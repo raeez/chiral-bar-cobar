@@ -1,14 +1,14 @@
-r"""Genus-2 shadow free energy for W_3: the first multi-weight computation.
+r"""Genus-2 shadow free-energy projection for W_3: the first multi-weight computation.
 
 MATHEMATICAL FRAMEWORK:
 
   W_3 at generic central charge c is the FIRST non-affine algebra for which
-  we compute the genus-2 shadow free energy F_2. It has TWO generators:
+  we compute the genus-2 scalar plus cross-channel projection F_2. It has TWO generators:
     T (weight 2, stress-energy tensor)
     W (weight 3, spin-3 current)
 
   This is a multi-weight algebra, so the scalar formula F_g = kappa * lambda_g^FP
-  FAILS at genus >= 2. The full decomposition (thm:multi-weight-genus-expansion)
+  FAILS at genus >= 2. The all-weight decomposition (thm:multi-weight-genus-expansion)
   gives:
 
     F_2(W_3) = kappa * lambda_2^FP + delta_F_2^cross
@@ -45,23 +45,13 @@ MATHEMATICAL FRAMEWORK:
     over all stable graphs of M_bar_{2,0}. The four contributing graphs
     with cross-channel amplitudes are:
 
-    (1) Banana graph (Gamma_2): two genus-1 vertices, two edges.
-        Cross-channel: one edge carries T, the other W.
-        Amplitude: 3/c.
+    (1) Banana graph (Gamma_2): 3/c.
 
-    (2) Theta graph (Gamma_4): two genus-0 vertices, three edges.
-        Cross-channel: at least two distinct channels among 3 edges.
-        Amplitude: 9/(2c).
+    (2) Theta graph (Gamma_4): 9/(2c).
 
-    (3) Lollipop graph (Gamma_5): one genus-0 vertex (self-loop + bridge)
-        connected to one genus-1 vertex.
-        Cross-channel: self-loop and bridge carry different channels.
-        Amplitude: 1/16.
+    (3) Lollipop graph (Gamma_5): 1/16.
 
-    (4) Barbell graph (Gamma_7): two genus-0 vertices with self-loops,
-        connected by a bridge.
-        Cross-channel: self-loops carry different channels from bridge.
-        Amplitude: 21/(4c).
+    (4) Barbell graph (Gamma_7): 21/(4c).
 
     Sum: 3/c + 9/(2c) + 1/16 + 21/(4c) = (c + 204)/(16c).
 
@@ -70,9 +60,9 @@ MATHEMATICAL FRAMEWORK:
     The c/(16c) = 1/16 comes from the lollipop.
     Total: (c + 204)/(16c).
 
-  THE FULL GENUS-2 FREE ENERGY:
+  THE GENUS-2 SCALAR + CROSS-CHANNEL PROJECTION:
 
-    F_2(W_3) = 7c/6912 + (c + 204)/(16c)
+    F_2^{proj}(W_3) = 7c/6912 + (c + 204)/(16c)
              = [112c^2 + 6912c + 1410048] / (110592c)
 
     At the self-dual point c = 50 (K_3 = 100, self-dual under c -> 100 - c):
@@ -89,42 +79,14 @@ MATHEMATICAL FRAMEWORK:
   DS REDUCTION CONNECTION:
 
     W_3 = DS reduction of sl_3-hat at level k.
-    c(W_3, k) = 2 - 24/(k+3).
+    c(W_3, k) = 2 - 24(k+2)^2/(k+3).
     c(sl_3, k) = 8k/(k+3).
 
-    At the DS point, F_2(W_3, c(k)) should equal F_2(sl_3, k) + (ghost contribution).
-    The ghost contribution comes from the BRST complex: the bc ghosts of
-    the DS reduction contribute their own genus-2 invariant.
-
-    Ghost sector: dim(n_+) = 3 bc pairs at weights (1,0), (1,1), (2,-1).
-    c_ghost = -2 * (6*j^2 - 6*j + 1) summed over j = 1 (x2), 2 (x1).
-    For principal sl_3: c_ghost = -2*(1 + 1 + 7) = -18... NO:
-    c_ghost = -2 * sum_{positive roots} (6h_alpha^2 - 6h_alpha + 1)
-    where h_alpha is the conformal weight of the bc pair for root alpha.
-
-    For sl_3 principal DS, the positive roots have heights 1, 1, 2:
-      alpha_1: height 1, bc at (1, 0), c_ghost = -2*(6-6+1) = -2
-      alpha_2: height 1, bc at (1, 0), c_ghost = -2
-      alpha_1 + alpha_2: height 2, bc at (2, -1), c_ghost = -2*(24-12+1) = -26
-    Total c_ghost = -2 - 2 - 26 = -30... but this should satisfy:
-      c(sl_3, k) = c(W_3, k) + c_ghost
-      8k/(k+3) = 2 - 24/(k+3) + c_ghost
-    So c_ghost = 8k/(k+3) - 2 + 24/(k+3) = (8k + 24)/(k+3) - 2
-               = 8(k+3)/(k+3) - 2 = 8 - 2 = 6.
-
-    Wait, that gives c_ghost = 6, independent of k. Check:
-    The BRST ghosts for principal DS of sl_3 have c_ghost = dim(n_+) (each
-    bc pair at weight (j, 1-j) contributes -2(6j^2 - 6j + 1)). For
-    principal sl_3, the 3 positive roots have j = 1, 1, 2.
-    c_ghost = -2(1 + 1 + 13) = -2*15 = -30.
-    But the BRST formulation also includes the chi system (auxiliary fields).
-
-    The correct relation is simpler: c(sl_3) = c(W_3) + 2*dim(n_+) = c(W_3) + 6.
-    That is: 8k/(k+3) = 2 - 24/(k+3) + 6 = 8 - 24/(k+3), which gives
-    8k/(k+3) = 8(k+3)/(k+3) - 24/(k+3) = (8k+24-24)/(k+3) = 8k/(k+3). Check.
-
-    So c_ghost = 2*dim(n_+) = 6 for sl_3. kappa_ghost = c_ghost/2 = 3... NO.
-    Ghost kappa depends on the ghost algebra type, not just c.
+    The central-charge gap is not the constant 6. DS reduction acts on the
+    current-plus-ghost BRST complex with an improvement term; after reduction
+    the W_3 channel packet is (c/2, c/3), not the bare affine scalar
+    4(k+3)/3. The exact gap is
+      c(sl_3,k) - c(W_3,k) = 24k + 30.
 
     The DS reduction conjecture for genus-2 free energies:
       F_2(sl_3, k) = F_2(W_3, c(k)) + F_2(ghost, c_ghost) + (cross terms).
@@ -189,6 +151,22 @@ from functools import lru_cache
 from typing import Any, Dict, List, Optional, Tuple
 
 
+def _require_noncritical_level(k: Fraction) -> Fraction:
+    """Return k as a Fraction, excluding the DS critical pole k = -3."""
+    k = Fraction(k)
+    if k == Fraction(-3):
+        raise ValueError("W_3 central charge is undefined at the critical level k = -3")
+    return k
+
+
+def _require_genus2_regular_c(c: Fraction) -> Fraction:
+    """Return c as a Fraction, excluding the genus-2 cross-channel pole c = 0."""
+    c = Fraction(c)
+    if c == 0:
+        raise ValueError("W_3 genus-2 cross-channel projection is singular at c = 0")
+    return c
+
+
 # ======================================================================
 # 1. W_3 algebra data
 # ======================================================================
@@ -200,7 +178,7 @@ def w3_data() -> Dict[str, Any]:
       T (weight 2, stress-energy tensor)
       W (weight 3, spin-3 current)
 
-    Central charge: c (generic; parametrized by level k via c = 2 - 24/(k+3)).
+    Central charge: c (generic; parametrized by c(k) = 2 - 24(k+2)^2/(k+3)).
     Koszul conductor: K_3 = 100 (self-dual at c = 50).
     """
     return {
@@ -218,36 +196,37 @@ def w3_data() -> Dict[str, Any]:
 def w3_central_charge_from_level(k: Fraction) -> Fraction:
     """Central charge of W_3 at level k.
 
-    c(W_3, k) = 2 - 24/(k+3).
+    c(W_3, k) = 2 - 24(k+2)^2/(k+3).
 
     This is the Fateev-Lukyanov / Feigin-Frenkel formula for the
     principal W-algebra W^k(sl_3).
     """
-    k = Fraction(k)
-    return Fraction(2) - Fraction(24) / (k + 3)
+    k = _require_noncritical_level(k)
+    return Fraction(2) - Fraction(24) * (k + 2) ** 2 / (k + 3)
+
+
+def w3_dual_level(k: Fraction) -> Fraction:
+    """Feigin-Frenkel dual level for principal W_3: k' = -k - 6."""
+    k = _require_noncritical_level(k)
+    return -k - 6
+
+
+def w3_zero_curvature_levels() -> Tuple[Fraction, Fraction]:
+    """Levels where c(k)=0, hence kappa(W_3)=0.
+
+    The genus-2 cross-channel projection has a pole at these central charges.
+    """
+    return (Fraction(-9, 4), Fraction(-5, 3))
 
 
 def w3_koszul_dual_c(c: Fraction) -> Fraction:
     """Koszul dual central charge: c' = K_3 - c = 100 - c.
 
     Under Feigin-Frenkel involution k -> -k - 2*h^v = -k - 6:
-      c' = c(-k - 6) = 2 - 24/(-k - 6 + 3) = 2 - 24/(-k - 3) = 2 + 24/(k+3)
-      c + c' = 4 + 0 ... NO.
+      c(k) + c(-k - 6) = 100.
 
-    Actually: c + c' = (2 - 24/(k+3)) + (2 + 24/(k+3)) = 4.
-
-    Wait, that gives c + c' = 4, but K_3 = 100. The discrepancy is because
-    the Koszul conductor for W_N uses the FULL formula:
-      K_N = 2*rank + 4*dim*h^v = 2*2 + 4*8*3 = 4 + 96 = 100.
-    The Feigin-Frenkel c + c' = 2*(N-1) = 4 for sl_3 is the W-algebra
-    central charge sum, NOT the Koszul conductor.
-
-    Resolution: the Koszul dual of W_3 at level k is NOT W_3 at level -k-6
-    (that is the FF dual). The CHIRAL Koszul dual involves the full bar complex
-    and the modular characteristic formula. The conductor K_3 = 100 comes from
-    kappa + kappa' = rho * K where rho = 5/6 (AP24 for W-algebras):
-      kappa(c) + kappa(100-c) = 5c/6 + 5(100-c)/6 = 500/6 = 250/3.
-    And kappa_sum / rho = (250/3) / (5/6) = 100 = K_3. Check.
+    Therefore the scalar modular characteristic satisfies
+      kappa(c) + kappa(100-c) = 5c/6 + 5(100-c)/6 = 250/3.
 
     For the shadow tower, the relevant duality is c -> K_3 - c = 100 - c.
     """
@@ -341,7 +320,7 @@ def lambda_fp(g: int) -> Fraction:
 
     lambda_g^FP = (2^{2g-1} - 1) / 2^{2g-1} * |B_{2g}| / (2g)!
 
-    lambda_1 = 1/24, lambda_2 = 7/5760, lambda_3 = 31/2903040.
+    lambda_1 = 1/24, lambda_2 = 7/5760, lambda_3 = 31/967680.
     """
     if g < 1:
         raise ValueError(f"lambda_fp requires g >= 1, got {g}")
@@ -360,86 +339,11 @@ def lambda_fp(g: int) -> Fraction:
 def banana_cross_channel(c: Fraction) -> Fraction:
     """Cross-channel amplitude for the banana graph (Gamma_2).
 
-    The banana has 2 genus-1 vertices connected by 2 edges. |Aut| = 8.
-
-    Cross-channel assignment: one edge T, one edge W.
-    Number of such assignments: 2 (TW or WT, but identified under Aut).
-
-    For each genus-1 vertex with two edges (one T, one W):
-      V_1(T, W) = 0 (genus >= 1 vertex requires all edges same channel).
-
-    Wait, that is wrong. Let me reconsider.
-
-    The banana vertex factor for genus-1 vertex with 2 half-edges carrying
-    channels (i, j) is: delta_{ij} * kappa_i * lambda_1 + (non-diagonal terms).
-
-    NO. The genus-1 vertex factor in the gravitational Frobenius algebra is:
-      V_{1, (i,j)} = delta_{ij} * kappa_i / 24  (only diagonal contributes).
-
-    So for banana cross-channel (one edge T, one edge W):
-    Left vertex: half-edges (T, W) -> V_1(T,W) = 0 (off-diagonal).
-    RIGHT. The banana cross-channel is ZERO.
-
-    Hmm, but the established formula gives 3/c. Let me re-examine.
-
-    Looking at multichannel_genus2.py: the banana amplitude delta_Gamma2 = 3/c.
-    This comes from the graph sum where each vertex is genus 0,
-    and the banana has 2 genus-0 vertices with 2 edges between them.
-
-    Wait, M_bar_{2,0} has specific stable graphs. Let me be precise.
-
-    The stable graphs of genus 2 with 0 marked points:
-    1. Genus-2 vertex (single vertex, g=2, no edges): F_2^scalar for each channel.
-    2. Banana: 2 vertices, g_1 = g_2 = 1, 2 edges (the genus-2 graph from
-       connecting two genus-1 curves along 2 nodes).
-
-    Actually the banana in genus 2 has vertex genera (1, 1) and 2 edges.
-
-    For vertex of genus g=1 with 2 half-edges both carrying channel j:
-      V_{1,2}(j, j) = kappa_j * lambda_1^{1-point}... no, this needs the
-      exact Feynman rules.
-
-    Let me use the EXACT Feynman rules from the multiweight frontier engine.
-
-    The gravitational vertex factor for genus g vertex with n half-edges,
-    all carrying the same channel j, is:
-      V_{g,n}(j,...,j) = kappa_j * lambda_g^FP  (for g >= 1, any n).
-
-    For g >= 1 vertex with half-edges carrying DIFFERENT channels: V = 0.
-
-    For g = 0 vertex with n >= 3 half-edges: recursive Frobenius factorization
-    using C_{ijk} (the 3-point structure constants) and eta^{jj} = j/c (propagator).
-
-    With this convention, the banana (g_1=g_2=1, 2 edges):
-    Cross-channel: edges carry (T, W) = (2, 3).
-    Vertex 1 half-edges: (2, 3) -> genus 1, different channels -> V = 0.
-    Cross-channel banana amplitude = 0.
-
-    So where does the 3/c come from in the existing code?
-
-    Let me re-read the graph structure. For M_bar_{2,0}, the stable graphs are:
-    (i)   Single vertex, g=2, 0 edges: amplitude = F_2^{scalar}(j) for each j.
-    (ii)  Two vertices g_1=g_2=1, connected by 1 edge: the lollipop is g=1/g=0.
-    No wait.
-
-    The SEVEN stable graphs of M_bar_{2,0} are:
-    1. Single vertex g=2, val=0: 1 graph
-    2. One g=1 vertex with self-loop: 1 graph (genus comes from vertex + loop)
-    3. Two g=1 vertices, 1 bridge: the figure-eight bridge
-    4. One g=0 vertex, 2 self-loops: the banana self-loops... no.
-
-    Let me use the established enumeration from the code.
-
-    I realize I should not recompute the graph enumeration from scratch.
-    The multichannel_genus2 module has already established the cross-channel
-    computation. I will import and verify its result.
+    This is the 1/c part of the seven-stable-graph genus-2 contraction.
+    Together with the theta and barbell terms it supplies
+    3/c + 9/(2c) + 21/(4c) = 51/(4c).
     """
-    c = Fraction(c)
-    # From multichannel_genus2: banana has 2 edges, 2 genus-0 trivalent vertices.
-    # This is the THETA graph of genus 2 (NOT the higher-genus banana).
-    # Re-reading the code: Gamma_2 is their banana notation.
-    # delta_Gamma2 = 3/c.
-    # I will verify this against the universal N-formula below.
+    c = _require_genus2_regular_c(c)
     return Fraction(3) / c
 
 
@@ -449,7 +353,7 @@ def theta_graph_cross_channel(c: Fraction) -> Fraction:
     Three edges connecting two genus-0 vertices. |Aut| = 12.
     delta_Gamma4 = 9/(2c).
     """
-    c = Fraction(c)
+    c = _require_genus2_regular_c(c)
     return Fraction(9) / (2 * c)
 
 
@@ -474,6 +378,7 @@ def lollipop_cross_channel(c: Fraction) -> Fraction:
 
     Total: 1/16.
     """
+    _require_genus2_regular_c(c)
     return Fraction(1, 16)
 
 
@@ -483,7 +388,7 @@ def barbell_cross_channel(c: Fraction) -> Fraction:
     Two genus-0 vertices each with self-loop, connected by bridge. |Aut| = 8.
     delta_Gamma7 = 21/(4c).
     """
-    c = Fraction(c)
+    c = _require_genus2_regular_c(c)
     return Fraction(21) / (4 * c)
 
 
@@ -492,7 +397,7 @@ def delta_F2_cross_graphwise(c: Fraction) -> Dict[str, Fraction]:
 
     Sums contributions from all 4 graphs with cross-channel amplitudes.
     """
-    c = Fraction(c)
+    c = _require_genus2_regular_c(c)
     d_banana = banana_cross_channel(c)
     d_theta = theta_graph_cross_channel(c)
     d_lollipop = lollipop_cross_channel(c)
@@ -523,9 +428,9 @@ def delta_F2_universal_formula(N: int, c: Fraction) -> Fraction:
       A = 1*(81+126+66+33)/24 = 306/24 = 51/4.
       delta = 1/16 + 51/(4c) = (c + 204)/(16c).
     """
-    c = Fraction(c)
     if N <= 2:
         return Fraction(0)
+    c = _require_genus2_regular_c(c)
     B = Fraction((N - 2) * (N + 3), 96)
     A = Fraction((N - 2) * (3 * N**3 + 14 * N**2 + 22 * N + 33), 24)
     return B + A / c
@@ -533,12 +438,12 @@ def delta_F2_universal_formula(N: int, c: Fraction) -> Fraction:
 
 def delta_F2_w3_closed_form(c: Fraction) -> Fraction:
     """delta_F_2(W_3) = (c + 204)/(16c). Closed form (Path 3)."""
-    c = Fraction(c)
+    c = _require_genus2_regular_c(c)
     return (c + Fraction(204)) / (16 * c)
 
 
 # ======================================================================
-# 6. Full genus-2 shadow free energy
+# 6. Genus-2 scalar plus cross-channel projection
 # ======================================================================
 
 def F2_scalar_part(c: Fraction) -> Fraction:
@@ -552,13 +457,13 @@ def F2_cross_channel(c: Fraction) -> Fraction:
 
 
 def F2_w3_total(c: Fraction) -> Fraction:
-    """Total genus-2 shadow free energy for W_3.
+    """Genus-2 scalar plus cross-channel projection for W_3.
 
     F_2(W_3) = kappa * lambda_2 + delta_F_2^cross
              = 7c/6912 + (c + 204)/(16c)
              = (112c^2 + 6912c + 1410048) / (110592c).
     """
-    c = Fraction(c)
+    c = _require_genus2_regular_c(c)
     scalar = F2_scalar_part(c)
     cross = F2_cross_channel(c)
     return scalar + cross
@@ -577,7 +482,7 @@ def F2_w3_closed_form(c: Fraction) -> Fraction:
       Sum = [112c^2 + 6912c + 6912*204] / (110592c)
           = [112c^2 + 6912c + 1410048] / (110592c).
     """
-    c = Fraction(c)
+    c = _require_genus2_regular_c(c)
     numerator = 112 * c**2 + 6912 * c + 1410048
     denominator = 110592 * c
     return numerator / denominator
@@ -603,7 +508,7 @@ def F2_w3_per_channel(c: Fraction) -> Dict[str, Fraction]:
     F_2 = F_2^{T-channel} + F_2^{W-channel} + delta_F_2^cross
         = kappa_T * lambda_2 + kappa_W * lambda_2 + delta_F_2^cross.
     """
-    c = Fraction(c)
+    c = _require_genus2_regular_c(c)
     f_T = kappa_t_channel(c) * lambda_fp(2)
     f_W = kappa_w_channel(c) * lambda_fp(2)
     delta = F2_cross_channel(c)
@@ -690,7 +595,7 @@ def sl3_data_at_level(k: Fraction) -> Dict[str, Fraction]:
     c(sl_3, k) = 8k/(k+3).
     kappa(sl_3, k) = dim(sl_3) * (k + h^v) / (2 * h^v) = 8(k+3)/6 = 4(k+3)/3.
     """
-    k = Fraction(k)
+    k = _require_noncritical_level(k)
     c = Fraction(8) * k / (k + 3)
     kappa = Fraction(8) * (k + 3) / 6
     return {
@@ -708,11 +613,24 @@ def F2_sl3_scalar(k: Fraction) -> Fraction:
     return data['kappa'] * lambda_fp(2)
 
 
+def ds_central_charge_gap(k: Fraction) -> Fraction:
+    """Exact affine-to-W_3 central-charge gap at the DS level.
+
+    With c_W3(k) = 2 - 24(k+2)^2/(k+3) and c_sl3(k) = 8k/(k+3),
+    the difference simplifies to 24k + 30. This is a current-plus-ghost
+    and improvement diagnostic, not a constant ghost central charge.
+    """
+    k = _require_noncritical_level(k)
+    return sl3_data_at_level(k)['c'] - w3_central_charge_from_level(k)
+
+
 def ds_comparison(k: Fraction) -> Dict[str, Any]:
     """Compare F_2(W_3, c(k)) with F_2(sl_3, k) at the DS point.
 
-    At the DS point, c(W_3, k) = 2 - 24/(k+3) and c(sl_3, k) = 8k/(k+3).
-    The relation c(sl_3) = c(W_3) + 6 holds.
+    At the DS point,
+      c(W_3, k) = 2 - 24(k+2)^2/(k+3),
+      c(sl_3, k) = 8k/(k+3).
+    Their difference is 24k+30, not a constant ghost central charge.
 
     For the free energies:
     F_2(sl_3, k) = kappa(sl_3) * lambda_2 (scalar, uniform-weight).
@@ -722,7 +640,7 @@ def ds_comparison(k: Fraction) -> Dict[str, Any]:
     contribution of the DS reduction at genus 2.
     This is CONJECTURAL: BV/BRST = bar at genus >= 2 (conj:master-bv-brst).
     """
-    k = Fraction(k)
+    k = _require_noncritical_level(k)
     c_w3 = w3_central_charge_from_level(k)
     sl3 = sl3_data_at_level(k)
 
@@ -731,22 +649,20 @@ def ds_comparison(k: Fraction) -> Dict[str, Any]:
 
     diff = F2_sl3 - F2_w3
 
-    # Ghost contribution (if DS reduction were exact at genus 2):
-    # F_2(ghost) = diff (conjectural).
-    # The ghost has c_ghost = 6, kappa_ghost = ?
-    # For bc ghosts at various weights, kappa is NOT simply c/2.
-
     return {
         'k': k,
         'c_w3': c_w3,
         'c_sl3': sl3['c'],
-        'c_relation': sl3['c'] - c_w3,  # should be 6
+        'c_relation': sl3['c'] - c_w3,
+        'central_charge_gap': sl3['c'] - c_w3,
+        'central_charge_gap_formula': 24 * k + 30,
+        'central_charge_gap_is_constant_6': (sl3['c'] - c_w3) == 6,
         'kappa_sl3': sl3['kappa'],
         'kappa_w3': kappa_w3(c_w3),
         'F2_sl3': F2_sl3,
         'F2_w3': F2_w3,
         'difference': diff,
-        'status': 'conjectural (conj:master-bv-brst)',
+        'status': 'finite genus-2 diagnostic; BV/BRST=bar comparison remains conjectural',
     }
 
 
@@ -896,25 +812,49 @@ def cross_family_comparison(c: Fraction) -> Dict[str, Any]:
     }
 
 
+def uniform_weight_reduction_witness(c: Fraction) -> Dict[str, Any]:
+    """Witness that the uniform-weight scalar formula fails for W_3 at genus 2."""
+    c = _require_genus2_regular_c(c)
+    scalar_only = F2_scalar_part(c)
+    cross = F2_cross_channel(c)
+    total = scalar_only + cross
+
+    return {
+        'c': c,
+        'scalar_only_uniform_weight_value': scalar_only,
+        'cross_channel_gap': cross,
+        'all_weight_genus2_projection': total,
+        'scalar_formula_equals_projection': scalar_only == total,
+        'failure_gap_equals_delta_F2_cross': total - scalar_only == cross,
+    }
+
+
+def w3_genus2_projection_scope() -> Dict[str, Any]:
+    """Scope declaration for the finite genus-2 W_3 computation."""
+    return {
+        'computed_object': 'genus-2 scalar diagonal plus gravitational cross-channel projection',
+        'finite_genus2_diagnostic': True,
+        'is_full_ope_partition_function': False,
+        'is_full_modular_koszul_package': False,
+        'is_derived_center_data': False,
+        'requires_channel_packet': ('T', 'W'),
+        'kappa_packet': {
+            'T': Fraction(1, 2),      # coefficient of c
+            'W': Fraction(1, 3),      # coefficient of c
+            'trace': Fraction(5, 6),  # coefficient of c
+        },
+        'genus2_cross_channel_singular_c': (Fraction(0),),
+        'scalar_shadow_singular_c': (Fraction(0), Fraction(-22, 5)),
+        'exact_delta_F2_cross': '(c + 204)/(16c)',
+    }
+
+
 # ======================================================================
 # 14. Propagator variance (thm:propagator-variance)
 # ======================================================================
 
 def propagator_variance_w3(c: Fraction) -> Dict[str, Fraction]:
     """Propagator variance delta_mix for W_3.
-
-    delta_mix = sum_i f_i^2/kappa_i - (sum_i f_i)^2 / sum_i kappa_i
-
-    For W_3: f_T = kappa_T = c/2, f_W = kappa_W = c/3.
-    kappa_T = c/2, kappa_W = c/3.
-
-    sum f_i^2/kappa_i = (c/2)^2/(c/2) + (c/3)^2/(c/3) = c/2 + c/3 = 5c/6.
-    (sum f_i)^2 / sum kappa_i = (c/2 + c/3)^2 / (c/2 + c/3) = 5c/6.
-
-    Wait, that gives delta_mix = 0. But this uses f_i = kappa_i.
-    The propagator variance uses the COUPLING CONSTANTS, not kappa.
-
-    Let me re-read thm:propagator-variance more carefully.
 
     delta_mix = sum_i f_i^2/kappa_i - (sum_i f_i)^2 / kappa_total
 
@@ -932,7 +872,7 @@ def propagator_variance_w3(c: Fraction) -> Dict[str, Fraction]:
 
     This is NON-ZERO for c != 0, confirming multi-channel non-autonomy.
     """
-    c = Fraction(c)
+    c = _require_genus2_regular_c(c)
     kap_T = kappa_t_channel(c)
     kap_W = kappa_w_channel(c)
     kap_total = kappa_w3(c)
@@ -973,7 +913,7 @@ def multi_path_verification(c: Fraction) -> Dict[str, Any]:
     Path 4: Component check (constant + 1/c decomposition).
     Path 5: Koszul duality (sum F_2(c) + F_2(100-c) structural check).
     """
-    c = Fraction(c)
+    c = _require_genus2_regular_c(c)
 
     path1 = delta_F2_cross_graphwise(c)['total']
     path2 = delta_F2_universal_formula(3, c)
@@ -995,13 +935,13 @@ def multi_path_verification(c: Fraction) -> Dict[str, Any]:
 
 
 def full_F2_multi_path(c: Fraction) -> Dict[str, Any]:
-    """Multi-path verification of the FULL F_2(W_3, c).
+    """Multi-path verification of the genus-2 W_3 projection.
 
     Path A: scalar + cross = kappa*lambda_2 + (c+204)/(16c).
-    Path B: closed form (7c^2 + 6912c + 1410048)/(110592c).
+    Path B: closed form (112c^2 + 6912c + 1410048)/(110592c).
     Path C: per-channel sum F_T + F_W + delta.
     """
-    c = Fraction(c)
+    c = _require_genus2_regular_c(c)
 
     path_a = F2_scalar_part(c) + F2_cross_channel(c)
     path_b = F2_w3_closed_form(c)
@@ -1024,7 +964,7 @@ def full_F2_multi_path(c: Fraction) -> Dict[str, Any]:
 # ======================================================================
 
 def summary_report(c: Optional[Fraction] = None) -> Dict[str, Any]:
-    """Complete summary of F_2(W_3) computation.
+    """Summary of the genus-2 W_3 projection computation.
 
     If c is None, reports at c = 50 (self-dual point).
     """
@@ -1043,6 +983,7 @@ def summary_report(c: Optional[Fraction] = None) -> Dict[str, Any]:
         'F2_cross': F2_cross_channel(c),
         'F2_total': F2_w3_total(c),
         'F2_closed_form': F2_w3_closed_form(c),
+        'projection_scope': w3_genus2_projection_scope(),
         'is_multi_weight': True,
         'cross_channel_nonzero': F2_cross_channel(c) != 0,
         'multi_path_delta': multi_path_verification(c),

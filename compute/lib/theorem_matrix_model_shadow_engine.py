@@ -1,107 +1,60 @@
-r"""Theorem engine: matrix model from the shadow generating function.
+r"""Finite matrix-model diagnostics from shadow scalar data.
 
-CENTRAL RESULT
-==============
+This module checks exact finite-window identities attached to the shadow
+obstruction tower.  It does not promote those scalar identities to a
+Kontsevich-Witten tau-function statement, a KdV or Gelfand-Dickey
+hierarchy, an Eynard-Orantin recursion theorem, a convergence-radius
+theorem, or an all-genus matrix-integral theorem.  Those structures need
+separate descendant CohFT, isomonodromic, or analytic input.
 
-The shadow obstruction tower genus expansion F_g(A) is controlled by a
-matrix model dictionary that depends on the shadow depth class:
+Finite algebraic layer:
+    F_g^scal(A) = kappa(A) * lambda_g^FP on the proved uniform-weight
+    scalar lane, and at genus 1 for all standard families.  Interacting
+    multi-weight families have a full free energy
+        F_g = kappa * lambda_g^FP + delta_F_g^cross
+    at g >= 2.  For W_3,
+        delta_F_2^cross(W_3) = (c + 204)/(16c).
 
-  Class G (Gaussian, r_max=2): F_g = kappa * lambda_g^FP
-      = F_g^GUE(N^2 = kappa).  EXACT Gaussian matrix model.
+Stationary primary-line diagnostics:
+    Q_L(t) = (2*kappa + 3*S_3*t)^2 + 2*Delta*t^2,
+    Delta = 8*kappa*S_4.  Discriminants, formal potentials
+    sum (S_r/r) M^r, and the finite CEO-adjacent subtraction
+    F_g^CEO = F_g^scal - delta_pf^{(g)} are scalar diagnostics.  They
+    are not themselves matrix-integral or EO-recursion constructions.
 
-  Class L (Lie, r_max=3): F_g = kappa * lambda_g^FP (uniform-weight).
-      The CEO decomposition: F_g = F_g^CEO(Q_L) + delta_pf^{(g)}.
-      The spectral curve Q_L = perfect square (degenerate: colliding
-      branch points).  Corresponds to the CRITICAL cubic matrix model
-      (Painleve I universality).
+Model-specific finite-window evidence:
+    The Gaussian bridge uses the same Faber-Pandharipande coefficients
+    as the Gaussian normalization.  The Barnes-G comparison below is a
+    finite-N asymptotic normalization check, not an analytic equality of
+    partition functions.
 
-  Class C (Contact, r_max=4): F_g = kappa * lambda_g^FP (uniform-weight).
-      CEO decomposition with quartic spectral curve corrections.
-      Corresponds to the CRITICAL quartic matrix model (Painleve II).
+Canonical local constants:
+    kappa(H_k) = k.
+    kappa(V_k(g)) = dim(g)*(k+h^vee)/(2*h^vee).
+    kappa(Vir_c) = c/2.
+    kappa(W_N) = c*(H_N - 1).
+    Virasoro: S_3 = 2, S_4 = 10/[c(5c+22)],
+        S_5 = -48/[c^2(5c+22)].
+    beta-gamma standard class-C family:
+        S_2 = 6*lambda^2 - 6*lambda + 1, S_3 = 0,
+        S_4 = -5/12, S_r = 0 for r >= 5.
+    r-matrices use collision-residue normalization:
+        Heisenberg k/z; affine k*Omega_tr/z;
+        Virasoro (c/2)/z^3 + 2T/z.
+    The KZ residue Omega/((k+h^vee)z) is a separate normalization.
 
-  Class M (Mixed, r_max=infinity): F_g = kappa * lambda_g^FP FAILS for
-      multi-weight algebras.  The full decomposition:
-          F_g = kappa * lambda_g^FP + delta_F_g^cross
-      where delta_F_g^cross != 0 for multi-weight families (W_3, ...).
-      Corresponds to an infinite-potential matrix model AWAY from
-      criticality (non-degenerate spectral curve with complex conjugate
-      branch points).
+Object firewall:
+    A, B(A), A^i, A^!, and Z_ch^der(A) are distinct.  Omega(B(A)) = A
+    is bar-cobar inversion, not Koszul duality.  A^! lies on the
+    Verdier/continuous-linear dual branch.  Hochschild/bulk data are not
+    Koszul dual data.
 
-THE TWO-LAYER STRUCTURE
-========================
-
-Layer 1 (CEO = matrix model):
-    The Eynard-Orantin topological recursion on y^2 = Q_L(t) gives
-    F_g^CEO.  This coincides with the free energy of the matrix model
-    V(M) = sum_{r>=2} (S_r/r) M^r with spectral curve y^2 = Q_L.
-
-Layer 2 (planted-forest correction):
-    The full shadow tower includes codimension >= 2 boundary corrections:
-        F_g^shadow = F_g^CEO + delta_pf^{(g)}
-    For uniform-weight algebras: F_g^CEO + delta_pf = kappa * lambda_g^FP
-    (the planted-forest correction EXACTLY compensates the non-Gaussian
-    CEO, restoring the Gaussian answer).
-
-UNIFORM-WEIGHT GAUSSIAN THEOREM (Theorem D):
-    For ALL uniform-weight modular Koszul algebras, regardless of shadow
-    depth class (G, L, C, or M):
-        F_g(A) = kappa(A) * lambda_g^FP = F_g^GUE(N^2 = kappa(A))
-    The shadow coefficients S_3, S_4, ... affect the CEO/delta_pf
-    decomposition but NOT the total.  The Gaussian matrix model is
-    UNIVERSAL on the uniform-weight lane.
-
-MULTI-WEIGHT CORRECTION (thm:multi-weight-genus-expansion):
-    For multi-weight algebras at g >= 2:
-        F_g(A) = kappa * lambda_g^FP + delta_F_g^cross(A)
-    where delta_F_2(W_3) = (c+204)/(16c) > 0 for all c > 0.
-    The cross-channel correction is R-matrix independent and vanishes
-    iff the algebra is uniform-weight.
-
-QUANTITATIVE IDENTIFICATIONS (verified in this engine)
-======================================================
-
-(1) Gaussian bridge: F_g^GUE(N^2=1) = lambda_g^FP at all genera.
-(2) CEO decomposition: F_g^CEO = F_g^shadow - delta_pf^{(g)}.
-(3) CEO + delta_pf = kappa * lambda_g^FP for uniform-weight (genus 1-5).
-(4) Spectral curve classification by discriminant sign:
-    disc(Q_L) < 0 => class M (complex branch points)
-    disc(Q_L) = 0 => class G or L (degenerate / colliding)
-    disc(Q_L) > 0 => not realized by standard families
-(5) Matrix model potential reconstruction from shadow data.
-(6) Critical behavior at class boundaries.
-(7) Multi-weight Gaussian failure: delta_F_2^cross(W_3) = (c+204)/(16c).
-
-MULTI-PATH VERIFICATION (>= 3 per claim, per CLAUDE.md)
-========================================================
-
-Gaussian bridge:
-  Path 1: Direct formula F_g(kappa=1) = lambda_g^FP
-  Path 2: A-hat generating function coefficients
-  Path 3: Barnes G-function asymptotics (finite-N comparison)
-  Path 4: Cross-family consistency (Heisenberg kappa=k)
-
-CEO decomposition:
-  Path 1: Shadow formula + planted-forest formula
-  Path 2: Heisenberg specialization (delta_pf=0 => CEO=shadow)
-  Path 3: Affine sl_2 numerical check
-  Path 4: Beta-gamma (c=2) cross-check
-
-Spectral curve:
-  Path 1: Direct quadratic formula on Q_L
-  Path 2: Discriminant from shadow data
-  Path 3: Numerical evaluation at specific c
-
-CONVENTIONS (AP1, AP9, AP22, AP24, AP27, AP38, AP39, AP48)
-==========================================================
-- kappa(H_k) = k  [AP39: NOT k/2]
-- kappa(Vir_c) = c/2
-- kappa(aff KM g_k) = dim(g)*(k+h^v)/(2h^v)
-- F_g values POSITIVE [AP22: Bernoulli sign absorbed into |B_{2g}|]
-- lambda_g^FP = (2^{2g-1}-1)|B_{2g}| / (2^{2g-1} (2g)!)
-- Q_L(t) = (2*kappa + 3*alpha*t)^2 + 2*Delta*t^2, Delta = 8*kappa*S4
-- Bar propagator weight 1 [AP27]: all channels use E_1
-- Shadow coefficients: alpha = S_3 (cubic), S_4 (quartic contact)
-- delta_pf^{(2)} = S_3*(10*S_3 - kappa)/48
+Verified here:
+    * exact lambda_g^FP values and finite scalar identities;
+    * discriminants of the formal shadow metric Q_L;
+    * planted-forest corrections at genus 2 and 3;
+    * the W_3 genus-2 and genus-3 cross-channel corrections;
+    * explicit negative certification for analytic hierarchy claims.
 
 Manuscript references:
     thm:theorem-d (higher_genus_modular_koszul.tex)
@@ -128,6 +81,56 @@ from sympy import (
     Rational, Symbol, bernoulli, factorial, simplify, sqrt, expand,
     solve, symbols, cancel, Abs, log, pi, I, Poly, Integer,
 )
+
+
+LOCAL_FORMULA_SOURCES = {
+    'standard_constants': 'chapters/examples/landscape_census.tex:134',
+    'virasoro_shadows': 'chapters/examples/landscape_census.tex:160',
+    'r_matrix_normalization': 'chapters/examples/landscape_census.tex:173',
+    'betagamma_class_c': 'chapters/examples/landscape_census.tex:1147',
+    'scalar_lane_scope': 'chapters/examples/landscape_census.tex:1067',
+    'w3_cross_genus2': 'chapters/examples/landscape_census.tex:1081',
+    'w3_cross_genus3': 'chapters/examples/landscape_census.tex:1088',
+    'w3_pf_genus2': 'chapters/examples/genus_expansions.tex:3188',
+    'w3_propagator_variance': 'chapters/examples/landscape_census.tex:2921',
+    'virasoro_nonsingular_surface': 'chapters/examples/landscape_census.tex:572',
+    'formal_vs_analytic': 'chapters/connections/concordance.tex:8726',
+    'derived_center_firewall': 'chapters/connections/concordance.tex:12073',
+    'central_charge_kappa_firewall': 'chapters/connections/concordance.tex:12563',
+}
+
+
+OBJECT_FIREWALLS = {
+    'A': 'chiral algebra',
+    'B(A)': 'bar coalgebra T^c(s^-1 Abar)',
+    'A^i': 'bar cohomology coalgebra H^*B(A)',
+    'A^!': 'Verdier/continuous-linear dual algebra branch',
+    'Z_ch^der(A)': 'derived chiral centre, i.e. Hochschild/bulk branch',
+    'Omega(B(A))': 'bar-cobar inversion back to A, not Koszul duality',
+}
+
+
+KERNEL_NORMALIZATIONS = {
+    'affine_raw_trace_form': 'k*Omega_tr/z',
+    'affine_KZ': 'Omega/((k+h^vee)z)',
+    'heisenberg': 'k/z',
+    'virasoro': '(c/2)/z^3 + 2T/z',
+}
+
+
+VIRASORO_SINGULAR_CENTRAL_CHARGES = (Rational(0), Rational(-22, 5))
+
+
+def _require_nonsingular_virasoro_c(c: Rational) -> None:
+    """Reject the singular surface c(5c+22)=0 for Virasoro shadow data."""
+    if c in VIRASORO_SINGULAR_CENTRAL_CHARGES:
+        raise ValueError("Virasoro shadow coefficients require c*(5*c+22) != 0")
+
+
+def _require_nonzero_c(c: Rational, family: str) -> None:
+    """Reject cross-channel formulas with a pole at c=0."""
+    if c == 0:
+        raise ValueError(f"{family} cross-channel coefficient requires c != 0")
 
 
 # ============================================================================
@@ -162,7 +165,7 @@ def lambda_fp_exact(g: int) -> Fraction:
 
     Exact values:
         g=1: 1/24
-        g=2: 7/5760  (NOT 1/1152 -- AP38)
+        g=2: 7/5760
         g=3: 31/967680
     """
     if g < 1:
@@ -179,11 +182,53 @@ def lambda_fp_sympy(g: int) -> Rational:
 
 
 def F_g_shadow(kappa_val, g: int):
-    """Shadow free energy F_g(A) = kappa(A) * lambda_g^FP.
+    """Scalar shadow free energy F_g^scal(A) = kappa(A) * lambda_g^FP.
 
-    Valid for ALL uniform-weight modular Koszul algebras (Theorem D).
+    This is the proved uniform-weight scalar lane and the genus-1
+    specialization.  Interacting multi-weight full free energies need
+    the separate cross-channel term delta_F_g^cross at g >= 2.
     """
     return kappa_val * lambda_fp_sympy(g)
+
+
+def scalar_matrix_model_certification_firewall(max_genus: int = 5) -> Dict[str, Any]:
+    r"""Report what the finite scalar checks certify and what they do not.
+
+    The positive assertions are coefficient identities through the requested
+    finite genus window and the exact algebraic formulas used to compute them.
+    Every analytic or hierarchy promotion is deliberately negative here.
+    """
+    scalar_checks = {
+        g: {
+            'lambda_fp': lambda_fp_sympy(g),
+            'kappa_one_scalar': F_g_shadow(Rational(1), g),
+            'matches_kappa_one': F_g_shadow(Rational(1), g) == lambda_fp_sympy(g),
+        }
+        for g in range(1, max_genus + 1)
+    }
+    return {
+        'finite_scalar_coefficients_checked': True,
+        'max_genus_checked': max_genus,
+        'scalar_checks': scalar_checks,
+        'certifies_kw_tau_powers': False,
+        'certifies_kdv_hierarchy': False,
+        'certifies_gelfand_dickey_hierarchy': False,
+        'certifies_eo_recursion': False,
+        'certifies_convergence_radius': False,
+        'certifies_all_genus_matrix_integral': False,
+        'certifies_chiral_bar_cobar_equivalence': False,
+        'certifies_shadow_archetype_classification': False,
+        'certifies_derived_center_data': False,
+        'certifies_koszul_dual_data': False,
+        'certifies_full_chiral_free_energy': False,
+        'finite_witness_lane_only': True,
+        'descendant_cohft_assumed_separately': True,
+        'analytic_data_assumed_separately': True,
+        'isomonodromic_data_assumed_separately': True,
+        'object_firewall': OBJECT_FIREWALLS,
+        'kernel_normalizations': KERNEL_NORMALIZATIONS,
+        'sources': LOCAL_FORMULA_SOURCES,
+    }
 
 
 # ============================================================================
@@ -192,19 +237,19 @@ def F_g_shadow(kappa_val, g: int):
 
 @dataclass(frozen=True)
 class ShadowMatrixData:
-    r"""Shadow data for the matrix model identification.
+    r"""Shadow data for finite scalar matrix-model diagnostics.
 
     Shadow metric:
         Q_L(t) = (2*kappa + 3*S_3*t)^2 + 2*Delta*t^2
-    where Delta = 8*kappa*S_4 (critical discriminant).
+    where Delta = 8*kappa*S_4 (downstream scalar discriminant).
 
     Expanded: Q_L(t) = 4*kappa^2 + 12*kappa*S_3*t + (9*S_3^2 + 16*kappa*S_4)*t^2
 
-    Matrix model potential (formal):
+    Formal potential diagnostic:
         V(M) = sum_{r>=2} (S_r / r) * M^r
     where S_2 = kappa.
 
-    Convention (AP1, AP9, AP39):
+    Convention:
         kappa = modular characteristic (family-specific formula)
         S_3 = cubic shadow coefficient (alpha)
         S_4 = quartic contact invariant
@@ -219,7 +264,7 @@ class ShadowMatrixData:
 
     @property
     def Delta(self) -> Rational:
-        """Critical discriminant Delta = 8*kappa*S_4."""
+        """Downstream scalar discriminant Delta = 8*kappa*S_4."""
         return 8 * self.kappa * self.S4
 
     @property
@@ -249,7 +294,7 @@ class ShadowMatrixData:
 
     @property
     def matrix_potential_terms(self) -> Dict[int, Rational]:
-        """Matrix model potential V(M) = sum (S_r/r) M^r, truncated."""
+        """Formal potential coefficients V(M) = sum (S_r/r) M^r."""
         terms = {2: self.kappa / 2}
         if self.S3 != 0:
             terms[3] = self.S3 / 3
@@ -267,8 +312,8 @@ class ShadowMatrixData:
 def heisenberg_matrix_data(k=1) -> ShadowMatrixData:
     """Heisenberg at level k.  Class G, r_max=2.
 
-    kappa = k [AP39: NOT k/2].  All higher shadows vanish.
-    Matrix model: V(M) = (k/2)*M^2 (pure Gaussian).
+    kappa = k.  All higher shadows vanish.
+    Formal potential diagnostic: V(M) = (k/2)*M^2.
     """
     k = Rational(k)
     return ShadowMatrixData("Heis", k, Rational(0), Rational(0),
@@ -279,8 +324,8 @@ def affine_sl2_matrix_data(k=1) -> ShadowMatrixData:
     """Affine V_k(sl_2).  Class L, r_max=3.
 
     kappa = 3(k+2)/4, S_3 = 2, S_4 = S_5 = 0.
-    Matrix model: V(M) = (kappa/2)*M^2 + (2/3)*M^3 (cubic).
-    Q_L = (2*kappa + 6*t)^2 (perfect square => critical cubic).
+    Formal potential diagnostic: V(M) = (kappa/2)*M^2 + (2/3)*M^3.
+    Q_L = (2*kappa + 6*t)^2, a perfect square on the scalar line.
     """
     k = Rational(k)
     kappa = Rational(3) * (k + 2) / 4
@@ -289,15 +334,13 @@ def affine_sl2_matrix_data(k=1) -> ShadowMatrixData:
 
 
 def virasoro_matrix_data(c_val) -> ShadowMatrixData:
-    """Virasoro at central charge c.  Class M (c > 0), r_max=infinity.
+    """Virasoro at central charge c.  Class M off c(5c+22)=0.
 
     kappa = c/2, S_3 = 2, S_4 = 10/(c*(5c+22)), S_5 = -48/(c^2*(5c+22)).
-    Matrix model: V(M) = infinite polynomial in M.
+    The finite data below are the first terms of the infinite shadow tower.
     """
     c = Rational(c_val)
-    if c == 0:
-        return ShadowMatrixData("Vir_0", Rational(0), Rational(2),
-                                Rational(0), Rational(0), 'G')
+    _require_nonsingular_virasoro_c(c)
     kappa = c / 2
     S3 = Rational(2)
     S4 = Rational(10) / (c * (5 * c + 22))
@@ -306,29 +349,43 @@ def virasoro_matrix_data(c_val) -> ShadowMatrixData:
 
 
 def betagamma_matrix_data() -> ShadowMatrixData:
-    """Beta-gamma system.  Class C, r_max=4.
+    """Standard beta-gamma class-C family at lambda=1.
 
-    Same shadow data as Virasoro at c=2 on the primary line.
-    kappa = 1, S_3 = 2, S_4 = 5/32, S_5 = -3/8.
-    Matrix model: V(M) = (1/2)*M^2 + (2/3)*M^3 + (5/128)*M^4 + ...
+    The standard conformal-weight family has
+    S_2 = 6*lambda^2 - 6*lambda + 1, S_3 = 0,
+    S_4 = -5/12, and S_r = 0 for r >= 5.  At lambda=1, kappa=1.
     """
-    c = Rational(2)
     kappa = Rational(1)
-    S3 = Rational(2)
-    S4 = Rational(10) / (c * (5 * c + 22))
-    S5 = Rational(-48) / (c ** 2 * (5 * c + 22))
+    S3 = Rational(0)
+    S4 = Rational(-5, 12)
+    S5 = Rational(0)
     return ShadowMatrixData("betagamma", kappa, S3, S4, S5, 'C')
 
 
-def w3_tline_matrix_data(c_val) -> ShadowMatrixData:
-    """W_3 on the T-line (stress tensor channel).  Class M.
+def betagamma_tline_matrix_data(lambda_val=1) -> ShadowMatrixData:
+    """Beta-gamma stress-tensor primary-line diagnostic.
 
-    Same shadow data as Virasoro on the T-channel.
+    This is the Virasoro recomputation at
+    c = 2*(6*lambda^2 - 6*lambda + 1).  It is a stationary T-line
+    diagnostic, not the standard class-C family-level shadow datum.
+    """
+    lam = Rational(lambda_val)
+    c = 2 * (6 * lam ** 2 - 6 * lam + 1)
+    _require_nonsingular_virasoro_c(c)
+    kappa = c / 2
+    S3 = Rational(2)
+    S4 = Rational(10) / (c * (5 * c + 22))
+    S5 = Rational(-48) / (c ** 2 * (5 * c + 22))
+    return ShadowMatrixData(f"betagamma_T_lambda_{lam}", kappa, S3, S4, S5, 'M')
+
+
+def w3_tline_matrix_data(c_val) -> ShadowMatrixData:
+    """W_3 on the T-line (stress tensor channel).  Class M off c(5c+22)=0.
+
+    This is a stationary primary-line diagnostic with Virasoro shadow data.
     """
     c = Rational(c_val)
-    if c == 0:
-        return ShadowMatrixData("W3_T_0", Rational(0), Rational(2),
-                                Rational(0), Rational(0), 'G')
+    _require_nonsingular_virasoro_c(c)
     kappa_T = c / 2
     S3 = Rational(2)
     S4 = Rational(10) / (c * (5 * c + 22))
@@ -398,18 +455,20 @@ def delta_pf_genus(g: int, data: ShadowMatrixData):
 
 
 # ============================================================================
-# 4. CEO free energy (from spectral curve via EO topological recursion)
+# 4. CEO-adjacent finite subtraction
 # ============================================================================
 
 def F_g_CEO(g: int, data: ShadowMatrixData):
-    r"""CEO free energy F_g^CEO = F_g^shadow - delta_pf^{(g)}.
+    r"""Finite CEO-adjacent coefficient F_g^CEO = F_g^scal - delta_pf^{(g)}.
 
-    The Eynard-Orantin topological recursion on y^2 = Q_L(t) produces
-    F_g^CEO.  This equals the free energy of the matrix model whose
-    spectral curve is y^2 = Q_L(t).
+    This function defines the coefficient by subtraction from the scalar
+    shadow value.  It does not run Eynard-Orantin recursion and does not
+    certify a matrix-integral free energy.  Such an identification requires
+    a separately supplied descendant CohFT or analytic matrix model.
 
-    For uniform-weight algebras: F_g^shadow = kappa * lambda_g^FP.
-    For multi-weight: F_g^shadow = kappa * lambda_g^FP + delta_F_g^cross.
+    For uniform-weight algebras: F_g^scal = kappa * lambda_g^FP.
+    For interacting multi-weight algebras, the full F_g also includes
+    delta_F_g^cross.
     """
     F_shadow = F_g_shadow(data.kappa, g)
     dpf = delta_pf_genus(g, data)
@@ -421,25 +480,28 @@ def F_g_CEO(g: int, data: ShadowMatrixData):
 # ============================================================================
 
 def gaussian_matrix_model_Fg(N_squared, g: int):
-    r"""Free energy of the Gaussian (GUE) matrix model at genus g.
+    r"""Gaussian normalization coefficient at genus g.
 
     F_g^GUE = N^2 * lambda_g^FP  (intersection-theoretic normalization).
 
-    The 't Hooft genus expansion of Z_N = int dM exp(-N Tr(M^2)/2):
+    In the formal Gaussian normalization of
+    Z_N = int dM exp(-N Tr(M^2)/2):
     log Z_N = sum_{g>=0} N^{2-2g} F_g
     with F_g = lambda_g^FP in the intersection-theoretic normalization.
 
     Equivalently: F_g(N) = N^2 * lambda_g^FP when summed as
     sum F_g * hbar^{2g} with hbar = 1/N.
+    This is a normalization comparison, not a proof that a general
+    shadow datum is represented by a convergent matrix integral.
     """
     return N_squared * lambda_fp_sympy(g)
 
 
 def verify_gaussian_shadow_bridge(max_genus: int = 8) -> Dict[str, Any]:
-    r"""Verify F_g^shadow(kappa) = F_g^GUE(N^2=kappa) for all genera.
+    r"""Verify finite scalar equality with the Gaussian normalization.
 
     Multi-path verification:
-      Path 1: Direct shadow formula kappa * lambda_g^FP
+      Path 1: Direct scalar shadow formula kappa * lambda_g^FP
       Path 2: GUE formula N^2 * lambda_g^FP with N^2 = kappa
       Path 3: A-hat generating function coefficient extraction
     """
@@ -463,7 +525,13 @@ def verify_gaussian_shadow_bridge(max_genus: int = 8) -> Dict[str, Any]:
             'match': match,
         }
 
-    return {'all_match': all_match, 'genus_data': results}
+    return {
+        'all_match': all_match,
+        'genus_data': results,
+        'finite_scalar_identity_only': True,
+        'matrix_integral_equality_proved': False,
+        'analytic_convergence_proved': False,
+    }
 
 
 # ============================================================================
@@ -471,23 +539,25 @@ def verify_gaussian_shadow_bridge(max_genus: int = 8) -> Dict[str, Any]:
 # ============================================================================
 
 def verify_CEO_decomposition(g: int, data: ShadowMatrixData) -> Dict[str, Any]:
-    r"""Verify F_g^shadow = F_g^CEO + delta_pf^{(g)} for given data.
+    r"""Verify F_g^scal = F_g^CEO + delta_pf^{(g)} for given data.
 
-    For uniform-weight: F_g^shadow = kappa * lambda_g^FP (Theorem D),
+    For uniform-weight: F_g^scal = kappa * lambda_g^FP,
     so CEO + delta_pf = kappa * lambda_g^FP.
 
-    For Heisenberg: delta_pf = 0, so CEO = shadow = kappa * lambda_g^FP.
+    For Heisenberg: delta_pf = 0, so CEO = scalar shadow =
+    kappa * lambda_g^FP.  This is a finite algebraic subtraction, not an
+    EO recursion theorem.
     """
     F_shadow = F_g_shadow(data.kappa, g)
     dpf = delta_pf_genus(g, data)
     F_ceo = F_g_CEO(g, data)
     F_gaussian = gaussian_matrix_model_Fg(data.kappa, g)
 
-    # CEO + delta_pf should equal shadow
+    # CEO + delta_pf equals the scalar shadow coefficient by definition.
     reconstruction = F_ceo + dpf
     decomposition_holds = simplify(reconstruction - F_shadow) == 0
 
-    # For uniform-weight: shadow = Gaussian
+    # On the scalar lane the same coefficient matches the Gaussian normalization.
     shadow_is_gaussian = simplify(F_shadow - F_gaussian) == 0
 
     return {
@@ -500,11 +570,13 @@ def verify_CEO_decomposition(g: int, data: ShadowMatrixData) -> Dict[str, Any]:
         'CEO_plus_dpf_eq_shadow': decomposition_holds,
         'shadow_eq_gaussian': shadow_is_gaussian,
         'delta_pf_is_zero': dpf == 0,
+        'eo_recursion_certified': False,
+        'matrix_integral_certified': False,
     }
 
 
 def verify_CEO_all_families_genus2() -> Dict[str, Dict[str, Any]]:
-    """Verify CEO decomposition at genus 2 across all standard families."""
+    """Verify finite CEO-adjacent subtraction at genus 2."""
     families = {
         'Heisenberg_k1': heisenberg_matrix_data(1),
         'Heisenberg_k3': heisenberg_matrix_data(3),
@@ -524,11 +596,11 @@ def verify_CEO_all_families_genus2() -> Dict[str, Dict[str, Any]]:
 # ============================================================================
 
 def spectral_curve_classify(data: ShadowMatrixData) -> Dict[str, Any]:
-    r"""Classify the spectral curve y^2 = Q_L(t) of the shadow metric.
+    r"""Classify the finite scalar curve y^2 = Q_L(t).
 
     disc(Q_L) = q1^2 - 4*q0*q2
-      disc < 0: complex conjugate branch points (class M away from crit.)
-      disc = 0: colliding branch points (class G or L, critical)
+      disc < 0: complex conjugate roots in the scalar quadratic
+      disc = 0: repeated root or constant scalar quadratic
       disc > 0: real distinct branch points (not realized by standard families)
 
     For Virasoro: disc = -320*c^2/(5c+22) < 0 for all c > 0.
@@ -550,7 +622,7 @@ def spectral_curve_classify(data: ShadowMatrixData) -> Dict[str, Any]:
     if q2 == 0 and q1 == 0:
         result['curve_type'] = 'fully_degenerate'
         result['branch_points'] = 'none (constant Q_L)'
-        result['matrix_criticality'] = 'Gaussian (trivial)'
+        result['matrix_criticality'] = 'formal Gaussian scalar label'
     elif disc == 0:
         result['curve_type'] = 'degenerate'
         if q2 != 0:
@@ -558,15 +630,18 @@ def spectral_curve_classify(data: ShadowMatrixData) -> Dict[str, Any]:
             result['branch_points'] = f'colliding at t = {t_crit}'
         else:
             result['branch_points'] = 'single zero at t = -q0/q1'
-        result['matrix_criticality'] = 'critical (Painleve)'
+        result['matrix_criticality'] = 'repeated-root scalar diagnostic'
     elif disc < 0:
         result['curve_type'] = 'elliptic_imaginary'
         result['branch_points'] = 'complex conjugate pair'
-        result['matrix_criticality'] = 'off-critical (generic phase)'
+        result['matrix_criticality'] = 'irreducible scalar quadratic diagnostic'
     else:
         result['curve_type'] = 'hyperbolic_real'
         result['branch_points'] = 'real distinct pair'
-        result['matrix_criticality'] = 'off-critical (two-cut phase)'
+        result['matrix_criticality'] = 'real-root scalar quadratic diagnostic'
+
+    result['eo_recursion_certified'] = False
+    result['matrix_integral_certified'] = False
 
     return result
 
@@ -605,13 +680,14 @@ def virasoro_discriminant_formula(c_val) -> Dict[str, Any]:
 
 def matrix_potential_from_shadow(data: ShadowMatrixData,
                                  max_order: int = 5) -> Dict[str, Any]:
-    r"""Reconstruct the matrix model potential from shadow data.
+    r"""Reconstruct the formal potential diagnostic from shadow data.
 
     V(M) = sum_{r=2}^{max_order} (S_r / r) * M^r
 
     where S_2 = kappa, S_3, S_4, S_5 are the shadow coefficients.
     The potential is truncated at max_order; for class M (infinite tower),
-    the full potential requires all S_r.
+    the full formal potential requires all S_r.  This does not define a
+    convergent matrix integral without separate analytic data.
     """
     coefficients = {}
     shadow_coeffs = {2: data.kappa, 3: data.S3, 4: data.S4, 5: data.S5}
@@ -632,21 +708,24 @@ def matrix_potential_from_shadow(data: ShadowMatrixData,
         'V_symbolic': V_expr,
         'is_truncated': data.depth_class == 'M',
         'number_of_terms': len(coefficients),
+        'matrix_integral_certified': False,
+        'analytic_convergence_certified': False,
     }
 
 
 # ============================================================================
-# 9. Uniform-weight Gaussian theorem
+# 9. Scalar Gaussian normalization checks
 # ============================================================================
 
 def verify_uniform_weight_gaussian(max_genus: int = 5) -> Dict[str, Any]:
-    r"""Verify that ALL uniform-weight families give F_g = Gaussian.
+    r"""Verify scalar-lane Gaussian normalization in a finite genus window.
 
-    For each uniform-weight family and each genus g=1,...,max_genus:
-    check F_g = kappa * lambda_g^FP = F_g^GUE(N^2=kappa).
+    For each scalar-lane or free-field exact family and each genus
+    g=1,...,max_genus, check
+        F_g^scal = kappa * lambda_g^FP = F_g^GUE(N^2=kappa).
 
-    The shadow coefficients S_3, S_4, ... do NOT affect the total;
-    they only affect the CEO/delta_pf decomposition.
+    This is not a hierarchy, EO-recursion, or matrix-integral
+    certification.
     """
     families = {
         'Heis_k1': heisenberg_matrix_data(1),
@@ -656,7 +735,7 @@ def verify_uniform_weight_gaussian(max_genus: int = 5) -> Dict[str, Any]:
         'Vir_c1': virasoro_matrix_data(1),
         'Vir_c13': virasoro_matrix_data(13),
         'Vir_c26': virasoro_matrix_data(26),
-        'betagamma': betagamma_matrix_data(),
+        'betagamma_free_exact': betagamma_matrix_data(),
     }
 
     all_gaussian = True
@@ -677,7 +756,14 @@ def verify_uniform_weight_gaussian(max_genus: int = 5) -> Dict[str, Any]:
             }
         results[name] = family_results
 
-    return {'all_gaussian': all_gaussian, 'results': results}
+    return {
+        'all_gaussian': all_gaussian,
+        'results': results,
+        'finite_scalar_identity_only': True,
+        'full_multi_weight_statement': False,
+        'hierarchy_certified': False,
+        'matrix_integral_certified': False,
+    }
 
 
 # ============================================================================
@@ -690,15 +776,45 @@ def delta_F2_cross_W3(c_val) -> Rational:
     delta_F_2^cross(W_3) = (c + 204) / (16*c)
 
     From thm:multi-weight-genus-expansion.
-    This is POSITIVE for all c > 0, proving the Gaussian formula fails
-    for multi-weight algebras at genus >= 2.
+    This is positive for all c > 0, so the scalar formula alone is not
+    the full W_3 genus-2 free energy.
     """
     c = Rational(c_val)
+    _require_nonzero_c(c, "W_3 genus-2")
     return (c + 204) / (16 * c)
 
 
+def delta_F3_cross_W3(c_val) -> Rational:
+    r"""Cross-channel correction for W_3 at genus 3.
+
+    delta_F_3^cross(W_3) =
+        (5*c^3 + 3792*c^2 + 1149120*c + 217071360)/(138240*c^2)
+
+    This is a mixed-channel free-energy correction.  It is not a
+    planted-forest correction and does not certify an all-genus hierarchy.
+    """
+    c = Rational(c_val)
+    _require_nonzero_c(c, "W_3 genus-3")
+    return (
+        5 * c ** 3
+        + 3792 * c ** 2
+        + 1149120 * c
+        + 217071360
+    ) / (138240 * c ** 2)
+
+
+def w3_genus2_planted_forest_total(c_val) -> Rational:
+    r"""Within-channel W_3 planted-forest correction at genus 2.
+
+    The T-channel contributes (40-c)/48 and the W-channel contributes 0.
+    This is distinct from delta_F_2^cross(W_3) = (c+204)/(16c).
+    """
+    c = Rational(c_val)
+    return (40 - c) / 48
+
+
 def verify_multi_weight_gaussian_failure(c_val=10) -> Dict[str, Any]:
-    r"""Verify Gaussian formula fails for W_3 at genus 2.
+    r"""Verify the scalar Gaussian formula misses W_3 at genus 2.
 
     F_2(W_3) = kappa*lambda_2^FP + delta_F_2^cross
     delta_F_2^cross = (c+204)/(16c) > 0  (positive for all c > 0)
@@ -709,15 +825,27 @@ def verify_multi_weight_gaussian_failure(c_val=10) -> Dict[str, Any]:
     F2_gaussian = kappa_W3 * lambda_fp_sympy(2)
     delta_cross = delta_F2_cross_W3(c)
     F2_actual = F2_gaussian + delta_cross
+    F3_scalar = kappa_W3 * lambda_fp_sympy(3)
+    delta_cross_g3 = delta_F3_cross_W3(c)
+    F3_actual = F3_scalar + delta_cross_g3
+    dpf_g2 = w3_genus2_planted_forest_total(c)
 
     return {
         'c': c,
         'kappa_W3': kappa_W3,
         'F2_gaussian': F2_gaussian,
         'delta_F2_cross': delta_cross,
+        'delta_pf_genus2_total': dpf_g2,
         'F2_actual': F2_actual,
         'gaussian_fails': delta_cross != 0,
         'cross_correction_positive': delta_cross > 0,
+        'F3_scalar': F3_scalar,
+        'delta_F3_cross': delta_cross_g3,
+        'F3_actual': F3_actual,
+        'genus3_scalar_fails': delta_cross_g3 != 0,
+        'planted_forest_is_cross_channel': False,
+        'finite_cross_channel_computation': True,
+        'full_hierarchy_certified': False,
     }
 
 
@@ -733,17 +861,21 @@ def propagator_variance_W3(c_val) -> Dict[str, Any]:
     For W_3: kappa_T = c/2, kappa_W = c/3.
     The f_i are the 'effective coupling' coefficients from the OPE.
 
-    Mixing polynomial: P(W_3) = 25c^2 + 100c - 428.
+    delta_mix(W_3) = 1280*P(c)^2/[c^3(5c+22)^6],
+    P(c) = 25c^2 + 100c - 428.
     """
     c = Rational(c_val)
+    _require_nonsingular_virasoro_c(c)
     kappa_T = c / 2
     kappa_W = c / 3
     kappa_total = kappa_T + kappa_W  # = 5c/6
 
-    # Propagator variance is non-negative by Cauchy-Schwarz
-    # and vanishes iff the algebra is uniform-weight.
-    # For W_3, it is nonzero for all c.
     mixing_poly = 25 * c ** 2 + 100 * c - 428
+    delta_mix = Rational(1280) * mixing_poly ** 2 / (c ** 3 * (5 * c + 22) ** 6)
+    enhanced_roots = (
+        -2 - Rational(4, 5) * sqrt(33),
+        -2 + Rational(4, 5) * sqrt(33),
+    )
 
     return {
         'c': c,
@@ -751,90 +883,103 @@ def propagator_variance_W3(c_val) -> Dict[str, Any]:
         'kappa_W': kappa_W,
         'kappa_total': kappa_total,
         'mixing_polynomial': mixing_poly,
-        'mixing_poly_positive': mixing_poly > 0 if c > 0 else None,
+        'delta_mix': cancel(delta_mix),
+        'autonomous': bool(mixing_poly == 0),
+        'enhanced_symmetry_roots': enhanced_roots,
+        'mixing_poly_positive': bool(mixing_poly > 0) if c > 0 else None,
+        'delta_mix_positive_for_positive_rational_c': bool(delta_mix > 0) if c > 0 else None,
+        'finite_variance_witness_only': True,
+        'classifies_full_W3_shadow_tower': False,
     }
 
 
 # ============================================================================
-# 12. Critical behavior at class boundaries
+# 12. Finite scalar boundary diagnostics
 # ============================================================================
 
 def critical_behavior_analysis(data: ShadowMatrixData) -> Dict[str, Any]:
-    r"""Analyze the critical behavior of the matrix model.
+    r"""Analyze finite scalar boundary diagnostics.
 
-    Class G: no criticality (trivial = Gaussian)
-    Class L: cubic critical point (Painleve I universality, k=2 multicritical)
-    Class C: quartic critical point (Painleve II, k=3 multicritical)
-    Class M: generic (not at criticality)
-
-    The critical exponent gamma_str determines the double-scaling behavior:
-    F_g ~ (g_s - g_s^crit)^{(2-gamma_str)(1-g) + gamma_str} near criticality.
-
-    For (p,q) minimal gravity: gamma_str = -2/(p+q-2).
-    Class L: (2,3) -> gamma_str = -2/3.
-    Class C: (2,5) -> gamma_str = -2/5.
+    The returned Painleve and gamma entries are conditional matrix-model
+    labels only.  The function does not certify double scaling, a Painleve
+    equation, a KdV/Gelfand-Dickey hierarchy, or analytic convergence.
     """
     cls = data.depth_class
+    firewall = {
+        'painleve_equation_certified': False,
+        'double_scaling_certified': False,
+        'kdv_hierarchy_certified': False,
+        'gelfand_dickey_hierarchy_certified': False,
+        'descendant_cohft_required': True,
+        'analytic_model_required': True,
+    }
 
     if cls == 'G':
         return {
             'family': data.name,
             'class': 'G',
-            'criticality': 'trivial',
+            'criticality': 'formal_gaussian_scalar',
             'gamma_str': None,
             'painleve': None,
             'multicritical_order': None,
-            'note': 'Pure Gaussian, no critical point.',
+            'conditional_model_label': None,
+            'note': 'Constant scalar Q_L; no analytic model certified.',
+            **firewall,
         }
     elif cls == 'L':
         return {
             'family': data.name,
             'class': 'L',
-            'criticality': 'cubic_critical',
+            'criticality': 'formal_square_collision',
             'gamma_str': Rational(-2, 3),
-            'painleve': 'I',
-            'multicritical_order': 2,
-            'note': 'Colliding branch points, Q_L = perfect square. '
-                    'Double-scaling limit = Painleve I transcendent.',
+            'painleve': 'conditional P_I label',
+            'multicritical_order': 'conditional k=2 label',
+            'conditional_model_label': 'cubic one-matrix model if supplied separately',
+            'note': 'Q_L is a perfect square on the scalar line.',
+            **firewall,
         }
     elif cls == 'C':
         return {
             'family': data.name,
             'class': 'C',
-            'criticality': 'quartic_critical',
+            'criticality': 'formal_quartic_contact',
             'gamma_str': Rational(-2, 5),
-            'painleve': 'II',
-            'multicritical_order': 3,
-            'note': 'Contact stratum separation terminates tower at r=4. '
-                    'Critical behavior governed by Painleve II.',
+            'painleve': 'conditional P_II label',
+            'multicritical_order': 'conditional k=3 label',
+            'conditional_model_label': 'quartic/contact model if supplied separately',
+            'note': 'Class-C finite shadow depth terminates at r=4.',
+            **firewall,
         }
     else:  # M
         return {
             'family': data.name,
             'class': 'M',
-            'criticality': 'generic',
+            'criticality': 'formal_infinite_tower',
             'gamma_str': None,
-            'painleve': 'higher (all orders)',
-            'multicritical_order': 'infinity',
-            'note': 'Non-degenerate Q_L (complex branch points). '
-                    'Infinite-potential matrix model, off-critical. '
-                    'Full KdV tower active.',
+            'painleve': None,
+            'multicritical_order': 'not certified from finite scalar data',
+            'conditional_model_label': 'requires all S_r plus analytic model data',
+            'note': (
+                'Finite windows see an irreducible scalar Q_L; hierarchy '
+                'certification requires separate descendant or analytic data.'
+            ),
+            **firewall,
         }
 
 
 # ============================================================================
-# 13. Planted-forest compensation theorem (numerical verification)
+# 13. Planted-forest finite-window compensation
 # ============================================================================
 
 def verify_pf_compensation_genus2(data: ShadowMatrixData) -> Dict[str, Any]:
-    r"""Verify that CEO + delta_pf = Gaussian at genus 2 for uniform-weight.
+    r"""Verify finite scalar compensation at genus 2.
 
-    The planted-forest correction EXACTLY compensates the non-Gaussian
-    part of the CEO free energy, restoring F_2 = kappa * 7/5760.
+    The planted-forest correction compensates the finite CEO-adjacent
+    subtraction, restoring F_2^scal = kappa * 7/5760.
 
     F_2^CEO = kappa*7/5760 - S_3*(10*S_3 - kappa)/48
     delta_pf = S_3*(10*S_3 - kappa)/48
-    Sum = kappa*7/5760  [CHECK]
+    Sum = kappa*7/5760.
     """
     kappa = data.kappa
     S3 = data.S3
@@ -854,11 +999,13 @@ def verify_pf_compensation_genus2(data: ShadowMatrixData) -> Dict[str, Any]:
         'CEO_plus_dpf': F2_sum,
         'matches_gaussian': simplify(F2_sum - F2_gaussian) == 0,
         'delta_pf_vanishes': dpf == 0,
+        'finite_scalar_identity_only': True,
+        'eo_recursion_certified': False,
     }
 
 
 def verify_pf_compensation_genus3(data: ShadowMatrixData) -> Dict[str, Any]:
-    r"""Verify CEO + delta_pf = Gaussian at genus 3 for uniform-weight."""
+    r"""Verify finite scalar compensation at genus 3."""
     kappa = data.kappa
 
     F3_gaussian = kappa * lambda_fp_sympy(3)
@@ -873,6 +1020,8 @@ def verify_pf_compensation_genus3(data: ShadowMatrixData) -> Dict[str, Any]:
         'delta_pf_g3': dpf,
         'CEO_plus_dpf': simplify(F3_sum),
         'matches_gaussian': simplify(F3_sum - F3_gaussian) == 0,
+        'finite_scalar_identity_only': True,
+        'eo_recursion_certified': False,
     }
 
 
@@ -881,7 +1030,7 @@ def verify_pf_compensation_genus3(data: ShadowMatrixData) -> Dict[str, Any]:
 # ============================================================================
 
 def barnes_G_genus_expansion(N: int, max_genus: int = 5) -> Dict[str, Any]:
-    r"""Compare exact log G(N+1) with the genus expansion at finite N.
+    r"""Compare exact log G(N+1) with a finite asymptotic expansion.
 
     log G(N+1) = log(prod_{j=0}^{N-1} j!) is the exact Barnes G-function.
     The genus expansion:
@@ -893,6 +1042,8 @@ def barnes_G_genus_expansion(N: int, max_genus: int = 5) -> Dict[str, Any]:
     This is the COMBINATORIAL normalization.  In the intersection-theoretic
     normalization: F_g = lambda_g^FP.  The two are related by
     F_g^comb / lambda_g^FP = 2^{2g-1}*(2g-1)! / (2^{2g-1}-1).
+
+    This is a normalization check at finite N, not a convergence theorem.
     """
     # Exact value
     exact_log = sum(math.lgamma(j + 1) for j in range(N))
@@ -919,24 +1070,36 @@ def barnes_G_genus_expansion(N: int, max_genus: int = 5) -> Dict[str, Any]:
         'abs_error': abs(exact_log - approx),
         'rel_error': abs(exact_log - approx) / abs(exact_log),
         'max_genus': max_genus,
+        'asymptotic_normalization_check': True,
+        'convergence_theorem_certified': False,
     }
 
 
 # ============================================================================
-# 15. Four-class dictionary (complete summary)
+# 15. Four-class dictionary (witness-lane summary)
 # ============================================================================
 
 def four_class_matrix_dictionary() -> Dict[str, Dict[str, Any]]:
-    r"""The four shadow classes and their matrix model counterparts.
+    r"""Witness-lane entries for the four shadow classes.
 
-    The matrix model potential is V(M) = sum_{r>=2} (S_r/r) M^r.
+    The formal potential diagnostic is V(M) = sum_{r>=2} (S_r/r) M^r.
     The shadow depth r_max determines the degree of V.
 
-    Class G: r_max=2, V = Gaussian.  No branch points.
-    Class L: r_max=3, V = cubic.  Colliding branch points (critical).
-    Class C: r_max=4, V = quartic.  Contact stratum terminates tower.
-    Class M: r_max=inf, V = infinite.  Non-degenerate branch points.
+    The entries do not certify matrix integrals, EO recursion, KdV,
+    Gelfand-Dickey, convergence, double scaling, or the full
+    G/L/C/M classification theorem.
     """
+    common_firewall = {
+        'certifies_matrix_integral': False,
+        'certifies_eo_recursion': False,
+        'certifies_integrable_hierarchy': False,
+        'certifies_chiral_bar_cobar_equivalence': False,
+        'certifies_shadow_archetype_classification': False,
+        'certifies_derived_center_data': False,
+        'witness_lane_only': True,
+        'descendant_cohft_required_for_hierarchy': True,
+        'analytic_data_required_for_convergence': True,
+    }
     return {
         'G': {
             'shadow_depth': 2,
@@ -945,11 +1108,12 @@ def four_class_matrix_dictionary() -> Dict[str, Dict[str, Any]]:
             'V_formula': 'V(M) = (kappa/2) M^2',
             'spectral_curve': 'y^2 = 4*kappa^2 (constant)',
             'branch_points': 'none (fully degenerate)',
-            'criticality': 'trivial (Gaussian)',
-            'double_scaling': 'Airy function',
+            'criticality': 'formal Gaussian scalar label',
+            'double_scaling': 'not certified by this scalar diagnostic',
             'painleve': None,
             'F_g_formula': 'kappa * lambda_g^FP',
             'delta_pf': 'identically zero',
+            **common_firewall,
         },
         'L': {
             'shadow_depth': 3,
@@ -958,24 +1122,26 @@ def four_class_matrix_dictionary() -> Dict[str, Dict[str, Any]]:
             'V_formula': 'V(M) = (kappa/2) M^2 + (S_3/3) M^3',
             'spectral_curve': 'y^2 = (2*kappa + 3*S_3*t)^2 (perfect square)',
             'branch_points': 'colliding at t = -2*kappa/(3*S_3)',
-            'criticality': 'cubic critical (k=2 multicritical)',
-            'double_scaling': 'Painleve I transcendent',
-            'painleve': 'I',
+            'criticality': 'formal repeated-root scalar label',
+            'double_scaling': 'conditional cubic model label only',
+            'painleve': 'conditional P_I label',
             'F_g_formula': 'kappa * lambda_g^FP (uniform-weight)',
-            'delta_pf': 'nonzero but compensates CEO to give Gaussian total',
+            'delta_pf': 'finite subtraction restores scalar coefficient',
+            **common_firewall,
         },
         'C': {
             'shadow_depth': 4,
             'examples': ['beta-gamma'],
             'matrix_potential_degree': 4,
-            'V_formula': 'V(M) = (kappa/2) M^2 + (S_3/3) M^3 + (S_4/4) M^4',
+            'V_formula': 'V(M) = (kappa/2) M^2 + (S_4/4) M^4 on the standard class-C family',
             'spectral_curve': 'y^2 = quadratic with Delta != 0',
-            'branch_points': 'complex conjugate (off-real)',
-            'criticality': 'quartic critical (k=3 multicritical)',
-            'double_scaling': 'Painleve II transcendent',
-            'painleve': 'II',
-            'F_g_formula': 'kappa * lambda_g^FP (uniform-weight)',
-            'delta_pf': 'nonzero, compensates CEO',
+            'branch_points': 'depends on scalar discriminant',
+            'criticality': 'formal quartic-contact scalar label',
+            'double_scaling': 'conditional quartic/contact model label only',
+            'painleve': 'conditional P_II label',
+            'F_g_formula': 'kappa * lambda_g^FP on free-field exact scalar lane',
+            'delta_pf': 'finite class-C correction from S_4 terms',
+            **common_firewall,
         },
         'M': {
             'shadow_depth': 'infinity',
@@ -984,12 +1150,13 @@ def four_class_matrix_dictionary() -> Dict[str, Dict[str, Any]]:
             'V_formula': 'V(M) = sum_{r>=2} (S_r/r) M^r',
             'spectral_curve': 'y^2 = irreducible quadratic in t',
             'branch_points': 'complex conjugate, disc = -320c^2/(5c+22)',
-            'criticality': 'generic (off-critical)',
-            'double_scaling': 'higher multicritical / full KdV tower',
-            'painleve': 'higher order',
+            'criticality': 'formal infinite-tower scalar label',
+            'double_scaling': 'not certified without all S_r and analytic model data',
+            'painleve': None,
             'F_g_formula': 'kappa * lambda_g^FP (uniform-weight only; '
                            'multi-weight gets cross-channel correction)',
-            'delta_pf': 'nonzero and grows with genus',
+            'delta_pf': 'finite windows use S_r through r <= 2g-1',
+            **common_firewall,
         },
     }
 
@@ -1013,16 +1180,17 @@ def verify_heisenberg_delta_pf_vanishes(max_genus: int = 3) -> Dict[int, bool]:
 
 
 # ============================================================================
-# 17. Complementarity and the matrix model
+# 17. Complementarity of scalar diagnostics
 # ============================================================================
 
 def complementarity_matrix_model(c_val) -> Dict[str, Any]:
-    r"""Compare matrix model data for Virasoro at c and its Koszul dual at 26-c.
+    r"""Compare Virasoro scalar data at c and its Verdier-dual sector 26-c.
 
-    kappa(Vir_c) + kappa(Vir_{26-c}) = c/2 + (26-c)/2 = 13  [AP24: NOT 0]
+    kappa(Vir_c) + kappa(Vir_{26-c}) = c/2 + (26-c)/2 = 13.
 
-    The matrix models at c and 26-c have DIFFERENT spectral curves
-    but the COMPLEMENTARITY relation constrains their sum.
+    This is a scalar complementarity check.  It does not identify the
+    derived centre with a Koszul dual and does not assert matrix-integral
+    equivalence between the two sectors.
 
     The discriminant duality:
     disc(c) = -320*c^2/(5c+22)
@@ -1046,6 +1214,10 @@ def complementarity_matrix_model(c_val) -> Dict[str, Any]:
         'disc_c': data_c.discriminant,
         'disc_dual': data_dual.discriminant,
         'both_class_M': data_c.depth_class == 'M' and data_dual.depth_class == 'M',
+        'object_firewall': OBJECT_FIREWALLS,
+        'matrix_integral_equivalence_certified': False,
+        'derived_center_identification_certified': False,
+        'koszul_dual_equivalence_certified': False,
     }
 
 
@@ -1054,11 +1226,11 @@ def complementarity_matrix_model(c_val) -> Dict[str, Any]:
 # ============================================================================
 
 def verify_c13_self_duality() -> Dict[str, Any]:
-    r"""Verify full self-duality of the matrix model data at c=13.
+    r"""Verify self-duality of the Virasoro scalar data at c=13.
 
-    At c=13: Vir_c = Vir_{26-c}, so the matrix model is self-dual.
+    At c=13: Vir_c = Vir_{26-c} on the Virasoro complementarity lane.
     kappa = 13/2, S_3 = 2, S_4 = 10/(13*87) = 10/1131.
-    The spectral curve is invariant under c -> 26-c.
+    The scalar Q_L data are invariant under c -> 26-c.
     """
     data = virasoro_matrix_data(13)
     data_dual = virasoro_matrix_data(13)
@@ -1073,4 +1245,5 @@ def verify_c13_self_duality() -> Dict[str, Any]:
         'S4_self_dual': data.S4 == data_dual.S4,
         'disc': data.discriminant,
         'F2_shadow': F_g_shadow(data.kappa, 2),
+        'matrix_integral_self_duality_certified': False,
     }

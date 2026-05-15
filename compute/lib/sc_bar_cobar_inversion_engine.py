@@ -52,7 +52,7 @@ MATHEMATICAL CONTENT:
 
 CRITICAL DISTINCTIONS (from CLAUDE.md):
   - Omega(B(A)) = A (bar-cobar INVERSION, recovers original) [AP25]
-  - D_Ran(B(A)) = B(A!) (Verdier dual, produces Koszul dual) [AP25, AP50]
+  - D_Ran(B(A)) is the Verdier bar-side comparison for the A^! branch [AP25, AP50]
   - Z^der_ch(A) = universal bulk (derived center, NOT bar) [AP-OC, AP34]
   - Bar propagator d log E(z,w) is weight 1 regardless of field weight [AP27]
   - Desuspension s^{-1} LOWERS degree by 1 [AP45]
@@ -674,7 +674,7 @@ class SCBarCobarResult:
 
     The key distinction (AP34, AP-OC):
       Omega(B(A)) = A (inversion, recovers original)
-      D_Ran(B(A)) = B(A!) (Verdier dual, produces Koszul dual)
+      D_Ran(B(A)) is the Verdier bar-side comparison for the A^! branch
       Z^der_ch(A) = bulk (derived center, different functor entirely)
     """
     recovers_closed_colour: bool = True
@@ -691,13 +691,14 @@ def analyze_sc_bar_cobar(ope: OPEData) -> SCBarCobarResult:
       Omega(B^ch(A)) recovers A.
 
     The line-side dual A^! is NOT recovered by the cobar.
-    It is obtained by Verdier duality: D_Ran(B(A)) = B(A!).
+    It is obtained only after the Verdier comparison and the strict
+    finite-type or completed passage from the bar-dual coalgebra A^i.
     The genuine SC^{ch,top} structure is different again:
     it lives on the derived-center pair (C^*_ch(A,A), A).
 
     The open/closed architecture (AP34):
       Functor (1): Omega(B(A)) = A (reconstruction)
-      Functor (2): Omega(D_Ran(B(A))) = A! (Koszul dual = boundary)
+      Functor (2): D_Ran(B(A)) gives the Verdier bar-side comparison for A^!
       Functor (3): C^*_ch(A, A) = Z^der_ch(A) (derived center = bulk)
     """
     result = SCBarCobarResult()
@@ -709,8 +710,9 @@ def analyze_sc_bar_cobar(ope: OPEData) -> SCBarCobarResult:
     result.explanation = (
         f"Bar-cobar inversion Omega(B^ch({ope.name})) recovers the algebra "
         f"{ope.name} via the bar-cobar quasi-isomorphism (Theorem B). "
-        f"The line-side dual A^! is obtained by Verdier duality "
-        f"D_Ran(B(A)) = B(A!), a DIFFERENT functor. "
+        f"The line-side dual A^! is obtained from A^i only through the "
+        f"Verdier comparison and the strict finite-type or completed passage, "
+        f"a different functorial lane. "
         f"The genuine SC bulk/boundary datum is "
         f"(C^*_ch(A, A), {ope.name}), with bulk algebra "
         f"Z^der_ch(A) = C^*_ch(A, A). Three functors, three outputs "
@@ -989,14 +991,15 @@ def verify_sc_cobar_analysis() -> Dict[str, Any]:
 
     2. Three-functor distinction (AP25, AP34):
        - Omega(B(A)) = A (reconstruction)
-       - D_Ran(B(A)) = B(A!) (Verdier dual, Koszul dual)
+       - D_Ran(B(A)) is the Verdier bar-side comparison for A^!
        - C^*_ch(A, A) = bulk (derived center)
 
     3. SC structure: the bar complex encodes BOTH differential (hol)
        and coproduct (top). The cobar uses the differential to recover A.
        The coproduct becomes the R-matrix/braiding datum of the cobar
        resolution, not a separate algebra. To get A^!, one must apply
-       Verdier duality, a DIFFERENT operation.
+       Verdier duality and the strict finite-type or completed passage, a
+       different operation.
     """
     results = {}
 
@@ -1115,13 +1118,14 @@ def verify_koszul_dual_not_cobar(k=None) -> Dict[str, Any]:
 
     Three functors on B(A), three outputs:
       1. Omega(B(A)) = A (cobar = inversion, recovers ORIGINAL)
-      2. B(A)^v = A^! (linear dual = Koszul dual ALGEBRA)
-         equivalently D_Ran(B(A)) = B(A!) (Verdier intertwining)
+      2. A^i = H^*(B(A)) is the bar-dual coalgebra; A^! is obtained from
+         A^i by Verdier/linear duality under finite-type or completion
+         hypotheses.
       3. C^*_ch(A, A) = Z^der_ch(A) (derived center = BULK)
 
     For Heisenberg H_k:
       Omega(B(H_k)) = H_k (the Heisenberg algebra itself)
-      B(H_k)^v = Sym^ch(V*) = H_k^! (the Koszul dual, AP33: NOT H_{-k})
+      H_k^! = Sym^ch(V*) after the Verdier/linear passage (AP33: NOT H_{-k})
       Z^der_ch(H_k) = universal bulk (different object entirely)
 
     These are THREE DIFFERENT OBJECTS.
@@ -1135,10 +1139,12 @@ def verify_koszul_dual_not_cobar(k=None) -> Dict[str, Any]:
     results['cobar_output'] = 'H_k (the original Heisenberg)'
     results['cobar_is_original'] = True
 
-    # 2. Linear dual gives Koszul dual
+    # 2. Verdier/linear passage gives Koszul dual
     # H_k^! = Sym^ch(V*) with curvature m_0 = -k * omega
     # This is NOT H_{-k} (AP33: different algebra, same kappa)
     results['koszul_dual'] = 'Sym^ch(V*) with m_0 = -k*omega'
+    results['bar_dual_coalgebra'] = 'A^i = H^*(B(H_k))'
+    results['dual_construction'] = 'Verdier/linear dual of A^i, not Omega(B(H_k))'
     results['koszul_dual_is_H_minus_k'] = False  # AP33
     results['kappa_H_k'] = k
     results['kappa_H_k_dual'] = -k  # kappa(H_k^!) = -k = kappa(H_{-k})

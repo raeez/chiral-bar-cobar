@@ -2,7 +2,7 @@
 % ============================================================================
 % Chapter: Universality of the Sugawara denominator (k + h^v)
 %
-% Russian-school lossless adversarial attack + Platonic reconstitution.
+% Russian-school lossless rectification and Platonic reconstitution.
 % Drinfeld + Feigin-Frenkel + Faddeev-Takhtajan style.
 %
 % This chapter STRENGTHENS the convention paragraphs already present at
@@ -474,7 +474,7 @@ following sharp form.
 \ClaimStatusProvedHere
 Let $\fg$ be simple and $k \neq -\hv$. The two classical $r$-matrix
 presentations $\rtr(z) = k\,\Omegatr / z$ and
-$\rKZ(z) = \OmegaKZ / ((k + \hv) z)$ are NOT equal as
+$\rKZ(z) = \OmegaKZ / ((k + \hv) z)$ are distinct as
 $\fg \otimes \fg$-valued rational functions of $k$ and $z$: at $k = 0$
 the former vanishes while the latter equals $\OmegaKZ / (\hv\,z) \neq 0$
 for non-abelian $\fg$. With the normalisation
@@ -539,7 +539,7 @@ and excludes the false tensor identity.
 \label{rem:chern-weil-474}
 The naive rational identity
 $k\,\Omegatr = \OmegaKZ/(k + \hv)$ fails at $k = 0$ and therefore is
-NOT an identity in rational functions of $k$. The structural positive
+not an identity in rational functions of $k$. The structural positive
 statement is supplied by
 Theorems~\ref{thm:level-shift-universality} and
 \ref{thm:trace-KZ-convention-bridge}: they identify the denominator
@@ -555,8 +555,8 @@ share an affine OPE source but live in different normalisations.
 
 The healing closes at the universal level.
 
-\begin{corollary}[universal healing]
-\label{cor:ap126-healing-universal}
+\begin{corollary}[$r$-matrix convention bridge with explicit $k=0$ check]
+\label{cor:level-shift-universal-convention-bridge}
 \ClaimStatusProvedHere
 Every $r$-matrix write for $V_k(\fg)$ in the programme must declare
 its convention and exhibit the corresponding $k = 0$ check, as follows.
@@ -600,25 +600,24 @@ augmentation per convention, and the resulting expression is checkable
 against its $k=0$ boundary.
 \end{proof}
 
-\begin{remark}[downstream]
-\label{rem:ap141-downstream}
-The level-shift universality also heals (level prefix omission):
-once Corollary~\ref{cor:ap126-healing-universal} is applied, every
-$r$-matrix write carries either an explicit $k$ numerator (trace
-form) or an explicit $(k + \hv)$ denominator (KZ), so the level is
-never implicit. The grep check
-\[
- \mathtt{r\backslash(z\backslash)\backslash s*=\backslash s*\backslash\backslash Omega\backslash s*/\backslash s*z}
-\]
-for bare $\Omega/z$ writes is then a complete detector of the
-violation class.
+\begin{remark}[Detector for level-prefix omission]
+\label{rem:level-prefix-grep-detector}
+Once
+Corollary~\ref{cor:level-shift-universal-convention-bridge} fixes
+the convention discipline, every $r$-matrix write carries either
+an explicit $k$ numerator (trace form) or an explicit $(k+\hv)$
+denominator (KZ); the level is never implicit. The pattern
+$r(z) = \Omega/z$ with no level prefix is therefore a detector for
+violations of the discipline: any such write is either an undeclared
+free-field identity at $k=1$ or a typesetting omission to be
+corrected.
 \end{remark}
 
-\section{Independent verification}
-\label{sec:hz-iv-level-shift}
+\section{Independent verification of the level-shift theorems}
+\label{sec:level-shift-independent-verification}
 
-The four proved-here theorems of this chapter have independent
-verification witnesses recorded in
+Each proved theorem of the chapter has an independent verification
+witness in
 \texttt{compute/tests/test\_chern\_weil\_level\_shift.py}.
 
 \begin{itemize}
@@ -650,31 +649,34 @@ verification witnesses recorded in
  identity.
 \end{itemize}
 
-\section{False coincidence isolated}
-\label{sec:fp-cache-entry}
+\section{Trace-form versus KZ presentation: not a hidden Casimir rescaling}
+\label{sec:trace-vs-kz-r-matrix-disambiguation}
 
-The possible confusion is the following:
-\emph{trace-form $r$-matrix $k \Omega/z$ and KZ $r$-matrix
-$\Omega/((k + \hv)z)$ are the same tensor after a hidden Casimir
-rescaling.} Theorem~\ref{thm:level-shift-universality} proves the
-opposite. The denominator $k+\hv$ is the universal Sugawara
-denominator; the trace-form coefficient $k$ and the KZ coefficient
-$(k+\hv)^{-1}$ are different extractions from the same affine OPE.
-The bridge of Theorem~\ref{thm:trace-KZ-convention-bridge} is a
-dictionary, not a rational identity.
+The candidate identification
+$k\Omega/z \stackrel{?}{=} \Omega/((k+\hv)z)$ — the trace-form
+$r$-matrix and the KZ $r$-matrix as the same tensor up to a
+hidden Casimir rescaling — is false.
+Theorem~\ref{thm:level-shift-universality} proves the opposite. The
+denominator $k+\hv$ is the universal Sugawara denominator; the
+trace-form coefficient $k$ and the KZ coefficient $(k+\hv)^{-1}$
+are different extractions from the same affine OPE.
+Theorem~\ref{thm:trace-KZ-convention-bridge} bridges the two as a
+dictionary on conventions, not as a rational identity in the same
+generators.
 
-\section*{Closing: the level shift as a Platonic invariant}
+\section*{The level shift as the universal Sugawara parameter}
 
-The assignment $k \mapsto k + \hv$ is not a convention-dependent
+The assignment $k \mapsto k+\hv$ is not a convention-dependent
 algebraic manipulation; it is the universal Sugawara parameter of
 the affine Kac--Moody chiral algebra. Every quantity attached to
 $V_k(\fg)$ that cares about the Sugawara normalisation depends on
-$k$ through $k + \hv$ alone. The trace-form and KZ presentations of
-$r(z)$ remain convention-separated: one reads the central double pole,
-the other reads the Sugawara Ward identity. The critical-level locus
-$k = -\hv$ is the zero of this universal denominator, and
-Feigin--Frenkel localisation is the chart of the chiral datum adapted
-to that locus. The convention discipline is thereby made universal in
-Corollary~\ref{cor:ap126-healing-universal}: every bare $r$-matrix
+$k$ through $k+\hv$ alone. The trace-form and KZ presentations of
+$r(z)$ remain convention-separated: one reads the central double
+pole, the other reads the Sugawara Ward identity. The
+critical-level locus $k = -\hv$ is the zero of this universal
+denominator, and Feigin--Frenkel localisation is the chart of the
+chiral datum adapted to that locus.
+Corollary~\ref{cor:level-shift-universal-convention-bridge}
+makes the convention discipline universal: every bare $r$-matrix
 write admits a unique augmentation per convention, and each
 augmentation carries its own $k=0$ check.

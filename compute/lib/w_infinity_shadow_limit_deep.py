@@ -1,70 +1,38 @@
-r"""Deep analysis of the large-N limit of the W_N shadow obstruction tower.
+r"""Finite-N and formal large-N diagnostics for principal W_N shadows.
 
-Establishes the W_infinity shadow as a universal object by computing:
+Certified finite-N scalar constants in this module are:
 
-1. MULTI-CHANNEL shadow data for general W_N (all primary lines, not just T-line)
-2. LARGE-N SCALING of shadow coefficients with multiple independent methods
-3. 't HOOFT LIMIT at fixed lambda = N/(k+N) with 1/N expansion
-4. SHADOW GROWTH RATE convergence rho(W_N) -> rho_infty
-5. KOSZUL CONDUCTOR scaling K_N and complementarity in the large-N limit
-6. HIGHER-SPIN LIMIT (lambda = 0): connection to Gaberdiel-Gopakumar
-7. UNIVERSAL SHADOW: Theta_{W_infty} as inverse limit of Theta_{W_N}
-8. PLANAR SHADOW: leading term in the 1/N expansion
+1. Fateev-Lukyanov central charge
+   c(W_N,k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N).
+2. Principal W_N modular characteristic
+   kappa(W_N) = c(H_N - 1) = sum_{s=2}^{N} c/s.
+3. Virasoro T-line constants
+   S_2 = c/2, S_3 = 2, S_4 = 10/[c(5c+22)],
+   S_5 = -48/[c^2(5c+22)] on c(5c+22) != 0.
+4. Principal W_3 W-line quartic constant
+   S_4^W = 2560/[c(5c+22)^3].
+5. Feigin-Frenkel central-charge conductor
+   K_N^c = c(k) + c(-k-2N) = 4N^3 - 2N - 2.
 
-KEY MATHEMATICAL CONTENT:
+The large-N functions below are formal diagnostics of these scalar
+finite-N formulas.  They do not certify an analytic W_infinity object,
+an all-genus partition function, a tau function, Borel/resurgent
+summability, integrable-hierarchy membership, or a multi-channel
+inverse limit.  Higher-spin channels beyond the T-line are marked
+non-certified unless a local exact finite-N formula is available.
 
-The W_N algebra = DS(sl_N, f_prin) has N-1 strong generators of spins 2, 3, ..., N.
-As N -> infinity, this becomes W_{1+infinity} with generators at all integer spins >= 2.
+In the fixed positive 't Hooft parameter lambda = N/(k+N) lane,
+k+N = N/lambda and
 
-Central charge: c(W_N, k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
+    c(N,lambda) = (N-1) - (N^2-1)(N-lambda)^2/lambda,
 
-In the 't Hooft limit (N -> inf, lambda = N/(k+N) fixed):
-    c ~ N(1-lambda) as N -> inf  (linear growth)
-    In terms of lambda = N/(k+N), k+N = N/lambda, k+N-1 = (N-lambda)/lambda:
-            c = (N-1) - (N^2-1)(N-lambda)^2/lambda   (exact in lambda)
+so c ~ -N^4/lambda for fixed lambda > 0.  The lambda = 0 free-field
+lane c = N-1 is a separate singular boundary diagnostic.
 
-    For small lambda: c ~ N-1 (free field regime).
-    For lambda = 0 (free field): c = N-1.
-    For lambda = 1/2: c ~ -N^2/2 (non-unitary, large negative).
-
-SHADOW TOWER STRUCTURE:
-
-Each primary line (spin-s generator) contributes independently to the
-shadow obstruction tower at leading order.  The T-line (spin 2) carries the
-Virasoro shadow data; each W_s-line (spin s >= 3) carries its own data:
-    kappa_s = c/s
-    alpha_s = 0 for odd-parity generators (s odd)
-    S4_s depends on the W_N OPE structure
-
-The TOTAL modular characteristic:
-    kappa(W_N) = (H_N - 1) * c = sum_{s=2}^{N} c/s
-
-The SHADOW GROWTH RATE on the T-line (Virasoro part) is:
-    rho_T(c) = sqrt((180c + 872)/((5c+22)*c^2))
-This is INDEPENDENT of N (the Virasoro sub-tower is universal).
-
-The total shadow metric on the diagonal x_2 = x_3 = ... = x_N = t
-involves ALL channels and their cross-couplings.
-
-IMPORTANT CONVENTIONS (AP1, AP9, AP20):
-    - kappa(W_N) = (H_N-1)*c is the TOTAL modular characteristic
-    - kappa_T = c/2 is the T-LINE (Virasoro) part only
-    - kappa_s = c/s is the spin-s channel part
-    - The T-line shadow tower is Virasoro-universal (independent of N)
-    - The multi-channel shadow metric involves mixing (propagator variance)
-    - The 't Hooft limit lambda = N/(k+N) differs from fixed-k limit
-
-WARNING (AP48): kappa depends on the full algebra, not just the Virasoro
-subalgebra.  kappa(W_N) != c/2 for N >= 3.
-
-Manuscript references:
-    thm:shadow-archetype-classification (higher_genus_modular_koszul.tex)
-    thm:single-line-dichotomy (higher_genus_modular_koszul.tex)
-    thm:shadow-radius (higher_genus_modular_koszul.tex)
-    thm:propagator-variance (higher_genus_modular_koszul.tex)
-    thm:winfty-all-stages-rigidity-closure (concordance.tex)
-    thm:stabilized-completion-positive (bar_cobar_adjunction_curved.tex)
-    thm:depth-decomposition (higher_genus_modular_koszul.tex)
+Object firewall: A, B(A), A^i, A^!, and Z_ch^der(A) are distinct.
+Omega(B(A)) = A is bar-cobar inversion, not Koszul duality.  The
+Verdier/continuous-linear branch controls A^!; Hochschild cochains
+control the derived centre.
 """
 
 from __future__ import annotations
@@ -77,6 +45,49 @@ from typing import Any, Dict, List, Optional, Tuple
 from compute.lib.wn_central_charge_canonical import c_wn_fl as canonical_c_wn_fl
 
 
+FINITE_N_EXACT = "finite_N_exact"
+FORMAL_LIMIT_DIAGNOSTIC = "formal_N_limit_diagnostic"
+SCALAR_AHAT_BERNOULLI = "scalar_ahat_bernoulli"
+NOT_CERTIFIED = "not_certified"
+
+
+def claim_certification_firewall() -> Dict[str, Dict[str, Any]]:
+    """Certification boundary for data produced by this engine."""
+    return {
+        "finite_N_constants": {
+            "certified": True,
+            "lane": FINITE_N_EXACT,
+            "sources": (
+                "chapters/examples/landscape_census.tex",
+                "compute/lib/wn_central_charge_canonical.py",
+                "chapters/examples/w_algebras_deep.tex",
+            ),
+        },
+        "formal_N_limit_diagnostics": {
+            "certified": True,
+            "lane": FORMAL_LIMIT_DIAGNOSTIC,
+            "analytic_certified": False,
+        },
+        "scalar_ahat_bernoulli_lane": {
+            "certified": True,
+            "lane": SCALAR_AHAT_BERNOULLI,
+            "partition_function_certified": False,
+        },
+        "multiweight_cross_channel_data": {
+            "certified": False,
+            "finite_certified_cases": ("T-line", "principal W_3 W-line"),
+        },
+        "winfinity_inverse_limit": {
+            "certified": False,
+            "tline_formal_compatible": True,
+        },
+        "all_genus_partition_function": {"certified": False},
+        "analytic_tau_function": {"certified": False},
+        "borel_resurgence": {"certified": False},
+        "integrable_hierarchy_membership": {"certified": False},
+    }
+
+
 # ============================================================================
 # 1.  Fundamental arithmetic (exact Fraction)
 # ============================================================================
@@ -87,6 +98,33 @@ def harmonic(n: int) -> Fraction:
     if n <= 0:
         return Fraction(0)
     return sum(Fraction(1, j) for j in range(1, n + 1))
+
+
+@lru_cache(maxsize=64)
+def bernoulli_number(n: int) -> Fraction:
+    """Bernoulli number B_n, exact for the scalar Faber-Pandharipande lane."""
+    if n < 0:
+        raise ValueError("Bernoulli index must be non-negative")
+    work = [Fraction(0) for _ in range(n + 1)]
+    for m in range(n + 1):
+        work[m] = Fraction(1, m + 1)
+        for j in range(m, 0, -1):
+            work[j - 1] = j * (work[j - 1] - work[j])
+    return work[0]
+
+
+def scalar_ahat_bernoulli_free_energy(kappa_val: Fraction, genus: int) -> Fraction:
+    r"""Scalar Faber-Pandharipande/A-hat coefficient.
+
+    F_g = kappa * ((2^(2g-1)-1)/2^(2g-1)) * |B_{2g}|/(2g)!.
+    This is a scalar lambda_g coefficient, not an all-genus partition
+    function and not a tau-function certification.
+    """
+    if genus < 1:
+        raise ValueError("genus must be at least 1")
+    weight = Fraction(2 ** (2 * genus - 1) - 1, 2 ** (2 * genus - 1))
+    bernoulli = abs(bernoulli_number(2 * genus))
+    return kappa_val * weight * bernoulli / math.factorial(2 * genus)
 
 
 def anomaly_ratio(N: int) -> Fraction:
@@ -199,9 +237,9 @@ def thooft_c_large_N(N: int, lam: float) -> float:
 
 
 def thooft_regime_analysis(lam: float, N_values: Optional[List[int]] = None) -> List[Dict]:
-    """Analyze the 't Hooft regime as a function of N at fixed lambda.
+    """Tabulate the formal 't Hooft substitution as a function of N.
 
-    Returns dict with c, kappa, rho, convergence status for each N.
+    The analytic positive-c regime is not inferred from this scalar table.
     """
     if N_values is None:
         N_values = list(range(2, 31))
@@ -218,7 +256,8 @@ def thooft_regime_analysis(lam: float, N_values: Optional[List[int]] = None) -> 
             'kappa_total': kap,
             'rho_T': rho_T,
             'c_positive': c_val > 0,
-            'max_positive_N': int(1.0 / lam - 1) if lam > 0 else float('inf'),
+            'positive_c_bound_certified': False,
+            'analytic_certified': False,
         })
     return results
 
@@ -287,6 +326,8 @@ def shadow_tower_tline(c_val: float, max_arity: int = 10) -> Dict[int, float]:
     """T-line shadow tower: Virasoro sub-tower at central charge c."""
     if abs(c_val) < 1e-100:
         return {r: 0.0 for r in range(2, max_arity + 1)}
+    if abs(5.0 * c_val + 22.0) < 1e-100:
+        raise ValueError("singular Virasoro shadow surface c(5c+22)=0")
     kap = c_val / 2.0
     alpha = 2.0
     S4 = 10.0 / (c_val * (5.0 * c_val + 22.0))
@@ -315,19 +356,19 @@ def shadow_tower_wline_w3(c_val: float, max_arity: int = 10) -> Dict[int, float]
 # ============================================================================
 
 def wn_channel_data(N: int, c_val: float) -> List[Dict]:
-    r"""Shadow data for each primary channel of W_N.
+    r"""Finite scalar channel data for W_N.
 
     W_N has N-1 generators of spins s = 2, 3, ..., N.
     Each channel has:
         kappa_s = c/s
-        alpha_s: cubic shadow (0 for odd-spin generators by Z_2 parity)
-        S4_s: quartic shadow (from the OPE self-coupling)
-        Delta_s = 8*kappa_s*S4_s: critical discriminant
+        alpha_s: cubic shadow when known
+        S4_s: quartic shadow when locally certified
+        Delta_s = 8*kappa_s*S4_s when S4_s is known
 
-    The T-line (s=2) data is exact (Virasoro universal).
-    For s >= 3, the S4 data depends on the full W_N OPE structure.
-    We use the known formulas for s=2 (Virasoro) and structural
-    properties (parity, scaling) for higher spins.
+    The T-line (s=2) data is the exact Virasoro formula.
+    The principal W_3 W-line is exact in the local manuscript.
+    General s >= 3 data depends on full W_N OPE/cross-channel structure
+    and is not inferred from the finite scalar kappa_s value.
     """
     channels = []
 
@@ -340,6 +381,7 @@ def wn_channel_data(N: int, c_val: float) -> List[Dict]:
                 'S4': 0.0,
                 'Delta': 0.0,
                 'depth_class': 'degenerate',
+                'certification': FINITE_N_EXACT,
             })
         return channels
 
@@ -347,27 +389,28 @@ def wn_channel_data(N: int, c_val: float) -> List[Dict]:
         kap = c_val / s
 
         if s == 2:
-            # T-line: Virasoro data
             alpha = 2.0
-            S4 = 10.0 / (c_val * (5.0 * c_val + 22.0))
-        else:
-            # Higher spin: Z_2 parity kills odd arities for odd-spin generators
-            # alpha = 0 for odd s (the OPE W_s · W_s has no odd-pole contribution)
-            # alpha != 0 for even s in general, but we set alpha = 0 as leading approx
-            # (the cubic term involves cross-OPE data not available for generic N)
+            denom = c_val * (5.0 * c_val + 22.0)
+            S4 = 10.0 / denom if abs(denom) > 1e-100 else None
+            certification = FINITE_N_EXACT if S4 is not None else NOT_CERTIFIED
+        elif N == 3 and s == 3:
             alpha = 0.0
-            # S4 for higher spins: from bootstrap/OPE
-            # Known only for W_3 exactly; for general N use the structural formula
-            # S4_s ~ scaling_constant / (c * (5c+22)^(2s-3))
-            # This is the pattern from W_3 (s=3: exponent 3) generalized
-            S4 = 0.0  # Will be filled by specific engines when available
+            denom = c_val * (5.0 * c_val + 22.0) ** 3
+            S4 = 2560.0 / denom if abs(denom) > 1e-100 else None
+            certification = FINITE_N_EXACT if S4 is not None else NOT_CERTIFIED
+        else:
+            alpha = None
+            S4 = None
+            certification = NOT_CERTIFIED
 
-        Delta = 8.0 * kap * S4
-        if abs(Delta) > 1e-100:
+        Delta = 8.0 * kap * S4 if S4 is not None else None
+        if Delta is None:
+            depth_class = NOT_CERTIFIED
+        elif abs(Delta) > 1e-100:
             depth_class = 'M'
         elif abs(S4) > 1e-100:
             depth_class = 'C'
-        elif abs(alpha) > 1e-100:
+        elif alpha is not None and abs(alpha) > 1e-100:
             depth_class = 'L'
         else:
             depth_class = 'G'
@@ -379,6 +422,7 @@ def wn_channel_data(N: int, c_val: float) -> List[Dict]:
             'S4': S4,
             'Delta': Delta,
             'depth_class': depth_class,
+            'certification': certification,
         })
 
     return channels
@@ -415,8 +459,8 @@ def large_N_tline_scaling(N_values: Optional[List[int]] = None,
     The T-line data depends on N only through c(W_N, k).  At fixed k:
         c(W_N, k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
 
-    For large N at fixed k: c ~ -(N-1)*N^2/k ~ -N^3/k.
-    The central charge goes to -infinity as N^3: the shadow tower on the
+    For large N at fixed k: c ~ -N^4.
+    The central charge goes to -infinity quartically: the shadow tower on the
     T-line enters the negative-c regime where the standard growth rate
     formula does not apply directly.
 
@@ -429,11 +473,10 @@ def large_N_tline_scaling(N_values: Optional[List[int]] = None,
     tower_data = {r: [] for r in range(2, max_arity + 1)}
 
     for N in N_values:
-        h = float(Fraction(N))
-        kf = k_val
-        if kf + h == 0:
+        k_frac = Fraction(k_val).limit_denominator(10**12)
+        if k_frac + N == 0:
             continue
-        c_val = (N - 1) * (1.0 - N * (N + 1) / (kf + h))
+        c_val = float(canonical_c_wn_fl(N, k_frac))
         c_data.append((N, c_val))
 
         if abs(c_val) < 1e-100 or abs(5 * c_val + 22) < 1e-100:
@@ -472,16 +515,14 @@ def large_N_tline_scaling(N_values: Optional[List[int]] = None,
 def large_N_thooft_scaling(lam: float = 0.1,
                            N_values: Optional[List[int]] = None,
                            max_arity: int = 8) -> Dict[str, Any]:
-    r"""Analyze N-dependence of T-line shadow coefficients in 't Hooft limit.
+    r"""Formal N-dependence of T-line coefficients after the 't Hooft substitution.
 
-    At fixed lambda = N/(k+N), c = (N-1)(1-(N+1)*lambda).
-    For 0 < lambda < 1/(N+1): c > 0.
-    The maximum N for positive c is N_max = floor(1/lambda - 1).
+    At fixed lambda = N/(k+N),
+        c = (N-1) - (N^2-1)(N-lambda)^2/lambda.
 
-    For lambda small (near free field): c ~ N(1-lambda) > 0 for all N,
-    and the shadow tower is well-defined.
-
-    The 't Hooft limit is the physically meaningful large-N limit for W_N.
+    For fixed lambda > 0 this is negative quartic in N in the canonical
+    Fateev-Lukyanov normalization.  The table is therefore a finite-scalar
+    diagnostic, not an analytic large-N certification.
     """
     if N_values is None:
         N_values = list(range(2, 51))
@@ -535,6 +576,8 @@ def large_N_thooft_scaling(lam: float = 0.1,
         'rho_data': rho_data,
         'exponents': exponents,
         'regime': 'thooft',
+        'claim_class': FORMAL_LIMIT_DIAGNOSTIC,
+        'analytic_certified': False,
     }
 
 
@@ -543,37 +586,30 @@ def large_N_thooft_scaling(lam: float = 0.1,
 # ============================================================================
 
 def planar_shadow_tline(lam: float, max_arity: int = 10) -> Dict[str, Any]:
-    r"""Compute the PLANAR (leading large-N) T-line shadow.
+    r"""Numerical finite-N fit for a putative T-line planar coefficient.
 
     In the 't Hooft limit at fixed lambda, the T-line central charge is
         c(N, lam) = (N-1) - (N^2-1)(N-lam)^2/lam  (exact in lambda)
 
-    For large N: c ~ N*(1 - N*lam) = N - N^2*lam.
+    For fixed lambda > 0: c ~ -N^4/lambda.
 
     The T-line shadow coefficients S_r depend on c only.  So we can
-    write them as functions of N at fixed lambda and expand in 1/N.
+    sample them as functions of N at fixed lambda and fit in 1/N when
+    enough positive-c points exist.
 
-    S_r(c(N,lam)) = S_r^{(0)}(lam) + S_r^{(1)}(lam)/N + O(1/N^2)
-
-    where S_r^{(0)} is the PLANAR SHADOW coefficient.
-
-    We extract the expansion numerically by computing at large N values
-    and fitting the polynomial in 1/N.
+    The result is a diagnostic fit.  It is not an analytic planar limit
+    or hierarchy-membership certificate.
     """
-    # Compute at several large N values for extrapolation
-    if lam > 0:
-        N_max = int(1.0 / lam) - 1
-        if N_max < 10:
-            return {'lambda': lam, 'error': f'N_max={N_max} too small for 1/N expansion'}
-    else:
-        N_max = 200
-
-    # Use N values where c > 0
-    N_values = [n for n in [10, 20, 30, 50, 80, 100, 150, 200]
-                if n <= N_max and thooft_c(n, lam) > 0]
+    candidate_N = [10, 20, 30, 50, 80, 100, 150, 200]
+    N_values = [n for n in candidate_N if thooft_c(n, lam) > 0]
 
     if len(N_values) < 3:
-        return {'lambda': lam, 'error': 'insufficient positive-c points'}
+        return {
+            'lambda': lam,
+            'error': 'insufficient positive-c points',
+            'claim_class': FORMAL_LIMIT_DIAGNOSTIC,
+            'analytic_certified': False,
+        }
 
     # Collect S_r(N)
     sr_data = {r: [] for r in range(2, max_arity + 1)}
@@ -620,6 +656,8 @@ def planar_shadow_tline(lam: float, max_arity: int = 10) -> Dict[str, Any]:
         'one_over_N_corrections': corrections,
         'N_values_used': N_values,
         'sr_data': sr_data,
+        'claim_class': FORMAL_LIMIT_DIAGNOSTIC,
+        'analytic_certified': False,
     }
 
 
@@ -629,16 +667,18 @@ def one_over_N_expansion_kappa(lam: float, N_values: Optional[List[int]] = None)
     kappa(W_N) / N = (H_N - 1) * c / N
 
     For large N: H_N - 1 ~ log(N) + gamma - 1 (Euler-Mascheroni gamma ~ 0.5772).
-    And c/N ~ (1 - N*lambda) for large N.
+    For fixed lambda > 0 in the canonical normalization,
+    c/N ~ -N^3/lambda.
 
-    So kappa/N ~ (log(N) + gamma - 1)(1 - N*lambda).
-    For lambda > 0: kappa/N ~ -N*lambda*log(N) -> -infinity.
+    So kappa/N ~ -(N^3/lambda)(log(N) + gamma - 1).
+    For lambda > 0: kappa/N ~ -(N^3/lambda)log(N) -> -infinity.
     For lambda = 0: kappa/N ~ (log(N) + gamma - 1) -> infinity (slowly).
 
     The NORMALIZED quantity kappa/(N*c) = (H_N-1)/N -> 0 as N -> infinity
     (harmonic number grows as log(N), so (H_N-1)/N ~ log(N)/N -> 0).
 
-    A better normalization: kappa/log(N) -> c (since H_N-1 ~ log(N)+gamma-1).
+    The quotient kappa/(c log N) tends to 1 when c != 0 is used only as
+    the finite-N scalar central charge.
     """
     if N_values is None:
         N_values = list(range(3, 51))
@@ -679,7 +719,7 @@ def one_over_N_expansion_kappa(lam: float, N_values: Optional[List[int]] = None)
 
 def growth_rate_convergence(lam: float = 0.0,
                             N_values: Optional[List[int]] = None) -> Dict[str, Any]:
-    r"""Shadow growth rate rho(W_N) on the T-line as N -> infinity.
+    r"""T-line algebraic growth diagnostic for sampled N.
 
     Since the T-line rho depends only on c:
         rho_T(c) = sqrt((180c + 872)/((5c+22)*c^2))
@@ -689,12 +729,12 @@ def growth_rate_convergence(lam: float = 0.0,
                    = sqrt((180N + 692)/((5N+17)*(N-1)^2))
                    ~ sqrt(180/(5*N^2)) = sqrt(36/N^2) = 6/N for large N.
 
-    So rho_T -> 0 as 6/N: the T-line shadow CONVERGES BETTER at large N.
-    The shadow radius R_T -> infinity: the convergence radius GROWS with N.
+    Thus rho_T -> 0 as 6/N on the lambda = 0 scalar lane.  The flag
+    rho < 1 is an algebraic coefficient diagnostic, not analytic
+    convergence of a partition function or tau function.
 
-    At general lambda: c ~ N(1 - Nlam) for large N.
+    At fixed lambda > 0: c ~ -N^4/lambda for large N.
     If lam = 0: rho ~ 6/N.
-    If 0 < lam < 1/N: c > 0 but c can be O(1) or growing.
     """
     if N_values is None:
         N_values = list(range(2, 51))
@@ -731,16 +771,19 @@ def growth_rate_convergence(lam: float = 0.0,
         'rho_times_N_limit': limit_rho_N,
         'rho_limit': data[-1]['rho'] if data else None,
         'expected_rho_times_N': 6.0 if lam == 0 else None,
+        'claim_class': FORMAL_LIMIT_DIAGNOSTIC,
+        'analytic_certified': False,
     }
 
 
-def growth_rate_all_channels(N: int, c_val: float) -> Dict[str, float]:
-    r"""Shadow growth rate for each primary channel of W_N.
+def growth_rate_all_channels(N: int, c_val: float) -> Dict[str, Optional[float]]:
+    r"""Certified channel growth diagnostics for W_N.
 
     rho_s = sqrt((9*alpha_s^2 + 2*Delta_s)) / (2*|kappa_s|)
 
     For the T-line (s=2): fully computed.
-    For s >= 3: requires S4_s data.
+    For s >= 3: requires finite-N OPE data; only the principal W_3 W-line
+    is certified in this module.
     """
     result = {}
 
@@ -754,9 +797,7 @@ def growth_rate_all_channels(N: int, c_val: float) -> Dict[str, float]:
         if abs(kap) < 1e-100:
             result[f'W_{s}'] = 0.0
             continue
-        # Without S4 data, we can only report the degenerate case
-        # For the W_3 W-line, we know S4_W = 2560/(c*(5c+22)^3)
-        if s == 3 and N >= 3:
+        if s == 3 and N == 3:
             denom = c_val * (5.0 * c_val + 22.0) ** 3
             if abs(denom) > 1e-100:
                 S4_W = 2560.0 / denom
@@ -779,111 +820,52 @@ def growth_rate_all_channels(N: int, c_val: float) -> Dict[str, float]:
 # ============================================================================
 
 def koszul_conductor_ff(N: int) -> Fraction:
-    """Feigin-Frenkel c-sum: c(k) + c(k') = 2(N-1).
+    """Feigin-Frenkel central-charge conductor K_N^c.
 
-    This is the FF-level c-sum, NOT the chiral Koszul conductor K.
-    See the AP24 discussion: kappa + kappa' = rho * K.
+    K_N^c = c(k) + c(-k-2N) = 2(N-1) + 4N(N^2-1)
+          = 4N^3 - 2N - 2.
+
+    This scalar conductor does not construct A^!, Omega(B(A)), or the
+    Hochschild derived centre.
     """
-    return 2 * Fraction(N - 1)
+    return ff_central_charge_sum(N)
 
 
 def kappa_sum_ff(N: int) -> Fraction:
     r"""kappa(W_N, k) + kappa(W_N, k') under FF duality.
 
-    kappa + kappa' = rho(N) * (c + c') = (H_N - 1) * 2(N-1).
+    kappa + kappa' = rho(N) * (c + c')
+                   = (H_N - 1) * [2(N-1) + 4N(N^2-1)].
 
-    For N=2: (1/2)*2 = 1.  But manuscript says kappa+kappa' = 13 for Virasoro!
-    This discrepancy is because FF duality (k -> -k-2N) is NOT the same as
-    chiral Koszul duality (c -> 26-c for Virasoro).
-
-    The FF kappa sum = 2(N-1)(H_N - 1).
-    N=2: 2*(1/2) = 1.
-    N=3: 4*(5/6) = 10/3.
-    N=4: 6*(13/12) = 13/2.
-    N=5: 8*(77/60) = 154/15.
+    N=2: 13.
+    N=3: 250/3.
+    N=4: 533/2.
+    N=5: 9394/15.
     """
-    return 2 * Fraction(N - 1) * anomaly_ratio(N)
+    return ff_central_charge_sum(N) * anomaly_ratio(N)
 
 
 def chiral_koszul_conductor(N: int) -> Optional[Fraction]:
-    r"""Chiral Koszul conductor K_N such that c + c_{Koszul} = K_N.
+    r"""Central-charge conductor on the principal W_N FF/Verdier branch.
 
-    Known values:
-    K_2 = 26 (Virasoro)
-    K_3 = 100 (W_3)
-    K_4 = 246 (W_4)
+    Local canonical formula:
+        K_N^c = 4N^3 - 2N - 2.
 
-    The Koszul conductor for W_N = DS(sl_N) is:
-    K_N = (N-1)(2N^2 + 3N + 1)/3 = (N-1)(N+1)(2N+1)/3
-
-    Let me verify:
-    N=2: 1*3*5/3 = 5.  But K_2 = 26.  WRONG.
-
-    Try: K_N = c(W_N, k) + c(W_N, k_Koszul).
-    The Koszul dual level is NOT the FF dual; it is a different duality.
-
-    For Virasoro: c + c' = 26 means c' = 26 - c.
-    c(k) = 1 - 6/(k+2).  c' = 25 + 6/(k+2).
-    Is there k' with c(k') = 25 + 6/(k+2)?
-    1 - 6/(k'+2) = 25 + 6/(k+2) => -6/(k'+2) = 24 + 6/(k+2)
-    => k'+2 = -6/(24 + 6/(k+2)) = -6(k+2)/(24(k+2)+6) = -(k+2)/(4(k+2)+1)
-    = -(k+2)/(4k+9).
-    So k' = -(k+2)/(4k+9) - 2 = -(k+2+2(4k+9))/(4k+9) = -(9k+20)/(4k+9).
-
-    For W_3: c + c' = 100 means c' = 100 - c.  By similar reasoning
-    the dual level has a specific formula.
-
-    Rather than trying to derive K_N in closed form (which involves the
-    specific Koszul duality for W_N, not just FF), we use the known values
-    and verify the pattern.
-
-    From AP24: kappa + kappa' = rho * K.
-    For Virasoro: (c/2) + ((26-c)/2) = 13 = (1/2)*26.  K=26. ✓
-    For W_3: (5c/6) + (5(100-c)/6) = 500/6 = 250/3 = (5/6)*100.  K=100. ✓
-    For W_4: (13c/12) + (13(246-c)/12) = 13*246/12 = 3198/12 = 533/2 = (13/12)*246.  K=246. ✓
-
-    Pattern: K_2 = 26, K_3 = 100, K_4 = 246.
-    Differences: 74, 146.  Second difference: 72.
-    If K_N is cubic in N: K_N = a*N^3 + b*N^2 + c*N + d.
-    K_2 = 8a + 4b + 2c + d = 26
-    K_3 = 27a + 9b + 3c + d = 100
-    K_4 = 64a + 16b + 4c + d = 246
-    Subtracting: 19a + 5b + c = 74, 37a + 7b + c = 146.
-    Subtracting: 18a + 2b = 72 => 9a + b = 36.
-    From 19a + 5b + c = 74: c = 74 - 19a - 5b = 74 - 19a - 5(36-9a) = 74 - 19a - 180 + 45a = 26a - 106.
-    From K_2: 8a + 4(36-9a) + 2(26a-106) + d = 26
-    => 8a + 144 - 36a + 52a - 212 + d = 26
-    => 24a - 68 + d = 26 => d = 94 - 24a.
-
-    We need a fourth point.  For W_5: K_5 is not computed in the codebase.
-    Let's try a = 2: b = 36-18 = 18, c = 52-106 = -54, d = 94-48 = 46.
-    K_N = 2N^3 + 18N^2 - 54N + 46.
-    K_2 = 16+72-108+46 = 26. ✓
-    K_3 = 54+162-162+46 = 100. ✓
-    K_4 = 128+288-216+46 = 246. ✓
-    K_5 = 250+450-270+46 = 476.
-    K_6 = 432+648-324+46 = 802.
-    K_7 = 686+882-378+46 = 1236.
-
-    Factor: 2N^3 + 18N^2 - 54N + 46 = 2(N^3 + 9N^2 - 27N + 23).
-    Check: N^3 + 9N^2 - 27N + 23 at N=2: 8+36-54+23 = 13. So K_N = 2(N^3+9N^2-27N+23).
-    For Virasoro: K_2 = 2*13 = 26.  ✓
+    The historical function name is retained for compatibility.  The
+    returned scalar is not a bar-cobar inversion statement and not a
+    Hochschild/bulk computation.
     """
-    known = {2: Fraction(26), 3: Fraction(100), 4: Fraction(246)}
-    if N in known:
-        return known[N]
-    # Use the fitted cubic: K_N = 2(N^3 + 9N^2 - 27N + 23)
-    val = 2 * (N ** 3 + 9 * N ** 2 - 27 * N + 23)
-    return Fraction(val)
+    return ff_central_charge_sum(N)
 
 
 def koszul_conductor_scaling(N_values: Optional[List[int]] = None) -> List[Dict]:
-    r"""Analyze the large-N scaling of the Koszul conductor K_N.
+    r"""Formal large-N scaling of the FF/Verdier scalar conductor.
 
-    From K_N = 2(N^3 + 9N^2 - 27N + 23) ~ 2N^3 for large N.
+    K_N^c = 4N^3 - 2N - 2 ~ 4N^3.
 
     The kappa complementarity sum:
-    kappa + kappa' = rho(N) * K_N ~ (log(N) + gamma - 1) * 2N^3
+    kappa + kappa' = rho(N) * K_N^c
+                     ~ (log(N) + gamma - 1) * 4N^3
 
     This grows as N^3 * log(N), so the complementarity sum diverges.
     """
@@ -902,8 +884,10 @@ def koszul_conductor_scaling(N_values: Optional[List[int]] = None) -> List[Dict]
             'K': K_float,
             'K_over_N3': K_float / N ** 3 if N > 0 else None,
             'K_over_2N3': K_float / (2.0 * N ** 3) if N > 0 else None,
+            'K_over_4N3': K_float / (4.0 * N ** 3) if N > 0 else None,
             'rho': rho_N,
             'kappa_sum': kap_sum,
+            'claim_class': FORMAL_LIMIT_DIAGNOSTIC,
         })
 
     return results
@@ -915,15 +899,11 @@ def koszul_conductor_scaling(N_values: Optional[List[int]] = None) -> List[Dict]
 
 def higher_spin_shadow(N_values: Optional[List[int]] = None,
                        max_arity: int = 8) -> Dict[str, Any]:
-    r"""Shadow tower in the higher-spin limit lambda = 0.
+    r"""T-line scalar diagnostics on the lambda = 0 free-field boundary.
 
     At lambda = 0: k -> infinity, c = N-1.
-    This is the FREE FIELD LIMIT: W_N at infinite level is the
-    algebra of N-1 free bosons.
-
-    The higher-spin/CFT duality (Gaberdiel-Gopakumar) identifies
-    W_N at large N with the higher-spin gravity dual of the free
-    O(N) vector model.
+    This function uses only the Virasoro T-line shadow constants at
+    c = N-1.  It does not certify a higher-spin/CFT duality.
 
     Shadow data at c = N-1:
     - kappa_T = (N-1)/2
@@ -933,8 +913,7 @@ def higher_spin_shadow(N_values: Optional[List[int]] = None,
             = sqrt((180N+692)/((5N+17)*(N-1)^2))
             ~ 6/N for large N.
 
-    The higher-spin shadow connection: nabla^sh_T is the Virasoro
-    shadow connection at c = N-1.
+    The normalized entries are finite-N diagnostics of this scalar lane.
     """
     if N_values is None:
         N_values = list(range(2, 31))
@@ -949,11 +928,10 @@ def higher_spin_shadow(N_values: Optional[List[int]] = None,
         rho = _rho_tline(c_val)
         kap_total = float(anomaly_ratio(N)) * c_val
 
-        # Higher-spin normalized: S_r * N^r (the conjectured finite limit)
         normalized = {}
         for r in range(2, max_arity + 1):
             if r in tower:
-                normalized[r] = tower[r] * N ** (r - 2)  # trial normalization
+                normalized[r] = tower[r] * N ** (r - 2)
 
         data.append({
             'N': N,
@@ -969,6 +947,8 @@ def higher_spin_shadow(N_values: Optional[List[int]] = None,
     return {
         'limit': 'higher_spin_lambda_0',
         'data': data,
+        'claim_class': FORMAL_LIMIT_DIAGNOSTIC,
+        'analytic_certified': False,
     }
 
 
@@ -977,8 +957,9 @@ def higher_spin_delta_scaling(N_values: Optional[List[int]] = None) -> List[Dict
 
     Delta_T = 40/(5c+22) = 40/(5(N-1)+22) = 40/(5N+17)
 
-    For large N: Delta ~ 8/N.
-    Delta -> 0 from above: the class-M tower becomes "weakly mixed" at large N.
+    For large N on the T-line: Delta ~ 8/N.  This is a scalar
+    Virasoro-channel diagnostic; it is not a statement about the full
+    multi-channel W_infinity shadow metric.
     """
     if N_values is None:
         N_values = list(range(2, 51))
@@ -1000,31 +981,24 @@ def higher_spin_delta_scaling(N_values: Optional[List[int]] = None) -> List[Dict
 
 
 # ============================================================================
-# 10.  Universal shadow: inverse limit structure
+# 10.  Finite prefix compatibility diagnostics
 # ============================================================================
 
 def universal_shadow_projection(N_target: int, N_source: int,
                                 c_val: float, max_arity: int = 8) -> Dict:
-    r"""Verify that W_{N_source} shadow projects to W_{N_target} shadow.
+    r"""Compare finite scalar prefix data for W_{N_source} and W_{N_target}.
 
-    For N_source > N_target, the W_{N_source} algebra has a natural
-    projection to W_{N_target} (by dropping generators of spin > N_target).
-
-    At the level of the T-line shadow: both W_{N_source} and W_{N_target}
-    have IDENTICAL T-line towers (both = Virasoro at the same c).
-
-    The projection is thus exact on the T-line.
-
-    The non-trivial content is in the multi-channel structure:
-    the W_{N_target} multi-channel tower is obtained by restricting
-    the W_{N_source} data to spins <= N_target.
+    At a fixed scalar central charge c, the T-line towers agree because
+    both are the same Virasoro computation.  The kappa_s prefix also
+    agrees formally.  This function does not certify an algebra map,
+    a multi-channel OPE projection, or an inverse-limit object.
     """
     assert N_source > N_target >= 2
 
     tower_source = shadow_tower_tline(c_val, max_arity)
     tower_target = shadow_tower_tline(c_val, max_arity)
 
-    # T-line projections match exactly (both are Virasoro)
+    # T-line prefixes match because both calls use the same Virasoro data.
     tline_match = True
     for r in range(2, max_arity + 1):
         if r in tower_source and r in tower_target:
@@ -1032,11 +1006,9 @@ def universal_shadow_projection(N_target: int, N_source: int,
                 tline_match = False
                 break
 
-    # Multi-channel projection: channel data
     channels_source = wn_channel_data(N_source, c_val)
     channels_target = wn_channel_data(N_target, c_val)
 
-    # The target channels should be the first (N_target-1) channels of the source
     channel_match = True
     for i in range(N_target - 1):
         if abs(channels_source[i]['kappa'] - channels_target[i]['kappa']) > 1e-12:
@@ -1049,6 +1021,9 @@ def universal_shadow_projection(N_target: int, N_source: int,
         'c': c_val,
         'tline_match': tline_match,
         'channel_match': channel_match,
+        'projection_certified': False,
+        'multi_channel_ope_certified': False,
+        'claim_class': FORMAL_LIMIT_DIAGNOSTIC,
         'kappa_source': sum(ch['kappa'] for ch in channels_source),
         'kappa_target': sum(ch['kappa'] for ch in channels_target),
     }
@@ -1057,16 +1032,13 @@ def universal_shadow_projection(N_target: int, N_source: int,
 def inverse_limit_consistency(c_val: float,
                               N_values: Optional[List[int]] = None,
                               max_arity: int = 8) -> Dict:
-    r"""Verify the inverse limit structure: T-line towers form a compatible system.
+    r"""Check finite T-line compatibility across sampled N.
 
     For any two N values with the same c, the T-line towers are IDENTICAL.
     This is because the T-line only depends on c (Virasoro universality).
 
-    The inverse limit Theta_{W_infty}^{T-line} = lim_{N} Theta_{W_N}^{T-line}
-    exists trivially: it IS the Virasoro shadow tower at central charge c.
-
-    The non-trivial inverse limit is in the multi-channel directions:
-    as N increases, new channels W_{N+1} appear, and the total kappa grows.
+    This is a finite scalar compatibility check.  It does not certify
+    a multi-channel inverse limit Theta_{W_infinity}.
     """
     if N_values is None:
         N_values = [3, 5, 7, 10, 15, 20]
@@ -1093,34 +1065,33 @@ def inverse_limit_consistency(c_val: float,
         'kappa_sequence': [(N, kappas[N]) for N in N_values],
         'kappa_growth': 'logarithmic',  # H_N ~ log(N)
         'tower': ref,
+        'inverse_limit_certified': False,
+        'multi_channel_ope_certified': False,
+        'claim_class': FORMAL_LIMIT_DIAGNOSTIC,
     }
 
 
 # ============================================================================
-# 11.  Normalized shadow coefficients for universal scaling
+# 11.  Normalized shadow coefficients for scalar scaling
 # ============================================================================
 
 def normalized_shadow_coefficients(N: int, c_val: float,
                                    max_arity: int = 10) -> Dict[int, float]:
-    r"""Shadow coefficients normalized by appropriate N-dependent factors.
+    r"""Finite scalar normalizations of T-line shadow coefficients.
 
     Several normalization schemes:
-    (a) S_r / kappa^{r/2}: removes the leading kappa scaling
-    (b) S_r * c^{r-2}: the "c-stripped" coefficient
-    (c) S_r * N^{r-2}: the "N-stripped" coefficient (for lambda=0)
+    (a) S_r / kappa^{r/2}: a diagnostic rescaling
+    (b) S_r * c^p with p = 0 for r <= 3 and p = r-2 for r >= 4
+    (c) S_r * N^{r-2}: a lambda=0 diagnostic rescaling
 
-    For the T-line, S_r depends on c only, so the c-normalization is:
-    S_r * c^{r-2} = universal_r (independent of c at leading order).
-
-    Actually S_r(Vir) = [t^{r-2}] sqrt(Q(t)) / r, where Q is quadratic in t.
+    S_r(Vir) = [t^{r-2}] sqrt(Q(t)) / r, where Q is quadratic in t.
     The Taylor coefficients of sqrt(Q) at large c scale as:
     a_0 = c, a_1 = 6, a_2 = (9*4 + 16*(c/2)*10/(c*(5c+22)))/(2c)
-         ~ (36 + 80/(5c+22)) / (2c) ~ 36/(2c) = 18/c for large c.
-    So S_4 = a_2/4 ~ 18/(4c) = 9/(2c).
+    after subtracting a_1^2, so a_2 = 40/[c(5c+22)] and
+    S_4 ~ 2/c^2.
 
     More generally, a_n ~ C_n / c^{n-1} for large c, so
-    S_r = a_{r-2}/r ~ C_{r-2} / (r * c^{r-3}).
-    The natural normalization is S_r * c^{r-3}.
+    S_r = O(c^{-(r-2)}) for r >= 4 in this scalar recursion.
     """
     tower = shadow_tower_tline(c_val, max_arity)
 
@@ -1128,10 +1099,12 @@ def normalized_shadow_coefficients(N: int, c_val: float,
     result = {}
     for r in range(2, max_arity + 1):
         sr = tower.get(r, 0.0)
+        c_power = 0 if r <= 3 else r - 2
         result[r] = {
             'raw': sr,
             'kappa_normalized': sr / abs(kap) ** (r / 2.0) if abs(kap) > 1e-100 else None,
-            'c_stripped': sr * c_val ** (r - 3) if abs(c_val) > 1e-100 else None,
+            'c_power': c_power,
+            'c_stripped': sr * c_val ** c_power if abs(c_val) > 1e-100 else None,
             'N_stripped': sr * N ** (r - 2),
         }
 
@@ -1144,14 +1117,13 @@ def large_c_asymptotics(max_arity: int = 10) -> Dict[int, float]:
     S_r(Vir_c) for c -> infinity:
     S_2 = c/2 ~ c/2
     S_3 = 2 (constant, independent of c)
-    S_4 = 10/(c(5c+22)) ~ 2/(c^2 * 5) = 2/(5c^2) for large c
-    S_5 ~ O(1/c^2)
-    S_r ~ O(1/c^{r-3}) for r >= 4
+    S_4 = 10/(c(5c+22)) ~ 2/c^2
+    S_5 ~ -48/(5c^3)
+    S_r = O(1/c^{r-2}) for r >= 4 in this scalar recursion
 
-    These are the PLANAR shadow coefficients in the higher-spin limit
-    (lambda = 0, c = N-1 -> infinity).
+    These are large-c scalar asymptotics, not analytic planar
+    partition-function coefficients.
     """
-    # Compute at several large c values and extract the limit
     c_values = [100.0, 500.0, 1000.0, 5000.0, 10000.0]
     asymp = {}
 
@@ -1160,12 +1132,10 @@ def large_c_asymptotics(max_arity: int = 10) -> Dict[int, float]:
         for c_val in c_values:
             tower = shadow_tower_tline(c_val, max_arity)
             sr = tower.get(r, 0.0)
-            # Normalize: S_r * c^{max(0, r-3)}
             if r <= 3:
                 vals.append(sr)
             else:
-                vals.append(sr * c_val ** (r - 3))
-        # The limit is the last value (converging to the asymptotic)
+                vals.append(sr * c_val ** (r - 2))
         asymp[r] = vals[-1]
 
     return asymp
@@ -1194,7 +1164,7 @@ def verify_anomaly_ratio_formula() -> Dict:
 
 
 def verify_ff_duality_sum() -> Dict:
-    """Verify c(k) + c(k') = 2(N-1) under FF duality for several N, k."""
+    """Verify the Freudenthal-de Vries c-sum under FF duality."""
     results = {}
     for N in [2, 3, 4, 5, 7, 10]:
         for k_val in [Fraction(1), Fraction(3), Fraction(5), Fraction(10)]:
@@ -1217,24 +1187,22 @@ def verify_ff_duality_sum() -> Dict:
 
 
 def verify_koszul_conductor_consistency() -> Dict:
-    r"""Verify kappa + kappa' = rho * K for known Koszul conductors.
+    r"""Verify the scalar identity kappa + kappa' = rho * K_N^c.
 
-    For N = 2, 3, 4:
-    kappa(c) + kappa(K-c) = rho(N) * K.
+    This is a conductor identity on the finite scalar branch; it does not
+    construct A^!, Omega(B(A)), or Z_ch^der(A).
     """
     results = {}
-    for N, K in [(2, 26), (3, 100), (4, 246)]:
+    for N in [2, 3, 4, 5]:
+        K = ff_central_charge_sum(N)
         rho = anomaly_ratio(N)
-        # kappa(c) + kappa(K-c) = rho*c + rho*(K-c) = rho*K.  Tautological!
-        # The non-trivial check: does the Koszul duality actually send
-        # c -> K-c?  For N=2: c + c' = 26 (proved in manuscript).
-        # For N=3: c + c' = 100 (proved in manuscript).
         expected_sum = rho * Fraction(K)
         results[N] = {
             'K': K,
             'rho': rho,
             'kappa_sum': expected_sum,
             'kappa_sum_float': float(expected_sum),
+            'constructs_dual_object': False,
         }
     return results
 
@@ -1242,12 +1210,9 @@ def verify_koszul_conductor_consistency() -> Dict:
 def verify_tline_universality(c_val: float = 10.0, max_arity: int = 8) -> Dict:
     r"""Cross-engine verification that the T-line shadow is INDEPENDENT of N.
 
-    GENUINE CROSS-ENGINE TEST (replaces vacuous self-comparison, GREEN audit
-    Finding 4).  Imports t_line_tower_numerical from each of the independent
-    W_N shadow tower engines (N = 3, 5, 6, 7) and compares their output
-    against this engine's shadow_tower_tline.  Each W_N engine has its own
-    convolution recursion implementation, so agreement is a non-trivial
-    cross-implementation verification.
+    Imports t_line_tower_numerical from independent W_N shadow tower
+    engines (N = 3, 5, 6, 7) and compares their output against this
+    engine's shadow_tower_tline.
 
     The W_4 engine (w4_multivariable_shadow) is symbolic/multivariable and
     does not expose a numerical T-line tower; it is tested via its shadow
@@ -1255,10 +1220,7 @@ def verify_tline_universality(c_val: float = 10.0, max_arity: int = 8) -> Dict:
 
     Mathematical content: the T-line shadow uses kappa_T = c/2, alpha_T = 2,
     S4_T = 10/(c(5c+22)).  These are the Virasoro sub-contributions and are
-    N-independent.  The cross-engine test confirms that 5 independent code
-    paths (w3_shadow_tower_engine, w5_shadow_tower, w6_shadow_tower,
-    w7_shadow_tower, w_infinity_shadow_limit_deep) all produce the same
-    numerical tower.
+    N-independent finite scalar data.
     """
     ref_tower = shadow_tower_tline(c_val, max_arity)
 
@@ -1400,14 +1362,14 @@ def verify_tline_universality(c_val: float = 10.0, max_arity: int = 8) -> Dict:
 
 def comprehensive_scaling_analysis(lam: float = 0.0,
                                    max_arity: int = 8) -> Dict[str, Any]:
-    r"""Comprehensive large-N scaling analysis at fixed 't Hooft coupling.
+    r"""Formal scalar large-N diagnostics at fixed 't Hooft coupling.
 
     Computes:
     1. Central charge scaling: c(N) vs N
     2. Total kappa scaling: kappa(N) vs N
     3. T-line rho scaling: rho(N) vs N
     4. T-line S_r scaling: S_r(N) vs N
-    5. 1/N expansion coefficients for each quantity
+    5. sampled coefficient tables
     """
     if lam == 0:
         N_values = list(range(2, 51))
@@ -1450,4 +1412,6 @@ def comprehensive_scaling_analysis(lam: float = 0.0,
         'rho_vs_N': rho_vs_N,
         'sr_vs_N': sr_vs_N,
         'rho_times_N_limit': rho_N_limit,
+        'claim_class': FORMAL_LIMIT_DIAGNOSTIC,
+        'analytic_certified': False,
     }

@@ -28,13 +28,6 @@
 \providecommand{\Res}{\operatorname{Res}}
 \providecommand{\Vir}{\mathrm{Vir}}
 
-\makeatletter
-\let\cls@oldref\ref
-\renewcommand{\ref}[1]{%
- \@ifundefined{r@#1}{\textit{full monograph}}{\cls@oldref{#1}}%
-}
-\makeatother
-
 \title{The G/L/C/M classification and shadow tables}
 \author{Raeez Lorgat}
 \date{}
@@ -44,14 +37,13 @@
 \fi
 \providecommand{\Walg}{\mathcal{W}}
 
-%% classification.tex -- §5--6 of the standalone paper
-%% The G/L/C/M classification and shadow tables
+%% Four shadow classes and shadow tables
 
-\begin{remark}[Relationship to companion papers]
-The three-invariants distinction $p_{\max} \neq k_{\max} \neq r_{\max}$
-and the operator-order trichotomy are developed further in the companion
-paper \emph{The classification trichotomy for chiral algebras}
-(\texttt{classification\_trichotomy.tex}).
+\begin{remark}[Three independent depths]
+The inequalities $p_{\max} \neq k_{\max} \neq r_{\max}$ separate
+OPE pole order, collision depth, and shadow depth. The shadow
+classification is the stratification by the third invariant; the
+operator-order trichotomy is the stratification by the first two.
 \end{remark}
 
 %% =====================================================================
@@ -60,9 +52,11 @@ paper \emph{The classification trichotomy for chiral algebras}
 
 \section{The Four Shadow Classes}\label{sec:four-classes}
 
-The single-line dichotomy (Theorem~\ref{thm:single-line-dichotomy})
-partitions the space of chirally Koszul algebras into four shadow classes,
-determined by two invariants of the shadow metric
+The single-line Riccati dichotomy partitions noncritical
+one-dimensional primary lines into the three rank-one outcomes
+G, L, and M. The fourth standard shadow class, C, is produced by
+charged-stratum separation in the $bc$ and $\beta\gamma$ families.
+The rank-one outcomes are determined by two invariants of the shadow metric
 $Q_L(t) = (2\kappa + 3\alpha t)^2 + 2\Delta\, t^2$:
 the cubic coefficient~$\alpha = S_3$ and the critical
 discriminant $\Delta = 8\kappa S_4$.
@@ -74,28 +68,27 @@ along $L$ is:
 \[
 \renewcommand{\arraystretch}{1.4}
 \begin{array}{c|cc|cc}
-\textbf{Class} & \alpha & \Delta & r_{\max} & Q_L \\
+\textbf{Class} & \alpha & \Delta & r_{\max} & mechanism \\
 \hline
-G\;\text{(Gaussian)} & 0 & 0 & 2 & (2\kappa)^2 \\
-L\;\text{(Lie/tree)} & \neq 0 & 0 & 3 & (2\kappa + 3\alpha t)^2 \\
-C\;\text{(Contact)} & 0 & 0^* & 4 & (2\kappa)^2\;\text{(primary line)} \\
-M\;\text{(Mixed)} & \neq 0 & \neq 0 & \infty & \text{irreducible quadratic}
+G\;\text{(Gaussian)} & 0 & 0 & 2 & constant metric \\
+L\;\text{(Lie/tree)} & \neq 0 & 0 & 3 & square metric \\
+C\;\text{(Contact)} & 0 & \text{line data} & 4 & charged contact stratum \\
+M\;\text{(Mixed)} & \neq 0 & \neq 0 & \infty & irreducible quadratic
 \end{array}
 \]
 Here $r_{\max}$ is the \emph{shadow depth}: the largest degree~$r$
 for which the shadow coefficient $S_r \neq 0$.
-${}^*$Class~C has $\Delta = 0$ on the primary line (where
-the single-line dichotomy applies), but the quartic contact
-invariant $Q^{\mathrm{contact}} \neq 0$ lives on a charged
-stratum; see Definition~\ref{def:class-C}.
+Class~C is the finite contact stratum of the standard $bc_\lambda$ and
+$\beta\gamma_\lambda$ families, where $S_3=0$, $S_4=-5/12$, and
+$S_r=0$ for $r\geq5$ on the standard conformal-weight channel.
 \end{definition}
 
 The classification is exhaustive: every entry in Table~\ref{tab:master-shadow}
 falls into exactly one class, and every class is realized by at least
 one standard family. The mechanism is algebraic: the shadow generating
 function $H(t) = t^2\sqrt{Q_L(t)}$ is algebraic of degree~$2$
-(Theorem~\ref{thm:riccati-algebraicity}), and its Taylor coefficients
-$S_r$ are computed from the convolution recursion
+on each rank-one primary line, and its Taylor coefficients $S_r$
+are computed from the convolution recursion
 $H(t)^2 = t^4 Q_L(t)$, where $H(t) = \sum_{r \geq 2} r\, S_r\, t^r$
 and $S_r = a_{r-2}/r$ with $a_n$ the Taylor coefficients of $\sqrt{Q_L}$.
 When $Q_L$ is a perfect square ($\Delta = 0$), the square root
@@ -167,9 +160,9 @@ r^{\mathrm{KZ}}(z)
 \qquad
 \Omega_{\mathrm{KZ}}=2h^\vee\Omega_{\mathrm{tr}}.
 \]
-These are conventionally related normalizations, not an identity as
-rational functions of~$k$. The tree-level graph sum terminates at
-trivalent vertices.
+These are conventionally related normalizations with different
+$k$-dependence. The tree-level graph sum terminates at trivalent
+vertices.
 
 \medskip
 
@@ -177,21 +170,18 @@ trivalent vertices.
 
 \begin{definition}\label{def:class-C}
 A chirally Koszul algebra $\cA$ is \emph{contact} if
-$\Delta = 0$ on every primary line (so the single-line
-dichotomy gives $r_{\max}|_L \leq 3$ on each line), but there
-exists a charged stratum direction with $S_4 \neq 0$
-(the quartic contact invariant), and the tower terminates at
-degree~$4$: $S_r = 0$ for $r \geq 5$.
+$S_3=0$, $S_4\neq0$, and $S_r=0$ for $r\geq5$ on the standard
+contact channel. In the verified standard families this is the
+conformal-weight channel of $bc_\lambda$ and
+$\beta\gamma_\lambda$, where $S_4=-5/12$.
 \end{definition}
 
 \noindent\textbf{Mechanism.}
-Class~C escapes the single-line dichotomy (which gives $r_{\max} \in
-\{2, 3, \infty\}$) via \emph{stratum separation}: the quartic contact
-invariant $Q^{\mathrm{contact}}$ lives on a charged stratum whose
-self-bracket exits the cyclic deformation complex at degree~$5$, by
-rank-one rigidity. On the weight-changing primary line, the tower is
-abelian ($\alpha = 0$, $S_4 = 0$); the quartic contact is visible
-only on the full two-dimensional deformation space.
+Class~C is a finite contact phenomenon external to the rank-one
+Riccati dichotomy. The weight-changing line is abelian, while the
+standard conformal-weight channel carries the quartic contact
+coefficient. Rank-one rigidity kills the next charged target, so the
+tower stops at degree~$4$.
 
 \noindent\textbf{Examples.}
 The $\beta\gamma$ system at conformal weight~$\lambda$, with
@@ -216,9 +206,11 @@ topologisation fails.
 
 \begin{definition}[Class FF]\label{def:class-FF}
 A chirally Koszul algebra $\cA$ belongs to class~$\mathrm{FF}$ if
-$\kappa(\cA) = 0$. The shadow depth $r_{\max}(\cA)$ is then
-unconstrained by the single-line dichotomy and is read from the
-Feigin--Frenkel coset data $\mathrm{coset}_{FF}(\cA)$.
+it lies at a critical Feigin--Frenkel centre or coset locus where
+the Sugawara topologisation degenerates. The vanishing
+$\kappa(\cA)=0$ is a necessary scalar signal in the affine examples;
+the class itself is controlled by the Feigin--Frenkel coset data
+$\mathrm{coset}_{FF}(\cA)$.
 \end{definition}
 
 \noindent\textbf{Examples.}
@@ -232,30 +224,27 @@ fixed point $k = -h^\vee$. Critical $\Walg_N$ (at the Feigin--Frenkel
 image of the affine critical level) is also class~FF.
 
 \noindent\textbf{Characterization.}
-At $\kappa = 0$ the conformal vector degenerates: the Sugawara
+At the Feigin--Frenkel critical locus the conformal vector degenerates:
+the Sugawara
 construction $T = (k + h^\vee)^{-1} :J^a J^a:$ has a pole, and
 topologisation~$\mathrm{SC}^{\mathrm{ch,top}} \to E_3^{\mathrm{top}}$
 fails. The coset slot of the canonical fingerprint
-(Definition~\ref{def:canonical-fingerprint} in the monograph)
 switches from~$(\mathrm{Com}(\cH_\kappa, \cA), \cA/\mathrm{Com})$
 to the Feigin--Frenkel coset
 $\mathrm{coset}_{FF}(\cA) \subset \mathfrak{z}(\widehat{\fg})$.
-Class~FF is not a shadow-depth class in the sense of classes
-$G, L, C, M$: it is the locus on which the ambient shadow invariants
-degenerate and the classification is controlled by coset data rather
-than by~$(\alpha, \Delta)$.
+Class~FF is the degeneration locus for the ambient shadow invariants.
+On this locus the controlling datum is the Feigin--Frenkel coset data
+instead of~$(\alpha, \Delta)$.
 
-\begin{remark}[Why FF is a fifth class, not a refinement]
+\begin{remark}[FF as a fifth companion class]
 \label{rem:FF-not-refinement}
 The four classes $G, L, C, M$ are determined by the shadow metric
 $Q_L(t) = (2\kappa + 3\alpha t)^2 + 2\Delta t^2$, which degenerates
 at $\kappa = 0$: the leading constant term vanishes, the Riccati
 algebraicity argument loses its pivot, and the tower
 of~$\Theta_\cA^{\leq r}$ must be read from a different source.
-Promoting~FF to a fifth companion class is therefore not a refinement
-of the quadrichotomy but a structural completion:
-the five classes exhaust the full fingerprint stratum
-(Theorem~\ref{thm:five-class-stratum} in the monograph).
+Together with $G,L,C,M$, this companion locus gives the
+five-class fingerprint stratification used in the standard landscape.
 \end{remark}
 
 \subsection{Class M: Mixed ($r_{\max} = \infty$)}
@@ -293,20 +282,19 @@ diverges ($\rho > 1$). At the self-dual point $c = 13$:
 $\rho(\mathrm{Vir}_{13}) \approx 0.467$.
 
 The Virasoro shadow obstruction tower has explicitly computed coefficients through
-degree~$10$:
+degree~$6$:
 \begin{align}
 S_2 &= \tfrac{c}{2}\,, &
 S_3 &= 2\,, &
 S_4 &= \frac{10}{c(5c+22)}\,,
 \label{eq:vir-S234} \\
 S_5 &= \frac{-48}{c^2(5c+22)}\,, &
-S_6 &= \frac{80(45c+193)}{3c^3(5c+22)^2}\,, &
-S_7 &= \frac{-2880(15c+61)}{7c^4(5c+22)^2}\,.
+S_6 &= \frac{4(240c+1031)}{c^3(5c+22)^2}\,.
 \label{eq:vir-S567}
 \end{align}
 \noindent
-The $c$-independence of $S_3 = 2$ is now proved algebraically
-by direct residue extraction; see \texttt{virasoro\_r\_matrix.tex}.
+The identity $S_3 = 2$ is independent of $c$ by direct residue
+extraction from the Virasoro OPE.
 
 \medskip
 
@@ -321,8 +309,7 @@ $r_{\max}(\cA)$ with the $A_\infty$-depth and $L_\infty$-formality level.
 
 \begin{remark}[Total depth decomposition]\label{rem:total-depth}
 The total shadow depth decomposes as
-$d(\cA) = 1 + d_{\mathrm{arith}} + d_{\mathrm{alg}}$
-(Theorem~\ref{thm:depth-decomposition}), where the algebraic depth
+$d(\cA) = 1 + d_{\mathrm{arith}} + d_{\mathrm{alg}}$, where the algebraic depth
 $d_{\mathrm{alg}} \in \{0, 1, 2, \infty\}$ and depths $\geq 5$ are
 purely arithmetic (cusp forms contribute beyond the algebraic engine).
 \end{remark}
@@ -333,14 +320,15 @@ companions}
 
 The four classes $G, L, C, M$ together with the Feigin--Frenkel
 locus~FF form the fingerprint stratification of the non-logarithmic
-standard landscape. Two further strata appear once the landscape is
-enlarged: logarithmic $\cW(p)$ and Wakimoto free-field
-realisations.
+standard landscape. Two further labels occur on enlarged surfaces:
+logarithmic $\cW(p)$ behaviour and Wakimoto free-field realisations.
+They are companion overlays that may overlap the five strata.
 
 \begin{definition}[Class~$M^\ast$: logarithmic companion]
 \label{def:class-M-star}
-A chirally Koszul algebra $\cA$ belongs to class~$M^\ast$ if it
-is logarithmic in the sense of Gurarie--Flohr, i.e.\ the Zhu
+A chirally Koszul algebra $\cA$ carries the companion label
+$M^\ast$ if it is logarithmic in the sense of
+Gurarie--Flohr~\cite{Gurarie1993,Flohr1996}, i.e.\ the Zhu
 algebra $A(\cA)$ is finite-dimensional but the Hochschild Massey
 products $\langle \Omega, \Omega, \ldots, \Omega \rangle$ carry
 amplitude on arbitrarily high tensor powers of the vacuum.
@@ -355,8 +343,7 @@ Class~$M^\ast$ algebras satisfy $\kappa \neq 0$ and share the
 mixed-shadow expansion $\alpha \neq 0$, $\Delta \neq 0$ of
 class~M, but are distinguished by logarithmic amplitudes:
 Zhu-finite yet Massey-unbounded. The non-logarithmic shadow
-analysis of Theorem~\ref{thm:single-line-dichotomy} applies on
-the formal-weight line; logarithmic corrections do not affect
+analysis applies on the formal-weight line; logarithmic corrections leave
 the algebraic invariants $\alpha = S_3$ and $\Delta = 8\kappa
 S_4$, which remain finite and computable, but they preclude
 tempering of the shadow tower.
@@ -369,77 +356,81 @@ through Feigin--Frenkel--Wakimoto realisation,
 $\cA = \bigcap_i \ker Q_{\alpha_i} \subset \cH^{\oplus(N-1)}$.
 \end{definition}
 
-\noindent\textbf{Examples.} Principal~$\cW_N$ (as a Wakimoto
-kernel inside $\cH^{\oplus (N-1)}$); affine $\widehat{\mathfrak{sl}}_2$
-through the $\beta\gamma\,\phi$ Wakimoto realisation; admissible
-affine algebras through parabolic screenings (KRW03, Arakawa07).
+\noindent\textbf{Examples.} Principal~$\cW_N$ as a Wakimoto
+kernel inside $\cH^{\oplus (N-1)}$
+\cite{Frenkel-Kac-Wakimoto92,FP03}; affine
+$\widehat{\mathfrak{sl}}_2$ through the $\beta\gamma\,\phi$
+Wakimoto realisation; admissible affine algebras through parabolic
+screenings \cite{KRW03,Arakawa07}.
 
 \noindent\textbf{Characterization.}
-Class~$W$ is not disjoint from $G,L,C,M$: it is a presentational
-overlay. The ambient Heisenberg is class~$G$, and the kernel
-inherits chiral Koszulity from the screening-kernel preservation
-theorem. The utility of the class~$W$ label is that it
-canonicalises the Koszul dual: the Koszul-locus preservation is
-witnessed explicitly by the screening integrand, and Drinfeld
-coproducts descend to the intersection from the rank-$(N-1)$
-free-field parent.
+Class~$W$ can overlap $G,L,C,M$: it is a presentational overlay.
+The ambient Heisenberg is class~$G$, while the screening
+kernel may land in class~L or class~M after the BRST and
+screening-obstruction data are imposed. The label records the
+free-field presentation; Koszulity and Drinfeld coproduct descent
+require separate screening-kernel input.
 
-\begin{remark}[Why the full stratification is G, L, C, M, FF,
-$M^\ast$, W]
+\begin{remark}[Fingerprint strata and overlays]
 \label{rem:full-stratification}
 The four shadow-depth classes $G, L, C, M$ stratify the
 non-logarithmic non-critical locus by the algebraic invariants
 $(\alpha, \Delta)$ of the shadow metric. Class~FF marks the
-$\kappa = 0$ boundary. Class~$M^\ast$ records logarithmic
+$\kappa = 0$ critical boundary. Class~$M^\ast$ records logarithmic
 amplitude behaviour orthogonal to $(\alpha, \Delta)$: a
 Zhu-finite class-M algebra is class-M, class-$M^\ast$, or both,
-depending on Massey boundedness (Gurarie 1993, Flohr 1996).
+depending on Massey boundedness
+\cite{Gurarie1993,Flohr1996}.
 Class~$W$ records a presentation overlay: a class-L or class-M
 algebra may simultaneously be class-$W$ when realised as a
-screening kernel. The seven-stratum fingerprint is exhaustive on
-the standard landscape.
+screening kernel. The stratification is five-class:
+$G,L,C,M,FF$; $M^\ast$ and $W$ are companion labels.
 \end{remark}
 
-\subsection{Universal shadow-series exponential base}
+\subsection{Leading T-line exponential base}
 \label{ssec:universal-C-A-6}
 
-The asymptotic behaviour of the shadow coefficients on
-non-logarithmic class~M algebras containing a Virasoro
-subalgebra admits a sharp universal description, independent of
-the specific family.
+The leading large-central-charge coefficients on the Virasoro
+stress-tensor line have a sharp exponential base. This is a
+T-line statement, separate from exact finite-$c$ radius questions for
+the full shadow series of an arbitrary class-M algebra.
 
-\begin{theorem}[Universal exponential base $C_\cA = 6$]
+\begin{proposition}[Leading T-line exponential base $C^T_\cA = 6$]
 \label{thm:universal-C-A-6-sa}
-Let $\cA$ be a non-logarithmic class~M chirally Koszul algebra
-with Virasoro subalgebra at generic central charge. The shadow
-series
-$\Sigma_\cA(z) = \sum_{r \geq 2} S_r(\cA)\, z^r$
-has radius of convergence exactly $1/6$; equivalently,
+Let $\cA$ be a non-logarithmic class-M standard family with a
+generic Virasoro stress-tensor line, and suppose the T-line
+dominance hypotheses hold. Let $A_r^T$ denote the leading
+large-$c$ coefficient of the T-line shadow coefficient $S_r^T$.
+Then
 \[
-C_\cA \;:=\; \limsup_{r \to \infty}
-\bigl|S_{r+1}(\cA)/S_r(\cA)\bigr| \;=\; 6.
+C^T_\cA \;:=\; \limsup_{r \to \infty}
+\bigl|A_{r+1}^T/A_r^T\bigr| \;=\; 6.
 \]
-The closed form on the Virasoro primary line is
+For the Virasoro line the leading generating function has the
+logarithmic singularity
 \[
-\Sigma_{\Vir}(z)
+\Sigma_{\Vir}^{T,\mathrm{lead}}(z)
 \;=\;
 \tfrac{4z^3}{9} - \tfrac{z^2}{9} + \tfrac{z}{27}
  - \tfrac{\log(1 + 6z)}{162}\,.
 \]
-Pole-doubling for all $k$:
-$\Sigma_\Vir^{(k)}(z)
-   = [P_k + Q_k \log(1{+}6z)] / (1{+}6z)^{2k}$.
-The constant~$6$ decomposes as $6 = r_0 \cdot S_{r_0}$
-$= 3 \cdot 2$: the bar-depth seed times the Riccati seed
-coefficient.
-\end{theorem}
+\end{proposition}
 
-The constant~$6$ is programme-universal on class~M non-log with
-Virasoro subalgebra: the same $1/6$ radius appears for
-$\cW_N$-algebras at leading $1/c$, and the Vol~II tempering rate
-$\beta_\cA$ coincides with~$C_\cA$ at leading $1/c$. The higher
-sub-leading $\cW_N$ corrections $\beta_N = (N+1)(N+2)/2$ absorb
-into $C_{\cW_N} = 6$ asymptotically.
+\begin{proof}
+The T-line large-$c$ recursion is the Virasoro Riccati recursion
+with seed $S_3=2$. Solving the recursion gives the displayed
+logarithmic term, whose nearest singularity is at $z=-1/6$.
+The root test gives the exponential base~$6$ for the leading
+coefficients $A_r^T$.
+\end{proof}
+
+For $\cW_N$ the corresponding Vol~II tempering exponent is a
+separate invariant. Under the harmonic tempering law it is
+\[
+\beta_{\cW_N}=12(H_N-1),
+\]
+so $\beta_{\cW_3}=10$ and $\beta_{\cW_4}=13$. It is not the
+value given by the polynomial interpolant $(N+1)(N+2)/2$.
 
 \subsection{Picard--Fuchs spectral-curve presentation}
 \label{ssec:picard-fuchs-spectral-curve}
@@ -451,50 +442,31 @@ non-logarithmic class~M, the shadow generating function
 $\Sigma_\cA(z)$ satisfies a Picard--Fuchs equation whose
 monodromy encodes the Borel geometry of the shadow tower.
 
-\begin{proposition}[Picard--Fuchs for the shadow series]
+\begin{proposition}[Picard--Fuchs equation for the leading T-line]
 \label{prop:picard-fuchs-sa}
-Let $\cA$ be class~M with Virasoro subalgebra at generic
-central charge. The shadow series $\Sigma_\cA(z)$ satisfies a
-second-order Picard--Fuchs equation
+Let $\cA$ be class~M with a generic Virasoro T-line and suppose the
+leading T-line dominance hypotheses of
+Proposition~\ref{thm:universal-C-A-6-sa} hold. The leading T-line
+shadow series $\Sigma_\cA^{T,\mathrm{lead}}(z)$ satisfies a
+second-order Picard--Fuchs-type equation
 \[
-(1 + 6z)^2 \Sigma_\cA''(z)
- + P_1(z)\, \Sigma_\cA'(z)
- + P_0(z)\, \Sigma_\cA(z)
+(1 + 6z)^2 (\Sigma_\cA^{T,\mathrm{lead}})''
+ + P_1(z)\, (\Sigma_\cA^{T,\mathrm{lead}})'
+ + P_0(z)\, \Sigma_\cA^{T,\mathrm{lead}}
 \;=\; R_\cA(z),
 \]
 with $P_0, P_1, R_\cA$ polynomials of degree at most~$2$ in~$z$
-determined by $(\kappa, \alpha, \Delta)$. The regular-singular
-point $z = -1/6$ is the universal branch point; the monodromy
-around this point is the reflection sending $z \mapsto -z/(1+6z)$,
-realising the Borel-plane involution on the shadow tower.
+determined by the leading T-line Riccati data. The regular-singular
+point $z=-1/6$ is the leading T-line branch point.
 \end{proposition}
 
-\subsection{The depth gap $d_{\mathrm{alg}} \in \{0,1,2,\infty\}$}
-\label{ssec:depth-gap-standalone}
-
-\begin{proposition}[Depth gap]
-\label{prop:depth-gap-standalone-new}
-\ClaimStatusProvedHere
-For every chirally Koszul algebra in the standard landscape, the
-algebraic depth $d_{\mathrm{alg}}$ takes values in
-$\{0,1,2,\infty\}$. The value~$3$ is impossible.
-\end{proposition}
-
-\noindent\textbf{Witness table.} $d_{\mathrm{alg}} = 0$: free
-fields, $bc$ ghosts (shadow tower trivial). $d_{\mathrm{alg}} =
-1$: Heisenberg and lattice (class~G). $d_{\mathrm{alg}} = 2$:
-$\beta\gamma$ on the conformal-weight line (class~C) and affine
-Kac--Moody (class~L). $d_{\mathrm{alg}} = \infty$: Virasoro,
-$\cW_N$ principal (class~M).
-
-\noindent\textbf{Mechanism.}
-The gap at~$3$ is structural. If $d_{\mathrm{alg}} = 3$ there is
-a nonzero degree-$4$ MC obstruction with no degree-$5$ follow-up;
-the Riccati equation $\Delta = 8\kappa S_4$ combined with the
-shadow Lie Jacobi identity forces either $\Delta = 0$ (which
-brings $d_{\mathrm{alg}} \leq 2$) or an infinite tower
-($d_{\mathrm{alg}} = \infty$). No intermediate value survives.
-
+\begin{proof}
+Differentiate the logarithmic expression in
+Proposition~\ref{thm:universal-C-A-6-sa}. Clearing the denominator
+$(1+6z)^2$ gives the displayed inhomogeneous second-order equation
+with polynomial coefficients. The only singularity introduced by the
+logarithmic term in the leading T-line expression is $z=-1/6$.
+\end{proof}
 
 %% =====================================================================
 %% §6. Shadow Tables
@@ -502,7 +474,6 @@ brings $d_{\mathrm{alg}} \leq 2$) or an infinite tower
 
 \section{Shadow Tables}\label{sec:shadow-tables}
 
-All entries in the tables below are verified against the compute layer.
 The modular characteristic $\kappa(\cA)$ is the degree-$2$ projection
 of the universal MC element $\Theta_\cA$, and the genus-$g$ free energy
 is $F_g(\cA) = \kappa(\cA) \cdot \lambda_g^{\mathrm{FP}}$ for
@@ -713,10 +684,10 @@ $V_\Lambda$ (lattice)
  & ${}^{\ddagger}$ & $0$ & $\Lambda$ self-dual \\
 Free fermion
  & $\mathrm{Sym}^{\mathrm{ch}}(\gamma)$
- & $0$ & $0$ & --- \\
+ & $0$ & $0$ & none \\
 $\beta\gamma_\lambda$
  & $bc_\lambda$
- & $0$ & $0$ & --- \\[3pt]
+ & $0$ & $0$ & none \\[3pt]
 \midrule
 $V_k(\mathfrak{sl}_2)$
  & $V_{-k-4}(\mathfrak{sl}_2)$
@@ -750,9 +721,9 @@ $\cW_N$ at $c$ (general)
 
 \noindent
 ${}^{\ddagger}$The Koszul dual $\cH_k^! = \mathrm{Sym}^{\mathrm{ch}}(V^*)$
-is not a Heisenberg algebra: $\kappa(\cH_k^!) = -k = \kappa(\cH_{-k})$,
-but the OPE structure of $\cH_k^!$ differs from that of $\cH_{-k}$.
-The central charge sum is not defined within a single-parameter family.
+has $\kappa(\cH_k^!) = -k = \kappa(\cH_{-k})$; its OPE structure
+differs from that of $\cH_{-k}$.
+The central charge sum has no single-parameter-family meaning.
 
 \noindent
 Here $K_N = 2(N{-}1)(2N^2{+}2N{+}1)$ is the Koszul conductor for
@@ -938,57 +909,32 @@ derivation and the convolution recursion from $H^2 = t^4 Q_L$.
 
 \section{Structural Theorems}\label{sec:structural-theorems}
 
-A classification is not a theorem. Left as a table, the four
-shadow classes would be an observation: a pattern in the data,
-subject to the next counterexample. What transforms a table
-into a theorem is the proof that no other classes exist, the
-identification of the algebraic mechanism that enforces the
-table, and the discovery that the classes carry structure
-beyond the taxonomy itself.
-
-This section establishes five results that accomplish this
-transformation. The depth gap (Proposition~\ref{prop:depth-gap-standalone})
-proves that $d_{\mathrm{alg}} \in \{0, 1, 2, \infty\}$ with
-no intermediate values: the classification is forced by the
-arithmetic of a single quadratic polynomial.
-The SC-formality characterisation
-(Proposition~\ref{prop:sc-formality-standalone}) shows that
-class~$\mathbf{G}$ is distinguished by a sharp operadic property.
-The betagamma contact mechanism
-(Proposition~\ref{prop:betagamma-contact-standalone}) reveals
-how class~$\mathbf{C}$ escapes the single-line dichotomy.
-The DS escalation conjecture
-(Conjecture~\ref{conj:ds-shadow-escalation-standalone})
-identifies the functor that moves between classes. The
-join-semilattice theorem
-(Proposition~\ref{prop:shadow-semilattice-standalone}) shows that
-the classes carry a natural algebraic order.
+The classification is supported by four structural statements.
+Proposition~\ref{prop:depth-gap-standalone} excludes intermediate
+algebraic depths; Proposition~\ref{prop:sc-formality-standalone}
+identifies class~$\mathbf{G}$ with SC-formality; and
+Proposition~\ref{prop:betagamma-contact-standalone} produces
+class~$\mathbf{C}$ by contact-channel separation. The
+Drinfeld--Sokolov conjecture isolates the class-raising functor under
+its generic-level hypotheses, and
+Proposition~\ref{prop:shadow-semilattice-standalone}
+gives the ordered classes their split direct-sum join.
 
 
 \subsection{The depth gap theorem}\label{ssec:depth-gap}
 
-The shadow tower of a chirally Koszul algebra can terminate or
-diverge. One might expect every finite depth to be realised:
-that the tower could stop at degree~$5$, or~$7$, or~$100$, by
-some suitable choice of OPE data. This does not happen. The
-tower terminates at degree~$3$ (class~$\mathbf{G}$), at
-degree~$4$ (class~$\mathbf{L}$), at degree~$5$
-(class~$\mathbf{C}$, via stratum separation), or not at all
-(class~$\mathbf{M}$). No other depth is accessible.
-
-The reason is that the shadow generating function
-$H(t) = t^2\sqrt{Q_L(t)}$ is controlled by a quadratic
-polynomial $Q_L(t)$, and a quadratic polynomial is either a
-perfect square or it is not. When $Q_L$ is a perfect square,
-the square root is linear and the tower terminates; when $Q_L$
-is not a perfect square, the binomial series for $(1+u)^{1/2}$
-produces infinitely many nonzero coefficients. There is no
-third possibility. This is the Riccati dichotomy: the depth of
-the shadow tower is not a free parameter but is read off from
-the discriminant of a single quadratic.
+The Riccati equation leaves only three rank-one possibilities. The
+tower has support through $S_2$ in class~$\mathbf{G}$, through $S_3$
+in class~$\mathbf{L}$, through a contact-channel $S_4$ in
+class~$\mathbf{C}$, and through infinitely many nonzero coefficients
+in class~$\mathbf{M}$. A quadratic $Q_L$ is either a square or a
+non-square; its square root is respectively polynomial or an infinite
+binomial series. Thus the discriminant of $Q_L$ determines the
+rank-one shadow depth, while class~$\mathbf{C}$ is supplied by the
+separate standard contact channel.
 
 Two distinct notions of depth appear in this analysis and must
-not be conflated. The algebraic depth
+be kept separate. The algebraic depth
 $d_{\mathrm{alg}}(\cA)$ counts independent shadow coefficients:
 $d_{\mathrm{alg}} = 0$ if $S_r = 0$ for all $r \geq 3$,
 $d_{\mathrm{alg}} = n$ if $S_r = 0$ for all $r \geq n + 3$,
@@ -999,8 +945,7 @@ lower ones. For the Virasoro algebra, $d_{\mathrm{gen}} = 3$
 (the cubic $S_3 = 2$ and quartic $S_4 = 10/[c(5c{+}22)]$
 determine all $S_r$ via the convolution recursion) but
 $d_{\mathrm{alg}} = \infty$ (every $S_r$ is nonzero). The
-recursion is finitely generated; the output is not finitely
-supported.
+recursion is finitely generated; the output has infinite support.
 
 \begin{proposition}[Depth gap]\label{prop:depth-gap-standalone}
 Let $\cA$ be a chirally Koszul algebra in the standard landscape
@@ -1020,8 +965,7 @@ line and a multi-sector extension.
 \emph{Rank one.}
 On a primary line~$L$ with $\kappa \neq 0$, the shadow generating
 function $H(t) = t^2 \sqrt{Q_L(t)}$ is determined by
-$(\kappa, \alpha, S_4)$
-(Theorem~\ref{thm:riccati-algebraicity}), where the shadow metric
+$(\kappa, \alpha, S_4)$, where the shadow metric
 $Q_L(t) = (2\kappa + 3\alpha\, t)^2 + 2\Delta\, t^2$
 is the Gaussian decomposition and
 $\Delta = 8\kappa S_4$ is the critical discriminant.
@@ -1035,14 +979,14 @@ to whether $\alpha = 0$ (class~$\mathbf{G}$) or
 $\alpha \neq 0$ (class~$\mathbf{L}$).
 
 If $\Delta \neq 0$ (equivalently $S_4 \neq 0$), then $Q_L$ is
-not a perfect square in $k(c)[t]$: the interaction correction
+irreducible over the rank-one coefficient field: the interaction correction
 $2\Delta\, t^2$ prevents $\sqrt{Q_L}$ from being polynomial.
 The Taylor expansion of $\sqrt{Q_L(t)}$ about $t = 0$ has
 infinitely many nonzero coefficients (the binomial series for
 $(1 + u)^{1/2}$ with
 $u = (6\alpha\,t + (9\alpha^2 + 2\Delta)\,t^2)/(4\kappa^2)$
-does not terminate when the coefficient of~$t^2$ in~$u$ is
-nonzero). Therefore $S_r \neq 0$ for infinitely many~$r$,
+has infinitely many nonzero terms when the coefficient of~$t^2$ in~$u$
+is nonzero). Therefore $S_r \neq 0$ for infinitely many~$r$,
 and $d_{\mathrm{alg}} = \infty$ (class~$\mathbf{M}$).
 
 The gap at $d_{\mathrm{alg}} = 3$ is now forced. Suppose
@@ -1056,11 +1000,8 @@ closed form $H(t) = t^2\sqrt{Q_L(t)}$ makes this manifest.
 Termination at any finite degree $\geq 5$ is impossible.
 
 Class~$\mathbf{C}$ ($d_{\mathrm{alg}} = 2$) occupies the
-boundary where $\Delta = 0$ on the primary line but
-$S_4 \neq 0$ on a charged stratum: stratum separation
-(Remark~\ref{rem:contact-stratum-separation}) terminates the
-tower at degree~$4$ by a mechanism external to the
-rank-one Riccati analysis. See
+contact channel where $S_3=0$, $S_4=-5/12$, and $S_r=0$ for
+$r\geq5$ by a mechanism external to the rank-one Riccati analysis. See
 Proposition~\ref{prop:betagamma-contact-standalone} below.
 
 \emph{Multi-sector extension.}
@@ -1082,13 +1023,13 @@ Every algebra in the standard landscape is chirally Koszul: the
 bar spectral sequence collapses at $E_2$, the bar cohomology
 concentrates in degree~$1$, and the transferred $A_\infty$
 operations on $H^*(\bar{B}^{\mathrm{ch}}(\cA))$ satisfy
-$m_k = 0$ for $k \geq 3$. Koszulness does not distinguish the
-four shadow classes.
+$m_k = 0$ for $k \geq 3$. Koszulness is common to all four shadow
+classes.
 
 A stronger condition does. Swiss-cheese formality asks that the
 higher SC-operations on $\cA$ \emph{itself} vanish:
 $m_k^{\mathrm{SC}} = 0$ for all $k \geq 3$. This is a
-condition on the algebra, not on its bar cohomology; the common
+condition on the algebra, distinct from a condition on its bar cohomology; the common
 notation $m_k$ for both is a source of systematic confusion.
 The question is: which algebras satisfy this stronger condition?
 
@@ -1111,8 +1052,7 @@ analogous statement for every other class~$\mathbf{G}$ family.
 All nested brackets vanish, so $m_k^{\mathrm{SC}} = 0$ for
 $k \geq 3$.
 
-The converse is a three-step forced march. Suppose $\cA$ is
-SC-formal. The cubic shadow $S_3$ is the normalized projection
+Conversely, suppose $\cA$ is SC-formal. The cubic shadow $S_3$ is the normalized projection
 of the trilinear form
 \[
  C(x,y,z) \;=\; \kappa\bigl(x,\, [y,z]\bigr),
@@ -1163,7 +1103,7 @@ The single-line Riccati dichotomy produces three outcomes:
 $d_{\mathrm{alg}} \in \{0, 1, \infty\}$. Class~$\mathbf{C}$
 ($d_{\mathrm{alg}} = 2$) is absent from this list. Its
 existence requires a mechanism that the rank-one analysis
-cannot see: shadow data that lives on a charged stratum rather
+misses: shadow data that lives on a charged stratum rather
 than on the primary line, and a termination mechanism that
 operates by dimensional obstruction rather than by
 algebraic identity.
@@ -1202,7 +1142,7 @@ Then\textup{:}
  \mathrm{Def}_{\mathrm{cyc}}^{(q)} \to
  \mathrm{Def}_{\mathrm{cyc}}^{(2q)}$
  has $\dim \mathrm{Def}_{\mathrm{cyc}}^{(2q)} = 0$ for
- rank-one systems: the quartic pump does not activate, and
+ rank-one systems: the quartic pump has zero target, and
  the tower terminates at $r_{\max} = 4$.
 \item The shadow depth is $r_{\max}(\beta\gamma_\lambda) = 4$
  and $d_{\mathrm{alg}}(\beta\gamma_\lambda) = 2$ for all
@@ -1211,10 +1151,9 @@ Then\textup{:}
 \end{proposition}
 
 \begin{proof}
-The four items form a logical chain: (i) shows that the primary
-line sees nothing beyond class~$\mathbf{G}$; (ii) identifies
-where the quartic shadow lives; (iii) explains why the tower
-stops there; (iv) assembles the classification.
+The primary-line computation gives (i), the charged-sector
+decomposition gives (ii), rank-one rigidity gives (iii), and
+(i)--(iii) imply (iv).
 
 \emph{Item~(i): invisibility on the primary line.}
 The $\beta\gamma$ OPE
@@ -1227,19 +1166,18 @@ gives $d_{\mathrm{alg}} = 0$. If the primary line were the
 whole story, $\beta\gamma$ would be class~$\mathbf{G}$.
 
 \emph{Item~(ii): birth of the quartic on the charged stratum.}
-The primary line is not the whole story. The $\beta\gamma$
+The weight-changing primary line is incomplete. The $\beta\gamma$
 system has two generators of different conformal weight: the
 cyclic deformation complex decomposes by charge, and the charged
 sector $\mathrm{Def}_{\mathrm{cyc}}^{(q)}$ with $q \neq 0$ is
 invisible to the restriction $q = 0$ that defines the primary
 line. The quartic contact invariant
 $\mathfrak{Q}_{\beta\gamma} = \mathrm{cyc}(m_3)$ is the
-trilinear Massey product on this charged stratum
-(Theorem~\ref{thm:nms-betagamma-quartic-birth}). At conformal
-weight $\lambda = 1/2$ (the symplectic boson), a $\mathbb{Z}/2$
-symmetry forces $\mathfrak{Q} = 0$; at all other $\lambda$, this
-symmetry is broken and $\mathfrak{Q} \neq 0$. The quartic shadow
-is born.
+trilinear Massey product on this charged stratum. In the standard
+conformal-weight family the quartic coefficient is
+$S_4=-5/12$ for all~$\lambda$; at $\lambda=1/2$ the symplectic
+boson changes the parity grading, while the graded contact witness
+remains nonzero.
 
 \emph{Item~(iii): death of the quintic by rank-one rigidity.}
 The quartic shadow, once born, must either propagate (producing
@@ -1292,36 +1230,36 @@ genuinely different algebra: new composite fields appear (the
 Sugawara stress tensor $T$, higher-spin currents $W_s$), and
 these composites carry OPE data absent from the affine algebra.
 
-The shadow-theoretic consequence is that DS reduction
-\emph{escalates} shadow class. An affine Kac--Moody algebra
-is class~$\mathbf{L}$ ($r_{\max} = 3$): the Jacobi identity
-kills the quartic shadow on every primary line. Every
-non-trivial DS reduction creates a Virasoro subalgebra whose
-quartic shadow $S_4 = 10/[c(5c{+}22)] \neq 0$ on the
-stress-tensor line, forcing $\Delta \neq 0$ and hence
-$r_{\max} = \infty$ by the depth gap. The jump is maximal:
-from $r_{\max} = 3$ (finite tower, class~$\mathbf{L}$) to
-$r_{\max} = \infty$ (infinite tower, class~$\mathbf{M}$),
-with no intermediate stop.
+The conjectural shadow-theoretic consequence is class escalation. An
+affine Kac--Moody algebra is class~$\mathbf{L}$ ($r_{\max}=3$):
+the Jacobi identity kills the quartic shadow on every primary line.
+For a generic nontrivial DS reduction, the stress-tensor line is
+required to carry a nonzero Virasoro quartic
+$S_4 = 10/[c(5c{+}22)]$, away from the singular central charges
+$c=0,-22/5$. The depth gap would then force
+$r_{\max}=\infty$. Singular levels and degenerate central charges
+require separate computation.
 
 \begin{conjecture}[Shadow depth escalation under DS reduction]
 \label{conj:ds-shadow-escalation-standalone}
 Let $\fg$ be a simple Lie algebra, $f \in \fg$ a non-zero
-nilpotent, and $k \neq -h^\vee$ a non-critical level. Then
+nilpotent, and let $k$ be a non-critical level for which the
+stress-tensor line of $\cW^k(\fg,f)$ is nondegenerate and has
+$c\notin\{0,-22/5\}$. Then
 \[
  r_{\max}\bigl(\cW^k(\fg, f)\bigr)
  \;\geq\;
  r_{\max}\bigl(V_k(\fg)\bigr)
  \;=\; 3.
 \]
-The inequality is strict for every non-zero nilpotent:
+The conjecture asserts strictness for every non-zero nilpotent:
 $r_{\max}(\cW^k(\fg, f)) = \infty$
-\textup{(}class~$\mathbf{M}$\textup{)} whenever $f \neq 0$.
+\textup{(}class~$\mathbf{M}$\textup{)}.
 \end{conjecture}
 
 The conjecture asserts that DS reduction is a one-way door in
 shadow complexity: once the nilpotent $f$ is turned on, the
-tower cannot be made to terminate again. The depth gap
+tower remains infinite in the conjectural generic regime. The depth gap
 (Proposition~\ref{prop:depth-gap-standalone}) reduces the
 conjecture to a single computation: it suffices to show
 $S_4 \neq 0$ on the stress-tensor primary line of
@@ -1332,17 +1270,16 @@ automatically.
 Three independent lines of evidence support the conjecture.
 
 \emph{(a)~Principal reductions.} For $f = f_{\mathrm{prin}}$
-and every simple~$\fg$, the conjecture is proved: the principal
+and the standard generic-level principal rows, the statement is proved: the principal
 $\cW$-algebra $\cW_N = \cW^k(\mathfrak{sl}_N,
 f_{\mathrm{prin}})$ contains the Virasoro algebra as a
 subalgebra, and the Virasoro quartic $S_4 \neq 0$ on the
 $T$-line is a universal computation independent of~$\fg$.
 
-\emph{(b)~Non-principal reductions in type~$A$.} Systematic
-computation verifies the conjecture for all nilpotent orbits of
-$\mathfrak{sl}_N$ ($N = 3, 4, 5$) at multiple non-critical
-levels~$k$. Every non-trivial orbit (minimal, subregular,
-hook-type, and all intermediate) produces class~$\mathbf{M}$.
+\emph{(b)~Non-principal reductions in type~$A$.} Existing
+computations support the conjecture for several nilpotent orbits of
+$\mathfrak{sl}_N$ at non-critical levels~$k$. The generic statement
+remains conjectural outside the verified OPE tables.
 The minimal nilpotent orbit of $\mathfrak{sl}_3$ (the
 Bershadsky--Polyakov algebra $\cW^k(\mathfrak{sl}_3, f_{\min})$)
 is the simplest non-principal example: it has a single
@@ -1366,12 +1303,10 @@ tower.
 \label{ssec:shadow-semilattice}
 
 The four shadow classes are invariants of individual algebras.
-The question of how they behave under algebraic operations
-requires a separate argument. Direct sum is the simplest such
-operation: given two chiral algebras $\cA_1$ and $\cA_2$,
-their direct sum $\cA_1 \oplus \cA_2$ has fields from both
-factors, with OPE between distinct factors regular (no singular
-terms). What is the shadow class of the direct sum?
+Their behaviour under algebraic operations requires a separate
+argument. The split operation considered here is the direct sum of
+cyclically admissible Lie conformal algebras with vanishing mixed
+OPE, whose modular envelopes split as completed tensor products.
 
 The answer is the maximum, and the proof is that the shadow
 tower decomposes sector by sector when the cross-sector OPE is
@@ -1398,10 +1333,12 @@ $r_{\max}(\cA_1 \oplus \cA_2)
 \end{proposition}
 
 \begin{proof}
-The OPE of $\cA_1 \oplus \cA_2$ decomposes into three sectors:
+Assume $\cA_1$ and $\cA_2$ are cyclically admissible Lie conformal
+algebras with vanishing mixed OPE and split modular envelopes. The OPE
+of $\cA_1 \oplus \cA_2$ decomposes into three sectors:
 pure $\cA_1$, pure $\cA_2$, and mixed. The mixed sector has
-regular OPE by the definition of direct sum: fields from
-distinct factors are mutually local with no singular terms.
+regular OPE by hypothesis: fields from distinct factors are mutually
+local with no singular terms.
 Regular OPE contributes no shadow coefficients at any degree.
 The shadow tower of $\cA_1 \oplus \cA_2$ is therefore the
 direct sum of the towers of $\cA_1$ and $\cA_2$, and the shadow
@@ -1415,9 +1352,8 @@ $V_k(\fg_1)$, the Jacobi identity kills $S_4$; on the primary
 line of $V_{k'}(\fg_2)$, the same. The mixed channel
 $\fg_1 \otimes \fg_2$ contributes no singular OPE terms, so
 no quartic shadow is born in the cross-sector. Therefore
-$\mathbf{L} \oplus \mathbf{L} = \mathbf{L}$ (not
-$\mathbf{C}$, not $\mathbf{M}$): the Jacobi identity of each
-factor survives the direct sum.
+$\mathbf{L} \oplus \mathbf{L} = \mathbf{L}$: the Jacobi identity
+of each factor survives the direct sum.
 \end{proof}
 
 \begin{remark}[Monotonicity and its failure]
@@ -1428,13 +1364,13 @@ Constructions that create new singular terms between sectors
 violate monotonicity and can raise the shadow class strictly.
 Two examples illustrate the failure.
 
-Drinfeld--Sokolov reduction: $V_k(\fg)$ is class~$\mathbf{L}$,
-but $\cW^k(\fg, f)$ is class~$\mathbf{M}$ for every non-zero
-nilpotent~$f$
-(Conjecture~\ref{conj:ds-shadow-escalation-standalone}, proved
-for principal reductions). The BRST construction creates
-composite fields with new OPE singularities; these singularities
-produce the quartic shadow that the Jacobi identity had killed.
+Drinfeld--Sokolov reduction sends class~$\mathbf{L}$ affine
+input to class~$\mathbf{M}$ output in the verified principal rows
+and in the generic regime predicted by
+Conjecture~\ref{conj:ds-shadow-escalation-standalone}. The BRST
+construction creates composite fields with new OPE singularities;
+these singularities produce the quartic shadow that the Jacobi
+identity had killed.
 
 Coset construction: $\cA / \cA'$ can land in a higher class
 than either factor. The Goddard--Kent--Olive coset of
@@ -1448,6 +1384,38 @@ The join-semilattice records the stable part of this structure;
 the unstable part is the subject of
 Conjecture~\ref{conj:ds-shadow-escalation-standalone}.
 \end{remark}
+
+\begin{thebibliography}{99}
+
+\bibitem{Arakawa07}
+T. Arakawa, \emph{Representation theory of W-algebras}, Invent.
+Math. \textbf{169} (2007), no.~2, 219--320.
+
+\bibitem{Flohr1996}
+M. A. I. Flohr, \emph{On modular invariant partition functions of
+conformal field theories with logarithmic operators}, Int. J. Mod.
+Phys. A \textbf{11} (1996), 4147--4172.
+
+\bibitem{FP03}
+C. Faber and R. Pandharipande, \emph{Hodge integrals, partition
+matrices, and the $\lambda_g$ conjecture}, Ann. of Math. \textbf{157}
+(2003), no.~1, 97--124.
+
+\bibitem{Frenkel-Kac-Wakimoto92}
+I. B. Frenkel, V. G. Kac, and M. Wakimoto, \emph{Characters and
+fusion rules for $W$-algebras via quantized Drinfeld--Sokolov
+reduction}, Comm. Math. Phys. \textbf{147} (1992), no.~2, 295--328.
+
+\bibitem{Gurarie1993}
+V. Gurarie, \emph{Logarithmic operators in conformal field theory},
+Nucl. Phys. B \textbf{410} (1993), 535--549.
+
+\bibitem{KRW03}
+V. G. Kac, S.-S. Roan, and M. Wakimoto, \emph{Quantum reduction for
+affine superalgebras}, Comm. Math. Phys. \textbf{241} (2003),
+307--342.
+
+\end{thebibliography}
 
 \ifdefined\shadowtowervtwoincluded
 \else

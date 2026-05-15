@@ -1,13 +1,14 @@
-r"""Twisted holography amplitudes from Koszul duality (Costello-Li programme).
+r"""Twisted holography amplitude projections for the Costello-Li programme.
 
 Costello-Li's twisted holography identifies the holomorphic twist of type IIB
-on AdS_3 x S^3 x T^4 with Koszul duality between a boundary chiral algebra A
-and its Koszul dual A!.  The shadow obstruction tower Theta_A packages the holographic
-dictionary.  The holographic modular Koszul datum
+on AdS_3 x S^3 x T^4 with a bar/Verdier comparison between a boundary
+chiral algebra A, its bar-dual coalgebra A^i, and its Verdier/Koszul
+branch A!.  The shadow obstruction tower Theta_A packages the holographic
+dictionary.  The holographic modular Koszul package is
 
-    H(T) = (A, A!, C, r(z), Theta_A, nabla^hol)
+    H(T) = (A, A^i, A!, C, r(z), Theta_A, nabla^hol)
 
-encodes the full system.
+This module computes scalar and amplitude projections of that package.
 
 This module computes twisted holography amplitudes for two key examples:
 
@@ -114,53 +115,31 @@ def _lambda_fp_exact(g: int) -> Fraction:
 class TwistedN4Data:
     """Data for twisted N=4 SYM (D3 brane) at rank N.
 
-    The holomorphic twist of N=4 SYM has boundary chiral algebra =
-    affine gl_N at level 1.
+    The holomorphic twist of N=4 SYM has boundary chiral algebra
+    affine gl_N at level 1 in the normalization used by this module.
 
-    For gl_N at level 1:
-      c = N (each U(1) factor contributes 1, and we have N of them
-             from gl_N = sl_N + u(1); more precisely c(gl_N, k=1) = N)
-      kappa = N/2? NO.
-
-    CAREFUL (AP1, AP9): For gl_N at level k, we must distinguish:
-      - sl_N part: c(sl_N, k) = k(N^2-1)/(k+N), kappa = (N^2-1)(k+N)/(2N)
-      - u(1) part: c(u(1), k) = 1, kappa = k
-      - Total for gl_N: c = k(N^2-1)/(k+N) + 1
+    The gl_N convention is the direct-sum convention gl_N = sl_N + u(1):
+      - sl_N part: c(sl_N, k) = k(N^2-1)/(k+N),
+        kappa(sl_N, k) = (N^2-1)(k+N)/(2N).
+      - u(1) part: c(u(1), k) = 1 and kappa(u(1), k) = k.
+      - Total: c(gl_N, k) = k(N^2-1)/(k+N) + 1 and
+        kappa(gl_N, k) = (N^2-1)(k+N)/(2N) + k.
 
     At level k=1:
       c(sl_N, 1) = (N^2-1)/(N+1) = N-1
       c(u(1), 1) = 1
       c(gl_N, 1) = N
 
-    kappa(sl_N, k=1) = (N^2-1)(1+N)/(2N) = (N^2-1)/2
+    kappa(sl_N, k=1) = (N^2-1)(N+1)/(2N)
     kappa(u(1), k=1) = 1
-    kappa(gl_N, k=1) = (N^2-1)/2 + 1 = (N^2+1)/2
-
-    Wait -- this uses the additive splitting gl_N = sl_N + u(1).
-    kappa is additive on direct sums (prop:independent-sum-factorization),
-    so kappa(gl_N) = kappa(sl_N) + kappa(u(1)).
-
-    At k=1: kappa(gl_N) = (N^2-1)(N+1)/(2N) + 1 = (N^2-1)/2 + 1 = (N^2+1)/2.
-
-    Actually let me recheck: for sl_N at level k, the formula is
-      kappa(sl_N, k) = dim(sl_N) * (k + h^v) / (2*h^v)
-                     = (N^2-1)(k+N)/(2N)
-    At k=1: (N^2-1)(1+N)/(2N) = (N+1)(N-1)(N+1)/(2N)... that's wrong.
-    (N^2-1)(1+N)/(2N) = (N-1)(N+1)(N+1)/(2N). For N=2: 1*3*3/4 = 9/4.
-
-    For Heisenberg (u(1)) at level k: kappa = k.
-    At k=1: kappa(u(1)) = 1.
-
-    So kappa(gl_N, k=1) = (N^2-1)(N+1)/(2N) + 1.
+    kappa(gl_N, k=1) = (N^2-1)(N+1)/(2N) + 1.
 
     For the twisted holography computation, what matters is that the
     shadow obstruction tower at genus g gives F_g = kappa * lambda_g^FP.
 
-    ACTUALLY: In the Costello-Li programme, the relevant level for the
-    holomorphic twist of N=4 SYM is determined by the 't Hooft coupling.
-    At tree level (classical), the boundary algebra is gl_N at level
-    psi_0 (the "holomorphic twist parameter"). The standard normalization
-    sets this to 1 for simplicity.
+    In the Costello-Li convention the boundary level is fixed by the
+    holomorphic twist parameter. The standard scalar lane in this module
+    sets that parameter to 1.
 
     For computational clarity, we work with the TOTAL kappa for gl_N at level k.
     """
@@ -714,7 +693,8 @@ class HolographicRMatrix:
     """R-matrix r(z) = Res^coll_{0,2}(Theta_A) for a holographic system.
 
     The collision residue of the MC element Theta_A at genus 0, arity 2
-    gives the R-matrix governing the binary OPE of the Koszul dual A!.
+    gives the collision R-matrix of the boundary algebra A.  This is
+    not the Verdier/Koszul branch A! and not the bar-dual coalgebra A^i.
 
     POLE ORDER (AP19): The r-matrix has poles ONE ORDER BELOW the OPE.
     For gl_N at level 1:
@@ -748,26 +728,11 @@ def holographic_r_matrix_d3(N: int) -> HolographicRMatrix:
     with the standard normalization Tr(E_{ab} E_{cd}) = delta_{ac} delta_{bd},
     the Casimir eigenvalue on the adjoint is N.)
 
-    Scalar trace: Tr(Omega) = sum_{a,b} Tr(E_{ab}) Tr(E_{ba}) =
-    sum_{a,b} delta_{ab} delta_{ba} = N^2.
-
-    Wait: Tr(Omega) in the tensor product sense is the contraction
-    sum_a Tr(t^a t_a) = sum_a C_2(fund) = dim(g) * C_2(fund) / dim(V).
-    For gl_N in the fundamental: Tr(Omega_{fund}) = C_2(fund) = N^2/N = N.
-
-    Actually Tr_{fund}(Omega) (meaning the trace in V tensor V where
-    Omega acts on V tensor V): this is the scalar amplitude.
-    For gl_N: Omega acting on C^N tensor C^N is the swap operator P_{12}.
-    Tr_{C^N tensor C^N}(P_{12}) = N (= dim of symmetric subspace minus
-    antisymmetric, or simply the trace of P which equals dim(C^N) = N).
-
-    So the scalar trace of the R-matrix r-value is kappa = N^2/2 + 1? No.
-    The r-matrix is Omega/z. The scalar projection of Omega is the
-    Killing form contraction = kappa.
-
-    Let me be precise: kappa = Sh_{0,2}(Theta_A), the arity-2 scalar shadow.
-    This is the KAPPA we computed: kappa(gl_N, 1) = (N^2-1)(N+1)/(2N) + 1.
-    The scalar trace of the r-matrix coefficient gives this kappa.
+    Trace conventions are separated.  On C^N tensor C^N the tensor
+    Casimir is the swap operator P_{12}, whose ordinary trace is N.
+    The scalar shadow used here is not that ordinary tensor trace.  It is
+    the arity-2 scalar projection Sh_{0,2}(Theta_A), hence
+    kappa(gl_N, 1) = (N^2-1)(N+1)/(2N) + 1.
     """
     kappa_val = twisted_n4_kappa(N, k=1)
     return HolographicRMatrix(
@@ -913,10 +878,10 @@ def anomaly_matching_m2(N: int, k: int) -> AnomalyMatching:
       the matter anomaly for the twist to be consistent)
     - kappa_eff = -2N^2 + 2N^2 = 0
 
-    Actually: the CS sectors have kappa_CS(k) + kappa_CS(-k) = 0.
-    The matter has kappa_matter = -2N^2 (4N^2 symplectic bosons each with kappa = -1/2).
-    The ghost sector for BRST has kappa_ghost = +2N^2.
-    Total: kappa_eff = 0 + (-2N^2) + 2N^2 = 0.
+    The two Chern-Simons sectors satisfy kappa_CS(k) + kappa_CS(-k) = 0.
+    The matter sector has kappa_matter = -2N^2, with 4N^2 symplectic
+    bosons each contributing kappa = -1/2. The BRST ghost sector
+    contributes kappa_ghost = +2N^2, hence kappa_eff = 0.
     """
     kappa_m = Fraction(-2 * N * N)
     kappa_g = Fraction(2 * N * N)
@@ -930,7 +895,7 @@ def anomaly_matching_m2(N: int, k: int) -> AnomalyMatching:
 
 
 def koszul_complementarity_d3(N: int) -> Dict[str, Fraction]:
-    """Koszul complementarity for D3 brane: kappa(A) + kappa(A!) = 0.
+    """Verdier/Koszul scalar complementarity for D3 brane.
 
     For gl_N at level k, the Feigin-Frenkel dual level is k' = -k - 2N.
     At k=1: k' = -1 - 2N.
@@ -940,7 +905,8 @@ def koszul_complementarity_d3(N: int) -> Dict[str, Fraction]:
                      = (N^2-1)(-1-N)/(2N) + (-1-2N)
                      = -(N^2-1)(N+1)/(2N) - 1 - 2N
 
-    Wait: kappa(gl_N, k') = kappa_sl(k') + kappa_u1(k')
+    The affine Feigin-Frenkel transform gives
+    kappa(gl_N, k') = kappa_sl(k') + kappa_u1(k')
     where kappa_sl(k') = (N^2-1)(k'+N)/(2N) = (N^2-1)(-1-2N+N)/(2N)
                         = (N^2-1)(-1-N)/(2N) = -(N^2-1)(N+1)/(2N) = -kappa_sl(k=1).
     and kappa_u1(k') = k' = -1-2N.
@@ -1004,9 +970,11 @@ def koszul_complementarity_m2(N: int, k: int) -> Dict[str, Fraction]:
 # ===========================================================================
 
 def full_twisted_holography_datum_d3(N: int) -> Dict[str, object]:
-    """Complete holographic datum for D3 brane at rank N.
+    """Holographic projection package for the D3 brane at rank N.
 
-    Returns all six components of H(T) plus cross-checks.
+    Returns the visible scalar, collision, and connection projections of
+    H(T) = (A, A^i, A!, C, r(z), Theta_A, nabla^hol), while preserving
+    legacy key names used by older tests.
     """
     data = TwistedN4Data(N=N)
     r_matrix = holographic_r_matrix_d3(N)
@@ -1014,8 +982,15 @@ def full_twisted_holography_datum_d3(N: int) -> Dict[str, object]:
     complementarity = koszul_complementarity_d3(N)
 
     return {
+        "holographic_package": "(A, A^i, A^!, C, r(z), Theta_A, nabla^hol)",
         "A": f"gl_{N}(k=1)",
+        "A_i": f"H^*(B^ch(gl_{N}(k=1)))",
         "A_dual": f"gl_{N}(k'=-{1+2*N})",
+        "A^!": f"gl_{N}(k'=-{1+2*N})",
+        "C": "Z_ch^der(A) bulk slot after open-closed comparison",
+        "Theta_A": "shadow obstruction tower",
+        "nabla^hol": "shadow connection",
+        "projection_scope": "scalar/amplitude projection, not a complete bulk reconstruction",
         "c(A)": data.central_charge,
         "kappa(A)": data.kappa,
         "kappa(A!)": complementarity["kappa_A_dual"],
@@ -1035,15 +1010,22 @@ def full_twisted_holography_datum_d3(N: int) -> Dict[str, object]:
 
 
 def full_twisted_holography_datum_m2(N: int, k: int) -> Dict[str, object]:
-    """Complete holographic datum for M2 brane at rank N, level k."""
+    """Holographic projection package for M2 brane at rank N, level k."""
     data = ABJMShadowData(N=N, k=k)
     r_matrix = holographic_r_matrix_m2(N, k)
     anomaly = anomaly_matching_m2(N, k)
     complementarity = koszul_complementarity_m2(N, k)
 
     return {
+        "holographic_package": "(A, A^i, A^!, C, r(z), Theta_A, nabla^hol)",
         "A": f"ABJM(N={N},k={k})",
+        "A_i": f"H^*(B^ch(ABJM(N={N},k={k})))",
         "A_dual": f"ABJM(N={N},k={k})!",
+        "A^!": f"ABJM(N={N},k={k})!",
+        "C": "Z_ch^der(A) bulk slot after open-closed comparison",
+        "Theta_A": "shadow obstruction tower",
+        "nabla^hol": "shadow connection",
+        "projection_scope": "reduced scalar/amplitude projection, not the full pre-BRST package",
         "c(A)": Fraction(-2 * N * N),
         "kappa(A)": data.kappa,
         "kappa(A!)": complementarity["kappa_A_dual"],

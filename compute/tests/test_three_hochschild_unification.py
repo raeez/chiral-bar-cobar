@@ -1,31 +1,19 @@
-"""HZ-IV independent-verification decorators for Vol I chapter
+"""Independent checks for Vol I chapter
 chapters/theory/three_hochschild_unification_platonic.tex.
 
-Targets three new ProvedHere theorems / propositions:
+The tests keep four surfaces distinct:
 
-  1. thm:three-hochschild-chain-level-agreement-low-degree
-  2. thm:three-hochschild-cohomological-agreement-all-degree
-  3. prop:three-hochschild-high-degree-divergence
-  4. thm:critical-level-ff-center-unification
+  1. curve-level chiral Hochschild cochains;
+  2. associative Hochschild cochains of a chosen formal-disk mode algebra;
+  3. continuous Chevalley--Eilenberg/Gel'fand--Fuks cochains;
+  4. critical chiral and mode centres identified with opers.
 
-Disjointness discipline: every `derived_from` source is disjoint at the
-string level from every `verified_against` source. Decorator enforces
-disjointness at import time.
-
-External disjoint verification anchors (per HZ-IV protocol):
-
-  (a) Feigin--Fuks 1984, Fuks 1986 (Vir GF cohomology polynomial c_{2k});
-  (b) Kontsevich 1994 HKR (classical Hochschild of commutative);
-  (c) Gel'fand--Fuchs 1970, Goncharova 1973 (continuous Lie cohomology).
-
-No tautological decoration: the engine-side dimension tables are
-computed from the published source values; the test-side values come
-from independent cross-family Whitehead/Euler-characteristic arguments.
+Categorical Hochschild cochains and topological Hochschild homology
+have different inputs and are deliberately absent from these comparison
+tests.
 """
 
 from __future__ import annotations
-
-from fractions import Fraction
 
 from compute.lib.independent_verification import independent_verification
 
@@ -53,12 +41,9 @@ FAMILY_LOW_DEGREE_TABLE = {
         "chirhoch": (1, 1, 1),
         # HH*(A_1): classical Weyl algebra Whitehead (Sridharan 1961).
         "hh_mode": (1, 0, 0),
-        # Heisenberg positive-mode Lie algebra is abelian infinite-dim;
-        # its continuous cohomology is divided polynomial in even
-        # generators truncated to degree <= 2: H^0 = C, H^1 = 0
-        # (no abelian derivations beyond inner), H^2 = C (central
-        # extension class, the level k itself).  Source: Pressley-Segal
-        # 1986, Sect 4.
+        # Reduced scalar GF target used in the chapter: H^0 = C,
+        # H^1 = 0 in the selected bounded table, H^2 = C records the
+        # central extension class, the level k itself.
         "gf_cont": (1, 0, 1),
     },
     "fermion": {
@@ -74,8 +59,8 @@ FAMILY_LOW_DEGREE_TABLE = {
         # for semisimple over char 0 gives HH^0 = C, HH^1 = HH^2 = 0.
         # Whitehead 1937.
         "hh_mode": (1, 0, 0),
-        # GF: H^0(sl_2_hat) = C, H^1 = 0 (Whitehead), H^2(sl_2) = C
-        # (Killing form class). Fuks 1986 Table 2.
+        # GF: H^0 = C, H^1 = 0, H^2 = C for the scalar affine
+        # central-extension class.
         "gf_cont": (1, 0, 1),
     },
     "virasoro_generic": {
@@ -91,10 +76,39 @@ FAMILY_LOW_DEGREE_TABLE = {
 }
 
 
+THETA1_KERNEL_TABLE = {
+    "heisenberg": (0, 1, 1),
+    "fermion": (0, 0, 1),
+    "affine_sl2_generic": (0, 3, 1),
+    "virasoro_generic": (0, 0, 1),
+}
+
+
+THETA3_SCALAR_IMAGE_TABLE = {
+    # For the chosen scalar target, the mode-visible scalar image is
+    # degree zero only. The GF degree-two class is native Lie-cohomology
+    # content, not the image of Theta_3.
+    family: (1, 0, 0)
+    for family in FAMILY_LOW_DEGREE_TABLE
+}
+
+
+EXPECTED_EULER_CHARACTERISTICS = {
+    "heisenberg": {"chirhoch": 1, "hh_mode": 1, "gf_cont": 2},
+    "fermion": {"chirhoch": 2, "hh_mode": 1, "gf_cont": 2},
+    "affine_sl2_generic": {"chirhoch": -1, "hh_mode": 1, "gf_cont": 2},
+    "virasoro_generic": {"chirhoch": 2, "hh_mode": 1, "gf_cont": 2},
+}
+
+
+def alternating_euler(dims: tuple[int, int, int]) -> int:
+    """Low-degree alternating Euler characteristic."""
+    return sum((-1) ** n * dims[n] for n in range(3))
+
+
 # ---------------------------------------------------------------------------
 # thm:three-hochschild-chain-level-agreement-low-degree
-# Chain-level quasi-iso of Theta_1 onto image (outer-derivation subcomplex).
-# Tested as: dim ChirHoch^n = dim HH^n_mode + (outer-derivation correction).
+# Theta_1 compares the chiral quotient to the mode-visible image.
 # ---------------------------------------------------------------------------
 
 
@@ -102,8 +116,8 @@ FAMILY_LOW_DEGREE_TABLE = {
     claim="thm:three-hochschild-chain-level-agreement-low-degree",
     derived_from=[
         "ChirHoch dimension tables from Vol I Chapters 10 and 11",
-        "FAMILY_LOW_DEGREE_TABLE engine ledger computed from "
-        "Vol I prop:chirhoch1-affine-km and boson/fermion computations",
+        "Mode-visible quotient stated in "
+        "chapters/theory/three_hochschild_unification_platonic.tex",
     ],
     verified_against=[
         "Sridharan 1961: HH^*(Weyl_n) = H^*(sp_{2n}) concentrated deg 0",
@@ -112,47 +126,36 @@ FAMILY_LOW_DEGREE_TABLE = {
         "extension classified by single H^2 class",
     ],
     disjoint_rationale=(
-        "Chain-level agreement is the equality "
-        "dim ChirHoch^n = dim HH^n_mode + outer_chiral_derivation_count "
-        "in degrees 0,1,2 on the Koszul locus. Derivation side is "
-        "Vol I computations of ChirHoch by direct chiral cochain "
-        "analysis; verification side is three INDEPENDENT pillars: "
+        "The comparison is a quotient/image statement in degrees 0,1,2. "
+        "The chiral side is computed by direct chiral cochains; the "
+        "verification side uses classical associative and Lie inputs: "
         "Sridharan for HH of Weyl, Whitehead for semisimple Lie, "
-        "Pressley-Segal for Heisenberg central extensions. None of "
-        "the three independent anchors uses chiral Hochschild in its "
-        "derivation; each computes its target from the classical "
-        "associative/Lie side."),
+        "Pressley-Segal for Heisenberg central extensions. These sources "
+        "do not compute chiral Hochschild cochains."),
 )
 def test_three_hochschild_chain_level_agreement_low_degree():
-    """Verify dim ChirHoch^n agrees with dim HH^n_mode + outer-derivation
-    correction in degrees 0, 1, 2 for all four families."""
-
-    # Outer-chiral-derivation correction at degree 1: for Heisenberg
-    # and affine KM, the simple-pole-absent generator admits an outer
-    # chiral derivation D(alpha)=1 or D(J^a) in g that is NOT inner in
-    # the mode algebra.  This is the precise chain-level content the
-    # theorem identifies as the image of Theta_1.
-    outer_der_correction = {
-        "heisenberg": (0, 1, 1),  # deg 1: outer D(alpha); deg 2: level def
-        "fermion": (0, 0, 1),  # deg 2: level shift only
-        "affine_sl2_generic": (0, 3, 1),  # deg 1: adjoint g; deg 2: level
-        "virasoro_generic": (0, 0, 1),  # deg 2: c-deformation
-    }
+    """Theta_1 sees the mode quotient, not the whole chiral complex."""
 
     for family, table in FAMILY_LOW_DEGREE_TABLE.items():
-        cor = outer_der_correction[family]
+        kernel = THETA1_KERNEL_TABLE[family]
         for n in (0, 1, 2):
-            predicted = table["hh_mode"][n] + cor[n]
+            mode_visible = table["hh_mode"][n]
+            predicted = mode_visible + kernel[n]
             actual = table["chirhoch"][n]
             assert actual == predicted, (
                 f"family {family}, degree {n}: "
-                f"ChirHoch = {actual}, HH_mode + outer = {predicted}")
+                f"ChirHoch = {actual}, mode image + kernel = {predicted}")
+
+            theta3_scalar = THETA3_SCALAR_IMAGE_TABLE[family][n]
+            assert theta3_scalar <= table["gf_cont"][n], (
+                f"family {family}, degree {n}: Theta_3 scalar image "
+                f"{theta3_scalar} exceeds GF target {table['gf_cont'][n]}")
 
 
 # ---------------------------------------------------------------------------
 # thm:three-hochschild-cohomological-agreement-all-degree
-# ChirHoch vanishes above 2 (Theorem H); GF unbounded. Cohomological
-# iso onto bounded part.
+# ChirHoch vanishes above 2 (Theorem H); GF can be unbounded.
+# The comparison is by quotient and image, not Euler equality.
 # ---------------------------------------------------------------------------
 
 
@@ -160,35 +163,53 @@ def test_three_hochschild_chain_level_agreement_low_degree():
     claim="thm:three-hochschild-cohomological-agreement-all-degree",
     derived_from=[
         "Theorem H amplitude bound: ChirHoch^{>2}(A) = 0 on Koszul locus",
-        "FAMILY_LOW_DEGREE_TABLE ledger for the bounded range [0,2]",
+        "Low-degree comparison tables in "
+        "chapters/theory/three_hochschild_unification_platonic.tex",
     ],
     verified_against=[
-        "Euler characteristic: sum_n (-1)^n dim ChirHoch^n from "
-        "independent Hilbert-series computation of Vol I Theorem H",
+        "Direct alternating-sum computation from the four low-degree "
+        "dimension triples",
         "Loday 1992 Ch 1: antisymmetrization HH^* -> C^*_Lie is a "
         "chain map with image = antisymmetric Hochschild component",
     ],
     disjoint_rationale=(
-        "Cohomological agreement on the full range reduces to the "
-        "truncated statement on [0,2] because ChirHoch vanishes above. "
-        "Euler characteristic cross-check (Hilbert series) and "
-        "Loday's antisymmetrization theorem are classical sources "
-        "disjoint from the chiral Hochschild derivation."),
+        "The theorem asserts cohomological comparison only after quotient "
+        "and passage to images. The alternating sums are recomputed from "
+        "the native dimension triples to detect false equality claims; "
+        "Loday supplies the independent antisymmetrization map."),
 )
 def test_three_hochschild_cohomological_euler_characteristic():
-    """Verify Euler characteristic chi_{<=2} ChirHoch = chi_{<=2} GF_cont
-    for each family (bounded part)."""
+    """Record native Euler characteristics; no universal equality holds."""
     for family, table in FAMILY_LOW_DEGREE_TABLE.items():
-        chi_ch = sum((-1) ** n * table["chirhoch"][n] for n in range(3))
-        chi_gf = sum((-1) ** n * table["gf_cont"][n] for n in range(3))
-        # For the bounded part on Koszul locus, the outer-derivation
-        # component in ChirHoch^1 is counterbalanced by the
-        # central-extension class in GF^2 (Heisenberg, Virasoro) or
-        # by the Killing H^2(g) class (affine KM). Euler
-        # characteristics coincide exactly.
-        assert chi_ch == chi_gf, (
-            f"family {family}: chi ChirHoch = {chi_ch}, "
-            f"chi GF_cont = {chi_gf}")
+        actual = {
+            "chirhoch": alternating_euler(table["chirhoch"]),
+            "hh_mode": alternating_euler(table["hh_mode"]),
+            "gf_cont": alternating_euler(table["gf_cont"]),
+        }
+        assert actual == EXPECTED_EULER_CHARACTERISTICS[family]
+
+    assert EXPECTED_EULER_CHARACTERISTICS["heisenberg"] == {
+        "chirhoch": 1,
+        "hh_mode": 1,
+        "gf_cont": 2,
+    }
+    assert (
+        EXPECTED_EULER_CHARACTERISTICS["heisenberg"]["chirhoch"]
+        != EXPECTED_EULER_CHARACTERISTICS["heisenberg"]["gf_cont"]
+    )
+    affine_chis = EXPECTED_EULER_CHARACTERISTICS["affine_sl2_generic"]
+    assert len(set(affine_chis.values())) == 3
+
+
+def test_theta3_scalar_image_is_not_full_scalar_gf():
+    """The scalar GF degree-two class is native Lie cohomology."""
+    for family, table in FAMILY_LOW_DEGREE_TABLE.items():
+        image = THETA3_SCALAR_IMAGE_TABLE[family]
+        gap = tuple(table["gf_cont"][n] - image[n] for n in range(3))
+        assert image == (1, 0, 0)
+        assert gap == (0, 0, 1), (
+            f"family {family}: expected exactly the GF degree-two "
+            f"class outside Theta_3 image, got gap {gap}")
 
 
 # ---------------------------------------------------------------------------
@@ -210,10 +231,10 @@ def test_three_hochschild_cohomological_euler_characteristic():
     ],
     disjoint_rationale=(
         "High-degree divergence is the assertion that ChirHoch and "
-        "HH_mode vanish while GF stays polynomial. Theorem H bounds "
-        "ChirHoch; Ore extension classical result bounds HH_mode; "
-        "Goncharova-Fuks exhibits GF unboundedness. Three independent "
-        "computations across three disjoint source traditions."),
+        "the chosen Vir mode model vanish in degree 4 while GF stays "
+        "polynomial. Theorem H bounds ChirHoch; the classical mode "
+        "model bounds this HH computation; Goncharova-Fuks exhibits "
+        "GF unboundedness."),
 )
 def test_high_degree_divergence_virasoro_degree_4():
     """Verify at degree 4 for Virasoro: ChirHoch^4 = 0, HH^4_mode = 0,
@@ -230,14 +251,15 @@ def test_high_degree_divergence_virasoro_degree_4():
     assert hh_mode_4_vir == 0, "Ore extension HH bound violated"
     assert gf_4_vir == 1, "Goncharova c_4 class missing"
 
-    # Divergence: ChirHoch and HH_mode agree (both 0), but GF disagrees.
-    assert chirhoch_4_vir == hh_mode_4_vir  # low two agree above [0,2]
+    # Divergence: ChirHoch and this mode model agree, but GF disagrees.
+    assert chirhoch_4_vir == hh_mode_4_vir
     assert gf_4_vir != chirhoch_4_vir  # GF diverges
 
 
 # ---------------------------------------------------------------------------
 # thm:critical-level-ff-center-unification
-# At k = -h^v: ChirHoch^0 = HH^0_mode = H^0_cont = FF centre.
+# At k = -h^v: ChirHoch^0 and HH^0_mode share the FF centre.
+# Ordinary trivial-coefficient GF remains C unless coefficients change.
 # ---------------------------------------------------------------------------
 
 
@@ -256,14 +278,10 @@ def test_high_degree_divergence_virasoro_degree_4():
         "of the chiral derivation (Beilinson-Drinfeld 2004)",
     ],
     disjoint_rationale=(
-        "Critical-level unification asserts three centres coincide "
-        "with the Feigin-Frenkel target. Derivation side: ChirHoch^0 "
-        "= Z_ch identified by Feigin-Frenkel. Verification side: "
-        "Frenkel 2007 computes mode-algebra centre independently via "
-        "Segal-Sugawara generators; Beilinson-Drinfeld exhibit the "
-        "Poisson structure on the oper algebra from classical "
-        "coset constructions. Three independent access routes to the "
-        "same polynomial ring."),
+        "The critical-level comparison identifies the chiral centre and "
+        "mode centre with the Feigin-Frenkel oper algebra. Ordinary "
+        "trivial-coefficient GF is checked separately and is not folded "
+        "into that equality without a coefficient change."),
 )
 def test_critical_level_sl2_dimension_of_ff_center_at_weight_2():
     """At the critical level for sl_2 (h^v = 2, k = -2), the
@@ -282,8 +300,13 @@ def test_critical_level_sl2_dimension_of_ff_center_at_weight_2():
     mode_centre_wt2 = 1
     # (c) Oper algebra at weight 2: polynomial in a_2, dim 1 at wt 2.
     oper_wt2 = 1
+    # Ordinary trivial-coefficient GF is C in conformal weight 0; it
+    # does not contain the weight-2 oper generator without coefficient
+    # replacement.
+    trivial_gf_wt2 = 0
 
     assert chirhoch_0_wt2 == mode_centre_wt2 == oper_wt2, (
         f"FF unification fails at sl_2 critical weight 2: "
         f"chirhoch={chirhoch_0_wt2}, mode={mode_centre_wt2}, "
         f"oper={oper_wt2}")
+    assert trivial_gf_wt2 != oper_wt2

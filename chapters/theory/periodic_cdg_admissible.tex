@@ -3,10 +3,9 @@
 % chapters/theory/periodic_cdg_admissible.tex
 %
 % Periodic CDG structure at admissible level and the chiral
-% Adams-analog functor. Reduces conj:periodic-cdg to
-% Massey-vanishing + small-quantum-group semisimplification descent;
-% proves the Adams-analog construction for rank-1 (sl_2), conjectural
-% for rank >= 2 where quantum Serre replaces ordinary anticommutation.
+% Adams-analog functor. Separates the proved universal PBW--Koszul
+% lane from the conjectural simple-quotient periodic-CDG and
+% small-quantum-group descent data.
 %
 % ClaimStatus discipline: every theorem tagged; every proof body
 % self-contained; kappa qualified throughout; direct prose.
@@ -16,40 +15,41 @@
 \label{chap:periodic-cdg-admissible}
 
 The chain-level Kazhdan--Lusztig adjunction
-\textup{(}Theorem~\ref{thm:kl-bar-cobar-adjunction}\textup{)} cites a
-Koszul purity statement at admissible level
-$k = -h^\vee + p/q$ whose honest form is
-Conjecture~\ref{conj:periodic-cdg}: the bar complex
-$\barB^{\mathrm{ch}}(\widehat{\fg}_k)$ should carry a $2p$-periodic
-curved-differential-graded (CDG) structure. This chapter reduces
-the conjecture to two residual hypotheses. The reduction rests on
-two genuinely independent inputs, each a theorem of the ambient
-representation theory: Arakawa's $C_2$-cofiniteness of the simple
-quotient $L_k(\fg)$ on the non-degenerate admissible lane, and
-Finkelberg's semisimplification of the Kazhdan--Lusztig fusion
-category via Wenzl tilting quotients. Once both are available, the
-bar complex at admissible level becomes the filtered colimit of a
-finite tower whose graded quotients carry a $2p$-periodic
-cohomological structure. The chain-level $2p$-periodic isomorphism
-of the full CDG-coalgebra requires the Massey-vanishing hypothesis,
-and the descent from small-quantum-group bar cohomology to the
-semisimplified Kazhdan--Lusztig target remains
-Conjecture~\ref{conj:kl-bar-cobar-dl}; both are left conjectural
-here.
+\textup{(}Theorem~\ref{thm:kl-bar-cobar-adjunction}\textup{)} has a
+proved PBW--Koszul input and a conjectural admissible quotient input.
+For the universal affine algebra $V_k(\fg)$, $k\neq -h^\vee$,
+Theorem~\ref{thm:universal-kac-moody-koszul} gives the completed
+PBW--Koszul duality with level reflection $k\mapsto -k-2h^\vee$.
+This statement remains true when $k+h^\vee=p/q$ is admissible.  It is
+not a periodic-CDG theorem: the universal bar complex is uncurved.
 
-The chapter then constructs the chiral Adams-analog functor
-promised by the admissible spectral sequence: a dg functor on the
-chiral endomorphism operad $\End^{\mathrm{ch}}_{L_k(\fg)}$ whose
-primary operations are the $d_1$ differentials of the admissible-KL
-spectral sequence. The construction is complete for $\fg =
-\mathfrak{sl}_2$; for higher-rank $\fg$ the target algebra is
-$u_q^-(\fg)$ at $q_{\mathrm{qg}} = e^{\pi i q/p}$, governed by
-quantum Serre relations rather than ordinary anticommutation, and
-the functor is stated as Conjecture~\ref{conj:adams-analog-higher-rank}.
+The simple quotient $L_k(\fg)$ is different.  Vacuum null vectors enter
+the bar differential as curvature, and Conjecture~\ref{conj:periodic-cdg}
+asserts that the resulting curved coalgebra is $2p$-periodic.  Arakawa's
+$C_2$-cofiniteness gives weightwise finite bar sectors on the
+non-degenerate lane; KZ monodromy gives the root-of-unity parameter
+$q_{\mathrm{qg}}=\exp(\pi i/(k+h^\vee))=\exp(\pi i q/p)$; Finkelberg's
+semisimplified tilting quotient gives the intended Kazhdan--Lusztig
+endpoint.  None of these three facts by itself constructs the
+CDG-coalgebra period or identifies the bar-side coderived quotient with
+the small quantum group.  The strongest chain-level statement supported
+by the local inputs is a weightwise finite filtration and a conditional
+comparison map; the simple-quotient period and the semisimplified
+descent are additional data.
+
+The admissible spectral sequence also carries a chiral Adams-analog
+functor.  In rank one it is a conditional
+dg functor on $\End^{\mathrm{ch}}_{L_k(\mathfrak{sl}_2)}$, with
+primary operation the $d_1$ differential, after the screening action
+factors through $u_{q_{\mathrm{qg}}}^-(\mathfrak{sl}_2)$.  For
+higher-rank $\fg$ the target algebra is
+$u_{q_{\mathrm{qg}}}^-(\fg)$, governed by quantum Serre relations
+rather than ordinary anticommutation, and the functor is stated as
+Conjecture~\ref{conj:adams-analog-higher-rank}.
 
 Throughout this chapter $\fg$ is a simple Lie algebra,
-$k = -h^\vee + p/q$ is admissible (coprime $p, q$; $q \geq h^\vee$
-on the non-degenerate lane), and we write $\Psi = p/q$ for the
+$k = -h^\vee + p/q$ is admissible (coprime $p, q$; for simply-laced
+$\fg$, $p \geq h^\vee$), and we write $\Psi = p/q$ for the
 level-conventional parameter. Every $\kappa$ in this chapter
 carries a family subscript; for affine Kac--Moody at level~$k$
 the value is $\kappa^{\mathrm{KM}}(V_k(\fg)) =
@@ -60,12 +60,40 @@ the value is $\kappa^{\mathrm{KM}}(V_k(\fg)) =
 \label{sec:periodic-cdg-setup}
 %==================================================================
 
-Fix $k = -h^\vee + p/q$ admissible. The category
-$\KL_k^{\mathrm{adm}}(\fg) := \cO_k^{\mathrm{int}}(\widehat\fg) \cap
-\mathrm{Mod}(L_k(\fg))$ is the full subcategory of
-integrable level-$k$ modules that descend to the simple quotient
-$L_k(\fg) = \mathcal{V}_k(\fg)/J_k$. It has $|\mathrm{Adm}_k|$
-simple objects \textup{(}Theorem~\ref{thm:admissible-rep-theory}\textup{)}.
+Fix $k = -h^\vee + p/q$ admissible.  The category
+$\KL_k^{\mathrm{adm}}(\fg)$ used here is the full subcategory of
+grading-restricted ordinary $L_k(\fg)$-modules generated by the
+Kac--Wakimoto admissible highest weights.  On the non-degenerate lane
+$X_{L_k(\fg)}=\{0\}$ it has finitely many simple objects, indexed by
+$\mathrm{Adm}_k$, by Theorem~\ref{thm:admissible-rep-theory}; on the
+degenerate lane it is not the finite semisimple Kazhdan--Lusztig
+endpoint.
+
+\begin{proposition}[Universal PBW--Koszul lane at admissible parameters;
+\ClaimStatusProvedHere]
+\label{prop:universal-pbw-koszul-admissible-parameters}
+\index{PBW--Koszul!admissible parameters}%
+Let $k=-h^\vee+p/q$ be admissible and non-critical.  The universal
+affine algebra $V_k(\fg)$ lies in the completed PBW--Koszul ambient of
+Theorem~\ref{thm:universal-kac-moody-koszul}.  Its ordered chiral bar
+coalgebra is the ordinary completed PBW bar coalgebra, the curvature
+term vanishes, and the Koszul dual is the chiral CE algebra attached
+to the level-reflected current presentation at $-k-2h^\vee$.  Passing
+from $V_k(\fg)$ to the simple quotient $L_k(\fg)=V_k(\fg)/J_k$ is not
+covered by this proposition; the null-vector ideal $J_k$ is exactly
+the source of the curved admissible problem.
+\end{proposition}
+
+\begin{proof}
+Theorem~\ref{thm:universal-kac-moody-koszul} applies to every
+$k\neq -h^\vee$, with no integrality or admissibility hypothesis.
+The PBW filtration used there is the universal current filtration,
+so imposing the numerical condition $k+h^\vee=p/q$ changes only the
+scalar value of the invariant form.  No quotient by $J_k$ is taken,
+hence no vacuum-null curvature term is introduced.  The level-reflected
+dual is therefore the same completed universal object as in the generic
+non-critical theorem.
+\end{proof}
 
 \begin{definition}[Screening-charge adjoint]
 \label{def:screening-adjoint}
@@ -80,43 +108,43 @@ The \emph{screening-charge adjoint} $Q_i^{\mathrm{adm}}$ is the
 adjoint \textup{(}with respect to the Shapovalov pairing\textup{)} of
 the Feigin--Frenkel screening
 $Q_i = \oint :e^{\alpha_i \cdot \phi(z)/\sqrt{p/q}}: dz$,
-restricted to the bar complex:
+restricted to the weight-completed bar complex:
 \begin{equation}\label{eq:screening-adjoint}
 Q_i^{\mathrm{adm}}\colon
-\barB^{\mathrm{ch},n}(\widehat\fg_k)
+\barB^{\mathrm{ch},n}(L_k(\fg))
 \longrightarrow
-\barB^{\mathrm{ch},n-1}(\widehat\fg_k),
+\barB^{\mathrm{ch},n-1}(L_k(\fg)),
 \qquad
 Q_i^{\mathrm{adm}}
 = (-1)^n \langle -, Q_i \cdot - \rangle_{\mathrm{Shap}}.
 \end{equation}
-The signed sum
-$Q^{\mathrm{adm}} := \sum_{i=1}^{\mathrm{rk}\,\fg} Q_i^{\mathrm{adm}}$
-is the \emph{total admissible screening adjoint}.
+In rank one we write $Q^{\mathrm{adm}}=Q_1^{\mathrm{adm}}$.  In
+higher rank the ordered tuple
+$(Q_1^{\mathrm{adm}},\ldots,Q_{\mathrm{rk}\,\fg}^{\mathrm{adm}})$,
+not its ordinary sum, is the screening datum.
 \end{definition}
 
-\begin{lemma}[Screening adjoints square to zero and satisfy quantum Serre;
-\ClaimStatusProvedHere]
+\begin{lemma}[Screening adjoints are chain maps and satisfy quantum Serre;
+\ClaimStatusConditional]
 \label{lem:screening-adjoint-squares}
-For each simple root $\alpha_i$, $(Q_i^{\mathrm{adm}})^2 = 0$ on
-$\barB^{\mathrm{ch}}(\widehat\fg_k)$ at admissible level, and each
-$Q_i^{\mathrm{adm}}$ commutes with the bar differential $d_B$. The
-generators $\{Q_i^{\mathrm{adm}}\}$ satisfy the quantum Serre
-relations of $U_{q_{\mathrm{qg}}}^-(\fg)$ at the quantum parameter
-$q_{\mathrm{qg}} = e^{\pi i q/p}$. In rank one $\fg =
-\mathfrak{sl}_2$ there is a single generator and the single
-relation $(Q_1^{\mathrm{adm}})^2 = 0$ suffices; in higher rank the
-cross relations at $a_{ij} = -1$ are cubic,
-$(\mathrm{ad}_{q_{\mathrm{qg}}} Q_i^{\mathrm{adm}})^2 Q_j^{\mathrm{adm}}
-= 0$, not quadratic. Consequently the single-generator total
-$Q^{\mathrm{adm}} := \sum_i Q_i^{\mathrm{adm}}$ squares to zero if
-and only if $\mathrm{rk}\,\fg = 1$ or the $q_{\mathrm{qg}} \to 1$
-limit applies; for $\mathrm{rk}\,\fg \geq 2$ the signed sum is
-replaced by a commuting family and the filtration of
-Definition~\ref{def:periodic-cdg-filtration} is defined by joint
-kernels
-$F^n = \bigcap_{i=1}^{\mathrm{rk}\,\fg}
-\ker\bigl((Q_i^{\mathrm{adm}})^{n_i}\bigr)_{|n| = n}$.
+Assume the Wakimoto realisation and the Shapovalov pairing have been
+chosen on the same weight-completed model.  Each
+$Q_i^{\mathrm{adm}}$ commutes with the bar differential $d_B$ and the
+operators $\{Q_i^{\mathrm{adm}}\}$ satisfy the adjoint form of the
+quantum Serre relations for the negative Borel
+$U_{q_{\mathrm{qg}}}^-(\fg)$, with
+$q_{\mathrm{qg}}=e^{\pi i q/p}$.  The small-quantum-group truncation
+is an additional quotient condition:
+\[
+(Q_i^{\mathrm{adm}})^p=0
+\qquad
+\text{after the action factors through }u_{q_{\mathrm{qg}}}^-(\fg).
+\]
+Thus $(Q_i^{\mathrm{adm}})^2=0$ only in the exterior special case
+$p=2$.  For $\mathrm{rk}\,\fg\geq2$ the cross relations are quantum
+Serre relations, not ordinary anticommutation; the ordinary sum
+$\sum_i Q_i^{\mathrm{adm}}$ is not a differential without an extra
+braided-totalisation datum.
 \end{lemma}
 
 \begin{proof}
@@ -125,18 +153,22 @@ $U_{q_{\mathrm{qg}}}^+(\fg)$ at $q_{\mathrm{qg}} = e^{\pi i q/p}$
 \textup{(}Feigin--Frenkel~\cite{FF96}\textup{)}. Taking the
 Shapovalov-adjoint reverses the Serre commutator and conjugates by
 the real bilinear form, yielding $U_{q_{\mathrm{qg}}}^-$-style
-relations: $(Q_i^{\mathrm{adm}})^2 = 0$ for each $i$ (nilpotency at
-a single node) and the cubic cross relation
+relations.  For adjacent simple roots this gives the cubic relation
 $(\mathrm{ad}_{q_{\mathrm{qg}}} Q_i^{\mathrm{adm}})^2
-Q_j^{\mathrm{adm}} = 0$ for $a_{ij} = -1$. Ordinary anticommutation
+Q_j^{\mathrm{adm}} = 0$ for $a_{ij} = -1$.  Ordinary
+anticommutation
 $Q_i^{\mathrm{adm}} Q_j^{\mathrm{adm}} + Q_j^{\mathrm{adm}}
-Q_i^{\mathrm{adm}} = 0$ is the classical specialisation
-$q_{\mathrm{qg}} \to 1$ and is NOT valid at the admissible
-root-of-unity value of $q_{\mathrm{qg}}$.
+Q_i^{\mathrm{adm}} = 0$ is the exterior specialisation and is not
+valid at the admissible root-of-unity value of $q_{\mathrm{qg}}$.
+The relation $(Q_i^{\mathrm{adm}})^p=0$ is not a consequence of the
+Serre relation; it is exactly the passage from the Lusztig quantum
+group to the small quantum group, hence it is recorded as a quotient
+hypothesis.
 
 Commutation with $d_B$: the bar differential is the cobar
-construction of the chiral coalgebra structure on
-$\widehat{\fg}_k$, hence depends only on the ChirAss structure.
+construction of the chiral coalgebra structure on the chosen
+weight-completed quotient model, hence depends only on the ChirAss
+structure.
 Each $Q_i$ is a derivation of that ChirAss structure (the
 Wakimoto realisation is a ChirAss-algebra homomorphism); the
 Shapovalov-adjoint is a coderivation of the bar coalgebra
@@ -149,29 +181,31 @@ $[d_B, Q_i^{\mathrm{adm}}] = 0$ for each $i$.
 \label{def:periodic-cdg-filtration}
 \index{periodic CDG!filtration}
 The \emph{periodic-CDG filtration} on
-$\barB^{\mathrm{ch}}(\widehat\fg_k)$ at admissible level is, in
-rank one,
+$\barB^{\mathrm{ch}}(L_k(\fg))$ at admissible level is defined only
+after the screening action factors through the indicated
+root-of-unity quotient.  In rank one, assuming
+$(Q_1^{\mathrm{adm}})^p=0$, it is
 \begin{equation}\label{eq:periodic-filtration}
 F^n := \ker\bigl((Q_1^{\mathrm{adm}})^n\bigr)
-\;\subseteq\; \barB^{\mathrm{ch}}(\widehat\fg_k),
-\qquad n = 0, 1, 2, \ldots
+\;\subseteq\; \barB^{\mathrm{ch}}(L_k(\mathfrak{sl}_2)),
+\qquad 0\leq n\leq p,
 \end{equation}
-In rank $r \geq 2$, using the commuting nilpotent family
-$\{Q_i^{\mathrm{adm}}\}_{i=1}^r$ of
-Lemma~\ref{lem:screening-adjoint-squares}, the filtration is indexed
-by a multi-degree $\mathbf{n} = (n_1, \ldots, n_r)$,
-$F^{\mathbf{n}} := \bigcap_{i=1}^r \ker\bigl((Q_i^{\mathrm{adm}})^{n_i}\bigr)$,
-with total degree $|\mathbf{n}| = n_1 + \cdots + n_r$ defining the
-single-index coarsening
-$F^n := \sum_{|\mathbf{n}| = n} F^{\mathbf{n}}$.
-By Lemma~\ref{lem:screening-adjoint-squares} this is a filtration
-by sub-CDG-coalgebras. The associated graded
-$\gr^n F = F^n/F^{n-1}$ is a finite-dimensional complex in each
+and $F^n=\barB^{\mathrm{ch}}(L_k(\mathfrak{sl}_2))$ for $n\geq p$.
+In rank $r\geq2$ the replacement is the Nichols/PBW-length
+filtration for the braided algebra $u_{q_{\mathrm{qg}}}^-(\fg)$:
+$F^n$ consists of those bar chains killed by every negative-Borel PBW
+monomial of length $>n$.  This is a filtered predifferential graded
+object because the screenings commute with $d_B$.  It is a filtration
+by CDG-coalgebras only
+after the curvature and deconcatenation maps are shown to be
+$u_{q_{\mathrm{qg}}}^-(\fg)$-module maps; that is one of the comparison
+data in Conjecture~\ref{conj:kl-bar-cobar-dl}.  The associated graded
+$\gr^n F = F^n/F^{n-1}$ is finite-dimensional in each fixed
 conformal-weight sector
 \textup{(}Corollary~\textup{\ref{cor:bar-admissible-finiteness}}\textup{)},
-and we write
-$\barB^{\mathrm{ch},\mathrm{adm}}(\widehat\fg_k)
-:= \colim_n F^n$.
+and its conformal-weight completion is the object
+$\widehat C_k$ of
+Definition~\ref{def:admissible-positselski-ambient}.
 \end{definition}
 
 \begin{remark}[Level-parameter conventions]
@@ -191,12 +225,14 @@ On the non-degenerate admissible lane ($X_{L_k} = \{0\}$;
 Theorem~\ref{thm:admissible-rep-theory}(ii)), Arakawa proved that
 $L_k(\fg)$ is $C_2$-cofinite
 \textup{(}\cite{Arakawa15} Thm.~4.1; see also
-Theorem~\ref{thm:arakawa-rationality}\textup{)}. This is the
-input that converts weight-by-weight finiteness of the bar
-complex \textup{(}Corollary~\ref{cor:bar-admissible-finiteness}\textup{)}
-into a \emph{global} finiteness statement on the filtration
-quotients: each $\gr^n F$ is finite-dimensional as a whole
-(not only weight-by-weight).
+Theorem~\ref{thm:arakawa-rationality}\textup{)}.  The consequence used
+here is weightwise finiteness: in each fixed conformal-weight sector
+only finitely many bar degrees and filtration quotients contribute
+\textup{(}Corollary~\ref{cor:bar-admissible-finiteness}\textup{)}.
+It is not a global finite-dimensionality statement for the entire
+vertex algebra.  Passage from fixed weights to the total bar complex
+therefore uses the weight completion and the Mittag--Leffler condition
+on the finite truncation tower.
 \end{remark}
 
 \begin{remark}[Finkelberg semisimplification input]
@@ -205,190 +241,219 @@ Finkelberg~\cite{Fin96} constructed the semisimplified tilting
 quotient $\mathcal{C}(U_q(\fg)) :=
 \mathrm{Tilt}(U_q(\fg))/\mathrm{Neg}$, where
 $\mathrm{Neg}$ is the tensor ideal of negligible tilting modules
-(those with quantum dimension zero). For $\fg$ simply-laced and
-$q_{\mathrm{qg}} = e^{\pi i q/p}$ with $p \geq h^\vee$, this
-quotient is braided equivalent to $\cO_k^{\mathrm{int}}$ via the
-Kazhdan--Lusztig equivalence
-\textup{(}Theorem~\ref{thm:kl-equivalence}\textup{)}. The key
-structural fact we use is that the tilting category
-$\mathrm{Tilt}(U_q(\fg))$ is equivalent to the category of modules
-over the \emph{small quantum group} $u_q(\fg)$ at $q_{\mathrm{qg}}$
-after inverting the small-group central idempotent; and
-$u_q(\fg)$-modules carry a natural $2p$-periodicity
-\textup{(}Lusztig~\cite{Lus90} Prop.~8.3\textup{)}.
+(those with quantum dimension zero).  In the integrable WZW lane this
+is the semisimplified target appearing in the local
+Kazhdan--Lusztig theorem
+\textup{(}Theorem~\ref{thm:kl-equivalence}\textup{)}.  At an
+admissible fractional level the same root-of-unity parameter is forced
+by KZ monodromy,
+\[
+q_{\mathrm{KZ}}=\exp\!\left(\frac{\pi i}{k+h^\vee}\right)
+=e^{\pi i q/p},
+\qquad (q_{\mathrm{KZ}}^2)^p=1,
+\]
+but the KZ monodromy calculation lands first in a root-of-unity
+quantum-group setting.  The small quantum group
+$u_{q_{\mathrm{qg}}}(\fg)$, its negative Borel
+$u_{q_{\mathrm{qg}}}^-(\fg)$, and the semisimplified tilting quotient
+$\mathcal{C}(U_q(\fg))$ are distinct targets.  A functor from the
+periodic bar-side coderived quotient to the small quantum group, and
+then to the semisimplified Kazhdan--Lusztig endpoint, is precisely the
+descent datum isolated in Conjecture~\ref{conj:kl-bar-cobar-dl}.
 \end{remark}
+
+\begin{definition}[Admissible Positselski ambient]
+\label{def:admissible-positselski-ambient}
+\index{Positselski ambient!admissible level}%
+\index{coderived category!admissible weight completion}%
+Let $C_k=\barB^{\mathrm{ch}}(L_k(\fg))$.  For a conformal-weight
+cutoff $W$, set
+\[
+C_k^{\leq W}:=
+C_k\,/\,F^{\mathrm{wt}}_{>W}C_k,
+\qquad
+\widehat C_k:=R\!\varprojlim_W C_k^{\leq W}.
+\]
+The admissible completion is \emph{strict Mittag--Leffler} if the
+transition systems of finite-weight pages, cycles, and boundaries
+appearing in every curvature-zero associated-graded spectral sequence
+have vanishing $R^1\!\varprojlim$.  A curvature datum
+$m_0\in\widehat C_k^2$ is admissible if
+$d_B^2=[m_0,-]$ in the completed tensor product and if
+$d_B$, $m_0$, and deconcatenation are continuous for the
+weight topology.
+
+The category
+$D^{\mathrm{co},\mathrm{adm,wt}}
+(\CoMod^{\Eone,\mathrm{conil}}_{\widehat C_k})$
+is the coderived category of complete $\widehat C_k$-comodules,
+localized by the coacyclic objects generated after finite-weight
+truncation and strict completion.  The continuous dual algebra
+\(\widehat C_k^\vee\) belongs to the contraderived category
+\[
+D^{\mathrm{ctr},\mathrm{adm,wt}}
+(\widehat C_k^\vee\text{-}\mathrm{ContraMod}).
+\]
+Ordinary derived categories occur only on finite truncations with
+zero curvature, or on flat finite-type loci where Positselski's
+coderived and contraderived categories reduce to the usual derived
+category.  No assertion below identifies bar-cobar inversion
+$\Omega\barB(A)\simeq A$, Verdier production of $A^!$, or the
+derived chiral center.
+\end{definition}
 
 %==================================================================
 \section{The periodic CDG theorem}
 \label{sec:periodic-cdg-theorem}
 %==================================================================
 
-\begin{theorem}[Periodic CDG is Koszul-compatible on filtration quotients;
+\begin{theorem}[Weightwise admissible filtration and conditional periodic comparison;
 \ClaimStatusConditional]
 \label{thm:periodic-cdg-is-koszul-compatible}
 \index{periodic CDG!Koszul compatibility}%
-Let $\fg$ be simply-laced and $k = -h^\vee + p/q$ on the
-non-degenerate admissible lane \textup{(}$q \geq h^\vee$
-coprime to $p$; $X_{L_k} = \{0\}$\textup{)}. Then the
-periodic-CDG filtration of
-Definition~\ref{def:periodic-cdg-filtration} is compatible with
-chiral Koszul duality in the following sense:
+Let $\fg$ be simply-laced and let $k=-h^\vee+p/q$ be
+non-degenerate admissible \textup{(}$p,q$ coprime,
+$p\geq h^\vee$, $X_{L_k(\fg)}=\{0\}$\textup{)}.  Set
+$C_k=(\barB^{\mathrm{ch}}(L_k(\fg)),d_B,m_0)$ in the admissible
+Positselski ambient of
+Definition~\ref{def:admissible-positselski-ambient}.  Assume a
+continuous screening action
+\[
+\rho_k\colon u_{q_{\mathrm{qg}}}^-(\fg)
+\longrightarrow
+\End_{\mathrm{cont}}(\widehat C_k),
+\qquad
+f_i\longmapsto Q_i^{\mathrm{adm}},
+\qquad
+q_{\mathrm{qg}}=e^{\pi i q/p},
+\]
+compatible with the weight completion.  Then:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Period on cohomology of filtration quotients.} There is a
- chain map
+\item \emph{Weightwise finite filtration.}  The filtration
+ of Definition~\ref{def:periodic-cdg-filtration} gives, in every
+ fixed conformal-weight sector, a finite filtered underlying
+ graded object.  On every finite truncation for which the curvature
+ is killed or trivialized, the ordinary filtered spectral sequence is
+ finite in that sector and therefore converges strongly there.
+ Passage from finite weights to $\widehat C_k$ uses the strict
+ Mittag--Leffler condition of
+ Definition~\ref{def:admissible-positselski-ambient}.
+\item \emph{Root-of-unity compatibility.}  KZ monodromy supplies only
+ the numerical root of unity:
+ $q_{\mathrm{KZ}}=e^{\pi i/(k+h^\vee)}=e^{\pi i q/p}$ and
+ $(q_{\mathrm{KZ}}^2)^p=1$.  It does not identify $C_k$ with
+ $u_{q_{\mathrm{qg}}}(\fg)$-modules, nor does it descend to
+ $\mathcal C(U_q(\fg))$, without the comparison functors of
+ Conjecture~\ref{conj:kl-bar-cobar-dl}.
+\item \emph{Conditional period endomorphism.}  If, in addition, there
+ is a closed degree-$2p$ endomorphism in the coderived category
  \[
- \sigma_{2p}\colon
- \barB^{\mathrm{ch},n}(\widehat\fg_k)
- \longrightarrow
- \barB^{\mathrm{ch},n+2p}(\widehat\fg_k)
+ \sigma_{2p}\colon \widehat C_k \longrightarrow \widehat C_k[2p]
+ \quad\text{in}\quad
+ D^{\mathrm{co},\mathrm{adm,wt}}
+ (\CoMod^{\Eone,\mathrm{conil}}_{\widehat C_k}),
  \]
- induced by cup product with the period generator
- $\Theta_{2p} \in \ChirHoch^{2p}(\widehat\fg_k)$; $\sigma_{2p}$
- induces an isomorphism on $H^\bullet(\gr^n F)$ for every $n$, and
- on the bar cohomology
- $H^\bullet\bigl(\barB^{\mathrm{ch},\mathrm{adm}}(\widehat\fg_k)\bigr)$
- after the spectral-sequence passage of
- Theorem~\ref{thm:admissible-kl-bar-cobar-adjunction}. Strict
- chain-level $2p$-periodicity of the full CDG-coalgebra
- $\barB^{\mathrm{ch}}(\widehat\fg_k)$ is conditional on Massey
- vanishing \textup{(}Remark~\ref{rem:massey-vanishing-periodic-cdg}\textup{)}
- and is left as Conjecture~\ref{conj:periodic-cdg}.
-\item \emph{CDG compatibility.} The bar complex of Koszul dual
- $\barB^{\mathrm{ch}}(\widehat\fg_{-k-2h^\vee})$
- inherits a $2p$-periodic structure on cohomology of filtration
- quotients, and the Feigin--Frenkel duality
- \textup{(}Theorem~\ref{thm:universal-kac-moody-koszul}\textup{)}
- intertwines $Q^{\mathrm{adm}}$ with $Q^{\mathrm{adm},!}$ up to
- period shift on each $\gr^n F$:
+ preserving the screening filtration and inducing an isomorphism on
+ every curvature-zero finite-weight associated graded, then
+ $\sigma_{2p}$ induces a period-$2p$ isomorphism on those finite
+ abutments and a period-$2p$ autoequivalence after strict
+ Mittag--Leffler completion.  This is not a class in ordinary
+ $\ChirHoch^{2p}$; it is a bar-side coderived endomorphism.
+ Strict CDG-coalgebra periodicity of $C_k$ remains exactly
+ Conjecture~\ref{conj:periodic-cdg}; the obstruction is
+ Massey-vanishing plus compatibility with curvature and
+ deconcatenation.
+\item \emph{Rank-one sanity check.}  For $\fg=\mathfrak{sl}_2$, if
+ the screening action factors through
+ $u_{q_{\mathrm{qg}}}^-(\mathfrak{sl}_2)\cong \bC[x]/(x^p)$, the
+ complete resolution
  \[
- \mathrm{FF}\circ Q^{\mathrm{adm}}
- = \sigma_{2p}^{-1}\circ Q^{\mathrm{adm},!}\circ \mathrm{FF}
- \qquad \text{on } H^\bullet(\gr^n F).
+ \cdots \xrightarrow{x^{p-1}} \bC[x]/(x^p)
+ \xrightarrow{x} \bC[x]/(x^p)
+ \xrightarrow{x^{p-1}} \bC[x]/(x^p)
+ \xrightarrow{x} \bC[x]/(x^p)
+ \longrightarrow \bC
  \]
-\item \emph{Small-quantum-group image.} The bar-cobar composition
- $\Omega^{\mathrm{ch}}\circ\barB^{\mathrm{ch}}$ applied to any
- simple admissible $\mathcal{L}(\lambda)$, $\lambda \in
- \mathrm{Adm}_k$, takes values, after passage to cohomology of
- filtration quotients, in the stable module category of the small
- quantum group $u_{q_{\mathrm{qg}}}(\fg)$ at
- $q_{\mathrm{qg}} = e^{\pi i q/p}$, with $2p$-periodicity in the
- Tate-cohomological sense \textup{(}Lusztig~\cite{Lus90} Prop.~8.3\textup{)}.
- The further descent from $u_{q_{\mathrm{qg}}}(\fg)$-modules to
- the semisimplified Kazhdan--Lusztig target $\cO_k^{\mathrm{int}}
- \simeq \mathcal{C}(U_{q_{\mathrm{qg}}}(\fg))$ requires the
- Arkhipov--Gaitsgory long exact triangle and is stated as
- Conjecture~\ref{conj:kl-bar-cobar-dl}; the inclusion
- $\sigma_{2p}^m(\Omega^{\mathrm{ch}}\barB^{\mathrm{ch}}
- (\mathcal{L}(\lambda))) \in \cO_k^{\mathrm{int}}$ for every integer
- $m$ holds conditionally on that descent.
+ has consecutive composites zero because $x^p=0$.  This proves the
+ two-step hypersurface periodicity of the rank-one negative Borel
+ model.  The manuscript's $2p$ bar-period is the further chiral
+ grading lift; it is not a consequence of this algebra resolution
+ alone.
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-The proof rests on three ingredients: the
-Arakawa input \textup{(}Rem.~\ref{rem:arakawa-c2-input}\textup{)},
-the Finkelberg input \textup{(}Rem.~\ref{rem:finkelberg-semisimp-input}\textup{)},
-and the periodic-CDG filtration
-\textup{(}Def.~\ref{def:periodic-cdg-filtration}\textup{)}.
+The first assertion is Corollary~\ref{cor:bar-admissible-finiteness}
+applied after the screening action has been installed as a continuous
+finite-weight action:
+each fixed conformal-weight sector is finite-dimensional, and the
+positive grading leaves only finitely many bar degrees in that sector.
+The filtration is finite on such a sector by construction.  The
+ordinary spectral sequence is used only after passing to a finite
+quotient or totalization on which the curvature has been killed; on
+that quotient it converges after finitely many pages.  Strict
+Mittag--Leffler kills the Milnor $R^1\!\varprojlim$ term, giving the
+stated completed passage.
 
-\emph{Step~1: Period generator.}
-The rank-$1$ calculation
-\textup{(}Prop.~\ref{prop:sl2-periodicity-dl} for $\mathfrak{sl}_2$
-at critical level\textup{)} identifies the periodicity class
-$\Theta_1 \in \ChirHoch^4(\widehat{\mathfrak{sl}}_{2,-2})$.
-At admissible level $k = -h^\vee + p/q$, the analogous class
-$\Theta_{2p}$ is constructed as follows. The Feigin--Frenkel
-center at admissible level is the polynomial ring
-$\mathrm{Sym}(\fh^*)^W / \bigl(\mathrm{characters\ of\
-\text{integrable\ weights}}\bigr)$ truncated by the
-Kac--Wakimoto admissibility ideal; its Poincare series has period
-$2p$ in bar degree by Kac--Wakimoto character arithmetic (every
-admissible weight contributes a simple factor of degree dividing
-$2p$, and the Poincar\'e series of the quotient is the $2p$-th
-cyclotomic polynomial evaluated at the character variable). The
-generator $\Theta_{2p}$ is the image of the Casimir element under
-the Wakimoto realisation, restricted to the screening-kernel.
+The KZ parameter calculation is formal:
+$k+h^\vee=p/q$, so $\exp(\pi i/(k+h^\vee))=\exp(\pi i q/p)$ and the
+square has order dividing $p$.  This proves only root-of-unity
+compatibility.  The categorical comparison from bar comodules to
+small-quantum-group modules and then to the semisimplified tilting
+quotient is the separate datum named in
+Conjecture~\ref{conj:kl-bar-cobar-dl}.
 
-\emph{Step~2: Quasi-isomorphism on filtration quotients.}
-Each filtration quotient $F^n/F^{n-1}$ is a finite-dimensional
-complex by Arakawa $C_2$-cofiniteness
-\textup{(}Rem.~\ref{rem:arakawa-c2-input}\textup{)}: the screening
-adjoint $Q^{\mathrm{adm}}$ acts by a nilpotent of nilpotency index
-at most $p$ on each conformal-weight space, and the associated
-graded $\gr^n F$ is a direct sum of modules over the Zhu algebra
-$A(L_k(\fg))$ which is finite-dimensional by
-Theorem~\ref{thm:arakawa-rationality}(i). Cup product with
-$\Theta_{2p}$ is an isomorphism on each $\gr^n F$ because the
-Poincar\'e duality pairing for finite-dimensional CDG-coalgebras
-\textup{(}Positselski~\cite{Positselski11} Prop.~3.11\textup{)}
-realises $\Theta_{2p}$ as a top-form generator of the relevant
-cohomology.
+If $\sigma_{2p}$ exists with the stated properties, it is a filtered
+closed morphism in the coderived category.  A filtered morphism
+inducing an isomorphism on the curvature-zero associated graded
+induces an isomorphism on the abutment of a finite spectral sequence
+in each weight.  The completed statement follows from strict
+Mittag--Leffler.  The argument does not produce $\sigma_{2p}$ or prove
+compatibility with curvature; those are exactly the residual CDG
+assertions.
 
-\emph{Step~3: Feigin--Frenkel intertwining.}
-The Feigin--Frenkel involution $k \mapsto -k - 2h^\vee$
-sends the admissible level $k = -h^\vee + p/q$ to
-$k' = -h^\vee - p/q$, i.e.\ preserves $|k+h^\vee| = p/q$ and
-negates the sign \textup{(}Prop.~\ref{prop:admissible-levels-permuted}\textup{)}.
-On screenings, this corresponds to the map
-$e^{\alpha_i \cdot \phi/\sqrt{\Psi}}
-\mapsto e^{-\alpha_i \cdot \phi/\sqrt{\Psi}}$, which is the
-Shapovalov adjoint up to sign. Hence $Q^{\mathrm{adm},!}$ is
-identified with $-\sigma_{2p}^{-1} Q^{\mathrm{adm}} \sigma_{2p}$
-via the Feigin--Frenkel duality functor restricted to the
-admissible Koszul lane. The sign is absorbed into the
-$\sigma_{2p}^{-1}$ twist because $\Theta_{2p}$ is a degree-$2p$
-class.
-
-\emph{Step~4: Small-quantum-group image and conditional descent.}
-Finkelberg~\cite{Fin96} Thm.~4.2 gives a braided equivalence
-$\cO_k^{\mathrm{int}} \simeq \mathrm{Tilt}(U_{q_{\mathrm{qg}}}(\fg))/\mathrm{Neg}$,
-and the semisimplification kills all non-zero Ext groups on the
-target: in $\mathrm{Tilt}(U_{q_{\mathrm{qg}}}(\fg))/\mathrm{Neg}$ there
-is no non-trivial cohomological periodicity because the category is
-semisimple. The non-trivial $2p$-Tate-cohomological periodicity lives
-on $u_{q_{\mathrm{qg}}}(\fg)$-modules \textup{(}Lusztig~\cite{Lus90}
-Prop.~8.3; $u_{q_{\mathrm{qg}}}(\fg)$ is the finite-dimensional small
-quantum group, non-semisimple at a root of unity\textup{)}. The bar
-complex of $\widehat{\fg}_k$ restricted to admissible weights has its
-cohomology of filtration quotients identified, via Positselski's
-CDG Koszul duality~\cite{Positselski11}, with the bar cohomology of
-$u_{q_{\mathrm{qg}}}(\fg)$, which is $2p$-Tate-periodic. This
-establishes (iii) with target the stable module category
-$\mathrm{Stab}(u_{q_{\mathrm{qg}}}(\fg))$. The further descent from
-$\mathrm{Stab}(u_{q_{\mathrm{qg}}}(\fg))$ to
-$\mathrm{Tilt}(U_{q_{\mathrm{qg}}}(\fg))/\mathrm{Neg} \simeq
-\cO_k^{\mathrm{int}}$ uses the Arkhipov--Gaitsgory long exact triangle
-and remains Conjecture~\ref{conj:kl-bar-cobar-dl}; we do not claim
-the unconditional inclusion $\Omega^{\mathrm{ch}}\barB^{\mathrm{ch}}
-(\mathcal{L}(\lambda)) \in \cO_k^{\mathrm{int}}$ here.
+For rank one, the displayed resolution is the standard complete
+resolution of the residue field over the hypersurface algebra
+\(\bC[x]/(x^p)\).  Consecutive maps compose to multiplication by
+\(x^p\), hence vanish.  This supplies the low-degree chain check:
+the first two composites are \(x^{p-1}x=x^p=0\) and
+\(xx^{p-1}=x^p=0\).  The chiral grading lift to a \(2p\)-periodic
+bar operator remains an additional structure, not a consequence of
+the hypersurface calculation alone.
 \end{proof}
 
 \begin{remark}[Massey-vanishing hypothesis for strict CDG periodicity]
 \label{rem:massey-vanishing-periodic-cdg}
 \index{Massey vanishing!periodic CDG}%
-Cohomology-level periodicity on filtration quotients (part (i))
-lifts to a chain-level isomorphism of the full CDG-coalgebra
-$\barB^{\mathrm{ch}}(\widehat\fg_k)$ when the higher Massey products
-$\langle\sigma_{2p}, \sigma_{2p}, \ldots \rangle$ vanish on each
-$\gr^n F$. The vanishing is known for $\mathfrak{sl}_2$ at every
-admissible $(p, q)$ \textup{(}a direct computation with the single
-Wakimoto screening\textup{)}, but is open for $\mathrm{rk}\,\fg \geq 2$
-where the cubic quantum Serre relations of
-Lemma~\ref{lem:screening-adjoint-squares} produce a non-trivial
-Nichols-algebra obstruction. The residual form of
-Conjecture~\ref{conj:periodic-cdg} is precisely this Massey-vanishing
-statement.
+Finite-quotient periodicity on filtration quotients, when supplied
+by the conditional period endomorphism of
+Theorem~\ref{thm:periodic-cdg-is-koszul-compatible}(iii), lifts to a
+chain-level isomorphism of the full completed CDG-coalgebra
+$\widehat C_k$ only if the higher Massey products
+$\langle\sigma_{2p}, \sigma_{2p}, \ldots \rangle$ vanish and the
+chosen homotopies are compatible with curvature and
+deconcatenation.  The rank-one hypersurface resolution in
+Theorem~\ref{thm:periodic-cdg-is-koszul-compatible}(iv) proves a
+two-step algebraic periodicity for $\bC[x]/(x^p)$; it does not by
+itself prove the chiral $2p$ CDG period.  For
+$\mathrm{rk}\,\fg\geq2$, the Nichols-algebra quantum Serre relations
+create the additional braided-totalisation obstruction.
 \end{remark}
 
 \begin{remark}[Rank-$1$ cross-check]
 \label{rem:periodic-cdg-sl2-cross-check}
-For $\fg = \mathfrak{sl}_2$ at $k = -2 + p/q$, the period
-$2p$ specialises to $2p$ (since $h^\vee = 2$ and the critical
-period $2h^\vee = 4$ divides $2p$ exactly when $p$ is even).
-For $p = 3, q = 2$ \textup{(}Virasoro $(3,2)$ minimal model
-point\textup{)} the period is $6$, and the rank-$1$ periodicity
-of Prop.~\ref{prop:sl2-periodicity-dl} is recovered on the
-sub-filtration $F^2$ where only two screenings are active.
+For $\fg = \mathfrak{sl}_2$ at $k=-2+p/q$, the admissible
+root-of-unity parameter satisfies
+$q_{\mathrm{qg}}^2=e^{2\pi i q/p}$, hence the small negative Borel
+has the expected truncation $x^p=0$ once the screening action factors
+through it.  At $(p,q)=(3,2)$ the numerical chiral period predicted by
+Conjecture~\ref{conj:periodic-cdg} is $6$.  The proved local
+critical-period statement
+\textup{(}Proposition~\ref{prop:sl2-periodicity-dl}\textup{)} is a
+different assertion: it concerns the critical level $k=-2$ and the
+formal-disk Hochschild generator of degree~$4$.  The two statements
+share the same rank-one screening lineage but are not consequences of
+one another.
 \end{remark}
 
 \begin{remark}[Degenerate admissible lane]
@@ -398,9 +463,10 @@ on the non-degenerate admissible lane ($X_{L_k} = \{0\}$). On
 the degenerate lane ($X_{L_k} = \overline{\mathbb{O}} \neq \{0\}$;
 Theorem~\ref{thm:admissible-rep-theory}(iii)), the nilradical
 contributions of Prop.~\ref{prop:large-orbit-obstruction} obstruct
-the finite-dimensionality of $\gr^n F$, and the periodic-CDG
-structure is replaced by a \emph{logarithmic} analogue. The
-logarithmic extension is outside the present scope
+the finite semisimple endpoint and may introduce off-diagonal bar
+cohomology not controlled by the weightwise non-degenerate argument.
+The periodic-CDG structure is then replaced by a \emph{logarithmic}
+analogue. The logarithmic extension is outside the present scope
 \textup{(}see~\cite{CKL20}\textup{)}; our chain-level adjunction
 in \S\ref{sec:admissible-kl-bar-cobar} refers exclusively to the
 non-degenerate lane.
@@ -411,51 +477,65 @@ non-degenerate lane.
 \label{sec:admissible-kl-bar-cobar}
 %==================================================================
 
-\begin{theorem}[Admissible-KL bar-cobar adjunction;
+\begin{theorem}[Admissible-KL bar-cobar comparison;
 \ClaimStatusConditional]
 \label{thm:admissible-kl-bar-cobar-adjunction}
 \index{Kazhdan--Lusztig equivalence!admissible adjunction}%
 Let $\fg$ be simply-laced and $k = -h^\vee + p/q$ on the
-non-degenerate admissible lane. The chain-level adjunction
-$\Omega^{\mathrm{ch}} \dashv \barB^{\mathrm{ch}}$ of
-Theorem~\ref{thm:kl-bar-cobar-adjunction} descends to an
-adjunction on admissible-level Kazhdan--Lusztig categories:
+non-degenerate admissible lane.  Let
+$D^{\mathrm{adm,wt}}(L_k)$ be the full weight-completed subcategory
+generated by the finite conformal-weight truncations of admissible
+simple $L_k(\fg)$-modules, and set
+$C_k=\barB^{\mathrm{ch}}(L_k(\fg))$, with completion
+$\widehat C_k$ as in
+Definition~\ref{def:admissible-positselski-ambient}.  The chain-level
+bar-cobar adjunction of Theorem~\ref{thm:kl-bar-cobar-adjunction}
+restricts to a weightwise admissible comparison
 \begin{equation}\label{eq:admissible-kl-adjunction}
-\Omega^{\mathrm{ch}}_{\mathrm{adm}}\colon
-\KL_k^{\mathrm{adm}}(\fg)
+\Phi^{\mathrm{adm}}_k\colon
+D^{\mathrm{adm,wt}}(L_k)
 \;\rightleftarrows\;
-\bigl(\KL_{k^!}^{\mathrm{adm}}(\fg)\bigr)^{\mathrm{op}}
-\;\colon \barB^{\mathrm{ch}}_{\mathrm{adm}}
+D^{\mathrm{co},\mathrm{adm,wt}}
+\bigl(\CoMod^{\Eone,\mathrm{conil}}_{\widehat C_k}\bigr)
+\;\colon \Psi^{\mathrm{adm}}_k .
 \end{equation}
-where $k^! = -k - 2h^\vee$, and the unit $\eta$ and counit
-$\epsilon$ are quasi-isomorphisms modulo the $2p$-periodic
-shift $\sigma_{2p}$. On Ext groups:
+The unit and counit are the restrictions of the completed/conilpotent
+unit and counit of Theorem~\ref{thm:kl-bar-cobar-adjunction}; they
+are coderived isomorphisms on the stated completed Koszul subcategory,
+and ordinary quasi-isomorphisms only on curvature-zero finite
+truncations.
+If the period endomorphism of
+Theorem~\ref{thm:periodic-cdg-is-koszul-compatible}(iii) is supplied,
+then the Ext comparison has a periodized coderived form
 \begin{equation}\label{eq:admissible-ext-recovery}
-\bigoplus_{m \in \mathbb{Z}}
-\Ext^{n+2pm}_{\widehat\fg_k}(\omega_X, \mathcal{L}(\lambda))
-\cong
-\Hom_{D(\CoMod^{\Eone,\mathrm{conil}}_{C_k})}
+\operatorname{per}_{\sigma}\colon
+\bigoplus_{m \in \mathbb{Z}}^{\mathrm{fin.wt}}
+\Ext^{n+2pm}_{L_k(\fg)}(\omega_X, \mathcal{L}(\lambda))
+\longrightarrow
+\Hom_{
+D^{\mathrm{co},\mathrm{adm,wt}}
+(\CoMod^{\Eone,\mathrm{conil}}_{\widehat C_k})[\sigma_{2p}^{-1}]
+}
 \bigl(\Phi_k(\omega_X),\;
 \Phi_k(\mathcal{L}(\lambda))[n]\bigr)
 \end{equation}
-for every admissible weight $\lambda \in \mathrm{Adm}_k$ and
-every integer $n \geq 0$. The adjunction of
-Theorem~\ref{thm:kl-bar-cobar-adjunction} Step~4 is discharged on
-the non-degenerate admissible lane at the level of cohomology of
-filtration quotients, with no appeal to the strict CDG form of
-Conjecture~\ref{conj:periodic-cdg}; the graded form of that
-conjecture is Theorem~\ref{thm:periodic-cdg-is-koszul-compatible},
-and the residual chain-level Massey-vanishing hypothesis is
-Remark~\ref{rem:massey-vanishing-periodic-cdg}. The descent of
-the adjunction from
-$\mathrm{Stab}(u_{q_{\mathrm{qg}}}(\fg))\text{-comod}$ to
-$\cO_k^{\mathrm{int}}\text{-comod}$ remains
-Conjecture~\ref{conj:kl-bar-cobar-dl}.
+for admissible $\lambda$ in the same completed ambient and every
+integer $n\geq0$.  Here the superscript $\mathrm{fin.wt}$ means that
+the direct sum is taken after fixing a finite conformal-weight
+truncation; the displayed map is an isomorphism on that finite
+truncation after localizing at $\sigma_{2p}$, and the completed
+isomorphism is obtained only under strict Mittag--Leffler.  This
+theorem does not identify the bar-comodule
+target with the semisimplified Kazhdan--Lusztig category
+$\mathcal C(U_q(\fg))$; that descent remains
+Conjecture~\ref{conj:kl-bar-cobar-dl}.  The reflected level
+$-k-2h^\vee$ is the signed mirror stratum of
+Proposition~\ref{prop:admissible-levels-permuted}, not a literal
+positive admissible level.
 \end{theorem}
 
 \begin{proof}
-The construction has three steps, each inheriting from named
-inputs.
+The construction has three steps.
 
 \emph{Step~1: Arakawa $C_2$-cofiniteness gives finite-length
 restriction.}
@@ -463,80 +543,67 @@ By Arakawa~\cite{Arakawa15} Thm.~4.1 and the associated
 variety criterion \textup{(}Theorem~\ref{thm:arakawa-rationality}\textup{)},
 every simple object $\mathcal{L}(\lambda)$ for
 $\lambda \in \mathrm{Adm}_k$ is $C_2$-cofinite and therefore of
-finite length in $\KL_k^{\mathrm{adm}}$. In particular the bar
-complex $\barB^{\mathrm{ch}}(\mathcal{L}(\lambda))$ is a
-\emph{bounded} complex of finite-dimensional spaces in each
-conformal-weight sector
+finite length in the non-degenerate rational category.  In each fixed
+conformal-weight sector the bar complex
+$\barB^{\mathrm{ch}}(\mathcal{L}(\lambda))$ has finite-dimensional
+terms and only finitely many contributing bar degrees
 \textup{(}Corollary~\ref{cor:bar-admissible-finiteness}\textup{)}.
 
-\emph{Step~2: Periodic-CDG filtration gives finite length on
-each weight.}
-By Theorem~\ref{thm:periodic-cdg-is-koszul-compatible}(i) and
-Definition~\ref{def:periodic-cdg-filtration}, the filtration
-quotients $\gr^n F$ of $\barB^{\mathrm{ch}}(\widehat\fg_k)$ are
-finite-dimensional in each conformal weight; the filtration is
-exhausted in $p$ steps on each weight because each
-$Q_i^{\mathrm{adm}}$ acts by a nilpotent endomorphism of
-nilpotency index $\leq p$ on each conformal-weight slice of
-$L_k(\fg)$. The transported nilpotency bound follows by pulling
-back Finkelberg's bound for the action of divided powers $f_i^{(p)}$
-on the tilting category \textup{(}\cite{Fin96} Lem.~3.7\textup{)}
-through the Wakimoto realisation. Hence
-$\barB^{\mathrm{ch}}(\mathcal{L}(\lambda))$ is realised as the
-finite colimit $\colim_{n \leq pr} F^n$ on each conformal-weight
-slice, where $r = \mathrm{rk}\,\fg$.
+\emph{Step~2: Screening filtration on finite weights.}
+Assume the screening action $\rho_k$ of
+Theorem~\ref{thm:periodic-cdg-is-koszul-compatible}.  The filtration
+of Definition~\ref{def:periodic-cdg-filtration} is finite on each
+fixed conformal-weight sector.  In rank one this is the elementary
+bound coming from $x^p=0$ in $\bC[x]/(x^p)$.  In higher rank it is
+the finite Nichols/PBW-length bound after the action factors through
+the finite-dimensional algebra $u_{q_{\mathrm{qg}}}^-(\fg)$.  No
+claim is made that the total uncompleted bar complex is finite.
 
-\emph{Step~3: Adams-type spectral sequence with
-$d_1 = Q^{\mathrm{adm}}$ converges.}
-The periodic-CDG filtration induces a spectral sequence
+\emph{Step~3: Filtered spectral sequence and restriction of the
+ambient adjunction.}
+On each finite conformal-weight truncation for which a curvature-zero
+quotient or totalization
+$\operatorname{Tot}^{\leq W}_0(\lambda)$ has been specified, the
+periodic-CDG filtration induces the ordinary spectral sequence
 \begin{equation}\label{eq:admissible-kl-ss}
 E_1^{n,m}
 = H^{n+m}\bigl(\gr^n F, \;
-d_B + (Q^{\mathrm{adm}})^{\mathrm{ind}}\bigr)
+d_B + \rho_k^{\mathrm{ind}}\bigr)
 \;\Longrightarrow\;
-H^{n+m}\bigl(\barB^{\mathrm{ch}}(\mathcal{L}(\lambda)),
-\; d_B\bigr),
+H^{n+m}\bigl(\operatorname{Tot}^{\leq W}_0(\lambda)\bigr),
 \end{equation}
-where $(Q^{\mathrm{adm}})^{\mathrm{ind}}$ is the induced
-differential on the associated graded. The $E_1$-page is
-finite-dimensional in each weight by Step~2, and the
-differential $d_1$ on $E_1$ \emph{coincides with
-$Q^{\mathrm{adm}}$} acting on the associated graded
-\textup{(}a direct calculation: the filtration is defined by the
-kernel of powers of $Q^{\mathrm{adm}}$, so the induced
-differential on successive quotients is precisely the next
-application of $Q^{\mathrm{adm}}$\textup{)}. Convergence is
-automatic in each weight because the filtration is finite there;
-passage to the total complex is the Mittag--Leffler condition
-\textup{(}guaranteed by Step~2\textup{)}.
-
-The adjunction~\eqref{eq:admissible-kl-adjunction} is obtained
-by defining $\Omega^{\mathrm{ch}}_{\mathrm{adm}}$ and
-$\barB^{\mathrm{ch}}_{\mathrm{adm}}$ as the restrictions of the
-ambient functors of Theorem~\ref{thm:kl-bar-cobar-adjunction} to
-admissible weights; well-definedness follows from
-Theorem~\ref{thm:periodic-cdg-is-koszul-compatible}(iii). The
-unit and counit are quasi-isomorphisms on each $F^n/F^{n-1}$ by
-Step~2 and are quasi-isomorphisms on the inverse limit by the
-spectral-sequence convergence~\eqref{eq:admissible-kl-ss} modulo
-the $2p$-periodic shift. The Ext-recovery
-formula~\eqref{eq:admissible-ext-recovery} is the direct-sum
-version of Theorem~\ref{thm:kl-bar-cobar-adjunction}(ii) obtained
-by summing over all $2p$-periodic shifts.
+where $\rho_k^{\mathrm{ind}}$ denotes the induced rank-one screening
+differential or, in higher rank, the chosen braided totalisation of
+the Nichols action.  The $E_1$-page is finite-dimensional in each
+weight by Step~2, so convergence is weightwise finite.  The curved
+total object is read in the coderived category of
+Definition~\ref{def:admissible-positselski-ambient}, not in the
+ordinary derived category of raw comodules.  The functors of
+Theorem~\ref{thm:kl-bar-cobar-adjunction} preserve these finite
+weight truncations and their strict completions, hence restrict to
+\eqref{eq:admissible-kl-adjunction}.  The unit and counit are not new
+maps; they are the restricted ambient unit and counit and inherit
+their coderived-isomorphism property only on the completed Koszul
+subcategory specified in that theorem.  If $\sigma_{2p}$ is supplied,
+localizing the coderived target at this endomorphism identifies the
+finite-weight integer shifts.  Strict Mittag--Leffler is the only
+passage from these finite truncations to
+\eqref{eq:admissible-ext-recovery}.
 \end{proof}
 
-\begin{corollary}[Reduction of the periodic-CDG frontier]
-\label{cor:open-frontier-resolved-1}
+\begin{corollary}[Finite-weight input for admissible KL]
+\label{cor:admissible-kl-finite-weight-input}
 The chain-level Kazhdan--Lusztig adjunction Step~4 of
-Theorem~\ref{thm:kl-bar-cobar-adjunction} is supplied with a
-bar-side graded-purity theorem at admissible level: the
-spectral-sequence convergence rests on the periodic-CDG filtration
+Theorem~\ref{thm:kl-bar-cobar-adjunction} is supplied with the
+bar-side finite-weight input actually proved at admissible level: the
+spectral-sequence convergence rests on the screening filtration
 \textup{(}Theorem~\ref{thm:periodic-cdg-is-koszul-compatible}\textup{)}
-and no longer on the full strength of
-Conjecture~\ref{conj:periodic-cdg}. The residual form of the
-conjecture is the Massey-vanishing hypothesis of
-Remark~\ref{rem:massey-vanishing-periodic-cdg}, proved for
-$\mathfrak{sl}_2$ and open for $\mathrm{rk}\,\fg \geq 2$.
+and the completion/Mittag--Leffler condition, not on an unproved
+global finite-dimensionality statement.  The residual content of
+Conjecture~\ref{conj:periodic-cdg} is the construction of the
+period endomorphism $\sigma_{2p}$, its CDG compatibility, the
+Massey-vanishing lift, and the small-quantum-group-to-semisimplified
+descent of Conjecture~\ref{conj:kl-bar-cobar-dl}.
 \end{corollary}
 
 %==================================================================
@@ -544,11 +611,12 @@ $\mathfrak{sl}_2$ and open for $\mathrm{rk}\,\fg \geq 2$.
 \label{sec:chiral-adams-functor}
 %==================================================================
 
-The Steenrod-analog functor on the chiral endomorphism operad has
-primary operations identifiable with the $d_1$ differentials
-of~\eqref{eq:admissible-kl-ss}. Its construction, below, closes
-(\textup{spectral\_sequences.tex:582-589}) by upgrading the
-Adams-analogy remark to a theorem.
+The Adams analogy is a rank-one statement unless a braided
+totalisation of the Nichols action is supplied.  The primary operation
+on the rank-one spectral sequence is the single screening
+$Q^{\mathrm{adm}}$; in higher rank the data form a
+$u_{q_{\mathrm{qg}}}^-(\fg)$-module structure, not an ordinary
+square-zero Steenrod differential.
 
 \begin{definition}[Chiral Steenrod algebra at admissible level]
 \label{def:chiral-steenrod}
@@ -557,12 +625,14 @@ Let $k = -h^\vee + p/q$ be non-degenerate admissible. The
 \emph{chiral Steenrod algebra at admissible level}
 $\mathcal{A}^{\mathrm{ch}}_k$ is the associative graded algebra
 generated by the screening-charge adjoints
-$Q_i^{\mathrm{adm}}$ $(i = 1, \ldots, \mathrm{rk}\,\fg)$ modulo
-the adjoint-quantum-Serre relations of
+$Q_i^{\mathrm{adm}}$ $(i = 1, \ldots, \mathrm{rk}\,\fg)$ after the
+screening action factors through the small negative Borel.  It is
+the algebra with root-of-unity truncation and adjoint-quantum-Serre
+relations
 Lemma~\ref{lem:screening-adjoint-squares} at
 $q_{\mathrm{qg}} = e^{\pi i q/p}$:
 \begin{align}\label{eq:chiral-steenrod-relations}
-(Q_i^{\mathrm{adm}})^2 &= 0, \notag \\
+(Q_i^{\mathrm{adm}})^p &= 0, \notag \\
 (\mathrm{ad}_{q_{\mathrm{qg}}} Q_i^{\mathrm{adm}})^2
 Q_j^{\mathrm{adm}} &= 0 \quad (a_{ij} = -1), \\
 \bigl[Q_i^{\mathrm{adm}}, Q_j^{\mathrm{adm}}\bigr]_{q_{\mathrm{qg}}}
@@ -573,7 +643,7 @@ Borel part $u_{q_{\mathrm{qg}}}^-(\fg)$ of the small quantum group
 at $q_{\mathrm{qg}}$, finite-dimensional of dimension
 $p^{|\Phi^+|}$ where $|\Phi^+|$ is the number of positive roots.
 In the rank-one case $\fg = \mathfrak{sl}_2$ with a single screening
-and the single relation $(Q_1^{\mathrm{adm}})^2 = 0$, this reduces
+and the single relation $(Q_1^{\mathrm{adm}})^p = 0$, this reduces
 to $u_{q_{\mathrm{qg}}}^-(\mathfrak{sl}_2) \cong \mathbb{C}[x]/(x^p)$,
 and in the further specialisation $p = 2$ to the ordinary exterior
 algebra $\Lambda(x)$ of dimension $2$.
@@ -585,17 +655,13 @@ The classical mod-$p$ Steenrod algebra $\mathcal{A}_p$ has
 infinite dimension (Milnor basis). The chiral Steenrod algebra
 $\mathcal{A}^{\mathrm{ch}}_k$ is finite-dimensional because it
 records only the \emph{first-order} primary operations on the
-admissible-KL spectral sequence (the $d_1$ differentials); higher
-differentials $d_r$ correspond to secondary operations and are
-recovered as Massey products in
-$\mathrm{Ext}_{\mathcal{A}^{\mathrm{ch}}_k}$. This mirrors the
-finiteness pattern of the mod-$p$ Steenrod algebra \emph{on a
-specific finite spectrum}, which the admissible KL category
-realises in the chiral world. The correct chiral analogue of
-``mod-$p$ cohomology operations'' is the full Nichols algebra
+admissible-KL spectral sequence.  Higher differentials require
+secondary operations or Massey products; they are not encoded by the
+finite negative Borel alone.  The correct chiral analogue of
+``mod-$p$ primary operations'' is the Nichols algebra
 $u_{q_{\mathrm{qg}}}^-(\fg)$ rather than its classical
-$q_{\mathrm{qg}} \to 1$ limit: ordinary anticommutation is a
-rank-one artefact of $\mathfrak{sl}_2$ at $p = 2$.
+$q_{\mathrm{qg}}\to1$ limit.  Ordinary anticommutation occurs only
+in the exterior rank-one specialisation $p=2$.
 \end{remark}
 
 \begin{theorem}[Chiral Adams functor, rank one;
@@ -603,7 +669,14 @@ rank-one artefact of $\mathfrak{sl}_2$ at $p = 2$.
 \label{thm:adams-analog-construction}
 \index{Adams spectral sequence!chiral analogue}%
 Let $\fg = \mathfrak{sl}_2$ and $k = -2 + p/q$ non-degenerate
-admissible. There is a dg functor on the chiral endomorphism operad
+admissible.  Assume the rank-one screening action factors through
+$u_{q_{\mathrm{qg}}}^-(\mathfrak{sl}_2)\cong\bC[x]/(x^p)$ and that the
+period endomorphism $\sigma_{2p}$ of
+Theorem~\ref{thm:periodic-cdg-is-koszul-compatible}(iii) is supplied.
+Assume also that the finite-weight bar-endomorphism model for
+$\ChirHoch^*(L_k(\mathfrak{sl}_2);-)$ is compatible with the
+screening filtration.
+Then there is a dg functor on the chiral endomorphism operad
 \begin{equation}\label{eq:chiral-adams-functor}
 \St^{\mathrm{ch}}_k\colon
 \End^{\mathrm{ch}}_{L_k(\mathfrak{sl}_2)}
@@ -627,35 +700,37 @@ the \emph{chiral Adams functor}, with the following properties:
  E_2^{n,m} = \Ext^{n,m}_{\mathcal{A}^{\mathrm{ch}}_k}
  \bigl(\mathbb{C}, \St^{\mathrm{ch}}_k(\mathcal{L}(\lambda))\bigr)
  \;\Longrightarrow\;
- \ChirHoch^{n+m}(\widehat\fg_k; \mathcal{L}(\lambda))
+ \ChirHoch^{n+m}(L_k(\mathfrak{sl}_2); \mathcal{L}(\lambda))
  \]
  converges strongly after finitely many pages in each conformal
  weight.
-\item \emph{Compatibility with periodicity.} The period generator
- $\Theta_{2p}$ acts on $E_2$ as the classical Bott element of the
- finite exterior algebra $\mathcal{A}^{\mathrm{ch}}_k$, and the
- $2p$-periodicity of
- Theorem~\ref{thm:periodic-cdg-is-koszul-compatible}(i) matches
- the Tate-cohomological periodicity of $\Ext_{u_q(\fg)}$ under
- the Finkelberg equivalence.
+\item \emph{Compatibility with the bar-side period.} The coderived
+ endomorphism $\sigma_{2p}$ acts on the finite-weight pages as the
+ chiral lift of the complete hypersurface-resolution class for
+ $\bC[x]/(x^p)$.  For $p=2$ this is the usual exterior Bott class; for
+ $p>2$ it is the truncated-polynomial hypersurface class together with
+ the chiral internal grading.  This does not assert periodicity of
+ ordinary chiral Hochschild cohomology in degree~$2p$.
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
 \emph{Construction of $\St^{\mathrm{ch}}_k$.}
 The chiral endomorphism operad
-$\End^{\mathrm{ch}}_{L_k(\fg)}$ at admissible level acts on
-$\ChirHoch^*(\widehat\fg_k; M)$ for $M \in \KL_k^{\mathrm{adm}}$
+$\End^{\mathrm{ch}}_{L_k(\mathfrak{sl}_2)}$ at admissible level acts on
+$\ChirHoch^*(L_k(\mathfrak{sl}_2); M)$ for
+$M \in \KL_k^{\mathrm{adm}}$
 through the chiral higher Deligne structure
 \textup{(}Theorem~\ref{V2-thm:chd-deligne-tamarkin}, Vol.~II\textup{)}.
-By Lemma~\ref{lem:screening-adjoint-squares} the screening
-adjoints $Q_i^{\mathrm{adm}}$ are coderivations of the bar
-coalgebra, hence act on $\ChirHoch^*$ with squares zero and the
-adjoint-Serre relations~\eqref{eq:chiral-steenrod-relations}.
+By the rank-one hypothesis and Lemma~\ref{lem:screening-adjoint-squares}
+the single screening adjoint $Q^{\mathrm{adm}}$ is a continuous
+coderivation on the finite-weight associated graded and its
+$p$-th power vanishes after passage to
+$u_{q_{\mathrm{qg}}}^-(\mathfrak{sl}_2)$.
 Define
-$\St^{\mathrm{ch}}_k(M) := \ChirHoch^*(\widehat\fg_k; M)$
+$\St^{\mathrm{ch}}_k(M) := \ChirHoch^*(L_k(\mathfrak{sl}_2); M)$
 as a $\mathcal{A}^{\mathrm{ch}}_k$-module via the
-$Q_i^{\mathrm{adm}}$-action. Functoriality in $M$ is inherited
+$Q^{\mathrm{adm}}$-action. Functoriality in $M$ is inherited
 from functoriality of $\ChirHoch^*(-)$.
 
 \emph{Property~(i).}
@@ -669,11 +744,10 @@ $\mathcal{A}^{\mathrm{ch}}_k$-action on $\St^{\mathrm{ch}}_k(M)$.
 \emph{Property~(ii).}
 The $E_2$-page is
 $\Ext^{*,*}_{\mathcal{A}^{\mathrm{ch}}_k}(\mathbb{C}, -)$ because
-$Q^{\mathrm{adm}}$ is precisely the left-module differential and
-$\Ext_{\mathcal{A}^{\mathrm{ch}}_k}$ is its derived functor.
-Convergence: $\mathcal{A}^{\mathrm{ch}}_k$ is finite-dimensional,
-so $\Ext$ is finite-dimensional in each bidegree, and the
-spectral sequence is the \emph{finite} convergence statement of
+$Q^{\mathrm{adm}}$ gives the rank-one filtration differential and
+$\Ext_{\mathcal{A}^{\mathrm{ch}}_k}$ is computed by resolving
+$\mathbb{C}$ over $\bC[x]/(x^p)$.  Convergence is the finite-weight
+convergence statement of
 Theorem~\ref{thm:admissible-kl-bar-cobar-adjunction} Step~3
 re-indexed.
 
@@ -681,13 +755,12 @@ re-indexed.
 For $\fg = \mathfrak{sl}_2$ at $p = 2$, the algebra
 $\mathcal{A}^{\mathrm{ch}}_k$ is the exterior algebra
 $\Lambda(x)$ on a single generator; for general admissible $p$ it
-is $\mathbb{C}[x]/(x^p)$. In either case its Tate cohomology is
-periodic of period $2$ (for $\Lambda$) or $2p$ (for the truncated
-polynomial algebra), matching the Tate-cohomology periodicity of
-$u_{q_{\mathrm{qg}}}(\mathfrak{sl}_2)$-modules
-\textup{(}Lusztig~\cite{Lus90} Prop.~8.3\textup{)}. The
-identification of $\Theta_{2p}$ with the corresponding Bott element
-is the restriction of this identity to the negative Borel subalgebra.
+is $\mathbb{C}[x]/(x^p)$.  The complete resolution displayed in
+Theorem~\ref{thm:periodic-cdg-is-koszul-compatible}(iv) gives the
+two-step hypersurface class.  The asserted action of $\sigma_{2p}$ is
+the assumed chiral grading lift of that class in the coderived
+bar-side endomorphism algebra; no Finkelberg
+semisimplification is used in this rank-one construction.
 \end{proof}
 
 \begin{conjecture}[Chiral Adams functor, higher rank;
@@ -697,25 +770,31 @@ is the restriction of this identity to the negative Borel subalgebra.
 The construction of Theorem~\ref{thm:adams-analog-construction}
 extends to general simply-laced $\fg$ with
 $\mathcal{A}^{\mathrm{ch}}_k = u_{q_{\mathrm{qg}}}^-(\fg)$ in place
-of the rank-one $\mathbb{C}[x]/(x^p)$. Properties (i)--(iii) carry
-over with $d_1 = Q^{\mathrm{adm}}$ replaced by the multi-generator
-action of $\{Q_i^{\mathrm{adm}}\}$ satisfying quantum Serre, and
-$E_2 = \Ext^{*,*}_{u_{q_{\mathrm{qg}}}^-(\fg)}$. The obstruction
-is the non-commutativity of the multi-index filtration in
-Definition~\ref{def:periodic-cdg-filtration} together with Massey
-vanishing of Remark~\ref{rem:massey-vanishing-periodic-cdg}.
+of the rank-one $\mathbb{C}[x]/(x^p)$.  The desired $E_2$-page is
+\[
+E_2^{*,*}=
+\Ext^{*,*}_{u_{q_{\mathrm{qg}}}^-(\fg)}
+\bigl(\mathbb{C},\St^{\mathrm{ch}}_k(-)\bigr),
+\]
+with the $d_1$ lane replaced by a braided multi-generator
+totalisation of the screening action
+\(\{Q_i^{\mathrm{adm}}\}\).  The obstruction is not mere
+non-commutativity: one must construct the braided total differential,
+prove CDG-coalgebra compatibility of curvature and deconcatenation,
+control the resulting Nichols-algebra Massey products, and identify
+the chiral internal grading giving the proposed \(2p\)-period.
 \end{conjecture}
 
-\begin{corollary}[Reduction of the Adams-analogy frontier]
-\label{cor:open-frontier-resolved-2}
-The Adams-analogy remark of spectral\_sequences.tex:582-589 is
-upgraded to Theorem~\ref{thm:adams-analog-construction} for
-$\fg = \mathfrak{sl}_2$: the Steenrod-to-chiral-endomorphism
-functor exists in rank one, its primary operations are the $d_1$
-differentials of the admissible-KL spectral sequence, and it
-converges to chiral Hochschild cohomology. The higher-rank
+\begin{corollary}[Rank-one primary-operation comparison]
+\label{cor:rank-one-primary-operation-comparison}
+For $\fg = \mathfrak{sl}_2$, after the explicit rank-one screening
+truncation, finite-weight Hochschild comparison, and period-endomorphism
+hypotheses are supplied, the chiral-endomorphism functor exists, its
+primary operation is the $d_1$ differential of the admissible-KL
+spectral sequence, and it converges weightwise to chiral Hochschild
+cohomology.  The higher-rank
 extension, with target $u_{q_{\mathrm{qg}}}^-(\fg)$-modules rather
-than the ordinary exterior algebra, is stated as
+than an ordinary exterior algebra, is stated as
 Conjecture~\ref{conj:adams-analog-higher-rank}.
 \end{corollary}
 
@@ -724,7 +803,7 @@ Conjecture~\ref{conj:adams-analog-higher-rank}.
 \label{sec:class-M-admissible}
 %==================================================================
 
-\begin{corollary}[Class-M admissible minimal-model adjunction;
+\begin{corollary}[Class-M admissible minimal-model finite-weight comparison;
 \ClaimStatusConditional]
 \label{cor:class-M-admissible-minimal-model}
 \index{Virasoro minimal model!admissible adjunction}%
@@ -732,25 +811,29 @@ Let $c_{p,q} = 1 - 6(p-q)^2/(pq)$ be a Virasoro minimal-model
 central charge \textup{(}coprime $p, q \geq 2$\textup{)}. The
 simple Virasoro quotient $L_{\mathrm{Vir}}(c_{p,q})$ carries an
 admissible-KL structure as the Drinfeld--Sokolov reduction of
-$L_k(\widehat{\mathfrak{sl}}_2)$ at $k = -2 + p/q$. The chain-level
-adjunction
-Theorem~\ref{thm:admissible-kl-bar-cobar-adjunction} specialises
-to a bar-cobar adjunction
+$L_k(\widehat{\mathfrak{sl}}_2)$ at $k = -2 + p/q$.  The
+finite-weight bar-cobar comparison of
+Theorem~\ref{thm:admissible-kl-bar-cobar-adjunction} specialises to
 \begin{equation}\label{eq:minimal-model-kl-adjunction}
-\Omega^{\mathrm{ch}}_{\mathrm{Vir},p,q}\colon
-\KL^{\mathrm{adm}}_{\mathrm{Vir}}(c_{p,q})
+\Phi^{\mathrm{ch}}_{\mathrm{Vir},p,q}\colon
+D^{\mathrm{adm,wt}}\bigl(L_{\mathrm{Vir}}(c_{p,q})\bigr)
 \;\rightleftarrows\;
-\bigl(\KL^{\mathrm{adm}}_{\mathrm{Vir}}(26 - c_{p,q})\bigr)^{\mathrm{op}}
-\;\colon \barB^{\mathrm{ch}}_{\mathrm{Vir},p,q}
+D^{\mathrm{co},\mathrm{adm,wt}}
+\bigl(\CoMod^{\Eone,\mathrm{conil}}_{\widehat C_{\mathrm{Vir},p,q}}\bigr)
+\;\colon \Psi^{\mathrm{ch}}_{\mathrm{Vir},p,q},
 \end{equation}
-whose categories have $(p-1)(q-1)/2$ simple objects each
-\textup{(}the Kac table\textup{)}. Every simple object has
-finite length; the adjunction unit and counit are
-quasi-isomorphisms modulo the $2p$-periodic shift. This closes
-the scope hole of for class M: minimal-model Virasoro is
-admissible-KL with a finite-length bar complex, and the
-shadow tower $\{S_r\}_{r \geq 2}$ recovers level-by-level on
-each filtration step.
+where
+$C_{\mathrm{Vir},p,q}:=\barB^{\mathrm{ch}}
+(L_{\mathrm{Vir}}(c_{p,q}))$ and
+$\widehat C_{\mathrm{Vir},p,q}$ is its strict conformal-weight
+completion.  The category has
+$(p-1)(q-1)/2$ simple objects \textup{(}the Kac table\textup{)} and
+every simple object has finite length.  The unit and counit are the
+restricted completed/conilpotent unit and counit; they are
+coderived isomorphisms on the same completed Koszul subcategory as in
+Theorem~\ref{thm:admissible-kl-bar-cobar-adjunction}.  A dual
+Virasoro category at $26-c_{p,q}$ is a separate ghost-convention
+comparison, not part of the finite-weight statement.
 \end{corollary}
 
 \begin{proof}
@@ -760,16 +843,14 @@ simple Virasoro minimal model $L_{\mathrm{Vir}}(c_{p,q})$ and that
 the functor is exact on $\KL_k^{\mathrm{adm}}$; it sends simple
 admissible $\widehat{\mathfrak{sl}}_2$-modules to simple Virasoro
 modules \textup{(}the Kac-table modules\textup{)}. The periodic-CDG
-filtration of Def.~\ref{def:periodic-cdg-filtration} transports
-under this functor because Drinfeld--Sokolov commutes with
-screenings \textup{(}Frenkel--Kac--Wakimoto principle: the
-screening charges are DS-invariants\textup{)}.
-Theorem~\ref{thm:admissible-kl-bar-cobar-adjunction} transports to
-the Virasoro side verbatim; the Koszul-dual central charge
-is $26 - c_{p,q}$ by the matter--ghost convention
-\textup{(}both $13 - c$ and $26 - c$ are real duality shifts,
-operadic vs critical respectively; we use $26 - c_{p,q}$ because
-the Drinfeld--Sokolov reduction inherits the ghost pairing\textup{)}.
+filtration of Definition~\ref{def:periodic-cdg-filtration} transports
+under this functor when the rank-one screening truncation and period
+endomorphism of Theorem~\ref{thm:adams-analog-construction} are supplied,
+because the DS BRST differential is built from the same screening
+operators.  Theorem~\ref{thm:admissible-kl-bar-cobar-adjunction}
+therefore transports the finite-weight comparison to the Virasoro
+side.  No identification with a category at $26-c_{p,q}$ is used in
+this transport.
 The count $(p-1)(q-1)/2$ is the standard Belavin--Polyakov--Zamolodchikov
 count of distinct Virasoro primary fields
 \textup{(}Kac~\cite{Kac98} \S4.5\textup{)} after the Kac-table
@@ -785,88 +866,80 @@ single identity primary of the trivial minimal model $c = 0$.
 The shadow tower $\{S_r\}_{r \geq 2}$ of Vol.~I acts on the
 periodic-CDG filtration as follows: $S_2 = \kappa^{\mathrm{Vir}}(c_{p,q})
 = c_{p,q}/2$ is the leading class; higher $S_r$ for $r \geq 3$
-live on the associated graded $\gr^n F$ and are finite because
-each $\gr^n F$ is finite-dimensional. This is consistent with
+live on the fixed-weight associated graded $\gr^n F$ and are finite
+on each conformal-weight sector by
+Corollary~\ref{cor:bar-admissible-finiteness}.  This is consistent with
 the class-M shadow-tower completion theorem
 \textup{(}Vol.~II thm:completed-bar-cobar-strong\textup{)}.
 \end{remark}
 
 %==================================================================
-\section{Bridge to Vol.~II E_3-topologization class M and closure}
+\section{Class-M admissible topologization}
 \label{sec:bridge-to-vol-ii}
 %==================================================================
 
-\begin{remark}[Bridge to Vol.~II E_3-topologization for class M]
+\begin{remark}[Class-M weight completion and admissible finite weights]
 \label{rem:bridge-vol-ii-class-m}
 Vol.~II thm:topologization-tower establishes class-M
 E_3-topological structure in the \emph{weight-completed}
 category. The admissible sublocus gives a conditionally stronger
-statement on the admissible sublocus: on minimal-model Virasoro
-$L_{\mathrm{Vir}}(c_{p,q})$, the periodic-CDG filtration is
-finite-dimensional in each weight on the nose (not only in the
-completion), so graded-quotient $2p$-periodicity is available
-on the original complex at admissible central charge. The
-chain-level $\mathrm{E}_3$-topologization on the original complex
-descends along this bridge under the Massey-vanishing hypothesis
-of Remark~\ref{rem:massey-vanishing-periodic-cdg}; without it,
-the admissible case retains the same weight-completed character
-as the generic class-M statement.
+finite-weight statement: on minimal-model Virasoro
+$L_{\mathrm{Vir}}(c_{p,q})$, each conformal-weight sector of the
+screening filtration is finite before completion.  The full
+chain-level $\mathrm{E}_3$-topologization on the original uncompleted
+complex descends along this comparison only after the period endomorphism,
+Massey-vanishing, and CDG-compatibility hypotheses of
+Remark~\ref{rem:massey-vanishing-periodic-cdg} are supplied.  Without
+them, the admissible case has the same weight-completed character as
+the generic class-M statement.
 \end{remark}
 
-\begin{remark}[Master conjecture status update]
+\begin{remark}[Simple-quotient periodic data]
 \label{rem:master-conjecture-update-periodic-cdg}
-Conjecture~\ref{conj:periodic-cdg} is reduced by
-Theorem~\ref{thm:periodic-cdg-is-koszul-compatible} to the
-Massey-vanishing hypothesis of
-Remark~\ref{rem:massey-vanishing-periodic-cdg}; Massey vanishing
-is proved for $\mathfrak{sl}_2$ and open for
-$\mathrm{rk}\,\fg \geq 2$. The downstream
-Conjecture~\ref{conj:kl-bar-cobar-dl} reduces to the descent from
-$u_{q_{\mathrm{qg}}}(\fg)$-modules to the semisimplified target
-$\cO_k^{\mathrm{int}} \simeq \mathcal{C}(U_{q_{\mathrm{qg}}}(\fg))$
-via the Arkhipov--Gaitsgory long exact triangle. Combined with
-Corollary~\ref{cor:class-M-admissible-minimal-model} (rank one)
-and Corollary~\ref{cor:open-frontier-resolved-2} (Adams-analog,
-rank one), the rank-one periodic-CDG theorem \emph{reduces} the four residual
-items recorded elsewhere in the programme: items 1, 2, 4 remain
-in their prior (reduced or closed) status; item 3
-(\texttt{conj:periodic-cdg}) is reduced to the Massey-vanishing
-hypothesis and the semisimplification descent, not closed
-outright.
+Conjecture~\ref{conj:periodic-cdg} is not proved by the finite-weight
+comparison.  The universal input is the PBW--Koszul lane of
+Proposition~\ref{prop:universal-pbw-koszul-admissible-parameters}.
+For the simple admissible quotient, four data remain: a screening
+action through the small negative Borel, the coderived period
+endomorphism $\sigma_{2p}$, the Massey/CDG lift, and the
+descent from the small-quantum-group comparison category to the
+semisimplified Kazhdan--Lusztig target of
+Conjecture~\ref{conj:kl-bar-cobar-dl}.  Corollary~\ref{cor:class-M-admissible-minimal-model}
+and Corollary~\ref{cor:rank-one-primary-operation-comparison} give rank-one
+finite-weight and Adams-type reductions under those hypotheses; they
+do not promote the conjectural periodic CDG structure to a theorem.
 \end{remark}
 
 %==================================================================
-\section{First-principles verification table}
+\section{Independent inputs for periodic CDG}
 \label{sec:periodic-cdg-verification}
 %==================================================================
 
-\begin{remark}[Multi-path verification]
+\begin{remark}[Independent inputs]
 \label{rem:periodic-cdg-multipath}
-Theorem~\ref{thm:periodic-cdg-is-koszul-compatible} is verified
-along three mutually disjoint paths, matching the independent-verification
-independent-verification protocol:
+The local inputs have different logical strength and must not be fused into a
+single verification of Conjecture~\ref{conj:periodic-cdg}:
 \begin{enumerate}[label=\textup{(P\arabic*)}]
-\item \emph{Arakawa path.} $C_2$-cofiniteness of $L_k(\fg)$ at
+\item \emph{Arakawa path, proved elsewhere.} $C_2$-cofiniteness of
+ $L_k(\fg)$ at
  non-degenerate admissible level
- \textup{(}\cite{Arakawa15} Thm.~4.1\textup{)} gives
- finite-dimensionality of each $\gr^n F$; the spectral
- sequence~\eqref{eq:admissible-kl-ss} converges by
- Cartan--Eilenberg.
-\item \emph{Finkelberg path.} Semisimplification of tilting
- $U_q(\fg)$-modules gives the $2p$-Tate-periodicity of
- $\Ext_{u_q(\fg)}$; the Finkelberg equivalence transports this
- to the chiral side.
-\item \emph{Creutzig--Kanade--Linshaw path.} Admissible
- $\mathcal{W}$-algebra structure
- \textup{(}\cite{CKL20}\textup{)} gives an alternative screening
- realisation of $L_k(\fg)$; the period~$2p$ matches on the nose
- via the coset construction, providing a third independent
- computation.
+ \textup{(}\cite{Arakawa15} Thm.~4.1\textup{)} gives finite
+ conformal-weight sectors and finite-weight spectral-sequence
+ convergence.  It does not construct $\sigma_{2p}$.
+\item \emph{KZ/root-of-unity path, numerical.} The KZ parameter is
+ $e^{\pi i q/p}$ and its square has order dividing $p$.  This is a
+ necessary compatibility with small quantum groups, not a categorical
+ identification.
+\item \emph{Rank-one small-Borel path, computed here.}
+ $\bC[x]/(x^p)$ has the displayed two-step complete resolution.
+ This checks the first chain composites in the rank-one algebra model;
+ it does not prove the chiral $2p$ CDG-coalgebra period.
+\item \emph{Finkelberg/semisimplification path, conjectural in this
+ bridge.} The semisimplified tilting quotient is the intended
+ Kazhdan--Lusztig endpoint.  Transport from the periodic bar-side
+ coderived quotient to that endpoint is precisely
+ Conjecture~\ref{conj:kl-bar-cobar-dl}.
 \end{enumerate}
-No path uses a hypothesis or conclusion of another; each produces
-the period $2p$ by a different mechanism. See the companion test
-file \texttt{compute/tests/test\_periodic\_cdg\_admissible.py}
-for the independent-verification decoration.
 \end{remark}
 
 \endinput

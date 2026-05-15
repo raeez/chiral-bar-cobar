@@ -3,8 +3,8 @@
 Non-trivial identities tested:
   (i)   c_{E_8}(k=1) = 248/31 -- central charge of V_{E_8}.
   (ii)  complementarity sum c + c' = 2*dim(E_8) = 496 for Koszul dual KM.
-  (iii) nonzero differential count at degree 2 = 15600
-        = 1920 (Cartan-root) + 13440 (root-root inner product -1) + 240 (opposites).
+  (iii) degree-2 ordered nonzero counts: 17520 outside the Cartan-Cartan
+        diagonal and 17528 after adding the eight Cartan curvature maps.
   (iv)  E_8 root system data: 240 roots, 8-rank, Coxeter h = h^vee = 30.
 """
 
@@ -14,6 +14,7 @@ import pytest
 from sympy import Rational, Symbol, simplify
 
 from compute.lib.e8_lattice_bar import (
+    e8_bar_deg2_type_counts,
     e8_central_charge,
     e8_complementarity_sum,
     e8_curvature,
@@ -62,9 +63,16 @@ def test_dual_level_at_k_one():
 
 
 def test_nonzero_diff_count_deg2():
-    """Total nonzero differential count at degree 2 is 15600 = 1920+13440+240."""
-    assert e8_nonzero_diff_count() == 1920 + 13440 + 240
-    assert e8_nonzero_diff_count() == 15600
+    """Degree-2 ordered counts match comp:E8-bar-deg2."""
+    counts = e8_bar_deg2_type_counts()
+    assert counts["nonzero_cartan_root"] == 2 * 8 * 240 == 3840
+    assert counts["nonzero_root_root_minus1"] == 240 * 56 == 13440
+    assert counts["nonzero_root_root_minus2"] == 240
+    assert counts["total_non_diagonal"] == 3840 + 13440 + 240 == 17520
+    assert e8_nonzero_diff_count(include_cartan_diagonal=False) == 17520
+    assert counts["nonzero_cartan_cartan_diagonal"] == 8
+    assert counts["total_nonzero"] == 17520 + 8 == 17528
+    assert e8_nonzero_diff_count() == 17528
 
 
 def test_generator_count_sums_to_dim():

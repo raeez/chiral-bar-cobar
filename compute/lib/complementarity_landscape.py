@@ -234,13 +234,11 @@ def kappa_affine(lie_type: str, rank: int, k: Fraction) -> Fraction:
 
     CRITICAL (AP1): This is NOT c/2 for affine algebras.
     c = k*dim(g)/(k+h^v) (Sugawara), but kappa = dim(g)*(k+h^v)/(2*h^v).
+    At the critical level k = -h^v, kappa is zero; the Sugawara
+    central charge is the quantity that is undefined.
     """
     dim_g, h_dual = _lie_dim_hdual(lie_type, rank)
     k = Fraction(k)
-    if k + h_dual == 0:
-        raise ValueError(
-            f"Critical level k = -{h_dual}: kappa undefined for {lie_type}_{rank}"
-        )
     return Fraction(dim_g) * (k + h_dual) / (2 * h_dual)
 
 

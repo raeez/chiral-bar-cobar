@@ -3,11 +3,11 @@ r"""Modular forms, quasi-modular forms, and the shadow genus expansion.
 MATHEMATICAL FRAMEWORK
 ======================
 
-The genus-g shadow amplitude F_g(A) for a chirally Koszul algebra A lives in
-the ring of quasi-modular forms QM_*(SL(2,Z)) = C[E_2*, E_4, E_6].  The
-genus-1 propagator IS E_2*(tau) (quasi-modular, weight 2, depth 1), and
-graph sums at genus g produce quasi-modular forms of weight <= 2g and
-depth <= g.
+The genus-g shadow amplitude F_g(A) for a chirally Koszul algebra A has a
+scalar projection and, after propagator dressing, a quasi-modular finite
+window in QM_*(SL(2,Z)) = C[E_2*, E_4, E_6].  The genus-1 propagator is
+P(tau) = -E_2*(tau)/12 (quasi-modular, weight 2, depth 1).  Finite q-window
+checks below are diagnostics; they are not proofs of global modularity.
 
 TEN COMPUTATIONAL MODULES:
 
@@ -31,14 +31,20 @@ TEN COMPUTATIONAL MODULES:
    These are the modular-covariant brackets; their relationship to the
    convolution bracket on Def_cyc^mod(A) is computed.
 
-5. SHADOW ZETA FUNCTION
-   L_A^sh(s) = sum_{r>=2} S_r(A) * r^{-s} = -kappa * zeta(s) * zeta(s-1)
-   Verified Eisenstein (not cuspidal) for all standard families.
+5. GENUS-1 EISENSTEIN SERIES AND SHADOW ZETA DIAGNOSTICS
+   The correct Eisenstein identity is for the Fourier coefficients of the
+   genus-1 arity-2 amplitude:
+       Sh_2^{(1)}(tau) = kappa * E_2*(tau),
+       D_2(A,s) = sum_{n>=1} -24*kappa*sigma_1(n)*n^{-s}
+                = -24*kappa*zeta(s)*zeta(s-1).
+   The shadow coefficient series L_A^sh(s) = sum_{r>=2} S_r(A) r^{-s}
+   is a different Dirichlet series.  It is not equal to the Eisenstein
+   product; class G already falsifies that identity.
 
 6. NON-HOLOMORPHIC COMPLETION
    E_2*(tau) -> E_hat_2(tau, tau-bar) = E_2*(tau) - 3/(pi*Im(tau))
    Effect on the shadow tower: the non-holomorphic completion restores
-   exact modular invariance but at the cost of holomorphicity.
+   weight-2 modular covariance of E_hat_2 but at the cost of holomorphicity.
 
 7. JACOBI FORMS AND ELLIPTIC GENUS
    The genus-1 shadow on the (tau, z) torus-with-insertion is a weak
@@ -75,7 +81,8 @@ ANTI-PATTERN GUARDS:
   AP46: eta(q) = q^{1/24} prod(1-q^n).  The q^{1/24} is NOT optional.
 
 References:
-    thm:shadow-eisenstein (arithmetic_shadows.tex)
+    thm:shadow-eisenstein and rem:shadow-eisenstein-correct-scope
+        (chapters/connections/arithmetic_shadows.tex)
     rem:propagator-weight-universality (higher_genus_modular_koszul.tex)
     thm:shadow-double-convergence (higher_genus_modular_koszul.tex)
     thm:algebraic-family-rigidity (higher_genus_modular_koszul.tex)
@@ -177,11 +184,8 @@ def shadow_amplitude_genus1(kappa_val: Fraction, nmax: int = 31) -> Dict[str, An
         q_coeffs[m] = kappa_val * sigma_neg1
 
     # E_2* contribution: the propagator P = -E_2*/12 enters through
-    # d/dtau log eta = -(1/24) E_2*(tau) (up to 2*pi*i factor)
-    # So A_1 ~ (kappa/24) * E_2*(tau) in the sense that the q-expansion
-    # of -kappa * log eta is governed by E_2*.
-    # More precisely: (2*pi*i)^{-1} d/dtau (-kappa * log eta)
-    #               = (kappa/24) * E_2*(tau)
+    # D log eta = (1/24) E_2*(tau), where D = q d/dq.
+    # Thus D(-kappa * log eta) = -(kappa/24) * E_2*(tau).
     # This is the weight-2 quasi-modular derivative of the genus-1 amplitude.
 
     return {
@@ -192,6 +196,43 @@ def shadow_amplitude_genus1(kappa_val: Fraction, nmax: int = 31) -> Dict[str, An
         'weight': 0,  # F_1 is weight 0 (constant)
         'depth': 0,   # at scalar level, no E_2* involvement
         'derivative_weight': 2,  # d/dtau(A_1) has weight 2 (from E_2*)
+    }
+
+
+def genus1_log_eta_derivative_coefficients(
+    kappa_val: Fraction, nmax: int = 31
+) -> Dict[str, Any]:
+    r"""Exact q-series for D(-kappa log eta), with D = q d/dq.
+
+    AP46 fixes
+        eta(tau) = q^{1/24} prod_{m>=1} (1 - q^m).
+    Hence
+        D log eta = 1/24 - sum_{n>=1} sigma_1(n) q^n = E_2*/24,
+    and therefore
+        D(-kappa log eta) = -kappa E_2*/24.
+
+    The returned ``product_formula_coefficients`` are computed directly from
+    the eta product:
+        q^0 coefficient = -kappa/24,
+        q^n coefficient = kappa*sigma_1(n), n >= 1.
+    """
+    kappa_val = Fraction(kappa_val)
+    e2s = eisenstein_e2k_exact(1, nmax)
+    derivative = [-kappa_val * coeff / 24 for coeff in e2s]
+
+    product_coeffs = [Fraction(0)] * nmax
+    if nmax > 0:
+        product_coeffs[0] = -kappa_val / 24
+    for n in range(1, nmax):
+        product_coeffs[n] = kappa_val * Fraction(sigma_k(n, 1))
+
+    return {
+        'kappa': kappa_val,
+        'operator': 'D = q d/dq = (2*pi*i)^(-1) d/dtau',
+        'D_minus_kappa_log_eta': derivative,
+        'product_formula_coefficients': product_coeffs,
+        'matches_product_formula': derivative == product_coeffs,
+        'e2_star_normalization': 'E_2* = 1 - 24*sum sigma_1(n) q^n',
     }
 
 
@@ -606,8 +647,96 @@ def verify_rc_bracket_modularity(nmax: int = 15) -> Dict[str, Any]:
 
 
 # =====================================================================
-# Section 5: Shadow zeta function
+# Section 5: Genus-1 Eisenstein identity and shadow zeta diagnostics
 # =====================================================================
+
+def genus1_arity2_eisenstein_coefficients(
+    kappa_val: Fraction, nmax: int = 31
+) -> Dict[str, Any]:
+    r"""Exact Fourier coefficients of the genus-1 arity-2 shadow amplitude.
+
+    Local source: Theorem ``thm:shadow-eisenstein`` and
+    Remark ``rem:shadow-eisenstein-correct-scope`` in
+    ``chapters/connections/arithmetic_shadows.tex``.
+
+    The valid Eisenstein object is
+        Sh_2^{(1)}(tau) = kappa * E_2*(tau)
+    with
+        E_2*(tau) = 1 - 24 * sum_{n>=1} sigma_1(n) q^n.
+
+    Therefore the q^n coefficient for n >= 1 is
+        a_n = -24 * kappa * sigma_1(n).
+
+    This is not the shadow coefficient Dirichlet series
+    L_A^sh(s) = sum S_r(A) r^{-s}.
+    """
+    kappa_val = Fraction(kappa_val)
+    coeffs = [Fraction(0)] * nmax
+    if nmax > 0:
+        coeffs[0] = kappa_val
+    for n in range(1, nmax):
+        coeffs[n] = -24 * kappa_val * Fraction(sigma_k(n, 1))
+
+    return {
+        'kappa': kappa_val,
+        'coefficients': coeffs,
+        'constant_term': coeffs[0] if coeffs else Fraction(0),
+        'nonconstant_formula': '-24*kappa*sigma_1(n)',
+        'series': 'Sh_2^{(1)}(tau) = kappa * E_2*(tau)',
+        'dirichlet_series': 'D_2(A,s), not L_A^sh(s)',
+    }
+
+
+def genus1_arity2_dirichlet_window(
+    kappa_val: Fraction, s: int = 4, nterms: int = 50
+) -> Dict[str, Any]:
+    r"""Finite exact Dirichlet-window diagnostic for the valid Eisenstein identity.
+
+    For integer s > 2 and a finite window N, compute
+        D_{2,N}(A,s) = sum_{1<=n<=N} -24*kappa*sigma_1(n) / n^s.
+
+    The independent finite-window oracle uses the Dirichlet convolution
+    coefficient of zeta(s) zeta(s-1):
+        coeff_n(1 * id) = sum_{d|n} d = sigma_1(n).
+
+    The full identity after N -> infinity is
+        D_2(A,s) = -24*kappa*zeta(s)*zeta(s-1), Re(s) > 2.
+    """
+    if s <= 2:
+        raise ValueError("integer s must be > 2 for the convergent window")
+    if nterms < 1:
+        raise ValueError("nterms must be >= 1")
+
+    kappa_val = Fraction(kappa_val)
+    coeff_data = genus1_arity2_eisenstein_coefficients(kappa_val, nterms + 1)
+    coeffs = coeff_data['coefficients']
+
+    direct = Fraction(0)
+    for n in range(1, nterms + 1):
+        direct += coeffs[n] / Fraction(n ** s)
+
+    convolution_sigma = [0] * (nterms + 1)
+    for a in range(1, nterms + 1):
+        for b in range(1, nterms // a + 1):
+            convolution_sigma[a * b] += b
+
+    convolution_window = Fraction(0)
+    for n in range(1, nterms + 1):
+        convolution_window += (
+            -24 * kappa_val * Fraction(convolution_sigma[n], n ** s)
+        )
+
+    return {
+        'kappa': kappa_val,
+        's': s,
+        'nterms': nterms,
+        'D2_window': direct,
+        'dirichlet_convolution_window': convolution_window,
+        'matches_dirichlet_convolution': direct == convolution_window,
+        'finite_window_only': True,
+        'limit_identity': '-24*kappa*zeta(s)*zeta(s-1)',
+    }
+
 
 def shadow_coefficients_virasoro(c_val: Fraction,
                                   max_arity: int = 8) -> Dict[int, Fraction]:
@@ -733,10 +862,12 @@ def shadow_zeta_function(S: Dict[int, Fraction], s: complex,
                           max_r: Optional[int] = None) -> complex:
     r"""Shadow zeta function: L_A^sh(s) = sum_{r>=2} S_r(A) * r^{-s}.
 
-    For all standard families (thm:shadow-eisenstein):
-        L_A^sh(s) = -kappa(A) * zeta(s) * zeta(s-1)
-
-    This is an EISENSTEIN L-function (not cuspidal).
+    This is the shadow-coefficient Dirichlet series.  It is not the
+    Eisenstein Dirichlet series of Theorem ``thm:shadow-eisenstein``.
+    The local corrected scope is explicit in
+    ``rem:shadow-eisenstein-correct-scope``:
+        L_A^sh(s) != -kappa(A) * zeta(s) * zeta(s-1)
+    in general, and class G already gives a one-term counterexample.
     """
     if max_r is None:
         max_r = max(S.keys()) if S else 2
@@ -749,12 +880,16 @@ def shadow_zeta_function(S: Dict[int, Fraction], s: complex,
 
 def shadow_zeta_eisenstein_prediction(kappa_val: float, s: complex,
                                        nterms: int = 500) -> complex:
-    r"""Compute -kappa * zeta(s) * zeta(s-1) for comparison with the shadow zeta.
+    r"""Compute the falsified Eisenstein comparison target for L_A^sh.
 
-    The shadow Eisenstein theorem (thm:shadow-eisenstein):
-        L_A^sh(s) = -kappa * zeta(s) * zeta(s-1)
+    This helper is retained only as a negative diagnostic.  The expression
+        -kappa * zeta(s) * zeta(s-1)
+    is not the value of the shadow coefficient series L_A^sh(s).  The valid
+    theorem has an extra factor -24 and uses the Fourier coefficients of
+    Sh_2^{(1)}(tau) = kappa*E_2*(tau), not the constants S_r(A).
 
-    where zeta(s) = sum_{n>=1} n^{-s} is the Riemann zeta function.
+    Use ``genus1_arity2_dirichlet_window`` for the true finite-window
+    Eisenstein diagnostic.
     """
     zeta_s = sum(n ** (-s) for n in range(1, nterms + 1))
     zeta_s1 = sum(n ** (-(s - 1)) for n in range(1, nterms + 1))
@@ -764,22 +899,16 @@ def shadow_zeta_eisenstein_prediction(kappa_val: float, s: complex,
 def verify_shadow_eisenstein(family: str, params: Dict[str, Any],
                               s_values: Optional[List[complex]] = None,
                               tol: float = 0.05) -> Dict[str, Any]:
-    r"""Verify that L_A^sh(s) = -kappa * zeta(s) * zeta(s-1) for a given family.
+    r"""Finite-window diagnostic for the falsified L_A^sh Eisenstein identity.
 
-    Tests at multiple s-values in the convergent region Re(s) > 2.
+    Tests at multiple s-values in the convergent region Re(s) > 2, but does
+    not claim or prove modularity.  The local corrected theorem says the
+    Eisenstein identity belongs to the Fourier coefficients of
+    Sh_2^{(1)}(tau), not to L_A^sh(s).
 
     For Heisenberg: S = {2: k, 3: 0, ...}, so L_H^sh(s) = k * 2^{-s}.
-    The Eisenstein prediction is -k * zeta(s) * zeta(s-1).
-    These match only in the LIMIT of infinitely many shadow coefficients.
-    For Heisenberg (class G, terminates at arity 2), the zeta function
-    is just k * 2^{-s}, which does NOT equal -k * zeta(s) * zeta(s-1).
-
-    The shadow Eisenstein theorem applies to the ANALYTICAL CONTINUATION
-    of the shadow tower, not to the truncated tower.  For class G,
-    the shadow zeta is trivially a single-term Dirichlet series.
-
-    For Virasoro (class M, infinite tower): the identity L_A^sh = -kappa*zeta*zeta
-    holds asymptotically as max_arity -> infinity.
+    This does not equal -k*zeta(s)*zeta(s-1), and the mismatch is the
+    expected outcome.
     """
     if s_values is None:
         s_values = [3.0 + 0j, 4.0 + 0j, 5.0 + 0j]
@@ -807,11 +936,12 @@ def verify_shadow_eisenstein(family: str, params: Dict[str, Any],
         shadow_val = shadow_zeta_function(S, s, max_r)
         eisenstein_val = shadow_zeta_eisenstein_prediction(kappa, s, nterms=500)
         diff = abs(shadow_val - eisenstein_val)
-        # For finite truncations, the match is approximate
+        # This is a negative diagnostic: matching would be accidental.
         results[s] = {
             'shadow_zeta': shadow_val,
-            'eisenstein_prediction': eisenstein_val,
+            'falsified_eisenstein_comparison': eisenstein_val,
             'absolute_diff': diff,
+            'matches_falsified_identity_within_tol': diff < tol,
         }
 
     return {
@@ -819,6 +949,11 @@ def verify_shadow_eisenstein(family: str, params: Dict[str, Any],
         'kappa': kappa,
         'max_arity': max_r,
         'results': results,
+        'diagnostic_type': 'finite-window negative diagnostic',
+        'finite_window_only': True,
+        'exact_identity_proved': False,
+        'correct_identity': 'D_2(A,s) = -24*kappa*zeta(s)*zeta(s-1)',
+        'shadow_l_equals_eisenstein': False,
     }
 
 
@@ -838,15 +973,16 @@ def e2_hat_completion(tau: complex, nmax: int = 200) -> complex:
     E_2* is only quasi-modular:
         E_2*(-1/tau) = tau^2 * E_2*(tau) + 12*tau / (2*pi*i)
 
-    The extra term 12*tau/(2*pi*i) = -6/(pi*y) * tau cancels with
+    The extra term 12*tau/(2*pi*i) = -6i*tau/pi cancels with
     the transformation of -3/(pi*y):
         -3/(pi * Im(-1/tau)) = -3*|tau|^2/(pi*y)
     vs  tau^2 * (-3/(pi*y)) = -3*tau^2/(pi*y).
 
-    The difference: -3*|tau|^2/(pi*y) - (-3*tau^2/(pi*y)) = -3*(|tau|^2 - tau^2)/(pi*y)
-                  = -3*(-2i*x*y)/(pi*y) = 6ix/pi
-    And 12*tau/(2*pi*i) = 12*(x+iy)/(2*pi*i) = -6y/pi + 6ix/pi.
-    So: the full transformation works out.
+    The correction difference is
+        -3*(|tau|^2 - tau^2)/(pi*y) = -6y/pi + 6ix/pi,
+    while
+        12*tau/(2*pi*i) = 6y/pi - 6ix/pi.
+    The sum is zero.
     """
     y = tau.imag
     if y <= 0:
@@ -901,12 +1037,14 @@ def nonholomorphic_shadow_effect(kappa_val: float, tau: complex,
     The genus-1 amplitude A_1(tau) = -kappa * log eta(tau) is holomorphic.
     Its derivative w.r.t. tau involves E_2*.
 
-    The non-holomorphic version replaces E_2* by E_hat_2:
-        A_1^{nh}(tau, tau-bar) = A_1(tau) + kappa * 3 / (8*pi*y) * (some correction)
+    At the derivative level, the non-holomorphic version replaces E_2* by
+    E_hat_2:
+        D A_1^{nh} = -kappa * E_hat_2 / 24
+                  = D A_1^{hol} + kappa/(8*pi*y).
 
-    The correction restores exact modular invariance but at the cost of
-    holomorphicity.  The shadow tower at the scalar level (tau-independent F_g)
-    is unaffected, since the non-holomorphic correction is purely tau-dependent.
+    This derivative correction restores exact modular covariance at the cost
+    of holomorphicity.  The shadow tower at the scalar level
+    (tau-independent F_g) is unaffected.
     """
     import cmath
     y = tau.imag
@@ -922,8 +1060,7 @@ def nonholomorphic_shadow_effect(kappa_val: float, tau: complex,
 
     A1_hol = -kappa_val * log_eta
 
-    # Non-holomorphic correction: from replacing E_2* by E_hat_2
-    # The correction is ~ kappa/(8*pi*y) at leading order
+    # Derivative-level correction from replacing E_2* by E_hat_2.
     nh_correction = kappa_val / (8.0 * math.pi * y)
 
     return {
@@ -1065,8 +1202,9 @@ def bar_cohomology_genus1_modular_interpretation(kappa_val: Fraction) -> Dict[st
     weight 2 fills this role).
 
     The Eichler-Shimura isomorphism gives the CUSP FORM part.
-    The shadow obstruction tower at genus 1 is entirely Eisenstein:
-    L_A^sh(s) = -kappa * zeta(s) * zeta(s-1) (thm:shadow-eisenstein).
+    The genus-1 arity-2 Fourier coefficient series is Eisenstein:
+    D_2(A,s) = -24*kappa*zeta(s)*zeta(s-1).  The shadow coefficient
+    series L_A^sh(s) is a different object.
 
     At higher genus, cusp form contributions enter through the higher-arity
     shadow and the planted-forest corrections.
@@ -1075,7 +1213,9 @@ def bar_cohomology_genus1_modular_interpretation(kappa_val: Fraction) -> Dict[st
         'kappa': kappa_val,
         'genus': 1,
         'scalar_dim': 1,  # kappa * lambda_1 spans the scalar line
-        'modular_type': 'Eisenstein',  # L_A^sh is Eisenstein, not cuspidal
+        'modular_type': 'Eisenstein',  # for D_2(A,s), not for L_A^sh(s)
+        'eisenstein_object': 'D_2(A,s) from Fourier coefficients of kappa*E_2*',
+        'not_eisenstein_object': 'L_A^sh(s) = sum S_r(A) r^{-s}',
         'cusp_contribution_genus': 'genus >= 2',  # cusp forms enter at g >= 2
         'E_2_star_role': 'quasi-modular generator of weight-2 deformations',
     }
@@ -1096,8 +1236,9 @@ def banana_graph_genus2_amplitude(kappa_val: float) -> Dict[str, Any]:
         amplitude = kappa^3 / kappa^3 * (vertex factors) * (propagator factors)
                   = (combinatorial factor) * kappa * lambda_2^FP
 
-    The modular graph function for the banana graph on a genus-2 surface
-    involves the genus-2 period matrix and Siegel modular forms.
+    The associated genus-2 modular graph function depends on the genus-2
+    period matrix.  This engine records only a finite-window scalar
+    diagnostic; it does not construct a holomorphic Siegel modular form.
 
     At genus 2, the planted-forest correction is:
         delta_pf^{(2,0)} = S_3 * (10*S_3 - kappa) / 48
@@ -1115,7 +1256,9 @@ def banana_graph_genus2_amplitude(kappa_val: float) -> Dict[str, Any]:
         'kappa': kappa_val,
         'scalar_amplitude': kappa_val * float(lambda_fp(2)),
         'lambda_2_FP': float(lambda_fp(2)),
-        'modular_graph_function': 'Siegel modular form contribution at genus 2',
+        'modular_graph_function': 'genus-2 real-analytic modular graph diagnostic',
+        'finite_window_only': True,
+        'exact_siegel_modularity_proved': False,
     }
 
 
@@ -1144,15 +1287,16 @@ def modular_graph_function_types(genus: int) -> Dict[str, Any]:
     r"""Classification of modular graph functions at a given genus.
 
     At genus g, modular graph functions arise from trivalent graphs
-    (Feynman graphs) on the genus-g surface.  They are:
-        - Real-analytic automorphic forms on the Siegel upper half-space H_g
-        - Have specific growth conditions at the boundary (cusp)
-        - Satisfy Laplace eigenvalue equations
+    (Feynman graphs) on the genus-g surface.  In the analytic theory they are
+    real-analytic automorphic functions on the Siegel upper half-space H_g
+    with boundary growth and differential equations.  A finite q-window does
+    not prove holomorphic Siegel modularity.
 
     At genus 1: modular graph functions reduce to non-holomorphic Eisenstein
     series and iterated integrals of Eisenstein series (Green, Zagier).
 
-    At genus 2: modular graph functions are Siegel modular forms of degree 2.
+    At genus 2: the relevant functions live over Siegel degree 2; this engine
+    records the ambient type but not an exact holomorphic form construction.
     The simplest is the genus-2 sunset integral.
 
     Connection to planted-forest corrections:
@@ -1167,21 +1311,27 @@ def modular_graph_function_types(genus: int) -> Dict[str, Any]:
             'ring': 'generated by E_2*, E_4, E_6 (quasi-modular) + 1/y corrections',
             'examples': ['E_2^*(tau)', 'E_4(tau)', 'E_6(tau)', 'E_2^*2 - E_4/3'],
             'tropical_limit': 'edge lengths on circle graphs',
+            'finite_window_only': True,
+            'holomorphic_siegel_modularity_proved': False,
         }
     elif genus == 2:
         return {
             'genus': 2,
-            'type': 'Siegel modular forms of degree 2',
-            'ring': 'generated by Igusa invariants (weights 4, 6, 10, 12)',
+            'type': 'real-analytic Siegel modular graph functions of degree 2',
+            'ring': 'ambient Siegel degree-2 functions; no exact ring presentation here',
             'examples': ['chi_10 (Igusa cusp form)', 'E_4^{(2)} (Siegel Eisenstein)'],
             'tropical_limit': 'planted-forest graphs on theta graphs',
+            'finite_window_only': True,
+            'holomorphic_siegel_modularity_proved': False,
         }
     else:
         return {
             'genus': genus,
-            'type': f'Siegel modular forms of degree {genus}',
-            'ring': 'increasingly complex with genus',
+            'type': f'real-analytic Siegel modular graph functions of degree {genus}',
+            'ring': 'increasingly complex with genus; no exact ring presentation here',
             'tropical_limit': 'planted-forest graphs on stable graphs of genus g',
+            'finite_window_only': True,
+            'holomorphic_siegel_modularity_proved': False,
         }
 
 

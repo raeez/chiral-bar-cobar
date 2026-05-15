@@ -1,4 +1,4 @@
-r"""Tests for the exact full-OPE delta_F2(W_4, c) engine.
+r"""Tests for the finite W_4 scalar full-OPE delta_F2 engine.
 
 STRUCTURE
 =========
@@ -11,8 +11,8 @@ STRUCTURE
  6. Three-part decomposition: R + I_1 + I_2 = total
  7. Per-graph contributions: 6 boundary graphs
  8. Higher-spin correction: rational and irrational decomposition
- 9. Comparison with W_3: delta(W_4) > delta(W_3) universally
-10. Koszul duality: c <-> 246-c
+ 9. Comparison with W_3: sampled values and large-c separation
+10. Complementarity bookkeeping: c <-> 246-c
 11. Limiting cases: large c, self-dual point, Ising point
 12. Direct graph sum verification (independent path)
 13. Cross-check against w4_genus2_cross_channel.py
@@ -39,13 +39,25 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'lib'))
 
 from theorem_w4_full_ope_delta_f2_engine import (
     CHANNELS,
+    FULL_OPE_SURFACE_SCOPE,
+    HOLOGRAPHIC_PACKAGE_ENTRIES,
     K4,
+    KERNEL_CONSTANTS,
+    MODULAR_KOSZUL_COMPUTE_PACKAGE_PROJECTIONS,
+    NON_CERTIFIED_CLAIMS,
+    POSITIVE_DS_BRANCH,
+    SCALAR_PROJECTION_CHANNELS_USED,
+    SCALAR_PROJECTION_OMITS_FULL_MC_CHANNELS,
     WEIGHTS,
     _C3,
     _V04,
     _master_formula_float,
+    certification_scope,
+    complementarity_check,
     delta_F2_W3,
     delta_F2_full,
+    delta_F2_full_branch,
+    delta_F2_full_with_coupling_signs,
     delta_F2_full_via_master,
     direct_graph_sum,
     full_evaluation,
@@ -72,7 +84,9 @@ from theorem_w4_full_ope_delta_f2_engine import (
     rational_hs_part_float,
     rational_part_exact,
     rational_part_float,
+    signed_ope_couplings_float,
     verify_per_graph_sum,
+    w4_primary_branch_couplings_float,
     w3_w4_comparison,
 )
 
@@ -176,6 +190,124 @@ class TestOPEData(unittest.TestCase):
         # These are in the non-physical regime, so g334^2 is smooth for c > 0
         for c in [0.1, 1, 10, 100, 1000]:
             self.assertTrue(math.isfinite(g334_squared_float(c)))
+
+
+class TestSquareRootBranchDiscipline(unittest.TestCase):
+    """Verify that the square-root extension and branch choices are explicit."""
+
+    def test_positive_branch_is_default(self):
+        c = 50
+        self.assertEqual(POSITIVE_DS_BRANCH, 1)
+        expected = rational_part_float(c) + irrational_part_1(c) + irrational_part_2(c)
+        self.assertAlmostEqual(delta_F2_full(c), expected, places=12)
+        self.assertAlmostEqual(delta_F2_full_branch(c, 1), expected, places=12)
+
+    def test_independent_coupling_signs(self):
+        c = 50
+        R = rational_part_float(c)
+        I1 = irrational_part_1(c)
+        I2 = irrational_part_2(c)
+        self.assertAlmostEqual(
+            delta_F2_full_with_coupling_signs(c, -1, 1),
+            R - I1 - I2,
+            places=12,
+        )
+        self.assertAlmostEqual(
+            delta_F2_full_with_coupling_signs(c, 1, -1),
+            R + I1 - I2,
+            places=12,
+        )
+        self.assertAlmostEqual(
+            delta_F2_full_with_coupling_signs(c, -1, -1),
+            R - I1 + I2,
+            places=12,
+        )
+
+    def test_common_w4_orientation_flips_only_linear_term(self):
+        c = 50
+        R = rational_part_float(c)
+        I1 = irrational_part_1(c)
+        I2 = irrational_part_2(c)
+        self.assertAlmostEqual(delta_F2_full_branch(c, -1), R - I1 + I2,
+                               places=12)
+        pos = w4_primary_branch_couplings_float(c, 1)
+        neg = w4_primary_branch_couplings_float(c, -1)
+        self.assertAlmostEqual(neg['g334'], -pos['g334'], places=12)
+        self.assertAlmostEqual(neg['g444'], -pos['g444'], places=12)
+        self.assertAlmostEqual(neg['g334_g444'], pos['g334_g444'], places=12)
+
+    def test_direct_paths_respect_common_branch(self):
+        c = 50
+        for branch in (1, -1):
+            scalar = delta_F2_full_branch(c, branch)
+            master = delta_F2_full_via_master(c, branch)
+            graph = direct_graph_sum(c, branch)['delta_F2']
+            self.assertAlmostEqual(scalar, master, places=10)
+            self.assertAlmostEqual(scalar, graph, places=10)
+
+    def test_invalid_branch_rejected(self):
+        with self.assertRaisesRegex(ValueError, "sign334"):
+            signed_ope_couplings_float(50, sign334=0)
+        with self.assertRaisesRegex(ValueError, "w4_branch"):
+            w4_primary_branch_couplings_float(50, w4_branch=0)
+
+    def test_nonreal_lower_branch_rejected(self):
+        with self.assertRaisesRegex(ValueError, "c >= 1/2"):
+            delta_F2_full(0.49)
+
+    def test_ising_endpoint_is_real_degenerate_branch(self):
+        self.assertAlmostEqual(irrational_part_2(0.5), 0.0, places=12)
+        self.assertTrue(math.isfinite(delta_F2_full(0.5)))
+
+
+class TestCertificationScope(unittest.TestCase):
+    """Verify finite-W4 scalar scope and object firewalls."""
+
+    def test_scope_is_finite_w4_scalar_projection(self):
+        scope = certification_scope()
+        self.assertEqual(scope['object'], 'principal W_4 = W(sl_4,f_prin)')
+        self.assertEqual(scope['genus'], 2)
+        self.assertEqual(scope['quantity'], 'scalar cross-channel projection delta_F2')
+        self.assertFalse(scope['uses_full_mc_data'])
+        self.assertFalse(FULL_OPE_SURFACE_SCOPE['uses_generic_WN_extrapolation'])
+
+    def test_non_certified_claims_are_explicit(self):
+        joined = " | ".join(NON_CERTIFIED_CLAIMS)
+        self.assertIn('all-genus', joined)
+        self.assertIn('generic W_N', joined)
+        self.assertIn('full ordered Maurer-Cartan', joined)
+        self.assertIn('delta_F2 invariance', joined)
+
+    def test_scalar_projection_not_full_mc_packet(self):
+        self.assertIn('C_W3W3W4', SCALAR_PROJECTION_CHANNELS_USED)
+        self.assertIn('C_W4W4W4', SCALAR_PROJECTION_CHANNELS_USED)
+        self.assertIn('C_3,4;3;0,4', SCALAR_PROJECTION_OMITS_FULL_MC_CHANNELS)
+        self.assertIn('ordered convolution brackets in Theta_A',
+                      SCALAR_PROJECTION_OMITS_FULL_MC_CHANNELS)
+
+    def test_object_firewalls_preserved(self):
+        scope = certification_scope()
+        self.assertEqual(HOLOGRAPHIC_PACKAGE_ENTRIES, (
+            'A', 'A^i', 'A^!', 'C', 'r(z)', 'Theta_A', 'nabla^hol',
+        ))
+        self.assertEqual(MODULAR_KOSZUL_COMPUTE_PACKAGE_PROJECTIONS, (
+            'Fact_X(L)', 'barB_X(L)', 'Theta_L', 'L_L',
+            '(V_br,T_br)', 'R4_mod(L)',
+        ))
+        self.assertEqual(
+            scope['object_firewall']['Omega(B(A))=A'],
+            'bar-cobar inversion, not Koszul duality',
+        )
+        self.assertEqual(
+            scope['object_firewall']['Z_ch^der(A)'],
+            'ChirHoch^*(A,A), the Hochschild bulk branch',
+        )
+
+    def test_kernel_constants_preserved(self):
+        self.assertEqual(KERNEL_CONSTANTS['affine_raw'], 'k*Omega_tr/z')
+        self.assertEqual(KERNEL_CONSTANTS['kz'], 'Omega/((k+h^vee)z)')
+        self.assertEqual(KERNEL_CONSTANTS['heisenberg'], 'k/z')
+        self.assertEqual(KERNEL_CONSTANTS['virasoro'], '(c/2)/z^3 + 2T/z')
 
 
 # ============================================================================
@@ -496,7 +628,7 @@ class TestHigherSpinCorrection(unittest.TestCase):
 # ============================================================================
 
 class TestW3Comparison(unittest.TestCase):
-    """Verify delta(W_4) > delta(W_3) universally."""
+    """Verify sampled and asymptotic separation from the W_3 correction."""
 
     def test_exceeds_w3(self):
         for c in C_VALUES:
@@ -518,13 +650,13 @@ class TestW3Comparison(unittest.TestCase):
 
 
 # ============================================================================
-# 10. Koszul duality
+# 10. Complementarity bookkeeping
 # ============================================================================
 
-class TestKoszulDuality(unittest.TestCase):
-    """Verify behavior under c <-> 246-c."""
+class TestComplementarityBookkeeping(unittest.TestCase):
+    """Verify kappa complementarity under c <-> 246-c."""
 
-    def test_koszul_conductor(self):
+    def test_complementarity_conductor(self):
         self.assertEqual(K4, 246)
 
     def test_kappa_sum(self):
@@ -540,11 +672,30 @@ class TestKoszulDuality(unittest.TestCase):
         self.assertTrue(r['match_master'])
         self.assertTrue(r['match_graph'])
 
-    def test_koszul_check_structure(self):
-        """koszul_dual_check returns consistent data."""
-        d = koszul_dual_check(50)
+    def test_complementarity_check_structure(self):
+        """complementarity_check returns consistent conductor data."""
+        d = complementarity_check(50)
         self.assertAlmostEqual(d['c'] + d['c_dual'], 246)
         self.assertAlmostEqual(d['kappa_sum'], d['kappa_sum_expected'], places=8)
+
+    def test_legacy_alias_is_not_object_identification(self):
+        """koszul_dual_check is a compatibility alias, not A^! or bulk data."""
+        self.assertEqual(koszul_dual_check(50), complementarity_check(50))
+
+    def test_delta_is_not_claimed_invariant(self):
+        """delta_F2(c) is not invariant under c -> 246-c away from c=123."""
+        d = complementarity_check(50)
+        self.assertNotAlmostEqual(d['delta_at_c'], d['delta_at_dual'], places=6)
+        self.assertAlmostEqual(
+            d['delta_difference'],
+            d['delta_at_c'] - d['delta_at_dual'],
+            places=12,
+        )
+
+    def test_self_dual_delta_difference_zero(self):
+        """At c=123 the complementarity involution fixes c."""
+        d = complementarity_check(123)
+        self.assertAlmostEqual(d['delta_difference'], 0.0, places=12)
 
 
 # ============================================================================
@@ -571,8 +722,8 @@ class TestLimitingCases(unittest.TestCase):
         v3 = delta_F2_full(100000)
         self.assertLess(abs(v3 - v2), abs(v2 - v1))
 
-    def test_diverges_near_zero(self):
-        """delta_F2 diverges as c -> 0+."""
+    def test_large_near_lower_real_branch_edge(self):
+        """Near c=1/2 the real branch is large but finite."""
         val = delta_F2_full(0.6)
         self.assertGreater(val, 10)
 
@@ -581,6 +732,15 @@ class TestLimitingCases(unittest.TestCase):
         sub = large_c_subleading()
         self.assertGreater(sub['A'], 0)
         self.assertGreater(sub['B'], 0)
+        expected_B = 851/16 - 293*math.sqrt(10)/840 + 6*math.sqrt(30)/5
+        self.assertAlmostEqual(sub['B'], expected_B, places=12)
+
+    def test_subleading_numerical_convergence(self):
+        """delta_F2(c) - A has the corrected B/c leading term."""
+        c = 1e7
+        sub = large_c_subleading()
+        approx = sub['A'] + sub['B'] / c
+        self.assertAlmostEqual(delta_F2_full(c), approx, places=10)
 
 
 # ============================================================================
@@ -725,8 +885,7 @@ class TestAsymptotics(unittest.TestCase):
         self.assertAlmostEqual(grav - leading, 2148/(48*c), places=8)
 
     def test_hs_rational_asymptotic(self):
-        """hs_rational ~ 567*5/(16*7*3) * 1 = 2835/336 ~ 8.4375... NO.
-        Actually hs_rational ~ 567*5c^2/(16*21c^3) ~ 567*5/(336c) -> 0."""
+        """hs_rational ~ 135/(16c), hence tends to 0."""
         c = 1e6
         self.assertLess(rational_hs_part_float(c), 0.01)
 
@@ -880,7 +1039,7 @@ class TestEdgeCases(unittest.TestCase):
         self.assertTrue(r['match_graph'])
 
     def test_c_very_large(self):
-        """c=10000: converges toward large-c limit (B/c ~ 0.006 correction)."""
+        """c=10000: converges toward the large-c limit with about 0.006 correction."""
         r = full_evaluation(10000)
         self.assertTrue(r['match_master'])
         limit = large_c_limit()
@@ -895,8 +1054,8 @@ class TestEdgeCases(unittest.TestCase):
             self.assertTrue(row['match_master'])
             self.assertTrue(row['match_graph'])
 
-    def test_exceeds_w3_universally(self):
-        """W_4 exceeds W_3 at all tested c values."""
+    def test_exceeds_w3_on_numerical_table(self):
+        """W_4 exceeds W_3 at the tabulated test values."""
         for row in numerical_table():
             self.assertTrue(row['exceeds_W3'],
                             f"W4 not > W3 at c={row['c']}")
@@ -930,7 +1089,7 @@ class TestMasterCoefficients(unittest.TestCase):
         # From: theta contributes 9*g334^2/(16c), barbell contributes 9*g334^2/(32c)
         # In 192c*delta: theta -> 192c * 9g^2/(16c) = 108g^2
         #                barbell -> 192c * 9g^2/(32c) = 54g^2
-        #                Total: 162g^2  CHECK!
+        #                Total: 162g^2
         self.assertEqual(108 + 54, 162)
 
     def test_g334_g444_coefficient(self):
@@ -938,13 +1097,13 @@ class TestMasterCoefficients(unittest.TestCase):
         # From: banana contributes 3gg'/(4c), barbell contributes 24gg'/(32c) = 3gg'/(4c)
         # In 192c*delta: banana -> 192c * 3gg'/(4c) = 144gg'
         #                barbell -> 192c * 24gg'/(32c) = 144gg'
-        #                Total: 288gg'  CHECK!
+        #                Total: 288gg'
         self.assertEqual(144 + 144, 288)
 
     def test_g334_linear_coefficient(self):
         """Coefficient of c*g334 is 3."""
         # From lollipop: g334/64
-        # In 192c*delta: 192c * g334/64 = 3c*g334  CHECK!
+        # In 192c*delta: 192c * g334/64 = 3c*g334
         self.assertAlmostEqual(192 / 64, 3.0)
 
 

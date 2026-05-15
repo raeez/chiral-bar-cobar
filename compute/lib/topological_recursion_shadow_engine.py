@@ -1,35 +1,36 @@
-r"""Topological recursion from the shadow obstruction tower: unified engine.
+r"""Topological recursion from the shadow obstruction tower.
 
 STRUCTURAL QUESTION: Is the shadow obstruction tower a topological recursion?
 
 The shadow metric Q_L(t) = (2*kappa + 3*alpha*t)^2 + 2*Delta*t^2 defines a
-spectral curve y^2 = Q_L(t).  This module provides a definitive answer to
-nine structural questions connecting the shadow tower to the Eynard-Orantin
-(EO) topological recursion, the Kontsevich-Witten tau-function, Mirzakhani
-recursion, and the Chekhov-Eynard-Orantin free energies.
+spectral curve y^2 = Q_L(t).  This module computes the scalar checks that
+relate the shadow tower to Eynard-Orantin (EO) topological recursion, the
+Kontsevich-Witten coefficient lane, Mirzakhani recursion, and
+Chekhov-Eynard-Orantin free energies.
 
 NINE STRUCTURAL QUESTIONS
 -------------------------
 1. HEISENBERG (class G): spectral curve y^2 = 4*kappa^2 (constant).
    The EO recursion on a degenerate curve gives omega_{g,n} = 0 for
    2g-2+n > 0.  The only nonzero invariant is F_g = kappa * lambda_g^FP,
-   which matches the Airy curve FREE ENERGY rescaled by kappa.
-   Key distinction: the Heisenberg spectral curve is NOT the Airy curve
-   y^2 = x; it is the DEGENERATE constant curve.  The Airy free energies
-   F_g^Airy = lambda_g^FP arise from the LOCAL MODEL near a ramification
-   point, not from the global Heisenberg curve.
+   the kappa-rescaled Airy/KW coefficient.
+   Key distinction: the Heisenberg spectral curve differs from the Airy
+   curve y^2 = x; it is the degenerate constant curve.  The Airy
+   coefficients F_g^Airy = lambda_g^FP arise from the local model near a
+   ramification point rather than the global Heisenberg curve.
 
 2. VIRASORO (class M): spectral curve y^2 = Q_L(t) with genuine branch
    points.  The Bergman kernel on THIS curve differs from the standard
    Bergman 1/(z-w)^2 by the Zhukovsky change of variables.  The shadow
-   connection nabla^sh has the SAME singular structure as the EO recursion
-   kernel near ramification points: both have simple poles with residue
-   determined by Q_L.
+   connection nabla^sh and the EO recursion kernel have the same pole
+   order near ramification points, but their residues live in different
+   lanes: scalar connection residue versus z0-dependent EO kernel residue.
 
 3. EO RECURSION KERNEL vs SHADOW CONNECTION: K_EO(z, w) involves
    int B(., w) / (y(z) - y(sigma(z))), while nabla^sh = d - Q_L'/(2*Q_L) dt.
-   Near a branch point t_*, both have a simple pole with IDENTICAL residue:
-   the coefficient is 1/(2*sqrt(Q_L''(t_*))) in both cases.
+   Near a simple branch point both have logarithmic/simple-pole behaviour.
+   The scalar shadow connection has residue 1/2; the EO kernel residue still
+   depends on the external point and local-coordinate normalization.
 
 4. AFFINE sl_2 (class L): Q_L is a perfect square, the branch points
    collide, and the spectral curve degenerates.  Shadow tower terminates
@@ -37,40 +38,37 @@ NINE STRUCTURAL QUESTIONS
    omega_{g,n} = 0 for stable (g,n) --- consistent with termination.
 
 5. BETA-GAMMA (class C): on the primary line, same spectral curve as
-   Virasoro at c=2.  Shadow tower terminates at depth 4 by stratum
+   Virasoro at c=2.  The shadow tower terminates at depth 4 by stratum
    separation (the quartic contact invariant lives on a charged stratum).
-   The EO recursion on the Virasoro-c=2 curve does NOT terminate ---
-   showing that the spectral curve captures only the single-line data,
-   not the full multi-stratum structure.  This is a NEGATIVE result:
-   standard EO does not capture class C depth.
+   The EO recursion on the Virasoro-c=2 curve continues past that depth,
+   so the spectral curve captures only the single-line data.  The full
+   multi-stratum structure requires the charged contact invariant.
 
 6. SHADOW DEPTH vs SPECTRAL CURVE GENUS: For the SHADOW spectral curve
-   y^2 = Q_L(t) (always genus 0), shadow depth is NOT the genus of the
-   spectral curve.  Shadow depth = r_max is an algebraic invariant of
-   the MC tower, not a topological invariant of the curve.  The spectral
-   curve genus is always 0 for single-channel algebras.
+   y^2 = Q_L(t) (always genus 0), shadow depth is distinct from the genus
+   of the spectral curve.  Shadow depth = r_max is an algebraic invariant
+   of the MC tower.  The spectral curve genus is always 0 for
+   single-channel algebras.
 
 7. CHEKHOV-EYNARD-ORANTIN FREE ENERGY: F_g^CEO on y^2 = Q_L(t) vs
    F_g^shadow = kappa * lambda_g^FP.  For class G and L (degenerate
    curves), CEO gives 0 while shadow gives kappa * lambda_g^FP.  For
-   class M, CEO gives a c-dependent correction beyond kappa * lambda_g^FP.
-   The planted-forest corrections delta_pf^{(g,0)} account for the
-   difference: F_g^shadow = F_g^CEO + delta_pf^{(g,0)}.
+   class M, the genus-2 planted-forest correction is computed by the closed
+   formula delta_pf^{(2,0)} = S_3*(10*S_3-kappa)/48.  Higher-genus closed
+   formulas are separate graph-computation data, not inferred from Q_L alone.
 
-8. KONTSEVICH-WITTEN TAU-FUNCTION: The KW tau-function is
-   tau_KW = exp(sum_g F_g^Airy * hbar^{2g}).  Our shadow tower gives
-   tau_shadow = exp(sum_g kappa * lambda_g^FP * hbar^{2g})
-              = tau_KW^kappa.
-   That is, the shadow partition function is the kappa-th power of KW.
+8. KONTSEVICH-WITTEN TAU-FUNCTION: On the formal scalar coefficient lane,
+   [hbar^{2g}] log(tau_shadow) =
+   kappa [hbar^{2g}] log(tau_KW).  This is a finite formal coefficient
+   identity.
 
 9. MIRZAKHANI RECURSION: The WP volumes V_{g,n}(L_1,...,L_n) satisfy
    Mirzakhani's recursion, which differs from EO by the sine-curve
    spectral data.  The relationship to planted-forest corrections:
    the sine curve y = sin(2*pi*sqrt(x))/(4*pi) is the spectral curve
-   for JT gravity, NOT for the shadow tower.  The shadow tower uses
-   the ALGEBRAIC curve y^2 = Q_L(t), while WP volumes use the
-   TRANSCENDENTAL sine curve.  The planted-forest corrections are
-   the algebraic-to-transcendental bridge.
+   for JT gravity.  The shadow tower uses the algebraic curve
+   y^2 = Q_L(t), while WP volumes use the transcendental sine curve.  The
+   comparison below records the separation of the two normalizations.
 
 APPROACH
 --------
@@ -114,7 +112,85 @@ except ImportError:
 
 
 # ============================================================================
-# 0. Faber-Pandharipande numbers (standalone, no circular import)
+# 0. Object, package, and kernel firewalls
+# ============================================================================
+
+HOLOGRAPHIC_PACKAGE_ENTRIES: Tuple[str, ...] = (
+    "A",
+    "A^i",
+    "A^!",
+    "C",
+    "r(z)",
+    "Theta_A",
+    "nabla^hol",
+)
+
+
+MODULAR_KOSZUL_PRIMARY_PROJECTIONS: Tuple[str, ...] = (
+    "Fact_X(L)",
+    "barB_X(L)",
+    "Theta_L",
+    "L_L",
+    "(V_L^br, T_L^br)",
+    "R_4^mod(L)",
+)
+
+
+TYPED_FIREWALL_OBJECTS: Tuple[str, ...] = (
+    "A",
+    "B(A)",
+    "A^i",
+    "A^!",
+    "Omega(B(A))",
+    "Z_ch^der(A)",
+)
+
+
+KERNEL_NORMALIZATIONS: Dict[str, str] = {
+    "affine_raw_collision": "k*Omega_tr/z",
+    "affine_KZ_coefficient": "Omega/((k+h^vee)z)",
+    "heisenberg_raw_collision": "k/z",
+    "virasoro_collision": "(c/2)/z^3 + 2T/z",
+}
+
+
+def holographic_package_entries() -> Tuple[str, ...]:
+    """Seven entries of H(A), in canonical order."""
+    return HOLOGRAPHIC_PACKAGE_ENTRIES
+
+
+def modular_koszul_primary_projections() -> Tuple[str, ...]:
+    """Six projections of the compute-side modular Koszul package."""
+    return MODULAR_KOSZUL_PRIMARY_PROJECTIONS
+
+
+def typed_firewall_objects() -> Tuple[str, ...]:
+    """Objects kept distinct by the bar/Koszul/derived-centre firewall."""
+    return TYPED_FIREWALL_OBJECTS
+
+
+def object_firewall_summary() -> Dict[str, str]:
+    """Typed roles for the objects most often conflated in this surface."""
+    return {
+        "A": "input chiral algebra",
+        "B(A)": "ordered bar coalgebra before cohomology",
+        "A^i": "bar cohomology coalgebra H^*(B(A))",
+        "A^!": (
+            "Verdier/continuous-linear dual branch under finite-type or "
+            "completed hypotheses"
+        ),
+        "Omega(B(A))": "bar-cobar inversion recovering A",
+        "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/derived-centre bulk",
+    }
+
+
+def kernel_normalizations() -> Dict[str, str]:
+    """Raw-collision and comparison kernel normalizations."""
+    return dict(KERNEL_NORMALIZATIONS)
+
+
+# ============================================================================
+# 1. Faber-Pandharipande numbers (standalone, no circular import)
 # ============================================================================
 
 def _bernoulli_number(n: int) -> Rational:
@@ -138,12 +214,53 @@ def lambda_fp(g: int) -> Rational:
     return Rational(num, den)
 
 
+FP_CENSUS_CONSTANTS: Dict[int, Rational] = {
+    1: Rational(1, 24),
+    2: Rational(7, 5760),
+    3: Rational(31, 967680),
+    4: Rational(127, 154828800),
+    5: Rational(73, 3503554560),
+    6: Rational(1414477, 2678117105664000),
+    7: Rational(8191, 612141052723200),
+    8: Rational(16931177, 49950709902213120000),
+    9: Rational(5749691557, 669659197233029971968000),
+    10: Rational(91546277357, 420928638260761696665600000),
+}
+
+
+def faber_pandharipande_census_constants(g_max: int = 10) -> Dict[int, Rational]:
+    """First ten FP constants recorded in landscape_census.tex.
+
+    Source: chapters/examples/landscape_census.tex,
+    Proposition prop:fp-coefficients.  Values beyond genus 10 are computed
+    by lambda_fp rather than hard-coded from the census table.
+    """
+    if g_max < 1:
+        raise ValueError(f"g_max must be >= 1, got {g_max}")
+    if g_max > max(FP_CENSUS_CONSTANTS):
+        raise ValueError("The census table records FP constants only through g=10")
+    return {g: FP_CENSUS_CONSTANTS[g] for g in range(1, g_max + 1)}
+
+
+def verify_faber_pandharipande_census(g_max: int = 10) -> Dict[int, Dict[str, Any]]:
+    """Compare the Bernoulli formula with the finite census table."""
+    constants = faber_pandharipande_census_constants(g_max)
+    return {
+        g: {
+            'formula': lambda_fp(g),
+            'census': constants[g],
+            'matches': lambda_fp(g) == constants[g],
+        }
+        for g in range(1, g_max + 1)
+    }
+
+
 def ahat_coefficient(g: int) -> Rational:
     r"""Coefficient of x^{2g} in the A-hat genus expansion.
 
     A-hat(x) = x/2 / sinh(x/2) = 1 - x^2/24 + 7*x^4/5760 - ...
 
-    For the shadow generating function (AP22):
+    For the shadow generating function:
       sum_g F_g * hbar^{2g} = kappa * (A-hat(i*hbar) - 1)
     where A-hat(i*hbar) = hbar/2 / sin(hbar/2), so ALL coefficients
     of the expansion of A-hat(ix) - 1 in x^2 are POSITIVE.
@@ -154,7 +271,7 @@ def ahat_coefficient(g: int) -> Rational:
 
 
 # ============================================================================
-# 1. Shadow data for all standard families (exact Fraction arithmetic)
+# 2. Shadow data for all standard families (exact Fraction arithmetic)
 # ============================================================================
 
 @dataclass(frozen=True)
@@ -165,7 +282,7 @@ class ShadowFamilyData:
         Q_L(t) = 4*kappa^2 + 12*kappa*alpha*t + (9*alpha^2 + 2*Delta)*t^2
     where Delta = 8*kappa*S4 is the critical discriminant.
 
-    Convention (AP1/AP9, from landscape_census.tex):
+    Convention from landscape_census.tex:
         kappa = S_2 (modular characteristic)
         alpha = S_3 (cubic shadow)
         S4 = quartic contact invariant
@@ -247,7 +364,7 @@ def virasoro_data(c: Fraction) -> ShadowFamilyData:
     """Virasoro at central charge c.  Class M, r_max=infinity.
 
     kappa = c/2, alpha = 2, S4 = 10/[c(5c+22)].
-    Q^contact_Vir = 10/[c(5c+22)] (AP1).
+    Q^contact_Vir = 10/[c(5c+22)].
 
     At c=0: kappa=0, S4 undefined (degenerate). We set S4=0
     and depth class to 'G' (the algebra is trivial at c=0).
@@ -429,7 +546,7 @@ def shadow_connection_coefficient(data: ShadowFamilyData, t: complex) -> complex
 
 
 def shadow_connection_residue_at_branch(data: ShadowFamilyData) -> Rational:
-    """Residue of nabla^sh at each branch point: always 1/2.
+    """Residue of nabla^sh at a simple branch point.
 
     nabla^sh = d - d(log sqrt(Q_L)), so near a simple zero t_* of Q_L:
         A(t) ~ 1/(2*(t - t_*)) + regular
@@ -438,6 +555,8 @@ def shadow_connection_residue_at_branch(data: ShadowFamilyData) -> Rational:
     Monodromy around any branch point = exp(2*pi*i * 1/2) = -1
     (the Koszul sign).
     """
+    if data.is_degenerate:
+        raise ValueError("Degenerate shadow curves have no simple branch point")
     return Rational(1, 2)
 
 
@@ -447,7 +566,7 @@ def shadow_flat_section(data: ShadowFamilyData, t: complex) -> complex:
     nabla^sh(Phi) = 0.
 
     The shadow generating function H(t) = t^2 * Phi(t) * sqrt(Q_L(0))
-    is NOT a flat section (AP23): nabla^sh(H) != 0 because of the t^2.
+    is not a flat section: nabla^sh(H) != 0 because of the t^2 factor.
     """
     curve = ShadowSpectralCurve(data)
     QL_t = curve.Q_L(t)
@@ -478,7 +597,8 @@ def eo_recursion_kernel(curve: ShadowSpectralCurve,
 
     Near a ramification point z -> z_ram:
         K ~ 1 / (2 * y(z) * dt/dz)
-    which has a simple pole matching nabla^sh.
+    which has the same pole order as nabla^sh; no scalar residue
+    identification is made.
     """
     if curve.degenerate:
         return 0.0
@@ -502,9 +622,11 @@ def compare_kernels_at_branch(data: ShadowFamilyData,
                               epsilon: float = 0.01) -> Dict[str, Any]:
     """Compare EO kernel and shadow connection near a branch point.
 
-    Both have simple poles at the branch points.  The residues should
-    match (both equal 1/2 for the shadow connection, and the EO kernel
-    residue is determined by the local Airy approximation).
+    Both have simple-pole behaviour at a non-degenerate branch point.  The
+    shadow connection residue is the scalar 1/2.  The EO kernel residue is a
+    differential kernel residue depending on the external point z0 and the
+    local coordinate; this routine records it but does not identify it with
+    the scalar shadow residue.
 
     Returns a dict with residue comparison data.
     """
@@ -512,8 +634,9 @@ def compare_kernels_at_branch(data: ShadowFamilyData,
     if curve.degenerate:
         return {
             'degenerate': True,
-            'residue_match': True,
-            'reason': 'Both degenerate (no poles).',
+            'same_pole_order': False,
+            'residue_identification': 'no branch residue on degenerate curve',
+            'reason': 'Degenerate curve: no simple branch point.',
         }
 
     # Near z=1 (ramification), expand omega_diff:
@@ -535,19 +658,18 @@ def compare_kernels_at_branch(data: ShadowFamilyData,
         res_K += eo_recursion_kernel(curve, z, z0_test) * dz
     res_K /= (2 * math.pi * 1j)
 
-    # The shadow connection residue at branch point is always 1/2
-    shadow_res = Rational(1, 2)
+    shadow_res = shadow_connection_residue_at_branch(data)
 
     # The EO kernel residue structure: K(z, z0) near z=1 behaves as
-    # 1/(z-1) * (numerator depending on z0).  The z0-independent part
-    # of the residue structure determines the RECURSION, which matches
-    # the shadow connection transport.
+    # 1/(z-1) times a numerator depending on z0 and the local coordinate.
     return {
         'degenerate': False,
         'shadow_connection_residue': float(shadow_res),
         'eo_kernel_residue_numerical': complex(res_K),
         'branch_point_t_plus': complex(curve.t_plus),
         'branch_point_t_minus': complex(curve.t_minus),
+        'same_pole_order': True,
+        'residue_identification': 'shadow scalar only; EO residue depends on z0',
     }
 
 
@@ -561,8 +683,9 @@ class ShadowEOEngine:
     Computes omega_{g,n} by numerical contour integration at the
     ramification points z = +/- 1 (Zhukovsky parametrization).
 
-    Also computes free energies F_g^{CEO} and compares with
-    F_g^{shadow} = kappa * lambda_g^FP.
+    This is a low-correlator numerical lane.  Free-energy comparison is
+    handled by exact scalar functions below, with explicit finite-window
+    scope.
     """
 
     def __init__(self, data: ShadowFamilyData,
@@ -821,7 +944,7 @@ def free_energy_shadow(data: ShadowFamilyData, g: int) -> Rational:
 
 
 def free_energy_airy(g: int) -> Rational:
-    """Path 2: F_g^{Airy} = lambda_g^FP (Witten-Kontsevich).
+    """Path 2: F_g^{Airy} = lambda_g^FP on the KW coefficient lane.
 
     The Airy curve y^2 = x gives the universal genus-0 local model.
     """
@@ -835,7 +958,7 @@ def free_energy_ahat(kappa: Rational, g: int) -> Rational:
     => F_g = kappa * [hbar^{2g}] (A-hat(i*hbar) - 1)
            = kappa * lambda_g^FP.
 
-    (AP22: the hbar convention must be 2g, not 2g-2.)
+    The hbar convention is 2g, not 2g-2.
     """
     return kappa * lambda_fp(g)
 
@@ -845,7 +968,7 @@ def compare_free_energies(data: ShadowFamilyData,
     """Compare F_g across three paths for genera 1..g_max.
 
     Path 1: Shadow tower (Theorem D)
-    Path 2: Airy curve rescaled by kappa
+    Path 2: Airy/KW coefficient lane rescaled by kappa
     Path 3: A-hat generating function
 
     Returns dict[g] -> {shadow, airy_rescaled, ahat, match}.
@@ -870,31 +993,36 @@ def compare_free_energies(data: ShadowFamilyData,
 # ============================================================================
 
 def kw_tau_function_log(g_max: int = 8) -> Dict[int, Rational]:
-    """log(tau_KW) = sum_g F_g^{Airy} * hbar^{2g} = sum_g lambda_g^FP * hbar^{2g}.
+    """Finite truncation of log(tau_KW) on the Airy/KW coefficient lane.
 
     Returns {g: lambda_g^FP} for g = 1..g_max.
     """
+    if g_max < 1:
+        raise ValueError(f"g_max must be >= 1, got {g_max}")
     return {g: lambda_fp(g) for g in range(1, g_max + 1)}
 
 
 def shadow_tau_function_log(data: ShadowFamilyData,
                             g_max: int = 8) -> Dict[int, Rational]:
-    """log(tau_shadow) = sum_g kappa * lambda_g^FP * hbar^{2g}.
+    """Finite truncation of log(tau_shadow) on the scalar coefficient lane.
 
-    tau_shadow = tau_KW^kappa: the shadow partition function is the
-    kappa-th power of the Kontsevich-Witten tau-function.
+    Equivalently, log(tau_shadow) = kappa * log(tau_KW) on this scalar
+    coefficient lane.  No identification of the global spectral curves is
+    asserted.
     """
+    if g_max < 1:
+        raise ValueError(f"g_max must be >= 1, got {g_max}")
     kappa = Rational(data.kappa)
     return {g: kappa * lambda_fp(g) for g in range(1, g_max + 1)}
 
 
 def verify_tau_kw_power_relation(data: ShadowFamilyData,
                                  g_max: int = 5) -> Dict[str, Any]:
-    """Verify tau_shadow = tau_KW^kappa.
+    """Verify finite-window log(tau_shadow) = kappa * log(tau_KW).
 
     At the level of free energies:
         F_g^{shadow} = kappa * F_g^{Airy}
-    for all g >= 1.
+    for the requested finite genus window.
     """
     kappa = Rational(data.kappa)
     kw_log = kw_tau_function_log(g_max)
@@ -912,9 +1040,95 @@ def verify_tau_kw_power_relation(data: ShadowFamilyData,
 
     return {
         'kappa': kappa,
+        'genus_window': (1, g_max),
         'match_all': match_all,
         'details': details,
-        'interpretation': 'tau_shadow = tau_KW^kappa',
+        'interpretation': (
+            'finite formal coefficient identity: '
+            'log(tau_shadow) = kappa * log(tau_KW)'
+        ),
+        'analytic_tau_power_asserted': False,
+    }
+
+
+def finite_window_tr_shadow_theorem(data: ShadowFamilyData,
+                                    g_max: int = 5) -> Dict[str, Any]:
+    """Exact finite-window theorem for the scalar TR/KW comparison.
+
+    Proved in this engine for the requested finite window:
+        [hbar^{2g}] log(tau_shadow)
+        = kappa * lambda_g^FP
+        = kappa [hbar^{2g}] log(tau_KW).
+
+    Not asserted here: analytic tau powers, global EO/KW equality,
+    convergence radius, or multi-weight cross-channel terms.
+    """
+    if g_max < 1:
+        raise ValueError(f"g_max must be >= 1, got {g_max}")
+
+    kappa = Rational(data.kappa)
+    kw_log = kw_tau_function_log(g_max)
+    shadow_log = shadow_tau_function_log(data, g_max)
+    fp_window = min(g_max, max(FP_CENSUS_CONSTANTS))
+    fp_census = verify_faber_pandharipande_census(fp_window)
+
+    coefficients = {}
+    for g in range(1, g_max + 1):
+        lam = lambda_fp(g)
+        f_shadow = free_energy_shadow(data, g)
+        expected = kappa * kw_log[g]
+        coefficients[g] = {
+            'lambda_fp': lam,
+            'kw_log_coefficient': kw_log[g],
+            'shadow_log_coefficient': shadow_log[g],
+            'F_g_shadow': f_shadow,
+            'kappa_times_kw': expected,
+            'coefficient_identity': (
+                shadow_log[g] == f_shadow == expected == kappa * lam
+            ),
+            'fp_census_verified': (
+                fp_census[g]['matches'] if g in fp_census else None
+            ),
+        }
+
+    return {
+        'status': 'proved_finite_window',
+        'family': data.name,
+        'depth_class': data.depth_class,
+        'kappa': kappa,
+        'genus_window': (1, g_max),
+        'coefficient_statement': (
+            '[hbar^{2g}] log(tau_shadow) = '
+            'kappa [hbar^{2g}] log(tau_KW) for 1 <= g <= g_max'
+        ),
+        'coefficients': coefficients,
+        'all_coefficients_match': all(
+            row['coefficient_identity'] for row in coefficients.values()
+        ),
+        'fp_census_window': fp_census,
+        'scope': {
+            'scalar_lane_only': True,
+            'single_channel_curve_only': True,
+            'multi_weight_cross_channel_terms_included': False,
+            'full_eo_recursion_theorem_asserted': False,
+            'analytic_tau_power_asserted': False,
+            'convergence_radius_asserted': False,
+        },
+        'eo_scope': {
+            'degenerate_curve': data.is_degenerate,
+            'kernel_statement': (
+                'same local pole order where non-degenerate; scalar and EO '
+                'residues are not identified'
+            ),
+        },
+        'cross_channel_obligation': (
+            'Multi-weight cross-channel terms require a separate graph/weight '
+            'engine; this scalar window neither computes nor suppresses them.'
+        ),
+        'convergence_obligation': (
+            'No analytic convergence or radius statement follows from this '
+            'finite coefficient window.'
+        ),
     }
 
 
@@ -923,36 +1137,13 @@ def verify_tau_kw_power_relation(data: ShadowFamilyData,
 # ============================================================================
 
 def wp_volume_closed(g: int) -> Fraction:
-    r"""Weil-Petersson volume V_{g,0} of M_g (closed surface).
+    r"""Low-genus rational coefficients used in the WP comparison.
 
-    V_{1,0} = 1/24 * (2*pi^2) ... Actually these are pi-dependent.
-
-    We use the COMBINATORIAL normalization:
-        V_{g,0} = int_{M_g} exp(omega_WP)
-    which includes powers of pi.
-
-    Known exact values (rational parts, dividing by appropriate pi^{2g}):
-        V_{1,0} = 1/24 * pi^2 / 6 ... this is complicated.
-
-    Instead, use the relation to intersection numbers:
-        V_{g,n}(0,...,0) = sum_{d_1+...+d_n=3g-3+n}
-            prod (2*d_i+1)!! / prod (2*pi^2)^{d_i}
-            * <tau_{d_1}...tau_{d_n}>_g
-
-    For n=0: V_{g,0} = <1>_g (total intersection in M_g).
-
-    The Mirzakhani recursion computes these volumes inductively.
-    Here we provide the known low-genus values.
+    Full Weil-Petersson volumes carry powers of pi and depend on the chosen
+    normalization.  This helper stores only the small rational coefficients
+    needed to prove that the shadow algebraic curve and the WP sine curve are
+    different invariants.
     """
-    # V_{g,0} as rational multiples of pi^{6g-6} (Zograf normalization):
-    # V_{2,0} = 43867 / (2^17 * 3^6 * 5^2 * 7) * pi^6 ... complicated
-    #
-    # Use the simpler normalization: V_{g,0} = vol(M_g) in standard WP metric.
-    # For comparison with shadow tower, the key relationship is:
-    # The SINE CURVE spectral curve y = sin(2*pi*sqrt(x))/(4*pi) gives
-    # F_g^{sine} = (-1)^g * V_{g,0}^{WP} / (some normalization).
-    #
-    # The shadow tower uses the ALGEBRAIC curve y^2 = Q_L(t), not sine.
     known = {
         1: Fraction(1, 24),     # pi^2/6 in V_{1,1}(0); V_{1,0} via dilaton
         2: Fraction(1, 1152),
@@ -979,11 +1170,12 @@ def planted_forest_correction(data: ShadowFamilyData, g: int) -> Rational:
     Genus 2 exact formula (prop:planted-forest-genus2):
         delta_pf^{(2,0)} = S_3 * (10*S_3 - kappa) / 48
 
-    Genus 3: 11-term polynomial in kappa, S_3, S_4, S_5 (approximate).
+    Genus >= 3 for non-degenerate curves requires the separate stable-graph
+    planted-forest engines.  This topological-recursion surface does not
+    infer those coefficients from Q_L alone.
     """
     kappa = Rational(data.kappa)
     alpha = Rational(data.alpha)
-    S4 = Rational(data.S4)
 
     if g == 1:
         # At genus 1: delta_pf = 0 for non-degenerate curves
@@ -1002,20 +1194,20 @@ def planted_forest_correction(data: ShadowFamilyData, g: int) -> Rational:
     if data.is_degenerate:
         return kappa * lambda_fp(g)
 
-    # For non-degenerate curves at g >= 3, the planted-forest correction
-    # is a polynomial in the shadow invariants (kappa, S_3, S_4, ...).
-    # Only the genus-2 formula is proved in closed form.
-    return Rational(0)  # Placeholder for g >= 3
+    raise NotImplementedError(
+        "Non-degenerate planted-forest corrections at genus >= 3 are "
+        "stable-graph data beyond Q_L in this engine"
+    )
 
 
 def compare_shadow_with_wp(c_val: Fraction,
                            g_max: int = 3) -> Dict[int, Dict[str, Any]]:
     """Compare shadow free energy with WP volumes for Virasoro at c.
 
-    The key point: the shadow tower uses the ALGEBRAIC curve y^2 = Q_L(t),
-    while WP volumes use the TRANSCENDENTAL sine curve.  They are NOT
-    the same spectral curve.  The relationship passes through the
-    planted-forest corrections, not through direct spectral curve matching.
+    The shadow tower uses the algebraic curve y^2 = Q_L(t).
+    WP volumes use the transcendental sine curve.  The comparison passes
+    through planted-forest corrections rather than direct spectral curve
+    identification.
     """
     data = virasoro_data(c_val)
     results = {}
@@ -1039,9 +1231,9 @@ def compare_shadow_with_wp(c_val: Fraction,
 class SpectralCurveClassification:
     """Classification of the shadow spectral curve.
 
-    The shadow spectral curve y^2 = Q_L(t) is ALWAYS genus 0 (it is a
-    conic in the (t, y) plane).  Shadow depth is an algebraic invariant
-    of the MC tower, NOT the genus of the spectral curve.
+    The shadow spectral curve y^2 = Q_L(t) has genus 0: it is a conic in
+    the (t, y) plane.  Shadow depth is an algebraic invariant of the MC
+    tower, distinct from the genus of the spectral curve.
 
     The critical discriminant Delta = 8*kappa*S4 determines:
         Delta = 0: Q_L is a perfect square, curve degenerates (class G or L)
@@ -1062,7 +1254,7 @@ class SpectralCurveClassification:
 
     @property
     def depth_equals_curve_genus(self) -> bool:
-        """Shadow depth is NOT the spectral curve genus.  Always False."""
+        """Shadow depth is distinct from spectral curve genus."""
         return False
 
 
@@ -1112,15 +1304,15 @@ def depth_vs_curve_genus_table() -> Dict[str, Dict[str, Any]]:
 # ============================================================================
 
 def ceo_vs_shadow_discrepancy(data: ShadowFamilyData,
-                              g_max: int = 3) -> Dict[int, Dict[str, Rational]]:
+                              g_max: int = 3) -> Dict[int, Dict[str, Any]]:
     """Compare F_g^{CEO} with F_g^{shadow} = kappa * lambda_g^FP.
 
     For DEGENERATE curves (class G, L): F_g^{CEO} = 0 (no ramification),
     so the full shadow free energy IS the planted-forest correction.
 
-    For NON-DEGENERATE curves (class M): F_g^{CEO} captures the
-    contribution from the spectral curve, and the planted-forest
-    correction delta_pf^{(g,0)} is the remainder.
+    For NON-DEGENERATE curves (class M): the genus-2 closed form is computed
+    here.  For genus >= 3 the result is reported as an open stable-graph
+    input unless supplied by a dedicated planted-forest engine.
 
     At genus 1: F_1^{CEO} = (1/2)*log(tau) where tau is the spectral
     determinant; this EQUALS kappa/24 for the shadow curve, so
@@ -1132,7 +1324,18 @@ def ceo_vs_shadow_discrepancy(data: ShadowFamilyData,
     kappa = Rational(data.kappa)
     for g in range(1, g_max + 1):
         fg_shadow = free_energy_shadow(data, g)
-        delta_pf = planted_forest_correction(data, g)
+        try:
+            delta_pf = planted_forest_correction(data, g)
+        except NotImplementedError as exc:
+            results[g] = {
+                'F_g_shadow': fg_shadow,
+                'F_g_CEO': None,
+                'delta_pf': None,
+                'decomposition_holds': None,
+                'closed_form_available': False,
+                'open_obligation': str(exc),
+            }
+            continue
         fg_ceo = fg_shadow - delta_pf
 
         results[g] = {
@@ -1140,23 +1343,27 @@ def ceo_vs_shadow_discrepancy(data: ShadowFamilyData,
             'F_g_CEO': fg_ceo,
             'delta_pf': delta_pf,
             'decomposition_holds': (fg_shadow == fg_ceo + delta_pf),
+            'closed_form_available': True,
         }
     return results
 
 
 # ============================================================================
-# 12. Koszul duality on spectral curves
+# 12. Verdier-dual scalar lane on spectral curves
 # ============================================================================
 
 def koszul_dual_spectral_curve(data: ShadowFamilyData) -> Dict[str, Any]:
-    """Koszul duality acts on the spectral curve.
+    """Virasoro Verdier-dual scalar lane compared through spectral curves.
 
-    For Virasoro: Vir_c^! = Vir_{26-c} (AP24).
+    For Virasoro: Vir_c^! = Vir_{26-c} on the finite-type/completed
+    Verdier-dual branch.
     kappa(Vir_c) = c/2, kappa(Vir_{26-c}) = (26-c)/2.
-    kappa + kappa' = 13 (NOT 0 for Virasoro).
+    kappa + kappa' = 13 for Virasoro.
 
     The spectral curves y^2 = Q_L(t; c) and y^2 = Q_L(t; 26-c)
-    are DIFFERENT curves that become identical at c = 13 (self-dual point).
+    are scalar shadow curves attached to A and A^!.  They are distinct
+    from the bar-cobar inversion Omega(B(A)) = A and from the Hochschild
+    bulk Z_ch^der(A).
     """
     if data.name.startswith("Virasoro") or data.name.startswith("Vir"):
         # Extract c from kappa = c/2
@@ -1176,9 +1383,12 @@ def koszul_dual_spectral_curve(data: ShadowFamilyData) -> Dict[str, Any]:
             'q0_dual': data_dual.q0,
             'q2': data.q2,
             'q2_dual': data_dual.q2,
+            'dual_branch': 'A^! via Verdier/continuous-linear duality',
+            'not_inversion': 'Omega(B(A)) = A is bar-cobar inversion',
+            'not_bulk': 'Z_ch^der(A) = ChirHoch^*(A,A)',
         }
     return {
-        'note': 'Koszul duality for non-Virasoro families uses family-specific formulas.',
+        'note': 'Non-Virasoro dual scalar lanes use family-specific Verdier formulas.',
     }
 
 
@@ -1276,7 +1486,7 @@ def full_tr_shadow_verification(g_max: int = 5) -> Dict[str, Any]:
     report['Q1_heisenberg'] = {
         'degenerate_curve': heis.is_degenerate,
         'F_g_match_airy_rescaled': all(v['all_match'] for v in heis_fe.values()),
-        'answer': 'F_g = kappa * lambda_g^FP matches Airy rescaled by kappa.',
+        'answer': 'F_g = kappa * lambda_g^FP matches the Airy/KW coefficient lane.',
     }
 
     # Q2: Virasoro spectral curve
@@ -1308,7 +1518,7 @@ def full_tr_shadow_verification(g_max: int = 5) -> Dict[str, Any]:
         'depth_class': bg.depth_class,
         'r_max': bg.r_max,
         'same_curve_as_vir_c2': True,
-        'eo_terminates': False,  # EO on Vir c=2 curve does NOT terminate
+        'eo_terminates': False,  # EO on the Vir c=2 curve continues
         'answer': ('Spectral curve same as Vir c=2 but shadow depth=4 '
                    'by stratum separation. Standard EO does not capture this.'),
     }
@@ -1322,9 +1532,19 @@ def full_tr_shadow_verification(g_max: int = 5) -> Dict[str, Any]:
 
     # Q8: KW tau
     report['Q8_kw_tau'] = verify_tau_kw_power_relation(vir10, g_max)
+    report['Q8_finite_window_theorem'] = finite_window_tr_shadow_theorem(
+        vir10, g_max
+    )
 
     # Q9: WP comparison
     report['Q9_wp_comparison'] = compare_shadow_with_wp(Fraction(10), min(g_max, 3))
+
+    report['firewalls'] = {
+        'holographic_package_entries': holographic_package_entries(),
+        'modular_koszul_primary_projections': modular_koszul_primary_projections(),
+        'typed_objects': typed_firewall_objects(),
+        'kernel_normalizations': kernel_normalizations(),
+    }
 
     return report
 
@@ -1390,15 +1610,12 @@ def verify_shadow_tower_consistency(data: ShadowFamilyData,
 # ============================================================================
 
 def verify_symplectic_invariance(data: ShadowFamilyData) -> Dict[str, Any]:
-    """The free energies F_g are symplectic invariants of the spectral curve.
+    """Check the distinguished-origin normalization of the shadow free energy.
 
-    A symplectic transformation (x, y) -> (x + f(y), y) preserves all F_g.
-    For the shadow spectral curve, this means F_g depends only on Q_L (the
-    spectral curve), not on the choice of parametrization.
-
-    Verification: F_g^{shadow} = kappa * lambda_g^FP depends only on kappa,
-    which is determined by Q_L(0) = 4*kappa^2.  This is manifestly
-    symplectic-invariant (it depends on the spectral curve, not coordinates).
+    The scalar formula F_g^{shadow} = kappa * lambda_g^FP depends on the
+    chosen shadow coordinate through the distinguished value Q_L(0) =
+    4*kappa^2.  This is a normalization check, not a claim that arbitrary
+    EO symplectic transformations preserve the shadow obstruction scalar.
     """
     kappa = Rational(data.kappa)
     q0 = Rational(data.q0)
@@ -1410,8 +1627,10 @@ def verify_symplectic_invariance(data: ShadowFamilyData) -> Dict[str, Any]:
         'kappa': kappa,
         'kappa_from_q0': kappa_from_q0,
         'q0': q0,
-        'symplectic_invariant': True,
-        'reason': 'F_g = kappa * lambda_g^FP depends only on kappa = sqrt(Q_L(0))/2.',
+        'normalization_invariant': True,
+        'full_eo_symplectic_invariance_asserted': False,
+        'scope': 'distinguished shadow-coordinate normalization',
+        'reason': 'F_g = kappa * lambda_g^FP depends on kappa = sqrt(Q_L(0))/2.',
     }
 
 
@@ -1470,18 +1689,18 @@ def airy_limit_of_shadow(data: ShadowFamilyData) -> Dict[str, Any]:
     """The Airy curve y^2 = x is the LOCAL MODEL near a ramification point.
 
     Near the ramification point t_+ of y^2 = Q_L(t), set u = t - t_+:
-        Q_L(t_+ + u) ~ Q_L''(t_+)/2 * u^2 + O(u^3)
-        y ~ sqrt(Q_L''(t_+)/2) * u
+        Q_L(t_+ + u) = q2*u*(t_+ - t_- + u)
+                     = Q_L'(t_+)*u + O(u^2)
 
-    So locally y^2 ~ (Q_L''(t_+)/2) * u: the local model IS the Airy
-    curve y^2 = a*x with a = Q_L''(t_+)/2.
+    So locally y^2 ~ Q_L'(t_+)*u: the local model is the Airy
+    curve y^2 = a*x with a = Q_L'(t_+) = 2*q2*half_gap.
 
     The Airy free energies F_g^{Airy} = lambda_g^FP are UNIVERSAL
     (independent of a, by dimensional analysis / symplectic rescaling).
 
-    The GLOBAL free energy F_g^{shadow} = kappa * lambda_g^FP is the
-    sum of LOCAL Airy contributions from both ramification points,
-    weighted by kappa.
+    The global shadow coefficient F_g^{shadow} = kappa * lambda_g^FP is a
+    scalar obstruction invariant, not a sum obtained from this local model
+    without the planted-forest data.
     """
     if data.is_degenerate:
         return {
@@ -1492,9 +1711,6 @@ def airy_limit_of_shadow(data: ShadowFamilyData) -> Dict[str, Any]:
     curve = ShadowSpectralCurve(data)
     q2 = float(data.q2)
 
-    # Q_L''(t) = 2*q2 (constant for degree-2 Q_L)
-    # Near t_+: Q_L(t_+ + u) ~ q2 * (t_+ - t_-)^2/2 * u^2 ... no, let me
-    # be more careful.
     # Q_L(t) = q2*(t - t_+)*(t - t_-)
     # Q_L(t_+ + u) = q2 * u * (t_+ + u - t_-) = q2 * u * (2*delta + u)
     #              ~ 2*q2*delta*u for small u, where delta = half_gap.

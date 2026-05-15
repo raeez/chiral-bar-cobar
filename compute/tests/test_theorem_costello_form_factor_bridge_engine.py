@@ -1,10 +1,14 @@
-r"""Tests for the Costello form factor bridge engine.
+r"""Tests for the Costello/form-factor finite scalar bridge engine.
 
-Verifies the bridge between:
+Checks the finite scalar diagnostic surface touching:
 - Costello's QCD form factor computations (arXiv:2302.00770)
 - Bittleston-Costello-Zeng self-dual gauge theory (arXiv:2412.02680)
-- Fernandez-Paquette all-orders OPE (arXiv:2412.17168)
+- Fernandez-Paquette quantum-OPE constraints (arXiv:2412.17168)
 - The shadow obstruction tower framework (thm:mc2-bar-intrinsic)
+
+These tests deliberately do not promote scalar shadow data to full QFT
+amplitudes, BV/BRST equivalences, factorization equivalences, analytic
+continuation statements, or all-genus theorems.
 
 TEST ORGANIZATION:
 1. Exact arithmetic helpers (Bernoulli, lambda_fp, harmonic)
@@ -37,6 +41,7 @@ Ground truth (independently computed):
 """
 
 from fractions import Fraction
+from pathlib import Path
 
 import pytest
 
@@ -46,6 +51,12 @@ from compute.lib.theorem_costello_form_factor_bridge_engine import (
     _bernoulli_exact,
     _lambda_fp_exact,
     harmonic,
+    # Scope firewalls
+    BridgeScopeCertificate,
+    HOLOGRAPHIC_PACKAGE_ENTRIES,
+    KERNEL_CONSTANTS,
+    MODULAR_KOSZUL_COMPUTE_PACKAGE_PROJECTIONS,
+    bridge_scope_certificate,
     # Lie algebra
     LieAlgebraData,
     sl_N_data,
@@ -91,6 +102,7 @@ from compute.lib.theorem_costello_form_factor_bridge_engine import (
     compare_costello_two_loop,
     # Twisted holography
     TwistedHolographyBridge,
+    costello_bridge_object_firewall,
     twisted_holography_d3,
     # Celestial OPE
     CelestialOPEShadowIdentification,
@@ -106,6 +118,61 @@ from compute.lib.theorem_costello_form_factor_bridge_engine import (
     verify_mc_equation_all_arities,
     verify_loop_genus_identification,
 )
+
+
+# ============================================================================
+# 0. Scope firewalls
+# ============================================================================
+
+class TestScopeFirewalls:
+    """Tests preventing finite scalar diagnostics from becoming theorems."""
+
+    def test_bridge_scope_certificate_blocks_overpromotion(self):
+        cert = bridge_scope_certificate(max_genus=3)
+        assert cert.status == "finite_scalar_shadow_diagnostic"
+        assert cert.scalar_formula == "F_L^scalar = kappa * lambda_L^FP"
+        assert "1 <= L <= 3" in cert.finite_scalar_statement
+        assert not cert.promotes_full_qft_theorem
+        assert not cert.promotes_bv_brst_equivalence
+        assert not cert.promotes_factorization_equivalence
+        assert not cert.promotes_analytic_continuation
+        assert not cert.promotes_all_genus
+
+    def test_bridge_scope_certificate_rejects_genus_zero_request(self):
+        with pytest.raises(ValueError):
+            bridge_scope_certificate(max_genus=0)
+
+    def test_package_entries_are_exact_firewalls(self):
+        assert HOLOGRAPHIC_PACKAGE_ENTRIES == (
+            "A",
+            "A^i",
+            "A^!",
+            "C",
+            "r(z)",
+            "Theta_A",
+            "nabla^hol",
+        )
+        assert MODULAR_KOSZUL_COMPUTE_PACKAGE_PROJECTIONS == (
+            "Fact_X(L)",
+            "barB_X(L)",
+            "Theta_L",
+            "L_L",
+            "(V_br,T_br)",
+            "R4_mod(L)",
+        )
+
+    def test_kernel_constants_are_exact_and_distinct(self):
+        assert KERNEL_CONSTANTS["affine_raw_trace_form"] == (
+            "r^KM(z) = k*Omega_tr/z"
+        )
+        assert KERNEL_CONSTANTS["affine_KZ"] == (
+            "r^KZ(z) = Omega/((k+h^vee)z)"
+        )
+        assert KERNEL_CONSTANTS["heisenberg"] == "r^Heis(z) = k/z"
+        assert KERNEL_CONSTANTS["virasoro"] == (
+            "r^Vir(z) = (c/2)/z^3 + 2T/z"
+        )
+        assert KERNEL_CONSTANTS["affine_raw_trace_form"] != KERNEL_CONSTANTS["affine_KZ"]
 
 
 # ============================================================================
@@ -210,16 +277,12 @@ class TestKappaFormulas:
     """Multi-path verification of kappa formulas."""
 
     @pytest.mark.parametrize("N,k,expected", [
-        (2, 0, Fraction(3, 4)),       # (4-1)*2/(2*2) = 3/4? No: (4-1)(0+2)/(2*2) = 3*2/4 = 3/2. Wait:
-        # kappa(V_0(sl_2)) = (4-1)(0+2)/(2*2) = 3*2/4 = 6/4 = 3/2
-        # Let me recompute: dim=3, k=0, h^v=2. kappa = 3*(0+2)/(2*2) = 6/4 = 3/2
+        (2, 0, Fraction(3, 2)),
     ])
     def test_kappa_sl2_k0_direct(self, N, k, expected):
         """kappa(V_0(sl_2)) = 3*2/4 = 3/2. Direct computation."""
-        # Recompute: dim(sl_2)=3, h^v=2, k=0
-        # kappa = 3*(0+2)/(2*2) = 6/4 = 3/2
         result = kappa_affine_slN(2, Fraction(0))
-        assert result == Fraction(3, 2)
+        assert result == expected
 
     def test_kappa_sl2_k0(self):
         """kappa(V_0(sl_2)) = (N^2-1)/2 = 3/2 at k=0."""
@@ -407,6 +470,19 @@ class TestAllPlusAmplitudes:
         for N in range(2, 5):
             assert verify_genus_expansion_positivity(N, max_genus=6)
 
+    def test_all_plus_objects_remain_scalar_diagnostics(self):
+        """All-plus records do not claim full QFT amplitude equality."""
+        for amp in [
+            all_plus_amplitude_1loop(5, 3),
+            all_plus_amplitude_2loop(5, 3),
+            all_plus_amplitude_L_loops(5, 3, 3),
+        ]:
+            assert amp.bridge_scope == "finite_scalar_shadow"
+            assert not amp.full_amplitude_claim
+            assert not amp.analytic_continuation_claim
+            assert not amp.bv_brst_equivalence_claim
+            assert not amp.factorization_equivalence_claim
+
 
 # ============================================================================
 # 7. MC equation = bootstrap associativity
@@ -429,6 +505,8 @@ class TestMCBootstrap:
                     f"MC bootstrap failed at arity {check.arity} for sl_{N}: "
                     f"residual = {check.mc_residual}"
                 )
+                assert check.scope == "finite_genus0_scalar_mc_residual"
+                assert not check.full_qft_bootstrap_claim
 
     def test_mc_arity3_is_jacobi(self):
         """Arity-3 MC equation = Jacobi identity / CYBE."""
@@ -570,13 +648,17 @@ class TestGenusExpansion:
 # ============================================================================
 
 class TestCostelloComparison:
-    """Tests comparing shadow tower with Costello's results."""
+    """Tests comparing scalar shadow data with Costello's target."""
 
     @pytest.mark.parametrize("N", [2, 3, 4, 5])
-    def test_costello_matches(self, N):
-        """The shadow tower reproduces Costello's two-loop result."""
+    def test_costello_full_match_is_not_promoted(self, N):
+        """The scalar package does not claim the full two-loop formula."""
         result = compare_costello_two_loop(N)
-        assert result.costello_matches_shadow
+        assert not result.costello_matches_shadow
+        assert result.scalar_shadow_verified
+        assert not result.full_form_factor_theorem
+        assert result.comparison_scope == "scalar_free_energy_and_planted_forest_only"
+        assert "full two-loop single-trace n-point formula" in result.proof_obligation
 
     def test_F2_shadow_exact_sl2(self):
         """F_2 for SU(2): kappa * 7/5760 = (3/2)(7/5760) = 21/11520 = 7/3840."""
@@ -630,6 +712,75 @@ class TestTwistedHolography:
         """D3 brane boundary algebra is V_1(sl_N)."""
         bridge = twisted_holography_d3(4)
         assert bridge.level == Fraction(1)
+        assert bridge.boundary_algebra == "V_1(sl_4)"
+
+    def test_slN_kappa_not_promoted_to_glN_shortcut(self):
+        """The sl_N compute row is not replaced by the gl_N slogan kappa=N."""
+        bridge = twisted_holography_d3(4)
+        assert bridge.kappa == kappa_affine_slN(4, Fraction(1))
+        assert bridge.kappa == Fraction(75, 8)
+        assert bridge.kappa != bridge.N
+
+    def test_typed_verdier_branch(self):
+        """The D3 bridge passes through A^i before naming the A^! branch."""
+        bridge = twisted_holography_d3(3)
+        assert bridge.bar_complex == "B(V_1(sl_3)): ordered bar coalgebra"
+        assert bridge.koszul_dual_coalgebra == "V_1(sl_3)^i = H^*(B(V_1(sl_3)))"
+        assert "V_-7(sl_3)" in bridge.verdier_dual_branch
+        assert "Verdier/continuous linear duality" in bridge.verdier_dual_branch
+        assert "Omega(B(V_1(sl_3))) -> V_1(sl_3)" in bridge.reconstruction_branch
+        assert "bar-cobar inversion" in bridge.reconstruction_branch
+        assert "Z_ch^der(V_1(sl_3))" in bridge.derived_center_slot
+
+    def test_ap25_object_firewall_distinguishes_slots(self):
+        """B(A), A^i, A^!, Omega(B(A)), and Z_ch^der(A) stay typed apart."""
+        firewall = costello_bridge_object_firewall("V_1(sl_3)", "V_-7(sl_3)")
+        expected = {"A", "B(A)", "A^i", "A^!", "Omega(B(A))", "Z_ch^der(A)"}
+        assert set(firewall) == expected
+        assert "ordered bar coalgebra" in firewall["B(A)"]
+        assert "Koszul-dual coalgebra" in firewall["A^i"]
+        assert "Verdier/continuous linear dual" in firewall["A^!"]
+        assert "bar-cobar reconstruction" in firewall["Omega(B(A))"]
+        assert "derived-centre bulk" in firewall["Z_ch^der(A)"]
+        assert firewall["A^i"] != firewall["A^!"]
+        assert firewall["Omega(B(A))"] != firewall["A^!"]
+        assert firewall["Z_ch^der(A)"] != firewall["B(A)"]
+
+    def test_owned_sources_have_no_stale_ap25_shorthand(self):
+        """The owned engine/test sources do not expose the stale AP25 equality."""
+        stale_bridge = "B(A) <-> " + "D_Ran(B(A)) = " + "B(A!)"
+        verdier_collapse = "D_Ran(B(A)) = " + "B(A!)"
+        omega_dual = "Omega(B(A)) = " + "A^!"
+        center_dual = "Z_ch^der(A) = " + "A^!"
+        owned_sources = [
+            Path("compute/lib/theorem_costello_form_factor_bridge_engine.py"),
+            Path(__file__),
+        ]
+        for source in owned_sources:
+            text = source.read_text()
+            assert stale_bridge not in text
+            assert verdier_collapse not in text
+            assert omega_dual not in text
+            assert center_dual not in text
+
+    def test_owned_sources_have_no_bridge_overpromotion_phrases(self):
+        """The owned sources do not state diagnostics as a bridge theorem."""
+        banned = [
+            "BRIDGE " + "THEOREM",
+            "by the bridge " + "theorem",
+            "Q" + "ED",
+            "EXACT" + "LY our MC equation",
+            "reproduces " + "Costello's QCD form factor computations",
+            "kappa(A) = " + "N",
+        ]
+        owned_sources = [
+            Path("compute/lib/theorem_costello_form_factor_bridge_engine.py"),
+            Path(__file__),
+        ]
+        for source in owned_sources:
+            text = source.read_text()
+            for phrase in banned:
+                assert phrase not in text
 
 
 # ============================================================================
@@ -659,6 +810,9 @@ class TestCelestialOPEIdentification:
         for N in range(2, 5):
             ident = celestial_ope_from_shadow_g0(N)
             assert ident.identification_verified
+            assert ident.verified_scope == "binary_collision_residue_only"
+            assert not ident.full_ope_equivalence_claim
+            assert not ident.analytic_continuation_claim
 
 
 # ============================================================================
@@ -685,6 +839,17 @@ class TestDictionary:
     def test_dictionary_values_nonempty(self):
         for key, val in COSTELLO_SHADOW_DICTIONARY.items():
             assert len(val) > 0, f"Empty value for key: {key}"
+
+    def test_cy5_entry_uses_typed_verdier_branch(self):
+        entry = COSTELLO_SHADOW_DICTIONARY["CY5_twisted_holography"]
+        assert "typed Verdier/Koszul branch" in entry
+        assert "A^i=H^*(B(A))" in entry
+        assert "separate from Omega(B(A)) -> A" in entry
+
+    def test_dictionary_marks_qft_targets_as_uncertified(self):
+        assert "scalar" in COSTELLO_SHADOW_DICTIONARY["all_plus_at_L_loops"]
+        assert "comparison target" in COSTELLO_SHADOW_DICTIONARY["n_point_form_factor"]
+        assert "not certified" in COSTELLO_SHADOW_DICTIONARY["BCFW_recursion"]
 
 
 # ============================================================================
@@ -714,11 +879,23 @@ class TestFullBridgeAnalysis:
 
     def test_full_analysis_costello_comparison(self):
         result = full_bridge_analysis(3)
-        assert result["costello_comparison"].costello_matches_shadow
+        assert not result["costello_comparison"].costello_matches_shadow
+        assert result["costello_comparison"].scalar_shadow_verified
 
     def test_full_analysis_twisted_holography(self):
         result = full_bridge_analysis(4)
         assert result["twisted_holography"].anomaly_cancellation
+
+    def test_full_analysis_carries_scope_certificate(self):
+        result = full_bridge_analysis(3, max_genus=2)
+        scope = result["scope_certificate"]
+        assert isinstance(scope, BridgeScopeCertificate)
+        assert scope.status == "finite_scalar_shadow_diagnostic"
+        assert not scope.promotes_full_qft_theorem
+        assert not scope.promotes_bv_brst_equivalence
+        assert not scope.promotes_factorization_equivalence
+        assert not scope.promotes_analytic_continuation
+        assert not scope.promotes_all_genus
 
 
 # ============================================================================
@@ -847,6 +1024,10 @@ class TestMultiPathVerification:
         # Path 1
         ident = verify_loop_genus_identification(N, 1)
         path1 = ident["F_L"]
+        assert ident["scope"] == "finite_scalar_shadow"
+        assert not ident["full_form_factor_theorem"]
+        assert not ident["analytic_continuation_claim"]
+        assert not ident["all_genus_claim"]
 
         # Path 2
         amp = all_plus_amplitude_1loop(4, N)
@@ -874,6 +1055,8 @@ class TestQuantumOPE:
         assert corrections[0].coefficient == Fraction(N)
         assert corrections[0].loop_order == 1
         assert corrections[0].pole_order == 2
+        assert corrections[0].scope == "finite_scalar_proxy"
+        assert not corrections[0].full_ope_claim
 
     @pytest.mark.parametrize("N", [2, 3, 4])
     def test_two_loop_correction_exists(self, N):
@@ -881,9 +1064,11 @@ class TestQuantumOPE:
         corrections = two_loop_ope_correction_sdym(N)
         assert len(corrections) >= 1
         assert corrections[0].loop_order == 2
+        assert corrections[0].scope == "finite_scalar_proxy"
+        assert not corrections[0].full_ope_claim
 
-    def test_all_orders_ope_consistent(self):
-        """Quantum OPE at all orders is consistent (coefficients positive)."""
+    def test_finite_ope_truncation_consistent(self):
+        """Finite quantum-OPE truncation has positive scalar coefficients."""
         N = 3
         ope = quantum_ope_all_orders(N, max_loop=4)
         for L, corrections in ope.items():
@@ -891,6 +1076,7 @@ class TestQuantumOPE:
             for corr in corrections:
                 assert corr.loop_order == L
                 assert corr.coefficient > 0
+                assert not corr.full_ope_claim
 
 
 # ============================================================================

@@ -1,103 +1,139 @@
 \chapter{Quantum corrections to Arnold relations}
 \label{ch:quantum-corrections}
-% Regimes II--III: curved and filtered (Convention~\ref{conv:regime-tags}).
 
-The MC element $\Theta_\cA$ satisfies
-$D\Theta_\cA + \tfrac{1}{2}[\Theta_\cA, \Theta_\cA] = 0$; the
-genus-$g$ components of this equation are the quantum corrections to
-the genus-$0$ bar differential. At genus~$0$, the Arnold relation
-ensures $d^2 = 0$; at genus~$g \geq 1$, it deforms by coherent
-higher homotopies whose leading term is the modular curvature
-$\kappa(\cA)$.
+The universal modular Maurer--Cartan element
+$\Theta_\cA \in \MC(\mathfrak g^{\mathrm{mod}}_\cA)$ satisfies
+\[
+D_\cA\Theta_\cA
+  + \tfrac{1}{2}[\Theta_\cA,\Theta_\cA]=0 .
+\]
+The factor $\tfrac{1}{2}$ is part of the convention: it is the same
+factor as in the BV quantum master equation and in the operadic
+Maurer--Cartan equation of Appendix~\ref{app:signs}.  The
+genus-$0$ collision component is the Arnold flatness identity for the
+logarithmic forms $\eta_{ij}=d\log(z_i-z_j)$.  At positive genus the
+total modular equation remains a flat MC equation; the new term is the
+fiberwise Hodge curvature.  Its scalar projection is
+$\kappa(\cA)\lambda_g$ on the uniform-weight scalar lane, while
+interacting multi-weight algebras carry additional cross-channel
+corrections invisible to that scalar projection
+(Chapter~\ref{ch:genus-expansions}).
 
 \begin{definition}[Quantum corrections]\label{def:quantum-corrections}
 \index{quantum corrections|textbf}
-In this monograph, \emph{quantum corrections} are the
-genus-$g \geq 1$ components of the modular bar differential
-that vanish on genus-$0$ configuration spaces. Precisely:
-the total differential $D = \sum_{g \geq 0} \hbar^g D^{(g)}$
-splits by loop genus; the genus-$0$ part $D^{(0)}$
-is the chiral bar differential on configuration spaces of~$X$,
-governed by the Arnold relation for the logarithmic forms
-$\eta_{ij} = d\log(z_i - z_j)$ on $\FM_n(X)$
-(this is \emph{not} the classical bar differential over a point,
-which retains no configuration-space geometry), and the
-higher-genus parts $D^{(g)}$ for $g \geq 1$ are the quantum
-corrections.
-The parameter~$\hbar$ is a formal loop-counting variable
-with $|\hbar| = 0$; it tracks the genus grading and has
-no physical content beyond tracking the genus grading.
+The \emph{quantum corrections} of~$\cA$ are the positive-genus
+components in the completed stable-graph expansion
+\[
+ D = D^{(0)}+\sum_{g\geq 1}\hbar^g D^{(g)} .
+\]
+The genus-$0$ part $D^{(0)}$ is the chiral bar differential on
+configuration spaces of~$X$, governed by the Arnold relation for
+$\eta_{ij}=d\log(z_i-z_j)$ on $\FM_n(X)$.  The terms $D^{(g)}$ for
+$g\geq 1$ are the modular corrections: they record non-separating
+clutching, period dependence, and the curvature component of the
+completed convolution algebra.  The formal variable~$\hbar$ has
+degree~$0$ and records only the genus filtration.
 \end{definition}
 
-When strict Arnold relations fail at genus $g \geq 1$,
-they fail by coherent higher homotopies: quantum
-corrections are new higher operations in the homotopy
-algebra, not errors.
+\begin{remark}[Genus-filtration parameter]
+\label{rem:qc-hbar-genus-filtration}
+The symbol $\hbar$ in Definition~\ref{def:quantum-corrections} is the
+Rees parameter for the genus filtration of the modular convolution
+algebra.  A stable graph of genus
+$g=h^1(\Gamma)+\sum_{v}g_v$ lies in the coefficient of~$\hbar^g$;
+one application of the non-separating clutching operator~$\Delta$
+raises this exponent by one.  The physical partition-function
+normalization uses $\hbar_{\mathrm{phys}}^{2g-2}$ and the scalar
+free-energy convention uses the even variable
+$\hbar_{\mathrm{phys}}^2$.  The imported K3 boundary parameters in
+\S\ref{sec:qc-supplement} are Vol.~III quantum-group deformation
+parameters.  These three parameters live in separate filtrations.
+\end{remark}
 
-Four principles govern the structure.
-\emph{Strictness as shadow.} The genus-$0$ identity
+The genus-$0$ identity
 $\eta_{12} \wedge \eta_{23} + \eta_{23} \wedge \eta_{31}
-+ \eta_{31} \wedge \eta_{12} = 0$ is the shadow of a chain-level
-identity in $\Convinf(\barBch(\cA), \cA)$. When the curve acquires
-non-trivial periods, that identity deforms by an Eisenstein
-correction whose leading term is $\kappa(\cA)$.
-\emph{Modularity at chain level.} The correction is a
-Maurer--Cartan deformation of the differential in the modular
-convolution algebra $\mathfrak{g}^{\mathrm{mod}}_{\cA}$, dictated by
-the Feynman transform of the modular operad and recorded in the
-shadow obstruction tower of Chapter~\ref{sec:koszul-across-genera}.
-\emph{Examples.} Each standard family behaves differently:
-Heisenberg terminates at degree~$2$ (pure curvature), affine algebras
-at degree~$3$ (cubic shadow), $\beta\gamma$ at degree~$4$ (quartic
-contact), while Virasoro and $\mathcal{W}_N$ produce infinite towers
-forced by non-vanishing quintic obstructions.
-\emph{Closing the loop.} Every quantum correction computed here
-reappears as input to Theorem~C (complementarity,
-Chapter~\ref{chap:higher-genus}) and Theorem~D (modular
-characteristic, Chapter~\ref{ch:genus-expansions}), confirming that
-the corrections assemble into a universal, additive,
-duality-constrained invariant.
-
-Strict genus-$0$ nilpotence breaks once the propagator remembers the
-periods of the curve. Curvature terms, Eisenstein regularizations,
-and their assembly into a curved $A_\infty$ package constitute the
-explicit correction mechanism behind the higher-genus theory. The
-Heisenberg computation of Chapter~\ref{ch:heisenberg-frame} is the
-frame case; the genus-$1$ identity already exhibits the universal
-pattern.
++ \eta_{31} \wedge \eta_{12}=0$ is the genus-$0$ projection of the
+chain-level equation in $\Convinf(\barBch(\cA),\cA)$.  In genus
+$g\geq1$ the completed stable-graph sum splits after choosing the
+strong-generator channel set $\mathrm{Ch}(\cA)$:
+\[
+F_g(\cA)
+=
+\sum_{\substack{\Gamma,\ \sigma:E(\Gamma)\to\mathrm{Ch}(\cA)\\
+                \sigma\ \mathrm{constant}}}
+\frac{W_\Gamma(\sigma)}{|\operatorname{Aut}(\Gamma)|}
+\;+\;
+\sum_{\substack{\Gamma,\ \sigma:E(\Gamma)\to\mathrm{Ch}(\cA)\\
+                \sigma\ \mathrm{not\ constant}}}
+\frac{W_\Gamma(\sigma)}{|\operatorname{Aut}(\Gamma)|}
+=F_g^{\mathrm{diag}}(\cA)+\delta F_g^{\mathrm{cross}}(\cA).
+\]
+The Chern--Weil map from the diagonal summand to the Hodge lane sends
+$F_g^{\mathrm{diag}}(\cA)$ to
+$\kappa(\cA)\lambda_g^{\mathrm{FP}}$; the obstruction-class version is
+$\operatorname{obs}_g^{\mathrm{scal}}(\cA)=\kappa(\cA)\lambda_g$.
+Heisenberg has only this scalar curvature channel.  Affine
+Kac--Moody algebras add the cubic Lie channel.  The $\beta\gamma$
+system has the free-field mixed-channel cancellation recorded in
+Chapter~\ref{ch:genus-expansions}.  Principal $\mathcal W_N$ algebras
+for $N\geq 3$ are the standard interacting multi-weight witnesses:
+their diagonal scalar term is $\kappa(\cA)\lambda_g$, and their full
+free energy contains $\delta F_g^{\mathrm{cross}}$ for $g\geq 2$.
 
 \section{Braid groups and Arnold relations}
 
 \subsection{Arnold relations and the braid group}
 
-Arnold's relations among differential forms on configuration spaces arise from the topology of the braid group. Consider three strands in a braid, labeled 1, 2, and 3. Their projections onto a plane trace out paths $z_1(t)$, $z_2(t)$, and $z_3(t)$. The fundamental group of the configuration space of three distinct points in the plane is the braid group $B_3$.
+Arnold's relation is the codimension-two collision identity behind
+flatness of the logarithmic configuration-space connection.  For
+three ordered points on the affine line, write
+$z_{ij}=z_i-z_j$ and
+\[
+\eta_{ij}=d\log z_{ij}=\frac{dz_i-dz_j}{z_i-z_j}.
+\]
+The forms $\eta_{ij}$ are the de~Rham representatives of the
+Orlik--Solomon generators for the braid arrangement; the braid-group
+monodromy is obtained by integrating them around the collision
+divisors.
 
 \subsubsection{The braid derivation of Arnold relations}
 
-Start with a specific braid where strand 1 circles around strand 2, while strand 3 remains fixed. The winding number of this motion is captured by the integral:
-\[\oint \frac{dz_1 - dz_2}{z_1 - z_2} = 2\pi i\]
-
-If we compose three such braids (where 1 circles 2, then 2 circles 3, then 3 circles 1) we return to the identity braid. This topological fact translates to an algebraic relation.
-
-To see this explicitly, consider the logarithmic 1-forms:
+The local winding normalization is
+\[
+\frac{1}{2\pi i}\oint_{|z_{ij}|=\epsilon}\eta_{ij}=1,
+\]
+while the quadratic relation follows from the partial-fraction
+identity for the three collision hyperplanes.  Explicitly,
 \begin{align}
 \eta_{12} &= d\log(z_1 - z_2) = \frac{dz_1 - dz_2}{z_1 - z_2} \\
 \eta_{23} &= d\log(z_2 - z_3) = \frac{dz_2 - dz_3}{z_2 - z_3} \\
 \eta_{31} &= d\log(z_3 - z_1) = \frac{dz_3 - dz_1}{z_3 - z_1}
 \end{align}
-
-The braid group relation forces a dependence among these forms, visible via the \emph{partial fraction identity}: clearing denominators in
-\[\frac{1}{(z_1 - z_2)(z_2 - z_3)} + \frac{1}{(z_2 - z_3)(z_3 - z_1)} + \frac{1}{(z_3 - z_1)(z_1 - z_2)} = 0\]
-gives the numerator $(z_3 - z_1) + (z_1 - z_2) + (z_2 - z_3) = 0$.
-
-Computing the wedge product $\eta_{ij} \wedge \eta_{jk}$ and using the form-level analogue of this identity yields:
-\[\eta_{12} \wedge \eta_{23} + \eta_{23} \wedge \eta_{31} + \eta_{31} \wedge \eta_{12} = 0\]
-
-This is Arnold's relation: it encodes the fact that the three braiding operations compose to the identity.
+and clearing denominators in
+\[
+\frac{1}{z_{12}z_{23}}
++\frac{1}{z_{23}z_{31}}
++\frac{1}{z_{31}z_{12}}=0
+\]
+gives $z_{31}+z_{12}+z_{23}=0$.  Multiplying by the common
+two-form numerator gives Arnold's relation
+\[
+\eta_{12}\wedge\eta_{23}
++\eta_{23}\wedge\eta_{31}
++\eta_{31}\wedge\eta_{12}=0.
+\]
+This is the form-level relation used in the bar differential; the
+Orlik--Solomon sign convention for generators is compared with the
+differential-form convention in Appendix~\ref{app:signs}.
 
 \subsection{The meaning of integrability}
 
-These relations are the integrability conditions for the geometric bar complex: $d^2 = 0$ is flatness of the Knizhnik--Zamolodchikov connection on the local system of conformal blocks \cite[Section~3.4]{BD04}.
+These relations are the integrability conditions for the genus-$0$
+geometric bar complex.  On the affine Kac--Moody comparison surface
+they are the flatness equations for the Knizhnik--Zamolodchikov
+connection on conformal blocks \cite[Section~3.4]{BD04}; for a
+general chiral algebra they are the codimension-two cancellation in
+the residue differential.
 
 Consider the bar complex:
 \[\bar{B}^{\text{geom}}(\mathcal{A}) = \bigoplus_n \Gamma(\overline{C}_n(X), \mathcal{A}^{\boxtimes n} \otimes \Omega^*_{\log})\]
@@ -109,7 +145,7 @@ with differential $d = d_{\text{internal}} + d_{\text{residue}} + d_{\text{deRha
 More precisely, we can view $d$ as a connection on the graded vector bundle:
 \[\mathcal{E} = \bigoplus_{n,k} \mathcal{A}^{\boxtimes n} \otimes \Omega^k_{\log}\]
 
-The flatness condition $d^2 = 0$ is equivalent to the Maurer--Cartan equation:
+The flatness condition is the Maurer--Cartan equation
 \[d\omega + \frac{1}{2}[\omega, \omega] = 0\]
 
 where $\omega = \sum_{i<j} t_{ij}\, \eta_{ij}$ is the residue-valued
@@ -124,55 +160,79 @@ Proposition~\ref{prop:arnold-higher-genus}.
 
 \subsubsection{Concrete computation}
 
-We verify this for $n = 3$. The differential acts on $a_1 \otimes a_2 \otimes a_3 \otimes \eta_{12}$ as:
-\[d(a_1 \otimes a_2 \otimes a_3 \otimes \eta_{12}) = a_1 \otimes a_2 \otimes a_3 \otimes d\eta_{12} + \text{residue terms}\]
-
-For $d^2 = 0$, we need:
-\[d(d\eta_{12}) = 0\]
-
-But $d\eta_{12} = d(d\log(z_1 - z_2)) = 0$ automatically. The non-trivial constraint comes from mixed terms:
-\[d_{\text{residue}}(d_{\text{deRham}}(\ldots)) + d_{\text{deRham}}(d_{\text{residue}}(\ldots)) = 0\]
-
-This is satisfied if and only if the Arnold relations hold.
+For $n=3$, the de~Rham squares $d\eta_{ij}=0$ do not carry the
+constraint.  The non-trivial term in $d^2$ is the sum of iterated
+residues at the triple collision divisor.  Its form factor is exactly
+\[
+\eta_{12}\wedge\eta_{23}
++\eta_{23}\wedge\eta_{31}
++\eta_{31}\wedge\eta_{12},
+\]
+so the Arnold relation is the local cancellation that removes the
+codimension-two residue.
 
 \section{Genus one: theta functions and central extensions}
 
 \subsection{The genus one quantum correction}
 
-On the torus $E_\tau = \mathbb{C}/(\mathbb{Z} + \tau\mathbb{Z})$ with modular parameter $\tau \in \mathbb{H}$, the logarithmic forms must respect the double periodicity.
+On the torus $E_\tau=\mathbb C/(\mathbb Z+\tau\mathbb Z)$ there is no
+global holomorphic function with one simple zero and strict double
+periodicity.  The genus-$1$ propagator is therefore computed in a
+holomorphic trivialization on the universal cover and then projected to
+the invariant scalar curvature class.
 
-\subsubsection{The Weierstrass construction}
+\subsubsection{The prime-form construction}
 
-We need a function with a simple zero at the origin and the correct periodicity. Weierstrass constructed the sigma function:
-\[\sigma(z|\tau) = z \prod_{(m,n) \neq (0,0)} \left(1 - \frac{z}{m + n\tau}\right) \exp\left(\frac{z}{m+n\tau} + \frac{z^2}{2(m+n\tau)^2}\right)\]
-
-This infinite product converges due to the exponential factors. The logarithmic derivative gives the Weierstrass zeta function:
-\[\zeta(z|\tau) = \frac{d}{dz}\log\sigma(z|\tau) = \frac{1}{z} + \sum_{(m,n) \neq (0,0)} \left(\frac{1}{z - m - n\tau} + \frac{1}{m + n\tau} + \frac{z}{(m + n\tau)^2}\right)\]
+The genus-$1$ prime form in the standard holomorphic
+trivialization is
+\[
+E(z|\tau)=\frac{\theta_1(z|\tau)}{\theta_1'(0|\tau)}.
+\]
+Its logarithmic derivative
+\[
+K_\tau(z)=\partial_z\log E(z|\tau)
+\]
+is the propagator used in the bar differential.  It is related to the
+Weierstrass sigma function by
+\[
+K_\tau(z)=\zeta_\sigma(z|\tau)-2\eta_1 z,
+\qquad
+\zeta_\sigma(z|\tau)=\partial_z\log\sigma(z|\tau).
+\]
+This distinction is essential: the plain sigma zeta function has no
+$G_2z$ term in its Laurent expansion, while the prime-form derivative
+does.  The genus-$1$ scalar curvature below is computed from
+$K_\tau$, not from $\zeta_\sigma$ alone.
 
 \subsubsection{The quasi-periodicity and its consequences}
 
-The zeta function is not doubly periodic but quasi-periodic:
+The sigma zeta function is quasi-periodic:
 \begin{align}
-\zeta(z + 1|\tau) &= \zeta(z|\tau) + 2\eta_1 \\
-\zeta(z + \tau|\tau) &= \zeta(z|\tau) + 2\eta_\tau
+\zeta_\sigma(z + 1|\tau) &= \zeta_\sigma(z|\tau) + 2\eta_1 \\
+\zeta_\sigma(z + \tau|\tau) &= \zeta_\sigma(z|\tau) + 2\eta_\tau
 \end{align}
 
-where the quasi-periods satisfy the \emph{Legendre relation}:
+where the quasi-periods satisfy the Legendre relation
 \[\tau\eta_1 - \eta_\tau = \pi i\]
-(from $\oint_{\partial\mathcal{F}} \zeta(z)\,dz = 2\pi i$ and the quasi-periodicity $\zeta(z+\omega) = \zeta(z) + 2\eta_\omega$)
-
-The quantum correction arises from this quasi-periodicity:
+from the residue normalization
+$\oint_{\partial\mathcal F}\zeta_\sigma(z)\,dz=2\pi i$.  Hence
+$K_\tau(z+1)=K_\tau(z)$ and
+$K_\tau(z+\tau)=K_\tau(z)-2\pi i$.  The $B$-cycle shift is the
+genus-$1$ source of the Hodge curvature.
 
 \subsubsection{Computing the quantum correction}
 
-The logarithmic forms on the torus are:
-\[\eta_{ij}^{(1)} = d\log\sigma(z_i - z_j|\tau) = \zeta(z_i - z_j|\tau)(dz_i - dz_j)\]
-
-Now compute the Arnold combination:
+In the prime-form trivialization set
+\[
+\eta_{ij}^{(1)}
+ = d\log E(z_i-z_j|\tau)
+ = K_\tau(z_i-z_j)(dz_i-dz_j).
+\]
+The Arnold combination is
 \[\mathcal{A}_3^{(1)} = \eta_{12}^{(1)} \wedge \eta_{23}^{(1)} + \eta_{23}^{(1)} \wedge \eta_{31}^{(1)} + \eta_{31}^{(1)} \wedge \eta_{12}^{(1)}\]
 
-We derive the defect from first principles via the Eisenstein-regularised
-Laurent expansion of~$\zeta$.
+We derive the scalar defect from the Eisenstein-regularised Laurent
+expansion of~$K_\tau$.
 
 \emph{Step~1: Form-factor reduction.}
 Write $u = z_{12}$, $v = z_{23}$, $w = z_{31} = -(u+v)$
@@ -186,35 +246,38 @@ Note that $dz_3 - dz_1 = -(\alpha + \beta)$, so
 Every cyclic term carries the \emph{same} form factor, giving
 \begin{equation}\label{eq:arnold-genus1-factored}
 \mathcal{A}_3^{(1)}
-= \bigl[\zeta(u)\zeta(v)
- + \zeta(v)\zeta(w) + \zeta(w)\zeta(u)\bigr]
+= \bigl[K_\tau(u)K_\tau(v)
+ + K_\tau(v)K_\tau(w) + K_\tau(w)K_\tau(u)\bigr]
  \cdot \alpha \wedge \beta.
 \end{equation}
 
 \emph{Step~2: Pole cancellation.}
-Denote the coefficient function $S(u,v) = \sum_{\mathrm{cyc}}\zeta(u)\zeta(v)$.
+Denote the coefficient function
+$S(u,v)=\sum_{\mathrm{cyc}}K_\tau(u)K_\tau(v)$.
 At $z_1 = z_2$ (i.e.\ $u = 0$), the first and third terms
-each have a simple pole in~$u$, with residues $\zeta(v)$ and
-$\zeta(w) = \zeta(-v) = -\zeta(v)$ respectively; the second
+each have a simple pole in~$u$, with residues $K_\tau(v)$ and
+$K_\tau(w) = K_\tau(-v) = -K_\tau(v)$ respectively; the second
 term is regular. So the residue of~$S$ at $u = 0$ vanishes.
 By symmetry the same holds at $v = 0$ and $w = 0$.
-Therefore $S$ is an \emph{entire} function of~$(u,v)$.
+Thus the collision-pole part vanishes; only the regular period
+polynomial of the chosen trivialization can contribute to the scalar
+projection.
 
 \emph{Step~3: Laurent expansion via Eisenstein summation.}
-The Weierstrass $\zeta$-function admits the
-Eisenstein-regularised expansion
+The prime-form derivative admits the Eisenstein-regularised expansion
 (cf.~\S\ref{sec:km-bar-complex}):
-\begin{equation}\label{eq:zeta-eisenstein-expansion}
-\zeta(z|\tau)
+\begin{equation}\label{eq:primeform-eisenstein-expansion}
+K_\tau(z)
 = \frac{1}{z} - G_2(\tau)\,z - G_4(\tau)\,z^3 - G_6(\tau)\,z^5 - \cdots
 \end{equation}
 where $G_{2k}(\tau) = \sum'_{(m,n)} (m + n\tau)^{-2k}$
 and $G_2(\tau) = \tfrac{\pi^2}{3}\,E_2(\tau)$ requires
-Eisenstein summation (inner sum over~$m$ first).
-The quasi-period is $2\eta_1 = G_2(\tau)$.
+Eisenstein summation (inner sum over~$m$ first).  Equivalently,
+$2\eta_1=G_2(\tau)$ in the sigma normalization and
+$K_\tau=\zeta_\sigma-G_2z$.
 
 \emph{Step~4: Constant term of $S$.}
-Substituting~\eqref{eq:zeta-eisenstein-expansion} into $S$
+Substituting~\eqref{eq:primeform-eisenstein-expansion} into $S$
 and collecting powers of $(u,v)$, the singular terms cancel
 by Step~2. The leading contributions are:
 \begin{align}
@@ -236,120 +299,224 @@ In~\eqref{eq:arnold-G2} we used Newton's identity
 $u^3 + v^3 + w^3 = 3uvw$ (valid when $u + v + w = 0$), and
 in~\eqref{eq:arnold-leading} the genus-$0$ Arnold relation.
 
-\emph{Step~5: Higher-order terms are cohomologically trivial.}
-The position-dependent corrections~\eqref{eq:arnold-higher}
-are polynomial in $(u,v)$ with $\tau$-dependent coefficients.
-Since $\alpha \wedge \beta = du \wedge dv$ and any polynomial
-$p(u,v)\,du \wedge dv$ on~$\mathbb{C}^2$ is exact
-(primitives are $\partial\bar\partial$-exact on the
-universal cover and descend to exact forms on~$C_3(E_\tau)$
-because they have at most polynomial growth), they do not
-contribute to the cohomology class
-$[\mathcal{A}_3^{(1)}] \in H^{2,0}(C_3(E_\tau))$.
+\emph{Step~5: Scalar projection.}
+The position-dependent terms in~\eqref{eq:arnold-higher} are not
+identified here with zero in $H^{2,0}(C_3(E_\tau))$: exactness on the
+universal cover does not by itself descend to the torus configuration
+space, and the prime-form derivative carries $B$-cycle
+quasi-periodicity.  The scalar curvature lane keeps only the
+translation-invariant constant term of the Eisenstein expansion.
+Denote this projection by $\pi_{\mathrm{scal}}$.
 
-\emph{Step~6: The Arnold defect.}
-Combining Steps~4 and~5:
+\emph{Step~6: The scalar Arnold defect.}
+Combining Steps~4 and~5 gives
 \begin{equation}\label{eq:arnold-defect-genus1}
 \boxed{
-\mathcal{A}_3^{(1)}
+\pi_{\mathrm{scal}}\mathcal{A}_3^{(1)}
 = 3\,G_2(\tau) \cdot \alpha \wedge \beta
- + (\text{exact})
 = \pi^2 E_2(\tau) \cdot \alpha \wedge \beta
- + (\text{exact})
 }
 \end{equation}
 where $E_2(\tau) = 1 - 24\sum_{n=1}^\infty \sigma_1(n)\,q^n$
 is the weight-$2$ quasi-modular Eisenstein series
 ($q = e^{2\pi i \tau}$).
-The right-hand side is a holomorphic $(2,0)$-form on
-$C_3(\Sigma_\tau)$ whose cohomology class is
-$\pi^2 E_2(\tau) \cdot [\alpha \wedge \beta]$;
-the factor~$\pi^2$ is the residue of the Eisenstein
-regularisation and is absorbed into $\kappa(\mathcal{A})$
-when the Arnold defect is contracted against the OPE data
-to produce the bar-complex curvature
-$m_0^{(1)} = \kappa \cdot E_2(\tau)$.
+The factor $\pi^2$ belongs to the analytic generator
+$G_2=(\pi^2/3)E_2$ and is removed by the scalar-lane normalization;
+the invariant $\kappa(\cA)$ is fixed by the degree-two OPE
+coefficient.  Put
+\[
+e_2^{\mathrm{an}}
+:=\pi^{-2}\pi_{\mathrm{scal}}\mathcal{A}_3^{(1)}
+=E_2(\tau)\,\alpha\wedge\beta .
+\]
+The analytic-to-Hodge normalization
+\[
+\nu_1\colon \mathbb C\cdot e_2^{\mathrm{an}}
+\longrightarrow H^2(\overline{\mathcal M}_{1,1};\mathbb C),
+\qquad
+\nu_1(e_2^{\mathrm{an}})=\lambda_1
+\]
+is the scalar lane used by Theorem~\ref{thm:genus-universality}.
+Contracting the degree-two OPE coefficient with this generator gives
+the genus-$1$ scalar curvature in the $E_2$ trivialization,
+\[
+m_{0,\mathrm{scal}}^{(1)}(\cA)=\kappa(\cA)\,E_2(\tau),
+\]
+equivalently $F_1(\cA)=\kappa(\cA)/24$ after the Hodge projection and
+integration over $\overline{\mathcal M}_{1,1}$.
 The non-holomorphic completion $\hat{E}_2(\tau) = E_2(\tau)
 - 3/(\pi\,\mathrm{Im}(\tau))$ governs the single-valued
 propagator and produces the Arakelov $(1,1)$-form
 $2\pi i \cdot \omega_\tau$ of
 Theorem~\ref{thm:arnold-higher-genus}(b).
 
+\begin{remark}[Scalar one-loop class and determinant amplitude]
+\label{rem:qc-scalar-one-loop-vs-determinant}
+The equality $F_1(\cA)=\kappa(\cA)/24$ is the Hodge intersection
+number $\kappa(\cA)\int_{\overline{\mathcal M}_{1,1}}\lambda_1$.
+The full torus determinant is a separate physical amplitude.  For an
+even lattice VOA of rank~$d$, the physical genus-$1$ partition
+function is
+\[
+ Z_1(V_\Lambda,\tau)=\Theta_\Lambda(\tau)\,\eta(\tau)^{-d},
+ \qquad
+ \partial_\tau\log\eta(\tau)=\frac{\pi i}{12}E_2(\tau),
+\]
+so the oscillator determinant contains the whole
+$q$-series of~$\eta^{-d}$, while the scalar lane retains only the
+Hodge coefficient $d/24$.  For the free $\beta\gamma$ system the
+determinantal statement is a statement about
+$\det R\Gamma(\Sigma_g,K^\lambda)$ and its Quillen refinement; this
+chapter uses only the induced Mumford/Hodge scalar unless a separate
+determinant-line comparison theorem is invoked.  The scalar
+obstruction formula therefore uses $\kappa(\cA)/24$, with
+$-\log\eta(\tau)$ and zeta-regularized determinants remaining in the
+determinant-line lane.
+\end{remark}
+
 \subsection{The central extension at genus one}
 
 \subsubsection{The central extension}
 
-Consider the Heisenberg vertex algebra $\mathcal{H}_\kappa$ with generators $a_n$ for $n \in \mathbb{Z}$. The commutation relations are:
-\[[a_m, a_n] = \kappa \, m\,\delta_{m+n,0}\]
-
-where $\kappa$ is the level. The central extension is present already at genus zero; it is part of the \emph{definition} of the Heisenberg algebra. What changes at genus one is not the commutation relations themselves, but the \emph{modular properties} of the resulting chiral algebra: the partition function acquires $\tau$-dependence, and correlation functions must be consistent with the quantum-corrected Arnold relations on the torus.
+Let $\mathcal H_k$ be the rank-one Heisenberg vertex algebra at level
+$k$, generated by modes $a_n$ with
+\[
+[a_m,a_n]=k\,m\,\delta_{m+n,0}\mathbf 1 .
+\]
+This central extension is a genus-$0$ OPE datum.  Genus~$1$ leaves
+the commutation relations fixed and couples the same scalar level
+$k=\kappa(\mathcal H_k)$ to the Hodge curvature represented above by
+$E_2(\tau)$.
 
 \subsubsection{The explicit construction of the central element}
 
-The deformation of the Arnold relation at genus~1 encodes the \emph{curving obstruction} $m_0^{(1)}$ in the genus-1 bar complex. For the Heisenberg algebra $\mathcal{H}_\kappa$, this obstruction is:
-\[m_0^{(1)} = \kappa \cdot E_2(\tau)\]
+For the Heisenberg algebra the scalar genus-$1$ curvature is
+\[
+m_{0,\mathrm{scal}}^{(1)}(\mathcal H_k)=k\,E_2(\tau),
+\qquad
+F_1(\mathcal H_k)=k/24 .
+\]
 
-The factor $E_2(\tau)$ controls the modular dependence of the genus-1 partition function $Z^{(1)} = \eta(\tau)^{-\operatorname{rank}}$, consistent with the identity $\partial_\tau \log \eta(\tau) = \frac{\pi i}{12} E_2(\tau)$. The central charge ($c = 1$ for rank-1 Heisenberg) is a genus-0 datum determined by the Sugawara construction, not by this integral.
+The identity
+$\partial_\tau\log\eta(\tau)=\frac{\pi i}{12}E_2(\tau)$ explains the
+same $E_2$ coefficient in the genus-$1$ character.  The central charge
+$c=1$ for a rank-one Heisenberg algebra is a separate genus-$0$ VOA
+datum; the modular characteristic used here is the level
+$\kappa(\mathcal H_k)=k$.
 
 \subsubsection{The cocycle condition}
 
-The quantum correction satisfies a cocycle condition. Define:
-\[\omega(a_m, a_n) = m\delta_{m+n,0}\]
+The central extension is classified by the standard cocycle on the
+abelian loop algebra:
+\[
+\omega_k(a_m,a_n)=k\,m\delta_{m+n,0}.
+\]
 
-This is a 2-cocycle in the Lie algebra cohomology:
+Since the underlying loop algebra is abelian, the cocycle condition is
+immediate:
 \[\omega([a_\ell, a_m], a_n) + \omega([a_m, a_n], a_\ell) + \omega([a_n, a_\ell], a_m) = 0\]
 
-The central extension is the universal one classified by $H^2(\text{Heisenberg}, \mathbb{C})$.
+For non-abelian affine algebras the analogous cocycle uses the
+trace-form pairing and must be kept separate from the KZ normalization;
+see Chapter~\ref{chap:kac-moody} and
+\eqref{eq:qc-trace-kz-normalizations} below.
 
-\subsubsection{Concrete section realizing the extension}
+\subsection{Trace-form and KZ normalizations}
 
-The central extension can be realized concretely as follows. Consider the space:
-\[\hat{\mathcal{H}} = \mathcal{H} \oplus \mathbb{C} c\]
-
-where $\mathcal{H}$ is the original Heisenberg algebra. The bracket is:
-\[[\hat{a}_m, \hat{a}_n] = \widehat{[a_m, a_n]} + \omega(a_m, a_n) c\]
-
-The element $c$ is central: $[c, \hat{a}_n] = 0$ for all $n$.
+For an affine Kac--Moody algebra $V_k(\mathfrak g)$ with normalized
+invariant form $\kappa_{\mathfrak g}$,
+\[
+J^a(z)J^b(w)
+\sim
+\frac{k\,\kappa_{\mathfrak g}(a,b)}{(z-w)^2}
++\frac{f^{ab}{}_cJ^c(w)}{z-w}.
+\]
+The double pole is the trace-form curvature input; the KZ connection
+uses the Sugawara-shifted inverse form.  The two normalizations are
+\begin{equation}\label{eq:qc-trace-kz-normalizations}
+r^{\mathrm{coll}}_{\widehat{\mathfrak g}_k}(z)
+ = \frac{k\,\Omega_{\mathrm{tr}}}{z},
+\qquad
+r^{\mathrm{KZ}}_{\widehat{\mathfrak g}_k}(z)
+ = \frac{\Omega_{\mathrm{KZ}}}{(k+h^\vee)z}.
+\end{equation}
+Thus $r^{\mathrm{coll}}$ vanishes at $k=0$, while the KZ coefficient
+remains nonzero; at the critical level $k=-h^\vee$ the KZ denominator
+degenerates, while the trace-form collision residue has no such
+denominator.  The modular characteristic is the separate scalar
+\[
+\kappa(V_k(\mathfrak g))
+ = \frac{\dim(\mathfrak g)(k+h^\vee)}{2h^\vee},
+\]
+and the genus-curvature formula uses this value separately from the
+collision level~$k$ and the KZ coefficient $(k+h^\vee)^{-1}$.
 
 \section{Higher genus}
 
 \subsection{\texorpdfstring{Genus $2$}{Genus 2}}
 
-The moduli space $\mathcal{M}_2$ is 3-dimensional, parametrized by the period matrix:
+The moduli space $\mathcal{M}_2$ is three-dimensional and is locally
+parametrized by the period matrix
 \[\Omega = \begin{pmatrix} \tau_{11} & \tau_{12} \\ \tau_{12} & \tau_{22} \end{pmatrix} \in \mathcal{H}_2\]
 
 living in the Siegel upper half-space, the space of symmetric complex $2 \times 2$ matrices with positive definite imaginary part.
 
 \subsubsection{The theta functions}
 
-There are 16 theta characteristics at genus 2, corresponding to the 16 spin structures. Of these, 6 are odd (theta function vanishes at the origin) and 10 are even. The even characteristics give rise to quantum corrections.
+There are $16$ theta characteristics in genus~$2$: six odd and ten
+even.  The universal prime form is written using an odd
+characteristic; fermionic determinants and Pfaffian lines depend on
+spin parity, but the scalar bar curvature below is the Hodge-class
+projection.  Quantum corrections outside this scalar projection may
+retain their characteristic parity.
 
 \subsubsection{Detailed computation of genus 2 corrections}
 
-The prime form at genus 2 is:
+The prime form may be written as
 \[E(z,w) = \frac{\theta[\delta](z-w|\Omega)}{h_\delta(z)^{1/2} h_\delta(w)^{1/2}}\]
 
-where $\delta$ is an odd characteristic and $h_\delta$ is the corresponding holomorphic differential.
+where $\delta$ is an odd characteristic and $h_\delta$ is the
+associated half-differential.  With the convention of
+Appendix~\ref{app:signs}, $E(z,w)$ is a section of
+$K^{-1/2}\boxtimes K^{-1/2}$ and is antisymmetric.
 
 The logarithmic forms become:
 \[\eta_{ij}^{(2)} = d\log E(z_i, z_j) = \partial_i \log E(z_i, z_j)\, dz_i + \partial_j \log E(z_i, z_j)\, dz_j\]
 
 The Arnold combination on $\Sigma_2$ is
 \[\mathcal{A}_3^{(2)} = \sum_{\text{cyclic}} \eta_{ij}^{(2)} \wedge \eta_{jk}^{(2)}.\]
-As at genus~$1$, the singular terms cancel and the defect reduces to
-a $(2,0)$-form on $C_3(\Sigma_2)$ whose cohomology class depends on
-the period matrix~$\Omega$. The genus-$2$ analogue of the
-Eisenstein correction $3G_2(\tau)$ of~\eqref{eq:arnold-defect-genus1}
-involves the Siegel Eisenstein series $E_2^{(2)}(\Omega)$ and
-determines the genus-$2$ bar curvature
-$m_0^{(2)} = \kappa(\cA) \cdot \lambda_2$
-(Theorem~\ref{thm:genus-universality}). The explicit graph-sum
-computation of the planted-forest correction $\delta_{\mathrm{pf}}^{(2,0)}$
-at genus~$2$ appears in~\S\ref{sec:koszul-across-genera}.
+As at genus~$1$, the local pole terms cancel on the scalar diagonal
+after projection to the Hodge class.  The universal scalar statement is
+the cohomological identity
+\[
+m_{0,\mathrm{scal}}^{(2)}(\cA)
+  = \kappa(\cA)\lambda_2
+\]
+on the uniform-weight scalar lane (Theorem~\ref{thm:genus-universality}).
+For a multi-weight algebra the full genus-$2$ free energy is
+\[
+F_2(\cA)
+=\kappa(\cA)\lambda_2^{\mathrm{FP}}
+ +\delta F_2^{\mathrm{cross}}(\cA),
+\]
+where $\delta F_2^{\mathrm{cross}}$ is the nonconstant channel-coloring
+subsum of the genus-$2$ stable graphs
+(Theorem~\ref{thm:multi-weight-genus-expansion}).  For the first
+interacting witness,
+\[
+\delta F_2^{\mathrm{cross}}(\cW_3)
+=\frac{c+204}{16c}.
+\]
+The planted-forest contribution lives in the higher-degree shadow
+tower and leaves the degree-$2$ scalar projection unchanged
+(Remark~\ref{rem:pf-does-not-affect-scalar-lane}).
 
 \section{\texorpdfstring{The $A_\infty$ structure}{The A-infinity structure}}
 
-The $A_\infty$ structure (Stasheff~\cite{Sta63}) encodes the higher coherences for consistency across genera.
+The $A_\infty$ structure (Stasheff~\cite{Sta63}) encodes the
+tree-level homotopies.  Positive genus adds curvature and stable-graph
+operations in the completed modular convolution algebra; the
+genus-$0$ bar differential remains nilpotent.
 
 \subsection{\texorpdfstring{The complete $A_\infty$ structure}{The complete A-infinity structure}}
 
@@ -358,7 +525,7 @@ An $A_\infty$ algebra consists of operations $m_n: A^{\otimes n} \to A[2-n]$ for
 
 \subsubsection{For the bar complex}
 
-The bar complex of a chiral algebra carries a natural $A_\infty$ structure:
+The transferred bar model carries operations
 
 \[m_1 = d_{\text{bar}}\]
 
@@ -372,19 +539,25 @@ where $\eta_{123}^{\text{FM}}$ is the propagator form on the Fulton--MacPherson 
 
 \subsubsection{For the Heisenberg algebra}
 
-The $A_\infty$ structure is strict: $m_0 = 0$ (uncurved, so $m_1^2 = 0$), $m_2$ is the standard product, and $m_n = 0$ for $n \geq 3$. The genus-$g$ corrections for $g \geq 1$ enter not through higher $m_n$ but through the curvature $m_0^{(g)} = \kappa(\mathcal{H}_\kappa) \cdot \lambda_g$ and the cohomology of $\overline{\mathcal{M}}_g$ (cf.\ Part~\ref{part:characteristic-datum}).
+The genus-$0$ Heisenberg transfer is strict: $m_0=0$,
+$m_1^2=0$, $m_2$ is the standard product, and $m_n=0$ for
+$n\geq 3$.  Positive-genus scalar corrections enter through the
+separate modular curvature
+$m_{0,\mathrm{scal}}^{(g)}=k\,\lambda_g$ for
+$\mathcal H_k$; the Heisenberg tree operations remain strict.
 
 \subsubsection{\texorpdfstring{For the $\beta\gamma$ system}{For the beta-gamma system}}
 
-With background charge $Q$: $m_0$ is the degree-$2$ curvature element determined by $Q$ and $c_{\beta\gamma}$; $m_1$ is the BRST differential (satisfying the curved relation $m_1^2(a) = [m_0, a]$); $m_2$ is the standard OPE product; and $m_3$ is the transferred ternary operation from homotopy transfer on $\overline{C}_3(\mathbb{C})$, whose coefficient depends on the OPE structure constants of the $\beta\gamma$ system.
+For a $\beta\gamma$ system with a chosen background charge, the curved
+BRST presentation has $m_1^2(a)=[m_0,a]$.  The coefficient of $m_0$
+is fixed by the chosen OPE and background-charge convention.  The
+ternary operation $m_3$ below is only the genus-$0$ homotopy-transfer
+operation; the free-field exactness statement in
+Chapter~\ref{ch:genus-expansions} says that the mixed positive-genus
+cross-channel graph sum vanishes for this system.
 
 \subsubsection{\texorpdfstring{Explicit computation of $m_3$ for $\beta\gamma$}{Explicit computation of m 3 for beta-gamma}}
 
-% Verification note (2026-04-07): The former unsupported Q^2
-% prefactor has been removed. The formula below gives the correct HTT
-% transfer from FM_3(C) with the two planar binary trees and contracting
-% homotopy h. The coefficient depends on the specific beta-gamma OPE
-% structure constants through the homotopy retract data (p, i, h).
 The transferred operation $m_3$ is computed by homotopy transfer from
 the Fulton--MacPherson compactification $\overline{C}_3(\mathbb{C})$:
 \begin{equation}
@@ -397,8 +570,8 @@ leaves (two trees), each internal edge carrying the contracting
 homotopy~$h$, and $p, i$ are the projection and inclusion of the
 homotopy retract. This is a genus-$0$ (tree-level) operation;
 genus $g \geq 1$ corrections enter through the propagator and the
-cohomology of $\overline{\mathcal{M}}_g$, not through the degree of the
-$A_\infty$ operations.
+cohomology of $\overline{\mathcal{M}}_g$; the degree of the
+$A_\infty$ operation remains tree-level data.
 
 \subsubsection{For $\mathcal{W}$-algebras}
 
@@ -420,10 +593,16 @@ described in Part~\ref{part:bar-complex}.
 \begin{remark}[Koszul complementarity at higher genus]
 \label{rem:koszul-complementarity-higher-genus}
 \index{quantum corrections!complementarity formula}
-For a Koszul dual pair $(\cA, \cA^!)$ of chiral algebras, the quantum correction spaces at any genus $g$ satisfy:
-\[\mathcal{Q}_g(\cA) \oplus \mathcal{Q}_g(\cA^!) = H^*(\overline{\mathcal{M}}_g, Z(\cA)).\]
-See Theorem~\ref{thm:quantum-complementarity-main} for the full statement
-and proof (via Kodaira--Spencer map and Verdier involution on moduli space cohomology).
+The proved complementarity statement used by this chapter is scalar:
+on the scalar lane,
+\[
+F_g^{\mathrm{diag}}(\cA)+F_g^{\mathrm{diag}}(\cA^!)
+  =\bigl(\kappa(\cA)+\kappa(\cA^!)\bigr)\lambda_g^{\mathrm{FP}}.
+\]
+A direct-sum formula for full quantum-correction spaces requires the
+extra hypotheses in Theorem~\ref{thm:quantum-complementarity-main};
+the scalar curvature identity alone gives only the displayed diagonal
+statement.
 \end{remark}
 
 \subsection{Examples of Koszul complementarity}
@@ -436,8 +615,12 @@ The free fermion system $\mathcal{F}$ with OPE:
 is Koszul dual to the $\beta\gamma$ system with $Q = 1$:
 \[\beta(z)\gamma(w) \sim \frac{1}{z-w}\]
 
-At genus $g$, the quantum corrections decompose according to spin structure parity: $\mathcal{Q}_g(\mathcal{F})$ receives contributions from the Pfaffian line bundle over odd spin structures, while $\mathcal{Q}_g(\beta\gamma)$ receives contributions from even spin structures.
-Heuristically, their union covers the spin-structure-dependent part of the moduli space, though the precise relationship to $H^*(\overline{\mathcal{M}}_{g,n})$ involves the tautological ring and requires further analysis.
+At positive genus the fermionic side is governed by Pfaffian line
+bundles and spin parity, while the $\beta\gamma$ side is a bosonic
+free-field system.  The free-field exactness result used here is the
+vanishing of the mixed-channel graph sum in
+Chapter~\ref{ch:genus-expansions}; no covering statement for the full
+cohomology of $\overline{\mathcal M}_{g,n}$ is asserted here.
 
 \subsubsection{Example 2: $\mathcal{W}$-algebras and their duals}
 
@@ -447,33 +630,40 @@ companion $\mathcal{W}^{k'}(\mathfrak{g})$, where
 $k' = -k - 2h^\vee$ is the Feigin--Frenkel companion level
 (Chapter~\ref{chap:w-algebra-koszul}). The stronger same-family
 algebra identification is conditional on DS/bar transport. This is
-chiral Koszul characteristic transport within the $\mathcal{W}$-algebra family, not the
-Feigin--Frenkel--Langlands correspondence (which relates the
+chiral Koszul characteristic transport within the
+$\mathcal{W}$-algebra family, distinct from the
+Feigin--Frenkel--Langlands correspondence, which relates the
 critical-level center to opers on $\mathfrak{g}^\vee$).
-Koszul complementarity (Theorem~C) then gives
-\[\dim \mathcal{Q}_g(\mathcal{W}^k(\mathfrak{g})) + \dim \mathcal{Q}_g(\mathcal{W}^{k'}(\mathfrak{g})) = \dim H^*(\overline{\mathcal{M}}_{g}, Z(\mathcal{W}^k(\mathfrak{g})))\]
-where $Z(\mathcal{W}^k(\mathfrak{g}))$ is the center, viewed as a local system on $\overline{\mathcal{M}}_g$.
+On the scalar diagonal this gives
+\[
+F_g^{\mathrm{diag}}(\mathcal W^k(\mathfrak g))
++F_g^{\mathrm{diag}}(\mathcal W^{k'}(\mathfrak g))
+ =
+\bigl(\kappa(\mathcal W^k(\mathfrak g))
++\kappa(\mathcal W^{k'}(\mathfrak g))\bigr)
+\lambda_g^{\mathrm{FP}}.
+\]
+For principal $\mathcal W_N$ with $N\geq 3$, this is only the
+diagonal scalar part; the full free energy includes the cross-channel
+correction of Theorem~\ref{thm:multi-weight-genus-expansion}.
 
 \section{Dictionary}
 
 \begin{center}
 \begin{tabular}{lll}
 \toprule
-Geometric & Algebraic & Physical \\
+Geometric term & Algebraic term & Scope \\
 \midrule
-Arnold relations & Associativity & Tree-level consistency \\
-Quantum corrections & Central extensions & Loop corrections \\
-Configuration spaces & Operadic structure & Correlation functions \\
-Theta functions & Spin structures & Fermionic sectors \\
-Period matrices & Moduli parameters & Coupling constants \\
-Koszul duality & $\Lambda^* \leftrightarrow \mathrm{Sym}^*$ & S-duality \\
+Arnold relations & MC flatness & genus-$0$ collision stratum \\
+Quantum corrections & stable-graph terms & positive-genus modular stratum \\
+Configuration spaces & chiral bar complex & ordered points on $X$ \\
+Prime form & propagator kernel & genus-$g$ curve \\
+Period matrix & Hodge-bundle coordinate & scalar curvature projection \\
+Koszul partner $\cA^!$ & Verdier dual of the bar coalgebra &
+not $\Omega B(\cA)=\cA$ \\
 \bottomrule
 \end{tabular}
 \end{center}
-
-% ==========================================
-% THE MODULAR QUANTUM L-INFINITY COMPLETION
-% ==========================================
 
 \section{The modular quantum \texorpdfstring{$L_\infty$}{L-infinity} completion}
 \label{sec:modular-quantum-Linfty}
@@ -491,9 +681,15 @@ the BV operator and spectral line-operator data.
 \label{def:modular-homotopy-package}
 \index{modular homotopy package}
 Let $\cA$ be a chiral algebra on a curve $X$ with cyclic pairing, and
-let $r(z)$ be a spectral twisting datum
-(Definition~\ref{def:spectral-quantum-group}). The \emph{modular homotopy
-package} is
+let $\mathcal L_\cA$ be its spectral line-operator algebra.  On the
+chiral Koszul locus there is a Verdier comparison
+$\mathcal L_\cA\simeq \cA^!$; outside that locus the symbol
+$\mathcal L_\cA$ is retained.  A spectral twisting datum is an element
+$r(z)\in
+\mathcal L_\cA\widehat\otimes
+\mathcal L_\cA((z^{-1}))$
+(Definition~\ref{def:spectral-quantum-group}). The \emph{modular
+homotopy package} is
 \[
  \mathcal{H}(T, B_\infty)
  \;:=\;
@@ -512,10 +708,11 @@ geometric roles:
 \item $\Delta$ is the BV loop-contraction operator, raising the genus
  by one;
 \item $d_r$ inserts the spectral line-operator twisting datum
- $r(z) \in \cA^! \widehat{\otimes}\, \cA^!\bigl(\!(z^{-1})\!\bigr)$.
+ $r(z)$.
 \end{enumerate}
-This is the cyclic/modular bar-cobar machine with defect and spectral
-twisting, strictly richer than a bare modular envelope.
+This is the cyclic/modular bar-cobar machine with spectral twisting;
+the four summands are kept separate because they have different
+normalizations and different genus behavior.
 \end{definition}
 
 \begin{remark}[Coderivation model of the modular $L_\infty$ structure]
@@ -529,12 +726,11 @@ evaluated on specific graph types: $d_{A_\infty}$ encodes tree graphs
 $\hbar\Delta$ encodes non-separating clutching (genus-raising loops),
 and $d_r$ encodes spectral twisting (line-operator insertions).
 
-The bar-cobar adjunction (Theorem~A) preserves quasi-isomorphisms
-\emph{because} it is a quantum $L_\infty$ functor: it intertwines the
-full $L_\infty$ structures on both sides, so homotopy transfer (Appendix~\ref{app:homotopy-transfer})
-produces the correct $A_\infty$ operations: the transferred
-operations are the $L_\infty$-functorial image of the original ones,
-not an ad hoc perturbative approximation.
+The bar-cobar adjunction of Theorem~A is compatible with this
+coderivation model through the completed convolution formalism.
+Homotopy transfer (Appendix~\ref{app:homotopy-transfer}) transports
+the tree operations, while the positive-genus terms remain in the
+stable-graph completion.
 \end{remark}
 
 \subsection{Tree-level operations: explicit \texorpdfstring{$A_\infty$}{A-infinity} and \texorpdfstring{$L_\infty$}{L-infinity} brackets}
@@ -569,9 +765,7 @@ Antisymmetrizing yields the classical $L_\infty$ brackets:
  \sum_{\sigma \in S_n} \chi(\sigma)\,
  m_n^{\mathrm{tr}}(x_{\sigma(1)}, \dotsc, x_{\sigma(n)}),
 \end{equation}
-where $\chi(\sigma)$ is the Koszul sign of the permutation. This is
-precisely the homotopy-transfer output of the BV theory: the
-operations used, for instance, by Zeng after Kaluza--Klein reduction.
+where $\chi(\sigma)$ is the Koszul sign of the permutation.
 \end{definition}
 
 \begin{remark}[Two-level convention for quantum corrections]
@@ -586,14 +780,14 @@ genus-truncation of $\Definfmod(\cA)$.
 
 \subsection{Quantum/modular completion: wheeled graphs}
 
-Beyond genus zero, the operations acquire loop corrections indexed by
-stable graphs.
+Beyond genus zero, the completed operations are indexed by stable
+graphs.
 
 \begin{definition}[Genus-refined $L_\infty$ operations; \ClaimStatusProvedHere]
 \label{def:genus-refined-linfty}
 \index{L-infinity brackets@$L_\infty$ brackets!genus-refined}
-For each connected stable graph $\Gamma$ of genus $g$ with $n$ external
-legs, define the genus-$g$, $n$-ary operation
+Define the genus-$g$, $n$-ary operation by the completed stable-graph
+sum
 \begin{equation}\label{eq:genus-ell}
  \ell_{g,n}(x_1, \dotsc, x_n)
  \;=\;
@@ -607,31 +801,31 @@ where:
  $m_k^{\mathrm{tr}}$ or $\ell_k^{\mathrm{cl}}$;
 \item each internal edge carries the propagator~$h$;
 \item internal loops are contracted via the BV pairing;
-\item $W_\Gamma$ is the \emph{Feynman weight} of the graph,
- defined as follows. Assign to each internal edge~$e$
- the propagator $h_e = K^{(g_e)}(z_{s(e)}, z_{t(e)})$
- (the genus-$g_e$ Cauchy kernel), and to each vertex~$v$
- the classical operation
- $m_{|v|}^{\mathrm{cl}}$ evaluated at the adjacent fields.
- Then
+\item $W_\Gamma$ is the geometric Feynman weight, and
+ $\mathrm{Cont}_\Gamma$ is the algebraic contraction.  Assign to each
+ internal edge~$e$ the propagator
+ $h_e = K^{(g_e)}(z_{s(e)},z_{t(e)})$ and to each vertex~$v$ the
+ fundamental chain or Hodge insertion~$\omega_v$ dictated by its
+ stable-curve label.  In the unintegrated tree-transfer case
+ $\omega_v=1$.  Then
  \[
  W_\Gamma
  \;:=\;
  \prod_{e \in E_{\mathrm{int}}(\Gamma)} h_e
  \cdot
- \prod_{v \in V(\Gamma)} m_{|v|}^{\mathrm{cl}},
+ \prod_{v \in V(\Gamma)} \omega_v,
  \]
- composed via the contraction map $\mathrm{Cont}_\Gamma$.
- When $\Gamma$ has internal loops ($g(\Gamma) > 0$),
- the loop contractions $\sum_a e_a \otimes e^a$ produce
- the BV operator~$\Delta$. The product is well-defined
- (finite, no regularization needed) when the OPE has
- finitely many singular terms, which holds for all
- chiral algebras with polynomial OPE growth
- (\S\ref{subsec:hs-sewing}). The term
- ``regularized'' in earlier versions of this chapter
- referred to this finiteness condition; no analytic
- regularization (dimensional or otherwise) is used.
+ while $\mathrm{Cont}_\Gamma$ inserts the vertex operations
+ $m_{|v|}^{\mathrm{cl}}$ or $\ell_{|v|}^{\mathrm{cl}}$ and pairs the
+ half-edges through the cyclic/BV pairing.
+	 When $\Gamma$ has internal loops ($g(\Gamma) > 0$),
+	 the loop contractions $\sum_a e_a \otimes e^a$ produce
+	 the BV operator~$\Delta$.  The expression is formal in the
+	 completed genus/weight filtration.  Under the local-finiteness
+	 hypotheses of \S\ref{subsec:hs-sewing}, each fixed
+	 \((g,n)\)-weight component has finitely many contributing pole
+	 contractions.  The all-genus graph series is used only as a
+	 formal completed object here.
 \end{itemize}
 \end{definition}
 
@@ -644,6 +838,7 @@ The genus-refined operations $\{\ell_{g,n}\}$ satisfy the modular
 $L_\infty$ constraint: for all $g \ge 0$ and $n \ge 0$ with
 $2g - 2 + n > 0$,
 \begin{equation}\label{eq:quantum-master-linfty}
+ \frac{1}{2}
  \sum_{\substack{g_1 + g_2 = g \\ I \sqcup J = [n]}}
  (\pm)\; \ell_{g_1,\,|I|+1}\bigl(
  \ell_{g_2,\,|J|+1}(x_J),\, x_I\bigr)
@@ -651,13 +846,16 @@ $2g - 2 + n > 0$,
  \Delta\, \ell_{g-1,\,n+2}(x_1, \dotsc, x_n)
  \;=\; 0.
 \end{equation}
+The BV term is omitted when $g=0$.
 \end{theorem}
 
 \begin{proof}
-The first sum is the genus-splitting term; the second is
-the loop-contraction/BV term. Together they are the
-$(g,n)$-component of~$D^2 = 0$, where $D$ is the full
-modular bar differential
+The first sum is the quadratic genus-splitting term; the factor
+$\tfrac{1}{2}$ is the Maurer--Cartan/QME factor from
+Appendix~\ref{app:signs}.  The second term is the
+loop-contraction/BV term.  Together they are the
+$(g,n)$-component of the square-zero condition for the full modular
+coderivation~$D$
 (Definition~\ref{def:modular-homotopy-package}).
 The identity~$D^2 = 0$ is
 Theorem~\ref{thm:convolution-d-squared-zero}, which
@@ -670,6 +868,25 @@ nodes and the BV term encodes gluing along non-separating
 nodes.
 \end{proof}
 
+\begin{remark}[Feynman transform and BV comparison]
+\label{rem:qc-feynman-bv-comparison}
+The graph sum in Definition~\ref{def:genus-refined-linfty} is a
+Getzler--Kapranov Feynman-transform sum for
+$\mathsf F\mathrm{Com}$, rather than an analytic perturbative
+integral.
+The quadratic term in~\eqref{eq:quantum-master-linfty} is the
+separating clutching boundary
+$\overline{\mathcal M}_{g_1,|I|+1}\times
+\overline{\mathcal M}_{g_2,|J|+1}\to
+\overline{\mathcal M}_{g,n}$, and the BV term is the
+non-separating clutching boundary
+$\overline{\mathcal M}_{g-1,n+2}\to\overline{\mathcal M}_{g,n}$.
+The notation $W_\Gamma$ records the same stable-graph combinatorics as
+the Feynman transform.  Analytic convergence of an all-loop path
+integral and comparison with a physical determinant require separate
+input.
+\end{remark}
+
 \begin{remark}[Relation to the full modular homotopy type]
 \label{rem:modular-homotopy-type}
 \index{modular homotopy type!spectral enrichment}
@@ -677,40 +894,39 @@ The full modular homotopy type combines four layers:
 \begin{enumerate}
 \item the \emph{cyclic/modular bar-cobar complex}, encoding
  stable-curve gluing via the Feynman transform;
-\item \emph{Koszul duality}, producing the dual algebra $\cA^!$ and
- the line-operator category $\cA^!\text{-}\mathrm{mod}$;
-\item the \emph{derived bulk-boundary center}
- $Z_{\mathrm{der}}(\cA_\partial)$, realizing the bulk as the
- chiral Hochschild cohomology of the boundary (Theorem~H);
+\item \emph{Verdier--Koszul duality}, when $\cA$ lies on the chiral
+ Koszul locus, producing the partner $\cA^!$ as the Verdier dual of
+ the bar coalgebra; the bar-cobar equivalence
+ $\Omega^{\mathrm{ch}}B^{\mathrm{ch}}(\cA)\simeq \cA$ is the
+ inversion theorem and is kept separate;
+\item the \emph{derived open/closed center}
+ $Z_{\mathrm{der}}(\cA_\partial)$, the mathematical closed-sector object
+ computed by chiral Hochschild cochains of the boundary under
+ Theorem~H; a physical closed-string state space requires an
+ additional comparison theorem;
 \item the \emph{spectral $r(z)$-defect datum}, encoding the OPE of
- line operators via the dg-shifted Yangian.
+ line operators through $\mathcal L_\cA$; on the comparison surfaces
+ where Definition~\ref{def:dg-shifted-yangian} applies, this is the
+ dg-shifted-Yangian datum.
 \end{enumerate}
-The modular envelope alone sees stable-curve gluing; the addition of
-$r(z)$ sees the spectral OPE of lines. The combined package is
-precisely the dg-shifted Yangian of Dimofte--Niu--Py for line operators
-in~$3$d holomorphic-topological QFT
-(Definition~\ref{def:dg-shifted-yangian};
-\S\ref{sec:derived-dk}). Its consistency
-condition ($D^2 = 0$ in the $d_r$-twisted modular bar
-complex) subsumes both the quantum master
-equation~\eqref{eq:quantum-master-linfty} and the $A_\infty$
-Yang--Baxter equation of Conjecture~\ref{conj:modular-yang-baxter}.
+The modular envelope sees stable-curve gluing; the addition of $r(z)$
+records the spectral OPE of line operators.  On the
+Dimofte--Niu--Py comparison surface this is the dg-shifted-Yangian
+package of Definition~\ref{def:dg-shifted-yangian}.  Its consistency
+condition is the square-zero equation for the $d_r$-twisted modular
+bar complex; the Yang--Baxter extension remains the content of
+Conjecture~\ref{conj:modular-yang-baxter}.
 \end{remark}
-
-% ==========================================
-% NON-RENORMALIZATION AND TREE-LEVEL EXACTNESS
-% ==========================================
 
 \section{Non-renormalization and the exactness of tree-level operations}
 \label{sec:non-renormalization-tree}
 \index{non-renormalization!tree-level exactness}
 
-The modular homotopy package of the previous section splits cleanly
+Under the hypotheses of the non-renormalization theorem, the modular
+homotopy package splits
 into a tree-level piece (the $A_\infty$ operations $\{m_n\}$ and the
 spectral kernel $r(z)$) and a loop piece (the BV operator $\Delta$
-and the genus-raising operations $\ell_{g,n}$). A theorem
-of Dimofte--Niu--Py guarantees that, for a wide class of theories,
-the tree-level piece receives \emph{no} quantum corrections.
+and the genus-raising operations $\ell_{g,n}$).
 
 \begin{definition}[Quasi-linear HT theory]
 \label{def:quasi-linear}
@@ -718,10 +934,11 @@ the tree-level piece receives \emph{no} quantum corrections.
 A holomorphic-topological QFT is \emph{quasi-linear} if the
 interaction vertices are at most linear in the fields being
 propagated; that is, each vertex has at most one propagating leg.
-All HT-twisted $3$d $\cN=2$ gauge theories with polynomial
-superpotential are quasi-linear: the cubic vertex
+The HT-twisted $3$d $\cN=2$ examples used below with polynomial
+superpotential are quasi-linear when the cubic vertex
 $\operatorname{Tr}(c\,Z_1 Z_2)$ is linear in the gauge field~$c$
-being propagated, and similarly for the matter couplings.
+being propagated, and the matter couplings satisfy the same
+one-propagating-leg condition.
 \end{definition}
 
 \begin{theorem}[Non-renormalization at tree level;
@@ -733,10 +950,10 @@ Proposition~6.1.)}
 Let $\cA$ be a quasi-linear $3$d HT QFT. Then:
 \begin{enumerate}
 \item[\textup{(i)}] The $A_\infty$ operations $\{m_n\}$ on both
- $\cA$ and $\cA^!$ are determined exactly at tree level: all
- loop diagrams contributing to $m_n$ vanish.
+ $\cA$ and $\cA^!$ are determined at tree level: the loop diagrams
+ covered by the theorem have zero contribution to $m_n$.
 \item[\textup{(ii)}] The line-operator OPE kernel $r(z)$ is
- determined exactly by tree-level ``ladder'' diagrams.
+ determined by tree-level ladder diagrams.
 \item[\textup{(iii)}] $r(z)$ is independent of the bulk field
  interactions; it depends only on the propagator and the
  boundary coupling.
@@ -746,72 +963,77 @@ Let $\cA$ be a quasi-linear $3$d HT QFT. Then:
 \begin{remark}[Validation of tree-level computations]
 \label{rem:non-renorm-validation}
 \index{non-renormalization!validation of homotopy transfer}
-For quasi-linear theories, the transferred $A_\infty$ operations computed by
-homotopy transfer
-(Definition~\ref{def:tree-level-ainfty})
-are exact, not leading-order approximations. The only quantum corrections enter
-through the genus-raising BV operator~$\Delta$ (the $\hbar\Delta$
-term in $D = d_{A_\infty} + d_{\mathrm{sew}} + \hbar\Delta +
-d_r$), not through corrections to tree vertices.
+For theories satisfying Theorem~\ref{thm:non-renormalization-tree},
+homotopy transfer computes the tree operations
+(Definition~\ref{def:tree-level-ainfty}) without additional loop
+vertices.  The positive-genus terms in this chapter enter through the
+genus-raising BV operator~$\Delta$ and the Hodge curvature, while the
+local tree vertices stay fixed.
 \end{remark}
 
-\begin{corollary}[Exactness of standard-family $r$-matrices;
+\begin{corollary}[Collision residue normalization for standard-family
+$r$-matrices;
  \ClaimStatusProvedElsewhere]
 \label{cor:exact-r-matrix}
 \index{r-matrix@$r$-matrix!exactness for standard families}
 For the standard families $\cA \in \{\mathcal{H}_k,\;
 \beta\gamma/bc,\; \widehat{\mathfrak{g}}_k \text{ at non-critical
 level},\; \mathrm{Vir}_c,\; \mathcal{W}_N\}$, the $r$-matrices
-computed in Part~\ref{part:characteristic-datum} via the Laplace transform of the
-$\lambda$-bracket are exact: they receive no loop corrections.
+computed in Part~\ref{part:characteristic-datum} via the Laplace
+transform of the $\lambda$-bracket are local genus-$0$ collision
+residues.  This is a statement about the singular OPE coefficient,
+separate from all-genus analytic non-renormalization statements for
+standard VOAs.  For the quasi-linear HT comparison theories,
+Theorem~\ref{thm:non-renormalization-tree} explains why no additional
+loop vertex changes this local residue.
+For affine Kac--Moody algebras this means
+$r^{\mathrm{coll}}(z)=k\Omega_{\mathrm{tr}}/z$, rather than the
+KZ-normalized coefficient $\Omega_{\mathrm{KZ}}/((k+h^\vee)z)$.
 \end{corollary}
 
-\begin{remark}[Trees vs.\ loops: chirality vs.\ modularity]
+\begin{remark}[Trees and loops]
 \label{rem:trees-loops-separation}
 \index{non-renormalization!trees vs.\ loops}
-Physically, loop corrections in the
-bulk correspond to the genus tower (the $\ell_{g,n}$ operations
-of Definition~\ref{def:genus-refined-linfty}), not to
-renormalization of local vertex data. The separation
+For the quasi-linear theories covered by
+Theorem~\ref{thm:non-renormalization-tree}, the genus tower (the
+$\ell_{g,n}$ operations of Definition~\ref{def:genus-refined-linfty})
+is separate from the local tree-vertex data:
 \[
  \text{trees} = \text{chirality},
  \qquad
  \text{loops} = \text{modularity}
 \]
-from the modular PVA quantization package (Vol~II) is a direct
-consequence of Theorem~\ref{thm:non-renormalization-tree}.
+under exactly those hypotheses.
 \end{remark}
 
 \begin{remark}[Consequences for the modular package]
 \label{rem:non-renorm-modular-consequences}
 \index{non-renormalization!modular package consequences}
-The non-renormalization theorem has three structural consequences for
-the modular quantization package of Vol~II:
+Under the hypotheses of Theorem~\ref{thm:non-renormalization-tree},
+the modular package separates as follows:
 \begin{enumerate}[label=\textup{(\roman*)},nosep]
-\item \emph{The PVA $\lambda$-bracket is exact.} For every standard
- family, the classical $\lambda$-bracket
+\item \emph{The PVA $\lambda$-bracket is the local tree datum.} For
+ the standard-family comparison surfaces listed above, the classical
+ $\lambda$-bracket
  (Definition~\ref{def:affine-pva-lambda-bracket} for affine,
  \S\ref{subsec:virasoro-teichmuller-phase-space} for Virasoro,
  \S\ref{sec:w3-pva-holography} for $\mathcal{W}_3$) is the
- \emph{complete} tree-level datum. The 3d HT action reconstructed
- from the $\lambda$-bracket is therefore exact to all orders in
- perturbation theory, modulo the genus tower.
-\item \emph{The bar differential is exact.} For quasi-linear theories,
+ tree-level datum used by the local reconstruction of the collision
+ residue.
+\item \emph{The genus-$0$ bar differential is unchanged.} For
+ quasi-linear theories,
  the bar differential $d_{\bar{B}}$ at genus zero receives no
- corrections: the $A_\infty$ operations $\{m_n\}$ computed by
- homotopy transfer are final. The only genus-raising corrections
- enter through the curvature $m_0^{(g)} = \kappa(\cA) \cdot \omega_g$
- (i.e.\ $m_1^2(a) = [m_0^{(g)}, a]$), mediated by the BV
- operator~$\Delta$.
-\item \emph{The spectral $r$-matrix is exact.} The line-operator OPE
- kernel $r(z)$ computed in Part~\ref{part:characteristic-datum} for each standard family is the
- tree-level answer, and the tree-level answer \emph{is} the answer.
- Loop corrections to $r(z)$ vanish identically for quasi-linear
- theories.
+ loop-vertex correction.  The genus-raising terms enter through the
+ curvature $m_{0,\mathrm{scal}}^{(g)}=\kappa(\cA)\lambda_g$ on the
+ scalar lane and through cross-channel graph sums for interacting
+ multi-weight algebras.
+\item \emph{The collision $r$-matrix remains a tree datum.} The
+ line-operator OPE kernel $r(z)$ computed in
+ Part~\ref{part:characteristic-datum} is the collision residue
+ normalization; it is distinct from the KZ coefficient in
+ \eqref{eq:qc-trace-kz-normalizations}.
 \end{enumerate}
-By Proposition~\ref{prop:chriss-ginzburg-structure},
-non-renormalization means that the genus filtration of the master MC
-element $\Theta_{\cA}$ separates cleanly:
+The genus filtration of the master MC element has the decomposition
 \[
  \Theta_{\cA}
  \;=\;
@@ -819,17 +1041,11 @@ element $\Theta_{\cA}$ separates cleanly:
  \;+\;
  \underbrace{\Theta_{\cA}\big|_{\hbar^g,\;g \geq 1}}_{\text{loop: genus tower}},
 \]
-with the tree part $\tau$ (the twisting morphism of Theorem~A)
-receiving no corrections from the loop part. These consequences
-validate every explicit computation in Chapters
-\ref{chap:free-fields}--\ref{chap:w-algebra-koszul}: the algebraic
-formulas derived from the bar-cobar engine are not leading-order
-approximations; they are exact.
+with the tree part $\tau$ the twisting morphism of Theorem~A.  This is
+a filtration statement for the completed MC element.  Analytic
+summability of the all-genus expansion and reconstruction of the full
+partition function require separate input.
 \end{remark}
-
-% ================================================================
-% THE JACOBIATOR HOMOTOPY AND OPERADIC CONTROL
-% ================================================================
 
 \section{The Jacobiator homotopy and the Eilenberg--Zilber operad}
 \label{sec:jacobiator-homotopy}
@@ -843,11 +1059,11 @@ satisfying an $L_\infty$ master equation. At degree~$3$, this
 master equation has a transparent interpretation: it is the
 \emph{Jacobiator homotopy}, the precise mechanism by which Jacobi
 fails on the resolution and is restored by a coherent correction.
-But the Jacobiator does \emph{not} appear for arbitrary covers: on
+The Jacobiator appears only for covers with sufficient overlap: on
 $\mathbb{P}^1$ with the standard two-element cover, it vanishes
 identically. The obstruction requires triple intersections (three
-or more overlapping opens) and thus measures a genuine descent
-obstruction, not just an artifact of the resolution.
+or more overlapping opens) and thus measures genuine descent failure
+for the chosen cover.
 
 The Jacobiator, and all higher
 $F_n$, are components of a single master equation
@@ -937,8 +1153,8 @@ three-element cover (e.g., the standard affine cover of a
 projective curve of genus $g \geq 1$) produces a nonzero
 Jacobiator from the non-abelian OPE $[e,f] = h$
 (Example~\ref{ex:cech-hca-sl2}). This is the prototypical
-example: the Jacobiator is a descent obstruction, not a local
-one.
+example: the Jacobiator is a descent obstruction for the cover, while
+the local OPE supplies its Lie input.
 \end{remark}
 
 \subsection{The Jacobiator as the degree-$3$ master equation}
@@ -1059,38 +1275,41 @@ $\varepsilon\colon \mathcal{Z}(n) \to k$,
 so the HCA is a resolution of a strict chiral algebra.
 
 At genus $g \geq 1$, the \v{C}ech homotopies no longer suffice:
-the bar complex sees the full modular operad, and the homotopies
-are controlled by the cellular chains on
-$\overline{\mathcal{M}}_{g,n}$, i.e., by stable-graph
-compositions in $\mathsf{F}\mathrm{Com}$. The Eilenberg--Zilber
-operad $\mathcal{Y}(n)$ is precisely the genus-$0$ truncation of
-$\mathsf{F}\mathrm{Com}$: it sees trees (simplicial
-decompositions of the nerve) where
-$\mathsf{F}\mathrm{Com}$ sees stable graphs (including loops).
-The passage from $\mathcal{Y}(n)$ to $\mathsf{F}\mathrm{Com}$ is
-the passage from tree-level (\v{C}ech) homotopies to all-genus
-(bar) homotopies, paralleling the genus expansion
+the bar complex sees the modular operad, and the homotopies are
+controlled by stable-graph compositions in
+$\mathsf{F}\mathrm{Com}$.  The Eilenberg--Zilber operad
+$\mathcal{Y}(n)$ is the simplicial tree model feeding the genus-$0$
+part of this machine.  It records parenthesized collision and descent
+data; the full genus-$0$ summand of $\mathsf{F}\mathrm{Com}$ also
+records the complex cross-ratio moduli of pointed rational curves.
+The passage from
+$\mathcal{Y}(n)$ to $\mathsf{F}\mathrm{Com}$ is therefore a
+filtered comparison from tree-level \v{C}ech homotopies to the
+stable-graph bar homotopies, paralleling the genus expansion
 $\Theta_{\cA} = \Theta_{\cA}|_{\hbar=0} +
 \sum_{g \geq 1}\hbar^g\,\Theta_{\cA,g}$ of the master MC element.
 \end{remark}
 
-\begin{remark}[Precise truncation: EZ chain complex, associahedra,
+\begin{remark}[Tree comparison: EZ chain complex, associahedra,
 and genus-$0$ $\mathsf{F}\mathrm{Com}$]
 \label{rem:ez-fcom-precise-truncation}
 \index{Eilenberg--Zilber operad!precise truncation to FCom@precise
 truncation to $\mathsf{F}\mathrm{Com}$}
 \index{associahedron!and genus-0 FCom@and genus-$0$
 $\mathsf{F}\mathrm{Com}$}
-We make the comparison between $\mathcal{Y}(n)$ and
-$\mathsf{F}\mathrm{Com}$ precise at the chain level.
+The comparison between $\mathcal{Y}(n)$ and
+$\mathsf{F}\mathrm{Com}$ is a filtered tree comparison.  A single
+associahedron sees the tree chamber, while
+$\overline{\mathcal M}_{0,n+1}$ carries the full pointed-rational
+moduli complex.
 
 \smallskip\noindent\emph{(i) Genus-$0$ component of
 $\mathsf{F}\mathrm{Com}$.}
-The moduli space $\overline{\mathcal{M}}_{0,n+1}$ is the real
-orientable compactification of
-$\Conf_n(\mathbb{C})/\mathrm{Aff}$, where
+The space $\Conf_n(\mathbb{C})/\mathrm{Aff}$, where
 $\mathrm{Aff} = \mathbb{C} \rtimes \mathbb{C}^\times$ acts by
-affine transformations. Its cellular chains
+affine transformations, is the open genus-$0$ configuration chart.
+Its stable compactification is $\overline{\mathcal{M}}_{0,n+1}$.
+The cellular chains
 $C_*(\overline{\mathcal{M}}_{0,n+1};\, k)$ form the genus-$0$
 component of the Feynman transform:
 \[
@@ -1125,55 +1344,52 @@ structure and the CW decomposition of $K_n$.
 
 \smallskip\noindent\emph{(iii) Associahedra inside
 $\overline{\mathcal{M}}_{0,n+1}$.}
-The Stasheff associahedron $K_n$ embeds into
-$\overline{\mathcal{M}}_{0,n+1}$ as a fundamental domain for the
-real locus: the real points
-$\overline{\mathcal{M}}_{0,n+1}(\mathbb{R})$ decompose into
-$(n{-}1)!/2$ copies of $K_n$ (one for each dihedral ordering of
-the marked points), and the inclusion of any single copy induces a
+The Stasheff associahedron $K_n$ occurs in the real locus and in the
+boundary-stratified collision model: dihedral orderings of the marked
+points give associahedral chambers.  Choosing one chamber gives a
 chain map
 \[
 \beta_n \colon C_*(K_n;\, k)
  \longrightarrow C_*(\overline{\mathcal{M}}_{0,n+1};\, k)
  = \mathsf{F}\mathrm{Com}(0,\, n{+}1).
 \]
-This map is a quasi-isomorphism: both sides have homology
-concentrated in degree $n{-}2$ (the top cell of $K_n$ and the
-fundamental class of
-$\overline{\mathcal{M}}_{0,n+1} \cong
-\mathbb{CP}^{n-2}$-bundle quotient), and $\beta_n$ induces an
-isomorphism on this class.
+For $n+1\geq 5$, $\overline{\mathcal{M}}_{0,n+1}$ has complex moduli
+and boundary cohomology beyond a single associahedron.  The map
+identifies the tree-cell contribution used by homotopy transfer.
 
 \smallskip\noindent\emph{(iv) The truncation chain.}
-Composing the three maps gives the truncation:
+Composing the comparison maps gives the tree-level route:
 \[
 \mathcal{Z}(n)
  \xrightarrow[\text{EZ--Loday}]{\;\alpha_n\;}
 C_*(K_n;\, k)
- \xrightarrow[\text{real locus}]{\;\beta_n\;}
+ \xrightarrow[\text{tree chamber}]{\;\beta_n\;}
 \mathsf{F}\mathrm{Com}(0,\, n{+}1)
  \hookrightarrow
 \mathsf{F}\mathrm{Com}(\bullet,\, n{+}1).
 \]
-The first two arrows are quasi-isomorphisms; the last is the
-inclusion of the genus-$0$ summand into the full modular operad.
+The first arrow is the EZ--Loday comparison.  The second is the
+tree-cell inclusion into the genus-$0$ moduli complex.  The last is
+the inclusion of the genus-$0$ summand into the full modular operad.
 Tensoring with the Lie operad recovers the Eilenberg--Zilber
-operad:
+tree contribution:
 \[
 \mathcal{Y}(n) = \mathcal{Z}(n) \otimes_k \mathrm{Lie}(n)
 \xrightarrow[\sim]{\;\alpha_n \otimes \mathrm{id}\;}
 C_*(K_n;\, k) \otimes_k \mathrm{Lie}(n)
-\xrightarrow[\sim]{\;\beta_n \otimes \mathrm{id}\;}
+\xrightarrow{\;\beta_n \otimes \mathrm{id}\;}
 \mathsf{F}\mathrm{Com}(0,\, n{+}1) \otimes_k \mathrm{Lie}(n).
 \]
-Thus $\mathcal{Y}(n)$ sees \emph{exactly} the genus-$0$ component
-of $\mathsf{F}\mathrm{Com}$, tensored with the bracket symmetry.
+Thus $\mathcal{Y}(n)$ sees the tree-level genus-$0$ collision
+sector of $\mathsf{F}\mathrm{Com}$, tensored with the bracket
+symmetry.
 At genus $g \geq 1$, the summands
 $\mathsf{F}\mathrm{Com}(g,\, n{+}1)$ involve stable graphs with
 loops (corresponding to $\overline{\mathcal{M}}_{g,n+1}$), which
 have no counterpart in the tree-level simplicial structure
 underlying $\mathcal{Z}(n)$. This is the precise sense in which
-the EZ operad is the genus-$0$ shadow of $\mathsf{F}\mathrm{Com}$.
+the EZ operad is the \v{C}ech tree shadow of the modular
+bar construction.
 \end{remark}
 
 \subsection{Secondary Borcherds operations}
@@ -1232,9 +1448,9 @@ a_{(n)}b = (-1)^{n+1}\sum_{j \geq 0}
 These formulas \emph{are} the $n$-th product relations of
 Beilinson--Drinfeld~\cite{BD04}; they hold strictly on each open
 of the cover. On the \v{C}ech complex, however, gluing local
-brackets across multiple opens introduces a descent obstruction,
-and the correction terms are precisely the operations $F_n$ for
-$n \geq 3$. The secondary Borcherds
+brackets across multiple opens can introduce a descent obstruction;
+in the HCA model the homotopies correcting this obstruction are the
+operations $F_n$ for $n \geq 3$. The secondary Borcherds
 identity~\eqref{eq:secondary-borcherds} is the explicit formula
 for this descent correction at degree~$3$: the right-hand side is
 the local $n$-th product relation (which holds on each open), and
@@ -1243,8 +1459,10 @@ that relation fails to descend.
 
 For two-element covers the descent obstruction vanishes
 (Proposition~\ref{prop:two-element-strict}); the correction $F_n$
-is nonzero precisely when the cover has $(n{-}1)$-fold or higher
-overlaps.
+can be nonzero only if the nerve has nondegenerate
+$(n{-}1)$-simplices.  Higher overlaps are the geometric support
+condition; non-vanishing requires the algebra-specific contact
+representative.
 \end{remark}
 
 \begin{remark}[Derivation of the vertex Lie Jacobi family from
@@ -1252,8 +1470,8 @@ the Borcherds identity]
 \label{rem:jacobi-family-derivation}
 \index{Borcherds identity!derivation of Jacobi family}
 \index{vertex Lie algebra!Jacobi family derivation}
-We sketch how the Jacobi identity
-family~\eqref{eq:vertex-jacobi-family} follows from the Borcherds
+The Jacobi identity family~\eqref{eq:vertex-jacobi-family} follows
+from the Borcherds
 identity for the chiral product, applied to three sections on
 pairwise intersections of a \v{C}ech cover. This makes precise
 the passage from OPE associativity on a single open to the $n$-th
@@ -1344,40 +1562,41 @@ the full level. In the bar-side language
 identities~\eqref{eq:secondary-borcherds} are the vertex-algebra
 avatar of the $A_\infty$ associativity relations for $m_3$.
 
-The vanishing pattern of secondary Borcherds operations classifies
-our archetype families:
+The raw HCA operations depend on the cover.  After projection to the
+genus-$0$ shadow quotient and on covers whose nerves support the
+required intersections, the cover-independent termination profile is:
 \begin{center}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{lll}
 \toprule
-\emph{Family} & \emph{Vanishing pattern} & \emph{Archetype} \\
+\emph{Family} & \emph{Shadow profile} & \emph{Archetype} \\
 \midrule
-Heisenberg & $j'_{(p,q,r)} = 0$ for all $p,q,r$ & Gaussian (strict) \\
-Affine $\widehat{\mathfrak{sl}}_2$ & $j' \neq 0$ at degree $3$ & Lie/tree \\
-$\beta\gamma$ & $j' \neq 0$ at degree $3$; $j'_4 = 0$ & Contact/quartic \\
-Virasoro/$W_N$ & $j' \neq 0$ at all degrees & Mixed (infinite tower) \\
+Heisenberg & no cubic or higher shadow class & Gaussian (strict) \\
+Affine $\widehat{\mathfrak{sl}}_2$ & first nonzero class at degree $3$ & Lie/tree \\
+$\beta\gamma$ & quartic contact class, free-field cross-channel vanishing & Contact/quartic \\
+Virasoro/$W_N$ & no finite termination in the standard completion & Mixed (infinite tower) \\
 \bottomrule
 \end{tabular}
 \end{center}
-This classification coincides with the shadow-tower termination
-pattern: the degree at which secondary Borcherds operations first
-vanish equals the degree at which the shadow obstruction tower terminates
-(Heisenberg at~$2$, affine at~$3$, $\beta\gamma$ at~$4$,
-Virasoro never).
+The table is a statement about the projected shadow tower.  Raw
+\v{C}ech non-vanishing remains cover-dependent.
 \end{remark}
 
-\begin{proposition}[Secondary Borcherds operations as shadow obstruction tower
+\begin{proposition}[Secondary Borcherds operations and the first shadow
 obstructions; \ClaimStatusProvedHere]
 \label{prop:borcherds-shadow-identification}
 \index{secondary Borcherds operations!shadow tower identification}
 Under the genus-$0$ operadic equivalence between the
 Malikov--Schechtman HCA operations and the transferred
 $L_\infty$ brackets on the bar-side minimal model, the HCA
-operations $F_n$ of \cite{MS24} at degree $n \geq 3$ are
-identified with the shadow obstruction tower obstruction classes $o_n(\cA)$
+operation $F_3=J'$ maps to the cubic shadow obstruction class
+$o_3(\cA)$
 \textup{(}Definition~\textup{\ref{def:shadow-postnikov-tower})}
-at genus~$0$. The explicit formula for the secondary Borcherds
-operations \cite[formula~(4.5.1)]{MS24} is:
+at genus~$0$.  The secondary Borcherds operations give the next
+computable contact representatives; after projection to the quartic
+shadow quotient they detect $o_4(\cA)$ when the \v{C}ech--bar
+comparison is defined on that quotient.  The explicit formula
+\cite[formula~(4.5.1)]{MS24} is:
 \begin{multline}\label{eq:secondary-borcherds-explicit}
  \bigl(d \circ {}_{(p,q,r)} + {}_{(p,q,r)} \circ d\bigr)(a,b,c) \\
  = \sum_{j \geq 0}\tbinom{p}{j}
@@ -1387,27 +1606,28 @@ operations \cite[formula~(4.5.1)]{MS24} is:
  \bigl(a_{(p+q-j)}\, b\bigr)_{(r+j)}\, c,
 \end{multline}
 where ${}_{(p,q,r)}$ is the secondary Borcherds operation at
-multi-index $(p,q,r)$. This is the three-variable refinement of
-the $L_\infty$ relation at degree~$4$: the left-hand side is the
-homotopy boundary of $F_4$, and the right-hand side is the
-secondary Jacobi identity expressed through iterated Borcherds
-products.
+multi-index $(p,q,r)$. This is the three-variable refinement of the
+Jacobiator homotopy: the left-hand side is the differential of the
+ternary secondary operation, and the right-hand side is the secondary
+Jacobi identity expressed through iterated Borcherds products.
 
 The identification is:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item $F_3 = J'$ \textup{(}Jacobiator homotopy\textup{)}
  corresponds to $o_3(\cA)$ \textup{(}cubic shadow obstruction\textup{)}.
-\item $F_4$ \textup{(}secondary Jacobi homotopy\textup{)}
- corresponds to $o_4(\cA)$ \textup{(}quartic resonance
- obstruction\textup{)}. The quartic contact invariant
+\item The projected secondary Borcherds contact class corresponds to
+ $o_4(\cA)$ \textup{(}quartic resonance obstruction\textup{)} when the
+ genus-$0$ \v{C}ech--bar comparison is evaluated on the quartic shadow
+ quotient. The Virasoro quartic contact invariant
  $\mathfrak{Q}^{\mathrm{contact}}_{\mathrm{Vir}} = 10/[c(5c+22)]$
- is the normalised coefficient of the secondary Borcherds
- operation ${}_{(1,0,0)}$ evaluated on the Moore complex of
+ is the normalized coefficient of the secondary Borcherds
+ contact representative evaluated on the Moore complex of
  $\mathrm{Vir}_c$.
-\item At degree $n \geq 5$, the higher operations $F_n$ encode
- the higher obstruction classes
- $o_n(\cA) \in H^2(\cA^{\mathrm{sh}}_n)$
- of the shadow obstruction tower.
+\item At degree $n \geq 5$, the higher HCA operations supply
+ candidate representatives for the higher shadow classes
+ $o_n(\cA) \in H^2(\cA^{\mathrm{sh}}_n)$; equality with the
+ bar-side classes requires the same genus-$0$ comparison on the
+ corresponding shadow quotient.
 \end{enumerate}
 The identification is structural at genus~$0$; at genus $g \geq 1$,
 the bar side includes modular corrections (stable graph sums with
@@ -1415,8 +1635,9 @@ loops) that have no \v{C}ech counterpart in~\cite{MS24}.
 \end{proposition}
 
 \begin{proof}
-The proof uses only the genus-$0$ operadic equivalence, not any
-full \v{C}ech--bar $L_\infty$ intertwining statement.
+The proof uses only the genus-$0$ operadic equivalence.  A full
+\v{C}ech--bar $L_\infty$ intertwining statement is a separate
+comparison theorem.
 
 Over a field of characteristic~$0$, the category of
 $\tau_{\leq 0}\mathcal{Y}$-algebras (Malikov--Schechtman's
@@ -1429,19 +1650,21 @@ MC moduli (Remark~\ref{rem:conv-functoriality-infrastructure}(iii)).
 Under this equivalence, the $n$-th HCA operation $F_n$ corresponds
 to the $n$-th $L_\infty$ bracket $\ell_n$ on the Moore complex.
 
-At genus~$0$, the $L_\infty$ brackets on the bar complex are
-exactly the transferred operations from the minimal model of
+At genus~$0$, the $L_\infty$ brackets on the bar complex are the
+transferred operations from the minimal tree model of
 $C_*(\overline{\cM}_{0,n+1})$
 (Construction~\ref{constr:explicit-convolution-linfty}), and the
 obstruction class $o_n(\cA)$ is the cohomology class
-$[\ell_n] \in H^2(\cA^{\mathrm{sh}}_n)$. The identification
-$F_n = \ell_n = o_n$ at the cohomological level follows.
+$[\ell_n] \in H^2(\cA^{\mathrm{sh}}_n)$ when the comparison map is
+defined on the relevant shadow quotient.
 
 Part~(i): $F_3 = J'$ is the Jacobiator homotopy
 (Proposition~\ref{prop:jacobiator-nullhomotopic}); $\ell_3 = o_3$
 is the cubic shadow (Definition~\ref{def:shadow-postnikov-tower}).
-Part~(ii): $F_4$ is the secondary Borcherds homotopy;
-$\ell_4 = o_4$ is the quartic resonance obstruction.
+Part~(ii): the secondary Borcherds contact representative projects
+to the quartic resonance class, and the Virasoro coefficient is the
+canonical value recorded in the landscape census,
+$10/[c(5c+22)]$.
 \end{proof}
 
 \begin{remark}[One-slot functoriality obstruction and MC3]
@@ -1467,12 +1690,15 @@ $\operatorname{hom}^\alpha_\ell(\Phi,1)$), then in the algebra slot
 two extensions are compatible only up to higher homotopy.
 \end{remark}
 
-\section{Synthesis}
+\section{Imported K3 boundary data}
 \label{sec:qc-supplement}
 
-\begin{remark}[Pentagon coboundary at $\hbar^3$ as the universal quantum correction]
+\begin{remark}[Pentagon coboundary at $\hbar^3$]
 \label{rem:qc-1}
-The pentagon-level quantum correction on $\mathbf H_{\Delta_5}$ has explicit form
+The following formula is imported from Vol.~III as boundary data for
+comparison with the K3 chiral bialgebra.  In the notation of
+Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}, the pentagon-level
+correction is
 \[
  \phi^{(3)}
  \;=\;
@@ -1482,16 +1708,12 @@ The pentagon-level quantum correction on $\mathbf H_{\Delta_5}$ has explicit for
  \;+\;
  \tfrac{\Phi_{10}}{\eta^{24}}\, c_{\Phi_{10}},
 \]
-with three linearly independent third-order closure pieces:
-$\zeta(3)$-piece (symmetric part, Drinfeld--Kohno--associator $KZ$-contribution),
-$(25/3)$-piece (timelike-anomaly, c.f. class-$\mathcal S$
-$c_{2d} = -214 = -12\cdot 107/6$ at the $\Sigma_{0,24}$ punctures;
-the pentagon-constant $25/3 = \mathrm{rk}(II_{25,1})/3$ is
-independent of $c_{2d}$, so the retraction
-$-312 \to -214$ leaves this coefficient unchanged), and $(\Phi_{10}/\eta^{24})$-piece (BKM
-imaginary-root contribution, the Igusa cusp-form weight-$5$ denominator)
-\cite{Drinfeld1990,Borcherds1992,GritsenkoNikulin1998}. Cross-ref
-Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic} \S on pentagon closures.
+with three independent third-order pieces: the Drinfeld--Kohno
+associator contribution $\zeta(3)c_{\mathrm{symm}}$, the timelike
+coefficient $(25/3)c_{\mathrm{timelike}}$, and the Borcherds
+imaginary-root contribution
+$(\Phi_{10}/\eta^{24})c_{\Phi_{10}}$
+\cite{Drinfeld1990,Borcherds1992,GritsenkoNikulin1998}.
 \end{remark}
 
 \begin{remark}[$\widetilde M_{24}$ quantum correction as order-$6$ Schur cocycle]
@@ -1499,37 +1721,53 @@ Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic} \S on pentagon closures.
 The $\widetilde M_{24}$ quantum correction attaches the Schur
 cocycle of order $6$ in $H^2(M_{24}, U(1)) = \mathbb Z/12$ to the
 $M_{24}$-equivariant quantisation of the K3 chiral structure. At the
-bar/cobar level this is the central extension
+ordered bar--cobar deformation level this is the central extension
 \[
  1\to \mathbb Z/6\to \widetilde M_{24}\to M_{24}\to 1
 \]
 whose extension class restricts to the $\mathrm{Mathieu}\ M_{12}$-Schur
-cocycle of order $12$ (Cheng--Duncan--Harvey 2014 umbral shift
+cocycle of order $12$ (Cheng--Duncan--Harvey~\cite{ChengDuncanHarvey2014} umbral shift
 $m_\sigma$ at conjugacy class $\sigma$), detecting the obstruction to
 lifting the $M_{24}$-action on the K3 elliptic genus to a strict
-action on the chiral side. See Vol.~III Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
+action on the chiral side.
 \end{remark}
 
-\begin{remark}[Drinfeld audit: the classical $r$-matrix of the K3 chiral bialgebra]
-\label{rem:drinfeld-audit-k3-rmatrix}%
+\begin{remark}[Classical $r$-matrix of the K3 chiral bialgebra]
+\label{rem:k3-classical-rmatrix}%
 \index{K3 chiral bialgebra!classical r-matrix}%
 \index{Yang--Baxter equation!dynamical, Siegel-elliptic}%
 \index{r-matrix!fourth class}
-Every Yangian-like chiral quantum group is, in the Drinfeld sense, a
-deformation quantisation of a universal enveloping algebra by a classical
-$r$-matrix satisfying CYBE; without such an $r$-matrix the label
-``Yangian'' is a type error. We record the classical $r$-matrix
-$r^{K3}(z)$ underlying the K3 chiral bialgebra $\mathbf{H}_{\Delta_5}$
-(Vol.~III Definition~\ref{V3-def:k3-chiral-bialgebra}) and its status. The
-home Lie algebra is the Manin pair
+Assume the Vol.~III Manin-pair construction of the K3 chiral
+bialgebra $\mathbf H_{\Delta_5}$
+(Definition~\ref{V3-def:k3-chiral-bialgebra}).  The datum imported
+into this chapter is the triple
+\[
+\bigl(\mathbf H_{\Delta_5},\; r^{K3}(Z),\;
+K^{\kappa_{\mathrm{ch}}}=2c_+(\mathrm{Mukai}(K3))=8\bigr).
+\]
+Its three scalar shadows have different targets:
+\[
+\kappa_{\mathrm{BKM}}(\Delta_5)=5,\qquad
+\operatorname{rk}(\Lambda_{K3})=24,\qquad
+K^{\kappa_{\mathrm{ch}}}=8.
+\]
+The first is the Borcherds weight, the second is the Heisenberg
+rank in the abelian residue, and the third is the Mukai conductor.
+The third belongs to the $\mathcal B$-row complementarity
+normalization.  Theorem~D uses the scalar $\kappa(\cA)$ in its own
+target, separately from all three K3 shadows.
+
+The classical spectral datum is outside the rational affine
+Kac--Moody kernel of \eqref{eq:qc-trace-kz-normalizations}.  The home
+Lie algebra is the Manin pair
 $(\mathfrak{g}_{\Delta_5},\, \mathfrak{n}_{+}^{\mathrm{imag}}\oplus
 \mathfrak{h}^{\mathrm{imag,rk\,23}})$ of the Gritsenko--Nikulin
 Borcherds--Kac--Moody superalgebra with Cartan form on
 $\Lambda^{3,2}\otimes\mathbb{R}$ of signature $(3,2)$, and the spectral
 parameter is the $\mathbb{H}_2$-period matrix
 $Z = \bigl(\begin{smallmatrix}\tau & z\\ z & \rho\end{smallmatrix}\bigr)$.
-The classical $r$-matrix is the Pasol--Zagier--Siegel Kronecker--Eisenstein
-series
+The classical $r$-matrix is the Siegel Kronecker--Eisenstein series
+used in Vol.~III Section~\ref{V3-sec:R-Sieg-dynamical}:
 \[
  r^{K3}(Z)
  \;=\;
@@ -1539,39 +1777,51 @@ series
  \sum_{i,j\in \mathfrak{h}^{\mathrm{imag,rk\,23}}}
  \Omega_{ij}\, h_i\otimes h_j,
 \]
-with $F^{\mathrm{Sieg}}_z$ the Pasol--Zagier--Siegel extension of the
-Kronecker series on $\mathbb{H}_2$ (Pasol--Zagier 2013, \S $3$) and
-$\Omega$ the BKM Cartan form on $\Lambda^{3,2}$. This is \emph{Siegel-elliptic
-dynamical} in the sense of Felder 1994 extended to $\mathrm{Sp}_4$; it is
-neither rational ($r^{KM}(z) = k\Omega/z$), nor trigonometric
-($r^{U_q}(z) = k\Omega \cdot (z+1)/(z-1)$), nor elliptic
-(single-parameter $r^{\mathrm{Felder}}(u,\tau)$), but a fourth class.
-CYBE holds on the paramodular locus $K(1)\subset \mathbb{H}_2/\mathrm{Sp}_4(\mathbb{Z})$
-via the Pasol--Zagier cyclic identity
+Here $F^{\mathrm{Sieg}}_z$ is the Siegel extension of the
+Kronecker series on $\mathbb{H}_2$ from Vol.~III and $\Omega$ is the
+BKM Cartan form on $\Lambda^{3,2}$.  This is
+\emph{Siegel-elliptic dynamical} in the sense of
+Felder~\cite{Felder94} extended to
+$\mathrm{Sp}_4$.  It lies outside the three one-parameter kernels
+\[
+r^{\mathrm{coll}}(z)=\frac{k\Omega_{\mathrm{tr}}}{z},\qquad
+r^{U_q}(z)=k\Omega\,\frac{z+1}{z-1},\qquad
+r^{\mathrm{Felder}}(u,\tau).
+\]
+CYBE holds on the paramodular locus
+$K(1)\subset \mathbb{H}_2/\mathrm{Sp}_4(\mathbb{Z})$ by the imported
+Vol.~III cyclic Siegel--Kronecker identity
 \[
  F^{\mathrm{Sieg}}_z(u_{12}+\lambda,Z) + F^{\mathrm{Sieg}}_z(u_{23}+\lambda,Z)
  + F^{\mathrm{Sieg}}_z(u_{31}+\lambda,Z) \;=\; 0
 \]
-(Pasol--Zagier 2013 Theorem $3.2$, cyclic Siegel-Kronecker identity). Off
+from Section~\ref{V3-sec:R-Sieg-dynamical}.  Off
 $K(1)$, on the Humbert locus $H_1\cup H_4$, CYBE acquires an elliptic
 anomaly of order $\eta^{24}(\tau)\cdot\phi_{10,1}(\rho)$ whose order is
 $K^{\kappa_{\mathrm{ch}}} = 8$ on $H_1$ and $16$ on $H_4$.
 
-The residue at the diagonal $Z\to 0$ recovers the Heisenberg $r$-matrix
-$r^{\mathrm{Heis}}(z) = k/z$ on the abelian-at-Lie stratum with level
-$k = \mathrm{rk}(\Lambda_{K3}) = 24$, matching the fact (Nekrasov 2026)
-that $\mathbf{H}_{\Delta_5}$ is abelian at the Lie level
-($24$ Miki/Heisenberg copies) and that non-abelian BKM arises only under
-Frenkel--Kac vertex closure on the K3 Fock module. The deformation
-parameter satisfies $\hbar^2 \cdot K^{\kappa_{\mathrm{ch}}} = -1$ on the
-$\mathcal{B}$-family with $K^{\kappa_{\mathrm{ch}}} = 2c_+(\mathrm{Mukai}(K3)) = 8$,
-whence $\hbar^2 = -1/8$, in line with the Lusztig small-quantum-group order
-$\ell = 8$ and the Bruinier 2002 Heegner Chern-class reciprocity
-(Proposition~5.1). The nomenclature ``K3 Yangian'' is therefore a category
-error: no Drinfeld Yangian exists ($\mathfrak{g}_{\Delta_5}$ has no
-Kac--Moody Cartan, no Weyl group on imaginary simple roots, no
-J-presentation), the correct label is the \emph{K3 chiral Hall--Drinfeld
-double}, and the underlying $r$-matrix is Siegel-elliptic dynamical.
-Further detail is in Vol.~III
-Section~\ref{V3-sec:R-Sieg-dynamical}.
+The abelian residue map
+\[
+\operatorname{Res}_{\mathrm{ab}}\colon
+\operatorname{gr}_{\mathrm{ab}}\mathbf H_{\Delta_5}
+\longrightarrow \mathcal H_{\operatorname{rk}(\Lambda_{K3})}
+\]
+sends the diagonal residue of $r^{K3}$ to the Heisenberg kernel
+\[
+\operatorname{Res}_{\mathrm{ab}}\bigl(r^{K3}(Z)\bigr)
+=r^{\mathrm{Heis}}_{24}(z)=\frac{24}{z}.
+\]
+In the Vol.~III presentation the non-abelian BKM bracket enters
+through Frenkel--Kac vertex closure on the K3 Fock module rather than
+through the abelian Lie stratum.  If
+the $\mathcal B$-family normalization
+$K^{\kappa_{\mathrm{ch}}}=2c_+(\mathrm{Mukai}(K3))=8$ is imposed, the
+deformation parameter satisfies
+\[
+\hbar^2 K^{\kappa_{\mathrm{ch}}}=-1,
+\qquad
+\hbar^2=-\frac18 .
+\]
+This normalization is external to the scalar genus-curvature
+calculation in this chapter.
 \end{remark}

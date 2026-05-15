@@ -1,9 +1,8 @@
 % q_convention_bridge_appendix.tex
 % q-convention bridge as cross-volume appendix.
 %
-% This appendix elevates the bridge identity q_KL^2 = q_DK from a parenthetical
-% remark in ordered_associative_chiral_kd.tex to a NAMED, citable theorem with
-% full structural content. It is the canonical Vol I reference; Vol II appendix
+% This appendix records the bridge identity q_KL^2 = q_DK with its
+% normalization consequences. It is the canonical Vol I reference; Vol II appendix
 % appendix_q_conventions_v2.tex and Vol III conventions.tex sec:q-convention-bridge
 % point here.
 %
@@ -32,8 +31,8 @@ monodromy, and modular data of an affine Kac--Moody algebra at
 non-critical level admits two standard normalisations. The
 Kazhdan--Lusztig (KL) convention writes
 $q_{\KL} := \exp(\pi i / (k + \hv))$; the Drinfeld--Kohno (DK)
-convention writes $q_{\DK} := \exp(2\pi i / (k + \hv))$. Both are
-the same monodromy datum. They are related by the squaring
+convention writes $q_{\DK} := \exp(2\pi i / (k + \hv))$. They are
+two normalisations of the same local monodromy. They are related by the squaring
 identity
 \begin{equation}
 \label{eq:q-bridge}
@@ -47,20 +46,15 @@ cover of the unordered configuration space (a framed datum); the
 DK convention works on the base (an unframed datum); the square
 root is the lift.
 
-This appendix promotes \eqref{eq:q-bridge} from
+This appendix records \eqref{eq:q-bridge} from
 \texttt{rem:q-physical} in
-\texttt{chapters/theory/ordered\_associative\_chiral\_kd.tex} to a named, cite-able theorem with six
-clauses, three structural readings, and an explicit cross-volume
-propagation table. The bridge converts the recurrent within-file
+\texttt{chapters/theory/ordered\_associative\_chiral\_kd.tex} as a named theorem with six
+clauses and three structural readings. The bridge converts the recurrent
 convention clash between two incompatible $\hbar$ normalisations
 and the B-cycle monodromy $i^{2}$ sign error (the silent
 replacement of a root of unity by a real exponential decay when
 $\hbar = \pi i/(k+\hv)$ is substituted into
-$q = \exp(2\pi i \hbar)$) from a class of failure modes into a
-one-time installation: every q-using site in the manuscript now
-has a single named theorem to invoke, and no future session can
-introduce a q-convention clash without violating an explicit
-citation.
+$q = \exp(2\pi i \hbar)$) into a single normalization convention.
 
 \section{The bridge theorem}
 \label{sec:q-bridge-theorem}
@@ -96,15 +90,20 @@ $\log q_{\DK} = 2 \log q_{\KL} = 2 \pi i \hbar$ on the principal
 branch of the universal cover $\bbR + i \bbR \to \bbC^{\times}$.
 \item[\textup{(iii)}] \emph{r-matrix bridge \textup{(level-prefix
 convention: trace-form versus KZ)}.}
-The trace-form classical r-matrix $r_{\mathrm{tr}}(z) :=
-k\, \Omega_{\mathrm{tr}}/z$ and the KZ-form classical r-matrix
-$r_{\KZ}(z) := \Omega/((k + \hv) z) = \hbar \cdot \Omega/z$
-parametrise the same monodromy datum under the Casimir rescaling
-$\Omega = 2\hv\, \Omega_{\mathrm{tr}}$; the trace-form boundary
-condition $r_{\mathrm{tr}}(z) \big|_{k = 0} = 0$ holds (the level
-prefix is manifest), and the KZ-form value at $k = 0$ is
-$\Omega/(\hv\, z) \neq 0$ (the Lie bracket persists for non-abelian
-$\fg$; correct).
+The trace-form current-algebra residue
+$r_{\mathrm{tr}}(z):=k\,\Omega_{\mathrm{tr}}/z$ and the KZ
+connection residue
+$r_{\KZ}(z):=\Omega/((k+\hv)z)=\hbar\,\Omega/z$ are different
+normalised representatives. The Casimir rescaling
+$\Omega=2\hv\,\Omega_{\mathrm{tr}}$ gives
+\[
+r_{\KZ}(z)=\frac{2\hv}{k+\hv}\,
+\frac{\Omega_{\mathrm{tr}}}{z},
+\]
+so equality with $r_{\mathrm{tr}}(z)$ is not an identity in~$k$.
+The trace-form representative carries the level prefix and satisfies
+$r_{\mathrm{tr}}(z)|_{k=0}=0$; the KZ representative carries the
+KZ coupling and has value $\Omega/(\hv z)$ at $k=0$.
 \item[\textup{(iv)}] \emph{R-matrix monodromy.}
 For a representation $V_{\lambda}$ of $\fg$, the full pure-braid
 monodromy of the Knizhnik--Zamolodchikov connection
@@ -130,11 +129,12 @@ and does not depend on the convention choice. The relabelling
 $q \mapsto q^{1/2}$ induces an isomorphism of braided monoidal
 categories
 $\Rep_{q_{\KL}}(\fg) \xrightarrow{\sim} \Rep_{q_{\DK}^{1/2}}(\fg)$.
-At admissible level $k = -\hv + p/q$ with $\gcd(p, q) = 1$, the
-small quantum group $u_{q}(\fg)$ has $2p$ simple modules in the KL
-convention and $p$ simple modules in the DK convention; these are
-the same objects, with the count differing by a factor of two
-because the KL convention sees the $\bbZ/2$-cover.
+At a root of unity, the two conventions change the recorded order
+of the parameter and hence the alcove labelling. Simple-object
+counts depend on the Lie type, parity, lattice, and chosen
+semisimple or small-quantum-group quotient; no universal factor-two
+count is asserted here. The invariant statement is the parameter
+identity $q_{\KL}^{2}=q_{\DK}$ on the common cover.
 \end{enumerate}
 \end{theorem}
 
@@ -148,17 +148,13 @@ because the KL convention sees the $\bbZ/2$-cover.
 the normalised Killing form $(\cdot, \cdot)$ are related by
 $(\cdot, \cdot) = 2\hv (\cdot, \cdot)_{\mathrm{tr}}$, the
 standard normalisation fixed by long-root squared length two; the
-Casimirs satisfy $\Omega = 2 \hv \, \Omega_{\mathrm{tr}}$. Both
-$r_{\mathrm{tr}}$ and $r_{\KZ}$ encode the same Cauchy residue at
-$z = 0$ of the Wess--Zumino--Witten OPE; the relabelling
-$\Omega = 2\hv\, \Omega_{\mathrm{tr}}$ between Casimirs accounts
-for the apparent mismatch of prefactors. The trace-form
-convention manifests the level-prefix vanishing
-$r_{\mathrm{tr}}|_{k=0} = 0$ as an explicit prefactor; the KZ form
-absorbs the level into
-$\hbar$ and the corresponding boundary value
-$\Omega/(\hv\, z)$ encodes the persistent Lie bracket on
-non-abelian $\fg$.
+Casimirs satisfy $\Omega = 2 \hv \, \Omega_{\mathrm{tr}}$.
+Substitution gives the displayed expression for $r_{\KZ}$. The two
+representatives are used in different calculations:
+$r_{\mathrm{tr}}$ records the trace-form current-algebra OPE with
+the level as a prefactor, while $r_{\KZ}$ records the KZ connection
+residue with coupling $(k+\hv)^{-1}$. Their comparison is therefore
+a normalization bridge, not an equality of rational functions in~$k$.
 
 \textbf{(iv)} The KZ connection $\nabla_{\KZ} = d - \hbar
 \Omega \, dz/z$ on $\Conf_{2}(\bbC)$ has residue $\hbar \Omega$
@@ -187,13 +183,11 @@ $q_{\KL}^{2 h(V_{\lambda})}$.
 generic $q$ is determined by the universal R-matrix and its
 intertwiner data, both of which are intrinsic to the
 quantum-group construction. The relabelling $q \mapsto q^{1/2}$
-induces a strict isomorphism of monoidal categories whose
-braiding squares match: $R_{\KL}^{2} = R_{\DK}$. At admissible
-levels, the Kazhdan--Lusztig framework realises the category over
-the $2p$-th cyclotomic field; the Drinfeld--Kohno framework
-realises the same category over the $p$-th cyclotomic field. The
-forgetful functor from the $2p$-fold realisation to the $p$-fold
-realisation is the categorical content of the squaring identity.
+identifies the generic braided categories after passing to the
+common square-root cover. At roots of unity, the recorded order of
+the parameter and the alcove labels change. The object count then
+depends on the chosen root datum and quotient category, so the
+theorem records only the parameter relation.
 \end{proof}
 
 \begin{remark}[Chern--Simons interpretation]
@@ -215,14 +209,11 @@ At admissible level $k = -\hv + p/q$ with $\gcd(p, q) = 1$ and
 $p \geq \hv$ for simply-laced $\fg$, $q_{\KL} = \exp(\pi i q/p)$
 is a $2p$-th root of unity, while $q_{\DK} = \exp(2\pi i q/p)$
 is a $p$-th root of unity. The Kazhdan--Lusztig equivalence is
-stated at $q_{\KL}$: the small quantum group $u_{q}(\fg)$ has
-$2p$ simple modules and the bar-complex periodicity is
-$2p$-periodic. The DK theorem is stated at $q_{\DK}$: the KZ
-monodromy realises the $p$-th roots of unity labelling the
-conformal blocks. The squaring identity
-realises the forgetful functor from the $2p$-periodic structure
-to the $p$-periodic structure as the categorical content of
-clause~\textup{(vi)}.
+stated at $q_{\KL}$ and the Drinfeld--Kohno theorem is stated at
+$q_{\DK}$. The squaring identity changes the recorded root order
+from $2p$ to $p$. It does not by itself determine the number of
+simple objects in a root-of-unity quotient; that number depends on
+the root datum, parity, lattice convention, and the quotient category.
 \end{remark}
 
 \section{Internal consistency: five derived quantities}
@@ -238,9 +229,10 @@ $R_{\KL} = q_{\KL}^{\Omega} \cdot (\mathrm{correction})$; in DK,
 $R_{\DK} = q_{\DK}^{\Omega} \cdot (\mathrm{correction})$. The
 correction terms are q-series in the Lie algebra side, independent
 of convention, built from $q_{\KL} = q_{\DK}^{1/2}$ on the
-diagonal Cartan. The relation $R_{\DK} = R_{\KL}^{2}$ holds at
-the level of the leading Cartan factor and propagates to
-corrections.
+diagonal Cartan. The squaring relation is a parameter relation on
+the common cover; the full universal R-matrix is compared by
+rewriting its q-series in that parameter, not by literally squaring
+the complete R-matrix.
 
 \paragraph{KZ monodromy.}
 The pure-braid full monodromy is $\exp(2\pi i \hbar \Omega) =
@@ -302,7 +294,7 @@ through this extension via $\rho_{\KZ}(\sigma^{2}) = q_{\DK}^{\Omega}$
 $\rho_{\KZ}(\sigma) = q_{\KL}^{\Omega}$ (image of the swap class,
 half-monodromy). The Drinfeld--Kohno theorem identifies
 $\rho_{\KZ}$ with the universal R-matrix representation of
-$U_{q}(\fg)$, with the convention choice IS the choice of which
+$U_{q}(\fg)$; the convention choice is the choice of which
 level of the extension to take as the parameter base. The KL
 convention takes $B_{2}$ as the base (the cover); the DK
 convention takes $\langle \sigma^{2} \rangle = P_{2}$ as the base
@@ -476,15 +468,15 @@ The CY-to-chiral functor $\Phi$ produces output chiral algebras
 whose $\hbar$ parameter is inherited from the Vol~I or Vol~II
 input data. Four representative sites:
 \begin{itemize}
-\item \texttt{cy\_c\_quantum\_group\_k3.py} engine: K3 Yangian
-$R^{K3}(u)$ defaults to $q_{\KL}$ (KL convention,
-consistent with KL-equivalence framing of CY-C abelian
-level).
+\item \texttt{cy\_c\_quantum\_group\_k3.py} engine: the K3
+Hall--Drinfeld $R$-matrix package $R^{K3}(u)$ defaults to
+$q_{\KL}$ (KL convention, consistent with KL-equivalence framing
+of CY-C abelian level).
 \item \texttt{prop:mo-rmatrix-charge2}: Maulik--Okounkov stable
 envelope R-matrix in the trace-form r-matrix convention $r_{\mathrm{tr}} =
 k\, \Omega_{\mathrm{tr}}/z$. The bridge clause~\textup{(iii)}
 converts to the KZ form $r_{\KZ} = \Omega/((k + \hv) z)$ for
-compatibility with the K3 Yangian.
+compatibility with the K3 Hall--Drinfeld double.
 \item Costello 5d hCS verification
 \textup{(}\texttt{costello\_5d\_verification}\textup{)}: DK
 convention, because the 5d holomorphic Chern--Simons theory's
@@ -519,8 +511,8 @@ q_{\DK}$ (\texttt{thm:q-convention-bridge-main}, clause~\textup{(i)}).''
 
 \paragraph{First-principles protocol applied to convention
 clashes.} When a q-convention clash is suspected (within-file
-$\hbar$ ambiguity, or a B-cycle $i^{2}$ sign error), fill the
-following template before any edit.
+$\hbar$ ambiguity, or a B-cycle $i^{2}$ sign error), record the
+following convention data.
 \begin{quote}
 \textbf{What does the suspect formula get right?} Identify the
 ghost theorem: name the underlying monodromy datum that survives
@@ -571,17 +563,15 @@ verifies five derived quantities (R-matrix, KZ monodromy,
 conformal weights, Verlinde fusion, modular T-matrix). The
 Chriss--Ginzburg form
 \textup{(}\texttt{thm:q-bridge-cocycle}\textup{)} makes the
-structural content explicit: the convention IS the gauge.
+structural content explicit: the convention is the gauge.
 Cross-volume propagation tables list 23 Vol~I sites, the
 nine-$\hbar$ zoo of Vol~II
 \textup{(}three equivalence classes A / B / C\textup{)}, and four
-Vol~III inheritance sites (K3 Yangian, MO R-matrix, BFN, Costello
-5d). The first-principles protocol for convention clashes appears
+Vol~III inheritance sites (K3 Hall--Drinfeld double, MO R-matrix,
+BFN, Costello 5d). The first-principles protocol for convention clashes appears
 at \S\ref{sec:q-bridge-protocol}.
 
 The bridge converts within-file $\hbar$ clashes and the B-cycle
-$i^{2}$ sign error from recurring failure modes into a one-time
-installation: every q-using site in the three
-volumes now has a single named theorem to invoke, and no future
-session can introduce a q-convention clash without violating an
-explicit citation.
+$i^{2}$ sign error into the single identity
+$q_{\KL}^{2}=q_{\DK}$, together with its r-matrix and monodromy
+normalisations.

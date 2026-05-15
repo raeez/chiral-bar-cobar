@@ -115,14 +115,11 @@ class TestKappaAntiSymmetry:
         expected = Rational(4) * (k + 3) / 3
         assert simplify(kappa_k - expected) == 0
 
-    def test_kappa_at_critical_level_raises(self):
-        """kappa is undefined at the critical level k = -h^vee."""
-        with pytest.raises(ValueError, match="Critical level"):
-            kappa_affine("A", 1, -2)  # sl_2, h^vee = 2
-        with pytest.raises(ValueError, match="Critical level"):
-            kappa_affine("A", 2, -3)  # sl_3, h^vee = 3
-        with pytest.raises(ValueError, match="Critical level"):
-            kappa_affine("G", 2, -4)  # g_2, h^vee = 4
+    def test_kappa_at_critical_level_vanishes(self):
+        """kappa vanishes at k=-h^vee; Sugawara central charge is undefined."""
+        assert kappa_affine("A", 1, -2) == 0  # sl_2, h^vee = 2
+        assert kappa_affine("A", 2, -3) == 0  # sl_3, h^vee = 3
+        assert kappa_affine("G", 2, -4) == 0  # g_2, h^vee = 4
 
 
 # ===========================================================================
@@ -240,7 +237,7 @@ class TestLevelRank:
         assert data["kappa_sum_ff"] == 0
         # When N = k, the level-rank dual sl_k at level -N hits critical level
         assert data["dual_critical"]
-        assert data["kappa_B"] is None
+        assert data["kappa_B"] == 0
 
     @pytest.mark.parametrize("N,k", [
         (2, 3), (3, 2), (4, 2), (5, 3), (3, 5),

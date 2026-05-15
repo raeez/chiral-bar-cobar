@@ -1,33 +1,18 @@
-r"""Tests for Virasoro constraints on the shadow CohFT.
+r"""Tests for finite scalar shadow coefficients and KW reference checks.
 
-Tests the engine compute/lib/cohft_virasoro_constraints_engine.py which verifies:
-
-1. The shadow CohFT satisfies ALL Virasoro constraints L_n for n >= -1.
-2. The shadow partition function Z^sh = kappa * (hbar/2/sin(hbar/2) - 1)
-   matches the A-hat genus generating function.
-3. The Hodge-psi identity (Faber-Pandharipande formula) holds.
-4. The Faber-Zagier relations are consistent with shadow amplitudes.
-5. The Virasoro algebra structure [L_m, L_n] = (m-n) L_{m+n} is verified.
-6. The KdV hierarchy follows from the Virasoro constraints.
-
-MULTI-PATH VERIFICATION:
-  Path 1: Direct DVV recursion (Virasoro constraints as recursion)
-  Path 2: Generating function identity (A-hat genus expansion)
-  Path 3: Known WK intersection numbers (literature comparison)
-  Path 4: Cross-constraint consistency (string/dilaton/L_1 interplay)
-  Path 5: Hodge-psi identity (independent formula for lambda_g^FP)
-
-Ground truth:
-  thm:shadow-cohft (higher_genus_modular_koszul.tex)
-  thm:planted-forest-structure (higher_genus_modular_koszul.tex)
-  rem:virasoro-constraints-tangent-complex (higher_genus_modular_koszul.tex)
-  prop:shadow-genus-closed-form (higher_genus_modular_koszul.tex)
+The engine verifies exact FP scalar coefficients, exact WK/DVV reference
+correlators, and the obstruction to promoting
+``tau_shadow,scal = tau_KW^kappa`` into descendant Virasoro/KdV data for
+arbitrary ``kappa``.
 """
 
 import pytest
 from fractions import Fraction
 
 from compute.lib.cohft_virasoro_constraints_engine import (
+    descendant_cohft_data_certificate,
+    finite_scalar_shadow_tau,
+    kernel_constant_certificate,
     lambda_fp,
     lambda_g_integral,
     wk_intersection,
@@ -47,6 +32,9 @@ from compute.lib.cohft_virasoro_constraints_engine import (
     string_equation_genus_explicit,
     heisenberg_virasoro_operators,
     kdv_from_virasoro_check,
+    shadow_equation_classification,
+    standard_hierarchy_constraint_status,
+    stationary_primary_line_diagnostics,
 )
 
 
@@ -191,7 +179,7 @@ class TestStringEquation:
         """String equation at genus 0: <tau_0 tau_0 tau_0>_0 = 1 (seed)."""
         r = virasoro_string_equation(0, (0, 0))
         # <tau_0 tau_0 tau_0>_0 = <tau_{-1} tau_0>_0 + <tau_0 tau_{-1}>_0 = 0
-        # Actually LHS = <tau_0 tau_0 tau_0>_0 = 1 by the seed.
+        # The seed gives <tau_0 tau_0 tau_0>_0 = 1.
         # RHS = sum over d_i > 0 in (0,0): no d_i > 0, so RHS = 0.
         # But <tau_0^3>_0 = 1 != 0. The string equation applies when
         # there are OTHER insertions. With S = (0,0), n=2:
@@ -471,20 +459,28 @@ class TestVirasoroAlgebra:
 
 
 # =========================================================================
-# Section 9: Full Virasoro theorem verification
+# Section 9: Virasoro classification
 # =========================================================================
 
-class TestShadowCohFTVirasoroTheorem:
-    """Verify the full theorem: shadow CohFT satisfies all Virasoro constraints."""
+class TestShadowCohFTVirasoroClassification:
+    """Separate finite scalar data from the standard KW descendant package."""
 
-    def test_full_theorem_genus2(self):
-        """Full verification through genus 2."""
+    def test_kappa_half_is_not_descendant_package(self):
+        """The finite scalar lane at kappa = 1/2 is not KW Virasoro data."""
         r = shadow_cohft_virasoro_theorem(Fraction(1, 2), max_g=2, max_n_vir=2)
-        assert r['all_pass']
+        assert r['kw_reference_checks_pass']
+        assert r['scalar_lane_pass']
+        assert not r['standard_descendant_package_pass']
+        assert not r['all_pass']
+        assert r['standard_hierarchy_status'][
+            'kdv_residual_factor_kappa_1_minus_kappa'
+        ] == Fraction(1, 4)
 
-    def test_full_theorem_genus3(self):
-        """Full verification through genus 3."""
+    def test_kappa_one_is_kw_descendant_package(self):
+        """The actual KW case passes the standard descendant package."""
         r = shadow_cohft_virasoro_theorem(Fraction(1), max_g=3, max_n_vir=2)
+        assert r['kw_reference_checks_pass']
+        assert r['standard_descendant_package_pass']
         assert r['all_pass']
 
 
@@ -511,12 +507,30 @@ class TestStringEquationExplicit:
 # =========================================================================
 
 class TestKdVHierarchy:
-    """Verify KdV hierarchy from Virasoro constraints."""
+    """Classify KdV checks for KW, zero field, and scalar rescaling."""
 
-    def test_kdv_check(self):
-        """KdV cross-checks at genus 2 and 3."""
+    def test_kw_kdv_reference_check(self):
+        """KW KdV cross-checks at genus 2 and 3."""
         r = kdv_from_virasoro_check(max_g=3)
+        assert r['kw_reference_checks_pass']
+        assert r['standard_kdv_certified']
         assert r['all_pass']
+
+    def test_kappa_half_kdv_residual(self):
+        """The standard KdV hierarchy fails for kappa = 1/2."""
+        r = kdv_from_virasoro_check(max_g=3, kappa_val=Fraction(1, 2))
+        assert r['kw_reference_checks_pass']
+        assert not r['standard_kdv_certified']
+        assert not r['all_pass']
+        assert r['residual_factor'] == Fraction(1, 4)
+
+    def test_zero_field_kdv_exception(self):
+        """kappa = 0 is a KdV/Hirota exception, not KW descendants."""
+        r = kdv_from_virasoro_check(max_g=3, kappa_val=Fraction(0))
+        assert r['standard_kdv_certified']
+        assert not r['standard_hierarchy_status'][
+            'standard_descendant_virasoro_constraints'
+        ]
 
     def test_genus2_n1_value(self):
         """<tau_4>_2 = 1/1152 (literature value)."""
@@ -626,25 +640,11 @@ class TestCrossConstraintConsistency:
 
 
 # =========================================================================
-# Section 14: Shadow free energy Virasoro (the key result)
+# Section 14: Shadow free energy classification
 # =========================================================================
 
-class TestShadowFreeEnergyVirasoro:
-    """The key result: F_g = kappa * lambda_g^FP satisfies Virasoro constraints.
-
-    THEOREM: For the rank-1 shadow CohFT with trivial R-matrix (R=1),
-    the descendant potential satisfies L_n(Z) = 0 for all n >= -1.
-    This is equivalent to the Witten-Kontsevich theorem.
-
-    The shadow free energies F_g = kappa * lambda_g^FP are the n=0
-    projection of this descendant potential. The Virasoro constraints
-    at n=0 are automatically satisfied since they involve DESCENDANT
-    variables (t_k = int psi^k * Omega), not the free energies directly.
-
-    The free energies satisfy the SCALAR GENERATING FUNCTION IDENTITY:
-    sum_{g>=1} F_g hbar^{2g} = kappa * (hbar/2/sin(hbar/2) - 1)
-    which is the A-hat genus expansion.
-    """
+class TestShadowFreeEnergyClassification:
+    """The scalar FP identity is finite coefficient data."""
 
     def test_scalar_gf_genus1(self):
         """F_1 = kappa/24 matches A-hat coefficient."""
@@ -659,15 +659,86 @@ class TestShadowFreeEnergyVirasoro:
         r = shadow_partition_function_closed_form_check(Fraction(1), max_g=6)
         assert r['all_match']
 
-    def test_virasoro_theorem_kappa_half(self):
-        """Full Virasoro theorem for kappa = 1/2 (Virasoro at c=1)."""
+    def test_kappa_half_has_only_scalar_certificate(self):
+        """kappa = 1/2 verifies scalar coefficients, not descendants."""
         r = shadow_cohft_virasoro_theorem(Fraction(1, 2), max_g=2, max_n_vir=2)
+        assert r['scalar_lane_pass']
+        assert r['kw_reference_checks_pass']
+        assert not r['standard_descendant_package_pass']
+
+    def test_full_verification_kw_case(self):
+        """The complete standard package passes at kappa = 1."""
+        r = full_virasoro_verification(Fraction(1), max_g=2, max_n_vir=2)
+        assert r['scalar_lane_pass']
+        assert r['kw_reference_checks_pass']
+        assert r['standard_descendant_package_pass']
         assert r['all_pass']
 
-    def test_full_verification(self):
-        """Complete verification suite."""
-        r = full_virasoro_verification(Fraction(1), max_g=2, max_n_vir=2)
-        assert r['all_pass']
+    def test_full_verification_non_kw_case(self):
+        """The complete standard package fails away from kappa in {0,1}."""
+        r = full_virasoro_verification(Fraction(2, 3), max_g=2, max_n_vir=2)
+        assert r['scalar_lane_pass']
+        assert r['kw_reference_checks_pass']
+        assert not r['standard_descendant_package_pass']
+        assert not r['all_pass']
+
+
+class TestScalarLaneFirewalls:
+    """Check the negative certificates and local constants."""
+
+    def test_finite_scalar_tau_coefficients(self):
+        """Finite q-series coefficients match exp(kappa log tau_KW)."""
+        r = finite_scalar_shadow_tau(Fraction(5, 2), max_genus=3)
+        assert r['power_identity'] == 'tau_shadow_scal^{<=G} = (tau_KW^{<=G})^kappa'
+        assert r['shadow_log_coefficients'][1] == Fraction(5, 2) * Fraction(1, 24)
+        assert r['shadow_log_coefficients'][2] == Fraction(5, 2) * Fraction(7, 5760)
+        assert r['scalar_lane_only']
+        assert not r['constructs_descendant_virasoro_constraints']
+
+    def test_standard_status_cases(self):
+        """Only the KW case certifies the standard descendant package."""
+        half = standard_hierarchy_constraint_status(Fraction(1, 2))
+        one = standard_hierarchy_constraint_status(Fraction(1))
+        zero = standard_hierarchy_constraint_status(Fraction(0))
+        assert half['kdv_residual_factor_kappa_1_minus_kappa'] == Fraction(1, 4)
+        assert not half['standard_descendant_virasoro_constraints']
+        assert one['standard_descendant_virasoro_constraints']
+        assert zero['standard_kdv_hierarchy']
+        assert not zero['standard_descendant_virasoro_constraints']
+
+    def test_stationary_primary_line_is_diagnostic(self):
+        """Stationary shadow classes require descendant input for a hierarchy."""
+        r = stationary_primary_line_diagnostics()
+        assert r['classes']['G']['depth'] == 2
+        assert r['classes']['M']['depth'] == 'infinity'
+        assert not r['constructs_full_hierarchy']
+        assert r['requires_descendant_cohft_data']
+
+    def test_descendant_data_must_be_supplied(self):
+        """The scalar lane does not provide psi-class CohFT data."""
+        absent = descendant_cohft_data_certificate(False)
+        supplied = descendant_cohft_data_certificate(True)
+        assert not absent['finite_scalar_lane_supplies_descendants']
+        assert not absent['full_virasoro_constraints_available']
+        assert supplied['full_virasoro_constraints_available']
+
+    def test_kernel_constants_are_exact(self):
+        """Collision kernels and object firewalls are exact strings."""
+        cert = kernel_constant_certificate()
+        kernels = cert['kernel_constants']
+        assert kernels['affine_raw_trace']['formula'] == 'k*Omega_tr/z'
+        assert kernels['affine_kz']['formula'] == 'Omega/((k+h^vee)z)'
+        assert kernels['heisenberg']['formula'] == 'k/z'
+        assert kernels['virasoro']['formula'] == '(c/2)/z^3 + 2*T/z'
+        assert any('bar-cobar inversion' in item for item in cert['object_firewalls'])
+        assert any('Hochschild/bulk' in item for item in cert['object_firewalls'])
+
+    def test_shadow_equation_classification(self):
+        """Classification records the residual away from KW and zero field."""
+        r = shadow_equation_classification(Fraction(2, 3), max_genus=3)
+        assert r['satisfies']['finite_scalar_coefficient_identity']
+        assert not r['satisfies']['standard_kdv_hierarchy']
+        assert r['exceptions']['kdv_residual_factor'] == Fraction(2, 9)
 
 
 # =========================================================================

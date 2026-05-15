@@ -1,16 +1,8 @@
-r"""Tests for theorem: Virasoro constraints = genus-0 arity-(n+2) MC projections.
+r"""Tests for finite scalar shadow certificates and KW reference checks.
 
-THEOREM UNDER TEST:
-  L_n Z^sh = 0 (n >= -1) is the (g=0, arity n+2) projection of the
-  MC equation D*Theta + (1/2)[Theta,Theta] = 0 in g^mod_A.
-
-VERIFICATION STRATEGY (multi-path, per mandate):
-  Path 1: DVV recursion (which IS the MC boundary equation)
-  Path 2: Direct WK intersection number computation
-  Path 3: Kappa-scaled verification
-  Path 4: Structural (boundary strata counts, dimension checks)
-
-All arithmetic is exact (fractions.Fraction). No floating point.
+The scalar identity exp(kappa log tau_KW^{<=G}) is not allowed to promote
+itself into full Kontsevich-Witten descendant Virasoro/KdV/Hirota data.
+All arithmetic is exact.
 """
 
 from fractions import Fraction
@@ -35,15 +27,101 @@ from compute.lib.theorem_virasoro_constraints_mc_engine import (
     shadow_equation_classification,
     mc_arity_virasoro_dictionary,
     kappa_scaled_virasoro_operators,
+    kernel_constant_certificate,
+    finite_scalar_shadow_tau,
+    standard_hierarchy_constraint_status,
+    stationary_primary_line_diagnostics,
+    descendant_cohft_data_certificate,
+    finite_constraint_scope_certificate,
+    virasoro_shadow_surface_certificate,
 )
 
 
 # ============================================================================
-# Section 0: Faber-Pandharipande number verification (foundation)
+# Section 0: Convention firewalls
+# ============================================================================
+
+
+class TestConventionFirewalls:
+    """Verify kernel constants and object firewalls from local sources."""
+
+    def test_kernel_constants_are_source_anchored(self):
+        cert = kernel_constant_certificate()
+        kernels = cert['kernel_constants']
+        assert kernels['affine_raw_trace']['formula'] == 'k*Omega_tr/z'
+        assert kernels['affine_kz']['formula'] == 'Omega/((k+h^vee)z)'
+        assert kernels['heisenberg']['formula'] == 'k/z'
+        assert kernels['virasoro']['formula'] == '(c/2)/z^3 + 2*T/z'
+        assert 'landscape_census.tex:173-186' in kernels['virasoro']['source']
+
+    def test_kappa_formulas_are_distinct_from_kernels(self):
+        cert = kernel_constant_certificate()
+        kappas = cert['kappa_formulas']
+        assert kappas['heisenberg_rank_one']['formula'] == 'k'
+        assert kappas['affine_trace_form']['formula'] == 'dim(g)*(k+h^vee)/(2*h^vee)'
+        assert kappas['virasoro']['formula'] == 'c/2'
+        assert kappas['w_n']['formula'] == 'c*(H_N-1)'
+
+    def test_object_firewall_keeps_bulk_out_of_koszul_dual(self):
+        cert = kernel_constant_certificate()
+        firewall = " ".join(cert['object_firewalls'])
+        assert 'Z_ch^der(A) is ChirHoch^*(A,A)' in firewall
+        assert 'bar-cobar inversion, not Koszul duality' in firewall
+
+    def test_data_channels_keep_ope_bar_and_bulk_separate(self):
+        cert = kernel_constant_certificate()
+        channels = cert['data_channel_firewalls']
+        assert not channels['virasoro_ope_data']['supplies_bar_differential']
+        assert not channels['virasoro_ope_data']['supplies_derived_center']
+        assert not channels['bar_differential_data']['supplied_by_finite_virasoro_window']
+        assert not channels['derived_center_data']['supplied_by_virasoro_ope']
+
+
+class TestVirasoroCentralChargeSurface:
+    """Verify exact Virasoro formulas and their singular hypotheses."""
+
+    def test_c_one_surface_coefficients(self):
+        result = virasoro_shadow_surface_certificate(Fraction(1))
+        coeffs = result['coefficients']
+        assert result['nonsingular_shadow_surface']
+        assert result['kappa'] == Fraction(1, 2)
+        assert coeffs['S_2'] == Fraction(1, 2)
+        assert coeffs['S_3'] == Fraction(2)
+        assert coeffs['S_4'] == Fraction(10, 27)
+        assert coeffs['S_5'] == Fraction(-16, 9)
+        assert coeffs['Delta'] == Fraction(40, 27)
+        assert coeffs['Lambda_norm'] == Fraction(27, 10)
+
+    def test_singular_central_charges_do_not_supply_s4_s5(self):
+        for c in (Fraction(0), Fraction(-22, 5)):
+            result = virasoro_shadow_surface_certificate(c)
+            coeffs = result['coefficients']
+            assert not result['nonsingular_shadow_surface']
+            assert coeffs['S_4'] is None
+            assert coeffs['S_5'] is None
+            assert coeffs['Delta'] is None
+
+    def test_finite_shadow_window_does_not_prove_infinite_depth(self):
+        result = virasoro_shadow_surface_certificate(Fraction(26))
+        depth = result['shadow_depth']
+        assert depth['census_class'] == 'M'
+        assert depth['census_depth'] == 'infinity'
+        assert depth['finite_witness_orders'] == (2, 3, 4, 5)
+        assert depth['nonzero_finite_witnesses']
+        assert not depth['finite_window_proves_infinite_depth']
+
+    def test_virasoro_surface_does_not_construct_bulk_or_bar_data(self):
+        result = virasoro_shadow_surface_certificate(Fraction(1))
+        assert not result['constructs_bar_differential']
+        assert not result['constructs_derived_center']
+
+
+# ============================================================================
+# Section 1: Faber-Pandharipande number verification
 # ============================================================================
 
 class TestLambdaFP:
-    """Verify FP numbers by multiple paths (AP10: never trust hardcoded alone)."""
+    """Verify FP numbers against the local coefficient table."""
 
     def test_lambda_fp_g1(self):
         assert lambda_fp(1) == Fraction(1, 24)
@@ -58,7 +136,7 @@ class TestLambdaFP:
         assert lambda_fp(4) == Fraction(127, 154828800)
 
     def test_lambda_fp_positive(self):
-        """All lambda_g^FP are positive (AP22)."""
+        """All lambda_g^FP are positive."""
         for g in range(1, 8):
             assert lambda_fp(g) > 0
 
@@ -131,7 +209,7 @@ class TestGenus0BoundaryStrata:
         assert result['num_strata'] == 0
         assert result['dimension'] == 0
 
-    def test_mbar04_one_stratum(self):
+    def test_mbar04_three_strata(self):
         """M-bar_{0,4} = P^1 has 3 boundary divisors (3 partitions of 4 into 2+2)."""
         result = genus0_boundary_strata(4)
         assert result['dimension'] == 1
@@ -158,7 +236,7 @@ class TestGenus0BoundaryStrata:
         Total masks: 2^{k-1} (each of points 2,...,k in I or J).
         Subtract: all in I (1 mask), all in J (1 mask),
         exactly one in J = k-1 masks. Also subtract 0 masks where |J|<2.
-        Actually the formula is more subtle. Just check values.
+        The following exact values fix the convention used by the engine.
         """
         # Known counts:
         expected = {4: 3, 5: 10, 6: 25, 7: 56}
@@ -211,11 +289,11 @@ class TestMCGenus0AritykTerms:
 
 
 # ============================================================================
-# Section 4: PROOF 1 — MC projection = Virasoro constraint (computational)
+# Section 4: KW reference DVV recursion
 # ============================================================================
 
-class TestProof1MCProjection:
-    """Verify Proof 1: DVV/MC boundary = Virasoro constraint."""
+class TestKWReferenceDVV:
+    """Verify the KW reference recursion."""
 
     def test_string_equation_all_pass(self):
         """L_{-1} (string equation) verified at multiple genera."""
@@ -253,10 +331,10 @@ class TestProof1MCProjection:
         assert result['all_pass']
 
     def test_mc_arity_matches_virasoro_index(self):
-        """MC arity in results matches n_vir + 2."""
+        """MC arity in results matches n_vir + 3."""
         for n_vir in range(-1, 4):
             result = proof1_mc_projection_equals_virasoro(n_vir, max_genus=1, max_extra_insertions=0)
-            assert result['mc_arity'] == n_vir + 2
+            assert result['mc_arity'] == n_vir + 3
 
     def test_string_genus0_explicit(self):
         """L_{-1} at genus 0: <tau_0^3>_0 = 1 via string equation."""
@@ -266,15 +344,17 @@ class TestProof1MCProjection:
 
 
 # ============================================================================
-# Section 5: PROOF 2 — Kodaira-Spencer identification
+# Section 5: Stationary primary-line diagnostics
 # ============================================================================
 
-class TestProof2KodairaSpencer:
-    """Verify Proof 2: bar complex = KS deformation complex."""
+class TestStationaryPrimaryLine:
+    """Keep stationary diagnostics separate from descendant constraints."""
 
     def test_kodaira_spencer_all_pass(self):
         result = proof2_kodaira_spencer(max_genus=2)
         assert result['all_pass']
+        assert not result['constructs_descendant_virasoro_constraints']
+        assert result['descendant_cohft_data_assumed_separately']
 
     def test_frobenius_metric_seed(self):
         result = proof2_kodaira_spencer(max_genus=1)
@@ -283,7 +363,7 @@ class TestProof2KodairaSpencer:
     def test_wdvv_vacuous_rank1(self):
         """WDVV is vacuous for rank-1 Frobenius manifold."""
         result = proof2_kodaira_spencer(max_genus=1)
-        assert 'vacuous' in result['wdvv_rank1']['status']
+        assert 'vacuous' in result['wdvv_rank1']['classification']
 
     def test_arity_map_complete(self):
         """Arity map covers L_{-1} through L_4."""
@@ -292,28 +372,49 @@ class TestProof2KodairaSpencer:
             assert k in result['arity_map']
             assert result['arity_map'][k]['virasoro_index'] == k - 3
 
+    def test_stationary_table_requires_descendant_data(self):
+        result = stationary_primary_line_diagnostics()
+        assert result['classes']['M']['depth'] == 'infinity'
+        assert result['requires_descendant_cohft_data']
+        assert not result['constructs_full_hierarchy']
+
+    def test_descendant_data_is_separate_assumption(self):
+        absent = descendant_cohft_data_certificate(False)
+        present = descendant_cohft_data_certificate(True)
+        assert not absent['finite_scalar_lane_supplies_descendants']
+        assert not absent['full_virasoro_constraints_available']
+        assert present['full_virasoro_constraints_available']
+
 
 # ============================================================================
-# Section 6: PROOF 3 — Kappa-scaling compatibility
+# Section 6: Scalar kappa lane and hierarchy obstruction
 # ============================================================================
 
-class TestProof3KappaScaling:
-    """Verify Proof 3: Virasoro constraints survive kappa-scaling."""
+class TestScalarKappaLane:
+    """Scalar coefficient scaling must not certify descendant constraints."""
 
-    def test_kappa_half_all_pass(self):
+    def test_kappa_half_scalar_passes_standard_fails(self):
         """kappa = 1/2 (Virasoro at c=1)."""
         result = proof3_kappa_scaling(Fraction(1, 2))
         assert result['all_pass']
+        status = result['standard_hierarchy_status']
+        assert not status['standard_descendant_virasoro_constraints']
+        assert not status['standard_kdv_hierarchy']
+        assert result['kdv_negative']['residual_factor'] == Fraction(1, 4)
 
-    def test_kappa_1_all_pass(self):
+    def test_kappa_1_is_actual_kw_case(self):
         """kappa = 1 (Heisenberg at k=1, or KW itself)."""
         result = proof3_kappa_scaling(Fraction(1))
         assert result['all_pass']
+        status = result['standard_hierarchy_status']
+        assert status['standard_descendant_virasoro_constraints']
+        assert status['standard_kdv_hierarchy']
 
-    def test_kappa_13_half_all_pass(self):
+    def test_kappa_13_half_scalar_only(self):
         """kappa = 13/2 (Virasoro at c=13, self-dual point)."""
         result = proof3_kappa_scaling(Fraction(13, 2))
         assert result['all_pass']
+        assert not result['standard_hierarchy_status']['standard_descendant_virasoro_constraints']
 
     def test_ratio_is_kappa(self):
         """F_g^shadow / F_g^KW = kappa for all g."""
@@ -323,32 +424,52 @@ class TestProof3KappaScaling:
             assert g_data['kappa_constant']
 
     def test_virasoro_linearity(self):
-        """L_n is a first-order differential operator."""
+        """The scalar log check is not a Virasoro constraint for kappa != 1."""
         result = proof3_kappa_scaling(Fraction(1, 2))
-        assert result['virasoro_linearity']['kappa_commutes']
+        assert not result['virasoro_linearity']['kappa_commutes']
 
     def test_kdv_negative_result(self):
-        """tau_KW^kappa does NOT satisfy KdV for kappa != 1."""
+        """The standard KdV residual is nonzero for kappa not in {0,1}."""
         result = proof3_kappa_scaling(Fraction(1, 2))
-        assert 'NOT' in result['kdv_negative']['statement']
+        assert result['kdv_negative']['fails']
+        assert result['kdv_negative']['residual_factor'] == Fraction(1, 4)
 
-    def test_kappa_scaled_operator_unchanged(self):
-        """L_n^{(kappa)} = L_n (the operator does not deform)."""
+    def test_kappa_scaled_operator_not_constructed(self):
+        """No deformed Virasoro operator is built from scalar coefficients."""
         for n in range(-1, 5):
             op = kappa_scaled_virasoro_operators(n, Fraction(1, 2))
-            assert op['no_deformation']
+            assert not op['standard_operator_certified']
+            assert not op['no_deformation']
+            assert not op['constructs_deformed_operator']
+
+    def test_kappa_0_is_only_zero_field_exception(self):
+        status = standard_hierarchy_constraint_status(Fraction(0))
+        assert status['standard_kdv_hierarchy']
+        assert status['standard_hirota_equations']
+        assert not status['standard_descendant_virasoro_constraints']
+
+    def test_finite_scalar_tau_coefficients(self):
+        result = finite_scalar_shadow_tau(Fraction(2), max_genus=2)
+        assert result['shadow_log_coefficients'][1] == Fraction(1, 12)
+        assert result['shadow_log_coefficients'][2] == Fraction(7, 2880)
+        assert result['shadow_tau_coefficients'][1] == Fraction(1, 12)
+        assert result['shadow_tau_coefficients'][2] == Fraction(17, 2880)
+        assert result['scalar_lane_only']
+        assert not result['constructs_full_tau_function']
 
 
 # ============================================================================
-# Section 7: PROOF 4 — W-constraints for W_N
+# Section 7: W-constraint structural data
 # ============================================================================
 
-class TestProof4WConstraints:
-    """Verify Proof 4: W-constraints generalize Virasoro for W_N."""
+class TestWConstraintStructure:
+    """Verify W_N structural data without scalar-lane promotion."""
 
     def test_w_constraints_all_pass(self):
         result = proof4_w_constraints(max_N=4)
         assert result['all_pass']
+        assert result['requires_descendant_cohft_data']
+        assert not result['scalar_lane_constructs_operators']
 
     def test_n2_is_virasoro(self):
         """W_2 = Virasoro."""
@@ -406,6 +527,19 @@ class TestMCGeneralGenus:
         result = verify_mc_at_genus_arity(1, 2, (0,))
         assert result['passes']
 
+    def test_general_genus_projection_is_not_full_reconstruction(self):
+        result = mc_general_genus_projection(2, 4)
+        assert result['finite_projection_only']
+        assert not result['reconstructs_full_mc']
+        assert not result['reconstructs_all_Fg_from_genus0']
+        assert result['separates_bar_from_hochschild']
+
+    def test_negative_genus_rejected(self):
+        with pytest.raises(ValueError):
+            mc_general_genus_projection(-1, 4)
+        with pytest.raises(ValueError):
+            verify_mc_at_genus_arity(-1, 4, ())
+
 
 # ============================================================================
 # Section 9: Address table
@@ -421,19 +555,19 @@ class TestAddressTable:
     def test_l_minus1_address(self):
         table = virasoro_mc_address_table()
         entry = table['L_-1_g0']
-        assert entry['mc_arity'] == 1  # -1 + 2 = 1
+        assert entry['mc_arity'] == 2
         assert entry['virasoro_index'] == -1
 
     def test_l0_address(self):
         table = virasoro_mc_address_table()
         entry = table['L_0_g0']
-        assert entry['mc_arity'] == 2
+        assert entry['mc_arity'] == 3
         assert entry['virasoro_index'] == 0
 
     def test_l1_address(self):
         table = virasoro_mc_address_table()
         entry = table['L_1_g0']
-        assert entry['mc_arity'] == 3
+        assert entry['mc_arity'] == 4
         assert entry['virasoro_index'] == 1
 
     def test_handle_terms_only_at_positive_genus(self):
@@ -452,28 +586,34 @@ class TestAddressTable:
 class TestTripleVerification:
     """Verify all three paths agree for individual constraints."""
 
-    def test_triple_string_genus0(self):
+    def test_triple_string_genus0_scalar_not_descendant(self):
         result = triple_verification_constraint(-1, 0, (0, 0), Fraction(1, 2))
-        assert result['all_three_agree']
+        assert result['dvv_passes']
+        assert result['scaling_consistent']
+        assert not result['descendant_virasoro_certified']
 
-    def test_triple_dilaton_genus1(self):
-        result = triple_verification_constraint(0, 1, (1,), Fraction(1, 2))
+    def test_triple_dilaton_genus1_kw(self):
+        result = triple_verification_constraint(0, 1, (1,), Fraction(1))
         assert result['all_three_agree']
+        assert result['descendant_virasoro_certified']
 
-    def test_triple_L1_genus1(self):
+    def test_triple_L1_genus1_scalar_not_descendant(self):
         """L_1 at genus 1 with tau_0 insertion."""
         result = triple_verification_constraint(1, 1, (0,), Fraction(1, 2))
-        assert result['all_three_agree']
+        assert result['scaling_consistent']
+        assert not result['all_three_agree']
 
-    def test_triple_kappa_13_half(self):
+    def test_triple_kappa_13_half_scalar_not_descendant(self):
         """Triple verification at the self-dual point kappa = 13/2."""
         result = triple_verification_constraint(-1, 0, (0, 0), Fraction(13, 2))
-        assert result['all_three_agree']
+        assert result['scaling_consistent']
+        assert not result['descendant_virasoro_certified']
 
-    def test_triple_kappa_3(self):
+    def test_triple_kappa_3_scalar_not_descendant(self):
         """Triple verification at kappa = 3 (affine sl_2 at k=2)."""
         result = triple_verification_constraint(0, 1, (1,), Fraction(3))
-        assert result['all_three_agree']
+        assert result['scaling_consistent']
+        assert not result['descendant_virasoro_certified']
 
 
 # ============================================================================
@@ -483,32 +623,57 @@ class TestTripleVerification:
 class TestFullTheorem:
     """Comprehensive theorem verification."""
 
-    def test_full_verification_kappa_half(self):
-        """Full verification at kappa = 1/2 (Virasoro at c=1)."""
+    def test_full_verification_kappa_half_is_scalar_only(self):
+        """At kappa = 1/2 the scalar lane passes and the full hierarchy fails."""
         result = full_theorem_verification(
             kappa_val=Fraction(1, 2), max_genus=2, max_n_vir=3, max_extra=1)
-        assert result['all_pass'], result.get('summary', '')
+        assert result['scalar_lane_pass']
+        assert not result['standard_descendant_package_pass']
+        assert not result['all_pass']
 
     def test_full_verification_kappa_1(self):
-        """Full verification at kappa = 1 (Heisenberg at k=1)."""
+        """The actual KW case is the standard descendant package."""
         result = full_theorem_verification(
             kappa_val=Fraction(1), max_genus=2, max_n_vir=3, max_extra=1)
         assert result['all_pass'], result.get('summary', '')
 
-    def test_all_four_proofs_pass(self):
-        """Each of the four proofs passes independently."""
+    def test_reference_checks_and_scalar_certificate_are_separate(self):
+        """KW reference checks may pass while arbitrary kappa still fails."""
         result = full_theorem_verification(
             kappa_val=Fraction(1, 2), max_genus=2, max_n_vir=3, max_extra=1)
         assert result['proofs']['proof1_mc_projection']['all_pass']
-        assert result['proofs']['proof2_kodaira_spencer']['all_pass']
+        assert result['proofs']['proof2_kodaira_spencer']['kw_reference_checks_pass']
         assert result['proofs']['proof3_kappa_scaling']['all_pass']
         assert result['proofs']['proof4_w_constraints']['all_pass']
+        assert not result['standard_hierarchy_status']['standard_descendant_virasoro_constraints']
 
-    def test_cross_checks_pass(self):
-        """All triple cross-checks pass."""
+    def test_cross_checks_certify_only_kw(self):
+        """Triple checks certify descendants only for kappa = 1."""
         result = full_theorem_verification(
             kappa_val=Fraction(1, 2), max_genus=2, max_n_vir=3, max_extra=1)
-        assert result['cross_checks_all_pass']
+        assert not result['cross_checks_all_pass']
+        kw = full_theorem_verification(
+            kappa_val=Fraction(1), max_genus=2, max_n_vir=3, max_extra=1)
+        assert kw['cross_checks_all_pass']
+
+    def test_finite_window_is_not_full_mc_reconstruction(self):
+        scope = finite_constraint_scope_certificate(max_n_vir=3, max_genus=2)
+        assert scope['checked_virasoro_indices'] == (-1, 0, 1, 2, 3)
+        assert scope['checked_genera'] == (0, 1, 2)
+        assert scope['checked_constraint_count'] == 15
+        assert scope['next_unchecked'] == {'virasoro_index': 4, 'genus': 3}
+        assert not scope['proves_all_virasoro_constraints']
+        assert not scope['proves_full_mc_reconstruction']
+        assert not scope['reconstructs_derived_center']
+
+    def test_full_verification_exposes_finite_scope_even_for_kw(self):
+        result = full_theorem_verification(
+            kappa_val=Fraction(1), max_genus=2, max_n_vir=3, max_extra=1)
+        assert result['finite_window_pass']
+        assert not result['proves_full_mc_reconstruction']
+        assert not result['constructs_bar_differential']
+        assert not result['constructs_derived_center']
+        assert not result['finite_constraint_scope']['proves_full_mc_reconstruction']
 
 
 # ============================================================================
@@ -541,31 +706,38 @@ class TestBoundaryChain:
 class TestEquationClassification:
     """Verify which equations the shadow PF satisfies/does not satisfy."""
 
-    def test_satisfies_virasoro(self):
+    def test_finite_scalar_identity_holds(self):
         result = shadow_equation_classification(Fraction(1, 2))
-        assert result['satisfies']['virasoro_constraints']
+        assert result['satisfies']['finite_scalar_coefficient_identity']
 
-    def test_satisfies_mc(self):
+    def test_standard_virasoro_fails_for_kappa_half(self):
         result = shadow_equation_classification(Fraction(1, 2))
-        assert result['satisfies']['mc_equation']
+        assert not result['satisfies']['standard_descendant_virasoro_constraints']
+        assert result['does_not_satisfy']['standard_descendant_virasoro_constraints']
 
-    def test_satisfies_string(self):
+    def test_stationary_primary_line_is_only_diagnostic(self):
         result = shadow_equation_classification(Fraction(1, 2))
-        assert result['satisfies']['string_equation']
-
-    def test_satisfies_dilaton(self):
-        result = shadow_equation_classification(Fraction(1, 2))
-        assert result['satisfies']['dilaton_equation']
+        assert result['satisfies']['stationary_primary_line_diagnostics']
+        assert result['does_not_satisfy']['full_descendant_cohft_from_scalar_lane']
 
     def test_does_not_satisfy_kdv_kappa_half(self):
-        """tau_KW^{1/2} does NOT satisfy KdV."""
+        """The standard KdV hierarchy fails for kappa = 1/2."""
         result = shadow_equation_classification(Fraction(1, 2))
         assert result['does_not_satisfy']['kdv_hierarchy']
+        assert result['exceptions']['kdv_residual_factor'] == Fraction(1, 4)
 
     def test_kdv_at_kappa_1(self):
-        """tau_KW^1 = tau_KW DOES satisfy KdV."""
+        """kappa = 1 is the KW case."""
         result = shadow_equation_classification(Fraction(1))
-        assert not result['does_not_satisfy']['kdv_hierarchy']
+        assert result['satisfies']['standard_kdv_hierarchy']
+        assert result['satisfies']['standard_descendant_virasoro_constraints']
+
+    def test_kdv_at_kappa_0_is_zero_field_only(self):
+        result = shadow_equation_classification(Fraction(0))
+        assert result['satisfies']['standard_kdv_hierarchy']
+        assert result['satisfies']['standard_hirota_equations']
+        assert not result['satisfies']['standard_descendant_virasoro_constraints']
+        assert result['exceptions']['kappa_0_zero_field']
 
     def test_free_energy_ratios_constant(self):
         result = shadow_equation_classification(Fraction(3, 7))
@@ -633,11 +805,11 @@ class TestShadowFreeEnergy:
 
 
 # ============================================================================
-# Section 16: Explicit DVV recursion checks (independent of Proof 1 wrapper)
+# Section 16: Explicit DVV recursion checks
 # ============================================================================
 
 class TestExplicitDVV:
-    """Verify DVV recursion at specific correlators, independent of Proof 1."""
+    """Verify DVV recursion at specific correlators."""
 
     def test_dvv_genus0_tau0_tau0_tau0(self):
         """<tau_0^3>_0 = 1 (seed, no recursion needed)."""
@@ -704,11 +876,11 @@ class TestMCDecompositionConsistency:
 
 
 # ============================================================================
-# Section 18: Multiple kappa values (AP39: kappa != c/2 in general)
+# Section 18: Multiple kappa values
 # ============================================================================
 
 class TestMultipleKappaValues:
-    """Verify theorem at multiple kappa values from different families."""
+    """Verify scalar values while rejecting descendant promotion."""
 
     @pytest.mark.parametrize("kappa_val,family", [
         (Fraction(1, 2), "Virasoro c=1"),
@@ -729,6 +901,7 @@ class TestMultipleKappaValues:
         Fraction(1, 2), Fraction(1), Fraction(5, 3),
     ])
     def test_triple_verify_multiple_kappa(self, kappa_val):
-        """Triple verification at multiple kappa values."""
+        """Only kappa = 1 certifies the descendant Virasoro package."""
         result = triple_verification_constraint(-1, 0, (0, 0), kappa_val)
-        assert result['all_three_agree']
+        assert result['scaling_consistent']
+        assert result['descendant_virasoro_certified'] == (kappa_val == Fraction(1))

@@ -4,55 +4,76 @@
 \chapter{The FTM seven-fold TFAE at genus zero: hub-and-spoke theorem}
 \label{chap:ftm-seven-fold-tfae-platonic}
 
-\section{Setup, and what this chapter is not}
+\section{The finite-type genus-zero window}
 \label{sec:ftm-sevenfold-setup}
 
-This chapter proves the genus-zero seven-fold equivalence for the
-fundamental twisting morphism as a hub-and-spoke theorem. The seven
-conditions are Koszulness, counit quasi-isomorphism, unit weak
-equivalence, twisted tensor acyclicity, bar concentration in weight~$1$,
-PBW $E_2$-collapse, and SC-formality on the class-$G$ parametrised
-surface. The hard question is whether the apparent
-$\binom{7}{2}=21$ bidirectional arrows reduce to independent spokes
-through one hub. Each bidirectional arrow is formally a separate
-implication. A seven-object TFAE claim can mean either
-%
-\begin{itemize}
-\item[(a)] all $21$ bidirections proved independently, or
-\item[(b)] each of the seven conditions is bidirectionally equivalent
-to a \emph{hub}, so that TFAE follows by transitivity from $6$ proved
-bidirections.
-\end{itemize}
-%
-The theorem has a single hub, and each of the other six conditions has
-an independently-proved bidirection to the hub. The proof must
-%
-\begin{enumerate}
-\item name the hub explicitly (it is the PBW $E_2$-collapse);
-\item list the six spokes and cite the theorem that proves each
-bidirection;
-\item identify exactly which bidirection is the locus of
-non-tautology, so that ``not tautological'' is a checkable claim, not a
-slogan;
-\item record precisely how each spoke extends (or fails to extend) to
-higher genus, replacing the g=0 ``resolves tautology'' language with a
-positive statement that names what survives.
+The phrase ``seven-fold TFAE'' has a finite domain.  The intrinsic
+fundamental-twisting-morphism package has six genus-zero conditions:
+Koszulness of $\tau_{\mathrm{univ}}$, the bar--cobar counit,
+the bar--cobar unit, twisted tensor acyclicity, diagonal bar
+concentration, and PBW $E_2$-collapse.  The seventh condition,
+Swiss-cheese formality, is not an intrinsic consequence of the first
+six on the whole Koszul locus.  It becomes equivalent to them only on
+the class-$G$ fibre of the shadow-archetype map.
+
+\begin{definition}[Genus-zero finite-type PBW window]
+\label{def:ftm-g0-pbw-window}
+\index{FTM TFAE!finite-type PBW window}
+A filtered augmented chiral algebra $(\cA,F_\bullet)$ lies in the
+\emph{genus-zero finite-type PBW window} if the following hypotheses
+hold.
+\begin{enumerate}[label=\textup{(W\arabic*)}]
+\item $X$ is a smooth genus-zero curve and
+$\tau_{\mathrm{univ}}\colon \barB^{\ord}_X(\cA)\to\cA$ is the
+universal twisting morphism of
+Corollary~\ref{cor:three-bijections}.
+\item The quadruple
+$(\cA,\barB^{\ord}_X(\cA),\tau_{\mathrm{univ}},F_\bullet)$ is a
+chiral twisting datum in the sense of
+Definition~\ref{def:chiral-twisting-datum}: the filtration on
+$\cA$, $\barB^{\ord}_X(\cA)$, and
+$\Omega_X\barB^{\ord}_X(\cA)$ is exhaustive, complete, bounded
+below, and compatible with the structure maps.
+\item The PBW filtration is flat and finite in the sense of
+Theorem~\ref{thm:pbw-koszulness-criterion}
+\textup{\ref{item:pbw-flat}} and
+\textup{\ref{item:pbw-bounded}}: every PBW graded piece is finite
+rank in each conformal weight, and every fixed bar degree and
+conformal weight of $\barB^{\ord}_X(\cA)$ is finite-dimensional.
+\item The filtered bar, cobar, and twisted-tensor spectral sequences
+converge strongly, so the intrinsic core of
+Theorem~\ref{thm:koszul-equivalences-meta} applies:
+chiral Koszulness of $\tau_{\mathrm{univ}}$ is equivalent to PBW
+$E_2$-collapse.
+\item When the notation $\cA^!$ is used, the finite graded-piece
+duality needed for continuous linear or Verdier duality is present;
+otherwise the theorem stops at the coalgebra
+$\cA^{\mathrm i}=H^\bullet\barB^{\ord}_X(\cA)$ and makes no
+algebra-level assertion about $\cA^!$.
 \end{enumerate}
-%
-The result is not a new theorem: it is a rigorous re-presentation of
-the existing proofs in
+The generic standard-landscape witnesses cited below lie in this
+window.  Critical affine level, non-generic simple quotients,
+logarithmic examples, raw direct-sum class-$M$ completions, and
+multi-weight higher-genus scalar reductions require their own
+completion or perfectness hypotheses and are not included by the
+word ``PBW'' alone.
+\end{definition}
+
+The proof uses the following local anchors:
 Theorem~\ref{thm:fundamental-twisting-morphisms},
-Theorem~\ref{thm:bar-concentration},
 Theorem~\ref{thm:pbw-koszulness-criterion},
+Theorem~\ref{thm:koszul-equivalences-meta},
+Theorem~\ref{thm:bar-concentration},
+Theorem~\ref{thm:ext-diagonal-vanishing},
 Theorem~\ref{thm:bar-cobar-inversion-qi}, and
-Proposition~\ref{prop:sc-formal-iff-class-g}, assembled as a
-hub-and-spoke diagram with every bidirection cited.
+Proposition~\ref{prop:sc-formal-iff-class-g}.
 
 \section{The seven conditions at genus zero}
 \label{sec:ftm-seven-conditions}
 
-Throughout, $\cA$ denotes an augmented chiral algebra on a smooth
-curve $X$ equipped with a PBW filtration $F_\bullet$, and
+Throughout, $(\cA,F_\bullet)$ denotes an augmented chiral algebra in
+the genus-zero finite-type PBW window of
+Definition~\ref{def:ftm-g0-pbw-window}, and
 $\tau_{\mathrm{univ}}\colon \bar{B}^{\ord}_X(\cA) \to \cA$ the
 universal twisting morphism of
 Corollary~\ref{cor:three-bijections}. We restrict attention to the
@@ -75,23 +96,27 @@ $\varepsilon_{\tau_{\mathrm{univ}}} \colon \Omega_X(\bar B^{\ord}_X(\cA))
 \emph{Unit weak equivalence}: the unit
 $\eta_{\tau_{\mathrm{univ}}} \colon \bar B^{\ord}_X(\cA) \to
 \bar B^{\ord}_X(\Omega_X(\bar B^{\ord}_X(\cA)))$ is a weak equivalence
-of conilpotent complete factorisation coalgebras. Equivalently (by
-Corollary~\ref{cor:three-bijections}), for every conilpotent complete
-coalgebra $\cC$ the induced map
-$\tau_* \colon \cC \to \bar B^{\ord}_X(\cA)$
-is a weak equivalence.
+of conilpotent complete factorisation coalgebras.  Under
+Corollary~\ref{cor:three-bijections}, this is the unit corresponding
+to the single universal twisting morphism
+$\tau_{\mathrm{univ}}$; it is not a universal weak-equivalence
+claim for every coalgebra $\cC$ mapping to $\cA$.
 \item\label{seven:ttacyclic}
 \emph{Twisted tensor acyclicity}: both twisted tensor products
 $K_\tau^L(\cA, \bar B^{\ord}_X(\cA))$ and
 $K_\tau^R(\bar B^{\ord}_X(\cA), \cA)$ are acyclic.
 \item\label{seven:bar-conc-wt1}
-\emph{Bar concentration in weight~$1$}: the bar cohomology
+\emph{Diagonal bar concentration}: the bar cohomology
 $H^{p,q}(\bar B^{\ord}_X(\cA))$ vanishes for $q \neq 0$, and
-$H^{p,0}$ is concentrated in bar-weight $p$ for every $p \geq 0$. In
+$H^{p,0}$ is the $p$th bar-weight piece for every $p \geq 0$. In
 particular,
 $H^*(\bar B^{\ord}_X(\cA)) \cong \cA^\mathrm{i}$ as a weight-graded
 chiral coalgebra, with the weight grading coinciding with bar degree
-(hence the slogan ``bar concentrated in weight 1'').
+\textup{(}Theorem~\ref{thm:bar-concentration}\textup{)}.  The
+historical phrase ``bar concentrated in weight~$1$'' means this
+diagonal support condition; it does not assert that
+$\cA^{\mathrm i}$ is cofree on $H^{1,0}$ outside the free/Gaussian
+cases.
 \item\label{seven:pbw-e2}
 \emph{PBW $E_2$-collapse} (the hub): the PBW spectral sequence of
 $\bar B^{\ord}_X(\cA)$ collapses at the $E_2$ page, i.e.\
@@ -104,61 +129,81 @@ Proposition~\ref{prop:sc-formal-iff-class-g}).
 \end{enumerate}
 \end{definition}
 
+\begin{remark}[Object firewall]
+\label{rem:ftm-object-firewall}
+\index{object firewall!FTM seven-fold theorem}
+Five objects remain separate throughout the theorem:
+\[
+\cA,\qquad
+\barB^{\ord}_X(\cA),\qquad
+\cA^{\mathrm i}=H^\bullet\barB^{\ord}_X(\cA),\qquad
+\cA^!=(\cA^{\mathrm i})^\vee,\qquad
+Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)=\ChirHoch^\bullet(\cA,\cA).
+\]
+The counit
+$\Omega_X\barB^{\ord}_X(\cA)\to\cA$ is bar--cobar inversion.
+The passage from $\cA^{\mathrm i}$ to $\cA^!$ is continuous linear
+or Verdier duality on the finite-type lane.  The derived centre is
+the chiral Hochschild complex.  Theorem~C's scalar complementarity
+and Theorem~H's Hochschild amplitude are therefore not additional
+spokes of this TFAE: they are consequences only after the scalar,
+perfectness, and $E_\infty$-completion hypotheses of
+Theorem~\ref{thm:derived-centre-complementarity-strengthened} and
+Theorem~\ref{thm:main-koszul-hoch}.
+\end{remark}
+
 \begin{remark}[Why these seven, not some other seven]
 \label{rem:seven-not-other-seven}
-Other Koszulness characterisations exist
-(Theorem~\ref{thm:koszul-equivalences-meta} lists twelve, including
-Ext-diagonal vanishing, Barr--Beck--Lurie equivalence, Kac--Shapovalov
-non-degeneracy, FM boundary-stratum acyclicity, and genus-0
-factorisation-homology concentration). The seven of
-Definition~\ref{def:seven-conditions-g0} are exactly those that
-descend from the classical FTM package of Loday--Vallette
-\cite[\S2.3]{LV12}, plus the two adversarial additions (bar
-concentration in weight 1, SC-formality) that the theorem
-verifies are bidirectionally linked to the FTM hub at genus zero. The
-full twelve-fold meta-theorem is reserved for the higher-genus
-setting, where conditions (iv), (ix), (x), (xi), (xii) of
-Theorem~\ref{thm:koszul-equivalences-meta} acquire independent
-content that they lack at $g = 0$.
+Other Koszulness characterisations exist.  Theorem~\ref{thm:koszul-equivalences-meta}
+has an intrinsic equivalence core, a Barr--Beck--Lurie monadic
+consequence, a conditional factorisation-homology criterion, a
+one-way chiral Hochschild amplitude consequence, and conditional
+perfectness/Lagrangian refinements.  The seven conditions of
+Definition~\ref{def:seven-conditions-g0} are the FTM core of
+Loday--Vallette \cite[\S2.3]{LV12}, the diagonal bar concentration
+forced by Theorem~\ref{thm:bar-concentration}, and the
+class-$G$ Swiss-cheese formality condition of
+Proposition~\ref{prop:sc-formal-iff-class-g}.  No Hochschild
+amplitude, scalar complementarity statement, or perfectness theorem is
+silently promoted to a spoke.
 \end{remark}
 
 \section{The hub: PBW $E_2$-collapse}
 \label{sec:ftm-hub}
 
-The hub is condition~\ref{seven:pbw-e2}: PBW $E_2$-collapse. This choice
-is forced by three considerations.
+The hub is condition~\ref{seven:pbw-e2}: PBW $E_2$-collapse. This
+choice is forced by three considerations.
 
 First, among the seven conditions, \ref{seven:pbw-e2} is the one for
 which the forward implication from each other condition admits a
 spectral-sequence proof at fixed level. Every other pairing (e.g.\
-counit qi $\Leftrightarrow$ bar concentration in weight 1) factors
+counit qi $\Leftrightarrow$ diagonal bar concentration) factors
 through the PBW filtration.
 
-Second, PBW $E_2$-collapse is the condition that the ``PBW-Koszulness
-criterion'' (Theorem~\ref{thm:pbw-koszulness-criterion}) takes as
-input: the theorem states precisely that
-\ref{seven:pbw-e2} $\Leftrightarrow$ \ref{seven:koszul} for any chiral
-algebra in the standard landscape equipped with a compatible PBW
-filtration. Every other bidirection is then obtained by routing
-through this primary equivalence.
+Second, Theorem~\ref{thm:koszul-equivalences-meta} identifies
+PBW $E_2$-collapse with chiral Koszulness inside the intrinsic
+finite-type core, while
+Theorem~\ref{thm:pbw-koszulness-criterion} supplies the
+filtered-complete proof of the associated-graded-to-filtered
+direction.  Every FTM arrow then routes through this primary
+equivalence.
 
 Third, the Vol~I landscape census
 (\texttt{chapters/examples/landscape\_census.tex}) verifies
 \ref{seven:pbw-e2} concretely for every named family (Heisenberg,
-affine Kac--Moody at non-critical level, Virasoro at generic $c$,
-principal $\cW_N$ at generic $\Psi$, $\beta\gamma$, lattice VOA, bc).
-The verification is therefore \emph{checkable} case-by-case, not
-inferred from an abstract formality statement.
+affine Kac--Moody away from the exceptional set, Virasoro at generic
+$c$, principal $\cW_N$ at generic $\Psi$, $\beta\gamma$, lattice VOA,
+bc).  The verification is case-by-case PBW finite-type verification,
+not an inference from Swiss-cheese formality.
 
 \begin{theorem}[Six-fold TFAE on the Koszul locus, with a class-$G$
 seventh equivalence; \ClaimStatusConditional]
 \label{thm:ftm-seven-fold-tfae-via-hub-spoke}
 \index{FTM TFAE!six-fold on Koszul locus plus class-G seventh|textbf}
-Let $\cA$ be an augmented chiral algebra on a smooth genus-zero curve
-$X$ equipped with a PBW filtration $F_\bullet$ that is exhaustive,
-complete, and bounded below.
+Let $(\cA,F_\bullet)$ lie in the genus-zero finite-type PBW window of
+Definition~\ref{def:ftm-g0-pbw-window}.
 \begin{enumerate}[label=\textup{(\Alph*)}]
-\item \textup{(Six-fold TFAE on the Koszul locus.)} The six
+\item \textup{(Six-fold intrinsic TFAE.)} The six
 conditions
 \ref{seven:koszul}, \ref{seven:counit-qi}, \ref{seven:unit-we},
 \ref{seven:ttacyclic}, \ref{seven:bar-conc-wt1}, \ref{seven:pbw-e2}
@@ -177,42 +222,46 @@ with five independent bidirections
 \ref{seven:bar-conc-wt1} \,\Leftrightarrow\, \ref{seven:pbw-e2}.
 \]
 Transitivity then furnishes the remaining $\binom{5}{2} = 10$
-bidirections of the six-fold equivalence. No confabulated
-$\binom{6}{2}=15$-arrow independent-proof structure is asserted.
-\item \textup{(Class-$G$ seventh equivalence.)} Restricting attention
-to the class-$G$ stratum of the shadow archetype classification
-(Heisenberg, lattice VOA, free fermion), the SC-formality condition
-\ref{seven:sc-formal} is equivalent to every condition of (A), giving
-a seven-fold TFAE on that stratum. This equivalence is genuinely
-\emph{class-$G$-scoped}: for class-$L$, class-$C$, and class-$M$
-members of the standard landscape, conditions
-\ref{seven:koszul}--\ref{seven:bar-conc-wt1} and \ref{seven:pbw-e2}
-hold but \ref{seven:sc-formal} fails
+bidirections of the six-fold equivalence.
+\item \textup{(Class-$G$ seventh equivalence.)} On the standard
+landscape, the seventh condition satisfies
+\[
+\ref{seven:sc-formal}
+\quad\Longleftrightarrow\quad
+\bigl(\ref{seven:pbw-e2}\ \text{and}\ \cA\in\mathsf{G}\bigr).
+\]
+After restricting the parameter space to the class-$G$ stratum
+(Heisenberg, lattice VOA, free fermion), this becomes an honest
+seventh equivalence with the six intrinsic conditions.  For generic
+class-$L$, class-$C$, and class-$M$ members in the finite-type window,
+the six intrinsic conditions hold but \ref{seven:sc-formal} fails
 \textup{(Remark~\ref{rem:sc-formal-parametrised-scope})}.
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-Part (A): the five spokes to the PBW $E_2$-collapse hub are proved
-below, one section each. Each spoke cites an existing theorem for the
-forward direction and an existing theorem for the reverse direction.
-Transitivity of ``if and only if'' then assembles the six-fold TFAE.
-Part (B) is Corollary~\ref{cor:ftm-seventh-class-G} below.
+The five intrinsic spokes to the PBW $E_2$-collapse hub are proved
+below, one section each, inside
+Definition~\ref{def:ftm-g0-pbw-window}.  Transitivity of
+``if and only if'' assembles the six-fold TFAE.  The class-$G$
+seventh statement is Corollary~\ref{cor:ftm-seventh-class-G}.
 \end{proof}
 
 \begin{corollary}[Seventh (SC-formality) equivalence on class~$G$;
 \ClaimStatusConditional]
 \label{cor:ftm-seventh-class-G}
-On the class-$G$ stratum, condition \ref{seven:sc-formal} is
-equivalent to \ref{seven:pbw-e2}. The forward implication
-\ref{seven:sc-formal} $\Rightarrow$ \ref{seven:pbw-e2} is immediate
-(class-$G$ algebras are Koszul). The reverse
-\ref{seven:pbw-e2} $\Rightarrow$ \ref{seven:sc-formal} restricted to
-class $G$ is Proposition~\ref{prop:sc-formal-iff-class-g}.
+On the standard landscape,
+\[
+\ref{seven:sc-formal}
+\quad\Longleftrightarrow\quad
+\bigl(\ref{seven:pbw-e2}\ \text{and}\ \cA\in\mathsf{G}\bigr).
+\]
+Consequently, after restriction to the class-$G$ stratum, condition
+\ref{seven:sc-formal} is equivalent to \ref{seven:pbw-e2}.
 \end{corollary}
 
 \begin{proof}
-This restates Proposition~\ref{prop:ftm-spoke-sc-pbw}.
+This is Proposition~\ref{prop:ftm-spoke-sc-pbw}.
 \end{proof}
 
 \section{Spoke 1: Koszul \texorpdfstring{$\Leftrightarrow$}{iff} PBW
@@ -226,18 +275,16 @@ condition~\ref{seven:pbw-e2}.
 \end{proposition}
 
 \begin{proof}
-This is the PBW-Koszulness criterion,
-Theorem~\ref{thm:pbw-koszulness-criterion}, applied at genus zero.
-The forward direction \ref{seven:koszul} $\Rightarrow$
-\ref{seven:pbw-e2} is the statement that Koszulness of the universal
-twisting morphism implies that the bar-filtration spectral sequence
-degenerates. The reverse \ref{seven:pbw-e2} $\Rightarrow$
-\ref{seven:koszul} is the Priddy-style classical-Koszul transfer:
-$E_2$-collapse gives associated-graded acyclicity of the Koszul
-complex, which is equivalent to classical Koszulness of
-$\mathrm{gr}_F \cA$; acyclicity of twisted tensor products on the
-universal curve follows from filtered-comparison
-(Lemma~\ref{lem:filtered-comparison}).
+This is the intrinsic core
+\textup{(i)}$\Leftrightarrow$\textup{(ii)} of
+Theorem~\ref{thm:koszul-equivalences-meta}, restricted to the
+genus-zero finite-type PBW window.  The forward direction is
+Koszulness of $\tau_{\mathrm{univ}}$ forcing degeneration of the
+PBW bar spectral sequence.  The reverse direction is the
+filtered-complete Priddy transfer: PBW $E_2$-collapse identifies the
+associated-graded Koszul complex with a classically Koszul datum, and
+Lemma~\ref{lem:filtered-comparison} lifts the associated-graded
+acyclicity to the filtered chiral twisted tensor products.
 \end{proof}
 
 \section{Spoke 2: counit qi \texorpdfstring{$\Leftrightarrow$}{iff}
@@ -282,18 +329,14 @@ condition~\ref{seven:pbw-e2}.
 \end{proposition}
 
 \begin{proof}
-Bar--cobar adjunction is an adjoint equivalence between $A_\infty$
-augmented algebras and conilpotent $A_\infty$ coalgebras (the
-chiral adaptation of \cite[Theorem~2.3.1]{LV12}): the bar complex
-$\bar B^{\ord}_X$ is right adjoint to the cobar complex $\Omega_X$,
-and the unit $\eta_\tau$ and counit $\varepsilon_\tau$ are linked by
-the triangle identities. For $L=\Omega_X$ and
-$R=\bar B^{\ord}_X$, the identity
-$R(\varepsilon_\cA)\circ\eta_{R(\cA)}=\mathrm{id}_{R(\cA)}$
-links the unit at $R(\cA)$ to the right-adjoint image of the counit
-at~$\cA$; in the present case this is exactly
-Theorem~\ref{thm:fundamental-twisting-morphisms}\ref{ftm:counit}%
---\ref{ftm:unit}. Composing with Spoke 2 gives
+For the single universal twisting datum
+$(\cA,\barB^{\ord}_X(\cA),\tau_{\mathrm{univ}},F_\bullet)$,
+Theorem~\ref{thm:fundamental-twisting-morphisms}
+\ref{ftm:counit}--\ref{ftm:unit} identifies the counit
+quasi-isomorphism and the unit weak equivalence.  The triangle
+identities of the bar--cobar adjunction supply the comparison of the
+two canonical maps; no assertion about all maps
+$\cC\to\barB^{\ord}_X(\cA)$ is used.  Composing with Spoke 2 gives
 \ref{seven:unit-we} $\Leftrightarrow$ \ref{seven:counit-qi}
 $\Leftrightarrow$ \ref{seven:pbw-e2}.
 \end{proof}
@@ -320,26 +363,28 @@ quasi-isomorphism, which is condition~\ref{seven:counit-qi}; Spoke 2
 then gives~\ref{seven:pbw-e2}.
 
 \emph{Reverse} \ref{seven:pbw-e2} $\Rightarrow$ \ref{seven:ttacyclic}.
-This is the direction that would-be tautology interpretations
-collapse onto a single cited theorem. $E_2$-collapse on
+This direction contains the filtered step.  $E_2$-collapse on
 $\bar B^{\ord}_X(\cA)$ means every transferred differential
 $d_r = 0$ for $r \geq 2$, hence the associated graded
 $\mathrm{gr}_F \bar B^{\ord}_X(\cA)$ is the classical bar complex of
-$\mathrm{gr}_F \cA$, which is classically Koszul
-(Theorem~\ref{thm:pbw-koszulness-criterion}). Both classical twisted
+$\mathrm{gr}_F \cA$.  Inside
+Definition~\ref{def:ftm-g0-pbw-window}, the PBW recognition circuit
+identifies the associated-graded twisting datum as classically
+Koszul.  Both classical twisted
 tensor products $K_{\bar\tau}^L$ and $K_{\bar\tau}^R$ on the
 associated-graded side are acyclic by Priddy 1970
 \cite[Proposition~2.1]{Priddy1970}. The strong-convergence hypothesis
 built into the twisting datum
 (Definition~\ref{def:chiral-twisting-datum}) then lifts this
 acyclicity from the associated-graded to the filtered complexes
-$K_\tau^L(\cA, \cC)$ and $K_\tau^R(\cC, \cA)$; the lift is
+$K_\tau^L(\cA,\barB^{\ord}_X(\cA))$ and
+$K_\tau^R(\barB^{\ord}_X(\cA),\cA)$; the lift is
 Lemma~\ref{lem:filtered-comparison}. This uses genuine filtered
 spectral-sequence input, not merely the abstract Koszul bidirection,
 and is therefore the spoke where non-tautology is visible.
 \end{proof}
 
-\section{Spoke 5: bar concentration in weight 1
+\section{Spoke 5: diagonal bar concentration
 \texorpdfstring{$\Leftrightarrow$}{iff} PBW $E_2$-collapse}
 \label{sec:ftm-spoke-5}
 
@@ -351,16 +396,19 @@ condition~\ref{seven:pbw-e2}.
 
 \begin{proof}
 \emph{Forward} \ref{seven:bar-conc-wt1} $\Rightarrow$
-\ref{seven:pbw-e2}: bar-weight concentration identifies the bar
-cohomology with a graded coalgebra concentrated in a single
-weight-per-bar-degree. Under the PBW filtration this forces all
-PBW-differentials $d_r = 0$ for $r \geq 2$: a nonzero $d_r$ with
-$r \geq 2$ would move weight and hence break concentration.
+\ref{seven:pbw-e2}: diagonal bar concentration makes the bar
+resolution compute a diagonal Ext algebra.  The
+Ext-diagonal criterion
+(Theorem~\ref{thm:ext-diagonal-vanishing}) then forces the PBW
+differentials $d_r$ for $r \geq 2$ to vanish: such a differential
+has bidegree $(r,1-r)$ and would create an off-diagonal Ext class in
+the strongly convergent spectral sequence.
 
 \emph{Reverse} \ref{seven:pbw-e2} $\Rightarrow$
 \ref{seven:bar-conc-wt1}: Theorem~\ref{thm:bar-concentration} states
 that for a chiral Koszul pair, bar cohomology is concentrated in
-bar-differential degree~$0$ with $\dim H^{p,0} = \dim \cA^i_p$. The
+bar-differential degree~$0$ with
+$H^{p,0}\cong(\cA^{\mathrm i})_p$. The
 bar-degree grading coincides with the weight grading at genus zero
 because the bar differential preserves weight, and the bar-degree
 grading is the weight grading of the Koszul dual (see
@@ -368,57 +416,70 @@ Corollary~\ref{cor:bar-cohomology-koszul-dual}). Spoke 1 turns
 \ref{seven:pbw-e2} into Koszulness of the universal twisting morphism,
 which is the input of Theorem~\ref{thm:bar-concentration}.
 
-The slogan ``bar concentrated in weight 1'' names this phenomenon: the
-augmentation-ideal contribution $s^{-1}\bar\cA$ enters at weight 1,
-and all of $H^*(\bar B^{\ord}_X(\cA))$ is freely generated by iterates
-of this single weight-1 piece at $E_2$, hence ``weight~$1$ generates
-the whole bar cohomology.''
+This is a statement about the coalgebra
+$\cA^{\mathrm i}=H^\bullet\barB^{\ord}_X(\cA)$, not about the
+Verdier-dual algebra $\cA^!$ unless the finite-type duality
+hypothesis of Definition~\ref{def:ftm-g0-pbw-window}\textup{(W5)}
+is present.  For non-abelian examples such as affine Kac--Moody,
+the $E_1$ exterior coalgebra is cut by the Chevalley--Eilenberg
+$d_1$ differential; the surviving $\cA^{\mathrm i}$ is not the free
+exterior coalgebra on the weight-$1$ generators
+\textup{(}Remark~\ref{rem:ce-vs-exterior}\textup{)}.
 \end{proof}
 
 \section{Spoke 6: SC-formality
 \texorpdfstring{$\Leftrightarrow$}{iff} class G, and the PBW hub}
 \label{sec:ftm-spoke-6}
 
-This spoke is logically weakest: at genus zero, SC-formality
-characterises the Gaussian locus (class G), which is a \emph{subclass}
-of the Koszul locus. The bidirection with \ref{seven:pbw-e2} therefore
-holds at the \emph{parametrised} level: on the standard landscape's
-``class G'' stratum, SC-formality $\Leftrightarrow$ PBW $E_2$-collapse
-$\cap$ class G.
+SC-formality characterises the Gaussian locus (class $G$), not the
+whole Koszul locus.  The correct unparametrised statement is
+\[
+\ref{seven:sc-formal}
+\quad\Longleftrightarrow\quad
+\bigl(\ref{seven:pbw-e2}\ \text{and}\ \cA\in\mathsf{G}\bigr)
+\]
+inside the standard landscape.  The displayed equivalence reduces to
+\ref{seven:sc-formal} $\Leftrightarrow$ \ref{seven:pbw-e2} only after
+the parameter space has already been restricted to class~$G$.
 
 \begin{proposition}[Spoke 6, parametrised; \ClaimStatusConditional]
 \label{prop:ftm-spoke-sc-pbw}
-Restrict attention to class~$G$ of the shadow archetype classification
-(Heisenberg, lattice VOA, free fermion). Then
+For $\cA$ in the standard landscape and in the genus-zero finite-type
+PBW window,
+\[
+\ref{seven:sc-formal}
+\quad\Longleftrightarrow\quad
+\bigl(\ref{seven:pbw-e2}\ \text{and}\ \cA\in\mathsf{G}\bigr).
+\]
+After restriction to class~$G$ (Heisenberg, lattice VOA, free
+fermion), this is the bidirection
 \ref{seven:sc-formal} $\Leftrightarrow$ \ref{seven:pbw-e2}.
 \end{proposition}
 
 \begin{proof}
-Within class~$G$:
-\emph{Forward} \ref{seven:sc-formal} $\Rightarrow$ \ref{seven:pbw-e2}
-is immediate: class-$G$ algebras are Koszul at every member of the
-family (verified in the landscape census), so Spoke 1 gives the
-conclusion.
+\emph{Forward.}  Proposition~\ref{prop:sc-formal-iff-class-g} gives
+SC-formality $\Rightarrow \cA\in\mathsf{G}$.  The class-$G$ families
+are genus-zero PBW-Koszul in the finite-type window, so Spoke~1 gives
+\ref{seven:pbw-e2}.
 
-\emph{Reverse} \ref{seven:pbw-e2} $\Rightarrow$ \ref{seven:sc-formal}:
-Proposition~\ref{prop:sc-formal-iff-class-g} shows that
-SC-formality on the standard landscape is equivalent to class~$G$.
-Since the premise restricts to class~$G$, SC-formality holds.
+\emph{Reverse.}  If \ref{seven:pbw-e2} holds and
+$\cA\in\mathsf{G}$, then
+Proposition~\ref{prop:sc-formal-iff-class-g} gives
+SC-formality.  The class condition is part of the premise; PBW
+$E_2$-collapse alone does not imply SC-formality.
 \end{proof}
 
 \begin{remark}[Parametrisation is forced]
 \label{rem:sc-formal-parametrised-scope}
 The \emph{unparametrised} bidirection \ref{seven:sc-formal}
-$\Leftrightarrow$ \ref{seven:pbw-e2} is false as stated. Every
-class-$L$, class-$C$, class-$M$ algebra in the standard landscape is
-Koszul (so \ref{seven:pbw-e2} holds) but not SC-formal
-(Proposition~\ref{prop:swiss-cheese-nonformality-by-class}). The
-hub-and-spoke diagram therefore includes Spoke 6 as a
-\emph{parametrised} equivalence, with the parametrisation being the
-shadow archetype. The seven-fold TFAE holds on the class-$G$ stratum
-of the landscape; on the larger Koszul locus the first six conditions
-remain equivalent, and the seventh refines the equivalence to its
-Gaussian subclass.
+$\Leftrightarrow$ \ref{seven:pbw-e2} is false.  Generic class-$L$,
+class-$C$, and class-$M$ algebras in the standard landscape satisfy
+PBW $E_2$-collapse in the finite-type window, but they are not
+SC-formal
+(Proposition~\ref{prop:swiss-cheese-nonformality-by-class}).  The
+seven-fold TFAE is therefore a theorem on the class-$G$ stratum; on
+the larger Koszul locus the first six conditions remain equivalent,
+and the seventh cuts out the Gaussian subclass.
 \end{remark}
 
 \section{Non-tautology theorem}
@@ -429,12 +490,15 @@ Gaussian subclass.
 \index{FTM seven-fold TFAE!non-tautology}
 The hub-and-spoke bidirection
 \ref{seven:ttacyclic} $\Leftrightarrow$ \ref{seven:pbw-e2}
-(Spoke~4) is not tautological: the forward direction requires a
-filtered-comparison argument (passage from associated-graded
-acyclicity to filtered acyclicity), and the reverse direction
-requires the cone identification
-$K_\tau^L \simeq \mathrm{Cone}(\varepsilon_\tau)[-1]$, neither of
-which is implied by definition unfolding. Consequently the six-fold
+(Spoke~4) is not tautological: the direction
+\ref{seven:ttacyclic} $\Rightarrow$ \ref{seven:pbw-e2} requires the
+cone identification
+$K_\tau^L \simeq \mathrm{Cone}(\varepsilon_\tau)[-1]$, a
+chain-level computation not implied by definition unfolding, and the
+direction
+\ref{seven:pbw-e2} $\Rightarrow$ \ref{seven:ttacyclic} requires the
+filtered-comparison argument transferring associated-graded
+acyclicity to filtered acyclicity. Consequently the six-fold
 TFAE of clause~(A) of
 Theorem~\ref{thm:ftm-seven-fold-tfae-via-hub-spoke} is genuine
 content: deleting Spoke~4's filtered-comparison lemma breaks the
@@ -469,97 +533,102 @@ route from acyclicity to $E_2$-collapse), the full six-fold TFAE
 would fail. Hence the theorem is not tautological.
 \end{proof}
 
-\begin{remark}[Where the adversarial complaint lives]
-\label{rem:adversarial-locus}
-The original ``$21$-arrow adversarial'' objection to the headline
-TFAE is resolved by the following observation. In a hub-and-spoke
-diagram with hub $H$ and spokes $S_1, \dots, S_5$, the statement
-``$H, S_1, \dots, S_5$ are TFAE'' is provable from five independent
-bidirections $S_i \Leftrightarrow H$; the $\binom{6}{2} - 5 = 10$
-remaining bidirections are consequences of transitivity. Adding the
-class-$G$-scoped SC-formality equivalence as a sixth spoke adds one
-more independent bidirection on the class-$G$ stratum.
-Transitivity is not a tautology in the vacuous sense: each of the
-base bidirections is a non-trivial theorem (Spoke~4 being the
-most visibly non-tautological, per
-Proposition~\ref{prop:no-tautology-at-g0}). The headline TFAE is
-therefore a theorem with six genuine proof obligations, not twenty-one
-and not zero. The ghost arithmetic that a seven-object equivalence
-requires $21$ independent bidirections misses the hub: once a single
-condition is fixed as hub, transitivity promotes $15$ arrows to free
-consequences of the remaining six.
+\begin{remark}[Combinatorics of the hub]
+\label{rem:ftm-hub-combinatorics}
+In a hub-and-spoke diagram with hub $H$ and spokes
+$S_1,\dots,S_5$, the statement
+``$H,S_1,\dots,S_5$ are TFAE'' is proved from five independent
+bidirections $S_i\Leftrightarrow H$; the
+$\binom{6}{2}-5=10$ remaining bidirections are consequences of
+transitivity.  Adding the class-$G$-scoped SC-formality spoke adds
+one more independent bidirection only on the class-$G$ stratum.
+Thus the proof obligations are five intrinsic spokes plus one
+parametrised spoke, not $21$ direct arrows.  Spoke~4 is the visible
+non-formal step because it uses both the cone computation and the
+filtered-comparison lemma.
 \end{remark}
 
-\section{Higher-genus behaviour of each spoke}
+\section{Higher-genus survival of the spokes}
 \label{sec:ftm-higher-genus}
 
 The seven conditions of
 Definition~\ref{def:seven-conditions-g0} behave differently under
-lift to genus $g \geq 1$. Some spokes extend unchanged; others
-acquire curvature corrections; the SC-formality spoke fails already at
-genus $1$ for class $L$.
+lift to genus $g \geq 1$.  The FTM arrows live on completed curved
+twisting data; the PBW spoke requires a named all-genera PBW theorem;
+diagonal bar concentration is a separate curved-bar assertion; and
+the scalar formula $\mathrm{obs}_g=\kappa(\cA)\lambda_g$ is available
+only on the scalar lane of Definition~\ref{def:scalar-lane} or at
+the explicitly stated genus-$1$ exception.
 
-\begin{corollary}[Genus extension of each spoke;
+\begin{corollary}[Higher-genus survival, with scalar-lane scope;
 \ClaimStatusConditional]
 \label{cor:TFAE-extends-to-genus-1-uniform-weight}
 \index{FTM seven-fold TFAE!genus extension}
-Let $\cA$ be on the uniform-weight lane of the standard landscape.
-Then at genus $g = 1$:
+Fix $g\geq 1$.  Let $\cA$ be a standard-landscape chiral algebra
+whose completed genus-$g$ bar datum lies on the higher-genus Koszul
+locus of Theorem~\ref{thm:higher-genus-inversion}.  Assume the
+relevant all-genera PBW theorem is available for the family
+\textup{(}for example
+Theorems~\ref{thm:pbw-allgenera-km},
+\ref{thm:pbw-allgenera-virasoro}, and
+\ref{thm:pbw-allgenera-principal-w}\textup{)}.  Then:
 \begin{itemize}
-\item[\textup{(a)}] Spokes 1, 2, 3, 4 (Koszul $\Leftrightarrow$ PBW
-$E_2$-collapse, counit qi $\Leftrightarrow$ PBW, unit we
-$\Leftrightarrow$ PBW, twisted tensor acyclic $\Leftrightarrow$ PBW)
-persist at genus 1: the uniform-weight scalar curvature
-$\kappa(\cA) \cdot \omega_g$ enters the bar differential at fiberwise
-level but preserves the PBW filtration, so the $E_2$-collapse
-equivalence lifts.
-\item[\textup{(b)}] Spoke 5 (bar concentration in weight 1) fails at
-$g \geq 1$ for all classes except class $G$. The fiberwise
-obstruction $d_{\mathrm{fib}}^2 = \kappa \cdot \omega_g$ produces
-bar cohomology at bar-weight $\neq 1$ whenever $\kappa \neq 0$: the
-universal curvature cocycle $\omega_g$ contributes a weight-raising
-class that breaks concentration. The forward implication ``bar
-concentration in weight 1 $\Rightarrow$ PBW $E_2$-collapse'' now
-acquires a conditional: the claim in
-Proposition~\ref{prop:ftm-spoke-bar-conc-pbw} becomes
-``bar concentration in weight 1 $\Rightarrow$ $\kappa(\cA) = 0$'' at
-$g \geq 1$.
-\item[\textup{(c)}] Spoke 6 (SC-formality $\Leftrightarrow$ class $G$)
-persists at every genus on the class-$G$ stratum: genus lift
-preserves Gaussian factorisation (Corollary~\ref{cor:lattice-postnikov-termination},
-Wick-contraction argument).
+\item[\textup{(a)}] The FTM equivalence among Koszulness, counit
+quasi-isomorphism, unit weak equivalence, and twisted tensor
+acyclicity persists for the completed genus-$g$ twisting datum.  The
+PBW hub remains equivalent to this FTM core precisely for the families
+covered by the named all-genera PBW theorem.
+\item[\textup{(b)}] Diagonal bar concentration is not controlled by
+the scalar number $\kappa(\cA)$ alone.  It persists at genus~$g$ only
+when the curved PBW spectral sequence remains diagonal after the
+genus-$g$ correction.  On the scalar lane, the obstruction class is
+the scalar projection
+$\mathrm{obs}_g(\cA)=\kappa(\cA)\lambda_g$
+\textup{(}Proposition~\ref{prop:scalar-obstruction-hodge-euler},
+Theorem~\ref{thm:genus-universality}\textup{)}; off the scalar lane,
+multi-weight cross-channel terms of
+Definition~\ref{def:scalar-lane} intervene.  Thus the genus-zero
+Spoke~5 is not promoted to a higher-genus equivalence without a
+separate diagonal-concentration theorem.
+\item[\textup{(c)}] The SC-formality spoke remains class-$G$-scoped.
+For Gaussian families with all-genus Wick factorisation, such as the
+Heisenberg/lattice/free-fermion witnesses, the higher operations
+remain zero
+\textup{(}Corollary~\ref{cor:lattice-postnikov-termination}\textup{)}.
+For non-Gaussian classes, PBW survival does not imply
+SC-formality.
 \end{itemize}
-The genus-0 ``resolves tautology'' slogan therefore refines to the
-positive statement that Spokes 1, 2, 3, 4 persist to genus $\geq 1$
-under uniform weight, Spoke 5 loses its forward implication at $g
-\geq 1$ outside class $G$, and Spoke 6 remains a class-$G$
-parametrised equivalence at every genus.
 \end{corollary}
 
 \begin{proof}
-(a) For Spokes 1--4: the PBW filtration is defined fiberwise
-(Definition~\ref{def:pbw-filtration-modular}) and the uniform-weight
-curvature $\kappa \cdot \omega_g$ lifts to the $E_1$-page of the PBW
-spectral sequence as a degree-0 shift, preserving the filtration.
-$E_2$-collapse then is stable under the uniform-weight curvature
-correction. Counit qi, unit we, and twisted tensor acyclicity inherit
-the lift because they are adjunction data that track the PBW
-filtration.
+(a) The completed genus-$g$ bar object is the ambient object of
+Theorem~\ref{thm:higher-genus-inversion}; on that locus the
+bar--cobar counit is a quasi-isomorphism and the FTM proof of
+Theorem~\ref{thm:fundamental-twisting-morphisms} applies to the
+completed curved twisting datum.  The PBW condition is not automatic
+from the word ``genus''.  It is supplied by the family-specific
+all-genera PBW results named in the statement, where the genus
+correction preserves the relevant filtered comparison.
 
-(b) For Spoke 5: the fiberwise bar differential
-$d_{\mathrm{fib}}^2 = \kappa \cdot \omega_g$
-(Theorem~\ref{thm:genus-universality} and
-Proposition~\ref{prop:ftm-spoke-bar-conc-pbw}\textup{)} produces a
-nontrivial cocycle at bar-weight two; the bar cohomology acquires a
-class at weight~$\neq 1$ for every $\kappa \neq 0$. Concentration in
-weight~$1$ therefore implies $\kappa = 0$, which (on the standard
-landscape) forces class~$G$.
+(b) The scalar obstruction formula is a projection of the universal
+curved bar datum, not the whole curved spectral sequence.  On the
+scalar lane, Proposition~\ref{prop:scalar-obstruction-hodge-euler}
+and Theorem~\ref{thm:genus-universality} identify the diagonal scalar
+obstruction with $\kappa(\cA)\lambda_g$.  Definition~\ref{def:scalar-lane}
+records the failure of this one-variable description for multi-weight
+algebras at $g\geq 2$, where cross-channel corrections appear.  Hence
+bar diagonal concentration at higher genus requires a direct
+curved-PBW diagonal theorem; it is not equivalent to the vanishing of
+a scalar $\kappa$.
 
-(c) For Spoke 6: class $G$ is defined by Gaussian factorisation of
-genus-zero amplitudes. Wick's theorem (applied to lattice VOAs and
-Heisenberg; \cite{FLM1988}) extends to all-genus amplitudes because
-the higher-genus bar complex is the genus-0 bar complex twisted by
-the period matrix $\Omega$; no new non-Wick contraction enters.
+(c) Proposition~\ref{prop:sc-formal-iff-class-g} is genus-zero
+Swiss-cheese formality.  For Gaussian free-field families, Wick
+factorisation gives the same vanishing of primitive higher operations
+after genus lift; the lattice case is recorded in
+Corollary~\ref{cor:lattice-postnikov-termination}.  The non-Gaussian
+classes retain their first nonzero higher Swiss-cheese operation by
+Proposition~\ref{prop:swiss-cheese-nonformality-by-class}, so PBW
+survival gives no reverse implication to SC-formality.
 \end{proof}
 
 \begin{remark}[The SC-formality spoke at class $M$]
@@ -572,48 +641,48 @@ Spokes 1--5: class-$M$ algebras are genus-$0$ Koszul even though the
 SC-formality spoke excludes them.
 \end{remark}
 
-\section{Relation to the twelve-fold meta-theorem}
+\section{Relation to the Koszul meta-theorem}
 \label{sec:ftm-relation-meta}
 
-Theorem~\ref{thm:koszul-equivalences-meta} lists twelve equivalences
-(plus partial/conditional extensions): (i) Koszul, (ii) PBW
-$E_2$-collapse, (iii) minimal $A_\infty$-formal, (iv) Ext diagonal
-vanishing, (v) counit qi, (vi) Barr--Beck--Lurie, (vii) genus-0
-factorisation homology concentration (+ uniform-weight all-genera
-refinement), (viii) ChirHoch cohomological amplitude $[0,2]$, (ix)
-Kac--Shapovalov determinant non-vanishing, (x) FM boundary-stratum
-acyclicity, (xi) Lagrangian transversality (conditional), (xii)
-$\cD$-module purity (one-way). The seven-fold TFAE of the present
-chapter is the sub-diagram on
+Theorem~\ref{thm:koszul-equivalences-meta} has four layers.  Its
+intrinsic equivalence core contains Koszulness, PBW $E_2$-collapse,
+minimal $A_\infty$ formality, Ext diagonal vanishing, and the
+bar--cobar counit.  Its Barr--Beck--Lurie statement is a monadic
+consequence.  Its factorisation-homology criterion is conditional on
+the detecting comparison hypotheses.  Its chiral Hochschild amplitude
+$[0,2]$ is a one-way consequence on the Koszul locus, and its
+Lagrangian/perfectness and $\cD$-module purity clauses have their own
+conditional or one-way scopes.
+
+The seven-fold TFAE of the present chapter is the genus-zero
+sub-diagram on
 $\{\,\text{(i)},\,\text{(ii)},\,\text{(v)},\,\text{(iii)-hub-image},\,
-\text{bar-conc wt 1},\,\text{tt-acyclic},\,\text{SC-formal}\,\}$
+\text{diagonal bar concentration},\,\text{tt-acyclic},\,
+\text{SC-formal}\,\}$
 restricted to genus zero, with hub (ii) and spokes~1--6 as assigned
 above.
 
 \begin{remark}[What's new relative to the meta-theorem]
 \label{rem:ftm-sevenfold-delta}
-The meta-theorem's unconditional equivalence block at genus zero
-gives (i)-(vi), (ix), (x). Seven-fold TFAE adds two items: ``bar
-concentrated in weight 1'' (present implicitly as a consequence of
-(v) + bar-concentration theorem, but not named as a separate
-equivalence) and ``SC-formality'' (treated separately in
-Proposition~\ref{prop:sc-formal-iff-class-g} as a class-$G$
-characterisation). The hub-and-spoke reconstitution gives these two
-items the same standing as the other six, with the parametrisation
-caveat for Spoke~6 (class~$G$ only).
+The meta-theorem gives the PBW--Koszul--counit core.  The present
+chapter adds diagonal bar concentration as an explicit spoke by using
+Theorem~\ref{thm:bar-concentration} and
+Theorem~\ref{thm:ext-diagonal-vanishing}.  It adds SC-formality only
+as a parametrised spoke: Proposition~\ref{prop:sc-formal-iff-class-g}
+turns SC-formality into class-$G$ membership, not into an intrinsic
+property of the whole Koszul locus.
 \end{remark}
 
 \begin{remark}[Why we do not assert $21$-arrow independence]
 \label{rem:no-21-independence}
-Asserting $21$ independent bidirections would require proving, e.g.,
-``SC-formality $\Leftrightarrow$ counit qi'' without routing through
-PBW $E_2$-collapse. No such direct proof exists in the programme;
-every route between SC-formality and any other spoke factors through
-the hub. The hub-and-spoke framing is honest about this: $6$
-bidirections, not $21$, carry the proof obligation.
+Asserting $21$ independent bidirections would require proving, for
+example, ``SC-formality $\Leftrightarrow$ counit qi'' without routing
+through PBW $E_2$-collapse and without imposing class~$G$.  No such
+direct theorem is used here.  The proof obligation is five intrinsic
+bidirections with the hub, plus the class-$G$ parametrised spoke.
 \end{remark}
 
-\section{Non-tautology witness: worked counterexample at class $L$}
+\section{Non-tautology witness: class $L$}
 \label{sec:ftm-counterexample}
 
 To make non-tautology at the structural level operational, we exhibit
@@ -622,8 +691,10 @@ PBW $E_2$-collapse) is non-trivial.
 
 \begin{proposition}[Class-$L$ witness; \ClaimStatusConditional]
 \label{prop:class-L-witness}
-For the affine Kac--Moody vertex algebra $V_k(\mathfrak{sl}_2)$ at
-generic level $k \neq -h^\vee = -2$, at genus zero:
+For the affine Kac--Moody vertex algebra $V_k(\mathfrak{sl}_2)$ at a
+generic level $k\notin\Sigma(\mathfrak{sl}_2)$
+\textup{(}in particular away from the critical level
+$k=-h^\vee=-2$\textup{)}, at genus zero:
 \begin{itemize}
 \item[\textup{(i)}] PBW $E_2$-collapse holds, by the Kac--Shapovalov
 non-degeneracy criterion
@@ -634,12 +705,13 @@ following from the filtered-comparison argument of Spoke~4.
 \item[\textup{(iii)}] The filtered-comparison lemma is load-bearing:
 naive associated-graded computation gives acyclicity of the
 classical Koszul complex of $\mathrm{gr}_F V_k(\mathfrak{sl}_2) =
-\Sym(\mathfrak{sl}_2[t^{-1}] t^{-1}[t^{-1}])$, but the filtered lift
-to the chiral twisted tensor product on $X = \mathbb{P}^1$ requires
-the Kashiwara filtration hypothesis on the vacuum module (see
-Remark~\ref{rem:kac-moody-filtered-comparison}). Without this, the
-spectral sequence does not converge strongly and the twisted tensor
-product is not acyclic.
+\Sym(\mathfrak{sl}_2\otimes t^{-1}\bC[t^{-1}])$, but the filtered
+lift to the chiral twisted tensor product on $X = \mathbb{P}^1$
+requires the Kashiwara/conformal-weight completeness hypothesis on
+the vacuum module (see
+Remark~\ref{rem:kac-moody-filtered-comparison}).  Without this
+finite-type completion, the associated-graded calculation does not
+prove acyclicity of the filtered chiral twisted tensor product.
 \end{itemize}
 In particular, the bidirection of Spoke~4 contains genuine
 filtration-level content for affine Kac--Moody, confirming
@@ -648,15 +720,16 @@ Proposition~\ref{prop:no-tautology-at-g0}.
 
 \begin{proof}
 (i) is Theorem~\ref{thm:kac-shapovalov-koszulness}
-(Kac--Shapovalov determinant non-vanishing at generic $k$ implies
-PBW-Koszulness, hence $E_2$-collapse). (ii) follows from Spoke~4 of
+(Kac--Shapovalov determinant non-vanishing at
+$k\notin\Sigma(\mathfrak{sl}_2)$ implies PBW-Koszulness, hence
+$E_2$-collapse). (ii) follows from Spoke~4 of
 Theorem~\ref{thm:ftm-seven-fold-tfae-via-hub-spoke}. (iii) observes
 that the passage from associated-graded Koszulity to filtered
 Koszulity in the Kac--Moody case requires the Kashiwara filtration
 identification used in the proof of
-Proposition~\ref{prop:d-module-purity-km-equivalence}. Without that
-identification, the spectral sequence has non-trivial higher
-differentials and the reverse direction of Spoke~4 fails.
+Proposition~\ref{prop:d-module-purity-km-equivalence}.  Without that
+identification, the proof has only associated-graded acyclicity, not
+filtered twisted-tensor acyclicity.
 \end{proof}
 
 \begin{remark}[Kashiwara filtration on the Kac--Moody vacuum module;
@@ -664,17 +737,18 @@ differentials and the reverse direction of Spoke~4 fails.
 \label{rem:kac-moody-filtered-comparison}
 \index{Kashiwara filtration!on vacuum module}
 \index{filtered comparison!non-tautology at the chiral level}
-We make explicit the filtration step that is load-bearing in
-clause~(iii) of Proposition~\ref{prop:class-L-witness}. For
-$\cA=V_k(\mathfrak{sl}_2)$ at generic $k\neq -h^\vee=-2$, the
+The filtration step in clause~(iii) of
+Proposition~\ref{prop:class-L-witness} is the following.  For
+$\cA=V_k(\mathfrak{sl}_2)$ at
+$k\notin\Sigma(\mathfrak{sl}_2)$, the
 Kashiwara filtration $F^{\mathrm{Kash}}_\bullet V_k(\mathfrak{sl}_2)$
 on the vacuum module is the filtration by $L_0$-eigenspaces (the
 conformal-weight filtration), equivalently the PBW filtration on
 $U(\widehat{\mathfrak{sl}_2})$ restricted to the vacuum
 Verma-quotient. The associated graded
 $\mathrm{gr}^F V_k(\mathfrak{sl}_2)$ is the symmetric algebra
-$\Sym\bigl(\mathfrak{sl}_2[t^{-1}]\,t^{-1}\bigr)$, which is Koszul
-classically.
+$\Sym\bigl(\mathfrak{sl}_2\otimes t^{-1}\bC[t^{-1}]\bigr)$, which
+is Koszul classically.
 The filtered-comparison lemma
 (Lemma~\ref{lem:filtered-comparison}) demands that the filtration
 be exhaustive, complete, and bounded below, and that the spectral
@@ -691,24 +765,24 @@ $\mathrm{gr}^F V_k(\mathfrak{sl}_2)$ is finite in every degree and
 matches the PBW estimate. This \emph{finiteness-at-each-weight} is
 what closes the inverse limit at the chiral level.
 
-The non-tautology is visible by contrast with two nearby cases that
-fail:
+The non-tautology is visible by contrast with nearby cases outside
+the generic proof:
 \begin{itemize}
 \item[(a)] at the \emph{critical} level $k=-h^\vee=-2$, the
 Shapovalov form degenerates (the Feigin--Frenkel centre enters
 $\mathrm{gr}^F$), Kac--Kazhdan singular vectors at every bounded
 weight invalidate completeness, and the spectral sequence acquires
-non-trivial higher differentials. Spoke~4's reverse direction fails
-at $k=-h^\vee$;
-\item[(b)] at \emph{integer non-admissible} levels ($k\in\Z_{\geq 0}$
-with non-generic fusion), Verma multiplicity grows unboundedly within a
-fixed $L_0$-eigenspace through primitive-vector descent; completeness
-of $F^{\mathrm{Kash}}$ then fails in the same sense as (a).
+non-trivial higher differentials.  Spoke~4's reverse direction is
+not available at $k=-h^\vee$;
+\item[(b)] for non-generic simple quotients and logarithmic
+quotients, the finite-type and strong-convergence hypotheses must be
+verified separately before Spoke~4 can be invoked.
 \end{itemize}
 Thus ``classical associated-graded Koszulness implies filtered chiral
 Koszulness'' is a non-vacuous statement whose verification at
 $V_k(\mathfrak{sl}_2)$ requires the Kac--Kazhdan-generic
-multiplicity estimate, and fails off the generic locus. The
+multiplicity estimate, and is outside the theorem's scope off the
+generic locus until an equivalent finite-type completion is supplied. The
 filtered-comparison lemma is therefore load-bearing for the
 $V_k(\mathfrak{sl}_2)$
 witness; the step is not supplied by definition unfolding. Primary
@@ -720,17 +794,16 @@ modules at generic level).
 
 \begin{remark}[Failure-mode under relaxed hypotheses]
 \label{rem:ftm-sevenfold-failure-mode}
-If the PBW filtration is not exhaustive+complete+bounded-below, the
+If the PBW filtration is not exhaustive, complete, and bounded below, the
 spectral sequence of the bar complex may fail to converge strongly.
 In such cases: $E_2$-collapse can hold (locally in each bar degree)
 while twisted tensor acyclicity fails (the $F^\infty$-residue carries
-unkilled cohomology). This failure mode is not hypothetical:
-Virasoro at $c = 0$ with a naive filtration, affine Kac--Moody at
-the critical level $k = -h^\vee$, and logarithmic $\cW(p)$ all exhibit
-filtration issues that break strong convergence. The seven-fold TFAE
-statement carries these hypotheses inside its definition of ``PBW
-filtration'' (Definition~\ref{def:pbw-filtration-modular}); relaxing
-them breaks the hub-and-spoke structure.
+unkilled cohomology).  Critical affine level, non-generic simple
+quotients, and logarithmic $\cW(p)$ examples lie outside
+Definition~\ref{def:ftm-g0-pbw-window} until the relevant completed
+finite-type filtered model is proved.  The hub-and-spoke theorem uses
+that window as a hypothesis, not as an automatic consequence of
+having a PBW filtration.
 \end{remark}
 
 \section{Summary table}
@@ -757,48 +830,47 @@ $\Rightarrow$ condition \\
 & Lem~\ref{lem:twisted-product-cone-counit} + Spoke 2
 & Lem~\ref{lem:filtered-comparison} (filtered-comparison,
 non-tautological) \\
-5 & \ref{seven:bar-conc-wt1} bar conc. weight 1
-& weight-preservation of $d_r$
+5 & \ref{seven:bar-conc-wt1} diagonal bar concentration
+& Thm~\ref{thm:ext-diagonal-vanishing}
 & Thm~\ref{thm:bar-concentration} + Spoke 1 \\
 6 & \ref{seven:sc-formal} SC-formality (class $G$ only)
-& Prop~\ref{prop:sc-formal-iff-class-g}
-& Prop~\ref{prop:sc-formal-iff-class-g} \\
+& Prop~\ref{prop:sc-formal-iff-class-g} + Spoke 1
+& Prop~\ref{prop:sc-formal-iff-class-g} + class $G$ \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-Six rows, six bidirections, one hub. The seven-fold TFAE follows by
-transitivity, and the only non-tautological bidirection is Spoke 4's
-reverse direction, which invokes the filtered-comparison lemma
-(Lemma~\ref{lem:filtered-comparison}). Every other arrow routes
-through this one lemma plus the universal FTM
-(Theorem~\ref{thm:fundamental-twisting-morphisms}) plus the
-PBW-Koszulness criterion
-(Theorem~\ref{thm:pbw-koszulness-criterion}) plus the SC-formality
-characterisation (Proposition~\ref{prop:sc-formal-iff-class-g}).
+Six rows, one hub.  Rows 1--5 give the intrinsic six-fold TFAE in
+the finite-type genus-zero PBW window.  Row 6 is a parametrised spoke:
+it becomes a seventh equivalence only after class~$G$ is fixed.
+Spoke~4 is the most visibly non-formal bidirection: the forward arrow
+uses the cone computation
+Lemma~\ref{lem:twisted-product-cone-counit}, and the reverse arrow
+uses the filtered-comparison lemma
+Lemma~\ref{lem:filtered-comparison}.
 
-\section{Compact statement}
-\label{sec:ftm-status-update}
+\section{Compact theorem}
+\label{sec:ftm-compact-theorem}
 
-The seven-fold TFAE is a hub-and-spoke
-diagram with hub \ref{seven:pbw-e2} (PBW $E_2$-collapse) and six
-spokes, each an independent bidirection with the hub; the two
-additional equivalences (bar concentration in weight 1, SC-formality)
-are Spokes~5 and~6; the ``shadow-truncation'' phrasing in the
-compact form refers to the parametrisation of Spoke~6 as a
-class-$G$ equivalence (class $G$ has shadow tower truncated at
-degree~$2$, i.e., $S_r = 0$ for $r \geq 3$, which is the shadow
-content); and non-tautology is witnessed at Spoke~4 by the
-filtered-comparison lemma.
+The theorem is a finite-type genus-zero hub-and-spoke diagram with
+hub \ref{seven:pbw-e2} (PBW $E_2$-collapse).  The intrinsic theorem
+has five spokes and six equivalent conditions.  The seventh spoke is
+SC-formality, which is equivalent to the hub only on the class-$G$
+stratum, equivalently on the shadow-truncation locus
+$S_r=0$ for $r\geq 3$.  Diagonal bar concentration is a coalgebra
+statement about $\cA^{\mathrm i}$; scalar complementarity for
+$\cA^!$ and Hochschild amplitude for
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ are separate theorem packages.
 
 In one sentence:
 \begin{quote}
-\textit{Genus-0 seven-fold TFAE (hub-and-spoke): hub $=$ PBW
+\textit{Genus-0 finite-type FTM theorem: hub $=$ PBW
 $E_2$-collapse; Spokes $=$ Koszul morphism, counit qi, unit weak eq,
-twisted tensor acyclic, bar concentration in weight 1,
-SC-formality (class $G$ parametrised); non-tautology is visible at
-Spoke 4 via the filtered-comparison lemma
-\textup{(Lemma~\ref{lem:filtered-comparison})}. Genus extension:
-Spokes 1--4 persist; Spoke 5 loses forward implication off class $G$;
-Spoke 6 remains class-$G$-parametrised.}
+twisted tensor acyclic, diagonal bar concentration, and
+SC-formality with the class-$G$ parameter; non-tautology is visible at
+Spoke 4 via the cone computation and the filtered-comparison lemma
+\textup{(Lemmas~\ref{lem:twisted-product-cone-counit},
+\ref{lem:filtered-comparison})}. Higher genus requires the completed
+Koszul locus, a named all-genera PBW theorem, and scalar-lane
+hypotheses for any $\kappa\lambda_g$ statement.}
 \end{quote}

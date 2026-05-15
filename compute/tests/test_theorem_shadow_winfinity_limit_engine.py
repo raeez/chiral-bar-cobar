@@ -1,14 +1,14 @@
-r"""Tests for the W_{1+\infty} shadow depth phase transition engine.
+r"""Tests for finite W_N T-line constants and formal W_{1+infty} diagnostics.
 
-VERIFICATION STRATEGY (multi-path, per CLAUDE.md mandate):
+Verification strategy:
 
-    Path 1: Direct computation from convolution recursion at finite c.
-    Path 2: Closed-form L_r = (-1)^r * 2 * 6^{r-2} / (9r) verification.
-    Path 3: Ratio recursion L_{r+1}/L_r = -6r/(r+1).
-    Path 4: Generating function evaluation.
-    Path 5: Cross-check against theorem_shadow_arity_frontier_engine.py.
-    Path 6: Limiting cases (c -> inf, N = 2 reduces to Virasoro).
-    Path 7: Complementarity and duality consistency.
+    1. Direct computation from convolution recursion at finite c.
+    2. Closed-form L_r = (-1)^r * 2 * 6^{r-2} / (9r).
+    3. Ratio recursion L_{r+1}/L_r = -6r/(r+1).
+    4. Ordinary Taylor generating function evaluation.
+    5. Cross-check against existing local compute modules.
+    6. Limiting diagnostics without analytic or hierarchy promotion.
+    7. Complementarity and duality consistency.
 """
 
 import math
@@ -28,15 +28,21 @@ from theorem_shadow_winfinity_limit_engine import (
     channel_kappa_decomposition,
     complementarity_scaling,
     critical_discriminant,
+    depth_class_at_c,
     depth_transition_data,
+    finite_n_tline_constants,
     finite_N_correction,
     growth_rate_large_N,
     growth_rate_tline,
     harmonic,
+    analytic_certification_status,
+    kernel_normalization_constants,
     kappa_over_c_convergence,
     kappa_total,
     large_N_scaling_free_field,
     large_N_scaling_self_dual,
+    metric_excess_coefficient,
+    object_firewall_status,
     planar_limit_exact,
     planar_limit_float,
     planar_limit_generating_function,
@@ -149,7 +155,7 @@ class TestCentralCharge:
             assert c_self_dual(N) == alpha_N(N) / 2
 
     def test_c_self_dual_virasoro(self):
-        """c_sd(W_2) = 13 (AP8: self-dual at c=13)."""
+        """c_sd(W_2) = 13."""
         assert c_self_dual(2) == Fraction(13)
 
     def test_c_self_dual_asymptotic(self):
@@ -208,12 +214,64 @@ class TestTlineShadowTower:
             )
 
 
+class TestConstantFirewalls:
+    """Test exact constants and certification boundaries."""
+
+    def test_critical_discriminant_not_metric_excess(self):
+        """Delta_crit = 40/(5c+22), while the metric excess is 80/(5c+22)."""
+        c = Fraction(13)
+        assert critical_discriminant(c) == Fraction(40, 5 * 13 + 22)
+        assert metric_excess_coefficient(c) == Fraction(80, 5 * 13 + 22)
+        assert metric_excess_coefficient(c) == 2 * critical_discriminant(c)
+
+    def test_finite_n_tline_constants(self):
+        """Finite T-line constants match the local canonical Virasoro surface."""
+        c = Fraction(13)
+        constants = finite_n_tline_constants(c)
+        assert constants['S2'] == Fraction(13, 2)
+        assert constants['S3'] == Fraction(2)
+        assert constants['S4'] == Fraction(10, 13 * (5 * 13 + 22))
+        assert constants['S5'] == Fraction(-48, 13**2 * (5 * 13 + 22))
+
+    def test_kernel_normalizations_are_distinct(self):
+        """Raw trace-form, KZ, Heisenberg, and Virasoro kernels stay separate."""
+        kernels = kernel_normalization_constants()
+        assert kernels['affine_raw_trace_form'] == 'r^{KM}(z) = k*Omega_tr/z'
+        assert kernels['affine_kz_form'] == 'r_KZ(z) = Omega/((k+h^vee)z)'
+        assert kernels['heisenberg_collision_form'] == 'r^{Heis}(z) = k/z'
+        assert kernels['virasoro_collision_form'] == 'r^{Vir}(z) = (c/2)/z^3 + 2T/z'
+
+    def test_no_analytic_or_hierarchy_promotion(self):
+        """Finite shadow diagnostics do not certify analytic or hierarchy claims."""
+        status = analytic_certification_status()
+        assert status['finite_n_tline_constants_certified'] is True
+        assert status['formal_large_c_tline_diagnostics_certified'] is True
+        assert status['planar_class_g_promotion_certified'] is False
+        assert status['all_genus_partition_function_certified'] is False
+        assert status['analytic_tau_function_certified'] is False
+        assert status['borel_summability_certified'] is False
+        assert status['resurgence_data_certified'] is False
+        assert status['hierarchy_membership_certified'] is False
+        assert status['multiweight_cross_channel_certified'] is False
+
+    def test_bar_dual_bulk_objects_stay_distinct(self):
+        """Bar inversion, Verdier duality, and Hochschild bulk are separate."""
+        status = object_firewall_status()
+        assert status['A'] == 'chiral algebra'
+        assert status['B(A)'] == 'bar coalgebra'
+        assert status['A^!'] == 'Verdier continuous-linear dual algebra branch'
+        assert status['Z_ch^der(A)'] == 'derived chiral centre, Hochschild/bulk branch'
+        assert status['Omega(B(A))'] == 'bar-cobar inversion'
+        assert status['Omega_BA_is_koszul_duality'] is False
+        assert status['bulk_is_koszul_dual'] is False
+
+
 # ============================================================================
-# 4.  Planar shadow limits (MAIN THEOREM)
+# 4.  Formal planar shadow limits
 # ============================================================================
 
 class TestPlanarLimits:
-    """Test the closed-form planar limit L_r = (-1)^r * 2 * 6^{r-2} / (9r)."""
+    """Test the formal scalar limit L_r = (-1)^r * 2 * 6^{r-2} / (9r)."""
 
     def test_l4_exact(self):
         """L_4 = 2."""
@@ -340,12 +398,12 @@ class TestGeneratingFunction:
         assert abs(gf - partial) / abs(partial) < 1e-6
 
     def test_gf_convergence_radius(self):
-        """GF raises error for |6u| >= 1."""
+        """GF raises error outside the ordinary Taylor disk."""
         with pytest.raises(ValueError):
             planar_limit_generating_function(1.0 / 6.0)
 
     def test_gf_negative_u(self):
-        """GF works for negative u (within radius)."""
+        """GF works for negative u inside the ordinary Taylor disk."""
         u = -0.05
         gf = planar_limit_generating_function(u)
         partial = sum(planar_limit_float(r) * u**(r - 2) for r in range(4, 25))
@@ -353,45 +411,59 @@ class TestGeneratingFunction:
 
 
 # ============================================================================
-# 6.  Shadow depth phase transition
+# 6.  Finite class and formal degeneration
 # ============================================================================
 
-class TestPhaseTransition:
-    """Test the class M -> class G degeneration."""
+class TestFiniteClassFormalDegeneration:
+    """Test finite class M data and non-promoted formal degeneration."""
 
     def test_delta_nonzero_finite_c(self):
-        """Delta = 80/(5c+22) != 0 for any finite c != -22/5."""
+        """Delta_crit = 40/(5c+22) is nonzero for finite c != -22/5."""
         for c_val in [Fraction(1), Fraction(13), Fraction(1000)]:
             delta = critical_discriminant(c_val)
             assert delta != 0
 
     def test_delta_approaches_zero(self):
-        """Delta -> 0 as c -> inf. Scaling: Delta ~ 16/c."""
+        """Delta_crit -> 0 as c -> inf with scaling 8/c."""
         for c_val in [100, 1000, 10000, 100000]:
             delta = float(critical_discriminant(Fraction(c_val)))
             assert delta > 0
-            assert delta < 20.0 / c_val  # Delta ~ 16/c, allow 25% margin
+            assert delta < 10.0 / c_val
 
     def test_delta_scaling(self):
-        """Delta * c -> 16 as c -> inf (since Delta ~ 80/(5c) = 16/c)."""
+        """Delta_crit * c -> 8 as c -> inf."""
         for c_val in [1000, 10000, 100000]:
             product = float(critical_discriminant(Fraction(c_val))) * c_val
+            assert abs(product - 8) < 1.0, f"c={c_val}: product={product}"
+
+    def test_metric_excess_scaling(self):
+        """The metric excess is twice Delta_crit and scales as 16/c."""
+        for c_val in [1000, 10000, 100000]:
+            product = float(metric_excess_coefficient(Fraction(c_val))) * c_val
             assert abs(product - 16) < 1.0, f"c={c_val}: product={product}"
 
     def test_depth_class_always_M(self):
         """Depth class is M for all finite positive c."""
         for c_val in [Fraction(1, 2), Fraction(13), Fraction(10**6)]:
-            assert 'M' == 'M'  # class M at finite c, confirmed
+            assert depth_class_at_c(c_val) == 'M'
 
     def test_delta_at_self_dual(self):
-        """Delta at self-dual c ~ 8/N^3 for large N."""
+        """Delta_crit at self-dual c scales as 4/N^3."""
         for N in [10, 50, 100]:
             c = c_self_dual(N)
             delta = critical_discriminant(c)
-            # Delta ~ 80/(5*2N^3) = 8/N^3
-            predicted = Fraction(8) / Fraction(N**3)
+            predicted = Fraction(4) / Fraction(N**3)
             ratio = float(delta) / float(predicted)
             assert abs(ratio - 1) < 0.1, f"N={N}: ratio={ratio}"
+
+    def test_depth_data_does_not_promote_limit_class(self):
+        """Formal degeneration rows do not certify class-G or hierarchy membership."""
+        rows = depth_transition_data(N_values=[2, 5, 10], regime='self_dual')
+        for row in rows:
+            assert row['depth_class'] == 'M'
+            assert row['formal_limit_depth_class'] == 'not_certified'
+            assert row['planar_class_g_promotion_certified'] is False
+            assert row['hierarchy_membership_certified'] is False
 
 
 # ============================================================================
@@ -436,11 +508,13 @@ class TestLargeNScaling:
         result = large_N_scaling_self_dual(N_values=[2, 5, 10])
         assert len(result['data']) == 3
         assert 'planar_limits' in result
+        assert all(row['planar_class_g_promotion_certified'] is False for row in result['data'])
 
     def test_free_field_scaling_runs(self):
         """large_N_scaling_free_field returns data."""
         result = large_N_scaling_free_field(N_values=[2, 5, 10])
         assert len(result['data']) == 3
+        assert all(row['planar_class_g_promotion_certified'] is False for row in result['data'])
 
     def test_s4_c2_monotone_to_2(self):
         """S_4 * c^2 increases monotonically toward 2 at self-dual."""
@@ -484,18 +558,20 @@ class TestThooftLimit:
         assert c < 0
 
     def test_thooft_max_N(self):
-        """N_max ~ floor(1/lambda - 1)."""
-        assert thooft_max_N(0.1) == 9
+        """Fixed 0 < lambda < 1 has no positive-c N >= 2 window."""
+        assert thooft_max_N(0.1) == 1
         assert thooft_max_N(0.5) == 1
-        assert thooft_max_N(0.01) == 99
+        assert thooft_max_N(0.01) == 1
 
     def test_thooft_shadow_data_runs(self):
-        """thooft_shadow_data returns valid structure for small lambda."""
+        """thooft_shadow_data returns a non-promoted structure for fixed lambda."""
         result = thooft_shadow_data(Fraction(1, 20), max_r=6)
         assert 'data' in result
         assert 'lambda' in result
         assert abs(float(result['lambda']) - 0.05) < 1e-10
-        # Data may be empty at extreme lambda values
+        assert result['N_max_positive'] == 1
+        assert result['positive_c_certified'] is False
+        assert result['analytic_continuation_certified'] is False
         for row in result['data']:
             assert row['c'] > 0
 
@@ -535,6 +611,12 @@ class TestMultiChannel:
             result = channel_kappa_decomposition(N, Fraction(1))
             assert result['anomaly_ratio'] == anomaly_ratio(N)
 
+    def test_channel_kappa_is_not_cross_channel_data(self):
+        """Scalar channel curvatures do not certify multiweight OPE closure."""
+        result = channel_kappa_decomposition(5, Fraction(30))
+        assert result['match']
+        assert result['multiweight_cross_channel_certified'] is False
+
 
 # ============================================================================
 # 11. Growth rate
@@ -566,11 +648,13 @@ class TestGrowthRate:
                 )
 
     def test_convergence_radius_increases(self):
-        """Convergence radius R = 1/rho increases with N."""
+        """The formal T-line Taylor radius R = 1/rho increases with N."""
         data = growth_rate_large_N(N_values=[2, 5, 10, 50], regime='self_dual')
-        radii = [row['convergence_radius'] for row in data]
+        radii = [row['formal_tline_radius'] for row in data]
         for i in range(len(radii) - 1):
             assert radii[i] < radii[i + 1]
+        assert all(row['radius_status'] == 'formal_tline_taylor_radius' for row in data)
+        assert all(row['analytic_tau_function_certified'] is False for row in data)
 
 
 # ============================================================================
@@ -581,7 +665,7 @@ class TestComplementarity:
     """Test complementarity scaling in large-N limit."""
 
     def test_kappa_complementarity_virasoro(self):
-        """kappa + kappa' = 13 for Virasoro (AP24)."""
+        """kappa + kappa' = 13 for Virasoro."""
         data = complementarity_scaling(N_values=[2])
         assert data[0]['kappa_plus_kappa_prime'] == Fraction(13)
 

@@ -1,4 +1,22 @@
-r"""Selberg-type zeta function from the shadow connection flow.
+r"""Selberg-type zeta diagnostics from the scalar shadow connection.
+
+This module computes the rank-one scalar projection attached to the
+shadow metric on one primary line. It is not a construction of a
+classical Selberg-class L-function, does not prove analytic continuation
+or a functional equation, and does not recover the full Maurer-Cartan
+element Theta_A from its scalar projection.
+
+Object firewalls:
+
+  - Holographic package entries:
+    (A, A^i, A^!, C, r(z), Theta_A, nabla^hol).
+  - Modular Koszul compute package projections:
+    (Fact_X(L), barB_X(L), Theta_L, L_L, (V_br,T_br), R4_mod(L)).
+  - Omega(B(A)) = A is bar-cobar inversion, not Koszul duality.
+  - A^! is the Verdier/continuous-linear dual branch under the required
+    finite-type/completed hypotheses.
+  - Z_ch^der(A) = ChirHoch^*(A,A) is Hochschild/bulk data, not Koszul
+    dual data.
 
 MATHEMATICAL FRAMEWORK
 ======================
@@ -20,9 +38,10 @@ whose zeros (branch points) t_+, t_- determine the geometry:
   - Class G/L/C: branch points are real or at infinity (finite tower)
   - Class M: branch points are a complex conjugate pair t_pm = a +/- ib
 
-For CLASS M, define the "shadow flow" as follows. The double cover
-Y^2 = Q_L(t) defines an elliptic-type curve. The period of the
-connection around a branch point gives a CLOSED ORBIT.
+For CLASS M, the scalar diagnostic uses the two simple non-real branch
+points of the double cover Y^2 = Q_L(t). Loops around such branch points
+have non-trivial square-root monodromy. Double roots have residue 1 and
+trivial monodromy, hence do not contribute non-trivial primitive orbits.
 
 ORBIT LENGTHS:
   The orbit encircling branch point t_0 has length
@@ -64,8 +83,8 @@ ORBIT LENGTHS:
   This confirms: ell_geom = pi (universal for simple zeros, independent
   of the algebra or the branch point location).
 
-SHADOW SELBERG ZETA FUNCTION
------------------------------
+SHADOW SELBERG-TYPE PRODUCT
+----------------------------
 
 With orbit lengths ell(gamma_j), define:
 
@@ -81,10 +100,14 @@ For N_bp = 2 (class M with 2 simple branch points):
 
   Z^{Sel}_A(s) = [prod_{k>=0} (1 + exp(-(s+k)*pi))]^2
 
-This has EXPLICIT EVALUATION via the Jacobi triple product and
-q-Pochhammer identities:
+This scalar product has a q-Pochhammer evaluation in its convergence
+domain:
 
   prod_{k>=0} (1 + q^k) = (-q; q)_inf  where q = e^{-pi}
+
+This is an Euler-type diagnostic product over branch-monodromy data. It
+is not a Selberg-class assertion for the genus-1 amplitude series, not a
+prime Euler product, and not a statement about analytic continuation.
 
 RUELLE ZETA FUNCTION
 --------------------
@@ -129,9 +152,9 @@ These are DIFFERENT objects with DIFFERENT spectral meanings:
   - Riemann zeros encode prime distribution
   - Shadow Selberg zeros encode branch-point monodromy
 
-Any numerical alignment with Riemann zeros would be COINCIDENTAL
-unless there is a deep structural reason. We test for this
-systematically but expect NO systematic alignment.
+Finite numerical alignment scores with Riemann zeros are diagnostic
+only. They do not prove independence, a zero theorem, or a functional
+equation.
 
 DYNAMICAL ENTROPY
 -----------------
@@ -183,16 +206,43 @@ CAUTION (AP1): kappa formulas are family-specific. Recompute from first principl
 CAUTION (AP9): S_2 = kappa != c/2 in general (only for Virasoro).
 CAUTION (AP19): The bar complex propagator extracts residues along d log(z-w).
 CAUTION (AP24): kappa(Vir_c) + kappa(Vir_{26-c}) = 13, NOT 0.
-CAUTION (AP42): "Selberg zeta = shadow" is correct at the structural level;
-    naive comparison with Riemann zeros should not be expected to work.
+CAUTION: this surface is scalar rank-one branch-monodromy data only.
 """
 
 from __future__ import annotations
 
 import cmath
 import math
-from dataclasses import dataclass, field
-from typing import Any, Callable, Dict, List, Optional, Tuple
+from dataclasses import dataclass
+from typing import Dict, List, Optional, Tuple
+
+
+HOLOGRAPHIC_PACKAGE = (
+    "A", "A^i", "A^!", "C", "r(z)", "Theta_A", "nabla^hol",
+)
+MODULAR_KOSZUL_COMPUTE_PACKAGE = (
+    "Fact_X(L)", "barB_X(L)", "Theta_L", "L_L", "(V_br,T_br)", "R4_mod(L)",
+)
+
+
+@dataclass(frozen=True)
+class SelbergScopeDiagnostic:
+    """Certification scope for this scalar compute surface."""
+
+    scalar_projection_only: bool = True
+    certifies_selberg_class: bool = False
+    certifies_prime_euler_product: bool = False
+    certifies_analytic_continuation: bool = False
+    certifies_functional_equation: bool = False
+    certifies_full_mc_data: bool = False
+    certifies_holographic_package: bool = False
+    holographic_package: Tuple[str, ...] = HOLOGRAPHIC_PACKAGE
+    modular_koszul_compute_package: Tuple[str, ...] = MODULAR_KOSZUL_COMPUTE_PACKAGE
+
+
+def selberg_scope_diagnostic() -> SelbergScopeDiagnostic:
+    """Return the non-certifying scope flags for this scalar diagnostic."""
+    return SelbergScopeDiagnostic()
 
 
 # ============================================================================
@@ -250,13 +300,12 @@ def _affine_shadow_coefficients(
 
 def _betagamma_shadow_coefficients(lam_val: float = 0.5, max_r: int = 60) -> Dict[int, float]:
     """Beta-gamma at weight lambda. Class C, terminates at arity 4."""
-    c_val = 2.0 * (6.0 * lam_val ** 2 - 6.0 * lam_val + 1.0)
-    kappa = c_val / 2.0
-    result = {2: kappa, 3: 2.0}
-    if c_val != 0.0 and 5.0 * c_val + 22.0 != 0.0:
-        result[4] = 10.0 / (c_val * (5.0 * c_val + 22.0))
-    else:
-        result[4] = 0.0
+    kappa = 6.0 * lam_val ** 2 - 6.0 * lam_val + 1.0
+    result = {2: kappa}
+    if max_r >= 3:
+        result[3] = 0.0
+    if max_r >= 4:
+        result[4] = -5.0 / 12.0
     for r in range(5, max_r + 1):
         result[r] = 0.0
     return result
@@ -300,6 +349,33 @@ def branch_points(kappa: float, alpha: float, S4: float) -> Tuple[complex, compl
     t_plus = (-q1 + sqrt_disc) / (2.0 * q2)
     t_minus = (-q1 - sqrt_disc) / (2.0 * q2)
     return (t_plus, t_minus)
+
+
+def finite_roots_with_multiplicity(
+    kappa: float, alpha: float, S4: float,
+) -> List[Tuple[complex, int]]:
+    """Finite roots of Q_L with algebraic multiplicity.
+
+    A double root has connection residue 1 and monodromy +1 for
+    Q'_L/(2Q_L); it is a logarithmic singularity, not a square-root
+    branch orbit.
+    """
+    q0, q1, q2 = shadow_metric_coefficients(kappa, alpha, S4)
+    if abs(q2) < 1e-300:
+        if abs(q1) < 1e-300:
+            return []
+        return [(complex(-q0 / q1), 1)]
+
+    disc = q1 * q1 - 4.0 * q0 * q2
+    disc_scale = max(1.0, abs(q1 * q1), abs(4.0 * q0 * q2))
+    if abs(disc) <= 1e-12 * disc_scale:
+        return [(complex(-q1 / (2.0 * q2)), 2)]
+
+    sqrt_disc = cmath.sqrt(disc)
+    return [
+        ((-q1 + sqrt_disc) / (2.0 * q2), 1),
+        ((-q1 - sqrt_disc) / (2.0 * q2), 1),
+    ]
 
 
 def virasoro_shadow_data(c_val: float) -> Tuple[float, float, float, float]:
@@ -374,26 +450,32 @@ def compute_orbits(
 ) -> List[ShadowOrbit]:
     """Compute the closed orbits of the shadow flow.
 
-    For a quadratic shadow metric Q_L with two branch points, there are
-    exactly 2 primitive orbits (one around each branch point), plus their
+    For a quadratic shadow metric Q_L with two simple branch points, there
+    are exactly 2 primitive non-trivial monodromy orbits, plus their
     iterates (winding number > 1).
+
+    Double roots are excluded: Q'_L/(2Q_L) has residue 1 there, so the
+    square-root monodromy is +1 rather than the Koszul sign -1.
 
     Returns list of primitive orbits only. Iterate orbits can be generated
     by multiplying the lengths by the winding number.
     """
-    t_plus, t_minus = branch_points(kappa, alpha, S4)
     orbits = []
 
-    for bp in [t_plus, t_minus]:
+    for bp, multiplicity in finite_roots_with_multiplicity(kappa, alpha, S4):
         bp_mod = abs(bp)
         if bp_mod > 1e100:
             continue  # Branch point at infinity: no finite orbit
+        residue = 0.5 * multiplicity
+        monodromy = cmath.exp(2.0j * math.pi * residue)
+        if abs(monodromy - 1.0) < 1e-12:
+            continue
         orbits.append(ShadowOrbit(
             branch_point=bp,
             topological_length=math.pi,
             geometric_length=math.pi * bp_mod,
-            monodromy=-1.0 + 0.0j,
-            residue=0.5,
+            monodromy=monodromy,
+            residue=residue,
             winding_number=1,
         ))
 
@@ -549,29 +631,29 @@ def selberg_zeta_via_trace(
     max_winding: int = 200,
     use_geometric: bool = True,
 ) -> complex:
-    """Compute log Z^{Sel}(s) via the trace formula:
+    """Compute Z^{Sel}(s) by the logarithmic product expansion.
 
-    log Z^{Sel}(s) = -sum_gamma sum_{k>=1} M_gamma^k * exp(-s*k*ell(gamma))
-                                             / (k * det(1 - P_gamma^k))
+    For |exp(-s ell)| < 1,
 
-    For a rank-1 connection, P_gamma = M_gamma (the monodromy), so
-    det(1 - P_gamma^k) = 1 - M_gamma^k.
+        log Z(s)
+        = -sum_gamma sum_{m>=1}
+            M_gamma^m exp(-m s ell(gamma))
+            / (m * (1 - exp(-m ell(gamma)))).
 
-    This is the SECOND independent computation path.
-
-    WARNING: The standard Selberg trace formula relates log Z'(s)/Z(s) to
-    spectral data. Here we use the Euler product/orbit sum directly.
+    This is a second numerical path for the same scalar q-product. It is
+    not the classical Selberg trace formula and carries no spectral
+    theorem or analytic-continuation assertion.
     """
     log_Z = 0.0 + 0.0j
     for orb in orbits:
         ell = orb.geometric_length if use_geometric else orb.topological_length
         M = orb.monodromy
-        for k in range(1, max_winding + 1):
-            Mk = M ** k
-            det_factor = 1.0 - Mk
-            if abs(det_factor) < 1e-300:
-                continue  # Skip singular terms
-            term = Mk * cmath.exp(-s * k * ell) / (k * det_factor)
+        for m in range(1, max_winding + 1):
+            exp_m_ell = cmath.exp(-m * ell)
+            denominator = m * (1.0 - exp_m_ell)
+            if abs(denominator) < 1e-300:
+                continue
+            term = (M ** m) * cmath.exp(-s * m * ell) / denominator
             log_Z -= term
     return cmath.exp(log_Z)
 
@@ -665,14 +747,15 @@ def selberg_functional_equation_test(
     s: complex,
     max_k: int = 100,
 ) -> Tuple[complex, complex, complex]:
-    """Test whether Z^{Sel}(s) = Z^{Sel}(1-s) * correction.
+    """Return the finite-truncation ratio Z(s)/Z(1-s).
 
     For a classical Selberg zeta on a compact surface of genus g:
         Z(s)/Z(1-s) = exp(polynomial of degree 2g in s)
 
-    For the shadow Selberg zeta, no such relation is expected in general
-    because the underlying geometry is a meromorphic connection, not a
-    compact Riemann surface.
+    This scalar shadow product is attached to a logarithmic connection,
+    not a compact Riemann surface. The returned ratio is diagnostic only:
+    a finite computation neither proves nor disproves a functional
+    equation.
 
     Returns (Z(s), Z(1-s), Z(s)/Z(1-s)).
     """
@@ -970,7 +1053,7 @@ def selberg_consistency_with_spectral_dimension(
 
 @dataclass
 class SelbergShadowData:
-    """Complete Selberg-type data for a modular Koszul algebra."""
+    """Scalar Selberg-type diagnostic data for one shadow projection."""
     name: str
     shadow_class: str
     kappa: float
@@ -997,8 +1080,16 @@ def compute_selberg_data(
     alpha: float,
     S4: float,
 ) -> SelbergShadowData:
-    """Compute complete Selberg data for a given algebra."""
-    orbits = compute_orbits(kappa, alpha, S4)
+    """Compute class-aware scalar Selberg-type diagnostic data.
+
+    Only class M carries the non-trivial branch-monodromy product at this
+    surface. Classes G, L, and C are finite shadow-tower lanes here; their
+    landscape-level diagnostic product is the empty product.
+    """
+    if shadow_class.upper() == 'M':
+        orbits = compute_orbits(kappa, alpha, S4)
+    else:
+        orbits = []
     N_bp = len(orbits)
 
     bp_mods = [abs(o.branch_point) for o in orbits if abs(o.branch_point) < 1e100]

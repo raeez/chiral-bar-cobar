@@ -9,7 +9,7 @@ Organized by section:
   6.  Shadow Chebyshev function psi_A(x)
   7.  Shadow prime counting function pi_A(x)
   8.  Shadow Chebyshev bias
-  9.  Shadow prime number theorem
+  9.  Shadow Chebyshev slope estimator
   10. Explicit formula from zeros
   11. Inverse Mellin verification
   12. Weil explicit formula (trace formula analogue)
@@ -21,9 +21,9 @@ Organized by section:
 
 Multi-path verification:
   Path 1: Direct recursive computation of Lambda_A(r)
-  Path 2: Convolution identity recovery (Lambda * S = S * log)
+  Path 2: Convolution identity recovery (Lambda_A * L_A = S * log)
   Path 3: Heisenberg exact closed form (benchmark)
-  Path 4: Inverse Mellin transform of -zeta'/zeta
+  Path 4: Inverse Mellin transform of -L_A'/L_A
 """
 
 import pytest
@@ -31,15 +31,26 @@ import math
 import cmath
 import sys
 import os
+from fractions import Fraction
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'lib'))
 
 from bc_explicit_formula_engine import (
+    # Firewalls
+    HOLOGRAPHIC_PACKAGE_ENTRIES,
+    MODULAR_KOSZUL_PRIMARY_PROJECTIONS,
+    TYPED_FIREWALL_OBJECTS,
+    bar_koszul_firewall_summary,
+    explicit_formula_diagnostic_scope,
+    kernel_normalization_constants,
     # Shadow coefficient providers
     heisenberg_shadow_coefficients,
+    heisenberg_shadow_coefficients_exact,
     affine_sl2_shadow_coefficients,
+    affine_sl2_shadow_coefficients_exact,
     betagamma_shadow_coefficients,
     virasoro_shadow_coefficients,
+    virasoro_initial_shadow_coefficients_exact,
     virasoro_growth_rate,
     # Shadow von Mangoldt
     shadow_von_mangoldt,
@@ -53,6 +64,7 @@ from bc_explicit_formula_engine import (
     # Zeros
     shadow_zeta_value,
     shadow_zeta_derivative,
+    shadow_l_function_value,
     shadow_log_derivative,
     find_shadow_zeros_on_line,
     refine_zero_newton,
@@ -66,7 +78,7 @@ from bc_explicit_formula_engine import (
     shadow_bias_table,
     shadow_sign_changes,
     shadow_bias_positive_density,
-    # PNT
+    # Chebyshev slope estimator
     shadow_pnt_constant,
     shadow_pnt_ratio_table,
     # Weil explicit formula
@@ -90,6 +102,98 @@ from bc_explicit_formula_engine import (
     verify_von_mangoldt_consistency,
     verify_psi_two_paths,
 )
+
+
+# ============================================================================
+# Section 0: Object and normalization firewalls
+# ============================================================================
+
+class TestFirewalls:
+    """Typed package and kernel normalizations that this scalar engine must not conflate."""
+
+    def test_holographic_package_has_exactly_seven_entries(self):
+        expected = ("A", "A^i", "A^!", "C", "r(z)", "Theta_A", "nabla^hol")
+        assert HOLOGRAPHIC_PACKAGE_ENTRIES == expected
+        assert len(HOLOGRAPHIC_PACKAGE_ENTRIES) == 7
+        assert "B(A)" not in HOLOGRAPHIC_PACKAGE_ENTRIES
+        assert "Z_ch^der(A)" not in HOLOGRAPHIC_PACKAGE_ENTRIES
+
+    def test_modular_koszul_compute_package_is_six_projection_surface(self):
+        expected = (
+            "Fact_X(L)",
+            "barB_X(L)",
+            "Theta_L",
+            "L_L",
+            "(V_br,T_br)",
+            "R4_mod(L)",
+        )
+        assert MODULAR_KOSZUL_PRIMARY_PROJECTIONS == expected
+        assert len(MODULAR_KOSZUL_PRIMARY_PROJECTIONS) == 6
+        assert set(expected).isdisjoint(HOLOGRAPHIC_PACKAGE_ENTRIES)
+
+    def test_bar_koszul_derived_center_objects_are_typed_separately(self):
+        roles = bar_koszul_firewall_summary()
+        assert set(TYPED_FIREWALL_OBJECTS) == set(roles)
+        assert "inversion" in roles["Omega(B(A))"]
+        assert "Verdier/continuous-linear dual" in roles["A^!"]
+        assert "ChirHoch^*(A,A)" in roles["Z_ch^der(A)"]
+
+    def test_kernel_normalization_constants_are_not_collapsed(self):
+        constants = kernel_normalization_constants(c=26, k=3, h_vee=2)
+        assert constants["heisenberg_collision"]["formula"] == "k/z"
+        assert constants["heisenberg_collision"]["coefficient"] == 3
+        assert constants["affine_raw_collision"]["formula"] == "k*Omega_tr/z"
+        assert constants["affine_raw_collision"]["coefficient"] == 3
+        assert constants["affine_kz_coefficient"]["formula"] == "Omega/((k+h^vee)z)"
+        assert constants["affine_kz_coefficient"]["coefficient"] == 1 / 5
+        assert constants["virasoro_collision"]["formula"] == "(c/2)/z^3 + 2T/z"
+        assert constants["virasoro_collision"]["central_coefficient"] == 13
+        assert constants["virasoro_collision"]["stress_coefficient"] == 2
+
+    def test_explicit_formula_diagnostic_scope_is_non_certifying(self):
+        scope = explicit_formula_diagnostic_scope()
+        assert scope["surface"] == "scalar_shadow_dirichlet_projection"
+        assert scope["zero_sum_is_certifying"] is False
+        assert scope["constructs_chiral_mc_theorem"] is False
+        assert scope["constructs_full_theta_A"] is False
+        assert scope["imports_riemann_selberg_arithmetic"] is False
+        assert scope["proves_analytic_continuation"] is False
+        assert scope["proves_functional_equation"] is False
+
+    def test_exact_canonical_shadow_constants(self):
+        heis = heisenberg_shadow_coefficients_exact(Fraction(3, 2), 5)
+        assert heis[2] == Fraction(3, 2)
+        assert all(heis[r] == 0 for r in range(3, 6))
+
+        aff = affine_sl2_shadow_coefficients_exact(Fraction(1), 5)
+        assert aff[2] == Fraction(9, 4)
+        assert aff[3] == Fraction(4, 3)
+        aff_float = affine_sl2_shadow_coefficients(1.0, 5)
+        assert aff_float[2] == float(aff[2])
+        assert aff_float[3] == float(aff[3])
+
+        vir = virasoro_initial_shadow_coefficients_exact(Fraction(13))
+        assert vir["S2"] == Fraction(13, 2)
+        assert vir["S3"] == Fraction(2)
+        assert vir["S4"] == Fraction(10, 1131)
+        assert vir["S5"] == Fraction(-16, 4901)
+        assert vir["Delta"] == Fraction(40, 87)
+        vir_float = virasoro_shadow_coefficients(13.0, 5)
+        assert abs(vir_float[2] - float(vir["S2"])) < 1e-14
+        assert abs(vir_float[3] - float(vir["S3"])) < 1e-14
+        assert abs(vir_float[4] - float(vir["S4"])) < 1e-14
+        assert abs(vir_float[5] - float(vir["S5"])) < 1e-14
+
+        vir_negative = virasoro_initial_shadow_coefficients_exact(Fraction(-1))
+        assert vir_negative["S2"] == Fraction(-1, 2)
+        assert vir_negative["S3"] == Fraction(2)
+        assert vir_negative["S4"] == Fraction(-10, 17)
+        assert vir_negative["S5"] == Fraction(-48, 17)
+        vir_negative_float = virasoro_shadow_coefficients(-1.0, 5)
+        assert abs(vir_negative_float[2] - float(vir_negative["S2"])) < 1e-14
+        assert abs(vir_negative_float[3] - float(vir_negative["S3"])) < 1e-14
+        assert abs(vir_negative_float[4] - float(vir_negative["S4"])) < 1e-14
+        assert abs(vir_negative_float[5] - float(vir_negative["S5"])) < 1e-14
 
 
 # ============================================================================
@@ -150,7 +254,27 @@ class TestShadowVonMangoldt:
         L1 = shadow_von_mangoldt(coeffs, 20)
         L2 = shadow_von_mangoldt_from_log_derivative(coeffs, 20)
         for r in range(2, 21):
-            assert abs(L1[r] - L2[r]) < 1e-14
+            scale = max(1.0, abs(L1[r]), abs(L2[r]))
+            assert abs(L1[r] - L2[r]) < 1e-12 * scale
+
+    def test_heisenberg_log_derivative_uses_normalized_l_function(self):
+        """Heisenberg log derivative is -L_A'/L_A, not the bare -zeta_A'/zeta_A."""
+        k = 2.0
+        coeffs = heisenberg_shadow_coefficients(k, 80)
+        s = complex(3.0, 0.0)
+        expected = k * math.log(2.0) * 2.0 ** (-s.real) / (1.0 + k * 2.0 ** (-s.real))
+        assert abs(shadow_log_derivative(coeffs, s) - expected) < 1e-14
+        assert abs(shadow_log_derivative(coeffs, s) - math.log(2.0)) > 1e-2
+
+    def test_log_derivative_series_matches_lambda_coefficients(self):
+        """The Lambda coefficients reconstruct -L_A'/L_A in its convergence half-plane."""
+        k = 0.5
+        max_r = 256
+        coeffs = heisenberg_shadow_coefficients(k, max_r)
+        Lambda = shadow_von_mangoldt(coeffs, max_r)
+        s = complex(3.0, 0.0)
+        series_value = sum(Lambda[r] * r ** (-s) for r in range(2, max_r + 1))
+        assert abs(series_value - shadow_log_derivative(coeffs, s, max_r)) < 1e-10
 
 
 # ============================================================================
@@ -510,14 +634,14 @@ class TestBias:
 
 
 # ============================================================================
-# Section 9: Shadow prime number theorem
+# Section 9: Shadow Chebyshev slope estimator
 # ============================================================================
 
-class TestPNT:
-    """Tests for the shadow prime number theorem."""
+class TestChebyshevSlope:
+    """Tests for the finite-window shadow Chebyshev slope estimator."""
 
     def test_pnt_constant_finite_tower(self):
-        """PNT constant is 0 for finite towers."""
+        """The terminal slope estimator is 0 for finite towers."""
         for coeffs_fn in [
             lambda: heisenberg_shadow_coefficients(1.0, 30),
             lambda: affine_sl2_shadow_coefficients(1.0, 30),
@@ -527,11 +651,12 @@ class TestPNT:
             C = shadow_pnt_constant(coeffs)
             assert C == 0.0
 
-    def test_pnt_constant_class_m_nonzero(self):
-        """PNT constant is nonzero for class M (infinite tower)."""
+    def test_pnt_constant_class_m_matches_terminal_ratio(self):
+        """For class M, the estimator is the observed terminal ratio."""
         coeffs = virasoro_shadow_coefficients(13.0, 50)
         C = shadow_pnt_constant(coeffs, 50)
-        assert C != 0.0
+        expected = shadow_chebyshev_psi(coeffs, 50.0, 50) / 50.0
+        assert abs(C - expected) < 1e-14
 
     def test_pnt_ratio_table(self):
         """psi(x)/x table has finite values."""
@@ -550,24 +675,21 @@ class TestExplicitFormula:
     """Tests for the explicit formula decomposition."""
 
     def test_heisenberg_zeros(self):
-        """Heisenberg zeta_A(s) = k * 2^{-s} has zeros at s = i * pi * (2n+1) / log(2)."""
+        """Heisenberg L_A(s)=1+k*2^{-s} has the expected first zero."""
         k = 1.0
         coeffs = heisenberg_shadow_coefficients(k, 10)
         # zeta_A(s) = k * 2^{-s} = 0 requires 2^{-s} = 0, which never happens.
         # So there are NO zeros for a single-term zeta.
-        # However, if we consider 1 + zeta_A = 1 + k*2^{-s} = 0,
+        # For L_A(s) = 1 + zeta_A(s) = 1 + k*2^{-s} = 0,
         # then 2^{-s} = -1/k, so s = log(k)/log(2) + i*pi*(2n+1)/log(2).
         # For k=1: s = i*pi*(2n+1)/log(2).
-        # The zeros of the "full" L(s) = 1 + 2^{-s}:
         expected_t1 = math.pi / math.log(2)
-        # Check that zeta_A at the expected location is indeed -(the constant term)
         s0 = complex(0, expected_t1)
-        val = shadow_zeta_value(coeffs, s0)
-        # val = 1.0 * 2^{-i*pi/ln2} = exp(-i*pi*ln2/ln2) = exp(-i*pi) = -1
-        assert abs(val - (-1.0)) < 1e-10
+        assert abs(shadow_zeta_value(coeffs, s0) - (-1.0)) < 1e-10
+        assert abs(shadow_l_function_value(coeffs, s0)) < 1e-10
 
     def test_explicit_formula_runs(self):
-        """Explicit formula computation returns valid structure."""
+        """Explicit formula diagnostic returns valid non-certifying structure."""
         coeffs = virasoro_shadow_coefficients(13.0, 20)
         # Use a few synthetic zeros for testing
         zeros = [complex(1, 5), complex(1, 10)]
@@ -575,11 +697,19 @@ class TestExplicitFormula:
         assert 'psi_direct' in result
         assert 'zero_sum' in result
         assert math.isfinite(result['psi_direct'])
+        assert result['main_term_is_residual_fit'] is True
+        assert result['certifies_explicit_formula'] is False
+        assert result['zero_sum_is_certifying'] is False
+        assert result['constructs_chiral_mc_theorem'] is False
+        assert result['constructs_full_theta_A'] is False
+        assert result['proves_analytic_continuation'] is False
+        assert result['proves_functional_equation'] is False
+        assert abs(result['reconstruction'] - result['psi_direct']) < 1e-14
 
     def test_explicit_formula_error_table(self):
-        """Error table returns finite values."""
+        """Zero-only residual table returns finite diagnostic values."""
         coeffs = heisenberg_shadow_coefficients(1.0, 20)
-        zeros = []  # No zeros for single-term zeta
+        zeros = []  # No supplied zeros; this is not a certificate.
         errors = explicit_formula_error(coeffs, [5.0, 10.0], zeros)
         assert all(math.isfinite(e) for e in errors.values())
 
@@ -632,7 +762,7 @@ class TestWeilFormula:
     """Tests for the shadow Weil explicit formula."""
 
     def test_weil_gaussian_test_fn(self):
-        """Weil formula with Gaussian test function."""
+        """Weil diagnostic with Gaussian test function is non-certifying."""
         coeffs = virasoro_shadow_coefficients(13.0, 20)
         test_fn = lambda r: math.exp(-r / 10.0)
         # Use synthetic zeros
@@ -641,6 +771,13 @@ class TestWeilFormula:
         assert 'sum_side' in result
         assert 'spectral_side' in result
         assert math.isfinite(result['sum_side'])
+        assert result['principal_is_residual_fit'] is True
+        assert result['certifies_weil_formula'] is False
+        assert result['zero_sum_is_certifying'] is False
+        assert result['constructs_chiral_mc_theorem'] is False
+        assert result['constructs_full_theta_A'] is False
+        assert result['proves_analytic_continuation'] is False
+        assert result['proves_functional_equation'] is False
 
     def test_weil_identity_test_fn(self):
         """Weil formula with h(r) = 1 recovers psi_A(max_r)."""
@@ -681,7 +818,7 @@ class TestCramerModel:
         """Variance is positive for Virasoro (class M)."""
         c_val = 13.0
         kappa = c_val / 2.0
-        alpha = 2.0  # S_3 on T-line (AP9: S_3 = 2, not 6; 3*S_3 = 6 is the Q_L coefficient)
+        alpha = 2.0  # S_3 on T-line; 3*S_3=6 is the Q_L coefficient
         S4 = 10.0 / (c_val * (5.0 * c_val + 22.0))
         var = shadow_variance_from_quadratic(kappa, alpha, S4)
         assert var > 0
@@ -805,12 +942,13 @@ class TestConsistency:
 class TestCrossFamily:
     """Cross-family structural comparisons."""
 
-    def test_pnt_constant_ordering(self):
-        """PNT constant: finite towers have C=0, class M has C != 0."""
+    def test_terminal_slope_ordering(self):
+        """Finite towers have zero terminal slope; class M reports psi(max_r)/max_r."""
         heis = heisenberg_shadow_coefficients(1.0, 30)
         vir = virasoro_shadow_coefficients(13.0, 30)
         assert shadow_pnt_constant(heis) == 0.0
-        assert shadow_pnt_constant(vir, 30) != 0.0
+        expected = shadow_chebyshev_psi(vir, 30.0, 30) / 30.0
+        assert abs(shadow_pnt_constant(vir, 30) - expected) < 1e-14
 
     def test_bias_sign_heisenberg_positive(self):
         """Heisenberg bias is positive (S_2 = k > 0)."""
@@ -897,16 +1035,17 @@ class TestLandscape:
             assert result['is_consistent'], \
                 f"{name}: convolution identity fails, max error {result['max_error']}"
 
-    def test_landscape_pnt_finite_vs_infinite(self):
-        """Finite towers have PNT constant 0; infinite towers nonzero."""
+    def test_landscape_terminal_slope_finite_vs_dense(self):
+        """Finite towers have zero terminal slope; class M records the observed slope."""
         data = compute_full_landscape_data(max_r=25)
         for name, d in data.items():
             if d.shadow_class in ('G', 'L', 'C'):
                 assert d.pnt_constant == 0.0, \
-                    f"{name} (class {d.shadow_class}): PNT constant {d.pnt_constant}"
+                    f"{name} (class {d.shadow_class}): terminal slope {d.pnt_constant}"
             elif d.shadow_class == 'M':
-                assert d.pnt_constant != 0.0, \
-                    f"{name} (class M): PNT constant should be nonzero"
+                expected = shadow_chebyshev_psi(d.shadow_coeffs, 25.0, 25) / 25.0
+                assert abs(d.pnt_constant - expected) < 1e-14, \
+                    f"{name} (class M): terminal slope mismatch"
 
     def test_single_data_point(self):
         """Individual explicit formula data computation."""
@@ -947,13 +1086,14 @@ class TestShadowZeta:
             assert abs(zp - expected) < 1e-12
 
     def test_log_derivative_heisenberg(self):
-        """-zeta'/zeta = log(2) for Heisenberg (independent of s)."""
+        """shadow_log_derivative evaluates -L_A'/L_A for Heisenberg."""
         k = 1.0
         coeffs = heisenberg_shadow_coefficients(k, 10)
         for s_val in [1.0, 2.0, 5.0]:
             s = complex(s_val, 0)
             ld = shadow_log_derivative(coeffs, s)
-            assert abs(ld - math.log(2)) < 1e-10
+            expected = k * math.log(2) * 2.0 ** (-s_val) / (1.0 + k * 2.0 ** (-s_val))
+            assert abs(ld - expected) < 1e-10
 
     def test_zeta_at_large_s(self):
         """For large Re(s), zeta_A(s) -> S_2 * 2^{-s} (dominated by first term)."""

@@ -52,7 +52,7 @@ $\holim$ & Homotopy limit \\
 $\hocolim$ & Homotopy colimit \\
 $f_*$, $f^*$ & Pushforward and pullback functors \\
 $f_!$, $f^!$ & Exceptional pushforward and pullback \\
-$\VD$ & Verdier duality functor \\
+$\VD$ & Verdier duality functor on sheaves/D-modules; in the bar-cobar package it sends the bar coalgebra to the homotopy dual algebra after the required completion, not to an ordinary uncompleted graded dual \\
 $\DR$ & De Rham functor \\
 $\Sol$ & Solutions functor \\
 \end{longtable}
@@ -103,13 +103,15 @@ $\cP^{\scriptstyle \text{\textexclamdown}}$ & Koszul dual cooperad \\
 %
 $\Free(\cM)$ & Free algebra on module $\cM$ \\
 $\Cofree(\cN)$ & Cofree coalgebra on comodule $\cN$ \\
-$\B(\cA)$ & Bar construction of algebra $\cA$ (a dg coalgebra; see $\Bbar$ for the reduced version) \\
-$\Cobar(\cC)$ & Cobar construction of coalgebra $\cC$ (a dg algebra; $\Cobar(\Bbar(\cA)) \xrightarrow{\sim} \cA$ when $\cA$ is Koszul) \\
-$\Bbar(\cA)$ & Reduced bar construction $= (T^c(s^{-1}\bar{\cA}),\, d)$: a conilpotent dg coalgebra. This is the Koszul dual \emph{coalgebra} $\cA^{\text{\textexclamdown}}$; dualizing gives the Koszul dual \emph{algebra} $\cA^! = \Bbar(\cA)^\vee$ \\
+$\B(\cA)$ & Bar construction of algebra $\cA$; a dg coalgebra resolving $\cA$, not the Koszul dual algebra and not the derived center \\
+$\Cobar(\cC)$ & Cobar construction of coalgebra $\cC$; a dg algebra. The counit $\Cobar(\Bbar(\cA)) \xrightarrow{\sim} \cA$ is bar-cobar inversion on the Koszul/bar-complete locus, not the definition of $\cA^!$ \\
+$\Bbar(\cA)$ & Reduced bar construction $= (T^c(s^{-1}\bar{\cA}),\, d)$: a conilpotent dg coalgebra. Its cohomology is the Koszul-dual coalgebra $\cA^i=H^\bullet(\Bbar(\cA))$ on the Koszul locus; the chain coalgebra itself is not $\cA^!$ \\
+$\Bbar^{\mathrm{ord}}(\cA)$ & Ordered reduced bar coalgebra $T^c(s^{-1}\bar{\cA})$ on ordered configuration spaces; it retains the $\Sigma_n$-ordering, braid monodromy, and $R$-matrix data before averaging \\
+$\Bbar^{\Sigma}(\cA)$ & Symmetric/coinvariant reduced bar coalgebra $\Sym^c(s^{-1}\bar{\cA})$; it is the $\Sigma_n$-coinvariant shadow of the ordered bar after the required equivariant descent, and the passage from ordered to symmetric is lossy \\
 %
 $\overline{\Cobar}(\cC)$ & Reduced cobar construction \\
-$\Bbar^{\mathrm{geom}}$ & Geometric bar complex \\
-$\Cobar^{\mathrm{geom}}$ & Geometric cobar complex \\
+$\Bbar^{\mathrm{geom}}$ & Configuration-space model of the reduced chiral bar coalgebra \\
+$\Cobar^{\mathrm{geom}}$ & Geometric cobar complex obtained from the bar coalgebra by the Verdier/distributional dual construction \\
 $\Tw(\cC, \cP)$ & Twisting morphisms from $\cC$ to $\cP$ \\
 $\MC(\fg)$ & Maurer--Cartan elements in $\fg$ \\
 $\CE(\fg)$ & Chevalley--Eilenberg complex \\
@@ -179,7 +181,7 @@ $\omega_{X^n/X}$ & Relative dualizing sheaf \\
 \bottomrule
 \endlastfoot
 
-$\cA, \cB, \ldots$ & Chiral algebras \\
+$\cA, \cB, \ldots$ & Chiral algebras; source/boundary objects, distinct from $\Bbar(\cA)$, $\cA^i$, $\cA^!$, and $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ \\
 $\cC, \cD, \ldots$ & Chiral coalgebras \\
 $\mu^{\mathrm{ch}}$ & Chiral bracket/product \\
 $\Delta^{\mathrm{ch}}$ & Chiral coproduct \\
@@ -196,19 +198,20 @@ $\chirLie$ & Chiral Lie operad \\
 $\chirAss$ & Chiral associative operad \\
 $\chirCom$ & Chiral commutative operad \\
 $\chirPois$ & Chiral Poisson operad \\
-$\cA^{\text{\textexclamdown}}$ & Koszul dual \emph{coalgebra}: $\cA^{\text{\textexclamdown}} = \Bbar(\cA)$, the reduced bar construction viewed as a conilpotent dg coalgebra. This is the primary output of the bar construction; no dualization is involved. \\
+$\cA^i$ & Koszul dual \emph{coalgebra}: $\cA^i=H^\bullet(\Bbar(\cA))$ on the Koszul locus, with completed version $H^\bullet\widehat{\Bbar}^{\mathrm{ch}}(\cA)$. The chain object $\Bbar(\cA)$ resolves $\cA^i$; it is not the strict dual algebra. \\
 %
-$\cA^!$ & Koszul dual \emph{algebra}: $\cA^! = \Bbar(\cA)^{\vee} = (\cA^{\text{\textexclamdown}})^\vee$, obtained from the Koszul dual coalgebra by graded linear dualization (equivalently $\VD(\Bbar(\cA)) \otimes \omega^{-1}$ in the chiral setting). Three objects, three symbols: $\Bbar(\cA)$ = bar coalgebra, $\cA^{\text{\textexclamdown}} = \Bbar(\cA)$ = Koszul dual coalgebra, $\cA^! = \Bbar(\cA)^\vee$ = Koszul dual algebra. \\
+$\cA^!$ & Koszul dual \emph{algebra}: $\cA^!=(\cA^i)^\vee$ under finite-type or completed continuous duality. The homotopy dual is $\VD_{\Ran}\Bbar^{\mathrm{ch}}(\cA)$; the strict algebra is obtained only after the finite-type/completed dual passage. \\
 $H^{\mathrm{ch}}_*(X, \cA)$ & Chiral homology of $\cA$ over $X$ \\
 $H^{*,\mathrm{ch}}(X, \cA)$ & Chiral cohomology \\
-$\CC^*_{\mathrm{ch}}(\cA)$ & Chiral Hochschild cochain complex \\
-$\CC_*^{\mathrm{ch}}(\cA)$ & Chiral Hochschild chain complex \\
+$\CC^*_{\mathrm{ch}}(\cA)$ & Chiral Hochschild cochain complex: the curve/Fulton--MacPherson chiral complex built from chiral products of $\cA$ \\
+$\CC_*^{\mathrm{ch}}(\cA)$ & Chiral Hochschild chain complex; distinct from topological Hochschild homology of a ring spectrum \\
 %
-$\ChirHoch^*(\cA)$ & Chiral Hochschild cohomology \\
-$HH_*^{\mathrm{ch}}(\cA)$ & Chiral Hochschild homology \\
-$\mathrm{HH}^\bullet_{\mathrm{alg}}(A)$ & Classical algebraic Hochschild cohomology of an associative or dg algebra~$A$ \\
-$\mathrm{HH}^\bullet_{\mathrm{cat}}(\cC)$ & Categorical Hochschild cohomology $\RHom_{\cC \otimes \cC^{\mathrm{op}}}(\id,\id)$ of a dg/$A_\infty$-category~$\cC$ \\
-$\mathrm{THH}(R)$ & Topological Hochschild homology of an $E_1$-ring spectrum~$R$ \\
+$\ChirHoch^*(\cA)$ & Chiral Hochschild cohomology. The ordered version $\ChirHoch^{\mathrm{ord},*}(\cA)$ is computed before $\Sigma_n$-averaging; the symmetric version is obtained only after the averaging/descent step. \\
+$HH_*^{\mathrm{ch}}(\cA)$ & Chiral Hochschild homology of a chiral algebra on a curve \\
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ & Chiral derived center, $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)=\ChirHoch^\bullet(\cA,\cA)$ as the cochain-level closed-sector/endocentral $E_2$-object attached to $\cA$; not $\cA$, not $\Bbar(\cA)$, and not $\cA^!$. A physical bulk requires an additional open/closed comparison map. \\
+$\mathrm{HH}^\bullet_{\mathrm{alg}}(A)$ & Classical algebraic Hochschild cohomology $\RHom_{A^e}(A,A)$ of an associative or dg algebra~$A$ \\
+$\mathrm{HH}^\bullet_{\mathrm{cat}}(\cC)$ & Categorical Hochschild cohomology of a dg/$A_\infty$-category~$\cC$: endomorphisms of the identity functor, equivalently $\RHom_{\cC^e}(\Delta_\cC,\Delta_\cC)$ \\
+$\mathrm{THH}(R)$ & Topological Hochschild homology of an $E_1$-ring spectrum~$R$; not chiral Hochschild and not categorical Hochschild cohomology \\
 $Y(a, z)$ & State-field correspondence/vertex operator \\
 $a_{(n)} b$ & $n$-th Borcherds product \\
 $a_{(n,m)} b$ & Higher Borcherds product \\
@@ -218,7 +221,7 @@ $: ab :$ & Normal ordering \\
 $T$ & Translation operator \\
 $T(z)$ & Stress-energy tensor (Virasoro field) of conformal weight $2$ \\
 $L_n$ & Virasoro modes \\
-$c$ & Central charge \\
+$c$ & Virasoro/CFT central charge; family-dependent input to $\kappa(\cA)$, with $\kappa(\mathrm{Vir}_c)=c/2$ rather than $c=\kappa$ \\
 \end{longtable}
 
 
@@ -241,7 +244,7 @@ $c$ & Central charge \\
 \bottomrule
 \endlastfoot
 
-$k$ & Ground field (typically $\bC$ or $\bQ$) \\
+$k$ & Ground field when used as coefficient field; in $V_k(\fg)$ or $\mathcal H_k$, the subscript $k$ is a level parameter, not the ground field \\
 $\bC, \bR, \bQ, \bZ$ & Complex, real, rational numbers; integers \\
 $\bA^n$ & Affine $n$-space \\
 $\bP^n$ & Projective $n$-space \\
@@ -263,14 +266,17 @@ $h$ & Conformal weight of a field \\
 $\mathsf{h}$ & Coxeter number of a simple Lie algebra (distinguished from conformal weight $h$) \\
 %
 $h^\vee$ & Dual Coxeter number of a simple Lie algebra \\
-$\kappa$ & Level parameter (as subscript, e.g., $\hat{\mathfrak{g}}_\kappa$) \\
-$\kappa(\cA)$ & Obstruction coefficient (modular characteristic) of chiral algebra $\cA$ \\
+$\kappa$ & Bare modular characteristic only after a family has been fixed; affine and Heisenberg levels are written as level parameters such as $k$ or $\ell$, not identified with the invariant by notation alone \\
+$\kappa(\cA)$ & Obstruction coefficient (modular characteristic) of chiral algebra $\cA$; standard normalizations include $\kappa(\mathcal H_\ell^{\oplus d})=d\ell$, $\kappa(V_k(\fg))=\dim(\fg)(k+h^\vee)/(2h^\vee)$, $\kappa(\mathrm{Vir}_c)=c/2$, and $\kappa(\mathcal W_N)=c(H_N-1)$ \\
 $\kappa_d(\cA)$ & Shadow depth of $\cA$ (Definition~\ref{def:shadow-depth-classification}) \\
 $\kappa^{ab}$ & Killing form / Casimir tensor on $\mathfrak{g}$ \\
 $\kappa_{\mathrm{KS}}$ & Kodaira--Spencer map \\
 %
 $\kappa_1$ & First Mumford--Morita--Miller class on $\overline{\mathcal{M}}_g$ \\
 $\varrho(\mathfrak{g})$ & Anomaly ratio $\sum_{i=1}^r 1/(m_i+1)$ \\
+$r^{\mathrm{Heis}}(z)$ & Trace-form Heisenberg collision residue $k/z$; its scalar average is $\kappa(\mathcal H_k)=k$ \\
+$r^{\mathrm{KM}}(z)$ & Trace-form affine Kac--Moody residue $k\Omega/z$ with the level prefix included; distinct from the KZ residue $\Omega/((k+h^\vee)z)$ \\
+$r^{\mathrm{Vir}}_c(z)$ & Virasoro ordered collision residue $(c/2)z^{-3}+2Tz^{-1}$; the scalar cubic-pole coefficient gives $\kappa(\mathrm{Vir}_c)=c/2$ \\
 %
 $S_\cA(u)$ & Dirichlet--sewing lift of $\cA$ (Definition~\ref{def:dirichlet-sewing-lift}) \\
 $K_\cA(s,t)$ & Sewing reproducing kernel $= S_\cA(s{+}t)$ (Definition~\ref{def:sewing-kernel}) \\

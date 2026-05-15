@@ -72,7 +72,13 @@ from compute.lib.bc_cyclic_homology_shadow_engine import (
     kahler_module_data,
     # Negative cyclic / Dennis
     negative_cyclic_dimension,
+    negative_cyclic_hodge_fiber_dimension,
     dennis_trace_data,
+    # Firewalls
+    holographic_package_entries,
+    modular_koszul_primary_projections,
+    object_firewall,
+    kernel_normalizations,
     # Full verification
     full_verification,
     # Master
@@ -113,6 +119,52 @@ class TestBinomial:
         """Sum of binomials = 2^d."""
         for d in range(8):
             assert sum(binomial(d, k) for k in range(d+1)) == 2**d
+
+
+# ============================================================================
+# Test group 1b: Object and kernel firewalls
+# ============================================================================
+
+class TestObjectFirewalls:
+    def test_holographic_package_has_seven_entries(self):
+        assert holographic_package_entries() == (
+            "A",
+            "A^i",
+            "A^!",
+            "C",
+            "r(z)",
+            "Theta_A",
+            "nabla^hol",
+        )
+
+    def test_modular_compute_package_has_six_primary_projections(self):
+        projections = modular_koszul_primary_projections()
+        assert projections == (
+            "Fact_X(L)",
+            "barB_X(L)",
+            "Theta_L",
+            "L_L",
+            "(V_br, T_br)",
+            "R4_mod(L)",
+        )
+        assert len(projections) == 6
+        assert len(holographic_package_entries()) == 7
+        assert projections != holographic_package_entries()
+
+    def test_bar_koszul_derived_centre_objects_are_distinct(self):
+        firewall = object_firewall()
+        assert "ordered bar coalgebra" in firewall["B(A)"]
+        assert "bar cohomology coalgebra" in firewall["A^i"]
+        assert "Verdier/continuous-linear dual branch" in firewall["A^!"]
+        assert "inversion recovering A" in firewall["Omega(B(A))"]
+        assert "ChirHoch^*(A,A)" in firewall["Z_ch^der(A)"]
+
+    def test_kernel_normalizations(self):
+        kernels = kernel_normalizations()
+        assert kernels["affine_raw_collision"] == "k*Omega_tr/z"
+        assert kernels["affine_KZ_coefficient"] == "Omega/((k+h^vee)z)"
+        assert kernels["heisenberg_raw_collision"] == "k/z"
+        assert kernels["virasoro_collision"] == "(c/2)/z^3 + 2T/z"
 
 
 # ============================================================================
@@ -193,7 +245,7 @@ class TestHochschildHKR:
 # ============================================================================
 
 class TestCyclicHomology:
-    """HC_n for polynomial ring: HC_0=1, HC_{2m}=1 (m>=1), HC_{odd}=0."""
+    """Point-fiber HC oracle: HC_0=1, HC_{2m}=1, HC_{odd}=0."""
 
     def test_hc_d1(self):
         dims = hc_dimensions_all(1, 6)
@@ -211,7 +263,7 @@ class TestCyclicHomology:
         assert dims[2] == 1
 
     def test_hc_dimension_independent_of_d(self):
-        """For polynomial rings, HC_n (as k-vsp at a point) depends only on parity.
+        """For the point-fiber oracle, HC_n depends only on parity.
 
         HC_0 = 1, HC_{2m} = 1 for m >= 1, HC_{2m+1} = 0.
         This is INDEPENDENT of d (the number of variables).
@@ -237,7 +289,7 @@ class TestCyclicHomology:
 # ============================================================================
 
 class TestSBI:
-    """Verify the SBI long exact sequence holds."""
+    """Verify the point-fiber SBI periodicity oracle."""
 
     def test_sbi_d1(self):
         results = sbi_sequence_check(1, 6)
@@ -255,11 +307,18 @@ class TestSBI:
             assert entry['status'] == 'PASS'
 
     def test_sbi_all_dimensions(self):
-        """SBI holds for all d = 1, ..., 10."""
+        """The finite SBI oracle is periodic for d = 1, ..., 10."""
         for d in range(1, 11):
             results = sbi_sequence_check(d, 8)
             for entry in results:
                 assert entry['status'] == 'PASS'
+
+    def test_connes_b_symbol_rank_not_target_rank(self):
+        """B is a first-order operator; the finite oracle is symbol rank C(d-1,n)."""
+        assert connes_b_rank(3, 0) == 1
+        assert connes_b_rank(3, 1) == 2
+        assert connes_b_rank(3, 2) == 1
+        assert connes_b_rank(3, 3) == 0
 
 
 # ============================================================================
@@ -422,6 +481,15 @@ class TestHomologyAtZeros:
         assert result['effective_dim'] >= 3  # class M
         assert result['HH'][0] == 1  # HH_0 = A^sh
 
+    def test_zeta_zero_shadow_keeps_complex_truncation(self):
+        """Class-M zeta-zero data preserves complex coefficients and max_arity."""
+        data = shadow_data_at_zeta_zero(1, max_arity=8)
+        assert data.effective_dim == 7  # kappa, alpha, S4, S5, S6, S7, S8
+        assert isinstance(data.kappa, complex)
+        assert abs(data.kappa.imag) > 1.0
+        assert data.alpha == 2.0
+        assert set(data.higher_S) == {5, 6, 7, 8}
+
     def test_hh_uniform_across_zeros(self):
         """HH module ranks are the same at all zeros (topological invariance)."""
         results = hc_at_zeta_zeros_batch(20, max_deg=6)
@@ -545,6 +613,16 @@ class TestFamilyTables:
             data = virasoro_shadow_data(c)
             assert abs(data.kappa - c / 2.0) < 1e-10
 
+    def test_virasoro_shadow_constants_from_landscape_census(self):
+        """Virasoro: S_3=2, S_4=10/[c(5c+22)], S_5=-48/[c^2(5c+22)]."""
+        for c in [1.0, 10.0, 13.0, -2.0]:
+            data = virasoro_shadow_data(c, max_arity=5)
+            assert data.alpha == 2.0
+            expected_s4 = 10.0 / (c * (5.0 * c + 22.0))
+            expected_s5 = -48.0 / (c * c * (5.0 * c + 22.0))
+            assert abs(data.S4 - expected_s4) < 1e-12
+            assert abs(data.higher_S[5] - expected_s5) < 1e-12
+
     def test_kappa_sl2(self):
         """kappa(sl_2_k) = 3(k+2)/4 (AP1)."""
         for k in [1, 2, 3, 4]:
@@ -593,22 +671,26 @@ class TestKahler:
 
 class TestNegativeCyclic:
     def test_hn_d1(self):
-        """HN_0 for d=1: C(1,0) + C(1,2) + ... = 1."""
+        """HN_0 for affine-space polynomial shadows is H^0_dR = k."""
         assert negative_cyclic_dimension(1, 0) == 1
 
     def test_hn_d2(self):
-        """HN_0 for d=2: C(2,0) + C(2,2) = 1 + 1 = 2."""
-        assert negative_cyclic_dimension(2, 0) == 2
+        """HN_0 is de Rham homology, not the even-form fiber size."""
+        assert negative_cyclic_dimension(2, 0) == 1
+        assert negative_cyclic_hodge_fiber_dimension(2, 0) == 2
 
     def test_hn_d3(self):
-        """HN_0 for d=3: C(3,0) + C(3,2) = 1 + 3 = 4."""
-        assert negative_cyclic_dimension(3, 0) == 4
+        """The Hodge-fiber size is recorded separately from HN itself."""
+        assert negative_cyclic_dimension(3, 0) == 1
+        assert negative_cyclic_dimension(3, 1) == 0
+        assert negative_cyclic_hodge_fiber_dimension(3, 0) == 4
 
     def test_dennis_trace(self):
         for d in range(1, 5):
             dt = dennis_trace_data(d)
             assert dt['K0'] == 'Z'
-            assert dt['K_higher'] == 0
+            assert dt['higher_K_computed'] is False
+            assert 'K_n(k)' in dt['K_higher']
             assert dt['dennis_trace_image'] == 1
 
 
@@ -683,6 +765,7 @@ class TestDeformationAtZeros:
         data = deformation_hh_virasoro(c_val)
         assert abs(data['c'].real - 13.0) < 1e-10
         assert abs(data['kappa'] - c_val / 2.0) < 1e-10
+        assert data['alpha'] == 2.0
 
     def test_deformation_kappa_nonzero(self):
         """kappa(c(rho_n)) is nonzero for all n (since c(rho_n) != 0)."""
@@ -747,9 +830,8 @@ class TestCrossFamilyConsistency:
         for family, param in [('heisenberg', 1), ('virasoro', 10),
                               ('affine_sl2', 3), ('betagamma', 1.0)]:
             result = full_verification(family, param)
-            hp = result['path_v_numerical']
-            # HP_0 = 1 (the Chern character target)
-            assert hp['fiber_dims'][0] == 1
+            assert result['path_iii_Chern']['HP0_dim'] == 1
+            assert hp_dimension(result['effective_dim'], 1) == 0
 
 
 # ============================================================================

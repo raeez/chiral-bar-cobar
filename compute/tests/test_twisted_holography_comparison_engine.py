@@ -1,6 +1,6 @@
 r"""Tests for twisted_holography_comparison_engine.
 
-Systematic comparison of our holographic modular Koszul datum H(A) with
+Systematic comparison of typed scalar projections of the seven-entry H(A) with
 Costello's twisted holography programme.
 
 VERIFICATION STRUCTURE (multi-path, as required by CLAUDE.md):
@@ -73,6 +73,9 @@ from twisted_holography_comparison_engine import (
     collision_residue_pole_order,
     form_factor_comparison,
     costello_vs_our_scope_summary,
+    holographic_package_slots,
+    ap25_object_roles,
+    collision_kernel_normalization,
     # Verification
     verify_koszul_dual_m2,
     verify_koszul_dual_d3,
@@ -367,6 +370,29 @@ class TestCollisionResidue:
         """
         assert collision_residue_pole_order(6) == 5
 
+    def test_heisenberg_kernel_is_level_prefixed(self):
+        """Heisenberg collision kernel is k/z, not the Virasoro c/2 rule."""
+        kernel = collision_kernel_normalization("heisenberg", Fraction(5))
+        assert kernel["collision_formula"] == "5/z"
+        assert kernel["coefficient"] == Fraction(5)
+        assert kernel["pole_order"] == 1
+
+    def test_affine_kernel_keeps_collision_and_kz_separate(self):
+        """Affine collision kernel is k*Omega_tr/z; KZ normalization is separate."""
+        kernel = collision_kernel_normalization(
+            "affine_km", Fraction(3, 2), h_dual=2
+        )
+        assert kernel["collision_formula"] == "3/2*Omega_tr/z"
+        assert kernel["coefficient"] == Fraction(3, 2)
+        assert kernel["kz_formula"] == "Omega_KZ/((3/2+2)*z)"
+
+    def test_virasoro_kernel_normalization(self):
+        """Virasoro collision kernel is (c/2)/z^3 + 2*T/z."""
+        kernel = collision_kernel_normalization("virasoro", Fraction(26))
+        assert kernel["collision_formula"] == "(13)/z^3 + 2*T/z"
+        assert kernel["coefficient"] == Fraction(13)
+        assert kernel["pole_order"] == 3
+
 
 # ===========================================================================
 # 4. Genus tower (our extension beyond Costello)
@@ -456,10 +482,19 @@ class TestM2BraneComparison:
         result = compare_m2_brane(N=2, k=1)
         assert result.r_matrix_match is True
 
+    def test_m2_cs_r_matrices_keep_level_prefixes(self):
+        """The two CS sectors keep +k and -k in collision normalization."""
+        ours = our_m2_brane(N=2, k=3)
+        assert "3*Omega_tr/z" in ours.r_matrix
+        assert "-3*Omega_tr/z" in ours.r_matrix
+
     def test_bulk_extends(self):
-        """Our bulk (derived center) extends Costello's (DCA)."""
+        """The C-slot comparison does not identify C with Costello's DCA."""
         result = compare_m2_brane(N=2, k=1)
         assert result.bulk_comparison == "extends"
+        assert "line/bulk symmetry algebra" in result.bulk_notes
+        assert "Z^der_ch(A)" in result.bulk_notes
+        assert "separate from A^i and A^!" in result.bulk_notes
 
     def test_genus_extends(self):
         """Our genus tower extends Costello (genus 0 only)."""
@@ -491,6 +526,13 @@ class TestD3BraneComparison:
     def test_r_matrix_match(self):
         result = compare_d3_brane(N=2)
         assert result.r_matrix_match is True
+        assert "1*Omega_tr/z" in result.r_matrix_notes
+        assert "Omega_KZ/((k+h^v)z)" in result.r_matrix_notes
+
+    def test_d3_our_r_matrix_level_prefix(self):
+        ours = our_d3_brane(N=3, k=2)
+        assert "2*Omega_tr/z" in ours.r_matrix
+        assert "collision convention" in ours.r_matrix
 
     def test_genus_extends(self):
         result = compare_d3_brane(N=2)
@@ -572,6 +614,40 @@ class TestBetagammaBoundary:
 
 class TestScopeComparison:
     """Test the overall scope comparison between programmes."""
+
+    def test_seven_entry_package_slots(self):
+        """The compute surface names the seven H(A) slots exactly."""
+        assert holographic_package_slots() == (
+            "A",
+            "A^i",
+            "A^!",
+            "C=Z_ch^der(A)",
+            "r(z)",
+            "Theta_A",
+            "nabla^hol",
+        )
+
+        summary = costello_vs_our_scope_summary()
+        assert summary["package_scope"]["holographic_package"] == (
+            "(A, A^i, A^!, C, r(z), Theta_A, nabla^hol)"
+        )
+        assert summary["package_scope"]["compute_surface"] == (
+            "scalar comparison record for selected H(A) slots; not a "
+            "construction of the whole holographic package"
+        )
+
+    def test_ap25_objects_are_typed_apart(self):
+        """B(A), A^i, A^!, Omega(B(A)), and Z_ch^der(A) have distinct roles."""
+        roles = ap25_object_roles()
+        for key in ["A", "B(A)", "A^i", "A^!", "Omega(B(A))", "Z_ch^der(A)"]:
+            assert key in roles
+
+        assert "coalgebra" in roles["B(A)"]
+        assert "H^*(B(A))" in roles["A^i"]
+        assert "Verdier" in roles["A^!"]
+        assert "recovering A" in roles["Omega(B(A))"]
+        assert "Hochschild" in roles["Z_ch^der(A)"]
+        assert len(set(roles.values())) == len(roles)
 
     def test_costello_no_genus_tower(self):
         """Costello's programme does NOT compute worldsheet genus tower."""
@@ -722,7 +798,7 @@ class TestMultiPathVerification:
             assert tower[2] == kap * Fraction(7, 5760)
 
     def test_kappa_determines_full_tower(self):
-        """The full genus tower is determined by the SINGLE invariant kappa.
+        """The uniform-weight genus tower is determined by kappa.
 
         This is the content of Theorem D on the uniform-weight lane:
         F_g = kappa * lambda_g^FP for ALL g >= 1.

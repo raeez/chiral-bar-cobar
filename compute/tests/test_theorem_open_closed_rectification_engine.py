@@ -1,7 +1,7 @@
 r"""Tests for open/closed rectification engine: four-stage architecture
-audit against DNP, CDG, Safronov-Gunningham, Safronov.
+witnesses against DNP, CDG, Safronov-Gunningham, Safronov.
 
-CHAPTER UNDER AUDIT: thqg_open_closed_realization.tex
+CHAPTER ANCHOR: thqg_open_closed_realization.tex
 
 40+ tests organized in 8 sections:
   1. Heisenberg open/closed MC element (8 tests)
@@ -10,7 +10,7 @@ CHAPTER UNDER AUDIT: thqg_open_closed_realization.tex
   4. DNP line operator bridge (5 tests)
   5. CDG boundary-bulk bridge (4 tests)
   6. Safronov CoHA bridge (4 tests)
-  7. Four-stage architecture audit (4 tests)
+  7. Four-stage architecture witnesses (4 tests)
   8. Cross-checks and consistency (9 tests)
 
 Multi-path verification per claim:
@@ -23,8 +23,13 @@ import pytest
 from fractions import Fraction
 
 from compute.lib.theorem_open_closed_rectification_engine import (
+    LAMBDA_1,
+    LAMBDA_2_SCALAR,
     kappa_family,
     kappa_dual,
+    open_closed_object_separation_witness,
+    physical_bulk_comparison_check,
+    factorization_equivalence_hypothesis_check,
     HeisenbergOpenClosedMC,
     DerivedCenterSl2Level1,
     ainfty_yang_baxter_arity3,
@@ -77,7 +82,9 @@ class TestHeisenbergOpenClosedMC:
         """F_2(H_k) = k * 7/5760 (uniform-weight, no cross-channel)."""
         mc = HeisenbergOpenClosedMC(Fraction(1))
         result = mc.theta_closed_genus2_arity0()
-        assert result["F_2"] == Fraction(7, 5760)
+        assert result["F_2"] == LAMBDA_2_SCALAR
+        assert result["lane"] == "uniform_weight_scalar"
+        assert result["not_full_free_energy_for_multi_weight"] is True
 
     def test_annulus_trace(self):
         """Annulus trace: Delta_ns(Tr) = kappa * lambda_1.
@@ -93,6 +100,7 @@ class TestHeisenbergOpenClosedMC:
             # Path 1
             assert trace["annulus_trace_value"] == Fraction(k, 24)
             # Path 2
+            assert trace["lambda_1"] == LAMBDA_1
             assert trace["kappa"] * trace["lambda_1"] == Fraction(k, 24)
             # Path 3: must equal F_1
             f1 = mc.theta_closed_genus1_arity0()["F_1"]
@@ -201,6 +209,8 @@ class TestAInftyYangBaxter:
         result = ainfty_yang_baxter_arity3("Affine_sl2", k=1)
         assert result["cybe_satisfied"] is True
         assert result["infinitesimal_braid_check"] is True
+        assert result["witness_type"] == "closed_collision_cybe"
+        assert result["full_open_closed_factorization"] is False
 
     def test_sl2_casimir_fundamental(self):
         """Quadratic Casimir of sl_2 on fundamental = 3/4."""
@@ -218,6 +228,7 @@ class TestAInftyYangBaxter:
         result = ainfty_yang_baxter_arity3("Virasoro", c=26)
         assert result["r_matrix_pole_orders"] == [3, 1]
         assert result["ope_pole_orders"] == [4, 2, 1]
+        assert result["engine_verifies_full_mc"] is False
 
 
 # ======================================================================
@@ -228,11 +239,14 @@ class TestDNPLineOperatorBridge:
     """5 tests for DNP [2508.11749] line operator identification."""
 
     def test_sl2_integrable_count(self):
-        """Affine sl_2 at level k: k+1 integrable representations."""
+        """Affine sl_2 at level k: boundary integrables are not the line count."""
         for k in [1, 2, 3, 4]:
             dnp = DNPLineOperatorBridge("Affine_sl2", k=k)
             result = dnp.line_operator_count()
             assert result["n_integrable_reps"] == k + 1
+            assert result["dual_level"] == -k - 4
+            assert result["dual_level_integrable_reps"] == 0
+            assert result["line_operator_count_is_integrable_count"] is False
 
     def test_heisenberg_continuous_modules(self):
         """Heisenberg: continuous family of Fock modules."""
@@ -241,24 +255,30 @@ class TestDNPLineOperatorBridge:
         assert result["n_integrable_reps"] == "continuous"
 
     def test_meromorphic_tensor_heisenberg(self):
-        """DNP meromorphic tensor = bar coproduct for Heisenberg."""
+        """DNP meromorphic tensor has the Heisenberg R-matrix scalar witness."""
         dnp = DNPLineOperatorBridge("Heisenberg", k=1)
         result = dnp.meromorphic_tensor_is_bar_coproduct()
-        assert result["identification_holds"] is True
+        assert result["scalar_witness_holds"] is True
+        assert result["identification_holds"] is False
+        assert result["full_factorization_equivalence"] is False
         assert result["is_abelian"] is True
 
     def test_meromorphic_tensor_sl2(self):
-        """DNP meromorphic tensor = Yang R-matrix coproduct for sl_2."""
+        """DNP meromorphic tensor has the sl_2 R-matrix scalar witness."""
         dnp = DNPLineOperatorBridge("Affine_sl2", k=1)
         result = dnp.meromorphic_tensor_is_bar_coproduct()
-        assert result["identification_holds"] is True
+        assert result["scalar_witness_holds"] is True
+        assert result["identification_holds"] is False
+        assert result["full_factorization_equivalence"] is False
         assert result["is_abelian"] is False
 
     def test_meromorphic_tensor_virasoro(self):
         """DNP meromorphic tensor for Virasoro (higher-pole r-matrix)."""
         dnp = DNPLineOperatorBridge("Virasoro", c=26)
         result = dnp.meromorphic_tensor_is_bar_coproduct()
-        assert result["identification_holds"] is True
+        assert result["scalar_witness_holds"] is True
+        assert result["identification_holds"] is False
+        assert result["full_factorization_equivalence"] is False
 
 
 # ======================================================================
@@ -269,29 +289,37 @@ class TestCDGBoundaryBulkBridge:
     """4 tests for CDG [2005.00083] boundary-bulk consistency."""
 
     def test_bulk_is_derived_center(self):
-        """CDG bulk = our derived center Z^der_ch(A)."""
+        """CDG cochain shadow is not physical bulk equivalence without data."""
         for fam in ["Heisenberg", "Affine_sl2", "Virasoro"]:
             cdg = CDGBoundaryBulkBridge(fam)
             result = cdg.bulk_is_derived_center()
-            assert result["match"] is True
+            assert result["cochain_closed_sector_match"] is True
+            assert result["match"] is False
+            assert result["physical_bulk_identification"] is False
+            assert "quasi_isomorphism" in result["missing_hypotheses"]
 
     def test_p0_equals_gerstenhaber(self):
         """CDG's P_0 structure = our Gerstenhaber structure."""
         cdg = CDGBoundaryBulkBridge("Heisenberg")
         result = cdg.bulk_algebra_structure()
         assert result["are_same"] is True
+        assert result["cochain_shadow_structure_match"] is True
+        assert result["physical_bulk_reconstructed"] is False
 
     def test_boundary_module_factors_through_universal(self):
         """CDG's boundary module structure factors through U(A)."""
         cdg = CDGBoundaryBulkBridge("Affine_sl2", k=1)
         result = cdg.boundary_module_structure()
         assert result["cdg_confirms_stage"] == 1
+        assert result["universal_action_classified"] is True
+        assert result["physical_bulk_identification"] is False
 
     def test_cdg_all_families(self):
-        """CDG identification holds for all standard families."""
+        """CDG cochain comparison holds while physical-bulk equality is typed."""
         for fam in ["Heisenberg", "Affine_sl2", "Virasoro"]:
             cdg = CDGBoundaryBulkBridge(fam)
-            assert cdg.bulk_is_derived_center()["match"] is True
+            assert cdg.bulk_is_derived_center()["cochain_closed_sector_match"] is True
+            assert cdg.bulk_is_derived_center()["match"] is False
             assert cdg.bulk_algebra_structure()["are_same"] is True
 
 
@@ -303,18 +331,20 @@ class TestSafronovCoHABridge:
     """4 tests for Safronov [2406.12838] and Safronov-Gunningham [2312.07595]."""
 
     def test_coha_bar_duality(self):
-        """CoHA^* ~ B(A) identification confirmed."""
+        """CoHA/bar comparison is a finite shadow witness here."""
         for fam in ["Heisenberg", "Affine_sl2"]:
             bridge = SafronovCoHABridge(fam, k=1)
             result = bridge.coha_bar_duality_check()
-            assert result["duality"] == "CoHA^* ~ B(A)"
+            assert result["bar_comultiplication_witness"] is True
+            assert result["full_duality_proved_by_engine"] is False
 
     def test_complementarity_heisenberg(self):
-        """Heisenberg: kappa + kappa_dual = 0 (transverse Lagrangian)."""
+        """Heisenberg: kappa + kappa_dual = 0 as scalar witness."""
         bridge = SafronovCoHABridge("Heisenberg", k=1)
         result = bridge.complementarity_as_lagrangian()
         assert result["complement_sum"] == Fraction(0)
-        assert result["lagrangian_intersection"] == "transverse"
+        assert result["scalar_lagrangian_witness"] == "transverse"
+        assert result["full_lagrangian_intersection_proved_by_engine"] is False
 
     def test_complementarity_virasoro(self):
         """Virasoro: kappa + kappa_dual = 13 != 0 (AP24: excess Lagrangian).
@@ -325,7 +355,8 @@ class TestSafronovCoHABridge:
         bridge = SafronovCoHABridge("Virasoro", c=1)
         result = bridge.complementarity_as_lagrangian()
         assert result["complement_sum"] == Fraction(13)
-        assert result["lagrangian_intersection"] == "excess"
+        assert result["scalar_lagrangian_witness"] == "excess"
+        assert result["full_lagrangian_intersection_proved_by_engine"] is False
 
     def test_complementarity_virasoro_c26(self):
         """At c=26 (critical): kappa = 13, kappa_dual = 0. Sum = 13."""
@@ -337,32 +368,37 @@ class TestSafronovCoHABridge:
 
 
 # ======================================================================
-#  Section 7: Four-stage architecture audit
+#  Section 7: Four-stage architecture witnesses
 # ======================================================================
 
 class TestFourStageArchitecture:
-    """4 tests for the four-stage architecture comprehensive audit."""
+    """Four-stage architecture witness tests."""
 
     def test_all_stages_present(self):
-        """All four stages present in the audit."""
+        """All four stages present in the witness."""
         for fam in ["Heisenberg", "Affine_sl2", "Virasoro"]:
-            audit = four_stage_audit(fam, k=1, c=26)
-            assert set(audit["stages"].keys()) == {1, 2, 3, 4}
+            witness = four_stage_audit(fam, k=1, c=26)
+            assert set(witness["stages"].keys()) == {1, 2, 3, 4}
 
     def test_stage1_proved(self):
-        """Stage 1 (local one-colour) is PROVED."""
-        audit = four_stage_audit("Heisenberg", k=1)
-        assert audit["stages"][1]["status"] == "PROVED"
+        """Stage 1 gives a cochain universal-action witness."""
+        witness = four_stage_audit("Heisenberg", k=1)
+        assert witness["stages"][1]["cochain_universal_action"] is True
+        assert witness["stages"][1]["physical_bulk_identification"] is False
 
     def test_stage2_meromorphic_match(self):
-        """Stage 2: DNP meromorphic tensor matches."""
-        audit = four_stage_audit("Affine_sl2", k=1)
-        assert audit["stages"][2]["meromorphic_tensor_match"] is True
+        """Stage 2 separates R-matrix witness from full equivalence."""
+        witness = four_stage_audit("Affine_sl2", k=1)
+        assert witness["stages"][2]["scalar_rmatrix_witness"] is True
+        assert witness["stages"][2]["meromorphic_tensor_match"] is False
+        assert witness["stages"][2]["full_factorization_equivalence"] is False
 
     def test_stage3_bulk_identification(self):
-        """Stage 3: CDG bulk = derived center."""
-        audit = four_stage_audit("Heisenberg", k=1)
-        assert audit["stages"][3]["bulk_identification_match"] is True
+        """Stage 3 has cochain match, not physical-bulk identification."""
+        witness = four_stage_audit("Heisenberg", k=1)
+        assert witness["stages"][3]["cochain_closed_sector_match"] is True
+        assert witness["stages"][3]["bulk_identification_match"] is False
+        assert witness["stages"][3]["physical_bulk_identification"] is False
 
 
 # ======================================================================
@@ -370,14 +406,65 @@ class TestFourStageArchitecture:
 # ======================================================================
 
 class TestCrossChecks:
-    """9 tests for cross-checks and consistency."""
+    """Cross-checks, object separation, and consistency."""
+
+    def test_open_closed_object_separation(self):
+        """Bar, Verdier dual, derived center, and physical bulk are distinct."""
+        witness = open_closed_object_separation_witness()
+        assert witness["all_forbidden_equalities_rejected"] is True
+        assert witness["forbidden_equalities"]["bar_equals_derived_center"] is False
+        assert witness["forbidden_equalities"]["koszul_dual_equals_derived_center"] is False
+        assert witness["objects"]["bar_cobar_inverse"]["symbol"] == "Omega(B(A)) -> A"
+        assert witness["objects"]["derived_center"]["producer"] == "Hochschild cohomology"
+
+    def test_physical_bulk_comparison_requires_typed_data(self):
+        """Physical bulk is identified with the center only after all hypotheses."""
+        empty = physical_bulk_comparison_check()
+        assert empty["universal_action_classified"] is False
+        assert empty["physical_bulk_identified_with_derived_center"] is False
+        assert "brace_map" in empty["missing_hypotheses"]
+
+        action = physical_bulk_comparison_check(
+            boundary_identification=True,
+            local_operator_shadow=True,
+            brace_map=True,
+        )
+        assert action["universal_action_classified"] is True
+        assert action["physical_bulk_identified_with_derived_center"] is False
+        assert action["missing_hypotheses"] == ["quasi_isomorphism", "completion"]
+
+        equivalence = physical_bulk_comparison_check(
+            boundary_identification=True,
+            local_operator_shadow=True,
+            brace_map=True,
+            quasi_isomorphism=True,
+            completion=True,
+        )
+        assert equivalence["physical_bulk_identified_with_derived_center"] is True
+
+    def test_factorization_equivalence_needs_more_than_rmatrix(self):
+        """An R-matrix scalar check does not build C_op equivalence."""
+        missing = factorization_equivalence_hypothesis_check()
+        assert missing["full_factorization_equivalence"] is False
+        assert "associator_coherence" in missing["missing_hypotheses"]
+
+        full = factorization_equivalence_hypothesis_check(
+            braided_monoidal_functor=True,
+            associator_coherence=True,
+            boundary_cosheaf_descent=True,
+            completion=True,
+            quasi_equivalence=True,
+        )
+        assert full["full_factorization_equivalence"] is True
 
     def test_annulus_trace_three_paths(self):
-        """Three independent paths for annulus trace all agree."""
+        """Three paths for annulus trace agree as a scalar witness."""
         for fam in ["Heisenberg", "Affine_sl2", "Virasoro"]:
             params = {"k": 1} if fam != "Virasoro" else {"c": 26}
             result = annulus_trace_cross_check(fam, **params)
             assert result["all_agree"] is True
+            assert result["finite_scalar_witness_only"] is True
+            assert result["proves_full_open_closed_factorization"] is False
 
     def test_kappa_complementarity_km(self):
         """kappa + kappa_dual = 0 for KM families (AP24)."""
@@ -423,12 +510,32 @@ class TestCrossChecks:
             assert result["concentrated_in_012"] is True
             assert result["theorem_h_satisfied"] is True
 
+    def test_derived_center_critical_level_rejected(self):
+        """Critical affine level fails the generic-level hypothesis."""
+        result = derived_center_three_term_check("Affine_sl2", k=-2)
+        assert result["concentrated_in_012"] is False
+        assert result["theorem_h_satisfied"] is False
+        assert result["failed_hypothesis"] == "generic_level"
+
     def test_open_closed_mc_decomposition(self):
-        """Theta^oc = Theta_A + sum mu^{M_j} decomposition."""
+        """Theta^oc requires admissible open/closed extension data."""
         for fam in ["Heisenberg", "Affine_sl2", "Virasoro"]:
             params = {"k": 1} if fam != "Virasoro" else {"c": 26}
             result = open_closed_mc_decomposition_check(fam, **params)
-            assert result["all_sectors_from_single_mc"] is True
+            assert result["closed_projection_available"] is True
+            assert result["all_sectors_from_single_mc"] is False
+            assert "mixed_maps" in result["missing_hypotheses"]
+
+            full_params = {
+                **params,
+                "module_structures": True,
+                "mixed_maps": True,
+                "boundary_compatibility": True,
+                "completion": True,
+            }
+            full = open_closed_mc_decomposition_check(fam, **full_params)
+            assert full["admissible_extension"] is True
+            assert full["all_sectors_from_single_mc"] is True
 
     def test_shadow_archetype_classification(self):
         """Shadow archetypes: G/L/C/M correctly assigned."""
@@ -436,6 +543,12 @@ class TestCrossChecks:
         assert shadow_archetype_classification("Affine_sl2")["archetype"] == "L"
         assert shadow_archetype_classification("Virasoro", c=26)["archetype"] == "M"
         assert shadow_archetype_classification("W3", c=2)["archetype"] == "M"
+        assert (
+            shadow_archetype_classification("Virasoro", c=26)[
+                "swiss_cheese_formality_proved_by_scalar"
+            ]
+            is False
+        )
 
     def test_virasoro_quartic_contact(self):
         """Q^ct_Vir = 10/(c(5c+22)) at specific c values.
@@ -459,9 +572,9 @@ class TestCrossChecks:
     def test_kappa_formula_consistency(self):
         """kappa formula consistent across all families (AP1 cross-check).
 
-        kappa(H_k) = k (NOT k/2, NOT c/2)
-        kappa(Vir_c) = c/2 (NOT c, NOT k)
-        kappa(sl_2, k) = 3(k+2)/4 (NOT k, NOT c/2)
+        kappa(H_k) = k.
+        kappa(Vir_c) = c/2.
+        kappa(sl_2, k) = 3(k+2)/4.
 
         Path 1: Direct computation
         Path 2: Check Heisenberg at k=1 gives c=1 but kappa=1 (not 1/2)

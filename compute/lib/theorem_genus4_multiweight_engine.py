@@ -1,4 +1,4 @@
-r"""Genus-4 multi-weight universality failure: pushing delta_F_g^cross to genus 4.
+r"""Genus-4 multi-weight finite-window engine for W3.
 
 At genus 2, the multi-weight genus expansion (thm:multi-weight-genus-expansion)
 gives F_2(W_3) = kappa * lambda_2^FP + delta_F_2^cross, where
@@ -7,36 +7,38 @@ delta_F_2(W_3) = (c + 204)/(16c) > 0 (PROVED, 73 tests).
 At genus 3, the extension gives delta_F_3(W_3) =
 (5c^3 + 3792c^2 + 1149120c + 217071360)/(138240 c^2) > 0 (PROVED).
 
-This engine pushes the computation to GENUS 4, computing:
+This engine records the finite-window genus-4 W3 computation:
 
 1. lambda_4^FP = 127/154828800 from Bernoulli numbers (3 independent paths)
 2. delta_F_4^cross(W_3) = (287c^4 + 268881c^3 + 115455816c^2
        + 29725133760c + 5594347866240) / (17418240 c^3)
-   PROVED: derived from the 379-graph sum over all stable graphs of
-   M-bar_{4,0} via Newton interpolation (degree 4 polynomial in the
-   numerator, confirmed by forward differences vanishing at order 5).
-   Verified at c = 1, 2, ..., 20.
-3. Virasoro shadow data S_6 and S_7, first visible at genus 4
+   COMPUTE-BACKED FINITE WINDOW: derived from the genus-4 graph-sum
+   certificate at N = 3 and c = 1, ..., 7, with exact rational arithmetic.
+   The all-weight structural theorem remains conditional in the concordance.
+3. Weighted Riccati Virasoro data S_6^wt and S_7^wt, first visible at genus 4
    (cor:shadow-visibility-genus: g_min(S_r) = floor(r/2) + 1).
-   S_6 = 80(45c + 193) / [3 c^3 (5c+22)^2]
-   S_7 = -2880(15c + 61) / [7 c^4 (5c+22)^2]
-4. Cross-genus growth analysis: delta_F_4/delta_F_3 ~ 7.9 at c=26,
-   confirming factorial growth of cross-channel corrections.
-5. Complementarity checks at genus 4.
+   S_6^wt = 80(45c + 193) / [3 c^3 (5c+22)^2]
+   S_7^wt = -2880(15c + 61) / [7 c^4 (5c+22)^2]
+4. Manuscript null-state sextic Virasoro shadow:
+   S_6^ms = 4(240c + 1031) / [c^3(5c+22)^2].
+   This is distinct from S_6^wt; the two normalisations are firewalled.
+5. Cross-genus growth analysis over a finite positive-c window.
+   The data show rapid growth of cross-channel corrections.
+   They are not an all-genus factorial-growth proof.
+6. Complementarity checks at genus 4, scalar lane only for the dual sum.
 
 EPISTEMIC STATUS
 ================
 
 PROVED:
   - lambda_4^FP = 127/154828800 (Bernoulli formula, 3 paths)
-  - delta_F_4^cross(W_3): closed-form from 379-graph sum, rational
-    reconstruction, integer-point verification (PROVED in delta_f4_engine.py
-    and theorem_thm_d_multiweight_frontier_engine.py)
+  - delta_F_4^cross(W_3): exact rational closed form on the N=3
+    finite-window graph-sum certificate c=1,...,7.
   - F_4(W_3) = kappa * lambda_4^FP + delta_F_4^cross (definition)
   - delta_F_4 > 0 for all c > 0 (all numerator coefficients positive)
   - F_4(Heisenberg) = k * lambda_4^FP (class G, no corrections)
-  - S_6, S_7 from the convolution recursion f^2 = Q_L (quintic_shadow_engine.py)
-  - Shadow visibility: S_6, S_7 first appear at genus 4
+  - S_6^wt, S_7^wt from the weighted convolution recursion f^2 = Q_L
+  - S_6^ms from thm:S6-Vir-closed, distinct from S_6^wt
 
 CONJECTURAL:
   - The genus-4 planted-forest formula (the full polynomial in kappa, S_3, ..., S_7)
@@ -66,8 +68,9 @@ Shadow data (Virasoro, from landscape_census.tex and quintic_shadow_engine.py):
     S_3 = 2
     S_4 = Q^contact = 10/[c(5c+22)]
     S_5 = -48/[c^2(5c+22)]
-    S_6 = 80(45c + 193) / [3 c^3 (5c+22)^2]
-    S_7 = -2880(15c + 61) / [7 c^4 (5c+22)^2]
+    weighted S_6^wt = 80(45c + 193) / [3 c^3 (5c+22)^2]
+    weighted S_7^wt = -2880(15c + 61) / [7 c^4 (5c+22)^2]
+    manuscript S_6^ms = 4(240c + 1031) / [c^3(5c+22)^2]
 """
 
 from __future__ import annotations
@@ -75,7 +78,33 @@ from __future__ import annotations
 from fractions import Fraction
 from functools import lru_cache
 from math import comb, factorial
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple, Union
+
+
+Number = Union[int, Fraction]
+
+
+def _as_fraction(value: Number, name: str) -> Fraction:
+    """Coerce integral/rational inputs to Fraction for exact arithmetic."""
+    if isinstance(value, Fraction):
+        return value
+    if isinstance(value, int):
+        return Fraction(value)
+    raise TypeError(f"{name} must be an int or Fraction, got {type(value).__name__}")
+
+
+def _as_nonzero_fraction(value: Number, name: str) -> Fraction:
+    result = _as_fraction(value, name)
+    if result == 0:
+        raise ValueError(f"{name} must be nonzero")
+    return result
+
+
+def _as_virasoro_c(value: Number) -> Fraction:
+    c = _as_nonzero_fraction(value, "c")
+    if 5 * c + 22 == 0:
+        raise ValueError("c = -22/5: quartic diverges")
+    return c
 
 
 # ============================================================================
@@ -180,28 +209,28 @@ def lambda_fp_from_ahat(g: int) -> Fraction:
 # Section 3: Shadow data for standard families
 # ============================================================================
 
-def virasoro_shadow(c: Fraction) -> Dict[str, Fraction]:
-    r"""Virasoro shadow data through arity 7. Class M, r_max = infinity.
+def virasoro_weighted_riccati_shadow(c: Number) -> Dict[str, Any]:
+    r"""Weighted Riccati Virasoro shadow data through arity 7.
 
     kappa = c/2
     S_3 = 2
     S_4 = Q^contact = 10 / [c(5c+22)]
     S_5 = -48 / [c^2(5c+22)]
-    S_6 = 80(45c + 193) / [3 c^3 (5c+22)^2]
-    S_7 = -2880(15c + 61) / [7 c^4 (5c+22)^2]
+    S_6^wt = 80(45c + 193) / [3 c^3 (5c+22)^2]
+    S_7^wt = -2880(15c + 61) / [7 c^4 (5c+22)^2]
 
     S_6, S_7 first appear at genus 4 (cor:shadow-visibility-genus).
     Formulas from quintic_shadow_engine.py, derived via the convolution
     recursion S_r = a_{r-2}/r where a_n are Taylor coefficients of sqrt(Q_L).
+
+    This is not the manuscript null-state normalisation at arity 6.
     """
-    if c == Fraction(0):
-        raise ValueError("c = 0: Virasoro degenerate")
+    c = _as_virasoro_c(c)
     denom1 = c * (5 * c + 22)
-    if denom1 == 0:
-        raise ValueError("c = -22/5: quartic diverges")
     denom2 = (5 * c + 22) ** 2
     return {
         'kappa': c / 2,
+        'normalization': 'weighted_riccati',
         'S_3': Fraction(2),
         'S_4': Fraction(10) / denom1,
         'S_5': Fraction(-48) / (c * denom1),
@@ -210,28 +239,68 @@ def virasoro_shadow(c: Fraction) -> Dict[str, Fraction]:
     }
 
 
-def w3_shadow(c: Fraction) -> Dict[str, Any]:
+def virasoro_manuscript_shadow(c: Number) -> Dict[str, Any]:
+    r"""Manuscript null-state Virasoro shadow through the proved sextic term.
+
+    The sextic coefficient is the theorem-level normalisation of
+    thm:S6-Vir-closed:
+
+        S_6^ms = 4(240c + 1031) / [c^3(5c+22)^2].
+
+    It differs from the weighted Riccati metric coefficient
+    S_6^wt = 80(45c + 193) / [3c^3(5c+22)^2].
+    """
+    c = _as_virasoro_c(c)
+    denom1 = c * (5 * c + 22)
+    denom2 = (5 * c + 22) ** 2
+    return {
+        'kappa': c / 2,
+        'normalization': 'manuscript_null_state',
+        'S_3': Fraction(2),
+        'S_4': Fraction(10) / denom1,
+        'S_5': Fraction(-48) / (c * denom1),
+        'S_6': Fraction(4) * (240 * c + 1031) / (c ** 3 * denom2),
+    }
+
+
+def virasoro_shadow(c: Number) -> Dict[str, Any]:
+    """Backward-compatible Virasoro weighted Riccati shadow data."""
+    return virasoro_weighted_riccati_shadow(c)
+
+
+def virasoro_S6_manuscript_null_state(c: Number) -> Fraction:
+    """Manuscript sextic coefficient from thm:S6-Vir-closed."""
+    return virasoro_manuscript_shadow(c)['S_6']
+
+
+def w3_shadow(c: Number) -> Dict[str, Any]:
     r"""W_3 shadow data.
 
     Two channels: T (weight 2, kappa_T = c/2), W (weight 3, kappa_W = c/3).
     Total kappa(W_3) = 5c/6.
-    T-line has same shadow data as Virasoro at c.
+    T-line stores the weighted Riccati Virasoro data at c.  The manuscript
+    null-state S_6 is carried separately to prevent normalisation leakage.
     """
-    vir = virasoro_shadow(c)
+    c = _as_fraction(c, "c")
+    vir = virasoro_weighted_riccati_shadow(c)
+    vir_ms = virasoro_manuscript_shadow(c)
     return {
         'kappa_T': vir['kappa'],
         'kappa_W': c / 3,
         'kappa_total': Fraction(5) * c / 6,
+        'T_normalization': vir['normalization'],
         'S_3_T': vir['S_3'],
         'S_4_T': vir['S_4'],
         'S_5_T': vir['S_5'],
-        'S_6_T': vir['S_6'],
-        'S_7_T': vir['S_7'],
+        'S_6_T_weighted': vir['S_6'],
+        'S_7_T_weighted': vir['S_7'],
+        'S_6_T_manuscript': vir_ms['S_6'],
     }
 
 
-def heisenberg_shadow(k: Fraction = Fraction(1)) -> Dict[str, Fraction]:
+def heisenberg_shadow(k: Number = Fraction(1)) -> Dict[str, Fraction]:
     """Heisenberg shadow data. Class G, r_max = 2. All higher shadows vanish."""
+    k = _as_fraction(k, "k")
     return {
         'kappa': k,
         'S_3': Fraction(0),
@@ -242,11 +311,12 @@ def heisenberg_shadow(k: Fraction = Fraction(1)) -> Dict[str, Fraction]:
     }
 
 
-def affine_sl2_shadow(k: Fraction = Fraction(1)) -> Dict[str, Fraction]:
+def affine_sl2_shadow(k: Number = Fraction(1)) -> Dict[str, Fraction]:
     r"""Affine V_k(sl_2) shadow data. Class L, r_max = 3.
 
     S_3 = 4/(k+2), all higher shadows vanish (Delta = 0 for class L).
     """
+    k = _as_fraction(k, "k")
     if k == Fraction(-2):
         raise ValueError("k = -2 is the critical level")
     return {
@@ -260,38 +330,60 @@ def affine_sl2_shadow(k: Fraction = Fraction(1)) -> Dict[str, Fraction]:
 
 
 # ============================================================================
-# Section 4: Cross-channel corrections at genera 2, 3, 4 (all PROVED)
+# Section 4: Cross-channel corrections at genera 2, 3, 4
 # ============================================================================
 
-def delta_F2_W3(c: Fraction) -> Fraction:
+_DELTA_F4_W3_NUMERATOR = (
+    Fraction(287),
+    Fraction(268881),
+    Fraction(115455816),
+    Fraction(29725133760),
+    Fraction(5594347866240),
+)
+_DELTA_F4_W3_DENOMINATOR = Fraction(17418240)
+
+_DELTA_F4_W3_GRAPH_SUM_CERTIFICATE: Dict[int, Fraction] = {
+    1: Fraction(703023590623, 2177280),
+    2: Fraction(706782764083, 17418240),
+    3: Fraction(35089936129, 2903040),
+    4: Fraction(89298640253, 17418240),
+    5: Fraction(287294685997, 108864000),
+    6: Fraction(8914990013, 5806080),
+    7: Fraction(414869575201, 426746880),
+}
+
+
+def delta_F2_W3(c: Number) -> Fraction:
     r"""Cross-channel correction at genus 2: delta_F_2(W_3) = (c + 204)/(16c).
 
     PROVED. Computed by summing mixed-channel amplitudes over all 6 boundary
     stable graphs of M-bar_{2,0}. All numerator coefficients positive.
     """
+    c = _as_nonzero_fraction(c, "c")
     return (c + Fraction(204)) / (16 * c)
 
 
-def delta_F3_W3(c: Fraction) -> Fraction:
+def delta_F3_W3(c: Number) -> Fraction:
     r"""Cross-channel correction at genus 3.
 
     delta_F_3(W_3) = (5c^3 + 3792c^2 + 1149120c + 217071360) / (138240 c^2)
 
     PROVED: 42-graph sum, closed-form match, 7-path verification.
     """
+    c = _as_nonzero_fraction(c, "c")
     num = 5 * c ** 3 + 3792 * c ** 2 + 1149120 * c + 217071360
     return num / (138240 * c ** 2)
 
 
-def delta_F4_W3(c: Fraction) -> Fraction:
+def delta_F4_W3(c: Number) -> Fraction:
     r"""Cross-channel correction at genus 4.
 
     delta_F_4(W_3) = (287c^4 + 268881c^3 + 115455816c^2
                       + 29725133760c + 5594347866240) / (17418240 c^3)
 
-    PROVED: derived from the 379-graph sum over all stable graphs of
-    M-bar_{4,0} via Newton interpolation (degree-4 polynomial numerator,
-    forward differences vanish at order 5). Verified at c = 1, ..., 20.
+    COMPUTE-BACKED FINITE WINDOW: the polynomial matches the independent
+    genus-4 graph-sum certificate at N=3 and c=1,...,7.  This function is
+    the W3 finite-window theorem implementation, not a general W_N theorem.
 
     Denominator: 17418240 = 2^11 * 3^5 * 5 * 7.
     All numerator coefficients (287, 268881, 115455816, 29725133760,
@@ -300,9 +392,9 @@ def delta_F4_W3(c: Fraction) -> Fraction:
     c-power structure: numerator degree 4, denominator c^{g-1} = c^3.
     Net degree 1 at large c (linear growth), matching genus 2 and 3.
     """
-    num = (287 * c ** 4 + 268881 * c ** 3 + 115455816 * c ** 2
-           + 29725133760 * c + 5594347866240)
-    return num / (17418240 * c ** 3)
+    c = _as_nonzero_fraction(c, "c")
+    num = sum(coeff * c ** (4 - idx) for idx, coeff in enumerate(_DELTA_F4_W3_NUMERATOR))
+    return num / (_DELTA_F4_W3_DENOMINATOR * c ** 3)
 
 
 def delta_F4_W3_coefficients() -> Dict[str, Fraction]:
@@ -311,26 +403,50 @@ def delta_F4_W3_coefficients() -> Dict[str, Fraction]:
     delta_F_4 = (a_4 c^4 + a_3 c^3 + a_2 c^2 + a_1 c + a_0) / (D * c^3)
     """
     return {
-        'a_4': Fraction(287),
-        'a_3': Fraction(268881),
-        'a_2': Fraction(115455816),
-        'a_1': Fraction(29725133760),
-        'a_0': Fraction(5594347866240),
-        'D': Fraction(17418240),
+        'a_4': _DELTA_F4_W3_NUMERATOR[0],
+        'a_3': _DELTA_F4_W3_NUMERATOR[1],
+        'a_2': _DELTA_F4_W3_NUMERATOR[2],
+        'a_1': _DELTA_F4_W3_NUMERATOR[3],
+        'a_0': _DELTA_F4_W3_NUMERATOR[4],
+        'D': _DELTA_F4_W3_DENOMINATOR,
     }
 
 
-def delta_F4_W3_from_thm_d_engine(c: Fraction) -> Fraction:
+def delta_F4_W3_graph_sum_certificate() -> Dict[int, Fraction]:
+    """Finite graph-sum certificate for W3 at c=1,...,7.
+
+    Values are exact outputs of the genus-4 gravitational graph-sum lane
+    for N=3.  Unit tests compare this data table to the closed form without
+    re-running the slow 379-graph enumeration.
+    """
+    return dict(_DELTA_F4_W3_GRAPH_SUM_CERTIFICATE)
+
+
+def delta_F4_W3_from_graph_sum_certificate(c: Number) -> Fraction:
+    """Return the graph-sum certificate value at an integral c in 1,...,7."""
+    c = _as_fraction(c, "c")
+    if c.denominator != 1 or c.numerator not in _DELTA_F4_W3_GRAPH_SUM_CERTIFICATE:
+        raise ValueError("graph-sum certificate is available only for c = 1, ..., 7")
+    return _DELTA_F4_W3_GRAPH_SUM_CERTIFICATE[c.numerator]
+
+
+def delta_F4_W3_from_thm_d_engine(c: Number) -> Fraction:
     r"""Cross-check via theorem_thm_d_multiweight_frontier_engine.
 
-    Independent implementation of the same closed-form formula,
-    imported from the graph-sum computation lineage.
+    Cross-check through the verified coefficient lane in
+    delta_f4_universal_engine.  This avoids duplicating the numerator
+    polynomial in this module.
     """
-    return (287 * c ** 4 + 268881 * c ** 3 + 115455816 * c ** 2
-            + 29725133760 * c + 5594347866240) / (17418240 * c ** 3)
+    c = _as_nonzero_fraction(c, "c")
+    from compute.lib.delta_f4_universal_engine import delta_F4_exact
+
+    value = delta_F4_exact(3, c)
+    if value is None:
+        raise RuntimeError("delta_f4_universal_engine lacks the N=3 certificate")
+    return value
 
 
-def delta_F4_W3_decomposition(c: Fraction) -> Dict[str, Fraction]:
+def delta_F4_W3_decomposition(c: Number) -> Dict[str, Any]:
     """Decompose delta_F_4(W_3) into c-power contributions.
 
     delta_F_4 = E*c + D + C/c + B/c^2 + A/c^3
@@ -338,7 +454,8 @@ def delta_F4_W3_decomposition(c: Fraction) -> Dict[str, Fraction]:
     where each coefficient is an exact rational derived from the
     graph sum (the decomposition by loop number h^1 of the graphs).
     """
-    D_denom = Fraction(17418240)
+    c = _as_nonzero_fraction(c, "c")
+    D_denom = _DELTA_F4_W3_DENOMINATOR
     E = Fraction(287) / D_denom
     D_coeff = Fraction(268881) / D_denom
     C = Fraction(115455816) / D_denom
@@ -365,38 +482,40 @@ def delta_F4_W3_decomposition(c: Fraction) -> Dict[str, Fraction]:
 # ============================================================================
 
 def genus4_free_energy(family: str,
-                       param: Optional[Fraction] = None) -> Dict[str, Any]:
+                       param: Optional[Number] = None) -> Dict[str, Any]:
     r"""Complete genus-4 free energy decomposition.
 
     F_4(A) = kappa * lambda_4^FP + delta_F_4^cross
 
     For uniform-weight: delta_F_4^cross = 0.
-    For multi-weight (W_3): delta_F_4^cross from the 379-graph sum.
+    For multi-weight (W_3): delta_F_4^cross from the finite graph-sum
+    certificate at N=3.
 
     Heisenberg is class G: F_4 = k * lambda_4^FP exactly, no corrections.
     Virasoro is uniform-weight: delta_F_4^cross = 0.
     Affine sl_2 is uniform-weight: delta_F_4^cross = 0.
-    W_3 is multi-weight: delta_F_4^cross > 0 (PROVED).
+    W_3 is multi-weight: delta_F_4^cross > 0 because the finite-window
+    closed form has positive numerator coefficients.
     """
     fp4 = lambda_fp(4)
 
     if family == 'Heisenberg':
-        k = param if param is not None else Fraction(1)
+        k = _as_fraction(param, "param") if param is not None else Fraction(1)
         kappa = k
         delta_cross = Fraction(0)
         name = f'Heisenberg_k{k}'
     elif family == 'Virasoro':
-        c = param if param is not None else Fraction(26)
+        c = _as_fraction(param, "param") if param is not None else Fraction(26)
         kappa = c / 2
         delta_cross = Fraction(0)
         name = f'Virasoro_c{c}'
     elif family == 'affine_sl2':
-        k = param if param is not None else Fraction(1)
+        k = _as_fraction(param, "param") if param is not None else Fraction(1)
         kappa = Fraction(3) * (k + 2) / Fraction(4)
         delta_cross = Fraction(0)
         name = f'affine_sl2_k{k}'
     elif family == 'W_3':
-        c = param if param is not None else Fraction(50)
+        c = _as_nonzero_fraction(param, "param") if param is not None else Fraction(50)
         kappa = Fraction(5) * c / 6
         delta_cross = delta_F4_W3(c)
         name = f'W_3_c{c}'
@@ -415,6 +534,37 @@ def genus4_free_energy(family: str,
         'delta_cross': delta_cross,
         'total_F4': total,
         'is_uniform_weight': delta_cross == 0,
+    }
+
+
+def w3_genus4_channel_decomposition(c: Number) -> Dict[str, Fraction]:
+    r"""Separate W3 genus-4 scalar diagonal lane from cross-channel terms.
+
+    The diagonal scalar lane is
+        (kappa_T + kappa_W) * lambda_4^FP
+      = (c/2 + c/3) * lambda_4^FP.
+
+    The cross-channel lane is the finite-window graph-sum correction
+    delta_F_4^cross(W3).  It is not a Faber-Pandharipande scalar term.
+    """
+    c = _as_nonzero_fraction(c, "c")
+    fp4 = lambda_fp(4)
+    kappa_T = c / 2
+    kappa_W = c / 3
+    scalar_T = kappa_T * fp4
+    scalar_W = kappa_W * fp4
+    scalar_total = scalar_T + scalar_W
+    cross = delta_F4_W3(c)
+    return {
+        'kappa_T': kappa_T,
+        'kappa_W': kappa_W,
+        'kappa_total': kappa_T + kappa_W,
+        'lambda_4_FP': fp4,
+        'scalar_T': scalar_T,
+        'scalar_W': scalar_W,
+        'scalar_total': scalar_total,
+        'cross_channel': cross,
+        'total_F4': scalar_total + cross,
     }
 
 
@@ -450,8 +600,9 @@ def cross_channel_growth(c_values: Optional[List[int]] = None) -> Dict[int, Dict
     r"""Analyze growth of delta_F_g^cross(W_3) from genus 2 through genus 4.
 
     At large c, delta_F_g ~ (leading coefficient) * c.
-    The growth ratio delta_F_{g+1}/delta_F_g measures the factorial
-    divergence of the cross-channel correction tower.
+    The growth ratio delta_F_{g+1}/delta_F_g records finite-window growth
+    of the computed correction tower.  It is not an all-genus asymptotic
+    theorem.
     """
     if c_values is None:
         c_values = [1, 10, 26, 50, 100]
@@ -460,7 +611,7 @@ def cross_channel_growth(c_values: Optional[List[int]] = None) -> Dict[int, Dict
     results = {}
 
     for c_val in c_values:
-        c = Fraction(c_val)
+        c = _as_nonzero_fraction(c_val, "c_val")
         kappa = Fraction(5) * c / 6
 
         d2 = delta_F2_W3(c)
@@ -499,17 +650,14 @@ def genus4_positivity(c_values: Optional[List[int]] = None) -> Dict[int, bool]:
     """
     if c_values is None:
         c_values = [1, 2, 5, 10, 13, 26, 50, 100, 1000]
-    return {
-        c_val: delta_F4_W3(Fraction(c_val)) > 0
-        for c_val in c_values
-    }
+    return {c_val: delta_F4_W3(c_val) > 0 for c_val in c_values}
 
 
 # ============================================================================
 # Section 9: Complementarity at genus 4
 # ============================================================================
 
-def virasoro_complementarity_g4(c: Fraction) -> Dict[str, Any]:
+def virasoro_complementarity_g4(c: Number) -> Dict[str, Any]:
     r"""Complementarity check at genus 4 for Virasoro.
 
     Koszul dual: Vir_c <-> Vir_{26-c}.
@@ -517,6 +665,7 @@ def virasoro_complementarity_g4(c: Fraction) -> Dict[str, Any]:
 
     Scalar sum: F_4^scalar(c) + F_4^scalar(26-c) = 13 * lambda_4^FP.
     """
+    c = _as_fraction(c, "c")
     c_dual = 26 - c
     fp4 = lambda_fp(4)
 
@@ -534,7 +683,7 @@ def virasoro_complementarity_g4(c: Fraction) -> Dict[str, Any]:
     }
 
 
-def w3_complementarity_g4(c: Fraction) -> Dict[str, Any]:
+def w3_complementarity_g4(c: Number) -> Dict[str, Any]:
     r"""Complementarity check at genus 4 for W_3.
 
     Koszul dual: W_3 at c <-> W_3 at 100 - c (K_3 = 100).
@@ -542,7 +691,10 @@ def w3_complementarity_g4(c: Fraction) -> Dict[str, Any]:
 
     Cross-channel sum: delta_F_4(c) + delta_F_4(100-c).
     """
+    c = _as_nonzero_fraction(c, "c")
     c_dual = 100 - c
+    if c_dual == 0:
+        raise ValueError("c_dual = 0: W3 cross-channel correction is singular")
     fp4 = lambda_fp(4)
 
     kappa = Fraction(5) * c / 6
@@ -622,7 +774,7 @@ def genus_comparison_table(c_values: Optional[List[int]] = None) -> Dict[int, Di
     table = {}
 
     for c_val in c_values:
-        c = Fraction(c_val)
+        c = _as_nonzero_fraction(c_val, "c_val")
         kappa = Fraction(5) * c / 6
 
         s2, s3, s4 = kappa * fp2, kappa * fp3, kappa * fp4
@@ -680,28 +832,30 @@ def depth_class_consistency_g4() -> Dict[str, bool]:
 # Section 13: Virasoro shadow S_6, S_7 cross-verification
 # ============================================================================
 
-def virasoro_S6_from_convolution(c: Fraction) -> Fraction:
-    r"""S_6 from the convolution recursion a_n, with S_r = a_{r-2}/r.
+def virasoro_S6_from_convolution(c: Number) -> Fraction:
+    r"""Weighted S_6 from the convolution recursion a_n, S_r = a_{r-2}/r.
 
     From quintic_shadow_engine.py:
     a_4 = 160(45c + 193) / [c^3(5c+22)^2]
-    S_6 = a_4 / 6 = 80(45c + 193) / [3 c^3 (5c+22)^2]
+    S_6^wt = a_4 / 6 = 80(45c + 193) / [3 c^3 (5c+22)^2]
     """
+    c = _as_virasoro_c(c)
     return Fraction(80) * (45 * c + 193) / (3 * c ** 3 * (5 * c + 22) ** 2)
 
 
-def virasoro_S7_from_convolution(c: Fraction) -> Fraction:
-    r"""S_7 from the convolution recursion a_n, with S_r = a_{r-2}/r.
+def virasoro_S7_from_convolution(c: Number) -> Fraction:
+    r"""Weighted S_7 from the convolution recursion a_n, S_r = a_{r-2}/r.
 
     From quintic_shadow_engine.py:
     a_5 = -2880(15c + 61) / [c^4(5c+22)^2]
-    S_7 = a_5 / 7 = -2880(15c + 61) / [7 c^4 (5c+22)^2]
+    S_7^wt = a_5 / 7 = -2880(15c + 61) / [7 c^4 (5c+22)^2]
     """
+    c = _as_virasoro_c(c)
     return Fraction(-2880) * (15 * c + 61) / (7 * c ** 4 * (5 * c + 22) ** 2)
 
 
-def virasoro_S6_from_shadow_metric(c: Fraction) -> Fraction:
-    r"""S_6 from direct Taylor expansion of sqrt(Q_L(t)).
+def virasoro_S6_from_shadow_metric(c: Number) -> Fraction:
+    r"""Weighted S_6 from direct Taylor expansion of sqrt(Q_L(t)).
 
     Independent path: compute the convolution coefficients a_0, ..., a_4
     by solving f^2 = Q_L term by term.
@@ -715,8 +869,7 @@ def virasoro_S6_from_shadow_metric(c: Fraction) -> Fraction:
 
     Then S_6 = a_4 / 6.
     """
-    kappa = c / 2
-    S4 = Fraction(10) / (c * (5 * c + 22))
+    c = _as_virasoro_c(c)
     q2 = (180 * c + 872) / (5 * c + 22)
 
     a0 = c
@@ -728,11 +881,12 @@ def virasoro_S6_from_shadow_metric(c: Fraction) -> Fraction:
     return a4 / 6
 
 
-def virasoro_S7_from_shadow_metric(c: Fraction) -> Fraction:
-    r"""S_7 from direct Taylor expansion of sqrt(Q_L(t)).
+def virasoro_S7_from_shadow_metric(c: Number) -> Fraction:
+    r"""Weighted S_7 from direct Taylor expansion of sqrt(Q_L(t)).
 
     Extends the a_n computation to n=5, then S_7 = a_5/7.
     """
+    c = _as_virasoro_c(c)
     q2 = (180 * c + 872) / (5 * c + 22)
 
     a0 = c
@@ -788,16 +942,22 @@ def full_verification_summary() -> Dict[str, Any]:
 
     # 6. S_6, S_7 cross-verification
     c = Fraction(26)
-    vir = virasoro_shadow(c)
-    summary['S6_cross'] = {
-        'from_shadow_dict': vir['S_6'],
+    vir = virasoro_weighted_riccati_shadow(c)
+    vir_ms = virasoro_manuscript_shadow(c)
+    summary['S6_weighted_cross'] = {
+        'from_weighted_shadow_dict': vir['S_6'],
         'from_convolution': virasoro_S6_from_convolution(c),
         'from_shadow_metric': virasoro_S6_from_shadow_metric(c),
         'all_agree': (vir['S_6'] == virasoro_S6_from_convolution(c)
                       == virasoro_S6_from_shadow_metric(c)),
     }
+    summary['S6_normalization_firewall'] = {
+        'manuscript_null_state': vir_ms['S_6'],
+        'weighted_riccati': vir['S_6'],
+        'distinct': vir_ms['S_6'] != vir['S_6'],
+    }
     summary['S7_cross'] = {
-        'from_shadow_dict': vir['S_7'],
+        'from_weighted_shadow_dict': vir['S_7'],
         'from_convolution': virasoro_S7_from_convolution(c),
         'from_shadow_metric': virasoro_S7_from_shadow_metric(c),
         'all_agree': (vir['S_7'] == virasoro_S7_from_convolution(c)

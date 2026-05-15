@@ -34,6 +34,8 @@ from fractions import Fraction
 
 from compute.lib.symplectic_duality_engine import (
     # Kappa functions
+    koszul_object_firewall,
+    KoszulObjectConvention,
     kappa_heisenberg,
     kappa_virasoro,
     kappa_affine,
@@ -107,6 +109,56 @@ from compute.lib.symplectic_duality_engine import (
     # Master table
     master_verification_table,
 )
+
+
+# =========================================================================
+# OBJECT CONVENTIONS: BAR, VERDIER, COBAR, HOCHSCHILD
+# =========================================================================
+
+class TestKoszulObjectFirewall:
+    """Regression guard for AP25/AP34/AP50 object separation."""
+
+    def test_expected_symbols_present(self):
+        firewall = koszul_object_firewall()
+        assert set(firewall) == {
+            "A",
+            "B(A)",
+            "A^i",
+            "A^!",
+            "D_Ran(B(A))",
+            "Omega(B(A))",
+            "Z_ch^der(A)",
+        }
+        assert all(isinstance(entry, KoszulObjectConvention) for entry in firewall.values())
+
+    def test_bar_verdier_cobar_bulk_are_distinct(self):
+        firewall = koszul_object_firewall()
+
+        assert firewall["B(A)"].kind == "bar coalgebra"
+        assert firewall["B(A)"].construction == "T^c(s^{-1} Abar)"
+
+        assert firewall["A^i"].kind == "bar-cohomology coalgebra"
+        assert firewall["A^i"].construction == "H^*(B(A))"
+
+        assert firewall["A^!"].kind == "Koszul dual algebra"
+        assert "finite-type" in firewall["A^!"].branch
+
+        verdier = firewall["D_Ran(B(A))"]
+        assert verdier.kind == "Verdier algebra-side branch"
+        assert "finite-type" in verdier.output
+        assert "completed/pro" in verdier.output
+
+        cobar = firewall["Omega(B(A))"]
+        assert cobar.branch == "inversion"
+        assert cobar.output == "A"
+        assert "A^!" in cobar.distinct_from
+        assert "Z_ch^der(A)" in cobar.distinct_from
+
+        bulk = firewall["Z_ch^der(A)"]
+        assert bulk.construction == "ChirHoch^*(A,A)"
+        assert bulk.branch == "Hochschild bulk"
+        assert "B(A)" in bulk.distinct_from
+        assert "A^!" in bulk.distinct_from
 
 
 # =========================================================================

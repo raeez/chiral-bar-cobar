@@ -9,16 +9,21 @@ Verifies the deepest structural claim (Theorems A + B):
 CRITICAL DISTINCTIONS (CLAUDE.md):
   A != B(A) != A^i != A^!
   Omega(B(A)) = A (INVERSION, not duality)
-  A^! = (H*(B(A)))^v (VERDIER/LINEAR duality)
+  A^i = H*(B(A)); A^! = (A^i)^v after VERDIER/LINEAR duality
+  Z_ch^der(A) = ChirHoch^bullet(A,A) (bulk, not bar/cobar)
   Com^! = Lie (NOT coLie)
   Heisenberg NOT self-dual
   Virasoro self-dual at c=13, NOT c=26
 """
 
+import inspect
+from pathlib import Path
+
 import pytest
 import numpy as np
 from math import factorial
 
+import compute.lib.verdier_bar_cobar_pairing as vbc
 from compute.lib.verdier_bar_cobar_pairing import (
     DGA,
     BarData,
@@ -38,6 +43,7 @@ from compute.lib.verdier_bar_cobar_pairing import (
     verify_koszul_pair,
     bar_cobar_inversion_table,
     four_objects_distinguished,
+    typed_koszul_object_firewall,
     ce_sl2_verdier_pairing,
     pairing_dimensions_consistent,
     verify_bar_d_squared,
@@ -562,7 +568,7 @@ class TestHeisenbergVerdierPairing:
 # ===================================================================
 
 class TestKoszulDual:
-    """Tests for A^i = H*(B(A)) and A^! = (A^i)^v."""
+    """Tests for A^i = H*(B(A)) and the post-Verdier A^! branch."""
 
     def test_koszul_dual_sl2_degree1(self):
         """H^1(B(sl_2)) should be nonzero."""
@@ -587,6 +593,26 @@ class TestKoszulDual:
         result = koszul_dual_from_bar(dga, max_tensor=4)
         for n in range(1, 5):
             assert result["A_i_dims"][n] == 1
+
+    def test_koszul_dual_records_typed_branch(self):
+        """Bar cohomology is A^i; A^! is the Verdier/linear-dual algebra."""
+        result = koszul_dual_from_bar(_abelian_lie_dga(2), max_tensor=3)
+        assert result["object_types"]["A^i"] == "bar-dual coalgebra"
+        assert result["object_types"]["A^!"] == "Verdier/linear-dual algebra"
+        assert result["construction_path"] == (
+            "B(A)",
+            "A^i = H*(B(A))",
+            "A^! = (A^i)^v",
+        )
+        assert result["A_i_dims"] == result["A_dual_dims"]
+        assert result["object_types"]["A^i"] != result["object_types"]["A^!"]
+
+    def test_stale_direct_bar_cohomology_dual_shorthand_is_forbidden(self):
+        """The engine must not collapse A^i into the post-Verdier A^! branch."""
+        result = koszul_dual_from_bar(_heisenberg_dga(1.0), max_tensor=3)
+        stale = "A^! = " + "(H*(B(A)))^v"
+        assert result["forbidden_shorthand"] == stale
+        assert stale not in result["construction_path"]
 
 
 # ===================================================================
@@ -658,17 +684,21 @@ class TestBarCobarInversionTable:
 # ===================================================================
 
 class TestFourObjects:
-    """Tests for the critical distinction: A, B(A), A^i, A^!."""
+    """Tests for the critical distinction: A, B(A), A^i, A^!, Omega(B(A)), Z."""
 
     def test_four_objects_sl2(self):
-        """A, B(A), A^i, A^! are all distinguished for sl_2."""
+        """A, B(A), A^i, A^!, Omega(B(A)), and Z are all distinguished for sl_2."""
         result = four_objects_distinguished(_sl2_lie_dga(), max_tensor=3)
         assert result["A_dim"] == 3
         assert result["B(A)_dims"][1] == 3
         assert result["B(A)_dims"][2] == 9
+        assert result["Omega(B(A))_dims"][1] == 3
         assert result["Ai_is_coalgebra"] is True
         assert result["Adual_is_algebra"] is True
+        assert result["Omega_is_cobar_inversion"] is True
+        assert result["Zch_is_derived_center_bulk"] is True
         assert result["Ai_Adual_same_dims_different_structure"] is True
+        assert result["B_Ai_Adual_Omega_Z_typed_apart"] is True
 
     def test_four_objects_heisenberg(self):
         """Four objects for Heisenberg."""
@@ -679,6 +709,41 @@ class TestFourObjects:
         """A != B(A) (except trivially)."""
         result = four_objects_distinguished(_sl2_lie_dga(), max_tensor=3)
         assert result["A_neq_BA"]
+
+    def test_typed_firewall_records_six_objects(self):
+        """The firewall types A, bar, bar-dual, Verdier dual, inversion, and bulk."""
+        firewall = typed_koszul_object_firewall(_sl2_lie_dga(), max_tensor=3)
+        assert firewall["typed_objects"] == (
+            "A",
+            "B(A)",
+            "A^i",
+            "A^!",
+            "Omega(B(A))",
+            "Z_ch^der(A)",
+        )
+        assert firewall["objects"]["B(A)"]["kind"] == "conilpotent bar coalgebra"
+        assert firewall["objects"]["A^i"]["kind"] == "bar-dual coalgebra"
+        assert firewall["objects"]["A^!"]["kind"] == "Verdier/linear-dual algebra"
+        assert firewall["objects"]["A^!"]["source_object"] == "A^i"
+        assert firewall["objects"]["Omega(B(A))"]["kind"] == "cobar algebra and inversion object"
+        assert firewall["objects"]["Z_ch^der(A)"]["kind"] == "chiral Hochschild derived-centre bulk"
+
+    def test_typed_firewall_branch_order(self):
+        """Koszul duality, inversion, and bulk use different branches."""
+        firewall = typed_koszul_object_firewall(_heisenberg_dga(1.0), max_tensor=3)
+        assert firewall["branch_order"]["koszul_dual"] == ("B(A)", "A^i", "A^!")
+        assert firewall["branch_order"]["bar_cobar_inversion"] == ("B(A)", "Omega(B(A))", "A")
+        assert firewall["branch_order"]["bulk"] == ("A", "Z_ch^der(A)")
+        assert ("Omega(B(A)) = " + "A^!") in firewall["forbidden_shorthands"]
+        assert ("A^i", "A^!") in firewall["forbidden_collapses"]
+
+    def test_each_firewall_object_lists_the_others_as_distinct(self):
+        """Every typed object rejects collapse onto every other typed object."""
+        firewall = typed_koszul_object_firewall(_abelian_lie_dga(2), max_tensor=3)
+        names = firewall["typed_objects"]
+        for name in names:
+            distinct_from = set(firewall["objects"][name]["distinct_from"])
+            assert distinct_from == set(names) - {name}
 
 
 # ===================================================================
@@ -785,6 +850,28 @@ class TestCriticalPitfalls:
         """Com^! = Lie, NOT coLie (CLAUDE.md critical pitfall)."""
         # This is a structural fact, not a computation
         assert True  # Verified by the operadic framework
+
+    def test_source_has_no_direct_bar_cohomology_to_a_bang_shorthand(self):
+        """The owned sources must pass through A^i before naming A^!."""
+        stale = "A^! = " + "(H*(B(A)))^v"
+        sources = (
+            inspect.getsource(vbc),
+            Path(__file__).read_text(),
+        )
+        for source in sources:
+            assert stale not in source
+
+    def test_source_has_no_inversion_or_bulk_collapse_to_a_bang(self):
+        """Omega(B(A)) and Z_ch^der(A) are never identified with A^!."""
+        sources = "\n".join((inspect.getsource(vbc), Path(__file__).read_text()))
+        forbidden = [
+            "Omega(B(A)) = " + "A^!",
+            "Z_ch^der(A) = " + "A^!",
+            "Z_ch^der(A) = " + "B(A)",
+            "B(A) = " + "A^!",
+        ]
+        for phrase in forbidden:
+            assert phrase not in sources
 
 
 # ===================================================================

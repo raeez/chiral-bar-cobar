@@ -25,6 +25,12 @@ import pytest
 from sympy import Rational, bernoulli, factorial, simplify
 
 from compute.lib.dt_shadow_scattering_engine import (
+    # Firewalls
+    HOLOGRAPHIC_PACKAGE_ENTRIES,
+    MODULAR_KOSZUL_PRIMARY_PROJECTIONS,
+    TYPED_FIREWALL_OBJECTS,
+    bar_koszul_firewall_summary,
+    kernel_normalization_constants,
     # Helpers
     _sigma,
     _bernoulli_number,
@@ -85,6 +91,52 @@ from compute.lib.dt_shadow_scattering_engine import (
     # Full suite
     full_verification_suite,
 )
+
+
+# ====================================================================
+# Section 0: Object and normalization firewalls
+# ====================================================================
+
+class TestFirewalls:
+    """Typed package and kernel normalizations kept distinct by this engine."""
+
+    def test_holographic_package_has_seven_entries(self):
+        expected = ("A", "A^i", "A^!", "C", "r(z)", "Theta_A", "nabla^hol")
+        assert HOLOGRAPHIC_PACKAGE_ENTRIES == expected
+        assert len(HOLOGRAPHIC_PACKAGE_ENTRIES) == 7
+        assert "B(A)" not in HOLOGRAPHIC_PACKAGE_ENTRIES
+        assert "Z_ch^der(A)" not in HOLOGRAPHIC_PACKAGE_ENTRIES
+
+    def test_modular_koszul_package_has_six_distinct_projections(self):
+        expected = (
+            "Fact_X(L)",
+            "barB_X(L)",
+            "Theta_L",
+            "L_L",
+            "(V^br,T^br)",
+            "R_4^mod(L)",
+        )
+        assert MODULAR_KOSZUL_PRIMARY_PROJECTIONS == expected
+        assert len(MODULAR_KOSZUL_PRIMARY_PROJECTIONS) == 6
+        assert set(expected).isdisjoint(HOLOGRAPHIC_PACKAGE_ENTRIES)
+
+    def test_bar_koszul_hochschild_firewall(self):
+        roles = bar_koszul_firewall_summary()
+        assert set(TYPED_FIREWALL_OBJECTS) == set(roles)
+        assert roles["A^i"] == "bar cohomology coalgebra H^*(B(A))"
+        assert "Verdier/continuous-linear dual" in roles["A^!"]
+        assert "inversion" in roles["Omega(B(A))"]
+        assert "ChirHoch^*(A,A)" in roles["Z_ch^der(A)"]
+
+    def test_kernel_normalization_constants(self):
+        constants = kernel_normalization_constants(c=Rational(10), k=Rational(3), h_vee=Rational(5))
+        assert constants["affine_raw_collision"]["formula"] == "k*Omega_tr/z"
+        assert constants["affine_raw_collision"]["coefficient"] == Rational(3)
+        assert constants["affine_kz_coefficient"]["formula"] == "Omega/((k+h^vee)z)"
+        assert constants["affine_kz_coefficient"]["coefficient"] == Rational(1, 8)
+        assert constants["virasoro_collision"]["formula"] == "(c/2)/z^3 + 2T/z"
+        assert constants["virasoro_collision"]["central_coefficient"] == Rational(5)
+        assert constants["virasoro_collision"]["stress_coefficient"] == 2
 
 
 # ====================================================================
@@ -234,6 +286,16 @@ class TestKSAutomorphisms:
         for charge in c1:
             assert c2[charge] == 2 * c1[charge]
 
+    def test_ks_sign_is_minus_li2_minus_x(self):
+        """log K_gamma uses -Li_2(-x), giving alternating coefficients."""
+        coeffs = ks_lie_algebra_element((1, 1), 1, 4)
+        assert [coeffs[(k, k)] for k in range(1, 5)] == [
+            Rational(1),
+            Rational(-1, 4),
+            Rational(1, 9),
+            Rational(-1, 16),
+        ]
+
 
 # ====================================================================
 # Section 4: Scattering consistency and MC equation
@@ -252,7 +314,7 @@ class TestScatteringConsistency:
         assert result["euler_form_10_01"] == 1
 
     def test_naive_bch_fails_at_21(self):
-        """AP42: naive BCH gives 1/2 at (2,1), not 1.
+        """The naive group-commutator logarithm gives 1/2 at (2,1), not 1.
 
         The motivic correction accounts for the discrepancy.
         """
@@ -265,12 +327,30 @@ class TestScatteringConsistency:
         result = conifold_scattering_consistency_check(2)
         assert result["motivic_correction_21"] == Rational(1, 2)
 
+    def test_group_commutator_oracle_degree_three(self):
+        """Group commutator, not log(exp(A)exp(B)), gives the 1/2 at (2,1)."""
+        result = conifold_scattering_consistency_check(2)
+        oracle = result["group_commutator_oracle"]
+        assert oracle[(1, 1)] == Rational(1)
+        assert oracle[(2, 1)] == Rational(1, 2)
+        assert oracle[(1, 2)] == Rational(-1, 2)
+        assert result["bch_charges"][(2, 1)] == Rational(1, 2)
+
     def test_bch_charges_at_order_2(self):
         """BCH at order 2 produces charges (1,1), (2,1), (1,2)."""
         result = conifold_scattering_consistency_check(2)
         assert (1, 1) in result["bch_charges"]
         assert (2, 1) in result["bch_charges"]
         assert (1, 2) in result["bch_charges"]
+
+    def test_no_uncertified_order_three_coefficients(self):
+        """The engine does not return guessed higher-order scattering coefficients."""
+        result = conifold_scattering_consistency_check(3)
+        assert (3, 2) not in result["bch_charges"]
+        assert (2, 3) not in result["bch_charges"]
+        assert result["higher_order_status"] == (
+            "not_certified_beyond_group_commutator_degree_three"
+        )
 
 
 # ====================================================================
@@ -422,26 +502,8 @@ class TestShadowDTConnection:
     def test_shadow_F1_conifold(self):
         """F_1^{shadow} = kappa * lambda_1 = 1 * 1/24 = 1/24 for conifold.
 
-        But the exact conifold F_1 = 1/12 = chi/24 = 2/24.
-        The shadow uses kappa = chi/2 = 1, while the constant map uses chi = 2.
-        F_1^{shadow} = 1/24, F_1^{const} = 2/24 = 1/12.
-        These DIFFER by a factor of 2 at genus 1.
-
-        Wait: F_1^{const} = chi/24 = 2/24 = 1/12.
-        F_1^{shadow} = kappa * lambda_1 = 1 * 1/24 = 1/24.
-        Ratio: F_1^{shadow}/F_1^{const} = 1/2.
-
-        Actually let me re-check. The genus-1 shadow formula is:
-        F_1(A) = kappa(A) * lambda_1^FP = kappa * (1/24).
-
-        For the conifold chiral algebra: kappa = chi/2 = 1.
-        So F_1^{shadow} = 1/24.
-
-        The constant map contribution for g=1 is:
-        F_1^{const} = -chi/24... or is it chi/24?
-
-        Hmm, the sign depends on convention. Let me just verify that
-        the shadow and exact formulas are related in a predictable way.
+        The constant-map convention in this engine gives F_1^{const}=chi/24.
+        Thus kappa=chi/2 makes F_1^{shadow}=F_1^{const}/2.
         """
         kappa = Rational(1)  # conifold: chi/2 = 1
         F_shadow = shadow_free_energy(1, kappa)
@@ -452,19 +514,16 @@ class TestShadowDTConnection:
         F_const = shadow_constant_map_Fg(1, 2)
         assert F_const == Rational(1, 12)
 
-    def test_shadow_vs_constant_agree_g1_chi2(self):
+    def test_shadow_vs_constant_factor_two_g1_chi2(self):
         """At g=1: F_shadow(kappa=1) = 1/24, F_const(chi=2) = 1/12.
 
-        These differ by a factor of 2 because:
-        F_const = chi * (1/24) = 2/24 = 1/12
-        F_shadow = (chi/2) * (1/24) = 1/24
-
-        The ratio is 1/2, reflecting that kappa = chi/2.
+        The ratio is 1/2 because kappa = chi/2.
         """
         comp = shadow_dt_comparison(1, 2)
         assert comp["F_shadow"] == Rational(1, 24)
         assert comp["F_const"] == Rational(1, 12)
-        # They differ by factor 2
+        assert comp["agree"] is False
+        assert comp["ratio"] == Rational(1, 2)
         assert comp["F_shadow"] * 2 == comp["F_const"]
 
     def test_shadow_constant_diverge_g2(self):
@@ -627,28 +686,20 @@ class TestDTPTWallCrossing:
             assert pt[n] == (-1)**(n + 1) * n
 
     def test_pt_dt_agree_degree1(self):
-        """For the conifold, PT_1 = DT'_1 (they agree at degree 1).
+        """For the conifold, PT equals the reduced DT series."""
+        result = verify_dt_pt_wall_crossing(8, 1, chi=2)
+        assert result["reduced_match"] is True
+        assert result["reduced_dt_coeffs"] == result["pt_coeffs"]
+        assert result["relation"] == "Z'_DT = Z^PT; Z_DT = M(-q)^chi * Z^PT"
 
-        Actually Z'^DT_1 = Z^PT_1 * M(-q) at degree 1.
-        But for degree 1, the McMahon factor only contributes at Q^0,
-        so Z'^DT_1 = Z^PT_1 at degree 1? No, that's not right.
-
-        Z'^DT(q,Q) = Z^PT(q,Q) * M(-q)
-        [Q^1] Z'^DT = [Q^1] Z^PT + [Q^0]Z^PT * [Q^1]M(-q)
-        But M(-q) doesn't depend on Q, so [Q^d]M(-q) = 0 for d > 0.
-        Wait, M(-q) = prod(1-(-q)^n)^{-n} doesn't depend on Q at all.
-
-        So: Z'^DT = Z^PT * M(-q) means
-        [Q^d] Z'^DT = sum_k [Q^k] Z^PT * [Q^{d-k}] M(-q)
-        = [Q^d] Z^PT * M(-q)   (since M(-q) is independent of Q)
-
-        So Z'^DT_d(q) = Z^PT_d(q) * M(-q) AS q-SERIES.
-
-        Let's verify: DT_1 = PT_1 * M(-q) as q-series.
-        """
-        # This is a deep test: verify the full DT/PT wall-crossing
-        # at degree 1 by convolving PT with MacMahon
-        pass  # Full test below uses verify_dt_pt_wall_crossing
+    def test_full_dt_has_macmahon_degree_zero_factor(self):
+        """The unreduced DT series differs from PT by M(-q)^chi."""
+        result = verify_dt_pt_wall_crossing(5, 1, chi=2)
+        pt = result["pt_coeffs"]
+        full_dt = result["full_dt_coeffs"]
+        assert full_dt != pt
+        assert result["macmahon_chi_coeffs"][0] == 1
+        assert full_dt[1] == pt[1] + result["macmahon_chi_coeffs"][1] * pt[0]
 
 
 # ====================================================================
@@ -742,18 +793,29 @@ class TestMCScatteringDictionary:
         assert "mc_equation" in d
         assert "shadow_kappa" in d
         assert "koszul_duality" in d
+        assert "bar_cobar_inversion" in d
+        assert "derived_chiral_center" in d
 
     def test_dictionary_mc_equation_is_consistency(self):
         d = mc_scattering_dictionary()
         assert d["mc_equation"] == "scattering_consistency"
 
-    def test_dictionary_koszul_is_flop(self):
+    def test_dictionary_koszul_is_not_flop(self):
         d = mc_scattering_dictionary()
-        assert d["koszul_duality"] == "flop"
+        assert d["koszul_duality"] == "Verdier_continuous_linear_branch_not_flop"
+        assert d["flop"] == "birational_wall_crossing_model"
+        assert d["koszul_duality"] != d["flop"]
 
     def test_dictionary_complementarity_is_wall_crossing(self):
         d = mc_scattering_dictionary()
-        assert d["complementarity"] == "DT_PT_wall_crossing"
+        assert d["complementarity"] == "DT_PT_chamber_comparison"
+
+    def test_dictionary_object_firewall(self):
+        d = mc_scattering_dictionary()
+        assert d["A^i"] == "H^*(B(A))"
+        assert d["A^!"] == "Verdier_continuous_linear_dual_branch"
+        assert d["bar_cobar_inversion"] == "Omega(B(A))=A"
+        assert d["derived_chiral_center"] == "ChirHoch^*(A,A)"
 
 
 # ====================================================================
@@ -868,9 +930,6 @@ class TestCrossGeometry:
         # (-1)^2 * B_4 * B_2 = (+1) * (-1/30) * (1/6) = -1/180 < 0
         # So F_2^{const}(chi=2) < 0 (since numerator is negative).
         F2 = shadow_constant_map_Fg(2, 2)
-        # Actually: num = (-1)^2 * 2 * (-1/30) * (1/6) = -2/180 = -1/90
-        # den = 4*2*2*2 = 32
-        # F2 = -1/90 / 32?? Let me recompute.
         # F_g^{const} = (-1)^g * chi * B_{2g} * B_{2g-2} / (4g * (2g-2) * (2g-2)!)
         # g=2: (-1)^2 * 2 * B_4 * B_2 / (8 * 2 * 2!) = 2 * (-1/30) * (1/6) / (8*2*2)
         # = 2 * (-1/180) / 32 = -2/(180*32) = -1/2880.
@@ -976,7 +1035,7 @@ class TestConifoldAsymptotics:
             asymptotic = float(factorial(2*g - 2)) / (2 * math.pi)**(2*g)
             ratio = Fg / asymptotic
             # Ratio should approach 2/(2g*(2g-2)) * (2g)!/(2g-2)! ...
-            # actually the ratio is more complex; just check it's order 1
+            # The ratio is more complex; this only checks order of magnitude.
             assert 0.01 < abs(ratio) < 100, f"g={g}: ratio={ratio}"
 
     def test_Fg_alternating_sign_in_bernoulli(self):

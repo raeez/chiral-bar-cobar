@@ -28,6 +28,7 @@ Test count: 65+ tests covering:
 
 from __future__ import annotations
 
+import inspect
 from fractions import Fraction
 
 import pytest
@@ -35,11 +36,15 @@ import pytest
 import sys
 sys.path.insert(0, str(__import__('pathlib').Path(__file__).resolve().parent.parent / 'lib'))
 
+import koszul_holography_comparison_engine as khe
+
 from koszul_holography_comparison_engine import (
     # Kappa formulas
     kappa_km, kappa_slN, kappa_glN, kappa_virasoro,
     kappa_heisenberg, kappa_betagamma, kappa_bc,
     kappa_symplectic_boson,
+    # Object firewall
+    koszul_object_firewall,
     # Layer comparisons
     CostelloLayer, layer1_cg_bv, layer2_cwy,
     layer3_m2_holography, layer4_celestial_twisted,
@@ -160,9 +165,10 @@ class TestFourDualities:
                "GENERICALLY DIFFERENT" in comp.relation_to_our_theorem_a.upper()
 
     def test_s_duality_coincidence_locus(self):
-        """S-duality = KD only at Psi^2 = -1 (Agent 3 finding)."""
+        """S-duality = KD only at Psi = +/-1 in the sl_2 convention."""
         comp = s_duality_comparison()
-        assert "Psi" in comp.when_they_coincide or "self-dual" in comp.when_they_coincide
+        assert "Psi = k+2 = +/-1" in comp.when_they_coincide
+        assert "k = -1 or k = -3" in comp.when_they_coincide
 
     def test_mirror_no_direct_relation(self):
         """3d mirror symmetry has NO direct relation to our Theorem A."""
@@ -198,6 +204,8 @@ class TestFourDualities:
         comp = s_duality_comparison()
         assert comp.discrepancy_formula is not None
         assert "sl_2" in comp.discrepancy_formula
+        assert "-(2k+5)/(k+2)" in comp.discrepancy_formula
+        assert "k = -1 or k = -3" in comp.discrepancy_formula
 
     def test_chiral_kd_no_discrepancy(self):
         """Chiral KD has no discrepancy (it IS our theorem)."""
@@ -557,7 +565,72 @@ class TestUncitedPapers:
 
 
 # ===========================================================================
-# 10. AP50 compliance: A^!_infty != A^!
+# 10. Object firewall: B(A), A^i, A^!, Omega(B(A)), Z^der_ch(A)
+# ===========================================================================
+
+class TestKoszulObjectFirewall:
+    """AP25/AP34: the five Koszul objects are type-distinct."""
+
+    def test_firewall_states_five_distinct_objects(self):
+        """The firewall records bar, bar-dual, post-Verdier dual, inversion, and bulk."""
+        firewall = koszul_object_firewall()
+        assert "B(A)" in firewall.bar_complex
+        assert "coalgebra" in firewall.bar_complex
+        assert "A^i = H*(B(A))" in firewall.bar_dual_coalgebra
+        assert "bar-dual coalgebra" in firewall.bar_dual_coalgebra
+        assert "A!" in firewall.koszul_dual_algebra
+        assert "Verdier" in firewall.koszul_dual_algebra
+        assert "finite-type" in firewall.koszul_dual_algebra
+        assert "Omega(B(A)) = A" in firewall.cobar_inversion
+        assert "inversion" in firewall.cobar_inversion
+        assert "Z^der_ch(A)" in firewall.bulk_sector
+        assert "derived-centre bulk sector" in firewall.bulk_sector
+
+    def test_firewall_records_forbidden_collapses(self):
+        """Known stale collapses are recorded as forbidden pairs, not identities."""
+        firewall = koszul_object_firewall()
+        forbidden = set(firewall.forbidden_collapses)
+        assert ("B(A)", "A!") in forbidden
+        assert ("Omega(B(A))", "A!") in forbidden
+        assert ("Z^der_ch(A)", "A!") in forbidden
+        assert ("Z^der_ch(A)", "B(A)") in forbidden
+        assert ("Verdier dual of raw B(A)", "bar construction of A!") in forbidden
+
+    def test_engine_source_has_no_stale_ap25_equalities(self):
+        """Reject the stale shorthand equating raw bars with post-Verdier algebras."""
+        source = inspect.getsource(khe)
+        raw_bar = "B(A)"
+        bar_of_bang = "B(A" + "!)"
+        bulk = "Z^der_ch(A)"
+
+        def eq(left, right, spaced=True):
+            return f"{left}{' = ' if spaced else '='}{right}"
+
+        stale_equalities = [
+            eq(f"D_Ran({raw_bar})", bar_of_bang),
+            eq(f"D_Ran({raw_bar})", bar_of_bang, spaced=False),
+            eq(raw_bar, "A!"),
+            eq(f"Omega({raw_bar})", "A!"),
+            eq(bulk, "A!"),
+            eq(bulk, raw_bar),
+            "A -> " + "A! via bar-cobar",
+        ]
+        for stale in stale_equalities:
+            assert stale not in source
+
+    def test_chiral_koszul_definition_uses_firewall(self):
+        """Chiral KD passes through A^i and Verdier duality; cobar is inversion."""
+        comp = chiral_koszul_comparison()
+        assert "A^i := H*(B(A))" in comp.definition
+        assert "intrinsic bar-dual coalgebra" in comp.definition
+        assert "Verdier duality" in comp.definition
+        assert "Omega(B(A)) = A" in comp.definition
+        assert "inversion" in comp.definition
+        assert "not the definition of A!" in comp.definition
+
+
+# ===========================================================================
+# 11. AP50 compliance: A^!_infty != A^!
 # ===========================================================================
 
 class TestAP50Compliance:
@@ -581,7 +654,7 @@ class TestAP50Compliance:
 
 
 # ===========================================================================
-# 11. Cross-layer consistency
+# 12. Cross-layer consistency
 # ===========================================================================
 
 class TestCrossLayerConsistency:
@@ -622,7 +695,7 @@ class TestCrossLayerConsistency:
 
 
 # ===========================================================================
-# 12. Multi-path cross-checks (AP10 compliance)
+# 13. Multi-path cross-checks (AP10 compliance)
 # ===========================================================================
 
 class TestMultiPathCrossChecks:

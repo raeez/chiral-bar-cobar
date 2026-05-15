@@ -1,914 +1,962 @@
-r"""Theorem: tau_shadow = tau_KW^kappa -- four independent proofs.
+r"""Finite-window engine for the tau-shadow / KW scalar lane.
 
-THEOREM (Shadow-KW Power Identity).  Let A be a uniform-weight chirally
-Koszul algebra with modular characteristic kappa(A).  Then the shadow
-partition function equals the kappa-th power of the Kontsevich-Witten
-tau-function:
+What is computed here:
+  * exact Faber-Pandharipande coefficients
+      lambda_g^FP = ((2^(2g-1)-1)/2^(2g-1)) * |B_(2g)|/(2g)!;
+  * the finite formal log identity
+      log tau_shadow^{<=G} = kappa * log tau_KW^{<=G} mod q^(G+1),
+      q = hbar^2,
+    on the uniform-weight scalar-diagonal lane;
+  * the derived finite formal exponential check through the same window;
+  * the W_3 cross-channel correction through genus 4.
 
-    tau_shadow(A) = tau_KW^{kappa(A)}.
+What is not asserted:
+  * no analytic identity of tau functions is proved by a formal
+    coefficient window;
+  * tau_KW^kappa is not certified as a Kontsevich-Witten tau function
+    for kappa != 1;
+  * multi-weight algebras are not reduced to the diagonal scalar term.
 
-Equivalently, at the level of free energies:
-
-    F_g^{shadow}(A) = kappa(A) * lambda_g^{FP}   for all g >= 1,
-
-where lambda_g^{FP} = int_{M-bar_{g,1}} psi^{2g-2} lambda_g is the
-Faber-Pandharipande intersection number and tau_KW = exp(sum_g lambda_g^{FP}
-hbar^{2g}) is the Kontsevich-Witten tau-function evaluated at the
-zero-time point.
-
-HYPOTHESES (stated precisely):
-  (H1) A is a chiral algebra on a smooth algebraic curve X.
-  (H2) A is chirally Koszul (Definition def:chiral-koszul-geometric).
-  (H3) A is uniform-weight: all generators have the same conformal weight.
-       (For multi-weight algebras, the identity FAILS at genus >= 2
-       by thm:multi-weight-genus-expansion.)
-  (H4) kappa(A) is the modular characteristic (Theorem D).
-
-SCOPE RESTRICTIONS (per AP32):
-  - PROVED at ALL genera for uniform-weight chirally Koszul algebras.
-  - PROVED at genus 1 UNCONDITIONALLY for all families.
-  - FAILS at genus >= 2 for multi-weight algebras (W_3 counterexample:
-    delta_F_2(W_3) = (c+204)/(16c) > 0).
-
-FOUR PROOFS:
-
-Proof 1 (Generating function identity):
-  The shadow generating function is kappa * (A-hat(i*hbar) - 1)
-  = kappa * ((hbar/2)/sin(hbar/2) - 1).
-  The KW generating function is A-hat(i*hbar) - 1.
-  Therefore log(tau_shadow) = kappa * log(tau_KW).
-  This is a DIRECT algebraic identity at the formal power series level.
-
-Proof 2 (MC equation scalar projection):
-  The MC element Theta_A in g^mod_A (thm:mc2-bar-intrinsic) projects
-  to genus g, arity 0 as F_g(A).  On the uniform-weight lane, the
-  algebraic-family rigidity (thm:algebraic-family-rigidity) gives
-  Theta_A^min = eta tensor Gamma_A with Gamma_A = kappa(A) * Lambda.
-  The genus-g projection is then F_g = kappa * <Lambda>_g where
-  <Lambda>_g is the universal genus-g invariant from the Hodge class.
-  By Faber-Pandharipande (FP03), <Lambda>_g = lambda_g^FP.
-  This proof uses the full MC machinery and is the deepest.
-
-Proof 3 (Hodge bundle / intersection theory):
-  The bar complex propagator d log E(z,w) is weight 1 (AP27:
-  rem:propagator-weight-universality).  All edges use the standard
-  Hodge bundle E_1 = R^0 pi_* omega.  The genus-g graph sum with
-  kappa(A) at each vertex and E_1 at each edge gives:
-    F_g = kappa * int_{M-bar_g} lambda_g * ch_{g-1}(E_1)
-  where ch_{g-1}(E_1) is the Chern character.  The Mumford formula
-  c_1(E_1) = lambda_1, combined with the FP conjecture (proved in FP03),
-  gives lambda_g^FP = int_{M-bar_{g,1}} psi^{2g-2} lambda_g.
-  This is an independent geometric derivation.
-
-Proof 4 (Kontsevich matrix model):
-  The KW tau-function tau_KW = int dM exp(-Tr(M^3/3 + Lambda M^2/2))
-  where M is an N x N Hermitian matrix and Lambda = diag(lambda_i).
-  The shadow partition function arises from kappa copies of the Hodge
-  bundle (Proof 3), corresponding to a kappa-fold tensor product of
-  the matrix model measure.  For integer kappa, this is literal:
-  kappa independent copies of the matrix integral give
-  (tau_KW)^kappa.  For non-integer kappa, the identity extends by
-  analytic continuation in kappa (the free energies are rational in kappa).
-
-  CAVEAT (Beilinson check): tau_KW^kappa does NOT satisfy the KdV
-  hierarchy for kappa != 1.  The nonlinear terms in KdV scale as
-  kappa^2, breaking the rescaling.  The shadow partition function is
-  NOT a KdV tau-function; it is controlled by the MC equation in
-  g^mod_A, not by KdV.  This is a NEGATIVE structural result.
-
-Manuscript references:
-    thm:theorem-d (higher_genus_modular_koszul.tex)
-    thm:mc2-bar-intrinsic (higher_genus_modular_koszul.tex)
-    thm:algebraic-family-rigidity (higher_genus_modular_koszul.tex)
-    rem:propagator-weight-universality (higher_genus_modular_koszul.tex)
-    thm:multi-weight-genus-expansion (higher_genus_modular_koszul.tex)
-    cor:topological-recursion-mc-shadow (higher_genus_modular_koszul.tex)
-    FP03: Faber-Pandharipande, Ann. Math. 157 (2003), 97-124.
-    Kon92: Kontsevich, Comm. Math. Phys. 147 (1992), 1-23.
-    DVV91: Dijkgraaf-Verlinde-Verlinde, Nucl. Phys. B 348 (1991), 435-456.
+Canonical anchors:
+  * chapters/examples/landscape_census.tex:134-186, 4970-5018;
+  * chapters/examples/genus_expansions.tex:1-25, 1438-1607,
+    2048-2092, 3178-3237;
+  * chapters/connections/concordance.tex:6742-6767.
 """
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 from fractions import Fraction
 from functools import lru_cache
-from typing import Any, Dict, List, Optional, Tuple
+from math import factorial
+from typing import Any, Dict, Mapping, Tuple
 
-from sympy import (
-    Rational, Symbol, bernoulli, binomial, cancel, collect,
-    diff, exp, expand, factor, factorial, log, nsimplify, oo,
-    pi as sym_pi, series, simplify, sin, solve, sqrt, symbols, together,
-    Integer, Poly, Function, Sum,
+
+# ---------------------------------------------------------------------------
+# Structural firewalls
+# ---------------------------------------------------------------------------
+
+HOLOGRAPHIC_PACKAGE_ENTRIES: Tuple[str, ...] = (
+    "A",
+    "A^i",
+    "A^!",
+    "C",
+    "r(z)",
+    "Theta_A",
+    "nabla^hol",
 )
 
+MODULAR_KOSZUL_COMPUTE_PROJECTIONS: Tuple[str, ...] = (
+    "Fact_X(L)",
+    "barB_X(L)",
+    "Theta_L",
+    "L_L",
+    "(V_br,T_br)",
+    "R4_mod(L)",
+)
 
-# ============================================================================
-# 0. Faber-Pandharipande numbers (standalone, avoids circular import)
-# ============================================================================
+TYPED_OBJECT_ROLES: Mapping[str, str] = {
+    "A": "input chiral algebra",
+    "B(A)": "ordered bar coalgebra T^c(s^-1 Abar)",
+    "A^i": "bar cohomology coalgebra H^*(B(A))",
+    "A^!": "Verdier/continuous-linear dual branch",
+    "Omega(B(A))": "bar-cobar inversion recovering A",
+    "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild bulk",
+}
 
-def _bernoulli_number(n: int) -> Rational:
-    """Bernoulli number B_n (sympy convention: B_1 = -1/2)."""
-    return Rational(bernoulli(n))
+LOCAL_SOURCE_ANCHORS: Mapping[str, str] = {
+    "collision_residues": "chapters/examples/landscape_census.tex:173-186",
+    "kappa_formulas": "chapters/examples/landscape_census.tex:134-186",
+    "fp_coefficients": "chapters/examples/landscape_census.tex:4970-5018",
+    "scalar_lane": "chapters/examples/genus_expansions.tex:1-25",
+    "multi_weight": "chapters/examples/genus_expansions.tex:1-25, 1438-1580",
+    "finite_scalar_tau": "chapters/examples/genus_expansions.tex:2048-2092",
+    "free_field_exact": "chapters/examples/genus_expansions.tex:196-240",
+    "w3_genus2_cross": (
+        "chapters/examples/genus_expansions.tex:1451-1533, 3178-3237"
+    ),
+    "w3_genus3_cross": "chapters/examples/genus_expansions.tex:1536-1566",
+    "w3_genus4_cross": "chapters/examples/genus_expansions.tex:1589-1607",
+    "concordance_scalar_free_energy": "chapters/connections/concordance.tex:6742-6767",
+    "hierarchy_residual_scope": "chapters/connections/concordance.tex:6759-6767",
+}
+
+W3_CROSS_CHANNEL_WITNESSES: Mapping[int, Mapping[str, Any]] = {
+    1: {
+        "source": LOCAL_SOURCE_ANCHORS["multi_weight"],
+        "formula": "0",
+        "stable_graph_count": 0,
+        "witness": "genus-one scalar universality",
+    },
+    2: {
+        "source": LOCAL_SOURCE_ANCHORS["w3_genus2_cross"],
+        "formula": "(c + 204)/(16*c)",
+        "stable_graph_count": 7,
+        "witness": "graph-by-graph contraction over seven genus-2 stable graphs",
+    },
+    3: {
+        "source": LOCAL_SOURCE_ANCHORS["w3_genus3_cross"],
+        "formula": "(5*c^3 + 3792*c^2 + 1149120*c + 217071360)/(138240*c^2)",
+        "stable_graph_count": 42,
+        "witness": "stable-graph contraction polynomial for genus 3",
+    },
+    4: {
+        "source": LOCAL_SOURCE_ANCHORS["w3_genus4_cross"],
+        "formula": (
+            "(287*c^4 + 268881*c^3 + 115455816*c^2 + "
+            "29725133760*c + 5594347866240)/(17418240*c^3)"
+        ),
+        "stable_graph_count": None,
+        "witness": "overdetermined universal-polynomial computation, N=2..7",
+    },
+}
+
+KERNEL_NORMALIZATION_FORMULAS: Mapping[str, Mapping[str, str]] = {
+    "affine_raw_trace": {
+        "formula": "k*Omega_tr/z",
+        "scope": "trace-form collision residue",
+        "source": LOCAL_SOURCE_ANCHORS["collision_residues"],
+    },
+    "affine_kz": {
+        "formula": "Omega/((k+h^vee)z)",
+        "scope": "KZ presentation; not the trace-form collision residue",
+        "source": LOCAL_SOURCE_ANCHORS["collision_residues"],
+    },
+    "heisenberg": {
+        "formula": "k/z",
+        "scope": "rank-one Heisenberg collision residue",
+        "source": LOCAL_SOURCE_ANCHORS["collision_residues"],
+    },
+    "virasoro": {
+        "formula": "(c/2)/z^3 + 2T/z",
+        "scope": "Virasoro collision residue",
+        "source": LOCAL_SOURCE_ANCHORS["collision_residues"],
+    },
+}
 
 
-def lambda_fp(g: int) -> Rational:
-    r"""Faber-Pandharipande intersection number lambda_g^FP.
+def holographic_package_entries() -> Tuple[str, ...]:
+    """The seven entries of the holographic package H(A)."""
 
-    lambda_g^FP = int_{M-bar_{g,1}} psi^{2g-2} lambda_g
-               = (2^{2g-1} - 1) / 2^{2g-1} * |B_{2g}| / (2g)!
+    return HOLOGRAPHIC_PACKAGE_ENTRIES
 
-    Generating function: sum_{g>=1} lambda_g^FP * x^{2g} = (x/2)/sin(x/2) - 1.
 
-    POSITIVE for all g >= 1.
+def modular_koszul_compute_projections() -> Tuple[str, ...]:
+    """The six projections of the modular Koszul compute package."""
 
-    Proved by Faber-Pandharipande (FP03, Ann. Math. 157, 2003).
+    return MODULAR_KOSZUL_COMPUTE_PROJECTIONS
+
+
+def typed_object_firewall() -> Dict[str, str]:
+    """Roles that keep A, B(A), A^i, A^!, inversion, and bulk distinct."""
+
+    return dict(TYPED_OBJECT_ROLES)
+
+
+def kernel_constant_certificate(
+    k: Any = Fraction(1), h_vee: Any = Fraction(2), c: Any = Fraction(26)
+) -> Dict[str, Any]:
+    """Sourced collision and KZ kernel normalizations."""
+
+    k_q = _as_fraction(k)
+    h_vee_q = _as_fraction(h_vee)
+    c_q = _as_fraction(c)
+    if k_q + h_vee_q == 0:
+        raise ValueError("affine KZ normalization requires k + h^vee != 0")
+    return {
+        "source": LOCAL_SOURCE_ANCHORS["collision_residues"],
+        "affine_raw_trace": {
+            **KERNEL_NORMALIZATION_FORMULAS["affine_raw_trace"],
+            "coefficient": k_q,
+        },
+        "affine_kz": {
+            **KERNEL_NORMALIZATION_FORMULAS["affine_kz"],
+            "coefficient": Fraction(1, 1) / (k_q + h_vee_q),
+        },
+        "heisenberg": {
+            **KERNEL_NORMALIZATION_FORMULAS["heisenberg"],
+            "coefficient": k_q,
+        },
+        "virasoro": {
+            **KERNEL_NORMALIZATION_FORMULAS["virasoro"],
+            "central_coefficient": c_q / 2,
+            "stress_coefficient": Fraction(2),
+        },
+    }
+
+
+def structural_firewall_summary() -> Dict[str, Any]:
+    """Package and object separation used by this compute surface."""
+
+    return {
+        "holographic_package_entries": holographic_package_entries(),
+        "modular_koszul_compute_projections": modular_koszul_compute_projections(),
+        "packages_are_distinct": (
+            set(HOLOGRAPHIC_PACKAGE_ENTRIES)
+            != set(MODULAR_KOSZUL_COMPUTE_PROJECTIONS)
+        ),
+        "object_roles": typed_object_firewall(),
+        "kernel_constants": kernel_constant_certificate(),
+        "source_anchors": dict(LOCAL_SOURCE_ANCHORS),
+    }
+
+
+def scalar_projection_firewall() -> Dict[str, Any]:
+    """Claims certified, and not certified, by the scalar KW window."""
+
+    return {
+        "certifies_fp_coefficients": True,
+        "certifies_finite_log_window": True,
+        "certifies_formal_exponential_window": True,
+        "certifies_tautological_integral": True,
+        "tautological_integral": (
+            "int_{Mbar_{g,1}} psi_1^{2g-2} lambda_g = lambda_g^FP"
+        ),
+        "certifies_full_mc_element": False,
+        "certifies_bar_cobar_equivalence": False,
+        "certifies_derived_center_data": False,
+        "certifies_all_class_theorem": False,
+        "certifies_full_descendant_hierarchy": False,
+        "requires_uniform_weight_or_free_field_exactness": True,
+        "source_anchors": {
+            "scalar_lane": LOCAL_SOURCE_ANCHORS["scalar_lane"],
+            "fp_coefficients": LOCAL_SOURCE_ANCHORS["fp_coefficients"],
+            "finite_scalar_tau": LOCAL_SOURCE_ANCHORS["finite_scalar_tau"],
+        },
+    }
+
+
+# ---------------------------------------------------------------------------
+# Exact Faber-Pandharipande coefficients
+# ---------------------------------------------------------------------------
+
+
+def _as_fraction(value: Any) -> Fraction:
+    """Coerce exact numeric input to Fraction."""
+
+    return value if isinstance(value, Fraction) else Fraction(value)
+
+
+@lru_cache(maxsize=128)
+def _bernoulli_number(n: int) -> Fraction:
+    """Exact Bernoulli number B_n by the Akiyama-Tanigawa algorithm.
+
+    This gives B_1 = +1/2. Only even Bernoulli numbers enter
+    lambda_g^FP, so the convention at B_1 is immaterial here.
     """
+
+    if n < 0:
+        raise ValueError(f"Bernoulli index must be nonnegative, got {n}")
+    work = [Fraction(0)] * (n + 1)
+    for m in range(n + 1):
+        work[m] = Fraction(1, m + 1)
+        for j in range(m, 0, -1):
+            work[j - 1] = j * (work[j - 1] - work[j])
+    return work[0]
+
+
+@lru_cache(maxsize=128)
+def lambda_fp(g: int) -> Fraction:
+    r"""Faber-Pandharipande number lambda_g^FP."""
+
     if g < 1:
         raise ValueError(f"lambda_fp requires g >= 1, got {g}")
-    B2g = _bernoulli_number(2 * g)
-    num = (2**(2*g - 1) - 1) * abs(B2g)
-    den = 2**(2*g - 1) * factorial(2 * g)
-    return Rational(num, den)
-
-
-def shadow_free_energy(kappa: Rational, g: int) -> Rational:
-    r"""Shadow free energy F_g^shadow(A) = kappa(A) * lambda_g^FP.
-
-    Valid unconditionally at genus 1 for all families.
-    Valid at all genera for uniform-weight families.
-    """
-    return kappa * lambda_fp(g)
-
-
-# ============================================================================
-# 1. PROOF 1: Generating function identity
-# ============================================================================
-
-def ahat_generating_function(x, order: int = 20):
-    r"""A-hat(ix) - 1 = (x/2)/sin(x/2) - 1.
-
-    This is the generating function of lambda_g^FP:
-        A-hat(ix) - 1 = sum_{g>=1} lambda_g^FP * x^{2g}
-
-    All coefficients are POSITIVE (AP22 convention check: hbar^{2g} not hbar^{2g-2}).
-    """
-    return series(x / 2 / sin(x / 2) - 1, x, 0, order)
-
-
-def shadow_generating_function(kappa, x, order: int = 20):
-    r"""Shadow generating function: kappa * (A-hat(ix) - 1).
-
-    log(tau_shadow) = sum_g F_g^shadow * hbar^{2g}
-                    = kappa * sum_g lambda_g^FP * hbar^{2g}
-                    = kappa * (A-hat(i*hbar) - 1).
-    """
-    return kappa * ahat_generating_function(x, order)
-
-
-def kw_generating_function(x, order: int = 20):
-    r"""KW generating function: A-hat(ix) - 1.
-
-    log(tau_KW) = sum_g lambda_g^FP * hbar^{2g}
-                = A-hat(i*hbar) - 1.
-    """
-    return ahat_generating_function(x, order)
-
-
-def proof1_generating_function_identity(kappa, g_max: int = 8) -> Dict[str, Any]:
-    r"""PROOF 1: Direct generating function identity.
-
-    Claim: log(tau_shadow) = kappa * log(tau_KW).
-    Therefore: tau_shadow = exp(kappa * log(tau_KW)) = tau_KW^kappa.
-
-    Proof: At the formal power series level,
-        log(tau_shadow) = sum_g kappa * lambda_g^FP * hbar^{2g}
-                        = kappa * sum_g lambda_g^FP * hbar^{2g}
-                        = kappa * log(tau_KW).
-    This is an identity of formal power series in hbar.  QED.
-
-    Verification: check coefficient-by-coefficient through genus g_max.
-    """
-    kappa = Rational(kappa)
-    results = {'kappa': kappa, 'g_max': g_max, 'proof': 'generating_function'}
-
-    # Path A: compute from shadow formula F_g = kappa * lambda_g^FP
-    shadow_coeffs = {}
-    for g in range(1, g_max + 1):
-        shadow_coeffs[g] = shadow_free_energy(kappa, g)
-
-    # Path B: compute from KW and multiply by kappa
-    kw_coeffs = {}
-    for g in range(1, g_max + 1):
-        kw_coeffs[g] = lambda_fp(g)
-
-    # Path C: extract from the generating function series directly
-    x = Symbol('x')
-    shadow_gf = shadow_generating_function(kappa, x, 2 * g_max + 2)
-    kw_gf = kw_generating_function(x, 2 * g_max + 2)
-    gf_coeffs_shadow = {}
-    gf_coeffs_kw = {}
-    for g in range(1, g_max + 1):
-        gf_coeffs_shadow[g] = Rational(shadow_gf.coeff(x, 2 * g))
-        gf_coeffs_kw[g] = Rational(kw_gf.coeff(x, 2 * g))
-
-    # Three-way check
-    all_match = True
-    details = {}
-    for g in range(1, g_max + 1):
-        a = shadow_coeffs[g]
-        b = kappa * kw_coeffs[g]
-        c = gf_coeffs_shadow[g]
-        d = kappa * gf_coeffs_kw[g]
-        match = (a == b == c == d)
-        details[g] = {
-            'F_g_shadow': a,
-            'kappa_times_F_g_KW': b,
-            'gf_shadow_coeff': c,
-            'kappa_times_gf_kw_coeff': d,
-            'all_four_match': match,
-        }
-        if not match:
-            all_match = False
-
-    results['all_match'] = all_match
-    results['details'] = details
-    results['conclusion'] = (
-        'log(tau_shadow) = kappa * log(tau_KW) verified through genus '
-        f'{g_max}. Identity: tau_shadow = tau_KW^kappa.'
-    )
-    return results
-
-
-# ============================================================================
-# 2. PROOF 2: MC equation scalar projection
-# ============================================================================
-
-def proof2_mc_scalar_projection(kappa, g_max: int = 8) -> Dict[str, Any]:
-    r"""PROOF 2: MC equation scalar projection.
-
-    The MC element Theta_A := D_A - d_0 in MC(g^mod_A) is proved by
-    thm:mc2-bar-intrinsic.  The genus-g, arity-0 projection gives:
-
-        F_g(A) = <Theta_A>_{g,0} = graph sum over stable graphs of (g,0).
-
-    On the uniform-weight lane, algebraic-family rigidity
-    (thm:algebraic-family-rigidity) gives the line-concentration:
-        Theta_A^min = eta tensor Gamma_A
-    where Gamma_A lies on the Hodge class line.
-
-    For uniform-weight algebras, Gamma_A = kappa(A) * Lambda where
-    Lambda is the universal Hodge class.  Therefore:
-        F_g = kappa(A) * <Lambda>_g = kappa(A) * lambda_g^FP.
-
-    The last equality is the Faber-Pandharipande theorem (FP03).
-
-    Multi-path verification:
-      Path A: F_g = kappa * lambda_g^FP (direct formula)
-      Path B: F_g from graph sum (genus-g stable graphs)
-      Path C: F_g from generating function coefficient extraction
-    """
-    kappa = Rational(kappa)
-
-    # Path A: direct formula
-    path_a = {g: shadow_free_energy(kappa, g) for g in range(1, g_max + 1)}
-
-    # Path B: from graph sum structure
-    # The genus-g graph sum at arity 0 on the scalar line gives:
-    # F_g = kappa * sum over stable graphs Gamma of (g,0):
-    #   |Aut(Gamma)|^{-1} * prod_{v in V(Gamma)} kappa^{val(v)/2} * <tau...>_{g(v)}
-    #   * prod_{e in E(Gamma)} (1/kappa)
-    # After simplification, this reduces to kappa * lambda_g^FP for uniform weight.
-    # We verify by checking the low-genus graph sums explicitly.
-
-    # Genus 1: single graph, one vertex, one self-loop
-    # F_1 = (1/|Aut|) * kappa * (1/kappa) * <vertex factor>
-    #      = (1/2) * 1 * <tau_1>_1 ... actually the genus-1 computation is:
-    # F_1 = kappa/24 = kappa * lambda_1^FP
-    path_b = {}
-    # Genus 1: only one stable graph of (1,0) -- one vertex, one self-loop
-    # Automorphism factor = 2 (the self-loop has Z/2 symmetry)
-    # Vertex contribution at (g=0, n=2): <tau_0 tau_0>_0 = identity (normalization)
-    # Edge contribution: propagator 1/kappa, vertex factor kappa/12
-    # Net: F_1 = (kappa/12) * (1/2) = kappa/24
-    path_b[1] = kappa * Rational(1, 24)
-    assert path_b[1] == kappa * lambda_fp(1), f"Genus-1 graph sum failed: {path_b[1]}"
-
-    # Genus 2: seven stable graphs of (2,0)
-    # The sum gives kappa * 7/5760 = kappa * lambda_2^FP
-    # (verified in standalone/computations.tex and compute/lib/genus_expansion.py)
-    path_b[2] = kappa * Rational(7, 5760)
-    assert path_b[2] == kappa * lambda_fp(2), f"Genus-2 graph sum failed: {path_b[2]}"
-
-    # Higher genus: use the formula directly (the graph sum always gives kappa * lambda_g^FP
-    # on the uniform-weight lane by the algebraic-family rigidity theorem)
-    for g in range(3, g_max + 1):
-        path_b[g] = kappa * lambda_fp(g)
-
-    # Path C: generating function
-    x = Symbol('x')
-    gf = shadow_generating_function(kappa, x, 2 * g_max + 2)
-    path_c = {g: Rational(gf.coeff(x, 2 * g)) for g in range(1, g_max + 1)}
-
-    # Check all three paths agree
-    all_match = True
-    details = {}
-    for g in range(1, g_max + 1):
-        a, b, c = path_a[g], path_b[g], path_c[g]
-        match = (a == b == c)
-        details[g] = {'path_a': a, 'path_b': b, 'path_c': c, 'match': match}
-        if not match:
-            all_match = False
-
-    return {
-        'kappa': kappa,
-        'g_max': g_max,
-        'proof': 'mc_scalar_projection',
-        'all_match': all_match,
-        'details': details,
-        'conclusion': (
-            'MC projection F_g = kappa * lambda_g^FP verified through genus '
-            f'{g_max} by three independent paths.'
-        ),
-    }
-
-
-# ============================================================================
-# 3. PROOF 3: Hodge bundle / intersection theory
-# ============================================================================
-
-def hodge_lambda_integral(g: int) -> Rational:
-    r"""The integral int_{M-bar_g} lambda_g.
-
-    By the Faber-Pandharipande theorem (FP03):
-        int_{M-bar_{g,1}} psi^{2g-2} lambda_g = lambda_g^FP
-        = (2^{2g-1} - 1) / 2^{2g-1} * |B_{2g}| / (2g)!
-
-    This is the top lambda class integral that controls the shadow tower.
-    """
-    return lambda_fp(g)
-
-
-def mumford_formula_c1(g: int) -> str:
-    """Mumford's formula: c_1(E_h) = (6h^2 - 6h + 1) * lambda_1.
-
-    For h=1 (the bar propagator weight): c_1(E_1) = lambda_1.
-    For h=2: c_1(E_2) = 13 * lambda_1.  (AP27: NEVER use this for bar complex.)
-
-    The bar propagator d log E(z,w) has weight 1 regardless of field weight,
-    so all edges use E_1 = R^0 pi_* omega_{X/S}.
-    """
-    return f"c_1(E_{1}) = lambda_1 (Mumford, using h=1 for bar propagator)"
-
-
-def proof3_hodge_bundle(kappa, g_max: int = 8) -> Dict[str, Any]:
-    r"""PROOF 3: Hodge bundle / intersection theory.
-
-    The bar complex propagator is d log E(z,w) where E is the prime form.
-    This has weight 1 in both variables (AP27: rem:propagator-weight-universality).
-    Consequence: every edge of the genus-g graph sum uses the standard
-    Hodge bundle E_1 = R^0 pi_* omega_{X/S}.
-
-    The genus-g free energy is a sum over stable graphs Gamma of genus g:
-        F_g(A) = sum_Gamma |Aut(Gamma)|^{-1} * I_Gamma(A)
-    where each graph amplitude I_Gamma involves:
-      - kappa(A) at each trivalent vertex (from the cubic coupling)
-      - The Hodge bundle E_1 along each edge (from the propagator)
-
-    For uniform-weight algebras on the scalar line:
-        F_g = kappa * int_{M-bar_g} [characteristic class from E_1]
-            = kappa * lambda_g^FP.
-
-    The identification [characteristic class from E_1] = lambda_g^FP
-    uses the Mumford isomorphism c_1(E_1) = lambda_1 and the
-    Faber-Pandharipande evaluation of the top lambda integral.
-
-    Multi-path verification:
-      Path A: F_g = kappa * lambda_g^FP (from Hodge integral)
-      Path B: Generating function of Hodge integrals = A-hat(ix) - 1
-      Path C: Comparison with Mumford formula prediction
-    """
-    kappa = Rational(kappa)
-
-    # Path A: Hodge integral evaluation
-    path_a = {}
-    for g in range(1, g_max + 1):
-        # The Hodge integral int_{M-bar_{g,1}} psi^{2g-2} lambda_g
-        hodge_integral = hodge_lambda_integral(g)
-        # F_g = kappa times this integral
-        path_a[g] = kappa * hodge_integral
-
-    # Path B: from the generating function of Hodge integrals
-    # Faber-Pandharipande proved: sum_g lambda_g^FP x^{2g} = (x/2)/sin(x/2) - 1
-    # This IS the A-hat generating function.
-    x = Symbol('x')
-    hodge_gf = series(x / 2 / sin(x / 2) - 1, x, 0, 2 * g_max + 2)
-    path_b = {}
-    for g in range(1, g_max + 1):
-        path_b[g] = kappa * Rational(hodge_gf.coeff(x, 2 * g))
-
-    # Path C: direct from the Bernoulli number formula
-    path_c = {}
-    for g in range(1, g_max + 1):
-        B2g = abs(_bernoulli_number(2 * g))
-        fp_val = (2**(2*g - 1) - 1) * B2g / (2**(2*g - 1) * factorial(2 * g))
-        path_c[g] = kappa * fp_val
-
-    # Three-way check
-    all_match = True
-    details = {}
-    for g in range(1, g_max + 1):
-        a, b, c = path_a[g], path_b[g], path_c[g]
-        match = (a == b == c)
-        details[g] = {
-            'hodge_integral': a,
-            'gf_extraction': b,
-            'bernoulli_formula': c,
-            'match': match,
-        }
-        if not match:
-            all_match = False
-
-    return {
-        'kappa': kappa,
-        'g_max': g_max,
-        'proof': 'hodge_bundle',
-        'all_match': all_match,
-        'details': details,
-        'mumford_check': mumford_formula_c1(1),
-        'conclusion': (
-            'Hodge bundle proof verified through genus '
-            f'{g_max}: F_g = kappa * lambda_g^FP from intersection theory.'
-        ),
-    }
-
-
-# ============================================================================
-# 4. PROOF 4: Kontsevich matrix model
-# ============================================================================
-
-def kontsevich_matrix_integral_asymptotic(g: int) -> Rational:
-    r"""The genus-g free energy from the Kontsevich matrix integral.
-
-    The Kontsevich model:
-        tau_KW = int dM exp(-Tr(M^3/6 + Lambda M^2/2)) / Z_0
-    with M an N x N Hermitian matrix.
-
-    The genus-g free energy at the zero-time point (Lambda -> infinity):
-        F_g^KW = lambda_g^FP.
-
-    This is the content of the Kontsevich theorem (Kon92).
-    """
-    return lambda_fp(g)
-
-
-def proof4_matrix_model(kappa, g_max: int = 8) -> Dict[str, Any]:
-    r"""PROOF 4: Kontsevich matrix model.
-
-    For INTEGER kappa: tau_shadow = (tau_KW)^kappa is literally the partition
-    function of kappa INDEPENDENT copies of the Kontsevich matrix integral.
-    The free energies are additive: F_g^{kappa copies} = kappa * F_g^{KW}.
-
-    For RATIONAL kappa: the identity extends by polynomial interpolation.
-    F_g^shadow = kappa * lambda_g^FP is a polynomial (linear) in kappa,
-    and polynomial identities that hold on integers hold everywhere.
-
-    For REAL/COMPLEX kappa: analytic continuation in kappa.
-    Both sides of F_g^shadow = kappa * lambda_g^FP are analytic in kappa
-    (in fact, linear), so the identity extends to all kappa.
-
-    NEGATIVE RESULT (Beilinson check):
-    tau_KW^kappa does NOT satisfy the KdV hierarchy for kappa != 0, 1.
-    Reason: the KdV equation du/dt_1 = u*du/dt_0 + (1/12)*d^3u/dt_0^3
-    is NONLINEAR in u = d^2 F/dt_0^2.  If F_shadow = kappa * F_KW, then
-    u_shadow = kappa * u_KW, and the quadratic term u * du/dt_0 scales
-    as kappa^2, not kappa.  So kappa * u_KW satisfies KdV only when
-    kappa^2 = kappa, i.e., kappa in {0, 1}.
-
-    Multi-path verification:
-      Path A: kappa copies of Kontsevich integral
-      Path B: polynomial interpolation from integer kappa
-      Path C: direct formula check
-    """
-    kappa = Rational(kappa)
-
-    # Path A: kappa copies of Kontsevich integral
-    # For integer kappa = n: F_g^{n copies} = n * F_g^{KW}
-    path_a = {}
-    for g in range(1, g_max + 1):
-        # Each copy contributes F_g^{KW} = lambda_g^FP independently
-        fg_per_copy = kontsevich_matrix_integral_asymptotic(g)
-        path_a[g] = kappa * fg_per_copy
-
-    # Path B: polynomial interpolation
-    # F_g(kappa) is linear in kappa (= kappa * constant).
-    # Check at kappa = 0, 1, 2 to verify linearity.
-    path_b = {}
-    for g in range(1, g_max + 1):
-        fp = lambda_fp(g)
-        # f(0) = 0, f(1) = fp, f(2) = 2*fp => linear: f(kappa) = kappa * fp
-        f0 = Rational(0) * fp
-        f1 = Rational(1) * fp
-        f2 = Rational(2) * fp
-        # Check linearity: f2 - f1 = f1 - f0
-        is_linear = (f2 - f1 == f1 - f0)
-        path_b[g] = kappa * fp
-
-    # Path C: direct formula
-    path_c = {g: shadow_free_energy(kappa, g) for g in range(1, g_max + 1)}
-
-    all_match = True
-    details = {}
-    for g in range(1, g_max + 1):
-        a, b, c = path_a[g], path_b[g], path_c[g]
-        match = (a == b == c)
-        details[g] = {
-            'kappa_copies': a,
-            'interpolation': b,
-            'direct': c,
-            'match': match,
-        }
-        if not match:
-            all_match = False
-
-    return {
-        'kappa': kappa,
-        'g_max': g_max,
-        'proof': 'matrix_model',
-        'all_match': all_match,
-        'details': details,
-        'kdv_negative_result': (
-            'tau_KW^kappa does NOT satisfy KdV for kappa != 0, 1.'
-        ),
-        'conclusion': (
-            'Matrix model proof verified through genus '
-            f'{g_max}: kappa copies of Kontsevich integral.'
-        ),
-    }
-
-
-# ============================================================================
-# 5. Cross-proof consistency and scope verification
-# ============================================================================
-
-def verify_all_four_proofs(kappa, g_max: int = 8) -> Dict[str, Any]:
-    """Run all four proofs and verify cross-consistency."""
-    kappa = Rational(kappa)
-
-    p1 = proof1_generating_function_identity(kappa, g_max)
-    p2 = proof2_mc_scalar_projection(kappa, g_max)
-    p3 = proof3_hodge_bundle(kappa, g_max)
-    p4 = proof4_matrix_model(kappa, g_max)
-
-    all_proofs_match = (
-        p1['all_match'] and p2['all_match'] and
-        p3['all_match'] and p4['all_match']
+    power = 2 ** (2 * g - 1)
+    return Fraction(power - 1, power) * abs(_bernoulli_number(2 * g)) / factorial(
+        2 * g
     )
 
-    # Cross-proof consistency: check that all four proofs give the same F_g
-    cross_consistent = True
-    cross_details = {}
-    for g in range(1, g_max + 1):
-        vals = [
-            p1['details'][g]['F_g_shadow'],
-            p2['details'][g]['path_a'],
-            p3['details'][g]['hodge_integral'],
-            p4['details'][g]['kappa_copies'],
-        ]
-        match = all(v == vals[0] for v in vals)
-        cross_details[g] = {
-            'proof1': vals[0], 'proof2': vals[1],
-            'proof3': vals[2], 'proof4': vals[3],
-            'cross_match': match,
-        }
-        if not match:
-            cross_consistent = False
 
-    return {
-        'kappa': kappa,
-        'g_max': g_max,
-        'proof1_ok': p1['all_match'],
-        'proof2_ok': p2['all_match'],
-        'proof3_ok': p3['all_match'],
-        'proof4_ok': p4['all_match'],
-        'all_proofs_ok': all_proofs_match,
-        'cross_consistent': cross_consistent,
-        'cross_details': cross_details,
-    }
+@lru_cache(maxsize=128)
+def _sin_over_x_half_coeff(n: int) -> Fraction:
+    """Coefficient of q^n in sin(sqrt(q)/2)/(sqrt(q)/2)."""
+
+    return Fraction((-1) ** n, (2 ** (2 * n)) * factorial(2 * n + 1))
 
 
-# ============================================================================
-# 6. Scope verification: multi-weight failure
-# ============================================================================
+def ahat_log_coefficients(g_max: int) -> Tuple[Fraction, ...]:
+    r"""Coefficients of (x/2)/sin(x/2)-1 through x^(2*g_max).
 
-def multi_weight_failure_genus2_w3(c) -> Dict[str, Any]:
-    r"""Verify that tau_shadow = tau_KW^kappa FAILS for W_3 at genus 2.
-
-    W_3 is a multi-weight algebra (generators at weight 2 and 3).
-    The scalar formula F_g = kappa * lambda_g^FP fails at genus 2:
-        F_2^full(W_3) = kappa * lambda_2^FP + delta_F_2^cross
-    where delta_F_2^cross = (c + 204) / (16c) > 0 for all c > 0.
-
-    This means tau_shadow != tau_KW^kappa for W_3 (and all multi-weight algebras).
+    The computation inverts the sine series recursively, independent of
+    the Bernoulli-number implementation used by lambda_fp.
     """
-    c = Rational(c)
-    kappa_w3 = Rational(5) * c / 6
 
-    # Scalar part (what tau_KW^kappa would give)
-    F2_scalar = kappa_w3 * lambda_fp(2)
+    if g_max < 1:
+        raise ValueError(f"g_max requires g_max >= 1, got {g_max}")
 
-    # Cross-channel correction (thm:multi-weight-genus-expansion)
-    delta_F2 = (c + 204) / (16 * c)
-
-    # Full genus-2 free energy
-    F2_full = F2_scalar + delta_F2
-
-    return {
-        'c': c,
-        'kappa_W3': kappa_w3,
-        'F2_scalar': F2_scalar,
-        'delta_F2_cross': delta_F2,
-        'F2_full': F2_full,
-        'scalar_equals_full': (F2_scalar == F2_full),
-        'correction_positive': (delta_F2 > 0),
-        'tau_power_fails': (delta_F2 != 0),
-        'conclusion': (
-            f'W_3 at c={c}: delta_F_2 = {delta_F2} != 0. '
-            'The identity tau_shadow = tau_KW^kappa FAILS for multi-weight algebras.'
-        ),
-    }
-
-
-def genus1_universality(kappa) -> Dict[str, Any]:
-    r"""Verify F_1 = kappa * lambda_1^FP = kappa/24 unconditionally.
-
-    At genus 1, the identity holds for ALL families (uniform-weight or not).
-    This is because the only genus-1 stable graph has a single self-loop,
-    and the graph sum reduces to kappa * <tau_1>_1 = kappa/24 regardless
-    of the number of generators or their weights.
-    """
-    kappa = Rational(kappa)
-    F1 = kappa * lambda_fp(1)
-    return {
-        'kappa': kappa,
-        'F_1': F1,
-        'expected': kappa / 24,
-        'match': (F1 == kappa / 24),
-        'genus1_universal': True,
-    }
-
-
-# ============================================================================
-# 7. KdV non-compatibility (negative result)
-# ============================================================================
-
-def kdv_compatibility_check(kappa) -> Dict[str, Any]:
-    r"""Check whether tau_KW^kappa satisfies the KdV hierarchy.
-
-    RESULT: NO, for kappa != 0, 1.
-
-    The KdV equation: du/dt_1 = u * du/dt_0 + (1/12) * d^3u/dt_0^3
-    where u = d^2 F / dt_0^2 and F = log(tau).
-
-    If F_shadow = kappa * F_KW, then u_shadow = kappa * u_KW.
-    LHS: d(kappa*u)/dt_1 = kappa * du/dt_1
-    RHS term 1: (kappa*u) * d(kappa*u)/dt_0 = kappa^2 * u * du/dt_0
-    RHS term 2: (1/12) * d^3(kappa*u)/dt_0^3 = kappa/12 * d^3u/dt_0^3
-
-    Using du/dt_1 = u * du/dt_0 + (1/12) d^3u/dt_0^3 (KdV for u_KW):
-    LHS = kappa * (u * du/dt_0 + (1/12) d^3u/dt_0^3)
-    RHS = kappa^2 * u * du/dt_0 + kappa/12 * d^3u/dt_0^3
-
-    LHS - RHS = kappa(1 - kappa) * u * du/dt_0
-
-    This vanishes iff kappa = 0 or kappa = 1.
-    For kappa != 0, 1: the KdV equation is VIOLATED.
-    """
-    kappa = Rational(kappa)
-    # The discrepancy coefficient
-    discrepancy = kappa * (1 - kappa)
-    satisfies_kdv = (discrepancy == 0)
-
-    return {
-        'kappa': kappa,
-        'discrepancy_coefficient': discrepancy,
-        'satisfies_kdv': satisfies_kdv,
-        'reason': (
-            'KdV compatible' if satisfies_kdv
-            else f'KdV violated: discrepancy ~ kappa(1-kappa) = {discrepancy}'
-        ),
-    }
-
-
-# ============================================================================
-# 8. Virasoro constraint analysis at the free energy level
-# ============================================================================
-
-def free_energy_virasoro_constraints(kappa, g_max: int = 5) -> Dict[str, Any]:
-    r"""Verify the Virasoro constraints at the free energy level.
-
-    The string equation (L_{-1}) at the free energy level:
-        dF/dt_0 = sum_{k>=0} t_{k+1} dF/dt_k + t_0^2/2
-
-    The dilaton equation (L_0) at the free energy level:
-        sum_{k>=0} (2k+1)/2 * t_k * dF/dt_k = (2g-2+n) F_{g,n}
-
-    Both equations are HOMOGENEOUS in F.  Therefore:
-    if F_KW satisfies them, then F_shadow = kappa * F_KW also satisfies them
-    (both sides scale by kappa).
-
-    This is a CONSISTENCY CHECK, not an independent proof:
-    it shows the kappa rescaling is compatible with the Virasoro algebra
-    structure at the free energy level.
-    """
-    kappa = Rational(kappa)
-
-    # The string equation at the zero-time point for F = sum F_g hbar^{2g}:
-    # At (g,n) = (0,3): F_{0,3} = 1 (normalization).
-    # At (g,n) = (1,1): F_{1,1} = 1/24.
-    # The string equation relates F_{g,n+1}(0, d_1,...,d_n) to F_{g,n}(d_1,...,d_n).
-
-    # For our purposes, the key check is:
-    # F_1^shadow = kappa/24 satisfies the dilaton equation:
-    # (2*1 - 2 + 1) * F_{1,1} = 0 ... this is the (g=1, n=1) case.
-    # Wait: the dilaton equation for the total free energy gives
-    # F_g = (2g-2)/24 at genus g for the partition function.
-    # But F_1 = 1/24 for KW, so (2*1-2) * F_1 = 0 * F_1 = 0.
-    # The dilaton equation at genus 1: sum (2k+1)/2 t_k dF/dt_k = 0.
-    # At the zero-time point, this is trivially satisfied.
-
-    results = {
-        'kappa': kappa,
-        'string_equation_compatible': True,
-        'dilaton_equation_compatible': True,
-        'reason': (
-            'F_shadow = kappa * F_KW: both Virasoro constraint equations are '
-            'homogeneous in F, so the kappa rescaling is automatically compatible.'
-        ),
-    }
-
-    # Verify F_g values are consistent with the dilaton equation recursion
-    # The dilaton equation gives: F_{g,n} at the zero-time point satisfies
-    # (2g-2+n) * F_{g,n}(0,...,0) = sum of lower terms.
-    # For n=0: (2g-2) * F_g = boundary terms from M-bar_g.
-    # The genus-1 case is special: (2*1-2) = 0, so F_1 is determined
-    # independently (it's 1/24 for KW, kappa/24 for shadow).
-
-    for g in range(1, g_max + 1):
-        F_g_shadow = shadow_free_energy(kappa, g)
-        F_g_kw = lambda_fp(g)
-        results[f'F_{g}_ratio'] = (
-            F_g_shadow / F_g_kw if F_g_kw != 0 else 'undefined'
+    reciprocal = [Fraction(0)] * (g_max + 1)
+    reciprocal[0] = Fraction(1)
+    for n in range(1, g_max + 1):
+        reciprocal[n] = -sum(
+            _sin_over_x_half_coeff(j) * reciprocal[n - j] for j in range(1, n + 1)
         )
+    return tuple(reciprocal[1:])
 
-    return results
+
+def ahat_log_coefficient(g: int) -> Fraction:
+    """Coefficient of x^(2g) in (x/2)/sin(x/2)-1."""
+
+    if g < 1:
+        raise ValueError(f"ahat_log_coefficient requires g >= 1, got {g}")
+    return ahat_log_coefficients(g)[g - 1]
 
 
-# ============================================================================
-# 9. Convergence analysis
-# ============================================================================
+def fp_window(g_max: int) -> Dict[int, Fraction]:
+    """Faber-Pandharipande coefficients in the finite genus window."""
 
-def convergence_radius_shadow(kappa) -> Dict[str, Any]:
-    r"""The shadow generating function has radius of convergence |hbar| = 2*pi.
+    if g_max < 1:
+        raise ValueError(f"g_max requires g_max >= 1, got {g_max}")
+    return {g: lambda_fp(g) for g in range(1, g_max + 1)}
 
-    This is INDEPENDENT of kappa:
-        sum_g kappa * lambda_g^FP * hbar^{2g} = kappa * ((hbar/2)/sin(hbar/2) - 1)
-    converges for |hbar| < 2*pi (the nearest singularity of 1/sin(hbar/2)
-    is at hbar = 2*pi).
 
-    The ratio test: lambda_{g+1}^FP / lambda_g^FP -> 1/(2*pi)^2 as g -> infinity
-    (from the Bernoulli number asymptotics |B_{2g}| ~ 4*sqrt(pi*g) * (g/(pi*e))^{2g}).
+# ---------------------------------------------------------------------------
+# Formal finite-window tau algebra
+# ---------------------------------------------------------------------------
+
+
+@dataclass(frozen=True)
+class ScalarWindowRow:
+    genus: int
+    lambda_fp: Fraction
+    ahat_coefficient: Fraction
+    scalar_free_energy: Fraction
+    coefficient_match: bool
+
+
+@dataclass(frozen=True)
+class ScalarWindowCertificate:
+    kappa: Fraction
+    g_max: int
+    variable: str
+    ring: str
+    lane: str
+    log_identity: str
+    log_identity_modulus: str
+    tautological_ring_input: str
+    analytic_tau_identity_proved: bool
+    kw_kdv_tau_membership_certified: bool
+    full_descendant_hierarchy_certified: bool
+    full_mc_element_certified: bool
+    bar_cobar_theorem_certified: bool
+    derived_center_data_certified: bool
+    stable_graph_cross_channels_checked: bool
+    multi_weight_theorem: bool
+    source: str
+    rows: Tuple[ScalarWindowRow, ...]
+
+    @property
+    def all_coefficients_match(self) -> bool:
+        return all(row.coefficient_match for row in self.rows)
+
+
+def shadow_free_energy(kappa: Any, g: int) -> Fraction:
+    r"""Diagonal scalar free energy kappa * lambda_g^FP."""
+
+    return _as_fraction(kappa) * lambda_fp(g)
+
+
+def scalar_shadow_window(kappa: Any, g_max: int) -> ScalarWindowCertificate:
+    r"""Finite formal log identity on the scalar-diagonal lane.
+
+    The result certifies
+    log tau_shadow^{<=G} = kappa log tau_KW^{<=G} in Q[kappa][[q]]/(q^(G+1)),
+    q = hbar^2. It does not certify analytic tau membership.
     """
-    kappa = Rational(kappa)
 
-    ratios = {}
-    for g in range(1, 8):
-        fp_g = lambda_fp(g)
-        fp_g1 = lambda_fp(g + 1)
-        ratio = fp_g1 / fp_g
-        # This should approach 1/(4*pi^2) as g -> infinity
-        ratios[g] = {'ratio': ratio, 'numerical': float(ratio)}
+    if g_max < 1:
+        raise ValueError(f"g_max requires g_max >= 1, got {g_max}")
+    kappa_q = _as_fraction(kappa)
+    ahat_coeffs = ahat_log_coefficients(g_max)
+    rows = []
+    for g, ahat_coeff in enumerate(ahat_coeffs, start=1):
+        lam = lambda_fp(g)
+        rows.append(
+            ScalarWindowRow(
+                genus=g,
+                lambda_fp=lam,
+                ahat_coefficient=ahat_coeff,
+                scalar_free_energy=kappa_q * lam,
+                coefficient_match=(ahat_coeff == lam),
+            )
+        )
+    return ScalarWindowCertificate(
+        kappa=kappa_q,
+        g_max=g_max,
+        variable="q = hbar^2",
+        ring=f"Q[kappa][[q]]/(q^{g_max + 1})",
+        lane="uniform-weight scalar-diagonal",
+        log_identity=(
+            "log_tau_shadow_scal^{<=G} = "
+            "kappa*log_tau_KW^{<=G} mod q^{G+1}"
+        ),
+        log_identity_modulus=f"q^{g_max + 1}",
+        tautological_ring_input=(
+            "int_{Mbar_{g,1}} psi_1^{2g-2} lambda_g = lambda_g^FP"
+        ),
+        analytic_tau_identity_proved=False,
+        kw_kdv_tau_membership_certified=False,
+        full_descendant_hierarchy_certified=False,
+        full_mc_element_certified=False,
+        bar_cobar_theorem_certified=False,
+        derived_center_data_certified=False,
+        stable_graph_cross_channels_checked=False,
+        multi_weight_theorem=False,
+        source=LOCAL_SOURCE_ANCHORS["finite_scalar_tau"],
+        rows=tuple(rows),
+    )
 
-    # The limiting value is 1/(4*pi^2) = 1/(4 * 9.8696...) = 1/39.478...
-    # So the radius of convergence in hbar^2 is 4*pi^2, meaning |hbar| = 2*pi.
-    target = Rational(1) / (4 * sym_pi**2)
 
+def _normalize_log_coeffs(log_coeffs: Mapping[int, Any], g_max: int) -> Dict[int, Fraction]:
+    return {g: _as_fraction(log_coeffs.get(g, 0)) for g in range(1, g_max + 1)}
+
+
+def formal_exponential_coefficients(
+    log_coeffs: Mapping[int, Any], g_max: int
+) -> Tuple[Fraction, ...]:
+    r"""Coefficients of exp(sum a_g q^g) through q^g_max.
+
+    Returned tuple is (t_0, ..., t_gmax). The recurrence follows from
+    T' = L' T and is exact over Q.
+    """
+
+    if g_max < 0:
+        raise ValueError(f"g_max must be nonnegative, got {g_max}")
+    coeffs = _normalize_log_coeffs(log_coeffs, g_max)
+    tau = [Fraction(0)] * (g_max + 1)
+    tau[0] = Fraction(1)
+    for n in range(1, g_max + 1):
+        tau[n] = (
+            sum(
+                (j * coeffs[j] * tau[n - j] for j in range(1, n + 1)),
+                Fraction(0),
+            )
+            / n
+        )
+    return tuple(tau)
+
+
+def formal_log_from_unit_series(series_coeffs: Tuple[Any, ...]) -> Tuple[Fraction, ...]:
+    r"""Recover log coefficients from a unit series T(q) = 1 + ... ."""
+
+    if not series_coeffs or _as_fraction(series_coeffs[0]) != 1:
+        raise ValueError("formal_log_from_unit_series requires a unit series")
+    g_max = len(series_coeffs) - 1
+    tau = [_as_fraction(v) for v in series_coeffs]
+    log_coeffs = [Fraction(0)] * (g_max + 1)
+    for n in range(1, g_max + 1):
+        lower = sum(
+            (j * log_coeffs[j] * tau[n - j] for j in range(1, n)),
+            Fraction(0),
+        )
+        log_coeffs[n] = tau[n] - lower / n
+    return tuple(log_coeffs)
+
+
+def tau_kw_coefficients(g_max: int) -> Tuple[Fraction, ...]:
+    """Formal coefficients of exp(sum lambda_g^FP q^g) through q^g_max."""
+
+    return formal_exponential_coefficients(fp_window(g_max), g_max)
+
+
+def tau_shadow_coefficients(kappa: Any, g_max: int) -> Tuple[Fraction, ...]:
+    """Formal scalar-lane coefficients of exp(sum kappa*lambda_g^FP q^g)."""
+
+    kappa_q = _as_fraction(kappa)
+    return formal_exponential_coefficients(
+        {g: kappa_q * lambda_fp(g) for g in range(1, g_max + 1)}, g_max
+    )
+
+
+def formal_tau_power_window(kappa: Any, g_max: int) -> Dict[str, Any]:
+    r"""Derived finite formal exponential check.
+
+    The theorem-level statement is the logarithmic coefficient identity
+    in Q[[q]]/(q^(g_max+1)), q = hbar^2. Exponentiating inside this
+    nilpotent ring is a formal algebra check, not analytic tau membership.
+    """
+
+    if g_max < 1:
+        raise ValueError(f"g_max requires g_max >= 1, got {g_max}")
+    kappa_q = _as_fraction(kappa)
+    kw_tau = tau_kw_coefficients(g_max)
+    recovered_kw_log = formal_log_from_unit_series(kw_tau)
+    power_from_kw = formal_exponential_coefficients(
+        {g: kappa_q * recovered_kw_log[g] for g in range(1, g_max + 1)},
+        g_max,
+    )
+    shadow_tau = tau_shadow_coefficients(kappa_q, g_max)
     return {
-        'kappa': kappa,
-        'radius_of_convergence_hbar': '2*pi',
-        'radius_independent_of_kappa': True,
-        'ratios': ratios,
-        'limiting_ratio': f'1/(4*pi^2) ~ {float(target):.6f}',
+        "kappa": kappa_q,
+        "g_max": g_max,
+        "variable": "q = hbar^2",
+        "modulus": f"q^{g_max + 1}",
+        "kw_tau_coefficients": kw_tau,
+        "recovered_kw_log": recovered_kw_log,
+        "shadow_tau_coefficients": shadow_tau,
+        "tau_kw_power_coefficients": power_from_kw,
+        "finite_formal_match": shadow_tau == power_from_kw,
+        "certified_identity": (
+            "log_tau_shadow_scal^{<=G} = "
+            "kappa*log_tau_KW^{<=G} mod q^{G+1}"
+        ),
+        "firewall": scalar_projection_firewall(),
+        "theorem_proves_log_coefficients_only": True,
+        "derived_formal_exponential_check": True,
+        "analytic_tau_identity_proved": False,
+        "constructs_analytic_tau_function": False,
+        "kw_kdv_tau_membership_certified": False,
+        "full_descendant_hierarchy_certified": False,
+        "source": LOCAL_SOURCE_ANCHORS["finite_scalar_tau"],
     }
 
 
-# ============================================================================
-# 10. Numerical verification table for standard families
-# ============================================================================
+# ---------------------------------------------------------------------------
+# Lane and family certificates
+# ---------------------------------------------------------------------------
+
+
+def scalar_lane_certificate(
+    family: str,
+    generator_weights: Tuple[int, ...],
+    scalar_diagonal: bool = True,
+    free_field_exception: bool = False,
+) -> Dict[str, Any]:
+    """Decide the local scalar-lane hypothesis used by this engine."""
+
+    if not generator_weights:
+        raise ValueError("generator_weights must be nonempty")
+    uniform_weight = len(set(generator_weights)) == 1
+    on_scalar_lane = uniform_weight and scalar_diagonal
+    scalar_formula_exact = on_scalar_lane or bool(free_field_exception)
+    stable_graphs_required = not scalar_formula_exact
+    return {
+        "family": family,
+        "generator_weights": tuple(generator_weights),
+        "uniform_weight": uniform_weight,
+        "scalar_diagonal": bool(scalar_diagonal),
+        "free_field_exception": bool(free_field_exception),
+        "on_scalar_lane": on_scalar_lane,
+        "scalar_formula_exact": scalar_formula_exact,
+        "cross_channel_correction_required": not scalar_formula_exact,
+        "stable_graph_cross_channels_required": stable_graphs_required,
+        "certifies_full_mc_element": False,
+        "certifies_derived_center_data": False,
+        "tautological_ring_input": (
+            "scalar term uses the Hodge class lambda_g; interacting "
+            "multi-weight full amplitudes require boundary stable graphs"
+        ),
+        "exception_source": (
+            LOCAL_SOURCE_ANCHORS["free_field_exact"]
+            if free_field_exception
+            else None
+        ),
+        "source": LOCAL_SOURCE_ANCHORS["scalar_lane"],
+    }
+
 
 def standard_family_verification_table(g_max: int = 5) -> Dict[str, Dict[str, Any]]:
-    r"""Verify tau_shadow = tau_KW^kappa across all standard uniform-weight families.
+    """Finite scalar-window checks for standard scalar-lane families."""
 
-    Standard uniform-weight families:
-      - Heisenberg H_k: kappa = k (single generator, weight 1)
-      - Virasoro Vir_c: kappa = c/2 (single generator, weight 2)
-      - Affine sl_2: kappa = 3(k+2)/4 (rank 1, uniform weight)
-
-    Multi-weight families (EXCLUDED from the theorem):
-      - W_3: two generators at weights 2 and 3 (fails at genus >= 2)
-      - W_N for N >= 3: similar failure
-    """
     families = {
-        'Heisenberg_k=1': Rational(1),
-        'Heisenberg_k=2': Rational(2),
-        'Heisenberg_k=7': Rational(7),
-        'Virasoro_c=1': Rational(1, 2),
-        'Virasoro_c=10': Rational(5),
-        'Virasoro_c=13': Rational(13, 2),
-        'Virasoro_c=26': Rational(13),
-        'Virasoro_c=25': Rational(25, 2),
-        'Affine_sl2_k=1': Rational(9, 4),
-        'Affine_sl2_k=2': Rational(3),
-        'Affine_sl2_k=10': Rational(9),
+        "Heisenberg_k=1": (Fraction(1), (1,)),
+        "Heisenberg_k=7": (Fraction(7), (1,)),
+        "Virasoro_c=10": (Fraction(5), (2,)),
+        "Virasoro_c=26": (Fraction(13), (2,)),
+        "Affine_sl2_k=1": (Fraction(9, 4), (1,)),
+        "Affine_sl2_k=2": (Fraction(3), (1,)),
     }
-
-    table = {}
-    for name, kappa in families.items():
-        result = verify_all_four_proofs(kappa, g_max)
+    table: Dict[str, Dict[str, Any]] = {}
+    for name, (kappa_q, weights) in families.items():
+        lane = scalar_lane_certificate(name, weights)
+        window = scalar_shadow_window(kappa_q, g_max)
+        tau = formal_tau_power_window(kappa_q, g_max)
         table[name] = {
-            'kappa': kappa,
-            'all_proofs_ok': result['all_proofs_ok'],
-            'cross_consistent': result['cross_consistent'],
+            "kappa": kappa_q,
+            "on_scalar_lane": lane["on_scalar_lane"],
+            "scalar_formula_exact": lane["scalar_formula_exact"],
+            "log_coefficients_match": window.all_coefficients_match,
+            "finite_formal_tau_match": tau["finite_formal_match"],
+            "analytic_tau_identity_proved": False,
+            "kw_kdv_tau_membership_certified": False,
         }
-
     return table
 
 
-def kappa_zero_degenerate_case() -> Dict[str, Any]:
-    r"""At kappa = 0: tau_shadow = tau_KW^0 = 1 (trivial partition function).
+# ---------------------------------------------------------------------------
+# Multi-weight W_3 corrections
+# ---------------------------------------------------------------------------
 
-    F_g = 0 for all g >= 1.  The bar complex is uncurved (d^2 = 0).
-    The shadow obstruction tower is trivial: Theta_A = 0 at arity 2.
 
-    CAVEAT (AP31): kappa = 0 does NOT imply Theta_A = 0 in general.
-    The higher-arity components (cubic C, quartic Q, ...) can be nonzero
-    even when kappa = 0.  But the SCALAR free energy F_g = kappa * lambda_g^FP
-    is zero.
+def kappa_w3(c: Any) -> Fraction:
+    """kappa(W_3) = c * (1/2 + 1/3) = 5c/6."""
+
+    return Fraction(5, 6) * _as_fraction(c)
+
+
+def w3_cross_correction_decomposition_genus2(c: Any) -> Dict[str, Fraction]:
+    """Four-term rational witness for delta F_2^cross(W_3).
+
+    This is a computable witness for the total cross-channel constant.
+    The tautological-ring proof still requires the seven stable-graph
+    contributions.
     """
-    results = {}
-    for g in range(1, 9):
-        Fg = shadow_free_energy(Rational(0), g)
-        results[g] = {'F_g': Fg, 'is_zero': (Fg == 0)}
+
+    c_q = _as_fraction(c)
+    if c_q == 0:
+        raise ValueError("W_3 cross-channel formulas require c != 0")
+    pieces = {
+        "sunset": Fraction(3, 1) / c_q,
+        "theta": Fraction(9, 2) / c_q,
+        "bridge_loop": Fraction(1, 16),
+        "barbell": Fraction(21, 4) / c_q,
+    }
+    pieces["total"] = sum(pieces.values(), Fraction(0))
+    return pieces
+
+
+def w3_cross_channel_witness(g: int, c: Any) -> Dict[str, Any]:
+    """Stable-graph and tautological-ring witness for W_3 cross terms."""
+
+    if g not in W3_CROSS_CHANNEL_WITNESSES:
+        raise ValueError("W_3 cross-channel witness is implemented only for g = 1..4")
+    c_q = _as_fraction(c)
+    datum = W3_CROSS_CHANNEL_WITNESSES[g]
     return {
-        'kappa': Rational(0),
-        'all_Fg_zero': all(r['is_zero'] for r in results.values()),
-        'tau_shadow': 'tau_KW^0 = 1',
-        'details': results,
-        'ap31_caveat': 'kappa=0 implies F_g=0 but NOT Theta_A=0 (AP31).',
+        "genus": g,
+        "c": c_q,
+        "delta_cross": w3_delta_cross(g, c_q),
+        "formula": datum["formula"],
+        "stable_graph_count": datum["stable_graph_count"],
+        "witness": datum["witness"],
+        "source": datum["source"],
+        "tautological_ring_input_required": g >= 2,
+        "scalar_diagonal_sufficient": g == 1,
+        "certifies_full_mc_element": False,
+        "certifies_derived_center_data": False,
     }
 
 
-def kappa_one_recovers_kw() -> Dict[str, Any]:
-    r"""At kappa = 1: tau_shadow = tau_KW (the Kontsevich-Witten tau-function).
+def w3_delta_cross(g: int, c: Any) -> Fraction:
+    """Known exact W_3 cross-channel correction for g = 1, 2, 3, 4."""
 
-    This is the Heisenberg case at level k=1.
-    F_g = lambda_g^FP = the Airy free energies.
-    tau_shadow satisfies the full KdV hierarchy.
-    """
-    results = {}
-    for g in range(1, 9):
-        Fg = shadow_free_energy(Rational(1), g)
-        Fg_kw = lambda_fp(g)
-        results[g] = {'F_g': Fg, 'F_g_KW': Fg_kw, 'match': (Fg == Fg_kw)}
+    c_q = _as_fraction(c)
+    if c_q == 0:
+        raise ValueError("W_3 cross-channel formulas require c != 0")
+    if g == 1:
+        return Fraction(0)
+    if g == 2:
+        return (c_q + 204) / (16 * c_q)
+    if g == 3:
+        return (
+            5 * c_q**3
+            + 3792 * c_q**2
+            + 1_149_120 * c_q
+            + 217_071_360
+        ) / (138_240 * c_q**2)
+    if g == 4:
+        return (
+            287 * c_q**4
+            + 268_881 * c_q**3
+            + 115_455_816 * c_q**2
+            + 29_725_133_760 * c_q
+            + 5_594_347_866_240
+        ) / (17_418_240 * c_q**3)
+    raise ValueError("W_3 cross-channel window is implemented only for g = 1..4")
+
+
+def w3_free_energy_window(c: Any, g_max: int = 4) -> Dict[str, Any]:
+    """Full W_3 free energy through the known cross-channel window."""
+
+    if not 1 <= g_max <= 4:
+        raise ValueError("W_3 free-energy window is implemented for 1 <= g_max <= 4")
+    c_q = _as_fraction(c)
+    kappa_q = kappa_w3(c_q)
+    rows: Dict[int, Dict[str, Fraction | bool]] = {}
+    for g in range(1, g_max + 1):
+        scalar = kappa_q * lambda_fp(g)
+        delta = w3_delta_cross(g, c_q)
+        rows[g] = {
+            "scalar_diagonal": scalar,
+            "delta_cross": delta,
+            "full": scalar + delta,
+            "scalar_equals_full": delta == 0,
+        }
     return {
-        'kappa': Rational(1),
-        'recovers_kw': all(r['match'] for r in results.values()),
-        'satisfies_kdv': True,
-        'details': results,
+        "family": "W_3",
+        "c": c_q,
+        "kappa": kappa_q,
+        "lane": scalar_lane_certificate("W_3", (2, 3)),
+        "cross_channel_witnesses": {
+            g: w3_cross_channel_witness(g, c_q) for g in range(1, g_max + 1)
+        },
+        "full_mc_element_certified": False,
+        "derived_center_data_certified": False,
+        "rows": rows,
     }
 
 
-# ============================================================================
-# 11. Complementarity on the tau-function level
-# ============================================================================
+def multi_weight_failure_genus2_w3(c: Any) -> Dict[str, Any]:
+    """Sharp genus-2 negative test for the diagonal scalar shortcut."""
 
-def complementarity_tau_functions(kappa, kappa_dual) -> Dict[str, Any]:
-    r"""Complementarity: tau_shadow(A) * tau_shadow(A!) = tau_KW^{kappa + kappa'}.
+    window = w3_free_energy_window(c, g_max=2)
+    row = window["rows"][2]
+    return {
+        "c": window["c"],
+        "kappa_W3": window["kappa"],
+        "F2_scalar": row["scalar_diagonal"],
+        "delta_F2_cross": row["delta_cross"],
+        "F2_full": row["full"],
+        "scalar_equals_full": row["scalar_equals_full"],
+        "correction_positive": row["delta_cross"] > 0,
+        "tau_power_fails_for_full_free_energy": row["delta_cross"] != 0,
+    }
 
-    For KM/free fields: kappa + kappa' = 0, so the product is 1.
-    For Virasoro: kappa + kappa' = 13, so the product is tau_KW^13.
 
-    This follows directly from:
-        tau_shadow(A) = tau_KW^kappa,  tau_shadow(A!) = tau_KW^{kappa'}
-    => tau_shadow(A) * tau_shadow(A!) = tau_KW^{kappa + kappa'}.
+def w3_large_c_cross_to_scalar_ratio(g: int) -> Fraction:
+    """Large-c ratio delta F_g^cross / (kappa(W_3) lambda_g^FP)."""
+
+    if g == 2:
+        return Fraction(0)
+    if g == 3:
+        return Fraction(42, 31)
+    if g == 4:
+        return Fraction(9184, 381)
+    raise ValueError("large-c ratio implemented only for W_3 genus 2, 3, 4")
+
+
+# ---------------------------------------------------------------------------
+# KdV / Virasoro / analytic-scope certificates
+# ---------------------------------------------------------------------------
+
+
+def genus1_universality(kappa: Any) -> Dict[str, Any]:
+    """The genus-1 scalar coefficient is kappa/24 for every family."""
+
+    kappa_q = _as_fraction(kappa)
+    value = kappa_q * lambda_fp(1)
+    return {
+        "kappa": kappa_q,
+        "F_1": value,
+        "expected": kappa_q / 24,
+        "match": value == kappa_q / 24,
+        "cross_channel_delta": Fraction(0),
+    }
+
+
+def kdv_residual_certificate(kappa: Any) -> Dict[str, Any]:
+    r"""Residual for substituting F_shadow = kappa F_KW into scalar KdV.
+
+    The nonlinear KdV term gives residual coefficient kappa(1-kappa).
+    Vanishing at kappa = 0 is the trivial solution, not the normalized
+    Kontsevich-Witten descendant potential.
     """
-    kappa = Rational(kappa)
-    kappa_dual = Rational(kappa_dual)
-    kappa_sum = kappa + kappa_dual
+
+    kappa_q = _as_fraction(kappa)
+    residual = kappa_q * (1 - kappa_q)
+    return {
+        "kappa": kappa_q,
+        "residual_coefficient": residual,
+        "scalar_kdv_equation_satisfied": residual == 0,
+        "kw_reference_case": kappa_q == 1,
+        "kw_tau_normalization_certified": False,
+        "kw_tau_normalization_certified_by_this_engine": False,
+        "trivial_solution": kappa_q == 0,
+        "coefficient_identity_used": False,
+        "source": LOCAL_SOURCE_ANCHORS["hierarchy_residual_scope"],
+    }
+
+
+def kdv_hirota_residual_certificate(kappa: Any) -> Dict[str, Any]:
+    r"""Standard nonlinear hierarchy residuals, separate from coefficients."""
+
+    cert = kdv_residual_certificate(kappa)
+    residual = cert["residual_coefficient"]
+    return {
+        "kappa": cert["kappa"],
+        "kdv_residual_factor": residual,
+        "hirota_residual_factor": residual,
+        "standard_kdv_hierarchy": residual == 0,
+        "standard_hirota_equations": residual == 0,
+        "kw_reference_case": cert["kw_reference_case"],
+        "full_kw_descendant_hierarchy": False,
+        "full_descendant_hierarchy_certified_by_this_engine": False,
+        "kw_tau_normalization_certified": cert["kw_tau_normalization_certified"],
+        "trivial_zero_solution_exception": cert["trivial_solution"],
+        "coefficient_identity_used": False,
+        "source": LOCAL_SOURCE_ANCHORS["hierarchy_residual_scope"],
+    }
+
+
+def kdv_compatibility_check(kappa: Any) -> Dict[str, Any]:
+    """KdV residual certificate with the historical result keys."""
+
+    cert = kdv_residual_certificate(kappa)
+    return {
+        "kappa": cert["kappa"],
+        "discrepancy_coefficient": cert["residual_coefficient"],
+        "satisfies_kdv": cert["scalar_kdv_equation_satisfied"],
+        "kw_reference_case": cert["kw_reference_case"],
+        "kw_tau_normalization_certified": cert["kw_tau_normalization_certified"],
+        "kw_tau_normalization_certified_by_this_engine": cert[
+            "kw_tau_normalization_certified_by_this_engine"
+        ],
+        "trivial_solution": cert["trivial_solution"],
+        "coefficient_identity_used": cert["coefficient_identity_used"],
+    }
+
+
+def virasoro_constraint_scope(kappa: Any) -> Dict[str, Any]:
+    """Scope of Virasoro claims visible from this zero-time engine."""
+
+    kappa_q = _as_fraction(kappa)
+    return {
+        "kappa": kappa_q,
+        "zero_time_coefficients_only": True,
+        "full_descendant_constraints_checked": False,
+        "full_descendant_hierarchy_certified": False,
+        "full_descendant_hierarchy_certified_by_this_engine": False,
+        "analytic_tau_membership_certified_by_coefficients": False,
+        "kw_reference_case": kappa_q == 1,
+        "kw_virasoro_normalization_preserved": False,
+        "reason": (
+            "finite zero-time scalar coefficients do not certify full "
+            "descendant Virasoro constraints; kappa rescaling changes the "
+            "normalization outside the KW reference case kappa = 1"
+        ),
+    }
+
+
+def free_energy_virasoro_constraints(kappa: Any, g_max: int = 5) -> Dict[str, Any]:
+    """Coefficient-window report; it does not check Virasoro constraints."""
+
+    scope = virasoro_constraint_scope(kappa)
+    scope["coefficient_window"] = {
+        g: shadow_free_energy(kappa, g) for g in range(1, g_max + 1)
+    }
+    scope["coefficient_identity_only"] = True
+    return scope
+
+
+def convergence_radius_shadow(kappa: Any) -> Dict[str, Any]:
+    """A-hat model radius datum, separated from the finite tau theorem."""
 
     return {
-        'kappa': kappa,
-        'kappa_dual': kappa_dual,
-        'kappa_sum': kappa_sum,
-        'product_tau': f'tau_KW^{kappa_sum}',
-        'product_trivial': (kappa_sum == 0),
+        "kappa": _as_fraction(kappa),
+        "formal_coefficient_window_only": True,
+        "coefficient_identity_implies_radius": False,
+        "finite_window_has_radius": False,
+        "ahat_meromorphic_model_radius_hbar": "2*pi",
+        "ahat_model_radius_independent_of_kappa": True,
+        "radius_theorem_for_tau_shadow": False,
+        "analytic_tau_identity_proved": False,
+        "scope_note": (
+            "the pole of (hbar/2)/sin(hbar/2) belongs to the A-hat "
+            "meromorphic model, not to the finite KW coefficient theorem"
+        ),
+        "source": LOCAL_SOURCE_ANCHORS["concordance_scalar_free_energy"],
     }
+
+
+def kappa_zero_degenerate_case(g_max: int = 8) -> Dict[str, Any]:
+    """At kappa = 0 the scalar free energies vanish in every finite window."""
+
+    coeffs = tau_shadow_coefficients(Fraction(0), g_max)
+    return {
+        "kappa": Fraction(0),
+        "all_Fg_zero": all(shadow_free_energy(0, g) == 0 for g in range(1, g_max + 1)),
+        "tau_coefficients": coeffs,
+        "trivial_solution_not_theta_vanishing": True,
+    }
+
+
+def kappa_one_recovers_kw(g_max: int = 8) -> Dict[str, Any]:
+    """At kappa = 1 the finite scalar window is the KW finite window."""
+
+    return {
+        "kappa": Fraction(1),
+        "recovers_kw": tau_shadow_coefficients(1, g_max) == tau_kw_coefficients(g_max),
+        "kw_finite_window_normalization_certified": True,
+        "kw_tau_normalization_certified": False,
+        "full_descendant_hierarchy_certified_by_this_engine": False,
+        "tau_coefficients": tau_kw_coefficients(g_max),
+    }
+
+
+def complementarity_tau_functions(
+    kappa: Any, kappa_dual: Any, g_max: int = 5
+) -> Dict[str, Any]:
+    """Finite formal scalar product for paired kappa values."""
+
+    kappa_q = _as_fraction(kappa)
+    kappa_dual_q = _as_fraction(kappa_dual)
+    total = kappa_q + kappa_dual_q
+    return {
+        "kappa": kappa_q,
+        "kappa_dual": kappa_dual_q,
+        "kappa_sum": total,
+        "product_log_coefficients": {
+            g: total * lambda_fp(g) for g in range(1, g_max + 1)
+        },
+        "product_tau_coefficients": tau_shadow_coefficients(total, g_max),
+        "finite_formal_product": (
+            f"exp(({total})*log_tau_KW^<=G) mod q^{g_max + 1}"
+        ),
+        "analytic_tau_identity_proved": False,
+        "kw_kdv_tau_membership_certified": False,
+        "object_firewall": {
+            "A^!": TYPED_OBJECT_ROLES["A^!"],
+            "Omega(B(A))": TYPED_OBJECT_ROLES["Omega(B(A))"],
+            "Z_ch^der(A)": TYPED_OBJECT_ROLES["Z_ch^der(A)"],
+        },
+        "source": LOCAL_SOURCE_ANCHORS["finite_scalar_tau"],
+    }
+
+
+__all__ = [
+    "HOLOGRAPHIC_PACKAGE_ENTRIES",
+    "KERNEL_NORMALIZATION_FORMULAS",
+    "LOCAL_SOURCE_ANCHORS",
+    "MODULAR_KOSZUL_COMPUTE_PROJECTIONS",
+    "TYPED_OBJECT_ROLES",
+    "W3_CROSS_CHANNEL_WITNESSES",
+    "ScalarWindowCertificate",
+    "ScalarWindowRow",
+    "_bernoulli_number",
+    "ahat_log_coefficient",
+    "ahat_log_coefficients",
+    "complementarity_tau_functions",
+    "convergence_radius_shadow",
+    "formal_exponential_coefficients",
+    "formal_log_from_unit_series",
+    "formal_tau_power_window",
+    "fp_window",
+    "free_energy_virasoro_constraints",
+    "genus1_universality",
+    "holographic_package_entries",
+    "kappa_one_recovers_kw",
+    "kappa_w3",
+    "kappa_zero_degenerate_case",
+    "kdv_compatibility_check",
+    "kdv_hirota_residual_certificate",
+    "kdv_residual_certificate",
+    "kernel_constant_certificate",
+    "lambda_fp",
+    "modular_koszul_compute_projections",
+    "multi_weight_failure_genus2_w3",
+    "scalar_lane_certificate",
+    "scalar_projection_firewall",
+    "scalar_shadow_window",
+    "shadow_free_energy",
+    "standard_family_verification_table",
+    "structural_firewall_summary",
+    "tau_kw_coefficients",
+    "tau_shadow_coefficients",
+    "typed_object_firewall",
+    "virasoro_constraint_scope",
+    "w3_cross_channel_witness",
+    "w3_cross_correction_decomposition_genus2",
+    "w3_delta_cross",
+    "w3_free_energy_window",
+    "w3_large_c_cross_to_scalar_ratio",
+]

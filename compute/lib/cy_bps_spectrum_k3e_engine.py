@@ -158,8 +158,8 @@ MATHEMATICAL FRAMEWORK
      - kappa(A) = 2 (complex dimension of K3; see cy_lattice_voa_k3_engine.py)
        WAIT: The BPS entropy engine says kappa = 5. WHICH IS CORRECT?
        kappa = 2 is the K3 SIGMA MODEL modular characteristic.
-       kappa = 5 is the weight of Delta_5 (Igusa cusp form weight 5,
-       which is the BKM automorphic form for K3).
+       kappa_BKM = 5 is the weight of the primitive Delta_5 denominator,
+       whose square is the weight-10 Igusa form.
        These are DIFFERENT objects (AP20): kappa(sigma model) vs
        kappa(BKM denominator).
        For the shadow obstruction tower of the K3 sigma model: kappa = 2.

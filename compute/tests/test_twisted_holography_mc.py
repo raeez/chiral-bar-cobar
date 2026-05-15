@@ -42,6 +42,7 @@ from twisted_holography_mc import (
     extract_collision_residue,
     collision_residue_leading_pole,
     collision_residue_matches_ope,
+    kernel_normalization,
     # CYBE
     verify_cybe_from_mc,
     cybe_sl2_fundamental_numerical,
@@ -71,6 +72,9 @@ from twisted_holography_mc import (
     # Master
     master_holographic_verification,
     # Internals
+    MC_EQUATION,
+    MC_EQUATION_SCOPE,
+    SEVEN_ENTRY_PACKAGE,
     _lambda_fp,
 )
 
@@ -91,7 +95,7 @@ class TestCollisionResidue:
         assert collision_residue_leading_pole(r) == 1
 
     def test_affine_sl2_collision_residue(self):
-        """sl_2: OPE k/z^2 + f/z -> collision residue Omega/z (AP19).
+        """sl_2: OPE k/z^2 + f/z -> collision residue k*Omega/z (AP19).
 
         The double pole becomes a single pole (Casimir/z).
         The simple pole drops to regular (AP19).
@@ -101,6 +105,15 @@ class TestCollisionResidue:
         assert collision_residue_leading_pole(r) == 1
         assert r.is_matrix_valued is True
         assert r.casimir_order == 3  # dim(sl_2)
+        assert r.scalar_poles[1] == Fraction(1)
+
+    def test_affine_collision_residue_uses_level_not_kappa(self):
+        """Affine trace-form r(z) has coefficient k, not kappa."""
+        A = make_affine_sl2(Fraction(4))
+        r = extract_collision_residue(A)
+        assert r.scalar_poles[1] == Fraction(4)
+        assert A.kappa == Fraction(9, 2)
+        assert r.scalar_poles[1] != A.kappa
 
     def test_virasoro_collision_residue(self):
         """Virasoro: OPE (c/2)/z^4 + 2T/z^2 + T'/z
@@ -266,7 +279,7 @@ class TestQuantumRMatrix:
         assert verify_qybe_yang_numerical(3) is True
 
     def test_quantum_r_from_mc(self):
-        """R(z) is derived from Theta_A: the MC equation guarantees QYBE."""
+        """R(z) is anchored at Theta_A: the MC equation guarantees QYBE."""
         A = make_affine_sl2(Fraction(4))
         R = quantum_r_matrix(A)
         assert R.satisfies_qybe is True
@@ -278,7 +291,7 @@ class TestQuantumRMatrix:
 # =========================================================================
 
 class TestShadowConnection:
-    """Test nabla^{hol}_{0,n} = d - sum r^{ij}(z_{ij}) dz_{ij}."""
+    """Test nabla^{hol}_{0,n} flatness and KZ normalization data."""
 
     def test_shadow_connection_flat(self):
         """Flatness from MC equation (thm:thqg-flatness)."""
@@ -286,11 +299,23 @@ class TestShadowConnection:
                   make_virasoro(Fraction(25))]:
             conn = shadow_connection_genus0(A, 3)
             assert conn["is_flat"] is True
+            assert MC_EQUATION in conn["flat_reason"]
+            assert MC_EQUATION_SCOPE in conn["flat_reason"]
 
     def test_kz_match_sl2(self):
-        """sl_2: shadow connection = KZ connection at genus 0."""
+        """sl_2: shadow connection is KZ-compatible after normalization."""
         A = make_affine_sl2(Fraction(1))
         assert kz_connection_matches_shadow(A) is True
+
+    def test_affine_kernel_normalizations_typed_apart(self):
+        """Affine collision and KZ factors are not collapsed to bare Omega/z."""
+        A = make_affine_sl2(Fraction(4))
+        norm = kernel_normalization(A)
+        assert norm.collision_residue_factor == Fraction(4)
+        assert norm.holomorphic_connection_factor == Fraction(1, 6)
+        assert norm.collision_kernel == "k*Omega/z"
+        assert "Omega/((k+h^vee)z)" in norm.holomorphic_connection_kernel
+        assert norm.collision_residue_factor != norm.holomorphic_connection_factor
 
     def test_kz_match_sl3(self):
         """sl_3: shadow connection = KZ connection at genus 0."""
@@ -396,10 +421,13 @@ class TestSl2Explicit:
         assert result["collision_residue_single_pole"] == Fraction(1)
 
     def test_sl2_full_verification_k1(self):
-        """Full holographic dictionary for sl_2 at k=1."""
+        """Holographic projection dictionary for sl_2 at k=1."""
         result = sl2_explicit_verification(Fraction(1))
         assert result["r_matrix_leading_pole"] == 1
         assert result["r_matrix_is_casimir_type"] is True
+        assert result["r_matrix_scalar_coeff"] == Fraction(1)
+        assert result["collision_kernel_factor"] == Fraction(1)
+        assert result["kz_sugawara_factor"] == Fraction(1, 3)
         assert result["cybe_from_mc"] is True
         assert result["cybe_numerical_sl2"] is True
         assert result["qybe_yang_sl2"] is True
@@ -409,9 +437,12 @@ class TestSl2Explicit:
         assert result["three_paths_agree"] is True
 
     def test_sl2_full_verification_k4(self):
-        """Full holographic dictionary for sl_2 at k=4."""
+        """Holographic projection dictionary for sl_2 at k=4."""
         result = sl2_explicit_verification(Fraction(4))
         assert result["kappa"] == Fraction(9, 2)
+        assert result["r_matrix_scalar_coeff"] == Fraction(4)
+        assert result["collision_kernel_factor"] == Fraction(4)
+        assert result["kz_sugawara_factor"] == Fraction(1, 6)
         assert result["kappa_sum"] == Fraction(0)
         assert result["three_paths_agree"] is True
 
@@ -456,7 +487,7 @@ class TestMasterSweep:
         assert results["Vir(c=13)"]["kappa"] == Fraction(13, 2)
 
     def test_full_dictionary_extraction(self):
-        """Extract complete holographic dictionary for each family."""
+        """Extract the holographic projection dictionary for each family."""
         families = [
             make_heisenberg(Fraction(1)),
             make_affine_sl2(Fraction(1)),
@@ -465,10 +496,34 @@ class TestMasterSweep:
         ]
         for A in families:
             H = extract_holographic_dictionary(A)
+            assert H.package_entries == SEVEN_ENTRY_PACKAGE
+            assert H.bar_complex_name.startswith("B^ch(")
+            assert H.bar_dual_name.startswith("H^*(B^ch(")
+            assert "bar-dual coalgebra" in H.bar_dual_scope
+            assert "Omega(B(A))" in H.object_types
+            assert "bar-cobar inversion" in H.object_types["Omega(B(A))"]
+            assert H.bar_cobar_inversion_name.startswith("Omega(B^ch(")
+            assert H.bulk_slot_name.startswith("Z_ch^der(")
+            assert "Z_ch^der" in H.derived_center_scope
+            assert "not B(A)" in H.derived_center_scope
+            assert H.mc_equation == MC_EQUATION
+            assert H.mc_equation_scope == MC_EQUATION_SCOPE
+            assert "KZ/Sugawara" in H.nabla_hol_scope
             assert H.shadow_connection_flat is True
             assert H.path_a_mc_projection is True
             assert H.path_b_boundary_ope is True
             assert H.collision_residue.satisfies_cybe is True
+
+    def test_ap25_typed_apart_objects(self):
+        """B(A), A^i, A^!, Omega(B(A)), and Z_ch^der(A) stay distinct."""
+        H = extract_holographic_dictionary(make_affine_sl2(Fraction(1)))
+        assert H.object_types["B(A)"].startswith("ordered bar coalgebra")
+        assert H.object_types["A^i"].startswith("bar cohomology coalgebra")
+        assert H.object_types["A^!"].startswith("Verdier/Koszul dual algebra")
+        assert H.object_types["Z_ch^der(A)"].startswith("derived-centre")
+        assert H.bar_dual_name != H.koszul_dual_name
+        assert H.bar_cobar_inversion_name != H.koszul_dual_name
+        assert H.bulk_slot_name != H.koszul_dual_name
 
     def test_ap24_virasoro_all_c(self):
         """AP24: kappa(Vir_c) + kappa(Vir_{26-c}) = 13 for all c."""

@@ -2,7 +2,7 @@ r"""Tests for Vol II Part I rectification engine.
 
 50+ tests verifying the core claims of Vol II Part I:
 ordered bar = E_1 coalgebra on FM_k(C) x Conf_k(R), with the
-Swiss-cheese datum on the derived-center pair.
+Swiss-cheese datum on the typed open/closed pair.
 
 Test structure follows the multi-path verification mandate:
 every claim verified by at least 2 independent paths.
@@ -16,6 +16,9 @@ from compute.lib.theorem_vol2_swiss_cheese_rectification_engine import (
     kappa_virasoro,
     kappa_affine,
     kappa_wn,
+    verify_package_firewalls,
+    verify_kernel_normalization_firewall,
+    verify_projection_promotion_firewall,
     arnold_relation_genus0,
     curvature_from_arnold_defect,
     verify_heisenberg_curvature_genus1,
@@ -95,6 +98,97 @@ class TestModularCharacteristics:
 
 
 # ============================================================================
+# Section 1b: Package and projection firewalls
+# ============================================================================
+
+class TestPackageAndProjectionFirewalls:
+    """Prevent package, kernel, and projection over-promotion."""
+
+    def test_holographic_package_entries_exact(self):
+        result = verify_package_firewalls()
+        assert result["holographic_package"] == (
+            "A",
+            "A^i",
+            "A^!",
+            "C",
+            "r(z)",
+            "Theta_A",
+            "nabla^hol",
+        )
+        assert result["package_lengths"]["holographic"] == 7
+
+    def test_modular_koszul_compute_package_entries_exact(self):
+        result = verify_package_firewalls()
+        assert result["modular_koszul_compute_package"] == (
+            "Fact_X(L)",
+            "barB_X(L)",
+            "Theta_L",
+            "L_L",
+            "(V_br,T_br)",
+            "R4_mod(L)",
+        )
+        assert result["package_lengths"]["compute"] == 6
+        assert result["packages_are_distinct"]
+
+    def test_package_roles_do_not_collapse_bar_bulk_dual(self):
+        result = verify_package_firewalls()
+        assert result["holographic_roles"]["C"] == "derived-centre/Hochschild bulk slot"
+        assert result["holographic_roles"]["A^!"].startswith("Verdier")
+        assert result["compute_roles"]["barB_X(L)"] == "bar coalgebra projection"
+        assert result["bar_projection_not_verdier_dual"]
+        assert result["bulk_slot_not_compute_projection"]
+
+    def test_kernel_normalizations_are_canonical_strings(self):
+        result = verify_kernel_normalization_firewall(k=1, h_dual=2, c=26)
+        assert result["formulas"]["affine_raw_collision"] == "k*Omega_tr/z"
+        assert result["formulas"]["affine_kz_connection"] == "Omega/((k+h^vee)z)"
+        assert result["formulas"]["heisenberg_collision"] == "k/z"
+        assert result["formulas"]["virasoro_collision"] == "(c/2)/z^3 + 2T/z"
+        assert result["virasoro_cubic_coefficient"] == 13
+
+    def test_affine_raw_and_kz_normalizations_separate_at_level_zero(self):
+        result = verify_kernel_normalization_firewall(k=0, h_dual=2)
+        assert result["affine_raw_coefficient"] == 0
+        assert result["affine_kz_coefficient"] == Fraction(1, 2)
+        assert result["level_zero_separates_raw_from_kz"]
+        assert result["raw_and_kz_not_equal_as_rational_functions"]
+
+    def test_affine_kz_undefined_at_critical_level(self):
+        result = verify_kernel_normalization_firewall(k=-2, h_dual=2)
+        assert result["affine_kz_coefficient"] is None
+        assert not result["affine_kz_defined"]
+        assert result["critical_level_kz_undefined"]
+
+    def test_r_matrix_is_binary_projection_not_full_mc(self):
+        result = verify_projection_promotion_firewall()
+        r_matrix = result["r_matrix_projection"]
+        assert r_matrix["source"] == "Res^{coll}_{0,2}(Theta_A)"
+        assert r_matrix["scope"] == "binary genus-0 collision residue"
+        assert r_matrix["not_full_mc_element"]
+        assert r_matrix["does_not_determine_all_arities"]
+
+    def test_kappa_scalar_projection_not_full_mc(self):
+        result = verify_projection_promotion_firewall()
+        kappa = result["kappa_projection"]
+        assert kappa["scope"] == "uniform-weight scalar obstruction coefficient"
+        assert kappa["not_full_mc_element"]
+        assert kappa["kappa_zero_does_not_imply_theta_zero"]
+
+    def test_open_closed_full_equivalence_not_promoted(self):
+        result = verify_projection_promotion_firewall()
+        equivalence = result["open_closed_equivalence"]
+        assert equivalence["requires_boundary_condition"]
+        assert equivalence["requires_cumulant_recognition_for_full_equivalence"]
+        assert not equivalence["full_vol2_equivalence_promoted"]
+
+    def test_annulus_trace_not_operadic_or_bar_cobar(self):
+        result = verify_projection_promotion_firewall()
+        annulus = result["annulus_trace"]
+        assert annulus["not_operadic_open_to_closed"]
+        assert annulus["not_bar_cobar_inversion"]
+
+
+# ============================================================================
 # Section 2: AP39 - kappa != c/2 for non-Virasoro families
 # ============================================================================
 
@@ -116,7 +210,7 @@ class TestAP39:
 
     def test_ap39_heisenberg_kappa_eq_c_over_2(self):
         """For Heisenberg at level k: c = 1, kappa = k. c/2 = 1/2.
-        kappa = c/2 only when k = 1/2, NOT in general."""
+        kappa = c/2 only at the special level k = 1/2."""
         # At k=1: kappa=1, c/2=1/2 -> not equal
         assert kappa_heisenberg(1) != Fraction(1, 2)
         # At k=1/2: kappa=1/2, c/2=1/2 -> equal (special case)
@@ -192,7 +286,7 @@ class TestCurvature:
 # ============================================================================
 
 class TestAP44:
-    """Lambda-bracket coefficient at order n is a_{(n)}b / n!, NOT a_{(n)}b."""
+    """Lambda-bracket coefficient at order n is a_{(n)}b / n!."""
 
     def test_ap44_virasoro_lambda_bracket(self):
         result = verify_virasoro_lambda_bracket(26)
@@ -267,6 +361,11 @@ class TestDirectionality:
         result = verify_swiss_cheese_directionality()
         assert result["genus_0_strict_directionality"]
 
+    def test_annulus_trace_not_operadic_open_to_closed(self):
+        result = verify_swiss_cheese_directionality()
+        assert result["open_to_closed_operadic_empty"]
+        assert result["annulus_trace_is_not_bar_cobar"]
+
 
 # ============================================================================
 # Section 8: Three models
@@ -335,6 +434,7 @@ class TestCDGCompatibility:
     def test_cdg_bulk_compatible(self):
         result = verify_cdg_compatibility()
         assert result["bulk_algebra"]["compatible"]
+        assert result["bulk_algebra"]["not_bar_complex"]
 
     def test_cdg_shift_matches(self):
         result = verify_cdg_compatibility()
@@ -347,6 +447,11 @@ class TestCDGCompatibility:
     def test_cdg_directionality(self):
         result = verify_cdg_compatibility()
         assert result["directionality"]["compatible"]
+
+    def test_cdg_object_boundary(self):
+        result = verify_cdg_compatibility()
+        assert result["object_boundary"]["bulk"] == "Z^der_ch(A_b)"
+        assert "bar_engine" in result["object_boundary"]
 
 
 # ============================================================================
@@ -367,14 +472,15 @@ class TestMoriwakiCompatibility:
     def test_moriwaki_swiss_cheese_compatible(self):
         result = verify_moriwaki_compatibility()
         assert result["swiss_cheese_action"]["compatible"]
+        assert result["swiss_cheese_action"]["typed_bulk_boundary"]
 
 
 # ============================================================================
-# Section 12: Koszul decomposition
+# Section 12: Typed product decomposition
 # ============================================================================
 
 class TestKoszulDecomposition:
-    """Koszul duality decomposes along C x R."""
+    """The product C x R has typed bar-cobar and Verdier lanes."""
 
     def test_kunneth_holds(self):
         result = verify_koszul_decomposition()
@@ -382,11 +488,34 @@ class TestKoszulDecomposition:
 
     def test_r_direction_e1(self):
         result = verify_koszul_decomposition()
-        assert result["R_direction"]["type"] == "E_1 Koszul duality"
+        assert result["R_direction"]["type"] == "E_1 bar-cobar/Koszul lane"
 
     def test_c_direction_chiral(self):
         result = verify_koszul_decomposition()
-        assert result["C_direction"]["type"] == "chiral Koszul duality"
+        assert result["C_direction"]["type"] == "chiral bar-cobar lane"
+
+    def test_verdier_lane_hypotheses(self):
+        result = verify_koszul_decomposition()
+        assert result["Verdier_direction"]["coalgebra"] == "A^i = H*(B(A_b))"
+        assert result["Verdier_direction"]["algebra"] == "A^! = D(A^i)"
+        assert result["Verdier_direction"]["finite_type_required"]
+        assert result["Verdier_direction"]["completed_strict_ml_allowed"]
+
+    def test_combined_surface_not_sc_self_duality(self):
+        result = verify_koszul_decomposition()
+        assert result["combined"]["not_swiss_cheese_self_duality"]
+        assert result["combined"]["not_bar_equals_bulk"]
+
+    def test_object_firewall_names_five_objects(self):
+        result = verify_koszul_decomposition()
+        firewall = result["object_firewall"]
+        assert set(firewall) == {
+            "B(A_b)",
+            "Omega(B(A_b))",
+            "A^i",
+            "A^!",
+            "Z^der_ch(A_b)",
+        }
 
 
 # ============================================================================
@@ -477,7 +606,7 @@ class TestHeisenbergGenus1:
 # ============================================================================
 
 class TestBulkIdentification:
-    """The bulk is the derived center, NOT the bar complex."""
+    """The bulk is the derived center, distinct from the bar complex."""
 
     def test_ap_oc(self):
         result = verify_bulk_identification()
@@ -498,6 +627,48 @@ class TestBulkIdentification:
     def test_bulk_cohomology_gerstenhaber(self):
         result = verify_bulk_identification()
         assert result["bulk_on_cohomology"] == "Gerstenhaber algebra (= CDG shifted Poisson)"
+
+    def test_five_typed_objects_are_distinct(self):
+        result = verify_bulk_identification()
+        typed = result["typed_objects"]
+        assert set(typed) == {
+            "B(A_b)",
+            "Omega(B(A_b))",
+            "A^i",
+            "A^!",
+            "Z^der_ch(A_b)",
+        }
+        assert result["pairwise_distinct_roles"]
+        assert typed["B(A_b)"]["type"] == "conilpotent dg coalgebra"
+        assert typed["Omega(B(A_b))"]["role"] == "reconstructs the original boundary algebra A_b"
+        assert typed["A^i"]["type"] == "Koszul-dual coalgebra"
+        assert typed["A^!"]["type"] == "Koszul-dual algebra"
+        assert typed["Z^der_ch(A_b)"]["role"] == "intrinsic bulk acting on the boundary chart"
+
+    def test_verdier_hypotheses_named(self):
+        result = verify_bulk_identification()
+        hypotheses = result["finite_type_completed_verdier_hypotheses"]
+        assert hypotheses["finite_type_verdier_surface"]
+        assert hypotheses["completed_strict_mittag_leffler_surface"]
+        assert hypotheses["naive_uncompleted_infinite_dual_forbidden"]
+
+    def test_open_closed_bulk_boundary(self):
+        result = verify_bulk_identification()
+        boundary = result["open_closed_boundary"]
+        assert boundary["open_sector"] == "C_op on the tangential log boundary"
+        assert boundary["boundary_chart"] == "A_b = End_Cop(b)"
+        assert boundary["bulk"] == "Z^der_ch(A_b)"
+        assert boundary["bulk_to_boundary_action"]
+        assert not boundary["open_to_closed_operadic_map"]
+
+    def test_no_ap25_object_collapse(self):
+        result = verify_bulk_identification()
+        collapse = result["no_object_collapse"]
+        assert collapse["bulk_not_bar"]
+        assert collapse["cobar_not_koszul_dual"]
+        assert collapse["koszul_dual_coalgebra_not_algebra"]
+        assert collapse["verdier_hypothesis_named"]
+        assert collapse["bulk_boundary_named"]
 
 
 # ============================================================================
@@ -524,7 +695,7 @@ class TestFullSuite:
 # ============================================================================
 
 class TestComplementarity:
-    """AP24: kappa + kappa! is NOT universally zero."""
+    """AP24: kappa + kappa! is family-dependent."""
 
     def test_heisenberg_complementarity_zero(self):
         """For Heisenberg: kappa(H_k) + kappa(H_k^!) = k + (-k) = 0."""

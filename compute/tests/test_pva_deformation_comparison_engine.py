@@ -1,10 +1,10 @@
-r"""Tests for PVA deformation quantization comparison engine.
+r"""Tests for PVA deformation comparison engine.
 
-Verification strategy (multi-path, per CLAUDE.md mandate):
+Verification strategy:
   Path 1: Direct computation from defining formulas
   Path 2: Cross-check with existing genus_expansion.py / virasoro_shadow_all_arity.py
   Path 3: Limiting/special case verification (k=0, c=0, c=13, c=26)
-  Path 4: Complementarity / duality cross-checks (AP24, Theorem D)
+  Path 4: Complementarity / duality cross-checks
   Path 5: Cross-family consistency (additivity of kappa, etc.)
   Path 6: Literature comparison (Arakawa, De Sole-Kac, Beem-Rastelli)
 
@@ -21,7 +21,7 @@ STRUCTURE:
   Part 10: Beem-Rastelli 4d/2d comparison
   Part 11: Full comparison tables (sl_2 at k=1..10)
   Part 12: Virasoro comparison table (special central charges)
-  Part 13: Anti-pattern guards (AP24, AP39, AP44, AP48)
+  Part 13: Normalization and firewall guards
   Part 14: Master comparison integration tests
 """
 
@@ -41,6 +41,7 @@ from compute.lib.pva_deformation_comparison_engine import (
     kappa_w3,
     kappa_beta_gamma,
     kappa_general_km,
+    affine_sl2_cubic_shadow,
     associated_variety_dimension,
     quantization_obstruction_genus0,
     quantization_obstruction_genus1,
@@ -60,6 +61,10 @@ from compute.lib.pva_deformation_comparison_engine import (
     extended_master_comparison,
     lambda_fp,
     F_g_value,
+    holographic_package_entries,
+    modular_koszul_primary_projections,
+    object_firewall,
+    kernel_normalizations,
     verify_all,
 )
 
@@ -81,9 +86,10 @@ class TestPVADataConstruction:
         assert pva.generators[0] == ("J", 1)
 
     def test_heisenberg_pva_bracket(self):
-        """Heisenberg: {J_lambda J} = k at mode 0."""
+        """Heisenberg: {J_lambda J} = k*lambda, so the stored mode is n=1."""
         pva = heisenberg_pva(Fraction(5))
-        assert pva.bracket_modes[("J", "J", 0)] == Fraction(5)
+        assert ("J", "J", 0) not in pva.bracket_modes
+        assert pva.bracket_modes[("J", "J", 1)] == Fraction(5)
 
     def test_sl2_pva_generators(self):
         pva = affine_sl2_pva(Fraction(1))
@@ -121,8 +127,8 @@ class TestPVADataConstruction:
         assert pva.bracket_modes[("L", "L", 3)] == Fraction(13)  # c/2
 
     def test_virasoro_central_term_convention(self):
-        """AP44: L_{(3)} L = c/2, lambda-bracket coeff = c/2 / 3! = c/12.
-        The PVA stores the OPE mode coefficient c/2, NOT the lambda-bracket
+        """L_{(3)} L = c/2, lambda-bracket coeff = c/2 / 3! = c/12.
+        The PVA stores the OPE mode coefficient c/2, not the lambda-bracket
         coefficient c/12. The conversion happens at the lambda-bracket level."""
         c = Fraction(12)
         pva = virasoro_pva(c)
@@ -138,7 +144,7 @@ class TestPVADataConstruction:
 # =========================================================================
 
 class TestKappaFormulas:
-    """Multi-path verification of kappa formulas (AP1, AP39, AP48)."""
+    """Multi-path verification of kappa formulas."""
 
     # --- Path 1: Direct computation from defining formula ---
 
@@ -191,7 +197,7 @@ class TestKappaFormulas:
         assert kappa_heisenberg(Fraction(0)) == Fraction(0)
 
     def test_kappa_virasoro_c0(self):
-        """At c=0: kappa(Vir_0) = 0 (uncurved, AP31 reminder)."""
+        """At c=0: kappa(Vir_0) = 0 in the scalar curvature slot."""
         assert kappa_virasoro(Fraction(0)) == Fraction(0)
 
     def test_kappa_virasoro_c13_self_dual(self):
@@ -202,33 +208,32 @@ class TestKappaFormulas:
         """At c=26: kappa = 13 (critical string)."""
         assert kappa_virasoro(Fraction(26)) == Fraction(13)
 
-    # --- Path 4: AP39 guard: kappa != S_2 for non-Virasoro ---
+    # --- Path 4: affine kappa differs from the Sugawara Virasoro kappa ---
 
-    def test_AP39_kappa_ne_c_half_for_sl2(self):
-        """AP39: kappa(V_k(sl_2)) != c_sugawara/2 in general.
+    def test_affine_kappa_ne_sugawara_c_half_for_sl2(self):
+        """kappa(V_k(sl_2)) differs from c_sugawara/2 in general.
 
         c(sl_2, k) = 3k/(k+2), so c/2 = 3k/(2(k+2)).
         kappa = 3(k+2)/4.
-        These are DIFFERENT (they coincide only in degenerate limits).
         """
         for k_int in [1, 2, 3, 5]:
             k = Fraction(k_int)
             kap = kappa_affine_sl2(k)
             c_sug = Fraction(3) * k / (k + Fraction(2))
             c_half = c_sug / Fraction(2)
-            assert kap != c_half, f"AP39 violated at k={k}: kappa={kap}, c/2={c_half}"
+            assert kap != c_half, f"kappa collapsed to Sugawara c/2 at k={k}"
 
-    # --- Path 5: AP48 guard: kappa depends on full algebra ---
+    # --- Path 5: kappa depends on the full algebra ---
 
-    def test_AP48_kappa_full_vs_virasoro_subalgebra(self):
-        """AP48: kappa(V_k(sl_2)) != kappa(Vir_{c_sug})."""
+    def test_kappa_full_vs_virasoro_subalgebra(self):
+        """kappa(V_k(sl_2)) is not kappa(Vir_{c_sug})."""
         for k_int in [1, 2, 3, 5, 10]:
             k = Fraction(k_int)
             kap_km = kappa_affine_sl2(k)
             c_sug = Fraction(3) * k / (k + Fraction(2))
             kap_vir = kappa_virasoro(c_sug)
             assert kap_km != kap_vir, (
-                f"AP48 violated at k={k}: kappa(sl2)={kap_km}, kappa(Vir)={kap_vir}"
+                f"full-algebra kappa collapsed at k={k}: kappa(sl2)={kap_km}, kappa(Vir)={kap_vir}"
             )
 
 
@@ -257,11 +262,20 @@ class TestAssociatedVarieties:
         assert av["c2_cofinite"] is False  # C_2-cofiniteness is for L_k
 
     def test_sl2_admissible_simple_variety(self):
-        """Simple quotient L_k at non-integer admissible k=-1/2: X = nilcone (dim 2)."""
+        """Simple quotient L_k at non-integer admissible k=-1/2: X = nilcone."""
         av = associated_variety_dimension(
             "affine_sl2", k=Fraction(-1, 2), quotient="simple"
         )
         assert av["dimension"] == 2
+        assert av["quasi_lisse"] is True
+        assert av["c2_cofinite"] is False
+
+    def test_sl2_positive_integral_simple_variety(self):
+        """Simple integrable L_1(sl_2) has point associated variety."""
+        av = associated_variety_dimension(
+            "affine_sl2", k=Fraction(1), quotient="simple"
+        )
+        assert av["dimension"] == 0
         assert av["c2_cofinite"] is True
 
     def test_virasoro_generic_variety(self):
@@ -271,7 +285,7 @@ class TestAssociatedVarieties:
 
     def test_admissible_level_detection(self):
         """Admissible levels for sl_2: k+2 = p/q, p >= 2, gcd(p,q)=1.
-        C_2-cofiniteness only for simple quotient L_k at non-integer admissible."""
+        Universal and simple quotients have different associated varieties."""
         # k = 0: k+2 = 2/1, p=2, q=1 => admissible (integer)
         av = associated_variety_dimension("affine_sl2", k=Fraction(0))
         assert av["c2_cofinite"] is False  # Universal algebra
@@ -282,7 +296,8 @@ class TestAssociatedVarieties:
         av_simple = associated_variety_dimension(
             "affine_sl2", k=Fraction(-1, 2), quotient="simple"
         )
-        assert av_simple["c2_cofinite"] is True
+        assert av_simple["quasi_lisse"] is True
+        assert av_simple["c2_cofinite"] is False
         assert av_simple["dimension"] == 2
 
 
@@ -387,7 +402,7 @@ class TestGenus1Obstructions:
 # =========================================================================
 
 class TestShadowVsDeformation:
-    """The shadow obstruction tower = deformation obstruction tower."""
+    """Shadow and deformation towers agree on the represented comparison surface."""
 
     def test_heisenberg_towers_match(self):
         result = shadow_vs_deformation_obstruction("heisenberg", k=Fraction(3))
@@ -407,12 +422,23 @@ class TestShadowVsDeformation:
             )
             assert result["all_match"] is True
 
+    def test_sl2_cubic_shadow_is_class_l(self):
+        """Affine sl_2 has S_3 = 4/(k+2) and terminates after arity 3."""
+        k = Fraction(1)
+        result = shadow_vs_deformation_obstruction("affine_sl2", k=k, max_arity=6)
+        assert result["shadow_tower"][2] == Fraction(9, 4)
+        assert result["shadow_tower"][3] == Fraction(4, 3)
+        for r in range(4, 7):
+            assert result["shadow_tower"][r] == Fraction(0)
+
     def test_virasoro_towers_match(self):
         for c_int in [1, 2, 13, 25]:
             result = shadow_vs_deformation_obstruction(
                 "virasoro", c=Fraction(c_int), max_arity=6
             )
             assert result["all_match"] is True
+            assert result["proved_match_through_arity"] == 4
+            assert result["comparison_status"][5] == "computed_shadow_model"
 
     def test_virasoro_S4_value(self):
         """Virasoro S_4 = 10/(c(5c+22))."""
@@ -524,7 +550,7 @@ class TestDeSoleKac:
             assert data["genus_0_match"] is True
 
     def test_genus_1_requires_modular(self):
-        """De Sole-Kac does NOT cover genus >= 1."""
+        """De Sole-Kac does not cover genus >= 1."""
         for fam, kwargs in [
             ("heisenberg", {"k": Fraction(1)}),
             ("affine_sl2", {"k": Fraction(1)}),
@@ -545,31 +571,44 @@ class TestQuasiLisse:
         data = quasi_lisse_data("heisenberg", k=Fraction(1))
         assert data["quasi_lisse"] is False
 
-    def test_sl2_positive_integer_quasi_lisse(self):
-        """V_k(sl_2) at positive integer k is quasi-lisse."""
+    def test_sl2_universal_positive_integer_not_quasi_lisse(self):
+        """Universal V_k(sl_2) still has X = sl_2*."""
         for k_int in [1, 2, 3, 5]:
             data = quasi_lisse_data("affine_sl2", k=Fraction(k_int))
+            assert data["quasi_lisse"] is False
+            assert data["associated_variety_dim"] == 3
+
+    def test_sl2_positive_integer_simple_quasi_lisse(self):
+        """Simple L_k(sl_2) at positive integer k is lisse."""
+        for k_int in [1, 2, 3, 5]:
+            data = quasi_lisse_data(
+                "affine_sl2", k=Fraction(k_int), quotient="simple"
+            )
             assert data["quasi_lisse"] is True
+            assert data["c2_cofinite"] is True
 
     def test_sl2_admissible_quasi_lisse(self):
-        """L_{-1/2}(sl_2) is quasi-lisse (admissible level)."""
-        data = quasi_lisse_data("affine_sl2", k=Fraction(-1, 2))
+        """Simple L_{-1/2}(sl_2) is quasi-lisse but not C_2-cofinite."""
+        data = quasi_lisse_data(
+            "affine_sl2", k=Fraction(-1, 2), quotient="simple"
+        )
         assert data["quasi_lisse"] is True
+        assert data["c2_cofinite"] is False
 
-    def test_virasoro_quasi_lisse(self):
-        """Virasoro is always quasi-lisse."""
+    def test_generic_virasoro_not_quasi_lisse(self):
+        """Universal generic Virasoro has A^1 with infinitely many zero leaves."""
         for c_int in [1, 13, 26]:
             data = quasi_lisse_data("virasoro", c=Fraction(c_int))
-            assert data["quasi_lisse"] is True
+            assert data["quasi_lisse"] is False
 
     def test_minimal_model_c2_cofinite(self):
-        """Virasoro minimal models are C_2-cofinite."""
+        """Simple Virasoro minimal models are C_2-cofinite."""
         # c_{3,2} = 1/2
         data = quasi_lisse_data("virasoro", c=Fraction(1, 2))
         assert data["c2_cofinite"] is True
 
     def test_generic_virasoro_not_c2_cofinite(self):
-        """Generic Virasoro is NOT C_2-cofinite."""
+        """Generic Virasoro is not C_2-cofinite."""
         data = quasi_lisse_data("virasoro", c=Fraction(1))
         assert data["c2_cofinite"] is False
 
@@ -626,12 +665,13 @@ class TestFullComparisonTable:
             entry = table[k_int]
             assert entry["F_1"] == entry["kappa"] / Fraction(24)
 
-    def test_shadow_class_G_for_sl2(self):
-        """sl_2 is rank 1, so shadow class G (depth 2)."""
+    def test_shadow_class_l_for_sl2(self):
+        """Affine sl_2 is class L (depth 3) with a Lie cubic shadow."""
         table = full_comparison_table(max_level=10)
         for k_int in range(1, 11):
-            assert table[k_int]["shadow_class"] == "G"
-            assert table[k_int]["shadow_depth"] == 2
+            assert table[k_int]["shadow_class"] == "L"
+            assert table[k_int]["shadow_depth"] == 3
+            assert table[k_int]["S_3"] == affine_sl2_cubic_shadow(Fraction(k_int))
 
     def test_all_genus0_unobstructed(self):
         table = full_comparison_table(max_level=10)
@@ -643,8 +683,8 @@ class TestFullComparisonTable:
         for k_int in range(1, 11):
             assert table[k_int]["frameworks_agree"] is True
 
-    def test_AP48_for_all_levels(self):
-        """AP48: kappa(V_k(sl_2)) != kappa(Vir_{c_sug}) at all levels."""
+    def test_full_kappa_differs_from_sugawara_for_all_levels(self):
+        """kappa(V_k(sl_2)) differs from kappa(Vir_{c_sug}) at all levels."""
         table = full_comparison_table(max_level=10)
         for k_int in range(1, 11):
             entry = table[k_int]
@@ -664,12 +704,12 @@ class TestVirasoroComparisonTable:
         assert "13" in table
         assert "26" in table
 
-    def test_AP24_complementarity(self):
-        """AP24: kappa(Vir_c) + kappa(Vir_{26-c}) = 13."""
+    def test_virasoro_complementarity(self):
+        """kappa(Vir_c) + kappa(Vir_{26-c}) = 13."""
         table = virasoro_comparison_table()
         for key, entry in table.items():
             assert entry["kappa_sum"] == Fraction(13), (
-                f"AP24 violated at c={entry['central_charge']}: "
+                f"Virasoro complementarity failed at c={entry['central_charge']}: "
                 f"kappa_sum={entry['kappa_sum']}"
             )
 
@@ -691,10 +731,8 @@ class TestVirasoroComparisonTable:
             assert entry["shadow_class"] == "M"
 
     def test_virasoro_shadow_S3_value(self):
-        """S_3 = 6 (c-independent) for Virasoro."""
+        """S_3 = 2 (c-independent) for Virasoro."""
         # S_3 = a_1 / 3 = 6 / 3 = 2
-        # Wait: a_1 = 6 (from convolution recursion), S_3 = a_1/3 = 2.
-        # Let me check: S_r = a_{r-2}/r. So S_3 = a_1/3 = 6/3 = 2.
         table = virasoro_comparison_table()
         for key, entry in table.items():
             c = entry["central_charge"]
@@ -704,14 +742,14 @@ class TestVirasoroComparisonTable:
 
 
 # =========================================================================
-# PART 13: ANTI-PATTERN GUARDS
+# PART 13: NORMALIZATION AND FIREWALL GUARDS
 # =========================================================================
 
-class TestAntiPatternGuards:
-    """Specific tests guarding against known anti-patterns."""
+class TestNormalizationAndFirewallGuards:
+    """Specific tests guarding object separation and normalization."""
 
-    def test_AP24_virasoro_sum_ne_zero(self):
-        """AP24: kappa + kappa_dual = 13 for Virasoro, NOT 0."""
+    def test_virasoro_sum_is_thirteen(self):
+        """kappa + kappa_dual = 13 for Virasoro."""
         for c_int in [1, 5, 10, 13, 20, 25]:
             c = Fraction(c_int)
             kap = kappa_virasoro(c)
@@ -719,40 +757,67 @@ class TestAntiPatternGuards:
             assert kap + kap_dual == Fraction(13)
             assert kap + kap_dual != Fraction(0) or c == Fraction(13)
 
-    def test_AP39_kappa_ne_S2_for_km(self):
-        """AP39: kappa != c/2 for affine KM."""
+    def test_affine_kappa_ne_sugawara_c_half(self):
+        """Affine kappa is not the Sugawara Virasoro kappa."""
         for k_int in [1, 2, 3, 5]:
             k = Fraction(k_int)
             kap = kappa_affine_sl2(k)
             c_sug = Fraction(3) * k / (k + Fraction(2))
-            # kappa should NOT equal c_sugawara / 2
             assert kap != c_sug / Fraction(2)
 
-    def test_AP44_lambda_bracket_conversion(self):
-        """AP44: OPE mode / n! = lambda-bracket coefficient at order n.
+    def test_lambda_bracket_conversion(self):
+        """OPE mode / n! = lambda-bracket coefficient at order n.
 
         For Virasoro: L_{(3)} L = c/2 (OPE mode).
-        Lambda-bracket at lambda^3: c/2 / 3! = c/12 (NOT c/2).
+        Lambda-bracket at lambda^3: c/2 / 3! = c/12.
         """
         c = Fraction(24)
         pva = virasoro_pva(c)
         ope_mode_3 = pva.central_terms[("L", "L", 3)]
         assert ope_mode_3 == Fraction(12)  # c/2 = 24/2 = 12
 
-        # Lambda-bracket coefficient: 12 / 6 = 2, NOT 12
+        # Lambda-bracket coefficient: 12 / 6 = 2.
         lambda_coeff = ope_mode_3 / Fraction(6)  # 3! = 6
         assert lambda_coeff == Fraction(2)
-        assert lambda_coeff != ope_mode_3  # AP44: they are DIFFERENT
+        assert lambda_coeff != ope_mode_3
 
-    def test_AP48_kappa_different_algebras(self):
-        """AP48: kappa depends on full algebra, not Virasoro subalgebra."""
+    def test_kappa_different_algebras(self):
+        """kappa depends on the full algebra, not only the Virasoro subalgebra."""
         # V_1(sl_2) has c_sugawara = 1, so kappa(Vir_1) = 1/2.
-        # But kappa(V_1(sl_2)) = 3*3/4 = 9/4. DIFFERENT.
+        # But kappa(V_1(sl_2)) = 3*3/4 = 9/4.
         kap_km = kappa_affine_sl2(Fraction(1))
         kap_vir = kappa_virasoro(Fraction(1))
         assert kap_km == Fraction(9, 4)
         assert kap_vir == Fraction(1, 2)
         assert kap_km != kap_vir
+
+    def test_holographic_package_has_seven_entries(self):
+        """H(A) has seven entries and is distinct from compute projections."""
+        assert holographic_package_entries() == (
+            "A", "A^i", "A^!", "C", "r(z)", "Theta_A", "nabla^hol",
+        )
+        assert len(holographic_package_entries()) == 7
+
+    def test_modular_koszul_package_has_six_primary_projections(self):
+        """The compute package has six primary projections."""
+        projections = modular_koszul_primary_projections()
+        assert len(projections) == 6
+        assert projections != holographic_package_entries()
+
+    def test_bar_verdier_hochschild_firewall(self):
+        """A, B(A), A^i, A^!, Omega(B(A)), and Z_ch^der(A) remain distinct."""
+        firewall = object_firewall()
+        assert firewall["A^i"] == "bar cohomology coalgebra H^*(B(A))"
+        assert "Verdier/continuous-linear dual branch" in firewall["A^!"]
+        assert firewall["Omega(B(A))"] == "bar-cobar inversion recovering A"
+        assert "ChirHoch^*(A,A)" in firewall["Z_ch^der(A)"]
+
+    def test_kernel_normalizations(self):
+        """Trace-form collision and KZ normalizations are not interchanged."""
+        kernels = kernel_normalizations()
+        assert kernels["affine_raw_collision"] == "k*Omega_tr/z"
+        assert kernels["affine_KZ_coefficient"] == "Omega/((k+h^vee)z)"
+        assert kernels["virasoro_collision"] == "(c/2)/z^3 + 2T/z"
 
 
 # =========================================================================
@@ -882,10 +947,10 @@ class TestSelfVerification:
 
 
 # =========================================================================
-# MULTI-PATH CROSS-VERIFICATION (AP10 compliance)
+# MULTI-PATH CROSS-VERIFICATION
 # =========================================================================
 # Every numerical value verified by at least 2 independent methods.
-# These tests do NOT hardcode expected values; they compare
+# These tests compare
 # independent computation paths against each other.
 
 class TestMultiPathKappa:
@@ -915,7 +980,7 @@ class TestMultiPathKappa:
 
     def test_virasoro_kappa_three_paths(self):
         """Path 1: kappa = c/2 (defining formula).
-        Path 2: From AP24 complementarity kappa + kappa' = 13, kappa' = (26-c)/2.
+        Path 2: From Virasoro complementarity kappa + kappa' = 13, kappa' = (26-c)/2.
         Path 3: From F_1 = kappa/24, invert to get kappa = 24 * F_1.
         """
         for c_int in [1, 2, 5, 13, 25, 26]:
@@ -1062,7 +1127,7 @@ class TestMultiPathShadowTower:
 
 
 class TestMultiPathComplementarity:
-    """AP24 complementarity verified via 2 paths."""
+    """Virasoro complementarity verified via 2 paths."""
 
     def test_virasoro_complementarity_direct_and_sum(self):
         """Path 1: kappa(c) + kappa(26-c) computed directly.
@@ -1322,6 +1387,17 @@ class TestGenus2Obstructions:
             assert obs["delta_F_2_cross"] == Fraction(0)
             assert obs["uniform_weight"] is True
 
+    def test_sl2_genus2_retains_class_l_cubic_shadow(self):
+        """Uniform weight kills cross-channel terms, not the class-L cubic."""
+        k = Fraction(1)
+        obs = quantization_obstruction_genus2("affine_sl2", k=k)
+        S3 = affine_sl2_cubic_shadow(k)
+        kap = kappa_affine_sl2(k)
+        expected_pf = S3 * (Fraction(10) * S3 - kap) / Fraction(48)
+        assert obs["S_3"] == Fraction(4, 3)
+        assert obs["planted_forest_correction"] == expected_pf
+        assert obs["planted_forest_correction"] != Fraction(0)
+
     def test_virasoro_genus2_single_generator(self):
         """Virasoro is single-generator: no cross-channel correction."""
         c = Fraction(26)
@@ -1340,7 +1416,7 @@ class TestGenus2Obstructions:
         assert obs["planted_forest_correction"] == expected
 
     def test_w3_genus2_cross_channel_nonzero(self):
-        """W_3 has NONZERO cross-channel correction at genus 2.
+        """W_3 has nonzero cross-channel correction at genus 2.
         delta_F_2(W_3) = (c + 204) / (16c) > 0 for all c > 0.
         This is the key result of thm:multi-weight-genus-expansion."""
         for c_int in [1, 10, 50, 100]:
@@ -1381,8 +1457,9 @@ class TestCoulombBranchPoisson:
 
     def test_heisenberg_constant_bracket(self):
         result = coulomb_branch_poisson_structure("heisenberg", k=Fraction(1))
-        assert result["poisson_bracket_type"] == "constant"
+        assert result["poisson_bracket_type"] == "trivial_on_variety"
         assert result["poisson_rank"] == 0
+        assert result["enhancement"] == "Lambda-bracket {J_lambda J} = k*lambda adds k-dependence"
 
     def test_sl2_kirillov_kostant(self):
         result = coulomb_branch_poisson_structure("affine_sl2", k=Fraction(1))
@@ -1529,7 +1606,7 @@ class TestDeformationQuantizationBridge:
         assert g1["shadow_obstruction"] == g1["khan_zeng_anomaly"]
 
     def test_dq_gives_bar_for_standard_families(self):
-        """DQ of Coulomb branch PVA gives our bar complex for standard families."""
+        """DQ comparison is scoped to genus-0 tree data."""
         for fam, kwargs in [
             ("heisenberg", {"k": Fraction(1)}),
             ("affine_sl2", {"k": Fraction(1)}),
@@ -1538,6 +1615,9 @@ class TestDeformationQuantizationBridge:
         ]:
             bridge = deformation_quantization_bridge(fam, **kwargs)
             assert bridge["does_dq_give_bar"] is True
+            assert bridge["does_dq_give_bar_scope"] == (
+                "genus-0 tree data; modular corrections are separate"
+            )
 
     def test_w3_bridge_level_2(self):
         """W_3 bridge breaks at genus >= 2 (multi-weight)."""
@@ -1566,6 +1646,9 @@ class TestDeformationQuantizationBridge:
         assert deformation_quantization_bridge(
             "heisenberg", k=Fraction(1)
         )["shadow_class"] == "G"
+        assert deformation_quantization_bridge(
+            "affine_sl2", k=Fraction(1)
+        )["shadow_class"] == "L"
         assert deformation_quantization_bridge(
             "virasoro", c=Fraction(1)
         )["shadow_class"] == "M"
@@ -1741,31 +1824,30 @@ class TestMultiPathCrossChannel:
 
 
 # =========================================================================
-# PART 24: AP GUARD TESTS FOR NEW FAMILIES
+# PART 24: NORMALIZATION GUARDS FOR NEW FAMILIES
 # =========================================================================
 
-class TestNewFamilyAPGuards:
-    """Anti-pattern guard tests for new families."""
+class TestNewFamilyNormalizationGuards:
+    """Normalization guard tests for new families."""
 
-    def test_AP39_w3_kappa_ne_c_half(self):
-        """AP39: kappa(W_3) = 5c/6 != c/2 in general."""
+    def test_w3_kappa_ne_c_half(self):
+        """kappa(W_3) = 5c/6 differs from c/2 in general."""
         for c_int in [1, 6, 100]:
             c = Fraction(c_int)
             kap = kappa_w3(c)
             c_half = c / Fraction(2)
-            assert kap != c_half, f"AP39 violated for W_3 at c={c}"
+            assert kap != c_half, f"W_3 kappa collapsed to c/2 at c={c}"
 
-    def test_AP48_w3_kappa_ne_virasoro_kappa(self):
-        """AP48: kappa(W_3) != kappa(Vir_c) at same c."""
+    def test_w3_kappa_ne_virasoro_kappa(self):
+        """kappa(W_3) differs from kappa(Vir_c) at the same c."""
         for c_int in [1, 13, 26, 100]:
             c = Fraction(c_int)
             kap_w3 = kappa_w3(c)
             kap_vir = kappa_virasoro(c)
-            assert kap_w3 != kap_vir, f"AP48: W_3 and Vir kappas coincide at c={c}"
+            assert kap_w3 != kap_vir, f"W_3 and Vir kappas coincide at c={c}"
 
-    def test_AP32_uniform_vs_multi_weight(self):
-        """AP32: uniform-weight algebras have no cross-channel correction;
-        multi-weight algebras DO have corrections at genus >= 2."""
+    def test_uniform_vs_multi_weight(self):
+        """Uniform-weight algebras have no cross-channel correction."""
         # Uniform-weight: sl_2 (all weight 1)
         sl2_obs = quantization_obstruction_genus2("affine_sl2", k=Fraction(1))
         assert sl2_obs["delta_F_2_cross"] == Fraction(0)
@@ -1773,8 +1855,8 @@ class TestNewFamilyAPGuards:
         w3_obs = quantization_obstruction_genus2("w3", c=Fraction(100))
         assert w3_obs["delta_F_2_cross"] != Fraction(0)
 
-    def test_AP44_w3_central_term_convention(self):
-        """AP44: W_{(5)} W = c/3 is the OPE mode, NOT the lambda-bracket coefficient.
+    def test_w3_central_term_convention(self):
+        """W_{(5)} W = c/3 is the OPE mode, not the lambda-bracket coefficient.
         Lambda-bracket at lambda^5: c/3 / 5! = c/360."""
         c = Fraction(360)
         pva = w3_pva(c)
@@ -1783,10 +1865,10 @@ class TestNewFamilyAPGuards:
         # Lambda-bracket coefficient: 120 / 120 = 1 (5! = 120)
         lambda_coeff = ope_mode_5 / Fraction(120)
         assert lambda_coeff == Fraction(1)
-        assert lambda_coeff != ope_mode_5  # AP44: they are DIFFERENT
+        assert lambda_coeff != ope_mode_5
 
     def test_beta_gamma_not_heisenberg(self):
-        """beta-gamma has DIFFERENT shadow class from Heisenberg despite same kappa."""
+        """beta-gamma has a different shadow class from Heisenberg despite same kappa."""
         # Both have kappa = k, but different shadow depths
         # Heisenberg: class G (depth 2), beta-gamma: class C (depth 4)
         h_pva = heisenberg_pva(Fraction(1))

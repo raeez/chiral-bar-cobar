@@ -16,7 +16,12 @@ from fractions import Fraction as F
 import pytest
 
 from compute.lib.cy_elliptic_genus_k3e_engine import (
+    BAR_COBAR_OBJECT_FIREWALL,
+    HOLOGRAPHIC_PACKAGE_ENTRIES,
     HodgeDiamond,
+    KERNEL_NORMALIZATIONS,
+    MODULAR_KOSZUL_PRIMARY_PROJECTIONS,
+    OBJECT_SEPARATION,
     product_hodge,
     k3_hodge,
     elliptic_hodge,
@@ -52,6 +57,7 @@ from compute.lib.cy_elliptic_genus_k3e_engine import (
     verify_hodge_numbers_k3e_detailed,
     compare_with_quintic,
     compute_all_k3e,
+    structural_firewall_data,
 )
 
 
@@ -155,10 +161,7 @@ class TestK3Hodge:
         """Signature tau(K3) = -16 (from b_2^+ = 3, b_2^- = 19).
 
         tau = b_2^+ - b_2^- = 3 - 19 = -16.
-        Equivalently: tau = sum_{p even} (-1)^q h^{p,q} - sum_{p odd} (-1)^q h^{p,q}
-        For K3: tau = (1 + 1 + 1 + 1) - 2*(0 + 20 + 0) + ... hmm.
-
-        Actually: signature = chi_{y=1} for surfaces.
+        Equivalently, for a complex surface, signature = chi_y at y=1:
         chi_y(K3)|_{y=1} = chi(O) + chi(Omega^1) + chi(Omega^2) = 2 - 20 + 2 = -16.
         """
         hd = k3_hodge()
@@ -614,7 +617,7 @@ class TestGenus1:
         assert g1.f1_shadow == F(1, 8)
 
     def test_k3xe_f1_nonzero(self):
-        """F_1 does NOT vanish despite chi = 0 (AP31)."""
+        """The scalar shadow F_1 does not vanish despite chi = 0."""
         g1 = compute_genus1_k3e()
         assert not g1.f1_vanishes
         assert g1.f1_shadow != 0
@@ -731,7 +734,7 @@ class TestShadowTower:
             assert st.f_g[g] > 0
 
     def test_k3xe_chi_nonzero_kappa(self):
-        """chi = 0 but kappa = 3 != 0 (AP31: no contradiction)."""
+        """chi = 0 but the scalar shadow has kappa = 3."""
         st = compute_shadow_tower_k3e()
         assert st.chi == 0
         assert st.kappa == F(3)
@@ -824,9 +827,11 @@ class TestDTandDMVV:
         dt = compute_dt_data_k3e()
         assert dt.macmahon_is_trivial
 
-    def test_dt_reduced_equals_full(self):
+    def test_dt_macmahon_reduction_not_translation_reduction(self):
+        """The MNOP degree-zero prefactor is trivial when chi = 0."""
         dt = compute_dt_data_k3e()
         assert dt.reduced_equals_full
+        assert not dt.translation_reduced_equals_full
 
     def test_dmvv_z0_constant(self):
         """phi_{0,1}(tau, 0) = 12 => coefficients [12, 0, 0, ...]."""
@@ -859,9 +864,12 @@ class TestRaySinger:
         assert rs['leading_vanishes']
 
     def test_rs_h1_nonzero(self):
-        """b_1(K3xE) = 2 > 0, so torsion is nontrivial."""
+        """b_1(K3xE) = 2; this alone does not prove torsion nontrivial."""
         rs = ray_singer_data_k3e()
         assert rs['h1_nonzero']
+        assert rs['alternating_p_bp'] == 0
+        assert not rs['torsion_nontrivial']
+        assert not rs['torsion_nontrivial_from_betti']
 
 
 # =========================================================================
@@ -920,7 +928,7 @@ class TestQuinticComparison:
     """Compare K3 x E with the quintic CY3."""
 
     def test_same_kappa(self):
-        """Both K3xE and quintic have kappa = 3 (AP48)."""
+        """Both K3xE and quintic have scalar chiral-de Rham kappa = 3."""
         comp = compare_with_quintic()
         assert comp['same_kappa']
 
@@ -971,7 +979,65 @@ class TestMasterComputation:
 
 
 # =========================================================================
-# Section 18: Cross-family consistency (8 tests)
+# Section 18: Structural firewalls (5 tests)
+# =========================================================================
+
+class TestStructuralFirewalls:
+    """Verify package, object, and kernel normalizations stay separated."""
+
+    def test_holographic_package_has_seven_entries(self):
+        expected = ("A", "A^i", "A^!", "C", "r(z)", "Theta_A", "nabla^hol")
+        data = structural_firewall_data()
+        assert HOLOGRAPHIC_PACKAGE_ENTRIES == expected
+        assert data.holographic_package_entries == expected
+        assert len(data.holographic_package_entries) == 7
+
+    def test_modular_koszul_package_has_six_primary_projections(self):
+        expected = (
+            "Fact_X(L)",
+            "barB_X(L)",
+            "Theta_L",
+            "L_L",
+            "(V_br, T_br)",
+            "R4_mod(L)",
+        )
+        data = structural_firewall_data()
+        assert MODULAR_KOSZUL_PRIMARY_PROJECTIONS == expected
+        assert data.modular_koszul_primary_projections == expected
+        assert len(data.modular_koszul_primary_projections) == 6
+        assert data.packages_are_distinct
+
+    def test_object_firewall_separates_branches(self):
+        data = structural_firewall_data()
+        assert data.object_firewall == BAR_COBAR_OBJECT_FIREWALL
+        for key in ("A", "B(A)", "A^i", "A^!", "Z_ch^der(A)", "Omega(B(A))"):
+            assert key in OBJECT_SEPARATION
+            assert key in data.object_separation
+        assert "Verdier/continuous-linear" in data.object_separation["A^!"]
+        assert (
+            data.object_separation["Omega(B(A))"]
+            == "bar-cobar inversion returning A"
+        )
+        assert "Hochschild" in data.object_separation["Z_ch^der(A)"]
+
+    def test_kernel_normalization_constants(self):
+        data = structural_firewall_data()
+        assert KERNEL_NORMALIZATIONS["affine_raw_collision"] == "k*Omega_tr/z"
+        assert KERNEL_NORMALIZATIONS["kz_coefficient"] == "Omega/((k+h^vee)z)"
+        assert KERNEL_NORMALIZATIONS["virasoro"] == "(c/2)/z^3 + 2T/z"
+        assert data.kernel_normalizations == KERNEL_NORMALIZATIONS
+
+    def test_holographic_entries_do_not_include_bar_coalgebra(self):
+        data = structural_firewall_data()
+        assert "B(A)" not in data.holographic_package_entries
+        assert "Z_ch^der(A)" not in data.holographic_package_entries
+        assert set(data.holographic_package_entries).isdisjoint(
+            set(data.modular_koszul_primary_projections)
+        )
+
+
+# =========================================================================
+# Section 19: Cross-family consistency (8 tests)
 # =========================================================================
 
 class TestCrossFamilyConsistency:
@@ -1033,7 +1099,7 @@ class TestCrossFamilyConsistency:
 
 
 # =========================================================================
-# Section 19: Lambda_g^FP cross-checks (5 tests)
+# Section 20: Lambda_g^FP cross-checks (5 tests)
 # =========================================================================
 
 class TestLambdaFP:
@@ -1073,7 +1139,7 @@ class TestLambdaFP:
 
 
 # =========================================================================
-# Section 20: Product Hodge diamond general properties (3 tests)
+# Section 21: Product Hodge diamond general properties (3 tests)
 # =========================================================================
 
 class TestProductHodgeGeneral:

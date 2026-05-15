@@ -1,59 +1,36 @@
-r"""Shadow partition function convergence atlas: explicit convergence radii
-for ALL standard families in the modular Koszul landscape.
+r"""Shadow planted-forest convergence diagnostics atlas.
 
 MATHEMATICAL FRAMEWORK
 ======================
 
-The shadow partition function Z^sh(A, hbar) = sum_{g>=1} hbar^{2g} F_g(A)
-has DOUBLE convergence (genus + arity), in sharp contrast with the string
-partition function which diverges factorially.
+The certified analytic object in this module is the scalar Bernoulli/A-hat
+genus series
 
-GENUS CONVERGENCE:
-    The scalar genus series sum_{g>=1} F_g^{scal} hbar^{2g} has the closed form
-    kappa * ((hbar/2)/sin(hbar/2) - 1), with poles at hbar = 2*pi*n.
-    Convergence radius R_genus = 2*pi (UNIVERSAL, algebra-independent).
+    sum_{g>=1} F_g^{scalar}(A) hbar^{2g}
+      = kappa(A) * ((hbar/2)/sin(hbar/2) - 1).
 
-    At higher arity, genus-g contributions at fixed arity r are bounded by
-    |Z_g^{(r)}| <= |S_r| * lambda_g^FP * C(g,r), where the Bernoulli decay
-    lambda_g^FP ~ 2/(2*pi)^{2g} controls the genus direction INDEPENDENTLY
-    of the arity direction.
+It has poles at hbar = 2*pi*n and scalar Taylor radius 2*pi.  This is a
+theorem about the scalar lane, not a theorem about the full planted-forest
+partition function of an interacting algebra.
 
-ARITY CONVERGENCE:
-    For class G/L/C: the shadow obstruction tower terminates, R_arity = infinity.
-    For class M: S_r ~ C * rho^r * r^{-5/2} * cos(r*theta + phi), with
-    rho(A) = sqrt(9*alpha^2 + 2*Delta) / (2|kappa|), R_arity = 1/rho.
+The arity quantities below are finite-depth facts for terminating classes
+and arity-radius diagnostics for class M.  The Virasoro and W-line rho values
+use local shadow coefficients such as S_3, S_4, S_5 and the algebraic
+radicand.  They do not certify all-genus Virasoro planted-forest corrections,
+Borel summability, analytic continuation of the full shadow partition
+function, nonperturbative completion, BTZ/JT recovery, or multiweight
+all-genus partition data.
 
-DOUBLE CONVERGENCE DOMAIN:
-    D(A) = {(hbar, t) : |hbar| < R_genus, |t| < R_arity}
-    where R_genus = 2*pi and R_arity = 1/rho(A).
-
-    The bound factorizes:
-    |Z^sh| <= |kappa| * G * L
-    where G = 2/(4*pi^2 - 1) and L = Li_{5/2}(rho).
-
-COMPARISON WITH STRING THEORY:
-    Shadow: |F_g| ~ 2|kappa| / (2*pi)^{2g}  (GEOMETRIC decay)
-    String: |A_g| ~ C * (2g)!               (FACTORIAL growth)
-    Ratio:  ~ 1/((2*pi)^{2g} * (2g)!) -> 0 superexponentially.
-
-PHASE TRANSITION:
-    At the critical cubic 5c^3 + 22c^2 - 180c - 872 = 0 (c* ~ 6.125):
-    - c < c*: rho > 1, arity series diverges (oscillatory asymptotics)
-    - c > c*: rho < 1, arity series converges (summable amplitudes)
-    - c = c*: rho = 1, marginal (logarithmic corrections)
-
-ANALYTIC CONTINUATION:
-    Z^sh(A, hbar) as function of complex hbar has poles at hbar = 2*pi*n.
-    At purely imaginary hbar (Lorentzian signature): the series still
-    converges, but oscillates.  The shadow PF is meromorphic in hbar
-    with poles at 2*pi*Z, NOT entire.
+The comparison routines deliberately return certification metadata so tests
+can prevent scalar Bernoulli facts or finite windows from being promoted to
+global analytic theorems.
 
 Manuscript references:
-    thm:shadow-double-convergence (higher_genus_modular_koszul.tex)
     thm:shadow-radius (higher_genus_modular_koszul.tex)
     prop:genus-expansion-convergence (genus_expansions.tex)
     rem:convergence-vs-string (genus_expansions.tex)
     def:shadow-growth-rate (higher_genus_modular_koszul.tex)
+    prop:virasoro-shadow-canonical (landscape_census.tex)
 """
 
 from __future__ import annotations
@@ -61,9 +38,9 @@ from __future__ import annotations
 import cmath
 import math
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional
 
-from sympy import Rational, Symbol, sqrt, cancel, solve, Abs, N as Neval
+from sympy import Rational, Symbol, solve
 
 from compute.lib.utils import lambda_fp, F_g
 
@@ -72,21 +49,29 @@ PI = math.pi
 TWO_PI = 2 * PI
 TWO_PI_SQ = TWO_PI ** 2
 
-c_sym = Symbol('c')
+EXACT_SCALAR_AHAT = "exact_scalar_a_hat"
+FINITE_DEPTH_EXACT = "finite_depth_exact"
+SINGLE_LINE_DIAGNOSTIC = "single_line_diagnostic"
+ARITY_RADIUS_DIAGNOSTIC = "arity_radius_diagnostic"
+ASYMPTOTIC_ESTIMATE = "asymptotic_estimate"
+ANALYTIC_HYPOTHESIS_REQUIRED = "analytic_hypothesis_required"
+NOT_CERTIFIED = "not_certified"
+VERDIER_DUAL_BRANCH = "A^! Verdier/continuous-linear dual branch"
+BAR_COBAR_INVERSION_FIREWALL = "Omega(B(A))=A is bar-cobar inversion"
+HOCHSCHILD_BULK_FIREWALL = "Z_ch^der(A) is Hochschild/bulk, not Koszul dual"
 
 
 # ============================================================================
-# 1. Kappa values for ALL standard families
+# 1. Kappa values for standard-family representatives
 # ============================================================================
 
-def kappa_heisenberg(rank: int = 1) -> float:
-    """kappa(H_k) = k for rank-1 Heisenberg at level k.
+def kappa_heisenberg(rank: int = 1, level: float = 1.0) -> float:
+    """kappa(H_level^{oplus rank}) = rank * level.
 
-    For rank-n Heisenberg: kappa = n * k.
-    Standard convention: rank-1 at level 1 gives kappa = 1/2.
-    But the canonical Heisenberg has kappa = n/2 for rank n.
+    Local source: chapters/examples/landscape_census.tex records
+    kappa(H_l^{oplus d}) = d*l and the collision residue k/z.
     """
-    return rank / 2.0
+    return float(rank) * float(level)
 
 
 def kappa_virasoro(c_val: float) -> float:
@@ -131,7 +116,7 @@ def kappa_wN(N: int, c_val: float) -> float:
 
 
 # ============================================================================
-# 2. Shadow radius for ALL standard families
+# 2. Shadow radius diagnostics for standard-family representatives
 # ============================================================================
 
 def virasoro_rho_squared(c_val: float) -> float:
@@ -214,11 +199,11 @@ def critical_central_charge() -> float:
 
 
 # ============================================================================
-# 3. Genus convergence radius (universal)
+# 3. Scalar A-hat genus convergence radius
 # ============================================================================
 
 def genus_convergence_radius() -> float:
-    r"""Universal genus convergence radius R_genus = 2*pi.
+    r"""Scalar A-hat genus convergence radius R_genus = 2*pi.
 
     The generating function (hbar/2)/sin(hbar/2) has poles at
     hbar = 2*pi*n (n != 0).  Nearest pole at |hbar| = 2*pi.
@@ -229,7 +214,7 @@ def genus_convergence_radius() -> float:
 def genus_series_closed_form(kappa_val: float, hbar: float) -> float:
     r"""Closed-form scalar genus series: kappa * ((hbar/2)/sin(hbar/2) - 1).
 
-    Valid for |hbar| < 2*pi.
+    Valid as the scalar Taylor sum for |hbar| < 2*pi.
     """
     if abs(hbar) < 1e-15:
         return 0.0
@@ -248,7 +233,7 @@ def genus_series_partial_sum(kappa_val: float, max_genus: int,
 
 
 # ============================================================================
-# 4. Arity convergence radius (family-dependent)
+# 4. Arity radius diagnostic (family-dependent)
 # ============================================================================
 
 def arity_convergence_radius(rho: float) -> float:
@@ -264,27 +249,53 @@ def arity_convergence_radius(rho: float) -> float:
 
 @dataclass
 class FamilyConvergenceData:
-    """Complete convergence data for a single algebra family."""
+    """Convergence and certification data for one algebra-family row."""
     name: str
     depth_class: str         # G, L, C, M
     shadow_depth: float      # 2, 3, 4, inf
     kappa: float
     rho: float               # shadow growth rate
-    R_genus: float           # genus convergence radius = 2*pi
-    R_arity: float           # arity convergence radius = 1/rho
-    genus_convergent: bool   # always True (R_genus = 2*pi > 0)
-    arity_convergent: bool   # True iff rho < 1
-    double_convergent: bool  # True iff both genus and arity converge
+    R_genus: float           # scalar A-hat Taylor radius = 2*pi
+    R_arity: float           # arity diagnostic radius = 1/rho
+    genus_convergent: bool   # scalar lane only
+    arity_convergent: bool   # diagnostic True iff rho < 1
+    double_convergent: bool  # scalar x arity diagnostic, not full PF
     F1: float                # genus-1 free energy = kappa/24
+    genus_scope: str = EXACT_SCALAR_AHAT
+    arity_scope: str = ARITY_RADIUS_DIAGNOSTIC
+    double_convergence_scope: str = ANALYTIC_HYPOTHESIS_REQUIRED
+    full_shadow_pf_certified: bool = False
     parameters: Dict[str, Any] = field(default_factory=dict)
 
 
 def family_convergence(name: str, depth_class: str, shadow_depth: float,
                        kappa: float, rho: float,
                        **params) -> FamilyConvergenceData:
-    """Construct convergence data for a single family."""
+    """Construct convergence data for a single family row."""
     R_genus = TWO_PI
     R_arity = arity_convergence_radius(rho)
+    genus_scope = params.pop('genus_scope', EXACT_SCALAR_AHAT)
+    arity_scope = params.pop('arity_scope', None)
+    double_scope = params.pop('double_convergence_scope', None)
+    full_pf_certified = params.pop('full_shadow_pf_certified', None)
+
+    if arity_scope is None:
+        if depth_class in {'G', 'L'} and rho == 0.0:
+            arity_scope = FINITE_DEPTH_EXACT
+        elif depth_class == 'C':
+            arity_scope = SINGLE_LINE_DIAGNOSTIC
+        else:
+            arity_scope = ARITY_RADIUS_DIAGNOSTIC
+
+    if double_scope is None:
+        if depth_class in {'G', 'L'} and rho == 0.0:
+            double_scope = FINITE_DEPTH_EXACT
+        else:
+            double_scope = ANALYTIC_HYPOTHESIS_REQUIRED
+
+    if full_pf_certified is None:
+        full_pf_certified = depth_class in {'G', 'L'} and rho == 0.0
+
     return FamilyConvergenceData(
         name=name,
         depth_class=depth_class,
@@ -297,20 +308,24 @@ def family_convergence(name: str, depth_class: str, shadow_depth: float,
         arity_convergent=(rho < 1.0),
         double_convergent=(rho < 1.0),
         F1=kappa / 24.0,
+        genus_scope=genus_scope,
+        arity_scope=arity_scope,
+        double_convergence_scope=double_scope,
+        full_shadow_pf_certified=full_pf_certified,
         parameters=params,
     )
 
 
 def shadow_growth_rate_atlas() -> Dict[str, FamilyConvergenceData]:
-    r"""Complete atlas of shadow growth rates for ALL standard families.
+    r"""Atlas of shadow growth rates for standard-family representatives.
 
     Returns a dictionary mapping family names to their FamilyConvergenceData.
 
     Covers all four depth classes:
       G (Gaussian, rho = 0): Heisenberg, lattice VOAs
       L (Lie/tree, rho = 0): all affine KM (A-D-E, BCFG)
-      C (Contact, rho N/A): beta-gamma (stratum separation)
-      M (Mixed, rho > 0): Virasoro, W_N
+      C (Contact, single-line diagnostic): beta-gamma
+      M (Mixed, rho > 0): Virasoro, W_N diagnostics
     """
     atlas = {}
 
@@ -330,7 +345,7 @@ def shadow_growth_rate_atlas() -> Dict[str, FamilyConvergenceData]:
     for rank, lattice_name in [(8, 'E_8'), (16, 'D_{16}^+'), (24, 'Leech')]:
         atlas[f'Lattice_{lattice_name}'] = family_convergence(
             f'Lattice V_{lattice_name}', 'G', 2, float(rank), 0.0,
-            rank=rank, lattice=lattice_name)  # AP48: kappa = rank, NOT rank/2
+            rank=rank, lattice=lattice_name)
 
     # === CLASS L: Lie/tree, depth 3 ===
     # sl_2
@@ -416,20 +431,24 @@ def shadow_growth_rate_atlas() -> Dict[str, FamilyConvergenceData]:
 
 
 # ============================================================================
-# 6. Double convergence domain computation
+# 6. Scalar x arity diagnostic domain
 # ============================================================================
 
 @dataclass
 class DoubleConvergenceDomain:
-    """The domain D(A) = {(hbar, t) : |hbar| < R_genus, |t| < R_arity}."""
+    """Diagnostic domain for scalar hbar and arity variable t."""
     R_genus: float
     R_arity: float
     rho: float
     kappa: float
     name: str = ''
+    genus_scope: str = EXACT_SCALAR_AHAT
+    arity_scope: str = ARITY_RADIUS_DIAGNOSTIC
+    full_shadow_pf_certified: bool = False
 
     @property
     def is_convergent(self) -> bool:
+        """Return the arity-radius diagnostic, not a full PF certificate."""
         return self.rho < 1.0
 
     @property
@@ -441,7 +460,7 @@ class DoubleConvergenceDomain:
 
 def double_convergence_domain(kappa_val: float, rho: float,
                                name: str = '') -> DoubleConvergenceDomain:
-    """Construct the double convergence domain."""
+    """Construct the scalar x arity diagnostic domain."""
     return DoubleConvergenceDomain(
         R_genus=TWO_PI,
         R_arity=arity_convergence_radius(rho),
@@ -452,7 +471,7 @@ def double_convergence_domain(kappa_val: float, rho: float,
 
 
 def double_convergence_domains_table() -> List[Dict[str, Any]]:
-    r"""Double convergence domains for the specific algebras requested.
+    r"""Scalar x arity diagnostic domains for selected algebras.
 
     Virasoro at c = 1/2, 1, 6, 13, 25, 26.
     W_3 at c = 50.
@@ -469,6 +488,9 @@ def double_convergence_domains_table() -> List[Dict[str, Any]]:
             'name': label, 'kappa': kap, 'rho': rho,
             'R_genus': TWO_PI, 'R_arity': arity_convergence_radius(rho),
             'double_convergent': rho < 1.0,
+            'genus_scope': EXACT_SCALAR_AHAT,
+            'arity_scope': ARITY_RADIUS_DIAGNOSTIC,
+            'full_shadow_pf_certified': False,
         })
 
     # W_3 at c = 50
@@ -477,6 +499,9 @@ def double_convergence_domains_table() -> List[Dict[str, Any]]:
         'name': 'W_3 c=50', 'kappa': kappa_wN(3, 50.0), 'rho': rho_eff,
         'R_genus': TWO_PI, 'R_arity': arity_convergence_radius(rho_eff),
         'double_convergent': rho_eff < 1.0,
+        'genus_scope': EXACT_SCALAR_AHAT,
+        'arity_scope': ARITY_RADIUS_DIAGNOSTIC,
+        'full_shadow_pf_certified': False,
     })
 
     # sl_2 at various levels
@@ -486,29 +511,28 @@ def double_convergence_domains_table() -> List[Dict[str, Any]]:
             'name': f'sl_2 k={k}', 'kappa': kap, 'rho': 0.0,
             'R_genus': TWO_PI, 'R_arity': float('inf'),
             'double_convergent': True,
+            'genus_scope': EXACT_SCALAR_AHAT,
+            'arity_scope': FINITE_DEPTH_EXACT,
+            'full_shadow_pf_certified': True,
         })
 
     return table
 
 
 # ============================================================================
-# 7. Perturbative vs non-perturbative comparison
+# 7. Scalar Bernoulli vs toy factorial comparison
 # ============================================================================
 
 def shadow_vs_string_comparison(kappa_val: float,
                                  max_genus: int = 10) -> Dict[str, Any]:
-    r"""Compare shadow and string genus-g free energies.
+    r"""Compare scalar shadow coefficients with a toy factorial sequence.
 
-    Shadow: F_g^{sh} = kappa * lambda_g^{FP} ~ 2|kappa| / (2*pi)^{2g}
-    String: F_g^{str} ~ C * (2g)!  (Gross-Periwal)
+    Scalar shadow: F_g^{scalar} = kappa * lambda_g^FP
+      ~ 2|kappa| / (2*pi)^{2g}.
 
-    The ratio F_g^{sh} / F_g^{str} decays SUPEREXPONENTIALLY,
-    growing as 1/((2*pi)^{2g} * (2g)!).
-
-    The shadow partition function is therefore NON-PERTURBATIVE
-    in the string coupling: it captures only the tautological
-    (Bernoulli) piece of the genus expansion, not the full
-    Weil-Petersson volume.
+    The factorial comparison uses F_g^{toy} = (2g)! only as an
+    asymptotic foil.  It is not a nonperturbative completion statement and
+    does not compare against a full string partition function.
     """
     data = []
     for g in range(1, max_genus + 1):
@@ -531,6 +555,9 @@ def shadow_vs_string_comparison(kappa_val: float,
 
     return {
         'kappa': kappa_val,
+        'shadow_scope': EXACT_SCALAR_AHAT,
+        'comparison_scope': 'toy_factorial_sequence',
+        'nonperturbative_completion_certified': False,
         'data': data,
         'ratio_of_ratios': ratio_ratios,
         'factorial_decay_confirmed': all(r < 0.1 for r in ratio_ratios[2:]) if len(ratio_ratios) > 3 else False,
@@ -540,19 +567,12 @@ def shadow_vs_string_comparison(kappa_val: float,
 def borel_comparison(kappa_val: float,
                       hbar_values: Optional[List[float]] = None,
                       max_genus: int = 100) -> Dict[str, Any]:
-    r"""Compare exact shadow PF vs Borel-resummed string PF.
+    r"""Compute scalar A-hat values and a scalar Borel-transform diagnostic.
 
-    The shadow series CONVERGES (Bernoulli decay), giving an exact
-    result Z^sh without resummation.
-
-    For the string series, Borel summation is needed.  The string
-    Borel transform B_str(zeta) = sum (2g)! * zeta^{2g} / (2g)!
-    = sum zeta^{2g} has radius 1 in zeta, with a pole at zeta = 1.
-
-    The shadow Borel transform B_sh(zeta) = sum lambda_g^FP * zeta^{2g} / (2g)!
-    is ENTIRE (superexponential decay of Bernoulli/(2g)!).
-
-    At hbar within the convergence disc: Z^sh(exact) is computable.
+    The ordinary scalar series converges inside |hbar| < 2*pi.  Dividing
+    its scalar coefficients by (2g)! gives an entire Borel transform, but
+    this routine does not certify Borel summability of the full
+    planted-forest shadow partition function.
     """
     if hbar_values is None:
         hbar_values = [0.1, 0.5, 1.0, 2.0]
@@ -563,6 +583,8 @@ def borel_comparison(kappa_val: float,
             results.append({
                 'hbar': hbar, 'Z_sh_exact': float('nan'),
                 'note': 'outside convergence disc',
+                'scope': EXACT_SCALAR_AHAT,
+                'full_shadow_borel_certified': False,
             })
             continue
 
@@ -584,9 +606,18 @@ def borel_comparison(kappa_val: float,
             'relative_error': rel_err,
             'borel_transform_value': borel_sum,
             'borel_finite': math.isfinite(borel_sum),
+            'scope': EXACT_SCALAR_AHAT,
+            'borel_transform_scope': 'scalar_coefficients_divided_by_factorial',
+            'full_shadow_borel_certified': False,
         })
 
-    return {'kappa': kappa_val, 'results': results}
+    return {
+        'kappa': kappa_val,
+        'scope': EXACT_SCALAR_AHAT,
+        'scalar_borel_transform_entire': True,
+        'full_shadow_borel_certified': False,
+        'results': results,
+    }
 
 
 # ============================================================================
@@ -595,19 +626,16 @@ def borel_comparison(kappa_val: float,
 
 def phase_transition_scan(c_values: Optional[List[float]] = None
                            ) -> Dict[str, Any]:
-    r"""Scan across the critical central charge c* ~ 6.125.
+    r"""Scan the Virasoro arity-radius diagnostic across c* ~ 6.125.
 
-    For c < c*: rho > 1, arity series diverges.
-    For c > c*: rho < 1, arity series converges.
+    For c < c*: rho > 1, so the arity-radius diagnostic gives radius < 1.
+    For c > c*: rho < 1, so the diagnostic gives radius > 1.
 
     The critical cubic: 5c^3 + 22c^2 - 180c - 872 = 0.
 
-    For c < c*, the branch points of Q_L are complex with |t_0| < 1/rho < 1,
-    and S_r oscillates while growing.
-
-    For c > c*, S_r still oscillates (the branch points remain complex
-    for all c > 0 since Delta = 40/(5c+22) > 0 for c > -22/5)
-    but the growth rate rho < 1 ensures convergence.
+    The labels "divergent", "convergent", and "marginal" refer to this
+    arity-radius diagnostic, not to a certified full planted-forest
+    partition function.
     """
     c_star = critical_central_charge()
 
@@ -639,12 +667,16 @@ def phase_transition_scan(c_values: Optional[List[float]] = None
             'rho': rho,
             'R_arity': arity_convergence_radius(rho),
             'phase': phase,
+            'phase_scope': ARITY_RADIUS_DIAGNOSTIC,
+            'full_shadow_pf_certified': False,
             'theta': theta,
             'F1': kap / 24.0,
         })
 
     return {
         'c_star': c_star,
+        'scope': ARITY_RADIUS_DIAGNOSTIC,
+        'full_shadow_pf_certified': False,
         'scan': scan,
     }
 
@@ -656,11 +688,11 @@ def phase_transition_scan(c_values: Optional[List[float]] = None
 def analytic_continuation_complex_hbar(kappa_val: float,
                                         hbar_values: Optional[List[complex]] = None,
                                         max_genus: int = 80) -> List[Dict[str, Any]]:
-    r"""Evaluate Z^sh at complex hbar values.
+    r"""Evaluate the scalar A-hat closed form at complex hbar values.
 
-    Z^sh(hbar) = kappa * ((hbar/2)/sin(hbar/2) - 1) for the scalar level.
+    Z_scalar(hbar) = kappa * ((hbar/2)/sin(hbar/2) - 1).
 
-    The function is MEROMORPHIC (not entire): poles at hbar = 2*pi*n.
+    This scalar function is meromorphic with poles at hbar = 2*pi*n.
     For complex hbar with |hbar| < 2*pi, the series converges absolutely.
 
     Test points:
@@ -705,6 +737,8 @@ def analytic_continuation_complex_hbar(kappa_val: float,
             'Z_partial': Z_partial if inside_disc else None,
             'relative_error': rel_err,
             'finite': cmath.isfinite(Z_closed),
+            'scope': EXACT_SCALAR_AHAT,
+            'full_shadow_pf_certified': False,
         })
 
     return results
@@ -713,24 +747,21 @@ def analytic_continuation_complex_hbar(kappa_val: float,
 def lorentzian_evaluation(kappa_val: float,
                            imag_hbar_values: Optional[List[float]] = None
                            ) -> List[Dict[str, Any]]:
-    r"""Evaluate at purely imaginary hbar (Lorentzian signature).
+    r"""Evaluate the scalar A-hat series at purely imaginary hbar.
 
     hbar = i*beta corresponds to Euclidean inverse temperature.
-    Z^sh(i*beta) = kappa * ((beta/2)/sinh(beta/2) - 1).
+    Z_scalar(i*beta) = kappa * ((beta/2)/sinh(beta/2) - 1).
 
-    This is REAL and CONVERGENT for all beta (no poles on imaginary axis,
+    This is real and finite for all beta (no poles on the imaginary axis,
     since sin(hbar/2) = sin(i*beta/2) = i*sinh(beta/2) has no real zeros
     except beta = 0).
-
-    The Lorentzian shadow partition function is ENTIRE along the
-    imaginary axis.
     """
     if imag_hbar_values is None:
         imag_hbar_values = [0.1, 0.5, 1.0, 2.0, 5.0, 10.0, 20.0]
 
     results = []
     for beta in imag_hbar_values:
-        # Z^sh(i*beta) = kappa * ((beta/2)/sinh(beta/2) - 1)
+        # Scalar A-hat value at i*beta.
         if abs(beta) < 1e-15:
             val = 0.0
         else:
@@ -743,20 +774,27 @@ def lorentzian_evaluation(kappa_val: float,
             'is_real': True,
             'is_finite': math.isfinite(val),
             'sign': 'negative' if val < 0 else 'positive' if val > 0 else 'zero',
+            'scope': EXACT_SCALAR_AHAT,
+            'full_shadow_pf_certified': False,
         })
 
     return results
 
 
 # ============================================================================
-# 10. Koszul duality and convergence
+# 10. Verdier-dual branch and convergence diagnostics
 # ============================================================================
 
 def koszul_convergence_comparison(c_val: float) -> Dict[str, Any]:
-    r"""Compare convergence data for A and A! = Koszul dual.
+    r"""Compare convergence diagnostics for Vir_c and the A^! branch.
 
-    Virasoro: A = Vir_c, A! = Vir_{26-c}.
-    At c = 13 (self-dual): rho(A) = rho(A!).
+    The function name is kept for compatibility.  The object A^! is the
+    Verdier/continuous-linear dual branch in this atlas.  Omega(B(A))=A is
+    bar-cobar inversion, and Z_ch^der(A) is a Hochschild/bulk object; neither
+    is identified with this branch by this routine.
+
+    Virasoro branch: A = Vir_c, A^! = Vir_{26-c}.  At c = 13 the diagnostic
+    is fixed by the involution.
     """
     c_dual = 26.0 - c_val
 
@@ -777,6 +815,10 @@ def koszul_convergence_comparison(c_val: float) -> Dict[str, Any]:
         'rho_product': rho * rho_dual if math.isfinite(rho_dual) else float('inf'),
         'self_dual': abs(c_val - 13.0) < 1e-10,
         'both_convergent': (rho < 1.0 and rho_dual < 1.0),
+        'duality_branch': VERDIER_DUAL_BRANCH,
+        'bar_cobar_inversion': BAR_COBAR_INVERSION_FIREWALL,
+        'hochschild_bulk_relation': HOCHSCHILD_BULK_FIREWALL,
+        'full_shadow_pf_certified': False,
     }
 
 
@@ -790,9 +832,9 @@ def affine_sl2_free_field_limit(k_values: Optional[List[float]] = None
 
     kappa(sl_2, k) = 3(k+2)/4 -> 3k/4 as k -> infinity.
     F_1 = kappa/24.
-    R_arity = infinity (class L, rho = 0 for ALL k).
+    R_arity = infinity (class L, rho = 0 for every finite listed k).
 
-    The free field limit k -> infinity does NOT change the depth class:
+    The free field limit k -> infinity does not change the depth class:
     affine KM remains class L for all finite k.
     """
     if k_values is None:
@@ -809,6 +851,7 @@ def affine_sl2_free_field_limit(k_values: Optional[List[float]] = None
             'F1': kap / 24.0,
             'depth_class': 'L',
             'kappa_over_k': kap / k if k > 0 else float('inf'),
+            'arity_scope': FINITE_DEPTH_EXACT,
         })
 
     return results
@@ -819,7 +862,7 @@ def affine_sl2_free_field_limit(k_values: Optional[List[float]] = None
 # ============================================================================
 
 def full_convergence_table() -> List[Dict[str, Any]]:
-    r"""Master table of convergence data for all families.
+    r"""Master table of convergence diagnostics for atlas rows.
 
     Columns: name, class, kappa, rho, R_genus, R_arity,
              genus_conv, arity_conv, double_conv, F_1.
@@ -839,6 +882,10 @@ def full_convergence_table() -> List[Dict[str, Any]]:
             'genus_conv': data.genus_convergent,
             'arity_conv': data.arity_convergent,
             'double_conv': data.double_convergent,
+            'genus_scope': data.genus_scope,
+            'arity_scope': data.arity_scope,
+            'double_convergence_scope': data.double_convergence_scope,
+            'full_shadow_pf_certified': data.full_shadow_pf_certified,
             'F1': data.F1,
         })
     return table
@@ -846,7 +893,7 @@ def full_convergence_table() -> List[Dict[str, Any]]:
 
 def virasoro_convergence_scan(
         c_values: Optional[List[float]] = None) -> List[Dict[str, Any]]:
-    r"""Detailed Virasoro convergence scan."""
+    r"""Detailed Virasoro arity-radius diagnostic scan."""
     if c_values is None:
         c_star = critical_central_charge()
         c_values = [0.5, 1.0, 2.0, 4.0, 6.0, c_star,
@@ -862,6 +909,9 @@ def virasoro_convergence_scan(
             'R_arity': arity_convergence_radius(rho),
             'R_genus': TWO_PI,
             'arity_convergent': rho < 1.0,
+            'genus_scope': EXACT_SCALAR_AHAT,
+            'arity_scope': ARITY_RADIUS_DIAGNOSTIC,
+            'full_shadow_pf_certified': False,
             'F1': kap / 24.0,
             'F2': float(F_g(Rational(kap), 2)) if kap != 0 else 0,
         })
@@ -869,7 +919,7 @@ def virasoro_convergence_scan(
 
 
 # ============================================================================
-# 13. Double convergence bound
+# 13. Scalar x arity majorant
 # ============================================================================
 
 def polylogarithm_5_2(rho: float, max_terms: int = 500) -> float:
@@ -889,9 +939,11 @@ def polylogarithm_5_2(rho: float, max_terms: int = 500) -> float:
 
 
 def double_convergence_bound(kappa_val: float, rho: float) -> Dict[str, Any]:
-    r"""Upper bound on |Z^sh|.
+    r"""Formal scalar x arity majorant.
 
-    |Z^sh(A)| <= |kappa| * G * (1 + L)
+    Under a separate analytic hypothesis bounding full arity coefficients
+    by the rho-majorant, the product majorant has the form
+    |kappa| * G * (1 + L).
 
     where G = 2/(4*pi^2 - 1) (genus geometric sum)
     and   L = Li_{5/2}(rho)   (arity polylogarithm).
@@ -908,6 +960,10 @@ def double_convergence_bound(kappa_val: float, rho: float) -> Dict[str, Any]:
         'L': L,
         'bound': bound,
         'convergent': rho < 1.0,
+        'genus_scope': EXACT_SCALAR_AHAT,
+        'arity_scope': ARITY_RADIUS_DIAGNOSTIC,
+        'full_shadow_pf_certified': False,
+        'analytic_hypothesis': ANALYTIC_HYPOTHESIS_REQUIRED,
     }
 
 

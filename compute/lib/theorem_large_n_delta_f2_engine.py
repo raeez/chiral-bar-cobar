@@ -15,6 +15,13 @@ These are PROVED by the independent graph sum in
 rectification_delta_f2_verify_engine.py (7 genus-2 stable graphs,
 5+ independent verification paths).
 
+Scope: this is the gravitational cross-channel subseries. It is exact
+for W_3 and vanishes for W_2. For W_N with N >= 4 it is a lower bound
+on the full OPE cross-channel correction, because higher-spin exchange
+couplings contribute additional terms. This finite genus-2 diagnostic
+does not prove the full modular Koszul theorem and does not determine
+derived-centre data.
+
 LARGE-N EXPANSION
 =================
 
@@ -28,10 +35,11 @@ Full asymptotic expansion:
 Ratio:
     A(N)/B(N) = 12N^2 + 20N + 28 + O(1/N)
 
-Physical interpretation: the 1/c term (A/c) dominates the constant
-term (B) when c << 12N^2. Since c(W_N) ~ N^2 at large N for fixed k,
-the ratio delta_F_2 / (kappa * lambda_2) measures cross-channel
-importance relative to the scalar sector.
+Diagnostic interpretation: the 1/c term (A/c) dominates the constant
+term (B) inside this genus-2 gravitational subseries when
+|c| << 12N^2. This is not a fixed-level large-N statement about the
+Fateev-Lukyanov central charge; in the fixed-lambda and fixed-level
+DS parametrizations below the leading central charge is order -N^4.
 
 'T HOOFT LIMIT
 ==============
@@ -45,18 +53,14 @@ so k = N(1 - lambda)/lambda, k + N = N/lambda.
 The central charge at large N with fixed lambda:
 
     c(W_N, k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
-              ~ -N^2(N^2-1)(1-lambda)^2/lambda   (leading term)
-              ~ -N^4(1-lambda)^2/lambda            (N -> infinity)
-
-This is the NEGATIVE large-N regime (level k grows with N). For the
-POSITIVE large-N regime (c > 0), one needs k > 0, which requires
-lambda < 1 and appropriate N.
+              = -N^4/lambda + 2N^3 + (1/lambda-lambda)N^2
+                - N + lambda - 1
 
 In the 't Hooft limit with the standard parametrization:
 
     delta_F_2 ~ B(N) + A(N)/c
-             ~ N^2/96 + (N^4/8) / (-N^4(1-lambda)^2/lambda)
-             ~ N^2/96 - lambda/(8(1-lambda)^2)
+             ~ N^2/96 + (N^4/8) / (-N^4/lambda)
+             ~ N^2/96 - lambda/8
 
 The constant term B(N) grows as N^2, while A(N)/c approaches a
 lambda-dependent constant. The 't Hooft limit is SINGULAR for the
@@ -79,7 +83,7 @@ multi-weight correction is infinite. The NORMALIZED quantity
 also diverges: B/kappa ~ N^2/(96c log N) -> infinity and
 A/(c*kappa) ~ N^4/(8c^2 log N) -> infinity.
 
-The W_{1+infinity} limit does NOT have a finite delta_F_2.
+The W_{1+infinity} limit has divergent delta_F_2.
 The scalar formula F_g = kappa * lambda_g becomes increasingly
 inadequate as N grows, with the cross-channel correction
 eventually dominating the scalar sector.
@@ -105,7 +109,7 @@ spectral curve is the DISCRIMINANT of the Frobenius multiplication:
     det(C_i^j(t) - u * delta^j_i) = 0
 
 For the gravitational Frobenius algebra, the T-multiplication has
-eigenvalues c/j (j = 2, ..., N), giving N-1 branch points.
+eigenvalues j (j = 2, ..., N), giving N-1 branch points.
 
 The matrix model interpretation: delta_F_2 is the genus-2
 contribution to the free energy of an (N-1)-matrix model with
@@ -150,10 +154,16 @@ from __future__ import annotations
 
 from fractions import Fraction
 from functools import lru_cache
-from math import factorial, log
-from typing import Dict, List, Optional, Tuple, Union
+from math import factorial, log, sqrt
+from typing import Dict, List, Optional, Union
 
 Num = Union[int, float, Fraction]
+
+
+def _validate_wn_rank(N: int) -> None:
+    """Validate the principal W_N rank convention."""
+    if N < 2:
+        raise ValueError(f"W_N requires N >= 2, got {N}")
 
 
 # ============================================================================
@@ -170,8 +180,7 @@ def B_exact(N: int) -> Fraction:
     B(3) = 1/16 (W_3).
     B(4) = 7/48 (W_4).
     """
-    if N < 2:
-        raise ValueError(f"W_N requires N >= 2, got {N}")
+    _validate_wn_rank(N)
     return Fraction((N - 2) * (N + 3), 96)
 
 
@@ -185,13 +194,16 @@ def A_exact(N: int) -> Fraction:
     A(3) = 51/4 (W_3, giving (c+204)/(16c) = 1/16 + (51/4)/c).
       Check: 51/4 = (1)(3*27+14*9+22*3+33)/24 = (81+126+66+33)/24 = 306/24 = 51/4. OK.
     """
-    if N < 2:
-        raise ValueError(f"W_N requires N >= 2, got {N}")
+    _validate_wn_rank(N)
     return Fraction((N - 2) * (3 * N**3 + 14 * N**2 + 22 * N + 33), 24)
 
 
 def delta_F2_grav_closed(N: int, c: Num) -> Fraction:
     r"""Closed form: delta_F_2^{grav}(W_N, c) = B(N) + A(N)/c.
+
+    This is the gravitational cross-channel diagnostic. It is the full
+    cross-channel correction for N = 2, 3 and a lower bound for N >= 4,
+    where full-OPE higher-spin couplings enter.
 
     Parameters
     ----------
@@ -202,6 +214,100 @@ def delta_F2_grav_closed(N: int, c: Num) -> Fraction:
     if c_f == 0:
         raise ValueError("Central charge c must be nonzero")
     return B_exact(N) + A_exact(N) / c_f
+
+
+def harmonic_minus_one(N: int) -> Fraction:
+    r"""Return H_N - 1 = sum_{j=2}^N 1/j for the W_N anomaly ratio."""
+    _validate_wn_rank(N)
+    return sum(Fraction(1, j) for j in range(2, N + 1))
+
+
+def koszul_conductor_WN(N: int) -> int:
+    r"""Central-charge Koszul conductor K_N for principal W_N.
+
+    The Fateev-Lukyanov / Feigin-Frenkel calculation gives
+
+        K_N = c(W_N^k) + c(W_N^{k'})
+            = 2(N-1) + 4N(N^2-1)
+            = 4N^3 - 2N - 2.
+
+    First values: K_2 = 26, K_3 = 100, K_4 = 246, K_5 = 488.
+    """
+    _validate_wn_rank(N)
+    return 2 * (N - 1) + 4 * N * (N**2 - 1)
+
+
+def kappa_complementarity_WN(N: int) -> Fraction:
+    r"""Kappa complementarity sum for principal W_N.
+
+    Since kappa(W_N^k) = c(W_N^k) * (H_N - 1),
+
+        kappa(W_N^k) + kappa(W_N^{k'})
+        = K_N * (H_N - 1).
+
+    This equals 13 for N = 2 and 250/3 for N = 3. It is not the
+    W_3 value extrapolated to every N.
+    """
+    return Fraction(koszul_conductor_WN(N)) * harmonic_minus_one(N)
+
+
+def self_dual_c_WN(N: int) -> Fraction:
+    r"""Formal self-dual central charge c*_N = K_N/2."""
+    return Fraction(koszul_conductor_WN(N), 2)
+
+
+def self_dual_kappa_WN(N: int) -> Fraction:
+    r"""Formal self-dual kappa value: (K_N/2) * (H_N - 1)."""
+    return self_dual_c_WN(N) * harmonic_minus_one(N)
+
+
+def delta_F2_grav_scope(N: int) -> Dict[str, object]:
+    r"""Scope witness for the genus-2 gravitational diagnostic.
+
+    The returned flags are deliberately negative for theorem-level
+    conclusions: a finite asymptotic diagnostic is not evidence for the
+    full modular Koszul theorem, the derived centre, or the full OPE.
+    """
+    _validate_wn_rank(N)
+    equals_full_cross_channel = N <= 3
+    if N == 2:
+        reason = "uniform-weight Virasoro lane: the correction vanishes"
+    elif N == 3:
+        reason = "W_3 has no spin >= 4 exchange channel"
+    else:
+        reason = "N >= 4 needs higher-spin full-OPE exchange couplings"
+
+    return {
+        'N': N,
+        'diagnostic': 'genus-2 gravitational cross-channel',
+        'equals_full_cross_channel': equals_full_cross_channel,
+        'is_lower_bound_for_full_ope': N >= 4,
+        'proves_full_modular_koszul_theorem': False,
+        'determines_derived_center': False,
+        'determines_koszul_complementarity': False,
+        'reason': reason,
+    }
+
+
+def w4_full_ope_large_c_witness() -> Dict[str, object]:
+    r"""Witness that W_4 full-OPE data is not the gravitational scalar.
+
+    The local TeX computation gives
+
+        lim_{c -> infinity} delta F_2^{full}(W_4)
+        = (3*sqrt(10) + 28)/192,
+
+    whereas the gravitational subseries has limit B(4) = 7/48.
+    """
+    gravitational = B_exact(4)
+    full_float = (3 * sqrt(10) + 28) / 192
+    return {
+        'N': 4,
+        'gravitational_limit': gravitational,
+        'full_limit_expression': '(3*sqrt(10)+28)/192',
+        'full_limit_float': full_float,
+        'strictly_larger_than_gravitational': full_float > float(gravitational),
+    }
 
 
 # ============================================================================
@@ -281,10 +387,12 @@ def ratio_A_over_B(N: int) -> Fraction:
 
     At large N: 12N^2 + ... (leading term).
 
-    For N=2: 0/0, undefined (both vanish). Convention: 0.
+    For N = 2 both A and B vanish, so the ratio is the singular
+    expression 0/0 and no crossover central charge is defined.
     """
-    if N <= 2:
-        return Fraction(0)
+    _validate_wn_rank(N)
+    if N == 2:
+        raise ValueError("A(N)/B(N) is undefined at N=2 because A(2)=B(2)=0")
     num = 4 * (3 * N**3 + 14 * N**2 + 22 * N + 33)
     den = N + 3
     return Fraction(num, den)
@@ -308,8 +416,9 @@ def ratio_large_N_expansion(N: int) -> Dict[str, Fraction]:
     Full expansion:
       A/B = 12N^2 + 20N + 28 + 48/N - 144/N^2 + O(1/N^3)
     """
-    if N <= 2:
-        return {'N^2': Fraction(0)}
+    _validate_wn_rank(N)
+    if N == 2:
+        raise ValueError("A(N)/B(N) has no large-N ratio value at N=2")
     # Exact polynomial part from long division
     q, r = divmod(3 * N**3 + 14 * N**2 + 22 * N + 33, N + 3)
     # q should be 3N^2 + 5N + 7, r should be 12
@@ -345,6 +454,7 @@ def c_wn_thooft(N: int, lam: Fraction) -> Fraction:
 
     This is exact for rational lambda.
     """
+    _validate_wn_rank(N)
     if lam == 0:
         raise ValueError("lambda = 0 (k = infinity) not allowed")
     if lam == 1:
@@ -356,7 +466,30 @@ def c_wn_thooft(N: int, lam: Fraction) -> Fraction:
     return c
 
 
-def c_thooft_large_N(N: int, lam: Fraction) -> Dict[str, Fraction]:
+def c_thooft_polynomial_coefficients(lam: Fraction) -> Dict[str, Fraction]:
+    r"""Exact fixed-lambda polynomial coefficients of c(W_N, lambda).
+
+    Substituting k+N = N/lambda into the Fateev-Lukyanov formula gives
+
+        c(N, lambda)
+        = -N^4/lambda + 2N^3 + (1/lambda - lambda)N^2
+          - N + lambda - 1.
+
+    The leading term is -N^4/lambda, not
+    -N^4(1-lambda)^2/lambda.
+    """
+    if lam == 0:
+        raise ValueError("lambda = 0 (k = infinity) not allowed")
+    return {
+        'N^4': Fraction(-1, 1) / lam,
+        'N^3': Fraction(2),
+        'N^2': Fraction(1, 1) / lam - lam,
+        'N^1': Fraction(-1),
+        'N^0': lam - 1,
+    }
+
+
+def c_thooft_large_N(N: int, lam: Fraction) -> Dict[str, object]:
     r"""Large-N expansion of c(W_N, lambda) at fixed lambda.
 
     c = (N-1) - (N^2-1) * lambda * (N/lambda - 1)^2
@@ -366,9 +499,19 @@ def c_thooft_large_N(N: int, lam: Fraction) -> Dict[str, Fraction]:
     Leading: -(N^2-1)N^2/lambda ~ -N^4/lambda.
     """
     c_exact = c_wn_thooft(N, lam)
+    coeffs = c_thooft_polynomial_coefficients(lam)
+    c_polynomial = (
+        coeffs['N^4'] * N**4
+        + coeffs['N^3'] * N**3
+        + coeffs['N^2'] * N**2
+        + coeffs['N^1'] * N
+        + coeffs['N^0']
+    )
     c_leading = Fraction(-1) * Fraction(N**4) / lam
     return {
         'exact': c_exact,
+        'polynomial': c_polynomial,
+        'coefficients': coeffs,
         'leading_N4': c_leading,
         'ratio': c_exact / c_leading if c_leading != 0 else None,
     }
@@ -420,6 +563,8 @@ def thooft_limit_A_over_c(lam: Fraction) -> Fraction:
     from the 1/c sector. It is NEGATIVE (since c < 0 in the
     Gaberdiel-Gopakumar regime) and bounded.
     """
+    if lam == 0:
+        raise ValueError("lambda = 0 (k = infinity) not allowed")
     return -lam / Fraction(8)
 
 
@@ -432,7 +577,7 @@ def delta_F2_winfty_scaling(N: int, c: Num) -> Dict[str, object]:
 
     delta_F_2 = B(N) + A(N)/c ~ N^2/96 + N^4/(8c) -> infinity.
 
-    The correction diverges: W_{1+infinity} does NOT have a finite
+    The correction diverges: W_{1+infinity} has no finite
     cross-channel genus-2 correction. This is a manifestation of
     the infinite number of generators.
 
@@ -634,7 +779,7 @@ def large_N_table(N_values: Optional[List[int]] = None,
             'kappa': kappa,
             'scalar_F2': scalar,
             'cross_over_scalar': float(dF2 / scalar) if scalar != 0 else float('inf'),
-            'A/B': float(ratio_A_over_B(N)) if N > 2 else 0.0,
+            'A/B': float(ratio_A_over_B(N)) if N > 2 else None,
         })
     return rows
 
@@ -757,8 +902,9 @@ def dominance_crossover(N: int) -> Dict[str, object]:
 
     A(N)/c_* = B(N) => c_* = A(N)/B(N) = ratio_A_over_B(N).
 
-    For c < c_*: the 1/c term dominates (instanton regime).
-    For c > c_*: the constant term dominates (perturbative regime).
+    This crossover compares only the two terms inside the genus-2
+    gravitational diagnostic. It is not a full-OPE statement and is not
+    a Koszul-complementarity or derived-centre witness.
 
     At large N: c_* ~ 12N^2.
     """
@@ -773,8 +919,8 @@ def dominance_crossover(N: int) -> Dict[str, object]:
         'B': B_exact(N),
         'A': A_exact(N),
         'interpretation': (
-            f'For c < {float(r):.1f}: 1/c term dominates (instanton). '
-            f'For c > {float(r):.1f}: constant term dominates (perturbative).'
+            f'Inside the gravitational genus-2 diagnostic, |A/c| > |B| '
+            f'for |c| < {float(r):.1f} and |B| > |A/c| for larger |c|.'
         ),
     }
 

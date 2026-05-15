@@ -4,7 +4,7 @@ One generator. One relation.
 \[
 J(z)\,J(w) \;\sim\; \frac{k}{(z-w)^2}.
 \]
-If bar-cobar duality fails for this OPE, it fails everywhere.
+If bar-cobar inversion fails for this OPE, it fails everywhere.
 The Heisenberg vertex algebra $\mathcal{H}_k$ is the simplest
 chiral algebra: a single current $J$ of conformal weight~$1$,
 a level $k \in \mathbb{C}$, a double pole, nothing else. It is
@@ -40,7 +40,8 @@ compactification produces the Koszul dual
 $\mathcal{H}_k^! = \mathrm{Sym}^{\mathrm{ch}}(V^*)$
 (the chiral symmetric algebra on the linear dual of
 $V = \mathbb{C}\cdot J$, the one-dimensional space of
-weight-$1$ generators; \emph{not} $\mathcal{H}_{-k}$, cf.~)
+weight-$1$ generators; \emph{not} $\mathcal{H}_{-k}$,
+cf.~Remark~\ref{rem:frame-three-dualities})
 with curvature $m_0 = -k\omega$, where
 $\omega = c_1(\det \Lambda_g)^{\mathrm{Arakelov}}$ is the
 Faltings-Arakelov Chern form on the determinant of the Hodge
@@ -49,7 +50,6 @@ Bar-cobar inversion recovers~$\mathcal{H}_k$ from
 $\barB(\mathcal{H}_k)$. The Maurer--Cartan element
 $\Theta_{\mathcal{H}_k}$ that governs the modular deformation
 collapses to a single scalar:
-%: kappa(Heis) = k, from landscape_census.tex; k=0 -> 0. Verified.
 $\kappa(\mathcal{H}_k) = k$.
 The cubic shadow $S_3$ vanishes. The quartic contact invariant
 $S_4$ vanishes. The discriminant $\Delta = 8\kappa S_4 = 0$.
@@ -109,8 +109,6 @@ genus, and all characteristic invariants are determined by the single
 scalar $\kappa = k$.
 
 The classical $r$-matrix
-% PE-1: r-matrix. Family: Heis. r(z) = k/z. Level: k. OPE pole 2, r pole 1.
-% vanishing check : k=0 -> r=0. Match: Y. Source: landscape_census.tex. Verdict: ACCEPT.
 $r^{\mathrm{Heis}}(z) = k/z$ is nontrivial but scalar. At $k = 0$
 the $r$-matrix vanishes: the abelian limit is uncurved. The
 $R$-matrix $R(z) = e^{k\hbar/z}$ carries spectral data, yet the
@@ -182,9 +180,11 @@ obstruction tower.
  the simple pole and a curvature component from the double pole;
  neither is individually a differential. The Borcherds identity,
  coupling both pole orders, replaces the Jacobi identity. The PBW
- spectral sequence emerges as the correct computational tool, and the
- Feigin--Frenkel involution $k \leftrightarrow -k - 2h^\vee$ is
- Koszul duality.
+ spectral sequence emerges as the correct computational tool. On the
+ non-critical PBW/Koszul lane, the Feigin--Frenkel level reflection
+ $k \leftrightarrow -k - 2h^\vee$ gives the level of the
+ Verdier--Koszul partner; the partner is the chiral CE algebra at the
+ reflected level, not the affine current algebra itself.
 
 \item \textbf{$\mathcal{W}$-algebras}
  (\S\ref{sec:frame-w-algebras}): class~M, shadow depth infinite.
@@ -192,9 +192,11 @@ obstruction tower.
  $\Lambda = :\!TT\!: - \tfrac{3}{10}\partial^2 T$ introduce quartic
  OPE poles; the PBW spectral sequence does not automatically
  degenerate. The obstruction tower never terminates: $S_4 \neq 0$,
- $\Delta \neq 0$. Koszul duality commutes with Drinfeld--Sokolov
- reduction, extending the Feigin--Frenkel involution to the full
- $\mathcal{W}$-algebra tower.
+ $\Delta \neq 0$. On the non-critical completed-PBW lane, the
+ Verdier--Koszul partner is compatible with Drinfeld--Sokolov
+ reduction, transporting the level reflection to the principal
+ $\mathcal{W}$-algebra tower. The Feigin--Frenkel critical center is
+ a separate oper-valued cohomology surface.
 
 \item \textbf{Lattice vertex algebras}
  (\S\ref{sec:frame-yangian-preview}): the new ingredient is
@@ -229,7 +231,7 @@ which every load-bearing phenomenon on the commutative/modular face
 of this monograph is already forced. The computation begins now.
 
 Let $X$ be a smooth algebraic curve. The Heisenberg chiral algebra
-$\mathcal{H}_k$ at level $k \in \mathbb{C}^\times$ has a single current
+$\mathcal{H}_k$ at level $k \in \mathbb{C}$ has a single current
 $\alpha(z)$ of conformal weight~$1$, with operator product expansion
 \begin{equation}\label{eq:frame-heisenberg-ope}
 \alpha(z)\alpha(w) = \frac{k}{(z-w)^2} + \text{regular}.
@@ -240,11 +242,15 @@ commutation relations are
 \begin{equation}\label{eq:frame-heisenberg-modes}
 [\alpha_m, \alpha_n] = k \cdot m \cdot \delta_{m+n,0}.
 \end{equation}
-The vacuum representation (Fock space) is
+For $k \neq 0$, the vacuum representation (Fock space) is
 $\mathcal{F}_k = \mathbb{C}[\alpha_{-1}, \alpha_{-2}, \ldots]\,|0\rangle$
 with $\alpha_n|0\rangle = 0$ for $n > 0$. The Sugawara construction gives
 the stress tensor $T = \frac{1}{2k}:\!\alpha(z)\alpha(z)\!:$ with central
-charge $c = 1$.
+charge $c = 1$. This Virasoro central charge is independent of the
+level; the bar-intrinsic modular characteristic is instead
+$\kappa(\mathcal{H}_k)=k$. At $k=0$ the current algebra has the
+degenerate commutative specialization, but the displayed Sugawara
+tensor is not defined in this normalization.
 
 No simple pole appears in the self-OPE. This is the defining feature.
 Free fermions have a simple pole $\psi(z)\psi(w) \sim 1/(z-w)$; affine
@@ -580,7 +586,26 @@ Arnold relation on the logarithmic forms.
 
 \begin{remark}[The Arnold relation as factorization coherence]
 \label{rem:frame-arnold-factorization}
-The identity~\eqref{eq:frame-arnold} is the fundamental coherence relation of factorization algebras: the bar complex is well-defined because Arnold holds, Verdier duality sends the bar coalgebra to the homotopy Koszul dual algebra ($\mathbb{D}_{\Ran}\barB(\cA) \simeq \cA^!_\infty$) because Arnold is self-dual, and the genus tower extends over $\overline{\mathcal{M}}_g$ because Arnold lifts to boundary strata of the FM operad. In the operadic language at genus~$0$,~\eqref{eq:frame-arnold} defines the gravity operad $\mathrm{Grav}$, which is Koszul dual to the hypercommutative operad $\mathrm{HyCom}$ in the sense of Getzler--Kapranov~\cite{GK94}; the identification $\mathrm{Grav} = \mathrm{HyCom}^!$ is a genus-$0$ operadic Koszul duality, and it does not automatically extend to the modular operad (the higher-genus analogue requires the Feynman transform, which twists the operadic Koszul picture by the self-gluing maps of $\overline{\mathcal{M}}_{g,n}$). The genus-$0$ bar-cobar adjunction is the operadic Koszul duality at that level.
+The identity~\eqref{eq:frame-arnold} is the coherence relation behind
+the factorization bar complex. It gives $d_{\barB}^2=0$ by cancelling
+the two ordered collision paths through each codimension-$2$ stratum of
+\(\overline C_3(X)\). Since the logarithmic collision forms are
+self-dual under Verdier duality, the same relation survives on the
+bar-cohomology coalgebra
+\[
+\cA^{\mathrm i}=H^*(\barB(\cA)).
+\]
+Under the finite-type completed hypotheses, Verdier duality then gives
+the homotopy Koszul dual algebra
+\[
+\cA^!_\infty\simeq \mathbb{D}_{\Ran}(\cA^{\mathrm i}).
+\]
+At genus~$0$, the Arnold relation is the operadic relation defining
+the gravity operad \(\mathrm{Grav}\), and Getzler--Kapranov identify
+\(\mathrm{Grav}\) as Koszul dual to \(\mathrm{HyCom}\)~\cite{GK94}.
+The modular extension uses the Feynman transform and the self-gluing
+maps of \(\overline{\mathcal M}_{g,n}\); it is a separate higher-genus
+input to the bar tower.
 \end{remark}
 
 % ================================================================
@@ -925,7 +950,7 @@ On $\mathbb{P}^1$, where $H^1(X) = 0$, this map is surjective
 and has trivial kernel, so $H^1 = 0$.
 
 \emph{Degree~$2$.}
-The three-current collision produces the central charge class.
+The three-current collision produces the central-extension class.
 When $\alpha(z_1), \alpha(z_2), \alpha(z_3)$ approach a
 common point, the iterated OPE produces:
 \begin{equation}\label{eq:frame-triple-residue}
@@ -1089,23 +1114,23 @@ Remark~\ref{rem:curved-twisting-higher-genus}).
 \section{Reading off the Koszul dual}\label{sec:frame-koszul-dual}
 % ================================================================
 
-The bar coalgebra $\bar{B}(\mathcal{H}_k)$ carries a coproduct
-determined by the OPE. On the single cogenerator
-$\alpha^* \in \bar{B}^1$, there is nothing to decompose:
+The raw bar object
+$\bar{B}^{\mathrm{ch}}(\mathcal{H}_k)=
+T^c(s^{-1}\bar{\mathcal H}_k)$ carries a coproduct determined by
+deconcatenation and a differential determined by the OPE. It is
+not yet the Koszul-dual algebra. On the single weight-one
+cogenerator $\alpha^*$ in the primitive lane, there is nothing
+to decompose:
 \begin{equation}\label{eq:frame-primitive}
 \Delta(\alpha^*) = \alpha^* \otimes 1 + 1 \otimes \alpha^*.
 \end{equation}
 This is the definition of a \emph{primitive} element.
-Every element of $\bar{B}^1$ is primitive, and the
-double-pole residue is symmetric under $z_i \leftrightarrow z_j$,
-so the coproduct is cocommutative at all degrees.
+The double-pole residue is symmetric under
+$z_i \leftrightarrow z_j$, so the Heisenberg primitive lane is
+cocommutative.
 The bar coalgebra is also conilpotent
 (Theorem~\ref{thm:bar-nilpotency-complete}): every element
 is eventually annihilated by iterated reduced coproducts.
-By the Milnor--Moore theorem
-(characteristic zero, conilpotent, cocommutative), such a
-coalgebra is the universal enveloping coalgebra of its
-primitives.
 
 In detail:
 write $V = \mathrm{Span}\{\alpha\}$ for the one-dimensional
@@ -1129,37 +1154,43 @@ of a single element. (Here $\mathrm{Lie}(n)$ denotes the $n$-th
 graded piece of the free Lie algebra on a single generator, the
 image of the operad component $\mathrm{Lie}(n)$ under the
 one-dimensional representation, not the operad component itself,
-which has dimension $(n{-}1)!$.) Dually, the cofree Lie coalgebra on one
-cogenerator is concentrated in degree~$1$:
+which has dimension $(n{-}1)!$.) Dually, the cofree Lie coalgebra
+on one cogenerator is concentrated in degree~$1$:
 \[
 \mathrm{coLie}^{\mathrm{ch}}(V^*) \;\cong\; V^*
 \quad\text{as a graded vector space.}
 \]
-The bar coalgebra of $\mathcal{H}_k$ therefore has
-a single cogenerator $\alpha^* \in \bar{B}^1$ and nothing
-in higher bar degrees:
-\begin{equation}\label{eq:frame-bar-coalgebra}
-\bar{B}^{\mathrm{ch}}(\mathcal{H}_k)
-\simeq \mathrm{coLie}^{\mathrm{ch}}(V^*) \cong V^*,
-\qquad V^* = \mathrm{Span}\{\alpha^*\}.
-\end{equation}
-This is the coalgebraic expression of the fact that
-$\mathcal{H}_k$ is a \emph{free} commutative chiral algebra
-on one generator: its bar complex sees only the generator and
-no relations. For algebras with nontrivial brackets
-(affine Kac--Moody, $\mathcal{W}_N$, \ldots),
-$\mathrm{coLie}^{\mathrm{ch}}$ on a higher-dimensional
-cogenerator space produces a genuinely infinite-dimensional
-coalgebra, with bar degrees counted by the Witt necklace formula
+The Koszul contraction of the bar complex has this primitive
+coalgebra as its generator lane, while the double-pole class
+$c_k \in H^2(\bar B(\mathcal H_k))$ records the scalar curvature.
+Thus the five-object firewall is:
+\[
+\bar B(\mathcal H_k)
+\quad\longrightarrow\quad
+\mathcal H_k^i := H^*(\bar B(\mathcal H_k))
+\quad\longrightarrow\quad
+\mathcal H_k^! := \mathbb{D}_{\Ran}(\mathcal H_k^i)
+\simeq (\mathrm{Sym}^{\mathrm{ch}}(V^*),m_0=-k\omega).
+\]
+The raw bar complex still has tensor lengths in all degrees; after
+Koszul contraction the only primitive generator is $\alpha^*$, and
+the higher Heisenberg information is the curvature scalar~$k$.
+For algebras with nontrivial brackets (affine Kac--Moody,
+$\mathcal{W}_N$, \ldots), the primitive Koszul-dual coalgebra is
+no longer the one-dimensional lane above; higher-dimensional
+cogenerator spaces produce genuine Lie-coalgebra terms, with bar
+degrees counted by the Witt necklace formula
 (Computation~\ref{comp:bar-sym-ch}).
 
 \medskip
 \noindent\textbf{Two constructions, two targets.}
-From the coalgebra $\bar{B}(\mathcal{H}_k)$, two different
-operations produce two different algebras:
+From the bar coalgebra of $\mathcal{H}_k$, two different
+operations produce two different targets:
 \begin{enumerate}
-\item \emph{Dualize} (graded linear dual):
-$\mathrm{coLie}^{\mathrm{ch}}(V^*)^\vee
+\item \emph{Take the Koszul-dual coalgebra and Verdier dualize}:
+$\mathcal H_k^i=H^*(\bar B(\mathcal H_k))$ is the
+Koszul-dual coalgebra, and
+$\mathbb{D}_{\Ran}(\mathcal H_k^i)
 \cong \mathrm{Sym}^{\mathrm{ch}}(V^*)$,
 the free commutative algebra in one generator,
 the \emph{Koszul dual algebra} $\mathcal{H}_k^!$.
@@ -1171,25 +1202,24 @@ a quasi-isomorphism recovering the \emph{original} algebra
 \end{enumerate}
 In display:
 \begin{equation}\label{eq:frame-koszul-dual-coalgebra-to-algebra}
-\bar{B}^{\mathrm{ch}}(\mathcal{H}_k)^\vee
+\mathbb{D}_{\Ran}\!\left(\mathcal H_k^i\right)
 \;\cong\; \mathrm{Sym}^{\mathrm{ch}}(V^*)
 = \mathcal{H}_k^!
 \end{equation}
 versus
 \[
 \Omega\bigl(\bar{B}^{\mathrm{ch}}(\mathcal{H}_k)\bigr)
-= \Omega\bigl(\mathrm{coLie}^{\mathrm{ch}}(V^*)\bigr)
 \xrightarrow{\;\sim\;} \mathcal{H}_k.
 \]
 Both operations start from the bar coalgebra
 $\bar{B}(\mathcal{H}_k)$ and land in the algebra category,
-but by different routes: dualizing applies linear duality
-(coalgebra $\to$ algebra, coLie $\to$ Sym) and produces
-the Koszul dual $\mathcal{H}_k^!$; cobar applies the
-functor $\Omega$ (coalgebra $\to$ algebra) and recovers the
-original $\mathcal{H}_k$ as a resolution. They point in
-opposite algebraic directions, and this is the
-$\mathrm{Com}^! = \mathrm{Lie}$ duality made concrete.
+but by different routes: Verdier duality applied to the
+Koszul-dual coalgebra produces the Koszul dual algebra
+$\mathcal{H}_k^!$; cobar applied to the raw bar coalgebra
+recovers the original $\mathcal{H}_k$ as a resolution. They
+point in opposite algebraic directions. The statement
+$\Omega\bar B(\mathcal H_k)\simeq\mathcal H_k$ is inversion,
+not the construction of~$\mathcal H_k^!$.
 
 The level $k$ determines a curvature element
 $m_0 = -k \cdot \omega \in \mathrm{Sym}^2(V^*)$, encoding the
@@ -1226,14 +1256,18 @@ Lie-type (LCA envelope) & Com-type ($\mathrm{Sym}^{\mathrm{ch}}$)
 \end{center}
 
 For a general augmented chiral algebra~$\cA$, the same
-two-arrow pattern holds: the bar $\bar{B}(\cA)$ is a coalgebra
-(the Koszul dual \emph{coalgebra}), its linear dual
-$\bar{B}(\cA)^\vee = \cA^!$ is the Koszul dual \emph{algebra}
-(realized via Verdier duality on $\operatorname{Ran}(X)$;
-Theorem~\ref{thm:bar-cobar-verdier}), and the cobar recovers
-the original: $\Omega(\bar{B}(\cA)) \simeq \cA$ on the Koszul
-locus (Theorem~\ref{thm:bar-cobar-inversion-qi}). The general
-bar-cobar adjunction is developed in
+two-arrow pattern holds. The raw bar $\bar{B}(\cA)$ is a
+conilpotent coalgebra. Its Koszul-dual coalgebra is
+$\cA^i:=H^*(\bar B(\cA))$ after the chosen Koszul contraction.
+The Koszul dual algebra is
+$\cA^!:=\mathbb{D}_{\Ran}(\cA^i)$
+(Theorem~\ref{thm:bar-cobar-verdier}). The cobar recovers the
+original:
+$\Omega(\bar{B}(\cA)) \simeq \cA$ on the Koszul locus
+(Theorem~\ref{thm:bar-cobar-inversion-qi}). These are the five
+objects $A$, $B(A)$, $A^i$, $A^!$, and
+$Z^{\mathrm{der}}_{\mathrm{ch}}(A)$; none is a substitute for
+another. The general bar-cobar adjunction is developed in
 Chapter~\ref{chap:bar-cobar}.
 
 \begin{remark}[The canonical twisting morphism for Heisenberg]
@@ -1254,7 +1288,21 @@ bar concentration (Theorem~\ref{thm:frame-heisenberg-bar}).
 
 \begin{remark}[Three different ``dualities'']
 \label{rem:frame-three-dualities}
-Three distinct operations must not be confused: (1)~Koszul duality $\mathcal{H}_k \leftrightarrow \mathrm{Sym}^{\mathrm{ch}}(V^*)$, where the bar coalgebra $\bar{B}(\mathcal{H}_k)$ \emph{is} the Koszul dual coalgebra and its linear dual is the Koszul dual algebra~$\mathcal{H}_k^!$ (this chapter); (2)~level-shifting $\mathrm{Rep}(\mathcal{H}_k) \simeq \mathrm{Rep}(\mathcal{H}_{-k})$; (3)~boson-fermion correspondence $\mathrm{Rep}(\mathcal{H}_k) \simeq \mathrm{Rep}(\mathcal{F}^{\otimes 2})$. Only~(1) is the subject of this monograph.
+Three distinct operations must not be confused:
+(1)~Koszul duality
+$\mathcal{H}_k \leftrightarrow \mathrm{Sym}^{\mathrm{ch}}(V^*)$,
+where the bar coalgebra $\bar{B}(\mathcal{H}_k)$ resolves the
+Koszul-dual coalgebra
+$\mathcal{H}_k^i=H^*(\bar{B}(\mathcal{H}_k))$, and the
+Koszul-dual algebra is
+$\mathcal{H}_k^!=(\mathcal{H}_k^i)^\vee$ under the finite-type
+Verdier duality convention used in this chapter;
+(2)~level-shifting
+$\mathrm{Rep}(\mathcal{H}_k) \simeq \mathrm{Rep}(\mathcal{H}_{-k})$;
+(3)~boson-fermion correspondence
+$\mathrm{Rep}(\mathcal{H}_k) \simeq
+\mathrm{Rep}(\mathcal{F}^{\otimes 2})$.
+Only~(1) is the subject of this monograph.
 \end{remark}
 
 % ================================================================
@@ -1293,10 +1341,13 @@ $\barB$ &
  Residue \\
 $H^*(\barB)$ &
  $c_k \in H^2\bigl(\barB(\mathcal{H}_k)\bigr)$ &
- Central class \\
-$\Omega$ &
- $m_0 = -k\omega$ in $\Omega\barB(\mathcal{H}_k)$ &
- Curvature \\
+ Central-extension class in the Koszul-dual coalgebra \\
+$\mathcal H_k^!$ &
+ $m_0 = -k\omega$ &
+ Verdier-dual curvature \\
+$\Omega\barB$ &
+ raw bar coalgebra with $c_k$ encoded in the differential &
+ Cobar resolution \\
 $\varepsilon$ &
  $s\alpha^* \mapsto \alpha$ &
  OPE recovered
@@ -1305,12 +1356,15 @@ $\varepsilon$ &
 \noindent
 The bar differential extracts~$k$ as a residue
 (\S\ref{sec:frame-bar-deg1}); the bar cohomology stores it
-in the central class~$c_k$
-(Theorem~\ref{thm:frame-heisenberg-bar}); the cobar functor
-reads the coalgebra structure of~$\barB(\mathcal{H}_k)$
-and installs it as the differential of a free chiral
-algebra on the cogenerator~$s\alpha^*$; the counit projects
-to~$\mathcal{H}_k$. Bar is a lossless encoding.
+in the central-extension class~$c_k$
+(Theorem~\ref{thm:frame-heisenberg-bar}); Verdier duality reads
+the same class as the curvature $m_0=-k\omega$ of
+$\mathcal H_k^!$; the cobar functor reads the raw coalgebra
+structure of~$\barB(\mathcal{H}_k)$ and builds a free chiral
+algebra resolving the original~$\mathcal{H}_k$. Bar is a
+lossless encoding, but the lossless round trip is
+$\Omega\bar B(\mathcal H_k)\to\mathcal H_k$, not
+$\Omega\bar B(\mathcal H_k)\to\mathcal H_k^!$.
 
 \subsection{The Koszul property}
 
@@ -1330,33 +1384,34 @@ Formality forces the counit~$\varepsilon$ to be
 a quasi-isomorphism: the resolution carries no higher
 obstructions.
 
-The chain of identifications underlying the duality:
+The chain of identifications underlying the duality separates
+inversion from Verdier duality:
 \[
-\bar{B}^{\mathrm{ch}}(\mathcal{H}_k)
-\simeq \mathrm{coLie}^{\mathrm{ch}}(V^*)
-\;\xrightarrow{\;\Omega\;}\;
-\mathrm{Sym}^{\mathrm{ch}}(V^*)
-= \mathcal{H}_k^!,
+\mathcal H_k
+\xleftarrow{\;\varepsilon\;}
+\Omega^{\mathrm{ch}}\bar B^{\mathrm{ch}}(\mathcal H_k),
 \qquad
-\bar{B}^{\mathrm{ch}}(\mathcal{H}_k^!)
-\simeq \mathrm{coLie}^{\mathrm{ch}}(V)
-\;\xrightarrow{\;\Omega\;}\;
-\mathcal{H}_k.
+\mathcal H_k^i:=H^*(\bar B^{\mathrm{ch}}(\mathcal H_k)),
+\qquad
+\mathcal H_k^!:=\mathbb{D}_{\Ran}(\mathcal H_k^i)
+\simeq \mathrm{Sym}^{\mathrm{ch}}(V^*).
 \]
-The last step uses that the free Lie algebra on a single
-generator is abelian ($\mathrm{Lie}(V) \cong V$ for
-$\dim V = 1$). The bar-cobar adjunction restricts to an
-equivalence on the Koszul locus
-(Theorem~\ref{thm:bar-cobar-isomorphism-main}):
-$\mathcal{H}_k$ and $\mathcal{H}_k^!$ mutually determine
-each other.
+The first arrow is the bar-cobar counit; it recovers the
+original algebra. The second and third terms construct the
+Koszul-dual coalgebra and the Koszul-dual algebra. Applying
+bar-cobar inversion to the dual algebra gives
+$\Omega\bar B(\mathcal H_k^!)\simeq \mathcal H_k^!$, not
+$\mathcal H_k$. The pair
+$(\mathcal{H}_k,\mathcal{H}_k^!)$ mutually determines itself
+through Koszul/Verdier duality, while each object is recovered
+from its own bar construction by the bar-cobar counit.
 
 This is Theorem~B
 (Theorem~\ref{thm:higher-genus-inversion})
 for the simplest non-trivial case. The general theorem
 (with the $\mathrm{A}_0/\mathrm{A}_1/\mathrm{A}_2$ decomposition
 of Remark~\ref{rem:theorem-A-decomposition}) establishes
-bar-cobar duality for all augmented chiral algebras, with the
+bar-cobar inversion for all augmented chiral algebras, with the
 quasi-isomorphism $\Omega\barB(\cA) \xrightarrow{\sim}
 \cA$ holding on the Koszul locus. The PBW spectral sequence
 (Chapter~\ref{chap:bar-cobar}) controls convergence:
@@ -1683,8 +1738,10 @@ The genus-$g$ obstruction class is
 $\mathrm{obs}_g(\mathcal{H}_k) = k \cdot \lambda_g$ where $\lambda_g = c_g(\mathbb{E}) \in H^{2g}(\overline{\mathcal{M}}_g)$
 is the top Chern class of the Hodge bundle
 $\mathbb{E} = \pi_*\omega_{\mathcal{C}/\overline{\mathcal{M}}_g}$.
-The uniform-weight tag is conservative here: since $\mathcal{H}_k$ is a free field
-(the OPE $J(z)J(w) \sim k/(z-w)^2$ is purely quadratic, so $m_k = 0$ for $k \geq 3$),
+The uniform-weight hypothesis is automatic here: since
+$\mathcal{H}_k$ is a free field
+(the OPE $J(z)J(w) \sim k/(z-w)^2$ is purely quadratic, so
+$m_r = 0$ for $r \geq 3$),
 the cross-channel correction vanishes at every genus,
 $\delta F_g^{\mathrm{cross}}(\mathcal{H}_k) = 0$
 (Proposition~\ref{prop:free-field-scalar-exact}).
@@ -1739,7 +1796,7 @@ The $\hat{A}$-genus arises from Grothendieck--Riemann--Roch \ifannalsedition\els
 = \pi_*\!\left(\mathrm{ch}(\omega_{\mathcal{C}}) \cdot
 \mathrm{Td}(T_\pi)\right)
 \end{equation}
-applied to $\pi\colon \overline{\mathcal{M}}_{g,1} \to \overline{\mathcal{M}}_g$ recovers the Mumford formula $\mathrm{ch}_g(\mathbb{E}) = B_{2g} \cdot \kappa_{2g-1}/(2g)!$, which combined with $\mathrm{obs}_g = k \cdot \lambda_g$ \textup{(}UNIFORM-WEIGHT\textup{}) yields~\eqref{eq:frame-generating-function}. The genus expansion of every Koszul chiral algebra is an index: the $\hat{A}$-class pushforward of the Hodge bundle scaled by bar-complex curvature.
+applied to $\pi\colon \overline{\mathcal{M}}_{g,1} \to \overline{\mathcal{M}}_g$ recovers the Mumford formula $\mathrm{ch}_g(\mathbb{E}) = B_{2g} \cdot \kappa_{2g-1}/(2g)!$, which combined with the uniform-weight identity $\mathrm{obs}_g = k \cdot \lambda_g$ yields~\eqref{eq:frame-generating-function}. The genus expansion of every Koszul chiral algebra is an index: the $\hat{A}$-class pushforward of the Hodge bundle scaled by bar-complex curvature.
 \end{remark}
 
 \begin{table}[ht]
@@ -1835,7 +1892,9 @@ The Heisenberg frame exhibits the following characteristic data:
  $\kappa(\mathcal{H}_k) = k$
 (Theorem~\ref{thm:modular-characteristic}), which determines
 the entire \emph{scalar} modular package: $\mathrm{obs}_g = k
-\cdot \lambda_g$ \textup{(}UNIFORM-WEIGHT\textup{}) for all $g \geq 1$ \item The \emph{proved ambient complementarity complex}
+\cdot \lambda_g$ under the uniform-weight free-field hypothesis
+for all $g \geq 1$.
+\item The \emph{proved ambient complementarity complex}
  \begin{equation}\label{eq:frame-ambient}
  H_{\mathcal{H}_k}
  \coloneqq R\Gamma\bigl(\overline{\mathcal{M}}_g,\,
@@ -1925,18 +1984,21 @@ their holographic duals. We state it once, in coordinates, and check
 it against the computations already performed on~$\cH_k$.
 
 \begin{quote}
-\textbf{Thesis.} A chiral algebra~$\cA$ determines a $3$d HT bulk
-theory (T18(iii)) whose chain-level algebra of local observables is
-the chiral derived centre $\mathrm{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)$
-(T18(i)). The level $\kappa(\cA)$ is the holographic central charge
-of the induced $3$d HT bulk. The shadow obstruction tower
-$\Theta_{\cA}^{\leq r}$ is the hierarchy of holographic corrections
+\textbf{Thesis.} A chiral algebra~$\cA$ determines a cochain-level
+closed-sector slot
+$\mathrm{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ (T18(i)). A $3$d HT
+bulk theory enters only after the open/closed comparison data are
+constructed (T18(iii)). The level $\kappa(\cA)$ is the scalar anomaly
+coefficient on that comparison surface; in current-algebra examples it
+is the coupling parameter, not automatically a Virasoro central charge.
+The shadow obstruction tower
+$\Theta_{\cA}^{\leq r}$ is the hierarchy of open/closed corrections
 to the leading scalar datum. The Drinfeld double
 $U_{\cA} = \cA \bowtie \cA^!$, with braiding governed by the
-classical $r$-matrix, is the universal boundary-to-bulk reconstructor:
+classical $r$-matrix, is the algebraic open/closed comparison object:
 it assembles the boundary algebra and its Koszul dual into a single
-braided object that the $3$d HT bulk realises as its category of line
-operators.
+braided object. A $3$d HT realization as a category of line operators
+is an additional comparison theorem.
 \end{quote}
 
 The Heisenberg algebra is the minimal instance where every term of
@@ -1969,18 +2031,20 @@ The Koszul dual algebra is
  \cH_k^! \;=\; \bigl(\mathrm{Sym}^{\mathrm{ch}}(V^*),\;
  d = 0,\; m_0 = -k\cdot\omega\bigr),
 \]
-obtained from Verdier duality on the factorization coalgebra
-$\barB(\cH_k)$ on $\mathrm{Ran}(X)$
+obtained by applying Verdier duality to the bar-dual coalgebra
+computed by $\barB(\cH_k)$ on $\mathrm{Ran}(X)$
 (Theorem~\ref{thm:frame-heisenberg-koszul-dual}). This is
 \emph{not} the level-flipped algebra $\cH_{-k}$, which is a
 representation-theoretic duality distinct from Koszul duality
-(Remark~\ref{rem:frame-three-dualities}). The bar coalgebra
-itself, $\barB(\cH_k) \simeq \mathrm{coLie}^{\mathrm{ch}}(V^*)$,
-is the Koszul dual \emph{coalgebra}; linear dualisation exchanges
-coLie and Sym.
+(Remark~\ref{rem:frame-three-dualities}). The raw bar coalgebra
+$\barB(\cH_k)$ resolves the Koszul dual coalgebra
+$\cH_k^i=H^*(\barB(\cH_k))$; after the finite-type Verdier-dual
+passage, $\cH_k^!=(\cH_k^i)^\vee$ is the commutative chiral
+algebra above. The bar-cobar counit recovers $\cH_k$ itself, not
+$\cH_k^!$.
 
 \item \textbf{Drinfeld double.}
-The universal reconstructor is
+The universal comparison object is
 \[
  U_{\cH_k}
  \;=\;
@@ -1988,8 +2052,8 @@ The universal reconstructor is
 \]
 with braiding generated by the classical $r$-matrix at degree~$2$.
 For the abelian case this $r$-matrix is
-$r(z) = k/z$ (after $d\log$ absorption of the double pole, with the
-level surviving), and the quantum $R$-matrix is the scalar
+$r(z) = k/z$ (the residue transform lowers the double pole and
+leaves the level as a prefactor), and the quantum $R$-matrix is the scalar
 exponential $R(z) = \exp(k\hbar/z)$
 (Theorem~\ref{thm:rosetta-cs-r-matrix} for the odd current variant;
 the Heisenberg version is derived in
@@ -1998,7 +2062,7 @@ of the braiding vanish because the OPE has only a single pole
 order: there is one generator, one relation, one scalar, and no
 place for a genuine degree-$3$ braiding structure to hide.
 
-\item \textbf{Chiral derived centre and $3$d HT bulk.}
+\item \textbf{Chiral derived centre and closed-sector comparison.}
 The chiral derived centre (T18(i)) of $\cH_k$ is the chiral
 Hochschild complex
 \[
@@ -2022,16 +2086,16 @@ explicit computation in~\S\ref{sec:frame-center-theorem}
 total dimension~$3$. The degree-$0$ class is the vacuum; the
 degree-$1$ class is the outer derivation $D(\alpha) = \mathbf{1}$;
 the degree-$2$ class is the level deformation
-$\delta_k\colon \alpha\otimes\alpha \mapsto 1$. The $3$d HT bulk
-(T18(iii)) physically realised by this chiral derived centre is
+$\delta_k\colon \alpha\otimes\alpha \mapsto 1$. Under the abelian
+Chern--Simons open/closed comparison, the physical target is
 abelian Chern--Simons at level~$k$: the three classes correspond
-respectively to the partition function of the $3$d HT bulk, the
-topological shift deforming the Chern--Simons Lagrangian by a
+respectively to the partition-function slot, the topological shift
+deforming the Chern--Simons Lagrangian by a
 $B\wedge F$ term, and the level-varying deformation of the
 Chern--Simons coupling. The amplitude of this complex is $[0,2]$
 (cohomological amplitude, \emph{not} virtual dimension).
 
-\item \textbf{$\kappa$ as holographic central charge.}
+\item \textbf{$\kappa$ as scalar coupling.}
 The scalar level is
 \[
  \kappa(\cH_k) \;=\; k
@@ -2039,16 +2103,14 @@ The scalar level is
 (Theorem~\ref{thm:modular-characteristic} and
 Remark~\ref{rem:cs-hinge-ap1-level}), with no factor of two. In the 4d--3d--2d cascade of
 Heuristic~\ref{heur:cs-hinge-cascade} this number is the
-Chern--Simons level of the 3d bulk, and is therefore the
-$U(1)$ holographic central charge: it controls the large-$k$
-entanglement entropy $S_{\mathrm{EE}} \sim k^{-1}\cdot\mathrm{(area)}$
-through the $U(1)$ analogue of the Brown--Henneaux formula. The
-Heisenberg has no stress tensor of its own (there is no Virasoro
-subalgebra built from $\alpha$ without invoking the Sugawara
-construction), so the Brown--Henneaux central charge does not
-arise here in the Virasoro sense. The level~$\kappa = k$ plays
-the role directly: it is the holographic coupling that couples
-the boundary current to the bulk gauge field.
+Chern--Simons level of the 3d bulk. For $k\neq0$ the rank-one
+free boson has the Sugawara stress tensor
+$T=(2k)^{-1}:\!\alpha\alpha\!:$ and Virasoro central charge
+$c=1$, independent of~$k$. Thus $\kappa=k$ is not the Virasoro
+central charge. It is the bar-curvature coefficient and the
+$U(1)$ bulk coupling that couples the boundary current to the
+bulk gauge field; a Brown--Henneaux central charge does not enter
+this abelian rank-one computation.
 
 \item \textbf{Shadow tower termination.}
 Heisenberg is of class~G (Gaussian): the shadow obstruction tower
@@ -2062,8 +2124,8 @@ Gaussian atom the thesis reduces to its base case, and the shadow
 tower is literally a single scalar.
 
 \item \textbf{4d--3d--2d cascade.}
-The boundary-to-bulk reconstruction of the thesis is physically
-realised by the cascade
+The open/closed comparison surface of the thesis is physically
+modeled by the cascade
 \[
  \text{4d $\mathcal{N}=2$ abelian gauge theory}
  \;\longrightarrow\;
@@ -2085,15 +2147,15 @@ Each of the seven items is a specific, checkable claim on the
 Heisenberg algebra. Every one of them reduces to a single scalar,
 the level~$k$, or to a construction determined by that scalar. The
 Gaussian archetype is the statement that the thesis \emph{collapses}
-to a single scalar at the atom: the bulk reconstruction, the
-holographic central charge, and the shadow tower are all captured by
-$\kappa(\cH_k) = k$, and no additional data survives.
+to a single scalar at the atom: the open/closed comparison, the
+coupling, and the shadow tower are all captured by
+$\kappa(\cH_k) = k$, and no additional scalar shadow survives.
 
 \subsection{The Drinfeld double of the Heisenberg algebra}
 \label{subsec:frame-thesis-drinfeld-double}
 
-The Drinfeld double $U_{\cH_k}$ is the universal braided
-reconstructor paired to $(\cH_k, \cH_k^!)$. For Heisenberg the
+The Drinfeld double $U_{\cH_k}$ is the universal braided comparison
+object paired to $(\cH_k, \cH_k^!)$. For Heisenberg the
 construction is elementary and the classical limit recovers
 $r(z) = k/z$ exactly. We record both the construction and the
 verification.
@@ -2113,13 +2175,13 @@ with Hopf pairing determined by the evaluation
 $\langle \alpha^*, \alpha\rangle = 1$, and with braiding given
 at degree~$2$ by the classical $r$-matrix
 \begin{equation}\label{eq:frame-drinfeld-rmatrix}
- r(z) \;=\; \frac{k}{z}
- \;=\; k\,\partial_z \eta(z),
- \qquad
- \eta(z) = d\log z,
+ r(z) \;=\; \frac{k}{z},
 \end{equation}
-the collision residue of the double pole in the Heisenberg
-self-OPE, with the level surviving $d\log$ absorption.
+the residue-transform of the double pole in the Heisenberg
+self-OPE. The Arnold form $\eta=d\log z$ remains the
+configuration-space coefficient in the bar complex; it is not
+multiplied into the connection form $r(z)\,dz$. The transform
+lowers the pole order and leaves the level~$k$ as a prefactor.
 The quantum $R$-matrix is the scalar exponential
 \begin{equation}\label{eq:frame-drinfeld-Rmatrix}
  R(z) \;=\; \exp\!\bigl(k\hbar/z\bigr)
@@ -2162,13 +2224,14 @@ the replacement $c \leftrightarrow \alpha$ and the simple/double
 pole distinction tracked through the Laplace transform).
 \end{proof}
 
-The Drinfeld double of $\cH_k$ is the universal boundary-to-bulk
-reconstructor in the sense of the thesis: it assembles $\cH_k$
+The Drinfeld double of $\cH_k$ is the algebraic open/closed comparison
+object in the sense of the thesis: it assembles $\cH_k$
 (Dirichlet boundary) and $\cH_k^!$ (Neumann boundary) into a single
 braided object whose braiding data is exactly the scalar
 $r$-matrix~\eqref{eq:frame-drinfeld-rmatrix} read off the
-Heisenberg collision residue. The bulk Chern--Simons theory
-recovers this braiding as the framing anomaly of its line operators:
+Heisenberg collision residue. Under the Chern--Simons comparison,
+the physical theory recovers this braiding as the framing anomaly of
+its line operators:
 a Wilson line of charge~$q$ in the 3d bulk acquires a topological
 phase $\exp(2\pi i q^2/k)$ under a $2\pi$ self-twist, which is the
 boundary-value of the exponentiated $R$-matrix after specialising
@@ -2183,7 +2246,7 @@ is the Postnikov tower of the MC element
 $\Theta_{\cA} \in \MC(\fg^{\mathrm{mod}}_{\cA})$, with graded
 pieces $S_2, S_3, S_4, \ldots$, each encoding an obstruction at a
 fixed symmetric degree on the symmetric bar. The thesis identifies
-this tower with the hierarchy of holographic corrections to the
+this tower with the hierarchy of open/closed corrections to the
 leading scalar $\kappa$: for a generic chiral algebra, successive
 pieces $S_r$ refine the Gaussian approximation provided by~$S_2$.
 For the Heisenberg, the tower terminates immediately.
@@ -2295,18 +2358,20 @@ fermionic ($|\psi| = 1$), two desuspended cogenerators in
 $\bar{B}^2$ satisfy
 $\psi^* \otimes \psi^* = -\psi^* \otimes \psi^*$ under
 transposition, forcing antisymmetry. The coproduct on
-$\bar{B}(\mathcal{F})$ is therefore co-antisymmetric, so the
-bar coalgebra is a coLie coalgebra and the Koszul dual algebra is
-the commutative algebra $\mathrm{Com}$. This is the classical
-duality $\mathrm{Lie}^! = \mathrm{Com}$, already visible in the
-OPE: the self-pairing $\psi(z)\psi(w) \sim 1/(z-w)$ is
-antisymmetric under $z \leftrightarrow w$ (fermionic), encoding
-Lie structure.
+$\bar{B}(\mathcal{F})$ is therefore co-antisymmetric. On the
+Koszul locus its bar cohomology $\mathcal F^i$ is a coLie
+coalgebra, and the Koszul-dual algebra
+$\mathcal F^!=(\mathcal F^i)^\vee$ is the commutative algebra
+$\mathrm{Com}$. This is the classical duality
+$\mathrm{Lie}^! = \mathrm{Com}$, already visible in the OPE:
+the self-pairing $\psi(z)\psi(w) \sim 1/(z-w)$ is antisymmetric
+under $z \leftrightarrow w$ (fermionic), encoding Lie structure.
 
 By contrast, the Heisenberg current $\alpha$ is bosonic
 ($|\alpha| = 0$), so the desuspended cogenerators commute, the
-bar coalgebra is cocommutative (coLie $\to$ Sym), and the Koszul
-dual is $\mathrm{Sym}^{\mathrm{ch}}(V^*)$. In both cases, it is
+bar cohomology coalgebra is cocommutative (coLie $\to$ Sym), and
+the Koszul-dual algebra is $\mathrm{Sym}^{\mathrm{ch}}(V^*)$.
+In both cases, it is
 the \emph{statistics of the generators}, not the pole order, that
 determines the operadic type.
 
@@ -2577,13 +2642,23 @@ of the associated graded together with the classical Koszulness
 of $U(\mathfrak{g})$ (Priddy~\cite{Priddy70}); see
 Theorem~\ref{thm:pbw-koszulness-criterion}.
 
-\subsection{The Feigin--Frenkel involution as Koszul duality}
+\subsection{The Feigin--Frenkel level reflection on the non-critical Koszul lane}
 
-The Koszul dual of $\widehat{\mathfrak{g}}_k$ is
-$\widehat{\mathfrak{g}}_{-k-2h^\vee}$, where $h^\vee$ is the
-dual Coxeter number (Theorem~\ref{thm:universal-kac-moody-koszul}).
-For $\mathfrak{g} = \mathfrak{sl}_2$, $h^\vee = 2$ and the duality
-sends $k \mapsto -k - 4$.
+For $k\neq -h^\vee$, the Koszul dual of
+$\widehat{\mathfrak{g}}_k$ is the chiral Chevalley--Eilenberg
+algebra of the level-reflected current presentation,
+\[
+(\widehat{\mathfrak{g}}_k)^!
+\simeq
+\mathrm{CE}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_{-k-2h^\vee}),
+\]
+where $h^\vee$ is the dual Coxeter number
+(Theorem~\ref{thm:universal-kac-moody-koszul}). The notation
+$\widehat{\mathfrak{g}}_{-k-2h^\vee}$ records the current
+presentation inside the CE algebra; it is not a claim that the
+Koszul dual algebra is the affine vertex algebra itself. For
+$\mathfrak{g} = \mathfrak{sl}_2$, $h^\vee = 2$ and the reflected
+level is $k'=-k-4$.
 
 \begin{center}
 \small
@@ -2598,28 +2673,38 @@ $d^2 = 0$ from & Arnold alone
 Spectral sequence & Trivial ($E_1 = E_\infty$)
  & PBW ($E_2$ collapse for Koszul) \\
 Koszul dual & $\mathrm{Sym}^{\mathrm{ch}}(V^*)$
- & $\widehat{\mathfrak{g}}_{-k-2h^\vee}$ \\
+ & $\mathrm{CE}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_{-k-2h^\vee})$ \\
 Level shift & None ($h^\vee = 0$)
  & $k \mapsto -k - 2h^\vee$ \\
 Discriminant & $\Delta(x) = 1$
  & $\Delta(x) = (1-3x)(1+x)$ for $\mathfrak{sl}_2$ \\
 Critical level & $k = 0$ (degenerate)
- & $k = -h^\vee$ (curvature vanishes)
+ & $k = -h^\vee$ (shifted curvature vanishes; FF boundary)
 \end{tabular}
 \end{center}
 
-At the critical level $k = -h^\vee$, the curvature of the bar
-complex vanishes: $d^2 = 0$ at all genera. This is the level at
-which the center of $\widehat{\mathfrak{g}}_k$ becomes large
-(the Feigin--Frenkel center $\mathfrak{z}(\widehat{\mathfrak{g}}_{-h^\vee})
-\cong \mathcal{W}(\widehat{\mathfrak{g}}^\vee)$), and the bar
-complex recovers the Langlands dual.
+At the critical level $k = -h^\vee$, the \emph{shifted} curvature
+$\kappa(\widehat{\mathfrak{g}}_k)
+=\dim(\mathfrak g)(k+h^\vee)/(2h^\vee)$ vanishes. The current OPE
+does not become abelian: the simple-pole bracket remains, and the
+trace-form double pole is $-h^\vee\Omega/(z-w)^2$. This is the
+level at which the Feigin--Frenkel center becomes large,
+\[
+\mathfrak{z}(\widehat{\mathfrak{g}}_{-h^\vee})
+\cong
+\operatorname{Fun}(\operatorname{Op}_{\mathfrak{g}^\vee}(D)),
+\]
+on the formal-disc surface of
+Theorem~\ref{thm:critical-level-structure}. That critical center is
+bar cohomology on the oper axis; it is not the bar-cobar inverse
+$\Omega\barB(\widehat{\mathfrak g}_{-h^\vee})$, not the Koszul
+dual algebra, and not the chiral derived center.
 
-The Feigin--Frenkel involution $k \leftrightarrow -k - 2h^\vee$
-is not a representation-theoretic accident: it is Koszul duality
-in the chiral algebra sense, proved in
-Theorem~\ref{thm:universal-kac-moody-koszul} via Verdier duality
-on Fulton--MacPherson configuration spaces.
+The Feigin--Frenkel level reflection $k \leftrightarrow -k - 2h^\vee$
+is the reflection appearing in the non-critical Verdier/Koszul
+construction. The actual Koszul dual object is the CE algebra at the
+reflected level; bar-cobar inversion remains the separate counit
+$\Omega\barB(\widehat{\mathfrak g}_k)\to\widehat{\mathfrak g}_k$.
 
 % ================================================================
 \section{The nonabelian Rosetta Stone: reading the full structure
@@ -2635,8 +2720,9 @@ structure is genuinely nontrivial. The OPE has \emph{both} simple
 poles (from the Lie bracket) and double poles (from the Killing form),
 the bar differential decomposes as
 $d = d_{\mathrm{bracket}} + d_{\mathrm{curvature}}$ with
-$d_{\mathrm{bracket}}^2 \neq 0$, and the Feigin--Frenkel involution
-$k \mapsto -k-4$ emerges as Verdier duality on configuration spaces.
+$d_{\mathrm{bracket}}^2 \neq 0$, and the Feigin--Frenkel level
+reflection $k \mapsto -k-4$ emerges in the Verdier
+construction of the CE/Koszul partner.
 
 Three structures emerge that were invisible for Heisenberg:
 \begin{enumerate}
@@ -2647,10 +2733,12 @@ Three structures emerge that were invisible for Heisenberg:
 \item The \emph{affine Poisson vertex algebra} structure on bar
  cohomology, with the Jacobi identity verified directly from the
  Arnold relation.
-\item The \emph{Feigin--Frenkel involution as Verdier duality}:
+\item The \emph{Feigin--Frenkel level reflection as Verdier data}:
  the classical involution $k \mapsto -k - 2h^\vee$ is not an
  ad hoc symmetry of level but the action of Verdier duality on the
- bar differential, exchanging the roles of simple and double poles.
+ coefficient system used to build the Koszul partner. It does not
+ identify the critical center with the Koszul dual or with the
+ derived center.
 \end{enumerate}
 
 
@@ -2829,7 +2917,7 @@ Heisenberg.
 
 
 % ========================================================
-\subsection{\texorpdfstring{Reading off $m_2$ and the Feigin--Frenkel involution}{Reading off m2 and the Feigin--Frenkel involution}}
+\subsection{\texorpdfstring{Reading off $m_2$ and the Feigin--Frenkel level reflection}{Reading off m2 and the Feigin--Frenkel level reflection}}
 \label{subsec:rosetta-operations}
 % ========================================================
 
@@ -2877,7 +2965,7 @@ $\mathfrak{sl}_2$ at level~$k$.
 \end{remark}
 
 \medskip
-\noindent\textbf{The Feigin--Frenkel involution from Verdier duality.}
+\noindent\textbf{The Feigin--Frenkel level reflection from Verdier duality.}
 
 Verdier duality on $\FM_n(\mathbb{C})$ exchanges logarithmic forms
 with distributional currents
@@ -2885,19 +2973,31 @@ with distributional currents
 On the bar complex, it acts on the \emph{coefficients} of the
 differential.
 
-\begin{theorem}[Feigin--Frenkel involution as Verdier duality;
+\begin{theorem}[Verdier level identification for
+\texorpdfstring{$\widehat{\mathfrak{sl}}_2$}{sl2-hat};
 \ClaimStatusProvedHere]
 \label{thm:rosetta-feigin-frenkel}
-Verdier duality on $\FM_n(\mathbb{C})$ induces an isomorphism of
-bar complexes\textup{:}
+For $k\neq -2$, Verdier duality on the Fulton--MacPherson
+coefficient system used in the Koszul construction sends
+$\widehat{\mathfrak{sl}}_{2,k}$ to the CE/Koszul partner at the
+reflected level:
+\begin{equation}\label{eq:rosetta-verdier-km-partner}
+(\widehat{\mathfrak{sl}}_{2,k})^!
+\;\simeq\;
+\mathrm{CE}^{\mathrm{ch}}(\widehat{\mathfrak{sl}}_{2,{-k-4}}).
+\end{equation}
+At the level of bar-coefficient complexes, the underlying Verdier
+transform is
 \begin{equation}\label{eq:rosetta-verdier-km}
 \mathbb{D}\colon
 \barB(\widehat{\mathfrak{sl}}_{2,k})
 \;\xrightarrow{\;\sim\;}\;
 \barB(\widehat{\mathfrak{sl}}_{2,{-k-4}})^\vee.
 \end{equation}
-The level shift $k \mapsto -k - 2h^\vee = -k - 4$ is the
-Feigin--Frenkel involution, realized geometrically.
+The display is the coefficient transform in the Verdier/Koszul
+construction. It is not the bar-cobar counit and it does not
+identify $\widehat{\mathfrak{sl}}_{2,k}$ with
+$\widehat{\mathfrak{sl}}_{2,-k-4}$ as vertex algebras.
 \end{theorem}
 
 \begin{proof}
@@ -2940,20 +3040,30 @@ duality formula on the double-pole coefficient is therefore
 \]
 and the dual bar complex has level $-k - 4$.
 
-Combining both components: the dual bar complex has the same
-structure constants $f^{ab}{}_c$ (preserved) and level $-k - 4$
-(shifted), hence is $\barB(\widehat{\mathfrak{sl}}_{2,-k-4})^\vee$.
+Combining both components: the Verdier-dual coefficient system has
+the same structure constants $f^{ab}{}_c$ (preserved) and level
+$-k - 4$ (shifted), hence the Koszul partner is the chiral CE
+algebra of the reflected current presentation. The raw bar-cobar
+construction $\Omega\barB(\widehat{\mathfrak{sl}}_{2,k})$ recovers
+the original current algebra and is a different operation.
 \end{proof}
 
 \begin{remark}[Critical level as Verdier fixed point]
 \label{rem:rosetta-critical}
 The critical level $k = -h^\vee = -2$ is the unique fixed point
-of $k \mapsto -k - 4$: the bar complex is Verdier self-dual, the
-curvature vanishes ($m_0 = 0$), and the Koszul dual is
-$\widehat{\mathfrak{sl}}_{2,-2}$ itself. This is the geometric
-critical specialization of the internal level-shift formula
-\textup{(}Proposition~\textup{\ref{prop:verdier-level-identification}}\textup{)},
-compatible with the external Feigin--Frenkel critical-level theorem
+of $k \mapsto -k - 4$. This is a fixed \emph{level}, not a
+self-Koszul-duality statement. The shifted curvature vanishes
+($m_0=0$), but the OPE still contains the simple-pole
+$\mathfrak{sl}_2$ bracket and the trace-form double pole
+$-2\Omega/(z-w)^2$. The Feigin--Frenkel center is the critical
+cohomology
+$\operatorname{Fun}(\operatorname{Op}_{\mathfrak{sl}_2^\vee}(D))$;
+it is distinct from the CE/Koszul partner, the raw bar-cobar
+inverse, and the chiral derived center. This is the critical
+specialization of the level-shift formula
+\textup{(}Proposition~\textup{\ref{prop:verdier-level-identification}}\textup{)}
+and is compatible with, but does not prove, the external
+Feigin--Frenkel center theorem
 \textup{(}Theorem~\textup{\ref{thm:critical-level-structure}}\textup{)}.
 \end{remark}
 
@@ -3144,7 +3254,7 @@ complex, Arnold relation, Koszul dual, curvature, genus tower) for
 an abelian algebra whose only OPE singularity is a double pole.
 The $\widehat{\mathfrak{sl}}_2$ frame adds the \emph{horizontal
 enrichment}: the simple pole, the Lie bracket, the PBW spectral
-sequence, and the Feigin--Frenkel involution as Verdier duality.
+sequence, and the Feigin--Frenkel level reflection as Verdier data.
 Every computation in the Heisenberg frame has a non-abelian
 counterpart in the $\mathfrak{sl}_2$ frame, with the bracket
 component $d_{\mathrm{bracket}}$ as the new ingredient:
@@ -3166,11 +3276,11 @@ Lambda-bracket & $\{J {}_\lambda J\} = k\lambda$
 PVA Jacobi & Commutativity of $\kappa$
  & Arnold $+$ both pole orders \\
 Koszul dual & $\mathrm{Sym}^{\mathrm{ch}}(V^*)$
- & $\widehat{\mathfrak{sl}}_{2,-k-4}$ \\
+ & $\mathrm{CE}^{\mathrm{ch}}(\widehat{\mathfrak{sl}}_{2,-k-4})$ \\
 Verdier action & $k \mapsto -k$
  & $k \mapsto -k - 4$ \\
 Chiral differential & Flat
- & Curved (defect $= k$)
+ & Curved off $k=-2$ (shifted defect $= k+2$)
 \end{tabular}
 \end{center}
 
@@ -3212,10 +3322,6 @@ self-bracket.
 \begin{remark}[The boundary of abelian Chern--Simons is the Heisenberg;
 the odd current is a complementary pole structure]
 \label{rem:abelian-cs-is-heisenberg}
-%: Heisenberg = abelian CS boundary algebra (same OPE).
-% The Heisenberg is the CG opening, not the atom of E_1 structure;
-% the genuine E_1 atom is the Yangian
-% (see \S\ref{sec:frame-yangian-preview}).
 The boundary algebra of $U(1)$ Chern--Simons theory on
 $\bC \times \bR_{\ge 0}$ is the \emph{Heisenberg algebra}
 $\cH_k$ itself: the boundary current~$J$ is even/bosonic,
@@ -3251,19 +3357,20 @@ derivable from any local OPE
 Section~\ref{sec:frame-thesis-at-atom} verified the seven items of
 the thesis on the Heisenberg algebra by direct bar-complex
 calculation. This subsection explains the same verification from
-the opposite direction: starting from the 3d bulk theory whose
-boundary-to-bulk reconstruction produces~$\cH_k$, and reading off
+the opposite direction: starting from the 3d abelian Chern--Simons
+comparison target whose boundary condition produces~$\cH_k$, and reading off
 every item of the thesis from the Chern--Simons Lagrangian. The
 two directions meet in the middle. In the bar-complex direction,
 the derived chiral center
 $\mathrm{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cH_k)
 = \ChirHoch^{\bullet}(\cH_k, \cH_k)$ of
-\S\ref{sec:frame-thesis-at-atom} is the abstract characterisation
-of the bulk. In the Chern--Simons direction, the bulk is the 3d
-theory whose perturbative partition function, read on a slab, is
-computed by the Heisenberg bar complex. The thesis asserts that
-these two characterisations agree: the derived chiral center of the
-boundary is the same thing as the perturbative 3d bulk theory.
+\S\ref{sec:frame-thesis-at-atom} is the cochain-level closed-sector
+slot. In the Chern--Simons direction, the physical comparison target
+is the 3d theory whose perturbative partition function, read on a
+slab, is computed by the Heisenberg bar complex. The thesis asserts
+that these two characterisations agree after the open/closed
+comparison is fixed; the derived chiral center of the boundary is not
+identified with a physical 3d theory by bar-cobar algebra alone.
 At the Gaussian atom, both reduce to a single scalar, the level
 $\kappa = k$, and the reduction can be carried out line by line.
 
@@ -3285,19 +3392,19 @@ rigorous content is the list of mathematical objects that the
 derivation produces. The Heisenberg OPE is fixed by the boundary
 condition; the level $k$ is the Chern--Simons coupling; the bar
 complex is the space of operator insertions on an interval;
-the Koszul dual bar complex corresponds to the opposite
-boundary condition (Neumann instead of Dirichlet); and Koszul
-duality itself is the boundary-changing functor of
+the Koszul dual algebra corresponds to the opposite boundary
+condition (Neumann instead of Dirichlet); and Koszul duality
+itself is the boundary-changing functor of
 Dimofte~\cite{CostelloGaiotto2020}. Each of these identifications
 is an instance of the thesis: boundary VOA, Koszul dual, derived
-center, holographic central charge, cascade.
+center, scalar coupling, cascade.
 
 The remainder of this subsection unfolds the derivation in four
 steps: (1) abelian Chern--Simons on a disk and the Heisenberg
 boundary OPE (thesis item~(1), boundary VOA); (2) the perturbative
-expansion in Feynman diagrams and the propagator
-$\eta = d\log(z_1 - z_2)$ (thesis item~(3), braiding and
-$r$-matrix); (3) the physical identification of the bar complex
+expansion in Feynman diagrams, the double-pole propagator, and the
+Arnold form $\eta = d\log(z_1 - z_2)$ (thesis item~(3), braiding
+and $r$-matrix); (3) the physical identification of the bar complex
 with interval amplitudes (thesis item~(4), derived center); and
 (4) the 4d--3d--2d cascade that lifts the story to
 four-dimensional gauge theory (thesis item~(7)).
@@ -3489,18 +3596,18 @@ $\mathrm{Conf}_n(\bC)$ in the Arnold presentation; the Feynman
 propagator is the kernel against which the Arnold form is
 integrated to extract the collision residue.
 
-\begin{remark}[F3-C1, F3-C2: propagator vs Arnold form]
+\begin{remark}[Propagator and Arnold form]
 \label{rem:cs-hinge-propagator-arnold-distinction}
-Earlier drafts of this section recorded the propagator as
-``$G(z_i, z_j) = k\,\partial_{z_i}\eta_{ij}$'', which is
-dimensionally inconsistent: $\eta_{ij}$ is weight~$1$, and
+The expression
+$G(z_i, z_j) = k\,\partial_{z_i}\eta_{ij}$ is dimensionally
+inconsistent: $\eta_{ij}$ is weight~$1$, and
 $\partial_{z_i}\eta_{ij}$ is a weight-$2$ object that looks like
 the propagator but is a distinct one-form
 ($d(-(z_i - z_j)^{-1})$, not $d\log(z_i - z_j)$). The correct
 statement is~\eqref{eq:cs-hinge-propagator-forms}: the two
-one-forms are distinct and serve distinct roles. The confusion
-is an instance (connection one-form is $r(z)\,dz$, NOT
-$r(z)\,d\log(z)$): the Arnold form is a bar-complex coefficient,
+one-forms are distinct and serve distinct roles. The connection
+one-form is $r(z)\,dz$, not $r(z)\,d\log(z)$: the Arnold form is a
+bar-complex coefficient,
 not the connection form of a flat bundle.
 \end{remark}
 
@@ -3520,7 +3627,7 @@ is nonempty only when $n$ is even; the odd-degree amplitudes
 vanish.
 
 Each matching $\pi$ is a graph on $n$ vertices with $n/2$ edges.
-The edges are Arnold propagator lines
+The edges are Arnold-form lines
 $\{i,j\}\leftrightarrow\eta_{ij}$. The amplitude
 \eqref{eq:cs-hinge-degree-n-amplitude} is the evaluation of the
 graph sum against the Gaussian measure, weighted by $k$ per
@@ -3571,18 +3678,17 @@ degree-$3$ follows from the Arnold relation, which follows from
 the partial fraction decomposition of the product of three
 propagators.
 
-\begin{remark}[level survives $d\log$ absorption]
+\begin{remark}[Level survives the residue transform]
 \label{rem:cs-hinge-ap126}
 In the passage from the propagator $k/(z - w)^2$ to the Arnold
 form $\eta = d\log(z - w)$, the level $k$ survives: the
-propagator is $k\,\partial_z \eta$, and the level is a
-multiplicative prefactor that is not absorbed by the differential.
+propagator is the weight-$2$ kernel
+$-k\,d((z-w)^{-1})$, and the level is a multiplicative prefactor
+that is not absorbed by the logarithmic coefficient.
 The classical $r$-matrix extracted from the collision residue is
 $r(z) = k/z$, \emph{not} $1/z$; at $k = 0$ both the propagator and
-the $r$-matrix vanish. is the mandate to verify this after
-every formula involving the CS level: the $k$ is never absorbed by
-$d\log$, and any formula with a bare $1/z$ or a level-stripped
-Casimir pole without a level prefix is suspect.
+the $r$-matrix vanish. Thus any formula with a bare $1/z$ or a
+level-stripped Casimir pole has changed the normalization.
 \end{remark}
 
 \subsubsection{The bar complex as the space of interval amplitudes}
@@ -3737,7 +3843,7 @@ no hypermultiplet), the 3d theory is the abelian holomorphic
 Chern--Simons whose boundary amplitudes match the Gaussian integral
 underlying~\eqref{eq:cs-hinge-action}.
 
-\begin{remark}[F3-M2: holomorphic vs topological Chern--Simons]
+\begin{remark}[Holomorphic and topological Chern--Simons]
 \label{rem:cs-hinge-holomorphic-vs-topological}
 The bar-complex derivation is insensitive to which of the two
 3d Chern--Simons variants provides the bulk. Both the
@@ -3754,11 +3860,10 @@ of the boundary algebra and its derived center. The cascade
 from 4d $\cN = 2$ produces the holomorphic variant,
 but the classical topological abelian Chern--Simons of
 Subsection~\ref{sec:cs-hinge-abelian} is an equally valid starting
-point for deriving the Heisenberg boundary OPE. The F3-M2
-audit warning notes that conflating the two is harmless \emph{for
-the Heisenberg bar complex}, but would matter if one tried to
-extract the modular character from the non-chiral full CS
-partition function.
+point for deriving the Heisenberg boundary OPE. The distinction is
+harmless for the chiral bar complex and not harmless for the
+non-chiral modular character of the full Chern--Simons partition
+function.
 \end{remark}
 
 At the second step, 3d Chern--Simons on $\Sigma \times I$ with
@@ -3804,8 +3909,9 @@ boundary duality $\cD \leftrightarrow \cN$ of the 3d CS slab,
 realised as a boundary-changing defect in the Dimofte
 sense~\cite{CostelloGaiotto2020};
 \item the modular characteristic $\kappa(\cH_k) = k$ is the
-central charge of the 4d bulk theory, propagated through the
-cascade by holomorphic anomaly matching;
+abelian anomaly coefficient propagated through the cascade by
+holomorphic anomaly matching; it is not the rank-one Virasoro
+central charge, which is $1$ for $k\neq0$;
 \item the genus tower $F_g = k \cdot \lambda_g^{\mathrm{FP}}$
 is the perturbative expansion of the 4d partition function on
 $\Sigma_g \times I \times I$, where the second interval is a
@@ -3994,10 +4100,11 @@ $r_{12}(z_1 - z_2)$, the CYBE
 \;=\; 0
 \end{equation}
 is a statement about three points $z_1, z_2, z_3$ on the curve.
-For the rational $r$-matrix $r(z) = k\,\Omega/z$
+For the rational Kac--Moody $r$-matrix
+$r^{KM}(z) = k\,\Omega/z$
 (where $\Omega \in \fg \otimes \fg$ is the Casimir tensor of an
 affine Kac--Moody algebra at level~$k$, and the level survives
-$d\log$ absorption so that $r$ vanishes at $k = 0$), the three
+the residue transform so that $r^{KM}$ vanishes at $k = 0$), the three
 terms are respectively
 $k^2\,[\Omega_{12}, \Omega_{13}]/(z_{12}\,z_{13})$,
 $k^2\,[\Omega_{12}, \Omega_{23}]/(z_{12}\,z_{23})$, and
@@ -4043,14 +4150,14 @@ The spectral $R$-matrix at the evaluation locus recovers the
 Drinfeld--Kohno braiding from Volume~I's DK ladder (DK-0).
 For a non-abelian gauge group~$G$ with Lie algebra~$\fg$, the
 classical $r$-matrix becomes
-$r(z) = k\,\Omega/z$,
+$r^{KM}(z) = k\,\Omega/z$,
 where $\Omega = \sum_a J^a \otimes J_a$ is the quadratic Casimir.
 At the evaluation locus (i.e., the fundamental representation),
-this is $r(z) = k P / z$ with $P$ the permutation matrix, and
-the quantum $R$-matrix $R(z) = \mathrm{id} + \hh\, r(z) + O(\hh^2)$
+this is $r^{KM}(z) = k P / z$ with $P$ the permutation matrix, and
+the quantum $R$-matrix $R(z) = \mathrm{id} + \hh\, r^{KM}(z) + O(\hh^2)$
 matches the Drinfeld $R$-matrix to first order. The rank-one
 odd current algebra is the specialization where $\Omega = 1$ and
-$R(z) = \exp(k/z)$.
+$R(z) = \exp(k\hh/z)$.
 \end{remark}
 
 \medskip
@@ -4075,7 +4182,7 @@ the information it kills.
 For the Heisenberg algebra, the collision residue is
 $r^{\mathrm{coll}}(z) = k/z$
 (the OPE double pole $k/(z{-}w)^2$ descends to a simple pole
-$k/z$ via $d\log$ absorption; see
+$k/z$ by the residue transform; see
 Remark~\ref{rem:bar-pole-absorption} and
 Example~\ref{ex:e1-shadow-archetypes}). The quantum $R$-matrix
 $R(z) = e^{k\hbar/z}$
@@ -4088,12 +4195,12 @@ is entirely determined by $\kappa$, so the loss is
 recoverable: the spectral profile can be reconstructed from
 the single scalar.
 For affine $\widehat{\mathfrak{sl}}_2$ at level~$k$, the loss
-is \emph{irrecoverable}: $r(z) = k\,\Omega/z$ carries the
+is \emph{irrecoverable}: $r^{KM}(z) = k\,\Omega/z$ carries the
 Casimir tensor
 $\Omega = \sum_a J^a \otimes J_a$ in $\fg \otimes \fg$, but
-$\mathrm{av}(r(z)) = \kappa_{\mathrm{dp}}
+$\mathrm{av}(r^{KM}(z)) = \kappa_{\mathrm{dp}}
 = k\,\dim(\fg)/(2h^\vee)$ and
-$\kappa = \mathrm{av}(r(z)) + \dim(\fg)/2
+$\kappa = \mathrm{av}(r^{KM}(z)) + \dim(\fg)/2
 = \dim(\fg)\cdot(k + h^\vee)/(2h^\vee)$
 is a single scalar. The Casimir tensor determines the braiding
 on the category of representations; the modular
@@ -4178,7 +4285,7 @@ Genuinely $\Eone$ example
 \footnotetext{For the odd current algebra,
 $r^{\mathrm{coll}} = k$ is a constant (the simple pole
 $c(z)\,c(w) \sim k/(z-w)$ becomes a constant after
-$d\log$ absorption: $z^{-1} \mapsto z^0$).
+bar-residue extraction: $z^{-1} \mapsto z^0$).
 The $R$-matrix $R(z) = \exp(k\hbar/z)$ is obtained from the
 \emph{Laplace transform} of the $\lambda$-bracket
 $\{c {}_\lambda c\} = k$, which gives $r(z) = k/z$
@@ -4212,7 +4319,7 @@ and averaging kills only the spectral profile~$1/z$.
 Since the profile can be reconstructed from $\kappa = k$
 alone, the loss is recoverable.
 For the odd current algebra, the collision residue is the constant~$k$
-(no spectral dependence at all, since $d\log$ absorption
+(no spectral dependence at all, since bar-residue extraction
 reduces the simple pole to $z^0$), so averaging loses
 nothing: the modular characteristic $\kappa = k$ already
 captures the full collision data.
@@ -4331,9 +4438,10 @@ OPE implies $E_2$ collapse'' is \emph{false} for $\mathcal{W}$-algebras.
 \end{remark}
 
 \medskip
-\noindent\textbf{Koszul duality commutes with DS reduction.}
-The central theorem for $\mathcal{W}$-algebras is that Drinfeld--Sokolov
-reduction commutes with Koszul duality
+\noindent\textbf{The non-critical Koszul partner commutes with DS reduction.}
+The central theorem for principal finite-type $\mathcal{W}$-algebras is
+that, for $k\neq -h^\vee$ on the completed PBW/Koszul lane,
+Drinfeld--Sokolov reduction commutes with the Verdier--Koszul partner
 (Theorem~\ref{thm:w-algebra-koszul-main}):
 \begin{equation}\label{eq:frame-w-koszul}
 \mathcal{W}^k(\mathfrak{g})^!
@@ -4342,10 +4450,13 @@ reduction commutes with Koszul duality
 \qquad
 k' = -k - 2h^\vee.
 \end{equation}
-The Feigin--Frenkel involution $k \leftrightarrow -k - 2h^\vee$,
+The Feigin--Frenkel level reflection $k \leftrightarrow -k - 2h^\vee$,
 which we saw for Kac--Moody algebras in
 \S\ref{sec:frame-nonabelian-preview}, descends through DS reduction
-to the full $\mathcal{W}$-algebra tower. For the Virasoro algebra
+to the non-critical principal $\mathcal{W}$-algebra tower. The
+critical Feigin--Frenkel center remains the oper-valued critical
+surface and is not part of~\eqref{eq:frame-w-koszul}. For the
+Virasoro algebra
 ($\mathfrak{g} = \mathfrak{sl}_2$, $h^\vee = 2$), the dual levels
 satisfy
 \begin{equation}\label{eq:frame-virasoro-dual-central-charge}
@@ -4368,8 +4479,9 @@ Second, the bar complex of this derived tensor product is compared
 with the bar complex of $\widehat{\mathfrak{g}}_k$ restricted to
 the BRST cohomology. The BRST differential and the
 bar differential commute at the chain level, so the DS reduction
-can be performed inside the bar complex. The Koszul dual then
-inherits the level shift from the Kac--Moody duality.
+can be performed inside the bar complex. The Koszul partner then
+inherits the level reflection from the Kac--Moody Verdier/CE
+construction, not from the critical center.
 
 \begin{center}
 \small
@@ -4390,20 +4502,21 @@ Max OPE pole & $2$ & $4$ & $6$ \\
 PBW collapse & $E_2$ (automatic)
  & $E_2$ (automatic)
  & $E_2$ (separate argument) \\
-Koszul dual & $\widehat{\mathfrak{g}}_{k'}$
+Koszul dual & $\mathrm{CE}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_{k'})$
  & $\mathrm{Vir}_{c'}$
  & $\mathcal{W}_3^{k'}$ \\
 $c + c'$ & $2\dim(\mathfrak{g})$ & $26$ & $100$
 \end{tabular}
 \end{center}
 
-Chiral Koszul duality is compatible with Drinfeld--Sokolov reduction.
+On the non-critical completed-PBW lane, chiral Koszul duality is
+compatible with Drinfeld--Sokolov reduction.
 The BRST differential and the bar differential commute at the chain
-level, so the entire Koszul duality machine descends through the
-derivation. The composite field phenomenon enriches rather than
-obstructs the theory: the PBW spectral sequence acquires non-trivial
-higher differentials that encode the normal-ordering structure of
-conformal field theory.
+level, so the Verdier/Koszul construction descends through the
+reduction. The composite field phenomenon enriches rather than
+obstructs the theory: the PBW spectral sequence carries non-trivial
+filtration corrections before the separate collapse argument encodes
+the normal-ordering structure of conformal field theory.
 
 % ================================================================
 \section{\texorpdfstring{The braided world: lattice algebras and Yangians}{The braided world: lattice algebras and Yangians}}
@@ -4558,8 +4671,11 @@ The core phenomena are:
 \item The Koszul dual read from bar complex cohomology:
  $\mathcal{H}_k^! = \mathrm{Sym}^{\mathrm{ch}}(V^*)$,
  $\mathcal{F}^! = \beta\gamma$,
- $\widehat{\mathfrak{g}}_k^! = \widehat{\mathfrak{g}}_{-k-2h^\vee}$,
+ $\widehat{\mathfrak{g}}_k^!
+ = \mathrm{CE}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_{-k-2h^\vee})$
+ on the non-critical affine lane,
  $\mathcal{W}^k(\mathfrak{g})^! = \mathcal{W}^{-k-2h^\vee}(\mathfrak{g})$
+ on the non-critical completed principal $\mathcal{W}$ lane
  (\S\ref{sec:frame-koszul-dual},
  \S\ref{sec:frame-free-fields},
  \S\ref{sec:frame-nonabelian-preview},
@@ -4594,11 +4710,12 @@ The core phenomena are:
 These instantiate the main theorems of the monograph.
 \textbf{Theorem~A}
 (Theorem~\ref{thm:bar-cobar-isomorphism-main}):
-the bar construction $\bar{B}(\cA)$ is the Koszul dual
-coalgebra, a dg factorization coalgebra on $\mathrm{Ran}(X)$
-intertwined with Verdier duality; the Koszul dual algebra
-$\cA^!$ is obtained by Verdier duality, and the cobar of the
-bar recovers $\cA$ itself
+the bar construction $\bar{B}(\cA)$ is a dg factorization
+coalgebra on $\mathrm{Ran}(X)$ resolving the Koszul-dual
+coalgebra $\cA^i=H^*(\bar B(\cA))$ on the Koszul locus; the
+Koszul dual algebra $\cA^!$ is obtained from $\cA^i$ by
+Verdier/finite-type duality, and the cobar of the raw bar
+recovers $\cA$ itself
 ($\Omega(\bar{B}(\cA)) \xrightarrow{\sim} \cA$ on the Koszul
 locus, not $\cA^!$).
 \textbf{Theorem~B}
@@ -4795,7 +4912,7 @@ Free fermion / $\beta\gamma$
  & Lie--Com duality, acyclicity, three dualities distinguished \\
 $\widehat{\mathfrak{sl}}_2$
  & Borcherds identity, PBW spectral sequence,
- Feigin--Frenkel involution \\
+ non-critical Feigin--Frenkel level reflection \\
 $\mathcal{W}_3$
  & Composite fields, higher OPE poles,
  DS-Koszul commutativity \\
@@ -4867,7 +4984,7 @@ $f \colon \mathcal{H}_k^{\otimes n} \to
 \mathcal{H}_k((\lambda_1))\cdots((\lambda_{n-1}))$
 for some degree~$n$. The chiral Hochschild differential is
 $\delta(f) = [m, f]$, where $m$ is the $A_\infty$-structure
-(for Heisenberg: $m_2$ is the OPE, $m_k = 0$ for $k \geq 3$).
+(for Heisenberg: $m_2$ is the OPE, $m_r = 0$ for $r \geq 3$).
 
 Since $\mathcal{H}_k$ is generated by a single current~$\alpha$,
 a cochain of degree~$n$ is determined by
@@ -4930,5 +5047,17 @@ is the prototype for the general modular characteristic.
 
 \begin{remark}[Mukai-Heisenberg frame at K3 and the Hall-Drinfeld double]
 \label{rem:hf-mukai-frame}
-The Heisenberg frame specialises at K3 to the Mukai-Heisenberg $\mathcal{H}_{\mathrm{Muk}}$ on $\Lambda_{\mathrm{Muk}} = \mathrm{II}_{4,20}$ at $c = 24$. The Mukai-doubling conductor $K^{\kappa_{\mathrm{ch}}}(\mathcal{H}_{\mathrm{Muk}}(K3)) = 2\,c_+(\mathrm{Mukai}(K3)) = 8$ enlarges Theorem~C on the $\mathcal{B}$-family. Under $\widetilde{M}_{24}$-equivariance the Serre functor carries a projective Schur cocycle of order $6$ in $H^2(M_{24}, \mathrm{U}(1)) \cong \mathbb{Z}/12$. At $K3 \times E$ the Heisenberg frame promotes (via vertex closure on $\mathcal{F}_{K3}$) to the K3 chiral Hall--Drinfeld double.
+The Heisenberg frame specialises at K3 to the Mukai-Heisenberg
+$\mathcal{H}_{\mathrm{Muk}}$ on
+$\Lambda_{\mathrm{Muk}}=\mathrm{II}_{4,20}$. Its central charge
+$c=24$ is the rank of this lattice Heisenberg system; it is not the
+central charge of a rank-one level-$k$ free boson, which is
+$1$ for $k\neq0$. The Mukai-doubling conductor
+$K^{\kappa_{\mathrm{ch}}}(\mathcal{H}_{\mathrm{Muk}}(K3))
+= 2\,c_+(\mathrm{Mukai}(K3)) = 8$ enlarges Theorem~C on the
+$\mathcal{B}$-family. Under $\widetilde{M}_{24}$-equivariance the
+Serre functor carries a projective Schur cocycle of order $6$ in
+$H^2(M_{24}, \mathrm{U}(1)) \cong \mathbb{Z}/12$. At $K3 \times E$
+the Heisenberg frame promotes (via vertex closure on
+$\mathcal{F}_{K3}$) to the K3 chiral Hall--Drinfeld double.
 \end{remark}

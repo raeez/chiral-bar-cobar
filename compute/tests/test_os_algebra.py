@@ -10,6 +10,7 @@ Verifies:
 import pytest
 import numpy as np
 from math import factorial, comb
+from sympy import Matrix, Rational
 
 
 class TestOSDimensions:
@@ -120,3 +121,39 @@ class TestVerification:
         results = verify_residue_maps(4)
         for name, ok in results.items():
             assert ok, f"Residue map check failed: {name}"
+
+
+class TestExactNBCOracle:
+    """Exact rational OS/NBC oracle used before BV/H arguments."""
+
+    def test_nbc_dimensions(self):
+        from compute.lib.os_algebra_exact import nbc_basis
+        from compute.lib.os_algebra import os_dimension
+        for n in range(2, 7):
+            for k in range(n):
+                assert len(nbc_basis(n, k)) == os_dimension(n, k)
+
+    def test_arnold_triangle_reduces_to_zero(self):
+        from compute.lib.os_algebra_exact import arnold_triangle_relation
+        assert arnold_triangle_relation(1, 2, 3) == {}
+
+    def test_residue_matrix_exact_rational(self):
+        from compute.lib.os_algebra_exact import residue_matrix_exact
+        R = residue_matrix_exact(3, 2, 1, 2)
+        assert R.shape == (1, 2)
+        for entry in R:
+            assert isinstance(entry, Rational)
+
+    def test_public_residue_matches_exact_float_view(self):
+        from compute.lib.os_algebra import residue_map
+        from compute.lib.os_algebra_exact import residue_matrix_exact
+        exact = residue_matrix_exact(3, 2, 1, 2)
+        public = residue_map(3, 2, 1, 2)
+        assert public.shape == exact.shape
+        assert np.allclose(public, np.array(exact.tolist(), dtype=float))
+
+    def test_internal_oracle_verification(self):
+        from compute.lib.os_algebra_exact import verify_exact_oracle
+        results = verify_exact_oracle(5)
+        for name, ok in results.items():
+            assert ok, f"Exact OS oracle check failed: {name}"

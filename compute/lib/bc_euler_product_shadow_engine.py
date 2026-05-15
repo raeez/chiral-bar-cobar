@@ -1,45 +1,63 @@
 r"""bc_euler_product_shadow_engine.py -- BC-85: Euler product structure of shadow zeta.
 
-For the Riemann zeta: zeta(s) = prod_p (1-p^{-s})^{-1}.  Does the shadow zeta
-    zeta_A(s) = sum_{r>=2} S_r(A) * r^{-s}
-have an Euler product?  The key test: compute the Dirichlet series coefficients
-and check if the associated von Mangoldt function vanishes at non-prime-powers.
+For the Riemann zeta, zeta(s) = prod_p (1-p^{-s})^{-1}.  For a shadow tower
+set
+    a_1 = 1,     a_r = S_r(A) for r >= 2,
+    L_A(s) = sum_{r>=1} a_r r^{-s} = 1 + sum_{r>=2} S_r(A) r^{-s}.
+The Euler-product question is whether these Dirichlet coefficients factor over
+coprime indices.  The log-derivative test computes the coefficients of
+    -L_A'(s) / L_A(s) = sum_{r>=2} Lambda_A(r) r^{-s}
+and checks whether non-prime-power support appears in the tested range.
 
 MATHEMATICAL FRAMEWORK
 ======================
 
 1. MULTIPLICATIVE STRUCTURE OF SHADOW COEFFICIENTS
-   Test whether S_{mn} = S_m * S_n for gcd(m,n)=1.
-   If S is multiplicative: zeta_A(s) = prod_p (sum_{k>=0} S_{p^k} p^{-ks}).
-   If NOT multiplicative: no classical Euler product.
+   Test whether a_{mn} = a_m * a_n for gcd(m,n)=1, with a_1 = 1 and
+   a_r = S_r for r >= 2.
+   If a is multiplicative:
+       L_A(s) = prod_p F_p(p^{-s}),
+       F_p(X) = 1 + sum_{k>=1} S_{p^k} X^k.
+   If a is not multiplicative: no classical Euler product with these local
+   factors.
 
 2. LOG-DERIVATIVE TEST
-   Compute -zeta_A'(s)/zeta_A(s) = sum Lambda_A(n) n^{-s}.
-   If Euler product exists: Lambda_A(n) = 0 for n not a prime power.
-   Compute Lambda_A(n) via Moebius inversion:
-     Lambda_A(n) = sum_{d|n} mu(n/d) * (-S_d * log d)  (formal)
-   and also via the recursion from the log-derivative convolution identity.
+   Let a^{-1} denote the Dirichlet inverse of a.  Then
+       Lambda_A = (a log) * a^{-1},
+   equivalently
+       Lambda_A * a = a log.
+   The recursive form is
+       Lambda_A(n) = S_n log(n)
+           - sum_{d|n, 2<=d<n} Lambda_A(d) S_{n/d}.
+   A nonzero Lambda_A(n) at a non-prime-power n obstructs an Euler product.
+   Classical Moebius inversion is the zeta-special case a_n = 1; it is not the
+   shadow log-derivative formula.
 
 3. LOCAL FACTORS
    F_p(X) = 1 + sum_{k>=1} S_{p^k} X^k
    Rationality test: is F_p(X) = P_p(X)/Q_p(X)?
 
 4. FACTORIZATION OBSTRUCTION
-   E_A(s) = zeta_A(s) / prod_{p<=P} F_p(p^{-s})
-   If Euler product holds, E_A -> 0 as P -> infinity.
+   E_A(s) = L_A(s) / prod_{p<=P} F_p(p^{-s})
+   If Euler product holds, E_A -> 1 as P -> infinity.
 
 5. PRIME POWER SHADOW COEFFICIENTS
    Compare S_{p^k} vs (S_p)^k (completely multiplicative test).
 
-6. SHADOW SATAKE PARAMETERS
-   If F_p(X) = (1 - alpha_p X)^{-1}(1 - beta_p X)^{-1}, solve for alpha_p, beta_p.
+6. DEGREE-TWO SHADOW SATAKE MODEL
+   If F_p(X) has the degree-two form
+       (1 - alpha_p X)^{-1}(1 - beta_p X)^{-1},
+   solve for alpha_p, beta_p from S_p and S_{p^2}.  This is a model
+   diagnostic unless higher prime-power coefficients satisfy the same factor.
 
-7. RANKIN-SELBERG FROM EULER PRODUCT
-   If Euler product exists, L(s, zeta_A x zeta_B) has a local factorization.
+7. RANKIN-SELBERG FROM A LOCAL FACTOR MODEL
+   If compatible local factors exist for two towers, the Rankin-Selberg
+   product is computed prime by prime.
 
 CONVENTIONS:
   - Shadow coefficients S_r start at r=2 with S_2 = kappa (the modular characteristic).
-  - S_1 := 0 by convention (shadow towers have no arity-1 term).
+  - Shadow towers have no arity-1 coefficient S_1; the Dirichlet series uses
+    the Euler-product unit a_1 = 1.
   - For the Dirichlet series with Euler product, we use
     L_A(s) = 1 + sum_{r>=2} S_r r^{-s}   (constant term 1 for multiplicativity).
   - Cohomological grading (|d| = +1), bar uses desuspension.
@@ -161,6 +179,35 @@ def _divisors(n: int) -> List[int]:
             if d != n // d:
                 divs.append(n // d)
     return sorted(divs)
+
+
+def _shadow_dirichlet_coefficients(S: Dict[int, Any], max_r: int) -> Dict[int, float]:
+    r"""Return a_1 = 1, a_n = S_n for 2 <= n <= max_r as floats."""
+    a = {1: 1.0}
+    for n in range(2, max_r + 1):
+        a[n] = float(S.get(n, 0))
+    return a
+
+
+def dirichlet_inverse_coefficients(a: Dict[int, Any],
+                                   max_r: int) -> Dict[int, float]:
+    r"""Compute the Dirichlet inverse b of a through max_r.
+
+    The normalization is a_1 = 1.  The inverse b is determined by
+        (a * b)(1) = 1,     (a * b)(n) = 0 for n > 1.
+    """
+    if float(a.get(1, 0)) != 1.0:
+        raise ValueError("Dirichlet inverse requires a_1 = 1.")
+
+    b: Dict[int, float] = {1: 1.0}
+    for n in range(2, max_r + 1):
+        total = 0.0
+        for d in _divisors(n):
+            if d == n:
+                continue
+            total += b.get(d, 0.0) * float(a.get(n // d, 0))
+        b[n] = -total
+    return b
 
 
 # ---------------------------------------------------------------------------
@@ -356,32 +403,24 @@ def multiplicativity_defect(S: Dict[int, Any],
 
 
 # ---------------------------------------------------------------------------
-# 3. Shadow von Mangoldt function (Moebius inversion)
+# 3. Shadow von Mangoldt function (Dirichlet log-derivative)
 # ---------------------------------------------------------------------------
 
 
-def shadow_von_mangoldt_mobius(S: Dict[int, Any],
-                                max_r: Optional[int] = None) -> Dict[int, float]:
-    r"""Compute the shadow von Mangoldt function via Moebius inversion.
+def shadow_von_mangoldt_log_derivative(S: Dict[int, Any],
+                                        max_r: Optional[int] = None) -> Dict[int, float]:
+    r"""Compute Lambda_A from -L_A'(s)/L_A(s).
 
-    Lambda_A(n) = sum_{d|n} mu(n/d) * S_d * log(d)
+    With a_1 = 1 and a_n = S_n for n >= 2,
+        -L_A'/L_A = sum Lambda_A(n) n^{-s}
+    is equivalent to the Dirichlet-convolution identity
+        Lambda_A * a = a log.
 
-    This is the formal Moebius inversion of the relation
-        S_n * log(n) = sum_{d|n} Lambda_A(d) * 1     (if S multiplicative)
-
-    Actually the correct relation for log derivative of 1 + sum S_r r^{-s} is:
-        Lambda_A(n) = sum_{d|n} mu(n/d) * a(d)
-    where a(n) = S_n * log(n) - sum_{d|n, d<n} Lambda_A(d) * S_{n/d}.
-
-    For the FORMAL Moebius approach (testing multiplicativity):
-    If the Dirichlet series were L_A(s) = prod_p (F_p(p^{-s})) then
-        -L_A'/L_A(s) = sum Lambda_A(n) n^{-s}
-    and Lambda_A is supported on prime powers.
-
-    We use the RECURSION approach (log-derivative convolution):
-        Lambda_A(r) = S_r * log(r) - sum_{d|r, 2<=d<r, r/d>=2} Lambda_A(d) * S_{r/d}
-
-    with the convention L_A(s) = 1 + sum_{r>=2} S_r r^{-s}.
+    Thus, for n >= 2,
+        Lambda_A(n) = S_n log(n)
+            - sum_{d|n, 2<=d<n} Lambda_A(d) S_{n/d}.
+    This recursion is the defining formula for a general shadow tower.  A
+    classical Moebius transform is only the zeta-special case a_n = 1.
     """
     if max_r is None:
         max_r = max(S.keys())
@@ -402,20 +441,41 @@ def shadow_von_mangoldt_mobius(S: Dict[int, Any],
     return Lambda
 
 
-def shadow_von_mangoldt_direct_mobius(S: Dict[int, Any],
-                                       max_r: Optional[int] = None) -> Dict[int, float]:
-    r"""Compute Lambda_A via DIRECT Moebius inversion formula.
+def shadow_von_mangoldt_dirichlet_inverse(S: Dict[int, Any],
+                                           max_r: Optional[int] = None) -> Dict[int, float]:
+    r"""Compute Lambda_A by first computing the Dirichlet inverse of a.
 
-    Lambda_A(n) = sum_{d|n} mu(n/d) * b(d)
+    This is an independent implementation of the same identity used by
+    shadow_von_mangoldt_log_derivative:
+        Lambda_A = (a log) * a^{-1}.
+    """
+    if max_r is None:
+        max_r = max(S.keys())
 
-    where b(d) = S_d * log(d) for the log derivative of L_A(s) = 1 + sum S_r r^{-s}.
+    a = _shadow_dirichlet_coefficients(S, max_r)
+    ainv = dirichlet_inverse_coefficients(a, max_r)
 
-    This is an ALTERNATIVE computation path to shadow_von_mangoldt_mobius.
-    The two agree if and only if the computation is correct.
+    Lambda: Dict[int, float] = {}
+    for n in range(2, max_r + 1):
+        val = 0.0
+        for d in _divisors(n):
+            if d < 2:
+                continue
+            val += float(a.get(d, 0)) * math.log(d) * ainv.get(n // d, 0.0)
+        Lambda[n] = val
+    return Lambda
 
-    NOTE: This formula is exact only if S is multiplicative.  For non-multiplicative S,
-    the log-derivative recursion (shadow_von_mangoldt_mobius) is the correct definition,
-    and this direct formula will differ -- the DIFFERENCE measures the non-multiplicativity.
+
+def shadow_von_mangoldt_classical_mobius_shortcut(S: Dict[int, Any],
+                                                  max_r: Optional[int] = None) -> Dict[int, float]:
+    r"""Compute the zeta-style Moebius transform of S_n log(n).
+
+    The formula
+        sum_{d|n} mu(n/d) S_d log(d)
+    is correct for the Riemann zeta coefficients a_n = 1.  For a general
+    shadow series it is a diagnostic shortcut, not the coefficient of
+    -L_A'/L_A.  It can differ from the correct Lambda_A even when L_A has an
+    exact Euler product, for example L_A(s) = 1 + k 2^{-s}.
     """
     if max_r is None:
         max_r = max(S.keys())
@@ -435,13 +495,31 @@ def shadow_von_mangoldt_direct_mobius(S: Dict[int, Any],
     return Lambda
 
 
+def shadow_von_mangoldt_mobius(S: Dict[int, Any],
+                                max_r: Optional[int] = None) -> Dict[int, float]:
+    r"""Compatibility name for shadow_von_mangoldt_log_derivative.
+
+    The computation is the Dirichlet log-derivative recursion, not classical
+    Moebius inversion.
+    """
+    return shadow_von_mangoldt_log_derivative(S, max_r)
+
+
+def shadow_von_mangoldt_direct_mobius(S: Dict[int, Any],
+                                       max_r: Optional[int] = None) -> Dict[int, float]:
+    r"""Compatibility name for shadow_von_mangoldt_classical_mobius_shortcut."""
+    return shadow_von_mangoldt_classical_mobius_shortcut(S, max_r)
+
+
 def von_mangoldt_prime_power_support(Lambda: Dict[int, float],
                                       max_r: Optional[int] = None,
                                       tol: float = 1e-10) -> Dict[str, Any]:
     r"""Check whether Lambda_A(n) vanishes at non-prime-power n.
 
-    If the shadow zeta has an Euler product, Lambda_A should be supported
-    on prime powers.  Returns diagnostics.
+    For a formal Dirichlet series with a_1 = 1, prime-power support of the
+    log-derivative is the local-prime decomposition test.  On a finite
+    truncation, nonzero values at non-prime-powers are obstructions; absence
+    of such values is a bounded diagnostic, not a proof beyond max_r.
     """
     if max_r is None:
         max_r = max(Lambda.keys())
@@ -458,6 +536,7 @@ def von_mangoldt_prime_power_support(Lambda: Dict[int, float],
                 non_pp_nonzero.append((n, val))
 
     return {
+        'prime_power_support_holds': len(non_pp_nonzero) == 0,
         'euler_product_holds': len(non_pp_nonzero) == 0,
         'non_prime_power_violations': non_pp_nonzero,
         'prime_power_values': pp_values,
@@ -733,7 +812,7 @@ def partial_euler_product(S: Dict[int, Any],
     F_p(X) = 1 + sum_{k>=1} S_{p^k} X^k,  evaluated at X = p^{-s}.
 
     If the shadow zeta has a true Euler product, this should converge
-    to zeta_A(s) = 1 + sum_{r>=2} S_r r^{-s} as P_max -> infinity.
+    to L_A(s) = 1 + sum_{r>=2} S_r r^{-s} as P_max -> infinity.
     """
     primes = _primes_up_to(P_max)
     product = 1.0 + 0.0j
@@ -747,7 +826,7 @@ def partial_euler_product(S: Dict[int, Any],
 def shadow_zeta_direct(S: Dict[int, Any],
                         s: complex,
                         max_r: Optional[int] = None) -> complex:
-    r"""Direct evaluation of zeta_A(s) = 1 + sum_{r>=2} S_r r^{-s}."""
+    r"""Direct evaluation of L_A(s) = 1 + sum_{r>=2} S_r r^{-s}."""
     if max_r is None:
         max_r = max(S.keys())
     total = 1.0 + 0.0j
@@ -766,7 +845,7 @@ def factorization_obstruction(S: Dict[int, Any],
                                 local_max_power: int = 8) -> Dict[int, complex]:
     r"""Compute the factorization obstruction E_A(s, P).
 
-    E_A(s, P) = zeta_A(s) / prod_{p<=P} F_p(p^{-s})
+    E_A(s, P) = L_A(s) / prod_{p<=P} F_p(p^{-s})
 
     If Euler product holds exactly: E_A -> 1 as P -> infinity.
     Returns {P: E_A(s, P)} for each P in P_values.
@@ -791,7 +870,7 @@ def rankin_selberg_from_euler(S_A: Dict[int, Any],
                                 S_B: Dict[int, Any],
                                 p: int,
                                 max_k: int = 5) -> List[complex]:
-    r"""Compute the local factor of L(s, zeta_A x zeta_B) at prime p from Satake.
+    r"""Compute a Rankin-Selberg local factor at prime p from degree-two Satake data.
 
     If alpha_A, beta_A (resp. alpha_B, beta_B) are the Satake parameters,
     the Rankin-Selberg local factor is:
@@ -866,10 +945,10 @@ def euler_product_convergence_rate(S: Dict[int, Any],
                                      s_values: List[complex],
                                      P_schedule: List[int],
                                      local_max_power: int = 8) -> Dict:
-    r"""Measure how fast the partial Euler product converges to zeta_A.
+    r"""Measure how fast the partial Euler product converges to L_A.
 
     For each s in s_values and each P in P_schedule, compute
-        |zeta_A(s) - prod_{p<=P} F_p(p^{-s})| / |zeta_A(s)|
+        |L_A(s) - prod_{p<=P} F_p(p^{-s})| / |L_A(s)|
 
     Returns nested dict {s: {P: relative_error}}.
     """
@@ -950,7 +1029,7 @@ def full_euler_product_analysis(S: Dict[int, Any],
     results['complete_multiplicativity'] = test_complete_multiplicativity(S, max_r_mult)
 
     # 3. Von Mangoldt
-    Lambda = shadow_von_mangoldt_mobius(S, max_r_vm)
+    Lambda = shadow_von_mangoldt_log_derivative(S, max_r_vm)
     results['von_mangoldt'] = von_mangoldt_prime_power_support(Lambda, max_r_vm)
 
     # 4. Local factor rationality

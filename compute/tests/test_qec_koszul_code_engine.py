@@ -7,7 +7,7 @@ Verification strategy:
   4. Knill-Laflamme verification via three independent paths
   5. Code distance vs shadow depth (multi-path)
   6. Encoding/decoding round-trip
-  7. Logical operators from Koszul dual
+  7. Logical operators from the post-Verdier dual lane
   8. Threshold error rate estimates
   9. Holographic tensor network construction
   10. Decoupling bounds
@@ -22,6 +22,7 @@ from sympy import Rational
 
 from compute.lib.qec_koszul_code_engine import (
     # Weight dimensions
+    koszul_firewall,
     partition_count,
     heisenberg_weight_dim,
     affine_sl2_weight_dim,
@@ -201,6 +202,14 @@ class TestSymplecticCode:
         assert n == 2
         assert k == 1
         assert d == 2
+
+    def test_symplectic_code_return_carries_koszul_firewall(self):
+        code = symplectic_code_at_weight('heisenberg', 2)
+        firewall = code['koszul_firewall']
+        assert 'finite-type' in firewall['verdier_koszul_dual']
+        assert 'completed cobar convergence' in firewall['verdier_koszul_dual']
+        assert 'Hochschild bulk object' in firewall['derived_centre']
+        assert 'bar-cobar construction of A!' not in code['dual_lane']
 
 
 class TestAggregateCodeParameters:
@@ -401,11 +410,24 @@ class TestEncodingDecoding:
         data = bar_cobar_round_trip_dimensions('affine', 5)
         assert all(d['match'] for d in data)
 
-    def test_ap25_note(self):
-        """AP25: bar-cobar recovers A itself, NOT A!."""
+    def test_bar_cobar_firewall_note(self):
+        """Bar-cobar recovers A itself, not A!."""
         result = encoding_decoding_structure('heisenberg', h=1)
-        assert 'Omega(B(A)) = A' in result['note_ap25']
-        assert 'Verdier duality' in result['note_ap25']
+        note = result['bar_cobar_firewall_note']
+        assert note == result['note_ap25']
+        assert 'Omega(B(A)) = A' in note
+        assert 'finite-type/completed hypotheses' in note
+        stale_ran_bar_identity = 'D_Ran(B(A)) = ' + 'B(A!)'
+        assert stale_ran_bar_identity not in note
+
+    def test_koszul_firewall_separates_four_objects(self):
+        firewall = koszul_firewall()
+        assert 'reconstruction of the input algebra' in firewall['bar_cobar_inversion']
+        assert 'Koszul-dual coalgebra' in firewall['bar_dual_coalgebra']
+        assert 'A!_infty' in firewall['verdier_koszul_dual']
+        assert 'Hochschild bulk object' in firewall['derived_centre']
+        assert 'Do not identify' in firewall['forbidden_collapse']
+        assert 'finite-type/completed theorem' in firewall['forbidden_collapse']
 
 
 # ===================================================================
@@ -413,7 +435,7 @@ class TestEncodingDecoding:
 # ===================================================================
 
 class TestLogicalOperators:
-    """Logical operators from the Koszul dual pair."""
+    """Logical operators from the post-Verdier dual lane."""
 
     def test_virasoro_c13_self_dual(self):
         result = logical_operators_from_koszul_pair('virasoro', c_val=Rational(13))
@@ -440,6 +462,13 @@ class TestLogicalOperators:
         for c in [Rational(1, 2), Rational(1), Rational(13), Rational(26)]:
             result = logical_operators_from_koszul_pair('virasoro', c_val=c)
             assert result['commutation_nondegenerate'] is True
+
+    def test_logical_operator_return_names_post_verdier_lane(self):
+        result = logical_operators_from_koszul_pair('virasoro', c_val=Rational(13))
+        assert 'post-Verdier lane' in result['Z_logical']['source']
+        assert 'finite-type/completed' in result['commutation_mechanism']
+        assert 'not derived from bar-cobar inversion alone' in result['commutation_mechanism']
+        assert 'derived_centre' in result['koszul_firewall']
 
 
 # ===================================================================

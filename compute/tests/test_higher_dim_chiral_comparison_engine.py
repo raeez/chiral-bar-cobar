@@ -570,11 +570,11 @@ class TestHCSBoundary:
         assert len(algebras) >= 5
 
     def test_k3_x_e_kappa_5(self):
-        """K3 x E boundary algebra has kappa = 5.
+        """K3 x E boundary algebra has BKM-lane kappa_BKM = 5.
 
         Multi-path verification:
-        (1) chi^CY(K3 x E) = 5 (categorical CY Euler characteristic)
-        (2) Igusa cusp form Delta_5 has weight 5
+        (1) c_{phi_{0,1}}(0)/2 = 10/2 = 5
+        (2) primitive Gritsenko-Nikulin denominator Delta_5 has weight 5
         """
         kappa = hcs_kappa_from_cy3('K3 x E')
         assert kappa == Fraction(5)
@@ -637,15 +637,23 @@ class TestKoszulDualityHigherDim:
             assert data['bar_cobar_adjunction'] is True
 
     def test_verdier_intertwining_all_n(self):
-        """Verdier intertwining generalizes to all n."""
+        """Verdier comparison is present but not verbatim theorem transport."""
         for n in [1, 2, 3]:
             data = koszul_duality_comparison(n)
             assert data['verdier_intertwining'] is True
+            assert 'separate chiral-geometric input' in data['our_thm_a_generalizes']
 
     def test_genus_extension_our_only(self):
         """Genus tower is our unique contribution (no E_n analogue for n >= 2)."""
         data = koszul_duality_comparison(2)
         assert 'do NOT have known' in data['genus_extension']
+
+    def test_theorem_scope_firewall(self):
+        """E_n Koszul duality does not imply the modular theorem package."""
+        data = koszul_duality_comparison(2)
+        assert 'Theorem C, Theorem D, and Theorem H' in data['theorem_scope_firewall']
+        assert 'do not follow from E_n Koszul duality alone' in data['theorem_scope_firewall']
+        assert 'not an instance of the Vol I theorem' in data['costello_holography_as_koszul']
 
 
 # ============================================================================
@@ -692,9 +700,10 @@ class TestAssociativitySufficiency:
         assert 'Koszulness' in data['our_translation']
 
     def test_koszul_duality_match(self):
-        """Fernandez-Paquette Koszul duality = our Theorem A."""
+        """Fernandez-Paquette gives a structural Theorem A analogue."""
         data = associativity_sufficiency_theorem()
         assert 'Theorem A' in data['koszul_duality_match']
+        assert data['comparison_status'] == 'structural analogue, not literal theorem identity'
 
     def test_genus_extension(self):
         """Our framework extends beyond Fernandez-Paquette (genus > 0)."""

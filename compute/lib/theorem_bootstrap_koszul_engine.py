@@ -1,41 +1,45 @@
-r"""Bootstrap as a consequence of Koszulness: the MC equation determines the CFT.
+r"""Finite bootstrap/Koszul certificates from the shadow compute surface.
 
 CENTRAL QUESTION: Is the conformal bootstrap a CONSEQUENCE of chiral Koszulness?
 
 The conformal bootstrap says: crossing symmetry + unitarity + OPE convergence
 determines the theory.  The modular Koszul framework says: Koszulness (bar
 cohomology concentrated) + MC equation (D*Theta + (1/2)[Theta, Theta] = 0)
-determines the full genus tower.  This module investigates whether these
-are the SAME constraint.
+controls the shadow obstruction tower under the required finiteness and
+completion hypotheses.  This module records the finite certificates that the
+compute layer can actually check.
 
-ANSWER: PARTIALLY YES, with precise qualifications.
+ANSWER: finite shadow evidence, not an equivalence theorem.
 
-The bootstrap is NOT identical to Koszulness, but Koszulness IMPLIES the
-bootstrap closes, and the shadow metric encodes bootstrap bounds.  The
-precise relationship:
+The bootstrap is not identical to Koszulness.  This file verifies scalar
+Virasoro shadow data and package firewalls; it does not promote those finite
+checks to uniqueness of a CFT, all-genus modular invariance, or construction
+of the Verdier dual.
 
-(1) Koszulness => bootstrap closes at finite order (for classes G/L/C)
-    or via the full MC tower (for class M).
+(1) Classes G/L/C have finite shadow depth on the recorded scalar lane.
+    Class M has an infinite shadow tower controlled by the Riccati relation.
 
-(2) The MC equation at (g=0, n=4) IS the crossing equation.
+(2) The MC equation at (g=0, n=4) gives the Virasoro stress-tensor scalar
+    quartic contact S_4 = 10/[c(5c+22)].  This is a finite projection of
+    crossing, not the full spectral bootstrap system.
 
 (3) The shadow metric Q_L encodes the CONVERGENCE radius of the bootstrap
-    expansion, and its zeros are related to (but not identical to) the
-    spectral gap.
+    shadow expansion.  It is not the Hellerman spectral-gap bound.
 
-(4) For minimal models: Koszulness + BPZ null vector = unique theory.
-    This is a RIGOROUS derivation of the bootstrap uniqueness at c < 1.
+(4) For minimal models this file certifies BPZ/null-vector and Virasoro
+    shadow constants.  The simple quotient is not promoted to the universal
+    Virasoro Koszul locus; null vectors must be tracked in the bar range.
 
 (5) The modular bootstrap (genus 1) is the MC equation at (g=1, n=0),
     and F_1 = kappa/24 is the anomaly.  Full modular invariance does NOT
-    follow from the MC equation alone -- it requires the SEWING axiom
-    (MC5) which demands convergence of the partition function.
+    follow from the MC equation alone or from HS-sewing convergence alone;
+    it requires the factorization structure on elliptic curves.
 
 FOUR COMPUTATIONS:
 
 (a) Shadow metric zeros vs spectral gap (Section 1)
 (b) MC equation vs crossing equation (Section 2)
-(c) Ising uniqueness from Koszulness + null vector (Section 3)
+(c) Ising finite BPZ/shadow data with no uniqueness promotion (Section 3)
 (d) Modular bootstrap from MC + sewing (Section 4)
 
 AP COMPLIANCE:
@@ -78,6 +82,126 @@ try:
     HAS_SYMPY = True
 except ImportError:
     HAS_SYMPY = False
+
+
+# ============================================================================
+# 0a. Structural firewalls and certification scope
+# ============================================================================
+
+HOLOGRAPHIC_PACKAGE_ENTRIES: Tuple[str, ...] = (
+    "A",
+    "A^i",
+    "A^!",
+    "C",
+    "r(z)",
+    "Theta_A",
+    "nabla^hol",
+)
+
+
+MODULAR_KOSZUL_COMPUTE_PROJECTIONS: Tuple[str, ...] = (
+    "Fact_X(L)",
+    "barB_X(L)",
+    "Theta_L",
+    "L_L",
+    "(V_br,T_br)",
+    "R4_mod(L)",
+)
+
+
+def holographic_package_entries() -> Tuple[str, ...]:
+    """Seven entries of the holographic package H(A)."""
+    return HOLOGRAPHIC_PACKAGE_ENTRIES
+
+
+def modular_koszul_compute_projections() -> Tuple[str, ...]:
+    """Six projections of the modular Koszul compute package."""
+    return MODULAR_KOSZUL_COMPUTE_PROJECTIONS
+
+
+def kernel_normalization_constants() -> Dict[str, str]:
+    """Canonical kernel normalizations from landscape_census.tex.
+
+    The affine collision residue and the KZ residue are different
+    normalizations of the monodromy datum.  Tests keep the level-prefix
+    convention visible so k=0 is not confused with KZ normalization.
+    """
+    return {
+        "affine_collision_raw": "k*Omega_tr/z",
+        "affine_kz": "Omega/((k+h^vee)z)",
+        "heisenberg_collision": "k/z",
+        "virasoro_collision": "(c/2)/z^3 + 2T/z",
+    }
+
+
+def typed_duality_firewall() -> Dict[str, Any]:
+    """Typed roles for A, B(A), A^i, A^!, and the derived centre."""
+    return {
+        "roles": {
+            "A": "input chiral algebra",
+            "B(A)": "ordered bar coalgebra T^c(s^{-1} bar A)",
+            "A^i": "bar cohomology coalgebra H^*(B(A))",
+            "A^!": (
+                "Verdier/continuous-linear dual branch under finite-type "
+                "or completed hypotheses"
+            ),
+            "Omega(B(A))": "bar-cobar inversion recovering A",
+            "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/derived-centre bulk",
+        },
+        "confusions_forbidden": {
+            "omega_bar_is_koszul_duality": False,
+            "A_bang_is_bar_coalgebra": False,
+            "A_bang_is_A_i_without_dualization": False,
+            "derived_centre_is_koszul_dual": False,
+            "holographic_package_is_compute_package": False,
+        },
+        "finite_type_or_completion_required_for_A_bang": True,
+    }
+
+
+def finite_bootstrap_certification(family: str = "virasoro") -> Dict[str, Any]:
+    """Certification scope for this compute surface.
+
+    The Virasoro branch certifies finite scalar shadow data through arity 5:
+    S_2, S_3, S_4, S_5 and the derived discriminant Delta.  It does not
+    certify uniqueness of the spectral bootstrap problem.
+    """
+    normalized = family.lower()
+    if normalized in {"virasoro", "vir"}:
+        checked_arities = (2, 3, 4, 5)
+        checked_formulas = (
+            "S_2=c/2",
+            "S_3=2",
+            "S_4=10/[c(5c+22)]",
+            "S_5=-48/[c^2(5c+22)]",
+            "Delta=40/(5c+22)",
+        )
+    elif normalized in {"heisenberg", "heis"}:
+        checked_arities = (2,)
+        checked_formulas = ("kappa=k", "r(z)=k/z")
+    elif normalized in {"kac_moody", "km", "affine"}:
+        checked_arities = (2, 3)
+        checked_formulas = (
+            "kappa=dim(g)(k+h^vee)/(2h^vee)",
+            "r_coll(z)=k*Omega_tr/z",
+            "r_KZ(z)=Omega/((k+h^vee)z)",
+        )
+    else:
+        checked_arities = ()
+        checked_formulas = ()
+
+    return {
+        "family": family,
+        "checked_arities": checked_arities,
+        "max_checked_arity": max(checked_arities) if checked_arities else None,
+        "checked_formulas": checked_formulas,
+        "finite_ope_jacobi_certificate": bool(checked_arities),
+        "full_crossing_system_certified": False,
+        "spectral_bootstrap_uniqueness_certified": False,
+        "all_genus_trace_certified_without_uniform_weight": False,
+        "bar_cobar_inversion_promoted_to_koszul_duality": False,
+        "requires_completion_for_full_tower": True,
+    }
 
 
 # ============================================================================
@@ -168,19 +292,16 @@ def F_g_shadow(kappa_val, g):
 # The modulus |t_*| controls the CONVERGENCE RADIUS of the shadow
 # expansion H(t) = 2*kappa*t^2 * sqrt(Q_L(t)/Q_L(0)).
 #
-# CLAIM: |t_*| is related to the spectral gap bound, but they are
-# NOT identical.  The relationship:
-#   |t_*| ~ 1/Delta_gap  (inverse relation)
-#
-# Larger spectral gap => farther singularity => faster shadow convergence.
-# This is the KOSZUL SHADOW of the bootstrap gap bound.
+# CERTIFIED DISTINCTION: |t_*| is the shadow arity convergence radius.
+# It is not the Hellerman spectral-gap bound and is not proportional to
+# its inverse.  For large c, |t_*| ~ c/6 while 1/Delta_gap is O(1/c).
 
 def shadow_metric_zeros_virasoro(c_val):
     """Compute the zeros of Q_L(t) for Virasoro at central charge c.
 
     Q_L(t) = (2*kappa + 3*alpha*t)^2 + 2*Delta*t^2
 
-    For Virasoro: kappa = c/2, alpha = S_3/3 = 2/3 ... WAIT.
+    For Virasoro: kappa = c/2 and S_3 = 2.
 
     Careful with conventions.  The shadow metric is:
         Q_L(t) = (2*kappa + 3*alpha*t)^2 + 2*Delta*t^2
@@ -299,7 +420,7 @@ def shadow_metric_zeros_virasoro(c_val):
             'The shadow metric zero modulus |t_*| controls the convergence '
             'radius of the shadow arity expansion.  It grows linearly with c. '
             'The Hellerman spectral gap bound c/12 also grows with c. '
-            'Both are consequences of the MC equation, but they encode '
+            'They encode '
             'DIFFERENT projections: the arity expansion (shadow) vs the '
             'spectral decomposition (bootstrap).'
         ),
@@ -342,10 +463,12 @@ def shadow_metric_discriminant_classification(c_val):
     Delta = 0: boundary (class G/L, perfect-square Q_L).
     Delta < 0: unphysical for Virasoro (would require c < -22/5).
 
-    The bootstrap analog:
-    - Delta > 0: the theory has an infinite tower of bootstrap constraints
-      (the MC equation at each arity gives a new crossing relation).
-    - Delta = 0: the bootstrap closes at finite order (like free fields).
+    Bootstrap scope:
+    - Delta > 0: the Virasoro shadow tower is infinite.
+    - Delta = 0: the scalar shadow tower closes at finite order.
+
+    This classification is not a certificate for spectral bootstrap
+    uniqueness or for all genus amplitudes.
     """
     kappa = float(c_val) / 2.0
     S_4 = float(Q_contact_virasoro(c_val))
@@ -369,6 +492,9 @@ def shadow_metric_discriminant_classification(c_val):
         'shadow_class': shadow_class,
         'bootstrap_type': bootstrap_type,
         'Delta_positive': Delta > 0,
+        'checked_shadow_degrees': (2, 3, 4, 5),
+        'full_spectral_bootstrap_certified': False,
+        'all_genus_trace_certified_without_uniform_weight': False,
     }
 
 
@@ -379,7 +505,8 @@ def shadow_metric_discriminant_classification(c_val):
 # The MC equation at genus 0, arity n:
 #   [D, Theta]|_{0,n} + (1/2)[Theta, Theta]|_{0,n} = 0
 #
-# At n=4: this IS the crossing equation for the 4-point function.
+# At n=4: this gives the scalar stress-tensor contact term appearing in
+# the four-point crossing equation.
 # At n=2: this gives kappa = the curvature (the OPE).
 # At n=3: this gives the cubic shadow S_3 (the TT OPE structure).
 #
@@ -398,10 +525,8 @@ def shadow_metric_discriminant_classification(c_val):
 # The two channels (s and t) of the sewing correspond to the two
 # channels of crossing symmetry.
 #
-# THEREFORE: the MC equation at (0,4) = the crossing equation.
-# This is NOT a coincidence -- it is a theorem (the MC equation
-# IS the consistency condition for the factorization algebra,
-# which IS crossing symmetry in the physical language).
+# Therefore this compute surface checks the arity-4 shadow projection of
+# crossing.  It does not solve the full spectral crossing problem.
 
 def mc_arity_n_projection(c_val, n):
     """The MC equation projected to genus 0, arity n for Virasoro.
@@ -412,8 +537,8 @@ def mc_arity_n_projection(c_val, n):
     - n=4: crossing equation (shadow S_4 = Q^contact)
     - n=5: quintic constraint (shadow S_5)
 
-    Each arity-n MC equation constrains the n-point function
-    on the sphere, which is a bootstrap equation at n points.
+    For n <= 5 this routine returns checked Virasoro scalar shadow data.
+    For n > 5 it records scope only.
     """
     kappa = float(c_val) / 2.0
     results = {'c': float(c_val), 'kappa': kappa, 'arity': n}
@@ -457,11 +582,14 @@ def mc_arity_n_projection(c_val, n):
         results['bootstrap'] = f'{n}-point crossing relations'
         results['mc_equation'] = f'arity-{n} MC equation'
 
+    results['finite_scalar_projection_only'] = True
+    results['full_crossing_system_certified'] = False
+    results['checked_by_this_engine'] = n in finite_bootstrap_certification('virasoro')['checked_arities']
     return results
 
 
 def crossing_as_mc_verification(c_val):
-    """Verify that crossing symmetry = MC equation at (0,4).
+    """Verify the finite arity-4 shadow contact extracted from crossing.
 
     Three independent paths:
 
@@ -469,7 +597,9 @@ def crossing_as_mc_verification(c_val):
     Path 2 (Crossing): Compute the crossing constraint from conformal blocks.
     Path 3 (Shadow metric): Extract S_4 from the discriminant Delta.
 
-    All three must agree.
+    All three agree only on the scalar Virasoro stress-tensor contact
+    coefficient.  This is not a full crossing-system or uniqueness
+    certificate.
     """
     c = float(c_val)
     kappa = c / 2.0
@@ -520,40 +650,41 @@ def crossing_as_mc_verification(c_val):
         'beta_2': beta_2,
         'all_three_agree': mc_cross_agree and mc_disc_agree,
         'mc_equals_crossing': mc_cross_agree,
+        'certificate_scope': 'Virasoro TT arity-4 scalar shadow contact S_4',
+        'checked_arity': 4,
+        'full_crossing_system_certified': False,
+        'bootstrap_uniqueness_certified': False,
         'interpretation': (
-            'The MC equation at (g=0, n=4) and the crossing equation for '
-            '<TTTT> produce the SAME constraint on S_4. '
+            'The MC equation at (g=0, n=4) and the stress-tensor crossing '
+            'calculation produce the same scalar constraint on S_4. '
             'This is because the MC bracket [Theta, Theta]|_{0,4} '
-            'is DEFINED by sewing two arity-2 elements along two '
-            'of four punctures, which ARE the s- and t-channel gluings.'
+            'sews two arity-2 elements along two of four punctures, '
+            'matching the scalar shadow of the s- and t-channel gluings.'
         ),
     }
 
 
 def bootstrap_koszul_equivalence_table():
-    """The precise map between bootstrap axioms and Koszul characterizations.
+    """Map bootstrap constraints to Koszul-side hypotheses without promotion.
 
     From theorem_celestial_new_proofs_engine.py, refined:
 
     BOOTSTRAP AXIOM               KOSZUL ITEM           STATUS
     ==================            ===========           ======
     OPE associativity (d^2=0)     UNIVERSAL (not K1-K12) THEOREM
-    Crossing symmetry             K10 (FM boundary)      UNCONDITIONAL
-    OPE convergence               K2 (PBW collapse)      UNCONDITIONAL
-    Bootstrap closure at finite   K3 (A-inf formality)   UNCONDITIONAL
+    Crossing symmetry             K10 (FM boundary)      finite projection here
+    OPE convergence               K2 (PBW collapse)      needs hypotheses
+    Bootstrap closure at finite   K3 (A-inf formality)   shadow-depth scope
       order                         for classes G/L/C
     Unitarity                     Shadow Q_L >= 0        NOT K1-K12
-    Modular invariance            MC5 (sewing) + K7      PROVED
+    Modular invariance            MC5 (sewing) + K7      not certified here
 
     KEY DISTINCTION: The MC equation d^2 = 0 holds for ALL chiral algebras,
-    Koszul or not.  Koszulness adds that the MC moduli is DISCRETE
-    (formal neighborhood = point), so Theta is uniquely determined by
-    genus-0 data.  This is the bootstrap statement that "associativity
-    is enough" (Fernandez-Paquette).
+    Koszul or not.  Koszulness adds deformation-theoretic rigidity under
+    the manuscript hypotheses; this file only records finite projections.
 
-    For non-Koszul algebras: the MC equation still holds, but the
-    bootstrap does NOT close -- there are continuous moduli of consistent
-    solutions.  Koszulness = rigidity = bootstrap uniqueness.
+    This table is a scope map.  It is not itself a proof that finite
+    arity checks certify spectral bootstrap uniqueness.
     """
     table = [
         {
@@ -561,42 +692,49 @@ def bootstrap_koszul_equivalence_table():
             'koszul_item': 'UNIVERSAL (thm:convolution-d-squared-zero)',
             'status': 'THEOREM for all chiral algebras',
             'koszul_required': False,
+            'certified_by_this_engine': True,
         },
         {
             'bootstrap_axiom': 'Crossing symmetry (4-point)',
             'koszul_item': 'K10: FM boundary equivariance',
-            'status': 'UNCONDITIONAL (10 proved equivalent)',
+            'status': 'FINITE TT scalar projection checked here',
             'koszul_required': True,
+            'certified_by_this_engine': False,
         },
         {
             'bootstrap_axiom': 'OPE convergence',
             'koszul_item': 'K2: PBW spectral sequence collapse at E_2',
-            'status': 'UNCONDITIONAL',
+            'status': 'requires PBW/completion hypotheses',
             'koszul_required': True,
+            'certified_by_this_engine': False,
         },
         {
             'bootstrap_axiom': 'Bootstrap finite closure (class G/L/C)',
             'koszul_item': 'K3: A-inf formality (m_n = 0 for n >= n_max)',
-            'status': 'UNCONDITIONAL',
+            'status': 'shadow-depth statement, not spectral uniqueness',
             'koszul_required': True,
+            'certified_by_this_engine': False,
         },
         {
             'bootstrap_axiom': 'Bootstrap infinite tower (class M)',
             'koszul_item': 'Koszul + full MC tower (thm:recursive-existence)',
-            'status': 'PROVED (bar-intrinsic construction)',
+            'status': 'requires completed full tower; finite checks do not suffice',
             'koszul_required': True,
+            'certified_by_this_engine': False,
         },
         {
             'bootstrap_axiom': 'Unitarity (reflection positivity)',
             'koszul_item': 'Shadow Q_L(t) >= 0 (thm:riccati-algebraicity)',
             'status': 'NOT a Koszul characterization',
             'koszul_required': False,
+            'certified_by_this_engine': False,
         },
         {
             'bootstrap_axiom': 'Modular invariance (genus 1)',
             'koszul_item': 'MC5 sewing (thm:general-hs-sewing) + K7 (FH conc.)',
-            'status': 'PROVED',
+            'status': 'HS-sewing gives convergence; modular invariance needs elliptic factorization',
             'koszul_required': True,  # for the genus tower, not for Z(tau)
+            'certified_by_this_engine': False,
         },
     ]
 
@@ -606,55 +744,41 @@ def bootstrap_koszul_equivalence_table():
         'table': table,
         'n_bootstrap_axioms': len(table),
         'n_requiring_koszulness': koszul_required_count,
+        'finite_engine_certifies_full_bootstrap': False,
+        'overpromotion_guard': finite_bootstrap_certification('virasoro'),
         'conclusion': (
             f'{koszul_required_count}/{len(table)} bootstrap axioms '
-            'require Koszulness. The remaining axioms (d^2 = 0, unitarity) '
-            'hold universally. Koszulness is SUFFICIENT but not NECESSARY '
-            'for the bootstrap to close -- non-Koszul algebras satisfy the '
-            'bootstrap equations but have continuous moduli.'
+            'touch Koszul-side hypotheses. This table records scope only: '
+            'finite OPE/Jacobi shadow checks do not certify full spectral '
+            'bootstrap uniqueness.'
         ),
     }
 
 
 # ============================================================================
-# 3. ISING UNIQUENESS from Koszulness + null vector
+# 3. ISING FINITE DATA: SHADOW CONSTANTS AND BPZ NULL VECTOR
 # ============================================================================
 #
 # At c = 1/2 (Ising model = M(4,3)):
-# - The Virasoro algebra is Koszul (AP14: all standard families are Koszul)
+# - The universal Virasoro algebra supplies the shadow constants.
+# - The simple quotient contains null-vector data in the bar-relevant range.
 # - The BPZ null vector at level 2 for the sigma field (h = 1/16) gives:
 #   (L_{-2} - (4/3) L_{-1}^2) |sigma> = 0
-# - This null vector + Koszulness => the 4-point function satisfies a
-#   second-order ODE, which has a UNIQUE solution up to normalization.
-#
-# The bootstrap says: at c = 1/2, crossing + unitarity uniquely determines
-# the theory.  This is because the BPZ null vector forces the conformal
-# blocks to satisfy an ODE, and crossing + unitarity pick the unique solution.
-#
-# The Koszul perspective: Koszulness means bar cohomology is concentrated,
-# so the MC moduli is a point.  The null vector constrains the OPE, and
-# the MC equation (which IS crossing) has a unique solution.
-#
-# THEOREM (Bootstrap-Koszul uniqueness at c < 1):
-#   For c = c_{p,q} (minimal models), Koszulness + BPZ null vectors
-#   at level r*s uniquely determine the MC element Theta_A.
-#   This IS the bootstrap uniqueness for minimal models.
+# - This file certifies the finite constants; it does not prove chiral
+#   Koszulness or uniqueness of the simple quotient.
 
 def ising_koszul_uniqueness():
-    """Verify that Koszulness + null vector => unique theory at c = 1/2.
+    """Verify finite Ising shadow data without promoting uniqueness.
 
-    Three independent paths to uniqueness:
+    Three finite checks:
 
-    Path 1 (Bootstrap): Crossing + unitarity + BPZ null at c = 1/2 gives
-        the unique Ising CFT (Belavin-Polyakov-Zamolodchikov 1984).
+    Path 1 (BPZ): the sigma null-vector coefficient is 4/3.
 
-    Path 2 (Koszul): The Virasoro algebra at c = 1/2 is Koszul.
-        Bar cohomology concentrated => MC moduli is discrete.
-        BPZ null vector constrains the OPE => unique Theta.
+    Path 2 (shadow): kappa=1/4 and S_4=40/49 are specializations of
+        the universal Virasoro formulas.
 
-    Path 3 (MDE): The modular differential equation at c = 1/2
-        has order 3 (= number of primaries) with unique solution
-        matching the Ising characters.
+    Path 3 (finite representation data): the diagonal minimal-model
+        primary count is 3.
     """
     if not HAS_SYMPY:
         c = 0.5
@@ -675,7 +799,7 @@ def ising_koszul_uniqueness():
         {'label': 'sigma',    'r': 2, 's': 2, 'h': 1.0/16.0},
     ]
 
-    # Path 1: Bootstrap uniqueness via BPZ null vector
+    # Path 1: finite BPZ null-vector coefficient
     # The null vector (L_{-2} - a * L_{-1}^2)|phi> = 0 with
     # a = 3/(2*(2h+1)) for the degenerate representation at level 2.
     # For sigma (h = 1/16): a = 3/(2*(1/8 + 1)) = 3/(9/4) = 4/3
@@ -690,18 +814,14 @@ def ising_koszul_uniqueness():
     # This is _2F_1(1/2, 1/2; 1; z).
     hyp_params = {'a': 0.5, 'b': 0.5, 'c_param': 1.0}
 
-    # Path 2: Koszul uniqueness
-    # The universal Virasoro algebra V_c is Koszul at ALL c
-    # (prop:pbw-universality: freely strongly generated => PBW collapse).
-    # At c = 1/2, the simple quotient L_{1/2}(Vir) = M(4,3) is also Koszul
-    # (the null vector quotient preserves bar concentration for sl_2,
-    # rem:admissible-koszul-status).
-    #
-    # Koszul => MC moduli is discrete.
-    # The MC element Theta at c = 1/2 is uniquely determined by:
-    # (a) kappa = 1/4 (genus-0 curvature)
-    # (b) null vector at level 2 (constrains the OPE)
-    # (c) MC equation [D, Theta] + [Theta, Theta]/2 = 0 (crossing)
+    # Simple quotient certification firewall.
+    # The vacuum minimal model M(4,3) has first null-vector weight
+    # (p-1)(q-1)=6, which lies in the Virasoro bar-relevant range
+    # h_null >= 4.  This finite test prevents promoting universal
+    # Virasoro Koszulness to the simple quotient.
+    h_null = (4 - 1) * (3 - 1)
+    bar_threshold = 4
+    null_in_bar_range = h_null >= bar_threshold
 
     # Path 3: Modular differential equation
     # At c = 1/2: 3 primaries => 3rd order MDE.
@@ -717,12 +837,10 @@ def ising_koszul_uniqueness():
     # F_1 = kappa * lambda_1 = (1/4) * (1/24) = 1/96
     F_1 = float(kappa) * float(lambda_fp(1)) if HAS_SYMPY else 0.25 / 24.0
 
-    # Crossing check at the Ising point:
+    # Crossing finite-data check at the Ising point:
     # The sigma 4-point function is _2F_1(1/2, 1/2; 1; z), which
-    # automatically satisfies crossing G(z) = G(1-z) because
-    # _2F_1(a, b; c; z) at the symmetric point z = 1/2 with a=b, c=a+b
-    # is self-conjugate under the Pfaff transformation.
-    # This is the content of the MC equation at (0,4).
+    # is the BPZ block datum used here.  The compute surface records the
+    # hypergeometric parameters and does not certify full crossing uniqueness.
 
     return {
         'c': float(c),
@@ -736,33 +854,41 @@ def ising_koszul_uniqueness():
         'hypergeometric_params': hyp_params,
         'F_1': F_1,
         'mde_order': mde_order,
-        'path1_bootstrap': 'BPZ null + crossing => unique 4-point function',
-        'path2_koszul': 'Koszulness => discrete MC moduli + null => unique Theta',
-        'path3_mde': f'Order-{mde_order} MDE has unique character solution',
-        'all_paths_agree': True,
-        'uniqueness_proved': True,
+        'h_null': h_null,
+        'bar_threshold': bar_threshold,
+        'null_in_bar_range': null_in_bar_range,
+        'simple_quotient_koszul_certified': False,
+        'bpz_finite_data_certified': True,
+        'path1_bpz': 'BPZ null coefficient 4/3 for the sigma field',
+        'path2_shadow': 'kappa=1/4 and S_4=40/49 from universal Virasoro formulas',
+        'path3_primary_count': f'{mde_order} primary sectors in M(4,3)',
+        'finite_paths_agree': True,
+        'all_paths_agree': False,
+        'bootstrap_unique_certified': False,
+        'uniqueness_proved': False,
         'interpretation': (
-            'At c = 1/2, the Ising model is the UNIQUE consistent CFT. '
-            'Bootstrap proves this via crossing + unitarity + BPZ null. '
-            'Koszulness proves this via discrete MC moduli + null constraint. '
-            'These are the SAME argument in different languages.'
+            'At c = 1/2 this engine certifies finite BPZ and shadow data. '
+            'It does not certify that the simple quotient is chirally Koszul, '
+            'and it does not promote those data to full bootstrap uniqueness.'
         ),
     }
 
 
 def minimal_model_koszul_bootstrap(p, q):
-    """Bootstrap uniqueness for general minimal model M(p,q) via Koszulness.
+    """Finite minimal-model BPZ/shadow data with Koszul-scope flags.
 
     c = 1 - 6(p-q)^2/(p*q) for the unitary minimal model M(p, p-1).
 
     For unitary minimal models (q = p-1, p >= 3):
       c = 1 - 6/[p(p-1)]
 
-    Koszulness: the universal Virasoro V_c is Koszul at all c.
-    The simple quotient at c = c_{p,q} is Koszul (for unitary models).
+    The universal Virasoro V_c supplies the shadow formulas.  The simple
+    quotient M(p,q) is a separate object: if its first null vector lies in
+    the Virasoro bar-relevant range, this compute surface does not promote it
+    to the universal Koszul locus.
 
-    The BPZ null vectors constrain the fusion rules, and the MC equation
-    (= crossing) uniquely determines Theta at each minimal model point.
+    The BPZ null vectors constrain the fusion rules.  This routine records
+    finite data and prevents promotion to full bootstrap uniqueness.
 
     The number of primaries: (p-1)(q-1)/2.
 
@@ -777,6 +903,10 @@ def minimal_model_koszul_bootstrap(p, q):
     c = 1.0 - 6.0 * (p - q) ** 2 / (p * q)
     n_primaries = (p - 1) * (q - 1) // 2
     kappa = c / 2.0
+    h_null = (p - 1) * (q - 1)
+    bar_threshold = 4
+    null_in_bar_range = h_null >= bar_threshold
+    simple_quotient_koszul = not null_in_bar_range
 
     Q_contact = Q_contact_virasoro(c) if abs(c * (5*c + 22)) > 1e-15 else float('inf')
     F_1 = kappa / 24.0
@@ -797,25 +927,26 @@ def minimal_model_koszul_bootstrap(p, q):
     nonzero_weights = [w for w in weights if w['h'] > 1e-15]
     spectral_gap = nonzero_weights[0]['h'] if nonzero_weights else 0.0
 
-    # Bootstrap uniqueness: the minimal model is uniquely determined by
-    # (c, null vectors, crossing, unitarity).
-    # Koszul uniqueness: the MC element is uniquely determined by
-    # (c, Koszulness, null vectors, MC equation).
-    # These are the same constraint.
-
     return {
         'p': p,
         'q': q,
         'c': c,
         'kappa': kappa,
+        'universal_virasoro_koszul': True,
+        'h_null': h_null,
+        'bar_threshold': bar_threshold,
+        'null_in_bar_range': null_in_bar_range,
         'n_primaries': n_primaries,
         'Q_contact': Q_contact,
         'F_1': F_1,
         'weights': weights,
         'spectral_gap': spectral_gap,
         'is_unitary': (q == p - 1),
-        'koszul': True,
-        'bootstrap_unique': True,
+        'koszul': simple_quotient_koszul,
+        'simple_quotient_koszul_certified': simple_quotient_koszul,
+        'bpz_finite_data_certified': True,
+        'bootstrap_unique': False,
+        'bootstrap_unique_certified': False,
         'mde_order': n_primaries,
     }
 
@@ -853,18 +984,17 @@ def minimal_model_koszul_bootstrap(p, q):
 #
 # PRECISE STATEMENT:
 #   MC equation alone does NOT imply modular invariance.
-#   MC equation + factorization algebra axioms (including the genus-1
-#   sewing axiom and curve-independence) => modular invariance.
-#   This is PROVED by MC5 + the factorization algebra structure
-#   on all elliptic curves.
+#   HS-sewing gives convergence under growth hypotheses.
+#   Modular invariance requires the factorization algebra structure on all
+#   elliptic curves; convergence alone is not the S-transformation.
 
 def modular_bootstrap_from_mc(c_val):
     """The modular bootstrap as a consequence of MC + sewing.
 
     Returns the chain of implications:
     MC equation => F_1 = kappa/24 (genus-1 anomaly)
-    MC5 sewing => Z(tau) converges
-    Factorization on all curves => Z(tau) modular invariant
+    HS-sewing => Z(tau) converges under growth hypotheses
+    Factorization on all elliptic curves => Z(tau) modular invariant
     """
     kappa = float(c_val) / 2.0
     F_1 = kappa / 24.0
@@ -893,7 +1023,7 @@ def modular_bootstrap_from_mc(c_val):
     # It constrains the asymptotic density of states (Cardy),
     # but does NOT by itself determine the full partition function.
 
-    # What IS determined by the MC equation at genus g:
+    # What the MC equation constrains at genus g:
     # F_g(A) = kappa * lambda_g^FP (on the uniform-weight lane)
     # These are the Hodge class coefficients integrated over M_g.
     # The full Z(tau) is an INFINITE sum over states, not just the
@@ -918,11 +1048,20 @@ def modular_bootstrap_from_mc(c_val):
         'high_T_coefficient': high_T_coefficient,
         'cardy_coefficient': cardy_coefficient,
         'modular_invariance_from_mc': False,  # MC alone is NOT enough
-        'modular_invariance_from_mc_plus_sewing': True,  # MC + sewing = enough
+        'modular_invariance_from_mc_plus_sewing': False,
+        'hs_sewing_convergence_certified': True,
+        'modular_invariance_from_mc_plus_factorization': True,
+        'finite_type_completion_hypotheses': (
+            'positive energy',
+            'subexponential sector growth',
+            'polynomial OPE growth',
+            'bounded collar transport',
+            'factorization over all elliptic curves for modular invariance',
+        ),
         'chain_of_implications': [
-            'MC equation (D^2 = 0) => all shadow coefficients determined',
+            'MC equation (D^2 = 0) constrains the completed shadow tower',
             'Shadow F_1 = kappa/24 => Cardy formula (asymptotic density)',
-            'MC5 (HS-sewing, thm:general-hs-sewing) => Z(tau) converges',
+            'HS-sewing (thm:general-hs-sewing) => Z(tau) converges under growth hypotheses',
             'Factorization on all elliptic curves => Z(tau) modular invariant',
             'Modular invariance => Hellerman bound Delta_1 <= c/12 + O(1)',
             'Shadow F_2, F_3, ... => additional constraints beyond modular',
@@ -930,7 +1069,7 @@ def modular_bootstrap_from_mc(c_val):
         'what_mc_determines': 'integrated shadow invariants F_g = kappa * lambda_g',
         'what_mc_does_not_determine': 'pointwise Z(tau) or individual multiplicities d_i',
         'the_gap': (
-            'The MC equation determines the INTEGRATED genus expansion, '
+            'The MC equation constrains the integrated genus expansion, '
             'not the SPECTRAL decomposition.  Modular invariance is a '
             'spectral constraint (on individual d_i), while the shadow '
             'tower is an integrated constraint (on sums over states). '
@@ -1030,7 +1169,7 @@ def modular_invariance_test_ising():
 # AP14: ALL standard families are Koszul.  Shadow depth classifies
 # COMPLEXITY within the Koszul world, not Koszulness status.
 #
-# The bootstrap analog:
+# Shadow-depth/bootstrap analogy:
 #   G: the bootstrap is determined by Wick contractions alone
 #      (free field theory, all n-point functions from 2-point)
 #   L: the bootstrap closes at the cubic level
@@ -1040,9 +1179,11 @@ def modular_invariance_test_ising():
 #   M: the bootstrap requires the full infinite tower
 #      (every arity contributes independently)
 #
-# The THEOREM (celestial engine, thm:shadow-formality-identification):
+# The theorem surface (thm:shadow-formality-identification):
 #   shadow_depth(A) = A-inf formality level
 #                   = the number of non-trivial bootstrap constraints
+# This file records the scalar shadow depth and does not certify the full
+# spectral bootstrap problem.
 
 def shadow_depth_bootstrap_closure(family, c_val=None, k_val=None, N_val=None):
     """Classify algebra by shadow depth and bootstrap closure.
@@ -1123,6 +1264,16 @@ def shadow_depth_bootstrap_closure(family, c_val=None, k_val=None, N_val=None):
 
     results['koszul'] = True  # AP14: all standard families are Koszul
     results['mc_equation_holds'] = True  # universal
+    results['finite_engine_certifies_full_bootstrap'] = False
+    results['full_spectral_bootstrap_certified'] = False
+    if results['shadow_depth'] == float('inf'):
+        results['completion_required_for_full_tower'] = True
+        results['finite_checked_shadow_degrees'] = (2, 3, 4, 5)
+    else:
+        results['completion_required_for_full_tower'] = False
+        results['finite_checked_shadow_degrees'] = tuple(
+            range(2, int(results['shadow_depth']) + 1)
+        )
 
     return results
 
@@ -1134,7 +1285,7 @@ def shadow_depth_bootstrap_closure(family, c_val=None, k_val=None, N_val=None):
 # QUESTION: Are conformal blocks F_{Delta,ell}(z,zbar) the same as
 # shadow projections Sh_{0,n}(Theta_A)?
 #
-# ANSWER: They encode the SAME data but are DIFFERENT objects.
+# ANSWER: They are linked by projection, but they are different objects.
 #
 # Conformal blocks F_{Delta}(z): functions of the cross-ratio z,
 # expanded in the OPE channel.  They are eigenfunctions of the
@@ -1269,6 +1420,7 @@ def shadow_bounds_at_c(c_val):
         'F_2_scalar': F_2_scalar,
         'F_2_planted_forest': delta_pf,
         'F_2_total': F_2_total,
+        'shadow_radius_is_spectral_gap_bound': False,
         'all_bounds_consistent': True,
     }
 
@@ -1293,80 +1445,61 @@ def multi_c_bootstrap_landscape():
 
 
 # ============================================================================
-# 8. KOSZULNESS IMPLIES BOOTSTRAP UNIQUENESS ON THE KOSZUL LOCUS
+# 8. FINITE BOOTSTRAP/KOSZUL CERTIFICATE THEOREM SURFACE
 # ============================================================================
 
 def koszul_implies_bootstrap_theorem():
-    """The main theorem: Koszulness implies bootstrap closure.
+    """Finite theorem surface certified by this module.
 
-    THEOREM (Bootstrap-Koszul):
-    Let A be a chirally Koszul algebra (any of the 10 unconditional
-    characterizations K1-K10 of thm:koszul-equivalences-meta).  Then:
+    This function deliberately separates what is certified here from what
+    belongs to manuscript-level hypotheses.
 
-    (a) The MC equation D*Theta + (1/2)[Theta, Theta] = 0 has a UNIQUE
-        solution Theta_A in the formal neighborhood of the genus-0 data.
-        [This is the "bootstrap closes" statement.]
+    Certified here:
+    (a) the MC equation supplies finite arity projections;
+    (b) Virasoro S_2,S_3,S_4,S_5 match the canonical constants;
+    (c) shadow depth is a scalar arity-tower classification;
+    (d) unitarity and Koszulness remain separate;
+    (e) object/package firewalls are enforced.
 
-    (b) The MC element Theta_A is determined recursively from genus-0 data:
-        Theta^{(n)} is determined by Theta^{(k)} for k < n via the MC equation.
-        [This is "associativity is enough" (Fernandez-Paquette).]
-
-    (c) For classes G/L/C: the recursion terminates at finite arity.
-        For class M: the recursion is infinite but converges
-        (thm:recursive-existence).
-        [This is the shadow-depth classification.]
-
-    (d) Unitarity (Q_L >= 0) is COMPATIBLE with Koszulness but is a
-        separate condition: non-unitary Koszul algebras exist (e.g.,
-        Virasoro at c < 0).
-        [AP: unitarity is NOT a Koszul characterization.]
-
-    (e) The MC element Theta_A encodes the SAME data as the bootstrap
-        solution (OPE coefficients + conformal blocks), but in the
-        shadow basis rather than the spectral basis.
-
-    PROOF SKETCH:
-    (a) follows from K3 (A-inf formality): bar cohomology is concentrated
-        => deformation complex has H^2 = 0 => MC moduli is discrete.
-    (b) follows from the MC recursion (thm:mc2-bar-intrinsic):
-        Theta := D_A - d_0 automatically satisfies MC because D^2 = 0.
-    (c) follows from the shadow-formality identification
-        (thm:shadow-formality-identification): shadow depth = A-inf depth.
-    (d) is the separation of Koszulness from unitarity: both are needed
-        for a physically sensible theory, but mathematically independent.
-    (e) follows from the crossing = MC correspondence (Section 2 above).
-
-    Returns the theorem statement and proof components.
+    Not certified here: full spectral bootstrap uniqueness, all-genus scalar
+    trace without uniform-weight hypotheses, or construction of A^! by
+    bar-cobar inversion.
     """
     return {
-        'theorem': 'Koszulness implies bootstrap closure',
+        'theorem': 'Finite bootstrap/Koszul shadow certificate',
+        'claim_status': 'computed finite certificate',
         'parts': {
             'a': {
-                'statement': 'MC equation has UNIQUE solution on Koszul locus',
-                'proof': 'K3 (A-inf formality) => H^2(Def) = 0 => discrete moduli',
-                'manuscript_ref': 'thm:koszul-equivalences-meta item (iii)',
-            },
-            'b': {
-                'statement': 'Theta determined recursively from genus-0 data',
-                'proof': 'thm:mc2-bar-intrinsic: Theta := D_A - d_0 is MC',
+                'statement': 'MC equation has finite arity projections',
+                'proof': 'thm:mc2-bar-intrinsic: Theta := D_A - d_0 is MC in the completed convolution algebra',
                 'manuscript_ref': 'thm:mc2-bar-intrinsic',
             },
+            'b': {
+                'statement': 'Virasoro finite constants S_2,S_3,S_4,S_5 are certified',
+                'proof': 'landscape_census.tex: prop:virasoro-shadow-canonical',
+                'manuscript_ref': 'prop:virasoro-shadow-canonical',
+            },
             'c': {
-                'statement': 'Shadow depth = bootstrap closure order',
-                'proof': 'thm:shadow-formality-identification',
+                'statement': 'Shadow depth is an arity-tower statement',
+                'proof': 'thm:shadow-formality-identification plus finite class checks',
                 'manuscript_ref': 'thm:shadow-formality-identification',
             },
             'd': {
                 'statement': 'Unitarity is separate from Koszulness',
-                'proof': 'Non-unitary Koszul algebras exist (Vir at c < 0)',
+                'proof': 'shadow Q_L positivity and bar concentration are different conditions',
                 'manuscript_ref': 'AP14 in CLAUDE.md',
             },
             'e': {
-                'statement': 'MC element = bootstrap data in shadow basis',
-                'proof': 'Crossing = MC at (0,4) (Section 2 above)',
-                'manuscript_ref': 'thm:shadow-cohft',
+                'statement': 'A, B(A), A^i, A^!, and Z_ch^der(A) remain typed separately',
+                'proof': 'typed_duality_firewall() and package-entry tests',
+                'manuscript_ref': 'landscape_census.tex complementarity discipline',
             },
         },
+        'certification': finite_bootstrap_certification('virasoro'),
+        'duality_firewall': typed_duality_firewall(),
+        'full_bootstrap_uniqueness_promoted': False,
+        'all_genus_promoted_without_uniform_weight': False,
+        'omega_bar_promoted_to_koszul_duality': False,
         'converse_status': (
             'The converse (bootstrap closure => Koszulness) is OPEN. '
             'It would say: if a chiral algebra has a unique MC solution '
@@ -1449,6 +1582,9 @@ def c13_self_duality_bootstrap():
         # AP24: kappa + kappa' = 13 for Virasoro (NOT zero)
         'complementarity_value': 13.0,
         'complementarity_correct': abs(kappa + kappa_dual - 13.0) < 1e-12,
+        'rational_shadow_self_duality_all_degrees': True,
+        'rtf_checked_to_degree': 7,
+        'rtf_all_degree_certified': False,
     }
 
 
@@ -1557,12 +1693,11 @@ def complementarity_bootstrap_test(c_val):
 
     The bootstrap interpretation:
     - A = Vir_c: the physical theory at central charge c.
-    - A^! = Vir_{26-c}: the Koszul dual theory.
+    - A^! = Vir_{26-c}: the Verdier/continuous-linear dual branch.
     - The complementarity sum 13 = the TOTAL central charge of the
       matter + Koszul-ghost system.
     - At c = 26: kappa(Vir_{26}) = 13, kappa(Vir_0) = 0.
-      The ghost contribution is zero: no anomaly cancellation needed
-      ... WAIT: this is the Koszul dual, not the physical ghost.
+      This is the Verdier dual branch, not the physical ghost.
       AP29: delta_kappa = kappa - kappa' = c/2 - (26-c)/2 = c - 13.
             kappa_eff = kappa(matter) + kappa(ghost) = c/2 + (-13) = (c-26)/2.
       These are DIFFERENT quantities: delta_kappa = 0 at c = 13 (self-dual),
@@ -1592,4 +1727,7 @@ def complementarity_bootstrap_test(c_val):
         'kappa_eff_zero_at_c': 26.0,
         'AP24_correct': abs(complementarity_sum - 13.0) < 1e-12,
         'AP29_correct': (abs(delta_kappa) < 1e-12) == (abs(c - 13.0) < 1e-12),
+        'dual_branch': 'Verdier/continuous-linear dual under finite-type/completed hypotheses',
+        'omega_bar_is_koszul_duality': False,
+        'derived_centre_is_koszul_dual': False,
     }

@@ -5,8 +5,9 @@ MATHEMATICAL FRAMEWORK
 
 The symmetric orbifold Sym^N(X) = X^{\otimes N} / S_N of a 2d CFT X with
 central charge c(X) is the boundary theory for AdS_3 x S^3 x X (when X = T^4
-or K3).  This module computes the shadow obstruction tower of Sym^N(X), its
-large-N limit, and the holographic modular Koszul datum.
+or K3).  This module computes finite scalar projections of the shadow
+obstruction tower of Sym^N(X), its large-N limit, and the seven-entry
+holographic package.
 
 1. BASIC DATA
    c(Sym^N(X)) = N * c(X).
@@ -47,7 +48,7 @@ large-N limit, and the holographic modular Koszul datum.
    The key invariant: kappa(Sym^N(X)) = N * kappa(X) at leading order,
    with O(1) corrections from twisted sectors.
 
-   For the full shadow tower at finite N:
+   For finite shadow-tower projections at finite N:
    - Shadow depth: at least r_max(X) (inherited from seed theory)
    - Cubic shadow: receives twist-sector corrections
    - Quartic and higher: increasingly complex S_N combinatorics
@@ -61,16 +62,25 @@ large-N limit, and the holographic modular Koszul datum.
    free energy has a 1/N expansion:
      log Z(Sym^N) = N * f_0 + f_1 + (1/N) * f_2 + ...
 
-6. HOLOGRAPHIC MODULAR KOSZUL DATUM
-   A = Sym^N(T^4) (or Sym^N(K3)):
+6. HOLOGRAPHIC PACKAGE PROJECTION
+   The holographic package is
+     H(A) = (A, A^i, A!, C, r(z), Theta_A, nabla^hol).
+   The modular Koszul compute package is a different six-projection surface:
+     Pi_X(L) = (Fact_X(L), Bbar_X(L), Theta_L, L_L, (V^br,T^br), R_4^mod(L)).
+   This module records scalar compatibility data, not the full package.
+
+   For A = Sym^N(T^4) (or Sym^N(K3)):
      - c(A) = 6N
      - kappa(A) = 2N (for K3, dim_C = 2) or kappa(A) = 2N (for T^4, dim_C = 2)
-     - A! = ? : the Koszul dual.  Costello-Paquette identify the boundary
-       algebra of the bulk Kodaira-Spencer theory on AdS_3 x S^3 x T^4
-       as the large-N limit of the boundary chiral algebra.
+     - B(A) = T^c(s^{-1}bar A), distinct from A, A^i, A!, and Z^der_ch(A)
+     - A^i = H^bullet B(A), the Koszul dual coalgebra
+     - A! = (A^i)^vee by Verdier duality, with only kappa(A!) recorded here
+     - C / Z^der_ch(A) = bulk-observable slot, not the bar coalgebra or A!
      - r(z) = collision residue (genus-0 binary shadow)
      - Theta_A = bar-intrinsic MC element
-     - Derived center Z^der_ch = bulk observables (supergravity modes)
+     - nabla^hol = shadow connection
+
+   Omega(B(A)) = A is bar-cobar inversion.  It is not the construction of A!.
 
 7. BTZ BLACK HOLE ENTROPY
    S_BH = 2*pi*sqrt(c*n/6) = 2*pi*sqrt(N*c_seed*n/6)
@@ -87,8 +97,8 @@ large-N limit, and the holographic modular Koszul datum.
    Costello-Paquette (2001.02177) study AdS_3 x S^3 x T^4 in the twisted
    holography framework.  Their boundary algebra at genus 0 matches the
    chiral algebra of the free symmetric orbifold in the large-N limit.
-   The Koszul dual in their framework: the Kodaira-Spencer theory on the
-   bulk, with gauge algebra W_{1+infinity} at large N.
+   Their comparison concerns the large-N boundary algebra and the
+   bulk/derived-centre slot.  It is not an identification of A! with the bulk.
 
 10. SECOND-QUANTIZED PARTITION FUNCTION AND BORCHERDS PRODUCTS
     sum_N p^N Z(Sym^N(K3)) = 1/Phi_{10}(Omega) (DMVV/Borcherds)
@@ -547,7 +557,7 @@ def shadow_depth_sym_n(seed: SeedTheory, N: int) -> int:
 
     The shadow depth of the symmetric orbifold is at LEAST the shadow
     depth of the seed theory, because the untwisted sector inherits
-    the full shadow tower of X.
+    the seed shadow-tower projections.
 
     For N >= 2, the twisted sectors introduce additional shadow
     components.  The twist field OPE generically has pole orders
@@ -601,7 +611,7 @@ def shadow_tower_sym_n(
     seed_shadows: Optional[Dict[int, Fraction]] = None,
     max_arity: int = 6,
 ) -> Dict[int, Fraction]:
-    r"""Full shadow tower {r: S_r(Sym^N(X))} for r = 2, 3, ..., max_arity.
+    r"""Finite scalar shadow-tower projection for r = 2, 3, ..., max_arity.
 
     At leading order in N, the shadow coefficients of Sym^N(X) are:
     S_r(Sym^N) = N * S_r(X) for all r.
@@ -754,31 +764,61 @@ def _factorial_frac(n: int) -> Fraction:
 
 
 # =========================================================================
-# Section 6: Holographic modular Koszul datum for AdS_3
+# Section 6: Holographic package projection for AdS_3
 # =========================================================================
+
+HOLOGRAPHIC_PACKAGE_ENTRIES = (
+    "A",
+    "A^i",
+    "A^!",
+    "C",
+    "r(z)",
+    "Theta_A",
+    "nabla^hol",
+)
+
+MODULAR_KOSZUL_COMPUTE_PROJECTIONS = (
+    "Fact_X(L)",
+    "Bbar_X(L)",
+    "Theta_L",
+    "L_L",
+    "(V^br,T^br)",
+    "R_4^mod(L)",
+)
+
 
 @dataclass
 class HolographicDatum:
-    """The holographic modular Koszul datum H(T) for AdS_3/CFT_2.
+    """Scalar compatibility record for the holographic package.
 
-    H(T) = (A, A!, C, r(z), Theta_A, nabla^hol)
+    Manuscript package:
+      H(A) = (A, A^i, A!, C, r(z), Theta_A, nabla^hol)
 
-    For AdS_3 x S^3 x T^4 with N units of flux:
-      A = Sym^N(T^4) (boundary chiral algebra)
-      A! = Koszul dual (related to W_{1+infty} at large N)
-      C = c(A) = 6N
-      r(z) = collision residue of Theta_A (genus-0 binary shadow)
-      Theta_A = bar-intrinsic MC element
-      nabla^hol = shadow connection
+    This dataclass records central charge, kappa, complementarity, and
+    descriptive slots for H(A).  It does not reconstruct B(A), A^i, A!, or
+    Z_ch^der(A) as chain-level objects.  The modular Koszul compute package
+    Pi_X(L) has six primary projections and is a separate surface.
     """
     name: str
     seed: SeedTheory
     N: int
-    central_charge: Fraction
+    central_charge: Fraction  # scalar c(A), not the C slot of H(A)
     kappa: Fraction
     kappa_dual: Fraction  # kappa(A!)
     shadow_depth: int
     shadow_class: str  # G, L, C, or M
+    boundary_algebra: str = ""
+    bar_complex: str = "B(A) = T^c(s^{-1}bar A), distinct from A^i and A^!"
+    koszul_dual_coalgebra: str = "A^i = H^bullet B(A)"
+    koszul_dual_algebra: str = "A^! = (A^i)^vee via Verdier duality"
+    bulk_slot: str = "C / Z_ch^der(A), distinct from B(A), A^i, and A^!"
+    r_matrix: str = "r(z) = Res^coll_{0,2}(Theta_A)"
+    theta: str = "Theta_A, recorded here only through scalar shadow projections"
+    holomorphic_connection: str = "nabla^hol = d - Sh(Theta_A)"
+    holographic_package_entries: Tuple[str, ...] = HOLOGRAPHIC_PACKAGE_ENTRIES
+    modular_koszul_compute_projections: Tuple[str, ...] = (
+        MODULAR_KOSZUL_COMPUTE_PROJECTIONS
+    )
 
     @property
     def delta_kappa(self) -> Fraction:
@@ -791,20 +831,20 @@ class HolographicDatum:
 
 
 def holographic_datum_ads3_t4(N: int) -> HolographicDatum:
-    r"""Holographic datum for AdS_3 x S^3 x T^4 with N units of flux.
+    r"""Scalar holographic-package projection for AdS_3 x S^3 x T^4.
 
     Boundary: Sym^N(T^4), c = 6N, kappa = 2N.
-    The Koszul dual at large N is related to W_{1+infty}:
-    Costello-Paquette identify the bulk Kodaira-Spencer theory
-    with the large-N limit.
+    Costello-Paquette identify a bulk Kodaira-Spencer theory whose boundary
+    algebra matches the large-N boundary chiral algebra.  That comparison
+    informs the C / derived-centre slot, not an equality A! = bulk.
 
-    For the Koszul dual of the symmetric orbifold:
-    kappa(A!) should satisfy the complementarity relation.
-    For free fields: kappa + kappa! = 0, so kappa! = -kappa = -2N.
-    The T^4 sigma model is free (class G), so this applies.
+    The scalar kappa(A!) is kept as the free-field complementarity value:
+    kappa(A) + kappa(A!) = 0, hence kappa(A!) = -2N.  This is a scalar
+    projection of A!, not a reconstruction of the Koszul dual algebra.
     """
     c = central_charge_sym_n(T4_SIGMA, N)
     kap = kappa_sym_n(T4_SIGMA, N)
+    boundary = f"Sym^{N}(T^4)"
     return HolographicDatum(
         name=f"AdS_3 x S^3 x T^4, N={N}",
         seed=T4_SIGMA,
@@ -814,18 +854,33 @@ def holographic_datum_ads3_t4(N: int) -> HolographicDatum:
         kappa_dual=-kap,  # Free field: kappa + kappa! = 0
         shadow_depth=2,   # Gaussian class
         shadow_class="G",
+        boundary_algebra=boundary,
+        bar_complex=f"B({boundary}) = T^c(s^-1 bar A)",
+        koszul_dual_coalgebra=f"A^i({boundary}) = H^bullet B(A)",
+        koszul_dual_algebra=(
+            f"A^!({boundary}) = (A^i)^vee; kappa(A^!) = {-kap}"
+        ),
+        bulk_slot=(
+            f"C / Z_ch^der({boundary}): Kodaira-Spencer bulk-observable "
+            "comparison slot"
+        ),
+        r_matrix="r(z) = Omega/z at the free symmetric-orbifold scalar level",
+        theta="Theta_A, scalar shadow projection with kappa = 2N",
+        holomorphic_connection="nabla^hol = d - Sh(Theta_A), scalar flatness slot",
     )
 
 
 def holographic_datum_ads3_k3(N: int) -> HolographicDatum:
-    r"""Holographic datum for AdS_3 x S^3 x K3 with N units of flux.
+    r"""Scalar holographic-package projection for AdS_3 x S^3 x K3.
 
     Boundary: Sym^N(K3), c = 6N, kappa = 2N.
     K3 sigma model is also free at the level of the chiral algebra
-    (N=4 superconformal), so class G applies.
+    (N=4 superconformal), so class G applies.  The returned kappa_dual is
+    the scalar complementarity projection of A!, not a bulk or bar object.
     """
     c = central_charge_sym_n(K3_SIGMA, N)
     kap = kappa_sym_n(K3_SIGMA, N)
+    boundary = f"Sym^{N}(K3)"
     return HolographicDatum(
         name=f"AdS_3 x S^3 x K3, N={N}",
         seed=K3_SIGMA,
@@ -835,11 +890,21 @@ def holographic_datum_ads3_k3(N: int) -> HolographicDatum:
         kappa_dual=-kap,
         shadow_depth=2,
         shadow_class="G",
+        boundary_algebra=boundary,
+        bar_complex=f"B({boundary}) = T^c(s^-1 bar A)",
+        koszul_dual_coalgebra=f"A^i({boundary}) = H^bullet B(A)",
+        koszul_dual_algebra=(
+            f"A^!({boundary}) = (A^i)^vee; kappa(A^!) = {-kap}"
+        ),
+        bulk_slot=f"C / Z_ch^der({boundary}): bulk-observable slot",
+        r_matrix="r(z) = Omega/z at the free symmetric-orbifold scalar level",
+        theta="Theta_A, scalar shadow projection with kappa = 2N",
+        holomorphic_connection="nabla^hol = d - Sh(Theta_A), scalar flatness slot",
     )
 
 
 def costello_paquette_comparison(N: int) -> Dict[str, Any]:
-    r"""Compare our holographic datum with Costello-Paquette (2001.02177).
+    r"""Compare this scalar package projection with Costello-Paquette.
 
     Costello-Paquette study AdS_3 x S^3 x T^4 via twisted holography.
     Key identifications:
@@ -852,9 +917,9 @@ def costello_paquette_comparison(N: int) -> Dict[str, Any]:
     2. Bulk theory: Kodaira-Spencer theory on T^4 x C (where C is
        the holomorphic plane in AdS_3).
 
-    3. The Koszul dual of the boundary algebra (in our framework)
-       is the algebra of boundary conditions for the bulk theory.
-       At genus 0, this is the Kodaira-Spencer chiral algebra.
+    3. The bulk theory compares to the C / Z_ch^der(A) slot of H(A).
+       It is not the bar complex B(A), the Koszul dual coalgebra A^i,
+       or the Verdier/Koszul dual algebra A!.
 
     4. The collision residue r(z) = Res^{coll}_{0,2}(Theta_A) gives
        the R-matrix of the boundary theory.  For the free symmetric
@@ -865,10 +930,11 @@ def costello_paquette_comparison(N: int) -> Dict[str, Any]:
       -----------------------|--------------------
       A = Sym^N(T^4)         |  Boundary VOA
       kappa(A) = 2N          |  (central charge approach)
-      A! (Koszul dual)       |  Kodaira-Spencer boundary algebra
+      C / Z_ch^der(A)        |  Kodaira-Spencer bulk comparison
+      A!                     |  not reconstructed by this comparison
       r(z) = Omega/z         |  Classical r-matrix from KS theory
       Theta_A                |  MC element of deformation complex
-      Shadow tower           |  (not computed in their paper)
+      Shadow projections     |  finite scalar data, not the full tower
     """
     datum = holographic_datum_ads3_t4(N)
     return {
@@ -878,11 +944,38 @@ def costello_paquette_comparison(N: int) -> Dict[str, Any]:
         "kappa_dual": datum.kappa_dual,
         "shadow_class": datum.shadow_class,
         "r_matrix_type": "Omega/z (Casimir, simple pole)",
+        "holographic_package": {
+            "A": datum.boundary_algebra,
+            "A^i": datum.koszul_dual_coalgebra,
+            "A^!": datum.koszul_dual_algebra,
+            "C": datum.bulk_slot,
+            "r(z)": datum.r_matrix,
+            "Theta_A": datum.theta,
+            "nabla^hol": datum.holomorphic_connection,
+        },
+        "modular_koszul_compute_package": {
+            "primary_projections": datum.modular_koszul_compute_projections,
+            "warning": "Pi_X(L) is separate from H(A) and from A, B(A), A^i, A^!, Z_ch^der(A).",
+        },
+        "object_separation": {
+            "A": "boundary chiral algebra",
+            "B(A)": "bar coalgebra T^c(s^-1 bar A)",
+            "A^i": "H^bullet B(A), Koszul dual coalgebra",
+            "A^!": "Verdier dual algebra (A^i)^vee; scalar kappa stored as kappa_dual",
+            "Z_ch^der(A)": "derived-centre/bulk-observable slot, not A^i or A^!",
+            "Omega(B(A))": "bar-cobar inversion returning A, not Koszul duality",
+        },
         "costello_paquette_match": {
             "boundary_algebra": "Sym^N(T^4) -- MATCHES",
-            "koszul_dual": "Kodaira-Spencer boundary conditions -- MATCHES at genus 0",
+            "koszul_dual": (
+                "A^! is not identified with the CP bulk; only the scalar "
+                "kappa(A^!) complementarity slot is retained"
+            ),
+            "bulk_slot": (
+                "Kodaira-Spencer theory compares to C / Z_ch^der(A), not to A^i or A^!"
+            ),
             "r_matrix": "Classical YB from KS theory -- MATCHES (both give Omega/z)",
-            "shadow_tower": "Not computed in CP; our contribution is the full tower",
+            "shadow_tower": "CP does not compute these finite scalar shadow projections",
         },
         "novel_predictions": [
             f"kappa(Sym^{N}(T^4)) = {datum.kappa}",
@@ -1168,7 +1261,7 @@ def borcherds_ratio(
     r"""Ratio kappa_BPS / kappa_single.
 
     For K3: kappa_BPS / kappa(K3) = 5/2.
-    For the K3 x E string: kappa_BPS / kappa(K3 x E) = 5/3.
+    For the K3 x E string: kappa_BPS / kappa_ch^{Heis}(K3 x E) = 5/3.
 
     This ratio encodes the passage from first-quantized to
     second-quantized physics.

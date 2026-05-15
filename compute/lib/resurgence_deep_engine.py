@@ -1,79 +1,37 @@
-r"""Deep resurgence engine: alien derivatives, Stokes constants, trans-series
-completion, and double resurgence for the shadow obstruction tower.
+r"""Scalar resurgence diagnostics for the shadow obstruction tower.
 
-MATHEMATICAL FRAMEWORK
-======================
+The module keeps four surfaces separate.
 
-The shadow obstruction tower S_r(A) for class M algebras (Virasoro, W_N)
-has asymptotic growth |S_r| ~ C * rho^r * r^{-5/2} * cos(r*theta + phi).
-The series sum_r S_r t^r diverges for |t| > 1/rho but is BOREL SUMMABLE.
+1. Exact scalar genus data:
+   F_g = kappa * lambda_g^FP and
+   sum_{g>=1} lambda_g^FP u^g = (sqrt(u)/2)/sin(sqrt(u)/2) - 1.
+   Hence the u-plane poles are exactly u_n = (2*pi*n)^2, with residue
+   R_n = (-1)^n * 8*pi^2*n^2*kappa.
 
-This module computes the complete resurgent structure in both the ARITY
-direction (shadow tower, algebra-dependent) and the GENUS direction
-(Faber-Pandharipande, universal), plus their interaction (double resurgence).
+2. Exact scalar arity algebra:
+   H(t) = t^2 * sqrt(Q_L(t)) with Q_L(t) = q0 + q1*t + q2*t^2.
+   For Virasoro,
+   Q_Vir(t) = c^2 + 12ct + [(180c+872)/(5c+22)]t^2.
+   The zeros of Q_L determine the scalar algebraic radius
+   R = min |t_k| and rho = 1/R.
 
-1. BOREL TRANSFORM (arity direction):
-   Bhat[S](xi) = sum_{r>=2} S_r * xi^r / r!
-   This is ENTIRE (r! kills the geometric growth rho^r).
-   Singularities appear in the RESUMMED function, not the Borel transform.
+3. Finite-window diagnostics:
+   root tests, Richardson acceleration, and Pade poles estimate the
+   scalar arity radius from finitely many coefficients. They are
+   diagnostics, not proofs of analytic continuation, median summation,
+   or a nonperturbative theory.
 
-2. BOREL SINGULARITIES (arity direction):
-   Located at the instanton actions omega_k = 1/t_k where t_k are the
-   zeros of the shadow metric Q_L(t) = q0 + q1*t + q2*t^2.
-   For Virasoro: Q_Vir(t) = c^2 + 12ct + [(180c+872)/(5c+22)]t^2.
-   The primary singularity: omega_1 = 1/|t_nearest| = rho (the growth rate).
+4. Formal resurgence hypotheses:
+   Darboux coefficients, Stokes constants, alien derivatives, arity
+   trans-series, and double-resurgence commutators below are formal
+   quantities attached to the scalar algebraic model. They do not
+   certify lateral summability, analytic continuation, gravity recovery,
+   or Virasoro/multiweight partition theorems.
 
-3. ALIEN DERIVATIVES:
-   The alien derivative Delta_{omega} of the Borel transform measures
-   the discontinuity at a Borel singularity:
-   Delta_{omega_1} Bhat[S] = lim_{eps->0} [Bhat(omega_1+eps*e^{i*pi})
-                              - Bhat(omega_1+eps*e^{-i*pi})] / (2*pi*i)
-   For sqrt(Q_L), the monodromy at each branch point is -1, giving a
-   specific connection coefficient that determines the Stokes constant.
-
-4. TRANS-SERIES COMPLETION:
-   S^full(t) = sum_{n>=0} sigma_n * e^{-n*omega_1/t} * S^(n)(t)
-   where S^(0) is the perturbative tower, S^(1) the one-instanton sector.
-   For the algebraic function sqrt(Q_L), only ONE instanton sector from
-   each branch point (two-sheeted structure, no multi-instantons).
-
-5. STOKES PHENOMENON:
-   As arg(t) crosses a Stokes ray (arg(t) = arg(omega_k)), the
-   Borel-resummed answer jumps:
-   S_+(t) - S_-(t) = S_1 * e^{-omega_1/t} * (subleading)
-
-6. GENUS RESURGENCE:
-   F_g = kappa * lambda_g^FP has |F_g| ~ 2*kappa/(2*pi)^{2g}.
-   Borel singularities at xi = (2*pi*n)^2 in u = hbar^2 plane.
-   Stokes constant: S^genus_n = (-1)^n * 16*pi^3*n^2*kappa*i (u-plane).
-
-7. DOUBLE RESURGENCE:
-   With TWO asymptotic parameters (arity r, genus g), the alien
-   derivatives in the two directions should commute:
-   [Delta_omega^{arity}, Delta_eta^{genus}] = 0
-   This is a PREDICTION verified numerically.
-
-8. PEACOCK PATTERNS (Dorigoni-Dunne-Unsal):
-   Pade approximant poles in the complex Borel plane cluster along
-   lines approaching the true Borel singularities, forming characteristic
-   peacock-tail patterns.
-
-BEILINSON WARNINGS
-==================
-
-AP15: The genus-1 propagator is E_2* (quasi-modular). The Borel transform
-maps the quasi-modular series to a meromorphic function in the Borel plane.
-
-AP22: The generating function pairing is sum F_g hbar^{2g} (NOT hbar^{2g-2}).
-At g=1: F_1 = kappa/24 at order hbar^2.
-
-AP24: kappa + kappa' = 0 for KM/free fields, = 13 for Virasoro.
-
-AP27: Bar propagator d log E(z,w) is weight 1 regardless of field weight.
-
-AP31: kappa = 0 does NOT imply Theta = 0. Higher-arity components persist.
-
-AP46: eta(q) = q^{1/24} prod(1-q^n). The q^{1/24} is NOT optional.
+Local convention checks:
+   - The genus pairing is sum F_g hbar^{2g}; F_1 = kappa/24.
+   - kappa + kappa' = 0 for KM/free fields and 13 for Virasoro.
+   - kappa = 0 does not force the full obstruction Theta to vanish.
 
 Manuscript references:
     thm:shadow-radius (higher_genus_modular_koszul.tex)
@@ -213,7 +171,8 @@ def virasoro_deep(c_val: float) -> DeepResurgenceAlgebra:
 
     kappa = c/2, alpha = S_3 = 2,
     S_4 = Q^contact = 10/(c(5c+22)).
-    Koszul dual: Vir_{26-c}, so kappa' = (26-c)/2.
+    Verdier scalar partner in this census: Vir_{26-c}, so
+    kappa' = (26-c)/2. This is not bar-cobar inversion.
     """
     if abs(c_val) < 1e-15:
         # c=0: degenerate (kappa=0, S4 diverges)
@@ -237,7 +196,7 @@ def w3_deep(c_val: float) -> DeepResurgenceAlgebra:
             name='W3_c=0', kappa=0.0, alpha=2.0, S4=0.0,
             c=0.0, kappa_dual=5.0 * 100.0 / 6.0, depth_class='M',
         )
-    kappa = 5.0 * c_val / 6.0  # AP1/AP39: kappa(W_3) = 5c/6, NOT c/2
+    kappa = 5.0 * c_val / 6.0  # kappa(W_3) = 5c/6, not the Virasoro c/2.
     S4 = 10.0 / (c_val * (5.0 * c_val + 22.0))
     return DeepResurgenceAlgebra(
         name=f'W3_c={c_val}', kappa=kappa, alpha=2.0, S4=S4,
@@ -344,13 +303,13 @@ def shadow_coefficients_high_precision(alg: DeepResurgenceAlgebra,
 
 def arity_borel_transform(alg: DeepResurgenceAlgebra, xi: complex,
                            max_r: int = 60) -> complex:
-    r"""Standard Borel transform of the shadow tower in the arity variable.
+    r"""Truncated standard Borel transform in the arity variable.
 
     Bhat[S](xi) = sum_{r>=2} S_r * xi^r / r!
 
-    This function is ENTIRE (r! kills the geometric growth rho^r).
-    The singularities of the RESUMMED function appear at xi = 1/t_pm
-    (the instanton actions).
+    For the scalar algebraic model the factorial denominator removes
+    geometric coefficient growth. This finite truncation does not certify
+    Borel summation or lateral analytic continuation.
     """
     xi = complex(xi)
     coeffs = shadow_coefficients(alg, max_r)
@@ -369,13 +328,13 @@ def arity_borel_transform(alg: DeepResurgenceAlgebra, xi: complex,
 
 def arity_borel_weighted(alg: DeepResurgenceAlgebra, xi: complex,
                           max_r: int = 60) -> complex:
-    r"""Weighted Borel transform matching the r^{-5/2} decay.
+    r"""Truncated weighted arity Borel diagnostic.
 
     Bhat_w[S](xi) = sum_{r>=2} S_r * xi^r / Gamma(r + 5/2)
 
-    This normalization accounts for the r^{-5/2} algebraic prefactor
-    in the asymptotic expansion, making the Borel coefficients decay
-    superexponentially (Gamma(r+5/2) ~ r^{r+2} >> rho^r).
+    The normalization accounts for the r^{-5/2} algebraic prefactor
+    in the scalar asymptotic expansion. It is a coefficient diagnostic,
+    not a summability certificate.
     """
     xi = complex(xi)
     coeffs = shadow_coefficients(alg, max_r)
@@ -420,21 +379,23 @@ def arity_borel_at_points(alg: DeepResurgenceAlgebra,
 
 @dataclass
 class ArityBorelSingularity:
-    """Data for an arity-direction Borel singularity."""
+    """Candidate arity singularity from the scalar algebraic branch locus."""
     branch_point: complex       # t_k: zero of Q_L
     instanton_action: complex   # omega_k = 1/t_k
     modulus: float              # |omega_k| = rho
     argument: float             # arg(omega_k) = -arg(t_k)
     singularity_type: str       # 'branch_point' (always for sqrt)
     monodromy: complex          # -1 for sqrt (two-sheeted)
+    certification: str = 'algebraic_branch_diagnostic'
 
 
 def identify_arity_singularities(alg: DeepResurgenceAlgebra
                                   ) -> List[ArityBorelSingularity]:
-    """Identify all arity-direction Borel singularities.
+    """Identify scalar arity branch diagnostics.
 
-    For the algebraic function sqrt(Q_L), there are exactly TWO branch
-    points (the zeros of Q_L), giving TWO instanton actions.
+    For sqrt(Q_L), the zeros of Q_L give two algebraic branch points
+    and reciprocal action candidates. The result is not an analytic
+    summability certificate.
     """
     if alg.depth_class in ('G', 'L'):
         return []
@@ -697,18 +658,19 @@ def darboux_coefficient_numerical(alg: DeepResurgenceAlgebra,
 
 def alien_derivative_arity(alg: DeepResurgenceAlgebra,
                             at_singularity: str = 'primary') -> Dict[str, Any]:
-    r"""Alien derivative of the shadow tower at an arity Borel singularity.
+    r"""Formal arity alien-derivative diagnostic.
 
-    Delta_{omega_1} Bhat[S] encodes the DISCONTINUITY of the Borel-Laplace
-    resummation across the Stokes ray at arg(xi) = arg(omega_1).
-
-    For the algebraic function sqrt(Q_L), the alien derivative at the
-    nearest singularity omega_1 = 1/t_p is determined by:
+    For the scalar algebraic function sqrt(Q_L), the diagnostic at the
+    nearest reciprocal branch point omega_1 = 1/t_p is determined by:
     - The Darboux coefficient C (connection between sheets)
     - The monodromy -1 (square-root branch)
 
     Stokes constant: S_1 = -2*pi*i * C / t_p^2
     (the t_p^2 accounts for the t^2 prefactor in G(t) = t^2*sqrt(Q_L))
+
+    This function returns the formal coefficient attached to the scalar
+    branch model. It does not prove lateral summation or analytic
+    continuation of the shadow series.
     """
     if alg.depth_class in ('G', 'L'):
         return {
@@ -716,6 +678,9 @@ def alien_derivative_arity(alg: DeepResurgenceAlgebra,
             'stokes_constant': 0.0 + 0.0j,
             'instanton_action': complex('inf'),
             'note': 'Tower terminates; no arity-direction resurgence.',
+            'certification': 'terminating_scalar_tower',
+            'borel_summability_certified': False,
+            'median_resummation_certified': False,
         }
 
     C = darboux_coefficient(alg)
@@ -742,12 +707,15 @@ def alien_derivative_arity(alg: DeepResurgenceAlgebra,
         'instanton_action': omega_1,
         'darboux_coefficient': C,
         'monodromy': -1.0 + 0.0j,
+        'certification': 'formal_scalar_darboux_diagnostic',
+        'borel_summability_certified': False,
+        'median_resummation_certified': False,
     }
 
 
 def alien_derivative_numerical(alg: DeepResurgenceAlgebra,
                                 max_r: int = 200) -> complex:
-    r"""Extract Stokes constant numerically from high-order coefficients.
+    r"""Estimate the formal Stokes coefficient from high-order data.
 
     Uses the Dingle-Berry relation:
     S_r ~ S_1/(2*pi*i) * omega_1^{-r} * Gamma(r - 1/2) / Gamma(r+1) * ...
@@ -756,7 +724,8 @@ def alien_derivative_numerical(alg: DeepResurgenceAlgebra,
     S_r = C * rho^r * r^{-5/2} * cos(r*theta + phi)
     and S_1 = -2*pi*i * C / t_p^2.
 
-    We extract C from the fit and compute S_1.
+    We extract C from a finite least-squares fit and compute S_1. The
+    estimate is not an analytic continuation certificate.
     """
     if alg.depth_class in ('G', 'L'):
         return 0.0 + 0.0j
@@ -806,7 +775,7 @@ def alien_derivative_numerical(alg: DeepResurgenceAlgebra,
 # =====================================================================
 
 def stokes_automorphism_arity(alg: DeepResurgenceAlgebra) -> Dict[str, Any]:
-    r"""Stokes automorphism for the arity-direction shadow tower.
+    r"""Formal Stokes automorphism for the scalar arity model.
 
     As arg(t) crosses a Stokes ray at arg(t) = arg(1/omega_k):
     S_+(t) - S_-(t) = S_1 * e^{-omega_1/t} * G^{(1)}(t)
@@ -815,7 +784,7 @@ def stokes_automorphism_arity(alg: DeepResurgenceAlgebra) -> Dict[str, Any]:
     OTHER SHEET of the square root:
     G^{(1)}(t) = t^2 * (-sqrt(Q_L(t))) = -G^{(0)}(t)
 
-    So the Stokes jump is:
+    In this formal model the Stokes-jump ansatz is:
     S_+(t) - S_-(t) = -S_1 * e^{-omega_1/t} * G^{(0)}(t)
     """
     alien = alien_derivative_arity(alg)
@@ -831,22 +800,27 @@ def stokes_automorphism_arity(alg: DeepResurgenceAlgebra) -> Dict[str, Any]:
         'stokes_rays': stokes_rays,
         'stokes_jump_formula': 'S_+(t) - S_-(t) = -S_1 * exp(-omega_1/t) * G^{(0)}(t)',
         'algebraic_simplification': 'For sqrt, one-instanton = minus perturbative (second sheet)',
+        'certification': 'formal_scalar_stokes_ansatz',
+        'borel_summability_certified': False,
+        'median_resummation_certified': False,
     }
 
 
 def stokes_jump_numerical(alg: DeepResurgenceAlgebra, t_val: complex,
                            max_r: int = 60) -> Dict[str, Any]:
-    """Compute the Stokes jump numerically at a given t value.
+    """Evaluate the formal Stokes-jump ansatz at a given t value.
 
-    Evaluates G(t) on both sides of the Stokes ray (t slightly above
-    and slightly below the Stokes direction) using optimal truncation
-    and lateral Borel sums.
+    Uses finite optimal truncation and the formal Darboux coefficient.
+    It does not compute lateral Borel sums.
     """
     if alg.depth_class in ('G', 'L'):
         return {
             't': t_val,
             'stokes_jump': 0.0 + 0.0j,
             'note': 'No arity resurgence for class G/L.',
+            'certification': 'terminating_scalar_tower',
+            'borel_summability_certified': False,
+            'median_resummation_certified': False,
         }
 
     coeffs = shadow_coefficients(alg, max_r)
@@ -876,6 +850,9 @@ def stokes_jump_numerical(alg: DeepResurgenceAlgebra, t_val: complex,
         'predicted_jump': predicted_jump,
         'predicted_jump_modulus': abs(predicted_jump),
         'instanton_suppression': abs(exponential_factor),
+        'certification': 'formal_scalar_stokes_ansatz',
+        'borel_summability_certified': False,
+        'median_resummation_certified': False,
     }
 
 
@@ -885,15 +862,15 @@ def stokes_jump_numerical(alg: DeepResurgenceAlgebra, t_val: complex,
 
 @dataclass
 class ArityTransSeriesDeep:
-    """Full arity-direction trans-series for the shadow tower.
+    """Formal arity-direction trans-series ansatz for the scalar tower.
 
     G^full(t) = G^{(0)}(t) + sigma * e^{-omega_1/t} * G^{(1)}(t) + c.c.
 
     For sqrt: G^{(1)} = -G^{(0)} (the other sheet), so:
     G^full(t) = G^{(0)}(t) * (1 - sigma * e^{-omega_1/t} + c.c.)
 
-    This is EXACT for the algebraic shadow tower (no multi-instanton
-    corrections beyond the two-sheeted structure).
+    This records the two-sheeted scalar algebraic ansatz. It is not a
+    full chiral completion.
     """
     name: str
     perturbative: Dict[int, float]
@@ -903,11 +880,13 @@ class ArityTransSeriesDeep:
     darboux: complex
     rho: float
     theta: float
+    certification: str = 'formal_scalar_trans_series_ansatz'
+    analytic_resummation_certified: bool = False
 
 
 def build_arity_trans_series(alg: DeepResurgenceAlgebra,
                               max_r: int = 60) -> ArityTransSeriesDeep:
-    """Construct the arity-direction trans-series."""
+    """Construct the formal scalar arity trans-series ansatz."""
     coeffs = shadow_coefficients(alg, max_r)
     A_p, A_m = alg.instanton_actions
     S_1 = alien_derivative_arity(alg)['stokes_constant']
@@ -936,8 +915,8 @@ def evaluate_trans_series_arity(ts: ArityTransSeriesDeep, t: complex,
     A_- = A_+* so the exponential terms are also conjugates
     when t is real, giving a real correction.
 
-    For class G/L (no arity resurgence, Stokes constant = 0),
-    the non-perturbative correction vanishes identically.
+    For class G/L (terminating arity tower, Stokes constant = 0), the
+    formal exponential correction vanishes.
     """
     t = complex(t)
     if abs(t) < 1e-15:
@@ -946,12 +925,12 @@ def evaluate_trans_series_arity(ts: ArityTransSeriesDeep, t: complex,
     # Perturbative sector
     G0 = sum(ts.perturbative.get(r, 0.0) * t ** r for r in range(2, max_r + 1))
 
-    # Skip non-perturbative correction if Stokes constant is zero
+    # Skip the formal exponential correction if the Stokes coefficient is zero
     # (class G/L: tower terminates, no resurgence)
     if abs(ts.stokes_constant) < 1e-30 or abs(sigma) < 1e-30:
         return G0
 
-    # Non-perturbative corrections (for the algebraic case)
+    # Formal exponential corrections for the scalar algebraic model.
     # The other sheet gives -G0, so the correction is additive
     np_plus = sigma * cmath.exp(-ts.instanton_action_plus / t)
     np_minus = sigma.conjugate() * cmath.exp(-ts.instanton_action_minus / t)
@@ -1006,12 +985,12 @@ def F_g_scalar(kappa: float, g: int) -> float:
 
 def genus_borel_transform(kappa: float, xi: complex,
                            g_max: int = 80) -> complex:
-    r"""Borel transform of the genus expansion in u = hbar^2.
+    r"""Truncated Borel transform of the scalar genus expansion.
 
     B_u[Z](xi) = sum_{g>=1} F_g * xi^{g-1} / (g-1)!
 
-    This is ENTIRE (the (g-1)! kills the polynomial growth in g).
-    The RESUMMED function has simple poles at xi = (2*pi*n)^2.
+    The exact scalar generating function is handled by genus_closed_form;
+    this routine evaluates a finite Borel-normalized coefficient window.
     """
     xi = complex(xi)
     result = 0.0 + 0.0j
@@ -1051,7 +1030,7 @@ def genus_borel_singularities(kappa: float, n_max: int = 5) -> List[Dict[str, An
     Stokes constant (u-plane): S_n^u = 2*pi*i * R_n.
     Stokes constant (hbar-plane): S_n^hbar = (-1)^n * 4*pi^2*n * kappa * i.
 
-    UNIVERSAL: independent of algebra family (within the scalar lane).
+    This is independent of algebra family within the scalar lane.
     """
     sings = []
     for n in range(1, n_max + 1):
@@ -1080,12 +1059,13 @@ def genus_stokes_constant(kappa: float, n: int = 1) -> complex:
 
 def genus_large_order_prediction(kappa: float, g: int,
                                   n_inst: int = 5) -> float:
-    r"""Large-order prediction for F_g from instanton data.
+    r"""Finite partial sum for the Bernoulli/A-hat pole expansion.
 
     F_g = sum_{n>=1} (-1)^{n+1} * 2*kappa / (2*pi*n)^{2g}
 
-    EXACT for all g (not just asymptotic), because Z(u) is a sum of
-    simple poles with no essential singularities.
+    The infinite sum is exact for the scalar A-hat series. This function
+    truncates it at n_inst and is therefore an approximation with an
+    alternating-tail bound when kappa is fixed.
     """
     result = 0.0
     for n in range(1, n_inst + 1):
@@ -1093,11 +1073,19 @@ def genus_large_order_prediction(kappa: float, g: int,
     return result
 
 
+def genus_large_order_tail_bound(kappa: float, g: int,
+                                  n_inst: int = 5) -> float:
+    """Alternating-tail bound for genus_large_order_prediction."""
+    if g < 1 or n_inst < 1:
+        return float('inf')
+    return abs(2.0 * kappa / (TWO_PI * (n_inst + 1)) ** (2 * g))
+
+
 def genus_ratio_test(kappa: float, g_max: int = 30) -> Dict[str, Any]:
     r"""Ratio test: |F_{g+1}/F_g| should approach 1/(2*pi)^2 = 1/(4*pi^2).
 
-    This extracts the GENUS-direction Borel radius R = (2*pi)^2 in the
-    u-plane, equivalently R = 2*pi in the hbar-plane. UNIVERSAL.
+    This estimates the exact scalar genus radius R = (2*pi)^2 in the
+    u-plane, equivalently R = 2*pi in the hbar-plane.
     """
     ratios = []
     for g in range(1, g_max):
@@ -1129,7 +1117,7 @@ def double_resurgence_coefficients(alg: DeepResurgenceAlgebra,
                                     r_max: int = 30) -> np.ndarray:
     r"""Compute the double expansion coefficients F_{g,r}.
 
-    The FULL shadow partition function has two asymptotic expansions:
+    The scalar projected shadow series has two coefficient directions:
     Z^sh(hbar, t) = sum_{g>=1, r>=2} F_{g,r} * hbar^{2g} * t^r
 
     where F_{g,r} = F_g * S_r (factorized in the scalar sector).
@@ -1142,9 +1130,9 @@ def double_resurgence_coefficients(alg: DeepResurgenceAlgebra,
     - Borel transform in g: sum_g F_{g,r} xi^{g-1}/(g-1)! = S_r * B_u(xi)
     - Borel transform in r: sum_r F_{g,r} zeta^r/r! = F_g * B_arity(zeta)
 
-    DOUBLE Borel transform: sum_{g,r} F_{g,r} xi^{g-1} zeta^r / ((g-1)! r!)
+    Double Borel diagnostic: sum_{g,r} F_{g,r} xi^{g-1} zeta^r / ((g-1)! r!)
                           = B_u(xi) * B_arity(zeta)
-    This FACTORS, so the double Borel transform is a product.
+    This factors at the scalar coefficient level.
     """
     coeffs_r = shadow_coefficients(alg, r_max)
     kappa = alg.kappa
@@ -1162,7 +1150,7 @@ def double_resurgence_coefficients(alg: DeepResurgenceAlgebra,
 def double_borel_transform(alg: DeepResurgenceAlgebra,
                             xi: complex, zeta: complex,
                             g_max: int = 20, r_max: int = 30) -> complex:
-    r"""Double Borel transform in both genus and arity variables.
+    r"""Scalar double Borel diagnostic in genus and arity variables.
 
     B_{u,t}(xi, zeta) = sum_{g>=1, r>=2} F_{g,r} * xi^{g-1}/(g-1)! * zeta^r/r!
 
@@ -1179,18 +1167,18 @@ def double_borel_transform(alg: DeepResurgenceAlgebra,
 def double_alien_commutativity(alg: DeepResurgenceAlgebra,
                                 g_max: int = 20,
                                 r_max: int = 30) -> Dict[str, Any]:
-    r"""Verify that alien derivatives in genus and arity directions commute.
+    r"""Check formal commutativity in the scalar factorized model.
 
     [Delta_omega^{arity}, Delta_eta^{genus}] = 0
 
-    Because the double Borel transform FACTORS as B_u * B_arity,
+    Because the scalar double Borel diagnostic factors as B_u * B_arity,
     the alien derivatives in the two directions act independently:
     - Delta_omega acts on B_arity only (arity singularity)
     - Delta_eta acts on B_u only (genus singularity)
-    Therefore they commute TRIVIALLY by the product structure.
+    Therefore they commute within this formal product model.
 
-    We verify this numerically by checking that the factored form holds
-    to high precision.
+    This is not a proof of analytic double resurgence for the full
+    chiral theory.
     """
     kappa = alg.kappa
 
@@ -1218,7 +1206,7 @@ def double_alien_commutativity(alg: DeepResurgenceAlgebra,
 
     all_pass = all(r['relative_error'] < 1e-10 for r in results)
 
-    # Commutativity of alien derivatives follows from factorization
+    # Formal commutativity follows from scalar factorization.
     # The genus alien derivative Delta_{eta_n} acts on B_u factor only
     # The arity alien derivative Delta_{omega_k} acts on B_arity factor only
     # Therefore [Delta_{omega}, Delta_{eta}] = 0
@@ -1231,12 +1219,15 @@ def double_alien_commutativity(alg: DeepResurgenceAlgebra,
         'factorization_verified': all_pass,
         'factorization_tests': results,
         'commutator_vanishes': all_pass,
+        'scope': 'scalar_factorized_coefficients',
+        'analytic_resurgence_certified': False,
+        'borel_summability_certified': False,
         'genus_stokes_S1': genus_stokes,
         'arity_stokes_S1': arity_stokes,
         'explanation': (
-            'Double Borel transform factors as B_u(xi)*B_arity(zeta). '
-            'Alien derivatives in different directions act on different '
-            'factors and therefore commute.'
+            'The scalar double Borel diagnostic factors as '
+            'B_u(xi)*B_arity(zeta). Formal alien operators in different '
+            'directions act on different factors in this model.'
         ),
     }
 
@@ -1319,14 +1310,11 @@ def peacock_pattern_data(alg: DeepResurgenceAlgebra,
                           max_r: int = 60,
                           pade_orders: Optional[List[int]] = None
                           ) -> Dict[str, Any]:
-    r"""Generate peacock pattern data: Pade poles at increasing orders.
+    r"""Generate Pade-pole clustering diagnostics at increasing orders.
 
-    The Dorigoni-Dunne-Unsal peacock pattern: as the Pade order N increases,
-    the poles of the [N/N] Pade approximant cluster along lines connecting
-    the origin to the Borel singularities, forming characteristic
-    "peacock tail" patterns.
-
-    Returns pole data at multiple Pade orders for visualization.
+    The output records finite-order pole locations and their distance to
+    the scalar branch-action candidates. It does not certify analytic
+    continuation of the shadow series.
     """
     if pade_orders is None:
         pade_orders = [5, 8, 10, 12, 15]
@@ -1372,19 +1360,22 @@ def peacock_pattern_data(alg: DeepResurgenceAlgebra,
         'true_singularities': true_sing_locations,
         'clustering': clustering,
         'pade_orders_used': list(pole_data.keys()),
+        'certification': 'finite_pade_window_diagnostic',
+        'analytic_continuation_certified': False,
     }
 
 
 def pade_borel_singularity_detection(alg: DeepResurgenceAlgebra,
                                       max_r: int = 60,
                                       N: int = 15) -> Dict[str, Any]:
-    """Detect singularities of the shadow series from Pade poles.
+    """Estimate scalar arity branch locations from Pade poles.
 
     The Pade approximant of sum S_r t^r has poles that approximate
     the branch points t_pm (zeros of Q_L in the t-plane).
     The convergence radius is R = 1/rho = |t_nearest|.
 
-    The smallest Pade pole modulus should approximate R = 1/rho.
+    The smallest Pade pole modulus is a finite-window estimate of
+    R = 1/rho.
     """
     coeffs = shadow_coefficients(alg, max_r)
     poles = pade_poles(coeffs, min(N, max_r // 2 - 1))
@@ -1412,6 +1403,8 @@ def pade_borel_singularity_detection(alg: DeepResurgenceAlgebra,
         'true_branch_points': (t_p, t_m),
         'pade_poles': poles[:6],
         'n_poles': len(poles),
+        'certification': 'finite_pade_window_diagnostic',
+        'analytic_continuation_certified': False,
     }
 
 
@@ -1422,9 +1415,10 @@ def pade_borel_singularity_detection(alg: DeepResurgenceAlgebra,
 def virasoro_full_analysis(c_val: float,
                             max_r: int = 60,
                             g_max: int = 30) -> Dict[str, Any]:
-    """Complete resurgence analysis for Virasoro at central charge c.
+    """Scalar resurgence diagnostics for Virasoro at central charge c.
 
-    Returns genus-direction, arity-direction, and double resurgence data.
+    Returns exact scalar genus facts, exact scalar arity branch data, and
+    finite-window diagnostics. It does not certify an analytic completion.
     """
     alg = virasoro_deep(c_val)
     kappa = alg.kappa
@@ -1465,6 +1459,10 @@ def virasoro_full_analysis(c_val: float,
         'genus_ratio_converged': genus_rt['converged'],
         # Double
         'double_factorized': True,
+        'scope': 'scalar_shadow_coefficients',
+        'analytic_resurgence_certified': False,
+        'borel_summability_certified': False,
+        'median_resummation_certified': False,
         # Pade
         'peacock': peacock,
         # Cross checks
@@ -1476,7 +1474,7 @@ def virasoro_full_analysis(c_val: float,
 
 def virasoro_borel_scan(c_values: Optional[List[float]] = None,
                          max_r: int = 60) -> Dict[str, Dict[str, Any]]:
-    """Complete scan at multiple central charges."""
+    """Run scalar diagnostics at multiple central charges."""
     if c_values is None:
         c_values = [1.0, 7.0, 13.0, 25.0]
     return {f'Vir_c={c}': virasoro_full_analysis(c, max_r) for c in c_values}
@@ -1488,11 +1486,11 @@ def virasoro_borel_scan(c_values: Optional[List[float]] = None,
 
 def verify_arity_borel_radius_multipath(alg: DeepResurgenceAlgebra,
                                          max_r: int = 60) -> Dict[str, Any]:
-    r"""Verify arity-direction Borel radius by multiple independent paths.
+    r"""Diagnose the scalar arity radius by multiple paths.
 
     Path 1: From formula rho = sqrt(9*alpha^2 + 2*Delta)/(2*|kappa|)
     Path 2: From r-th root test |S_r|^{1/r} -> rho
-    Path 3: From Pade poles of the Borel transform
+    Path 3: From finite-window Pade poles
     Path 4: From branch point of Q_L (exact algebraic)
     Path 5: From Richardson extrapolation
     """
@@ -1523,7 +1521,7 @@ def verify_arity_borel_radius_multipath(alg: DeepResurgenceAlgebra,
         'path5_richardson': path5,
     }
 
-    # Agreement check
+    # Agreement check for diagnostics against the exact scalar branch radius.
     reference = path1
     agreement = {}
     for name, val in paths.items():
@@ -1536,6 +1534,12 @@ def verify_arity_borel_radius_multipath(alg: DeepResurgenceAlgebra,
         'paths': paths,
         'agreement': agreement,
         'reference': reference,
+        'exact_scalar_radius': 1.0 / reference if reference > 1e-15 else float('inf'),
+        'exact_scalar_radius_certified': True,
+        'finite_window_only': True,
+        'borel_summability_certified': False,
+        'median_resummation_certified': False,
+        'analytic_continuation_certified': False,
         'all_within_5pct': all(
             v < 0.05 for v in agreement.values()
             if isinstance(v, float) and not math.isnan(v)
@@ -1575,7 +1579,7 @@ def verify_genus_stokes_multipath(kappa: float,
     path2_hbar = -4.0 * PI ** 2 * kappa * 1.0j
 
     # Path 3: Exact Bernoulli
-    # F_g^{exact} = kappa * lambda_g, and the EXACT decomposition:
+    # F_g = kappa * lambda_g, and the exact infinite decomposition:
     # F_g = sum_{n>=1} (-1)^{n+1} * 2*kappa / (2*pi*n)^{2g}
     # The n=1 term gives 2*kappa/(2*pi)^{2g} = S_1 contribution
     # At g=1: F_1 = kappa/24 (from B_2 = 1/6)
@@ -1607,7 +1611,7 @@ def verify_genus_stokes_multipath(kappa: float,
 def verify_double_resurgence(alg: DeepResurgenceAlgebra,
                               g_max: int = 15,
                               r_max: int = 30) -> Dict[str, Any]:
-    """Verify the double resurgence structure.
+    """Check scalar double-resurgence diagnostics.
 
     Path 1: Check that the double Borel transform factors as B_u * B_arity
     Path 2: Check alien derivative commutativity
@@ -1629,6 +1633,10 @@ def verify_double_resurgence(alg: DeepResurgenceAlgebra,
         'genus_leading_check': genus_check,
         'arity_leading_check': arity_check,
         'all_pass': comm['factorization_verified'] and genus_check and arity_check,
+        'scope': 'scalar_factorized_coefficients',
+        'analytic_resurgence_certified': False,
+        'borel_summability_certified': False,
+        'median_resummation_certified': False,
     }
 
 
@@ -1637,10 +1645,10 @@ def verify_double_resurgence(alg: DeepResurgenceAlgebra,
 # =====================================================================
 
 def complementarity_resurgence(c_val: float) -> Dict[str, Any]:
-    """Compare resurgent structures of A and A! (Virasoro Koszul pair).
+    """Compare scalar diagnostics for A and its Verdier partner datum.
 
     For Vir_c and Vir_{26-c}:
-    - kappa(A) + kappa(A!) = 13 (AP24)
+    - kappa(A) + kappa(A!) = 13 on the Virasoro scalar lane
     - rho(A) != rho(A!) in general (complementarity breaks rho symmetry)
     - At self-dual c=13: rho(A) = rho(A!) (enhanced Z_2 symmetry)
     - Stokes constants: S_1(A)/kappa(A) = S_1(A!)/kappa(A!) iff rho(A)=rho(A!)
@@ -1678,4 +1686,7 @@ def complementarity_resurgence(c_val: float) -> Dict[str, Any]:
         'arity_stokes_dual': stokes_A_dual,
         'genus_stokes_sum': genus_stokes_sum,
         'self_dual': abs(c_val - 13.0) < 0.01,
+        'duality_branch': 'Verdier scalar partner datum',
+        'bar_cobar_inversion_used': False,
+        'bulk_hochschild_used': False,
     }

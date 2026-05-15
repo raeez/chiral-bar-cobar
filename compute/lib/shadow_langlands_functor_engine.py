@@ -206,13 +206,8 @@ def heisenberg_shadow_coefficients(k_val: float,
                                     max_r: int = 20) -> Dict[int, float]:
     """Heisenberg shadow: S_2 = k/2, all higher vanish (class G, depth 2).
 
-    NOTE: kappa(H_k) = k (NOT k/2). But S_2 = kappa/2 ... WAIT.
-    Actually from the manuscript: the shadow GF convention has
-    S_2 = kappa = k for Heisenberg.
-
-    Let me be precise. The Heisenberg at level k has:
-      kappa = k  (modular characteristic)
-      S_2 = kappa = k  (NOT kappa/2)
+    The manuscript convention is kappa(H_k)=k and S_2=kappa=k.
+    All higher shadow coefficients vanish.
 
     The shadow GF is G(t) = kappa * t^2 / ... hmm, let me check the
     existing shadow_automorphic_bridge.py which has:
@@ -267,18 +262,9 @@ def betagamma_shadow_coefficients(lam: float,
                                    max_r: int = 20) -> Dict[int, float]:
     r"""beta-gamma system shadow: class C (contact), terminates at arity 4.
 
-    kappa = 1 (independent of lambda, since c_{bg} = 2 and kappa = c/2 = 1
-    ... WAIT. For beta-gamma: kappa = -1 (ghost-like).
-    Actually, let me use the POSITIVE convention from landscape:
-      kappa_{bg} = 1 at lambda = 1/2 (standard).
-    More precisely: beta-gamma has c = -1, kappa = -1/2? No.
-
-    From the manuscript (AP39): kappa depends on the full algebra.
-    For beta-gamma at weight lambda: c = -2(6*lambda^2 - 6*lambda + 1).
-    kappa = c/2 since it has a single generator (Virasoro-type formula).
-
-    Actually beta-gamma is NOT Virasoro. It is a free-field algebra
-    with kappa = 1 for the standard normalization.
+    In the landscape normalization used by this engine, beta-gamma is a
+    free-field algebra with kappa = 1 in the standard normalization. It is
+    not assigned kappa by the Virasoro formula c/2.
 
     For this engine, we parametrize simply:
       kappa = 1, alpha = some function of lambda, S_4 = contact.
@@ -444,7 +430,8 @@ def shadow_hecke_eigenvalue(S: Dict[int, float], p: int) -> Optional[float]:
       But a_p^sh via T_p^sh S at r=2: (T_p S)_2 = S_{2p}.
       For p=2: S_4 = 0 (terminates), so a_2^sh = 0.
       For p=3: S_6 = 0, a_3^sh = 0.
-      Actually S_3 = 2 but S_{2*3} = S_6 = 0, so a_3 = 0.
+      The cubic term S_3 = 2 is not sampled by the even Adams index
+      S_{2p}; hence a_3 uses S_6 and vanishes.
 
     For Virasoro (class M): a_p^sh = S_{2p}(c) / S_2(c).
       S_2 = c/2, S_4 = 10/[c(5c+22)], so a_2^sh = 20/[c^2(5c+22)].

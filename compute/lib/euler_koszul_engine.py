@@ -1,17 +1,22 @@
 """Euler-Koszul three-tier classification engine.
 
-The Euler-Koszul defect D_A(u) = S_A(u) / (|W(A)|·zeta(u)·zeta(u+1)) classifies
-chiral algebras into three tiers based on their arithmetic complexity.
+At the weight-multiset level, the Euler-Koszul defect
+D_A(u) = S_A(u) / (|W(A)|·zeta(u)·zeta(u+1)) records whether the sewing
+Dirichlet lift is the pure Heisenberg Euler product or a finite harmonic
+subtraction from it. Lattice and Hecke data are external to this weight
+model and are needed for the non-Euler-Koszul tier.
 
-The key insight: DS reduction maps Tier 1 (exact) to Tier 2 (finitely defective).
-The arithmetic defect measures HOW MUCH non-linearity the DS reduction introduces.
+Principal DS reduction maps Tier 1 (exact) to Tier 2 (finitely defective):
+weight-1 currents are replaced by Casimir-degree generators, and each
+higher conformal weight removes finitely many low modes from the Euler
+product.
 
 Three tiers:
 
 | Tier | Condition | Examples |
 |------|-----------|----------|
 | Exact Euler-Koszul | D_A = 1 | Heisenberg, V_k(g), betagamma |
-| Finitely Defective | D_A = polynomial in 1/zeta(u) | Virasoro, W_N |
+| Finitely Defective | 1 - D_A is a finite harmonic sum divided by zeta(u) | Virasoro, W_N |
 | Non-Euler-Koszul | D_A involves distinct Hecke L | Lattices with h(D) >= 2 |
 
 References:
@@ -65,7 +70,9 @@ def S_A(u, weights):
 def euler_koszul_defect(u, weights):
     """D_A(u) = S_A(u) / (|W(A)| * zeta(u) * zeta(u+1)).
 
-    Exact Euler-Koszul iff D = 1 identically (all weights = 1).
+    For a non-empty finite weight multiset, exact Euler-Koszul means
+    D_A = 1 identically, equivalently all weights are 1. The empty multiset
+    returns 0 as the trivial no-generator sentinel.
     """
     u = mpf(u)
     n = len(weights)
@@ -392,30 +399,41 @@ def verify_ds_sends_exact_to_defective(lie_type, rank=None):
 # =============================================================================
 
 def defect_polynomial_expansion(weights, max_terms=5):
-    """Expand D_A(u) in powers of 1/zeta(u).
+    """Report the finite harmonic defect expansion of D_A(u).
 
     For weight multiset W = {w_1,...,w_n}, the defect is
     D_A(u) = (1/n) * sum_i (zeta(u) - H_{w_i-1}(u)) / zeta(u)
            = 1 - (1/n) * sum_i H_{w_i-1}(u) / zeta(u)
 
-    The "polynomial" structure: the defect is a polynomial in 1/zeta(u)
-    of degree 1 when all H_j are proportional to zeta (i.e., finite sums).
+    Thus P_A(u) := 1 - D_A(u) is a finite harmonic sum divided by zeta(u).
+    The legacy key ``defect_degree`` is kept for compatibility and is only
+    the Boolean distinction exact/non-exact: 0 for no harmonic correction,
+    1 for a finite harmonic correction. The mathematical rank of the finite
+    defect is ``defect_rank``.
 
     Returns dict with:
       - constant_term: always 1
       - harmonic_correction: -(1/n) * sum_i H_{w_i-1}(u) / zeta(u) at test points
-      - max_weight: max(w_i) - determines complexity
-      - defect_degree: effective degree in 1/zeta
+      - max_weight: max(w_i)
+      - defect_degree: compatibility field, 0 for exact and 1 for finite defect
+      - defect_rank: number of generators with positive weight excess
+      - euler_koszul_class: max_i(w_i - 1)
     """
     n = len(weights)
     if n == 0:
-        return {"constant_term": 1, "harmonic_correction": [], "max_weight": 0, "defect_degree": 0}
+        return {
+            "constant_term": 1,
+            "harmonic_correction": [],
+            "max_weight": 0,
+            "defect_degree": 0,
+            "defect_rank": 0,
+            "euler_koszul_class": 0,
+        }
 
     max_w = max(weights)
     # For weight-1 generators, H_0(u) = 0, so no harmonic correction
     # For weight w, H_{w-1}(u) = sum_{j=1}^{w-1} j^{-u}
-    # This is a finite sum, not proportional to zeta(u)
-    # The "degree" is determined by the maximum weight
+    # This is the finite harmonic subtraction from the Heisenberg product.
 
     # Evaluate harmonic correction at several test points
     corrections = {}
@@ -424,18 +442,23 @@ def defect_polynomial_expansion(weights, max_terms=5):
         harm_total = sum(harmonic_zeta(w - 1, u) for w in weights)
         corrections[u_val] = float(-harm_total / (n * zeta(u)))
 
-    # The defect degree: for weight-1, degree 0; otherwise degree 1 in 1/zeta
-    # (each H_j contributes a finite sum divided by zeta)
+    defect_rank = sum(1 for w in weights if w > 1)
+    ek_class = max_w - 1
+
+    # Compatibility field: exact has no correction; otherwise the correction
+    # is finite harmonic data divided by zeta(u).
     if all(w == 1 for w in weights):
         degree = 0
     else:
-        degree = 1  # The defect is linear in 1/zeta(u)
+        degree = 1
 
     return {
         "constant_term": 1,
         "harmonic_correction": corrections,
         "max_weight": max_w,
         "defect_degree": degree,
+        "defect_rank": defect_rank,
+        "euler_koszul_class": ek_class,
         "num_generators": n,
     }
 
@@ -454,11 +477,11 @@ _NAMED_FAMILIES = {
     "affine_sl2": (affine_sl2_weights, "exact",
                    "D = 1"),
     "W_3": (lambda: w_n_weights(3), "finitely_defective",
-            "D = 1 - (1+H_2)/2zeta"),
+            "D = 1 - (H_1(u)+H_2(u))/(2*zeta(u))"),
     "W_4": (lambda: w_n_weights(4), "finitely_defective",
-            "D = 1 - (1+H_2+H_3)/3zeta"),
+            "D = 1 - (H_1(u)+H_2(u)+H_3(u))/(3*zeta(u))"),
     "W_5": (lambda: w_n_weights(5), "finitely_defective",
-            "D = 1 - (1+H_2+H_3+H_4)/4zeta"),
+            "D = 1 - (H_1(u)+H_2(u)+H_3(u)+H_4(u))/(4*zeta(u))"),
 }
 
 
@@ -487,7 +510,7 @@ def euler_koszul_class(name):
             return {
                 "weights": weights,
                 "tier": "finitely_defective",
-                "defect_formula": f"D = 1 - sum_{{j=1}}^{{{N-1}}} H_j / ({N-1}*zeta)",
+                "defect_formula": f"D = 1 - sum_{{j=1}}^{{{N-1}}} H_j(u) / (({N-1})*zeta(u))",
             }
         except ValueError:
             pass
@@ -551,7 +574,7 @@ def ising_sewing_lift(u):
 
 
 def ising_modular_sewing_lift(u, n_terms=5000):
-    """Full Ising sewing lift from diagonal modular invariant.
+    """Weight-multiset fallback for the Ising diagonal modular sewing lift.
 
     Z_Ising(tau) = |chi_0|^2 + |chi_{1/2}|^2 + |chi_{1/16}|^2
 
@@ -559,10 +582,9 @@ def ising_modular_sewing_lift(u, n_terms=5000):
     at level 24. The Dirichlet lift of F^conn decomposes into
     partial zeta functions over residue classes mod 24.
 
-    This function computes the Dirichlet series from the explicit
-    q-expansion of Z_Ising, not from the weight multiset.
-
-    Returns S_Ising^mod(u) via direct summation over q-coefficients.
+    The full diagonal modular-invariant q-expansion is not implemented in
+    this engine. The returned value is the weight-multiset, single-character
+    Virasoro lift zeta(u+1) * (zeta(u) - 1), matching ising_sewing_lift().
     """
     u = mpf(u)
     # The modular Ising partition function on the imaginary axis:
@@ -575,7 +597,7 @@ def ising_modular_sewing_lift(u, n_terms=5000):
     # the result is the Virasoro sewing lift with c=1/2.
     # The modular invariant mixes characters and introduces L-function data.
     #
-    # Placeholder: return single-character level for now
+    # Full modular-invariant q-expansion is a separate computation.
     return zeta(u + 1) * (zeta(u) - 1)
 
 
@@ -663,6 +685,23 @@ def defect_at_integers(weights, u_values=None):
     return {u_val: float(euler_koszul_defect(u_val, weights)) for u_val in u_values}
 
 
+def defect_limit_as_u_infinity(weights):
+    """Limit of D_A(u) as u -> +infinity for a finite positive weight multiset.
+
+    Since zeta(u) -> 1 and
+    H_{w-1}(u) -> 0 for w = 1, while H_{w-1}(u) -> 1 for w >= 2,
+    the limit is the fraction of weight-1 generators:
+
+        lim_{u -> infinity} D_A(u) = #{i : w_i = 1} / |W(A)|.
+
+    The empty multiset returns 0 as the no-generator sentinel.
+    """
+    n = len(weights)
+    if n == 0:
+        return mpf(0)
+    return mpf(sum(1 for w in weights if w == 1)) / n
+
+
 def ds_arithmetic_defect_formula(lie_type, u, rank=None):
     """Explicit formula for DS defect.
 
@@ -686,21 +725,11 @@ def virasoro_defect_exact(u):
 def w3_defect_exact(u):
     """Exact W_3 defect: D_{W_3}(u) = 1 - (1 + H_2(u)) / (2*zeta(u)).
 
+    The weights are {2, 3}. Therefore H_1(u) = 1 and
     H_2(u) = 1 + 2^{-u}, so
+
     D_{W_3}(u) = 1 - (2 + 2^{-u}) / (2*zeta(u))
                = 1 - (1 + 2^{-u-1}) / zeta(u)
-
-    Wait: W_3 has weights {2,3}, so |W| = 2.
-    S_{W_3}(u) = zeta(u+1) * [(zeta(u) - H_1(u)) + (zeta(u) - H_2(u))]
-               = zeta(u+1) * [2*zeta(u) - 1 - (1 + 2^{-u})]
-               = zeta(u+1) * [2*zeta(u) - 2 - 2^{-u}]
-
-    D_{W_3}(u) = S / (2*zeta*zeta') = [2*zeta(u) - 2 - 2^{-u}] / (2*zeta(u))
-               = 1 - (2 + 2^{-u}) / (2*zeta(u))
-               = 1 - (1 + 2^{-u-1}) * (1/zeta(u))
-
-    Hmm, let me be precise:
-    = 1 - 1/zeta(u) - 2^{-u}/(2*zeta(u))
     """
     u = mpf(u)
     return 1 - (2 + power(2, -u)) / (2 * zeta(u))

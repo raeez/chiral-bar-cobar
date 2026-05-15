@@ -2,8 +2,8 @@ r"""Bershadsky-Polyakov bar complex: chain-level computation.
 
 The Bershadsky-Polyakov algebra BP_k = W_k(sl_3, f_{min}) is the DS reduction
 of V_k(sl_3) at the MINIMAL nilpotent orbit (partition (2,1)).  It is the
-simplest non-principal W-algebra and coincides with the N=2 superconformal
-algebra (in the Kazama-Suzuki normalisation).
+simplest non-principal W-algebra.  Its chain-level OPE is the
+Feigin-Semikhatov W_3^{(2)} normal form.
 
 GENERATORS (4 strong generators):
   J   (conformal weight 1,   bosonic,   J-charge 0)
@@ -24,16 +24,18 @@ CENTRAL CHARGE (Kac-Roan-Wakimoto 2003, Arakawa 2015, authoritative):
 
 KOSZUL CONDUCTOR:  K_BP = c_BP(k) + c_BP(-k-6) = 196.
 
-OPE (N=2 SCA convention, verified by super-skew-symmetry):
+OPE (Feigin-Semikhatov BP convention, verified by super-skew-symmetry):
   T_(3)T = c/2,    T_(1)T = 2T,        T_(0)T = dT
   T_(1)J = J,      T_(0)J = dJ
   T_(1)G+ = 3/2 G+, T_(0)G+ = dG+
   T_(1)G- = 3/2 G-, T_(0)G- = dG-
-  J_(1)J = c/3,    J_(0)J = 0
+  J_(1)J = (2k+3)/3,    J_(0)J = 0
   J_(1)T = J,      J_(0)T = 0
   J_(0)G+ = G+,    J_(0)G- = -G-
-  G+_(2)G- = 2c/3, G+_(1)G- = 2J,      G+_(0)G- = 2T + dJ
-  G-_(2)G+ = 2c/3, G-_(1)G+ = -2J,     G-_(0)G+ = 2T - dJ
+  G+_(2)G- = (k+1)(2k+3), G+_(1)G- = 3(k+1)J
+  G+_(0)G- = 3:JJ: + (3(k+1)/2)dJ - (k+3)T
+  G-_(2)G+ = (k+1)(2k+3), G-_(1)G+ = -3(k+1)J
+  G-_(0)G+ = 3:JJ: - (3(k+1)/2)dJ - (k+3)T
   G+_(n)G+ = 0,    G-_(n)G- = 0
   G+_(1)T = 3/2 G+, G+_(0)T = 1/2 dG+
   G-_(1)T = 3/2 G-, G-_(0)T = 1/2 dG-
@@ -115,19 +117,45 @@ def bp_koszul_conductor():
 # N-th products (complete OPE data)
 # =============================================================================
 
-def bp_nth_products() -> Dict[Tuple[str, str], Dict[int, Dict[str, object]]]:
+def bp_primary_ope_normal_form(level=None) -> Dict[str, object]:
+    """Feigin-Semikhatov normal-form constants for BP_k = W_3^{(2)}."""
+    if level is None:
+        level = Symbol('k')
+    kk = sympify(level)
+    return {
+        "level": kk,
+        "central_charge": bp_central_charge(kk),
+        "J_level": (2 * kk + 3) / 3,
+        "G_pairing": (kk + 1) * (2 * kk + 3),
+        "GJ_coefficient": 3 * (kk + 1),
+        "JJ_coefficient": Rational(3),
+        "dJ_coefficient": Rational(3, 2) * (kk + 1),
+        "T_coefficient": -(kk + 3),
+        "convention": "Feigin-Semikhatov BP W_3^{(2)}",
+    }
+
+
+def bp_nth_products(level=None) -> Dict[Tuple[str, str], Dict[int, Dict[str, object]]]:
     """All singular n-th products for BP generators.
 
     Returns {(a, b): {n: {output: coeff}}} for all generator pairs.
-    Coefficients are rational functions of Symbol('c').
+    Coefficients are rational functions of the affine sl_3 level k.
 
     OPE verified by:
       (1) Conformal Ward identity (T-generator OPEs)
       (2) U(1) Ward identity (J-charge conservation)
       (3) Super-skew-symmetry (all reversed pairs)
-      (4) Agreement with the N=2 SCA mode algebra (Di Francesco Ch. 11)
+      (4) Agreement with the Feigin-Semikhatov W_3^{(2)} normal form.
     """
-    c = Symbol('c')
+    fs = bp_primary_ope_normal_form(level)
+    kk = fs["level"]
+    c = fs["central_charge"]
+    j_level = fs["J_level"]
+    g_pairing = fs["G_pairing"]
+    g_j = fs["GJ_coefficient"]
+    jj_coeff = fs["JJ_coefficient"]
+    dJ_coeff = fs["dJ_coefficient"]
+    t_coeff = fs["T_coefficient"]
 
     return {
         # ===== T x T: standard Virasoro (bosonic x bosonic) =====
@@ -157,7 +185,7 @@ def bp_nth_products() -> Dict[Tuple[str, str], Dict[int, Dict[str, object]]]:
 
         # ===== J x J: abelian current (bosonic x bosonic) =====
         ("J", "J"): {
-            1: {"vac": c / 3},
+            1: {"vac": j_level},
             # No simple pole: J_{(0)}J = 0
         },
 
@@ -179,16 +207,16 @@ def bp_nth_products() -> Dict[Tuple[str, str], Dict[int, Dict[str, object]]]:
 
         # ===== G+ x G-: the KEY non-trivial OPE (fermionic x fermionic) =====
         ("G+", "G-"): {
-            2: {"vac": 2 * c / 3},
-            1: {"J": Rational(2)},
-            0: {"T": Rational(2), "dJ": Rational(1)},
+            2: {"vac": g_pairing},
+            1: {"J": g_j},
+            0: {"JJ": jj_coeff, "dJ": dJ_coeff, "T": t_coeff},
         },
 
         # ===== G- x G+: from super-skew-symmetry (fermionic x fermionic) =====
         ("G-", "G+"): {
-            2: {"vac": 2 * c / 3},
-            1: {"J": Rational(-2)},
-            0: {"T": Rational(2), "dJ": Rational(-1)},
+            2: {"vac": g_pairing},
+            1: {"J": -g_j},
+            0: {"JJ": jj_coeff, "dJ": -dJ_coeff, "T": t_coeff},
         },
 
         # ===== G+ x G+ = 0 (charge conservation) =====
@@ -221,9 +249,9 @@ def bp_nth_products() -> Dict[Tuple[str, str], Dict[int, Dict[str, object]]]:
     }
 
 
-def bp_nth_product(a: str, b: str, n: int) -> Dict[str, object]:
+def bp_nth_product(a: str, b: str, n: int, level=None) -> Dict[str, object]:
     """Get a_{(n)}b for BP generators a, b."""
-    products = bp_nth_products()
+    products = bp_nth_products(level)
     pair = (a, b)
     if pair not in products:
         return {}
@@ -241,16 +269,17 @@ def bp_curvature() -> Dict[str, object]:
     i.e. the leading-pole self-OPE coefficient.
 
     For T: m_0^(T) = T_{(3)}T|_vac = c/2
-    For J: m_0^(J) = J_{(1)}J|_vac = c/3
+    For J: m_0^(J) = J_{(1)}J|_vac = (2k+3)/3
     For G+, G-: the self-OPE vanishes (charge conservation), but the
-    CROSS inner product G+_{(2)}G- = 2c/3 gives the curvature on the
+    CROSS inner product G+_{(2)}G- = (k+1)(2k+3) gives the curvature on the
     fermionic sector.
     """
-    c = Symbol('c')
+    k = Symbol('k')
+    fs = bp_primary_ope_normal_form(k)
     return {
-        "T": c / 2,
-        "J": c / 3,
-        "G+G-": 2 * c / 3,  # cross-curvature on fermionic pair
+        "T": fs["central_charge"] / 2,
+        "J": fs["J_level"],
+        "G+G-": fs["G_pairing"],  # cross-curvature on fermionic pair
     }
 
 
@@ -569,18 +598,20 @@ def ds_bar_commutation_kappa() -> Dict[str, object]:
     # DS-derived kappa
     kappa_ds = kappa_affine - ghost
 
-    # Direct BP kappas
+    # Direct BP invariants.  The T-line has Virasoro curvature c/2;
+    # the J-current level is independent of c/3 in FS normal form.
     kappa_T = c / 2
-    kappa_J = c / 6  # = (c/3)/2
+    j_level = (2 * k + 3) / 3
 
     return {
         "kappa_affine": kappa_affine,
         "ghost_constant": ghost,
         "kappa_ds": kappa_ds,
         "kappa_T": kappa_T,
-        "kappa_J": kappa_J,
+        "J_level": j_level,
         "kappa_ds_simplified": simplify(kappa_ds),
         "kappa_T_simplified": simplify(kappa_T),
+        "J_level_simplified": simplify(j_level),
     }
 
 
@@ -652,7 +683,7 @@ def bp_arnold_cancellation_deg3() -> bool:
       TT: order 4 pole * simple pole = order 3 singularity -> Res = 0
       G+G-: order 3 pole * simple pole = order 2 singularity -> Res = 0
       JJ: order 2 pole * simple pole = order 1 singularity -> Res != 0
-    BUT the JJ case: J_{(1)}J = c/3 is a SCALAR, so it maps to B^0,
+    BUT the JJ case: J_{(1)}J = (2k+3)/3 is a SCALAR, so it maps to B^0,
     not to B^1.  The B^0 component requires TWO vacuum contributions
     from independent collisions, which cancel by the Arnold relation.
     """
@@ -671,7 +702,8 @@ def verify_skew_symmetry() -> Dict[str, bool]:
     For both fermionic: b_{(n)}a = -sum (-1)^{n+j+1}/j! d^j(a_{(n+j)}b)
                                  = sum (-1)^{n+j}/j! d^j(a_{(n+j)}b)
     """
-    c = Symbol('c')
+    k = Symbol('k')
+    fs = bp_primary_ope_normal_form(k)
     results = {}
 
     # --- J_{(0)}T via skew of T_{(0)}J and T_{(1)}J ---
@@ -681,22 +713,32 @@ def verify_skew_symmetry() -> Dict[str, bool]:
     results["J_(0)T = 0"] = (computed == 0) and (expected == 0)
 
     # --- G-_(2)G+ via super-skew of G+_(2)G- ---
-    # G-_(2)G+ = (-1)^{2+0} G+_(2)G- = G+_(2)G- = 2c/3
+    # G-_(2)G+ = (-1)^{2+0} G+_(2)G- = G+_(2)G-.
     expected_val = bp_nth_product("G-", "G+", 2)
-    results["G-_(2)G+ = 2c/3"] = (expected_val.get("vac") == 2 * c / 3)
+    results["G-_(2)G+ = FS pairing"] = (
+        simplify(expected_val.get("vac") - fs["G_pairing"]) == 0
+    )
 
     # --- G-_(1)G+ via super-skew ---
     # G-_(1)G+ = (-1)^{1+0} G+_(1)G- + (-1)^{1+1} d(G+_(2)G-)
-    # = -2J + 0 = -2J
+    # = -3(k+1)J + 0
     expected_val = bp_nth_product("G-", "G+", 1)
-    results["G-_(1)G+ = -2J"] = (expected_val.get("J") == -2)
+    results["G-_(1)G+ = -3(k+1)J"] = (
+        simplify(expected_val.get("J") + fs["GJ_coefficient"]) == 0
+    )
 
     # --- G-_(0)G+ via super-skew ---
     # G-_(0)G+ = (-1)^{0+0} G+_(0)G- + (-1)^{0+1} d(G+_(1)G-) + ...
-    # = (2T + dJ) - d(2J) + 0 = 2T + dJ - 2dJ = 2T - dJ
+    # = 3JJ + a*dJ -(k+3)T - d(3(k+1)J)
+    # = 3JJ - a*dJ -(k+3)T, with a = 3(k+1)/2.
     expected_val = bp_nth_product("G-", "G+", 0)
-    results["G-_(0)G+: T coeff = 2"] = (expected_val.get("T") == 2)
-    results["G-_(0)G+: dJ coeff = -1"] = (expected_val.get("dJ") == -1)
+    results["G-_(0)G+: JJ coeff = 3"] = (expected_val.get("JJ") == 3)
+    results["G-_(0)G+: T coeff = -(k+3)"] = (
+        simplify(expected_val.get("T") - fs["T_coefficient"]) == 0
+    )
+    results["G-_(0)G+: dJ coeff = -3(k+1)/2"] = (
+        simplify(expected_val.get("dJ") + fs["dJ_coefficient"]) == 0
+    )
 
     # --- G+_(0)J via super-skew of J_(0)G+ ---
     # G+_(0)J = (-1)^{0+0+1} J_{(0)}G+ = -G+
@@ -735,19 +777,19 @@ def bp_is_chirally_koszul() -> Dict[str, object]:
     The OPE structure:
       - JJ: pole 2 = scalar (quadratic)
       - JG±: pole 1 = linear (quadratic)
-      - G+G-: pole 3 = scalar, pole 2 = J (linear), pole 1 = T + dJ (linear+derivative)
+      - G+G-: pole 3 = scalar, pole 2 = J (linear), pole 1 = 3JJ + dJ - (k+3)T
       - TT: pole 4 = scalar, pole 2 = T (linear), pole 1 = dT (derivative)
       - TJ: pole 2 = J, pole 1 = dJ
       - TG±: pole 2 = G± (linear), pole 1 = dG± (derivative)
 
-    All poles involve at most LINEAR composites.  No quadratic composites
-    (like :JJ:) appear in the SINGULAR part of any OPE.
+    All poles involve at most QUADRATIC composites; the Feigin-Semikhatov
+    simple pole displays the :JJ: term explicitly.
     Therefore BP_k is chirally Koszul.
     """
     return {
         "is_koszul": True,
         "criterion": "PBW universality (prop:pbw-universality)",
-        "reason": "All OPE singularities involve only linear/derivative composites",
+        "reason": "Feigin-Semikhatov normal form has generator degree <= 2; the :JJ: term is explicit",
         "n_generators": 4,
         "n_relations": 4,  # JJ, JG±, G+G-, TT (independent at quadratic level)
         "euler_characteristic": 1 - 4 + 4 - 1,  # = 0 (with one Jacobi syzygy)
@@ -804,24 +846,25 @@ def verify_bp_bar_complex() -> Dict[str, bool]:
     ) == 0
 
     # 4. Bar differential at degree 2
-    c_sym = Symbol('c')
+    fs = bp_primary_ope_normal_form(k)
     vac, bar1 = bp_bar_diff_deg2("T", "T")
-    results["D(TT): vac = c/2"] = vac.get("vac") == c_sym / 2
+    results["D(TT): vac = c(k)/2"] = simplify(vac.get("vac") - fs["central_charge"] / 2) == 0
     results["D(TT): T coeff = 2"] = bar1.get("T") == 2
 
     vac, bar1 = bp_bar_diff_deg2("J", "J")
-    results["D(JJ): vac = c/3"] = vac.get("vac") == c_sym / 3
+    results["D(JJ): vac = (2k+3)/3"] = simplify(vac.get("vac") - fs["J_level"]) == 0
 
     vac, bar1 = bp_bar_diff_deg2("G+", "G-")
-    results["D(G+G-): vac = 2c/3"] = vac.get("vac") == 2 * c_sym / 3
-    results["D(G+G-): J coeff = 2"] = bar1.get("J") == 2
-    results["D(G+G-): T coeff = 2"] = bar1.get("T") == 2
-    results["D(G+G-): dJ coeff = 1"] = bar1.get("dJ") == 1
+    results["D(G+G-): vac = FS pairing"] = simplify(vac.get("vac") - fs["G_pairing"]) == 0
+    results["D(G+G-): J coeff = 3(k+1)"] = simplify(bar1.get("J") - fs["GJ_coefficient"]) == 0
+    results["D(G+G-): JJ coeff = 3"] = bar1.get("JJ") == 3
+    results["D(G+G-): T coeff = -(k+3)"] = simplify(bar1.get("T") - fs["T_coefficient"]) == 0
+    results["D(G+G-): dJ coeff = 3(k+1)/2"] = simplify(bar1.get("dJ") - fs["dJ_coefficient"]) == 0
 
     vac, bar1 = bp_bar_diff_deg2("G-", "G+")
-    results["D(G-G+): vac = 2c/3"] = vac.get("vac") == 2 * c_sym / 3
-    results["D(G-G+): J coeff = -2"] = bar1.get("J") == -2
-    results["D(G-G+): dJ coeff = -1"] = bar1.get("dJ") == -1
+    results["D(G-G+): vac = FS pairing"] = simplify(vac.get("vac") - fs["G_pairing"]) == 0
+    results["D(G-G+): J coeff = -3(k+1)"] = simplify(bar1.get("J") + fs["GJ_coefficient"]) == 0
+    results["D(G-G+): dJ coeff = -3(k+1)/2"] = simplify(bar1.get("dJ") + fs["dJ_coefficient"]) == 0
 
     # Vanishing OPEs
     vac_pp, bar1_pp = bp_bar_diff_deg2("G+", "G+")

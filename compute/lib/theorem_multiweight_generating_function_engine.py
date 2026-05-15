@@ -1,7 +1,7 @@
-r"""Generating function analysis of the multi-weight cross-channel correction.
+r"""Finite-window generating-function diagnostics for the W_3 cross channel.
 
-GENERATING FUNCTION ANALYSIS (new result)
-==========================================
+FINITE-WINDOW DIAGNOSTIC SURFACE
+================================
 
 For the W_3 algebra, the cross-channel correction delta_F_g^cross has been
 computed at g = 2, 3, 4 (thm:multi-weight-genus-expansion). This module
@@ -9,44 +9,93 @@ studies the generating function
 
     G(t, c) = sum_{g >= 2} delta_F_g(c) * t^{2g}
 
-at specific values of c, seeking structural patterns:
+through the certified finite window g = 2, 3, 4.  No all-genus analytic
+claim, convergence-radius theorem, analytic tau-function statement, or
+KdV/Gelfand-Dickey hierarchy membership is inferred from these three
+coefficients.
 
-(1) RATIO ANALYSIS: compute delta_F_{g+1} / delta_F_g and test for
-    convergence to a radius of convergence or factorial/polynomial growth.
+(1) RATIO ANALYSIS: compute the two available ratios
+    delta_F_3 / delta_F_2 and delta_F_4 / delta_F_3.
 
 (2) SHADOW METRIC CONNECTION: test whether G relates to sqrt(Q_L) where
-    Q_L is the shadow metric on the T-primary line.
+    Q_L is the canonical Virasoro/T-primary shadow metric.
 
-(3) PADE APPROXIMANT: rational reconstruction of G from the 3 known terms.
+(3) PADE APPROXIMANT: rational reconstruction of the finite window from
+    the three known terms.
 
 (4) NUMERATOR FACTORIZATION: factor P_g(c) over Q to find meaningful roots.
 
-DATA (PROVED by exhaustive graph sum, from theorem_multiweight_structure_engine):
+DATA (certified by exhaustive graph sum in theorem_multiweight_structure_engine):
 
     delta_F_2 = (c + 204) / (16 c)
     delta_F_3 = (5c^3 + 3792c^2 + 1149120c + 217071360) / (138240 c^2)
     delta_F_4 = (287c^4 + 268881c^3 + 115455816c^2
                  + 29725133760c + 5594347866240) / (17418240 c^3)
 
-MULTI-PATH VERIFICATION:
-    Path 1: Evaluation of closed-form formulas (this module)
-    Path 2: Cross-check against theorem_multiweight_structure_engine
-    Path 3: Betti stratum reassembly
-    Path 4: Asymptotic consistency checks (large c, small c)
-    Path 5: Pade self-consistency (reconstruct input from approximant)
+LOCAL VERIFICATION ROUTES:
+    1. Evaluation of closed-form formulas in this module.
+    2. Cross-check against theorem_multiweight_structure_engine.
+    3. Betti stratum reassembly.
+    4. Large-c and small-c consistency checks.
+    5. Pade self-consistency on exactly the three input coefficients.
 
 References:
     thm:multi-weight-genus-expansion (higher_genus_modular_koszul.tex)
     theorem_multiweight_structure_engine.py
-    AP27 (bar propagator weight universality)
 """
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 from fractions import Fraction
-from functools import lru_cache
 from math import factorial, gcd, isqrt, log, sqrt
 from typing import Any, Dict, List, Optional, Tuple
+
+
+GENUS_WINDOW: Tuple[int, ...] = (2, 3, 4)
+"""Finite genus window certified by the exhaustive W_3 graph sum."""
+
+HOLOGRAPHIC_PACKAGE_ENTRIES: Tuple[str, ...] = (
+    "A",
+    "A^i",
+    "A^!",
+    "C",
+    "r(z)",
+    "Theta_A",
+    "nabla^hol",
+)
+"""The seven slots of the holographic package, kept distinct here."""
+
+MODULAR_KOSZUL_COMPUTE_PROJECTIONS: Tuple[str, ...] = (
+    "Fact_X(L)",
+    "barB_X(L)",
+    "Theta_L",
+    "L_L",
+    "(V_br,T_br)",
+    "R4_mod(L)",
+)
+"""The six projections of the modular Koszul compute package."""
+
+BAR_KOSZUL_OBJECT_ROLES: Dict[str, str] = {
+    "A": "input chiral algebra",
+    "B(A)": "ordered bar coalgebra T^c(s^{-1}bar A)",
+    "A^i": "bar cohomology coalgebra H^*(B(A))",
+    "A^!": "Verdier/continuous-linear dual algebra branch",
+    "Omega(B(A))": "bar-cobar inversion back to A",
+    "Z_ch^der(A)": "derived chiral centre ChirHoch^*(A,A), the bulk slot",
+}
+"""Firewall preventing bar, dual, inversion, and Hochschild/bulk conflation."""
+
+
+@dataclass(frozen=True)
+class W3ChannelData:
+    """Diagonal primary-line data for W_3 before cross-channel graph summation."""
+
+    channel: str
+    conformal_weight: int
+    kappa: Fraction
+    S3: Fraction
+    S4: Optional[Fraction]
 
 
 # ============================================================================
@@ -84,29 +133,50 @@ def delta_Fg(g: int, c: Fraction) -> Fraction:
     return P / (Fraction(D) * c ** (g - 1))
 
 
+def available_genera() -> Tuple[int, ...]:
+    """Return the exact genus window available in this engine."""
+    return GENUS_WINDOW
+
+
 # ============================================================================
 # Generating function evaluation
 # ============================================================================
 
 def generating_function(c: Fraction, max_g: int = 4) -> Dict[int, Fraction]:
-    r"""Compute G(t, c) coefficients: G = sum_{g>=2} delta_F_g * t^{2g}.
+    r"""Compute the finite-window coefficients of G(t, c).
 
-    Returns dict {2g: delta_F_g(c)} for g = 2, ..., max_g.
+    The certified data are only for g in {2, 3, 4}.  This returns the
+    available coefficients {2g: delta_F_g(c)} up to max_g; it does not
+    extrapolate the all-genus series.
     """
     result = {}
-    for g in range(2, max_g + 1):
-        if g in NUMERATOR_COEFFS:
+    for g in GENUS_WINDOW:
+        if g <= max_g:
             result[2 * g] = delta_Fg(g, c)
     return result
 
 
+def generating_function_u(c: Fraction, max_g: int = 4) -> Dict[int, Fraction]:
+    r"""Finite-window coefficients in u = t^2.
+
+    Returns {g: delta_F_g(c)} for G(u,c) = sum delta_F_g(c) u^g.
+    """
+    return {g: delta_Fg(g, c) for g in GENUS_WINDOW if g <= max_g}
+
+
 def evaluate_generating_function(c: Fraction, t: Fraction,
                                   max_g: int = 4) -> Fraction:
-    r"""Evaluate G(t, c) = sum_{g>=2} delta_F_g(c) * t^{2g} at given t, c."""
+    r"""Evaluate the finite-window truncation sum delta_F_g(c) t^{2g}."""
+    return evaluate_generating_function_u(c, t * t, max_g=max_g)
+
+
+def evaluate_generating_function_u(c: Fraction, u: Fraction,
+                                   max_g: int = 4) -> Fraction:
+    r"""Evaluate the finite-window truncation G(u,c)=sum delta_F_g(c) u^g."""
     total = Fraction(0)
-    for g in range(2, max_g + 1):
-        if g in NUMERATOR_COEFFS:
-            total += delta_Fg(g, c) * t ** (2 * g)
+    for g in GENUS_WINDOW:
+        if g <= max_g:
+            total += delta_Fg(g, c) * u ** g
     return total
 
 
@@ -115,12 +185,11 @@ def evaluate_generating_function(c: Fraction, t: Fraction,
 # ============================================================================
 
 def genus_ratio(g: int, c: Fraction) -> Fraction:
-    r"""Compute delta_F_{g+1}(c) / delta_F_g(c).
+    r"""Compute the adjacent finite-window quotient delta_F_{g+1}/delta_F_g.
 
-    If the generating function has radius of convergence R, the ratios
-    should converge to 1/R^2 as g -> infinity (for power series in t^2).
-
-    If the ratios grow like g^alpha, the series has zero radius (Gevrey).
+    Only R_2 and R_3 are available.  Interpreting these quotients as a
+    convergence radius, Gevrey order, or asymptotic law would require
+    all-genus control not supplied by this engine.
     """
     if g + 1 not in NUMERATOR_COEFFS:
         raise ValueError(f"Need g+1={g+1} data")
@@ -134,42 +203,40 @@ def genus_ratio(g: int, c: Fraction) -> Fraction:
 def all_genus_ratios(c: Fraction) -> Dict[int, Fraction]:
     """Compute all available ratios delta_F_{g+1}/delta_F_g."""
     ratios = {}
-    for g in range(2, 4):  # g=2->3 and g=3->4
+    for g in GENUS_WINDOW[:-1]:  # g=2->3 and g=3->4
         ratios[g] = genus_ratio(g, c)
     return ratios
 
 
-def ratio_growth_exponent(c: Fraction) -> Optional[Fraction]:
-    r"""If R_{g+1}/R_g ~ g^alpha, estimate alpha from two data points.
+def ratio_growth_quotient(c: Fraction) -> Fraction:
+    r"""Exact finite-window quotient (delta_F_4/delta_F_3)/(delta_F_3/delta_F_2)."""
+    ratios = all_genus_ratios(c)
+    return ratios[3] / ratios[2]
+
+
+def ratio_growth_exponent(c: Fraction) -> Optional[float]:
+    r"""Finite-window alpha estimate from R_3/R_2 = (3/2)^alpha.
 
     R_g = delta_F_{g+1}/delta_F_g. If R_3/R_2 ~ (3/2)^alpha, then
     alpha = log(R_3/R_2) / log(3/2).
 
-    Returns None if data is insufficient or the ratio analysis is
-    not meaningful (e.g., ratios decrease).
+    This uses only the certified g = 2, 3, 4 window.  It is not an
+    all-genus asymptotic theorem.
     """
     ratios = all_genus_ratios(c)
     R2 = ratios[2]  # delta_F_3 / delta_F_2
     R3 = ratios[3]  # delta_F_4 / delta_F_3
     if R2 <= 0 or R3 <= 0:
         return None
-    # alpha = log(R3/R2) / log(3/2)
     ratio_of_ratios = float(R3) / float(R2)
     if ratio_of_ratios <= 0:
         return None
-    alpha_float = log(ratio_of_ratios) / log(3 / 2)
-    # Return as fraction approximation
-    return Fraction(R3, R2)  # Return the ratio itself; exponent is float
+    return log(ratio_of_ratios) / log(3 / 2)
 
 
 def ratio_second_difference(c: Fraction) -> Fraction:
-    """R_3/R_2 - 1: fractional growth of the ratio.
-
-    If this is approximately constant across different c values,
-    it suggests the radius of convergence is independent of c.
-    """
-    ratios = all_genus_ratios(c)
-    return ratios[3] / ratios[2] - 1
+    """R_3/R_2 - 1 in the certified g = 2, 3, 4 window."""
+    return ratio_growth_quotient(c) - 1
 
 
 # ============================================================================
@@ -177,7 +244,7 @@ def ratio_second_difference(c: Fraction) -> Fraction:
 # ============================================================================
 
 def pade_11(c: Fraction) -> Tuple[List[Fraction], List[Fraction]]:
-    r"""[1/1] Pade approximant of G(t,c) in the variable u = t^2.
+    r"""Finite-window [1/1] Pade approximant in the variable u = t^2.
 
     G(u) = a_2 u^2 + a_3 u^3 + a_4 u^4 + ...
 
@@ -229,8 +296,8 @@ def pade_evaluate(c: Fraction, u: Fraction) -> Fraction:
 def pade_pole(c: Fraction) -> Fraction:
     """Location of the Pade pole: u_pole = -1/q1 = a_3/a_4.
 
-    This estimates the radius of convergence of G(u) in the u = t^2 variable.
-    The radius of convergence in t is sqrt(u_pole).
+    This is a finite-window diagnostic from the three certified coefficients,
+    not a theorem about the all-genus radius of convergence.
     """
     _, den_c = pade_11(c)
     q1 = den_c[1]
@@ -270,6 +337,53 @@ def pade_reconstruction_error(c: Fraction) -> Dict[int, Fraction]:
 # Shadow metric connection
 # ============================================================================
 
+def virasoro_t_line_shadow_data(c: Fraction) -> Dict[str, Fraction]:
+    r"""Canonical Virasoro/T-line shadow constants.
+
+    Source: landscape_census.tex, standard-family constants:
+    kappa = c/2, S_3 = 2, S_4 = 10/[c(5c+22)],
+    Delta = 8*kappa*S_4 = 40/(5c+22).
+    """
+    if c == 0 or 5 * c + 22 == 0:
+        raise ValueError("Virasoro T-line shadow data is singular at c=0,-22/5")
+    kappa = c / 2
+    S3 = Fraction(2)
+    S4 = Fraction(10) / (c * (5 * c + 22))
+    Delta = 8 * kappa * S4
+    return {
+        "kappa": kappa,
+        "S3": S3,
+        "S4": S4,
+        "Delta": Delta,
+    }
+
+
+def w3_diagonal_channel_data(c: Fraction) -> Dict[str, W3ChannelData]:
+    r"""Diagonal T/W primary-line data before cross-channel summation.
+
+    The scalar lane uses kappa_T + kappa_W = 5c/6.  The cross-channel
+    correction delta_F_g is not obtained by replacing this diagonal datum
+    with another scalar kappa; it is the mixed-channel graph sum.
+    """
+    t_data = virasoro_t_line_shadow_data(c)
+    return {
+        "T": W3ChannelData(
+            channel="T",
+            conformal_weight=2,
+            kappa=c / 2,
+            S3=t_data["S3"],
+            S4=t_data["S4"],
+        ),
+        "W": W3ChannelData(
+            channel="W",
+            conformal_weight=3,
+            kappa=c / 3,
+            S3=Fraction(0),
+            S4=None,
+        ),
+    }
+
+
 def shadow_metric_Q_virasoro(c: Fraction, t: Fraction) -> Fraction:
     r"""Shadow metric Q_L(t) for Virasoro (T-primary line of W_3).
 
@@ -277,37 +391,45 @@ def shadow_metric_Q_virasoro(c: Fraction, t: Fraction) -> Fraction:
 
     where for Virasoro:
       kappa = c/2
-      S_3 = -6/(c*(5c+22))  (cubic shadow coefficient)
+      S_3 = 2
       alpha = S_3
-      S_4 = 10/(c^2*(5c+22))  (Q^contact)
-      Delta = 8*kappa*S_4 = 40/(c*(5c+22))  (critical discriminant)
+      S_4 = 10/(c*(5c+22))  (Q^contact)
+      Delta = 8*kappa*S_4 = 40/(5c+22)  (critical discriminant)
     """
-    kappa = c / 2
-    S3 = Fraction(-6) / (c * (5 * c + 22))
-    S4 = Fraction(10) / (c ** 2 * (5 * c + 22))
-    Delta = 8 * kappa * S4  # = 40 / (c * (5c+22))
-    alpha = S3
+    data = virasoro_t_line_shadow_data(c)
+    kappa = data["kappa"]
+    alpha = data["S3"]
+    Delta = data["Delta"]
 
     linear = 2 * kappa + 3 * alpha * t
     return linear ** 2 + 2 * Delta * t ** 2
+
+
+def shadow_metric_zero_modulus_sq(c: Fraction) -> Fraction:
+    r"""Squared modulus of the two complex zeros of Q_L(t) for c > 0."""
+    data = virasoro_t_line_shadow_data(c)
+    kappa = data["kappa"]
+    S3 = data["S3"]
+    Delta = data["Delta"]
+    return 4 * kappa ** 2 / (9 * S3 ** 2 + 2 * Delta)
 
 
 def shadow_metric_sqrt_series(c: Fraction, max_order: int = 6
                                ) -> List[Fraction]:
     r"""Taylor coefficients of sqrt(Q_L(t)) for Virasoro.
 
-    sqrt(Q_L) is the flat section of the shadow connection.
-    Compare with the generating function G(t,c) to test whether
-    G = f(sqrt(Q_L)) for some simple f.
+    The formal branch of sqrt(Q_L) is the Virasoro T-line shadow flat
+    section.  The comparison with G(t,c) is a finite-window diagnostic
+    only; it is not an analytic identification of the W_3 cross-channel
+    series with a tau function or a hierarchy solution.
 
     Returns coefficients [a_0, a_1, a_2, ...] where
     sqrt(Q_L) = a_0 + a_1*t + a_2*t^2 + ...
     """
-    kappa = c / 2
-    S3 = Fraction(-6) / (c * (5 * c + 22))
-    S4 = Fraction(10) / (c ** 2 * (5 * c + 22))
-    Delta = 8 * kappa * S4
-    alpha = S3
+    data = virasoro_t_line_shadow_data(c)
+    kappa = data["kappa"]
+    alpha = data["S3"]
+    Delta = data["Delta"]
 
     # Q_L(t) = (2kappa)^2 + 12*kappa*alpha*t + (9*alpha^2 + 2*Delta)*t^2
     # = A + B*t + C*t^2  where A=(2kappa)^2, B=12*kappa*alpha, C=9*alpha^2+2*Delta
@@ -322,8 +444,7 @@ def shadow_metric_sqrt_series(c: Fraction, max_order: int = 6
     if A == 0:
         return [Fraction(0)] * max_order
 
-    sqrtA = kappa  # sqrt(4*kappa^2) = 2*|kappa| but we track sign; for c>0, kappa>0
-    # Actually sqrt(A) = 2*kappa for c>0
+    # Formal branch with leading coefficient 2*kappa (positive for c>0).
     sqrtA_val = 2 * kappa
 
     b = B / A  # = 12*kappa*alpha / (4*kappa^2) = 3*alpha/kappa
@@ -541,6 +662,8 @@ def large_c_leading(g: int) -> Fraction:
     For g = 2: delta_F_2 ~ 1/16 (constant)
     For g >= 3: delta_F_g ~ (P_g leading) / D_g * c (linear in c)
     """
+    if g not in NUMERATOR_COEFFS:
+        raise ValueError(f"Data not available for g={g}")
     coeffs = NUMERATOR_COEFFS[g]
     D = DENOMINATOR_CONSTS[g]
     return Fraction(coeffs[0], D)
@@ -554,6 +677,8 @@ def small_c_leading(g: int) -> Fraction:
     The dominant small-c behavior is c^{-(g-1)}, controlled by the
     max-Betti stratum.
     """
+    if g not in NUMERATOR_COEFFS:
+        raise ValueError(f"Data not available for g={g}")
     coeffs = NUMERATOR_COEFFS[g]
     D = DENOMINATOR_CONSTS[g]
     return Fraction(coeffs[-1], D)
@@ -562,17 +687,25 @@ def small_c_leading(g: int) -> Fraction:
 def kappa_w3(c: Fraction) -> Fraction:
     r"""Modular characteristic kappa(W_3, c).
 
-    kappa(W_3) = c * (5c + 22) / (5 * 6 * 2) = c * (5c + 22) / 60
-
-    DERIVATION: For W_N at level k, the central charge is
-    c = (N-1)(1 - N(N+1)/(k+N)). For W_3: c = 2(1 - 12/(k+3)).
-    kappa = dim(g) * (k + h^v) / (2 * h^v) with dim(sl_3)=8, h^v=3.
-    But for W-algebras, kappa = c * (H_N - 1) where H_N = harmonic number.
+    The principal W_N convention is kappa(W_N) = c * (H_N - 1).
     For W_3: H_3 = 1 + 1/2 + 1/3 = 11/6, so kappa = c * 5/6.
 
-    AP39 WARNING: kappa != c/2 for W-algebras. kappa(W_3) = 5c/6.
+    This is the diagonal scalar lane kappa_T + kappa_W = c/2 + c/3.
+    It is not the Virasoro T-line value c/2 and it is not the
+    cross-channel correction delta_F_g.
     """
     return Fraction(5) * c / Fraction(6)
+
+
+def scalar_lane_decomposition(g: int, c: Fraction) -> Dict[str, Fraction]:
+    r"""Separate diagonal scalar and mixed cross-channel genus-g pieces."""
+    scalar = scalar_Fg(g, c)
+    cross = delta_Fg(g, c)
+    return {
+        "scalar": scalar,
+        "cross": cross,
+        "total": scalar + cross,
+    }
 
 
 def scalar_Fg(g: int, c: Fraction) -> Fraction:
@@ -587,20 +720,31 @@ def scalar_Fg(g: int, c: Fraction) -> Fraction:
 
 
 def total_Fg(g: int, c: Fraction) -> Fraction:
-    r"""Total genus-g free energy: F_g = kappa * lambda_g + delta_F_g."""
+    r"""Certified finite-window W_3 value: F_g = kappa*lambda_g + delta_F_g."""
     return scalar_Fg(g, c) + delta_Fg(g, c)
 
 
 def cross_to_scalar_ratio(g: int, c: Fraction) -> Fraction:
-    r"""Ratio delta_F_g / (kappa * lambda_g): how large the correction is.
+    r"""Pointwise finite-window ratio delta_F_g / (kappa * lambda_g).
 
-    If this ratio is << 1, the scalar approximation is good.
-    If this ratio is >> 1, the cross-channel dominates.
+    Values below or above 1 compare the two terms at the chosen c and g.
+    They do not assert all-c dominance.
     """
     s = scalar_Fg(g, c)
     if s == 0:
         raise ValueError("Scalar contribution is zero")
     return delta_Fg(g, c) / s
+
+
+def cross_exceeds_scalar(g: int, c: Fraction) -> bool:
+    r"""Whether delta_F_g^cross exceeds kappa(W_3) lambda_g^FP at this c.
+
+    This is a pointwise finite-window comparison.  It is deliberately not
+    stated as a uniform theorem in c: at genus 2 the ratio tends to zero
+    as c -> infinity because delta_F_2 has constant leading order while
+    the scalar lane grows linearly.
+    """
+    return cross_to_scalar_ratio(g, c) > 1
 
 
 # ============================================================================
@@ -615,6 +759,8 @@ def denominator_factored(g: int) -> Dict[str, Any]:
     - Products of factorials from graph automorphisms
     - Powers of 2 from Z_2 channel parity
     """
+    if g not in DENOMINATOR_CONSTS:
+        raise ValueError(f"Data not available for g={g}")
     D = DENOMINATOR_CONSTS[g]
 
     # Prime factorization
@@ -655,29 +801,32 @@ def denominator_factored(g: int) -> Dict[str, Any]:
 # ============================================================================
 
 def full_analysis(c_val: int) -> Dict[str, Any]:
-    """Run the complete generating function analysis at c = c_val.
+    """Run the finite-window generating function analysis at c = c_val.
 
     Returns a dictionary with all computed quantities.
     """
     c = Fraction(c_val)
-    result: Dict[str, Any] = {'c': c_val}
+    result: Dict[str, Any] = {'c': c_val, 'genus_window': GENUS_WINDOW}
 
     # 1. delta_F_g values
-    result['delta_F'] = {g: delta_Fg(g, c) for g in [2, 3, 4]}
+    result['delta_F'] = {g: delta_Fg(g, c) for g in GENUS_WINDOW}
 
     # 2. Ratios
     result['ratios'] = all_genus_ratios(c)
-    result['ratio_growth'] = result['ratios'][3] / result['ratios'][2]
+    result['ratio_growth'] = ratio_growth_quotient(c)
 
     # 3. Scalar comparison
-    result['scalar_F'] = {g: scalar_Fg(g, c) for g in [2, 3, 4]}
-    result['cross_to_scalar'] = {g: cross_to_scalar_ratio(g, c) for g in [2, 3, 4]}
+    result['scalar_F'] = {g: scalar_Fg(g, c) for g in GENUS_WINDOW}
+    result['cross_to_scalar'] = {g: cross_to_scalar_ratio(g, c) for g in GENUS_WINDOW}
+    result['scalar_cross_decomposition'] = {
+        g: scalar_lane_decomposition(g, c) for g in GENUS_WINDOW
+    }
 
     # 4. Pade
     result['pade_pole'] = pade_pole(c)
     result['pade_errors'] = pade_reconstruction_error(c)
 
     # 5. Total free energy
-    result['total_F'] = {g: total_Fg(g, c) for g in [2, 3, 4]}
+    result['total_F'] = {g: total_Fg(g, c) for g in GENUS_WINDOW}
 
     return result

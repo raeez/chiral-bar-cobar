@@ -1,13 +1,13 @@
-r"""Comprehensive test suite for the genus-3 gravitational cross-channel correction.
+r"""Tests for the genus-3 gravitational cross-channel correction.
 
-Tests the PROVED universal formula:
+Tests the finite-window genus-3 gravitational formula:
 
     delta_F_3^{grav}(W_N, c) = D_3(N)*c + C_3(N) + B_3(N)/c + A_3(N)/c^2
 
 where:
     D_3(N) = (N-2) / 27648
     C_3(N) = (N-2) * (35*N^2 + 133*N + 234) / 34560
-    B_3(N) = (N-2) * (21*N^4 + 156*N^3 + 499*N^2 + 932*N + 1704) / 1728
+    B_3(N) = (N-2) * (15*N^4 + 147*N^3 + 517*N^2 + 947*N + 1686) / 1728
     A_3(N) = (N-2) * (120*N^6 + 1300*N^5 + 5918*N^4 + 14786*N^3
               + 27592*N^2 + 36369*N + 56475) / 1080
 
@@ -48,17 +48,104 @@ from theorem_delta_f3_universal_engine import (
     delta_F3_grav_graph_sum,
     extract_DCBA_from_c_values,
     genus3_graphs,
+    genus3_gravitational_formula_scope,
     grav_C3,
     grav_kappa_channel,
     grav_kappa_total,
     grav_propagator,
     grav_V0_factorize,
     grav_vertex_factor,
+    holographic_package_entries,
+    kernel_normalization_constants,
     lambda_fp,
+    modular_koszul_compute_projections,
+    typed_object_firewall,
     verify_graph_count,
     verify_N2_vanishing,
     verify_positivity,
 )
+
+
+# ============================================================================
+# 0. Scope firewalls: no all-genus/MC/object over-promotion
+# ============================================================================
+
+class TestScopeFirewalls(unittest.TestCase):
+    """Prevent finite scalar diagnostics from being promoted to stronger data."""
+
+    def test_genus3_scope_is_finite_gravitational_scalar(self):
+        scope = genus3_gravitational_formula_scope()
+        self.assertEqual(scope["genus"], 3)
+        self.assertEqual(scope["formula"], "D*c + C + B/c + A/c^2")
+        self.assertTrue(scope["gravitational_truncation"])
+        self.assertTrue(scope["scalar_projection_only"])
+        self.assertFalse(scope["proved_all_genus"])
+        self.assertFalse(scope["proved_all_N_full_ope"])
+        self.assertFalse(scope["cohomological_theorem_d_statement"])
+        self.assertFalse(scope["class_valued_mc_lift_proved"])
+        self.assertFalse(scope["delta_diagnostic_promoted_to_universal_theorem"])
+
+    def test_full_ope_scope_is_only_w3(self):
+        scope = genus3_gravitational_formula_scope()
+        self.assertEqual(scope["full_ope_exact_for_N"], (3,))
+        self.assertFalse(scope["full_ope_exact_for_generic_WN"])
+
+    def test_holographic_package_entries(self):
+        self.assertEqual(
+            holographic_package_entries(),
+            ("A", "A^i", "A^!", "C", "r(z)", "Theta_A", "nabla^hol"),
+        )
+
+    def test_modular_koszul_compute_projections(self):
+        self.assertEqual(
+            modular_koszul_compute_projections(),
+            (
+                "Fact_X(L)",
+                "barB_X(L)",
+                "Theta_L",
+                "L_L",
+                "(V_br,T_br)",
+                "R4_mod(L)",
+            ),
+        )
+
+    def test_bar_verdier_hochschild_objects_are_typed_apart(self):
+        roles = typed_object_firewall()
+        self.assertIn("input chiral algebra", roles["A"])
+        self.assertIn("bar coalgebra", roles["B(A)"])
+        self.assertIn("bar cohomology coalgebra", roles["A^i"])
+        self.assertIn("Verdier/continuous-linear dual branch", roles["A^!"])
+        self.assertIn("bar-cobar inversion", roles["Omega(B(A))"])
+        self.assertIn("Hochschild/derived-centre bulk", roles["Z_ch^der(A)"])
+        self.assertEqual(
+            len({"A", "B(A)", "A^i", "A^!", "Omega(B(A))", "Z_ch^der(A)"}),
+            6,
+        )
+
+    def test_kernel_normalization_constants(self):
+        kernels = kernel_normalization_constants(c=Fraction(26), k=Fraction(3),
+                                                 h_vee=Fraction(2))
+        self.assertEqual(kernels["affine_raw_collision"]["formula"],
+                         "k*Omega_tr/z")
+        self.assertEqual(kernels["affine_raw_collision"]["coefficient"],
+                         Fraction(3))
+        self.assertEqual(kernels["affine_kz_coefficient"]["formula"],
+                         "Omega/((k+h^vee)z)")
+        self.assertEqual(kernels["affine_kz_coefficient"]["coefficient"],
+                         Fraction(1, 5))
+        self.assertEqual(kernels["heisenberg_raw_collision"]["formula"], "k/z")
+        self.assertEqual(kernels["heisenberg_raw_collision"]["coefficient"],
+                         Fraction(3))
+        self.assertEqual(kernels["virasoro_collision"]["formula"],
+                         "(c/2)/z^3 + 2T/z")
+        self.assertEqual(kernels["virasoro_collision"]["central_coefficient"],
+                         Fraction(13))
+        self.assertEqual(kernels["virasoro_collision"]["stress_coefficient"],
+                         Fraction(2))
+
+    def test_affine_kz_critical_level_is_singular(self):
+        with self.assertRaises(ValueError):
+            kernel_normalization_constants(k=Fraction(-2), h_vee=Fraction(2))
 
 
 # ============================================================================
@@ -381,7 +468,7 @@ class TestExactValues(unittest.TestCase):
         self.assertEqual(C3_formula(3), Fraction(79, 2880))
 
     def test_N3_B(self):
-        self.assertEqual(B3_formula(3), Fraction(69, 8))
+        self.assertEqual(B3_formula(3), Fraction(133, 16))
 
     def test_N3_A(self):
         self.assertEqual(A3_formula(3), Fraction(6281, 4))
@@ -393,7 +480,7 @@ class TestExactValues(unittest.TestCase):
         self.assertEqual(C3_formula(4), Fraction(221, 2880))
 
     def test_N4_B(self):
-        self.assertEqual(B3_formula(4), Fraction(1199, 36))
+        self.assertEqual(B3_formula(4), Fraction(4499, 144))
 
     def test_N4_A(self):
         self.assertEqual(A3_formula(4), Fraction(109499, 12))
@@ -422,10 +509,10 @@ class TestPolynomialStructure(unittest.TestCase):
 
     def test_B3_degree5(self):
         """B_3(N) has degree 5."""
-        # Leading term: (N-2) * 21*N^4 / 1728 -> 21/1728 * N^5 = 7/576 * N^5
+        # Leading term: (N-2) * 15*N^4 / 1728 -> 5/576 * N^5
         b_1000 = B3_formula(1000)
         ratio = b_1000 / Fraction(1000**5)
-        self.assertAlmostEqual(float(ratio), 7.0 / 576, places=3)
+        self.assertAlmostEqual(float(ratio), 5.0 / 576, places=3)
 
     def test_A3_degree7(self):
         """A_3(N) has degree 7."""
@@ -760,21 +847,23 @@ class TestExtractDCBA(unittest.TestCase):
 # ============================================================================
 
 class TestOutOfSample(unittest.TestCase):
-    """Verify formula at N values beyond the interpolation range."""
+    """Verify formula at N values beyond the direct extraction range."""
 
-    def test_N9_analytical(self):
-        D, C, B, A = delta_F3_analytical(9)
-        self.assertEqual(D, D3_formula(9))
-        self.assertEqual(C, C3_formula(9))
-        self.assertEqual(B, B3_formula(9))
-        self.assertEqual(A, A3_formula(9))
+    def _check_frontier_oracle(self, N):
+        from theorem_thm_d_multiweight_frontier_engine import (
+            genus3_grav_laurent_coefficients,
+        )
+        coeffs = genus3_grav_laurent_coefficients(N)
+        self.assertEqual(coeffs[1], D3_formula(N))
+        self.assertEqual(coeffs[0], C3_formula(N))
+        self.assertEqual(coeffs[-1], B3_formula(N))
+        self.assertEqual(coeffs[-2], A3_formula(N))
 
-    def test_N10_analytical(self):
-        D, C, B, A = delta_F3_analytical(10)
-        self.assertEqual(D, D3_formula(10))
-        self.assertEqual(C, C3_formula(10))
-        self.assertEqual(B, B3_formula(10))
-        self.assertEqual(A, A3_formula(10))
+    def test_N9_frontier_oracle(self):
+        self._check_frontier_oracle(9)
+
+    def test_N10_frontier_oracle(self):
+        self._check_frontier_oracle(10)
 
     def test_N10_exact_values(self):
         """Exact values at N=10, independently computed."""
@@ -783,12 +872,8 @@ class TestOutOfSample(unittest.TestCase):
         #        = 8 * 5064 / 34560 = 40512 / 34560 = 211/180
         self.assertEqual(C3_formula(10), Fraction(211, 180))
 
-    def test_N11_analytical(self):
-        D, C, B, A = delta_F3_analytical(11)
-        self.assertEqual(D, D3_formula(11))
-        self.assertEqual(C, C3_formula(11))
-        self.assertEqual(B, B3_formula(11))
-        self.assertEqual(A, A3_formula(11))
+    def test_N11_frontier_oracle(self):
+        self._check_frontier_oracle(11)
 
 
 # ============================================================================
@@ -834,13 +919,7 @@ class TestAnalyticalVsBruteForce(unittest.TestCase):
 # ============================================================================
 
 class TestGravitationalVsActualW3(unittest.TestCase):
-    """The gravitational and actual W_3 computations now agree exactly.
-
-    Previously these differed by 5/(16c) due to a half-edge ordering bug
-    in the gravitational engine: self-loop half-edges were interleaved
-    with bridge half-edges at genus-0 vertices instead of being paired
-    first. The fix ensures correct factorization pairing.
-    """
+    """The gravitational and actual W_3 computations agree exactly."""
 
     def test_difference_at_c1(self):
         from w3_genus3_cross_channel import genus3_cross_channel
@@ -864,13 +943,44 @@ class TestGravitationalVsActualW3(unittest.TestCase):
         self.assertEqual(grav, actual)
 
     def test_difference_formula(self):
-        """grav == actual for all c > 0 (after half-edge ordering fix)."""
+        """grav == actual for the tested positive c-values."""
         from w3_genus3_cross_channel import genus3_cross_channel
         for c_val in [1, 2, 3, 7, 26]:
             c = Fraction(c_val)
             diff = delta_F3_grav_graph_sum(3, c) - genus3_cross_channel(c)
             self.assertEqual(diff, Fraction(0),
                              f"Difference not 0 at c={c_val}")
+
+    def test_multi_weight_graph_oracle(self):
+        from multi_weight_cross_channel_engine import (
+            WNFrobeniusAlgebra,
+            cross_channel_genus3,
+        )
+        for N, c in [(3, Fraction(11)), (4, Fraction(5)), (5, Fraction(3))]:
+            oracle = cross_channel_genus3(WNFrobeniusAlgebra(N), c)
+            self.assertEqual(delta_F3_grav_graph_sum(N, c), oracle)
+
+    def test_w3_finite_window_anchors(self):
+        from delta_f4_universal_engine import delta_F4_closed_form_W3
+        c = Fraction(17)
+        g2 = Fraction(1, 16) + Fraction(51, 4) / c
+        g3 = (
+            c / Fraction(27648)
+            + Fraction(79, 2880)
+            + Fraction(133, 16) / c
+            + Fraction(6281, 4) / c**2
+        )
+        g4 = (
+            Fraction(41, 2488320) * c
+            + Fraction(89627, 5806080)
+            + Fraction(229079, 34560) / c
+            + Fraction(163829, 96) / c**2
+            + Fraction(5138841, 16) / c**3
+        )
+        from theorem_delta_f3_universal_engine import delta_F2_formula
+        self.assertEqual(delta_F2_formula(3, c), g2)
+        self.assertEqual(delta_F3_formula(3, c), g3)
+        self.assertEqual(delta_F4_closed_form_W3(c), g4)
 
 
 # ============================================================================
@@ -1022,10 +1132,10 @@ class TestEdgeCases(unittest.TestCase):
 # ============================================================================
 
 class TestPolynomialConsistencyWide(unittest.TestCase):
-    """Verify DCBA formulas match analytical computation across wide N range."""
+    """Verify DCBA formulas match direct extraction on the feasible window."""
 
-    def test_analytical_matches_formula_N2_to_9(self):
-        for N in range(2, 10):
+    def test_analytical_matches_formula_N2_to_6(self):
+        for N in range(2, 7):
             D, C, B, A = delta_F3_analytical(N)
             self.assertEqual(D, D3_formula(N), f"D mismatch at N={N}")
             self.assertEqual(C, C3_formula(N), f"C mismatch at N={N}")

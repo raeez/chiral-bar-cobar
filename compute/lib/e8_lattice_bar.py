@@ -1,21 +1,26 @@
 """E8 lattice VOA bar complex: chain-level computations.
 
-The E_8 lattice VOA V_{E_8} at level k=1 has 248 generators:
+The E_8 lattice VOA V_{E_8} is the FKS simple level-1 quotient
+L(e8-hat,1).  Its weight-1 space has 248 generators:
   - 8 Cartan currents J^i(z), conformal weight 1
   - 240 vertex operators e^alpha(z) for alpha in Phi(E_8), weight 1
 
-Ground truth from the manuscript (detailed_computations.tex):
+Ground truth from the manuscript (chapters/examples/bar_complex_tables.tex):
   comp:E8-generators:
     dim(E_8) = 248, rank = 8, |Phi| = 240, h = h^vee = 30
-    c = 248k/(k+30) = 248/31 at k=1
+    c = 248k/(k+30) = 248/31 = 8 at k=1
 
   comp:E8-bar-deg2:
-    Type I:  Cartan-Cartan (64 elements): D([J^i|J^j]otimes eta) = k*delta^{ij}*|0>
-    Type II: Cartan-root (1920 elements): D([J^i|e^alpha]otimes eta) = alpha_i * e^alpha
+    Type I:  Cartan-Cartan (64 elements, 8 diagonal curvature maps):
+      D([J^i|J^j]otimes eta) = k*delta^{ij}*|0>
+    Type II: Ordered Cartan-root and root-Cartan (2*8*240 = 3840 elements):
+      D([J^i|e^alpha]otimes eta) = alpha_i * e^alpha
     Type III: Root-root (57600 elements): depends on <alpha,beta>
       <alpha,beta> = -2: D = J_alpha + k*|0>
       <alpha,beta> = -1: D = epsilon(alpha,beta) * e^{alpha+beta}
       <alpha,beta> = 0,+1,+2: D = 0
+    Non-Cartan-diagonal channels: 3840 + 13440 + 240 = 17520
+    Full ordered nonzero channel entries: 17520 + 8 = 17528
 
   comp:E8-curvature:
     m_0 = (k + h^vee)/(2h^vee) * kappa = 31/60 * kappa at k=1
@@ -85,6 +90,11 @@ def e8_bar_deg2_type_counts() -> Dict[str, int]:
     rank = E8_DATA["rank"]
     n_roots = E8_DATA["n_roots"]
     nbr = E8_DATA["neighbors_at_minus1"]
+    cartan_root = 2 * rank * n_roots
+    root_root_minus1 = n_roots * nbr
+    root_root_minus2 = n_roots
+    non_cartan_diagonal = cartan_root + root_root_minus1 + root_root_minus2
+    cartan_diagonal = rank
 
     return {
         "type_I_cartan_cartan": rank ** 2,             # 64
@@ -92,10 +102,12 @@ def e8_bar_deg2_type_counts() -> Dict[str, int]:
         "type_III_root_root": n_roots ** 2,            # 57600
         "total": (rank + n_roots) ** 2,                # 61504
         # Nonzero differentials:
-        "nonzero_cartan_root": 2 * rank * n_roots,     # 3840
-        "nonzero_root_root_minus1": n_roots * nbr,     # 13440
-        "nonzero_root_root_minus2": n_roots,            # 240
-        "total_nonzero": 2 * rank * n_roots + n_roots * nbr + n_roots,
+        "nonzero_cartan_cartan_diagonal": cartan_diagonal,  # 8
+        "nonzero_cartan_root": cartan_root,                 # 3840
+        "nonzero_root_root_minus1": root_root_minus1,       # 13440
+        "nonzero_root_root_minus2": root_root_minus2,       # 240
+        "total_non_diagonal": non_cartan_diagonal,          # 17520
+        "total_nonzero": non_cartan_diagonal + cartan_diagonal,  # 17528
     }
 
 
@@ -147,15 +159,24 @@ def e8_bar_diff_type_III(inner_product: int) -> Tuple[Dict[str, object], Dict[st
         raise ValueError(f"Invalid inner product: {inner_product}")
 
 
-def e8_nonzero_diff_count() -> int:
-    """Total number of degree-2 elements with nonzero differential.
+def e8_nonzero_diff_count(include_cartan_diagonal: bool = True) -> int:
+    """Total number of ordered degree-2 entries with nonzero differential.
 
     Ground truth: comp:E8-bar-deg2.
-    1920 (Cartan-root) + 13440 (root-root, <.,.>=-1) + 240 (opposite roots) = 15600
+
+    Outside the Cartan-Cartan diagonal:
+        3840 (ordered Cartan-root)
+      + 13440 (root-root, <.,.>=-1)
+      +   240 (opposite roots)
+      = 17520.
+
+    Including the 8 diagonal Cartan-Cartan curvature maps gives 17528.
     """
     counts = e8_bar_deg2_type_counts()
-    # Only one direction for Cartan-root: [J^i | e^alpha] (the manuscript counts 1920)
-    return 1920 + counts["nonzero_root_root_minus1"] + counts["nonzero_root_root_minus2"]
+    total = counts["total_non_diagonal"]
+    if include_cartan_diagonal:
+        total += counts["nonzero_cartan_cartan_diagonal"]
+    return total
 
 
 # ---------------------------------------------------------------------------
@@ -273,9 +294,12 @@ def verify_e8_bar_deg2():
     counts = e8_bar_deg2_type_counts()
     results = {}
     results["type I count = 64"] = counts["type_I_cartan_cartan"] == 64
+    results["type II ordered count = 3840"] = counts["type_II_cartan_root"] == 3840
     results["type III count = 57600"] = counts["type_III_root_root"] == 57600
     results["total = 61504"] = counts["total"] == 61504
-    results["nonzero count = 15600"] = e8_nonzero_diff_count() == 15600
+    results["root-root minus-one count = 13440"] = counts["nonzero_root_root_minus1"] == 13440
+    results["non-Cartan-diagonal count = 17520"] = e8_nonzero_diff_count(False) == 17520
+    results["full nonzero count = 17528"] = e8_nonzero_diff_count() == 17528
     return results
 
 

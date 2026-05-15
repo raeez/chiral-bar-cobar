@@ -1009,33 +1009,53 @@ def m5_genus_table(N_values: Optional[List[int]] = None,
 
 
 # ===========================================================================
-# 10. Holographic datum for M5 (full six-fold)
+# 10. Holographic package for M5
 # ===========================================================================
 
 @dataclass
 class M5HolographicDatum:
-    """Six-fold modular Koszul datum H(M5_N) = (A, A!, C, r(z), Theta, nabla).
+    """Seven-entry theorem surface for the M5 holographic package.
 
-    A     : boundary VOA W_{1+inf}[lambda=N]
-    A!    : Koszul dual ("phantom"/M-minus theory)
-    C     : bulk 11d M-theory on AdS_7 x S^4 (twisted)
-    r(z)  : boundary collision residue (W_infty r-matrix)
-    Theta : universal MC element of W_{1+inf}[lambda=N]
-    nabla : holographic shadow connection on M_{g,n}
+    Manuscript package:
+        H(M5_N) = (A, A^i, A^!, C, r(z), Theta_A, nabla^hol).
+
+    This compute record keeps the scalar/projection slots used by the
+    legacy tests and exposes A^i explicitly so that the bar-dual coalgebra,
+    the Verdier/Koszul dual algebra, and the derived-centre bulk channel
+    are not identified.
+
+    A         : boundary VOA W_{1+inf}[lambda=N]
+    A^i       : H^*(B_ch(A)), the bar-dual coalgebra slot
+    A^!       : Verdier/Koszul dual algebra ("phantom"/M-minus theory)
+    C         : Z_ch^der(A) bulk channel, modelled by twisted M-theory
+    r(z)      : boundary collision residue (W_infty r-matrix)
+    Theta_A   : universal MC element of W_{1+inf}[lambda=N]
+    nabla^hol : holographic shadow connection on M_{g,n}
     """
     m5: M5Data
 
     @property
     def A_name(self) -> str:
+        """Boundary chiral algebra slot A."""
         return f"A_M5({self.m5.N}) = {self.m5.boundary_voa_name}"
 
     @property
+    def A_i_name(self) -> str:
+        """Bar-dual coalgebra slot A^i = H^*(B_ch(A))."""
+        return f"A_M5({self.m5.N})^i = H^*(B_ch(A_M5({self.m5.N})))"
+
+    @property
     def A_dual_name(self) -> str:
-        return f"A_M5({self.m5.N})! = phantom dual"
+        """Verdier/Koszul dual algebra slot A^!, distinct from A^i."""
+        return f"A_M5({self.m5.N})^! = Verdier/Koszul phantom dual"
 
     @property
     def bulk_description(self) -> str:
-        return f"twisted M-theory on AdS_7 x S^4 with N={self.m5.N} M5 branes"
+        """C slot: derived-centre bulk channel, not A^i or A^!."""
+        return (
+            f"C_M5({self.m5.N}) = Z_ch^der(A_M5({self.m5.N})) bulk channel; "
+            f"twisted M-theory on AdS_7 x S^4 with N={self.m5.N} M5 branes"
+        )
 
     @property
     def collision_residue_type(self) -> str:
@@ -1056,6 +1076,11 @@ class M5HolographicDatum:
         return self.m5.kappa_leading
 
     @property
+    def theta_description(self) -> str:
+        """Universal MC element slot Theta_A."""
+        return f"Theta_A for A_M5({self.m5.N}), scalar kappa={self.theta_kappa}"
+
+    @property
     def kappa_sum_with_dual(self) -> Fraction:
         dual = m5_koszul_dual(self.m5.N)
         return dual.complementarity_sum
@@ -1065,18 +1090,36 @@ class M5HolographicDatum:
         """Holographic shadow connection is flat (MC equation)."""
         return True
 
+    @property
+    def connection_description(self) -> str:
+        """Holographic shadow connection slot nabla^hol."""
+        return f"nabla^hol_A_M5({self.m5.N}) flat={self.connection_is_flat}"
+
     def summary(self) -> Dict[str, object]:
         return {
+            "holographic_package": "(A, A^i, A^!, C, r(z), Theta_A, nabla^hol)",
             "A": self.A_name,
+            "A^i": self.A_i_name,
+            "A^!": self.A_dual_name,
             "A!": self.A_dual_name,
             "kappa(A)": self.m5.kappa_leading,
+            "kappa(A^!)": Fraction(2 - self.m5.N) ** 3,
             "kappa(A!)": Fraction(2 - self.m5.N) ** 3,
+            "kappa+kappa^!": self.kappa_sum_with_dual,
             "kappa+kappa!": self.kappa_sum_with_dual,
+            "C": self.bulk_description,
             "C (bulk)": self.bulk_description,
             "r(z)": self.collision_residue_type,
+            "Theta_A": self.theta_description,
             "shadow_depth": self.m5.shadow_depth,
             "shadow_class": self.m5.shadow_class,
+            "nabla^hol": self.connection_description,
+            "nabla^hol flat": self.connection_is_flat,
             "nabla flat": self.connection_is_flat,
+            "projection_scope": (
+                "legacy scalar keys are retained; A^i, A^!, and "
+                "Z_ch^der(A) remain separate seven-entry slots"
+            ),
         }
 
 

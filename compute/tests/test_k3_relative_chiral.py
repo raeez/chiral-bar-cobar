@@ -547,7 +547,7 @@ class TestShadowBKMBridge:
 # =========================================================================
 
 class TestIgusaConnection:
-    """Verify Igusa cusp form Delta_5 connection."""
+    """Verify primitive Gritsenko-Nikulin denominator Delta_5 connection."""
 
     def test_igusa_weight(self):
         """Delta_5 is weight 5 on H_2."""

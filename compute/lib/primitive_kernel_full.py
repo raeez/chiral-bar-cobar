@@ -20,8 +20,28 @@ carries three channels:
 Per-family primitive kernels (concordance sec:concordance-primitive-kernel):
     Heisenberg:      K_{0,2} + K_{1,1}          (Delta_ns only)
     Affine g_k:      K_{0,2} + K_{0,3} + K_{1,1}  (Delta_ns, [-,-])
-    betagamma:       K_{0,2} + K_{0,4} + K_{1,1} + R_pf  (Delta_ns, Rig)
+    betagamma:       K_{0,2} + K_{0,4}^{amb} + K_{1,1} + R_pf
+                     (Delta_ns, Rig; scalar weight-line quartic is zero)
     Virasoro/W_N:    K_{0,2} + K_{0,3} + K_{0,4} + K_{1,1} + R_pf + ...  (all three)
+
+Scalar/collision convention:
+    - Heisenberg H_k has kappa = k on the rank-one scalar lane.  For H_k^d
+      this module records the direct-sum scalar trace k*d; it never replaces
+      the level by the rank-one central-charge value c/2.
+    - Virasoro has kappa = c/2 and collision residue
+      r^{Vir}(z) = (c/2)/z^3 + 2T/z.
+    - betagamma/bc have zero pole-valued collision residue.  The simple pole
+      in the mixed beta-gamma OPE is absorbed by dlog extraction; the regular
+      unipotent contact transport is separate from the collision r-matrix.
+    - Class C is a finite-depth standard-family contact class.  It is not the
+      ambient stress-tensor class M and does not carry a Virasoro tail.
+
+Object firewall:
+    A is the chiral algebra, B(A) the ordered bar coalgebra,
+    A^i = H(B(A)) the Koszul-dual coalgebra, A^! its Verdier/Koszul dual
+    algebra on finite-type truncations, and Z_ch^der(A) the chiral Hochschild
+    bulk.  Omega(B(A)) = A is bar-cobar inversion, not an identification of
+    these five objects.
 
 References:
     - def:primitive-log-modular-kernel
@@ -81,6 +101,10 @@ class PrimitiveKernel:
         h_dual: dual Coxeter number (for affine)
         level: the level parameter k (for affine/Heisenberg)
         central_charge: the central charge c (for Virasoro/W_N)
+        collision_residue: pole-valued collision residue convention
+        regular_contact_transport: non-pole contact transport, if present
+        scalar_lane: scalar branch represented by the numeric corollas
+        standard_shadow_class: G/L/C/M class of the standard family
     """
     name: str
     kappa: Fraction
@@ -94,6 +118,10 @@ class PrimitiveKernel:
     h_dual: int = 0
     level: Optional[Fraction] = None
     central_charge: Optional[Fraction] = None
+    collision_residue: str = "unspecified"
+    regular_contact_transport: str = "none"
+    scalar_lane: str = "standard family scalar lane"
+    standard_shadow_class: Optional[str] = None
 
     def __post_init__(self):
         # K_{1,1} = kappa by the genus-1 shell equation at arity 1
@@ -124,17 +152,37 @@ class PrimitiveKernel:
             channels.append("Rig")
         return tuple(channels)
 
-    def component_string(self) -> str:
-        """Concordance-style component string."""
+    def component_string(self, include_ambient: bool = False) -> str:
+        """Concordance-style component string.
+
+        By default this reports the nonzero scalar corollas stored in the
+        numeric kernel.  With include_ambient=True it also displays ambient
+        contact corollas tracked by R_pf, such as the standard-family
+        betagamma class-C contact term whose weight-line scalar projection
+        is zero.
+        """
         parts = ["K_{0,2}"]
         if self.cubic != Fraction(0):
             parts.append("K_{0,3}")
         if self.quartic != Fraction(0):
             parts.append("K_{0,4}")
+        elif include_ambient and self.has_planted_forest:
+            parts.append("K_{0,4}^{amb}")
         parts.append("K_{1,1}")
         if self.has_planted_forest:
             parts.append("R_pf")
         return " + ".join(parts)
+
+    def convention_summary(self) -> Dict[str, Any]:
+        """Return scalar/collision conventions attached to this kernel."""
+        return {
+            "name": self.name,
+            "kappa": self.kappa,
+            "collision_residue": self.collision_residue,
+            "regular_contact_transport": self.regular_contact_transport,
+            "scalar_lane": self.scalar_lane,
+            "standard_shadow_class": self.standard_shadow_class,
+        }
 
 
 # =====================================================================
@@ -144,7 +192,10 @@ class PrimitiveKernel:
 def heisenberg_kernel(k: Fraction = Fraction(1), d: int = 1) -> PrimitiveKernel:
     """Primitive kernel for Heisenberg H_k^d.
 
-    kappa = k * d (level times dimension).
+    Rank-one scalar convention: kappa(H_k) = k, the level.  This is not
+    c/2: the rank-one Heisenberg central charge is c = 1 independently of k.
+
+    Direct-sum convention: H_k^d records the trace scalar k*d.
     All higher corolla vanish: cubic = quartic = 0.
     Shadow class: G (Gaussian), r_max = 2.
     """
@@ -157,6 +208,9 @@ def heisenberg_kernel(k: Fraction = Fraction(1), d: int = 1) -> PrimitiveKernel:
         has_planted_forest=False,
         branch_rank=1,
         level=Fraction(k),
+        collision_residue=f"{Fraction(k)}/z",
+        scalar_lane="rank-one Heisenberg level lane" if d == 1 else "direct-sum Heisenberg trace lane",
+        standard_shadow_class="G",
     )
 
 
@@ -209,6 +263,9 @@ def affine_slN_kernel(N: int, k: Fraction = Fraction(1)) -> PrimitiveKernel:
         dim_lie=dim_g,
         h_dual=h_dual,
         level=kk,
+        collision_residue=f"{kk}*Omega/z",
+        scalar_lane="full current-algebra scalar trace",
+        standard_shadow_class="L",
     )
 
 
@@ -222,10 +279,12 @@ def betagamma_kernel(lam: Fraction = Fraction(0)) -> PrimitiveKernel:
     On the weight-changing line:
         cubic = 0 (abelian fundamental OPE)
         quartic = 0 (mu_{bg} = 0 by cor:nms-betagamma-mu-vanishing)
+        pole-valued collision residue = 0
 
-    But the CHARGED stratum has nontrivial quartic contact.
-    The planted-forest correction R_pf is nonzero.
-    Shadow class: C (Contact), r_max = 4.
+    The standard family still has finite class-C contact data:
+        S_4 = -5/12, carried by the ambient contact/planted-forest package.
+    This regular contact transport is separate from the collision r-matrix;
+    it is not a Virasoro stress-tensor tail and not class M.
     """
     la = Fraction(lam)
     kap = 6 * la * la - 6 * la + 1
@@ -236,9 +295,14 @@ def betagamma_kernel(lam: Fraction = Fraction(0)) -> PrimitiveKernel:
         cubic=Fraction(0),
         quartic=Fraction(0),  # on weight-changing line
         has_planted_forest=True,
+        planted_forest_value=Fraction(-5, 12),
         branch_rank=1,
         level=None,
         central_charge=2 * kap,
+        collision_residue="0",
+        regular_contact_transport="unipotent contact transport; not a pole-valued collision residue",
+        scalar_lane="rank-one weight-changing line (mu_bg = 0)",
+        standard_shadow_class="C",
     )
 
 
@@ -266,8 +330,12 @@ def virasoro_kernel(c: Fraction = Fraction(1)) -> PrimitiveKernel:
         cubic=cubic,
         quartic=quartic,
         has_planted_forest=True,
+        planted_forest_value=quartic,
         branch_rank=1,
         central_charge=cc,
+        collision_residue=f"({kap})/z^3 + 2T/z",
+        scalar_lane="Virasoro stress-tensor primary line",
+        standard_shadow_class="M",
     )
 
 
@@ -293,8 +361,12 @@ def w3_kernel(c: Fraction = Fraction(1)) -> PrimitiveKernel:
         cubic=Fraction(2),  # nonzero cubic
         quartic=quartic,
         has_planted_forest=True,
+        planted_forest_value=quartic,
         branch_rank=2,
         central_charge=cc,
+        collision_residue="stress-tensor collision residue plus W-current channels",
+        scalar_lane="principal W_3 primary slice",
+        standard_shadow_class="M",
     )
 
 
@@ -522,6 +594,11 @@ def genus2_shell(kernel: PrimitiveKernel) -> Dict[str, Fraction]:
 
     (3) Planted-forest (rigid): R_pf from quartic contact.
         Value: quartic * kappa^2 / 8 (banana graph contribution).
+
+    The returned "planted_forest" entry is the scalar branch contribution.
+    For betagamma this is zero on the weight-changing line even though the
+    standard family has ambient class-C contact data recorded in
+    kernel.planted_forest_value.
     """
     # Channel 1: loop-loop
     # Delta_ns(K_{1,1}) = kappa * (-1/12)
@@ -548,6 +625,7 @@ def genus2_shell(kernel: PrimitiveKernel) -> Dict[str, Fraction]:
         "loop": loop,
         "bracket": bracket,
         "planted_forest": pf,
+        "ambient_contact": kernel.planted_forest_value,
         "total": total,
     }
 
@@ -1007,11 +1085,34 @@ def shadow_depth_class(kernel: PrimitiveKernel) -> Tuple[str, Optional[int]]:
     C (Contact):   quartic != 0, cubic = 0  => r_max = 4
     M (Mixed):     cubic != 0, quartic != 0  => r_max = None (infinity)
 
-    Note: the contact class C escapes the single-line dichotomy via
-    stratum separation (thm:single-line-dichotomy).
+    This is the standard-family classification.  It treats R_pf as ambient
+    contact data, so betagamma is class C even though its rank-one
+    weight-changing scalar branch has quartic = 0.  Use
+    branch_scalar_depth_class when the branch scalar packet, rather than the
+    standard family, is the intended surface.
     """
     has_cubic = kernel.cubic != Fraction(0)
     has_quartic = kernel.quartic != Fraction(0) or kernel.has_planted_forest
+
+    if not has_cubic and not has_quartic:
+        return ('G', 2)
+    elif has_cubic and not has_quartic:
+        return ('L', 3)
+    elif not has_cubic and has_quartic:
+        return ('C', 4)
+    else:
+        return ('M', None)
+
+
+def branch_scalar_depth_class(kernel: PrimitiveKernel) -> Tuple[str, Optional[int]]:
+    """Classify the numeric branch scalar packet only.
+
+    This ignores ambient R_pf/contact metadata.  It is the correct helper for
+    the betagamma weight-changing line, where quartic = 0 and the pole-valued
+    collision residue is zero, while the standard family remains class C.
+    """
+    has_cubic = kernel.cubic != Fraction(0)
+    has_quartic = kernel.quartic != Fraction(0)
 
     if not has_cubic and not has_quartic:
         return ('G', 2)
@@ -1043,6 +1144,10 @@ def cross_validate_kappa(kernel: PrimitiveKernel) -> Dict[str, Any]:
         if kernel.level is not None:
             kk = kernel.level
             expected = Fraction(3) * (kk + 2) / 4
+            result["census_kappa"] = expected
+    elif "betagamma" in kernel.name:
+        if kernel.central_charge is not None:
+            expected = kernel.central_charge / 2
             result["census_kappa"] = expected
     elif "Virasoro" in kernel.name:
         if kernel.central_charge is not None:

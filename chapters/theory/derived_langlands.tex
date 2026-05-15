@@ -14,17 +14,19 @@
 The geometric Langlands conjecture predicts, and in established
 critical-level lanes supplies, categorical correspondences of the form
 \[
-\mathcal{D}\text{-mod}(\Bun_G)
+\mathcal{D}\text{-mod}_{\mathrm{ren}}\bigl(\Bun_G(X)\bigr)
 \;\simeq\;
-\mathrm{IndCoh}\bigl(\Loc_{G^\vee}\bigr)
+\IndCoh_{\mathrm{Nilp}}\bigl(\operatorname{LocSys}_{G^\vee}(X)\bigr)
 \]
-between automorphic and spectral categories. The part used here is
-narrower. Beilinson--Drinfeld and Feigin--Frenkel identify the
-critical center of the affine vertex algebra with functions on
-formal-disc opers. Frenkel--Teleman identifies the corresponding
-vacuum self-Ext algebra with differential forms on that oper space.
-The chiral bar complex enters as a chain-level resolution input for
-this vacuum calculation, not as the geometric Langlands functor.
+between renormalized automorphic $\mathcal D$-modules on a smooth
+complete curve and spectral ind-coherent sheaves with nilpotent
+singular support. The part used here is narrower. Beilinson--Drinfeld
+and Feigin--Frenkel identify the critical center of the affine vertex
+algebra with functions on formal-disc opers. Frenkel--Teleman
+identifies the corresponding vacuum self-Ext algebra with differential
+forms on that oper space. The chiral bar complex enters as a
+chain-level resolution input for this vacuum calculation, not as the
+geometric Langlands functor.
 
 For an affine Kac--Moody chiral algebra the scalar governing the
 modular curvature lane is
@@ -63,26 +65,27 @@ r-matrix $r(z) = k\Omega_{\mathrm{tr}}/z$ at $k = -2$ gives
 $r(z) = -2\Omega_{\mathrm{tr}}/z \neq 0$
 (equivalently, $r(z) = \Omega/((k{+}h^\vee)z)$ diverges at $k = -h^\vee$: this
 is the Sugawara singularity in the KZ normalisation);
-% Two conventions: k*Omega_tr/z (finite at critical level, trace-form)
-% vs Omega/((k+h^v)*z) (diverges at critical level, KZ). Same physics.
 the r-matrix does not vanish and the OPE structure persists. What
 vanishes is the modular curvature scalar. The critical center is the
 Feigin--Frenkel center; the bar complex records its
 differential-form extension through the vacuum Ext comparison.
 
-At admissible levels $k = -h^\vee + p/q$, the curvature is nonzero
-but rational, and the bar complex conjecturally acquires a periodic
-CDG structure with period~$2p$
-(Conjecture~\ref{conj:periodic-cdg}). Given this periodicity,
-Positselski's Koszul duality for CDG-algebras gives a route to the
-Kazhdan--Lusztig equivalence
-$\cO_k^{\mathrm{int}}(\widehat{\fg}) \simeq
-\mathcal{C}(U_q(\fg))$
-on the semisimplified tilting quotient. Any lift beyond the
-semisimplified target to the full quantum-group category, or to a
-completed/coderived enlargement, is a separate problem
-requiring additional inputs beyond the MC3 evaluation-generated core proved in
-Corollary~\ref{cor:mc3-all-types}.
+At admissible levels $k = -h^\vee + p_0/q_0$, the modular curvature scalar
+is nonzero and rational. This is not the integrable WZW
+Kazhdan--Lusztig theorem. Kac--Wakimoto gives the finite set of
+admissible highest weights, while Arakawa separates the
+non-degenerate rational simple quotients from the degenerate
+logarithmic cases. The proposed periodic CDG structure with
+period~$2p_0$ (Conjecture~\ref{conj:periodic-cdg}) is an additional
+admissible-level datum, not a consequence of the critical calculation.
+If that datum is constructed, and if it is equipped with the
+root-of-unity central action and braided monoidal comparison specified
+in Conjecture~\ref{conj:kl-bar-cobar-dl}, Positselski's CDG formalism
+gives the bar-side input for a KL-type semisimplified
+root-of-unity target on the specified quotient. Any lift to the full
+non-semisimple quantum-group category, to a degenerate admissible
+logarithmic category, or to a completed/coderived enlargement, is a
+separate comparison theorem.
 
 \begin{theorem}[Critical bar-to-oper bridge; \ClaimStatusConditional]
 \label{thm:langlands-bar-bridge}
@@ -92,11 +95,12 @@ Let $\fg$ be a simple finite-dimensional Lie algebra with dual
 Coxeter number~$h^\vee$, and let $\fg^\vee$ denote the Langlands
 dual Lie algebra. At the critical level $k = -h^\vee$:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \textup{(Curvature vanishing)}\quad
+\item \textup{(Modular curvature vanishing)}\quad
  $\kappa(\widehat{\fg}_{-h^\vee}) = 0$
  \textup{(}Corollary~\textup{\ref{cor:critical-level-universality}}\textup{)},
- so $\barB(\widehat{\fg}_{-h^\vee})$ is an ordinary chain complex
- \textup{(}uncurved: $m_0 = 0$, hence $d^2 = 0$\textup{)}.
+ so the completed vacuum bar model used below is an ordinary chain
+ complex. The genus-$0$ ordered bar differential is ordinary for every
+ level; criticality removes the modular/fiberwise curvature correction.
 \item \textup{(Oper differential-form identification)}\quad
  The bar cohomology computes the graded algebra of differential forms
  on the oper space:
@@ -134,8 +138,10 @@ dual Lie algebra. At the critical level $k = -h^\vee$:
 \begin{proof}
 Part~(i) is Corollary~\ref{cor:critical-level-universality}: the
 modular characteristic $\kappa(\widehat{\fg}_k)$ vanishes at the critical level
-because the Killing form $(\cdot,\cdot)_k$ degenerates at
-$k = -h^\vee$. Part~(ii) combines the bar-Ext comparison with
+because the shifted Kac--Moody scalar $k+h^\vee$ vanishes at
+$k = -h^\vee$. The genus-$0$ bar differential is already ordinary;
+the critical equality removes the modular curvature correction used in
+the formal-disc vacuum comparison. Part~(ii) combines the bar-Ext comparison with
 Frenkel--Teleman~\cite{FT06}; the PBW calculations below give the
 low-degree finite-weight checks and the Feigin--Frenkel theorem gives
 the $H^0$ center. Part~(iii) fixes the object being compared. The
@@ -146,36 +152,58 @@ with oper forms; the derived centre remains the full chiral
 Hochschild complex.
 \end{proof}
 
-\begin{remark}[Periodicity open problem]
-The core of this chapter is asymmetric. The critical-level
-bar/oper identification is proved, and the manuscript establishes
-rank-$1$ chiral Hochschild periodicity at critical level in
-Proposition~\ref{prop:sl2-periodicity-dl}. The stronger admissible-level
-statement that the full bar complex carries a periodic CDG structure,
-especially in the higher-rank form needed for Kazhdan--Lusztig
-transport, remains conjectural and belongs to the MC3/periodicity
-extension problem \textup{(}MC3 categorical Clebsch--Gordan closure and
-the generated-core DK comparison are proved for all simple types, with
-post-CG completion open beyond type~$A$; the periodicity aspect is
-open\textup{)}. Even on the KL side, the ordinary semisimplified target
-$\mathcal{C}(U_q(\fg))$ and any larger non-semisimple or
-completed/coderived lift must be kept separate.
+\begin{remark}[Admissible periodicity as proof obligation]
+The proved periodic statement in this chapter is rank-$1$ formal-disk
+local Hochschild periodicity at critical level
+\textup{(}Proposition~\ref{prop:sl2-periodicity-dl}\textup{)}. The
+admissible-level assertion needed for a bar-side KL reconstruction is
+stronger and consists of three separate obligations:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item construct a natural CDG-coalgebra isomorphism
+ $\barB^{n+2p_0}(\widehat{\fg}_k)\cong \barB^n(\widehat{\fg}_k)$
+ compatible with curvature and deconcatenation;
+\item identify the resulting period with the root-of-unity central
+ action at $q_{\mathrm{QG}}=e^{\pi i q_0/p_0}$;
+\item compare the resulting coderived or stable category with the
+ semisimplified tilting quotient
+ $\mathcal C(U_{q_{\mathrm{QG}}}(\fg))$ as a braided monoidal category.
+\end{enumerate}
+None of these obligations follows from bar-cobar inversion
+$\Omega B(A)\simeq A$, from the Feigin--Frenkel center, or from
+rank-$1$ critical local Hochschild periodicity.
 \end{remark}
 
-\begin{construction}[Kazhdan--Lusztig as categorical MC3]
+\begin{construction}[Kazhdan--Lusztig--Finkelberg as generator transport]
 \label{constr:kl-categorical-mc3}
 \ClaimStatusProvedHere
 \index{Kazhdan--Lusztig equivalence!categorical MC3|textbf}
 \index{MC3!Kazhdan--Lusztig realization|textbf}
 \index{thick generation!prefundamental|textbf}
-The Kazhdan--Lusztig equivalence $\mathrm{KL}_k \colon \mathcal{O}^{\mathrm{int}}_k(\hat{\mathfrak{g}}) \xrightarrow{\sim} \mathrm{Rep}^{\mathrm{fd}}(U_q(\mathfrak{g}))$ at $q = e^{\pi i/(k+h^\vee)}$ is best read as a categorical analogue of the MC3 strategy, not as a consequence of the repaired Yangian MC3 chain. On the Yangian side, the proved comparison is the DK transport on the evaluation-generated core \textup{(}Corollary~\ref{cor:dk23-all-types}\textup{)}, with the post-core prefundamental/completion packets kept separate \textup{(}Corollary~\ref{cor:mc3-all-types}, Theorem~\ref{thm:mc3-type-a-resolution}\textup{)}.
+On the integrable WZW lane, for a non-negative integral level~$\ell$,
+the Kazhdan--Lusztig--Finkelberg theorem gives a braided monoidal
+equivalence
+\[
+\mathrm{KL}_\ell\colon
+\mathcal{O}^{\mathrm{int}}_\ell(\widehat{\fg})
+\xrightarrow{\sim}
+\mathcal C(U_{q_{\mathrm{KL}}}(\fg)),
+\qquad q_{\mathrm{KL}}=e^{\pi i/(\ell+h^\vee)},
+\]
+where $\mathcal C(U_{q_{\mathrm{KL}}}(\fg))$ is the semisimplified
+tilting quotient.
+It is not an equivalence with the full category
+$\mathrm{Rep}^{\mathrm{fd}}(U_{q_{\mathrm{KL}}}(\fg))$ in the sense used here, and it
+is not the admissible-level comparison conjectured below.
 
-The shared mechanism is generator-and-transport on a controlled subcategory. In the KL setting, the category $\mathcal{O}^{\mathrm{int}}_k(\hat{\mathfrak{g}})$ is generated by Weyl modules $V_\lambda$, and the quantum group $U_q(\mathfrak{g})$ acts on that generating set via the $R$-matrix. In the MC3 setting, the proved Yangian comparison is on the evaluation-generated core, where the dg-shifted Yangian acts via the spectral kernel. What is not claimed here is that the repaired Yangian MC3 theorem itself proves KL, or that full prefundamental thick generation of $\mathcal{O}^{\mathrm{sh}}$ is already available on the general Yangian surface.
+The comparison with MC3 is only the formal pattern of
+generator-and-transport on a controlled subcategory. In the KL setting,
+$\mathcal{O}^{\mathrm{int}}_\ell(\widehat{\fg})$ is generated by Weyl
+modules and transported by the quantum $R$-matrix. In the Yangian
+setting, Corollary~\ref{cor:dk23-all-types} gives DK transport on the
+evaluation-generated core. There is no implication from the Yangian MC3
+comparison to the KL theorem, and no assertion here that prefundamental
+completion has been constructed outside its stated ambient.
 \end{construction}
-
-%================================================================
-% SECTION 1: DERIVED ALGEBRAIC GEOMETRY PREREQUISITES
-%================================================================
 
 \section{Derived algebraic geometry: prerequisites}
 \label{sec:dag-prerequisites}
@@ -231,10 +259,6 @@ structure sheaf on the oper space. The bar complex is better viewed
 as a chain-level enhancement of the oper differential-form algebra.
 \end{remark}
 
-
-%================================================================
-% SECTION 2: THE OPER SPACE
-%================================================================
 
 \section{The oper space}
 \label{sec:oper-space}
@@ -295,10 +319,6 @@ plus~$1$\textup{)}.
 \end{theorem}
 
 
-%================================================================
-% SECTION 3: BAR COMPLEX AT CRITICAL LEVEL
-%================================================================
-
 \section{Bar complex at critical level and the oper differential-form package}
 \label{sec:bar-critical}
 \index{bar complex!critical level}
@@ -317,7 +337,7 @@ H^0\bigl(\barB(\widehat{\fg}_{-h^\vee})\bigr)
 \end{theorem}
 
 \begin{proof}
-At the critical level, the curvature vanishes
+At the critical level, the modular curvature scalar vanishes
 ($\kappa(\widehat{\fg}_{-h^\vee}) = 0$,
 Corollary~\ref{cor:critical-level-universality}), so the bar
 complex is an ordinary chain complex.
@@ -647,8 +667,8 @@ The argument combines two results, each proved independently:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Bar computes Ext.}\quad
  Corollary~\ref{cor:bar-computes-ext}: for the chiral algebra
- $\widehat{\fg}_{-h^\vee}$ (whose curvature vanishes at critical
- level by Corollary~\ref{cor:critical-level-universality}), the
+ $\widehat{\fg}_{-h^\vee}$ (whose modular curvature scalar vanishes at
+ critical level by Corollary~\ref{cor:critical-level-universality}), the
  bar cohomology computes vacuum self-extensions:
  \[
  H^n\bigl(\barB(\widehat{\fg}_{-h^\vee})\bigr)
@@ -682,7 +702,7 @@ derived structure sheaf remains concentrated in degree~$0$.
 \end{proof}
 
 \begin{remark}[Bar-Ext comparison and PBW checks]
-\label{rem:oper-evidence}
+\label{rem:oper-proof-structure}
 \index{oper!proof structure}
 The proof combines bar-Ext (Corollary~\ref{cor:bar-computes-ext})
 with Frenkel--Teleman~\cite{FT06}. PBW finite-weight checks are
@@ -786,18 +806,17 @@ $\kappa(\widehat{\fg}_{-h^\vee}) = \dim(\fg)\,(k + h^\vee)/(2h^\vee)\big|_{k=-h^
 This vanishing has two consequences for the bar complex that must be
 carefully distinguished.
 
-\emph{First consequence: uncurving.} Since $\kappa(\widehat{\fg}_{-h^\vee}) = 0$, the genus-$0$
-curvature $m_0$ vanishes and the bar complex
+\emph{First consequence: modular uncurving.} The genus-$0$ ordered
+bar differential is ordinary independently of~$k$. Since
+$\kappa(\widehat{\fg}_{-h^\vee}) = 0$, the completed vacuum bar model
 $\barB(\widehat{\fg}_{-h^\vee}) = T^c(s^{-1}\,\overline{V}_{-h^\vee})$
-%: augmentation ideal
-is an ordinary chain complex ($d^2 = 0$). The higher-genus fiberwise
+has no modular curvature correction and is an ordinary chain complex
+($d^2 = 0$). The higher-genus fiberwise
 obstruction $d_{\mathrm{fib}}^2 = \kappa(\widehat{\fg}_k) \cdot \omega_g$ likewise
 vanishes.
 
 \emph{Second consequence: the $r$-matrix survives.} The classical
 $r$-matrix is $r^{\mathrm{KM}}(z) = \Omega/\bigl((k{+}h^\vee)z\bigr)$
-% KZ normalisation; diverges at critical level (Sugawara singularity).
-% In the trace-form convention: r = k*Omega_tr/z, finite at k=-h^v.
 (Remark~\ref{rem:km-collision-residue-rmatrix}). In the
 trace-form normalisation $r(z) = k\,\Omega_{\mathrm{tr}}/z$, the
 critical level specializes to $r(z) = -h^\vee \cdot \Omega_{\mathrm{tr}}/z$; this is
@@ -855,7 +874,7 @@ oper geometry.
 \ClaimStatusConjectured
 \index{Koszul duality!critical level}
 \index{oper!de Rham complex}
-\index{Feigin--Frenkel center!Koszul dual}
+\index{Feigin--Frenkel center!bar cohomology}
 The critical oper calculation uses the bar construction, but it does
 not identify the five objects
 $A$, $B(A)$, $A^{\mathrm i}$, $A^!$, and
@@ -867,8 +886,9 @@ $\kappa(\widehat{\fg}_{-h^\vee})
 vanishes (Corollary~\ref{cor:critical-level-universality}), so the
 bar complex $\barB(\widehat{\fg}_{-h^\vee})
 = T^c(s^{-1}\,\overline{V}_{-h^\vee})$
-%: augmentation ideal
-is uncurved ($m_0 = 0$, $d^2 = 0$).
+is used in the uncurved modular lane: the genus-$0$ differential is
+ordinary, and the $\kappa$-dependent modular curvature correction
+vanishes.
 Theorem~\ref{thm:oper-bar-dl} identifies its cohomology algebra
 with the differential-form algebra on the oper space:
 \[
@@ -892,12 +912,13 @@ The only statement proved here is the cohomological comparison
 $H^*(\barB(\widehat{\fg}_{-h^\vee}))
 \cong\Omega^*(\mathrm{Op}_{\fg^\vee}(D))$ under the bar-Ext and
 Frenkel--Teleman hypotheses. A chain-level quasi-isomorphism between
-the bar coalgebra and the de Rham coalgebra of the oper space would
-require a specified dg-coalgebra model, a completed topology, and a
+the bar coalgebra and the de Rham coalgebra of the oper space requires
+a specified dg-coalgebra model, a completed topology, and a
 map compatible with deconcatenation and shuffle coproducts. That is a
 separate conjecture.
 The critical level is special in two ways: the vanishing of
-$\kappa(\widehat{\fg}_{-h^\vee})$ uncurves the bar complex, and the critical level is fixed by the
+$\kappa(\widehat{\fg}_{-h^\vee})$ removes the modular curvature
+correction from the completed vacuum bar model, and the critical level is fixed by the
 Feigin--Frenkel level involution ($-(-h^\vee) - 2h^\vee = -h^\vee$; see
 Remark~\ref{rem:km-complementarity-vs-feigin-frenkel}).
 \end{remark}
@@ -954,10 +975,6 @@ The only unconditional input used below is the critical vacuum
 cohomology comparison. Full Hecke compatibility of the chiral bar
 complex is conjectural.
 \end{remark}
-%================================================================
-% SECTION 4: ROOT-OF-UNITY BAR COMPLEXES
-%================================================================
-
 \section{Root-of-unity bar complexes}
 \label{sec:root-of-unity}
 \index{root of unity!bar complex|textbf}
@@ -968,35 +985,41 @@ complex is conjectural.
 \begin{definition}[Admissible level]
 \label{def:admissible-level-dl}
 A level $k$ is \emph{admissible} if
-$k = -h^\vee + p/q$ where $p, q \in \bZ_{> 0}$, $\gcd(p, q) = 1$,
-and $p \geq h^\vee$ (for simply-laced~$\fg$; the condition is more
-involved for non-simply-laced types). The associated quantum group
-parameter is $q_{\mathrm{QG}} = e^{\pi i/(k + h^\vee)} = e^{\pi i q/p}$.
+$k = -h^\vee + p_0/q_0$ where $p_0, q_0 \in \bZ_{> 0}$,
+$\gcd(p_0, q_0) = 1$, and $p_0 \geq h^\vee$ (for
+simply-laced~$\fg$; the condition is more involved for
+non-simply-laced types). The associated quantum group parameter is
+$q_{\mathrm{QG}} = e^{\pi i/(k + h^\vee)} = e^{\pi i q_0/p_0}$.
 \end{definition}
 
 At admissible level the affine OPE contains the central double pole
 \[
  a(z)b(w)\sim \frac{k(a,b)}{(z-w)^2}+\frac{[a,b](w)}{z-w}.
 \]
-In the completed curved bar model used here this central term gives
-the curvature element represented by $k(\,\cdot\,,\,\cdot\,)|0\rangle$.
-Its scalar shadow in the modular-curvature normalization is
+The central double pole is not itself the modular curvature scalar.
+In trace-form normalization its collision residue is the level-$k$
+$r$-matrix residue, while the genus-$1$ scalar extracted after the
+Sugawara shift is
 \[
  \kappa(V_k(\fg))
  = \frac{\dim(\fg)(k+h^\vee)}{2h^\vee}
- = \frac{\dim(\fg)p}{2h^\vee q}
+ = \frac{\dim(\fg)p_0}{2h^\vee q_0}
  \qquad
- (k=-h^\vee+p/q).
+ (k=-h^\vee+p_0/q_0).
 \]
 Thus the critical level has vanishing scalar curvature, while an
 admissible noncritical level has rational nonzero scalar curvature.
-This statement belongs to the chosen completed curved bar model; it
-does not assert curvature for every reduced quotient of the bar
-construction. The Sugawara central charge
+This statement belongs to the chosen completed curved bar model and
+to its shifted scalar channel; it does not assert curvature for every
+reduced quotient of the bar construction. The Sugawara central charge
 $c = k\dim(\fg)/(k+h^\vee)$ is a separate conformal invariant.
-Meanwhile, the representation category $\cO_k^{\mathrm{int}}(\widehat{\fg})$
-is semisimple with $|\mathrm{Adm}_k|$ simple objects
-(Theorem~\ref{thm:admissible-rep-theory}).
+Meanwhile, admissible representation theory has two regimes. The
+Kac--Wakimoto admissible highest weights form a finite set
+$\mathrm{Adm}_k$. For the simple quotient $L_k(\fg)$, Arakawa's
+theorem gives rationality and finitely many simple modules only in the
+non-degenerate case $X_{L_k(\fg)}=\{0\}$; degenerate admissible levels
+have non-trivial associated variety and logarithmic, non-semisimple
+behaviour (Theorem~\ref{thm:admissible-rep-theory}).
 
 \subsection{The periodic CDG structure}
 
@@ -1011,9 +1034,9 @@ $d\colon A \to A[1]$ is a derivation, and $h \in A^2$ is the
 \item $d^2(a) = [h, a]$ for all $a \in A$;
 \item $dh = 0$ (the curvature is closed).
 \end{enumerate}
-The bar complex $\barB(\widehat{\fg}_k)$ at non-critical level is
-a CDG-coalgebra: the curvature element $m_0$ satisfies $d(m_0) = 0$
-and $d^2 = [m_0, -]$
+The completed modular bar model for $\widehat{\fg}_k$ at non-critical
+level is treated in the curved-central regime as a CDG-coalgebra: the
+curvature element $m_0$ satisfies $d(m_0) = 0$ and $d^2 = [m_0, -]$
 (Proposition~\ref{prop:pole-decomposition}).
 \end{definition}
 
@@ -1021,7 +1044,7 @@ and $d^2 = [m_0, -]$
 \ClaimStatusConjectured]
 \label{conj:periodic-cdg}
 \index{CDG algebra!periodicity}
-At admissible level $k = -h^\vee + p/q$, the bar complex
+At admissible level $k = -h^\vee + p_0/q_0$, the bar complex
 $\barB(\widehat{\fg}_k)$ admits a \emph{periodic CDG structure}:
 there exists a natural isomorphism of CDG-coalgebras
 \begin{equation}\label{eq:periodic-cdg}
@@ -1029,8 +1052,8 @@ there exists a natural isomorphism of CDG-coalgebras
 \;\cong\;
 \barB^n(\widehat{\fg}_k)
 \end{equation}
-where $s = p$ \textup{(}the numerator of
-$k + h^\vee = p/q$\textup{)}, so the bar complex is $2p$-periodic
+where $s = p_0$ \textup{(}the numerator of
+$k + h^\vee = p_0/q_0$\textup{)}, so the bar complex is $2p_0$-periodic
 in bar degree.
 \end{conjecture}
 
@@ -1039,43 +1062,52 @@ in bar degree.
 \index{Positselski!CDG algebras}
 Positselski~\cite{Positselski11} develops CDG-algebras whose
 Koszul duality exchanges coderived and contraderived categories:
-$D^{\mathrm{co}}(A) \simeq D^{\mathrm{ctr}}(B)$. For periodic
-CDG-algebras, the coderived category reduces to the stable category
-of a finite-dimensional quotient (the passage from $U_q(\fg)$ to
-$u_q(\fg)$). Conjecture~\ref{conj:periodic-cdg} asserts that the
-bar complex at admissible level is periodic in this sense; upgrading
-it requires understanding the quantum group center action on the bar
-complex at a root of unity.
-(Contributing to Conjecture~\ref{conj:master-dk-kl}.)
+$D^{\mathrm{co}}(A) \simeq D^{\mathrm{ctr}}(B)$ under the stated
+curved-completion hypotheses. In root-of-unity examples, periodic
+curved data may pass from a coderived ambient to a stable category of a
+finite-dimensional quotient, such as the passage from a Lusztig
+quantum group to the small quantum group. Conjecture~\ref{conj:periodic-cdg}
+asserts that the admissible affine bar complex carries precisely this
+kind of period. To use it for KL one must still construct the quantum
+center action on the bar complex and compare the resulting stable
+category with the semisimplified tilting quotient.
 \end{remark}
 
 
-\subsection{Evidence for periodicity}
+\subsection{Critical Hochschild periodicity and admissible obstruction}
 
-\begin{proposition}[Affine sl2 chiral Hochschild periodicity at critical level;
+\begin{proposition}[Affine sl2 local chiral Hochschild periodicity at critical level;
 \ClaimStatusConditional]
 \label{prop:sl2-periodicity-dl}
 \index{periodicity!$\widehat{\mathfrak{sl}}_2$}
 For $\fg = \mathfrak{sl}_2$ at critical level $k = -h^\vee = -2$, the
-chiral Hochschild cohomology satisfies the periodicity
+formal-disk continuous model satisfies the periodicity
 \begin{equation}\label{eq:sl2-periodicity}
-\dim \ChirHoch^{n+4}(\widehat{\mathfrak{sl}}_{2,-2})
-= \dim \ChirHoch^n(\widehat{\mathfrak{sl}}_{2,-2})
+\dim \ChirHoch_{\mathrm{loc}}^{n+4}(\widehat{\mathfrak{sl}}_{2,-2})
+= \dim \ChirHoch_{\mathrm{loc}}^n(\widehat{\mathfrak{sl}}_{2,-2})
 \quad
 \text{for all } n \geq 0,
 \end{equation}
 with period $2h = 4$ \textup{(}$h = 2$ for $\mathfrak{sl}_2$\textup{)}.
 The periodicity operator is cup product with the even generator
-$\Theta_1 \in \ChirHoch^4$.
+$\Theta_1 \in \ChirHoch_{\mathrm{loc}}^4$. The global curve-level
+object $Z^{\mathrm{der}}_{\mathrm{ch}}$ is obtained only after the
+Fulton--MacPherson/logarithmic comparison and its amplitude bound; no
+Theorem~H concentration statement is invoked at critical level.
 \end{proposition}
 
 \begin{proof}
 Theorem~\ref{thm:affine-periodicity-critical}: at critical level, the
-bar complex is uncurved and the Beilinson--Drinfeld comparison gives
-$\ChirHoch^*(\widehat{\mathfrak{sl}}_{2,-2}) \cong
-\Lambda(P_1) \otimes \bC[\Theta_1]$ with $\deg P_1 = 3$,
+formal-disk continuous model identifies
+\[
+\ChirHoch_{\mathrm{loc}}^*(\widehat{\mathfrak{sl}}_{2,-2})
+\cong
+\Lambda(P_1) \otimes \bC[\Theta_1]
+\]
+with $\deg P_1 = 3$,
 $\deg \Theta_1 = 4$. Cup product with $\Theta_1$ is an isomorphism
-$\ChirHoch^n \xrightarrow{\sim} \ChirHoch^{n+4}$ for all $n \geq 0$.
+$\ChirHoch_{\mathrm{loc}}^n \xrightarrow{\sim}
+\ChirHoch_{\mathrm{loc}}^{n+4}$ for all $n \geq 0$.
 \end{proof}
 
 \begin{remark}[Bar cohomology vs chiral Hochschild cohomology]
@@ -1084,33 +1116,41 @@ The bar cohomology dimensions $\dim H^n(\barB(\widehat{\mathfrak{sl}}_{2,k}))$
 at generic level grow linearly \textup{(}$3, 5, 7, 9, 11, 13, \ldots = 2n{+}1$
 for $n = 1, 2, \ldots$; Remark~\textup{\ref{rem:garland-lepowsky-sl2}}\textup{)} and are \emph{not} periodic.
 The periodicity of Proposition~\ref{prop:sl2-periodicity-dl} is a
-critical-level, chiral-Hochschild-cohomology phenomenon: at $k = -2$, the bar
-complex is uncurved and the Feigin--Frenkel center provides the
-polynomial generator $\Theta_1$ whose cup product gives the period-$4$
-isomorphism. The extension to admissible levels requires the periodic CDG
-structure \textup{(}Conjecture~\ref{conj:periodic-cdg}\textup{)}.
+critical-level, formal-disk local Hochschild phenomenon. At $k = -2$
+the Feigin--Frenkel center provides the polynomial generator
+$\Theta_1$ whose cup product gives the period-$4$ isomorphism in the
+local model. The extension to admissible levels requires the periodic
+CDG structure \textup{(}Conjecture~\ref{conj:periodic-cdg}\textup{)}.
 \end{remark}
 
 \begin{remark}[Periodicity and quantum group]
 \label{rem:periodicity-quantum}
 \index{quantum group!from periodicity}
-At admissible level $k = -2 + p/q$, the period $2h = 4$ divides
-$2p$ when $p$ is even. The $4$-periodicity of the chiral Hochschild
-cohomology at critical level is a shadow of the representation-theoretic
-periodicity of the quantum group $U_q(\mathfrak{sl}_2)$ at
-$q = e^{\pi i q/p}$. For the small quantum group $u_q$, the
-representation category is $2p$-periodic, and Conjecture~\ref{conj:periodic-cdg} asserts
-that the bar complex ``sees'' this periodicity via CDG structure.
+At admissible level $k = -2 + p_0/q_0$, the quantum parameter
+$q_{\mathrm{QG}}=e^{\pi i q_0/p_0}$ has cyclotomic period dividing $2p_0$.
+This numerical period is only a necessary compatibility check for
+Conjecture~\ref{conj:periodic-cdg}. The critical period-$4$ local
+Hochschild operator of Proposition~\ref{prop:sl2-periodicity-dl} is
+cup product with the Feigin--Frenkel generator $\Theta_1$ at
+$k=-2$; it does not construct an admissible-level CDG isomorphism
+$\barB^{n+2p_0}\cong\barB^n$. The missing object is a degree-$2p_0$
+CDG-coalgebra automorphism compatible with curvature, the quantum
+Frobenius center, and the small-quantum-group quotient.
 \end{remark}
 
 \begin{remark}[Scope boundary for periodicity]
 \label{rem:periodicity-scope-boundary-dl}
-Only rank-$1$ strict chiral Hochschild periodicity at critical level is proved in
-this chapter
+Only rank-$1$ strict formal-disk local Hochschild periodicity at
+critical level is proved in this chapter
 \textup{(}Proposition~\ref{prop:sl2-periodicity-dl}\textup{)}.
-For higher-rank affine algebras, strict periodicity of $\ChirHoch^*$ fails
+For higher-rank affine algebras, strict periodicity of
+$\ChirHoch_{\mathrm{loc}}^*$ fails
 \textup{(}polynomial growth $O(n^{r-1})$, not periodic; see
 Theorem~\ref{thm:affine-periodicity-critical}\textup{)}.
+Theorem~H concerns the global curve-level chiral Hochschild amplitude
+on its stated non-critical Koszul locus and does not apply to the
+critical Feigin--Frenkel center. It is not categorical Hochschild
+cohomology of a product Calabi--Yau category.
 Extension to admissible levels requires the periodic CDG conjecture
 \textup{(}Conjecture~\ref{conj:periodic-cdg}\textup{)}.
 In particular, periodicity does not transfer automatically across Koszul
@@ -1118,65 +1158,74 @@ duality or level-shift involutions without additional rank-sensitive input.
 \end{remark}
 
 
-%================================================================
-% SECTION 5: THE KAZHDAN-LUSZTIG EQUIVALENCE FROM BAR-COBAR
-%================================================================
-
-\section{Kazhdan--Lusztig from bar-cobar: chain-level adjunction and periodic structure}
+\section{Bar-cobar adjunction and the Kazhdan--Lusztig boundary}
 \label{sec:kl-from-bar-cobar}
 \index{Kazhdan--Lusztig equivalence!from bar-cobar|textbf}
 
-\begin{theorem}[Kazhdan--Lusztig equivalence on the semisimplified target;
+\begin{theorem}[Kazhdan--Lusztig--Finkelberg equivalence on the semisimplified target;
 \ClaimStatusProvedElsewhere]
 \label{thm:kl-equivalence}
 \index{Kazhdan--Lusztig equivalence}
-\textup{(}Kazhdan--Lusztig~\cite{KL93}\textup{)}\quad
-For $\fg$ simply-laced and $k = -h^\vee + p/q$ admissible with
-$p \geq h^\vee$, there is an equivalence of braided monoidal
-categories:
+\textup{(}Kazhdan--Lusztig~\cite{KL93}, Finkelberg~\cite{Finkelberg96}\textup{)}\quad
+For $\fg$ simply-laced and for a non-negative integral WZW
+level~$\ell$, there is an equivalence of braided monoidal categories:
 \begin{equation}\label{eq:kl-equivalence-dl}
-\cO_k^{\mathrm{int}}(\widehat{\fg})
+\cO_\ell^{\mathrm{int}}(\widehat{\fg})
 \;\simeq\;
-\mathcal{C}(U_q(\fg)),
+\mathcal{C}(U_{q_{\mathrm{KL}}}(\fg)),
 \end{equation}
-where $q = e^{\pi i q/p}$ and $\mathcal{C}(U_q(\fg))$ denotes the
-semisimplified tilting quotient on the admissible alcove. The larger
-category $\mathrm{Rep}^{\mathrm{fd}}(U_q(\fg))$ is a non-semisimple
-lift and lies outside the target used in this monograph.
+where $q_{\mathrm{KL}} = e^{\pi i/(\ell+h^\vee)}$ and
+$\mathcal{C}(U_{q_{\mathrm{KL}}}(\fg))$ denotes the semisimplified
+tilting quotient on the integrable alcove.
+This theorem is the integrable KL/Finkelberg input. It is not the
+admissible-level statement for $k=-h^\vee+p_0/q_0$. The larger category
+$\mathrm{Rep}^{\mathrm{fd}}(U_{q_{\mathrm{KL}}}(\fg))$ is a
+non-semisimple lift and lies outside the target used in this theorem.
 \end{theorem}
 
-\begin{theorem}[Chain-level KL adjunction from bar-cobar;
+\begin{theorem}[Module bar-cobar adjunction at admissible level;
 \ClaimStatusConditional]
 \label{thm:kl-bar-cobar-adjunction}
 \index{Kazhdan--Lusztig equivalence!bar-cobar adjunction}
-Let $\fg$ be simply-laced and $k = -h^\vee + p/q$ admissible with
-$p \geq h^\vee$. Write
+Let $\fg$ be simply-laced and let $k = -h^\vee + p_0/q_0$ be admissible.
+Let $A_k$ denote either the universal affine algebra
+$\widehat{\fg}_k$ in the completed PBW--Koszul ambient or the simple
+quotient $L_k(\fg)$ at a non-degenerate admissible level. Write
 \[
- C_k := \barB^{\mathrm{ch}}(\widehat{\fg}_k).
+ C_k := \barB^{\mathrm{ch}}(A_k).
 \]
-There exists a chain-level adjunction
+The completed $\Eone$-module bar-cobar functors give a chain-level
+adjunction
 \begin{equation}\label{eq:kl-bar-cobar-adjunction}
 \Phi_k\colon
-D\bigl(\mathrm{Mod}^{\Eone,\,\mathrm{compl}}_{\widehat{\fg}_k}\bigr)
+D\bigl(\mathrm{Mod}^{\Eone,\,\mathrm{compl}}_{A_k}\bigr)
 \;\rightleftarrows\;
 D\bigl(\mathrm{CoMod}^{\Eone,\,\mathrm{conil}}_{C_k}\bigr)
 \;\colon \Psi_k
 \end{equation}
-such that:
+in the completed/conilpotent ambient of
+Theorem~\ref{thm:e1-module-koszul-duality}. For modules lying in this
+completed Koszul subcategory, and in the simple-quotient lane only
+under the non-degeneracy hypothesis $X_{L_k(\fg)}=\{0\}$, the
+following bar-side statements hold:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item On integrable highest-weight modules $M(\lambda) \in
- \cO_k^{\mathrm{int}}(\widehat{\fg})$, the functor $\Phi_k$
- produces a finite-dimensional comodule over the dual-side bar
- coalgebra $C_k$.
-\item The induced map on Ext groups recovers BGG multiplicities:
+\item For an admissible highest-weight module $M(\lambda)$ in the
+ stated ambient, the functor $\Phi_k$ produces a weightwise
+ finite $C_k$-comodule. Total finite-dimensionality is asserted only
+ after a finite conformal-weight truncation or a finite quotient has
+ been specified.
+\item The induced map on Ext groups is the bar-cobar derived-Hom
+ exchange:
  \[
- \mathrm{Ext}^n_{\widehat{\fg}_k}(\omega_X, M(\lambda))
+ \mathrm{Ext}^n_{A_k}(\omega_X, M(\lambda))
  \cong
  \operatorname{Hom}_{D(\mathrm{CoMod}^{\Eone,\,\mathrm{conil}}_{C_k})}
  \bigl(\Phi_k(\omega_X), \Phi_k(M(\lambda))[n]\bigr).
  \]
-\item The composition $\Psi_k \circ \Phi_k$ is quasi-isomorphic
- to the identity on $\cO_k^{\mathrm{int}}(\widehat{\fg})$.
+ BGG multiplicity formulae require the separate BGG comparison datum.
+\item The derived unit
+ $M\to\Psi_k\Phi_k(M)$ is a quasi-isomorphism for
+ $M$ lying in the stated completed Koszul ambient.
 \end{enumerate}
 \end{theorem}
 
@@ -1184,39 +1233,42 @@ such that:
 The proof assembles five ingredients, each proved elsewhere in this
 monograph, into a single chain-level construction.
 
-\emph{Step 1: Koszul dual identification.}
+\emph{Koszul dual identification.}
 By Theorem~\ref{thm:universal-kac-moody-koszul}, the chiral Koszul
-dual of $\widehat{\fg}_k$ is $\widehat{\fg}_{-k-2h^\vee}$.
-Set $\cA = \widehat{\fg}_k$ and
-$C_k := \barB^{\mathrm{ch}}(\widehat{\fg}_k)$ for the ordered
+dual of the universal affine algebra $\widehat{\fg}_k$ is
+$\widehat{\fg}_{-k-2h^\vee}$ in the stated completed ambient. Set
+$\cA = A_k$ and
+$C_k := \barB^{\mathrm{ch}}(A_k)$ for the ordered
 genus-$0$ bar coalgebra on the dual side. On finite-type lanes one may
 rewrite $C_k^\vee$ as the dual algebra at level $-k-2h^\vee$, but the
 intrinsic module comparison is coalgebra-valued.
 
-\emph{Step 2: Module bar-cobar adjunction.}
+\emph{Module bar-cobar adjunction.}
 By Theorem~\ref{thm:e1-module-koszul-duality}, the $\Eone$-chiral
-bar-cobar adjunction gives an equivalence
+bar-cobar construction gives an adjunction
 \[
 D(\mathrm{Mod}^{\Eone,\,\mathrm{compl}}_{\cA})
-\;\simeq\;
+\;\rightleftarrows\;
 D(\mathrm{CoMod}^{\Eone,\,\mathrm{conil}}_{C_k}).
 \]
 Define $\Phi_k := \mathrm{Ind}$ and $\Psi_k := \mathrm{Res}$ from
-that theorem. The unit and counit are quasi-isomorphisms on the
-relevant subcategories, giving~(iii).
+that theorem. The derived unit is a quasi-isomorphism on the stated
+completed Koszul subcategory, giving~(iii). This is a
+bar-side statement; it does not identify the target with
+$\mathcal C(U_{q_{\mathrm{QG}}}(\fg))$.
 
-\emph{Step 3: PBW filtration and chain map.}
-Equip $\widehat{\fg}_k$ with the PBW filtration by conformal weight.
+\emph{PBW filtration and chain map.}
+Equip $A_k$ with the PBW filtration by conformal weight.
 This filtration is compatible with the bar construction
 (Theorem~\ref{thm:bar-cobar-spectral-sequence}): the associated
-graded of the bar complex $\barB(\widehat{\fg}_k)$ is the
+graded of the bar complex $\barB(A_k)$ is the
 \emph{classical} bar complex $\barB(U(\fg[t^{-1}]t^{-1}))$, which
 is a dg-coalgebra (not curved). For a highest-weight module
 $M(\lambda)$, the PBW filtration induces a filtration on the
 relative bar complex
 $\barB(\cA, M(\lambda)) := \barB(\cA) \otimes_{\cA} M(\lambda)$.
 
-\emph{Step 4: Spectral sequence comparison.}
+\emph{Spectral sequence comparison.}
 The PBW filtration gives a spectral sequence
 \[
 E_1^{p,q} = H^{p+q}(\mathrm{gr}^p \barB(\cA, M(\lambda)))
@@ -1228,21 +1280,19 @@ Chevalley--Eilenberg complex of $\fg[t^{-1}]t^{-1}$ with
 coefficients in $\mathrm{gr}\, M(\lambda)$. At $E_1$, the
 cohomology is computed by the BGG resolution
 (Corollary~\ref{cor:bgg-koszul-involution}).
-By Corollary~\ref{cor:bar-admissible-finiteness}, the relevant
-fixed conformal-weight sectors of the bar complex are
-finite-dimensional at admissible levels, so the spectral
-sequence converges weightwise. Since $M(\lambda) \in \cO_k^{\mathrm{int}}$ is
-integrable, the $E_1$ page is concentrated in finitely many degrees
-(bounded by the Weyl group), and the spectral sequence degenerates at
-$E_2$ by the Koszul purity of $\cA$
-(Theorem~\ref{thm:km-chiral-koszul}). This establishes that
-$\Phi_k(M(\lambda))$ is a finite-dimensional $C_k$-comodule,
-proving~(i).
+By Corollary~\ref{cor:bar-admissible-finiteness}, the relevant fixed
+conformal-weight sectors are finite-dimensional for the
+non-degenerate simple quotient $L_k(\fg)$. In the universal lane this
+is retained as the completed PBW weightwise hypothesis. Thus the
+spectral sequence converges weightwise. If a BGG comparison and
+Koszul purity hypothesis are supplied, the $E_2$ degeneration recovers
+the usual multiplicity calculation. The theorem itself uses only the
+weightwise finiteness and convergence, proving~(i).
 
-\emph{Step 5: Ext recovery.}
+\emph{Ext recovery.}
 The derived-Hom exchange~(ii) is
 Theorem~\ref{thm:e1-module-koszul-duality}(ii) applied to
-$\cA = \widehat{\fg}_k$: the bar-cobar adjunction identifies module
+$\cA = A_k$: the bar-cobar adjunction identifies module
 Ext groups with derived morphisms between the corresponding dual-side
 bar-comodules.
 \end{proof}
@@ -1252,95 +1302,104 @@ bar-comodules.
 \label{conj:kl-bar-cobar-dl}
 \index{Kazhdan--Lusztig equivalence!bar-cobar proof}
 The chain-level adjunction of
-Theorem~\textup{\ref{thm:kl-bar-cobar-adjunction}} refines to the
-package-level Kazhdan--Lusztig recovery on the semisimplified target
-\begin{equation}\label{eq:kl-bar-cobar-dl}
-\barB_{\Eone}\bigl(\widehat{\fg}_k\text{-}\mathrm{mod}\bigr)
+Theorem~\textup{\ref{thm:kl-bar-cobar-adjunction}} can recover an
+admissible root-of-unity analogue of the semisimplified KL target only
+after the following three comparison data are supplied:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item the periodic CDG-coalgebra structure
+ $\barB^{n+2p_0}(\widehat{\fg}_k)\cong\barB^n(\widehat{\fg}_k)$ of
+ Conjecture~\ref{conj:periodic-cdg}, compatible with curvature and
+ deconcatenation;
+\item a root-of-unity central action identifying the resulting
+ periodic coderived quotient with the stable module category of the
+ small quantum group $u_{q_{\mathrm{QG}}}(\fg)$;
+\item Lusztig's stable-to-tilting comparison, upgraded in this
+ ambient to a braided monoidal functor landing in the semisimplified
+ tilting quotient $\mathcal C(U_{q_{\mathrm{QG}}}(\fg))$.
+\end{enumerate}
+Under these hypotheses, and only on the selected non-degenerate
+admissible quotient or semisimplified quotient category, the bar-cobar
+package induces a braided monoidal equivalence
+\[
+\cO_{k,\mathrm{nd}}^{\mathrm{ss}}(\fg)
 \;\simeq\;
-\Omega_{\Eone}\bigl(U_q(\fg)\text{-}\mathrm{comod}\bigr),
-\end{equation}
-identifying
-$\cO_k^{\mathrm{int}}(\widehat{\fg}) \simeq
-\mathcal{C}(U_q(\fg))$
-as braided monoidal categories, where $\mathcal{C}(U_q(\fg))$ is the
-semisimplified tilting quotient (not the full representation category
-$\mathrm{Rep}(U_q(\fg))$; see Remark~\ref{rem:kl-target-category}).
-Any non-semisimple lift to
-$\mathrm{Rep}^{\mathrm{fd}}(U_q(\fg))$ is an additional open problem,
-outside the endpoint used elsewhere in the manuscript;
-the completed/coderived MC3 enlargement
-\textup{(}categorical CG closure plus the generated-core DK comparison
-proved for all simple types; post-CG completion open beyond
-type~$A$; Corollary~\ref{cor:mc3-all-types}\textup{)} lies further out still.
-The remaining ingredient beyond
-Theorem~\textup{\ref{thm:kl-bar-cobar-adjunction}} is the periodic
-CDG structure of the bar complex
-\textup{(}Conjecture~\textup{\ref{conj:periodic-cdg}):} given
-$2p$-periodicity, Positselski's Koszul duality for periodic
-CDG-algebras~\cite{Positselski11} identifies the coderived category
-of the bar complex with the stable module category of the small
-quantum group $u_q(\fg)$, which maps to
-$\mathcal{C}(U_q(\fg))$ via Lusztig's theorem.
+\mathcal C(U_{q_{\mathrm{QG}}}(\fg)).
+\]
+Here $\cO_{k,\mathrm{nd}}^{\mathrm{ss}}(\fg)$ denotes the chosen
+non-degenerate admissible semisimplified quotient; it is not the whole
+admissible category at a degenerate level.
+The conjecture does not identify the bar comodule category with the
+full non-semisimple category $\mathrm{Rep}^{\mathrm{fd}}(U_{q_{\mathrm{QG}}}(\fg))$,
+with a degenerate admissible logarithmic category, nor with any
+completed/coderived enlargement beyond the specified periodic quotient.
 \end{conjecture}
 
 \begin{remark}[KL target category]\label{rem:kl-target-category}
 \index{Kazhdan--Lusztig equivalence!target category}
-The correct KL target is the semisimplified tilting quotient
-$\mathcal{C}(U_q(\fg))$ ($|P_k^+|$ simple objects), not the full
-$\mathrm{Rep}(U_q(\fg))$; see~\cite{BK01} and~\cite{EGNO},
-Remark~11.7.10. The coderived category enters only as the ambient
-bar-side formalism for the conjectural lift, not as the printed KL
-endpoint.
-(Contributing to Conjecture~\ref{conj:master-dk-kl}.)
+On the integrable WZW lane the KL target is the semisimplified tilting
+quotient $\mathcal{C}(U_{q_{\mathrm{KL}}}(\fg))$ ($|P_\ell^+|$ simple objects), not
+the full $\mathrm{Rep}(U_{q_{\mathrm{KL}}}(\fg))$; see~\cite{BK01} and~\cite{EGNO},
+Remark~11.7.10. At rational admissible levels the same target is only
+a proposed semisimplified quotient after the periodic CDG and
+root-of-unity comparison data have been supplied. Degenerate
+admissible levels are logarithmic and are not semisimple KL endpoints.
+The coderived category enters only as the ambient bar-side formalism
+for the conjectural lift, not as the printed KL endpoint.
 \end{remark}
 
 \begin{remark}[Scope]\label{rem:kl-bar-cobar-scope}
 Theorem~\ref{thm:kl-bar-cobar-adjunction} constructs the chain-level
-adjunction on integrable modules. Two further passages are separate:
-(a)~identifying the bar functor target with $\mathcal{C}(U_q(\fg))$
+adjunction on modules in the completed Koszul ambient. Two further
+passages are separate:
+(a)~identifying the bar functor target with $\mathcal{C}(U_{q_{\mathrm{QG}}}(\fg))$
 requires the periodic CDG structure
 (Conjecture~\ref{conj:periodic-cdg}); (b)~any lift beyond the
-semisimplified target is an outer MC3 problem
-\textup{(}categorical CG closure plus the generated-core DK comparison
-proved for all simple types; post-CG completion open beyond
-type~$A$; Corollary~\ref{cor:mc3-all-types}\textup{)}. Without periodicity,
-$\Phi_k$ lands in $\widehat{\fg}_{-k-2h^\vee}$-comodules, not
-$U_q(\fg)$-comodules.
-(Contributing to Conjecture~\ref{conj:master-dk-kl}.)
+semisimplified target requires a non-semisimple quantum-group
+completion theorem. Without periodicity and the root-of-unity central
+action, $\Phi_k$ lands in $C_k$-comodules, not in
+$U_{q_{\mathrm{QG}}}(\fg)$-comodules.
 \end{remark}
 
 \begin{remark}[Geometric form of a bar-cobar KL proof]
 \label{rem:geometric-proof-kl}
 \index{Kazhdan--Lusztig equivalence!geometric proof}
 The original KL proof~\cite{KL93} uses analytic continuation.
-A bar-cobar proof has a geometric form: (1)~configuration space
-integrals build the bar complex; (2)~Verdier duality on FM
-compactifications realizes
-$\widehat{\fg}_k^! = \mathrm{CE}^{\mathrm{ch}}(\widehat{\fg}_{-k-2h^\vee})$; (3)~bar curvature
-interacts with $q = e^{\pi i/(k+h^\vee)}$ to produce periodic CDG
-structure; (4)~Positselski's CDG Koszul duality plus Lusztig's
-stable-to-tilting comparison reach the semisimplified target.
+A bar-cobar proof requires four geometric inputs:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item configuration-space integrals constructing the completed bar
+ coalgebra;
+\item Verdier duality on FM compactifications realizing
+ $\widehat{\fg}_k^! =
+ \mathrm{CE}^{\mathrm{ch}}(\widehat{\fg}_{-k-2h^\vee})$ in the
+ continuous ambient;
+\item a curvature-compatible period-$2p_0$ CDG structure at
+ $q_{\mathrm{QG}}=e^{\pi i/(k+h^\vee)}$;
+\item Positselski's curved Koszul duality, followed by Lusztig's
+ stable-to-tilting comparison, as a braided monoidal map to
+ $\mathcal C(U_{q_{\mathrm{QG}}}(\fg))$.
+\end{enumerate}
+The first two inputs are bar/Verdier data. The third and fourth are
+the unproved admissible-level comparison data.
 \end{remark}
 
 
-\subsection{Roadmap: from critical level to KL}
+\subsection{Critical-admissible deformation}
 
 \begin{remark}[The critical-admissible deformation]
 \label{rem:critical-admissible}
 \index{critical level!deformation to admissible}
-As $k$ deforms from $-h^\vee$ to $-h^\vee + p/q$, the bar complex
-interpolates: uncurved at critical level (computes oper functions,
-Theorem~\ref{thm:oper-bar-h0-dl}); CDG-coalgebra at generic
-perturbation; conjecturally periodic CDG at rational $p/q$
-(recovering the semisimplified KL target). This connects geometric
-Langlands (opers) to representation-theoretic Langlands (quantum
-groups) through bar-cobar duality.
+As $k$ deforms from $-h^\vee$ to $-h^\vee + p_0/q_0$, the completed
+vacuum bar model passes from the critical formal-disc oper lane
+(degree-zero cohomology gives oper functions,
+Theorem~\ref{thm:oper-bar-h0-dl}) to a curved-central bar model at
+noncritical perturbation, and conjecturally to a periodic CDG model at
+rational $p_0/q_0$. This is a comparison problem between the formal-disc
+oper lane and the root-of-unity quantum-group lane, not a continuous
+transport of the KL theorem. Bar-cobar duality supplies the
+chain-level adjunction; periodic CDG, a root-of-unity central action,
+and Lusztig comparison supply the additional admissible-level data.
 \end{remark}
 
-
-%================================================================
-% SECTION 6: CONNECTIONS TO GEOMETRIC LANGLANDS
-%================================================================
 
 \section{Connections to geometric Langlands}
 \label{sec:langlands-connections}
@@ -1353,15 +1412,21 @@ groups) through bar-cobar duality.
 \label{thm:fg-localization}
 \index{Frenkel--Gaitsgory!localization}
 \textup{(}Frenkel--Gaitsgory~\cite{FG06}\textup{)}\quad
-There is a localization functor
+There is a critical-level localization functor
 \[
 \Delta\colon
 D\bigl(\widehat{\fg}_{-h^\vee}\text{-mod}\bigr)
 \;\longrightarrow\;
 D\bigl(\mathrm{QCoh}(\mathrm{Op}_{\fg^\vee}(D))\bigr)
 \]
-that is an equivalence on the subcategory of modules on which the
-center $Z(\widehat{\fg}_{-h^\vee})$ acts locally finitely.
+in the Frenkel--Gaitsgory critical setting. The piece used here is the
+vacuum edge: the critical vacuum module maps to
+$\mathcal O_{\mathrm{Op}_{\fg^\vee}(D)}$, and the Feigin--Frenkel
+center acts through
+$\mathcal O(\mathrm{Op}_{\fg^\vee}(D))$. Equivalence statements require
+the precise Frenkel--Gaitsgory subcategory and finiteness/singularity
+hypotheses; no equivalence on all critical modules is used in this
+chapter.
 \end{theorem}
 
 \begin{remark}[Vacuum-side localization comparison]
@@ -1469,7 +1534,7 @@ At integral level $k$:
 \end{enumerate}
 \end{conjecture}
 
-\begin{remark}[Evidence]
+\begin{remark}[Endpoint scalar checks]
 At the critical level $k = -h^\vee$, the affine formula
 $\kappa\bigl(V_k(\fg)\bigr) = \dim(\fg)\,(k+h^\vee)/(2h^\vee)$ gives
 $\kappa\bigl(V_{-h^\vee}(\fg)\bigr) = 0$, while the averaged
@@ -1538,8 +1603,8 @@ formal and Koszul, so that the weight filtration is determined by the
 bar resolution of these $\mathrm{Ext}$ algebras.
 Arkhipov--Bezrukavnikov--Ginzburg~\cite{ABG04} complete the comparison by
 identifying the resulting Koszul dual category with representations of
-the quantum group $U_q(\fg)$ at a root of unity, where $q = e^{\pi i
-/(k + h^\vee)}$.
+the quantum group $U_{q_{\mathrm{ABG}}}(\fg)$ at a root of unity,
+where $q_{\mathrm{ABG}} = e^{\pi i/(k + h^\vee)}$.
 The shadow-depth filtration on $\barB^\Sigma$ therefore supplies the
 source for the same weight filtration after a chiral Satake
 comparison. Without that comparison it remains a filtration inside the
@@ -1562,8 +1627,9 @@ Virasoro. At the critical level $k = -h^\vee$
 (equivalently, $\kappa(\widehat{\fg}_{-h^\vee}) = 0$): the shadow connection becomes
 regular, the shadow metric degenerates to $Q_L(t) = 9\alpha^2
 t^2$, and the space of flat sections consists of polynomial
-functions on the degree line; this is the oper space in the
-shadow coordinates.
+functions on the degree line. This is an oper-like rank-$1$ shadow of
+the formal-disc calculation, not an identification with the full oper
+stack $\mathrm{Op}_{\fg^\vee}(D)$.
 
 More precisely, the shadow connection on a primary line~$L$
 with Higgs field $M(t)$
@@ -1586,10 +1652,6 @@ For class~$\mathbf{M}$: the shadow discriminant is algebraic
 of degree~$2$ in the degree variable~$t$, while the Hitchin
 discriminant is transcendental on the full Hitchin base.
 \end{remark}
-
-%================================================================
-% SECTION 7: SUMMARY
-%================================================================
 
 \section{Critical-level lane}
 \label{sec:derived-langlands-summary}
@@ -1622,10 +1684,10 @@ semisimplified Kazhdan--Lusztig comparison. Completed or coderived
 Kazhdan--Lusztig lifts require additional periodic, topological, and
 coderived input.
 
-\section{Structural cross-references}
+\section{Formal-disc and boundary carriers}
 \label{sec:dl-anchors}
 
-\begin{remark}[Anchor map for derived Langlands]
+\begin{remark}[Carrier map for derived Langlands]
 \label{rem:dl-anchors}
 \index{derived Langlands!anchor map}
 \index{geometric Langlands!Koszul reflection}
@@ -1656,7 +1718,7 @@ The derived Langlands chapter has three structural anchors:
  requires the renormalized Feigin--Frenkel critical comparison; it is
  not obtained by substituting $k=-h^\vee$ into the KZ connection.
 \end{enumerate}
-Cross-volume comparison is conditional. A Vol~II boundary
+Boundary comparison is conditional. A Vol~II boundary
 interpretation must provide the boundary factorization algebra and a
 map to the critical vacuum oper complex. A Vol~III CY-to-chiral
 interpretation must provide the exact functor
@@ -1686,7 +1748,7 @@ At a point there is no formal coordinate, no OPE pole expansion, and
 no Sugawara curvature term.
 \end{remark}
 
-\section{Synthesis}
+\section{K3--BKM boundary comparisons}
 \label{sec:dl-supplement}
 
 \begin{remark}[K3 comparison morphism and the Langlands boundary]
@@ -1734,12 +1796,15 @@ formal-disc oper calculation of this chapter
 \index{Kazhdan--Lusztig equivalence!K3-BKM analogue}
 \index{quantum group!root of unity!$q_{K3}$}
 \index{Etingof--Kazhdan!super-quasi-Hopf quantisation}
-The Kazhdan--Lusztig equivalence~\cite{KazhdanLusztig1993,KazhdanLusztig1994}
+The Kazhdan--Lusztig--Finkelberg integrable comparison
+\cite{KazhdanLusztig1993,KazhdanLusztig1994,Finkelberg96}
 $\mathrm{KL}_k\colon \mathcal{O}^{\mathrm{int}}_k(\widehat{\fg})
-\xrightarrow{\sim} \mathrm{Rep}^{\mathrm{fd}}(U_q(\fg))$ at
-$q = e^{\pi i/(k+h^\vee)}$ does not extend to the
-K3-BKM~$\mathfrak{g}_{\Delta_5}$ as a Drinfeld Yangian
-(no finite-rank symmetrisable Cartan, no J-presentation; see Vol~III
+\xrightarrow{\sim} \mathcal C(U_{q_{\mathrm{KL}}}(\fg))$ at
+$q_{\mathrm{KL}} = e^{\pi i/(k+h^\vee)}$ does not turn the
+K3-BKM~$\mathfrak{g}_{\Delta_5}$ into a Drinfeld Yangian. The
+Drinfeld Yangian hypotheses fail here: there is no finite-rank
+symmetrisable Cartan datum of the required type and no
+Drinfeld \(J\)-presentation; see Vol~III
 Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic},
 Remark~\ref{V3-rem:k3-non-yangian-adjoint}). The residual KL analogue
 is therefore not a Yangian equivalence. It is the Lusztig
@@ -1755,9 +1820,10 @@ the double, and the negative half require completion, monoidal
 vanishing-cycle realization, and a Hopf pairing. After these data are
 present, the specialization at
 $q_{K3} = e^{2\pi i/8}$ (primitive $8$-th root of unity) produces a
-small quantum group $u_{q_{K3}}$ whose modular tensor category
-is the proposed Bruinier-reciprocity match with the Hecke-eigen side
-of the K3 comparison datum on the
+small Lusztig quantum-group analogue. Its finite ribbon/logarithmic
+tensor category, or its semisimplified modular quotient after the
+radical data are imposed, is the proposed Bruinier-reciprocity match
+with the Hecke-eigen side of the K3 comparison datum on the
 bi-based Ran space $(\mathrm{Ran}(E^{\mathrm{nod,sm}}_{24}),
 \overline{\mathcal{A}_2})$. The level shift selecting $\ell=8$ is the
 scalar condition encoded by the three-face
@@ -1778,13 +1844,57 @@ identity
 with Drinfeld's scaling~\cite{Drinfeld1990}
 $\hbar=2\pi i/\ell$. The Etingof--Kazhdan super-quasi-Hopf
 quantisation functor of Part~V~\cite{EtingofKazhdan2007PartV}
-then reduces the deformation problem to the cohomology class
-$H^2(\mathfrak{g}_{\Delta_5})^{\mathbb{Z}/2,\,K(1)}\cong\mathbb{C}\cdot\Delta_5$
-when the Vol~III BKM cohomology computation is invoked. The K3 chiral
+then reduces the deformation problem to completed Lie-bialgebra data.
+The comparison target for the K3 row is the Heegner line
+$\mathbb C\cdot[\operatorname{div}(\Delta_5)]$, reached only after the
+finite Hall/CoHA source, pairing, PBW/no-extra-relations, radical,
+parity, completion, inverse-limit, and Heegner gates; no intrinsic
+$H^2(\mathfrak g_{\Delta_5})$ construction is asserted here. The K3 chiral
 side of this picture is a super-quasi-Hopf quantisation, not a
 Drinfeld Yangian. Its analogue of the critical center jump is the
 Humbert-monodromy torsion order in the completed K3 boundary model,
 not a consequence of the formal-disc Feigin--Frenkel theorem.
+\end{remark}
+
+\begin{remark}[K3, Mukai, Monster, and Drinfeld taxonomy]
+\label{rem:dl-k3-monster-yangian-firewall}
+\index{Yangian!K3 taxonomy firewall}
+\index{Borcherds--Kac--Moody algebra!not a Yangian}
+Four quantum-algebra objects meet at the K3 boundary, but they are not
+interchangeable.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Drinfeld Yangian.} A Drinfeld Yangian $Y_\hbar(\fg)$ is
+attached to a finite-dimensional simple Lie algebra with finite Cartan
+datum and Drinfeld $J$-presentation. This is the source of the
+finite-type rational $R$-matrix chart used in local recognition
+arguments.
+\item \emph{K3 Mukai Yangian chart.} The Mukai branch is the
+finite-window or evaluation chart on the Mukai lattice, and on
+ADE/Kummer restrictions it recovers finite-type rational factors. It
+is a chart inside the K3 recognition package. It is not the
+Borcherds denominator algebra, and it is not a KL target category.
+\item \emph{K3 Hall--Drinfeld double.} The K3 boundary object used
+here is the completed Hall--Drinfeld double
+\[
+ D_\hbar\!\left(Y^{\mathrm{Hall},+}_\hbar(K3\times E)\right),
+\]
+after the compact CoHA source, Hopf pairing, negative half,
+completion, parity, radical quotient, and Heegner comparison have been
+supplied. Its BKM shadow is the $\Delta_5$ denominator object
+$\mathbf H_{\Delta_5}$ with $\kappa_{\mathrm{BKM}}(\Delta_5)=5$.
+\item \emph{Monster and Fake-Monster BKM denominator rows.} Monster,
+Fake-Monster, and K3 denominator algebras are Borcherds-type
+denominator objects in different lattice ambients. The Fake-Monster
+row is the $\Phi_{12}$ weight-$12$ Lorentzian denominator row; the K3
+row is the $\Delta_5$ weight-$5$ Humbert boundary row. Neither row is
+a Drinfeld Yangian, and no finite-type KL/Finkelberg theorem is
+imported into either row without a separate named BKM analogue.
+\end{enumerate}
+Thus a finite-type rational Drinfeld chart may be used as a local
+factor in the K3 recognition package, but the K3 Hall--Drinfeld
+double, the Mukai evaluation chart, the Monster/Fake-Monster
+denominator rows, and the KL/Finkelberg finite-type theorem remain
+separate mathematical objects.
 \end{remark}
 
 \section{Octachotomy of $\overline{\mathcal{A}_2}$ and derived Satake for $\mathrm{Sp}_4$}
@@ -2049,9 +2159,9 @@ $\Phi_{\mathrm{KZ}}$ over the $\mathbb{Z}/2$-spin double cover
 \cite[\S 5]{EnriquezEtingof2005}. The $H^2$-coefficient
 $H^1(\AbarTwo,\mu_2)\cong\mu_2$ is generated by the spin character
 of the Maass cover (Weissauer 2009 Lem.~3.2). Independent
-compatibility check: the gauge class of $\Delta_5$ in
-$H^2(\frakg_{\Delta_5})^{\Z/2,K(1)}\cong\mathbb{C}\cdot\Delta_5$
-(Remark~\ref{rem:dl-3-etingof-KL-parameters}) projects to
+compatibility check: the Heegner line
+$\mathbb C\cdot[\operatorname{div}(\Delta_5)]$ targeted by
+Remark~\ref{rem:dl-3-etingof-KL-parameters} projects to
 $\mathrm{ob}^{\mathrm{Lang}}|_{H_1\cup H_4}$ under the
 Etingof--Kazhdan classical-limit map of
 Theorem~\ref{thm:dl-kazhdan-classical-limit}.
@@ -2143,12 +2253,14 @@ $\mathrm{ob}^{\mathrm{Lang}}\in
 H^2(\grt_1^{(1/2)};H^1(\AbarTwo,\mu_2))$
 of Conjecture~\ref{thm:dl-octachotomy-satake-bridge}~(4) is the
 cohomological residue of this transport failure: the
-finite-type central-sheaf theorem applies along the
-super-quasi-Hopf flat direction $\hbar^2=-1/8$, with
+finite-type central-sheaf theorem can only be imported along the
+super-quasi-Hopf flat direction $\hbar^2=-1/8$ after the completed
+Hall--Drinfeld source, pairing, and Heegner comparison have been
+supplied, with
 $\mathrm{ob}^{\mathrm{Lang}}|_{H_1\cup H_4}$ recording the
 deviation. Where the finite-type theorem proves the central-sheaf
-identification on the nose, the BKM extension proves it modulo
-$\mathrm{ob}^{\mathrm{Lang}}$.
+identification on the nose, the BKM extension has at most a
+conditional modulo-$\mathrm{ob}^{\mathrm{Lang}}$ comparison.
 \end{remark}
 
 \section{Archimedean place: the place at infinity and global closure}
@@ -2183,8 +2295,8 @@ $K$-type of weight $(10, 10)$. The Schmidt
 parameter~\cite{Schmidt2017Archimedean}
 for a holomorphic Siegel form of weight~$k$ is $(k - 3/2, k - 5/2)$;
 for $k = 10$ this gives $(17/2, 15/2)$, not $(7/2, 5/2)$
-as the ``weight-$k$ gives $(k-3/2, k-5/2)$'' identification would
-register for $k = 5$. The correction: $\Delta_{10}$, as a weight-$10$
+as the ``weight-$k$ gives $(k-3/2, k-5/2)$'' identification registers
+for $k = 5$. The correction: $\Delta_{10}$, as a weight-$10$
 SK lift of a weight-$16$ elliptic form, has the archimedean parameter
 of its SK seed shifted by $\mathrm{Sym}^1$, which reads off the
 archimedean Weil--Deligne form
@@ -2227,7 +2339,7 @@ $\widetilde{\mathrm{Sp}_4(\mathbb{Z})}$, a $\mathbb{Z}/2$-central
 extension of $\mathrm{Sp}_4(\mathbb{Z})$ whose character
 $v_{\Delta_5}$ factors through $\mathrm{Sp}_4(\mathbb{Z}/2) \cong S_6$.
 The archimedean parameter of a weight-$k$ Siegel form on the
-paramodular side would be Schmidt $(k - 3/2, k - 5/2)$; for $k = 5$
+paramodular side is Schmidt $(k - 3/2, k - 5/2)$; for $k = 5$
 this yields $(7/2, 5/2)$. The form $\Delta_5$ is Maass-spin-cover
 rather than paramodular. On the double cover, the archimedean
 parameter picks up a twist by the sign character
@@ -2336,18 +2448,17 @@ Weissauer~\cite{Weissauer2009GSp4} for the
 $\mathrm{GSp}_4$-multiplicity formula.
 \end{remark}
 
-\begin{remark}[Cross-volume bridge: archimedean $\phi_\infty$ and the Vol III Drinfeld centre]
+\begin{remark}[Archimedean packet and categorical-centre carrier]
 \label{rem:dl-cross-volume-archimedean}
-\index{cross-volume!archimedean Langlands}
-The archimedean parameter $\phi_{\Delta_5, \infty}$ pushes forward
-through the Vol~I--III pipeline. At the chiral-algebra level, the
-sign-character twist $\mathrm{sgn}_\R$ corresponds to the
-$\mathbb{Z}/2$-spin grading on
-$H^2(\mathfrak{g}_{\Delta_5})^{\mathbb{Z}/2, K(1)} \cong
-\mathbb{C}\cdot \Delta_5$: the $\mathbb{Z}/2$ is exactly the spin
-double cover contributed by the Maass-spin lift, and its action on
-the BKM cohomology factors through the Cartan central element $Z
-\mapsto -Z$ (Fricke involution $w_8$; see
+\index{archimedean Langlands!categorical-centre carrier}
+The archimedean parameter $\phi_{\Delta_5, \infty}$ enters the K3
+recognition target through the parity character on the Heegner line.
+At the chiral-algebra level, the sign-character twist
+$\mathrm{sgn}_\R$ is one of the parity gates in
+$\mathbb C\cdot[\operatorname{div}(\Delta_5)]$: the $\mathbb{Z}/2$ is
+exactly the spin double cover contributed by the Maass-spin lift, and
+its action on the BKM comparison data factors through the Cartan
+central element $Z \mapsto -Z$ (Fricke involution $w_8$; see
 Remark~\ref{V3-rem:gl-fricke-self-duality} in
 Chapter~\ref{V3-ch:geometric-langlands} of Vol~III).
 At the representation-category level, the discrete-series packet
@@ -2356,19 +2467,26 @@ $\mathrm{sgn}_\R$-twists of the holomorphic highest-weight module at
 archimedean weight $(5, 5)$, exhibited explicitly by
 $\mathrm{Rep}(\mathbf{H}_{\Delta_5})$ at its $\zeta_8$-specialisation
 as the 4 simple objects generated by $\Omega\text{-twists}$ of the
-identity. The Drinfeld-centre upgrade
+identity, after the Vol~III source-recognition gates have supplied the
+specialised representation category. The Drinfeld-centre upgrade
 (Vol~III Chapter~\ref{V3-ch:drinfeld-center},
 Remark~\ref{rem:dc-H-delta5-center}) quantifies
-this 4-fold branching categorically: the global Arthur packet size $4$
-equals the Frobenius--Perron dimension of the four simple objects in
-the $\mu_8$-gerbe-twisted Tannakian fibre at the Fricke-fixed locus.
+this 4-fold branching categorically only on that recognised
+representation category. Here ``Drinfeld centre'' means the braided
+categorical centre of a monoidal category of representations; it is
+not the chiral derived centre
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\mathbf H_{\Delta_5})$ and it is not
+the Feigin--Frenkel critical centre. Under the Vol~III hypotheses, the
+global Arthur packet size $4$ matches the Frobenius--Perron dimension
+of the four simple objects in the $\mu_8$-gerbe-twisted Tannakian
+fibre at the Fricke-fixed locus.
 \end{remark}
 
 \section{$S_\psi$ enlargement on the Maass
 spin cover and Hecke extension to $p \le 113$}
 \label{sec:dl-supplement-ii}
 
-The archimedean Langlands data are now in hand for both
+The archimedean Langlands data used below are
 $\Delta_{10}$ (Schmidt $(17/2, 15/2)$, packet size $4$) and
 $\Delta_5$ (Schmidt $(7/2, 5/2)\otimes\mathrm{sgn}_\R$, archimedean
 discrete-series packet size $4$), closing the global $\Delta_{10}$
@@ -2522,7 +2640,7 @@ $\chi_{\mathrm{spin}}(p) = \bigl(\frac{p}{8}\bigr) \in \{\pm 1\}$
 (Vol~III Remark~\ref{rem:gl-W18-siegel-fourier-extension}).
 The local Arthur--Hecke computation records the added-prime table and
 the weight-$16$ Fourier coefficients, with first-principles agreement
-at all $8$ primes via the direct convolution
+at all $8$ primes via the q-series product identity
 $f_{16} = E_4\cdot\Delta$. The sixteen further primes
 $\{127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181,
 191, 193, 197, 199\}$ are tabulated in Vol~I
@@ -2540,18 +2658,18 @@ Cor.\ 16.2; Weissauer $2009$ Cor.\ 5.2; Euler $1748$
 \emph{Introductio} Ch.~XVI; Chenevier $2014$ \S1.2.
 \end{remark}
 
-\begin{remark}[Cross-volume bridge: $|\Psi_{\Delta_5}| = 16$ lifts
-to Vol~III's spin-refined self-duality]
+\begin{remark}[$|\Psi_{\Delta_5}| = 16$ and the spin-refined Fricke grading]
 \label{rem:dl-cross-volume}
-\index{cross-volume!spin-refined Langlands}
+\index{spin-refined Langlands!Fricke grading}
 The $16$-fold global packet of
 Remark~\ref{rem:dl-global-packet-delta5} factorises as
 $(\text{holo/antiholo}) \times (\text{spin}\pm) \times
 (\text{archimedean discrete-series 4-tuple})$, with each factor
 $\mathbb{Z}/2$-graded and the four pairings determining which
 constituents pair to $+\varepsilon_\psi$ and survive cuspidally.
-The corresponding geometric Langlands picture, Vol~III
-Remark~\ref{rem:gl-W18-spin-refined-self-duality}, splits the
+The Vol~III spin-refined self-duality datum
+\textup{(}Remark~\ref{rem:gl-W18-spin-refined-self-duality}\textup{)}
+splits the
 Arinkin--Gaitsgory equivalence across the $\mathbb{Z}/2$-spin
 grading on both sides, with Fricke $w_8$ swapping the $\pm$-blocks.
 The Vol~III
@@ -2569,8 +2687,7 @@ at $|S_\psi| = 4$ evaluates on $\pi_{\Delta_5}$ to
 $\tfrac{1}{4}(1 + 1 + 1 + 1) = 1$ under the choice where all four
 pairings are $+1$, which is precisely the holomorphic-$\otimes$-spin-$+$
 distinguished constituent. Primary: Arthur $2013$ AMS Coll.~$61$
-Thm.~$1.5.2$; Arinkin--Gaitsgory $2015$ Conj.~$1.1.5$;
-cross-reference Vol~III
+Thm.~$1.5.2$; Arinkin--Gaitsgory $2015$ Conj.~$1.1.5$; Vol~III
 Remark~\ref{rem:gl-W18-spin-refined-self-duality}.
 \end{remark}
 
@@ -2638,8 +2755,7 @@ Weissauer~\cite{Weissauer2009GSp4} Lem.\ 3.2 (centrality of
 $\zeta_{\mathrm{spin}}$ in $\widetilde{\mathrm{SO}_5}$);
 Arthur~\cite{Arthur2013Endoscopic} Thm.\ 2.2.1 (centraliser
 computation compatibility with $A$-parameter decomposition).
-Cross-ref Vol~III
-Remark~\ref{rem:dc-kazhdan-ZZ2x2-incarnation}.
+Vol~III Remark~\ref{rem:dc-kazhdan-ZZ2x2-incarnation}.
 \end{remark}
 
 \begin{remark}[Archimedean sign: $\varepsilon_\infty = -1$ from the discrete-series signature]
@@ -2816,35 +2932,42 @@ anchoring).
 \section{The classical limit $\hbar \to 0$: the Gritsenko--Nikulin chiral algebroid}
 \label{sec:dl-kazhdan-classical}
 
-At the Lusztig-specialisation point $\hbar^2 = -1/8$, the
-super-Etingof--Kazhdan quantisation $\mathbf H_{\Delta_5}$
-assembles the Rep-side of the Langlands packet for $\Delta_5$. The
-Kazhdan axis closes from the opposite direction by letting
-$\hbar\to 0$ and verifying that the classical limit \emph{is} the
+At the Lusztig-specialisation point $\hbar^2 = -1/8$, a completed
+Hall/CoHA candidate for $\mathbf H_{\Delta_5}$ is compared with the
+Rep-side of the Langlands packet for $\Delta_5$ only after the
+source-recognition gates. The Kazhdan axis supplies the opposite
+test: as $\hbar\to 0$ the candidate must limit to the
 Gritsenko--Nikulin 1998 classical chiral Lie bialgebra
 $(\frakg_{\Delta_5}, \delta_{\mathrm{GN}})$, with Poisson bracket
-given by the classical $r$-matrix obtained from the Drinfeld
-factorisation. This coherence check pins the Langlands-packet
+given by the classical $r$-matrix obtained from a Hall--Drinfeld
+double factorisation datum. This is not a Drinfeld Yangian structure
+on the BKM algebra $\frakg_{\Delta_5}$: the rational Drinfeld factor
+used below is a finite-type local chart in the recognition package,
+while the K3 object itself remains the Hall--Drinfeld double of a
+CoHA source. This coherence check pins the Langlands-packet
 constructions to the Gritsenko--Nikulin semi-classical data, and
 hence forces the sign-character algebra
 $\varepsilon_\infty\cdot\varepsilon_2 = +1$ of
 Remark~\ref{rem:dl-kazhdan-global-consistency} to survive the
 classical-limit degeneration. The argument runs through five
-cycles (C1--C5) below.
+comparison tests below.
 
 \begin{definition}[Classical Siegel dynamical $r$-matrix]
 \label{def:dl-classical-r}
 \index{classical $r$-matrix!Siegel dynamical}
-At the Drinfeld factorisation
+Assume the completed Hall--Drinfeld recognition package supplies a
+paramodular quantum $R$-matrix with factorisation
 \[
  R_{\mathrm{Sieg,dyn}}(u, Z)
  \;=\;
- R^{\mathrm{rat}}_{\mathrm{Yang}}(u)
+ R^{\mathrm{rat}}_{\mathrm{ft}}(u)
  \cdot
  \theta^{\mathrm{K3}}(u, Z)
 \]
-of the paramodular quantum $R$-matrix, the \emph{classical
-Siegel dynamical $r$-matrix} is
+where $R^{\mathrm{rat}}_{\mathrm{ft}}$ is the finite-type rational
+Drinfeld chart and not a Yangian attached to
+$\frakg_{\Delta_5}$. The \emph{classical Siegel dynamical
+$r$-matrix} is
 \begin{equation}
 \label{eq:dl-classical-r}
  r(u, Z)
@@ -2874,11 +2997,12 @@ $Z = (\tau_1, z, \tau_2)\in\mathbb H_2$ (Igusa 1962
 \emph{Duke Math.\ J.}~94 \S3 Thm.~3.2).
 \end{definition}
 
-\begin{theorem}[C1 -- existence and pole-order structure]
+\begin{theorem}[Hall--Drinfeld semi-classical pole structure]
 \label{thm:dl-C1-r-existence}
-\ClaimStatusProvedHere
+\ClaimStatusConditional
 The semi-classical $r$-matrix $r(u, Z)$ of
-Definition~\ref{def:dl-classical-r} is well-defined, takes
+Definition~\ref{def:dl-classical-r}, under the Hall--Drinfeld
+factorisation hypothesis stated there, is well-defined, takes
 values in $\frakg_{\Delta_5}\widehat\otimes\frakg_{\Delta_5}$, has
 simple pole at $u = 0$ with residue $\Omega_{\mathrm{Mukai}}$, and
 has logarithmic dependence on $Z$ through
@@ -2888,11 +3012,18 @@ imaginary-root corrections.
 \end{theorem}
 
 \begin{proof}
-The rational Yangian factor $R^{\mathrm{rat}}_{\mathrm{Yang}}(u)$ of
-Drinfeld's rational Yangian
-\cite[Thm.~1]{Drinfeld1985Yangians} has textbook $\hbar$-expansion
-$R^{\mathrm{rat}}_{\mathrm{Yang}}(u) = 1 + \hbar\,\Omega/u + O(\hbar^2)$
+The finite-type rational chart $R^{\mathrm{rat}}_{\mathrm{ft}}(u)$
+has the same local expansion as the rational $R$-matrix of
+Drinfeld's Yangian for a finite-dimensional simple Lie algebra:
+\[
+R^{\mathrm{rat}}_{\mathrm{ft}}(u)
+=1+\hbar\,\Omega/u+O(\hbar^2).
+\]
+This is the finite-type Drinfeld expansion
+\cite[Thm.~1]{Drinfeld1985Yangians}
 (Chari--Pressley~\cite{ChariPressley1994Guide} \S12.1 Prop.~12.1.5).
+It imports only the local rational factor; it does not make
+$\frakg_{\Delta_5}$ into a Drinfeld Yangian.
 The dynamical Siegel factor $\theta^{\mathrm{K3}}(u, Z)$, defined by
 $\log\theta^{\mathrm{K3}}(u, Z) = \hbar\cdot
 F^{\mathrm{Sieg}}(u, Z)\cdot\Omega_{\mathrm{K3}} + O(\hbar^2)$
@@ -2910,31 +3041,34 @@ Igusa $\Phi_{10}^{\mathrm{un}}$ (Gritsenko 1994 \emph{St.\ Petersburg Math.\ J.}
 Thm.~1.1).
 \end{proof}
 
-\begin{theorem}[C2 -- classical Yang--Baxter equation]
+\begin{theorem}[Dynamical Yang--Baxter equation in the Hall--Drinfeld chart]
 \label{thm:dl-C2-CYBE}
-\ClaimStatusProvedHere
+\ClaimStatusConditional
 \index{classical Yang--Baxter equation!Siegel dynamical}
-The Siegel dynamical $r$-matrix $r(u, Z)$ satisfies the classical
-Yang--Baxter equation in dynamical form:
+Under the same Hall--Drinfeld factorisation hypothesis, the Siegel
+dynamical $r$-matrix $r(u, Z)$ satisfies the classical dynamical
+Yang--Baxter equation in the completed chart:
 \begin{equation}
 \label{eq:dl-CYBE}
+\operatorname{CYB}(r)+\operatorname{Dyn}_Z(r)=0,
+\qquad
+\operatorname{CYB}(r):=
  [r_{12}(u_1, u_2, Z), r_{13}(u_1, u_3, Z)]
  + [r_{12}(u_1, u_2, Z), r_{23}(u_2, u_3, Z)]
- + [r_{13}(u_1, u_3, Z), r_{23}(u_2, u_3, Z)]
- \;=\;
- \hbar\cdot\partial_Z\text{-corrections}
- \;+\;
- O(\hbar^2).
+ + [r_{13}(u_1, u_3, Z), r_{23}(u_2, u_3, Z)] .
 \end{equation}
-The $\hbar^0$ term vanishes; the $\hbar^1$ correction is the
-dynamical-CYBE closure term governed by $\partial_Z\log\Phi_{10}^{\mathrm{un}}$
-(the Siegel--Borcherds associator).
+Here $\operatorname{Dyn}_Z(r)$ denotes the Felder--Etingof--Varchenko
+derivative term in the Siegel period variables. The ordinary
+$\operatorname{CYB}$ term of the finite-type rational chart vanishes;
+the derivative term is governed by
+$\partial_Z\log\Phi_{10}^{\mathrm{un}}$ and is part of the assumed
+completed dynamical factorisation.
 \end{theorem}
 
 \begin{proof}
-The identity decomposes on the two Drinfeld factors. The rational
-Yangian factor gives, at $\hbar^0$-order, the infinitesimal braid
-relation
+The identity decomposes on the finite-type rational chart and the
+Siegel dynamical factor. The rational chart gives the infinitesimal
+braid relation
 $[\Omega_{12}, \Omega_{13}] + [\Omega_{12}, \Omega_{23}]
 + [\Omega_{13}, \Omega_{23}] = 0$, which holds because
 $\Omega_{\mathrm{Mukai}}$ is a Casimir for the Mukai pairing
@@ -2944,17 +3078,17 @@ derives CYBE from the Casimir property).
 The Siegel dynamical factor
 $F^{\mathrm{Sieg}}(u, Z)\cdot\Omega_{\mathrm{K3}}$ contributes the
 dynamical correction terms $\partial_Z r$, whose closure at
-$\hbar^0$ follows from the Felder dynamical-Yang--Baxter formalism
+the classical level follows from the Felder dynamical-Yang--Baxter formalism
 (Felder 1995 \emph{ICM Z\"urich Proc.}~\S3 Thm.~3.1;
 Etingof--Varchenko 1998 \emph{Comm.\ Math.\ Phys.}~192 Prop.~2.1,
-dynamical-CYBE for Felder-type $r$-matrices on $\mathbb H_2$). At
-$\hbar^0$ level the CYBE is closed (no corrections); at $\hbar^1$
-level the associator delivers the dynamical closure data.
+dynamical-CYBE for Felder-type $r$-matrices on $\mathbb H_2$). This
+proves the chart-level dynamical CYBE; a global uncompleted BKM
+quasitriangular structure is not asserted.
 \end{proof}
 
-\begin{theorem}[C3 -- Lie bialgebra structure on $\frakg_{\Delta_5}$]
+\begin{theorem}[Dynamical Lie-bialgebra recognition on $\frakg_{\Delta_5}$]
 \label{thm:dl-C3-lie-bialgebra}
-\ClaimStatusProvedHere
+\ClaimStatusConditional
 \index{Lie bialgebra!Gritsenko--Nikulin}
 The pair $(\frakg_{\Delta_5}, \delta_{\mathrm{GN}})$ with cocycle
 $\delta_{\mathrm{GN}}\colon\frakg_{\Delta_5}\to\frakg_{\Delta_5}\otimes
@@ -2965,29 +3099,40 @@ $\delta_{\mathrm{GN}}\colon\frakg_{\Delta_5}\to\frakg_{\Delta_5}\otimes
  \;=\;
  [r(u, Z), x\otimes 1 + 1\otimes x]
 \end{equation}
-is a \emph{Lie bialgebra} in the super-graded category. The
+is a \emph{dynamical} Lie-bialgebra datum over
+$\mathbb H_2\setminus\bigcup H_n$, equivalently a Lie bialgebroid
+over the Siegel period base. After a flat dynamical trivialisation
+or a fixed Gritsenko--Nikulin chart is supplied, its fibre is the
+classical Gritsenko--Nikulin Lie bialgebra. The
 compatibility between the BKM bracket on $\frakg_{\Delta_5}$ and the
 cobracket $\delta_{\mathrm{GN}}$ is the cocycle condition
 $\delta([x, y]) = [\delta(x), y\otimes 1 + 1\otimes y]
-+ [x\otimes 1 + 1\otimes x, \delta(y)]$, satisfied because $r(u, Z)$
-obeys CYBE by Theorem~\ref{thm:dl-C2-CYBE}.
++ [x\otimes 1 + 1\otimes x, \delta(y)]$, satisfied in the completed
+recognition chart because $r(u, Z)$ obeys the dynamical CYBE of
+Theorem~\ref{thm:dl-C2-CYBE}. The unconditional primary-literature
+object is the Gritsenko--Nikulin classical Lie bialgebra; identifying
+the completed Hall/CoHA candidate with it is the recognition datum.
 \end{theorem}
 
 \begin{proof}
-The map $\delta_{\mathrm{GN}}$ is the standard construction from a
-classical $r$-matrix: given $r\in\frakg\otimes\frakg$ satisfying CYBE
-with $r + r^{21}$ the Casimir of a non-degenerate invariant form, the
-formula $\delta(x) = [r, x\otimes 1 + 1\otimes x]$ defines a Lie
-bialgebra cobracket (Drinfeld 1983 \S2 Thm.~2, quasi-classical limit;
+For an ordinary classical $r$-matrix, Drinfeld's construction says:
+given $r\in\frakg\otimes\frakg$ satisfying CYBE with $r + r^{21}$ the
+Casimir of a non-degenerate invariant form, the formula
+$\delta(x) = [r, x\otimes 1 + 1\otimes x]$ defines a Lie bialgebra
+cobracket (Drinfeld 1983 \S2 Thm.~2, quasi-classical limit;
 Etingof--Schiffmann~\cite{EtingofSchiffmann1998Lectures} \S2.2
-Thm.~2.2.1, Lie bialgebra from $r$-matrix). For $\frakg_{\Delta_5}$,
+Thm.~2.2.1, Lie bialgebra from $r$-matrix). The present $r(u,Z)$ is
+dynamical, so the derivative term in
+Theorem~\ref{thm:dl-C2-CYBE} upgrades this construction to the
+Felder--Etingof--Varchenko dynamical Lie-bialgebra/bialgebroid
+setting over the Siegel base. For $\frakg_{\Delta_5}$,
 the BKM-superalgebra structure of Borcherds 1992 Thm.~3.2 gives the
 Lie bracket, and the Mukai + imaginary-root Casimir
 $\Omega_{\mathrm{Mukai}} + \Omega_{\mathrm{K3}}$ is symmetric and
 invariant under the real-root Weyl group
 $W_{\mathrm{para}} = W(A_2^{(-1)})$ (Gritsenko--Nikulin 1998 \S3
-Thm.~3.2). The cocycle identity reduces to CYBE, which holds by
-Theorem~\ref{thm:dl-C2-CYBE}.
+Thm.~3.2). In the completed chart, the cocycle identity reduces to
+the dynamical CYBE of Theorem~\ref{thm:dl-C2-CYBE}.
 
 \emph{Four derivations.}
 (i) Drinfeld 1983 Thm.~2 direct construction;
@@ -2997,17 +3142,23 @@ Theorem~\ref{thm:dl-C2-CYBE}.
  \eqref{eq:dl-lie-cobracket} pointwise;
 (iv) Chari--Pressley 1994 \S2.1 Prop.~2.1.3 functoriality of the
  $r\mapsto\delta$ construction.
+The conditionality is exactly the passage from the primary
+Gritsenko--Nikulin Lie bialgebra to the completed Hall--Drinfeld
+recognition chart; no Drinfeld Yangian presentation is used.
 \end{proof}
 
-\begin{theorem}[Kazhdan classical-limit theorem]
+\begin{theorem}[Kazhdan classical-limit recognition criterion]
 \label{thm:dl-kazhdan-classical-limit}
-\ClaimStatusProvedHere
+\ClaimStatusConditional
 \index{Kazhdan classical limit!$\mathbf H_{\Delta_5}$|textbf}
 \index{Gritsenko--Nikulin!classical Lie bialgebra|textbf}
-The $\hbar\to 0$ classical limit of the super-Etingof--Kazhdan
-quantisation $\mathbf H_{\Delta_5}$ is the Gritsenko--Nikulin 1998
-classical Lie bialgebra $(\frakg_{\Delta_5}, \delta_{\mathrm{GN}})$
-with semi-classical $r$-matrix
+Let a completed Hall/CoHA candidate for $\mathbf H_{\Delta_5}$ be given
+with finite source, Mukai/Siegel pairing, PBW/no-extra-relations,
+radical quotient, parity fixture, completion, inverse-limit, and
+Heegner comparison data. Its $\hbar\to 0$ classical limit is recognized
+as the Gritsenko--Nikulin 1998 classical Lie bialgebra
+$(\frakg_{\Delta_5}, \delta_{\mathrm{GN}})$ exactly when the
+semi-classical $r$-matrix is
 \begin{equation}
 \label{eq:dl-classical-limit}
  r(u, Z)
@@ -3018,23 +3169,23 @@ with semi-classical $r$-matrix
  \;+\;
  O(u^{-2}).
 \end{equation}
-Every super-Lie bialgebra has a unique super-quantisation up to
-gauge; $\mathbf H_{\Delta_5}$ is this unique super-quantisation
-of $(\frakg_{\Delta_5}, \delta_{\mathrm{GN}})$ at the Lusztig
-specialisation $\hbar^2 = -1/8$.
+Etingof--Kazhdan quantisation supplies the completed quasi-Hopf
+framework; identifying the output with $\mathbf H_{\Delta_5}$ is the
+recognition problem above, not a uniqueness theorem from an intrinsic
+$H^2$ line.
 \end{theorem}
 
 \begin{proof}
-\emph{Step 1 (classical $r$-matrix is well-defined).}
+\emph{Classical $r$-matrix.}
 Theorem~\ref{thm:dl-C1-r-existence}.
 
-\emph{Step 2 (CYBE).}
+\emph{Classical Yang--Baxter equation.}
 Theorem~\ref{thm:dl-C2-CYBE}.
 
-\emph{Step 3 (Lie bialgebra).}
+\emph{Lie bialgebra.}
 Theorem~\ref{thm:dl-C3-lie-bialgebra}.
 
-\emph{Step 4 (Gritsenko--Nikulin match).}
+\emph{Gritsenko--Nikulin match.}
 Gritsenko--Nikulin 1998 \emph{Duke Math.\ J.}~94 \S5 Thm.~5.3 computes
 the classical limit of the chiral algebra attached to the Igusa cusp
 form $\Delta_5=(\Phi_{10}^{\mathrm{un}})^{1/2}$. Their classical Lie bialgebra has
@@ -3048,7 +3199,7 @@ dynamical factor gives the imaginary-root Poisson cobracket
 (Gritsenko--Nikulin 1998 \S5 formula~(5.4) matches pointwise on
 generators).
 
-\emph{Step 5 (uniqueness of quantisation).}
+\emph{Quantisation gate.}
 Etingof--Kazhdan 1996--2000 Parts I--V established that every Lie
 bialgebra $(\frakg, \delta)$ admits a quasi-triangular quantisation
 $U_\hbar(\frakg)$, unique up to gauge equivalence
@@ -3057,13 +3208,11 @@ Etingof--Kazhdan 1998 Part~II Thm.~2.1, uniqueness up to gauge;
 Etingof--Kazhdan 2000 Part~V, super-graded extension).
 Kontsevich 2003 \emph{Lett.\ Math.\ Phys.}~66 gives the formality
 argument guaranteeing gauge-equivalence invariance under Kontsevich
-star-product formality. The cohomological classification
-$H^2(\frakg_{\Delta_5})^{\Z/2,\,K(1)}\cong\bC\cdot\Delta_5$
-(Remark~\ref{rem:defq-1}) shows the quantisation moduli space for
-$(\frakg_{\Delta_5}, \delta_{\mathrm{GN}})$ is one-dimensional; the
-Lusztig root-of-unity specialisation $\hbar^2 = -1/8$ distinguishes
-the $\mathbf H_{\Delta_5}$ chiral-bialgebra basepoint within this
-moduli line.
+star-product formality. This proves the quantisation gate for a
+completed source; it does not produce a one-dimensional chiral
+quantisation-moduli space. The $\Delta_5$ line is the Heegner
+comparison target, and the Lusztig root-of-unity specialisation
+$\hbar^2=-1/8$ is a source-recognition boundary condition.
 \end{proof}
 
 \begin{remark}[Gritsenko--Nikulin semi-classical consistency]
@@ -3091,7 +3240,7 @@ cobracket: expanding
 $\partial_Z\log\Phi_{10}^{\mathrm{un}}(Z)\cdot\Omega_{\mathrm{K3}}$ on the
 imaginary-root basis gives
 $\Omega_{\mathrm{K3}} = \sum_\beta\mathrm{mult}(\beta)\cdot
-x_\beta\otimes x_\beta^\vee$, and Koszul self-duality
+x_\beta\otimes x_\beta^\vee$, and Mukai-pairing duality
 $x_\beta^\vee = x_{-\beta}$ identifies the cobracket
 $\delta_{\mathrm{GN}}(x) = [r, x\otimes 1 + 1\otimes x]$ with the sum
 in \eqref{eq:dl-gn-cobracket}. Primary:
@@ -3116,23 +3265,23 @@ $\varepsilon_\infty\cdot\varepsilon_2 = +1$ of
 Remark~\ref{rem:dl-kazhdan-global-consistency} is a
 \emph{classical} statement about the archimedean and $2$-adic sign
 characters of the Langlands parameter $\phi_{\Delta_5}$, independent
-of the quantisation parameter $\hbar$; it therefore survives the
-$\hbar\to 0$ limit and fixes the Gritsenko--Nikulin cobracket gauge
-class. Every Langlands sign pins to a semi-classical cocycle choice, via the Lie-bialgebra-to-Hopf-algebra
+of the quantisation parameter $\hbar$; it therefore supplies a
+necessary gauge constraint on the Gritsenko--Nikulin cobracket in the
+$\hbar\to 0$ recognition problem. The passage from this sign constraint
+to a semi-classical cocycle choice uses the Lie-bialgebra-to-Hopf-algebra
 correspondence of Drinfeld 1983 and the Etingof--Kazhdan 1996--2000
-uniqueness.
+quantisation mechanism, and remains part of the completed-source
+recognition data.
 \end{remark}
 
 \begin{remark}[The $\hbar \to 0$ Langlands axis]
 \label{rem:dl-kazhdan-synthesis}
 The Langlands analysis at $\hbar^2 = -1/8$ and the
-classical-limit analysis at $\hbar \to 0$ are the two endpoints of
-the unique Etingof--Kazhdan one-parameter quantisation line for
-$(\frakg_{\Delta_5}, \delta_{\mathrm{GN}})$. The one-dimensionality
-$H^2(\frakg_{\Delta_5})^{\Z/2,\,K(1)}\cong\bC\cdot\Delta_5$
-(Remark~\ref{rem:defq-1}) is the Lie-bialgebra-cohomological
-shadow of the Gritsenko--Nikulin 1998 Thm.~5.3 classical-limit
-structure. The endpoints are related by:
+classical-limit analysis at $\hbar \to 0$ are two recognition tests for
+a completed source, not endpoints of a proved one-parameter moduli line.
+The Heegner line $\mathbb C\cdot[\operatorname{div}(\Delta_5)]$ is the
+automorphic comparison target for the Gritsenko--Nikulin 1998 Thm.~5.3
+classical-limit structure. The tests are:
 \begin{itemize}
  \item \emph{Classical} ($\hbar\to 0$): Lie bialgebra
  $(\frakg_{\Delta_5}, \delta_{\mathrm{GN}})$; semi-classical
@@ -3140,16 +3289,15 @@ structure. The endpoints are related by:
  \partial_Z\log\Phi_{10}^{\mathrm{un}}\cdot\Omega_{\mathrm{K3}} + O(u^{-2})$.
  \item \emph{Lusztig} ($\hbar^2 = -1/8$): chiral bialgebra
  $\mathbf H_{\Delta_5}$; quantum $R$-matrix
- $R_{\mathrm{Sieg,dyn}} = R^{\mathrm{rat}}_{\mathrm{Yang}}\cdot\theta^{\mathrm{K3}}$
+ $R_{\mathrm{Sieg,dyn}} = R^{\mathrm{rat}}_{\mathrm{ft}}\cdot\theta^{\mathrm{K3}}$
  with small Lusztig form
  $\mathfrak u_{\zeta_8}(\widehat{\mathfrak m}_{\Delta_5})$.
 \end{itemize}
-Etingof--Kazhdan 1996--2000 Parts I--V connect these endpoints by
-the unique gauge-equivalence class of quantisations. The
-Kontsevich-formality theorem (Kontsevich 2003) ensures the
-quantum-classical transition is the identity on cohomology, hence
-preserves the Langlands data of the packet across the entire
-$\hbar$-line.
+Etingof--Kazhdan 1996--2000 Parts I--V provide the completed
+quantisation mechanism. The passage from this mechanism to the named
+K3 chiral bialgebra still requires the finite Hall/CoHA source,
+pairing, PBW/no-extra-relations, radical, parity, inverse-limit, and
+Heegner comparison gates.
 \end{remark}
 
 \section{Chenevier determinant for $\psi_{\Delta_{10}}$ on the
@@ -3170,8 +3318,8 @@ $\Delta_{10}$-isotypic component of $H^3_{\mathrm{et}}$ of the Siegel
 threefold. Construction of the representation \emph{as a representation}
 (Taylor 1991 \emph{Duke Math.\ J.}\ 63; Weissauer 2005 LNM 1868; Laumon
 2005 \emph{Publ.\ IHES}\ 102) passes through a Chenevier determinant
-argument (the structural refinement of the older Taylor--Wiles
-pseudo-character framework due to Chenevier 2014 arXiv:1301.0635, \S1.2;
+argument (the Chenevier 2014 determinant formalism,
+arXiv:1301.0635, \S1.2;
 see Remark~\ref{rem:dl-chenevier-determinant-vs-pseudocharacter}):
 one first produces a $4$-dimensional Chenevier determinant
 on the abstract paramodular Hecke algebra whose linear component at
@@ -3181,15 +3329,15 @@ Saito--Kurokawa factorisation of the spinor \(L\)-factor, and only
 then extends it to a genuine Galois representation. The determinant
 on the Hecke side is constructed below.
 
-\begin{remark}[Chenevier determinant supersedes Taylor--Wiles pseudo-character]
+\begin{remark}[Taylor--Wiles pseudo-character and Chenevier determinant]
 \label{rem:dl-chenevier-determinant-vs-pseudocharacter}
-\index{Chenevier determinant!retracts Taylor--Wiles pseudo-character}
-Chenevier 2014 (arXiv:1301.0635, \S1.2, Prop.~1.9) refined the Taylor
+\index{Chenevier determinant!Taylor--Wiles pseudo-character comparison}
+Chenevier 2014 (arXiv:1301.0635, \S1.2, Prop.~1.9) upgrades the Taylor
 1991 \emph{Duke}~63 / Wiles 1988 pseudo-character formalism into the
-structurally sharper notion of a \emph{determinant}
+polynomial-law notion of a \emph{determinant}
 $D^{\mathrm{Chen}}\colon R\to A$, a multiplicative $d$-dimensional
 polynomial trace functor satisfying Cayley--Hamilton of degree $d$.
-Where the older Taylor pseudo-character axiomatises the first $d$
+Where the Taylor pseudo-character axiomatises the first $d$
 symmetric functions $(\Sps_1,\dots,\Sps_d)$ with the
 Amitsur--Levitzki truncation $\Sps_{d+1}\circ\mathrm{Alt}_{d+1}\equiv 0$,
 the Chenevier determinant axiomatises the single polynomial map
@@ -3238,7 +3386,7 @@ $\Sps_1\colon R\to A$ plays the role of the trace of a $d$-dimensional
 representation; $\Sps_2,\dots,\Sps_d$ are the higher symmetric
 functions $\tr(\Lambda^k\rho)$; $\Sps_{d+1}$ and above vanish by the
 Cayley--Hamilton identity for $d\times d$ matrices, recovering the
-older Taylor--Wiles pseudo-character axiom
+Taylor--Wiles pseudo-character axiom
 $\Sps_{d+1}\circ\mathrm{Alt}_{d+1}\equiv 0$ as a consequence of
 Cayley--Hamilton rather than as a primitive axiom.
 \end{definition}
@@ -3254,7 +3402,7 @@ algebra via symmetric polarisation, and Chenevier 2014 Thm.~2.12
 shows the two frameworks coincide on reduced $A$-algebras. The
 Chenevier axiomatisation is stronger on non-reduced rings
 (characteristic~$p$, Deligne--Serre reduction mod~$\ell$), where the
-polynomial-law formalism carries information that the older
+polynomial-law formalism carries information that the Taylor
 symmetric-function-tuple axiomatisation loses under nilpotent
 extensions. For the paramodular Hecke target $\Tpar_1$
 (integral domain, reduced, commutative), the two formalisms agree
@@ -3438,14 +3586,13 @@ equations~\eqref{eq:dl-Sps1-identity}--\eqref{eq:dl-Sps4-identity}
 and the Chenevier determinant $D^{\mathrm{Chen}}$ carry the same
 information on the nose; on non-reduced rings (characteristic~$p$,
 Deligne--Serre reduction mod $\ell^n$, nilpotent thickenings) the
-Chenevier polynomial-law formalism is strictly stronger. The
-canonical terminology and symbol are therefore
-\emph{Chenevier determinant} and $D^{\mathrm{Chen}}$; occurrences of
-the shorthand ``pseudo-character $S^{\mathrm{ps}}$'' in this chapter
-are to be read as this Chenevier determinant.
+Chenevier polynomial-law formalism is strictly stronger. The canonical
+object is the Chenevier determinant $D^{\mathrm{Chen}}$; the symbols
+$\Sps_i$ denote its polarised trace functions, not an independent
+Taylor pseudo-character datum.
 \end{remark}
 
-\begin{remark}[Source algebra: the conflation neutralised]
+\begin{remark}[Source algebra for the Chenevier determinant]
 \label{rem:dl-source-algebra-scope}
 \index{Chenevier determinant!source algebra!scope}
 \index{type-confusion!chiral bialgebra vs Hecke algebra}
@@ -3460,24 +3607,34 @@ Galois sides); chiral bialgebras admit \emph{chiral traces} in the
 sense of Beilinson--Drinfeld 2004 Ch.~4, but the latter take values in
 chiral modules and satisfy a factorisation-compatible identity, not the
 multiplicativity / Cayley--Hamilton axioms of
-Definition~\ref{def:dl-chenevier-pseudocharacter}. The bridge
-between the two sides is the Satake functor: at each prime $p\nmid\ell$,
-the spherical Hecke algebra $\mathcal{H}_p = \mathcal{C}_c^\infty(\GSp_4(\mathbb{Q}_p)\sslash K(1)_p)$
-maps to a central subalgebra of $\mathbf{H}_{\Delta_5}$ via the
-Frenkel--Gaitsgory--Gaiotto chiralisation of
-Vol~III Remark~\ref{rem:dc-H-delta5-center}, and the Chenevier
-linear component $\Sps_1$ pulls back to the Casimir spectrum of
-$\mathbf{H}_{\Delta_5}$ via the Satake--Casimir dictionary
-$\mathrm{Cas}_p(\mathbf{H}_{\Delta_5}) = (a_p)^2/p^{15} - 2$
-(the degree-two Satake polynomial for the SK packet, normalised by
-\(\det\phi_{\Delta_{10}}=\omega^{17}\)). Stated without the Satake
-intermediary, the identification $\Sps\leftrightarrow
+Definition~\ref{def:dl-chenevier-pseudocharacter}. The typed carrier
+between the two sides is not a determinant on the chiral algebra but a
+conditional Satake--chiralisation map
+\[
+ \mathsf{Sat}^{\mathrm{ch}}_p\colon
+ \mathcal{H}^{\mathrm{sph}}_p
+ =
+ \mathcal{C}_c^\infty\bigl(\GSp_4(\mathbb{Q}_p)\sslash K(1)_p\bigr)
+ \longrightarrow
+ H^0 Z^{\mathrm{der}}_{\mathrm{ch}}(\mathbf{H}_{\Delta_5})
+\]
+in the completed factorisation category of the K3 recognition target.
+After this map is supplied, the Chenevier linear component $\Sps_1$
+can be compared with the Casimir spectrum of $\mathbf{H}_{\Delta_5}$:
+\[
+ \mathrm{Cas}_p(\mathbf{H}_{\Delta_5})
+ =
+ \frac{(a_p)^2}{p^{15}} - 2,
+\]
+the degree-two Satake polynomial for the SK packet, normalised by
+\(\det\phi_{\Delta_{10}}=\omega^{16}\). Stated without
+\(\mathsf{Sat}^{\mathrm{ch}}_p\), the identification $\Sps\leftrightarrow
 \mathrm{tr}_{\mathbf{H}_{\Delta_5}}$ is a type-confusion between a
 Chenevier determinant on a commutative Hecke algebra and a chiral
 trace on a non-commutative chiral bialgebra. The construction of
 Theorem~\ref{thm:dl-pseudocharacter-delta10} is entirely on the
 Hecke side; transport to $\mathbf{H}_{\Delta_5}$ passes through the
-Satake--Frenkel--Gaitsgory chiralisation, not through a direct
+completed Satake--chiralisation carrier, not through a direct
 Chenevier determinant construction on the chiral bialgebra itself.
 \end{remark}
 
@@ -3495,45 +3652,50 @@ inputs drawn from the first-principles $E_4\cdot\Delta$ convolution:
 At each of the 22 primes, $\Sps_1(T_p)=a_p+p^8+p^9$ lies in
 $\mathcal{O}_E$ and $|a_p|\le 2p^{15/2}$ (Deligne 1974 \emph{Publ.\
 IHES}\ 43; saturation peak $0.895$ at $p=37$). The determinant
-$\Sps_4(T_p,T_p,T_p,T_p)=p^{34}$ coincides with the Deligne--Katz
-normalisation of $\det\phi_{\Delta_{10}}=\omega^{17}$, $\omega$ the
-$\ell$-adic cyclotomic character, read off from the spinor-$L$-factor
-functional equation at weight-motif $17$. The extension to
+$\Sps_4(T_p,T_p,T_p,T_p)=p^{32}$ coincides with the Deligne--Katz
+normalisation of $\det\phi_{\Delta_{10}}=\omega^{16}$, $\omega$ the
+$\ell$-adic cyclotomic character, read off from the Satake-root product
+$p^8\cdot p^9\cdot p^{15}$. The extension to
 $p\le 113$ via \texttt{DELTA\_E6\_AP\_W18} extends the comparison
 locus to 30 primes, with maximum Deligne saturation $0.8575$ at $p=89$.
 \end{remark}
 
-\begin{remark}[Conjectural extension to the chiral derived centre]
+\begin{remark}[Chiral derived-centre extension as proof obligation]
 \label{rem:dl-pseudocharacter-chiral-extension}
 \index{Chenevier determinant!chiral extension!conjectural}
 \index{derived centre!chiral!Chenevier determinant}
-The chiralisation of Theorem~\ref{thm:dl-pseudocharacter-delta10}
-is CONJECTURAL: one expects a $4$-dimensional chiral Chenevier
-determinant
+The chiralisation of Theorem~\ref{thm:dl-pseudocharacter-delta10} is
+a proof obligation, not a consequence of the Hecke-side determinant.
+The desired object is a factorisation-compatible $4$-dimensional
+chiral Chenevier trace
 \[
  \Sps^{\mathrm{ch}}\colon Z^{\mathrm{der}}_{\mathrm{ch}}(\mathbf{H}_{\Delta_5})
  \longrightarrow\mathcal{O}_E\otimes\overline{\mathbb{Q}}_\ell,
 \]
-on the chiral derived centre of $\mathbf{H}_{\Delta_5}$, extending the
-Hecke-side Chenevier determinant of
-Theorem~\ref{thm:dl-pseudocharacter-delta10} across the
-Frenkel--Gaitsgory--Gaiotto Satake chiralisation. The chiral-side
-axioms would replace the Chenevier multiplicativity / Cayley--Hamilton
-axioms by factorisation-compatible analogues
+on the chiral derived centre
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\mathbf{H}_{\Delta_5})
+=\ChirHoch^\bullet(\mathbf{H}_{\Delta_5},\mathbf{H}_{\Delta_5})$.
+It extends the Hecke-side Chenevier determinant of
+Theorem~\ref{thm:dl-pseudocharacter-delta10} only after the
+completed Satake--chiralisation maps
+$\mathsf{Sat}^{\mathrm{ch}}_p$ supply compatible maps from the
+commutative spherical Hecke algebras into the chiral side. The
+chiral-side axioms must replace the Chenevier multiplicativity /
+Cayley--Hamilton axioms by factorisation-compatible analogues
 (Beilinson--Drinfeld 2004 Ch.~4;
 Francis--Gaitsgory 2012 \emph{Selecta}\ 18 Thm.~1.2.2), with the
 Cayley--Hamilton identity $\Sps^{\mathrm{ch}}_5\circ\mathrm{Alt}_5
 \equiv 0$ reading as a factorisation-coend vanishing on the Ran space.
-The obstruction is the type mismatch analysed in
+The obstruction is the type mismatch isolated in
 Remark~\ref{rem:dl-source-algebra-scope}: a chiral trace in the
-BD sense is not a Chenevier determinant on the nose, and the
-bridge requires the Frenkel--Gaitsgory chiralisation of the
-spherical Hecke algebra, which is only proved on the Koszul locus
+BD sense is not a Chenevier determinant, and the comparison requires
+the completed Satake--chiralisation carrier on the Koszul locus
 $\overline{\mathcal{A}_2}\setminus\bigcup_{n\text{ admissible}}H_n$
 (Vol~III Remark~\ref{rem:dc-H-delta5-center} and
-Beilinson--Bridgeland global dictionary). Upgrading $\Sps^{\mathrm{ch}}$
-from conjecture to theorem awaits the primary-literature resolution of
-that bridge.
+Beilinson--Bridgeland global dictionary). Until that map and the
+factorisation Cayley--Hamilton nullhomotopy are constructed, there is
+no equality between a Chenevier determinant and the chiral derived
+centre.
 \end{remark}
 
 \begin{theorem}[Chenevier determinant on the non-reduced deformation ring $R^{\mathrm{def}}_{\Delta_5}$]
@@ -3633,8 +3795,8 @@ Then:
  The reduction map
  $R^{\mathrm{def}}_{\Delta_5} \twoheadrightarrow R^{\mathrm{def},
  \mathrm{red}}_{\Delta_5}$ therefore strictly loses the extension of
- the Chenevier determinant; the older framework which processes the
- Hecke tuple on $\Tpar_1$ (reduced) alone is blind to the quadratic
+ the Chenevier determinant; the Taylor framework recording the Hecke
+ tuple on $\Tpar_1$ (reduced) alone is blind to the quadratic
  endoscopic obstruction.
 \end{enumerate}
 \end{theorem}
@@ -3868,7 +4030,7 @@ $d=4$ place us in the first setting on the reduced quotient $\Tpar_1$
 $R^{\mathrm{def}}_{\Delta_5}$: the determinant is necessary, not the
 pseudo-character. This is the precise sense in which the pseudo-character
 framing is insufficient on deformation rings around the SK-lift;
-the extra structure the older framing drops is the nilpotent endoscopic
+the extra structure omitted by that framing is the nilpotent endoscopic
 direction $x_1$ governed by the cup-square Liu--Xiao obstruction.
 \end{remark}
 
@@ -4002,33 +4164,44 @@ Conway--Sloane 1988 \emph{Sphere Packings, Lattices, and Groups} Ch.~4, Ch.~10;
 Zagier 1976 \emph{Inv.~Math.}~30.
 \end{remark}
 
-\section{Tempered Hecke action on the Mukai-graded pieces of $\mathbf{H}_{\Delta_5}$}
+\section{Conditional Hecke comparison for the Mukai-graded K3 target}
 \label{sec:dl-tempered-hecke}
 
 The Arthur decomposition, the Maass-spin character group
 $S_{\psi_{\Delta_5}} = (\mathbb{Z}/2)^2$, and the Etingof--Kazhdan
-classical-limit theorem together furnish the data needed to write the
-tempered Hecke action of $T_p$ on the Mukai-graded pieces of the K3-BKM
-chiral bialgebra $\mathbf{H}_{\Delta_5}$ by \emph{direct Chriss--Ginzburg
-convolution}, with no residual conjectural gap at the five cycle points.
+classical-limit theorem furnish the automorphic side of the Hecke
+comparison. They are not the construction of the compact K3
+Hall--Drinfeld double.
+Vol~III constructs the finite reduced compact Hall windows and their
+finite radical-quotient doubles; the Mukai-graded action below is a
+recognition criterion after the Heegner comparison,
+PBW/no-extra-relations, parity/root fixture, radical faithfulness,
+inverse-limit, and completed Borcherds recognition data have been
+supplied.
 
-\begin{theorem}[Mukai-graded Hecke eigenvalue formula]
+\begin{theorem}[Conditional Mukai-graded Hecke eigenvalue criterion]
 \label{thm:dl-kazhdan-C1-mukai-eigenvalue}
-\ClaimStatusProvedHere
+\ClaimStatusConditional
 \index{Hecke eigenvalue!Mukai grading!$\mathbf{H}_{\Delta_5}$|textbf}
-\index{Chriss--Ginzburg!direct convolution!$\mathbf{H}_{\Delta_5}$}
-Decompose
-$\mathbf{H}_{\Delta_5} = \bigoplus_{v \in \Lambda_{\mathrm{Muk}}}
-(\mathbf{H}_{\Delta_5})_v$
+\index{Hecke eigenvalue!trace-piece universality!$\mathbf{H}_{\Delta_5}$}
+Assume the finite Hall--Drinfeld recognition package has identified the
+completed K3 Hall--Drinfeld target with a Mukai-graded object
+\[
+\mathbf{H}_{\Delta_5}^{\mathrm{rec}}
+\;=\;
+\bigoplus_{v \in \Lambda_{\mathrm{Muk}}}
+(\mathbf{H}_{\Delta_5}^{\mathrm{rec}})_v
+\]
 by the Mukai lattice $\Lambda_{\mathrm{Muk}} = \mathrm{II}_{4, 20}$, with
 homogeneous pieces indexed by Mukai vectors $v = (r, c_1, c_2) \in
-H^0 \oplus H^2 \oplus H^4$ of an auxiliary K3 $S$. On each graded piece,
-the Andrianov--Ikeda spinor Hecke operator $T_p$ of the $\mathrm{GSp}(4)$
-Saito--Kurokawa lift
+H^0 \oplus H^2 \oplus H^4$ of an auxiliary K3 $S$, and assume the
+Hecke correspondence acts on this recognition target through the
+Maass-spin cover. Then on each graded piece the Andrianov--Ikeda spinor
+Hecke operator $T_p$ of the $\mathrm{GSp}(4)$ Saito--Kurokawa lift
 $\Delta_5^2=\Phi_{10}^{\mathrm{un}}=\Delta_{10}$ acts as the scalar
 \begin{equation}
 \label{eq:kazhdan-C1-eigenvalue}
- T_p \big|_{(\mathbf{H}_{\Delta_5})_v}
+ T_p \big|_{(\mathbf{H}_{\Delta_5}^{\mathrm{rec}})_v}
  \;=\;
  \lambda_p(v) \cdot \mathrm{id},
  \qquad
@@ -4042,19 +4215,42 @@ elliptic cusp form $\Delta_{E_6} = E_4 \cdot \Delta$ and
 $p^8 + p^9$ the Saito--Kurokawa CAP contribution of the two
 non-tempered Langlands constituents at parameters $p^{\pm 1/2}$
 centred at weight $9 = (16/2) + 1$. The Mukai independence is the
-Chriss--Ginzburg convolution statement that $T_p$ commutes with the
+recognition compatibility that $T_p$ commutes with the
 $\Lambda_{\mathrm{Muk}}$-grading: the spinor Hecke operator acts through
 the central character of the Saito--Kurokawa lift, and the Mukai grading
-sits in the maximal $\mathrm{Spin}(4, 20)$-torus, which commutes with
-the $\mathrm{Sp}(4)/\mathbb{Q}$-Hecke algebra (Satake 1963 decomposition
-theorem; Arthur 2013 \emph{Endoscopic}, Prop.~1.5.1).
+is required to sit in the maximal $\mathrm{Spin}(4, 20)$-torus compatible
+with the completed Hall target.
+
+If the recognition package also supplies a completed Fricke--Hecke
+trace carrier
+\[
+ \mathsf W_{\mathrm{Fr}}\colon
+ \mathcal H^{\mathrm{sph}}_{\Delta_5}
+ \longrightarrow
+ \operatorname{End}_{\Lambda_{\mathrm{Muk}}\text{-gr}}
+ \bigl(\widehat{\mathbf{H}}_{\Delta_5}^{\mathrm{rec}}\bigr)
+\]
+from the unramified spherical Hecke algebra generated by the $T_p$ to
+graded continuous endomorphisms of the completed recognition target,
+together with trace functionals
+$\operatorname{Tr}^{\mathrm{Fr}}_{W_p}$ on the Fricke-fixed carrier,
+then the same scalar is the Wilson-line trace:
+\[
+\operatorname{Tr}^{\mathrm{Fr}}_{W_p}
+\bigl(\mathsf W_{\mathrm{Fr}}(T_p)
+|_{(\mathbf{H}_{\Delta_5}^{\mathrm{rec}})_v}\bigr)
+\;=\;\lambda_p(v).
+\]
+Without \(\mathsf W_{\mathrm{Fr}}\) this theorem asserts only the
+Mukai-graded Hecke eigenvalue criterion.
 \end{theorem}
 
 \begin{proof}
-\emph{C1 (universal eigenvalue formula).} The $\mathbf{H}_{\Delta_5}$-algebra
-is constructed as the chiral quantisation of the BKM Lie algebra
-$\mathfrak{g}_{\Delta_5}$ on the K3 Mukai lattice; the Saito--Kurokawa
-identification $\Delta_5^2=\Phi_{10}^{\mathrm{un}}=\Delta_{10}$
+\emph{Automorphic eigenvalue formula.} The Hall--Drinfeld
+recognition hypotheses provide the Mukai-graded target and the Hecke
+action on it. The scalar in that action is fixed on the automorphic
+side: the Saito--Kurokawa identification
+$\Delta_5^2=\Phi_{10}^{\mathrm{un}}=\Delta_{10}$
 (Igusa 1964; Saito 1975;
 Kurokawa 1978) places $\Delta_5$ as the unique square-root of the
 Ikeda-lifted $\Delta_{10} = \mathrm{Ik}(\Delta_{E_6})$ in $S_{10}(
@@ -4064,13 +4260,12 @@ spinor $L$-function factors as
 $L(s, \Delta_{10}, \mathrm{spin}) = \zeta(s - 8)\zeta(s - 9)
 L(s, \Delta_{E_6}, \mathrm{std})$, yielding exactly the three-term
 formula~\eqref{eq:kazhdan-C1-eigenvalue} at every unramified
-prime. The $v$-independence follows because Hecke operators on the
-spinor side commute with translation by any $v \in \Lambda_{\mathrm{Muk}}$:
-the $\mathrm{Sp}_4(\mathbb{Z})$-Hecke algebra and the
-$\Lambda_{\mathrm{Muk}}$-translation commute in the algebra of
-biinfinite Hecke operators on $L^2(\mathrm{Sp}_4(\mathbb{A}))$.
+prime. Under the recognition hypotheses, $v$-independence is precisely
+the compatibility condition that the Hecke correspondence acts through
+the central Maass-spin character and commutes with the
+$\Lambda_{\mathrm{Muk}}$ grading of the completed target.
 
-\emph{C2 (temperedness for $p \le 79$).} Deligne's bound
+\emph{Temperedness for $p \le 79$.} Deligne's bound
 $|a_p(\Delta_{E_6})| \le 2 p^{15/2}$ (Deligne 1974 \emph{Publ.~IHES}~43,
 Thm.~9.3) gives the normalised Satake-parameter ratio
 $|a_p| / p^{15/2} \le 2$. Reading the Beilinson Hecke table
@@ -4087,7 +4282,7 @@ primes in the computed range, giving a clean tempered $L$-packet at
 each finite place $v \ne 2$ (the $v = 2$ ramification is disposed
 of by Remark~\ref{rem:dl-fricke-self-duality}).
 
-\emph{C3 (Satake parameter formula).} At each unramified prime $p$, the
+\emph{Satake parameter formula.} At each unramified prime $p$, the
 Satake parameter of the elliptic factor $\Delta_{E_6}$ is the pair
 $\{\alpha_p, p^{15}/\alpha_p\}$ determined by
 \begin{equation}
@@ -4109,7 +4304,7 @@ encode the CAP non-temperedness that, as recorded in
 Remark~\ref{rem:dl-fricke-self-duality}, reverses to
 archimedean temperedness at $\infty$.
 
-\emph{C4 (twisted Hecke for $\Delta_5$-characters at $g \in M_{24}$-classes).}
+\emph{Twisted Hecke for $\Delta_5$-characters at $g \in M_{24}$-classes.}
 At each of the $26$ conjugacy classes $g \in M_{24}$, the Ibukiyama
 paramodular Maass-spin cover supports a $g$-twisted Hecke operator
 $T_p^g$ acting on the Fourier coefficients of
@@ -4120,7 +4315,7 @@ $\mathrm{Res}^{\mathrm{Co}_1}_{M_{24}} T_g^{\mathrm{Conway}}
 $w_8$-eigenvalue $\pm 1$ at each class yields the twisted eigenvalue
 \begin{equation}
 \label{eq:kazhdan-C4-twisted}
- T_p^g \big|_{(\mathbf{H}_{\Delta_5})_v}
+ T_p^g \big|_{(\mathbf{H}_{\Delta_5}^{\mathrm{rec}})_v}
  \;=\;
  \chi_g(p) \cdot \lambda_p(v),
  \qquad
@@ -4136,25 +4331,23 @@ $-1$ at $p \equiv 2 \pmod{3}$; and so on through the remaining $21$
 Mathieu classes, giving a complete $26 \times 21$ character table
 $\chi_g(p)$ for $g \in \mathrm{Cl}(M_{24})$ and $p \le 79$.
 
-\emph{C5 (geometric Langlands: Hecke as Wilson line on Fricke self-duality).}
-Remark~\ref{rem:dl-fricke-self-duality} established
-$w_8$ as the structural $S$-matrix of the geometric Langlands
-self-duality for $\mathfrak{g}_{\Delta_5}$; under this identification,
-the Hecke operator $T_p$ at each prime $p$ corresponds to a Wilson line
-$W_p$ on $\mathrm{Bun}_G(X)^{\mathrm{Fricke}}$ with weight determined by
-the spinor Satake parameter $\alpha_p$. The tempered eigenvalue
-formula~\eqref{eq:kazhdan-C1-eigenvalue} translates to the
-Wilson-line trace
+\emph{Conditional Fricke trace carrier.}
+The automorphic Hecke calculation does not construct Wilson lines on a
+K3-BKM geometric-Langlands stack. If the completed carrier
+\(\mathsf W_{\mathrm{Fr}}\) in the theorem is supplied, its defining
+compatibility sends \(T_p\) to the Fricke-fixed Hecke endomorphism with
+weight determined by the spinor Satake parameter \(\alpha_p\). The
+eigenvalue formula~\eqref{eq:kazhdan-C1-eigenvalue} then gives
 \begin{equation}
 \label{eq:kazhdan-C5-wilson-trace}
- \mathrm{tr}_{W_p}\bigl(\mathrm{Hecke}_p\,
- (\mathbf{H}_{\Delta_5})_v\bigr)
+ \operatorname{Tr}^{\mathrm{Fr}}_{W_p}
+ \bigl(\mathsf W_{\mathrm{Fr}}(T_p)
+ |_{(\mathbf{H}_{\Delta_5}^{\mathrm{rec}})_v}\bigr)
  \;=\;
  \lambda_p(v),
 \end{equation}
-with $W_p$ the $p$-th Wilson line on the Fricke self-dual locus; the
-$v$-independence~\eqref{eq:kazhdan-C1-eigenvalue} means that
-the trace is a scalar on each Mukai-graded piece. \qedhere
+and the $v$-independence~\eqref{eq:kazhdan-C1-eigenvalue} means that
+the trace is scalar on each Mukai-graded piece. \qedhere
 \end{proof}
 
 \begin{remark}[First-principles computation of $\lambda_p(v)$ at three primes]
@@ -4214,35 +4407,32 @@ Phys.}~4, 623; Gaberdiel--Hohenegger--Volpato 2010 Tab.~1;
 Eguchi--Ooguri--Tachikawa 2011 Tab.~2.
 \end{remark}
 
-\begin{remark}[Fricke Wilson-line trace factorisation: cross-volume bridge]
+\begin{remark}[Conditional Fricke Wilson-line trace factorisation]
 \label{rem:dl-kazhdan-wilson-factorisation}
 \index{Wilson-line trace!factorisation}
 \index{geometric Langlands!Wilson-line factorisation}
-The Fricke Wilson-line trace~\eqref{eq:kazhdan-C5-wilson-trace}
-factorises, as a $\mathrm{GSp}(4)/\mathbb{Q}$-automorphic datum, through
-the Saito--Kurokawa three-term decomposition:
+The trace~\eqref{eq:kazhdan-C5-wilson-trace} exists only after the
+completed carrier \(\mathsf W_{\mathrm{Fr}}\) of
+Theorem~\ref{thm:dl-kazhdan-C1-mukai-eigenvalue} has been supplied.
+In that ambient it factorises, as a
+$\mathrm{GSp}(4)/\mathbb{Q}$-automorphic datum, through the
+Saito--Kurokawa three-term decomposition:
 \[
- \mathrm{tr}_{W_p}
+ \operatorname{Tr}^{\mathrm{Fr}}_{W_p}
  \;=\;
- \mathrm{tr}_{W_p^{\mathrm{std}}(\Delta_{E_6})}
+ \operatorname{Tr}^{\mathrm{Fr}}_{W_p^{\mathrm{std}}(\Delta_{E_6})}
  \;+\;
- p^8 \cdot \mathrm{tr}_{W_p^{\mathrm{triv}}}
+ p^8 \cdot \operatorname{Tr}^{\mathrm{Fr}}_{W_p^{\mathrm{triv}}}
  \;+\;
- p^9 \cdot \mathrm{tr}_{W_p^{\mathrm{triv}}},
+ p^9 \cdot \operatorname{Tr}^{\mathrm{Fr}}_{W_p^{\mathrm{triv}}},
 \]
 where $W_p^{\mathrm{std}}(\Delta_{E_6})$ is the weight-$15/2$ standard
-Wilson line attached to the elliptic factor and the two triviality
-pieces $\{p^8, p^9\}$ encode the two CAP contributions. Under the
-Vol~III Fricke self-duality (geometric Langlands on K3-BKM as Fricke
-$w_8$ self-duality, Remark~\ref{V3-rem:gl-fricke-self-duality}),
-the standard Wilson line $W_p^{\mathrm{std}}(\Delta_{E_6})$ sits at the
-Fricke-fixed point and is $w_8$-invariant, while the two triviality
-pieces are exchanged by $w_8$. The cross-volume contribution
-to the geometric Langlands picture is Vol~III
-Remark~\ref{V3-rem:gl-kazhdan-fricke-wilson}, which records the
-Fricke-symmetry of this three-piece decomposition on the spectral side
-as the unique automorphic fingerprint of the Saito--Kurokawa
-$\Delta_5^2=\Phi_{10}^{\mathrm{un}}=\Delta_{10}$ identity. Primary:
+trace summand attached to the elliptic factor and the two triviality
+pieces $\{p^8, p^9\}$ encode the two CAP contributions. A separate
+Vol~III Fricke self-duality datum may identify the standard summand as
+$w_8$-invariant and exchange the two triviality summands. This is a
+condition on the carrier, not a consequence of the Saito--Kurokawa
+eigenvalue formula alone. Primary:
 Arthur 2013 \emph{Endoscopic}, Thm.~1.5.2 on $\mathrm{GSp}(4)$ packets;
 Andrianov 1974 \S 2--3; Vol~III
 Remark~\ref{V3-rem:gl-fricke-self-duality}.
@@ -4634,11 +4824,11 @@ the compatibility between $\mathcal D^{\mathbb L}$ and the Selmer-complex
 differentials (Nekov\'a\v{r} 2006 Thm.~0.14 Poitou--Tate).
 \end{remark}
 
-\begin{remark}[Cross-volume bridge: derived ring and chiral $\mathbf H_{\Delta_5}$]
+\begin{remark}[Derived ring and chiral $\mathbf H_{\Delta_5}$ carrier]
 \label{rem:dl-derived-chiral-bridge}
-\index{cross-volume!derived ring!chiral $\mathbf H_{\Delta_5}$}
+\index{derived ring!chiral $\mathbf H_{\Delta_5}$ carrier}
 \index{chiral quantum group!$\mathbf H_{\Delta_5}$!derived determinant}
-A cross-volume comparison with the K3--BKM chiral quantum group is the
+The comparison with the K3--BKM chiral quantum group is the
 datum of an $\mathbb E_\infty$ morphism
 \[
  \Theta_{\Delta_5}\colon
@@ -4648,17 +4838,24 @@ datum of an $\mathbb E_\infty$ morphism
  =
  \ChirHoch^\bullet(\mathbf H_{\Delta_5},\mathbf H_{\Delta_5})
 \]
-constructed from the CY-to-chiral functor
+This is a conditional datum, available only after the source-recognition
+gates, from the CY-to-chiral functor
 \[
  \Phi_3=\SpCh_{\Sigma_2,E}\circ\PhiFA_3.
 \]
-The required comparison data are: the Vol~III construction of
-$\mathbf H_{\Delta_5}$, a computed chiral Hochschild complex, and
+The required comparison data are: the finite Hall/CoHA source for
+$\mathbf H_{\Delta_5}$, the compatible pairing, PBW/no-extra-relations
+verification, radical and parity data, completed inverse limit, Heegner
+comparison, a computed chiral Hochschild complex, and
 compatibility of $\Phi_3$ with the Galatius--Venkatesh cotangent
-complex. If these data are supplied, $\pi_0\Theta_{\Delta_5}$ compares
-the Chenevier deformation ring with the degree-zero chiral
-centre, and $\pi_1\Theta_{\Delta_5}$ compares the finite Selmer
-$H^2_f$ with first-order chiral deformations. No equality of
+complex. The Hochschild object here is the curve-level chiral
+Hochschild cochain complex after Stage-2 specialization. It is not
+categorical Hochschild cohomology of $D^b(\mathrm{Coh}(K3\times E))$
+and not a product-Calabi--Yau Hochschild invariant. If these data are
+supplied, $\pi_0\Theta_{\Delta_5}$ compares the Chenevier deformation
+ring with the degree-zero chiral centre, and
+$\pi_1\Theta_{\Delta_5}$ compares the finite Selmer $H^2_f$ with
+first-order chiral deformations. No equality of
 $\mathcal R^{\mathrm{der}}_{\Delta_5}$ with the chiral derived centre
 is asserted here.
 \end{remark}
@@ -4684,7 +4881,7 @@ order-of-vanishing prediction.
 \label{thm:dl-selmer-rank-delta5}
 \index{Selmer group!$H^2_f$!$\mathrm{ad}^0\rho_{\Delta_{10}}$}
 \index{Bellaïche--Chenevier bound!SK lift}
-\index{Fontaine--Laffaille!crystalline Selmer}
+\index{Breuil--Kisin!crystalline Selmer}
 \index{order of vanishing!$L(s,\mathrm{ad}^0\Delta_{10})$}
 \ClaimStatusConditional
 Let $\rho_{\Delta_{10}}\colon G_\Q\to\mathrm{GSp}_4(\overline\Z_\ell)$
@@ -4749,8 +4946,8 @@ where the $\mathbf 1$ is absorbed into the trace and
 $\mathrm{Sym}^2 V_{\Delta,\ell}^{(0)}$ is the $3$-dimensional
 trace-zero symmetric square of the Deligne motive.
 
-\emph{Cycle $2$: Tate-twist analysis of $H^2_f$.} For each irreducible
-summand $\pi$ in the decomposition of Cycle $1$, compute
+\emph{Tate-twist analysis of $H^2_f$.} For each irreducible
+summand $\pi$ in the irreducible decomposition above, compute
 $H^2_f(\Q,\pi)$ by Bloch--Kato Tamagawa-number analysis
 (Bloch--Kato $1990$ Conj.~$5.15$; Fontaine--Perrin-Riou $1994$
 \emph{Proc.\ Symp.\ Pure Math.}~$55$ \S $3.3$).
@@ -4780,7 +4977,7 @@ Summing: $2\cdot 1 + 1\cdot 1 = 3$. Contributions (a)--(c) are zero;
 summands; (e) contributes $1$ from $\mathrm{Sym}^2 V_{\Delta,\ell}^{(0)}$.
 Total: $r = 3$.
 
-\emph{Cycle $3$: Poitou--Tate global-to-local cross-check.} The
+\emph{Poitou--Tate global-to-local cross-check.} The
 Poitou--Tate long exact sequence
 (Nekov\'a\v r $2006$ \emph{M\'em.~SMF}~$310$ Thm.~$0.14$)
 \[
@@ -4803,32 +5000,28 @@ the cup-square correction (Bella\"\i che--Chenevier $2009$ \S $7.5$
 reducibility-ideal formula for SK-lift Selmer), yielding
 $\dim\bigoplus_v H^1_{/f} = 6 + 3 = 9$ minus local-at-$\ell$ tame correction
 of $3$, for a total of $6$; the arithmetic is
-$r = 6 - 6 + 3 = 3$, matching Cycle $2$.
+$r = 6 - 6 + 3 = 3$, matching the Tate-twist analysis.
 
-\emph{Cycle $4$: Fontaine--Laffaille crystalline constraint at $\ell = 5$.}
+\emph{Crystalline local condition at $\ell = 5$.}
 At the weight $\ell = 5$, the representation $\rho_{\Delta_{10}}$ is
-crystalline with Hodge--Tate weights $\{0, 1, 9, 10\}$ satisfying
-$\max - \min = 10 < \ell - 1 = 4$ only after shifting to
-$\{0,1,9,10\} \bmod \ell$. The Hodge--Tate range $\{0,\dots,10\}$
-exceeds the Fontaine--Laffaille window $[0,\ell-2] = [0,3]$, so the
-standard FL-functor does not apply at $\ell = 5$; we invoke the
-Breuil--Kisin crystalline functor (Breuil $1999$ \emph{Ast\'erisque}~$260$
-Thm.~$4.2.4$; Kisin $2006$ \emph{Invent.}~$165$ Thm.~$0.1$), which
-extends the FL-comparison to the full Hodge--Tate range with
-ramification bound $e < \ell - 1$ satisfied at $\Q_\ell$ (unramified,
-$e = 1 < 4$). The crystalline local condition
+crystalline with Hodge--Tate weights $\{0, 1, 9, 10\}$. Their width is
+$10$, so the Fontaine--Laffaille window $[0,\ell-2] = [0,3]$ does not
+apply. The local condition used here is the Breuil--Kisin crystalline
+condition (Breuil $1999$ \emph{Ast\'erisque}~$260$ Thm.~$4.2.4$;
+Kisin $2006$ \emph{Invent.}~$165$ Thm.~$0.1$), together with the
+explicit filtration datum stated below. The crystalline local condition
 $H^1_f(\Q_\ell,\mathrm{ad}^0\rho)$ has dimension
 $\dim\mathrm{Fil}^0(\mathbf D_{\mathrm{cris}}(\mathrm{ad}^0\rho)) + h^0$;
 the Hodge filtration on $\mathbf D_{\mathrm{cris}}(\mathrm{ad}^0)$
 has jumps at $\{-10, -9, -1, 0, 1, 9, 10\}$ with multiplicities
-summing to $15$, and $\dim\mathrm{Fil}^0 = 8$. Combined with
+specified by the SK crystalline type, and $\dim\mathrm{Fil}^0 = 8$. Combined with
 $h^0(\Q_\ell,\mathrm{ad}^0\rho) = 0$ (no Frobenius fixed points at the SK
 point for crystalline $\ell = 5$), this gives
 $\dim H^1_f(\Q_\ell,\mathrm{ad}^0\rho) = 8$, a Poitou--Tate-dual
 constraint that cross-pins $r = 3$ through the local-global
-term-by-term matching of Cycle $3$.
+term-by-term matching above.
 
-\emph{Cycle $5$: reducibility-ideal tame-conductor contribution count.}
+\emph{Reducibility-ideal tame-conductor contribution count.}
 Bella\"\i che--Chenevier $2009$ \S $7.5$ Thm.~$7.5.1$ for SK-lift
 Selmer bounds $r \le 9$ by the dimension argument
 $r \le \dim\mathrm{ad}^0 - \dim\mathrm{End}(\rho) = 15 - 6 = 9$,
@@ -4843,7 +5036,7 @@ three surviving summands are exactly the pair
 $V_{\Delta,\ell}^\vee$, $V_{\Delta,\ell}^\vee(9)$ and the
 endoscopic $\mathrm{Sym}^2 V_{\Delta,\ell}^{(0)}$. Hence $r = 3$.
 
-The four cycles agree: $r = 3$.
+The four numerical comparisons agree: $r = 3$.
 
 \emph{Conditional Bloch--Kato sharpening.} Bloch--Kato $1990$
 Conj.~$5.15$ asserts
@@ -4880,7 +5073,7 @@ $\pi_1\mathcal R^{\mathrm{der}}_{\Delta_5}\otimes_{\pi_0}\F_5
 admits the basis $\{y_1,y_2,y_3\}$ realised by the following explicit
 Selmer cocycles, each pinned to a primary-literature construction and
 each attached to a distinct $\mathrm{ad}^0$-summand of
-Cycle~$1$ of Theorem~\ref{thm:dl-selmer-rank-delta5}:
+the adjoint decomposition in Theorem~\ref{thm:dl-selmer-rank-delta5}:
 \begin{enumerate}
 \item[(i)] \emph{Endoscopic cup-square generator}
  $y_1 \;\in\; H^2_f\bigl(\Q,\;\mathrm{Sym}^2 V_{\Delta,\ell}^{(0)}\bigr)$.
@@ -4947,12 +5140,12 @@ Cycle~$1$ of Theorem~\ref{thm:dl-selmer-rank-delta5}:
  \;\in\; H^1_f\bigl(\Q,\;V_{\Delta,\ell}(-8)\bigr)^\vee
  \;\cong\; H^2_f\bigl(\Q,\;V_{\Delta,\ell}^\vee(9)\bigr),
  \end{equation}
- realised by the chain-level cocycle
- $y_3(g,h) = c_1(g)\otimes_{\F_5}(g\cdot u_2^\vee(h))$. This is the
- SK-diagonal Coleman direction; its crystalline local condition at
+realised by the chain-level cocycle
+$y_3(g,h) = c_1(g)\otimes_{\F_5}(g\cdot u_2^\vee(h))$. This is the
+SK-diagonal Coleman direction; its crystalline local condition at
  $\ell = 5$ follows from the $\omega^9$-twist of the
- Fontaine--Laffaille window analysis of
- Theorem~\ref{thm:dl-selmer-rank-delta5} Cycle~$4$. $y_3$ attaches
+ Breuil--Kisin crystalline analysis in
+ Theorem~\ref{thm:dl-selmer-rank-delta5}. $y_3$ attaches
  to the diagonal SK-Coleman direction $x_3$ via
  $\partial y_3 = x_1 x_3$.
 \end{enumerate}
@@ -4980,7 +5173,7 @@ verify independence~\eqref{eq:yi-independence}.
 
 \emph{Distinct summands.} Each $y_j$ lives in a distinct irreducible
 summand of $\mathrm{ad}^0\rho_{\Delta_{10}}$ (the decomposition of
-Cycle~$1$ of Theorem~\ref{thm:dl-selmer-rank-delta5}): $y_1$ in
+Theorem~\ref{thm:dl-selmer-rank-delta5}): $y_1$ in
 $\mathrm{Sym}^2 V_{\Delta,\ell}^{(0)}$, $y_2$ in
 $V_{\Delta,\ell}^\vee$, $y_3$ in $V_{\Delta,\ell}^\vee(9)$. The
 three summands are non-isomorphic $G_\Q$-representations
@@ -5014,8 +5207,8 @@ from the Bella\"\i che--Chenevier $2009$ \emph{Ast\'erisque}~$324$
 local Tate invariants
 $\sum_v\mathrm{inv}_v\langle y_i, y_j, y_k\rangle_v$ vanishes
 (global Poitou--Tate), and the local contribution at $\ell = 5$ is
-forced nonzero by the Fontaine--Laffaille crystalline filtration
-computation of Cycle~$4$ (the $\mathrm{Fil}^0$-dimension of
+forced nonzero by the Breuil--Kisin crystalline filtration
+computation in Theorem~\ref{thm:dl-selmer-rank-delta5} (the $\mathrm{Fil}^0$-dimension of
 $\mathbf D_{\mathrm{cris}}$ accommodates exactly one triple-product
 class). Dually, the Chenevier determinant on the non-reduced
 $\mathcal R^{\mathrm{der}}$ pairs non-trivially:
@@ -5084,10 +5277,11 @@ Remark~\ref{rem:dl-selmer-generators}. The cup-square cocycles
 $(c_j \smile c_j)(g,h) = c_j(g)\otimes g\!\cdot\!c_j(h)$ and mixed
 cocycles $(c_1\smile c_i)(g,h)$ for $i = 2, 3$ project to
 $Z^2(G_\Q,\mathrm{Sym}^2\pi_j)$ and $Z^2(G_\Q,\pi_1\otimes\pi_i)$
-respectively, producing the three $H^2_f$-classes $y_1, y_2, y_3$. Each
-classes $y_j$ attaches to the corresponding $x$-cell via the
-Bockstein-like map $\partial y_j = $ (cocycle witness),
-realising the cell complex
+respectively, producing the three $H^2_f$-classes $y_1, y_2, y_3$.
+Each class $y_j$ attaches to the corresponding $x$-cell through the
+Bockstein-type boundary represented by its quadratic cocycle:
+$\partial y_1=x_1^2$, $\partial y_2=x_1x_2$, and
+$\partial y_3=x_1x_3$. This realises the cell complex
 \[
  \mathcal R^{\mathrm{der}}_{\Delta_5}
  \;=\;
@@ -5103,9 +5297,9 @@ $2009$ Lem.~$7.5.2$ verifies this at chain level for SK lifts.
 \end{remark}
 
 \begin{remark}[Bloch--Kato conditionality and Selmer obstructions]
-\label{rem:dl-selmer-open-threads}
+\label{rem:dl-selmer-proof-obligations}
 \index{Bloch--Kato!conditional}
-\index{open problem!Selmer rank sharpness}
+\index{Selmer rank!sharpness}
 The value $r = 3$ of \eqref{eq:selmer-rank-value} is conditional on
 the Selmer summand hypotheses in
 Theorem~\ref{thm:dl-selmer-rank-delta5}. The identification
@@ -5121,10 +5315,10 @@ $L(s,\mathrm{ad}^0\Delta_{10})$. Three proof obligations remain.
  $L(s,\Delta)$ ordinary; the twist $L(s,\Delta,9)$ is Iwasawa-main
  conjecture territory (Skinner--Urban $2014$
  \emph{Invent.}~$195$); $L(s,\mathrm{Sym}^2\Delta,9)$ and
- $L(s,\mathrm{Sym}^2\Delta)$ are open beyond Kim--Shahidi
+ $L(s,\mathrm{Sym}^2\Delta)$ require more than Kim--Shahidi
  $2002$ nonvanishing.
 \item \emph{Fontaine--Laffaille at low $\ell$.} The crystalline
- computation at $\ell = 5$ of Cycle $4$ invoked Breuil--Kisin
+ computation at $\ell = 5$ invoked Breuil--Kisin
  beyond the strict FL-range; a direct FL-functor computation is
  unavailable at $\ell = 5$ for Hodge--Tate range $\{0,\dots,10\}$.
  Pollack--Stevens $2013$ \emph{J.~Th.\ Nombres Bordeaux}~$25$
@@ -5135,17 +5329,17 @@ $L(s,\mathrm{ad}^0\Delta_{10})$. Three proof obligations remain.
  forces $r\ge 1$. The tight value $r = 3$ rests on the Flach--Kato
  upper bound for $\mathrm{Sym}^2\Delta$ combined with the two Urban
  Poitou--Tate dual contributions; any strengthening to
- $r = 1$ would require a vanishing result for two of the three
- summands, contradicting Cycle $5$'s saturation argument. The
+ $r = 1$ requires a vanishing result for two of the three
+ summands, contradicting the tame-conductor saturation argument. The
  conjectural sharpening to $r = 1$ (sometimes stated in the literature)
  is incompatible with the $3$-dimensional Urban tangent space for
  the Chenevier deformation ring (Theorem~\ref{thm:dl-chenevier-nonreduced-delta5}(i)).
 \end{itemize}
 \end{remark}
 
-\begin{remark}[Cross-volume bridge: Selmer rank $3$ and chiral derived centre]
+\begin{remark}[Selmer rank $3$ and the chiral derived centre]
 \label{rem:dl-selmer-cross-volume}
-\index{cross-volume!Selmer rank!chiral}
+\index{Selmer rank!chiral derived centre}
 If the comparison map $\Theta_{\Delta_5}$ of
 Remark~\ref{rem:dl-derived-chiral-bridge} is constructed and the
 conditional Selmer computation gives $r=3$, then the first-order
@@ -5156,12 +5350,15 @@ piece of the chiral derived centre satisfies
  \dim_{\F_5} H^2_f\bigl(\Q,\mathrm{ad}^0\rho_{\Delta_{10}}\bigr)
  \;=\; 3.
 \]
-This is a prediction about the Vol~III chiral data. It becomes a
-theorem only after the chiral Hochschild complex of
+This is a conditional statement about the Vol~III curve-level chiral
+data. It is not categorical Hochschild cohomology of
+$D^b(\mathrm{Coh}(K3\times E))$ and not a product-Calabi--Yau
+Hochschild invariant. It becomes a theorem only after the chiral
+Hochschild complex of
 $\mathbf H_{\Delta_5}$ is computed and the map $\Theta_{\Delta_5}$ is
 shown to identify the three Selmer classes with three chiral
 deformation classes. The three classes correspond to the
 Liu--Xiao endoscopic direction, the paramodular Coleman direction,
-and the twisted Coleman direction; cross-reference Vol~III
+and the twisted Coleman direction; Vol~III
 Remark~\ref{rem:gl-W18-borcherds-singularity-count}.
 \end{remark}

@@ -1,5 +1,4 @@
-r"""Tests for the deep resurgence engine: alien derivatives, Stokes constants,
-trans-series completion, and double resurgence.
+r"""Tests for scalar resurgence diagnostics.
 
 Comprehensive multi-path verification (3+ independent paths per result)
 for the full resurgent structure of the shadow obstruction tower.
@@ -22,8 +21,7 @@ Structure:
 
 Total: 111 tests.
 
-All expected values computed INDEPENDENTLY (AP1, AP3, AP10).
-No copy-paste from source module. Every formula recomputed from scratch.
+Expected constants are computed independently of the engine when feasible.
 
 References:
     compute/lib/resurgence_deep_engine.py
@@ -49,7 +47,7 @@ FOUR_PI_SQ = TWO_PI ** 2
 
 
 # =====================================================================
-# Independent helpers (AP10: independent computation, not from module)
+# Independent helpers.
 # =====================================================================
 
 def _bernoulli_independent(n):
@@ -104,7 +102,7 @@ def _virasoro_rho(c):
 
 
 def _shadow_coefficients_independent(kappa, alpha, S4, max_r=60):
-    """Shadow coefficients via independent sqrt expansion (AP10)."""
+    """Shadow coefficients via independent sqrt expansion."""
     q0 = 4.0 * kappa ** 2
     q1 = 12.0 * kappa * alpha
     q2 = 9.0 * alpha ** 2 + 16.0 * kappa * S4
@@ -132,14 +130,14 @@ class TestAlgebraData:
     """Test algebra construction and basic shadow metric properties."""
 
     def test_virasoro_kappa(self):
-        """kappa(Vir_c) = c/2 (AP1)."""
+        """kappa(Vir_c) = c/2."""
         from lib.resurgence_deep_engine import virasoro_deep
         for c in [1.0, 7.0, 13.0, 25.0, 26.0]:
             alg = virasoro_deep(c)
             assert abs(alg.kappa - c / 2.0) < 1e-14
 
     def test_virasoro_dual_sum(self):
-        """kappa + kappa' = 13 for Virasoro (AP24)."""
+        """kappa + kappa' = 13 for the Virasoro Verdier scalar lane."""
         from lib.resurgence_deep_engine import virasoro_deep
         for c in [1.0, 7.0, 13.0, 25.0]:
             alg = virasoro_deep(c)
@@ -219,7 +217,7 @@ class TestShadowCoefficients:
         assert abs(coeffs[3] - 2.0) < 1e-12
 
     def test_coefficients_independent_comparison(self):
-        """Compare with independently computed coefficients (AP10)."""
+        """Compare with independently computed coefficients."""
         from lib.resurgence_deep_engine import virasoro_deep, shadow_coefficients
         for c in [1.0, 7.0, 13.0]:
             alg = virasoro_deep(c)
@@ -535,17 +533,20 @@ class TestLargeOrder:
             expected = 1.0 / FOUR_PI_SQ
             assert abs(last - expected) / expected < 0.01
 
-    def test_genus_large_order_exact(self):
-        """Large-order prediction is exact for genus expansion (simple poles)."""
+    def test_genus_large_order_partial_sum_bound(self):
+        """Finite pole sum obeys the alternating-tail bound."""
         from lib.resurgence_deep_engine import (
-            F_g_scalar, genus_large_order_prediction
+            F_g_scalar, genus_large_order_prediction, genus_large_order_tail_bound
         )
         kappa = 3.5
         for g in [5, 10, 15, 20]:
             Fg_exact = F_g_scalar(kappa, g)
             Fg_pred = genus_large_order_prediction(kappa, g, 20)
+            tail_bound = genus_large_order_tail_bound(kappa, g, 20)
             rel_err = abs(Fg_exact - Fg_pred) / abs(Fg_exact)
-            assert rel_err < 1e-6, f"Large-order prediction off at g={g}: {rel_err}"
+            roundoff = 1e-14 * max(abs(Fg_exact), abs(Fg_pred), 1e-300)
+            assert rel_err < 1e-6, f"finite pole approximation off at g={g}: {rel_err}"
+            assert abs(Fg_exact - Fg_pred) <= tail_bound + roundoff
 
     def test_leading_asymptotic(self):
         """Leading asymptotic: F_g ~ 2*kappa/(2*pi)^{2g} at large g.
@@ -642,30 +643,30 @@ class TestAlienDerivatives:
         # At different c, the Stokes constants should differ
         assert abs(stokes_c1 - stokes_c25) / max(stokes_c1, stokes_c25) > 0.1
 
-    def test_numerical_stokes_agrees_with_exact(self):
-        """Numerical Stokes constant modulus agrees with exact.
+    def test_numerical_stokes_matches_formal_modulus_scale(self):
+        """Numerical Stokes coefficient has the formal modulus scale.
 
         The numerical extraction from a least-squares fit of oscillating
         coefficients is inherently approximate. We check that the MODULUS
         of the extracted Stokes constant is within a factor of 3 of the
-        exact value, which confirms the correct order of magnitude.
+        closed-form scalar-model value.
         """
         from lib.resurgence_deep_engine import (
             virasoro_deep, alien_derivative_arity, alien_derivative_numerical
         )
         for c in [13.0, 25.0]:
             alg = virasoro_deep(c)
-            exact = alien_derivative_arity(alg)['stokes_constant']
+            closed_form = alien_derivative_arity(alg)['stokes_constant']
             numerical = alien_derivative_numerical(alg, max_r=150)
-            if abs(exact) > 1e-10 and abs(numerical) > 1e-10:
-                ratio = abs(numerical) / abs(exact)
+            if abs(closed_form) > 1e-10 and abs(numerical) > 1e-10:
+                ratio = abs(numerical) / abs(closed_form)
                 assert 0.3 < ratio < 3.0, \
-                    f"Stokes modulus mismatch at c={c}: |exact|={abs(exact)}, |num|={abs(numerical)}"
+                    f"Stokes modulus mismatch at c={c}: |closed|={abs(closed_form)}, |num|={abs(numerical)}"
 
     def test_darboux_numerical_nonzero(self):
         """Numerical Darboux extraction is nonzero for class M.
 
-        The exact and numerical Darboux coefficients are related by
+        The closed-form and numerical Darboux coefficients are related by
         convention-dependent factors. We verify that the numerical
         extraction yields a nonzero result, confirming that the
         detrended coefficients have a well-defined oscillation.
@@ -675,9 +676,9 @@ class TestAlienDerivatives:
         )
         for c in [7.0, 13.0, 25.0]:
             alg = virasoro_deep(c)
-            exact = darboux_coefficient(alg)
+            closed_form = darboux_coefficient(alg)
             numerical = darboux_coefficient_numerical(alg, max_r=50)
-            assert abs(exact) > 1e-5, f"Exact Darboux zero at c={c}"
+            assert abs(closed_form) > 1e-5, f"Closed-form Darboux zero at c={c}"
             assert abs(numerical) > 1e-5, f"Numerical Darboux zero at c={c}"
 
     def test_genus_stokes_formula(self):
@@ -942,7 +943,7 @@ class TestGenusResurgence:
         assert abs(series - closed) / abs(closed) < 1e-6
 
     def test_genus_borel_radius_universal(self):
-        """Genus Borel radius = 2*pi in hbar, (2*pi)^2 in u. UNIVERSAL."""
+        """Genus Borel radius = 2*pi in hbar, (2*pi)^2 in u."""
         from lib.resurgence_deep_engine import genus_borel_singularities
         for kappa in [0.5, 6.5, 12.5]:
             sings = genus_borel_singularities(kappa, 1)
@@ -970,15 +971,20 @@ class TestGenusResurgence:
             expected = 2.0j * PI * R_n
             assert abs(S_u - expected) < 1e-10
 
-    def test_large_order_exact_genus(self):
-        """Large-order relation is EXACT for genus (sum of simple poles)."""
-        from lib.resurgence_deep_engine import F_g_scalar, genus_large_order_prediction
+    def test_large_order_finite_pole_sum_bound(self):
+        """The finite pole sum approximates the exact genus coefficient."""
+        from lib.resurgence_deep_engine import (
+            F_g_scalar, genus_large_order_prediction, genus_large_order_tail_bound
+        )
         kappa = 7.0
         for g in [3, 5, 10, 15]:
             exact = F_g_scalar(kappa, g)
             predicted = genus_large_order_prediction(kappa, g, 30)
+            bound = genus_large_order_tail_bound(kappa, g, 30)
             rel = abs(exact - predicted) / abs(exact) if abs(exact) > 1e-300 else 0.0
-            assert rel < 1e-8, f"Large-order not exact at g={g}: rel={rel}"
+            roundoff = 1e-14 * max(abs(exact), abs(predicted), 1e-300)
+            assert rel < 1e-8, f"finite pole approximation off at g={g}: rel={rel}"
+            assert abs(exact - predicted) <= bound + roundoff
 
 
 # =====================================================================
@@ -1265,8 +1271,8 @@ class TestMultiPathVerification:
             assert abs(omega1 - omega2) < 1e-10
             assert abs(omega1 - omega3) < 1e-10
 
-    def test_complete_scan_runs(self):
-        """Full Virasoro scan completes without error."""
+    def test_diagnostic_scan_runs(self):
+        """Virasoro diagnostic scan runs without error."""
         from lib.resurgence_deep_engine import virasoro_borel_scan
         results = virasoro_borel_scan([1.0, 7.0, 13.0, 25.0], max_r=30)
         assert len(results) == 4
@@ -1277,14 +1283,96 @@ class TestMultiPathVerification:
 
 
 # =====================================================================
-# Section 13: Complementarity of resurgent structures
+# Section 13: Analytic certification firewalls
+# =====================================================================
+
+class TestAnalyticCertificationFirewalls:
+    """Prevent finite scalar diagnostics from being promoted to theorems."""
+
+    def test_forbidden_promotion_phrases_absent_from_engine(self):
+        """Engine docstrings do not claim unsupported analytic theorems."""
+        import inspect
+        import lib.resurgence_deep_engine as engine
+
+        source = inspect.getsource(engine).lower()
+        forbidden = [
+            "borel " + "summable",
+            "complete " + "resurgent structure",
+            "median " + "resummation",
+            "unique analytic " + "continuation",
+            "nonperturbative " + "completion",
+            "btz",
+            "jt",
+            "all-" + "genus",
+            "all " + "genus",
+            "koszul " + "dual",
+        ]
+        for phrase in forbidden:
+            assert phrase not in source
+
+    def test_arity_radius_diagnostics_are_not_certificates(self):
+        """Arity radius paths certify only the scalar algebraic radius."""
+        from lib.resurgence_deep_engine import virasoro_deep, verify_arity_borel_radius_multipath
+
+        alg = virasoro_deep(13.0)
+        result = verify_arity_borel_radius_multipath(alg, max_r=50)
+        assert result['exact_scalar_radius_certified'] is True
+        assert result['finite_window_only'] is True
+        assert result['borel_summability_certified'] is False
+        assert result['median_resummation_certified'] is False
+        assert result['analytic_continuation_certified'] is False
+
+    def test_stokes_and_trans_series_are_formal_only(self):
+        """Arity Stokes/trans-series outputs remain non-certified."""
+        from lib.resurgence_deep_engine import (
+            virasoro_deep, alien_derivative_arity, stokes_automorphism_arity,
+            build_arity_trans_series,
+        )
+
+        alg = virasoro_deep(7.0)
+        alien = alien_derivative_arity(alg)
+        stokes = stokes_automorphism_arity(alg)
+        ts = build_arity_trans_series(alg)
+        assert alien['certification'] == 'formal_scalar_darboux_diagnostic'
+        assert alien['borel_summability_certified'] is False
+        assert stokes['certification'] == 'formal_scalar_stokes_ansatz'
+        assert stokes['median_resummation_certified'] is False
+        assert ts.certification == 'formal_scalar_trans_series_ansatz'
+        assert ts.analytic_resummation_certified is False
+
+    def test_double_resurgence_scope_is_scalar_factorization(self):
+        """Double-resurgence checks do not certify full analytic resurgence."""
+        from lib.resurgence_deep_engine import (
+            virasoro_deep, double_alien_commutativity, verify_double_resurgence,
+        )
+
+        alg = virasoro_deep(7.0)
+        comm = double_alien_commutativity(alg)
+        ver = verify_double_resurgence(alg)
+        assert comm['scope'] == 'scalar_factorized_coefficients'
+        assert comm['analytic_resurgence_certified'] is False
+        assert ver['scope'] == 'scalar_factorized_coefficients'
+        assert ver['analytic_resurgence_certified'] is False
+
+    def test_verdier_partner_firewall(self):
+        """Complementarity uses the Verdier scalar branch, not bar-cobar inversion."""
+        from lib.resurgence_deep_engine import complementarity_resurgence
+
+        comp = complementarity_resurgence(7.0)
+        assert comp['duality_branch'] == 'Verdier scalar partner datum'
+        assert comp['bar_cobar_inversion_used'] is False
+        assert comp['bulk_hochschild_used'] is False
+
+
+# =====================================================================
+# Section 14: Complementarity of resurgent structures
 # =====================================================================
 
 class TestComplementarity:
-    """Test resurgent structure under Koszul complementarity."""
+    """Test resurgent structure under Verdier scalar complementarity."""
 
     def test_kappa_sum_13(self):
-        """kappa(Vir_c) + kappa(Vir_{26-c}) = 13 (AP24)."""
+        """kappa(Vir_c) + kappa(Vir_{26-c}) = 13 on the scalar lane."""
         from lib.resurgence_deep_engine import complementarity_resurgence
         for c in [1.0, 7.0, 13.0, 25.0]:
             comp = complementarity_resurgence(c)
@@ -1314,7 +1402,7 @@ class TestComplementarity:
         assert abs(comp['genus_stokes_sum'] - expected_sum) < 1e-8
 
     def test_c1_c25_complementarity(self):
-        """Vir_1 and Vir_25 are Koszul duals (c + c' = 26)."""
+        """Vir_1 and Vir_25 are paired by the Verdier scalar lane."""
         from lib.resurgence_deep_engine import complementarity_resurgence
         comp = complementarity_resurgence(1.0)
         assert abs(comp['c_dual'] - 25.0) < 1e-14
@@ -1334,7 +1422,7 @@ class TestComplementarity:
 
 
 # =====================================================================
-# Section 14: Cross-family comparison
+# Section 15: Cross-family comparison
 # =====================================================================
 
 class TestCrossFamily:
@@ -1389,7 +1477,7 @@ class TestCrossFamily:
                 assert len(sings) == 2
 
     def test_w3_kappa_is_5c_over_6(self):
-        """W_3 kappa = 5c/6, NOT c/2 (AP1/AP39)."""
+        """W_3 kappa = 5c/6, not c/2."""
         from lib.resurgence_deep_engine import virasoro_deep, w3_deep
         for c in [7.0, 13.0]:
             vir = virasoro_deep(c)

@@ -17,7 +17,7 @@ Tests organized by section:
   14. Holographic c-function (monotonicity, c-theorem)
   15. Koszul holographic summary
   16. AP24 complementarity: kappa + kappa' = 13 for Virasoro
-  17. AP25 three-functor distinction: bar != cobar != Verdier
+  17. AP25 typed-object firewall: bar, Verdier, cobar, center
   18. Cross-family consistency (Heisenberg, KM, Virasoro, W_N)
   19. Special central charges (c = 0, 1, 13, 24, 26)
   20. Multi-path verification (3+ independent routes per claim)
@@ -47,6 +47,7 @@ from bc_twisted_holography_deep_engine import (
     thooft_coupling,
     # Propagator
     bulk_boundary_propagator, bulk_boundary_propagator_exact,
+    bulk_boundary_kernel_mass,
     # Entanglement
     holographic_entanglement, holographic_entanglement_exact,
     # Fusion
@@ -63,6 +64,10 @@ from bc_twisted_holography_deep_engine import (
     km_holographic_summary, heisenberg_holographic_summary,
     # Cross-family
     complementarity_sum, verify_three_functors,
+    holographic_package_entries, modular_koszul_primary_projections,
+    typed_firewall_objects, bc_beta_gamma_collision_surface,
+    collision_kernel_normalization, genus0_closed_curvature,
+    verify_object_firewall,
     # Genus expansion
     F_g_value, genus_expansion_virasoro, complementarity_at_genus,
     # Shadow depth
@@ -347,6 +352,26 @@ class TestBulkBoundaryPropagator:
         G1 = bulk_boundary_propagator_exact(2, 0, 0, 0, 0, 1)
         G2 = bulk_boundary_propagator_exact(4, 0, 0, 0, 0, 1)
         assert G2 == 2 * G1  # kappa(4) = 2 = 2 * kappa(2) = 2 * 1
+
+    def test_poisson_kernel_integrates_to_kappa(self):
+        """The 1/pi Poisson prefactor gives boundary mass kappa."""
+        assert bulk_boundary_kernel_mass(26) == Fraction(13)
+        assert bulk_boundary_kernel_mass(2) == Fraction(1)
+        assert 0 < bulk_boundary_kernel_mass(26, half_width=10.0, r=1.0) < 13
+
+    def test_collision_kernel_normalizations(self):
+        """Raw bar collision kernels keep the level/central prefactors."""
+        heis = collision_kernel_normalization("heisenberg", k=3)
+        km = collision_kernel_normalization("kac_moody", k=2)
+        vir = collision_kernel_normalization("virasoro", c=26)
+
+        assert heis["formula"] == "3/z"
+        assert heis["closed_collision_residue"] == Fraction(3)
+        assert km["formula"] == "2*Omega/z"
+        assert km["trace_form_level_prefix"] == Fraction(2)
+        assert km["kz_kernel_is_comparison_normalization"]
+        assert vir["formula"] == "(26/2)/z^3 + 2T/z"
+        assert vir["central_prefactor"] == Fraction(13)
 
 
 # ============================================================================
@@ -639,6 +664,172 @@ class TestKoszulSummary:
 
 
 # ============================================================================
+# Section 15b: Holographic package and firewall surface
+# ============================================================================
+
+class TestHolographicPackageFirewall:
+    """Canonical package arities and typed-object separation."""
+
+    EXPECTED_HOLOGRAPHIC_ENTRIES = (
+        "A",
+        "A^i",
+        "A^!",
+        "C",
+        "r(z)",
+        "Theta_A",
+        "nabla^hol",
+    )
+
+    EXPECTED_MODULAR_PROJECTIONS = (
+        "Fact_X(L)",
+        "barB_X(L)",
+        "Theta_L",
+        "L_L",
+        "(V_L^br, T_L^br)",
+        "R_4^mod(L)",
+    )
+
+    EXPECTED_FIREWALL_OBJECTS = (
+        "A",
+        "B(A)",
+        "A^i",
+        "A^!",
+        "Omega(B(A))",
+        "Z_ch^der(A)",
+    )
+
+    def test_holographic_package_has_exactly_seven_entries(self):
+        """H(T) has the seven canonical entries and no legacy collapse."""
+        entries = holographic_package_entries()
+        assert entries == self.EXPECTED_HOLOGRAPHIC_ENTRIES
+        assert len(entries) == 7
+
+        s = koszul_holographic_summary(10)
+        datum = s["holographic_package"]
+        assert datum["package_entries"] == entries
+        assert tuple(key for key in entries if key in datum) == entries
+        assert datum["A"] == "Vir_10"
+        assert datum["A^i"] == "H*(B(Vir_10))"
+        assert datum["A^!"] == "Vir_16"
+        assert datum["A_dual"] == datum["A^!"]
+        assert datum["C"] == "Z_ch^der(Vir_10)"
+
+    def test_modular_koszul_package_has_six_primary_projections(self):
+        """Pi_X(L) is the six-projection compute package, not H(T)."""
+        projections = modular_koszul_primary_projections()
+        assert projections == self.EXPECTED_MODULAR_PROJECTIONS
+        assert len(projections) == 6
+
+        s = koszul_holographic_summary(10)
+        package = s["modular_koszul_package"]
+        assert package["primary_projections"] == projections
+        assert tuple(key for key in projections if key in package) == projections
+        assert "A^!" not in package
+        assert "C" not in package
+        assert package["barB_X(L)"] == "B(Vir_10)"
+        assert package["R_4^mod(L)"] == "quartic resonance projection"
+
+    def test_object_firewall_keeps_six_objects_typed_apart(self):
+        """A, B(A), A^i, A^!, Omega(B(A)), and Z_ch^der(A) remain distinct."""
+        objects = typed_firewall_objects()
+        assert objects == self.EXPECTED_FIREWALL_OBJECTS
+        assert len(set(objects)) == len(objects)
+
+        result = verify_object_firewall(10)
+        assert result["typed_firewall_objects"] == objects
+        assert result["five_objects_distinct"]
+        assert result["six_objects_distinct"]
+        assert result["all_distinct"]
+        assert result["original_A"]["type"] == "chiral algebra"
+        assert result["bar_complex_B_A"]["type"] == "factorization coalgebra"
+        assert result["bar_dual_A_i"]["type"] == "bar-dual coalgebra"
+        assert result["koszul_dual_A_bang"]["type"] == "Verdier/Koszul branch"
+        assert result["derived_center_Z_ch_der"]["type"] == (
+            "chiral Hochschild derived center"
+        )
+        assert result["original_A"]["description"] != result["bar_complex_B_A"]["description"]
+        assert result["bar_complex_B_A"]["description"] != result["bar_dual_A_i"]["description"]
+        assert result["koszul_dual_A_bang"]["description"] != result[
+            "derived_center_Z_ch_der"
+        ]["description"]
+        assert result["typed_objects"]["Omega(B(A))"] == (
+            "bar-cobar inversion recovering A"
+        )
+        assert result["omega_B_A"]["type"] == "bar-cobar inversion object"
+        assert result["omega_B_A"]["is_derived_center"] is False
+
+    def test_omega_ba_is_inversion_not_koszul_duality(self):
+        """Omega(B(A)) recovers A; it is not the A^! branch."""
+        result = verify_object_firewall(10)
+        omega = result["omega_B_A"]
+        cobar = result["cobar_Omega"]
+        dual = result["koszul_dual_A_bang"]
+
+        assert omega["operation"] == "bar-cobar inversion"
+        assert omega["recovers"] == "Vir_10"
+        assert omega["is_koszul_duality"] is False
+        assert cobar["recovers"] == omega["recovers"]
+        assert cobar["is_koszul_duality"] is False
+        assert "inversion" in cobar["description"]
+        assert dual["description"] == "Vir_16: A^!"
+        assert omega["recovers"] != dual["description"].split(":")[0]
+        assert result["kappa_cobar"] == result["original_A"]["kappa"]
+        assert result["kappa_cobar"] != result["koszul_dual_A_bang"]["kappa"]
+        assert result["omega_is_inversion_not_koszul_duality"]
+
+    def test_bc_beta_gamma_closed_collision_residue_is_zero(self):
+        """Closed collision residue is zero; OPE/contact data is separate."""
+        surface = bc_beta_gamma_collision_surface()
+        assert surface["families"] == ("bc", "beta_gamma")
+        assert surface["closed_collision_residue"] == Fraction(0)
+        assert surface["bc_closed_collision_residue"] == Fraction(0)
+        assert surface["genus0_closed_curvature"] == Fraction(0)
+        assert genus0_closed_curvature("beta_gamma") == Fraction(0)
+        assert genus0_closed_curvature("bc") == Fraction(0)
+        assert surface["simple_ope_residue"] != surface["closed_collision_residue"]
+        assert surface["simple_ope_residue_beta_gamma"] == Fraction(1)
+        assert surface["simple_ope_residue_gamma_beta"] == Fraction(-1)
+        assert surface["S_3"] == Fraction(0)
+        assert surface["S_4"] == Fraction(-5, 12)
+        assert surface["tail_from_5"] == Fraction(0)
+        assert surface["scalar_closed_branch"]["S_4"] == Fraction(0)
+        assert surface["contact_data_separate"] is True
+        assert surface["package_entries"] == holographic_package_entries()
+
+        beta_gamma = shadow_depth_classification("beta_gamma")
+        assert beta_gamma["class"] == "C"
+        assert beta_gamma["closed_collision_residue"] == Fraction(0)
+        assert beta_gamma["genus0_closed_curvature"] == Fraction(0)
+        assert beta_gamma["simple_ope_residue"] != beta_gamma[
+            "closed_collision_residue"
+        ]
+        assert beta_gamma["simple_ope_residue_beta_gamma"] == Fraction(1)
+        assert beta_gamma["simple_ope_residue_gamma_beta"] == Fraction(-1)
+        assert beta_gamma["S_4"] == Fraction(-5, 12)
+        assert beta_gamma["tail_from_5"] == Fraction(0)
+        assert beta_gamma["contact_data_separate"] is True
+
+        bc = shadow_depth_classification("bc")
+        assert bc["class"] == "C"
+        assert bc["closed_collision_residue"] == Fraction(0)
+        assert bc["genus0_closed_curvature"] == Fraction(0)
+        assert bc["simple_ope_residue_b_c"] == Fraction(1)
+        assert bc["simple_ope_residue_c_b"] == Fraction(-1)
+
+        s = koszul_holographic_summary(10)
+        datum = s["holographic_datum"]
+        assert datum["closed_collision_residue"] is None
+        assert "not a closed-collision scalar" in datum["collision_residue"]
+        assert datum["kernel_normalization"]["formula"] == "(10/2)/z^3 + 2T/z"
+
+        kernel = collision_kernel_normalization("beta_gamma")
+        assert kernel["closed_collision_residue"] == Fraction(0)
+        assert kernel["genus0_closed_curvature"] == Fraction(0)
+        assert kernel["simple_ope_residue_beta_gamma"] == Fraction(1)
+        assert kernel["simple_ope_residue_gamma_beta"] == Fraction(-1)
+
+
+# ============================================================================
 # Section 16: AP24 Complementarity kappa + kappa' = 13
 # ============================================================================
 
@@ -672,18 +863,19 @@ class TestAP24Complementarity:
 
 
 # ============================================================================
-# Section 17: AP25 Three-functor distinction
+# Section 17: AP25 typed-object firewall
 # ============================================================================
 
-class TestAP25ThreeFunctors:
-    """Bar != cobar != Verdier: three distinct functors."""
+class TestAP25TypedFirewall:
+    """Bar, Verdier, cobar, and derived center remain typed apart."""
 
-    def test_three_functors_c26(self):
-        """At c = 26: all three functors give distinct results."""
+    def test_firewall_c26(self):
+        """At c = 26: all firewall objects give distinct typed results."""
         result = verify_three_functors(26)
         assert result["bar_ne_cobar"]
         assert result["bar_ne_verdier"]
         assert result["verdier_ne_cobar"]
+        assert result["six_objects_distinct"]
 
     def test_bar_is_coalgebra(self):
         """B(A) is a factorization coalgebra."""
@@ -778,7 +970,9 @@ class TestCrossFamily:
 
     def test_all_are_koszul(self):
         """AP14: all standard families are Koszul regardless of depth."""
-        for family in ["heisenberg", "affine", "beta_gamma", "virasoro", "w_algebra"]:
+        for family in [
+            "heisenberg", "affine", "beta_gamma", "bc", "virasoro", "w_algebra"
+        ]:
             d = shadow_depth_classification(family)
             assert d["all_are_koszul"], f"{family} not marked Koszul"
 

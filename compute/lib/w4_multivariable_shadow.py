@@ -1,24 +1,25 @@
-"""W_4 multi-variable shadow obstruction tower: the first 3-generator computation.
+"""W_4 multi-variable shadow obstruction tower.
 
-NEW MATHEMATICS. The W_4 algebra has generators T (wt 2), W_3 (wt 3), W_4 (wt 4).
-The shadow lives on a 3-dimensional deformation space (x_T, x_3, x_4).
+The principal W_4 algebra has generators T (wt 2), W_3 (wt 3), and W_4
+(wt 4).  The shadow lives on the 3-dimensional deformation space
+(x_T, x_3, x_4).
 
-KEY STRUCTURAL DISCOVERY: W_4 is the FIRST algebra where the quartic shadow
-has TWO quasi-primary exchange channels:
-  (1) Λ = :TT: - (3/10)∂²T (weight 4, norm c(5c+22)/10)
-  (2) W_4 itself (weight 4, norm c/4)
+The weight-4 reduced contact packet has two quasi-primary exchange
+channels:
+  (1) Λ = :TT: - (3/10)∂²T, with norm c(5c+22)/10;
+  (2) W_4 itself, with norm c/4.
 
-The quartic exchange formula becomes:
-  Q_{ijkl} = Σ_α C_{ij,α} (N_α)^{-1} C_{kl,α}
-where α ∈ {Λ, W_4}.
+The reduced contact coefficients have the form
+  Q_{ijkl} = Σ_α C_{ij,α} (N_α)^{-1} C_{kl,α},
+where α ∈ {Λ, W_4}, after quotienting out the universal conformal Ward
+action of T.  The Ward terms belong to the gravitational cubic sector,
+not to an independent quartic contact packet.
 
-This gives a RICHER denominator structure than W_3:
-  - Λ channel: denominators involve (5c+22) [Kac level-4 factor]
-  - W_4 channel: denominators involve c [normalization factor]
-  - Cross terms: products of both
-
-The non-gravitational cubic from W_3 × W_3 → W_4 (coupling c₃₃₄) makes
-the cubic shadow genuinely 3-dimensional, not just a gravitational slice.
+The higher-spin cubic terms are symbolic:
+  W_3 × W_3 → W_4 contributes c334 x_4 x_3^2,
+  W_4 × W_4 → W_4 contributes c444 x_4^3.
+Only the W_3 parity is imposed; W_4 has even weight and no parity rule
+forces its self-cubic to vanish.
 
 Ground truth:
   - w4_bar.py: W_4 OPE data
@@ -36,6 +37,7 @@ c = Symbol('c')
 c334 = Symbol('c334')  # W_3×W_3→W_4 structure constant (symbolic)
 c444 = Symbol('c444')  # W_4×W_4→W_4 self-coupling (symbolic)
 alpha_44 = Symbol('alpha_44')  # W_4×W_4→Λ coupling (symbolic)
+C_34_W = Symbol('C_34_W')  # W_3×W_4→W_4 stage-4 coefficient (symbolic)
 
 x_T = Symbol('x_T')
 x_3 = Symbol('x_3')
@@ -106,11 +108,12 @@ def w4_weight4_quasi_primaries():
 def w4_cubic():
     """Cubic shadow for W_4.
 
-    GRAVITATIONAL part (from thm:w-universal-gravitational-cubic):
+    Gravitational part (from thm:w-universal-gravitational-cubic):
       Sh_3^grav = 2 x_T^3 + 3 x_T x_3^2 + 4 x_T x_4^2
 
-    NON-GRAVITATIONAL part (from W_3×W_3 → W_4 coupling):
-      The coupling c₃₃₄ contributes a term proportional to x_4 x_3^2.
+    Higher-spin part:
+      The coupling c334 from W_3×W_3 → W_4 contributes x_4 x_3^2.
+      The self-coupling c444 from W_4×W_4 → W_4 contributes x_4^3.
 
       The cubic tensor C(W_4, W_3, W_3) = kappa(W_4, W_3_(1)W_3)
       From the OPE: W_3_(1)W_3 includes c334·W_4 (at the right pole order).
@@ -126,35 +129,27 @@ def w4_cubic():
         c334_normalized = f(c334, c)
       This requires the full symmetrization, which we leave symbolic.
 
-    CHARGE CONSERVATION:
-      x_3 has W_3-charge 1 (odd), x_4 has W_4-charge 1.
-      Monomials in Sh_3 must have even x_3 power (Z_2 from W_3 → -W_3).
-      x_4 has weight 4 (even) → no parity constraint from x_4 alone.
-      But: the W_4 algebra has a Z_3 automorphism (from the sl_4 Weyl group)?
-      Actually the charge conservation is more subtle for W_4.
+    Parity:
+      W_3 has odd parity in the stage packet, so every nonzero cubic monomial
+      has even x_3-degree.  T and W_4 have even weight; no parity rule kills
+      x_4^3.  The terms x_T^2 x_4 and x_3 x_4^2 vanish respectively by
+      C_{TTW4}=0 and odd W_3-count.
 
-      For the gravitational cubic: 2x_T^3 + 3x_T x_3^2 + 4x_T x_4^2
-      (all terms have even x_3 power ✓)
-
-      The non-gravitational: x_4 x_3^2 has even x_3 power ✓.
-      But x_3 x_4^2 would also be allowed... does it appear?
-      From W_4_(1)W_4: this gives output at weight 4+4-4=4, so it could
-      produce W_4 (via c444) or Λ or T-descendants.
-      kappa(W_3, W_4_(1)W_4) = kappa(W_3, stuff). Since W_4_(1)W_4 produces
-      weight-4 states (T-descendants, Λ, W_4), and kappa(W_3, weight-4) = 0
-      (because W_3 has weight 3 ≠ 4), this vanishes.
-      So: NO x_3 x_4^2 term. ✓
-
-    RESULT:
-      Sh_3 = 2 x_T^3 + 3 x_T x_3^2 + 4 x_T x_4^2 + C_{nongrav} x_4 x_3^2
-    where C_{nongrav} depends on c334.
+    Result:
+      Sh_3 = 2 x_T^3 + 3 x_T x_3^2 + 4 x_T x_4^2
+             + c334 x_4 x_3^2 + c444 x_4^3.
     """
     # The non-gravitational coupling normalization:
     # Following the same convention as the gravitational part,
-    # C_{nongrav} should be the structure constant c334 in the polynomial.
+    # the higher-spin couplings are kept symbolic in the polynomial.
     # The precise normalization requires the full symmetrized Lie bracket computation.
-    # For now we use the symbolic c334.
-    return 2*x_T**3 + 3*x_T*x_3**2 + 4*x_T*x_4**2 + c334*x_4*x_3**2
+    return (
+        2*x_T**3
+        + 3*x_T*x_3**2
+        + 4*x_T*x_4**2
+        + c334*x_4*x_3**2
+        + c444*x_4**3
+    )
 
 
 # =============================================================================
@@ -162,13 +157,17 @@ def w4_cubic():
 # =============================================================================
 
 def w4_quartic():
-    """Quartic shadow for W_4 from Λ-exchange AND W_4-exchange.
+    """Reduced quartic contact shadow for W_4.
 
     TWO channels:
       Q^Λ_{ijkl} = C_{ij,Λ} · (N_Λ)^{-1} · C_{kl,Λ}
       Q^{W4}_{ijkl} = C_{ij,W4} · (N_{W4})^{-1} · C_{kl,W4}
 
     Total: Q_{ijkl} = Q^Λ_{ijkl} + Q^{W4}_{ijkl}
+
+    This is the reduced contact packet.  The universal Ward coefficient
+    T(z)W_4(w) ~ 4W_4/(z-w)^2 is already accounted for by the gravitational
+    cubic 4 x_T x_4^2 and is not an independent quartic contact channel.
 
     COUPLINGS to Λ (from the OPE at pole order h_i+h_j-4):
       C_{TT,Λ} = 1 (regular part of TT OPE, same as Virasoro)
@@ -183,34 +182,13 @@ def w4_quartic():
       C_{W3W3,W4} = c334 (from W_3_(1)W_3 at pole 2)
       C_{W4W4,W4} = c444 (from W_4_(3)W_4 at pole 4)
       C_{TW3,W4} = 0 (T_(1)W_3 = 3W_3, no W_4)
-      C_{TW4,W4} = 0 (T_(0)W_4 = ∂W_4, a descendant of W_4, not W_4 itself)
-        Actually T_(h_T+h_4-h_4-1)W_4 = T_(1)W_4 = 4W_4. Pole order 2+4-4=2 → n=1.
-        T_(1)W_4 = 4W_4. So C_{TW4, W4} = 4? Let me check:
-        No — the coupling C_{TW4, W4} is the coefficient of W_4 in the
-        T(z)W_4(w) OPE at pole order h_T+h_4-h_4 = 2. This is pole 2,
-        i.e., n=1: T_(1)W_4 = 4W_4. So C_{TW4, W4} = 4.
-        Wait — but this is just the CONFORMAL WEIGHT eigenvalue, not a
-        structure constant. The coupling C_{AB,P} for the QUARTIC shadow
-        should be the coefficient of the QUASI-PRIMARY P in the OPE,
-        not the full coefficient including descendants.
-        T_(1)W_4 = 4W_4 is the conformal weight eigenvalue. Since W_4 IS
-        a quasi-primary (primary, in fact), the coefficient IS 4.
-        So C_{TW4, W4} = 4!? That can't be right for the quartic shadow...
-
-        Actually: for the quartic exchange, C_{AB,P} is the three-point
-        function coefficient <A(z₁)B(z₂)P(z₃)> normalized by the two-point
-        functions. The conformal Ward identity gives:
-          C_{TW4,W4} = h_{W4} · (N_{W4}/N_T)^{1/2} ? No, this is getting confused.
-
-        The CORRECT extraction: C_{AB,α} is defined such that
-          A(z)B(w) = ... + C_{AB,α} · α(w) / (z-w)^{h_A+h_B-h_α} + descendants
-        For A=T, B=W_4, α=W_4: T(z)W_4(w) ~ 4W_4(w)/(z-w)^2 + ∂W_4/(z-w)
-        So C_{TW4,W4} = 4 at pole 2 (n=1 product).
-
-      C_{W3W4,W4} = C_{34,4,3} (from w4_bar.py, symbolic)
+      C_{TW4,W4} = 0 in the reduced contact packet (Ward action removed)
+      C_{W3W4,W4} = C_34_W (from the stage-4 packet, symbolic)
 
     The FULL quartic (polynomial in x_T, x_3, x_4):
-    Need to enumerate all channels (a,b) with a+b=4 and appropriate charges.
+    contains the Λ pairings, the W_4 self-pairings, and the mixed
+    W_3-W_4 pair square.  It is not the six-entry stage-4 identity packet
+    and not the seven-entry holographic modular Koszul datum.
     """
     alpha_33 = Rational(16) / (5*c + 22)
     N_Lambda = c * (5*c + 22) / 10
@@ -229,12 +207,12 @@ def w4_quartic():
     C_33_W = c334             # W_3_(1)W_3 → W_4
     C_44_W = c444             # W_4_(3)W_4 → W_4 (self-coupling)
     C_T3_W = S.Zero           # T_(1)W_3 = 3W_3, no W_4
-    C_T4_W = Rational(4)      # T_(1)W_4 = 4W_4
-    C_34_W = Symbol('C_34_W') # W_3_(2)W_4 → W_4 (symbolic)
+    C_T4_W = S.Zero           # reduced packet removes the Ward T-action
+    C_34_W_local = C_34_W     # W_3-W_4 -> W_4 stage-4 coefficient
 
     # Quartic channels: Q_{abcd} = Σ_α C_{ab,α}/N_α · C_{cd,α}
     # For a polynomial in (x_T, x_3, x_4), we need Q for each monomial.
-    # Charge conservation: x_3 power must be even.
+    # Parity: x_3 power must be even; x_4 has no independent parity cutoff.
 
     # Channels with their x-monomials:
     # x_T^4:       (TT)(TT) → Q_TTTT
@@ -243,10 +221,6 @@ def w4_quartic():
     # x_3^4:       (33)(33) → Q_3333
     # x_3^2 x_4^2: (33)(44) + (34)(34) → Q_3344 + Q_3434
     # x_4^4:       (44)(44) → Q_4444
-    # Also: x_T x_3^2 x_4: (T3)(34) etc. — but this has odd x_3? No: x_3^2 is even.
-    #   Wait: x_T x_3^2 x_4 has total degree 4, x_3 power = 2 (even) ✓
-    #   Channel: (T,3,3,4) — permutations. Need C_{T3,α}·C_{34,α}/N_α etc.
-
     # For the PURE Λ-exchange:
     Q_TTTT_L = C_TT_L**2 / N_Lambda                    # = 10/[c(5c+22)]
     Q_TT33_L = C_TT_L * C_33_L / N_Lambda              # = α₃₃ · 10/[c(5c+22)]
@@ -261,11 +235,12 @@ def w4_quartic():
     Q_TT44_W = C_TT_W * C_44_W / N_W4                   # = 0
     Q_3333_W = C_33_W**2 / N_W4                          # = c334² · 4/c
     Q_3344_W = C_33_W * C_44_W / N_W4                    # = c334·c444 · 4/c
+    Q_3434_W = C_34_W_local**2 / N_W4                     # = C_34_W² · 4/c
     Q_4444_W = C_44_W**2 / N_W4                          # = c444² · 4/c
 
-    # Mixed channels (T4):
+    # The T-W4 Ward action is not a reduced contact channel.
     Q_T4T4_L = C_T4_L**2 / N_Lambda                     # = 0
-    Q_T4T4_W = C_T4_W**2 / N_W4                         # = 16 · 4/c = 64/c
+    Q_T4T4_W = C_T4_W**2 / N_W4                         # = 0
 
     # TOTAL quartic coefficients (Λ + W_4):
     channels = {
@@ -275,6 +250,7 @@ def w4_quartic():
         'Q_T4T4': simplify(Q_T4T4_L + Q_T4T4_W),
         'Q_3333': simplify(Q_3333_L + Q_3333_W),
         'Q_3344': simplify(Q_3344_L + Q_3344_W),
+        'Q_3434': simplify(Q_3434_W),
         'Q_4444': simplify(Q_4444_L + Q_4444_W),
     }
 
@@ -284,10 +260,10 @@ def w4_quartic():
 def w4_quartic_structure():
     """Structural analysis of the W_4 quartic shadow.
 
-    KEY RESULT: The quartic splits into Λ-mediated and W_4-mediated parts.
+    The reduced quartic splits into Λ-mediated and W_4-mediated parts.
 
     Λ-mediated: SAME structure as W_3 (all channels involve N_Λ denominator).
-    W_4-mediated: NEW channels that are ABSENT in W_3.
+    W_4-mediated: channels absent in W_3 because W_3 has no weight-4 primary.
 
     The denominator filtration has TWO sources:
       (5c+22) from Λ
@@ -299,27 +275,27 @@ def w4_quartic_structure():
       Q_TT44 (T-T cross W_4-W_4): involves α₄₄/(c(5c+22))
 
     Channels where ONLY W_4 contributes:
-      Q_T4T4 (T-W_4 self-exchange): 64/c [NO (5c+22) factor!]
+      Q_3434 (mixed W_3-W_4 pair square): C_34_W^2 · 4/c
 
     Channels where BOTH contribute:
       Q_3333 (pure W_3): α₃₃²/(c(5c+22)) + c334²·4/c
       Q_3344 (W_3-W_4 cross): α₃₃·α₄₄/(c(5c+22)) + c334·c444·4/c
       Q_4444 (pure W_4): α₄₄²/(c(5c+22)) + c444²·4/c
 
-    CRITICAL OBSERVATION: Q_T4T4 = 64/c has NO (5c+22) factor.
-    This BREAKS the uniform denominator filtration from W_3.
-    The W_4-exchange channel introduces a qualitatively different singularity.
+    The Ward coefficient T_(1)W_4 = 4W_4 is not listed as Q_T4T4; it belongs
+    to the universal gravitational cubic, not to the reduced quartic contact.
     """
     channels = w4_quartic()
     return {
         'channels': channels,
         'Lambda_only': ['Q_TTTT', 'Q_TT33', 'Q_TT44'],
-        'W4_only': ['Q_T4T4'],
+        'W4_only': ['Q_3434'],
         'both': ['Q_3333', 'Q_3344', 'Q_4444'],
+        'reduced_zero': ['Q_T4T4'],
         'uniform_filtration_broken': True,
         'reason': (
-            'Q_T4T4 = C_{TW4,W4}^2/N_{W4} = 16·4/c = 64/c has NO (5c+22) factor. '
-            'The W_4-exchange channel bypasses the Λ propagator entirely.'
+            'Q_3434 = C_34_W^2/N_{W4} = 4*C_34_W^2/c has no Lambda-norm '
+            'factor. The W_4-exchange channel bypasses the Λ propagator.'
         ),
     }
 
@@ -333,7 +309,8 @@ def w4_shadow_tower(max_arity=6):
 
     INPUTS:
       Sh_2 = (c/2)x_T^2 + (c/3)x_3^2 + (c/4)x_4^2
-      Sh_3 = 2x_T^3 + 3x_T x_3^2 + 4x_T x_4^2 + c334·x_4·x_3^2
+      Sh_3 = 2x_T^3 + 3x_T x_3^2 + 4x_T x_4^2
+             + c334·x_4·x_3^2 + c444·x_4^3
       Sh_4 = from two-channel exchange (symbolic in c334, c444, α₄₄)
 
     PROPAGATED: Sh_r for r >= 5 via master equation.
@@ -356,32 +333,14 @@ def w4_shadow_tower(max_arity=6):
     shadows[2] = (c/2)*x_T**2 + (c/3)*x_3**2 + (c/4)*x_4**2
     shadows[3] = w4_cubic()
 
-    # Quartic from two-channel exchange (simplified for tractability)
+    # Quartic from the reduced two-channel contact packet.
     q = w4_quartic()
-    # Build the quartic polynomial with multinomial factors
     shadows[4] = expand(
         q['Q_TTTT'] * x_T**4 +
         6 * q['Q_TT33'] * x_T**2 * x_3**2 +
         6 * q['Q_TT44'] * x_T**2 * x_4**2 +
-        6 * q['Q_T4T4'] * x_T**2 * x_4**2 +  # Wait: T4T4 has monomial x_T^2 x_4^2
-        # Hmm: Q_TT44 and Q_T4T4 both contribute to x_T^2 x_4^2.
-        # Need to be more careful with the multinomial assignment.
         q['Q_3333'] * x_3**4 +
-        6 * q['Q_3344'] * x_3**2 * x_4**2 +
-        q['Q_4444'] * x_4**4
-    )
-    # Note: The x_T^2 x_4^2 coefficient receives contributions from
-    # BOTH Q_TT44 (Λ-exchange of TT with 44) and Q_T4T4 (W_4-exchange of T4 with T4).
-    # These are different CHANNELS contributing to the same MONOMIAL.
-    # The total coefficient of x_T^2 x_4^2 is 6*(Q_TT44 + Q_T4T4).
-
-    # Fix: combine the x_T^2 x_4^2 terms properly
-    shadows[4] = expand(
-        q['Q_TTTT'] * x_T**4 +
-        6 * q['Q_TT33'] * x_T**2 * x_3**2 +
-        6 * (q['Q_TT44'] + q['Q_T4T4']) * x_T**2 * x_4**2 +
-        q['Q_3333'] * x_3**4 +
-        6 * q['Q_3344'] * x_3**2 * x_4**2 +
+        6 * (q['Q_3344'] + q['Q_3434']) * x_3**2 * x_4**2 +
         q['Q_4444'] * x_4**4
     )
 
@@ -433,7 +392,7 @@ def w4_autonomy_checks():
 def w4_denominator_analysis():
     """Analyze the denominator structure of the W_4 quartic.
 
-    The W_4 quartic has a RICHER denominator than W_3:
+    The reduced W_4 contact quartic has a richer denominator than W_3:
 
     W_3 quartic: all channels have denominator ~ c · (5c+22)^k
     W_4 quartic: channels split into three types:
@@ -441,18 +400,19 @@ def w4_denominator_analysis():
       Type II (W_4-only): denominator ~ c (NO (5c+22))
       Type III (both): denominator ~ c · (5c+22)^j + c (sum of two terms)
 
-    Type II channels are the NEW FEATURE. They arise from the W_4-exchange
-    and have a SIMPLER singularity structure (only c = 0, not c = -22/5).
+    Type II channels arise from the W_4-exchange and do not carry the
+    Λ-propagator pole at c = -22/5.
 
-    PHYSICAL INTERPRETATION:
+    Interpretation:
       At c = -22/5 (Lee-Yang): Λ decouples (null vector), so all Λ-mediated
-      channels diverge. But W_4-mediated channels remain REGULAR.
-      The W_4-exchange is INSENSITIVE to the Lee-Yang critical point.
+      channels diverge. Reduced W_4-propagator summands remain regular as
+      contact propagators; substituting a concrete bootstrap formula may make
+      a numerator vanish there, but it does not create the Λ-norm pole.
     """
     q = w4_quartic()
 
-    # Q_T4T4 = 64/c has pole only at c=0, NOT at c=-22/5
-    Q_T4T4 = q['Q_T4T4']
+    # Q_3434 = 4*C_34_W^2/c has pole only at c=0 in the reduced symbolic packet.
+    Q_3434 = q['Q_3434']
 
     # Q_TTTT = 10/[c(5c+22)] has poles at c=0 and c=-22/5
     Q_TTTT = q['Q_TTTT']
@@ -460,11 +420,11 @@ def w4_denominator_analysis():
     return {
         'Lambda_channel_poles': [0, Rational(-22, 5)],
         'W4_channel_poles': [0],
-        'Q_T4T4': Q_T4T4,
+        'Q_3434': Q_3434,
         'Q_TTTT': Q_TTTT,
         'lee_yang_behavior': (
             'At c=-22/5: Λ-channels diverge (Λ decouples), '
-            'W_4-channels remain regular (W_4 does not decouple).'
+            'reduced W_4-propagator summands have no Lambda-norm pole.'
         ),
         'uniform_filtration': 'BROKEN by W_4-exchange channels',
     }

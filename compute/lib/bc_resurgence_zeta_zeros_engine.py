@@ -1,83 +1,48 @@
-r"""Benjamin-Chang resurgent structure near Riemann zeta zeros.
+r"""Finite diagnostics for Benjamin-Chang scattering poles and shadow data.
 
-MATHEMATICAL FRAMEWORK
-======================
-
-The constrained Epstein zeta function epsilon^c_s(A) (Benjamin-Chang,
-arXiv:2208.02259) satisfies the functional equation
+The constrained Epstein zeta function epsilon^c_s(A) satisfies the
+functional equation
 
     epsilon^c_{c/2-s} = F_c(s) * epsilon^c_{c/2+s-1}
 
-where the scattering factor
+with scattering factor
 
     F_c(s) = Gamma(s)*Gamma(s+c/2-1)*zeta(2s)
-             / (pi^{2s-1/2}*Gamma(c/2-s)*Gamma(s-1/2)*zeta(2s-1))
+             / (pi^{2s-1/2}*Gamma(c/2-s)*Gamma(s-1/2)*zeta(2s-1)).
 
-has POLES at s = (1+rho_n)/2 where rho_n ranges over the nontrivial
-zeros of the Riemann zeta function.
+The denominator zeta(2s-1) gives uncompleted-factor poles at
+s = (1+rho_n)/2.  This module evaluates those pole locations and residue
+factors, and compares them with the Virasoro scalar shadow tower.  It does
+not certify analytic continuation of spectral data off the real line, a
+nonperturbative completion, an all-genus partition theorem, or a
+reconstruction of zeta zeros from finite shadow data.
 
-This module computes the RESURGENT structure of epsilon^c_s near these poles,
-connecting the Borel singularity structure to the shadow obstruction tower
-and the trans-series expansion of the shadow generating function.
+Certified scalar facts in this file are limited to the local scalar lane:
+kappa(Vir_c)=c/2, S_3=2, S_4=10/[c(5c+22)], Delta=40/(5c+22), the
+Virasoro branch-root rho formula, and Heisenberg kappa=rank*level with a
+terminating depth-2 tower.  Bernoulli/A-hat genus coefficients are exact
+facts in the genus engines and manuscript surfaces, not consequences of the
+finite Borel or zeta-zero diagnostics here.
 
-SEVEN COMPUTATIONS
-==================
+Object firewall:
+    A, B(A), A^i, A^!, and Z_ch^der(A) are distinct.  Omega(B(A))=A is
+    bar-cobar inversion.  A^! is the Verdier/continuous linear dual branch.
+    Z_ch^der(A) is the Hochschild bulk.
 
-1. BOREL PLANE OF F_c(s): The scattering factor has poles at s_n = (1+rho_n)/2.
-   Under RH, s_n = 3/4 + i*gamma_n/2 with gamma_n the imaginary parts of
-   zeta zeros.  In the Borel plane (Borel transform in the variable 1/s),
-   these become singularities at zeta_n = 2/(1+rho_n).
-
-2. STOKES LINES: The Stokes lines of epsilon^c_s in the complex s-plane
-   separate regions where different trans-series contributions dominate.
-   They emanate from the zeta-zero poles and have directions determined by
-   the phase of the instanton action A_n = s_n.
-
-3. LATERAL BOREL RESUMMATION: The lateral Borel sums S_+/- differ by the
-   Stokes automorphism.  The Stokes jump at each zeta zero encodes the
-   residue A_c(rho_n).
-
-4. ALIEN DERIVATIVE: Delta_{omega_n} epsilon^c_s = the alien derivative at
-   the singularity omega_n corresponding to the n-th zeta zero.  Computed
-   from the universal residue factor A_c(rho_n).
-
-5. RESURGENT BRIDGE: The shadow tower F_g ~ C*rho^g*g^{-5/2} with action
-   A = -log(rho).  The Benjamin-Chang poles at gamma_n are at
-   omega_n = 2/(1+1/2+i*gamma_n) under RH.  The Stokes constants
-   S_n = Res_{s=s_n} F_c(s) * [perturbative coefficient].
-
-6. TRANS-SERIES at c=13: The self-dual point has enhanced resurgent
-   structure from Koszul self-duality c -> 26-c = 13.
-
-7. MEDIAN RESUMMATION: The median sum (average of lateral Borel sums)
-   should give the correct nonperturbative value.
-
-BEILINSON WARNINGS
-==================
-
-AP15: The genus-1 propagator is E_2* (quasi-modular).  The Borel transform
-maps the quasi-modular series to a holomorphic object in the Borel plane.
-
-AP24: kappa + kappa' = 0 for KM/free fields, = 13 for Virasoro.  At c=13
-(self-dual), kappa = kappa' = 13/2.
-
-AP29: delta_kappa = kappa - kappa' (complementarity asymmetry, vanishes at
-c=13) is DIFFERENT from kappa_eff = kappa(matter) + kappa(ghost) (anomaly
-cancellation, vanishes at c=26).
-
-AP38: Literature normalization conventions: verify against specific sources.
-
-AP39: kappa = c/2 is specific to Virasoro.  For affine KM: kappa =
-dim(g)*(k+h^v)/(2h^v).  NEVER copy between families without recomputation.
-
-AP46: eta(q) = q^{1/24} prod(1-q^n).  The q^{1/24} is NOT optional.
+Kernel constants, sourced from chapters/examples/landscape_census.tex:
+    affine raw collision residue: k*Omega_tr/z
+    KZ normalization: Omega/((k+h^vee)z)
+    Heisenberg: k/z
+    Virasoro: (c/2)/z^3 + 2T/z
 
 Manuscript references:
     eq:constrained-epstein-fe (arithmetic_shadows.tex)
     def:universal-residue-factor (arithmetic_shadows.tex)
+    rem:structural-obstruction (arithmetic_shadows.tex)
+    rem:shadow-riemann-independence (arithmetic_shadows.tex)
     thm:shadow-radius (higher_genus_modular_koszul.tex)
     thm:riccati-algebraicity (higher_genus_modular_koszul.tex)
-    thm:mc2-bar-intrinsic (higher_genus_modular_koszul.tex)
+    cor:virasoro-shadow-radius (higher_genus_modular_koszul.tex)
     [BenjaminChang22]: arXiv:2208.02259
 """
 
@@ -110,6 +75,76 @@ except ImportError:
 PI = math.pi
 TWO_PI = 2.0 * PI
 
+STATUS_EXACT_SCALAR = "exact_scalar_fact"
+STATUS_FINITE_WINDOW = "finite_window_diagnostic"
+STATUS_BOREL_DIAGNOSTIC = "borel_transform_diagnostic"
+STATUS_ZETA_EVIDENCE = "zeta_zero_evidence"
+STATUS_CONDITIONAL_ANALYTIC = "conditional_analytic_hypothesis"
+STATUS_NON_CERTIFIED = "non_certified_diagnostic"
+
+PROHIBITED_PROMOTION_STATUSES = frozenset({
+    "proved_nonperturbative_completion",
+    "certified_analytic_continuation",
+    "all_genus_shadow_partition_theorem",
+    "zeta_zero_reconstruction",
+    "koszul_duality_from_scalar_data",
+})
+
+CONDITIONAL_ANALYTIC_HYPOTHESES = (
+    "Borel summability in the requested sector",
+    "admissible contour avoiding singular directions",
+    "analytic continuation of spectral coefficients off the real line",
+    "Stokes constants matched to a proved alien-calculus model",
+)
+
+KERNEL_CONSTANTS = {
+    "affine_raw_collision": "k*Omega_tr/z",
+    "affine_KZ": "Omega/((k+h^vee)z)",
+    "heisenberg": "k/z",
+    "virasoro": "(c/2)/z^3 + 2T/z",
+}
+
+OBJECT_FIREWALLS = {
+    "distinct_objects": ("A", "B(A)", "A^i", "A^!", "Z_ch^der(A)"),
+    "bar_cobar": "Omega(B(A))=A is bar-cobar inversion",
+    "koszul_dual": "A^! is the Verdier/continuous-linear dual branch",
+    "bulk": "Z_ch^der(A) is the Hochschild bulk",
+}
+
+
+def diagnostic_scope() -> Dict[str, Any]:
+    """Return the certification boundaries enforced by this engine."""
+    return {
+        "exact_scalar_facts": {
+            "virasoro_kappa": "kappa(Vir_c)=c/2",
+            "virasoro_S3": "S_3=2",
+            "virasoro_S4": "S_4=10/[c(5c+22)]",
+            "virasoro_Delta": "Delta=40/(5c+22)",
+            "heisenberg_kappa": "kappa(H_k^{rank})=rank*level",
+        },
+        "exact_genus_facts_not_computed_here": (
+            "Bernoulli/A-hat scalar genus coefficients",
+        ),
+        "finite_window_diagnostics": (
+            "truncated shadow coefficients through r_max",
+            "finite quadrature of a truncated Borel-Laplace integral",
+            "finite Pade poles from a finite coefficient list",
+        ),
+        "borel_transform_diagnostics": (
+            "finite-window Borel transform values",
+            "lateral-sum numerical comparison",
+            "median average of two finite lateral quadratures",
+        ),
+        "zeta_zero_evidence": (
+            "omega_n=1/s_n for s_n=(1+rho_n)/2",
+            "A_c(rho_n)=Res_{s=s_n} F_c(s) in the uncompleted factor",
+        ),
+        "conditional_analytic_hypotheses": CONDITIONAL_ANALYTIC_HYPOTHESES,
+        "prohibited_promotions": tuple(sorted(PROHIBITED_PROMOTION_STATUSES)),
+        "object_firewalls": OBJECT_FIREWALLS,
+        "kernel_constants": KERNEL_CONSTANTS,
+    }
+
 
 # =====================================================================
 # Section 0: Virasoro shadow invariants (self-contained)
@@ -120,7 +155,7 @@ def virasoro_kappa(c_val: float) -> float:
     return c_val / 2.0
 
 
-def virasoro_shadow_invariants(c_val: float) -> Dict[str, float]:
+def virasoro_shadow_invariants(c_val: float) -> Dict[str, Any]:
     r"""Shadow invariants for Virasoro at central charge c.
 
     kappa = c/2, alpha = 2, S_4 = 10/(c(5c+22)),
@@ -156,6 +191,8 @@ def virasoro_shadow_invariants(c_val: float) -> Dict[str, float]:
         'R': R,
         'rho': rho,
         'theta': theta,
+        'certification_status': STATUS_EXACT_SCALAR,
+        'source': 'chapters/examples/landscape_census.tex',
     }
 
 
@@ -237,14 +274,18 @@ def universal_residue_factor(rho_val, c_val, dps=30):
 
 
 def borel_singularity_from_zeta_zero(n, dps=30):
-    r"""Borel singularity location from the n-th zeta zero.
+    r"""Diagnostic Borel-plane location from the n-th zeta zero.
 
     The scattering factor F_c(s) has poles at s_n = (1+rho_n)/2.
-    In the Borel plane (Borel transform in the variable 1/s), the
-    singularity is at zeta_n = 2/(1+rho_n) = 1/s_n.
+    In the formal 1/s Borel coordinate used here, the corresponding
+    location is zeta_n = 2/(1+rho_n) = 1/s_n.
 
     Under RH: rho_n = 1/2 + i*gamma_n, so
     s_n = 3/4 + i*gamma_n/2 and zeta_n = 2/(3/2 + i*gamma_n).
+
+    This is evidence for where the uncompleted scattering factor places
+    singular data.  It is not a reconstruction of zeta zeros from the
+    finite shadow tower.
     """
     if not HAS_MPMATH:
         raise RuntimeError("mpmath required")
@@ -261,6 +302,8 @@ def borel_singularity_from_zeta_zero(n, dps=30):
             'borel_singularity': complex(zeta_n),
             'borel_singularity_modulus': float(mpfabs(zeta_n)),
             'borel_singularity_arg': float(mparg(zeta_n)),
+            'diagnostic_status': STATUS_ZETA_EVIDENCE,
+            'certifies_zeta_zero_reconstruction': False,
         }
 
 
@@ -352,13 +395,13 @@ def stokes_direction_large_gamma(gamma_n):
 # =====================================================================
 
 def stokes_constant_at_zero(n, c_val, dps=30):
-    r"""Stokes constant S_n = Res_{s=s_n} F_c(s).
+    r"""Residue diagnostic S_n = Res_{s=s_n} F_c(s).
 
     This is the residue of the scattering factor at the pole s_n = (1+rho_n)/2.
     The residue equals the universal residue factor A_c(rho_n).
 
-    The Stokes constant controls the jump in the lateral Borel resummation:
-    S_+ - S_- = 2*pi*i * S_n * (one-instanton contribution)
+    Interpreting this residue as a Stokes constant for a completed
+    alien-calculus model is conditional on additional analytic data.
     """
     if not HAS_MPMATH:
         raise RuntimeError("mpmath required")
@@ -374,6 +417,8 @@ def stokes_constant_at_zero(n, c_val, dps=30):
             'stokes_modulus': abs(A_c),
             'stokes_phase': cmath.phase(A_c),
             'c': c_val,
+            'diagnostic_status': STATUS_ZETA_EVIDENCE,
+            'certifies_alien_calculus': False,
         }
 
 
@@ -392,14 +437,14 @@ def stokes_constants_spectrum(c_val, n_zeros=10, dps=30):
 
 
 def stokes_constant_decay_rate(c_val, n_zeros=10, dps=30):
-    r"""Measure the decay rate of |S_n| as a function of gamma_n.
+    r"""Measure the finite-window decay of |S_n| as a function of gamma_n.
 
     From Stirling's approximation of the Gamma factors in A_c(rho),
     the leading decay is:
         |A_c(rho)| ~ |gamma_n|^{-(c-1)/2} * |zeta(1+rho_n)| / |zeta'(rho_n)|
 
-    The |zeta(1+i*gamma)/zeta'(1/2+i*gamma)| ratio grows like log(gamma)
-    on average, so the Stokes constants decay polynomially in gamma_n.
+    The returned list is a finite-window diagnostic; it is not a theorem
+    about all zero ordinates.
     """
     if not HAS_MPMATH:
         raise RuntimeError("mpmath required")
@@ -418,13 +463,18 @@ def stokes_constant_decay_rate(c_val, n_zeros=10, dps=30):
 
 
 # =====================================================================
-# Section 4: Lateral Borel resummation of the shadow tower
+# Section 4: Lateral Borel diagnostics of the shadow tower
 # =====================================================================
 
 def shadow_borel_transform(c_val, xi, r_max=60):
-    r"""Borel transform of the shadow tower: B[G](xi) = sum_{r>=2} S_r xi^r / r!.
+    r"""Finite Borel-transform diagnostic for the shadow tower.
 
-    This is an ENTIRE function (r! kills geometric growth rho^r).
+    The returned value is
+        sum_{2 <= r <= r_max} S_r xi^r / r!.
+
+    The exact Borel transform of the algebraic Virasoro shadow series is
+    expected to be entire from the proved exponential coefficient bound,
+    but this routine evaluates only the finite truncation.
     """
     coeffs = virasoro_shadow_coefficients(c_val, r_max)
     xi = complex(xi)
@@ -440,9 +490,12 @@ def shadow_borel_transform(c_val, xi, r_max=60):
 
 def lateral_borel_sum_shadow(c_val, t_val, epsilon=0.02, r_max=60,
                               n_quad=2000, xi_max=80.0):
-    r"""Lateral Borel sum of the shadow tower along direction epsilon.
+    r"""Finite lateral Borel-Laplace diagnostic along direction epsilon.
 
     S_epsilon[G](t) = int_0^{inf*e^{i*eps}} B[G](xi) e^{-xi/t} dxi/t
+
+    The integral is truncated at xi_max and uses the finite Borel
+    polynomial through r_max.
     """
     coeffs = virasoro_shadow_coefficients(c_val, r_max)
     t = complex(t_val)
@@ -465,7 +518,7 @@ def lateral_borel_sum_shadow(c_val, t_val, epsilon=0.02, r_max=60,
 
 def lateral_borel_sums_shadow(c_val, t_val, epsilon=0.02, r_max=60,
                                n_quad=2000, xi_max=80.0):
-    r"""Both lateral Borel sums and the Stokes jump for the shadow tower."""
+    r"""Both finite lateral diagnostics and their numerical difference."""
     S_plus = lateral_borel_sum_shadow(c_val, t_val, +epsilon, r_max,
                                        n_quad, xi_max)
     S_minus = lateral_borel_sum_shadow(c_val, t_val, -epsilon, r_max,
@@ -478,6 +531,13 @@ def lateral_borel_sums_shadow(c_val, t_val, epsilon=0.02, r_max=60,
         'stokes_jump': S_plus - S_minus,
         'median_sum': (S_plus + S_minus) / 2.0,
         'epsilon': epsilon,
+        'diagnostic_status': STATUS_BOREL_DIAGNOSTIC,
+        'certifies_nonperturbative_completion': False,
+        'analytic_continuation_certified': False,
+        'conditional_hypotheses': CONDITIONAL_ANALYTIC_HYPOTHESES,
+        'r_max': r_max,
+        'n_quad': n_quad,
+        'xi_max': xi_max,
     }
 
 
@@ -486,17 +546,17 @@ def lateral_borel_sums_shadow(c_val, t_val, epsilon=0.02, r_max=60,
 # =====================================================================
 
 def alien_derivative_at_zeta_zero(n, c_val, dps=30):
-    r"""Alien derivative of epsilon^c_s at the singularity from the n-th zeta zero.
+    r"""Residue proxy at the singularity from the n-th zeta zero.
 
-    The alien derivative Delta_{omega_n} epsilon^c measures the
-    discontinuity of the Borel resummation at the singularity omega_n.
+    In a completed resurgent model, an alien derivative would measure the
+    discontinuity of the Borel resummation at omega_n.
 
     For a simple pole of F_c(s) at s_n = (1+rho_n)/2, the alien
-    derivative is proportional to the residue A_c(rho_n):
+    derivative coefficient would be proportional to the residue A_c(rho_n):
 
         Delta_{omega_n} epsilon^c = A_c(rho_n) * (shifted epsilon)
 
-    where omega_n = 1/s_n is the Borel singularity.
+    This function returns only that residue coefficient and location.
     """
     if not HAS_MPMATH:
         raise RuntimeError("mpmath required")
@@ -517,11 +577,14 @@ def alien_derivative_at_zeta_zero(n, c_val, dps=30):
             'alien_derivative_coefficient': A_c,
             'alien_modulus': abs(A_c),
             'c': c_val,
+            'diagnostic_status': STATUS_ZETA_EVIDENCE,
+            'certifies_alien_calculus': False,
+            'certifies_borel_discontinuity': False,
         }
 
 
 def alien_derivative_spectrum(c_val, n_zeros=10, dps=30):
-    """Spectrum of alien derivatives at zeta-zero singularities."""
+    """Finite list of residue proxies at zeta-zero singularities."""
     if not HAS_MPMATH:
         raise RuntimeError("mpmath required")
     return [alien_derivative_at_zeta_zero(n, c_val, dps)
@@ -529,12 +592,12 @@ def alien_derivative_spectrum(c_val, n_zeros=10, dps=30):
 
 
 # =====================================================================
-# Section 6: Resurgent bridge — shadow tower meets zeta zeros
+# Section 6: Finite scale comparison for shadow and zeta-zero data
 # =====================================================================
 
 @dataclass
 class ResurgentBridgeData:
-    """Data connecting shadow tower resurgence to zeta-zero structure."""
+    """Finite comparison data for shadow and zeta-zero diagnostics."""
     c: float
     kappa: float
     rho_shadow: float        # shadow growth rate
@@ -542,18 +605,27 @@ class ResurgentBridgeData:
     borel_sings_zeta: List[complex]   # Borel singularities from zeta zeros
     stokes_constants: List[complex]   # S_n = A_c(rho_n)
     gamma_values: List[float]         # imaginary parts of zeta zeros
+    diagnostic_status: str = STATUS_FINITE_WINDOW
+    certifies_zeta_zero_reconstruction: bool = False
+    certifies_all_genus_partition_theorem: bool = False
+    conditional_hypotheses: Tuple[str, ...] = field(
+        default_factory=lambda: CONDITIONAL_ANALYTIC_HYPOTHESES
+    )
 
 
 def build_resurgent_bridge(c_val, n_zeros=10, dps=30):
-    r"""Build the resurgent bridge between shadow tower and zeta zeros.
+    r"""Build finite comparison data between shadow and zeta-zero scales.
 
     The shadow tower has instanton action A_shadow = 1/t_branch (from Q_L).
     The Benjamin-Chang FE has singularities at omega_n = 2/(1+rho_n).
 
-    The BRIDGE: both arise from the same modular-invariant partition
-    function Z_A(tau), but in different asymptotic regimes:
-    - Shadow tower: arity expansion (algebraic, from sqrt(Q_L))
-    - BC singularities: spectral expansion (analytic, from Eisenstein)
+    The two lists live in different regimes:
+    - Shadow tower: scalar arity expansion from sqrt(Q_L).
+    - BC singularities: uncompleted scattering-factor residues.
+
+    A theorem identifying these two regimes requires analytic
+    continuation and spectral-coefficient hypotheses not supplied by
+    finite scalar data.
     """
     if not HAS_MPMATH:
         raise RuntimeError("mpmath required")
@@ -590,13 +662,11 @@ def build_resurgent_bridge(c_val, n_zeros=10, dps=30):
 
 
 def resurgent_bridge_scales(c_val, n_zeros=5, dps=30):
-    r"""Compare the two scales: shadow instanton action vs zeta-zero positions.
+    r"""Compare shadow branch-point scale with zeta-zero pole positions.
 
     The shadow instanton action |A_shadow| = rho_shadow sets the
-    non-perturbative scale in the arity direction.
+    algebraic branch scale in the arity direction.
     The zeta-zero positions |omega_n| ~ 2/gamma_n set the spectral scale.
-
-    For the bridge to be meaningful, we need these scales to interact.
     """
     bridge = build_resurgent_bridge(c_val, n_zeros, dps)
 
@@ -604,6 +674,9 @@ def resurgent_bridge_scales(c_val, n_zeros=5, dps=30):
         'c': c_val,
         'shadow_action_modulus': abs(bridge.action_shadow),
         'shadow_rho': bridge.rho_shadow,
+        'diagnostic_status': STATUS_FINITE_WINDOW,
+        'certifies_zeta_zero_reconstruction': False,
+        'certifies_all_genus_partition_theorem': False,
     }
 
     for i, (omega, gamma, sc) in enumerate(zip(
@@ -626,17 +699,17 @@ def resurgent_bridge_scales(c_val, n_zeros=5, dps=30):
 # =====================================================================
 
 def trans_series_c13(n_instanton=3, r_max=60, n_zeros=5, dps=30):
-    r"""Trans-series expansion of epsilon^{13}_s at the self-dual point.
+    r"""Finite trans-series ansatz data at the scalar self-dual point.
 
-    At c = 13, kappa = kappa' = 13/2, and the Koszul duality c -> 26-c
-    is a self-duality.  This means:
-    - F_{13}(s) has a symmetry under s -> 7-s (reflection around s=7/2)
-    - The Gamma factors Gamma(s+11/2)/Gamma(13/2-s) are palindromic
+    At c = 13, kappa(Vir_c)=kappa(Vir_{26-c})=13/2 on the Verdier
+    scalar Virasoro lane.  General Koszul-duality certification and
+    Hochschild-bulk identification require separate data beyond this
+    residue ansatz.
 
-    The trans-series:
-    epsilon^{13}_s ~ sum_{k>=0} sigma^k e^{-k*A/s} sum_n a_{k,n} s^{-n}
+    The finite ansatz has the shape:
+        epsilon^{13}_s ~ sum_{k>=0} sigma^k e^{-k*A/s} sum_n a_{k,n} s^{-n}
 
-    where A is determined by the nearest singularity.
+    The returned object records coefficients and residues only.
     """
     if not HAS_MPMATH:
         raise RuntimeError("mpmath required")
@@ -681,15 +754,20 @@ def trans_series_c13(n_instanton=3, r_max=60, n_zeros=5, dps=30):
         'perturbative_coeffs': coeffs[:min(10, len(coeffs))],
         'zeta_stokes': zeta_stokes,
         'n_instanton_sectors': n_instanton,
+        'diagnostic_status': STATUS_FINITE_WINDOW,
+        'certifies_nonperturbative_completion': False,
+        'certifies_koszul_duality': False,
     }
 
 
 def trans_series_evaluate_c13(s_val, sigma=1.0, n_perturbative=40,
                                 n_instanton=2, dps=30):
-    r"""Evaluate the trans-series at s = s_val with trans-series parameter sigma.
+    r"""Evaluate the finite c=13 ansatz at s = s_val.
 
     The perturbative sector is the shadow tower evaluated at t = 1/s.
-    The instanton corrections are e^{-A*s} (in the s-variable).
+    The extra terms are model corrections e^{-A*s} from branch points.
+    The legacy key ``full`` denotes this ansatz value, not a certified
+    nonperturbative completion.
     """
     c_val = 13.0
     coeffs = virasoro_shadow_coefficients(c_val, n_perturbative)
@@ -707,6 +785,8 @@ def trans_series_evaluate_c13(s_val, sigma=1.0, n_perturbative=40,
             'perturbative': G_pert,
             'full': G_pert,
             'instanton_corrections': [],
+            'diagnostic_status': STATUS_FINITE_WINDOW,
+            'full_is_certified_completion': False,
         }
 
     # Instanton corrections from shadow branch points
@@ -743,24 +823,25 @@ def trans_series_evaluate_c13(s_val, sigma=1.0, n_perturbative=40,
         'perturbative': G_pert,
         'full': G_full,
         'instanton_corrections': corrections,
+        'diagnostic_status': STATUS_FINITE_WINDOW,
+        'full_is_certified_completion': False,
     }
 
 
 # =====================================================================
-# Section 8: Median resummation
+# Section 8: Median finite diagnostic
 # =====================================================================
 
 def median_resummation(c_val, t_val, epsilon=0.02, r_max=60,
                         n_quad=2000, xi_max=80.0):
-    r"""Median Borel resummation (average of lateral sums).
+    r"""Median of two finite lateral Borel diagnostics.
 
     S_med[G](t) = (S_+[G](t) + S_-[G](t)) / 2
 
-    This should give the correct nonperturbative value when the
-    series is Borel summable (class M algebras).
-
-    Verification: for small |t| (inside convergence radius), the
-    median sum should agree with the direct partial sum.
+    Agreement with a direct partial sum inside the algebraic convergence
+    radius is a finite-window check.  Outside the radius this routine
+    reports a numerical diagnostic, not a certified analytic continuation
+    or nonperturbative completion.
     """
     data = lateral_borel_sums_shadow(c_val, t_val, epsilon, r_max,
                                       n_quad, xi_max)
@@ -777,14 +858,20 @@ def median_resummation(c_val, t_val, epsilon=0.02, r_max=60,
         'S_minus': data['S_minus'],
         'stokes_jump': data['stokes_jump'],
         'agreement_error': abs(data['median_sum'] - partial),
+        'diagnostic_status': STATUS_BOREL_DIAGNOSTIC,
+        'agreement_status': STATUS_FINITE_WINDOW,
+        'certifies_nonperturbative_completion': False,
+        'analytic_continuation_certified': False,
+        'conditional_hypotheses': CONDITIONAL_ANALYTIC_HYPOTHESES,
     }
 
 
 def median_vs_direct_comparison(c_val, t_values, r_max=60):
-    r"""Compare median resummation with direct evaluation at multiple points.
+    r"""Compare median diagnostics with partial sums at multiple points.
 
-    For |t| < 1/rho (convergence region), both should agree.
-    For |t| > 1/rho (divergence region), only the median sum is well-defined.
+    For |t| < 1/rho the algebraic Taylor series converges.  For
+    |t| > 1/rho the analytic continuation is supplied by the algebraic
+    function sqrt(Q_L), not by the median diagnostic.
     """
     inv = virasoro_shadow_invariants(c_val)
     rho = inv['rho']
@@ -801,6 +888,8 @@ def median_vs_direct_comparison(c_val, t_values, r_max=60):
             'partial_sum': data['partial_sum'],
             'relative_error': (abs(data['median_sum'] - data['partial_sum'])
                                / max(abs(data['partial_sum']), 1e-100)),
+            'diagnostic_status': STATUS_BOREL_DIAGNOSTIC,
+            'median_certified_outside_radius': False,
         })
 
     return {
@@ -808,33 +897,29 @@ def median_vs_direct_comparison(c_val, t_values, r_max=60):
         'convergence_radius': convergence_radius,
         'rho': rho,
         'results': results,
+        'radius_status': STATUS_EXACT_SCALAR,
+        'outside_radius_status': STATUS_NON_CERTIFIED,
     }
 
 
 # =====================================================================
-# Section 9: Bridge equation verification
+# Section 9: Algebraic sheet and residue comparison
 # =====================================================================
 
 def bridge_equation_check(c_val, n=1, dps=30):
-    r"""Check the bridge equation relating Stokes constants to MC structure.
+    r"""Check algebraic sheet data and the zeta-residue side by side.
 
-    The bridge equation constrains the alien derivatives via the MC
-    equation D*Theta + (1/2)[Theta, Theta] = 0.  At leading order:
+    The MC equation D*Theta + (1/2)[Theta, Theta] = 0 constrains the
+    shadow tower.  This routine does not prove that the zeta-zero
+    residue is an alien derivative of that MC object.
 
-    For the shadow tower, the MC equation at arity r gives:
+    For the algebraic shadow sheet one can record the formal relation
         Delta_{omega_1} S_r = S_1 * S_r^{(1)}
 
-    where S_1 is the Stokes constant and S_r^{(1)} is the one-instanton
-    shadow coefficient.
-
-    For the algebraic case (sqrt(Q_L)), this reduces to:
+    and, for sqrt(Q_L),
         S_r^{(1)} = -S_r^{(0)}  (second sheet = minus first sheet)
 
-    so the bridge equation becomes:
-        Delta_{omega_1} S_r = -S_1 * S_r
-
-    This means the Stokes automorphism acts as multiplication by
-    (1 - S_1 * e^{-omega_1/t}), consistent with the two-sheeted structure.
+    The returned zeta residue remains a separate diagnostic.
     """
     inv = virasoro_shadow_invariants(c_val)
     kappa = inv['kappa']
@@ -868,22 +953,23 @@ def bridge_equation_check(c_val, n=1, dps=30):
         'shadow_instanton_action': omega_1,
         'zeta_stokes_constant': A_c,
         'bridge_consistency': 'algebraic: second sheet = minus first sheet',
+        'diagnostic_status': STATUS_FINITE_WINDOW,
+        'certifies_mc_bridge': False,
+        'certifies_alien_calculus': False,
     }
 
 
 # =====================================================================
-# Section 10: Heisenberg verification — no Stokes phenomena
+# Section 10: Heisenberg exact lane
 # =====================================================================
 
 def heisenberg_no_stokes(rank=1, level=1.0, r_max=20):
-    r"""Verify that Heisenberg has no Stokes phenomena.
+    r"""Compute the exact depth-2 Heisenberg shadow lane.
 
     Heisenberg is class G (depth 2): the shadow tower terminates at S_2 = kappa.
     The generating function G(t) = kappa*t^2 is a polynomial (exact).
-    No Borel singularities, no Stokes lines, no trans-series corrections.
-
-    This is the cleanest verification: the Borel transform B[G](xi) = kappa*xi^2/2
-    is entire, and the Borel-Laplace integral gives back kappa*t^2 exactly.
+    No shadow Borel singularities or trans-series corrections occur on
+    this scalar lane.
     """
     kappa = float(rank) * level
 
@@ -923,6 +1009,7 @@ def heisenberg_no_stokes(rank=1, level=1.0, r_max=20):
         'stokes_phenomena': False,
         'borel_singularities': [],
         'tests': tests,
+        'certification_status': STATUS_EXACT_SCALAR,
     }
 
 
@@ -973,7 +1060,9 @@ def partial_sum_sequence(c_val, t_val, r_max=60):
     P_N(t) = sum_{r=2}^{N} S_r t^r
 
     For |t| < 1/rho: converges.
-    For |t| > 1/rho: diverges (class M).
+    For |t| > 1/rho: the Taylor series diverges on the class-M scalar
+    lane; analytic continuation is supplied by sqrt(Q_L), not by this
+    finite sequence.
     """
     coeffs = virasoro_shadow_coefficients(c_val, r_max)
     t = complex(t_val)
@@ -987,13 +1076,10 @@ def partial_sum_sequence(c_val, t_val, r_max=60):
 
 
 def richardson_vs_borel(c_val, t_val, r_max=60, rich_order=3):
-    r"""Compare Richardson extrapolation with Borel resummation.
+    r"""Compare Richardson extrapolation with the Borel diagnostic.
 
-    For divergent series, both should approximate the correct answer:
-    - Richardson: algebraic acceleration of partial sums
-    - Borel: analytic continuation via integral transform
-
-    Agreement between the two provides INDEPENDENT VERIFICATION.
+    Agreement is only finite-window evidence.  It is not an independent
+    proof of analytic continuation or a nonperturbative value.
     """
     partial = partial_sum_sequence(c_val, t_val, r_max)
     real_partial = [p.real for p in partial]
@@ -1010,6 +1096,8 @@ def richardson_vs_borel(c_val, t_val, r_max=60, rich_order=3):
         'borel_median': median,
         'partial_sum_last': partial[-1] if partial else 0.0,
         'rich_borel_agreement': abs(rich_result - median.real),
+        'diagnostic_status': STATUS_FINITE_WINDOW,
+        'agreement_is_certification': False,
     }
 
 
@@ -1018,12 +1106,13 @@ def richardson_vs_borel(c_val, t_val, r_max=60, rich_order=3):
 # =====================================================================
 
 def complementarity_stokes_at_zero(n, c_val, dps=30):
-    r"""Compare Stokes constants for A = Vir_c and A! = Vir_{26-c} at the n-th zero.
+    r"""Compare residue factors for Vir_c and Vir_{26-c} at one zero.
 
-    The Koszul duality c -> 26-c maps:
+    On the Virasoro scalar Verdier lane one compares:
         A_c(rho) <-> A_{26-c}(rho)
 
-    At c = 13 (self-dual): A_c = A_{26-c} identically.
+    At c = 13: A_c = A_{26-c} tautologically.  Koszul duality and
+    Hochschild-bulk identification require data beyond residue equality.
     """
     if not HAS_MPMATH:
         raise RuntimeError("mpmath required")
@@ -1040,16 +1129,18 @@ def complementarity_stokes_at_zero(n, c_val, dps=30):
             'A_c_dual': A_c_dual,
             'ratio': A_c / A_c_dual if abs(A_c_dual) > 1e-300 else complex('inf'),
             'modulus_ratio': abs(A_c) / abs(A_c_dual) if abs(A_c_dual) > 1e-300 else float('inf'),
+            'duality_status': 'verdier_scalar_partner_diagnostic',
+            'certifies_koszul_duality': False,
+            'certifies_bulk_identification': False,
         }
 
 
 def self_dual_stokes_enhancement(n_zeros=5, dps=30):
-    r"""Check for enhanced structure at the self-dual point c = 13.
+    r"""Check finite residue agreement at the scalar point c = 13.
 
     At c = 13:
     - kappa = kappa' = 13/2
-    - F_{13}(s) has reflection symmetry s -> 7-s
-    - Stokes constants satisfy A_{13}(rho) = A_{13}(rho) trivially
+    - Stokes constants satisfy A_{13}(rho) = A_{13}(rho) tautologically
     - The shadow growth rate rho is at its unique self-dual value
     """
     if not HAS_MPMATH:
@@ -1077,6 +1168,8 @@ def self_dual_stokes_enhancement(n_zeros=5, dps=30):
         'self_dual_kappa': abs(inv['kappa'] - virasoro_kappa(26.0 - c_val)) < 1e-14,
         'rho_shadow': inv['rho'],
         'stokes_data': stokes_data,
+        'diagnostic_status': STATUS_ZETA_EVIDENCE,
+        'certifies_koszul_duality': False,
     }
 
 
@@ -1085,11 +1178,11 @@ def self_dual_stokes_enhancement(n_zeros=5, dps=30):
 # =====================================================================
 
 def borel_pade_approximant(c_val, r_max=40):
-    r"""Construct the [M/M] Pade approximant of the Borel transform.
+    r"""Construct a finite [M/M] Pade approximant of the Borel transform.
 
-    The Pade poles cluster toward the Borel singularities (Peacock
-    pattern, Dorigoni-Dunne-Unsal).  This provides an independent
-    check on the singularity locations.
+    Pade poles from a finite coefficient list are numerical evidence
+    only.  They do not certify singularity locations or analytic
+    continuation.
     """
     coeffs = virasoro_shadow_coefficients(c_val, r_max)
 
@@ -1157,6 +1250,8 @@ def borel_pade_approximant(c_val, r_max=40):
         'n_poles': len(pole_list),
         'nearest_pole_modulus': min(abs(p) for p in pole_list) if pole_list else float('inf'),
         'coefficients': borel_coeffs,
+        'diagnostic_status': STATUS_FINITE_WINDOW,
+        'certifies_singularity_locations': False,
     }
 
 
@@ -1165,8 +1260,7 @@ def borel_pade_approximant(c_val, r_max=40):
 # =====================================================================
 
 def full_bc_resurgence_analysis(c_val, n_zeros=5, r_max=40, dps=30):
-    r"""Complete analysis: Borel singularities, Stokes constants, trans-series,
-    median resummation, bridge equation, complementarity.
+    r"""Collect finite diagnostics for the BC scattering and shadow surfaces.
     """
     if not HAS_MPMATH:
         raise RuntimeError("mpmath required")
@@ -1197,4 +1291,8 @@ def full_bc_resurgence_analysis(c_val, n_zeros=5, r_max=40, dps=30):
         'alien_derivatives': aliens,
         'bridge': bridge,
         'complementarity_first_zero': comp,
+        'diagnostic_scope': diagnostic_scope(),
+        'certifies_nonperturbative_completion': False,
+        'certifies_zeta_zero_reconstruction': False,
+        'certifies_all_genus_partition_theorem': False,
     }

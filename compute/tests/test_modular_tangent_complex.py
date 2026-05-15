@@ -7,8 +7,8 @@ Verifies:
   - Nijenhuis-Richardson bracket properties
   - Killing cocycle: CE cocycle, nonzero 3-form
   - Killing bracket [eta, -] intertwining with d_CE
-  - kappa-twisted differential: curvature proportional to kappa^2
-  - d^2 = 0 at critical level k = -h^v
+  - kappa-twisted finite CE window: exact degree signs and d^2 = 0
+  - singular twist scales where finite-window cohomology changes
   - Obstruction o_4 = 0 for affine sl_2 (shadow terminates at r=3)
   - Shadow depth classification for standard families
   - Kappa formulas for standard families
@@ -25,6 +25,7 @@ import numpy as np
 from compute.lib.modular_tangent_complex import (
     CyclicDeformationComplex,
     KillingTwistedDifferential,
+    nijenhuis_richardson_bracket,
     _is_zero_matrix,
     _mat_multiply,
     _mat_add,
@@ -37,6 +38,7 @@ from compute.lib.modular_tangent_complex import (
     kappa_affine,
     kappa_heisenberg,
     kappa_virasoro,
+    modular_tangent_scope_firewall,
     heisenberg_tangent,
     affine_sl2_tangent,
     virasoro_tangent,
@@ -205,6 +207,28 @@ class TestCyclicCohomologySl2:
 # Killing cocycle properties
 # ===================================================================
 
+class TestNijenhuisRichardsonConventions:
+    """NR bracket degree convention in C^n(g,g)=Hom(Lambda^n g,g)."""
+
+    def test_endomorphism_bracket_lands_in_c1(self):
+        """[C^1,C^1]_NR lies in C^1 and is the matrix commutator."""
+        dim = 3
+        f = _np_zeros(dim * dim, 1).reshape(-1)
+        g = _np_zeros(dim * dim, 1).reshape(-1)
+        # f(e_0)=e_1 and g(e_1)=e_2; [f,g](e_0) = -e_2.
+        f[1 * dim + 0] = Fraction(1)
+        g[2 * dim + 1] = Fraction(1)
+
+        result = nijenhuis_richardson_bracket(
+            f, 1, g, 1, dim, sl2_structure_constants()
+        )
+
+        assert len(result) == dim * dim
+        for idx, value in enumerate(result):
+            expected = Fraction(-1) if idx == 2 * dim + 0 else Fraction(0)
+            assert value == expected
+
+
 class TestKillingCocycle:
     """Properties of the Killing cocycle eta = [-,-] in C^2(g,g)."""
 
@@ -223,6 +247,17 @@ class TestKillingCocycle:
         d2 = ce_differential_2(self.sc, self.dim)
         d_eta = _mat_multiply(d2, self.eta.reshape(-1, 1))
         assert _is_zero_matrix(d_eta)
+
+    def test_eta_is_ordinary_ce_boundary_of_identity(self):
+        """As an adjoint CE 2-cochain eta=d_CE(Id); its class is cyclic."""
+        identity = _np_zeros(self.dim * self.dim, 1).reshape(-1)
+        for j in range(self.dim):
+            identity[j * self.dim + j] = Fraction(1)
+        d1 = ce_differential_1(self.sc, self.dim)
+        d_identity = _mat_multiply(d1, identity.reshape(-1, 1))
+        eta_column = self.eta.reshape(-1, 1)
+        diff = _mat_add(d_identity, _mat_scale(Fraction(-1), eta_column))
+        assert _is_zero_matrix(diff)
 
     def test_killing_3form_value(self):
         """kap([e_0, e_1], e_2) = kap([e, h], f) = kap(-2e, f) = -2."""
@@ -246,6 +281,7 @@ class TestKillingCocycle:
         result = verify_sl2_killing_cocycle()
         assert result["killing_3form_nonzero"]
         assert result["eta_is_ce_cocycle"]
+        assert result["eta_is_ordinary_ce_boundary"]
 
 
 # ===================================================================
@@ -275,6 +311,15 @@ class TestKillingBracket:
         """[eta, -]: C^2 -> C^3 has shape (3, 9)."""
         mat = _killing_bracket_matrix(self.eta, self.sc, self.kap, self.dim, 2)
         assert mat.shape == (3, 9)
+
+    @pytest.mark.parametrize("n,sign", [(0, -1), (1, 1), (2, -1)])
+    def test_bracket_equals_signed_ce_differential(self, n, sign):
+        """For eta=mu, [eta,-]|C^n = (-1)^(n+1)d_CE in degrees 0, 1, 2."""
+        cx = sl2_deformation_complex()
+        bracket = _killing_bracket_matrix(self.eta, self.sc, self.kap, self.dim, n)
+        d_ce = cx.differential(n)
+        diff = _mat_add(bracket, _mat_scale(Fraction(-sign), d_ce))
+        assert _is_zero_matrix(diff)
 
     def test_bracket_c0_nonzero(self):
         """[eta, -]: C^0 -> C^1 is nonzero."""
@@ -363,6 +408,29 @@ class TestKappaTwistedDifferential:
             d2 = tw.d_squared_matrix(0)
             assert _is_zero_matrix(d2), f"d^2 != 0 at kappa={kap}"
 
+    def test_bracket_ce_sign_diagnostics(self):
+        """The twist records exact CE signs instead of relying on prose."""
+        tw = KillingTwistedDifferential(complex=self.cx, kappa=Fraction(9, 4))
+        assert tw.bracket_ce_sign(0) == -1
+        assert tw.bracket_ce_sign(1) == 1
+        assert tw.bracket_ce_sign(2) == -1
+
+    def test_finite_window_diagnostics_are_explicit(self):
+        """Diagnostics declare the finite CE window and do not claim chiral curvature."""
+        tw = KillingTwistedDifferential(complex=self.cx, kappa=Fraction(9, 4))
+        diag = tw.finite_window_diagnostics()
+        assert diag["finite_window_only"]
+        assert not diag["full_chiral_curvature_computed"]
+        assert not diag["completed_shadow_tower_computed"]
+        assert diag["implemented_bracket_degrees"] == (0, 1, 2)
+        assert diag["bracket_ce_signs"] == {0: -1, 1: 1, 2: -1}
+        assert diag["degree_scale_factors"] == {
+            0: Fraction(-5, 4),
+            1: Fraction(13, 4),
+            2: Fraction(-5, 4),
+        }
+        assert diag["d_squared_zero"] == {0: True, 1: True}
+
     def test_twisted_differential_changes_with_kappa(self):
         """The twisted differential d_kappa changes as kappa varies."""
         tw1 = KillingTwistedDifferential(complex=self.cx, kappa=Fraction(0))
@@ -373,12 +441,29 @@ class TestKappaTwistedDifferential:
         # d_kappa should change with kappa (the bracket term contributes)
         assert not _is_zero_matrix(diff)
 
+    def test_twisted_cohomology_generic_matches_ce_for_sl2(self):
+        """For kappa not +/-1, the finite-window ranks match ordinary CE ranks."""
+        tw = KillingTwistedDifferential(complex=self.cx, kappa=Fraction(9, 4))
+        assert tw.twisted_cohomology_dims() == {0: 0, 1: 0, 2: 0, 3: 0}
+
+    def test_twisted_cohomology_kappa_one_changes_rank(self):
+        """At kappa=1, degree 0 and 2 scale factors vanish in the CE window."""
+        tw = KillingTwistedDifferential(complex=self.cx, kappa=Fraction(1))
+        assert tw.twisted_cohomology_dims() == {0: 3, 1: 3, 2: 3, 3: 3}
+
+    def test_twisted_cohomology_kappa_minus_one_changes_rank(self):
+        """At kappa=-1, the degree 1 scale factor vanishes in the CE window."""
+        tw = KillingTwistedDifferential(complex=self.cx, kappa=Fraction(-1))
+        assert tw.twisted_cohomology_dims() == {0: 0, 1: 6, 2: 6, 3: 0}
+
     def test_verify_entry_point_critical(self):
         """Verify the entry point at critical level k = -2."""
         result = verify_kappa_twist_curvature_sl2(Fraction(-2))
         assert result["kappa_value"] == Fraction(0)
         assert result["d_squared_zero_at_deg0"]
         assert result["jacobi_consistent"]
+        assert result["finite_window_only"]
+        assert not result["full_chiral_curvature_computed"]
 
     def test_verify_entry_point_generic(self):
         """Verify the entry point at generic level k = 1."""
@@ -418,7 +503,9 @@ class TestKappaFormulas:
         # sl_2: dim=3, h^v=2
         assert kappa_affine(3, Fraction(1), 2) == Fraction(9, 4)
         # sl_3: dim=8, h^v=3
-        assert kappa_affine(8, Fraction(1), 3) == Fraction(8) * Fraction(4) / Fraction(6)
+        assert kappa_affine(8, Fraction(1), 3) == (
+            Fraction(8) * Fraction(4) / Fraction(6)
+        )
 
     def test_virasoro_kappa(self):
         """kappa(Vir_c) = c/2."""
@@ -431,6 +518,50 @@ class TestKappaFormulas:
         k2 = kappa_affine_sl2(Fraction(1))  # 9/4
         # V_1(sl_2) tensor Heis: kappa = 9/4 + 1 = 13/4
         assert k1 + k2 == Fraction(13, 4)
+
+
+# ===================================================================
+# Package firewalls
+# ===================================================================
+
+class TestPackageFirewalls:
+    """The finite CE tangent oracle stays typed apart from adjacent packages."""
+
+    def setup_method(self):
+        self.firewall = modular_tangent_scope_firewall()
+
+    def test_holographic_package_has_seven_entries(self):
+        """Holographic package: (A, A^i, A^!, C, r(z), Theta_A, nabla^hol)."""
+        assert self.firewall["holographic_package"] == (
+            "A",
+            "A^i",
+            "A^!",
+            "C",
+            "r(z)",
+            "Theta_A",
+            "nabla^hol",
+        )
+
+    def test_modular_koszul_compute_package_has_six_projections(self):
+        """Compute package has the six concordance projections."""
+        assert self.firewall["modular_koszul_compute_package"] == (
+            "Fact_X(L)",
+            "barB_X(L)",
+            "Theta_L",
+            "L_L",
+            "(V_br,T_br)",
+            "R4_mod(L)",
+        )
+
+    def test_bar_cobar_verdier_bulk_objects_are_separate(self):
+        """A, B(A), A^i, A^!, Omega(B(A)), and Z_ch^der(A) are distinct."""
+        roles = self.firewall["object_separation"]
+        assert roles["A^i"] == "bar cohomology coalgebra H^*(B(A))"
+        assert "Verdier/continuous-linear dual branch" in roles["A^!"]
+        assert roles["Omega(B(A))"] == "bar-cobar inversion recovering A"
+        assert "Hochschild/bulk" in roles["Z_ch^der(A)"]
+        assert roles["A^!"] != roles["Z_ch^der(A)"]
+        assert roles["Omega(B(A))"] != roles["A^!"]
 
 
 # ===================================================================

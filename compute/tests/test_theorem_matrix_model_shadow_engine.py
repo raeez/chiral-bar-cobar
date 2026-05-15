@@ -1,8 +1,9 @@
-r"""Tests for theorem_matrix_model_shadow_engine: matrix model from the shadow tower.
+r"""Tests for finite matrix-model diagnostics from the shadow tower.
 
-42 tests covering all structural results with multi-path verification.
+Focused tests cover the finite scalar identities, family constants,
+cross-channel corrections, and analytic firewalls.
 
-VERIFICATION STRATEGY (per CLAUDE.md multi-path mandate):
+VERIFICATION STRATEGY:
   Path 1: Direct computation from defining formula
   Path 2: Alternative formula / independent derivation
   Path 3: Limiting case / special value check
@@ -10,13 +11,13 @@ VERIFICATION STRATEGY (per CLAUDE.md multi-path mandate):
   Path 5: Literature comparison (Bernoulli numbers, intersection theory)
   Path 6: Numerical evaluation
 
-CAUTION (AP1):  kappa(H_k) = k, NOT k/2.
-CAUTION (AP9):  S_2 = kappa != c/2 in general.
-CAUTION (AP10): Cross-family consistency, not just single-family tests.
-CAUTION (AP22): F_g values are POSITIVE.
-CAUTION (AP24): kappa(Vir_c) + kappa(Vir_{26-c}) = 13, NOT 0.
-CAUTION (AP38): Convention check on all hardcoded values.
-CAUTION (AP39): kappa != S_2 for non-rank-1 families.
+Conventions checked here:
+  kappa(H_k) = k.
+  S_2 = kappa, and kappa is not generally c/2.
+  F_g scalar coefficients are positive when kappa is positive.
+  kappa(Vir_c) + kappa(Vir_{26-c}) = 13.
+  Finite scalar coefficients do not certify KW tau powers, KdV,
+  Gelfand-Dickey, EO recursion, convergence, or matrix integrals.
 """
 
 import math
@@ -36,7 +37,9 @@ from compute.lib.theorem_matrix_model_shadow_engine import (
     affine_sl2_matrix_data,
     virasoro_matrix_data,
     betagamma_matrix_data,
+    betagamma_tline_matrix_data,
     w3_tline_matrix_data,
+    scalar_matrix_model_certification_firewall,
     # Planted-forest corrections
     delta_pf_genus2,
     delta_pf_genus3,
@@ -54,14 +57,16 @@ from compute.lib.theorem_matrix_model_shadow_engine import (
     virasoro_discriminant_formula,
     # Matrix potential
     matrix_potential_from_shadow,
-    # Uniform-weight Gaussian theorem
+    # Scalar Gaussian checks
     verify_uniform_weight_gaussian,
     # Multi-weight
     delta_F2_cross_W3,
+    delta_F3_cross_W3,
+    w3_genus2_planted_forest_total,
     verify_multi_weight_gaussian_failure,
     # Propagator variance
     propagator_variance_W3,
-    # Critical behavior
+    # Boundary diagnostics
     critical_behavior_analysis,
     # PF compensation
     verify_pf_compensation_genus2,
@@ -97,7 +102,7 @@ class TestFaberPandharipande:
         assert Fraction(1, 2) * B2 / Fraction(2) == Fraction(1, 24)
 
     def test_lambda_2(self):
-        """lambda_2^FP = 7/5760 (AP38: NOT 1/1152)."""
+        """lambda_2^FP = 7/5760."""
         assert lambda_fp_exact(2) == Fraction(7, 5760)
         # Cross-check: (2^3-1)/2^3 * |B_4|/4! = (7/8)*(1/30)/24 = 7/5760
         assert Fraction(7, 8) * Fraction(1, 30) / Fraction(24) == Fraction(7, 5760)
@@ -106,8 +111,13 @@ class TestFaberPandharipande:
         """lambda_3^FP = 31/967680."""
         assert lambda_fp_exact(3) == Fraction(31, 967680)
 
+    def test_lambda_4_and_5_exact_values(self):
+        """lambda_4^FP and lambda_5^FP match the local coefficient table."""
+        assert lambda_fp_exact(4) == Fraction(127, 154828800)
+        assert lambda_fp_exact(5) == Fraction(73, 3503554560)
+
     def test_lambda_positivity(self):
-        """All lambda_g^FP are positive (AP22)."""
+        """All lambda_g^FP are positive."""
         for g in range(1, 10):
             assert lambda_fp_exact(g) > 0
 
@@ -127,7 +137,7 @@ class TestFamilyConstructors:
     """Verify shadow data for each standard family."""
 
     def test_heisenberg_data(self):
-        """Heisenberg: kappa=k, S_3=S_4=S_5=0, class G (AP39)."""
+        """Heisenberg: kappa=k, S_3=S_4=S_5=0, class G."""
         for k in [1, 2, 5, 10]:
             d = heisenberg_matrix_data(k)
             assert d.kappa == Rational(k)
@@ -156,13 +166,39 @@ class TestFamilyConstructors:
         assert d.depth_class == 'M'
         assert not d.Q_L_is_perfect_square  # Delta != 0
 
+    def test_virasoro_singular_surface_is_not_class_G(self):
+        """The singular Virasoro surface c(5c+22)=0 is not relabelled class G."""
+        with pytest.raises(ValueError, match=r"c\*\(5\*c\+22\)"):
+            virasoro_matrix_data(0)
+        with pytest.raises(ValueError, match=r"c\*\(5\*c\+22\)"):
+            virasoro_matrix_data(Rational(-22, 5))
+        with pytest.raises(ValueError, match=r"c\*\(5\*c\+22\)"):
+            w3_tline_matrix_data(0)
+
+    def test_affine_kappa_is_not_c_over_two(self):
+        """Affine kappa uses the trace-form level formula, not c/2."""
+        d = affine_sl2_matrix_data(1)
+        affine_sl2_c_over_two_at_level_1 = Rational(1, 2)
+        assert d.kappa == Rational(9, 4)
+        assert d.kappa != affine_sl2_c_over_two_at_level_1
+
     def test_betagamma_data(self):
-        """Beta-gamma: kappa=1, S_3=2, class C."""
+        """Standard beta-gamma class-C datum at lambda=1."""
         d = betagamma_matrix_data()
         assert d.kappa == Rational(1)
-        assert d.S3 == Rational(2)
+        assert d.S3 == Rational(0)
         assert d.depth_class == 'C'
-        assert d.S4 == Rational(10) / (2 * 32)  # 10/(c*(5c+22)) at c=2
+        assert d.S4 == Rational(-5, 12)
+        assert d.S5 == Rational(0)
+
+    def test_betagamma_tline_is_virasoro_c2_diagnostic(self):
+        """Beta-gamma T-line diagnostic matches Virasoro at c=2."""
+        d = betagamma_tline_matrix_data(1)
+        v = virasoro_matrix_data(2)
+        assert d.kappa == v.kappa
+        assert d.S3 == v.S3
+        assert d.S4 == v.S4
+        assert d.depth_class == 'M'
 
     def test_w3_tline_data(self):
         """W_3 T-line: same spectral data as Virasoro on T-channel."""
@@ -205,9 +241,10 @@ class TestGaussianBridge:
                 assert F_g_shadow(Rational(k), g) == gaussian_matrix_model_Fg(Rational(k), g)
 
     def test_barnes_G_finite_N(self):
-        """Barnes G-function genus expansion matches at N=20 to 6 digits."""
+        """Barnes G finite-N asymptotic normalization is accurate."""
         result = barnes_G_genus_expansion(20, max_genus=5)
         assert result['rel_error'] < 1e-6
+        assert result['convergence_theorem_certified'] is False
 
 
 # ===========================================================================
@@ -346,33 +383,36 @@ class TestSpectralCurve:
 
 
 # ===========================================================================
-# SECTION 7: Uniform-weight Gaussian theorem (4 tests)
+# SECTION 7: Scalar Gaussian normalization (4 tests)
 # ===========================================================================
 
 class TestUniformWeightGaussian:
-    """Verify all uniform-weight algebras give Gaussian free energies."""
+    """Verify finite scalar-lane Gaussian normalization."""
 
     def test_all_families_gaussian(self):
-        """F_g = kappa * lambda_g^FP for all uniform-weight families, g=1..5."""
+        """F_g^scal = kappa * lambda_g^FP in the finite checked window."""
         result = verify_uniform_weight_gaussian(5)
         assert result['all_gaussian']
+        assert result['hierarchy_certified'] is False
+        assert result['matrix_integral_certified'] is False
 
     def test_pf_compensation_genus2_affine(self):
-        """PF compensates CEO to give Gaussian at g=2 for affine sl_2."""
+        """PF compensates the finite CEO-adjacent coefficient at g=2."""
         d = affine_sl2_matrix_data(1)
         result = verify_pf_compensation_genus2(d)
         assert result['matches_gaussian']
         assert not result['delta_pf_vanishes']
+        assert result['eo_recursion_certified'] is False
 
     def test_pf_compensation_genus2_virasoro(self):
-        """PF compensates CEO to give Gaussian at g=2 for Virasoro."""
+        """PF compensation is a finite scalar identity for Virasoro."""
         for c in [1, 13, 25]:
             d = virasoro_matrix_data(c)
             result = verify_pf_compensation_genus2(d)
             assert result['matches_gaussian']
 
     def test_pf_compensation_genus3(self):
-        """PF compensates CEO to give Gaussian at g=3."""
+        """PF compensation is finite scalar algebra at genus 3."""
         for data in [affine_sl2_matrix_data(2), virasoro_matrix_data(7),
                      betagamma_matrix_data()]:
             result = verify_pf_compensation_genus3(data)
@@ -384,7 +424,7 @@ class TestUniformWeightGaussian:
 # ===========================================================================
 
 class TestMultiWeightFailure:
-    """Verify Gaussian formula FAILS for multi-weight algebras."""
+    """Verify scalar formula misses interacting multi-weight algebras."""
 
     def test_W3_cross_correction_positive(self):
         """delta_F_2^cross(W_3) = (c+204)/(16c) > 0 for c > 0."""
@@ -409,42 +449,105 @@ class TestMultiWeightFailure:
         # Path 3: verify positivity at c=1 and c=10
         assert path2_c1 > 0 and path2_c10 > 0
 
+    def test_W3_genus3_cross_correction_values(self):
+        """delta_F_3^cross(W_3) exact constants and large-c ratio."""
+        assert delta_F3_cross_W3(10) == Rational(5723669, 345600)
+        assert delta_F3_cross_W3(50) == Rational(7115809, 8640000)
+        assert delta_F3_cross_W3(204) == Rational(125723, 1109760)
+
+        scalar_leading_per_c = Rational(5, 6) * lambda_fp_sympy(3)
+        cross_leading_per_c = Rational(1, 27648)
+        assert cross_leading_per_c / scalar_leading_per_c == Rational(42, 31)
+
+    def test_W3_planted_forest_is_not_cross_channel(self):
+        """The genus-2 planted-forest witness is distinct from delta_F_2^cross."""
+        assert w3_genus2_planted_forest_total(50) == Rational(-5, 24)
+        assert delta_F2_cross_W3(50) == Rational(127, 400)
+        assert w3_genus2_planted_forest_total(50) != delta_F2_cross_W3(50)
+
+        assert w3_genus2_planted_forest_total(40) == 0
+        assert delta_F2_cross_W3(40) == Rational(61, 160)
+
+    def test_W3_cross_channel_poles_rejected(self):
+        """The W_3 cross-channel formulas have a pole at c=0."""
+        with pytest.raises(ValueError, match="c != 0"):
+            delta_F2_cross_W3(0)
+        with pytest.raises(ValueError, match="c != 0"):
+            delta_F3_cross_W3(0)
+
     def test_W3_gaussian_failure(self):
-        """The Gaussian formula fails for W_3."""
+        """The scalar Gaussian term is not the full W_3 genus-2 value."""
         result = verify_multi_weight_gaussian_failure(10)
         assert result['gaussian_fails']
         assert result['cross_correction_positive']
+        assert result['genus3_scalar_fails']
+        assert result['planted_forest_is_cross_channel'] is False
+        assert result['full_hierarchy_certified'] is False
 
 
 # ===========================================================================
-# SECTION 9: Critical behavior (3 tests)
+# SECTION 9: Propagator variance (2 tests)
 # ===========================================================================
 
-class TestCriticalBehavior:
-    """Verify critical behavior classification."""
+class TestPropagatorVariance:
+    """Verify W_3 variance without confusing P(c) with the variance."""
+
+    def test_W3_variance_is_square_even_when_P_is_negative(self):
+        """At c=1, P(c)<0 but delta_mix is positive."""
+        result = propagator_variance_W3(1)
+        assert result['mixing_polynomial'] == -303
+        assert result['mixing_poly_positive'] is False
+        assert result['delta_mix'] == Rational(13057280, 43046721)
+        assert result['delta_mix_positive_for_positive_rational_c'] is True
+        assert result['autonomous'] is False
+
+        c = result['c']
+        P = result['mixing_polynomial']
+        expected = Rational(1280) * P ** 2 / (c ** 3 * (5 * c + 22) ** 6)
+        assert simplify(result['delta_mix'] - expected) == 0
+
+    def test_W3_enhanced_symmetry_roots_annihilate_P(self):
+        """The enhanced symmetry roots are roots of 25c^2+100c-428."""
+        result = propagator_variance_W3(10)
+        roots = result['enhanced_symmetry_roots']
+        for root in roots:
+            assert simplify(25 * root ** 2 + 100 * root - 428) == 0
+        assert result['delta_mix'] == Rational(128, 1476225)
+
+
+# ===========================================================================
+# SECTION 10: Finite scalar boundary diagnostics (3 tests)
+# ===========================================================================
+
+class TestBoundaryDiagnostics:
+    """Verify scalar boundary diagnostics and analytic firewalls."""
 
     def test_class_G_trivial(self):
-        """Class G: no criticality (trivial Gaussian)."""
+        """Class G has only the formal Gaussian scalar label."""
         d = heisenberg_matrix_data(1)
         cb = critical_behavior_analysis(d)
-        assert cb['criticality'] == 'trivial'
+        assert cb['criticality'] == 'formal_gaussian_scalar'
         assert cb['gamma_str'] is None
+        assert cb['double_scaling_certified'] is False
+        assert cb['kdv_hierarchy_certified'] is False
 
-    def test_class_L_painleve_I(self):
-        """Class L: cubic critical, Painleve I, gamma_str = -2/3."""
+    def test_class_L_conditional_model_label(self):
+        """Class L records a conditional cubic model label only."""
         d = affine_sl2_matrix_data(1)
         cb = critical_behavior_analysis(d)
-        assert cb['criticality'] == 'cubic_critical'
-        assert cb['painleve'] == 'I'
+        assert cb['criticality'] == 'formal_square_collision'
+        assert cb['painleve'] == 'conditional P_I label'
         assert cb['gamma_str'] == Rational(-2, 3)
-        assert cb['multicritical_order'] == 2
+        assert cb['painleve_equation_certified'] is False
+        assert cb['descendant_cohft_required'] is True
 
     def test_class_M_generic(self):
-        """Class M: generic (off-critical), infinite potential."""
+        """Class M hierarchy certification requires external data."""
         d = virasoro_matrix_data(25)
         cb = critical_behavior_analysis(d)
-        assert cb['criticality'] == 'generic'
-        assert cb['multicritical_order'] == 'infinity'
+        assert cb['criticality'] == 'formal_infinite_tower'
+        assert cb['multicritical_order'] == 'not certified from finite scalar data'
+        assert cb['gelfand_dickey_hierarchy_certified'] is False
 
 
 # ===========================================================================
@@ -455,18 +558,22 @@ class TestComplementarity:
     """Verify complementarity of matrix model data."""
 
     def test_kappa_sum_is_13(self):
-        """kappa(Vir_c) + kappa(Vir_{26-c}) = 13 (AP24)."""
+        """kappa(Vir_c) + kappa(Vir_{26-c}) = 13."""
         for c in [1, 5, 7, 13, 20, 25]:
             result = complementarity_matrix_model(c)
             assert result['kappa_sum_is_13']
+            assert result['matrix_integral_equivalence_certified'] is False
+            assert result['derived_center_identification_certified'] is False
+            assert result['koszul_dual_equivalence_certified'] is False
 
     def test_c13_self_duality(self):
-        """At c=13, Virasoro is self-dual: all shadow data invariant."""
+        """At c=13, Virasoro scalar shadow data are self-dual."""
         result = verify_c13_self_duality()
         assert result['kappa_self_dual']
         assert result['S3_self_dual']
         assert result['S4_self_dual']
         assert result['kappa'] == Rational(13, 2)
+        assert result['matrix_integral_self_duality_certified'] is False
 
     def test_complementarity_both_class_M(self):
         """Both Vir_c and Vir_{26-c} are class M for 0 < c < 26."""
@@ -476,14 +583,14 @@ class TestComplementarity:
 
 
 # ===========================================================================
-# SECTION 11: Four-class dictionary and potential (3 tests)
+# SECTION 11: Four-class witness dictionary and potential (3 tests)
 # ===========================================================================
 
 class TestDictionary:
-    """Verify the four-class matrix model dictionary."""
+    """Verify the four-class matrix model witness dictionary."""
 
     def test_dictionary_completeness(self):
-        """All four classes present with required fields."""
+        """All four witness classes present with required firewalls."""
         d = four_class_matrix_dictionary()
         assert set(d.keys()) == {'G', 'L', 'C', 'M'}
         for cls, entry in d.items():
@@ -491,6 +598,14 @@ class TestDictionary:
             assert 'examples' in entry
             assert 'spectral_curve' in entry
             assert 'criticality' in entry
+            assert entry['certifies_matrix_integral'] is False
+            assert entry['certifies_eo_recursion'] is False
+            assert entry['certifies_integrable_hierarchy'] is False
+            assert entry['certifies_chiral_bar_cobar_equivalence'] is False
+            assert entry['certifies_shadow_archetype_classification'] is False
+            assert entry['certifies_derived_center_data'] is False
+            assert entry['witness_lane_only'] is True
+        assert 'not certified' in d['M']['double_scaling']
 
     def test_potential_reconstruction(self):
         """Matrix potential reconstructed correctly from shadow data."""
@@ -520,12 +635,21 @@ class TestCrossConsistency:
     """Consistency checks across families and genera."""
 
     def test_betagamma_matches_virasoro_c2(self):
-        """Beta-gamma shadow data matches Virasoro at c=2."""
-        bg = betagamma_matrix_data()
+        """Beta-gamma T-line diagnostic matches Virasoro at c=2."""
+        bg = betagamma_tline_matrix_data(1)
         v = virasoro_matrix_data(2)
         assert bg.kappa == v.kappa
         assert bg.S3 == v.S3
         assert bg.S4 == v.S4
+
+    def test_betagamma_standard_not_tline(self):
+        """Standard class-C beta-gamma data are distinct from the T-line."""
+        standard = betagamma_matrix_data()
+        tline = betagamma_tline_matrix_data(1)
+        assert standard.depth_class == 'C'
+        assert tline.depth_class == 'M'
+        assert standard.S3 == 0
+        assert tline.S3 == 2
 
     def test_F2_monotone_in_kappa(self):
         """F_2^shadow increases with kappa (positive, linear in kappa)."""
@@ -536,11 +660,11 @@ class TestCrossConsistency:
 
 
 # ===========================================================================
-# SECTION 13: Multi-path cross-verification (AP10 hardening)
+# SECTION 13: Multi-path cross-verification
 # ===========================================================================
 
 class TestMultiPathCrossVerification:
-    """Cross-family and cross-method verification to satisfy AP10.
+    """Cross-family and cross-method verification.
 
     Every numerical value must be confirmed by at least 2 genuinely
     independent computation paths.
@@ -644,7 +768,7 @@ class TestMultiPathCrossVerification:
             assert simplify(path1 - path2) == 0, f"c={c}: path1 vs path2"
             assert simplify(path1 - path3) == 0, f"c={c}: path1 vs path3"
 
-    def test_gaussian_universality_cross_genus(self):
+    def test_scalar_ratio_cross_genus(self):
         """F_g / lambda_g^FP = kappa for all (family, g) pairs.
 
         This is the RATIO test: the ratio must be exactly kappa,
@@ -712,6 +836,44 @@ class TestMultiPathCrossVerification:
         for c in [1, 2, 5, 10, 100]:
             c_r = Rational(c)
             assert delta_F2_cross_W3(c) == (c_r + 204) / (16 * c_r)
+
+
+# ===========================================================================
+# SECTION 14: Certification firewalls
+# ===========================================================================
+
+class TestCertificationFirewalls:
+    """Negative checks for unsupported analytic promotions."""
+
+    def test_scalar_window_does_not_certify_hierarchies(self):
+        """Finite scalar coefficients do not certify analytic hierarchy data."""
+        result = scalar_matrix_model_certification_firewall(4)
+        assert all(v['matches_kappa_one'] for v in result['scalar_checks'].values())
+        assert result['certifies_kw_tau_powers'] is False
+        assert result['certifies_kdv_hierarchy'] is False
+        assert result['certifies_gelfand_dickey_hierarchy'] is False
+        assert result['certifies_eo_recursion'] is False
+        assert result['certifies_convergence_radius'] is False
+        assert result['certifies_all_genus_matrix_integral'] is False
+        assert result['certifies_chiral_bar_cobar_equivalence'] is False
+        assert result['certifies_shadow_archetype_classification'] is False
+        assert result['certifies_derived_center_data'] is False
+        assert result['certifies_koszul_dual_data'] is False
+        assert result['certifies_full_chiral_free_energy'] is False
+        assert result['finite_witness_lane_only'] is True
+
+    def test_object_and_kernel_firewalls_are_exposed(self):
+        """Object and kernel normalizations are explicit in the engine output."""
+        result = scalar_matrix_model_certification_firewall(1)
+        objects = result['object_firewall']
+        kernels = result['kernel_normalizations']
+        assert objects['Omega(B(A))'] == 'bar-cobar inversion back to A, not Koszul duality'
+        assert objects['A^!'] == 'Verdier/continuous-linear dual algebra branch'
+        assert objects['Z_ch^der(A)'] == 'derived chiral centre, i.e. Hochschild/bulk branch'
+        assert kernels['affine_raw_trace_form'] == 'k*Omega_tr/z'
+        assert kernels['affine_KZ'] == 'Omega/((k+h^vee)z)'
+        assert kernels['heisenberg'] == 'k/z'
+        assert kernels['virasoro'] == '(c/2)/z^3 + 2T/z'
 
 
 # Helper for the cross-verification section (standalone, no circular import)

@@ -1,4 +1,4 @@
-r"""Tests for the all-genera free energy generating function.
+r"""Tests for the finite scalar Faber-Pandharipande generating function.
 
 Verifies:
   1. λ_g^FP table through genus 15
@@ -6,21 +6,20 @@ Verifies:
   3. Free energy closed form: F(ℏ) = κ/ℏ² · [(ℏ/2)/sin(ℏ/2) - 1]
   4. Universal ratios F_{g+1}/F_g
   5. Sign resolution: (x/2)/sin(x/2) vs (x/2)/sinh(x/2)
-  6. Virasoro shadow correction at genus 2
-  7. Infinite product representation
-  8. Tau function / integrable hierarchy structure
+  6. Conditional Virasoro genus-2 contact pairing
+  7. Scalar infinite-product window
+  8. KdV/tau firewall for missing descendant CohFT data
 """
 
-import pytest
 from sympy import (
     Rational, Symbol, bernoulli, factorial, Abs, simplify, series,
-    sin, sinh, S, pi, log, exp, oo,
+    sin, sinh, pi, log, oo,
 )
 
 import sys, os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
-from lib.utils import lambda_fp, F_g
+from lib.utils import lambda_fp
 from lib.genus_generating_function import (
     lambda_fp_table,
     lambda_fp_extended,
@@ -85,12 +84,12 @@ class TestAHatGenus:
     """Verify (x/2)/sin(x/2) = Σ λ_g^FP x^{2g}."""
 
     def test_generating_function_g10(self):
-        """Full verification through genus 10."""
+        """Finite exact verification through genus 10."""
         result = numerical_verification(10)
         assert result['all_match']
 
     def test_generating_function_g15(self):
-        """Full verification through genus 15."""
+        """Finite exact verification through genus 15."""
         result = numerical_verification(15)
         assert result['all_match']
 
@@ -128,12 +127,8 @@ class TestFreeEnergy:
 
     def test_series_matches_closed_form(self):
         """Term-by-term comparison through genus 10."""
-        hbar = Symbol('hbar')
         x = Symbol('x')
         g_max = 10
-
-        # Series from FP numbers
-        F_series = sum(lambda_fp(g) * hbar**(2*g - 2) for g in range(1, g_max+1))
 
         # Closed form: 1/hbar^2 * [(hbar/2)/sin(hbar/2) - 1]
         closed_inner = series(x/2/sin(x/2) - 1, x, 0, 2*g_max + 2)
@@ -141,6 +136,21 @@ class TestFreeEnergy:
         for g in range(1, g_max + 1):
             coeff_closed = Rational(closed_inner.coeff(x, 2*g))
             assert coeff_closed == lambda_fp(g), f"Mismatch at genus {g}"
+
+    def test_closed_form_function_uses_sin_branch(self):
+        """The public closed-form helper returns the positive FP branch."""
+        kappa = Symbol('kappa')
+        hbar = Symbol('hbar')
+        closed = scalar_free_energy_closed_form(kappa, hbar)
+        expanded = series(closed, hbar, 0, 8).removeO()
+        for g in range(1, 4):
+            coeff = expanded.coeff(hbar, 2*g - 2)
+            assert simplify(coeff - kappa * lambda_fp(g)) == 0
+
+    def test_verify_closed_form_reports_finite_window(self):
+        result = verify_closed_form(10)
+        assert result['all_match']
+        assert result['scope'] == 'finite exact rational window 1 <= g <= 10'
 
     def test_genus_1_term(self):
         """F_1 = κ/24 (the leading term as ℏ → 0)."""
@@ -171,7 +181,7 @@ class TestUniversalRatios:
         assert r > 0
 
     def test_ratios_decreasing(self):
-        """Ratios λ_{g+1}/λ_g → 0 as g → ∞ (series converges for |ℏ| < 2π)."""
+        """Ratios approach the scalar Bernoulli value 1/(2π)^2."""
         for g in range(1, 10):
             r = lambda_fp(g+1) / lambda_fp(g)
             assert 0 < r < 1, f"Ratio at g={g} is {r}, expected < 1"
@@ -208,7 +218,7 @@ class TestSignResolution:
 # ═══════════════════════════════════════════════════════════════════════
 
 class TestVirasoro:
-    """Shadow corrections to Virasoro free energy."""
+    """Scalar Virasoro term and conditional contact pairing."""
 
     def test_Q_contact(self):
         c = Symbol('c')
@@ -226,70 +236,52 @@ class TestVirasoro:
         data = genus2_shadow_correction_virasoro(c)
         assert simplify(data['F_2_scalar'] - c * Rational(7, 11520)) == 0
 
-    def test_genus2_correction_subleading(self):
-        """Shadow correction is O(1/c) relative to scalar (subleading at large c)."""
+    def test_genus2_contact_pairing_conditional(self):
+        """Q_contact times 1/1152 is conditional descendant data."""
         c = Symbol('c')
         data = genus2_shadow_correction_virasoro(c)
-        ratio = simplify(data['correction_ratio'])
-        # ratio should be ~ const/c² at large c
-        # Check it vanishes as c → ∞
+        assert data['boundary_wk_pairing'] == Rational(1, 1152)
+        assert simplify(
+            data['conditional_delta_F_2']
+            - virasoro_Q_contact(c) * Rational(1, 1152)
+        ) == 0
+        assert data['unconditional_full_genus2_correction'] is None
+
+    def test_conditional_contact_ratio_subleading(self):
+        """The conditional contact/scalar ratio vanishes at large c."""
+        c = Symbol('c')
+        data = genus2_shadow_correction_virasoro(c)
+        ratio = simplify(data['conditional_ratio_if_pairing_applies'])
         from sympy import limit
         assert limit(ratio, c, oo) == 0
 
-    def test_shadow_correction_positive(self):
-        """For c > 0 (unitary region), the shadow correction is positive."""
-        # At c = 1 (Ising)
-        data = genus2_shadow_correction_virasoro(1)
-        assert data['delta_F_2'] > 0
-
-    def test_corrected_larger_than_scalar(self):
-        """F_2^corr > F_2^scalar for c > 0."""
-        for c_val in [1, 2, 10, 26, 100]:
-            data = genus2_shadow_correction_virasoro(c_val)
-            assert data['F_2_corrected'] > data['F_2_scalar']
+    def test_contact_scope_blocks_unconditional_correction_claim(self):
+        data = genus2_shadow_correction_virasoro(26)
+        assert data['claim_scope'].startswith('conditional:')
 
 
 # ═══════════════════════════════════════════════════════════════════════
-# Infinite product and convergence
+# Scalar infinite product
 # ═══════════════════════════════════════════════════════════════════════
 
-class TestInfiniteProduct:
+class TestScalarInfiniteProduct:
     """(ℏ/2)/sin(ℏ/2) = Π_{n≥1} (1 - ℏ²/(2nπ)²)^{-1}."""
 
     def test_product_matches_series(self):
-        """Verify the infinite product gives the same series coefficients."""
+        """The Euler product gives the x^2 logarithmic coefficient."""
         x = Symbol('x')
         # sin(x/2) = (x/2) Π_{n≥1} (1 - x²/(2nπ)²)
         # So (x/2)/sin(x/2) = Π_{n≥1} (1 - x²/(2nπ)²)^{-1}
         # log[(x/2)/sin(x/2)] = -Σ_{n≥1} log(1 - x²/(2nπ)²)
         #                     = Σ_{n≥1} Σ_{m≥1} x^{2m} / (m · (2nπ)^{2m})
-        # Coefficient of x^{2g}: Σ_{n≥1} 1/(g · (2nπ)^{2g}) = ζ(2g)/(g · (2π)^{2g} · ... )
-
-        # ζ(2g) = (-1)^{g+1} (2π)^{2g} B_{2g} / (2 · (2g)!)
-        # So coeff of x^{2g} in log:
-        #   Σ_n 1/(g (2nπ)^{2g}) = 1/(g · 2^{2g}) · ζ(2g)/π^{2g}
-        #   = 1/(g · 2^{2g}) · (-1)^{g+1} 2^{2g} |B_{2g}| / (2 · (2g)!)
-        #   [using |ζ(2g)| = (2π)^{2g} |B_{2g}| / (2(2g)!)]
-        #   = (-1)^{g+1} |B_{2g}| / (2g · (2g)!)  ... hmm
-
-        # Let's just verify numerically for g=1
-        # Coeff of x^2 in log[(x/2)/sin(x/2)]:
-        # From series: log(1 + x^2/24 + ...) ≈ x^2/24
-        # From product: Σ_n 1/(1·(2nπ)^2) = 1/4 · ζ(2)/π^2 = 1/4 · 1/6 = 1/24 ✓
         from sympy import zeta
-        for g in range(1, 6):
-            product_coeff = zeta(2*g) / (g * (2*pi)**(2*g))
-            expected = Rational(lambda_fp_extended(0))  # dummy
-            # Just verify the zeta identity gives the right number
-            numerical = float(product_coeff)
-            fp_log = float(log(1 + sum(lambda_fp_extended(k) * S(1)**k
-                                       for k in range(1, 8))))  # rough
-            # Instead, verify directly at g=1
-            if g == 1:
-                assert abs(numerical - 1/24) < 1e-15
+        product_coeff = simplify(zeta(2) / (2*pi)**2)
+        log_series = series(log(x/2/sin(x/2)), x, 0, 4)
+        assert product_coeff == Rational(1, 24)
+        assert Rational(log_series.coeff(x, 2)) == Rational(1, 24)
 
-    def test_convergence_radius(self):
-        """Series converges for |ℏ| < 2π (first zero of sin at x = 2π)."""
+    def test_scalar_meromorphic_radius(self):
+        """The scalar sin closed form has first pole at |ℏ| = 2π."""
         # The ratio test: λ_{g+1}/λ_g → 1/(2π)² as g → ∞
         # (from Bernoulli number asymptotics: |B_{2g}| ~ 2(2g)!/(2π)^{2g})
         ratios = []
@@ -302,20 +294,27 @@ class TestInfiniteProduct:
 
 
 # ═══════════════════════════════════════════════════════════════════════
-# Tau function and integrable hierarchy
+# Descendant CohFT firewall
 # ═══════════════════════════════════════════════════════════════════════
 
-class TestIntegrableHierarchy:
-    """Connection to KdV / integrable hierarchies."""
+class TestDescendantCohFTFirewall:
+    """Scalar FP windows do not construct descendant hierarchies."""
 
-    def test_tau_function_check(self):
+    def test_scalar_window_does_not_construct_kdv(self):
         result = free_energy_tau_function_check()
         assert 'scalar_free_energy' in result
         assert 'infinite_product' in result
+        assert result['constructs_full_kdv_hierarchy'] is False
+        assert result['constructs_analytic_tau_function'] is False
+        assert result['claims_all_genus_shadow_convergence'] is False
+        assert result['requires_witten_kontsevich_descendants'] is True
+        assert 'all-genus shadow convergence requires separate analytic input' in result['analytic_scope']
 
     def test_shadow_corrected_structure(self):
         result = shadow_corrected_structure()
         assert result['mc_equation_controls_corrections']
+        assert result['closed_shadow_generating_function'] is None
+        assert result['requires_descendant_cohft_data'] is True
 
     def test_gaussian_no_correction(self):
         """Gaussian archetype (Heisenberg): no shadow correction."""
@@ -359,18 +358,18 @@ class TestHighGenusFP:
 
 
 # ═══════════════════════════════════════════════════════════════════════
-# The dream result: complete statement
+# Scalar coefficient surface
 # ═══════════════════════════════════════════════════════════════════════
 
-class TestDreamResult:
-    r"""The all-genera free energy = κ · Â_R(ℏ)/ℏ².
+class TestScalarCoefficientSurface:
+    r"""Finite-window scalar free-energy identity.
 
-    THEOREM (Generating function form of Theorem D):
+    Scalar coefficient identity:
 
       F(ℏ) = κ/ℏ² · [(ℏ/2)/sin(ℏ/2) - 1]
 
-    where (ℏ/2)/sin(ℏ/2) = Â(iℏ) is the analytic continuation of
-    the Hirzebruch Â-genus.
+    where (ℏ/2)/sin(ℏ/2) is the positive FP generating function,
+    formally obtained from the A-hat series by x -> i*x.
 
     Equivalently:
       F^total(ℏ) = κ · (ℏ/2)/(ℏ² sin(ℏ/2))
@@ -379,16 +378,15 @@ class TestDreamResult:
     with genus-g projection:
       F_g = κ · λ_g^FP,  λ_g^FP = (2^{2g-1}-1)/2^{2g-1} · |B_{2g}|/(2g)!
 
-    Shadow-corrected version:
+    Conditional shadow-corrected version:
       F^corr(ℏ) = F^scalar(ℏ) + δF^shadow(ℏ)
-    where δF^shadow is controlled by the MC element Θ_A and starts at
-    genus 2 for contact/mixed archetypes.
+    where δF^shadow requires the MC element Θ_A and descendant graph data.
     """
 
-    def test_theorem_statement(self):
-        """Verify the complete theorem through genus 15."""
+    def test_finite_scalar_statement(self):
+        """Verify the scalar coefficient identity through genus 15."""
         result = numerical_verification(15)
-        assert result['all_match'], "Â-genus identity FAILED"
+        assert result['all_match'], "A-hat companion identity failed"
 
     def test_closed_form_series_agreement(self):
         """Closed form and series agree through genus 10."""
@@ -399,15 +397,15 @@ class TestDreamResult:
         for g in range(1, g_max + 1):
             assert Rational(s.coeff(x, 2*g)) == lambda_fp(g)
 
-    def test_physics_interpretation(self):
-        """Free energy = κ copies of chiral boson on circle."""
+    def test_log_product_first_coefficient(self):
+        """The scalar Euler product gives the first logarithmic coefficient."""
         # Verify: log[(x/2)/sin(x/2)] at x^2 gives 1/24
         x = Symbol('x')
         s = series(log(x/2/sin(x/2)), x, 0, 6)
         assert Rational(s.coeff(x, 2)) == Rational(1, 24)
 
-    def test_convergence_at_hbar_1(self):
-        """Series converges well inside radius 2π."""
+    def test_scalar_meromorphic_window_at_hbar_1(self):
+        """The scalar sin series is inside its first-pole window at ℏ = 1."""
         # Evaluate at ℏ = 1
         val = float(sum(lambda_fp(g) for g in range(1, 20)))
         exact = float(Rational(1, 2) / sin(Rational(1, 2))) - 1

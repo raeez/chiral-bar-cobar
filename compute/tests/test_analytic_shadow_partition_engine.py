@@ -1,7 +1,7 @@
 r"""Tests for the analytic shadow partition function engine.
 
-Multi-path verification of the non-perturbative completion of the shadow
-generating function via the sewing envelope.
+Multi-path verification of scalar shadow coefficients, genus-1 analytic
+partition functions, and scope certificates that block over-promotion.
 
 VERIFICATION PATHS:
   1. Sewing construction (Fredholm determinant)
@@ -27,6 +27,17 @@ from compute.lib.utils import lambda_fp, F_g
 from compute.lib.analytic_shadow_partition_engine import (
     # Constants
     PI, TWO_PI,
+    HOLOGRAPHIC_PACKAGE_ENTRIES,
+    MODULAR_KOSZUL_COMPUTE_PACKAGE_PROJECTIONS,
+    KERNEL_NORMALIZATIONS,
+    OBJECT_FIREWALLS,
+    ScopeCertificate,
+    kernel_normalization_certificate,
+    package_firewall_certificate,
+    scalar_shadow_scope_certificate,
+    analytic_continuation_scope_certificate,
+    hs_sewing_scope_certificate,
+    genus2_plumbing_scope_certificate,
     # Section 1: basic building blocks
     _partitions, colored_partitions,
     eta_product, eta_function, eta_function_from_q, log_eta,
@@ -85,6 +96,99 @@ TAU_LARGE = complex(0, 5.0)
 TAU_SMALL = complex(0, 0.3)
 Q_STANDARD = cmath.exp(2j * PI * TAU_STANDARD)
 Q_ABS_STANDARD = abs(Q_STANDARD)  # e^{-2*pi} ~ 0.00187
+
+
+# =========================================================================
+# Section 0: Scope certificates and firewalls
+# =========================================================================
+
+class TestCertificationFirewalls:
+    """Executable guards against promoting scalar data beyond its scope."""
+
+    def test_kernel_normalizations_are_canonical(self):
+        """Kernel constants retain the trace-form/KZ separation."""
+        kernels = kernel_normalization_certificate()
+        assert kernels == KERNEL_NORMALIZATIONS
+        assert kernels["affine_raw_trace_form"] == "k*Omega_tr/z"
+        assert kernels["affine_KZ"] == "Omega/((k+h^vee)z)"
+        assert kernels["heisenberg"] == "k/z"
+        assert kernels["virasoro"] == "(c/2)/z^3 + 2T/z"
+        assert kernels["affine_raw_trace_form"] != kernels["affine_KZ"]
+
+    def test_package_firewalls_are_exact(self):
+        """Holographic and modular Koszul packages remain distinct."""
+        cert = package_firewall_certificate()
+        assert cert["holographic_package_entries"] == HOLOGRAPHIC_PACKAGE_ENTRIES
+        assert HOLOGRAPHIC_PACKAGE_ENTRIES == (
+            "A", "A^i", "A^!", "C", "r(z)", "Theta_A", "nabla^hol",
+        )
+        assert cert["modular_koszul_compute_package_projections"] == (
+            "Fact_X(L)", "barB_X(L)", "Theta_L", "L_L",
+            "(V_br,T_br)", "R4_mod(L)",
+        )
+        assert (
+            cert["modular_koszul_compute_package_projections"]
+            == MODULAR_KOSZUL_COMPUTE_PACKAGE_PROJECTIONS
+        )
+
+    def test_object_firewalls_separate_duals_and_bulk(self):
+        """A, B(A), A^i, A^!, Omega(B(A)), and Hochschild bulk stay typed."""
+        firewalls = package_firewall_certificate()["object_firewalls"]
+        assert firewalls == OBJECT_FIREWALLS
+        assert "bar-cobar inversion" in firewalls["Omega(B(A))"]
+        assert "not Koszul duality" in firewalls["Omega(B(A))"]
+        assert "Verdier continuous-linear dual" in firewalls["A^!"]
+        assert "ChirHoch^*(A,A)" in firewalls["Z_ch^der(A)"]
+        assert "not Koszul dual" in firewalls["Z_ch^der(A)"]
+
+    def test_scalar_certificate_blocks_full_mc_and_resurgence(self):
+        """Finite scalar coefficients do not certify full Theta_A or resurgence."""
+        cert = scalar_shadow_scope_certificate("heisenberg", hbar=1.0)
+        assert isinstance(cert, ScopeCertificate)
+        assert cert.flags["scalar_projection_only"] is True
+        assert cert.flags["full_maurer_cartan_data"] is False
+        assert cert.flags["borel_resurgence_tau"] is False
+        assert cert.flags["all_genus_analytic_partition"] is False
+        assert cert.flags["series_within_radius"] is True
+        blocked = " ".join(cert.blocked_promotions)
+        assert "full Maurer-Cartan" in blocked
+        assert "Borel/resurgence/tau-function" in blocked
+
+    def test_scalar_certificate_radius_blocks_boundary(self):
+        """The closed scalar genus sum is certified only inside |hbar|<2*pi."""
+        inside = scalar_shadow_scope_certificate("generic", hbar=TWO_PI - 1e-6)
+        boundary = scalar_shadow_scope_certificate("generic", hbar=TWO_PI)
+        outside = scalar_shadow_scope_certificate("generic", hbar=TWO_PI + 1e-6)
+        assert inside.flags["series_within_radius"] is True
+        assert boundary.flags["series_within_radius"] is False
+        assert outside.flags["series_within_radius"] is False
+
+    def test_analytic_continuation_certificate_is_generic_only(self):
+        """Central-charge continuation is not a minimal-model or VOA-family claim."""
+        cert = analytic_continuation_scope_certificate()
+        assert cert.flags["generic_vacuum_character_only"] is True
+        assert cert.flags["minimal_model_family"] is False
+        assert cert.flags["full_modular_package"] is False
+        blocked = " ".join(cert.blocked_promotions)
+        assert "minimal-model" in blocked
+        assert "S-matrix" in blocked
+
+    def test_hs_certificate_requires_completion_checks(self):
+        """HS-sewing convergence does not certify completed algebras for free."""
+        cert = hs_sewing_scope_certificate()
+        assert cert.flags["finite_standard_landscape"] is True
+        assert cert.flags["completed_requires_separate_verification"] is True
+        assert cert.flags["numeric_truncation_only"] is True
+        assert cert.flags["full_maurer_cartan_data"] is False
+
+    def test_genus2_plumbing_certificate_is_degeneration_only(self):
+        """The plumbing sum is not promoted to a global genus-2 partition function."""
+        cert = genus2_plumbing_scope_certificate()
+        assert cert.flags["degeneration_only"] is True
+        assert cert.flags["global_genus2_partition"] is False
+        assert cert.flags["finite_truncation"] is True
+        blocked = " ".join(cert.blocked_promotions)
+        assert "global genus-2 Siegel partition function" in blocked
 
 
 # =========================================================================
@@ -545,6 +649,7 @@ class TestGenus2:
         result = genus2_shadow_vs_plumbing(k=1, q1=0.1, q2=0.1, qp=0.01)
         assert result['F2_shadow'] > 0
         assert result['log_plumbing_sum'] > 0
+        assert result['certification'].flags['global_genus2_partition'] is False
 
 
 # =========================================================================
@@ -555,7 +660,7 @@ class TestHSSewing:
     """Test Hilbert-Schmidt sewing convergence (thm:general-hs-sewing)."""
 
     def test_hs_heisenberg_converges(self):
-        """HS norm converges for Heisenberg at any |q| < 1."""
+        """HS norm is finite for the Heisenberg benchmark at q=0.1."""
         result = hs_sewing_norm(0.1, 'heisenberg', k=1)
         assert result['converged']
         assert result['hs_norm'] < float('inf')
@@ -566,21 +671,26 @@ class TestHSSewing:
         assert result['converged']
 
     def test_hs_affine_converges(self):
-        """HS norm converges for affine KM at any |q| < 1."""
+        """HS norm is finite for the affine KM benchmark at q=0.1."""
         result = hs_sewing_norm(0.1, 'affine_km', dim_g=3)
         assert result['converged']
 
     def test_hs_landscape_all_converge(self):
-        """thm:general-hs-sewing: entire standard landscape converges.
+        """Finite-tail HS benchmark converges for the standard families.
 
         For large-dimensional algebras (E8: dim=248), we need |q| much smaller
         than 0.1 for the HS norm to converge within 100 terms.  The theorem
-        guarantees convergence for ALL |q| < 1; the issue is numerical: we
-        need q small enough that q^{2n} beats dim(V_n)^2 within our truncation.
+        gives the infinite-series statement under its hypotheses; this test
+        checks only that q^{2n} beats dim(V_n)^2 within our truncation.
         At q=0.001 (~ tau = i*1.1), convergence is fast even for E8.
         """
         landscape = hs_convergence_landscape(q_abs=0.001)
         assert landscape['all_converged']
+        assert landscape['certification'].flags['numeric_truncation_only'] is True
+        assert (
+            landscape['certification'].flags['completed_requires_separate_verification']
+            is True
+        )
 
     def test_hs_norm_decreases_with_smaller_q(self):
         """Smaller |q| -> smaller HS norm."""
@@ -673,6 +783,7 @@ class TestAnalyticContinuation:
         c_vals = [float(c) for c in range(1, 30)]
         result = analytic_continuation_c(c_vals, TAU_STANDARD)
         assert result['smooth']
+        assert result['certification'].flags['generic_vacuum_character_only'] is True
 
     def test_c_noninteger(self):
         """Non-integer c values produce valid partition functions."""
@@ -725,24 +836,26 @@ class TestLargeTauAsymptotics:
 
 
 # =========================================================================
-# Section 12: Full analysis integration
+# Section 12: Integrated analysis wrappers
 # =========================================================================
 
 class TestFullAnalysis:
-    """Test the integrated full analysis."""
+    """Test integrated analysis wrappers with scope certificates."""
 
     def test_full_heisenberg(self):
-        """Full multi-path analysis for Heisenberg."""
+        """Integrated multi-path analysis for Heisenberg carries a certificate."""
         result = full_analysis_heisenberg(k=1, tau=TAU_STANDARD)
         assert abs(result.genus1_exact) > 0
         assert result.genus1_shadow > 0
         assert result.fredholm['partition_function'] > 0
+        assert result.certification.flags['full_maurer_cartan_data'] is False
 
     def test_full_virasoro(self):
-        """Full analysis for Virasoro."""
+        """Integrated analysis for Virasoro carries a scalar certificate."""
         result = full_analysis_virasoro(c=25.0, tau=TAU_STANDARD)
         assert abs(result.genus1_exact) > 0
         assert result.genus1_shadow > 0
+        assert result.certification.flags['scalar_projection_only'] is True
 
 
 # =========================================================================
@@ -818,6 +931,8 @@ class TestShadowClass:
         result = shadow_class_partition_function('heisenberg', TAU_STANDARD, k=1)
         assert result['shadow_class'] == 'G'
         assert result['r_max'] == 2
+        assert result['certification'].flags['scalar_projection_only'] is True
+        assert result['certification'].flags['full_maurer_cartan_data'] is False
 
     def test_virasoro_class_M(self):
         """Virasoro is class M (infinite shadow depth)."""
@@ -863,6 +978,9 @@ class TestMultiPath:
         assert 'path3_exact' in result
         assert 'path4_modular' in result
         assert 'path6_fourier' in result
+        assert result['certification'].flags['scalar_projection_only'] is True
+        assert result['kernel_normalizations']['affine_raw_trace_form'] == "k*Omega_tr/z"
+        assert "Omega(B(A))" in result['package_firewalls']['object_firewalls']
 
     def test_multi_path_fredholm_exact_agree(self):
         """Fredholm and exact paths agree at purely imaginary tau."""

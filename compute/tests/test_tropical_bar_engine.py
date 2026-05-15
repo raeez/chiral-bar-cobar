@@ -398,15 +398,16 @@ class TestTropicalShadowTower:
         assert kappa == 4
 
     def test_betagamma_kappa(self):
-        """kappa^trop(betagamma) from direct OPE curvature channels.
+        """kappa^trop(betagamma) vanishes on the direct OPE contact lane.
 
         For betagamma: beta*gamma ~ 1/(z-w) produces vacuum (coeff 1),
         gamma*beta ~ -1/(z-w) produces vacuum (coeff -1).
-        Total tropical kappa = 1 + (-1) = 0.
+        These are simple-pole contact terms, not closed collision
+        curvature.  Total direct tropical contact coefficient = 0.
         """
         shadow = TropicalShadowTower(ope=betagamma_ope())
         kappa = shadow.kappa_tropical()
-        assert kappa == 0  # Vacuum channels cancel
+        assert kappa == 0
 
     def test_shadow_tower_data(self):
         """shadow_tower_data returns results at each arity."""
@@ -584,7 +585,7 @@ class TestShadowTowerAgreement:
             assert ok, f"Heisenberg shadow mismatch at arity {arity}"
 
     def test_betagamma_agreement(self):
-        """Tropical shadows agree with algebraic for beta-gamma."""
+        """Beta-gamma direct tropical lane is compatible with class-C contact data."""
         results = shadow_tower_agrees_with_algebraic("betagamma", max_arity=3)
         for arity, ok in results.items():
             assert ok, f"Beta-gamma shadow mismatch at arity {arity}"

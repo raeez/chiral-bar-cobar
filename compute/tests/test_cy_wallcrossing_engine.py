@@ -25,11 +25,15 @@ from compute.lib.cy_wallcrossing_engine import (
     MukaiVector,
     K3_EULER_CHAR,
     K3_HODGE,
+    HOLOGRAPHIC_PACKAGE_KEYS,
+    MODULAR_KOSZUL_PACKAGE_KEYS,
+    FINITE_WINDOW_DIAGNOSTIC_STATUS,
     # Bridgeland stability
     BridgelandCentralCharge,
     # Walls
     Wall,
     find_walls_rank1,
+    wall_alignment_diagnostic,
     # DT invariants
     hilb_k3_euler_char,
     hilb_k3_euler_char_product,
@@ -42,7 +46,9 @@ from compute.lib.cy_wallcrossing_engine import (
     dt_degree0_k3xe,
     macmahon_coefficients,
     macmahon_from_product,
+    signed_macmahon_coefficients,
     verify_macmahon_power_zero,
+    degree0_dt_pt_factorization_k3xe,
     hilb_k3xe_euler_cheah,
     verify_mnop_k3xe,
     # Motivic DT
@@ -186,17 +192,30 @@ class TestMukaiVector:
         w = MukaiVector(1, -1, 2)
         assert v.mukai_pairing(w) == w.mukai_pairing(v)
 
-    def test_euler_pairing_antisymmetric(self):
-        """chi(v,w) = -chi(w,v)."""
+    def test_k3_ext_euler_symmetric(self):
+        """On K3, chi(E,F)=-(v(E),v(F)) is symmetric, not the KS skew form."""
+        ox = MukaiVector(1, 0, 1)
+        point = MukaiVector(0, 0, 1)
+        assert ox.k3_ext_euler_characteristic(point) == point.k3_ext_euler_characteristic(ox)
+        assert ox.k3_ext_euler_characteristic(ox) == 2
+
+    def test_skew_pairing_antisymmetric(self):
+        """The KS diagnostic uses r*s' - r'*s, a skew projection."""
         v = MukaiVector(2, 1, 3)
         w = MukaiVector(1, -1, 2)
-        assert v.euler_pairing(w) == -w.euler_pairing(v)
+        assert v.ks_skew_pairing(w) == -w.ks_skew_pairing(v)
+        assert v.euler_pairing(w) == v.ks_skew_pairing(w)
 
     def test_euler_pairing_value(self):
-        """chi(v,w) = r1*s2 - r2*s1 for our definition."""
+        """Backward-compatible euler_pairing is the KS skew diagnostic."""
         v = MukaiVector(1, 0, 0)
         w = MukaiVector(0, 0, 1)
         assert v.euler_pairing(w) == 1  # 1*1 - 0*0
+
+    def test_mukai_primitivity(self):
+        """Primitive guard for Hilb-formula DT invariants."""
+        assert MukaiVector(1, 0, -1).is_primitive()
+        assert not MukaiVector(2, 0, 0).is_primitive()
 
     def test_expected_dim_hilb2(self):
         """Hilb^2(K3): v=(1,0,-1), v^2=2, dim=4."""
@@ -295,6 +314,20 @@ class TestWalls:
         for i in range(len(walls) - 1):
             assert walls[i].radius >= walls[i + 1].radius
 
+    def test_rank_zero_wall_is_semicircle_not_vertical_shortcut(self):
+        """Rank-zero destabilizers satisfy the direct central-charge wall equation."""
+        v = MukaiVector(1, 0, -1)
+        walls = find_walls_rank1(v, max_sub_rank=2, max_sub_degree=2)
+        finite = [w for w in walls if w.radius < float('inf')]
+        assert finite, "rank-zero candidates should be finite semicircles"
+        diag = wall_alignment_diagnostic(finite[0], height_fraction=0.1)
+        assert diag['finite_window_diagnostic']
+        assert diag['max_abs_imaginary_residual'] < 1e-8
+        assert any(
+            wall_alignment_diagnostic(w, height_fraction=0.1)['positive_alignment_sides']
+            for w in finite
+        )
+
     def test_wall_symmetry(self):
         """If (v1, v2) gives a wall, the center should respect B -> -B symmetry
         when v has d=0 (symmetric in B)."""
@@ -346,6 +379,11 @@ class TestDTInvariantsK3:
         """v^2 < -2 gives Omega = 0."""
         v = MukaiVector(1, 0, 2)  # v^2 = -4
         assert dt_invariant_k3(v) == 0
+
+    def test_dt_invariant_nonprimitive_requires_multicover_data(self):
+        """The primitive Hilb^n(K3) formula is not applied to non-primitive classes."""
+        with pytest.raises(ValueError, match="non-primitive"):
+            dt_invariant_k3(MukaiVector(2, 0, 0))
 
     def test_dt_invariant_odd_norm(self):
         """v^2 odd gives Omega = 0 (v^2 always even on K3)."""
@@ -482,10 +520,10 @@ class TestPentagonIdentity:
         result = verify_pentagon_identity(max_order=6)
         assert result['pentagon_holds'], "Pentagon identity failed"
 
-    def test_pentagon_euler_pairing(self):
-        """The pentagon requires <gamma_1, gamma_2> = 1."""
+    def test_pentagon_skew_pairing(self):
+        """The pentagon requires skew pairing <gamma_1, gamma_2> = 1."""
         result = verify_pentagon_identity(max_order=6)
-        assert result['euler_pairing'] == 1
+        assert result['skew_pairing'] == 1
 
     def test_pentagon_higher_order(self):
         """Pentagon identity at higher truncation order."""
@@ -564,6 +602,21 @@ class TestMacMahon:
             lhs = n * pp[n]
             rhs = sum(_sigma(k, 2) * pp[n - k] for k in range(1, n + 1))
             assert lhs == rhs, f"MacMahon recurrence fails at n={n}"
+
+    def test_signed_macmahon_for_dt_convention(self):
+        """DT degree-zero uses M(-q), so coefficients alternate by q-degree."""
+        assert signed_macmahon_coefficients(5) == [1, -1, 3, -6, 13, -24]
+
+    def test_k3xe_degree0_dt_pt_reduced_factorization(self):
+        """For chi(K3 x E)=0, unreduced DT, reduced DT, and PT degree-zero are all 1."""
+        result = degree0_dt_pt_factorization_k3xe(5)
+        identity = [1, 0, 0, 0, 0, 0]
+        assert result['status'] == 'exact_degree_zero_chi_zero'
+        assert result['macmahon_signed_power_chi_zero'] == identity
+        assert result['dt0'] == identity
+        assert result['pt0'] == identity
+        assert result['reduced_dt0'] == identity
+        assert result['verified']
 
 
 # ============================================================================
@@ -781,14 +834,20 @@ class TestShadowBridge:
         result = compare_ks_vs_shadow_monodromy(v, sigma)
         assert result['kappa_k3'] == Fraction(2)
         assert result['chi_k3xe'] == 0
-        assert result['bridge_status'] == 'conditional_on_d3_functor'
+        assert result['bridge_status'] == FINITE_WINDOW_DIAGNOSTIC_STATUS
+        assert result['ks_support_comparison'] == 'open'
 
     def test_shadow_dt_structural(self):
-        """The KS-shadow bridge is conditional (AP42)."""
+        """The KS-shadow bridge is a finite-window diagnostic, not an exact construction."""
         v = MukaiVector(1, 0, 0)
         sigma = BridgelandCentralCharge(B=0, omega=1)
         result = compare_ks_vs_shadow_monodromy(v, sigma)
-        assert 'conditional' in result['bridge_status']
+        assert 'finite_window_diagnostic' in result['bridge_status']
+        assert result['holographic_package_keys'] == HOLOGRAPHIC_PACKAGE_KEYS
+        assert result['modular_koszul_package_keys'] == MODULAR_KOSZUL_PACKAGE_KEYS
+        assert len(HOLOGRAPHIC_PACKAGE_KEYS) == 7
+        assert len(MODULAR_KOSZUL_PACKAGE_KEYS) == 6
+        assert result['object_firewall']['B(A)'] != result['object_firewall']['A_bang']
 
 
 # ============================================================================
@@ -934,7 +993,7 @@ class TestEdgeCases:
         diff = v - w
         assert diff.r == 2 and diff.d == 1 and diff.s == 0
 
-    def test_euler_pairing_self_zero(self):
+    def test_skew_pairing_self_zero(self):
         """<v, v> = 0 (antisymmetric pairing)."""
         v = MukaiVector(2, 3, 5)
         assert v.euler_pairing(v) == 0
@@ -1214,14 +1273,14 @@ class TestMultiPathVerification:
         p3 = 24
         assert p1 == p2 == p3
 
-    def test_pentagon_plus_euler_pairing(self):
-        """Pentagon identity verified + Euler pairing cross-check."""
+    def test_pentagon_plus_skew_pairing(self):
+        """Pentagon identity verified + skew-pairing cross-check."""
         result = verify_pentagon_identity(max_order=8)
         assert result['pentagon_holds']
         g1, g2 = result['gamma_1'], result['gamma_2']
         # Cross-check: <g1, g2> = 1 and <g2, g1> = -1
-        assert g1.euler_pairing(g2) == 1
-        assert g2.euler_pairing(g1) == -1
+        assert g1.ks_skew_pairing(g2) == 1
+        assert g2.ks_skew_pairing(g1) == -1
 
     def test_k3xe_dt_three_paths(self):
         """DT_0(K3 x E, n) = 0 for n >= 1 by 3 paths."""

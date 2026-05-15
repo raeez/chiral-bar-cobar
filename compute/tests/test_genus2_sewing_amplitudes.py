@@ -23,6 +23,9 @@ Ground truth:
 """
 
 import math
+from fractions import Fraction
+from pathlib import Path
+
 import numpy as np
 import pytest
 
@@ -104,22 +107,29 @@ class TestPeriodMatrix:
         assert abs(Omega[1, 1] - TAU2) < 0.1
 
     def test_off_diagonal_from_sewing(self):
-        """Off-diagonal delta = -(1/(2pi i)) log(w) at leading order."""
+        """Separating off-diagonal delta equals the normalized sewing coordinate."""
         w = 0.1
         Omega = period_matrix_from_sewing(TAU1, TAU2, w, correction_order=0)
-        expected_delta = -(1.0 / (2.0 * np.pi * 1j)) * np.log(w)
+        expected_delta = w
         assert abs(Omega[0, 1] - expected_delta) < 1e-10
 
     def test_period_matrix_degeneration(self):
-        """As w -> 0, |off-diagonal entry| diverges."""
+        """As the separating parameter w -> 0, the off-diagonal entry vanishes."""
         w_vals = [0.1, 0.01, 0.001]
         abs_deltas = []
         for w in w_vals:
             Omega = period_matrix_from_sewing(TAU1, TAU2, w, correction_order=0)
             abs_deltas.append(abs(Omega[0, 1]))
-        # |delta| = |log(w)|/(2pi) increases as w -> 0
         for i in range(len(abs_deltas) - 1):
-            assert abs_deltas[i] < abs_deltas[i + 1]
+            assert abs_deltas[i + 1] < abs_deltas[i]
+
+    def test_separating_logarithm_not_used(self):
+        """The nonseparating logarithmic period is not the separating off-diagonal."""
+        w = 0.01
+        Omega = period_matrix_from_sewing(TAU1, TAU2, w, correction_order=0)
+        nonseparating_log = -(1.0 / (2.0 * np.pi * 1j)) * np.log(complex(w))
+        assert abs(Omega[0, 1]) < 0.02
+        assert abs(Omega[0, 1] - nonseparating_log) > 0.5
 
     def test_period_matrix_corrections(self):
         """Corrections to period matrix are small for small w."""
@@ -319,10 +329,10 @@ class TestAffineGenus2:
             assert abs(a['central_charge'] - 3.0 * k / (k + 2.0)) < 1e-10
 
     def test_affine_heisenberg_sewing_match(self):
-        """Affine sl_2 sewing factor = prod(1-w^n)^{-3} = rank-3 Heis.
+        """Affine sl_2 PBW oscillator factor equals rank-3 Heis.
 
-        Since the vacuum affine sl_2 module has the same character
-        as rank-3 free bosons, the sewing factor should match.
+        This is an oscillator-envelope check, not a claim about
+        integrable quotient characters.
         """
         w = 0.1
         a = affine_sl2_genus2_sewing(1.0, TAU1, TAU2, w)
@@ -446,7 +456,7 @@ class TestBetagammaGenus2:
         assert abs(bg['central_charge'] - 2.0) < 1e-10
 
     def test_bg_equals_rank2_heisenberg(self):
-        """bg sewing factor = rank-2 Heisenberg (two oscillator species)."""
+        """bg oscillator sewing factor = rank-2 Heisenberg."""
         bg = betagamma_genus2_sewing(1.0, TAU1, TAU2, W_SEW)
         h2 = heisenberg_genus2_sewing(TAU1, TAU2, W_SEW, rank=2)
         ratio = abs(bg['Z2_holomorphic'] / h2['Z2_holomorphic'])
@@ -508,9 +518,25 @@ class TestFreeEnergy:
         assert abs(fe[1]['F_g'] - 1.0 / 24.0) < 1e-10
 
     def test_F2_value(self):
-        """F_2 = kappa * |B_4|/(4*4!) = kappa / 2880."""
+        """F_2 = kappa * (7/8) * |B_4|/4! = 7*kappa/5760."""
         fe = genus2_free_energy_expansion(1.0)
-        assert abs(fe[2]['F_g'] - 1.0 / 2880.0) < 1e-12
+        assert abs(fe[2]['F_g'] - 7.0 / 5760.0) < 1e-12
+
+    def test_FP_coefficients_first_three(self):
+        """Independent FP coefficient oracle from the Bernoulli closed form."""
+        fe = genus2_free_energy_expansion(1.0, g_max=3)
+        expected = {
+            1: Fraction(1, 24),
+            2: Fraction(7, 5760),
+            3: Fraction(31, 967680),
+        }
+        for g, value in expected.items():
+            assert abs(fe[g]['lambda_g'] - float(value)) < 1e-15
+
+    def test_F2_over_F1_ratio(self):
+        """The Heisenberg FP ratio F_2/F_1 is 7/240."""
+        fe = genus2_free_energy_expansion(1.0, g_max=2)
+        assert abs(fe[2]['F_g'] / fe[1]['F_g'] - 7.0 / 240.0) < 1e-14
 
     def test_F_g_positive(self):
         """All F_g are positive for kappa > 0."""
@@ -591,3 +617,32 @@ class TestFayIdentity:
         Omega = period_matrix_from_sewing(TAU1, TAU2, W_SEW)
         data = fay_trisecant_genus2_numerical(Omega, 0, 0, 0, 0, N=4)
         assert math.isfinite(abs(data['chi10']))
+
+
+# ====================================================================
+# 13. Prose and normalization firewalls
+# ====================================================================
+
+class TestProseFirewalls:
+    """Guard against process prose and degeneration conflation."""
+
+    def test_owned_module_has_no_process_prose_markers(self):
+        """Scratch/process markers stay out of the compute source."""
+        source = Path("compute/lib/genus2_sewing_amplitudes.py").read_text()
+        forbidden = [
+            "Act" + "ually",
+            "W" + "ait",
+            "h" + "mm",
+            "AP" + "25",
+            "per " + "CLAUDE",
+            "ag" + "ent",
+            "wa" + "ve",
+            "led" + "ger",
+        ]
+        for marker in forbidden:
+            assert marker not in source
+
+    def test_owned_module_separating_period_has_no_log_w_formula(self):
+        """The separating period model must not reintroduce the logarithmic formula."""
+        source = Path("compute/lib/genus2_sewing_amplitudes.py").read_text()
+        assert "log" + "(w)" not in source

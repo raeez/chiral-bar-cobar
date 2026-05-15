@@ -25,9 +25,10 @@ PLANTED-FOREST CORRECTION
 
         delta_pf = sum_{PF graphs Gamma} (1/|Aut(Gamma)|) * w(Gamma) * I(Gamma)
 
-    where w(Gamma) is the product of vertex weights (S_k for genus-0 vertices,
-    kappa and MC-determined values for higher genus) and I(Gamma) is the
-    Hodge integral.
+    where w(Gamma) is the product of the implemented vertex weights (S_k for
+    genus-0 vertices, the exact genus-1 weights through valence 2, and the
+    inherited kappa weights for the still-unresolved higher-valence MC surface)
+    and I(Gamma) is the Hodge integral.
 
     For Virasoro (class M), this evaluates to:
 
@@ -42,11 +43,20 @@ VERIFICATION
 ============
 
     1. Heisenberg vanishing: delta_pf(H_k) = 0 (class G, all S_r=0 for r>=3)
-    2. Affine sl_2: delta_pf(sl_2) is a polynomial in k (class L, only S_3!=0)
+    2. Class-L restriction: set S_4=S_5=S_6=S_7=0 after fixing the
+       canonical lower-index edge-propagator sign convention
     3. Self-loop parity vanishing: graphs with single self-loop contribute 0
     4. Lambda_4^FP from Bernoulli: (127/128)*(1/30)/40320 = 127/154828800
     5. Orbifold Euler characteristic: chi^orb(M-bar_{4,0}) = -4717039/6220800
     6. Large-c asymptotics: F_4^total ~ c^4 / 7077888
+
+CERTIFICATION FIREWALL
+======================
+
+    This module certifies a finite genus-4 graph-sum surface.  It does not
+    certify an all-genus Virasoro formula, Borel summability of the
+    planted-forest sector, a tau/hierarchy identification, or the full
+    higher-valence MC recursion.
 
 GRAPH CENSUS (M-bar_{4,0})
 ==========================
@@ -145,6 +155,37 @@ assert _bernoulli_exact(8) == Fraction(-1, 30)
 # ============================================================================
 
 c_sym = Symbol('c')
+
+EDGE_PROPAGATOR_SIGN_CONVENTION = (
+    "bridge sign on the lower-indexed endpoint in the canonical StableGraph "
+    "edge tuple; self-loop sign on the second half-edge"
+)
+
+KERNEL_NORMALIZATIONS = {
+    "affine_raw_trace": "r^KM(z) = k*Omega_tr/z",
+    "affine_KZ": "r^KZ(z) = Omega/((k+h^vee)z)",
+    "heisenberg": "r^Heis(z) = k/z",
+    "virasoro": "r^Vir(z) = (c/2)/z^3 + 2T/z",
+}
+
+OBJECT_FIREWALLS = {
+    "A": "input chiral algebra",
+    "B(A)": "bar coalgebra T^c(s^{-1}bar A)",
+    "A^i": "bar cohomology/Koszul-dual coalgebra H^*(B(A))",
+    "A^!": "Verdier/continuous-linear dual branch under finite-type or completed hypotheses",
+    "Omega(B(A))": "bar-cobar inversion returning A, not Koszul duality",
+    "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/derived-centre bulk",
+}
+
+GENUS4_FINITE_SCOPE_CERTIFICATION = {
+    "certified_surface": "finite genus-4 planted-forest graph sum",
+    "all_genus_virasoro_formula_certified": False,
+    "borel_planted_forest_sector_certified": False,
+    "planted_forest_closed_form_certified": False,
+    "tau_or_hierarchy_identification_certified": False,
+    "full_higher_valence_mc_recursion_certified": False,
+    "edge_propagator_sign_convention": EDGE_PROPAGATOR_SIGN_CONVENTION,
+}
 
 
 def virasoro_shadow_coefficients(max_r: int = 10) -> Dict[int, Any]:
@@ -407,9 +448,11 @@ def genus4_exact_coefficients() -> Dict[Tuple[int, ...], Rational]:
     Keys are (a, b, c, d, e, f) where the monomial is
     kappa^a * S_3^b * S_4^c * S_5^d * S_6^e * S_7^f.
 
-    These 37 coefficients are computed from the 379-graph sum and verified
-    by Heisenberg vanishing, affine sl_2 specialization, and numerical
-    Virasoro cross-checks at 8 central charges.
+    These 37 coefficients are computed from the 379-graph sum using the
+    lower-index edge-propagator sign convention and verified by Heisenberg
+    vanishing, genus-2/genus-3 planted-forest anchors, the class-L
+    restriction certificate, and numerical Virasoro cross-checks at 8
+    central charges.
     """
     return {
         # ---- 10 terms with kappa^0 ----
@@ -476,6 +519,112 @@ def genus4_formula_symbolic() -> Any:
                 term *= syms[i] ** exp
         result += term
     return expand(result)
+
+
+def _rational_to_fraction(value: Any) -> Fraction:
+    """Convert a SymPy rational or Python rational to fractions.Fraction."""
+    if hasattr(value, 'p') and hasattr(value, 'q'):
+        return Fraction(int(value.p), int(value.q))
+    return Fraction(value)
+
+
+def genus4_class_l_restriction_coefficients() -> Dict[Tuple[int, int], Fraction]:
+    r"""Restrict the genus-4 polynomial to the class-L lane.
+
+    The class-L lane is obtained by setting S_4 = S_5 = S_6 = S_7 = 0.
+    The remaining keys are (a, b) for kappa^a * S_3^b.
+    """
+    restricted: Dict[Tuple[int, int], Fraction] = {}
+    for (a, b, c, d, e, f), coeff in genus4_exact_coefficients().items():
+        if (c, d, e, f) == (0, 0, 0, 0):
+            restricted[(a, b)] = _rational_to_fraction(coeff)
+    return restricted
+
+
+def genus4_class_l_formula_symbolic() -> Any:
+    """Return the class-L restriction as a polynomial in kappa and S_3."""
+    kappa = Symbol('kappa')
+    S3 = Symbol('S_3')
+    total = Integer(0)
+    for (a, b), coeff in genus4_class_l_restriction_coefficients().items():
+        total += Rational(coeff.numerator, coeff.denominator) * kappa ** a * S3 ** b
+    return expand(total)
+
+
+def genus4_kappa4_s3_squared_certificate() -> Dict[str, Any]:
+    r"""Certify the coefficient of kappa^4 * S_3^2 on the class-L lane.
+
+    The coefficient is not a shadow-normalization ambiguity.  With the
+    lower-index bridge sign convention validated by the genus-2 and genus-3
+    planted-forest engines, only two genus-4 planted-forest graph types
+    contribute to kappa^4*S_3^2:
+
+    * ((1,2),(1,1),(1,1),(1,1),(0,3)) contributes 1/5308416.
+    * ((1,1),(1,1),(1,1),(1,1),(0,3),(0,3)) contributes 1/2654208.
+
+    Their sum is 1/1769472.  The competing value 5/15925248 is obtained by
+    changing the first graph's Hodge integral from 1/110592 to -1/331776,
+    the alternate sign convention used by the older genus4_planted_forest
+    surface.  That alternate sign already fails the genus-3 coefficient
+    anchor, so it is not the convention used here.
+    """
+    canonical_witnesses = [
+        {
+            'vertex_genera_valences': ((1, 2), (1, 1), (1, 1), (1, 1), (0, 3)),
+            'edges': ((0, 1), (0, 4), (2, 4), (3, 4)),
+            'automorphism_order': 2,
+            'hodge_integral': Fraction(1, 110592),
+            'coefficient_contribution': Fraction(1, 5308416),
+        },
+        {
+            'vertex_genera_valences': (
+                (1, 1), (1, 1), (1, 1), (1, 1), (0, 3), (0, 3)
+            ),
+            'edges': ((0, 4), (1, 4), (2, 5), (3, 5), (4, 5)),
+            'automorphism_order': 8,
+            'hodge_integral': Fraction(1, 331776),
+            'coefficient_contribution': Fraction(1, 2654208),
+        },
+    ]
+    alternate_sign_witnesses = [
+        {
+            **canonical_witnesses[0],
+            'hodge_integral': Fraction(-1, 331776),
+            'coefficient_contribution': Fraction(-1, 15925248),
+        },
+        dict(canonical_witnesses[1]),
+    ]
+
+    canonical_value = sum(
+        row['coefficient_contribution'] for row in canonical_witnesses
+    )
+    alternate_value = sum(
+        row['coefficient_contribution'] for row in alternate_sign_witnesses
+    )
+
+    return {
+        'monomial': (4, 2),
+        'meaning': 'coefficient of kappa^4 * S_3^2 after S_4=S_5=S_6=S_7=0',
+        'canonical_value': canonical_value,
+        'competing_alternate_sign_value': alternate_value,
+        'canonical_over_alternate_ratio': canonical_value / alternate_value,
+        'difference': canonical_value - alternate_value,
+        'edge_propagator_sign_convention': EDGE_PROPAGATOR_SIGN_CONVENTION,
+        'canonical_witnesses': canonical_witnesses,
+        'alternate_sign_witnesses': alternate_sign_witnesses,
+        'normalization_conflict': False,
+        'sign_convention_conflict': True,
+        'resolution': 'use canonical_value',
+    }
+
+
+def genus4_certification_firewall() -> Dict[str, Any]:
+    """Return finite-scope and object-separation certification for this module."""
+    data = dict(GENUS4_FINITE_SCOPE_CERTIFICATION)
+    data['kernel_normalizations'] = dict(KERNEL_NORMALIZATIONS)
+    data['object_firewalls'] = dict(OBJECT_FIREWALLS)
+    data['class_l_kappa4_s3_squared'] = genus4_kappa4_s3_squared_certificate()
+    return data
 
 
 # ============================================================================

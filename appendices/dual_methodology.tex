@@ -190,13 +190,16 @@ the $\infty$-categorical cofree coalgebra on the suspended cogenerators.
 
 \begin{corollary}[Bar-cobar inversion establishes Koszulness \cite{LV12}; \ClaimStatusConditional]
 \label{cor:derived-koszul}
-For any augmented $\Eone$-chiral algebra $\cA$, the counit of the bar-cobar
-adjunction
+\emph{Type signature:} (Open quadrant; bar--cobar; Beilinson level
+$1\!\leftrightarrow\!2$; HP = augmented + complete + Koszul locus).
+For any augmented $\Eone$-chiral algebra $\cA$ on the chirally Koszul
+locus, the counit of the bar-cobar adjunction
 \[
 \varepsilon\colon \Cobar_\infty(\Bbar_\infty(\cA)) \xrightarrow{\simeq} \cA
 \]
 is an equivalence in the $\infty$-category of $\Eone$-chiral algebras. This
-is Theorem~B (bar-cobar inversion), not a definition of Koszulness: the
+is the counit face of Theorem~A (bar-cobar inversion), not a definition of
+Koszulness: the
 equivalence $\Omega B(\cA) \simeq \cA$ holds unconditionally on the chirally
 Koszul locus, and characterizes it (see the Koszul equivalences meta-theorem,
 Theorem~\ref{thm:koszul-equivalences-meta}).
@@ -212,3 +215,142 @@ the chain level; Theorem~\ref{thm:abstract-bar-cobar} upgrades it to an
 $\infty$-categorical equivalence.
 \end{proof}
 \end{corollary}
+
+\subsection{Gui--Li--Zeng quadratic duality: candidate dual with MC
+comparison map, not full Koszulness}
+\label{subsec:glz-scope-vs-full-koszulness}
+
+The Gui--Li--Zeng quadratic duality~\cite{GLZ22} produces a
+\emph{candidate} Koszul dual with an associated Maurer--Cartan
+comparison map. Full Koszulness — the bar--cobar inversion
+$\Omega B(\cA) \simeq \cA$ on the locus — is a strictly stronger
+statement that requires three independent ingredients. This
+distinction is load-bearing and is the MA-12 scope discipline applied
+to quadratic chiral duality.
+
+\begin{theorem}[Gui--Li--Zeng quadratic duality: scope; \ClaimStatusProvedElsewhere]
+\label{thm:glz-quadratic-duality-scope}
+\emph{Type signature:} (Open quadrant; quadratic chiral data;
+Beilinson level $1\!\rightarrow\!2$; HP = $E_\infty$-chiral +
+quadratic presentation $(N,P)$ + dualizable quadratic datum
+$(s^{-1}N^\vee\omega^{-1}, P^\perp)$).
+Let $\cA = \cA(N,P)$ be a quadratic chiral algebra with dualizable
+quadratic datum in the sense of~\cite{GLZ22}. Then:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item \textbf{Candidate quadratic dual.} There is a quadratic chiral
+algebra
+\[
+\cA^!_{\mathrm{GLZ}} := \cA\bigl(s^{-1}N^\vee\omega^{-1}, P^\perp\bigr),
+\]
+the GLZ quadratic dual.
+
+\item \textbf{Maurer--Cartan comparison map.} There is a bijection
+\[
+\operatorname{Hom}_{\mathrm{ChirAlg}}(\cA, \cB)
+\;\longleftrightarrow\;
+\MC\bigl(\cA^!_{\mathrm{GLZ}} \otimes \cB\bigr),
+\]
+between chiral algebra morphisms and Maurer--Cartan elements in the
+tensor product convolution algebra.
+\end{enumerate}
+The output is a candidate dual together with a comparison map, not a
+witnessed bar--cobar inversion.
+\end{theorem}
+
+\begin{proof}
+This is~\cite[Proposition~3.2 and Theorem~5.3]{GLZ22}, restated
+verbatim with type signature attached.
+\end{proof}
+
+\begin{theorem}[Full Koszulness as a separate theorem; \ClaimStatusConditional]
+\label{thm:full-koszulness-separate}
+\emph{Type signature:} (Open quadrant; bar--cobar inversion;
+Beilinson level $1\!\leftrightarrow\!2$; HP = (a)+(b)+(c) below).
+Let $\cA = \cA(N,P)$ be a quadratic chiral algebra. Then $\cA$ is
+chirally Koszul — meaning the bar--cobar inversion
+$\Cobar^{\mathrm{ch}}\Bbar^{\mathrm{ch}}(\cA) \xrightarrow{\sim} \cA$
+holds in the appropriate ambient — \emph{if and only if} all three
+of the following independent ingredients hold simultaneously:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \textbf{Quadratic-dual candidate exists.} The dualizable
+quadratic datum $(s^{-1}N^\vee\omega^{-1}, P^\perp)$ is well-formed
+and produces $\cA^!_{\mathrm{GLZ}}$
+(Theorem~\ref{thm:glz-quadratic-duality-scope}).
+
+\item \textbf{Maurer--Cartan comparison map is a quasi-isomorphism.}
+The comparison map of
+Theorem~\ref{thm:glz-quadratic-duality-scope}(2) lifts to a
+quasi-isomorphism of convolution dg Lie algebras
+$\operatorname{Conv}(\cA^{\mathrm i}, \cA^!_{\mathrm{GLZ}}) \to
+\operatorname{Conv}(\cA^{\mathrm i}, \cA)$ identifying the
+canonical twisting morphism $\tau$ with the GLZ Maurer--Cartan
+element $\alpha$.
+
+\item \textbf{Bar--cobar adjunction $K^2 \simeq \id$ on the comparison
+locus.} The counit $\Cobar^{\mathrm{ch}}\Bbar^{\mathrm{ch}}(\cA)
+\xrightarrow{\sim} \cA$ is a chain-level quasi-isomorphism on the
+locus where (a) and (b) hold; equivalently, the PBW spectral sequence
+degenerates at $E_2$ on this locus.
+\end{enumerate}
+Each ingredient is independent: (a) without (b) gives a candidate
+without comparison; (a)+(b) without (c) gives a Maurer--Cartan
+comparison without bar--cobar inversion (the higher
+$A_\infty$-operations $m_k$, $k\ge 3$, may obstruct
+strictification); (a)+(c) without (b) is impossible (the comparison
+map is forced by the quadratic datum once dualisability is granted).
+\end{theorem}
+
+\begin{proof}
+\textbf{Necessity.} If bar--cobar inversion holds, the bar coalgebra
+is concentrated on quadratic generators and quadratic relations
+(degrees~$1$ and~$2$ in bar weight), forcing the dualizable quadratic
+datum and the comparison map. The $E_2$-degeneration of the PBW
+spectral sequence is the chain-level witness.
+
+\textbf{Sufficiency.} Granted (a)+(b)+(c), the comparison map of (b)
+identifies $\Cobar^{\mathrm{ch}}(\Bbar^{\mathrm{ch}}(\cA))$ with the
+quadratic algebra reconstructed from the GLZ dual on the locus
+of~(c); the $E_2$-degeneration of (c) ensures no higher $A_\infty$
+shadows obstruct the inversion.
+\end{proof}
+
+\begin{remark}[Why all three ingredients are required: MA-12]
+\label{rem:glz-three-ingredients-ma12}
+\index{MA-12 (finite-spin / quadratic / classical = full theorem)}
+Asserting GLZ quadratic duality ``establishes Koszulness'' without
+ingredients (b) and (c) is a textbook MA-12 violation: a
+quadratic-only construction is promoted to the full Koszul-duality
+theorem without naming the endpoint hypothesis package. The endpoint
+hypotheses are (b) the Maurer--Cartan comparison map being a
+quasi-isomorphism and (c) the bar--cobar adjunction $K^2 \simeq \id$
+on the comparison locus, which specialise the
+Vallette~\cite{Val16} / Hinich~\cite{Hinich2003} /
+Positselski~\cite{Positselski11,Positselski2018} bar--cobar Quillen
+package to the chiral ambient.
+
+The MA-12 violation is detected by the slogan \emph{``GLZ produces
+the Koszul dual''} — the truth is GLZ produces a \emph{candidate}
+dual with a comparison map; the inversion theorem is separate. The
+companion-theorem package is named in the type signature of
+Theorem~\ref{thm:full-koszulness-separate}.
+\end{remark}
+
+\begin{remark}[Companion: chain-level versus $\infty$-categorical lanes]
+\label{rem:glz-two-lanes}
+The three-ingredient package of
+Theorem~\ref{thm:full-koszulness-separate} has two lanes,
+parallelling the dual-proof methodology of
+Convention~\ref{conv:dual-proof}.
+\emph{Chain-level (Priddy lane).} Ingredient (c) is witnessed by an
+explicit Priddy--Koszul chain homotopy contracting the augmentation
+ideal, with $E_2$-degeneration of the PBW spectral sequence
+weight-by-weight (\cite[\S7.4]{LV12}; chiral specialisation).
+\emph{$\infty$-categorical (Positselski lane).} Ingredient (c) is
+witnessed by the coderived/contraderived bar--cobar Quillen
+equivalence on the pro-conilpotent completion
+$\widehat{\cA} = \varprojlim_N \cA/\cA_{\geq N}$
+(\cite{Positselski2011}; chiral specialisation in
+Theorem~\ref{thm:abstract-bar-cobar}).
+The two lanes coincide on the Koszul locus and diverge off it; bare
+GLZ quadratic duality alone does not select either lane.
+\end{remark}

@@ -12,7 +12,6 @@
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{conjecture}[theorem]{Conjecture}
 
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
@@ -62,65 +61,47 @@ The Bershadsky--Polyakov algebra $\cB^k = W_k(\fsl_3, f_{(2,1)})$
 is the Drinfeld--Sokolov reduction of $\widehat{\fsl}_3$ at the
 minimal nilpotent orbit. The hook partition $(2,1)$ is self-transpose,
 and the Feigin--Frenkel level involution sends $k$ to
-$k'=-k-6$. Under the subregular DS/bar-transport theorem, this gives
-$(\cB^k)^! \cong \cB^{k'}$ away from the critical level. The central
-sharpening of this note
-(Theorem~\textup{\ref{thm:bp-koszul-conductor-polynomial}}) is the
-\emph{polynomial identity} $K_{\cB}(k) \equiv 196$ in the rational
-function field $\bQ(k)$, in the Arakawa/Fehily--Kawasetsu--Ridout
-convention; equivalently, $c(\cB^k) - 98$ is an odd function of
-$(k+3)$. The fixed point $k=-3$ of the level involution $k\mapsto -k-6$
-coincides with the critical level $-h^\vee(\fsl_3)$, and
-$\kappa(\cB^{-3}) = 49/3$ is the principal-value symmetric limit across
-the pole, not a function value. Throughout this note
-$\kappa_{\cB} = \tfrac{1}{6}\, c_{\cB}$ is the Bershadsky--Polyakov
-modular-characteristic normalisation
-(Chapter~\ref{chap:subregular-hook-frontier}), so that
-$49/3 = (98)/6$ recovers the symmetric limit of $c$. In the Fateev--Lukyanov screening
-convention used by the Vol~II counterparts, a direct rational
-computation gives $K^{\mathrm{FL}}_{\cB}(k) = [(2k+9)(3k+17) - (2k+3)(3k+1)]/(k+3) = 50(k+3)/(k+3) \equiv 50$ in $\mathbb{Q}(k)$ (the pole at
-$k=-3$ is removable); both conventions therefore produce a
-level-independent polynomial-constant conductor, and they differ
-only in numerical value (Arakawa $\equiv 196$ vs.\ Fateev--Lukyanov
-$\equiv 50$) through the choice of central-charge normalisation.
-The complementarity sum $\kappa_{\cB} + \kappa_{\cB}' = K_{\cB}/6 = 98/3 \neq 0$
-is the first non-principal instance of a non-vanishing complementarity
+$k'=-k-6$. Under the subregular DS/bar-transport hypothesis, this
+gives $(\cB^k)^! \cong \cB^{k'}$ away from the critical level. The
+conductor theorem in the standard Fehily--Kawasetsu--Ridout OPE
+normalisation is the rational-function identity
+$K_{\cB}(k)\equiv 50$ in $\bQ(k)$; equivalently,
+$c(\cB^k)-25$ is odd in $(k+3)$. The fixed point $k=-3$ of
+$k\mapsto -k-6$ is the critical pole, so
+$\kappa(\cB^{-3})=25/6$ denotes the principal-value symmetric
+limit. The Bershadsky--Polyakov modular characteristic is
+ $\kappa_{\cB}=c_{\cB}/6$ in the BRST generator-orbit
+ normalisation used here. The shifted quadratic-numerator invariant
+$2-24(k+1)^2/(k+3)$ gives the auxiliary conductor~$196$; it is not
+the FKR central charge unless the shifted stress tensor is specified.
+The complementarity sum $\kappa_{\cB} + \kappa_{\cB}' = K_{\cB}/6 = 25/3 \neq 0$
+ is a non-principal instance of a non-vanishing complementarity
 in the $W$-algebra landscape. The shadow obstruction tower is class~$M$
 on the $T$-line and class~$G$ on the $J$-line.
 \end{abstract}
 
 \begin{remark}[Polynomial conductor identity]\label{rem:bp-polynomial-conductor}
-This paper records the polynomial theorem
-\textup{\ref{thm:bp-koszul-conductor-polynomial}} at
-Vol~I~\verb|standalone/bp_self_duality.tex:253| (this file) and its
-Vol~II cross-check at
-\verb|bp_chain_level_strict_platonic.tex| (FL convention). The
-polynomial identity is stronger than the scalar
-``$K_{\cB}=196$'' because it is an identity
-of rational functions. The Arakawa-convention fixed-point $k=-3$
-coincides with the critical level $-h^\vee(\fsl_3)$; the passage
-through the removable singularity is not a value but a principal-value
-symmetric limit. Both conventions (Arakawa and Fateev--Lukyanov)
-produce a level-independent polynomial-constant Koszul conductor
-(Arakawa $\equiv 196$, Fateev--Lukyanov $\equiv 50$; see
-Remark~\ref{rem:bp-fl-convention-2026-04-17}); the two numerical
-values are central-charge normalisations of the same algebra.
+The assertion $K_{\cB}=50$ means
+$K_{\cB}(k)\equiv50$ as a rational function, not as a level
+evaluation. The fixed point $k=-3$ is critical; the associated number
+is the symmetric principal value across the pole. The
+quadratic-numerator convention gives the parallel shifted constant
+$196$ after changing the conformal vector.
 \end{remark}
 
 % ================================================================
 \section{Introduction}\label{sec:intro}
 % ================================================================
 
-The hook-type transport programme, initiated by Fehily
+Hook-type partitions in type~$A$, studied by Fehily
 \cite{FehilyHook} and developed by Creutzig--Linshaw--Nakatsuka--Sato
-\cite{CLNS24}, identifies a corridor in the non-principal $W$-algebra
-landscape where Drinfeld--Sokolov reduction commutes with bar-cobar
-duality. The corridor consists of $W$-algebras
+\cite{CLNS24}, are closed under transposition. The associated
+non-principal $W$-algebras are
 $W_k(\fsl_N, f_\lambda)$ for hook-type partitions
 $\lambda = (N-j, 1^j)$. For these partitions the transpose
 $\lambda^t$ is again a hook: $(N-j, 1^j)^t = (j+1, 1^{N-j-1})$, and
-the transport-to-transpose conjecture asserts
-\begin{equation}\label{eq:transport-conjecture}
+the hook-transpose duality has the form
+\begin{equation}\label{eq:transport-duality}
  \bigl(W_k(\fsl_N, f_\lambda)\bigr)^!
  \;\cong\;
  W_{k^\vee_\lambda}(\fsl_N, f_{\lambda^t})
@@ -132,11 +113,12 @@ The simplest non-trivial case is $N=3$, $\lambda = (2,1)$. Here
 $\lambda^t = (2,1) = \lambda$: the partition is self-transpose. The
 corresponding $W$-algebra is the Bershadsky--Polyakov algebra
 $\cB^k$, the DS reduction of $\widehat{\fsl}_3$ at the minimal
-nilpotent. At generic level ($k \neq -3$), self-transposition of the partition forces Koszul
-self-duality of the algebra: $(\cB^k)^! \cong \cB^{k'}$ where
-$k' = -k-6$ is the Feigin--Frenkel dual level. This paper develops
-the modular Koszul invariants of $\cB^k$ and establishes it as the
-first non-principal self-dual case in the standard landscape.
+nilpotent. At levels where the completed DS/bar-transport theorem
+applies, self-transposition gives
+$(\cB^k)^! \cong \cB^{k'}$ with $k'=-k-6$. Thus $\cB^k$ is the
+smallest non-principal test case for hook-transpose transport; its
+conductor, complementarity defect, and mixed $T/J$ shadow depth are
+computed below.
 
 % ================================================================
 \section{The Bershadsky--Polyakov algebra}\label{sec:bp-algebra}
@@ -153,19 +135,19 @@ element $f \in \fsl_3$ corresponding to the partition $(2,1)$ of~$3$.
 
 The Jacobson--Morozov $\fsl_2$-triple $(e,h,f)$ for the minimal nilpotent
 of $\fsl_3$ determines an $\ad(h)$-grading on $\fsl_3$. The
-centralizer $\fg^f$ has dimension $2$ (the Cartan plus a root vector),
-and the DS reduction produces four strong generators:
+centralizer $\fg^f$ has dimension $4$, and the DS reduction produces
+four strong generators:
 
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
 \begin{tabular}{cccc}
 \toprule
-Generator & Conformal weight & Parity & $J$-charge \\
+Generator & Conformal weight & Field & $J$-charge \\
 \midrule
-$J$ & $1$ & bosonic & $0$ \\
-$G^+$ & $3/2$ & fermionic & $+1$ \\
-$G^-$ & $3/2$ & fermionic & $-1$ \\
-$T$ & $2$ & bosonic & $0$ \\
+$J$ & $1$ & current & $0$ \\
+$G^+$ & $3/2$ & charged half-integral field & $+1$ \\
+$G^-$ & $3/2$ & charged half-integral field & $-1$ \\
+$T$ & $2$ & stress tensor & $0$ \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -177,56 +159,51 @@ The central charge of $\cB^k$ is
 \begin{equation}\label{eq:bp-central-charge}
  c(k)
  \;=\;
- 2 \;-\; \frac{24(k+1)^2}{k+3}.
+ -\,\frac{(2k+3)(3k+1)}{k+3}.
 \end{equation}
 \end{proposition}
 
 \begin{proof}
-The Kac--Roan--Wakimoto formula \cite{KRW03} gives
-\[
- c = \dim(\fg_0)
- - \tfrac{1}{2}\dim(\fg_{1/2})
- - \frac{12\|\rho - \rho_L\|^2}{k + h^\vee}
-\]
-where $\fg_j$ are the eigenspaces of $\tfrac{1}{2}\ad(h)$ on
-$\fsl_3$, $\rho$ is the Weyl vector, and $\rho_L$ is the Weyl vector
-of the Levi subalgebra. For the minimal nilpotent of $\fsl_3$:
-$\dim(\fg_0) = 4$, $\dim(\fg_{1/2}) = 4$, $h^\vee = 3$,
-$\|\rho - \rho_L\|^2 = 1/2$, and the Sugawara subtraction contributes
-$-24k^2/(k+3)$. Collecting terms gives~\eqref{eq:bp-central-charge}.
-This is verified against the literature value of
-Fehily--Kawasetsu--Ridout \cite{FKR20} and against the compute layer
-at eight admissible levels.
+This is the Feigin--Semikhatov/Kac--Roan--Wakimoto OPE
+normalisation used by Fehily--Kawasetsu--Ridout
+\cite{FeiginSemikhatov,KRW03,FKR20}. The formula is the central
+charge attached to the displayed BP stress tensor.
 \end{proof}
 
 \begin{remark}[Admissible-level check]\label{rem:admissible-check}
 At $k = -3/2$ (the simplest admissible level for $\widehat{\fsl}_3$),
-formula~\eqref{eq:bp-central-charge} gives $c(-3/2) = 2 - 24 \cdot
-(1/4)/(3/2) = 2 - 4 = -2$, matching the triplet algebra value. At
-$k = -9/4$: $c = 2 - 24 \cdot (1/16)/(3/4) = 0$. Both agree with
-the published tables of \cite{FKR20}.
+formula~\eqref{eq:bp-central-charge} gives $c(-3/2)=0$. At
+$k=-1$ one obtains $c(-1)=1/2$. These are values in the standard
+FKR conformal-vector convention.
 \end{remark}
 
 \subsection{OPE data}
 
-The OPE of $\cB^k$ is that of the $N{=}2$ superconformal algebra in
-the Kazama--Suzuki normalization. The bosonic sector is:
+The OPE of $\cB^k$ is the Feigin--Semikhatov Bershadsky--Polyakov
+normal form~\cite[(A.3)]{FeiginSemikhatov}. The bosonic sector is:
 \begin{align}\label{eq:bp-ope-bosonic}
  T_{(3)}T &= \tfrac{c}{2}, &
  T_{(1)}T &= 2T, &
  T_{(0)}T &= \partial T, \notag\\
- J_{(1)}J &= k_{\mathrm{res}}, &
+ J_{(1)}J &= k_J=\frac{2k+3}{3}, &
  J_{(0)}J &= 0, &
- T_{(1)}J &= J.
+ T_{(1)}J &= J,\qquad T_{(0)}J = \partial J.
 \end{align}
-The fermionic sector:
-\begin{align}\label{eq:bp-ope-fermionic}
- G^+_{(2)}G^- &= \tfrac{2c}{3}, &
- G^+_{(1)}G^- &= 2J, &
- G^+_{(0)}G^- &= 2T + \partial J, \notag\\
- G^-_{(2)}G^+ &= \tfrac{2c}{3}, &
- G^-_{(1)}G^+ &= -2J, &
- G^-_{(0)}G^+ &= 2T - \partial J.
+The conformal action on the odd generators is
+\begin{align}\label{eq:bp-ope-primary}
+ T_{(1)}G^\pm &= \tfrac{3}{2}G^\pm, &
+ T_{(0)}G^\pm &= \partial G^\pm, &
+ J_{(0)}G^\pm &= \pm G^\pm .
+\end{align}
+The charged sector:
+\begin{align}\label{eq:bp-ope-charged}
+ G^+_{(2)}G^- &= (k+1)(2k+3), &
+ G^+_{(1)}G^- &= 3(k+1)J, &
+ G^+_{(0)}G^- &= 3{:}JJ{:}+\tfrac{3}{2}(k+1)\partial J-(k+3)T,
+ \notag\\
+ G^-_{(2)}G^+ &= (k+1)(2k+3), &
+ G^-_{(1)}G^+ &= -3(k+1)J, &
+ G^-_{(0)}G^+ &= 3{:}JJ{:}-\tfrac{3}{2}(k+1)\partial J-(k+3)T.
 \end{align}
 All generator self-OPEs among $G^+G^+$, $G^-G^-$ vanish. The
 maximal OPE pole order among generators is $p_{\max}(\cB^k) = 4$
@@ -250,18 +227,18 @@ $\fsl_3$ involution is $k \mapsto -k - 2h^\vee = -k - 6$, and this
 descends to the DS quotient.
 
 \begin{proposition}[BP Koszul self-duality]\label{prop:bp-self-dual}
-Assume the subregular DS/bar-transport theorem for the minimal
-nilpotent reduction of $\widehat{\fsl}_3$. For $k \neq -3$, the
-Koszul dual of $\cB^k$ is $(\cB^k)^! \cong \cB^{k'}$ with
-$k' = -k-6$. In particular, $\cB^k$ is self-dual inside the
-Bershadsky--Polyakov family.
+Assume a comparison theorem identifying the completed chiral
+bar-cobar Verdier dual with the CLNS convolution dual for the
+subregular $\fsl_3$ hook. For $k\neq-3$, this additional comparison
+gives $(\cB^k)^!\cong \cB^{k'}$ with $k'=-k-6$.
 \end{proposition}
 
 \begin{proof}
-The partition $(2,1)$ is self-transpose: $(2,1)^t = (2,1)$. By the
-hook-type transport theorem \cite{CLNS24,FehilyHook}, for a
-self-transpose hook partition $\lambda = \lambda^t$, Koszul duality
-preserves the nilpotent orbit and sends $k \mapsto k^\vee_\lambda$.
+The partition $(2,1)$ is self-transpose: $(2,1)^t = (2,1)$. The
+CLNS/Fehily hook-transpose theorem gives the convolution dual hook
+surface. The stated Verdier Koszul conclusion follows only after the
+assumed DS/bar comparison identifies that surface with the completed
+chiral bar-cobar dual.
 For $\fsl_3$ with $\lambda = (2,1)$, the Levi subalgebra is
 $\fg_0 \cong \mathfrak{gl}_1 \oplus \fsl_2$, and the Feigin--Frenkel
 involution on the affine extension gives
@@ -275,7 +252,7 @@ For a Koszul pair $(A, A^!)$ with central charges $c$ and $c'$, the
 \emph{Koszul conductor} is $K := c + c'$.
 \end{definition}
 
-\begin{theorem}[Bershadsky--Polyakov Koszul-conductor polynomial identity]
+\begin{theorem}[Bershadsky--Polyakov FKR-conductor identity]
 \label{thm:bp-koszul-conductor-polynomial}
 In the rational function field $\mathbb{Q}(k)$, the Koszul-conductor function
 \[
@@ -283,155 +260,95 @@ In the rational function field $\mathbb{Q}(k)$, the Koszul-conductor function
  \;:=\;
  c(\cB^k) + c(\cB^{-k-6})
  \;=\;
- \Bigl(2 - \frac{24(k+1)^2}{k+3}\Bigr)
- + \Bigl(2 - \frac{24(-k-5)^2}{-k-3}\Bigr)
+ -\frac{(2k+3)(3k+1)}{k+3}
+ -\frac{(-2k-9)(-3k-17)}{-k-3}
 \]
-is identically $196$:
+is identically $50$:
 \[
- K_{\cB}(k) \;\equiv\; 196 \qquad \text{as an element of } \mathbb{Q}(k).
+ K_{\cB}(k) \;\equiv\; 50 \qquad \text{as an element of } \mathbb{Q}(k).
 \]
-Equivalently, $c(\cB^k) - 98$ is an \emph{odd} function of $(k+3)$:
-$[c(\cB^k) - 98] + [c(\cB^{-k-6}) - 98] \;=\; 0$ in $\mathbb{Q}(k)$.
+Equivalently, $c(\cB^k) - 25$ is an \emph{odd} function of $(k+3)$:
+$[c(\cB^k) - 25] + [c(\cB^{-k-6}) - 25] \;=\; 0$ in $\mathbb{Q}(k)$.
 The fixed point $k = -3$ of the level involution $k \mapsto -k-6$ coincides
 with the critical level $-h^\vee(\fsl_3) = -3$, where both summands of
 $K_{\cB}(k)$ are singular. The constancy of $K_{\cB}(k)$ on
 $\mathbb{Q}(k) \setminus \{-3\}$ uniquely extends through the removable
 singularity; in the Bershadsky--Polyakov modular-characteristic
-normalisation $\kappa_{\cB}(k) = \tfrac{1}{6}\, c_{\cB}(k)$
-(Chapter~\ref{chap:subregular-hook-frontier},
-equation~(1020)), the symmetric limit of the central charge across the
-pole is
+ normalisation $\kappa_{\cB}(k) = \tfrac{1}{6}\, c_{\cB}(k)$,
+ the symmetric limit of the central charge across the pole is
 $\lim_{\varepsilon\to 0} \tfrac{1}{2}[c_{\cB}(-3+\varepsilon)
- + c_{\cB}(-3-\varepsilon)] = 98$, and therefore
-$\kappa(\cB^{-3}) = 98/6 = 49/3$ is the principal-value
+ + c_{\cB}(-3-\varepsilon)] = 25$, and therefore
+$\kappa(\cB^{-3}) = 25/6$ is the principal-value
 symmetric limit $\lim_{\varepsilon\to 0} \tfrac{1}{2}[\kappa(\cB^{-3+\varepsilon})
 + \kappa(\cB^{-3-\varepsilon})]$ across the pole, not a regular function
-value. The factor $1/6$ in $\kappa_{\cB} = c_{\cB}/6$ is back-derived
-from the generator profile $J^{\mathrm{bos}}_{h=1}$,
-$G^{\pm,\mathrm{ferm}}_{h=3/2}$, $T^{\mathrm{bos}}_{h=2}$ via
-$\varrho_{\BP} = 1 - 2/(3/2) - 2/(3/2) + 1/2 = 1/6$; a structural
-derivation (e.g.\ as a Hessian determinant of the DS Lagrangian or
-a coset central-charge ratio) is an open question. The polynomial
-identity $K_{\cB}(k) \equiv 196$ holds globally in
+value. The factor $1/6$ in $\kappa_{\cB} = c_{\cB}/6$ is the
+DS-BRST generator-orbit trace
+\[
+\varrho_{\cB}
+=1-\frac{1}{3/2}-\frac{1}{3/2}+\frac12=\frac16.
+\]
+The polynomial
+identity $K_{\cB}(k) \equiv 50$ holds globally in
 $\mathbb{Q}(k)$ even though no single real level realises a self-dual central
-charge $c = 98$ as a regular function value (the real equation
-$c(\cB^k) = 98$ has complex roots $k = -3 \pm 2i$).
+charge $c = 25$ as a regular function value (the real equation
+$c(\cB^k) = 25$ has complex roots $k = -3 \pm 2i$).
 \end{theorem}
 
 \begin{proof}
 Direct polynomial-identity computation in $\mathbb{Q}(k)$. Clear the sign
-$-k-3 = -(k+3)$ and reduce $(-k-5)^2 = (k+5)^2$:
+$-k-3 = -(k+3)$:
 \begin{align*}
  K_{\cB}(k)
- &= \Bigl(2 - \frac{24(k+1)^2}{k+3}\Bigr)
- + \Bigl(2 - \frac{24(k+5)^2}{-(k+3)}\Bigr) \\
- &= 4 - \frac{24(k+1)^2}{k+3} + \frac{24(k+5)^2}{k+3}
- = 4 + \frac{24\bigl[(k+5)^2 - (k+1)^2\bigr]}{k+3} \\
- &= 4 + \frac{24 \cdot (2k+6)(4)}{k+3}
- = 4 + \frac{192(k+3)}{k+3}
- = 4 + 192
- = 196.
+ &= -\frac{(2k+3)(3k+1)}{k+3}
+ + \frac{(2k+9)(3k+17)}{k+3} \\
+ &= \frac{(2k+9)(3k+17)-(2k+3)(3k+1)}{k+3}
+ = \frac{50(k+3)}{k+3}
+ = 50.
 \end{align*}
-The $(k+3)$ factor cancels as an identity of rational functions (not as a
-limit): the numerator $(k+5)^2 - (k+1)^2 = (2k+6) \cdot 4 = 8(k+3)$ carries
-the pole-killing factor exactly once. Hence $K_{\cB}(k) - 196 \equiv 0$ in
+The $(k+3)$ factor cancels as an identity of rational functions,
+not as a level evaluation. Hence $K_{\cB}(k) - 50 \equiv 0$ in
 $\mathbb{Q}(k)$. The odd-function reformulation follows from
-$K_{\cB}(k) = 2 \cdot 98 + [c(\cB^k) - 98] + [c(\cB^{-k-6}) - 98] \equiv 196$,
+$K_{\cB}(k) = 2 \cdot 25 + [c(\cB^k) - 25] + [c(\cB^{-k-6}) - 25] \equiv 50$,
 which forces the bracketed sum to vanish identically.
 \end{proof}
 
-\begin{remark}[Alias: numerical value vs polynomial identity]
+\begin{remark}[Rational-function conductor]
 \label{rem:bp-conductor-alias}
-The shorthand $K_{\cB} = 196$, used throughout the chapter and
-Table~\ref{comp:bp-invariants}, denotes the constant value of the rational
-function $K_{\cB}(k) \in \mathbb{Q}(k)$ proved in
-Theorem~\textup{\ref{thm:bp-koszul-conductor-polynomial}}, \emph{not} a
-numerical evaluation at any particular level. Every subsequent invocation
-of $K_{\cB} = 196$ should be read as a reference to the polynomial identity
-$K_{\cB}(k) \equiv 196$.
+The notation $K_{\cB}=50$ denotes the constant rational function
+$K_{\cB}(k)\equiv50$ in $\mathbb{Q}(k)$. It is not an evaluation at a
+particular level, and in particular not an evaluation at the critical
+fixed point $k=-3$.
 \end{remark}
 
-\begin{warning}[Convention check]\label{warn:conductor-value}
-The preceding computation gives $K_{\cB} = 196$. The shadow tower
-module \texttt{bp\_shadow\_tower.py} reports $K = 76$ using the
-alternate central charge formula $c = 2 - 3(2k+3)^2/(k+3)$. The
-discrepancy arises from two conventions for the BP central charge in
-the literature:
-\begin{enumerate}[label=(\roman*)]
- \item $c = 2 - 24(k+1)^2/(k+3)$ \quad
- (Fehily--Kawasetsu--Ridout \cite{FKR20}),
- \item $c = 2 - 3(2k+3)^2/(k+3)$ \quad
- (expanded Kac--Roan--Wakimoto with Sugawara subtraction).
-\end{enumerate}
-These are identical: $3(2k+3)^2 = 3(4k^2+12k+9) = 12k^2+36k+27$ and
-$24(k+1)^2 = 24k^2+48k+24$; they agree only if the Sugawara
-correction is applied consistently. In fact,
-$3(2k+3)^2 = 12k^2 + 36k + 27 \neq 24k^2 + 48k + 24 = 24(k+1)^2$,
-so they are \emph{different formulas}. The authoritative source is
-\cite{FKR20}: $c = 2 - 24(k+1)^2/(k+3)$, giving $K = 196$. The
-compute module \texttt{bp\_shadow\_tower.py} uses the alternate
-convention, and $K = 76$ is correct in that convention. We adopt
-the FKR convention throughout this paper.
+\begin{warning}[Central-charge normalisations]\label{warn:conductor-value}
+Two central-charge expressions occur in computations around the BP
+reduction:
+\[
+c_{\mathrm{FKR}}(k)=-\frac{(2k+3)(3k+1)}{k+3},\qquad
+c_{\mathrm{shift}}(k)=2-\frac{24(k+1)^2}{k+3}.
+\]
+The displayed OPEs in this paper use the Fehily--Kawasetsu--Ridout
+conformal vector, hence $c_{\mathrm{FKR}}$ and conductor~$50$. The
+quadratic-numerator expression $c_{\mathrm{shift}}$ gives conductor
+$196$ for a shifted conformal normalisation; it must not be cited as
+the FKR central charge unless that stress tensor is defined.
 \end{warning}
 
 \begin{remark}[Two formulas reconciled]\label{rem:two-formulas}
-Setting $c_1(k) = 2 - 24(k+1)^2/(k+3)$ and
-$c_2(k) = 2 - 3(2k+3)^2/(k+3)$, one computes
-$c_1(k) - c_2(k) = (-24(k+1)^2 + 3(2k+3)^2)/(k+3)
-= (-24k^2 - 48k - 24 + 12k^2 + 36k + 27)/(k+3)
-= (-12k^2 - 12k + 3)/(k+3)$.
-At $k = -3/2$: $c_1 = -2$, $c_2 = 2 - 3 \cdot 0 = 2$. Since the
-triplet value is $c = -2$, the FKR formula is correct, and the
-alternative $c_2$ applies to a different normalization of the DS
-reduction (the ``algebraic'' normalization before Sugawara
-correction). Both appear in the compute layer with appropriate flags.
-\end{remark}
-
-\begin{remark}[Fateev--Lukyanov screening convention: polynomial
-constant $\equiv 50$]\label{rem:bp-fl-convention-2026-04-17}
-A second convention appears in the Vol~II screening-operator
-literature (Fateev--Lukyanov, also used in the fractional-ghost
-\verb|fm81_fractional_ghost_platonic.tex| template): here
-$c^{\mathrm{FL}}_{\cB}(k) = -(2k+3)(3k+1)/(k+3)$, derived by
-ordering the screening charges under $W_3$-reflection before
-Sugawara subtraction. Under the Feigin--Frenkel dual $k \mapsto -k-6$,
-$c^{\mathrm{FL}}(-k-6) = (2k+9)(3k+17)/(k+3)$ and the Koszul-conductor
-sum is
+The two conductors are both rational-function identities:
 \[
-  K^{\mathrm{FL}}_{\cB}(k)
-  \;=\; c^{\mathrm{FL}}(k) + c^{\mathrm{FL}}(-k-6)
-  \;=\; \frac{(2k+9)(3k+17) - (2k+3)(3k+1)}{k+3}
-  \;=\; \frac{50(k+3)}{k+3}
-  \;\equiv\; 50
+c_{\mathrm{FKR}}(k)+c_{\mathrm{FKR}}(-k-6)=50,\qquad
+c_{\mathrm{shift}}(k)+c_{\mathrm{shift}}(-k-6)=196.
 \]
-in $\mathbb{Q}(k)$: the apparent pole at $k=-3$ is removable, and the
-Fateev--Lukyanov conductor is the polynomial constant~$50$. Both
-conventions therefore produce a level-independent polynomial-constant
-Koszul conductor; they differ only in numerical value
-(Arakawa~$\equiv 196$, Fateev--Lukyanov~$\equiv 50$) through the
-choice of central-charge normalisation, and they parametrise the
-same underlying $W$-algebra via a level reparametrisation. The
-specific numerical value $196$ of
-Theorem~\textup{\ref{thm:bp-koszul-conductor-polynomial}} is
-Arakawa-convention-specific; the \emph{constancy as a rational
-function of the level} is convention-independent. The Vol~II
-cross-check in \verb|bp_chain_level_strict_platonic.tex| uses FL
-consistently and confirms the polynomial constant~$50$.
+The first belongs to the standard BP OPE written above. The second is
+an auxiliary shifted-normalisation invariant.
 \end{remark}
 
-\begin{remark}[Convention choice rationale]\label{rem:bp-convention-rationale}
-Why FKR for the polynomial identity? Because FKR incorporates the
-Sugawara shift by~$h^\vee(\fsl_3) = 3$ (the numerator $(k+1)$
-shifts to $(k+1+2) = (k+3)$ under the $(k \mapsto -k-6)$ involution,
-producing the clean difference-of-squares $3 \cdot 8 (k+3) / (k+3) =
-24$ central to the proof). The FL convention suppresses this shift
-by absorbing it into the screening charge, producing instead the
-canonical $W_3$-reflection $(2k+3)(3k+1)$ which has no
-difference-of-squares structure under the involution. The choice
-is not convention: the polynomial identity is a statement about a
-particular Chevalley--Shephard--Todd invariant of the
-$(\fsl_3, f_{\mathrm{min}})$ W-algebra pair, and FKR is the
-convention in which that invariant is manifestly visible.
+\begin{remark}[FKR normalisation and the conductor invariant]
+\label{rem:bp-convention-rationale}
+The FKR normalisation displays the BP reflection polynomial
+$(2k+3)(3k+1)$. Under $k\mapsto-k-6$ the numerator difference is
+$50(k+3)$, which is why the conductor is constant.
 \end{remark}
 
 \subsection{Anomaly ratio and complementarity}
@@ -442,83 +359,44 @@ characteristic $\kappa$ and central charge $c$ is
 $\rho(\cA) := \kappa / c$.
 \end{definition}
 
-\begin{remark}[$\kappa_T$ vs.\ $\varrho$ vs.\ $\varrho^{\mathrm{FKR}}$:
-naming disambiguation]\label{rem:kappa-vs-rho-disambiguation}
-Three numerical invariants in this paper share the informal epithet
-``anomaly ratio''; they are distinct functions of the algebra and must
-not be conflated.
+\begin{remark}[$\kappa_{\cB}$, $\kappa_T$, and $\varrho$]
+\label{rem:kappa-vs-rho-disambiguation}
+The BP calculation involves three distinct quantities.
 \begin{enumerate}[label=(\alph*)]
- \item \textbf{Modular characteristic $\kappa_T(\cA)$} ($c$-dependent):
- the chain-level curvature coefficient appearing in
- Proposition~\ref{prop:complementarity}. Family values:
- $\kappa_T(\Vir_c) = c/2$; $\kappa_T(H_k) = k$ (Heisenberg at $c=1$);
- $\kappa_T(\widehat{g}_k) = \dim(g)(k+h^\vee)/(2 h^\vee)$
- (affine Kac--Moody, cf.\ /); $\kappa_T(\cB^k) = c(k)/2$.
- \item \textbf{Reduced anomaly ratio
- $\varrho(\cA) := \kappa_T(\cA)/c$} ($c$-independent on any fixed
- family):
- $\varrho(\Vir) = 1/2$;
- $\varrho(H_k) = k$ (since $c = 1$);
- $\varrho(\widehat{g}_k) = \dim(g)(k+h^\vee)/(2 h^\vee c)$;
- $\varrho(\cB^k) = 1/2$ (from $\kappa_T = c/2$). This is the
- invariant defined by Definition~\ref{def:anomaly-ratio}.
- \item \textbf{FKR signed-sum ratio
- $\varrho^{\mathrm{FKR}}(\cA) := \sum_i \varepsilon_i / (2 h_i)$},
- summed over generator orbits with Cartan-grading signs
- (cf.\ Remark~\ref{rem:bp-signed-sum-convention}):
- $\varrho^{\mathrm{FKR}}(\Vir) = 1/(2 \cdot 2) = 1/4$ per generator,
- but with a single $T$-orbit and conventional doubling to match
- $\varrho$ one obtains $1/2$;
- $\varrho^{\mathrm{FKR}}(\cB) = 1 - 4/3 + 1/2 = 1/6$
- (eq.~\ref{eq:bp-anomaly-ratio}).
+ \item The full BP modular characteristic is
+ $\kappa_{\cB}=c_{\cB}/6$. It is the quantity used in
+ Proposition~\ref{prop:complementarity} and
+ Theorem~\ref{thm:bp-koszul-conductor-polynomial}.
+ \item The Virasoro $T$-line curvature is $\kappa_T=c_{\cB}/2$.
+ It controls the one-dimensional Virasoro shadow tower only.
+ \item The residual current line has
+ $\kappa_J=(2k+3)/3$ in the Feigin--Semikhatov normal form.
 \end{enumerate}
-Relations: $\kappa_T(\cA) = \varrho(\cA) \cdot c$ holds identically by
-definition. The FKR signed-sum coincides with $\varrho$ for pure
-Virasoro (both $1/2$) and diverges for composite algebras: for $\cB$,
-$\varrho = 1/2$ but $\varrho^{\mathrm{FKR}} = 1/6$; the signed sum
-tracks BRST cohomology, not the $\kappa_T/c$ ratio.
-
-\textbf{Convention used in this paper.} The $c$-dependent modular
-characteristic $\kappa_T$ is the operative invariant throughout
-(Proposition~\ref{prop:complementarity}, the conductor
-Theorem~\ref{thm:bp-koszul-conductor-polynomial}, all downstream
-complementarity statements). The FKR signed-sum ratio
-$\varrho^{\mathrm{FKR}}$ appears only in
-equation~\eqref{eq:bp-anomaly-ratio} as a provenance check on the
-Kac--Roan--Wakimoto reduction, and is not used elsewhere.
+The signed generator sum $\varrho$ is a BRST generator-orbit trace for
+\eqref{eq:bp-anomaly-ratio}. It is not the Virasoro line curvature.
 \end{remark}
 
-For the BP algebra, the anomaly ratio is computed from the signed
-DS reduction formula (cf.\ the monograph,
-Computation~\texttt{comp:bp-kappa-three-paths}):
-following the Feigin--Kac--Roan--Wakimoto convention (cf.\ the
-Bershadsky--Polyakov chapter of Volume~I, and see Remark~\ref{rem:bp-signed-sum-convention}
-below for the sign discipline): the $J$-generator (weight~$1$) contributes $+1$,
-the $G^\pm$-ghost pair (weight~$3/2$, one Cartan-graded fermion pair)
-contributes $-\tfrac{2}{3/2} = -\tfrac{4}{3}$ combined,
-and the $T$-generator (weight~$2$) contributes $+\tfrac{1}{2}$.
-The result is
+For the BP algebra, the DS-BRST signed generator-orbit sum has four
+contributions: $J$ contributes $+1$, the charged $G^+$ orbit
+contributes $-\tfrac{2}{3}$, the charged $G^-$ orbit contributes
+$-\tfrac{2}{3}$, and $T$ contributes $+\tfrac{1}{2}$. These signs are
+BRST Berezinian signs, not VOA parity assignments. Thus
 \begin{equation}\label{eq:bp-anomaly-ratio}
  \varrho_{\cB}
  \;=\;
- \frac{1}{1} - \frac{2}{3/2} + \frac{1}{2}
+ \frac{1}{1} - \frac{1}{3/2} - \frac{1}{3/2} + \frac{1}{2}
  \;=\;
- 1 - \tfrac{4}{3} + \tfrac{1}{2}
+ 1 - \tfrac{2}{3} - \tfrac{2}{3} + \tfrac{1}{2}
  \;=\; \frac{6 - 8 + 3}{6}
  \;=\; \frac{1}{6}.
 \end{equation}
 
-\begin{remark}[Signed-sum convention: why $G^\pm$ counts once]\label{rem:bp-signed-sum-convention}
-The FKR anomaly-ratio formula sums $\varepsilon_i / (2 h_i)$ over
-\emph{generator orbits} under the algebra's natural grading, not over
-generators individually. The $G^\pm$-pair, although realized as two
-fields of the same conformal weight, forms a \emph{single} Cartan-graded
-fermion pair for the purposes of this sum: they carry opposite $U(1)$-charges
-under $J$, and the contribution $-2/(2\cdot 3/2) = -2/3$ per fermion
-doubles under the FKR orbit-count, yielding $-4/3$ combined. Counting
-$G^+$ and $G^-$ as two independent orbit contributions would
-double-count the fermion pair; the orbit-count convention above is the
-Feigin--Kac--Roan--Wakimoto convention.
+\begin{remark}[Signed-sum convention for the $G^\pm$ orbit]
+\label{rem:bp-signed-sum-convention}
+The anomaly-ratio convention used here sums $\varepsilon_i / (2 h_i)$
+over the charged generator lines in the DS-BRST complex. The fields
+$G^+$ and $G^-$ have the same conformal weight and opposite $U(1)$
+charges. Their total contribution is $-2/3-2/3=-4/3$.
 \end{remark}
 
 \begin{proposition}[Complementarity sum]\label{prop:complementarity}
@@ -529,22 +407,29 @@ For the Bershadsky--Polyakov algebra with the FKR central charge:
  \frac{c(k)}{6} + \frac{c(k')}{6}
  \;=\;
  \frac{K_{\cB}}{6}
- \;=\; \frac{98}{3}.
+ \;=\; \frac{25}{3}.
 \end{equation}
 This is \textbf{nonzero}: the complementarity sum does not vanish.
 For the Virasoro algebra, $\kappa + \kappa' = 13$; for the BP algebra,
-$\kappa_{\cB} + \kappa_{\cB}' = K_{\cB}/6$ in the BP normalization used here.
+$\kappa_{\cB} + \kappa_{\cB}' = K_{\cB}/6$ in the BP modular-characteristic
+normalisation.
 \end{proposition}
 
-\begin{remark}[in the non-principal landscape]\label{rem:ap24}
+\begin{proof}
+Divide the rational-function conductor identity
+$c(k)+c(k')=K_{\cB}=50$ of
+Theorem~\ref{thm:bp-koszul-conductor-polynomial} by $6$.
+\end{proof}
+
+\begin{remark}[Non-principal complementarity]\label{rem:bp-nonprincipal-complementarity}
 The complementarity sum $\kappa + \kappa' = 0$ holds for affine
 Kac--Moody algebras (the Feigin--Frenkel involution $k \mapsto
 -k - 2h^\vee$ ensures antisymmetry around $0$) and for free fields.
 It fails for all $W$-algebras with $K \neq 0$: the Virasoro has
 $K_c = 26$ and $\kappa+\kappa'=13$, while the BP algebra has
-$K_c = 196$ and $\kappa_{\cB}+\kappa_{\cB}'=98/3$ in the
-normalisation of this paper. Writing $\kappa + \kappa' = 0$ for a
-$W$-algebra is wrong unless the family-specific conductor vanishes.
+$K_c = 50$ and $\kappa_{\cB}+\kappa_{\cB}'=25/3$. Thus
+$\kappa+\kappa'=0$ is valid for a $W$-algebra only when its
+family-specific conductor vanishes.
 \end{remark}
 
 % ================================================================
@@ -573,8 +458,8 @@ data on the $T$-line is:
  \Delta_T = \frac{40}{5c+22}.
 \end{equation}
 The critical discriminant $\Delta_T = 8 \kappa_T S_4 = 40/(5c+22)$ is
-nonzero for all $c \neq 0$, confirming that the shadow metric on the
-$T$-line is irreducible.
+nonzero on the regular locus $c(5c+22)\ne0$, confirming that the
+shadow metric on the $T$-line is irreducible there.
 \end{theorem}
 
 \begin{proof}
@@ -582,14 +467,14 @@ On the $T$-line, the MC equation projects to the single-line
 recursion with $\kappa = c/2$, $\alpha = S_3 = 2$, $S_4 = Q^{\mathrm{contact}}_{\Vir}
 = 10/(c(5c+22))$ (the Virasoro quartic contact class). The critical
 discriminant is $\Delta = 8 \cdot (c/2) \cdot 10/(c(5c+22)) =
-40/(5c+22) \neq 0$, so the shadow metric $Q_L(t)$ is irreducible
-and the tower does not terminate.
+40/(5c+22)$. On the regular locus $c(5c+22)\ne0$, the shadow metric
+$Q_L(t)$ is irreducible and the tower does not terminate.
 \end{proof}
 
 \subsection{The J-line: class G}
 
 The $J$-line is the primary slice spanned by the $U(1)$ current $J$.
-The $J$-self-OPE is $J_{(1)}J = k_{\mathrm{res}} = k + \tfrac{1}{2}$
+The $J$-self-OPE is $J_{(1)}J = k_J = (2k+3)/3$
 (the residual $\mathrm{U}(1)$ level), and all
 higher self-OPE modes vanish.
 
@@ -598,16 +483,16 @@ The shadow obstruction tower of $\cB^k$ on the $J$-line has depth
 $r_{\max} = 2$. The tower is class~$G$ (Gaussian). The modular
 characteristic on the $J$-line is
 \begin{equation}\label{eq:j-line-kappa}
- \kappa_J = k_{\mathrm{res}} = k + \tfrac{1}{2}
+ \kappa_J = k_J = \frac{2k+3}{3}
 \end{equation}
-where $k_{\mathrm{res}}$ is the residual $U(1)$ level. The cubic
+where $k_J$ is the residual $U(1)$ level. The cubic
 and quartic shadows vanish: $S_3^J = S_4^J = 0$.
 \end{theorem}
 
 \begin{proof}
-The $J$-self-OPE is purely quadratic: $J_{(1)}J = k_{\mathrm{res}}$
+The $J$-self-OPE is purely quadratic: $J_{(1)}J = k_J$
 and $J_{(0)}J = 0$ (after $d\log$ absorption, the collision residue
-is $k_{\mathrm{res}}/z$). The cubic shadow requires a
+is $k_J/z$). The cubic shadow requires a
 composite-field contribution from the $J \cdot J$ OPE at mode $(0)$,
 which vanishes since $J_{(0)}J = 0$. Higher degrees vanish for the
 same reason: the shadow obstruction tower terminates at degree~$2$.
@@ -623,7 +508,7 @@ Virasoro is $M$). The BP algebra demonstrates that non-principal
 $W$-algebras can exhibit different shadow classes on different
 generator lines. The global shadow class of $\cB^k$ is $M$
 (the maximum over all lines), but the per-line classification is
-$(T: M,\; J: G,\; G^\pm: \text{fermionic})$.
+$(T: M,\; J: G,\; G^\pm: \text{charged})$.
 \end{remark}
 
 \subsection{Sigma-invariant}
@@ -634,36 +519,40 @@ defect'' at each degree:
  \sigma^{(r)}(k) := S_r^T(c(k)) + S_r^T(c(k')),
  \qquad k' = -k-6.
 \end{equation}
-For the $T$-line: $\sigma^{(2)} = c(k)/2 + c(k')/2 = K/2 = 98$.
+For the $T$-line: $\sigma^{(2)} = c(k)/2 + c(k')/2 = K/2 = 25$.
 Higher degrees: $\sigma^{(3)} = 2 + 2 = 4$,
 $\sigma^{(4)} = 10/(c(5c+22)) + 10/(c'(5c'+22))$ where
-$c' = K - c$. These are generically nonvanishing.
+$c' = K - c$. These vanish only on the proper algebraic exceptional
+locus of the single-line recursion.
 
-\begin{proposition}[Sigma non-vanishing]\label{prop:sigma-nonvanishing}
-For the Bershadsky--Polyakov algebra, $\sigma^{(r)} \neq 0$ for all
-$r \geq 2$ and generic $k$. In particular, the shadow
-complementarity sum does not vanish at any finite degree.
+\begin{proposition}[Finite-cutoff sigma non-vanishing]
+\label{prop:sigma-nonvanishing}
+For the Bershadsky--Polyakov algebra, $\sigma^{(2)}\ne0$ and
+$\sigma^{(3)}\ne0$. For each fixed cutoff $R\ge4$, there is a
+proper algebraic exceptional locus $E_R$ such that
+$\sigma^{(r)}\ne0$ for $2\le r\le R$ on its complement. Uniform
+non-vanishing for all $r$ is a separate Virasoro-recursion proof
+obligation.
 \end{proposition}
 
 \begin{proof}
-At degree~$2$: $\sigma^{(2)} = K/2 = 98 \neq 0$. At degree~$3$:
+At degree~$2$: $\sigma^{(2)} = K/2 = 25 \neq 0$. At degree~$3$:
 $\sigma^{(3)} = 4 \neq 0$. At degree~$4$: the quartic sigma-invariant
-is a nontrivial rational function of $k$. By the algebraicity
-theorem, all higher degrees are determined by degrees $2$, $3$, $4$
-via the single-line recursion, and the non-vanishing propagates.
+is a nontrivial rational function of $k$. For a fixed cutoff $R$, the
+finite product of the numerator polynomials for
+$4\le r\le R$ cuts out the proper exceptional locus $E_R$.
 \end{proof}
 
 % ================================================================
 \section{The hook-type transport}\label{sec:hook}
 % ================================================================
 
-\subsection{The hook-type corridor}
+\subsection{The hook-type surface}
 
-The hook-type corridor in type~$A$ consists of partitions
+The hook-type surface in type~$A$ consists of partitions
 $\lambda = (N-j, 1^j)$ of $N$. The transpose is
-$(N-j, 1^j)^t = (j+1, 1^{N-j-1})$, another hook. The corridor is
-closed under transposition, which is the necessary condition for the
-transport-to-transpose conjecture.
+$(N-j, 1^j)^t = (j+1, 1^{N-j-1})$, another hook. This surface is
+closed under transposition.
 
 \begin{definition}[Self-transpose hooks]\label{def:self-transpose}
 A hook partition $(N-j, 1^j)$ of $N$ is \emph{self-transpose} if and
@@ -676,8 +565,11 @@ For $N=5$: $j = 2$, $\lambda = (3,1,1)$ (a hook-type $W$-algebra of
 $\fsl_5$). For $N = 2m+1$: $j = m$, $\lambda = (m+1, 1^m)$.
 
 \begin{theorem}[Hook self-duality]\label{thm:hook-self-duality}
-Assume hook-type DS/bar transport for the self-transpose hook
-$\lambda=(m+1,1^m)$ in $\fsl_{2m+1}$. Then the $W$-algebra
+Assume the completed hook-type DS/bar transport theorem for the
+self-transpose hook $\lambda=(m+1,1^m)$ in $\fsl_{2m+1}$, including
+the finite-type Verdier model and the compatibility of the
+Drinfeld--Sokolov reduction with the bar comparison. Then the
+$W$-algebra
 $W_k(\fsl_N, f_\lambda)$ is Koszul self-dual:
 \[
  \bigl(W_k(\fsl_N, f_\lambda)\bigr)^!
@@ -686,8 +578,9 @@ $W_k(\fsl_N, f_\lambda)$ is Koszul self-dual:
 \]
 with $k' = -k - 2N$, matching the Feigin--Frenkel involution
 $k \mapsto -k - 2h^\vee$ for $\fsl_N$ where $h^\vee(\fsl_N) = N$.
-	The hook conductor is level-independent whenever the same transport
-	identifies the two central-charge normalizations.
+The corresponding hook conductor is a separate proof obligation:
+one must compute the KRW central charge for $\lambda=(m+1,1^m)$ and
+prove that $c_\lambda(k)+c_\lambda(-k-2N)$ is constant.
 \end{theorem}
 
 \begin{proof}
@@ -710,15 +603,14 @@ rank is $N-1$, while $h^\vee(\fsl_N)=N$ for type $A_{N-1}$.
 
 \subsection{The BP algebra as seed}
 
-The Bershadsky--Polyakov algebra occupies a distinguished position in
-the hook-type corridor: it is the simplest non-principal $W$-algebra
-that is both chirally Koszul (the bar spectral sequence collapses at
-$E_2$ by PBW universality of the universal algebra $W^k(\fsl_3,
-f_{(2,1)})$) and self-dual (the partition is self-transpose).
+The Bershadsky--Polyakov algebra is the smallest non-principal case
+where the PBW strong-generation surface can be tested against the
+DS/bar comparison. Its chiral Koszulity is used here only under the
+completed BP bar-cobar comparison hypothesis.
 
 \begin{computation}[Koszul invariants of $\cB^k$]
 \label{comp:bp-invariants}
-We tabulate the full set of modular Koszul invariants:
+The invariants are:
 \begin{center}
 \renewcommand{\arraystretch}{1.35}
 \begin{tabular}{lll}
@@ -726,22 +618,22 @@ We tabulate the full set of modular Koszul invariants:
 \textbf{Invariant} & \textbf{Formula} & \textbf{Value} \\
 \midrule
 Central charge $c(k)$
- & $2 - 24(k+1)^2/(k+3)$
+ & $-(2k+3)(3k+1)/(k+3)$
  & rational in $k$ \\
 Dual level $k'$
  & $-k-6$
  & involution \\
 Dual charge $c(k')$
- & $196 - c(k)$
- & by $K = 196$ \\
+ & $50 - c(k)$
+ & by $K = 50$ \\
 Koszul conductor $K$
  & $c + c'$
- & $196$ \\
+ & $50$ \\
 $\kappa_T(k)$
  & $c(k)/2$
  & Virasoro sector \\
 $\kappa_J(k)$
- & $(2k+1)/4$
+ & $(2k+3)/3$
  & $U(1)$ sector \\
 Shadow depth ($T$-line)
  & $\infty$
@@ -758,8 +650,9 @@ $k_{\max}$
 \bottomrule
 \end{tabular}
 \end{center}
-All entries are verified by the \texttt{bp\_shadow\_tower} and
-\texttt{bershadsky\_polyakov\_bar} compute modules ($63$ tests).
+The entries follow from the central-charge formula, the
+Feigin--Frenkel involution, and the $T$- and $J$-line OPE
+computations above.
 \end{computation}
 
 \subsection{Comparison with Virasoro and $W_3$}
@@ -780,7 +673,7 @@ reduction produces $\cB^k$ (four generators of weights $1, 3/2, 3/2,
 \[
  K_{\Vir} = 26,
  \qquad
-	K_{\cB} = 196,
+	K_{\cB} = 50,
 	\qquad
 	K_{W_3} = 2(N-1)(2N^2+2N+1)\big|_{N=3}=100.
 \]
@@ -792,30 +685,22 @@ $W_3$ (no $J$-line) exhibits this phenomenon.
 
 \subsection{Self-dual point}
 
-\begin{proposition}[BP self-dual point]\label{prop:bp-self-dual-point}
-The Bershadsky--Polyakov algebra is self-dual at $k = -3$, where
-$k' = -k-6 = -3 = k$. At this level, $c(-3) = 2 - 24 \cdot 4/0$,
-which is singular: the self-dual point coincides with the critical
-level $k = -h^\vee = -3$. The self-dual central charge is therefore
-not a regular function value; the value $\kappa(\cB^{-3}) = 49/3$
-quoted elsewhere is the \emph{principal-value symmetric limit}
-$\lim_{\varepsilon\to 0}\tfrac{1}{2}[\kappa(\cB^{-3+\varepsilon})
-+ \kappa(\cB^{-3-\varepsilon})]$ across the pole, \emph{not} a
-function value (cf.\ Theorem~\ref{thm:bp-koszul-conductor-polynomial}).
-The ``finite'' self-dual point is at $c = 98$, but this value is
-not attained at any real level: the polynomial identity
-$K_{\cB}(k) \equiv 196$ holds globally in $\mathbb{Q}(k)$ without
-any single level producing $c(\cB^k) = 98$ as a regular value.
+\begin{proposition}[Critical fixed point of the level involution]
+\label{prop:bp-self-dual-point}
+The level involution $k\mapsto -k-6$ has fixed point $k=-3$, the
+critical excluded level. No regular Bershadsky--Polyakov algebra at
+that level realizes self-duality. The expression $c(-3)$ is singular,
+so $\kappa(\cB^{-3})=25/6$ denotes the symmetric principal value
+across the pole. No real regular level has $c(\cB^k)=25$; the
+equation has roots $k=-3\pm2i$.
 \end{proposition}
 
 \begin{proof}
-$c(k) = c(k')$ requires $c = K - c$, hence $c = K/2 = 98$.
-Solving $2 - 24(k+1)^2/(k+3) = 98$ reduces to
+$c(k) = c(k')$ requires $c = K - c$, hence $c = K/2 = 25$.
+Solving $-(2k+3)(3k+1)/(k+3) = 25$ reduces to
 $k^2 + 6k + 13 = 0$, whose discriminant is $36 - 52 = -16 < 0$.
-The roots $k = -3 \pm 2i$ are complex. Since $c(k) \leq 2$ for
-$k > -3$ and $c(k) \geq 194$ for $k < -3$ (with critical points
-at $k = -1$ and $k = -5$), the value $c = 98$ lies in the gap
-$(2, 194)$ and is never attained at a real level.
+The roots $k = -3 \pm 2i$ are complex, so no real regular level
+realises the self-dual central charge.
 The formal self-dual point $k = k' = -3$ is the critical level,
 where the DS reduction degenerates.
 \end{proof}
@@ -826,44 +711,38 @@ where the DS reduction degenerates.
 
 \begin{thebibliography}{99}
 
+\bibitem{FeiginSemikhatov}
+B.~L. Feigin and A.~M. Semikhatov,
+\emph{$\mathcal W_n^{(2)}$ algebras},
+Nuclear Phys.~B \textbf{698} (2004), 409--449.
+
+\bibitem{FateevLukyanov}
+V.~A. Fateev and S.~L. Lukyanov,
+\emph{The models of two-dimensional conformal quantum field theory with
+$Z_n$ symmetry},
+Int.\ J.\ Mod.\ Phys.\ A \textbf{3} (1988), 507--520.
+
 \bibitem{FehilyHook}
-Z.~Fehily, \emph{Subregular $W$-algebras of type~$A$}, Comm.\
-Math.\ Phys.\ \textbf{404} (2023), 865--911.
+Z.~Fehily,
+\emph{Inverse reduction and hook-type $W$-algebras},
+J.\ Pure Appl.\ Algebra \textbf{228} (2024), no.~7, Paper No.~107006.
 
 \bibitem{CLNS24}
-T.~Creutzig, A.~Linshaw, S.~Nakatsuka, R.~Sato,
-\emph{Hook-type $W$-algebras and inverse quantum Hamiltonian
-reduction}, preprint 2024.
+T.~Creutzig, A.~R. Linshaw, N.~Nakatsuka, and R.~Sato,
+\emph{Duality of hook-type $W$-algebras},
+preprint, 2024.
 
 \bibitem{FKR20}
-Z.~Fehily, K.~Kawasetsu, D.~Ridout,
-\emph{Weight modules for admissible affine vertex algebras and the
-Bershadsky--Polyakov algebra}, J.\ Math.\ Phys.\ \textbf{62} (2021),
-064301.
+Z.~Fehily, K.~Kawasetsu, and D.~Ridout,
+\emph{Classifying relaxed highest-weight modules for admissible-level
+Bershadsky--Polyakov algebras},
+Comm.\ Math.\ Phys.\ \textbf{385} (2021), no.~2, 859--904,
+arXiv:2007.03917.
 
 \bibitem{KRW03}
 V.~Kac, S.-S.~Roan, M.~Wakimoto,
 \emph{Quantum reduction for affine superalgebras}, Comm.\ Math.\
 Phys.\ \textbf{241} (2003), 307--342.
-
-\bibitem{Bershadsky91}
-M.~Bershadsky,
-\emph{Conformal field theories via Hamiltonian reduction},
-Comm.\ Math.\ Phys.\ \textbf{139} (1991), 71--82.
-
-\bibitem{Polyakov90}
-A.~M.~Polyakov,
-\emph{Gauge transformations and diffeomorphisms},
-Int.\ J.\ Mod.\ Phys.\ A \textbf{5} (1990), 833--842.
-
-\bibitem{Lorgat2026a}
-R.~Lorgat, \emph{Modular Koszul duality: a monograph on bar-cobar
-duality for chiral algebras on algebraic curves}, Volume~I
-(manuscript, 2026).
-
-\bibitem{Lorgat2026b}
-R.~Lorgat, \emph{$A$-infinity chiral algebras and $3$d
-holomorphic-topological QFT}, Volume~II (manuscript, 2026).
 
 \end{thebibliography}
 

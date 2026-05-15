@@ -1,14 +1,21 @@
-r"""BV/BRST = bar at genus 1, CHAIN LEVEL, for class L (affine KM).
+r"""BV/BRST-to-bar diagnostics at genus 1, strict chain level.
 
 THE CHAIN-LEVEL IDENTIFICATION:
-  The scalar-level match F_1^BV = kappa/24 is proved for all standard families
-  (theorem_bv_brst_genus1_constraints_engine.py, 59 tests).  The CHAIN-LEVEL
-  identification requires more: the BV 1-loop effective action on E_tau x R
-  should equal the genus-1 bar complex as a CHAIN COMPLEX, not merely at the
-  level of the Euler characteristic / free energy.
+  The scalar-level match F_1^BV = kappa/24 is a genus-1 diagnostic.  It
+  does not by itself prove an all-genus BV/BRST=bar equivalence.  The strict
+  chain-level comparison here tests whether the BV differential on
+  E_tau x R is compared with the genus-1 bar coalgebra B(A) as a chain
+  complex, not merely with its Euler characteristic / free energy.
 
-  For class L (affine KM): the chain-level identification IS PROVED.
-  For class M (Virasoro, W_N): it REMAINS CONDITIONAL.
+  Strict ordinary chain level:
+    class G: proved by absence of interaction,
+    class L: proved by Jacobi/PBW witnesses,
+    class C: conditional on harmonic decoupling,
+    class M: obstructed by the quartic harmonic contact term.
+
+  All-genus BV/BRST=bar statements require a separate ambient:
+    coderived: coacyclic-cone Verdier localization,
+    completed chain: pro/J-adic/weight completion plus Mittag-Leffler witness.
 
 THE ARGUMENT FOR CLASS L:
   1. The BV BRST operator Q_BV on E_tau x R decomposes as Q_BV = Q_0 + Q_int
@@ -20,7 +27,7 @@ THE ARGUMENT FOR CLASS L:
      vertex is PURELY CUBIC.
 
   3. The Jacobi identity for the Lie algebra g implies:
-       [Q_int, Q_int] = 0    (not just [Q_int, Q_int] ~ d-exact)
+       [Q_int, Q_int] = 0 as a strict chain identity
      This is the chain-level content: the cubic vertex squares to zero
      BY ITSELF, independent of the quadratic part.
 
@@ -35,20 +42,23 @@ THE ARGUMENT FOR CLASS L:
      PBW filtration.
 
   6. Therefore: (BV complex on E_tau x R, Q_BV) ~ (bar complex at genus 1, d_bar)
-     as chain complexes, for class L.
+     as strict genus-1 chain complexes, for class L.
 
 WHAT FAILS FOR CLASS M:
   For Virasoro/W_N, the OPE has poles of order > 2.  The BV interaction
   includes quartic and higher vertices.  The condition [Q_int, Q_int] = 0
   FAILS: instead [Q_int, Q_int] is proportional to the quartic contact
-  invariant Q^contact_Vir = 10/[c(5c+22)].  This nonvanishing obstruction
-  prevents the spectral sequence argument from closing at E_2.
+  invariant Q^contact_Vir = 10/[c(5c+22)] on the non-singular surface
+  c(5c+22) != 0.  This nonvanishing obstruction prevents the ordinary
+  chain spectral sequence argument from closing at E_2.  Its all-genus
+  resolution is a coderived/coacyclic statement, not an ordinary-chain
+  consequence of the scalar F_g = kappa lambda_g^FP formula.
 
 CONVENTIONS (from signs_and_shifts.tex, AUTHORITATIVE):
   - Cohomological grading: |d| = +1
   - QME: hbar * Delta * S + (1/2){S,S} = 0 (factor 1/2)
-  - eta(q) = q^{1/24} * prod(1-q^n)  (AP46: the q^{1/24} is NOT optional)
-  - kappa(H_k) = k (NOT k/2, AP48)
+  - eta(q) = q^{1/24} * prod(1-q^n)  (AP46)
+  - kappa(H_k) = k (AP48)
   - kappa(sl_N, k) = dim(sl_N) * (k + N) / (2N) for sl_N
   - lambda_1^FP = 1/24,  F_1 = kappa / 24
   - The bar propagator is d log E(z,w), weight 1 in both variables (AP27)
@@ -61,7 +71,7 @@ MULTI-PATH VERIFICATION:
 
 Ground truth:
   bv_brst.tex (conj:master-bv-brst, thm:bv-bar-geometric),
-  higher_genus_modular_koszul.tex (Theorem D),
+  higher_genus_modular_koszul.tex (Theorem D scalar obs_g = kappa lambda_g),
   theorem_bv_brst_genus1_constraints_engine.py (scalar-level verification).
 """
 
@@ -72,6 +82,14 @@ from enum import Enum
 from fractions import Fraction
 from math import factorial
 from typing import Any, Dict, List, Optional, Tuple
+
+
+GENUS_ONE = 1
+LAMBDA_1_FP = Fraction(1, 24)
+VIRASORO_CONTACT_NUMERATOR = Fraction(10)
+VIRASORO_CONTACT_LINEAR_COEFF = Fraction(5)
+VIRASORO_CONTACT_SHIFT = Fraction(22)
+VIRASORO_S5_NUMERATOR = Fraction(-48)
 
 
 # =====================================================================
@@ -125,7 +143,53 @@ class ShadowClass(str, Enum):
 class EpistemicStatus(str, Enum):
     PROVED = 'PROVED'
     CONDITIONAL = 'CONDITIONAL'
+    OBSTRUCTED = 'OBSTRUCTED'
     CONJECTURAL = 'CONJECTURAL'
+
+
+class ComparisonAmbient(str, Enum):
+    STRICT_CHAIN = 'STRICT_CHAIN'
+    CODERIVED = 'CODERIVED'
+    WEIGHT_COMPLETED = 'WEIGHT_COMPLETED'
+
+
+class ChiralObject(str, Enum):
+    ALGEBRA_A = 'A'
+    BAR_COALGEBRA = 'B(A)'
+    BAR_COHOMOLOGY_COALGEBRA = 'A^i'
+    KOSZUL_DUAL_ALGEBRA = 'A^!'
+    DERIVED_CENTER = 'Z_ch^der(A)'
+
+
+@dataclass(frozen=True)
+class ComparisonHypotheses:
+    """Hypotheses required before a BV/bar claim is interpreted.
+
+    This engine's default claim is strict genus-1 chain comparison with the
+    bar coalgebra B(A).  Coderived and completed all-genus statements need
+    explicit witnesses; scalar F_g data are not enough.
+    """
+    genus: int = GENUS_ONE
+    ambient: ComparisonAmbient = ComparisonAmbient.STRICT_CHAIN
+    source: ChiralObject = ChiralObject.ALGEBRA_A
+    target: ChiralObject = ChiralObject.BAR_COALGEBRA
+    chirally_koszul: bool = True
+    coacyclic_cone_localization: bool = False
+    weight_completed: bool = False
+    mittag_leffler_witness: bool = False
+    finite_type_or_completed_koszul: bool = False
+
+
+@dataclass(frozen=True)
+class HypothesisCheck:
+    """Result of checking whether a BV/bar claim has enough hypotheses."""
+    valid: bool
+    genus: int
+    ambient: ComparisonAmbient
+    source: ChiralObject
+    target: ChiralObject
+    required_witnesses: Tuple[str, ...]
+    failure_reasons: Tuple[str, ...]
 
 
 @dataclass(frozen=True)
@@ -163,15 +227,154 @@ class ChiralAlgebraData:
 
     @property
     def has_cubic_only(self) -> bool:
-        """OPE pole order <= 2 means the BV vertex is at most cubic."""
-        return self.max_ope_pole_order <= 2
+        """No quartic-or-higher BV vertex on this genus-1 chain surface."""
+        return self.shadow_class in (ShadowClass.G, ShadowClass.L) and (
+            self.max_ope_pole_order <= 2
+        )
 
     @property
     def chain_level_status(self) -> EpistemicStatus:
-        """Chain-level BV = bar status at genus 1."""
+        """Strict ordinary-chain BV/bar status at genus 1."""
         if self.shadow_class in (ShadowClass.G, ShadowClass.L):
             return EpistemicStatus.PROVED
+        if self.shadow_class == ShadowClass.C:
+            return EpistemicStatus.CONDITIONAL
+        if self.shadow_class == ShadowClass.M:
+            return EpistemicStatus.OBSTRUCTED
         return EpistemicStatus.CONDITIONAL
+
+
+def validate_bv_bar_hypotheses(
+    hypotheses: ComparisonHypotheses,
+) -> HypothesisCheck:
+    """Check scope before interpreting a BV/BRST-to-bar claim.
+
+    The strict engine compares the BV complex with the bar coalgebra B(A) at
+    genus 1.  Higher-genus or class-M statements are not obtained by scalar
+    F_g values; they require coderived or completed witnesses.
+    """
+    failures: List[str] = []
+    witnesses: List[str] = []
+
+    if hypotheses.genus < GENUS_ONE:
+        failures.append('genus must be at least 1')
+
+    if hypotheses.source != ChiralObject.ALGEBRA_A:
+        failures.append('BV input is the chiral algebra A, not a derived object')
+
+    if hypotheses.target != ChiralObject.BAR_COALGEBRA:
+        failures.append(
+            'this compute surface compares with the bar coalgebra B(A), '
+            f'not {hypotheses.target.value}'
+        )
+        if hypotheses.target == ChiralObject.BAR_COHOMOLOGY_COALGEBRA:
+            failures.append('A^i is H^*B(A), not the bar chain coalgebra')
+        elif hypotheses.target == ChiralObject.KOSZUL_DUAL_ALGEBRA:
+            failures.append(
+                'A^! is the Verdier dual of A^i and requires a finite-type '
+                'or completed Koszul surface'
+            )
+        elif hypotheses.target == ChiralObject.DERIVED_CENTER:
+            failures.append(
+                'Z_ch^der(A) is the chiral Hochschild bulk object, not B(A)'
+            )
+
+    if hypotheses.ambient == ComparisonAmbient.STRICT_CHAIN:
+        witnesses.extend((
+            'genus_1_torus_hodge_decomposition',
+            'F1_scalar_match_kappa_over_24',
+            'Jacobi_or_zero_interaction_witness',
+            'ordinary_chain_E2_witness',
+        ))
+        if hypotheses.genus != GENUS_ONE:
+            failures.append(
+                'strict ordinary-chain comparison in this engine is genus-1 '
+                'only; scalar kappa*lambda_g^FP does not promote it to all '
+                'genera'
+            )
+    elif hypotheses.ambient == ComparisonAmbient.CODERIVED:
+        witnesses.extend((
+            'chirally_koszul_input',
+            'coacyclic_cone_Verdier_localization',
+        ))
+        if not hypotheses.chirally_koszul:
+            failures.append('coderived BV/bar requires a chirally Koszul input')
+        if not hypotheses.coacyclic_cone_localization:
+            failures.append(
+                'all-genus coderived BV/bar requires coacyclic-cone '
+                'Verdier localization'
+            )
+    elif hypotheses.ambient == ComparisonAmbient.WEIGHT_COMPLETED:
+        witnesses.extend((
+            'pro_J_adic_or_weight_completion',
+            'Mittag_Leffler_cohomology_tower',
+        ))
+        if not hypotheses.weight_completed:
+            failures.append('completed chain comparison requires a completed ambient')
+        if not hypotheses.mittag_leffler_witness:
+            failures.append(
+                'completed chain comparison requires a Mittag-Leffler witness'
+            )
+    else:
+        failures.append(f'unknown comparison ambient {hypotheses.ambient}')
+
+    if (
+        hypotheses.target == ChiralObject.KOSZUL_DUAL_ALGEBRA
+        and not hypotheses.finite_type_or_completed_koszul
+    ):
+        failures.append(
+            'forming A^! from A^i requires finite type or completed Koszul duality'
+        )
+
+    return HypothesisCheck(
+        valid=not failures,
+        genus=hypotheses.genus,
+        ambient=hypotheses.ambient,
+        source=hypotheses.source,
+        target=hypotheses.target,
+        required_witnesses=tuple(witnesses),
+        failure_reasons=tuple(failures),
+    )
+
+
+def object_boundary_witness(
+    finite_type_or_completed_koszul: bool = False,
+) -> Dict[str, Dict[str, Any]]:
+    """Return computable object-boundary witnesses for A, B(A), A^i, A^!, Z."""
+    return {
+        ChiralObject.ALGEBRA_A.value: {
+            'role': 'input chiral algebra',
+            'is_chain_coalgebra': False,
+            'is_compute_target': False,
+        },
+        ChiralObject.BAR_COALGEBRA.value: {
+            'role': 'bar coalgebra T^c(s^-1 Abar) with twisted differential',
+            'is_chain_coalgebra': True,
+            'is_compute_target': True,
+            'equals_bar_cohomology': False,
+            'equals_koszul_dual_algebra': False,
+            'equals_derived_center': False,
+        },
+        ChiralObject.BAR_COHOMOLOGY_COALGEBRA.value: {
+            'role': 'bar cohomology coalgebra H^*B(A)',
+            'is_chain_coalgebra': False,
+            'is_compute_target': False,
+            'constructed_from': ChiralObject.BAR_COALGEBRA.value,
+        },
+        ChiralObject.KOSZUL_DUAL_ALGEBRA.value: {
+            'role': 'Verdier dual algebra (A^i)^vee',
+            'is_chain_coalgebra': False,
+            'is_compute_target': False,
+            'requires_finite_type_or_completed_koszul': True,
+            'available_on_supplied_surface': finite_type_or_completed_koszul,
+        },
+        ChiralObject.DERIVED_CENTER.value: {
+            'role': 'chiral Hochschild cochain bulk object',
+            'is_chain_coalgebra': False,
+            'is_compute_target': False,
+            'equals_bar_coalgebra': False,
+        },
+    }
 
 
 # =====================================================================
@@ -286,7 +489,7 @@ def virasoro(c: Fraction) -> ChiralAlgebraData:
 
     OPE has poles of order up to 4: T(z)T(w) ~ c/2/(z-w)^4 + 2T/(z-w)^2
     + dT/(z-w).  BV vertex has quartic and higher terms.
-    Chain-level BV = bar: CONDITIONAL (quartic obstruction nonzero).
+    Strict chain-level BV/bar: OBSTRUCTED (quartic obstruction nonzero).
     """
     return ChiralAlgebraData(
         name=f'Vir_{c}',
@@ -364,13 +567,14 @@ def bv_one_loop(algebra: ChiralAlgebraData) -> BVOneLoopDeterminant:
 
     For Virasoro at central charge c:
       The ghost system gives alpha = c/2 = kappa.
-      F_1 = c/48 = kappa(Vir_c) / 24.  CONDITIONAL at chain level.
+      F_1 = c/48 = kappa(Vir_c) / 24.  This is scalar genus-1 data;
+      strict chain level is obstructed for class M.
     """
     kappa = algebra.kappa
     alpha = kappa  # The identification alpha(A) = kappa(A)
     zeta_prime = Fraction(-1, 24)  # zeta'_dbar(0) = -1/24
     F1_bv = -alpha * zeta_prime   # alpha / 24
-    F1_bar = kappa * lambda_fp_exact(1)  # kappa / 24
+    F1_bar = kappa * LAMBDA_1_FP
 
     return BVOneLoopDeterminant(
         algebra_name=algebra.name,
@@ -408,8 +612,8 @@ class HodgeDecomposition:
 
     For the chain-level comparison, the key question is whether Q_int
     (the cubic interaction) maps harmonic fields OUT of the harmonic space.
-    For class L (Jacobi identity), it does NOT: the zero-mode part of
-    f^{abc} J^a_0 J^b_0 J^c_0 vanishes by antisymmetry of f^{abc}.
+    For class L, the Jacobi identity and antisymmetry of f^{abc} force the
+    zero-mode part of f^{abc} J^a_0 J^b_0 J^c_0 to vanish.
     """
     algebra_name: str
     dim_H0: int           # dim of harmonic 0-forms = dim(g) or 1
@@ -427,7 +631,7 @@ def hodge_decomposition_torus(algebra: ChiralAlgebraData) -> HodgeDecomposition:
       f^{abc} a^a_0 a^b_0 a^c_0 = 0 by total antisymmetry of f^{abc}
       and commutativity of zero modes.  So Q_int preserves harmonics.
     For class M (Virasoro): the quartic vertex T*T couples to harmonics
-      through the conformal anomaly.  Zero modes do NOT decouple.
+      through the conformal anomaly. Zero modes remain coupled.
     """
     if algebra.is_class_G:
         d = algebra.dim_generators
@@ -510,14 +714,15 @@ def analyze_q_int(algebra: ChiralAlgebraData) -> QIntAnalysis:
       the beta*gamma*beta*gamma contact term.  Q^contact = 0 for the
       weight-(1,0) pair, so the quartic vertex is trivially zero.
       Still, the absence of a Lie algebra structure means Q_int^2 = 0
-      is NOT automatic from Jacobi.
+      requires an independent check beyond Jacobi.
 
     For class M (Virasoro, W_N):
       Quartic and higher vertices.  Q_int includes quartic terms from
       T(z)T(w) ~ c/2/(z-w)^4 + ...  The quartic contact invariant
-      Q^contact_Vir = 10/[c(5c+22)] is NONZERO for c != 0.
+      Q^contact_Vir = 10/[c(5c+22)] is nonzero on
+      c(5c+22) != 0.
       [Q_int, Q_int] != 0 in general.
-      The SS does NOT degenerate at E_2.
+      The spectral sequence has a nonzero obstruction beyond E_2.
     """
     if algebra.is_class_G:
         return QIntAnalysis(
@@ -586,14 +791,39 @@ def q_contact_virasoro(c: Fraction) -> Fraction:
     the BV quartic vertex couples nontrivially to the harmonic propagator
     on E_tau.
 
-    Q^contact = 0  iff  c = 0 (trivial algebra).
-    Q^contact is ALWAYS positive for c > 0.
+    The formula is defined on the non-singular surface c(5c+22) != 0.
+    It has no finite zero on that surface and is positive for c > 0.
     At c = 13 (self-dual): Q^contact = 10 / (13 * 87) = 10/1131.
     At c = 26 (bosonic string): Q^contact = 10 / (26 * 152) = 10/3952 = 5/1976.
     """
-    if c == 0:
-        raise ValueError("Virasoro at c=0 is the trivial algebra")
-    return Fraction(10, 1) / (c * (5 * c + 22))
+    c = Fraction(c)
+    denominator = c * (VIRASORO_CONTACT_LINEAR_COEFF * c + VIRASORO_CONTACT_SHIFT)
+    if denominator == 0:
+        raise ValueError("Virasoro contact invariant requires c(5c+22) != 0")
+    return VIRASORO_CONTACT_NUMERATOR / denominator
+
+
+def virasoro_shadow_contact_witness(c: Fraction) -> Dict[str, Fraction]:
+    r"""Compute the Virasoro shadow/contact constants from the canonical row.
+
+    S_2 = c/2,
+    S_3 = 2,
+    S_4 = Q^contact = 10/[c(5c+22)],
+    S_5 = -48/[c^2(5c+22)],
+    Delta = 8*kappa*S_4 = 40/(5c+22).
+    """
+    c = Fraction(c)
+    S4 = q_contact_virasoro(c)
+    return {
+        'S2': c / 2,
+        'S3': Fraction(2),
+        'S4': S4,
+        'S5': VIRASORO_S5_NUMERATOR / (
+            c * c * (VIRASORO_CONTACT_LINEAR_COEFF * c + VIRASORO_CONTACT_SHIFT)
+        ),
+        'kappa': c / 2,
+        'Delta': Fraction(8) * (c / 2) * S4,
+    }
 
 
 def q_contact_class_L() -> Fraction:
@@ -650,6 +880,8 @@ def spectral_sequence_analysis(algebra: ChiralAlgebraData) -> SpectralSequenceDa
     For class G: degenerates at E_1 (no interaction).
     For class L: degenerates at E_2 (Jacobi closes the cubic differential).
     For class C/M: degeneration page unknown.
+    Class M is obstructed at ordinary chain level; coderived resolution is
+    not an ordinary-chain E_2 collapse.
     """
     if algebra.is_class_G:
         return SpectralSequenceData(
@@ -691,7 +923,7 @@ def spectral_sequence_analysis(algebra: ChiralAlgebraData) -> SpectralSequenceDa
             d1_squared_zero=False,
             e2_equals_einfty=False,
             euler_char_determined_at=1,
-            chain_level_comparison=EpistemicStatus.CONDITIONAL,
+            chain_level_comparison=EpistemicStatus.OBSTRUCTED,
         )
 
 
@@ -748,7 +980,8 @@ class ChainLevelResult:
       (4) Spectral sequence: E_2 degeneration for class L
       (5) Sugawara shift: raw alpha -> kappa
 
-    Result: PROVED for class G and L. CONDITIONAL for class C and M.
+    Result: PROVED for class G and L, CONDITIONAL for class C, and
+    OBSTRUCTED for class M at strict ordinary chain level.
     """
     algebra: ChiralAlgebraData
     scalar_match: bool
@@ -797,7 +1030,7 @@ def verify_jacobi_sl2() -> Dict[str, Any]:
     """
     # Basis: 0 = e, 1 = f, 2 = h
     # [h, e] = 2e:  f^{2,0,0} = 2 (but structure constants are antisymmetric)
-    # Actually: [X_a, X_b] = sum_c f^{ab}_c X_c
+    # Convention: [X_a, X_b] = sum_c f^{ab}_c X_c
     # f^{20}_0 = 2 (i.e. [h,e] = 2e)
     # f^{21}_1 = -2 (i.e. [h,f] = -2f)
     # f^{01}_2 = 1 (i.e. [e,f] = h)
@@ -938,7 +1171,8 @@ def cross_family_chain_level_summary() -> Dict[str, Any]:
       Class L: PROVED (Jacobi identity)
       Class C: CONDITIONAL (quartic contact Q^contact = 0 for beta-gamma,
                but no universal argument)
-      Class M: CONDITIONAL (quartic contact Q^contact != 0)
+      Class M: OBSTRUCTED at ordinary chain level (quartic contact
+               Q^contact != 0 on the non-singular surface)
     """
     families = [
         heisenberg(1),
@@ -967,11 +1201,13 @@ def cross_family_chain_level_summary() -> Dict[str, Any]:
 
     proved = sum(1 for r in results if r['chain_level'] == 'PROVED')
     conditional = sum(1 for r in results if r['chain_level'] == 'CONDITIONAL')
+    obstructed = sum(1 for r in results if r['chain_level'] == 'OBSTRUCTED')
 
     return {
         'families': results,
         'proved_count': proved,
         'conditional_count': conditional,
+        'obstructed_count': obstructed,
         'total': len(results),
         'class_L_all_proved': all(
             r['chain_level'] == 'PROVED'

@@ -28,6 +28,8 @@ from typing import Dict, FrozenSet, List, Optional, Tuple
 from functools import lru_cache
 from math import factorial
 
+from .os_algebra_exact import basis_matrix_numpy, residue_matrix_numpy
+
 
 Pair = Tuple[int, int]  # (i, j) with i < j
 
@@ -343,8 +345,11 @@ def os_basis(n: int, k: int) -> Tuple[List[Tuple[Pair, ...]], np.ndarray]:
 
     basis_matrix: (dim × num_monomials) array, each row is a basis element
     expressed as coordinates in the monomial basis.
+
+    The basis is now the exact NBC basis, exposed as a NumPy matrix for
+    compatibility with older callers.
     """
-    return _os_basis_data(n, k)
+    return basis_matrix_numpy(n, k)
 
 
 # ---------------------------------------------------------------------------
@@ -361,7 +366,17 @@ def residue_map(n: int, k: int, i: int, j: int) -> np.ndarray:
 
     Returns matrix M of shape (dim_target, dim_source) such that
     M @ v gives the residue image in target basis coordinates.
+
+    This public NumPy matrix is a float view of the exact rational NBC
+    residue in ``os_algebra_exact``.  No SVD or least-squares computation
+    is used in the residue oracle.
     """
+    if k < 1:
+        return np.zeros((1, 1))
+    return residue_matrix_numpy(n, k, i, j)
+
+def _legacy_residue_map(n: int, k: int, i: int, j: int) -> np.ndarray:
+    """Legacy SVD/least-squares residue map retained for audit comparisons."""
     if k < 1:
         return np.zeros((1, 1))
 

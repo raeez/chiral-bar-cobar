@@ -1,17 +1,23 @@
 r"""Generating function analysis for class L (affine Kac-Moody) free energy.
 
-MAIN RESULT (NEGATIVE): The planted-forest generating function G_pf(xi) for
-class L algebras does NOT admit a closed form analogous to the scalar
-generating function G^scalar(xi) = kappa * (xi/(2 sin(xi/2)) - 1).
+CERTIFIED RESULT: the scalar sector has the all-genus closed form
+
+    G^scalar(xi) = kappa * (xi/(2 sin(xi/2)) - 1).
+
+The planted-forest sector is certified here only through the imported
+finite window g = 2, 3, 4.  The genus-2 and genus-3 class-L coefficients
+are exact on the local graph-sum surface.  Genus 4 uses the canonical
+bridge-sign convention certified by theorem_genus4_virasoro_engine.  No
+all-genus non-existence theorem for a planted-forest closed form is
+certified by this file.
 
 The full class L free energy decomposes as:
 
     G[F](xi) = G^scalar(xi) + G^pf(xi)
 
 where G^scalar(xi) = kappa * (xi/(2 sin(xi/2)) - 1) is CLOSED FORM
-(proved in theorem_borel_summability_shadow_engine.py), but G^pf(xi) is
-an infinite series whose coefficients are polynomials in (kappa, S_3)
-of growing degree, with no finite closed form.
+(proved in theorem_borel_summability_shadow_engine.py), while G^pf(xi)
+is represented here by exact finite-window coefficients.
 
 STRUCTURAL RESULTS (POSITIVE)
 ==============================
@@ -20,8 +26,9 @@ STRUCTURAL RESULTS (POSITIVE)
    where Phi is a formal power series. The overall S_3 factor encodes
    the class G recovery: S_3 = 0 => G_pf = 0 (Heisenberg limit).
 
-2. DEGREE BOUND:  At genus g, delta_pf^{(g)} is a polynomial in (kappa, S_3)
-   of total degree <= 2(g-1), with S_3 appearing at powers 1 through 2(g-1).
+2. DEGREE BOUND:  In the certified window g = 2, 3, 4,
+   delta_pf^{(g)} is a polynomial in (kappa, S_3) of total degree
+   <= 2(g-1), with S_3 appearing at powers 1 through 2(g-1).
    The S_3 degree bound 2(g-1) equals the maximum number of genus-0
    trivalent vertices in a stable graph at (g, 0).
 
@@ -31,32 +38,33 @@ STRUCTURAL RESULTS (POSITIVE)
    with family-dependent pole location xi^2 = -1/q_1.
 
 4. S_3-LINEAR DERIVATIVE: dG_pf/dS_3|_{S_3=0} = sum_g L_g(kappa) * xi^{2g}
-   where L_g is a polynomial in kappa of degree g-1 (not g).
-   At genus 2: L_2 = -kappa/48.
+   in the finite window.  The verified kappa degrees are
+   deg L_2 = 1, deg L_3 = 3, deg L_4 = 3; there is no all-genus
+   degree law certified here.  At genus 2: L_2 = -kappa/48.
 
-5. LEADING S_3 TERM: The pure-S_3 term (kappa^0 coefficient) at genus g
-   has the form c_g * S_3^{2(g-1)}, with c_2 = 5/24, c_3 = 15/64,
-   c_4 = 425/576. The sequence {c_g} grows rapidly and does NOT match
-   any standard combinatorial sequence.
+5. LEADING S_3 TERM: In the certified window, the pure-S_3 term
+   (kappa^0 coefficient) has the form c_g * S_3^{2(g-1)}, with
+   c_2 = 5/24, c_3 = 15/64, c_4 = 425/576.
 
 6. CLASS G RECOVERY: Setting S_3 = 0 recovers G_pf = 0, so
    G[F] = kappa * (xi/(2 sin(xi/2)) - 1), confirming the Borel engine result.
 
 7. LARGE-N ASYMPTOTICS: For SU(N) at k=0 with N >> 1:
-   kappa ~ N^2/2, S_3 ~ 2/(3N), so S_3 * kappa ~ 2N/3 is level-independent.
-   The planted-forest correction grows as N^{2(g-1)} at genus g, matching
-   the 't Hooft large-N scaling with genus-dependent planar weight.
+   kappa = (N^2 - 1)/2, S_3 = 4N/[3(N^2 - 1)] ~ 4/(3N), and
+   S_3 * kappa = 2N/3 exactly.  The verified planted-forest leading
+   powers are N^1 at genus 2, N^5 at genus 3, and N^6 at genus 4.
 
 COMPUTATIONAL INFRASTRUCTURE
 ==============================
 
-- Exact rational arithmetic through genus 4 (from theorem_class_l_closed_form_engine)
+- Exact rational arithmetic through the imported genus-4 class-L table
 - Numerical evaluation at arbitrary xi for SU(N) families
-- Pade [1/1] and [2/2] approximants from genus 2-4 data
+- Pade [1/1] approximants from genus 2-4 data
 - S_3-derivative analysis at S_3 = 0
 - Cross-family consistency checks (SU(2) through SU(8))
 - Additivity verification for scalar part
-- Complementarity verification (AP24)
+- Certification firewalls for finite-window scope, object separation, and
+  kernel normalization
 
 CONVENTIONS (AP1, AP9, AP27, AP38)
 ===================================
@@ -100,6 +108,204 @@ try:
     from compute.lib.lie_algebra import cartan_data
 except ImportError:
     cartan_data = None
+
+
+# ============================================================================
+# Section 0: Certification and firewall metadata
+# ============================================================================
+
+HOLOGRAPHIC_PACKAGE_ENTRIES: Tuple[str, ...] = (
+    "A",
+    "A^i",
+    "A^!",
+    "C",
+    "r(z)",
+    "Theta_A",
+    "nabla^hol",
+)
+
+MODULAR_KOSZUL_COMPUTE_PACKAGE_PROJECTIONS: Tuple[str, ...] = (
+    "Fact_X(L)",
+    "barB_X(L)",
+    "Theta_L",
+    "L_L",
+    "(V_br,T_br)",
+    "R4_mod(L)",
+)
+
+KERNEL_CONSTANTS: Dict[str, str] = {
+    "affine_raw_trace": "r^KM(z) = k*Omega_tr/z",
+    "affine_KZ": "r^KZ(z) = Omega/((k+h^vee)z)",
+    "heisenberg": "r^Heis(z) = k/z",
+    "virasoro": "r^Vir(z) = (c/2)/z^3 + 2T/z",
+}
+
+OBJECT_FIREWALLS: Dict[str, str] = {
+    "A": "input chiral algebra",
+    "B(A)": "bar coalgebra T^c(s^{-1}bar A)",
+    "A^i": "bar-cohomology/Koszul-dual coalgebra H^*(B(A))",
+    "A^!": "Verdier/continuous-linear dual branch under finite-type or completed hypotheses",
+    "Omega(B(A))": "bar-cobar inversion returning A, not Koszul duality",
+    "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/derived-centre bulk",
+}
+
+GENUS3_MANUSCRIPT_GENERIC_CLASS_L: Dict[Tuple[int, int], Fraction] = {
+    (0, 4): Fraction(-5, 128),
+    (1, 3): Fraction(3, 512),
+    (2, 2): Fraction(-1, 4608),
+    (3, 1): Fraction(-1, 82944),
+    (1, 1): Fraction(-343, 2304),
+}
+
+
+def _pf_coefficients_by_genus() -> Dict[int, Dict[Tuple[int, int], Fraction]]:
+    """Return the class-L planted-forest coefficient tables used here."""
+    return {
+        2: {
+            (1, 1): Fraction(-1, 48),
+            (0, 2): Fraction(5, 24),
+        },
+        3: dict(GENUS3_PF_CLASS_L),
+        4: dict(GENUS4_PF_CLASS_L),
+    }
+
+
+def class_l_generating_function_certification() -> Dict[str, Any]:
+    r"""Certification flags for the class-L generating-function surface.
+
+    The scalar closed form is all-genus.  The planted-forest data in this
+    module is finite-window data through genus 4, and finite Pade evidence is
+    not a proof of non-existence of an all-genus closed form.
+    """
+    return {
+        "scalar_closed_form_all_genus": True,
+        "scalar_formula": "kappa*(xi/(2*sin(xi/2)) - 1)",
+        "planted_forest_exact_genera": (2, 3, 4),
+        "genus2_status": "exact: rem:planted-forest-correction-explicit",
+        "genus3_status": "exact class-L graph-sum coefficients",
+        "genus4_status": "canonical finite genus-4 class-L restriction",
+        "planted_forest_closed_form_theorem_certified": False,
+        "negative_nonexistence_theorem_certified": False,
+        "finite_pade_decides_all_genus": False,
+        "noncritical_affine_lane_required": True,
+        "S3_slN_normalization": "S_3 = 2N/(3*kappa), so at k=0 S_3 = 4N/[3(N^2-1)]",
+        "holographic_package_entries": HOLOGRAPHIC_PACKAGE_ENTRIES,
+        "modular_koszul_compute_package_projections": MODULAR_KOSZUL_COMPUTE_PACKAGE_PROJECTIONS,
+        "object_firewalls": dict(OBJECT_FIREWALLS),
+        "kernel_constants": dict(KERNEL_CONSTANTS),
+    }
+
+
+def genus3_class_l_source_audit() -> Dict[str, Any]:
+    r"""Compare exact class-L genus-3 data with the generic manuscript formula.
+
+    The generic genus-3 manuscript formula records an approximate
+    genus-1+ vertex-weight surface.  The exact class-L base used here is the
+    five-term graph-sum table imported from theorem_class_l_closed_form_engine.
+    """
+    exact = dict(GENUS3_PF_CLASS_L)
+    generic = dict(GENUS3_MANUSCRIPT_GENERIC_CLASS_L)
+    keys = sorted(set(exact) | set(generic))
+    mismatches = {
+        key: {"exact_class_L": exact.get(key), "generic_manuscript": generic.get(key)}
+        for key in keys
+        if exact.get(key) != generic.get(key)
+    }
+    return {
+        "exact_source": "theorem_class_l_closed_form_engine.GENUS3_PF_CLASS_L",
+        "generic_source": "higher_genus_modular_koszul.tex eq:delta-pf-genus3-explicit",
+        "generic_formula_status": "approximate for S_3-only class-L specialization",
+        "exact_class_L_preferred": True,
+        "mismatches": mismatches,
+        "matches": len(mismatches) == 0,
+    }
+
+
+def genus4_class_l_cross_source_audit() -> Dict[str, Any]:
+    r"""Audit selected genus-4 class-L coefficients against the canonical surface."""
+    local = dict(GENUS4_PF_CLASS_L)
+    result: Dict[str, Any] = {
+        "local_source": "theorem_class_l_closed_form_engine.GENUS4_PF_CLASS_L",
+        "comparison_source": "theorem_genus4_virasoro_engine.genus4_exact_coefficients",
+        "canonical_convention": "bridge sign on lower-indexed StableGraph endpoint",
+        "rejected_alternate_sign_value": Fraction(5, 15925248),
+        "available": False,
+        "checks": {},
+        "all_checked_match": None,
+        "certification": "COMPARISON_UNAVAILABLE",
+    }
+    try:
+        from compute.lib.theorem_genus4_virasoro_engine import genus4_exact_coefficients
+    except Exception as exc:  # pragma: no cover - defensive for slim installs
+        result["error"] = repr(exc)
+        return result
+
+    comparison = genus4_exact_coefficients()
+    selected = {
+        (0, 6): (0, 6, 0, 0, 0, 0),
+        (1, 1): (1, 1, 0, 0, 0, 0),
+        (4, 2): (4, 2, 0, 0, 0, 0),
+    }
+    checks = {}
+    for local_key, comparison_key in selected.items():
+        local_value = local[local_key]
+        raw_comparison = comparison[comparison_key]
+        if hasattr(raw_comparison, "p") and hasattr(raw_comparison, "q"):
+            comparison_value = Fraction(int(raw_comparison.p), int(raw_comparison.q))
+        else:
+            comparison_value = Fraction(raw_comparison)
+        checks[local_key] = {
+            "local": local_value,
+            "comparison": comparison_value,
+            "match": local_value == comparison_value,
+        }
+
+    all_match = all(row["match"] for row in checks.values())
+    result.update({
+        "available": True,
+        "checks": checks,
+        "all_checked_match": all_match,
+        "certification": "CANONICAL_CONSISTENT" if all_match else "RECONCILIATION_REQUIRED",
+    })
+    return result
+
+
+def S3_linear_degree_profile() -> Dict[int, Dict[str, Any]]:
+    """Return the kappa-degree profile of the S_3-linear coefficients."""
+    profile = {}
+    for g, coeffs in S3_linear_coefficients().items():
+        degrees = sorted(a for (a, b) in coeffs if b == 1 and coeffs[(a, b)] != 0)
+        profile[g] = {
+            "degrees": degrees,
+            "max_kappa_degree": max(degrees) if degrees else None,
+            "degree_g_minus_1": g - 1,
+            "matches_g_minus_1": (max(degrees) == g - 1) if degrees else False,
+        }
+    return profile
+
+
+def large_N_pf_scaling_certification() -> Dict[int, Dict[str, Any]]:
+    r"""Leading powers for delta_pf at SU(N), k=0 in the certified window.
+
+    At k=0, kappa = (N^2-1)/2 and S_3 = 4N/[3(N^2-1)].  A monomial
+    kappa^a*S_3^b has leading power N^(2a-b) and leading coefficient
+    (1/2)^a*(4/3)^b times its polynomial coefficient.
+    """
+    result = {}
+    for g, coeffs in _pf_coefficients_by_genus().items():
+        grouped: Dict[int, Fraction] = {}
+        for (a, b), coeff in coeffs.items():
+            exponent = 2 * a - b
+            leading_coeff = coeff * Fraction(1, 2) ** a * Fraction(4, 3) ** b
+            grouped[exponent] = grouped.get(exponent, Fraction(0)) + leading_coeff
+        nonzero = {power: coeff for power, coeff in grouped.items() if coeff != 0}
+        leading_power = max(nonzero)
+        result[g] = {
+            "leading_N_power": leading_power,
+            "leading_coefficient": nonzero[leading_power],
+            "power_coefficients": dict(sorted(nonzero.items())),
+        }
+    return result
 
 
 # ============================================================================
@@ -210,6 +416,10 @@ def S3_linear_coefficients() -> Dict[int, Dict[Tuple[int, int], Fraction]]:
     g=2: L_2 = -kappa/48
     g=3: L_3 = -343/2304 * kappa - 1/82944 * kappa^3
     g=4: L_4 = -123589/165888 * kappa - 13/864 * kappa^2 - 143/1327104 * kappa^3
+
+    The finite-window degrees are therefore 1, 3, 3.  The earlier
+    heuristic ``degree g-1'' is false at genus 3 on the exact class-L
+    coefficient surface.
     """
     result = {}
 
@@ -316,7 +526,7 @@ class PadeApproximant:
     p0: Fraction
     p1: Fraction
     q1: Fraction
-    pole_location: Fraction  # xi^2 = -1/q1
+    pole_location: Optional[Fraction]  # xi^2 = -1/q1
     a2: Fraction
     a3: Fraction
     a4: Fraction
@@ -436,7 +646,7 @@ def pf_to_scalar_ratio_table(
 ) -> Dict[int, Dict[float, float]]:
     r"""Compute G_pf/G_scalar ratio across SU(N) families.
 
-    This ratio is NOT universal (depends on N), confirming that the
+    This ratio depends on N, confirming that the
     planted-forest part has no simple proportionality to the scalar part.
     """
     if N_values is None:
@@ -543,10 +753,14 @@ def test_S3_squared_scaling(
 def large_N_scaling(N_values: List[int] = None) -> Dict[int, Dict[str, Any]]:
     r"""Analyze the large-N scaling of F_g and delta_pf for SU(N) at k=0.
 
-    At large N: kappa ~ N^2/2, S_3 ~ 2/(3N), S_3*kappa = 2N/3.
+    At large N: kappa = (N^2-1)/2, S_3 = 4N/[3(N^2-1)] ~ 4/(3N),
+    and S_3*kappa = 2N/3 exactly.
     The scalar part scales as kappa ~ N^2.
-    The planted-forest part at genus g scales as N^{2(g-1)} (from the
-    S_3^{2(g-1)} leading term combined with its kappa-dependence).
+
+    In the certified window the leading planted-forest powers are:
+        g=2: N^1 with coefficient -1/72
+        g=3: N^5 with coefficient -1/497664
+        g=4: N^6 with coefficient 5/143327232
     """
     if N_values is None:
         N_values = [2, 3, 5, 8, 12, 20]
@@ -555,6 +769,7 @@ def large_N_scaling(N_values: List[int] = None) -> Dict[int, Dict[str, Any]]:
     for N in N_values:
         kap = kappa_slN(N)
         s3 = S3_slN(N)
+        scaling = large_N_pf_scaling_certification()
 
         row = {
             'kappa': float(kap),
@@ -571,7 +786,10 @@ def large_N_scaling(N_values: List[int] = None) -> Dict[int, Dict[str, Any]]:
             row[f'F_{g}_scalar'] = Fg_scal
             row[f'F_{g}_pf'] = Fg_pf
             if g >= 2:
+                leading_power = scaling[g]['leading_N_power']
                 row[f'F_{g}_pf_over_N_{2*(g-1)}'] = Fg_pf / (N ** (2 * (g - 1)))
+                row[f'F_{g}_pf_leading_N_power'] = leading_power
+                row[f'F_{g}_pf_over_N_leading_power'] = Fg_pf / (N ** leading_power)
 
         results[N] = row
 
@@ -626,18 +844,19 @@ def pade_pole_table(
 # ============================================================================
 
 def closed_form_obstruction_evidence() -> Dict[str, Any]:
-    r"""Compile evidence that G_pf does NOT have a finite closed form.
+    r"""Compile finite-window evidence against a scalar-analog closed form.
 
     Evidence:
-    1. The polynomial degree in (kappa, S_3) grows unboundedly as 2(g-1).
+    1. The polynomial degree in (kappa, S_3) grows across g = 2, 3, 4.
     2. The number of monomial terms grows: 2, 5, 11, ... (not stabilizing).
     3. The Pade pole location is family-dependent (no universal pole).
     4. The ratio G_pf/G_scalar is not constant across families.
-    5. The leading S_3 coefficients {5/24, 15/64, 425/576} do not match
-       any standard generating function.
+    5. The leading S_3 coefficients {5/24, 15/64, 425/576} are not
+       geometric in the certified window.
 
-    This is a NEGATIVE RESULT: the planted-forest expansion is an
-    irreducibly complicated infinite series indexed by stable graphs.
+    This is not a theorem that no finite closed form exists.  Finite Pade
+    data and three genera of coefficients cannot decide all-genus
+    non-existence.
     """
     # Term count growth
     term_counts = {2: 2, 3: 5, 4: 11}
@@ -672,13 +891,19 @@ def closed_form_obstruction_evidence() -> Dict[str, Any]:
         'ratio_c4_c3': str(r43),
         'leading_is_geometric': is_geometric,
         'pade_poles_universal': poles_universal,
-        'conclusion': 'NO_CLOSED_FORM',
+        'exact_genus_window': (2, 4),
+        'certifies_nonexistence': False,
+        'conclusion': 'FINITE_WINDOW_OBSTRUCTION_EVIDENCE',
         'explanation': (
             'The planted-forest generating function G_pf(xi) for class L '
-            'has polynomials of unboundedly growing degree, non-geometric '
-            'leading coefficients, and family-dependent Pade poles. '
-            'No finite closed form exists analogous to the scalar '
-            'kappa*(xi/(2 sin(xi/2))-1).'
+            'has growing term counts, non-geometric leading coefficients '
+            'through genus 4, and family-dependent Pade poles. This is '
+            'evidence against a scalar-analog universal closed form, not a '
+            'certified all-genus non-existence theorem.'
+        ),
+        'open_obligation': (
+            'Prove an all-genus recurrence/asymptotic obstruction or construct '
+            'the closed form; genus 2-4 data alone is insufficient.'
         ),
     }
 
@@ -909,7 +1134,10 @@ def S3_generic(type_: str, rank: int,
     _, _, h_dual = _SIMPLE_LIE_DATA[key]
     kap = kappa_generic(type_, rank, k)
     if kap == Fraction(0):
-        return Fraction(0)
+        raise ValueError(
+            "S_3 is not defined on the critical kappa=0 affine lane; "
+            "the class-L shadow tower here is non-critical/completed."
+        )
     return Fraction(2 * h_dual) / (3 * kap)
 
 
@@ -917,7 +1145,7 @@ def S3_kappa_product_generic(type_: str, rank: int) -> Fraction:
     r"""The level-independent invariant S_3 * kappa = 2 * h^v / 3.
 
     This is the 't Hooft-like invariant for class L algebras:
-    it depends on the Lie algebra type (through h^v) but NOT on the level k.
+    it depends on the Lie algebra type (through h^v) and is independent of the level k.
     """
     key = (type_, rank)
     if key not in _SIMPLE_LIE_DATA:
@@ -1028,17 +1256,25 @@ def shadow_connection_residue_class_L(kappa: Fraction,
     Q_L'/(2*Q_L) = 6*S_3 / (2*(2*kappa + 3*S_3*t))
                  = 3*S_3 / (2*kappa + 3*S_3*t).
 
-    The connection has a simple pole at t_0 = -2*kappa/(3*S_3) with
-    residue 1/2.  The Koszul monodromy is exp(2*pi*i * 1/2) = -1.
+    At t_0 = -2*kappa/(3*S_3), Q_L has a double zero, not a simple
+    branch point of sqrt(Q_L).  The raw logarithmic form Q_L'/(2Q_L) has
+    integer residue 1 at this zero, the connection form d - Q_L'/(2Q_L)dt
+    has residue -1, and the monodromy is trivial.  The residue 1/2 and
+    monodromy -1 belong to simple zeros of non-square Q_L, not to class L.
 
-    The flat section is Phi(t) = sqrt(Q_L(t)/Q_L(0)) = |2*kappa + 3*S_3*t|/(2*kappa).
+    For kappa != 0, the normalized flat section is
+    Phi(t) = (2*kappa + 3*S_3*t)/(2*kappa), a single-valued linear function.
     """
     if S3 == Fraction(0):
         return {
             'class': 'G',
             'connection_trivial': True,
+            'connection_gauge_trivial': True,
             'pole_location': None,
             'residue': None,
+            'raw_log_residue': None,
+            'connection_residue': None,
+            'branch_residue': None,
             'monodromy': 1,
             'flat_section': 'constant (class G)',
         }
@@ -1047,11 +1283,22 @@ def shadow_connection_residue_class_L(kappa: Fraction,
     return {
         'class': 'L',
         'connection_trivial': False,
+        'connection_gauge_trivial': True,
         'pole_location': t0,
-        'residue': Fraction(1, 2),
-        'monodromy': -1,
-        'koszul_sign': -1,
-        'flat_section_at_0': Fraction(1),
+        'zero_multiplicity_Q_L': 2,
+        'is_branch_point': False,
+        'residue': Fraction(-1),
+        'raw_log_residue': Fraction(1),
+        'connection_residue': Fraction(-1),
+        'branch_residue': None,
+        'monodromy': 1,
+        'koszul_sign': 1,
+        'flat_section_at_0': Fraction(1) if kappa != Fraction(0) else None,
+        'flat_section': (
+            '(2*kappa + 3*S_3*t)/(2*kappa)'
+            if kappa != Fraction(0)
+            else 'base point t=0 lies on Q_L=0'
+        ),
     }
 
 
@@ -1097,7 +1344,7 @@ def virasoro_S3() -> Fraction:
     to S_3 for affine KM which depends on the level k and the Lie algebra.
 
     The Virasoro also has S_4 = Q^contact = 10/[c(5c+22)] != 0,
-    making it class M (mixed, infinite tower), NOT class L.
+    making it class M (mixed, infinite tower), while class L has finite tower.
     """
     return Fraction(2)
 
@@ -1144,12 +1391,12 @@ def S3_at_virasoro_subalgebra(N: int,
     Via Sugawara, V_k(sl_N) contains a Virasoro subalgebra with
     c = k*dim(sl_N)/(k+h^v) = k*(N^2-1)/(k+N).
 
-    The Virasoro subalgebra ALWAYS has S_3(Vir) = 2 (AP68: the PVA slab
-    ghost central charge is NOT kappa).
+    The Virasoro subalgebra always has S_3(Vir) = 2; the PVA slab
+    ghost central charge is a separate invariant from kappa.
 
-    The FULL KM algebra has S_3(KM) = 2N/(3*kappa) which is DIFFERENT.
+    The full KM algebra has S_3(KM) = 2N/(3*kappa).
     The full algebra's S_3 depends on the Lie algebra structure constants,
-    not just the Virasoro subalgebra contribution.
+    including more data than the Virasoro subalgebra contribution.
     """
     kap = kappa_slN(N, k)
     s3_km = S3_slN(N, k)
@@ -1166,7 +1413,7 @@ def S3_at_virasoro_subalgebra(N: int,
         'S3_differ': s3_km != Fraction(2),
         'explanation': (
             'S_3(full KM) != S_3(Virasoro subalgebra) because the KM S_3 '
-            'involves ALL generators (via the Lie bracket f^{abc}), '
-            'not just the Sugawara stress tensor.'
+            'involves all generators via the Lie bracket f^{abc}, '
+            'including more data than the Sugawara stress tensor.'
         ),
     }

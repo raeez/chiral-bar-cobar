@@ -1,32 +1,33 @@
-r"""Tests for the twisted holographic partition function engine.
+r"""Tests for the zeta-zero scalar twisted-holography engine.
 
 Tests organized by section:
-  1.  Modular characteristics (exact arithmetic, AP1/AP9/AP20/AP29)
+  1.  Modular characteristics (exact arithmetic)
   2.  Faber-Pandharipande intersection numbers (exact)
-  3.  Zeta-zero parameter mapping (numerological consistency)
+  3.  Zeta-zero parameter mapping (formal-probe consistency)
   4.  Dedekind eta and boundary partition functions
   5.  Boundary partition at zeta-zero parameters
-  6.  Bulk shadow (matter vs effective, AP29)
+  6.  Bulk shadow (matter vs effective)
   7.  Twisted partition function
   8.  Celestial OPE coefficients
-  9.  BTZ thermodynamics at zeta-zero parameters
-  10. Cardy-BTZ consistency (mathematical identity, not numerological)
+  9.  BTZ thermodynamics at zeta-zero probe parameters
+  10. Cardy-BTZ consistency (mathematical identity, not a zeta-zero claim)
   11. Anomaly polynomial
   12. Chern-Simons partition function
   13. Open/closed duality and annulus trace
-  14. Complementarity (AP24/AP29)
+  14. Complementarity
   15. Tachyon mass and Hagedorn (c=26)
   16. Shadow partition function at zeta-zero temperature
   17. Cross-family consistency
   18. Full holographic scan integration
+  19. Seven-entry typed package and object firewall
 
 VERIFICATION PATHS:
   Path 1: Cardy = BTZ at all temperatures (proved identity)
-  Path 2: kappa(Vir_c) + kappa(Vir_{26-c}) = 13 (AP24, exact)
+  Path 2: kappa(Vir_c) + kappa(Vir_{26-c}) = 13 (exact)
   Path 3: At c=26: kappa_eff = 0, all effective shadows vanish (anomaly cancellation)
   Path 4: lambda_fp values from A-hat generating function (independent formula)
   Path 5: CS at k=1 (U(1)) = 1, at k=2 (SU(2)) = known value (literature)
-  Path 6: eta(tau) = q^{1/24} prod(1-q^n) vs analytic formula (AP46)
+  Path 6: eta(tau) = q^{1/24} prod(1-q^n) vs analytic formula
 """
 
 import pytest
@@ -42,6 +43,7 @@ from bc_twisted_holography_zeta_engine import (
     # Section 1: modular characteristics
     kappa_virasoro, kappa_heisenberg, kappa_kac_moody, kappa_wn,
     central_charge_km, kappa_ghost, kappa_eff, delta_kappa,
+    central_charge_betagamma, kappa_betagamma, central_charge_bc, kappa_bc,
     # Section 2: intersection numbers
     lambda_fp, _bernoulli_2g,
     # Section 3: zeta-zero mapping
@@ -69,6 +71,8 @@ from bc_twisted_holography_zeta_engine import (
     annulus_trace_genus1, derived_center_dimension, open_closed_at_zeta_zero,
     # Section 13: complementarity
     complementarity_check, holographic_dictionary_entry,
+    seven_entry_package_at_zeta_zero, typed_object_firewall,
+    HOLOGRAPHIC_PACKAGE_ENTRIES, TYPED_FIREWALL_OBJECTS,
     # Section 14: shadow PF
     shadow_partition_at_zeta_zero,
     # Section 15: consistency
@@ -86,7 +90,7 @@ TWO_PI = 2.0 * PI
 # ===========================================================================
 
 class TestModularCharacteristics:
-    """Exact kappa values.  AP1/AP9: each computed from first principles."""
+    """Exact kappa values, computed by family."""
 
     def test_kappa_virasoro_c26(self):
         """kappa(Vir_26) = 13."""
@@ -125,6 +129,20 @@ class TestModularCharacteristics:
         """kappa(W_3) = c*(H_3-1) = c*(1+1/2+1/3-1) = c*5/6."""
         assert kappa_wn(6, 3) == Fraction(5)  # 6 * 5/6 = 5
 
+    def test_betagamma_shadow_constants(self):
+        """beta-gamma has c=2(6 lambda^2-6 lambda+1), kappa=c/2."""
+        assert central_charge_betagamma(Fraction(1)) == Fraction(2)
+        assert kappa_betagamma(Fraction(1)) == Fraction(1)
+        assert central_charge_betagamma(Fraction(1, 2)) == Fraction(-1)
+        assert kappa_betagamma(Fraction(1, 2)) == Fraction(-1, 2)
+        assert kappa_betagamma(Fraction(2)) == Fraction(13)
+
+    def test_bc_betagamma_scalar_cancellation(self):
+        """The bc companion has the opposite scalar constants."""
+        for lam in [Fraction(0), Fraction(1, 2), Fraction(1), Fraction(2)]:
+            assert central_charge_bc(lam) + central_charge_betagamma(lam) == 0
+            assert kappa_bc(lam) + kappa_betagamma(lam) == 0
+
     def test_kappa_ghost(self):
         """kappa(ghost) = -13."""
         assert kappa_ghost() == Fraction(-13)
@@ -145,13 +163,13 @@ class TestModularCharacteristics:
             assert delta_kappa(kA, kA_dual) == Fraction(c) - Fraction(13)
 
     def test_delta_kappa_vanishes_at_self_dual(self):
-        """delta_kappa = 0 at c=13 (self-dual point, AP29)."""
+        """delta_kappa = 0 at c=13 (self-dual point)."""
         kA = kappa_virasoro(13)
         kA_dual = kappa_virasoro(13)
         assert delta_kappa(kA, kA_dual) == Fraction(0)
 
     def test_kappa_eff_vs_delta_kappa_distinct(self):
-        """AP29: kappa_eff and delta_kappa are DIFFERENT objects.
+        """kappa_eff and delta_kappa are different objects.
         kappa_eff = 0 at c=26.  delta_kappa = 0 at c=13."""
         # At c=20: kappa_eff = 10-13 = -3.  delta_kappa = 10-3 = 7.
         kA = kappa_virasoro(20)
@@ -189,7 +207,7 @@ class TestFaberPandharipande:
         assert lambda_fp(5) == Fraction(73, 3503554560)
 
     def test_lambda_positive(self):
-        """All lambda_g^FP are positive (AP22: Bernoulli signs)."""
+        """All lambda_g^FP are positive under the absolute Bernoulli convention."""
         for g in range(1, 8):
             assert lambda_fp(g) > 0
 
@@ -247,6 +265,7 @@ class TestZetaZeroMapping:
         for n in range(1, 6):
             s = spectral_parameter_from_zeta_zero(n)
             assert abs(s.real - 0.5) < 1e-15
+            assert abs(s.imag - zeta_zero(n)) < 1e-15
 
     def test_mellin_equals_spectral(self):
         """Delta_n = s_n (same object, different name)."""
@@ -273,7 +292,7 @@ class TestZetaZeroMapping:
 # ===========================================================================
 
 class TestDedekindEta:
-    """Dedekind eta function (AP46: includes q^{1/24})."""
+    """Dedekind eta function includes q^{1/24}."""
 
     def test_eta_modular_transformation(self):
         """eta(-1/tau) = sqrt(-i*tau) * eta(tau) for tau = i."""
@@ -378,7 +397,7 @@ class TestBoundaryAtZetaZeros:
 # ===========================================================================
 
 class TestBulkShadow:
-    """Bulk shadow free energies.  AP20/AP29: kappa vs kappa_eff."""
+    """Bulk shadow free energies: kappa(A) vs kappa_eff."""
 
     def test_F1_virasoro(self):
         """F_1 = kappa/24 = c/48."""
@@ -474,6 +493,14 @@ class TestCelestialOPE:
         B = celestial_collinear_kernel(complex(1, 0), complex(1, 0))
         assert abs(B - 1.0) < 0.1
 
+    def test_collinear_beta_normalization(self):
+        """The kernel is the unshifted unit-normalized Euler beta function."""
+        # B(2,3) = Gamma(2) Gamma(3) / Gamma(5) = 1!*2!/4! = 1/12.
+        B = celestial_collinear_kernel(complex(2, 0), complex(3, 0))
+        assert abs(B - Fraction(1, 12)) < 1e-12
+        with pytest.raises(ValueError):
+            celestial_collinear_kernel(2, 3, normalization="shifted_graviton")
+
     def test_celestial_at_zeta_zero_finite(self):
         """Celestial data at zeta zeros is finite."""
         for n in range(1, 4):
@@ -486,6 +513,7 @@ class TestCelestialOPE:
         assert 'Delta' in data
         assert 'soft_factor' in data
         assert 'collinear_kernel' in data
+        assert data['kernel_normalization'] == 'unit_euler_beta'
 
 
 # ===========================================================================
@@ -697,18 +725,18 @@ class TestOpenClosed:
         assert abs(data['kappa'] - 13.0) < 1e-12
 
     def test_open_closed_complementarity_sum(self):
-        """AP24: kappa + kappa' = 13 for Virasoro."""
+        """kappa + kappa' = 13 for Virasoro."""
         for c in [1.0, 10.0, 13.0, 20.0, 26.0]:
             data = open_closed_at_zeta_zero(1, c=c)
             assert abs(data['kappa_sum'] - 13.0) < 1e-10
 
 
 # ===========================================================================
-# Section 14: Complementarity (AP24/AP29)
+# Section 14: Complementarity
 # ===========================================================================
 
 class TestComplementarity:
-    """Complementarity check: AP24 (kappa+kappa'=13) and AP29 (distinct vanishing)."""
+    """Complementarity check: kappa-sum and distinct vanishing conditions."""
 
     def test_complementarity_sum_13(self):
         """kappa(Vir_c) + kappa(Vir_{26-c}) = 13 for all c."""
@@ -730,13 +758,13 @@ class TestComplementarity:
         assert abs(comp['kappa_eff']) < 1e-12
 
     def test_not_self_dual_at_c26(self):
-        """c=26 is NOT the self-dual point (AP29)."""
+        """c=26 is not the self-dual point."""
         comp = complementarity_check(26.0)
         assert not comp['is_self_dual']
         assert abs(comp['delta_kappa'] - 13.0) < 1e-12  # c-13 = 13
 
     def test_not_critical_at_c13(self):
-        """c=13 is NOT the critical dimension (AP29)."""
+        """c=13 is not the critical dimension."""
         comp = complementarity_check(13.0)
         assert not comp['is_critical']
         assert abs(comp['kappa_eff'] - (-6.5)) < 1e-12  # 13/2 - 13 = -13/2
@@ -850,7 +878,7 @@ class TestCrossFamilyConsistency:
 
     def test_kappa_virasoro_vs_heisenberg_at_c1(self):
         """At c=1: kappa(Vir_1) = 1/2 but kappa(H_1) = 1.
-        AP48: kappa depends on the FULL algebra, not the Virasoro subalgebra."""
+        kappa depends on the full algebra, not the Virasoro subalgebra."""
         assert kappa_virasoro(1) != kappa_heisenberg(1)
         assert kappa_virasoro(1) == Fraction(1, 2)
         assert kappa_heisenberg(1) == Fraction(1)
@@ -864,7 +892,7 @@ class TestCrossFamilyConsistency:
             assert F2 == Fraction(kappa_val) * lam
 
     def test_complementarity_all_central_charges(self):
-        """AP24: kappa + kappa' = 13 is exact for all Virasoro c."""
+        """kappa + kappa' = 13 is exact for all Virasoro c."""
         for c in range(0, 27):
             comp = complementarity_check(float(c))
             assert comp['complementarity_holds']
@@ -902,3 +930,73 @@ class TestFullScan:
         """At c=26: anomaly cancellation in the full scan."""
         scan = full_holographic_scan(c=26.0, n_max=3, g_max=3)
         assert scan['complementarity']['is_critical']
+        assert tuple(scan['seven_entry_package'].keys()) == HOLOGRAPHIC_PACKAGE_ENTRIES
+        assert 'typed_firewall' in scan
+
+
+# ===========================================================================
+# Section 19: Seven-entry package and typed object firewall
+# ===========================================================================
+
+class TestSevenEntryPackage:
+    """Typed package: A, A^i, A^!, C, r(z), Theta_A, nabla^hol."""
+
+    def test_virasoro_package_slots(self):
+        package = seven_entry_package_at_zeta_zero(1, c=10.0)
+        assert tuple(package.keys()) == HOLOGRAPHIC_PACKAGE_ENTRIES
+        assert package["A"] == "Vir_10"
+        assert package["A^i"].startswith("H^*(B^ch(Vir_10))")
+        assert package["A^!"] == "Vir_16"
+        assert package["C"].startswith("Z_ch^der(Vir_10)")
+        assert package["r(z)"] == "r^Vir(z) = 5/z^3 + 2T/z"
+        assert package["Theta_A"] == Fraction(5)
+        assert package["nabla^hol"] is True
+
+    def test_firewall_typed_objects(self):
+        firewall = typed_object_firewall(c=10.0)
+        for key in TYPED_FIREWALL_OBJECTS:
+            assert key in firewall
+        assert "complex is not A^i itself" in firewall["B(A)"]
+        assert "not B(A), not A^!" in firewall["A^i"]
+        assert "bar-cobar inversion" in firewall["Omega(B(A))"]
+        assert "derived-center C slot" in firewall["Z_ch^der(A)"]
+        assert "Omega(B(A)) != A^!" in firewall["forbidden_identifications"]
+        assert "Z_ch^der(A) != A^!" in firewall["forbidden_identifications"]
+
+    def test_open_closed_exposes_typed_slots(self):
+        data = open_closed_at_zeta_zero(1, c=26.0)
+        assert data["A"] == "Vir_26"
+        assert data["A^!"] == "Vir_0"
+        assert data["seven_entry_package"]["C"] == data["C"]
+        assert data["typed_firewall"]["A^!"].startswith("Vir_0")
+
+    def test_dictionary_entry_exposes_typed_slots(self):
+        entry = holographic_dictionary_entry(13.0, 1)
+        assert tuple(entry["seven_entry_package"].keys()) == HOLOGRAPHIC_PACKAGE_ENTRIES
+        assert entry["seven_entry_package"]["A"] == "Vir_13"
+        assert entry["typed_firewall"]["Omega(B(A))"].startswith(
+            "Omega(B(A)) recovers Vir_13"
+        )
+
+    def test_betagamma_package_constants_and_closed_residue(self):
+        package = seven_entry_package_at_zeta_zero(
+            1,
+            algebra="betagamma",
+            lam=Fraction(1, 2),
+        )
+        assert package["A"] == "betagamma_1/2"
+        assert package["A^!"] == "bc_1/2"
+        assert package["Theta_A"] == Fraction(-1, 2)
+        assert package["r(z)"] == (
+            "closed r(z) = 0; simple OPE/contact datum is boundary data"
+        )
+
+    def test_bc_package_constants(self):
+        package = seven_entry_package_at_zeta_zero(
+            1,
+            algebra="bc",
+            lam=Fraction(1, 2),
+        )
+        assert package["A"] == "bc_1/2"
+        assert package["A^!"] == "betagamma_1/2"
+        assert package["Theta_A"] == Fraction(1, 2)

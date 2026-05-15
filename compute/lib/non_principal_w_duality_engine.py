@@ -5,7 +5,8 @@ W-algebras W^k(sl_N, f_lambda) in type A, with emphasis on:
 
 (A) sl_3 WITH ALL NILPOTENT ORBITS:
     - Principal (3): W_3 algebra, generators at h=2,3.  Class M.
-    - Subregular/minimal (2,1): Bershadsky-Polyakov = N=2 SCA.
+    - Subregular/minimal (2,1): Feigin-Semikhatov W_3^{(2)}
+      (Bershadsky-Polyakov).
       Self-transpose.  Generators: J(1), G+(3/2), G-(3/2), T(2).
       c_BP(k) = 2 - 24(k+1)^2/(k+3), K=196 (FKR 2020).  rho = 1/6.  kappa = rho*c.
 
@@ -378,10 +379,14 @@ def sl3_all_profiles() -> Dict[Partition, NonPrincipalDualityProfile]:
 
 
 def sl3_subregular_ope_data(level=None):
-    r"""OPE data for W_k(sl_3, f_{(2,1)}) = Bershadsky-Polyakov = N=2 SCA.
+    r"""OPE data for W_k(sl_3, f_{(2,1)}) in Feigin-Semikhatov normal form.
 
     Generators: J (h=1, bosonic), G+ (h=3/2, fermionic),
                 G- (h=3/2, fermionic), T (h=2, bosonic).
+
+    This is the Bershadsky-Polyakov W_3^{(2)} algebra.  The four-generator
+    display below is the BP/Feigin-Semikhatov OPE surface used by this
+    compatibility engine.
 
     OPE (AP44: lambda-bracket coefficients differ by 1/n! from OPE modes):
       J(z)J(w) ~ (c/3)/(z-w)^2

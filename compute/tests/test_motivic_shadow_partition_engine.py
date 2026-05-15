@@ -1,9 +1,12 @@
 r"""Tests for motivic_shadow_partition_engine.py.
 
-40+ tests covering the motivic structure of the shadow partition function
-tau_shadow(kappa, hbar) = tau_KW^kappa, answering the seven deep-research
-questions about its coefficient field, Hodge structure, periods, motivic
-Galois group, Beilinson cohomology, and negative results.
+Finite formal tests for the motivic shadow scalar window.  The certified
+object is the q = hbar^2 coefficient window
+
+    exp(kappa * sum_g lambda_g^FP q^g) mod q^(g_max + 1),
+
+not an analytic KW/KdV tau-function theorem and not a constructed
+motivic Galois object.
 
 MULTI-PATH VERIFICATION (required by CLAUDE.md):
   * Every lambda_g^FP value verified via at least 3 independent paths:
@@ -20,14 +23,15 @@ GROUND TRUTH:
   (from Faber-Pandharipande 2003, Ann. Math. 157)
 
 SCOPE CHECKS:
-  * rational kappa -> rational coefficients (no field extension)
-  * F_g is NEVER an MZV, NEVER transcendental, NEVER involves pi
-  * the Beilinson regulator on lambda_g vanishes (pure Tate => no transcendence)
+  * rational kappa -> rational log and tau coefficients
+  * noninteger rational kappa introduces no root-extension
+  * algebraic kappa stays in Q(kappa); symbolic kappa gives Q[kappa]
+  * F_g has no positive-weight MZV content and no pi/zeta factor
 
 NEGATIVE RESULTS VERIFIED:
-  * tau_shadow is NOT a KdV tau function for kappa != 0, 1
-  * F_g is not an MZV at any genus
-  * the scalar map kappa -> motive(tau_shadow) is not injective
+  * finite coefficients do not certify analytic KW/KdV membership
+  * finite coefficients do not certify a motivic Galois group
+  * finite scalar coefficients recover kappa; abstract Tate-shape labels do not
 
 Manuscript references:
   thm:theorem-d (higher_genus_modular_koszul.tex)
@@ -42,17 +46,27 @@ import unittest
 from fractions import Fraction
 
 from sympy import (
-    Rational, Symbol, bernoulli, factorial, series, sin, expand, Poly,
+    Rational, Symbol, bernoulli, cancel, factorial, series, sin, expand, Poly,
+    sqrt,
 )
 
 from compute.lib.motivic_shadow_partition_engine import (
+    # Structural firewalls
+    HOLOGRAPHIC_PACKAGE_ENTRIES,
+    MODULAR_KOSZUL_COMPUTE_PROJECTIONS,
+    TYPED_OBJECT_ROLES,
+    structural_firewall_summary,
     # Core FP numbers
     lambda_fp,
     faber_pandharipande_table,
     # Q1 — coefficient field
     tau_shadow_genus_coefficient,
+    formal_shadow_log_coefficients,
+    tau_shadow_exp_coefficients,
     coefficient_field_signature,
     verify_no_field_extension,
+    scalar_lane_certificate,
+    finite_formal_coefficient_window,
     # Q2 — motive at fixed genus
     TateMotive,
     motive_of_Fg,
@@ -64,7 +78,7 @@ from compute.lib.motivic_shadow_partition_engine import (
     is_rational_period,
     period_classification,
     deligne_critical_value_check,
-    # Q5 — pro-motive
+    # Q5 — formal Tate labels
     ShadowProMotive,
     shadow_pro_motive,
     motivic_galois_action,
@@ -89,6 +103,36 @@ from compute.lib.motivic_shadow_partition_engine import (
     # Summary
     shadow_motivic_summary,
 )
+
+
+# =========================================================================
+# SECTION 0: Structural firewalls
+# =========================================================================
+
+class TestStructuralFirewalls(unittest.TestCase):
+    """Package and object firewalls required by the compute surface."""
+
+    def test_holographic_package_has_seven_entries(self):
+        self.assertEqual(len(HOLOGRAPHIC_PACKAGE_ENTRIES), 7)
+        self.assertEqual(
+            HOLOGRAPHIC_PACKAGE_ENTRIES,
+            ("A", "A^i", "A^!", "C", "r(z)", "Theta_A", "nabla^hol"),
+        )
+
+    def test_modular_koszul_package_has_six_projections(self):
+        self.assertEqual(len(MODULAR_KOSZUL_COMPUTE_PROJECTIONS), 6)
+        self.assertEqual(
+            MODULAR_KOSZUL_COMPUTE_PROJECTIONS,
+            ("Fact_X(L)", "barB_X(L)", "Theta_L", "L_L", "(V_br,T_br)", "R4_mod(L)"),
+        )
+
+    def test_typed_objects_are_not_conflated(self):
+        summary = structural_firewall_summary()
+        self.assertTrue(summary["packages_are_distinct"])
+        roles = TYPED_OBJECT_ROLES
+        self.assertIn("inversion", roles["Omega(B(A))"])
+        self.assertIn("Verdier", roles["A^!"])
+        self.assertIn("Hochschild", roles["Z_ch^der(A)"])
 
 
 # =========================================================================
@@ -167,15 +211,18 @@ class TestMultiPathVerification(unittest.TestCase):
 # =========================================================================
 
 class TestCoefficientField(unittest.TestCase):
-    """Verify that tau_shadow(kappa) lives in Q[[hbar^2]] for rational kappa."""
+    """Verify exact coefficient fields in finite q-windows."""
 
     def test_10_rational_kappa_stays_rational(self):
-        """For kappa in Q, all coefficients F_g(kappa) are rational."""
+        """For kappa in Q, all log and tau coefficients are rational."""
         for kappa_val in [Rational(1), Rational(3, 2), Rational(-5), Rational(13, 2)]:
             res = verify_no_field_extension(kappa_val, g_max=6)
             self.assertEqual(res["field"], "Q")
             self.assertTrue(res["rational"])
-            for g, c in res["coefficients"].items():
+            self.assertTrue(res["all_tau_coefficients_in_field"])
+            for c in res["log_coefficients"].values():
+                self.assertIsInstance(c, Rational)
+            for c in res["tau_coefficients"]:
                 self.assertIsInstance(c, Rational)
 
     def test_11_integer_kappa(self):
@@ -203,6 +250,43 @@ class TestCoefficientField(unittest.TestCase):
         sig = coefficient_field_signature(k)
         self.assertEqual(sig["field"], "Q(kappa)")
         self.assertTrue(sig["transcendental"])
+        self.assertEqual(sig["coefficient_ring"], "Q[kappa] in each finite window")
+
+    def test_14b_noninteger_rational_tau_coefficients_are_in_Q(self):
+        """kappa = 1/2 introduces no square-root or branch extension."""
+        coeffs = tau_shadow_exp_coefficients(Rational(1, 2), 3)
+        self.assertEqual(coeffs[0], 1)
+        self.assertEqual(coeffs[1], Rational(1, 48))
+        expected_q2 = Rational(1, 2) * lambda_fp(2) + Rational(1, 8) * lambda_fp(1) ** 2
+        self.assertEqual(coeffs[2], expected_q2)
+        self.assertTrue(all(isinstance(c, Rational) for c in coeffs))
+
+    def test_14c_algebraic_kappa_stays_in_Q_kappa(self):
+        """kappa = sqrt(2) is algebraic of degree 2, not transcendental."""
+        sig = coefficient_field_signature(sqrt(2))
+        self.assertEqual(sig["field"], "Q(kappa)")
+        self.assertEqual(sig["extension_degree"], 2)
+        self.assertTrue(sig["algebraic"])
+        self.assertFalse(sig["transcendental"])
+
+    def test_14d_symbolic_tau_coefficients_are_polynomial_in_kappa(self):
+        """The q^n coefficient has degree <= n in symbolic kappa."""
+        k = Symbol("kappa")
+        coeffs = tau_shadow_exp_coefficients(k, 3)
+        self.assertEqual(coeffs[1], k / 24)
+        self.assertEqual(cancel(coeffs[2] - (k * lambda_fp(2) + k ** 2 / 1152)), 0)
+        for n, coeff in enumerate(coeffs):
+            self.assertLessEqual(Poly(coeff, k).degree(), n)
+
+    def test_14e_finite_formal_window_declines_analytic_claims(self):
+        """The repaired theorem is finite and formal."""
+        window = finite_formal_coefficient_window(Rational(7, 3), 4)
+        self.assertTrue(window["finite_formal_identity_certified"])
+        self.assertEqual(window["modulus"], "q^5")
+        self.assertFalse(window["analytic_tau_identity_proved"])
+        self.assertFalse(window["kw_kdv_theorem_proved"])
+        self.assertFalse(window["motivic_galois_group_proved"])
+        self.assertFalse(window["convergence_proved"])
 
 
 # =========================================================================
@@ -243,6 +327,32 @@ class TestTateMotiveAtGenus(unittest.TestCase):
         self.assertEqual(motive_of_Fg(1).period, "2*pi*i")
         self.assertEqual(motive_of_Fg(2).period, "(2*pi*i)^2")
         self.assertEqual(TateMotive(n=0).period, "1")
+
+
+# =========================================================================
+# SECTION 4A: Scalar lane versus multi-weight separation
+# =========================================================================
+
+class TestScalarLaneSeparation(unittest.TestCase):
+    """The kappa-linear theorem is scalar-diagonal only."""
+
+    def test_uniform_weight_scalar_lane_is_certified(self):
+        cert = scalar_lane_certificate("Heisenberg", (1, 1, 1))
+        self.assertTrue(cert["uniform_weight"])
+        self.assertTrue(cert["scalar_lane_certified"])
+        self.assertFalse(cert["multi_weight_cross_channels_omitted"])
+
+    def test_multi_weight_cross_channels_are_not_collapsed(self):
+        cert = scalar_lane_certificate("multi-weight test", (1, 2, 3))
+        self.assertFalse(cert["uniform_weight"])
+        self.assertFalse(cert["scalar_lane_certified"])
+        self.assertTrue(cert["multi_weight_cross_channels_omitted"])
+
+        window = finite_formal_coefficient_window(
+            Rational(5), 3, family="multi-weight test", generator_weights=(1, 2)
+        )
+        self.assertFalse(window["finite_formal_identity_certified"])
+        self.assertTrue(window["lane"]["multi_weight_cross_channels_omitted"])
 
 
 # =========================================================================
@@ -297,6 +407,8 @@ class TestPeriods(unittest.TestCase):
         cl = period_classification(3, Rational(1))
         self.assertTrue(cl["is_rational"])
         self.assertFalse(cl["is_mzv"])
+        self.assertFalse(cl["is_nontrivial_mzv"])
+        self.assertEqual(cl["mzv_weight"], 0)
         self.assertFalse(cl["involves_pi"])
         self.assertFalse(cl["involves_zeta"])
         self.assertEqual(cl["transcendence_degree"], 0)
@@ -332,22 +444,26 @@ class TestPeriods(unittest.TestCase):
 
 
 # =========================================================================
-# SECTION 7: Q5 — pro-motive M^sh (5 tests)
+# SECTION 7: Q5 — formal Tate labels (5 tests)
 # =========================================================================
 
 class TestShadowProMotive(unittest.TestCase):
-    """The shadow pro-motive is prod_g Q(-g) with motivic Galois group G_m."""
+    """The engine records formal Tate labels, not a Galois theorem."""
 
     def test_29_pro_motive_layers(self):
-        """Layer g is Q(-g) for g = 1, ..., g_max."""
+        """Layer g carries the formal Q(-g) label for g = 1, ..., g_max."""
         pm = shadow_pro_motive(g_max=5)
         for i, layer in enumerate(pm.layers, start=1):
             self.assertEqual(layer.n, i)
 
     def test_30_motivic_galois_group_is_Gm(self):
-        """G_mot(M^sh) = G_m."""
+        """A motivic Galois group is not certified here."""
         pm = shadow_pro_motive(g_max=5)
-        self.assertEqual(pm.motivic_galois_group, "G_m")
+        self.assertEqual(
+            pm.motivic_galois_group,
+            "formal_Tate_weight_torus_not_certified_G_mot",
+        )
+        self.assertFalse(pm.certified_motivic_galois_group)
 
     def test_31_cocharacter_weight(self):
         """Cocharacter weight on Q(-g) is 2g."""
@@ -356,13 +472,13 @@ class TestShadowProMotive(unittest.TestCase):
             self.assertEqual(w, 2 * g)
 
     def test_32_is_mixed_tate(self):
-        """M^sh is mixed Tate but NOT pure (different layer weights)."""
+        """Formal labels are mixed Tate but not pure across all weights."""
         pm = shadow_pro_motive(g_max=5)
         self.assertTrue(pm.is_mixed_tate)
         self.assertFalse(pm.is_pure)
 
     def test_33_motivic_galois_action(self):
-        """G_m acts on the genus-g layer by t^{2g}."""
+        """The formal weight cocharacter acts on genus g by t^{2g}."""
         t = Symbol("t")
         self.assertEqual(motivic_galois_action(1, t), t ** 2)
         self.assertEqual(motivic_galois_action(3, t), t ** 6)
@@ -373,13 +489,14 @@ class TestShadowProMotive(unittest.TestCase):
 # =========================================================================
 
 class TestBeilinsonRegulator(unittest.TestCase):
-    """The Beilinson regulator vanishes on pure Tate classes."""
+    """The engine proves rational periods, not regulator vanishing."""
 
     def test_34_regulator_vanishes(self):
-        """The regulator vanishes on lambda_g for every g >= 1."""
+        """Regulator vanishing is explicitly outside this finite window."""
         for g in range(1, 8):
             res = beilinson_regulator_vanishing(g)
-            self.assertTrue(res["regulator_vanishes"])
+            self.assertIsNone(res["regulator_vanishes"])
+            self.assertFalse(res["regulator_vanishing_certified"])
             self.assertTrue(res["period_in_Q"])
             self.assertEqual(res["period_value"], lambda_fp(g))
 
@@ -391,6 +508,8 @@ class TestBeilinsonRegulator(unittest.TestCase):
             self.assertEqual(data["hodge_type"], (g, g))
             self.assertEqual(data["weight"], 2 * g)
             self.assertEqual(data["tate_twist"], -g)
+            self.assertFalse(data["mhs_theorem_certified"])
+            self.assertTrue(data["formal_tate_label"])
 
     def test_36_MHS_filtration_consistency(self):
         """F^g is full, F^{g+1} is zero; W_{2g} is full, W_{2g-1} is zero."""
@@ -405,30 +524,39 @@ class TestBeilinsonRegulator(unittest.TestCase):
 # =========================================================================
 
 class TestNegativeResults(unittest.TestCase):
-    """Negative motivic results: KdV fails, MZV fails, scalar injectivity fails."""
+    """Negative boundaries: no analytic/KdV/Galois theorem from this window."""
 
     def test_37_kdv_fails_for_generic_kappa(self):
-        """tau_shadow is not KdV for kappa != 0, 1."""
+        """Generic kappa is not certified as KdV by finite coefficients."""
         for k in [Rational(2), Rational(3), Rational(13, 2), Rational(24)]:
             res = kdv_negative_result(k)
             self.assertFalse(res["satisfies_kdv"])
+            self.assertFalse(res["satisfies_kdv_certified_by_this_engine"])
+            self.assertFalse(res["analytic_kw_tau_function_certified_by_this_engine"])
 
     def test_38_kdv_trivially_satisfied_at_kappa_0_or_1(self):
-        """kappa = 0 and kappa = 1 are the only KdV-compatible values."""
+        """Even the exception values are not proved by this motivic window."""
         for k in [Rational(0), Rational(1)]:
             res = kdv_negative_result(k)
             self.assertTrue(res["satisfies_kdv"])
+            self.assertFalse(res["satisfies_kdv_certified_by_this_engine"])
 
     def test_39_mzv_fails_at_every_genus(self):
-        """F_g is never an MZV — it is always rational."""
+        """F_g has no positive-weight MZV content in the rational case."""
         for g in range(1, 8):
             res = mzv_negative_result(g)
             self.assertFalse(res["is_mzv"])
+            self.assertFalse(res["is_nontrivial_mzv"])
+            self.assertEqual(res["mzv_weight"], 0)
             self.assertTrue(res["is_rational"])
 
     def test_40_scalar_injectivity_fails(self):
-        """kappa -> motive(tau_shadow) is not injective at scalar level."""
+        """Finite scalar coefficients recover kappa; abstract Tate shape does not."""
         res = injectivity_negative_result()
+        self.assertTrue(res["finite_formal_scalar_injective"])
+        self.assertEqual(res["recovery_formula"], "kappa = 24 * [q^1] log(tau_shadow)")
+        self.assertFalse(res["abstract_tate_shape_injective"])
+        self.assertFalse(res["galois_orbit_injectivity_certified"])
         self.assertFalse(res["injective_on_motives"])
         self.assertTrue(res["injective_on_values"])
 
@@ -438,10 +566,10 @@ class TestNegativeResults(unittest.TestCase):
 # =========================================================================
 
 class TestUniversalHodgeStructure(unittest.TestCase):
-    """The universal Hodge structure underlying tau_shadow."""
+    """Formal Hodge labels underlying the finite scalar window."""
 
     def test_41_betti_dimension_equals_g_max(self):
-        """Betti dimension of the truncated pro-motive = g_max."""
+        """Betti dimension of the truncated formal model = g_max."""
         for g_max in [3, 5, 8]:
             u = universal_shadow_hodge(g_max=g_max)
             self.assertEqual(u.betti_dimension, g_max)
@@ -462,7 +590,7 @@ class TestUniversalHodgeStructure(unittest.TestCase):
         self.assertEqual(evals, [5, 25, 125, 625])
 
     def test_44_crystalline_and_abelian(self):
-        """Tate pro-motive is crystalline and its Galois action is abelian."""
+        """The Tate model is crystalline and formally abelian."""
         uhs = universal_shadow_hodge(g_max=5)
         self.assertTrue(uhs.is_crystalline())
         self.assertTrue(uhs.galois_action_is_abelian())
@@ -552,10 +680,10 @@ class TestCrossConsistency(unittest.TestCase):
 # =========================================================================
 
 class TestGaloisInvariance(unittest.TestCase):
-    """Structural invariants preserved by the motivic Galois group."""
+    """Structural invariants of the formal Tate weight labels."""
 
     def test_53_weight_invariant_under_Gm(self):
-        """The weight 2g of Q(-g) is invariant under G_m action (it IS the cocharacter)."""
+        """The weight 2g of Q(-g) is the formal cocharacter label."""
         pm = shadow_pro_motive(g_max=5)
         for g, w in pm.cocharacter_weight.items():
             self.assertEqual(w, 2 * g)

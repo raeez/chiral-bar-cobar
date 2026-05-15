@@ -1,4 +1,4 @@
-"""Tests for twisted holography amplitudes from Koszul duality (Costello-Li programme).
+"""Tests for twisted holography amplitude projections in the Costello-Li programme.
 
 Verifies:
   1. D3 brane (twisted N=4 SYM): kappa, genus expansion, R-matrix, anomaly matching
@@ -576,10 +576,16 @@ class TestKoszulComplementarity:
 # ========================================================================
 
 class TestFullDatum:
-    """Test complete holographic datum extraction."""
+    """Test holographic projection package extraction."""
 
     def test_d3_full_datum_N2(self):
         datum = full_twisted_holography_datum_d3(2)
+        assert datum["holographic_package"] == "(A, A^i, A^!, C, r(z), Theta_A, nabla^hol)"
+        assert datum["A_i"].startswith("H^*(B^ch(")
+        assert datum["A^!"] == datum["A_dual"]
+        assert "Z_ch^der" in datum["C"]
+        assert datum["Theta_A"] == "shadow obstruction tower"
+        assert datum["nabla^hol"] == "shadow connection"
         assert datum["kappa(A)"] == Fraction(13, 4)
         assert datum["anti_symmetric"] is True
         assert datum["satisfies_cybe"] is True
@@ -594,6 +600,10 @@ class TestFullDatum:
 
     def test_m2_full_datum(self):
         datum = full_twisted_holography_datum_m2(2, 1)
+        assert datum["holographic_package"] == "(A, A^i, A^!, C, r(z), Theta_A, nabla^hol)"
+        assert datum["A_i"].startswith("H^*(B^ch(")
+        assert datum["A^!"] == datum["A_dual"]
+        assert "Z_ch^der" in datum["C"]
         assert datum["kappa(A)"] == Fraction(-4)
         assert datum["anti_symmetric"] is True
         assert datum["anomaly_free"] is True

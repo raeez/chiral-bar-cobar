@@ -847,9 +847,9 @@ def verify_complementarity_at_genus(family: str, max_genus: int = 5,
                                      level_or_c=None) -> Dict:
     """Verify shadow complementarity at each genus.
 
-    F_g(A) + F_g(A!) = (kappa(A) + kappa(A!)) * lambda_g^FP
+    F_g(A) + F_g(A^!) = (kappa(A) + kappa(A^!)) * lambda_g^FP
 
-    For KM: kappa + kappa' = 0, so F_g(A) + F_g(A!) = 0.
+    For KM: kappa + kappa' = 0, so F_g(A) + F_g(A^!) = 0.
     For Virasoro: kappa + kappa' = 13, so F_g(Vir_c) + F_g(Vir_{26-c}) = 13 * lambda_g^FP.
     """
     kappa_A = _get_kappa(family, level_or_c)
@@ -927,9 +927,25 @@ def bar_to_fh_dictionary() -> Dict[str, str]:
             "the formal genus expansion converges to trace-class amplitudes."
         ),
         "verdier_duality": (
-            "Verdier duality D_Ran(B(A)) = B(A!) intertwines the "
-            "factorization homology of A with that of A!. This is the "
-            "NAP duality: int_X D(A) = D(int_{-X} A)."
+            "Verdier duality has two branches. Finite-type branch: for "
+            "dualizable holonomic input with finite cohomological amplitude, "
+            "Verdier duality on Ran identifies the completed geometric bar "
+            "complex of A with the completed geometric bar complex of the "
+            "Verdier-Koszul dual A^! after the usual orientation and continuous "
+            "dual conventions. Completed branch: without finite-type "
+            "hypotheses, D_Ran(B(A)) lands in the continuous dual/pro-completed "
+            "bar object, and comparison with B(A^!) is a completed comparison "
+            "morphism rather than a literal equality."
+        ),
+        "five_object_separation": (
+            "B(A), A^i, A^!, Omega(B(A)), and Z_ch^der(A) are distinct objects. "
+            "B(A) is the geometric bar coalgebra computing chiral/factorization "
+            "homology; A^i is the Koszul-dual coalgebraic object; A^! is the "
+            "Verdier-Koszul dual under finite-type or completed-dual "
+            "hypotheses; Omega(B(A)) is bar-cobar inversion back to A in the "
+            "proved ambient category; Z_ch^der(A) is the Hochschild/derived "
+            "chiral centre. None of these identifications follows from "
+            "Verdier duality alone."
         ),
         "shadow_projection": (
             "The scalar shadow F_g = kappa * lambda_g^FP is the "
@@ -1447,7 +1463,7 @@ def poincare_koszul_duality_check(N: int, k: int,
     k^v = -k - 2*h^v (Feigin-Frenkel involution).
 
     Shadow-level check:
-        F_g(A) + F_g(A!) = 0  for KM families (kappa + kappa' = 0)
+        F_g(A) + F_g(A^!) = 0  for KM families (kappa + kappa' = 0)
     """
     results = {"N": N, "k": k, "checks": {}}
 

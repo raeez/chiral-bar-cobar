@@ -14,21 +14,21 @@
 \index{bar construction!as integral transform|textbf}
 \index{non-abelian Fourier transform|textbf}
 
-An augmented algebra has exactly one piece of canonical structure beyond
-its multiplication: the augmentation ideal $\bar\cA = \ker(\varepsilon)$,
-the part that the counit forgets.
-Desuspend it (the shift $s^{-1}$ with $|s^{-1}v| = |v|-1$, lowering
-cohomological degree by one), then form the cofree
-conilpotent coalgebra $T^c(s^{-1}\bar\cA)$ with deconcatenation coproduct.
-This object is not a choice; it is the \emph{universal} recipient
-of coderivations built from the algebra structure maps, and the
-bar differential is the unique coderivation that encodes them all.
-The entire construction is forced: given $\cA$ and $\varepsilon$, the
-coalgebra $B(\cA)$ exists, its differential squares to zero,
-and every deformation-theoretic invariant of $\cA$ is a projection
-from the resulting Maurer--Cartan element.
-What follows is the geometric incarnation of this universal object
-on algebraic curves.
+An augmented algebra has exactly one canonical input beyond its
+multiplication: the augmentation ideal
+$\bar\cA=\ker(\varepsilon)$, the part invisible to the counit.
+Desuspend it (the shift $s^{-1}$ with $|s^{-1}v|=|v|-1$), then form
+the cofree conilpotent coalgebra
+$T^c(s^{-1}\bar\cA)$ with deconcatenation coproduct. This ordered
+tensor coalgebra is the primitive bar object. Its coderivations are
+freely determined by their projection to $s^{-1}\bar\cA$, so the
+chiral product and the internal differential determine a unique bar
+coderivation. At genus~$0$ the Arnold relation and the Borcherds
+identity force this coderivation to square to zero. The symmetric Ran
+bar appears only after passing to coinvariants; the ordered kernel is
+recoverable only under an explicit PBW/Koszul acyclicity hypothesis.
+The geometric incarnation has two faces on algebraic curves: the
+ordered tensor coalgebra and its symmetric shadow.
 
 Locality of the chiral product forces a nilpotent coalgebra.
 The OPE has poles of finite order along the diagonal; the logarithmic
@@ -38,25 +38,27 @@ Arnold relation makes $d^2 = 0$ at genus~$0$.
 The primitive construction is the ordered bar
 $B^{\mathrm{ord}}(\cA) = T^c(s^{-1}\bar\cA)$: the cofree
 tensor coalgebra with deconcatenation coproduct, carrying the
-$R$-matrix, the KZ associator, and the full Yangian deformation.
-The factorization coalgebra $\barB(\cA) = \mathrm{Sym}^c(s^{-1}\bar\cA)$
-on the Ran space $\Ran(X)$ (the ind-scheme of nonempty finite subsets of~$X$)
-is its $\Sigma_n$-coinvariant quotient, the
-input to the universal Maurer--Cartan element
-$\Theta_\cA \in \MC(\gAmod)$ of the modular convolution algebra, governing the genus expansion,
-the adjunction (Theorem~A), and the shadow obstruction
-tower $\Theta_\cA^{\leq r}$.
+$R$-matrix, the KZ associator, and the Yangian deformation before
+averaging. The factorization coalgebra
+$\barB(\cA)=\mathrm{Sym}^c(s^{-1}\bar\cA)$ on the Ran space
+$\Ran(X)$ (the ind-scheme of nonempty finite subsets of~$X$)
+is its $\Sigma_n$-coinvariant quotient. It is the input to the
+modular Maurer--Cartan element
+$\Theta_\cA \in \MC(\gAmod)$, to Theorem~A, and to the shadow
+obstruction tower $\Theta_\cA^{\leq r}$.
 At genus~$g \geq 1$ the fiberwise differential acquires curvature
 $d^2_{\mathrm{fib}} = \kappa(\cA) \cdot \omega_g$ from the Hodge bundle
 (Chapter~\ref{chap:higher-genus}); on the Koszul locus, the cobar
-functor inverts the bar:
+functor inverts the symmetric bar:
 $\Omega \circ \barB \xrightarrow{\sim} \mathrm{id}$
-(Theorem~\ref{thm:bar-cobar-inversion-qi}).
+(Theorem~\ref{thm:bar-cobar-inversion-qi}). This is bar--cobar
+inversion. It is not Verdier duality, not the construction of
+$\cA^!$, and not a closed-sector bulk construction.
 The three-step bar differential
 $d = d_{\mathrm{internal}} + d_{\mathrm{residue}}
 + d_{\mathrm{de\,Rham}}$ that we built by hand for the Heisenberg
-algebra in Chapter~\ref{ch:heisenberg-frame} now receives its general
-formulation. The three components
+algebra in Chapter~\ref{ch:heisenberg-frame} has the following general
+form. The three components
 correspond to three types of geometry on the compactified
 configuration space $\overline{C}_n(X)$:
 \begin{center}
@@ -79,8 +81,8 @@ and proves $\dzero^2 = 0$; the key input is the Arnold relation
 Remark~\ref{rem:costello-gwilliam-factorization}).
 
 The three-component decomposition is not the structural endpoint.
-The full bar differential is the pullback of one universal flat
-connection along the KZ functor: at the climax of Volume~I one shows
+The full ordered bar differential is the pullback of one universal flat
+connection along the KZ functor:
 \[
  \dbar \;=\; \KZ^{*}(\nabla_{\Arn})
 \]
@@ -101,9 +103,8 @@ forces $\dbar^2 = 0$ \textup{(}Case~(ii) of
 Theorem~\ref{thm:bar-nilpotency-complete}\textup{)}; the classical
 Yang--Baxter equation on the family
 $\{r^{(ij)}(z_{ij}) = \KZ^{*}(\eta_{ij})\}$ is its $r$-matrix-valued
-incarnation. The chapter develops the bar differential in its
-three-component form because the form is computationally explicit;
-the climax statement records that the form is forced by a single
+incarnation. The three-component form is computationally explicit;
+Theorem~\ref{thm:climax-vol1-platonic} identifies it with a single
 universal pullback.
 
 \smallskip
@@ -120,11 +121,35 @@ Throughout this chapter: collision divisors are $D_{ij}$ with $i < j$ (indices i
 \label{conv:bar-coalgebra-identity}
 \index{bar construction!as bar coalgebra|textbf}
 \index{Koszul dual!coalgebra vs.\ algebra|textbf}
-The bar construction $\barB_X(\cA)$ of an augmented chiral
-algebra~$\cA$ is a dg factorization \emph{coalgebra} on
-$\operatorname{Ran}(X)$, the $\Sigma_n$-coinvariant quotient of the ordered bar $B^{\mathrm{ord}}_X(\cA) = T^c(s^{-1}\bar\cA)$. Throughout this chapter, the unqualified notation $\barB_X(\cA)$ refers to this symmetric factorization bar on unordered $\operatorname{Ran}(X)$; the ordered tensor coalgebra is always written $B^{\mathrm{ord}}_X(\cA)$. It is the bar coalgebra
-of~$\cA$: the bar complex computes the dual
-coalgebra
+The primitive bar construction of an augmented chiral algebra~$\cA$ is
+the ordered tensor coalgebra
+\[
+B^{\mathrm{ord}}_X(\cA)=T^c(s^{-1}\bar\cA),
+\qquad \bar\cA=\ker(\varepsilon),
+\]
+with deconcatenation coproduct
+\[
+\Delta_{\mathrm{dec}}(x_1\otimes\cdots\otimes x_n)
+=\sum_{i=0}^{n}
+(x_1\otimes\cdots\otimes x_i)\otimes
+(x_{i+1}\otimes\cdots\otimes x_n).
+\]
+The Ran-space bar is the coinvariant shadow
+\[
+\barB_X(\cA)=
+\bigl(B^{\mathrm{ord}}_X(\cA)\bigr)_{\Sigma_\bullet}
+\cong \mathrm{Sym}^c(s^{-1}\bar\cA),
+\]
+with coshuffle coproduct. The quotient
+$\pi_\Sigma\colon B^{\mathrm{ord}}_X(\cA)\twoheadrightarrow
+\barB_X(\cA)$ is the averaging/coinvariant map; it forgets the
+non-symmetric ordered kernel unless an additional acyclicity theorem
+is invoked. Throughout this chapter, the unqualified notation
+$\barB_X(\cA)$ refers to this symmetric factorization coalgebra on
+unordered $\operatorname{Ran}(X)$; the ordered tensor coalgebra is
+always written $B^{\mathrm{ord}}_X(\cA)$.
+
+The symmetric bar coalgebra computes the dual coalgebra
 \[
 \cA^i \;:=\; H^*(\barB_X(\cA)).
 \]
@@ -162,12 +187,12 @@ Verdier intertwining.
 To compare the ordered bar with Theorem~A, one must first pass to
 its $\Sigma_n$-coinvariant quotient $\barB_X(\cA)$.
 \end{remark}
-\begin{remark}[Volume~II notation]
-In Volume~II, the Koszul dual splits into two components:
+\begin{remark}[Chiral and line duals]
+Two duals must remain separated:
 $\cA^!_{\mathrm{ch}}$ (the chiral dual, arising from Verdier duality on
 the symmetric bar $\barB_X(\cA)$) and $\cA^!_{\mathrm{line}}$ (the line
 dual, arising from linear duality on the ordered
-bar $B^{\mathrm{ord}}_X(\cA)$). Throughout Volume~I, bare~$\cA^!$
+bar $B^{\mathrm{ord}}_X(\cA)$). Throughout this volume, bare~$\cA^!$
 denotes $\cA^!_{\mathrm{ch}}$ unless otherwise specified.
 \end{remark}
 The cobar--bar counit
@@ -243,13 +268,20 @@ $\mu \colon j_* j^*(\cA \boxtimes \cA) \to \Delta_!(\cA)$
 orders simultaneously. The \emph{chiral bracket}
 $\{a,b\} = a_{(0)}b$ extracts the simple-pole residue of~$\mu$;
 the \emph{invariant pairing} $\kappa(a,b) = a_{(1)}b$ extracts
-the double-pole residue. The bar differential
-$d_{\mathrm{res}}$ uses the full product~$\mu$
-(Proposition~\ref{prop:pole-decomposition}), which decomposes as
-$d_{\mathrm{res}} = d_{\mathrm{bracket}} + d_{\mathrm{curvature}}$:
-the bracket component uses $\{,\}$; the curvature component
-uses~$\kappa$. Neither component is individually a differential
-(\S\ref{sec:selection-principle}).
+the double-pole residue on quadratic current-type sectors.
+The bar differential $d_{\mathrm{res}}$ uses the full product~$\mu$,
+not only these two projections. Equivalently,
+\[
+d_{\mathrm{res}}=\sum_{m\ge0} d_{(m)},\qquad
+d_{(m)}\text{ applies the OPE mode }a_{(m)}b.
+\]
+Thus $d_{\mathrm{bracket}}=d_{(0)}$, while the scalar curvature
+projection is the relevant part of $d_{(1)}$ for affine and
+Heisenberg current algebras and of higher modes in Virasoro/W-type
+families. No individual pole-order summand is a differential in
+general; the Borcherds identity makes their signed sum square to zero
+(\S\ref{sec:selection-principle},
+Proposition~\ref{prop:pole-decomposition}).
 \end{convention}
 
 \section{The geometric bar complex}
@@ -315,14 +347,11 @@ is the codimension-$2$ cancellation that makes $d^2_{\mathrm{res}} = 0$
 a consequence of the face relations on~$\FM_k(X)$.
 Thus, at the level of operadic boundary strata of~$\FM_k(X)$,
 the bar complex realizes holomorphic factorization in the sense
-of Costello--Gwilliam~\cite{CG17}. Promotion to a BD factorization
-coalgebra on the Ran space $\Ran(X)$ is a further step: it
-requires a $\cD$-module structure compatible with chiral OPE, the
-homotopy-Koszul self-duality of~$\SCchtop$, and the
-pro-ambient / weight-completed bar on class-M algebras
-\textup{(}cf.\ Vol.~II,
-\texttt{theory/factorization\_swiss\_cheese.tex},
-Construction for the bar complex as factorization coalgebra\textup{)}.
+of Costello--Gwilliam~\cite{CG17}. This chapter uses only that
+single-colour ordered construction and its Ran coinvariants. Any
+open--closed or Swiss-cheese enhancement is a separate structure on
+the derived-centre pair, not proof input for the bar differential
+constructed here.
 \end{remark}
 
 \begin{example}[OPE as residue: the Heisenberg current]\label{ex:ope-to-residue}
@@ -353,7 +382,7 @@ is the form-level expression of $d^2 = 0$ on configuration spaces; it holds for 
 Conformal invariance, canonical residues, and differential nilpotence together force the logarithmic form uniquely.
 \end{remark}
 
-\subsection{Non-abelian Poincar\'e perspective on bar construction}
+\subsection{Non-abelian Poincar\'e realization of the bar complex}
 
 Factorization homology integrates a chiral algebra~$\cA$ over a space of configurations rather than over the space itself: each marked point contributes an insertion of~$\cA$, and the compactification~$\overline{C}_n(X)$ encodes how those insertions collide. Non-abelian Poincar\'e duality (NAP) identifies this integral with the bar complex.
 
@@ -417,8 +446,8 @@ $B_X^{\mathrm{ord}}(\cA) = T^c(s^{-1}\bar\cA)$. The ordered object is an
 $\Eone$ refinement that keeps the ordered collision data and the
 $R$-matrix; BD's Ran-space formalism is permutation-invariant from the
 start. Passing from $B_X^{\mathrm{ord}}(\cA)$ to $\barB_X(\cA)$ is the
-convention bridge from the ordered presentation used in this monograph
-to the symmetric factorization-coalgebra formalism of
+convention bridge from the ordered $\Eone$-presentation to the
+symmetric factorization-coalgebra formalism of
 \cite[Theorem~3.4.9, §§3.4.11--3.4.12]{BD04}.
 
 At genus~$0$, the differential
@@ -541,7 +570,7 @@ arises from modular and quantum sources whose nilpotent generators
 have finite-order exponentials.
 \end{remark}
 
-\subsection{Precise construction of the bar complex}
+\subsection{Construction of the geometric bar complex}
 
 \begin{definition}[Genus-graded geometric bar complex, preliminary form]
 \label{def:geom-bar-preview}
@@ -654,10 +683,12 @@ $|d| = +1$, verified component by component:
  increases some $|\phi_i|$ by $1$: net $n \mapsto n+1$.
 \item $d_{\mathrm{residue}}$ maps
  $\barB_{p,q} \to \barB_{p-1,q}$: bar degree
- decreases by $1$ (two factors merge via~$\mu$), form
- degree is unchanged (the Poincar\'e residue extracts a
- scalar, not a form), and the desuspension
- contribution changes by $-(p) - (-(p+1)) = +1$:
+ decreases by $1$ (two factors merge via~$\mu$). The
+ Poincar\'e residue removes the normal logarithmic form
+ $d\log(z_i-z_j)$, while the codimension-one Gysin shift in
+ $\Delta_!$ supplies the compensating cohomological degree; in this
+ totalization the $q$-index is therefore unchanged. The
+ desuspension contribution changes by $-(p) - (-(p+1)) = +1$:
  net $n \mapsto n+1$.
 \item $d_{\mathrm{form}}$ maps
  $\barB_{p,q} \to \barB_{p,q+1}$: form degree
@@ -665,6 +696,33 @@ $|d| = +1$, verified component by component:
  net $n \mapsto n+1$.
 \end{itemize}
 \noindent
+On the primitive ordered bar write
+\[
+[\phi_0|\cdots|\phi_p]
+:=s^{-1}\phi_0\otimes\cdots\otimes s^{-1}\phi_p.
+\]
+The ordered residue component is defined by first moving the two
+colliding desuspended factors to adjacent positions using the Koszul
+rule on the degrees $|\phi|-1$, then applying the desuspended chiral
+product and the Poincar\'e residue along the corresponding collision
+divisor. For adjacent factors this gives
+\[
+d_{\mathrm{residue}}
+[\phi_0|\cdots|\phi_p]
+=
+\sum_{i=0}^{p-1}
+(-1)^{\sum_{r<i}(|\phi_r|-1)+\epsilon_{\mathrm{or}}(D_{i,i+1})}
+[\phi_0|\cdots|\mu(\phi_i,\phi_{i+1})|\cdots|\phi_p],
+\]
+with the logarithmic form factor restricted by
+$\operatorname{Res}_{D_{i,i+1}}$. For a non-adjacent collision
+$D_{ij}$ the same formula is conjugated by the unique order-preserving
+shuffle that brings $i$ and $j$ together; the shuffle contributes only
+the Koszul sign on the desuspended factors and the boundary-orientation
+parity from Convention~\ref{conv:orientations-enhanced}. The symmetric
+bar differential is the $\Sigma_{p+1}$-coinvariant image of this
+ordered coderivation.
+
 The three components are:
 \[d = d_{\text{internal}} + d_{\text{residue}} + d_{\text{form}}\]
 
@@ -677,13 +735,25 @@ where $\epsilon_i$ is the Koszul sign:
 
 \emph{Component 2: Residue differential $d_{\text{residue}}$.}
 
-The main geometric operation extracts OPE coefficients via residues at collision divisors.
-\[d_{\text{residue}}\left(\phi_0 \otimes \cdots \otimes \phi_n \otimes \omega\right) = \sum_{0 \leq i < j \leq n} (-1)^{\sigma_{ij}} \text{Res}_{D_{ij}}\left[\mu(\phi_i, \phi_j) \otimes \text{(other factors)} \otimes \omega\right]\]
+The main geometric operation composes the Poincar\'e residue of the
+normal logarithmic form with the OPE-mode projections of the chiral
+product:
+\[
+d_{\text{residue}}\left(\phi_0 \otimes \cdots \otimes \phi_n \otimes \omega\right)
+=
+\sum_{0 \leq i < j \leq n}
+\sum_{m\ge0}
+(-1)^{\sigma_{ij}}\,
+\left((\phi_i)_{(m)}\phi_j\right)\otimes
+\text{(other factors)}
+\otimes
+\operatorname{Res}^{\mathrm{form}}_{D_{ij}}(\omega).
+\]
 where:
 \begin{itemize}
-\item $\mu: \mathcal{A} \otimes \mathcal{A} \to \mathcal{A}$ is the OPE (chiral product)
+\item $\mu: \mathcal{A} \otimes \mathcal{A} \to \mathcal{A}$ is the OPE (chiral product), decomposed into modes $( - )_{(m)}( - )$
 \item $D_{ij} \subset \overline{C}_{n+1}(\Sigma_g)$ is the divisor where $z_i = z_j$
-\item $\text{Res}_{D_{ij}}$ is the residue along $D_{ij}$ (see \S\ref{sec:residue-calculus} below)
+\item $\operatorname{Res}^{\mathrm{form}}_{D_{ij}}$ is the Poincar\'e residue of the logarithmic form factor along $D_{ij}$ (see \S\ref{sec:residue-calculus} below)
 \item $\sigma_{ij}$ is a sign determined by:
  \begin{enumerate}
  \item Position of $i,j$ in the tensor product (Koszul sign)
@@ -692,11 +762,20 @@ where:
  \end{enumerate}
 \end{itemize}
 
-The explicit formula for the sign is:
-\[\sigma_{ij} = \left(\sum_{k=0}^{i-1} |\phi_k|\right) + \left(\sum_{k=i+1}^{j-1} |\phi_k|\right) + |\phi_i| + \epsilon_{\text{geom}}(D_{ij})\]
-where $\epsilon_{\text{geom}}(D_{ij}) \in \{0,1\}$ is the parity of the
-boundary orientation of the collision divisor~$D_{ij}$; the full sign
-package is fixed in Convention~\ref{conv:orientations-enhanced}.
+Equivalently,
+\[
+\sigma_{ij}
+\equiv
+\epsilon_{\mathrm{desusp}}(i,j)
++\epsilon_{\mathrm{or}}(D_{ij})
+\pmod 2,
+\]
+where $\epsilon_{\mathrm{desusp}}(i,j)$ is the Koszul parity of the
+shuffle on the desuspended factors $s^{-1}\phi_k$ and
+$\epsilon_{\mathrm{or}}(D_{ij})$ is the parity of the boundary
+orientation of the collision divisor~$D_{ij}$. This convention is the
+one used in the deconcatenation coderivation and descends to the
+coshuffle convention after taking coinvariants.
 
 \emph{Component 3: Form differential $d_{\text{form}}$.}
 
@@ -705,6 +784,26 @@ Apply the de Rham differential to the form component:
 where $d_{\text{dR}}: \Omega^n \to \Omega^{n+1}$ is the de Rham differential on forms.
 
 \end{definition}
+
+\begin{convention}[Length filtration]
+\label{conv:bar-length-filtration}
+\index{bar complex!length filtration}
+The ordered bar carries the decreasing complete word-length filtration
+\[
+F^rB^{\mathrm{ord}}_X(\cA)
+=\prod_{n\ge r}(s^{-1}\bar\cA)^{\otimes n}.
+\]
+The deconcatenation coproduct satisfies
+$\Delta_{\mathrm{dec}}F^r\subset
+\sum_{a+b\ge r}F^a\otimes F^b$, the internal and form differentials
+preserve~$F^r$, and the residue differential sends
+$F^r$ to~$F^{r-1}$. Hence the completed ordered convolution algebra
+$\prod_{n\ge0}\Hom((s^{-1}\bar\cA)^{\otimes n},\cA)$ is complete for
+the induced arity filtration, and every Maurer--Cartan equation has a
+finite arity-$N$ truncation. The symmetric Ran bar inherits the quotient
+filtration through $\pi_\Sigma$; it does not remember the filtered
+kernel of $\pi_\Sigma$.
+\end{convention}
 
 \begin{lemma}[$d_{\mathrm{form}}$ preserves
 \ClaimStatusProvedHere
@@ -773,7 +872,8 @@ where $\nabla_{\mathrm{Arnold}} = d - \sum_{i<j} t_{ij}\,\eta_{ij}$ is
 Arnold's universal flat connection on the trivial
 $U(\mathfrak{t}_n)$-bundle over $\Conf_n^{\mathrm{ord}}(X)$
 \textup{(}Definition in
-\S\ref{ssec:climax-platonic-arnold} of the climax chapter\textup{)}, and
+\S\ref{ssec:climax-platonic-arnold} of
+Chapter~\ref{chap:climax-platonic}\textup{)}, and
 the KZ functor of
 Construction~\ref{constr:kz-functor-platonic} sends the universal
 infinitesimal braid generator $t_{ij}$ to the OPE-derived
@@ -797,11 +897,11 @@ the codimension-two compatibility that forces $d^2 = 0$
 \textup{(}Case~(ii) of Theorem~\ref{thm:bar-nilpotency-complete}\textup{)};
 the classical Yang--Baxter equation on the family
 $\{r^{(ij)}(z_{ij}) = \KZ^{*}(\eta_{ij})\}$ is its $r$-matrix-valued
-incarnation. Thus the per-family bar differentials are not independent
-data: every bar differential in this monograph is the pullback of one
-universal flat connection along the unique structure morphism induced
-by $\cA \to \End(B^{\mathrm{ord}}(\cA))$. The unification is
-Theorem~\ref{thm:climax-vol1-platonic}.
+incarnation. The per-family bar differentials are not independent data: every
+bar differential is the pullback of the single universal flat
+connection $\nabla_{\mathrm{Arnold}}$ along the structure morphism
+induced by $\cA \to \End(B^{\mathrm{ord}}(\cA))$. The unification
+is Theorem~\ref{thm:climax-vol1-platonic}.
 \end{remark}
 
 \begin{remark}[The bar coalgebra over $(\chirAss)^!$, not over
@@ -823,8 +923,9 @@ the closed-color piece of the Swiss-cheese structure'' is false; the
 bar holds the $E_1$ data, the derived centre holds the
 $\mathrm{SC}^{\mathrm{ch,top}}$ data
 (\S\ref{ssec:climax-platonic-equation-g2} of
-Chapter~\ref{chap:climax-platonic} for the $E_1$ pullback identity;
-the universal Swiss-cheese assembly is treated in Vol~II).
+Chapter~\ref{chap:climax-platonic} for the $E_1$ pullback identity).
+No assertion in this chapter uses an open--closed lift to prove a
+property of $B^{\mathrm{ord}}(\cA)$ or $\barB_X(\cA)$.
 \end{remark}
 
 \begin{remark}[Curved $A_\infty$ and the genus-$g$ fiberwise curvature]
@@ -841,7 +942,7 @@ $\mu_1^2 = 0$. The two nilpotence statements
 do not conflict: the genus-$0$ bar differential and the curved
 $A_\infty$ differential live on different sides of the bar
 construction. The genus-$g$ fiberwise curvature reads off the
-$\kappa$-conductor of $\cA$, which by the climax identity~(G3)
+$\kappa$-conductor of $\cA$, which by identity~\textup{(G3)}
 $\kappa(\cA) = -\,c_{\mathrm{ghost}}(\BRST(\cA))$ of
 Chapter~\ref{chap:universal-conductor} is independent of the choice of
 quasi-free BRST resolution.
@@ -1148,7 +1249,12 @@ sum~\eqref{eq:case-ii-cyclic-sum} vanishes for every triple
 $\{i,j,\ell\}$ and every choice of sections and forms.
 Therefore $d_2^2 = 0$ on all Case~(ii) contributions.
 
-\emph{Case (iii): Same pair} ($\{i,j\} = \{k,\ell\}$). Since $\text{Res}_{D_{ij}}$ extracts a simple pole along $D_{ij}$, applying it once produces a section regular along $D_{ij}$, and a second application yields zero: $\text{Res}_{D_{ij}}^2 = 0$.
+\emph{Case (iii): Same pair} ($\{i,j\} = \{k,\ell\}$). The
+Poincar\'e residue removes the unique normal logarithmic factor
+$d\log(z_i-z_j)$ from the form part and restricts to the divisor
+$D_{ij}$. After that restriction there is no second normal direction
+for the same divisor, hence
+$\text{Res}_{D_{ij}}^2 = 0$.
 
 \emph{Mixed terms.} The anticommutator $\{d_1, d_2\} = 0$
 follows because the chiral product~$\mu$ is a morphism
@@ -1180,7 +1286,7 @@ graded associative algebra), see Verification~\ref{ver:d2-degree3} and
 Proposition~\ref{prop:master-sign} in Appendix~\ref{app:signs}.
 \end{remark}
 
-\begin{remark}[Synthesis]\label{rem:d-squared-synthesis}\label{rem:geometric-miracle}
+\begin{remark}[Boundary mechanism]\label{rem:d-squared-synthesis}\label{rem:geometric-miracle}
 The three mechanisms entering the proof of $d^2 = 0$,
 the Borcherds identity (algebra), Stokes' theorem (topology), and
 residue calculus (analysis), all arise from the boundary
@@ -1196,66 +1302,135 @@ see \S\ref{sec:selection-principle} for the selection principle).
 \index{bar differential!pole decomposition}
 \index{bar differential!bracket component}
 \index{bar differential!curvature component}
-The residue differential $d_{\mathrm{res}}$ decomposes according to OPE pole order:
+The residue differential decomposes by OPE mode:
 \begin{equation}\label{eq:pole-decomposition}
-d_{\mathrm{res}} = d_{\mathrm{bracket}} + d_{\mathrm{curvature}}
+d_{\mathrm{res}}
+=
+\sum_{m\ge0} d_{(m)},\qquad
+d_{(m)}\text{ applies }a_{(m)}b.
 \end{equation}
-where $d_{\mathrm{bracket}}$ extracts residues from simple poles (Lie bracket terms $a_{(0)}b$) and $d_{\mathrm{curvature}}$ extracts residues from double poles (metric/level terms $\kappa(a,b)|0\rangle$).
+The summand $d_{(0)}=:d_{\mathrm{bracket}}$ is the simple-pole
+bracket part. On quadratic current-type sectors, the only
+non-bracket pole mode is the scalar double-pole pairing
+$a_{(1)}b=\kappa(a,b)|0\rangle$; in that restricted lane we write
+$d_{\mathrm{curvature}}:=d_{(1)}$ and
+$d_{\mathrm{res}}=d_{\mathrm{bracket}}+d_{\mathrm{curvature}}$.
+For Virasoro, W-algebras, and other higher-pole chiral algebras, the
+terms $d_{(m)}$ with $m\ge2$ are part of the residue differential and
+must not be discarded.
 
 This decomposition has the following properties:
 \begin{enumerate}
-\item $d_{\mathrm{bracket}}^2 \neq 0$ in general: the obstruction is the Borcherds associator, which involves iterated residues mixing both pole orders.
-\item $d_{\mathrm{curvature}}^2 = 0$: double-pole residues produce scalars (vacuum vectors), and a second residue applied to a scalar vanishes.
-\item $d_{\mathrm{res}}^2 = d_{\mathrm{bracket}}^2 + \{d_{\mathrm{bracket}}, d_{\mathrm{curvature}}\} + d_{\mathrm{curvature}}^2 = 0$, so the cross-term $\{d_{\mathrm{bracket}}, d_{\mathrm{curvature}}\}$ exactly compensates the failure of $d_{\mathrm{bracket}}^2 = 0$.
+\item The full signed sum satisfies $d_{\mathrm{res}}^2=0$ by the
+Borcherds identity together with the Arnold boundary relation.
+\item A single mode summand need not square to zero. In particular,
+the simple-pole Jacobi identity controls only the pure
+$d_{(0)}d_{(0)}$ part on the affine Lie screen; it does not cancel
+mixed pole-order terms in a general chiral algebra.
+\item On a quadratic current-type sector with scalar curvature
+$d_{(1)}$, the scalarity of $a_{(1)}b$ gives
+$d_{\mathrm{curvature}}^2=0$ and
+\[
+d_{\mathrm{bracket}}^2
+=-\{d_{\mathrm{bracket}},d_{\mathrm{curvature}}\}.
+\]
 \end{enumerate}
 
-In particular, the Lie-bracket Jacobi identity (which would give $d_{\mathrm{bracket}}^2 = 0$ for a Lie algebra) is \emph{insufficient} for nilpotency of the chiral bar differential. The full Borcherds identity (associativity of the chiral product $\mu$, involving all pole orders simultaneously) is required.
+The Lie-bracket Jacobi identity is therefore insufficient for
+nilpotency of the chiral bar differential. The full Borcherds identity
+for the chiral product~$\mu$, involving all pole orders
+simultaneously, is required.
 \end{proposition}
 
 \begin{proof}
-For a chiral algebra $\cA$ with OPE $a(z)b(w) \sim \sum_{n \geq 0} a_{(n)}b \cdot (z-w)^{-n-1}$, the residue differential at the divisor $D_{ij}$ extracts:
+For a chiral algebra $\cA$ with
 \[
-\mathrm{Res}_{D_{ij}}[\mu(\phi_i, \phi_j) \otimes \omega]
- = \mathrm{Res}_{\epsilon=0}\Bigl[\sum_{n \geq 0}
- \frac{(\phi_i)_{(n)}\phi_j}{\epsilon^{n+1}} \otimes \omega\Bigr]
+a(z)b(w)\sim\sum_{m\ge0} a_{(m)}b\,(z-w)^{-m-1},
 \]
-where $\epsilon = z_i - z_j$ is the local coordinate normal to $D_{ij}$.
-
-The simple-pole contribution ($n = 0$) gives:
+let $\operatorname{pr}_m\mu$ denote the $m$-th OPE-mode projection of
+the chiral product. If the logarithmic form factor is locally
+$d\log(z_i-z_j)\wedge\alpha+\beta$, then
 \[
-d_{\mathrm{bracket}}(\cdots) = \sum_{i < j} (-1)^{\sigma_{ij}}
- \mathrm{Res}_{\epsilon=0}\Bigl[\frac{(\phi_i)_{(0)}\phi_j}{\epsilon}
- \otimes \omega\Bigr],
+\operatorname{Res}_{D_{ij}}^{\mathrm{form}}(\omega)=\alpha|_{D_{ij}}.
 \]
-which extracts the Lie bracket $[\phi_i, \phi_j] = (\phi_i)_{(0)}\phi_j$ via the simple-pole residue of $\omega$.
-
-The double-pole contribution ($n = 1$) gives:
+The collision differential is the sum of the maps
 \[
-d_{\mathrm{curvature}}(\cdots) = \sum_{i < j} (-1)^{\sigma_{ij}}
- \mathrm{Res}_{\epsilon=0}\Bigl[\frac{(\phi_i)_{(1)}\phi_j}{\epsilon^2}
- \otimes \omega\Bigr],
+d_{(m)}
+(\phi_0\otimes\cdots\otimes\phi_p\otimes\omega)
+=
+\sum_{i<j}(-1)^{\sigma_{ij}}\,
+(\phi_i)_{(m)}\phi_j\otimes
+\widehat{\phi_i,\phi_j}\otimes
+\operatorname{Res}_{D_{ij}}^{\mathrm{form}}(\omega),
 \]
-which extracts the invariant bilinear form $(\phi_i)_{(1)}\phi_j = \kappa(\phi_i, \phi_j)|0\rangle$. For Kac--Moody algebras, this is the level: $(J^a)_{(1)}J^b = k\,\delta^{ab}|0\rangle$.
+with the omitted factors ordered by Convention~\ref{conv:set-notation}.
+The Poincar\'e residue is applied only to the logarithmic form factor;
+the OPE pole order is selected by $\operatorname{pr}_m\mu$. Thus no
+term ever takes a residue of
+$(z_i-z_j)^{-m-1}d\log(z_i-z_j)$.
 
-\emph{Property~(2).} Since $d_{\mathrm{curvature}}$ replaces a pair $(\phi_i, \phi_j)$ by a scalar multiple of the vacuum $|0\rangle$, the output of $d_{\mathrm{curvature}}$ at position $i$ is proportional to $|0\rangle$. A subsequent application of $d_{\mathrm{curvature}}$ (or $d_{\mathrm{bracket}}$) involving this vacuum position produces $|0\rangle_{(n)}\phi_k = 0$ for $n \geq 0$, hence $d_{\mathrm{curvature}}^2 = 0$.
+For $m=0$ this is the bracket component
+$d_{\mathrm{bracket}}$, applying
+$\phi_i{}_{(0)}\phi_j$. For an affine current algebra,
+$m=1$ gives the scalar level term
+$(J^a)_{(1)}J^b=k\,\delta^{ab}|0\rangle$; for the Heisenberg algebra
+it gives $J_{(1)}J=k$. These are the current-type curvature terms.
+For Virasoro and W-type algebras, higher $m$ also occur and remain in
+the sum~\eqref{eq:pole-decomposition}.
 
-\emph{Property~(1).} In the double sum $d_{\mathrm{bracket}}^2$, the one-overlap terms (Case~(ii) of Theorem~\ref{thm:bar-nilpotency-complete}) produce iterated residues $\mathrm{Res}_{D_{j\ell}}\mathrm{Res}_{D_{ij}}[(\phi_i)_{(0)}(\phi_j)_{(0)}\phi_\ell \otimes \omega]$. The Borcherds identity for the chiral product asserts:
+The square of the total residue differential is the one-overlap part
+of Theorem~\ref{thm:bar-nilpotency-complete}: at a triple collision,
+the three iterated products
+\[
+\mu(\mu(\phi_i,\phi_j),\phi_\ell),\qquad
+\mu(\phi_i,\mu(\phi_j,\phi_\ell)),\qquad
+\mu(\mu(\phi_i,\phi_\ell),\phi_j)
+\]
+are weighted by the three logarithmic two-forms in Arnold's relation.
+The Borcherds identity cancels the OPE-mode sum carried by these
+three products; Arnold cancels the configuration-form coefficients.
+Hence the full $d_{\mathrm{res}}$ squares to zero.
+
+\emph{Quadratic current lane.}
+If the only non-bracket pole mode is a scalar $d_{(1)}$, then applying
+$d_{(1)}$ replaces the colliding pair by a vacuum scalar. A second
+positive mode involving that output vanishes because
+$\mathbf{1}_{(m)}a=0$ for $m\ge0$. Thus
+$d_{\mathrm{curvature}}^2=0$ in this lane. Expanding the total identity
+$d_{\mathrm{res}}^2=0$ gives
 \begin{equation}\label{eq:borcherds-pole-mix}
-\sum_{\text{cyclic}} \mathrm{Res}_{D_{j\ell}} \circ \mathrm{Res}_{D_{ij}}
- \bigl[\mu(\mu(\phi_i, \phi_j), \phi_\ell) \otimes \omega\bigr] = 0.
+d_{\mathrm{bracket}}^2
++\{d_{\mathrm{bracket}},d_{\mathrm{curvature}}\}
++d_{\mathrm{curvature}}^2=0,
 \end{equation}
-Decomposing $\mu$ by pole order, the bracket--bracket contributions $(\phi_i)_{(0)}((\phi_j)_{(0)}\phi_\ell)$ give the Jacobi identity, but there are additional bracket--curvature cross-terms $(\phi_i)_{(0)}((\phi_j)_{(1)}\phi_\ell \cdot |0\rangle)$ and curvature--bracket terms that arise from the Taylor expansion of the OPE near the triple collision locus $D_{ij\ell}$. The Jacobi identity cancels only the pure bracket terms; the cross-terms remain, giving $d_{\mathrm{bracket}}^2 \neq 0$.
-
-\emph{Property~(3).} The full Borcherds identity~\eqref{eq:borcherds-pole-mix} cancels \emph{all} iterated residue terms simultaneously, regardless of pole decomposition. Since $d_{\mathrm{res}} = d_{\mathrm{bracket}} + d_{\mathrm{curvature}}$, the identity $d_{\mathrm{res}}^2 = 0$ (Theorem~\ref{thm:bar-nilpotency-complete}) together with $d_{\mathrm{curvature}}^2 = 0$ gives $d_{\mathrm{bracket}}^2 = -\{d_{\mathrm{bracket}}, d_{\mathrm{curvature}}\}$.
+and the scalarity just proved gives the displayed compensation formula.
 \end{proof}
 
 \begin{remark}[Bicomplex obstruction]\label{rem:bicomplex-obstruction}
 \index{bar complex!bicomplex structure}
-Proposition~\ref{prop:pole-decomposition} shows that the pair $(d_{\mathrm{bracket}}, d_{\mathrm{curvature}})$ does \emph{not} form a bicomplex (which would require $d_{\mathrm{bracket}}^2 = d_{\mathrm{curvature}}^2 = \{d_{\mathrm{bracket}}, d_{\mathrm{curvature}}\} = 0$). Instead, $d_{\mathrm{bracket}}^2 = -\{d_{\mathrm{bracket}}, d_{\mathrm{curvature}}\} \neq 0$: the curvature (level/central charge) is the \emph{obstruction} to the Lie-bracket differential being nilpotent.
+Proposition~\ref{prop:pole-decomposition} shows that the pole-order
+summands of $d_{\mathrm{res}}=\sum_{m\ge0}d_{(m)}$ do \emph{not} form a
+bicomplex. On the quadratic current lane this reduces to the familiar
+two-term obstruction:
+\[
+d_{\mathrm{bracket}}^2
+=-\{d_{\mathrm{bracket}},d_{\mathrm{curvature}}\},
+\]
+with $d_{\mathrm{curvature}}^2=0$ only because the current-type
+curvature is scalar. For Virasoro and W-type algebras the higher-pole
+summands $d_{(m)}$, $m\ge2$, are part of the same Borcherds
+cancellation and cannot be suppressed.
 
 For \emph{free fields} (Heisenberg, free fermion), the OPE has only a double pole ($a_{(0)}b = 0$), so $d_{\mathrm{bracket}} = 0$ and $d_{\mathrm{res}} = d_{\mathrm{curvature}}$, which squares to zero automatically. This explains the simpler algebraic structure of free-field bar complexes (Corollary~\ref{cor:subexp-free-field}).
 
-For Kac--Moody algebras, the failure of $d_{\mathrm{bracket}}^2 = 0$ is controlled by the level-$k$ double-pole OPE coefficient $k \cdot (\,,\,)$, which gives rise to the curved $A_\infty$ curvature element $m_0$ with scalar projection $\kappa(\widehat{\mathfrak{g}}_k) = \dim(\mathfrak{g})\cdot(k+h^\vee)/(2h^\vee)$ (Chapter~\ref{chap:deformation-theory}).
+For Kac--Moody algebras, the mixed term is controlled by the level-$k$
+double-pole OPE coefficient $k \cdot (\,,\,)$, whose scalar projection
+is the conductor
+\[
+\kappa(\widehat{\mathfrak{g}}_k)
+= \dim(\mathfrak{g})\cdot(k+h^\vee)/(2h^\vee)
+\]
+(Chapter~\ref{chap:deformation-theory}).
 \end{remark}
 
 \begin{corollary}[Functoriality; \ClaimStatusConditional]\label{cor:bar-functorial}
@@ -1369,15 +1544,20 @@ d_{\text{dR}}(\eta_{12} \wedge \eta_{23}) &= d(\eta_{12}) \wedge \eta_{23} - \et
 \[\int_{\overline{C}_3} d_{\text{dR}}(\omega) = 0 = \int_{D_{12}} \text{Res}_{D_{12}}(\omega) + \int_{D_{23}} \text{Res}_{D_{23}}(\omega) + \int_{D_{13}} \text{Res}_{D_{13}}(\omega)\]
 
 \emph{Residues.}
-- $\text{Res}_{D_{12}}(\eta_{12} \wedge \eta_{23}) = \eta_{23}|_{D_{12}}$
-- $\text{Res}_{D_{23}}(\eta_{12} \wedge \eta_{23}) = -\eta_{12}|_{D_{23}}$ (sign from wedge order)
-- $\text{Res}_{D_{13}}(\eta_{12} \wedge \eta_{23}) = 0$ (no pole along $D_{13}$)
+\begin{itemize}
+\item $\text{Res}_{D_{12}}(\eta_{12} \wedge \eta_{23}) = \eta_{23}|_{D_{12}}$.
+\item $\text{Res}_{D_{23}}(\eta_{12} \wedge \eta_{23}) = -\eta_{12}|_{D_{23}}$ (sign from wedge order).
+\item $\text{Res}_{D_{13}}(\eta_{12} \wedge \eta_{23}) = 0$ (no pole along $D_{13}$).
+\end{itemize}
 
 Therefore
 \[0 = \int_{D_{12}} \eta_{23} - \int_{D_{23}} \eta_{12} + 0\]
 
-This is the \emph{Arnold relation}:
-\[\eta_{12} \wedge \eta_{23} \text{ integrates to zero around boundaries}\]
+This is the boundary-shadow of the Arnold relation: the two displayed
+residues are the restrictions of the three-term identity
+$\eta_{12}\wedge\eta_{23}
++\eta_{23}\wedge\eta_{31}
++\eta_{31}\wedge\eta_{12}=0$ to the corresponding faces.
 \end{example}
 
 \begin{corollary}[Residues anticommute at corners; \ClaimStatusProvedHere]\label{cor:residues-anticommute}
@@ -1434,8 +1614,15 @@ For distinct indices $i, j, k \in \{1, \ldots, n\}$, the logarithmic 1-forms $\e
 \emph{Formulation 2 (Orlik--Solomon).}
 The algebra $H^*(C_n(\mathbb{C}); \mathbb{Q})$ is the quotient of the exterior algebra $\bigwedge\langle \eta_{ij} \mid 1 \le i < j \le n \rangle$ by the ideal generated by the three-term Arnold relations of Formulation~1. All higher-degree relations in the Orlik--Solomon algebra follow from these by repeated application; there is no independent ``general Arnold relation'' beyond the three-term version.
 
-\emph{Formulation 3 (cohomological).}
-The cohomology ring $H^*(\overline{C}_n(X); \mathbb{Q})$ is generated by classes $[\eta_{ij}]$ subject to the Arnold relations.
+\emph{Formulation 3 (logarithmic FM model).}
+On the Fulton--MacPherson compactification, the logarithmic de~Rham
+complex $\Omega^\bullet_{\overline{C}_n(X)}(\log D)$ restricts to the
+open configuration space $C_n(X)$ and computes its cohomology. On
+the type-$A$ affine chart $X=\mathbb{A}^1$ this is the
+Orlik--Solomon algebra of Formulation~2. For a general curve~$X$,
+additional classes pulled from $H^\bullet(X)$ may occur; the Arnold
+three-term relation is the universal diagonal-collision relation,
+not a presentation of the whole compactified cohomology ring.
 \end{theorem}
 
 \begin{proof}
@@ -1443,12 +1630,25 @@ See Theorem~\ref{thm:arnold-relations} for the partial-fractions proof.
 The topological, combinatorial, and operadic perspectives are developed in \S\ref{sec:arnold-three-proofs-comprehensive}.
 \end{proof}
 
-\begin{remark}[Arnold relations = Jacobi identity]\label{rem:arnold-jacobi-geometric}
-The geometric content of $\dzero^2 = 0$ at degree~$3$ is precisely the Jacobi identity: the three boundary strata of $\overline{C}_4(\mathbb{P}^1)$ that contribute to $\dzero^2$ correspond to the three terms of the Jacobi identity for the chiral bracket. Concretely, the Arnold relation $\eta_{12} \wedge \eta_{23} + \eta_{23} \wedge \eta_{31} + \eta_{31} \wedge \eta_{12} = 0$ forces
+\begin{remark}[Arnold relation and the Jacobi screen]\label{rem:arnold-jacobi-geometric}
+On the simple-pole affine screen, the geometric content of
+$\dzero^2=0$ at degree~$3$ is the Jacobi identity: the three boundary
+strata of $\overline{C}_4(\mathbb{P}^1)$ that contribute to
+$\dzero^2$ carry the three terms of the chiral bracket Jacobi sum.
+Concretely, the Arnold relation
+$\eta_{12} \wedge \eta_{23} + \eta_{23} \wedge \eta_{31}
++ \eta_{31} \wedge \eta_{12} = 0$ supplies the geometric coefficient of
 \[
 {f^{ab}}_d\,{f^{dc}}_e + {f^{bc}}_d\,{f^{da}}_e + {f^{ca}}_d\,{f^{db}}_e = 0,
 \]
-which is the Jacobi identity for the structure constants extracted by residues. The implication is bidirectional: the Arnold relations \emph{are} the Jacobi identity via the residue dictionary. See Computation~\ref{comp:geom-alg-comparison-deg3} for the complete term-by-term verification in $\widehat{\mathfrak{sl}}_{2,k}$ and Theorem~\ref{thm:arnold-jacobi} for the general CFT formulation.
+the Jacobi identity for the simple-pole structure constants. This is
+the content of Theorem~\ref{thm:arnold-jacobi}: Arnold is equivalent
+to Jacobi after projecting the chiral product to its simple-pole
+bracket. For the full bar differential, higher OPE modes remain and
+the required algebraic identity is Borcherds, as in
+Theorem~\ref{thm:bar-nilpotency-complete}. See
+Computation~\ref{comp:geom-alg-comparison-deg3} for the
+term-by-term affine $\widehat{\mathfrak{sl}}_{2,k}$ verification.
 \end{remark}
 
 \begin{corollary}[Cohomology of configuration spaces {\cite{Arnold69}}; \ClaimStatusProvedElsewhere]\label{cor:cohomology-config}
@@ -1458,7 +1658,9 @@ where $\mathcal{I}_{\text{Arnold}}$ is the ideal generated by Arnold relations.
 \end{corollary}
 
 \begin{proof}
-By Arnol'd~\cite{Arnold69}, the 1-forms $\eta_{ij} = d\log(z_i - z_j)$ generate $H^*(C_n(\mathbb{C}); \mathbb{Q})$ and satisfy the Arnold relations $\eta_{ij} \wedge \eta_{jk} + \eta_{jk} \wedge \eta_{ki} + \eta_{ki} \wedge \eta_{ij} = 0$. That these generate \emph{all} relations follows from Cohen's computation of $H^*(C_n(\mathbb{C}))$ as the cohomology of the Arnol'd--Brieskorn braid arrangement complement~\cite{Coh76}. See also Appendix~\ref{app:arnold-relations} for the three proofs of the Arnold relations used in this monograph.
+By Arnol'd~\cite{Arnold69}, the 1-forms $\eta_{ij} = d\log(z_i - z_j)$ generate $H^*(C_n(\mathbb{C}); \mathbb{Q})$ and satisfy the Arnold relations $\eta_{ij} \wedge \eta_{jk} + \eta_{jk} \wedge \eta_{ki} + \eta_{ki} \wedge \eta_{ij} = 0$. That these generate \emph{all} relations follows from Cohen's computation of $H^*(C_n(\mathbb{C}))$ as the cohomology of the Arnol'd--Brieskorn braid arrangement complement~\cite{Coh76}. Appendix~\ref{app:arnold-relations} records the three proofs of the
+Arnold relations (topological, combinatorial, operadic) used
+elsewhere in the manuscript.
 \end{proof}
 
 \subsection{Low-degree explicit computations}
@@ -1523,20 +1725,23 @@ If the OPE is:
 then the bar differential acts by extracting the full chiral
 product~$\mu$ (Convention~\ref{conv:product-vs-bracket}):
 \[d_{\mathrm{res}}(\phi_i \otimes \phi_j \otimes \eta_{12})
- = \mu(\phi_i, \phi_j)
- = \sum_{n \geq 0} (\phi_i)_{(n)}\phi_j.\]
-The decomposition $\mu = d_{\mathrm{bracket}} + d_{\mathrm{curvature}}$
-(Proposition~\ref{prop:pole-decomposition}) separates the contributions:
+ = \sum_{m \geq 0} (\phi_i)_{(m)}\phi_j.\]
+The mode decomposition of Proposition~\ref{prop:pole-decomposition}
+separates the contributions:
 \begin{itemize}
-\item $\Delta_k = 1$ (simple pole): the bracket component $d_{\mathrm{bracket}}$ extracts $(\phi_i)_{(0)}\phi_j = C_{ij}^k \phi_k$
-\item $\Delta_k = 2$ (double pole): the curvature component $d_{\mathrm{curvature}}$ extracts the invariant pairing $(\phi_i)_{(1)}\phi_j$
-\item $\Delta_k \geq 3$ (higher pole): higher modes contribute to secondary operations
-\item $\Delta_k = 0$ (regular): no pole, zero contribution
+\item pole order $1$: $d_{(0)}=d_{\mathrm{bracket}}$ applies
+ $(\phi_i)_{(0)}\phi_j$;
+\item pole order $2$: $d_{(1)}$ applies
+ $(\phi_i)_{(1)}\phi_j$, the scalar curvature pairing in
+ current-type examples;
+\item pole order $m+1\ge3$: $d_{(m)}$ records the higher OPE modes;
+\item regular terms give no bar-residue contribution.
 \end{itemize}
 The OPE pole is not multiplied by the propagator
 $\eta_{12}=d\epsilon/\epsilon$ to form a second residue. The
-logarithmic form records the bar degree; the residue is the OPE
-coefficient itself.
+logarithmic form records the collision direction; the Poincar\'e
+residue removes that form factor, while the chiral product supplies
+the OPE coefficient.
 \end{computation}
 
 \begin{proof}
@@ -1556,8 +1761,9 @@ divisor \(D_{12}\), so applying it to a generator tensor produces the
 chiral product \(\mu(\phi_i,\phi_j)\), which is exactly the displayed
 formula for \(d_{\mathrm{res}}\). The final warning is the usual
 separation between the OPE pole and the logarithmic propagator:
-\(\eta_{12}\) supplies the bar-degree form, while the residue acts on the
-singular part of \(\mu(\phi_i,\phi_j)\).
+\(\eta_{12}\) supplies the normal logarithmic form, the Poincar\'e
+residue removes that form, and the singular part of
+\(\mu(\phi_i,\phi_j)\) is selected by the OPE-mode projection.
 \end{proof}
 
 \begin{remark}[Iterated residues as $A_\infty$ operations]
@@ -1694,10 +1900,10 @@ $d_{\mathrm{bar}}^2=0$.
 \begin{example}[Unreduced bar complex in low degrees: orientation only]\label{ex:bar-unreduced-low-degrees}
 The display in this example uses the full algebra~$\mathcal{A}$ rather
 than the augmentation ideal~$\bar{\mathcal{A}}$. It is the
-\emph{unreduced} bar complex. The canonical bar complex used in the
-theorems below is the \emph{reduced} bar
-$\bar{B}(\mathcal{A}) = T^c(s^{-1}\bar{\mathcal{A}})$ built on the
-augmentation ideal.
+\emph{unreduced} bar complex. The canonical theorem-level complex is
+the reduced ordered bar
+$B^{\mathrm{ord}}(\mathcal{A}) = T^c(s^{-1}\bar{\mathcal{A}})$,
+and its symmetric Ran quotient is $\barB_X(\mathcal{A})$.
 
 In the unreduced presentation:
 \begin{align}
@@ -1706,12 +1912,27 @@ In the unreduced presentation:
 \bar{B}^2_{\mathrm{unred}}(\mathcal{A}) &= \Gamma(\overline{C}_3(X), \mathcal{A}^{\boxtimes 3} \otimes \Omega^2_{\log}).
 \end{align}
 
-Bar degree~$n$ uses sections over $C_{n+1}(X)$; the bar differential lowers bar degree. The \emph{reduced} bar complex, used from \S\ref{subsec:bar-functoriality} onward and throughout the monograph, replaces $\mathcal{A}$ by its augmentation ideal $\bar{\mathcal{A}} = \ker(\varepsilon \colon \mathcal{A} \to \omega_X)$ and starts at $\bar{B}^0 = \mathbb{C}$. Augmentation separates generators from scalars: the map~$\varepsilon$ extracts the component of each operator proportional to the identity (the vacuum expectation value), and the reduced complex $T^c(s^{-1}\bar{\mathcal{A}})$ tensors together only the non-scalar modes. Without this splitting, the reduced coproduct on the bar coalgebra would fail conilpotence, and the cofree coalgebra structure that drives the bar-cobar adjunction (Theorem~\ref{thm:bar-cobar-adjunction}) would be unavailable. Every theorem stated later in this chapter refers to the reduced complex $T^c(s^{-1}\bar{\mathcal{A}})$; the unreduced display above has no independent content.
+Bar degree~$n$ uses sections over $C_{n+1}(X)$, and the bar
+differential lowers bar degree. The reduced ordered complex used from
+\S\ref{subsec:bar-functoriality} onward replaces $\mathcal{A}$ by its
+augmentation ideal
+\[
+\bar{\mathcal A}=\ker(\varepsilon\colon\mathcal A\to\omega_X)
+\]
+and starts at $B^{\mathrm{ord},0}=\mathbb C$. The augmentation separates scalar
+vacuum expectation values from genuine generators. Thus
+$T^c(s^{-1}\bar{\mathcal A})$ tensors only non-scalar modes, carries
+the reduced coproduct, and is conilpotent. This conilpotent cofree
+coalgebra is the input of the bar-cobar adjunction
+\textup{(}Theorem~\textup{\ref{thm:bar-cobar-adjunction}}\textup{)}.
+The reduced complex is the theorem-level object; the unreduced display
+records the orientation convention for the first residue.
 \begin{align}
-d: \bar{B}^1 &\to \bar{B}^0 \\
+d: B^{\mathrm{ord},1} &\to B^{\mathrm{ord},0} \\
 a_1 \otimes a_2 \otimes \eta_{12} &\mapsto \text{Res}_{z_1=z_2}[a_1(z_1) \cdot a_2(z_2) \cdot \eta_{12}]
 \end{align}
-This residue extraction computes the OPE product, contracting two operator insertions via the singular part of their operator product.
+This residue extraction computes the OPE product by composing the
+Poincar\'e residue of $\eta_{12}$ with the chiral mode projection.
 \end{example}
 
 \subsection{Functoriality of the bar construction}
@@ -1810,7 +2031,7 @@ mapping space between them is contractible.
 The bar complex carries a natural coalgebra structure:
 \[\Delta: \bar{B}^{\text{geom}}(\mathcal{A}) \to \bar{B}^{\text{geom}}(\mathcal{A}) \otimes \bar{B}^{\text{geom}}(\mathcal{A})\]
 induced by the diagonal map $X \to X \times X$.
-This is the coshuffle coproduct on the symmetric bar $\mathrm{Sym}^c(s^{-1}\bar{\mathcal{A}})$, summing over all $2^n$ unordered bipartitions (Theorem~\textup{\ref{thm:three-bar-complexes}}\textup{(ii)}). The ordered bar $T^c(s^{-1}\bar{\mathcal{A}})$ carries a distinct deconcatenation coproduct with $n+1$ terms (Theorem~\textup{\ref{thm:three-bar-complexes}}\textup{(iii)}); the coshuffle is its $\Sigma_n$-symmetrization.
+This is the coshuffle coproduct on the symmetric bar $\mathrm{Sym}^c(s^{-1}\bar{\mathcal{A}})$, summing over all $2^n$ unordered bipartitions (Theorem~\textup{\ref{thm:three-bar-complexes}}\textup{(ii)}). The ordered bar $T^c(s^{-1}\bar{\mathcal{A}})$ carries a distinct deconcatenation coproduct with $n+1$ terms (Theorem~\textup{\ref{thm:three-bar-complexes}}\textup{(i)}); the coshuffle is its $\Sigma_n$-coinvariant image.
 \end{theorem}
 
 \begin{proof}
@@ -1827,7 +2048,7 @@ Theorem~\ref{thm:counit-axioms}. Hence the stated coproduct gives a coalgebra
 structure on $\bar{B}^{\mathrm{geom}}(\mathcal{A})$.
 \end{proof}
 
-\subsection{Coalgebra axioms: verification}
+\subsection{Coalgebra axioms for the bar coalgebra}
 \label{subsec:coalgebra-axioms-complete}
 
 \begin{theorem}[Coassociativity; \ClaimStatusProvedHere]\label{thm:coassociativity-complete}
@@ -2034,25 +2255,29 @@ the cohomological degree.
 \begin{definition}[Factorization differential]\label{def:diff-fact}
  The factorization differential encodes the chiral algebra structure:
  \[
- d_{\text{fact}} = \sum_{1 \leq i < j \leq n+1} (-1)^{\sigma(i,j)} \text{Res}_{D_{ij}} \left(\mu_{ij} \otimes (\eta_{ij} \wedge -)\right)
+ d_{\text{fact}}
+ =
+ \sum_{1 \leq i < j \leq n+1}
+ (-1)^{\sigma(i,j)}
+ \sum_{m\ge0}
+ \bigl((-)_{(m)}(-)\bigr)_{ij}
+ \otimes
+ \operatorname{Res}^{\mathrm{form}}_{D_{ij}}
  \]
  where the sign is:
  \[\sigma(i,j) = i + j + \left(\sum_{k=1}^{i-1} |\alpha_k|\right) \cdot |\eta_{ij}|\]
  (Here $|\alpha_k|$ denotes the cohomological degree of the $k$-th element and $|\eta_{ij}| = 1$ for the logarithmic 1-form.)
 
- \emph{Geometric meaning.} This extracts the ``color'' $C_{ij}^k$ from the ``composite light'' of $\mathcal{A}$:
- \begin{center}
- \begin{tikzcd}
- \phi_i \otimes \phi_j \otimes \eta_{ij} \arrow[r, "d_{\text{fact}}"] &
- \text{Res}_{D_{ij}}[\text{OPE}(\phi_i, \phi_j)] = \sum_k C_{ij}^k \phi_k
- \end{tikzcd}
- \end{center}
-
- Each residue reveals one structure coefficient, with the totality forming the complete ``spectrum.''
+ The operator $\operatorname{Res}^{\mathrm{form}}_{D_{ij}}$ is the
+ Poincar\'e residue on the logarithmic form factor. The OPE mode
+ $(-)_{(m)}(-)$ is supplied by the chiral product. Thus
+ $d_{\text{fact}}$ does not take the analytic residue of an OPE pole
+ multiplied by $\eta_{ij}$; it composes the form residue with the
+ chiral mode projection.
 
  This accounts for:
  \begin{itemize}
- \item Koszul sign from moving $\eta_{ij}$ past the fields $\alpha_k$
+ \item Koszul sign from moving the normal logarithmic direction past the fields $\alpha_k$
  \item Orientation of the divisor $D_{ij}$
  \item Parity of the permutation after collision
  \end{itemize}
@@ -2087,9 +2312,9 @@ the cohomological degree.
  \label{lem:residue-properties}
  The residue operation satisfies:
  \begin{enumerate}
- \item $\text{Res}_{D_{ij}}^2 = 0$ (extracting residue lowers pole order)
+ \item $\text{Res}_{D_{ij}}^2 = 0$ for the same boundary normal direction
  \item For disjoint pairs: $\text{Res}_{D_{ij}} \circ \text{Res}_{D_{k\ell}} = -\text{Res}_{D_{k\ell}} \circ \text{Res}_{D_{ij}}$
- \item For overlapping pairs with $j = k$: contributions combine via Jacobi identity
+ \item For overlapping pairs with $j = k$: contributions combine by the Arnold relation on forms and the Borcherds identity on OPE modes
  \end{enumerate}
  \end{lemma}
 
@@ -2100,11 +2325,14 @@ the cohomological degree.
 
  Part~(2): This is Corollary~\ref{cor:residues-anticommute}: for disjoint index pairs, the divisors $D_{ij}$ and $D_{k\ell}$ are transverse, and the anticommutativity follows from the antisymmetry of $d\log u \wedge d\log v$.
 
- Part~(3): For overlapping pairs with $j = k$, three codimension-1 strata $D_{ij}$, $D_{jk}$, and $D_{ik}$ meet at the triple collision stratum $D_{ijk}$. The sum of iterated residues:
+ Part~(3): For overlapping pairs with $j = k$, three codimension-1 strata $D_{ij}$, $D_{jk}$, and $D_{ik}$ meet at the triple collision stratum $D_{ijk}$. The form part of the iterated residues:
  \[
  \mathrm{Res}_{D_{jk}} \circ \mathrm{Res}_{D_{ij}} + \mathrm{Res}_{D_{ij}} \circ \mathrm{Res}_{D_{jk}} + \mathrm{Res}_{D_{ik}} \circ \mathrm{Res}_{D_{ij}}
  \]
- vanishes by the associativity of the chiral product, as verified in Case~(ii) of Theorem~\ref{thm:bar-nilpotency-complete}.
+ is the codimension-two Arnold cancellation. After applying the
+ corresponding OPE modes, the algebraic coefficients cancel by the
+ Borcherds identity, as verified in Case~(ii) of
+ Theorem~\ref{thm:bar-nilpotency-complete}.
  \end{proof}
 
 % Well-definedness and anticommutativity of residues: see
@@ -2156,7 +2384,7 @@ The two conventions agree up to an overall normalization constant, absorbed into
 The nine-term proof of $d^2 = 0$ (Theorem~\ref{thm:bar-nilpotency-complete}) uses geometric signs throughout. Translating to operadic conventions via the dictionary above preserves $d^2 = 0$.
 \end{remark}
 
-\begin{theorem}[Three bar complexes and their inclusions]\label{thm:three-bar-complexes}
+\begin{theorem}[Ordered, symmetric, and Harrison bars]\label{thm:three-bar-complexes}
 \index{bar complex!three variants|textbf}
 \index{coshuffle coproduct|textbf}
 \index{deconcatenation coproduct|textbf}
@@ -2166,40 +2394,17 @@ The nine-term proof of $d^2 = 0$ (Theorem~\ref{thm:bar-nilpotency-complete}) use
 Work in characteristic zero.
 Let\/ $\cA$ be an augmented chiral algebra on\/~$X$ with
 augmentation ideal\/ $\bar\cA = \ker(\varepsilon)$.
-There is a chain of coalgebra inclusions
+There is a chain of comparison maps
 \begin{equation}\label{eq:three-bar-inclusions}
-\mathrm{Lie}^c(s^{-1}\bar\cA)
-\;\hookrightarrow\;
-\mathrm{Sym}^c(s^{-1}\bar\cA)
-\;\hookrightarrow\;
 T^c(s^{-1}\bar\cA)
+\xrightarrow{\ \pi_\Sigma\ }
+\mathrm{Sym}^c(s^{-1}\bar\cA)
+\xrightarrow{\ e^{(1)}\ }
+\mathrm{Lie}^c(s^{-1}\bar\cA)
 \end{equation}
 whose three terms are:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \textup{(Harrison/coLie bar.)}
- $\mathrm{Lie}^c(s^{-1}\bar\cA)$:
- the cofree conilpotent coLie coalgebra on
- $s^{-1}\bar\cA$.
- In degree~$n$ the component is the cofree
- $\operatorname{Lie}^c$-coalgebra on $s^{-1}\bar\cA$,
- with $\dim\operatorname{Lie}(n) = (n{-}1)!$ as an
- $S_n$-representation.
- The coproduct is the coLie cobracket.
- This is the Koszul dual cooperad of\/ $\chirCom$.
-\item \textup{(Symmetric/coshuffle bar.)}
- $\mathrm{Sym}^c(s^{-1}\bar\cA)$:
- the cofree cocommutative coassociative conilpotent
- coalgebra on $s^{-1}\bar\cA$.
- In degree~$n$ the component is
- $\bigl((s^{-1}\bar\cA)^{\otimes n}\bigr)_{S_n}$,
- with the coshuffle coproduct
- \[
- \Delta(a_1 \cdots a_n)
- \;=\;
- \sum_{I \sqcup J = [n]} \pm\, (a_I) \otimes (a_J),
- \]
- a sum over all\/ $2^n$ unordered bipartitions.
-\item \textup{(Tensor/deconcatenation bar.)}
+\item \textup{(Ordered tensor bar.)}
  $T^c(s^{-1}\bar\cA)$:
  the cofree conilpotent coassociative
  \textup{(}non-cocommutative\textup{)} coalgebra on
@@ -2216,14 +2421,47 @@ whose three terms are:
  (a_{i+1} \otimes \cdots \otimes a_n),
  \]
  a sum over the\/ $n+1$ consecutive cuts.
- This is the Koszul dual cooperad of\/ $\chirAss$.
+ This is the Koszul dual cooperad of\/ $\chirAss$ and is the
+ primitive object carrying the ordered $R$-matrix tower.
+\item \textup{(Symmetric/coshuffle bar.)}
+ $\mathrm{Sym}^c(s^{-1}\bar\cA)$:
+ the cofree cocommutative coassociative conilpotent
+ coalgebra on $s^{-1}\bar\cA$.
+ In degree~$n$ the component is
+ $\bigl((s^{-1}\bar\cA)^{\otimes n}\bigr)_{S_n}$,
+ with the coshuffle coproduct
+ \[
+ \Delta(a_1 \cdots a_n)
+ \;=\;
+ \sum_{I \sqcup J = [n]} \pm\, (a_I) \otimes (a_J),
+ \]
+ a sum over all\/ $2^n$ unordered bipartitions.
+\item \textup{(Harrison/coLie bar.)}
+ $\mathrm{Lie}^c(s^{-1}\bar\cA)$:
+ the weight-$1$ Eulerian summand of the symmetric bar, equivalently
+ the cofree conilpotent coLie coalgebra on $s^{-1}\bar\cA$.
+ In degree~$n$ it carries the Lie representation
+ of dimension $(n{-}1)!$, and its coproduct is the coLie cobracket.
+ This is the Koszul dual cooperad of\/ $\chirCom$.
 \end{enumerate}
-The inclusions in~\eqref{eq:three-bar-inclusions} are
-strict in each degree\/ $n \ge 2$: coshuffle has\/
-$2^n$ terms vs deconcatenation's\/ $n+1$; coLie is
-the weight-$1$ Eulerian summand of coshuffle.
 The following structural results hold.
 \begin{enumerate}[label=\textup{(\alph*)}]
+\item \textup{(Coinvariant projection.)}
+ The map
+ $\pi_\Sigma\colon T^c(s^{-1}\bar\cA)\twoheadrightarrow
+ \mathrm{Sym}^c(s^{-1}\bar\cA)$ is the degreewise
+ $\Sigma_n$-coinvariant quotient. It is a morphism of graded
+ coalgebras from deconcatenation to coshuffle, and it is a chain map
+ whenever the ordered bar differential is $\Sigma_n$-equivariant.
+ Its kernel is the non-symmetric ordered sector.
+\item \textup{(Averaging idempotent.)}
+ The characteristic-zero averaging section
+ $j_\Sigma\colon\mathrm{Sym}^c(s^{-1}\bar\cA)\to
+ T^c(s^{-1}\bar\cA)$ satisfies
+ $\pi_\Sigma j_\Sigma=\id$ and makes
+ $j_\Sigma\pi_\Sigma$ the symmetrizing idempotent on $T^c$.
+ This splitting is a statement about graded coalgebras; it is not a
+ quasi-isomorphism statement.
 \item \textup{(PBW decomposition.)}
  The Eulerian idempotent decomposition gives a
  direct-sum splitting of graded coalgebras
@@ -2238,21 +2476,20 @@ The following structural results hold.
  The first summand\/ $(r = 1)$ is the Harrison
  complex; the higher summands are its symmetric
  decomposables.
-\item \textup{(Symmetrization quasi-isomorphism.)}
- The symmetrization map
- $\operatorname{sym}\colon
- T^c(s^{-1}\bar\cA) \twoheadrightarrow
- \mathrm{Sym}^c(s^{-1}\bar\cA)$
- is a surjective quasi-isomorphism of dg~coalgebras.
- Its kernel is the space of non-symmetric tensors.
+\item \textup{(Acyclicity criterion.)}
+ The projection $\pi_\Sigma$ is a quasi-isomorphism exactly on those
+ lanes where the non-symmetric ordered kernel is acyclic. This
+ acyclicity is the PBW/Koszul averaging hypothesis used for the
+ symmetric Theorem~A/H statements; it is false as an unrestricted
+ assertion about ordered chiral bars.
 \item \textup{(R-matrix descent.)}
  The $R$-matrix tower on\/ $T^c$ descends to the
  shadow obstruction tower on\/ $\mathrm{Sym}^c$
- via\/ $\operatorname{sym}$, and the Harrison
+ via\/ $\pi_\Sigma$, and the Harrison
  subcomplex\/ $\mathrm{Lie}^c$ detects the primitives.
  In the notation of\/
  \S\textup{\ref{subsec:e1-as-primitive}}: at degree\/
- $r$, $\operatorname{sym}(r_r) = S_r$ is the
+ $r$, $\pi_\Sigma(r_r) = S_r$ is the
  $E_\infty$-shadow at degree\/~$r$
  \textup{(}$\kappa$ at\/ $r = 2$;
  the cubic shadow\/ $\mathfrak{C}$ at\/ $r = 3$\textup{)}.
@@ -2263,17 +2500,42 @@ The following structural results hold.
 \begin{proof}
 The three coalgebras are the cofree constructions on
 $s^{-1}\bar\cA$ for the cooperads
-$\mathrm{Lie}^c \subset \mathrm{Sym}^c \subset T^c$,
-and the inclusions
-in~\eqref{eq:three-bar-inclusions} are inherited from
-the cooperad inclusions
-$\mathrm{Lie}^c \hookrightarrow
-\mathrm{Com}^c \hookrightarrow
-\mathrm{Ass}^c$
+$\mathrm{Ass}^c$, $\mathrm{Com}^c$, and $\mathrm{Lie}^c$
 (Loday--Vallette \cite[Theorem~1.3.6,
 Proposition~8.6.9]{LV12}).
 
 \emph{Part\/ \textup{(a)}.}
+The projection $\pi_\Sigma$ is the
+coinvariant quotient in each arity:
+\[
+\pi_\Sigma(a_1\otimes\cdots\otimes a_n)=a_1\cdots a_n.
+\]
+Applying $\pi_\Sigma$ to deconcatenation and then using the
+$S_n$-coinvariant universal property gives the coshuffle formula:
+every consecutive cut in each ordered representative becomes one of
+the unordered bipartitions of $[n]$, with the Koszul sign inherited
+from the representative. If the differential on $T^c$ is
+$S_n$-equivariant, then the formula defining it commutes with the
+coinvariant quotient, so
+$d_{\mathrm{Sym}}\pi_\Sigma=\pi_\Sigma d_T$.
+
+\emph{Part\/ \textup{(b)}.}
+In characteristic zero the averaging section is
+\[
+j_\Sigma(a_1\cdots a_n)
+=\frac{1}{n!}\sum_{\sigma\in S_n}
+\epsilon(\sigma)\,
+a_{\sigma(1)}\otimes\cdots\otimes a_{\sigma(n)}.
+\]
+The equality $\pi_\Sigma j_\Sigma=\id$ is immediate, and
+$j_\Sigma\pi_\Sigma$ is the standard symmetrizing idempotent. For
+$n\ge2$ its kernel contains, for homogeneous $a,b$,
+\[
+a\otimes b-(-1)^{(|a|-1)(|b|-1)}b\otimes a,
+\]
+so ordered information is genuinely lost by $\pi_\Sigma$.
+
+\emph{Part\/ \textup{(c)}.}
 The Eulerian idempotents
 $e^{(r)}_n \in \mathbb{Q}[S_n]$
 ($r = 1, \ldots, n$) form a complete set of
@@ -2295,32 +2557,23 @@ the symmetric coalgebra on a Lie coalgebra is the
 universal enveloping cocommutative coalgebra, and the
 grading by Eulerian weight supplies the splitting.
 
-\emph{Part\/ \textup{(b)}.}
-The symmetrization map
-$\operatorname{sym}(a_1 \otimes \cdots \otimes a_n)
-= \frac{1}{n!}\sum_{\sigma \in S_n}
-\epsilon(\sigma)\,
-a_{\sigma(1)} \cdots a_{\sigma(n)}$
-intertwines the deconcatenation coproduct on
-$T^c$ with the coshuffle coproduct on
-$\mathrm{Sym}^c$: both reduce to the same
-combinatorial identity after $S_n$-averaging.
-Surjectivity is immediate (every symmetric tensor
-is in the image). The map is a quasi-isomorphism
-because both sides compute
-$\operatorname{Ext}^*_\cA(\mathbf{1}, \mathbf{1})$
-(the derived Hom from the unit); equivalently, the
-cohomology comparison follows from the
-Loday--Quillen--Tsygan theorem in characteristic zero
-(Loday \cite[Theorem~3.3.2]{Loday98}).
+\emph{Part\/ \textup{(d)}.}
+The quasi-isomorphism assertion is precisely the vanishing of
+$H^*(\ker\pi_\Sigma)$. On the PBW/Koszul averaging lane this is the
+standard acyclicity input: the non-symmetric shuffle sector is
+contracted by the PBW homotopy, so the quotient computes the same
+Ext object. Without that hypothesis the displayed antisymmetric class
+above can survive, and no formal property of cofree coalgebras kills
+it. Thus the unrestricted quasi-isomorphism claim is false; the true
+statement is the stated acyclicity criterion.
 
-\emph{Part\/ \textup{(c)}.}
+\emph{Part\/ \textup{(e)}.}
 The $R$-matrix $r_r \in \operatorname{End}(V^{\otimes r})
 \otimes \mathcal{O}(*\Delta)$ is the degree-$r$
 genus-$0$ component of the $E_1$ MC element
 $\Theta_\cA^{E_1}$ on the tensor bar $T^c$
 (Proposition~\ref{prop:e1-shadow-r-matrix}).
-Under symmetrization, the $S_r$-coinvariant of
+Under the coinvariant projection, the $S_r$-coinvariant of
 $r_r$ is the degree-$r$ shadow $S_r$ on the
 symmetric bar $\mathrm{Sym}^c$: this is the content
 of the coinvariant shadow theorem
@@ -2341,7 +2594,16 @@ symmetric decomposables determined by the primitives).
 
 \begin{remark}[Primacy direction]\label{rem:primacy-direction}
 \index{bar complex!primacy direction}
-Information flows in one direction through the chain~\eqref{eq:three-bar-inclusions}: from $T^c$ to $\mathrm{Sym}^c$ to $\mathrm{Lie}^c$. The symmetrization map $\operatorname{sym}\colon T^c \twoheadrightarrow \mathrm{Sym}^c$ is a surjective quasi-isomorphism (part~(b)), but its kernel contains the $R$-matrix's non-coinvariant Fourier modes: the ordered bar is strictly richer. Theorems~A--D use the symmetric bar because their statements are $\Sigma_n$-invariant; the seven-faces development of the collision residue uses the ordered bar because the quantum-group and Yangian structures it carries are not.
+Information flows in one direction through
+\eqref{eq:three-bar-inclusions}: from the ordered tensor bar to the
+symmetric coinvariant shadow, then to the Harrison primitive summand.
+The projection
+$\pi_\Sigma\colon T^c \twoheadrightarrow \mathrm{Sym}^c$ is always
+surjective, and it is a quasi-isomorphism only under the acyclicity
+criterion of Theorem~\ref{thm:three-bar-complexes}(d). Its kernel
+contains the $R$-matrix's non-coinvariant Fourier modes. The ordered
+bar is strictly richer; Theorems~A--D use the symmetric bar exactly
+where their statements are $\Sigma_n$-invariant.
 \end{remark}
 
 \begin{remark}[Topological factorization on the $\bR$-direction]
@@ -2369,7 +2631,17 @@ $(C^\bullet_{\mathrm{ch}}(\cA,\cA),\,\cA)$.
 
 \begin{remark}[Conventions for this chapter]\label{rem:three-bar-conventions}
 \index{bar complex!convention in this chapter}
-In this chapter, the unadorned notation $\bar{B}^{\mathrm{geom}}(\mathcal{A})$ denotes the symmetric bar $\mathrm{Sym}^c(s^{-1}\bar{\mathcal{A}})$ (Theorem~\ref{thm:three-bar-complexes}(ii)): the coproduct (Theorems~\ref{thm:bar-coalgebra}--\ref{thm:coassociativity-complete}) is the coshuffle on $\mathrm{Sym}^c$, matching the geometric decomposition of $\overline{C}_{n+1}(X)$ into unordered collision strata. Every theorem in this chapter is $\Sigma_n$-invariant (Remark~\ref{rem:primacy-direction}).
+In this chapter, the unadorned notation
+$\bar{B}^{\mathrm{geom}}(\mathcal{A})$ denotes the symmetric Ran bar
+$\mathrm{Sym}^c(s^{-1}\bar{\mathcal{A}})$
+(Theorem~\ref{thm:three-bar-complexes}(ii)); its coproduct is the
+coshuffle on $\mathrm{Sym}^c$, matching the decomposition of
+$\overline{C}_{n+1}(X)$ into unordered collision strata. The notation
+$B_X^{\mathrm{ord}}(\cA)$ always denotes the ordered tensor bar with
+deconcatenation. Statements involving $R$-matrices, Yangian data, or
+ordered convolution are made before applying $\pi_\Sigma$; statements
+about Theorem~A, Verdier duality, and Ran factorization use the
+symmetric quotient.
 \end{remark}
 
 \begin{theorem}[Geometric bar \texorpdfstring{$=$}{=} operadic bar; \ClaimStatusProvedHere]
@@ -2407,9 +2679,11 @@ morphism $\kappa: \mathcal{P}^{!,c} \to \mathcal{P}$
 \emph{Step 1} (Geometric realization of $\mathcal{P}^{!,c}$).
 For $\mathcal{P} = \operatorname{Com}$ (the $\Einf$-chiral case),
 $\mathcal{P}^{!,c} = \operatorname{Lie}^c$, and the cooperad
-$\operatorname{Lie}^c(n)$ is computed by the cohomology of the
-Fulton--MacPherson compactification $\overline{C}_n(X)$: the Arnold
-relations on $H^*(\overline{C}_n)$ generate the Lie cooperad.
+$\operatorname{Lie}^c(n)$ is computed by the logarithmic de~Rham
+model of the open configuration space $C_n(X)$ on the
+Fulton--MacPherson compactification
+$\overline{C}_n(X)$. On the affine type-$A$ chart, the Arnold
+relations in the Orlik--Solomon algebra give the Lie cooperad.
 For $\mathcal{P} = \operatorname{Ass}$,
 $\mathcal{P}^{!,c} = \operatorname{Ass}^c$ (the associative
 cooperad), realized by ordered configurations.
@@ -2492,38 +2766,45 @@ is well-defined when wavefront sets are in general position. See Hörmander,
 Costello--Gwilliam Vol. 1, \S2.4 for the QFT perspective.}
 
 \[
-\phi_\alpha(z)\phi_\beta(w) \sim \sum_{\gamma} \sum_{n=0}^{N_{\alpha\beta}}
-\frac{C^{\gamma,n}_{\alpha\beta} \partial^n\phi_\gamma(w)}{(z-w)^{h_\alpha + h_\beta - h_\gamma - n}}
+\phi_\alpha(z)\phi_\beta(w) \sim \sum_{\gamma} \sum_{r=0}^{N_{\alpha\beta}}
+\frac{C^{\gamma,r}_{\alpha\beta} \partial^r\phi_\gamma(w)}{(z-w)^{h_\alpha + h_\beta - h_\gamma - r}}
 + \text{regular}
 \]
-where the sum is finite (quasi-finite OPE). Then:
+where the sum is finite (quasi-finite OPE). Write
 \[
-\text{Res}_{D_{ij}}[\phi_{\alpha_1}(z_1) \otimes \cdots \otimes \phi_{\alpha_{n+1}}(z_{n+1})
-\otimes \eta_{i_1j_1} \wedge \cdots \wedge \eta_{i_kj_k}]
+P_{\alpha\beta}^{\gamma,r}=h_\alpha+h_\beta-h_\gamma-r
 \]
-equals:
-\begin{itemize}
-\item If $(i,j) \notin \{(i_r, j_r)\}_{r=1}^k$: zero (no pole along $D_{ij}$)
-\item If $(i,j) = (i_r, j_r)$ for unique $r$ and $h_{\alpha_i} + h_{\alpha_j} - h_\gamma - n = 1$:
+for the pole order of the displayed term. If
 \[
-(-1)^r C^{\gamma,n}_{\alpha_i\alpha_j} \phi_{\alpha_1} \otimes \cdots \otimes \partial^n\phi_\gamma \otimes \cdots
-\otimes \widehat{\phi_{\alpha_j}} \otimes \cdots \otimes \eta_{i_1j_1} \wedge \cdots \wedge \widehat{\eta_{ij}} \wedge \cdots
+\omega=\eta_{i_1j_1}\wedge\cdots\wedge\eta_{i_kj_k}
 \]
-where the hat denotes omission
-\item Otherwise: zero from the bracket component (wrong pole order for simple-pole extraction)
-\end{itemize}
-
-The \emph{criticality condition} $h_{\alpha_i} + h_{\alpha_j} - h_\gamma - n = 1$ characterises the \emph{bracket component} $d_{\mathrm{bracket}}$
-(Proposition~\ref{prop:pole-decomposition}): the Poincar\'e
-residue along~$D_{ij}$ extracts the simple-pole coefficient. The full bar
-differential $d_{\mathrm{res}} = d_{\mathrm{bracket}} +
-d_{\mathrm{curvature}}$
-(Convention~\ref{conv:product-vs-bracket}) also receives the
-double-pole contribution $d_{\mathrm{curvature}}$ from the chiral
-product~$\mu$; at the double pole ($h_{\alpha_i} + h_{\alpha_j} - h_\gamma - n = 2$), the curvature component extracts the invariant pairing $(\phi_i)_{(1)}\phi_j$. For algebras whose OPE has no simple pole
-(e.g.\ the Heisenberg algebra), $d_{\mathrm{bracket}} = 0$ and
-$d_{\mathrm{res}} = d_{\mathrm{curvature}}$
-(Remark~\ref{rem:bicomplex-obstruction}).
+and $(i,j)=(i_s,j_s)$ occurs once, then the $m$-th pole-mode
+summand of the residue differential is
+\[
+\begin{aligned}
+d_{(m),ij}&\bigl(
+\phi_{\alpha_1}(z_1)\otimes\cdots\otimes
+\phi_{\alpha_{N}}(z_N)\otimes \omega\bigr)  \\
+&=
+(-1)^{s-1+\epsilon_{\mathrm{Koszul}}}
+\sum_{\substack{\gamma,r\\P_{\alpha_i\alpha_j}^{\gamma,r}=m+1}}
+C^{\gamma,r}_{\alpha_i\alpha_j}\,
+\phi_{\alpha_1}\otimes\cdots\otimes
+\partial^r\phi_\gamma\otimes\cdots\otimes
+\widehat{\phi_{\alpha_i},\phi_{\alpha_j}}\otimes\cdots
+\otimes
+\eta_{i_1j_1}\wedge\cdots\wedge\widehat{\eta_{ij}}\wedge\cdots
+\wedge\eta_{i_kj_k}.
+\end{aligned}
+\]
+Here $N$ is the number of tensor factors. If no factor $\eta_{ij}$ is
+present, the form residue along $D_{ij}$ is zero. The case $m=0$ is
+the bracket component; the case $m=1$ is the double-pole component;
+all $m\ge2$ are higher-pole components.
+The Poincar\'e residue removes the logarithmic form factor
+$\eta_{ij}$; it does not impose the condition $P=1$ on the OPE.
+The condition $P=m+1$ is instead the choice of OPE mode
+$a_{(m)}b$ in the chiral product.
 \end{theorem}
 
 \begin{proof}
@@ -2537,17 +2818,23 @@ The logarithmic form becomes:
 \]
 The OPE gives:
 \[
-\phi_{\alpha_i}(z_i)\phi_{\alpha_j}(z_j) = \sum_{\gamma,n}
-\frac{C^{\gamma,n}_{\alpha_i\alpha_j} \partial^n\phi_\gamma(u)}{(\epsilon e^{i\theta})^{h_{\alpha_i} + h_{\alpha_j} - h_\gamma - n}}
+\phi_{\alpha_i}(z_i)\phi_{\alpha_j}(z_j) = \sum_{\gamma,r}
+\frac{C^{\gamma,r}_{\alpha_i\alpha_j} \partial^r\phi_\gamma(u)}{(\epsilon e^{i\theta})^{h_{\alpha_i} + h_{\alpha_j} - h_\gamma - r}}
 + O(\epsilon^0)
 \]
-The residue $\text{Res}_{D_{ij}}$ extracts the coefficient of
-$\frac{d\log\epsilon}{\epsilon}$, which is nonzero only when the pole
-order equals~$1$, i.e., when
-$h_{\alpha_i} + h_{\alpha_j} - h_\gamma - n = 1$. This is the
-\emph{criticality condition} for the residue pairing. The sign $(-1)^r$ comes from
-moving $\eta_{ij}$ past $r-1$ other 1-forms via the Koszul rule for graded
-commutativity.
+The form residue extracts the coefficient of $d\log\epsilon$ in the
+logarithmic form factor:
+\[
+\operatorname{Res}^{\mathrm{form}}_{D_{ij}}
+(d\log\epsilon\wedge\alpha+\beta)=\alpha|_{D_{ij}}.
+\]
+Independently, the chiral product is decomposed into its mode
+projections; the term of pole order $m+1$ is precisely
+$(\phi_{\alpha_i})_{(m)}\phi_{\alpha_j}$. Combining these two
+operations gives the displayed formula. The sign is the Koszul sign
+for moving the normal logarithmic factor to the first position before
+taking the Poincar\'e residue, together with the sign from moving the
+two desuspended field factors into the collision position.
 \end{proof}
 
 \subsection{Uniqueness and functoriality}
@@ -2665,7 +2952,7 @@ hence on free algebras by external product, hence on all algebras by locality.
 \begin{theorem}[Bar complex is chiral; \ClaimStatusConditional]\label{thm:bar-chiral}
 \index{factorization coalgebra|textbf}
 The geometric bar complex $\bar{B}^{\text{ch}}(\mathcal{A})$ naturally carries the structure of a differential graded chiral coalgebra.
-The coproduct is the coshuffle coproduct on $\mathrm{Sym}^c(s^{-1}\bar{\mathcal{A}})$; the ordered refinement on $T^c(s^{-1}\bar{\mathcal{A}})$ with deconcatenation coproduct (Theorem~\textup{\ref{thm:three-bar-complexes}}\textup{(iii)}) carries strictly richer data, including the $R$-matrix tower.
+The coproduct is the coshuffle coproduct on $\mathrm{Sym}^c(s^{-1}\bar{\mathcal{A}})$; the ordered refinement on $T^c(s^{-1}\bar{\mathcal{A}})$ with deconcatenation coproduct (Theorem~\textup{\ref{thm:three-bar-complexes}}\textup{(i)}) carries strictly richer data, including the $R$-matrix tower.
 \end{theorem}
 
 \begin{proof}
@@ -2721,23 +3008,24 @@ $\dfib^{\,2}=\kappa(\cA)\cdot\omega_g$
 characteristic datum $\kappa(\cA)$ is the residue of that failure at the
 branch point.
 
-\section{Synthesis}
+\section{Ordered K3 convolution}
 \label{sec:barconstr-supplement}
 
 \begin{remark}[Hall-theoretic bar construction]
 \label{rem:barconstr-1}
-The bar construction on the K3 chiral bialgebra $\mathbf H_{\Delta_5}$ takes the form
+The ordered bar construction on the K3 chiral bialgebra
+$\mathbf H_{\Delta_5}$ takes the form
 \[
 B^{E_1}_{\mathrm{ch}}(\mathbf H_{\Delta_5}) \;=\; T^c\bigl(s^{-1}\overline{\mathbf H_{\Delta_5}}\bigr) \;\in\; \mathrm{Hall}(\mathrm{CoHA}_{K3\times E}),
 \]
 the tensor coalgebra on the desuspended augmentation-reduction
 $\overline{\mathbf H_{\Delta_5}} = \ker(\epsilon:\mathbf H_{\Delta_5}\to\mathbb C)$,
 taken in the Hall subcategory of the K3-elliptic Cohomological Hall
-Algebra. The bar differential decomposes as
+Algebra. In the Hall model the bar differential is written
 $d_B = d_{\mathrm{Hall}} + d_{\mathrm{Sieg}} + \hbar\, d_{\mathrm{assoc}} + \hbar^2\, d_{\Phi_{10}^{\mathrm{un}}/\eta^{24}}$
-(Vol.~II, \S\ref{V2-sec:bar-cobar-review-supplement}). The Hall
-piece $d_{\mathrm{Hall}}$ is what distinguishes the Hall-theoretic bar from classical
-bar-construction theory -- in the classical case $d_{\mathrm{Hall}} = 0$
+as a decomposition by geometric source. The Hall piece
+$d_{\mathrm{Hall}}$ distinguishes the Hall-theoretic bar from classical
+bar-construction theory: in the classical case $d_{\mathrm{Hall}} = 0$
 because the algebra lives in a symmetric monoidal category, but the Hall
 category is \emph{only} monoidal (non-symmetric), and the Hall piece
 is genuinely non-trivial. This is the source of the non-abelian chiral
@@ -2776,7 +3064,7 @@ graded vector space
  \mathbf{H}_{\Delta_5}\bigr),
 \]
 working in the weight-completed pro-category with respect to the
-Mukai-lattice grading $\Lambda_{\mathrm{Muk}}$ (see C1~heal below).
+Mukai-lattice grading $\Lambda_{\mathrm{Muk}}$.
 Let $d_B = d_{\mathrm{Hall}} + d_{\mathrm{Sieg}} + \hbar d_{\mathrm{assoc}}
 + \hbar^2 d_{\Phi_{10}^{\mathrm{un}}/\eta^{24}}$ be the bar differential of
 Remark~\ref{rem:barconstr-1} and let $d_A$ be the BKM differential on
@@ -2827,7 +3115,7 @@ Kac 1990 \S 2.5), $d_B^2 = 0$ by coassociativity of $\bar\Delta$ combined
 with the Arnold relation
 $\eta_{ij}\wedge\eta_{jk} + \eta_{jk}\wedge\eta_{ki} +
 \eta_{ki}\wedge\eta_{ij} = 0$
-on $\mathrm{Conf}_n(X)$ (Theorem~\ref{thm:arnold}), and the
+on $\mathrm{Conf}_n(X)$ (Theorem~\ref{thm:arnold-three}), and the
 cross-terms cancel by the Koszul sign rule.
 
 \emph{(ii) Super-antisymmetry.} Immediate from the commutator form.
@@ -2850,13 +3138,13 @@ coderivation of $\bar\Delta$), the right-hand side regroups as
 $[D\phi,\psi] + (-1)^p[\phi,D\psi]$.
 \end{proof}
 
-\begin{remark}[C1 heal: weight-completion for infinite-dimensional $A$]
+\begin{remark}[Weight completion for infinite-dimensional $A$]
 \label{rem:c1-weight-completion-k3-convolution}
 Because $\mathbf{H}_{\Delta_5}$ is infinite-dimensional (the imaginary
 cone has one Fourier mode per positive Gritsenko--Nikulin coefficient
 $c_{\Delta_5}(N,\ell)$), the naive
 $\mathrm{Hom}(B^{\mathrm{ord}}(A),A)$ carries no sensible grading.
-The heal: work in the weight-completed pro-category
+The correct ambient category is the weight-completed pro-category
 $\mathrm{Hom}_{\widehat{\Lambda}_{\mathrm{Muk}}}$ with respect to the
 Mukai lattice $\Lambda_{\mathrm{Muk}} = \mathrm{II}_{4,4}\oplus\mathrm{II}_{2,2}$
 grading on $\mathbf{H}_{\Delta_5}$ (each Fourier mode carries a definite
@@ -2874,11 +3162,9 @@ This is the chain-level pro-object / weight-completed ambient in which
 the class-M Maurer--Cartan tower is well-defined.
 \end{remark}
 
-\begin{remark}[Universal Maurer--Cartan element
-$\Theta_{\mathbf{H}_{\Delta_5}}$; \ClaimStatusProvedHere]
+\begin{remark}[K3 Maurer--Cartan input]
 \label{rem:theta-universal-MC-k3}
-The universal obstruction element solving the
-Maurer--Cartan equation on $\mathfrak{C}_{\mathbf{H}_{\Delta_5}}$ is
+For the ordered K3 Hall model, write a degree-one series
 \[
  \Theta_{\mathbf{H}_{\Delta_5}}
  \;=\; \sum_{n\ge 3} \hbar^n\,\phi^{(n)}
@@ -2886,8 +3172,8 @@ Maurer--Cartan equation on $\mathfrak{C}_{\mathbf{H}_{\Delta_5}}$ is
 \]
 with $\phi^{(n)}\in \mathrm{Hom}^1(B^{\mathrm{ord}}_n(\mathbf{H}_{\Delta_5}),
 \mathbf{H}_{\Delta_5})$ the order-$n$ pentagon cocycle in the
-sense of Etingof--Kazhdan. The leading
-coefficient at $\hbar^3$ is the triple-$\zeta$--Borcherds MZV leg:
+sense of Etingof--Kazhdan. The K3 construction supplies the leading
+coefficient
 \[
  \phi^{(3)}
  \;=\;
@@ -2895,33 +3181,30 @@ coefficient at $\hbar^3$ is the triple-$\zeta$--Borcherds MZV leg:
  \;+\;\tfrac{25}{3}\,c_{\mathrm{timelike}}
  \;+\; (\Phi_{10}^{\mathrm{un}}/\eta^{24})\, c_{\Phi_{10}^{\mathrm{un}}},
 \]
-matching Vol.~III
-Theorem~\ref{V3-thm:pentagon-sieg-bor}. The next nontrivial correction at
-$\hbar^6$ (the first MC-forced higher coherence) reads
+and the next nontrivial correction
 $\phi^{(6)} = \zeta(3)^2\, c_6^{(1)} + \tfrac{25}{3}\zeta(3)\, c_6^{(2)}
 + (25/3)^2\, c_6^{(3)} + \zeta(3)(\Phi_{10}^{\mathrm{un}}/\eta^{24})c_6^{(4)}
 + (\Phi_{10}^{\mathrm{un}}/\eta^{24})^2 c_6^{(5)} + \zeta(5)\, c_6^{(6)}$,
 where $c_6^{(i)}$ are the six MZV--Borcherds-leg cohomology
-representatives of the single-valued $\mathrm{ChirHoch}^3$ basis. The $\hbar^3$ equation
-$D\phi^{(3)} = 0$ is the pentagon equation of
-Theorem~\ref{V3-thm:pentagon-sieg-bor}; the $\hbar^4$ equation
-$D\phi^{(4)} + \tfrac{1}{2}[\phi^{(3)},\phi^{(3)}]_{\hbar^4} = 0$
-is the first genuine super-Jacobi coherence and forces
-$\phi^{(4)} = 0$ (by a parity argument: $[\phi^{(3)},\phi^{(3)}]$
-lives in the symmetric square and integrates via MZV-shuffle
-Brown 2012 \S 3 into $\hbar^6$, not $\hbar^4$). Subsequent MC
-equations at $\hbar^{2k}$ are the higher coherence tower of
-Drinfeld~1990 Problem 3.16.
+representatives. These coefficients are input data for this section.
+Only the ordered-convolution implications from explicit finite
+identities among the $\phi^{(n)}$ are asserted here; no cross-volume
+statement is used as a proof of those identities in this chapter.
 \end{remark}
 
-\begin{theorem}[MC verification at $\hbar^3,\hbar^4$;
+\begin{theorem}[Finite Maurer--Cartan window at $\hbar^3,\hbar^4$;
 \ClaimStatusProvedHere]
 \label{thm:MC-hbar3-hbar4-k3}
 On the weight-completed dGLA
 $\mathfrak{C}_{\mathbf{H}_{\Delta_5}}[[\hbar]]$ of
-Definition~\ref{def:convolution-dgla-k3} with universal element
+Definition~\ref{def:convolution-dgla-k3}, let
 $\Theta_{\mathbf{H}_{\Delta_5}}$ of
-Remark~\ref{rem:theta-universal-MC-k3}, the Maurer--Cartan equation
+Remark~\ref{rem:theta-universal-MC-k3} satisfy
+\[
+\phi^{(0)}=\phi^{(1)}=\phi^{(2)}=0,\qquad
+D\phi^{(3)}=0,\qquad \phi^{(4)}=0.
+\]
+Then the Maurer--Cartan equation
 \[
  D\,\Theta_{\mathbf{H}_{\Delta_5}} \;+\; \tfrac{1}{2}\,
  [\Theta_{\mathbf{H}_{\Delta_5}},\Theta_{\mathbf{H}_{\Delta_5}}]
@@ -2934,77 +3217,59 @@ holds modulo $\hbar^5$.
 Collecting terms by powers of $\hbar$: the $\hbar^0,\hbar^1,\hbar^2$
 terms vanish because $\Theta$ starts at $\hbar^3$ and $D,\ [\cdot,\cdot]$
 preserve $\hbar$-degree. At $\hbar^3$:
-$D\phi^{(3)} = 0$. The three summands each satisfy
-$D\, c = 0$ because $c_{\mathrm{symm}}, c_{\mathrm{timelike}}, c_{\Phi_{10}^{\mathrm{un}}}$
-are the three independent $3$-coboundaries of the
-Chevalley--Eilenberg complex
-$C^3(\widehat{\mathfrak{t}^{\mathrm{Sieg}}_{2,[2]}\oplus
-\mathfrak{n}_+^{\mathrm{imag}}})$ (Enriquez--Gomez-Gonzalez--Maassarani 2022
-Theorem~4.3), which map to $d_A$-closed elements under the BKM
-quantisation functor by Etingof--Kazhdan naturality.
+$D\phi^{(3)} = 0$ by hypothesis.
 At $\hbar^4$: $D\phi^{(4)} + \tfrac{1}{2}[\phi^{(3)},\phi^{(3)}]_{\hbar^4}
-= 0$. The commutator
-$[\phi^{(3)},\phi^{(3)}]$ produces only $\hbar^6$ contributions
-(both legs carry $\hbar^3$; $\hbar^3\cdot\hbar^3 = \hbar^6$), so
-the $\hbar^4$ component of the commutator is zero, and
-$D\phi^{(4)} = 0$ with $\phi^{(4)}=0$ satisfies the equation
-trivially. The absence of $\phi^{(4)},\phi^{(5)}$ terms reflects
-the Etingof--Kazhdan even-only pentagon cocycle support
-(Etingof--Kazhdan 1996 second paper, Proposition 3.2). The first nonzero
-higher correction lives at $\hbar^6$ and is verified in
-Volume~III Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic},
-Theorem~\ref{V3-thm:kcb-phi-arrow-discipline} and compute module
-\texttt{compute/lib/mzv\_shuffle\_borcherds\_phi6\_k3.py}.
+= 0$. The commutator has no $\hbar^4$ component because both inputs
+begin at $\hbar^3$; the first possible bracket is at $\hbar^6$.
+Thus the $\hbar^4$ equation reduces to $D\phi^{(4)}=0$, which follows
+from $\phi^{(4)}=0$.
 \end{proof}
 
-\begin{theorem}[MC verification through weight $\hbar^{12}$;
+\begin{theorem}[Finite Maurer--Cartan criterion through $\hbar^{12}$;
 \ClaimStatusProvedHere]
 \label{thm:MC-hbar7-hbar12-k3}
 On the weight-completed pro-dGLA
-$\mathfrak{C}_{\mathbf{H}_{\Delta_5}}[[\hbar]]$, the universal element
-$\Theta_{\mathbf{H}_{\Delta_5}}$ of
-Remark~\ref{rem:theta-universal-MC-k3} satisfies the
-Maurer--Cartan equation modulo $\hbar^{13}$. The MC tower is supported on
-the sub-semigroup $3\mathbb{Z}_{\ge 1}$: $\phi^{(n)} = 0$ for
-$n\not\in\{3,6,9,12,\ldots\}$. At $n = 9$ the depth-$3$ MZV
-$\zeta(3,3,3)$ enters for the first time via the Brown $2012$ stuffle
-$\zeta(3)\cdot\zeta(3,3) = \zeta(3,3,3) + \zeta(3,6) + \zeta(6,3)$; at
-$n = 12$ the depth-$4$ MZV $\zeta(3,3,3,3)$ enters via the iterated Brown
-shuffle, realising the Brown motivic-Galois horizon at weight $12$.
+$\mathfrak{C}_{\mathbf{H}_{\Delta_5}}[[\hbar]]$, suppose
+$\Theta=\sum_{n\ge3}\hbar^n\phi^{(n)}$ has support in
+$3\mathbb Z_{\ge1}$ through order~$12$:
+\[
+\phi^{(n)}=0
+\quad
+\text{for } n\in\{4,5,7,8,10,11\}.
+\]
+Assume the three finite identities
+\[
+D\phi^{(6)}+\tfrac12[\phi^{(3)},\phi^{(3)}]=0,
+\]
+\[
+D\phi^{(9)}+[\phi^{(3)},\phi^{(6)}]=0,
+\]
+\[
+D\phi^{(12)}+[\phi^{(3)},\phi^{(9)}]
++\tfrac12[\phi^{(6)},\phi^{(6)}]=0.
+\]
+Then $\Theta$ satisfies the Maurer--Cartan equation modulo
+$\hbar^{13}$.
 \end{theorem}
 
 \begin{proof}
-The $3\mathbb{Z}$-parity of the non-vanishing $\phi^{(n)}$ follows from
-Etingof--Kazhdan $1996$ even-tensor-degree pentagon support
-(Proposition $3.2$ loc.\ cit.) together with the Siegel--Borcherds
-Manin-pair shift that promotes Drinfeld $1990$ $2\mathbb{Z}$-parity to
-$3\mathbb{Z}$-parity through the minimal Humbert-divisor weight of
-$(\Phi_{10}^{\mathrm{un}}/\eta^{24})$ (Bruinier $2002$ Proposition $5.1$; weight $\ge 3$
-Heegner-divisor Chern-class reciprocity). Hence $\phi^{(n)} = 0$ for
-$n\in\{4,5,7,8,10,11\}$.
-
-At $n\in\{7,8,10,11\}$ every MC bracket-summand
-$[\phi^{(i)},\phi^{(j)}]$ with $i+j = n$ and $3\le i\le j\le n-3$
-involves a vanishing factor, so the right side is zero and
-$\phi^{(n)} = 0$ solves the equation. At $n = 9$ the only contributing
-bracket is $[\phi^{(3)},\phi^{(6)}]$, and matching scalar coefficients
-via Brown $2012$ motivic stuffle (\S $4.3$ Corollary $4$) yields a
-nine-term MZV--Borcherds-leg decomposition including the depth-$3$
-MZV $\zeta(3,3,3)$. At $n = 12$ the brackets $[\phi^{(3)},\phi^{(9)}]$
-and $\tfrac{1}{2}[\phi^{(6)},\phi^{(6)}]$ contribute; the iterated Brown
-shuffle $\zeta(3)\cdot\zeta(3,3,3) = \zeta(3,3,3,3) + \zeta(3,3,6) +
-\zeta(3,6,3) + \zeta(6,3,3)$ and the quadruple shuffle
-$\zeta(3)^4$ both unfold in the Brown $2012$ depth-$4$ weight-$12$
-motivic MZV basis $\{\zeta(3,3,3,3),\zeta(3,3,6),\zeta(3,9),\zeta(6,6),
-\zeta(9,3),\zeta(12)\}$. The twelve pentagon coefficients
-$c_{12}^{(i)}$ are the EGGM $2022$ $C^3\to\cdots\to C^5$ weight-$12$
-representatives, whose consistency under the motivic coaction is Brown
-$2012$ \textup{Ann.~Math.}~$175$ Theorem $1$ at weight $12$. The full
-per-order verification (stuffle arithmetic, depth filtration,
-Borcherds-leg shuffle) is recorded in Volume~III
-Theorem~\ref{V3-thm:kcb-MC-hbar7-hbar12} and in the compute modules
-\texttt{compute/lib/mzv\_stuffle\_depth3\_phi9\_k3.py} and
-\texttt{compute/lib/mzv\_shuffle\_depth4\_phi12\_k3.py}.
+The coefficient of $\hbar^n$ in
+$D\Theta+\tfrac12[\Theta,\Theta]$ is
+\[
+D\phi^{(n)}
++\tfrac12\sum_{\substack{i+j=n\\ i,j\ge3}}
+[\phi^{(i)},\phi^{(j)}].
+\]
+For $n=3,4$ this reduces to
+Theorem~\ref{thm:MC-hbar3-hbar4-k3}. For $n=5$ the coefficient is
+$D\phi^{(5)}$ and vanishes by the support hypothesis.
+For $n=6,9,12$ the displayed hypotheses are exactly the three
+nontrivial coefficient equations. For
+$n\in\{7,8,10,11\}$ each summand either contains
+$\phi^{(4)}$, $\phi^{(5)}$, $\phi^{(7)}$, $\phi^{(8)}$,
+$\phi^{(10)}$, or $\phi^{(11)}$, or has an impossible split into
+positive multiples of~$3$; hence it vanishes. Therefore every
+coefficient through $\hbar^{12}$ is zero.
 \end{proof}
 
 \section{Admissibility filtration on the pentagon tower}
@@ -3018,32 +3283,29 @@ description. The pentagon coherences index via the discriminant
 $\mathfrak d_n = (n-3)/2$ against the Jacobi-index-$1$ lattice $4NM - \ell^2$
 carried by the K3 elliptic genus $\phi^{K3}_{0,1}$. The question of
 which $\phi^{(n)}$ survives is then not a motivic-depth question but a
-polar-support question, and the polar cutoff of
-Eichler--Zagier $1985$ supplies an unconditional answer.
+polar-support question, and Eichler--Zagier $1985$ supplies the
+polar cutoff.
 
-\begin{lemma}[Polar support of the K3 elliptic genus; cross-volume
-reference]
+\begin{lemma}[Polar support of the K3 elliptic genus]
 \label{lem:bc-polar-support-phi-K3}
 \ClaimStatusProvedElsewhere
 The K3 elliptic genus $\phi^{K3}_{0,1}$ has Fourier coefficients
 $c(N, \ell) = C(4N - \ell^2)$ depending only on the discriminant
 $\Delta = 4N - \ell^2$, with
 $C(-1) = 2$, $C(0) = 20$, and
-$C(\Delta) = 0$ for all $\Delta < -1$. Proved in Volume~III
-Lemma~\ref{V3-lem:polar-support-phi-K3}; primary source
+$C(\Delta) = 0$ for all $\Delta < -1$. The primary source is
 Eichler--Zagier $1985$ \textup{Prog.~Math.}~$55$ Theorem~$9.1$
 (index-$m$ weak Jacobi forms vanish in discriminants below $-m^2$, here
 $m = 1$).
 \end{lemma}
 
-\begin{theorem}[Unconditional depth-reduction of the pentagon tower on
-the K3 side]
+\begin{theorem}[Polar depth-reduction of the pentagon tower on the K3
+side]
 \label{thm:bc-unconditional-depth-reduction}
-\ClaimStatusProvedHere
-Consider the pentagon $A_\infty$-tower $\{\phi^{(n)}\}_{n\ge 3}$ of
-$\mathbf{H}_{\Delta_5}$ on the $A_\infty$-Humbert regime
-(Volume~III
-Proposition~\ref{V3-prop:A-infty-structure-constants-humbert}), where
+\ClaimStatusConditional
+Assume the pentagon $A_\infty$-tower $\{\phi^{(n)}\}_{n\ge 3}$ of
+$\mathbf{H}_{\Delta_5}$ on the $A_\infty$-Humbert regime has coefficient
+formula
 \[
  \phi^{(n)} \;=\; \sum_{\substack{(N, \ell, M)\\ 4NM - \ell^2 = -\mathfrak d_n}}
  c_{\Phi_{10}^{\mathrm{un}}/\eta^{24}}(N, \ell, M)\,
@@ -3055,8 +3317,7 @@ $n \equiv 3, 5 \pmod 8$, is necessary for the lattice sum to be
 non-empty. On the admissible locus:
 \begin{itemize}
 \item $n = 3$: $\phi^{(3)} \ne 0$, the Etingof--Kazhdan pentagon
- cocycle of Theorem~\ref{V3-thm:pentagon-sieg-bor}
- (Volume~III).
+ cocycle.
 \item $n = 5$: $\phi^{(5)} = 2\,[\mathrm{generator}]^{\otimes 5} \ne 0$,
  one-term lattice sum with Heegner coefficient
  $C(-1) = 2$.
@@ -3066,10 +3327,12 @@ non-empty. On the admissible locus:
  Lemma~\ref{lem:bc-polar-support-phi-K3}.
 \end{itemize}
 The non-admissible $n$'s have $\phi^{(n)} = 0$ by empty lattice sum.
-Hence the $A_\infty$-Humbert pentagon tower is concentrated at
+Under the displayed coefficient formula, the $A_\infty$-Humbert
+pentagon tower is concentrated at
 $n \in \{3, 5\}$: the strict quasi-Hopf obstruction plus a single
 higher coherence at $n = 5$. The vanishing for $n \ge 11$ is
-\emph{unconditional}: it follows from Eichler--Zagier $1985$ Theorem~$9.1$
+\emph{unconditional relative to the coefficient formula}: it follows
+from Eichler--Zagier $1985$ Theorem~$9.1$
 (index-$m$ polar support $\Delta \ge -m^2$, here $m = 1$), a
 structural property of weak Jacobi forms that does not depend on
 motivic-depth arithmetic.
@@ -3105,35 +3368,28 @@ fails, so there exists no $(N, \ell, M)\in\mathbb{Z}_{\ge 0}\times
 \mathbb{Z}\times\mathbb{Z}_{\ge 0}$ with $4NM - \ell^2 = -\mathfrak d_n$; the
 lattice sum is empty and $\phi^{(n)} = 0$ by vacuity.
 
-The unconditionality statement: Brown $2012$ \textup{Ann.~Math.}~$175$
-Theorem~$1$ establishes the motivic-MZV basis through weight $12$, and
-Theorem~\ref{thm:MC-hbar7-hbar12-k3} of this chapter uses that input
-to close the MC tower in the strict quasi-Hopf regime through
-$\hbar^{12}$. Higher weights $n \ge 13$ in the strict regime require
-the Zagier--Hoffman conjecture on the motivic-depth filtration (Hoffman
-$1997$ \textup{Pac.~J.~Math.}~$194$; Zagier $1994$
-\textup{Prog.~Math.}~$120$; unproved beyond Brown's horizon). The
-present theorem bypasses this entirely on the $A_\infty$-Humbert regime:
-the vanishing of $\phi^{(n)}$ for admissible $n \ge 11$ comes from
-Eichler--Zagier $1985$ Theorem~$9.1$, which is unconditional and
-structural to the theory of index-$1$ weak Jacobi forms, reaching all
+The independence statement is this: the finite-window
+Maurer--Cartan criterion of
+Theorem~\ref{thm:MC-hbar7-hbar12-k3} reduces the strict quasi-Hopf
+calculation to explicit coefficient identities, while the present
+vanishing does not use motivic-depth identities at all once the
+$A_\infty$-Humbert coefficient formula is fixed. The vanishing of
+$\phi^{(n)}$ for admissible $n \ge 11$ comes from Eichler--Zagier
+$1985$ Theorem~$9.1$, which is unconditional and structural to the
+theory of index-$1$ weak Jacobi forms, reaching all
 $n$ with $\mathfrak d_n > 1$.
 \end{proof}
 
-\begin{remark}[Contrast with Brown's weight-$12$ horizon]
+\begin{remark}[Contrast with motivic-depth input]
 \label{rem:bc-brown-horizon-contrast}
-Theorem~\ref{thm:MC-hbar7-hbar12-k3} closes the strict quasi-Hopf
-pentagon tower modulo $\hbar^{13}$ through the motivic MZV basis at
-weight $12$, whose existence is Brown $2012$
-\textup{Ann.~Math.}~$175$ Theorem~$1$. Weights $15$ and beyond
-require the depth-$5$ motivic generator $\zeta(3,3,3,3,3)$ and
-depend on the Zagier--Hoffman conjectural depth filtration.
-Theorem~\ref{thm:bc-unconditional-depth-reduction} is orthogonal: on
-the $A_\infty$-Humbert regime the vanishing is polar-cutoff driven
-and reaches arbitrarily high $n$, without any motivic-basis input. The
-K3-side cross-volume reference is Volume~III
-Theorem~\ref{V3-thm:filtration-sharpness} (filtration sharpness), where
-the admissibility table through $n \le 30$ is recorded with explicit
-Jacobi-lattice representatives $(N, \ell, M)$ and Heegner coefficients
-$H_n = C(-\mathfrak d_n)$.
+Theorem~\ref{thm:MC-hbar7-hbar12-k3} is a formal finite-window
+criterion: it identifies the coefficient identities needed through
+$\hbar^{12}$. The motivic verification of those identities is a
+separate arithmetic input. Theorem~\ref{thm:bc-unconditional-depth-reduction}
+is orthogonal: on the $A_\infty$-Humbert regime the vanishing is
+polar-cutoff driven and reaches arbitrarily high $n$, without any
+motivic-basis input. The
+admissibility table through $n \le 30$ is obtained directly by listing
+Jacobi-lattice representatives $(N,\ell,M)$ and evaluating the Heegner
+coefficients $H_n=C(-\mathfrak d_n)$.
 \end{remark}

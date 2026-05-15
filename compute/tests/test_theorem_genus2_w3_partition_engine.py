@@ -4,7 +4,7 @@ Multi-path verification of the first non-affine genus-2 computation.
 W_3 has generators T (weight 2), W (weight 3) -- multi-weight, so
 the scalar formula F_g = kappa * lambda_g FAILS at genus >= 2.
 
-The full decomposition (thm:multi-weight-genus-expansion):
+The all-weight decomposition (thm:multi-weight-genus-expansion):
   F_2(W_3) = kappa * lambda_2^FP + delta_F_2^cross
   where delta_F_2^cross = (c + 204)/(16c).
 
@@ -30,7 +30,9 @@ from fractions import Fraction
 from theorem_genus2_w3_partition_engine import (
     w3_data,
     w3_central_charge_from_level,
+    w3_dual_level,
     w3_koszul_dual_c,
+    w3_zero_curvature_levels,
     harmonic_number,
     kappa_w3,
     kappa_t_channel,
@@ -56,11 +58,14 @@ from theorem_genus2_w3_partition_engine import (
     F2_at_integer_values,
     sl3_data_at_level,
     F2_sl3_scalar,
+    ds_central_charge_gap,
     ds_comparison,
     koszul_duality_analysis,
     large_c_asymptotics,
     rational_reconstruction_check,
     cross_family_comparison,
+    uniform_weight_reduction_witness,
+    w3_genus2_projection_scope,
     propagator_variance_w3,
     multi_path_verification,
     full_F2_multi_path,
@@ -102,19 +107,39 @@ class TestCentralCharge:
     """Tests for W_3 central charge formula."""
 
     def test_w3_c_formula(self):
-        """c(W_3, k) = 2 - 24/(k+3)."""
-        assert w3_central_charge_from_level(Fraction(1)) == Fraction(2) - Fraction(24, 4)
-        assert w3_central_charge_from_level(Fraction(1)) == Fraction(-4)
+        """c(W_3, k) = 2 - 24(k+2)^2/(k+3)."""
+        assert w3_central_charge_from_level(Fraction(1)) == Fraction(2) - Fraction(24 * 9, 4)
+        assert w3_central_charge_from_level(Fraction(1)) == Fraction(-52)
 
     def test_w3_c_at_k_equals_minus1(self):
-        """c(W_3, k=-1) = 2 - 24/2 = -10."""
+        """c(W_3, k=-1) = 2 - 24(1)^2/2 = -10."""
         assert w3_central_charge_from_level(Fraction(-1)) == Fraction(-10)
+
+    def test_feigin_frenkel_dual_level_gives_c_sum_100(self):
+        """Under k'=-k-6, c(k)+c(k')=100."""
+        for k in [Fraction(1), Fraction(0), Fraction(-1), Fraction(1, 2)]:
+            c = w3_central_charge_from_level(k)
+            c_dual = w3_central_charge_from_level(w3_dual_level(k))
+            assert c + c_dual == Fraction(100)
+            assert w3_koszul_dual_c(c) == c_dual
 
     def test_koszul_dual_c(self):
         """c' = 100 - c."""
         assert w3_koszul_dual_c(Fraction(2)) == Fraction(98)
         assert w3_koszul_dual_c(Fraction(50)) == Fraction(50)
         assert w3_koszul_dual_c(Fraction(0)) == Fraction(100)
+
+    def test_critical_level_excluded(self):
+        """k=-3 is the pole of c(k)."""
+        with pytest.raises(ValueError, match="critical level"):
+            w3_central_charge_from_level(Fraction(-3))
+
+    def test_zero_curvature_levels(self):
+        """c(k)=0 exactly at k=-9/4 and k=-5/3."""
+        levels = w3_zero_curvature_levels()
+        assert levels == (Fraction(-9, 4), Fraction(-5, 3))
+        for k in levels:
+            assert w3_central_charge_from_level(k) == 0
 
 
 # ======================================================================
@@ -232,6 +257,21 @@ class TestGraphCrossChannel:
             closed = delta_F2_w3_closed_form(c)
             assert graphwise == closed, f"Mismatch at c={c_val}"
 
+    def test_c_zero_is_singular(self):
+        """The genus-2 W_3 cross-channel projection has a pole at c=0."""
+        with pytest.raises(ValueError, match="singular at c = 0"):
+            delta_F2_w3_closed_form(Fraction(0))
+        with pytest.raises(ValueError, match="singular at c = 0"):
+            F2_w3_total(Fraction(0))
+
+    def test_zero_curvature_levels_do_not_define_F2_projection(self):
+        """c(k)=0 levels are scalar-curvature zeros, not regular genus-2 values."""
+        for k in w3_zero_curvature_levels():
+            c = w3_central_charge_from_level(k)
+            assert c == 0
+            with pytest.raises(ValueError, match="singular at c = 0"):
+                F2_cross_channel(c)
+
 
 # ======================================================================
 # 5. Universal N-formula
@@ -251,6 +291,12 @@ class TestUniversalFormula:
     def test_N2_vanishes(self):
         """delta_F_2(W_2, c) = delta_F_2(Vir, c) = 0 (single-generator)."""
         assert delta_F2_universal_formula(2, Fraction(10)) == Fraction(0)
+        assert delta_F2_universal_formula(2, Fraction(0)) == Fraction(0)
+
+    def test_N3_c_zero_singular(self):
+        """For N>=3 the universal cross-channel formula has a c=0 pole."""
+        with pytest.raises(ValueError, match="singular at c = 0"):
+            delta_F2_universal_formula(3, Fraction(0))
 
     def test_N4_nonzero(self):
         """delta_F_2(W_4, c) is nonzero."""
@@ -270,11 +316,11 @@ class TestUniversalFormula:
 
 
 # ======================================================================
-# 6. Full F_2(W_3) computation
+# 6. Genus-2 W_3 projection computation
 # ======================================================================
 
 class TestF2Total:
-    """Tests for the full genus-2 free energy."""
+    """Tests for the genus-2 scalar plus cross-channel projection."""
 
     def test_scalar_part(self):
         """Scalar part = kappa * lambda_2 = 7c/6912."""
@@ -389,6 +435,14 @@ class TestVirComparison:
         result = cross_family_comparison(c)
         assert result['diff_matches_expected']
 
+    def test_uniform_weight_scalar_reduction_fails(self):
+        """The scalar-only uniform-weight reduction misses exactly delta_F_2^cross."""
+        c = Fraction(10)
+        witness = uniform_weight_reduction_witness(c)
+        assert not witness['scalar_formula_equals_projection']
+        assert witness['cross_channel_gap'] == Fraction(c + 204, 16 * c)
+        assert witness['failure_gap_equals_delta_F2_cross']
+
 
 # ======================================================================
 # 9. Multi-path verification
@@ -409,7 +463,7 @@ class TestMultiPath:
             assert result['all_paths_agree'], f"Paths disagree at c={c_val}"
 
     def test_full_F2_3_paths(self):
-        """Three paths for full F_2 agree."""
+        """Three paths for the genus-2 projection agree."""
         result = full_F2_multi_path(Fraction(5))
         assert result['all_paths_agree']
 
@@ -442,6 +496,12 @@ class TestKoszulDuality:
         result = koszul_duality_analysis(Fraction(50))
         assert result['F2_c'] == result['F2_dual']
         assert result['F2_diff'] == Fraction(0)
+
+    def test_koszul_endpoint_singularities(self):
+        """The c=0 and c=100 endpoints hit a genus-2 cross-channel pole."""
+        for c in [Fraction(0), Fraction(100)]:
+            with pytest.raises(ValueError, match="singular at c = 0"):
+                koszul_duality_analysis(c)
 
 
 # ======================================================================
@@ -478,12 +538,20 @@ class TestAsymptotics:
 class TestDSReduction:
     """Tests for DS reduction comparison sl_3 -> W_3."""
 
-    def test_c_relation(self):
-        """c(sl_3, k) - c(W_3, k) = 6 for all k."""
+    def test_c_gap_formula(self):
+        """c(sl_3,k)-c(W_3,k)=24k+30, not a constant 6."""
         for k_val in [1, 2, 3, 5, 10]:
-            result = ds_comparison(Fraction(k_val))
-            assert result['c_relation'] == Fraction(6), \
-                f"c_sl3 - c_w3 != 6 at k={k_val}"
+            k = Fraction(k_val)
+            result = ds_comparison(k)
+            assert result['c_relation'] == 24 * k + 30
+            assert result['central_charge_gap'] == ds_central_charge_gap(k)
+            assert not result['central_charge_gap_is_constant_6']
+
+    def test_c_gap_equals_6_only_at_k_minus_1(self):
+        """The old constant-6 relation is an accidental value at k=-1."""
+        result = ds_comparison(Fraction(-1))
+        assert result['central_charge_gap'] == Fraction(6)
+        assert result['central_charge_gap_is_constant_6']
 
     def test_sl3_kappa_formula(self):
         """kappa(sl_3, k) = 8(k+3)/6 = 4(k+3)/3."""
@@ -496,6 +564,13 @@ class TestDSReduction:
         """F_2(sl_3) != F_2(W_3) at the DS point (ghost contribution nonzero)."""
         result = ds_comparison(Fraction(1))
         assert result['difference'] != Fraction(0)
+
+    def test_ds_critical_level_excluded(self):
+        """Both affine and W_3 formulae have the critical pole k=-3."""
+        with pytest.raises(ValueError, match="critical level"):
+            sl3_data_at_level(Fraction(-3))
+        with pytest.raises(ValueError, match="critical level"):
+            ds_comparison(Fraction(-3))
 
 
 # ======================================================================
@@ -562,6 +637,21 @@ class TestSummary:
         report = summary_report(Fraction(7))
         assert report['multi_path_delta']['all_paths_agree']
         assert report['multi_path_total']['all_paths_agree']
+
+    def test_projection_scope_not_full_ope_or_derived_center(self):
+        """The finite genus-2 diagnostic is not full OPE or derived-centre data."""
+        scope = w3_genus2_projection_scope()
+        assert scope['finite_genus2_diagnostic']
+        assert not scope['is_full_ope_partition_function']
+        assert not scope['is_full_modular_koszul_package']
+        assert not scope['is_derived_center_data']
+        assert scope['kappa_packet']['trace'] == Fraction(5, 6)
+        assert scope['scalar_shadow_singular_c'] == (Fraction(0), Fraction(-22, 5))
+
+    def test_summary_carries_projection_scope(self):
+        """Summary exposes the same scope declaration."""
+        report = summary_report(Fraction(50))
+        assert report['projection_scope']['computed_object'].startswith('genus-2 scalar')
 
     def test_cross_channel_positive(self):
         """delta_F_2 > 0 for all c > 0 (thm:multi-weight-genus-expansion)."""

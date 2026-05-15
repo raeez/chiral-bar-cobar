@@ -1,20 +1,19 @@
-r"""Tests for the complete resurgence analysis of the shadow partition function.
+r"""Tests for scalar genus diagnostics of the shadow partition function.
 
-Comprehensive verification of the genus-direction resurgence pipeline:
+Verification of the genus-direction scalar pipeline:
 
-1. Borel transform: coefficients, evaluation, convergence radius
-2. Borel singularities: locations, types, relation to A-hat poles
-3. Stokes automorphism: multipliers at each singularity
-4. Trans-series: perturbative + instanton sectors
-5. Median Borel summation: comparison with exact, Pade, partial sum
-6. Large-order resurgent relations: prediction vs exact F_g
-7. Peacock pattern: multi-instanton Stokes constants
-8. Koszul complementarity: non-perturbative free energy from A!
-9. Optimal truncation: N* vs instanton action
-10. Cross-family comparison: universality of genus resurgence
+1. Exact Bernoulli/Faber--Pandharipande coefficients
+2. Exact A-hat scalar poles and residues
+3. Entire factorial-divided Borel-transform diagnostics
+4. Formal residue multipliers and trans-series diagnostics
+5. Pade and partial-sum comparison with the scalar closed form
+6. Finite-pole asymptotic estimates
+7. Verdier-branch complementarity diagnostics
+8. Firewalls preventing promotion to Borel summability, BTZ/JT,
+   non-perturbative completion, or multiweight partition theorems
 
 All tests use independently computed values.  No pattern matching or
-copy-paste (AP1, AP3).
+copy-paste.
 
 References:
     compute/lib/resurgence_shadow_complete.py
@@ -78,7 +77,7 @@ class TestAlgebraData:
         assert abs(h.kappa - 2.0) < 1e-14
 
     def test_heisenberg_dual_kappa(self):
-        """kappa + kappa' = 0 for Heisenberg (AP24)."""
+        """kappa + kappa' = 0 for the Heisenberg Verdier branch."""
         from lib.resurgence_shadow_complete import heisenberg_algebra
         h = heisenberg_algebra(rank=3)
         assert abs(h.kappa + h.kappa_dual) < 1e-14
@@ -90,7 +89,7 @@ class TestAlgebraData:
             assert abs(v.kappa - c / 2.0) < 1e-14
 
     def test_virasoro_dual_kappa(self):
-        """kappa(Vir_c) + kappa(Vir_{26-c}) = 13 (AP24)."""
+        """kappa(Vir_c) + kappa(Vir_{26-c}) = 13."""
         from lib.resurgence_shadow_complete import virasoro_algebra
         for c in [1.0, 6.0, 13.0, 25.0]:
             v = virasoro_algebra(c)
@@ -107,7 +106,7 @@ class TestAlgebraData:
         assert abs(a.kappa - 3.0 * 3.0 / 4.0) < 1e-14  # 3*(1+2)/4 = 9/4
 
     def test_affine_sl2_dual_kappa(self):
-        """kappa + kappa' = 0 for affine (AP24)."""
+        """kappa + kappa' = 0 for the affine scalar dual-level branch."""
         from lib.resurgence_shadow_complete import affine_sl2_algebra
         a = affine_sl2_algebra(k=1.0)
         assert abs(a.kappa + a.kappa_dual) < 1e-14
@@ -129,6 +128,12 @@ class TestFaberPandharipande:
         """lambda_2^FP = 7/5760."""
         from lib.resurgence_shadow_complete import lambda_fp
         assert abs(lambda_fp(2) - 7.0 / 5760.0) < 1e-14
+
+    def test_lambda_fp_exact_g5(self):
+        """lambda_5^FP = 73/3503554560."""
+        from fractions import Fraction
+        from lib.resurgence_shadow_complete import lambda_fp_exact
+        assert lambda_fp_exact(5) == Fraction(73, 3503554560)
 
     def test_lambda_fp_matches_independent(self):
         from lib.resurgence_shadow_complete import lambda_fp
@@ -165,7 +170,7 @@ class TestFaberPandharipande:
 # =====================================================================
 
 class TestBorelTransformGenus:
-    """Test the Borel transform of the genus series."""
+    """Test the entire factorial-divided diagnostic transforms."""
 
     def test_borel_at_zero(self):
         from lib.resurgence_shadow_complete import borel_transform_genus
@@ -182,9 +187,9 @@ class TestBorelTransformGenus:
         assert abs(val - leading) / abs(leading) < 0.01
 
     def test_borel_real_convergent(self):
-        """B[F](zeta) converges for |zeta| < 2*pi."""
+        """B[F](zeta) is finite at sampled real points."""
         from lib.resurgence_shadow_complete import borel_transform_genus
-        for zeta in [1.0, 3.0, 5.0]:
+        for zeta in [1.0, 3.0, 5.0, 10.0]:
             val = borel_transform_genus(1.0, zeta, g_max=100)
             assert math.isfinite(abs(val))
 
@@ -196,7 +201,7 @@ class TestBorelTransformGenus:
         assert abs(B2 - 3.5 * B1) < 1e-10 * abs(B2)
 
     def test_borel_imaginary_zeta(self):
-        """B[F] at imaginary zeta should converge."""
+        """B[F] at imaginary zeta is finite at sampled points."""
         from lib.resurgence_shadow_complete import borel_transform_genus
         val = borel_transform_genus(1.0, 3.0j, g_max=80)
         assert math.isfinite(abs(val))
@@ -208,9 +213,9 @@ class TestBorelTransformGenus:
         assert abs(val - 1.0 / 24.0) < 1e-12
 
     def test_borel_u_plane_convergent(self):
-        """B_u converges for |xi| < (2*pi)^2."""
+        """B_u is finite at sampled u-plane points."""
         from lib.resurgence_shadow_complete import borel_transform_u_plane
-        for xi in [1.0, 10.0, 30.0]:
+        for xi in [1.0, 10.0, 30.0, 100.0]:
             val = borel_transform_u_plane(1.0, xi, g_max=80)
             assert math.isfinite(abs(val))
 
@@ -218,34 +223,36 @@ class TestBorelTransformGenus:
         from lib.resurgence_shadow_complete import borel_coefficients_genus
         coeffs = borel_coefficients_genus(1.0, 20)
         assert len(coeffs) == 20
-        # First entry should be (1, F_1/Gamma(2)) = (1, kappa/24)
+        # First entry is (1, F_1/Gamma(2)) = (1, kappa/24).
         assert coeffs[0][0] == 1
         assert abs(coeffs[0][1] - 1.0 / 24.0) < 1e-14
 
 
 # =====================================================================
-# Section 4: Borel singularities
+# Section 4: Scalar A-hat poles and Borel radius firewall
 # =====================================================================
 
-class TestBorelSingularities:
-    """Test the Borel singularity structure."""
+class TestScalarAhatPoles:
+    """Test scalar A-hat pole data and Borel-transform separation."""
 
-    def test_singularity_locations(self):
+    def test_scalar_pole_locations(self):
         from lib.resurgence_shadow_complete import borel_singularities_genus
         sings = borel_singularities_genus(5)
         assert len(sings) == 5
         for s in sings:
             n = s['n']
             assert abs(s['zeta_location'] - 2.0 * PI * n) < 1e-12
+            assert s['object'] == 'scalar_ahat_closed_form'
+            assert not s['borel_transform_singularity']
 
-    def test_singularity_u_locations(self):
+    def test_scalar_pole_u_locations(self):
         from lib.resurgence_shadow_complete import borel_singularities_genus
         sings = borel_singularities_genus(3)
         for s in sings:
             n = s['n']
             assert abs(s['u_location'] - (2.0 * PI * n) ** 2) < 1e-10
 
-    def test_singularity_residues(self):
+    def test_scalar_pole_residues(self):
         """Residue of (hbar/2)/sin(hbar/2) at hbar=2*pi*n is (-1)^n * 2*pi*n."""
         from lib.resurgence_shadow_complete import borel_singularities_genus
         sings = borel_singularities_genus(4)
@@ -254,15 +261,25 @@ class TestBorelSingularities:
             expected = (-1) ** n * 2.0 * PI * n
             assert abs(s['residue_of_ahat'] - expected) < 1e-10
 
-    def test_borel_radius(self):
+    def test_borel_transform_radius_is_infinite(self):
         from lib.resurgence_shadow_complete import borel_radius_genus
-        assert abs(borel_radius_genus() - TWO_PI) < 1e-12
+        assert math.isinf(borel_radius_genus())
+
+    def test_scalar_genus_radius(self):
+        from lib.resurgence_shadow_complete import (
+            scalar_genus_radius_hbar,
+            scalar_genus_radius_u,
+        )
+        assert abs(scalar_genus_radius_hbar() - TWO_PI) < 1e-12
+        assert abs(scalar_genus_radius_u() - FOUR_PI_SQ) < 1e-10
 
     def test_verify_borel_radius_from_coefficients(self):
         from lib.resurgence_shadow_complete import verify_borel_radius_from_coefficients
         result = verify_borel_radius_from_coefficients(1.0, g_max=40)
         assert result['converged']
         assert abs(result['predicted_u_radius'] - FOUR_PI_SQ) < 1e-10
+        assert math.isinf(result['borel_transform_radius'])
+        assert result['certification'] == 'finite_window_diagnostic'
 
 
 # =====================================================================
@@ -270,7 +287,7 @@ class TestBorelSingularities:
 # =====================================================================
 
 class TestHeisenbergBorel:
-    """Test Heisenberg-specific Borel analysis."""
+    """Test Heisenberg-specific scalar-pole diagnostics."""
 
     def test_heisenberg_borel_coefficients(self):
         from lib.resurgence_shadow_complete import heisenberg_borel_coefficients
@@ -282,7 +299,9 @@ class TestHeisenbergBorel:
     def test_heisenberg_singularity_structure(self):
         from lib.resurgence_shadow_complete import heisenberg_borel_singularity_structure
         result = heisenberg_borel_singularity_structure(1.0)
-        assert abs(result['borel_radius'] - TWO_PI) < 1e-12
+        assert math.isinf(result['borel_radius'])
+        assert abs(result['scalar_hbar_radius'] - TWO_PI) < 1e-12
+        assert result['certification'] == 'certified_exact'
         assert len(result['singularities']) == 5
 
     def test_heisenberg_first_singularity_residue(self):
@@ -325,6 +344,7 @@ class TestVirasoroBorel:
         for r in results:
             if r['within_radius']:
                 assert math.isfinite(r['modulus_borel'])
+            assert r['borel_certification'] == 'borel_transform_entire_diagnostic'
 
     def test_virasoro_c_half_borel(self):
         """Virasoro at c=1/2 (Ising): kappa = 1/4."""
@@ -340,11 +360,11 @@ class TestVirasoroBorel:
 
 
 # =====================================================================
-# Section 7: Stokes multipliers
+# Section 7: Formal residue multipliers
 # =====================================================================
 
 class TestStokesMultipliers:
-    """Test Stokes multipliers for the genus direction."""
+    """Test formal residue multipliers for the scalar pole model."""
 
     def test_S1_formula(self):
         """S_1 = kappa * (-1)^1 * 4*pi^2 * i = -4*pi^2*kappa*i."""
@@ -396,12 +416,13 @@ class TestStokesMultipliers:
 # =====================================================================
 
 class TestTransseries:
-    """Test the genus trans-series construction."""
+    """Test the diagnostic genus trans-series construction."""
 
     def test_transseries_instanton_action(self):
         from lib.resurgence_shadow_complete import build_genus_transseries
         ts = build_genus_transseries(1.0, 20)
         assert abs(ts.instanton_action - FOUR_PI_SQ) < 1e-10
+        assert ts.certification == 'analytic_resurgence_hypothesis'
 
     def test_transseries_perturbative_equals_F_g(self):
         from lib.resurgence_shadow_complete import build_genus_transseries, F_g_scalar
@@ -450,14 +471,14 @@ class TestTransseries:
 
 
 # =====================================================================
-# Section 9: Median Borel summation
+# Section 9: Scalar closed form and ray-integral diagnostics
 # =====================================================================
 
-class TestMedianBorelSum:
-    """Test median Borel summation."""
+class TestScalarClosedForm:
+    """Test scalar closed form, Pade, and partial sums."""
 
     def test_pade_genus_series_small_hbar(self):
-        """Pade should match exact at small hbar."""
+        """Pade matches the scalar closed form at small hbar."""
         from lib.resurgence_shadow_complete import (
             pade_genus_series, genus_series_closed_form,
         )
@@ -468,7 +489,7 @@ class TestMedianBorelSum:
         assert abs(pade_val - exact) / abs(exact) < 0.01
 
     def test_pade_genus_series_medium_hbar(self):
-        """Pade should match exact at medium hbar."""
+        """Pade matches the scalar closed form at medium hbar."""
         from lib.resurgence_shadow_complete import (
             pade_genus_series, genus_series_closed_form,
         )
@@ -507,11 +528,11 @@ class TestMedianBorelSum:
 
 
 # =====================================================================
-# Section 10: Large-order relations
+# Section 10: Finite-pole coefficient asymptotics
 # =====================================================================
 
 class TestLargeOrderRelations:
-    """Test resurgent large-order predictions for F_g."""
+    """Test finite-pole asymptotic predictions for F_g."""
 
     def test_large_order_leading_heisenberg(self):
         """For Heisenberg, large-order prediction matches Bernoulli asymptotics."""
@@ -521,9 +542,9 @@ class TestLargeOrderRelations:
             Fg = F_g_scalar(kappa, g)
             Fg_pred = large_order_prediction(kappa, g, n_inst=3)
             rel_err = abs(Fg - Fg_pred) / abs(Fg)
-            assert rel_err < 0.5  # Improves with g; at g=10 should be < 10%
+            assert rel_err < 0.5
 
-    def test_large_order_improves_with_g(self):
+    def test_finite_pole_error_drops_with_g(self):
         """Relative error of large-order prediction decreases with g."""
         from lib.resurgence_shadow_complete import large_order_prediction, F_g_scalar
         kappa = 1.0
@@ -535,8 +556,8 @@ class TestLargeOrderRelations:
         # Check that errors generally decrease (not necessarily monotonically)
         assert errors[-1] < errors[0]
 
-    def test_large_order_more_instantons_better(self):
-        """Including more instanton sectors improves the prediction."""
+    def test_more_scalar_poles_improve_prediction(self):
+        """Including more scalar poles improves the prediction."""
         from lib.resurgence_shadow_complete import large_order_prediction, F_g_scalar
         kappa = 1.0
         g = 10
@@ -550,6 +571,7 @@ class TestLargeOrderRelations:
         result = large_order_verification(1.0, g_max=15, n_inst=3)
         assert len(result['results']) == 15
         assert result['error_at_gmax'] is not None
+        assert result['certification'] == 'finite_window_diagnostic'
 
     def test_large_order_virasoro(self):
         """Virasoro large-order: same structure as Heisenberg (scalar level)."""
@@ -562,16 +584,16 @@ class TestLargeOrderRelations:
         assert rel_err < 0.3
 
     def test_large_order_prediction_at_g1(self):
-        """At g=1, the prediction should be reasonable (not exact)."""
+        """At g=1, the prediction is nonzero but not exact."""
         from lib.resurgence_shadow_complete import large_order_prediction, F_g_scalar
         kappa = 1.0
         Fg = F_g_scalar(kappa, 1)
         Fg_pred = large_order_prediction(kappa, 1, n_inst=10)
         # At g=1, the prediction is less accurate
-        assert abs(Fg_pred) > 0  # Should be nonzero
+        assert abs(Fg_pred) > 0
 
     def test_large_order_sign_pattern(self):
-        """F_g are all positive; prediction should also be positive."""
+        """F_g and the finite-pole prediction are positive in this range."""
         from lib.resurgence_shadow_complete import large_order_prediction
         kappa = 1.0
         for g in range(2, 15):
@@ -580,11 +602,11 @@ class TestLargeOrderRelations:
 
 
 # =====================================================================
-# Section 11: Peacock pattern
+# Section 11: Formal Peacock-table diagnostics
 # =====================================================================
 
 class TestPeacockPattern:
-    """Test the Aniceto-Schiappa-Vonk peacock pattern."""
+    """Test the formal residue table shaped like a Peacock pattern."""
 
     def test_peacock_S10_equals_S1(self):
         """S_{1,0} = S_1 (first Stokes multiplier)."""
@@ -606,7 +628,7 @@ class TestPeacockPattern:
         assert abs(S20 - S2) < 1e-10
 
     def test_peacock_S21_equals_S1(self):
-        """S_{2,1} = S_{2-1} = S_1 (simple-pole factorization)."""
+        """S_{2,1} = S_{2-1} = S_1 in the simple-pole model."""
         from lib.resurgence_shadow_complete import (
             peacock_stokes_constant, stokes_multiplier_genus_n,
         )
@@ -645,11 +667,11 @@ class TestPeacockPattern:
 
 
 # =====================================================================
-# Section 12: Koszul complementarity
+# Section 12: Verdier-branch complementarity diagnostics
 # =====================================================================
 
-class TestKoszulComplementarity:
-    """Test non-perturbative structure from Koszul duality."""
+class TestVerdierBranchComplementarity:
+    """Test dual-branch diagnostics without object conflation."""
 
     def test_koszul_np_heisenberg(self):
         from lib.resurgence_shadow_complete import (
@@ -658,7 +680,9 @@ class TestKoszulComplementarity:
         alg = heisenberg_algebra(rank=1)
         result = koszul_nonperturbative_genus(alg, 0.5, g_max=20)
         assert math.isfinite(result['F_perturbative'])
-        # Heisenberg dual has kappa = -1, so F_pert_dual should be negative
+        assert result['dual_branch'] == 'A^! Verdier/continuous-linear dual branch'
+        assert result['certification'] == 'analytic_resurgence_hypothesis'
+        # The Heisenberg dual branch has kappa = -1, so F_pert_dual is negative.
         assert result['F_perturbative_dual'] < 0
 
     def test_koszul_np_virasoro(self):
@@ -674,13 +698,13 @@ class TestKoszulComplementarity:
         from lib.resurgence_shadow_complete import koszul_self_dual_check
         result = koszul_self_dual_check(c_val=13.0, hbar=1.0)
         assert result['kappa_equals_kappa_dual']
-        assert result['symmetry'] == 'Z_2 enhanced'
+        assert result['symmetry'] == 'scalar branch fixed point'
 
     def test_koszul_not_self_dual(self):
         from lib.resurgence_shadow_complete import koszul_self_dual_check
         result = koszul_self_dual_check(c_val=1.0, hbar=1.0)
         assert not result['kappa_equals_kappa_dual']
-        assert result['symmetry'] == 'broken'
+        assert result['symmetry'] == 'scalar branches distinct'
 
     def test_koszul_instanton_suppressed(self):
         """At small hbar, instanton correction is negligible."""
@@ -692,11 +716,24 @@ class TestKoszulComplementarity:
         assert result['exp_suppression'] < 1e-100
 
     def test_koszul_complementarity_sum(self):
-        """kappa + kappa' = 13 for Virasoro (AP24)."""
+        """kappa + kappa' = 13 for the Virasoro scalar dual branch."""
         from lib.resurgence_shadow_complete import virasoro_algebra
         for c in [1.0, 6.0, 13.0, 25.0]:
             alg = virasoro_algebra(c)
             assert abs(alg.kappa + alg.kappa_dual - 13.0) < 1e-14
+
+    def test_object_firewall_records_five_distinct_objects(self):
+        from lib.resurgence_shadow_complete import OBJECT_FIREWALLS
+        for key in ['A', 'B(A)', 'A^i', 'A^!', 'Z_ch^der(A)']:
+            assert key in OBJECT_FIREWALLS
+        assert 'inversion, not Koszul duality' in OBJECT_FIREWALLS['bar_cobar']
+
+    def test_kernel_normalization_firewall(self):
+        from lib.resurgence_shadow_complete import KERNEL_NORMALIZATIONS
+        assert KERNEL_NORMALIZATIONS['affine_raw_collision'] == 'k*Omega_tr/z'
+        assert KERNEL_NORMALIZATIONS['affine_KZ'] == 'Omega/((k+h_vee)z)'
+        assert KERNEL_NORMALIZATIONS['heisenberg'] == 'k/z'
+        assert KERNEL_NORMALIZATIONS['virasoro'] == '(c/2)/z^3 + 2T/z'
 
 
 # =====================================================================
@@ -704,15 +741,16 @@ class TestKoszulComplementarity:
 # =====================================================================
 
 class TestOptimalTruncation:
-    """Test optimal truncation of the genus series."""
+    """Test finite-window truncation diagnostics for the genus series."""
 
     def test_optimal_N_star_formula(self):
-        """N* = floor(A / hbar^2) = floor((2*pi)^2 / hbar^2)."""
+        """Diagnostic N* = floor(A / hbar^2) = floor((2*pi)^2 / hbar^2)."""
         from lib.resurgence_shadow_complete import optimal_truncation_genus
         result = optimal_truncation_genus(1.0, 1.0)
         A = FOUR_PI_SQ
         expected_N = int(A / 1.0)  # = 39
         assert result['N_star_predicted'] == expected_N
+        assert result['certification'] == 'finite_window_diagnostic'
 
     def test_optimal_truncation_hbar_2(self):
         """At hbar = 2: N* = floor(4*pi^2 / 4) = floor(9.87) = 9."""
@@ -723,7 +761,7 @@ class TestOptimalTruncation:
         assert result['N_star_predicted'] == expected_N
 
     def test_optimal_truncation_minimum_error(self):
-        """The minimum error should occur near N*."""
+        """The displayed window contains the diagnostic scale."""
         from lib.resurgence_shadow_complete import optimal_truncation_genus
         result = optimal_truncation_genus(1.0, 1.0)
         N_star = result['N_star_predicted']
@@ -743,7 +781,7 @@ class TestOptimalTruncation:
 # =====================================================================
 
 class TestFullPipeline:
-    """Test the full resurgence analysis pipeline."""
+    """Test the scalar diagnostic analysis bundle."""
 
     def test_full_analysis_runs(self):
         from lib.resurgence_shadow_complete import full_resurgence_analysis
@@ -756,13 +794,15 @@ class TestFullPipeline:
     def test_full_analysis_borel_radius(self):
         from lib.resurgence_shadow_complete import full_resurgence_analysis
         result = full_resurgence_analysis(1.0, g_max=15)
-        assert abs(result['borel']['radius'] - TWO_PI) < 1e-12
+        assert math.isinf(result['borel']['radius'])
+        assert abs(result['borel']['scalar_hbar_radius'] - TWO_PI) < 1e-12
 
     def test_full_analysis_stokes_S1(self):
         from lib.resurgence_shadow_complete import full_resurgence_analysis
         result = full_resurgence_analysis(1.0, g_max=15)
         S1 = result['stokes']['S_1']
         assert abs(S1 - (-FOUR_PI_SQ * 1.0j)) < 1e-10
+        assert result['stokes']['certification'] == 'analytic_resurgence_hypothesis'
 
     def test_full_analysis_peacock_triangle(self):
         from lib.resurgence_shadow_complete import full_resurgence_analysis
@@ -770,13 +810,23 @@ class TestFullPipeline:
         triangle = result['peacock_triangle']
         assert len(triangle) == 4
 
+    def test_full_analysis_certification_firewall(self):
+        from lib.resurgence_shadow_complete import full_resurgence_analysis
+        result = full_resurgence_analysis(1.0, g_max=8)
+        summary = result['certification_summary']
+        assert summary['borel_transform_entire'] == 'certified_exact'
+        assert summary['formal_stokes_multipliers'] == 'analytic_resurgence_hypothesis'
+        assert summary['nonperturbative_completion'] == 'analytic_resurgence_hypothesis'
+        assert summary['BTZ_JT_recovery'] == 'not_certified_here'
+        assert summary['all_genus_multiweight_partition_theorem'] == 'not_certified_here'
+
 
 # =====================================================================
 # Section 15: Cross-family comparison
 # =====================================================================
 
 class TestCrossFamilyComparison:
-    """Test universality of genus-direction resurgence across families."""
+    """Test scalar A-hat diagnostics across families."""
 
     def test_family_comparison_runs(self):
         from lib.resurgence_shadow_complete import family_comparison
@@ -784,18 +834,21 @@ class TestCrossFamilyComparison:
         assert len(results) >= 5
 
     def test_universal_instanton_action(self):
-        """All families share instanton action (2*pi)^2 (genus direction)."""
+        """All scalar diagnostics share pole scale (2*pi)^2."""
         from lib.resurgence_shadow_complete import family_comparison
         results = family_comparison(g_max=10)
         for name, data in results.items():
             assert abs(data['instanton_action'] - FOUR_PI_SQ) < 1e-10
 
-    def test_universal_borel_radius(self):
-        """All families share Borel radius 2*pi (genus direction)."""
+    def test_borel_transform_entire_and_scalar_radius(self):
+        """All sampled families have entire Borel transforms and scalar radius 2*pi."""
         from lib.resurgence_shadow_complete import family_comparison
         results = family_comparison(g_max=10)
         for name, data in results.items():
-            assert abs(data['borel_radius'] - TWO_PI) < 1e-12
+            assert math.isinf(data['borel_radius'])
+            assert abs(data['scalar_hbar_radius'] - TWO_PI) < 1e-12
+            assert data['certification'] == 'finite_window_diagnostic'
+            assert 'multiweight partition theorem' in data['not_certified']
 
     def test_S1_proportional_to_kappa(self):
         """S_1 = -4*pi^2*kappa*i for all families."""
@@ -862,13 +915,11 @@ class TestBorelPlaneVisualization:
             prev = abs(val)
 
     def test_borel_on_imaginary_axis(self):
-        """B[F](i*y) should be purely imaginary for real kappa."""
+        """B[F](i*y) is finite for real kappa."""
         from lib.resurgence_shadow_complete import borel_transform_genus
         kappa = 1.0
         for y in [1.0, 2.0, 3.0]:
             val = borel_transform_genus(kappa, 1.0j * y, g_max=60)
-            # Not exactly purely imaginary due to even/odd structure,
-            # but should be finite
             assert math.isfinite(abs(val))
 
 
@@ -937,7 +988,7 @@ class TestConsistencyWithExisting:
     """Cross-check with existing resurgence and shadow partition function modules."""
 
     def test_F_g_matches_utils(self):
-        """F_g should match the utils module."""
+        """F_g matches the utils module."""
         try:
             from lib.utils import lambda_fp as utils_lambda_fp, F_g as utils_F_g
             from lib.resurgence_shadow_complete import F_g_scalar, lambda_fp
@@ -950,17 +1001,17 @@ class TestConsistencyWithExisting:
         except ImportError:
             pytest.skip("utils module not available")
 
-    def test_borel_radius_matches_shadow_pf(self):
-        """Borel radius should match shadow_pf_convergence."""
+    def test_scalar_radius_matches_shadow_pf(self):
+        """Scalar genus radius matches shadow_pf_convergence."""
         try:
             from lib.shadow_pf_convergence import genus_convergence_radius
-            from lib.resurgence_shadow_complete import borel_radius_genus
-            assert abs(genus_convergence_radius() - borel_radius_genus()) < 1e-12
+            from lib.resurgence_shadow_complete import scalar_genus_radius_hbar
+            assert abs(genus_convergence_radius() - scalar_genus_radius_hbar()) < 1e-12
         except ImportError:
             pytest.skip("shadow_pf_convergence not available")
 
     def test_closed_form_matches_shadow_pf(self):
-        """Closed form should match shadow_pf_convergence."""
+        """Closed form matches shadow_pf_convergence."""
         try:
             from lib.shadow_pf_convergence import genus_series_closed_form as spf_closed
             from lib.resurgence_shadow_complete import genus_series_closed_form
@@ -981,15 +1032,14 @@ class TestEdgeCases:
     """Test edge cases and robustness."""
 
     def test_borel_at_large_zeta(self):
-        """Borel transform should handle large |zeta| gracefully."""
+        """Borel transform handles large |zeta| without crashing."""
         from lib.resurgence_shadow_complete import borel_transform_genus
-        # Beyond convergence radius, the partial sum may not converge,
-        # but it should not crash
+        # The finite truncation is a diagnostic value beyond the scalar disk.
         val = borel_transform_genus(1.0, 10.0, g_max=30)
         assert isinstance(val, complex)
 
     def test_negative_kappa(self):
-        """Negative kappa (e.g., Koszul dual) should work correctly."""
+        """Negative kappa values from dual branches are supported."""
         from lib.resurgence_shadow_complete import F_g_scalar, borel_transform_genus
         kappa = -1.0
         assert F_g_scalar(kappa, 1) < 0

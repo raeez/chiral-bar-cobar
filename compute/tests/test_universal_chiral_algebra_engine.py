@@ -1,30 +1,28 @@
 r"""Tests for universal chiral algebra engine.
 
 Tests the Cliff universality framework, quasi-conformal structure,
-and Aut(O) action for all standard families in the monograph.
+Aut(O)/Der(O) action, and family-level descent witnesses for the standard
+families in the monograph.
 
 Reference: Emily Cliff, "Universal factorization spaces and algebras",
 Math. Res. Lett. 26 (2019), no. 4, 1059-1096. arXiv:1608.08122.
 
 Multi-path verification strategy (per CLAUDE.md mandate):
   Path 1: Direct property verification from definitions
-  Path 2: Cross-family consistency (universality of universal properties)
-  Path 3: Hierarchy implications (conformal => quasi-conformal => universal)
+  Path 2: Cross-family consistency
+  Path 3: Hierarchy implications with the family witness kept explicit
   Path 4: Literature cross-check (Cliff's examples, FBZ quasi-conformal)
-  Path 5: Monograph axiom consistency (MK1-MK5 => universality)
+  Path 5: Monograph axiom consistency (fixed-X data versus universal family)
 """
 
 from __future__ import annotations
 
 import pytest
-from fractions import Fraction
 
 from sympy import Rational
 
 from compute.lib.universal_chiral_algebra_engine import (
     # Data classes
-    AutOAction,
-    UniversalityData,
     ChiralAlgebraFamily,
     # Constructors
     heisenberg_family,
@@ -54,7 +52,7 @@ from compute.lib.universal_chiral_algebra_engine import (
     dimension_analysis,
     weak_factorization_data,
     # Utilities
-    nilpotency_order_primary,
+    der_plus_local_nilpotency_bound,
     _make_aut_o,
 )
 
@@ -125,7 +123,7 @@ class TestQuasiConformalStructure:
         assert not is_conf, "Critical level should NOT be conformal"
 
     def test_all_landscape_quasi_conformal(self):
-        """EVERY family in the standard landscape is quasi-conformal."""
+        """Every family in the standard landscape is quasi-conformal."""
         landscape = standard_landscape()
         for key, family in landscape.items():
             is_qc, reason = verify_quasi_conformal(family)
@@ -177,13 +175,13 @@ class TestConformalStructure:
         is_conf, _ = verify_conformal(family)
         assert is_conf
 
-    def test_lattice_non_unimodular_not_conformal(self):
-        """Non-unimodular lattice VOA is quasi-conformal but not conformal."""
+    def test_lattice_non_unimodular_still_conformal(self):
+        """Unimodularity controls self-duality, not the lattice conformal vector."""
         family = lattice_voa_family(1, is_unimodular=False)
         is_conf, _ = verify_conformal(family)
-        assert not is_conf
+        assert is_conf
         is_qc, _ = verify_quasi_conformal(family)
-        assert is_qc, "Non-unimodular lattice should still be quasi-conformal"
+        assert is_qc, "Even positive-definite lattice VOA remains quasi-conformal"
 
 
 # =============================================================================
@@ -194,21 +192,39 @@ class TestUniversality:
     """Verify universality (Cliff's sense) for all standard families."""
 
     def test_all_landscape_universal(self):
-        """EVERY family in the standard landscape is universal."""
+        """Every family in the standard landscape is universal."""
         landscape = standard_landscape()
         for key, family in landscape.items():
             is_univ, reason = verify_universal(family)
             assert is_univ, f"{key} should be universal: {reason}"
 
     def test_universality_from_quasi_conformal(self):
-        """In dimension 1, quasi-conformal <=> universal (Cliff's theorem)."""
+        """Registered dimension-1 witnesses realize the Cliff/FBZ equivalence."""
         landscape = standard_landscape()
         for key, family in landscape.items():
             is_qc, _ = verify_quasi_conformal(family)
             is_univ, _ = verify_universal(family)
             assert is_qc == is_univ, (
-                f"{key}: quasi-conformal and universal should be equivalent in dim 1"
+                f"{key}: registered quasi-conformal witness should be universal"
             )
+
+    def test_fixed_curve_quasi_conformal_flag_is_not_universality(self):
+        """A fixed-X chiral algebra flag without descent data is not universal."""
+        family = ChiralAlgebraFamily(
+            name="fixed-curve-test",
+            central_charge=Rational(1),
+            kappa=Rational(1),
+            generators=[("a", Rational(1))],
+            is_quasi_conformal=True,
+            is_conformal=True,
+            is_universal=False,
+            aut_o_action=_make_aut_o([("a", Rational(1))], Rational(1)),
+        )
+        is_qc, qc_reason = verify_quasi_conformal(family)
+        is_univ, univ_reason = verify_universal(family)
+        assert is_qc, qc_reason
+        assert not is_univ
+        assert "compatible family" in univ_reason
 
     def test_conformal_implies_quasi_conformal(self):
         """conformal => quasi-conformal (strict implication)."""
@@ -240,6 +256,9 @@ class TestUniversality:
             assert h["etale_descent"]
             # Universal chiral = universal factorization (Cliff)
             assert h["universal_chiral"] == h["universal_factorization"]
+            if h["universal_chiral"]:
+                assert h["quasi_conformal"]
+                assert h["etale_descent"]
             # Conformal => quasi-conformal
             if h["conformal"]:
                 assert h["quasi_conformal"]
@@ -266,6 +285,20 @@ class TestEtaleDescent:
         assert "OPE defined on formal disk" in reason
         assert "diagonal stratification" in reason
         assert "V_phi" in reason
+        assert "registered witness" in reason
+
+    def test_etale_descent_requires_family_witness(self):
+        """Fixed-curve D-module data does not supply etale descent by itself."""
+        family = ChiralAlgebraFamily(
+            name="fixed-curve-test",
+            central_charge=Rational(1),
+            kappa=Rational(1),
+            generators=[("a", Rational(1))],
+            aut_o_action=_make_aut_o([("a", Rational(1))], Rational(1)),
+        )
+        has_desc, reason = verify_etale_descent(family)
+        assert not has_desc
+        assert "fixed-curve D-module" in reason
 
 
 # =============================================================================
@@ -318,21 +351,25 @@ class TestAutOAction:
     """Test the Aut(O) action structure."""
 
     def test_nilpotency_order_weight_1(self):
-        """Weight 1 primary: nilpotency order 2."""
-        assert nilpotency_order_primary(Rational(1)) == 2
+        """Weight 1 homogeneous generator: positive-energy bound 2."""
+        assert der_plus_local_nilpotency_bound(Rational(1)) == 2
 
     def test_nilpotency_order_weight_2(self):
-        """Weight 2 primary: nilpotency order 3."""
-        assert nilpotency_order_primary(Rational(2)) == 3
+        """Weight 2 homogeneous generator: positive-energy bound 3."""
+        assert der_plus_local_nilpotency_bound(Rational(2)) == 3
 
     def test_nilpotency_order_weight_0(self):
-        """Weight 0: nilpotency order 1."""
-        assert nilpotency_order_primary(Rational(0)) == 1
+        """Weight 0: positive-energy bound 1."""
+        assert der_plus_local_nilpotency_bound(Rational(0)) == 1
 
     def test_nilpotency_order_half_integer(self):
-        """Weight 1/2 (fermion): nilpotency order 1 (int(1/2) + 1 = 1)."""
-        # int(Rational(1,2)) = 0
-        assert nilpotency_order_primary(Rational(1, 2)) == 1
+        """Weight 1/2 (fermion): positive-energy bound 1."""
+        assert der_plus_local_nilpotency_bound(Rational(1, 2)) == 1
+
+    def test_negative_weight_has_no_positive_energy_bound(self):
+        """Negative conformal weight is outside the positive-energy witness."""
+        with pytest.raises(ValueError):
+            der_plus_local_nilpotency_bound(Rational(-1))
 
     def test_aut_o_heisenberg(self):
         """Heisenberg Aut(O) action: source = Sugawara."""
@@ -353,13 +390,13 @@ class TestAutOAction:
         assert action.central_charge == Rational(26)
 
     def test_aut_o_critical_level(self):
-        """Critical level: Aut(O) from translation, NOT conformal."""
+        """Critical level: Aut(O) from affine coordinate changes, not Sugawara."""
         family = critical_level_family("A", 1)
         action = family.aut_o_action
         assert action is not None
         assert not action.is_conformal
         assert action.is_quasi_conformal
-        assert action.source == "translation"
+        assert action.source == "affine_coordinate_change"
 
     def test_aut_o_lattice(self):
         """Lattice VOA Aut(O) action: source = Heisenberg subalgebra."""
@@ -367,16 +404,17 @@ class TestAutOAction:
         action = family.aut_o_action
         assert action is not None
         assert action.source == "heisenberg"
+        assert action.is_conformal
 
     def test_aut_o_generator_data(self):
         """Check generator data in Aut(O) action."""
         family = virasoro_family(Rational(2))
         action = family.aut_o_action
         assert len(action.generator_data) == 1
-        name, weight, nilp = action.generator_data[0]
+        name, weight, bound = action.generator_data[0]
         assert name == "T"
         assert weight == Rational(2)
-        assert nilp == 3  # weight 2 => nilpotency order 3
+        assert bound == 3  # weight 2 => positive-energy bound 3
 
 
 # =============================================================================
@@ -387,7 +425,7 @@ class TestKappaConsistency:
     """Cross-check kappa values with universality data."""
 
     def test_heisenberg_kappa(self):
-        """kappa(H_k) = k (AP39)."""
+        """kappa(H_k) = k for rank one."""
         family = heisenberg_family(Rational(3))
         assert family.kappa == Rational(3)
 
@@ -407,12 +445,12 @@ class TestKappaConsistency:
         assert family.kappa == Rational(0)
 
     def test_w2_kappa_matches_virasoro_boundary(self):
-        """AP136/C04: W_2 gives kappa = c/2, matching Virasoro."""
+        """W_2 gives kappa = c/2, matching Virasoro."""
         family = w_algebra_family(2, Rational(26))
         assert family.kappa == Rational(13)
 
     def test_w3_kappa_matches_harmonic_formula(self):
-        """AP1/AP136: kappa(W_3) = c * (H_3 - 1) = 5c/6."""
+        """kappa(W_3) = c * (H_3 - 1) = 5c/6."""
         family = w_algebra_family(3, Rational(6))
         assert family.kappa == Rational(5)
 
@@ -422,10 +460,10 @@ class TestKappaConsistency:
         assert family.kappa == Rational(77)
 
     def test_lattice_kappa_equals_rank(self):
-        """kappa(V_Lambda) = rank(Lambda) (AP48, not c/2)."""
+        """kappa(V_Lambda) = rank(Lambda), not c/2."""
         family = lattice_voa_family(24, True)
         assert family.kappa == Rational(24)
-        # AP48: kappa != c/2 for lattice VOAs (c = 24, c/2 = 12, but kappa = 24)
+        # c = 24 gives c/2 = 12, but the lattice row has kappa = 24.
         assert family.kappa != family.central_charge / 2 or family.central_charge == Rational(24) * 2
 
     def test_kappa_curve_independent(self):
@@ -439,11 +477,11 @@ class TestKappaConsistency:
 
 
 # =============================================================================
-# Section 8: Monograph axiom tests (Path 5: MK axioms => universality)
+# Section 8: Monograph axiom tests (Path 5: fixed-X data versus universality)
 # =============================================================================
 
 class TestMonographAxioms:
-    """Verify that monograph axioms imply universality."""
+    """Verify fixed-curve data separately from universal-family descent."""
 
     def test_mk1_gives_factorization(self):
         """MK1 (chiral algebra = D-module + Lie bracket) gives factorization on fixed X."""
@@ -455,14 +493,16 @@ class TestMonographAxioms:
             assert h["d_module_on_ran"], f"{key}: MK1 gives D-module on Ran"
 
     def test_quasi_conformal_gives_universality(self):
-        """Quasi-conformal structure is the BRIDGE from fixed-X to universal."""
+        """Quasi-conformal structure plus descent witness bridges fixed-X to universal."""
         # D-module on Ran(X) for fixed X is NOT enough for universality.
-        # Need: quasi-conformal structure to get the FAMILY over all curves.
+        # Need: coordinate-change structure and the family over all curves.
         landscape = standard_landscape()
         for key, family in landscape.items():
             is_qc, _ = verify_quasi_conformal(family)
             is_univ, _ = verify_universal(family)
-            assert is_qc == is_univ
+            assert is_qc
+            assert family.descent_witness
+            assert is_univ
 
     def test_minimal_structure_documented(self):
         """Each family has documented minimal universality structure."""
@@ -551,7 +591,8 @@ class TestWeakFactorization:
         """Weak factorization data for Virasoro."""
         family = virasoro_family()
         data = weak_factorization_data(family)
-        assert "OPE data alone" in data["shadow_tower_connection"]
+        assert "formal OPE data" in data["shadow_tower_connection"]
+        assert "descent witness" in data["shadow_tower_connection"]
 
     def test_weak_data_computational_consequence(self):
         """Check that the computational consequence is documented."""
@@ -594,17 +635,17 @@ class TestDimensionAnalysis:
 # =============================================================================
 
 class TestKoszulDualUniversality:
-    """If A is universal, so is A! (Koszul dual preserves universality)."""
+    """Registered standard dual representatives carry universality witnesses."""
 
     def test_heisenberg_dual_universal(self):
-        """H_k universal => H_{-k} universal."""
+        """Both H_k and the registered H_{-k} representative are universal."""
         for k_val in [Rational(1), Rational(3), Rational(-1)]:
             family = heisenberg_family(k_val)
             is_univ, _ = verify_universal(family)
             assert is_univ
 
     def test_virasoro_dual_universal(self):
-        """Vir_c universal => Vir_{26-c} universal."""
+        """Both Vir_c and the registered Vir_{26-c} representative are universal."""
         for c_val in [Rational(1), Rational(13), Rational(26), Rational(0)]:
             family = virasoro_family(c_val)
             is_univ, _ = verify_universal(family)
@@ -615,7 +656,7 @@ class TestKoszulDualUniversality:
             assert is_dual_univ
 
     def test_affine_ff_dual_universal(self):
-        """Affine at level k => Feigin-Frenkel dual at level -k-2h^v."""
+        """Registered affine dual levels retain the coordinate-change witness."""
         family = affine_km_family("A", 1, Rational(1))
         is_univ, _ = verify_universal(family)
         assert is_univ
@@ -650,6 +691,17 @@ class TestSpecificParameters:
         """Affine sl_2 at admissible level -1/2 is universal."""
         family = affine_km_family("A", 1, Rational(-1, 2))
         is_univ, _ = verify_universal(family)
+        assert is_univ
+
+    def test_affine_sl2_direct_critical_level_boundary(self):
+        """The affine constructor handles k = -h^v without Sugawara division."""
+        family = affine_km_family("A", 1, Rational(-2))
+        is_qc, _ = verify_quasi_conformal(family)
+        is_conf, _ = verify_conformal(family)
+        is_univ, _ = verify_universal(family)
+        assert family.kappa == Rational(0)
+        assert is_qc
+        assert not is_conf
         assert is_univ
 
     def test_w3_generic_universal(self):
@@ -744,13 +796,13 @@ class TestCrossEngineConsistency:
         """Shadow tower is curve-independent => consistent with universality.
 
         The shadow obstruction tower theta_A is computed from OPE data on
-        the formal disk. This is exactly the data preserved by Cliff's
-        etale pullback.
+        the formal disk. The registered descent witness is what promotes this
+        local datum to Cliff etale pullback data.
         """
         landscape = standard_landscape()
         for key, family in landscape.items():
             data = weak_factorization_data(family)
-            assert "OPE data alone" in data["shadow_tower_connection"]
+            assert "formal OPE data" in data["shadow_tower_connection"]
 
 
 # =============================================================================
@@ -767,7 +819,7 @@ class TestLandscapeAudit:
         n_families = len(status)
         assert n_families >= 17
 
-        # All should be universal
+        # All registered families are universal.
         n_universal = sum(1 for d in status.values() if d["is_universal"])
         assert n_universal == n_families
 
@@ -780,7 +832,7 @@ class TestLandscapeAudit:
             1 for d in status.values()
             if d["conformal_vs_quasi_conformal"] == "quasi-conformal only"
         )
-        # At least one should be quasi-conformal-only (critical level)
+        # At least one registered family is quasi-conformal-only (critical level).
         assert n_qc_only >= 1, "Should have at least one QC-only family"
         assert n_conformal + n_qc_only == n_families
 
@@ -793,7 +845,9 @@ class TestLandscapeAudit:
             if h["conformal"]:
                 assert h["quasi_conformal"]
             # quasi_conformal <=> universal_chiral (dim 1)
-            assert h["quasi_conformal"] == h["universal_chiral"]
+            if h["universal_chiral"]:
+                assert h["quasi_conformal"]
+                assert h["etale_descent"]
             # universal_chiral <=> universal_factorization (Cliff)
             assert h["universal_chiral"] == h["universal_factorization"]
             # D-module on Ran always holds

@@ -1,12 +1,14 @@
-r"""BKM (Borcherds-Kac-Moody) algebra for K3 x E.
+r"""Finite CY-BKM sanity computations for K3 x E.
 
 MATHEMATICAL FRAMEWORK
 ======================
 
 The BPS spectrum of Type IIA on K3 x E is organized by a Borcherds-Kac-Moody
 (BKM) algebra whose denominator function is the Igusa cusp form Phi_{10}.
-This module computes the root system, Weyl group, representation theory,
-and denominator identity of this algebra.
+This module contains a finite, low-order computational model: lattice
+arithmetic, K3 elliptic-genus coefficients, signed product exponents, and
+sample super root data. It does not recognize the full root system or prove
+the denominator identity.
 
 1. THE LATTICE
    The charge lattice for the BKM algebra is II_{1,1} + II_{1,1} = U + U,
@@ -22,168 +24,31 @@ and denominator identity of this algebra.
    matrix is A_{ij} = 2(alpha_i, alpha_j) / alpha_j^2 (generalized,
    allowing alpha_j^2 <= 0).
 
-2. ROOT MULTIPLICITIES FROM THE K3 ELLIPTIC GENUS
-   The key input is the weak Jacobi form phi_{0,1}(tau, z) of weight 0
-   and index 1 (Eichler-Zagier convention: phi_{0,1}(tau,0) = 12).
-   The K3 elliptic genus is 2*phi_{0,1}.
+2. JACOBI COEFFICIENTS, PRODUCT EXPONENTS, SUPER ROOT DATA
+   The finite routines below keep three objects separate.
 
-   The Fourier expansion phi_{0,1} = sum c(n,l) q^n y^l gives the
-   c_0 function: for discriminant D = 4n - l^2,
-     c_0(D) = c(n, l)  for any (n,l) with 4n - l^2 = D.
-   NOTE: For WEAK Jacobi forms, c(n,l) does NOT depend only on D.
-   The c_0(D) notation refers to the coefficient in the theta
-   decomposition: phi_{0,1} = sum_{mu mod 2} h_mu(tau) * theta_{mu,1}(tau,z),
-   where h_0(tau) = sum c_0(D) q^{D/4} and h_1(tau) = sum c_1(D) q^{D/4}.
-   For phi_{0,1}: c_0(D) comes from the l=even sector and c_1(D) from l=odd.
+   Jacobi coefficients:
+     phi_{0,1}(tau,z) = sum a(n,l) q^n y^l,
+     K3 elliptic genus coefficient = 2*a(n,l).
 
-   Concretely, via the theta decomposition of phi_{0,1}:
-     h_0(tau) = 10 + 108q + 808q^2 + ...  (coefficients of q^{D/4}, D = 4n-l^2, l even)
-     h_1(tau) = q^{-1/4}(1 - 64q + ...) (coefficients, l odd)
+   Signed Borcherds product exponents:
+     Phi_{10} starts as q*y*p times products
+       (1 - q^{n0} y^l p^{m0})^{e(n0,l,m0)}.
+     The Jacobi coefficient is indexed by N = n0*m0 and l:
+       e(n0,l,m0) = 2*a(N,l).
+     A negative exponent is a signed product exponent. It is not by
+     itself an unsigned root multiplicity.
 
-   For the BKM algebra, the ROOT MULTIPLICITIES are:
-     mult(alpha) = c(4nm - l^2)   for alpha^2 = 2(4nm - l^2)/2
-   where c(D) are Fourier coefficients of 1/(eta^{24}) or equivalently
-   from the Borcherds product formula.
+   Super root multiplicities:
+     a super root datum records even and odd dimensions separately.
+     Its signed dimension even - odd may agree with a product exponent
+     in the toy coefficients used here, but that equality is input data
+     for a finite sanity check, not recognition of a BKM root system.
 
-   More precisely: for the BKM algebra associated to K3, the simple
-   imaginary roots have multiplicities given by the coefficients of
-   2*phi_{0,1}, evaluated at the discriminant. The positive root
-   multiplicities are then determined by the denominator identity.
-
-   ROOT MULTIPLICITY FUNCTION (from Gritsenko-Nikulin / Borcherds):
-   For a positive root alpha with alpha^2 = 2n:
-     - n > 0 (real root, alpha^2 = 2): mult = 1
-     - n = 0 (lightlike root): mult = c_0(0) = 24 - 4 = 20
-       (This is the 20 from h^{1,1}(K3) - h^{2,0}(K3) - h^{0,2}(K3) = 20;
-       equivalently c_0(0) = phi_{0,1} coefficient at (n=0, l=0) = 10,
-       but with the K3 genus being 2*phi_{0,1}, we get 2*10 = 20.)
-     - n < 0 (imaginary root, alpha^2 < 0): mult = c_0(-n)
-       from the K3 elliptic genus coefficients.
-
-   CORRECTION: The standard Borcherds construction for the fake monster
-   algebra uses the coefficients c(D) from the EXPANSION of the
-   denominator product. For the algebra associated to Phi_{10}, the
-   root multiplicities at norm 2n are given by the Fourier coefficients
-   of 2*phi_{0,1} evaluated at the appropriate discriminant.
-
-   EXPLICIT c_0 values (from 2*phi_{0,1} theta decomposition):
-     c_0(-1) = 2     (from c(0, +-1) = 1, so 2*1 = 2 from K3 EG)
-                      Wait: c_0 for the theta decomposition.
-   Let us be precise. The denominator product for Phi_{10} is:
-     Phi_{10}(Omega) = e^{2pi i (rho, Z)} * prod_{(n,l,m)>0} (1 - e^{2pi i(n*tau + l*z + m*sigma)})^{c_0(4nm-l^2)}
-   where c_0(D) are the Fourier coefficients of the K3 ELLIPTIC GENUS
-   restricted to the l-even sector (the h_0 component).
-
-   From the standard references (Gritsenko-Nikulin 1996, Borcherds 1995):
-     The exponents in the Borcherds product for Phi_{10} are:
-     c_0(D) for D = -1: 2   (y^{-1} + y term contributes e^{-1} from (0,+-1))
-     Actually, the exponents come from 2*phi_{0,1} evaluated via
-     the "additive lift" / Borcherds lift. The function whose
-     Fourier coefficients give the exponents is:
-       F(tau, z) = 2*phi_{0,1}(tau, z)
-     and the exponents are c(n, l) from F = sum c(n,l) q^n y^l.
-     For (n,l,m) with 4nm - l^2 = D:
-       exponent = c(D) from the discriminant-D Fourier coefficient.
-
-   Since phi_{0,1} has c(n,l) depending on both n and l (not just D)
-   for a WEAK Jacobi form, we need the THETA DECOMPOSITION. The
-   exponents in the Borcherds product are actually:
-     c_0(D) = coefficient of q^{D/4} in h_0(tau)  (for l even)
-     c_1(D) = coefficient of q^{(D+1)/4} in h_1(tau) (for l odd)
-   combined into a single function c(D) where:
-     c(D) for D = -1, 0, 3, 4, 7, 8, ...
-
-   DEFINITIVE VALUES (from the Borcherds product for Phi_{10}):
-     These are the exponents f(D) = c_0(D) in the product
-     Phi_{10} = q*r*s * prod (1 - q^n y^l p^m)^{f(4nm-l^2)}:
-
-     f(-1) = 2    (D = -1: the simple root (n,l,m)=(0,1,0) with 4*0*0-1 = -1)
-     f(0) = -2    (D = 0: null root (n,l,m)=(0,0,1) etc.)
-                   WAIT: This gives multiplicity -2.
-                   Let me recheck from the standard source.
-
-   The confusion arises because different authors use different sign
-   conventions. Let me use the DEFINITIVE source: Gritsenko-Nikulin,
-   "Automorphic forms and Lorentzian Kac-Moody algebras II" (1998).
-
-   The Igusa cusp form Phi_{10} has the product expansion (GN eq 2.2):
-     Phi_{10}(Z) = qrs * prod_{(n,l,m)>0} (1 - q^n y^l p^m)^{c_0(4nm-l^2)}
-   where the exponents c_0(D) come from the WEIGHT-2 INDEX-1
-   Jacobi form phi_{2,1} (NOT phi_{0,1}!), defined by:
-     phi_{2,1}(tau,z) = phi_{10,1}(tau,z) / eta(tau)^{24}
-
-   CORRECTION: Actually, for the additive lift Phi_{10} = Borch(phi_{10,1}),
-   the input is the Jacobi cusp form phi_{10,1} of weight 10 and index 1.
-   But for the MULTIPLICATIVE lift (Borcherds product), the input is
-   different: it is the meromorphic Jacobi form of weight 0, which for
-   Phi_{10} is:
-     psi(tau, z) = phi_{0,1}(tau,z)^2 / phi_{-2,1}(tau,z)^2 * ...
-
-   Let me just use the KNOWN Fourier expansion directly. The product
-   formula for Phi_{10} (Maass 1979, Borcherds 1995, GN 1996):
-     Phi_{10}(Z) = qrs * prod_{(n,l,m)>0} (1 - q^n y^l p^m)^{c(4nm-l^2)}
-   where c(D) are the Fourier coefficients of the elliptic genus of K3:
-     chi(K3; tau, z) = 2*phi_{0,1}(tau, z) = sum c(n,l) q^n y^l
-   and c(D) denotes the coefficient for discriminant D, extracted via
-   the theta decomposition.
-
-   From 2*phi_{0,1}, the discriminant-D coefficients are:
-     c(D = -1) = 2    (from c(0, +-1) = 2*1 = 2)
-     c(D = 0)  = 20   (from c(0, 0) = 2*10 = 20; but 4*0*0-0^2=0)
-     c(D = 3)  = -128  (from c(1, +-1) = 2*(-64) = -128; 4*1*0-1^2=-1 NO)
-
-   WAIT. I need to be very careful about what "discriminant D" means here.
-   For the product formula, the ordering (n,l,m) > 0 means:
-     m > 0, OR m = 0 and n > 0, OR m = 0 and n = 0 and l < 0.
-   And the exponent for (n,l,m) is c(4nm - l^2).
-
-   The function c(D) is defined by: c(D) is the coefficient of q^n y^l
-   in 2*phi_{0,1} for ANY (n,l) with 4n - l^2 = D (for weak Jacobi forms
-   of index 1, this does NOT depend only on D for D < 0; but for the
-   Borcherds product, we need the SPECIFIC coefficients, not a D-function).
-
-   Let me restart with a clean computation. The Borcherds product formula
-   for Phi_{10} is (see Gritsenko-Nikulin 1996 Theorem 3.1):
-
-     Phi_{10}(Z) = q*r*s * prod_{(n,l,m)>0} (1 - q^n y^l p^m)^{f(n,l,m)}
-
-   where f(n,l,m) = c_K3(n,l) = 2*c_{phi01}(n,l), the Fourier coefficient
-   of the K3 elliptic genus at (n,l). Here (n,l) is determined from (n,l,m)
-   by the rule: in the product, each factor (1 - q^n y^l p^m) has exponent
-   given by the COEFFICIENT of q^n y^l in 2*phi_{0,1}(tau, z), where we
-   identify q <-> q, y <-> y (the m-direction is the "new" variable from
-   the multiplicative lift).
-
-   WAIT NO. The standard Borcherds product for Phi_{10} uses the
-   coefficients c(4nm - l^2) where c is from 2*phi_{0,1}. Let me just
-   look up the explicit values.
-
-   From Dijkgraaf-Verlinde-Verlinde (1997), eq (6.1):
-     Phi_{10} = p * prod_{k,l,m} (1 - p^k q^l y^m)^{c_0(kl, m)}
-   where c_0(n, l) are the Fourier coefficients of the K3 elliptic genus.
-
-   SIMPLIFICATION: For THIS MODULE, we work with the BKM algebra
-   whose generalized Cartan matrix and root multiplicities are defined
-   as follows (Gritsenko-Nikulin 1996, Section 5):
-
-   The BKM algebra g(A) has:
-   - Real simple roots: vectors alpha in II_{1,1} with alpha^2 = 2
-   - Imaginary simple roots: vectors alpha in II_{1,1} with alpha^2 = 2n <= 0,
-     with multiplicity p(alpha) given by the K3 elliptic genus coefficients.
-
-   The positive root multiplicities mult(alpha) for alpha^2 = 2n are:
-   - For n = 1 (real): mult = 1
-   - For n = 0 (lightlike): mult = 24 (the 24 from chi(K3))
-   - For n < 0 (imaginary): mult determined by the denominator identity.
-
-   The root multiplicities are encoded in the denominator identity:
-     sum_{w in W} det(w) w(e^rho * prod_{alpha>0, imag simple} (1-e^alpha)^{-mult(alpha)})
-     = e^rho * prod_{alpha>0} (1-e^alpha)^{mult(alpha)}
-
-   For the FAKE MONSTER LIE ALGEBRA (Borcherds 1990), the root lattice
-   is II_{25,1} and the root multiplicities at norm 2n are p_{24}(1-n)
-   (the 24-colored partition function). For K3 x E, we have a rank-4
-   quotient where the multiplicities come from 2*phi_{0,1}.
+   The hardcoded table in this module is therefore only a finite sample
+   of low signed exponents extracted from 2*phi_{0,1}. It does not prove
+   a denominator identity, a simple-root classification, or BKM
+   recognition.
 
 3. WEYL GROUP
    The Weyl group W is generated by reflections s_alpha for real simple
@@ -200,13 +65,13 @@ and denominator identity of this algebra.
    It is an infinite group (hyperbolic Coxeter group).
 
 4. PETERSON-KAC RECURSION
-   The Peterson-Kac formula computes root multiplicities recursively:
+   The Peterson-Kac formula computes multiplicities recursively:
      sum_{k>=1} mult(alpha/k)/k * (rho, alpha/k)
        = (1/2) sum_{beta+gamma=alpha, beta,gamma>0} (beta, gamma) mult(beta) mult(gamma)
    where the sum on the right is over positive root decompositions.
 
-   For the BKM algebra, this recursion can be used to compute mult(alpha)
-   from the simple root multiplicities.
+   In this finite engine, the routine is only a seeded signed-dimension
+   sanity calculation.
 
 5. DENOMINATOR IDENTITY
    The Weyl-Kac-Borcherds denominator identity:
@@ -215,8 +80,9 @@ and denominator identity of this algebra.
    where S = prod_{simple imaginary alpha} (1 - e^{-alpha})^{-mult(alpha)}
    is the "correction factor" from imaginary simple roots.
 
-   For the K3 BKM algebra, this identity is equivalent to the
-   product formula for Phi_{10}.
+   For the K3 BKM algebra, this identity is equivalent to the full product
+   formula for Phi_{10}. The code below only performs finite low-order
+   coefficient checks.
 
 CONVENTIONS (AP38, AP46, AP48)
 ==============================
@@ -225,18 +91,28 @@ CONVENTIONS (AP38, AP46, AP48)
   - phi_{0,1} = Eichler-Zagier convention: phi_{0,1}(tau,0) = 12
   - K3 elliptic genus = 2*phi_{0,1}, so at z=0: 24 = chi(K3)
   - kappa(K3 sigma model) = 2 (complex dimension)
-  - kappa(K3 x E as CY3) = 0 (chi = 0)
+  - K3 x E has four distinct kappa lanes:
+      kappa_cat(K3 x E) = chi(O_{K3 x E}) = 0,
+      kappa_ch^{Heis}(K3 x E) = dim_C(K3 x E) = 3,
+      kappa_BKM(Delta_5) = wt(Delta_5) = 5,
+      kappa_fiber(K3) = rank H^*(K3) = 24.
+    These are not aliases.
   - Root norm: alpha^2 = 2n means the Mukai/intersection form gives 2n.
   - Weyl vector: rho with (rho, alpha_i) = alpha_i^2 / 2 for simple alpha_i.
+  - Igusa normalisation:
+      D_5 = 64^{-1} Delta_5,
+      Phi_{10}^{un} = Delta_5^2,
+      Phi_{10}^{OP} = D_5^2 = 4096^{-1} Delta_5^2,
+      Z_{OP/DT} = -D_5^{-2} = -4096 Delta_5^{-2}.
 
-MULTI-PATH VERIFICATION
-========================
-  Path A: Direct root computation from lattice enumeration
-  Path B: Peterson-Kac recursion for root multiplicities
-  Path C: Denominator identity / Borcherds product expansion
-  Path D: K3 elliptic genus coefficient extraction
-  Path E: Shadow tower connection (kappa, F_g)
-  Path F: Weyl-Kac character formula consistency
+FINITE SANITY CHECKS
+====================
+  Path A: Direct lattice arithmetic
+  Path B: Finite Peterson-Kac-style seeded recursion
+  Path C: Truncated Borcherds product expansion
+  Path D: K3 elliptic-genus coefficient extraction
+  Path E: Shadow tower scalar checks (kappa, F_g)
+  Path F: Leading Phi_{10} coefficient checks
 
 References:
   Borcherds (1995): "Automorphic forms on O_{s+2,2}(R) and infinite products"
@@ -283,7 +159,7 @@ class LatticeVector:
         e_2 <-> y-direction (angular momentum l, positive part)
         f_2 <-> y-direction (angular momentum l, negative part)
 
-    For the BKM root system, we work with a simpler 3-parameter
+    For the finite root-coordinate samples, we work with a 3-parameter
     encoding (n, l, m) where the norm is 2(nm) - l^2 = 2nm - l^2.
     But the true lattice is rank 4 (U+U).
     """
@@ -350,7 +226,7 @@ _PHI01_COEFFS: Dict[Tuple[int, int], int] = {
 def phi01_coeff(n: int, ell: int) -> int:
     """Fourier coefficient c(n, l) of phi_{0,1}.
 
-    Returns 0 for entries outside the verified table.
+    Returns 0 for entries outside the finite sample table.
     For |l| > n + 1, c(n, l) = 0 for a weak Jacobi form of index 1.
     """
     if n < 0:
@@ -366,13 +242,14 @@ def k3_eg_coeff(n: int, ell: int) -> int:
 
 
 def c0_from_k3_eg(D: int) -> int:
-    r"""The c_0(D) coefficient used in the Borcherds product for Phi_{10}.
+    r"""Finite c_0(D) sample extracted from the K3 elliptic genus.
 
     For the product formula:
       Phi_{10} = q*r*s * prod_{(n,l,m)>0} (1 - q^n y^l p^m)^{c_0(4nm-l^2)}
 
-    The exponent c_0(D) for discriminant D = 4nm - l^2 is the coefficient
-    extracted from the theta decomposition of the K3 elliptic genus.
+    The signed exponent c_0(D) for discriminant D = 4nm - l^2 is the
+    coefficient extracted from the theta decomposition of the K3 elliptic
+    genus.
 
     For a weak Jacobi form phi of weight 0, index 1, the theta
     decomposition gives:
@@ -392,22 +269,12 @@ def c0_from_k3_eg(D: int) -> int:
     For D = 0: (n, l) = (0, 0) gives c(0, 0) = 10, so c_0(0) = 20.
     For D = 3: (n, l) = (1, 1) gives c(1, 1) = -64, so c_0(3) = -128.
     For D = 4: (n, l) = (1, 0) gives c(1, 0) = 108, so c_0(4) = 216.
-
-    WAIT: D = 4*1 - 0^2 = 4. c(1, 0) = 108, so c_0(4) = 216.
-    But also D = 4*1 - 0^2 = 4, same.
-    Check: D = 4*0 - l^2 requires l^2 = -D, so l^2 = -D.
-    For D = -1: l^2 = 1, n = 0, (0, 1): c = 1, c_0 = 2. OK.
-    For D = 0: l = 0, n = 0, (0, 0): c = 10, c_0 = 20. OK.
-    For D = 3: l^2 = 4n - 3. n = 1: l^2 = 1, l = +-1. c(1, 1) = -64. c_0 = -128.
-    For D = 4: l^2 = 4n - 4. n = 1: l = 0. c(1, 0) = 108. c_0 = 216.
-      Or n = 2: l^2 = 4. l = +-2. c(2, 2) = 108. c_0 = 216. CONSISTENT!
-    For D = 7: l^2 = 4n - 7. n = 2: l^2 = 1, l = +-1. c(2, 1) = -513. c_0 = -1026.
-    For D = 8: l^2 = 4n - 8. n = 2: l = 0. c(2, 0) = 808. c_0 = 1616.
-      Or n = 3: l^2 = 4. l = +-2. Need c(3, 2) which is outside our table.
+    For D = 7: (n, l) = (2, 1) gives c(2, 1) = -513, so c_0(7) = -1026.
+    For D = 8: (n, l) = (2, 0) gives c(2, 0) = 808, so c_0(8) = 1616.
 
     DISCRIMINANT CONSISTENCY: For discriminant D with D = -1 mod 4 or D = 0 mod 4:
     the coefficient should be the same for all (n, l) achieving it.
-    Verified above for D = 4 via two independent (n, l) pairs.
+    The finite table checks D = 4 via two available (n, l) pairs.
 
     Range: we can compute c_0(D) for D in {-1, 0, 3, 4, 7, 8} from our table.
     """
@@ -458,8 +325,9 @@ def _build_c0_table() -> None:
                 # DO depend only on D within each mu-sector. The full c(n,l)
                 # involves both h_0 and h_1, so apparent inconsistency comes
                 # from mixing l-parity sectors.
-                # For the Borcherds product, the exponent for a triple (n,l,m)
-                # is c_K3(n, l) = 2*c_{phi01}(n, l), NOT c_0(D).
+                # For the Borcherds product, the exponent for a triple
+                # (n0,l,m0) is c_K3(N,l) with N = n0*m0, not the left
+                # index n0 alone.
                 # We store the VALUE for the smallest |l| representative.
                 pass
         else:
@@ -468,14 +336,13 @@ def _build_c0_table() -> None:
 
 
 def c0_table(D: int) -> int:
-    """Look up c_0(D) from precomputed table."""
+    """Look up a finite signed c_0(D) exponent sample."""
     _build_c0_table()
     return _C0_TABLE.get(D, 0)
 
 
-# Hardcoded verified values of c_0(D) for the Borcherds product.
-# Source: computed from 2*phi_{0,1} theta decomposition;
-# cross-checked against Gritsenko-Nikulin 1996 Table 1.
+# Finite signed exponent samples from 2*phi_{0,1}. These are low-order
+# coefficient sanity data, not a proof of denominator/root-system recognition.
 # D = -1: c_0 = 2 (from c(0,1) = 1)
 # D = 0:  c_0 = 20 (from c(0,0) = 10)
 # D = 3:  c_0 = -128 (from c(1,1) = -64)
@@ -483,7 +350,7 @@ def c0_table(D: int) -> int:
 # D = 7:  c_0 = -1026 (from c(2,1) = -513)
 # D = 8:  c_0 = 1616 (from c(2,0) = 808)
 
-C0_VERIFIED: Dict[int, int] = {
+SIGNED_BORCHERDS_EXPONENT_SAMPLES: Dict[int, int] = {
     -1: 2,
     0: 20,
     3: -128,
@@ -492,27 +359,31 @@ C0_VERIFIED: Dict[int, int] = {
     8: 1616,
 }
 
-# Also store the individual exponents for the Borcherds product.
-# For a triple (n, l, m) > 0, the exponent is c_K3(n, l) = 2*c_{phi01}(n, l).
-# NOT the discriminant-D function (which conflates l-parity sectors).
+# Individual signed exponents for the finite Borcherds-product truncation.
+# For a triple (n0, l, m0) > 0, the exponent sample is
+# c_K3(N, l) = 2*c_{phi01}(N, l) with N = n0*m0. It is not an unsigned
+# root multiplicity.
 
 
-def borcherds_exponent(n: int, ell: int) -> int:
+def borcherds_exponent(n: int, ell: int, m: Optional[int] = None) -> int:
     """Exponent in the Borcherds product for Phi_{10}.
 
-    For triple (n_0, l_0, m_0) with n_0*m_0 and l_0 given,
-    the exponent is c_K3(n_0, l_0) = 2*phi01_coeff(n_0, l_0).
+    For a product triple (n_0, l_0, m_0), the exponent is indexed by
+    the Jacobi product index N = n_0*m_0 and l_0:
+      c_K3(N, l_0) = 2*phi01_coeff(N, l_0).
 
-    Note: the product formula uses (n, l, m) where n is the
-    "left" index, m is the "right" index, l is the angular momentum.
-    The exponent depends on (n, l) only (not m).
+    Backward compatibility: when ``m`` is omitted, ``n`` is interpreted
+    as the already-formed Jacobi index N. Calls that know the product
+    triple should pass ``m`` explicitly.
 
     CRITICAL (AP38): the exponent for the triple (n,l,m) in the product
-      Phi_{10} = q*r*s * prod_{(n,l,m)>0} (1 - q^n y^l p^m)^{f(n,l)}
-    is f(n,l) = c_K3(n,l) = 2*c_{phi01}(n,l).
-    This is NOT the same as c_0(4nm - l^2) in general (due to weak JF).
+      Phi_{10} = q*r*s * prod_{(n,l,m)>0} (1 - q^n y^l p^m)^{f(nm,l)}
+    is f(nm,l) = c_K3(nm,l) = 2*c_{phi01}(nm,l). In
+    discriminant-indexed notation this is c_0(4nm-l^2) when the finite
+    sample contains that coefficient.
     """
-    return 2 * phi01_coeff(n, ell)
+    jacobi_index = n if m is None else n * m
+    return 2 * phi01_coeff(jacobi_index, ell)
 
 
 # ============================================================================
@@ -521,37 +392,17 @@ def borcherds_exponent(n: int, ell: int) -> int:
 
 @dataclass
 class BKMRoot:
-    """A root of the BKM algebra for K3 x E.
+    """Root-coordinate sample in the Siegel modular parametrization.
 
-    In the simplified (n, l, m) parametrization:
-      norm^2 = 2(nm - l^2/4)... NO, the norm depends on the lattice embedding.
-
-    For the BKM algebra associated to Phi_{10}, the roots live in II_{1,1}
-    where a root is specified by integers (n, m) with inner product
-    (n, m).(n', m') = nm' + mn'. The norm is 2nm.
-
-    For the FULL Siegel-modular BKM, the "roots" are elements of II_{2,2}
-    specified by (n, l, m) where n, m are as above and l is the angular
-    momentum. The norm is 2nm - l^2/2... no.
-
-    CORRECTION: The BKM algebra for the DVV formula lives in the lattice
-    Lambda = U + U (two copies of the hyperbolic lattice).
-    A root alpha = (n, l, m) in the "upper triangular" parametrization has:
-      alpha^2 = 2nm - l^2  (Gritsenko-Nikulin, using the convention
-      that the lattice is Z^3 with bilinear form
-      B((n1,l1,m1),(n2,l2,m2)) = n1*m2 + m1*n2 - l1*l2).
-
-    WAIT: II_{1,1} + II_{1,1} has rank 4, not 3. The (n,l,m)
-    parametrization comes from choosing a PRIMITIVE embedding
-    of the Siegel domain into the lattice.
-
-    Let me use the clean formulation: a root of the BKM algebra is
-    specified by a triple (n, l, m) of integers with the bilinear form:
+    The full lattice is a rank-four U+U lattice. This finite engine uses
+    the standard three-coordinate slice in which a vector is represented
+    by a triple (n, l, m) with bilinear form
       ((n,l,m), (n',l',m')) = nm' + mn' - ll'
-    so the norm is:
+    and norm
       (n,l,m)^2 = 2nm - l^2.
 
-    This is the standard Siegel-modular parametrization.
+    The optional ``multiplicity`` field stores a finite sample value. It is
+    not evidence that the vector has been recognized as a simple root.
     """
     n: int
     l: int
@@ -565,23 +416,12 @@ class BKMRoot:
 
     @property
     def discriminant(self) -> int:
-        """The discriminant D = l^2 - 2nm = -norm_sq.
+        """Root discriminant D_root = l^2 - 2nm = -norm_sq.
 
-        Note: different from 4nm - l^2 which is the DVV discriminant.
-        The relation: D_DVV = 4nm - l^2 = 2nm - l^2 + 2nm = norm_sq + 2nm.
-        Actually: D_DVV = 4nm - l^2, while norm^2 = 2nm - l^2.
-        So D_DVV = 2*norm^2 + l^2... no.
-        D_DVV = 4nm - l^2, norm^2 = 2nm - l^2.
-        D_DVV - norm^2 = 4nm - l^2 - 2nm + l^2 = 2nm.
-        D_DVV = norm^2 + 2nm.
-
-        Hmm, better to just use the bilinear form directly.
-        The DVV discriminant is for 1/4-BPS states:
-          Delta = 4nm - l^2 (in the notation where Q^2 = 2n, P^2 = 2m, Q.P = l).
-        The root norm is:
-          alpha^2 = 2nm - l^2 (in the bilinear form ((n,l,m),(n,l,m)) = 2nm - l^2).
-
-        These are DIFFERENT: Delta = alpha^2 + 2nm.
+        This is distinct from the DVV charge discriminant
+        Delta = 4nm - l^2. The finite product-exponent samples use their
+        own indexing convention; callers must not identify these two
+        discriminants silently.
         """
         return self.l ** 2 - 2 * self.n * self.m
 
@@ -630,6 +470,28 @@ class BKMRoot:
         return f"BKMRoot(n={self.n}, l={self.l}, m={self.m})"
 
 
+@dataclass(frozen=True)
+class SuperRootMultiplicity:
+    """Even/odd super root multiplicity data for a finite sample root.
+
+    The signed dimension ``even - odd`` is the exponent seen by a
+    denominator product. The total dimension ``even + odd`` is the unsigned
+    multiplicity of the super vector space.
+    """
+    even: int = 0
+    odd: int = 0
+
+    @property
+    def signed_dimension(self) -> int:
+        """Signed superdimension even - odd."""
+        return self.even - self.odd
+
+    @property
+    def total_dimension(self) -> int:
+        """Unsigned total dimension even + odd."""
+        return self.even + self.odd
+
+
 # ============================================================================
 # Section 3: BKM Cartan matrix
 # ============================================================================
@@ -658,138 +520,39 @@ def simple_real_roots() -> List[BKMRoot]:
 
 
 def simple_imaginary_roots(norm_bound: int = 0) -> List[BKMRoot]:
-    """Simple imaginary roots of the BKM algebra.
+    """Finite representatives seeded from signed exponent samples.
 
-    Imaginary simple roots have norm^2 <= 0. Their multiplicities come
-    from the K3 elliptic genus.
+    This is not a simple-root recognition algorithm. It chooses one small
+    representative for each stored signed exponent and records the absolute
+    super-dimension in ``BKMRoot.multiplicity``. The parity information is
+    recovered by ``super_root_multiplicity`` from the sign.
 
-    For norm^2 = 0 (lightlike): the simplest is (0, 0, 1) with mult c_0(0) = 20.
-      Check: norm = 2*0*1 - 0^2 = 0. The exponent is c_K3(0, 0) = 20.
-    Also (1, 0, 0) is lightlike: norm = 0. But its positivity:
-      m = 0, n = 1 > 0: positive. Exponent: c_K3(1, 0) = 2*108 = 216. WAIT.
-      The exponent for (n,l,m) in the Borcherds product is c_K3(n, l),
-      which depends on (n, l), not on m. For the triple (1, 0, 0):
-      n_triple = 1, l_triple = 0, m_triple = 0. The exponent is
-      c_K3(1, 0) = 2*108 = 216? That seems too large for a simple root.
-
-    CORRECTION: The roots of the BKM algebra are NOT the triples (n,l,m)
-    directly. The BKM algebra has:
-    - A Cartan subalgebra of rank 3 (or 4 for the full II_{2,2} version)
-    - Root spaces indexed by root vectors in the lattice
-    - The Borcherds product gives the DENOMINATOR, not the simple roots directly.
-
-    For the BKM algebra of Borcherds type, the simple roots are:
-    1. One real simple root alpha with alpha^2 = 2 (this is the "Weyl" root).
-    2. Imaginary simple roots: for each positive D, there is one simple
-       imaginary root of norm -D with multiplicity c_0(D) (from the
-       K3 elliptic genus).
-
-    The simplest BKM algebra for K3 has the generalized Cartan matrix
-    indexed by:
-      alpha_0: real, alpha_0^2 = 2
-      alpha_D (D = 1, 2, 3, ...): imaginary, alpha_D^2 = -D, mult = c_0(D)
-    where c_0(D) is from the K3 EG.
-
-    But c_0(D) is only defined for D = -1 mod 4 or D = 0 mod 4
-    (these are the discriminants achievable as 4n - l^2).
-    For D not of this form, c_0(D) = 0.
-
-    REFINEMENT: The discriminants D achievable as D = l^2 - 4n with
-    n >= 0, l integer, are: D = -1, 0, 3, 4, 7, 8, 11, 12, 15, 16, ...
-    (i.e., D = 0 or 3 mod 4).
-
-    For the Borcherds product exponents c_0(D):
-      D = -1: c_0 = 2 (the polar term y + y^{-1})
-      D = 0:  c_0 = 20
-      D = 3:  c_0 = -128 (NEGATIVE! This means a DENOMINATOR factor, not root)
-
-    Hmm. Negative c_0 values correspond to simple roots with NEGATIVE
-    multiplicity, which in Borcherds' theory means they are "imaginary
-    simple roots" that contribute to the NUMERATOR of the denominator
-    identity (the "correction factor" S).
-
-    In fact, for a BKM algebra, ALL simple imaginary roots have positive
-    multiplicity. The negative coefficients in the Borcherds product
-    are not simple root multiplicities but rather appear in the
-    denominator identity differently.
-
-    Let me reconsider. The Borcherds product formula:
-      Phi_{10} = e^{2pi i (rho, Z)} prod_{alpha > 0} (1 - e^{2pi i (alpha, Z)})^{c(alpha)}
-    where c(alpha) is the multiplicity of the root alpha. Here POSITIVE
-    c(alpha) means a root of the Lie algebra, and the formula gives the
-    DENOMINATOR function.
-
-    For Phi_{10}: c(alpha) = c_K3(n, l) for alpha = (n, l, m).
-    c_K3(1, 1) = 2*(-64) = -128 < 0.
-
-    Negative multiplicities DO appear in BKM algebras. They correspond
-    to "fermionic" or "odd" roots. In the super-BKM context:
-    - c(alpha) > 0: even (bosonic) root of multiplicity c(alpha)
-    - c(alpha) < 0: odd (fermionic) root of multiplicity |c(alpha)|
-
-    For the K3 BKM algebra, the full root structure includes both
-    even and odd roots. The even roots have positive c_0 and the
-    odd roots have negative c_0.
-
-    SIMPLE IMAGINARY ROOTS (returning only those with c_0 > 0):
+    ``norm_bound`` is retained for API compatibility. The default ``0`` means
+    "return the whole finite sample".
     """
-    roots = []
-    _build_c0_table()
-    for D, c0_val in sorted(C0_VERIFIED.items()):
-        if D > norm_bound:
-            continue
-        if D <= 0:
-            # norm_sq of simple root = -D (we negate to get norm)
-            # Actually norm^2 = -(D) for discriminant D, but our D is the
-            # discriminant 4n - l^2, which equals -norm_sq.
-            # So norm^2 = -D... no.
-            # From the definition: root norm^2 = 2nm - l^2.
-            # Discriminant D_DVV = 4nm - l^2 = norm^2 + 2nm.
-            # For a simple imaginary root at discriminant D:
-            # this is a root with 4nm - l^2 = D, i.e., the product
-            # exponent c_0(D). The norm^2 = 2nm - l^2 varies.
-            # For the SIMPLEST representative: take m = 0, then
-            # 4*n*0 - l^2 = -l^2 = D, so l^2 = -D, n arbitrary >= 0.
-            # norm^2 = 0 - l^2 = -l^2 = D. But D <= 0 means l^2 >= 0. OK.
-            # Wait: D_DVV = -l^2 for m = 0: need D = -l^2, so l^2 = -D.
-            # For D = -1: l = +-1. Root (0, 1, 0): norm^2 = 0 - 1 = -1.
-            pass
-
-    # Return simple imaginary roots with explicit data
-    # For the BKM algebra, the simple imaginary roots are the
-    # "rows" of the generalized Cartan matrix beyond the real root.
-    # Following Gritsenko-Nikulin, the simple root multiplicities
-    # for the imaginary roots at discriminant D are c_0(D).
-
     result = []
-    for D in sorted(C0_VERIFIED.keys()):
-        c0_val = C0_VERIFIED[D]
-        if c0_val == 0:
+    for D, signed_exp in sorted(SIGNED_BORCHERDS_EXPONENT_SAMPLES.items()):
+        if norm_bound != 0 and D > norm_bound:
             continue
-        # Find a representative root
-        # D = 4n - l^2 with m = 0 (simplest positive root)
-        # Then l^2 = -D + 4n, choose n = 0: l^2 = -D
+        if signed_exp == 0:
+            continue
+        multiplicity = abs(signed_exp)
+
         if D <= 0:
             l_sq = -D
             l_val = int(math.isqrt(l_sq))
             if l_val * l_val == l_sq:
-                # Root: (0, -l_val, 0) if l_val > 0 (positive by l < 0 convention)
-                # Actually: (n,l,m) = (0, l_val, 0) is not positive
-                # (m=0, n=0, l > 0 is NOT positive; we need l < 0).
-                # So the positive version is (0, -l_val, 0).
-                # But then 4*0*0 - (-l_val)^2 = -l_val^2 != D in general.
-                # 4*0*0 - l_val^2 = -l_val^2 = D only if l_val^2 = -D. YES.
-                result.append(BKMRoot(0, -l_val, 0, multiplicity=abs(c0_val)))
+                if l_val == 0:
+                    result.append(BKMRoot(0, 0, 1, multiplicity=multiplicity))
+                else:
+                    result.append(BKMRoot(0, -l_val, 0, multiplicity=multiplicity))
         else:
-            # D > 0: need 4n - l^2 = D with n > 0.
-            # Smallest: l = 0, n = D/4 (if D divisible by 4)
-            # or l = 1, n = (D+1)/4 (if D = 3 mod 4)
             if D % 4 == 0:
                 n_val = D // 4
-                result.append(BKMRoot(n_val, 0, 0, multiplicity=abs(c0_val)))
+                result.append(BKMRoot(n_val, 0, 0, multiplicity=multiplicity))
             elif D % 4 == 3:
                 n_val = (D + 1) // 4
-                result.append(BKMRoot(n_val, 1, 0, multiplicity=abs(c0_val)))
+                result.append(BKMRoot(n_val, 1, 0, multiplicity=multiplicity))
     return result
 
 
@@ -956,39 +719,41 @@ def weyl_group_is_infinite() -> bool:
 # ============================================================================
 
 def root_multiplicity_direct(alpha: BKMRoot) -> int:
-    """Root multiplicity from the K3 elliptic genus (direct formula).
+    """Signed superdimension from the finite K3 elliptic-genus sample.
 
-    For a positive root alpha with norm^2 = 2nm - l^2:
-    - norm^2 > 0 (specifically = 2, real root): mult = 1
-    - norm^2 = 0 (lightlike): mult = c_K3(n, l) where (n, l) comes from
-      the root. For the simplest lightlike root (0, 0, 1): c_K3(0, 0) = 20.
-    - norm^2 < 0 (imaginary): mult = c_K3(n, l) from the elliptic genus.
+    This legacy helper returns a signed integer. Positive values represent
+    even superdimension, negative values represent odd superdimension, and
+    zero means no finite sample value is present. Use
+    ``super_root_multiplicity`` when parity and unsigned multiplicity must be
+    explicit.
 
-    For POSITIVE roots that are NOT simple, the multiplicity is determined
-    by the denominator identity (not directly from c_K3).
-
-    This function returns the "direct" multiplicity for simple roots
-    and small positive roots.
+    The value is a finite coefficient sanity check. It is not a denominator
+    identity computation and does not recognize a root system.
     """
     ns = alpha.norm_sq
     if ns > 2:
-        return 0  # Not a root (norm too large)
+        return 0
     if ns == 2:
-        # Real root: multiplicity always 1
         return 1
-    # Imaginary or lightlike root
-    # The multiplicity is c_K3(n, l) = 2*phi01_coeff(n, l) for
-    # a simple root. For non-simple positive roots, this is the
-    # TOTAL multiplicity from the denominator identity.
-    c = k3_eg_coeff(alpha.n, alpha.l)
-    return c
+    return k3_eg_coeff(alpha.n, alpha.l)
+
+
+def super_root_multiplicity(alpha: BKMRoot) -> SuperRootMultiplicity:
+    """Even/odd super root multiplicity for the finite sample root."""
+    signed = root_multiplicity_direct(alpha)
+    if signed > 0:
+        return SuperRootMultiplicity(even=signed, odd=0)
+    if signed < 0:
+        return SuperRootMultiplicity(even=0, odd=-signed)
+    return SuperRootMultiplicity()
 
 
 def root_multiplicity_table(norm_max: int = 8) -> Dict[int, int]:
-    """Table of root multiplicities by norm squared.
+    """Finite table of signed superdimensions by representative norm.
 
-    For each achievable norm^2 value, returns the multiplicity of a
-    root with that norm. This is for SIMPLE roots.
+    For each stored representative norm, returns the signed dimension
+    even - odd. It is not an unsigned multiplicity table and not a
+    root-system recognition result.
 
     norm^2 = 2: mult = 1 (real root)
     norm^2 = 0: mult = 20 (c_K3(0, 0) = 2*10 = 20, lightlike)
@@ -996,19 +761,18 @@ def root_multiplicity_table(norm_max: int = 8) -> Dict[int, int]:
     norm^2 = -2: undefined by just norm (depends on (n,l))
     ...
 
-    IMPORTANT: for imaginary roots, the multiplicity depends on the
-    specific root vector (n, l, m), not just on the norm. We return
-    the multiplicity for the "canonical" representative.
+    For imaginary roots, the finite value depends on the selected vector,
+    not just on the norm. This routine returns only the representative
+    sample used by the tests.
     """
     result: Dict[int, int] = {}
     result[2] = 1  # Real root
 
-    # From C0_VERIFIED: the discriminant D_DVV = 4nm - l^2, and
-    # the root norm^2 = 2nm - l^2. For simple roots with m = 0:
-    # norm^2 = -l^2 and D_DVV = -l^2. So norm^2 = D_DVV.
-    # c_0(D) from C0_VERIFIED gives the multiplicity.
-    for D in sorted(C0_VERIFIED.keys()):
-        c0_val = C0_VERIFIED[D]
+    # The finite discriminant sample is used only to populate small
+    # representative norms. It is not a proof that the representative is a
+    # simple root.
+    for D in sorted(SIGNED_BORCHERDS_EXPONENT_SAMPLES.keys()):
+        c0_val = SIGNED_BORCHERDS_EXPONENT_SAMPLES[D]
         # For simple roots with m = 0, norm^2 = -l^2 where l^2 = -D
         # So norm^2 = D (since D = -l^2 for m = 0, n = 0 or appropriate).
         # Actually: D_DVV = 4nm - l^2 and norm^2 = 2nm - l^2.
@@ -1023,15 +787,8 @@ def root_multiplicity_table(norm_max: int = 8) -> Dict[int, int]:
             # Wait: D_DVV = 4nm - 0 = 4nm. So D = 4nm means nm = D/4.
             # norm^2 = 2nm = D/2.
             # For D = 4: nm = 1, norm^2 = 2.
-            # But norm^2 = 2 is a real root! Multiplicity should be 1.
-            # c_0(4) = 216, which is the Borcherds exponent, NOT the root
-            # multiplicity of a norm-2 root.
-
-            # This reveals the fundamental issue: the Borcherds product
-            # exponents c_0(D) are NOT the same as root multiplicities.
-            # They are the SIMPLE root multiplicities. For non-simple
-            # positive roots (like a real root that can be decomposed),
-            # the total root multiplicity in the Lie algebra is different.
+            # Positive discriminant samples are signed product exponents.
+            # They are not inserted as norm-indexed root multiplicities.
             pass
 
     return result
@@ -1044,7 +801,7 @@ def root_multiplicity_table(norm_max: int = 8) -> Dict[int, int]:
 def peterson_kac_mult(target_n: int, target_l: int, target_m: int,
                       known_mults: Optional[Dict[Tuple[int, int, int], int]] = None,
                       max_decompositions: int = 1000) -> int:
-    """Compute root multiplicity via Peterson-Kac recursion.
+    """Finite Peterson-Kac-style signed-superdimension recursion.
 
     The Peterson formula for BKM algebras:
       (alpha, alpha - 2*rho) * mult(alpha) / 2
@@ -1065,7 +822,8 @@ def peterson_kac_mult(target_n: int, target_l: int, target_m: int,
     - (alpha, alpha - 2*rho) = alpha^2 - 2*(alpha, rho)
       = (2nm - l^2) - 2(n + m - l)
 
-    Known multiplicities for simple roots are the input.
+    ``known_mults`` is a seed table of signed superdimensions. In this module
+    it is finite sanity data, not a recognized simple-root system.
     """
     alpha = BKMRoot(target_n, target_l, target_m)
     rho = weyl_vector()
@@ -1141,64 +899,38 @@ def peterson_kac_mult(target_n: int, target_l: int, target_m: int,
 
 
 def build_root_multiplicities_pk(max_height: int = 5) -> Dict[Tuple[int, int, int], int]:
-    """Build root multiplicities using Peterson-Kac recursion.
+    """Build a finite signed-superdimension table using seeded recursion.
 
-    Start from known simple root multiplicities and build up.
+    Start from finite coefficient seeds and build up.
     "Height" is defined as n + m (roughly the level in the root lattice).
 
-    Returns a dict mapping (n, l, m) -> multiplicity for positive roots.
+    Returns a dict mapping (n, l, m) -> signed superdimension.
     """
     mults: Dict[Tuple[int, int, int], int] = {}
 
-    # Initialize with simple root multiplicities
-    # Real simple root: (1, 0, 1) with mult = 1
+    # Initialize with finite signed-superdimension seeds.
+    # Real sample root: (1, 0, 1) with even dimension 1.
     mults[(1, 0, 1)] = 1
 
-    # Imaginary simple roots from K3 EG.
-    # For m = 0 (or n = 0): these are the "level-0" imaginary roots.
-    # (0, -1, 0): norm = -1, c_K3(0, 1) = 2 (using l = -1 for positivity)
-    #   But wait: for (0, -1, 0), positivity requires m > 0 or (m=0, n>0)
-    #   or (m=0, n=0, l < 0). (0, -1, 0) has m=0, n=0, l=-1 < 0: POSITIVE. OK.
+    # Imaginary sample roots from K3 EG.
+    # For m = 0 (or n = 0): these are the "level-0" sample roots.
+    # (0, -1, 0): norm = -1, c_K3(0, 1) = 2, with l = -1 chosen
+    # for the positive-root convention.
     mults[(0, -1, 0)] = 2  # c_K3(0, 1) = 2
 
     # (0, 0, 1): norm = 0, c_K3(0, 0) = 20. m = 1 > 0: POSITIVE.
     mults[(0, 0, 1)] = 20
 
-    # (1, 0, 0): norm = 0, c_K3(1, 0) = 216. m=0, n=1>0: POSITIVE.
-    # But is this a SIMPLE root? In the BKM algebra, a root is simple
-    # if it cannot be written as a sum of two positive roots.
-    # (1, 0, 0) = ? Can it be decomposed?
-    # (1, 0, 0) = (0, 0, 0) + (1, 0, 0)? (0,0,0) is not a positive root.
-    # (1, 0, 0) = (0, -1, 0) + (1, 1, 0)? Check: sum = (1, 0, 0). Yes.
-    # But (1, 1, 0) has norm = 0 - 1 = -1. Is (1, 1, 0) positive?
-    # m = 0, n = 1 > 0: YES. So (1, 0, 0) IS decomposable.
-    # Therefore (1, 0, 0) is NOT a simple root.
+    # (1, 0, 0): norm = 0, c_K3(1, 0) = 216. It is retained as a
+    # coefficient seed, with no assertion that it is simple.
 
-    # The simple roots are more carefully:
-    # (1, 0, 1): real, norm 2
-    # (0, -1, 0): imaginary, norm -1, mult 2
-    # All other positive roots are generated from these by the BKM relations.
+    # The full simple-root problem is not decided here. These seeds only keep
+    # the finite test surface stable.
 
-    # Actually, for the BKM algebra of Phi_{10}, the set of simple roots
-    # is more subtle. Let me use the standard description:
-    # Simple roots = {alpha in Delta^+: alpha cannot be written as
-    # alpha = beta + gamma with beta, gamma in Delta^+}.
-    # For an affine/indefinite KM algebra, there can be infinitely many
-    # simple imaginary roots.
-
-    # For the DVV BKM algebra, the simple root system is:
-    # One real simple root: delta = (1, 0, 1) with delta^2 = 2
-    # Imaginary simple roots: one for each (n, l) with c_K3(n, l) > 0
-    # and the root (n, l, 0) indecomposable.
-
-    # For practical computation, let's seed with the known ones and recurse.
-
-    # Additional simple imaginary roots at height 1:
+    # Additional finite sample roots at height 1:
     # (1, -1, 0): norm = 0 - 1 = -1. m=0, n=1>0: positive.
-    # Decompose? (1, -1, 0) = (0, -1, 0) + (1, 0, 0)? Sum = (1, -1, 0). YES.
-    # But (1, 0, 0) is positive (m=0, n=1): so (1, -1, 0) IS decomposable.
     # c_K3(1, -1) = 2*(-64) = -128.
-    # Negative multiplicity means this is a fermionic/odd root.
+    # Negative signed dimension records an odd contribution.
     mults[(1, -1, 0)] = -128  # From K3 EG: odd root
 
     # (1, 1, 0): norm = -1. m=0, n=1>0: positive.
@@ -1213,7 +945,7 @@ def build_root_multiplicities_pk(max_height: int = 5) -> Dict[Tuple[int, int, in
     mults[(1, 2, 0)] = 20
 
     # (1, 0, 0): lightlike. c_K3(1, 0) = 216.
-    # NOT simple (decomposes), but we record as a non-simple root mult.
+    # Not asserted simple; recorded as a finite sample value.
     mults[(1, 0, 0)] = 216
 
     # Now apply Peterson-Kac to compute higher roots
@@ -1240,7 +972,7 @@ def build_root_multiplicities_pk(max_height: int = 5) -> Dict[Tuple[int, int, in
 def borcherds_product_expansion(q_order: int = 5) -> Dict[Tuple[int, int, int], int]:
     """Expand the Borcherds product for Phi_{10} to given order.
 
-    Phi_{10}(Z) = q*r*s * prod_{(n,l,m)>0} (1 - q^n y^l p^m)^{c_K3(n,l)}
+    Phi_{10}(Z) = q*r*s * prod_{(n,l,m)>0} (1 - q^n y^l p^m)^{c_K3(nm,l)}
 
     We expand in powers of (q, y, p) = (e^{2pi i tau}, e^{2pi i z}, e^{2pi i sigma}).
 
@@ -1250,7 +982,7 @@ def borcherds_product_expansion(q_order: int = 5) -> Dict[Tuple[int, int, int], 
     Phi_{10} = sum c_{n,l,m} q^n y^l p^m.
     """
     # Start with the prefactor: q*y*p = coefficient 1 at (1, 1, 1)
-    # Then multiply by each factor (1 - q^n y^l p^m)^{c_K3(n,l)}
+    # Then multiply by each factor (1 - q^n y^l p^m)^{c_K3(nm,l)}
 
     # For efficiency, work with a truncated power series.
     # Represent as dict: (n, l, m) -> coefficient.
@@ -1271,8 +1003,8 @@ def borcherds_product_expansion(q_order: int = 5) -> Dict[Tuple[int, int, int], 
                 else:
                     continue
 
-                # Exponent from K3 EG
-                exp = borcherds_exponent(n_prod, l_prod)
+                # Exponent from K3 EG at Jacobi index N = n_prod*m_prod.
+                exp = borcherds_exponent(n_prod, l_prod, m_prod)
                 if exp == 0:
                     continue
 
@@ -1374,15 +1106,12 @@ def phi10_known_coefficients() -> Dict[Tuple[int, int, int], int]:
 
 
 def denominator_identity_check_leading(q_order: int = 3) -> Dict[str, object]:
-    """Verify the denominator identity at leading order.
-
-    LHS: Borcherds product = Phi_{10}
-    RHS: Weyl orbit sum
+    """Finite leading-coefficient check for the product expansion.
 
     At the very leading order: Phi_{10} starts with q*y*p * (1 - ...).
     The leading coefficient a(1, 1, 1) = 1 is the Weyl vector contribution.
 
-    We check: the product formula reproduces the known leading coefficients.
+    This does not prove the denominator identity or recognize the root system.
     """
     product = borcherds_product_expansion(q_order)
     known = phi10_known_coefficients()
@@ -1413,12 +1142,36 @@ def shadow_kappa_k3_sigma() -> F:
 
 
 def shadow_kappa_k3xe_total() -> F:
-    """Modular characteristic kappa for K3 x E as a CY3.
+    """Categorical/BCOV modular characteristic for K3 x E as a CY3.
 
-    kappa = chi(K3 x E)/12 = 0 (since chi = 24 * 0 = 0).
-    The vanishing of kappa reflects the chi = 0 property.
+    This is the total compact CY3 comparator.  It is not the Stage-2
+    chiral Heisenberg invariant, not the Borcherds weight, and not the
+    K3 fibre rank.
     """
     return F(0)
+
+
+def k3xe_kappa_split() -> Dict[str, F]:
+    """The four non-interchangeable kappa lanes attached to K3 x E."""
+    return {
+        'kappa_cat': F(0),            # chi(O_{K3 x E})
+        'kappa_ch_heisenberg': F(3),  # dim_C(K3 x E)
+        'kappa_bkm_delta5': F(5),     # wt(Delta_5)
+        'kappa_fiber_mukai': F(24),   # rank H^*(K3)
+    }
+
+
+def igusa_delta5_normalization() -> Dict[str, object]:
+    """Scalar normalisation bridge between Delta_5, D_5, and OP chi_10."""
+    return {
+        'delta5_leading_coeff': 64,
+        'D5_formula': 'D_5 = 64^{-1} Delta_5',
+        'Phi10_un_formula': 'Phi_10^un = Delta_5^2',
+        'Phi10_OP_formula': 'Phi_10^OP = D_5^2 = 4096^{-1} Delta_5^2',
+        'Z_OP_DT_formula': 'Z_OP/DT = -D_5^{-2} = -4096 Delta_5^{-2}',
+        'theta_to_monic_square_factor': 4096,
+        'op_dt_scalar_factor': -4096,
+    }
 
 
 def shadow_kappa_complementarity() -> Dict[str, object]:
@@ -1432,27 +1185,30 @@ def shadow_kappa_complementarity() -> Dict[str, object]:
     K3 sigma model is NOT a lattice VOA in general (it depends on moduli).
     At the Gepner point: kappa(A^!) is determined by the dual theory.
 
-    For the CY3 = K3 x E:
-      kappa_total = kappa(K3) + kappa(E) = 2 + 0 = 2? No.
-      kappa_total = chi(K3 x E)/12 = 0.
-    This is NOT simply additive: the elliptic curve contributes
-    kappa(E) = chi(E)/12 = 0 (consistent).
-    But kappa(K3) = chi(K3)/12 = 2 and kappa(E) = 0, so
-    kappa(K3 x E) = 0 != 2 + 0. The additivity FAILS for the
-    total space because chi is multiplicative for products:
-    chi(K3 x E) = chi(K3) * chi(E) = 24 * 0 = 0.
+    For the CY3 = K3 x E the scalar "kappa" must be lane-qualified:
+      kappa_cat = chi(O_{K3 x E}) = 0,
+      kappa_ch^{Heis} = dim_C(K3 x E) = 3,
+      kappa_BKM(Delta_5) = wt(Delta_5) = 5,
+      kappa_fiber(K3) = rank H^*(K3) = 24.
+    The categorical zero comes from the compact total space; the other
+    three numbers come from different constructions and do not add to it.
 
     Complementarity (Theorem C): kappa(A) + kappa(A^!) = 0 for KM/free fields.
     For K3 sigma model: kappa(A) = 2, so kappa(A^!) = -2 if complementarity holds.
     """
+    split = k3xe_kappa_split()
     return {
         'kappa_k3': shadow_kappa_k3_sigma(),
-        'kappa_k3xe': shadow_kappa_k3xe_total(),
+        'kappa_k3xe_cat': split['kappa_cat'],
+        'kappa_k3xe_ch_heisenberg': split['kappa_ch_heisenberg'],
+        'kappa_k3xe_bkm_delta5': split['kappa_bkm_delta5'],
+        'kappa_k3xe_fiber_mukai': split['kappa_fiber_mukai'],
+        'kappa_k3xe': split['kappa_cat'],  # backward-compatible alias
         'chi_k3': 24,
         'chi_e': 0,
         'chi_product': 0,
         'additivity_holds': False,  # chi is multiplicative, not additive
-        'note': 'kappa(K3xE)=0 because chi is multiplicative for products',
+        'note': 'K3xE kappa values are lane-qualified: {0, 3, 5, 24}.',
     }
 
 
@@ -1501,37 +1257,40 @@ def shadow_fg_k3_relative(g: int) -> F:
 def shadow_denominator_connection() -> Dict[str, object]:
     """Connection between the shadow tower and the BKM denominator.
 
-    The BKM denominator Phi_{10} encodes the BPS spectrum organized
-    as a Lie algebra. The shadow obstruction tower Theta_A encodes
-    the genus expansion of the chiral algebra A.
+    The BKM denominator Phi_{10} encodes signed target denominator data.
+    It becomes a Lie/Hall source statement only after a finite recognition
+    datum supplies source spaces, parity fixtures, brackets, PBW, and
+    comparison maps. The shadow obstruction tower Theta_A encodes the genus
+    expansion of the chiral algebra A.
 
     KEY RELATIONSHIP: Both are controlled by MC elements in different
     convolution algebras:
     - Phi_{10}: Borcherds product = MC in the quantum torus algebra
     - Theta_A: MC in the modular cyclic deformation complex Def_cyc^mod(A)
 
-    The BRIDGE: the K3 elliptic genus 2*phi_{0,1} is BOTH
-    (a) the input to the Borcherds product (giving root multiplicities), AND
-    (b) the genus-1 partition function of the K3 sigma model.
+    The lane separation: the K3 elliptic genus 2*phi_{0,1} supplies
+    (a) finite signed-character input for the Borcherds product exponents,
+    and
+    (b) the protected genus-1 index of the K3 sigma model.
 
     So the genus-1 shadow kappa = 2 is connected to the BKM algebra via:
       kappa(K3) = chi(K3)/12 = 24/12 = 2
-    and the root multiplicities come from the SAME elliptic genus that
-    determines kappa.
+    and the finite super root samples are extracted from the same elliptic
+    genus that determines kappa.
 
-    At higher genus: F_g(K3) = 2 * lambda_g^FP is a "scalar" projection
-    of the BKM denominator to M_g (via the forgetful map from the
-    moduli of BPS states to the moduli of curves).
+    At higher genus, a comparison of F_g(K3) with the BKM denominator is a
+    scalar shadow target until a source-level forgetful/trace map and the
+    finite Hall--Borcherds recognition datum are constructed.
     """
     return {
         'kappa_k3': shadow_kappa_k3_sigma(),
         'F_1': shadow_fg_k3_relative(1),
         'F_2': shadow_fg_k3_relative(2),
         'F_3': shadow_fg_k3_relative(3),
-        'eg_c0_minus1': C0_VERIFIED[-1],
-        'eg_c0_0': C0_VERIFIED[0],
-        'bkm_real_mult': 1,
-        'bkm_lightlike_mult': C0_VERIFIED[0],
+        'product_exp_c_minus1': SIGNED_BORCHERDS_EXPONENT_SAMPLES[-1],
+        'product_exp_c0': SIGNED_BORCHERDS_EXPONENT_SAMPLES[0],
+        'sample_real_even_dim': 1,
+        'sample_lightlike_even_dim': SIGNED_BORCHERDS_EXPONENT_SAMPLES[0],
         'bridge': 'K3 EG = input to both Borcherds product and shadow tower',
     }
 
@@ -1597,7 +1356,7 @@ def bkm_algebra_summary() -> BKMAlgebraSummary:
         imaginary_simple_roots=imag,
         weyl_vector=rho,
         weyl_group_infinite=weyl_group_is_infinite(),
-        c0_table=dict(C0_VERIFIED),
+        c0_table=dict(SIGNED_BORCHERDS_EXPONENT_SAMPLES),
         cartan_matrix_size=1 + len(imag),
         shadow_kappa=shadow_kappa_k3_sigma(),
         shadow_F1=shadow_fg_k3_relative(1),
@@ -1621,7 +1380,7 @@ def cross_check_c0_consistency() -> bool:
     c2 = 2 * phi01_coeff(2, 2)   # n=2, l=2: 4*2 - 4 = 4
     if c1 != c2:
         return False
-    if c1 != C0_VERIFIED[4]:
+    if c1 != SIGNED_BORCHERDS_EXPONENT_SAMPLES[4]:
         return False
     return True
 

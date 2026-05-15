@@ -1,124 +1,145 @@
-r"""Theorem: Virasoro constraints L_n Z = 0 are genus-0 arity-(n+2) MC projections.
+r"""Finite scalar shadow certificates and KW reference checks.
 
-THEOREM (Virasoro-MC Identification).  Let A be a uniform-weight chirally
-Koszul algebra with modular characteristic kappa(A).  The MC equation
+The certified identity in this module is the finite scalar coefficient
+statement
 
-    D * Theta_A + (1/2) [Theta_A, Theta_A] = 0
+    tau_shadow,scal^{<=G}(A) = exp(kappa(A) log tau_KW^{<=G})
 
-in the modular convolution algebra g^mod_A (thm:mc2-bar-intrinsic),
-projected to genus 0 and arity (n+2), yields the n-th Virasoro constraint
-L_n Z^sh = 0 (n >= -1) on the shadow partition function Z^sh(A).
+in Q[kappa][[q]]/(q^{G+1}).  It is not a construction of a full
+Kontsevich-Witten descendant tau function.  Standard KdV/Hirota/Virasoro
+constraints are certified only in the actual KW case kappa = 1, with the
+zero-field kappa = 0 exception recorded only for equations where the
+trivial solution is meaningful.
 
-Explicitly:
-  - L_{-1} (string equation): MC at (g=0, arity 2)
-  - L_0  (dilaton equation): MC at (g=0, arity 3)
-  - L_n  (n >= 1, higher):   MC at (g=0, arity n+2)
+The Witten-Kontsevich intersection-number routines below remain as a
+reference oracle for DVV/string/dilaton identities.  They test the genuine
+KW CohFT, not the assertion that tau_KW^kappa is a descendant CohFT for
+arbitrary kappa.
 
-MECHANISM:
-  The MC equation at genus 0 involves graph sums over stable graphs of
-  type (0, k).  The codimension-1 boundary strata of M-bar_{0,k} correspond
-  to the three terms in the DVV recursion:
-    (i)   MERGE: two marked points collide on a single component
-    (ii)  HANDLE: genus reduction via non-separating node (absent at g=0)
-    (iii) SPLIT: the curve degenerates into two genus-0 components
+Local source anchors:
+    chapters/examples/landscape_census.tex:173-186
+    chapters/examples/landscape_census.tex:4970-5018
+    chapters/theory/higher_genus_modular_koszul.tex:20242-20276
+    chapters/theory/higher_genus_modular_koszul.tex:20304-20388
+    chapters/connections/concordance.tex:4095-4108
+    chapters/connections/concordance.tex:6742-6759
 
-  The DVV recursion IS the Virasoro constraint (Dijkgraaf-Verlinde-Verlinde
-  1991).  The MC equation at genus 0 IS the DVV recursion, because both
-  express the condition that the total boundary of a fundamental chain
-  in M-bar_{0,k} vanishes.
-
-FOUR PROOFS:
-
-Proof 1 (MC projection):
-  Project D*Theta + (1/2)[Theta,Theta] = 0 to (g=0, n=k).  The differential
-  D contributes the merge term (codimension-1 boundary where two points
-  collide).  The bracket [Theta,Theta] contributes the split term (separating
-  node).  The handle term is absent at genus 0.  This gives exactly the
-  DVV recursion with distinguished insertion d = k-2, which is L_{k-3}.
-  Setting k = n+2 gives L_{n-1}... correcting: the arity-k projection at
-  genus 0 gives the Virasoro constraint L_{k-3} for k >= 2.  So:
-    arity 2 -> L_{-1} (string),  arity 3 -> L_0 (dilaton),
-    arity k -> L_{k-3} for k >= 2.
-
-Proof 2 (Kodaira-Spencer):
-  The bar complex of A is the chiral Kodaira-Spencer deformation complex
-  (thm:kodaira-spencer-chiral-complete).  An (n+1)-point shadow amplitude at
-  genus 0 encodes an (n+1)-point deformation of the curve X.  The MC equation
-  at arity (n+2) is the integrability condition for the (n+2)-point deformation,
-  which is the same as the L_n Virasoro constraint on the descendant potential.
-  Both express the absence of obstructions to extending deformations.
-
-Proof 3 (Matrix model / kappa-scaling):
-  The shadow partition function is tau_shadow = tau_KW^kappa (Theorem D +
-  thm:algebraic-family-rigidity).  The Virasoro operators L_n are DIFFERENTIAL
-  operators in the descendant variables t_k.  Since F_shadow = kappa * F_KW,
-  and L_n is a first-order differential operator in the t_k coordinates:
-    L_n(F_shadow) = kappa * L_n(F_KW) = 0.
-  The kappa rescaling is compatible because L_n is LINEAR in d/dt_k.
-  The SCALED Virasoro operators are:
-    L_n^{(kappa)} := L_n  (unchanged; kappa factors through as a scalar).
-
-  CAVEAT: tau_KW^kappa does NOT satisfy the KdV hierarchy for kappa != 1
-  (the KdV equation u_t + 6u u_x + u_xxx = 0 has a QUADRATIC nonlinearity
-  that breaks the kappa rescaling).  The Virasoro constraints are LINEAR
-  constraints that survive the rescaling.
-
-Proof 4 (W-constraints for W_N):
-  For the W_N algebra (rank N-1), the (0, n+2) MC projection gives the n-th
-  W_N-constraint.  The W_N-constraints generalize the Virasoro constraints
-  (which are the N=2 case) and form the N-th Gelfand-Dickey hierarchy.
-  At rank 1 (N=2, Virasoro): the W-constraints reduce to Virasoro constraints.
-  At rank r >= 2 (N >= 3): the MC equation at arity k gives COUPLED constraints
-  on the r-component descendant potential.
-
-SCOPE RESTRICTIONS (per AP32):
-  - The identification is PROVED for uniform-weight chirally Koszul algebras.
-  - For multi-weight algebras at genus >= 2, the scalar formula FAILS
-    (thm:multi-weight-genus-expansion, delta_F_2(W_3) > 0).
-  - The genus-0 identification holds for ALL families (no multi-weight issue
-    at genus 0).
-
-NUMERICAL VERIFICATION:
-  This engine verifies the identification by computing BOTH sides:
-  (A) The L_n constraint via the DVV recursion on WK intersection numbers.
-  (B) The MC equation at (0, n+2) via the boundary stratification of M-bar_{0,k}.
-  Agreement at each arity and genus verifies the theorem.
-
-Manuscript references:
-    thm:mc2-bar-intrinsic (higher_genus_modular_koszul.tex)
-    thm:algebraic-family-rigidity (higher_genus_modular_koszul.tex)
-    thm:shadow-cohft (higher_genus_modular_koszul.tex)
-    rem:virasoro-constraints-tangent-complex (higher_genus_modular_koszul.tex)
-    thm:theorem-d (higher_genus_modular_koszul.tex)
-    thm:multi-weight-genus-expansion (higher_genus_modular_koszul.tex)
-    DVV91: Dijkgraaf-Verlinde-Verlinde, Nucl. Phys. B 348 (1991), 435-456.
-    Kon92: Kontsevich, Comm. Math. Phys. 147 (1992), 1-23.
-
-All arithmetic is exact (fractions.Fraction or sympy.Rational). Never floating point.
+All arithmetic is exact.
 """
 
 from __future__ import annotations
 
 from fractions import Fraction
 from functools import lru_cache
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Tuple
 
-from sympy import (
-    Rational,
-    Symbol,
-    bernoulli,
-    binomial,
-    cancel,
-    diff,
-    expand,
-    factor,
-    factorial,
-    oo,
-    simplify,
-    sqrt,
-    symbols,
-    sin,
+from sympy import Rational, bernoulli, factorial
+
+
+LOCAL_SOURCE_ANCHORS: Dict[str, str] = {
+    'collision_residues': 'chapters/examples/landscape_census.tex:173-186',
+    'virasoro_shadow_surface': 'chapters/examples/landscape_census.tex:160-178',
+    'fp_coefficients': 'chapters/examples/landscape_census.tex:4970-5018',
+    'stationary_primary_line':
+        'chapters/theory/higher_genus_modular_koszul.tex:20242-20276',
+    'finite_scalar_tau':
+        'chapters/theory/higher_genus_modular_koszul.tex:20304-20388',
+    'concordance_kappa': 'chapters/connections/concordance.tex:4095-4108',
+    'scalar_free_energy':
+        'chapters/connections/concordance.tex:6742-6759',
+}
+
+
+KERNEL_CONSTANTS: Dict[str, Dict[str, str]] = {
+    'affine_raw_trace': {
+        'formula': 'k*Omega_tr/z',
+        'scope': 'collision residue, trace-form convention',
+        'source': LOCAL_SOURCE_ANCHORS['collision_residues'],
+    },
+    'affine_kz': {
+        'formula': 'Omega/((k+h^vee)z)',
+        'scope': 'KZ presentation; not equal to the raw trace-form residue',
+        'source': LOCAL_SOURCE_ANCHORS['collision_residues'],
+    },
+    'heisenberg': {
+        'formula': 'k/z',
+        'scope': 'rank-one Heisenberg collision residue',
+        'source': LOCAL_SOURCE_ANCHORS['collision_residues'],
+    },
+    'virasoro': {
+        'formula': '(c/2)/z^3 + 2*T/z',
+        'scope': 'Virasoro collision residue',
+        'source': LOCAL_SOURCE_ANCHORS['collision_residues'],
+    },
+}
+
+
+KAPPA_FORMULAS: Dict[str, Dict[str, str]] = {
+    'heisenberg_rank_one': {
+        'formula': 'k',
+        'source': 'chapters/examples/landscape_census.tex:151-152',
+    },
+    'affine_trace_form': {
+        'formula': 'dim(g)*(k+h^vee)/(2*h^vee)',
+        'source': 'chapters/examples/landscape_census.tex:140-143',
+    },
+    'virasoro': {
+        'formula': 'c/2',
+        'source': 'chapters/examples/landscape_census.tex:144',
+    },
+    'w_n': {
+        'formula': 'c*(H_N-1)',
+        'source': 'chapters/examples/landscape_census.tex:145-146',
+    },
+}
+
+
+VIRASORO_SHADOW_FORMULAS: Dict[str, str] = {
+    'hypothesis': 'c*(5*c+22) != 0',
+    'kappa': 'c/2',
+    'S_2': 'c/2',
+    'S_3': '2',
+    'S_4': '10/(c*(5*c+22))',
+    'S_5': '-48/(c^2*(5*c+22))',
+    'Delta': '40/(5*c+22)',
+    'Lambda_norm': 'c*(5*c+22)/10',
+    'collision_residue': '(c/2)/z^3 + 2*T/z',
+}
+
+
+OBJECT_FIREWALLS: Tuple[str, ...] = (
+    'A is the algebra.',
+    'B(A) is the bar coalgebra T^c(s^{-1} Abar).',
+    'A^i is the bar-cohomology coalgebra branch.',
+    'A^! is the Verdier/continuous-linear dual branch under hypotheses.',
+    'Z_ch^der(A) is ChirHoch^*(A,A), the Hochschild/bulk object.',
+    'Omega(B(A)) = A is bar-cobar inversion, not Koszul duality.',
 )
+
+
+DATA_CHANNEL_FIREWALLS: Dict[str, Dict[str, Any]] = {
+    'virasoro_ope_data': {
+        'object': 'OPE/collision residue',
+        'formula': VIRASORO_SHADOW_FORMULAS['collision_residue'],
+        'source': LOCAL_SOURCE_ANCHORS['collision_residues'],
+        'supplies_bar_differential': False,
+        'supplies_derived_center': False,
+    },
+    'bar_differential_data': {
+        'object': 'ordered bar differential and MC element',
+        'formula': 'D*Theta + (1/2)[Theta,Theta] = 0',
+        'source': 'local MC compute projection only',
+        'supplied_by_finite_virasoro_window': False,
+        'supplies_derived_center': False,
+    },
+    'derived_center_data': {
+        'object': 'Z_ch^der(A) = ChirHoch^*(A,A)',
+        'formula': 'Hochschild cochains, not Virasoro OPE constants',
+        'source': 'object firewall',
+        'supplied_by_virasoro_ope': False,
+        'supplied_by_bar_cobar_inversion': False,
+    },
+}
 
 
 # ============================================================================
@@ -131,7 +152,7 @@ def lambda_fp(g: int) -> Fraction:
 
     lambda_g^FP = (2^{2g-1} - 1) / 2^{2g-1} * |B_{2g}| / (2g)!
 
-    Verified values (AP10: multi-path, not hardcoded alone):
+    Verified values from landscape_census.tex:4988-4998:
         g=1: 1/24
         g=2: 7/5760
         g=3: 31/967680
@@ -147,8 +168,188 @@ def lambda_fp(g: int) -> Fraction:
 
 
 def shadow_free_energy(kappa_val, g: int) -> Fraction:
-    r"""Shadow free energy F_g^shadow(A) = kappa(A) * lambda_g^FP."""
+    r"""Scalar-lane coefficient F_g^scal(A) = kappa(A) * lambda_g^FP."""
     return kappa_val * lambda_fp(g)
+
+
+def kernel_constant_certificate() -> Dict[str, Any]:
+    r"""Return the local collision-residue and kappa convention firewall."""
+    return {
+        'kernel_constants': KERNEL_CONSTANTS,
+        'kappa_formulas': KAPPA_FORMULAS,
+        'virasoro_shadow_formulas': VIRASORO_SHADOW_FORMULAS,
+        'object_firewalls': OBJECT_FIREWALLS,
+        'data_channel_firewalls': DATA_CHANNEL_FIREWALLS,
+        'source_anchors': LOCAL_SOURCE_ANCHORS,
+    }
+
+
+def virasoro_shadow_surface_certificate(c_val: Fraction) -> Dict[str, Any]:
+    r"""Exact Virasoro shadow coefficients with central-charge hypotheses.
+
+    The formulas S_4 and S_5 live on the non-singular surface
+    c*(5*c+22) != 0.  The finite list S_2,...,S_5 is a computable witness
+    for the local shadow table; it is not a proof of the infinite tower.
+    """
+    c = Fraction(c_val)
+    five_c_plus_22 = 5 * c + 22
+    denominator = c * five_c_plus_22
+    nonsingular = denominator != 0
+    kappa_val = c / 2
+    lambda_norm = denominator / 10
+
+    if nonsingular:
+        S4 = Fraction(10, 1) / denominator
+        S5 = Fraction(-48, 1) / (c * c * five_c_plus_22)
+        delta = 8 * kappa_val * S4
+    else:
+        S4 = None
+        S5 = None
+        delta = None
+
+    return {
+        'central_charge': c,
+        'kappa': kappa_val,
+        'hypothesis': VIRASORO_SHADOW_FORMULAS['hypothesis'],
+        'nonsingular_shadow_surface': nonsingular,
+        'singular_locus': {
+            'c_equals_0': c == 0,
+            'c_equals_minus_22_over_5': five_c_plus_22 == 0,
+        },
+        'coefficients': {
+            'S_2': kappa_val,
+            'S_3': Fraction(2),
+            'S_4': S4,
+            'S_5': S5,
+            'Delta': delta,
+            'Lambda_norm': lambda_norm,
+        },
+        'formulas': VIRASORO_SHADOW_FORMULAS,
+        'shadow_depth': {
+            'census_class': 'M',
+            'census_depth': 'infinity',
+            'finite_witness_orders': (2, 3, 4, 5),
+            'finite_window_proves_infinite_depth': False,
+            'nonzero_finite_witnesses': nonsingular and S4 != 0 and S5 != 0,
+        },
+        'channel_separation': DATA_CHANNEL_FIREWALLS,
+        'constructs_bar_differential': False,
+        'constructs_derived_center': False,
+        'source': LOCAL_SOURCE_ANCHORS['virasoro_shadow_surface'],
+    }
+
+
+def finite_constraint_scope_certificate(
+    max_n_vir: int, max_genus: int, descendant_data_assumed: bool = False
+) -> Dict[str, Any]:
+    r"""Record the exact finite window checked by the Virasoro oracle.
+
+    A finite set of Virasoro/DVV equations is a useful regression witness.
+    It cannot certify the infinite Virasoro tail, reconstruct the full MC
+    element, or compute Hochschild/derived-centre data.
+    """
+    if max_n_vir < -1:
+        raise ValueError(f"max_n_vir must be >= -1, got {max_n_vir}")
+    if max_genus < 0:
+        raise ValueError(f"max_genus must be >= 0, got {max_genus}")
+
+    checked_indices = tuple(range(-1, max_n_vir + 1))
+    checked_genera = tuple(range(0, max_genus + 1))
+
+    return {
+        'checked_virasoro_indices': checked_indices,
+        'checked_genera': checked_genera,
+        'checked_constraint_count': len(checked_indices) * len(checked_genera),
+        'finite_window': True,
+        'descendant_data_assumed': bool(descendant_data_assumed),
+        'proves_all_virasoro_constraints': False,
+        'proves_full_mc_reconstruction': False,
+        'reconstructs_bar_differential': False,
+        'reconstructs_derived_center': False,
+        'next_unchecked': {
+            'virasoro_index': max_n_vir + 1,
+            'genus': max_genus + 1,
+        },
+        'required_to_upgrade': (
+            'an all-n/all-g argument for the descendant CohFT operators, '
+            'compatibility with the ordered bar differential, and an '
+            'independent Hochschild calculation for Z_ch^der(A)'
+        ),
+        'failure_mode': (
+            'finite Virasoro checks are regression witnesses, not full MC '
+            'reconstruction data'
+        ),
+    }
+
+
+def _exp_series_coefficients(
+    log_coefficients: Dict[int, Fraction], max_genus: int
+) -> Dict[int, Fraction]:
+    """Coefficients of exp(sum_{g>=1} a_g q^g) through q^max_genus."""
+    coeffs: Dict[int, Fraction] = {0: Fraction(1)}
+    for n in range(1, max_genus + 1):
+        total = Fraction(0)
+        for i in range(1, n + 1):
+            total += i * log_coefficients.get(i, Fraction(0)) * coeffs[n - i]
+        coeffs[n] = total / n
+    return coeffs
+
+
+def finite_scalar_shadow_tau(
+    kappa_val: Fraction, max_genus: int = 4
+) -> Dict[str, Any]:
+    r"""Finite scalar coefficient identity in Q[kappa][[q]]/(q^{G+1}).
+
+    The output certifies only the logarithmic scalar lane from
+    higher_genus_modular_koszul.tex:20304-20388.  It intentionally carries
+    no descendant variables and no full Virasoro/KdV/Hirota certificate.
+    """
+    if max_genus < 1:
+        raise ValueError(f"max_genus must be >= 1, got {max_genus}")
+
+    kw_log = {g: lambda_fp(g) for g in range(1, max_genus + 1)}
+    shadow_log = {
+        g: kappa_val * coeff for g, coeff in kw_log.items()
+    }
+
+    return {
+        'kappa': kappa_val,
+        'max_genus': max_genus,
+        'ring': f'Q[kappa][[q]]/(q^{max_genus + 1})',
+        'kw_log_coefficients': kw_log,
+        'shadow_log_coefficients': shadow_log,
+        'kw_tau_coefficients': _exp_series_coefficients(kw_log, max_genus),
+        'shadow_tau_coefficients':
+            _exp_series_coefficients(shadow_log, max_genus),
+        'identity': 'tau_shadow_scal^{<=G} = exp(kappa log tau_KW^{<=G})',
+        'scalar_lane_only': True,
+        'constructs_descendant_virasoro_constraints': False,
+        'constructs_full_tau_function': False,
+        'source': LOCAL_SOURCE_ANCHORS['finite_scalar_tau'],
+    }
+
+
+def standard_hierarchy_constraint_status(kappa_val: Fraction) -> Dict[str, Any]:
+    r"""Classify the standard KW/KdV/Hirota/Virasoro claim at this kappa."""
+    is_kw = kappa_val == Fraction(1)
+    is_zero = kappa_val == Fraction(0)
+    residual = kappa_val * (Fraction(1) - kappa_val)
+
+    return {
+        'kappa': kappa_val,
+        'standard_kw_descendant_tau': is_kw,
+        'standard_descendant_virasoro_constraints': is_kw,
+        'standard_kdv_hierarchy': is_kw or is_zero,
+        'standard_hirota_equations': is_kw or is_zero,
+        'all_standard_constraints': is_kw,
+        'trivial_zero_field_exception': is_zero,
+        'kdv_residual_factor_kappa_1_minus_kappa': residual,
+        'failure_mode': (
+            'finite scalar coefficients do not supply descendant CohFT data; '
+            'the standard nonlinear channels leave a kappa(1-kappa) residual'
+        ),
+        'source': LOCAL_SOURCE_ANCHORS['finite_scalar_tau'],
+    }
 
 
 # ============================================================================
@@ -280,8 +481,8 @@ def genus0_boundary_strata(k: int) -> Dict[str, Any]:
     {1, ..., k} with |I|, |J| >= 2 (separating nodes producing two
     genus-0 components).
 
-    The number of such strata is (2^{k-1} - k - 1) / 2
-    = binom(k,2)/2 - 1 for the unordered partition.
+    With point 1 fixed in I to remove the I/J symmetry, the number of
+    strata is 2^{k-1} - k - 1 for k >= 3.
 
     At genus 0 there are NO non-separating nodes (handle terms),
     since genus cannot decrease below 0.
@@ -376,30 +577,17 @@ def mc_genus0_arity_k_terms(k: int) -> Dict[str, Any]:
 
 
 # ============================================================================
-# 3. PROOF 1: MC projection = Virasoro constraint (explicit computation)
+# 3. Witten-Kontsevich reference DVV identities
 # ============================================================================
 
 def proof1_mc_projection_equals_virasoro(
     n_vir: int, max_genus: int = 2, max_extra_insertions: int = 3
 ) -> Dict[str, Any]:
-    r"""PROOF 1: The (g=0, arity n+2) MC projection = L_n Virasoro constraint.
+    r"""Reference check: the KW correlators satisfy the DVV/Virasoro recursion.
 
-    The MC equation at (g=0, arity k=n+2) gives the Virasoro constraint L_n.
-    We verify by computing both sides:
-      LHS: the Virasoro constraint L_n applied to WK intersection numbers.
-      RHS: the MC boundary equation at (0, n+2) using the DVV decomposition.
-
-    Since the DVV recursion IS both the MC boundary equation and the
-    Virasoro constraint, agreement is STRUCTURAL (the two objects are
-    the same mathematical statement expressed differently).
-
-    We verify this identification COMPUTATIONALLY at multiple genera and
-    insertion configurations.
-
-    The key: the Virasoro operator L_n inserts tau_{n+1} into a correlator
-    and expresses the result as a sum of merge and split terms.
-    The MC equation at (0, n+2) does the same: it decomposes an (n+2)-point
-    function into boundary contributions.
+    The check is a KW oracle.  It does not assert that the scalar series
+    exp(kappa log tau_KW^{<=G}) carries descendant variables or satisfies
+    the standard Virasoro constraints for arbitrary kappa.
 
     Parameters
     ----------
@@ -410,13 +598,19 @@ def proof1_mc_projection_equals_virasoro(
     max_extra_insertions : int
         Maximum number of additional insertions to test.
     """
-    k = n_vir + 2  # arity of the MC projection
+    k = n_vir + 3  # arity convention used by mc_genus0_arity_k_terms
 
     results = {
         'virasoro_index': n_vir,
         'mc_arity': k,
         'mc_genus': 0,
         'identification': f'L_{n_vir} <-> MC at (0, {k})',
+        'scope': 'KW descendant CohFT reference, not arbitrary kappa scaling',
+        'finite_scope': finite_constraint_scope_certificate(
+            max_n_vir=n_vir,
+            max_genus=max_genus,
+            descendant_data_assumed=True,
+        ),
         'tests': {},
         'all_pass': True,
     }
@@ -476,7 +670,8 @@ def _verify_single_virasoro_mc(n_vir: int, genus: int,
     The DVV recursion IS the MC boundary equation.  We verify that:
     (1) The WK intersection number with tau_{n_vir+1} inserted
         satisfies the DVV recursion (= MC boundary = L_n constraint).
-    (2) The constraint is exactly what arises from the (0, n_vir+2) MC projection.
+    (2) The constraint is tracked at the (0, n_vir+3) MC address in this
+        arity convention.
 
     For L_{-1}: string equation.
     For L_0: dilaton equation.
@@ -571,10 +766,10 @@ def _verify_dilaton_equation(genus: int,
 
 def _verify_higher_virasoro(n_vir: int, genus: int,
                               insertions: Tuple[int, ...]) -> Dict[str, Any]:
-    """Verify L_n (n >= 1) via DVV = MC at (0, n+2).
+    """Verify L_n (n >= 1) via DVV at the MC address (0, n+3).
 
     The DVV recursion with distinguished insertion d = n_vir + 1 gives the
-    L_{n_vir} constraint.  The MC equation at (0, n_vir + 2) decomposes into:
+    L_{n_vir} constraint.  The MC address (0, n_vir + 3) decomposes into:
       D-term: merge of the distinguished point with another
       [,]-term: splitting into two genus-0 components
     These are exactly the merge and split terms of DVV.
@@ -585,14 +780,14 @@ def _verify_higher_virasoro(n_vir: int, genus: int,
 
     if sum(full_ins) != 3 * genus - 3 + n_full:
         return {
-            'constraint': f'L_{n_vir} (DVV d={d}) = MC at (0, {n_vir + 2})',
+            'constraint': f'L_{n_vir} (DVV d={d}) = MC at (0, {n_vir + 3})',
             'genus': genus,
             'insertions': insertions,
             'lhs': Fraction(0),
             'rhs': Fraction(0),
             'defect': Fraction(0),
             'passes': True,
-            'mc_arity': n_vir + 2,
+            'mc_arity': n_vir + 3,
             'mc_term': 'dimension mismatch, vacuously true',
         }
 
@@ -647,14 +842,14 @@ def _verify_higher_virasoro(n_vir: int, genus: int,
     rhs_val = (merge_val + handle_val + split_val) / lhs_coeff
 
     return {
-        'constraint': f'L_{n_vir} (DVV d={d}) = MC at (0, {n_vir + 2})',
+        'constraint': f'L_{n_vir} (DVV d={d}) = MC at (0, {n_vir + 3})',
         'genus': genus,
         'insertions': insertions,
         'lhs': lhs_val,
         'rhs': rhs_val,
         'defect': lhs_val - rhs_val,
         'passes': lhs_val == rhs_val,
-        'mc_arity': n_vir + 2,
+        'mc_arity': n_vir + 3,
         'mc_decomposition': {
             'merge (D-term)': merge_val / lhs_coeff,
             'handle (absent at g=0)': handle_val / lhs_coeff,
@@ -664,52 +859,26 @@ def _verify_higher_virasoro(n_vir: int, genus: int,
 
 
 # ============================================================================
-# 4. PROOF 2: Kodaira-Spencer identification
+# 4. Stationary primary-line diagnostics
 # ============================================================================
 
 def proof2_kodaira_spencer(max_genus: int = 3) -> Dict[str, Any]:
-    r"""PROOF 2: Bar complex = KS deformation complex.
+    r"""Stationary primary-line checks separated from descendant constraints.
 
-    The bar complex B(A) is the chiral Kodaira-Spencer deformation complex
-    of the curve X.  The (n+1)-point amplitude at genus 0 encodes the
-    (n+1)-point deformation of X.
-
-    The MC equation at arity (n+2) is the integrability condition for the
-    (n+2)-point deformation.  This is equivalent to the L_n Virasoro
-    constraint because:
-
-    (1) The genus-0 descendant potential F_0 encodes the prepotential of the
-        Frobenius manifold structure on the deformation space.
-    (2) The WDVV (associativity) equations for F_0 are equivalent to the
-        genus-0 Virasoro constraints (L_1 and higher).
-    (3) The string equation L_{-1} is the flatness condition for the metric.
-    (4) The dilaton equation L_0 is the quasi-homogeneity condition.
-
-    We verify by checking that the WDVV equations hold for the rank-1
-    Frobenius manifold corresponding to the shadow CohFT.
-
-    For rank 1: the Frobenius manifold is trivial (1-dimensional), so WDVV
-    is vacuous.  The content is that L_n for all n >= -1 follows from:
-      - L_{-1}: flatness (metric on deformation space)
-      - L_0: Euler vector field (quasi-homogeneity)
-      - L_1: from WDVV at genus 0 + topological recursion
-      - L_n (n >= 2): generated by the Virasoro algebra from L_{-1}, L_0, L_1.
-
-    The Kodaira-Spencer interpretation: at arity k, the MC equation expresses
-    the vanishing of obstructions to extending a (k-1)-point deformation to a
-    k-point deformation.  This is the tangent-obstruction sequence of the
-    bar complex: H^1(B(A)) classifies first-order deformations,
-    H^2(B(A)) contains obstructions.  The MC equation is the universal
-    obstruction condition.
+    The manuscript source at higher_genus_modular_koszul.tex:20242-20276
+    restricts the hierarchy statement to one-variable stationary Riccati
+    diagnostics.  A full descendant CohFT hierarchy must be supplied
+    separately.
     """
     results = {
-        'proof': 'Kodaira-Spencer identification',
+        'diagnostic': 'stationary primary-line Riccati shadow',
         'mechanism': (
-            'The bar complex B(A) IS the chiral KS deformation complex. '
-            'The MC equation at (0, k) is the integrability condition for '
-            'k-point deformations. The Virasoro constraint L_{k-3} IS this '
-            'integrability condition, expressed in descendant coordinates.'
+            'The shadow tower gives one-variable primary-line diagnostics. '
+            'It does not construct descendant Virasoro operators.'
         ),
+        'constructs_descendant_virasoro_constraints': False,
+        'descendant_cohft_data_assumed_separately': True,
+        'source': LOCAL_SOURCE_ANCHORS['stationary_primary_line'],
         'arity_map': {},
     }
 
@@ -735,7 +904,7 @@ def proof2_kodaira_spencer(max_genus: int = 3) -> Dict[str, Any]:
 
     # Verify WDVV is vacuous at rank 1
     results['wdvv_rank1'] = {
-        'status': 'vacuous (rank 1 Frobenius manifold has no WDVV constraint)',
+        'classification': 'vacuous (rank 1 Frobenius manifold has no WDVV constraint)',
         'reason': '1-dimensional Frobenius manifolds have a single coordinate; '
                   'WDVV involves 4 indices, all equal for rank 1, giving a tautology.',
     }
@@ -754,9 +923,26 @@ def proof2_kodaira_spencer(max_genus: int = 3) -> Dict[str, Any]:
                     all_pass = False
 
     results['constraint_tests'] = constraint_tests
+    results['kw_reference_checks_pass'] = all_pass
     results['all_pass'] = all_pass
 
     return results
+
+
+def stationary_primary_line_diagnostics() -> Dict[str, Any]:
+    r"""Classify shadow-depth diagnostics without descendant promotion."""
+    return {
+        'source': LOCAL_SOURCE_ANCHORS['stationary_primary_line'],
+        'constructs_full_hierarchy': False,
+        'requires_descendant_cohft_data': True,
+        'classes': {
+            'G': {'depth': 2, 'stationary_shadow': 'trivial dispersionless'},
+            'L': {'depth': 3, 'stationary_shadow': 'Gelfand-Dickey GD_2'},
+            'C': {'depth': 4, 'stationary_shadow': 'KdV plus contact deformation'},
+            'M': {'depth': 'infinity',
+                  'stationary_shadow': 'polynomial Gelfand-Dickey shadow'},
+        },
+    }
 
 
 def _ks_interpretation(n_vir: int) -> str:
@@ -774,44 +960,30 @@ def _ks_interpretation(n_vir: int) -> str:
     }
     return interp.get(n_vir,
                       f'Order-{n_vir} integrability of deformations '
-                      f'(arity-{n_vir+2} MC equation).')
+                      f'(arity-{n_vir+3} MC equation).')
 
 
 # ============================================================================
-# 5. PROOF 3: Matrix model / kappa-scaling
+# 5. Scalar kappa lane and standard-hierarchy obstruction
 # ============================================================================
 
 def proof3_kappa_scaling(kappa_val: Fraction = Fraction(1, 2),
                           max_genus: int = 5) -> Dict[str, Any]:
-    r"""PROOF 3: Virasoro constraints survive kappa-scaling.
+    r"""Verify scalar kappa coefficients and report hierarchy failure.
 
-    Since F_shadow = kappa * F_KW, and the Virasoro operators L_n are
-    differential operators in descendant variables:
-
-        L_n(F_shadow) = L_n(kappa * F_KW) = kappa * L_n(F_KW) = 0.
-
-    This works because L_n is LINEAR in d/dt_k (first-order differential
-    operator).  The kappa factor commutes through.
-
-    IMPORTANT NEGATIVE RESULT (AP: tau_KW^kappa NOT KdV):
-    The KdV hierarchy u_t + 6u u_x + u_xxx = 0 has a quadratic nonlinearity
-    (6u u_x).  Under u -> kappa u: 6(kappa u)(kappa u_x) = 6 kappa^2 u u_x,
-    which differs from kappa * 6u u_x unless kappa = 1.
-    Therefore tau_shadow = tau_KW^kappa does NOT satisfy KdV for kappa != 1.
-
-    The shadow partition function is controlled by the MC equation in g^mod_A,
-    not by KdV.  The MC equation IS compatible with kappa-scaling (the
-    Virasoro constraints are the LINEAR part of the integrable hierarchy).
-
-    Multi-path verification:
-      Path 1: Direct kappa-scaling of F_g
-      Path 2: Free energy ratio F_g^shadow / F_g^KW = kappa (constant)
-      Path 3: Generating function kappa * (hbar/2/sin(hbar/2) - 1)
+    The positive check is only F_g^scal = kappa lambda_g^FP.  The standard
+    nonlinear hierarchy channels leave the kappa(1-kappa) residual recorded
+    in higher_genus_modular_koszul.tex:20376-20388.
     """
+    hierarchy_status = standard_hierarchy_constraint_status(kappa_val)
+    finite_tau = finite_scalar_shadow_tau(kappa_val, max_genus=max_genus)
+
     results = {
         'kappa': kappa_val,
-        'proof': 'kappa-scaling compatibility',
+        'certificate': 'finite scalar coefficient identity',
         'genus_checks': {},
+        'finite_scalar_tau': finite_tau,
+        'standard_hierarchy_status': hierarchy_status,
         'all_pass': True,
     }
 
@@ -820,15 +992,9 @@ def proof3_kappa_scaling(kappa_val: Fraction = Fraction(1, 2),
         F_shadow = kappa_val * fp
         F_kw = fp
 
-        # Path 1: direct
         path1 = F_shadow
-
-        # Path 2: ratio
         ratio = F_shadow / F_kw if F_kw != Fraction(0) else None
         path2_pass = (ratio == kappa_val) if ratio is not None else False
-
-        # Path 3: generating function coefficient
-        # A-hat(ix) - 1 at order x^{2g} gives lambda_g^FP
         path3 = kappa_val * fp
 
         all_match = (path1 == F_shadow == path3) and path2_pass
@@ -843,57 +1009,65 @@ def proof3_kappa_scaling(kappa_val: Fraction = Fraction(1, 2),
         if not all_match:
             results['all_pass'] = False
 
-    # Virasoro linearity check: L_n is first-order in d/dt_k
     results['virasoro_linearity'] = {
-        'statement': 'L_n = sum of first-order differential operators in t_k',
-        'kappa_commutes': True,
-        'reason': 'L_n(kappa * F) = kappa * L_n(F) since L_n is linear in d/dt_k',
+        'statement': 'finite scalar log scaling is not a Virasoro constraint',
+        'kappa_commutes': kappa_val == Fraction(1),
+        'reason': (
+            'standard tau-level Virasoro operators include nonlinear '
+            'free-energy channels and descendant variables'
+        ),
     }
 
-    # KdV non-compatibility
     results['kdv_negative'] = {
-        'statement': 'tau_KW^kappa does NOT satisfy KdV for kappa != 1',
-        'reason': 'KdV has quadratic nonlinearity: 6u u_x -> 6 kappa^2 u u_x',
-        'consequence': 'Shadow PF controlled by MC equation, not KdV',
+        'statement': 'standard KdV fails except for kappa=1 and zero-field kappa=0',
+        'residual_factor': hierarchy_status['kdv_residual_factor_kappa_1_minus_kappa'],
+        'fails': not hierarchy_status['standard_kdv_hierarchy'],
+        'source': LOCAL_SOURCE_ANCHORS['finite_scalar_tau'],
     }
 
     return results
 
 
 def kappa_scaled_virasoro_operators(n_vir: int, kappa_val: Fraction) -> Dict[str, Any]:
-    r"""The scaled Virasoro operators L_n^{(kappa)}.
+    r"""Report whether the standard KW Virasoro operator is certified."""
+    status = standard_hierarchy_constraint_status(kappa_val)
+    allowed = status['standard_descendant_virasoro_constraints']
 
-    Since F_shadow = kappa * F_KW and L_n is a first-order differential
-    operator: L_n^{(kappa)} = L_n (the operator is UNCHANGED).
-
-    The kappa factor is a multiplicative constant that commutes through L_n.
-    There is no deformation of the Virasoro algebra; the constraints are
-    the SAME operators applied to a DIFFERENT partition function.
-
-    The free-energy-level constraint is:
-      L_n^{FE}(F_shadow) = kappa * L_n^{FE}(F_KW) = 0
-
-    where L_n^{FE} is the free-energy formulation of L_n.
-
-    Returns the operator structure and scaling properties.
-    """
     return {
         'virasoro_index': n_vir,
         'kappa': kappa_val,
-        'operator': f'L_{n_vir}^{{(kappa)}} = L_{n_vir} (unchanged)',
-        'scaling_law': f'L_{n_vir}(kappa * F_KW) = kappa * L_{n_vir}(F_KW) = 0',
-        'no_deformation': True,
-        'reason': 'L_n is a first-order differential operator; '
-                  'constant scalars commute through first-order operators.',
+        'operator': f'L_{n_vir}',
+        'standard_operator_certified': allowed,
+        'no_deformation': allowed,
+        'constructs_deformed_operator': False,
+        'failure_mode': None if allowed else (
+            'finite scalar coefficients do not construct a descendant '
+            'Virasoro representation'
+        ),
+        'source': LOCAL_SOURCE_ANCHORS['finite_scalar_tau'],
+    }
+
+
+def descendant_cohft_data_certificate(descendant_data_assumed: bool = False) -> Dict[str, Any]:
+    r"""Separate scalar shadow data from an independently supplied CohFT."""
+    return {
+        'descendant_data_assumed': descendant_data_assumed,
+        'finite_scalar_lane_supplies_descendants': False,
+        'full_virasoro_constraints_available': bool(descendant_data_assumed),
+        'required_extra_data': (
+            'descendant CohFT classes, psi insertions, unit, metric, and '
+            'Virasoro/W-operator action on descendant variables'
+        ),
+        'source': LOCAL_SOURCE_ANCHORS['stationary_primary_line'],
     }
 
 
 # ============================================================================
-# 6. PROOF 4: W-constraints for W_N
+# 6. W-constraint structural data
 # ============================================================================
 
 def proof4_w_constraints(max_N: int = 4) -> Dict[str, Any]:
-    r"""PROOF 4: W-constraints generalize Virasoro constraints.
+    r"""Structural W_N hierarchy data, conditional on descendant CohFT input.
 
     For the W_N algebra (rank N-1), the shadow CohFT at genus 0 is the
     A_{N-1} Frobenius manifold CohFT.  The integrable hierarchy is the
@@ -904,19 +1078,19 @@ def proof4_w_constraints(max_N: int = 4) -> Dict[str, Any]:
       N=3 (W_3): L_n Z = 0 AND W_n Z = 0 (Boussinesq / 3-KdV)
       N=4 (W_4): L_n Z = 0 AND W_n^{(3)} Z = 0 AND W_n^{(4)} Z = 0
 
-    The (0, n+2) MC projection for W_N gives COUPLED constraints from
-    ALL generators W^{(s)} (s = 2, 3, ..., N).
+    The scalar coefficient lane alone does not build these operators.
 
     At genus 0: the W_N constraints determine the A_{N-1} Frobenius
     prepotential.  The MC equation at each arity k gives the integrability
     condition for k-point deformations in the (N-1)-dimensional space.
 
-    SCOPE: This is structural (the identification of MC projections with
-    W-constraints at genus 0).  The explicit W_N operators are known
-    from Dickey, Adler-Gelfand-Dickey, and Faber-Shadrin-Zvonkine.
+    The explicit W_N operators require the separately supplied descendant
+    CohFT package.
     """
     results = {
-        'proof': 'W-constraints generalize Virasoro for W_N',
+        'certificate': 'W-constraint structural data',
+        'requires_descendant_cohft_data': True,
+        'scalar_lane_constructs_operators': False,
         'families': {},
     }
 
@@ -940,8 +1114,8 @@ def proof4_w_constraints(max_N: int = 4) -> Dict[str, Any]:
             'n_generators': n_generators,
             'hierarchy': hierarchy,
             'genus_0_constraints': (
-                f'The MC equation at (0, k) for W_{N} gives {n_generators} '
-                f'coupled constraints from the {hierarchy} hierarchy.'
+                f'With descendant CohFT data, W_{N} has {n_generators} '
+                f'coupled {hierarchy} constraint families.'
             ),
             'arity_2_constraint': (
                 f'String equation for all {n_generators} generators'
@@ -987,7 +1161,7 @@ def _gelfand_dickey_name(N: int) -> str:
 
 
 # ============================================================================
-# 7. MC equation at general genus (not just genus 0)
+# 7. MC equation at general genus, extending the genus-0 projection
 # ============================================================================
 
 def mc_general_genus_projection(g: int, k: int) -> Dict[str, Any]:
@@ -1005,14 +1179,17 @@ def mc_general_genus_projection(g: int, k: int) -> Dict[str, Any]:
     The Virasoro constraint L_{k-3} at genus g:
       - L_{-1} (k=2, g > 0): string equation with handle terms
       - L_0 (k=3, g > 0): dilaton with handle terms
-      - L_n (k=n+2, g > 0): full DVV with merge + handle + split
+      - L_n (k=n+3, g > 0): full DVV with merge + handle + split
 
     The new ingredient at g > 0 is the HANDLE TERM, which couples genus g
-    to genus g-1 (and more generally, all lower genera).  This is the
-    mechanism by which the MC equation generates ALL F_g recursively from
-    genus-0 data.
+    to genus g-1 in the DVV recursion.  A single finite projection is only
+    a local address in the recursion; it does not reconstruct the full MC
+    element, the ordered bar differential, or every F_g from genus-0 data.
     """
-    boundary = genus0_boundary_strata(k) if g == 0 else None
+    if g < 0:
+        raise ValueError(f"genus must be >= 0, got {g}")
+    if k < 0:
+        raise ValueError(f"arity must be >= 0, got {k}")
 
     return {
         'genus': g,
@@ -1023,6 +1200,10 @@ def mc_general_genus_projection(g: int, k: int) -> Dict[str, Any]:
         'bracket_handle': 'ABSENT' if g == 0 else f'non-separating node (genus {g} -> {g-1})',
         'is_classical': g == 0,
         'quantum_correction': g > 0,
+        'finite_projection_only': True,
+        'reconstructs_full_mc': False,
+        'reconstructs_all_Fg_from_genus0': False,
+        'separates_bar_from_hochschild': True,
         'dvv_terms': {
             'merge': 'sum_i (d+d_i-1)!!/(d_i-1)!! <...tau_{d+d_i-1}...>_g',
             'handle': '0' if g == 0 else 'sum_{a+b=d-2} (a)!!(b)!!/2 <...tau_a tau_b...>_{g-1}',
@@ -1035,10 +1216,15 @@ def verify_mc_at_genus_arity(g: int, k: int,
                               insertions: Tuple[int, ...] = ()) -> Dict[str, Any]:
     """Verify the MC equation at (g, k) for specific insertions.
 
-    This is the master verification: compute both sides of the DVV recursion
-    at genus g with the distinguished insertion d = k-3+1 = k-2
-    and additional insertions.
+    This is a finite-window verification: compute both sides of the DVV
+    recursion at genus g with the distinguished insertion d = k-3+1 = k-2
+    and additional insertions.  It is not a full MC reconstruction.
     """
+    if g < 0:
+        raise ValueError(f"genus must be >= 0, got {g}")
+    if k < 0:
+        raise ValueError(f"arity must be >= 0, got {k}")
+
     n_vir = k - 3
     if n_vir < -1:
         return {
@@ -1057,10 +1243,10 @@ def virasoro_mc_address_table(max_n: int = 8, max_g: int = 4) -> Dict[str, Any]:
     r"""The Virasoro-MC address table.
 
     For each Virasoro operator L_n and genus g, identify the MC address
-    (g, k) where k = n + 2 + (number of extra insertions).
+    (g, k) in the arity convention k = n + 3.
 
     The FUNDAMENTAL identification:
-      L_n constraint <-> MC equation at (g, n+2)
+      L_n constraint <-> MC equation at (g, n+3)
       (with g = 0 for the pure genus-0 identification;
        g > 0 includes handle corrections).
 
@@ -1069,10 +1255,15 @@ def virasoro_mc_address_table(max_n: int = 8, max_g: int = 4) -> Dict[str, Any]:
       - dim M-bar_{g,k} = 3g - 3 + k
       - The constraint is nontrivial when 3g - 3 + k >= 0 and 2g - 2 + k > 0
     """
+    if max_n < -1:
+        raise ValueError(f"max_n must be >= -1, got {max_n}")
+    if max_g < 0:
+        raise ValueError(f"max_g must be >= 0, got {max_g}")
+
     table = {}
     for n in range(-1, max_n + 1):
         for g in range(0, max_g + 1):
-            k = n + 2
+            k = n + 3
             dim_mbar = 3 * g - 3 + k
             stable = 2 * g - 2 + k > 0
 
@@ -1107,27 +1298,26 @@ def triple_verification_constraint(
     n_vir: int, genus: int, insertions: Tuple[int, ...],
     kappa_val: Fraction = Fraction(1, 2)
 ) -> Dict[str, Any]:
-    r"""Triple-verify L_{n_vir} at (genus, insertions) by three paths.
+    r"""Compare the KW reference recursion with scalar kappa scaling.
 
-    Path 1: DVV recursion (= MC boundary equation).
-    Path 2: Direct WK intersection number computation.
-    Path 3: Kappa-scaled verification: kappa * L_n(F_KW) = L_n(F_shadow).
-
-    All three must agree. This is the multi-path verification mandate.
+    The third path certifies only scalar multiplication of the numerical
+    correlator.  It becomes a descendant Virasoro certificate only at
+    kappa = 1, where the object is the actual KW CohFT.
     """
-    # Path 1: DVV/MC (compute both LHS and RHS, check equality)
     path1 = _verify_single_virasoro_mc(n_vir, genus, insertions)
 
-    # Path 2: Direct WK number for the full correlator
     d_insert = max(n_vir + 1, 0)
     full_ins = tuple(sorted(list(insertions) + [d_insert]))
     path2_value = wk_intersection(genus, full_ins)
 
-    # Path 3: The shadow free energy at this genus
-    # F_g^shadow = kappa * F_g^KW, and L_n preserves this scaling
-    # So the correlator <tau_{n+1} tau_S>_g for the shadow CohFT
-    # equals kappa * <tau_{n+1} tau_S>_g for WK.
     path3_shadow = kappa_val * path2_value
+    hierarchy_status = standard_hierarchy_constraint_status(kappa_val)
+    scalar_scaling = path3_shadow == kappa_val * path2_value
+    descendant_certified = (
+        path1['passes']
+        and scalar_scaling
+        and hierarchy_status['standard_descendant_virasoro_constraints']
+    )
 
     return {
         'virasoro_index': n_vir,
@@ -1138,8 +1328,12 @@ def triple_verification_constraint(
         'path3_shadow_scaled': path3_shadow,
         'kappa': kappa_val,
         'dvv_passes': path1['passes'],
-        'scaling_consistent': path3_shadow == kappa_val * path2_value,
-        'all_three_agree': path1['passes'] and (path3_shadow == kappa_val * path2_value),
+        'scaling_consistent': scalar_scaling,
+        'descendant_virasoro_certified': descendant_certified,
+        'all_three_agree': descendant_certified,
+        'failure_mode': None if descendant_certified else (
+            'scalar scaling is not a full descendant Virasoro certificate'
+        ),
     }
 
 
@@ -1153,21 +1347,31 @@ def full_theorem_verification(
     max_n_vir: int = 5,
     max_extra: int = 2,
 ) -> Dict[str, Any]:
-    r"""Complete verification of the Virasoro-MC identification theorem.
+    r"""Full certificate package for KW reference and scalar-shadow claims.
 
-    Verifies all four proofs and the cross-verification at multiple genera,
-    Virasoro indices, and insertion configurations.
-
-    Returns comprehensive results dict.
+    The finite standard descendant window passes only at kappa = 1.  The
+    function does not certify full MC reconstruction.
     """
+    hierarchy_status = standard_hierarchy_constraint_status(kappa_val)
+    finite_scope = finite_constraint_scope_certificate(
+        max_n_vir=max_n_vir,
+        max_genus=max_genus,
+        descendant_data_assumed=hierarchy_status[
+            'standard_descendant_virasoro_constraints'
+        ],
+    )
     results = {
-        'theorem': 'Virasoro constraints L_n Z = 0 are genus-0 arity-(n+2) MC projections',
+        'claim': 'finite scalar shadow versus standard descendant constraints',
         'kappa': kappa_val,
+        'standard_hierarchy_status': hierarchy_status,
+        'finite_constraint_scope': finite_scope,
+        'proves_full_mc_reconstruction': False,
+        'constructs_bar_differential': False,
+        'constructs_derived_center': False,
         'proofs': {},
         'cross_checks': {},
     }
 
-    # Proof 1: MC projection = Virasoro
     proof1_results = {}
     all_proof1 = True
     for n_vir in range(-1, max_n_vir + 1):
@@ -1178,22 +1382,19 @@ def full_theorem_verification(
             all_proof1 = False
     results['proofs']['proof1_mc_projection'] = {
         'all_pass': all_proof1,
+        'scope': 'KW descendant CohFT reference',
         'details': proof1_results,
     }
 
-    # Proof 2: Kodaira-Spencer
     p2 = proof2_kodaira_spencer(max_genus=max_genus)
     results['proofs']['proof2_kodaira_spencer'] = p2
 
-    # Proof 3: Kappa-scaling
     p3 = proof3_kappa_scaling(kappa_val=kappa_val, max_genus=max_genus)
     results['proofs']['proof3_kappa_scaling'] = p3
 
-    # Proof 4: W-constraints
     p4 = proof4_w_constraints(max_N=4)
     results['proofs']['proof4_w_constraints'] = p4
 
-    # Triple cross-verification at selected points
     cross_pass = True
     for n_vir in range(-1, min(max_n_vir + 1, 4)):
         for g in range(0, min(max_genus + 1, 3)):
@@ -1206,24 +1407,24 @@ def full_theorem_verification(
                     cross_pass = False
 
     results['cross_checks_all_pass'] = cross_pass
-
-    # Address table
-    results['address_table'] = virasoro_mc_address_table(max_n=max_n_vir, max_g=max_genus)
-
-    # Overall
-    overall = (
+    results['scalar_lane_pass'] = p3['all_pass']
+    results['standard_descendant_package_pass'] = (
         all_proof1
-        and p2['all_pass']
+        and p2['kw_reference_checks_pass']
         and p3['all_pass']
         and p4['all_pass']
-        and cross_pass
+        and hierarchy_status['standard_descendant_virasoro_constraints']
     )
+
+    results['address_table'] = virasoro_mc_address_table(max_n=max_n_vir, max_g=max_genus)
+
+    overall = results['standard_descendant_package_pass']
+    results['finite_window_pass'] = overall
     results['all_pass'] = overall
     results['summary'] = (
-        'THEOREM VERIFIED: L_n Z^sh = 0 is the (g=0, arity n+2) MC projection. '
-        f'Checked L_{{-1}} through L_{max_n_vir} at genera 0-{max_genus}. '
-        f'Four independent proofs confirmed. '
-        f'{"ALL PASS" if overall else "FAILURES DETECTED"}.'
+        'Scalar coefficients verified; finite standard descendant window '
+        f'{"certified" if overall else "not certified"} at kappa={kappa_val}; '
+        'full MC reconstruction not certified.'
     )
 
     return results
@@ -1291,108 +1492,40 @@ def mc_boundary_chain_genus0(k: int) -> Dict[str, Any]:
 
 
 # ============================================================================
-# 12. Shadow partition function: what equations it DOES and DOES NOT satisfy
+# 12. Shadow partition function: certified equations and failure factors
 # ============================================================================
 
 def shadow_equation_classification(kappa_val: Fraction = Fraction(1, 2),
                                     max_genus: int = 5) -> Dict[str, Any]:
-    r"""Classify which equations the shadow partition function satisfies.
-
-    tau_shadow = tau_KW^kappa.
-
-    SATISFIES:
-      (1) All Virasoro constraints L_n tau = 0 (n >= -1)
-          Reason: L_n is a LINEAR (first-order) differential operator.
-          L_n(tau^kappa) = kappa * tau^{kappa-1} * L_n(tau) = 0 when
-          acting on the FREE ENERGY level F = log(tau).
-          At the free energy level: L_n^{FE}(kappa * F) = kappa * L_n^{FE}(F) = 0.
-
-      (2) The MC equation D*Theta + (1/2)[Theta,Theta] = 0
-          Reason: this is the DEFINING equation of Theta_A, and the
-          Virasoro constraints are its genus-0 projections.
-
-      (3) The shadow generating function identity:
-          sum F_g hbar^{2g} = kappa * (hbar/2 / sin(hbar/2) - 1)
-          This is an algebraic identity, not a differential equation.
-
-    DOES NOT SATISFY:
-      (1) The KdV hierarchy (for kappa != 0, 1)
-          Reason: KdV has quadratic nonlinearity.  Under F -> kappa F,
-          the nonlinear term scales as kappa^2, not kappa.
-
-      (2) The W_N-constraints for N >= 3 (if A is rank 1)
-          Reason: W_N-constraints involve higher-order differential operators
-          W^{(s)} (s >= 3) that do NOT commute with kappa-scaling in general.
-
-      (3) Topological recursion (Eynard-Orantin) for kappa != 1
-          Reason: TR involves a spectral curve; the kappa-scaling changes
-          the spectral curve, altering the recursion.
-
-    Verify by checking KdV failure at genus 2.
-    """
-    # Genus-2 KdV check: u_xx + 6u^2 = const at stationary reduction
-    # For F = sum F_g hbar^{2g}:
-    # The KdV recursion at genus 2 gives:
-    #   F_2 = (5/2) * (F_1)^2 + (1/240)
-    # For KW: F_1 = 1/24, F_2 = 7/5760.
-    # Check: (5/2)*(1/24)^2 + 1/240 = (5/2)/576 + 1/240 = 5/1152 + 1/240
-    # = 5/1152 + 4.8/1152 = ... let's compute exactly.
+    r"""Classify scalar coefficient identities versus standard hierarchies."""
     F1_kw = Fraction(1, 24)
     F2_kw = Fraction(7, 5760)
-
-    # The genus-2 KdV recursion (from the partition function):
-    # 5 F_2 = 5/2 * F_1^2 + 1/240 ... NO, the correct recursion is:
-    # From Witten's recursion at genus 2:
-    # The KdV equation at genus 2 determines F_2 from F_1.
-    # The precise recursion is complicated; instead verify a simpler check.
-
-    # SIMPLE CHECK: if tau satisfies KdV and we replace tau -> tau^kappa,
-    # then log(tau^kappa) = kappa * log(tau), so F -> kappa F.
-    # The KdV equation involves (F')^2 which scales as kappa^2.
-    # At genus 2: the KdV relation involves F_1^2 term.
-
-    # For KW: F_1 = 1/24, F_2 = 7/5760
-    # For shadow: F_1 = kappa/24, F_2 = 7*kappa/5760
-
-    # KdV at genus 2 (simplified form, from the 1-point function):
-    # F_2 relates to F_1 via a QUADRATIC relation.
-    # For KW: (F_2 - something*F_1^2) = something_else
-    # For shadow: (kappa*F_2 - something*(kappa*F_1)^2) = something_else
-    # The kappa^2 vs kappa mismatch proves KdV failure.
-
-    # Explicit: the Gelfand-Dickey / KdV recursion at genus 2:
-    # The partition function Z = exp(sum F_g eps^{2g-2})
-    # satisfies L_n Z = 0.  BUT the KdV equation is NONLINEAR:
-    #   d^2/dx^2 log Z = u, and u_t + 6u u_x + u_xxx = 0.
-    # Under Z -> Z^kappa: log(Z^kappa) = kappa log Z, so u -> kappa u.
-    # Then kappa u_t + 6(kappa u)(kappa u_x) + kappa u_xxx = 0
-    # => kappa [u_t + 6 kappa u u_x + u_xxx] = 0
-    # This equals kappa * KdV only if kappa = 1.
-
-    kdv_scales = (kappa_val == Fraction(1))
+    status = standard_hierarchy_constraint_status(kappa_val)
+    finite_tau = finite_scalar_shadow_tau(kappa_val, max_genus=max_genus)
 
     return {
         'kappa': kappa_val,
+        'source': LOCAL_SOURCE_ANCHORS['finite_scalar_tau'],
         'satisfies': {
-            'virasoro_constraints': True,
-            'mc_equation': True,
-            'generating_function_identity': True,
-            'string_equation': True,
-            'dilaton_equation': True,
+            'finite_scalar_coefficient_identity': True,
+            'standard_descendant_virasoro_constraints':
+                status['standard_descendant_virasoro_constraints'],
+            'standard_kdv_hierarchy': status['standard_kdv_hierarchy'],
+            'standard_hirota_equations': status['standard_hirota_equations'],
+            'stationary_primary_line_diagnostics': True,
         },
         'does_not_satisfy': {
-            'kdv_hierarchy': not kdv_scales,
-            'reason_kdv': (
-                'KdV has quadratic nonlinearity 6u u_x. Under u -> kappa u: '
-                '6 kappa^2 u u_x != kappa * 6u u_x unless kappa = 1.'
-            ),
-            'w_constraints_higher_rank': True,
-            'reason_w': 'rank-1 shadow does not satisfy W_N constraints for N >= 3',
-            'topological_recursion_kappa_ne_1': not kdv_scales,
+            'standard_descendant_virasoro_constraints':
+                not status['standard_descendant_virasoro_constraints'],
+            'kdv_hierarchy': not status['standard_kdv_hierarchy'],
+            'hirota_equations': not status['standard_hirota_equations'],
+            'full_descendant_cohft_from_scalar_lane': True,
         },
-        'kdv_exception': {
-            'kappa_1_satisfies_kdv': True,
-            'reason': 'At kappa=1, tau_shadow = tau_KW, which is the original KW tau-function.',
+        'exceptions': {
+            'kappa_1_actual_kw': kappa_val == Fraction(1),
+            'kappa_0_zero_field': kappa_val == Fraction(0),
+            'zero_field_scope': 'KdV/Hirota only; not a KW descendant package',
+            'kdv_residual_factor': status['kdv_residual_factor_kappa_1_minus_kappa'],
         },
         'free_energy_check': {
             'F_1_shadow': kappa_val * F1_kw,
@@ -1403,6 +1536,7 @@ def shadow_equation_classification(kappa_val: Fraction = Fraction(1, 2),
             'ratio_F2': kappa_val,
             'ratios_constant': True,
         },
+        'finite_scalar_tau': finite_tau,
     }
 
 
@@ -1411,9 +1545,7 @@ def shadow_equation_classification(kappa_val: Fraction = Fraction(1, 2),
 # ============================================================================
 
 def mc_arity_virasoro_dictionary() -> Dict[str, Any]:
-    r"""The complete MC-arity to Virasoro-constraint dictionary.
-
-    THEOREM (Virasoro-MC Dictionary):
+    r"""Finite MC-arity to Virasoro-constraint dictionary.
 
     The MC equation D*Theta + (1/2)[Theta,Theta] = 0, projected to
     genus g and arity k, gives:
@@ -1430,17 +1562,21 @@ def mc_arity_virasoro_dictionary() -> Dict[str, Any]:
                  MC content: full D + bracket at (0,4)
                  Geometric: dim M-bar_{0,5} = 2
 
-    (g=0, k=n+2): L_n = n-th Virasoro constraint
-                   MC content: D + bracket at (0, n+2)
-                   Geometric: dim M-bar_{0, n+3} = n
+    (g=0, k=n+3): L_n = n-th Virasoro constraint
+                   MC content: D + bracket at (0, n+3)
+                   Geometric: dim M-bar_{0, n+4} = n+1
 
     (g>0, k): SAME L_{k-3} constraint with ADDITIONAL handle terms
               from genus reduction (g -> g-1).  These are the
               QUANTUM CORRECTIONS that couple genera.
 
-    The dictionary is:
+    The formal address rule is:
       MC address (g, k)  <-->  L_{k-3} constraint at genus g
                                with handle corrections from all g' < g.
+
+    The returned dictionary is the finite arity window 2 <= k <= 9.  It is
+    a computable witness for the address convention, not a reconstruction
+    of the full ordered MC element.
     """
     dictionary = {}
     for k in range(2, 10):
@@ -1456,6 +1592,8 @@ def mc_arity_virasoro_dictionary() -> Dict[str, Any]:
             'merge_terms': 'yes (D-term)',
             'split_terms': 'yes ([,]-term)' if k >= 4 else 'no (arity too small)',
             'handle_terms': 'at g > 0 only',
+            'finite_window_only': True,
+            'reconstructs_full_mc': False,
         }
 
     return dictionary

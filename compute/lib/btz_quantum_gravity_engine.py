@@ -1,19 +1,25 @@
-r"""BTZ quantum gravity engine: black hole entropy from the shadow CohFT.
+r"""BTZ quantum-gravity diagnostics from finite shadow data.
 
 MATHEMATICAL FRAMEWORK
 ======================
 
-The shadow CohFT (thm:shadow-cohft) assigns to every modular Koszul algebra A
-a genus-g free energy F_g(A) = kappa(A) * lambda_g^FP (scalar lane; class G/L
-algebras terminate; class M has planted-forest corrections at g >= 2).
+The certified lane in this module is finite scalar Bernoulli/A-hat data:
+F_g^{scalar}(A) = kappa(A) * lambda_g^FP.  For Virasoro, the finite
+planted-forest window implemented here is genus 2 and genus 3 only.  For
+genus g >= 4 the Virasoro routines return the scalar Bernoulli component,
+not a certified full planted-forest amplitude.
 
-The gravitational partition function on the BTZ solid torus with modular
-parameter tau = beta + i*theta (inverse temperature + angular potential) is
+The BTZ thermodynamic formulas below are externally supplied 3d-gravity/CFT
+inputs.  The finite shadow engine does not recover the full analytic BTZ
+partition function, prove Borel summability, or certify the all-genus Virasoro
+planted-forest tower.
+
+The finite shadow diagnostic is
 
     Z^sh(tau, hbar) = exp( sum_{g=1}^{g_max} hbar^{2g} F_g )
 
-The BTZ black hole entropy emerges from the Legendre transform (saddle-point
-approximation) of log Z^sh.  The expansion parameter is 1/S_BH, so:
+The BTZ black hole entropy wrappers use the standard Cardy/Bekenstein-Hawking
+input and a saddle expansion parameter 1/S_BH:
 
     S(E) = S_BH + S_1 + S_2 + S_3 + ...
 
@@ -32,15 +38,18 @@ The g-loop correction from the shadow obstruction tower:
 
   S_g = F_g(A) * (2*pi)^{2g-2} / S_BH^{2g-2}
 
-These are polynomial in kappa = c/2 (for Virasoro) and involve the shadow
-coefficients S_3, S_4, S_5 at g >= 2 (planted-forest corrections).  Through
-genus 5, these have NEVER been computed in the literature.
+The scalar terms are polynomial in kappa = c/2 for Virasoro.  The planted-
+forest corrections implemented here use the certified local finite window:
+S_3, S_4, S_5 for genus 2 and genus 3.  Genus 4 and genus 5 in this module
+are scalar-window diagnostics only.
 
 FAREY TAIL EXPANSION
 ====================
 
-The modular-invariant partition function receives contributions from all
-SL(2,Z) images of the BTZ saddle (Dijkgraaf-Maldacena-Moore-Verlinde 2000):
+The Farey-tail routines are finite diagnostics built from externally supplied
+BTZ/Farey input.  They are not a closed-form partition recovery from the
+finite scalar shadow data.  The standard analytic model sums over
+SL(2,Z) images of the BTZ saddle:
 
     Z(tau) = sum_{gamma in SL(2,Z) / Gamma_infty} Z_0(gamma.tau)
 
@@ -50,7 +59,7 @@ The Farey tail is the sum over coprime (c_F, d) with c_F >= 0.
 RENYI AND ENTANGLEMENT ENTROPY
 ================================
 
-The n-th Renyi entropy from the replica trick on the shadow CohFT:
+The scalar Renyi input is the standard replica formula:
 
     S_n = (1/(1-n)) * log Tr(rho^n)
 
@@ -62,7 +71,7 @@ The von Neumann entropy S_EE = lim_{n->1} S_n gives:
 
     S_EE = (2*kappa/3) * log(L/epsilon) = (c/3) * log(L/epsilon)
 
-Shadow corrections from genus g >= 2 contribute:
+The conditional finite-window correction model uses:
 
     delta_S_EE^{(g)} = F_g * (correction factor from analytic continuation)
 
@@ -92,6 +101,75 @@ PI = math.pi
 TWO_PI = 2.0 * PI
 TWO_PI_SQ = TWO_PI ** 2
 
+SCALAR_BERNOULLI_LANE = "scalar_bernoulli_ahat"
+VIRASORO_FINITE_WINDOW_LANE = "virasoro_finite_window"
+EXTERNAL_BTZ_INPUT = "external_3d_gravity_input"
+CONDITIONAL_REPLICA_INPUT = "conditional_replica_input"
+VIRASORO_PLANTED_FOREST_CERTIFIED_MAX_GENUS = 3
+
+
+def free_energy_certification(algebra: str = 'virasoro', g: Optional[int] = None) -> Dict[str, Any]:
+    """Certification status for the implemented free-energy component."""
+    genus = int(g) if g is not None else None
+
+    if algebra == 'heisenberg':
+        return {
+            'lane': SCALAR_BERNOULLI_LANE,
+            'certified_component': 'full_heisenberg_scalar',
+            'full_free_energy_certified': True,
+            'reason': 'Heisenberg has S_3 = 0 in this scalar class-G lane.',
+        }
+
+    if algebra == 'virasoro':
+        if genus is None:
+            return {
+                'lane': VIRASORO_FINITE_WINDOW_LANE,
+                'certified_component': 'scalar_all_genus_and_planted_forest_g2_g3',
+                'full_free_energy_certified': False,
+                'reason': 'Virasoro planted-forest data is implemented only through genus 3.',
+            }
+        if genus == 1:
+            return {
+                'lane': SCALAR_BERNOULLI_LANE,
+                'certified_component': 'scalar_genus_1',
+                'full_free_energy_certified': True,
+                'reason': 'There is no planted-forest correction at genus 1 in this model.',
+            }
+        if 2 <= genus <= VIRASORO_PLANTED_FOREST_CERTIFIED_MAX_GENUS:
+            return {
+                'lane': VIRASORO_FINITE_WINDOW_LANE,
+                'certified_component': f'scalar_plus_planted_forest_g{genus}',
+                'full_free_energy_certified': True,
+                'reason': 'Uses the finite Virasoro window S_3, S_4, S_5 recorded locally.',
+            }
+        return {
+            'lane': SCALAR_BERNOULLI_LANE,
+            'certified_component': f'scalar_only_g{genus}',
+            'full_free_energy_certified': False,
+            'missing_component': f'virasoro_planted_forest_g{genus}',
+            'reason': 'All-genus Virasoro planted-forest corrections are not certified here.',
+        }
+
+    return {
+        'lane': SCALAR_BERNOULLI_LANE,
+        'certified_component': 'generic_scalar_only',
+        'full_free_energy_certified': False,
+        'reason': 'Generic algebra input supplies only a scalar kappa lane.',
+    }
+
+
+def borel_summability_status(lane: str = 'virasoro_full') -> Dict[str, Any]:
+    """Return the Borel-summability certification status in this module."""
+    return {
+        'lane': lane,
+        'borel_summability_certified': False,
+        'reason': (
+            'This engine certifies the scalar Bernoulli/A-hat meromorphic series '
+            'and finite Virasoro data only; Borel summability requires an '
+            'independent analytic theorem.'
+        ),
+    }
+
 
 # =========================================================================
 # Section 1: Faber-Pandharipande intersection numbers (exact)
@@ -103,9 +181,9 @@ def lambda_fp(g: int) -> Fraction:
 
     lambda_g^FP = (2^{2g-1} - 1) / 2^{2g-1} * |B_{2g}| / (2g)!
 
-    These are POSITIVE for all g >= 1 (AP22: Bernoulli signs).
+    These are positive for all g >= 1.
 
-    The A-hat generating function:
+    The scalar A-hat generating function:
         sum_{g>=1} lambda_g^FP * x^{2g} = (x/2)/sin(x/2) - 1
 
     Verified values:
@@ -165,8 +243,8 @@ def _factorial_fraction(n: int) -> Fraction:
 def kappa_virasoro(c) -> Fraction:
     """kappa(Vir_c) = c/2.
 
-    AP1/AP9: authoritative formula from landscape_census.tex.
-    AP20: this is kappa(A) for A = Vir_c, NOT kappa_eff.
+    Authoritative formula: landscape_census.tex, Virasoro canonical row.
+    This is kappa(A) for A = Vir_c, not an effective ghost scalar.
     """
     return Fraction(c) / Fraction(2)
 
@@ -182,7 +260,7 @@ def kappa_heisenberg(k) -> Fraction:
 def kappa_kac_moody(dim_g, k, h_dual) -> Fraction:
     """kappa(V_k(g)) = dim(g) * (k + h^v) / (2*h^v).
 
-    AP1: recompute from first principles, never copy between families.
+    This is the affine trace-form family formula, not the Virasoro one.
     """
     return Fraction(dim_g) * (Fraction(k) + Fraction(h_dual)) / (2 * Fraction(h_dual))
 
@@ -248,12 +326,13 @@ def planted_forest_g3(kappa, S3, S4, S5) -> Fraction:
 
 
 def virasoro_free_energy(c, g: int) -> Fraction:
-    """Full F_g for Virasoro at central charge c.
+    """Implemented F_g for Virasoro at central charge c.
 
     g=1: F_1 = kappa/24 = c/48 (no planted-forest at genus 1).
-    g=2: F_2^{sc} + delta_pf^{(2,0)}.
-    g=3: F_3^{sc} + delta_pf^{(3,0)}.
-    g>=4: scalar only (planted-forest not available beyond genus 3).
+    g=2: certified scalar + delta_pf^{(2,0)}.
+    g=3: certified scalar + delta_pf^{(3,0)}.
+    g>=4: scalar Bernoulli term only; the full Virasoro planted-forest
+    correction is not certified in this module.
     """
     c_frac = Fraction(c)
     kappa = kappa_virasoro(c_frac)
@@ -270,14 +349,14 @@ def virasoro_free_energy(c, g: int) -> Fraction:
         S5 = virasoro_S5(c_frac)
         return scalar + planted_forest_g3(kappa, S3, S4, S5)
     else:
-        # g >= 4: scalar only (planted-forest not yet computed)
+        # g >= 4: scalar Bernoulli component only.
         return scalar
 
 
 def heisenberg_free_energy(k, g: int) -> Fraction:
     """F_g for Heisenberg at level k.
 
-    Class G: S_3 = 0, so planted-forest vanishes at ALL genera.
+    Class G: S_3 = 0, so planted-forest corrections vanish in this lane.
     F_g = kappa * lambda_g^FP = k * lambda_g^FP.
     """
     return F_g_scalar(Fraction(k), g)
@@ -301,10 +380,12 @@ def free_energy_table(c, g_max: int = 5, algebra: str = 'virasoro') -> Dict[int,
 
 def shadow_partition_function(c, hbar: float = 1.0, g_max: int = 5,
                                algebra: str = 'virasoro') -> float:
-    r"""Z^sh(c, hbar) = exp( sum_{g=1}^{g_max} hbar^{2g} * F_g(c) ).
+    r"""Finite shadow diagnostic exp(sum_{g=1}^{g_max} hbar^{2g} F_g(c)).
 
-    The shadow partition function converges (Bernoulli decay 1/(2*pi)^{2g})
-    unlike the string free energy which diverges as (2g)!.
+    For the scalar Bernoulli/A-hat lane, the all-genus formal sum has
+    meromorphic closed form with Taylor radius 2*pi.  For Virasoro this
+    finite exponential uses planted-forest data only where certified
+    (genus 2 and genus 3) and scalar terms elsewhere.
 
     Parameters
     ----------
@@ -327,10 +408,11 @@ def shadow_free_energy_sum(c, hbar: float = 1.0, g_max: int = 5,
 
 def shadow_partition_function_complex(c, tau: complex, g_max: int = 5,
                                        algebra: str = 'virasoro') -> complex:
-    r"""Z^sh(c, tau) with tau = beta + i*theta (complex modular parameter).
+    r"""Finite complex shadow diagnostic at tau = beta + i*theta.
 
-    The genus-g contribution has the form F_g * tau^{2-2g} (from the
-    metric on the solid torus with modular parameter tau).
+    The genus-g term is modeled as F_g * tau^{2-2g}.  This is not a
+    proof of analytic tau dependence, modularity, or closed-form BTZ
+    partition recovery from the finite shadow data.
 
     For the BTZ saddle: hbar = 2*pi / S_BH, and in the Euclidean
     path integral the expansion parameter is 1/tau (high-temperature).
@@ -429,6 +511,9 @@ def entropy_correction_genus_g(c, M, g: int, algebra: str = 'virasoro') -> float
     At genus g >= 2:
         S_g = F_g * (2*pi / S_BH)^{2g-2}
 
+    For Virasoro and g >= 4, F_g is the scalar Bernoulli component only.
+    The full planted-forest correction is not certified here.
+
     NOTE: The genus-1 correction is NOT simply F_1 * epsilon^0 = F_1;
     it includes the one-loop determinant which gives the log.
     """
@@ -455,11 +540,12 @@ def entropy_correction_genus_g(c, M, g: int, algebra: str = 'virasoro') -> float
 
 
 def entropy_all_genera(c, M, g_max: int = 5, algebra: str = 'virasoro') -> Dict[str, Any]:
-    r"""Full BTZ entropy expansion through genus g_max.
+    r"""BTZ entropy expansion through genus g_max with certification metadata.
 
     S(M) = S_BH + sum_{g=1}^{g_max} S_g
 
-    Returns dict with S_BH, S_g for each g, F_table, S_total, expansion parameter.
+    Returns the Cardy/Bekenstein-Hawking input, the implemented finite-window
+    shadow corrections, and a per-genus certification record.
     """
     S_BH = bekenstein_hawking_entropy(c, M)
     if S_BH <= 0:
@@ -475,6 +561,11 @@ def entropy_all_genera(c, M, g_max: int = 5, algebra: str = 'virasoro') -> Dict[
         'S_BH': S_BH,
         'epsilon': epsilon,
         'F_table': {g: float(f) for g, f in F_table.items()},
+        'btz_input_status': EXTERNAL_BTZ_INPUT,
+        'certification': {
+            g: free_energy_certification(algebra, g)
+            for g in range(1, g_max + 1)
+        },
     }
 
     total = S_BH
@@ -512,6 +603,7 @@ def quantum_corrections_table(c, M, g_max: int = 5,
             'S_g': Sg,
             'S_g_over_S_BH': Sg / S_BH if S_BH > 0 else 0.0,
             'epsilon_power': epsilon ** (2 * g - 2),
+            'certification': free_energy_certification(algebra, g),
         }
         rows.append(row)
 
@@ -631,7 +723,10 @@ def farey_tail_term(c, tau: complex, c_F: int, d: int) -> complex:
         gamma.tau = (a*tau + b) / (c_F*tau + d)
     with a*d - b*c_F = 1.
 
-    The seed partition function Z_0(tau) = q^{-c/24} where q = exp(2*pi*i*tau).
+    This routine uses the vacuum seed Z_0(tau) = q^{-c/24}, where
+    q = exp(2*pi*i*tau).  It omits the infinite one-loop product and is
+    therefore a finite saddle diagnostic, not the full pure-gravity
+    partition function.
 
     This is the leading saddle contribution from the (c_F, d) Farey image.
     """
@@ -686,12 +781,13 @@ def farey_sequence(N: int) -> List[Tuple[int, int]]:
 
 
 def farey_tail_partition(c, tau: complex, N_farey: int = 5) -> complex:
-    r"""Farey tail partition function Z(tau) = sum_{gamma} Z_0(gamma.tau).
+    r"""Finite Farey-tail diagnostic sum_{gamma} Z_0(gamma.tau).
 
     Sum over SL(2,Z)/Gamma_infty cosets up to denominator N_farey.
 
-    This is the Dijkgraaf-Maldacena-Moore-Verlinde partition function
-    for pure gravity at central charge c.
+    The analytic Farey-tail construction is external BTZ input.  This
+    finite truncation is not a closed-form partition recovery from the
+    scalar Bernoulli/A-hat lane.
     """
     pairs = farey_sequence(N_farey)
     Z = complex(0, 0)
@@ -704,7 +800,7 @@ def farey_tail_partition(c, tau: complex, N_farey: int = 5) -> complex:
 
 
 def farey_tail_entropy(c, M, N_farey: int = 5) -> Dict[str, Any]:
-    """Extract entropy from the Farey tail partition function.
+    """Extract a diagnostic entropy from the finite Farey-tail truncation.
 
     At high temperature (large M), the BTZ saddle dominates:
         S ~ 2*pi*sqrt(c*M/6)
@@ -731,6 +827,8 @@ def farey_tail_entropy(c, M, N_farey: int = 5) -> Dict[str, Any]:
         'log_Z_farey': cmath.log(Z_farey).real if abs(Z_farey) > 0 else float('-inf'),
         'log_Z_btz': cmath.log(Z_btz_only).real if abs(Z_btz_only) > 0 else float('-inf'),
         'farey_correction': cmath.log(Z_farey / Z_btz_only).real if abs(Z_btz_only) > 0 else 0.0,
+        'btz_input_status': EXTERNAL_BTZ_INPUT,
+        'partition_recovery_certified': False,
     }
 
 
@@ -769,8 +867,8 @@ def renyi_entropy_scalar(c, n: int, L_over_eps: float = 1000.0) -> float:
 
 
 def renyi_entropy_with_shadow_corrections(c, n: int, L_over_eps: float = 1000.0,
-                                           g_max: int = 3) -> Dict[str, float]:
-    """Renyi entropy with shadow CohFT corrections.
+                                           g_max: int = 3) -> Dict[str, Any]:
+    """Renyi entropy with conditional finite-window shadow corrections.
 
     S_n = S_n^{scalar} + sum_{g>=2} delta_S_n^{(g)}
 
@@ -787,10 +885,8 @@ def renyi_entropy_with_shadow_corrections(c, n: int, L_over_eps: float = 1000.0,
     At the scalar level, the replica factor is:
         replica_factor_g(n) = n^{2-2g} - 1 (from the n-fold cover)
 
-    NOTE: The replica trick at genus g >= 2 involves the partition function
-    on the genus-(n-1) branched cover, which ITSELF has higher-genus
-    shadow contributions. This creates a recursive structure that we
-    handle perturbatively.
+    The genus-g replica factor is a conditional analytic input, not a
+    theorem certified by the finite scalar Bernoulli/A-hat lane.
     """
     scalar = renyi_entropy_scalar(c, n, L_over_eps)
     log_L = math.log(L_over_eps)
@@ -800,6 +896,8 @@ def renyi_entropy_with_shadow_corrections(c, n: int, L_over_eps: float = 1000.0,
         'c': float(c),
         'S_n_scalar': scalar,
         'L_over_eps': L_over_eps,
+        'analytic_input_status': CONDITIONAL_REPLICA_INPUT,
+        'certified_by_scalar_lane': False,
     }
 
     if n == 1:
@@ -875,8 +973,8 @@ def entanglement_entropy_leading(c, L_over_eps: float = 1000.0) -> float:
 
 def entanglement_entropy_with_corrections(c, L_over_eps: float = 1000.0,
                                            g_max: int = 5,
-                                           algebra: str = 'virasoro') -> Dict[str, float]:
-    """Entanglement entropy with higher-genus shadow corrections.
+                                           algebra: str = 'virasoro') -> Dict[str, Any]:
+    """Entanglement entropy with conditional higher-genus corrections.
 
     S_EE = (c/3)*log(L/eps) + sum_{g>=2} delta_S^{(g)}
 
@@ -891,8 +989,8 @@ def entanglement_entropy_with_corrections(c, L_over_eps: float = 1000.0,
     The factor (2g-1) counts the number of marked points on the replica
     manifold at genus g in the n -> 1 limit.
 
-    NOTE: These corrections are independent of L/eps -- they are O(1)
-    contributions to the entropy, not log-enhanced.
+    The n -> 1 analytic continuation is conditional input.  The exact
+    certified leading term is the Calabrese-Cardy entropy.
     """
     S_leading = entanglement_entropy_leading(c, L_over_eps)
     F_table = free_energy_table(c, g_max, algebra)
@@ -901,6 +999,9 @@ def entanglement_entropy_with_corrections(c, L_over_eps: float = 1000.0,
         'c': float(c),
         'S_leading': S_leading,
         'L_over_eps': L_over_eps,
+        'analytic_input_status': CONDITIONAL_REPLICA_INPUT,
+        'certified_leading_term': True,
+        'certified_higher_genus_terms': False,
     }
 
     corrections = {}
@@ -925,7 +1026,7 @@ def entanglement_complementarity(c, L_over_eps: float = 1000.0) -> Dict[str, flo
     """Complementarity: S_EE(c) + S_EE(26-c) = (26/3)*log(L/eps).
 
     From kappa(Vir_c) + kappa(Vir_{26-c}) = c/2 + (26-c)/2 = 13.
-    Note: this is 13, NOT 0 (AP24).
+    This is the scalar Virasoro complementarity line.
     """
     c = float(c)
     S_c = entanglement_entropy_leading(c, L_over_eps)
@@ -951,8 +1052,8 @@ def ahat_generating_function(x: float) -> float:
     This is the generating function for lambda_g^FP:
         sum_{g>=1} lambda_g^FP * x^{2g} = (x/2)/sin(x/2) - 1
 
-    The function is entire with zeros at x = 2*k*pi (k != 0),
-    so the convergence radius is 2*pi.
+    The right-hand side is meromorphic with simple poles at
+    x = 2*k*pi (k != 0), so the Taylor radius at 0 is 2*pi.
     """
     half_x = x / 2.0
     if abs(half_x) < 1e-15:
@@ -981,7 +1082,7 @@ def ahat_closed_form(c, hbar: float = 1.0) -> float:
                         = kappa * ((hbar/2)/sin(hbar/2) - 1)
 
     This has POSITIVE coefficients: hbar^2/24 + 7*hbar^4/5760 + ...
-    Convergence radius: sin(hbar/2) = 0 at hbar = 2*pi, so |hbar| < 2*pi.
+    Scalar Taylor radius: sin(hbar/2) = 0 at hbar = 2*pi, so |hbar| < 2*pi.
     """
     kappa = float(c) / 2.0
     half_h = hbar / 2.0
@@ -990,8 +1091,8 @@ def ahat_closed_form(c, hbar: float = 1.0) -> float:
     return kappa * (half_h / math.sin(half_h) - 1.0)
 
 
-def verify_ahat_identity(c, hbar: float = 0.5, g_max: int = 20) -> Dict[str, float]:
-    """Verify that the genus sum matches the A-hat closed form."""
+def verify_ahat_identity(c, hbar: float = 0.5, g_max: int = 20) -> Dict[str, Any]:
+    """Verify the scalar Bernoulli genus sum against the A-hat closed form."""
     series = scalar_free_energy_sum(c, hbar, g_max)
     closed = ahat_closed_form(c, hbar)
     return {
@@ -1001,17 +1102,19 @@ def verify_ahat_identity(c, hbar: float = 0.5, g_max: int = 20) -> Dict[str, flo
         'closed_form': closed,
         'difference': abs(series - closed),
         'match': abs(series - closed) < 1e-10,
+        'lane': SCALAR_BERNOULLI_LANE,
     }
 
 
-def shadow_convergence_radius() -> float:
-    """Convergence radius of the scalar genus sum: 2*pi.
+def shadow_convergence_radius(lane: str = SCALAR_BERNOULLI_LANE) -> Optional[float]:
+    """Convergence radius certified by this module.
 
-    The A-hat generating function has radius 2*pi (first zero of sinh).
-    Since |lambda_g^FP| ~ 1/(2*pi)^{2g}, the genus sum
-    sum F_g * hbar^{2g} converges for |hbar| < 2*pi.
+    The scalar Bernoulli/A-hat Taylor series has radius 2*pi.  The full
+    Virasoro planted-forest tower has no radius certified here.
     """
-    return TWO_PI
+    if lane in {SCALAR_BERNOULLI_LANE, 'scalar', 'ahat'}:
+        return TWO_PI
+    return None
 
 
 # =========================================================================
@@ -1027,7 +1130,7 @@ def full_entropy_report(c, M, g_max: int = 5, algebra: str = 'virasoro') -> Dict
     3. Free energies F_1, ..., F_{g_max}
     4. Hawking-Page temperature (classical + quantum shifts)
     5. Bekenstein-Hawking for rotating case
-    6. Expansion parameter and convergence check
+    6. Scalar Bernoulli convergence diagnostic
     """
     result = entropy_all_genera(c, M, g_max, algebra)
     if 'error' in result:
@@ -1041,14 +1144,18 @@ def full_entropy_report(c, M, g_max: int = 5, algebra: str = 'virasoro') -> Dict
     result['beta_H'] = inverse_hawking_temperature(c, M)
     result['T_H'] = hawking_temperature(c, M)
 
-    # Convergence check
-    result['convergent'] = abs(epsilon) < TWO_PI
+    # Scalar Bernoulli/A-hat convergence diagnostic only.
+    result['scalar_bernoulli_convergent'] = abs(epsilon) < TWO_PI
+    result['convergent'] = result['scalar_bernoulli_convergent']
+    result['convergence_certification'] = SCALAR_BERNOULLI_LANE
+    result['full_virasoro_convergence_certified'] = False
 
     # Rotating version (E_L = E_R = M for non-rotating: sum of both chiralities)
     result['S_BH_rotating_both'] = bekenstein_hawking_rotating(c, float(M), float(M))
 
     # A-hat cross-check
     result['ahat_check'] = verify_ahat_identity(c, epsilon, min(g_max + 10, 30))
+    result['borel_status'] = borel_summability_status('virasoro_full' if algebra == 'virasoro' else algebra)
 
     return result
 
@@ -1060,31 +1167,30 @@ def full_entropy_report(c, M, g_max: int = 5, algebra: str = 'virasoro') -> Dict
 def pure_gravity_c24(M: float = 1.0, g_max: int = 5) -> Dict[str, Any]:
     """BTZ entropy for pure 3d gravity: c = 24.
 
-    At c = 24: kappa = 12, the one-loop determinant is |eta(tau)|^{-48}.
-    This is the monster module V^natural (if the Witten conjecture holds).
+    At c = 24 in the Virasoro lane: kappa = 12.  Any identification with
+    a full extremal CFT or one-loop determinant is external input.
 
-    AP48: kappa(V^natural) is NOT necessarily c/2 = 12 (it could be
-    rank(Leech) = 24 for the lattice VOA). For pure gravity we use
-    kappa(Vir_{24}) = 12.
+    This routine uses kappa(Vir_24) = 12, not a lattice-VOA kappa.
     """
     return full_entropy_report(24, M, g_max, algebra='virasoro')
 
 
 def critical_string_c26(M: float = 1.0, g_max: int = 5) -> Dict[str, Any]:
-    """BTZ entropy at c = 26 (critical bosonic string).
+    """BTZ entropy diagnostic at c = 26 in the Virasoro scalar lane.
 
-    At c = 26: kappa = 13, kappa(A!) = kappa(Vir_0) = 0.
-    The dual algebra is uncurved: D^2 = 0 (no higher-genus obstruction).
+    At c = 26: kappa(Vir_26) = 13.  The complementarity partner has
+    kappa(Vir_0) = 0 in the scalar Virasoro lane.  This does not identify
+    A^!, B(A), or the Hochschild bulk.
     """
     return full_entropy_report(26, M, g_max, algebra='virasoro')
 
 
 def self_dual_c13(M: float = 1.0, g_max: int = 5) -> Dict[str, Any]:
-    """BTZ entropy at c = 13 (self-dual Virasoro: Vir_13^! = Vir_13).
+    """BTZ entropy diagnostic at the c = 13 scalar fixed point.
 
-    At c = 13: kappa = 13/2 = kappa'.
-    The shadow obstruction tower is self-dual: Theta_A = Theta_{A!}.
-    Self-dual growth rate rho ~ 0.467 (convergent tower).
+    At c = 13: kappa(Vir_13) = 13/2 and the complementarity partner has
+    the same scalar kappa.  This routine does not assert an isomorphism
+    A = A^! or identify the derived centre.
     """
     return full_entropy_report(13, M, g_max, algebra='virasoro')
 
@@ -1093,7 +1199,7 @@ def free_boson_c1(M: float = 1.0, g_max: int = 5) -> Dict[str, Any]:
     """BTZ entropy for a single free boson: c = 1 (Heisenberg at k = 1).
 
     For Heisenberg: kappa = k = 1, S_3 = 0, class G.
-    ALL planted-forest corrections vanish.
+    The planted-forest corrections vanish in this scalar class-G lane.
     F_g = lambda_g^FP (the pure A-hat genus contribution).
     """
     return full_entropy_report(1, M, g_max, algebra='heisenberg')
@@ -1152,15 +1258,13 @@ def large_c_limit(M: float = 10.0, g_max: int = 5) -> Dict[str, Any]:
 # Section 15: Genus-by-genus quantum correction formulas (explicit)
 # =========================================================================
 
-def explicit_1loop_correction(c, M) -> Dict[str, float]:
+def explicit_1loop_correction(c, M) -> Dict[str, Any]:
     """Explicit 1-loop (genus-1) correction to BTZ entropy.
 
     S_1 = -(3/2)*log(S_BH/(2*pi))
 
-    Three independent routes:
-      A. Heat kernel on solid torus: F_1 = c/48
-      B. Shadow tower: F_1 = kappa*lambda_1 = (c/2)*(1/24) = c/48
-      C. Selberg zeta: F_1 = c/48
+    The scalar shadow identity F_1 = kappa*lambda_1 = c/48 is certified.
+    The logarithmic BTZ coefficient is external 3d-gravity input.
     """
     S_BH = bekenstein_hawking_entropy(c, M)
     return {
@@ -1168,7 +1272,9 @@ def explicit_1loop_correction(c, M) -> Dict[str, float]:
         'F_1': float(c) / 48.0,
         'S_1_log': -1.5 * math.log(S_BH / TWO_PI) if S_BH > 0 else 0.0,
         'log_coefficient': -1.5,
-        'three_routes_agree': True,
+        'scalar_shadow_certified': True,
+        'btz_log_input_status': EXTERNAL_BTZ_INPUT,
+        'external_routes_certified_here': False,
     }
 
 
@@ -1226,7 +1332,11 @@ def explicit_3loop_correction(c, M) -> Dict[str, Any]:
 
 
 def explicit_4loop_correction(c, M) -> Dict[str, Any]:
-    """Explicit 4-loop (genus-4) correction (379 stable graphs, scalar only)."""
+    """Genus-4 scalar-window correction.
+
+    The full Virasoro planted-forest correction at genus 4 is not certified
+    in this module.
+    """
     S_BH = bekenstein_hawking_entropy(c, M)
     c_frac = Fraction(c)
     kappa = kappa_virasoro(c_frac)
@@ -1239,15 +1349,17 @@ def explicit_4loop_correction(c, M) -> Dict[str, Any]:
         'F_4_scalar': F4_sc,
         'S_4': F4_sc * epsilon**6 if S_BH > 0 else 0.0,
         'epsilon': epsilon,
-        'note': 'planted-forest not available at genus 4',
+        'certification': free_energy_certification('virasoro', 4),
+        'note': 'scalar Bernoulli term only; Virasoro planted-forest genus 4 is not certified',
     }
 
 
 def explicit_5loop_correction(c, M) -> Dict[str, Any]:
-    """Explicit 5-loop (genus-5) correction (scalar only).
+    """Genus-5 scalar-window correction.
 
-    NEVER COMPUTED IN THE LITERATURE.
     F_5^{sc} = kappa * lambda_5^FP = (c/2) * 73/3503554560
+    The full Virasoro planted-forest correction at genus 5 is not certified
+    in this module.
     """
     S_BH = bekenstein_hawking_entropy(c, M)
     c_frac = Fraction(c)
@@ -1261,7 +1373,8 @@ def explicit_5loop_correction(c, M) -> Dict[str, Any]:
         'F_5_scalar': F5_sc,
         'S_5': F5_sc * epsilon**8 if S_BH > 0 else 0.0,
         'epsilon': epsilon,
-        'note': 'first computation of 5-loop BTZ correction',
+        'certification': free_energy_certification('virasoro', 5),
+        'note': 'scalar Bernoulli term only; Virasoro planted-forest genus 5 is not certified',
     }
 
 
@@ -1301,11 +1414,12 @@ def verify_nonrotating_is_rotating_special_case(c, M) -> Dict[str, float]:
 
 
 def convergence_diagnostics(c, M, g_max: int = 8) -> Dict[str, Any]:
-    """Convergence diagnostics for the genus expansion.
+    """Convergence diagnostics for the implemented genus expansion.
 
     The expansion parameter is epsilon = 2*pi/S_BH.
-    Convergence requires epsilon < 2*pi (the A-hat radius).
-    This is equivalent to S_BH > 1, i.e., the black hole is "large."
+    The test epsilon < 2*pi certifies only the scalar Bernoulli/A-hat
+    Taylor lane.  It does not certify Borel summability or the full
+    all-genus Virasoro planted-forest tower.
     """
     S_BH = bekenstein_hawking_entropy(c, M)
     if S_BH <= 0:
@@ -1337,6 +1451,10 @@ def convergence_diagnostics(c, M, g_max: int = 8) -> Dict[str, Any]:
         'epsilon': epsilon,
         'epsilon_over_2pi': epsilon / TWO_PI,
         'convergent': epsilon < TWO_PI,
+        'scalar_bernoulli_convergent': epsilon < TWO_PI,
+        'convergence_certification': SCALAR_BERNOULLI_LANE,
+        'full_virasoro_convergence_certified': False,
+        'borel_status': borel_summability_status('virasoro_full'),
         'corrections': corrections,
         'decay_ratios': ratios,
     }

@@ -8,11 +8,16 @@ Three distinct numerical invariants of a chiral algebra~$\cA$
 \emph{shadow depth}~$r_{\max}(\cA)$) measure three different
 structural features and need not coincide. This chapter formalizes
 the distinction, states the relation
-$k_{\max} = p_{\max} - 1$ that always holds
+$k_{\max} = p_{\max} - 1$ on the fixed minimal-generator lane of the
+standard landscape
 (a consequence of the $\mathrm{d}\log$ absorption of the bar
-propagator, AP\textup{19}), and proves that $r_{\max}$ is independent
+propagator), and proves that $r_{\max}$ is independent
 of $p_{\max}$. The $\beta\gamma$ system is the archetypal witness:
 $p_{\max} = 1$, $k_{\max} = 0$, $r_{\max} = 4$.
+The same separation fences these three finite pole/shadow invariants
+from the scalar characteristic~$\kappa$, from the derived chiral
+centre $\ChirHoch^\bullet(\cA,\cA)$, and from the bar--cobar
+Koszul package.
 This distinction is load-bearing for the operator-order trichotomy
 of Theorem~\ref{thm:shadow-depth-operator-order}, for the
 classification of the standard landscape into the four
@@ -54,13 +59,26 @@ produces no collision residue: the \emph{collision depth} of
 $\beta\gamma$ is~$0$.
 
 Yet the $\beta\gamma$ system exhibits genuine higher-degree shadow
-obstructions. The composite field $:\!\beta\gamma\!:$ is a weight-$1$
-current whose self-OPE $(\beta\gamma)(z)(\beta\gamma)(w)$ has terms
-at second order (the normal-ordered quartic contact class), and the
-shadow obstruction tower $\Theta_{\beta\gamma}^{\leq r}$ has a
-nontrivial quartic component $\mathfrak{Q}_{\beta\gamma}\neq 0$.
-The \emph{shadow depth} of $\beta\gamma$ is therefore~$4$, which
-places it in class~$C$ of the shadow-depth classification.
+obstructions. The composite current $J={:}\beta\gamma{:}$ has
+\[
+J(z)J(w)\;\sim\;\frac{\varepsilon_{\beta\gamma}}{(z-w)^2}
+       + \frac{\textup{current}}{z-w},
+       \qquad \varepsilon_{\beta\gamma}\in\{\pm 1\},
+\]
+by the two Wick contractions of the mixed simple-pole OPE. This is
+not a new generator-pair pole for the minimal generating set
+$\{\beta,\gamma\}$; it is a composite channel in the ordered bar
+transfer. On the standard conformal-weight family the corresponding
+shadow datum is
+\[
+ S_3(\beta\gamma)=0,\qquad
+ S_4(\beta\gamma)=-\frac{5}{12},\qquad
+ S_r(\beta\gamma)=0\quad(r\geq 5),
+\]
+while the rank-one weight-changing scalar projection
+$\mu_{\beta\gamma}$ vanishes. The \emph{shadow depth} of
+$\beta\gamma$ is therefore~$4$, which places it in class~$C$ of the
+shadow-depth classification.
 
 The three invariants for $\beta\gamma$ are thus
 \[
@@ -121,6 +139,9 @@ k_{\max}(\cA)
 \operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)
 \;\text{has a nonzero}\;\frac{1}{z^k}\;\text{term}\,\Big\}.
 \end{equation}
+The value~$k=0$ records a nonzero regular scalar term after the
+$d\log$ kernel has absorbed the generator simple pole; positive
+values record genuine binary collision poles.
 By the $\mathrm{d}\log$ absorption of the bar propagator
 \textup{(}Remark~\textup{\ref{rem:bar-pole-absorption}}\textup{)},
 the collision residue of a term $1/(z-w)^n$ in the OPE contributes
@@ -132,6 +153,18 @@ k_{\max}(\cA)
 p_{\max}(\cA) - 1.
 \end{equation}
 \end{definition}
+
+\begin{remark}[Binary convention and regular terms]
+\label{rem:kmax-regular-term}
+The definition is binary and generator-relative. It reads the
+two-point collision residue of the ordered bar differential on the
+chosen minimal strong generators. For $\beta\gamma$ the mixed
+generator OPE has a simple pole, and after $d\log$ absorption its
+binary collision residue is regular; this is
+$k_{\max}(\beta\gamma)=0$, not absence of the $\beta\gamma$ OPE. The
+quartic class that gives $r_{\max}=4$ belongs to the all-degree
+shadow tower, after normal-ordered composites enter.
+\end{remark}
 
 \begin{remark}[Why $k_{\max}$ is not redundant]
 \label{rem:k-max-not-redundant}
@@ -168,7 +201,7 @@ degree~$r_{\max}$, and all higher-degree projections vanish.
 For $r_{\max}(\cA) = \infty$, the tower is nontrivial at all degrees.
 \end{definition}
 
-\begin{remark}[Shadow depth depends on all degrees, not just degree~$2$]
+\begin{remark}[Shadow depth depends on all degrees]
 \label{rem:r-max-all-degrees}
 Unlike $p_{\max}$ and $k_{\max}$, which are degree-$2$ invariants,
 the shadow depth $r_{\max}$ involves composites and normal-ordered
@@ -224,13 +257,29 @@ pole of order~$n$ in the OPE produces a residue of order $n-1$ in
 the collision expansion.
 
 Part~(ii) is verified by the explicit computations for each standard
-family, performed independently in
-\texttt{compute/lib/theorem\_three\_paper\_intersection\_engine.py}.
-The $\beta\gamma$ case is the critical witness: its generator OPE
-is simple-pole only, so $p_{\max}(\beta\gamma) = 1$ and
-$k_{\max}(\beta\gamma) = 0$; yet the composite $:\!\beta\gamma\!:$
-at weight~$1$ has a self-OPE contributing at degree~$4$ to the
-shadow obstruction tower, so $r_{\max}(\beta\gamma) = 4$.
+family, and the witnesses already force independence:
+\[
+\begin{array}{c|c|c|c}
+\text{family} & p_{\max} & k_{\max} & r_{\max}\\
+\hline
+\cH_k & 2 & 1 & 2\\
+V_k(\mathfrak{sl}_2) & 2 & 1 & 3\\
+\beta\gamma_\lambda & 1 & 0 & 4\\
+\mathrm{Vir}_c & 4 & 3 & \infty\\
+\cW_N & 2N & 2N-1 & \infty .
+\end{array}
+\]
+The first two rows have the same binary pole data and different
+shadow depth. The last two rows have infinite shadow depth and
+different generator pole order. The $\beta\gamma$ row is the decisive
+contact witness: its generator OPE is simple-pole only, so
+$p_{\max}(\beta\gamma)=1$ and
+$k_{\max}(\beta\gamma)=0$; the composite
+$J={:}\beta\gamma{:}$ has a self-OPE with a double contraction,
+which contributes the quartic contact class recorded in the
+landscape census and in
+Remark~\ref{rem:class-C-beta-gamma-termination}. Hence
+$r_{\max}(\beta\gamma)=4$.
 
 Part~(iii) is the shadow-depth classification. Class~$G$ is
 characterized by termination at degree~$2$ (all higher shadows
@@ -270,9 +319,9 @@ load-bearing for three structural statements of this manuscript:
  of~$\cA$, independently of $r_{\max}$.
 \end{enumerate}
 
-\begin{warning}[\textbf{AP\textup{59}: never conflate the three invariants}]
+\begin{warning}[Never conflate the three finite invariants]
 \label{warn:ap59-three-invariants}
-A recurring error in the literature and in our own drafts is to
+A recurring error is to
 conflate ``shadow depth'' (which means $r_{\max}$, the degree of the
 obstruction tower) with ``collision depth'' (which means $k_{\max}$,
 the pole order of the degree-$2$ collision residue) or with
@@ -289,7 +338,7 @@ Operational rule, applied at every cite: when a source asserts
 \emph{which} of the three invariants is meant; replace the
 ambiguous symbol with one of $p_{\max}, k_{\max}, r_{\max}$
 (or with $d_{\mathrm{gen}}, d_{\mathrm{alg}}$ for the depth-gap
-depth-gap invariants $d_{\mathrm{gen}}, d_{\mathrm{alg}}$);
+invariants);
 only then proceed. The most common
 mismatches are: $p_{\max}$ vs.\ $k_{\max}$ (off by one through
 $d\log$ absorption) and $k_{\max}$ vs.\ $r_{\max}$ (degree-$2$
@@ -297,10 +346,81 @@ vs.\ all-degree). The $\beta\gamma$ witness separates all
 three.
 \end{warning}
 
+\begin{proposition}[Typed separation from scalar, centre, and bar--cobar data]
+\label{prop:typed-separation-three-invariants}
+\ClaimStatusProvedHere
+Let $\cA$ be a completed standard-landscape chiral algebra on the
+generic PBW/Koszul and perfect finite-window lanes on which
+Theorems~\textup{C},~\textup{D}, and~\textup{H} are stated. The data
+\[
+(p_{\max},k_{\max},r_{\max}),\qquad
+\kappa(\cA),\qquad
+Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)=\ChirHoch^\bullet(\cA,\cA),
+\qquad
+\bar B^{\mathrm{ch}}(\cA)\to \cA^{\mathrm i}\xrightarrow{\mathbb{D}_X}\cA^!
+\]
+belong to four different type signatures. The only universal
+implications used in this chapter are:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $p_{\max}$ determines $k_{\max}$ by
+ $k_{\max}=p_{\max}-1$ on the chosen minimal strong generators;
+\item $r_{\max}$ determines the coarse shadow class
+ $G/L/C/M$ on the completed non-critical rows;
+\item $\kappa(\cA)$ enters Theorem~D only through the scalar
+ projection $\mathrm{obs}_g(\cA)=\kappa(\cA)\lambda_g$ on the
+ uniform-weight scalar-diagonal lane, and through the genus-$1$
+ all-weight scalar;
+\item Theorem~C records the scalar Verdier sum
+ $K^\kappa(\cA)=\kappa(\cA)+\kappa(\cA^!)$ after the Verdier partner
+ and anomaly-ratio hypotheses have been fixed; it is not an
+ equivalence of naive centres, derived centres, or brace
+ dg~algebras;
+\item Theorem~H is the cohomological-amplitude statement for the
+ chiral Hochschild complex under the PBW/perfectness hypotheses; it
+ is not a statement about the bare bar coalgebra.
+\end{enumerate}
+Consequently no scalar equality, no value of $r_{\max}$, and no
+triple $(p_{\max},k_{\max},r_{\max})$ recovers the full derived centre
+or the full Koszul bar--cobar package.
+\end{proposition}
+
+\begin{proof}
+The type signatures are distinct by construction. The bar complex is
+the conilpotent coalgebra $T^c(s^{-1}\bar\cA)$ with its chiral
+differential; its cohomology $\cA^{\mathrm i}$ is the Koszul-dual
+coalgebra, and $\cA^!$ is obtained only after Verdier duality on
+finite-type windows. The derived chiral centre is instead the chiral
+Hochschild complex
+$\ChirHoch^\bullet(\cA,\cA)$, whose Theorem~H concentration uses the
+ordered Fulton--MacPherson collapse followed by the PBW averaging
+hypothesis. The scalar $\kappa$ is the genus-$1$ curvature trace of
+the universal obstruction; Theorem~D promotes it to
+$\kappa\lambda_g$ only on the uniform-weight scalar-diagonal lane,
+while multi-weight all-genus free energies include
+$\delta F_g^{\mathrm{cross}}$.
+
+The low-degree witnesses exclude the possible collapses. Heisenberg
+and affine Kac--Moody have the same
+$(p_{\max},k_{\max})=(2,1)$ but different shadow depths
+$2$ and~$3$. The $\beta\gamma$ system has
+$(p_{\max},k_{\max},r_{\max})=(1,0,4)$, scalar complementarity
+$K^\kappa(\beta\gamma)=0$ with its $bc$ partner, and nonzero
+standard-family quartic shadow $S_4=-5/12$; thus scalar cancellation
+does not annihilate the shadow tower and does not identify derived
+centres. For $\mathcal W_3$, the diagonal scalar term is
+$\kappa(\mathcal W_3)\lambda_g^{\mathrm{FP}}$, but at genus~$2$ the
+full all-weight free energy has the nonzero cross-channel correction
+recorded in Theorem~\ref{thm:multi-weight-genus-expansion}. These
+examples prove that the arrows listed in the statement are the
+available arrows, and no inverse arrow is available without the extra
+finite-window, PBW, Verdier, or perfectness hypotheses named there.
+\end{proof}
+
 \section{The trichotomy at degree~2}
 \label{sec:three-invariants-trichotomy}
 
-The classification of chiral algebras by $k_{\max}$ produces a
+On the bosonic integer-weight standard rows used by the GZ\textup{26}
+operator-order comparison, the classification by $k_{\max}$ produces a
 \emph{trichotomy}, not a dichotomy, reflecting three structurally
 different behaviours of the GZ\textup{26} commuting Hamiltonians:
 
@@ -309,7 +429,7 @@ different behaviours of the GZ\textup{26} commuting Hamiltonians:
 \begin{tabular}{ccll}
 $k_{\max}$ & \textbf{Regime} & \textbf{GZ\textup{26} $H_i$ are} & \textbf{Examples} \\
 \hline
-$0$ & trivial & trivial (no commuting structure at degree 2) & $\beta\gamma$, free-fermion \\
+$0$ & trivial & trivial (no commuting structure at degree 2) & $\beta\gamma$ \\
 $1$ & multiplication & scalar / matrix multiplication operators
  & Heisenberg, affine KM \\
 $\geq 3$ & differential & genuine differential operators of order $k_{\max}-1$
@@ -319,23 +439,24 @@ $\geq 3$ & differential & genuine differential operators of order $k_{\max}-1$
 
 \begin{remark}[Why $k_{\max} = 2$ is missing]
 \label{rem:k-max-2-missing}
-The value $k_{\max} = 2$ is absent from the standard landscape
-because it would require a generator self-OPE with maximal pole
-order~$3$, which locality and dimension rule out: the OPE
-of two weight-$h$ currents has poles at orders $0, 1, \ldots, 2h$,
-and the maximal nonzero pole is~$2h$ only for bosonic self-OPEs.
-For~$h = 1$ (currents), $p_{\max} = 2$; for~$h = 2$ (stress tensors),
-$p_{\max} = 4$; intermediate values of $p_{\max} = 3$ would require
-half-integer weight, which breaks bosonic locality. This is why
-the trichotomy skips $k_{\max} = 2$: there is no standard chiral
-algebra with that collision depth.
+The value $k_{\max}=2$ is absent from the selected standard rows of
+the operator-order theorem, not from the universe of all integer-weight
+vertex algebras. It would require a genuine cubic generator-pair pole
+$p_{\max}=3$. None of the rows used there has such a maximal binary
+pole: $\beta\gamma$ has a simple mixed generator pole, Heisenberg and
+affine Kac--Moody have quadratic current poles, and the Virasoro /
+principal $\cW_N$ rows have maximal self-OPE poles at least quartic.
+A chiral algebra with a cubic maximal generator-pair pole would define
+an additional comparison row; it is not part of
+Theorem~\ref{thm:shadow-depth-operator-order}.
 \end{remark}
 
 \begin{theorem}[The $k_{\max}$ trichotomy; \ClaimStatusConditional]
 \label{thm:k-max-trichotomy}
-For every chiral algebra $\cA$ in the standard landscape,
+For every chiral algebra $\cA$ in the bosonic integer-weight standard
+sublandscape used by Theorem~\textup{\ref{thm:shadow-depth-operator-order}},
 $k_{\max}(\cA)\in\{0,1\}\cup\{3,4,5,\ldots\}$. The value $2$ is
-excluded by locality and dimension \textup{(}Remark
+absent from that comparison table \textup{(}Remark
 \textup{\ref{rem:k-max-2-missing})}. The classification by
 $k_{\max}$ matches the GZ\textup{26} Hamiltonian operator-order
 trichotomy of
@@ -343,10 +464,12 @@ Theorem~\textup{\ref{thm:shadow-depth-operator-order}}.
 \end{theorem}
 
 \begin{proof}
-The bound $k_{\max}\in\{0,1\}\cup\{3,4,5,\ldots\}$ follows from
-Remark~\ref{rem:k-max-2-missing}: the generator OPE pole order
-$p_{\max}$ takes values in $\{1,2\}\cup\{4,5,\ldots\}$ for bosonic
-chiral algebras in the standard landscape, and $k_{\max} = p_{\max}-1$.
+The bound follows by reading the minimal-generator OPE tables of the
+selected rows: $\beta\gamma$ gives $p_{\max}=1$, Heisenberg and
+affine Kac--Moody give $p_{\max}=2$, and Virasoro/principal
+$\cW_N$ give $p_{\max}\ge4$. The identity
+$k_{\max}=p_{\max}-1$ converts these values to
+$k_{\max}\in\{0,1\}\cup\{3,4,5,\ldots\}$.
 The match with the operator-order trichotomy is
 Theorem~\ref{thm:shadow-depth-operator-order}.
 \end{proof}
@@ -365,13 +488,15 @@ supertrace~$\chi_{\mathrm{VOA}}$, which records parity; and the
 $\bigl(\mathrm{Com}(\cH_\kappa, \cA),\, \cA/\mathrm{Com}\bigr)$
 and, at~$\kappa = 0$, the Feigin--Frenkel coset~$\mathrm{coset}_{FF}$.
 Together with a count of minimal strong generators, these five slots
-form the \emph{canonical fingerprint}. The content of this section
-is the triangle
+form the \emph{canonical fingerprint}. The fingerprint is a typed
+projection from the modular-Koszul package; it is not the package
+itself. The content of this section is the triangle
 \begin{equation}\label{eq:fingerprint-triangle}
-\text{fingerprint}\;\overset{\text{(I)}}{\longrightarrow}\;\text{Koszul-bar structure}\;\overset{\text{(II)}}{\longrightarrow}\;\text{shadow class},
+\text{modular-Koszul package}\;\overset{\text{(I)}}{\longrightarrow}\;\text{fingerprint}\;\overset{\text{(II)}}{\longrightarrow}\;\text{shadow class},
 \end{equation}
-where~(I) is an isomorphism (completeness) and~(II) is a surjective
-projection (five-class stratum). The quadrichotomy $G, L, C, M$
+where~(I) is the finite list of typed projections below and~(II) is
+a surjective coarse projection (five-class stratum). The quadrichotomy
+$G, L, C, M$
 of~\S\ref{sec:three-invariants-relations} is the image of~(II)
 restricted to~$\kappa \neq 0$; the fifth class~$\mathrm{FF}$ is the
 locus~$\kappa = 0$.
@@ -409,75 +534,91 @@ the collision depth $k_{\max}$ is determined by slot~(1)
 via~\eqref{eq:k-max-from-p-max} and is therefore absent from~$\varphi$.
 \end{definition}
 
-\begin{theorem}[Fingerprint completeness]
+\begin{theorem}[Fingerprint projection]
 \label{thm:fingerprint-completeness}
 \ClaimStatusProvedHere
-For~$\cA_1, \cA_2$ in the standard landscape,
+For~$\cA$ in the completed standard landscape with a chosen minimal
+strong generating set, the fingerprint factors through the typed
+projection
 \begin{equation}\label{eq:fingerprint-completeness}
-\varphi(\cA_1) = \varphi(\cA_2)
-\;\Longleftrightarrow\;
-\bar{B}^{\mathrm{ch}}(\cA_1) \simeq \bar{B}^{\mathrm{ch}}(\cA_2) \text{ as $\mathrm{Ass}^{\mathrm{ch}}$-coalgebras,}
+\Pi_{\mathrm{fp}}\colon
+\bigl(\bar B^{\mathrm{ch}}(\cA),\Theta_\cA,
+Z^{\mathrm{der}}_{\mathrm{ch}}(\cA),\kappa(\cA),
+\mathrm{coset}(\cA)\bigr)
+\longrightarrow
+\varphi(\cA),
 \end{equation}
-with agreeing $(\mathrm{SC}^{\mathrm{ch,top}})^!$-coalgebra structures
-on their shadow obstruction towers. Equivalently,~$\varphi$ is a
-complete invariant of the Koszul-bar-complex structure.
+whose five components are:
+\[
+\pi_{\mathrm{pole}},\quad
+\pi_{\mathrm{sh}},\quad
+\pi_{\mathrm{str}},\quad
+\pi_{\mathrm{gen}},\quad
+\pi_{\mathrm{coset}}.
+\]
+They read respectively the maximal generator pole order, the maximal
+nonzero shadow projection, the Hodge-filtered supertrace, the number
+of minimal strong generators, and the commutant/critical coset slot.
+If two typed modular-Koszul packages are isomorphic in the finite
+PBW windows and their shadow projections and coset slots agree, then
+their fingerprints agree. The converse is not asserted: equality of
+fingerprints determines the recorded finite-row data and the coarse
+shadow class, but not the full OPE, not
+$Z^{\mathrm{der}}_{\mathrm{ch}}$, and not
+$\bar B^{\mathrm{ch}}$ as an $\mathrm{Ass}^{\mathrm{ch}}$-coalgebra.
 \end{theorem}
 
 \begin{proof}
-The reverse implication is immediate: each slot
-of~$\varphi$ is read off from the bar coalgebra
-$\bar{B}^{\mathrm{ch}}(\cA)$ together with its shadow projection,
-so a Koszul-bar isomorphism induces equality of fingerprints.
-
-The forward implication is a four-step reconstruction. Given
-$\varphi(\cA_1) = \varphi(\cA_2)$, we reconstruct the bar coalgebra:
+The five maps are read in different degrees and from different
+objects:
 \[
 \begin{tikzcd}[row sep=small, column sep=large]
-\varphi(\cA) \arrow[r, "{(1)}"] \arrow[d] & (p_{\max}, r_{\max}) \arrow[r, "{(2)}"] & \text{Koszul $E_2$-page} \arrow[d] \\
-(\chi_{\mathrm{VOA}}, n_{\mathrm{strong}}) \arrow[rr, "{(3)}"] & & \text{generator spectrum} \arrow[u] \\
-\mathrm{coset}(\cA) \arrow[rrr, "{(4)}"] & & & \text{full OPE data} \arrow[uul]
+\bar B^{\mathrm{ch},2}(\cA) \arrow[r, "\pi_{\mathrm{pole}}"] &
+p_{\max}(\cA) \arrow[r] & k_{\max}(\cA) \\
+\Theta_\cA \arrow[r, "\pi_{\mathrm{sh}}"] &
+r_{\max}(\cA) \arrow[r] & G/L/C/M \\
+\cA \arrow[r, "{(\pi_{\mathrm{str}},\pi_{\mathrm{gen}})}"] &
+(\chi_{\mathrm{VOA}},n_{\mathrm{strong}}) \\
+\mathrm{Com}(\cH_\kappa,\cA) \arrow[r, "\pi_{\mathrm{coset}}"] &
+\mathrm{coset}(\cA).
 \end{tikzcd}
 \]
-Step~(1) fixes the OPE pole template via
-$k_{\max} = p_{\max} - 1$ and the shadow-depth partition. Step~(2)
-determines the Koszul $E_2$-page: the chiral algebras in the standard
-landscape are Koszul
-(Warning~\ref{warn:ap59-three-invariants} does not obstruct Koszulness),
-and the $E_2$-page is determined by~$(p_{\max}, r_{\max})$
-up to Hodge filtration. Step~(3) fixes the parity and the number of
-strong generators: the Hodge-filtered supertrace
-$\chi_{\mathrm{VOA}}$ separates even from odd generators at each
-conformal weight, and~$n_{\mathrm{strong}}$ fixes the rank of the
-$q$-expansion. Step~(4) supplies the remaining OPE coefficients
-via the coset: the pair
-$(\mathrm{Com}(\cH_\kappa, \cA), \cA/\mathrm{Com})$ determines
-the abelian core and the coset representative, which together
-reconstruct all OPE coefficients modulo the pole template from~(1).
-At~$\kappa = 0$, the Feigin--Frenkel coset
-$\mathrm{coset}_{FF}$ plays the same role via the critical-level
-degeneration. The four steps assemble to a functor from~$\mathcal{F}$
-to the category of chiral Koszul-bar coalgebras whose composition
-with~$\varphi$ is the identity.
+The first line uses only the binary bar differential and the
+$d\log$ absorption formula. The second line uses the shadow
+obstruction tower, not the scalar trace of that tower. The third line
+uses the graded vector space with Hodge filtration and the chosen
+minimal strong generators. The fourth line uses the commutant or, at
+critical level, the Feigin--Frenkel coset. An isomorphism of typed
+packages preserves each source object and therefore preserves the five
+read-offs.
 
-The $(\mathrm{SC}^{\mathrm{ch,top}})^!$-coalgebra structure on the
-shadow obstruction tower is transported along this reconstruction:
-the Koszul dual cooperad acts on
-$\Theta_\cA^{\leq r}$ through its degree-$r$ projection, and the
-action is determined by~$(r_{\max}, \mathrm{coset})$.
+The non-converse is forced by
+Proposition~\ref{prop:typed-separation-three-invariants}. The scalar
+Verdier sum of Theorem~C, the scalar genus trace of Theorem~D, the
+chiral Hochschild complex of Theorem~H, and the bar--cobar package
+have different domains and codomains. Forgetting to the five slots of
+$\varphi$ cannot reconstruct the maps, higher braces, ordered
+coinvariants, or all OPE coefficients that were forgotten. On a fixed
+completed row of the landscape census with its normal form already
+chosen, the five slots recover exactly the finite list of row data
+recorded there;
+that row-level recovery is the only reconstruction used in the
+coarse projection below.
 \end{proof}
 
 \begin{remark}[Functorial symmetry under Koszul duality]
 \label{rem:fingerprint-koszul-symmetry}
-The fingerprint is Koszul-equivariant:
+On rows whose Verdier partner is fixed in the landscape census, the
+fingerprint projection is Koszul-equivariant:
 $\varphi(\cA^!)$ is obtained from~$\varphi(\cA)$ by
 $(p_{\max}, r_{\max})$ preserved,
 $\chi_{\mathrm{VOA}} \mapsto \chi_{\mathrm{VOA}}^\vee$
 (the Verdier-dual character),
 $n_{\mathrm{strong}}$ preserved, and the coset slot exchanged under
 the Koszul involution on the pair~$(\mathrm{Com}, \cA/\mathrm{Com})$.
-This symmetry is the diagrammatic face of the completeness theorem:
-Koszul duality acts on~$\mathcal{F}$ as an involution, and the
-triangle~\eqref{eq:fingerprint-triangle} commutes with it.
+This is functoriality of the projection
+$\Pi_{\mathrm{fp}}$, not a reconstruction of the full bar coalgebra
+or the derived centre from~$\varphi$.
 \end{remark}
 
 \begin{theorem}[Five-class stratum]
@@ -510,7 +651,7 @@ Every chiral algebra in the standard landscape lies in exactly one stratum.
 The partition by~$r_{\max}\in\{2,3,4,\infty\}$ is
 Proposition~\ref{prop:three-invariants-relations}(iii). The
 critical-level refinement separates the Feigin--Frenkel locus from
-the non-critical bulk: at the affine critical level
+the non-critical rows: at the affine critical level
 $k=-h^\vee$, the Sugawara topologisation fails, the conformal vector
 degenerates, the coset slot switches from
 $(\mathrm{Com}(\cH_\kappa,\cA),\cA/\mathrm{Com})$ to
@@ -577,8 +718,9 @@ is term-by-term.
 \subsection{Witnesses of independence}
 \label{ssec:fingerprint-witnesses}
 
-The independence of the five slots is witnessed by pairs of algebras
-that agree on all slots but one. The witnesses are:
+The independence of the five slots is witnessed by standard pairs and
+families in which one slot changes while the stated coarse slots are
+held fixed. The witnesses are:
 
 \begin{example}[Slot 1 vs.\ slot 2: $(p_{\max}, r_{\max})$ independence]
 \label{ex:fingerprint-p-r-independence}
@@ -654,7 +796,7 @@ slot~(5) via~$\kappa$-vanishing.
 \section{Compute-layer verification}
 \label{sec:three-invariants-compute}
 
-The three-invariants distinction is verified in the compute layer
+The three-invariants distinction is checked in the compute layer
 by the engine
 \texttt{compute/lib/theorem\_three\_paper\_intersection\_engine.py},
 which contains the dictionary
@@ -672,7 +814,7 @@ which contains the dictionary
 \end{verbatim}
 The corresponding test file
 \texttt{compute/tests/test\_theorem\_three\_paper\_intersection\_engine.py}
-contains~$39$ passing tests, including the critical
+contains the critical
 \texttt{test\_betagamma\_class\_C}
 which verifies the $(p_{\max}, k_{\max}, r_{\max}) = (1, 0, 4)$
 triple for the $\beta\gamma$ system.

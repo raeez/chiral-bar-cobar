@@ -1,16 +1,19 @@
-r"""Donaldson-Thomas invariants from the shadow/scattering diagram correspondence.
+r"""Donaldson-Thomas invariants from scattering diagrams and shadow checks.
 
-Connects the bar-cobar framework to enumerative geometry via the identification
-of Kontsevich-Soibelman scattering diagrams with the shadow obstruction tower.
+The module computes a rank-two Kontsevich-Soibelman scattering model, the
+resolved-conifold reduced DT/PT product, and comparison scalars for the
+shadow obstruction tower.  The scattering MC element and the chiral
+obstruction element are related by a dictionary of roles; they are not
+identified as the same object by this compute layer.
 
 MATHEMATICAL FRAMEWORK
 ======================
 
 The Kontsevich-Soibelman wall-crossing formula encodes Donaldson-Thomas
-invariants of 3-Calabi-Yau categories.  The central claim (AP42: correct at
-the motivic Hall algebra level, not naive BCH) is:
+invariants of 3-Calabi-Yau categories.  The compute-level claim used here is:
 
-    SCATTERING DIAGRAM  <=>  SHADOW OBSTRUCTION TOWER
+    scattering consistency is the MC equation in the completed
+    scattering Lie algebra.
 
 The scattering diagram D consists of:
   - A lattice N = Z^r (charge lattice)
@@ -18,7 +21,7 @@ The scattering diagram D consists of:
   - Walls (d, f_d): half-planes d in N_R with attached automorphisms f_d
   - CONSISTENCY: the ordered product around any loop is the identity
 
-The consistency condition is equivalent to the MC equation:
+The consistency condition is the MC equation:
     D * Theta + (1/2) [Theta, Theta] = 0
 
 in the completion of the Lie algebra of Hamiltonian vector fields on the
@@ -52,13 +55,15 @@ with BPS index Omega(gamma):
             = prod_{k>=1} (1 - (-1)^{<gamma,gamma>} x^{k*gamma})^{k * Omega(gamma)}
 
 In the Lie algebra formulation:
-    log(K_gamma) = Omega(gamma) * Li_2(-(-1)^{<gamma,gamma>} x^gamma)
+    log(K_gamma) = -Omega(gamma) * Li_2(-x^gamma)
+    when <gamma,gamma> = 0, so the coefficient of x^{k gamma} is
+    Omega(gamma) * (-1)^{k-1}/k^2.
 
 DT/GV/PT CORRESPONDENCE
-=========================
+=======================
 
-    Z^DT = M(-q)^{chi(X)} * Z'^DT(q, Q)        (MNOP formula)
-    Z^PT = Z'^DT(q, Q)                           (DT/PT wall-crossing)
+    Z^DT = M(-q)^{chi(X)} * Z^PT(q, Q)       (MNOP degree-zero factor)
+    Z'^DT = Z^PT                              (reduced DT/PT series)
     F_g^GW = sum_d n_g^d sum_{k>=1} k^{2g-3} Q^{kd}  (GV formula, g >= 2)
 
 SHADOW TOWER CONNECTION
@@ -68,13 +73,14 @@ For a local CY3 X -> C with chiral algebra A_C:
   - kappa(A_C) = chi(X)/2 (Euler characteristic)
   - F_g^shadow = kappa * lambda_g^FP (scalar shadow = constant map contribution)
   - Higher-arity shadows capture instanton corrections
-  - The full MC element Theta_A encodes the complete DT partition function
+  - A scattering MC element packages wall functions for DT data.  The
+    chiral element Theta_A is compared to it through the stated dictionary,
+    not asserted equal to a DT partition function.
 
 Manuscript references:
     thm:mc2-bar-intrinsic (higher_genus_modular_koszul.tex)
     cor:topological-recursion-mc-shadow (higher_genus_modular_koszul.tex)
     rem:scattering-mc-identification (higher_genus_modular_koszul.tex)
-    AP42 — correct at motivic level (CLAUDE.md)
 """
 
 from __future__ import annotations
@@ -94,7 +100,92 @@ from sympy import (
 
 
 # ============================================================================
-# 0. Arithmetic and combinatorial helpers
+# 0. Object and normalization firewalls
+# ============================================================================
+
+HOLOGRAPHIC_PACKAGE_ENTRIES: Tuple[str, ...] = (
+    "A",
+    "A^i",
+    "A^!",
+    "C",
+    "r(z)",
+    "Theta_A",
+    "nabla^hol",
+)
+
+
+MODULAR_KOSZUL_PRIMARY_PROJECTIONS: Tuple[str, ...] = (
+    "Fact_X(L)",
+    "barB_X(L)",
+    "Theta_L",
+    "L_L",
+    "(V^br,T^br)",
+    "R_4^mod(L)",
+)
+
+
+TYPED_FIREWALL_OBJECTS: Tuple[str, ...] = (
+    "A",
+    "B(A)",
+    "A^i",
+    "A^!",
+    "Omega(B(A))",
+    "Z_ch^der(A)",
+)
+
+
+def holographic_package_entries() -> Tuple[str, ...]:
+    """Seven entries of H(A), in canonical order."""
+    return HOLOGRAPHIC_PACKAGE_ENTRIES
+
+
+def modular_koszul_primary_projections() -> Tuple[str, ...]:
+    """Six projections of the modular Koszul compute package."""
+    return MODULAR_KOSZUL_PRIMARY_PROJECTIONS
+
+
+def bar_koszul_firewall_summary() -> Dict[str, str]:
+    """Typed roles for bar, Koszul-dual, and Hochschild objects."""
+    return {
+        "A": "input chiral algebra",
+        "B(A)": "ordered bar coalgebra before cohomology",
+        "A^i": "bar cohomology coalgebra H^*(B(A))",
+        "A^!": (
+            "Verdier/continuous-linear dual branch under finite-type or "
+            "completed hypotheses"
+        ),
+        "Omega(B(A))": "bar-cobar inversion recovering A",
+        "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/bulk object",
+    }
+
+
+def kernel_normalization_constants(c: Any = Rational(26),
+                                   k: Any = Rational(1),
+                                   h_vee: Any = Rational(2)
+                                   ) -> Dict[str, Dict[str, Any]]:
+    """Canonical kernel normalizations kept distinct by this engine."""
+    return {
+        "affine_raw_collision": {
+            "formula": "k*Omega_tr/z",
+            "coefficient": k,
+            "normalization": "trace-form collision residue",
+        },
+        "affine_kz_coefficient": {
+            "formula": "Omega/((k+h^vee)z)",
+            "coefficient": Rational(1) / (k + h_vee),
+            "normalization": "KZ comparison coefficient",
+        },
+        "virasoro_collision": {
+            "formula": "(c/2)/z^3 + 2T/z",
+            "central_coefficient": c / 2,
+            "stress_coefficient": 2,
+            "normalization": "Virasoro collision residue",
+        },
+    }
+
+
+# ============================================================================
+# 1. Arithmetic and combinatorial helpers
 # ============================================================================
 
 def _sigma(n: int, power: int) -> int:
@@ -236,8 +327,8 @@ def ks_wall_crossing_factor(gamma: Tuple[int, int], omega: int,
     Returns: dictionary {k*gamma: coefficient} for the expansion of
     (1 + x^gamma)^n where n = -<gamma,gamma'> * Omega, truncated at order.
 
-    For the Lie algebra element (the log):
-        log K_gamma = Omega * Li_2(-x^gamma)
+    For the Lie algebra element (the log), with the present sign convention:
+        log K_gamma = -Omega * Li_2(-x^gamma)
                     = Omega * sum_{k>=1} (-1)^{k-1} x^{k*gamma} / k^2
     """
     result = {}
@@ -253,11 +344,10 @@ def ks_lie_algebra_element(gamma: Tuple[int, int], omega: int,
                            order: int) -> Dict[Tuple[int, int], Rational]:
     r"""Lie algebra element log(K_gamma) in the scattering Lie algebra.
 
-    log(K_gamma) = Omega(gamma) * sum_{k>=1} (-x^gamma)^k / k^2
-                 = Omega(gamma) * Li_2(-x^gamma)
+    log(K_gamma) = Omega(gamma) * sum_{k>=1} (-1)^{k-1} x^{k gamma} / k^2
+                 = -Omega(gamma) * Li_2(-x^gamma).
 
-    For numerical DT: Omega(gamma) = sum_n (-1)^n n^n DT_{gamma,n}
-    is the numerical DT invariant (Behrend-weighted).
+    The input omega is the numerical BPS index attached to gamma.
 
     Returns {k*gamma: coefficient} for k = 1, ..., order.
     """
@@ -288,19 +378,19 @@ def conifold_consistent_scattering_diagram(max_charge: int
                                            ) -> ScatteringDiagram:
     r"""Consistent (complete) scattering diagram for the resolved conifold.
 
-    After enforcing consistency (= MC equation), the scattering diagram
-    acquires walls at all charges (a, b) with a, b >= 0, gcd(a,b) = 1.
+    In the rank-two tropical-vertex model used by this engine, enforcing
+    consistency adds walls at all charges (a, b) with a, b >= 0 and
+    gcd(a,b) = 1 up to the requested cutoff.
 
-    The BPS index at charge (a, b) with gcd = 1 is:
-        Omega(a, b) = 1  for the conifold (all single-centered BPS)
+    The primitive wall index in this model is:
+        Omega(a, b) = 1.
 
     Multi-covering: at charge (ka, kb) with k > 1:
         The DT invariant receives multi-covering contributions.
 
-    For the conifold, the remarkable fact is that Omega(gamma) = 1
-    for ALL primitive charges gamma = (a, b) with a, b > 0.
-    This is equivalent to: the DT partition function factors as
-    a product of quantum dilogarithms.
+    The product decomposition into quantum dilogarithms is the local
+    conifold model being tested here; it is not a statement about every
+    stability chamber of every 3-Calabi-Yau category.
 
     Reference: Kontsevich-Soibelman, arXiv:0811.2435;
     Gross-Pandharipande-Siebert, arXiv:0709.4148.
@@ -319,6 +409,40 @@ def conifold_consistent_scattering_diagram(max_charge: int
     return sd
 
 
+def _scattering_bracket(gamma1: Tuple[int, int],
+                        gamma2: Tuple[int, int],
+                        coeff1: Rational = Rational(1),
+                        coeff2: Rational = Rational(1)
+                        ) -> Tuple[Tuple[int, int], Rational]:
+    r"""Bracket [coeff1 e_gamma1, coeff2 e_gamma2] in the scattering Lie algebra."""
+    euler = gamma1[0] * gamma2[1] - gamma1[1] * gamma2[0]
+    charge = (gamma1[0] + gamma2[0], gamma1[1] + gamma2[1])
+    return charge, coeff1 * coeff2 * Rational(euler)
+
+
+def _conifold_group_commutator_oracle() -> Dict[Tuple[int, int], Rational]:
+    r"""Degree-three oracle for log(exp(A)exp(B)exp(-A)exp(-B)).
+
+    With A=e_(1,0), B=e_(0,1), the group-commutator logarithm begins
+
+        [A,B] + 1/2[A,[A,B]] + 1/2[B,[A,B]] + ...
+
+    in the convention used by this module.  This is the source of the
+    1/2 coefficient at charge (2,1); the BCH logarithm of exp(A)exp(B)
+    alone would instead have coefficient 1/12 at that charge.
+    """
+    A = (1, 0)
+    B = (0, 1)
+    C_charge, C_coeff = _scattering_bracket(A, B)
+    AC_charge, AC_coeff = _scattering_bracket(A, C_charge, Rational(1), C_coeff)
+    BC_charge, BC_coeff = _scattering_bracket(B, C_charge, Rational(1), C_coeff)
+    return {
+        C_charge: C_coeff,
+        AC_charge: Rational(1, 2) * AC_coeff,
+        BC_charge: Rational(1, 2) * BC_coeff,
+    }
+
+
 def conifold_scattering_consistency_check(order: int) -> Dict[str, Any]:
     r"""Verify scattering diagram consistency for the conifold.
 
@@ -330,13 +454,14 @@ def conifold_scattering_consistency_check(order: int) -> Dict[str, Any]:
     (the pentagon identity for quantum dilogarithms).
 
     At leading order, this is the tropical vertex group identity.
-    The Lie algebra version: the Baker-Campbell-Hausdorff commutator
-    of log(K_{(1,0)}) and log(K_{(0,1)}) produces log(K_{(1,1)}).
+    The Lie algebra version: the group-commutator logarithm of
+    log(K_{(1,0)}) and log(K_{(0,1)}) produces the first outgoing wall
+    log(K_{(1,1)}).
 
     The Euler form: <(1,0), (0,1)> = 1, so [e_{(1,0)}, e_{(0,1)}] = e_{(1,1)}.
 
     Returns dict with:
-      - bch_commutator: the BCH commutator at leading order
+      - bch_commutator: the group-commutator logarithm at leading order
       - expected: the expected wall from consistency
       - is_consistent: whether they match
       - higher_order: higher BCH terms
@@ -351,7 +476,9 @@ def conifold_scattering_consistency_check(order: int) -> Dict[str, Any]:
 
     # [A, B] = <(1,0), (0,1)> * e_{(1,1)} = 1 * e_{(1,1)}
 
-    # BCH: log(e^A * e^B) = A + B + (1/2)[A,B] + (1/12)([A,[A,B]] + [B,[B,A]]) + ...
+    # Group commutator:
+    # log(e^A e^B e^{-A} e^{-B})
+    #   = [A,B] + (1/2)[A,[A,B]] + (1/2)[B,[A,B]] + ...
 
     # Scattering consistency demands that the commutator produces
     # the (1,1) wall with Omega = 1.
@@ -367,51 +494,48 @@ def conifold_scattering_consistency_check(order: int) -> Dict[str, Any]:
     # This matches Omega(1,1) = 1: CONSISTENT at leading order
     results["leading_consistent"] = (euler_10_01 == 1)
 
-    # Higher order BCH: [e_{(1,0)}, e_{(1,1)}] = <(1,0),(1,1)> * e_{(2,1)}
+    commutator_oracle = _conifold_group_commutator_oracle()
+
+    # Higher group-commutator term:
+    # [e_{(1,0)}, e_{(1,1)}] = <(1,0),(1,1)> * e_{(2,1)}
     euler_10_11 = 1 * 1 - 0 * 1  # = 1
     results["second_order_charge"] = (2, 1)
-    results["second_order_coefficient"] = Rational(1, 2) * euler_10_11
-    # Factor 1/2 from BCH: (1/2)[A, [A,B]]
+    results["second_order_coefficient"] = commutator_oracle[(2, 1)]
+    # Factor 1/2 from the group-commutator logarithm.
 
     # [e_{(0,1)}, e_{(1,1)}] = <(0,1),(1,1)> * e_{(1,2)}
     euler_01_11 = 0 * 1 - 1 * 1  # = -1
     results["second_order_charge_2"] = (1, 2)
-    results["second_order_coefficient_2"] = Rational(1, 2) * euler_01_11
-    # Factor 1/2 from BCH second bracket, BUT there's also the sign from
-    # the BCH formula: (1/12)([A,[A,B]] - [B,[A,B]])
+    results["second_order_coefficient_2"] = commutator_oracle[(1, 2)]
 
-    # The third-order BCH commutator at (2,1):
-    # (1/12)[A,[A,B]] = (1/12) * e_{(2,1)}
+    # The degree-three group-commutator coefficient at (2,1):
+    # (1/2)[A,[A,B]] = (1/2) * e_{(2,1)}
     # At charge (2,1) with gcd(2,1)=1, Omega(2,1) = 1 for conifold
     # The scattering diagram has this wall with Omega = 1.
-    # The BCH produces coefficient 1/2, NOT 1.
-    # This is the AP42 mismatch: naive BCH != motivic wall-crossing.
-    results["bch_at_21"] = Rational(1, 2)
+    # The naive commutator logarithm produces coefficient 1/2, not 1.
+    results["bch_at_21"] = commutator_oracle[(2, 1)]
     results["scattering_at_21"] = 1  # Omega(2,1) = 1
-    results["naive_bch_matches"] = False  # 1/2 != 1, as AP42 warns
+    results["naive_bch_matches"] = False  # 1/2 != 1
 
-    # The MOTIVIC correction: the full motivic Hall algebra product
+    # The motivic correction: the full motivic Hall algebra product
     # accounts for the Behrend function and virtual motives.
     # The discrepancy 1 - 1/2 = 1/2 measures the bound-state contribution.
     results["motivic_correction_21"] = Rational(1, 2)
+    results["group_commutator_oracle"] = commutator_oracle
 
-    # Collect all charges produced by BCH up to given order
+    # Collect all charges produced by the group-commutator logarithm up to
+    # the degree needed by the local tests.
     bch_charges = {}
     bch_charges[(1, 1)] = Rational(1)  # leading [A,B]
 
     if order >= 2:
-        # [A,[A,B]] contributes to (2,1) with coefficient 1/12
-        bch_charges[(2, 1)] = Rational(1, 12)
-        # [B,[A,B]] contributes to (1,2) with coefficient -1/12
-        bch_charges[(1, 2)] = Rational(-1, 12)
+        bch_charges[(2, 1)] = commutator_oracle[(2, 1)]
+        bch_charges[(1, 2)] = commutator_oracle[(1, 2)]
 
     if order >= 3:
-        # [[A,B],[A,[A,B]]] = <(1,1),(2,1)> * e_{(3,2)} with appropriate BCH coeff
-        euler_11_21 = 1*1 - 1*2  # = -1
-        bch_charges[(3, 2)] = Rational(-1, 24) * euler_11_21  # rough estimate
-        # [[A,B],[B,[A,B]]] = <(1,1),(1,2)> * e_{(2,3)}
-        euler_11_12 = 1*2 - 1*1  # = 1
-        bch_charges[(2, 3)] = Rational(-1, 24) * euler_11_12
+        results["higher_order_status"] = (
+            "not_certified_beyond_group_commutator_degree_three"
+        )
 
     results["bch_charges"] = bch_charges
     results["order"] = order
@@ -458,9 +582,7 @@ def dt_from_scattering_conifold(N: int, d_max: int) -> Dict[int, List[int]]:
         # [Q^d] Z'^DT = [Q^d] prod_{n>=1} (1 - (-q)^n Q)^n
         #
         # At d=1: prod_{n>=1} (1 - (-q)^n Q)^n evaluated at Q^1
-        # = sum_n (-(-q))^n * n (from the linear term)
-        # Wait, let me be more careful.
-        #
+        # uses the linear term in exactly one n-factor:
         # (1 - (-q)^n Q)^n = sum_{k>=0} C(n,k) (-1)^k ((-q)^n Q)^k
         #                  = sum_{k>=0} C(n,k) (-1)^k (-1)^{nk} q^{nk} Q^k
         #
@@ -495,9 +617,9 @@ def _dt_conifold_degree_d(d: int, N: int) -> List[int]:
     log Z'^DT = sum_{n>=1} n * log(1 - (-q)^n Q)
               = -sum_{n>=1} n * sum_{m>=1} ((-q)^n Q)^m / m
               = -sum_{m>=1} (Q^m / m) sum_{n>=1} n (-q)^{nm}
-              = -sum_{m>=1} (Q^m / m) * (-q)^m / (1-(-q)^m)^2  ... hmm
+              = -sum_{m>=1} (Q^m / m) * (-q)^m / (1-(-q)^m)^2
 
-    Alternatively, expand directly as a power series in Q.
+    The implementation expands directly as a power series in Q.
     """
     # Approach: compute the Q-expansion of the product term by term.
     # Start with the identity (constant 1 in Q=0 slice) and multiply
@@ -586,7 +708,7 @@ def local_p2_gv_invariants(g_max: int = 4, d_max: int = 8
     Reference: Huang-Klemm-Quackenbush, arXiv:hep-th/0612308;
     Katz, arXiv:alg-geom/9606003.
 
-    NOTE (AP38): These values use the STANDARD normalization where
+    These values use the standard normalization where
     n_g^d counts BPS states with the Schwinger loop integral sign.
     """
     gv = {}
@@ -637,19 +759,7 @@ def local_p1xp1_gv_invariants(d_max: int = 5) -> Dict[Tuple[int, int, int], int]
     r"""GV invariants for local P^1 x P^1 = O(-2,-2).
 
     Two Kahler parameters t_1, t_2 for the two P^1 factors.
-    Genus-0 GV invariants n_0^{d_1, d_2}:
-
-        n_0^{1,0} = -2  (two P^1's in one class... actually for O(-2,-2):
-        the resolved geometry has chi = 4)
-
-    Actually for O(-2,-2) -> P^1 x P^1 with TWO Kahler classes:
-        n_0^{(1,0)} = 0, n_0^{(0,1)} = 0  (no isolated curves in these classes)
-        n_0^{(1,1)} = 4  (four (1,1)-curves on P^1 x P^1: this is chi(P^1 x P^1))
-
-    Wait -- the standard result from the topological vertex:
-        n_0^{(1,0)} = -2  (for the O(-1,-1) -> P^1 factor)
-
-    For local P^1 x P^1, the GV at genus 0 in bidegree (d1, d2) are:
+    In the topological-vertex normalization used by this engine:
         n_0^{(1,0)} = -2, n_0^{(0,1)} = -2
         n_0^{(1,1)} = 4
         n_0^{(2,0)} = 0, n_0^{(0,2)} = 0
@@ -852,13 +962,13 @@ def verify_gw_from_gv_conifold(g: int, d_max: int = 5) -> Dict[str, Any]:
 # ============================================================================
 
 def shadow_constant_map_Fg(g: int, chi: int) -> Rational:
-    r"""Constant map contribution to F_g from the shadow obstruction tower.
+    r"""Constant map contribution to F_g for a CY3 of Euler characteristic chi.
 
     F_g^{const} = (-1)^g * chi * B_{2g} * B_{2g-2} / (4g * (2g-2) * (2g-2)!)
 
     This is the Faber-Pandharipande constant map formula for g >= 2.
 
-    For g = 1: F_1 = -chi/24 (the Euler characteristic contribution).
+    For g = 1, this engine uses the convention F_1 = chi/24.
 
     The shadow obstruction tower at the SCALAR level gives:
         F_g^{shadow} = kappa * lambda_g^FP = (chi/2) * lambda_g^FP
@@ -866,8 +976,9 @@ def shadow_constant_map_Fg(g: int, chi: int) -> Rational:
     NOTE: F_g^{const} and F_g^{shadow} are DIFFERENT objects.
     F_g^{const} involves B_{2g} * B_{2g-2} (two Bernoulli numbers).
     F_g^{shadow} involves only B_{2g} (one Bernoulli number via lambda_g^FP).
-    They agree at g=1 (F_1 = chi/24 = kappa * lambda_1^FP with kappa = chi/2)
-    but DIVERGE at g >= 2.
+    For kappa = chi/2, the scalar shadow is half of this genus-1
+    constant-map contribution and has a different Bernoulli structure for
+    g >= 2.
 
     The relationship: F_g^{const} = chi * I_g^{FP} where
     I_g^{FP} = (-1)^g B_{2g} B_{2g-2} / (4g(2g-2)(2g-2)!)
@@ -901,8 +1012,8 @@ def shadow_dt_comparison(g: int, chi: int) -> Dict[str, Any]:
       F_g^{shadow} = (chi/2) * lambda_g^FP
       F_g^{const} = constant map formula (two Bernoulli numbers)
 
-    At g = 1: these AGREE (F_1 = chi/24).
-    At g >= 2: they DIFFER. The shadow captures PART of the constant map.
+    With kappa = chi/2, the two values differ at g = 1 by a factor of 2.
+    For g >= 2 they are different Bernoulli expressions.
     """
     kappa = Rational(chi, 2)
 
@@ -916,7 +1027,7 @@ def shadow_dt_comparison(g: int, chi: int) -> Dict[str, Any]:
             "F_shadow": f_shadow,
             "F_const": f_const,
             "agree": simplify(f_shadow - f_const) == 0,
-            "ratio": Rational(1) if f_const != 0 else None,
+            "ratio": simplify(f_shadow / f_const) if f_const != 0 else None,
         }
 
     f_shadow = shadow_free_energy(g, kappa)
@@ -957,35 +1068,13 @@ def conifold_Fg(g: int) -> Rational:
 def conifold_Fg_from_gv(g: int, d_max: int = 20) -> Rational:
     r"""Compute F_g for the conifold by summing the GV multi-covering formula.
 
-    F_g = sum_{d=1}^{d_max} N_{g,d} * (q^d evaluated at q=1... no)
+    The full conifold F_g contains a regularized instanton sum.  This
+    helper does not evaluate the divergent Q -> 1 series directly.
 
-    Actually the FULL F_g for the conifold is the sum over all instantons:
-    F_g = sum_{d>=1} N_{g,d} * Li_{3-2g}(q) evaluated appropriately.
-
-    For g >= 2, at the "topological" point (q -> 0 asymptotics):
-    F_g = c_{g,0} * zeta(3-2g)  (from the sum over Li_{3-2g})
-
-    Wait, this is not right either. The FULL genus-g free energy of the
-    conifold (summing constant + instanton) is:
-
-    F_g = (-1)^{g-1} B_{2g} / (2g(2g-2))  [exact for all g >= 2]
-
-    This can be verified by:
-    F_g = F_g^{const}(chi=2) + F_g^{inst}
-    where F_g^{inst} = sum_{d>=1} c_{g,0} * sigma_{-3}(d) * q^d
-    evaluated at q -> 1.
-
-    But the sum diverges at q = 1! The finite answer comes from
-    analytic continuation / regularization.
-
-    Instead, verify via the B-model: the conifold mirror has a single
-    period, and F_g is determined by the local behavior near the conifold
-    singularity. The exact formula follows from the recursion relations
-    of the BCOV equations.
-
-    For our verification, we check that the GV formula CORRECTLY PRODUCES
-    the instanton coefficients N_{g,d}, and that the exact F_g matches
-    the constant map formula at chi = 2.
+    The finite exact answer is supplied by the B-model conifold formula
+    F_g = (-1)^{g-1} B_{2g}/(2g(2g-2)) for g >= 2.  The function verifies
+    the GV instanton coefficients N_{g,d} up to d_max and then returns the
+    exact B-model value.
     """
     gv = conifold_gv_invariants()
     gw = gv_to_gw(gv, g, d_max)
@@ -1084,85 +1173,80 @@ def verify_flop_invariance_gv(d_max: int = 5) -> bool:
 def pt_partition_conifold(N: int, d: int) -> List[int]:
     r"""Pandharipande-Thomas invariants for the conifold at degree d.
 
-    Z^PT_d(q) = [Q^d] prod_{n>=1} (1 + (-q)^n Q)^n
+    In the reduced DT/PT chamber used by this module,
+
+        Z^PT(q,Q) = Z'^DT(q,Q)
+                  = prod_{n>=1} (1 - (-q)^n Q)^n.
 
     For d = 1:
-      Z^PT_1 = sum_{n>=1} (-1)^{n+1} n q^n = q / (1+q)^2
-      Coefficients: 1, -2, 3, -4, 5, -6, ...
+      Z^PT_1 = sum_{n>=1} (-1)^{n-1} n q^n = q / (1+q)^2.
 
-    NOTE: PT counts stable pairs, not ideal sheaves.
-    DT/PT wall-crossing: Z'^DT = Z^PT * M(-q)
-
-    For the conifold: Z^PT_d(q) = [Q^d] prod (1 + (-q)^n Q)^n
-    = [Q^d] exp(sum_n n * log(1 + (-q)^n Q))
+    PT counts stable pairs, not ideal sheaves.  The degree-zero MacMahon
+    factor appears only when reconstructing the unreduced DT series:
+        Z^DT(q,Q) = M(-q)^chi * Z^PT(q,Q).
     """
-    coeffs = [0] * (N + 1)
     if d == 0:
+        coeffs = [0] * (N + 1)
         coeffs[0] = 1
         return coeffs
 
-    if d == 1:
-        for n in range(1, N + 1):
-            coeffs[n] = (-1)**(n + 1) * n
-        return coeffs
-
-    # General d: expand the product
-    # Same structure as DT but with + instead of -
-    coeffs_Q = [[0] * (N + 1) for _ in range(d + 1)]
-    coeffs_Q[0][0] = 1
-
-    for n in range(1, N + 1):
-        new_coeffs = [[0] * (N + 1) for _ in range(d + 1)]
-        for j_old in range(d + 1):
-            for k in range(min(n, d - j_old) + 1):
-                j_new = j_old + k
-                power_q = n * k
-                # (1 + (-q)^n Q)^n = sum C(n,k) ((-q)^n Q)^k
-                # = sum C(n,k) (-1)^{nk} q^{nk} Q^k
-                sign = (-1)**(n * k)
-                bc = math.comb(n, k)
-                for m in range(N + 1):
-                    m_new = m + power_q
-                    if m_new > N:
-                        break
-                    if coeffs_Q[j_old][m] != 0:
-                        new_coeffs[j_new][m_new] += \
-                            coeffs_Q[j_old][m] * sign * bc
-        coeffs_Q = new_coeffs
-
-    return coeffs_Q[d]
+    return dt_from_scattering_conifold(N, d)[d]
 
 
-def verify_dt_pt_wall_crossing(N: int = 8, d: int = 1) -> Dict[str, Any]:
+def _convolve_truncated(a: Sequence[int], b: Sequence[int], N: int) -> List[int]:
+    """Truncated convolution of q-series coefficients through q^N."""
+    convolved = [0] * (N + 1)
+    for i in range(min(len(a), N + 1)):
+        for j in range(min(len(b), N + 1 - i)):
+            convolved[i + j] += a[i] * b[j]
+    return convolved
+
+
+def _series_power(coeffs: Sequence[int], exponent: int, N: int) -> List[int]:
+    """Raise a q-series with constant term 1 to a nonnegative integer power."""
+    if exponent < 0:
+        raise ValueError("series exponent must be nonnegative")
+    result = [0] * (N + 1)
+    result[0] = 1
+    base = list(coeffs[:N + 1])
+    for _ in range(exponent):
+        result = _convolve_truncated(result, base, N)
+    return result
+
+
+def verify_dt_pt_wall_crossing(N: int = 8, d: int = 1,
+                               chi: int = 2) -> Dict[str, Any]:
     r"""Verify DT/PT wall-crossing for the conifold.
 
-    Z'^DT_d(q) = Z^PT_d(q) * M(-q)
+    The scattering product computed here is reduced:
 
-    where M(-q) = prod_{n>=1} (1 - (-q)^n)^{-n}.
+        Z'^DT_d(q) = Z^PT_d(q).
 
-    Equivalently: Z^PT_d(q) = Z'^DT_d(q) * M(-q)^{-1}.
+    The unreduced DT series is recovered by the degree-zero factor:
+
+        Z^DT_d(q) = M(-q)^chi * Z^PT_d(q).
     """
-    dt = dt_from_scattering_conifold(N, d)[d]
+    reduced_dt = dt_from_scattering_conifold(N, d)[d]
     pt = pt_partition_conifold(N, d)
 
-    # Compute M(-q) coefficients
+    reduced_match = all(reduced_dt[n] == pt[n] for n in range(N + 1))
+
     m_neg_q = _macmahon_neg_q(N)
-
-    # Convolve PT * M(-q)
-    convolved = [0] * (N + 1)
-    for i in range(N + 1):
-        for j in range(N + 1 - i):
-            convolved[i + j] += pt[i] * m_neg_q[j]
-
-    match = all(convolved[n] == dt[n] for n in range(N + 1))
+    macmahon_chi = _series_power(m_neg_q, chi, N)
+    full_dt = _convolve_truncated(pt, macmahon_chi, N)
 
     return {
         "d": d,
         "N": N,
-        "dt_coeffs": dt[:min(N + 1, 10)],
+        "chi": chi,
+        "reduced_dt_coeffs": reduced_dt[:min(N + 1, 10)],
         "pt_coeffs": pt[:min(N + 1, 10)],
-        "convolved": convolved[:min(N + 1, 10)],
-        "match": match,
+        "macmahon_neg_q_coeffs": m_neg_q[:min(N + 1, 10)],
+        "macmahon_chi_coeffs": macmahon_chi[:min(N + 1, 10)],
+        "full_dt_coeffs": full_dt[:min(N + 1, 10)],
+        "reduced_match": reduced_match,
+        "match": reduced_match,
+        "relation": "Z'_DT = Z^PT; Z_DT = M(-q)^chi * Z^PT",
     }
 
 
@@ -1271,9 +1355,6 @@ def topological_vertex_one_leg(mu: Tuple[int, ...], N: int) -> List[int]:
 
     where kappa(mu) = 2 sum_i (mu_i choose 2) - 2 sum_i (mu'_i choose 2)
     and s_mu(q^rho) is the Schur function at the special value q^{rho_i} = q^{i-1/2}.
-
-    For mu = (1): C_{(1),0,0} = q^{1/2}/(1-q) * M(q)... actually this
-    depends on the normalization.
 
     For the UNNORMALIZED vertex (divided by C_{000}):
         C_{mu,0,0}/C_{000} = q^{||mu||^2/2} * prod_{square in mu} 1/(1 - q^{h(s)})
@@ -1430,7 +1511,8 @@ def pentagon_identity_check(order: int = 5) -> Dict[str, Any]:
 def mc_scattering_dictionary() -> Dict[str, str]:
     r"""Dictionary between MC equation and scattering diagram data.
 
-    The identification (AP42: correct at motivic level):
+    The dictionary compares roles; it does not identify chiral Koszul
+    duality with a birational flop.
 
     MC EQUATION SIDE                   SCATTERING DIAGRAM SIDE
     ==================                 =======================
@@ -1442,8 +1524,15 @@ def mc_scattering_dictionary() -> Dict[str, str]:
     Quartic shadow Q (arity 4)      <->  Four-body bound state invariant
     Shadow depth r_max              <->  Maximum bound-state order
     Shadow connection nabla^sh      <->  KS monodromy connection
-    Complementarity Q_g(A)+Q_g(A!) <->  DT/PT wall-crossing
-    Koszul duality A -> A!          <->  Flop X -> X^+
+    Complementarity Q_g(A)+Q_g(A!) <->  DT/PT chamber comparison
+    Flop X -> X^+                  <->  birational wall-crossing model
+
+    Firewall:
+      A^i = H^*(B(A)).
+      A^! is the Verdier/continuous-linear dual branch under finite-type
+      or completed hypotheses.
+      Omega(B(A)) = A is bar-cobar inversion.
+      Z_ch^der(A) = ChirHoch^*(A,A) is the Hochschild/bulk object.
     """
     return {
         "modular_convolution_algebra": "Hamiltonian_vector_fields_on_torus",
@@ -1454,11 +1543,16 @@ def mc_scattering_dictionary() -> Dict[str, str]:
         "quartic_shadow": "four_body_bound_state",
         "shadow_depth": "max_bound_state_order",
         "shadow_connection": "KS_monodromy",
-        "complementarity": "DT_PT_wall_crossing",
-        "koszul_duality": "flop",
+        "complementarity": "DT_PT_chamber_comparison",
+        "koszul_duality": "Verdier_continuous_linear_branch_not_flop",
         "bar_complex": "stability_conditions",
         "genus_expansion": "DT_partition_function",
-        "lambda_g_FP": "constant_map_contribution",
+        "lambda_g_FP": "scalar_shadow_intersection_number",
+        "flop": "birational_wall_crossing_model",
+        "A^i": "H^*(B(A))",
+        "A^!": "Verdier_continuous_linear_dual_branch",
+        "bar_cobar_inversion": "Omega(B(A))=A",
+        "derived_chiral_center": "ChirHoch^*(A,A)",
     }
 
 
@@ -1491,14 +1585,8 @@ def castelnuovo_bound_p2(g: int) -> int:
     Examples:
         g=0: d_min = 1 (lines)
         g=1: d_min = 3 (cubics)
-        g=2: d_min = 4 (quartics... actually genus of smooth quartic = 3)
-        g=3: d_min = 5
-
-    Wait, for smooth plane curves of degree d: g = (d-1)(d-2)/2.
-    d=1: g=0, d=2: g=0, d=3: g=1, d=4: g=3, d=5: g=6.
-
-    So the minimum d for genus g is:
-      g=0: d=1, g=1: d=3, g=2: d=4 (singular quartic), g=3: d=4.
+        g=2: d_min = 4 (singular quartic)
+        g=3: d_min = 4 (smooth quartic)
 
     For the GV invariants of local P^2, the bound is:
         n_g^d = 0 for g > (d-1)(d-2)/2

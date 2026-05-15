@@ -561,11 +561,11 @@ class TestCrossEngineConsistency:
 
 
 # ===========================================================================
-# 11. Holographic datum (six-fold)
+# 11. Holographic datum (seven-entry package)
 # ===========================================================================
 
 class TestM5HolographicDatum:
-    """The six-fold holographic modular Koszul datum H(M5_N)."""
+    """The seven-entry holographic modular Koszul datum H(M5_N)."""
 
     def test_construction(self):
         D = make_m5_holographic_datum(3)
@@ -601,9 +601,46 @@ class TestM5HolographicDatum:
     def test_summary_dict_keys(self):
         D = make_m5_holographic_datum(3)
         s = D.summary()
-        for key in ["A", "A!", "kappa(A)", "kappa(A!)", "kappa+kappa!",
-                    "C (bulk)", "r(z)", "shadow_class", "nabla flat"]:
+        for key in [
+            "holographic_package",
+            "A",
+            "A^i",
+            "A^!",
+            "A!",
+            "kappa(A)",
+            "kappa(A^!)",
+            "kappa(A!)",
+            "kappa+kappa^!",
+            "kappa+kappa!",
+            "C",
+            "C (bulk)",
+            "r(z)",
+            "Theta_A",
+            "shadow_class",
+            "nabla^hol",
+            "nabla^hol flat",
+            "nabla flat",
+        ]:
             assert key in s
+
+    def test_summary_seven_entry_surface(self):
+        D = make_m5_holographic_datum(3)
+        s = D.summary()
+        assert s["holographic_package"] == "(A, A^i, A^!, C, r(z), Theta_A, nabla^hol)"
+        assert "B_ch" in s["A^i"]
+        assert "phantom" in s["A^!"]
+        assert "Z_ch^der" in s["C"]
+        assert "Theta_A" in s["Theta_A"]
+        assert "nabla^hol" in s["nabla^hol"]
+
+    def test_summary_legacy_aliases_still_match(self):
+        D = make_m5_holographic_datum(3)
+        s = D.summary()
+        assert s["A!"] == s["A^!"]
+        assert s["kappa(A!)"] == s["kappa(A^!)"]
+        assert s["kappa+kappa!"] == s["kappa+kappa^!"]
+        assert s["C (bulk)"] == s["C"]
+        assert s["nabla flat"] == s["nabla^hol flat"]
 
 
 # ===========================================================================

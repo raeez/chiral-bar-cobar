@@ -4,11 +4,11 @@ Verifies the full RT construction for U_q(sl_2) with fundamental representation:
   - R-matrix eigenvalues and skein relation
   - Quantum dimensions and their classical limits
   - Jones polynomial of unknot, trefoil, figure-eight, and torus knots
-  - Consistency at roots of unity q = exp(2*pi*i/(k+2)) for k=1,2,3,4
+  - Consistency at Jones roots q_J = exp(2*pi*i/(k+2)) for k=1,2,3,4
   - Cross-checks between RT computation and known closed-form polynomials
   - Writhe normalization and framing factor
   - 6j recoupling (F-matrix) properties
-  - KZ r-matrix data and kappa values
+  - Affine collision, KZ normalization, and kappa values
 
 Each hardcoded expected value is verified by 2+ independent paths:
   [DC] direct computation from eigenvalue formula
@@ -60,6 +60,18 @@ def assert_close(a, b, rtol=1e-10, msg=""):
 
 class TestQuantumIntegers:
     """Tests for quantum integers [n]_q and quantum dimensions."""
+
+    def test_level_parameter_split(self):
+        """q_from_level is the Jones variable q_J=q_QG^2."""
+        for k in [1, 2, 3, 4]:
+            q_qg = _eng.q_quantum_group_from_level(k)
+            q_j = _eng.q_from_level(k)
+            assert_close(q_j, q_qg ** 2, msg=f"q split at k={k}")
+
+    def test_q_from_level_critical_raises(self):
+        """KZ/DK q is undefined at the critical level k=-2."""
+        with pytest.raises(ValueError, match="critical level"):
+            _eng.q_from_level(-2)
 
     def test_quantum_integer_classical_limit(self):
         """[n]_q -> n as q -> 1.  [LC]"""
@@ -507,7 +519,7 @@ class TestWritheFraming:
 # =============================================================================
 
 class TestKZData:
-    """Tests for KZ r-matrix data and kappa values."""
+    """Tests for affine collision, KZ normalization, and kappa values."""
 
     def test_kz_kappa_sl2(self):
         """kappa(V_k(sl_2)) = 3(k+2)/4.
@@ -522,11 +534,48 @@ class TestKZData:
                 f"kappa at k={k_val}: got {kappa}, expected {expected}"
             )
 
-    def test_kz_ap126_check(self):
-        """AP126: r-matrix vanishes at k=0.  [DC]"""
+    def test_normalized_kz_keys_sl2(self):
+        """Normalized keys separate r_coll, r_KZ, q_QG, and q_J.  [DC, CF]"""
+        k_val = 3
+        h_vee = 2
+        shifted_level = k_val + h_vee
+        data = _eng.kz_r_matrix(k_val)
+        q_qg = _eng.q_quantum_group_from_level(k_val)
+        q_j = _eng.q_from_level(k_val)
+
+        assert data['level'] == k_val
+        assert data['shifted_level'] == shifted_level
+        assert data['collision_r_coefficient'] == k_val
+        assert data['r_coefficient'] == data['collision_r_coefficient']
+        assert_close(data['kz_r_coefficient'], 1 / shifted_level,
+                     msg="KZ coefficient")
+        assert_close(data['kz_trace_form_coefficient'],
+                     (2 * h_vee) / shifted_level,
+                     msg="KZ trace-form coefficient")
+        assert_close(data['q_quantum_group'], q_qg, msg="q_QG key")
+        assert_close(data['jones_q'], q_j, msg="q_J key")
+        assert_close(data['q'], q_j, msg="q compatibility alias")
+        assert_close(data['jones_q'], data['q_quantum_group'] ** 2,
+                     msg="q_J=q_QG^2")
+        assert abs(data['q_quantum_group'] - data['jones_q']) > 1e-3
+        assert data['convention'] == 'trace-form'
+        assert data['collision_formula'] == 'r_coll(z) = k*Omega_tr/z'
+        assert data['kz_formula'] == 'r_KZ(z) = Omega_KZ/((k+h_vee)*z)'
+        assert data['casimir_normalization'] == (
+            'Omega_KZ = 2*h_vee*Omega_tr'
+        )
+        assert data['yangian_spectral_parameter'] == 'not represented'
+
+    def test_collision_residue_ap126_check(self):
+        """AP126: r_coll(z)=k*Omega_tr/z vanishes at k=0.  [DC]"""
         data = _eng.kz_r_matrix(0)
-        # r(z) = k * Omega / z, so at k=0: r = 0
-        assert data['r_coefficient'] == 0
+        # The KZ kernel does not vanish here; only the collision residue does.
+        assert data['collision_r_coefficient'] == 0
+        assert data['r_coefficient'] == data['collision_r_coefficient']
+        assert_close(data['kz_r_coefficient'], 1 / 2,
+                     msg="KZ coefficient at k=0")
+        assert_close(data['kz_trace_form_coefficient'], 2.0,
+                     msg="KZ trace-form coefficient at k=0")
         assert data['ap126_check'] is True
 
     def test_kz_critical_level(self):
@@ -535,6 +584,13 @@ class TestKZData:
         """
         data = _eng.kz_r_matrix(-2)
         assert abs(data['kappa']) < 1e-12
+        assert data['shifted_level'] == 0
+        assert data['q_defined'] is False
+        assert data['q'] is None
+        assert data['jones_q'] is None
+        assert data['q_quantum_group'] is None
+        assert data['kz_r_coefficient'] is None
+        assert data['kz_trace_form_coefficient'] is None
 
     def test_kz_kappa_at_k0(self):
         """kappa(V_0(sl_2)) = dim(g)/2 = 3/2 (NOT zero).

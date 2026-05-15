@@ -2,11 +2,14 @@
 
 Ground truth from manuscript (beta_gamma.tex):
   OPE: beta_{(0)}gamma = 1 (simple pole only)
+  Closed collision: r_coll(beta gamma) = 0, r_coll(bc) = 0, m_0 = 0
   Bar diff: D(beta⊗gamma) = 1 (vacuum), D(gamma⊗beta) = -1
   D(beta⊗beta) = 0, D(gamma⊗gamma) = 0
   Chain type count: 2·3^{n-1}
+  Bare bar cohomology: Koszul-dual coalgebra, not acyclic
+  Twisted Koszul resolution: H^0 = C, H^n = 0 for n >= 1
   Koszul dual: (betagamma)^! = bc ghosts, (bc)^! = betagamma
-  Curvature: m_0 = 1 in beta-gamma channel
+  Class C: r_max = 4, S_3 = 0, S_4 = -5/12, S_r = 0 for r >= 5
 """
 
 import pytest
@@ -21,7 +24,12 @@ from compute.lib.betagamma_bar import (
     betagamma_bar_cohomology_dim,
     betagamma_koszul_dual,
     betagamma_is_koszul_acyclic,
+    betagamma_bare_bar_is_acyclic,
+    betagamma_twisted_koszul_resolution_is_acyclic,
     betagamma_curvature,
+    betagamma_closed_collision_residue,
+    bc_closed_collision_residue,
+    betagamma_class_c_shadow_data,
     bc_bar_diff_deg2,
     bc_coalgebra_type,
     bc_koszul_dual,
@@ -30,6 +38,7 @@ from compute.lib.betagamma_bar import (
     verify_bc_bar_diff,
     verify_chain_type_counts,
     verify_koszul_duality,
+    verify_closed_collision_vs_contact,
 )
 
 
@@ -138,18 +147,58 @@ class TestKoszulDuality:
         assert bc_koszul_dual() == "beta_gamma"
         assert betagamma_koszul_dual() == "bc_ghosts"
 
-    def test_acyclic(self):
+    def test_bare_bar_not_acyclic(self):
+        """The bare bar cohomology is the Koszul-dual coalgebra."""
+        assert betagamma_bare_bar_is_acyclic() is False
+        assert betagamma_bar_cohomology_dim(1) == 2
+        assert betagamma_bar_cohomology_dim(2) == 4
+
+    def test_twisted_resolution_acyclic(self):
+        """Acyclicity belongs to the twisted Koszul resolution."""
         assert betagamma_is_koszul_acyclic() is True
+        assert betagamma_twisted_koszul_resolution_is_acyclic() is True
 
 
 class TestCurvature:
-    def test_value(self):
+    def test_closed_genus0_curvature_zero(self):
+        curv = betagamma_curvature()
+        assert curv["m0"] == Rational(0)
+        assert curv["closed_collision_residue"] == Rational(0)
+
+    def test_closed_collision_residues_zero(self):
+        bg_closed = betagamma_closed_collision_residue()
+        bc_closed = bc_closed_collision_residue()
+        assert bg_closed["r_coll"] == Rational(0)
+        assert bg_closed["m0"] == Rational(0)
+        assert bc_closed["r_coll"] == Rational(0)
+        assert bc_closed["m0"] == Rational(0)
+
+    def test_simple_ope_residue_is_contact_data(self):
+        """beta_{(0)}gamma = 1 remains bar-contact data."""
+        curv = betagamma_curvature()
+        simple_ope = betagamma_nth_product("beta", "gamma", 0)["vac"]
+        assert simple_ope == Rational(1)
+        assert curv["simple_ope_residue"] == simple_ope
+        assert curv["bar_contact_residue"] == simple_ope
+        assert curv["simple_ope_residue"] != curv["m0"]
+
+    def test_legacy_beta_gamma_key_is_contact_data(self):
+        """The legacy beta_gamma key records beta_{(0)}gamma, not m_0."""
         curv = betagamma_curvature()
         assert curv["beta_gamma"] == Rational(1)
+        assert curv["beta_gamma"] == curv["bar_contact_residue"]
+        assert curv["beta_gamma"] != curv["m0"]
 
-    def test_matches_simple_pole(self):
-        """Curvature = OPE coefficient of beta_{(0)}gamma."""
-        assert betagamma_nth_product("beta", "gamma", 0)["vac"] == betagamma_curvature()["beta_gamma"]
+
+class TestClassCShadowData:
+    def test_standard_family_conventions(self):
+        class_c = betagamma_class_c_shadow_data()
+        assert class_c["shadow_class"] == "C"
+        assert class_c["depth"] == 4
+        assert class_c["S3"] == Rational(0)
+        assert class_c["S4"] == Rational(-5, 12)
+        assert class_c["tail_from_5"] == Rational(0)
+        assert class_c["closed_collision_residue"] == Rational(0)
 
 
 class TestBCGhosts:
@@ -189,4 +238,8 @@ class TestSelfConsistency:
 
     def test_koszul(self):
         for name, ok in verify_koszul_duality().items():
+            assert ok, f"Failed: {name}"
+
+    def test_closed_collision_vs_contact(self):
+        for name, ok in verify_closed_collision_vs_contact().items():
             assert ok, f"Failed: {name}"

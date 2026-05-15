@@ -1,4 +1,4 @@
-r"""Tests for BTZ 7-loop quantum gravity engine.
+r"""Tests for BTZ 7-loop finite shadow diagnostics.
 
 Tests organized by section:
   1.  Extended Faber-Pandharipande (lambda_6, lambda_7) — exact arithmetic
@@ -6,7 +6,7 @@ Tests organized by section:
   3.  Free energies F_6, F_7 (exact and numerical)
   4.  7-loop partition function and free energy sum
   5.  6-loop and 7-loop explicit entropy corrections
-  6.  Full 7-loop entropy expansion
+  6.  7-loop entropy diagnostic
   7.  Convergence analysis at 7 loops
   8.  Shadow growth rate verification
   9.  Borel transform analysis
@@ -19,6 +19,7 @@ Tests organized by section:
   16. Numerical precision diagnostics
   17. Cross-checks with base engine
   18. Multi-path verification synthesis
+  19. Certification and object firewalls
 """
 
 import pytest
@@ -64,6 +65,7 @@ from btz_7loop_engine import (
     precision_diagnostics,
     # Section 14
     full_7loop_report,
+    seven_loop_certification, object_firewall_status,
 )
 
 from btz_quantum_gravity_engine import (
@@ -117,7 +119,7 @@ class TestLambdaFP6:
         assert expected == LAMBDA_FP_6
 
     def test_positive(self):
-        """lambda_6^FP > 0 (AP22: all Bernoulli contributions are positive)."""
+        """lambda_6^FP > 0 from the positive Faber-Pandharipande value."""
         assert LAMBDA_FP_6 > 0
 
     def test_numerical_value(self):
@@ -390,7 +392,7 @@ class TestPartitionFunction7Loop:
 # =========================================================================
 
 class TestExplicit6Loop:
-    """First-ever 6-loop BTZ correction."""
+    """Scalar genus-6 BTZ correction diagnostic."""
 
     def test_F6_c24_positive(self):
         data = explicit_6loop_correction(24, 10)
@@ -418,13 +420,14 @@ class TestExplicit6Loop:
         assert isinstance(F6_exact, Fraction)
         assert F6_exact == Fraction(12) * LAMBDA_FP_6
 
-    def test_note_says_first(self):
+    def test_note_marks_scalar_lane(self):
         data = explicit_6loop_correction(24, 10)
-        assert 'first' in data['note'].lower()
+        assert 'scalar genus-6' in data['note'].lower()
+        assert not data['certification']['full_free_energy_certified']
 
 
 class TestExplicit7Loop:
-    """First-ever 7-loop BTZ correction."""
+    """Scalar genus-7 BTZ correction diagnostic."""
 
     def test_F7_c24_positive(self):
         data = explicit_7loop_correction(24, 10)
@@ -499,7 +502,7 @@ class TestEntropyCorrection7Loop:
 
 
 # =========================================================================
-# Section 6: Full 7-loop entropy expansion
+# Section 6: 7-loop entropy diagnostic
 # =========================================================================
 
 class TestFull7LoopEntropy:
@@ -514,6 +517,8 @@ class TestFull7LoopEntropy:
         assert 'S_total' in data
         assert 'F_table' in data
         assert 'convergent' in data
+        assert 'certification' in data
+        assert 'seven_loop_certification' in data
 
     def test_total_equals_sum(self):
         data = entropy_7loop_full(24, 10)
@@ -551,11 +556,13 @@ class TestFull7LoopEntropy:
 # =========================================================================
 
 class TestConvergenceAnalysis:
-    """Comprehensive convergence analysis at 7 loops."""
+    """Finite scalar convergence diagnostics at 7 loops."""
 
     def test_convergent_condition(self):
         data = convergence_analysis_7loop(24, 100)
         assert data['convergent']
+        assert data['scalar_bernoulli_convergent']
+        assert not data['full_virasoro_convergence_certified']
         assert data['epsilon_over_2pi'] < 1.0
 
     def test_decay_ratios_approach_prediction(self):
@@ -574,9 +581,10 @@ class TestConvergenceAnalysis:
             assert abs(sums[i]['term']) < abs(sums[i - 1]['term'])
 
     def test_tail_bound_small(self):
-        """Truncation error bound is very small for large S_BH."""
+        """Scalar tail estimate is very small for large S_BH."""
         data = convergence_analysis_7loop(24, 1000)
         assert data['tail_relative'] < 1e-20
+        assert not data['tail_bound_certified']
 
     def test_corrections_monotonically_decrease(self):
         """Entropy corrections decrease in absolute value for g >= 2."""
@@ -591,14 +599,14 @@ class TestConvergenceAnalysis:
 # =========================================================================
 
 class TestShadowGrowthRate:
-    """Verify lambda_{g+1}/lambda_g -> 1/(2*pi)^2."""
+    """Finite lambda-ratio checks against 1/(2*pi)^2."""
 
     def test_growth_verification_output(self):
         data = shadow_growth_verification(7)
         assert 'ratios' in data
         assert len(data['ratios']) == 6  # g=1..6
 
-    def test_converging_at_high_g(self):
+    def test_high_g_ratios_near_limit(self):
         data = shadow_growth_verification(7)
         assert data['converging']
 
@@ -621,7 +629,7 @@ class TestShadowGrowthRate:
 # =========================================================================
 
 class TestBorelTransform:
-    """Borel transform and singularity structure."""
+    """Truncated Borel coefficients and scalar pole diagnostics."""
 
     def test_borel_coefficients_scalar_all_positive(self):
         """Borel coefficients b_g = F_g/(2g-1)! all positive for scalar (Heisenberg).
@@ -651,17 +659,19 @@ class TestBorelTransform:
         assert abs(B - F1 * zeta) / abs(F1 * zeta) < 0.01
 
     def test_first_pole_location(self):
-        """First Borel singularity at zeta = 2*pi."""
+        """Scalar A-hat pole scale at hbar = 2*pi."""
         data = borel_singularity_analysis(24)
         assert abs(data['first_pole_hbar'] - TWO_PI) < 1e-12
+        assert not data['borel_summability_certified']
 
     def test_stokes_constant_proportional_to_kappa(self):
-        """S_1 = -4*pi^2*kappa."""
+        """Scalar Stokes normalization is proportional to kappa."""
         for c in [1, 13, 24, 26]:
             data = borel_singularity_analysis(c)
             kappa = float(kappa_virasoro(c))
             expected = -4.0 * PI ** 2 * kappa
             assert abs(data['stokes_1'] - expected) < 1e-10
+            assert data['stokes_1_status'] == 'scalar_meromorphic_normalization_only'
 
     def test_pole_residue_converges_to_1(self):
         """F_g * (2*pi)^{2g} / (2*kappa) -> 1 as g -> infinity."""
@@ -735,15 +745,19 @@ class TestLargeOrderRelation:
 # =========================================================================
 
 class TestMaloneyWittenComparison:
-    """Shadow tower vs Maloney-Witten."""
+    """Finite shadow diagnostic vs external Maloney-Witten input."""
 
-    def test_shadow_converges(self):
+    def test_scalar_shadow_radius_condition(self):
         data = maloney_witten_comparison(24, 100)
         assert data['shadow_converges']
+        assert data['shadow_convergence_certification'] == 'scalar_bernoulli_ahat'
 
-    def test_mw_diverges(self):
+    def test_mw_divergence_is_external_input(self):
         data = maloney_witten_comparison(24, 100)
         assert data['mw_diverges']
+        assert data['mw_divergence_source'] == 'external_maloney_witten_input'
+        assert not data['mw_divergence_certified_by_engine']
+        assert not data['closed_form_btz_partition_recovered']
 
     def test_truncation_error_small(self):
         """7-loop truncation error is small compared to the shadow sum."""
@@ -756,7 +770,7 @@ class TestMaloneyWittenComparison:
         assert data['mw_np_suppression'] < 1e-100
 
     def test_Z_shadow_close_to_closed_form(self):
-        """Shadow Z close to closed-form A-hat partition function.
+        """Shadow Z close to the scalar A-hat exponential.
 
         For Virasoro, planted-forest corrections at g=2,3 cause a small
         discrepancy with the scalar A-hat closed form.  For Heisenberg
@@ -795,7 +809,7 @@ class TestSpecialCharges7Loop:
         data = btz_c1_7loop(M=10)
         assert abs(data['kappa'] - 0.5) < 1e-12
 
-    def test_c13_self_dual(self):
+    def test_c13_kappa_fixed_point(self):
         """c=13: kappa = 13/2."""
         data = btz_c13_7loop(M=10)
         assert abs(data['kappa'] - 6.5) < 1e-12
@@ -936,7 +950,7 @@ class TestAreaCorrections:
 # =========================================================================
 
 class TestResurgence7Loop:
-    """Resurgence analysis from 7-loop data."""
+    """Scalar large-order diagnostics from 7-loop data."""
 
     def test_instanton_action(self):
         data = resurgence_from_7loop(24)
@@ -948,13 +962,15 @@ class TestResurgence7Loop:
         expected = -4.0 * PI ** 2 * 13.0
         assert abs(data['stokes_constant_1'] - expected) < 1e-8
 
-    def test_borel_summable(self):
+    def test_borel_summability_not_certified(self):
         data = resurgence_from_7loop(24)
-        assert data['borel_summable']
+        assert not data['borel_summable']
+        assert not data['borel_summability_certified']
 
-    def test_median_resummation(self):
+    def test_median_resummation_not_certified(self):
         data = resurgence_from_7loop(24)
-        assert data['median_resummation']
+        assert not data['median_resummation']
+        assert not data['median_resummation_certified']
 
     def test_action_estimates_converge(self):
         """Instanton action estimates from ratio test converge."""
@@ -1135,7 +1151,7 @@ class TestMultiPathSynthesis:
         assert abs(S7_bernoulli - S7_direct) / abs(S7_direct) < 1e-12
 
     def test_convergence_three_paths(self):
-        """Convergence verified by 3 paths.
+        """Scalar convergence diagnostics verified by 3 paths.
 
         Path 1: F_g decay rate < 1
         Path 2: A-hat radius condition |hbar| < 2*pi
@@ -1153,6 +1169,7 @@ class TestMultiPathSynthesis:
 
         # Path 3: tail bound
         assert data['tail_bound'] < 1e-15
+        assert not data['full_virasoro_convergence_certified']
 
     def test_complementarity_three_paths(self):
         """Complementarity F_g(c) + F_g(26-c) = 13*lambda_g at g=6,7.
@@ -1181,6 +1198,42 @@ class TestMultiPathSynthesis:
 
             assert abs(sum_direct - sum_kappa) < 1e-20
             assert abs(sum_linear - sum_kappa) < 1e-20
+
+
+# =========================================================================
+# Section 19: Certification and object firewalls
+# =========================================================================
+
+class TestCertificationFirewalls:
+    """Unsupported analytic claims stay outside the certified surface."""
+
+    def test_virasoro_certification_window(self):
+        cert = seven_loop_certification('virasoro')
+        assert cert['scalar_coefficients_certified_through_genus'] == 7
+        assert cert['full_free_energy_certified_through_genus'] == 3
+        assert cert['full_virasoro_convergence_radius'] is None
+        assert not cert['borel_status']['borel_summability_certified']
+        assert not cert['closed_form_btz_partition_certified']
+        assert not cert['analytic_tau_dependence_certified']
+
+    def test_genus_6_7_are_scalar_only_for_virasoro(self):
+        data = entropy_7loop_full(26, 10)
+        assert data['certification'][6]['certified_component'] == 'scalar_only_g6'
+        assert data['certification'][7]['certified_component'] == 'scalar_only_g7'
+        assert not data['certification'][6]['full_free_energy_certified']
+        assert not data['certification'][7]['full_free_energy_certified']
+
+    def test_heisenberg_scalar_lane_is_full_here(self):
+        cert = seven_loop_certification('heisenberg')
+        assert cert['full_free_energy_certified_through_genus'] == 7
+        assert cert['all_genus_planted_forest_certified']
+
+    def test_object_firewall(self):
+        firewall = object_firewall_status()
+        assert firewall['distinct_objects'] == ['A', 'B(A)', 'A^i', 'A^!', 'Z_ch^der(A)']
+        assert firewall['bar_cobar_inversion'] == 'Omega(B(A)) = A'
+        assert 'Verdier' in firewall['koszul_dual_branch']
+        assert 'Hochschild' in firewall['bulk_branch']
 
 
 # =========================================================================
@@ -1218,7 +1271,7 @@ class TestRobustness:
         assert abs(data['relative_correction']) < 1e-3
 
     def test_full_report_runs(self):
-        """Full 7-loop report runs without error."""
+        """7-loop report runs without error."""
         report = full_7loop_report(24, 10)
         assert 'entropy' in report
         assert 'convergence' in report

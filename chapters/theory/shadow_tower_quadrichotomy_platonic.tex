@@ -2,7 +2,7 @@
 % =====================================================================
 % Chapter: The Shadow Tower -- Quadrichotomy
 %
-% Master narrative anchored by the Quadrichotomy Theorem and the
+% Central theorem anchored by the Quadrichotomy Theorem and the
 % Riccati metric equation H_wt^2 = t^4 Q_c. The Riccati equation governs
 % the weighted metric coefficients; the manuscript shadow coefficients
 % are kept unhatted.
@@ -120,6 +120,32 @@ where $\Theta_{\cA}$ is the bar-intrinsic Maurer--Cartan element
 the line $L$ is fixed by context we write $S_r(\cA)$.
 \end{definition}
 
+\begin{remark}[Averaged shadows and ordered information]
+\label{rem:averaged-shadow-information-loss}
+The coefficients $S_r(\cA,L)$ live in the averaged modular
+convolution algebra
+$\mathfrak g^{\rm mod}_\cA$, not in the full ordered convolution
+algebra. They are the primary-line coordinates of
+\[
+\operatorname{av}(\Theta_\cA^{E_1})
+\in \mathfrak g^{\rm mod}_\cA,
+\qquad
+\operatorname{av}\colon
+B^{\mathrm{ord}}(\cA)=T^c(s^{-1}\bar\cA)
+\longrightarrow
+B^\Sigma(\cA)
+\]
+from the ordered bar complex to its $\Sigma_n$-coinvariant shadow
+(Equation~\ref{eq:bar-ordered-to-symmetric}). This map is a
+quasi-isomorphism on the relevant chain complexes in characteristic
+$0$, but it is not an isomorphism of coalgebras; its kernel contains
+ordered $R$-matrix, braiding, and Arnold-residue data
+(Theorem~\ref{thm:uc-kernel-archetypes}). Equality of shadow towers
+therefore means equality after averaging. It does not recover the
+ordered bar coalgebra, the ordered line-side Koszul dual, or the
+closed-sector derived centre.
+\end{remark}
+
 \begin{definition}[Weighted Riccati metric coefficients]
 \label{def:weighted-riccati-metric}
 Associated with a primary line $L$ is the weighted Riccati metric
@@ -226,6 +252,29 @@ A^{\rm wt}_r := \lim_{c\to\infty} c^{r-2}\,
 obeys $A^{\rm wt}_r = 8\,(-6)^{r-4}/r$.
 \end{proposition}
 
+\begin{proof}[Provenance]
+These are the canonical values of
+Proposition~\ref{prop:virasoro-shadow-canonical}. The normalisation is
+the Belavin--Polyakov--Zamolodchikov Virasoro OPE
+\[
+T(z)T(w)=\frac{c/2}{(z-w)^4}
+ +\frac{2T(w)}{(z-w)^2}
+ +\frac{\partial T(w)}{z-w}+\text{regular},
+\]
+so the quadratic and cubic entries are $S_2=c/2$ and $S_3=2$. At
+weight~$4$, orthogonalising ${:}TT{:}$ by
+$\Lambda={:}TT{:}-(3/10)\partial^2T$ gives the Gram entry
+$\langle\Lambda\mid\Lambda\rangle=c(5c+22)/10$; the quartic contact
+coefficient is its inverse, $S_4=10/[c(5c+22)]$. The quintic entry is
+the first non-trivial sewing contraction of the cubic vertex with this
+quartic contact in the Virasoro shadow recursion, equivalently the
+first BPZ/Zamolodchikov five-leg constraint in the standard
+normalisation; it gives $S_5=-48/[c^2(5c+22)]$ with the displayed
+sign. The primary literature is BPZ~\cite{BPZ84} for the Virasoro OPE
+normalisation and Zamolodchikov~\cite{Zamolodchikov1985} for the
+weight-$4$ quasi-primary normalisation.
+\end{proof}
+
 \begin{remark}[$S_4$ large-$c$ asymptotic]
 \label{rem:s4-large-c-ap178}
 Substituting $c = 100$ in the Virasoro $S_4$ closed form gives
@@ -244,14 +293,16 @@ the numerator $10 = 2 \cdot 5$.
 \begin{proposition}[$S_2$ as the curvature, $S_3$ as the cubic colour]
 \label{prop:s2-s3-roles}
 \ClaimStatusConditional
-On every primary line of every chirally Koszul vertex algebra of
-finite type, the leading two coefficients have the following
-intrinsic interpretation. The leading coefficient $S_2 = \kappa$ is
-the curvature of the Koszul complementarity pairing on $L$, the
-modular characteristic of the bar complex restricted to $L$. The
-cubic $S_3 = \alpha$ is the genus-zero $3$-collision residue of
-$\Theta_\cA$ on $L$, equivalently the Killing
-$3$-cocycle on $L^{\otimes 3}$ projected to $L$.
+On every computed standard-family primary line used in this chapter,
+the leading two coefficients have the following intrinsic
+interpretation. The leading coefficient $S_2 = \kappa$ is the curvature
+of the Koszul complementarity pairing on $L$, the modular
+characteristic of the bar complex restricted to $L$. The cubic
+$S_3 = \alpha$ is the genus-zero $3$-collision residue of
+$\Theta_\cA$ on $L$. For affine Kac--Moody it is the Killing
+$3$-cocycle projected to $L$; for Virasoro it is the coefficient
+$2$ in the $T(z)T(w)$ OPE; on the Heisenberg and standard contact
+witness lanes it vanishes.
 \end{proposition}
 
 \begin{proof}
@@ -260,9 +311,12 @@ bar-complex part: $\kappa$ measures the obstruction to flatness of
 the Koszul complementarity pairing on $L$ at the level of the
 $E_2$-page of the bar spectral sequence. The second is the genus-zero
 specialisation of the Getzler--Kapranov boundary at $b_1 = 0$: the
-$3$-input modular operad component is canonically the cubic Killing
-form of the chiral $L_\infty$-algebra
-$\mathfrak g^{\rm mod, (0)}_\cA|_L$ on $L$.
+$3$-input modular operad component is the cubic residue operation of
+the chiral $L_\infty$-algebra
+$\mathfrak g^{\rm mod, (0)}_\cA|_L$ on $L$. In the affine case this
+operation is the Killing cocycle; in the other listed families it is
+computed by the displayed OPE coefficient or by the parity/abelian
+vanishing stated above.
 \end{proof}
 
 \section{The Riccati master equation $H_{\rm wt}^{2} = t^{4}\,Q_c$}
@@ -382,19 +436,19 @@ entirely in the polynomial $Q_c$, which depends on three numbers.
 \section{The Quadrichotomy Theorem}
 \label{sec:quadrichotomy-theorem}
 
-The four classes G, L, C, M of the standard landscape partition the
-chirally Koszul vertex algebras of finite type by two complementary
-mechanisms: the algebraic factorisation type of the Riccati
-polynomial $Q_c$ on each $\kappa \neq 0$ primary line, and the
-separate standard conformal-weight contact witness
+The four classes G, L, C, M partition the computed conductor-domain
+rows by two complementary mechanisms: the algebraic factorisation type
+of the Riccati polynomial $Q_c$ on each $\kappa \neq 0$ primary line,
+and the separate standard conformal-weight contact witness
 $\beta\gamma_\lambda$ \textup{(}equivalently $bc_\lambda$\textup{)}
 for class~C.
 
-\begin{theorem}[Quadrichotomy of standard-landscape chirally Koszul vertex algebras]
+\begin{theorem}[Quadrichotomy of computed standard-landscape chirally Koszul rows]
 \label{thm:quadrichotomy}
 \ClaimStatusConditional
-Let $\cA$ be a chirally Koszul vertex algebra of finite type in the
-standard landscape, and let
+Let $\cA$ be one of the completed chirally Koszul standard-landscape
+rows whose shadow coefficients are computed in the conductor-domain
+census and in \S\ref{sec:per-family-witnesses}. Let
 $L^{(\mathbf q)} \subset \Defcyc^{\rm mod}(\cA)$ be a primary line of
 charge $\mathbf q$ with non-vanishing curvature
 $\kappa^{(\mathbf q)} := S_2(\cA|_{L^{(\mathbf q)}}) \neq 0$.
@@ -460,20 +514,21 @@ $d_{\mathrm{alg}}(\beta\gamma_\lambda) = 2$. The internal
 weight-changing line has zero shadow tower, while the T-line is
 class~M; neither one-dimensional slice is the class-C witness by
 itself.
-\item\label{quad:iv} \emph{(Aggregate class.)} Define
-$\mathrm{class}(\cA) := \max_{\mathbf q} r^{\rm wt}_{\max}
-(L^{(\mathbf q)})$ in the order $G < L < M$, and declare
+\item\label{quad:iv} \emph{(Aggregate class.)} Define the aggregate
+class by the supremum of the proved line-wise depths, with the depth
+values $2,3,\infty$ assigned to G, L, M, and declare
 $\mathrm{class}(\beta\gamma_\lambda) =
-\mathrm{class}(bc_\lambda) := C$. Every standard-landscape chirally
-Koszul vertex algebra of finite type belongs to exactly one of the
-four classes
+\mathrm{class}(bc_\lambda) := C$ for the standard contact family of
+depth~$4$. Every computed row in this conductor-domain list belongs to
+exactly one of the four classes
 \[
 G \;\sqcup\; L \;\sqcup\; C \;\sqcup\; M.
 \]
 \item\label{quad:v} \emph{(Quasi-isomorphism invariance.)}
-$\mathrm{class}(\cA) \in \{G, L, C, M\}$ is an invariant of the
-quasi-isomorphism class of the bar complex $B(\cA)$, hence of the
-chirally Koszul derived category $D^{b}_{\rm ch}(\cA)$.
+$\mathrm{class}(\cA) \in \{G, L, C, M\}$ is preserved by filtered bar
+quasi-isomorphisms that identify the averaged Maurer--Cartan element
+and the listed primary-line projections. No converse reconstruction of
+the ordered bar data is asserted.
 \end{enumerate}
 \end{theorem}
 
@@ -504,20 +559,52 @@ conformal-weight family $\beta\gamma_\lambda$
 \textup{(}equivalently $bc_\lambda$\textup{)} has
 $S_2 = 6\lambda^2 - 6\lambda + 1$, $S_3 = 0$, $S_4 = -5/12$, and
 no higher shadows, while its internal one-dimensional slices do not
-realize class~C.
+realize class~C. If the displayed triple were inserted into the
+one-line Riccati equation on a $\kappa\ne0$ slice, the non-zero
+quartic would give $\Delta\ne0$ and hence an infinite square-root
+tail. The equality $S_r=0$ for $r\ge5$ is therefore not a
+line-wise Riccati factorisation; it is the stratum-separation
+identity of the standard contact family.
 
-Part \ref{quad:iv} is the aggregate classification over the standard
-families.
+Part \ref{quad:iv} is the finite row-by-row classification in
+\S\ref{sec:per-family-witnesses} and in the conductor-domain census:
+Heisenberg and lattice rows give G, affine Kac--Moody away from
+critical level gives L, the
+standard $\beta\gamma_\lambda/bc_\lambda$ conformal-weight family gives
+C, and the Virasoro/principal-$\cW$/Bershadsky--Polyakov stress-tensor
+rows give M at generic non-degenerate parameters. For principal
+$\cW_N$ this aggregate M-placement is already forced by the
+Virasoro $T$-line; non-$T$ spin lanes require their own OPE-seed
+calculation, with the $\cW_3$ $W$-line checked separately.
 
 Part \ref{quad:v}: the line-wise G/L/M class is characterised by the
 algebraic structure of $Q^{(\mathbf q)}$, hence by the three
 homotopy-invariant genus-zero data
 $(\kappa^{(\mathbf q)},\alpha^{(\mathbf q)},S_4^{(\mathbf q)})$ of
 $\mathfrak g^{\rm mod,(0)}_{\cA}|_{L^{(\mathbf q)}}$. The aggregate
-class is therefore invariant under bar quasi-isomorphism. For the
-class-C family, the displayed standard-family coefficients are the
-homotopy-invariant quartic-contact data.
+class is therefore invariant under filtered bar quasi-isomorphisms
+that preserve this averaged primary-line projection. For the class-C
+family, the displayed standard-family coefficients are the
+homotopy-invariant quartic-contact data. Remark~\ref{rem:averaged-shadow-information-loss}
+records why this invariant is strictly weaker than the ordered bar
+package.
 \end{proof}
+
+\begin{remark}[Shadow class is not Koszul duality or bulk]
+\label{rem:shadow-class-not-duality-bulk}
+The class $G/L/C/M$ is a scalar invariant of the averaged
+Maurer--Cartan shadow. It is not the Koszul dual algebra $\cA^!$, not
+the bar--cobar inversion statement $\Omega B(\cA)\simeq\cA$, and not
+the closed-sector object
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$. The five objects
+\[
+\cA,\qquad B(\cA),\qquad \cA^i,\qquad \cA^!,\qquad
+Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
+\]
+remain distinct. Two algebras may have the same averaged shadow class
+while carrying different ordered $R$-matrices, different Verdier
+Koszul duals, or different derived centres.
+\end{remark}
 
 \begin{proposition}[Riccati signature stratification]
 \label{prop:moduli-stratification-codim}
@@ -571,7 +658,7 @@ one-dimensional slice is the class-C witness by itself.
 
 \begin{remark}[G/L/C/M is not a $2 \times 2$ Boolean grid]
 \label{rem:quadrichotomy-stratification-not-boolean}
-The four classes are not a post hoc relabelling of a
+The four classes are not a relabelling of a
 $2 \times 2$ Boolean product
 $(\alpha = 0\,/\,\alpha \ne 0) \times
  (\Delta = 0\,/\,\Delta \ne 0)$: on the principal line the three
@@ -587,42 +674,34 @@ $2^2$ but $3 + 1$, with the ``$+1$'' measuring a genuinely new piece
 of data orthogonal to the principal Riccati signature.
 \end{remark}
 
-\begin{remark}[Completeness over the standard landscape and silent
-families]
+\begin{remark}[Computed conductor domain and unplaced families]
 \label{rem:quadrichotomy-completeness-scope}
-Theorem~\ref{thm:quadrichotomy}\ref{quad:iii} places every chirally
-Koszul vertex algebra of finite type in exactly one of
+Theorem~\ref{thm:quadrichotomy}\ref{quad:iv} places the computed
+conductor-domain rows in exactly one of
 $G \sqcup L \sqcup C \sqcup M$. The proved per-family witnesses of
 \S\ref{sec:per-family-witnesses} cover Heisenberg $\Heis_k$ (G),
 affine Kac--Moody $V_k(\fg)$ for $k \ne -\hv$ and $\fg$ simple (L),
-$\beta\gamma$ (C), Virasoro $\Vir_c$, principal $\cW_N$, and
-Bershadsky--Polyakov $\BP_k$ (all M), and lattice VOAs $V_\Lambda$
-(G). Families not individually placed here inherit a predicted class
-from their principal-line Riccati and require per-family
-verification: cosets such as
-$SU(N)_k \times SU(N)_1 / SU(N)_{k+1}$ (class M expected via
-reduction to principal $\cW_N$); $N = 2$ superconformal algebras
-(class M expected on the Virasoro subalgebra line); admissible
+$\beta\gamma$ (C), Virasoro $\Vir_c$, principal $\cW_N$ by its
+$T$-line, and Bershadsky--Polyakov $\BP_k$ (all M at generic
+parameters), and lattice VOAs $V_\Lambda$ (G). This is not a theorem
+about all VOAs, all cosets, or all $\cW$-algebras. Families not
+individually placed here carry per-family proof obligations: cosets such as
+$SU(N)_k \times SU(N)_1 / SU(N)_{k+1}$ (candidate M via reduction to
+principal $\cW_N$); $N = 2$ superconformal algebras (candidate M on the
+Virasoro subalgebra line); admissible
 affine $V_k(\fg)$ at fractional level $k + \hv = p/q$ (class L on
 the generic locus, with periodic-CDG refinements on admissible
 strata); Monster $V^\natural$ (class M on its stress-tensor line via
 the contained Virasoro); and the logarithmic triplet $\cW(p)$, which
 is M-typical at the Riccati level but whose tempering is
-\textsc{Conjectured} rather than proved (\S\ref{sec:open-frontier}). The theorem is stated
-at generic parameters; boundary loci (e.g.\ critical level
+\textsc{Conjectured} rather than proved (\S\ref{sec:open-frontier}).
+The theorem is stated at generic parameters; boundary loci (e.g.\
+critical level
 $k = -\hv$ for affine KM, Lee--Yang $c = -22/5$ for Virasoro) are
 discriminantal and carry their own stratum labels
 (Propositions~\ref{prop:lee-yang-phase}
 and~\ref{prop:double-root-phase}, and the critical-level jump
 Proposition of Chapter~\ref{ch:ordered-associative-chiral-kd}).
-\end{remark}
-
-\begin{remark}[Canonical name: \emph{quadrichotomy}]
-\label{rem:quadrichotomy-canonical-name}
-The canonical name of the partition into $G \sqcup L \sqcup C \sqcup
-M$ is \emph{quadrichotomy} (from Latin \emph{quadri-} + Greek
-\emph{-tom\=e}, a cutting into four). The label
-\texttt{thm:quadrichotomy} is canonical throughout the three volumes.
 \end{remark}
 
 \section{Class M as a Riemann surface}
@@ -1440,9 +1519,45 @@ Modular characteristic $\kappa(V_k(\fg)) = \dim(\fg)\,(k + \hv) /
 (structure-constant $3$-cocycle). Quartic $S_4 = 0$; discriminant
 $\Delta = 0$. The Riccati polynomial is a perfect square with linear
 remainder: $Q_c = (2\kappa + 3 t)^{2}$. Shadow tower terminates at
-$r = 3$: $H_{\rm wt}(t) = t^{2}(2\kappa + 3 t)$. Critical level $k = -\hv$
-excluded by the Sugawara-degeneration caveat of Theorem C3
-(landscape census, kappa vanishes at $k = -\hv$).
+$r = 3$: $H_{\rm wt}(t) = t^{2}(2\kappa + 3 t)$. The hypothesis
+$k\ne-\hv$ is structural: the Riccati chart uses the propagator
+$1/\kappa$, and $\kappa$ vanishes at critical level.
+
+\begin{proposition}[Critical Feigin--Frenkel companion]
+\label{prop:critical-ff-companion-shadow}
+\ClaimStatusProvedElsewhere
+At the critical affine level $k=-\hv$ for $V_k(\fg)$, $\fg$ simple,
+the row is not class L and not class G. The shifted bar curvature
+\[
+\kappa^{\mathrm{KM}}(V_k(\fg))
+=\frac{(k+\hv)\dim\fg}{2\hv}
+\]
+vanishes, so the line-wise Riccati metric used in
+Theorem~\ref{thm:quadrichotomy} is undefined. The trace-form current
+OPE still has the non-zero double pole
+\[
+J^a(z)J^b(w)\sim
+\frac{-\hv(J^a,J^b)}{(z-w)^2}
++\frac{f^{ab}{}_{c}J^c(w)}{z-w},
+\]
+and the Feigin--Frenkel centre jumps to functions on
+${}^L\fg$-opers. Thus the critical level is a separate boundary
+stratum of the affine row, not a depth-$2$ collapse of the averaged
+shadow tower.
+\end{proposition}
+
+\begin{proof}
+The curvature formula and the non-vanishing trace-form OPE are
+Proposition~\ref{prop:km-critical-separation}. The jump of the centre
+is the Feigin--Frenkel centre theorem
+Theorem~\ref{thm:ff-center}. For $\fg=\mathfrak{sl}_2$, the ordered
+bar companion is computed in
+Proposition~\ref{prop:critical-level-ordered}: at $k=-2$ the
+monodromy trivialises, Koszul concentration fails, and the oper
+de~Rham algebra survives in bar cohomology. Each statement lies on
+the $\kappa=0$ boundary, outside the Riccati chart
+$\kappa\ne0$.
+\end{proof}
 
 \paragraph{$\beta\gamma$ ghost system (class C).}
 The class-C witness is the standard conformal-weight family
@@ -1475,6 +1590,18 @@ Proposition~\ref{prop:w3-Wline-twelve}). Both lanes are class M;
 the spectral curves $\Sigma_c^{(T)}$ and $\Sigma_c^{(W)}$ are
 distinct, with distinct branch-root loci.
 
+\paragraph{Principal $\cW_N$ at generic central charge (aggregate class M).}
+The stress-tensor line is Virasoro, hence has
+$S_3=2$, $S_4=10/[c(5c+22)]$, and infinite Riccati depth whenever
+$c(5c+22)\ne0$. Therefore the aggregate row is class M for every
+principal $\cW_N$ containing this non-degenerate $T$-line. The
+additional spin-$s$ lanes are not inferred from the $T$-line:
+$\beta_N=12(H_N-1)$ records the per-spin tempering rate, while the
+individual non-$T$ shadow towers require OPE-seed computations. The
+$\cW_3$ $W$-line is the checked second lane; for $N\ge4$ the
+non-$T$ spin-lane constants remain proof obligations unless computed
+separately.
+
 \paragraph{Bershadsky--Polyakov $\BP_k$ (class M).}
 Convention-dependent central-charge formula. In the Arakawa
 convention $c(\BP_k) = 2 - 24 (k + 1)^{2}/(k + 3)$, the Koszul
@@ -1496,7 +1623,7 @@ Modular characteristic $\kappa(V_\Lambda) = \mathrm{rank}(\Lambda)$
 $\kappa = 24$ blind to the root system. Cubic $\alpha = 0$; quartic
 $S_4 = 0$; discriminant $\Delta = 0$. Class G uniformly.
 
-\section{Open frontier}
+\section{Remaining proof obligations}
 \label{sec:open-frontier}
 
 Two proof obligations remain outside the proved core.
@@ -1530,7 +1657,7 @@ direct-sum statement is a genuine failure surface; moving to the
 weight-completed category requires the Milnor / Mittag-Leffler and
 ambient-comparison hypotheses.
 
-\section{The single Platonic display}
+\section{Riccati identity}
 \label{sec:platonic-display}
 
 The load-bearing identity is the Riccati metric equation. The classes
@@ -1552,7 +1679,7 @@ Q_c(t) \;=\; (2\kappa + 3\alpha\,t)^{2} \;+\; 2\,(8\,\kappa\,S_4)\,t^{2}.
 \;}
 \end{equation}
 
-\begin{summary}[The chapter in one paragraph]
+\begin{summary}[Riccati metric and conductor-domain classes]
 \label{sum:chapter-one-paragraph}
 The weighted Riccati metric attached to the shadow tower
 $\{S_r(\cA)\}_{r \ge 2}$ on a primary line $L$ of a chirally Koszul
@@ -1584,15 +1711,16 @@ $|t_\pm|(c)=c/6-1/27+O(c^{-1})$, and the per-spin tempering rate
 $\beta_N = 12 (H_N - 1)$ on principal $\cW_N$.
 \end{summary}
 
-\section{Synthesis}
+\section{Borcherds--K3 Virasoro face}
 \label{sec:stqp-supplement}
 
-\begin{remark}[Class-$\mathcal M$ Virasoro face as the shadow-tower quadrichotomy apex]
+\begin{remark}[Mathieu Virasoro face over the class-$\mathsf M$ stratum]
 \label{rem:stqp-1}
-The shadow-tower quadrichotomy -- Mathieu class $\mathcal M$ vs Conway
-class $\mathcal C$ vs umbral class $\mathcal U$ vs moonshine class $\mathcal S$ --
-meets at the K3 base point through the class-$\mathcal M$ Virasoro face,
-with computed shadow entries
+The K3 moonshine faces -- Mathieu $\mathcal M$, Conway $\mathcal C$,
+umbral $\mathcal U$, and moonshine $\mathcal S$ -- are refinements
+inside the Virasoro class-$\mathsf M$ stratum, not additional
+G/L/C/M classes. They meet at the K3 base point through the Mathieu
+Virasoro face, with computed shadow entries
 $m_5 = -80/9$, $m_7 = -24320/81$, $m_8 = 33157760/19683$
 and $G_5^{\mathrm{conn}} = 775/5184$ (from direct computation). The
 class-$\mathcal S$ face $c_{2d} = -214$ sits below, with umbral-moonshine
@@ -1604,14 +1732,17 @@ anchor is Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
 
 \begin{remark}[$\mathbf H_{\Delta_5}$ as unified apex of the four shadow faces]
 \label{rem:stqp-2}
-The fourth taxon $\mathbf H_{\Delta_5}$ is the unified apex of the
-four shadow faces: (i) Mathieu $\mathcal M_{24}$-twined trace gives the
-Igusa $\Delta_5$ as frame shape (conjectural at $d=2$; see Vol.~III
-mock modular theorem); (ii) Conway $\mathcal C$ shadow via $II_{1,1}\oplus II_{8}\oplus II_{8}\oplus II_{8}$
-Leech embedding; (iii) umbral $\mathcal U$ shadow via $\widetilde M_{24}$-lift
-obstruction; (iv) $\mathcal S$-class shadow via class-$\mathcal S$ $A_1$
-on $\Sigma_{0,24}$ with $c_{2d} = -214$. The shadow-tower $m_k$
-coefficients encode the $A_\infty$ coproduct corrections
+The Borcherds--K3 object $\mathbf H_{\Delta_5}$ is the unified apex
+of the four moonshine faces: (i) Mathieu $\mathcal M_{24}$-twined
+trace gives the Igusa $\Delta_5$ as frame shape (conjectural at
+$d=2$; see Vol.~III mock modular theorem); (ii) Conway $\mathcal C$
+shadow via $II_{1,1}\oplus II_{8}\oplus II_{8}\oplus II_{8}$ Leech
+embedding; (iii) umbral $\mathcal U$ shadow via
+$\widetilde M_{24}$-lift obstruction; (iv) class-$\mathcal S$
+$A_1$ on $\Sigma_{0,24}$ with $c_{2d} = -214$. These faces refine the
+same Virasoro class-$\mathsf M$ stress-tensor line. They do not add a
+fifth G/L/C/M class. The shadow-tower $m_k$ coefficients encode the
+$A_\infty$ coproduct corrections
 \cite{ConwaySloane1988,ChengDuncanHarvey2014,Gaiotto2009}. The
 Vol.~III anchor is Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
 \end{remark}
@@ -1833,20 +1964,26 @@ class-$\mathrm M$ Riccati criterion of
 Section~\ref{sec:class-M-Riemann-surface}: the K3 BKM chiral
 stress-tensor line has
 $(\kappa, \alpha, S_4) = (-107, 2, 5/112\,136)$ with discriminant
-$\Delta_{\mathrm{Ricc}} = 8\kappa S_4 = -10/131 \neq 0$, so $Q_c$
-is irreducible and $r_{\max} = \infty$. The hyperelliptic spectral
-surface $\Sigma_{c = -214} = \{y^2 = Q_{-214}(t)\}$ has smooth
-branch structure away from $t = 0$ and
-$t = -2\kappa/(3\alpha) = 107/3$, governed by Picard--Fuchs as in
-Theorem~\ref{thm:picard-fuchs-shadow}. Hence the K3 chiral
+$\Delta_{\mathrm{Ricc}} = 8\kappa S_4 = -5/131 \neq 0$, so $Q_c$
+is irreducible and $r_{\max} = \infty$. Here
+\[
+Q_{-214}(t)=(-214+6t)^2-\frac{10}{131}t^2,
+\qquad
+t_\pm=\frac{214}{6\mp\sqrt{10/131}}.
+\]
+Thus $\Sigma_{c = -214}=\{y^2=Q_{-214}(t)\}$ is smooth on the
+Riccati chart and has the two displayed branch points; it does not
+branch at $t=0$ or at the leading double-root approximation
+$107/3$. Picard--Fuchs is governed by
+Theorem~\ref{thm:spectral-hyperelliptic-pf}. Hence the K3 chiral
 bialgebra $\mathbf H_{\Delta_5}$ is class~$\mathrm M$
 (Virasoro archetype with $r_{\max} = \infty$) on its stress-tensor
 line; it is not class~$\mathrm G$ (lattice VOAs have
 $\alpha = S_4 = 0$, Section~\ref{sec:class-M-Riemann-surface}
-contrasting paragraph on lattice VOAs). The fourth taxon
+contrasting paragraph on lattice VOAs). The object
 $\mathbf H_{\Delta_5}$ of Remark~\ref{rem:stqp-2} is a
 class-$\mathrm M$ object refined by $M_{24}$-umbral shadow and
-Kuga--Satake geometry rather than a fifth class. The class-$\mathrm M$
+Kuga--Satake geometry, not a fifth class. The class-$\mathrm M$
 conclusion uses only the generic class-$\mathrm M$ conditions at
 $c=-214$: nonvanishing $5c + 22$, nonvanishing $S_4$, and
 irreducible $Q_c$. The depth-$\infty$ tower is a topological
@@ -1921,7 +2058,8 @@ Conway--Sloane 1988 Ch.~10 (Niemeier-lattice decomposition of
 $II_{2,1}\oplus II_8^{\oplus 3}$).
 \end{remark}
 
-\section{unitarity on the Koszul locus $\overline{\mathcal A_2}\setminus(H_1\cup H_4)$}
+\section{Real-root unitarity on the Koszul locus
+$\overline{\mathcal A_2}\setminus(H_1\cup H_4)$}
 \label{sec:stqp-unitarity}
 
 The BKM analysis sharpens the earlier scope
@@ -2162,40 +2300,49 @@ Gritsenko--Nikulin $h_{\min} = -2$ polar data: $-166$ is a
 data, not an independent input.
 \end{remark}
 
-\begin{proposition}[Fricke-fixed unitary sub-MTC and $\mathbb Z/2$-grading; \ClaimStatusProvedElsewhere]
+\begin{proposition}[Fricke-fixed semisimple block and $\mathbb Z/2$-grading; \ClaimStatusConditional]
 \label{prop:stqp-fricke-mtc}
 \index{Fricke involution!modular tensor category fixed points}
 \index{Z/2 grading@$\mathbb Z/2$-grading!unitary sub-MTC}
-The $\mathbb Z/2$-Fricke involution on the Gritsenko--Nikulin
+Assume that the K3 BKM category admits the semisimple Fricke quotient
+\[
+\mathcal C^{\mathrm{ss}}_{\Delta_5}
+\]
+used for the Vol.~II modular-bootstrap comparison, and write
+$\mathrm{MTC}(\mathbf H_{\Delta_5})$ for this quotient. The
+$\mathbb Z/2$-Fricke involution on the Gritsenko--Nikulin
 paramodular weight-$5$ form $\Delta_5$
 (Gritsenko--Nikulin 1998 \S 4; see also
 \texttt{ordered\_associative\_chiral\_kd.tex:8422, 8828} and
 \texttt{arithmetic\_shadows.tex:12761} for Fricke discipline in
-this manuscript) descends to the modular tensor category
+this manuscript) descends to
 $\mathrm{MTC}(\mathbf H_{\Delta_5})$ as a $\mathbb Z/2$-graded
-automorphism $\sigma_{\mathrm{Fricke}}$ whose fixed-point
-sub-MTC $\mathrm{MTC}^{\sigma}$ is precisely the unitary
-submodule of Proposition~\ref{prop:stqp-unitary-spectrum}.
+automorphism $\sigma_{\mathrm{Fricke}}$. Its fixed block is the
+image of the real-root positive-energy sector of
+Proposition~\ref{prop:stqp-unitary-spectrum}; the proposition does
+not assert that the whole indefinite BKM module is a modular tensor
+category.
 Concretely:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item $\sigma_{\mathrm{Fricke}}$ permutes simple objects of
 $\mathrm{MTC}(\mathbf H_{\Delta_5})$ as the Atkin--Lehner
 $w_5$ on the paramodular level; on the character lattice,
 $\sigma_{\mathrm{Fricke}}$ acts by $\lambda \mapsto \lambda^*$
-with $\lambda + \lambda^* = 0$ modulo the BKM Weyl group $W$.
-\item The fixed-point sub-MTC $\mathrm{MTC}^{\sigma}$ coincides
-with the unitary positive-energy submodule of
+with $\lambda + \lambda^* = 0$ modulo the BKM Weyl group $W$ on
+the semisimple quotient.
+\item The fixed block $\mathrm{MTC}^{\sigma}$ is the quotient-image
+of the unitary positive-energy submodule of
 Corollary~\ref{cor:stqp-real-imag-dichotomy}: for
 $V^\lambda$ unitary, the Fricke image $V^{\lambda^*}$ is dual
 to $V^\lambda$ via the BKM inner product, and the fixed-point
 condition $\sigma(\lambda) = \lambda$ forces
 $(\lambda, \lambda) > 0$ (spacelike, real-root sector).
-\item The $\mathbb Z/2$-grading on the full MTC splits
+\item The $\mathbb Z/2$-grading on the semisimple quotient splits
 $\mathrm{MTC}(\mathbf H_{\Delta_5}) = \mathrm{MTC}^{\sigma}
 \oplus\mathrm{MTC}^{-\sigma}$, and Fricke-fixed unitary
 representations are projectively self-dual (self-$S$-dual up
 to a sign; Fricke $S$-matrix, Section~\ref{sec:stqp-supplement}
-ff. on the Fricke data).
+on the Fricke data).
 \end{enumerate}
 \end{proposition}
 
@@ -2211,7 +2358,7 @@ the modular tensor category is the Bruinier--Funke 2002
 Heegner-divisor reciprocity (Bruinier 2002 Proposition~5.1;
 cf.\ entanglement chapter Remark~\ref{rem:ent-cthird-K3}
 on the universal identity $\hbar^2 K^{\kappa_{\mathrm{ch}}} = -1$).
-Projective self-duality (rather than full self-duality) appears
+Projective self-duality, rather than full self-duality, appears
 because the paramodular level~$5$ is not the maximal paramodular
 (which would be level~$1$); the $\mathbb Z/2$-grading is genuine
 rather than $\mathbb Z/1$-trivial, reflecting the obstruction
@@ -2221,7 +2368,7 @@ Cheng--Duncan--Harvey 2014 \S 5 for the $M_{24}$-umbral
 refinement of the Fricke grading.
 \end{remark}
 
-\begin{remark}[Synthesis of the BKM hyperbolic structure]
+\begin{remark}[BKM hyperbolic structure]
 \label{rem:stqp-synthesis}
 The BKM analysis sharpens the earlier scope by three concrete
 statements: (a) the hyperbolic Cartan of $\mathfrak g_{\Delta_5}$
@@ -2248,12 +2395,10 @@ sector. The Koszul-locus restriction is therefore essential,
 not cosmetic.
 \end{remark}
 
-\section{Fricke-phase $\theta_p$
-asymptotics on 22 primes $p \le 79$}
+\section{Fricke-phase $\theta_p$ statistics on 22 primes $p \le 79$}
 \label{sec:stqp-supplement-iii}
 
-\begin{proposition}[Fricke-phase clustering
-of Satake angles on the 22 primes $p \le 79$]
+\begin{proposition}[Observed Fricke-node counts for the 22 primes $p \le 79$]
 \ClaimStatusProvedHere
 \label{prop:stqp-theta-p-clustering}
 \index{Fricke involution!Satake angle clustering}%
@@ -2265,19 +2410,20 @@ eigenform in $S_{16}(\mathrm{SL}_2(\mathbb Z))$ (LMFDB
 Satake parameter of the cuspidal local component
 $\phi_{\Delta_{E_6}, p}$, and let
 $\theta_p = \arccos\bigl(a_p(\Delta_{E_6}) / (2 p^{15/2})\bigr)
-\in [0, \pi]$. For the $22$ primes $p \le 79$ (the range
-Beilinson-verified on the K3 chiral bialgebra
-$\mathbf H_{\Delta_5}$ in Vol.~I
+\in [0, \pi]$. For the $22$ primes $p \le 79$ tabulated on the K3
+chiral bialgebra $\mathbf H_{\Delta_5}$ in Vol.~I
 Prop.~\ref{prop:cclimax-SK-spinor} and the
 Satake--Casimir tabulation
 Rem.~\ref{rem:cclimax-satake-casimir-ii}), assign each
 $\theta_p$ to the nearest Fricke-node angle
 $\theta^*_k = k\pi/8$ for $k = 0, \ldots, 8$. Then the observed
-cluster counts $N_k = \#\{p \le 79 : |\theta_p - \theta^*_k|
-< \pi/16\}$ agree with the Sato--Tate expectation
-$\mathbb E[N_k]_{\mathrm{ST}} = 22 \int_{(k-1/2)\pi/8}^{(k+1/2)\pi/8}
-(2/\pi)\sin^2(\theta)\,\mathrm d\theta$ within the small-sample
-binomial error:
+cluster counts
+\[
+N_k = \#\{p \le 79 : \theta_p \in I_k\},\qquad
+I_k=\bigl[\max(0,(k-\tfrac12)\pi/8),
+\min(\pi,(k+\tfrac12)\pi/8)\bigr],
+\]
+are
 \[
 \begin{array}{r|ccccccccc}
 k & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
@@ -2287,11 +2433,22 @@ N_k^{\mathrm{obs}} & 0 & 0 & 4 & 6 & 5 & 6 & 0 & 1 & 0 \\
  & 4.64 & 2.75 & 0.86 & 0.04
 \end{array}
 \]
-The $\chi^2$ statistic $\chi^2 = \sum_k (N_k^{\mathrm{obs}} -
-\mathbb E[N_k])^2/\mathbb E[N_k]$ for the central bins
-$k \in \{2, 3, 4, 5\}$ (total expected $= 17.46$) equals
-$\chi^2_{\mathrm{central}} = 1.07$ on $3$ d.o.f., a p-value
-$\simeq 0.78$: consistent with Sato--Tate at the $1\sigma$ level.
+where the expectation row is
+$\mathbb E[N_k]_{\mathrm{ST}} =
+22 \int_{I_k}(2/\pi)\sin^2(\theta)\,\mathrm d\theta$. The
+central-bin Pearson statistic over
+$k \in \{2,3,4,5\}$ is
+\[
+\chi^2_{\mathrm{central}}
+ =
+\sum_{k=2}^{5}
+\frac{(N_k^{\mathrm{obs}}-\mathbb E[N_k]_{\mathrm{ST}})^2}
+{\mathbb E[N_k]_{\mathrm{ST}}}
+ = 1.39.
+\]
+Because the sample has $22$ primes and several expected bin counts
+are below $5$, this is a descriptive finite-sample statistic, not a
+proof of Sato--Tate equidistribution.
 \end{proposition}
 
 \begin{proof}[Verification]
@@ -2315,7 +2472,18 @@ and the cluster counts $(N_k)_{k=0}^{8}$ are read directly from
 this list. Sato--Tate expectations $(2/\pi)\int\sin^2\theta\,
 \mathrm d\theta$ per bin are computed by the primitive
 $F(\theta) = (\theta - \sin(2\theta)/2)/\pi$ and multiplied by
-$N = 22$. The central $\chi^2$ is computed over $k \in \{2,3,4,5\}$.
+$N = 22$. The central $\chi^2$ is computed over $k \in \{2,3,4,5\}$:
+\[
+\frac{(4-2.75)^2}{2.75}
+\;+\;
+\frac{(6-4.6449)^2}{4.6449}
+\;+\;
+\frac{(5-5.4299)^2}{5.4299}
+\;+\;
+\frac{(6-4.6449)^2}{4.6449}
+=1.39
+\]
+to the displayed precision.
 \end{proof}
 
 \begin{remark}[Primary literature and scope]
@@ -2332,93 +2500,110 @@ The Fricke involution $w_8: Z \mapsto -(8Z)^{-1}$ on
 $\mathbb H_2$ fixes the locus $H_1 \cap H_4$ (Gritsenko
 $1995$; Bruinier $2002$ LNM~$1780$, Fricke-fixed Heegner correspondence);
 the $\mathbb Z/8$ cyclotomic substructure arises from the
-$\zeta_8 = e^{i\pi/4}$ specialisation of the K3 Yangian
+$\zeta_8 = e^{i\pi/4}$ specialisation of the K3 Hall--Drinfeld
+comparison package
 (Rem.~\ref{rem:cclimax-satake-casimir-ii}), and the
-Fricke-node angles $k\pi/8$ are the arguments
-$\arg(\zeta_8^k)$ of the Lusztig specialisation loci
-(Nakajima $2001$ \emph{Publ.~RIMS}~$37$). The $22$-prime sample
-is the minimum for $\chi^2$-validity with $9$ bins ($N \ge 2\cdot 9$
-rule) while staying within the Beilinson-verified range;
-extension to $p \le 100$ would add $p \in \{83, 89, 97\}$, requiring
-three additional LMFDB lookups and rerunning the $\chi^2$.
+Fricke-node angles $k\pi/8$ are the Satake-angle half-grid determined
+by the doubled phase $e^{2i\theta}=\zeta_8^k$. Thus
+$\theta=0$ and $\theta=\pi$ give the same doubled phase but distinct
+endpoints of the Satake fundamental interval. The $22$-prime sample
+is too small for a nine-bin Pearson test without merging low-expected
+endpoint bins; it is a tabulated check against the proved
+Sato--Tate measure, not an independent equidistribution theorem.
 \end{remark}
 
-\begin{proposition}[Large-deviations Gauss-Kuzmin statistic near
-Fricke nodes on the $22$-prime sample; \ClaimStatusProvedHere]
+\begin{proposition}[Nearest-node deviation statistic on the $22$-prime sample;
+\ClaimStatusProvedHere]
 \label{prop:stqp-gauss-kuzmin}
-\index{Gauss--Kuzmin!Satake angle deviations}%
-\index{Fricke involution!large-deviations asymptotics}%
+\index{Satake angle!nearest-node deviations}%
+\index{Fricke involution!finite-sample deviations}%
 Let $\delta_p = \min_k |\theta_p - k\pi/8|$ denote the angular
 distance of $\theta_p$ to the nearest Fricke node. Then for the
 $22$-prime sample $p \le 79$ the rescaled deviation $\delta_p
-\sqrt{p}$ has sample mean $\bar\mu = 0.596$ and sample standard
-deviation $\bar\sigma = 0.349$, consistent with the Katz--Sarnak
-\emph{monodromy} prediction that $\delta_p \sqrt{\log p}$ is
-uniformly distributed on a Gauss--Kuzmin-shape support
-$[0, \pi/8]$ with density $\rho(x) \propto \sin^2(\theta^*(x))$
-weighted by the local Sato--Tate measure at the nearest node.
-The $\sqrt p$ rescaling (rather than $\sqrt{\log p}$) is the
-chiral-Frobenius weight-$15$ scaling: at Deligne weight~$15$,
-the square-root variance in the angular gap scales as the
-Frobenius modulus, not as the logarithmic monodromy scale.
+\sqrt{p}$ has sample mean $0.596$ and sample standard deviation
+$0.348$. This statistic is descriptive. Sato--Tate controls the
+unscaled nearest-node variable
+$D(\theta)=\min_k|\theta-k\pi/8|$; it does not imply a
+Gauss--Kuzmin, Katz--Sarnak, or $\sqrt p$ limiting law for
+$\delta_p$ at fixed nodes.
 \end{proposition}
 
-\begin{proof}[Computation at the verified primes]
+\begin{proof}[Computation at the tabulated primes]
 Numerical evaluation at the $22$ primes gives
 $(\delta_p \sqrt p)_{p \le 79} = (0.21, 0.11, 0.33, 0.21,
 0.53, 0.15, 0.48, 0.83, 0.48, 1.04, 0.87, 0.42, 0.43, 0.91,
 0.83, 0.12, 1.01, 0.79, 0.80, 1.42, 0.49, 0.66)$, whence
-$\bar\mu = 0.596$ and $\bar\sigma = 0.349$. The conjectured
-bound $\delta_p < \epsilon/\sqrt p \implies
-\mathrm{Prob} \sim \epsilon \sin^2(\theta^*)$ at each
-Fricke node $\theta^* = k\pi/8$ is the linearisation of the
-Sato--Tate density at $\theta^*$: $\mathrm d\mu_{\mathrm{ST}} =
-(2/\pi)\sin^2\theta\,\mathrm d\theta$, and the small-$\epsilon$
-fraction of primes within angular distance
-$\epsilon/\sqrt p$ of $\theta^*$ is
-$(2/\pi)\sin^2(\theta^*) \cdot (2\epsilon/\sqrt p)$; the
-$\sqrt p$ normalisation absorbs the prime index, and the
-residual is $\propto \epsilon \sin^2(\theta^*)$.
+$\bar\mu = 0.596$ and the sample standard deviation is $0.348$.
+No asymptotic claim is used in this computation.
 \end{proof}
 
-\begin{conjecture}[Gauss--Kuzmin asymptotic $p \to \infty$;
-\ClaimStatusConjectured]
+\begin{proposition}[Fixed-node Sato--Tate limit and the failure of a
+$\sqrt p$ law; \ClaimStatusProvedHere]
 \label{conj:stqp-gauss-kuzmin-asymptotic}
-\index{Gauss--Kuzmin!asymptotic conjecture}%
-The rescaled deviation $\delta_p \sqrt p$ converges in
-distribution, as the prime $p$ ranges over all primes up to
-$N \to \infty$, to the Katz--Sarnak $\mathrm{GUE}$-monodromy
-distribution on $[0, \pi \sqrt p/16]$ with density
-$\rho(x) = (2/\pi) \sin^2(\theta^*(x/\sqrt p))$ at the nearest
-Fricke-node angle $\theta^*$. Equivalently, the
-probability that $\delta_p < \epsilon/\sqrt p$ for a random
-prime $p \in [N, 2N]$ satisfies
-$\mathrm{Prob}(\delta_p < \epsilon/\sqrt p) =
-\epsilon \sin^2(\theta^*) (1 + o(1))$ as $N \to \infty$ with
-$\epsilon$ fixed.
-\end{conjecture}
+\index{Sato--Tate!fixed-node nearest-distance limit}%
+Let
+\[
+D(\theta)=\min_{0\le k\le 8}|\theta-k\pi/8|.
+\]
+Sato--Tate equidistribution gives, for every continuity point
+$u\in[0,\pi/16]$ of the distribution of $D$,
+\[
+\lim_{X\to\infty}
+\frac{\#\{p\le X:D(\theta_p)\le u\}}{\pi(X)}
+=
+\int_{\{D(\theta)\le u\}}\frac{2}{\pi}\sin^2\theta\,d\theta.
+\]
+In contrast, for every fixed $M>0$,
+\[
+\lim_{X\to\infty}
+\frac{\#\{X<p\le 2X:D(\theta_p)\sqrt p\le M\}}
+{\pi(2X)-\pi(X)}
+=0.
+\]
+Thus fixed Fricke nodes do not support a finite
+$\delta_p\sqrt p$ limiting distribution from Sato--Tate alone.
+\end{proposition}
+
+\begin{proof}
+The first assertion is the Sato--Tate theorem applied to the
+continuity set $\{\theta:D(\theta)\le u\}$. For the second assertion,
+fix $\eta>0$. For $X$ sufficiently large, $M/\sqrt X<\eta$, and
+\[
+\{X<p\le 2X:D(\theta_p)\sqrt p\le M\}
+\subset
+\{X<p\le 2X:D(\theta_p)\le \eta\}.
+\]
+Sato--Tate on the dyadic interval, obtained by subtracting the
+asymptotics for $p\le 2X$ and $p\le X$, gives an upper density
+bounded by
+\[
+\int_{\{D(\theta)\le\eta\}}\frac{2}{\pi}\sin^2\theta\,d\theta.
+\]
+This integral tends to $0$ as $\eta\downarrow0$, because the Fricke
+node set is finite. Hence the rescaled variable
+$D(\theta_p)\sqrt p$ escapes to infinity in prime density.
+\end{proof}
 
 \begin{remark}[Scope: why the central-bin $\chi^2$ is the
 meaningful test]
 \label{rem:stqp-chi2-scope}
 With $N = 22$ primes and $9$ bins, the tail bins $k \in \{0, 1,
 6, 7, 8\}$ have Sato--Tate expectations $\{0.04, 0.86, 2.75,
-0.86, 0.04\}$. Only bins $k = 2, 3, 4, 5$ have
-$\mathbb E[N_k] \ge 2.75$, satisfying the Cochran rule
-($\ge 5$ preferred, $\ge 2$ acceptable). The central $\chi^2 =
-1.07$ on $3$~d.o.f.\ (p-value~$\simeq 0.78$) is therefore the
-rigorous small-sample statistic. The observed excess at $k = 7$
+0.86, 0.04\}$. Only the central bins $k = 2, 3, 4, 5$ are even
+moderately populated, and two of them still have expected counts
+below $5$. The central $\chi^2 = 1.39$ is therefore a descriptive
+check, not a rigorous goodness-of-fit test with a quoted p-value.
+The observed excess at $k = 7$
 ($N_7^{\mathrm{obs}} = 1$ vs $\mathbb E = 0.86$) at $p = 37$
 corresponds to the maximally saturated Deligne bound
 ($|a_{37}|/(2\cdot 37^{15/2}) = 0.895$; Prop.~\ref{prop:cclimax-SK-spinor}
-check~(3)) and is a known feature, not a Sato--Tate violation.
-The extension to $p \le 200$ would give
-$N \approx 46$ primes and allow rigorous $\chi^2$ on all nine
-bins.
+check~(3)) and is one datum, not a Sato--Tate violation. A nine-bin
+Pearson test requires either merged endpoint bins or a much larger
+prime range; extending only to $p\le 200$ remains descriptive.
 \end{remark}
 
-\begin{theorem}[Archimedean-$p = 2$ Arthur sign global
-consistency via Hilbert reciprocity; \ClaimStatusProvedHere]
+\begin{theorem}[Archimedean-dyadic sign compatibility via Hilbert
+reciprocity; \ClaimStatusConditional]
 \label{thm:stqp-archimedean-sign}
 \index{Arthur packet!global sign consistency}%
 \index{Hilbert reciprocity!archimedean--dyadic sign product}%
@@ -2429,58 +2614,32 @@ the Saito--Kurokawa CAP lift of
 $\Delta_{E_6} = f_{16}$ (Vol.~I
 Rem.~\ref{rem:cclimax-SK-CAP}; Arthur $2013$
 \emph{Orthogonal and Symplectic Groups}, conjecture A;
-Weissauer $2009$ \emph{LNM}~$1968$). The Arthur character
-product $\psi_{\Delta_5}$ admits a dyadic local
-character $\varepsilon_2$ (encoding the ramified-quadratic
-class of $\sqrt 2$ modulo $(\mathbb Q_2^\times)^2$, order~$2$
-in $H^1(\mathrm{Gal}(\bar{\mathbb Q}_2/\mathbb Q_2),
-\mathbb Z/2)$) and an archimedean local sign
-$\varepsilon_\infty = \mathrm{sgn}_{\mathbb R}$ (on the
-Maass-spin cover $\mathbb Z/2 \to \mathrm{PGL}_2(\mathbb R)$,
-order~$2$). Then the global Arthur-sign product
+Weissauer $2009$ \emph{LNM}~$1968$). Assume the local
+identifications
+\[
+\varepsilon_\infty=(-1,2)_\infty=-1,\qquad
+\varepsilon_2=(-1,2)_2=-1,\qquad
+\varepsilon_p=+1\quad(p\text{ odd}),
+\]
+where $\varepsilon_2$ is the dyadic Fricke class of $\sqrt2$
+modulo $(\mathbb Q_2^\times)^2$ and $\varepsilon_\infty$ is the
+archimedean orientation class. Then the global sign product is
 \[
 \prod_v \varepsilon_v(\psi_{\Delta_5})
 \;=\;
 \varepsilon_\infty \cdot \varepsilon_2 \cdot
 \prod_{p \text{ odd}} \varepsilon_p
 \;=\;
-(-1, 2)_{\mathbb Q} \cdot \prod_{p \text{ odd}} \varepsilon_p
-\;=\;
 +1,
 \]
-where $(-1, 2)_{\mathbb Q}$ is the global rational Hilbert symbol
-and Hilbert reciprocity
-$\prod_v (a, b)_v = 1$ (Hasse--Minkowski $1923$; Milnor
-$1971$ \emph{K-theory}~Ch.~14) forces
-$\varepsilon_\infty \cdot \varepsilon_2 = +1$ since all odd-prime
-Arthur-signs $\varepsilon_p = +1$ by the Ikeda-lift local
-unramified hypothesis (Ikeda $2001$ Thm.~$3.2$, odd primes
-are spherical).
+compatibly with Hilbert reciprocity $\prod_v(-1,2)_v=1$. The
+theorem proves the compatibility of the sign classes; the
+identification of Arthur local signs with those classes is the
+stated local hypothesis.
 \end{theorem}
 
 \begin{proof}
-Step~$1$ (local signs). The Arthur parameter
-$\psi_{\Delta_5}$ of the non-tempered Saito--Kurokawa packet is
-$\psi_{\Delta_5} = \phi_{\Delta_{E_6}} \oplus \mathrm{triv}
-\otimes \nu[2]$ (Arthur $2013$, §~$1.5$, Eq.~$1.5.4$;
-Weissauer $2009$, §~$1.3$).
-At the archimedean place, the discrete-series
-parameter $\phi_{\infty}$ of weight~$k = 16$ has
-$\mathrm{sgn}(-1)^k = +1$, so the archimedean sign is the spin
-sign of the Maass cover, $\varepsilon_\infty = (-1)^{?}$, but
-for $\Delta_{E_6}$ the sign $\varepsilon_\infty = \mathrm{sgn}_{\mathbb R}$
-is the class of $-1$ in $\mathbb R^\times/(\mathbb R^\times)^2
-= \{\pm 1\}$, i.e.\ $\varepsilon_\infty = -1$ in the orientation
-sign class (the weight-$16$ form is its own Fricke conjugate on
-the imaginary axis).
-At $p = 2$, the Saito--Kurokawa lift produces a ramified local
-factor because $\Delta_5$ has Fricke level~$N = 8 = 2^3$; the
-Bruinier--Heegner class of the Fricke involution
-$w_8: Z \mapsto -(8Z)^{-1}$ restricts at the $p = 2$-adic place
-to the class of $\sqrt 2$ in
-$\mathbb Q_2^\times/(\mathbb Q_2^\times)^2$, of order~$2$. Hence
-$\varepsilon_2 = -1$ in the same convention.
-Step~$2$ (Hilbert reciprocity). The global Hilbert symbol
+The global Hilbert symbol
 $(-1, 2)_{\mathbb Q}$ is computed prime-by-prime:
 \begin{itemize}
 \item $(-1, 2)_\infty = \mathrm{sgn}_{\mathbb R}(-1) =
@@ -2500,16 +2659,12 @@ unramified-Hilbert-symbol vanishing
 Product: $(-1, 2)_\mathbb Q = (-1)\cdot(-1)\cdot\prod_{p \text{ odd}}
 (+1) = +1$, confirming Hilbert reciprocity
 $\prod_v (a, b)_v = 1$.
-Step~$3$ (global Arthur identification). The archimedean-dyadic
-product $\varepsilon_\infty \cdot \varepsilon_2 =
-(-1, 2)_\infty \cdot (-1, 2)_2 = (-1)\cdot(-1) = +1$. Since all
-other $\varepsilon_p = +1$ (unramified primes), the global Arthur
-sign product is $+1$, consistent with the functional equation
-$L(s, \phi_{\Delta_{E_6}}) = \varepsilon\,L(16 - s,
-\phi_{\Delta_{E_6}})$ with root number $\varepsilon = +1$ at
-weight~$k = 16$ (Atkin--Lehner $1970$
-\emph{Invent.~Math.}~$14$, Thm.~$3$: root number $+1$ for
-level-$1$ holomorphic cusp forms of even weight).
+Under the local hypotheses, the Arthur signs are these Hilbert
+classes at $\infty$ and $2$ and are trivial at odd primes. Therefore
+\[
+\prod_v\varepsilon_v
+=(-1)\cdot(-1)\cdot\prod_{p\text{ odd}}(+1)=+1.
+\]
 \end{proof}
 
 \begin{remark}[Primary scope for Theorem~\ref{thm:stqp-archimedean-sign}]
@@ -2520,15 +2675,14 @@ principle for quadratic forms). The Arthur-packet assignment
 $\psi_{\Delta_5} = \phi_{\Delta_{E_6}} \oplus \mathrm{triv}
 \otimes \nu[2]$ is Arthur $2013$ conjecture~A, proved for
 $\mathrm{Sp}_4$ Saito--Kurokawa CAP lifts by Weissauer $2009$
-LNM~$1968$ Thm.~$5.2$. The identification of the dyadic
-Arthur sign with the Fricke-involution class $(\sqrt 2)$
-uses Bruinier $2002$ LNM~$1780$ Prop.~$5.1$ (Heegner--Chern
-monodromy at $H_1$) together with the local Langlands
-correspondence for $\mathrm{GSp}_4/\mathbb Q_2$ (Gan--Takeda
-$2011$ \emph{Ann.~Math.}~$173$ Thm.~$7.1$). The archimedean
-orientation-sign identification uses the Maass-spin cover
-(Maass $1949$ \emph{Math.~Ann.}~$121$; Borel--Wallach
-$2000$ Ch.~III for the spin-cover differential operators).
+LNM~$1968$ Thm.~$5.2$. The remaining arithmetic input is the
+local identification of the dyadic Arthur sign with the
+Fricke-involution class $(\sqrt 2)$ and of the archimedean sign
+with the orientation class. The expected sources are Bruinier
+$2002$ LNM~$1780$ Prop.~$5.1$ (Heegner--Chern monodromy at $H_1$),
+Gan--Takeda $2011$ \emph{Ann.~Math.}~$173$ Thm.~$7.1$ for local
+Langlands over $\mathbb Q_2$, and Maass $1949$ / Borel--Wallach
+$2000$ for the archimedean spin-cover operators.
 \end{remark}
 
 \section{Fricke-fixed $\mathbb Z/8$-phase asymptotics: precise form
@@ -2536,24 +2690,26 @@ around the 9 Fricke nodes $\theta^*_k = k\pi/8$}
 \label{sec:stqp-fricke-z8-phase-asymptotics}
 
 The Fricke involution $w_8: Z \mapsto -(8Z)^{-1}$ acts on the
-paramodular threefold~$\mathbb H_2 / \Gamma_{\mathrm{para}}(8)$ and
-fixes a locus of complex dimension~$2$; the universal identity
-$\hbar^2_{K3} \cdot K^{\kappa_{\mathrm{ch}}}_{K3} = -1$ with
-$K_{K3} = 8$ forces the Lusztig specialisation $q = \zeta_8 =
-e^{i\pi/4}$ on the K3 Yangian. The interaction of the Fricke fixed
-locus with the Satake-parameter distribution of $\Delta_{E_6} =
-f_{16}$ is a $\mathbb Z/8$-cyclotomic refinement of the
-Sato--Tate law, with precise leading term and subleading correction.
+level-eight Hall--Drinfeld comparison surface and fixes a divisor in
+the corresponding paramodular threefold. The K3 convention
+$K_{K3}=8$ selects the root-of-unity parameter
+$q=\zeta_8=e^{i\pi/4}$ on the Hall--Drinfeld side. Satake angles
+live on the half-angle interval $[0,\pi]$: the doubled phase
+$e^{2i\theta}$ is $\zeta_8$-valued exactly at
+$\theta_k^*=k\pi/8$, $0\le k\le8$.
+The only analytic input is the Sato--Tate density
+$(2/\pi)\sin^2\theta$ for $f_{16}$.
 
-\begin{theorem}[$\mathbb Z/8$-phase asymptotics: leading order
-at the Fricke nodes; \ClaimStatusProvedHere]
+\begin{theorem}[$\mathbb Z/8$ half-angle nodes and Sato--Tate leading
+term; \ClaimStatusProvedElsewhere]
 \label{thm:stqp-fricke-z8-phase-leading}
 \index{Fricke involution!Z/8-phase asymptotics}%
 \index{Sato--Tate!Z/8-cyclotomic refinement}%
-\index{K3 Yangian!zeta_8 specialisation}%
+\index{K3 Hall--Drinfeld double!zeta_8 specialisation}%
 Fix $\theta^*_k = k\pi/8 \in [0, \pi]$ with $k \in \{0, 1, \ldots,
-8\}$, the 9~Fricke-node angles coming from the nine sheets of the
-$\mu_8$-gerbe on the paramodular Heegner divisor $H_1 \cup H_4$.
+8\}$, the nine Satake half-angle nodes determined by
+$e^{2i\theta^*_k}=\zeta_8^k$; the endpoint nodes $k=0,8$ have the
+same doubled phase and are distinct only as endpoints of $[0,\pi]$.
 For each prime $p$ of good reduction for $\Delta_{E_6}$, let
 $\theta_p = \arccos\bigl(a_p(\Delta_{E_6})/(2 p^{15/2})\bigr)
 \in [0, \pi]$ and let $\delta_{p, k} = \theta_p - \theta^*_k$.
@@ -2581,50 +2737,43 @@ satisfies
 \label{eq:stqp-z8-count}
  N_k(X)
  \;=\;
- \pi(X)\cdot\int_{(k-1/2)\pi/8}^{(k+1/2)\pi/8}
+ \pi(X)\cdot\int_{I_k}
  \rho_k(\theta)\,\mathrm d\theta
  \;+\;
- O\bigl(\pi(X) \cdot X^{-\delta}\bigr),
+ o\bigl(\pi(X)\bigr),
 \end{equation}
-where $\pi(X) \sim X/\log X$ is the prime-counting function and
-the error exponent $\delta > 0$ is the Sato--Tate equidistribution
-rate for $f_{16}$, effective through the
-Barnet-Lamb--Geraghty--Harris--Taylor 2011 \emph{Publ.\ IH\'ES}~108
-potential-modularity bound at
-$\delta = 1/4 - \varepsilon$ (any $\varepsilon > 0$) conditional on
-$\mathrm{Sym}^n L$-function holomorphy through $n = 8$.
+where
+\[
+I_k=\bigl[\max(0,(k-\tfrac12)\pi/8),
+\min(\pi,(k+\tfrac12)\pi/8)\bigr]
+\]
+and $\pi(X) \sim X/\log X$ is the prime-counting function. A power
+saving in the error term is a separate analytic estimate; it is not
+a consequence of the Sato--Tate theorem alone.
 \end{theorem}
 
 \begin{proof}
 \textup{Step 1 (Fricke node list).} The Fricke involution
-$w_8: Z \mapsto -(8Z)^{-1}$ has $\omega_8^2 = \mathrm{id}$ and acts
-on the $\zeta_8$-root-of-unity phase grading of the K3 Yangian
-specialisation $q = \zeta_8$ by $\zeta_8^a \mapsto \zeta_8^{-a}$.
-The fixed eigenvalues are $\zeta_8^a$ with $a \equiv -a \bmod 8$,
-i.e.\ $a \in \{0, 4\}$, giving two fixed phases $\{1, -1\}$; the
-remaining angles $\{\zeta_8^a : a \in \{1, 2, 3, 5, 6, 7\}\}$ fall
-into three $w_8$-orbits $\{a, -a\} = \{1, 7\}, \{2, 6\}, \{3, 5\}$.
-The corresponding angular coordinates
-$\theta^*_a = a\pi/8 \in [0, \pi]$ enumerate 9 points $k = 0, 1,
-\ldots, 8$ partitioned as (fixed) $\{0, 4, 8\}
-\cup$ (orbits) $\{1, 7\}, \{2, 6\}, \{3, 5\}$.
+$w_8$ acts on the doubled phase by
+$e^{2i\theta}\mapsto e^{-2i\theta}$. On the Satake interval this is
+the reflection $\theta\mapsto\pi-\theta$, hence
+$k\mapsto 8-k$ on the half-angle grid $\theta_k^*=k\pi/8$.
+The doubled phase classes fixed by inversion are $1$ and $-1$:
+the class $1$ appears at the two boundary nodes $k=0,8$, and the
+class $-1$ appears at the central node $k=4$.
 \textup{Step 2 (Taylor expansion of $\sin^2$).} Expanding
 $\sin^2(\theta)$ at $\theta = \theta^*_k$ via
 $\sin^2(\theta^*_k + \delta) = \sin^2(\theta^*_k)
 + \sin(2\theta^*_k)\,\delta + \cos(2\theta^*_k)\,\delta^2
 + O(\delta^3)$
 and multiplying by $2/\pi$ gives~\eqref{eq:stqp-z8-leading}.
-\textup{Step 3 (effective equidistribution).} The error term in
-\eqref{eq:stqp-z8-count} follows from
-Barnet-Lamb--Geraghty--Harris--Taylor 2011 Thm~B, which gives the
-effective rate $\delta = 1/4 - \varepsilon$ conditional on the
-holomorphy of $L(s, \mathrm{Sym}^n f_{16})$ through $n = 8$; a
-hypothesis verified at $n \le 4$ by Cogdell--Piatetski-Shapiro
-converse-theorem arguments and at $n = 5, 6, 7, 8$ by the
-Newton--Thorne potential-modularity bootstrap (Newton--Thorne 2021
-\emph{Publ.\ IH\'ES}~134). Primary: Barnet-Lamb--Geraghty--Harris--Taylor
-$2011$ \emph{Publ.\ IH\'ES}~$108$ Thm~B; Newton--Thorne $2021$
-Thm~A; Deligne $1974$ Weil~I (Ramanujan bound).
+\textup{Step 3 (Sato--Tate equidistribution).} The error term in
+\eqref{eq:stqp-z8-count} is the ordinary Sato--Tate
+equidistribution theorem for non-CM holomorphic eigenforms, applied
+to the fixed intervals $I_k$. Primary: Barnet-Lamb--Geraghty--Harris--Taylor
+$2011$ \emph{Publ.\ IH\'ES}~$108$; Newton--Thorne $2021$
+for symmetric-power automorphy; Deligne $1974$ for the Ramanujan
+bound.
 \end{proof}
 
 \begin{theorem}[$\mathbb Z/8$-phase subleading correction: the
@@ -2660,10 +2809,18 @@ and the local density~\eqref{eq:stqp-z8-leading} specialises to
  $\mathrm{sgn}(\sin(k\pi/4)) = +1$ at $k = 2$, $-1$ at $k = 6$.
 \item $k = 1, 3, 5, 7$ (diagonal nodes, forming two
  $w_8$-orbits):
- $\rho_k(\theta) = 1/\pi + (\sqrt 2/\pi)\,\delta \pm
- (\sqrt 2/\pi)\,\delta^2 + O(\delta^3)$
-; intermediate, with $\pm$ alternation tracked by
- $\cos(k\pi/4) = \pm\sqrt 2/2$.
+ \[
+ \rho_k(\theta^*_k+\delta)
+ =
+ \frac{2}{\pi}\sin^2(k\pi/8)
+ +\frac{2}{\pi}\sin(k\pi/4)\delta
+ +\frac{2}{\pi}\cos(k\pi/4)\delta^2
+ +O(\delta^3).
+ \]
+Thus the constant terms are
+$(2-\sqrt2)/(2\pi)$ at $k=1,7$ and
+$(2+\sqrt2)/(2\pi)$ at $k=3,5$; the linear signs are positive at
+$k=1,3$ and negative at $k=5,7$.
 \end{itemize}
 The curvature sign pattern
 $(+, +, 0, -, -, -, 0, +, +)$ across $k = 0, \ldots, 8$ is the
@@ -2674,9 +2831,9 @@ $[0, \pi]$.
 \begin{proof}
 Direct substitution of $\theta^*_k = k\pi/8$ into $\cos(2\theta) =
 \cos(k\pi/4)$ and $\sin(2\theta) = \sin(k\pi/4)$ yields
-\eqref{eq:stqp-z8-curvature-table}. Exponentiating
-$\theta \mapsto (\theta - \theta^*_k)$ near each node reproduces
-the quadratic expansions listed. The sign pattern of
+\eqref{eq:stqp-z8-curvature-table}. Writing
+$\theta=\theta_k^*+\delta$ gives the quadratic expansions listed.
+The sign pattern of
 $\cos(k\pi/4)$ is the real part of the $\mathbb Z/8$-Fourier mode
 at $k$, which is the character of the sign representation of
 $\mathbb Z/8$ evaluated at the orbit class. No further analytic
@@ -2684,234 +2841,106 @@ input is required; the statement is a direct consequence of the
 Taylor expansion and the Fourier character table of $\mathbb Z/8$.
 \end{proof}
 
-\begin{theorem}[Large-deviations principle for Fricke-phase
-clustering around the 9 $\mathbb Z/8$-nodes; \ClaimStatusProvedHere]
+\begin{theorem}[Fricke-node masses and the iid Sanov model;
+\ClaimStatusConditional]
 \label{thm:stqp-fricke-z8-ldp}
 \index{Fricke involution!large-deviations principle}%
 \index{Sato--Tate!rate function at Z/8-nodes}%
-\index{K3 Yangian!Gaussian curvature at zeta_8 nodes}%
+\index{K3 Hall--Drinfeld double!zeta_8 nodes}%
 Let $\theta_p = \arccos(a_p(\Delta_{E_6})/(2p^{15/2})) \in [0,\pi]$
 for primes $p$ of good reduction, and let $L_X = \pi(X)^{-1}
 \sum_{p \le X} \delta_{\theta_p}$ be the empirical angular measure
 with $\pi(X)$ the prime-counting function.
-\begin{enumerate}[label=\textup{(\alph*)}]
-\item \textup{(Global LDP, unconditional.)} The family
-$(L_X)_{X \to \infty}$ satisfies a large-deviations principle on
-$\mathcal P([0,\pi])$ at speed $\pi(X)$ with good rate function
+Let $\rho_{\mathrm{ST}}(\theta)=(2/\pi)\sin^2\theta$ and
+\[
+I_k=\bigl[\max(0,(k-\tfrac12)\pi/8),
+\min(\pi,(k+\tfrac12)\pi/8)\bigr],\qquad
+m_k=\int_{I_k}\rho_{\mathrm{ST}}(\theta)\,d\theta.
+\]
+Then
+\[
+\frac{N_k(X)}{\pi(X)}\longrightarrow m_k
+\qquad (0\le k\le8)
+\]
+by Sato--Tate. If, in addition, one replaces the deterministic prime
+sequence by an iid model with law $\rho_{\mathrm{ST}}(\theta)d\theta$,
+then the multinomial vector of node counts satisfies Sanov/Cramér
+large deviations with rate
 \begin{equation}
 \label{eq:stqp-ldp-global-rate}
- I(\nu) \;=\; H(\nu \,\|\, \rho_{\mathrm{ST}}\,\mathrm d\theta)
- \;=\; \int_0^\pi \frac{\mathrm d\nu}{\mathrm d\theta}
- \log\!\frac{\mathrm d\nu/\mathrm d\theta}{\rho_{\mathrm{ST}}(\theta)}
- \,\mathrm d\theta,
+J(x_0,\ldots,x_8)=
+\sum_{k=0}^{8} x_k\log(x_k/m_k),
+\qquad
+x_k\ge0,\quad \sum_kx_k=1.
 \end{equation}
-where $\rho_{\mathrm{ST}}(\theta) = (2/\pi)\sin^2\theta$ and
-$H(\cdot\,\|\,\cdot)$ is relative entropy; the rate function
-attains its unique zero at $\nu = \rho_{\mathrm{ST}}\,\mathrm d\theta$.
-\item \textup{(Local Gaussian LDP at interior nodes
-$k \in \{1,2,\ldots,7\}$.)} For $\delta > 0$ small and
-$\theta^*_k = k\pi/8$,
-\begin{equation}
-\label{eq:stqp-ldp-local-gaussian}
- \mathbb P\!\bigl(\theta_p \in B_\delta(\theta^*_k)
- \text{ for ``typical'' $p \le X$}\bigr)
- \;\asymp\;
- \exp\!\Bigl(-\pi(X)\,I_k(\theta^*_k + \delta)\Bigr),
-\end{equation}
-where the \emph{local rate function} $I_k$ admits the quadratic
-expansion
-\begin{equation}
-\label{eq:stqp-ldp-local-quadratic}
- I_k(\theta^*_k + \delta)
- \;=\; \frac{\delta^2}{2\sigma_k^2}
- \;+\; O(\delta^3)
- \qquad\text{with}\qquad
- \sigma_k^2
- \;=\; \frac{1}{\rho_{\mathrm{ST}}(\theta^*_k)}
- \;=\; \frac{\pi}{2\sin^2(\theta^*_k)},
-\end{equation}
-giving the complete $9$-node LDP table (exact closed forms on the
-left, decimal asymptotics on the right; each line is a separate
-theorem verified by three independent paths; direct substitution
-of $\theta^*_k = k\pi/8$ into $\sin^2\theta$, half-angle identity
-$\sin^2(\pi/8) = (1 - \cos(\pi/4))/2 = (2-\sqrt 2)/4$ and its
-complement $\sin^2(3\pi/8) = (2+\sqrt 2)/4$, and the symmetry
-$\sigma_{8-k}^2 = \sigma_k^2$ from $\sin\theta = \sin(\pi - \theta)$):
-\begin{equation}
-\label{eq:stqp-ldp-sigma-table}
-\begin{array}{|c|c|c|l|l|}
-\hline
-k & \theta^*_k & \sin^2(\theta^*_k) & \sigma_k^2 \text{ exact} & \sigma_k^2 \text{ decimal} \\ \hline
-0 & 0 & 0 & \infty \text{ (Poisson)} & \text{cubic-scaling } \mu_0 \\
-1 & \pi/8 & (2-\sqrt 2)/4 & \pi(2+\sqrt 2) & 10.7263 \\
-2 & \pi/4 & 1/2 & \pi & 3.14159 \\
-3 & 3\pi/8 & (2+\sqrt 2)/4 & \pi(2-\sqrt 2) & 1.83929 \\
-4 & \pi/2 & 1 & \pi/2 & 1.57080 \\
-5 & 5\pi/8 & (2+\sqrt 2)/4 & \pi(2-\sqrt 2) & 1.83929 \\
-6 & 3\pi/4 & 1/2 & \pi & 3.14159 \\
-7 & 7\pi/8 & (2-\sqrt 2)/4 & \pi(2+\sqrt 2) & 10.7263 \\
-8 & \pi & 0 & \infty \text{ (Poisson)} & \text{cubic-scaling } \mu_0 \\ \hline
-\end{array}
-\end{equation}
-The two boundary rows carry the Poissonian-regime signature:
-$\sigma_k^2 = \infty$ is not a divergence of the variance but the
-failure of the Gaussian ansatz; the Gärtner--Ellis quadratic
-expansion becomes degenerate exactly when $\rho_{\mathrm{ST}}(\theta^*_k)
-= 0$, and the cubic boundary measure $\mu_0(\delta) = (2/(3\pi))\delta^3
-+ O(\delta^5)$ replaces the Gaussian scale, as made precise
-in~\eqref{eq:stqp-ldp-cusp} below. The $\mathbb Z/2$-symmetry
-$k \leftrightarrow 8-k$ is the Fricke involution $\theta \mapsto
-\pi - \theta$ acting by the reflection $\sigma_{8-k}^2 = \sigma_k^2$;
-the five distinct values $\{\infty, \pi(2+\sqrt 2), \pi, \pi(2-\sqrt 2),
-\pi/2\}$ record the five orbits of $\mathbb Z/8$ under the
-reflection, matching the five-dimensional space of $\mathbb Z/2$-fixed
-phase data.
-\item \textup{(Gärtner--Ellis upper-bound verification at each interior
-node.)} For $k \in \{1, \ldots, 7\}$, the cumulant generating function
-of $\mathbf 1_{\theta_p \in B_\delta(\theta^*_k)}$ under the Sato--Tate
-law is
-\begin{equation}
-\label{eq:stqp-ldp-cgf-interior}
- \Lambda_k(s) \;=\; \log\!\left(1 + \bigl(e^s - 1\bigr)
- \rho_{\mathrm{ST}}(\theta^*_k)\,(2\delta) + O(\delta^2)\right),
-\end{equation}
-with Legendre transform $\Lambda_k^*(t) = (t - \rho_{\mathrm{ST}}
-(\theta^*_k)\cdot 2\delta)^2 / (2 \rho_{\mathrm{ST}}(\theta^*_k)
-\cdot 2\delta) + O(\delta)$ near the mean; evaluating at the
-extreme event $t = 0$ gives an LDP upper bound $\mathbb P(N_k = 0)
-\le \exp(-\pi(X) \rho_{\mathrm{ST}}(\theta^*_k) \cdot 2\delta)$
-matching the Sanov prediction with variance $\sigma_k^2 =
-1/\rho_{\mathrm{ST}}(\theta^*_k) = \pi/(2\sin^2(\theta^*_k))$; the
-lower bound follows by the contraction of the Sanov LDP to the node
-neighbourhood (Dembo--Zeitouni Thm~$4.2.1$), so the LDP is
-sharp at each of the seven interior nodes. The upper bound at
-$k \in \{0, 8\}$ requires the Poisson rate
-function~\eqref{eq:stqp-ldp-cusp} rather than~\eqref{eq:stqp-ldp-cgf-interior}.
-\item \textup{(Poissonian LDP at boundary nodes $k \in \{0, 8\}$.)}
-At the two Fricke-fixed endpoint nodes where
-$\rho_{\mathrm{ST}}(\theta^*_k) = 0$, the density vanishes
-quadratically: $\rho_{\mathrm{ST}}(\theta) = (2/\pi)\theta^2 +
-O(\theta^4)$ near $\theta = 0$, so the expected occupation of a
-half-ball of radius $\delta$ is
-$\mu_0(\delta) := \int_0^\delta \rho_{\mathrm{ST}}(\theta)
-\mathrm d\theta = (2/(3\pi))\delta^3 + O(\delta^5)$. The local
-count $N_0(X,\delta) = \#\{p \le X : \theta_p < \delta\}$ satisfies
-the Poisson LDP at speed $\pi(X)\mu_0(\delta)$ with rate function
+For a small ball $B_\delta(\theta_k^*)$ around an interior node
+$1\le k\le7$,
+\[
+\mu_k(\delta)=
+\int_{\theta_k^*-\delta}^{\theta_k^*+\delta}
+\rho_{\mathrm{ST}}(\theta)\,d\theta
+=2\delta\,\rho_{\mathrm{ST}}(\theta_k^*)+O(\delta^3).
+\]
+At the endpoints,
 \begin{equation}
 \label{eq:stqp-ldp-cusp}
- I^{\mathrm{Poi}}_0(t) \;=\; t\log(t/\mu_0(\delta))
- \;-\; t \;+\; \mu_0(\delta),
- \qquad t \;=\; N_0(X,\delta)/\pi(X),
+\mu_0(\delta)=
+\int_0^\delta \rho_{\mathrm{ST}}(\theta)d\theta
+=\frac{2}{3\pi}\delta^3+O(\delta^5),
+\qquad
+\mu_8(\delta)=\mu_0(\delta).
 \end{equation}
-and symmetrically at $k = 8$ with $\delta$ replaced by $\pi - \theta$.
-The boundary rate function is \emph{Poissonian}, not Gaussian: the
-vanishing density $\rho_{\mathrm{ST}}(0) = 0$ makes the Gärtner--Ellis
-quadratic expansion degenerate, and the LDP regime shifts to the
-rare-event / Poisson regime in which typical counts are of order
-$\pi(X)\delta^3$ rather than $\pi(X)\delta$.
-\end{enumerate}
-The scope is unconditional for the modular form $f_{16} =
-\Delta_{E_6}$: Newton--Thorne 2021 \emph{Publ.\ IH\'ES}~134 Thm~A
-establishes holomorphy of $L(s,\mathrm{Sym}^n f_{16})$ for all $n
-\ge 1$ (all non-CM cuspidal $\mathrm{GL}_2(\mathbb A_{\mathbb Q})$
-eigenforms), removing the Barnet-Lamb--Geraghty--Harris--Taylor
-$2011$ conditional hypothesis; the effective equidistribution rate
-$\delta = 1/4 - \varepsilon$ in
-Theorem~\ref{thm:stqp-fricke-z8-phase-leading} is likewise
-unconditional.
+The iid model therefore has binomial rate
+\[
+D(t\|\mu)=
+t\log(t/\mu)+(1-t)\log((1-t)/(1-\mu))
+\]
+for the fraction of samples in any fixed node neighbourhood. This
+probabilistic LDP is a model for fluctuations around Sato--Tate; it
+is not a deterministic theorem about the actual ordered sequence of
+prime-indexed angles.
 \end{theorem}
 
 \begin{proof}
-\textup{Step 1 (Global LDP via Cram\'er--Sanov).} By the Sato--Tate
-theorem for $f_{16}$ (Taylor $2008$ \emph{Publ.\ IH\'ES}~$108$;
-Barnet-Lamb--Geraghty--Harris--Taylor $2011$; made unconditional by
-Newton--Thorne $2021$), the $\theta_p$ are equidistributed with
-respect to $\rho_{\mathrm{ST}}(\theta)\,\mathrm d\theta$. The
-Sanov-type upgrade to an LDP on $\mathcal P([0,\pi])$ follows from
-the moment generating function identity
-$\Lambda(t) = \lim \pi(X)^{-1}\log\mathbb E\exp(t\sum_{p\le X}
-\varphi(\theta_p)) = \log\int_0^\pi e^{t\varphi}\rho_{\mathrm{ST}}
-\,\mathrm d\theta$ for continuous test $\varphi$; the rate function
-is the Legendre transform, which for the empirical-measure LDP is
-relative entropy against $\rho_{\mathrm{ST}}\,\mathrm d\theta$
-(Dembo--Zeitouni $2010$ Thm~$6.2.10$).
-\textup{Step 2 (Local Gaussian at interior nodes).} For
-$\theta^*_k$ with $\rho_{\mathrm{ST}}(\theta^*_k) > 0$, the
-contraction principle (Dembo--Zeitouni Thm~$4.2.1$) applied to the
-continuous functional $\nu \mapsto \int \mathbf 1_{B_\delta(\theta^*_k)}
-\,\mathrm d\nu$ and a quadratic expansion of the relative entropy
-about its minimum $\nu = \rho_{\mathrm{ST}}\mathrm d\theta$ gives
-$I_k(\theta^*_k + \delta) = (\delta^2/2)\cdot
-\rho_{\mathrm{ST}}(\theta^*_k)^{-1}$ to second order (Freidlin--Wentzell
-small-deviation expansion; Dembo--Zeitouni \S 3.7). Substituting
-$\rho_{\mathrm{ST}}(\theta^*_k) = (2/\pi)\sin^2(\theta^*_k)$ yields
-$\sigma_k^2 = \pi/(2\sin^2(\theta^*_k))$.
-\textup{Step 3 (Poissonian boundary regime).} At $k = 0$, the density
-vanishes quadratically, so the expected fraction of primes with
-$\theta_p < \delta$ is $\mu_0(\delta) = \int_0^\delta
-\rho_{\mathrm{ST}}\mathrm d\theta = (2/(3\pi))\delta^3 + O(\delta^5)$.
-The Gärtner--Ellis quadratic expansion~\eqref{eq:stqp-ldp-local-quadratic}
-fails because $\rho_{\mathrm{ST}}(\theta^*_0) = 0$. In the
-small-$\mu$ regime, the binomial LDP (Dembo--Zeitouni Thm~$2.1.4$ for
-iid Bernoulli, applied to the Bernoulli variables
-$\mathbf 1_{\theta_p < \delta}$ under equidistribution) gives the
-Poisson rate function $I^{\mathrm{Poi}}_0(t) = t\log(t/\mu_0) - t +
-\mu_0$, which is the Legendre transform of $\Lambda_0(s) =
-\mu_0(e^s - 1)$. Symmetry of $\rho_{\mathrm{ST}}$ under
-$\theta \mapsto \pi - \theta$ gives the identical Poisson rate at
-$k = 8$, confirming~\eqref{eq:stqp-ldp-cusp}.
-\textup{Step 4 (Scope upgrade via Newton--Thorne).}
-Barnet-Lamb--Geraghty--Harris--Taylor $2011$ Thm~B requires
-holomorphy of $L(s,\mathrm{Sym}^n f)$ through $n$ equal to the
-effective degree in the test; for the $\delta = 1/4 - \varepsilon$
-rate with 22-prime resolution, $n \le 8$ suffices. For $f_{16}$
-non-CM cuspidal on $\mathrm{GL}_2(\mathbb A_{\mathbb Q})$,
-Newton--Thorne $2021$ Thm~A establishes Sym$^n$ automorphy (hence
-holomorphy of $L(s,\mathrm{Sym}^n f_{16})$) for all $n \ge 1$,
-making the LDP unconditional. Primary: Dembo--Zeitouni $2010$
-\emph{Large Deviations Techniques}~$2$e Ch.~$1$--$3$, $6$; Taylor
-$2008$; Newton--Thorne $2021$ \emph{Publ.\ IH\'ES}~$134$ Thm~A.
+The convergence of $N_k(X)/\pi(X)$ is Sato--Tate applied to the fixed
+intervals $I_k$. In the iid model, the vector
+$(N_0,\ldots,N_8)$ is multinomial with probabilities
+$(m_0,\ldots,m_8)$; Cramér's theorem gives the relative-entropy rate
+\eqref{eq:stqp-ldp-global-rate}. The interior small-ball expansion
+follows by Taylor expanding $\rho_{\mathrm{ST}}$ at $\theta_k^*$; the
+linear term integrates to zero on the symmetric interval. At
+$0$ and $\pi$, $\sin^2\theta=\theta^2+O(\theta^4)$ and
+\eqref{eq:stqp-ldp-cusp} follows by integration. The binomial rate is
+the contraction of the multinomial rate to the event of lying in a
+chosen node neighbourhood.
 \end{proof}
 
-\begin{remark}[Three verification paths for the Fricke-$\mathbb Z/8$
-asymptotics]
+\begin{remark}[Three checks and their scope for the Fricke-$\mathbb Z/8$
+nodes]
 \label{rem:stqp-fricke-z8-three-paths}
 \index{Fricke involution!three verification paths}%
-The leading-order count~\eqref{eq:stqp-z8-count} admits three
-structurally independent verifications on the 22-prime sample
-$p \le 79$:
+The Fricke half-angle grid is checked in three different registers:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \textup{(Direct $\chi^2$ on the observed counts.)}
+\item \textup{(Finite prime table.)}
 Proposition~\ref{prop:stqp-theta-p-clustering} gives
-$\chi^2_{\mathrm{central}} = 1.07$ on $3$~d.o.f.\ across the
-four central Fricke nodes $k \in \{2, 3, 4, 5\}$, p-value $0.78$.
-\item \textup{($\sqrt p$-rescaled Gauss--Kuzmin.)}
+$\chi^2_{\mathrm{central}} = 1.39$ across the four central Fricke
+nodes $k \in \{2, 3, 4, 5\}$ on the $22$-prime sample. This is a
+descriptive statistic, not a nine-bin goodness-of-fit proof.
+\item \textup{(Nearest-node deviation.)}
 Proposition~\ref{prop:stqp-gauss-kuzmin} gives
-sample mean $\bar\mu = 0.596$ and sample std
-$\bar\sigma = 0.349$ for the rescaled angular deviation
-$\delta_p \sqrt p$, consistent with the Katz--Sarnak
-$\mathrm{GUE}$-monodromy prediction derived from the local
-density~\eqref{eq:stqp-z8-leading}.
-\item \textup{(Fricke-fixed-sign consistency via Hilbert
-reciprocity.)}
-Theorem~\ref{thm:stqp-archimedean-sign} verifies that
-the dyadic Arthur sign $\varepsilon_2 = -1$ matches the
-archimedean $\varepsilon_\infty = -1$ at $k = 4$ (central
-node) via $(-1, 2)_\infty \cdot (-1, 2)_2 = +1$, forcing the
-Fricke-fixed sub-MTC of
-Proposition~\ref{prop:stqp-fricke-mtc} to live at
-the central node $k = 4$ (where $\rho_4$ is maximal) and at
-the endpoint nodes $k \in \{0, 8\}$ (where $\rho_k$ vanishes
-quadratically). No other node admits a Fricke-fixed simple
-object under the $\mathbb Z/8$-grading of the
-$\mathrm{MTC}(\mathbf H_{\Delta_5})|_{\zeta_8}$.
+sample mean $\bar\mu = 0.596$ and sample standard deviation $0.348$
+for $\delta_p\sqrt p$. Proposition~\ref{conj:stqp-gauss-kuzmin-asymptotic}
+shows that no fixed-node $\sqrt p$ limit follows from Sato--Tate.
+\item \textup{(Hilbert-symbol sign compatibility.)}
+Theorem~\ref{thm:stqp-archimedean-sign} proves
+$(-1,2)_\infty\cdot(-1,2)_2=+1$ under the local Arthur-sign
+identifications. This checks the archimedean-dyadic sign convention;
+it does not supply a statistical proof of Sato--Tate clustering.
 \end{enumerate}
-Each path pins down the leading term $\sin^2(\theta^*_k)$ and the
-subleading $\cos(2\theta^*_k)$ curvature independently; the three
-predictions agree to the accuracy permitted by the 22-prime sample.
-Primary: Katz--Sarnak $1999$ \emph{Bull.\ AMS}~$36$
-(random-matrix monodromy); Serre $1997$ \emph{Abelian $\ell$-adic
-Representations} Ch.~IV (Sato--Tate statistics);
+The common mathematical object is the node set
+$\{\theta_k^*=k\pi/8\}_{k=0}^8$ and the Taylor expansion of
+$(2/\pi)\sin^2\theta$ at those nodes. Primary: Serre $1997$
+\emph{Abelian $\ell$-adic Representations} Ch.~IV (Sato--Tate statistics);
 Barnet-Lamb--Geraghty--Harris--Taylor $2011$ \emph{Publ.\ IH\'ES}~$108$
-(effective equidistribution).
+(Sato--Tate for non-CM modular forms).
 \end{remark}

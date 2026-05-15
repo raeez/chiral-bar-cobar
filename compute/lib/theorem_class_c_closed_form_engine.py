@@ -401,7 +401,7 @@ def delta_pf_genus3_generic(kappa: Fraction, S3: Fraction,
 # Genus 4: class L base + S_4 corrections.
 #
 # The class L genus-4 polynomial (11 terms in kappa, S_3) is EXACT
-# (verified at SU(2..4) against the 379-graph sum).
+# with canonical class-L restriction fixed by theorem_genus4_virasoro_engine.
 #
 # The S_4-dependent terms at genus 4 come from graphs in Mbar_{4,0}
 # containing at least one valence-4 genus-0 vertex (carrying S_4).
@@ -413,7 +413,7 @@ GENUS4_PF_CLASS_L: Dict[Tuple[int, int], Fraction] = {
     (1, 5): Fraction(-515, 9216),
     (2, 4): Fraction(421, 221184),
     (3, 3): Fraction(-7, 196608),
-    (4, 2): Fraction(5, 15925248),
+    (4, 2): Fraction(1, 1769472),
     (1, 3): Fraction(-19319, 27648),
     (2, 2): Fraction(9223, 331776),
     (1, 2): Fraction(2317, 1536),

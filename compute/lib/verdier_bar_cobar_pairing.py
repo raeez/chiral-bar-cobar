@@ -13,9 +13,10 @@ CRITICAL DISTINCTIONS (CLAUDE.md):
   A:    the algebra
   B(A): the bar coalgebra
   A^i = H*(B(A)): the Koszul dual coalgebra
-  A^! = (A^i)^v:  the Koszul dual algebra (linear dual of A^i)
+  A^! = (A^i)^v:  the Koszul dual algebra after Verdier/linear duality
   Omega(B(A)) = A (bar-cobar INVERSION, not duality)
   A^! is obtained by VERDIER/LINEAR duality, not cobar
+  Z_ch^der(A) is the Hochschild derived-centre bulk slot, not bar/cobar
 
 GRADING: cohomological (|d| = +1). Bar uses DESUSPENSION.
 
@@ -32,6 +33,22 @@ from typing import Dict, List, Optional, Tuple
 
 import numpy as np
 from sympy import Matrix, Rational, zeros, eye
+
+
+TYPED_KOSZUL_OBJECTS: Tuple[str, ...] = (
+    "A",
+    "B(A)",
+    "A^i",
+    "A^!",
+    "Omega(B(A))",
+    "Z_ch^der(A)",
+)
+
+STALE_BAR_COHOMOLOGY_DUAL_SHORTHAND = "A^! = " + "(H*(B(A)))^v"
+FORBIDDEN_OMEGA_TO_DUAL = "Omega(B(A)) = " + "A^!"
+FORBIDDEN_BAR_TO_DUAL = "B(A) = " + "A^!"
+FORBIDDEN_BULK_TO_BAR = "Z_ch^der(A) = " + "B(A)"
+FORBIDDEN_BULK_TO_DUAL = "Z_ch^der(A) = " + "A^!"
 
 
 # ============================================================================
@@ -893,6 +910,12 @@ def koszul_dual_from_bar(dga: DGA, max_tensor: int = 3) -> Dict[str, object]:
         "A_i_dims": bar_coh,  # dim A^i at each degree
         "A_dual_dims": bar_coh,  # dim A^! = dim (A^i)^v (same dims, dual space)
         "bar_total_dims": {n: bar.dim_at(n) for n in range(1, max_tensor + 1)},
+        "object_types": {
+            "A^i": "bar-dual coalgebra",
+            "A^!": "Verdier/linear-dual algebra",
+        },
+        "construction_path": ("B(A)", "A^i = H*(B(A))", "A^! = (A^i)^v"),
+        "forbidden_shorthand": STALE_BAR_COHOMOLOGY_DUAL_SHORTHAND,
     }
 
 
@@ -936,7 +959,7 @@ def verify_koszul_pair(dga: DGA, max_tensor: int = 3) -> Dict[str, object]:
        (bar cohomology concentrated at the expected degrees)
     2. Omega(B(A)) -> A is a quasi-isomorphism
     3. The Verdier pairing is non-degenerate and descends to cohomology
-    4. A^! = H*(B(A))^v has the right structure
+    4. A^! is the Verdier/linear dual algebra of A^i = H*(B(A))
     """
     bar_coh = koszul_dual_from_bar(dga, max_tensor)
     qi = verify_quasi_iso(dga, max_tensor)
@@ -987,19 +1010,110 @@ def bar_cobar_inversion_table(families: Optional[Dict[str, DGA]] = None) -> Dict
 # Four objects distinguished
 # ============================================================================
 
-def four_objects_distinguished(dga: DGA, max_tensor: int = 3) -> Dict[str, object]:
-    """Verify A, B(A), A^i = H*(B(A)), A^! = (A^i)^v are all DIFFERENT.
+def typed_koszul_object_firewall(dga: DGA, max_tensor: int = 3) -> Dict[str, object]:
+    """Return the typed firewall for bar, dual, inversion, and bulk objects.
 
-    CLAUDE.md critical pitfall: these four objects must never be conflated.
+    The finite engine computes dimensions for the bar, bar cohomology, and
+    cobar inversion pieces.  The derived-centre slot is recorded as a typed
+    Hochschild target because it is not computed by this bar-cobar routine.
     """
     bar = bar_complex_finite(dga, max_tensor)
+    cobar = cobar_complex_finite(bar, max_tensor)
     bar_coh = koszul_dual_from_bar(dga, max_tensor)
+
+    ba_dims = {n: bar.dim_at(n) for n in range(1, max_tensor + 1)}
+    ai_dims = bar_coh["A_i_dims"]
+    cobar_dims = {n: cobar.dim_at(n) for n in range(1, max_tensor + 1)}
+
+    objects = {
+        "A": {
+            "kind": "dg algebra",
+            "construction": "input finite-dimensional algebra",
+            "dims": {"underlying": dga.dim},
+        },
+        "B(A)": {
+            "kind": "conilpotent bar coalgebra",
+            "construction": "T^c(s^{-1}bar A), truncated in this finite check",
+            "dims": ba_dims,
+        },
+        "A^i": {
+            "kind": "bar-dual coalgebra",
+            "construction": "H*(B(A)) before Verdier or linear duality",
+            "dims": ai_dims,
+        },
+        "A^!": {
+            "kind": "Verdier/linear-dual algebra",
+            "construction": "(A^i)^v after the finite-type or completed Verdier branch",
+            "dims": ai_dims.copy(),
+            "source_object": "A^i",
+        },
+        "Omega(B(A))": {
+            "kind": "cobar algebra and inversion object",
+            "construction": "Omega applied to B(A), with augmentation Omega(B(A)) -> A",
+            "dims": cobar_dims,
+        },
+        "Z_ch^der(A)": {
+            "kind": "chiral Hochschild derived-centre bulk",
+            "construction": "ChirHoch^bullet(A,A), not a bar/cobar output",
+            "dims": "not computed by this finite bar-cobar engine",
+        },
+    }
+
+    distinct_from = {
+        name: tuple(other for other in TYPED_KOSZUL_OBJECTS if other != name)
+        for name in TYPED_KOSZUL_OBJECTS
+    }
+    for name, data in objects.items():
+        data["distinct_from"] = distinct_from[name]
+
+    return {
+        "objects": objects,
+        "typed_objects": TYPED_KOSZUL_OBJECTS,
+        "branch_order": {
+            "koszul_dual": ("B(A)", "A^i", "A^!"),
+            "bar_cobar_inversion": ("B(A)", "Omega(B(A))", "A"),
+            "bulk": ("A", "Z_ch^der(A)"),
+        },
+        "valid_identifications": (
+            "A^i = H*(B(A))",
+            "A^! = (A^i)^v after Verdier/linear duality",
+            "Omega(B(A)) -> A is bar-cobar inversion",
+            "Z_ch^der(A) = ChirHoch^bullet(A,A)",
+        ),
+        "forbidden_shorthands": (
+            STALE_BAR_COHOMOLOGY_DUAL_SHORTHAND,
+            FORBIDDEN_OMEGA_TO_DUAL,
+            FORBIDDEN_BAR_TO_DUAL,
+            FORBIDDEN_BULK_TO_BAR,
+            FORBIDDEN_BULK_TO_DUAL,
+        ),
+        "forbidden_collapses": (
+            ("A^i", "A^!"),
+            ("B(A)", "A^!"),
+            ("Omega(B(A))", "A^!"),
+            ("Z_ch^der(A)", "B(A)"),
+            ("Z_ch^der(A)", "A^!"),
+            ("Z_ch^der(A)", "Omega(B(A))"),
+        ),
+    }
+
+
+def four_objects_distinguished(dga: DGA, max_tensor: int = 3) -> Dict[str, object]:
+    """Verify A, B(A), A^i, A^!, Omega(B(A)), and Z_ch^der(A) are typed apart.
+
+    The legacy name is retained for existing callers.
+    """
+    bar = bar_complex_finite(dga, max_tensor)
+    cobar = cobar_complex_finite(bar, max_tensor)
+    bar_coh = koszul_dual_from_bar(dga, max_tensor)
+    firewall = typed_koszul_object_firewall(dga, max_tensor)
 
     a_dim = dga.dim
     ba_dims = {n: bar.dim_at(n) for n in range(1, max_tensor + 1)}
     ai_dims = bar_coh["A_i_dims"]
     # A^! = (A^i)^v has same dimensions as A^i but is the LINEAR DUAL (an algebra, not coalgebra)
     adual_dims = ai_dims.copy()
+    omega_dims = {n: cobar.dim_at(n) for n in range(1, max_tensor + 1)}
 
     # All four are different objects
     results = {
@@ -1007,6 +1121,8 @@ def four_objects_distinguished(dga: DGA, max_tensor: int = 3) -> Dict[str, objec
         "B(A)_dims": ba_dims,
         "A^i_dims": ai_dims,
         "A^!_dims": adual_dims,
+        "Omega(B(A))_dims": omega_dims,
+        "Z_ch^der(A)_type": "chiral Hochschild derived-centre bulk",
         "A_neq_BA": a_dim != sum(ba_dims.values()),
         "A_neq_Ai": a_dim != sum(ai_dims.values()) or dga.name != "",
         "BA_neq_Ai": sum(ba_dims.values()) != sum(ai_dims.values()),
@@ -1014,7 +1130,13 @@ def four_objects_distinguished(dga: DGA, max_tensor: int = 3) -> Dict[str, objec
         # A^i is a COALGEBRA, A^! is an ALGEBRA
         "Ai_is_coalgebra": True,
         "Adual_is_algebra": True,
+        "Omega_is_cobar_inversion": True,
+        "Zch_is_derived_center_bulk": True,
         "Ai_Adual_same_dims_different_structure": True,
+        "B_Ai_Adual_Omega_Z_typed_apart": True,
+        "typed_firewall": firewall,
+        "forbidden_shorthands": firewall["forbidden_shorthands"],
+        "forbidden_collapses": firewall["forbidden_collapses"],
     }
     return results
 

@@ -41,7 +41,8 @@ the degree-zero cohomology
 $Z_{\mathrm{ch}}(\cA)=\ChirHoch^0(\cA,\cA)$.
 Only degree-zero closed cochains define ordinary central classes.
 Higher Hochschild classes are deformations, obstructions, and
-bulk-to-boundary operations, not elements of the ordinary center.
+closed-sector operations acting on the boundary algebra, not elements
+of the ordinary center.
 The brace structure is forced on the local completed surface: among
 continuous dg algebras receiving a map from every local closed algebra
 that acts on~$\cA$, the chiral Hochschild cochains are the terminal
@@ -51,11 +52,13 @@ theorem (Theorem~\ref{thm:chiral-deligne-tamarkin}):
 the pair
 $\bigl(C^\bullet_{\mathrm{ch}}(\cA, \cA),\, \cA\bigr)$
 is the terminal local chiral Swiss-cheese pair over~$\cA$.
-Every continuous local bulk action factors uniquely through this
-derived center. This is not the Drinfeld center of a monoidal
-module category and not the naive center $H^0$ alone; categorical
-center comparisons require the compact-generator Hochschild
-identification of Theorem~\ref{thm:derived-center-hochschild}.
+Every continuous local closed-sector action factors uniquely through
+this derived center. Physical realization requires a separate
+open/closed comparison map and analytic completion. This is not the Drinfeld center of a
+monoidal module category and not the naive center $H^0$ alone;
+categorical center comparisons require the compact-generator
+Hochschild identification of
+Theorem~\ref{thm:derived-center-hochschild}.
 
 The theory produces sharp results. For the Virasoro algebra:
 $\ChirHoch^*(\mathrm{Vir}_c)$ is concentrated in degrees
@@ -420,7 +423,7 @@ curve-dependent data \textup{(}Green's functions, period
 corrections\textup{)} invisible to the algebraic model.
 \end{proposition}
 
-\begin{proof}[Proof sketch]
+\begin{proof}
 The argument parallels the bar complex comparison
 (Theorem~\ref{thm:geometric-equals-operadic-bar}).
 
@@ -1452,9 +1455,8 @@ statement, supplied only under the compact-generator hypotheses of
 Theorem~\ref{thm:derived-center-hochschild}. Every closed
 observable in any Swiss-cheese pair $(B, A, \mu)$ maps
 uniquely to a chiral Hochschild cochain via evaluation
-on the open sector. Terminality (rather than initiality)
-is the correct universal property for centers: the center
-receives maps from all closed algebras acting on~$A$,
+on the open sector. The center is the terminal object in this
+category: it receives maps from all closed algebras acting on~$A$,
 just as the center $Z(R)$ of a ring~$R$ is the largest
 central commutative subalgebra, i.e., the terminal object in the
 category of commutative algebras whose maps to~$R$ land in central
@@ -1897,14 +1899,15 @@ $(X, D, \tau)$ is developed in two directions:
  (Definition~\ref{def:oc-modular-convolution}) carries the
  dg~Lie structure with seven-component differential.
 
-\item \emph{Holographic.}
+\item \emph{Open/closed.}
  The open/closed realization
  (\S\ref{sec:thqg-open-closed-realization}) identifies the
  cohomology of the chiral derived center
  $H^*(Z^{\mathrm{der}}_{\mathrm{ch}}(\cA))
  = H^*(C^\bullet_{\mathrm{ch}}(\cA, \cA), \delta)$
- with the universal bulk of the holographic modular Koszul datum
- (Theorem~\ref{thm:thqg-swiss-cheese}). The local-global bridge
+ with the cochain-level open/closed closed-sector slot attached to~$\cA$
+ (Theorem~\ref{thm:thqg-swiss-cheese}). A physical holographic
+ realization requires the additional HT comparison data. The local-global bridge
  (Theorem~\ref{thm:thqg-local-global-bridge}) restricts the
  bordered FM convolution to a formal disc, recovering
  $C^\bullet_{\mathrm{ch}}(\cA, \cA)$.
@@ -1935,7 +1938,10 @@ theorem guarantees this restriction is unique.
 
 The general theory identifies the chiral derived center
 $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ with the completed brace dg
-algebra $C^\bullet_{\mathrm{ch}}(\cA,\cA)$. Its cohomology
+algebra $C^\bullet_{\mathrm{ch}}(\cA,\cA)$. It is neither the bar
+coalgebra $\barB^{\mathrm{ch}}(\cA)$ nor the Verdier--Koszul dual
+algebra $\cA^!$; the bar object enters only as the two-sided diagonal
+resolution used to compute Hochschild cochains. Its cohomology
 \[
 H^*\bigl(Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)\bigr)
 =
@@ -1945,12 +1951,17 @@ H^*(C^\bullet_{\mathrm{ch}}(\cA, \cA), \delta)
 \]
 is the graded vector space computed below. The standard families
 (Heisenberg, affine Kac--Moody, Virasoro) admit explicit
-computations of this cohomology.
+computations of the completed scalar finite-window cohomology on the
+generic PBW/Koszul locus. Positive conformal-weight classes are
+excluded only where the stated finite-window acyclicity is invoked;
+Theorem~H supplies cohomological amplitude and finite graded pieces,
+not a universal total-dimension bound.
 These computations verify the general structure of Theorem~H
 (polynomial growth) and provide concrete generators, products,
 brackets, and BV operators.
 
-\begin{proposition}[Explicit derived center: Heisenberg, affine $\widehat{\mathfrak{sl}}_2$,
+\begin{proposition}[Scalar finite-window derived-center cohomology:
+Heisenberg, affine $\widehat{\mathfrak{sl}}_2$,
 Virasoro]
 \label{prop:derived-center-explicit}
 \index{derived center!Heisenberg|textbf}
@@ -1973,11 +1984,13 @@ Virasoro]
  $1 \in \ChirHoch^0$ \textup{(}the vacuum, center of~$\mathfrak{H}_k$\textup{)},
  $\xi_k \in \ChirHoch^1$ \textup{(}the level deformation
  $k \mapsto k + \epsilon$\textup{)}, and
- $\eta \in \ChirHoch^2$ \textup{(}the dual vacuum, the obstruction
- class of the Koszul dual
- $\mathfrak{H}_k^! = \operatorname{Sym}^{\mathrm{ch}}(V^*)$\textup{)}.
- All cohomology is concentrated at conformal weight~$0$.
- The total cohomology of the derived-center complex is
+ $\eta \in \ChirHoch^2$ \textup{(}the dual-vacuum endpoint of the
+ diagonal Ext computation, detected through the Verdier partner
+ $\mathfrak{H}_k^! = \operatorname{Sym}^{\mathrm{ch}}(V^*)$ but not
+ an element of that algebra\textup{)}.
+ In the scalar finite-window complex computed here, the surviving
+ classes have conformal weight~$0$.
+ The scalar finite-window cohomology of the derived-center complex is
  $H^*(Z^{\mathrm{der}}_{\mathrm{ch}}(\mathfrak{H}_k))
  \cong \bC \oplus \bC[-1] \oplus \bC[-2]$.
 
@@ -2018,10 +2031,11 @@ Virasoro]
  \ChirHoch^2 = \bC \cdot \Theta,
  \]
  with Hilbert series $P(t) = 1 + t^2$.
- The weight grading of $\ChirHoch^2$ is concentrated at conformal
- weight~$0$: the single deformation parameter is the central
- charge~$c$. The deformation class $\Theta \in \ChirHoch^2$ is the
- universal central charge deformation cocycle.
+ In the scalar finite-window Virasoro complex, the surviving
+ $\ChirHoch^2$ class has conformal weight~$0$: the single deformation
+ parameter is the central charge~$c$. The deformation class
+ $\Theta \in \ChirHoch^2$ is the universal central charge deformation
+ cocycle.
  Note that the continuous Lie algebra cohomology
  $H^*_{\mathrm{cont}}(\mathrm{Vect}(S^1);\,\bC)$
  (Gel'fand--Fuchs cohomology) is infinite-dimensional; it is a
@@ -2044,11 +2058,12 @@ Since $\mathfrak{H}_k$ is quadratic (only binary OPE), it is
 chirally Koszul
 (Corollary~\ref{cor:universal-koszul}), and the bar cohomology is
 $H^*(B(\mathfrak{H}_k)) = \operatorname{Sym}^{\mathrm{ch}}(V^*[1])$,
-concentrated in bar degree~$1$.
+the Koszul dual coalgebra generated in bar degree~$1$.
 
 The chiral Hochschild cohomology $\ChirHoch^n(\mathfrak{H}_k,
 \mathfrak{H}_k)$ for a chirally Koszul algebra with one
-weight-$1$ generator is computed by the standard Ext argument:
+weight-$1$ generator is computed on the completed scalar finite-window
+complex by the standard Ext argument:
 $\ChirHoch^n = \operatorname{Ext}^n_{\cA\text{-bimod}}(\cA, \cA)$.
 For the polynomial vertex algebra on one generator, the bimodule
 Ext groups are $\bC$ in degrees $0$, $1$, $2$ and zero thereafter,
@@ -2056,10 +2071,11 @@ by the three-term resolution
 $0 \to \cA \otimes V^* \otimes \cA \to \cA \otimes V \otimes \cA
 \to \cA \otimes \cA \to \cA \to 0$
 (the Koszul resolution of the diagonal bimodule).
-The weight-$0$ concentration follows from the fact that the
-generating space $V = \bC\cdot a$ is one-dimensional: all
-cocycles are scalar multiples of the identity, level, and
-obstruction cocycles.
+The scalar weight-$0$ concentration follows from the fact that the
+generating space $V = \bC\cdot a$ is one-dimensional and the
+finite-window Koszul resolution has no positive-weight cohomology:
+all surviving cocycles are scalar multiples of the identity, level,
+and obstruction cocycles.
 
 \textbf{Part~(ii).}
 Affine $\widehat{\mathfrak{sl}}_{2,k}$ is generated by three
@@ -2073,9 +2089,13 @@ $V = \mathfrak{sl}_2$ (three-dimensional), giving
 $\ChirHoch^0 = \bC$ (center = vacuum at generic level),
 $\ChirHoch^1 \cong V = \mathfrak{sl}_2$ (outer derivations: the space of
 infinitesimal level-preserving deformations is parametrized by the
-Lie algebra itself), and $\ChirHoch^2 = \bC$ (the dual of the center of
-the Koszul dual $\widehat{\mathfrak{sl}}_{2, -k-4}$, which is
-one-dimensional at generic dual level).
+Lie algebra itself), and $\ChirHoch^2 = \bC$ (the dual of the
+vacuum line in the Verdier--Koszul partner
+$\widehat{\mathfrak{sl}}_{2, -k-4}$ at generic dual level). This is
+the endpoint of the diagonal Hochschild Ext calculation, not an
+identification of
+$Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\mathfrak{sl}_2))$ with the
+center of the dual algebra.
 The vanishing $\ChirHoch^n = 0$ for $n \geq 3$ follows from the
 three-term Koszul resolution.
 At $k = -2$: the Sugawara construction is undefined, the
@@ -2097,12 +2117,14 @@ one copy of~$\bC$ in degree~$0$ (the vacuum) and one copy
 in degree~$2$ (the central charge deformation).
 The degree-$2$ generator $\Theta$ represents
 the deformation $c \mapsto c + \epsilon$.
-The weight grading: $\Theta$ sits at conformal weight~$0$
+The scalar weight grading: $\Theta$ sits at conformal weight~$0$
 because the deformation $c \mapsto c + \epsilon$ does not shift
-conformal weights. The Virasoro Jacobi identity
-(associativity of the OPE) forces all higher-weight deformations
-within $\ChirHoch^2$ to vanish: there is no independent weight-$4$
-deformation, no weight-$6$ deformation, etc.
+conformal weights. The finite-window acyclicity supplied by
+Theorem~\ref{thm:hochschild-polynomial-growth}, with the Virasoro
+Jacobi identity as its local OPE input, makes all positive-weight
+degree-$2$ deformation candidates boundaries. Without that acyclicity
+hypothesis this proposition would assert only the degree range, not
+an all-weight total dimension.
 \end{proof}
 
 The $\mathfrak{sl}_2$ computation in Part~(ii) already exhibits the
@@ -2238,13 +2260,14 @@ not a general identification of
 $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ with the naive center of
 $\cA^!$; the full brace dg equivalence is the separate conjectural
 surface of Conjecture~\ref{conj:derived-center-koszul-equivalence}.
-The Koszul dual of $V_k(\fg)$ under chiral Feigin--Frenkel
-self-duality is $V_{-k - 2h^\vee}(\fg)$: the dual level is the
-fixed point of the involution $k \mapsto -k - 2h^\vee$ of the
-Kac--Moody complementarity locus, and the Sugawara conformal
-structure transports across the involution with central-charge
-flip $c(k) + c(-k-2h^\vee) = 2\dim(\fg)$ (compatible with the
-Trinity $K$ value $2\dim(\fg)$ for affine Kac--Moody).
+The Verdier--Koszul partner of $V_k(\fg)$ on the generic affine
+lane is $V_{-k - 2h^\vee}(\fg)$. This is the
+Feigin--Frenkel level involution on the complementarity locus, not
+the bar-cobar counit $\Omega B(V_k(\fg))\to V_k(\fg)$. The Sugawara
+conformal structure transports across this involution with
+central-charge flip
+$c(k) + c(-k-2h^\vee) = 2\dim(\fg)$, compatible with the Trinity
+$K$ value $2\dim(\fg)$ for affine Kac--Moody.
 
 The condition that $k$ avoid the Kac--Kazhdan walls is preserved by
 the involution $k \mapsto -k - 2h^\vee$; in particular both levels
@@ -2635,7 +2658,8 @@ $[\xi_k, \eta] = -\eta$. RHS: $\Delta(0) - (\Delta\xi_k)\eta
 
 \textit{Case $(\eta, \eta)$:}
 $[\eta, \eta] = 0$. Both sides vanish since $\eta^2 = 0$,
-$\Delta\eta = 0$, and the bracket lands in $\ChirHoch^3 = 0$. Match.
+$\Delta\eta = 0$, and the bracket lands in the vanishing curve-level
+group $\ChirHoch^3_{\mathrm{curve}} = 0$. Match.
 \end{proof}
 
 \begin{proposition}[Chiral Hochschild cohomology of commutative chiral algebras
@@ -2746,8 +2770,9 @@ $\widehat{\mathfrak{sl}}_{2,k}$:
 the Feigin--Frenkel involution sends $k \mapsto -k - 2h^\vee = -k - 4$,
 so $\kappa^! = 3(-k-4+2)/4 = 3(-k-2)/4 = -3(k+2)/4 = -\kappa$,
 giving $\kappa + \kappa^! = 0$.
-For Virasoro: the Koszul dual is $\mathrm{Vir}_{26-c}$
-(Example~\ref{ex:virasoro-koszul-dual}), so
+For Virasoro: the Verdier--Koszul partner on the matter-ghost lane is
+$\mathrm{Vir}_{26-c}$
+\textup{(}Example~\ref{ex:virasoro-koszul-dual}\textup{)}, so
 $\kappa + \kappa^! = c/2 + (26-c)/2 = 13$.
 This non-vanishing is the complementarity asymmetry.
 \end{proof}
@@ -2765,13 +2790,19 @@ landscape; \ClaimStatusConditional]
 Verdier duality on the bar coalgebra.]}
 Let $A$ be a standard chiral algebra of the Vol~I landscape -- a
 curved $\Ainf$-chiral algebra satisfying the standing assumptions of
-\textup{\S\ref{sec:chiral-center-theorem}}, lying in one of the four
-shadow archetypes $\mathsf{G}/\mathsf{L}/\mathsf{C}/\mathsf{M}$ with
-shadow-tower depth $r_{\max}\in\{2,3,4,\infty\}$
-\textup{(}Theorem~\textup{\ref{thm:quadrichotomy}}\textup{)}. Let
+\textup{\S\ref{sec:chiral-center-theorem}}. Parts \textup{(a)} and
+\textup{(b)} concern the four shadow archetypes
+$\mathsf{G}/\mathsf{L}/\mathsf{C}/\mathsf{M}$ with shadow-tower depth
+$r_{\max}\in\{2,3,4,\infty\}$
+\textup{(}Theorem~\textup{\ref{thm:quadrichotomy}}\textup{)}. Part
+\textup{(c)} enlarges only the \emph{computed scalar surface}, by
+adjoining the principal $\mathcal W_N$ tower and the Vol~III
+$\mathcal B$-row Mukai witness after their Verdier partners,
+anomaly ratios, and conductors have been verified. Let
 $A^!$ denote its Verdier dual on $\operatorname{Ran}(X)$
-\textup{(}the chiral Koszul partner of
-Theorem~\textup{\ref{thm:bar-cobar-isomorphism-main}}\textup{)} and
+\textup{(}the chiral Koszul partner on the stated Verdier lane, not
+the bar-cobar inversion counit
+$\Omega B(A)\to A$\textup{)} and
 write
 \[
 K^\kappa(A) \;:=\; \kappa(A) + \kappa(A^!) ,
@@ -2798,8 +2829,10 @@ Theorem~\ref{thm:C-PTVV-alternative}.
 The ordered $E_1$ bar and chiral Hochschild complexes are constructed
 before passing to $\Sigma_n$-coinvariants; $K^\kappa$ is the symmetric
 scalar projection after the averaging map. No assertion below recovers
-ordered cochains, brace operations, or bulk fields from the averaged
-scalar.
+ordered cochains, brace operations, or physical closed-sector fields
+from the averaged scalar, and the $\mathcal B$-row in \textup{(c)}
+is not promoted to a derived-center equivalence without the completed
+PBW/perfectness hypotheses named in this paragraph.
 \textup{(a)} The scalar sum factors through the anomaly ratio:
 \begin{equation}\label{eq:thm-C-bridge}
 K^\kappa(A) \;=\; \varrho(A) \cdot K(A),
@@ -2905,9 +2938,11 @@ $\kappa(\widehat{\fg}_k)=\dim(\fg)(k+h^\vee)/(2h^\vee)$ and the
 Feigin--Frenkel involution $k\mapsto -k-2h^\vee$ sends
 $\kappa\mapsto -\kappa$, so $K^\kappa=0$. In the
 level-symmetrised form $\varrho_{\mathrm{sym}}=0$ with $K=2\dim\fg$,
-$\varrho_{\mathrm{sym}}K=0$. At the critical fixed point
-$k=-h^\vee$ both $\kappa(\widehat{\fg}_k)$ and
-$\kappa(\widehat{\fg}_k^!)$ vanish.
+$\varrho_{\mathrm{sym}}K=0$. The fixed point
+$k=-h^\vee$ is a limiting scalar point of this involution: the
+formula gives $\kappa=0$, but the affine algebra is critical, the
+Feigin--Frenkel center jumps to opers, and the generic derived-center
+calculation above does not apply there.
 
 \item \emph{$\beta\gamma_\lambda$.}
 $\kappa(\beta\gamma_\lambda)=6\lambda^2-6\lambda+1$ with partner
@@ -2994,8 +3029,9 @@ lattice VOAs of every rank sit in the class-$\mathsf{G}$ zero locus.
 $\mathcal{W}(p)$ of Kausch has $c = 1 - 6(p-1)^2/p$ and is of
 class~$\mathsf{M}$-logarithmic. On the scalar lane
 $\kappa = c/2 = (p - 6(p-1)^2/p)/2$, with Koszul dual in the same
-conformal family \textup{(}not the triplet itself but the
-Virasoro-type dual $c'=26-c$ after localising to the rational locus;
+conformal family \textup{(}the Virasoro-type Verdier partner
+$c'=26-c$ after localising to the rational locus, not an
+identification with the triplet algebra;
 see Theorem~\textup{\ref{thm:census-witness-complementarity}}\textup{)},
 so $K^\kappa = 13$ on the rational scalar reduction. The logarithmic
 structure of the triplet does not shift the scalar sum; the
@@ -3084,5 +3120,6 @@ The stratification parameterises the landmark set
 $\{0, 98/3, 250/3\}$ by the Baily--Borel boundary geometry of
 $\overline{\mathcal A}_2$; the value~$13$ appears on the Virasoro
 witness inside the generic stratum, and the value~$8$ appears on the
-Mukai-enhanced K3 witness at the cusp cross-referenced to Vol~III.
+Mukai-enhanced K3 witness at the cusp, with its recognition data in
+Vol~III.
 \end{remark}

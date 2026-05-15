@@ -85,7 +85,7 @@ from compute.lib.cy_factorization_envelope_k3_engine import (
     # Nishinaka
     NishinakaComparison,
     nishinaka_comparison,
-    # Platonic datum
+    # Modular Koszul projection package
     PlatonicDatum,
     boundary_platonic_datum,
     k3_sigma_platonic_datum,
@@ -664,11 +664,11 @@ class TestNishinakaComparison:
 
 
 # =========================================================================
-# Section 12: Platonic datum (6 tests)
+# Section 12: Modular Koszul projection package (6 tests)
 # =========================================================================
 
 class TestPlatonicDatum:
-    """Verify Platonic datum assembly."""
+    """Verify modular Koszul projection package assembly."""
 
     def test_boundary_datum_kappa(self):
         pd = boundary_platonic_datum()
@@ -696,11 +696,11 @@ class TestPlatonicDatum:
 
 
 # =========================================================================
-# Section 13: Koszul duality (6 tests)
+# Section 13: Verdier/Koszul branch data (6 tests)
 # =========================================================================
 
 class TestKoszulDuality:
-    """Verify Koszul dual data and complementarity."""
+    """Verify Verdier/Koszul branch data and complementarity."""
 
     def test_boundary_complementarity_sum(self):
         """kappa + kappa' = 0 for free fields (AP24)."""
@@ -728,7 +728,7 @@ class TestKoszulDuality:
         assert data['kappa_A_dual'] == F(-2)
 
     def test_sigma_c_preserved(self):
-        """Central charge preserved under Koszul duality for sigma models."""
+        """Central charge preserved on the scalar branch package for sigma models."""
         data = k3_sigma_koszul_dual_data()
         assert data['c'] == data['c_dual']
 

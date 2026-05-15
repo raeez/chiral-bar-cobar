@@ -8,11 +8,18 @@ error-correcting code for each chirally Koszul algebra A.  This module
 constructs EXPLICIT codes, verifies the Knill-Laflamme conditions via
 three independent paths, and computes code parameters.
 
+Firewall: Omega(B(A)) -> A is bar-cobar reconstruction.  It does not
+construct A!.  The post-Verdier Koszul dual A! appears only after the
+finite-type/completed Verdier lane represents D_Ran B(A) and the
+completed cobar construction converges.  The derived chiral centre is
+the Hochschild cochain object, not the bar coalgebra and not A!.
+
 The central theorem (G12): KOSZULNESS <=> EXACT QEC.
 
 The code is SYMPLECTIC, not orthogonal:
   - Code subspace C = Q_g(A) (one Lagrangian summand)
-  - Error space C^perp = Q_g(A!) (complementary Lagrangian)
+  - Error space C^perp = Q_g(A!) when the post-Verdier algebra exists;
+    otherwise it is the corresponding Verdier-dual coalgebra lane
   - Verdier isotropy: <C, C>_D = 0 = <C^perp, C^perp>_D
   - Cross-pairing: <v, w>_S = -<v, w>_D (non-degenerate, sign flip)
   - Code rate = 1/2 (Lagrangian = half-dimensional)
@@ -22,7 +29,7 @@ Key objects constructed here:
   2. Knill-Laflamme verification via three independent paths
   3. Code distance from shadow depth and weight enumerators
   4. Encoding/decoding maps from bar-cobar
-  5. Logical operators from A and A!
+  5. Logical operators from A and the post-Verdier dual lane
   6. Threshold error rates from shadow radius
   7. Holographic tensor network from bar graph amplitudes
   8. Decoupling bounds from shadow CohFT
@@ -84,6 +91,39 @@ from compute.lib.entanglement_shadow_engine import (
 
 c_sym = Symbol('c')
 n_sym = Symbol('n', positive=True)
+
+
+KOSZUL_FIREWALL = {
+    'bar_cobar_inversion': (
+        'Omega_X B_X(A) -> A is reconstruction of the input algebra; '
+        'it is not a construction of A!.'
+    ),
+    'bar_dual_coalgebra': (
+        'A^i is the Koszul-dual coalgebra H^*(B_X(A)) on the strict '
+        'square-zero Koszul lane; in curved lanes it requires the '
+        'associated square-zero or coderived replacement.'
+    ),
+    'verdier_koszul_dual': (
+        'A!_infty is obtained from the Verdier-dual bar coalgebra only '
+        'under constructibility, finite-dimensional-stratum, and '
+        'completed cobar convergence hypotheses; the strict finite-type '
+        'quadratic case reduces to A! = (A^i)^vee.'
+    ),
+    'derived_centre': (
+        'Z^der_ch(A) = C^bullet_ch(A,A), the Hochschild bulk object; '
+        'it is not B(A), A^i, A!, or Omega(B(A)).'
+    ),
+    'forbidden_collapse': (
+        'Do not identify the Ran Verdier dual of B(A) with the bar '
+        'coalgebra of A! unless a separate finite-type/completed theorem '
+        'supplies that comparison.'
+    ),
+}
+
+
+def koszul_firewall() -> Dict[str, str]:
+    """Return the bar/Verdier/centre separation used by this engine."""
+    return dict(KOSZUL_FIREWALL)
 
 
 # ===========================================================================
@@ -259,11 +299,18 @@ def symplectic_code_at_weight(family: str, h: int, **kwargs) -> Dict:
     r"""Construct the symplectic code at a given weight level.
 
     Returns the code parameters at weight h:
-      n_h = dim(ambient complex) = dim(V_h(A)) + dim(V_h(A!))
+      n_h = dim(ambient complex) =
+            dim(V_h(A)) plus the paired Verdier-lane dimension
       k_h = dim(code subspace) = dim(V_h(A)) = n_h / 2 (Lagrangian)
       d_h = minimum distance at weight h
 
-    The ambient complex at genus g is C_g(A) = Q_g(A) + Q_g(A!).
+    The ambient complex at genus g is
+    C_g(A) = Q_g(A) + Q_g(A!) only after the finite-type/completed
+    Verdier-Koszul comparison supplies the post-Verdier algebra A!.
+    Before that comparison, the second summand is the Verdier-dual
+    coalgebra lane.  No bar-cobar inversion statement is used to
+    create A!.
+
     At each weight h, dim Q_g(A)|_h = dim V_h(A) at genus 1 (the
     bar cohomology at bar degree 1 and conformal weight h).
 
@@ -272,13 +319,14 @@ def symplectic_code_at_weight(family: str, h: int, **kwargs) -> Dict:
 
     The code distance d_h at each weight level: since the Lagrangian
     splitting is determined by the Verdier involution sigma, and sigma
-    acts by +1 on Q_g(A) and -1 on Q_g(A!), any non-trivial error
-    that is NOT in Q_g(A!) will be detected.  The minimum distance
-    is thus related to the minimum weight of a non-trivial element
-    in Q_g(A!) that has non-zero overlap with Q_g(A) under the
-    Shapovalov form.  Since the cross-pairing is non-degenerate
-    (Lagrangian), d_h >= 1 always; at the scalar level d = 2
-    (the arity filtration distance from thm:hc-shadow-redundancy).
+    acts by +1 on Q_g(A) and -1 on the paired Verdier lane, any
+    non-trivial error outside that lane will be detected.  The
+    minimum distance is thus related to the minimum weight of a
+    non-trivial element in the paired lane that has non-zero overlap
+    with Q_g(A) under the Shapovalov form.  Since the cross-pairing
+    is non-degenerate (Lagrangian), d_h >= 1 always; at the scalar
+    level d = 2 (the arity filtration distance from
+    thm:hc-shadow-redundancy).
 
     >>> code = symplectic_code_at_weight('heisenberg', 2, k=1)
     >>> code['n_h']
@@ -290,8 +338,9 @@ def symplectic_code_at_weight(family: str, h: int, **kwargs) -> Dict:
     """
     # Compute dimension of weight-h subspace for the algebra
     dim_h = _weight_dim(family, h, **kwargs)
-    # For the Koszul dual, the dimension at weight h is
-    # generically the same (by the Lagrangian condition).
+    # For the paired Verdier lane, the dimension at weight h is
+    # generically the same by the Lagrangian condition.  This is not
+    # a bar-cobar construction of A!.
     dim_h_dual = dim_h  # Lagrangian => half-dimensional
 
     n_h = 2 * dim_h  # total ambient
@@ -312,6 +361,8 @@ def symplectic_code_at_weight(family: str, h: int, **kwargs) -> Dict:
         'rate': rate,
         'dim_code': dim_h,
         'dim_error': dim_h_dual,
+        'dual_lane': 'post-Verdier algebra A! only under finite-type/completed hypotheses',
+        'koszul_firewall': koszul_firewall(),
         'lagrangian': True,
         'symplectic': True,
     }
@@ -450,7 +501,9 @@ def knill_laflamme_path1_lagrangian() -> Dict:
       <v, w>_D = <sigma(v), sigma(w)>_D = -<v, w>_D
     => <v, w>_D = 0  (isotropy)
 
-    Same for v, w in C^perp = Q_g(A!) = eigenspace with eigenvalue -1.
+    Same for v, w in C^perp, the -1 eigenspace.  This is written
+    Q_g(A!) only when the finite-type/completed Verdier-Koszul
+    comparison has produced the post-Verdier algebra A!.
 
     This isotropy is the structural prerequisite for QEC:
     code states are invisible to each other under the Verdier pairing.
@@ -484,6 +537,7 @@ def knill_laflamme_path1_lagrangian() -> Dict:
         'kl_genus_1': True,
         'kl_genus_1_reason': 'dim Q_1 = 1 => automatic (1D code => all operators scalar)',
         'kl_higher_genus': 'conjectural (requires anti-unitary sigma)',
+        'koszul_firewall': koszul_firewall(),
     }
 
 
@@ -641,9 +695,11 @@ def knill_laflamme_path3_complementarity(c_val) -> Dict:
 
     The complementarity theorem (Theorem C) provides:
       C_g(A) = Q_g(A) + Q_g(A!)  (Lagrangian splitting)
+        after the finite-type/completed Verdier-Koszul comparison
+        supplies the post-Verdier algebra A!
 
     The code structure is encoded in the complementarity constraint:
-      kappa(A) + kappa(A!) = 13  (Virasoro family)
+      kappa(A) + kappa(A!) = 13  (Virasoro family, on that lane)
 
     The KL condition follows from:
       1. Lagrangian isotropy (Path 1)
@@ -682,6 +738,7 @@ def knill_laflamme_path3_complementarity(c_val) -> Dict:
             'Isotropy of each summand gives the structural KL prerequisite. '
             'The code rate = 1/2 is the maximum for a Lagrangian code.'
         ),
+        'koszul_firewall': koszul_firewall(),
     }
 
 
@@ -819,9 +876,13 @@ def encoding_decoding_structure(family: str, h: int = 2, **kwargs) -> Dict:
     This IS the error correction: encoding followed by decoding
     gives back the original data (up to homotopy).
 
-    IMPORTANT (AP25): bar-cobar inversion recovers A ITSELF.
-    The Koszul dual A! is obtained by VERDIER duality, not cobar.
-    Omega(B(A)) = A (inversion), D_Ran(B(A)) = B(A!) (intertwining).
+    IMPORTANT: bar-cobar inversion recovers A ITSELF.
+    The Koszul dual A! is obtained only by the separate
+    finite-type/completed Verdier route followed by completed cobar.
+    Omega(B(A)) = A is inversion; D_Ran(B(A)) names the Verdier-dual
+    bar-coalgebra lane, not the bar coalgebra of A! by definition.
+    The derived chiral centre is the Hochschild object C^bullet_ch(A,A),
+    not B(A), A^i, A!, or Omega(B(A)).
 
     >>> result = encoding_decoding_structure('heisenberg', h=2)
     >>> result['round_trip']
@@ -830,6 +891,13 @@ def encoding_decoding_structure(family: str, h: int = 2, **kwargs) -> Dict:
     True
     """
     dim_h = _weight_dim(family, h, **kwargs)
+    firewall_note = (
+        'Omega(B(A)) = A (recovers the original algebra). '
+        'A! is post-Verdier: it is obtained only from the '
+        'Verdier-dual bar coalgebra plus completed cobar under '
+        'finite-type/completed hypotheses.  This computation does '
+        'not identify D_Ran(B(A)) with the bar coalgebra of A!.'
+    )
 
     return {
         'family': family,
@@ -850,11 +918,9 @@ def encoding_decoding_structure(family: str, h: int = 2, **kwargs) -> Dict:
         'round_trip': 'quasi-isomorphism',
         'exact_recovery': True,
         'source': 'Theorem B (bar-cobar inversion on Koszul locus)',
-        'note_ap25': (
-            'Omega(B(A)) = A (recovers the ORIGINAL algebra). '
-            'The Koszul dual A! is obtained by Verdier duality: '
-            'D_Ran(B(A)) = B(A!) (intertwining, not inversion).'
-        ),
+        'bar_cobar_firewall_note': firewall_note,
+        'note_ap25': firewall_note,
+        'koszul_firewall': koszul_firewall(),
     }
 
 
@@ -888,11 +954,13 @@ def bar_cobar_round_trip_dimensions(family: str, h_max: int = 6, **kwargs) -> Li
 # ===========================================================================
 
 def logical_operators_from_koszul_pair(family: str, c_val=None, **kwargs) -> Dict:
-    r"""Logical operators from A and A! via complementarity.
+    r"""Logical operators from A and the post-Verdier lane.
 
     In the symplectic code:
       - Logical X operators come from Q_g(A) (the code subspace)
-      - Logical Z operators come from Q_g(A!) (the error/dual subspace)
+      - Logical Z operators come from the paired Verdier lane, written
+        Q_g(A!) only after finite-type/completed Verdier-Koszul
+        hypotheses produce the post-Verdier algebra
       - Commutation: [X_logical, Z_logical] is determined by the
         Verdier cross-pairing <Q_g(A), Q_g(A!)>_D, which is
         non-degenerate (Lagrangian condition).
@@ -925,7 +993,7 @@ def logical_operators_from_koszul_pair(family: str, c_val=None, **kwargs) -> Dic
             'name': 'kappa(A)',
         },
         'Z_logical': {
-            'source': 'Q_g(A!)',
+            'source': 'post-Verdier lane Q_g(A!) when finite-type/completed hypotheses hold',
             'scalar_datum': kappa_z,
             'name': 'kappa(A!)',
         },
@@ -934,13 +1002,15 @@ def logical_operators_from_koszul_pair(family: str, c_val=None, **kwargs) -> Dic
         'commutation_nondegenerate': True,
         'commutation_mechanism': (
             'The Verdier cross-pairing <Q_g(A), Q_g(A!)>_D is non-degenerate '
-            '(Lagrangian condition). This provides the symplectic commutation '
-            'relation for logical operators.'
+            'on the finite-type/completed Verdier-Koszul lane. This provides '
+            'the symplectic commutation relation for logical operators; it is '
+            'not derived from bar-cobar inversion alone.'
         ),
         'complementarity_check': {
             'kappa_sum': kappa_x + kappa_z,
             'self_dual': (kappa_x == kappa_z) if c_val is not None else False,
         },
+        'koszul_firewall': koszul_firewall(),
     }
 
 

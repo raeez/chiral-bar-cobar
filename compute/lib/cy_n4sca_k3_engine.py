@@ -1,26 +1,18 @@
-r"""N=4 superconformal algebra at c=6 from K3 sigma model.
+r"""Small N=4 superconformal algebra at c=6 from the K3 sigma model.
 
 MATHEMATICAL FRAMEWORK
 ======================
 
-The chiral algebra of the K3 sigma model is a c=6 N=(4,4) superconformal
-vertex algebra.  The SMALL N=4 superconformal algebra (SCA) at central
-charge c = 6k/(k+2) with k=1 gives c=3/2; the K3 sigma model sits at
-c=6, which corresponds to the k -> infinity FREE-FIELD LIMIT of the small
-N=4, or equivalently to a direct sum of 4 free bosons + 4 free fermions
-(the sigma model target is a 4-real-dimensional HyperKaehler manifold).
-
-CRITICAL DISTINCTION: The "N=4 SCA at c=6" relevant to K3 is NOT the
-small N=4 at finite level.  It is the LARGE N=4 SCA (or more precisely,
-the N=4 structure inherited from the K3 sigma model).  The generators:
+The chiral algebra of the K3 sigma model contains the small N=4
+superconformal algebra at central charge c=6. In the normalization used
+here the SU(2)_R current algebra has level k_R=1 and c=6k_R. The primary
+small-N=4 generators are:
 
   T  (weight 2, bosonic)          — energy-momentum tensor
   G^+, G^-, Gtilde^+, Gtilde^-   — 4 supercharges (weight 3/2, fermionic)
   J^{++}, J^{--}, J^3            — SU(2)_R currents (weight 1, bosonic)
-  Jtilde^3                        — U(1) current (weight 1, bosonic)
 
-At c=6 with SU(2)_R at level k=1 (since c = 6k for the free-field
-realization, giving k=1):
+At c=6 with SU(2)_R at level k_R=1:
 
 OPE STRUCTURE (c=6, su(2) level k_R = 1):
   T(z)T(w) ~ 3/(z-w)^4 + 2T/(z-w)^2 + dT/(z-w)
@@ -40,7 +32,7 @@ MODULAR CHARACTERISTIC (the key computation):
   The modular characteristic kappa(A_{K3}) of the K3 sigma model VOA
   is kappa = 2 (the complex dimension of K3).
 
-  This is NOT obtainable by naive summation of subalgebra kappas:
+  This is not obtained by naive summation of subalgebra kappas:
   - kappa(Vir_6) = c/2 = 3  (Virasoro alone)
   - kappa(su(2)_1) = dim(su(2))*(1+2)/(2*2) = 9/4  (affine su(2) at level 1)
   The full N=4 algebra has kappa = 2 because the supersymmetry constraints
@@ -49,7 +41,7 @@ MODULAR CHARACTERISTIC (the key computation):
   Independent verification:
   (a) Geometric: kappa(CY_d sigma model) = d for CY d-fold (d=2 for K3)
   (b) Character: F_1 = kappa/24 = 2/24 = 1/12 matches the genus-1 anomaly
-  (c) Complementarity: kappa(A) + kappa(A!) = 0 gives kappa! = -2
+  (c) Verdier dual branch: kappa(A) + kappa(A^!) = 0 gives kappa(A^!) = -2
 
 ELLIPTIC GENUS:
   Z_{K3}(tau, z) = 2*phi_{0,1}(tau, z)
@@ -58,9 +50,9 @@ ELLIPTIC GENUS:
 
   Fourier expansion: phi_{0,1} = sum c(n,l) q^n y^l where
   c(n,l) depends only on the discriminant D = 4n - l^2.
-  Discriminant coefficients: c(-1) = 2, c(0) = -20 ... wait, let me be
-  precise.  For 2*phi_{0,1}:
-    c(0, +/-1) = 2 each, c(0, 0) = 20
+  Discriminant coefficients for phi_{0,1}: f(-1)=1, f(0)=10.
+  For Z_{K3}=2*phi_{0,1}:
+    c(0,+/-1) = 2 each, c(0,0) = 20
   so Z_{K3} at q^0: 2y + 20 + 2y^{-1} (the chi_y genus of K3).
 
 BPS DECOMPOSITION (Mathieu Moonshine):
@@ -72,14 +64,9 @@ BPS DECOMPOSITION (Mathieu Moonshine):
   These are dimensions of M24 representations.
 
 BAR COMPLEX:
-  B(A_{K3}) has arity 1 = generators = {T, G^+, G^-, Gtilde^+, Gtilde^-, J^3, J^{++}, J^{--}, Jtilde^3}
-  (9 generators at the primary level for the small N=4 at generic c; at c=6 k_R=1
-   the Jtilde^3 is an additional U(1) current).
-
-  The small N=4 SCA at c = 6k/(k+2) has generators:
+  The small N=4 SCA at c = 6k_R has generators:
     T (h=2), 4 supercharges G^{a,alpha} (h=3/2), 3 SU(2)_R currents J^a (h=1).
-  Total: 1 + 4 + 3 = 8 primary generators (or 7 for the small N=4 without the
-  additional U(1) which is present only in the large N=4).
+  Total: 1 + 4 + 3 = 8 primary generators.
 
   For the K3 sigma model (c=6), we work with the SMALL N=4 structure:
     Generators: T, G^+, G^-, Gtilde^+, Gtilde^-, J^{++}, J^{--}, J^3
@@ -99,6 +86,13 @@ CONVENTIONS:
   - kappa(A) = modular characteristic (AP20, AP48)
   - eta(q) = q^{1/24} prod(1-q^n) (AP46)
   - Desuspension: |s^{-1}v| = |v| - 1 (AP45)
+  - K3 Ext Euler pairings live on K_num(D^b Coh(K3)); Kontsevich-Soibelman
+    skew forms live in CY3 Hall/DT theory. This engine uses only the K3
+    N=4 chiral algebra and does not identify the two pairings.
+  - The elliptic genus, chiral algebra, shadow-depth class, and Calabi-Yau
+    package invariants are separate entries: Z_{K3}=2phi_{0,1}, A_{K3}
+    is the c=6 small-N=4 chiral algebra, the shadow class is M, and
+    kappa(A_{K3})=2.
 
 References:
   Eguchi-Taormina, Phys. Lett. B 210 (1988) 125
@@ -326,8 +320,8 @@ class N4SCAData:
             N4SCAGenerator("T", Fraction(2), 0, Fraction(0), "Virasoro"),
             N4SCAGenerator("G+", Fraction(3, 2), 1, Fraction(1, 2), "supercharge"),
             N4SCAGenerator("G-", Fraction(3, 2), 1, Fraction(-1, 2), "supercharge"),
-            N4SCAGenerator("Gt+", Fraction(3, 2), 1, Fraction(1, 2), "supercharge tilde"),
-            N4SCAGenerator("Gt-", Fraction(3, 2), 1, Fraction(-1, 2), "supercharge tilde"),
+            N4SCAGenerator("Gt+", Fraction(3, 2), 1, Fraction(-1, 2), "supercharge tilde"),
+            N4SCAGenerator("Gt-", Fraction(3, 2), 1, Fraction(1, 2), "supercharge tilde"),
             N4SCAGenerator("J++", Fraction(1), 0, Fraction(1), "SU(2)_R raising"),
             N4SCAGenerator("J--", Fraction(1), 0, Fraction(-1), "SU(2)_R lowering"),
             N4SCAGenerator("J3", Fraction(1), 0, Fraction(0), "SU(2)_R Cartan"),
@@ -539,8 +533,9 @@ def n4_check_jacobi_identity(c: Fraction = Fraction(6)) -> Dict[str, bool]:
     Cross-check: the Sugawara stress tensor for su(2)_k_R is
       T^{sug} = (1/(2(k_R+2))) * (J^a J^a)
     with central charge c^{sug} = 3k_R/(k_R+2).
-    For k_R=1: c^{sug} = 3/3 = 1 (NOT 6).
-    So T_total = T^{sug}_{su(2)} + T_{rest} with c_{rest} = 6 - 1 = 5.
+    For k_R=1: c^{sug} = 3/3 = 1, while the full small N=4 stress
+    tensor has central charge 6.  Thus
+    T_total = T^{sug}_{su(2)} + T_{rest} with c_{rest} = 6 - 1 = 5.
     """
     c = Fraction(c)
     k_R = c / 6
@@ -598,9 +593,10 @@ def kappa_n4_k3() -> Fraction:
       the genus-1 partition function gives F_1 = 2/24 = 1/12.
       Hence kappa = 24 * F_1 = 2.
 
-    Path 3 (Complementarity):
-      kappa(A) + kappa(A!) = 0 (for the sigma model, Verdier duality negates).
-      Since the dual has kappa! = -2, the complementarity sum = 0. Consistent.
+    Path 3 (Verdier dual branch):
+      kappa(A) + kappa(A^!) = 0 for this K3 sigma-model branch, where A^!
+      denotes the Verdier/continuous-linear dual branch rather than the
+      bar-cobar inverse Omega(B(A)). The dual branch has kappa(A^!)=-2.
 
     Path 4 (Hodge bundle):
       The genus-1 obstruction class is obs_1 = kappa * lambda_1
@@ -632,7 +628,7 @@ def kappa_n4_k3_path_character() -> Fraction:
 
 
 def kappa_n4_k3_path_complementarity() -> Fraction:
-    """Path 3: kappa + kappa! = 0, kappa! = -2, so kappa = 2."""
+    """Path 3: kappa(A) + kappa(A^!) = 0 with kappa(A^!) = -2."""
     kappa_dual = Fraction(-2)
     return -kappa_dual
 
@@ -777,13 +773,13 @@ def _phi01_discriminant_table() -> Dict[int, int]:
     f(-1) = 1, f(0) = 10, f(3) = -64, f(4) = 108, ...
 
     VERIFICATION (constraint sum_l f(4n - l^2) = 12 at n=0, 0 at n >= 1):
-      n=0: f(0) + 2*f(-1) = 10 + 2 = 12.  CHECK.
-      n=1: f(4) + 2*f(3) + 2*f(0) = 108 + 2*(-64) + 2*10 = 108 - 128 + 20 = 0.  CHECK.
+      n=0: f(0) + 2*f(-1) = 10 + 2 = 12.
+      n=1: f(4) + 2*f(3) + 2*f(0) = 108 + 2*(-64) + 2*10 = 108 - 128 + 20 = 0.
       n=2: f(8) + 2*f(7) + 2*f(4) + 2*f(-1) = 808 + 2*(-513) + 2*108 + 2*1
-           = 808 - 1026 + 216 + 2 = 0.  CHECK.
+           = 808 - 1026 + 216 + 2 = 0.
       n=3: f(12) + 2*f(11) + 2*f(8) + 2*f(3)
            = 4016 + 2*(-2752) + 2*808 + 2*(-64)
-           = 4016 - 5504 + 1616 - 128 = 0.  CHECK.
+           = 4016 - 5504 + 1616 - 128 = 0.
 
     Source: cross-verified against elliptic_genus_deep_engine._phi01_discriminant_table
     and theta-function product formula (Eichler-Zagier).
@@ -873,29 +869,22 @@ def compute_k3_elliptic_genus(nmax: int = 15) -> JacobiFormCoeffs:
 
 
 def k3_chi_y_genus() -> Dict[int, int]:
-    r"""chi_y genus of K3 (q^0 term of elliptic genus).
+    r"""q^0 term of the K3 elliptic genus.
 
     From the Hodge diamond of K3:
     h^{0,0}=1, h^{1,1}=20, h^{2,0}=h^{0,2}=1, all others = 0.
 
-    chi_y(K3) = sum_{p=0}^{d} (-1)^p * chi(Omega^p) * y^{p-d/2}
-    For surfaces (d=2): chi_y = 2*y^{-1} + 20 + 2*y
-    (using shifted convention where the powers are symmetric about 0).
+    Let chi_y(X)=sum_p chi(Omega^p_X)y^p. For K3,
+    chi_y(K3)=2-20y+2y^2. The elliptic-genus convention in the RR
+    sector uses the shifted polynomial y^{-1} chi_{-y}(K3), hence
+    2*y^{-1}+20+2*y.
 
     Equivalently, from the elliptic genus at q=0:
     Z_{K3}(0, z) = 2y + 20 + 2y^{-1}.
 
-    Checks:
-    - At y=1: 2 + 20 + 2 = 24 = chi(K3)
-    - At y=-1: -2 + 20 - 2 = 16 = sigma(K3) + chi(K3)/2... actually
-      chi_{-1} = sum(-1)^{p+q} h^{p,q} = 2-0+20-0+2 - 2*(0) = ... hmm.
-      sigma(K3) = -16. chi_{-1}(K3) = sum_p chi(Omega^p) = 2+0+2 = 4.
-      Wait, chi_{-1} = sum_p (-1)^p chi(Omega^p) = chi(O) - chi(Omega^1) + chi(Omega^2) = 2-0+2 = 4.
-      But 2*(-1) + 20 + 2*(-1)^{-1} = -2+20-2 = 16.  Hmm.
-      The y^l here are y^l with l = su(2) charge, not (-1)^p * y^{p}.
-      Actually for the elliptic genus in the RR sector with y = e^{2pi i z},
-      at q=0 we get the chi_y genus: sum c(0,l) y^l = 2y+20+2/y.
-      At y = 1: 24 = chi(K3).  CORRECT.
+    At y=1 this gives 24=chi(K3). The value at y=-1 is the signature
+    specialization of the shifted RR charge polynomial, not the unshifted
+    Hirzebruch chi_y polynomial.
     """
     return {-1: 2, 0: 20, 1: 2}
 
@@ -1116,16 +1105,11 @@ def n4_bar_complex_dimensions(weight_max: int = 6) -> Dict[str, Any]:
 
     For the small N=4 SCA at c=6:
     Primary generators:
-      T    (h=2, bosonic)       -> s^{-1}T has degree |T|-1 = 1
-      G^+  (h=3/2, fermionic)  -> s^{-1}G^+ has degree |G^+|-1 = 1/2
-      G^-  (h=3/2, fermionic)  -> s^{-1}G^- has degree |G^-|-1 = 1/2
-      Gt^+ (h=3/2, fermionic)  -> s^{-1}Gt^+ has degree |Gt^+|-1 = 1/2
-      Gt^- (h=3/2, fermionic)  -> s^{-1}Gt^- has degree |Gt^-|-1 = 1/2
-      J^{++} (h=1, bosonic)    -> s^{-1}J^{++} has degree 0
-      J^{--} (h=1, bosonic)    -> s^{-1}J^{--} has degree 0
-      J^3    (h=1, bosonic)    -> s^{-1}J^3 has degree 0
+      T, J^{++}, J^{--}, J^3 are bosonic, so |s^{-1}v|=-1.
+      G^+, G^-, Gt^+, Gt^- are fermionic, so |s^{-1}v|=0.
 
-    AP45: desuspension LOWERS degree: |s^{-1}v| = |v| - 1.
+    AP45: desuspension lowers cohomological degree: |s^{-1}v|=|v|-1.
+    The conformal weight h is an internal grading and is preserved.
 
     Bar degree 1 (generators): 8 elements
     Bar degree 2 (binary products): from pairs of generators, modulo
@@ -1144,19 +1128,9 @@ def n4_bar_complex_dimensions(weight_max: int = 6) -> Dict[str, Any]:
 
     bar_deg_1_dim = len(gens)  # = 8
 
-    # Bar degree 2: tensor products s^{-1}a tensor s^{-1}b
-    # For a chiral algebra, the bar differential d: B^2 -> B^1 extracts the
-    # OPE singular part. The dimension of B^2 before applying d is the
-    # number of ordered pairs, adjusted for parity:
-    # For bosonic generators: symmetric part contributes
-    # For fermionic generators: antisymmetric part contributes
-    # (because s^{-1}fermionic has even degree = parity(g)-1 mod 2...)
-    #
-    # Actually, the bar complex is a cofree coalgebra, so:
-    # B^n = (s^{-1}Abar)^{tensor n} with appropriate signs
-    # For the ORDERED bar complex: dim B^n = dim(s^{-1}Abar)^n = 8^n
-    # For the SHUFFLE bar complex: dim B^n = C(8+n-1, n) (for bosonic Abar)
-    # but for MIXED parity: it's a free graded-commutative coalgebra.
+    # Ordered bar complex: B^n=(s^{-1}Abar)^{tensor n}; no shuffle
+    # symmetrisation is imposed on the tensor coalgebra. Parity affects
+    # signs in the differential, not the arity-2 vector-space dimension.
 
     # Count by conformal weight:
     # Weight of a bar element s^{-1}a1 tensor ... tensor s^{-1}an is
@@ -1170,10 +1144,8 @@ def n4_bar_complex_dimensions(weight_max: int = 6) -> Dict[str, Any]:
 
     # Bar degree 2: count pairs (a, b) where h_a + h_b <= weight_max
     bar_deg_2_by_weight = defaultdict(int)
-    for i, (n1, h1, p1) in enumerate(gens):
-        for j, (n2, h2, p2) in enumerate(gens):
-            if j < i:
-                continue  # ordered, but for cofree coalgebra we take ALL ordered pairs
+    for n1, h1, p1 in gens:
+        for n2, h2, p2 in gens:
             w = h1 + h2
             if w <= weight_max:
                 bar_deg_2_by_weight[w] += 1
@@ -1196,6 +1168,9 @@ def n4_bar_complex_dimensions(weight_max: int = 6) -> Dict[str, Any]:
         'bar_deg_2_ordered_pairs': bar_deg_2_dim,
         'bar_deg_2_by_weight': dict(bar_deg_2_by_weight),
         'generators': [(n, float(h), p) for n, h, p in gens],
+        'desuspended_cohomological_degrees': {
+            n: p - 1 for n, _h, p in gens
+        },
         'num_bosonic_generators': sum(1 for _, _, p in gens if p == 0),
         'num_fermionic_generators': sum(1 for _, _, p in gens if p == 1),
         'koszul_expected': True,
@@ -1259,33 +1234,32 @@ def shadow_depth_classification() -> Dict[str, Any]:
 
 
 # =========================================================================
-# Section 10: Koszul dual
+# Section 10: Verdier dual branch
 # =========================================================================
 
 def koszul_dual_data() -> Dict[str, Any]:
-    r"""Koszul dual of the K3 sigma model VOA.
+    r"""Verdier/continuous-linear dual branch of the K3 sigma-model VOA.
 
-    A! has kappa(A!) = -kappa(A) = -2 (by complementarity, since the
-    K3 sigma model obeys kappa + kappa! = 0, as for lattice/free-field-type
-    families).
+    A^! has kappa(A^!) = -kappa(A) = -2 for this K3 branch.
 
-    The central charge of the dual: c! = 6 - 6 = 0?  NO.
-    For the N=4 SCA, the Koszul dual is not simply obtained by c -> 6*k_R - c
-    (that would be the Virasoro-type duality).  The correct duality for the
-    K3 sigma model uses the Verdier intertwining (Theorem A):
-      D_{Ran}(B(A)) ~ B(A!)
+    The N=4 dual branch is not obtained by a central-charge substitution.
+    The K3 sigma-model branch uses the Verdier intertwining:
+      D_{Ran}(B(A)) ~ B(A^!)
 
-    The dual A! has the same set of generators but with negated curvature.
-    kappa(A!) = -2.
+    The dual branch A^! has the same generator profile and negated scalar
+    shadow curvature. Omega(B(A))=A is bar-cobar inversion, not this
+    dual branch. The Hochschild/bulk object Z_ch^der(A) is separate.
 
-    AP33: Koszul duality != Feigin-Frenkel duality != negative-level substitution.
+    This is not Feigin-Frenkel duality and not negative-level substitution.
     """
     return {
         'kappa_A': Fraction(2),
         'kappa_A_dual': Fraction(-2),
         'complementarity_sum': Fraction(0),
         'central_charge': Fraction(6),
-        'dual_description': 'Verdier dual of B(A_{K3})',
+        'dual_description': 'Verdier/continuous-linear dual branch A^! of A_{K3}',
+        'bar_cobar_inverse': 'Omega(B(A_{K3})) = A_{K3}',
+        'bulk_object': 'Z_ch^der(A_{K3}) is Hochschild/bulk, not A^!',
     }
 
 
@@ -1381,37 +1355,17 @@ def verify_discriminant_dependence(nmax: int = 5) -> Dict[str, Any]:
 def verify_chi_y_from_hodge() -> Dict[str, Any]:
     r"""Verify chi_y genus of K3 matches the Hodge diamond.
 
-    chi_y(K3) = sum_{p,q} (-1)^q h^{p,q} y^p
-              = sum_p (sum_q (-1)^q h^{p,q}) y^p
-              = sum_p chi(Omega^p) y^p
+    chi_y(K3) = sum_p chi(Omega^p) y^p.
+    The elliptic genus q^0 term is y^{-1} chi_{-y}(K3).
 
     chi(Omega^0) = chi(O_{K3}) = h^{0,0} - h^{0,1} + h^{0,2} = 1-0+1 = 2
     chi(Omega^1) = h^{1,0} - h^{1,1} + h^{1,2} = 0-20+0 = -20
     chi(Omega^2) = h^{2,0} - h^{2,1} + h^{2,2} = 1-0+1 = 2
 
-    With the elliptic genus convention (shifted by y^{-1} so powers are symmetric):
-    chi_y = 2*y^{-1} + (-20)*y^0 + 2*y^1 ... no wait.
-
-    The elliptic genus at q=0 gives:
-    Z_{K3}(0, z) = sum_l c(0, l) y^l = 2y + 20 + 2/y.
-
-    This matches: at y^1: 2, at y^0: 20, at y^{-1}: 2.
-    But chi(Omega^1) = -20, and the q=0 coefficient at y^0 is +20.
-    The resolution: the elliptic genus involves (-1)^F which flips the sign
-    of the fermionic contribution, giving +20 from -(-20) = +20.
-
-    Actually, for the refined chi_y genus:
-    chi_y(K3) = sum_{p=0}^2 chi(Omega^p) * (-y)^p
-              = 2 + (-20)*(-y) + 2*(-y)^2
-              = 2 + 20y + 2y^2
-
-    With the substitution y -> y (for the charge variable):
-    In the RR sector, the q=0 contribution to Z is:
-    c(0, l) = coefficient of y^l.
-    c(0, 1) = 2 (from Omega^0), c(0, 0) = 20 (from Omega^1 with sign), c(0, -1) = 2 (from Omega^2).
-
-    This is consistent with: chi_y = 2/y + 20 + 2y.
-    At y=1: 2+20+2 = 24 = chi(K3).  CHECK.
+    Therefore chi_y(K3)=2-20y+2y^2 and
+    y^{-1}chi_{-y}(K3)=2y^{-1}+20+2y. Thus
+    c(0,-1)=2 from Omega^0, c(0,0)=20 from -chi(Omega^1), and
+    c(0,1)=2 from Omega^2. At y=1 the sum is 24=chi(K3).
     """
     hodge = k3_hodge_diamond()
 
@@ -1423,12 +1377,13 @@ def verify_chi_y_from_hodge() -> Dict[str, Any]:
     # Elliptic genus q=0 coefficients
     eg_q0 = k3_chi_y_genus()
 
-    # Match: c(0, 1) = chi(Omega^0) = 2, c(0, 0) = -chi(Omega^1) = 20, c(0, -1) = chi(Omega^2) = 2
+    # Match y^{-1}chi_{-y}: c(0,-1)=chi(Omega^0), c(0,0)=-chi(Omega^1),
+    # c(0,1)=chi(Omega^2).
     # The sign flip at p=1 is from the fermion number in the RR sector trace.
     matches = {
-        'c(0,1)_vs_chi_Omega0': eg_q0.get(1, 0) == chi_omega[0],
+        'c(0,-1)_vs_chi_Omega0': eg_q0.get(-1, 0) == chi_omega[0],
         'c(0,0)_vs_minus_chi_Omega1': eg_q0.get(0, 0) == -chi_omega[1],
-        'c(0,-1)_vs_chi_Omega2': eg_q0.get(-1, 0) == chi_omega[2],
+        'c(0,1)_vs_chi_Omega2': eg_q0.get(1, 0) == chi_omega[2],
         'euler_char_sum': sum(eg_q0.values()) == K3_EULER_CHAR,
     }
 
@@ -1566,12 +1521,9 @@ def shadow_tower_projections(g_max: int = 5) -> Dict[int, Dict[str, Fraction]]:
 def verify_ahat_gf(g_max: int = 5) -> Dict[str, Any]:
     r"""Verify that sum F_g hbar^{2g} = kappa * (A-hat(i*hbar) - 1).
 
-    The A-hat genus: A-hat(x) = (x/2)/sinh(x/2).
-    A-hat(i*hbar) = (i*hbar/2)/sin(i*hbar/2) = (hbar/2)/sinh(hbar/2)
-    ... wait, A-hat(i*hbar) = (i*hbar/2) / sinh(i*hbar/2)
-    = (i*hbar/2) / (i * sin(hbar/2)) = (hbar/2)/sin(hbar/2).
-    No: sinh(ix) = i*sin(x), so sinh(i*hbar/2) = i*sin(hbar/2).
-    A-hat(i*hbar) = (i*hbar/2) / (i*sin(hbar/2)) = (hbar/2)/sin(hbar/2).
+    The A-hat genus is A-hat(x)=(x/2)/sinh(x/2). Since
+    sinh(i*hbar/2)=i sin(hbar/2), the substitution x=i*hbar gives
+    A-hat(i*hbar)=(hbar/2)/sin(hbar/2).
 
     (hbar/2)/sin(hbar/2) = 1 + hbar^2/24 + 7*hbar^4/5760 + ...
     All coefficients POSITIVE (since we substituted i*hbar and the alternating

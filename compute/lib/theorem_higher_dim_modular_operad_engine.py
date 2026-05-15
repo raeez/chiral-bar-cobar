@@ -1,24 +1,28 @@
-r"""Higher-dimensional modular operad engine: E_n graph sums, ribbon structures, Feynman transforms.
+r"""Curve-level modular-operad diagnostics: stable graphs, ribbon structures,
+Feynman-transform scalar normalization.
 
-THEOREM (E_n modular operad amplitudes).
-The modular operad structure underpins the bar-cobar framework at genus g with
-n marked points.  The moduli space M_bar_{g,n} has boundary stratification by
-stable graphs.  The "higher-dimensional" aspect replaces the chiral (E_infty)
-modular operad with E_1 (ribbon/ordered) or general E_n versions.
+COMPUTABLE CLAIM.
+The routines in this module work on the Deligne--Mumford modular operad of
+stable pointed complex curves.  They do not compute factorization operads on
+higher-dimensional varieties.  The finite E_n checks below are scalar
+coinvariant diagnostics for curve-level shadows, not a theorem about all
+higher-dimensional factorization algebras.
 
 KEY STRUCTURES:
-  1. E_1 modular operad = ribbon (fat) graph version of the modular operad.
+  1. E_1 modular operad = ribbon (fat) graph version of the curve-level
+     modular operad.
      At each vertex of a stable graph, half-edges carry a CYCLIC ORDERING
      (from the ribbon/surface embedding).  This is the primitive operadic
-     structure (AP104: E_1 is the natural primitive; E_infty is the av-image).
+     structure; the symmetric version is obtained after forgetting order.
 
   2. E_infty modular operad = symmetric/unordered version (standard).
      No ordering data at vertices.  Recovered from E_1 by Sigma_n coinvariants.
 
   3. Feynman transforms: FCom (from Com) controls the chiral bar B^Sigma(A).
-     FAss (from Ass) controls the ordered bar B^ord(A).  The scalar-level
-     shadow invariants (kappa, S_r) are E_n-independent (prop:en-shadow-independence)
-     because the averaging map av: g^{E_1} -> g^{mod} projects to coinvariants.
+     FAss (from Ass) controls the ordered bar B^ord(A).  Raw ribbon graph
+     sums carry an extra product of cyclic-order counts.  Scalar FCom/FAss
+     agreement is the normalized coinvariant statement; without that
+     normalization the raw ribbon excess is an obstruction witness.
 
 RIBBON GRAPH COUNTING:
   A ribbon graph (= fat graph = dessin d'enfants) is a graph with a cyclic
@@ -48,9 +52,9 @@ HARER-ZAGIER FORMULA:
 FEYNMAN TRANSFORM COMPARISON:
   FCom(g,n) = Feynman transform of Com at (g,n).
   FAss(g,n) = Feynman transform of Ass at (g,n).
-  At the SCALAR level (shadow invariants), both produce the same answer
-  because the scalar projection is Sigma_n-invariant.  The difference
-  appears in the FULL amplitude (R-matrix, higher structure).
+  At the normalized SCALAR coinvariant level (shadow invariants), both
+  produce the same answer.  Before normalization, the ribbon sum already
+  differs by the cyclic-order multiplicity prod_v (val(v)-1)!.
 
 References:
   - Harer-Zagier, "The Euler characteristic of the moduli space of curves" (1986)
@@ -58,10 +62,7 @@ References:
   - Getzler-Kapranov, "Modular operads" (1998)
   - stable_graph_enumeration.py: StableGraph dataclass, enumerations
   - bar_modular_operad_fcom.py: FCom algebra structure
-  - theorem_kappa_en_invariance_engine.py: kappa E_n independence
-  - CLAUDE.md: AP82 (three coalgebra structures), AP83 (coshuffle != deconcatenation),
-               AP85 (factorization != deconcatenation coproduct), AP97 (av is lossy),
-               AP104 (E_1 primacy)
+  - theorem_kappa_en_invariance_engine.py: kappa finite-window diagnostics
 """
 from __future__ import annotations
 
@@ -105,6 +106,52 @@ def catalan_number(n: int) -> int:
     if n < 0:
         return 0
     return comb(2 * n, n) // (n + 1)
+
+
+def is_stable_curve_type(g: int, n: int) -> bool:
+    """Return whether the pair (g,n) is stable for pointed curves.
+
+    The Deligne--Mumford modular operad is indexed by stable pairs:
+    2g - 2 + n > 0.  In particular, (1,0) is not a stable pointed curve.
+    """
+    return g >= 0 and n >= 0 and 2 * g - 2 + n > 0
+
+
+def validate_curve_modular_operad_domain(
+    g: int,
+    n: int,
+    *,
+    base_complex_dimension: int = 1,
+    moduli_kind: str = "curves",
+    operad_kind: str = "modular",
+    require_stable: bool = True,
+) -> None:
+    """Validate the geometric domain implemented here.
+
+    The compute surface is deliberately narrower than a higher-dimensional
+    factorization-algebra theorem: it is the modular operad of stable pointed
+    curves, with optional ribbon ordering data.
+    """
+    if base_complex_dimension != 1:
+        raise NotImplementedError(
+            "Only complex curves are implemented; higher-dimensional "
+            "varieties require a separate factorization-operad engine"
+        )
+
+    if moduli_kind not in {"curves", "stable_curves"}:
+        raise NotImplementedError(
+            "Only Deligne--Mumford moduli of stable pointed curves are "
+            "implemented"
+        )
+
+    if operad_kind not in {"modular", "ribbon_modular", "symmetric_modular"}:
+        raise ValueError(
+            "Use a modular-operad kind here; factorization operads are a "
+            "different compute surface"
+        )
+
+    if require_stable and not is_stable_curve_type(g, n):
+        raise ValueError(f"Unstable pointed-curve type: (g,n)=({g},{n})")
 
 
 # =========================================================================
@@ -277,8 +324,8 @@ class RibbonStableGraph:
         num_self_loops = sum(1 for v1, v2 in self.edges if v1 == v2)
         base_aut = self.automorphism_order()
         # Each self-loop contributes a factor of 2 to Aut(Gamma) via
-        # half-edge flips. These flips reverse the local cyclic order
-        # and so are NOT ribbon automorphisms.
+        # half-edge flips. These flips reverse the local cyclic order,
+        # placing them outside the ribbon automorphism group.
         return base_aut // (2 ** num_self_loops)
 
 
@@ -368,10 +415,7 @@ def genus0_graphs(n: int) -> List[RibbonStableGraph]:
 def genus1_graphs(n: int) -> List[RibbonStableGraph]:
     """Stable graphs of genus 1 with n marked points."""
     if n == 0:
-        return [
-            RibbonStableGraph(vertex_genera=(1,), edges=(), legs=()),
-            RibbonStableGraph(vertex_genera=(0,), edges=((0, 0),), legs=()),
-        ]
+        return []
     if n == 1:
         return [
             RibbonStableGraph(vertex_genera=(1,), edges=(), legs=(0,)),
@@ -530,9 +574,9 @@ def _canonical(gr: RibbonStableGraph) -> tuple:
         candidate = (tuple(gr.vertex_genera[perm[v]]
                            for v in range(gr.num_vertices)),
                      mapped_edges, mapped_legs)
-        # Actually, canonical form should relabel vertices by the
-        # permuted genera in a standard order. Simpler: just use
-        # (sorted genera, sorted edges under all valid relabelings, legs).
+        # Canonical form relabels vertices by the permuted genera in a
+        # standard order. For this diagnostic, use sorted genera, sorted
+        # edges under all valid relabelings, and legs.
         # For deduplication, the key insight is: two graphs are iso iff
         # there exists a perm making them identical.
         key = (gr.vertex_genera, mapped_edges, mapped_legs)
@@ -617,8 +661,30 @@ def total_ordinary_graphs(g: int, n: int,
     return len(graphs)
 
 
-def enumerate_stable_graphs(g: int, n: int) -> List[RibbonStableGraph]:
-    """Main entry: enumerate all stable graphs at (g, n)."""
+def enumerate_stable_graphs(
+    g: int,
+    n: int,
+    *,
+    base_complex_dimension: int = 1,
+    moduli_kind: str = "curves",
+    operad_kind: str = "modular",
+) -> List[RibbonStableGraph]:
+    """Main entry: enumerate stable pointed-curve graphs at (g, n).
+
+    Unstable pairs return the empty list.  Use
+    validate_curve_modular_operad_domain when an amplitude formula requires a
+    stable input rather than an empty diagnostic.
+    """
+    validate_curve_modular_operad_domain(
+        g,
+        n,
+        base_complex_dimension=base_complex_dimension,
+        moduli_kind=moduli_kind,
+        operad_kind=operad_kind,
+        require_stable=False,
+    )
+    if not is_stable_curve_type(g, n):
+        return []
     if g == 0:
         return genus0_graphs(n)
     if g == 1:
@@ -704,9 +770,9 @@ def orientation_factor(graph: RibbonStableGraph) -> int:
 def genus1_trivalent_ribbon_vs_ordinary() -> Fraction:
     """Verify: for genus-1 trivalent graphs, ribbon = 2 * ordinary.
 
-    At genus 1 with 0 marked points, the only trivalent graph is
-    the self-loop graph (1 vertex g=0, 1 self-loop, val=2 -- NOT
-    trivalent). Actually at (g=1, n=0), there are no trivalent graphs
+    At genus 1 with 0 marked points, the self-loop graph has one genus-0
+    vertex, one self-loop, and valence 2. It is unstable. Hence there are no
+    trivalent graphs
     (minimum valence for stable g=0 vertex is 3, but a self-loop gives
     valence 2 for g=0 which is unstable; the smooth g=1 vertex has val=0).
 
@@ -797,6 +863,7 @@ def chi_orb_mbar_from_graphs(g: int, n: int) -> Fraction:
 
     chi^orb(Mbar_{g,n}) = sum_Gamma prod_v chi^orb(M_{g(v), val(v)}) / |Aut(Gamma)|
     """
+    validate_curve_modular_operad_domain(g, n)
     graphs = enumerate_stable_graphs(g, n)
     total = Fraction(0)
     for gr in graphs:
@@ -816,27 +883,23 @@ def chi_orb_mbar_from_graphs(g: int, n: int) -> Fraction:
 # =========================================================================
 
 def fcom_scalar_amplitude(g: int, kappa: Fraction,
-                          graphs: Optional[List[RibbonStableGraph]] = None
+                          graphs: Optional[List[RibbonStableGraph]] = None,
+                          n: int = 0
                           ) -> Fraction:
-    """FCom amplitude: the scalar-level genus-g free energy from the
-    commutative modular operad Feynman transform.
+    """FCom scalar graph diagnostic for the curve-level modular operad.
 
-    At the scalar level (arity 0, all insertions are kappa):
-      F_g^{FCom}(kappa) = sum_Gamma kappa^{|E(Gamma)|} * vertex_weight
-                          / |Aut(Gamma)|
+    At fixed stable pointed-curve type (g,n), in the constant-vertex-weight
+    diagnostic:
 
-    For genus g with no marked points, the vertex weight at each vertex v is
-    determined by the local genus g(v) and valence val(v).
+      F_{g,n}^{FCom}(kappa) = sum_Gamma kappa^{|E(Gamma)|} / |Aut(Gamma)|.
 
-    In the simplest model (constant vertex weight = 1):
-      F_g^{FCom} = sum_Gamma kappa^{|E|} / |Aut(Gamma)|
-
-    The actual shadow formula is F_g = kappa * lambda_g^FP, but here
-    we compute the graph sum as a polynomial in kappa for comparison
-    between FCom and FAss.
+    This is not the full Faber--Pandharipande genus formula; it is the
+    finite graph-sum surface used to compare symmetric and ordered scalar
+    normalizations.
     """
     if graphs is None:
-        graphs = enumerate_stable_graphs(g, 0)
+        validate_curve_modular_operad_domain(g, n)
+        graphs = enumerate_stable_graphs(g, n)
     total = Fraction(0)
     for gr in graphs:
         weight = kappa ** gr.num_edges / Fraction(gr.automorphism_order())
@@ -845,187 +908,135 @@ def fcom_scalar_amplitude(g: int, kappa: Fraction,
 
 
 def fass_scalar_amplitude(g: int, kappa: Fraction,
-                          graphs: Optional[List[RibbonStableGraph]] = None
+                          graphs: Optional[List[RibbonStableGraph]] = None,
+                          n: int = 0
                           ) -> Fraction:
-    """FAss amplitude: the scalar-level genus-g free energy from the
-    associative modular operad Feynman transform.
+    """Normalized FAss scalar diagnostic.
 
-    The FAss Feynman transform sums over RIBBON graphs instead of
-    ordinary graphs. Each ribbon graph contributes with its own
-    automorphism weight.
-
-    At the scalar level, the key fact (prop:en-shadow-independence) is:
-
-      F_g^{FAss}(kappa) = F_g^{FCom}(kappa)
-
-    because the scalar insertion kappa is Sigma_n-invariant. Summing
-    over all ribbon structures and then quotienting by the ribbon
-    automorphisms gives the same answer as the ordinary graph sum.
-
-    Proof: For each ordinary graph Gamma,
-      sum over ribbon structures: ribbon_count(Gamma) / |Aut_ribbon|
-    The ribbon structures are a torsor for the group of cyclic-order
-    choices at each vertex. The quotient by ribbon automorphisms
-    recovers exactly 1/|Aut(Gamma)| * prod_v (val(v)-1)! / (val(v)-1)!
-    = 1/|Aut(Gamma)|.
-
-    More precisely: for a Sigma_n-invariant amplitude phi(Gamma),
-    the FAss graph sum is:
-      sum_{ribbon Gamma} phi(Gamma) / |Aut_ribbon(Gamma)|
-    = sum_{ordinary Gamma} [sum over ribbon structures / |Aut_ribbon|] * phi(Gamma)
-    = sum_{ordinary Gamma} ribbon_count(Gamma) / (|Aut(Gamma)| * ribbon_count(Gamma) / 1)
-    Wait, that is not quite right. Let me be more careful.
-
-    The correct argument: the set of ribbon graphs with underlying
-    graph Gamma is a Aut(Gamma)-orbit. The number of ribbon structures
-    is prod (val(v)-1)!. The stabilizer of a ribbon structure in Aut(Gamma)
-    is Aut_ribbon(Gamma). By the orbit-stabilizer theorem:
-      |{ribbon structures}| = |Aut(Gamma)| / |Aut_ribbon(Gamma)|
-    ... no, more precisely: Aut(Gamma) acts on the set of ribbon
-    structures. The orbits are the distinct ribbon graphs (up to
-    ribbon isomorphism). For each orbit:
-      |orbit| * |stabilizer| = |Aut(Gamma)|
-
-    So: sum over ribbon graphs of 1/|Aut_ribbon|
-      = sum over orbits of 1/|stabilizer|
-      = (1/|Aut(Gamma)|) * sum over orbits of |orbit|
-      = (1/|Aut(Gamma)|) * (total number of ribbon structures)
-      = prod (val(v)-1)! / |Aut(Gamma)|.
-
-    For a SCALAR amplitude (Sigma_n-invariant), the amplitude is the same
-    for all ribbon structures on the same graph. So:
-      FAss sum = sum_{ordinary Gamma} phi(Gamma) * prod (val(v)-1)! / |Aut(Gamma)|
-
-    And FCom sum = sum_{ordinary Gamma} phi(Gamma) / |Aut(Gamma)|.
-
-    These are NOT equal in general! The ratio is prod (val(v)-1)!.
-
-    BUT: the Feynman transform normalization for FAss includes a factor
-    1/prod (val(v)-1)! in the vertex weight (from the operadic structure
-    of Ass). Specifically:
-      FCom vertex weight at valence d = 1/d! (from Com)
-      FAss vertex weight at valence d = 1/d! (from Ass, but with ordered insertions)
-
-    The key insight: in the Feynman transform, FAss normalizes by the
-    TOTAL number of orderings d!, not the cyclic number (d-1)!. The
-    ribbon structure provides cyclic orderings, and the remaining 1/d
-    factor (d! / (d-1)! = d) is the cost of choosing the first element.
-
-    The resolution: at the SCALAR level where all insertions are identical,
-    the ordered and unordered sums agree because the operadic structure
-    constants of Com and Ass agree after taking coinvariants. The
-    precise identity is:
-      sum_{ribbon} 1/|Aut_ribbon| = sum_{ordinary} prod(val(v)-1)!/|Aut|
-
-    and the Feynman transform normalizations are:
-      FCom: vertex weight includes 1/(prod val(v)!) from Com structure
-      FAss: vertex weight includes 1/(prod val(v)!) from Ass structure
-            but ribbon sum includes prod(val(v)-1)! extra factor
-
-    Net: FAss scalar = FCom scalar * prod (val-1)! / prod val!
-                     = FCom scalar * prod 1/val(v)
-    ... this is getting subtle. Let me implement both correctly.
-
-    CORRECT IMPLEMENTATION: Both FCom and FAss, at the scalar level,
-    produce the SAME genus-g free energy F_g = kappa * lambda_g^FP.
-    This is the content of prop:en-shadow-independence.
-
-    For the computation: we compute the graph polynomial (sum over graphs
-    weighted by kappa^|E| / |Aut|) which is the SAME for both FCom and FAss
-    at the scalar level. The difference only appears in non-scalar amplitudes
-    (where the ordering data matters).
+    The raw ribbon sum differs from FCom by the cyclic-order factor
+    prod_v (val(v)-1)!.  The scalar coinvariant comparison divides the
+    ribbon contribution by exactly that local ordering count.  The returned
+    value is therefore the normalized scalar comparison, not the raw ribbon
+    amplitude.
     """
-    # At the scalar level, FAss = FCom. We verify this by computing
-    # the FAss sum WITH ribbon weights and showing it equals the FCom sum.
     if graphs is None:
-        graphs = enumerate_stable_graphs(g, 0)
+        validate_curve_modular_operad_domain(g, n)
+        graphs = enumerate_stable_graphs(g, n)
 
     total = Fraction(0)
     for gr in graphs:
-        # FAss: sum over all ribbon structures on Gamma, each weighted by
-        # kappa^|E| / |Aut_ribbon|.
-        # By orbit-stabilizer: this equals kappa^|E| * ribbon_count / |Aut|.
         ribbon_count = gr.ribbon_structure_count()
         aut = gr.automorphism_order()
-        ribbon_aut = gr.ribbon_automorphism_order()
-
-        # Number of distinct ribbon graphs on this underlying graph:
-        # |Aut(Gamma)| / |Aut_ribbon(Gamma)| distinct orbits? No.
-        # The number of orbits times orbit size = ribbon_count.
-        # orbit_size = |Aut(Gamma)| / |Aut_ribbon(Gamma)|? Only if
-        # the action is transitive on ribbon structures.
-        # In general, the action is NOT transitive (different ribbon
-        # structures can give different genera).
-
-        # At the scalar level, sum over ALL ribbon structures:
-        # each contributes kappa^|E| / |Aut_ribbon|.
-        # = kappa^|E| * (ribbon_count / |Aut|)? No.
-        #
-        # Correct: sum_{r in ribbon structures on Gamma} 1/|Stab(r)|
-        # where Stab(r) = {sigma in Aut(Gamma) : sigma preserves r}
-        # = sum over orbits O of (|O| / |Aut|) = total / |Aut|? No.
-        # sum over orbits of 1/|Stab| = sum over orbits of |O|/|Aut|
-        # = (sum of orbit sizes) / |Aut| = ribbon_count / |Aut|.
-        #
-        # So: FAss sum for this graph = kappa^|E| * ribbon_count / |Aut|.
-        #
-        # And FCom sum for this graph = kappa^|E| / |Aut|.
-        #
-        # The ratio ribbon_count/1 = prod(val(v)-1)!.
-        #
-        # For the Feynman transform to give the same scalar answer,
-        # the operadic vertex weight must compensate. In FCom:
-        # vertex weight = 1 (commutative, no ordering).
-        # In FAss: vertex weight = 1/prod(val(v)-1)! (normalizing by
-        # the number of cyclic orderings, since the ribbon structure
-        # already provides the ordering).
-        #
-        # So FAss_normalized = kappa^|E| * ribbon_count * (1/ribbon_count) / |Aut|
-        #                    = kappa^|E| / |Aut| = FCom.
-        #
-        # This is the scalar-level E_n independence!
-
-        # For verification, compute BOTH the raw and normalized sums.
-        fass_raw = kappa ** gr.num_edges * Fraction(ribbon_count, aut)
-        # Normalized by 1/ribbon_count:
-        fass_normalized = kappa ** gr.num_edges / Fraction(aut)
-        total += fass_normalized
+        total += (
+            kappa ** gr.num_edges
+            * Fraction(ribbon_count, aut)
+            * Fraction(1, ribbon_count)
+        )
 
     return total
 
 
-def verify_fcom_fass_scalar_agreement(g: int, kappa: Fraction = Fraction(1)
-                                      ) -> Dict[str, Any]:
-    """Verify FCom = FAss at the scalar level for genus g.
+def raw_ribbon_scalar_amplitude(g: int, kappa: Fraction,
+                                graphs: Optional[List[RibbonStableGraph]] = None,
+                                n: int = 0
+                                ) -> Fraction:
+    """Raw ribbon scalar graph sum before scalar coinvariant normalization."""
+    if graphs is None:
+        validate_curve_modular_operad_domain(g, n)
+        graphs = enumerate_stable_graphs(g, n)
 
-    Returns a dict with both values and whether they agree.
+    total = Fraction(0)
+    for gr in graphs:
+        total += (
+            kappa ** gr.num_edges
+            * Fraction(gr.ribbon_structure_count(), gr.automorphism_order())
+        )
+    return total
+
+
+def ribbon_normalization_obstruction(
+    g: int,
+    kappa: Fraction = Fraction(1),
+    n: int = 0,
+) -> Dict[str, Any]:
+    """Compare raw ribbon and normalized scalar graph sums.
+
+    A nonzero obstruction means the raw ribbon count cannot be promoted to
+    scalar FCom/FAss agreement without the cyclic-order normalization.
     """
-    graphs = enumerate_stable_graphs(g, 0)
-    fcom = fcom_scalar_amplitude(g, kappa, graphs)
-    fass = fass_scalar_amplitude(g, kappa, graphs)
+    validate_curve_modular_operad_domain(g, n)
+    graphs = enumerate_stable_graphs(g, n)
+    fcom = fcom_scalar_amplitude(g, kappa, graphs, n=n)
+    fass = fass_scalar_amplitude(g, kappa, graphs, n=n)
+    raw = raw_ribbon_scalar_amplitude(g, kappa, graphs, n=n)
     return {
         "genus": g,
+        "marked_points": n,
+        "kappa": kappa,
+        "fcom": fcom,
+        "fass_normalized": fass,
+        "raw_ribbon": raw,
+        "normalization_obstruction": raw - fcom,
+        "normalized_agrees": fcom == fass,
+        "raw_agrees": raw == fcom,
+        "num_graphs": len(graphs),
+    }
+
+
+def verify_fcom_fass_scalar_agreement(g: int, kappa: Fraction = Fraction(1),
+                                      n: int = 0
+                                      ) -> Dict[str, Any]:
+    """Verify normalized FCom = FAss at scalar level for stable (g,n).
+
+    The returned raw ribbon value is included as an obstruction witness.
+    """
+    validate_curve_modular_operad_domain(g, n)
+    graphs = enumerate_stable_graphs(g, n)
+    fcom = fcom_scalar_amplitude(g, kappa, graphs, n=n)
+    fass = fass_scalar_amplitude(g, kappa, graphs, n=n)
+    raw = raw_ribbon_scalar_amplitude(g, kappa, graphs, n=n)
+    return {
+        "genus": g,
+        "marked_points": n,
         "kappa": kappa,
         "fcom": fcom,
         "fass": fass,
+        "raw_ribbon": raw,
+        "normalization_obstruction": raw - fcom,
         "agree": fcom == fass,
+        "raw_agrees": raw == fcom,
         "num_graphs": len(graphs),
     }
 
 
 # =========================================================================
-# 9. Shadow invariant E_n independence
+# 9. Shadow invariant finite E_n diagnostics
 # =========================================================================
 
-def shadow_kappa_en(family: str, n_operad: int, **kwargs) -> Fraction:
-    """Compute kappa for a given family at operadic level n.
+def shadow_kappa_en(
+    family: str,
+    n_operad: int,
+    *,
+    base_complex_dimension: int = 1,
+    **kwargs,
+) -> Fraction:
+    """Compute the curve-level scalar kappa diagnostic at operadic level n.
 
-    By prop:en-shadow-independence, kappa is independent of n.
-    This function returns the SAME kappa for all n >= 1.
+    The operadic level is a label for the finite scalar diagnostic, not the
+    complex dimension of a target variety.  Higher-dimensional varieties are
+    outside this module's implemented domain.
 
     Families: "heisenberg", "virasoro", "affine", "wn", "betagamma",
               "bc", "lattice", "free_fermion"
     """
+    if n_operad < 1:
+        raise ValueError(f"Operadic level must be >= 1, got {n_operad}")
+    if base_complex_dimension != 1:
+        raise NotImplementedError(
+            "kappa E_n diagnostics here are curve-level scalar shadows; "
+            "higher-dimensional varieties require the CY/factorization engine"
+        )
+
     family = family.lower()
     if family == "heisenberg":
         k = kwargs.get("k", Fraction(1))
@@ -1084,15 +1095,33 @@ def _lie_data(lie_type: str, rank: int) -> Tuple[int, int]:
     raise ValueError(f"Unknown Lie type {lie_type}{rank}")
 
 
-def verify_shadow_en_independence(family: str, max_n: int = 5, **kwargs
-                                  ) -> Dict[str, Any]:
-    """Verify kappa is independent of E_n operadic level.
+def verify_shadow_en_independence(
+    family: str,
+    max_n: int = 5,
+    *,
+    base_complex_dimension: int = 1,
+    **kwargs,
+) -> Dict[str, Any]:
+    """Finite diagnostic for kappa across operadic levels 1,...,max_n.
 
-    Computes kappa at n=1,...,max_n and checks all values are equal.
+    This is a bounded computation.  It records evidence for the scalar
+    coinvariant claim; it is not itself an all-n proof.
     """
+    if max_n < 1:
+        raise ValueError(f"max_n must be >= 1, got {max_n}")
+    if base_complex_dimension != 1:
+        raise NotImplementedError(
+            "Only curve-level scalar shadows are implemented in this module"
+        )
+
     values = {}
     for n in range(1, max_n + 1):
-        values[n] = shadow_kappa_en(family, n, **kwargs)
+        values[n] = shadow_kappa_en(
+            family,
+            n,
+            base_complex_dimension=base_complex_dimension,
+            **kwargs,
+        )
 
     all_equal = len(set(values.values())) == 1
     return {
@@ -1101,6 +1130,9 @@ def verify_shadow_en_independence(family: str, max_n: int = 5, **kwargs
         "values": values,
         "all_equal": all_equal,
         "kappa": values[1],
+        "diagnostic_range": (1, max_n),
+        "finite_diagnostic": True,
+        "base_complex_dimension": base_complex_dimension,
     }
 
 
@@ -1195,21 +1227,21 @@ def verify_genus2_euler() -> Dict[str, Any]:
 # =========================================================================
 
 def theorem_summary() -> Dict[str, Any]:
-    """Summary of the higher-dimensional modular operad theorem."""
+    """Summary of the curve-level modular-operad compute surface."""
     return {
-        "theorem": "Higher-dimensional modular operad: E_n graph sums",
+        "theorem": "Curve-level modular operad scalar diagnostics",
         "key_results": [
             "1. Ribbon structures on stable graph Gamma = prod(val(v)-1)!",
-            "2. E_n shadow independence: kappa is n-independent for all families",
-            "3. FCom = FAss at scalar level (prop:en-shadow-independence)",
-            "4. Harer-Zagier: chi(M_2) = -1/240 verified by 2 methods",
+            "2. Stable pointed-curve domain requires 2g-2+n > 0",
+            "3. Raw ribbon sums differ from symmetric sums by cyclic-order multiplicity",
+            "4. Normalized FAss scalar diagnostic agrees with FCom",
             "5. Genus-0 ribbon count = (2n-5)!! for trivalent trees",
-            "6. E_1/E_infty ratio measures ordered-vs-unordered data loss",
+            "6. Finite kappa E_n checks are diagnostics, not higher-dimensional proofs",
         ],
-        "anti_patterns_respected": [
-            "AP82: three coalgebra structures distinguished",
-            "AP83: coshuffle vs deconcatenation not confused",
-            "AP97: av is lossy projection",
-            "AP104: E_1 is the primitive",
+        "scope_guards": [
+            "Deligne--Mumford stable pointed curves only",
+            "modular or ribbon modular operads only",
+            "higher-dimensional varieties not implemented here",
+            "raw ribbon and scalar coinvariant sums reported separately",
         ],
     }

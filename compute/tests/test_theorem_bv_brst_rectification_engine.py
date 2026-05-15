@@ -1,6 +1,6 @@
 r"""Tests for theorem_bv_brst_rectification_engine.
 
-Deep Beilinson rectification of conj:master-bv-brst against:
+BV/BRST rectification of conj:master-bv-brst against:
   [SiLi25]  Si Li, arXiv:2511.12875
   [ESW20]   Elliott-Safronov-Williams, arXiv:2002.10517
   [ESW24]   Elliott-Safronov-Williams, arXiv:2403.19753
@@ -36,13 +36,19 @@ from compute.lib.theorem_bv_brst_rectification_engine import (
     analyze_si_li,
     analyze_wang_grady,
     anomaly_cancellation_check,
+    affine_kernel_normalization,
     bar_free_energy,
+    bc_lambda_kappa,
     betagamma_bv_genus1,
     betagamma_bv_genus1_numerical,
     betagamma_data,
+    betagamma_lambda_data,
+    betagamma_lambda_kappa,
+    bv_brst_bar_scope,
     conjecture_status_by_family,
     cross_family_genus1_check,
     esw_twist_classification,
+    finite_diagnostic_promotion_guard,
     full_rectification_synthesis,
     genus2_planted_forest_bv_comparison,
     hahner_paquette_implications,
@@ -50,8 +56,10 @@ from compute.lib.theorem_bv_brst_rectification_engine import (
     heisenberg_data,
     lambda_fp,
     lambda_fp_from_ahat,
+    object_role_table,
     obstruction_status_analysis,
     si_li_linfty_comparison,
+    standard_collision_kernels,
     virasoro_data,
     wang_grady_implications,
 )
@@ -109,7 +117,7 @@ class TestAlgebraData:
     """Verify kappa formulas for standard families (AP1, AP48)."""
 
     def test_heisenberg_kappa(self):
-        """kappa(H_k) = k (NOT k/2, AP48)."""
+        """kappa(H_k) = k."""
         h = heisenberg_data(k=Symbol('k'))
         assert h.kappa == Symbol('k')
 
@@ -129,9 +137,30 @@ class TestAlgebraData:
         assert v.kappa == 13
 
     def test_betagamma_kappa(self):
-        """kappa(bg_k) = k."""
+        """kappa(bg_k) = k for k copies of weight-(1,0) beta-gamma."""
         bg = betagamma_data(k=Symbol('k'))
         assert bg.kappa == Symbol('k')
+
+    def test_betagamma_lambda_kappa(self):
+        """kappa(beta-gamma_lambda) = 6 lambda^2 - 6 lambda + 1."""
+        lam = Symbol('lambda')
+        expected = 6 * lam ** 2 - 6 * lam + 1
+        assert simplify(betagamma_lambda_kappa(lam) - expected) == 0
+
+    def test_betagamma_lambda_weight_1(self):
+        """Weight-(1,0) beta-gamma has kappa = 1 and c = 2."""
+        bg = betagamma_lambda_data(lambda_weight=1)
+        assert bg.kappa == 1
+        assert bg.central_charge == 2
+
+    def test_betagamma_bc_verdiers_pair_cancels_kappa(self):
+        """beta-gamma/bc lambda pair has K^kappa = 0."""
+        lam = Symbol('lambda')
+        assert simplify(betagamma_lambda_kappa(lam) + bc_lambda_kappa(lam)) == 0
+
+    def test_betagamma_half_weight_constant(self):
+        """At lambda = 1/2, kappa(beta-gamma_lambda) = -1/2."""
+        assert betagamma_lambda_kappa(Rational(1, 2)) == Rational(-1, 2)
 
     def test_affine_sl2_kappa(self):
         """kappa(sl2_k) = 3(k+2)/4."""
@@ -147,6 +176,99 @@ class TestAlgebraData:
 
 
 # =====================================================================
+# Section B2: Object, ambient, and kernel guards
+# =====================================================================
+
+
+class TestObjectAndKernelGuards:
+    """Prevent object conflation and level-normalization drift."""
+
+    def test_bar_is_not_bulk(self):
+        """B(A) classifies twisting morphisms, not bulk operators."""
+        roles = object_role_table()
+        assert 'twisting morphisms' in roles['B(A)'].role
+        assert 'Z_der_ch(A)' in roles['B(A)'].not_equal_to
+
+    def test_cobar_bar_is_inversion_not_koszul_duality(self):
+        """Omega(B(A)) recovers A; it is not A^!."""
+        roles = object_role_table()
+        assert 'inversion' in roles['Omega(B(A))'].role
+        assert 'A^!' in roles['Omega(B(A))'].not_equal_to
+
+    def test_derived_center_is_hochschild_slot(self):
+        """The derived chiral center is the Hochschild cochain slot."""
+        roles = object_role_table()
+        assert 'C_ch^bullet(A,A)' in roles['Z_der_ch(A)'].construction
+        assert 'B(A)' in roles['Z_der_ch(A)'].not_equal_to
+
+    def test_affine_trace_kernel_not_kz_kernel(self):
+        """Trace-form collision kernel is not the KZ kernel."""
+        k = Symbol('k')
+        witness = affine_kernel_normalization('sl2', k=k)
+        assert witness.trace_collision_kernel == 'k*Omega_tr/z'
+        assert witness.auxiliary_kernel == 'Omega/((k+h^vee)*z)'
+        assert simplify(witness.kappa - Rational(3) * (k + 2) / 4) == 0
+        assert witness.level_zero_collision_coefficient == 0
+        assert witness.level_zero_kappa == Rational(3, 2)
+        assert witness.critical_collision_coefficient == -2
+        assert witness.critical_kappa == 0
+        assert witness.not_interchangeable
+
+    def test_standard_collision_kernels(self):
+        """Heisenberg and Virasoro collision residues carry level prefixes."""
+        kernels = standard_collision_kernels(k=3, c=26)
+        assert kernels['Heisenberg'] == '3/z'
+        assert kernels['affine_trace_form'] == 'k*Omega_tr/z'
+        assert kernels['Virasoro'] == '(26/2)/z^3 + 2*T/z'
+
+
+class TestComparisonScopeGuards:
+    """Finite diagnostics must not promote to full BV/BRST/bar equivalence."""
+
+    def test_class_m_ordinary_chain_false(self):
+        """Class M fails in the ordinary chain ambient at genus >= 1."""
+        scope = bv_brst_bar_scope('M', genus=2, ambient='ordinary_chain')
+        assert scope.status == 'FALSE_IN_ORDINARY_CHAIN_AMBIENT'
+        assert 'delta_4' in scope.witness
+        assert not scope.proves_full_bv_brst_bar_equivalence
+
+    def test_class_m_coderived_proved(self):
+        """The coderived ambient is a different proved theorem."""
+        scope = bv_brst_bar_scope('M', genus=2, ambient='coderived')
+        assert scope.status == 'PROVED_IN_DCO'
+        assert scope.proves_full_bv_brst_bar_equivalence
+
+    def test_class_c_requires_harmonic_decoupling(self):
+        """Class C is conditional until harmonic decoupling is supplied."""
+        scope = bv_brst_bar_scope('C', genus=1)
+        assert scope.status == 'CONDITIONAL_ON_HARMONIC_DECOUPLING'
+        assert not scope.proves_full_bv_brst_bar_equivalence
+        proved = bv_brst_bar_scope('C', genus=1, harmonic_decoupling=True)
+        assert proved.status == 'PROVED_WITH_HARMONIC_DECOUPLING'
+        assert proved.proves_full_bv_brst_bar_equivalence
+
+    def test_class_l_hypotheses_are_explicit(self):
+        """Class L ordinary-chain proof carries chain-level hypotheses."""
+        scope = bv_brst_bar_scope('L', genus=2)
+        assert scope.status == 'PROVED_WITH_HYPOTHESES'
+        assert any('non-critical' in hyp for hyp in scope.hypotheses)
+        assert scope.witness == 'class L has r_max=3 and S_4=0'
+
+    def test_f1_scalar_guard(self):
+        """F_1 = kappa/24 does not prove chain-level equivalence."""
+        guard = finite_diagnostic_promotion_guard('F1_scalar')
+        assert guard.supports == 'genus-1 scalar equality F_1 = kappa/24'
+        assert 'chain-level BV/BRST/bar equivalence' in guard.does_not_support
+        assert not guard.proves_full_bv_brst_bar_equivalence
+
+    def test_uv_finiteness_guard(self):
+        """UV finiteness gives existence, not coefficient identification."""
+        guard = finite_diagnostic_promotion_guard('uv_finiteness')
+        assert 'existence' in guard.supports
+        assert 'Theta_A' in guard.does_not_support
+
+
+# =====================================================================
 # Section C: Paper analyses — epistemic honesty
 # =====================================================================
 
@@ -158,7 +280,7 @@ class TestPaperAnalyses:
         """No paper in the literature proves conj:master-bv-brst."""
         for paper in all_paper_analyses():
             assert not paper.proves_conjecture, (
-                f"Paper {paper.arxiv_id} DOES NOT prove conj:master-bv-brst. "
+                f"Paper {paper.arxiv_id} leaves conj:master-bv-brst open. "
                 f"This test enforces epistemic honesty (AP4, AP7)."
             )
 
@@ -173,11 +295,11 @@ class TestPaperAnalyses:
         assert '2403.19753' in arxiv_ids   # ESW lattice
         assert '2602.22318' in arxiv_ids   # Hahner-Paquette
 
-    def test_si_li_does_not_prove_conjecture(self):
-        """Si Li confirms proved results but does NOT prove the conjecture."""
+    def test_si_li_leaves_conjecture_open(self):
+        """Si Li confirms proved results and leaves the conjecture open."""
         paper = analyze_si_li()
         assert not paper.proves_conjecture
-        assert 'NOT' in paper.obstruction_3_impact
+        assert 'OPEN' in paper.obstruction_3_impact
 
     def test_wang_grady_removes_necessary_condition(self):
         """Wang-Grady removes UV finiteness obstruction (necessary, not sufficient)."""
@@ -217,31 +339,34 @@ class TestObstructionAnalysis:
         assert indices == {1, 2, 3}
 
     def test_obstruction_3_deepest(self):
-        """Obstruction 3 (higher-arity coupling) remains the deepest."""
+        """Obstruction 3 is curved A_infty versus flat BV."""
         obstructions = obstruction_status_analysis()
         obs3 = [o for o in obstructions if o.index == 3][0]
-        assert 'UNCHANGED' in obs3.post_literature_status
+        assert obs3.name == 'Curved A_infty structure versus flat BV operator'
         assert 'DEEPEST' in obs3.post_literature_status
+        assert 'delta_4' in obs3.post_literature_status
 
-    def test_obstruction_2_resolved(self):
-        """Obstruction 2 (moduli dependence) is essentially resolved."""
+    def test_obstruction_2_genus_scoped(self):
+        """Genus-0 diagnostics do not decide genus >= 2 sewing."""
         obstructions = obstruction_status_analysis()
         obs2 = [o for o in obstructions if o.index == 2][0]
-        assert 'RESOLVED' in obs2.post_literature_status
+        assert obs2.name == 'Non-abelian sewing kernel at genus >= 2'
+        assert 'GENUS-SCOPED' in obs2.post_literature_status
 
-    def test_obstruction_1_improved(self):
-        """Obstruction 1 (propagator regularity) improved by Wang-Grady."""
+    def test_obstruction_1_requires_transfer_data(self):
+        """UV finiteness does not supply SDR transfer data."""
         obstructions = obstruction_status_analysis()
         obs1 = [o for o in obstructions if o.index == 1][0]
-        assert 'IMPROVED' in obs1.post_literature_status
+        assert obs1.name == 'Homotopy-transfer correction from SDR data'
+        assert 'not controlled by F_1' in obs1.post_literature_status
         assert '2407.08667' in obs1.literature_impact
 
     def test_no_obstruction_fully_resolved_for_class_M(self):
-        """No obstruction is fully resolved for class M at genus >= 1."""
+        """Class M is not resolved in ordinary bounded direct-sum chains."""
         obstructions = obstruction_status_analysis()
         for obs in obstructions:
             if obs.index == 3:
-                assert any('M' in item for item in obs.open_for)
+                assert any('M in ordinary chains' in item for item in obs.open_for)
 
 
 # =====================================================================
@@ -279,14 +404,15 @@ class TestSiLiLinftyComparison:
 
 
 class TestBetaGammaBVGenus1:
-    """Verify BV = bar for beta-gamma at genus 1."""
+    """Verify scalar BV = bar for beta-gamma at genus 1."""
 
     def test_bg_genus1_match(self):
-        """F_1^BV(bg) = F_1^bar(bg) = k/24."""
+        """F_1^BV(bg) = F_1^bar(bg) = k/24 at scalar scope."""
         result = betagamma_bv_genus1(k_val=1)
         assert result.match
         assert result.bv_F1 == Rational(1, 24)
         assert result.bar_F1 == Rational(1, 24)
+        assert result.chain_level_status == 'CONDITIONAL_ON_HARMONIC_DECOUPLING'
 
     def test_bg_genus1_k2(self):
         """F_1^BV(bg_2) = F_1^bar(bg_2) = 2/24 = 1/12."""
@@ -295,11 +421,13 @@ class TestBetaGammaBVGenus1:
         assert result.bv_F1 == Rational(2, 24)
 
     def test_bg_genus1_numerical(self):
-        """Numerical verification of bg BV = bar at genus 1."""
+        """Numerical verification of scalar bg BV = bar at genus 1."""
         for k_val in [1, 2, 3, 5, 10]:
             result = betagamma_bv_genus1_numerical(k_val)
             assert result['match'], f"bg_k={k_val}: BV != bar at genus 1"
             assert result['value'] == Rational(k_val, 24)
+            assert result['match_scope'] == 'scalar_genus_1_only'
+            assert result['chain_level_status'] == 'CONDITIONAL_ON_HARMONIC_DECOUPLING'
 
     def test_bg_mode_sum_description(self):
         """Mode sum representations described on both sides."""
@@ -410,12 +538,15 @@ class TestESWTwistClassification:
 
 
 class TestCrossFamilyConsistency:
-    """Cross-family checks for BV = bar at genus 1."""
+    """Cross-family scalar checks for BV = bar at genus 1."""
 
     def test_all_families_pass(self):
-        """F_1 = kappa/24 for all standard families."""
+        """F_1 = kappa/24 for all standard families at scalar scope."""
         result = cross_family_genus1_check()
         assert result['all_pass']
+        assert result['all_scalar_pass']
+        assert not result['all_chain_pass']
+        assert 'chain map' in result['chain_level_obstruction']
 
     def test_additivity(self):
         """F_1(A tensor B) = F_1(A) + F_1(B)."""
@@ -445,11 +576,13 @@ class TestGenus2PlantedForest:
         assert result['F2_total'] == Rational(7, 5760)
 
     def test_virasoro_has_planted_forest(self):
-        """Class M: planted-forest correction present."""
+        """Class M: Virasoro planted-forest discrepancy is normalized."""
         v = virasoro_data(c=Symbol('c'))
         result = genus2_planted_forest_bv_comparison(v)
         assert result['shadow_class'] == 'M'
         assert result['delta_pf'] != 0
+        assert simplify(result['delta_pf'] + (Symbol('c') - 40) / 48) == 0
+        assert 'ordinary chain-level' in result['bv_comparison_status']
 
     def test_affine_km_uniform_weight(self):
         """Class L uniform-weight: delta_pf absorbed."""
@@ -475,24 +608,33 @@ class TestConjectureStatus:
         assert 'PROVED' in heis.genus_1_scalar_status
         assert 'PROVED' in heis.higher_genus_scalar_status
 
-    def test_virasoro_chain_open(self):
-        """Virasoro: chain-level at genus >= 1 is OPEN."""
+    def test_virasoro_ordinary_chain_false(self):
+        """Virasoro: ordinary chain-level at genus >= 1 is false."""
         families = conjecture_status_by_family()
         vir = [f for f in families if 'Virasoro' in f.family][0]
-        assert 'OPEN' in vir.genus_1_chain_status
-        assert 'OPEN' in vir.higher_genus_chain_status
+        assert 'FALSE_IN_ORDINARY_CHAIN_AMBIENT' in vir.genus_1_chain_status
+        assert 'FALSE_IN_ORDINARY_CHAIN_AMBIENT' in vir.higher_genus_chain_status
+
+    def test_affine_chain_hypotheses(self):
+        """Affine class L chain proof is not a scalar-only promotion."""
+        families = conjecture_status_by_family()
+        km = [f for f in families if 'Affine KM' in f.family][0]
+        assert 'PROVED_WITH_HYPOTHESES' in km.genus_1_chain_status
+        assert 'S_4=0' in km.genus_1_chain_status
 
     def test_wn_multi_weight(self):
         """W_N: multi-weight at genus >= 2, scalar formula FAILS."""
         families = conjecture_status_by_family()
         wn = [f for f in families if 'W_N' in f.family][0]
         assert 'FAILS' in wn.higher_genus_scalar_status
+        assert 'FALSE_IN_ORDINARY_CHAIN_AMBIENT' in wn.higher_genus_chain_status
 
     def test_betagamma_genus1_scalar_proved(self):
         """Beta-gamma: genus 1 scalar PROVED."""
         families = conjecture_status_by_family()
         bg = [f for f in families if 'Beta-gamma' in f.family][0]
         assert 'PROVED' in bg.genus_1_scalar_status
+        assert 'CONDITIONAL_ON_HARMONIC_DECOUPLING' in bg.genus_1_chain_status
 
     def test_all_genus0_proved(self):
         """All families have genus 0 PROVED."""
@@ -510,8 +652,8 @@ class TestConjectureStatus:
 class TestFullSynthesis:
     """Verify the complete rectification synthesis."""
 
-    def test_conjecture_not_proved(self):
-        """The conjecture is NOT proved by the literature."""
+    def test_conjecture_open(self):
+        """The literature leaves the conjecture open."""
         result = full_rectification_synthesis()
         assert not result['conjecture_proved']
 
@@ -531,9 +673,12 @@ class TestFullSynthesis:
         assert 'Obstruction 3' in result['deepest_obstruction']
 
     def test_status_remains_conjectural(self):
-        """The recommendation is that status remains CONJECTURAL."""
+        """The recommendation is the ambient-qualified split."""
         result = full_rectification_synthesis()
-        assert 'CONJECTURAL' in result['recommendation']
+        assert not result['ordinary_chain_universal_claim_true']
+        assert result['coderived_claim_proved']
+        assert 'ambient-qualified split' in result['recommendation']
+        assert result['false_ordinary_chain_cases']
 
 
 # =====================================================================

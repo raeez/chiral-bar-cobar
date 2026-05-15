@@ -943,7 +943,7 @@ def hcs_boundary_algebras() -> List[HCSBoundaryAlgebra]:
             boundary_algebra='Extended current algebra with 4 generators',
             kappa=Fraction(5),
             shadow_class='M',
-            source='Costello-Li 1606.00365, twisted_gauge_chiral.py',
+            source='BKM/BPS lane: kappa_BKM(Delta_5)=5; compact kappa_cat=0',
         ),
         HCSBoundaryAlgebra(
             cy3_name='Quintic',
@@ -979,10 +979,10 @@ def hcs_boundary_algebras() -> List[HCSBoundaryAlgebra]:
 
 
 def hcs_kappa_from_cy3(cy3_name: str) -> Optional[Fraction]:
-    """Retrieve kappa for a boundary algebra from CY3 geometry.
+    """Retrieve the lane-specific kappa for a boundary algebra.
 
-    The modular characteristic kappa for the boundary chiral algebra
-    from HCS on CY3 x C depends on the CY3.
+    For K3 x E the registry entry is the BKM/BPS lane, not the compact
+    categorical total-space value.
     """
     for entry in hcs_boundary_algebras():
         if entry.cy3_name == cy3_name:
@@ -1355,12 +1355,13 @@ def higher_genus_twistor_data() -> Dict[str, Any]:
 # =============================================================================
 
 def koszul_duality_comparison(n: int) -> Dict[str, Any]:
-    """Compare Koszul duality at operadic level n with our 2d Koszul duality.
+    """Compare E_n bar-Koszul formalism with the E_1 modular chiral lane.
 
     At E_1 (our framework):
-    - Koszul dual: A^! = (H*(B(A)))^v
-    - Verdier intertwining: D_Ran(B(A)) = B(A!)
-    - Bar-cobar inversion: Omega(B(A)) = A
+    - Bar-dual coalgebra: A^i = H*(B(A)).
+    - Verdier/Koszul companion: A^! is obtained from A^i only under the
+      finite-type or completed Verdier hypotheses.
+    - Bar-cobar inversion: Omega(B(A)) = A.
     - Five main theorems (A-D+H)
 
     At E_n (Costello-Gwilliam):
@@ -1371,28 +1372,42 @@ def koszul_duality_comparison(n: int) -> Dict[str, Any]:
       boundary A is Koszul dual to bulk A^!_{E_n}
 
     Key structural comparison:
-    - E_1 Koszul duality = our Theorems A-D
-    - E_n Koszul duality = shifted version with same structural theorems
-    - Costello's holographic Koszul duality = E_n version of our Theorem A
+    - The E_n bar-cobar adjunction is an operadic analogue of the
+      adjunction/inversion part of Theorems A and B.
+    - The Verdier, modular-characteristic, complementarity, and Hochschild
+      surfaces of Theorems C, D, and H are extra chiral-geometric data.
+    - Costello's holographic Koszul duality is structurally parallel to
+      Theorem A, not an instance of it until a curve reduction and the
+      Vol I hypotheses have been checked.
     """
     return {
         'operadic_level': n,
         'koszul_shift': n,
         'bar_cobar_adjunction': True,  # Exists for all n
-        'verdier_intertwining': True,  # Generalizes to all n
-        'bar_cobar_inversion': True,  # Generalizes to all n
+        'verdier_intertwining': True,  # Comparison axis present; not verbatim theorem transport.
+        'bar_cobar_inversion': True,  # Operadic analogue under standard hypotheses.
         'our_thm_a_generalizes': (
-            f'Theorem A (bar-cobar adjunction + Verdier intertwining) '
-            f'generalizes to E_{n} with the shift by {n}.'
+            f'The E_{n} bar-cobar adjunction is the operadic analogue of '
+            f'Theorem A on the adjunction lane, with shift {n}; the Ran '
+            f'Verdier statement remains a separate chiral-geometric input.'
         ),
         'our_thm_b_generalizes': (
-            f'Theorem B (bar-cobar inversion) generalizes to E_{n}: '
-            f'Omega_{{E_{n}}}(B_{{E_{n}}}(A)) ~ A.'
+            f'The E_{n} bar-cobar counit gives the inversion analogue '
+            f'Omega_{{E_{n}}}(B_{{E_{n}}}(A)) ~ A under the usual '
+            f'conilpotence/completion hypotheses.'
         ),
         'costello_holography_as_koszul': (
-            f'Costello Koszul duality (holography): '
-            f'boundary A <-> bulk A^!_{{E_{n}}} with shift {n}. '
-            f'This is the E_{n} version of our Theorem A.'
+            f'Costello holography uses E_{n} factorization-algebra Koszul '
+            f'duality: boundary A is paired with bulk A^!_{{E_{n}}} with '
+            f'shift {n}. This is structurally parallel to Theorem A, not '
+            f'an instance of the Vol I theorem before curve reduction and '
+            f'Verdier hypotheses are verified.'
+        ),
+        'theorem_scope_firewall': (
+            'Only the adjunction and inversion lanes have immediate E_n '
+            'operadic analogues. Theorem C, Theorem D, and Theorem H are '
+            'modular chiral statements and do not follow from E_n Koszul '
+            'duality alone.'
         ),
         'genus_extension': (
             'Our Theorem D (modular characteristic) and genus tower do NOT '
@@ -1421,8 +1436,9 @@ def associativity_sufficiency_theorem() -> Dict[str, Any]:
     - The "all-orders" result corresponds to our KOSZULNESS: for chirally
       Koszul algebras, the bar cohomology is concentrated and the full
       structure is determined by the binary OPE.
-    - The Koszul duality construction in Fernandez-Paquette is EXACTLY our
-      Theorem A applied to the celestial/twistorial chiral algebra.
+    - The Koszul duality construction in Fernandez-Paquette has the same
+      bar-cobar adjunction pattern as Theorem A after the twistorial
+      chiral algebra is identified and the Vol I hypotheses are checked.
     """
     return {
         'theorem': (
@@ -1435,8 +1451,13 @@ def associativity_sufficiency_theorem() -> Dict[str, Any]:
             'full OPE determined by binary data.'
         ),
         'koszul_duality_match': (
-            'Fernandez-Paquette Koszul duality construction = our Theorem A '
-            'applied to the celestial chiral algebra.'
+            'Fernandez-Paquette Koszul duality uses the same bar-cobar '
+            'adjunction pattern as Theorem A for the celestial chiral '
+            'algebra, after the curve-level and finiteness hypotheses are '
+            'verified.'
+        ),
+        'comparison_status': (
+            'structural analogue, not literal theorem identity'
         ),
         'our_extension': (
             'We provide the GENUS TOWER beyond this: once the chiral algebra '

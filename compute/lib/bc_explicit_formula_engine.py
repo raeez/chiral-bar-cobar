@@ -1,7 +1,8 @@
-r"""Bar-cobar explicit formula engine: shadow von Mangoldt function and explicit formula.
+r"""Bar-cobar explicit formula engine for scalar shadow Dirichlet data.
 
-Analogue of the classical prime-counting explicit formula for the shadow
-obstruction tower of modular Koszul algebras.
+This module computes scalar invariants of a shadow tower
+``{S_r(A)}_{r >= 2}``.  It does not construct the bar coalgebra, the
+Verdier/Koszul dual, the chiral derived centre, or a holographic package.
 
 CLASSICAL ANALOGY
 =================
@@ -20,25 +21,21 @@ where rho runs over the nontrivial zeros of zeta(s).
 SHADOW ANALOGUE
 ===============
 
-For a modular Koszul algebra A with shadow zeta function
+For a shadow tower with bare shadow Dirichlet series
 
     zeta_A(s) = sum_{r >= 2} S_r(A) * r^{-s},
 
-define the shadow von Mangoldt function Lambda_A(r) by
+the logarithmic-derivative arithmetic is attached to the normalized
+shadow L-function
 
-    -zeta_A'(s) / zeta_A(s) = sum_{r >= 2} Lambda_A(r) * r^{-s}.
+    L_A(s) = 1 + zeta_A(s).
 
-Equivalently, if zeta_A(s) = exp(sum_{r>=2} b_r r^{-s}) formally, then
-Lambda_A(r) are determined by the logarithmic derivative.  In practice,
-for the Dirichlet series zeta_A(s), we compute Lambda_A via the recursion:
+Define the shadow von Mangoldt function Lambda_A(r) by
 
-    S_r = sum_{d | r, d >= 2} Lambda_A(d) * c_{r/d}
+    -L_A'(s) / L_A(s) = sum_{r >= 2} Lambda_A(r) * r^{-s}.
 
-where c_n are the coefficients of the reciprocal 1/zeta_A (the Mobius-like
-inversion in the shadow Dirichlet algebra).
-
-More directly: define b_r by zeta_A(s) = sum S_r r^{-s}, and
--zeta_A'(s)/zeta_A(s) = sum Lambda_A(r) r^{-s} where
+The coefficient recursion is the Dirichlet-algebra identity
+``(Lambda_A * L_A)(r) = S_r log(r)`` with ``L_A(1)=1``:
 
     Lambda_A(r) = S_r * log(r) - sum_{d | r, 2 <= d < r} Lambda_A(d) * S_{r/d}
 
@@ -58,17 +55,19 @@ For class M (Virasoro):   pi_A(x) ~ x (all arities contribute).
 EXPLICIT FORMULA (SHADOW ANALOGUE)
 ===================================
 
-    psi_A(x) = (main term) - sum_{rho_sh} x^{rho_sh} / rho_sh + (lower order)
+The zero-sum routines are finite-window diagnostics for the normalized
+L-function convention
 
-The main term comes from the rightmost pole of -zeta_A'/zeta_A.
-The sum over rho_sh runs over the zeros of zeta_A(s).
+    psi_A(x) = (principal term) - sum_{rho_sh} x^{rho_sh} / rho_sh
+               + (lower order),
 
-For finite towers (class G, L, C): zeta_A is a finite Dirichlet polynomial,
-so the "zeros" are finitely many and explicitly computable.
+where rho_sh runs over zeros of L_A(s), not the bare zeta_A(s).
 
-For class M: the zeros form an infinite sequence.  The leading-order
-behaviour of psi_A(x) is determined by the abscissa of convergence and
-the residue at the rightmost pole.
+For finite towers, L_A is a finite Dirichlet polynomial.  It has no
+general Riemann-style Euler product; zeros can occur in vertical
+periodic families even in one-prime examples.  For class M, all
+statements here are truncated scalar computations unless an external
+analytic continuation theorem is supplied.
 
 SHADOW CHEBYSHEV BIAS
 =====================
@@ -90,9 +89,8 @@ where hat{h} is the Fourier/Mellin transform of h evaluated at zeros.
 CRAMER MODEL
 =============
 
-A probabilistic model where S_r is "random" with variance sigma^2(r)
-determined by the shadow quadratic form Q_L.  The Cramer constant is
-the variance per unit arity.
+A finite-window variance model where the observed S_r are compared with
+the Darboux asymptotics of the shadow quadratic form Q_L.
 
 Manuscript references:
     thm:riccati-algebraicity (higher_genus_modular_koszul.tex)
@@ -101,10 +99,12 @@ Manuscript references:
     def:shadow-metric (higher_genus_modular_koszul.tex)
     def:shadow-algebra (higher_genus_modular_koszul.tex)
 
-CAUTION (AP1):  kappa formulas are family-specific.
-CAUTION (AP9):  kappa != c/2 in general.
-CAUTION (AP48): kappa depends on the full algebra, not the Virasoro sub.
-CAUTION (AP10): All numerical results cross-verified by 3+ paths.
+Normalization firewalls:
+    * A, B(A), A^i=H^*(B(A)), A^!, and Z_ch^der(A) are distinct objects.
+    * A^! is the Verdier/continuous-linear dual branch under finite-type
+      or completed hypotheses.
+    * Omega(B(A)) = A is bar-cobar inversion, not Koszul duality.
+    * Z_ch^der(A) = ChirHoch^*(A,A) is the Hochschild/bulk object.
 """
 
 from __future__ import annotations
@@ -116,9 +116,154 @@ from fractions import Fraction
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
 
+HOLOGRAPHIC_PACKAGE_ENTRIES: Tuple[str, ...] = (
+    "A",
+    "A^i",
+    "A^!",
+    "C",
+    "r(z)",
+    "Theta_A",
+    "nabla^hol",
+)
+"""Seven entries of the holographic package."""
+
+
+MODULAR_KOSZUL_PRIMARY_PROJECTIONS: Tuple[str, ...] = (
+    "Fact_X(L)",
+    "barB_X(L)",
+    "Theta_L",
+    "L_L",
+    "(V_br,T_br)",
+    "R4_mod(L)",
+)
+"""Six primary projections of the modular Koszul compute package."""
+
+
+TYPED_FIREWALL_OBJECTS: Tuple[str, ...] = (
+    "A",
+    "B(A)",
+    "A^i",
+    "A^!",
+    "Omega(B(A))",
+    "Z_ch^der(A)",
+)
+
+
+def bar_koszul_firewall_summary() -> Dict[str, str]:
+    """Typed roles for the objects kept separate by this compute surface."""
+    return {
+        "A": "input chiral algebra",
+        "B(A)": "ordered bar coalgebra before cohomology",
+        "A^i": "bar cohomology coalgebra H^*(B(A))",
+        "A^!": (
+            "Verdier/continuous-linear dual branch under finite-type or "
+            "completed hypotheses"
+        ),
+        "Omega(B(A))": "bar-cobar inversion recovering A",
+        "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/derived-centre bulk",
+    }
+
+
+def kernel_normalization_constants(
+    c: complex = 26,
+    k: complex = 1,
+    h_vee: complex = 2,
+) -> Dict[str, Dict[str, Any]]:
+    """Canonical collision and KZ normalizations used as firewalls."""
+    return {
+        "heisenberg_collision": {
+            "formula": "k/z",
+            "coefficient": k,
+        },
+        "affine_raw_collision": {
+            "formula": "k*Omega_tr/z",
+            "coefficient": k,
+        },
+        "affine_kz_coefficient": {
+            "formula": "Omega/((k+h^vee)z)",
+            "coefficient": 1 / (k + h_vee),
+        },
+        "virasoro_collision": {
+            "formula": "(c/2)/z^3 + 2T/z",
+            "central_coefficient": c / 2,
+            "stress_coefficient": 2,
+        },
+    }
+
+
+EXPLICIT_FORMULA_DIAGNOSTIC_SCOPE: Dict[str, Any] = {
+    "surface": "scalar_shadow_dirichlet_projection",
+    "zero_sum_is_certifying": False,
+    "constructs_chiral_mc_theorem": False,
+    "constructs_full_theta_A": False,
+    "imports_riemann_selberg_arithmetic": False,
+    "proves_analytic_continuation": False,
+    "proves_functional_equation": False,
+}
+"""Scope flags shared by finite-window zero-sum and Weil diagnostics."""
+
+
+def explicit_formula_diagnostic_scope() -> Dict[str, Any]:
+    """Return the non-certifying scope of the scalar zero-sum diagnostics."""
+    return dict(EXPLICIT_FORMULA_DIAGNOSTIC_SCOPE)
+
+
 # ============================================================================
 # 1.  Shadow coefficient providers (thin wrappers for self-containment)
 # ============================================================================
+
+def heisenberg_shadow_coefficients_exact(
+    k_val: Union[int, Fraction],
+    max_r: int = 50,
+) -> Dict[int, Fraction]:
+    """Exact Heisenberg coefficients: S_2=k and S_r=0 for r>=3."""
+    k_frac = Fraction(k_val)
+    result = {r: Fraction(0) for r in range(2, max_r + 1)}
+    result[2] = k_frac
+    return result
+
+
+def affine_sl2_shadow_coefficients_exact(
+    k_val: Union[int, Fraction],
+    max_r: int = 50,
+) -> Dict[int, Fraction]:
+    r"""Exact affine sl_2 coefficients on the class-L line.
+
+    The local canonical source is ``landscape_census.tex``:
+    ``kappa(V_k(g)) = dim(g)(k+h^\vee)/(2h^\vee)``.  For ``sl_2``,
+    ``dim(g)=3`` and ``h^\vee=2``, hence ``S_2=3(k+2)/4`` and
+    ``S_3=4/(k+2)``.
+    """
+    k_frac = Fraction(k_val)
+    if k_frac == -2:
+        raise ValueError("affine sl_2 class-L coefficient S_3 has a pole at k=-2")
+    result = {r: Fraction(0) for r in range(2, max_r + 1)}
+    result[2] = Fraction(3) * (k_frac + 2) / 4
+    result[3] = Fraction(4) / (k_frac + 2)
+    return result
+
+
+def virasoro_initial_shadow_coefficients_exact(
+    c_val: Union[int, Fraction],
+) -> Dict[str, Fraction]:
+    r"""Exact Virasoro initial coefficients from the canonical census.
+
+    On the non-singular surface ``c(5c+22) != 0``:
+    ``S_2=c/2``, ``S_3=2``, ``S_4=10/(c(5c+22))``,
+    ``S_5=-48/(c^2(5c+22))``, and
+    ``Delta=8*kappa*S_4=40/(5c+22)``.
+    """
+    c_frac = Fraction(c_val)
+    if c_frac == 0 or 5 * c_frac + 22 == 0:
+        raise ValueError(f"Virasoro shadow undefined at c={c_frac}")
+    return {
+        "S2": c_frac / 2,
+        "S3": Fraction(2),
+        "S4": Fraction(10, 1) / (c_frac * (5 * c_frac + 22)),
+        "S5": Fraction(-48, 1) / (c_frac * c_frac * (5 * c_frac + 22)),
+        "Delta": Fraction(40, 1) / (5 * c_frac + 22),
+    }
+
 
 def heisenberg_shadow_coefficients(k_val: float, max_r: int = 50) -> Dict[int, float]:
     """Shadow coefficients for Heisenberg H_k.  Class G: only S_2 = k."""
@@ -155,7 +300,7 @@ def betagamma_shadow_coefficients(lam_val: float = 0.5, max_r: int = 50) -> Dict
         S4 = 10.0 / (c_val * (5.0 * c_val + 22.0))
     result = {r: 0.0 for r in range(2, max_r + 1)}
     result[2] = kappa
-    result[3] = 2.0  # S_3 = 2: universal gravitational cubic for ALL Virasoro/betagamma (AP1)
+    result[3] = 2.0  # universal gravitational cubic on the Virasoro/T-line
     result[4] = S4
     return result
 
@@ -175,7 +320,8 @@ def virasoro_shadow_coefficients(c_val: float, max_r: int = 50) -> Dict[int, flo
     q1 = 12.0 * c_val
     q2 = (180.0 * c_val + 872.0) / (5.0 * c_val + 22.0)
 
-    a0 = abs(c_val)  # sqrt(c^2) = |c|
+    # Algebraic branch fixed by the canonical initial condition S_2=c/2.
+    a0 = c_val
     a = [a0]
 
     if max_r >= 3:
@@ -211,31 +357,13 @@ def shadow_von_mangoldt(shadow_coeffs: Dict[int, float],
                         max_r: Optional[int] = None) -> Dict[int, float]:
     r"""Compute the shadow von Mangoldt function Lambda_A(r).
 
-    Defined by the logarithmic derivative:
-        -zeta_A'(s) / zeta_A(s) = sum_{r >= 2} Lambda_A(r) * r^{-s}
-
-    Since zeta_A'(s) = -sum S_r log(r) r^{-s}, we have
-
-        sum Lambda_A(r) r^{-s} = [sum S_r log(r) r^{-s}] / [sum S_r r^{-s}]
-
-    Equivalently, by Dirichlet series convolution:
-        S_r * log(r) = sum_{d | r, d >= 2} Lambda_A(d) * S_{r/d}
-
-    where S_1 := 1 (Dirichlet series unit, so S_{r/d} for d=r gives S_1=1).
-
-    Rearranging:
-        Lambda_A(r) = S_r * log(r) / S_2_unit
-                    - sum_{d | r, 2 <= d < r, r/d >= 2} Lambda_A(d) * S_{r/d}
-
-    But this requires S_1 = 1 convention for the zeta function to include
-    a constant term.  Instead, we work directly:
-
-    Define L_A(s) = 1 + sum_{r>=2} S_r r^{-s} (with constant term 1).
+    Define ``L_A(s) = 1 + sum_{r>=2} S_r r^{-s}``.
     Then -L_A'/L_A = sum_{r>=2} Lambda_A(r) r^{-s} where
 
         Lambda_A(r) = S_r * log(r) - sum_{d | r, 2 <= d < r, r/d >= 2} Lambda_A(d) * S_{r/d}
 
-    This is the Dirichlet series Mobius inversion for the log derivative.
+    This is the Dirichlet-series inversion for the normalized
+    log derivative.
 
     Returns dict {r: Lambda_A(r)} for r = 2, ..., max_r.
     """
@@ -264,31 +392,43 @@ def shadow_von_mangoldt_from_log_derivative(
     shadow_coeffs: Dict[int, float],
     max_r: Optional[int] = None,
 ) -> Dict[int, float]:
-    r"""Compute Lambda_A(r) via explicit log-derivative matching.
+    r"""Compute Lambda_A(r) by the Dirichlet-inverse log-derivative formula.
 
-    Verification path 2: compute -zeta_A'(s)/zeta_A(s) at integer s values
-    and extract Lambda_A(r) by coefficient comparison.
+    Let ``a_1=1`` and ``a_r=S_r`` for ``r>=2``.  If
+    ``b_r=S_r log(r)`` and ``a^{-1}`` is the Dirichlet inverse of ``a``, then
 
-    For a FINITE tower this is exact.  For class M towers, this involves
-    truncation at max_r.
+        Lambda_A = b * a^{-1}.
 
-    Method: if zeta_A(s) = sum_{r>=2} S_r r^{-s}, define
-        f(s) = sum S_r log(r) r^{-s}   (= -zeta_A')
-        g(s) = sum S_r r^{-s}           (= zeta_A)
-
-    Then Lambda_A satisfies the convolution: f = Lambda * g where * is
-    Dirichlet convolution starting from r=2.  So:
-
-        Lambda(r) = [S_r log(r) - sum_{d|r, 2<=d<r, r/d>=2} Lambda(d) S_{r/d}]
-
-    NOTE (AP10): This function uses the SAME recursion as shadow_von_mangoldt.
-    It is NOT an independent verification path — both derive Lambda_A from the
-    same Dirichlet convolution identity.  A genuinely independent path would
-    compute Lambda_A by numerically evaluating -zeta_A'/zeta_A at multiple
-    points and inverting via Perron's formula.  This function is retained for
-    API compatibility but should not be cited as "path 2" in verification.
+    This is the coefficient form of ``-L_A'/L_A`` and gives an alternative
+    implementation to the forward recursion in :func:`shadow_von_mangoldt`.
     """
-    return shadow_von_mangoldt(shadow_coeffs, max_r)
+    if max_r is None:
+        max_r = max(shadow_coeffs.keys())
+
+    a = {1: 1.0}
+    for r in range(2, max_r + 1):
+        a[r] = shadow_coeffs.get(r, 0.0)
+
+    a_inv = {1: 1.0}
+    for n in range(2, max_r + 1):
+        total = 0.0
+        for d in range(2, n + 1):
+            if n % d == 0:
+                total += a.get(d, 0.0) * a_inv.get(n // d, 0.0)
+        a_inv[n] = -total
+
+    Lambda = {}
+    for n in range(2, max_r + 1):
+        val = 0.0
+        for d in range(2, n + 1):
+            if n % d != 0:
+                continue
+            Sd = shadow_coeffs.get(d, 0.0)
+            if abs(Sd) < 1e-300:
+                continue
+            val += Sd * math.log(d) * a_inv.get(n // d, 0.0)
+        Lambda[n] = val
+    return Lambda
 
 
 # ============================================================================
@@ -369,7 +509,7 @@ def shadow_active_arities(shadow_coeffs: Dict[int, float],
 def shadow_zeta_value(shadow_coeffs: Dict[int, float],
                       s: complex,
                       max_r: Optional[int] = None) -> complex:
-    """Evaluate zeta_A(s) = sum_{r >= 2} S_r r^{-s}."""
+    """Evaluate the bare shadow zeta_A(s) = sum_{r >= 2} S_r r^{-s}."""
     if max_r is None:
         max_r = max(shadow_coeffs.keys())
     total = 0.0 + 0.0j
@@ -384,7 +524,7 @@ def shadow_zeta_value(shadow_coeffs: Dict[int, float],
 def shadow_zeta_derivative(shadow_coeffs: Dict[int, float],
                            s: complex,
                            max_r: Optional[int] = None) -> complex:
-    """Evaluate zeta_A'(s) = -sum_{r >= 2} S_r log(r) r^{-s}."""
+    """Evaluate the bare derivative zeta_A'(s)."""
     if max_r is None:
         max_r = max(shadow_coeffs.keys())
     total = 0.0 + 0.0j
@@ -396,15 +536,29 @@ def shadow_zeta_derivative(shadow_coeffs: Dict[int, float],
     return total
 
 
+def shadow_l_function_value(shadow_coeffs: Dict[int, float],
+                            s: complex,
+                            max_r: Optional[int] = None) -> complex:
+    """Evaluate L_A(s) = 1 + zeta_A(s)."""
+    return 1.0 + shadow_zeta_value(shadow_coeffs, s, max_r)
+
+
+def shadow_l_function_derivative(shadow_coeffs: Dict[int, float],
+                                 s: complex,
+                                 max_r: Optional[int] = None) -> complex:
+    """Evaluate L_A'(s); the constant term has derivative zero."""
+    return shadow_zeta_derivative(shadow_coeffs, s, max_r)
+
+
 def shadow_log_derivative(shadow_coeffs: Dict[int, float],
                           s: complex,
                           max_r: Optional[int] = None) -> complex:
-    """Evaluate -zeta_A'(s)/zeta_A(s) = sum Lambda_A(r) r^{-s}."""
-    zeta_val = shadow_zeta_value(shadow_coeffs, s, max_r)
-    zeta_prime = shadow_zeta_derivative(shadow_coeffs, s, max_r)
-    if abs(zeta_val) < 1e-300:
+    """Evaluate -L_A'(s)/L_A(s) = sum Lambda_A(r) r^{-s}."""
+    l_val = shadow_l_function_value(shadow_coeffs, s, max_r)
+    l_prime = shadow_l_function_derivative(shadow_coeffs, s, max_r)
+    if abs(l_val) < 1e-300:
         return complex(float('nan'), float('nan'))
-    return -zeta_prime / zeta_val
+    return -l_prime / l_val
 
 
 def find_shadow_zeros_on_line(shadow_coeffs: Dict[int, float],
@@ -412,10 +566,10 @@ def find_shadow_zeros_on_line(shadow_coeffs: Dict[int, float],
                               t_range: Tuple[float, float] = (0.1, 100.0),
                               n_points: int = 5000,
                               max_r: Optional[int] = None) -> List[complex]:
-    r"""Find approximate zeros of zeta_A(sigma + it) by sign-change detection.
+    r"""Find approximate zeros of L_A(sigma + it) by sign-change detection.
 
-    Scans the line Re(s) = sigma for zeros of zeta_A by detecting sign
-    changes in the real and imaginary parts.
+    Scans the line Re(s) = sigma for zeros of the normalized shadow
+    L-function by detecting sign changes in the real and imaginary parts.
 
     Returns list of approximate zeros sigma + i*t.
     """
@@ -426,10 +580,10 @@ def find_shadow_zeros_on_line(shadow_coeffs: Dict[int, float],
     dt = (t_hi - t_lo) / n_points
 
     zeros = []
-    prev_val = shadow_zeta_value(shadow_coeffs, complex(sigma, t_lo), max_r)
+    prev_val = shadow_l_function_value(shadow_coeffs, complex(sigma, t_lo), max_r)
     for i in range(1, n_points + 1):
         t = t_lo + i * dt
-        val = shadow_zeta_value(shadow_coeffs, complex(sigma, t), max_r)
+        val = shadow_l_function_value(shadow_coeffs, complex(sigma, t), max_r)
         # Detect zero: both real and imaginary parts near zero,
         # or sign change in real part with small imaginary part
         if (prev_val.real * val.real < 0 and
@@ -438,8 +592,8 @@ def find_shadow_zeros_on_line(shadow_coeffs: Dict[int, float],
             t_a, t_b = t - dt, t
             for _ in range(30):
                 t_mid = (t_a + t_b) / 2
-                v_mid = shadow_zeta_value(shadow_coeffs, complex(sigma, t_mid), max_r)
-                if v_mid.real * shadow_zeta_value(
+                v_mid = shadow_l_function_value(shadow_coeffs, complex(sigma, t_mid), max_r)
+                if v_mid.real * shadow_l_function_value(
                         shadow_coeffs, complex(sigma, t_a), max_r).real < 0:
                     t_b = t_mid
                 else:
@@ -455,7 +609,7 @@ def find_shadow_zeros_general(shadow_coeffs: Dict[int, float],
                               n_sigma: int = 20,
                               n_t: int = 2000,
                               max_r: Optional[int] = None) -> List[complex]:
-    """Find zeros of zeta_A in a rectangular region of the complex plane.
+    """Find zeros of L_A in a rectangular region of the complex plane.
 
     Uses grid search followed by Newton refinement.
     """
@@ -485,11 +639,11 @@ def refine_zero_newton(shadow_coeffs: Dict[int, float],
                        max_iter: int = 50,
                        tol: float = 1e-12,
                        max_r: Optional[int] = None) -> complex:
-    """Refine a zero of zeta_A by Newton's method: s_{n+1} = s_n - zeta/zeta'."""
+    """Refine a zero of L_A by Newton's method: s_{n+1} = s_n - L/L'."""
     s = s0
     for _ in range(max_iter):
-        z = shadow_zeta_value(shadow_coeffs, s, max_r)
-        zp = shadow_zeta_derivative(shadow_coeffs, s, max_r)
+        z = shadow_l_function_value(shadow_coeffs, s, max_r)
+        zp = shadow_l_function_derivative(shadow_coeffs, s, max_r)
         if abs(zp) < 1e-300:
             break
         ds = z / zp
@@ -509,27 +663,23 @@ def explicit_formula_from_zeros(
     zeros: List[complex],
     max_r: Optional[int] = None,
 ) -> Dict[str, Any]:
-    r"""Compute the explicit formula decomposition of psi_A(x).
+    r"""Compute a finite-window zero-sum diagnostic for psi_A(x).
 
-    psi_A(x) = (main term) - sum_{rho} x^{rho} / rho + (lower order)
+    The intended normalized convention is
 
-    The main term is determined by the pole/residue structure of
-    -zeta_A'(s)/zeta_A(s).
+        psi_A(x) = (principal term) - sum_{rho} x^{rho} / rho
+                   + (lower order),
 
-    For a FINITE Dirichlet polynomial zeta_A(s) = sum_{r=2}^{R} S_r r^{-s},
-    there are no poles of -zeta_A'/zeta_A except at the zeros of zeta_A.
-    The explicit formula becomes:
-
-        psi_A(x) = -sum_{rho} x^{rho} / rho + constant_term
-
-    For class M (infinite tower), the main term arises from the
-    behaviour of zeta_A near the abscissa of convergence.
+    where rho runs over zeros of L_A(s)=1+zeta_A(s).  This routine is a
+    residual-fit diagnostic.  It does not prove analytic continuation,
+    a functional equation, or any chiral Maurer--Cartan theorem.
 
     Returns dict with:
         'psi_direct': direct computation of psi_A(x)
-        'zero_sum': -sum x^rho / rho
-        'main_term': estimated main term
-        'error': |psi_direct - (main_term + zero_sum)|
+        'zero_sum': paired sum x^rho/rho over supplied zeros
+        'signed_zero_term': the term -sum x^rho/rho in the displayed formula
+        'main_term': residual fitted after seeing psi_direct and zero_sum
+        'error': residual-fit closure error
         'zero_contributions': list of individual x^rho / rho terms
     """
     if max_r is None:
@@ -558,19 +708,26 @@ def explicit_formula_from_zeros(
             # Real zero
             conj_sum += (x ** rho / rho).real
 
-    # Main term: for finite towers, this is just the constant
-    # For class M, estimate from the abscissa region
-    main_term = psi_direct + conj_sum  # residual after subtracting zeros
+    main_term = psi_direct + conj_sum
+    signed_zero_term = -conj_sum
+    reconstruction = main_term + signed_zero_term
 
-    error = abs(psi_direct - (main_term - conj_sum))
+    error = abs(psi_direct - reconstruction)
 
-    return {
+    result = {
         'psi_direct': psi_direct,
         'zero_sum': conj_sum,
+        'signed_zero_term': signed_zero_term,
         'main_term': main_term,
+        'residual_principal_term': main_term,
+        'reconstruction': reconstruction,
         'error': error,
         'zero_contributions': zero_contributions,
+        'main_term_is_residual_fit': True,
+        'certifies_explicit_formula': False,
     }
+    result.update(explicit_formula_diagnostic_scope())
+    return result
 
 
 def explicit_formula_error(
@@ -579,7 +736,11 @@ def explicit_formula_error(
     zeros: List[complex],
     max_r: Optional[int] = None,
 ) -> Dict[float, float]:
-    """Compute the explicit formula error |psi_direct - psi_from_zeros| at each x."""
+    """Compute the zero-only residual ``|psi_direct + sum x^rho/rho|``.
+
+    No principal term is supplied, so these values are finite-window
+    diagnostics rather than explicit-formula errors in the analytic sense.
+    """
     if max_r is None:
         max_r = max(shadow_coeffs.keys())
     Lambda = shadow_von_mangoldt(shadow_coeffs, max_r)
@@ -609,10 +770,10 @@ def psi_from_inverse_mellin(shadow_coeffs: Dict[int, float],
                             T: float = 100.0,
                             n_points: int = 5000,
                             max_r: Optional[int] = None) -> float:
-    r"""Compute psi_A(x) via the inverse Mellin transform of -zeta_A'/zeta_A.
+    r"""Compute psi_A(x) via the inverse Mellin transform of -L_A'/L_A.
 
     psi_A(x) = (1/2pi i) * integral_{sigma - iT}^{sigma + iT}
-                              [-zeta_A'(s)/zeta_A(s)] * x^s / s ds
+                              [-L_A'(s)/L_A(s)] * x^s / s ds
 
     Verification path 2: independent of the recursive von Mangoldt computation.
 
@@ -627,7 +788,7 @@ def psi_from_inverse_mellin(shadow_coeffs: Dict[int, float],
     for i in range(n_points + 1):
         t = -T + i * dt
         s = complex(sigma, t)
-        # -zeta'/zeta
+        # -L'/L
         log_deriv = shadow_log_derivative(shadow_coeffs, s, max_r)
         if math.isnan(log_deriv.real) or math.isnan(log_deriv.imag):
             continue
@@ -716,20 +877,17 @@ def shadow_bias_positive_density(shadow_coeffs: Dict[int, float],
 
 
 # ============================================================================
-# 9.  Shadow prime number theorem
+# 9.  Shadow Chebyshev slope estimator
 # ============================================================================
 
 def shadow_pnt_constant(shadow_coeffs: Dict[int, float],
                         max_r: Optional[int] = None) -> float:
-    r"""Estimate the shadow PNT constant C such that psi_A(x) ~ C*x.
+    r"""Estimate the finite-window Chebyshev slope psi_A(max_r)/max_r.
 
-    For class M (infinite tower), psi_A(x) grows like C*x as x -> infinity.
-    The constant C is related to the residue of -zeta_A'/zeta_A at the
-    rightmost singularity.
-
-    For FINITE towers: psi_A(x) is eventually constant, so C = 0.
-
-    Estimation: C = lim_{x -> max_r} psi_A(x) / x.
+    For finite towers this returns 0 because psi_A is eventually constant.
+    For dense class-M truncations this returns only the observed terminal
+    slope; it is not an asymptotic prime-number-theorem constant without
+    an analytic continuation and pole theorem for L_A.
     """
     if max_r is None:
         max_r = max(shadow_coeffs.keys())
@@ -741,7 +899,7 @@ def shadow_pnt_constant(shadow_coeffs: Dict[int, float],
     if len(active) < max_r * 0.5:
         return 0.0  # Finite tower
 
-    # For infinite towers, estimate C from the ratio psi(x)/x
+    # For dense towers, report the observed terminal ratio psi(x)/x.
     psi_val = sum(Lambda.get(r, 0.0) for r in range(2, max_r + 1))
     if max_r > 2:
         return psi_val / max_r
@@ -751,7 +909,7 @@ def shadow_pnt_constant(shadow_coeffs: Dict[int, float],
 def shadow_pnt_ratio_table(shadow_coeffs: Dict[int, float],
                            x_values: List[float],
                            max_r: Optional[int] = None) -> Dict[float, float]:
-    """Compute psi_A(x) / x for a list of x values to study PNT convergence."""
+    """Compute finite-window ratios psi_A(x) / x for a list of x values."""
     if max_r is None:
         max_r = max(shadow_coeffs.keys())
     Lambda = shadow_von_mangoldt(shadow_coeffs, max_r)
@@ -771,8 +929,8 @@ def weil_explicit_formula(
     test_fn: Callable[[float], float],
     zeros: List[complex],
     max_r: Optional[int] = None,
-) -> Dict[str, float]:
-    r"""Shadow Weil explicit formula.
+) -> Dict[str, Any]:
+    r"""Finite-window shadow Weil diagnostic.
 
     For a test function h:
 
@@ -780,7 +938,9 @@ def weil_explicit_formula(
 
     where hat_h(rho) = sum_{r >= 2} h(r) r^{-rho} (the Mellin-type transform).
 
-    The principal term is the contribution from any pole of -zeta_A'/zeta_A.
+    The principal term is the residual after the supplied zeros of L_A are
+    paired with the arithmetic side.  Thus the returned equality is a
+    finite-window decomposition, not a trace formula theorem.
 
     Returns dict with:
         'sum_side': sum Lambda_A(r) h(r)
@@ -814,12 +974,16 @@ def weil_explicit_formula(
     principal = sum_side - spectral_sum
     error = abs(sum_side - (principal + spectral_sum))
 
-    return {
+    result = {
         'sum_side': sum_side,
         'spectral_side': spectral_sum,
         'principal': principal,
+        'principal_is_residual_fit': True,
         'error': error,
+        'certifies_weil_formula': False,
     }
+    result.update(explicit_formula_diagnostic_scope())
+    return result
 
 
 # ============================================================================
@@ -944,19 +1108,15 @@ def parseval_identity_check(
     sigma: float = 3.0,
     max_r: Optional[int] = None,
 ) -> Dict[str, float]:
-    r"""Check the Parseval identity between shadow coefficients and zeros.
+    r"""Check a finite-window Parseval identity for the bare shadow zeta.
 
     For the shadow zeta function, the Parseval relation on the line Re(s)=sigma:
 
         sum_{r >= 2} |S_r|^2 * r^{-2*sigma}
             = (1/2pi) * integral |zeta_A(sigma + it)|^2 dt
 
-    The spectral side involves the zeros of zeta_A.
-
-    Also: the squared log-derivative identity:
-
-        sum_{r >= 2} |Lambda_A(r)|^2 * r^{-2*sigma}
-            = (1/2pi) * integral |zeta_A'/zeta_A|^2 dt
+    Also records the squared normalized log-derivative coefficient sum
+    ``sum |Lambda_A(r)|^2 r^{-2*sigma}``.
 
     Returns:
         'coefficient_sum': sum |S_r|^2 r^{-2 sigma}
@@ -998,22 +1158,9 @@ def parseval_identity_check(
 def heisenberg_von_mangoldt_exact(k_val: float, r: int) -> float:
     r"""Exact shadow von Mangoldt for Heisenberg.
 
-    zeta_{H_k}(s) = k * 2^{-s}.  So
+    The normalized shadow L-function is L_A(s) = 1 + k * 2^{-s}.  Hence
 
-    -zeta'/zeta = k * log(2) * 2^{-s} / (k * 2^{-s}) = log(2).
-
-    This means sum Lambda_A(r) r^{-s} = log(2), so Lambda_A(2) = log(2)
-    and Lambda_A(r) = 0 for r >= 3... but wait, this treats zeta_A itself
-    as the full function.
-
-    More precisely: zeta_A(s) = k * 2^{-s} (no constant term 1).
-    Then -zeta_A'(s)/zeta_A(s) = log(2), which as a Dirichlet series
-    can only be log(2) * (sum_{r} delta_{r,2} * r^{-s}) if we insist the
-    series has the form sum Lambda(r) r^{-s}... but log(2) is a constant,
-    not a Dirichlet series in r^{-s}.
-
-    The correct interpretation: treating 1 + zeta_A as the "full" L-function,
-    L(s) = 1 + k * 2^{-s}, then -L'/L = k * log(2) * 2^{-s} / (1 + k * 2^{-s}).
+        -L_A'/L_A = k * log(2) * 2^{-s} / (1 + k * 2^{-s}).
 
     Expanding as a geometric series (for |k * 2^{-s}| < 1, i.e., Re(s) > log(k)/log(2)):
         -L'/L = k * log(2) * 2^{-s} * sum_{n=0}^inf (-k)^n * 2^{-ns}
@@ -1022,7 +1169,7 @@ def heisenberg_von_mangoldt_exact(k_val: float, r: int) -> float:
     So Lambda(2^n) = (-1)^{n+1} * k^n * log(2) for n >= 1,
     and Lambda(r) = 0 if r is not a power of 2.
 
-    For the RECURSIVE definition (with S_1 := 0, no constant term):
+    The same coefficients follow from the recursion with L_A(1)=1:
     Lambda(2) = S_2 * log(2) = k * log(2).
     Lambda(4) = S_4 * log(4) - Lambda(2) * S_2 = 0 - k * log(2) * k = -k^2 * log(2).
     Lambda(8) = S_8 * log(8) - Lambda(2)*S_4 - Lambda(4)*S_2
@@ -1078,7 +1225,7 @@ def heisenberg_bias_exact(k_val: float, x: float) -> float:
 def affine_sl2_von_mangoldt_exact(k_val: float, r: int) -> float:
     r"""Exact shadow von Mangoldt for affine sl_2.
 
-    zeta_A(s) = kappa * 2^{-s} + alpha * 3^{-s}   (only two nonzero terms).
+    L_A(s) = 1 + kappa * 2^{-s} + alpha * 3^{-s}.
 
     From the recursion:
         Lambda(2) = S_2 * log(2) = kappa * log(2)
@@ -1105,7 +1252,7 @@ def affine_sl2_von_mangoldt_exact(k_val: float, r: int) -> float:
 
 @dataclass
 class ExplicitFormulaData:
-    """Complete explicit formula data for a modular Koszul algebra."""
+    """Scalar explicit-formula diagnostics for one shadow tower."""
     name: str
     shadow_class: str
     shadow_coeffs: Dict[int, float]
@@ -1125,7 +1272,7 @@ def compute_explicit_formula_data(
     shadow_coeffs: Dict[int, float],
     x_values: Optional[List[float]] = None,
 ) -> ExplicitFormulaData:
-    """Compute full explicit formula data for an algebra."""
+    """Compute scalar explicit-formula diagnostics for one shadow tower."""
     max_r = max(shadow_coeffs.keys())
     if x_values is None:
         x_values = [float(x) for x in range(2, min(max_r + 1, 52))]
@@ -1198,22 +1345,31 @@ def verify_von_mangoldt_consistency(
     max_r: Optional[int] = None,
     tol: float = 1e-8,
 ) -> Dict[str, Any]:
-    r"""Verify shadow von Mangoldt function by three independent paths.
+    r"""Verify shadow von Mangoldt coefficients by two coefficient paths.
 
-    Path 1: Recursive definition (shadow_von_mangoldt).
-    Path 2: Coefficient recovery: sum_{d|r, d>=2} Lambda(d) * S_{r/d} = S_r * log(r)
-             where S_1 := 1 (the constant-term convention is implicit).
-    Path 3: For Heisenberg, compare against exact closed form.
+    Path 1: Forward recursion from ``(Lambda_A * L_A)(r)=S_r log(r)``.
+    Path 2: Dirichlet-inverse formula ``Lambda_A=(S log)*L_A^{-1}``.
+    The convolution identity is checked separately against the path-1 output.
 
-    Returns dict with 'max_error', 'path1_path2_agreement', 'is_consistent'.
+    Returns absolute and relative errors for the convolution and path checks.
     """
     if max_r is None:
         max_r = max(shadow_coeffs.keys())
 
     Lambda = shadow_von_mangoldt(shadow_coeffs, max_r)
+    Lambda_inverse = shadow_von_mangoldt_from_log_derivative(shadow_coeffs, max_r)
 
-    # Path 2: verify that the convolution identity holds
+    path_error = 0.0
+    path_relative_error = 0.0
+    for r in range(2, max_r + 1):
+        diff = abs(Lambda.get(r, 0.0) - Lambda_inverse.get(r, 0.0))
+        scale = max(1.0, abs(Lambda.get(r, 0.0)), abs(Lambda_inverse.get(r, 0.0)))
+        path_error = max(path_error, diff)
+        path_relative_error = max(path_relative_error, diff / scale)
+
+    # Verify that the convolution identity holds for the forward recursion.
     max_error = 0.0
+    max_relative_error = 0.0
     for r in range(2, max_r + 1):
         Sr = shadow_coeffs.get(r, 0.0)
         lhs = Sr * math.log(r)
@@ -1227,12 +1383,17 @@ def verify_von_mangoldt_consistency(
                 continue
             rhs += Lambda.get(d, 0.0) * shadow_coeffs.get(q, 0.0)
         error = abs(lhs - rhs)
+        scale = max(1.0, abs(lhs), abs(rhs))
         max_error = max(max_error, error)
+        max_relative_error = max(max_relative_error, error / scale)
 
     return {
         'max_error': max_error,
-        'path1_path2_agreement': max_error < tol,
-        'is_consistent': max_error < tol,
+        'max_relative_error': max_relative_error,
+        'path_error': path_error,
+        'path_relative_error': path_relative_error,
+        'path1_path2_agreement': path_relative_error < tol,
+        'is_consistent': max_relative_error < tol and path_relative_error < tol,
     }
 
 
@@ -1246,7 +1407,7 @@ def verify_psi_two_paths(
     r"""Compare psi_A(x) from direct summation vs inverse Mellin.
 
     Path 1: Direct sum of Lambda_A(r).
-    Path 2: Inverse Mellin integral of -zeta_A'/zeta_A.
+    Path 2: Inverse Mellin integral of -L_A'/L_A.
     """
     if max_r is None:
         max_r = max(shadow_coeffs.keys())

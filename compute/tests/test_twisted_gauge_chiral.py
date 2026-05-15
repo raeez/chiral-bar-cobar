@@ -4,10 +4,10 @@ Comprehensive test suite for the twisted gauge theory on CY3 -> chiral algebra
 engine.  Covers:
 
   Section 1: CY3 Hodge data (Tests 1-6)
-  Section 2: CY Euler characteristic chi^CY (Tests 7-12)
+  Section 2: legacy scalar lane readout (Tests 7-12)
   Section 3: Boundary chiral algebra data (Tests 13-20)
   Section 4: Tree-level OPE structure (Tests 21-26)
-  Section 5: Verification of kappa = 5 for K3 x E (Tests 27-36)
+  Section 5: Verification of kappa_BKM = 5 for K3 x E (Tests 27-36)
   Section 6: CY3 landscape table (Tests 37-42)
   Section 7: GL(N) landscape on C^3 (Tests 43-48)
   Section 8: Cross-checks and consistency (Tests 49-55)
@@ -138,38 +138,38 @@ class TestCY3HodgeData:
 
 
 # ===========================================================================
-# Section 2: CY Euler characteristic
+# Section 2: scalar lane readout
 # ===========================================================================
 
-class TestCYEulerCharacteristic:
-    """Tests for chi^CY, the categorical Euler characteristic."""
+class TestScalarLaneReadout:
+    """Tests for the legacy scalar readout used by this engine."""
 
     def test_chi_cy_c3(self):
-        """chi^CY(C^3) = 0."""
+        """The flat-space selected scalar is 0."""
         assert chi_cy(C3HodgeData()) == Fraction(0)
 
     def test_chi_cy_k3e(self):
-        """chi^CY(K3 x E) = 5.  THE KEY COMPUTATION."""
+        """For K3 x E the legacy scalar is kappa_BKM = 5."""
         assert chi_cy(K3xEHodgeData()) == Fraction(5)
 
     def test_chi_cy_quintic(self):
-        """chi^CY(quintic) = -25/3 = chi_top/24."""
+        """The quintic BCOV scalar is -25/3 = chi_top/24."""
         result = chi_cy(QuinticHodgeData())
         assert result == Fraction(-25, 3)
         # Cross-check: chi_top/24 = -200/24 = -25/3
         assert result == Fraction(-200, 24)
 
     def test_chi_cy_conifold(self):
-        """chi^CY(conifold) = 1."""
+        """The conifold selected scalar is 1."""
         assert chi_cy(ConifoldHodgeData()) == Fraction(1)
 
     def test_chi_cy_t6(self):
-        """chi^CY(T^6) = 0."""
+        """The T^6 selected scalar is 0."""
         assert chi_cy(T6HodgeData()) == Fraction(0)
 
     def test_chi_cy_ne_chi_top_k3e(self):
-        """chi^CY(K3 x E) = 5 != chi_top(K3 x E) = 0.
-        CRITICAL: these are DIFFERENT invariants (CLAUDE.md)."""
+        """kappa_BKM(K3 x E) = 5 != chi_top(K3 x E) = 0.
+        CRITICAL: this is not compact kappa_cat(K3 x E)=0."""
         cy3 = K3xEHodgeData()
         assert chi_cy(cy3) != cy3.euler_topological
         assert chi_cy(cy3) == Fraction(5)
@@ -225,7 +225,7 @@ class TestBoundaryChiralData:
             assert data.kappa_total == expected, f"Failed at N={N}"
 
     def test_k3e_gl1_kappa(self):
-        """GL(1) on K3 x E: kappa = chi^CY(K3 x E) = 5."""
+        """GL(1) on K3 x E: BKM-lane kappa_BKM = 5."""
         data = k3e_gl1_data()
         assert data.kappa_total == Fraction(5)
 
@@ -320,11 +320,11 @@ class TestTreeLevelOPE:
 
 
 # ===========================================================================
-# Section 6: Verification of kappa = 5 for K3 x E (5 independent paths)
+# Section 6: Verification of kappa_BKM = 5 for K3 x E (5 independent paths)
 # ===========================================================================
 
 class TestKappaK3E:
-    """Verification of kappa(K3 x E) = 5 via 5 independent paths.
+    """Verification of kappa_BKM(K3 x E) = 5 via 5 independent paths.
 
     This is the KEY computation of this module.  The multi-path verification
     mandate (CLAUDE.md) requires 3+ independent paths.  We provide 5.
@@ -343,7 +343,7 @@ class TestKappaK3E:
         assert result['matches_5'] is True
 
     def test_path3_genus1(self):
-        """Path 3: F_1 = 5/24 implies kappa = 5."""
+        """Path 3: F_1 = 5/24 implies kappa_BKM = 5."""
         result = verify_kappa_k3e_path3_genus1()
         assert result['F_1'] == Fraction(5, 24)
         assert result['kappa'] == Fraction(5)
@@ -359,14 +359,14 @@ class TestKappaK3E:
         assert result['kappa'] == Fraction(5)
 
     def test_all_5_paths_agree(self):
-        """All 5 independent paths give kappa = 5."""
+        """All 5 independent paths give kappa_BKM = 5."""
         result = verify_kappa_k3e_all_paths()
         assert result['all_agree'] is True
         assert result['kappa'] == Fraction(5)
         assert result['num_paths'] == 5
 
     def test_kappa_k3e_not_chi_top_over_24(self):
-        """kappa(K3 x E) = 5 != chi_top/24 = 0/24 = 0.
+        """kappa_BKM(K3 x E) = 5 != chi_top/24 = 0/24 = 0.
 
         CRITICAL: the BCOV formula chi_top/24 does NOT apply to K3 x E
         because K3 x E is not rigid (it has complex structure moduli).
@@ -374,22 +374,22 @@ class TestKappaK3E:
         cy3 = K3xEHodgeData()
         assert chi_cy(cy3) == Fraction(5)
         assert cy3.euler_topological == 0
-        # chi_top/24 = 0, but kappa = 5.
+        # chi_top/24 = 0, but the BKM lane has kappa_BKM = 5.
         assert Fraction(cy3.euler_topological, 24) != chi_cy(cy3)
 
     def test_genus_1_from_kappa(self):
-        """F_1(K3 x E) = kappa/24 = 5/24."""
+        """F_1(K3 x E) = kappa_BKM/24 = 5/24."""
         data = k3e_gl1_data()
         assert data.F_g(1) == Fraction(5, 24)
 
     def test_genus_2_from_kappa(self):
-        """F_2(K3 x E) = kappa * 7/5760 = 5 * 7/5760 = 7/1152."""
+        """F_2(K3 x E) = kappa_BKM * 7/5760 = 7/1152."""
         data = k3e_gl1_data()
         assert data.F_g(2) == Fraction(5) * Fraction(7, 5760)
         assert data.F_g(2) == Fraction(7, 1152)
 
     def test_genus_3_from_kappa(self):
-        """F_3(K3 x E) = kappa * 31/967680 = 5 * 31/967680 = 31/193536."""
+        """F_3(K3 x E) = kappa_BKM * 31/967680 = 31/193536."""
         data = k3e_gl1_data()
         expected = Fraction(5) * Fraction(31, 967680)
         assert data.F_g(3) == expected
@@ -646,7 +646,7 @@ class TestMultiPathVerification:
         assert kappa_p3 == Fraction(13, 4)
 
     def test_k3e_kappa_5_paths(self):
-        """kappa(K3 x E) = 5 via all 5 paths."""
+        """kappa_BKM(K3 x E) = 5 via all 5 paths."""
         result = verify_kappa_k3e_all_paths()
         assert result['all_agree']
         assert result['kappa'] == Fraction(5)
@@ -766,7 +766,7 @@ class TestKappaAdditivity:
             assert kappa_total == kappa_sl + kappa_u1
 
     def test_k3e_gl_n_kappa_scaling(self):
-        """GL(N) on K3 x E: kappa = N^2 * chi^CY at leading order."""
+        """GL(N) on K3 x E: BKM-lane kappa scales as N^2 at leading order."""
         for N in range(1, 5):
             data = k3e_gl_n_data(N)
             assert data.kappa_total == Fraction(N * N) * Fraction(5)

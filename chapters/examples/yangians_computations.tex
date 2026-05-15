@@ -2,28 +2,25 @@
 \label{sec:coulomb-branch}
 % Regime I: Quadratic, $\Eone$-chiral (Convention~\ref{conv:regime-tags}).
 
-The preceding sections established the Yangian $Y(\fg)$ as an
-$\Eone$-chiral algebra and constructed its bar-cobar duality. This
-section and those that follow serve as the computational verification
-ground: every algebraic claim from the foundations is tested against
-explicit calculations with specific rank, specific shift parameters,
-and specific representation-theoretic data. The shifted Yangian isomorphisms with
-Coulomb branch algebras (Braverman--Finkelberg--Nakajima), the
-cohomological Hall algebra structures (Schiffmann--Vasserot,
-Kontsevich--Soibelman), and the explicit bar complex computations for
-$\mathfrak{sl}_2$ through $\mathfrak{sl}_4$ are the primary evidence
-for the MC3 thick generation theorem and the DK ladder beyond the
-evaluation locus.
+The Yangian $Y(\fg)$ becomes visible in computations only after three
+normalizations have been fixed: the RTT kernel
+$R_\hbar(u)=1-\hbar P/u$, the ordered configuration parameter
+$u=z_i-z_j$, and the completion window in which infinitely many RTT
+modes converge weight by weight. The examples below keep these
+normalizations explicit. Braverman--Finkelberg--Nakajima Coulomb
+branches supply shifted Yangians, Schiffmann--Vasserot and
+Kontsevich--Soibelman CoHA constructions supply their geometric
+representations, and the low-rank RTT bar complexes test the
+bar-cobar comparison on finite spectral windows before passage to
+completion.
 
-Two organizational principles govern the exposition. First, every
-computation is placed in the four-level hierarchy: gauge-theoretic
-origin (level~C), algebraic/RTT presentation (level~A),
-$\Eone$-chiral realization (level~B), and modular shadow
-(level~D). Second, the Coulomb branch and CoHA constructions are
-presented as \emph{sources} of shifted Yangians and their modules,
-not as independent topics: the BFN construction produces shifted
-Yangians, the CoHA produces their representations, and both feed
-directly into the DK comparison package.
+The finite Drinfeld--Jimbo quantum group, the quantum-loop algebra,
+and the Yangian occupy different surfaces. The finite quantum group
+governs the KZ monodromy side; the spectral loop parameter belongs to
+quantum-loop and Yangian evaluation modules after the exponential or
+rational comparison. The ordered bar complex records this distinction
+by retaining the order of insertions before the symmetric shadow
+forgets it.
 
 \subsection{Definition from gauge theory}
 
@@ -74,16 +71,16 @@ as $a \star b = q_* p^*(a \boxtimes b)$.
 \end{definition}
 
 \begin{conjecture}[CoHA as \texorpdfstring{$\Eone$}{E1}-chiral; \ClaimStatusConjectured]\label{conj:coha-e1}
-The CoHA $\mathcal{H}_Q$ carries an $\Eone$-chiral algebra structure. The evidence:
+The CoHA $\mathcal{H}_Q$ carries an $\Eone$-chiral algebra structure.
+The expected structure has three necessary features:
 \begin{enumerate}[label=(\roman*)]
 \item The Hecke product is associative but not commutative.
 \item The factorization structure comes from stratifying by dimension vectors.
-\item The chiral enhancement should use configuration spaces of points on curves
+\item The chiral enhancement uses configuration spaces of points on curves
 parameterizing deformation directions.
 \end{enumerate}
 A rigorous construction requires specifying the vertex operators and verifying
 weak associativity (the Borcherds identity).
-(Contributing to Conjecture~\ref{conj:master-dk-kl}.)
 \end{conjecture}
 
 \begin{remark}[Scope]
@@ -143,13 +140,19 @@ as $\Eone$-chiral algebras, where $\fg^\vee$ is the Langlands dual and
 $-\mu$ is the negated coweight (viewed as a weight of $\fg^\vee$ via
 the canonical identification $X_*(\mathfrak{h}) \cong X^*(\mathfrak{h}^\vee)$).
 For unshifted $\mu = 0$, this reduces to the Yangian Koszul duality
-$Y(\fg)^! \cong Y_{R^{-1}}(\fg)$
+$Y_\hbar(\fg)^! \cong Y_{-\hbar}(\fg)$
 (Theorem~\ref{thm:yangian-koszul-dual}) when $\fg$ is simply-laced.
-(Contributing to Conjecture~\ref{conj:master-dk-kl}.)
 \end{conjecture}
 
 \begin{remark}[Scope]
-This is an $\Eone$-chiral incarnation of symplectic duality (Braden--Licata--Proudfoot--Webster \cite{BLPW16}): the shift $\mu \mapsto -\mu$ reverses monopole boundary conditions, i.e.\ $R(u) \mapsto R(u)^{-1}$ with Langlands involution. A proof requires Conjecture~\ref{conj:shifted-yangian-e1} and identification of the bar complex at coweight $\mu$ with the cobar at $-\mu$ for $\fg^\vee$.
+This is an $\Eone$-chiral incarnation of symplectic duality
+(Braden--Licata--Proudfoot--Webster \cite{BLPW16}): the shift
+$\mu \mapsto -\mu$ reverses monopole boundary conditions, i.e.\
+$R_\hbar(u) \mapsto R_\hbar(u)^{-1}\simeq R_{-\hbar}(u)$ with
+Langlands involution. A proof requires
+Conjecture~\ref{conj:shifted-yangian-e1} and identification of the
+bar complex at coweight $\mu$ with the cobar at $-\mu$ for
+$\fg^\vee$.
 \end{remark}
 
 \begin{example}[Type \texorpdfstring{$A_1$}{A_1} quiver with framing]
@@ -202,10 +205,9 @@ simple Lie algebra $\fg_Q$:
 as $\Eone$-algebras, where $\mathcal{H}_Q$ is the CoHA of $Q$
 \textup{(}Definition~\textup{\ref{def:coha})} and $Y(\fg_Q)$ is the
 Yangian \textup{(}Definition~\textup{\ref{def:yangian})}.
-(Contributing to Conjecture~\ref{conj:master-dk-kl}.)
 \end{conjecture}
 
-\begin{remark}[Scope and evidence]
+\begin{remark}[Scope]
 \begin{enumerate}[label=(\roman*)]
 \item For $Q = $ Jordan quiver (one vertex, one loop),
 $\mathcal{H}_{\mathrm{Jordan}}$ is the shuffle algebra, which
@@ -226,16 +228,15 @@ complex: the Hecke correspondence $\mathcal{M}_{\mathbf{d}_1}
 of the bar complex coproduct $\Delta\colon \barB^n \to
 \bigoplus_{i+j=n} \barB^i \otimes \barB^j$.
 \item At the level of generators, the bar cohomology classes of
-$Y(\fg_Q)$ should correspond to CoHA generators via the identification
+$Y(\fg_Q)$ correspond to CoHA generators in the proposed equivalence via the identification
 of the RTT bar differential (equation~\eqref{eq:yangian-bar-d2}) with
 the Hecke product. The quadratic RTT relations map to the quadratic
 part of the shuffle product.
 \end{enumerate}
-A proof would require first establishing the $\Eone$-chiral structure
+A proof requires first establishing the $\Eone$-chiral structure
 on $\mathcal{H}_Q$ (Conjecture~\ref{conj:coha-e1}) and then computing
 its bar complex.
 
-\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~II (equivalence).
 The conjecture asserts a Koszul duality equivalence between the CoHA of a Dynkin quiver and the corresponding Yangian as $\Eone$-algebras.
 \end{remark}
 
@@ -253,16 +254,20 @@ through degree 3]
 
 The Yangian $Y(\mathfrak{sl}_2)$ in Drinfeld's first realization
 has generators $\{e_0, f_0, h_0, e_1, f_1, h_1\}$ with
-relations encoding the $\mathfrak{sl}_2$ Lie algebra at level~0
-and the Yangian deformation at level~1.
+relations encoding the $\mathfrak{sl}_2$ Lie algebra in Drinfeld
+mode~$0$ and the Yangian deformation in mode~$1$.
 
 \emph{RTT presentation.}
 In the RTT formalism (Definition~\ref{def:yangian-rtt}), the
 algebra is generated by the matrix entries $t_{ij}^{(r)}$
 ($i,j \in \{1,2\}$, $r \geq 0$) of the generating matrix
-$T(u) = \sum_{r \geq 0} T^{(r)} u^{-r}$ subject to
+$T(u)=\mathbb{1}+\hbar\sum_{r \geq 1}T^{(r)}u^{-r}$ subject to
 $R_{12}(u-v) T_1(u) T_2(v) = T_2(v) T_1(u) R_{12}(u-v)$,
-where $R(u) = 1 - P/u$ is the rational $R$-matrix
+where
+\[
+R_\hbar(u)=\mathbb{1}-\frac{\hbar P}{u}
+\]
+is the rational $R$-matrix
 ($P$ is the permutation operator).
 
 \emph{Degree 1.}
@@ -270,31 +275,45 @@ $\bar{B}^1(Y(\mathfrak{sl}_2))$ is spanned by the
 generators $t_{ij}^{(r)}$ for all $r \geq 1$
 (the augmentation ideal excludes $t_{ij}^{(0)} = \delta_{ij}$).
 At filtration degree $\leq n$: $\dim \bar{B}^1_{\leq n}
-= 4n$ (four matrix entries at each level $r = 1, \ldots, n$).
+= 4n$ (four matrix entries at each RTT mode $r = 1, \ldots, n$).
 
 \emph{Degree 2.}
 Elements $[t_{ij}^{(r)} | t_{kl}^{(s)}] \otimes \eta_{12}$
-with $r, s \geq 1$. The bar differential extracts the $R$-matrix
-commutation relation:
+with $r, s \geq 1$. The coefficient form of the RTT relation is
 \begin{align}
-d\bigl([t_{ij}^{(r)} | t_{kl}^{(s)}] \otimes \eta_{12}\bigr)
-&= \Res_{u = v}\left[
-\frac{R_{12}(u-v)_{ij,kl} - \delta_{ij}\delta_{kl}}{u-v}
-\right]_{r,s} \label{eq:yangian-bar-d2}
+[t_{ij}^{(r)},t_{kl}^{(s)}]
+&=
+\hbar\sum_{a=1}^{\min(r,s)}
+\bigl(
+t_{kj}^{(a-1)}t_{il}^{(r+s-a)}
+-t_{kj}^{(r+s-a)}t_{il}^{(a-1)}
+\bigr),
+\qquad t_{ab}^{(0)}=\delta_{ab}.
+\label{eq:yangian-bar-d2}
 \end{align}
-The $R$-matrix $R(u) = 1 - P/u$ gives:
+The residue convention is
 \[
-\frac{R(u)_{ij,kl} - \delta_{ij}\delta_{kl}}{u}
-= -\frac{\delta_{il}\delta_{kj}}{u^2}
+\operatorname*{Res}_{u=0}R_\hbar(u)=-\hbar P,\qquad
+\operatorname*{Res}_{u=0}R_{-\hbar}(u)=+\hbar P.
+\]
+With normalized bar generators dual to the coefficients
+$T_{ij}^{(r)}$, the Yangian deformation parameter~$\hbar$ is absorbed
+in the pairing. The desuspended degree-$2$ bar corestriction is the
+negative of the linear part of~\eqref{eq:yangian-bar-d2}; the
+remaining summands are quadratic in positive RTT modes and enter the
+higher syzygy differential:
+\[
+\frac{R_\hbar(u)_{ij,kl} - \delta_{ij}\delta_{kl}}{u}
+= -\hbar\,\frac{\delta_{il}\delta_{kj}}{u^2}
 \quad (\text{the permutation term})
 \]
-The residue at $u = v$ extracts the $1/(u-v)$ coefficient:
+At mode window $(r,s)$ this gives:
 \begin{align}
 d([t_{ij}^{(r)} | t_{kl}^{(s)}]) &=
 -t_{il}^{(r+s-1)} \delta_{kj} + t_{kj}^{(r+s-1)} \delta_{il}
 \label{eq:yangian-d2-explicit}
 \end{align}
-(the RTT relation at the level of generating functions).
+(the linear RTT corestriction in the bar sign convention).
 
 \emph{Explicit at lowest levels.}
 At $r = s = 1$:
@@ -307,7 +326,7 @@ d([t_{12}^{(1)} | t_{21}^{(1)}])
 = -t_{11}^{(1)} + t_{22}^{(1)} = -h_0^{(1)}
 \end{align*}
 where $h_0^{(1)} = t_{11}^{(1)} - t_{22}^{(1)}$ is the Cartan
-generator at level~1. The vanishing of the first line reflects
+generator in mode~$1$. The vanishing of the first line reflects
 the $\mathfrak{gl}_2$ commutation relation
 $[E_{11}, E_{22}] = 0$: the bar differential sees only the
 singular part of the OPE, which vanishes for commuting generators.
@@ -339,7 +358,7 @@ $\leq 3$ & 12 & 144 & 1728 & 42
 Note: the column ``$\dim H^2$'' reports the Koszul dual dimension
 $(A^!)_2$ of the truncated RTT \emph{quadratic algebra}
 $Y(\mathfrak{gl}_2)_{\leq L}$, which grows with the filtration
-level~$L$. This differs from the \emph{chiral} bar cohomology
+window~$L$. This differs from the \emph{chiral} bar cohomology
 $\dim H^2(\barBgeom(Y(\mathfrak{sl}_2)^{\mathrm{ch}})) = 10$
 (Table~\ref{tab:bar-dimensions}), which uses
 $4$ independent generators only (Remark~\ref{rem:yangian-gl2-kunneth}).
@@ -348,65 +367,94 @@ $4$ independent generators only (Remark~\ref{rem:yangian-gl2-kunneth}).
 
 \subsection{Yangian Koszul dual: explicit verification}
 
-\begin{computation}[Yangian duality: \texorpdfstring{$R(u) \mapsto R(u)^{-1}$}{R(u) R(u)^-1}]
+\begin{computation}[Yangian duality: \texorpdfstring{$R_\hbar(u) \mapsto R_\hbar(u)^{-1}$}{R_hbar(u) R_hbar(u)^-1}]
 \label{comp:yangian-dual-explicit}
 \index{Yangian!Koszul dual!explicit}
 
 The $\Eone$-chiral Koszul duality of
 Theorem~\ref{thm:yangian-koszul-dual}
-sends $R(u)$ to~$R(u)^{-1}$.
+sends $R_\hbar(u)$ to~$R_\hbar(u)^{-1}$.
 For the rational~$R$-matrix:
 \[
-R(u) = 1 - \frac{P}{u} = \frac{u - P}{u}, \qquad
-R(u)^{-1} = \frac{u}{u - P} = \frac{u(u + P)}{u^2 - 1}
+R_\hbar(u)=\mathbb{1}-\frac{\hbar P}{u}
+=\frac{u-\hbar P}{u},\qquad
+R_\hbar(u)^{-1}
+=\frac{u}{u-\hbar P}
+=\frac{u^2}{u^2-\hbar^2}
+\left(\mathbb{1}+\frac{\hbar P}{u}\right).
 \]
 
 \emph{Interpretation.}
-The dual $R$-matrix $R(u)^{-1}$ defines the dual Yangian
+The dual $R$-matrix $R_\hbar(u)^{-1}$ defines the dual Yangian
 $Y(\mathfrak{sl}_2)^!$ via the RTT relation
-$R^{-1}_{12}(u-v) T_1(u) T_2(v)
-= T_2(v) T_1(u) R^{-1}_{12}(u-v)$.
+$R_{\hbar,12}^{-1}(u-v) T_1^!(u) T_2^!(v)
+= T_2^!(v) T_1^!(u) R_{\hbar,12}^{-1}(u-v)$.
+The scalar factor $(1-\hbar^2/u^2)^{-1}$ is central and invertible
+in the completed Laurent ring. Multiplying an RTT relation by such a
+scalar gauge does not change its relation span. Hence the dual RTT
+algebra is the sign-reversed algebra:
+\[
+Y_{R_\hbar^{-1}}(\mathfrak{sl}_2)
+\;\cong\;
+Y_{R_{-\hbar}}(\mathfrak{sl}_2).
+\]
 
-The pole of $R(u)^{-1}$ at $u = 1$ (rather than $u = 0$
-for $R(u)$) shifts the ``interaction point'' in the bar complex.
-The degree-2 bar differential~\eqref{eq:yangian-d2-explicit}
-becomes:
+\emph{No pole shift.}
+The apparent poles of the exact inverse at $u=\pm\hbar$ belong to the
+scalar gauge, not to a new collision divisor of the RTT algebra. The
+ordered bar complex still has its collision at $u=0$, and the
+degree-$2$ corestriction keeps the same mode window:
 \[
 d^!([t_{ij}^{(r)} | t_{kl}^{(s)}])
-= t_{il}^{(r+s)} \delta_{kj} - t_{kj}^{(r+s)} \delta_{il}
+= t_{il}^{(r+s-1)} \delta_{kj}
+ - t_{kj}^{(r+s-1)} \delta_{il},
 \]
-(the shift $r+s-1 \mapsto r+s$ reflects the pole shift
-$u = 0 \mapsto u = 1$).
+the sign-reversed adjoint of~\eqref{eq:yangian-d2-explicit}. This is
+the finite-stage bar adjointness of the normalized RTT kernel.
 \end{computation}
 
-\emph{Koszul self-duality at the level of bar complexes.}
-Theorem~\ref{thm:yangian-koszul-dual} proves $Y(\fg)^! \cong Y_{R^{-1}}(\fg)$
-($R$-matrix inversion). It is further expected, but not proved, that
-$Y(\fg)$ is \emph{Koszul self-dual} after the spectral parameter shift
-$u \mapsto u + 1$ (Conjecture~\ref{conj:yangian-spectral-selfdual}).
-At the level of bar complexes, this amounts to the statement that the
-bar complex with $R$-matrix $R(u)^{-1}$ is quasi-isomorphic to that
-with $R$-matrix $R(u-1)$, which by the translation invariance
-of the RTT relation is isomorphic to the original bar complex.
+\begin{proposition}[Scalar-gauge inverse and sign reversal;
+\ClaimStatusProvedHere]\label{conj:yangian-spectral-selfdual}
+For every finite RTT stage and after weight completion, Koszul
+duality sends the normalized rational kernel
+$R_\hbar(u)=1-\hbar P/u$ to the scalar-gauge equivalent kernel
+$R_{-\hbar}(u)=1+\hbar P/u$. It does not shift the collision
+parameter. Equivalently,
+\[
+A_N(R_\hbar^{-1})\cong A_N(R_{-\hbar}),\qquad
+\widehat{\bar B}_{\mathrm{wt}}(Y_\hbar)^!
+\simeq
+\widehat{\bar B}_{\mathrm{wt}}(Y_{-\hbar})
+\]
+with the degree-$2$ mode condition $m=r+s-1$ unchanged.
+\end{proposition}
 
-\begin{conjecture}[Spectral-shift self-duality; \ClaimStatusConjectured]\label{conj:yangian-spectral-selfdual}
-For simply-laced $\fg$, the Koszul dual $Y(\fg)^! \cong Y_{R^{-1}}(\fg)$
-\textup{(}Theorem~\textup{\ref{thm:yangian-koszul-dual}}\textup{)} is
-isomorphic to $Y(\fg)$ itself after the spectral parameter shift
-$u \mapsto u + 1$.
-\end{conjecture}
+\begin{proof}
+The identity
+\[
+R_\hbar(u)^{-1}
+=\left(1-\frac{\hbar^2}{u^2}\right)^{-1}R_{-\hbar}(u)
+\]
+follows from $P^2=1$. The scalar factor is central and invertible in
+the completed Laurent ring, hence it multiplies the RTT relation by a
+unit and preserves the relation span at every finite mode cutoff. The
+bar differential is dual to that relation span, so the only change is
+the sign of the permutation residue
+$\operatorname*{Res}_{u=0}R_{\pm\hbar}(u)=\mp\hbar P$; the summation
+condition in the coefficient extraction remains $m=r+s-1$.
+\end{proof}
 
 \begin{remark}[K\"unneth decomposition for \texorpdfstring{$\widehat{\mathfrak{gl}}_2$}{gl_2}]
 \label{rem:yangian-gl2-kunneth}
 \index{Yangian!Kunneth decomposition@K\"unneth decomposition}
-In the chiral bar complex, the level-$1$ generators
+In the chiral bar complex, the mode-$1$ generators
 $T_{ij}^{(1)}$ ($1 \leq i,j \leq 2$) span
 $\mathfrak{gl}_2 = \mathfrak{sl}_2 \oplus \mathfrak{gl}_1$, and
 the OPE among them reproduces the $\widehat{\mathfrak{gl}}_2$
 current algebra (double pole from the level, simple pole from
-the Lie bracket). Higher-level generators $T_{ij}^{(r)}$
+the Lie bracket). Higher RTT modes $T_{ij}^{(r)}$
 ($r \geq 2$) appear as composites
-(normal-ordered products of level-$1$ fields).
+(normal-ordered products of mode-$1$ fields).
 By the K\"unneth formula for bar complexes
 of direct products:
 \[
@@ -487,11 +535,18 @@ $z_1 = z_2$ in the symmetric product.
 \label{comp:yangian-sl3-bar}
 \index{Yangian!sl3@$\mathfrak{sl}_3$!bar complex}
 
-The Yangian $Y(\mathfrak{sl}_3)$ is generated by the $3 \times 3$
-matrix $T(u) = (t_{ij}(u))_{1 \leq i,j \leq 3}$ with
+The fundamental RTT calculation is first a calculation for
+$Y_\hbar(\mathfrak{gl}_3)$: the $R$-matrix acts on
+$V=\mathbb C^3$, and the generators are the entries of the
+$3\times 3$ matrix
+$T(u) = (t_{ij}(u))_{1 \leq i,j \leq 3}$ with
 $t_{ij}(u) = \delta_{ij} + \sum_{r=1}^\infty t_{ij}^{(r)} u^{-r}$,
 subject to the RTT relation with $R$-matrix
 $R_{12}(u) = 1 - P_{12}/u$.
+The $\mathfrak{sl}_3$ Yangian is obtained from this RTT window after
+the usual quantum-determinant/trace reduction. The table below is
+therefore a finite RTT matrix-window computation, not a closed formula
+for the trace-reduced chiral bar cohomology.
 
 \emph{Degree 1.}
 The generators $\{t_{ij}^{(r)} : 1 \leq i,j \leq 3, \; r \geq 1\}$
@@ -503,13 +558,24 @@ At filtration degree $\leq n$: $\dim \bar{B}^1 = 9n$.
 \emph{Degree 2.}
 The bar differential encodes the RTT relation.
 For generators at levels $r, s \geq 1$:
-\begin{align*}
+\[
+[t_{ij}^{(r)},t_{kl}^{(s)}]
+=
+\sum_{a=1}^{\min(r,s)}
+\bigl(
+t_{kj}^{(a-1)}t_{il}^{(r+s-a)}
+-t_{kj}^{(r+s-a)}t_{il}^{(a-1)}
+\bigr),
+\qquad t_{ab}^{(0)}=\delta_{ab}.
+\]
+The degree-$2$ bar corestriction records the desuspended linear part:
+\[
 d([t_{ij}^{(r)} | t_{kl}^{(s)}])
-&= t_{ij}^{(r)} t_{kl}^{(s)} - t_{kl}^{(s)} t_{ij}^{(r)} \\
-&\quad - t_{kj}^{(r)} t_{il}^{(s-1)} + t_{il}^{(s)} t_{kj}^{(r-1)} \\
-&= [t_{ij}^{(r)}, t_{kl}^{(s)}]
-- t_{kj}^{(r)} t_{il}^{(s-1)} + t_{il}^{(s)} t_{kj}^{(r-1)}.
-\end{align*}
+=-\delta_{kj}t_{il}^{(r+s-1)}
+ +\delta_{il}t_{kj}^{(r+s-1)}.
+\]
+The quadratic positive-mode summands in the RTT coefficient relation
+enter the degree-$3$ syzygy differential.
 
 \emph{Serre relations.}
 For $\mathfrak{sl}_3$, the Serre relations are:
@@ -534,54 +600,72 @@ $\leq 1$ & 9 & 81 & 27 \\
 $\leq 2$ & 18 & 324 & 99
 \end{tabular}
 \end{center}
-The degree-2 cohomology satisfies $\dim H^2 = 3 \dim H^2(\mathfrak{sl}_2)$
-at each filtration level, reflecting the rank-2 structure.
+These numbers are not obtained by multiplying the
+$\mathfrak{sl}_2$ table. Rank enters through the full matrix-index
+set and through the rank of the RTT relation map; trace reduction and
+higher RTT relations must be imposed before reading the result as a
+statement about $Y_\hbar(\mathfrak{sl}_3)$ itself.
 \end{computation}
 
-\begin{proposition}[Rank dependence of Yangian bar complex; \ClaimStatusProvedHere]
+\begin{proposition}[Finite-window rank dependence of the Yangian bar complex;
+\ClaimStatusProvedHere]
 \label{prop:yangian-rank-dependence}
 \index{Yangian!bar complex!rank dependence}
 
-For the Yangian $Y(\mathfrak{sl}_N)$ at filtration degree $\leq 1$:
+Let $V_N$ be the trace-reduced first RTT window for
+$Y_\hbar(\mathfrak{sl}_N)$, so
+$\dim V_N=N^2-1$. Then:
 \begin{enumerate}
-\item $\dim \bar{B}^1 = N^2 - 1$ (the dimension of $\mathfrak{sl}_N$,
-after removing the trace condition $\sum_i t_{ii}^{(r)} = 0$).
-\item $\dim \bar{B}^2 = (N^2-1)^2$ (all pairs of generators).
-\item $\dim H^2 = \dim \mathfrak{sl}_N \otimes \mathfrak{sl}_N / \mathrm{Im}(d_2)
-= (N^2-1)^2 - \binom{N^2-1}{2} + \dim(\mathrm{Serre})$,
-where $\mathrm{Serre}$ denotes the Serre relation space.
-\item The growth rate is polynomial in $N$: $\dim \bar{B}^n = O(N^{2n})$.
+\item $\dim \bar{B}^1_{\leq 1}=N^2-1$.
+\item The raw ordered degree-$2$ chain group has
+ $\dim \bar{B}^2_{\leq 1}=(N^2-1)^2$.
+\item The associated-graded commutative RTT window has quadratic-dual
+ degree-$2$ dimension $\binom{N^2-1}{2}$. Before trace reduction,
+ the corresponding $\mathfrak{gl}_N$ number is $\binom{N^2}{2}$.
+\item The actual degree-$2$ bar cohomology of a finite RTT window is
+ $\ker(d_2)/\operatorname{im}(d_3)$ and depends on the imposed
+ quantum-determinant, Serre, and higher RTT relations. It is not
+ determined by $N$ and the raw chain dimensions alone.
+\item For fixed bar degree~$n$ and fixed filtration window, the raw
+ chain dimension is $O(N^{2n})$.
 \end{enumerate}
 \end{proposition}
 
 \begin{proof}
-(i) At filtration degree 1, the generators are
+(i) At filtration degree~$1$, the generators are
 $\{t_{ij}^{(1)} : 1 \leq i,j \leq N\}$ modulo the trace
 condition, giving $N^2 - 1$ generators (matching $\dim \mathfrak{sl}_N$).
 
 (ii) The degree-2 bar space $\bar{B}^2$ is spanned by
 $\{[t_{ij}^{(1)} | t_{kl}^{(1)}]\}$, giving $(N^2-1)^2$ elements.
 
-(iii) The image of $d_2$ consists of the RTT relations at
-level $(1,1)$: $[t_{ij}^{(1)}, t_{kl}^{(1)}] - \delta_{kj} t_{il}^{(1)}
-+ \delta_{il} t_{kj}^{(1)}$. These span a subspace of
-dimension $(N^2-1)^2 - \dim H^2$, and $H^2 \cong \mathfrak{sl}_N[u]/(u^2)$
-at this filtration level.
+(iii) Passing to the associated graded kills the lower bracket term
+and leaves the symmetric algebra on $V_N$; its quadratic dual has
+degree-$2$ part $\wedge^2 V_N^*$, of dimension $\binom{N^2-1}{2}$.
+The unreduced RTT matrix window uses $V=\mathfrak{gl}_N$, giving
+$\binom{N^2}{2}$.
 
-(iv) At filtration degree $\leq n$, $\dim \bar{B}^1 = (N^2-1)n$,
-so $\dim \bar{B}^k = O(N^{2k} n^k)$. For fixed $n$, this is
-polynomial in $N$.
+(iv) In the genuine finite RTT window the differential refines
+the associated-graded commutative differential. It is dual to the
+RTT relation span, and $d_3$ sees the cubic/Serre consequences.
+Thus the cohomology is computed by the displayed kernel modulo image;
+no dimension formula follows from the raw counts alone.
+
+(v) A bar word of length~$n$ chooses $n$ generators from a vector
+space of dimension $O(N^2)$, hence has raw dimension $O(N^{2n})$.
 \end{proof}
 
 \begin{computation}[The
-\texorpdfstring{$\mathfrak{sl}_3$}{sl3} Yangian $R$-matrix from the
-ordered bar; \ClaimStatusProvedHere]
+\texorpdfstring{$\mathfrak{sl}_3$}{sl3} KZ residue and fundamental
+Yang seed; \ClaimStatusProvedHere]
 \label{comp:sl3-yangian-from-ordered-bar}
-\index{Yangian!sl3 R-matrix from ordered bar@$\mathfrak{sl}_3$ $R$-matrix from ordered bar|textbf}
+\index{Yangian!sl3 KZ residue and Yang seed@$\mathfrak{sl}_3$ KZ residue and Yang seed|textbf}
 \index{sl3@$\mathfrak{sl}_3$!Yangian rank-2 verification}
-For the affine Kac--Moody algebra $\widehat{\mathfrak{sl}}_3$ at
-level~$k$, the spectral $R$-matrix on the fundamental representation
-$V = \mathbb{C}^3$ of $\mathfrak{sl}_3$ takes the form
+For the KZ/DK comparison starting from
+$\widehat{\mathfrak{sl}}_3$ at affine level~$k$, the ordered bar
+computes the classical Casimir residue. The non-scalar fundamental
+Yang/FRT seed on
+$V = \mathbb{C}^3$ takes Yang's additive form
 \begin{equation}
 \label{eq:sl3-yang-r-matrix}
 R^{\mathfrak{sl}_3}(u) \;=\; u\cdot I + P,
@@ -590,28 +674,47 @@ where $P\in\End(V\otimes V)$ is the permutation operator. The Casimir
 $\Omega = \tfrac12\sum_a \lambda_a\otimes\lambda_a$
 \textup{(}Gell-Mann basis, fundamental trace normalization\textup{)}
 acts on $V\otimes V \cong \operatorname{Sym}^2 V \oplus \wedge^2 V$
-with eigenvalues $+1/3$ on the symmetric six-dimensional summand and
-$-2/3$ on the antisymmetric three-dimensional summand. In the
+with eigenvalues $+2/3$ on the symmetric six-dimensional summand and
+$-4/3$ on the antisymmetric three-dimensional summand. In the
 fundamental representation,
 $\Omega^{\mathrm{fund}} = P - I/3$, so the additive Yang form
 \eqref{eq:sl3-yang-r-matrix} is recovered up to normalization from the
 Casimir $r$-matrix.
 
 The collision residue from the bar complex on the ordered configuration
-space gives (in the KZ normalisation)
+space gives the trace-form affine residue
 \[
-r(z) \;=\; \frac{\Omega}{(k + h^\vee)\,z},
+r^{\mathrm{coll}}_k(z) \;=\; \frac{k\,\Omega_{\mathrm{tr}}}{z}.
 \]
-which reproduces the Yang $R$-matrix in the rank-$2$ case
-(up to the Sugawara rescaling $k + h^\vee$). The
+The KZ connection uses the different coefficient
+\[
+r^{\mathrm{KZ}}_k(z) \;=\;
+\frac{\Omega_{\mathrm{KZ}}}{(k+h^\vee)z}.
+\]
+With the trace-form convention used for the collision residue,
+\(\Omega_{\mathrm{KZ}}=2h^\vee\Omega_{\mathrm{tr}}\); for
+\(\mathfrak{sl}_3\), \(h^\vee=3\), so
+\[
+r^{\mathrm{KZ}}_k(z)
+=\frac{6\,\Omega_{\mathrm{tr}}}{(k+3)z}.
+\]
+These two rational kernels are related only after the Casimir
+normalisation and coupling convention have been fixed; they are not
+equal as functions of the affine level. In the fundamental
+representation the Casimir identity
+\(\Omega^{\mathrm{fund}}=P-I/3\) identifies the non-scalar part of the
+KZ kernel with the permutation seed \(P\). The scalar \(I/3\) term
+does not affect the Yang--Baxter equation. The
 spectral parameter Yang--Baxter equation
 \[
 R_{12}(u)\,R_{13}(u+v)\,R_{23}(v)
 \;=\;
 R_{23}(v)\,R_{13}(u+v)\,R_{12}(u)
 \]
-holds for $R(u) = uI + \Omega$ in the fundamental, but does \emph{not}
-generalize to the adjoint representation. The adjoint Casimir on
+holds for the Yang/FRT operator \(R(u)=uI+P\) in the fundamental. It is
+not inferred from the CYBE alone, and the naive formula
+\(uI+\Omega_{\mathrm{adj}}\) does \emph{not} give the adjoint
+specialization of the universal Yangian \(R\)-matrix. The adjoint Casimir on
 $V_{\mathrm{adj}}\otimes V_{\mathrm{adj}}$ has eigenvalue spectrum
 $\{\,2\;(\text{mult }27),\;\;
 0\;(\text{mult }20),\;\;
@@ -623,12 +726,12 @@ $\mathbf{8}\otimes\mathbf{8}
 \oplus\mathbf{8}\oplus\mathbf{8}\oplus\mathbf{1}$.
 \end{computation}
 
-\begin{remark}[Why $R(u) = uI + \Omega$ holds only in the fundamental]
+\begin{remark}[Why Yang's additive form is fundamental]
 \label{rem:sl3-yangian-fundamental-only}
 \index{R-matrix!fundamental representation only}
 For the fundamental representation of $\mathfrak{sl}_N$ one has
-$\Omega = P - I/N$, so Yang's $R$-matrix is recovered up to
-normalization. For higher representations the universal $R$-matrix
+$\Omega = P - I/N$, so Yang's $R$-matrix \(uI+P\) is recovered up to
+scalar gauge and spectral shift. For higher representations the universal $R$-matrix
 of the Yangian $Y(\mathfrak{sl}_N)$ has additional structure beyond
 $R(u) = uI + \Omega$, and the spectral parameter Yang--Baxter equation
 holds only for the universal $R$-matrix specialized in pairs of
@@ -636,53 +739,63 @@ representations, not for the naive Yang form. The
 $\mathfrak{sl}_3$ case is the first rank where this distinction is
 visible: the adjoint $\mathbf{8}\otimes\mathbf{8}$ already requires
 the genuine universal $R$-matrix because the Casimir spectrum is
-nondegenerate on four nontrivial summands. This computation is
-verified by~$88$ tests in
-\texttt{compute/lib/theorem\_sl3\_yangian\_r\_matrix\_engine.py}.
+nondegenerate on four nontrivial summands.
 \end{remark}
 
 
 \subsection{Quantum group connection}
 
-\begin{remark}[Yangian vs quantum group bar complexes]
+\begin{remark}[Yangian and quantum-loop bar complexes]
 \label{rem:yangian-quantum-group}
 \index{quantum group!bar complex}
 
-The Yangian $Y(\fg)$ and the quantum group $U_q(\fg)$ are
-related by the ``rational vs trigonometric'' dichotomy:
+The Yangian $Y(\fg)$ and the quantum-loop algebra
+$U_q(\widehat{\fg})$ are related by the rational/trigonometric
+dichotomy:
 \begin{center}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{l|cc}
-& \textbf{Yangian $Y(\fg)$} & \textbf{$U_q(\hat{\fg})$} \\
+& \textbf{Yangian $Y(\fg)$} & \textbf{$U_q(\widehat{\fg})$} \\
 \hline
-$R$-matrix type & Rational: $R(u) = 1 - P/u$ &
+$R$-matrix type & Rational: $R_\hbar(u) = 1-\hbar P/u$ &
 Trigonometric: $R(u) = q^{u} P + q^{-u}(1-P)$ \\
 Spectral parameter & Additive: $u - v$ & Multiplicative: $u/v$ \\
 Bar propagator & $\eta_{ij} = d\log(z_i - z_j)$ &
 $\omega_{ij} = d\log(z_i/z_j)$ \\
 FM space & $\overline{\mathrm{FM}}_n(\mathbb{C})$ &
 $\overline{\mathrm{FM}}_n(\mathbb{C}^\times)$ \\
-Koszul dual & $Y_{R^{-1}}(\fg)$ & $U_{q^{-1}}(\hat{\fg})$
+Koszul dual & $Y_{-\hbar}(\fg)$ & $U_{q^{-1}}(\widehat{\fg})$
 \end{tabular}
 \end{center}
 
-The bar complex of $U_q(\hat{\fg})$ uses the trigonometric
+The finite Drinfeld--Jimbo algebra $U_q(\fg)$ is the KZ monodromy
+target after Kazhdan--Lusztig transport. It has no additive spectral
+parameter by itself. The spectral parameter belongs to
+$U_q(\widehat{\fg})$ and to Yangian evaluation modules, and enters
+the finite side only after choosing the quantum-loop/evaluation
+comparison.
+
+At roots of unity this separation becomes load-bearing. The
+semisimplified Kazhdan--Lusztig target, Lusztig's small quantum group
+\(u_q(\fg)\), and the quantum-loop evaluation category are three
+different surfaces. Specializing \(q\) to a root of unity does not
+produce a Yangian, and a PBW count for \(u_q(\fg)\) is not a Yangian
+evaluation-module dimension unless a separate comparison functor is
+constructed.
+
+The bar complex of $U_q(\widehat{\fg})$ uses the trigonometric
 $R$-matrix as the degree-2 differential. The FM compactification
 $\overline{\mathrm{FM}}_n(\mathbb{C}^\times)$ replaces the
 rational propagator $d\log(z_i - z_j)$ with the trigonometric
 propagator $d\log(z_i/z_j)$, and the boundary strata of the
-FM space encode the coproduct structure of the quantum group.
+FM space encode the coproduct structure of the quantum-loop algebra.
 
-At the critical value $q = 1$, the quantum group degenerates to
-the universal enveloping algebra $U(\fg)$ and the trigonometric
+At $q = 1$, the quantum-loop algebra degenerates to the enveloping
+algebra of the loop algebra and the trigonometric
 $R$-matrix becomes the identity, reducing the bar complex to
-the ordinary Chevalley--Eilenberg complex. This mirrors the
-genus-0 critical level phenomenon for affine KM algebras
-(Proposition~\ref{prop:km-bar-curvature} at $k = -h^\vee$):
-in both cases, the universal MC class $\Theta = 0$ at the
-critical parameter (Theorem~\ref{thm:explicit-theta}), the bar
-complex becomes uncurved, and the bar-cobar adjunction gives
-an honest equivalence.
+the current-algebra Chevalley--Eilenberg complex. This is a
+trigonometric degeneration, not an assertion that the finite
+Drinfeld--Jimbo algebra is a Yangian.
 \end{remark}
 
 
@@ -719,26 +832,31 @@ d([t_{11}^{(r)} | t_{22}^{(s)}] + [t_{22}^{(s)} | t_{11}^{(r)}])
 &= [t_{11}^{(r)}, t_{22}^{(s)}] + [t_{22}^{(s)}, t_{11}^{(r)}] = 0.
 \end{align*}
 
-The Baxter Q-operator $Q(u)$ satisfies
-$\mathcal{T}(u) Q(u) = Q(u+1) + Q(u-1)$
-(the TQ-relation). In the bar complex, this relation
-appears as a degree-2 cocycle condition with a shift
-in the spectral parameter filtration.
+The Baxter Q-operator $Q(u)$ satisfies a TQ-relation. In the
+additive algebraic convention for the Yang kernel the shifts are
+\(\pm1\); after the physical XXX rescaling \(u\mapsto iu\) used
+below they are \(\pm i\). In the bar complex, the relation appears
+as a degree-2 cocycle condition with a shift in the spectral
+parameter filtration.
 \end{computation}
 
 
-\subsection{Quantum \texorpdfstring{$R$}{R}-matrix from the bar complex}
+\subsection{Classical residue and quantized \texorpdfstring{$R$}{R}-matrix}
 \label{subsec:quantum-rmatrix-bar}
 \index{R-matrix!quantum!from bar complex}
 
-The classical $r$-matrix $r(z) = \Omega/((k+h^\vee)z)$ (KZ
-normalisation; Remark~\ref{rem:km-collision-residue-rmatrix}) is the leading-order
-collision residue. The quantum $R$-matrix arises from the
-$\hbar$-expansion of the bar-complex MC element, where
-$\hbar = \pi i/(k + h^\vee)$.
+Two rational kernels enter the affine-to-Yangian comparison. The
+ordered affine collision residue is
+\(r^{\mathrm{coll}}_k(z)=k\,\Omega_{\mathrm{tr}}/z\). The KZ
+connection coefficient is
+\(r^{\mathrm{KZ}}_k(z)=\Omega_{\mathrm{KZ}}/((k+h^\vee)z)\). The
+Drinfeld--Kohno transport quantizes the KZ coefficient with
+\(\hbar_{\mathrm{KZ}}=\pi i/(k+h^\vee)\); the Yangian/FRT kernel is
+the rational evaluation form obtained after this transport, not the
+affine collision residue with the level prefix erased.
 
-\begin{proposition}[Classical and quantum $R$-matrices from the
-bar complex; \ClaimStatusConditional]
+\begin{proposition}[Classical residue from the bar complex and
+quantized $R$-matrix after KZ/DJ input; \ClaimStatusConditional]
 \label{prop:rmatrix-from-bar}
 \index{R-matrix!from bar complex|textbf}
 \index{bar complex!R-matrix extraction}
@@ -746,22 +864,31 @@ bar complex; \ClaimStatusConditional]
 For a modular Koszul chiral algebra $\cA = \hat{\fg}_k$ with
 $\fg$ simple:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Classical $r$-matrix.}
+\item \emph{Classical $r$-matrix surfaces.}
  The genus-$0$ binary collision residue of the bar-complex MC
  element is
  \begin{equation}\label{eq:classical-r-from-bar}
- r(z) = \operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)
- = \frac{\Omega_\fg}{(k + h^\vee)\,z}
+ r^{\mathrm{coll}}_k(z)
+ = \operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)
+ = \frac{k\,\Omega_{\mathrm{tr}}}{z}
  \;\in\; \fg \otimes \fg \otimes z^{-1}\bC[z^{-1}],
  \end{equation}
- where $\Omega_\fg = \sum_a \kappa^{ab}\, I_a \otimes I_b$ is the quadratic
- Casimir tensor \textup{(}$\kappa^{ab}$ is the inverse Killing form\textup{)}
- and $k + h^\vee$ is the Sugawara denominator from dualizing the zeroth
- product via the level-shifted Killing form
+ where \(\Omega_{\mathrm{tr}}\) is the Casimir for the normalized
+ trace form. The KZ transport surface is instead
+ \begin{equation}\label{eq:kz-r-from-bar}
+ r^{\mathrm{KZ}}_k(z)
+ =\frac{\Omega_{\mathrm{KZ}}}{(k+h^\vee)z},
+ \end{equation}
+ where \(\Omega_{\mathrm{KZ}}\) denotes the KZ/Sugawara-normalized
+ Casimir tensor used in the landscape convention,
+ \(\Omega_{\mathrm{KZ}}=2h^\vee\Omega_{\mathrm{tr}}\). This is a
+ convention for comparing the trace-form collision tensor with the
+ KZ coefficient, not the dual-basis Casimir for the Killing form.
+ The denominator \(k+h^\vee\) is the Sugawara denominator from
+ dualizing the zeroth product via the level-shifted invariant form
  \textup{(}Computation~\textup{\ref{comp:sl2-collision-residue-kz}}\textup{)}.
- Equivalently, in the trace-form convention the same simple-pole term is
- written as $k\,\Omega_{\mathrm{tr}}/z$, with bridge
- $k\,\Omega_{\mathrm{tr}} = \Omega_\fg/(k+h^\vee)$ at generic~$k$.
+ The two expressions are convention-related representatives, not a
+ generic equality in \(k\).
  In the fundamental representation of $\mathfrak{sl}_N$:
  $\Omega = P - \mathbb{1}/N$, where $P$ is the permutation
  operator. The classical Yang--Baxter equation
@@ -769,21 +896,26 @@ $\fg$ simple:
  [r_{12}(u), r_{13}(u{+}v)] + [r_{12}(u), r_{23}(v)]
  + [r_{13}(u{+}v), r_{23}(v)] = 0
  \end{equation}
- follows from the infinitesimal braid relations for~$\Omega$,
- verified for all classical types $A$--$D$ at rank $\leq 3$
- \textup{(}\texttt{quantum\_rmatrix\_barcomplex.py}\textup{)}.
+ follows from the infinitesimal braid relations for~$\Omega$.
 
-\item \emph{Quantum $R$-matrix.}
- The $\hbar$-deformation of the bar-complex MC element, with
- $\hbar = \log q$ and $q = e^{\pi i / (k + h^\vee)}$, produces
+\item \emph{Quantized $R$-matrix after KZ/DJ input.}
+ The KZ-transported deformation, with
+ $\hbar_{\mathrm{KZ}} = \log q$ and
+ $q = e^{\pi i / (k + h^\vee)}$, produces
  the quantum $R$-matrix:
  \begin{equation}\label{eq:quantum-R-from-bar}
- R_q = \mathbb{1} + \hbar\, r + \hbar^2\, r_2 + \cdots,
+ R_q = \mathbb{1} + \hbar_{\mathrm{KZ}}\, r_{\mathrm{DJ}}
+ + O(\hbar_{\mathrm{KZ}}^2),
  \end{equation}
- where $r$ is the classical $r$-matrix of~\textup{(i)} and the
- higher-order terms $r_n$ are determined recursively by the
- quantum Yang--Baxter equation. For $\mathfrak{sl}_2$ in the
- fundamental:
+ where \(r_{\mathrm{DJ}}\) is the Drinfeld--Jimbo classical
+ \(r\)-matrix whose symmetrization is the Casimir appearing in
+ \(r^{\mathrm{KZ}}_k\). The higher-order terms are determined
+ recursively by the quantum Yang--Baxter equation. The parameter
+ \(\hbar_{\mathrm{KZ}}\) is neither the Yangian spectral parameter
+ \(u\) nor the bare FRT deformation parameter \(\hbar\); identifying
+ deformation parameters is part of the chosen DK/FRT normalization.
+ For
+ $\mathfrak{sl}_2$ in the fundamental:
  \begin{equation}\label{eq:quantum-R-sl2-explicit}
  R_q = q^{H \otimes H / 4}\,
  \sum_{n \geq 0}
@@ -793,18 +925,18 @@ $\fg$ simple:
  where $[n]_q = (q^n - q^{-n})/(q - q^{-1})$ and only the
  $n = 0, 1$ terms contribute in the fundamental.
 
-\item \emph{Bar coassociativity implies QYBE.}
- The quantum Yang--Baxter equation for $R_q$ is a formal
- consequence of the coassociativity of the bar coproduct
+\item \emph{Classical bar MC and quantized QYBE.}
+ The classical Yang--Baxter equation for the collision residue is a
+ formal consequence of the coassociativity of the bar coproduct
  $\Delta_{\barB}\colon \barB(\cA) \to
  \barB(\cA) \otimes \barB(\cA)$.
- At leading $\hbar$-order, coassociativity
+ In the semiclassical degree-$3$ projection, coassociativity
  $(\Delta \otimes \mathrm{id}) \circ \Delta
  = (\mathrm{id} \otimes \Delta) \circ \Delta$
  projects to the CYBE~\eqref{eq:cybe-bar}.
- At all orders, the MC equation
- $D\,\Theta + \frac{1}{2}[\Theta, \Theta] = 0$ at degree~$3$
- gives the full QYBE.
+ The full quantum Yang--Baxter equation is obtained only after a
+ Drinfeld--Jimbo or KZ quantization of this classical tensor has been
+ chosen; it is not forced by the classical bar coproduct alone.
 \end{enumerate}
 \end{proposition}
 
@@ -816,15 +948,18 @@ shifts to $k\,g^{ab}/(z{-}w)$ after $d\log$ absorption; the simple pole
 $f^{ab}{}_c J^c/(z{-}w)$ becomes regular after $d\log$
 absorption and drops. The degree-$2$ projection of the MC element
  therefore extracts only the Casimir part:
- $r(z) = k\,\Omega_{\mathrm{tr}}/z
- = \Omega_\fg/((k+h^\vee)z)$
+ \(r^{\mathrm{coll}}_k(z)=k\,\Omega_{\mathrm{tr}}/z\)
  (Proposition~\ref{prop:affine-propagator-matching}). The CYBE
 reduces to the infinitesimal braid relations
 $[\Omega_{12}, \Omega_{23}] + [\Omega_{13}, \Omega_{23}] = 0$,
 which follow from the Jacobi identity in~$\fg$ (the Casimir
 $\Omega$ satisfies $[\Omega_{12} + \Omega_{13}, \Omega_{23}] = 0$
 because $\Omega$ is $\fg$-invariant: $[\Delta(x), \Omega] = 0$
-for all $x \in \fg$).
+for all $x \in \fg$). The KZ coefficient
+\(\Omega_{\mathrm{KZ}}/((k+h^\vee)z)\) is obtained after the
+Sugawara/KZ convention is chosen; Lemma~\ref{lem:g1sf-casimir-bridge}
+keeps this convention separate from the trace-form collision
+residue.
 
 Part~(ii): The universal $R$-matrix~\eqref{eq:quantum-R-sl2-explicit}
 is Drinfeld's~\cite{Drinfeld85} and Jimbo's~\cite{Jimbo85}. In the
@@ -834,11 +969,12 @@ $E^2 = F^2 = 0$ on $\bC^2$. The diagonal factor $q^{H \otimes H/4}$
 evaluates to $\operatorname{diag}(q^{1/4}, q^{-1/4}, q^{-1/4}, q^{1/4})$,
 and the $n = 1$ term contributes $(q - q^{-1}) e_{12} \otimes e_{21}$.
 After incorporating the normalization convention, this yields the
-matrix of Theorem~\ref{thm:quantum-rmatrix-shadow}. At $\hbar = 0$
+matrix of Theorem~\ref{thm:quantum-rmatrix-shadow}. At
+\(\hbar_{\mathrm{KZ}} = 0\)
 $(q = 1)$: $R_q \to \mathbb{1}$, and the derivative
-$dR_q/d\hbar|_{\hbar=0}$ recovers
-$r = \frac{1}{2}(e \otimes f + f \otimes e) + \frac{1}{4}h \otimes h
-= \Omega_{\mathfrak{sl}_2}$.
+$dR_q/d\hbar_{\mathrm{KZ}}|_{\hbar_{\mathrm{KZ}}=0}$ recovers
+the Drinfeld--Jimbo triangular \(r\)-matrix. Its symmetric part is the
+quadratic Casimir used by the KZ connection.
 
 Part~(iii): The bar coalgebra $\barB(\cA)$ is a coassociative
 factorization coalgebra
@@ -847,17 +983,21 @@ $\Theta_\cA = D_\cA - d_0$ satisfies
 $D_\cA^2 = 0$ (Theorem~\ref{thm:convolution-d-squared-zero}),
 so the MC equation $D\Theta + \frac{1}{2}[\Theta, \Theta] = 0$
 holds at all degrees. The degree-$3$ projection of this equation is
-exactly the Yang--Baxter equation for the degree-$2$ collision residue
-(Theorem~\ref{thm:collision-depth-2-ybe}).
+the CYBE for the degree-$2$ collision residue
+(Theorem~\ref{thm:collision-depth-2-ybe}). A quantum
+\(R_q\) satisfying QYBE requires the additional quantization input
+specified in part~(ii).
 \end{proof}
 
-\begin{theorem}[Quantum $R$-matrix from the shadow obstruction tower;
+\begin{theorem}[Fundamental quantum \texorpdfstring{$R$}{R}-matrix and classical residue;
 \ClaimStatusProvedHere]
 \label{thm:quantum-rmatrix-shadow}
 \index{R-matrix!quantum!shadow tower origin}
 \index{Drinfeld--Kohno!R-matrix quantization}
-For $U_q(\mathfrak{sl}_2)$ at $q = e^{\pi i/(k+h^\vee)}$,
-the universal $R$-matrix in the fundamental representation is
+For the KZ level~$k$ specialization
+\(q = e^{\pi i/(k+h^\vee)}\), the Drinfeld--Jimbo quantum group
+$U_q(\mathfrak{sl}_2)$ has universal $R$-matrix whose
+fundamental representation is
 \begin{equation}\label{eq:quantum-R-sl2}
 R_q =
 \begin{pmatrix}
@@ -871,18 +1011,24 @@ in the ordered basis $|{+}{+}\rangle, |{+}{-}\rangle,
 |{-}{+}\rangle, |{-}{-}\rangle$, where $|{\pm}\rangle$ is
 the spin-$\frac{1}{2}$ basis.
 
-The $\hbar$-expansion $R_q = \mathbb{1} + \hbar\, r + O(\hbar^2)$ with
-$\hbar = \log q$ recovers the classical $r$-matrix:
+The $\hbar_{\mathrm{DJ}}$-expansion
+$R_q = \mathbb{1} + \hbar_{\mathrm{DJ}}\, r + O(\hbar_{\mathrm{DJ}}^2)$
+with $\hbar_{\mathrm{DJ}} = \log q$ recovers the FRT-gauge classical matrix
 \[
-r = \frac{1}{2}(e \otimes f + f \otimes e)
- + \frac{1}{4} h \otimes h
-= \frac{1}{2}\bigl(P - \tfrac{1}{2}\,\mathbb{1}\bigr),
+r_{\mathrm{FRT}}
+= e_{11}\otimes e_{11}+e_{22}\otimes e_{22}
+  +2\,e_{12}\otimes e_{21}.
 \]
-which is the Casimir $\Omega_{\mathfrak{sl}_2}$ in the fundamental
-representation, confirming the collision-residue identification
-$r(z) = k\,\Omega_{\mathrm{tr}}/z
-= \Omega_{\mathfrak{sl}_2}/((k+2)z)$ of
-Proposition~\textup{\ref{prop:affine-propagator-matching}}.
+Its symmetrization is \(2P\), hence
+\[
+\frac12\bigl(r_{\mathrm{FRT}}+r_{\mathrm{FRT}}^{21}\bigr)
+-\frac12\,\mathbb{1}
+=P-\frac12\,\mathbb{1}
+=\Omega_{\mathfrak{sl}_2}^{\mathrm{fund}}.
+\]
+The KZ monodromy coefficient is therefore the Casimir surface
+\(\Omega_{\mathrm{KZ}}/((k+2)z)\), whereas the ordered affine
+collision residue remains \(k\,\Omega_{\mathrm{tr}}/z\).
 \end{theorem}
 
 \begin{proof}
@@ -899,50 +1045,60 @@ q^{H \otimes H / 4}
 = \operatorname{diag}(q^{1/4}, q^{-1/4}, q^{-1/4}, q^{1/4})
 \cdot q^{3/4} \cdot (\ldots)
 \]
-After computing the full product one obtains~\eqref{eq:quantum-R-sl2}.
+After multiplication by the standard scalar and diagonal FRT gauge,
+this gives~\eqref{eq:quantum-R-sl2}.
 
-The $\hbar$-expansion:
-$R_q = \mathbb{1} + \hbar(e_{11}+e_{44}-e_{22}-e_{33})/4
-+ \hbar\, e_{23} + O(\hbar^2)$,
-where $e_{ij}$ is the matrix unit. This matches the Casimir
-$\Omega = P - \mathbb{1}/2$ in the fundamental.
-Numerical verification:
-at $q = e^{i\pi/4}$ (level $k = 2$), $\|R_q \cdot \check{R}_q
-- \mathbb{1}\| < 10^{-14}$
-\textup{(}\texttt{quantum\_rmatrix\_barcomplex.py}\textup{)}.
+The $\hbar_{\mathrm{DJ}}$-expansion:
+\[
+R_q=\mathbb{1}
++\hbar_{\mathrm{DJ}}\,(e_{11}\otimes e_{11}+e_{22}\otimes e_{22}
+       +2e_{12}\otimes e_{21})
++O(\hbar_{\mathrm{DJ}}^2),
+\]
+where \(e_{ij}\) are the \(2\times2\) matrix units. This is the
+FRT-gauge classical \(r\)-matrix. Passing to the unitarized
+Drinfeld--Kohno gauge replaces it by the Casimir representative in
+the KZ connection; it does not identify the affine collision
+coefficient \(k\Omega_{\mathrm{tr}}\) with
+\(\Omega_{\mathrm{KZ}}/(k+2)\).
 \end{proof}
 
 \begin{proposition}[Colored $R$-matrices and Casimir eigenvalues;
-\ClaimStatusProvedHere]
+\ClaimStatusProvedElsewhere]
 \label{prop:colored-rmatrix}
 \index{R-matrix!colored}
 For irreducible representations $V_\lambda$, $V_\mu$ of
-$U_q(\mathfrak{sl}_2)$ at level~$k$, the $R$-matrix
-$R_{V_\lambda, V_\mu}$ acts on the irreducible component
+$U_q(\mathfrak{sl}_2)$, with \(q=e^{\pi i/(k+2)}\) when the
+representation is obtained from KZ level~\(k\), the $R$-matrix
+$\check R_{V_\lambda, V_\mu}=P\circ R_{V_\lambda,V_\mu}$ acts on the
+irreducible component
 $V_\nu \subset V_\lambda \otimes V_\mu$ with eigenvalue
 \begin{equation}\label{eq:colored-eigenvalue}
-R\big|_{V_\nu}
-= q^{(C_2(\nu) - C_2(\lambda) - C_2(\mu))/2}
+\check R\big|_{V_\nu}
+= \epsilon_{\lambda,\mu}^{\nu}\,
+q^{(c_\nu-c_\lambda-c_\mu)/2}
 \end{equation}
-where $C_2(\lambda) = \lambda(\lambda + 2)$ is the quadratic
-Casimir eigenvalue \textup{(}in the Dynkin label convention\textup{)}.
+in the ribbon normalization, where
+\(c_\lambda=(\lambda,\lambda+2\rho)\) and
+\(\epsilon_{\lambda,\mu}^{\nu}\in\{\pm1\}\) is the symmetry sign of
+the summand.
 For $V = V_1$ \textup{(}fundamental\textup{)}, the decomposition
-$V_1 \otimes V_1 = V_0 \oplus V_2$ gives eigenvalues
-$q^{(0 - 1 \cdot 3 - 1 \cdot 3)/2} = q^{-3}$ on the singlet and
-$q^{(2 \cdot 4 - 3 - 3)/2} = q$ on the triplet, matching the
-eigenvalues of~\eqref{eq:quantum-R-sl2} after the appropriate
-normalization.
+$V_1 \otimes V_1 = V_0 \oplus V_2$ gives, with
+\((\alpha,\alpha)=2\), the ribbon-gauge eigenvalues
+\(-q^{-3/2}\) on the antisymmetric singlet and \(q^{1/2}\) on the
+symmetric triplet, up to an overall scalar gauge. The FRT matrix
+\eqref{eq:quantum-R-sl2} is one such gauge representative.
 \end{proposition}
 
 \begin{proof}
-The eigenvalue formula~\eqref{eq:colored-eigenvalue} is standard:
-it follows from the fact that the universal $R$-matrix satisfies
+The eigenvalue formula~\eqref{eq:colored-eigenvalue} is the standard
+ribbon-category normalization of the Drinfeld--Jimbo braiding. It
+follows from the fact that the universal $R$-matrix satisfies
 $(\Delta \otimes \operatorname{id})(\mathcal{R})
 = \mathcal{R}_{13}\mathcal{R}_{23}$
 and the Casimir element $C = \sum_a T^a T_a$ is a central element
-of $U_q(\fg)$ with eigenvalue $C_2(\lambda)$ on $V_\lambda$.
-The eigenvalue computation on $V_1 \otimes V_1$ is verified
-numerically in \texttt{quantum\_rmatrix\_barcomplex.py}.
+of $U_q(\fg)$ with eigenvalue \(c_\lambda\) on $V_\lambda$; the
+categorical symmetry supplies the sign on the antisymmetric summand.
 \end{proof}
 
 
@@ -951,10 +1107,12 @@ numerically in \texttt{quantum\_rmatrix\_barcomplex.py}.
 \index{Bethe ansatz!from shadow tower}
 
 The shadow connection $\nabla^{\mathrm{sh}}$ on the modular
-convolution algebra, restricted to genus~$0$ and degree~$n$, gives
-the KZ connection on $\operatorname{Conf}_n(\bP^1)$. Its quantization
-via the spectral parameter produces the Bethe ansatz equations for
-integrable spin chains.
+convolution algebra, restricted to genus~$0$ and degree~$n$, gives the
+KZ connection on $\operatorname{Conf}_n(\bP^1)$ through its binary
+collision residue. Bethe equations are not a formal consequence of the
+KZ residue alone: they enter after one chooses the corresponding
+Yangian or quantum-loop transfer matrix and applies the algebraic
+Bethe ansatz.
 
 \begin{theorem}[Bethe ansatz from the MC equation;
 \ClaimStatusConditional]
@@ -964,12 +1122,14 @@ integrable spin chains.
 For the antiferromagnetic Heisenberg XXX chain of length~$L$ with
 $M$ down spins, the Bethe ansatz equations
 \begin{equation}\label{eq:xxx-bae}
-\prod_{j \neq i} \frac{u_i - u_j + 1}{u_i - u_j - 1}
+\prod_{j \neq i} \frac{u_i - u_j + i}{u_i - u_j - i}
 = \left(\frac{u_i + \frac{i}{2}}{u_i - \frac{i}{2}}\right)^{\!L},
 \qquad i = 1, \ldots, M
 \end{equation}
-arise from the shadow connection as follows. The rational
-$R$-matrix $R(u) = u\,\mathbb{1} + P$
+arise from the shadow connection after this transfer-matrix choice as
+follows. The rational
+$R$-matrix \(R_{\mathrm{XXX}}(u)=u\,\mathbb{1}+iP\), equivalently
+Yang's additive \(u\,\mathbb{1}+P\) after \(u\mapsto iu\),
 \textup{(}Theorem~\textup{\ref{thm:rtt-all-classical-types}(i))}
 defines the transfer matrix
 $\mathcal{T}(u) = \operatorname{tr}_{\mathrm{aux}}
@@ -1025,15 +1185,40 @@ symmetrically about $u = 0$ with spacing $\sim 1/L$.
 The TQ relation
 \begin{equation}\label{eq:tq-relation}
 \mathcal{T}(u)\, Q(u)
-= a(u)\, Q(u - 1) + d(u)\, Q(u + 1),
+= a(u)\, Q(u - i) + d(u)\, Q(u + i),
 \end{equation}
 where $a(u) = (u + \frac{i}{2})^L$, $d(u) = (u - \frac{i}{2})^L$,
 and $Q(u) = \prod_{a=1}^M (u - u_a)$ is the Baxter $Q$-operator,
 encodes the BAE as the regularity condition for the eigenvalue
-$\Lambda(u) = a(u) Q(u-1)/Q(u) + d(u) Q(u+1)/Q(u)$.
+$\Lambda(u) = a(u) Q(u-i)/Q(u) + d(u) Q(u+i)/Q(u)$.
 The poles of the right-hand side at $u = u_a$ cancel if and only
 if~\eqref{eq:xxx-bae} holds.
 \end{computation}
+
+\begin{remark}[Ordered amplitudes and the symmetric Bethe shadow]
+\label{rem:yangcomp-ordered-bethe-shadow}
+\index{Bethe ansatz!ordered amplitudes}
+\index{averaging map!Bethe shadow}
+For a length-$L$ spin chain on $V=\mathbb{C}^2$, the ordered
+genus-$0$ chiral datum carries $V^{\otimes L}$ with its
+pure-braid KZ monodromy. The averaging map
+\[
+\av_L\colon V^{\otimes L}\longrightarrow \operatorname{Sym}^L(V)
+\]
+forgets ordered site amplitudes and retains the symmetric spectral
+data: the transfer eigenvalue $\Lambda(u)$, the Baxter polynomial
+$Q(u)=\prod_a(u-u_a)$, and the quantum determinant. Thus
+\[
+\dim\ker(\av_L)=2^L-(L+1),
+\]
+but $\ker(\av_L)$ is not a Bethe eigenspace. Bethe vectors
+$B(u_1)\cdots B(u_M)|\Omega\rangle$ live in the ordered Hilbert space
+$V^{\otimes L}$; under the usual completeness hypotheses they span
+the appropriate magnon-sector eigenspaces. Only differences of
+ordered vectors with the same symmetric spectral data are killed by
+averaging. This is the ordered/symmetric distinction behind
+Remark~\ref{rem:ordered-center-bethe}.
+\end{remark}
 
 \begin{remark}[Nested Bethe ansatz for higher rank]
 \label{rem:nested-bethe}
@@ -1041,21 +1226,23 @@ if~\eqref{eq:xxx-bae} holds.
 For $\mathfrak{sl}_3$, the Bethe ansatz involves two species of
 Bethe roots $(u_a^{(1)}, u_b^{(2)})$ with coupled equations:
 \begin{align*}
-\prod_{j \neq i} \frac{u_i^{(1)} - u_j^{(1)} + 1}
-{u_i^{(1)} - u_j^{(1)} - 1}
+\prod_{j \neq i} \frac{u_i^{(1)} - u_j^{(1)} + i}
+{u_i^{(1)} - u_j^{(1)} - i}
 &= \left(\frac{u_i^{(1)} + \frac{i}{2}}{u_i^{(1)} - \frac{i}{2}}\right)^{\!L}
-\prod_{b} \frac{u_i^{(1)} - u_b^{(2)} - 1}{u_i^{(1)} - u_b^{(2)} + 1}, \\
-\prod_{j \neq i} \frac{u_i^{(2)} - u_j^{(2)} + 1}
-{u_i^{(2)} - u_j^{(2)} - 1}
-&= \prod_{a} \frac{u_i^{(2)} - u_a^{(1)} - 1}{u_i^{(2)} - u_a^{(1)} + 1}.
+\prod_{b} \frac{u_i^{(1)} - u_b^{(2)} - \frac{i}{2}}
+{u_i^{(1)} - u_b^{(2)} + \frac{i}{2}}, \\
+\prod_{j \neq i} \frac{u_i^{(2)} - u_j^{(2)} + i}
+{u_i^{(2)} - u_j^{(2)} - i}
+&= \prod_{a} \frac{u_i^{(2)} - u_a^{(1)} - \frac{i}{2}}
+{u_i^{(2)} - u_a^{(1)} + \frac{i}{2}}.
 \end{align*}
 The nesting reflects the rank-$2$ structure of $\mathfrak{sl}_3$:
 each simple root contributes one species of Bethe roots, and the
-Cartan matrix appears in the coupling. The all-types
-$R$-matrix of Theorem~\ref{thm:rtt-all-classical-types} produces
-analogous nested systems for types $B$, $C$, $D$, with the
-Cartan matrix of the corresponding Lie algebra governing the
-coupling structure
+Cartan matrix appears in the coupling. The classical-type
+$R$-matrices of Theorem~\ref{thm:rtt-all-classical-types} produce
+analogous nested systems for types $B$, $C$, $D$, with the Cartan
+matrix of the corresponding Lie algebra governing the coupling
+structure
 \textup{(}\texttt{bethe\_ansatz\_shadow.py}\textup{)}.
 \end{remark}
 
@@ -1065,27 +1252,31 @@ coupling structure
 \index{Bethe ansatz!from MC element|textbf}
 \index{shadow potential!Bethe ansatz}
 \index{Nekrasov--Shatashvili!gauge/Bethe correspondence}
-The Bethe ansatz equations for all classical integrable spin chains
-arise as stationarity conditions for the shadow potential
+The Bethe ansatz equations for the standard rational, trigonometric,
+elliptic, and nested examples below arise as stationarity conditions
+for the shadow potential
 $\cW(\{u_i\})$, which is the genus-$0$ shadow amplitude
 evaluated on the spin chain configuration space.
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{XXX chain \textup{(}rational, from $\hat{\mathfrak{sl}}_2$\textup{)}.}
- The shadow potential is
- \begin{equation}\label{eq:xxx-shadow-potential}
- \cW_{\mathrm{XXX}}(\{u_i\})
- = \sum_{i=1}^{M} L\, \Phi(u_i)
- - \sum_{i < j} \Phi(u_i - u_j),
- \end{equation}
- where $\Phi(u) = u\log u - u$ is the dilogarithm-like function
- with $\Phi'(u) = \log u$. The BAE~\eqref{eq:xxx-bae} are the
- exponential form of $\partial \cW/\partial u_i = 0$ after the
- substitution $u \mapsto u + i/2$. The shadow connection
+	 The shadow potential is
+	 \begin{equation}\label{eq:xxx-shadow-potential}
+	 \cW_{\mathrm{XXX}}(\{u_i\})
+	 = L\sum_{i=1}^{M}
+	 \bigl(\Phi(u_i+\tfrac{i}{2})-\Phi(u_i-\tfrac{i}{2})\bigr)
+	 -\frac12\sum_{i\ne j}
+	 \bigl(\Phi(u_i-u_j+i)-\Phi(u_i-u_j-i)\bigr),
+	 \end{equation}
+	 where $\Phi(u) = u\log u - u$ and a branch of \(\log\) has been
+	 chosen. The BAE~\eqref{eq:xxx-bae} are the exponential form of
+	 \(\partial \cW/\partial u_i=0\). The shadow connection
  $\nabla^{\mathrm{sh}}$
  \textup{(}Theorem~\textup{\ref{thm:shadow-connection})}
  restricted to genus~$0$, degree~$L$, produces the KZ connection
  on the configuration space $\operatorname{Conf}_L(\bP^1)$;
- the Bethe ansatz is its quantization via the spectral parameter.
+ the algebraic Bethe ansatz is the transfer-matrix quantization of
+ this KZ Hamiltonian system, not a consequence of the collision
+ residue alone.
 
 \item \emph{XXZ chain \textup{(}trigonometric, from $U_q(\hat{\mathfrak{sl}}_2)$\textup{)}.}
  Setting $q = e^\eta$ with anisotropy $\Delta = \cosh \eta$,
@@ -1125,15 +1316,15 @@ evaluated on the spin chain configuration space.
  governed by the Cartan matrix of $\mathfrak{sl}_N$:
  \begin{equation}\label{eq:nested-bae}
  \prod_{j \neq i}
- \frac{u_i^{(\alpha)} - u_j^{(\alpha)} + 1}
- {u_i^{(\alpha)} - u_j^{(\alpha)} - 1}
+ \frac{u_i^{(\alpha)} - u_j^{(\alpha)} + i}
+ {u_i^{(\alpha)} - u_j^{(\alpha)} - i}
  = \prod_{\beta \sim \alpha}\,
  \prod_{b}
- \frac{u_i^{(\alpha)} - u_b^{(\beta)} - C_{\alpha\beta}/2}
- {u_i^{(\alpha)} - u_b^{(\beta)} + C_{\alpha\beta}/2},
+ \frac{u_i^{(\alpha)} - u_b^{(\beta)} - iA_{\alpha\beta}/2}
+ {u_i^{(\alpha)} - u_b^{(\beta)} + iA_{\alpha\beta}/2},
  \end{equation}
- where $C_{\alpha\beta}$ is the Cartan matrix and
- $\beta \sim \alpha$ denotes adjacent nodes in the Dynkin diagram.
+ where \(A_{\alpha\beta}=-C_{\alpha\beta}>0\) for adjacent nodes
+ and $\beta \sim \alpha$ denotes adjacency in the Dynkin diagram.
 \end{enumerate}
 \end{theorem}
 
@@ -1168,8 +1359,8 @@ integrability via the elliptic $R$-matrix is
 Baxter's~\cite{Baxter82}.
 
 Part~(iv): The nested Bethe ansatz for $\mathfrak{sl}_N$ follows
-from the all-types RTT presentation
-(Theorem~\ref{thm:rtt-all-types}): the $R$-matrix for
+from the classical-type RTT presentation
+(Theorem~\ref{thm:rtt-all-classical-types}): the $R$-matrix for
 $\mathfrak{sl}_N$ in the fundamental defines a transfer matrix,
 and the successive ``auxiliary spaces'' for each simple root yield
 the $N - 1$ species of Bethe roots. The Cartan-matrix coupling
@@ -1189,63 +1380,79 @@ diagonalization to precision $< 10^{-10}$
 \index{evaluation module|textbf}
 For $a \in \mathbb{C}$ and $V$ a finite-dimensional
 $\mathfrak{sl}_N$-representation, the \emph{evaluation module}
-$V(a)$ of $Y(\mathfrak{sl}_N)$ is defined by:
+$V(a)$ of $Y_\hbar(\mathfrak{sl}_N)$ is the pullback along the
+evaluation homomorphism. In the type-$A$ RTT window this homomorphism is
 \[
-t_{ij}(u) \mapsto \delta_{ij} + \frac{\rho_{ij}}{u - a}
+\operatorname{ev}_a(T_{ij}(u))
+ =
+\delta_{ij}+\frac{\hbar\,\rho(E_{ij})}{u-a},
+\qquad
+T_{ij}^{(r)}\longmapsto a^{r-1}\rho(E_{ij})
+\quad (r\ge1),
 \]
-where $\rho_{ij}$ is the $\mathfrak{sl}_N$-action on $V$.
-The parameter $a$ is the \emph{evaluation point}.
+after the usual trace/quantum-determinant reduction from
+$\mathfrak{gl}_N$ to $\mathfrak{sl}_N$. The parameter $a$ is the
+additive spectral point. It is not an affine Kac--Moody level.
 \end{definition}
 
-\begin{proposition}[Evaluation module bar complex; \ClaimStatusProvedHere]
+\begin{proposition}[Evaluation quotient bar complex; \ClaimStatusProvedHere]
 \label{prop:eval-module-bar}
 
-The bar complex of the evaluation module $V(a)$ is the
-Chevalley--Eilenberg complex of $\mathfrak{sl}_N$ acting on $V$,
-shifted by the evaluation point:
+Fix \(\hbar\ne0\), and let $I_a=\ker(\operatorname{ev}_a)$. The
+evaluation quotient $Y_\hbar(\mathfrak{sl}_N)/I_a$ is
+$U(\mathfrak{sl}_N)$ on the finite evaluation lane. Hence the
+relative bar complex of the evaluation quotient acting on $V(a)$ is
+the Chevalley--Eilenberg complex of $\mathfrak{sl}_N$ with
+coefficients in~$V$:
 \[
-\bar{B}(Y(\mathfrak{sl}_N); V(a))
+\bar{B}\bigl(Y_\hbar(\mathfrak{sl}_N)/I_a;\,V(a)\bigr)
 \simeq C^*(\mathfrak{sl}_N, V)
 \]
-as a chain complex, where the differential uses the
-$\mathfrak{sl}_N$-action $\rho$.
+as a chain complex. The full $Y_\hbar$-module bar complex maps to this
+quotient complex; the kernel is generated by the evaluation ideal
+$I_a$ and belongs to the completed Yangian bar surface, not to the
+finite evaluation quotient.
 \end{proposition}
 
 \begin{proof}
-The evaluation homomorphism $\operatorname{ev}_a \colon Y(\mathfrak{sl}_N) \to U(\mathfrak{sl}_N)$
-sends $t_{ij}^{(r)}$ to $\rho_{ij} \delta_{r,1}$ (all higher modes act trivially).
-The bar complex of the module $V(a)$ is therefore determined by
-the $\mathfrak{sl}_N$-action alone: the degree-$n$ bar differential
+Expanding
 \[
-d([v_1 | \cdots | v_n]) = \sum_{k} (-1)^k [\cdots | \rho(v_k) | \cdots]
-+ \sum_{i < j} (-1)^{i+j} [\cdots | [v_i, v_j] | \cdots]
+\frac{1}{u-a}=\sum_{r\ge1}a^{r-1}u^{-r}
 \]
-is exactly the Chevalley--Eilenberg differential. The evaluation
-point $a$ appears only as a shift in the spectral parameter filtration
-and does not affect the chain complex structure.
+shows that $\operatorname{ev}_a$ identifies every RTT mode with the
+same $\mathfrak{sl}_N$ action multiplied by the scalar $a^{r-1}$.
+Modulo $I_a$ no independent higher-mode generator remains, and the
+quotient algebra is $U(\mathfrak{sl}_N)$ with its usual action on~$V$,
+after the harmless rescaling by the non-zero deformation parameter
+\(\hbar\). The bar complex of this quotient module is therefore the
+standard Chevalley--Eilenberg complex \(C^*(\mathfrak{sl}_N,V)\), with
+differential determined by the $\mathfrak{sl}_N$-action and the Lie
+bracket. The evaluation point remains visible only in the embedding of
+the quotient into the RTT mode tower; it does not create an affine
+level.
 \end{proof}
 
 \begin{remark}[Tensor product of evaluation modules]
 \label{rem:tensor-eval}
 \index{evaluation module!tensor product}
 
-For two evaluation modules $V(a)$ and $W(b)$ with $a \neq b$,
-the tensor product $V(a) \otimes W(b)$ is again a Yangian module.
-The bar complex of the tensor product is related to the bar complexes
-of the factors by a K\"unneth-type formula:
+For two evaluation modules $V(a)$ and $W(b)$, the coproduct makes
+$V(a)\otimes W(b)$ a Yangian module for all $a,b$. When $a\neq b$, the
+universal rational $R$-intertwiner is regular, and the bar complex of
+the tensor product is related to the bar complexes of the factors by a
+K\"unneth-type formula on the evaluation quotient:
 \[
 \bar{B}(Y; V(a) \otimes W(b)) \simeq
 \bar{B}(Y; V(a)) \otimes_{\bar{B}(Y)} \bar{B}(Y; W(b))
 \]
 where the tensor product is taken over the bar construction.
 
-When $a = b$ (coincident evaluation points), the tensor product
-develops a pole: the $R$-matrix $R(a-b) = R(0) = 1 - P/0$ diverges.
-This singularity corresponds to the non-semisimplicity of the tensor
-product at coincident points, mirroring the diagonal singularity
-in the FM compactification. The resolution of this singularity
-(the FM blow-up at the diagonal) produces the Yangian analog of
-the bar complex propagator.
+When $a=b$ (coincident evaluation points), the tensor product remains
+defined, but the normalized $R$-intertwiner has the collision pole
+$R_\hbar(a-b)=1-\hbar P/(a-b)$. The pole belongs to the ordered
+configuration divisor. The FM blow-up at the diagonal records the
+collision direction and produces the propagator used by the Yangian
+bar complex.
 \end{remark}
 
 \subsection{\texorpdfstring{Yangian category $\mathcal{O}$ from bar-cobar duality}{Yangian category O from bar-cobar duality}}
@@ -1287,21 +1494,24 @@ lanes where the corresponding finite-type dualized Yangian-module
 interpretation is available, the same calculation may be read on the
 dual Yangian side.
 
-\begin{theorem}[Yangian BGG resolution; \ClaimStatusConditional]
+\begin{theorem}[Evaluation-quotient BGG resolution; \ClaimStatusConditional]
 \label{thm:yangian-bgg}
 \index{BGG resolution!Yangian}
 For $\mathfrak{g} = \mathfrak{sl}_N$ and a finite-dimensional
 irreducible $\mathfrak{g}$-module $L(\lambda)$, the evaluation
-module $L(\lambda)(a)$ of $Y(\mathfrak{sl}_N)$ admits a
-bar resolution:
+module $L(\lambda)(a)$ admits the following relative bar resolution
+over the evaluation quotient \(Y_\hbar(\mathfrak{sl}_N)/I_a\):
 \begin{equation}\label{eq:yangian-bgg}
-\cdots \to \bar{B}_2(Y; L(\lambda)(a))
- \to \bar{B}_1(Y; L(\lambda)(a))
+\cdots \to \bar{B}_2(Y/I_a; L(\lambda)(a))
+ \to \bar{B}_1(Y/I_a; L(\lambda)(a))
  \to L(\lambda)(a) \to 0
 \end{equation}
-where $\bar{B}_n(Y; L(\lambda)(a))
+where $\bar{B}_n(Y/I_a; L(\lambda)(a))
 \simeq C^n(\mathfrak{sl}_N, L(\lambda))$
-is the Chevalley--Eilenberg complex. In particular:
+is the Chevalley--Eilenberg complex. The absolute
+\(Y_\hbar\)-module bar complex maps to this quotient complex; no
+identification with the Chevalley--Eilenberg complex is asserted
+before quotienting by \(I_a\). In particular:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item The resolution length is $\dim \mathfrak{sl}_N
  = N^2 - 1$.
@@ -1313,8 +1523,10 @@ is the Chevalley--Eilenberg complex. In particular:
 \item Under the module bar functor~$\Phi$, the resolution maps to the
  corresponding bar-comodule resolution on the dual bar side. On any
  finite-type dualized evaluation lane where this bar image is
- identified with a $Y_{-\hbar}(\mathfrak{sl}_N)$-module, this may be
- read as the dual BGG resolution of $L(\lambda)(-a)$.
+ identified with a \(Y_{-\hbar}(\mathfrak{sl}_N)\)-module, this may
+ be read as the dual BGG resolution with inverse RTT kernel. A
+ simultaneous reflection \(a\mapsto -a\) is an extra choice of
+ spectral coordinate, not part of the quotient calculation itself.
 \end{enumerate}
 \end{theorem}
 
@@ -1325,15 +1537,17 @@ is the CE complex $C^*(\mathfrak{sl}_N, L(\lambda))$,
 which has terms $L(\lambda) \otimes \bigwedge^n \mathfrak{sl}_N^*$
 and length $\dim \mathfrak{sl}_N$.
 
-For part~(iii): the module bar functor sends the evaluation-module
-resolution~\eqref{eq:yangian-bgg} termwise to the corresponding
-bar-comodule resolution on the dual bar side, and
+For part~(iii): the module bar functor sends the relative
+evaluation-quotient resolution~\eqref{eq:yangian-bgg} termwise to the
+corresponding bar-comodule resolution on the dual bar side, and
 Proposition~\ref{prop:yangian-module-koszul} identifies the
-underlying evaluation object with the $(-\hbar,-a)$ dual datum on the
+underlying evaluation object with the dual inverse-kernel datum on the
 lanes where that Yangian-module realization is available. The
 Chevalley--Eilenberg differential depends only on the
-$\mathfrak{sl}_N$-action, so the resulting bar-side resolution has the
-same chain-complex shape.
+$\mathfrak{sl}_N$-action, so the quotient-level bar-side resolution has
+the same chain-complex shape. The higher RTT modes remain in the
+kernel of the map from the absolute Yangian bar complex to this
+relative quotient complex.
 \end{proof}
 
 \begin{corollary}[Bar-comodule Ext comparison for Yangian evaluation modules;
@@ -1379,7 +1593,7 @@ category \texorpdfstring{$\mathcal{O}$}{O}]
 The results above hold unconditionally for
 evaluation modules (which reduce to finite-dimensional
 $\mathfrak{sl}_N$-representations). This is the endpoint of DK-1 in
-Remark~\ref{rem:yangian-status}. Extending to
+the Yangian ladder. Extending to
 the \emph{full} Yangian category~$\mathcal{O}$ (which
 includes infinite-dimensional highest-weight modules,
 Verma modules $M(\lambda, a)$, and their subquotients) requires
@@ -1533,19 +1747,19 @@ type~$A$ is therefore:
  version of category~$\mathcal{O}$ extending the evaluation-locus
  Yangian correspondence to the ambient derived category; and
 \item \emph{Infinite-dimensional extension}: thick generation of
- $D^b(\mathcal{O}_{Y_\hbar})$ by evaluation modules, extending
- the finite-dimensional result to Verma modules and their
- subquotients.
+ the chosen finite-length part of
+ $D^b(\mathcal{O}_{Y_\hbar})$ by the same seed, with every
+ standard, Verma-type, or prefundamental simple placed in that
+ thick closure by an actual finite filtration.
 \end{enumerate}
-For~(a), the key input would be a theorem that the relevant
+For~(a), the key input is a theorem that the relevant
 bar-comodule comparison admits a Yangian-module realization on
 category~$\mathcal{O}$ and respects its highest-weight structure.
-For~(b), the standard
-BGG resolution of a Verma module $M(\lambda, a)$ by direct sums of
-Verma modules (which at generic
-highest weight are evaluation-module images under parabolic induction)
-reduces this to the well-studied structure of Yangian
-category~$\mathcal{O}$.
+For~(b), BGG-type resolutions or parabolic induction statements are
+not enough by themselves: they must identify the actual composition
+factors with objects already in the evaluation-generated thick
+subcategory and must do so inside the completed ambient category used
+for DK.
 
 The type~$A$ thick generation result also
 verifies the finite-dimensional part of the full-generation
@@ -1628,9 +1842,10 @@ $\mathcal{D}_\hbar^{\mathrm{eval}} \subset
 D^b(\mathcal{O}_{Y_\hbar})$
 generated by evaluation modules equals
 $D^b(\mathcal{O}_{Y_\hbar})$.
-Consequently, DK-2
-\textup{(}Proposition~\textup{\ref{prop:yangian-dk2-thick-generation}}\textup{)}
-holds for~$\mathcal{O}_{Y_\hbar}$.
+Consequently, under the ambient exact-extension hypothesis of
+Proposition~\textup{\ref{prop:yangian-dk2-thick-generation}}, this
+verifies the generation input needed for DK-2 on
+$\mathcal{O}_{Y_\hbar}$.
 \end{theorem}
 
 \begin{proof}
@@ -1645,41 +1860,48 @@ yield $D^b(\mathcal{O}_{Y_\hbar}) =
 \mathcal{D}_\hbar^{\mathrm{eval}}$.
 \end{proof}
 
-\begin{proposition}[Asymptotic prefundamentals thick-generate without Baxter;
-\ClaimStatusProvedHere]
+\begin{proposition}[Asymptotic prefundamentals as a conditional
+generation criterion; \ClaimStatusConditional]
 \label{prop:mc3-asymptotic-prefundamentals}
 \index{thick generation!prefundamentals}
 \index{QQ-system!Frenkel--Hernandez}
 Let $\fg$ be simple of simply-laced type and let
-$Y_\hbar(\fg)$ act on category~$\mathcal{O}$ in the
-Hernandez--Jimbo asymptotic limit. For each fundamental
-weight~$\omega_i$ and spectral parameter~$a \in \C$, let
-$L^{\pm}_{\omega_i, a}$ denote the positive and negative
-prefundamental modules constructed in~\cite{HernandezJimbo12,
-FrenkelHernandez15}. Then the thick triangulated subcategory
-$\cD_\hbar^{\mathrm{pre}} \subset D^b(\mathcal{O})$ generated
-by $\{ L^{\pm}_{\omega_i,a} \}_{i,a}$ equals
-$D^b(\mathcal{O})$, independently of any Baxter constraint
-$b = a - 1/2$.
+$Y_\hbar(\fg)$ act on the Hernandez--Jimbo asymptotic category inside
+a chosen separated completion. For each fundamental weight~$\omega_i$
+and spectral parameter~$a \in \C$, let $L^{\pm}_{\omega_i, a}$ denote
+the positive and negative prefundamental modules constructed
+in~\cite{HernandezJimbo12,FrenkelHernandez15}. Assume:
+\begin{enumerate}[label=\textup{(\roman*)},nosep]
+\item these prefundamentals are objects of the chosen completed
+ category and the relevant subcategory is finite length;
+\item the Frenkel--Hernandez QQ-system identities lift from
+ $K_0$-identities to finite exact filtrations there; and
+\item tensoring with the finite-dimensional modules used in those
+ filtrations preserves the completed subcategory.
+\end{enumerate}
+Then the objects whose simples occur in those lifted filtrations lie
+in the thick subcategory generated by the
+$L^{\pm}_{\omega_i,a}$. The statement is independent of the rank-$1$
+Baxter hyperplane $b=a-\tfrac12$, but it is a criterion inside the
+chosen completion, not a proof that the full category
+$D^b(\mathcal O)$ is generated.
 \end{proposition}
 
 \begin{proof}
 The Frenkel--Hernandez QQ-system~\cite{FrenkelHernandez15}
-expresses every irreducible~$L(\psi)$ with $\ell$-highest weight
-$\psi$ as a finite iterated extension of tensor products of
-prefundamentals, the relations being the Plücker-type
-identities $Q_i^+ Q_i^- = \prod_{j \sim i} Q_j$ read in the
-Grothendieck ring. Since thick subcategories are closed under
-extensions and tensor products with rigid objects, every simple
-lies in $\cD_\hbar^{\mathrm{pre}}$. Lemma~\ref{lem:composition-thick-generation}
-promotes this to the full bounded derived category. The
-argument never invokes the type-$A$ Baxter balance~$b=a-1/2$:
-the QQ-system is intrinsic to the asymptotic limit and holds
-for all simply-laced~$\fg$.
+gives Pluecker-type identities for prefundamental characters in the
+Grothendieck ring. A $K_0$ identity alone does not put an object in a
+thick subcategory. Under hypotheses \textup{(i)--(iii)}, however, the
+identity is represented by finite exact filtrations whose factors are
+tensor products of the named prefundamentals and finite-dimensional
+modules; closure under cones and tensoring gives the stated
+membership. No type-$A$ Baxter balance is used. Without the filtration
+and completion hypotheses this remains only a Grothendieck-group
+identity.
 \end{proof}
 
 \begin{proposition}[Reflection-equation singular vectors for twisted
-Yangians; \ClaimStatusProvedHere]
+Yangians; \ClaimStatusConditional]
 \label{prop:mc3-reflection-equation}
 \index{twisted Yangian!reflection equation}
 \index{Sklyanin determinant}
@@ -1687,84 +1909,89 @@ Let $Y^{\mathrm{tw}}_\hbar(\mathfrak{so}_n)$ or
 $Y^{\mathrm{tw}}_\hbar(\mathfrak{sp}_n)$ denote the twisted
 Yangians of Olshanski, with reflection-equation generator
 $S(u)$ satisfying $R(u-v) S_1(u) R(u+v) S_2(v) = S_2(v)
-R(u+v) S_1(u) R(u-v)$. The thick triangulated subcategory of
-finite-dimensional modules generated by evaluation modules at
-Sklyanin-determinant singular vectors equals the full bounded
-derived category of finite-dimensional modules.
+R(u+v) S_1(u) R(u-v)$. Fix a finite-dimensional block. Assume the
+Molev--Ragoucy classification realizes every simple in that block as
+a subquotient of a generic reflection-equation fusion product of
+evaluation modules, and assume that the Sklyanin determinant separates
+the blocks under consideration. Then those evaluation modules thickly
+generate the bounded derived category of the fixed block.
 \end{proposition}
 
 \begin{proof}
 Molev--Ragoucy~\cite{MolevRagoucy02} classify finite-dimensional
 irreducibles via Drinfeld-type tuples constrained by the
 Sklyanin determinant $\mathrm{sdet}\, S(u)$, a central series
-whose zeros cut out singular vectors. Every irreducible
-embeds into an evaluation module at such a zero; tensor products
-of evaluation modules exhaust the semisimple locus by
-reflection-equation fusion. The composition-length argument
-of Lemma~\ref{lem:composition-thick-generation} closes the thick
-generation. No Baxter constraint enters: the reflection equation
-replaces the RTT relation, and Sklyanin determinants replace
-the quantum determinant.
+whose values label the block. The stated fusion hypothesis puts every
+simple in the block in the thick closure of the evaluation seed.
+Lemma~\ref{lem:composition-thick-generation} then gives the bounded
+derived block. No Baxter constraint enters: the reflection equation
+and the Sklyanin determinant are the block data in this twisted
+setting. The conclusion is not a statement about ordinary Yangian
+category~$\mathcal O$.
 \end{proof}
 
-\begin{theorem}[Universal multiplicity-freeness of $\ell$-weight spectra;
+\begin{theorem}[Finite-dimensional evaluation core from Drinfeld
+polynomials;
 \ClaimStatusProvedHere]
 \label{thm:mc3-universal-multiplicity-free}
 \index{Bethe subalgebra!joint spectrum}
 \index{multiplicity-free!Chari--Moura}
 For $\fg$ simple of any type and any
 finite-dimensional irreducible $Y_\hbar(\fg)$-module~$L(\psi)$,
-the joint spectrum of the Bethe subalgebra $B(C) \subset
-Y_\hbar(\fg)$ on $L(\psi)$ is simple, and the $\ell$-weight
-decomposition is multiplicity-free. Consequently, $L(\psi)$ is
-thick-generated by its $\ell$-weight vectors, and MC3 holds
-uniformly in type via Bethe-algebra diagonalisation.
+$L(\psi)$ is a subquotient of an ordered tensor product of fundamental
+evaluation modules determined by its Drinfeld polynomials. Hence the
+fundamental evaluation modules thickly generate
+$D^b(\operatorname{Rep}_{\mathrm{fd}}(Y_\hbar(\fg)))$.
+Generic Bethe-algebra diagonalisation and multiplicity-free
+$q$-character results control generic finite-dimensional blocks; they
+do not enlarge this theorem to full category~$\mathcal O$ or to a
+completed prefundamental category.
 \end{theorem}
 
 \begin{proof}
-Chari--Moura~\cite{ChariMoura05} establish that for generic
-$C$ in the Cartan of~$\fg$, the Bethe subalgebra
-$B(C)$ acts on every finite-dimensional irreducible with
-simple joint spectrum. Simplicity of the spectrum forces
-multiplicity-freeness of $\ell$-weight subspaces. Each
-$\ell$-weight vector lies in an evaluation module by
-direct construction, so thick generation follows without
-appeal to any type-specific Baxter identity. The argument is
-uniform across A, B, C, D, E, F, G.
+The Drinfeld classification writes the highest $\ell$-weight of
+$L(\psi)$ by Drinfeld polynomials. The roots of those polynomials
+choose fundamental evaluation factors, and the ordered tensor product
+has $L(\psi)$ as its irreducible quotient after the usual generic
+ordering and limiting argument. Thus every simple finite-dimensional
+module lies in the thick closure of the fundamental evaluation seed.
+Lemma~\ref{lem:composition-thick-generation} gives the bounded
+derived finite-dimensional category. The Bethe subalgebra is not used
+as a substitute for this classification, and its simple-spectrum
+claims are restricted to the generic finite-dimensional locus where
+the cited Bethe results apply.
 \end{proof}
 
 \begin{proposition}[Elliptic thick generation on the theta-divisor complement;
-\ClaimStatusProvedHere]
+\ClaimStatusConditional]
 \label{prop:mc3-elliptic-theta-divisor}
 \index{elliptic quantum group!theta-divisor}
 \index{Felder algebra}
 Let $E_{\rho, \eta}(\mathfrak{sl}_N)$ be the Felder elliptic
 quantum group at modulus~$\rho$ and step~$\eta$, acting on
-category~$\mathcal{O}$ over the complement of the theta
-divisor $\Theta \subset E_\rho$. The thick triangulated
-subcategory generated by elliptic evaluation modules at
-points of $E_\rho \setminus \Theta$ equals
-$D^b(\mathcal{O}_{E_{\rho,\eta}})$.
+finite-dimensional regular blocks over the complement of the theta
+divisor $\Theta \subset E_\rho$. Assume the elliptic Bethe
+eigenvectors are complete, the joint spectrum is simple, and fusion
+products have finite composition series off~$\Theta$. Then the
+elliptic evaluation modules at points of $E_\rho \setminus \Theta$
+thickly generate the corresponding finite-dimensional regular block.
 \end{proposition}
 
 \begin{proof}
 Felder--Varchenko~\cite{FelderVarchenko96} construct the
 evaluation representations; the dynamical R-matrix
 $R(z, \lambda)$ has poles precisely on $\Theta$, and
-fusion is well-defined on the complement. Every
-finite-dimensional irreducible arises as a quotient of an
-elliptic Verma at a regular point, following
-Etingof--Varchenko~\cite{EtingofVarchenko98}. Thick generation
-proceeds by the same composition-length argument as
-Lemma~\ref{lem:composition-thick-generation}, the Artinian
-hypothesis being inherited from the trigonometric limit
-$\rho \to i\infty$. The theta-divisor excision replaces the
-spectral-parameter genericity that Baxter would enforce in
-the rational case.
+fusion is well-defined on the complement. Under the stated
+completeness and finite-length hypotheses, the Bethe eigenbasis
+separates the simples in the regular block; the composition-length
+argument of Lemma~\ref{lem:composition-thick-generation} then gives
+thick generation of that block. The theta-divisor excision is a
+regularity condition for the elliptic block, not a proof of generation
+for an unrestricted elliptic category~$\mathcal O$.
 \end{proof}
 
 \begin{proposition}[Super-Yangian parity-balanced Baxter;
-\ClaimStatusProvedHere]
+\ClaimStatusConditional]
 \label{prop:mc3-super-parity-balance}
 \index{super-Yangian!parity balance}
 \index{Baxter polynomials!graded}
@@ -1778,8 +2005,10 @@ constraint
 \[
  b^+ - b^- \;=\; a - m + n
 \]
-equals the full bounded derived category of finite-dimensional
-modules.
+equals the bounded derived category of the parity-balanced
+finite-dimensional block, provided the graded Drinfeld classification
+and the super-Shapovalov determinant give finite-length fusion
+filtrations in that block.
 \end{proposition}
 
 \begin{proof}
@@ -1791,16 +2020,17 @@ relation above; at $n = 0$ this recovers the ordinary
 type-$A$ Baxter $b = a$ with the shift~$-1/2$ absorbed into
 conventions. The $\Z/2$-graded Drinfeld presentation gives
 an evaluation homomorphism $Y_\hbar(\mathfrak{gl}_{m|n}) \to
-U(\mathfrak{gl}_{m|n})$, and thick generation follows from
-the graded analogue of
-Proposition~\ref{prop:dk2-thick-generation-typeA}. The shift
-$-m + n$ is the super-trace of the identity and is the
-genuine structural content of the constraint.
+U(\mathfrak{gl}_{m|n})$. Under the stated finite-length fusion
+hypotheses, every simple in the parity-balanced block is a
+subquotient of tensor products of such evaluation modules, and
+Lemma~\ref{lem:composition-thick-generation} applies. The shift
+$-m+n$ is block data in the super setting; it is not a universal
+Baxter hyperplane for ordinary Yangians.
 \end{proof}
 
-\begin{remark}[The unified mechanism: Baxter is a type-$A$ rational artifact]
+\begin{remark}[The unified mechanism: Baxter is a type-$A$ rational chart]
 \label{rem:mc3-unified-mechanism}
-\index{Baxter constraint!retracted}
+\index{Baxter constraint!chart-local}
 Propositions~\ref{prop:mc3-asymptotic-prefundamentals},
 \ref{prop:mc3-reflection-equation},
 \ref{prop:mc3-elliptic-theta-divisor},
@@ -1813,62 +2043,61 @@ intrinsic to each family: the Frenkel--Hernandez QQ-system
 (asymptotic), the Sklyanin determinant (twisted), the
 Chari--Moura Bethe spectrum (uniform), the theta-divisor
 complement (elliptic), and the super-trace parity balance
-(graded). Read together, they retract the Baxter balance as a
-rational type-$A$ artifact: the underlying mechanism is the
-thick generation of $D^b(\mathcal{O})$ by spectral-parameter
-families of evaluation-type modules, constrained in each
-family by whichever central series or dynamical locus governs
-its fusion. MC3 is therefore uniform across families; the
-Baxter coincidence is the shadow of this uniform mechanism
-on the rational simply-laced stratum.
+(graded). Read together, they identify the Baxter balance as a
+rational type-$A$ chart: spectral-parameter families are governed in
+each setting by the central series or dynamical locus natural to that
+setting. The only unconditional theorem in this list is the
+finite-dimensional evaluation core. The asymptotic, twisted, elliptic,
+and super statements are conditional generation criteria in their
+named ambients and do not close the compact/completed DK extension.
 \end{remark}
 
 \begin{remark}[Verification of hypotheses and scope]
 \label{rem:catO-thick-generation-verification}
 \index{Category O@Category $\mathcal{O}$!finite-dimensionality of simples}
 Hypotheses (a) and~(b) of
-Theorem~\ref{thm:catO-thick-generation} hold in the following
-settings:
+Theorem~\ref{thm:catO-thick-generation} are hypotheses on the chosen
+finite-length ambient category. They hold in the following
+finite-dimensional or polynomial subcategories; they are not automatic
+for the full Hernandez--Jimbo category~$\mathcal O$.
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{$N = 2$.}
- Category~$\mathcal{O}$ for $Y_\hbar(\mathfrak{sl}_2)$
- is controlled by Kirillov--Reshetikhin modules:
- every module has finite composition length
- with finite-dimensional factors
- \cite{ChariPressley94}.
+\item \emph{$N = 2$, finite-dimensional block.}
+ The finite-dimensional representation category for
+ $Y_\hbar(\mathfrak{sl}_2)$ is controlled by
+ Kirillov--Reshetikhin modules \cite{ChariPressley94}.
  Thick generation is therefore
- \emph{unconditional} for~$\mathfrak{sl}_2$.
+ \emph{unconditional} for the finite-dimensional
+ $\mathfrak{sl}_2$ block.
 \item \emph{Polynomial category~$\mathcal{O}$, any~$N$.}
  The Hernandez--Leclerc subcategory
  $\mathcal{O}_{\mathrm{poly}} \subset
  \mathcal{O}_{Y_\hbar(\mathfrak{sl}_N)}$ (modules
  with polynomial highest $\ell$-weights
- \cite{HernandezLeclerc10}) has all simple objects
- finite-dimensional by the Drinfeld classification
- \cite{Drinfeld88}. Hence thick generation holds
- unconditionally for $\mathcal{O}_{\mathrm{poly}}$ at
- all~$N$.
+ \cite{HernandezLeclerc10}) has finite-dimensional simple objects
+ when it is restricted to the Drinfeld-polynomial locus
+ \cite{Drinfeld88}. Hence thick generation holds for that
+ finite-dimensional polynomial subcategory at all~$N$.
 \item \emph{Full category~$\mathcal{O}$ at $N \ge 3$.}
- The remaining question is whether the polynomial subcategory
- exhausts the full category~$\mathcal{O}$ relevant to the
- DK problem, or equivalently, whether every simple module in
- the DK-relevant category~$\mathcal{O}$ is finite-dimensional.
- For the factorization DK problem, the polynomial subcategory
- is the natural candidate.
+ The full category contains asymptotic and prefundamental objects
+ outside the finite-dimensional Drinfeld-polynomial locus. The
+ remaining question is therefore not settled by the polynomial
+ subcategory: one must specify the completed finite-length ambient
+ category and prove that its simples or standards lie in the
+ evaluation-generated thick closure.
 \end{enumerate}
 
-This supersedes the assessment in
-Remark~\ref{rem:cat-o-generation-obstruction} that composition
-series ``do not prove'' thick generation.
+The obstruction in
+Remark~\ref{rem:cat-o-generation-obstruction} is therefore not the
+use of composition series.
 Lemma~\ref{lem:composition-thick-generation} shows that a
 finite composition series with simple factors in a thick
 subcategory \emph{does} prove membership: every short exact
 sequence in an abelian category yields a distinguished triangle
 in the derived category, and thick subcategories are closed under
 cones. The generation obstruction for category~$\mathcal{O}$
-therefore reduces entirely to the finite-dimensionality of
-simple modules, a standard representation-theoretic question,
-not a triangulated-category question.
+therefore has two separate parts: the representation-theoretic
+finite-length/seed-containment statement, and the ambient exact
+extension/completion statement required by the DK comparison.
 \end{remark}
 
 \begin{remark}[Bar-comodule route to a factorization Kazhdan candidate]
@@ -1897,7 +2126,7 @@ Thus bar-cobar remains a natural route to the factorization Kazhdan
 transport required by
 Proposition~\ref{prop:yangian-dk3-generated-core}, but the actual
 bar-comodule-to-quantum-group comparison is extra input rather than a
-theorematic consequence of the module bar comparison itself.
+formal consequence of the module bar comparison itself.
 \end{remark}
 
 \begin{remark}[Remaining DK-3 input after the bar-cobar candidate]
@@ -1981,24 +2210,21 @@ $KZ_{\barB}$ gives the finite-dimensional factorization DK bridge
 under these ambient-extension and comparison hypotheses.
 \end{conjecture}
 
-\begin{remark}[Evidence]
-\emph{Step~1: Thick-generation upgrade of the ambient extension.}
+\begin{remark}[Finite-dimensional extension mechanism]
 Proposition~\ref{prop:dk2-thick-generation-typeA} shows that
 evaluation modules thickly generate
 $D^b(\operatorname{Rep}_{\mathrm{fd}}(Y_{\pm\hbar}(\mathfrak{sl}_N)))$.
 Applying Proposition~\ref{prop:yangian-dk2-thick-generation} to the
-ambient extension of hypothesis~\textup{(a)} upgrades the
+ambient extension of hypothesis~\textup{(a)} extends the
 evaluation-locus equivalence to all finite-dimensional
 representations.
 
-\emph{Step~2: Strong monoidality on the thick closure.}
 By hypothesis~\textup{(b)}, the ambient extension carries a lax
 monoidal structure that is an isomorphism on pairs of evaluation
 modules. Lemma~\ref{lem:monoidal-thick-extension} and thick generation
-therefore promote it to a strong monoidal structure on the whole
+therefore make it a strong monoidal structure on the whole
 finite-dimensional category.
 
-\emph{Step~3: Quantum-group bridge.}
 Hypothesis~\textup{(c)} identifies the resulting finite-dimensional
 Yangian-side equivalence with the corresponding quantum-group
 factorization category on the same thick closure, yielding the stated
@@ -2033,18 +2259,21 @@ $D^b(\mathcal{O}_{Y_\hbar(\mathfrak{sl}_N)})$ and that the required
 ambient extension/comparison package exists on that category.
 \end{remark}
 
-\begin{corollary}[Factorization DK for polynomial
-category~\texorpdfstring{$\mathcal{O}$}{O}, type~\texorpdfstring{$A$}{A}; \ClaimStatusConditional]
+\begin{corollary}[Factorization DK for the finite-dimensional
+polynomial locus, type~\texorpdfstring{$A$}{A}; \ClaimStatusConditional]
 \label{cor:dk-poly-catO}
 \index{Drinfeld--Kohno!derived!polynomial Category O@polynomial Category $\mathcal{O}$}
-For $\fg = \mathfrak{sl}_N$ with $N \ge 2$, assume the ambient
+For $\fg = \mathfrak{sl}_N$ with $N \ge 2$, let
+$\mathcal{O}_{\mathrm{poly}}^{\mathrm{fd}}$ be the full
+finite-dimensional Drinfeld-polynomial subcategory of
+$\mathcal{O}_{\mathrm{poly}}$. Assume the ambient
 extension/comparison hypotheses of
-Conjecture~\ref{conj:dk-fd-typeA} hold on the polynomial category
-$\mathcal{O}_{\mathrm{poly}}$. Then the induced factorization
-Drinfeld--Kohno functor is a braided monoidal equivalence
+Conjecture~\ref{conj:dk-fd-typeA} hold on this subcategory. Then the
+induced factorization Drinfeld--Kohno functor is a braided monoidal
+equivalence
 \[
 KZ_{\barB}\colon
-\operatorname{Fact}_{\Eone}^{\mathcal{O}_{\mathrm{poly}}}
+\operatorname{Fact}_{\Eone}^{\mathcal{O}_{\mathrm{poly}}^{\mathrm{fd}}}
  (Y_\hbar(\mathfrak{sl}_N))
 \;\xrightarrow{\;\sim\;}\;
 \operatorname{Fact}_{\Eone}^{\mathrm{fd}}
@@ -2055,42 +2284,43 @@ KZ_{\barB}\colon
 \begin{proof}
 Remark~\ref{rem:catO-thick-generation-verification}(ii) and
 Theorem~\ref{thm:catO-thick-generation} show that
-$D^b(\mathcal{O}_{\mathrm{poly}})$ is thickly generated by evaluation
-modules at all~$N$. Under the stated ambient-extension and
-comparison hypotheses, Conjecture~\ref{conj:dk-fd-typeA} therefore applies
-verbatim on this thick closure.
+$D^b(\mathcal{O}_{\mathrm{poly}}^{\mathrm{fd}})$ is thickly generated
+by evaluation modules at all~$N$. Under the stated ambient-extension
+and comparison hypotheses, Conjecture~\ref{conj:dk-fd-typeA}
+therefore applies verbatim on this thick closure.
 \end{proof}
 
-\begin{remark}[Polynomial category~\texorpdfstring{$\mathcal{O}$}{O} is the natural DK domain]
+\begin{remark}[Finite-dimensional polynomial locus is the natural DK domain]
 \label{rem:poly-O-natural-domain}
 Corollary~\ref{cor:dk-poly-catO} is the natural statement of
 factorization DK for the Yangian, for the following reason.
 The quantum group side of the equivalence is
 $\operatorname{Rep}_{\mathrm{fd}}(U_q(\mathfrak{sl}_N))$: finite-dimensional
 representations classified by Drinfeld polynomials. These correspond,
-under the KL identification, precisely to
-$\mathcal{O}_{\mathrm{poly}}$, not to the full category~$\mathcal{O}$.
+under the KL identification, to
+$\mathcal{O}_{\mathrm{poly}}^{\mathrm{fd}}$, not to the full
+category~$\mathcal{O}$.
 The ``full category~$\mathcal{O}$ generation problem'' of
 Corollary~\ref{cor:dk-partial-conj}
 is therefore a question about whether
-$\mathcal{O}$ and $\mathcal{O}_{\mathrm{poly}}$ coincide as DK-relevant
-categories, not about whether the DK equivalence extends beyond its
-natural domain.
+$\mathcal{O}$ and $\mathcal{O}_{\mathrm{poly}}^{\mathrm{fd}}$
+coincide as DK-relevant categories, not about whether the DK
+equivalence extends beyond its natural finite-dimensional domain.
 
-If $\mathcal{O} \supsetneq \mathcal{O}_{\mathrm{poly}}$ (i.e., if
-there exist simple modules of $\mathcal{O}$ that are \emph{not}
+If $\mathcal{O} \supsetneq
+\mathcal{O}_{\mathrm{poly}}^{\mathrm{fd}}$ (i.e., if there exist
+simple modules of $\mathcal{O}$ that are \emph{not}
 finite-dimensional), then these additional modules have no quantum
 group counterpart under the present formulation and lie outside the
-scope of DK\@. The factorization DK equivalence in its natural form is
-therefore still expected to live on $\mathcal{O}_{\mathrm{poly}}$, but
-the present theorem surface only proves the thick-generation extension
-criterion there, not the ambient extension/comparison package itself.
+finite-dimensional DK statement. The present theorem surface proves
+only the thick-generation extension criterion on the finite-dimensional
+polynomial locus, not the ambient extension/comparison package itself.
 
-Whether $\mathcal{O} = \mathcal{O}_{\mathrm{poly}}$ is an open
-question; see Corollary~\ref{cor:dk-partial-conj}.
-If $\mathcal{O} \supsetneq \mathcal{O}_{\mathrm{poly}}$, the
-additional modules could either be genuinely irrelevant to DK or
-could indicate missing structure on the quantum group side; the
+Whether $\mathcal{O} =
+\mathcal{O}_{\mathrm{poly}}^{\mathrm{fd}}$ is an open question; see
+Corollary~\ref{cor:dk-partial-conj}. If the inclusion is strict, the
+additional modules are either irrelevant to finite-dimensional DK
+or indicate missing structure on the quantum group side; the
 present framework does not distinguish these possibilities.
 \end{remark}
 
@@ -2099,20 +2329,23 @@ present framework does not distinguish these possibilities.
 DK-0/1: proved for all simple~$\fg$. DK-2/3: the thick-generation
 statements for finite-dimensional Yangian representations are proved
 \textup{(}Proposition~\ref{prop:dk2-thick-generation-typeA} and
-Theorem~\ref{thm:catO-thick-generation}\textup{)}, but promotion of
-evaluation-locus DK beyond the generators is only conditional on the
-ambient extension/comparison package of
+Corollary~\ref{cor:dk2-thick-generation-all-types}\textup{)}. For
+finite-length category~$\mathcal O$ subcategories with
+finite-dimensional simples, Theorem~\ref{thm:catO-thick-generation}
+gives the corresponding conditional generation criterion. Promotion
+of evaluation-locus DK beyond the generators is still conditional on
+the ambient extension/comparison package of
 Conjecture~\ref{conj:dk-fd-typeA}; a separate H-level sectorwise route
 exists at all simple types
 \textup{(}Corollary~\ref{cor:dk23-all-types}\textup{)}. Extension
-beyond $\mathcal{O}_{\mathrm{poly}}$ requires completed/coderived
-techniques. DK-4: structural framework proved (MC4 closed via
+beyond $\mathcal{O}_{\mathrm{poly}}^{\mathrm{fd}}$ requires
+completed/coderived techniques. DK-4: structural framework proved
+(MC4 closed via
 $\mathcal{W}_N$ rigidity, Theorem~\ref{thm:completed-bar-cobar-strong});
 algebraic identification open (Conjecture~\ref{conj:dk4-formal-moduli}).
 DK-5: still conjectural; even after the all-types generated-core DK
 comparison, it remains downstream of the post-core
 extension/completion packet and the later categorical bridge inputs.
-(Contributing to Conjecture~\ref{conj:master-dk-kl}.)
 \end{remark}
 
 \begin{lemma}[Finite-dimensional thick-closure constraint;
@@ -2288,8 +2521,8 @@ and convergence package survives the prefundamental/asymptotic
 extension, then the sectorwise method may enlarge the proved
 evaluation-generated DK core without thick generation.
 
-This is the most ambitious extension strategy: if successful, it
-would carry the proved evaluation-generated DK-2/3 equivalence to the
+A successful extension carries the proved evaluation-generated
+DK-2/3 equivalence to the
 completed/coderived factorization domain relevant to the remaining
 MC3 packets for \emph{all types} simultaneously, since the root
 lattice grading and loop filtration exist for any
@@ -2645,7 +2878,7 @@ resolution~\eqref{eq:verma-eval-resolution} is the key analytical
 question. For $\mathfrak{sl}_2$, the Ext groups
 $\operatorname{Ext}^n_{\mathcal{O}}(V_m(b), M(\lambda, a))$ are
 computable from the $q$-character theory of Hernandez
-\cite{Hernandez05}, and finiteness of the resolution would follow
+\cite{Hernandez05}, and finiteness of the resolution follows
 from eventual vanishing of these Ext groups at large spectral
 parameter separation $|a - b|$.
 \end{remark}
@@ -2830,6 +3063,7 @@ I (BGG) & Finite evaluation resolution of Verma modules
 \end{tabular}
 \end{center}
 Strategy~II is proved (Theorem~\ref{thm:catO-thick-generation}); the residual question is whether $\mathcal{O}_{\mathrm{poly}}$ exhausts the DK-relevant category (Remark~\ref{rem:infinite-dim-simples}). Strategy~IV resolves DK-2/3 on the evaluation-generated core for all simple types via sectorwise convergence (Theorem~\ref{thm:h-level-factorization-kd}, Corollary~\ref{cor:dk23-all-types}), bypassing thick generation. The remaining bottleneck is the factorization bar cohomology of $U(\mathfrak{g}[t])$, which interacts with the Loday--Quillen--Tsygan theorem.
+\end{remark}
 
 \begin{conjecture}[Sectorwise DK extension to the completed/coderived MC3 domain for all types;
 \ClaimStatusConjectured]\label{conj:mc3-sectorwise-all-types}
@@ -2838,7 +3072,7 @@ For every simple~$\mathfrak{g}$, the sectorwise root-weight
 decomposition and loop filtration of
 Proposition~\ref{prop:yangian-bar-loop-weight} extend from the
 evaluation-generated core to the completed/coderived enlargement
-described in Remark~\ref{rem:corrected-mc3-frontier}. Assume that,
+used by the MC3 completion problem. Assume that,
 on this enlarged domain, the associated spectral sequence
 stabilizes at each tridegree, retains sectorwise sub-exponential
 growth, and is compatible with factorization descent on
@@ -2849,7 +3083,7 @@ completed/coderived factorization domain relevant to the remaining
 MC3 packets at all simple types, bypassing ordinary thick generation
 as the route to that enlarged domain.
 
-\emph{The theorematic part of Strategy~IV is already settled on the
+\emph{The proved part of Strategy~IV is already settled on the
 evaluation-generated core by
 Theorem~\textup{\ref{thm:h-level-factorization-kd}} and
 Corollary~\textup{\ref{cor:dk23-all-types}}. The residual question
@@ -2925,14 +3159,12 @@ part~(c) from the leading term $r\pi^2/(24t)$ depending only
 on~$r$.
 \end{proof}
 
-\begin{computation}[Sub-exponential growth verification for all types]
+\begin{computation}[Finite-window sub-exponential growth for all types]
 \label{comp:lqt-e1-growth-verification}
-\index{Loday--Quillen--Tsygan theorem!growth verification}
+\index{Loday--Quillen--Tsygan theorem!finite-window growth}
 The sub-exponential growth rate of
-Proposition~\ref{prop:lqt-e1-subexponential-growth} has been
-verified computationally
-(\texttt{compute/lib/lqt\_e1\_growth.py}, $45$~tests) for all
-simple types through $p = 500$:
+Proposition~\ref{prop:lqt-e1-subexponential-growth} is visible in
+the finite enumeration for all simple types through $p=500$:
 \begin{itemize}
 \item Manuscript tables for $\mathfrak{sl}_2$, $\mathfrak{sl}_3$,
  $\mathfrak{sp}_4$ reproduced exactly through $p = 9$;
@@ -2948,15 +3180,12 @@ simple types through $p = 500$:
  $p = 7$ for $C_2$, $p = 11$ for $G_2$ (matching manuscript).
 \end{itemize}
 Sectorwise finiteness for all simply-laced lattice
-VOAs ($A_1$--$A_3$, $D_4$--$D_5$, $E_6$--$E_8$) is verified at the
-lattice-bar sector level ($93$~tests,
-\texttt{compute/lib/sectorwise\_finiteness.py}),
-and the sub-exponential vs.\ exponential growth discrimination is
-checked via least-squares fitting of $\log d_n$ to both $c \cdot n$
-and $C \cdot \sqrt{n}$ models.
+VOAs ($A_1$--$A_3$, $D_4$--$D_5$, $E_6$--$E_8$) holds at the
+lattice-bar sector level in the same finite window, and the
+sub-exponential versus exponential growth discrimination is the
+comparison of $\log d_n$ with the two models $c\cdot n$ and
+$C\sqrt n$.
 \end{computation}
-
-\end{remark}
 
 \subsubsection*{Resolution: the evaluation-generated core}
 
@@ -3051,9 +3280,8 @@ is a natural short exact sequence of $Y(\mathfrak{sl}_2)$-modules,
 functorial on~$\mathcal{O}_{\mathrm{poly}}$
 \textup{(}Corollary~\textup{\ref{cor:baxter-naturality-opoly})}.
 The $K_0$-image recovers Zhang's formula; the derived
-octahedral axiom is verified for iterated TQ compositions
-\textup{(}$724$~tests across $K_0$, $D^b$, and higher-spin
-levels\textup{)}.
+octahedral compatibility is the derived form of the same functorial
+short exact sequences under iterated TQ composition.
 \end{theorem}
 
 \begin{proof}
@@ -3211,8 +3439,7 @@ For $w_\lambda = \lambda \cdot u_2 - u_1$:
 which vanishes if and only if $b = a - (\lambda + 1)/2$.
 An analogous computation for $\Delta(H)$ confirms that $w_\lambda$
 is an $H$-eigenvector with eigenvalue determining the spectral
-parameter~$b'$ of the sub-Verma ($85$~tests verify both components
-symbolically and numerically for $\lambda = 1, \ldots, 50$).
+parameter~$b'$ of the sub-Verma.
 \end{proof}
 
 \begin{corollary}[Naturality on
@@ -3508,10 +3735,10 @@ arbitrary type thus reduces to the categorical lift: upgrading the
 $K_0$-level identity to a module decomposition in~$\mathcal{O}^{\mathrm{sh}}$.
 \end{remark}
 
-\begin{remark}[Research remark: removing the Baxter constraint from MC3]
+\begin{remark}[Removing the Baxter constraint from MC3]
 \label{rem:mc3-baxter-constraint-removal}
-\index{MC3!Baxter constraint!removal programme}
-\index{Baxter constraint!removal programme}
+\index{MC3!Baxter constraint!removal criterion}
+\index{Baxter constraint!removal criterion}
 \smallskip\noindent\emph{Proved core.}
 Theorem~\ref{thm:shifted-prefundamental-generation} proves the
 type-$A$ statement on the Baxter-locus seed
@@ -3536,13 +3763,13 @@ $\mathcal{E}_i$ constructed later in this chapter.
 Theorem~\ref{thm:yangian-generic-boundary-fibers} identifies its
 generic fibers with Cartan-renormalized asymptotic modules and its
 boundary fiber with the negative prefundamental module. A genuine
-removal of the Baxter constraint should therefore proceed by
+removal of the Baxter constraint proceeds by
 deformation: first show that the generic asymptotic fibers already lie
 in the localizing subcategory generated by the evaluation core inside
 the chosen completion, then prove that this localizing subcategory is
 stable under specialization along the flat family
 $\mathcal{E}_i \to \mathbb{A}^1_q$. The boundary module $L^-_{i,b}$
-would then follow by degeneration, so the explicit Baxter singular
+then follows by degeneration, so the explicit Baxter singular
 vector becomes only one rank-$1$ chart of the argument rather than the
 engine of the proof.
 
@@ -3550,8 +3777,8 @@ engine of the proof.
 classical theorem.}
 In the non-shifted finite-dimensional theory, ordered tensor products
 of fundamental evaluation modules generate without any spectral
-constraint. The shifted problem should not be attacked by perturbing
-the singular vector off the hyperplane
+constraint. The shifted problem is not addressed by perturbing the
+singular vector off the hyperplane
 \eqref{eq:baxter-spectral-constraint}. The sharper deformation is to
 move from the finite-dimensional evaluation core to the asymptotic
 chart of the Kirillov--Reshetikhin tower and then specialize to the
@@ -3589,7 +3816,7 @@ pattern as type~$A$; the remaining obstruction there is still the
 lift-and-lower categorical step of
 Conjecture~\ref{conj:rank-independence-step2}. Types~$B$ and~$C$ are
 different: the short/long-root asymmetry forces rootwise spectral
-renormalization, so one should expect mixed shifts rather than a single
+renormalization, producing mixed shifts rather than a single
 universal half-step. The manuscript does not yet prove a
 negative-prefundamental companion theorem with those renormalized
 shifts. This is why the asymptotic/Baxter--Rees deformation route is
@@ -3625,17 +3852,17 @@ conclusion still holds.
 \index{thick generation!obstruction analysis}
 For $L^-_a$ the negative prefundamental module of~$Y(\mathfrak{sl}_2)$
 with character $\operatorname{ch}(L^-) = \prod_{n \geq 1}(1-q^{2n})^{-1}$
-(partition generating function), the character factorizes as
+(partition generating function), the completed character factorizes
+formally as
 \begin{equation}\label{eq:fock-verma-factorization}
  \operatorname{ch}(L^-)
  \;=\;
  \operatorname{ch}(M(0)) \cdot \prod_{n \geq 2}(1-q^{2n})^{-1},
 \end{equation}
-identifying a ``multi-particle'' factor $F_{\geq 2}$ with weight
-multiplicities $p_2(k) := p(k) - p(k-1)$ (partitions into parts
-$\geq 2$). This factorization is the character shadow of the
-structural statement that $L^-$ ``contains'' the Verma module $M(0)$,
-with the multi-particle sector as internal degrees of freedom.
+where the factor \(F_{\ge2}:=\prod_{n\ge2}(1-q^{2n})^{-1}\) has
+coefficient \(p(k)-p(k-1)\) in weight~\(-2k\). This is an identity in
+the completed character ring. It does not by itself exhibit \(M(0)\)
+as a submodule, quotient, or direct summand of \(L^-\).
 
 The \emph{obstruction sequence} $\delta(k) := p(k) - 1$ (the excess
 of $L^-$ over $M(0)$ at weight~$-2k$) governs the resolution
@@ -3667,33 +3894,31 @@ evaluation module,
 is $\chi(L^-, V_n) = \sum_{k=0}^{n/2} p(k)$ for even~$n$,
 and character containment
 $\operatorname{ch}(M(\lambda)) \leq
- \operatorname{ch}(V_\lambda \otimes L^-)$
-holds for \emph{all}~$\lambda$ (by the prefundamental
-Clebsch--Gordan: $V_\lambda \otimes L^-$ contains~$n+1$ copies
-of~$L^-$ at shifted highest weights, and each copy dominates
-$M(\lambda + \text{shift})$ characterwise).
+	 \operatorname{ch}(V_\lambda \otimes L^-)$
+holds for \emph{all}~$\lambda$ as a coefficientwise inequality in the
+completed character ring. By the prefundamental Clebsch--Gordan
+character identity, \(V_\lambda\otimes L^-\) has the character of a
+finite sum of shifted \(L^-\)'s, and these shifted characters dominate
+the corresponding Verma characters coefficientwise.
 The Hom bounds are \emph{exact} for even~$n$.
 
-Three structural results follow from the prefundamental
-Clebsch--Gordan:
+Three character-level consequences follow from the prefundamental
+Clebsch--Gordan identity:
 \begin{enumerate}[label=\textup{(R\arabic*)},nosep]
-\item $V_n \otimes L^- \cong \bigoplus_{j=0}^{n} L^-(n-2j)$
- at character level: evaluation-stability of~$L^-$.
+\item \(\operatorname{ch}(V_n \otimes L^-)
+ = \sum_{j=0}^{n}\operatorname{ch}(L^-(n-2j))\):
+ evaluation-stability of~$L^-$ in the completed character ring.
 \item The kernel $K := \operatorname{ch}(L^-) - \operatorname{ch}(M(0))$
- decomposes with coefficients $p(k)-1$, the cumulative
- partition function into parts~$\geq 2$.
-\item $K - L^-(\text{hw}=-4)$ recovers the partition numbers~$p(k)$:
- recursive self-similarity connecting MC3 to classical partition theory.
+ decomposes with coefficients $p(k)-1$, the number of partitions of
+ \(k\) with at least two parts.
+\item The shifted coefficient sequence of \(K\) is recursively expressed
+ in terms of the same partition numbers \(p(k)\).
 \end{enumerate}
 In~$K_0$: the ring generated by $\{[V_n], [L^-]\}$ is closed
 under the tensor product (R1 gives the multiplication table).
 The Grothendieck class $[M(\lambda)]$ lies in this ring
-for all~$\lambda$ (verified $\lambda = 0, \ldots, 10$).
-Verified: $206$ tests across
-\texttt{test\_prefundamental\_clebsch\_gordan},
-\texttt{test\_thick\_generation\_sl2},
-\texttt{test\_mc3\_blue\_team\_defense}, and
-\texttt{test\_mc3\_redteam\_attack}.
+for all~$\lambda$ in the finite-window calculation, and the recursive
+form of R1 gives the proposed all-\(\lambda\) extension.
 \end{computation}
 
 \begin{proposition}[Universal prefundamental Clebsch--Gordan; \ClaimStatusProvedHere]
@@ -3712,13 +3937,14 @@ negative prefundamental module $L^-_i$ satisfies
  \operatorname{mult}_\lambda(\mu)\,
  \operatorname{ch}\bigl(L^-_i(\mathrm{shift} = \mu)\bigr).
 \end{equation}
-In particular: \textup{(a)}~same-index closure holds, the
-tensor product decomposes into shifted copies of $L^-_i$ only,
-with no $L^-_j$ for $j \neq i$;
+In particular: \textup{(a)}~same-index closure holds at the character
+level: the right-hand side is a sum of shifted $L^-_i$ characters only,
+with no $L^-_j$ character for $j \neq i$;
 \textup{(b)}~the total multiplicity equals $\dim V_\lambda$;
 \textup{(c)}~for $\mathfrak{g} = \mathfrak{sl}_2$ and
-$\lambda = n\omega$, this recovers
-$\bigoplus_{j=0}^{n} L^-(n{-}2j)$.
+$\lambda = n\omega$, this recovers the character identity
+\(\operatorname{ch}(V_n\otimes L^-)
+=\sum_{j=0}^{n}\operatorname{ch}(L^-(n{-}2j))\).
 \end{proposition}
 
 \begin{proof}
@@ -3731,9 +3957,6 @@ $\operatorname{ch}(V_\lambda) \cdot \operatorname{ch}(L^-_i)
  e^\mu \cdot \operatorname{ch}(L^-_i)
 = \sum_\mu \operatorname{mult}_\lambda(\mu)\,
  \operatorname{ch}(L^-_i(\mathrm{shift} = \mu))$.
-Verified computationally for $\mathfrak{sl}_2$ through
-$\mathfrak{sl}_6$ (\texttt{test\_prefundamental\_cg\_closure},
-\texttt{test\_prefundamental\_cg\_sl3}).
 \end{proof}
 
 \begin{corollary}[Universal character containment; \ClaimStatusProvedHere]
@@ -3821,9 +4044,9 @@ $\mathcal{O}^{\mathrm{sh}}_{\leq 0}$, using the same shift
 convention as
 Proposition~\textup{\ref{prop:prefundamental-clebsch-gordan}}:
 the $\ell$-highest weight of each summand encodes the full
-weight~$\mu$, not merely its pairing with a single coroot.
+weight~$\mu$, including its pairings with all simple coroots.
 The generic-parameter condition suffices for all generation
-arguments in the MC3 programme, since compact generation requires
+arguments in the MC3 comparison, since compact generation requires
 exact triangles only at a cofinal family of spectral parameters.
 \end{proposition}
 
@@ -3982,10 +4205,10 @@ items; a proof of either clause alone does not close the MC3 gap.
  Francis--Gaitsgory pro-nilpotent completion of
  $D^b(\mathcal{O}^{\mathrm{sh}}_{\leq 0}(Y(\mathfrak{g})))$ in the
  sense of~\cite{GR17} Vol~II Ch.~4, so that the extended equivalence
- is a statement about the same target category that the MC3 programme
- names in the preface.
+ is a statement about the same target category that the MC3 comparison
+names in the preface.
 \end{enumerate}
-A proof of~(C1) on its own would yield an equivalence on some
+A proof of~(C1) on its own yields an equivalence on some
 compactly-generated enhancement, leaving the identification with the
 Francis--Gaitsgory completion open; a proof of~(C2) on its own
 provides the completion comparison but not the functor extension. The
@@ -3998,7 +4221,7 @@ the completed category.
 \begin{remark}[Type-A DK on compact families]
 \label{rem:dk-compacts-completion-typeA}
 In type~$A$ ($\mathfrak{sl}_N$ for all $N \geq 2$),
-packages~(i)--(iii) of the old MC3 list are resolved, but
+packages~(i)--(iii) of the four-package MC3 list are resolved, but
 Conjecture~\ref{conj:dk-compacts-completion} remains the final
 unclosed packet. The proved type-$A$ input is:
 \begin{enumerate}[label=\textup{(\roman*)},nosep]
@@ -4019,34 +4242,30 @@ Theorem~\ref{thm:shifted-prefundamental-generation}; what remains is
 verifying those hypotheses and extending~$\Phi$ on the compact core.
 \end{remark}
 
-\begin{remark}[Computational evidence for the MC3 critical path]
+\begin{remark}[Finite-window MC3 checks]
 \label{rem:mc3-computational-evidence}
-\index{MC3!computational evidence}
+\index{MC3!finite-window checks}
 Theorems~\ref{thm:baxter-exact-triangles},
 \ref{thm:shifted-prefundamental-generation},
 \ref{thm:pro-weyl-recovery}, and
-Conjecture~\ref{conj:dk-compacts-completion} are now supported by
-extensive numerical verification:
+Conjecture~\ref{conj:dk-compacts-completion} meet the following
+finite-window consistency checks:
 \begin{enumerate}[label=\textup{(\roman*)},nosep]
-\item \emph{Baxter}: $K_0$-level TQ identities verified for
- $\mathfrak{sl}_2$ ($115$~tests) and~$\mathfrak{sl}_3$
- ($157$~tests), plus derived-level lifts to distinguished
- triangles, mapping cones, and the octahedral axiom
- ($226$~tests at the $D^b$ level).
+\item \emph{Baxter}: $K_0$-level TQ identities for
+ $\mathfrak{sl}_2$ and~$\mathfrak{sl}_3$, together with derived-level
+ lifts to distinguished triangles, mapping cones, and the octahedral
+ axiom.
 \item \emph{Prefundamental}: Hern'andez--Jimbo negative
  prefundamental modules~$L^-_a$ for $Y(\mathfrak{sl}_2)$
- implemented at the character/q-character level ($186$~tests).
- Key finding: weight multiplicities
+ at the character/q-character level. The weight multiplicities
  $\dim(L^-_a)_{-2k} = p(k)$ connect MC3 to partition theory.
- The QQ-system Wronskian relation is verified.
-\item \emph{Pro-Weyl}: M-level convergence verified ($344$~tests)
- including chain-level Ext computations, derived inverse limit
- $R\varprojlim W_m$, and R$^1$ vanishing via Mittag-Leffler.
+\item \emph{Pro-Weyl}: M-level convergence through chain-level Ext
+ computations, the derived inverse limit $R\varprojlim W_m$, and
+ R$^1$ vanishing via Mittag--Leffler.
 \item \emph{DK compacts}: Feigin--Gainutdinov completion gap
- analysis and Francis--Gaitsgory pro-nilpotent approximation
- ($101$~tests).
-\item \emph{Thick generation obstructions} ($58$~tests): the character
- of the negative prefundamental $L^-_a$ for $Y(\mathfrak{sl}_2)$
+ analysis and Francis--Gaitsgory pro-nilpotent approximation.
+\item \emph{Thick generation obstructions}: the character of the
+ negative prefundamental $L^-_a$ for $Y(\mathfrak{sl}_2)$
  admits the Fock--Verma factorization
  \[
  \operatorname{ch}(L^-)
@@ -4168,7 +4387,7 @@ setting.
  standard/Weyl objects in finite truncation sectors.
 \item \emph{Type-$A$ resolution.}
  In type~$A$ ($\mathfrak{sl}_N$ for all $N \geq 2$), the four
- former MC3 packages reduce to a single remaining
+ post-core MC3 packages reduce to a single remaining
  compact-completion packet
  (Theorem~\ref{thm:mc3-type-a-resolution}).
  The proof proceeds through: (1)~the prefundamental Clebsch--Gordan
@@ -4217,8 +4436,8 @@ category.
 \index{MC3!type-A resolution|textbf}
 \index{Drinfeld--Kohno!derived!type-A completion}
 \index{prefundamental!Clebsch--Gordan closure!type A}
-For $\mathfrak{g} = \mathfrak{sl}_N$ with $N \geq 2$, the old
-four-package MC3 extension problem is reduced to a single remaining
+For $\mathfrak{g} = \mathfrak{sl}_N$ with $N \geq 2$, the
+post-core MC3 extension problem is reduced to a single remaining
 compact-completion packet:
 \begin{enumerate}[label=\textup{(\roman*)},nosep]
 \item \emph{Baxter exact triangles.}
@@ -4447,12 +4666,12 @@ because it is purely combinatorial, depending only on Drinfeld
 polynomial data identified by~\cite{GTL17}.
 \end{remark}
 
-\begin{corollary}[Three-layer MC3 status after categorical CG closure;
+\begin{corollary}[Three-layer MC3 decomposition after categorical CG closure;
  \ClaimStatusConditional]
 \label{cor:mc3-all-types}%
 \index{MC3!all simple types|textbf}%
 \index{MC3!three-layer split}
-MC3 splits into three layers with the following status.
+MC3 decomposes into three layers.
 \begin{itemize}
 \item \emph{Layer~1 \textup{(}MC3a, all simple types,
  unconditional\textup{)}}: the categorical Clebsch--Gordan closure
@@ -4545,9 +4764,11 @@ Then:
  the localizing subcategory generated by the Baxter-locus seed
  $\mathcal{G}_{\mathrm{Bax}} =
  \{V_{\omega_i}(a)\} \cup \{L^-_{i,a-\frac{1}{2}}\}$.
-\item The bar-cobar Koszul duality functor~$\Phi$ of
- Theorem~\textup{\ref{thm:eval-core-identification}} extends to a
- localizing equivalence
+\item If, in addition, the bar-cobar functor~$\Phi$ of
+ Theorem~\textup{\ref{thm:eval-core-identification}} is defined on
+ the compact shifted-prefundamental core and restricts there to an
+ equivalence compatible with the dual completion, then~$\Phi$
+ extends uniquely to a localizing equivalence
  $\mathcal{D}^{\mathrm{comp}} \xrightarrow{\;\sim\;}
  (\mathcal{D}^{\mathrm{comp}})^{\mathrm{op,dual}}$.
 \end{enumerate}
@@ -4598,17 +4819,18 @@ generated by the compact part equals the whole category:
 $\mathcal{D}^{\mathrm{comp}} =
 \operatorname{Loc}\langle \mathcal{G}_{\mathrm{Bax}} \rangle$.
 
-\smallskip\noindent\textit{Step~3 \textup{(}Localizing DK
-extension\textup{)}.}
+\smallskip\noindent\textit{Step~3 \textup{(}Localizing DK extension
+under the compact-core hypothesis\textup{)}.}
 The bar-cobar functor~$\Phi$ is an exact equivalence on the
 evaluation-generated core
 \textup{(}Theorem~\ref{thm:eval-core-identification}\textup{)}.
-The pro-Weyl recovery
-\textup{(}Theorem~\ref{thm:pro-weyl-recovery}\textup{)}
-extends~$\Phi$ to standards, and by Step~2 to all compact objects.
+The additional hypothesis says precisely that this equivalence has
+already been extended to the compact shifted-prefundamental core.
+By Step~2, that core generates all compact objects of
+$\mathcal{D}^{\mathrm{comp}}$ after idempotent completion.
 A localizing exact functor between presentable stable categories
-that restricts to an equivalence on compact objects is itself an
-equivalence \textup{(}this is the universal property of
+that restricts to an equivalence on compact objects extends uniquely
+and is itself an equivalence \textup{(}this is the universal property of
 Ind-completion: a functor on compact objects extends uniquely,
 Lurie~\cite[Prop.~5.3.5.10]{HTT}\textup{)}.
 \end{proof}
@@ -4635,7 +4857,9 @@ all three hypotheses hold tautologically and the proposition gives
 $\operatorname{Ind}(D^b(\mathcal{A})) =
 \operatorname{Loc}\langle \mathcal{G}_{\mathrm{Bax}} \rangle$.
 This is the unconditional result: the Ind-completion of the shifted
-category is generated by the Baxter-locus seed.
+category is generated by the Baxter-locus seed. The DK equivalence on
+that Ind-completion still requires the compact-core extension
+hypothesis in Proposition~\ref{prop:completion-extension-weight-bounded}(c).
 
 For the Francis--Gaitsgory pro-nilpotent completion, the issue is that
 the completion functor $D^b(\mathcal{A}) \to \widehat{D}_{FG}$ may
@@ -4740,9 +4964,9 @@ type-$A$ proof apply verbatim: they are categorical and do not use
 additional type-$A$ combinatorics.
 \end{conjecture}
 
-\begin{remark}[Evidence]
+\begin{remark}[Type-independent completion mechanism]
 After Theorem~\ref{thm:categorical-cg-all-types} and
-Corollary~\ref{cor:dk23-all-types}, the remaining steps are the
+Corollary~\ref{cor:dk23-all-types}, the open inputs are the
 Mittag--Leffler argument on Weyl truncation towers and the formal
 passage from a compact-core equivalence to the chosen completed
 category. These manipulations depend on the hypotheses listed above,
@@ -4761,13 +4985,13 @@ multiplicity-free $q$-characters
 in place of the minuscule hypothesis.
 \end{remark}
 
-\begin{remark}[Type~$B$ from type~$A$ by folding (superseded)]
+\begin{remark}[Type~$B$ folding and uniform CG closure]
 \label{rem:mc3-type-b-folding}
-This proposition conjectured that MC3 for type~$B_n$ could be
-proved by folding from type~$A_{2n-1}$. This is now
-\emph{unnecessary}: Theorem~\ref{thm:categorical-cg-all-types}
-resolves the CG closure for \emph{all} simple types uniformly via
-the multiplicity-free $\ell$-weight property.
+Folding from type~$A_{2n-1}$ to type~$B_n$ gives one route to the
+type-$B$ prefundamental Clebsch--Gordan identities. The uniform
+statement is stronger: Theorem~\ref{thm:categorical-cg-all-types}
+proves the CG closure for every simple type directly from the
+multiplicity-free $\ell$-weight property.
 \end{remark}
 
 \begin{remark}[Difficulty gradient across Dynkin types (resolved)]
@@ -4779,7 +5003,7 @@ for all types:
 \begin{center}
 \begin{tabular}{cccc}
 \toprule
-Type & Minuscule count & Key input & CG status \\
+Type & Minuscule count & Key input & CG conclusion \\
 \midrule
 $A_n$ & $n$ & minuscule (all fund.\ reps) & \textbf{Proved} \\
 $B_n$ & $1$ & $\ell$-weight separation & \textbf{Proved} \\
@@ -4844,19 +5068,22 @@ No convergence issues arise because $V_\omega$ has finitely many
 weights. This argument is purely algebraic and type-independent.
 \end{proof}
 
-\subsection{Five-family thick generation: removing the Baxter constraint}
+\subsection{Five chart-local generation mechanisms}
 \label{sec:mc3-five-family-strengthening}
 
-The rank-$1$ Baxter hyperplane $b = a - \tfrac12$ is not a genuine
-obstruction of the master-conjecture programme. It is the fingerprint
-of one specific chart (type~$A$ rational) in which a singular vector
-happens to be visible; in four other charts the same generation
-statement is controlled by different module-theoretic mechanisms that
-do not call on any hyperplane. We isolate the five mechanisms and
-prove thick generation in each.
+The rank-$1$ Baxter hyperplane $b = a - \tfrac12$ is a
+coordinate condition on one rational type-$A$ singular-vector chart.
+It is not a universal spectral condition on every Yangian-like
+category. The five mechanisms below have different scopes. One is the
+proved finite-dimensional evaluation core. The others are conditional
+generation criteria inside a named completed, twisted, elliptic, or
+graded ambient category. None of them identifies the desired
+Francis--Gaitsgory completion or extends the bar-cobar equivalence to
+the compact shifted-prefundamental core; that remains the separate
+packet of Conjecture~\ref{conj:dk-compacts-completion}.
 
 \begin{proposition}[Asymptotic prefundamentals replace the Baxter locus for $Y_\hbar(\mathfrak{sl}_N)$;
- \ClaimStatusProvedHere]
+ \ClaimStatusConditional]
 \label{prop:mc3-asymptotic-prefundamentals-five-family}
 \index{MC3!asymptotic prefundamentals}
 \index{thick generation!asymptotic route}
@@ -4864,38 +5091,43 @@ Let $\mathcal{C}_{\mathrm{pf}} \subset \widehat{\mathcal{O}}(Y_\hbar(\mathfrak{s
 be the monoidal subcategory generated by the family of asymptotic
 prefundamental modules $\{L^\pm_{\omega_i, a}\}_{1 \le i \le N-1,\, a \in \mathbb{C}}$
 obtained as the Hernandez--Jimbo limit of Kirillov--Reshetikhin modules.
-Then $\mathcal{C}_{\mathrm{pf}}$ is a thick tensor ideal of the completed
-category $\widehat{\mathcal{O}}$, and no spectral constraint on~$a$ is
-required.
+Assume:
+\begin{enumerate}[label=\textup{(\alph*)},nosep]
+\item the Kirillov--Reshetikhin limits exist as compact objects in
+ the chosen separated completion;
+\item the Frenkel--Hernandez QQ-system identities lift from
+ $K_0$ to finite exact filtrations in that completion;
+\item tensoring with finite-dimensional Kirillov--Reshetikhin
+ modules preserves compactness.
+\end{enumerate}
+Then the localizing subcategory generated by the full asymptotic
+prefundamental family is independent of the Baxter hyperplane: every
+boundary module $L^-_{i,b}$ belongs to
+\(\operatorname{Loc}\langle L^\pm_{\omega_j,a}\rangle\) in the chosen
+completion. This is a criterion internal to the chosen completion,
+not an identification of that completion with the
+Francis--Gaitsgory pro-nilpotent completion.
 \end{proposition}
 
 \begin{proof}
 The Hernandez--Jimbo limit $\lim_{k \to \infty} W^{(i)}_{k,a}$ exists
-in $\widehat{\mathcal{O}}$ as a pro-object~\cite{HJZ25}, and its
+as a pro-object in the ambient used in~\cite{HJZ25}, and its
 $q$-character has the Frenkel--Hernandez product
 factorisation~\cite{FrenkelHernandez15}
 \[
  \chi_q\!\big(L^\pm_{\omega_i, a}\big) \;=\; \Psi_{i,a}^{\pm 1}
  \prod_{j \neq i} Q_{j}^{\pm \delta_{i,j}}(a),
 \]
-where the $Q_j$ are the QQ-system generators. Multiplicity-freeness of
-this $\ell$-character follows from the Mukhin--Varchenko Shapovalov
-determinant formula~\cite{MukhinVarchenko05}: the Shapovalov form is
-non-degenerate on every $\ell$-weight space of every tensor product of
-asymptotic prefundamentals, hence the joint spectrum of the Bethe
-subalgebra separates simples.
-Closure under tensor products follows from the QQ-system fusion
-relations~\cite{FrenkelHernandez15}; closure under sub-quotients from
-the multiplicity-free property combined with the Frenkel--Mukhin
-algorithm~\cite{FrenkelMukhin01}. The Baxter singular-vector
-calculation is never invoked: the negative prefundamental appears as a
-limit of finite-dimensional Kirillov--Reshetikhin modules, not as the
-simple cokernel of a rank-$1$ Verma exact sequence on
-$b = a - \tfrac12$.
+where the $Q_j$ are the QQ-system generators. Under hypotheses
+\textup{(a)--(c)}, these $K_0$ identities are realized by exact
+filtrations stable under compact tensoring. The boundary negative
+prefundamental appears as the $q=0$ limit of the same KR tower, so it
+lies in the generated localizing subcategory. No rank-$1$ Baxter
+singular vector is used in this argument.
 \end{proof}
 
 \begin{proposition}[Reflection-equation singular vectors for non-type-$A$;
- \ClaimStatusProvedHere]
+ \ClaimStatusConditional]
 \label{prop:mc3-reflection-equation-five-family}
 \index{MC3!reflection equation!non-type-A}
 \index{thick generation!reflection-equation route}
@@ -4908,67 +5140,65 @@ boundary Yang--Baxter equation
  K_2(v)\,R_{12}(u+v)\,K_1(u)\,R_{21}(u-v).
 \]
 Let $\mathcal{C}_{\mathrm{RE}}$ be the monoidal subcategory generated
-by evaluation modules $V_{\omega_1, a_i}$. Then $\mathcal{C}_{\mathrm{RE}}$
-is thick, and the Sklyanin determinant
+by evaluation modules $V_{\omega_1, a_i}$. Assume that the
+Molev--Ragoucy classification realizes every finite-dimensional
+simple in the chosen reflection-equation block as a subquotient of
+generic fusion products of these vector evaluation modules, and that
+the Sklyanin determinant
 \[
  \operatorname{sdet} K(u) \;\in\; Z\!\big(Y^{\mathrm{tw}}_\hbar\big)[[u^{-1}]]
 \]
-is central~\cite{Sklyanin88, Molev07}, providing the generation
-witness.
+separates the blocks under consideration. Then
+\(\mathcal{C}_{\mathrm{RE}}\) thickly generates the bounded derived
+category of that finite-dimensional block.
 \end{proposition}
 
 \begin{proof}
-The Manin-triple decomposition
-$Y^{\mathrm{tw}}_\hbar = Y^+_\hbar \bowtie Y^-_\hbar$ and the pairing
-$\langle\,\cdot\,,\,\cdot\,\rangle_{\mathrm{RE}}$ induced by the
-reflection equation is non-degenerate on $\bigotimes_i V_{\omega_1, a_i}$
-at generic spectral parameters~\cite{MolevRagoucy02}. Molev--Ragoucy
-singular vectors in these tensor products play the role of the
-type-$A$ Baxter companion: they provide explicit short exact sequences
-whose kernels and cokernels are again evaluation modules, closing the
-category under extensions. Centrality of $\operatorname{sdet} K(u)$
-supplies the $K_0$-level relation that promotes character-level closure
-to module-level closure (Lemma~\ref{lem:composition-thick-generation}).
-No Baxter hyperplane appears: the reflection equation already encodes
-the boundary spectral data uniformly.
+The reflection equation gives intertwiners on generic fusion
+products, and centrality of the Sklyanin determinant
+\cite{Sklyanin88, Molev07} fixes the block. By the stated
+classification hypothesis, every simple in the block is a subquotient
+of an object of \(\mathcal{C}_{\mathrm{RE}}\). Lemma~\ref{lem:composition-thick-generation}
+then promotes containment of simples to containment of the whole
+bounded derived block. The conclusion is about the twisted Yangian
+block just named; it is not a statement about the ordinary Yangian
+category~\(\mathcal O\).
 \end{proof}
 
-\begin{theorem}[Universal thick generation via multiplicity-free $\ell$-weights;
+\begin{theorem}[Finite-dimensional evaluation core from Drinfeld polynomials;
  \ClaimStatusProvedHere]
 \label{thm:mc3-universal-multiplicity-free-five-family}
 \index{MC3!universal thick generation|textbf}
 \index{thick generation!multiplicity-free $\ell$-weights}
 Let~$\mathfrak{g}$ be any simple Lie algebra and $Y_\hbar(\mathfrak{g})$
-its Yangian. For every fundamental weight~$\omega_i$ the evaluation
-module $V_{\omega_i, a}$ has multiplicity-free $\ell$-weight
-decomposition~\cite{ChariMoura06, FrenkelMukhin01, Nakajima04}. The
-Bethe subalgebra $B \subset Y_\hbar(\mathfrak{g})$ therefore has simple
-joint spectrum on a Zariski-open subset of spectral parameter space,
-and the full monoidal subcategory
-$\mathcal{C}_{\mathrm{ev}} \subset \mathcal{O}(Y_\hbar(\mathfrak{g}))$
-generated by evaluation modules is thick.
+its Yangian. The thick subcategory of
+\[
+D^b(\operatorname{Rep}_{\mathrm{fd}}(Y_\hbar(\mathfrak{g})))
+\]
+generated by fundamental evaluation modules is the whole bounded
+derived category of finite-dimensional modules.
+Multiplicity-free $\ell$-weights and the Bethe subalgebra give
+generic diagonalization on finite-dimensional evaluation modules, but they do
+not enlarge this theorem to the full category~\(\mathcal O\) or to a
+completed prefundamental category.
 \end{theorem}
 
 \begin{proof}
-Multiplicity-freeness of $\chi_q(V_{\omega_i, a})$ holds for all simple
-types: for simply-laced types it follows from quiver-variety
-geometry~\cite{Nakajima04}; for classical non-simply-laced types from
-explicit $q$-character formulas~\cite{ChariMoura06}; for exceptional
-types the Frenkel--Mukhin algorithm~\cite{FrenkelMukhin01} computes
-$\chi_q$ and confirms one-dimensionality of every $\ell$-weight space.
-The Kirillov--Reshetikhin conjecture, proved in full generality
-by~\cite{Hernandez10KR}, closes the induction: fusion products of
-KR modules in $\mathcal{C}_{\mathrm{ev}}$ admit composition series
-whose factors are again in $\mathcal{C}_{\mathrm{ev}}$, and density of
-the simple joint spectrum implies separation of simples. Thickness
-then follows from Lemma~\ref{lem:composition-thick-generation} applied
-to the evaluation-module seed. The argument uses no Baxter hyperplane:
-multiplicity-freeness is a property of the $\ell$-character, not of a
-rank-$1$ singular vector.
+By the Drinfeld classification of finite-dimensional Yangian modules,
+every simple finite-dimensional \(Y_\hbar(\mathfrak g)\)-module is
+the irreducible quotient of an ordered tensor product of fundamental
+evaluation modules with prescribed Drinfeld polynomials. Hence every
+simple object of \(\operatorname{Rep}_{\mathrm{fd}}\) lies in the
+thick closure of the evaluation seed. Lemma~\ref{lem:composition-thick-generation}
+then gives the whole bounded derived category. The
+multiplicity-free \(q\)-character results
+\cite{Nakajima04,FrenkelMukhin01,ChariMoura06} refine the generic
+Bethe diagonalization picture; they are not the logical source of
+generation beyond the finite-dimensional core.
 \end{proof}
 
 \begin{proposition}[Elliptic Yangian $E_{\rho,\eta}(\mathfrak{sl}_N)$: theta-divisor failure locus;
- \ClaimStatusProvedHere]
+ \ClaimStatusConditional]
 \label{prop:mc3-elliptic-theta-divisor-five-family}
 \index{MC3!elliptic Yangian}
 \index{thick generation!theta-divisor route}
@@ -4983,9 +5213,14 @@ transfer-matrix algebra with the elliptic Bethe subalgebra
  B_{\mathrm{ell}}(u) \;\subset\;
  E_{\rho,\eta}(\mathfrak{sl}_N)\big[[u^{-1}]\big].
 \]
-Thick generation holds on the complement of the theta divisor
-$\Theta \subset \mathcal{E}_\rho^{N-1}$; the failure locus has
-codimension~$1$.
+Assume the elliptic Bethe eigenvectors are complete, the joint
+spectrum is simple, and fusion products have finite composition
+series on
+\(\mathcal{E}_\rho^{N-1}\setminus\Theta\). Then the evaluation
+modules at parameters outside the theta divisor thickly generate the
+corresponding finite-dimensional elliptic block. The divisor
+\(\Theta\) is the resonance locus where this criterion does not
+apply.
 \end{proposition}
 
 \begin{proof}
@@ -4993,16 +5228,15 @@ The elliptic Bethe ansatz of Felder--Varchenko~\cite{FelderVarchenko96}
 produces joint eigenvectors of $B_{\mathrm{ell}}(u)$ parametrised by
 solutions of the elliptic Bethe equations; the simplicity of the joint
 spectrum holds outside the zero locus of the Jacobian theta function
-of the equations, which is a theta divisor. Separation of simples
-gives thickness on the theta-divisor complement. The codimension-$1$
-failure locus replaces the codimension-$1$ Baxter hyperplane of the
-type-$A$ rational case: in both situations the singular locus has
-pure codimension one, but the elliptic divisor is intrinsic
-(determined by the elliptic curve) rather than coordinate-dependent.
+of the equations, which is a theta divisor. Under the stated
+completeness and finite-length hypotheses, simple spectrum separates
+the simple objects in the block, and Lemma~\ref{lem:composition-thick-generation}
+converts this separation into thick generation. The proof stops at
+the elliptic finite-dimensional block.
 \end{proof}
 
 \begin{proposition}[Super-Yangian $Y_\hbar(\mathfrak{gl}_{m|n})$: parity-balance constraint;
- \ClaimStatusProvedHere]
+ \ClaimStatusConditional]
 \label{prop:mc3-super-parity-balance-five-family}
 \index{MC3!super-Yangian}
 \index{thick generation!parity-balance route}
@@ -5015,68 +5249,52 @@ quantum Berezinian~\cite{Nazarov91} factorises the Baxter operator as
 with $Q^\pm(u)$ acting on the even and odd sectors respectively. Thick
 generation of the evaluation-module subcategory
 $\mathcal{C}_{m|n} \subset \mathcal{O}(Y_\hbar(\mathfrak{gl}_{m|n}))$
-holds on the complement of the \emph{parity-balance hyperplane}
+holds in the finite-dimensional parity-balanced block, provided the
+graded Drinfeld classification and the super-Shapovalov determinant
+give finite-length fusion filtrations there. The balance condition is
 \[
  b^+ - b^- \;=\; a - m + n,
 \]
-which is codimension~$1$ in spectral parameter space.
+and it is a block constraint, not a universal Baxter hyperplane for
+ordinary Yangians.
 \end{proposition}
 
 \begin{proof}
-The super-Shapovalov form on tensor products of evaluation modules is
-non-degenerate away from the parity-balance hyperplane; this follows
-from the $\mathbb{Z}/2$-graded generalisation of the Mukhin--Varchenko
-determinant formula, with the Berezinian $\operatorname{Ber}(u)$ of
-Nazarov~\cite{Nazarov91} replacing the ordinary determinant. On the
-hyperplane the super-Shapovalov form degenerates along a single
-direction, and thick generation may fail at a codimension-$1$ locus;
-off the hyperplane, multiplicity-freeness of the $\ell$-character
-holds and thickness follows by the argument of
-Theorem~\ref{thm:mc3-universal-multiplicity-free-five-family}. The factorisation
-$Q(u) = Q^+(u) \otimes Q^-(u)$ ensures that the parity-balance
-constraint is a \emph{single} codimension-$1$ condition, not a
-higher-codimension intersection of even and odd Baxter loci.
+The Berezinian of Nazarov~\cite{Nazarov91} separates the even and odd
+Cartan series, so the graded highest-\(\ell\)-weight data splits into
+the two Baxter factors \(Q^\pm\). Under the stated classification and
+determinant hypotheses, every simple in the parity-balanced
+finite-dimensional block is a subquotient of a tensor product of
+evaluation modules in the same block. Lemma~\ref{lem:composition-thick-generation}
+then gives the derived thick-generation statement.
 \end{proof}
 
-\begin{remark}[Unifying mechanism: five charts replace the Baxter locus]
+\begin{remark}[Five charts and their scopes]
 \label{rem:mc3-unified-mechanism-five-family}
 \index{MC3!five-family unification}
-\index{Baxter constraint!retraction}
-The five propositions above exhibit five distinct module-theoretic
-mechanisms, one for each family, that control thick generation
-without appeal to the rank-$1$ Baxter singular vector:
+\index{Baxter constraint!chart-local}
+The five mechanisms have different logical strength:
 \begin{center}
 \renewcommand{\arraystretch}{1.15}
 \begin{tabular}{lll}
 \toprule
-Family & Mechanism & Failure locus \\
+Family & Mechanism & Scope \\
 \midrule
-$Y_\hbar(\mathfrak{sl}_N)$ rational & QQ-system / asymptotic KR limit & none \\
-$Y^{\mathrm{tw}}_\hbar(\mathfrak{so}_n), Y^{\mathrm{tw}}_\hbar(\mathfrak{sp}_n)$ & RE singular vectors, $\operatorname{sdet} K(u)$ & none \\
-all simple $\mathfrak{g}$ & multiplicity-free $\ell$-weights + KR & none (Zariski-open) \\
-$E_{\rho,\eta}(\mathfrak{sl}_N)$ elliptic & elliptic Bethe / DYBE & theta divisor \\
-$Y_\hbar(\mathfrak{gl}_{m|n})$ super & $\mathbb{Z}/2$-graded Berezinian & parity-balance \\
+$Y_\hbar(\mathfrak{sl}_N)$ rational & QQ-system / asymptotic KR limit & conditional completion criterion \\
+twisted $B/C/D$ Yangians & reflection equation, $\operatorname{sdet}K(u)$ & conditional finite block \\
+all simple $\mathfrak g$ & Drinfeld polynomials & proved finite-dimensional core \\
+$E_{\rho,\eta}(\mathfrak{sl}_N)$ elliptic & elliptic Bethe / DYBE & conditional off $\Theta$ \\
+$Y_\hbar(\mathfrak{gl}_{m|n})$ super & Berezinian parity split & conditional graded block \\
 \bottomrule
 \end{tabular}
 \end{center}
-The type-$A$ Baxter hyperplane $b = a - \tfrac12$ is an artefact of
-the degeneration that takes the elliptic or twisted integrable system
-to the rational non-graded case. It is not a genuine constraint of the
-master-conjecture~MC3. Accordingly, the MC3 master
-conjecture is upgraded to \emph{proved via five-family thick
-generation}, and the Baxter constraint is retracted as a universal
-hypothesis; it survives only as the coordinate-dependent signature of
-one of the five charts.
-
-This is the Drinfeld-school synthesis: the uniform phenomenon (thick
-generation of a monoidal category of evaluation-type modules) has one
-proof for each rational form of the underlying integrable system, and
-the chart-to-chart differences are exactly the classical
-differences between the rational, trigonometric, elliptic, graded,
-and boundary Yang--Baxter systems. The master conjecture does not
-require a single universal proof; it requires one proof per chart,
-assembled into a compatible family by the usual degeneration
-correspondences.
+The type-$A$ Baxter equation is therefore chart-local. It supplies
+one explicit singular-vector proof on the rational stratum, while the
+finite-dimensional evaluation core is already controlled by
+Drinfeld-polynomial generation. The post-core completed DK statement
+still requires the compact-core extension of \(\Phi\) and the
+completion comparison named in
+Conjecture~\ref{conj:dk-compacts-completion}.
 \end{remark}
 
 \section{Monopole operators as affine Grassmannian modifications}
@@ -5085,7 +5303,7 @@ correspondences.
 \index{affine Grassmannian!monopole operators}
 
 The Coulomb branch algebras of
-\S\ref{sec:coulomb-branch} to the geometric theory of monopole
+\S\ref{sec:coulomb-branch} connect to the geometric theory of monopole
 operators, following \cite{CDG2023}, \S7.2 and \S7.4.
 
 \subsection{Setup: Dirichlet boundary and monopole sectors}
@@ -5204,11 +5422,15 @@ The bar complex $\bar{B}^{\mathrm{ch}}$ of the Dirichlet boundary
 VOA inherits the decomposition \eqref{eq:monopole-hilbert-decomp}:
 the bar differential preserves the monopole grading
 $\lambda \in X_*(T)^+$, so that
-$\bar{B}^{\mathrm{ch}}(\mathcal{H}_{\mathrm{Dir}})$ is a direct sum
-of dg coalgebras, one for each Schubert stratum. Bar-cobar inversion
-(Theorem~B) then recovers the full Dirichlet algebra,
-perturbative and non-perturbative, from this Grassmannian-graded
-coalgebra data.
+$\bar{B}^{\mathrm{ch}}(\mathcal{H}_{\mathrm{Dir}})$ is an algebraic
+direct sum on every finite monopole-charge window. The completed
+object used by bar-cobar is the corresponding filtered
+charge-completion, equivalently the inverse limit over finite
+windows. In that completed/coderived ambient, bar-cobar inversion
+(Theorem~B) recovers the chosen Dirichlet boundary algebra from its
+bar coalgebra. It does not identify the bar coalgebra with the
+chiral derived centre, and it does not replace the BFN convolution
+construction of the Coulomb branch.
 \end{remark}
 
 
@@ -5236,18 +5458,20 @@ denotes the $(-1)$-shifted cotangent bundle (i.e.\ the cotangent
 fibers sit in cohomological degree~$1$).
 \end{proposition}
 
-\begin{proof}[Proof sketch]
-The boundary chiral algebra is the affine vertex algebra
-$\widehat{V}_k(\fg)$ (possibly tensored with matter contributions).
-Its bar complex $\bar{B}^{\mathrm{ch}}(\widehat{V}_k(\fg))$ has
-cohomology $\cA^{\mathrm{i}} = H^*(\bar{B}^{\mathrm{ch}})$ concentrated
-in a range determined by the Lie bracket and level. Dualising
-gives $\cA^! = (\cA^{\mathrm{i}})^\vee$. For the pure gauge theory
-(no matter), the bar complex is the Chevalley--Eilenberg complex of
-$\fg(\!(z)\!)$ relative to $\fg[\![z]\!]$, and the dual coalgebra
-is $\operatorname{Sym}(\fg^*[z^{-1}]z^{-1}[-1])$. The shifted
-cotangent structure arises because the BV pairing of the 3d theory
-equips $\cA^!$ with a $(-1)$-shifted symplectic form.
+\begin{proof}
+Dimofte--Niu--Py identify the boundary Koszul dual for Neumann
+boundary conditions with the shifted cotangent of the current
+algebra~\cite[\S4.2]{DNP2025}. In the pure gauge case the perturbative
+bar complex is the relative Chevalley--Eilenberg complex for
+$\fg(\!(z)\!)$ over $\fg[\![z]\!]$; dualizing its cohomology gives
+\[
+\operatorname{Sym}\bigl(\fg^*[z^{-1}]z^{-1}[-1]\bigr)
+\cong T^*[-1]\fg[\lambda]^* .
+\]
+Matter fields tensor in the corresponding boundary contribution, while
+the gauge current sector remains the shifted cotangent loop factor. The
+BV pairing of the 3d theory supplies the $(-1)$-shifted symplectic form
+on this dual algebra.
 \end{proof}
 
 \begin{remark}[The dg-shifted Yangian is the gauge Koszul dual]
@@ -5292,14 +5516,27 @@ the gauge theory evaluated at spectral parameter~$a$.
 \label{rem:shifted-cotangent-coulomb}
 The shifted cotangent identification
 \eqref{eq:gauge-koszul-shifted-cotangent} connects to the Coulomb
-branch story of \S\ref{sec:coulomb-branch}: the Coulomb branch algebra
-$\mathcal{A}(G,N) = H^0(\cA^!)$ is the classical (non-derived)
-projection of $T^*[-1]\fg[\lambda]^*$. The
-monopole decomposition \eqref{eq:monopole-hilbert-decomp} is the
-weight decomposition of the shifted cotangent bundle under the maximal
-torus of~$\fg$. The full dg structure of $\cA^!$ (equivalently, the genus-$0$ piece of the modular Yangian $\Ymod_T$,
+branch story of \S\ref{sec:coulomb-branch} through a comparison
+map from the perturbative degree-zero part of the Koszul dual
+\(\cA^!\) to the local Coulomb-branch chart. Equality with the BFN
+Coulomb branch algebra
+\(\mathcal{A}(G,N)=H^{G_{\mathcal O}\times\mathbb C^\times}_*
+(\mathcal R_{G,N})\)
+requires the non-perturbative monopole sectors and their convolution
+product; it is not a formal consequence of taking \(H^0(\cA^!)\)
+for the perturbative boundary algebra. Thus the objects remain
+separate:
+\[
+\cA,\qquad \barB(\cA),\qquad
+\cA^{\mathrm i}=H^\bullet\barB(\cA),\qquad
+\cA^!=(\cA^{\mathrm i})^\vee,\qquad
+Z^{\mathrm{der}}_{\mathrm{ch}}(\cA).
+\]
+The full dg structure of $\cA^!$ (equivalently, the genus-$0$ piece
+of the modular Yangian $\Ymod_T$,
 Definition~\ref{def:modular-yangian-pro}) retains the
-higher homotopy information lost in the passage to the Coulomb branch.
+perturbative higher homotopy information that is invisible in the
+underived Coulomb-branch chart.
 The shadow algebra $\cA^{\mathrm{sh}}$
 (Definition~\ref{def:shadow-algebra}) of the gauge boundary chiral
 algebra then captures the modular invariants: $\kappa$, $\Delta$, and
@@ -5520,7 +5757,7 @@ stated quasi-isomorphism.
 
 \begin{remark}[Why weightwise is the correct form of MC4]
 \label{rem:yangian-correct-MC4}
-The theorem explains why the MC4 programme
+The theorem explains why the MC4 comparison
 (\S\ref{sec:coulomb-branch}, Remark~\ref{rem:shifted-cotangent-coulomb})
 succeeds for $Y_\hbar(\fsl_N)$ despite the failure of unweighted
 stabilization: the bar-cobar resolution converges in the weight
@@ -5665,15 +5902,24 @@ background $\rho$ to a full modular completion is purely
 three-legged.
 \end{theorem}
 
-\begin{proof}[Proof sketch]
+\begin{proof}
 Filter $\fg_{\mathrm{ex}}(\rho)$ by geometric degree (= number of
 prime-form edges). On the $E_1$-page of the resulting spectral
 sequence, total degree~$2$ forces geometric degree $p \ge |I| - 1$
 (connected graphs on $|I|$ vertices have $\ge |I|-1$ edges) and
 coefficient degree $q \ge 0$ (connectiveness). Hence
 $|I| - 1 \le 2$ and $|I| \ge 3$, so $|I| = 3$, $p = 2$, $q = 0$.
-No differential can enter or leave this bidegree, giving
-$E_1^{2,0} = E_\infty^{2,0}$.
+The full-support differential is componentwise in the ordered set~$I$.
+There is no degree-$1$ full-support term for any \(|I|\ge3\), since a
+connected full-support graph on three vertices already has two edges.
+Thus there are no incoming boundaries to degree~$2$. For
+\(|I|\ge4\), the degree-$2$ cochain group itself vanishes by the same
+edge count. The only degree-$2$ cochains of
+\(\fg_{\mathrm{ex}}(\rho)\) are therefore the three-vertex
+full-support cochains, with the differential induced by
+\(\delta_\rho\) on
+\(L_{\{1,2,3\}}\langle\{1,2,3\}\rangle\). This proves
+\eqref{eq:H2-three-leg}.
 \end{proof}
 
 Under modular Arnold normalization (the higher-genus upgrade of the
@@ -5693,7 +5939,7 @@ $\mathrm{YB}(\rho) = [\rho_{12},\rho_{13}] + [\rho_{12},\rho_{23}]
 In particular, the modular completion is unobstructed in degree~$2$
 whenever $[\mathrm{YB}(\rho)] = 0$.
 
-\begin{remark}[Frontier shift]
+\begin{remark}[Three-leg criterion]
 \label{rem:yangian-frontier-shift}
 This converts the modular dg-shifted Yangian existence problem from a
 tower of unrelated higher-genus equations to a single explicit
@@ -5777,8 +6023,8 @@ deformation (noncompact boundary). The $H^2$-reduction theorem
 \eqref{eq:H2-three-leg} identifies the modular Yang--Baxter class as
 the sole obstruction to assembling these three scales into a single
 modular completion, making the type-$A$ derived Drinfeld--Kohno
-programme a concrete cohomological verification problem rather
-than an abstract aspiration.
+comparison a concrete cohomological verification problem rather
+than a slogan.
 \end{remark}
 
 \section{Synthesis}
@@ -5803,11 +6049,14 @@ Siegel-elliptic-dynamical rather than rational, trigonometric, or
 elliptic in the classical sense of Belavin--Drinfeld. At Lie/Hopf
 level the Hall side is abelian in its Miki-toroidal pieces; the
 non-abelian BKM bracket appears only after vertex-operator closure on
-the K3 Fock space. The explicit
-Miki-generator computations in this chapter should be read as the
-$\hbar$-formal shadow of this fourth taxon; under the CY-3 specialisation
-$\mathrm{CoHA}_{K3\times E}\to\mathrm{CoHA}_{K3}$ the Hall Yangian collapses
-back into the classical Yangian generators tabulated here. See Vol.~III,
+the K3 Fock space. It is not a Drinfeld Yangian
+\(Y_\hbar(\mathfrak g_{\Delta_5})\). The explicit
+Miki-generator computations in this chapter are the
+\(\hbar\)-formal shadow of this fourth taxon. Under the CY-3 specialisation
+\(\mathrm{CoHA}_{K3\times E}\to\mathrm{CoHA}_{K3}\), selected Hall/CoHA
+charts admit RTT-generator shadows comparable with the classical
+Yangian generators tabulated here; this is a Hall degeneration, not a
+Drinfeld-Yangian identification. See Vol.~III,
 Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic} and Schiffmann--Vasserot 2012,
 Davison 2017, Nakajima 2001.
 \[
@@ -5844,29 +6093,35 @@ a constraint invisible from the classical Yangian viewpoint.
 See Bruinier 2002 (arXiv:math/0108079), Lusztig 1990, Mukai 1987.
 \end{remark}
 
-\section{PBW truncation $d(N) = \dim_{\mathrm{PBW,wt}} u_{\zeta_8}(\mathfrak{sl}_N)$
-at the Borcherds $\rho$-orbit}
+\section{PBW $\rho$-orbit truncation at \texorpdfstring{$\zeta_8$}{zeta8}}
 \label{sec:u-zeta-8-pbw-truncation}
 
 At the Lusztig small quantum group $u_{\zeta_8}(\mathfrak{sl}_N)$ the
 De Concini--Kac PBW basis
 $\{\prod_{\alpha\in R^+} E_\alpha^{k_\alpha}\}_{0\le k_\alpha\le \ell-1}$
 with $\ell = 8$ inherits a Borcherds $\rho$-grading through the BKM
-envelope of~$\Phi$ on the Igusa side of the bridge. Writing
-$d(N) = \dim_{\mathrm{PBW,wt}} u_{\zeta_8}(\mathfrak{sl}_N)$ for the
-$\rho$-graded truncation dimension at level~$N$, the values through
-$N\le 4$ are $d(1) = 2$, $d(2) = 22$, $d(3) = 238$, $d(4) = 366$,
-with increments matching the K3 Fourier-coefficient sequence
-$c_{\mathrm{K3}}(\Delta_N) \in\{20, 216, 128\}$ at $N = 2, 3, 4$
-(orbit-integrated Gritsenko--Nikulin $1998$ \S3 Thm~3.1).
+envelope of~$\Phi$ on the Igusa side of the bridge. The number
+$d(N)$ below is the dimension of this single $\rho$-orbit
+PBW-weight truncation. It is not the ordinary vector-space dimension
+of the small quantum group and not a quantum-loop/Yangian evaluation
+dimension. In the normalization used here the computed pre-wall
+values are
+\[
+d(1)=2,\qquad d(2)=22,\qquad d(3)=238,\qquad d(4)=366,
+\]
+with increments $20,216,128$ on the Borcherds orbit.
 
-\begin{theorem}[PBW increment past the De Concini--Kac wall
+\begin{theorem}[Formal PBW increment past the De Concini--Kac wall
 $N = \ell/2 = 4$;
 \ClaimStatusProvedHere]
 \label{thm:u-zeta-8-PBW-wall-crossing}
 \index{De Concini-Kac!wall crossing}%
 \index{small quantum group!PBW truncation}%
-The PBW-truncation increment $\delta(N) := d(N) - d(N-1)$ satisfies
+Assume that the post-wall $\rho$-orbit truncation is governed by the
+De Concini--Kac linked tail seeded by
+$\delta(4)=d(4)-d(3)=128=2^7$ and by the fourfold decay
+$\delta(N+1)=\delta(N)/4$ for $N=4,5,6$. Then the
+PBW-truncation increment $\delta(N) := d(N) - d(N-1)$ satisfies
 \begin{equation}\label{eq:u-zeta-8-PBW-increment}
 \delta(N) \;=\; 2^{15 - 2N},\qquad N\in\{4,5,6,7\},
 \end{equation}
@@ -5874,54 +6129,35 @@ equivalently
 \begin{equation}\label{eq:u-zeta-8-PBW-d-values}
 d(5) = 398,\qquad d(6) = 406,\qquad d(7) = 408,
 \end{equation}
-and the geometric-series saturation gives
-$d(\infty) := \lim_{N\to\infty} d(N) = 408 + \tfrac{1}{2} + \tfrac{1}{8} +
-\cdots = 409 - 2^{-(2N_0 - 15)}$ in the rational closure,
-with effective integer plateau $d(N) = 408 + O(2^{-(2N-15)})$ for
-$N\ge 7$.
+and the formal geometric tail has rational closure
+\[
+d(4)+\sum_{N\ge 5}2^{15-2N}
+=366+\frac{128}{3}
+=\frac{1226}{3}.
+\]
+The verified integer window therefore terminates at the plateau value
+$d(7)=408$.
 \end{theorem}
 
 \begin{proof}
-Past the De Concini--Kac linkage wall at $N = \ell/2 = 4$, the Lusztig
-$1989$ quantum Frobenius
-$\mathrm{Fr}\colon U_{\zeta_8}(\mathfrak{sl}_N)\to U(\mathfrak{sl}_N)$
-degenerates the PBW monomials whose total weight exceeds the
-linkage-principle threshold
-$\Lambda_{\mathrm{link}}(\ell, N) := 2(\ell - 1)(N - \ell/2)$
-(Andersen--Polo--Wen $1991$ Proposition~3.8). The PBW-truncation
-increment thus acquires a factor of~$2^{-2(N - \ell/2)}$ relative to
-the generic (pre-wall) increment $c_{\mathrm{K3}}(\Delta_N)$; at $N = 4$
-the generic value $128 = 2^7 = 2^{\ell - 1}$ seeds the geometric
-recursion~\eqref{eq:u-zeta-8-PBW-increment}. Three independent
-verifications.
-\textup{(i)} \emph{Direct PBW count at $N = 5$.} The nilpotent
-positive part $u^+_{\zeta_8}(\mathfrak{sl}_5)$ has $|R^+| = 10$ roots;
-Lyndon-word enumeration restricted to weight-graded components
-compatible with the linkage principle at $N = 5 = 4 + 1$ gives
-$32 = 2^5$ new monomials, matching $\delta(5) = 2^{15 - 10} = 32$.
-\textup{(ii)} \emph{Modular-Kirillov character formula.} The restricted
-character $\chi_{u_{\zeta_8}(\mathfrak{sl}_N)}$ at the Steinberg
-module~$\mathrm{St}_\ell$ of Lusztig~$1989$ satisfies
-$\dim\mathrm{St}_\ell\bmod\mathrm{Fr}^* =
-\ell^{N(N-1)/2} / \prod_{i=1}^{\ell-1}(1 - \zeta_8^i)$,
-whose $\rho$-graded piece at level~$N$ agrees
-with~\eqref{eq:u-zeta-8-PBW-d-values} through~$N = 7$.
-\textup{(iii)} \emph{Gritsenko--Nikulin denominator coefficient.} The
-coefficient of $\rho^N$ in $\log\Phi_{10}^{\mathrm{un}}$ past the wall satisfies the
-asymptotic $|c(\Delta_N)|\sim 2^{15 - 2N}$ for $N\ge 4$
-(Gritsenko--Hulek 2007 Thm 2.1, Bruinier 2002 Prop 5.1 Heegner
-Chern-class reciprocity), matching the increment recursion.
+The recurrence gives
+$\delta(5)=128/4=32$, $\delta(6)=8$, and $\delta(7)=2$, which is
+exactly~\eqref{eq:u-zeta-8-PBW-increment}. Adding these increments to
+$d(4)=366$ gives~\eqref{eq:u-zeta-8-PBW-d-values}. The rational
+closure is the geometric sum
+$366+32(1+1/4+1/16+\cdots)=366+128/3$.
 \end{proof}
 
 \begin{remark}[Plateau and the Lusztig Frobenius kernel;
 \ClaimStatusProvedHere]
 \label{rem:u-zeta-8-PBW-plateau}
-The saturation $d(\infty) = 409$ equals
-$\dim_{\mathbb{F}_8} \mathrm{Ker}(\mathrm{Fr}\colon
-U_{\zeta_8}^{\mathrm{fin}}(\mathfrak{sl}_4)
-\to U(\mathfrak{sl}_4))/\mathrm{rad}$,
-the Frobenius-kernel quotient past the wall, counted
-with multiplicity in the Lusztig~$1989$ modular Springer
-correspondence. The plateau is reached precisely at $N = \ell - 1 = 7$
-beyond which no new PBW weight-graded monomial survives.
+The verified integer plateau is the statement
+$d(5)=398$, $d(6)=406$, $d(7)=408$ in the
+$\rho$-orbit truncation. It is not a literal
+$\mathbb{F}_8$-dimension of a Frobenius-kernel quotient: the
+Lusztig Frobenius is a root-of-unity comparison over a coefficient
+field containing $\zeta_8$, whereas the present number records only
+the Borcherds-weight orbit after the De Concini--Kac linkage wall.
+Thus the plateau belongs to the $\rho$-graded truncation model, not
+to the full small quantum group.
 \end{remark}

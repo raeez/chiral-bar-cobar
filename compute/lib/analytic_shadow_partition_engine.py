@@ -1,18 +1,24 @@
-r"""Analytic shadow partition function: the non-perturbative completion.
+r"""Analytic shadow partition function: scalar and genus-1 certificates.
 
 MATHEMATICAL FRAMEWORK
 ======================
 
-The shadow generating function Z^sh(A) = exp(sum_g hbar^{2g} F_g) is a
-PERTURBATIVE series in the genus expansion parameter hbar.  The analytic
-shadow partition function Z^an(A) is the NON-PERTURBATIVE object obtained
-from the sewing envelope A^sew.
+The shadow generating function Z^sh(A) = exp(sum_g hbar^{2g} F_g) used
+here is the SCALAR projection
+F_g^{scalar}(A) = kappa(A) * lambda_g^FP.  It is not the full
+Maurer-Cartan element Theta_A and it is not a Borel, resurgence, tau, or
+all-genus analytic continuation claim.
 
-The sewing envelope A^sew is the Hausdorff completion of A for the
-all-amplitude seminorm topology (raeeznotes89).  The HS-sewing condition
-(thm:general-hs-sewing) ensures convergence for the entire standard
-landscape: polynomial OPE growth + subexponential sector growth implies
-convergence at all genera.
+The engine evaluates:
+  - scalar Faber-Pandharipande coefficients kappa * lambda_g^FP;
+  - genus-1 oscillator/vacuum characters in the upper half-plane;
+  - finite Fredholm and plumbing approximations with stated truncation;
+  - executable scope certificates preventing promotion to full MC data.
+
+The HS-sewing condition (thm:general-hs-sewing) gives convergence for
+positive-energy chiral algebras with subexponential sector growth,
+polynomial OPE growth, and bounded collar transport.  Completed
+inverse-limit algebras require separate finite-type/completion checks.
 
 GENUS-1 EXACT PARTITION FUNCTIONS:
 
@@ -33,9 +39,10 @@ SHADOW vs EXACT DISCREPANCY:
 
   Delta_g(A) = log Z_g^{an} - log Z_g^{sh}
 
-  For class G (Heisenberg): the shadow expansion IS the full log partition
-  function at the scalar level.  The Fourier coefficients of log(1/eta^k)
-  beyond the leading q^{-k/24} are the non-perturbative corrections.
+  For class G (Heisenberg): the scalar coefficient F_1 = k/24 records the
+  coefficient of log q in the genus-1 oscillator character.  The full
+  holomorphic function 1/eta(tau)^k contains the remaining Fourier modes;
+  scalar equality is not equality of analytic partition functions.
 
 FREDHOLM DETERMINANT STRUCTURE:
 
@@ -69,6 +76,16 @@ Ground truth:
   prop:genus-expansion-convergence, fredholm_sewing_engine.py,
   affine_km_sewing_engine.py, shadow_pf_convergence.py,
   shadow_partition_function.py, concordance.tex (MC5).
+
+Firewalls:
+  - Holographic package entries:
+    (A, A^i, A^!, C, r(z), Theta_A, nabla^hol).
+  - Modular Koszul compute package projections:
+    (Fact_X(L), barB_X(L), Theta_L, L_L, (V_br,T_br), R4_mod(L)).
+  - Omega(B(A)) = A is bar-cobar inversion, not Koszul duality.
+  - A^! is the Verdier/continuous-linear dual branch under finite-type
+    or completed hypotheses.
+  - Z_ch^der(A) = ChirHoch^*(A,A) is Hochschild/bulk, not Koszul dual.
 """
 
 from __future__ import annotations
@@ -98,6 +115,231 @@ from compute.lib.utils import lambda_fp, F_g
 PI = math.pi
 TWO_PI = 2 * PI
 TWO_PI_SQ = TWO_PI ** 2
+
+
+# ===========================================================================
+# Certification firewalls
+# ===========================================================================
+
+HOLOGRAPHIC_PACKAGE_ENTRIES: Tuple[str, ...] = (
+    "A",
+    "A^i",
+    "A^!",
+    "C",
+    "r(z)",
+    "Theta_A",
+    "nabla^hol",
+)
+
+MODULAR_KOSZUL_COMPUTE_PACKAGE_PROJECTIONS: Tuple[str, ...] = (
+    "Fact_X(L)",
+    "barB_X(L)",
+    "Theta_L",
+    "L_L",
+    "(V_br,T_br)",
+    "R4_mod(L)",
+)
+
+KERNEL_NORMALIZATIONS: Dict[str, str] = {
+    "affine_raw_trace_form": "k*Omega_tr/z",
+    "affine_KZ": "Omega/((k+h^vee)z)",
+    "heisenberg": "k/z",
+    "virasoro": "(c/2)/z^3 + 2T/z",
+}
+
+OBJECT_FIREWALLS: Dict[str, str] = {
+    "A": "input chiral algebra",
+    "B(A)": "bar coalgebra T^c(s^{-1}Abar)",
+    "A^i": "bar cohomology coalgebra H^*B(A)",
+    "A^!": "Verdier continuous-linear dual algebra branch",
+    "Omega(B(A))": "bar-cobar inversion returning A, not Koszul duality",
+    "Z_ch^der(A)": "ChirHoch^*(A,A), Hochschild bulk, not Koszul dual",
+}
+
+
+@dataclass(frozen=True)
+class ScopeCertificate:
+    """Machine-readable statement of what a compute result certifies."""
+
+    name: str
+    certified: Tuple[str, ...]
+    blocked_promotions: Tuple[str, ...]
+    required_hypotheses: Tuple[str, ...]
+    source_anchors: Tuple[str, ...]
+    flags: Dict[str, Any]
+
+
+def kernel_normalization_certificate() -> Dict[str, str]:
+    """Return the canonical kernel normalizations used by this engine."""
+    return dict(KERNEL_NORMALIZATIONS)
+
+
+def package_firewall_certificate() -> Dict[str, Any]:
+    """Return object/package firewalls that this compute surface must preserve."""
+    return {
+        "holographic_package_entries": HOLOGRAPHIC_PACKAGE_ENTRIES,
+        "modular_koszul_compute_package_projections":
+            MODULAR_KOSZUL_COMPUTE_PACKAGE_PROJECTIONS,
+        "object_firewalls": dict(OBJECT_FIREWALLS),
+    }
+
+
+def scalar_shadow_scope_certificate(
+    algebra: str = "generic",
+    hbar: Optional[float] = None,
+) -> ScopeCertificate:
+    r"""Certify the scalar shadow lane and block over-promotion.
+
+    Certified formula:
+      F_g^{scalar}(A) = kappa(A) * lambda_g^FP,
+      lambda_g^FP = ((2^{2g-1}-1)/2^{2g-1}) * |B_{2g}|/(2g)!.
+
+    If hbar is supplied, the closed genus-series sum is certified only for
+    |hbar| < 2*pi, matching prop:genus-expansion-convergence.
+    """
+    if hbar is None:
+        within_radius: Optional[bool] = None
+    else:
+        within_radius = abs(hbar) < TWO_PI
+
+    certified = (
+        "scalar projection F_g^scalar(A)=kappa(A)*lambda_g^FP",
+        "lambda_g^FP from Bernoulli/Faber-Pandharipande formula",
+        "kappa formulas for Heisenberg, Virasoro, and affine KM",
+    )
+    if within_radius is True:
+        certified += ("closed scalar genus series for |hbar|<2*pi",)
+    elif within_radius is False:
+        certified += ("finite scalar coefficients only outside |hbar|<2*pi",)
+
+    return ScopeCertificate(
+        name=f"scalar_shadow:{algebra}",
+        certified=certified,
+        blocked_promotions=(
+            "finite scalar coefficients promoted to full analytic partition function",
+            "scalar kappa promoted to full Maurer-Cartan data Theta_A",
+            "Borel/resurgence/tau-function claim",
+            "all-genus convergence beyond the scalar radius statement",
+            "Delta_g=0 promoted to equality of analytic partition functions",
+        ),
+        required_hypotheses=(
+            "scalar lane or explicitly free-field exact exception",
+            "finite-type/completed hypotheses before forming A^!",
+            "separate Hochschild input before identifying Z_ch^der(A)",
+        ),
+        source_anchors=(
+            "chapters/examples/genus_expansions.tex:prop:genus-expansion-convergence",
+            "compute/lib/utils.py:lambda_fp",
+            "chapters/connections/genus_complete.tex:kappa formulas",
+        ),
+        flags={
+            "scalar_projection_only": True,
+            "full_maurer_cartan_data": False,
+            "borel_resurgence_tau": False,
+            "all_genus_analytic_partition": False,
+            "series_within_radius": within_radius,
+        },
+    )
+
+
+def analytic_continuation_scope_certificate() -> ScopeCertificate:
+    r"""Certify the narrow central-charge continuation used here."""
+    return ScopeCertificate(
+        name="virasoro_generic_c_continuation",
+        certified=(
+            "fixed generic Virasoro vacuum-character formula is analytic in c",
+            "fixed tau in the upper half-plane with a fixed log-q branch",
+        ),
+        blocked_promotions=(
+            "analytic family of all Virasoro VOAs",
+            "minimal-model Rocha-Caridi quotient continuation",
+            "modular invariant partition function or S-matrix continuation",
+            "Borel/resurgence/tau-function claim",
+            "full Maurer-Cartan or shadow-tower reconstruction",
+        ),
+        required_hypotheses=(
+            "Im(tau)>0",
+            "generic c with only the vacuum L_{-1}|0> null subtracted",
+            "fixed principal branch for q^{-c/24}",
+        ),
+        source_anchors=(
+            "compute/lib/analytic_shadow_partition_engine.py:virasoro_vacuum_character_generic",
+            "chapters/examples/landscape_census.tex:Virasoro shadow constants",
+        ),
+        flags={
+            "generic_vacuum_character_only": True,
+            "minimal_model_family": False,
+            "full_modular_package": False,
+            "borel_resurgence_tau": False,
+        },
+    )
+
+
+def hs_sewing_scope_certificate() -> ScopeCertificate:
+    """Certify the HS-sewing and numerical-truncation scope."""
+    return ScopeCertificate(
+        name="hs_sewing_standard_landscape",
+        certified=(
+            "HS-sewing under subexponential sector growth",
+            "HS-sewing under polynomial OPE growth",
+            "finite truncation tail check used by this engine",
+        ),
+        blocked_promotions=(
+            "completed inverse-limit algebra without topology-specific OPE bounds",
+            "finite numerical tail check promoted to theorem for every q",
+            "HS convergence promoted to full analytic partition function",
+            "HS convergence promoted to full Maurer-Cartan data",
+        ),
+        required_hypotheses=(
+            "positive-energy chiral algebra",
+            "0<|q|<1",
+            "bounded collar transport",
+            "completed algebras require separatedness and polynomial bounds",
+        ),
+        source_anchors=(
+            "chapters/connections/genus_complete.tex:thm:general-hs-sewing",
+            "chapters/connections/genus_complete.tex:rem:hs-sewing-completed",
+        ),
+        flags={
+            "finite_standard_landscape": True,
+            "completed_requires_separate_verification": True,
+            "numeric_truncation_only": True,
+            "full_maurer_cartan_data": False,
+        },
+    )
+
+
+def genus2_plumbing_scope_certificate() -> ScopeCertificate:
+    """Certify the genus-2 plumbing model as a degeneration computation."""
+    return ScopeCertificate(
+        name="genus2_heisenberg_plumbing_degeneration",
+        certified=(
+            "separating degeneration model for two tori",
+            "factorization limit qp -> 0",
+            "finite k-colored partition plumbing sum",
+        ),
+        blocked_promotions=(
+            "global genus-2 Siegel partition function",
+            "exact all-genus sewing amplitude",
+            "interacting full Maurer-Cartan correction",
+            "Borel/resurgence/tau-function claim",
+        ),
+        required_hypotheses=(
+            "|q1|<1, |q2|<1, |qp|<1",
+            "finite truncation N for numerical evaluation",
+            "Heisenberg/free-field one-particle factorization",
+        ),
+        source_anchors=(
+            "chapters/connections/genus_complete.tex:thm:heisenberg-one-particle-sewing",
+            "compute/lib/analytic_shadow_partition_engine.py:colored_partitions",
+        ),
+        flags={
+            "degeneration_only": True,
+            "global_genus2_partition": False,
+            "full_maurer_cartan_data": False,
+            "finite_truncation": True,
+        },
+    )
 
 
 # ===========================================================================
@@ -799,10 +1041,12 @@ def hs_sewing_norm(q_abs: float, algebra: str, **kwargs) -> Dict[str, Any]:
 
 
 def hs_convergence_landscape(q_abs: float = 0.1) -> Dict[str, Any]:
-    r"""Verify HS-sewing convergence across the standard landscape.
+    r"""Verify finite-tail HS-sewing convergence across benchmark families.
 
     thm:general-hs-sewing: polynomial OPE growth + subexponential
-    sector growth -> convergence at all genera.
+    sector growth -> HS-sewing convergence under the theorem hypotheses.
+    The boolean returned here is a numerical truncation check, not a new
+    all-genus analytic partition-function theorem.
 
     All standard families have polynomial OPE growth (finite number of
     generators with polynomial structure constants in n) and subexponential
@@ -833,6 +1077,7 @@ def hs_convergence_landscape(q_abs: float = 0.1) -> Dict[str, Any]:
         'q': q_abs,
         'results': results,
         'all_converged': all_converged,
+        'certification': hs_sewing_scope_certificate(),
     }
 
 
@@ -918,12 +1163,14 @@ def modular_t_transform_heisenberg(tau: complex, k: int = 1,
 
 def analytic_continuation_c(c_values: List[float], tau: complex,
                              N: int = 300) -> Dict[str, Any]:
-    r"""Evaluate the vacuum character at different central charges.
+    r"""Evaluate the generic vacuum character at different central charges.
 
     The Virasoro vacuum character at generic c is:
       chi_0(tau, c) = q^{-c/24} (1-q) / prod(1-q^n)
 
-    This is ANALYTIC in c (it's linear in q^{-c/24} = e^{-c/12 * 2*pi*i*tau}).
+    For fixed tau and fixed branch of log(q), this formula is analytic in c.
+    This does not continue minimal-model quotients, modular S-matrices, or
+    full VOA data.
     """
     results = {}
     for c in c_values:
@@ -959,6 +1206,7 @@ def analytic_continuation_c(c_values: List[float], tau: complex,
         'c_values': c_values,
         'results': results,
         'smooth': smoothness,
+        'certification': analytic_continuation_scope_certificate(),
     }
 
 
@@ -1020,12 +1268,12 @@ def large_tau_asymptotics(k: int = 1, t_values: Optional[List[float]] = None,
 
 
 # ===========================================================================
-# Section 13: Full analysis combining all paths
+# Section 13: Integrated analysis combining all paths
 # ===========================================================================
 
 @dataclass
 class AnalyticPartitionResult:
-    """Complete analytic shadow partition function analysis."""
+    """Integrated scalar/genus-1 analysis with an explicit scope certificate."""
     algebra: str
     params: Dict[str, Any]
     genus1_exact: complex
@@ -1034,13 +1282,14 @@ class AnalyticPartitionResult:
     fredholm: Dict[str, float]
     modular_check: Dict[str, Any]
     convergence: Dict[str, Any]
+    certification: ScopeCertificate
     description: str = ""
 
 
 def full_analysis_heisenberg(k: int = 1,
                               tau: complex = complex(0, 1.0),
                               N: int = 300) -> AnalyticPartitionResult:
-    r"""Complete multi-path verification for Heisenberg at level k.
+    r"""Integrated multi-path verification for Heisenberg at level k.
 
     Six verification paths:
     1. Sewing construction (Fredholm determinant)
@@ -1080,6 +1329,7 @@ def full_analysis_heisenberg(k: int = 1,
         fredholm=fred,
         modular_check=mod_check,
         convergence=conv,
+        certification=scalar_shadow_scope_certificate("heisenberg"),
         description=(
             f"Heisenberg at level k={k}. Class G (shadow depth 2). "
             f"kappa={kap}. Exact partition function is 1/eta^{k}."
@@ -1090,7 +1340,7 @@ def full_analysis_heisenberg(k: int = 1,
 def full_analysis_virasoro(c: float = 25.0,
                             tau: complex = complex(0, 1.0),
                             N: int = 300) -> AnalyticPartitionResult:
-    r"""Complete analysis for Virasoro at central charge c."""
+    r"""Integrated scalar/genus-1 analysis for Virasoro at central charge c."""
     q_abs = abs(cmath.exp(2j * PI * tau))
 
     Z1 = virasoro_vacuum_character_generic(tau, c, N)
@@ -1110,6 +1360,7 @@ def full_analysis_virasoro(c: float = 25.0,
         fredholm=fred,
         modular_check={},
         convergence=conv,
+        certification=scalar_shadow_scope_certificate("virasoro"),
         description=(
             f"Virasoro at c={c}. Class M (infinite shadow depth). "
             f"kappa={kap}=c/2."
@@ -1184,8 +1435,8 @@ def genus2_shadow_vs_plumbing(k: int = 1,
     The shadow expansion at genus 2:
       F_2 = kappa * 7/5760
 
-    The plumbing construction gives the EXACT genus-2 partition function
-    (in a specific degeneration limit).
+    The plumbing construction gives a Heisenberg separating-degeneration
+    model with a finite numerical truncation.
 
     In the degeneration limit qp -> 0:
       log Z_2 -> log Z_1(tau_1) + log Z_1(tau_2) + log(plumbing_sum)
@@ -1207,9 +1458,10 @@ def genus2_shadow_vs_plumbing(k: int = 1,
         'plumbing': plumbing,
         'description': (
             "F2_shadow is the genus-2 scalar free energy. "
-            "The plumbing sum captures the exact genus-2 partition function "
-            "in the degeneration limit."
+            "The plumbing sum is a finite separating-degeneration model, "
+            "not a global genus-2 Siegel partition function."
         ),
+        'certification': genus2_plumbing_scope_certificate(),
     }
 
 
@@ -1221,14 +1473,16 @@ def shadow_class_partition_function(algebra: str, tau: complex,
                                      N: int = 300, **kwargs) -> Dict[str, Any]:
     r"""Compute the analytic partition function and classify by shadow depth.
 
-    Class G (r_max=2): Heisenberg, lattice VOAs. Shadow IS exact at scalar level.
+    Class G (r_max=2): Heisenberg, lattice VOAs. The scalar shadow records
+    the leading log-q coefficient; exact analytic equality requires the
+    separate oscillator/lattice partition function.
     Class L (r_max=3): affine KM. One cubic correction.
     Class C (r_max=4): beta-gamma. Cubic + quartic corrections.
     Class M (r_max=inf): Virasoro, W_N. Infinite tower.
 
-    For class G: Delta_g = 0 (shadow is exact at scalar level).
-    For class L: Delta_g involves instanton corrections from the OPE.
-    For class M: Delta_g involves the full non-perturbative structure.
+    This function returns the scalar certificate that blocks promotion of
+    kappa to full Maurer-Cartan, Borel/resurgence, tau, or global analytic
+    partition data.
     """
     if algebra == 'heisenberg':
         k = kwargs.get('k', 1)
@@ -1270,6 +1524,7 @@ def shadow_class_partition_function(algebra: str, tau: complex,
         'shadow_class': shadow_class,
         'r_max': r_max,
         'tau': tau,
+        'certification': scalar_shadow_scope_certificate(algebra=algebra),
     }
 
 
@@ -1339,7 +1594,13 @@ def multi_path_verification(algebra: str = 'heisenberg',
     """
     q_abs = abs(cmath.exp(2j * PI * tau))
 
-    results = {'algebra': algebra, 'tau': tau}
+    results = {
+        'algebra': algebra,
+        'tau': tau,
+        'certification': scalar_shadow_scope_certificate(algebra=algebra),
+        'package_firewalls': package_firewall_certificate(),
+        'kernel_normalizations': kernel_normalization_certificate(),
+    }
 
     if algebra == 'heisenberg':
         k = kwargs.get('k', 1)

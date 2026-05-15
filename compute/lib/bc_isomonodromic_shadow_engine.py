@@ -1,4 +1,4 @@
-r"""bc_isomonodromic_shadow_engine.py -- Isomonodromic deformations at zeta zeros.
+r"""bc_isomonodromic_shadow_engine.py -- scalar shadow deformation at zeta zeros.
 
 BC-115: Riemann-Hilbert from shadow connection at Riemann zeta zeros.
 
@@ -6,11 +6,11 @@ MATHEMATICAL FRAMEWORK
 ======================
 
 The shadow connection nabla^sh = d - Q'_L/(2Q_L) dt is a logarithmic
-connection with regular singular points at the zeros of Q_L.  The
-monodromy around each zero is exp(2*pi*i * 1/2) = -1 (Koszul sign).
+rank-one connection with regular singular points at the zeros of Q_L.
+The local monodromy around each simple zero is exp(2*pi*i * 1/2) = -1.
 
-This engine studies the ISOMONODROMIC DEFORMATION of these singular
-points as the central charge c varies.  Three main structures:
+This engine studies the monodromy-preserving scalar shadow family as
+the central charge c varies.  The computed objects are:
 
 1. SINGULAR DIVISOR D_shadow = {(c,t) : Q_L(c,t) = 0} in the (c,t)-plane.
    This is a complex curve, and its fibration over c encodes how the
@@ -27,30 +27,31 @@ points as the central charge c varies.  Three main structures:
    The RH factorization index kappa_RH = (1/(2*pi*i)) * oint d log det Y
    is an integer that can jump at special parameter values.
 
-4. JIMBO TAU FUNCTION: tau(t) = exp(int omega) where omega is the
-   Malgrange differential form.  For the shadow connection:
-   tau_shadow = sqrt(Q_L(t)/Q_L(0)) is the flat section.
+4. SCALAR TAU SHADOW: tau(t) = exp(int omega) for the rank-one
+   Malgrange primitive omega = Q'_L/(2Q_L) dt.  In this scalar
+   normalization tau_shadow = sqrt(Q_L(t)/Q_L(0)) is the flat section.
 
-5. FREDHOLM DETERMINANT: tau = det(1 - K_RH) on L^2(Sigma), where
-   K_RH is the RH integral operator.  For the shadow (quadratic Q_L),
-   K_RH has finite rank and the determinant is elementary.
+5. CONSTANT-JUMP RH CHECK: the scalar shadow has constant jump -1 on
+   the chosen cut.  The normalized RH index is therefore zero; numerical
+   Cauchy discretizations below are diagnostics, not a substitute for a
+   nontrivial Jimbo-Miwa-Ueno determinant.
 
-BEILINSON CRITICAL ASSESSMENT
-==============================
+CRITICAL ASSESSMENT
+===================
 
-1. The shadow connection is a RIGID Fuchsian system (3 regular singular
-   points on P^1 for single-channel).  The monodromy representation is
-   determined by the local data (residues 1/2) up to overall conjugation.
-   There are NO continuous moduli -- the connection is RIGID.
+1. The single-channel scalar shadow has two finite simple singularities
+   and infinity.  Its local conjugacy classes are fixed by the residue
+   1/2.  The rank-two matrices used below are a companion model for
+   Fricke-coordinate checks, not a new chiral algebra.
 
-2. However, the FAMILY of connections (parametrized by c) provides a
-   nontrivial ISOMONODROMIC DEFORMATION.  As c varies, the singular
-   points t_+(c), t_-(c) move, but the local monodromies stay fixed
-   (always exp(pi*i) = -1).  This is EXACTLY the condition for
-   isomonodromic deformation.
+2. As c varies on the non-singular Virasoro parameter surface
+   c(5c+22) != 0, the points t_+(c), t_-(c) move while the scalar local
+   monodromies remain -1.  This is the monodromy-preserving content
+   computed here.
 
-3. For W_3 (multi-channel): 4 singular points -> Heun equation -> P_VI
-   isomonodromic deformation.  This is the genuine Painleve content.
+3. For W_3 the two channels give four branch points.  The cross-ratio
+   is the P_VI/Heun parameter coordinate recorded by this engine; no
+   Painleve flow is solved here.
 
 4. At zeta zeros c = 1/2 + i*gamma_n, the shadow metric Q_L has complex
    coefficients.  The RH factorization index kappa_RH is computed from
@@ -59,11 +60,9 @@ BEILINSON CRITICAL ASSESSMENT
    singular points).  Integer jumps occur at COLLISIONS of singular
    points, not at zeta zeros per se.
 
-5. The Jimbo tau function for the shadow connection COINCIDES with the
-   flat section sqrt(Q/Q(0)).  This is because the shadow is a
-   SCALAR connection (rank 1), and the Malgrange form reduces to
-   d log sqrt(Q).  For the Virasoro shadow, tau_Jimbo = tau_shadow
-   is an identity, NOT an accidental coincidence.
+5. The scalar tau shadow equals the flat section sqrt(Q/Q(0)).  This is
+   a rank-one normalization identity; it should not be read as the
+   non-scalar JMU tau function of a Painleve system.
 
 Dependencies:
     bc_painleve_shadow_engine.py -- base Painleve infrastructure
@@ -110,6 +109,101 @@ ZETA_ZEROS_30 = [
 ]
 
 
+HOLOGRAPHIC_PACKAGE_ENTRIES: Tuple[str, ...] = (
+    "A",
+    "A^i",
+    "A^!",
+    "C",
+    "r(z)",
+    "Theta_A",
+    "nabla^hol",
+)
+
+
+MODULAR_KOSZUL_PRIMARY_PROJECTIONS: Tuple[str, ...] = (
+    "Fact_X(L)",
+    "barB_X(L)",
+    "Theta_L",
+    "L_L",
+    "(V_L^br, T_L^br)",
+    "R_4^mod(L)",
+)
+
+
+TYPED_FIREWALL_OBJECTS: Tuple[str, ...] = (
+    "A",
+    "B(A)",
+    "A^i",
+    "A^!",
+    "Omega(B(A))",
+    "Z_ch^der(A)",
+)
+
+
+def holographic_package_entries() -> Tuple[str, ...]:
+    """Seven entries of H(A), in canonical order."""
+    return HOLOGRAPHIC_PACKAGE_ENTRIES
+
+
+def modular_koszul_primary_projections() -> Tuple[str, ...]:
+    """Six primary projections of the modular Koszul compute package."""
+    return MODULAR_KOSZUL_PRIMARY_PROJECTIONS
+
+
+def typed_firewall_objects() -> Tuple[str, ...]:
+    """Objects kept distinct by the bar/Koszul/derived-centre firewall."""
+    return TYPED_FIREWALL_OBJECTS
+
+
+def bar_koszul_firewall_summary() -> Dict[str, str]:
+    """Typed roles for the objects most often conflated in this surface."""
+    return {
+        "A": "input chiral algebra",
+        "B(A)": "ordered bar coalgebra before cohomology",
+        "A^i": "bar cohomology coalgebra H^*(B(A))",
+        "A^!": (
+            "Verdier/continuous-linear dual branch under finite-type or "
+            "completed hypotheses"
+        ),
+        "Omega(B(A))": "bar-cobar inversion recovering A",
+        "Z_ch^der(A)": "Hochschild/derived-centre bulk object",
+    }
+
+
+def kernel_normalization_constants(c: complex = 26,
+                                   k: complex = 1,
+                                   h_vee: complex = 2) -> Dict[str, Dict[str, Any]]:
+    """Canonical kernel normalizations used by the shadow checks.
+
+    The formulas follow the landscape-census convention: affine raw
+    collision residue is trace-form and carries the level prefix k,
+    while the KZ coefficient is a comparison normalization.
+    """
+    return {
+        "heisenberg_raw_collision": {
+            "formula": "k/z",
+            "coefficient": k,
+            "normalization": "trace-form collision residue",
+        },
+        "affine_raw_collision": {
+            "formula": "k*Omega_tr/z",
+            "coefficient": k,
+            "normalization": "trace-form collision residue",
+        },
+        "affine_kz_coefficient": {
+            "formula": "Omega/((k+h^vee)z)",
+            "coefficient": 1 / (k + h_vee),
+            "normalization": "KZ comparison coefficient",
+        },
+        "virasoro_collision": {
+            "formula": "(c/2)/z^3 + 2T/z",
+            "central_coefficient": c / 2,
+            "stress_coefficient": 2,
+            "normalization": "Virasoro collision residue",
+        },
+    }
+
+
 # ===========================================================================
 # Section 1: Shadow family data (extended for isomonodromic study)
 # ===========================================================================
@@ -134,10 +228,18 @@ def virasoro_shadow_data(c_val: complex) -> ShadowFamilyData:
     denom = c_val * (5 * c_val + 22)
     if abs(denom) < 1e-30:
         S4 = complex('inf')
-        Delta = complex('inf')
     else:
         S4 = 10.0 / denom
-        Delta = 8 * kappa * S4
+    delta_denom = 5 * c_val + 22
+    if abs(delta_denom) < 1e-30:
+        Delta = complex('inf')
+    else:
+        # Delta = 8*kappa*S4 simplifies to 40/(5c+22).  This keeps the
+        # removable c=0 limit visible while S4 itself remains singular.
+        if abs(c_val) < 1e-30:
+            Delta = 40.0 / delta_denom
+        else:
+            Delta = 8 * kappa * S4
     sc = 'M'
     if abs(c_val.imag if isinstance(c_val, complex) else 0) > 1e-10:
         sc = 'M_complex'
@@ -472,17 +574,13 @@ def rh_factorization_index(kappa: complex, alpha: complex,
         The RH factorization of G = G_- * diag(zeta^{k_1}, zeta^{k_2}) * G_+
         For G = -I: we can take G_+ = G_- = I, k_1 = k_2 = 0.
 
-        Actually, for G = -I on a contour, the factorization IS trivial
-        since -I is already constant (no winding).
+        For G = -I on a contour, the factorization is constant: the
+        jump has no winding.
 
         kappa_RH = k_1 + k_2 = 0.
 
-    This is INDEPENDENT of c (including complex c at zeta zeros).
-    The factorization index does NOT jump at zeta zeros.
-
-    BEILINSON CHECK: this is the CORRECT answer for a rigid system.
-    The factorization index jumps only at CONFLUENCES of singular points
-    (when branch points collide), not at generic parameter values.
+    This is independent of c, including complex c at zeta zeros, as
+    long as the scalar shadow is on the non-singular parameter surface.
     Zeta zeros are not confluence points of the shadow.
     """
     # For a regular singular system with monodromy -I at each singularity,
@@ -490,24 +588,51 @@ def rh_factorization_index(kappa: complex, alpha: complex,
     return 0
 
 
+def _quadratic_reduction_integral(q0: complex, q1: complex,
+                                  q2: complex, zeta: complex) -> complex:
+    """Integral from 0 to zeta of ds / (q2*s^2 + q1*s + q0)."""
+    if abs(q2) < 1e-30:
+        if abs(q1) < 1e-30:
+            if abs(q0) < 1e-50:
+                return complex('nan')
+            return zeta / q0
+        if abs(q0) < 1e-50:
+            return complex('nan')
+        return (cmath.log(q1 * zeta + q0) - cmath.log(q0)) / q1
+
+    disc = q1 ** 2 - 4 * q0 * q2
+    if abs(disc) < 1e-50:
+        root = -q1 / (2 * q2)
+        if abs(root) < 1e-50 or abs(zeta - root) < 1e-50:
+            return complex('nan')
+        return (-1 / q2) * (1 / (zeta - root) - 1 / (0 - root))
+
+    sqrt_disc = cmath.sqrt(disc)
+
+    def primitive(s: complex) -> complex:
+        u = 2 * q2 * s + q1
+        return cmath.log((u - sqrt_disc) / (u + sqrt_disc)) / sqrt_disc
+
+    return primitive(zeta) - primitive(0)
+
+
 def rh_solution_shadow(kappa: complex, alpha: complex,
                        Delta: complex, zeta: complex) -> List[List[complex]]:
     """Solve the RH problem for the shadow connection.
 
-    The unique solution Y(zeta) with prescribed monodromy around t_+, t_-:
+    The companion solution Y(zeta) with prescribed local monodromy
+    around t_+, t_-:
 
     Y(zeta) = [[sqrt(Q_L(zeta)), phi_2(zeta)],
                [d/dzeta sqrt(Q_L(zeta)), phi_2'(zeta)]]
 
-    where phi_2 is the second solution involving log(Q_L).
+    where phi_2 is the reduction-of-order second solution.  With
+    Phi = sqrt(Q_L(zeta)/Q_L(0)),
 
-    For normalization Y(zeta) -> I as zeta -> infty:
-        We need Y ~ diag(sqrt(q2)*zeta, ...) -> finite, so normalize.
+        phi_2 = Phi * int_0^zeta ds / Phi(s)^2,
 
-    In practice, for the rank-1 shadow:
-        Y(zeta) = Phi(zeta) = sqrt(Q_L(zeta) / Q_L(0))
-    is the normalized flat section.  The matrix version is:
-        Y = [[Phi, int dz/Phi], [Phi', (int dz/Phi)']]
+    so det(Y) = Phi*phi_2' - Phi'*phi_2 = 1.  The primitive is
+    logarithmic for a quadratic Q_L.
     """
     Q_zeta = shadow_metric_eval(kappa, alpha, Delta, zeta)
     Q_0 = shadow_metric_eval(kappa, alpha, Delta, 0)
@@ -525,26 +650,13 @@ def rh_solution_shadow(kappa: complex, alpha: complex,
     else:
         Phi_prime = Q_prime / (2 * cmath.sqrt(Q_0 * Q_zeta))
 
-    # Second column: the second solution
-    # For the quadratic Q_L, the integral int dz/sqrt(Q_L) is elementary:
-    # = (1/sqrt(q2)) * log(q2*z + q1/2 + sqrt(q2)*sqrt(Q_L)) + const
-    # (completing the square in Q_L = q2*(z - t_-)*(z - t_+))
-    if abs(q2) < 1e-30:
+    if abs(Phi) < 1e-50:
         psi = complex('nan')
         psi_prime = complex('nan')
     else:
-        sq2 = cmath.sqrt(q2)
-        sqQ = cmath.sqrt(Q_zeta)
-        arg = q2 * zeta + q1 / 2 + sq2 * sqQ
-        if abs(arg) < 1e-50:
-            psi = complex('nan')
-        else:
-            psi = cmath.log(arg) / sq2
-        # psi' = 1 / sqrt(Q_L(zeta))
-        if abs(Q_zeta) < 1e-50:
-            psi_prime = complex('inf')
-        else:
-            psi_prime = 1.0 / cmath.sqrt(Q_zeta)
+        integral = Q_0 * _quadratic_reduction_integral(q0, q1, q2, zeta)
+        psi = Phi * integral
+        psi_prime = Phi_prime * integral + 1 / Phi
 
     return [[Phi, psi], [Phi_prime, psi_prime]]
 
@@ -553,24 +665,11 @@ def rh_det_Y(kappa: complex, alpha: complex,
              Delta: complex, zeta: complex) -> complex:
     """det Y(zeta) for the RH solution.
 
-    For the canonical pair (sqrt(Q), int dz/sqrt(Q)):
-        Wronskian = sqrt(Q) * 1/sqrt(Q) - (sqrt(Q))' * int(dz/sqrt(Q))
-    The Wronskian of y_1 = sqrt(Q), y_2 = int dz/sqrt(Q) is:
-        W = y_1 * y_2' - y_1' * y_2
-          = sqrt(Q) * 1/sqrt(Q) - Q'/(2*sqrt(Q)) * int(dz/sqrt(Q))
-          = 1 - Q'/(2*sqrt(Q)) * int(dz/sqrt(Q))
-
-    For a Sturm-Liouville system with no first-order term (u'' = Vu):
-        Abel's identity: W(z) = const.
-    The Schrodinger equation is u'' + p(z)*u = 0, so Abel gives W = const.
-
-    For our system: the two solutions of Q_L''s associated Schrodinger eq
-    have constant Wronskian = 1 (by normalization).
-
-    So det Y = W = const for all zeta.
+    The returned matrix uses the reduction-of-order second solution, so
+    its Wronskian is one away from the branch points and from Q_L(0)=0.
     """
-    # Wronskian is constant = 1 (by normalization of the basis)
-    return 1.0
+    Y = rh_solution_shadow(kappa, alpha, Delta, zeta)
+    return Y[0][0] * Y[1][1] - Y[0][1] * Y[1][0]
 
 
 def rh_factorization_index_at_zeta_zeros(n_max: int = 20) -> List[Dict[str, Any]]:
@@ -615,15 +714,13 @@ def rh_factorization_index_at_zeta_zeros(n_max: int = 20) -> List[Dict[str, Any]
 
 def malgrange_form(kappa: complex, alpha: complex,
                    Delta: complex, t: complex) -> complex:
-    """The Malgrange 1-form omega for the shadow connection.
+    """The rank-one Malgrange primitive omega for the shadow connection.
 
     For a rank-1 connection nabla = d - Q'/(2Q) dt:
         omega = d log tau = d log sqrt(Q/Q(0)) = Q'/(2Q) dt
 
-    The Malgrange form COINCIDES with the connection form itself.
-    This is because the shadow is a scalar connection, and the
-    Jimbo-Miwa-Ueno tau function for a scalar connection is
-    simply the flat section.
+    In this scalar normalization the primitive is the connection form
+    itself, and its exponential is the normalized flat section.
 
     For rank >= 2, the Malgrange form involves the Hamiltonian
     of the isomonodromic system, which is more complex.
@@ -638,7 +735,7 @@ def malgrange_form(kappa: complex, alpha: complex,
 
 def jimbo_tau_shadow(kappa: complex, alpha: complex,
                      Delta: complex, t: complex) -> complex:
-    """Jimbo tau function for the shadow connection.
+    """Scalar tau shadow for the rank-one shadow connection.
 
     tau(t) = sqrt(Q_L(t) / Q_L(0))
 
@@ -646,12 +743,8 @@ def jimbo_tau_shadow(kappa: complex, alpha: complex,
         tau(t) = exp(int_0^t omega(s) ds) = exp(log sqrt(Q(t)/Q(0)))
                = sqrt(Q(t)/Q(0)).
 
-    Identity (PROVED):
-        tau_Jimbo = Phi (flat section of nabla^sh)
-
-    This is NOT an accident but a THEOREM for scalar connections:
-    for rank 1, the Malgrange form = connection form, so the tau
-    function = parallel transport = flat section.
+    This rank-one identity is a normalization check for the shadow.  It
+    is not the non-scalar JMU tau function of a Painleve system.
     """
     Q_t = shadow_metric_eval(kappa, alpha, Delta, t)
     Q_0 = shadow_metric_eval(kappa, alpha, Delta, 0)
@@ -667,7 +760,7 @@ def jimbo_tau_numerical_integration(kappa: complex, alpha: complex,
 
     tau(t) = exp(int_0^t omega(s) ds)
 
-    This provides an INDEPENDENT verification of the closed-form tau.
+    This provides a numerical oracle for the closed-form scalar tau.
     """
     dt = t_end / n_steps
     log_tau = 0.0 + 0j
@@ -720,7 +813,7 @@ def shadow_partition_function(kappa: complex, alpha: complex,
     The relation to Jimbo tau:
         Z^sh(t) = t^2 * sqrt(Q_L(0)) * tau(t) = 2*kappa * t^2 * tau(t)
 
-    NOT a flat section (AP23).
+    The extra t^2 factor means Z^sh is not itself a flat section.
     """
     Q_t = shadow_metric_eval(kappa, alpha, Delta, t)
     return t ** 2 * cmath.sqrt(Q_t)
@@ -775,19 +868,10 @@ def fredholm_kernel_shadow(kappa: complex, alpha: complex,
 
     This is a CAUCHY KERNEL on the branch cut.
 
-    The Fredholm determinant det(1 - K) on L^2([t_-, t_+]) for
-    the Cauchy kernel with constant coefficient is known:
-        det(1 - lambda * K_Cauchy) = a classical formula.
-
     For our specific case (G = -I, jump = -2I):
-        The RH problem is trivially solvable (Y = I away from cut),
-        so det(1 - K_RH) = 1.
-
-    BEILINSON: This is correct.  The shadow RH problem is TRIVIAL
-    (the jump is a constant matrix), so the Fredholm determinant
-    is 1.  Nontrivial Fredholm determinants arise for OSCILLATORY
-    RH problems (Riemann zeta, Painleve, random matrices), not for
-    rigid Fuchsian systems with constant jump.
+        the normalized scalar RH jump is constant.  The exact index is
+        already captured by rh_factorization_index; this kernel is only
+        a Cauchy discretization diagnostic.
     """
     if abs(zeta2 - zeta1) < 1e-50:
         return complex('inf')
@@ -796,12 +880,13 @@ def fredholm_kernel_shadow(kappa: complex, alpha: complex,
 
 def fredholm_det_shadow(kappa: complex, alpha: complex,
                         Delta: complex, n_quad: int = 50) -> complex:
-    """Fredholm determinant det(1 - K_RH) by numerical quadrature.
+    """Cauchy-kernel determinant diagnostic by numerical quadrature.
 
     Uses Gauss-Legendre quadrature on [t_-, t_+] to build the
     kernel matrix and compute its determinant.
 
-    For the shadow (constant jump G = -I): det = 1 (trivial RH).
+    For the normalized scalar shadow, the exact RH index is zero.  This
+    discretization is not used as an exact Fredholm determinant oracle.
     """
     tp, tm = branch_points(kappa, alpha, Delta)
     if cmath.isnan(tp) or cmath.isnan(tm):
@@ -876,7 +961,7 @@ def fredholm_det_shadow(kappa: complex, alpha: complex,
 def fredholm_det_expansion_shadow(kappa: complex, alpha: complex,
                                    Delta: complex,
                                    order: int = 5) -> List[complex]:
-    """Fredholm expansion det(1 - K) = sum_{n=0}^infty (-1)^n/n! * tr(K^n).
+    """Formal normalized expansion for the constant-jump scalar shadow.
 
     For the shadow (trivial RH): all terms beyond order 0 vanish
     when properly regularized, giving det = 1.
@@ -943,19 +1028,25 @@ def collision_locus_virasoro() -> List[complex]:
 
     Collision happens when disc(Q_L) = 0, i.e., -32*kappa^2*Delta = 0.
 
-    kappa = c/2 = 0 => c = 0
-    Delta = 40/(5c+22) = 0 => never (numerator 40 != 0)
+    On the finite Virasoro shadow surface, the simplified discriminant is
+        -320*c^2/(5c+22).
 
-    So: the branch points collide ONLY at c = 0.
+    The only finite zero is c = 0, where the Delta coefficient has a
+    removable value 40/22 and Q_L(t) has a double zero at t = 0.
 
-    At c = 0: kappa = 0, q0 = 0, Q_L = 12*0*t + (36 + 2*Delta)*t^2.
-    But Delta = 40/22 at c=0, Q_L = (36 + 80/22)*t^2 = ... pure t^2.
-    Both zeros are at t = 0 (collision at the origin).
-
-    This is the ONLY collision point in the c-plane.
-    There are NO other collision loci (no zeta-zero-related collisions).
+    The pole c = -22/5 is a singular parameter value of the coefficients,
+    not a branch-point collision in this finite model.  Zeta zeros are
+    not collision points.
     """
     return [0.0 + 0j]
+
+
+def virasoro_singular_parameter_locus() -> Dict[str, List[complex]]:
+    """Separate branch collisions from coefficient poles."""
+    return {
+        "branch_collisions": [0.0 + 0j],
+        "coefficient_poles": [-22.0 / 5.0 + 0j],
+    }
 
 
 def branch_point_velocity(c_val: complex,
@@ -970,13 +1061,14 @@ def branch_point_velocity(c_val: complex,
 
 
 # ===========================================================================
-# Section 8: W_3 multi-channel isomonodromic deformation (P_VI)
+# Section 8: W_3 four-point/P_VI parameter surface
 # ===========================================================================
 
 def w3_pvi_cross_ratio(c_val: complex) -> complex:
     """Cross-ratio of the 4 branch points of the W_3 two-channel system.
 
-    This is the isomonodromic coordinate for P_VI.
+    This is the four-point parameter used by the associated P_VI/Heun
+    surface.  The function computes the coordinate, not a P_VI flow.
     """
     tT_p, tT_m = branch_points_w3_T(c_val)
     tW_p, tW_m = branch_points_w3_W(c_val)
@@ -984,7 +1076,7 @@ def w3_pvi_cross_ratio(c_val: complex) -> complex:
 
 
 def w3_pvi_cross_ratio_landscape(c_values: list) -> List[Dict[str, Any]]:
-    """Cross-ratio landscape for W_3 P_VI across c values."""
+    """Cross-ratio landscape for the W_3 four-point surface."""
     results = []
     for c_val in c_values:
         c_val = complex(c_val)
@@ -1002,7 +1094,7 @@ def w3_pvi_cross_ratio_landscape(c_values: list) -> List[Dict[str, Any]]:
 
 
 def w3_pvi_monodromy_exponents() -> Dict[str, complex]:
-    """Universal monodromy exponents for W_3 P_VI.
+    """Universal monodromy exponents for the W_3 four-point model.
 
     All theta_j = 1/2 (from the universal indicial exponent at zeros of Q_L).
 
@@ -1257,7 +1349,7 @@ def verify_fricke_relation(c_val: complex) -> Dict[str, Any]:
 
 def verify_tau_three_paths(c_val: complex,
                            t_val: complex = 0.1) -> Dict[str, Any]:
-    """Verify Jimbo tau by 3 independent paths.
+    """Verify the scalar tau shadow by three consistency paths.
 
     Path 1: Closed-form tau = sqrt(Q(t)/Q(0)).
     Path 2: Numerical integration of the Malgrange form.

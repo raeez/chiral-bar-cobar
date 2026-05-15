@@ -25,6 +25,11 @@ import pytest
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'lib'))
 
 from theorem_bootstrap_koszul_engine import (
+    holographic_package_entries,
+    modular_koszul_compute_projections,
+    kernel_normalization_constants,
+    typed_duality_firewall,
+    finite_bootstrap_certification,
     kappa_virasoro,
     kappa_heisenberg,
     Q_contact_virasoro,
@@ -52,6 +57,57 @@ from theorem_bootstrap_koszul_engine import (
     kac_determinant_vs_shadow_unitarity,
     complementarity_bootstrap_test,
 )
+
+
+# ============================================================================
+# 0. Structural firewalls and certification scope
+# ============================================================================
+
+class TestStructuralFirewalls:
+    """Tests that prevent package and duality conflations."""
+
+    def test_holographic_package_entries_exact(self):
+        """Holographic package entries are exactly the seven typed entries."""
+        assert holographic_package_entries() == (
+            "A", "A^i", "A^!", "C", "r(z)", "Theta_A", "nabla^hol",
+        )
+
+    def test_modular_koszul_compute_projections_exact(self):
+        """Modular Koszul compute package projections stay distinct from H(A)."""
+        assert modular_koszul_compute_projections() == (
+            "Fact_X(L)", "barB_X(L)", "Theta_L", "L_L", "(V_br,T_br)", "R4_mod(L)",
+        )
+        assert set(holographic_package_entries()).isdisjoint(
+            set(modular_koszul_compute_projections())
+        )
+
+    def test_duality_firewall(self):
+        """A^!, B(A), A^i, and the Hochschild bulk are not conflated."""
+        firewall = typed_duality_firewall()
+        assert firewall["roles"]["Omega(B(A))"] == "bar-cobar inversion recovering A"
+        assert "Verdier/continuous-linear dual" in firewall["roles"]["A^!"]
+        assert firewall["roles"]["Z_ch^der(A)"].startswith("ChirHoch^*(A,A)")
+        confusions = firewall["confusions_forbidden"]
+        assert confusions["omega_bar_is_koszul_duality"] is False
+        assert confusions["derived_centre_is_koszul_dual"] is False
+        assert firewall["finite_type_or_completion_required_for_A_bang"] is True
+
+    def test_kernel_normalization_constants(self):
+        """Kernel constants preserve collision/KZ normalization discipline."""
+        constants = kernel_normalization_constants()
+        assert constants["affine_collision_raw"] == "k*Omega_tr/z"
+        assert constants["affine_kz"] == "Omega/((k+h^vee)z)"
+        assert constants["heisenberg_collision"] == "k/z"
+        assert constants["virasoro_collision"] == "(c/2)/z^3 + 2T/z"
+
+    def test_finite_bootstrap_certificate_blocks_overpromotion(self):
+        """Finite Virasoro OPE/Jacobi checks do not certify full bootstrap."""
+        cert = finite_bootstrap_certification("virasoro")
+        assert cert["checked_arities"] == (2, 3, 4, 5)
+        assert cert["finite_ope_jacobi_certificate"] is True
+        assert cert["full_crossing_system_certified"] is False
+        assert cert["spectral_bootstrap_uniqueness_certified"] is False
+        assert cert["bar_cobar_inversion_promoted_to_koszul_duality"] is False
 
 
 # ============================================================================
@@ -140,11 +196,14 @@ class TestMCCrossing:
     """Tests for the MC = crossing correspondence."""
 
     def test_crossing_mc_agreement_three_paths(self):
-        """S_4 from MC, crossing, and discriminant must agree (AP10: 3 paths)."""
+        """S_4 finite projection agrees; full crossing is not certified."""
         for c in [0.5, 1, 2, 10, 25, 100]:
             data = crossing_as_mc_verification(c)
             assert data['all_three_agree'], f"Three paths disagree at c={c}"
             assert data['mc_equals_crossing'], f"MC != crossing at c={c}"
+            assert data['certificate_scope'] == 'Virasoro TT arity-4 scalar shadow contact S_4'
+            assert data['full_crossing_system_certified'] is False
+            assert data['bootstrap_uniqueness_certified'] is False
 
     def test_mc_projection_arity2(self):
         """MC at arity 2 = OPE curvature kappa."""
@@ -174,6 +233,8 @@ class TestMCCrossing:
             Q_p3 = Delta / (8.0 * kappa)
             assert abs(Q_p1 - Q_p2) < 1e-12, f"Paths 1,2 disagree at c={c}"
             assert abs(Q_p1 - Q_p3) < 1e-12, f"Paths 1,3 disagree at c={c}"
+            assert data['finite_scalar_projection_only'] is True
+            assert data['full_crossing_system_certified'] is False
 
     def test_mc_projection_arity5(self):
         """MC at arity 5 = quintic shadow S_5 = -48/[c^2(5c+22)]."""
@@ -188,6 +249,8 @@ class TestMCCrossing:
         assert table_data['n_bootstrap_axioms'] == 7
         # 5 items require Koszulness, 2 are universal
         assert table_data['n_requiring_koszulness'] == 5
+        assert table_data['finite_engine_certifies_full_bootstrap'] is False
+        assert table_data['overpromotion_guard']['full_crossing_system_certified'] is False
 
 
 # ============================================================================
@@ -242,11 +305,17 @@ class TestIsingUniqueness:
         assert abs(params['b'] - 0.5) < 1e-12
         assert abs(params['c_param'] - 1.0) < 1e-12
 
-    def test_ising_uniqueness_proved(self):
-        """All three paths to uniqueness agree."""
+    def test_ising_uniqueness_not_overpromoted(self):
+        """Finite Ising data do not certify simple-quotient Koszulness."""
         data = ising_koszul_uniqueness()
-        assert data['all_paths_agree']
-        assert data['uniqueness_proved']
+        assert data['finite_paths_agree']
+        assert not data['all_paths_agree']
+        assert not data['simple_quotient_koszul_certified']
+        assert data['h_null'] == 6
+        assert data['bar_threshold'] == 4
+        assert data['null_in_bar_range']
+        assert not data['bootstrap_unique_certified']
+        assert not data['uniqueness_proved']
 
 
 # ============================================================================
@@ -257,12 +326,14 @@ class TestMinimalModels:
     """Tests for minimal model Koszul bootstrap."""
 
     def test_ising_as_minimal(self):
-        """M(4,3) = Ising: c = 1/2, 3 primaries."""
+        """M(4,3) = Ising: c = 1/2, 3 primaries, not promoted to Koszul."""
         data = minimal_model_koszul_bootstrap(4, 3)
         assert abs(data['c'] - 0.5) < 1e-12
         assert data['n_primaries'] == 3
         assert data['is_unitary']
-        assert data['koszul']
+        assert data['universal_virasoro_koszul']
+        assert not data['koszul']
+        assert not data['bootstrap_unique_certified']
 
     def test_tricritical_ising(self):
         """M(5,4) = tricritical Ising: c = 7/10, 6 primaries."""
@@ -270,6 +341,7 @@ class TestMinimalModels:
         assert abs(data['c'] - 0.7) < 1e-12
         assert data['n_primaries'] == 6
         assert data['is_unitary']
+        assert not data['koszul']
 
     def test_three_state_potts(self):
         """M(6,5) = 3-state Potts: c = 4/5, 10 primaries."""
@@ -277,18 +349,21 @@ class TestMinimalModels:
         assert abs(data['c'] - 0.8) < 1e-12
         assert data['n_primaries'] == 10
         assert data['is_unitary']
+        assert not data['koszul']
 
     def test_minimal_model_gap(self):
         """Spectral gap of M(4,3) is h_{2,2} = 1/16 (sigma field)."""
         data = minimal_model_koszul_bootstrap(4, 3)
         assert abs(data['spectral_gap'] - 1.0/16.0) < 1e-12
 
-    def test_all_minimal_koszul(self):
-        """All unitary minimal models are Koszul and bootstrap-unique."""
+    def test_minimal_model_koszul_scope_flags(self):
+        """Unitary minimal models carry finite BPZ data without uniqueness promotion."""
         for p in range(3, 8):
             data = minimal_model_koszul_bootstrap(p, p - 1)
-            assert data['koszul'], f"M({p},{p-1}) should be Koszul"
-            assert data['bootstrap_unique'], f"M({p},{p-1}) should be unique"
+            expected_koszul = data['h_null'] < data['bar_threshold']
+            assert data['koszul'] is expected_koszul
+            assert data['bpz_finite_data_certified']
+            assert not data['bootstrap_unique']
             assert data['c'] >= 0 and data['c'] < 1, f"c < 1 for minimal models"
 
 
@@ -304,10 +379,14 @@ class TestModularBootstrap:
         data = modular_bootstrap_from_mc(10.0)
         assert not data['modular_invariance_from_mc']
 
-    def test_mc_plus_sewing_sufficient(self):
-        """MC + sewing IS sufficient for modular invariance."""
+    def test_hs_sewing_not_modular_invariance_by_itself(self):
+        """HS-sewing certifies convergence, not modular invariance alone."""
         data = modular_bootstrap_from_mc(10.0)
-        assert data['modular_invariance_from_mc_plus_sewing']
+        assert not data['modular_invariance_from_mc_plus_sewing']
+        assert data['hs_sewing_convergence_certified']
+        assert data['modular_invariance_from_mc_plus_factorization']
+        assert 'factorization over all elliptic curves for modular invariance' in \
+            data['finite_type_completion_hypotheses']
 
     def test_F_1_cardy_consistency(self):
         """F_1 = kappa/24 = c/48 consistent with Cardy formula.
@@ -377,6 +456,8 @@ class TestShadowDepthBootstrap:
         assert data['shadow_depth'] == float('inf')
         assert data['shadow_class'] == 'M (mixed, infinite tower)'
         assert data['koszul']  # AP14: Virasoro IS Koszul
+        assert data['completion_required_for_full_tower']
+        assert not data['full_spectral_bootstrap_certified']
 
     def test_W_N_class_M(self):
         """W_N is class M for all N >= 2."""
@@ -396,6 +477,7 @@ class TestShadowDepthBootstrap:
             data = shadow_depth_bootstrap_closure(family, **kwargs)
             assert data['koszul'], f"{family} should be Koszul"
             assert data['mc_equation_holds'], f"MC holds for {family}"
+            assert not data['finite_engine_certifies_full_bootstrap']
 
 
 # ============================================================================
@@ -463,6 +545,7 @@ class TestBootstrapBounds:
         for c in [1.0, 10.0, 50.0]:
             data = shadow_bounds_at_c(c)
             assert data['all_bounds_consistent']
+            assert data['shadow_radius_is_spectral_gap_bound'] is False
 
 
 # ============================================================================
@@ -476,6 +559,7 @@ class TestMainTheorem:
         """Theorem has 5 parts."""
         thm = koszul_implies_bootstrap_theorem()
         assert len(thm['parts']) == 5
+        assert thm['claim_status'] == 'computed finite certificate'
 
     def test_each_part_has_proof(self):
         """Each part has a proof reference."""
@@ -488,6 +572,10 @@ class TestMainTheorem:
         """The converse (bootstrap => Koszulness) is OPEN."""
         thm = koszul_implies_bootstrap_theorem()
         assert 'OPEN' in thm['converse_status']
+        assert thm['full_bootstrap_uniqueness_promoted'] is False
+        assert thm['all_genus_promoted_without_uniform_weight'] is False
+        assert thm['omega_bar_promoted_to_koszul_duality'] is False
+        assert thm['certification']['checked_arities'] == (2, 3, 4, 5)
 
 
 # ============================================================================
@@ -521,6 +609,9 @@ class TestVirasiroTable:
         assert data['self_dual'], "c = 13 should be self-dual"
         assert data['Q_self_dual'], "Q^contact self-dual at c = 13"
         assert data['complementarity_correct'], "kappa + kappa' = 13 (AP24)"
+        assert data['rational_shadow_self_duality_all_degrees']
+        assert data['rtf_checked_to_degree'] == 7
+        assert not data['rtf_all_degree_certified']
 
     def test_c13_complementarity_is_13(self):
         """AP24: kappa + kappa' = 13 for Virasoro, NOT zero."""
@@ -649,6 +740,13 @@ class TestComplementarity:
         for c in [0.5, 10.0, 25.0]:
             data = complementarity_bootstrap_test(c)
             assert data['AP29_correct']
+
+    def test_dual_branch_not_inversion_or_bulk(self):
+        """A^! is Verdier/continuous-linear dual, not Omega(B(A)) or bulk."""
+        data = complementarity_bootstrap_test(10.0)
+        assert data['dual_branch'].startswith('Verdier/continuous-linear dual')
+        assert data['omega_bar_is_koszul_duality'] is False
+        assert data['derived_centre_is_koszul_dual'] is False
 
 
 # ============================================================================

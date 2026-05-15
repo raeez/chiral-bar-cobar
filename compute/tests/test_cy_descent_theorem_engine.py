@@ -1,6 +1,6 @@
 r"""Tests for cy_descent_theorem_engine.py -- Descent theorem for dg categories.
 
-Multi-path verification mandate: every numerical result verified by 3+ paths.
+Multi-path verification: every numerical result is checked by 3+ paths.
 
 The engine computes:
   1. Descent conditions (Zariski/etale/fpqc hierarchy)
@@ -28,6 +28,7 @@ from fractions import Fraction
 import numpy as np
 import pytest
 
+import compute.lib.cy_descent_theorem_engine as descent_engine
 from compute.lib.cy_descent_theorem_engine import (
     # Descent conditions
     DescentCondition,
@@ -81,6 +82,11 @@ from compute.lib.cy_cech_descent_engine import (
     k0_k3,
     k0_elliptic_curve,
 )
+
+
+def _normalized_engine_docstring() -> str:
+    """Collapse whitespace in the engine docstring for stable assertions."""
+    return " ".join((descent_engine.__doc__ or "").split())
 
 
 # =========================================================================
@@ -154,6 +160,117 @@ class TestDescentConditions:
         assert result['separated'] is True
         assert result['smooth'] is True
         assert result['proper'] is True
+
+
+# =========================================================================
+# Section 1b: Object firewall and descent scope
+# =========================================================================
+
+class TestObjectFirewallAndDescentScope:
+    """Pin the object distinctions and descent predicates exposed here."""
+
+    def test_engine_docstring_types_object_firewall(self):
+        """The engine types the bar, dual, inversion, and bulk slots separately."""
+        doc = _normalized_engine_docstring()
+        required_fragments = [
+            "B(A) = T^c(s^{-1} bar A) is a conilpotent dg coalgebra",
+            "A^i = H^*(B(A)) is the Koszul dual coalgebra",
+            "A^! is obtained from A^i only after Verdier/linear duality",
+            "Omega(B(A)) -> A is bar-cobar inversion, not the construction of A^!",
+            "Z_ch^der(A) = ChirHoch^*(A,A) is the bulk derived centre",
+            "distinct from B(A), A^i, and A^!",
+        ]
+        for fragment in required_fragments:
+            assert fragment in doc
+
+    def test_engine_docstring_excludes_out_of_scope_descent(self):
+        """Descent claims are scoped to Cech descent for Db, QCoh, and Perf."""
+        doc = _normalized_engine_docstring()
+        assert "Cech descent for D^b(Coh), QCoh, and Perf" in doc
+        assert "They do not assert descent for IndCoh" in doc
+        assert "or for the chiral derived centre" in doc
+
+    def test_forbidden_object_identifications_do_not_return(self):
+        """Forbidden identifications stay out of the engine surface."""
+        doc = _normalized_engine_docstring()
+        forbidden_fragments = [
+            "D_Ran(B(A)) = " + "B(A!)",
+            "Omega(B(A)) = " + "A^!",
+            "B(A) is an algebra",
+            "derived centre is the bar complex",
+            "Z_ch^der(A) = B(A)",
+            "Z_ch^der(A) = A^!",
+        ]
+        for fragment in forbidden_fragments:
+            assert fragment not in doc
+
+    def test_only_scoped_descent_predicates_are_exported(self):
+        """The predicate API names only QCoh, D^b(Coh), and Perf descent."""
+        predicate_names = {
+            name for name in dir(DescentCondition)
+            if name.startswith("sufficient_for_")
+        }
+        assert predicate_names == {
+            "sufficient_for_db",
+            "sufficient_for_perf",
+            "sufficient_for_qcoh",
+        }
+
+    @pytest.mark.parametrize("topology", ["zariski", "nisnevich"])
+    def test_perf_guard_does_not_upgrade_zariski_or_nisnevich(self, topology):
+        """The conservative Perf guard starts at etale covers."""
+        assert DescentCondition.sufficient_for_perf(topology) is False
+
+    @pytest.mark.parametrize("topology", ["etale", "fppf", "fpqc"])
+    def test_perf_guard_accepts_etale_or_finer(self, topology):
+        """Etale and finer topologies are in scope for Perf descent."""
+        assert DescentCondition.sufficient_for_perf(topology) is True
+
+    @pytest.mark.parametrize("topology", ["zariski", "nisnevich"])
+    def test_db_nonseparated_requires_etale_or_finer(self, topology):
+        """Non-separated D^b(Coh) descent is not inferred from weak covers."""
+        assert DescentCondition.sufficient_for_db(topology, separated=False) is False
+
+    @pytest.mark.parametrize("topology", ["etale", "fppf", "fpqc"])
+    def test_db_nonseparated_accepts_etale_or_finer(self, topology):
+        """Etale and finer topologies remain sufficient for D^b(Coh)."""
+        assert DescentCondition.sufficient_for_db(topology, separated=False) is True
+
+    @pytest.mark.parametrize("token", [
+        "IndCoh",
+        "indcoh",
+        "chiral-derived-centre",
+        "chiral-derived-center",
+        "derived-centre",
+        "derived_center",
+        "Z_ch^der",
+    ])
+    def test_out_of_scope_tokens_are_not_descent_topologies(self, token):
+        """IndCoh and chiral derived-centre labels are not accepted topologies."""
+        assert DescentCondition.implies(token, "zariski") is False
+        assert DescentCondition.sufficient_for_qcoh(token) is False
+        assert DescentCondition.sufficient_for_db(token, separated=True) is False
+        assert DescentCondition.sufficient_for_perf(token) is False
+
+    def test_k3_zariski_result_does_not_upgrade_perf(self):
+        """K3 Zariski output keeps Perf separate from Db and QCoh."""
+        result = descent_holds_for_k3("zariski")
+        assert result["Db_descent"] is True
+        assert result["QCoh_descent"] is True
+        assert result["Perf_descent"] is False
+
+    def test_k3_result_surface_only_names_in_scope_descent_slots(self):
+        """The returned descent slots are exactly Db, QCoh, and Perf."""
+        result = descent_holds_for_k3("etale")
+        descent_slots = {
+            key for key in result
+            if key.endswith("_descent")
+        }
+        assert descent_slots == {
+            "Db_descent",
+            "QCoh_descent",
+            "Perf_descent",
+        }
 
 
 # =========================================================================
@@ -416,16 +533,14 @@ class TestK3TimesEBetti:
 
     def test_betti_b3_from_kunneth(self):
         """b_3 via explicit Kunneth: b_0*b_3(E) + b_1*b_2(E) + b_2*b_1(E) + b_3*b_0(E)."""
-        val = (K3_BETTI[0] * ELLIPTIC_BETTI[2]   # 1*1 = 1 (wait, b_3(E)=0 since dim E=1)
-               + K3_BETTI[1] * 0                   # b_1(K3)*... but need b_2(E)
-               + K3_BETTI[2] * ELLIPTIC_BETTI[1]  # 22*2 = 44
-               + K3_BETTI[3] * ELLIPTIC_BETTI[0]) # 0*1 = 0
-        # Careful: b_k(E) = 0 for k > 2 since dim_R(E) = 2.
-        # b_3(K3xE) = sum_{i+j=3} b_i(K3)*b_j(E)
-        #           = b_0*b_3(E) + b_1*b_2(E) + b_2*b_1(E) + b_3*b_0(E)
-        #           = 1*0 + 0*1 + 22*2 + 0*1 = 44
-        val2 = (1 * 0 + 0 * 1 + 22 * 2 + 0 * 1)
-        assert val2 == 44
+        elliptic_b3 = 0
+        val = (
+            K3_BETTI[0] * elliptic_b3
+            + K3_BETTI[1] * ELLIPTIC_BETTI[2]
+            + K3_BETTI[2] * ELLIPTIC_BETTI[1]
+            + K3_BETTI[3] * ELLIPTIC_BETTI[0]
+        )
+        assert val == 44
 
     def test_betti_poincare_duality(self):
         """b_k = b_{6-k} (Poincare duality for 6-manifold)."""

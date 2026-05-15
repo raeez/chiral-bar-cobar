@@ -96,11 +96,6 @@
 \newcommand{\op}{\mathrm{op}}
 \newcommand{\FMAss}{F\!\Ass}
 
-\providecommand{\ClaimStatusConjectured}{}
-\providecommand{\ClaimStatusProvedHere}{}
-\providecommand{\ClaimStatusProvedElsewhere}{}
-\providecommand{\ClaimStatusHeuristic}{}
-
 \numberwithin{equation}{section}
 
 % ================================================================
@@ -116,7 +111,7 @@
   Waterloo, ON N2L 3G1, Canada}
 \email{rlorgat@perimeterinstitute.ca}
 
-\date{April 13, 2026}
+\date{}
 
 \begin{abstract}
 The five theorems of modular Koszul duality (bar-cobar adjunction,
@@ -130,7 +125,8 @@ This paper establishes $\Eone$ primacy: the ordered bar is the
 primitive object; the symmetric bar is derived by averaging; and the
 five theorems are the invariants that survive the quotient.
 
-The averaging map $\av\colon\gEone\twoheadrightarrow\gmod$ is
+After a strong-unitary \(R\)-twisted descent datum is fixed, the
+averaging map $\av_R\colon\gEone\twoheadrightarrow\gmod$ is
 a surjective morphism of dg~Lie algebras that sends the ordered
 Maurer--Cartan element $\Theta^{\Eone}_\cA$ to the modular
 $\Theta_\cA$, projects the classical $r$-matrix $r(z)$ to
@@ -151,11 +147,33 @@ $\kappa(\widehat{\fg}_k) = \dim(\fg)(k+h^\vee)/(2h^\vee)$,
 the Sugawara shift $\dim(\fg)/2$ arising from the simple-pole
 self-contraction; Virasoro $\Vir_c$ has
 $r(z) = (c/2)/z^3 + 2T/z$ and $\kappa(\Vir_c) = c/2$.
-The kernel of $\av$ at degree~$3$ contains the KZ associator;
-no symmetric invariant recovers this datum. We prove the $\Eone$
-primacy theorem, state the five ordered counterparts
-$\mathrm{A}^{\Eone}$--$\mathrm{H}^{\Eone}$, and exhibit the
-formality bridge and its failure.
+The non-trivial non-coinvariant component of the KZ associator,
+represented infinitesimally by $[\Omega_{12},\Omega_{23}]$, lies in
+the kernel of \(\av_R\). Its trivial isotypic projection is the cubic
+shadow \(\mathfrak C(\cA)\); this scalar shadow does not reconstruct
+\(\Phi_{\mathrm{KZ}}\).
+
+The bar direction does not by itself uplift a $2$-real-dimensional
+chiral algebra to a $3$-real-dimensional holomorphic--topological
+theory. The dimensional uplift is governed by the chiral
+Deligne--Tamarkin theorem: the universal local Swiss-cheese pair
+$(Z^{\mathrm{der}}_{\mathrm{ch}}(A_b),\, A_b)$ is terminal in the
+category of two-coloured $\SCchtop$-pairs over~$A_b$, the open
+colour~$A_b$ is acted on by the closed colour
+$Z^{\mathrm{der}}_{\mathrm{ch}}(A_b)$ through the chiral
+Swiss-cheese mixed operations, and the closed sector is not acted
+on by the open sector. The bar coalgebra
+$\Barord(\cA) = T^c(s^{-1}\bar\cA)$ is a chain-level
+\emph{computational model} that resolves $\cA$ for the purpose of
+computing $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
+= \HH^\bullet_{\mathrm{ch}}(\cA, \cA)
+= \mathrm{Hom}_{\mathrm{ch}}(\Barord(\cA), \cA)$; it is not the
+source of the dimensional uplift, which is the universal property
+of the Swiss-cheese pair. We prove the $\Eone$ primacy theorem,
+state the five ordered counterparts
+$\mathrm{A}^{\Eone}$--$\mathrm{H}^{\Eone}$, exhibit the chiral
+Deligne--Tamarkin Swiss-cheese theorem with its hypothesis package,
+and exhibit the formality bridge and its failure.
 \end{abstract}
 
 \subjclass[2020]{17B69, 18M70, 18M85, 81T40}
@@ -191,19 +209,12 @@ $\Barord(\cA) = T^c(s^{-1}\bar\cA)$ is the primitive object of
 modular Koszul duality, and that the symmetric bar
 $\BarSig(\cA)$ is an $R$-twisted coinvariant shadow when descent
 exists; in the pole-free locus this reduces to ordinary averaging. The
-averaging map is a surjective morphism of dg~Lie algebras; all five
-foundational theorems of modular Koszul duality (Theorems A through
-D, together with the chiral Hochschild theorem~H) lift to the ordered side,
-and each symmetric theorem is the $\Sigma_n$-coinvariant image of its
-ordered counterpart.
-% V2-AP4: ordered -> symmetric descent is R-twisted, not naive coinvariants.
-% On the pole-free subclass this reduces to naive $\Sigma_n$-coinvariants;
-% for non-pole-free $\Einf$-chiral algebras the descent is the
-% $R$-twisted equivariant quotient
-% $\BarSig_n(\cA) \simeq \bigl(\Barord_n(\cA)\bigr)^{R\text{-}\Sigma_n\text{-coinv}}$,
-% where the $\Sigma_n$-action on adjacent tensor factors is intertwined by
-% the chiral Heisenberg $R$-matrix; see Theorem~\ref{thm:formality-failure-standalone}
-% for the genuinely $\Eone$ case where even the $R$-twisted descent fails. The information lost under $\av$ is geometric,
+map $\av_R$ is a surjective morphism of dg~Lie algebras after a
+strong-unitary \(R\)-twisted descent datum is fixed. Under the same
+descent hypotheses, the five foundational theorems of modular Koszul
+duality (Theorems A through D, together with the chiral Hochschild
+theorem~H) have ordered counterparts whose symmetric forms are their
+\(R\)-coinvariant images. The information lost under $\av_R$ is geometric,
 arithmetic, and physical: the spectral $r$-matrix, the KZ connection,
 the Drinfeld associator, and the full braiding of tensor categories
 of modules all live on the ordered side.
@@ -220,10 +231,25 @@ its $\Sigma_2$-average recovers the degree-$2$ scalar shadow: for
 Heisenberg this is~$\kappa$, while for non-abelian affine Kac--Moody
 it is $\kappa_{\mathrm{dp}} = k\dim(\fg)/(2h^\vee)$, with the full
 $\kappa$ obtained after adding the Sugawara shift $\dim(\fg)/2$. The
-third is physical: the line-operator sector of a chiral conformal
-theory is naturally open and ordered, while the closed (bulk) sector
-is symmetric; the averaging map is the operadic image of the
-open-to-closed functor.
+third is operadic--holographic: the chiral Deligne--Tamarkin
+theorem (Theorem~\ref{thm:swiss-cheese-chiral-DT-standalone}
+below) constructs the universal Swiss-cheese pair
+$(Z^{\mathrm{der}}_{\mathrm{ch}}(\cA),\, \cA)$ as terminal in the
+category of two-coloured $\SCchtop$-pairs over $\cA$. The closed
+colour $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ acts on the open
+colour $\cA$ through the chiral Swiss-cheese mixed operations; the
+open colour does not act back. The bar coalgebra
+$\Barord(\cA)$ is a chain-level computational model that resolves
+$\cA$ for the purpose of computing
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ via
+$\mathrm{Hom}_{\mathrm{ch}}(\Barord(\cA), \cA)$; the $2$-real to
+$3$-real holomorphic--topological dimensional uplift is a property
+of the Swiss-cheese pair and the universal collar of its open
+boundary, not of the bar functor applied to $\cA$ alone. The
+averaging map sends the open ordered structure to its symmetric
+$\Sigma_n$-coinvariant image; the closed--open Swiss-cheese
+relation is invisible to averaging on a single colour and requires
+the two-coloured operad.
 
 We work throughout with the conventions of the monograph~\cite{Lor26},
 which we refer to as Volume~I. Everything is stated with OPE modes
@@ -264,25 +290,26 @@ The main results are:
   ordered Maurer--Cartan element $\Theta^{\Eone}_\cA$
   (Theorem~\ref{thm:e1-mc}).
 
-\item The \emph{averaging map} $\av\colon \gEone
+\item The \emph{averaging map} $\av_R\colon \gEone
   \twoheadrightarrow \gmod$ as a surjective dg~Lie morphism
   (Theorem~\ref{thm:av-surjective}), with the projection
-  formula $\av(\Theta^{\Eone}_\cA) = \Theta_\cA$
+  formula $\av_R(\Theta^{\Eone}_\cA) = \Theta_\cA$
   (Theorem~\ref{thm:av-mc-projection}).
 
 \item The \emph{$\Eone$ primacy theorem}
   (Theorem~\ref{thm:e1-primacy-main}): surjectivity, MC
-  projection, bracket preservation, and non-splitting of $\av$.
+  projection, bracket preservation, and non-splitting of $\av_R$.
 
 \item The \emph{non-splitting proposition}
-  (Proposition~\ref{prop:nonsplitting}): the kernel of $\av$
+  (Proposition~\ref{prop:nonsplitting}): the kernel of $\av_R$
   is controlled by $\GRT_1$ at genus~$0$ and by the
   quasi-modular anomaly at genus~$1$.
 
 \item The \emph{five ordered theorems}
   $\mathrm{A}^{\Eone}$--$\mathrm{H}^{\Eone}$
   (Theorems~\ref{thm:ordered-A}--\ref{thm:ordered-H}),
-  whose $\av$-images are the classical five theorems.
+  whose $\av_R$-images are the classical five theorems when
+  \(R\)-twisted descent is fixed.
 
 \item Complete degree-$2$ computations for Heisenberg, affine
   Kac--Moody, and Virasoro (Section~\ref{sec:heis-km}).
@@ -487,18 +514,19 @@ $k/(z_1-z_2)$. The $r$-matrix is
 \begin{equation}\label{eq:heis-r-matrix}
   r^{\mathrm{Heis}}(z) \;=\; k/z.
 \end{equation}
-% PE-1: r-matrix. Family: Heis. r(z) = k/z. Level: k.
-% AP126 check: k=0 -> r=0. Match: Y. Verdict: ACCEPT.
 At $k = 0$ the $r$-matrix vanishes: the algebra becomes
-trivially commutative. At degree~$3$, the Arnold relation on
-$\overline{\FM}_3(\CC)$ gives $d_{\mathrm{bar}}^2 = 0$: the three
-collision divisors contribute
-$k\cdot(\eta_{12}\wedge\eta_{23} + \eta_{23}\wedge\eta_{13}
-+ \eta_{13}\wedge\eta_{12}) = 0$.
+trivially commutative. At degree~$3$, the ordered differential squares
+to zero by Stokes on the consecutive Stasheff faces of
+$\overline{\FM}_3^{\mathrm{ord}}(\CC)$. The full Arnold relation
+belongs to the holomorphic flatness and ordered-to-symmetric descent
+calculation, not to the list of ordered boundary generators.
 \end{example}
 
 \begin{remark}[Heisenberg $R$-matrix convention: curved vs flat]\label{rem:heis-convention-eone-primacy}
-The Heisenberg algebra $\cH_k$ admits two standard presentations of the ordered bar $R$-datum: the \emph{flat} (classical, linear) form $r(z) = k/z$ used throughout this note, and the \emph{curved} (quantum, exponentiated) form $R(z) = \exp(k\hbar/z)$ used in the main chapter and in five companion standalones. They are related by the exponential map: $R(z) = \exp(\hbar\,r(z))$, so that the classical $r$-matrix is the $\hbar^{0}$ coefficient of $\log R$. At every order in $\hbar$ the exponentiation satisfies the quantum Yang--Baxter equation because $r(z)$ is a Casimir (its two tensor slots commute); the curved form is the trivialization of the twist, the flat form its infinitesimal shadow. This is the curved $\leftrightarrow$ flat Heisenberg equivalence (Costello--Witten twist trivialization); at $\hbar = 0$ the classical limit recovers $r(z)$.
+The Heisenberg algebra $\cH_k$ admits a flat presentation
+$r(z)=k/z$ and a curved presentation $R(z)=\exp(\hbar k/z)$. They
+are related by $R(z)=\exp(\hbar r(z))$; equivalently, $r(z)$ is the
+classical logarithm of the quantum monodromy.
 \end{remark}
 
 \begin{example}[Affine Kac--Moody ordered bar]
@@ -512,10 +540,6 @@ structure constants. The $r$-matrix in the trace-form convention is
 \begin{equation}\label{eq:km-r-matrix}
   r^{\KM}(z) \;=\; k\,\Omega_\fg/z,
 \end{equation}
-% PE-1: r-matrix. Family: affine KM. r(z) = k*Omega/z.
-% Level: k. AP126 check: k=0 -> r=0. Match: Y.
-% Critical-level check: k=-h^v -> r = -h^v Omega/z (finite).
-% Verdict: ACCEPT.
 where $\Omega_\fg = \sum_a t^a \otimes t_a \in \fg \otimes \fg$
 is the inverse Killing form Casimir. The level prefix~$k$ is
 essential: at $k = 0$ the $r$-matrix vanishes (the algebra becomes
@@ -525,9 +549,11 @@ Sugawara construction fails; the behaviour of the $r$-matrix at
 this locus is controlled by the Feigin--Frenkel centre.
 
 The KZ normalization
-$r(z) = \Omega_\fg/((k+h^\vee)z)$ is equivalent at generic~$k$
-via the bridge identity
-$k\,\Omega_{\mathrm{tr}} = \Omega/(k+h^\vee)$.
+$r_{\mathrm{KZ}}(z)=\Omega_{\mathrm{KZ}}/((k+h^\vee)z)$ is a separate
+spectral convention. It is not the same rational function of the
+level as the trace-form collision residue \(k\Omega_{\mathrm{tr}}/z\);
+the Drinfeld--Kohno comparison relates their monodromy categories
+after the standard KZ normalization has been chosen.
 \end{example}
 
 \begin{example}[Virasoro ordered bar]
@@ -723,14 +749,15 @@ boundary identity is the classical Yang--Baxter equation.
 
 \subsection{Definition of $\av$}
 
-\begin{definition}[The averaging map]
+\begin{definition}[The \(R\)-twisted averaging map]
 \label{def:averaging-map}
-With the notation of Definition~\ref{def:e1-convolution}, the
+With the notation of Definition~\ref{def:e1-convolution}, and after a
+strong-unitary \(R\)-twisted descent datum has been fixed, the
 \emph{averaging map} is the dg~Lie morphism
 \begin{equation}\label{eq:av-def}
-  \av\colon \gEone \twoheadrightarrow \gmod,
+  \av_R\colon \gEone \twoheadrightarrow \gmod,
   \qquad
-  \av(\phi)(g,n)
+  \av_R(\phi)(g,n)
   \;:=\;
   \frac{1}{n!}\sum_{\sigma \in \Sigma_n}
   \sigma \cdot
@@ -747,11 +774,14 @@ the external $\Sigma_n$-action: it takes external coinvariants
 after pullback along~$\iota^{\mathrm{rib}}$.
 \end{definition}
 
-\begin{theorem}[$\av$ is a surjective dg~Lie morphism]
+\begin{theorem}[$\av_R$ is a surjective dg~Lie morphism]
 \label{thm:av-surjective}
-The averaging map
-$\av\colon \gEone \twoheadrightarrow \gmod$
-is a surjective morphism of dg~Lie algebras.
+Under the fixed strong-unitary \(R\)-twisted descent datum, the
+averaging map
+$\av_R\colon \gEone \twoheadrightarrow \gmod$
+is a surjective morphism of dg~Lie algebras. Without this descent
+datum there is only the ordered dg Lie algebra; no morphism to
+\(\gmod\) is asserted.
 \end{theorem}
 
 \begin{proof}
@@ -799,9 +829,6 @@ In the affine Kac--Moody case the full modular characteristic is
   \;=\;
   \frac{\dim(\fg)(k+h^\vee)}{2h^\vee},
 \end{equation}
-% PE-2: kappa. Family: KM. kappa = dim(g)(k+h^v)/(2h^v).
-% At k=0: dim(g)/2 (NOT zero). At k=-h^v: 0 (critical).
-% Verdict: ACCEPT.
 where the extra $\dim(\fg)/2$ is the Sugawara simple-pole
 self-contraction through the adjoint Casimir eigenvalue $2h^\vee$.
 \end{theorem}
@@ -819,11 +846,9 @@ $\kappa_{\mathrm{dp}} = k\,\dim(\fg)/(2h^\vee)$; the simple-pole
 self-contraction contributes the additional Sugawara term
 $\dim(\fg)/2$, so
 $\kappa = \kappa_{\mathrm{dp}} + \dim(\fg)/2$.
-The example computations are recorded
-in~\cite[Chapter~5]{Lor26}; each formula is verified by three
-independent paths: pole-order analysis, the limiting case at
-$k = 0$ for the trace-form $r$-matrix, and cross-family consistency
-against the landscape census.
+The same formula is forced by pole-order analysis and by the limiting
+case \(k=0\), where the trace-form \(r\)-matrix vanishes but the
+Sugawara simple-pole contribution remains \( \dim(\fg)/2 \).
 \end{proof}
 
 \begin{remark}[Concrete examples]
@@ -833,7 +858,6 @@ The principal families:
 \item Heisenberg $\cH_k$:
   $r(z) = k/z$,
   $\kappa(\cH_k) = k$.
-  % AP126 check: k=0 -> r=0. Y.
 
 \item Affine Kac--Moody $\widehat{\fg}_k$:
   $r(z) = k\,\Omega_\fg/z$
@@ -862,13 +886,13 @@ genus-$0$ degree-$3$ Maurer--Cartan component, which for affine
 Kac--Moody $\widehat{\fg}_k$ is the Drinfeld--Kontsevich KZ
 associator. Then
 \begin{equation}\label{eq:degree-3-av}
-  \av_{n=3}\bigl(\Phi_{\mathrm{KZ}}(\cA)\bigr)
+\av_{R,n=3}\bigl(\Phi_{\mathrm{KZ}}(\cA)\bigr)
   \;=\; \mathfrak{C}(\cA),
 \end{equation}
 where $\mathfrak{C}(\cA)$ is the cubic shadow of Volume~I,
 equivalently the $\Sigma_3$-coinvariant of the associator. The
 antisymmetric component $[\Omega_{12}, \Omega_{23}]$ lies entirely
-in $\ker(\av)$: it is antisymmetric under the transposition
+in $\ker(\av_R)$: it is antisymmetric under the transposition
 $(1 \leftrightarrow 3)$, so its $\Sigma_3$-average vanishes. Only
 the symmetric products
 $\Omega_{ij}\Omega_{k\ell} + \Omega_{k\ell}\Omega_{ij}$ contribute
@@ -879,7 +903,7 @@ to~$\mathfrak{C}(\cA)$.
 The $\Sigma_3$-isotypic decomposition of $\Phi_{\mathrm{KZ}}$ in
 $\End(V^{\otimes 3})$ splits into the trivial, sign, and standard
 representations. The Reynolds operator
-$\av = (1/6)\sum_{\sigma \in \Sigma_3} \sigma$ projects onto the
+$\av_R = (1/6)\sum_{\sigma \in \Sigma_3} R_\sigma\sigma$ projects onto the
 trivial isotypic component. A direct check on
 $[\Omega_{12}, \Omega_{23}]$ shows it is antisymmetric under
 $(1 \leftrightarrow 3)$ and therefore has trivial isotypic component
@@ -889,11 +913,11 @@ $\mathfrak{C}(\cA)$ is~\cite[Theorem~D(iii)]{Lor26}.
 
 \subsection{MC projection}
 
-\begin{theorem}[MC projection under $\av$]
+\begin{theorem}[MC projection under $\av_R$]
 \label{thm:av-mc-projection}
-Under averaging:
+Under \(R\)-twisted averaging:
 \begin{equation}\label{eq:av-mc}
-  \av\bigl(\Theta^{\Eone}_\cA\bigr)
+  \av_R\bigl(\Theta^{\Eone}_\cA\bigr)
   \;=\; \Theta_\cA.
 \end{equation}
 In particular, the shadow obstruction tower
@@ -903,18 +927,18 @@ tower $(r(z), r_3, r_4, \ldots)$.
 \end{theorem}
 
 \begin{proof}
-$\av(D^{\Eone}_\cA) = D_\cA$ because the ordered genus-completed
+$\av_R(D^{\Eone}_\cA) = D_\cA$ because the ordered genus-completed
 bar differential on $\Barord(\cA)$ descends to $\BarSig(\cA)$
 under $R$-twisted $\Sigma_n$-coinvariants, and
-$\av(d_0) = d_0$. On the pole-free subclass the twist is trivial
+$\av_R(d_0) = d_0$. On the pole-free subclass the twist is trivial
 and descent reduces to naive coinvariants; for Heisenberg, affine
 Kac--Moody, and higher $E_\infty$-chiral families with poles, the
 twist carries the monodromy $R(z)$ along elementary transpositions,
 and the descent remains well-defined by quantum Yang--Baxter.
 Therefore
 \[
-  \av(\Theta^{\Eone}_\cA)
-  = \av(D^{\Eone}_\cA - d_0)
+  \av_R(\Theta^{\Eone}_\cA)
+  = \av_R(D^{\Eone}_\cA - d_0)
   = D_\cA - d_0
   = \Theta_\cA. \qedhere
 \]
@@ -922,16 +946,17 @@ Therefore
 
 \subsection{Non-splitting}
 
-\begin{proposition}[Non-splitting of $\av$]
+\begin{proposition}[Non-splitting of $\av_R$]
 \label{prop:nonsplitting}
 The short exact sequence of dg~Lie algebras
 \begin{equation}\label{eq:nonsplitting-ses}
-  0 \;\longrightarrow\; \ker(\av) \;\longrightarrow\;
-  \gEone \;\xrightarrow{\;\av\;}\; \gmod
+  0 \;\longrightarrow\; \ker(\av_R) \;\longrightarrow\;
+  \gEone \;\xrightarrow{\;\av_R\;}\; \gmod
   \;\longrightarrow\; 0
 \end{equation}
-does not split as dg~Lie algebras. Four independent obstructions
-prevent a section:
+does not split as dg~Lie algebras for non-abelian families with a
+nonzero degree-$3$ associator. Four independent obstructions prevent
+a section:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Fixed-degree triviality.}
   At each fixed degree~$n$, the inclusion section
@@ -947,14 +972,14 @@ prevent a section:
   contraction is $\Sigma_{n-2}$-equivariant but
   \emph{not} $\Sigma_n$-equivariant: it breaks the symmetry from
   $\Sigma_n$ to $\Sigma_{n-2}$, leaking from
-  $\ker(\av_n)$ into $\operatorname{im}(\av_{n-1})$. No
+  $\ker(\av_{R,n})$ into $\operatorname{im}(\av_{R,n-1})$. No
   Lie-algebra section can simultaneously respect the fixed-degree
   splitting and intertwine with~$D$.
 
 \item \emph{Associator representative.}
   At degree~$3$, the linearised Drinfeld associator
   $[\Omega_{12}, \Omega_{23}] \in \End(V^{\otimes 3})$ lies
-  entirely in $\ker(\av)$: it is antisymmetric under
+  entirely in $\ker(\av_R)$: it is antisymmetric under
   $(1 \leftrightarrow 3)$, so its $\Sigma_3$-average vanishes.
   The infinitesimal braid relation
   $[\Omega_{12}, \Omega_{13} + \Omega_{23}] = 0$
@@ -962,7 +987,7 @@ prevent a section:
   of the representation.
 
 \item \emph{$\GRT_1$-torsor structure.}
-  The space of dg~Lie sections of $\av$ satisfying the MC equation
+  The space of dg~Lie sections of $\av_R$ satisfying the MC equation
   up to gauge is a torsor for the pro-unipotent
   Grothendieck--Teichm\"uller group $\GRT_1$ of
   Drinfeld~\cite{Drinfeld91}. This is the algebraic shadow of the
@@ -970,13 +995,13 @@ prevent a section:
   splitting would canonically reconstruct the quantum group from the
   modular shadow $\kappa$ alone.
 \end{enumerate}
-For Heisenberg ($\dim V = 1$): $\ker(\av) = 0$ at every degree,
+For Heisenberg ($\dim V = 1$): $\ker(\av_R) = 0$ at every degree,
 the extension splits trivially, and no $\GRT_1$ ambiguity arises.
 \end{proposition}
 
 \begin{proof}
 Part~(i): the commutant of $\Sigma_n$ in $\End(V^{\otimes n})$ is
-a Lie subalgebra, so $c(A,B) = (1 - \av)([A,B]) = 0$.
+a Lie subalgebra, so $c(A,B) = (1 - \av_R)([A,B]) = 0$.
 
 Part~(ii): the partial-trace map
 $D_{ij}\colon \End(V^{\otimes n}) \to \End(V^{\otimes(n-1)})$
@@ -985,8 +1010,8 @@ $D_{ij} \circ \sigma = \sigma|_{\{1,\ldots,n\}\setminus\{j\}}
 \circ D_{ij}$
 only for $\sigma$ fixing both $i$ and $j$, i.e.\
 $\Sigma_{n-2} \subset \Sigma_n$. A $\Sigma_n$-invariant
-endomorphism in $\ker(\av_n)$ can map under $D$ to an endomorphism
-with nonzero $\av_{n-1}$ component.
+endomorphism in $\ker(\av_{R,n})$ can map under $D$ to an
+endomorphism with nonzero $\av_{R,n-1}$ component.
 
 Part~(iii): the $\Sigma_3$-isotypic decomposition of
 $[\Omega_{12}, \Omega_{23}]$ consists of sign and standard
@@ -1070,11 +1095,12 @@ Let $\cA$ be a cyclic chiral algebra on~$X$.
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \textup{(Surjectivity.)}
   The averaging map
-  $\av\colon \gEone \twoheadrightarrow \gmod$
-  is a surjective dg~Lie morphism.
+  $\av_R\colon \gEone \twoheadrightarrow \gmod$
+  is a surjective dg~Lie morphism after a strong-unitary
+  \(R\)-twisted descent datum has been fixed.
 
 \item \textup{(MC projection.)}
-  $\av$ sends
+  $\av_R$ sends
   $\Theta^{\Eone}_\cA \mapsto \Theta_\cA$.
   In particular, the shadow obstruction tower
   $(\kappa, \mathfrak{C}, \mathfrak{Q}, \ldots)$
@@ -1082,18 +1108,23 @@ Let $\cA$ be a cyclic chiral algebra on~$X$.
   $R$-matrix tower $(r(z), r_3, r_4, \ldots)$.
 
 \item \textup{(Bracket preservation.)}
-  $\av$ preserves the dg~Lie bracket by
+  $\av_R$ preserves the dg~Lie bracket by
   $\Sigma_n$-equivariance of the operad composition maps.
 
 \item \textup{(Non-splitting.)}
-  The kernel $\ker(\av)$ is non-trivial: at degree~$3$ it
-  contains the Drinfeld associator
-  $\Phi_{\mathrm{KZ}}(\cA)$, which is annihilated by $\av$
-  but satisfies the pentagon equation in $\gEone$. The short
+  For non-abelian families with a non-zero degree-$3$ associator
+  component, the non-trivial non-coinvariant component represented
+  infinitesimally by $[\Omega_{12},\Omega_{23}]$ lies in
+  $\ker(\av_R)$. Its trivial isotypic projection is the cubic shadow
+  $\mathfrak C(\cA)$; this scalar shadow does not reconstruct
+  $\Phi_{\mathrm{KZ}}$. The short
   exact sequence
-  $0 \to \ker(\av) \to \gEone
-  \xrightarrow{\av} \gmod \to 0$
-  does not split as dg~Lie algebras. At genus~$1$, a fourth
+  $0 \to \ker(\av_R) \to \gEone
+  \xrightarrow{\av_R} \gmod \to 0$
+  does not split as dg~Lie algebras in these non-abelian cases. In
+  the rank-one Heisenberg case $\ker(\av_n)=0$ for all $n$, so the
+  degreewise extension splits trivially and no $\GRT_1$ ambiguity
+  appears. At genus~$1$, a fourth
   obstruction to splitting arises from the quasi-modular anomaly
   of $E_2$ (Proposition~\textup{\ref{prop:nonsplitting-genus1}}).
 \end{enumerate}
@@ -1104,7 +1135,7 @@ Parts~(i)--(iii) are established in
 Theorem~\ref{thm:av-surjective} (surjectivity and bracket
 preservation as a dg~Lie morphism) and
 Theorem~\ref{thm:av-mc-projection} (MC projection
-$\av(\Theta^{\Eone}_\cA) = \Theta_\cA$). The map $\av$ is the
+$\av_R(\Theta^{\Eone}_\cA) = \Theta_\cA$). The map $\av_R$ is the
 Reynolds operator
 $\phi \mapsto (1/n!)\sum_\sigma \sigma \cdot \phi$; surjectivity
 follows because $\av$ restricts to the identity on
@@ -1114,16 +1145,17 @@ $\Sigma_n$-equivariant: coinvariant projection converts
 $T^c$-convolution to $\Sym^c$-convolution
 (Theorem~\ref{thm:fass-to-fcom}).
 
-For~(iv), the Drinfeld associator
-$\Phi_{\mathrm{KZ}}(\cA) \in \ker(\av)_{0,3}$ satisfies the
-pentagon equation in $\gEone$ (the genus-$0$, degree-$3$ MC
-equation). Its $\Sigma_3$-symmetrisation vanishes because the
-pentagon identity is antisymmetric under transposition of the two
-internal edges. Were $\av$ split, there would exist a dg~Lie section
-$s\colon \gmod \hookrightarrow \gEone$ with $\av \circ s = \id$.
+For~(iv), the antisymmetric linearised associator
+$[\Omega_{12},\Omega_{23}] \in \ker(\av_R)_{0,3}$ satisfies the
+linearised genus-$0$, degree-$3$ MC equation in $\gEone$. The full
+associator has a trivial-isotypic cubic shadow
+$\mathfrak C(\cA)=\av_R(\Phi_{\mathrm{KZ}})$, but that scalar shadow
+does not determine the ordered associator. Were $\av_R$ split, there
+would exist a dg~Lie section
+$s\colon \gmod \hookrightarrow \gEone$ with $\av_R \circ s = \id$.
 Such a section would lift the commutative MC element $\Theta_\cA$
 to an ordered element in the image of~$s$; but the pentagon
-constraint on $\ker(\av)$ forces the degree-$3$ component of any
+constraint on $\ker(\av_R)$ forces the degree-$3$ component of any
 lift to involve $\Phi_{\mathrm{KZ}}$, which does not lie in the
 image of any linear section
 (Proposition~\ref{prop:nonsplitting}).
@@ -1134,7 +1166,7 @@ image of any linear section
 Theorem~\textup{\ref{thm:e1-primacy-main}} admits a concise
 restatement. The $\Eone$/ordered structure is the natural primitive
 of the theory. The $\Einf$/symmetric/modular structure is its
-$\Sigma_n$-coinvariant shadow under $\av$. The five main theorems
+$\Sigma_n$-coinvariant shadow under $\av_R$. The five main theorems
 A--H are the invariants that survive averaging. Information flows
 in only one direction: from the rich $\Eone$ side, which contains
 the $R$-matrix, the KZ associator, the Drinfeld--Jimbo Yangian,
@@ -1173,14 +1205,138 @@ to $\cA$ itself. Compositions of the form ``$R$-matrix makes $\cA$ into
 an $\Etwo$-algebra'' are category errors.
 \end{remark}
 
+\subsection{The Swiss-cheese / chiral Deligne--Tamarkin theorem}
+\label{subsec:swiss-cheese-chiral-DT}
+
+The dimensional uplift from a $2$-real-dimensional chiral algebra
+on a curve $X$ to a $3$-real-dimensional holomorphic--topological
+theory on $X \times \RR_{\geq 0}$ is not a property of the bar
+direction alone. It is the universal property of the chiral
+Swiss-cheese pair, and the bar coalgebra $\Barord(\cA)$ is the
+chain-level computational model used to present that pair.
+
+\begin{theorem}[Swiss-cheese / chiral Deligne--Tamarkin]
+\label{thm:swiss-cheese-chiral-DT-standalone}
+\textup{(}\emph{quadrant} Open, \emph{presentation} two-coloured
+Swiss-cheese pair, \emph{level} $1 \to 3$ of the Beilinson tower,
+\emph{hypothesis package}: a local $\Ainf$-chiral algebra $\cA$ on
+a tangential log curve $(X, D, \tau)$ with completed
+conformal-weight topology and finite chiral residue at every
+double-point collision; a two-coloured chiral Swiss-cheese operad
+$\SCchtop$ with chiral colour and topological collar
+colour~\textup{\cite{Voronov99,KS00}}; an inner conformal vector
+controlling $\bar Q$-translations on the topological collar.\textup{)}
+The universal local chiral Swiss-cheese pair
+\[
+  U(\cA) \;=\; \bigl(\,
+    \HH^\bullet_{\mathrm{ch}}(\cA, \cA),\; \cA,\;
+    \{\mu^{\mathrm{univ}}_{p;q}\}\,\bigr)
+  \;=\;
+  \bigl(\,Z^{\mathrm{der}}_{\mathrm{ch}}(\cA),\; \cA,\;
+  \{\mu^{\mathrm{univ}}_{p;q}\}\,\bigr)
+\]
+is terminal in the category of local $\SCchtop$-pairs over~$\cA$:
+the closed colour $\HH^\bullet_{\mathrm{ch}}(\cA, \cA)
+= Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ acts on the open colour
+$\cA$ through the chiral Swiss-cheese mixed operations
+$\mu_{p;q}$ \textup{(}$p$ closed inputs, $q$ open inputs\textup{)};
+the open colour does not act back on the closed colour. For any
+local $\SCchtop$-pair $(B, \cA, \{\mu_{p;q}\})$ over $\cA$ with
+continuous mixed operations there is a unique morphism
+$\Phi \colon (B, \cA, \mu) \to U(\cA)$ over $\id_\cA$.
+\end{theorem}
+
+\begin{proof}[Citation]
+This is Volume~I, Chapter on the chiral derived centre, the chiral
+analogue of the Voronov Swiss-cheese formality
+theorem~\cite{Voronov99} and the Kontsevich--Soibelman Deligne
+conjecture~\cite{KS00}. Concretely, $\Phi(b)$ is the chiral
+Hochschild cochain
+\[
+  \Phi(b)_n(a_1, \ldots, a_n;\, \lambda_1, \ldots, \lambda_{n-1})
+  \;:=\;
+  (-1)^{|b|}\,
+  \mu_{1;n}(b;\, a_1, \ldots, a_n;\,
+    \lambda_1, \ldots, \lambda_{n-1})
+\]
+on $n - 1$ open-sector spectral variables.
+\end{proof}
+
+\begin{remark}[The Swiss-cheese pair is the explanatory mechanism;
+the bar is computational]
+\label{rem:bar-is-computational-not-uplift}
+The $2$-real to $3$-real dimensional uplift is the universal
+normal-collar direction of the codimension-one boundary condition
+forced by the chiral Deligne--Tamarkin terminal-object construction
+of Theorem~\ref{thm:swiss-cheese-chiral-DT-standalone}. It is not
+produced by iterating the bar functor on $\cA$. The bar coalgebra
+$\Barord(\cA) = T^c(s^{-1}\bar\cA)$ is $\Eone$-coassociative on
+the curve geometry: a single primitive twisting coalgebra over the
+chiral associative operad $(\mathrm{ChirAss})^!$, with
+deconcatenation coproduct and bar differential constituting one
+graded coalgebra structure --- not two colours of a Swiss-cheese
+algebra. The bar serves as a chain-level computational model that
+resolves $\cA$ for the purpose of computing the closed-colour
+Hochschild cochain complex via
+\[
+  Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
+  \;\simeq\;
+  \mathrm{Hom}_{\mathrm{ch}}\bigl(\Barord(\cA),\, \cA\bigr).
+\]
+The averaging map $\av_R$ acts within the open colour $\cA$,
+projecting the ordered bar onto the symmetric bar; it does not
+construct or witness the closed colour. The open and closed colours
+are linked only through the Swiss-cheese mixed operations of
+Theorem~\ref{thm:swiss-cheese-chiral-DT-standalone}.
+
+In particular, the slogans \emph{``$\Barord(\cA)$ is the bulk''},
+\emph{``the bar direction explains the $2$d $\to$ $3$d HT lift''},
+and \emph{``the bar is the open--closed transition''} are
+category-level errors: the bulk is the closed colour
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$, the dimensional uplift is
+the universal collar of the Swiss-cheese pair, and the open--closed
+transition is the chiral Deligne--Tamarkin morphism, not the bar
+functor.
+\end{remark}
+
+\begin{remark}[Where the dimensional uplift comes from in
+$\SCchtop$]
+\label{rem:uplift-mechanism-source}
+The Swiss-cheese chain-level construction adapts the topological
+Voronov pair~\cite{Voronov99} to the chiral setting: the open
+colour records $E_1$-chiral operations on $\cA$ along the curve
+$X$ (one complex direction, two real directions); the closed
+colour records $E_2$-topological brace operations on
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ in the transverse half-plane
+(two real directions). The chiral Deligne--Tamarkin terminal-object
+construction supplies a universal morphism between these two
+sectors that is itself a chiral object, with the inner conformal
+vector of the algebra controlling $\bar Q$-translations on the
+topological collar. The total $\SCchtop$ structure has
+$2 + 1 = 3$ real dimensions: the holomorphic chiral pair on the
+boundary curve and the topological collar normal to it. This is
+the mechanism: not Costello--Gwilliam factorisation, which is
+ambient-only, and not Voronov topological Swiss-cheese, which lacks
+the holomorphic colour --- but their fusion via chiral
+Deligne--Tamarkin. The bar of $\Eone$ is again $\Eone$ (cofree
+conilpotent over $T^c$); the Swiss-cheese pair $(\Etwo, \Eone)$ at
+the chiral-topological level is the source of the uplift.
+\end{remark}
+
 \subsection{The five ordered theorems}
 
-The five theorems of modular Koszul duality admit ordered $\Eone$
-counterparts, each of which projects to the classical theorem under
-$\av$.
+Under the ordered Koszul and \(R\)-twisted descent hypotheses stated in
+each item below, the five theorems of modular Koszul duality admit
+ordered $\Eone$ counterparts. Their symmetric forms are obtained by
+\(\av_R\), and no projection is asserted when the descent datum is absent.
 
 \begin{theorem}[Theorem $\mathrm{A}^{\Eone}$: ordered bar-cobar]
 \label{thm:ordered-A}
+\textup{(}\emph{quadrant} Open, \emph{presentation} bar / twisting
+coalgebra, \emph{level} $1 \leftrightarrow 2$ of the Beilinson
+tower, \emph{hypothesis package}: strongly admissible augmented
+cyclic $\Eone$-chiral algebra $\cA$ on a smooth curve, admissible
+$R$-twisted descent datum.\textup{)}
 The genus-$g$ ordered bar complex
 $\Barord(\cA)(g,n)$ is an $\FMAss$-coalgebra with differential
 satisfying $d^2 = 0$, where $\FMAss$ is the Feynman transform of
@@ -1191,12 +1347,18 @@ adjunction
   \mathrm{Alg}_{\FMAss} \rightleftarrows
   \mathrm{CoAlg}_{\FMAss},
 \]
-and coinvariant projection recovers Theorem~A of
-Volume~I.
+and, after \(R\)-twisted descent, the coinvariant projection recovers
+Theorem~A of Volume~I.
 \end{theorem}
 
 \begin{theorem}[Theorem $\mathrm{B}^{\Eone}$: ordered inversion]
 \label{thm:ordered-B}
+\textup{(}\emph{quadrant} Open, \emph{presentation} bar / cobar
+inversion, \emph{level} $1 \to 3$ of the Beilinson tower,
+\emph{hypothesis package}: $\Eone$ Koszul locus
+\textup{(}PBW-completeness on the ordered bar
+complex\textup{)}, propagated genus by genus via the MC
+perturbation lemma.\textup{)}
 Assume $\cA$ lies on the $\Eone$ Koszul locus, meaning the
 PBW-completeness hypothesis holds for the ordered bar complex. Then
 at each genus~$g$, the counit
@@ -1213,6 +1375,13 @@ $\Eone$-chiral algebra at each such genus.
 \begin{theorem}[Theorem $\mathrm{C}^{\Eone}$: ordered
 complementarity]
 \label{thm:ordered-C}
+\textup{(}\emph{quadrant} Open, \emph{presentation} ordered
+complementarity, \emph{level} $5$ per stratum of the Beilinson
+tower, \emph{hypothesis package}: ordered Koszul locus, finite
+perfect model for the ordered bar pairing, ordered chiral
+Hochschild centre $Z^{\mathrm{der}, \Eone}_{\mathrm{ch}}(\cA)$
+identified with the centre used by the strict ordered
+tower.\textup{)}
 At each genus~$g$ and degree~$n$ with $2g-2+n>0$, the ordered
 complementarity takes the form
 \begin{equation}\label{eq:ordered-C}
@@ -1221,16 +1390,24 @@ complementarity takes the form
   H^*\!\bigl(\overline{\cM}_{g,n}^{\mathrm{rib}},\,
   Z^{\Eone}(\cA)\bigr),
 \end{equation}
-where $Z^{\Eone}(\cA)$ is the $\Eone$ centre, the space of
-$R$-matrix-equivariant elements. The scalar identity
+where $Z^{\Eone}(\cA)$ is the ordered chiral Hochschild centre
+$Z^{\mathrm{der}, \Eone}_{\mathrm{ch}}(\cA)$, defined by the
+ordered chiral Hochschild cochain complex, not the subspace of
+$R$-matrix-fixed vectors. The scalar identity
 $\kappa + \kappa^! = 0$ for Kac--Moody and free-field families
 (and $\kappa + \kappa^! = 13$ for Virasoro) is the
-$\Sigma_n$-coinvariant image.
+$\Sigma_n$-coinvariant image of this complementarity in the
+verified scalar examples.
 \end{theorem}
 
 \begin{theorem}[Theorem $\mathrm{D}^{\Eone}$: ordered degree-$2$
 package]
 \label{thm:ordered-D}
+\textup{(}\emph{quadrant} Open, \emph{presentation} degree-$2$
+shadow tower, \emph{level} $4$ on $\overline\cM_{g,n}$ of the
+Beilinson tower, \emph{hypothesis package}: genus-refined
+degree-$2$ projection of $\Theta^{\Eone}_\cA$ exists genus by
+genus; cyclic admissibility on each stratum.\textup{)}
 The formal ordered degree-$2$ shadow series
 \begin{equation}\label{eq:ordered-D}
   R^{\Eone,\mathrm{bin}}(z;\hbar)
@@ -1254,6 +1431,12 @@ Theorem~D.
 \begin{theorem}[Theorem $\mathrm{H}^{\Eone}$: ordered
 chiral Hochschild]
 \label{thm:ordered-H}
+\textup{(}\emph{quadrant} Open, \emph{presentation} ordered chiral
+Hochschild concentration, \emph{level} $3$ of the Beilinson tower,
+\emph{hypothesis package}: $\cA$ complete and ordered Koszul;
+admissible $R$-twisted descent datum; complete bimodule $M$ in the
+same completion as $\cA$; class M chain-level statement requires
+weight-completed / pro-object / $J$-adic ambient.\textup{)}
 For every genus~$g$ and complete $\cA$-bimodule~$M$, the genus-$g$
 ordered chiral Hochschild homology is computed coalgebraically by
 the genus-$g$ ordered chiral coHochschild complex of the ordered bar
@@ -1287,17 +1470,17 @@ can see.
 
 \begin{remark}[What averaging forgets]
 \label{rem:what-av-forgets}
-The kernel of $\av$ contains several objects of independent interest.
-At degree~$2$, $\ker(\av)$ is the antisymmetric part of $r(z)$; for
+The kernel of $\av_R$ contains several objects of independent interest.
+At degree~$2$, $\ker(\av_R)$ is the antisymmetric part of $r(z)$; for
 bosonic generators of even desuspended degree this vanishes
 identically, and $\kappa$ recovers all of $r(z)$. For generators of
 odd desuspended degree, the kernel is nontrivial and captures the
 parity-dependent Eulerian weight structure on the bar complex. At
-degree~$3$, $\ker(\av)$ contains the linearised Drinfeld commutator
+degree~$3$, $\ker(\av_R)$ contains the linearised Drinfeld commutator
 $[\Omega_{12}, \Omega_{23}]$ and, by the non-splitting proposition,
 obstructs a canonical reconstruction of the full associator
 from~$\mathfrak{C}$. The $\GRT_1$-torsor structure of the splittings
-of $\av$ is the operadic shadow of Etingof--Kazhdan non-uniqueness
+of $\av_R$ is the operadic shadow of Etingof--Kazhdan non-uniqueness
 of quantisation.
 \end{remark}
 
@@ -1316,22 +1499,19 @@ chain level the loss is precisely the $R$-matrix and the associator.
 
 \begin{remark}[Formality for $\Einf$-chiral input]
 \label{rem:formality-einf}
-Every standard family in conformal field theory (Heisenberg, affine
-Kac--Moody, Virasoro, $\cW$-algebras, lattice vertex algebras,
-$\beta\gamma$ systems, $bc$ ghosts, Bershadsky--Polyakov) is
-$\Einf$-chiral: the OPE is symmetric in the operator ordering up
-to signs from the Arnold form, and the $\cD_X$-module structure
-descends to the symmetric Ran space. For such algebras the
-$\Eone$ refinement adds no new data at the level of bar
-\emph{cohomology}: the natural comparison map
+For families whose nontrivial $\Sigma_n$-isotypic summands of the
+ordered bar complex are acyclic, the $\Eone$ refinement adds no new
+data at the level of the trivial-isotypic bar \emph{cohomology}: the
+natural comparison map
 \[
-  H^*(\Barord(\cA)) \;\xrightarrow{\;\sim\;}\;
+  H^*(\Barord(\cA))_{\mathrm{triv}} \;\xrightarrow{\;\sim\;}\;
   H^*(\BarSig(\cA))
 \]
-is an isomorphism. The ordered bar carries additional data at the
-\emph{chain level}: the $R$-matrix, the KZ connection, and the
-Drinfeld associator are chain-level objects that project to zero in
-cohomology but determine the braided monoidal structure on the
+is an isomorphism. In characteristic zero the coinvariant functor is
+exact, so taking coinvariants introduces no higher group-cohomology
+obstruction. The ordered bar still carries chain-level data: the
+$R$-matrix, the KZ connection, and the nontrivial component of the
+Drinfeld associator determine the braided monoidal structure on the
 category of $\cA$-modules.
 \end{remark}
 
@@ -1340,10 +1520,13 @@ category of $\cA$-modules.
 \begin{theorem}[Formality bridge for $\Einf$-chiral algebras]
 \label{thm:formality-bridge-standalone}
 Let $\cA$ be an $\Einf$-chiral algebra on~$X$ and $\Phi$ a
-Drinfeld associator. The Kontsevich--Tamarkin operad formality
-quasi-isomorphism induces a quasi-isomorphism of coalgebras
+Drinfeld associator. Assume the nontrivial $\Sigma_n$-isotypic
+summands of the ordered bar complex are acyclic. The
+Kontsevich--Tamarkin operad formality quasi-isomorphism induces a
+quasi-isomorphism from the trivial-isotypic ordered bar to the
+symmetric bar,
 \begin{equation}\label{eq:formality-bridge-qi}
-  \Barord(\cA)
+  \Barord(\cA)_{\mathrm{triv}}
   \;\xrightarrow[\Phi]{\;\sim\;}\;
   \BarSig(\cA)
 \end{equation}
@@ -1423,16 +1606,6 @@ degree~$n$:
   \;\xrightarrow{\;\pi_{\Sigma_n}\;}
   (s^{-1}\bar\cA)^{\odot n} \;\to\; 0.
 \end{equation}
-% V2-AP4: the projection $\pi_{\Sigma_n}$ here is the naive coinvariant
-% quotient, valid on the pole-free subclass of $\Einf$-chiral algebras.
-% For $\Einf$-chiral algebras with OPE poles the correct descent is the
-% $R$-twisted quotient
-% $\BarSig_n(\cA) \simeq \bigl(\Barord_n(\cA)\bigr)^{R\text{-}\Sigma_n\text{-coinv}}$,
-% where adjacent-factor transpositions act by the Heisenberg $R$-matrix
-% $S_{i,i+1}(z)$; the bar differential remains $\Sigma_n$-equivariant for
-% this twisted action, and the argument below applies verbatim with the
-% $R$-twisted Maschke decomposition. The naive and $R$-twisted quotients
-% agree exactly when $S_{ij}(z) = \id$ (pole-free tier).
 The bar differential $d_{\mathrm{bar}}$ preserves the
 decomposition~\eqref{eq:maschke-decomp} because the
 $\Einf$-chiral OPE is $\Sigma_n$-equivariant: the collision
@@ -1481,10 +1654,11 @@ statements. It loses chain-level data: the $R$-matrix $r(z)$ is a
 chain-level datum on the ordered side that becomes trivial
 ($\Sigma_2$-average $\to \kappa$) on the symmetric side. The
 Drinfeld associator $\Phi_{\mathrm{KZ}}$ is a chain-level datum at
-degree~$3$ that maps to zero under $\av$. The braided monoidal
-structure on the category of $\cA$-modules is encoded in the chain-level
-ordered bar complex and is invisible from the symmetric bar
-cohomology.
+degree~$3$. Its antisymmetric linearised commutator lies in
+\(\ker(\av_R)\), while its trivial-isotypic projection is the cubic
+shadow \(\mathfrak C(\cA)\). The braided monoidal structure on the
+category of $\cA$-modules is encoded in the chain-level ordered bar
+complex and is invisible from the symmetric bar cohomology.
 \end{remark}
 
 % ================================================================
@@ -1650,12 +1824,11 @@ $X^{(n)}$).
 
 The paradigmatic example is the Yangian $Y_\hbar(\fg)$. Its
 $R$-matrix $r_{\mathrm{YB}}(z) = \hbar\,\Omega_\fg/z$ is a
-% PE-1: r-matrix. Family: Yangian. r(z) = hbar*Omega/z.
-% Level: hbar. AP126 check: hbar=0 -> r=0. Match: Y.
-% Verdict: ACCEPT.
 solution of the classical Yang--Baxter equation, and the bar
 complex $\Barord(Y_\hbar(\fg))$ is an $\FMAss$-coalgebra whose
-Koszul dual is the affine Kac--Moody algebra. The symmetric bar
+ordered Koszul comparison is controlled by the affine
+Drinfeld--Kohno local system under the flatness hypotheses of
+Proposition~\ref{prop:yangian-ordered-koszul-sa}. The symmetric bar
 $\BarSig(Y_\hbar(\fg))$ does not exist because the Yangian's OPE
 is not symmetric: the braiding $S(z) = 1 + \hbar\,P/z$ satisfies
 $S(z) \neq S(-z)$. This is the cleanest demonstration of $\Eone$
@@ -1674,22 +1847,21 @@ quasi-isomorphism of $\Eone$-chiral algebras\textup{)}; and
 collapses at $E_2$ in the ordered grading.
 \end{definition}
 
-\begin{proposition}[The Yangian is ordered Koszul]
+\begin{proposition}[Yangian ordered-Koszul criterion]
 \label{prop:yangian-ordered-koszul-sa}
-\ClaimStatusProvedHere
-For every finite-dimensional simple Lie algebra $\fg$ and every
-$\hbar \neq 0$, the Yangian $Y_\hbar(\fg)^{\mathrm{ch}}$ is
-ordered Koszul in the sense of
+Under Etingof--Kazhdan PBW flatness, Koszulity of the pure-braid
+Orlik--Solomon algebra, and the Drinfeld--Kohno monodromy comparison,
+$Y_\hbar(\fg)^{\mathrm{ch}}$ is ordered Koszul in the sense of
 Definition~\textup{\ref{def:ordered-koszul-chiral-algebra-sa}}.
 \end{proposition}
 
-\begin{proof}[Proof sketch]
+\begin{proof}
 Present $Y_\hbar(\fg)^{\mathrm{ch}}$ in Drinfeld's second form as
 generated by $\{\xi^{\pm}_{i,r}, h_{i,r}\}$ modulo the
 loop--algebra relations; by Etingof--Kazhdan flatness
-\textup{\cite{EK98}} the resulting filtration is PBW-flat over
+\textup{\cite{EK96}} the resulting filtration is PBW-flat over
 $\hbar$. Koszulity of the pure-braid Orlik--Solomon algebra
-(Shelton--Yuzvinsky~\textup{\cite{SheltonYuzvinsky}}) identifies
+(Shelton--Yuzvinsky~\textup{\cite{SheltonYuzvinsky1997}}) identifies
 the ordered bar cohomology with the quadratic dual under the
 Drinfeld--KZ bijection; $E_2$-collapse is the
 Etingof--Kazhdan--Drinfeld flatness statement. The EK monodromy
@@ -1774,7 +1946,6 @@ For $\cH_k$ with OPE $J(z)J(w) \sim k/(z-w)^2$:
 \item $\av(r(z)) = \kappa(\cH_k) = k$
   (the $\Sigma_2$-average of $k/z$ against $d\log(z)$ extracts
   the residue $k$, which is the full modular characteristic).
-  % PE-2 check: k=0 -> kappa = 0. Y.
 \item $\ker(\av_2) = 0$ (one-dimensional representation).
 \item Bar cohomology has its reduced generator
   $H^{-1}(\Barord(\cH_k)) = \CC \cdot s^{-1}J$ in bar degree~$1$.
@@ -1822,7 +1993,6 @@ The KZ connection at $n$ points is scalar:
   \nabla^{\cH_k}_{\mathrm{KZ}}
   \;=\; d - k\sum_{i < j} \frac{dz_{ij}}{z_i - z_j},
 \end{equation}
-% Connection form r(z) dz, not r(z) d log z. AP117 verified.
 and its monodromy is abelian: the representation
 $\rho_n\colon \PBr_n \to \CC^\times$ factors through
 $\PBr_n \twoheadrightarrow \ZZ^{\binom{n}{2}}$, and each
@@ -1837,7 +2007,6 @@ $h^\vee$ the dual Coxeter number:
 \item $r(z) = k\,\Omega_\fg/z$
   (equation~\eqref{eq:km-r-matrix}; trace-form convention;
   at $k=0$ the $r$-matrix vanishes identically).
-  % PE-1 check: k=0 -> r=0. Y.
 
 \item $\av(r(z)) = \kappa_{\mathrm{dp}}
   = k\,d/(2h^\vee)$ (double-pole channel).
@@ -1845,7 +2014,6 @@ $h^\vee$ the dual Coxeter number:
 \item $\kappa(\widehat{\fg}_k) = d(k+h^\vee)/(2h^\vee)$
   (equation~\eqref{eq:km-kappa-full}; at $k = 0$:
   $\kappa = d/2$, not zero; at $k = -h^\vee$: $\kappa = 0$).
-  % PE-2 check: k=0 -> d/2. k=-h^v -> 0. Y.
 
 \item $\ker(\av_2) = (d^2 - d(d+1)/2)$-dimensional: the
   antisymmetric part of $\Omega_\fg$ in $\fg \otimes \fg$.
@@ -1897,13 +2065,11 @@ The $n$-point KZ connection on the punctured disk is
 \begin{equation}\label{eq:km-kz-connection}
   \nabla_{\mathrm{KZ}}
   \;=\; d \;-\; \sum_{1 \leq i < j \leq n}
-  \frac{k\,\Omega_{ij}}{z_i - z_j}\, dz_{ij},
+  \frac{\Omega^{\mathrm{KZ}}_{ij}}{(k+h^\vee)(z_i - z_j)}\, dz_{ij},
 \end{equation}
-% PE-11: connection 1-form. Form: r(z) dz (not d log z). AP117 verified.
-% Verdict: ACCEPT.
-where $\Omega_{ij} = \sum_a t^a_i \otimes t_{a,j}$ acts on the
-$i$-th and $j$-th tensor factors of $V^{\otimes n}$, and
-$dz_{ij} = dz_i - dz_j$ (not $d\log(z_i - z_j)$).
+where \(\Omega^{\mathrm{KZ}}_{ij}\) is the KZ-normalised Casimir acting
+on the \(i\)-th and \(j\)-th tensor factors of \(V^{\otimes n}\), and
+\(dz_{ij}=dz_i-dz_j\).
 The connection is flat: its curvature vanishes by the
 infinitesimal braid relation
 \begin{equation}\label{eq:ibr}
@@ -1916,7 +2082,7 @@ configuration space $\Conf_2(\CC)$ is the single operator
 \begin{equation}\label{eq:kz-monodromy-n2}
   \mathrm{Mon}(\nabla_{\mathrm{KZ}})
   \;=\;
-  \exp\!\bigl(2\pi i \cdot k\,\Omega_\fg\bigr)
+  \exp\!\bigl(2\pi i\,\Omega^{\mathrm{KZ}}_\fg/(k+h^\vee)\bigr)
   \;\in\; \Aut(V \otimes V).
 \end{equation}
 
@@ -1928,7 +2094,8 @@ Drinfeld associator
 \begin{equation}\label{eq:drinfeld-associator}
   \Phi_{\mathrm{KZ}}
   \;=\;
-  \Phi(k\,\Omega_{12},\, k\,\Omega_{23})
+  \Phi\!\bigl(\Omega^{\mathrm{KZ}}_{12}/(k+h^\vee),\,
+  \Omega^{\mathrm{KZ}}_{23}/(k+h^\vee)\bigr)
   \;\in\; \exp\bigl(\hat{\mathfrak{t}}_3\bigr)
   \;\subset\; \End(V^{\otimes 3}),
 \end{equation}
@@ -1949,13 +2116,12 @@ $(i,j,k)$ tensor factors. This pentagon is the degree-$3$ MC
 equation on the ordered side (the five faces of the Stasheff
 associahedron $K_4$).
 
-The associator projects to zero under $\av$: the linearised
-commutator $[\Omega_{12}, \Omega_{23}]$ is antisymmetric under
-$(1 \leftrightarrow 3)$, so $\av_3(\Phi_{\mathrm{KZ}}) = 0$.
-The pentagon constraint survives averaging as the trivial identity
-$\mathfrak{C} = 0$ on the symmetric shadow, reflecting the fact
-that no $\Sigma_3$-coinvariant component of the pentagon carries
-content.
+The antisymmetric linearised commutator
+$[\Omega_{12}, \Omega_{23}]$ is killed by $\av_R$. The full
+associator has the nonzero trivial-isotypic projection
+\(\av_R(\Phi_{\mathrm{KZ}})=\mathfrak C(\cA)\) in general. The scalar
+cubic shadow records this projection, while the ordered associator
+contains the non-coinvariant data needed for the pentagon.
 
 \subsubsection{Worked example: $\fg = \mathfrak{sl}_2$}
 \label{subsubsec:sl2-example}
@@ -1966,9 +2132,6 @@ The modular characteristic is
   \kappa(\widehat{\mathfrak{sl}}_2,\, k)
   \;=\;
   \frac{3(k+2)}{4}.
-  % PE-2: kappa. Family: KM (sl_2). kappa = 3(k+2)/4.
-  % At k=0: 3/2 = dim(sl_2)/2. At k=-2: 0 (critical). Y.
-  % Verdict: ACCEPT.
 \end{equation}
 At $k = 0$: $\kappa = 3/2 = d/2$. At $k = -2$ (critical):
 $\kappa = 0$.
@@ -1984,7 +2147,6 @@ representation $V = \CC^2$ is
   \qquad
   \hbar = \frac{1}{k + 2},
 \end{equation}
-% AP126: hbar=0 (i.e. k -> inf) -> R = u I (trivial). Verified.
 where $P$ is the permutation matrix. In the standard basis
 $\{e_1 \otimes e_1,\; e_1 \otimes e_2,\;
 e_2 \otimes e_1,\; e_2 \otimes e_2\}$, this is the
@@ -2024,12 +2186,13 @@ The KZ monodromy on $\Conf_2(\CC)$ decomposes $V \otimes V
 = \CC^2 \otimes \CC^2$ into the singlet $V_0$ (dimension~$1$)
 and the triplet $V_1$ (dimension~$3$), with eigenvalues
 \begin{equation}\label{eq:sl2-monodromy-eigenvalues}
-  \exp(2\pi i \cdot k\,\Omega_{\mathfrak{sl}_2})
+  \exp\!\bigl(2\pi i\,\Omega^{\mathrm{KZ}}_{\mathfrak{sl}_2}/(k+2)\bigr)
   \;=\;
   \begin{cases}
-    e^{-3\pi i k/2} & \text{on } V_0, \\[3pt]
-    e^{\pi i k/2} & \text{on } V_1.
+    q_{\mathrm{KL}}^{-3/2} & \text{on } V_0, \\[3pt]
+    q_{\mathrm{KL}}^{1/2} & \text{on } V_1,
   \end{cases}
+  \qquad q_{\mathrm{KL}}=e^{\pi i/(k+2)}.
 \end{equation}
 At integer level $k \in \ZZ_{\geq 1}$, these are roots of unity,
 and the representation category of $U_q(\mathfrak{sl}_2)$
@@ -2101,7 +2264,7 @@ it satisfies Drinfeld's pentagon axiom
 in $U(\hat{\mathfrak g})^{\otimes 4}[[\hbar]]$, together with the
 two hexagon axioms relating $\Phi$ to the $R$-matrix
 $R(z) = e^{\hbar r(z)/2}$ of clause~(I)
-\cite{Drinfeld89,Drinfeld90,Kontsevich99}. Equivalently,
+\cite{Drinfeld91,Kontsevich99}. Equivalently,
 $\Phi_{\mathrm{KZ}}$ is the holonomy of the Knizhnik--Zamolodchikov
 connection on $\overline{\FM}_3^{\mathrm{ord}}(\CC)$ between the
 limiting tangential basepoints $(z_1 \to z_2) \to z_3$ and
@@ -2136,7 +2299,7 @@ The direction $\textup{(III)} \to \textup{(I)}$
 the degree-$2$ component of $\Delta_z$ at the classical level.
 \end{theorem}
 
-\begin{proof}[Proof sketch]
+\begin{proof}
 $\alpha$: the Stasheff associahedron $K_n$ is isomorphic to
 the real Fulton--MacPherson compactification
 $\overline{\FM}_n^{\mathrm{ord}}(\RR)$
@@ -2187,12 +2350,13 @@ The equivalence theorem extends to a uniform tower indexed by
 $N \geq 1$, through the principal $\cW$-algebras
 $\cW_N[\Psi]$ at level~$\Psi$.
 
-\begin{theorem}[$\mathfrak{gl}_N$ chiral quantum group for all
-$N \geq 1$]
+\begin{theorem}[$\mathfrak{gl}_N$ chiral quantum group tower]
 \label{thm:glN-chiral-qg-standalone}
-For each $N \geq 1$ and generic level~$\Psi$, the truncation
-$\cW_N[\Psi]$ carries a chiral quantum group datum in the sense
-of Theorem~\textup{\ref{thm:chiral-qg-equiv-standalone}}:
+For $N=1$ the datum is Heisenberg, and for $N=2$ it is the
+Virasoro/$\mathfrak{sl}_2$ case. For $N\geq3$ and generic
+level~$\Psi$, the chiral quantum-group datum for
+$\cW_N[\Psi]$ is conditional on the Jindal--Kaubrys--Latyntsev vertex
+bialgebra theorem~\cite{JKL26}. On the corresponding locus:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \textup{(Transfer matrix.)}
   The $N \times N$ transfer matrix
@@ -2211,7 +2375,6 @@ of Theorem~\textup{\ref{thm:chiral-qg-equiv-standalone}}:
   The $R$-matrix for $Y(\widehat{\mathfrak{gl}}_N)$
   in the fundamental representation is
   \begin{equation}\label{eq:yang-r-matrix-standalone}
-    % AP126: level prefix Psi mandatory; Psi=0 -> R = uI (trivial). Verified.
     R(u)
     \;=\; u\, I_{N^2} + \Psi\, P
     \;\in\; \End(\CC^N \otimes \CC^N),
@@ -2219,7 +2382,6 @@ of Theorem~\textup{\ref{thm:chiral-qg-equiv-standalone}}:
   where $P(e_i \otimes e_j) = e_j \otimes e_i$ is the
   permutation and $\Psi$ is the level prefix. The classical
   $r$-matrix is
-  % AP126: Psi=0 -> r=0. Verified.
   \begin{equation}\label{eq:classical-r-glN}
     r(z)
     \;=\;
@@ -2444,13 +2606,23 @@ from its logarithm. The symmetric bar is the $\Sigma_n$-invariant
 trace of this logarithm: a scalar shadow that retains
 $\kappa(\cA)$ but discards the $R$-matrix, the KZ associator, and
 every braid-group representation that makes the $\Eone$ theory
-strictly richer. The averaging map $\av$ is the sole information
+strictly richer. The averaging map $\av_R$ is the sole information
 loss in the passage from the $\Eone$ primitive to the
 $E_\infty$ shadow. The five theorems of modular Koszul duality are
 the invariants that survive this loss: they are projections of a
-richer $\Eone$ structure whose full content is the subject of the
-companion papers on the $E_n$ operadic circle, the chiral quantum
-group equivalence, and three-dimensional quantum gravity.
+richer $\Eone$ structure --- the operadic circle, the chiral
+quantum-group equivalence, and the chain-level computational
+presentation of the closed colour of the chiral
+Deligne--Tamarkin Swiss-cheese pair
+$(Z^{\mathrm{der}}_{\mathrm{ch}}(\cA),\, \cA)$ via
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA) \simeq
+\mathrm{Hom}_{\mathrm{ch}}(\Barord(\cA),\, \cA)$. The bulk is the
+closed colour $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$, not the bar
+that resolves it. The holomorphic--topological theory in three
+real dimensions is the universal-collar consequence of the
+Swiss-cheese pair, supplied by
+Theorem~\ref{thm:swiss-cheese-chiral-DT-standalone}, not by
+iterating the bar functor on the chiral algebra alone.
 
 
 % ================================================================
@@ -2518,6 +2690,11 @@ J.~Gui, H.~Li, and J.~Zeng,
 \textit{Quadratic duality for chiral algebras},
 Adv.~Math.\ \textbf{406} (2022), 108496.
 
+\bibitem{JKL26}
+A.~Jindal, M.~Kaubrys, and E.~Latyntsev,
+\textit{Vertex bialgebras and chiral quantum groups},
+preprint, 2026.
+
 \bibitem{Kohno85}
 T.~Kohno,
 \textit{S\'erie de Poincar\'e--Koszul associ\'ee aux groupes
@@ -2561,6 +2738,11 @@ D.\,P.~Sinha,
 spaces},
 Selecta Math.\ (N.S.) \textbf{10} (2004), 391--428.
 
+\bibitem{SheltonYuzvinsky1997}
+B.~Shelton and S.~Yuzvinsky,
+\textit{Koszul algebras from graphs and hyperplane arrangements},
+J.\ London Math.\ Soc.\ \textbf{56} (1997), 477--490.
+
 \bibitem{Stasheff63}
 J.\,D.~Stasheff,
 \textit{Homotopy associativity of $H$-spaces, I},
@@ -2576,6 +2758,20 @@ E.~Verlinde,
 \textit{Fusion rules and modular transformations in 2D conformal
 field theory},
 Nuclear Phys.~B \textbf{300} (1988), 360--376.
+
+\bibitem{Voronov99}
+A.\,A.~Voronov,
+\textit{The Swiss-cheese operad},
+Contemp.\ Math.\ \textbf{239} (1999), 365--373;
+arXiv:math/9807037.
+
+\bibitem{KS00}
+M.~Kontsevich and Y.~Soibelman,
+\textit{Deformations of algebras over operads and the Deligne
+conjecture},
+in \emph{Conf\'erence Mosh\'e Flato 1999, Vol.~I}, Math.\ Phys.\
+Stud.\ \textbf{21}, Kluwer, 2000, 255--307;
+arXiv:math/0001151.
 
 \end{thebibliography}
 

@@ -2,765 +2,800 @@
 %==================================================================
 % chapters/theory/theorem_h_off_koszul_platonic.tex
 %
-% Theorem H boundary strata: Koszul locus, logarithmic defects, and
-% critical level.
-%
-% The proved Theorem H surface is the Koszul/generic curve-level
-% concentration theorem. The logarithmic and critical-level formulae below
-% are companion boundary surfaces, kept with explicit conditional
-% hypotheses rather than folded into the main theorem package.
+% Theorem H boundary strata: Koszul locus, positive collision defects,
+% singular quotients, and critical level.
 %==================================================================
 
-\chapter{Theorem H boundary strata: off the Koszul locus and at critical level}
+\chapter{Theorem H boundary strata: Koszul locus, singular quotients, and critical level}
 \label{chap:theorem-h-off-koszul-platonic}
 
-Theorem H gives the sharp bigraded Hilbert series
+Theorem~H is a theorem about the curve-level chiral Hochschild complex
+\[
+ RHH_{\mathrm{ch}}(\cA)
+ \;=\;
+ R\mathrm{Hom}_{\cA^e}(\cA,\cA)
+\]
+of a chiral algebra on a fixed smooth projective reference curve~$X$.
+It is not a theorem about topological Hochschild homology of an
+$E_1$-ring spectrum, categorical Hochschild cochains of a dg or
+Calabi--Yau category, the Hochschild theory of a formal-disk mode
+algebra, or a product-ambient Hall Hochschild theory. The comparison
+convention is
+Convention~\ref{conv:three-hochschild}; the local construction is
+Remark~\ref{rem:three-hochschild-discipline}.
+The coHochschild statement attached to Theorem~H is not a second
+ambient: it is the transport of this chiral Hochschild complex across
+the complete bimodule--bicomodule equivalence of
+Theorem~\ref{thm:ordered-HH-coHH-cohomology}, with
+$C=\barB^{\mathrm{ch}}(\cA)$ and diagonal bicomodule~$C_\Delta$.
+No concentration statement is asserted for an arbitrary coalgebra
+outside that equivalence.
+
+On the PBW chiral Koszul locus, with the $E_\infty$-chiral completion,
+finite conformal-weight windows, Mittag--Leffler completion,
+perfectness, and genericity hypotheses of
+Theorem~\ref{thm:main-koszul-hoch}, the direct-sum totalization in bar
+degree is formed before weight completion and the collision-depth
+spectral sequence on ordered Fulton--MacPherson compactifications
+collapses by the pure-braid Orlik--Solomon contraction. The result is
+the sharp curve-level amplitude
+\[
+ \ChirHoch^n(\cA)=0\qquad(n\notin\{0,1,2\})
+\]
+and the Hilbert polynomial
 \[
  P_{\cA}(t,q)
  \;=\;
  \HS_{Z(\cA)}(q)
  \;+\;
- \HS_{\ChirHoch^{1}(\cA)}(q)\cdot t
+ \HS_{\ChirHoch^{1}(\cA)}(q)t
  \;+\;
- \HS_{Z(\cA^{!})}(q)\cdot t^{2}
+ \HS_{Z(\cA^{!})}(q)t^{2}.
 \]
-for chiral Hochschild cohomology on the Koszul locus
-\textup{(}Proposition~\textup{\ref{prop:chirhoch-sharp-hilbert}},
-Theorem~\textup{\ref{thm:hochschild-concentration-E1}}\textup{)}.
-The proved Vol~I theorem is the first statement: curve-level chiral
-Hochschild concentration in degrees $\{0,1,2\}$ on the
-Koszul/generic surface. The other two boundaries require additional
-comparison input. The logarithmic locus is controlled by a
-Koszul-defect complex once the defect-to-Hochschild comparison map is
-known to be an isomorphism in degrees $\geq 3$; the critical-level
-affine locus is controlled by the Feigin--Frenkel centre once the
-Sugawara fibre factor in the chiral Hochschild complex is identified.
+This is a Hilbert polynomial in the cohomological variable~$t$ with
+finite $q$-graded coefficients. It is not a Hilbert series for a
+topological Hochschild spectrum, a categorical Hochschild complex of a
+Calabi--Yau category, or a completed product totalization. Every
+boundary in this chapter is measured against that theorem.
 
-Thus this chapter has two functions. It restates the proved
-Koszul-locus theorem, and it records the precise conditional boundary
-formulae that would enlarge the theorem if the named comparison maps
-were supplied. The boundary formulae are not used to enlarge the main
-theorem package of this volume.
+\section{Object firewall}
+\label{sec:theorem-h-object-firewall}
 
-\section{Setup: Koszul defect and its graded measure}
-\label{sec:theorem-h-setup}
-
-Throughout this chapter $X$ is a smooth projective curve over a
-field of characteristic zero, and $\cA$ is a conformal-weight-graded
-chiral algebra in the standard landscape with
+The objects entering Theorem~H have different types:
 \[
- \cA \;=\; \bigoplus_{h \geq 0} \cA_h,
- \qquad
- \dim \cA_h < \infty.
+\begin{array}{c|c}
+\text{object} & \text{role}\\
+\hline
+\cA & \text{input chiral algebra on }X\\
+\barB^{\mathrm{ch}}(\cA) & \text{bar coalgebra}\\
+\Omega^{\mathrm{ch}}\barB^{\mathrm{ch}}(\cA) &
+ \text{bar--cobar resolution of }\cA\\
+\cA^{i}=H^*(\barB^{\mathrm{ch}}(\cA)) &
+ \text{Koszul coalgebra homology}\\
+\cA^!=\mathbb D_X(\cA^i) &
+ \text{Verdier-dual Koszul algebra}\\
+RHH_{\mathrm{ch}}(\cA) &
+ \text{chiral Hochschild cochain complex}\\
+Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)=RHH_{\mathrm{ch}}(\cA) &
+ \text{derived chiral centre, chain-level closed-sector object}\\
+\mathrm{Coext}_{C^e}^{\bullet}(C_\Delta,C_\Delta) &
+ \text{coHochschild self-extension, after }C=\barB^{\mathrm{ch}}(\cA)
+\end{array}
 \]
-Write $\barB(\cA)$ for the ordered chiral bar complex
-\textup{(}Definition~\textup{\ref{def:chiral-bar-complex}}\textup{)}
-and $\ChirHoch^{*}(\cA)$ for chiral Hochschild cohomology
-\textup{(}Definition~\textup{\ref{def:chiral-hochschild}}\textup{)}.
-The Koszul locus is the subset of the landscape on which the PBW
-criterion of Theorem~\ref{thm:pbw-koszulness-criterion} holds.
+The bar--cobar counit
+\[
+ \Omega^{\mathrm{ch}}\barB^{\mathrm{ch}}(\cA)\longrightarrow \cA
+\]
+is an inversion or resolution map. It is not the definition of the
+Koszul dual algebra, and its cone is not the Theorem~H defect. The
+Hochschild amplitude bound is lost precisely when the positive
+collision-depth part of the Fulton--MacPherson Hochschild complex is no
+longer killed by the PBW/Arnold contraction.
+All quotients and subcomplexes below are taken in the conformal-weight
+completed holonomic $\mathcal D_X$-module derived category. Thus
+$F^1_{\mathrm{FM}}$ denotes the closed positive-depth term in the
+completed collision-depth filtration, and the depth-zero quotient is a
+completed quotient. Without this Hausdorff completion the infinite
+standard families have the wrong ambient topology.
+The equality
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)=RHH_{\mathrm{ch}}(\cA)$ names the
+chiral derived centre of the boundary chiral algebra. It is not the
+topological bulk of a $3$-dimensional TQFT, not the categorical
+Hochschild cochains of a dg or Calabi--Yau category, and not a
+product-ambient Hall Hochschild theory unless a separate open--closed
+comparison theorem changes both the input and the target category.
 
-\begin{definition}[Koszul defect complex; \ClaimStatusProvedHere]
+\begin{definition}[Hochschild Koszul-defect complex]
 \label{def:koszul-defect-complex}
 \index{Koszul defect complex}
 \index{chiral Hochschild!Koszul defect}
-The \emph{Koszul defect complex} of $\cA$ is the mapping cone
+Let $F^\bullet_{\mathrm{FM}}RHH_{\mathrm{ch}}(\cA)$ be the complete
+collision-depth filtration of the bigraded chiral Hochschild complex
+used in Lemma~\ref{lem:hochschild-shift-computation} and
+Theorem~\ref{thm:hochschild-concentration-E1}. The
+\emph{Hochschild Koszul-defect complex} is the closed positive-depth
+subcomplex
 \[
- \mathrm{KD}^{\bullet}(\cA)
+ \mathrm{KD}_{\mathrm H}^{\bullet}(\cA)
  \;:=\;
- \mathrm{Cone}\Bigl(
- \Omega(\barB(\cA)) \xrightarrow{\,\varepsilon\,} \cA
- \Bigr),
+ F^1_{\mathrm{FM}}RHH_{\mathrm{ch}}(\cA).
 \]
-where $\varepsilon$ is the bar--cobar counit. Its cohomology
-$H^{*}(\mathrm{KD}^{\bullet}(\cA))$ measures the failure of
-Koszulness in the sense of
-Theorem~\ref{thm:bar-cobar-inversion-qi}: $\cA$ is chirally
-Koszul if and only if $\mathrm{KD}^{\bullet}(\cA)$ is acyclic.
+Equivalently, it is the part of the chiral Hochschild complex supported
+on non-trivial collision strata. It measures failure of the
+Fulton--MacPherson/PBW collapse used in Theorem~H, not failure of the
+bar--cobar counit.
 \end{definition}
 
-\begin{definition}[Koszul defect measure; \ClaimStatusProvedHere]
+\begin{definition}[Hochschild Koszul-defect measure]
 \label{def:koszul-defect-measure}
 \index{Koszul defect measure}
-For each $n \geq 0$, the \emph{degree-$n$ Koszul defect measure}
-is the graded dimension
+For finite conformal-weight pieces set
 \[
- \delta_{\mathrm{Kosz}}^{(n)}(\cA)(q)
+ \delta_{\mathrm H}^{(n)}(\cA)(q)
  \;:=\;
- \dim_q H^{n}(\mathrm{KD}^{\bullet}(\cA))
- \;\in\;
- \Z_{\geq 0}((q)).
+ \dim_q H^{n}\!\bigl(\mathrm{KD}_{\mathrm H}^{\bullet}(\cA)\bigr).
 \]
-The \emph{Koszul defect generating series} is
+The series
 \[
- \Delta_{\mathrm{Kosz}}(\cA)(t,q)
+ \Delta_{\mathrm H}(\cA)(t,q)
  \;:=\;
- \sum_{n \geq 0} \delta_{\mathrm{Kosz}}^{(n)}(\cA)(q) \, t^n.
+ \sum_{n\geq 0}\delta_{\mathrm H}^{(n)}(\cA)(q)t^n
 \]
-On the Koszul locus $\Delta_{\mathrm{Kosz}}(\cA)(t,q) \equiv 0$;
-off the locus, $\Delta_{\mathrm{Kosz}}(\cA)$ is a nonnegative
-integer-coefficient series in $q$ with finite graded pieces at
-each weight, carrying all the information about how~$\cA$ fails
-to be Koszul.
+is defined only when the displayed graded dimensions are finite. On the
+PBW chiral Koszul locus the positive-depth complex is acyclic in the
+range that can contribute to total degree $\geq3$.
 \end{definition}
 
 \begin{remark}[Why this is the right defect measure]
 \label{rem:koszul-defect-measure-right}
-The mapping-cone definition is intrinsic: it does not depend on
-a choice of resolution or bar-filtration truncation. Its
-cohomology is zero if and only if $\cA$ is chirally Koszul
-\textup{(}by Theorem~B; both directions\textup{)}, so the
-vanishing locus of $\Delta_{\mathrm{Kosz}}(\cA)$ is exactly the
-Koszul locus. The graded dimension is well defined because every
-term $\cA_h$ is finite-dimensional, so each cohomological degree
-of the cone is a finite-dimensional $\Z_{\geq 0}$-graded vector
-space.
+Theorem~H is not a formal consequence of the existence of the
+bar--cobar resolution. The proof uses the transported
+Shelton--Yuzvinsky contraction on positive Arnold classes in the
+collision-depth spectral sequence. The complex
+$\mathrm{KD}_{\mathrm H}^{\bullet}(\cA)$ is exactly the part of
+$RHH_{\mathrm{ch}}(\cA)$ on which that contraction must act. If it has
+cohomology in high total degree, no curve-level amplitude bound follows
+from Theorem~H.
 \end{remark}
 
-\section{Theorem H on the Koszul locus (restatement)}
+\begin{definition}[Collision obstruction pages]
+\label{def:theorem-h-collision-obstruction-pages}
+\index{Theorem H!collision obstruction}
+Let
+\[
+ E_1^{r,s}(\cA)
+ =
+ H^{r+s}\!\left(
+  \operatorname{gr}^{\,r}_{F_{\mathrm{FM}}}
+  RHH_{\mathrm{ch}}(\cA)
+ \right)
+\]
+be the collision-depth spectral sequence of
+$RHH_{\mathrm{ch}}(\cA)$, with $r$ the collision depth. The first
+Hochschild collision obstruction is
+\[
+ \mathfrak{o}_{\mathrm H,1}^{\ge3}(\cA)
+ :=
+ \bigoplus_{\substack{r\geq1\\ r+s\geq3}}
+ E_2^{r,s}(\cA),
+\]
+where $d_1$ is the residue differential along the first collision
+divisors. The permanent obstruction is
+\[
+ \mathfrak{o}_{\mathrm H,\infty}^{\ge3}(\cA)
+ :=
+ \bigoplus_{\substack{r\geq1\\ r+s\geq3}}
+ E_\infty^{r,s}(\cA)
+ \subset
+ \operatorname{gr}_{F_{\mathrm{FM}}}
+ H^{\geq3}\!\bigl(RHH_{\mathrm{ch}}(\cA)\bigr).
+\]
+On the PBW chiral Koszul locus the transported pure-braid
+Shelton--Yuzvinsky contraction makes
+$\mathfrak{o}_{\mathrm H,1}^{\ge3}(\cA)=0$. Off that locus, higher
+differentials can kill some $E_2$ classes. The exact amplitude
+obstruction is the permanent part together with the degree-$3$ boundary
+described in Theorem~\ref{thm:theorem-h-off-koszul-explicit-correction}.
+\end{definition}
+
+\section{Theorem H on the Koszul locus}
 \label{sec:theorem-h-on-koszul}
 
-\begin{theorem}[Theorem~H on the Koszul locus; sharp
-bigraded Hilbert series; \ClaimStatusProvedHere]
+\begin{theorem}[Theorem~H on the Koszul locus; sharp bigraded Hilbert series]
 \label{thm:theorem-h-on-koszul-locus}
 \index{Theorem H!on Koszul locus}
-Let $\cA$ be a chirally Koszul algebra on $X$ satisfying the PBW
-criterion of Theorem~\ref{thm:pbw-koszulness-criterion} and admitting
-the flat $E_\infty$ completion used in
-Theorem~\ref{thm:hochschild-concentration-E1}, so
-$\Delta_{\mathrm{Kosz}}(\cA)(t,q) \equiv 0$. Then
-$\ChirHoch^{n}(\cA) = 0$ for every $n \notin \{0,1,2\}$ and the
-bigraded Hilbert series satisfies
+Let $\cA$ be a PBW chiral Koszul algebra on a smooth projective curve
+$X$, satisfying the PBW criterion of
+Theorem~\ref{thm:pbw-koszulness-criterion}, the
+$E_\infty$-chiral completion hypothesis of
+Corollary~\ref{cor:hochschild-averaging-symmetric}, and the
+finite-type/perfectness hypotheses of
+Theorem~\ref{thm:main-koszul-hoch}. Assume that $\cA$ lies away from
+critical affine levels and away from the non-generic simple-quotient
+points excluded in Theorem~\ref{thm:main-koszul-hoch}. Then
+\[
+ \ChirHoch^n(\cA)=0\qquad(n\notin\{0,1,2\})
+\]
+and
 \begin{equation}
 \label{eq:theorem-h-on-koszul}
  P_{\cA}(t,q)
  \;=\;
  \HS_{Z(\cA)}(q)
  \;+\;
- \HS_{\ChirHoch^{1}(\cA)}(q)\cdot t
+ \HS_{\ChirHoch^{1}(\cA)}(q)t
  \;+\;
- \HS_{Z(\cA^{!})}(q)\cdot t^{2}.
+ \HS_{Z(\cA^{!})}(q)t^{2}.
 \end{equation}
-The critical level $k = -h^{\vee}$ lies outside the proved
-Koszul-locus statement and is not
-included in the Koszul locus.
+Here
+\[
+ P_{\cA}(t,q)=\sum_{n\geq0}\dim_q \ChirHoch^n(\cA)\,t^n
+\]
+is computed after passing through finite conformal-weight windows and
+then taking the strict Mittag--Leffler completion. The polynomial
+assertion is exactly the vanishing of the positive collision-depth tail
+after the PBW/Arnold contraction.
+The $t^2$ column is the Verdier-dual chiral centre
+$Z(\cA^!)^\vee\otimes\omega_X$ and has the same finite
+$q$-graded coefficients as $Z(\cA^!)$.
 \end{theorem}
 
 \begin{proof}
-By Theorem~\ref{thm:hochschild-concentration-E1} the bar complex
-argument via ordered Fulton--MacPherson plus Shelton--Yuzvinsky
-Koszulity of the pure-braid arrangement proves
-$\ChirHoch^{n}(\cA) = 0$ for $n \notin \{0,1,2\}$; by
-Proposition~\ref{prop:chirhoch-sharp-hilbert} the surviving
-degrees assemble into~\eqref{eq:theorem-h-on-koszul}. Both steps
-use only chiral Koszulness and the PBW criterion; neither invokes
-the critical-level exclusion directly, so the critical-level
-clause is a hypothesis on the landscape, not a gap in the proof.
+The ordered concentration is
+Theorem~\ref{thm:hochschild-concentration-E1}: the ordered
+Fulton--MacPherson collision-depth spectral sequence kills all
+positive Arnold fibre classes by the pure-braid
+Shelton--Yuzvinsky contraction transported through the chiral
+quadratic-Koszul comparison. The $E_\infty$-chiral completion
+hypothesis lets Corollary~\ref{cor:hochschild-averaging-symmetric}
+descend the ordered vanishing to the symmetric chiral Hochschild
+complex. Proposition~\ref{prop:chirhoch-sharp-hilbert} identifies the
+three surviving columns, and Theorem~\ref{thm:main-koszul-hoch}
+supplies the Verdier shift by~$2$.
 \end{proof}
 
-\begin{remark}[The three columns are Verdier-dual pairs]
+\begin{remark}[Amplitude source]
 \label{rem:three-columns-verdier}
-The $t^{0}$ and $t^{2}$ columns are Verdier-dual on~$X$
-\textup{(}Proposition~\textup{\ref{prop:chirhoch-sharp-hilbert}}\textup{)};
-the middle $t^{1}$ column is self-dual under Verdier. On the
-Koszul locus this gives the sharp pairing
-$P_{\cA}(t,q) \cdot t^{-1} = \omega_X$-twisted Verdier involution,
-a fact we will use off-locus to interpret the defect corrections.
+The amplitude $[0,2]$ is the sum of two facts: after the PBW/Arnold
+collapse, every bar degree is reduced to a holonomic
+$\mathcal D_X$-Ext computation on a curve, and the geometric
+$[p+2]$ shift on $\overline C_{p+2}(X)$ cancels the totalization
+$[-p]$ shift. No topological Hochschild, categorical Hochschild, or
+CY product-ambient Hochschild statement is used.
 \end{remark}
 
-\section{Theorem H off the Koszul locus: conditional defect correction}
+\section{Off the Koszul locus}
 \label{sec:theorem-h-off-koszul}
 
-\begin{theorem}[Boundary formula off the Koszul locus; conditional
-defect correction; \ClaimStatusConditional]
+Let
+\[
+ Q_{\mathrm H}(\cA)
+ \;:=\;
+ RHH_{\mathrm{ch}}(\cA)/
+ F^1_{\mathrm{FM}}RHH_{\mathrm{ch}}(\cA)
+\]
+be the depth-zero quotient. It is the curve-level piece left after
+discarding non-trivial collision strata. Under the holonomic
+finite-type hypotheses stated in
+Theorem~\ref{thm:theorem-h-off-koszul-explicit-correction}, it has
+cohomological amplitude~$[0,2]$ exactly when the depth-zero calculation
+is a curve-level $\mathcal D_X$-Ext calculation. Off the Koszul locus it
+need not identify its $t^2$ column with
+$Z(\cA^!)$; that identification is part of Theorem~H and uses the
+Koszul/Verdier comparison.
+
+\begin{theorem}[Off-Koszul high-degree exact sequence]
 \label{thm:theorem-h-off-koszul-explicit-correction}
 \index{Theorem H!off Koszul locus}
-Let $\cA$ be a conformal-weight-graded chiral algebra in the
-standard landscape, not assumed Koszul, and not at critical
-level. Assume that the bar--cobar exact triangle induces an
-isomorphism
+Let $\cA$ be a conformal-weight-graded chiral algebra on a smooth
+projective curve, with finite graded pieces, for which the
+completed Fulton--MacPherson chiral Hochschild filtration is defined,
+exhaustive, and Hausdorff in each conformal weight, and suppose that
+$Q_{\mathrm H}(\cA)$ has amplitude~$[0,2]$. Then the exact triangle
 \[
- \eta_\cA^n:\;
- H^{n}(\mathrm{KD}^{\bullet}(\cA))
- \xrightarrow{\ \sim\ }
- \ChirHoch^{n}(\cA)
- \qquad (n\geq 3)
+ \mathrm{KD}_{\mathrm H}^{\bullet}(\cA)
+ \longrightarrow
+ RHH_{\mathrm{ch}}(\cA)
+ \longrightarrow
+ Q_{\mathrm H}(\cA)
+ \xrightarrow{+1}
 \]
-and that the defect contribution in degrees $0,1,2$ is absorbed by
-the centre, first Hochschild, and Verdier-dual centre terms appearing
-in the Koszul-locus formula. Then $\ChirHoch^{*}(\cA)$ is no longer
-concentrated in
-$\{0,1,2\}$ in general, and the bigraded Hilbert series splits
-as
-\begin{equation}
-\label{eq:theorem-h-off-koszul-split}
- P_{\cA}(t,q)
- \;=\;
- P_{\cA}^{\mathrm{on}}(t,q)
- \;+\;
- \sum_{n \geq 3}
- \delta_{\mathrm{Kosz}}^{(n)}(\cA)(q) \cdot t^{n},
-\end{equation}
-where
+gives
 \[
- P_{\cA}^{\mathrm{on}}(t,q)
- \;:=\;
- \HS_{Z(\cA)}(q)
- \;+\;
- \HS_{\ChirHoch^{1}(\cA)}(q)\cdot t
- \;+\;
- \HS_{Z(\cA^{!})}(q)\cdot t^{2}
+ H^2(Q_{\mathrm H}(\cA))
+ \xrightarrow{\;\partial_{\mathrm H}^{3}(\cA)\;}
+ H^3(\mathrm{KD}_{\mathrm H}^{\bullet}(\cA))
+ \longrightarrow
+ \ChirHoch^3(\cA)
+ \longrightarrow 0
 \]
-is the Koszul-locus formula and
-$\delta_{\mathrm{Kosz}}^{(n)}(\cA)(q)$ is the degree-$n$ Koszul
-defect measure of Definition~\ref{def:koszul-defect-measure}.
-The lower three $t$-columns $\{0,1,2\}$ are unchanged: their
-coefficients are the centres of $\cA$, $\cA^{!}$, and
-$\ChirHoch^{1}(\cA)$ as in the Koszul case. The higher
-$t$-columns are entirely controlled by the Koszul defect: a
-nonzero $t^{n}$-coefficient at $n \geq 3$ is an isomorphism
+and hence an exact degree-$3$ obstruction
 \[
- \ChirHoch^{n}(\cA)
+ \mathfrak{o}_{\mathrm H}^{3}(\cA)
+ :=
+ \operatorname{coker}\!\left(
+  \partial_{\mathrm H}^{3}(\cA)\colon
+  H^2(Q_{\mathrm H}(\cA))
+  \longrightarrow
+  H^3(\mathrm{KD}_{\mathrm H}^{\bullet}(\cA))
+ \right)
+ \cong
+ \ChirHoch^3(\cA),
+\]
+and, for every $n\geq4$,
+\[
+ \ChirHoch^n(\cA)
  \;\cong\;
- H^{n}(\mathrm{KD}^{\bullet}(\cA))
- \quad (n \geq 3).
+ H^n(\mathrm{KD}_{\mathrm H}^{\bullet}(\cA)).
 \]
+Consequently $\ChirHoch^\bullet(\cA)$ has amplitude contained in
+$[0,N]$ for $N\geq3$ if
+$H^n(\mathrm{KD}_{\mathrm H}^{\bullet}(\cA))=0$ for $n>N$. It is
+concentrated in $\{0,1,2\}$ if and only if
+$\mathfrak{o}_{\mathrm H}^{3}(\cA)=0$ and
+$H^n(\mathrm{KD}_{\mathrm H}^{\bullet}(\cA))=0$ for every $n\geq4$.
 \end{theorem}
 
 \begin{proof}
-Apply the $E_2$-page spectral sequence of
-Proposition~\ref{prop:fm-tower-collapse} without invoking the
-PBW hypothesis. The collision-depth filtration on the ordered
-Fulton--MacPherson tower still converges to
-$\ChirHoch^{*}(\cA)$; the cohomology of each stratum is
-controlled by an Orlik--Solomon contribution on the fibre times
-a $\cD_X$-Ext amplitude $[0,2]$ on the base. In the Koszul case
-Shelton--Yuzvinsky Koszulity collapses all strata to the
-full-collision one, giving concentration in $\{0,1,2\}$. In the
-non-Koszul case the Shelton--Yuzvinsky contracting homotopy
-still acts on the pure-braid Orlik--Solomon algebra, but the
-transport lemma~\ref{lem:chiral-quadratic-koszul} requires the
-chiral quadratic-Koszul input on~$\cA$ to descend to a fibrewise
-contracting homotopy. Exactly the failure of chiral Koszulness is
-what the defect complex $\mathrm{KD}^{\bullet}(\cA)$ measures. The
-conditional comparison hypothesis is precisely the assertion that
-the transport lemma yields, on the relevant completed objects, an
-exact triangle
+The definition of $\mathrm{KD}_{\mathrm H}^{\bullet}$ gives the
+displayed exact triangle. The long exact cohomology sequence contains
 \[
- \mathrm{KD}^{\bullet}(\cA)
- \longrightarrow
- \ChirHoch^{*}(\cA)
- \longrightarrow
- \ChirHoch^{*}_{\mathrm{on}}(\cA)
- \xrightarrow{\,+1\,}
+H^2(Q_{\mathrm H})\to H^3(\mathrm{KD}_{\mathrm H})
+\to H^3(RHH_{\mathrm{ch}})\to H^3(Q_{\mathrm H}),
 \]
-where $\ChirHoch^{*}_{\mathrm{on}}(\cA)$ is the
-Koszul-locus approximation, formally defined as the $t^{0},t^{1},
-t^{2}$-columns of~\eqref{eq:theorem-h-on-koszul}. In degrees
-$n \leq 2$ the defect cohomology $H^{n}(\mathrm{KD}^{\bullet})$
-is assumed to be absorbed by the lower-column comparison; the
-$t^{0}$- and $t^{2}$-columns remain the centres of $\cA$ and
-$\cA^{!}$ respectively because the mapping-cone long exact
-sequence is zero on these terms under that comparison. In degrees
-$n \geq 3$ the Koszul-locus approximation vanishes and the defect
-cohomology constitutes the entire contribution by the maps
-$\eta_\cA^n$, whence
-$\ChirHoch^{n}(\cA) \cong H^{n}(\mathrm{KD}^{\bullet}(\cA))$ for
-$n \geq 3$. Assembling the graded dimensions
-yields~\eqref{eq:theorem-h-off-koszul-split}.
+and $H^3(Q_{\mathrm H})=0$ by the amplitude hypothesis. For
+$n\geq4$ both $H^{n-1}(Q_{\mathrm H})$ and $H^n(Q_{\mathrm H})$
+vanish, so the map
+$H^n(\mathrm{KD}_{\mathrm H})\to H^n(RHH_{\mathrm{ch}})$ is an
+isomorphism. Since
+$H^n(RHH_{\mathrm{ch}})=\ChirHoch^n(\cA)$, the amplitude statements
+follow. The cokernel displayed in degree~$3$ is exactly the first
+permanent collision class remaining after the depth-zero curve piece
+has absorbed its boundary.
 \end{proof}
 
-\begin{remark}[The lower-column comparison]
-\label{rem:lower-columns-koszul-exact}
-The mapping-cone long exact sequence gives contributions from
-$\mathrm{KD}^{\bullet}(\cA)$ to $\ChirHoch^{*}(\cA)$ in every
-degree. In degrees $0$ and $1$ the defect can in principle shift
-into $\ChirHoch^{0}$ and $\ChirHoch^{1}$, but the chiral-centre
-identifications $\ChirHoch^{0}(\cA) = Z(\cA)$ and
-$\ChirHoch^{1}(\cA)$ the first chiral Hochschild group are
-intrinsic: they are defined before bar-cobar and survive any
-failure of Koszulness. What is needed off the Koszul locus is the
-additional assertion that Theorem~B's exact triangle forces the
-defect contribution to land in $\ChirHoch^{\geq 2}$, with the
-lower-column Hilbert series locked to the Koszul-locus formula.
-In degree~$2$ the defect can in principle modify
-$\ChirHoch^{2}(\cA)$, but the Verdier-duality pairing of
-Remark~\ref{rem:three-columns-verdier} forces
-$\ChirHoch^{2}(\cA) = Z(\cA^{!})$ \emph{as $\cD_X$-modules},
-independent of Koszulness, because the dual algebra $\cA^{!}$ is
-defined by Verdier duality on $\mathrm{Ran}(X)$ without passing
-through bar-cobar inversion. The theorem above records the boundary
-formula only under this lower-column comparison.
-\end{remark}
+\begin{lemma}[Degree-three boundary obstruction]
+\label{lem:theorem-h-degree-three-boundary}
+\index{Theorem H!degree-three boundary obstruction}
+In the hypotheses of
+Theorem~\ref{thm:theorem-h-off-koszul-explicit-correction}, every class
+of $\ChirHoch^3(\cA)$ is the image of a positive collision-depth class
+modulo the boundary
+$\partial_{\mathrm H}^{3}(\cA)\colon H^2(Q_{\mathrm H}(\cA))\to
+H^3(\mathrm{KD}_{\mathrm H}^{\bullet}(\cA))$. Hence a nonzero
+$\ChirHoch^3(\cA)$ is not a fourth column of Theorem~H; it is the
+off-Koszul obstruction
+$\mathfrak{o}_{\mathrm H}^{3}(\cA)$.
+If $\cA$ satisfies the hypotheses of
+Theorem~\ref{thm:theorem-h-on-koszul-locus}, then
+$\mathrm{KD}_{\mathrm H}^{\bullet}(\cA)$ is acyclic in total degree
+$\geq3$, $\mathfrak{o}_{\mathrm H}^{3}(\cA)=0$, and
+$\ChirHoch^3(\cA)=0$.
+\end{lemma}
 
-\begin{corollary}[Conditional concentration criterion via defect
-vanishing]
+\begin{proof}
+The first assertion is the cokernel identification in
+Theorem~\ref{thm:theorem-h-off-koszul-explicit-correction}. The second
+is Theorem~\ref{thm:theorem-h-on-koszul-locus}, equivalently the
+vanishing of the positive-depth obstruction complex after the
+PBW/Arnold contraction.
+\end{proof}
+
+\begin{corollary}[Exact defect Hilbert tail]
 \label{cor:concentration-iff-defect-zero}
-Under the comparison hypotheses of
-Theorem~\ref{thm:theorem-h-off-koszul-explicit-correction},
-the chiral Hochschild complex $\ChirHoch^{*}(\cA)$ is concentrated
-in degrees $\{0,1,2\}$ if and only if the Koszul defect measure
-$\delta_{\mathrm{Kosz}}^{(n)}(\cA)$ vanishes for all $n \geq 3$.
-In particular, a partial Koszulness condition (vanishing of
-the defect in finitely many degrees) gives a finite-amplitude
-upper bound on $\ChirHoch^{*}(\cA)$.
+In the situation of
+Theorem~\ref{thm:theorem-h-off-koszul-explicit-correction}, assume
+that all displayed conformal-weight graded dimensions are finite and
+that the depth-zero quotient identifies, in degrees $0,1,2$, with the
+three Theorem~H columns $Z(\cA)$, $\ChirHoch^1(\cA)$, and
+$Z(\cA^!)^\vee\otimes\omega_X$. Then
+\[
+ P_{\cA}(t,q)
+ =
+ \HS_{Z(\cA)}(q)
+ +\HS_{\ChirHoch^1(\cA)}(q)t
+ +\HS_{Z(\cA^!)}(q)t^2
+ +\dim_q\mathfrak{o}_{\mathrm H}^{3}(\cA)t^3
+ +\sum_{n\geq4}
+  \dim_q H^n(\mathrm{KD}_{\mathrm H}^{\bullet}(\cA))\,t^n .
+\]
+If $\partial_{\mathrm H}^{3}(\cA)=0$, the $t^3$ coefficient is
+$\dim_q H^3(\mathrm{KD}_{\mathrm H}^{\bullet}(\cA))$; otherwise it is
+the cokernel dimension of the boundary map. Without the low-column
+Verdier identification, the same exact statement gives only the tail
+in degrees $\geq3$.
 \end{corollary}
 
 \begin{proof}
-Immediate from Theorem~\ref{thm:theorem-h-off-koszul-explicit-correction}
-by reading off the $t^{n}$-coefficients for $n \geq 3$.
+Theorem~\ref{thm:theorem-h-off-koszul-explicit-correction} identifies
+$\ChirHoch^3(\cA)$ with the cokernel
+$\mathfrak{o}_{\mathrm H}^{3}(\cA)$ and identifies
+$\ChirHoch^n(\cA)$ with
+$H^n(\mathrm{KD}_{\mathrm H}^{\bullet}(\cA))$ for $n\geq4$. The
+low-column hypothesis supplies the coefficients in degrees $0,1,2$.
 \end{proof}
 
-\section{The logarithmic $\cW(p)$ locus: explicit Koszul-defect formula}
+\begin{corollary}[coHochschild transport]
+\label{cor:theorem-h-cohochschild-transport}
+\index{coHochschild!Theorem H transport}
+Let $C=\barB^{\mathrm{ch}}(\cA)$, and assume the complete
+bimodule--bicomodule equivalence hypotheses of
+Theorem~\ref{thm:ordered-HH-coHH-cohomology}. If $\cA$ satisfies
+Theorem~\ref{thm:theorem-h-on-koszul-locus}, then
+\[
+ \mathrm{Coext}_{C^e}^{n}(C_\Delta,C_\Delta)=0
+ \qquad (n\notin\{0,1,2\}).
+\]
+Off the Koszul locus, the same identification transports the exact
+sequence of
+Theorem~\ref{thm:theorem-h-off-koszul-explicit-correction} to the
+coHochschild self-extension complex. Without the equivalence, there is
+no Theorem~H statement for coHochschild theory.
+\end{corollary}
+
+\begin{proof}
+Theorem~\ref{thm:ordered-HH-coHH-cohomology} identifies
+$\ChirHoch^\bullet(\cA)$ with
+$\mathrm{Coext}_{C^e}^{\bullet}(C_\Delta,C_\Delta)$ in the complete
+ordered bar ambient. The concentration and the off-locus exact
+sequence are therefore transported statements, not new vanishing
+theorems for a coalgebra outside the Koszul bar image.
+\end{proof}
+
+\section{Logarithmic and admissible singular quotients}
 \label{sec:theorem-h-logarithmic-wp}
 
-The prototypical off-Koszul family in the standard landscape is
-the triplet algebra $\cW(p)$ of
-Chapter~\ref{chap:logarithmic-w-algebras}. The algebra is
-$C_{2}$-cofinite but non-rational
-\textup{(}Adamovi\'c--Milas~\cite{AdamovicMilas2008}\textup{)},
-its module category is non-semisimple with Jordan blocks for
-$L_{0}$, and the five-theorem table of
-Table~\ref{tab:wp-five-theorems} records Theorem~H as open on this
-family. The conditional formula below identifies the obstruction
-that would close that row: the Koszul defect predicted by
-Creutzig--Ridout triplet data.
-
-\begin{theorem}[Conditional logarithmic $\cW(p)$ boundary formula;
-\ClaimStatusConditional]
+\begin{theorem}[Triplet logarithmic boundary]
 \label{thm:theorem-h-logarithmic-w(p)}
 \index{Theorem H!logarithmic W(p) boundary}
 \index{triplet algebra!chiral Hochschild}
-Let $p \geq 2$ be an integer and let $\cW(p)$ be the triplet
-algebra of Definition~\ref{def:wp-algebra}. Assume the
-defect-to-Hochschild comparison of
-Theorem~\ref{thm:theorem-h-off-koszul-explicit-correction} for
-$\cW(p)$ and assume that the collision-depth spectral sequence has
-only the triplet self-OPE non-Koszul stratum in degree~$3$. Then the
-Koszul defect measure of $\cW(p)$ is supported in degree~$3$:
-\begin{equation}
-\label{eq:koszul-defect-wp-concentration}
- \delta_{\mathrm{Kosz}}^{(n)}(\cW(p))(q) \;=\; 0
- \qquad\text{for } n \notin \{3\},
-\end{equation}
-and the degree-$3$ defect is
-\begin{equation}
-\label{eq:koszul-defect-wp-explicit}
- \delta_{\mathrm{Kosz}}^{(3)}(\cW(p))(q)
- \;=\;
- (2p-1)\cdot \frac{q^{2(2p-1)}}{(1-q)^{2(2p-1)}}
- \;+\;
- \mathrm{O}\bigl(q^{6p-1}\bigr),
-\end{equation}
-with the leading singularity $(2p-1) \cdot q^{2(2p-1)}$ reading
-off the three-copy self-OPE pole of the $\mathfrak{sl}_2$-triplet
-$(W^{+}, W^{0}, W^{-})$ at the maximal weight $2(2p-1)$ controlled
-by the Creutzig--Ridout logarithmic OPE structure
-\cite{CreutzigRidout2013}.
-Consequently the bigraded Hilbert series of
-$\ChirHoch^{*}(\cW(p))$ is concentrated in $\{0,1,2,3\}$, with
-$t^{3}$-coefficient~\eqref{eq:koszul-defect-wp-explicit} and
-lower columns as in
-Theorem~\ref{thm:theorem-h-on-koszul-locus}:
-\begin{equation}
-\label{eq:theorem-h-wp-final}
- P_{\cW(p)}(t,q)
- \;=\;
- \HS_{Z(\cW(p))}(q)
- + \HS_{\ChirHoch^{1}(\cW(p))}(q) \cdot t
- + \HS_{Z(\cW(p)^{!})}(q) \cdot t^{2}
- + \delta_{\mathrm{Kosz}}^{(3)}(\cW(p))(q) \cdot t^{3}.
-\end{equation}
+Let $p\geq2$ and let $\cW(p)$ be the triplet algebra of
+Definition~\ref{def:wp-algebra}. The known local facts are:
+\[
+ c(\cW(p))=1-\frac{6(p-1)^2}{p},\qquad
+ p_{\max}(\cW(p))=2(2p-1),\qquad
+ r_{\max}(\cW(p))=\infty,
+\]
+with $p_{\max}$ and $r_{\max}$ as in
+Remark~\ref{rem:wp-pole-depth}. The algebra is $C_2$-cofinite
+\textup{(}Proposition~\ref{prop:wp-c2-cofinite}\textup{)}, is not
+freely strongly generated
+\textup{(}Proposition~\ref{prop:wp-not-free-strong}\textup{)}, and
+its chiral Koszulness is Conjecture~\ref{conj:wp-koszulness}.
+
+Therefore the PBW/free proof of Theorem~H does not apply to
+$\cW(p)$. If a non-free route proves for $\cW(p)$ the PBW chiral
+Koszul, $E_\infty$-completion, finite-window perfectness, and averaging
+hypotheses of Theorem~\ref{thm:theorem-h-on-koszul-locus}, Theorem~H
+applies and $\ChirHoch^\bullet(\cW(p))$ has amplitude~$[0,2]$.
+Without those hypotheses, its high-degree chiral Hochschild groups are
+governed by the exact sequence of
+Theorem~\ref{thm:theorem-h-off-koszul-explicit-correction}; no
+explicit $t^3$ coefficient follows from $C_2$-cofiniteness or from the
+maximal $W$-$W$ pole order alone.
+
+Let
+$E_{2,W\text{-}W}^{r,s}(\cW(p))\subset E_2^{r,s}(\cW(p))$ be the
+image on the $E_2$-page of the local span of collision strata whose
+OPE input is a $W$-$W$ pole of order $2(2p-1)$. Let
+$E_{\infty,W\text{-}W}^{r,s}(\cW(p))$ denote the subquotient of
+$E_\infty^{r,s}(\cW(p))$ represented by classes in that $E_2$-subspace
+which survive all higher differentials. Under the amplitude hypothesis
+on $Q_{\mathrm H}(\cW(p))$, the exact triplet obstruction component is
+\[
+ \mathfrak{o}_{\mathrm H,W}^{3}(\cW(p))
+ :=
+ \operatorname{im}\!\left(
+  \bigoplus_{\substack{r\geq1\\ r+s=3}}
+  E_{\infty,W\text{-}W}^{r,s}(\cW(p))
+  \longrightarrow
+  \mathfrak{o}_{\mathrm H}^{3}(\cW(p))
+ \right).
+\]
+The remaining proof obligation is the differential calculation deciding
+the map
+$E_{2,W\text{-}W}^{r,s}(\cW(p))\to
+E_{\infty,W\text{-}W}^{r,s}(\cW(p))$.
 \end{theorem}
 
 \begin{proof}
-The $\mathfrak{sl}_2$-triplet generators $W^{+},W^{0},W^{-}$ of
-weight $2p-1$ each have maximal $W$-$W$ OPE pole order
-$p_{\max} = 2(2p-1) = 4p-2$
-\textup{(}Remark~\ref{rem:wp-pole-depth}\textup{)}, which by the
-collision-depth trichotomy
-\textup{(}Proposition~\textup{\ref{prop:depth-gap-trichotomy}}\textup{)}
-places $\cW(p)$ off the Koszul locus precisely in degree~$3$ of
-the defect complex: the chiral quadratic-Koszul lemma
-fails in exactly one Orlik--Solomon weight, namely the
-$(2p-1)$-fold pole in the $W$-channel. The
-collision-depth spectral sequence
-\textup{(}Proposition~\textup{\ref{prop:fm-tower-collapse}}\textup{)}
-then collapses everywhere except on the $(W,W,W)$ stratum at
-weight $2(2p-1)$, contributing exactly one surviving cohomology
-class in $\mathrm{KD}^{3}(\cW(p))$ per $\mathfrak{sl}_2$-triplet
-insertion.
-
-The leading singular behaviour is computed directly from the
-Creutzig--Ridout logarithmic OPE: the triplet self-OPE at maximal
-pole order produces a logarithmic partner contributing a Jordan
-block to $L_0$ at weight $2(2p-1)$, which by the generating-function
-identity~\cite[Theorem~3.4]{CreutzigRidout2013} has graded
-dimension
-$(2p-1) \cdot q^{2(2p-1)}/(1-q)^{2(2p-1)}$, the generating series
-of a rank-$3$ $\mathfrak{sl}_2$-triplet at the OPE pole. The
-higher-order terms come from descendants under $L_{-1}$ and
-contribute the $\mathrm{O}(q^{6p-1})$ correction. Plugging into
-Theorem~\ref{thm:theorem-h-off-koszul-explicit-correction}
-yields~\eqref{eq:theorem-h-wp-final}.
-
-That the defect is concentrated in degree~$3$ and not higher
-follows because the maximal OPE pole order $p_{\max} = 4p-2$ gives
-collision depth $k_{\max} = p_{\max} - 1 = 4p-3$, but the defect
-complex measures the failure of the \emph{chiral} quadratic-Koszul
-lemma, which by the chiral-quadratic Koszul classification of
-Shelton--Yuzvinsky and Loday--Vallette \cite{LodayVallette2012}
-contributes only at the single Orlik--Solomon weight where
-quadraticity fails. For the triplet, that single weight is the
-rank-$3$ $\mathfrak{sl}_2$-symmetric self-OPE, giving exactly one
-defect class in cohomological degree~$3$.
+The displayed central charge and pole data are the defining data and
+pole-depth computation in Chapter~\ref{chap:logarithmic-w-algebras}.
+$C_2$-cofiniteness and non-free strong generation are exactly
+Propositions~\ref{prop:wp-c2-cofinite} and
+\ref{prop:wp-not-free-strong}. Theorem~H uses the PBW chiral Koszul
+input and the transported Arnold contraction; $C_2$-cofiniteness is a
+finite associated-variety condition and does not supply that
+contraction. The final assertion is then the high-degree exact
+sequence of Theorem~\ref{thm:theorem-h-off-koszul-explicit-correction}.
+The pole order fixes the local $W$-$W$ summand on the first collision
+divisor; it does not compute the higher differentials. The definition
+of $\mathfrak{o}_{\mathrm H,W}^{3}$ records the permanent component
+which must vanish as part of the Theorem~H obstruction for the triplet
+algebra.
 \end{proof}
 
-\begin{remark}[$p = 2$: symplectic fermion cross-check]
-\label{rem:theorem-h-wp-p2-check}
-At $p = 2$, $\cW(2) \cong \mathcal{SF}^{\Z_2}$ is the symplectic
-fermion orbifold with $c = -2$. The formula
-\eqref{eq:koszul-defect-wp-explicit} specializes to
-$\delta_{\mathrm{Kosz}}^{(3)}(\cW(2))(q) = 3 \cdot q^{6}/(1-q)^{6}
-+ \mathrm{O}(q^{11})$, corresponding to the $(W,W,W)$ triplet
-self-OPE at maximal weight~$6$. This matches the Kausch
-computation \cite{Kausch2000} of the triplet in the $\Z_2$-orbifold
-channel, and is the expected Koszul-defect fingerprint of the
-symplectic fermion logarithmic extension.
-\end{remark}
-
-\begin{remark}[Higher-defect logarithmic families]
-\label{rem:higher-defect-logarithmic}
-For higher logarithmic families (the $(p,q)$-triplet
-$\cW(p,q)$, the singlet algebra $\cM(p)$, the
-$\mathcal{B}_p$ family), the same argument gives defect
-concentration at degree~$3$ with explicit leading singularities
-determined by the generator pole structure. The universal
-formula is
+\begin{theorem}[Admissible and minimal simple-quotient firewall]
+\label{thm:theorem-h-singular-quotient-firewall}
+\index{Theorem H!admissible quotient boundary}
+\index{Theorem H!minimal model boundary}
+Theorem~H does not pass from a universal affine or principal
+$\mathcal W$-algebra to a non-generic simple quotient by rationality,
+$C_2$-cofiniteness, or finite ordinary module category alone.
+For affine admissible quotients $L_k(\fg)$, the ordinary admissible
+category controls Zhu-theoretic and conformal-block finiteness, but
+the chiral bar-complex Ext theory is a separate factorization
+calculation
+\textup{(}Remark~\ref{rem:admissible-rationality-finiteness}\textup{)}.
+For $\fg=\mathfrak{sl}_2$ chiral Koszulness at admissible level is
+recorded in Remark~\ref{rem:admissible-koszul-status}; the Theorem~H
+conclusion still requires the completion, perfectness, and averaging
+hypotheses of Theorem~\ref{thm:theorem-h-on-koszul-locus}. For
+$\mathfrak{sl}_3$ at non-degenerate admissible level
+$k=-3+p/q$ with coprime $p\geq3$, $q\geq3$, assume the finite Li--bar
+package of Theorem~\ref{thm:admissible-sl3-non-koszul-qge3}, in which
+the reduced bar-relevant model contains the Cartan factors
 \[
- \delta_{\mathrm{Kosz}}^{(3)}(\cA_{\mathrm{log}})(q)
- \;=\;
- \sum_{\text{logarithmic channels}} \deg_{\mathrm{ch}} \cdot
- \frac{q^{p_{\max}^{\mathrm{ch}}}}{(1-q)^{p_{\max}^{\mathrm{ch}}}}
- \;+\;
- \mathrm{O}\bigl(q^{p_{\max}^{\mathrm{ch}}+d^{\mathrm{desc}}}\bigr),
+ \mathbb C[H_1]/(H_1^{d_C})\otimes
+ \mathbb C[H_2]/(H_2^{d_C}),
+ \qquad d_C=(p-1)q,
 \]
-where $\deg_{\mathrm{ch}}$ is the rank of the logarithmic channel
-representation, $p_{\max}^{\mathrm{ch}}$ is the maximal OPE pole
-order of the channel, and $d^{\mathrm{desc}}$ is the descendant
-shift. A full classification of logarithmic Koszul defects is
-beyond the scope of this chapter.
-\end{remark}
+and the root factors have exponent $d_R=(p-2)q$. Assume also a
+convergent completed FM Hochschild filtration, the amplitude hypothesis
+$Q_{\mathrm H}(L_k(\mathfrak{sl}_3))\in \mathrm D^{[0,2]}$, and a comparison map
+from the quotient Li--bar page to the FM Hochschild collision page,
+\[
+ \Phi_{\mathrm H}^{\mathrm{adm}}\colon
+ E_2^{2,*}\bigl(\barB(L_k(\mathfrak{sl}_3))\bigr)
+ \longrightarrow
+ \bigoplus_{r+s\geq3}
+ E_2^{r,s}\!\left(RHH_{\mathrm{ch}}(L_k(\mathfrak{sl}_3))\right),
+\]
+compatible with the residue differential $d_1$. The Cartan classes
+\[
+ [H_1], [H_2]\in E_2^{2,*}\bigl(\barB(L_k(\mathfrak{sl}_3))\bigr),
+ \qquad [\mathfrak h,\mathfrak h]=0,
+\]
+then define the admissible Hochschild obstruction
+\[
+ \mathfrak{o}_{\mathrm H,\mathrm{Cartan}}^{\ge3}(L_k(\mathfrak{sl}_3))
+ :=
+ \operatorname{im}\!\left(
+  \Phi_{\mathrm H}^{\mathrm{adm}}\!
+  \left(\operatorname{span}\{[H_1],[H_2]\}\right)
+  \longrightarrow
+  \mathfrak{o}_{\mathrm H,1}^{\ge3}(L_k(\mathfrak{sl}_3))
+ \right),
+\]
+and its degree-$3$ permanent component
+$\mathfrak{o}_{\mathrm H,\mathrm{Cartan}}^{3}$ is the image after
+survival to $E_\infty$ followed by the edge map of
+Theorem~\ref{thm:theorem-h-off-koszul-explicit-correction}. This is a
+named component of $\mathfrak{o}_{\mathrm H}^{3}$, not the whole
+obstruction unless the comparison proves that no other positive-depth
+classes survive. The exact high-degree Theorem~H obligation for this
+admissible quotient is
+\[
+ \mathfrak{o}_{\mathrm H}^{3}(L_k(\mathfrak{sl}_3))=0,\qquad
+ H^n(\mathrm{KD}_{\mathrm H}^{\bullet}(L_k(\mathfrak{sl}_3)))=0
+ \quad(n\geq4),
+\]
+with the low-degree Verdier-centre identification added if one wants
+the Hilbert polynomial \eqref{eq:theorem-h-on-koszul}. For
+$\mathrm{rk}(\fg)\geq3$ the analogous rank obstruction is
+Conjecture~\ref{conj:admissible-koszul-rank-obstruction}. For
+Virasoro minimal models and principal $\mathcal W$-algebras at
+admissible levels, the concentration problem is the non-generic
+class-\(\mathsf M\) problem of
+Conjecture~\ref{conj:hochschild-concentration-class-M-non-generic}.
+\end{theorem}
 
-\section{The critical level: Feigin--Frenkel centre boundary}
+\begin{proof}
+The cited admissible-level analysis separates ordinary representation
+theory from the chiral/factorization bar complex. Theorem~H requires
+the latter: PBW chiral Koszulness, completion, perfectness, and
+averaging. Rationality and $C_2$-cofiniteness imply finite ordinary
+data but do not identify the positive collision-depth Hochschild
+defect complex with zero. The rank-one and rank-two affine examples
+show that the issue is mathematical rather than terminological:
+rank~$1$ absorbs the admissible null vector in the quotient bar
+spectral sequence, while the rank~$2$ Cartan classes survive the
+$d_1$ page because the Cartan bracket vanishes. The map
+$\Phi_{\mathrm H}^{\mathrm{adm}}$ is precisely the missing bridge from
+bar non-Koszulness to a Hochschild amplitude obstruction. The Cartan
+image is decisive only after the comparison excludes all other
+positive-depth survivors. The
+class-\(\mathsf M\)
+statement in
+Conjecture~\ref{conj:hochschild-concentration-class-M-non-generic}
+records the remaining Virasoro and principal $\mathcal W$ simple
+quotient problem.
+\end{proof}
+
+\section{Critical level}
 \label{sec:theorem-h-critical-level}
 
-At the critical level $k = -h^{\vee}$ the affine Kac--Moody
-algebra $\widehat{\fg}_{-h^{\vee}}$ has a dramatically enlarged
-centre: the Feigin--Frenkel centre $\mathfrak{z}(\widehat{\fg})
-\subset V_{-h^{\vee}}(\fg)$ is isomorphic to the algebra of
-polynomial functions on the space of opers $\mathrm{Op}_{^L\fg}(D)$
-on the formal disc \cite{FeiginFrenkel1992,Frenkel2007}. The
-critical level is outside the Koszul/generic surface of Theorem~H
-because $Z(V_{-h^{\vee}}(\fg))$ is no longer finite-dimensional
-as a whole; graded finite-dimensionality is a separate condition.
-Instead it is generated by the
-Sugawara-limit Segal--Sugawara operators, which form a free
-commutative algebra on $\mathrm{rank}(\fg)$ generators of degrees
-$d_1 + 1, d_2 + 1, \ldots, d_r + 1$, where $d_i$ are the exponents
-of~$\fg$.
-
-\begin{theorem}[Critical-level Hochschild boundary formula;
-\ClaimStatusConditional]
+\begin{theorem}[Critical-level centre and amplitude obstruction]
 \label{thm:theorem-h-at-critical-level}
 \index{Theorem H!critical level}
 \index{Feigin--Frenkel centre!Theorem H}
-Let $V_{-h^{\vee}}(\fg)$ be the affine Kac--Moody vacuum module
-at critical level for a simple Lie algebra $\fg$ of rank $r$ and
-exponents $d_1, \ldots, d_r$. Then:
-\begin{enumerate}
-\item The chiral centre is the Feigin--Frenkel centre:
- \[
- Z(V_{-h^{\vee}}(\fg))
+Let $V_{-h^\vee}(\fg)$ be the affine Kac--Moody vacuum module at
+critical level for a simple Lie algebra $\fg$ of rank $r$ and
+exponents $d_1,\ldots,d_r$. Its chiral centre is the Feigin--Frenkel
+centre:
+\[
+ Z(V_{-h^\vee}(\fg))
  \;\cong\;
- \mathfrak{z}(\widehat{\fg})
+ \mathfrak z(\widehat{\fg})
  \;\cong\;
- \mathbb{C}\bigl[ S_1, \partial S_1, \partial^2 S_1, \ldots,
- S_r, \partial S_r, \partial^2 S_r, \ldots \bigr],
- \]
- a free commutative differential algebra on the Segal--Sugawara
- generators $S_i$ of conformal weight $d_i + 1$, with Hilbert
- series
- \begin{equation}
- \label{eq:ff-center-hilbert}
- \HS_{\mathfrak{z}(\widehat{\fg})}(q)
- \;=\;
- \prod_{i=1}^{r} \prod_{m \geq 0}
- \frac{1}{1 - q^{d_i + 1 + m}}.
- \end{equation}
-\item If the critical-level chiral Hochschild complex identifies its
- middle-degree Sugawara fibre with one polynomial generator of
- weight $h^\vee$, then it is no longer bounded in $\{0,1,2\}$;
- it has cohomology in every degree and the bigraded Hilbert series
- admits the explicit decomposition
- \begin{equation}
- \label{eq:theorem-h-critical-level-hilbert}
- P_{V_{-h^{\vee}}(\fg)}(t,q)
- \;=\;
- \HS_{\mathfrak{z}(\widehat{\fg})}(q)
- \cdot \frac{1}{1 - t \cdot q^{h^{\vee}}}
- \;\cdot\;
- \Bigl(1 + \HS_{\mathrm{Op}_{^L\fg}}(q) \cdot t^{2}\Bigr),
- \end{equation}
- where $\HS_{\mathrm{Op}_{^L\fg}}(q)$ is the Hilbert series of
- polynomial functions on the space of opers on the formal disc
- for the Langlands dual Lie algebra~$^L\fg$, satisfying
- $\HS_{\mathrm{Op}_{^L\fg}}(q) = \HS_{\mathfrak{z}(\widehat{\fg})}(q)$
- by the Feigin--Frenkel isomorphism.
-\item The exclusion of the critical level from
- Theorem~\ref{thm:theorem-h-on-koszul-locus} is a scope condition:
- the Koszul-locus formula
- $P_{\cA}(t,q) = \HS_{Z(\cA)}(q) + \HS_{\ChirHoch^{1}(\cA)}(q) \cdot
- t + \HS_{Z(\cA^{!})}(q) \cdot t^{2}$ requires finite-dimensional
- $Z(\cA)$ at each weight; the critical-level centre is infinite-
- dimensional globally, polynomial on opers, and the
- Hilbert-series recipe at critical level is the
- Feigin--Frenkel formula~\eqref{eq:theorem-h-critical-level-hilbert},
- not an approximation of the Koszul-locus formula.
-\end{enumerate}
+ \mathrm{Fun}(\mathrm{Op}_{{}^L\fg}(D)).
+\]
+Equivalently, as a graded commutative differential algebra it is freely
+generated by the Segal--Sugawara generators $S_i$ of conformal weights
+$d_i+1$ and their derivatives, so
+\begin{equation}
+\label{eq:ff-center-hilbert}
+ \HS_{\mathfrak z(\widehat{\fg})}(q)
+ =
+ \prod_{i=1}^{r}\prod_{m\geq0}
+ \frac{1}{1-q^{d_i+1+m}}.
+\end{equation}
+This is a degree-zero chiral-centre statement. A full bigraded Hilbert
+series for $RHH_{\mathrm{ch}}(V_{-h^\vee}(\fg))$ requires a chain-level
+comparison between the critical chiral Hochschild complex and the
+Beilinson--Drinfeld/Feigin--Tsygan oper complex. The Feigin--Frenkel
+centre alone does not supply such a formula.
+
+The critical-first affine bar perturbation is
+\[
+ d_k=d_{\mathrm{crit}}+(k+h^\vee)\delta,\qquad
+ d_{\mathrm{crit}}\delta+\delta d_{\mathrm{crit}}
+ =
+ \left[\frac{\mathsf C_{\fg}}{2h^\vee},-\right],
+\]
+so the obstruction to transporting the generic FM collapse across the
+critical divisor is the curvature action
+$[(k+h^\vee)\mathsf C_{\fg}/(2h^\vee),-]$ of
+Corollary~\ref{cor:critical-level-spectral}. Equivalently, the residue
+class
+\[
+ \mathfrak c_{\mathrm{crit}}(\fg)
+ :=
+ \left[\frac{\mathsf C_{\fg}}{2h^\vee},-\right]
+\]
+is the named obstruction to a pole-free continuation of the generic
+contracting homotopy through $k=-h^\vee$. Under the separate
+Beilinson--Drinfeld/Feigin--Tsygan comparison recorded in
+Remark~\ref{rem:critical-level-lie-vs-chirhoch}, the continuous
+Lie-cohomological factor in the critical chiral Hochschild comparison is
+\[
+ H^\bullet_{\mathrm{Lie,cont}}(\fg\otimes t\mathbb C[[t]];\mathbb C)
+ \cong
+ \Lambda(P_1,\ldots,P_r)\otimes
+ \mathbb C[\Theta_1,\ldots,\Theta_r],
+ \qquad
+ \deg P_i=2d_i+1,\quad
+ \deg\Theta_i=2(d_i+1),
+\]
+with the degree-zero Feigin--Frenkel centre acting as the chiral centre
+when the central action is retained. Its cohomological Hilbert--Poincare
+series is
+\[
+ \operatorname{HP}_{\mathrm{crit}}(u)
+ =
+ \prod_{i=1}^{r}
+ \frac{1+u^{2d_i+1}}{1-u^{2(d_i+1)}}.
+\]
+For every $N\geq1$, the monomial $\Theta_i^N$ has cohomological degree
+$2N(d_i+1)$. Thus the critical comparison has no finite cohomological
+amplitude. This is a critical-level comparison theorem, not a
+specialization of Theorem~H.
 \end{theorem}
 
 \begin{proof}
-Part~(1) is the Feigin--Frenkel theorem \cite{FeiginFrenkel1992}
-restated in Hilbert-series form; the Segal--Sugawara generators
-have conformal weights $d_i + 1$, and taking all $\partial^m$
-derivatives generates the chiral centre as a polynomial algebra,
-yielding~\eqref{eq:ff-center-hilbert}. We provide independent
-verification via the Frenkel description
-\cite[Theorem~3.7.7]{Frenkel2007} of
-$\mathfrak{z}(\widehat{\fg})$ as polynomial functions on opers on
-the formal disc, confirming both the generator structure and the
-Hilbert series.
-
-Part~(2) is the conditional chiral Hochschild computation at critical
-level.
-The Sugawara collapse at $k = -h^{\vee}$ makes the Virasoro
-element central, so $T(z)$ acts trivially on the chiral Hochschild
-complex, and the geometric Ran-space spectral sequence
-\textup{(}as in the proof of
-Proposition~\textup{\ref{prop:fm-tower-collapse}}\textup{)}
-degenerates differently: the base-curve Verdier pairing still
-gives a $t^{0} + t^{2}$ contribution from the centre of $\cA$ and
-its Koszul dual, but the Koszul dual at critical level is not
-finite: it is the Drinfeld--Sokolov quotient
-$\mathrm{DS}(V_{-h^{\vee}}(\fg)) = \cW^{\infty}(\fg)$
-\cite{FeiginFrenkel1992,Frenkel2007}, whose chiral centre is
-$\mathrm{Op}_{^L\fg}(D)$. The middle-degree
-$\ChirHoch^{1}(V_{-h^{\vee}}(\fg))$ is fibred over the Sugawara
-tower with fibre contribution $q^{h^{\vee}}$ per Sugawara
-generator, giving the geometric-series factor
-$(1 - t\, q^{h^{\vee}})^{-1}$ under the stated Sugawara-fibre
-identification. Assembling the three contributions
-yields~\eqref{eq:theorem-h-critical-level-hilbert}.
-
-Part~(3) is an observation: the finite-dimensional centre
-hypothesis that makes the Koszul-locus formula well-defined at
-each conformal weight fails at $k = -h^{\vee}$. The correct
-substitute is the opers Hilbert series, which is not a
-perturbation of the Koszul-locus formula but a replacement.
+The Feigin--Frenkel theorem identifies the centre of the critical
+affine vertex algebra with functions on local opers for the Langlands
+dual Lie algebra; see Theorem~\ref{thm:feigin-frenkel-center} and the
+formal-disc comparison in Chapter~\ref{chap:three-hochschild-unification}.
+The generators have degrees $d_i+1$, and applying all derivatives
+$\partial^m$ gives the product formula
+\eqref{eq:ff-center-hilbert}. The final sentence is the object
+firewall: a centre computation is the $0$th chiral Hochschild column,
+whereas a bigraded Hochschild Hilbert series requires all cochain
+degrees and all differentials. The displayed perturbation identity is
+Corollary~\ref{cor:critical-level-spectral}; it is the local
+calculation showing why the generic differential cannot be continued
+through the critical divisor as the PBW/Arnold contraction used in
+Theorem~H. The last displayed algebra is the Lie-cohomological factor
+from Remark~\ref{rem:critical-level-lie-vs-chirhoch}, with the
+exponents rewritten as $d_i=m_i$; it is not the degree-zero centre
+computed in \eqref{eq:ff-center-hilbert}.
 \end{proof}
 
-\begin{corollary}[Conditional critical-level Hilbert-series consistency]
-\label{cor:critical-level-consistency}
-Under the Sugawara-fibre comparison of
-Theorem~\ref{thm:theorem-h-at-critical-level}, the Hilbert series
-\eqref{eq:theorem-h-critical-level-hilbert} satisfies the
-Verdier-duality pairing of
-Remark~\ref{rem:three-columns-verdier} under Feigin--Frenkel
-dualtity: the $t \mapsto t^{-1}$-reflection of the formula
-reproduces itself up to the opers factor, which is the
-critical-level statement of Langlands duality.
-\end{corollary}
-
-\begin{proof}
-Reflection $t \mapsto t^{-1}$ of
-$(1-t\, q^{h^{\vee}})^{-1}$ produces
-$(1-t^{-1}\, q^{h^{\vee}})^{-1} \sim t\, q^{-h^{\vee}}(1 - t\,
-q^{-h^{\vee}})^{-1}$, which matches the Langlands-dual factor.
-The $\HS_{\mathrm{Op}_{^L\fg}}$ factor is invariant under
-Feigin--Frenkel duality, as is $\HS_{\mathfrak{z}(\widehat{\fg})}$
-by the isomorphism
-$\mathfrak{z}(\widehat{\fg}) \cong \mathrm{Op}_{^L\fg}$.
-\end{proof}
-
-\begin{remark}[Why critical level is separately parametrised]
+\begin{remark}[Critical level and amplitude]
 \label{rem:critical-level-separately-parametrised}
-The critical-level chiral Hochschild complex is well defined, but
-it does not lie on the Koszul/generic surface of
-Theorem~\ref{thm:theorem-h-on-koszul-locus}. The Feigin--Frenkel
-centre gives the correct boundary coordinate; the full Hilbert
-series~\eqref{eq:theorem-h-critical-level-hilbert} additionally
-requires the Sugawara-fibre comparison stated in
-Theorem~\ref{thm:theorem-h-at-critical-level}.
+The critical level is outside
+Theorem~\ref{thm:theorem-h-on-koszul-locus}. The obstruction has three
+faces: the Sugawara denominator degenerates, the curvature-residue class
+$\mathfrak c_{\mathrm{crit}}(\fg)$ blocks pole-free transport of the
+generic contraction, and diagonal Ext-concentration used by the
+FM-collapse proof fails. The Hilbert series
+\eqref{eq:ff-center-hilbert} has finite coefficients in each
+conformal weight, but finite coefficients in degree zero do not imply
+Theorem~H's cohomological amplitude bound.
 \end{remark}
 
-\section{Boundary atlas for Theorem~H}
+\section{Boundary firewall for Theorem~H}
 \label{sec:theorem-h-unified}
 
-\begin{theorem}[Boundary atlas for Theorem~H;
-\ClaimStatusConditional]
+\begin{theorem}[Boundary firewall for Theorem~H]
 \label{thm:theorem-h-platonic-unified}
-\index{Theorem H!boundary atlas}
-Let $\cA$ be a conformal-weight-graded chiral algebra in the
-standard landscape on a smooth projective curve~$X$. On the proved
-Vol~I surface, case \textup{(K)} is Theorem~H. If the comparison
-hypotheses in cases \textup{(L)} and \textup{(C)} hold, the
-following boundary atlas gives the corresponding bigraded Hilbert
-series:
-
-\begin{enumerate}
-\item[(K)] If $\cA$ is on the Koszul locus and not at critical
-level:
-\[
- P_{\cA}(t,q)
- \;=\;
- \HS_{Z(\cA)}(q)
- + \HS_{\ChirHoch^{1}(\cA)}(q)\cdot t
- + \HS_{Z(\cA^{!})}(q)\cdot t^{2}.
-\]
-\item[(L)] If $\cA$ is off the Koszul locus and not at critical
-level:
-\[
- P_{\cA}(t,q)
- \;=\;
- P_{\cA}^{\mathrm{on}}(t,q)
- \;+\;
- \sum_{n \geq 3} \delta_{\mathrm{Kosz}}^{(n)}(\cA)(q) \cdot t^{n}.
-\]
-For logarithmic $\cW(p)$ the Koszul defect is concentrated in
-degree~$3$ with explicit leading singularity
-$(2p-1)\cdot q^{2(2p-1)}/(1-q)^{2(2p-1)}
-+ \mathrm{O}(q^{6p-1})$.
-\item[(C)] If $\cA = V_{-h^{\vee}}(\fg)$ at critical level for
-simple~$\fg$:
-\[
- P_{\cA}(t,q)
- \;=\;
- \HS_{\mathfrak{z}(\widehat{\fg})}(q)
- \cdot \frac{1}{1 - t\, q^{h^{\vee}}}
- \cdot \bigl(1 + \HS_{\mathrm{Op}_{^L\fg}}(q)\cdot t^{2}\bigr).
-\]
+\index{Theorem H!boundary firewall}
+For conformal-weight-graded chiral algebras in the standard landscape
+on a smooth projective curve, the following regimes are disjoint.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{PBW chiral Koszul, generic, completed.}
+Theorem~\ref{thm:theorem-h-on-koszul-locus} applies:
+$\ChirHoch^\bullet$ has amplitude~$[0,2]$ and Hilbert series
+\eqref{eq:theorem-h-on-koszul}. The coHochschild self-extension of
+$\barB^{\mathrm{ch}}(\cA)$ has the same amplitude only after
+Corollary~\ref{cor:theorem-h-cohochschild-transport}.
+\item \emph{Off the PBW/Koszul collapse.}
+The high-degree groups are controlled by the positive collision-depth
+defect exact sequence of
+Theorem~\ref{thm:theorem-h-off-koszul-explicit-correction}. The first
+page to inspect is
+$\mathfrak{o}_{\mathrm H,1}^{\ge3}(\cA)\subset E_2$; the exact
+degree-$3$ obstruction is
+$\mathfrak{o}_{\mathrm H}^{3}(\cA)$, and degrees $\geq4$ are the
+cohomology of $\mathrm{KD}_{\mathrm H}^{\bullet}(\cA)$. The lower
+columns need not be the Theorem~H columns unless the low-degree
+Verdier comparison is separately proved.
+\item \emph{Logarithmic, admissible, and minimal simple quotients.}
+One must prove the Theorem~H hypotheses for the quotient itself or use
+the defect exact sequence. Rationality, $C_2$-cofiniteness, and a finite
+ordinary module category do not replace chiral Koszulness. The
+$\mathfrak{sl}_2$ admissible simple quotient is the rank-one Koszul
+surface, still subject to the finite-window completion and perfectness
+requirements of Theorem~\ref{thm:theorem-h-on-koszul-locus}; the
+$\mathfrak{sl}_3$, $q\geq3$ surface carries the Cartan
+bar obstruction
+$\mathfrak{o}_{\mathrm H,\mathrm{Cartan}}^{\ge3}$, with degree-$3$
+component $\mathfrak{o}_{\mathrm H,\mathrm{Cartan}}^{3}$, only after
+the comparison map $\Phi_{\mathrm H}^{\mathrm{adm}}$ is supplied. That
+component must be tested inside the full obstruction
+$\mathfrak{o}_{\mathrm H}^{3}$. Triplet logarithmic algebras carry the
+$W$-$W$ collision component $\mathfrak{o}_{\mathrm H,W}^{3}$.
+For class-\(\mathsf M\) objects, raw direct-sum ordinary chains are not
+a substitute for the completed or coderived ambient
+\textup{(}Proposition~\ref{prop:chiral-positselski-raw-direct-sum-class-M-false}\textup{)}.
+\item \emph{Critical affine level.}
+The Feigin--Frenkel theorem gives the degree-zero centre
+\eqref{eq:ff-center-hilbert}. The critical perturbation is governed
+by $d_k=d_{\mathrm{crit}}+(k+h^\vee)\delta$ and the residue class
+$\mathfrak c_{\mathrm{crit}}(\fg)$; under the separate
+BD/Feigin--Tsygan comparison, the Lie-cohomological factor has
+Hilbert--Poincare series $\operatorname{HP}_{\mathrm{crit}}(u)$ and is
+unbounded.
 \end{enumerate}
-The three cases are mutually exclusive among the regimes treated
-here. Only \textup{(K)} is part of the main proved Theorem~H package
-of this volume; \textup{(L)} and \textup{(C)} are conditional
-boundary formulae.
+None of these statements concerns $\mathrm{THH}$ of spectra,
+categorical Hochschild cochains of dg/CY categories, mode-algebra
+Hochschild cochains, or product-ambient Hall Hochschild theories unless
+a separate comparison theorem explicitly changes the input and output
+categories. In particular, K3 or higher-dimensional Calabi--Yau
+categorical Hochschild amplitudes are not imported into this curve-level
+chiral Hochschild theorem.
 \end{theorem}
 
 \begin{proof}
-Each case is a separately recorded surface: (K) is the proved
-Theorem~\ref{thm:theorem-h-on-koszul-locus}; (L) is
-the conditional
-Theorem~\ref{thm:theorem-h-off-koszul-explicit-correction}
-combined with
-Theorem~\ref{thm:theorem-h-logarithmic-w(p)} for the explicit
-$\cW(p)$ formula; (C) is
-the conditional
-Theorem~\ref{thm:theorem-h-at-critical-level}. Mutual exclusion
-is by construction: on the Koszul locus the defect vanishes and
-the non-critical hypothesis is taken; off-locus the defect is
-nonzero; at critical level the Segal--Sugawara tower generates
-an infinite centre that no finite-weight Hilbert series of the
-Koszul formula can absorb. The statement does not assert that the
-conditional boundary formulae enlarge the proved Vol~I theorem
-surface.
+Item~(a) is Theorem~\ref{thm:theorem-h-on-koszul-locus}. Item~(b) is
+the exact triangle defining $\mathrm{KD}_{\mathrm H}$ and the
+long-exact-sequence argument of
+Theorem~\ref{thm:theorem-h-off-koszul-explicit-correction}. Item~(c)
+is Theorem~\ref{thm:theorem-h-singular-quotient-firewall} and
+Theorem~\ref{thm:theorem-h-logarithmic-w(p)}. Item~(d) is
+Theorem~\ref{thm:theorem-h-at-critical-level}. The exclusion of other
+Hochschild theories is the typing convention of
+Convention~\ref{conv:three-hochschild} and
+Remark~\ref{rem:three-hochschild-discipline}.
 \end{proof}
-
-\begin{remark}[Relation to the proved Theorem~H package]
-\label{rem:theorem-h-boundary-atlas-scope}
-Theorem~\ref{thm:theorem-h-on-koszul-locus} is the Theorem~H
-package used by the rest of the volume: concentration in
-$\{0,1,2\}$ on the Koszul/generic curve-level surface. The boundary
-atlas records the two natural adjacent regimes and the exact
-comparison hypotheses needed to promote their formulae. Until those
-comparisons are proved, the atlas is not a replacement for the
-proved theorem.
-\end{remark}
-
-\begin{remark}[Boundary between the three regimes]
-\label{rem:theorem-h-boundary-three-regimes}
-The boundary between (K) and (L) is the vanishing locus of
-$\Delta_{\mathrm{Kosz}}(\cA)(t,q)$; the boundary between (K)/(L)
-and (C) is the discrete set $\{k = -h^{\vee}\}$ in the affine
-moduli. Both boundaries are accessible: the first via the
-PBW/Koszul criterion of
-Theorem~\textup{\ref{thm:pbw-koszulness-criterion}}, the second
-via direct inspection of the level. The boundary atlas is continuous
-across the first boundary in the sense that taking the Koszul-locus
-limit of (L) recovers (K) under the comparison hypothesis; it is
-discontinuous across the second because the centre dimension
-jumps at $k = -h^{\vee}$, reflecting the genuine Sugawara
-degeneration.
-\end{remark}
-
-\section{Independent verification paths}
-\label{sec:theorem-h-source-disjoint-verification}
-
-The proved and conditional surfaces in this chapter are checked
-against independent inputs in the sense of
-Section~\textup{\ref{sec:hziv-protocol}}. The verification paths are:
-
-\begin{itemize}
-\item \textbf{Path~(a)}: Arakawa 2007 $C_2$-cofiniteness
-\cite{Arakawa2007} as independent check that logarithmic
-$\cW(p)$ satisfies the $C_2$-cofiniteness hypothesis used in
-Theorem~\ref{thm:theorem-h-logarithmic-w(p)} to bound the
-defect degree.
-\item \textbf{Path~(b)}: Creutzig--Ridout 2013
-\cite{CreutzigRidout2013} logarithmic OPE structure, providing
-the generating-function formula for the degree-$3$ defect
-singular behaviour~\eqref{eq:koszul-defect-wp-explicit}.
-\item \textbf{Path~(c)}: Feigin--Frenkel 1992
-\cite{FeiginFrenkel1992} affine Kac--Moody centre at critical
-level, supplying the polynomial-on-opers
-identification~\eqref{eq:ff-center-hilbert} and the Langlands
-duality underlying
-Corollary~\ref{cor:critical-level-consistency}.
-\item \textbf{Path~(d)}: direct character-theoretic
-SymPy cross-check of
-\eqref{eq:theorem-h-critical-level-hilbert} at small rank, using
-the explicit Segal--Sugawara generator weights and the opers
-Hilbert series.
-\end{itemize}
-
-The corresponding test file is
-\texttt{compute/tests/test\_theorem\_h\_off\_koszul\_platonic.py},
-with the independent-verification registry recording the corresponding
-\texttt{@independently\_verified} checks. The disjointness rationales are:
-
-\begin{itemize}
-\item (a) relative to (K)--(L): Arakawa's proof uses Zhu algebra
-finite-dimensionality, a module-category fact disjoint from the
-chiral bar complex computation of (L).
-\item (b) relative to (a): Creutzig--Ridout compute the
-logarithmic OPE structure via lattice VOA screening kernels; no
-bar complex, no $C_2$-cofiniteness argument is used.
-\item (c) relative to (K)--(L) and to (a)--(b): Feigin--Frenkel
-use the BRST cohomology of the infinite affine Grassmannian and
-the Wakimoto realisation; neither the bar complex nor the
-logarithmic OPE enters the proof.
-\item (d) relative to (a)--(c): direct SymPy evaluation of
-infinite products at finite truncation is a numerical check
-whose disjointness is manifest.
-\end{itemize}
-
-\begin{remark}[Scope of the boundary atlas]
-\label{rem:theorem-h-platonic-scope}
-The boundary atlas has a narrower role than the proved Theorem~H
-package. It preserves the Koszul-locus theorem, isolates the
-logarithmic $\cW(p)$ comparison problem in degree~$3$, and isolates
-the critical-level Sugawara-fibre comparison problem over the
-Feigin--Frenkel centre. These are the exact obligations needed
-before either boundary can be promoted from conditional surface to
-proved theorem.
-\end{remark}

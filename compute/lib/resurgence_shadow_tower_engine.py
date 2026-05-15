@@ -1,62 +1,30 @@
-r"""Resurgence and Borel summability of the shadow obstruction tower.
+r"""Scalar A-hat diagnostics for the shadow obstruction tower.
 
-The genus expansion F = sum_{g>=1} F_g hbar^{2g} has ZERO radius of convergence
-as a formal power series in hbar (from (2g)! growth of Weil-Petersson volumes).
-However, the shadow tower has ALGEBRAIC structure: the generating function is
-Ahat(i*hbar) = (hbar/2)/sin(hbar/2), which is meromorphic with simple poles at
-hbar = 2*pi*n.  This structure makes the series Borel summable.
+Certified scalar lane.  On the proved uniform-weight scalar lane,
 
-MATHEMATICAL FRAMEWORK
-======================
+    F_g(A) = kappa(A) * lambda_g^FP,
+    lambda_g^FP = ((2**(2*g-1) - 1) / 2**(2*g-1)) * |B_{2g}| / (2g)!,
+    sum_{g>=1} lambda_g^FP hbar^{2g} = (hbar/2)/sin(hbar/2) - 1.
 
-1. **Borel transform** B(t) = sum_{g>=1} F_g t^{2g-1}/(2g-1)! of the shadow
-   partition function.  The (2g-1)! denominator tames the Bernoulli growth,
-   giving a convergent series with radius of convergence 2*pi.
+Consequences certified by the local manuscript and compute surfaces:
 
-2. **Singularity structure**: B(t) has singularities at t = +/- 2*pi*n*i
-   (n = 1, 2, 3, ...), inherited from the poles of the A-hat generating
-   function.  The nearest singularities are at t = +/- 2*pi*i, corresponding
-   to the universal instanton action A = (2*pi)^2.
+* the scalar hbar-series has radius 2*pi;
+* the scalar u = hbar^2 series has radius (2*pi)^2;
+* the closed A-hat function has simple hbar-poles at hbar = 2*pi*n;
+* the hbar-pole residue is (-1)^n * 2*pi*n;
+* the u-plane residue is kappa * (-1)^n * 8*pi^2*n^2.
 
-3. **Stokes automorphism**: the discontinuity across the Stokes line (the
-   imaginary axis) encodes non-perturbative information.  The leading Stokes
-   multiplier is S_1 = -4*pi^2*kappa*i (prop:universal-instanton-action).
+What is not certified here.  Scalar coefficients, finite Pade windows, and
+finite arity-shadow windows do not by themselves prove Borel summability,
+median resummation, a Stokes automorphism, alien derivatives, a unique
+nonperturbative completion, or a Koszul-dual bulk sector.  Functions retaining
+legacy names such as ``stokes_multiplier_n`` or ``median_borel_sum`` therefore
+return formal diagnostics or analytic hypotheses, not promoted theorems.
 
-4. **Alien derivative**: Delta_{2*pi*i} F = S_1 * F^{(1)}, the resurgence
-   relation connecting perturbative and one-instanton sectors.
-
-5. **Trans-series**: F = F^{(0)} + e^{-A/hbar^2} F^{(1)} + e^{-2A/hbar^2} F^{(2)} + ...
-   with A = (2*pi)^2.
-
-6. **One-instanton correction** F^{(1)} from the residue structure of the
-   A-hat generating function.
-
-7. **Median resummation**: the real, unambiguous non-perturbative answer
-   F^med = (S_+ + S_-)/2, free of Stokes ambiguity.
-
-8. **Numerical Borel-Pade resummation** through 20+ terms for Virasoro.
-
-9. **Ecalle bridge equation**: the MC equation D*Theta + (1/2)[Theta,Theta] = 0
-   constrains the trans-series via the relation between alien derivatives and
-   the Stokes automorphism.
-
-10. **Resurgent structure of Q^contact and higher shadows S_r**: the arity-
-    direction resurgence of the shadow generating function G(t) = sum S_r t^r.
-
-KEY RESULTS (proved in the manuscript):
-  - Universal instanton action A = (2*pi)^2 (prop:universal-instanton-action)
-  - Stokes constant S_1 = -4*pi^2*kappa*i
-  - Convergence radius 2*pi of the shadow generating function in hbar
-  - Borel summability: the series is Borel summable along non-Stokes directions
-  - Bridge equation: D^2 = 0 implies consistency of all alien derivatives
-
-Manuscript references:
-    prop:universal-instanton-action (higher_genus_modular_koszul.tex)
-    thm:shadow-double-convergence (higher_genus_modular_koszul.tex)
-    thm:mc2-bar-intrinsic (higher_genus_modular_koszul.tex)
-    rem:shadow-borel-summability (higher_genus_modular_koszul.tex)
-    thm:riccati-algebraicity (higher_genus_modular_koszul.tex)
-    thm:single-line-dichotomy (higher_genus_modular_koszul.tex)
+Local formula anchors:
+    chapters/theory/higher_genus_modular_koszul.tex:4253-4277
+    chapters/examples/landscape_census.tex:134-185
+    chapters/examples/landscape_census.tex:4984-5030
 """
 
 from __future__ import annotations
@@ -75,15 +43,28 @@ except ImportError:
     HAS_SCIPY = False
 
 # =====================================================================
-# Constants
+# Constants and certification labels
 # =====================================================================
 
 PI = math.pi
 TWO_PI = 2.0 * PI
 TWO_PI_SQ = TWO_PI ** 2       # ~ 39.478
 FOUR_PI_SQ = (2.0 * PI) ** 2  # same as TWO_PI_SQ = (2*pi)^2
-INSTANTON_ACTION = FOUR_PI_SQ  # A = (2*pi)^2, the universal instanton action
-BOREL_RADIUS = TWO_PI          # convergence radius of Borel transform in hbar
+SCALAR_HBAR_RADIUS = TWO_PI
+SCALAR_U_RADIUS = FOUR_PI_SQ
+SCALAR_FIRST_U_POLE = FOUR_PI_SQ
+INSTANTON_ACTION = SCALAR_FIRST_U_POLE  # legacy formal name, not a certificate
+BOREL_RADIUS = math.inf                 # scalar Borel transforms below are entire
+BOREL_U_RADIUS = math.inf
+
+CERTIFIED_SCALAR_AHAT = "certified_scalar_ahat_bernoulli"
+FINITE_WINDOW_DIAGNOSTIC = "finite_window_diagnostic"
+ARITY_RADIUS_DIAGNOSTIC = "arity_radius_diagnostic"
+ANALYTIC_HYPOTHESIS = "analytic_resurgence_hypothesis_not_certified"
+
+SCALAR_AHAT_SOURCE = "chapters/theory/higher_genus_modular_koszul.tex:4253-4277"
+STANDARD_CONSTANTS_SOURCE = "chapters/examples/landscape_census.tex:134-185"
+FP_COEFFICIENT_SOURCE = "chapters/examples/landscape_census.tex:4984-5030"
 
 # Bernoulli numbers (precomputed for speed, using standard convention B_1 = -1/2)
 _BERNOULLI_CACHE: Dict[int, float] = {}
@@ -106,6 +87,50 @@ def _bernoulli_number(n: int) -> float:
 # =====================================================================
 # Section 0: Algebra data and fundamental invariants
 # =====================================================================
+
+def certification_report() -> Dict[str, Any]:
+    """Certification boundaries for this scalar diagnostic engine."""
+    return {
+        'exact_scalar_ahat_coefficients': True,
+        'scalar_hbar_radius_certified': SCALAR_HBAR_RADIUS,
+        'scalar_u_radius_certified': SCALAR_U_RADIUS,
+        'borel_transform_radius_certified': BOREL_RADIUS,
+        'borel_summability_certified': False,
+        'median_resummation_certified': False,
+        'stokes_automorphism_certified': False,
+        'alien_derivatives_certified': False,
+        'nonperturbative_completion_certified': False,
+        'unique_continuation_from_finite_data_certified': False,
+        'exact_sources': (
+            SCALAR_AHAT_SOURCE,
+            STANDARD_CONSTANTS_SOURCE,
+            FP_COEFFICIENT_SOURCE,
+        ),
+    }
+
+
+def object_firewall() -> Dict[str, str]:
+    """Canonical separation of algebra, bar, Verdier dual, and bulk objects."""
+    return {
+        'A': 'algebra',
+        'B(A)': 'bar coalgebra T^c(s^{-1} Abar)',
+        'Omega(B(A))': 'bar-cobar inversion of A, not Koszul duality',
+        'A^i': 'bar cohomology coalgebra H^* B(A)',
+        'A^!': 'Verdier/continuous-linear dual algebra branch',
+        'Z_ch^der(A)': 'Hochschild derived centre/bulk, not Koszul dual',
+    }
+
+
+def kernel_constant_firewall() -> Dict[str, str]:
+    """Kernel normalizations from the local standard-family constants."""
+    return {
+        'source': STANDARD_CONSTANTS_SOURCE,
+        'heisenberg_collision': 'k/z',
+        'affine_raw_trace_form': 'k*Omega_tr/z',
+        'affine_kz': 'Omega/((k+h^vee)z), Omega=2*h^vee*Omega_tr',
+        'virasoro_collision': '(c/2)/z^3 + 2T/z',
+    }
+
 
 def kappa_virasoro(c: float) -> float:
     """kappa(Vir_c) = c/2."""
@@ -153,14 +178,17 @@ def F_g_scalar(kappa: float, g: int) -> float:
 
 def borel_transform_genus(kappa: float, t: complex,
                           g_max: int = 100) -> complex:
-    r"""Borel transform of the shadow partition function.
+    r"""Diagnostic Borel transform of the scalar genus series.
 
     B(t) = sum_{g>=1} F_g * t^{2g-1} / (2g-1)!
 
     where F_g = kappa * lambda_g^FP.
 
-    The (2g-1)! = Gamma(2g) denominator tames the Bernoulli factorial
-    growth, giving convergence for |t| < 2*pi.
+    The scalar coefficients already decay geometrically:
+    lambda_g^FP = 2*eta(2g)/(2*pi)^{2g}.  Dividing by Gamma(2g)
+    makes this diagnostic transform entire.  The finite scalar radius
+    2*pi belongs to the original A-hat hbar-series, not to this Borel
+    transform.
 
     Parameters
     ----------
@@ -190,11 +218,13 @@ def borel_transform_genus(kappa: float, t: complex,
 
 def borel_transform_u_plane(kappa: float, xi: complex,
                             g_max: int = 100) -> complex:
-    r"""Borel transform in the u = hbar^2 variable.
+    r"""Diagnostic Borel transform in the u = hbar^2 variable.
 
     B_u(xi) = sum_{g>=1} F_g * xi^{g-1} / (g-1)!
 
-    Singularities at xi = (2*pi*n)^2 = A*n^2.
+    This transform is entire for the certified scalar A-hat series.  The
+    points xi = (2*pi*n)^2 are the poles of the closed scalar u-function,
+    not certified Borel singularities of this transform.
     """
     xi = complex(xi)
     result = 0.0 + 0.0j
@@ -234,23 +264,22 @@ def borel_coefficients(kappa: float, g_max: int = 50
 
 @dataclass
 class BorelSingularity:
-    """A singularity of the Borel transform."""
+    """Legacy name for an exact A-hat pole datum."""
     n: int                # index (n = 1, 2, 3, ...)
     location_hbar: complex  # location in hbar-plane
     location_u: float       # location in u = hbar^2 plane
-    instanton_action: float  # A_n = (2*pi*n)^2
+    instanton_action: float  # legacy name for the scalar u-pole A_n
     singularity_type: str   # 'simple_pole'
     residue: float          # residue at the pole
+    certification: str = CERTIFIED_SCALAR_AHAT
+    borel_singularity_certified: bool = False
 
 
 def borel_singularity_locations(n_max: int = 5) -> List[BorelSingularity]:
-    r"""Singularity structure of the Borel transform.
+    r"""Exact pole structure of the scalar A-hat closed form.
 
     The closed form Z^sh = kappa * ((hbar/2)/sin(hbar/2) - 1) has
     simple poles at hbar = 2*pi*n for n = +/-1, +/-2, ...
-
-    In the Borel t-plane: singularities at t = +/- 2*pi*n*i (on the
-    imaginary axis) for n = 1, 2, 3, ...
 
     In the u = hbar^2 plane: singularities at u = (2*pi*n)^2.
 
@@ -260,7 +289,8 @@ def borel_singularity_locations(n_max: int = 5) -> List[BorelSingularity]:
                        ~ (-1)^n * (hbar-2*pi*n)/2.
     So (hbar/2)/sin(hbar/2) ~ pi*n / ((-1)^n * (hbar-2*pi*n)/2)
                              = (-1)^n * 2*pi*n / (hbar-2*pi*n).
-    Residue = (-1)^n * 2*pi*n.
+    Residue = (-1)^n * 2*pi*n.  The legacy function name does not certify
+    a singularity of the diagnostic Borel transforms above.
     """
     sings = []
     for n in range(1, n_max + 1):
@@ -277,20 +307,20 @@ def borel_singularity_locations(n_max: int = 5) -> List[BorelSingularity]:
 
 
 def nearest_borel_singularity() -> BorelSingularity:
-    """The nearest Borel singularity (n=1): at t = 2*pi*i, A = (2*pi)^2."""
+    """Nearest exact scalar A-hat pole, retained under a legacy name."""
     return borel_singularity_locations(1)[0]
 
 
 def verify_borel_radius_from_coefficients(kappa: float, g_max: int = 50
                                           ) -> Dict[str, Any]:
-    r"""Verify the convergence radius of the Borel transform.
+    r"""Verify the scalar A-hat radius from coefficient ratios.
 
-    The Borel coefficients b_g = F_g / (2g-1)! decay as
-    2*kappa / ((2*pi)^{2g} * (2g-1)!), making B(t) entire as a function
-    of t (the denominator kills the geometric growth).
+    The diagnostic Borel coefficients b_g = F_g / (2g-1)! make B(t)
+    entire.  The finite radius recovered here is the radius of the
+    original scalar A-hat series in u = hbar^2:
 
-    However, the ORIGINAL series in u = hbar^2 has coefficients F_g
-    with ratio |F_{g+1}/F_g| -> 1/(4*pi^2) = 1/A as g -> infinity.
+        |F_{g+1}/F_g| -> 1/(4*pi^2).
+
     Convergence radius in u: R_u = (2*pi)^2.
     Convergence radius in hbar: R_hbar = 2*pi.
     """
@@ -306,52 +336,57 @@ def verify_borel_radius_from_coefficients(kappa: float, g_max: int = 50
     last_5 = ratios[-5:] if len(ratios) >= 5 else ratios
 
     return {
-        'predicted_u_radius': FOUR_PI_SQ,
-        'predicted_hbar_radius': TWO_PI,
+        'predicted_u_radius': SCALAR_U_RADIUS,
+        'predicted_hbar_radius': SCALAR_HBAR_RADIUS,
+        'borel_transform_radius': BOREL_RADIUS,
         'predicted_ratio': predicted_ratio,
         'actual_ratios_last_5': last_5,
         'converged': (len(last_5) >= 3 and
                       abs(last_5[-1] - predicted_ratio) / predicted_ratio < 0.05),
+        'certification': CERTIFIED_SCALAR_AHAT,
+        'borel_summability_certified': False,
+        'analytic_continuation_from_finite_data_certified': False,
     }
 
 
 # =====================================================================
-# Section 3: Stokes automorphism
+# Section 3: Formal residue multipliers
 # =====================================================================
 
 def stokes_multiplier_n(kappa: float, n: int) -> complex:
-    r"""Stokes multiplier at the n-th singularity.
+    r"""Formal residue multiplier at the n-th scalar A-hat pole.
 
     From the residue of (hbar/2)/sin(hbar/2) at hbar = 2*pi*n:
         Res = (-1)^n * 2*pi*n.
 
-    The Stokes multiplier (hbar-plane Borel convention):
+    Under an additional analytic-resurgence hypothesis one may package
+    the residue in the hbar-plane convention:
         S_n = 2*pi*i * kappa * Res = 2*pi*i * kappa * (-1)^n * 2*pi*n
             = (-1)^n * 4*pi^2*n * kappa * i.
 
-    For n = 1: S_1 = -4*pi^2*kappa*i (the manuscript's prop:universal-instanton-action).
+    This function returns that formal multiplier.  It does not certify a
+    Stokes automorphism or a Borel singularity.
     """
     return kappa * (-1) ** n * FOUR_PI_SQ * n * 1.0j
 
 
 def stokes_multiplier_leading(kappa: float) -> complex:
-    r"""Leading Stokes multiplier S_1 = -4*pi^2*kappa*i.
-
-    This is the central result: the universal Stokes constant.
-    """
+    r"""Formal leading residue multiplier S_1 = -4*pi^2*kappa*i."""
     return stokes_multiplier_n(kappa, 1)
 
 
 def stokes_discontinuity_u_plane(kappa: float, u: complex,
                                  n_inst: int = 3) -> complex:
-    r"""Stokes discontinuity in the u = hbar^2 plane.
+    r"""Formal Stokes-discontinuity ansatz in the u = hbar^2 plane.
 
     Disc(Z)(u) = S_+ Z(u) - S_- Z(u) = sum_{n>=1} S_n * exp(-A_n/u) * Z^{(n)}(u)
 
-    At leading order (one-instanton):
+    At leading formal one-pole order:
         Disc ~ S_1 * exp(-A/u) * Z^{(1)}(u)
 
-    where A = (2*pi)^2 and Z^{(1)} is the one-instanton fluctuation.
+    where A = (2*pi)^2 and Z^{(1)} is a hypothesized one-pole
+    fluctuation.  The scalar A-hat coefficients do not certify this
+    discontinuity.
     """
     u = complex(u)
     if abs(u) < 1e-15:
@@ -359,9 +394,8 @@ def stokes_discontinuity_u_plane(kappa: float, u: complex,
 
     result = 0.0 + 0.0j
     for n in range(1, n_inst + 1):
-        A_n = FOUR_PI_SQ * n ** 2  # instanton action at n-th singularity
+        A_n = FOUR_PI_SQ * n ** 2
         S_n = stokes_multiplier_n(kappa, n)
-        # Leading fluctuation prefactor at n-th instanton: constant = 1
         exp_factor = cmath.exp(-A_n / u)
         result += S_n * exp_factor
     return result
@@ -372,28 +406,30 @@ def stokes_discontinuity_u_plane(kappa: float, u: complex,
 # =====================================================================
 
 def alien_derivative_perturbative(kappa: float, n: int = 1) -> complex:
-    r"""Alien derivative of the perturbative sector at the n-th singularity.
+    r"""Formal alien-derivative value under an analytic hypothesis.
 
     Delta_{A_n} F^{(0)} = S_n * F^{(n)}
 
-    where S_n is the Stokes multiplier and F^{(n)} is the n-instanton sector.
+    where S_n is the formal residue multiplier and F^{(n)} is the
+    hypothesized n-pole sector.
 
-    At leading order, the alien derivative acts as multiplication by S_n
-    (since F^{(n)} = 1 at leading order for simple-pole asymptotics).
+    This engine does not construct Ecalle alien derivations.  The return
+    value is the formal residue multiplier used for diagnostics.
     """
     return stokes_multiplier_n(kappa, n)
 
 
 def alien_derivative_chain(kappa: float, max_level: int = 4
                            ) -> List[Dict[str, Any]]:
-    r"""Chain of iterated alien derivatives Delta_{A_1}^k F^{(0)}.
+    r"""Formal chain of iterated alien derivatives.
 
     Delta_{A_1}^0 F^{(0)} = F^{(0)}  (identity)
     Delta_{A_1}^1 F^{(0)} = S_1 * F^{(1)}
     Delta_{A_1}^2 F^{(0)} = S_1^2 * F^{(2)}  (for simple resurgent structure)
 
-    For the A-hat generating function with simple poles, the iterated
-    alien derivative factorizes: Delta^k = S_1^k * (sector k fluctuation).
+    The factorization Delta^k = S_1^k is recorded as an analytic
+    resurgence hypothesis, not as a certified consequence of scalar
+    coefficients.
     """
     S_1 = stokes_multiplier_leading(kappa)
     chain = []
@@ -401,10 +437,12 @@ def alien_derivative_chain(kappa: float, max_level: int = 4
         chain.append({
             'level': k,
             'alien_derivative': S_1 ** k,
-            'instanton_weight': cmath.exp(-k * FOUR_PI_SQ),  # at u = 1
+            'instanton_weight': cmath.exp(-k * FOUR_PI_SQ),  # legacy key at u = 1
+            'certification': ANALYTIC_HYPOTHESIS,
+            'alien_derivative_certified': False,
             'interpretation': (
                 'perturbative' if k == 0 else
-                f'{k}-instanton sector'
+                f'{k}-pole formal sector'
             ),
         })
     return chain
@@ -412,7 +450,7 @@ def alien_derivative_chain(kappa: float, max_level: int = 4
 
 def verify_alien_derivative_resurgence(kappa: float, g_max: int = 30
                                        ) -> Dict[str, Any]:
-    r"""Verify the resurgence relation: large-order data reproduces S_1.
+    r"""Compare exact scalar coefficients with their leading pole asymptotic.
 
     The large-order relation for the u-plane series:
         F_g ~ sum_{n>=1} (-R_n / u_n^{g+1})
@@ -422,7 +460,9 @@ def verify_alien_derivative_resurgence(kappa: float, g_max: int = 30
     From the leading (n=1) contribution:
         F_g ~ 2*kappa / (2*pi)^{2g}
 
-    The ratio F_g / (2*kappa / (2*pi)^{2g}) should approach 1 as g -> infinity.
+    The ratio F_g / (2*kappa / (2*pi)^{2g}) approaches 1.  This is an
+    asymptotic statement about the exact A-hat pole expansion, not a
+    verification of alien derivatives.
     """
     ratios = []
     for g in range(1, g_max + 1):
@@ -438,6 +478,8 @@ def verify_alien_derivative_resurgence(kappa: float, g_max: int = 30
         'ratio_at_g20': ratios[19] if len(ratios) >= 20 else None,
         'approaching_1': (len(ratios) >= 15 and
                           abs(ratios[-1] - 1.0) < abs(ratios[5] - 1.0)),
+        'certification': CERTIFIED_SCALAR_AHAT,
+        'alien_derivative_certified': False,
     }
 
 
@@ -447,35 +489,37 @@ def verify_alien_derivative_resurgence(kappa: float, g_max: int = 30
 
 @dataclass
 class TransseriesData:
-    """Trans-series expansion of the shadow partition function.
+    """Formal trans-series ansatz for the scalar diagnostic.
 
     Z^full(hbar) = sum_{n>=0} sigma^n * exp(-n*A/hbar^2) * Z^{(n)}(hbar)
 
     where:
-        A = (2*pi)^2 is the universal instanton action
+        A = (2*pi)^2 is the first scalar u-plane A-hat pole
         Z^{(0)} is the perturbative series (shadow genus expansion)
-        Z^{(n)} is the n-instanton fluctuation sector
-        sigma is the trans-series parameter (related to S_1)
+        Z^{(n)} is a hypothesized n-pole fluctuation sector
+        sigma is the formal residue multiplier
     """
     kappa: float
-    instanton_action: float          # A = (2*pi)^2
+    instanton_action: float          # legacy key: first scalar u-pole
     perturbative: List[float]        # F_g^{(0)} for g = 1, 2, ...
     one_instanton: List[float]       # F_g^{(1)} for g = 1, 2, ...
     two_instanton: List[float]       # F_g^{(2)} for g = 1, 2, ...
     sigma: complex                   # trans-series parameter
+    certification: str = ANALYTIC_HYPOTHESIS
+    completion_certified: bool = False
 
 
 def one_instanton_coefficients(kappa: float, g_max: int = 30) -> List[float]:
-    r"""One-instanton fluctuation coefficients F_g^{(1)}.
+    r"""Formal one-pole fluctuation coefficients F_g^{(1)}.
 
-    From the pole structure of (hbar/2)/sin(hbar/2) at hbar = 2*pi:
-    the one-instanton sector captures the correction from the n=1 pole.
+    From the pole structure of (hbar/2)/sin(hbar/2) at hbar = 2*pi,
+    the first formal sector records the n=1 pole contribution.
 
     Using the dispersion relation / large-order structure:
         F_g^{(1)} = (-1)^{g+1} * 2*kappa / (2*pi)^{2g}
 
-    This matches the leading Bernoulli asymptotics of F_g itself,
-    confirming the simple resurgent structure.
+    This matches the leading Bernoulli asymptotic of F_g.  It does not
+    certify a nonperturbative sector.
     """
     coeffs = []
     for g in range(1, g_max + 1):
@@ -485,7 +529,7 @@ def one_instanton_coefficients(kappa: float, g_max: int = 30) -> List[float]:
 
 
 def two_instanton_coefficients(kappa: float, g_max: int = 30) -> List[float]:
-    r"""Two-instanton fluctuation coefficients F_g^{(2)}.
+    r"""Formal two-pole fluctuation coefficients F_g^{(2)}.
 
     From the n=2 pole at hbar = 4*pi:
         F_g^{(2)} = (-1)^g * 2*kappa / (4*pi)^{2g}
@@ -498,7 +542,7 @@ def two_instanton_coefficients(kappa: float, g_max: int = 30) -> List[float]:
 
 
 def build_transseries(kappa: float, g_max: int = 30) -> TransseriesData:
-    """Build the trans-series data for the shadow partition function."""
+    """Build formal trans-series diagnostic data."""
     pert = [F_g_scalar(kappa, g) for g in range(1, g_max + 1)]
     inst1 = one_instanton_coefficients(kappa, g_max)
     inst2 = two_instanton_coefficients(kappa, g_max)
@@ -516,7 +560,7 @@ def build_transseries(kappa: float, g_max: int = 30) -> TransseriesData:
 
 def transseries_evaluate(ts: TransseriesData, hbar: complex,
                          n_inst: int = 2) -> complex:
-    r"""Evaluate the trans-series at hbar.
+    r"""Evaluate the formal trans-series ansatz at hbar.
 
     Z^full(hbar) = Z^{(0)}(hbar)
                    + sigma * exp(-A/hbar^2) * Z^{(1)}(hbar)
@@ -550,19 +594,19 @@ def transseries_evaluate(ts: TransseriesData, hbar: complex,
 
 
 # =====================================================================
-# Section 6: One-instanton correction from resurgence
+# Section 6: Formal one-pole correction
 # =====================================================================
 
 def one_instanton_correction(kappa: float, hbar: float, g_max: int = 30
                              ) -> Dict[str, Any]:
-    r"""The one-instanton correction to the shadow partition function.
+    r"""Formal one-pole correction to the scalar series.
 
     F^{(1)}(hbar) = sum_{g>=1} F_g^{(1)} * hbar^{2g}
 
     weighted by exp(-A/hbar^2) where A = (2*pi)^2.
 
-    The correction is exponentially suppressed for small hbar, but becomes
-    important near the convergence boundary hbar ~ 2*pi.
+    The diagnostic exponential is small for small hbar.  The scalar A-hat
+    computation alone does not certify an instanton sector.
     """
     inst1_coeffs = one_instanton_coefficients(kappa, g_max)
     Z1 = sum(inst1_coeffs[g - 1] * hbar ** (2 * g)
@@ -580,6 +624,8 @@ def one_instanton_correction(kappa: float, hbar: float, g_max: int = 30
         'exp_suppression': exp_supp,
         'Z1_perturbative': Z1,
         'one_instanton_contrib': S_1 * exp_supp * Z1,
+        'certification': ANALYTIC_HYPOTHESIS,
+        'nonperturbative_sector_certified': False,
         'relative_to_perturbative': (
             abs(S_1 * exp_supp * Z1) / abs(sum(
                 F_g_scalar(kappa, g) * hbar ** (2 * g)
@@ -606,7 +652,7 @@ def ahat_generating_function(hbar: float) -> float:
 
 
 def genus_series_closed_form(kappa: float, hbar: float) -> float:
-    r"""Exact closed form: Z^sh = kappa * ((hbar/2)/sin(hbar/2) - 1)."""
+    r"""Exact scalar closed form: Z^sh = kappa*((hbar/2)/sin(hbar/2)-1)."""
     return kappa * (ahat_generating_function(hbar) - 1.0)
 
 
@@ -624,13 +670,15 @@ def lateral_borel_sum(kappa: float, hbar: complex,
                       g_max: int = 80,
                       n_quad: int = 2000,
                       xi_max: float = 50.0) -> complex:
-    r"""Lateral Borel sum of the genus series.
+    r"""Numerical lateral-Borel diagnostic for the genus series.
 
     Working in the u = hbar^2 plane:
         S_epsilon[Z](u) = int_0^{infty * e^{i*epsilon}} B_u(xi) e^{-xi/u} dxi/u
 
     epsilon > 0: S_+ (above the real axis)
     epsilon < 0: S_- (below the real axis)
+
+    This quadrature does not certify Borel summability or a Stokes jump.
     """
     u = complex(hbar) ** 2
     if abs(u) < 1e-15:
@@ -655,16 +703,14 @@ def median_borel_sum(kappa: float, hbar: float,
                      g_max: int = 80,
                      n_quad: int = 2000,
                      xi_max: float = 50.0) -> Dict[str, Any]:
-    r"""Median Borel resummation of the shadow partition function.
+    r"""Median-style numerical diagnostic for the scalar series.
 
     F^med(hbar) = (S_+(hbar) + S_-(hbar)) / 2
 
-    This is the real, unambiguous non-perturbative answer: the average
-    of the two lateral Borel sums, free of Stokes ambiguity.
-
-    The median sum agrees with the exact closed form within the
-    convergence radius, and provides the unique real analytic continuation
-    beyond the convergence radius (modulo exponentially small terms).
+    The returned value is a finite quadrature diagnostic.  It is not a
+    certificate of median resummation, Stokes ambiguity cancellation, or
+    unique nonperturbative completion.  The exact scalar comparison, when
+    present, comes from the A-hat closed form.
     """
     hbar_c = complex(hbar)
 
@@ -688,11 +734,14 @@ def median_borel_sum(kappa: float, hbar: float,
         'partial_sum': partial,
         'exact': exact,
         'median_vs_exact': abs(median.real - exact) if exact is not None else None,
+        'certification': FINITE_WINDOW_DIAGNOSTIC,
+        'median_resummation_certified': False,
+        'unique_analytic_continuation_certified': False,
     }
 
 
 # =====================================================================
-# Section 8: Numerical Borel-Pade resummation
+# Section 8: Finite-window Pade diagnostics
 # =====================================================================
 
 def pade_approximant_genus(kappa: float, hbar: float,
@@ -703,9 +752,9 @@ def pade_approximant_genus(kappa: float, hbar: float,
         Z(u) = sum_{g>=1} F_g u^g
     and evaluates at u = hbar^2.
 
-    The Pade approximant captures the pole structure of the A-hat
-    generating function, providing analytic continuation beyond the
-    convergence radius.
+    The Pade approximant is a finite-window probe of the A-hat pole
+    structure.  It does not certify analytic continuation; the exact
+    meromorphic continuation is supplied only by the closed A-hat formula.
     """
     # Coefficients of Z(u) = c_0 + c_1*u + c_2*u^2 + ...
     # c_0 = 0, c_g = F_g for g >= 1
@@ -760,7 +809,7 @@ def pade_approximant_genus(kappa: float, hbar: float,
 def pade_poles_genus(kappa: float, g_max: int = 20) -> np.ndarray:
     r"""Find poles of the Pade approximant in the u = hbar^2 plane.
 
-    These approximate the singularities at u = (2*pi*n)^2.
+    These approximate the scalar A-hat poles at u = (2*pi*n)^2.
     The nearest pole should converge to (2*pi)^2 ~ 39.48.
     """
     coeffs = [0.0]
@@ -794,12 +843,15 @@ def pade_poles_genus(kappa: float, g_max: int = 20) -> np.ndarray:
 
 
 def borel_pade_virasoro(c_val: float, g_max: int = 20) -> Dict[str, Any]:
-    r"""Full Borel-Pade analysis for Virasoro at central charge c.
+    r"""Finite-window Pade analysis for Virasoro at central charge c.
 
     Computes:
     1. Pade poles (should converge to (2*pi*n)^2)
     2. Pade values at several hbar values vs exact
     3. Quality of approximation
+
+    This is diagnostic data, not a proof of Borel summability or analytic
+    continuation from finite coefficients.
     """
     kappa = kappa_virasoro(c_val)
     poles = pade_poles_genus(kappa, g_max)
@@ -836,6 +888,9 @@ def borel_pade_virasoro(c_val: float, g_max: int = 20) -> Dict[str, Any]:
         'nearest_pole_error': pole_error,
         'expected_nearest': FOUR_PI_SQ,
         'comparisons': comparisons,
+        'certification': FINITE_WINDOW_DIAGNOSTIC,
+        'analytic_continuation_certified': False,
+        'borel_summability_certified': False,
     }
 
 
@@ -844,22 +899,21 @@ def borel_pade_virasoro(c_val: float, g_max: int = 20) -> Dict[str, Any]:
 # =====================================================================
 
 def bridge_equation_arity_r(kappa: float, r: int) -> Dict[str, Any]:
-    r"""Bridge equation at arity r: the MC constraint on shadow coefficients.
+    r"""Finite-arity bridge-equation diagnostic.
 
     The MC equation D*Theta + (1/2)[Theta,Theta] = 0 projected to arity r
     gives a constraint on the shadow coefficient S_r.
 
-    The bridge equation relates the alien derivative of Theta_r to the
-    Stokes automorphism:
+    A full Ecalle bridge equation would relate an alien derivative of
+    Theta_r to a Stokes automorphism:
         Delta_{A_1} Theta^{(0)}_r = S_1 * Theta^{(1)}_r
 
     At arity 2: Theta_2 = kappa = c/2, exact, so Delta kappa = 0.
     At arity 3: alpha = 2, exact, so Delta alpha = 0.
-    At arity 4: S_4 = 10/(c(5c+22)), c-dependent. The alien derivative
-        relates the one-instanton correction to S_4 via the MC equation.
+    At arity 4: S_4 = 10/(c(5c+22)), c-dependent.
 
-    The consistency of bridge equations across all arities is GUARANTEED
-    by D^2 = 0 (Ecalle's bridge equation theorem applied to the MC element).
+    This function records the finite shadow data and the formal bridge
+    shape.  It does not certify alien derivatives or Stokes automorphisms.
     """
     S_1 = stokes_multiplier_leading(kappa)
 
@@ -868,42 +922,49 @@ def bridge_equation_arity_r(kappa: float, r: int) -> Dict[str, Any]:
             'arity': 2,
             'shadow_coeff': kappa,
             'alien_derivative': 0.0,
-            'bridge_satisfied': True,
-            'interpretation': 'kappa is one-loop exact, no instanton corrections',
+            'bridge_satisfied': None,
+            'finite_shadow_exact': True,
+            'analytic_bridge_certified': False,
+            'interpretation': 'kappa is exact on the scalar shadow lane',
         }
     elif r == 3:
         return {
             'arity': 3,
             'shadow_coeff': 2.0,  # alpha = 2 for Virasoro
             'alien_derivative': 0.0,
-            'bridge_satisfied': True,
-            'interpretation': 'cubic shadow is exact, no instanton corrections',
+            'bridge_satisfied': None,
+            'finite_shadow_exact': True,
+            'analytic_bridge_certified': False,
+            'interpretation': 'cubic shadow is exact on the Virasoro lane',
         }
     else:
         return {
             'arity': r,
             'shadow_coeff': 'S_' + str(r),
             'alien_derivative': 'S_1 * S_' + str(r) + '^{(1)}',
-            'bridge_satisfied': True,
+            'bridge_satisfied': None,
+            'finite_shadow_exact': False,
+            'analytic_bridge_certified': False,
             'interpretation': (
-                f'bridge equation at arity {r} satisfied by '
-                f'D^2 = 0 (MC equation consistency)'
+                f'bridge equation at arity {r} is a formal analytic '
+                f'hypothesis beyond the finite scalar data'
             ),
         }
 
 
 def bridge_equation_mc_consistency(kappa: float) -> Dict[str, Any]:
-    r"""Verify that the bridge equation is consistent with the MC equation.
+    r"""Record the MC-to-bridge hypothesis boundary.
 
     The MC equation D*Theta + (1/2)[Theta,Theta] = 0 implies:
     1. D^2 = 0 at all levels
-    2. The alien derivative Delta commutes with D (at the formal level)
-    3. Therefore, if Theta satisfies MC, then the trans-series
+    2. A bridge theorem would require an alien derivative Delta commuting
+       with D in the chosen analytic category
+    3. Under that extra hypothesis, if Theta satisfies MC, then the trans-series
        Theta^full = Theta^{(0)} + sigma*e^{-A/hbar^2}*Theta^{(1)} + ...
        also satisfies MC, provided the Theta^{(n)} satisfy the
        LINEARIZED MC equation around Theta^{(0)}.
 
-    This is the shadow obstruction tower's encoding of Ecalle's bridge equation.
+    The scalar engine does not supply the analytic category or Delta.
     """
     S_1 = stokes_multiplier_leading(kappa)
 
@@ -913,12 +974,13 @@ def bridge_equation_mc_consistency(kappa: float) -> Dict[str, Any]:
         'instanton_action': INSTANTON_ACTION,
         'mc_equation': 'D*Theta + (1/2)[Theta,Theta] = 0',
         'bridge_equation': 'Delta_{A} Theta = S_1 * Theta^{(1)}',
-        'consistency_proof': (
-            'D^2 = 0 implies the alien derivative commutes with D. '
-            'Therefore the trans-series inherits the MC structure: '
-            'each instanton sector satisfies the linearized MC equation '
-            'around the perturbative sector, and the full trans-series '
-            'is a formal MC element in the trans-series ring.'
+        'analytic_bridge_certified': False,
+        'certification': ANALYTIC_HYPOTHESIS,
+        'consistency_proof': None,
+        'diagnostic_note': (
+            'The MC equation is exact in its lane.  Alien derivatives, '
+            'Stokes automorphisms, and trans-series MC lifts require an '
+            'additional analytic resurgence theorem not supplied here.'
         ),
         'arity_2_bridge': bridge_equation_arity_r(kappa, 2),
         'arity_3_bridge': bridge_equation_arity_r(kappa, 3),
@@ -1005,16 +1067,16 @@ def arity_shadow_coefficients_recursive(c_val: float, r_max: int = 30
 
 def arity_borel_transform(c_val: float, xi: complex, r_max: int = 60
                           ) -> complex:
-    r"""Borel transform of the arity-direction shadow series.
+    r"""Finite-window Borel diagnostic for the arity-direction shadow series.
 
     B^arity(xi) = sum_{r>=2} S_r * xi^r / r!
 
     This is the arity-direction Borel transform, complementary to the
     genus-direction transform in Section 1.
 
-    For c > 0: the arity series has radius of convergence R = |c|/6
-    (from the geometric growth S_r ~ (6/c)^r/r).  The Borel transform
-    B^arity is an entire function (r! kills the geometric growth).
+    For the quadratic Q_L model, geometric coefficient growth would make
+    the factorially normalized transform entire.  A finite window does not
+    certify this analytic statement.
     """
     coeffs = arity_shadow_coefficients_recursive(c_val, r_max)
     xi = complex(xi)
@@ -1029,18 +1091,19 @@ def arity_borel_transform(c_val: float, xi: complex, r_max: int = 60
 
 
 def qcontact_resurgence(c_val: float) -> Dict[str, Any]:
-    r"""Resurgent structure of Q^contact_Vir = 10/(c(5c+22)).
+    r"""Arity-radius diagnostic for Q^contact_Vir = 10/(c(5c+22)).
 
     Q^contact is the quartic shadow coefficient (arity 4).  Its c-dependence
-    has poles at c = 0 and c = -22/5.  In the resurgence framework, these
-    poles control the large-order behavior of the arity expansion.
+    has poles at c = 0 and c = -22/5.
 
     The arity expansion G(t) = sum S_r t^r has branch points at the zeros
-    of Q_L(t), and the resurgent structure in the arity direction is
-    controlled by the shadow metric Q_L = (2kappa + 3alpha*t)^2 + 2*Delta*t^2.
+    of the quadratic shadow metric model
+    Q_L = (2*kappa + 3*alpha*t)^2 + 2*Delta*t^2.
 
     For Virasoro: Delta = 40/(5c+22) > 0 for c > 0, so Q_L is irreducible
-    (class M) and the arity series has infinite depth.
+    (class M) and the shadow tower has infinite depth.  The radius, Borel,
+    and Stokes fields returned here are diagnostics or hypotheses unless an
+    all-arity analytic theorem is supplied separately.
     """
     inv = virasoro_shadow_invariants(c_val)
     kappa = inv['kappa']
@@ -1051,11 +1114,8 @@ def qcontact_resurgence(c_val: float) -> Dict[str, Any]:
     # Arity convergence radius
     R_arity = 1.0 / rho if rho > 0 else float('inf')
 
-    # Arity Borel radius (entire: the Borel transform converges everywhere)
-    arity_borel_entire = True  # since S_r grows at most geometrically
-
-    # Leading arity Stokes constant (from monodromy of sqrt(Q_L))
-    S_1_arity = 2.0j * PI  # logarithmic monodromy of sqrt
+    arity_borel_entire_diagnostic = True
+    S_1_arity_hypothesis = 2.0j * PI
 
     return {
         'c': c_val,
@@ -1064,8 +1124,14 @@ def qcontact_resurgence(c_val: float) -> Dict[str, Any]:
         'shadow_depth': 'infinite' if Delta != 0 else 'finite',
         'rho': rho,
         'arity_convergence_radius': R_arity,
-        'arity_borel_entire': arity_borel_entire,
-        'arity_stokes_constant': S_1_arity,
+        'arity_radius_certification': ARITY_RADIUS_DIAGNOSTIC,
+        'arity_radius_certified_from_finite_window': False,
+        'arity_borel_entire': None,
+        'arity_borel_entire_diagnostic': arity_borel_entire_diagnostic,
+        'arity_borel_entire_certified': False,
+        'arity_stokes_constant': None,
+        'arity_stokes_constant_hypothesis': S_1_arity_hypothesis,
+        'arity_stokes_constant_certified': False,
         'branch_points': (inv['branch_plus'], inv['branch_minus']),
         'depth_class': 'M' if Delta != 0 else 'G_or_L',
     }
@@ -1073,7 +1139,7 @@ def qcontact_resurgence(c_val: float) -> Dict[str, Any]:
 
 def higher_shadow_resurgence(c_val: float, r_max: int = 20
                              ) -> Dict[str, Any]:
-    r"""Resurgent structure of the higher shadow coefficients S_r.
+    r"""Asymptotic diagnostics for higher shadow coefficients S_r.
 
     For Virasoro, the leading asymptotics are:
         S_r ~ (2/r) * (-3)^{r-4} * (2/c)^{r-2}  for r >= 4.
@@ -1081,8 +1147,9 @@ def higher_shadow_resurgence(c_val: float, r_max: int = 20
     The growth rate rho = 6/|c| (at leading order in 1/c) gives the
     convergence radius R = |c|/6 of the shadow generating function.
 
-    The exact growth rate from the shadow metric branch points gives
-    corrections to this leading-order formula.
+    The growth rate from the quadratic shadow metric branch points gives
+    model corrections to this leading-order formula.  Finite windows do not
+    certify all-arity analytic continuation or resurgence.
     """
     coeffs = arity_shadow_coefficients_recursive(c_val, r_max)
     inv = virasoro_shadow_invariants(c_val)
@@ -1113,6 +1180,9 @@ def higher_shadow_resurgence(c_val: float, r_max: int = 20
         'leading_ratios': leading_ratios[-5:] if leading_ratios else [],
         'r_max': r_max,
         'convergence_radius': 1.0 / rho if rho > 0 else float('inf'),
+        'certification': ARITY_RADIUS_DIAGNOSTIC,
+        'finite_window_only': True,
+        'all_arity_resurgence_certified': False,
     }
 
 
@@ -1121,19 +1191,20 @@ def higher_shadow_resurgence(c_val: float, r_max: int = 20
 # =====================================================================
 
 def large_order_prediction(kappa: float, g: int, n_inst: int = 3) -> float:
-    r"""Large-order prediction for F_g from the instanton data.
+    r"""Finite-pole asymptotic estimate for F_g.
 
     Z(u) = kappa * ((sqrt(u)/2)/sin(sqrt(u)/2) - 1) has simple poles
     at u_n = (2*pi*n)^2 with residues R_n = (-1)^n * 8*pi^2*n^2*kappa.
 
-    The contribution of the n-th pole to F_g is:
+    The contribution of the n-th A-hat pole to F_g is:
         -R_n / u_n^{g+1} = (-1)^{n+1} * 2*kappa / ((2*pi)^{2g} * n^{2g})
 
     Total: F_g ~ 2*kappa / (2*pi)^{2g} * sum_{n>=1} (-1)^{n+1} / n^{2g}
              = 2*kappa / (2*pi)^{2g} * (1 - 1/2^{2g} + 1/3^{2g} - ...)
              = 2*kappa / (2*pi)^{2g} * eta(2g)
 
-    where eta is the Dirichlet eta function.
+    where eta is the Dirichlet eta function.  The finite ``n_inst`` cutoff
+    is an asymptotic pole-window estimate, not instanton data.
     """
     result = 0.0
     for n in range(1, n_inst + 1):
@@ -1146,11 +1217,11 @@ def large_order_prediction(kappa: float, g: int, n_inst: int = 3) -> float:
 
 def large_order_verification(kappa: float, g_max: int = 20,
                              n_inst: int = 5) -> Dict[str, Any]:
-    r"""Verify the resurgent large-order relation for F_g.
+    r"""Compare exact F_g with the finite-pole asymptotic estimate.
 
     Compare exact F_g (from Bernoulli numbers) with the large-order
-    prediction from the instanton data.  For large g, the agreement
-    should improve as more instanton sectors are included.
+    prediction from A-hat pole data.  For large g, the agreement improves
+    as more poles are included.
     """
     results = []
     for g in range(1, g_max + 1):
@@ -1171,27 +1242,31 @@ def large_order_verification(kappa: float, g_max: int = 20,
         'results': results,
         'error_at_g5': results[4]['relative_error'] if len(results) >= 5 else None,
         'error_at_g15': results[14]['relative_error'] if len(results) >= 15 else None,
+        'certification': CERTIFIED_SCALAR_AHAT,
+        'nonperturbative_completion_certified': False,
     }
 
 
 # =====================================================================
-# Section 12: Koszul complementarity and non-perturbative structure
+# Section 12: Verdier scalar complementarity diagnostic
 # =====================================================================
 
 def koszul_complementarity_np(c_val: float, hbar: float,
                               g_max: int = 30) -> Dict[str, Any]:
-    r"""Non-perturbative free energy from Koszul complementarity.
+    r"""Verdier scalar complementarity diagnostic for Virasoro.
 
     For Virasoro at c: kappa = c/2, kappa' = (26-c)/2.
 
-    The non-perturbative completion:
+    The optional diagnostic combination:
         F^np = F^pert(A) + exp(-A/hbar^2) * F^pert(A!) + ...
 
-    At c = 13 (self-dual): kappa = kappa' = 13/2, so the instanton
-    correction uses the SAME series, giving enhanced Z_2 symmetry.
+    is not certified as a nonperturbative completion.  A, B(A), A^i,
+    A^!, and Z_ch^der(A) remain distinct: Omega(B(A)) = A is bar-cobar
+    inversion; A^! is the Verdier/continuous-linear dual branch; the
+    Hochschild bulk is not Koszul dual.
     """
     kappa = kappa_virasoro(c_val)
-    kappa_dual = kappa_virasoro(26.0 - c_val)  # kappa(A!) for Vir
+    kappa_dual = kappa_virasoro(26.0 - c_val)  # Verdier scalar branch for Vir
 
     Fpert = genus_series_partial_sum(kappa, hbar, g_max) if abs(hbar) < TWO_PI else float('nan')
     Fpert_dual = genus_series_partial_sum(kappa_dual, hbar, g_max) if abs(hbar) < TWO_PI else float('nan')
@@ -1209,12 +1284,16 @@ def koszul_complementarity_np(c_val: float, hbar: float,
         'c': c_val,
         'kappa': kappa,
         'kappa_dual': kappa_dual,
-        'kappa_sum': kappa + kappa_dual,  # = 13 for Virasoro (AP24)
+        'kappa_sum': kappa + kappa_dual,
         'hbar': hbar,
         'F_pert': Fpert,
         'F_pert_dual': Fpert_dual,
         'exp_suppression': exp_factor,
         'F_np': F_np,
+        'F_np_certification': FINITE_WINDOW_DIAGNOSTIC,
+        'nonperturbative_completion_certified': False,
+        'dual_branch': 'Verdier scalar branch A^!, not bar-cobar inversion and not Hochschild bulk',
+        'object_firewall': object_firewall(),
         'exact': exact,
         'is_self_dual': is_self_dual,
     }
@@ -1232,12 +1311,13 @@ def gevrey_order(kappa: float, g_max: int = 30) -> Dict[str, Any]:
     For the shadow partition function:
         F_g ~ 2*kappa / (2*pi)^{2g}  (no factorial growth!)
 
-    This means the series is Gevrey-0: CONVERGENT (within the radius).
+    This means the scalar series is Gevrey-0: convergent within its
+    A-hat radius.
     The (2g)! from the Bernoulli numbers is cancelled by the (2g)! in
     the denominator of lambda_g^FP = (2^{2g-1}-1)/2^{2g-1} * |B_{2g}|/(2g)!.
 
-    However, the FULL genus expansion (not just the scalar shadow) has
-    factorial growth from WP volumes, making it Gevrey-1.
+    This statement is only about the scalar shadow lane.  It does not make
+    claims about a full Weil-Petersson genus expansion.
 
     The shadow partition function's Gevrey-0 nature is a CONSEQUENCE of
     the algebraic structure (Ahat generating function).
@@ -1269,25 +1349,20 @@ def gevrey_order(kappa: float, g_max: int = 30) -> Dict[str, Any]:
             'Gevrey-0: the shadow series is convergent within the radius '
             '|hbar| < 2*pi. The factorial growth of B_{2g} is exactly '
             'cancelled by the (2g)! in the FP denominator. The series '
-            'is Borel summable with singularities at t = 2*pi*n.'
+            'therefore needs no Borel-summability certificate on this '
+            'scalar lane.'
         ),
+        'borel_summability_certified': False,
     }
 
 
 def optimal_truncation(kappa: float, hbar: float) -> Dict[str, Any]:
-    r"""Optimal truncation order for the genus series.
+    r"""Truncation diagnostic for the scalar genus series.
 
-    For a series with convergence radius R, the optimal truncation at
-    hbar is approximately N* = R^2 / hbar^2 (the term number where
-    the partial sum starts to diverge).
-
-    For hbar < R = 2*pi: the series converges, so the optimal truncation
-    is "use all terms."
-
-    For hbar > R: the series diverges, and optimal truncation at
-    N* ~ (2*pi)^2 / hbar^2 = A / hbar^2 minimizes the remainder.
-    The remainder at optimal truncation is ~ exp(-A/hbar^2), which
-    is the instanton contribution.
+    For |hbar| < 2*pi the scalar A-hat series converges.  For
+    |hbar| >= 2*pi this routine does not certify an optimal truncation
+    theorem; it only returns the legacy geometric scale A/hbar^2 as a
+    diagnostic.
     """
     u = hbar ** 2
     A = INSTANTON_ACTION
@@ -1321,6 +1396,8 @@ def optimal_truncation(kappa: float, hbar: float) -> Dict[str, Any]:
         'instanton_action': A,
         'exp_suppression': math.exp(-A / u) if u > 0 and A / u < 500 else 0.0,
         'within_convergence': abs(hbar) < TWO_PI,
+        'certified_optimal_truncation': False,
+        'certification': FINITE_WINDOW_DIAGNOSTIC,
         'exact': exact,
         'partial_at_Nstar': (partials[N_star - 1][1]
                              if 0 < N_star <= len(partials) else None),

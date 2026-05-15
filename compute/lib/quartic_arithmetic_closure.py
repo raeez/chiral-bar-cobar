@@ -25,6 +25,15 @@ import numpy as np
 
 mp.dps = 50
 
+BETAGAMMA_CLOSED_COLLISION_RESIDUE = mpf(0)
+BC_CLOSED_COLLISION_RESIDUE = mpf(0)
+BETAGAMMA_SIMPLE_OPE_RESIDUE = mpf(1)
+
+CLASS_C_AMBIENT_S3 = mpf(0)
+CLASS_C_AMBIENT_S4 = -mpf(5) / 12
+CLASS_C_TAIL_FROM_5 = mpf(0)
+BETAGAMMA_STANDARD_KAPPA = mpf(1)
+
 
 # =============================================================================
 # 1. Quartic contact invariant
@@ -43,15 +52,17 @@ def quartic_contact_virasoro(c):
 
 
 def schur_complement_virasoro(c):
-    """Schur complement Sigma_2^Vir = 5/(5c+22).
+    """Normalized Virasoro Schur scalar Sigma_2^Vir = 5/(5c+22).
 
-    From the 3x3 Hankel moment matrix of shadow coefficients:
+    The raw 2x2 Hankel Schur complement is
+    mu_4 - mu_3^2 / mu_2 and is computed by
+    schur_complement_general('virasoro', c).  This helper preserves the
+    historical normalized scalar used by the quartic-closure tests.
+
+    The Hankel moment matrix of shadow coefficients is
       M = [[mu_2, mu_3, mu_4],
            [mu_3, mu_4, mu_5],
            [mu_4, mu_5, mu_6]]
-
-    The Schur complement Sigma_2 = mu_4 - mu_3^2/mu_2 isolates the
-    quartic contact coupling after removing the cubic channel.
     """
     c = mpf(c)
     return mpf(5) / (5 * c + 22)
@@ -406,9 +417,10 @@ def compatibility_ratio_c3(c, rho, u0):
 def compatibility_ratio_c4_gram(c, rho, u0):
     """Quartic Gram compatibility ratio C_4^Gram(c, rho; u_0).
 
-    The quartic shadow imposes a SECOND constraint through the Gram
-    matrix determinant. The Hankel matrix of shadow moments must have
-    positive leading minors for the shadow obstruction tower to be well-defined.
+    The quartic shadow imposes a second constraint through the Gram
+    matrix determinant.  This ratio uses the normalized quartic Gram
+    scalar; it is not a positivity assertion about the raw Virasoro
+    2x2 Hankel Schur complement.
 
     C_4^Gram measures the ratio of the quartic residue kernel squared
     to the Gram determinant at the quartic characteristic weight.
@@ -471,6 +483,46 @@ def compatibility_locus(c, u0, rho_range, tol=None):
 # 6. Shadow moment generating function
 # =============================================================================
 
+def betagamma_class_c_shadow_data():
+    """Separated beta-gamma/bc shadow data.
+
+    The closed collision residue and genus-0 closed curvature vanish for
+    beta-gamma and for its bc Koszul dual.  The simple OPE residue
+    beta_(0) gamma = 1 is bar/contact data, not a closed collision
+    residue.  The ambient class-C standard conformal-weight family has
+    S_3 = 0, S_4 = -5/12, and S_r = 0 for r >= 5; this is distinct
+    from scalar closed-collision branches where the quartic scalar may
+    vanish.
+
+    Compatibility keys are deliberately redundant: older callers expect
+    both 'class'/'shadow_class' and 'depth'/'r_max' naming.
+    """
+    return {
+        'family': 'betagamma',
+        'dual_family': 'bc',
+        'class': 'C',
+        'shadow_class': 'C',
+        'depth': 4,
+        'r_max': 4,
+        'kappa': BETAGAMMA_STANDARD_KAPPA,
+        'S2': BETAGAMMA_STANDARD_KAPPA,
+        'S3': CLASS_C_AMBIENT_S3,
+        'S4': CLASS_C_AMBIENT_S4,
+        'tail_from_5': CLASS_C_TAIL_FROM_5,
+        'closed_collision_residue': BETAGAMMA_CLOSED_COLLISION_RESIDUE,
+        'bc_closed_collision_residue': BC_CLOSED_COLLISION_RESIDUE,
+        'genus0_closed_curvature': BETAGAMMA_CLOSED_COLLISION_RESIDUE,
+        'simple_ope_residue_beta_gamma': BETAGAMMA_SIMPLE_OPE_RESIDUE,
+        'simple_ope_residue_gamma_beta': -BETAGAMMA_SIMPLE_OPE_RESIDUE,
+        'scalar_closed_branch': {
+            'S3': mpf(0),
+            'S4': mpf(0),
+            'closed_collision_residue': BETAGAMMA_CLOSED_COLLISION_RESIDUE,
+            'genus0_closed_curvature': BETAGAMMA_CLOSED_COLLISION_RESIDUE,
+        },
+    }
+
+
 def shadow_moment_generating_function(family, t, max_arity=6):
     """Shadow moment generating function F_A(t) = sum_{r>=2} mu_r t^r.
 
@@ -481,8 +533,15 @@ def shadow_moment_generating_function(family, t, max_arity=6):
     For the mixed (depth infinity) class, the radius of convergence
     is controlled by the Kac determinant singularities.
 
+    For family == 'betagamma', this function preserves the legacy scalar
+    closed-collision projection: kappa*t^2 with zero closed collision
+    residue, zero genus-0 closed curvature, S_3 = S_4 = 0 on that scalar
+    branch.  The ambient class-C beta-gamma/bc contact family is available
+    as family == 'betagamma_class_c' and has S_4 = -5/12.
+
     Parameters:
-      family: 'heisenberg', 'virasoro', 'betagamma', or ('WN', N)
+      family: 'heisenberg', 'virasoro', 'betagamma',
+              'betagamma_class_c', or ('WN', N)
       t: evaluation point (mpf or complex)
       max_arity: truncation level
     """
@@ -501,12 +560,16 @@ def shadow_moment_generating_function(family, t, max_arity=6):
         moments = virasoro_shadow_moments(c_val, max_arity)
         return sum(moments[r] * t ** r for r in sorted(moments.keys()))
 
-    elif family == 'betagamma':
-        # Contact (depth 4): mu_{beta_gamma} = 0, terminates at arity 4
-        # kappa = 1 (c=2 for beta-gamma, so kappa = c/2 = 1)
-        # F_{bg}(t) = t^2 + (cubic) t^3 + 0 * t^4
-        # Actually betgamma has kappa = c/2 and mu = 0
-        return mpf(1) * t ** 2
+    elif family in ('betagamma', 'betagamma_closed_scalar'):
+        # Legacy scalar closed-collision branch.  The closed collision
+        # residue and genus-0 closed curvature are zero; the simple OPE
+        # residue is separate bar/contact data.
+        return BETAGAMMA_STANDARD_KAPPA * t ** 2
+
+    elif family in ('betagamma_class_c', 'bc_betagamma_class_c'):
+        # Ambient class-C contact family, not the scalar closed branch.
+        return (BETAGAMMA_STANDARD_KAPPA * t ** 2
+                + CLASS_C_AMBIENT_S4 * t ** 4)
 
     elif isinstance(family, tuple) and family[0] == 'WN':
         N = family[1]
@@ -526,26 +589,25 @@ def shadow_moment_generating_function(family, t, max_arity=6):
 # =============================================================================
 
 def schur_complement_general(family, c):
-    """Schur complement Sigma_2 for general families.
+    """Raw Schur complement Sigma_2 for general families.
 
     Sigma_2 = mu_4 - mu_3^2 / mu_2
 
-    This isolates the quartic contact coupling after removing the
-    cubic contribution through the Schur complement decomposition.
+    This is a raw Hankel invariant.  It is not the normalized Virasoro
+    scalar returned by schur_complement_virasoro(c).
 
     For Virasoro: Sigma_2 = 10/(c(5c+22)) - 4/(c/2) = 10/(c(5c+22)) - 8/c
                           = [10 - 8(5c+22)] / [c(5c+22)]
                           = [10 - 40c - 176] / [c(5c+22)]
                           = -(40c + 166) / [c(5c+22)]
 
-    Wait: mu_3^2/mu_2 = 4/(c/2) = 8/c. So:
-      Sigma_2 = 10/(c(5c+22)) - 8/c = [10 - 8(5c+22)] / [c(5c+22)]
+    The statement Sigma_2^Vir = 5/(5c+22) names the normalized scalar
+    used elsewhere in this module, not this raw Schur complement.
 
-    But the SCHUR COMPLEMENT of mu_2 in the 2x2 Hankel [[mu_2, mu_3],[mu_3, mu_4]]
-    is Sigma = mu_4 - mu_3^2/mu_2. And this is what isolates the quartic contact.
-
-    The statement Sigma_2^Vir = 5/(5c+22) is the NORMALIZED Schur complement
-    after factoring out a standard normalization.
+    For beta-gamma, family == 'betagamma' preserves the legacy scalar
+    closed-collision branch and returns 0.  The ambient class-C family
+    is selected by 'betagamma_class_c' and has S_3 = 0, S_4 = -5/12,
+    hence raw Sigma_2 = -5/12.
 
     Computation: Sigma_2 = mu_4 - mu_3^2 / mu_2
                          = 10/(c(5c+22)) - 4/(c/2)
@@ -563,10 +625,15 @@ def schur_complement_general(family, c):
         # Gaussian: mu_3 = 0, so Sigma_2 = mu_4 = 0
         return mpf(0)
 
-    elif family == 'betagamma':
-        # Contact: mu = 0 (rank-one abelian rigidity)
-        # mu_2 = c/2, mu_3 = 0 (no cubic), mu_4 = 0
+    elif family in ('betagamma', 'betagamma_closed_scalar'):
+        # Scalar closed-collision branch: r_coll = m0 = S3 = S4 = 0.
         return mpf(0)
+
+    elif family in ('betagamma_class_c', 'bc_betagamma_class_c'):
+        # Ambient class-C contact data, distinct from closed collision residue.
+        mu_3 = CLASS_C_AMBIENT_S3
+        mu_4 = CLASS_C_AMBIENT_S4
+        return mu_4 - mu_3 ** 2 / BETAGAMMA_STANDARD_KAPPA
 
     elif family == 'W3':
         mu_2 = c / 2
@@ -663,13 +730,23 @@ def shadow_depth_class(family):
 
     G (Gaussian, r_max=2): Heisenberg
     L (Lie/tree, r_max=3): affine Kac-Moody
-    C (contact/quartic, r_max=4): beta-gamma
+    C (contact/quartic, r_max=4): ambient beta-gamma/bc class-C family
     M (mixed, r_max=infinity): Virasoro, W_N
+
+    The default 'betagamma' key records the ambient standard family:
+    S_3 = 0, S_4 = -5/12, S_r = 0 for r >= 5.  Use
+    'betagamma_closed_scalar' for the scalar closed-collision branch
+    where the closed residue, genus-0 closed curvature, and quartic
+    scalar vanish.
     """
     depth_map = {
         'heisenberg': ('G', 2),
         'affine': ('L', 3),
         'betagamma': ('C', 4),
+        'betagamma_class_c': ('C', 4),
+        'bc_betagamma_class_c': ('C', 4),
+        'betagamma_closed_scalar': ('G', 2),
+        'bc_closed_scalar': ('G', 2),
         'virasoro': ('M', float('inf')),
         'W3': ('M', float('inf')),
         'W4': ('M', float('inf')),

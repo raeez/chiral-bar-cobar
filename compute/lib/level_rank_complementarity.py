@@ -20,7 +20,7 @@ PROVED INGREDIENTS:
 CRITICAL DISTINCTIONS:
   - For sl_N: h^vee = N, dim = N^2 - 1
   - FF involution is k -> -k - 2h^vee, NOT -k - h^vee
-  - Critical level is k = -h^vee (kappa undefined there)
+  - Critical level is k = -h^vee (kappa vanishes there; Sugawara is undefined)
   - Sugawara central charge c = k * dim(g) / (k + h^vee), UNDEFINED at critical level
 
 Mathematical references:
@@ -91,12 +91,11 @@ def kappa_affine(type_: str, rank: int, level) -> Rational:
 
     kappa(g_k) = dim(g) * (k + h^vee) / (2 * h^vee)
 
-    Raises ValueError at the critical level k = -h^vee.
+    At the critical level k = -h^vee this returns zero. The Sugawara
+    central charge, not kappa, is undefined there.
     """
     dim_g, _, h_dual, _ = lie_data(type_, rank)
     k = sympify(level)
-    if k + h_dual == 0:
-        raise ValueError(f"Critical level k = -{h_dual}: kappa undefined")
     return Rational(dim_g) * (k + h_dual) / (2 * h_dual)
 
 
@@ -151,8 +150,9 @@ def level_rank_data(N: int, k: int) -> Dict:
     Level-rank is the CROSS-RANK version: (N, k) -> (k, -N).
 
     When N = k, the dual side sl_k at level -N = -k hits the critical
-    level (since h^vee(sl_k) = k), so kappa_B is undefined.  In this
-    case, dual_critical is set to True and kappa_B is None.
+    level (since h^vee(sl_k) = k), so kappa_B is zero while the
+    Sugawara/Verlinde interpretation is critical. In this case,
+    dual_critical is set to True.
 
     Returns dict with all the data.
     """
@@ -172,7 +172,7 @@ def level_rank_data(N: int, k: int) -> Dict:
         # Level -N for sl_k: critical iff -N + k = 0, i.e., N = k
         if -N + h_dual_k == 0:
             dual_critical = True
-            kappa_B = None
+            kappa_B = Rational(0)
         else:
             kappa_B = Rational(dim_k) * (-N + h_dual_k) / (2 * h_dual_k)
     else:
@@ -191,7 +191,7 @@ def level_rank_data(N: int, k: int) -> Dict:
         "dim_N": dim_N,
         "h_dual_N": h_dual_N,
         "kappa_A": kappa_A,          # kappa(sl_N at level k)
-        "kappa_B": kappa_B,          # kappa(sl_k at level -N); None if critical
+        "kappa_B": kappa_B,          # kappa(sl_k at level -N); zero if critical
         "kappa_ff": kappa_ff,        # kappa(sl_N at level -k-2N)
         "kappa_sum_ff": simplify(kappa_A + kappa_ff),  # should be 0
         "dim_k": dim_k,
@@ -519,7 +519,7 @@ def level_rank_kappa_identity(N: int, k: int) -> Dict:
     ff_sum = data["kappa_sum_ff"]
 
     # Level-rank: kappa of sl_k at level -N
-    # When N = k, the dual side is at critical level (kappa_B = None)
+    # When N = k, the dual side is at critical level (kappa_B = 0).
     kappa_lr = data["kappa_B"]
     dual_critical = data["dual_critical"]
 

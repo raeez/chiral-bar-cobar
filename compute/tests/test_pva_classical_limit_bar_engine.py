@@ -43,19 +43,32 @@ from compute.lib.pva_classical_limit_bar_engine import (
     pva_koszul_dual_sl2,
     pva_koszul_dual_virasoro,
     pva_complementarity_sum,
+    collision_kernel_terms,
     heisenberg_associated_variety,
     sl2_universal_associated_variety,
     sl2_integrable_associated_variety,
     virasoro_associated_variety,
     li_bar_E1_page,
     pva_scalar_kappa,
+    finite_window_diagnostics,
+    HOLOGRAPHIC_PACKAGE_ENTRIES,
+    MODULAR_KOSZUL_PROJECTIONS,
+    OBJECT_FIREWALLS,
     classical_limit_landscape_summary,
     verify_jacobi_identity,
     verify_antisymmetry,
+    verify_ce_differential_squared_zero,
     leak_dimensions,
     _sort_with_sign,
     _basis_exterior,
     _sign_remove_two,
+)
+
+from compute.lib.theorem_pva_classical_r_matrix_engine import (
+    PVAClassicalRMatrix,
+    affine_sl2_pva,
+    heisenberg_pva,
+    virasoro_pva,
 )
 
 
@@ -64,7 +77,7 @@ from compute.lib.pva_classical_limit_bar_engine import (
 # =========================================================================
 
 class TestHeisenbergClassicalPVA:
-    """Heisenberg PVA: single generator phi, {phi, phi}_0 = 0, central = k."""
+    """Heisenberg PVA: {phi, phi}_0 = 0 and c_1(phi,phi)=k."""
 
     def test_heisenberg_single_generator(self):
         """Path 1: Heisenberg classical PVA has exactly one generator."""
@@ -78,12 +91,27 @@ class TestHeisenbergClassicalPVA:
         lin, _ = pva.poisson_bracket("phi", "phi")
         assert lin == {}
 
-    def test_heisenberg_central_term_equals_k(self):
-        """Path 1: central Poisson term = k."""
+    def test_heisenberg_lambda_one_term_equals_k(self):
+        """Path 1: lambda coefficient c_1(J,J) = k."""
         for k in [1, 2, 3, 7, -1]:
             pva = heisenberg_classical_pva(k=Fraction(k))
-            _, cen = pva.poisson_bracket("phi", "phi")
-            assert cen == Fraction(k)
+            coeff = pva.lambda_coefficient("phi", "phi", 1)
+            assert coeff.scalar == Fraction(k)
+
+    def test_heisenberg_poisson_bracket_has_no_scalar_leak(self):
+        """Attack-heal: the C_2 zero-mode bracket does not return c_1=k."""
+        pva = heisenberg_classical_pva(k=Fraction(5))
+        lin, scalar = pva.poisson_bracket("phi", "phi")
+        assert lin == {}
+        assert scalar == 0
+
+    def test_heisenberg_collision_kernel_is_k_over_z(self):
+        """Path 5: AP19 d-log shift sends J_(1)J=k to k/z."""
+        pva = heisenberg_classical_pva(k=Fraction(7))
+        kernel = collision_kernel_terms(pva, "phi", "phi")
+        assert set(kernel) == {1}
+        assert kernel[1].scalar == Fraction(7)
+        assert kernel[1].linear == {}
 
     def test_heisenberg_kappa_equals_k(self):
         """Path 5 (kappa consistency): kappa(H_k) = k."""
@@ -125,6 +153,11 @@ class TestHeisenbergClassicalPVA:
         pva = heisenberg_classical_pva(k=Fraction(2))
         assert verify_antisymmetry(pva)["ok"]
 
+    def test_heisenberg_d_squared_zero(self):
+        """Path 1+8: CE bar differential squares to zero in the finite window."""
+        pva = heisenberg_classical_pva(k=Fraction(2))
+        assert verify_ce_differential_squared_zero(pva, max_arity=3)["ok"]
+
 
 # =========================================================================
 # Section 2: Affine sl_2 classical-limit PVA
@@ -165,14 +198,34 @@ class TestAffineSl2ClassicalPVA:
         lin_fh, _ = pva.poisson_bracket("f", "h")
         assert lin_fh == {"f": Fraction(2)}
 
-    def test_sl2_central_terms(self):
-        """Path 1: central lambda^1 term encodes level k."""
+    def test_sl2_lambda_one_level_terms(self):
+        """Path 1: lambda^1 scalar terms encode level k."""
         for k_val in [1, 2, 5, -3]:
             pva = affine_sl2_classical_pva(k=Fraction(k_val))
-            _, cen_ef = pva.poisson_bracket("e", "f")
-            assert cen_ef == Fraction(k_val)
-            _, cen_hh = pva.poisson_bracket("h", "h")
-            assert cen_hh == Fraction(2) * k_val
+            assert pva.lambda_coefficient("e", "f", 1).scalar == Fraction(k_val)
+            assert pva.lambda_coefficient("h", "h", 1).scalar == (
+                Fraction(2) * k_val
+            )
+
+    def test_sl2_reversed_lambda_level_is_not_antisymmetrized(self):
+        """Attack-heal: {f_lambda e} has +k lambda, not -k lambda."""
+        pva = affine_sl2_classical_pva(k=Fraction(3))
+        assert pva.lambda_coefficient("e", "f", 1).scalar == Fraction(3)
+        assert pva.lambda_coefficient("f", "e", 1).scalar == Fraction(3)
+        lin_fe, scalar_fe = pva.poisson_bracket("f", "e")
+        assert lin_fe == {"h": Fraction(-1)}
+        assert scalar_fe == 0
+
+    def test_sl2_collision_kernel_trace_form_entries(self):
+        """Path 5: affine raw collision kernel is k*Omega_tr/z."""
+        pva = affine_sl2_classical_pva(k=Fraction(5))
+        ef = collision_kernel_terms(pva, "e", "f")
+        fe = collision_kernel_terms(pva, "f", "e")
+        hh = collision_kernel_terms(pva, "h", "h")
+        assert ef[1].scalar == Fraction(5)
+        assert fe[1].scalar == Fraction(5)
+        assert hh[1].scalar == Fraction(10)
+        assert ef[1].linear == fe[1].linear == hh[1].linear == {}
 
     def test_sl2_bar_complex_dimensions(self):
         """Path 1: Lambda^*(3 gens) has dimensions (1, 3, 3, 1)."""
@@ -191,7 +244,7 @@ class TestAffineSl2ClassicalPVA:
 
     def test_sl2_bar_cohomology_level_independent(self):
         """Path 6: CE cohomology does NOT depend on the level k."""
-        # The central (level) terms are filtered out of the Chevalley-Eilenberg
+        # The scalar lambda^1 level terms are filtered out of the CE
         # differential on R_+; only the linear Kirillov-Kostant structure
         # controls cohomology.  So every non-critical level gives the same H.
         levels = [Fraction(1), Fraction(2), Fraction(5), Fraction(-1),
@@ -234,6 +287,12 @@ class TestAffineSl2ClassicalPVA:
         pva = affine_sl2_classical_pva(k=Fraction(1))
         assert verify_antisymmetry(pva)["ok"]
 
+    def test_sl2_d_squared_zero(self):
+        """Path 1+8: CE bar differential squares to zero."""
+        pva = affine_sl2_classical_pva(k=Fraction(1))
+        report = verify_ce_differential_squared_zero(pva, max_arity=3)
+        assert report["ok"], f"d^2 failed: {report['failures']}"
+
     def test_sl2_kappa_formula(self):
         """Path 5: kappa(sl_2, k) = 3(k+2)/4."""
         for k_val in [1, 2, 5, -1]:
@@ -247,7 +306,7 @@ class TestAffineSl2ClassicalPVA:
 # =========================================================================
 
 class TestVirasoroClassicalPVA:
-    """Virasoro classical PVA: single T with central c/12 term."""
+    """Virasoro classical PVA: one T with c_3(T,T)=c/12."""
 
     def test_virasoro_single_generator(self):
         """Path 1: Virasoro PVA has exactly one generator T of weight 2."""
@@ -261,12 +320,38 @@ class TestVirasoroClassicalPVA:
         lin, _ = pva.poisson_bracket("T", "T")
         assert lin == {}
 
-    def test_virasoro_central_is_c_over_12(self):
-        """Path 1: central Poisson term = c/12."""
+    def test_virasoro_lambda_three_is_c_over_12(self):
+        """Path 1: divided-power coefficient c_3(T,T) = c/12."""
         for c_val in [1, 2, 13, 26, -22]:
             pva = virasoro_classical_pva(c=Fraction(c_val))
-            _, cen = pva.poisson_bracket("T", "T")
-            assert cen == Fraction(c_val) / Fraction(12)
+            assert pva.lambda_coefficient("T", "T", 3).scalar == (
+                Fraction(c_val) / Fraction(12)
+            )
+
+    def test_virasoro_zero_mode_derivative_killed_in_c2(self):
+        """Attack-heal: T_(0)T=partial T is stored, but dies in R_A."""
+        pva = virasoro_classical_pva(c=Fraction(1))
+        coeff = pva.lambda_coefficient("T", "T", 0)
+        assert coeff.derivative == {"T": Fraction(1)}
+        lin, scalar = pva.poisson_bracket("T", "T")
+        assert lin == {}
+        assert scalar == 0
+
+    def test_virasoro_divided_power_to_ope_mode(self):
+        """Path 1: 3!*(c/12)=c/2 for T_(3)T."""
+        pva = virasoro_classical_pva(c=Fraction(26))
+        mode = pva.lambda_ope_mode("T", "T", 3)
+        assert mode.scalar == Fraction(13)
+
+    def test_virasoro_collision_kernel_constants(self):
+        """Path 5: collision kernel is (c/2)/z^3 + 2T/z."""
+        pva = virasoro_classical_pva(c=Fraction(9))
+        kernel = collision_kernel_terms(pva, "T", "T")
+        assert set(kernel) == {1, 3}
+        assert kernel[1].linear == {"T": Fraction(2)}
+        assert kernel[1].scalar == 0
+        assert kernel[3].scalar == Fraction(9, 2)
+        assert kernel[3].linear == {}
 
     def test_virasoro_kappa_equals_c_over_2(self):
         """Path 5: kappa(Vir_c) = c/2."""
@@ -288,6 +373,11 @@ class TestVirasoroClassicalPVA:
         report = ce_bar_cohomology(pva, max_arity=3)
         assert report.dim_H[0] == 1
         assert report.dim_H[1] == 1
+
+    def test_virasoro_d_squared_zero(self):
+        """Path 1+8: finite C_2 bar differential squares to zero."""
+        pva = virasoro_classical_pva(c=Fraction(1))
+        assert verify_ce_differential_squared_zero(pva, max_arity=3)["ok"]
 
 
 # =========================================================================
@@ -363,7 +453,7 @@ class TestCEDifferentialPrimitives:
 # =========================================================================
 
 class TestKoszulDualityPVA:
-    """Koszul dual PVAs and complementarity sums (AP24 compliance)."""
+    """Finite dual-branch PVA shadows and complementarity sums."""
 
     def test_heisenberg_koszul_dual_opposite_sign(self):
         """Path 1: Koszul dual of H_k is H_{-k} at the PVA level."""
@@ -556,7 +646,81 @@ class TestLandscapeSummary:
 
 
 # =========================================================================
-# Section 10: Cross-level sl_2 consistency (AP10)
+# Section 10: Oracle checks against the r-matrix engine
+# =========================================================================
+
+class TestRMatrixEngineOracle:
+    """Independent local oracle for lambda-to-collision constants."""
+
+    def test_heisenberg_kernel_matches_rmatrix_engine(self):
+        """Path 5: both engines produce collision pole k/z."""
+        k = Fraction(4)
+        local = collision_kernel_terms(heisenberg_classical_pva(k), "phi", "phi")
+        oracle = PVAClassicalRMatrix(heisenberg_pva(k)).coll_poles[("J", "J")]
+        assert local[1].scalar == oracle[1]
+
+    def test_sl2_kernel_matches_rmatrix_engine(self):
+        """Path 5: trace-form level entries match the r-matrix engine."""
+        k = Fraction(3)
+        pva = affine_sl2_classical_pva(k)
+        local_ef = collision_kernel_terms(pva, "e", "f")
+        local_hh = collision_kernel_terms(pva, "h", "h")
+        oracle = PVAClassicalRMatrix(affine_sl2_pva(k)).coll_poles
+        assert local_ef[1].scalar == oracle[("e", "f")][1]
+        assert local_hh[1].scalar == oracle[("h", "h")][1]
+
+    def test_virasoro_kernel_matches_rmatrix_engine(self):
+        """Path 5: Virasoro collision poles are c/2 at z^-3 and 2T at z^-1."""
+        c = Fraction(10)
+        local = collision_kernel_terms(virasoro_classical_pva(c), "T", "T")
+        oracle = PVAClassicalRMatrix(virasoro_pva(c)).coll_poles[("T", "T")]
+        assert local[3].scalar == oracle[3]
+        assert local[1].linear == {"T": oracle[1][0]}
+
+
+# =========================================================================
+# Section 11: Finite-window and object-firewall diagnostics
+# =========================================================================
+
+class TestFiniteWindowDiagnostics:
+    """Scope diagnostics: exact C_2 window, no hidden dual/bulk package."""
+
+    def test_virasoro_translation_closure_flagged_absent(self):
+        """The finite generator window stores partial T but does not close under it."""
+        diag = finite_window_diagnostics(virasoro_classical_pva(Fraction(1)))
+        assert diag.exact_c2_zero_mode_bar is True
+        assert diag.exact_stored_lambda_modes is True
+        assert diag.translation_closed is False
+        assert diag.omitted_derivative_generators == ("partial T",)
+
+    def test_heisenberg_window_is_translation_closed(self):
+        """Heisenberg has no derivative term in the stored finite window."""
+        diag = finite_window_diagnostics(heisenberg_classical_pva(Fraction(1)))
+        assert diag.translation_closed is True
+        assert diag.omitted_derivative_generators == ()
+
+    def test_package_cardinality_firewalls(self):
+        """Holographic package has seven entries; modular Koszul has six."""
+        diag = finite_window_diagnostics(affine_sl2_classical_pva(Fraction(1)))
+        assert diag.holographic_package_entries == HOLOGRAPHIC_PACKAGE_ENTRIES
+        assert len(diag.holographic_package_entries) == 7
+        assert diag.modular_koszul_projections == MODULAR_KOSZUL_PROJECTIONS
+        assert len(diag.modular_koszul_projections) == 6
+
+    def test_object_firewalls_distinguish_bar_dual_bulk(self):
+        """A, B(A), A^i, A^!, Omega(B(A)), and Hochschild bulk stay distinct."""
+        diag = finite_window_diagnostics(affine_sl2_classical_pva(Fraction(1)))
+        assert diag.object_firewalls == OBJECT_FIREWALLS
+        assert diag.object_firewalls["B(A)"] == "bar coalgebra"
+        assert "H^*(B(A))" in diag.object_firewalls["A^i"]
+        assert "Verdier" in diag.object_firewalls["A^!"]
+        assert "ChirHoch" in diag.object_firewalls["Z_ch^der(A)"]
+        assert "not Koszul duality" in diag.object_firewalls["Omega(B(A))"]
+        assert "assembled holographic package" in diag.excluded_objects
+
+
+# =========================================================================
+# Section 12: Cross-level sl_2 consistency (AP10)
 # =========================================================================
 
 class TestCrossLevelSl2Consistency:
@@ -589,7 +753,7 @@ class TestCrossLevelSl2Consistency:
 
 
 # =========================================================================
-# Section 11: Cross-parameter Virasoro consistency
+# Section 13: Cross-parameter Virasoro consistency
 # =========================================================================
 
 class TestCrossCentralChargeVirasoro:
@@ -617,7 +781,7 @@ class TestCrossCentralChargeVirasoro:
 
 
 # =========================================================================
-# Section 12: Meta-properties: no AI attribution in engine file
+# Section 14: Meta-properties: no AI attribution in engine file
 # =========================================================================
 
 class TestNoAIAttribution:

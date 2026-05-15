@@ -1,108 +1,214 @@
-r"""Theorem: The BCOV modular anomaly equation is the (g,0) projection of the MC equation.
+r"""Finite scalar witnesses for the modular-anomaly / MC projection surface.
 
-THEOREM (thm:modular-anomaly-mc-projection)
-==========================================
+This module verifies exact rational identities on the uniform-weight,
+arity-zero scalar lane:
 
-The BCOV holomorphic anomaly equation
+    lambda_g^FP = ((2^(2g-1) - 1) |B_(2g)|) / (2^(2g-1) (2g)!)
+    F_g(A) = kappa(A) lambda_g^FP
+    c_g(A) = (1/24) sum_(h=1)^(g-1) F_h(A) F_(g-h)(A)
 
-    dF_g/dE_2* = (1/24) * sum_{h=1}^{g-1} F_h * F_{g-h}
+The finite checks here do not reconstruct the universal MC element
+Theta_A.  They test a scalar projection after the higher arity,
+non-scalar OPE, moduli-dependent propagator, and cross-channel data
+have been forgotten.  That distinction is part of the compute surface:
+any function that returns a finite anomaly coefficient also returns, or
+is paired with, a witness that full MC reconstruction has not been
+proved by that coefficient.
 
-is PRECISELY the genus-g, arity-0 projection of the Maurer-Cartan equation
-
-    D(Theta_A) + (1/2)[Theta_A, Theta_A] = 0
-
-in the modular convolution dg Lie algebra g^mod_A = Def_cyc^mod(A) tensor G_mod.
-
-PROOF (four independent verification paths):
-
-Path 1 (MC projection):
-    Write Theta_A = sum_{g>=1} Theta^{(g)} hbar^{2g} at arity 0.
-    The D term acts on Theta^{(g)} via the genus-1 sewing operator, whose
-    kernel is the Bergman reproducing kernel B(z,w|tau).  The derivative
-    d/dE_2* of the genus-g amplitude extracts the genus-1 propagator
-    insertion (one edge of the stable graph), because:
-        (1/2pi i) d B(z,w|tau)/dtau = -(1/12) E_2*(tau) dz dw + O(q)
-    and d/dE_2* extracts the E_2* coefficient = -(1/12) dz dw.
-    The sewing normalization absorbs the -1/12 to give the 1/24 prefactor.
-
-    The [Theta,Theta] term at genus g pairs Theta^{(h)} with Theta^{(g-h)}
-    through the genus-0 pairing (Serre duality residue).  At arity 0:
-        (1/2)[Theta,Theta]^{(g)} = (1/2) sum_{h=1}^{g-1} F_h * F_{g-h}
-    The factor of 1/2 accounts for ordered vs unordered pairs.
-    Combined with the sewing normalization: D gives 1/24 from the trace
-    of the sewing operator = kappa/24 = F_1, giving the anomaly equation.
-
-Path 2 (Generating function convolution):
-    The generating function sum_{g>=1} F_g hbar^{2g} = kappa*(Ahat(i*hbar) - 1)
-    (AP22: note hbar^{2g}, not hbar^{2g-2}).  The modular anomaly operator
-    d/dE_2* acts as the genus-raising operator (1/24)*d^2/dhbar^2 on
-    the generating function, because the sewing differential at genus 1
-    inserts one E_2* propagator.  Then:
-        d/dE_2* sum F_g hbar^{2g} = (1/24) d^2/dhbar^2 sum F_g hbar^{2g}
-                                   = (1/24) sum g(2g-1) F_g hbar^{2g-2}
-    But the CONVOLUTION square (1/24)(sum F_h hbar^{2h})^2 also gives
-    (1/24) sum_{g>=2} (sum_{h=1}^{g-1} F_h F_{g-h}) hbar^{2g}, which
-    matches via the Ahat product identity.
-
-Path 3 (Heat equation / integrability):
-    The modular anomaly equation is a HEAT EQUATION on the modular parameter
-    space with E_2* as "time" and genus as "space."  The MC equation D^2 = 0
-    is the INTEGRABILITY CONDITION for this heat flow: the anomaly recursion
-    at genus g is self-consistent across genera precisely because D^2 = 0
-    on the full modular operad.  Concretely:
-        d/dE_2*(dF_{g+1}/dE_2*) = (1/24) sum_{h=1}^{g} (dF_h/dE_2*) F_{g+1-h}
-                                 + (1/24) sum_{h=1}^{g} F_h (dF_{g+1-h}/dE_2*)
-    Substituting the anomaly equation recursively and using D^2 = 0 gives
-    consistency at all genera.
-
-Path 4 (Non-holomorphic completion):
-    Under E_2*(tau) -> Ehat_2(tau,tau-bar) = E_2*(tau) - 3/(pi*Im(tau)),
-    the dressed amplitude becomes the non-holomorphic modular completion
-    Fhat_g(tau, tau-bar).  The anomaly equation becomes:
-        (d/dtau-bar) Fhat_g = (Im(tau)^2/(8*pi)) sum Fhat_h Fhat_{g-h}
-    which is the anti-holomorphic Ward identity of the MC equation in
-    the modular-invariant (non-holomorphic) frame.  The MC element
-    Theta_A^{nh} in the non-holomorphic completion satisfies the SAME
-    MC equation, but now projects to a genuine modular-invariant object.
-
-CONVENTIONS:
-    q = e^{2*pi*i*tau}
-    E_2*(tau) = 1 - 24*sum_{n>=1} sigma_1(n)*q^n  (quasi-modular, AP15)
-    kappa(A) = modular characteristic (AP20, AP39, AP48)
-    F_g(A) = kappa(A) * lambda_g^FP at the scalar level (Theorem D)
-    lambda_g^FP = (2^{2g-1}-1)|B_{2g}| / (2^{2g-1}*(2g)!)
-    Generating function: sum F_g hbar^{2g} = kappa*(Ahat(i*hbar) - 1)  (AP22)
-    Sewing operator trace: Tr(S_sew) = kappa/24 = F_1
-    Propagator: P(tau) = -E_2*(tau)/12 at genus 1  (AP15, AP27)
-
-ANTI-PATTERN GUARDS:
-    AP15: E_2* is quasi-modular.  The anomaly equation governs the
-          QUASI-MODULAR dressed amplitudes, not holomorphic modular forms.
-    AP20: kappa is an invariant of A, not of a physical system.
-    AP22: sum F_g hbar^{2g} (NOT hbar^{2g-2}).
-    AP27: propagator d log E(z,w) has weight 1 regardless of field weight.
-    AP32: the scalar formula F_g = kappa*lambda_g holds at all genera
-          on the uniform-weight lane.  For multi-weight algebras,
-          cross-channel corrections enter (thm:multi-weight-genus-expansion).
-    AP38: all numerical values independently computed, not copied from literature.
-    AP39: kappa != c/2 in general.
-
-References:
-    thm:mc2-bar-intrinsic (higher_genus_modular_koszul.tex)
-    thm:shadow-cohft (higher_genus_modular_koszul.tex)
-    thm:convolution-d-squared-zero (higher_genus_modular_koszul.tex)
-    Bershadsky-Cecotti-Ooguri-Vafa, Comm. Math. Phys. 165 (1994) 311-427
-    Yamaguchi-Yau, hep-th/0406078 (direct integration of HAE)
+Local anchors:
+    chapters/examples/landscape_census.tex:1069-1082:
+        uniform-weight lane and multi-weight cross-channel correction.
+    chapters/examples/landscape_census.tex:1662-1681:
+        F_g = kappa lambda_g^FP and F_1 = kappa/24.
+    chapters/connections/concordance.tex:12460-12470:
+        kappa is a scalar trace of the MC element, not any derived-center
+        datum on the nose.
+    chapters/theory/genus_2_ddybe_platonic.tex:680-730:
+        finite genus-2 moduli checks are evidence unless a degeneration
+        theorem supplies the missing analytic identity.
 """
 
 from __future__ import annotations
 
-import math
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from fractions import Fraction
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Mapping, Optional, Tuple
 
 F = Fraction
+
+SCALAR_LANE = "uniform_weight_scalar"
+MISSING_FULL_MC_AXES: Tuple[str, ...] = (
+    "higher arity operations",
+    "non-scalar OPE structure constants",
+    "moduli-dependent propagator kernels",
+    "cross-channel corrections for multi-weight algebras",
+    "derived-center comparison data",
+)
+
+
+@dataclass(frozen=True)
+class ProjectionScope:
+    """Scope of a finite modular-anomaly coefficient check."""
+
+    genus: int
+    arity: int
+    lane: str
+    finite_depth: int
+    stable_range: bool
+    scalar_projection_only: bool
+    can_reconstruct_full_mc: bool
+    missing_axes: Tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class DatumSeparation:
+    """One named datum in the anomaly/curvature/centre separation table."""
+
+    key: str
+    formula: str
+    value: Optional[Fraction]
+    source_anchor: str
+    feeds_scalar_anomaly: bool
+    proves_full_mc_reconstruction: bool
+    role: str
+
+
+def _require_min_genus(function_name: str, genus: int, minimum: int) -> None:
+    if genus < minimum:
+        raise ValueError(f"{function_name} requires genus >= {minimum}, got {genus}")
+
+
+def projection_scope(
+    genus: int,
+    arity: int = 0,
+    lane: str = SCALAR_LANE,
+    finite_depth: int = 1,
+) -> ProjectionScope:
+    """Return the formal scope of an arity-zero scalar anomaly check."""
+    if arity < 0:
+        raise ValueError(f"Arity must be non-negative, got {arity}")
+    if finite_depth < 0:
+        raise ValueError(f"Depth must be non-negative, got {finite_depth}")
+    return ProjectionScope(
+        genus=genus,
+        arity=arity,
+        lane=lane,
+        finite_depth=finite_depth,
+        stable_range=(genus >= 2 and arity == 0),
+        scalar_projection_only=(arity == 0 and lane == SCALAR_LANE),
+        can_reconstruct_full_mc=False,
+        missing_axes=MISSING_FULL_MC_AXES,
+    )
+
+
+def finite_mc_reconstruction_witness(max_genus: int, max_depth: int) -> Dict[str, Any]:
+    """Witness that finite scalar anomaly checks are not full MC reconstruction."""
+    _require_min_genus("finite_mc_reconstruction_witness", max_genus, 2)
+    if max_depth < 1:
+        raise ValueError(f"max_depth must be >= 1, got {max_depth}")
+    return {
+        "max_genus": max_genus,
+        "max_depth": max_depth,
+        "finite_checks": (
+            "Faber-Pandharipande lambda_g coefficients",
+            "arity-zero convolution coefficients c_g",
+            "finite-depth E_2* coefficient extraction",
+        ),
+        "missing_axes": MISSING_FULL_MC_AXES,
+        "can_reconstruct_full_mc": False,
+        "claim_status": "finite scalar witness only",
+    }
+
+
+def genus_moduli_scope_witness(genus: int, period_matrix: str = "generic") -> Dict[str, Any]:
+    """Record the genus/moduli hypotheses needed to interpret a finite check."""
+    if genus < 0:
+        raise ValueError(f"Genus must be non-negative, got {genus}")
+    period_matrix = period_matrix.lower()
+    if period_matrix not in {"generic", "diagonal", "separating"}:
+        raise ValueError(f"Unsupported period_matrix={period_matrix!r}")
+
+    diagonal_genus2 = (genus == 2 and period_matrix in {"diagonal", "separating"})
+    return {
+        "genus": genus,
+        "period_matrix": period_matrix,
+        "stable_closed_arity_zero_range": genus >= 2,
+        "diagonal_genus2_degenerates_to_genus1_theorem": diagonal_genus2,
+        "generic_period_finite_check_is_proof": False,
+        "topological_degree_is_dynamic_witness": False,
+        "required_for_full_moduli_statement": (
+            "analytic theta/Fay identity on the relevant moduli locus",
+            "uniform control of the propagator over the period domain",
+            "higher-arity compatibility under clutching maps",
+        ),
+    }
+
+
+def anomaly_datum_separation(g: int, kappa: Fraction) -> Dict[str, DatumSeparation]:
+    """Separate Quillen, Arakelov, bar-curvature, and derived-center data."""
+    _require_min_genus("anomaly_datum_separation", g, 1)
+    kappa = F(kappa)
+    scalar_value = kappa * lambda_fp_independent(g)
+    genus_one_value = kappa / F(24) if g == 1 else None
+    return {
+        "bar_scalar_trace": DatumSeparation(
+            key="bar_scalar_trace",
+            formula="F_g(A) = kappa(A) * lambda_g^FP",
+            value=scalar_value,
+            source_anchor="chapters/examples/landscape_census.tex:1662",
+            feeds_scalar_anomaly=True,
+            proves_full_mc_reconstruction=False,
+            role="scalar trace of the genus-g component of the universal MC element",
+        ),
+        "quillen_heisenberg_check": DatumSeparation(
+            key="quillen_heisenberg_check",
+            formula="F_1 = kappa/24 on the Heisenberg scalar lane",
+            value=genus_one_value,
+            source_anchor="chapters/connections/concordance.tex:10720",
+            feeds_scalar_anomaly=(g == 1),
+            proves_full_mc_reconstruction=False,
+            role="one verification path for the Heisenberg scalar equality",
+        ),
+        "arakelov_hodge_curvature": DatumSeparation(
+            key="arakelov_hodge_curvature",
+            formula="geometric curvature of the Hodge/Quillen metric",
+            value=None,
+            source_anchor="chapters/connections/concordance.tex:10720",
+            feeds_scalar_anomaly=False,
+            proves_full_mc_reconstruction=False,
+            role="geometric curvature class, not a kappa-valued scalar coefficient",
+        ),
+        "bar_differential_curvature": DatumSeparation(
+            key="bar_differential_curvature",
+            formula="d_bar^2 carries scalar curvature kappa before integration",
+            value=kappa,
+            source_anchor="chapters/connections/concordance.tex:6135",
+            feeds_scalar_anomaly=False,
+            proves_full_mc_reconstruction=False,
+            role="chain-level curvature datum distinct from integrated free energy",
+        ),
+        "derived_center_bulk": DatumSeparation(
+            key="derived_center_bulk",
+            formula="Z_ch^der(A) is Hochschild/closed-sector data",
+            value=None,
+            source_anchor="chapters/connections/concordance.tex:12460",
+            feeds_scalar_anomaly=False,
+            proves_full_mc_reconstruction=False,
+            role="bulk/derived-center datum, not the scalar trace kappa lambda_g",
+        ),
+    }
+
+
+def k3xe_kappa_polysemy() -> Dict[str, Any]:
+    """Distinguish the K3 x E kappa slots used in adjacent chapters."""
+    return {
+        "kappa_cat_K3xE": F(0),
+        "kappa_ch_heisenberg_K3xE": F(3),
+        "kappa_bkm_Delta5": F(5),
+        "kappa_fiber_K3": F(24),
+        "bkm_multiplier_is_chiral_modular_anomaly_kappa": False,
+        "source_anchor": "chapters/connections/concordance.tex:11375",
+    }
 
 
 # =====================================================================
@@ -205,10 +311,14 @@ class MCProjectionData:
     anomaly_lhs: Fraction     # dF_g/dE_2* (from the D term)
     anomaly_rhs: Fraction     # (1/24)*sum F_h F_{g-h}
     is_consistent: bool
+    bracket_sum: Fraction
+    mc_to_anomaly_factor: Fraction
+    scope: ProjectionScope
+    finite_check_reconstructs_full_mc: bool
 
 
 def mc_projection_genus_g(g: int, kappa: Fraction) -> MCProjectionData:
-    r"""Compute the MC equation at (g,0) and verify it equals the anomaly equation.
+    r"""Compute the finite scalar MC/anomaly coefficient at (g,0).
 
     The MC equation D(Theta) + (1/2)[Theta,Theta] = 0 projected to (g,0):
 
@@ -226,18 +336,24 @@ def mc_projection_genus_g(g: int, kappa: Fraction) -> MCProjectionData:
     Bracket term: [Theta,Theta]^{(g,0)} = sum_{h=1}^{g-1} F_h * F_{g-h}
     (the bracket pairs genus-h with genus-(g-h) through the Serre pairing).
 
-    MC equation at (g,0): the anomaly coefficient for the D term matches
-    (1/2) * bracket_sum, giving:
+    MC residual cancellation uses (1/2) * bracket_sum.  The
+    quasi-modular anomaly coefficient uses the same scalar bracket sum
+    with sewing normalization 1/24:
         anomaly_coeff = (1/24) * sum_{h=1}^{g-1} F_h * F_{g-h}
+
+    The finite scalar coefficient does not reconstruct Theta_A.  The
+    MC bracket half is 12 times the normalized anomaly coefficient.
     """
+    _require_min_genus("mc_projection_genus_g", g, 2)
     kappa = F(kappa)
 
     # Bracket term: (1/2) sum_{h=1}^{g-1} F_h * F_{g-h}
     # where F_h = kappa * lambda_h
-    bracket_sum = F(0)
+    lambda_convolution = F(0)
     for h in range(1, g):
-        bracket_sum += lambda_fp_independent(h) * lambda_fp_independent(g - h)
-    bracket_term = F(1, 2) * kappa ** 2 * bracket_sum
+        lambda_convolution += lambda_fp_independent(h) * lambda_fp_independent(g - h)
+    bracket_sum = kappa ** 2 * lambda_convolution
+    bracket_term = bracket_sum / F(2)
 
     # D term: the sewing operator at genus 1 has trace kappa/24.
     # The E_2* derivative of the dressed amplitude at genus g gets
@@ -247,8 +363,8 @@ def mc_projection_genus_g(g: int, kappa: Fraction) -> MCProjectionData:
 
     # Anomaly equation form:
     # dF_g/dE_2* = (1/24) sum_{h=1}^{g-1} F_h F_{g-h}
-    anomaly_rhs = F(1, 24) * kappa ** 2 * bracket_sum
-    anomaly_lhs = anomaly_rhs  # The MC equation FORCES equality
+    anomaly_rhs = bracket_sum / F(24)
+    anomaly_lhs = anomaly_rhs  # finite scalar coefficient witness
 
     return MCProjectionData(
         genus=g,
@@ -258,6 +374,10 @@ def mc_projection_genus_g(g: int, kappa: Fraction) -> MCProjectionData:
         anomaly_lhs=anomaly_lhs,
         anomaly_rhs=anomaly_rhs,
         is_consistent=(D_term + bracket_term == F(0)),
+        bracket_sum=bracket_sum,
+        mc_to_anomaly_factor=F(12),
+        scope=projection_scope(g, arity=0, finite_depth=1),
+        finite_check_reconstructs_full_mc=False,
     )
 
 
@@ -276,6 +396,7 @@ def anomaly_coefficient_direct(g: int, kappa: Fraction) -> Fraction:
     c_g = (1/24) * sum_{h=1}^{g-1} F_h * F_{g-h}
         = (kappa^2 / 24) * sum_{h=1}^{g-1} lambda_h * lambda_{g-h}
     """
+    _require_min_genus("anomaly_coefficient_direct", g, 2)
     kappa = F(kappa)
     s = F(0)
     for h in range(1, g):
@@ -292,6 +413,7 @@ def anomaly_coefficient_gf(g: int, kappa: Fraction) -> Fraction:
 
     The anomaly is (kappa^2/24) times this convolution coefficient.
     """
+    _require_min_genus("anomaly_coefficient_gf", g, 2)
     kappa = F(kappa)
     ahat = _ahat_coefficients(g)
     conv_coeff = F(0)
@@ -301,22 +423,15 @@ def anomaly_coefficient_gf(g: int, kappa: Fraction) -> Fraction:
 
 
 def anomaly_coefficient_genus_raising(g: int, kappa: Fraction) -> Fraction:
-    r"""Anomaly coefficient from the genus-raising operator.
+    r"""Compatibility witness for the genus-indexed convolution coefficient.
 
-    Path 2 (alternative): d/dE_2* acts as (1/24)*d^2/dhbar^2 on the GF.
-    Applied to F_g * hbar^{2g}: gives (1/24)*2g*(2g-1)*F_g * hbar^{2g-2}.
-
-    But we need the coefficient of hbar^{2g} in the anomaly equation,
-    so the genus-raising viewpoint says: the anomaly at genus g+1 is
-        c_{g+1} = (1/24) * sum_{h=1}^{g} F_h * F_{g+1-h}
-
-    For SELF-CONSISTENCY, the genus-raising operator on the GF squared
-    must reproduce the convolution:
-        (1/24) d^2/dhbar^2 [(kappa*(Ahat-1))^2] at hbar^{2g}
-        = (1/24) * sum_{h=1}^{g-1} 2g*(2g-1) * ... (complicated)
-
-    We verify instead that the direct and GF methods agree.
+    A second hbar-derivative of the scalar Ahat series is not itself the
+    anomaly coefficient at the same genus.  This function intentionally
+    returns the generating-function convolution coefficient, so callers
+    cannot promote a finite derivative identity into a genus-raising
+    reconstruction of the full MC element.
     """
+    _require_min_genus("anomaly_coefficient_genus_raising", g, 2)
     return anomaly_coefficient_gf(g, kappa)
 
 
@@ -326,17 +441,19 @@ def anomaly_coefficient_genus_raising(g: int, kappa: Fraction) -> Fraction:
 
 @dataclass
 class HeatEquationData:
-    """Data for the heat equation interpretation of the anomaly."""
+    """Data for the finite Leibniz consistency check of the anomaly."""
     genus: int
     kappa: Fraction
     heat_lhs: Fraction    # d/dE_2*(c_g) = second derivative of anomaly
     heat_rhs: Fraction    # (1/24) sum (dc_h/dE_2*) F_{g-h} + F_h (dc_{g-h}/dE_2*)
-    integrability_residual: Fraction  # should vanish by D^2 = 0
+    integrability_residual: Fraction  # finite scalar residual
     is_consistent: bool
+    scalar_level_is_trivial: bool
+    proves_full_d_squared_zero: bool
 
 
 def heat_equation_check(g: int, kappa: Fraction) -> HeatEquationData:
-    r"""Verify the integrability of the anomaly recursion (D^2 = 0 check).
+    r"""Verify the scalar-level Leibniz consistency of the anomaly recursion.
 
     The anomaly equation is:
         dF_g/dE_2* = (1/24) sum_{h=1}^{g-1} F_h F_{g-h}
@@ -354,13 +471,11 @@ def heat_equation_check(g: int, kappa: Fraction) -> HeatEquationData:
     This should equal d/dE_2* of the RHS, which by the product rule is:
         (1/24) sum (dF_h/dE_2*) F_{g-h} + (1/24) sum F_h (dF_{g-h}/dE_2*)
 
-    The consistency (vanishing of the difference) follows from D^2 = 0.
-    At the scalar level, F_h is constant so dF_h/dE_2* = 0, and both
-    sides vanish trivially.  The nontrivial check is at the level of
-    anomaly COEFFICIENTS: the iterated anomaly recursion is self-consistent.
-
-    We verify this at the level of the kappa-polynomial structure.
+    At the scalar level, F_h is constant, so both E_2* derivatives vanish.
+    This is a sanity check on the coefficient model, not a proof of
+    D^2 = 0 in the modular convolution algebra.
     """
+    _require_min_genus("heat_equation_check", g, 2)
     kappa = F(kappa)
 
     # At the scalar level, F_g is constant, so all E_2* derivatives vanish.
@@ -385,6 +500,8 @@ def heat_equation_check(g: int, kappa: Fraction) -> HeatEquationData:
         heat_rhs=heat_rhs,
         integrability_residual=heat_lhs - heat_rhs,
         is_consistent=True,
+        scalar_level_is_trivial=True,
+        proves_full_d_squared_zero=False,
     )
 
 
@@ -398,7 +515,7 @@ def heat_equation_dressed_check(g: int, kappa: Fraction) -> Dict[str, Any]:
     For p=2: c_g^{(2)} = (1/24)^2 sum_{a+b+c=g, a,b,c>=1} F_a F_b F_c
              (the triple convolution from applying the anomaly twice)
 
-    The integrability condition D^2 = 0 is verified as follows.
+    The finite coefficient-level consistency is verified as follows.
     Differentiating the anomaly RHS by the Leibniz rule:
 
         d/dE_2* [(1/24) sum_{h} F_h F_{g-h}]
@@ -412,12 +529,15 @@ def heat_equation_dressed_check(g: int, kappa: Fraction) -> Dict[str, Any]:
     (fixing genus h = a, splitting g-h = b+c).
 
     The direct triple convolution counts each ordered triple ONCE.
-    Therefore the integrability identity from D^2 = 0 is:
+    Therefore the finite coefficient identity is:
 
         depth2_from_leibniz = 2 * depth2_from_triple_convolution
 
-    This is precisely the content of D^2 = 0 at this depth level.
+    This is the arity-zero scalar Leibniz witness at depth 2.  It is not
+    the full D^2 = 0 statement before the missing axes in
+    MISSING_FULL_MC_AXES are restored.
     """
+    _require_min_genus("heat_equation_dressed_check", g, 3)
     kappa = F(kappa)
 
     # Depth-2 anomaly from direct triple convolution:
@@ -450,7 +570,8 @@ def heat_equation_dressed_check(g: int, kappa: Fraction) -> Dict[str, Any]:
         leibniz_sum += lambda_fp_independent(h) * inner
     depth2_from_leibniz = kappa ** 3 / F(24) ** 2 * leibniz_sum
 
-    # D^2 = 0 integrability: Leibniz gives exactly 2x the triple convolution.
+    # Coefficient-level Leibniz consistency: differentiating a quadratic
+    # convolution gives exactly 2x the ordered triple convolution.
     # Each ordered triple (a,b,c) is reached by two Leibniz routes:
     #   Route 1: h = a+b, j = a -> triple (a, b, c) from first Leibniz term
     #   Route 2: h = a, j = b -> triple (a, b, c) from second Leibniz term
@@ -463,11 +584,12 @@ def heat_equation_dressed_check(g: int, kappa: Fraction) -> Dict[str, Any]:
         'depth2_leibniz': depth2_from_leibniz,
         'leibniz_equals_2x_triple': integrability_holds,
         'integrability_holds': integrability_holds,
+        'proves_full_d_squared_zero': False,
+        'scope': projection_scope(g, arity=0, finite_depth=2),
         'interpretation': (
-            'D^2 = 0 ensures the Leibniz differentiation of the anomaly RHS '
-            'produces exactly twice the direct triple convolution. Each ordered '
-            'triple (a,b,c) with a+b+c=g is reached by two Leibniz routes, '
-            'giving the factor of 2. This is the depth-2 integrability condition.'
+            'Leibniz differentiation of the finite anomaly RHS produces exactly '
+            'twice the direct ordered triple convolution. Each ordered triple '
+            '(a,b,c) with a+b+c=g is reached by two Leibniz routes.'
         ),
     }
 
@@ -478,39 +600,43 @@ def heat_equation_dressed_check(g: int, kappa: Fraction) -> Dict[str, Any]:
 
 @dataclass
 class NonHolomorphicData:
-    """Data for the non-holomorphic completion of the anomaly equation."""
+    """Finite coefficient data for the non-holomorphic completion ansatz."""
     genus: int
     kappa: Fraction
     anomaly_coeff_holomorphic: Fraction  # (1/24) sum F_h F_{g-h}
     nh_correction_prefactor: Fraction    # coefficient of 1/(pi*y) term
     modular_weight: int                  # weight of the completed object
     is_modular_invariant: bool
+    completion_is_formal: bool
+    finite_coefficient_proves_modularity: bool
 
 
 def non_holomorphic_completion(g: int, kappa: Fraction) -> NonHolomorphicData:
-    r"""Non-holomorphic completion of the genus-g anomaly.
+    r"""Finite depth-1 non-holomorphic completion coefficient.
 
     Under E_2* -> Ehat_2 = E_2* - 3/(pi*y), the dressed amplitude becomes:
         Fhat_g(tau, tau-bar) = F_g^{hol}(tau) + sum_{p=1}^{g} nh_corrections
 
-    The anomaly equation in the non-holomorphic frame becomes:
+    After the full non-holomorphic completion, the anomaly equation has
+    the Ward-identity shape:
         (d/dtau-bar) Fhat_g = -(1/(8*pi*y^2)) sum_{h=1}^{g-1} Fhat_h Fhat_{g-h}
 
-    This is the anti-holomorphic Ward identity.  The MC equation in the
-    non-holomorphic frame is D^{nh} Theta^{nh} + (1/2)[Theta^{nh}, Theta^{nh}] = 0,
-    where D^{nh} includes the Maass raising/lowering operators.
+    This function computes only the depth-1 replacement coefficient,
+    not the completed Ward identity.
 
-    The non-holomorphic completion restores EXACT modular invariance but
-    at the cost of holomorphicity (AP15 resolution).
+    Replacing E_2* by its non-holomorphic completion is the correct
+    formal direction, but a single coefficient does not prove modular
+    invariance of the full amplitude.
 
     At the scalar level: F_g is constant, Fhat_g = F_g (no correction needed).
     The non-holomorphic correction is proportional to 1/(pi*Im(tau)) and
     enters at the dressed level.
 
     The modular anomaly at genus g involves depth p in E_2*.
-    Each E_2* -> Ehat_2 replacement shifts the depth-p piece to
-    depth 0 (modular invariant) plus lower-depth corrections involving 1/(pi*y).
+    Each E_2* -> Ehat_2 replacement contributes lower-depth terms
+    involving 1/(pi*y); modularity requires the full completed series.
     """
+    _require_min_genus("non_holomorphic_completion", g, 2)
     kappa = F(kappa)
     anomaly = anomaly_coefficient_direct(g, kappa)
 
@@ -525,7 +651,9 @@ def non_holomorphic_completion(g: int, kappa: Fraction) -> NonHolomorphicData:
         anomaly_coeff_holomorphic=anomaly,
         nh_correction_prefactor=nh_correction,
         modular_weight=0,  # the scalar amplitude has weight 0
-        is_modular_invariant=True,  # after completion
+        is_modular_invariant=False,
+        completion_is_formal=True,
+        finite_coefficient_proves_modularity=False,
     )
 
 
@@ -612,9 +740,9 @@ def ahat_product_identity(max_genus: int = 8) -> Dict[str, Any]:
 
     We verify: the convolution coefficients match the direct computation.
 
-    Furthermore, we verify the DIFFERENTIAL identity:
-        (1/24) G(x)^2 = (1/24) d^2G/dx^2 |_{x^{2g-2} coefficient}
-    which encodes the genus-raising operator interpretation.
+    The returned ``genus_raising_next`` value is diagnostic only: the
+    hbar-derivative coefficient is not identified with the convolution
+    coefficient at the same genus.
     """
     ahat = _ahat_coefficients(max_genus)
     results = {}
@@ -654,14 +782,12 @@ def ahat_product_identity(max_genus: int = 8) -> Dict[str, Any]:
 
 
 def ahat_recursion_from_anomaly(max_genus: int = 8) -> Dict[str, Any]:
-    r"""Derive the Ahat coefficients from the anomaly recursion.
+    r"""Recover Ahat coefficients from the sine recursion.
 
-    Starting from lambda_1 = 1/24 and the anomaly equation:
-        d/dE_2*(F_g) at depth 1 = (1/24) sum_{h=1}^{g-1} F_h F_{g-h}
-
-    Together with the initial condition and the Ahat differential equation
-    (which is equivalent to the anomaly recursion), we can reconstruct
-    all lambda_g from the recursion alone.
+    The anomaly convolution checks the coefficients once the scalar
+    amplitudes are known.  It does not reconstruct the scalar amplitudes
+    by itself.  This oracle recovers them from
+    (x/2)/sin(x/2), independently of the convolution code.
 
     The Ahat function satisfies: f(x) = (x/2)/sin(x/2), i.e.,
         2f * sin(x/2) = x
@@ -727,6 +853,7 @@ def convolution_bracket_genus_g(g: int, kappa: Fraction) -> Dict[str, Any]:
 
     The factor 1/2 in the MC equation cancels the double counting (h, g-h) vs (g-h, h).
     """
+    _require_min_genus("convolution_bracket_genus_g", g, 2)
     kappa = F(kappa)
 
     terms = {}
@@ -748,10 +875,12 @@ def convolution_bracket_genus_g(g: int, kappa: Fraction) -> Dict[str, Any]:
         'bracket_sum': total,
         'mc_bracket_half': mc_bracket_contribution,
         'anomaly_coefficient': total / F(24),
+        'mc_to_anomaly_factor': F(12),
+        'finite_check_reconstructs_full_mc': False,
         'interpretation': (
             f'At genus {g}, the bracket [Theta,Theta] has {g-1} terms. '
-            f'The MC equation gives (1/2)*bracket = -D(Theta), '
-            f'which equals the anomaly coefficient (1/24)*sum F_h F_{{g-h}}.'
+            f'The finite scalar MC bracket half is 12 times the normalized '
+            f'anomaly coefficient (1/24)*sum F_h F_{{g-h}}.'
         ),
     }
 
@@ -762,25 +891,30 @@ def convolution_bracket_genus_g(g: int, kappa: Fraction) -> Dict[str, Any]:
 
 @dataclass
 class TheoremVerification:
-    """Complete verification of the modular anomaly = MC projection theorem."""
+    """Finite scalar verification of the modular anomaly coefficient surface."""
     kappa: Fraction
     max_genus: int
-    path1_mc_projection: bool      # MC equation gives anomaly equation
+    path1_mc_projection: bool      # finite scalar MC projection
     path2_gf_convolution: bool     # GF convolution square matches
-    path3_heat_integrability: bool  # D^2=0 gives heat equation consistency
-    path4_nh_completion: bool      # Non-hol completion is modular invariant
+    path3_heat_integrability: bool  # finite Leibniz coefficient consistency
+    path4_nh_completion: bool      # formal non-holomorphic coefficient
     all_paths_agree: bool
+    full_mc_reconstructed: bool
     details: Dict[str, Any]
 
 
 def verify_theorem_all_paths(kappa: Fraction, max_genus: int = 8) -> TheoremVerification:
-    r"""Complete 4-path verification of the theorem.
+    r"""Run all finite scalar witnesses for the anomaly coefficient.
 
-    Path 1: MC projection at (g,0) gives the anomaly equation.
+    Path 1: MC projection at (g,0) gives the scalar anomaly coefficient.
     Path 2: Generating function convolution square matches anomaly coefficients.
-    Path 3: Heat equation integrability from D^2 = 0.
-    Path 4: Non-holomorphic completion is modular invariant.
+    Path 3: Leibniz consistency of the depth-2 scalar coefficient.
+    Path 4: Formal non-holomorphic E_2* replacement has the expected
+    depth-1 coefficient.
+
+    The result deliberately records ``full_mc_reconstructed=False``.
     """
+    _require_min_genus("verify_theorem_all_paths", max_genus, 2)
     kappa = F(kappa)
     details: Dict[str, Any] = {}
 
@@ -835,14 +969,20 @@ def verify_theorem_all_paths(kappa: Fraction, max_genus: int = 8) -> TheoremVeri
     path4 = True
     for g in range(2, max_genus + 1):
         nh = non_holomorphic_completion(g, kappa)
-        nh_results[g] = nh.is_modular_invariant
-        if not nh.is_modular_invariant:
+        nh_ok = (
+            nh.completion_is_formal
+            and not nh.finite_coefficient_proves_modularity
+            and nh.nh_correction_prefactor == -F(3) * nh.anomaly_coeff_holomorphic
+        )
+        nh_results[g] = nh_ok
+        if not nh_ok:
             path4 = False
     details['path4'] = nh_results
 
     # Recursion verification
     recursion = ahat_recursion_from_anomaly(max_genus)
     details['recursion_from_anomaly'] = recursion['all_match']
+    details['full_mc_reconstruction'] = finite_mc_reconstruction_witness(max_genus, 2)
 
     all_paths = path1 and path1_anomaly and path2 and direct_gf_match and path3 and path4
 
@@ -854,6 +994,7 @@ def verify_theorem_all_paths(kappa: Fraction, max_genus: int = 8) -> TheoremVeri
         path3_heat_integrability=path3,
         path4_nh_completion=path4,
         all_paths_agree=all_paths,
+        full_mc_reconstructed=False,
         details=details,
     )
 
@@ -869,11 +1010,14 @@ def cross_family_anomaly_check() -> Dict[str, Any]:
     The anomaly coefficient c_g = (kappa^2/24) * sum lambda_h lambda_{g-h}
     is LINEAR in kappa^2 (not kappa).
 
-    Families:
+    Chiral scalar families:
     - Heisenberg H_k: kappa = k
     - Virasoro Vir_c: kappa = c/2
     - Affine sl_2 at level k: kappa = 3(k+2)/4
-    - K3 x E BCOV: kappa = 5
+
+    The Delta_5 Borcherds multiplier kappa_BKM = 5 is not the
+    K3 x E chiral modular-anomaly kappa.  The K3 x E slots are kept
+    in k3xe_kappa_polysemy() and excluded from this chiral ratio table.
 
     Cross-check: the ratio c_g(A)/c_g(B) = (kappa(A)/kappa(B))^2
     because the anomaly is quadratic in kappa.
@@ -882,8 +1026,8 @@ def cross_family_anomaly_check() -> Dict[str, Any]:
         'Heisenberg_k=1': F(1),
         'Virasoro_c=1': F(1, 2),
         'Virasoro_c=26': F(13),
-        'sl2_k=1': F(3) * F(3) / F(4),  # 3*(1+2)/4 = 9/4
-        'K3xE': F(5),
+        'sl2_k=1_universal_vacuum': F(3) * F(3) / F(4),  # 3*(1+2)/4 = 9/4
+        'K3xE_chiral_heisenberg_shadow': F(3),
         'Virasoro_c=13_selfdual': F(13, 2),
     }
 
@@ -927,6 +1071,10 @@ def cross_family_anomaly_check() -> Dict[str, Any]:
         'families': results,
         'ratio_checks': ratio_checks,
         'all_ratios_correct': all(r['all_match'] for r in ratio_checks.values()),
+        'excluded_non_chiral_kappas': {
+            'Delta5_BKM_multiplier': k3xe_kappa_polysemy()['kappa_bkm_Delta5'],
+            'K3xE_categorical_kappa': k3xe_kappa_polysemy()['kappa_cat_K3xE'],
+        },
     }
 
 
@@ -941,7 +1089,7 @@ def explicit_anomaly_table(max_genus: int = 8) -> Dict[int, Dict[str, Fraction]]
         c_g = (1/24) * sum_{h=1}^{g-1} lambda_h * lambda_{g-h}
 
     Genus 2: c_2 = (1/24) * lambda_1^2 = (1/24) * (1/24)^2 = 1/13824
-    Genus 3: c_3 = (1/24) * 2*lambda_1*lambda_2 = (1/24)*2*(1/24)*(7/5760) = 7/1990656
+    Genus 3: c_3 = (1/24) * 2*lambda_1*lambda_2 = 7/1658880
     """
     table = {}
     for g in range(2, max_genus + 1):
@@ -997,8 +1145,28 @@ def anomaly_generating_function_coeffs(max_genus: int = 8) -> List[Fraction]:
 # Section 11: Propagator variance and multi-weight correction
 # =====================================================================
 
-def multi_weight_anomaly_correction(g: int, kappa: Fraction,
-                                     delta_cross: Fraction = F(0)) -> Dict[str, Any]:
+def w3_cross_channel_corrections(c: Fraction) -> Dict[int, Fraction]:
+    r"""Exact first W_3 cross-channel corrections from the landscape census."""
+    c = F(c)
+    if c == 0:
+        raise ValueError("W_3 cross-channel formulas require c != 0")
+    return {
+        2: (c + F(204)) / (F(16) * c),
+        3: (
+            F(5) * c ** 3
+            + F(3792) * c ** 2
+            + F(1149120) * c
+            + F(217071360)
+        ) / (F(138240) * c ** 2),
+    }
+
+
+def multi_weight_anomaly_correction(
+    g: int,
+    kappa: Fraction,
+    delta_cross: Fraction = F(0),
+    cross_corrections: Optional[Mapping[int, Fraction]] = None,
+) -> Dict[str, Any]:
     r"""Anomaly equation with multi-weight cross-channel correction.
 
     For multi-weight algebras (AP32, thm:multi-weight-genus-expansion):
@@ -1008,39 +1176,56 @@ def multi_weight_anomaly_correction(g: int, kappa: Fraction,
         dF_g/dE_2* = (1/24) sum_{h=1}^{g-1} F_h F_{g-h}
     where F_h now includes the cross-channel corrections.
 
-    The MC equation STILL holds at (g,0) because D^2 = 0 regardless:
-    the anomaly equation is an IDENTITY, not an approximation.
-    The cross-channel corrections simply change the VALUE of F_g
-    entering the recursion.
+    The scalar lane does not certify the full MC equation after
+    cross-channel corrections are present.  It only computes the corrected
+    arity-zero convolution coefficient once the corrected amplitudes are
+    supplied.
 
     For uniform-weight algebras: delta_cross = 0 and F_g = kappa * lambda_g.
-    For W_3 at genus 2: delta_F_2 = (c+204)/(16c) > 0 (AP32).
+    For W_3:
+        delta_F_2 = (c+204)/(16c)
+        delta_F_3 = (5c^3 + 3792c^2 + 1149120c + 217071360)/(138240 c^2)
     """
+    _require_min_genus("multi_weight_anomaly_correction", g, 2)
     kappa = F(kappa)
+    corrections: Dict[int, Fraction] = {
+        int(key): F(value) for key, value in (cross_corrections or {}).items()
+    }
+    if delta_cross:
+        if g <= 2:
+            raise ValueError("delta_cross can first enter the anomaly at genus >= 3")
+        corrections[g - 1] = corrections.get(g - 1, F(0)) + F(delta_cross)
 
     # Scalar anomaly (uniform-weight)
     scalar_anomaly = anomaly_coefficient_direct(g, kappa)
 
-    # Cross-channel correction to the anomaly at genus g
-    # When F_h = kappa*lambda_h + delta_h, the anomaly gets extra terms
-    cross_correction = F(0)
-    # At leading order: the correction to c_g is
-    # (1/24) * [2*kappa*lambda_1*delta_{g-1} + ... ] for g >= 3
-    # For g = 2: c_2 = (1/24)*(F_1)^2, no cross correction since g-1=1
-    # is scalar-only (genus 1 is universal).
+    corrected_conv = F(0)
+    corrected_terms = {}
+    for h in range(1, g):
+        Fh = kappa * lambda_fp_independent(h) + corrections.get(h, F(0))
+        Fgh = kappa * lambda_fp_independent(g - h) + corrections.get(g - h, F(0))
+        term = Fh * Fgh
+        corrected_terms[(h, g - h)] = term
+        corrected_conv += term
+
+    total_anomaly = corrected_conv / F(24)
+    cross_correction = total_anomaly - scalar_anomaly
 
     return {
         'genus': g,
         'kappa': kappa,
+        'cross_corrections': corrections,
         'scalar_anomaly': scalar_anomaly,
         'cross_channel_correction': cross_correction,
-        'total_anomaly': scalar_anomaly + cross_correction,
-        'mc_still_holds': True,  # D^2 = 0 is unconditional
+        'total_anomaly': total_anomaly,
+        'corrected_terms': corrected_terms,
+        'scalar_formula_complete': not any(corrections.values()),
+        'mc_still_holds': 'not certified by scalar coefficient check',
+        'full_mc_reconstruction': False,
         'note': (
-            'The MC equation holds for ALL modular Koszul algebras. '
-            'The anomaly equation is the (g,0) projection regardless of '
-            'whether the algebra is uniform-weight or multi-weight. '
-            'Cross-channel corrections change F_g but not the recursion structure.'
+            'The corrected arity-zero coefficient can be computed once the '
+            'delta_F_g^cross values are supplied. This finite scalar '
+            'coefficient does not prove the full MC equation.'
         ),
     }
 
@@ -1048,6 +1233,23 @@ def multi_weight_anomaly_correction(g: int, kappa: Fraction,
 # =====================================================================
 # Section 12: Numerical verification at specific tau values
 # =====================================================================
+
+def _sigma1(n: int) -> int:
+    """Sum of positive divisors of n."""
+    if n < 1:
+        raise ValueError(f"n must be positive, got {n}")
+    return sum(d for d in range(1, n + 1) if n % d == 0)
+
+
+def e2_quasimodular_qexp(tau: complex, terms: int = 200) -> complex:
+    r"""Compute E_2*(tau) = 1 - 24 sum sigma_1(n) q^n by q-expansion."""
+    if terms < 1:
+        raise ValueError(f"terms must be positive, got {terms}")
+    import cmath
+
+    q = cmath.exp(2 * cmath.pi * 1j * tau)
+    return 1 - 24 * sum(_sigma1(n) * q ** n for n in range(1, terms + 1))
+
 
 def numerical_anomaly_check(kappa_float: float, g: int,
                              tau: complex = 0.5 + 1.0j) -> Dict[str, Any]:
@@ -1059,7 +1261,7 @@ def numerical_anomaly_check(kappa_float: float, g: int,
     For the dressed amplitude, we would need the full q-expansion.
     Here we verify the ANOMALY COEFFICIENT numerically.
     """
-    import cmath
+    _require_min_genus("numerical_anomaly_check", g, 2)
 
     # lambda_g values
     lam = {}
@@ -1070,12 +1272,8 @@ def numerical_anomaly_check(kappa_float: float, g: int,
     conv = sum(lam[h] * lam[g - h] for h in range(1, g))
     anomaly = kappa_float ** 2 * conv / 24.0
 
-    # E_2* at tau (numerical)
-    q = cmath.exp(2 * cmath.pi * 1j * tau)
-    e2_val = 1.0
-    for n in range(1, 200):
-        sigma1 = sum(d for d in range(1, n + 1) if n % d == 0)
-        e2_val -= 24 * sigma1 * q.real ** n  # approximate for real part
+    # E_2* at tau (numerical); kept separate from the rational coefficient.
+    e2_val = e2_quasimodular_qexp(tau)
 
     return {
         'genus': g,
@@ -1085,6 +1283,7 @@ def numerical_anomaly_check(kappa_float: float, g: int,
         'lambda_values': lam,
         'convolution_sum': conv,
         'e2_star_approx': e2_val,
+        'finite_check_reconstructs_full_mc': False,
     }
 
 
@@ -1093,7 +1292,7 @@ def numerical_anomaly_check(kappa_float: float, g: int,
 # =====================================================================
 
 def bcov_original_comparison(g: int, kappa: Fraction) -> Dict[str, Any]:
-    r"""Compare our MC projection with the original BCOV formulation.
+    r"""Compare the scalar convolution coefficient with the BCOV shape.
 
     BCOV (1993) write the holomorphic anomaly equation as:
         d-bar_tau-bar F_g = (1/2) C-bar^{ij} (D_i D_j F_{g-1}
@@ -1110,9 +1309,9 @@ def bcov_original_comparison(g: int, kappa: Fraction) -> Dict[str, Any]:
     - The propagator term C-bar * G * G -> 1/(Im tau)^2 * (1/12)
     - After integration: (1/24) sum F_h F_{g-h}
 
-    Our MC projection EXACTLY reproduces this at the scalar level:
-    the sewing operator trace gives kappa/24, and the bracket [Theta,Theta]
-    gives sum F_h F_{g-h}.
+    The scalar coefficient has the same convolution shape.  This is not
+    a full BCOV reconstruction, because the non-constant-map sector and
+    covariant moduli derivatives are absent.
 
     For the non-constant-map sector: the full BCOV anomaly involves
     D_i D_j F_{g-1} (the "dilaton shift" term), which comes from the
@@ -1121,6 +1320,7 @@ def bcov_original_comparison(g: int, kappa: Fraction) -> Dict[str, Any]:
     At arity 0 (no insertions): only the sum_{h=1}^{g-1} term survives,
     and D_i -> d/dt is a constant (for the scalar shadow).
     """
+    _require_min_genus("bcov_original_comparison", g, 2)
     kappa = F(kappa)
 
     # Our computation
@@ -1142,10 +1342,11 @@ def bcov_original_comparison(g: int, kappa: Fraction) -> Dict[str, Any]:
         'match': our_anomaly == bcov_anomaly,
         'dilaton_term_present': g >= 2,
         'dilaton_term_arity': 2 if g >= 2 else None,
+        'full_bcov_reconstruction': False,
         'note': (
             'The BCOV dilaton term D_i D_j F_{g-1} comes from the (g-1, 2) '
             'projection of the MC equation, not the (g, 0) projection. '
-            'At arity 0, only the convolution sum contributes.'
+            'At arity 0, this finite scalar check sees only the convolution sum.'
         ),
     }
 
@@ -1169,6 +1370,9 @@ def anomaly_depth_tower(g: int, kappa: Fraction, max_depth: int = 3) -> Dict[str
     At the scalar level, this reduces to:
         c_g^{(p)} = (1/24)^p * kappa^{p+1} * [convolution of (p+1) copies of lambda]
     """
+    _require_min_genus("anomaly_depth_tower", g, 1)
+    if max_depth < 0:
+        raise ValueError(f"max_depth must be non-negative, got {max_depth}")
     kappa = F(kappa)
 
     tower = {}
@@ -1218,4 +1422,5 @@ def anomaly_depth_tower(g: int, kappa: Fraction, max_depth: int = 3) -> Dict[str
         'max_depth': max_depth,
         'depth_coefficients': tower,
         'total_depths_computed': len(tower),
+        'finite_check_reconstructs_full_mc': False,
     }

@@ -1,49 +1,55 @@
-r"""Categorical 't Hooft expansion and chiral algebra holography.
+r"""Categorical 't Hooft scalar comparisons and chiral holography.
 
 MATHEMATICAL FRAMEWORK
 ======================
 
 Gaiotto et al. derive holographic dual B-model backgrounds from the
 categorical 't Hooft expansion of chiral algebras [2411.00760, 2511.19776,
-2603.08783]. This engine verifies the match between their physical framework
-and the monograph's holographic modular Koszul datum
+2603.08783]. This engine checks scalar and descriptor-level comparison
+surfaces between their physical framework and the monograph's holographic
+modular Koszul package
 
-    H(A) = (A, A!, C, r(z), Theta_A, nabla^hol)
+    H(A) = (A, A^i, A^!, C, r(z), Theta_A, nabla^hol)
 
-using the following identifications:
+using the following scoped comparisons:
 
-1. **BRST anomaly matching = kappa matching**: Gaiotto's planar BRST anomaly
-   cancellation on the worldsheet is the vanishing of
+1. **BRST anomaly coefficient = kappa coefficient**: Gaiotto's planar BRST
+   anomaly cancellation on the comparison surface is the vanishing of
    kappa_eff = kappa(matter) + kappa(ghost) = 0 (thm:anomaly-koszul).
-   The BRST anomaly coefficient IS the modular characteristic kappa.
+   The BRST anomaly coefficient is compared with the modular characteristic
+   kappa on the scalar lane.
 
-2. **Worldsheet = dg-TFT with A-infinity boundary conditions**: Gaiotto's
-   worldsheet [2511.19776] is an extended 2d dg-TFT whose boundary
-   conditions form an A-infinity category. These A-infinity boundary
-   conditions are homotopy chiral algebras in the sense of Pillar A (MS24).
-   The bar complex B(A) is the A-infinity structure data.
+2. **Worldsheet descriptor and A-infinity boundary conditions**: Gaiotto's
+   worldsheet [2511.19776] is recorded here through descriptors of an
+   extended 2d dg-TFT whose boundary conditions form an A-infinity category.
+   The bar complex B(A) is distinct from A, A^i, A^!, and
+   Z_ch^der(A). The identity Omega(B(A)) = A is bar-cobar inversion, not
+   Koszul duality.
 
 3. **W_N minimal model holography**: The W_N minimal model at coprime (p,q)
    with p = N + k, q = N + k + 1 (adjacent parametrization) has central
    charge c_N(p,q) = (N-1)(1 - N(N+1)(p-q)^2/(pq)). Gaiotto-Zeng [2603.08783]
    match these with A-model topological string amplitudes via integrability.
-   Our shadow invariants (kappa, C, Q) for W_N minimal models should match.
+   This module compares the scalar kappa lane with the minimal-model
+   't Hooft descriptor.
 
 4. **Planar limit and shadow invariants**: In the large-N 't Hooft limit
    with lambda = N/(k+N), the planar free energy F_0 is the genus-0
    shadow and F_g ~ N^{2-2g} reproduces the genus expansion.
 
-5. **D-brane categories**: Gaiotto's D-brane A-infinity category
-   corresponds to our line category C = A!-mod in the holographic datum.
+5. **D-brane category descriptor**: Gaiotto's D-brane A-infinity category
+   is compared with the line-category descriptor C = A^!-mod. This module
+   does not reconstruct that category chain-level.
 
 CROSS-REFERENCES
 ================
 
 - concordance.tex: sec:concordance-holographic-completion, def:holographic-modular-koszul-datum
+- concordance.tex: constr:v1-platonic-package-concordance
 - frontier_modular_holography_platonic.tex: thm:frontier-twisted-holography
 - editorial_constitution.tex: thm:anomaly-koszul, thm:anomaly-physical-genus0
 - large_n_twisted_holography.py: existing holographic datum extraction
-- CLAUDE.md: AP20 (kappa vs kappa_eff), AP29 (delta_kappa vs kappa_eff)
+- local AP registry: AP20 (kappa vs kappa_eff), AP29 (delta_kappa vs kappa_eff)
 """
 
 from __future__ import annotations
@@ -53,6 +59,54 @@ from fractions import Fraction
 from functools import lru_cache
 from math import factorial, comb, log
 from typing import Dict, List, Optional, Tuple, Union
+
+
+HOLOGRAPHIC_PACKAGE_ENTRIES: Tuple[str, ...] = (
+    "A",
+    "A^i",
+    "A^!",
+    "C",
+    "r(z)",
+    "Theta_A",
+    "nabla^hol",
+)
+"""Seven entries of the holographic modular Koszul package."""
+
+
+MODULAR_KOSZUL_PRIMARY_PROJECTIONS: Tuple[str, ...] = (
+    "Fact_X(L)",
+    "barB_X(L)",
+    "Theta_L",
+    "L_L",
+    "(V_br, T_br)",
+    "R4_mod(L)",
+)
+"""Six primary projections of the modular Koszul compute package."""
+
+
+BAR_COBAR_OBJECT_FIREWALL = (
+    "A, B(A), A^i, A^!, and Z_ch^der(A) are distinct; "
+    "Omega(B(A)) = A is inversion, not Koszul duality."
+)
+
+
+OBJECT_BRANCH_STATUS: Dict[str, str] = {
+    "A": "boundary chiral algebra input",
+    "B(A)": "bar coalgebra T^c(s^-1 Abar), not a package slot",
+    "A^i": "bar-dual coalgebra H^*(B(A))",
+    "A^!": (
+        "Verdier/continuous-linear dual of A^i under finite-type or "
+        "completed hypotheses"
+    ),
+    "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild bulk object, not A^!",
+    "Omega(B(A))": "bar-cobar inversion recovering A, not Koszul duality",
+}
+
+
+CATEGORICAL_COMPARISON_SCOPE = (
+    "finite scalar/descriptor diagnostics; no chain-level categorical "
+    "equivalence is reconstructed"
+)
 
 
 # ============================================================================
@@ -129,33 +183,37 @@ class CategoricalThooftData:
     thooft_coupling: Fraction    # lambda = N/(k+N)
     central_charge: Fraction     # c
     kappa: Fraction              # modular characteristic
-    kappa_dual: Fraction         # kappa(A!)
+    kappa_dual: Fraction         # kappa(A^!)
     brst_anomaly: Fraction       # kappa + kappa_dual (should be 0)
     free_energies: Dict[int, Fraction]  # {g: F_g}
 
 
 @dataclass(frozen=True)
 class BRSTAnomalyMatch:
-    """Verification that BRST anomaly matching = kappa matching.
+    """Scalar verification that BRST anomaly matching equals kappa matching.
 
     Gaiotto's planar BRST anomaly cancellation requires the total
-    anomaly coefficient to vanish. This IS the condition
+    anomaly coefficient to vanish. On the affine comparison surface this is
     kappa(matter) + kappa(ghost) = 0 from thm:anomaly-koszul.
 
     For the matter-ghost system:
       kappa_eff = kappa(A) + kappa(ghost) = 0
     For the Koszul pair:
-      kappa(A) + kappa(A!) = 0 (for KM/free fields)
+      kappa(A) + kappa(A^!) = 0 (for KM/free fields)
 
-    The BRST anomaly coefficient IS kappa (AP20: never confuse with c).
+    The BRST anomaly coefficient is compared with kappa on the scalar lane
+    (AP20: never confuse kappa with c).
     """
     algebra_name: str
     kappa_matter: Fraction       # kappa(A)
     kappa_ghost: Fraction        # kappa(ghost) = -kappa(A) at critical dim
     kappa_eff: Fraction          # should be 0
-    kappa_dual: Fraction         # kappa(A!) from Feigin-Frenkel
-    kappa_anti_symmetric: bool   # kappa(A) + kappa(A!) = 0
+    kappa_dual: Fraction         # kappa(A^!) from Feigin-Frenkel
+    kappa_anti_symmetric: bool   # kappa(A) + kappa(A^!) = 0
     brst_matches_koszul: bool    # whether BRST anomaly = Koszul condition
+    kappa_complement: Fraction = Fraction(0)
+    dual_relation: str = "anti_symmetric"
+    comparison_scope: str = "scalar anomaly descriptor"
 
 
 @dataclass(frozen=True)
@@ -199,31 +257,31 @@ class PlanarLimitData:
 
 @dataclass(frozen=True)
 class DBraneCategoryData:
-    """D-brane category data from the categorical 't Hooft expansion.
+    """D-brane category descriptor from the categorical 't Hooft expansion.
 
-    Gaiotto's D-brane A-infinity category corresponds to the line
-    category C = A!-mod in the holographic datum H(A).
+    Gaiotto's D-brane A-infinity category is compared with the line
+    category descriptor C = A^!-mod in the holographic package H(A).
 
     For V_k(sl_N): the D-brane category has dim(Rep(sl_N)) = N
     simple objects at generic level (the fundamental representations).
 
-    The A-infinity structure on the D-brane category IS the
-    transferred bar structure: the bar complex B(A) encodes
-    the A-infinity operations m_k on boundary conditions.
+    This dataclass records descriptors only. It does not reconstruct the
+    chain-level A-infinity category, the bar complex B(A), the coalgebra A^i,
+    the Verdier-dual algebra A^!, or the chiral derived center.
     """
     algebra_name: str
     num_simple_objects: Optional[int]
     is_semisimple: bool
     a_infinity_depth: int         # depth of nontrivial A-infinity ops
-    matches_line_category: bool   # whether C matches A!-mod
+    matches_line_category: bool   # whether C matches A^!-mod
 
 
 @dataclass(frozen=True)
 class ShadowThooftComparison:
     """Comparison between shadow invariants and 't Hooft amplitudes.
 
-    Tests whether the shadow invariants (kappa, C, Q) can be
-    read off from the categorical 't Hooft expansion at each genus.
+    Tests whether the scalar shadow invariant kappa agrees with the
+    categorical 't Hooft amplitude descriptor at each genus.
 
     The key identification:
       F_g^{tHooft} = kappa * lambda_g^FP  (on the scalar lane)
@@ -347,6 +405,52 @@ def feigin_frenkel_dual_kappa(N: int, k: Fraction) -> Fraction:
     return Fraction(N * N - 1) * (k_dual + N) / (2 * N)
 
 
+def heisenberg_kernel_normalization(k: Fraction) -> Dict[str, object]:
+    """Rank-one Heisenberg collision residue r(z) = k/z."""
+    k_frac = _frac(k)
+    return {
+        "family": "Heisenberg",
+        "formula": "k/z",
+        "level_coefficient": k_frac,
+    }
+
+
+def kernel_normalizations_affine(N: int, k: Fraction) -> Dict[str, object]:
+    """Separate affine trace-form collision residue from KZ normalization.
+
+    Trace form: r_coll(z) = k*Omega_tr/z.
+    KZ form: r_KZ(z) = Omega/((k+h^vee)z), with h^vee = N for sl_N.
+
+    These are not equal rational functions of the level.  At critical level
+    k = -N the KZ coefficient is undefined, while the trace-form residue
+    remains the raw level coefficient k.
+    """
+    k_frac = _frac(k)
+    kz_coeff: Optional[Fraction]
+    if k_frac + N == 0:
+        kz_coeff = None
+    else:
+        kz_coeff = Fraction(1, 1) / (k_frac + N)
+    return {
+        "family": f"V_{k}(sl_{N})",
+        "trace_form_formula": "k*Omega_tr/z",
+        "trace_form_coefficient": k_frac,
+        "kz_formula": "Omega/((k+h^vee)z)",
+        "kz_connection_coefficient": kz_coeff,
+        "dual_coxeter": Fraction(N),
+        "same_normalization": False,
+    }
+
+
+def virasoro_r_matrix_components(c: Fraction) -> Dict[str, Fraction]:
+    """Virasoro collision residue r(z) = (c/2)/z^3 + 2T/z."""
+    c_frac = _frac(c)
+    return {
+        "z^-3_scalar": c_frac / 2,
+        "z^-1_T": Fraction(2),
+    }
+
+
 def thooft_coupling_under_ff(N: int, k: Fraction) -> Dict[str, Fraction]:
     """How FF duality acts on the 't Hooft coupling.
 
@@ -376,15 +480,17 @@ def brst_anomaly_match_affine(N: int, k: Fraction) -> BRSTAnomalyMatch:
     """Verify BRST anomaly matching for V_k(sl_N).
 
     The Gaiotto 't Hooft worldsheet BRST anomaly cancellation requires
-    the total anomaly coefficient to vanish. For the Koszul pair:
-      kappa(A) + kappa(A!) = 0 (thm:anomaly-koszul).
+    the total anomaly coefficient to vanish. On the scalar comparison
+    surface for the Koszul pair:
+      kappa(A) + kappa(A^!) = 0 (thm:anomaly-koszul).
 
-    This IS the same condition as the planar BRST anomaly vanishing
-    in the twisted holography setup [CDG20, GZ26].
+    This is the scalar condition compared with planar BRST anomaly
+    vanishing in the twisted holography setup [CDG20, GZ26].
 
     AP20: kappa(A) is an invariant of A alone; kappa_eff is a property
-    of the composite matter+ghost system. For the holographic pair:
-    the ghost system IS the Koszul dual A!, so kappa_eff = kappa(A) + kappa(A!).
+    of the composite matter+ghost system. This function records the
+    ghost/Koszul-dual descriptor comparison; it does not reconstruct the
+    ghost system or A^! chain-level.
     """
     k_frac = _frac(k)
     kap = affine_sl_N_kappa(N, k_frac)
@@ -403,21 +509,22 @@ def brst_anomaly_match_affine(N: int, k: Fraction) -> BRSTAnomalyMatch:
         kappa_dual=kap_dual,
         kappa_anti_symmetric=(kap + kap_dual == 0),
         brst_matches_koszul=(kap_eff == 0) and (kap + kap_dual == 0),
+        kappa_complement=kap + kap_dual,
+        dual_relation="anti_symmetric",
     )
 
 
 def brst_anomaly_match_wn(N: int, k: Fraction) -> BRSTAnomalyMatch:
     """BRST anomaly matching for W_N at level k.
 
-    For W_N (Virasoro = W_2): Koszul duality is c -> 26-c (for N=2).
-    For general W_N: the Koszul dual level is k' = -k - 2N (same FF).
+    The Feigin-Frenkel comparison level is k' = -k - 2N.  This is a
+    constant-complementarity lane, not a zero-anomaly lane:
+      kappa(W_N^k) + kappa(W_N^{k'}) =
+      (H_N - 1) * (2(N-1) + 4N(N^2-1)).
 
-    kappa(W_N) + kappa(W_N at dual level): for N=2 (Virasoro) this gives
-    kappa(c) + kappa(26-c) = c/2 + (26-c)/2 = 13, NOT 0 (AP24).
-
-    For N >= 3: the anti-symmetry kappa(A) + kappa(A!) = 0 holds
-    because the W_N kappa uses the harmonic factor c*(H_N-1) and
-    the FF involution sends c -> c' with the correct sign.
+    For N=2 this recovers the Virasoro value 13.  For N=3 this gives
+    250/3.  Hence the dual relation is not anti-symmetric except at
+    accidental zeroes outside this generic scalar surface.
     """
     k_frac = _frac(k)
     c = wn_central_charge(N, k_frac)
@@ -427,6 +534,7 @@ def brst_anomaly_match_wn(N: int, k: Fraction) -> BRSTAnomalyMatch:
     k_dual = feigin_frenkel_dual_level(k_frac, N)
     c_dual = wn_central_charge(N, k_dual)
     kap_dual = c_dual * (_harmonic_exact(N) - 1)
+    kap_complement = kap + kap_dual
 
     return BRSTAnomalyMatch(
         algebra_name=f"W_{N} at k={k}",
@@ -434,8 +542,14 @@ def brst_anomaly_match_wn(N: int, k: Fraction) -> BRSTAnomalyMatch:
         kappa_ghost=-kap,
         kappa_eff=Fraction(0),
         kappa_dual=kap_dual,
-        kappa_anti_symmetric=(kap + kap_dual == 0),
-        brst_matches_koszul=(kap + kap_dual == 0),
+        kappa_anti_symmetric=(kap_complement == 0),
+        brst_matches_koszul=False,
+        kappa_complement=kap_complement,
+        dual_relation="constant_complementarity",
+        comparison_scope=(
+            "W_N Verdier scalar complementarity; not BRST/Koszul "
+            "anti-symmetry"
+        ),
     )
 
 
@@ -445,15 +559,16 @@ def brst_anomaly_match_wn(N: int, k: Fraction) -> BRSTAnomalyMatch:
 
 def categorical_thooft_affine(N: int, k: Fraction,
                                max_genus: int = 5) -> CategoricalThooftData:
-    """Full categorical 't Hooft expansion for V_k(sl_N).
+    """Categorical 't Hooft scalar expansion for V_k(sl_N).
 
     log Z = sum_{g >= 0} N^{2-2g} F_g(lambda).
 
     On the scalar lane (uniform-weight algebras):
       F_g = kappa * lambda_g^FP.
 
-    Gaiotto's categorical expansion organizes these as worldsheet
-    amplitudes of a B-model dg-TFT.
+    Gaiotto's categorical expansion organizes these as worldsheet amplitude
+    descriptors of a B-model dg-TFT. No chain-level reconstruction is
+    implemented here.
     """
     k_frac = _frac(k)
     lam = thooft_coupling(N, k_frac)
@@ -578,7 +693,7 @@ def verify_large_n_scaling(N_values: List[int], k_from_N,
 # ============================================================================
 
 def wn_minimal_shadow_data(N: int, p: int, q: int) -> WNMinimalModelShadow:
-    """Complete shadow data for a W_N(p,q) minimal model.
+    """Shadow descriptor data for a W_N(p,q) minimal model.
 
     The 't Hooft coupling: lambda = N/p where p = k + N.
     Unitarity: p,q adjacent coprime and p,q >= N.
@@ -654,19 +769,20 @@ def wn_minimal_model_series(N: int, max_models: int = 10) -> List[WNMinimalModel
 # ============================================================================
 
 def dbrane_category_affine(N: int, k: Fraction) -> DBraneCategoryData:
-    """D-brane category for V_k(sl_N) in the categorical 't Hooft expansion.
+    """D-brane category descriptor for V_k(sl_N).
 
     Gaiotto [2511.19776]: the worldsheet D-brane A-infinity category
     consists of boundary conditions for the dg-TFT. For V_k(sl_N),
     these are N fundamental D-branes (the fundamental representations
     of sl_N).
 
-    The A-infinity structure IS the transferred bar structure:
-    the bar complex B(A) encodes all higher operations m_k.
+    The returned depth is a descriptor of the transferred A-infinity
+    operations. The bar complex B(A) remains a separate chain object.
     For affine sl_N: shadow depth = 3 (Lie/tree class), so
     m_k = 0 for k >= 4 in the transferred structure.
 
-    The D-brane category matches C = A!-mod in the holographic datum.
+    The D-brane descriptor is compared with the line-category surface
+    C = A^!-mod.  This boolean is not a proof of categorical equivalence.
     """
     return DBraneCategoryData(
         algebra_name=f"V_{k}(sl_{N})",
@@ -678,13 +794,13 @@ def dbrane_category_affine(N: int, k: Fraction) -> DBraneCategoryData:
 
 
 def dbrane_category_wn(N: int, k: Fraction) -> DBraneCategoryData:
-    """D-brane category for W_N.
+    """D-brane category descriptor for W_N.
 
     W_N has infinite shadow depth (class M), so the A-infinity
     structure has nontrivial m_k for all k >= 2.
 
-    The D-brane category at generic level is non-semisimple for
-    W_N (N >= 3) due to logarithmic extensions.
+    The semisimplicity flag is the generic-level descriptor used by the
+    comparison surface, not a reconstruction of the module category.
     """
     k_frac = _frac(k)
     # At generic irrational level: semisimple
@@ -709,7 +825,8 @@ def shadow_thooft_comparison(N: int, k: Fraction,
     """Compare shadow invariants with 't Hooft amplitudes genus by genus.
 
     The key identification: F_g^{shadow} = kappa * lambda_g^FP
-    should match F_g^{tHooft} from the genus expansion.
+    is compared with the scalar part of F_g^{tHooft} from the genus
+    expansion.
 
     For affine sl_N (uniform weight): exact match at all genera.
     For W_N (multi-weight, N >= 3): exact only at g=1 (AP32).
@@ -846,69 +963,110 @@ def interface_cs_level(N: int, p: int, q: int) -> Dict[str, object]:
 
 
 def sphere_amplitude_match(N: int, k: Fraction) -> Dict[str, object]:
-    """Verify sphere (genus-0) amplitude match.
+    """Verify the scalar sphere (genus-0) amplitude comparison.
 
     Gaiotto-Zeng match sphere correlation functions via integrability.
-    The sphere amplitude in our framework is the genus-0 shadow of Theta_A,
-    which at the scalar level is the collision residue r(z) = Omega/z.
+    The sphere amplitude is represented here by the genus-0 shadow descriptor
+    of Theta_A, which at the scalar level is the collision residue
+    r_coll(z) = k*Omega_tr/z in trace form.
 
     For V_k(sl_N): the sphere partition function on S^2 is determined
-    by the Casimir element, which is extracted by the collision residue
+    by the Casimir element, whose descriptor is the collision residue
     (Theorem thm:collision-residue-twisting).
     """
     k_frac = _frac(k)
     kap = affine_sl_N_kappa(N, k_frac)
     lam = thooft_coupling(N, k_frac)
+    kernels = kernel_normalizations_affine(N, k_frac)
 
     return {
         "kappa": kap,
         "lambda": lam,
         "casimir_adj": Fraction(2 * N),
-        "collision_residue_type": "Casimir/z",
+        "collision_residue_type": "k*Omega_tr/z",
+        "kernel_normalizations": kernels,
         "sphere_amplitude_match": True,
-        "reason": "collision residue = twisting morphism (thm:collision-residue-twisting)",
+        "reason": "scalar trace-form collision-residue descriptor",
     }
 
 
 # ============================================================================
-# 11. Full holographic datum comparison
+# 11. Holographic package comparison
 # ============================================================================
 
 def holographic_datum_comparison(N: int, k: Fraction) -> Dict[str, object]:
-    """Compare the full holographic datum H(A) with Gaiotto's 't Hooft data.
+    """Compare holographic package descriptors with Gaiotto's 't Hooft data.
 
-    H(A) = (A, A!, C, r(z), Theta_A, nabla^hol)
+    H(A) = (A, A^i, A^!, C, r(z), Theta_A, nabla^hol)
 
-    Gaiotto's framework provides:
+    The seven package entries are:
     - A = boundary chiral algebra (= our A)
-    - A! = Koszul dual boundary condition (= our A!)
-    - C = D-brane category (= our C = A!-mod)
-    - Worldsheet = dg-TFT (encoded by Theta_A)
-    - BRST anomaly = kappa (= our curvature)
-    - nabla^hol = shadow connection from MC (our nabla^hol)
+    - A^i = bar-dual coalgebra H^*(B(A))
+    - A^! = Verdier-dual algebra on the finite-type/completed Koszul surface
+    - C = D-brane line-category descriptor (= A^!-mod surface)
+    - r(z) = collision-residue descriptor
+    - Theta_A = modular Maurer-Cartan class, here only through kappa
+    - nabla^hol = shadow-connection descriptor from MC flatness
 
-    All six components match.
+    The compute package exposes six primary projections, following
+    constr:v1-platonic-package-concordance. The compatibility key
+    ``all_six_match`` is retained for those six projections and is not a
+    statement that H(A) has six entries.
+
+    This function performs scalar/descriptor checks only. It does not
+    reconstruct B(A), A^i, A^!, C, Theta_A, nabla^hol, or
+    Z_ch^der(A) chain-level. In particular, Omega(B(A)) = A is bar-cobar
+    inversion, not Koszul duality.
     """
     k_frac = _frac(k)
     data = categorical_thooft_affine(N, k_frac)
     brst = brst_anomaly_match_affine(N, k_frac)
     dbrane = dbrane_category_affine(N, k_frac)
     ff = thooft_coupling_under_ff(N, k_frac)
+    kernels = kernel_normalizations_affine(N, k_frac)
+
+    six_projection_match = (
+        brst.brst_matches_koszul and
+        dbrane.matches_line_category and
+        ff["is_negation"]
+    )
 
     return {
         "algebra": f"V_{k}(sl_{N})",
+        "holographic_package_entries": HOLOGRAPHIC_PACKAGE_ENTRIES,
+        "holographic_package_entry_count": len(HOLOGRAPHIC_PACKAGE_ENTRIES),
+        "modular_koszul_primary_projections": MODULAR_KOSZUL_PRIMARY_PROJECTIONS,
+        "modular_koszul_primary_projection_count": len(
+            MODULAR_KOSZUL_PRIMARY_PROJECTIONS
+        ),
+        "object_firewall": BAR_COBAR_OBJECT_FIREWALL,
+        "object_branch_status": OBJECT_BRANCH_STATUS,
+        "comparison_scope": CATEGORICAL_COMPARISON_SCOPE,
+        "categorical_equivalence_claimed": False,
+        "chain_level_reconstruction": False,
+        "strict_ht_assembly_status": "conditional",
+        "global_triangle_equivalence": "not checked by this compute engine",
         "koszul_dual": f"V_{feigin_frenkel_dual_level(k_frac, N)}(sl_{N})",
+        "koszul_dual_coalgebra": "A^i = H^*(B(A)) (descriptor only)",
+        "koszul_dual_branch": OBJECT_BRANCH_STATUS["A^!"],
+        "derived_center_status": OBJECT_BRANCH_STATUS["Z_ch^der(A)"],
+        "bar_cobar_inversion": "Omega(B(A)) = A",
+        "line_category_match_scope": (
+            "descriptor C = A^!-mod surface; not categorical equivalence"
+        ),
         "line_category_match": dbrane.matches_line_category,
-        "collision_residue": "Casimir/z (CYBE satisfied)",
+        "collision_residue": "k*Omega_tr/z (trace form)",
+        "kernel_normalizations": kernels,
         "theta_kappa": data.kappa,
+        "theta_scope": "scalar kappa projection; full Theta_A not reconstructed",
         "brst_anomaly_zero": brst.brst_matches_koszul,
         "ff_on_thooft": ff,
         "connection_flat": True,
-        "all_six_match": (
-            brst.brst_matches_koszul and
-            dbrane.matches_line_category and
-            ff["is_negation"]
-        ),
+        "connection_scope": "flatness descriptor from MC equation, not rebuilt",
+        "all_seven_descriptors_present": len(HOLOGRAPHIC_PACKAGE_ENTRIES) == 7,
+        "all_six_primary_projections_match": six_projection_match,
+        "all_six_match_scope": "six modular Koszul primary projections only",
+        "all_six_match": six_projection_match,
     }
 
 
@@ -934,8 +1092,8 @@ def amodel_bmodel_comparison(N: int, k: Fraction,
     [2411.00760]: B-model holographic dual from 't Hooft expansion.
     [2603.08783]: A-model topological string for W_N minimal models.
 
-    Our shadow invariants provide the common organizing framework:
-    both A-model and B-model amplitudes are projections of Theta_A.
+    This function compares both sides only through scalar projections of
+    Theta_A.
     """
     k_frac = _frac(k)
     kap = affine_sl_N_kappa(N, k_frac)
@@ -955,18 +1113,18 @@ def amodel_bmodel_comparison(N: int, k: Fraction,
         "family": f"V_{k}(sl_{N})",
         "genus_amplitudes": genus_data,
         "all_match": True,
-        "framework": "shadow invariants = common projections of Theta_A",
+        "framework": "scalar projections of Theta_A comparison surface",
     }
 
 
 # ============================================================================
-# 13. Comprehensive verification
+# 13. Compatibility verification
 # ============================================================================
 
 def full_categorical_thooft_verification(N: int, k: Fraction) -> Dict[str, object]:
-    """Run all categorical 't Hooft verifications for V_k(sl_N).
+    """Run scalar/descriptor 't Hooft compatibility checks for V_k(sl_N).
 
-    Returns a comprehensive dictionary of all checks.
+    Returns the compatibility dictionary expected by existing callers.
     """
     k_frac = _frac(k)
 
@@ -991,6 +1149,10 @@ def full_categorical_thooft_verification(N: int, k: Fraction) -> Dict[str, objec
         "anomaly_zero": thooft.brst_anomaly == 0,
         "dbrane_match": dbrane.matches_line_category,
         "shadow_thooft_match": all(c.match for c in comparisons),
+        "holographic_package_match": holo["all_six_match"],
         "holographic_datum_match": holo["all_six_match"],
+        "all_pass_scope": CATEGORICAL_COMPARISON_SCOPE,
+        "categorical_equivalence_claimed": False,
+        "chain_level_reconstruction": False,
         "all_pass": all_pass,
     }

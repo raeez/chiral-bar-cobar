@@ -1,0 +1,456 @@
+% Type System: formal grammar of theorem statements in the Open Beilinson tower.
+
+\providecommand{\BeilLevel}{\mathrm{Lvl}}
+\providecommand{\Quad}{\mathrm{Q}}
+\providecommand{\Pres}{\mathrm{P}}
+\providecommand{\Hyp}{\mathrm{H}}
+\providecommand{\TypeSig}{\mathfrak{T}}
+\providecommand{\Open}{\mathsf{Open}}
+\providecommand{\KSDual}{\mathsf{KSDual}}
+\providecommand{\Catl}{\mathsf{Cat}}
+\providecommand{\Chnl}{\mathsf{Chain}}
+\providecommand{\HypAug}{\mathsf{Aug}}
+\providecommand{\HypComp}{\mathsf{Comp}}
+\providecommand{\HypFinDimGr}{\mathsf{FDG}}
+\providecommand{\HypKosz}{\mathsf{Kosz}}
+\providecommand{\HypAmb}{\mathsf{Amb}}
+\providecommand{\HypGen}{\mathsf{Gen}}
+\providecommand{\HypClass}{\mathsf{Cl}}
+\providecommand{\HypProConil}{\mathsf{ProConil}}
+\providecommand{\HypJad}{\mathsf{J\text{-}adic}}
+\providecommand{\HypWtComp}{\mathsf{WtComp}}
+\providecommand{\HypCoder}{\mathsf{Coder}}
+\providecommand{\HypMC}{\mathsf{MC}}
+\providecommand{\HypMod}{\mathsf{Mod}}
+\providecommand{\HypClut}{\mathsf{Clut}}
+\providecommand{\HypHall}{\mathsf{Hall}}
+\providecommand{\HypIntegral}{\mathsf{Int}}
+\providecommand{\HypDescent}{\mathsf{Desc}}
+\providecommand{\Recon}{\mathrm{Rec}}
+\providecommand{\meet}{\sqcap}
+\providecommand{\joinp}{\sqcup}
+\providecommand{\Ab}{\mathcal{A}_b}
+
+\chapter[Type system]{Type system: the grammar of theorem statements}
+\label{app:type-system}
+
+The Open quadrant of the four-quadrant programme organises chiral
+algebra on $(X,D,\tau)$ as a five-step Beilinson tower with a
+reconstruction theorem at each interface. Every theorem in this
+volume carries a four-tuple
+\[
+ \TypeSig
+ = (\Quad,\Pres,\BeilLevel,\Hyp),
+\]
+the \emph{type signature}: quadrant, presentation, level, hypothesis
+package. Every cross-level equality invokes a named reconstruction
+theorem with explicit hypothesis package; suppressing the package
+collapses the quadrant grid (master pattern MA-1) and turns a
+forgetful image into a false equivalence.
+
+This appendix fixes the grammar. Section~\ref{sec:type-levels} fixes
+the level alphabet and gives an inscription example at each level.
+Section~\ref{sec:type-quadrants} fixes the quadrant alphabet and the
+$\mathbb{Z}/2$ involution defining $\KSDual$.
+Section~\ref{sec:type-presentations} fixes the chain-level /
+$(\infty,1)$-categorical dichotomy as equally load-bearing
+presentations. Section~\ref{sec:type-hypothesis} catalogues the
+hypothesis-package primitives and their containment partial order.
+Section~\ref{sec:type-composition} gives the composition rule for
+packages along reconstruction theorems and the meet/join.
+Section~\ref{sec:type-lattice} draws the Hypothesis-Package Lattice
+as a TikZ figure on the reconstruction-theorem nodes.
+
+\section{Levels}
+\label{sec:type-levels}
+
+\begin{definition}[Beilinson levels]
+\label{def:type-levels}
+The Open Beilinson tower is the linearly ordered five-element set
+\[
+ \BeilLevel
+ \in\{0,1,2,3,4,5\},
+\]
+indexing the carriers
+\[
+\begin{array}{c|l|l}
+\BeilLevel & \text{name} & \text{carrier} \\
+\hline
+0 & \text{primitive} & \mathcal C^{\mathrm{op}}\text{ on }(X,D,\tau)\text{: factorisation dg-cat} \\
+1 & \text{chart} & \Ab=\mathrm{End}_{\mathcal C}(b),\ b\in\mathcal C^{\mathrm{op}} \\
+2 & \text{twisting} & B(\Ab)=T^c(s^{-1}\bar\Ab) \\
+3 & \text{bulk} & Z^{\mathrm{der}}_{\mathrm{ch}}(\Ab)\simeq\ChirHoch^\bullet(\Ab) \\
+4 & \text{operator} & \mathsf{Line}_{\Ab},\ \mathsf{Brane}_{\Ab} \\
+5 & \text{scalar} & (\kappa\text{-tuple},Z_g,\Phi_N).
+\end{array}
+\]
+The level alphabet is exhaustive on the Open quadrant: every Vol~I
+theorem inscribes its conclusion at exactly one level.
+\end{definition}
+
+The level signature is recoverable from the carrier by inspection;
+a theorem whose conclusion compares carriers at different levels is
+called \emph{cross-level}, and the equality is then an image
+equality under a reconstruction theorem.
+
+\begin{example}[Level inscriptions]
+\label{ex:type-level-inscriptions}
+\begin{enumerate}[label=\textup{(L\arabic*)}]
+\item \emph{Level 0.} The factorisation dg-cat
+$\mathcal C^{\mathrm{op}}$ on $(X,D,\tau)$ is itself the inscription;
+the Morita equivalence $\mathcal C^{\mathrm{op}}\simeq
+\mathrm{Mod}_{\Ab}^{\mathrm{fact}}$ at chosen vacuum~$b$ is a
+\emph{cross-level} statement $0\leftrightarrow 1$.
+\item \emph{Level 1.} Theorem~A is the level-$1\leftrightarrow 2$
+reflection $K^2\simeq\mathrm{id}$ on $\mathrm{Kosz}(X)$.
+\item \emph{Level 2.} The bar coalgebra $B(\Ab)$ is the carrier of
+the universal twisting morphism
+$\pi_{\Ab}\colon B(\Ab)\to\Ab$ underlying Theorem~B inversion.
+\item \emph{Level 3.} Theorem~H states
+$\ChirHoch^\bullet(\Ab)\subset\{0,1,2\}$ on the Koszul locus at
+generic level.
+\item \emph{Level 4.} Theorem~D states
+$\mathrm{obs}_g=\kappa\cdot\lambda_g$ as an
+$H^\bullet(\overline{M}_{g,n})$ class.
+\item \emph{Level 5.} Theorem~C states the family-stratum ceiling
+$K^\kappa(\Ab)=\kappa(\Ab)+\kappa(\Ab^!)$ on the
+$\kappa$-stratification matrix.
+\end{enumerate}
+\end{example}
+
+\section{Quadrants}
+\label{sec:type-quadrants}
+
+\begin{definition}[Quadrant alphabet]
+\label{def:type-quadrants}
+The four-quadrant grid
+\[
+ \Quad
+ \in\bigl\{\Open,\ \mathrm{CY}\bigr\}
+ \times\bigl\{\Catl,\ \Chnl\bigr\}
+\]
+factors the programme: $\Open$ is Vol~I (algebraic-curve
+factorisation), $\mathrm{CY}$ is Vol~III (Calabi--Yau-category two-stage
+$\Phi_d^{(\Sigma_{d-1},C)}=\mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1},C}\circ\Phi_d^{\mathrm{FA}}$).
+The presentation factor $\{\Catl,\Chnl\}$ is treated in
+\S\ref{sec:type-presentations}.
+\end{definition}
+
+\begin{definition}[Chiral involution and $\KSDual$]
+\label{def:type-ksdual}
+Let $\sigma\colon\Ab\mapsto\Ab^!$ denote the chiral / antichiral
+Verdier--Koszul involution: $\sigma$ is the composition
+$\Ab\stackrel{B}{\longrightarrow}B(\Ab)\stackrel{\mathbb D_{\Ran}}{\longrightarrow}
+B(\Ab)^\vee\stackrel{\Omega}{\longrightarrow}\Ab^!$ on the Koszul
+locus. The fixed sublocus
+\[
+ \KSDual
+ :=\{\Ab\mid\Ab\simeq\Ab^!\}
+\]
+is the $\mathbb Z/2$-fixed locus on which the four-quadrant grid
+degenerates into self-dual form. On $\KSDual$:
+\begin{itemize}
+\item Theorem~A holds as an equivalence (not adjunction with
+comparison map);
+\item Theorem~H is exact in $\{0,1,2\}$;
+\item the five-archetype dichotomy stabilises;
+\item the Universal Trace Identity
+$h_{\Ab}=h_{\mathrm{LV}}/(\kappa+\kappa^!)$ is the equivariant
+signature.
+\end{itemize}
+\end{definition}
+
+\section{Presentations}
+\label{sec:type-presentations}
+
+\begin{definition}[Presentation tag]
+\label{def:type-presentation}
+The presentation tag $\Pres\in\{\Catl,\Chnl\}$ records the lane in
+which a theorem is stated.
+\begin{itemize}
+\item $\Pres=\Catl$ ($(\infty,1)$-categorical): derived stable
+$\infty$-categories, Lurie HA, factorisation $\infty$-categories,
+$\infty$-operads (Costello--Gwilliam, Francis--Gaitsgory). Proof
+witnesses are $(\infty,1)$-functors, adjunctions, colimits,
+monoidal structures.
+\item $\Pres=\Chnl$ (chain-level): explicit complexes, named
+differentials, witnessed homotopies, $L_\infty$-structures,
+Mittag--Leffler towers, $J$-adic / pro-conilpotent / weight-completed
+ambients. Proof witnesses are chain homotopies, explicit MC
+elements, OPE poles.
+\end{itemize}
+Both presentations are load-bearing. A theorem inscribed in $\Catl$
+is not the shadow of its $\Chnl$ avatar, and conversely; both are the
+theorem viewed through different lenses (master pattern MA-1
+disallows demoting either to the other).
+\end{definition}
+
+When a theorem requires both lanes (e.g.\ Theorem~B inversion off
+$\KSDual$), the type signature carries
+$\Pres=\Catl\meet\Chnl$ with the chain-level lane
+ambient-qualified in $\Hyp$.
+
+\section{Hypothesis-package primitives}
+\label{sec:type-hypothesis}
+
+\begin{definition}[Primitive hypotheses]
+\label{def:type-hypotheses}
+The hypothesis alphabet is a finite set of primitives, each a
+condition on $\Ab$, on the bar coalgebra $B(\Ab)$, on the ambient
+category, or on the stratum:
+\[
+\begin{array}{l|l}
+\textbf{Primitive} & \textbf{Condition} \\
+\hline
+\HypAug & \Ab\in\Alg^{\fact,\aug}_X;\ \bar\Ab=\ker\epsilon. \\
+\HypComp & \Ab\simeq\varprojlim_n\Ab/\bar\Ab^{\,n}\text{ (weak curvature).} \\
+\HypFinDimGr & \dim_k(B(\Ab))_w<\infty\ (\forall w\in\mathbb Z_{\geq 0}). \\
+\HypKosz & \mathrm{Ext}^{i,j}_{\mathcal C^{\mathrm{op}}}(b,b)=0\ (i\neq j); \\
+       & \text{i.e. }\Ab\in\mathrm{Kosz}(X). \\
+\HypAmb(\square) & \text{ambient }\square\in\{\Ch(\Vect),\HypCoder,\HypWtComp,\Pro,\HypJad\}. \\
+\HypGen & \text{generic level: }k\notin\{-h^\vee\}\cup\{\text{admissible roots}\}. \\
+\HypClass(\square) & \text{archetype label }\square\in\{\mathsf G,\mathsf L,\mathsf C,\mathsf M,\mathsf B\}. \\
+\HypMC & \text{Maurer--Cartan element }\Theta_{\Ab}\text{ exists and converges.} \\
+\HypMod & \text{modular trace data on the open category.} \\
+\HypClut & \text{clutching data on }\overline{M}_{g,n}. \\
+\HypHall & \text{Hall pairing on a half-density category.} \\
+\HypIntegral & \text{integral form of the deformed enveloping object.} \\
+\HypDescent & \text{descent data along a fibration of curve geometries.}
+\end{array}
+\]
+A \emph{hypothesis package} is a finite conjunction
+$\Hyp=\bigwedge_i \Hyp_i$ of primitives.
+\end{definition}
+
+\begin{example}[Theorem-A package]
+\label{ex:type-thmA-package}
+The Theorem~A package (\S\ref{sec:ainf2-koszul-reflection}, hypotheses
+H1--H3) is
+\[
+ \Hyp_{\mathrm{A}}
+ = \HypAug\wedge\HypComp\wedge\HypFinDimGr,
+\]
+with chain-level class~$\mathsf M$ requiring the strengthening
+\[
+ \Hyp_{\mathrm{A},\mathsf M}
+ = \Hyp_{\mathrm{A}}\wedge\HypAmb(\HypWtComp\joinp\Pro\joinp\HypJad).
+\]
+\end{example}
+
+\begin{example}[Theorem-H package]
+\label{ex:type-thmH-package}
+The Theorem~H package on the smooth Koszul locus is
+$\Hyp_{\mathrm{H}}=\Hyp_{\mathrm{A}}\wedge\HypKosz\wedge\HypGen$, with
+the class-$\mathsf M$ ambient strengthening above.
+\end{example}
+
+\subsection*{Containment partial order}
+
+\begin{definition}[Package containment]
+\label{def:type-containment}
+For packages $\Hyp,\Hyp'$, write $\Hyp\leq\Hyp'$ if every primitive
+appearing in $\Hyp$ appears in $\Hyp'$ (set inclusion of conjuncts),
+or if $\Hyp'$ strengthens an ambient: $\HypAmb(\square)\leq
+\HypAmb(\square')$ when $\square'$ refines $\square$ along the chain
+$\Ch(\Vect)\leq\HypCoder\leq\HypWtComp\leq\Pro\leq\HypJad$. The
+relation $\leq$ is a partial order: reflexive (any package contains
+itself), antisymmetric (mutual containment forces equality of the
+conjunct sets and ambient tags), transitive (transitive closure of
+inclusion and ambient refinement).
+\end{definition}
+
+The ambient chain
+$\Ch(\Vect)\leq\HypCoder\leq\HypWtComp\leq\Pro\leq\HypJad$ encodes the
+class-$\mathsf M$ phenomenon: bar--cobar inversion in the raw
+$\Ch(\Vect)$ ambient is genuinely false; passage to $\HypCoder$,
+$\HypWtComp$, $\Pro$, or $\HypJad$ restores the equivalence. The
+inscription cost rises with the refinement; using the weakest ambient
+that closes the proof is the discipline (master pattern MA-13).
+
+\section{Composition along reconstruction theorems}
+\label{sec:type-composition}
+
+A reconstruction theorem at level interface $\BeilLevel\to\BeilLevel'$
+bears a name $\Recon^{\BeilLevel\to\BeilLevel'}$ and a hypothesis
+package $\Hyp_{\Recon}$. The Vol~I primary list is
+\[
+\begin{array}{l|c|l}
+\textbf{Reconstruction} & \textbf{Levels} & \textbf{Package} \\
+\hline
+\text{Morita} &
+ 1\leftrightarrow 0 &
+ \HypAug\wedge\HypMC \\
+\text{Theorem A} &
+ 1\leftrightarrow 2 &
+ \HypAug\wedge\HypComp\wedge\HypFinDimGr \\
+\text{Theorem H} &
+ 1\to 3 &
+ \Hyp_{\mathrm{A}}\wedge\HypKosz\wedge\HypGen \\
+\text{Theorem B} &
+ 1\to 3 &
+ \HypKosz\wedge\HypAmb(\HypCoder\joinp\HypWtComp\joinp\Pro\joinp\HypJad) \\
+\text{Drinfeld double} &
+ 4\to 3 &
+ \HypHall\wedge\HypIntegral\wedge\HypDescent \\
+\text{Modular reconstruction} &
+ 5\to 4 &
+ \HypMod\wedge\HypClut.
+\end{array}
+\]
+
+\begin{proposition}[Composition rule]
+\label{prop:type-composition}
+If $\TypeSig_1=(\Quad_1,\Pres_1,\BeilLevel\to\BeilLevel',\Hyp_1)$
+and $\TypeSig_2=(\Quad_2,\Pres_2,\BeilLevel'\to\BeilLevel'',\Hyp_2)$
+are two reconstruction theorems whose target / source levels match,
+their composition has type signature
+\[
+ \TypeSig_2\circ\TypeSig_1
+ =\bigl(\Quad_1\meet\Quad_2,\ \Pres_1\meet\Pres_2,\ \BeilLevel\to\BeilLevel'',\ \Hyp_1\joinp\Hyp_2\bigr),
+\]
+where $\joinp$ is the join in the package partial order
+(Definition~\ref{def:type-containment}) and $\meet$ on quadrant /
+presentation tags is the intersection (refinement) of grid cells.
+The hypothesis package of a composite reconstruction is the join of
+the constituent packages; suppressing a conjunct of $\Hyp_1\joinp\Hyp_2$
+in the inscription instantiates master pattern MA-1.
+\end{proposition}
+
+\begin{proof}
+A theorem at level $\BeilLevel\to\BeilLevel'$ produces witnesses in the
+target carrier under $\Hyp_1$; chaining a theorem
+$\BeilLevel'\to\BeilLevel''$ requires its source hypotheses $\Hyp_2$ on
+those witnesses. Both must hold, so the composite hypothesis is the
+conjunction of the two; the partial order on packages identifies this
+conjunction with the join. The quadrant / presentation tags refine to
+the cells common to both reconstructions: a $\Open$-only theorem
+composed with a $\mathrm{CY}$-only theorem has empty intersection and
+no composition is defined.
+\end{proof}
+
+\begin{proposition}[Meet and join of packages]
+\label{prop:type-meetjoin}
+The package partial order
+$\bigl(\{\Hyp\},\leq\bigr)$ admits binary meets and joins:
+\[
+ \Hyp\meet\Hyp'
+ =\{\text{conjuncts in both}\},\qquad
+ \Hyp\joinp\Hyp'
+ =\Hyp\wedge\Hyp',
+\]
+extended on ambient tags by intersection / refinement of the
+$\Ch(\Vect)\leq\HypCoder\leq\HypWtComp\leq\Pro\leq\HypJad$ chain. The
+poset is a bounded lattice with bottom the empty package
+$\bigl(\HypAmb(\Ch(\Vect))\bigr)$ and top the full package
+$\Hyp_{\mathrm{full}}$ obtained by conjoining all primitives at the
+strongest ambient tag $\HypJad$.
+\end{proposition}
+
+\begin{proof}
+Conjunction is associative and commutative on a finite alphabet, so
+binary meets and joins exist. The ambient tag chain is totally
+ordered, so its meet / join is well-defined. Boundedness follows from
+the finiteness of the primitive alphabet.
+\end{proof}
+
+The lattice structure makes the type system a constructive grammar:
+every theorem inscription is parsed by reducing its hypothesis to a
+package in the lattice; reconstruction-theorem composition is package
+join.
+
+\section{The Hypothesis-Package Lattice}
+\label{sec:type-lattice}
+
+The reconstruction theorems form the nodes of a partially ordered
+diagram; an edge $\Recon\to\Recon'$ records that the target package
+of $\Recon$ contains (refines) the source package of $\Recon'$, so
+that $\Recon'$ is composable after $\Recon$.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[
+ node distance=14mm,
+ every node/.style={
+   draw,
+   rounded corners=2pt,
+   inner sep=4pt,
+   align=center,
+   font=\small
+ },
+ arrow/.style={-{Latex[length=2mm]}, thick},
+ hypothesis/.style={font=\scriptsize, draw=none, rounded corners=0pt}
+]
+
+\node (morita)
+ {Morita\\ \scriptsize $1\!\leftrightarrow\!0$\\
+  \scriptsize $\HypAug\wedge\HypMC$};
+
+\node[right=20mm of morita] (thmA)
+ {Theorem A\\ \scriptsize $1\!\leftrightarrow\!2$\\
+  \scriptsize $\HypAug\wedge\HypComp\wedge\HypFinDimGr$};
+
+\node[below=12mm of thmA] (thmH)
+ {Theorem H\\ \scriptsize $1\!\to\!3$\\
+  \scriptsize $\Hyp_{\mathrm A}\wedge\HypKosz\wedge\HypGen$};
+
+\node[left=20mm of thmH] (thmB)
+ {Theorem B\\ \scriptsize $1\!\to\!3$\\
+  \scriptsize $\HypKosz\wedge\HypAmb(\geq\HypCoder)$};
+
+\node[below=12mm of thmH] (drin)
+ {Drinfeld double\\ \scriptsize $4\!\to\!3$\\
+  \scriptsize $\HypHall\wedge\HypIntegral\wedge\HypDescent$};
+
+\node[left=20mm of drin] (modr)
+ {Modular reconstruction\\ \scriptsize $5\!\to\!4$\\
+  \scriptsize $\HypMod\wedge\HypClut$};
+
+\draw[arrow] (morita) -- node[hypothesis, midway, above]
+ {$+\HypComp\wedge\HypFinDimGr$} (thmA);
+\draw[arrow] (thmA) -- node[hypothesis, midway, right]
+ {$+\HypKosz\wedge\HypGen$} (thmH);
+\draw[arrow] (thmA.south west) -- node[hypothesis, midway, above left]
+ {$+\HypKosz, \HypAmb$} (thmB.north);
+\draw[arrow] (thmH) -- node[hypothesis, midway, right]
+ {$+\HypHall\wedge\HypIntegral$} (drin);
+\draw[arrow] (drin) -- node[hypothesis, midway, above]
+ {$+\HypMod\wedge\HypClut$} (modr);
+\draw[arrow] (thmB.south) -- node[hypothesis, midway, left]
+ {$+\HypMod$} (modr.north);
+
+\end{tikzpicture}
+\caption{Hypothesis-package lattice on the Open Beilinson-tower
+reconstruction theorems. Nodes carry the level interface and the
+package; arrows record package containment under
+Definition~\ref{def:type-containment}, labelled by the primitives
+added along the edge. Composition along a directed path takes the
+join of the edge increments
+(Proposition~\ref{prop:type-composition}).}
+\label{fig:type-lattice}
+\end{figure}
+
+\begin{proposition}[Lattice well-formedness]
+\label{prop:type-lattice-wellformed}
+The diagram in Figure~\ref{fig:type-lattice} is a Hasse diagram for a
+finite bounded lattice. Every directed path from
+$\mathrm{Morita}$ to $\mathrm{Modular\ reconstruction}$ realises a
+well-defined composite type signature
+$\TypeSig=(\Open,\meet_i\Pres_i,1\!\to\!4,\joinp_i\Hyp_i)$.
+\end{proposition}
+
+\begin{proof}
+Each edge realises a strict refinement of packages, so the diagram is
+acyclic; finiteness of the alphabet bounds the lattice. By
+Proposition~\ref{prop:type-meetjoin} every pair of nodes admits meet
+and join in the package lattice, and the level-interface composition
+is associative on the linearly ordered level set
+$\{0,1,2,3,4,5\}$. Hence every directed path produces a well-formed
+type signature.
+\end{proof}
+
+The type system fixes the inscription contract for the Master
+Reconstruction Theorem (Vol~I climax): a Vol~I theorem with type
+signature $(\Open,\Pres,\BeilLevel,\Hyp)$ admits a $\mathrm{CY}$
+companion at the same level under the vertical-equivalence cells
+listed in $\KSDual$, with both inscriptions named in the master
+concordance (\S\ref{sec:master-concordance-cross-volume}).

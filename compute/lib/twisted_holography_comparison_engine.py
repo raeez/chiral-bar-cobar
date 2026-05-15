@@ -1,4 +1,4 @@
-r"""Systematic comparison: our holographic modular Koszul datum vs Costello's twisted holography.
+r"""Systematic comparison: typed scalar projections of H(A) vs Costello's twisted holography.
 
 LITERATURE SURVEYED:
 
@@ -31,7 +31,8 @@ LITERATURE SURVEYED:
 
   [C17]   Costello, "Holography and Koszul duality: the example of the M2
           brane", arXiv:1705.02500. M2 branes in Omega-background. Boundary
-          algebra = Yangian(gl_N). Bulk algebra = U_{hbar,c}(Diff(C) x gl_N).
+          algebra = Yangian(gl_N). Costello-side line/bulk symmetry algebra =
+          U_{hbar,c}(Diff(C) x gl_N).
           Koszul duality proved to all orders in PERTURBATION THEORY (in hbar
           and 1/N), but at GENUS 0 on the worldsheet.
 
@@ -45,6 +46,19 @@ LITERATURE SURVEYED:
           SciPost Phys. 17, 109 (2024). Extends CP20 to K3. Identifies twist
           of SUGRA, enumerates states. Obtains planar chiral algebra and
           fixes planar 2- and 3-point functions.
+
+SCOPE OF THIS ENGINE:
+
+  The manuscript's holographic package has seven entries
+
+      H(A) = (A, A^i, A^!, C, r(z), Theta_A, nabla^hol),
+
+  where A^i is the bar-dual coalgebra H^*(B(A)), A^! is the Verdier/Koszul
+  companion algebra, and C = Z_ch^der(A) is the chiral derived-centre bulk
+  slot. This file records comparison strings and scalar invariants from
+  those slots. It is a typed scalar comparison surface, not a construction
+  of the whole package, and it never identifies H(A) with any one of A,
+  B(A), A^i, A^!, Omega(B(A)), or C.
 
 KEY FINDING: COSTELLO'S PROGRAMME WORKS AT GENUS 0 (WORLDSHEET).
 
@@ -63,16 +77,17 @@ KEY FINDING: COSTELLO'S PROGRAMME WORKS AT GENUS 0 (WORLDSHEET).
   is NOT addressed in the published twisted holography papers.
 
   OUR GENUS TOWER IS A GENUINE EXTENSION: the shadow obstruction tower
-  Theta_A controls the full genus expansion F_g = kappa * lambda_g^FP
-  (on the uniform-weight lane). This is the WORLDSHEET genus expansion,
-  which Costello's programme does not compute.
+  Theta_A controls the uniform-weight worldsheet genus projection
+  F_g = kappa * lambda_g^FP. This does not claim a complete bulk-loop or
+  all-corrections holographic package, and Costello's published programme
+  does not compute this worldsheet genus projection.
 
 COMPARISON STRUCTURE:
 
-  We compare five aspects:
+  We compare five projected aspects of H(A):
   1. Boundary algebra identification (our A vs Costello's boundary VOA)
-  2. Koszul dual identification (our A! vs Costello's bulk/Koszul dual)
-  3. Bulk algebra (our Z^der_ch(A) vs Costello's bulk)
+  2. Verdier/Koszul companion (our A^! vs Costello's Koszul partner)
+  3. Bulk slot (our C = Z_ch^der(A) vs Costello's bulk geometry)
   4. R-matrix and Yangian (our r(z) vs Costello's R-matrix)
   5. Higher genus (our Theta_A genus tower vs Costello's scope)
 
@@ -84,23 +99,30 @@ BRANE EXAMPLES:
 
   M5/D3 brane: A = affine gl_N at level 1 (twisted N=4 SYM).
                Costello [CG18] identifies boundary chiral algebra.
-               Our framework: holographic modular Koszul datum H(A).
+               Our framework: projected slots of the seven-entry package H(A).
 
   AdS_3: A = Sym^N(T^4) single-trace algebra W_{1+infinity} at c=6N.
          Costello-Paquette [CP20] study the N -> infinity limit.
-         Our framework: H(A) with kappa, shadow depth, genus expansion.
+         Our framework: scalar H(A) projections with kappa, shadow depth,
+         and uniform-weight genus amplitudes.
 
 ANTI-PATTERN COMPLIANCE:
   AP19: r-matrix poles ONE BELOW OPE (d log absorption)
   AP20: kappa(A) intrinsic, kappa_eff = kappa(matter) + kappa(ghost)
   AP24: kappa + kappa' = 0 for KM/free fields; != 0 for W-algebras
-  AP25: B(A) coalgebra, D_Ran(B(A)) = B(A!) algebra, Omega(B(A)) = A
+  AP25: B(A) coalgebra, A^i = H^*B(A), A^! via Verdier, Omega(B(A)) = A
   AP27: bar propagator d log E(z,w) weight 1 always
   AP33: H_k^! = Sym^ch(V*) != H_{-k}
-  AP34: bar-cobar != open-to-closed; bulk = derived center, NOT bar
+  AP34: bar-cobar inversion != open-to-closed; C = Z_ch^der(A), NOT bar
   AP39: kappa != c/2 in general
   AP44: lambda-bracket = OPE mode / n!
   AP48: kappa depends on full algebra, not Virasoro subalgebra
+
+KERNEL CONVENTION:
+  This engine uses the collision-residue convention from
+  landscape_census.tex: r^Heis(z)=k/z, r^KM(z)=k*Omega_tr/z, and
+  r^Vir(z)=(c/2)/z^3+2T/z. The KZ kernel Omega_KZ/((k+h^v)z) is a
+  different normalization and is recorded separately when needed.
 """
 
 from __future__ import annotations
@@ -109,7 +131,28 @@ from dataclasses import dataclass, field
 from fractions import Fraction
 from functools import lru_cache
 from math import factorial, comb
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, Tuple
+
+
+HOLOGRAPHIC_SLOT_ORDER: Tuple[str, ...] = (
+    "A",
+    "A^i",
+    "A^!",
+    "C=Z_ch^der(A)",
+    "r(z)",
+    "Theta_A",
+    "nabla^hol",
+)
+
+AP25_OBJECT_ROLES: Dict[str, str] = {
+    "A": "boundary E_1-chiral algebra",
+    "B(A)": "ordered bar coalgebra T^c(s^{-1}A_bar)",
+    "A^i": "bar-dual coalgebra H^*(B(A))",
+    "A^!": "Verdier/Koszul companion algebra formed from A^i",
+    "Omega(B(A))": "bar-cobar inverse recovering A",
+    "C": "C-slot bulk object Z_ch^der(A)",
+    "Z_ch^der(A)": "chiral Hochschild derived-centre bulk slot",
+}
 
 
 # ===========================================================================
@@ -123,6 +166,77 @@ def _frac(x) -> Fraction:
     if isinstance(x, int):
         return Fraction(x)
     return Fraction(x)
+
+
+def holographic_package_slots() -> Tuple[str, ...]:
+    """Return the seven slots of the holographic package H(A)."""
+    return HOLOGRAPHIC_SLOT_ORDER
+
+
+def ap25_object_roles() -> Dict[str, str]:
+    """Typed AP25/AP34 roles for the five bar/Koszul/centre objects."""
+    return dict(AP25_OBJECT_ROLES)
+
+
+def collision_kernel_normalization(
+    family: str,
+    level: Fraction = Fraction(1),
+    h_dual: int | None = None,
+) -> Dict[str, Any]:
+    """Level-prefixed collision kernel, with KZ normalization kept separate.
+
+    The collision convention is the one used by the shadow package:
+      Heisenberg: k/z.
+      affine KM: k*Omega_tr/z.
+      Virasoro: (c/2)/z^3 + 2*T/z.
+
+    For affine KM the KZ connection often uses Omega_KZ/((k+h^v)z). This
+    function records that as a separate field rather than absorbing it into
+    the collision residue.
+    """
+    key = family.lower().replace("-", "_")
+    k = _frac(level)
+    if key in {"heisenberg", "u1", "gl1"}:
+        return {
+            "family": "heisenberg",
+            "collision_formula": f"{k}/z",
+            "coefficient": k,
+            "tensor": "1",
+            "pole_order": 1,
+            "kz_formula": None,
+        }
+    if key in {"affine_km", "km", "sl_n", "sln", "gl_n", "gln"}:
+        result: Dict[str, Any] = {
+            "family": "affine_km",
+            "collision_formula": f"{k}*Omega_tr/z",
+            "coefficient": k,
+            "tensor": "Omega_tr",
+            "pole_order": 1,
+            "kz_formula": None,
+        }
+        if h_dual is not None:
+            result["kz_formula"] = f"Omega_KZ/(({k}+{h_dual})*z)"
+        return result
+    if key in {"virasoro", "vir"}:
+        c = k
+        return {
+            "family": "virasoro",
+            "collision_formula": f"({c / 2})/z^3 + 2*T/z",
+            "coefficient": c / 2,
+            "tensor": "T",
+            "pole_order": 3,
+            "kz_formula": None,
+        }
+    if key in {"betagamma", "beta_gamma", "bc"}:
+        return {
+            "family": "free_first_order",
+            "collision_formula": "regular",
+            "coefficient": Fraction(0),
+            "tensor": "1",
+            "pole_order": 0,
+            "kz_formula": None,
+        }
+    raise ValueError(f"unknown collision-kernel family: {family}")
 
 
 @lru_cache(maxsize=64)
@@ -247,6 +361,8 @@ class CostelloSetup:
     """Costello's twisted holography setup for a brane system.
 
     Extracted from the published papers [CG18, C17, CP20, CDG20].
+    The bulk_algebra_costello field records the Costello-side object by
+    its source name; it is not automatically the C = Z_ch^der(A) slot.
     """
     brane_system: str
     boundary_algebra_costello: str
@@ -260,16 +376,30 @@ class CostelloSetup:
 
 @dataclass
 class OurSetup:
-    """Our holographic modular Koszul datum H(A) for the same system."""
+    """Scalar record for selected slots of H(A), not a complete package.
+
+    The seven-entry holographic package is
+    (A, A^i, A^!, C, r(z), Theta_A, nabla^hol). This record keeps the
+    boundary A, the Verdier/Koszul companion A^!, and the derived-centre
+    bulk slot C separate; it does not construct A^i or identify
+    Omega(B(A)) with Koszul duality.
+    """
     boundary_algebra: str
-    koszul_dual: str
-    bulk_algebra: str  # Z^der_ch(A)
+    koszul_dual: str  # A^! slot, not A^i, B(A), Omega(B(A)), or C.
+    bulk_algebra: str  # C = Z^der_ch(A), not A^! or the bar coalgebra.
     r_matrix: str
     kappa: Fraction
     kappa_dual: Fraction
     shadow_depth: int  # 2=G, 3=L, 4=C, 1000=M
     genus_scope: str  # "all genera" or specific restrictions
     shadow_class: str  # G, L, C, M
+    holographic_slots: Tuple[str, ...] = field(
+        default_factory=lambda: HOLOGRAPHIC_SLOT_ORDER
+    )
+    projection_scope: str = (
+        "scalar comparison record for selected seven-entry H(A) slots; "
+        "not a construction of the whole holographic package"
+    )
 
 
 @dataclass
@@ -302,12 +432,14 @@ def costello_m2_brane() -> CostelloSetup:
     Boundary: Yangian(gl_N) (the algebra of supersymmetric operators on
     K M2 branes in Omega-background).
 
-    Bulk: U_{hbar,c}(Diff(C) x gl_N) (deformed double current algebra
-    = supersymmetric operators of 11d SUGRA in Omega-background).
+    Costello-side line/bulk symmetry algebra:
+    U_{hbar,c}(Diff(C) x gl_N) (deformed double current algebra =
+    supersymmetric operators of 11d SUGRA in Omega-background).
 
-    Koszul duality: proved to all orders in perturbation theory.
-    The Yangian is Koszul dual to the deformed double current algebra
-    in the sense that there is a bar-cobar quasi-isomorphism between them.
+    Koszul pairing: proved to all orders in perturbation theory in
+    Costello's deformation setting. This comparison records that partner
+    as a Costello-side Koszul object, not as Omega(B(A)) = A inversion and
+    not as the C = Z_ch^der(A) bulk slot.
 
     The "perturbation theory" here is in hbar (Omega deformation) and
     1/N (large-N expansion), NOT in the worldsheet genus.
@@ -315,9 +447,14 @@ def costello_m2_brane() -> CostelloSetup:
     return CostelloSetup(
         brane_system="M2 brane at A_{N-1} singularity",
         boundary_algebra_costello="Yangian(gl_N) (quantum double-loop algebra)",
-        bulk_algebra_costello="U_{hbar,c}(Diff(C) x gl_N) (deformed DCA)",
-        koszul_dual_costello="Yangian(gl_N) Koszul dual to U_{hbar,c}(Diff(C) x gl_N)",
-        r_matrix_costello="Rational R-matrix from Yangian structure",
+        bulk_algebra_costello=(
+            "Costello line/bulk symmetry algebra "
+            "U_{hbar,c}(Diff(C) x gl_N) (deformed DCA)"
+        ),
+        koszul_dual_costello="Costello Koszul partner U_{hbar,c}(Diff(C) x gl_N)",
+        r_matrix_costello=(
+            "Rational Yangian R-matrix with coupling/level prefactor retained"
+        ),
         genus_scope_costello=(
             "All orders in hbar and 1/N (perturbative in bulk coupling). "
             "Genus 0 worldsheet. No higher-genus worldsheet computation."
@@ -350,7 +487,10 @@ def costello_d3_brane() -> CostelloSetup:
             "Affine gl_N at level -psi_0 - 2N "
             "(Feigin-Frenkel involution for sl_N part)"
         ),
-        r_matrix_costello="Rational: Omega/z (Casimir/spectral parameter)",
+        r_matrix_costello=(
+            "Rational kernel: collision convention k*Omega_tr/z; "
+            "KZ convention Omega_KZ/((k+h^v)z)"
+        ),
         genus_scope_costello=(
             "Tree-level Witten diagrams + perturbative loop corrections "
             "in the bulk coupling. Worldsheet genus 0."
@@ -433,16 +573,17 @@ def costello_cdg_boundary() -> CostelloSetup:
 # ===========================================================================
 
 def our_m2_brane(N: int = 1, k: int = 1) -> OurSetup:
-    """Our holographic modular Koszul datum for the M2 brane system.
+    """Selected H(A) slots for the M2 brane system.
 
     Boundary VOA: BRST reduction of V_k(gl_N) x V_{-k}(gl_N) x Sb^{4N^2}.
     At N=1: 4 symplectic boson pairs.
 
     kappa = -(N^2 + 1) from the ABJM computation.
 
-    The Koszul dual is obtained by the Verdier intertwining:
-    D_Ran(B(A)) = B(A!). For the BRST-reduced system, the dual
-    is the S-dual boundary VOA.
+    The A^! slot is obtained by the Verdier/Koszul branch after the
+    bar-dual coalgebra A^i = H^*(B(A)) is formed. The bar-cobar inversion
+    Omega(B(A)) recovers A; it is not this dual slot. For the
+    BRST-reduced system, the companion is modeled by the S-dual boundary VOA.
 
     Shadow depth: 4 for N=1 (betagamma type, class C),
                   infinity for N >= 2 (class M, due to nonabelian interactions).
@@ -452,30 +593,38 @@ def our_m2_brane(N: int = 1, k: int = 1) -> OurSetup:
     # For ABJM: the BRST reduction complicates the Koszul dual.
     # At the level of kappa, the dual modular characteristic satisfies
     # the W-algebra complementarity (Theorem D).
-    kap_dual = -kap  # Free-field approximation; exact for the CS+matter system
+    kap_dual = -kap  # Exact for this scalar CS+matter comparison surface.
     depth = 4 if N == 1 else 1000  # sentinel for infinity
     sclass = "C" if N == 1 else "M"
+    r_plus = collision_kernel_normalization("affine_km", _frac(k), h_dual=N)
+    r_minus = collision_kernel_normalization("affine_km", -_frac(k), h_dual=N)
     return OurSetup(
         boundary_algebra=f"H^0_BRST(V_{k}(gl_{N}) x V_{{-{k}}}(gl_{N}) x Sb^{{4*{N}^2}})",
         koszul_dual=f"S-dual boundary VOA of ABJM(N={N},k={k})",
-        bulk_algebra=f"Z^der_ch(A_ABJM({N},{k})) (chiral derived center)",
-        r_matrix=f"Omega/z for gl_{N} part (Casimir r-matrix after AP19)",
+        bulk_algebra=f"Z^der_ch(A_ABJM({N},{k})) (chiral derived centre)",
+        r_matrix=(
+            f"{r_plus['collision_formula']} and {r_minus['collision_formula']} "
+            f"for the gl_{N} CS sectors before BRST reduction"
+        ),
         kappa=kap,
         kappa_dual=kap_dual,
         shadow_depth=depth,
-        genus_scope="All genera: F_g = kappa * lambda_g^FP on uniform-weight lane",
+        genus_scope=(
+            "Uniform-weight worldsheet genus projection for all g >= 1: "
+            "F_g = kappa * lambda_g^FP"
+        ),
         shadow_class=sclass,
     )
 
 
 def our_d3_brane(N: int = 2, k: int = 1) -> OurSetup:
-    """Our holographic modular Koszul datum for D3 brane (twisted N=4 SYM).
+    """Selected H(A) slots for D3 brane (twisted N=4 SYM).
 
     Boundary: affine gl_N at level k.
     kappa(gl_N, k) = (N^2-1)(k+N)/(2N) + k.
     Shadow depth: 3 (class L, affine KM).
 
-    The Koszul dual of gl_N at level k:
+    The A^! companion of gl_N at level k:
       sl_N part: level -k-2N (Feigin-Frenkel involution).
       u(1) part: level -k (simple negation).
     kappa_dual = kappa(sl_N, -k-2N) + kappa(u(1), -k)
@@ -483,34 +632,41 @@ def our_d3_brane(N: int = 2, k: int = 1) -> OurSetup:
     """
     kap = kappa_affine_glN(N, _frac(k))
     h_v = N
-    # Correct Koszul dual kappa: treat sl_N and u(1) separately
+    # Verdier/Koszul companion kappa: treat sl_N and u(1) separately.
     kap_sl_dual = kappa_affine_slN(N, -_frac(k) - 2 * h_v)
     kap_u1_dual = kappa_heisenberg(-_frac(k))
     kap_dual = kap_sl_dual + kap_u1_dual
     k_sl_dual = -_frac(k) - 2 * h_v
     k_u1_dual = -_frac(k)
+    r_kernel = collision_kernel_normalization("affine_km", _frac(k), h_dual=h_v)
     return OurSetup(
         boundary_algebra=f"V_{k}(gl_{N}) (affine gl_{N} at level {k})",
         koszul_dual=f"sl_{N} at level {k_sl_dual} + u(1) at level {k_u1_dual}",
-        bulk_algebra=f"Z^der_ch(V_{k}(gl_{N})) (chiral derived center)",
-        r_matrix=f"Omega_{{gl_{N}}}/z (Casimir r-matrix, simple pole after AP19)",
+        bulk_algebra=f"Z^der_ch(V_{k}(gl_{N})) (chiral derived centre)",
+        r_matrix=(
+            f"{r_kernel['collision_formula']} for gl_{N} "
+            "(collision convention, simple pole after AP19)"
+        ),
         kappa=kap,
         kappa_dual=kap_dual,
         shadow_depth=3,
-        genus_scope="All genera: F_g = kappa * lambda_g^FP (class L, uniform weight)",
+        genus_scope=(
+            "Uniform-weight worldsheet genus projection for all g >= 1: "
+            "F_g = kappa * lambda_g^FP (class L)"
+        ),
         shadow_class="L",
     )
 
 
 def our_betagamma_boundary(lam: Fraction = Fraction(1, 2)) -> OurSetup:
-    """Our holographic datum for betagamma boundary algebra.
+    """Selected H(A) slots for the betagamma boundary algebra.
 
     This is the simplest M2-brane case (N=1): the boundary VOA is
     a betagamma system (or collection thereof).
 
     At lambda=1/2: symplectic boson. kappa = -1/2.
     Shadow depth: 4 (class C, contact).
-    Koszul dual: bc ghost system at the same weight.
+    A^! companion: bc ghost system at the same weight.
     """
     kap = kappa_betagamma(lam)
     kap_dual = kappa_bc(lam)
@@ -522,13 +678,16 @@ def our_betagamma_boundary(lam: Fraction = Fraction(1, 2)) -> OurSetup:
         kappa=kap,
         kappa_dual=kap_dual,
         shadow_depth=4,
-        genus_scope="All genera: F_g = kappa * lambda_g^FP (class C, uniform weight)",
+        genus_scope=(
+            "Uniform-weight worldsheet genus projection for all g >= 1: "
+            "F_g = kappa * lambda_g^FP (class C)"
+        ),
         shadow_class="C",
     )
 
 
 def our_ads3(N: int = 100) -> OurSetup:
-    """Our holographic datum for AdS_3 x S^3 x T^4.
+    """Selected H(A) slots for AdS_3 x S^3 x T^4.
 
     Boundary: W_{1+infinity} at c = 6N (single-trace of Sym^N(T^4)).
     This is an infinite-type W-algebra: shadow depth = infinity (class M).
@@ -539,19 +698,19 @@ def our_ads3(N: int = 100) -> OurSetup:
     # kappa for W_{1+infinity} at c = 6N: this is a multi-generator
     # W-algebra, so kappa != c/2 in general. At the level of the
     # single-trace sector, the leading kappa is the Heisenberg part.
-    # For the full W_{1+infinity}: kappa is computed from the bar complex.
+    # For W_{1+infinity}: kappa is computed from the bar complex.
     # At large N: kappa ~ 3N (the Heisenberg generators dominate).
     kap = Fraction(3 * N)  # Leading-order approximation
     return OurSetup(
         boundary_algebra=f"W_{{1+infinity}} at c=6N (N={N})",
         koszul_dual=f"W_{{1+infinity}} at dual level (MC4 completion)",
-        bulk_algebra="Z^der_ch(W_{1+infinity}) (chiral derived center)",
+        bulk_algebra="Z^der_ch(W_{1+infinity}) (chiral derived centre)",
         r_matrix="Higher-spin R-matrix from collision residue of Theta_A",
         kappa=kap,
         kappa_dual=-kap,  # Approximate; exact requires MC4 computation
         shadow_depth=1000,  # infinity sentinel
         genus_scope=(
-            "All genera on uniform-weight lane. "
+            "Uniform-weight worldsheet genus projection at the scalar level. "
             "Multi-weight corrections at g >= 2 from thm:multi-weight-genus-expansion."
         ),
         shadow_class="M",
@@ -579,23 +738,22 @@ def compare_m2_brane(N: int = 1, k: int = 1) -> ComparisonResult:
         ),
         koszul_dual_match=True,
         koszul_dual_notes=(
-            "Costello: Koszul dual = U_{hbar,c}(Diff(C) x gl_N). "
-            "Our A! = (H*(B(A)))^v. These are compatible: Costello's bulk "
-            "algebra is a deformation of the enveloping algebra of Diff(C) x gl_N, "
-            "which is the Lie algebra underlying A!. The Koszul duality in "
-            "Costello's sense matches our Verdier intertwining (Theorem A). "
+            "Costello's Koszul partner is U_{hbar,c}(Diff(C) x gl_N). "
+            "Our A^! slot is the Verdier dual of A^i = H*(B(A)), not the "
+            "bar-cobar inverse Omega(B(A)) and not the C-slot bulk. The two "
+            "are compatible at the associated filtered E_1/Lie level; the "
+            "comparison is not an identification of A^! with Z_ch^der(A). "
             f"kappa(A) = {ours.kappa}, kappa(A!) = {ours.kappa_dual}."
         ),
         bulk_comparison="extends",
         bulk_notes=(
-            "Costello's bulk = U_{hbar,c}(Diff(C) x gl_N) is the algebra of "
-            "supersymmetric operators in twisted SUGRA. Our bulk = Z^der_ch(A), "
-            "the chiral derived center (Hochschild cochains). These are DIFFERENT "
-            "objects that should AGREE on protected data. Our bulk is defined "
-            "functorially from A via Hochschild cohomology; Costello's is "
-            "constructed from the bulk geometry. The identification of the two "
-            "is a theorem for boundary-linear theories (thm:boundary-linear-"
-            "bulk-boundary) and conjectural in general."
+            "Costello's DCA is a line/bulk symmetry algebra of supersymmetric "
+            "operators in twisted SUGRA. It is compared to our C-slot only "
+            "after passing to protected bulk observables. Our C slot is "
+            "Z^der_ch(A), the chiral derived centre (Hochschild cochains), "
+            "and is deliberately separate from A^i and A^!. The comparison "
+            "is proved for boundary-linear theories "
+            "(thm:boundary-linear-bulk-boundary) and conjectural in general."
         ),
         r_matrix_match=True,
         r_matrix_notes=(
@@ -610,24 +768,24 @@ def compare_m2_brane(N: int = 1, k: int = 1) -> ComparisonResult:
         genus_notes=(
             "CRITICAL DIFFERENCE: Costello proves Koszul duality to all "
             "orders in hbar and 1/N, but at GENUS 0 on the worldsheet. "
-            "Our shadow obstruction tower Theta_A gives the FULL GENUS "
-            "EXPANSION: F_g = kappa * lambda_g^FP for all g >= 1 "
-            "(on the uniform-weight lane). "
+            "Our shadow obstruction tower Theta_A gives the uniform-weight "
+            "worldsheet genus projection F_g = kappa * lambda_g^FP for all "
+            "g >= 1. "
             f"F_1 = {ours.kappa}/24 = {ours.kappa * _lambda_fp(1)}. "
             f"F_2 = kappa * 7/5760 = {ours.kappa * _lambda_fp(2)}. "
             "This worldsheet genus tower is NOT computed by Costello."
         ),
         our_extension=(
-            "1. Full genus tower F_g for all g >= 1. "
+            "1. Uniform-weight worldsheet genus tower F_g for all g >= 1. "
             "2. Shadow depth classification (class C for N=1, M for N>=2). "
             "3. Quartic contact invariant Q^contact. "
             "4. Shadow connection nabla^hol with Koszul monodromy. "
             "5. Complementarity theorem (Lagrangian splitting at each genus). "
-            "6. Convergence proof (HS-sewing, MC5)."
+            "6. HS-sewing convergence on the stated scalar/projection surface."
         ),
         costello_advantage=(
             "1. Explicit bulk geometry (11d SUGRA in Omega-background). "
-            "2. All-orders proof in hbar and 1/N (perturbative completeness). "
+            "2. All-orders perturbative control in hbar and 1/N. "
             "3. Concrete identification: boundary Yangian = double-loop algebra. "
             "4. Direct construction of bulk algebra from SUGRA field content."
         ),
@@ -649,10 +807,11 @@ def compare_d3_brane(N: int = 2) -> ComparisonResult:
         ),
         koszul_dual_match=True,
         koszul_dual_notes=(
-            f"Our Koszul dual: gl_{N} at level {-_frac(1) - 2*N} "
-            "(Feigin-Frenkel involution). Costello's Koszul dual: "
-            "the B-model on the dual CY3, whose boundary is gl_N at the "
-            "dual level. These agree for the sl_N part by Feigin-Frenkel. "
+            f"Our A^! companion: sl_{N} at level {-_frac(1) - 2*N} "
+            "and u(1) at level -1. Costello's dual-level boundary "
+            "description is compared to this A^! slot; the B-model bulk "
+            "belongs to the separate C-slot comparison. The sl_N part agrees "
+            "by Feigin-Frenkel and the u(1) factor is negated separately. "
             f"kappa(A) = {ours.kappa}, kappa(A!) = {ours.kappa_dual}. "
             f"Sum = {ours.kappa + ours.kappa_dual} "
             "(should be 0 for KM; AP24)."
@@ -660,17 +819,18 @@ def compare_d3_brane(N: int = 2) -> ComparisonResult:
         bulk_comparison="extends",
         bulk_notes=(
             "Costello's bulk: B-model on CY3 (Kodaira-Spencer theory). "
-            "Our bulk: Z^der_ch(gl_N) (chiral Hochschild cochains). "
-            "These are related: the B-model closed-string algebra IS "
-            "the Hochschild cohomology of the open-string algebra "
-            "(the Kontsevich open-closed correspondence). Our framework "
-            "makes this identification precise via the Swiss-cheese theorem."
+            "Our C slot: Z^der_ch(gl_N) (chiral Hochschild cochains). "
+            "The open-closed comparison relates the B-model closed-string "
+            "algebra to Hochschild cohomology of the open-string algebra, "
+            "but this is a C-slot statement, not the A^! companion."
         ),
         r_matrix_match=True,
         r_matrix_notes=(
-            f"Both: r(z) = Omega_{{gl_{N}}}/z (Casimir over spectral "
-            "parameter). AP19 verified: gl_N OPE has double pole, "
-            "d log absorption gives simple pole in r(z)."
+            f"Both use the rational collision kernel r(z) = "
+            f"1*Omega_tr/z for gl_{N} at level 1. AP19 verified: "
+            "the gl_N OPE has double pole and d log absorption gives a "
+            "simple pole in r(z). The KZ-normalized kernel "
+            "Omega_KZ/((k+h^v)z) is a separate convention."
         ),
         genus_comparison="our framework extends",
         genus_notes=(
@@ -682,11 +842,11 @@ def compare_d3_brane(N: int = 2) -> ComparisonResult:
             "Shadow depth = 3 (class L): finite shadow complexity."
         ),
         our_extension=(
-            "1. Full worldsheet genus tower F_g for all g >= 1. "
+            "1. Uniform-weight worldsheet genus tower F_g for all g >= 1. "
             "2. Shadow depth = 3 (class L): cubic shadow + gauge triviality. "
             "3. Complementarity: Lagrangian splitting at every genus. "
             "4. Anomaly matching: kappa + kappa' = 0 verified. "
-            "5. HS-sewing convergence proof."
+            "5. HS-sewing convergence on the stated scalar/projection surface."
         ),
         costello_advantage=(
             "1. Explicit CY3 geometry and B-model description. "
@@ -708,23 +868,25 @@ def compare_ads3() -> ComparisonResult:
         boundary_notes=(
             "Both identify boundary = single-trace algebra of Sym^N(T^4), "
             "which is W_{1+infinity} at c=6N. Costello-Paquette work in the "
-            "N -> infinity (planar) limit. Our framework works at finite N "
-            "with the full shadow obstruction tower."
+            "N -> infinity (planar) limit. Our comparison records finite-N "
+            "scalar shadow projections when the W_{1+infinity} input is fixed."
         ),
         koszul_dual_match=False,
         koszul_dual_notes=(
             "Costello-Paquette identify the symmetry algebra in the planar "
-            "limit but do not explicitly compute the Koszul dual as a chiral "
-            "algebra. Our framework computes A! via the bar construction, "
-            "but W_{1+infinity} at finite N requires the MC4 completion "
-            "programme (strong completion tower theorem)."
+            "limit but do not explicitly compute the A^! companion as a "
+            "chiral algebra. Our comparison can record an A^! slot only after "
+            "the bar-dual coalgebra A^i and the completed Verdier branch are "
+            "controlled; W_{1+infinity} at finite N requires the MC4 "
+            "completion programme."
         ),
         bulk_comparison="extends",
         bulk_notes=(
-            "Costello-Paquette: bulk = Kodaira-Spencer gravity on AdS_3. "
-            "Our framework: bulk = Z^der_ch(W_{1+infinity}). The "
-            "identification of KS gravity with the chiral derived center "
-            "is conjectural but structurally supported by CDG20."
+            "Costello-Paquette bulk presentation: Kodaira-Spencer gravity on AdS_3. "
+            "Our C slot is Z^der_ch(W_{1+infinity}), the chiral derived "
+            "centre. The identification of KS gravity with this C slot is "
+            "conjectural but structurally supported by CDG20; it is not an "
+            "A^! computation."
         ),
         r_matrix_match=True,
         r_matrix_notes=(
@@ -738,11 +900,12 @@ def compare_ads3() -> ComparisonResult:
             "(genus 0 worldsheet). Our framework provides: "
             f"F_1 = {ours.kappa}/24 = {ours.kappa * _lambda_fp(1)} "
             "(at leading order in N). "
-            "The full genus tower is controlled by the shadow obstruction tower. "
+            "The uniform-weight genus projection is controlled by the shadow "
+            "obstruction tower. "
             "Multi-weight corrections at g >= 2 from thm:multi-weight-genus-expansion."
         ),
         our_extension=(
-            "1. Full worldsheet genus tower beyond the planar limit. "
+            "1. Uniform-weight worldsheet genus projection beyond the planar limit. "
             "2. Shadow depth = infinity (class M): infinite shadow complexity. "
             "3. Finite-N effects from the shadow obstruction tower. "
             "4. Airy connection limit and N^{3/2} scaling. "
@@ -873,19 +1036,37 @@ def costello_vs_our_scope_summary() -> Dict[str, Any]:
         },
         "our_scope": {
             "boundary_identification": "Via gravitational input hypotheses",
-            "bulk_identification": "Z^der_ch(A) (chiral derived center)",
-            "koszul_duality": "Proved (Theorems A, B): bar-cobar + Verdier",
+            "bulk_identification": "C = Z_ch^der(A) (chiral derived centre)",
+            "koszul_duality": (
+                "bar-cobar inversion Omega(B(A)) ~= A plus separate "
+                "Verdier/Koszul A^! branch"
+            ),
             "r_matrix": "Res^{coll}_{0,2}(Theta_A) (collision residue of MC)",
             "genus_0_amplitudes": "Sh_{0,n}(Theta_A) (shadow amplitudes)",
             "loop_corrections": "NOT directly (we compute worldsheet, not bulk loops)",
-            "worldsheet_genus_tower": "F_g = kappa * lambda_g^FP (all g, uniform wt)",
+            "worldsheet_genus_tower": (
+                "F_g = kappa * lambda_g^FP for all g >= 1 on the uniform-weight lane"
+            ),
             "shadow_obstruction_tower": "Theta_A = varprojlim Theta_A^{<=r} (PROVED)",
-            "complementarity_theorem": "Q_g(A) + Q_g(A!) = H*(M_g, Z(A)) (PROVED)",
+            "complementarity_theorem": (
+                "Q_g(A) + Q_g(A!) equals the stated C-slot projection (PROVED)"
+            ),
             "convergence_proof": "HS-sewing (MC5, PROVED for standard landscape)",
             "shadow_depth_classification": "G/L/C/M (PROVED for all standard families)",
         },
+        "package_scope": {
+            "holographic_package": "(A, A^i, A^!, C, r(z), Theta_A, nabla^hol)",
+            "compute_surface": (
+                "scalar comparison record for selected H(A) slots; not a "
+                "construction of the whole holographic package"
+            ),
+            "separation_rule": (
+                "B(A), A^i, A^!, and C = Z_ch^der(A) are distinct; "
+                "Omega(B(A)) recovers A by inversion"
+            ),
+        },
         "genuine_extensions_of_ours": [
-            "Worldsheet genus tower at all genera (Costello does not compute this)",
+            "Uniform-weight worldsheet genus tower for all g >= 1",
             "Shadow obstruction tower (no analogue in Costello's programme)",
             "Complementarity theorem (Lagrangian splitting at each genus)",
             "HS-sewing convergence proof",
@@ -895,7 +1076,7 @@ def costello_vs_our_scope_summary() -> Dict[str, Any]:
             "Algebraic entanglement from Koszul complementarity",
         ],
         "genuine_advantages_of_costello": [
-            "Explicit bulk SUGRA geometry (we have only algebraic bulk)",
+            "Explicit bulk SUGRA geometry (we record the algebraic C slot)",
             "String-theoretic derivation from branes",
             "All-orders perturbative proof for M2 (in hbar, 1/N)",
             "Celestial holography connection [CP22]",
@@ -906,28 +1087,31 @@ def costello_vs_our_scope_summary() -> Dict[str, Any]:
             "Costello's programme and ours are COMPLEMENTARY, not competing. "
             "Costello provides the physical/geometric grounding (which brane "
             "system, which SUGRA, which boundary condition). We provide the "
-            "algebraic engine (bar-cobar, shadow tower, genus expansion, "
-            "convergence). The natural synthesis: use Costello's identification "
+            "algebraic projection engine (bar-cobar inversion, Verdier A^!, "
+            "derived-centre C, shadow tower, genus projection, convergence). "
+            "The natural synthesis: use Costello's identification "
             "of boundary VOA, then apply our Theta_A machinery to compute "
-            "the full genus expansion that Costello's programme does not address."
+            "the uniform-weight worldsheet genus projection that Costello's "
+            "programme does not address."
         ),
     }
 
 
 # ===========================================================================
-# 7. Verification: Costello's Koszul dual = our A! ?
+# 7. Verification: Costello's Koszul partner vs our A^! slot
 # ===========================================================================
 
 def verify_koszul_dual_m2(N: int = 2) -> Dict[str, Any]:
-    """Verify that Costello's Koszul dual matches our A! for M2 brane.
+    """Compare Costello's Koszul partner with our A^! slot for M2 brane.
 
-    Costello [C17]: boundary = Yangian(gl_N), Koszul dual = U_{hbar}(Diff(C) x gl_N).
-    Our: boundary VOA A, Koszul dual A! = (H*(B(A)))^v.
+    Costello [C17]: boundary = Yangian(gl_N), Koszul partner =
+    U_{hbar}(Diff(C) x gl_N).
+    Our: boundary VOA A, bar-dual coalgebra A^i = H*(B(A)), and Verdier
+    companion A^! = (A^i)^v in the finite-type/completed lane.
 
-    The comparison: Costello's Koszul dual is the ENVELOPING ALGEBRA of the
-    Lie algebra underlying A!. Our A! is a chiral algebra (vertex algebra level).
-    The Yangian Y(gl_N) is the ordered (E_1) Koszul dual; the enveloping algebra
-    is the full (E_infinity) version.
+    The comparison is made at modular-characteristic and associated filtered
+    E_1/Lie data. It does not identify A^! with C = Z_ch^der(A), and it does
+    not use Omega(B(A)) = A as the duality statement.
 
     At the level of modular characteristics:
     kappa(boundary) + kappa(Koszul dual) should vanish for free-field type.
@@ -941,12 +1125,13 @@ def verify_koszul_dual_m2(N: int = 2) -> Dict[str, Any]:
         "sum": kap_boundary + kap_dual,
         "complementarity_holds": (kap_boundary + kap_dual == 0),
         "costello_koszul_dual": f"U_{{hbar}}(Diff(C) x gl_{N})",
-        "our_koszul_dual": f"(H*(B(A_ABJM({N},1))))^v",
+        "our_koszul_dual": f"A^! = (A^i)^v, A^i = H*(B(A_ABJM({N},1)))",
         "agreement_level": (
-            "The two Koszul duals agree at the level of modular characteristics "
-            "and leading OPE data. The precise identification requires matching "
-            "the filtered/completed bar-cobar resolution with Costello's "
-            "perturbative Koszul duality."
+            "The Costello partner and the A^! slot are compatible at the level "
+            "of modular characteristics and leading OPE data. A strict "
+            "identification requires matching the filtered/completed Verdier "
+            "branch with Costello's perturbative Koszul construction; it is "
+            "not a statement about C = Z_ch^der(A)."
         ),
     }
 
@@ -958,8 +1143,8 @@ def verify_koszul_dual_d3(N: int = 2) -> Dict[str, Any]:
     Koszul dual: sl_N part at level -k-2N (Feigin-Frenkel),
                  u(1) part at level -k (negation).
 
-    Our A! = (H*(B(gl_N, k)))^v. For affine KM at non-critical level,
-    the sl_N part goes to level -k-2h^v, the u(1) part goes to level -k.
+    Our bar-dual coalgebra is A^i = H*(B(gl_N, k)); the Verdier companion
+    A^! = (A^i)^v has sl_N part at level -k-2h^v and u(1) part at level -k.
 
     kappa_dual = kappa(sl_N, -k-2N) + kappa(u(1), -k)
                = -kappa(sl_N, k) + (-k) = -kappa(gl_N, k).
@@ -984,22 +1169,23 @@ def verify_koszul_dual_d3(N: int = 2) -> Dict[str, Any]:
         "complementarity_holds": (kap + kap_dual == 0),
         "exact_match": True,
         "reason": (
-            f"Our A! = sl_{N} at level {-k - 2*h_v} + u(1) at level {-k}. "
-            f"Costello's Koszul dual = gl_{N} at dual level. EXACT AGREEMENT. "
+            f"Our A^! slot = sl_{N} at level {-k - 2*h_v} + u(1) at level {-k}. "
+            f"Costello's dual-level boundary partner matches this scalar data. "
             f"kappa + kappa' = {kap + kap_dual} = 0 (AP24 verified)."
         ),
     }
 
 
 def verify_betagamma_koszul_dual() -> Dict[str, Any]:
-    """Verify Koszul dual for betagamma (simplest M2-brane boundary).
+    """Verify the A^! companion for betagamma (simplest M2-brane boundary).
 
     betagamma^! = bc ghost system (statistics exchange).
     kappa(bg) + kappa(bc) = 0.
 
     In Costello's framework: the betagamma system on the boundary is
-    Koszul dual to the bc system on the defect. This matches our
-    Theorem A (Verdier intertwining).
+    paired with the bc system on the defect. In this engine that is the
+    A^! slot obtained through the Verdier branch, not the bar-cobar
+    inversion Omega(B(bg)) = bg and not the derived-centre C slot.
     """
     lam = Fraction(1, 2)
     kap_bg = kappa_betagamma(lam)
@@ -1016,7 +1202,8 @@ def verify_betagamma_koszul_dual() -> Dict[str, Any]:
         ),
         "our_identification": (
             "bg^! = bc by Theorem thm:betagamma-fermion-koszul. "
-            "Verdier intertwining D_Ran(B(bg)) = B(bc)."
+            "Here A^! is the Verdier companion of A^i = H*(B(bg)); "
+            "Omega(B(bg)) recovers bg."
         ),
         "exact_match": True,
     }
@@ -1037,8 +1224,8 @@ def theta_comparison_m2(N: int = 1, k: int = 1) -> Dict[str, Any]:
 
     Costello computes perturbative corrections in hbar and 1/N.
     These correspond to corrections to the R-matrix at higher orders,
-    which in our framework are encoded in the full MC element
-    (beyond the collision residue projection).
+    which in our framework are encoded in higher projections of the
+    universal MC element (beyond the collision residue projection).
     """
     kap = kappa_abjm(N, k)
     F_tower = {g: kap * _lambda_fp(g) for g in range(1, 6)}
@@ -1067,11 +1254,12 @@ def theta_comparison_d3(N: int = 2) -> Dict[str, Any]:
     """Compare our Theta_A with Costello's for D3 brane."""
     kap = kappa_affine_glN(N, Fraction(1))
     F_tower = {g: kap * _lambda_fp(g) for g in range(1, 6)}
+    r_kernel = collision_kernel_normalization("affine_km", Fraction(1), h_dual=N)
     return {
         "brane": f"D3 (gl_{N}, k=1)",
         "our_theta": "Theta_A = D_A - d_0 in MC(g^mod_A)",
         "projections": {
-            "(0,2)": f"r(z) = Omega_{{gl_{N}}}/z, matches Costello",
+            "(0,2)": f"r(z) = {r_kernel['collision_formula']}, matches Costello",
             "(0,3)": "CYBE, matches Costello (tree-level 3pt)",
             "(1,0)": f"F_1 = {F_tower[1]} (worldsheet genus 1)",
             "(2,0)": f"F_2 = {F_tower[2]} (worldsheet genus 2)",

@@ -1,6 +1,6 @@
 r"""Tests for class L generating function analysis.
 
-70 tests covering:
+Targeted tests covering:
 
 SECTION 1 — G_pf numerical evaluation (5 tests)
   1. G_pf at xi=0.1 for SU(2): exact rational value
@@ -23,7 +23,7 @@ SECTION 3 — S_3 factorization (3 tests)
 SECTION 4 — S_3 degree analysis (3 tests)
   13. Max S_3 degree at genus g is 2(g-1) (bound saturation)
   14. Leading S_3 coefficients: c_2=5/24, c_3=15/64, c_4=425/576
-  15. Leading coefficients are NOT geometric (c3/c2 != c4/c3)
+  15. Leading coefficients fail geometricity (c3/c2 != c4/c3)
 
 SECTION 5 — S_3 derivative at S_3=0 (3 tests)
   16. dG_pf/dS_3|_{S_3=0} at genus 2: L_2 = -kappa/48
@@ -33,7 +33,7 @@ SECTION 5 — S_3 derivative at S_3=0 (3 tests)
 SECTION 6 — Pade approximant (4 tests)
   19. Pade [1/1] matches series to O(xi^8) at small xi
   20. Pade pole location for SU(2): exact value
-  21. Pade is NOT constructible at S_3=0 (class G)
+  21. Pade is undefined at S_3=0 (class G)
   22. Pade pole moves with N (not universal)
 
 SECTION 7 — S_3*kappa invariant (3 tests)
@@ -42,7 +42,7 @@ SECTION 7 — S_3*kappa invariant (3 tests)
   25. S_3*kappa = 2N/3 at k=3 for N=2..5
 
 SECTION 8 — Cross-family consistency (3 tests)
-  26. G_pf/G_scalar ratio is NOT constant across N (non-universality)
+  26. G_pf/G_scalar ratio varies across N (non-universality)
   27. Full G agrees with genus-by-genus sum for SU(3)
   28. Additivity of scalar part: kappa1 + kappa2 (from parent engine)
 
@@ -114,6 +114,15 @@ from compute.lib.theorem_class_l_generating_function_engine import (
     virasoro_S3,
     compare_S3_virasoro_vs_km,
     S3_at_virasoro_subalgebra,
+    class_l_generating_function_certification,
+    genus3_class_l_source_audit,
+    genus4_class_l_cross_source_audit,
+    S3_linear_degree_profile,
+    large_N_pf_scaling_certification,
+    HOLOGRAPHIC_PACKAGE_ENTRIES,
+    MODULAR_KOSZUL_COMPUTE_PACKAGE_PROJECTIONS,
+    KERNEL_CONSTANTS,
+    OBJECT_FIREWALLS,
 )
 
 from compute.lib.theorem_class_l_closed_form_engine import (
@@ -129,7 +138,7 @@ from compute.lib.theorem_class_l_closed_form_engine import (
 
 
 # ============================================================================
-# Ground truth (independently recomputed, NOT copied from engine)
+# Ground truth (independently recomputed from the closed form)
 # ============================================================================
 
 # SU(2) at k=0:
@@ -296,7 +305,7 @@ class TestS3DegreeAnalysis:
         assert leading[4] == Fraction(425, 576)
 
     def test_leading_not_geometric(self):
-        """The sequence {c_g} is NOT geometric: c_3/c_2 != c_4/c_3."""
+        """The sequence {c_g} fails geometricity: c_3/c_2 != c_4/c_3."""
         leading = leading_S3_coefficients()
         r32 = leading[3] / leading[2]
         r43 = leading[4] / leading[3]
@@ -339,6 +348,15 @@ class TestS3Derivative:
         # the b=1 terms all have a >= 1)
         val = dGpf_dS3_at_zero(Fraction(0), Fraction(1))
         assert val == Fraction(0)
+
+    def test_linear_degree_profile_flags_genus3_exception(self):
+        """The exact g=3 linear term has kappa-degree 3, not g-1."""
+        profile = S3_linear_degree_profile()
+        assert profile[2]['matches_g_minus_1'] is True
+        assert profile[3]['max_kappa_degree'] == 3
+        assert profile[3]['degree_g_minus_1'] == 2
+        assert profile[3]['matches_g_minus_1'] is False
+        assert profile[4]['matches_g_minus_1'] is True
 
 
 # ============================================================================
@@ -432,10 +450,10 @@ class TestCrossFamilyConsistency:
     """Cross-family and additivity checks."""
 
     def test_pf_scalar_ratio_not_constant(self):
-        """G_pf/G_scalar is NOT constant across N (no simple proportionality)."""
+        """G_pf/G_scalar varies across N (no simple proportionality)."""
         ratios = pf_to_scalar_ratio_table(N_values=[2, 3, 4, 5], xi_values=[1.0])
         r_values = [ratios[N][1.0] for N in [2, 3, 4, 5]]
-        # These should NOT all be equal
+        # These vary with N.
         assert max(r_values) - min(r_values) > 0.1, (
             "G_pf/G_scalar ratios are too close (unexpected universality)"
         )
@@ -462,7 +480,7 @@ class TestCrossFamilyConsistency:
 # ============================================================================
 
 class TestClosedFormObstruction:
-    """Evidence that G_pf has no finite closed form."""
+    """Finite-window evidence about the absence of a scalar-analog formula."""
 
     def test_term_count_grows(self):
         """Number of monomials: 2, 5, 11 (not stabilizing)."""
@@ -484,7 +502,8 @@ class TestClosedFormObstruction:
         """Pade poles are family-dependent (non-universality)."""
         evidence = closed_form_obstruction_evidence()
         assert evidence['pade_poles_universal'] is False
-        assert evidence['conclusion'] == 'NO_CLOSED_FORM'
+        assert evidence['conclusion'] == 'FINITE_WINDOW_OBSTRUCTION_EVIDENCE'
+        assert evidence['certifies_nonexistence'] is False
 
 
 # ============================================================================
@@ -520,6 +539,23 @@ class TestLargeNScaling:
                 f"SU({N}): dpf2/N = {ratio}, expected -1/72 = {-1/72:.8f}"
             )
 
+    def test_S3_asymptotic_is_four_over_three_N(self):
+        """At k=0, S_3 = 4N/[3(N^2-1)], so N*S_3 -> 4/3."""
+        for N in [20, 50, 100]:
+            s3 = S3_slN(N)
+            assert s3 == Fraction(4 * N, 3 * (N * N - 1))
+            assert abs(float(N * s3) - 4.0 / 3.0) < 0.01
+
+    def test_certified_pf_leading_powers(self):
+        """Certified large-N powers are g=2: N, g=3: N^5, g=4: N^6."""
+        scaling = large_N_pf_scaling_certification()
+        assert scaling[2]['leading_N_power'] == 1
+        assert scaling[2]['leading_coefficient'] == Fraction(-1, 72)
+        assert scaling[3]['leading_N_power'] == 5
+        assert scaling[3]['leading_coefficient'] == Fraction(-1, 497664)
+        assert scaling[4]['leading_N_power'] == 6
+        assert scaling[4]['leading_coefficient'] == Fraction(1, 15925248)
+
 
 # ============================================================================
 # SECTION 11: Complementarity and decomposition
@@ -551,7 +587,68 @@ class TestComplementarityDecomposition:
 
 
 # ============================================================================
-# SECTION 12: Arity shadow generating function G_L(t)
+# SECTION 12: Certification and source-scope firewalls
+# ============================================================================
+
+class TestCertificationFirewalls:
+    """Tests that prevent finite scalar shadows from becoming full theorems."""
+
+    def test_certification_scope_is_finite_for_pf(self):
+        """Scalar GF is all-genus; planted-forest closed-form nonexistence is not certified."""
+        cert = class_l_generating_function_certification()
+        assert cert['scalar_closed_form_all_genus'] is True
+        assert cert['planted_forest_exact_genera'] == (2, 3, 4)
+        assert cert['planted_forest_closed_form_theorem_certified'] is False
+        assert cert['negative_nonexistence_theorem_certified'] is False
+        assert cert['finite_pade_decides_all_genus'] is False
+        assert cert['noncritical_affine_lane_required'] is True
+
+    def test_firewall_package_entries_are_exact(self):
+        """Holographic and modular-Koszul package slots are not interchangeable."""
+        assert HOLOGRAPHIC_PACKAGE_ENTRIES == (
+            "A", "A^i", "A^!", "C", "r(z)", "Theta_A", "nabla^hol"
+        )
+        assert MODULAR_KOSZUL_COMPUTE_PACKAGE_PROJECTIONS == (
+            "Fact_X(L)", "barB_X(L)", "Theta_L", "L_L", "(V_br,T_br)", "R4_mod(L)"
+        )
+        assert "bar-cobar inversion" in OBJECT_FIREWALLS["Omega(B(A))"]
+        assert "Hochschild" in OBJECT_FIREWALLS["Z_ch^der(A)"]
+        assert "Verdier" in OBJECT_FIREWALLS["A^!"]
+
+    def test_kernel_constants_do_not_conflate_raw_and_kz(self):
+        """Affine raw trace-form and KZ kernels have distinct normalizations."""
+        assert KERNEL_CONSTANTS["affine_raw_trace"] == "r^KM(z) = k*Omega_tr/z"
+        assert KERNEL_CONSTANTS["affine_KZ"] == "r^KZ(z) = Omega/((k+h^vee)z)"
+        assert KERNEL_CONSTANTS["heisenberg"] == "r^Heis(z) = k/z"
+        assert KERNEL_CONSTANTS["virasoro"] == "r^Vir(z) = (c/2)/z^3 + 2T/z"
+
+    def test_genus3_exact_class_L_overrides_generic_approximation(self):
+        """The exact class-L genus-3 table differs from the generic manuscript approximation."""
+        audit = genus3_class_l_source_audit()
+        assert audit['exact_class_L_preferred'] is True
+        assert audit['matches'] is False
+        assert audit['mismatches'][(0, 4)]['exact_class_L'] == Fraction(15, 64)
+        assert audit['mismatches'][(0, 4)]['generic_manuscript'] == Fraction(-5, 128)
+
+    def test_genus4_cross_source_canonical_convention(self):
+        """The owned surface uses the canonical bridge-sign genus-4 coefficient."""
+        audit = genus4_class_l_cross_source_audit()
+        assert audit['available'] is True
+        assert audit['certification'] == 'CANONICAL_CONSISTENT'
+        assert audit['checks'][(0, 6)]['match'] is True
+        assert audit['checks'][(4, 2)]['local'] == Fraction(1, 1769472)
+        assert audit['checks'][(4, 2)]['comparison'] == Fraction(1, 1769472)
+        assert audit['checks'][(4, 2)]['match'] is True
+        assert audit['rejected_alternate_sign_value'] == Fraction(5, 15925248)
+
+    def test_S3_generic_excludes_critical_kappa_zero_lane(self):
+        """The generic affine S_3 normalization is not defined at k=-h^vee."""
+        with pytest.raises(ValueError):
+            S3_generic('A', 1, Fraction(-2))
+
+
+# ============================================================================
+# SECTION 13: Arity shadow generating function G_L(t)
 # ============================================================================
 
 class TestArityShadowGF:
@@ -765,11 +862,16 @@ class TestShadowConnection:
         assert ql == 4 * SU2_KAPPA ** 2
         assert ql == Fraction(9)
 
-    def test_connection_residue_half(self):
-        """Shadow connection has residue 1/2 at the pole (Koszul monodromy = -1)."""
+    def test_class_L_connection_has_trivial_branch_monodromy(self):
+        """Class L has a double zero of Q_L, not simple-zero monodromy."""
         data = shadow_connection_residue_class_L(SU2_KAPPA, SU2_S3)
-        assert data['residue'] == Fraction(1, 2)
-        assert data['monodromy'] == -1
+        assert data['zero_multiplicity_Q_L'] == 2
+        assert data['is_branch_point'] is False
+        assert data['raw_log_residue'] == Fraction(1)
+        assert data['connection_residue'] == Fraction(-1)
+        assert data['branch_residue'] is None
+        assert data['monodromy'] == 1
+        assert data['connection_gauge_trivial'] is True
 
     def test_connection_pole_location_su2(self):
         """Pole at t_0 = -2*kappa/(3*S_3) for SU(2)."""
@@ -782,9 +884,10 @@ class TestShadowConnection:
         data = shadow_connection_residue_class_L(Fraction(5), Fraction(0))
         assert data['class'] == 'G'
         assert data['connection_trivial'] is True
+        assert data['connection_gauge_trivial'] is True
 
     def test_discriminant_nonzero_for_virasoro(self):
-        """Virasoro has Delta != 0 (class M, NOT class L)."""
+        """Virasoro has Delta != 0, placing it in class M rather than class L."""
         # Virasoro at c=1: kappa = 1/2, S_4 = 10/(1*27) = 10/27
         c_val = Fraction(1)
         kap_vir = c_val / 2

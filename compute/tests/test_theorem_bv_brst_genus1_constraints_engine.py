@@ -26,6 +26,8 @@ from fractions import Fraction
 from compute.lib.theorem_bv_brst_genus1_constraints_engine import (
     BVOneLoopResult,
     ChiralAlgebraData,
+    ChiralObjectRole,
+    ComparisonAmbient,
     CurvatureIdentityResult,
     EpistemicStatus,
     EpistemicStatusReport,
@@ -36,6 +38,7 @@ from compute.lib.theorem_bv_brst_genus1_constraints_engine import (
     affine_sl2,
     affine_sl3,
     betagamma,
+    bv_bar_scope_witness,
     bv_one_loop_determinant,
     complementarity_genus1_check,
     cross_family_additivity_check,
@@ -57,7 +60,11 @@ from compute.lib.theorem_bv_brst_genus1_constraints_engine import (
     lambda_fp_exact,
     lambda_fp_sympy,
     numerical_genus1_comparison,
+    object_role_witness,
+    ordinary_chain_bv_bar_status,
+    quillen_arakelov_genus1_witness,
     virasoro,
+    virasoro_shadow_constants,
 )
 
 
@@ -161,6 +168,29 @@ class TestBVOneLoop:
         for alg in [heisenberg(1), affine_sl2(1), virasoro(Fraction(26))]:
             result = bv_one_loop_determinant(alg)
             assert result.zeta_prime_dbar == Fraction(-1, 24)
+            assert result.determinant_witness.determinant_matches_lambda1 is True
+
+
+class TestQuillenArakelovWitness:
+    """Quillen/Arakelov determinant normalization is explicit."""
+
+    def test_quillen_arakelov_constants(self):
+        """lambda_1^FP, eta q-power, and zeta regularization agree."""
+        witness = quillen_arakelov_genus1_witness()
+        assert witness.lambda1_fp == Fraction(1, 24)
+        assert witness.eta_q_power == Fraction(1, 24)
+        assert witness.zeta_minus_one == Fraction(-1, 12)
+        assert witness.complex_half_density == Fraction(1, 2)
+        assert witness.zeta_prime_dbar == Fraction(-1, 24)
+        assert -witness.zeta_prime_dbar == witness.lambda1_fp
+        assert witness.determinant_matches_lambda1 is True
+
+    def test_missing_quillen_or_arakelov_blocks_scalar_claim(self):
+        """The determinant witness records missing metric hypotheses."""
+        no_quillen = quillen_arakelov_genus1_witness(quillen_metric=False)
+        no_arakelov = quillen_arakelov_genus1_witness(arakelov_normalized=False)
+        assert no_quillen.determinant_matches_lambda1 is False
+        assert no_arakelov.determinant_matches_lambda1 is False
 
 
 # =====================================================================
@@ -249,6 +279,128 @@ class TestGenus1Comparison:
             assert result.curvature_coefficient == alg.kappa
 
 
+class TestScopeAndObjectWitnesses:
+    """Anti-promotion and object-role checks."""
+
+    def test_genus1_scalar_scope_requires_quillen_arakelov(self):
+        """Scalar genus-1 equality is invalid without determinant hypotheses."""
+        missing_quillen = bv_bar_scope_witness(
+            heisenberg(1),
+            1,
+            ComparisonAmbient.SCALAR_HODGE,
+            quillen_metric=False,
+        )
+        missing_arakelov = bv_bar_scope_witness(
+            heisenberg(1),
+            1,
+            ComparisonAmbient.SCALAR_HODGE,
+            arakelov_normalized=False,
+        )
+        assert missing_quillen.valid is False
+        assert missing_quillen.status == EpistemicStatus.CONDITIONAL
+        assert 'Quillen' in missing_quillen.failures[0]
+        assert missing_arakelov.valid is False
+        assert 'Arakelov' in missing_arakelov.failures[0]
+
+    def test_multi_weight_g2_scalar_promotion_refuted(self):
+        """beta-gamma is genus-1 scalar-valid but not scalar all-genus."""
+        g1 = bv_bar_scope_witness(betagamma(), 1, ComparisonAmbient.SCALAR_HODGE)
+        g2 = bv_bar_scope_witness(betagamma(), 2, ComparisonAmbient.SCALAR_HODGE)
+        assert g1.valid is True
+        assert g1.scalar_free_energy == Fraction(1, 24)
+        assert g2.valid is False
+        assert g2.status == EpistemicStatus.REFUTED
+        assert g2.cross_channel_required is True
+        assert 'cross' in g2.failures[0]
+
+    def test_uniform_weight_g2_scalar_scope_survives(self):
+        """Virasoro is uniform-weight for scalar Hodge free energies."""
+        result = bv_bar_scope_witness(
+            virasoro(Fraction(26)),
+            2,
+            ComparisonAmbient.SCALAR_HODGE,
+        )
+        assert result.valid is True
+        assert result.status == EpistemicStatus.PROVED
+        assert result.scalar_free_energy == Fraction(13) * Fraction(7, 5760)
+
+    def test_class_m_ordinary_chain_refuted_but_coderived_needs_completion(self):
+        """Class M is not repaired by genus-1 scalar matching at chain level."""
+        ordinary = bv_bar_scope_witness(
+            virasoro(Fraction(26)),
+            2,
+            ComparisonAmbient.ORDINARY_CHAIN,
+        )
+        coderived_missing = bv_bar_scope_witness(
+            virasoro(Fraction(26)),
+            2,
+            ComparisonAmbient.CODERIVED,
+        )
+        coderived = bv_bar_scope_witness(
+            virasoro(Fraction(26)),
+            2,
+            ComparisonAmbient.CODERIVED,
+            coderived_completion=True,
+        )
+        assert ordinary.valid is False
+        assert ordinary.status == EpistemicStatus.REFUTED
+        assert 'class M' in ordinary.failures[0]
+        assert coderived_missing.valid is False
+        assert 'coderived' in coderived_missing.failures[0]
+        assert coderived.valid is True
+        assert coderived.status == EpistemicStatus.PROVED
+
+    def test_ordinary_chain_status_by_shadow_class(self):
+        """G/L proved, C conditional, M refuted in ordinary chains."""
+        assert ordinary_chain_bv_bar_status(heisenberg(1)) == EpistemicStatus.PROVED
+        assert ordinary_chain_bv_bar_status(affine_sl2(1)) == EpistemicStatus.PROVED
+        assert ordinary_chain_bv_bar_status(betagamma()) == EpistemicStatus.CONDITIONAL
+        assert ordinary_chain_bv_bar_status(virasoro(Fraction(1))) == EpistemicStatus.REFUTED
+
+    def test_object_role_valid_morphisms(self):
+        """Valid functorial steps keep A, B(A), A^i, A^!, and Z separate."""
+        inversion = object_role_witness(
+            'bar_cobar_inversion',
+            ChiralObjectRole.BAR_COALGEBRA,
+            ChiralObjectRole.ALGEBRA_A,
+        )
+        cohomology = object_role_witness(
+            'bar_cohomology',
+            ChiralObjectRole.BAR_COALGEBRA,
+            ChiralObjectRole.KOSZUL_DUAL_COALGEBRA,
+        )
+        verdier = object_role_witness(
+            'verdier_koszul_duality',
+            ChiralObjectRole.KOSZUL_DUAL_COALGEBRA,
+            ChiralObjectRole.KOSZUL_DUAL_ALGEBRA,
+        )
+        center = object_role_witness(
+            'derived_center',
+            ChiralObjectRole.ALGEBRA_A,
+            ChiralObjectRole.DERIVED_CENTER,
+        )
+        assert inversion.valid is True
+        assert cohomology.valid is True
+        assert verdier.valid is True
+        assert center.valid is True
+
+    def test_object_role_conflations_rejected(self):
+        """B(A) is neither A^! directly nor the derived center."""
+        bar_to_dual = object_role_witness(
+            'verdier_koszul_duality',
+            ChiralObjectRole.BAR_COALGEBRA,
+            ChiralObjectRole.KOSZUL_DUAL_ALGEBRA,
+        )
+        bar_bulk = object_role_witness(
+            'bar_equals_bulk',
+            ChiralObjectRole.BAR_COALGEBRA,
+            ChiralObjectRole.DERIVED_CENTER,
+        )
+        assert bar_to_dual.valid is False
+        assert bar_bulk.valid is False
+        assert 'different functorial outputs' in bar_bulk.reason
+
+
 # =====================================================================
 # Section E: Genus-1 curvature identity
 # =====================================================================
@@ -294,53 +446,48 @@ class TestGenus2Constraint:
     def test_virasoro_delta_pf(self):
         """Virasoro at general c: delta_pf = S_3*(10*S_3 - kappa)/48.
 
-        For Virasoro: S_3 = -2/c, kappa = c/2.
-        delta_pf = (-2/c) * (10*(-2/c) - c/2) / 48
-                 = (-2/c) * (-20/c - c/2) / 48
-                 = (-2/c) * (-(40 + c^2)/(2c)) / 48
-                 = (40 + c^2) / (c^2 * 48)
-                 Wait, let me recompute:
-        delta_pf = (-2/c) * (10*(-2/c) - c/2) / 48
-                 = (-2/c) * (-20/c - c/2) / 48
-        Let me compute numerically for c = 1:
-          S_3 = -2, kappa = 1/2
-          delta_pf = (-2) * (10*(-2) - 1/2) / 48 = (-2)*(-41/2)/48 = 41/48
+        For Virasoro: S_3 = 2, kappa = c/2.
+        At c = 1:
+          delta_pf = 2 * (20 - 1/2) / 48 = 39/48 = 13/16.
         """
         c = Fraction(1)
-        S3 = Fraction(-2)  # S_3 = -2/c = -2 for c=1
+        S3 = Fraction(2)
         kappa = c / 2
         result = genus2_planted_forest_constraint(virasoro(c), S3)
         expected_delta = S3 * (10 * S3 - kappa) / Fraction(48)
         assert result.delta_pf == expected_delta
-        assert result.delta_pf == Fraction(-2) * (Fraction(-20) - Fraction(1, 2)) / Fraction(48)
-        assert result.delta_pf == Fraction(-2) * Fraction(-41, 2) / Fraction(48)
-        assert result.delta_pf == Fraction(41, 48)
+        assert result.delta_pf == Fraction(2) * (Fraction(20) - Fraction(1, 2)) / Fraction(48)
+        assert result.delta_pf == Fraction(2) * Fraction(39, 2) / Fraction(48)
+        assert result.delta_pf == Fraction(13, 16)
 
     def test_virasoro_c26_delta_pf(self):
-        """Virasoro at c=26: S_3 = -2/26 = -1/13, kappa = 13."""
-        S3 = Fraction(-1, 13)
+        """Virasoro at c=26: S_3 = 2, kappa = 13."""
+        S3 = Fraction(2)
         result = genus2_planted_forest_constraint(virasoro(Fraction(26)), S3)
-        # delta_pf = (-1/13) * (10*(-1/13) - 13) / 48
-        #          = (-1/13) * (-10/13 - 13) / 48
-        #          = (-1/13) * (-10/13 - 169/13) / 48
-        #          = (-1/13) * (-179/13) / 48
-        #          = 179 / (13*13*48)
-        #          = 179 / 8112
-        expected = Fraction(179, 8112)
+        # delta_pf = 2 * (20 - 13) / 48 = 14/48 = 7/24.
+        expected = Fraction(7, 24)
         assert result.delta_pf == expected
+
+    def test_virasoro_wrong_S3_rejected(self):
+        """The old S_3 = -2/c convention is rejected for Virasoro."""
+        with pytest.raises(ValueError, match='canonical S_3'):
+            genus2_planted_forest_constraint(virasoro(Fraction(26)), Fraction(-1, 13))
 
     def test_lambda2_fp_value(self):
         """lambda_2^FP = 7/5760 in the genus-2 constraint."""
         result = genus2_planted_forest_constraint(heisenberg(1), Fraction(0))
         assert result.lambda2_fp == Fraction(7, 5760)
 
-    def test_genus2_status_conjectural(self):
-        """Genus-2 BV = bar is CONJECTURAL for all families."""
+    def test_genus2_status_by_shadow_class(self):
+        """Genus-2 ordinary-chain status follows the shadow-class scope."""
         for alg, s3 in [(heisenberg(1), Fraction(0)),
                         (affine_sl2(1), Fraction(1, 3)),
-                        (virasoro(Fraction(26)), Fraction(-1, 13))]:
+                        (virasoro(Fraction(26)), Fraction(2))]:
             result = genus2_planted_forest_constraint(alg, s3)
-            assert result.bv_genus2_status == EpistemicStatus.CONJECTURAL
+            assert result.bv_genus2_status == ordinary_chain_bv_bar_status(alg)
+        assert genus2_planted_forest_constraint(
+            virasoro(Fraction(26)), Fraction(2)
+        ).bv_genus2_status == EpistemicStatus.REFUTED
 
 
 # =====================================================================
@@ -460,10 +607,18 @@ class TestKZ25Constraints:
         assert c.match is True
 
     def test_genus2_planted_forest_constraint(self):
-        """Genus 2: CONJECTURAL for all families."""
+        """Genus 2: Heisenberg is proved in ordinary chains."""
         c = kz25_genus2_constraint(heisenberg(1), Fraction(0))
         assert c.genus == 2
-        assert c.status == EpistemicStatus.CONJECTURAL
+        assert c.status == EpistemicStatus.PROVED
+        assert c.match is True
+
+    def test_genus2_planted_forest_class_m_refuted(self):
+        """Genus 2: Virasoro ordinary-chain equality is refuted."""
+        c = kz25_genus2_constraint(virasoro(Fraction(26)), Fraction(2))
+        assert c.genus == 2
+        assert c.status == EpistemicStatus.REFUTED
+        assert c.match is False
 
 
 # =====================================================================
@@ -488,21 +643,29 @@ class TestEpistemicStatus:
 
     def test_virasoro_conditional(self):
         """Virasoro BV = bar at genus 1 is CONDITIONAL."""
-        report = full_epistemic_report(virasoro(Fraction(26)), Fraction(-1, 13))
+        report = full_epistemic_report(virasoro(Fraction(26)), Fraction(2))
         assert report.genus1_chain_level_status == EpistemicStatus.CONDITIONAL
         assert report.genus1_scalar_match is True
 
-    def test_genus2_always_conjectural(self):
-        """Genus 2 is CONJECTURAL for all families."""
+    def test_genus2_scope_status(self):
+        """Genus 2 status is not a universal conjectural bucket."""
         for alg, s3 in [(heisenberg(1), Fraction(0)),
-                        (virasoro(Fraction(26)), Fraction(-1, 13))]:
+                        (affine_sl2(1), Fraction(1, 3))]:
             report = full_epistemic_report(alg, s3)
-            assert report.genus2_scalar_status == EpistemicStatus.CONJECTURAL
+            assert report.genus2_scalar_status == EpistemicStatus.PROVED
+        vir_report = full_epistemic_report(virasoro(Fraction(26)), Fraction(2))
+        assert vir_report.genus2_scalar_status == EpistemicStatus.REFUTED
 
     def test_kz25_constraints_count(self):
-        """All 4 KZ25 constraints should be satisfied (at scalar level)."""
+        """Heisenberg satisfies all 4 KZ25 constraints in this scope."""
         report = full_epistemic_report(heisenberg(1))
         assert report.kz25_constraints_satisfied == 4
+        assert report.kz25_constraints_total == 4
+
+    def test_kz25_constraints_count_class_m(self):
+        """Virasoro fails the ordinary-chain genus-2 KZ25 constraint."""
+        report = full_epistemic_report(virasoro(Fraction(26)), Fraction(2))
+        assert report.kz25_constraints_satisfied == 3
         assert report.kz25_constraints_total == 4
 
     def test_summary_contains_algebra_name(self):
@@ -569,6 +732,18 @@ class TestAlgebraData:
         for c in [1, 2, 26, 13]:
             alg = virasoro(Fraction(c))
             assert alg.kappa == Fraction(c, 2)
+
+    def test_virasoro_shadow_constants(self):
+        """Virasoro shadow constants use S_3 = 2 and S_4 = 10/[c(5c+22)]."""
+        constants = virasoro_shadow_constants(Fraction(26))
+        alg = virasoro(Fraction(26))
+        assert constants['S2'] == Fraction(13)
+        assert constants['S3'] == Fraction(2)
+        assert constants['S4'] == Fraction(5, 1976)
+        assert constants['S5'] == Fraction(-3, 6422)
+        assert constants['Delta'] == Fraction(10, 38)
+        assert alg.shadow_S3 == constants['S3']
+        assert alg.shadow_S4 == constants['S4']
 
     def test_sl2_kappa_formula(self):
         """kappa(sl_2, k) = 3(k+2)/4."""

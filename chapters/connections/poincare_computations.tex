@@ -3,108 +3,258 @@
 
 \index{Poincare duality!explicit computations}
 
-Non-abelian Poincar\'e duality converts the global statement of
-Theorem~A, an adjunction between factorization homology and
-cohomology on Ran$(X)$, into a Verdier duality computation on
-individual strata, where the integral reduces to iterated residues
-against explicit propagators. Given any Koszul pair $(\cA, \cA^!)$, the NAP recipe
-produces the bar complex differentials, the cobar coproducts, and
-the genus corrections from a single configuration-space integral.
+\begin{remark}[Type signature; NAP as a level-$2$/$5$ statement]
+\label{rem:nap-type-signature}
+\index{type signature!NAP chapter}
+The non-abelian Poincar\'e (NAP) chapter operates on the Open quadrant
+in two strata. The bar/twisting calculation
+$\barB^{\mathrm{ch}}_X(\cA)$ and its Verdier dual
+$\cA^!_\infty$ are level-$2$ statements (bar coalgebra and post-Verdier
+homotopy dual algebra). The genus-graded NAP scalar shadow
+$\kappa(\cA)\lambda_g$ on $\overline{\cM}_g$ is a level-$5$ scalar
+shadow, obtained by trace + clutching on the open factorization
+category. The hypothesis package on every theorem in this chapter is:
+\emph{finite type on the Koszul locus, or separated completed
+continuous-dual replacement}; comparison maps from CY/Hall/Mukai data
+\textup{(}Vol~III\textup{)} are not used as inputs and never identify
+$\cA^!_\infty$ with a CY-side bulk. Modular invariance of any
+genus-$g$ partition function specialization derived from NAP is a
+level-$5$ trace+clutching statement; the closed shadow has modular
+consequences but modularity is not an intrinsic closed-algebra
+property. On the \emph{KSDual} sublocus
+($\Z/2$-fixed under $\cA\mapsto\cA^!$) the Verdier-Koszul reflection
+becomes an equivalence, and the genus complementarity of
+Theorem~\ref{thm:genus-complementarity} reads as a Lagrangian
+splitting rather than a comparison-with-comparison-map.
+Cross-volume specializations enter at
+$\Phi_d^{(\Sigma_{d-1}, C)}=\mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1},C}\circ
+\Phi_d^{\mathrm{FA}}$ (Stage~$1$ at level~$1$, Stage~$2$ at level~$2$);
+the K3-specific $C=E_\tau$ shadow appears in the Mukai-grading remark
+of \S\ref{rem:nap-no-cy-hall-shortcut}.
+\end{remark}
 
-Three worked examples cover the standard families and serve as independent
-verification: the free fermion (where the simple pole yields a
-non-degenerate bar differential), the $bc$-$\beta\gamma$ system
-(where statistics exchange implements Koszul duality), and affine
-Kac--Moody algebras (where the Feigin--Frenkel level shift
-$k \mapsto -k - 2h^\vee$ emerges from the Verdier pairing). In
-each case, the NAP computation reproduces the bar-cobar output of
-earlier chapters by an independent route, confirming both the
-general theorem and the specific invariants.
+Non-abelian Poincar\'e duality enters this monograph only on the
+Verdier-dualizable surface of Theorem~\ref{thm:main-NAP-resolution}:
+finite type on the Koszul locus, or the separated completed
+continuous-dual replacement. On this surface the chiral bar coalgebra
+$\barB_X^{\mathrm{ch}}(\cA)$ is the factorization homology object,
+and its Verdier dual
+\[
+\cA^!_\infty := \mathbb{D}_{\Ran}\barB_X^{\mathrm{ch}}(\cA)
+\]
+is the post-Verdier homotopy dual algebra. If the transferred
+structure is formal and dualizable, the strict Koszul-dual algebra is
+$\cA^!=(\cA^i)^\vee$, where
+$\cA^i=H^\bullet\barB_X^{\mathrm{ch}}(\cA)$ is the Koszul-dual
+coalgebra. The cobar counit
+$\Omegach_X\barB_X^{\mathrm{ch}}(\cA)\simeq\cA$ is bar-cobar
+inversion, not the definition of~$\cA^!$.
 
-More precisely, the NAP theorem (Theorem~\ref{thm:main-NAP-resolution}) identifies $\int_X \mathcal{A}$ with the Verdier dual of $\int_{-X} \mathcal{A}^!$. The bar construction is factorization homology; the cobar construction is factorization cohomology via the Verdier pairing. The standard Koszul pairs now exhibit how curvature $m_0$, level shift $k \mapsto -k-2h^\vee$, and genus corrections emerge from the NAP machinery.
+The computation is local on configuration strata. The logarithmic
+forms on $\overline{C}_n(X)$ carry the collision residues; Verdier
+duality turns the bar coproduct into the product of
+$\cA^!_\infty$, with the usual dimension shift and orientation line.
+Thus the same residue calculation detects the bar differential,
+the post-Verdier curvature, and the scalar genus obstruction, but it
+does so only after the finite-type or completed hypotheses have been
+installed.
+
+The examples isolate five mechanisms: the Heisenberg double pole,
+where the bar-side curvature $+k$ becomes the post-Verdier curvature
+$-k$; the free-fermion and $bc$-$\beta\gamma$ quadratic pairs, where
+Koszul duality exchanges exterior and symmetric generators; the
+affine family, where Verdier duality negates the shifted level
+$k+h^\vee$; and the Virasoro family, where completion and the
+Feigin--Frenkel involution produce the scalar shadow
+$c\mapsto 26-c$.
 
 \section{Worked examples: standard Koszul pairs}
-\noindent\emph{Status split.} Core NAP computations in this section are
-\ClaimStatusProvedHere. One bridge statement (critical-level
-Kac--Moody to Yangian) is recorded
-explicitly as \ClaimStatusConjectured.
+\noindent
+The NAP computations in this section are proved on the finite-type or
+completed surfaces stated above. The critical-level affine-to-Yangian
+bridge is isolated as Conjecture~\ref{conj:critical-affine-yangian}
+and is not used as input.
+
+\begin{remark}[The bar object is not a Hochschild complex]
+\label{rem:nap-hochschild-separation}
+The NAP complex in this chapter is the chiral bar coalgebra and its
+Verdier dual. It is not
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
+=\ChirHoch^\bullet(\cA,\cA)$, the curve-level chiral Hochschild
+bulk of Theorem~H; it is not topological Hochschild homology of an
+$E_n$-algebra; and it is not the categorical Hochschild complex of a
+dg or Calabi--Yau category. Comparison maps may be constructed on
+formal-disk or Stage--2 specialisation surfaces
+(Chapter~\ref{chap:three-hochschild-unification}), but no equality
+between these Hochschild theories is used here.
+\end{remark}
+
+\begin{remark}[No transitive proof through CY or Hall data]
+\label{rem:nap-no-cy-hall-shortcut}
+K3 Mukai pairings, Borcherds--Kac--Moody denominator weights, and
+Hall--Drinfeld doubles live in their own categorical or Hall-algebra
+ambients. They enter a curve-level NAP computation only through an
+explicit comparison map
+\[
+D^b\mathrm{Coh}(Y)
+\longrightarrow
+\mathrm{Fact}^{\mathrm{hol}}(Y)
+\longrightarrow
+\mathrm{Fact}^{\mathrm{ch}}(X)
+\longrightarrow
+\barB_X^{\mathrm{ch}}(\cA)
+\]
+together with the induced Verdier pairing on configuration strata.
+Absent that map, such data neither prove a Vol~I NAP claim nor
+identify $\cA^i$, $\cA^!$, or
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$.
+\end{remark}
 
 \subsection{Heisenberg algebra}
 
 \begin{example}[Heisenberg via NAP]\label{ex:heisenberg-NAP}
-The Heisenberg algebra $\mathcal{H}_k$ with OPE $J(z)J(w) = k/(z-w)^2$ has vanishing bracket differential $d_{\mathrm{bracket}} = 0$ (no simple pole) but nonzero curvature differential $d_{\mathrm{curvature}} = k$ (see~\S\ref{sec:frame-bar-all}), collision residue $r^{\mathrm{coll}}(z) = k/z$, and Koszul dual $\mathcal{H}_k^! = \mathrm{Sym}^{ch}(V^*)$ (Theorem~\ref{thm:heisenberg-not-self-dual}). From the NAP perspective, the level $k$ central extension becomes the curvature $m_0 = k\omega_X$ in the curved $A_\infty$ structure on the dual:
-\[\int_X \mathcal{H}_k \simeq \mathbb{D}\left(\int_{-X} \mathrm{Sym}^{ch}(V^*)\right) \quad \text{with curvature } m_0 = k\omega_X\]
+The Heisenberg algebra $\mathcal{H}_k$ with OPE
+$J(z)J(w)=k/(z-w)^2$ has no simple-pole bracket, so
+$d_{\mathrm{bracket}}=0$. The double pole gives the bar-side
+curvature class $m_0^{\mathrm{bar}}=k\,\omega_{\mathrm{cen}}$
+\textup{(}see~\S\ref{sec:frame-bar-all}\textup{)} and collision
+residue $r^{\mathrm{coll}}(z)=k/z$. The displayed strict dual is the
+finite-rank current-space calculation; the oscillator Fock realization
+uses the same conformal-weight completion and continuous dual
+convention as the other free-field examples. Verdier duality reverses
+the curvature sign, hence
+\[
+\mathcal{H}_k^!
+\simeq
+\bigl(\mathrm{Sym}^{\mathrm{ch}}(V^*),\,m_0^!=-k\,\omega_{\mathrm{cen}}\bigr)
+\]
+by Theorem~\ref{thm:heisenberg-not-self-dual}, and NAP gives
+\[
+\int_X \mathcal{H}_k
+\simeq
+\mathbb{D}\!\left(
+\int_{-X}\bigl(\mathrm{Sym}^{\mathrm{ch}}(V^*),
+m_0^!=-k\,\omega_{\mathrm{cen}}\bigr)\right).
+\]
 \end{example}
 
 \begin{remark}[Heisenberg Koszul duality]\label{rem:heisenberg-koszul}
-The duality $\mathcal{H}_k^! = \mathrm{Sym}^{ch}(V^*)$ is \emph{not} level-rank duality $SU(N)_k \leftrightarrow SU(k)_N$, which exchanges different algebras. It is operadic: $\mathrm{chirLie}^! = \mathrm{chirCom}$, realized at the factorization algebra level by Verdier duality on configuration spaces.
+The duality $\mathcal{H}_k^! = \mathrm{Sym}^{\mathrm{ch}}(V^*)$ is \emph{not} level-rank duality $SU(N)_k \leftrightarrow SU(k)_N$, which exchanges different algebras. It is operadic: $\mathrm{chirLie}^! = \mathrm{chirCom}$, realized at the factorization algebra level by Verdier duality on configuration spaces.
 \end{remark}
 
 \subsection{Free fermions: correct Koszul pair}
 
 \begin{example}[Free fermions via NAP]\label{ex:fermions-NAP}
-The free fermion chiral algebra $\mathcal{F}$ has:
-
-The generators are $\psi(z), \psi^*(z)$ with conformal weight $h = 1/2$, and the OPE is:
+The free fermion chiral algebra $\mathcal{F}$ has generators
+$\psi(z), \psi^*(z)$ of conformal weight $h=1/2$ and OPE
 \[\psi(z) \psi^*(w) = \frac{1}{z-w} + \text{regular}\]
 \[\psi(z) \psi(w) = 0, \quad \psi^*(z) \psi^*(w) = 0\]
 
-\emph{Step~1: Identify underlying classical Koszul pair.}
+On the finite quadratic surface, or in the conformal-weight
+completion of the Fock factorization algebra, the odd generator space
+is
+\[
+V=\operatorname{span}\{\psi,\psi^*\}.
+\]
+As a graded algebra $\mathcal{F}\cong\Lambda(V)$, and classical
+Koszul duality gives
+\[
+\Lambda(V)^! = \mathrm{Sym}(V^*).
+\]
 
-As a graded algebra:
-\[\mathcal{F} \cong \text{Exterior algebra } \Lambda(V)\]
-
-where $V = \text{span}\{\psi, \psi^*\}$.
-
-Classical Koszul theory gives:
-\[\Lambda(V)^! = \text{Sym}(V^*)\]
-
-\emph{Step~2: Chiral enhancement via configuration spaces.}
-
-The bar construction computes:
-\[\bar{B}^{\text{ch}}(\mathcal{F}) = \sum_{n \geq 0} \int_{\overline{C}_{n+1}(X)} \mathcal{F}^{\boxtimes(n+1)} \otimes \Omega^*_{\log}\]
-
-The fermionic OPE $\psi \psi^* \sim (z-w)^{-1}$ gives residues:
-\[\text{Res}_{D_{ij}}(\psi_i \otimes \psi^*_j \otimes \eta_{ij}) = 1\]
-
-These assemble into the coproduct of the bar construction $\bar{B}^{\mathrm{ch}}(\mathcal{F})$:
+The chiral bar construction is represented on configuration strata by
+\[
+\bar{B}^{\mathrm{ch}}(\mathcal{F})
+=
+\bigoplus_{n \geq 0}
+\int_{\overline{C}_{n+1}(X)}
+\mathcal{F}^{\boxtimes(n+1)}\otimes\Omega^*_{\log}.
+\]
+The fermionic OPE $\psi \psi^* \sim (z-w)^{-1}$ gives the normalized
+residue
+\[
+\operatorname{Res}_{D_{ij}}
+(\psi_i \otimes \psi^*_j \otimes \eta_{ij})=1.
+\]
+The corresponding length-two coproduct is
 \[\Delta(\psi^*) = 0, \quad \Delta(\psi) = 0 \quad \text{(primitives)}\]
 \[\Delta(\psi \psi^*) = \psi \otimes \psi^* - \psi^* \otimes \psi\]
-(the minus sign arises from the Koszul rule for transposing two odd elements). After desuspension $s^{-1}$, the generators become even and the coproduct acquires the symmetric (positive) sign, yielding the coalgebra structure of $\mathrm{Sym}^c(V^*)$
-
-\emph{Step~3: Verdier duality verification.}
-
-The NAP identity:
-\[\int_X \mathcal{F} \xleftrightarrow{\mathbb{D}} \int_{-X} \beta\gamma\]
-
-where $\beta\gamma$ is the boson system (which has $\text{Sym}$ structure).
-
-Hence $\mathcal{F}^! \simeq \beta\gamma$.
-
-This is the chiral Koszul duality $\Lambda(V)^! \simeq \mathrm{Sym}(V^*)$ lifted to the vertex algebra setting. Note: this is \emph{not} the boson-fermion correspondence (bosonization), which is an \emph{isomorphism} $\mathcal{F} \cong V_{\mathbb{Z}}$ via lattice VOA extension, not a duality.
+because the two generators are odd. After desuspension $s^{-1}$, the
+cogenerators are even and the sign becomes the symmetric coalgebra
+sign, giving $\mathrm{Sym}^c(V^*)$. Verdier duality identifies
+\[
+\int_X \mathcal{F}
+\simeq
+\mathbb{D}\!\left(\int_{-X}\beta\gamma\right),
+\qquad
+\mathcal{F}^! \simeq \beta\gamma .
+\]
+The algebra identification is Theorem~\ref{thm:fermion-boson-koszul}.
+This is chiral Koszul duality
+$\Lambda(V)^! \simeq \mathrm{Sym}(V^*)$ lifted to the vertex algebra
+setting. The boson-fermion correspondence is a separate lattice-VOA
+isomorphism $\mathcal{F} \cong V_{\mathbb{Z}}$, not this Koszul
+duality.
 \end{example}
 
-\subsection{Affine Kac--Moody at critical level}
+\subsection{Affine Kac--Moody levels}
 
 \begin{example}[Affine Lie algebras via NAP]\label{ex:kac-moody-NAP}
-For a simple Lie algebra $\mathfrak{g}$, the affine Kac--Moody algebra at level $k$ is:
-\[\widehat{\mathfrak{g}}_k = (\mathfrak{g} \otimes \mathbb{C}[t, t^{-1}]) \oplus \mathbb{C} K\]
+Let $\mathfrak{g}$ be simple with invariant form $(\, ,\,)$ and
+dual Coxeter number $h^\vee$. The affine algebra
+\[
+\widehat{\mathfrak{g}}_k
+=
+(\mathfrak{g}\otimes\mathbb{C}[t,t^{-1}])\oplus\mathbb{C}K
+\]
+has OPE
+\[
+J^a(z)J^b(w)
+\sim
+\frac{k(a,b)}{(z-w)^2}
++\frac{[a,b](w)}{z-w}.
+\]
+On the generic completed finite-weight surface, the double pole gives
+$r^{\mathrm{KM}}(z)=k\Omega/z$, while Verdier duality negates the
+shifted curvature
+\[
+m_0(k)=\frac{k+h^\vee}{2h^\vee}\Omega .
+\]
+Thus the Koszul partner is
+\[
+\mathbb{D}_{\Ran}\barB^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k)
+\simeq
+\widehat{\mathfrak{g}}_{k'},
+\qquad
+k'=-k-2h^\vee
+\]
+as in \eqref{eq:level-shifting-part1}; consequently
+$\kappa(\widehat{\mathfrak g}_k)+
+\kappa(\widehat{\mathfrak g}_{k'})=0$, while the ordinary central
+charges satisfy
+$c(\widehat{\mathfrak g}_k)+c(\widehat{\mathfrak g}_{k'})
+=2\dim\mathfrak g$
+\textup{(}Theorem~\ref{thm:central-charge-complementarity}\textup{)}.
 
-with central extension determined by $k$.
-
-\emph{At critical level $k = -h^\vee$.}
-
-The center becomes infinite-dimensional:
-\[\mathcal{Z}(\widehat{\mathfrak{g}}_{-h^\vee}) \cong \text{Fun}(\text{Op}_{{}^L\fg}(D^\times))\]
-(the algebra of functions on the space of ${}^L\fg$-opers on the punctured disk, by the Feigin--Frenkel theorem; these map to the Hitchin base but carry additional structure)
-
-\emph{NAP duality (orientation reversal).}
-\[\int_X \widehat{\mathfrak{g}}_{-h^\vee} \simeq \mathbb{D}\left(\int_{-X} \widehat{\mathfrak{g}}_{-h^{\vee}}\right)\]
-
-This is pure NAP duality: Verdier duality on the factorization algebra associated to the \emph{same} chiral algebra on the orientation-reversed curve. The Langlands dual $\mathfrak{g}^\vee$ enters separately, through the Feigin--Frenkel theorem:
-
-\emph{The geometric Langlands connection.}
-The Feigin--Frenkel theorem identifies $\mathcal{Z}(\widehat{\mathfrak{g}}_{-h^\vee})$ with ${}^L\mathfrak{g}$-opers, providing a bridge to the Langlands dual; $\widehat{\mathfrak{g}}_{-h^\vee}$ describes D-modules on $\text{Bun}_G(X)$; and the geometric Langlands correspondence (conjecturally) relates D-modules on $\text{Bun}_G(X)$ to those on $\text{Bun}_{G^\vee}(X)$, a different phenomenon from NAP duality.
+At the critical level $k=-h^\vee$ the shifted curvature vanishes, the
+level is fixed by $k\mapsto k'$, and the center becomes
+infinite-dimensional:
+\[
+\mathcal{Z}(\widehat{\mathfrak{g}}_{-h^\vee})
+\cong
+\operatorname{Fun}(\operatorname{Op}_{{}^L\fg}(D^\times))
+\]
+by the Feigin--Frenkel theorem. The NAP statement available here is
+the orientation-reversal statement on the completed center-aware
+surface:
+\[
+\int_X \widehat{\mathfrak{g}}_{-h^\vee}
+\simeq
+\mathbb{D}\!\left(\int_{-X}\widehat{\mathfrak{g}}_{-h^\vee}\right)
+\]
+for the same chiral algebra. The Langlands dual appears in the
+description of the center by opers; it is not produced by the NAP
+duality functor.
 
 \begin{conjecture}[Critical-level affine \texorpdfstring{$\to$}{to} Yangian bridge;
 \ClaimStatusConjectured]\label{conj:critical-affine-yangian}
@@ -114,10 +264,10 @@ Following Costello's 4d Chern--Simons framework, one expects
 \]
 \end{conjecture}
 
-\begin{remark}[Scope]
+\begin{remark}[Critical bridge is not an input]
 Conjecture~\ref{conj:critical-affine-yangian} is not used as input in
-this chapter. It records a possible bridge from the proved NAP
-computations to the geometric Langlands / quantum-group interface.
+this chapter. It records the missing comparison map from the completed
+critical affine factorization algebra to the quantum-group interface.
 \end{remark}
 \end{example}
 
@@ -127,40 +277,62 @@ computations to the geometric Langlands / quantum-group interface.
 The Virasoro algebra has generator $T(z)$ with OPE:
 \[T(z) T(w) = \frac{c/2}{(z-w)^4} + \frac{2T(w)}{(z-w)^2} + \frac{\partial T(w)}{z-w} + \text{reg}\]
 
-\emph{Problem.} This is highly non-quadratic; completion is required.
+The raw direct-sum bar complex is not the finite-type
+pro-conilpotent surface: the OPE and harmonic corrections produce
+infinite mode sums. The conformal-weight completed bar complex and
+continuous Verdier dual are therefore part of the statement
+\textup{(}Example~\ref{ex:virasoro-koszul-dual}\textup{)}.
 
-\emph{Step~1: Classical limit.}
+The local collision kernel lowers OPE pole order by one. Hence
+\[
+r^{\mathrm{Vir}}_c(u)
+=
+\frac{c/2}{u^3}+\frac{2T}{u}
+\]
+\textup{(}Computation~\ref{comp:virasoro-rmatrix}\textup{)}, and the
+scalar channel is the cubic-pole coefficient:
+\[
+\kappa(\mathrm{Vir}_c)=\frac{c}{2}.
+\]
+Equivalently, the Virasoro cocycle is
+\[
+\omega(L_m,L_n)=\frac{1}{12}m(m^2-1)\delta_{m+n,0}.
+\]
+The completed Koszul dual is curved, with scalar curvature
+$m_0=(c/2)\omega_{\mathrm{Vir}}$.
 
-Set $c = 0$ (classical Virasoro):
-\[\mathcal{V}_0 = \text{Lie}(\text{Vect}(S^1)) \quad \text{(vector fields on circle)}\]
+At genus $g$ the completed bar construction is
+\[
+\bar{B}^{(g)}(\mathcal{V}_c)
+=
+\prod_{n \geq 0}
+R\Gamma\!\left(
+\overline{C}_n(\Sigma_g),
+\mathcal{V}_c^{\boxtimes n}\otimes\Omega^*_{\log}
+\right),
+\]
+with direct sum only in finite bar-length truncations.
 
-Classical Koszul duality for Lie algebras:
-\[U(\mathcal{V}_0)^! \simeq CE^*(\mathcal{V}_0) \quad \text{(Chevalley--Eilenberg)}\]
-
-\emph{Step~2: Quantum deformation at $c \neq 0$.}
-
-The central charge $c$ enters as curvature of the bar complex:
-\[\kappa(\text{Vir}_c) = \frac{c}{2}\]
-
-where the Virasoro modular characteristic is the genus-independent curvature parameter
-\textup{(}Theorem~\ref{thm:genus-universality}\textup{)}, arising from the Virasoro
-2-cocycle $\omega(L_m, L_n) = \frac{1}{12}m(m^2-1)\delta_{m+n,0}$.
-
-The Koszul dual becomes a \emph{curved} algebra:
-\[m_0 = \kappa(\mathrm{Vir}_c) \cdot \omega_{\text{Vir}} \neq 0\]
-
-\emph{Step~3: NAP interpretation.}
-
-At genus $g$, the bar construction gives:
-\[\bar{B}^{(g)}(\mathcal{V}_c) = \bigoplus_{n \geq 0}\, \Gamma\!\left(\overline{C}_n(\Sigma_g),\, \mathcal{V}_c^{\boxtimes n} \otimes \Omega^*_{\log}\right)\]
-
-The modular characteristic $\kappa(\mathrm{Vir}_c) = c/2$ couples to the Chern class of the Hodge bundle:
-\[(c/2) \cdot \lambda_1 \in H^2(\overline{\mathcal{M}}_g)\]
-
-This is the \emph{geometric origin of central charge} from the NAP perspective.
+The modular characteristic $\kappa(\mathrm{Vir}_c)=c/2$ couples to
+the Hodge class on the uniform-weight scalar-diagonal lane of
+Theorem~\ref{thm:genus-universality}:
+\[
+\mathrm{obs}_g(\mathrm{Vir}_c)
+=
+(c/2)\,\lambda_g
+\in H^{2g}(\overline{\mathcal{M}}_g),
+\]
+and at genus~$1$ this reads $(c/2)\lambda_1$. Since Virasoro has one
+strong generator, the cross-channel correction term of
+Theorem~\ref{thm:genus-universality} vanishes for this family.
 
 \begin{proposition}[Virasoro NAP duality at \texorpdfstring{$c=26$}{c=26};
 \ClaimStatusConditional]\label{prop:virasoro-c26-selfdual}
+\textbf{Type signature.} (Open quadrant; Verdier-Koszul reflection at
+level~$2$; conformal-weight completed ambient required for
+Theorem~\ref{thm:main-NAP-resolution}; $c=26$ is on the closed-shadow
+modular consequence locus, not a self-dual KSDual locus.)
+
 At $c = 26$, the Koszul dual is $\mathrm{Vir}_{26}^! \simeq \mathrm{Vir}_0$
 (the uncurved algebra), so NAP gives
 \[
@@ -178,64 +350,100 @@ is $c = 13$.
 By Example~\ref{ex:virasoro-koszul-dual},
 $\mathrm{Vir}_c^! \simeq \mathrm{Vir}_{26-c}$. Setting $c = 26$
 gives $\mathrm{Vir}_{26}^! \simeq \mathrm{Vir}_0$.
-NAP (Theorem~\ref{thm:main-NAP-resolution}) then gives the stated duality.
+The completed Verdier-dualizable form of
+Theorem~\ref{thm:main-NAP-resolution} then gives the stated duality.
 \end{proof}
 
-\begin{remark}[Scope]
-The self-dual point $c = 13$ corresponds to the unique central charge
-at which $\mathrm{Vir}_c^! \simeq \mathrm{Vir}_c$. Whether the
-factorization homology at $c = 13$ carries additional structure
-(e.g., a non-degenerate self-pairing) is an open question.
+\begin{remark}[Self-dual central charge as a KSDual locus]
+\label{rem:c13-ksdual-poincare}
+\index{KSDual sublocus!Virasoro $c=13$}
+The self-dual point $c = 13$ is the \emph{KSDual} ($\Z/2$-fixed) locus
+for the Virasoro family under $\cA \mapsto \cA^!$: it is the unique
+central charge at which $\mathrm{Vir}_c^! \simeq \mathrm{Vir}_c$. On
+this sublocus the Verdier-Koszul reflection at level~$2$ is an
+equivalence rather than an adjunction with comparison map, and the
+modular shadow on $\overline{\cM}_{1,n}$ \textup{(}level~$5$\textup{)}
+carries the signature self-dual phase. Modular invariance of the
+genus-$1$ trace on the open factorization category is recovered by
+the trace + clutching package; on the KSDual sublocus the recovery
+strengthens to an intrinsic $\Z/2$-equivariance, but it remains a
+level-$5$ consequence of the open category, not an intrinsic
+closed-algebra modularity claim. Whether the factorization homology
+at $c = 13$ carries additional structure \textup{(}for example, a
+non-degenerate self-pairing compatible with the completed Verdier
+form\textup{)} is not proved here.
 \end{remark}
 \end{example}
 
-\section{\texorpdfstring{Computing $\mathcal{A}^!$ via non-abelian Poincar\'e duality}{Computing the Koszul dual via NAP}}
+\section{\texorpdfstring{Constructing $\mathcal{A}^!$ via non-abelian Poincar\'e duality}{Constructing the Koszul dual via NAP}}
 
-\subsection{Procedure}
+\subsection{Residue construction}
 \label{alg:NAP-koszul}
 
-Given a chiral algebra $\mathcal{A}$ on $X$ with generators $\{a_i\}$ and OPE
+Given a chiral algebra $\mathcal{A}$ on $X$ satisfying the finite-type
+Koszul hypotheses, or a separated completed replacement satisfying
+continuous dualizability, let $\{a_i\}$ be homogeneous generators and
+write the singular part of the OPE as
 \[
 a_i(z) a_j(w) = \sum_{k,m}\frac{C^k_{ij,m}}{(z-w)^m}a_k(w) + \text{descendants},
 \]
-the Koszul dual chiral coalgebra $\mathcal{A}^!$ is constructed as follows.
+the cohomological Koszul-dual chiral coalgebra $\mathcal{A}^i$
+is constructed first; the Koszul-dual algebra is
+$\mathcal{A}^!=(\mathcal{A}^i)^\vee$ when the finite-type or
+completed continuous dual exists.
 
-\emph{Step~1: Identify generators of $\mathcal{A}^!$.}
-For each generator $a_i \in \mathcal{A}$ of conformal weight $h_i$, introduce a dual
-generator $a_i^* \in \mathcal{A}^!$ with $|a_i^*| = -h_i$.
+\emph{Cogenerators.}
+For each generator $a_i \in \mathcal{A}$ introduce the desuspended
+Verdier-linear dual cogenerator $a_i^*\in \mathcal{A}^i$. Its
+cohomological degree is the dual degree shifted by the bar suspension;
+its conformal weight is recorded separately and is fixed by the
+residue pairing, not by the formula $|a_i^*|=-h_i$.
 
-\emph{Step~2: Compute coproduct from OPE.}
+\emph{Coproduct from OPE residues.}
 For each OPE term $a_i(z)a_j(w) \sim \frac{C^k_{ij,m}}{(z-w)^m} a_k(w)$, define the coproduct component:
 \[
-\Delta(a_k^*)=\sum_{i,j,m}C^k_{ij,m}(a_i^* \otimes a_j^*)+\text{primitive part}.
+\left\langle \Delta(a_k^*),a_i\otimes a_j\right\rangle
+=
+(-1)^{\epsilon(i,j)}
+\operatorname*{Res}_{z=w}
+\left\langle a_k^*,a_i(z)a_j(w)\right\rangle ,
 \]
+where $\epsilon(i,j)$ is the Koszul sign obtained by moving the bar
+desuspensions past the homogeneous fields. In coordinates this residue
+extracts the coefficient $C^k_{ij,m}$ with the chosen logarithmic-form
+normalisation.
 
-\emph{Step~3: Handle composite fields.}
+\emph{Composite fields.}
 If the OPE involves composite fields (e.g., $:T \cdot T:$ in W-algebras),
-add generators $(\text{composite})^*$ to $\mathcal{A}^!$,
+add generators $(\text{composite})^*$ to $\mathcal{A}^i$,
 compute their coproducts from residue formulas,
-and take the $I$-adic completion $\widehat{\mathcal{A}^!}$.
+and take the $I$-adic completion $\widehat{\mathcal{A}^i}$ before
+dualizing.
 
-\emph{Step~4: Define differential from Verdier pairing.}
-The coproduct $\Delta\colon \mathcal{A}^! \to \mathcal{A}^! \otimes \mathcal{A}^!$ is
+\emph{Differential from the Verdier pairing.}
+The coproduct
+$\Delta\colon \mathcal{A}^i \to \mathcal{A}^i \otimes \mathcal{A}^i$ is
 dual to the chiral product:
 \[
 \langle \Delta(a_i^*), a_j \otimes a_k \rangle = \langle a_i^*, \mu(a_j \otimes a_k)\rangle.
 \]
 
-\emph{Step~5: Verify coalgebra axioms.}
+\emph{Coalgebra axioms.}
 Check coassociativity $(\Delta \otimes \mathrm{id}) \circ \Delta = (\mathrm{id} \otimes \Delta) \circ \Delta$,
 the coderivation property $\Delta \circ d = (d \otimes \mathrm{id} + \mathrm{id} \otimes d) \circ \Delta$,
-and conilpotency $\Delta^{(N)} = 0$ for $N$ sufficiently large.
+and conilpotency. In completed examples, such as Virasoro and
+$W$-algebras, this last condition is topological conilpotency in the
+weight or $I$-adic completion, not nilpotence in the raw direct-sum
+coalgebra.
 
-\emph{Step~6: Identify Koszul partner.}
+\emph{Koszul partner.}
 If the Koszul dual coalgebra of $\mathcal{A}$ is quasi-isomorphic to the bar coalgebra of another chiral algebra $\mathcal{B}$, i.e.,
-$\bar{B}^{\mathrm{ch}}(\mathcal{A})^{\vee} \simeq \bar{B}^{\mathrm{ch}}(\mathcal{B})^{\vee}$,
+$\mathcal{A}^i\simeq \bar{B}^{\mathrm{ch}}(\mathcal{B})$,
 then $(\mathcal{B}, \mathcal{A})$ form a Koszul pair. Verify:
 \[
 \Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A})) \simeq \mathcal{A}
 \quad\text{and}\quad
-\bar{B}^{\mathrm{ch}}(\mathcal{B})^{\vee} \simeq \mathcal{A}^!.
+(\mathcal{A}^i)^\vee \simeq \mathcal{A}^!.
 \]
 
 \subsection{\texorpdfstring{Worked example: $\beta\gamma$ system}{Worked example: system}}
@@ -245,55 +453,176 @@ The $\beta\gamma$ chiral algebra has generators $\beta(z), \gamma(z)$ with OPE:
 \[\beta(z) \gamma(w) = \frac{1}{z-w} + \text{regular}\]
 \[\beta(z) \beta(w) = 0, \quad \gamma(z) \gamma(w) = 0\]
 
-We apply the procedure of \S\ref{alg:NAP-koszul}.
+On the finite quadratic surface, the underlying algebra is
+$\mathrm{Sym}(V)$ for
+$V=\operatorname{span}\{\beta,\gamma\}$; in the Fock model one works
+with conformal-weight completions and continuous duals.
 
-\emph{Step~1: Dual generators.}
-\[\beta^* \in (\beta\gamma)^!, \quad |\beta^*| = \text{weight of } \beta = \lambda\]
-\[\gamma^* \in (\beta\gamma)^!, \quad |\gamma^*| = \text{weight of } \gamma = 1-\lambda\]
+\emph{Dual generators.}
+The coalgebra $(\beta\gamma)^i$ has desuspended dual cogenerators
+$\beta^*,\gamma^*$. After Verdier-linear duality the strict algebra
+$(\beta\gamma)^!$ is generated by the odd fields
+\[
+b\quad(h_b=\lambda),\qquad c\quad(h_c=1-\lambda).
+\]
 
-\emph{Step~2: Coproduct from OPE.}
+\emph{Coproduct from the simple pole.}
 
 The OPE $\beta \gamma \sim (z-w)^{-1}$ gives:
 \[\Delta(\beta^*) = 0 \quad \text{(primitive)}\]
 \[\Delta(\gamma^*) = 0 \quad \text{(primitive)}\]
 
-Since $\beta^*, \gamma^*$ are cogenerators of $\bar{B}(\beta\gamma)$, the relevant coproduct is the deconcatenation on the bar complex. The $\beta\gamma$ system is not a Koszul pair with itself; rather:
-\[(\beta\gamma)^! = \text{free fermions } \mathcal{F}\]
+Since $\beta^*,\gamma^*$ are cogenerators of
+$\bar{B}^{\mathrm{ch}}(\beta\gamma)$, the displayed primitive
+coproduct is only the cogenerator part; the bar coalgebra also has
+deconcatenation. The $\beta\gamma$ system is not a Koszul pair with
+itself:
+\[
+(\beta\gamma)^!\simeq bc.
+\]
+This is quadratic chiral Koszul duality, not VOA bosonization.
 
-This is the fermionization of bosons.
+\emph{Verdier verification.}
 
-\emph{Step~3: Verification via NAP.}
-
-The factorization homology and Verdier duality give:
-\[\int_X \beta\gamma = \mathrm{Sym}^*(V), \qquad \mathbb{D}\!\left(\int_{-X} bc\right) = \Lambda^*(V^*)\]
-
-The Koszul duality $\mathrm{Sym}^*(V)^! = \Lambda^*(V^*)$ (classical Koszul duality of quadratic algebras) confirms:
+The Koszul-dual coalgebra is $\mathrm{co}\Lambda(V^*)$. Verdier
+duality turns this coalgebra into the exterior algebra generated by
+$b,c$. Thus
 \[(\beta\gamma)^! = bc \quad \text{and} \quad (bc)^! = \beta\gamma\]
 
-They are Koszul duals. (Note: the boson-fermion correspondence $\mathrm{Sym}^*(V) \simeq \Lambda^*(V)$ as vector spaces is \emph{different} from Koszul duality $\mathrm{Sym}^! = \Lambda^*$; the former is a representation isomorphism, the latter an operadic duality. See Theorem~\ref{thm:betagamma-fermion-koszul}.)
+They are Koszul duals. The boson-fermion correspondence
+$\mathrm{Sym}^*(V) \simeq \Lambda^*(V)$ as vector spaces is separate
+from Koszul duality $\mathrm{Sym}^! = \Lambda^*$; the former is a
+representation isomorphism, the latter an operadic duality. See
+Theorem~\ref{thm:betagamma-fermion-koszul}.
 \end{computation}
 
 \section{Higher genus corrections via NAP}
 
 \subsection{Genus expansion of factorization homology}
 
-\begin{definition}[Genus-graded NAP duality]\label{def:genus-NAP}
-At genus $g$, factorization homology decomposes as
-\[\int_{\Sigma_g} \mathcal{A} = \bigoplus_{n \geq 0} \int_{C_n(\Sigma_g)} \mathcal{A}^{\otimes n}.\]
-Verdier duality at genus $g$,
-\[\mathbb{D}^{(g)}: H^*(\overline{C}_n(\Sigma_g)) \xrightarrow{\sim} H^{d-*}(C_n(\Sigma_g)),\]
-receives contributions from modular forms on $\mathcal{M}_g$, period integrals over $\Sigma_g$, and genus-dependent orientation bundles. The \emph{genus-$g$ Koszul dual} is
-\[\mathcal{A}^!_{(g)} = \mathbb{D}^{(g)}(\mathcal{A}).\]
-This differs from $(\mathcal{A}^!)_{(g)}$, the genus-$g$ component of $\mathcal{A}^!$: the former is the genus-$g$ deformation of the dual, while the latter is determined by the genus-$0$ duality alone.
+\begin{definition}[Genus-graded NAP complex]\label{def:genus-NAP}
+\textbf{Type signature.} (Open quadrant; bar/twisting presentation on
+$(\Sigma_g, D, \tau)$; level~$2$ at the bar coalgebra, level~$5$ for
+the scalar $\kappa(\cA)\lambda_g$ projection; hypothesis package:
+$\cA$ finite-type or completed Koszul on the relevant ambient.) The
+modular shadow that emerges after trace + clutching on the open
+factorization category is a level-$5$ consequence; it is not an
+intrinsic closed-algebra invariant of $\cA$.
+
+For a smooth genus-$g$ curve $\Sigma_g$ and a finite-type or completed
+Koszul chiral algebra~$\mathcal{A}$, the genus-$g$ NAP chain model is
+\[
+\mathbf{C}^{\mathrm{NAP}}_g(\mathcal{A})
+=
+\prod_{n\geq0}
+R\Gamma\!\left(
+\overline{C}_n(\Sigma_g),
+j_{n*}j_n^*(\mathcal{A}^{\boxtimes n})
+\otimes\Omega^\bullet_{\log}
+\right),
+\]
+with direct sum in the finite bar-length case. Its curved
+differential is
+\[
+d_{\mathcal{A}}+d_{\mathrm{dR}}
++\sum_D \operatorname{Res}_D(\mu_{\mathcal{A}}),
+\]
+the sum over boundary collision divisors. Chiral associativity and
+the Arnold relation reduce its square to the scalar curvature term.
+After the flat representative is chosen, it becomes an ordinary
+differential; on the uniform-weight scalar-diagonal lane
+Theorem~\ref{thm:genus-universality} identifies the curvature with
+$\kappa(\mathcal{A})\lambda_g$. In the all-weight setting the same
+theorem supplies only the scalar summand
+$\kappa(\mathcal{A})\lambda_g^{\mathrm{FP}}$ of the genus-$g$ free
+energy; the cross-channel term
+$\delta F_g^{\mathrm{cross}}(\mathcal{A})$ is additional data, not a
+NAP consequence.
+Verdier duality on the $n$-point stratum carries the usual
+$[2n]$ orientation shift for a complex curve and sends this completed
+bar chain model to the corresponding post-Verdier model for
+$\mathcal{A}^!_\infty$.
 \end{definition}
 
-\begin{theorem}[Genus complementarity; \ClaimStatusConditional]\label{thm:genus-complementarity}
-For a Koszul pair $(\mathcal{A}_1, \mathcal{A}_2)$ at genus $g$:
-\[Q_g(\mathcal{A}_1) \oplus Q_g(\mathcal{A}_2) \cong H^*(\mathcal{M}_g, Z(\mathcal{A}_1))\]
+\begin{remark}[Curve Verdier shifts and Calabi--Yau Serre shifts]
+\label{rem:curve-vs-cy-shifts}
+The shift in Definition~\ref{def:genus-NAP} is the Verdier shift of
+configuration spaces on a curve. It is not the Serre shift $[d]$ of a
+$\mathrm{CY}_d$ input category. For a K3 input category
+$D^b\mathrm{Coh}(K3)$ the categorical shift is $[2]$; an auxiliary
+CY$_3$ factorization ambient used before Stage--2 specialisation does
+not change the K3 Serre shift. After Stage--2 specialisation to a
+reference curve, the resulting chiral algebra is governed by the
+curve-level NAP complex above.
+\end{remark}
 
-where $Q_g(\mathcal{A}_i)$ denotes genus-$g$ quantum corrections and $Z(\mathcal{A}_1)$ is the center of $\mathcal{A}_1$, viewed as a local system on $\mathcal{M}_g$. What $\mathcal{A}_1$ sees as deformation, $\mathcal{A}_2$ sees as obstruction.
+\begin{remark}[Comparison maps from K3, BKM, and Hall--Drinfeld data]
+\label{rem:k3-bkm-hall-comparison-map}
+A Mukai lattice calculation, a BKM denominator identity, or a
+Hall--Drinfeld double can supply a curve-level NAP input only after
+the comparison map to $\mathbf{C}^{\mathrm{NAP}}_g(\mathcal{A})$ has
+been constructed and checked against Verdier shifts, completions, and
+residue normalisations. The K3 value in Theorem~C is a
+Vol~III complementarity witness; it is not a proof of
+Theorem~\ref{thm:main-NAP-resolution}, of
+Definition~\ref{def:genus-NAP}, or of the examples in this chapter.
+\end{remark}
+
+\begin{theorem}[Genus complementarity; \ClaimStatusConditional]\label{thm:genus-complementarity}
+\textbf{Type signature.} (Open quadrant; Verdier-Koszul reflection at
+level~$2$, with the $\Z/2$-eigenspace splitting visible at level~$5$
+on $\overline{\cM}_g$; hypothesis package: finite-type or completed
+Koszul pair $(\cA,\cA^!)$, ordinary flat C0 representative, cochain
+involution $\sigma$. The Lagrangian/dual splitting at $g\geq1$
+specialises on the \emph{KSDual} sublocus
+\textup{(}$\Z/2$-fixed points of $\cA\mapsto\cA^!$\textup{)} to the
+fixed-point complex; off that sublocus, the splitting is the
+adjunction-with-comparison-map decomposition.)
+
+Let $(\mathcal{A},\mathcal{A}^!)$ be a finite-type or completed
+Koszul pair for which the C0 ordinary flat representative of
+Theorem~\ref{thm:quantum-complementarity-main} is available. Let
+$\mathbf{C}_g(\mathcal{A})$ denote the ambient complementarity complex,
+and assume the
+Verdier--Koszul involution is represented there by a cochain
+involution
+\[
+\sigma\colon \mathbf{C}_g(\mathcal{A})\to \mathbf{C}_g(\mathcal{A})
+\]
+as a map of complexes. Then
+\[
+\mathbf{C}_g(\mathcal{A})
+\simeq
+\mathbf{Q}_g(\mathcal{A})\oplus \mathbf{Q}_g(\mathcal{A}^!)
+\]
+with $\mathbf{Q}_g(\mathcal{A})$ and
+$\mathbf{Q}_g(\mathcal{A}^!)$ the homotopy $\pm1$ eigenspaces of
+$\sigma$. On cohomological shadows,
+\[
+H^*(\overline{\mathcal{M}}_g,\mathcal{Z}(\mathcal{A}))
+=
+Q_g(\mathcal{A})\oplus Q_g(\mathcal{A}^!).
+\]
+If $g\geq1$ and the Verdier pairing on
+$\mathbf{C}_g(\mathcal{A})$ is non-degenerate and anti-invariant,
+the two summands are Lagrangian and dual. At genus~$0$ the point
+class is $\sigma$-fixed, so
+$Q_0(\mathcal{A})=H^0(\overline{\mathcal{M}}_0,\mathcal{Z}(\mathcal{A}))$
+and $Q_0(\mathcal{A}^!)=0$.
 \end{theorem}
 
 \begin{proof}
-This is a restatement of Theorem~\ref{thm:quantum-complementarity-main} (Koszul Complementarity at Higher Genus) in the NAP framework. The proof proceeds via the Kodaira--Spencer map (Theorem~\ref{thm:kodaira-spencer-chiral-complete}), which provides a center action $\rho: Z(\mathcal{A}_1) \to \mathrm{End}(H^*(\overline{\mathcal{M}}_g, Z(\mathcal{A}_1)))$, and the Verdier involution $\sigma$ (Lemma~\ref{lem:verdier-involution-moduli}), which satisfies $\sigma^2 = \mathrm{id}$. Since $\mathrm{char}(\mathbb{C}) \neq 2$, the eigenspace decomposition $H^*(\overline{\mathcal{M}}_g, Z(\mathcal{A}_1)) = V^+ \oplus V^-$ with $V^+ = Q_g(\mathcal{A}_1)$ and $V^- = Q_g(\mathcal{A}_2)$ gives the stated direct sum.
+Theorem~\ref{thm:quantum-complementarity-main} gives the homotopy
+eigenspace decomposition under exactly these C0 and
+Verdier-involution hypotheses. The involution is constructed in
+Lemma~\ref{lem:verdier-involution-moduli}; its compatibility with the
+center action is the Kodaira--Spencer statement
+Theorem~\ref{thm:kodaira-spencer-chiral-complete}. Since the base
+field has characteristic zero, Lemma~\ref{lem:involution-splitting}
+splits the complex into homotopy $\pm1$ eigenspaces. Taking
+cohomology gives the displayed shadow decomposition on
+$H^*(\overline{\mathcal{M}}_g,\mathcal{Z}(\mathcal{A}))$. The
+Lagrangian and duality clauses are the positive-genus pairing clause
+of Theorem~\ref{thm:quantum-complementarity-main}; the genus-$0$
+exception is its final clause.
 \end{proof}

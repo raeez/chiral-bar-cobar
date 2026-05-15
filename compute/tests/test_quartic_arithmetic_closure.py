@@ -1,13 +1,13 @@
-"""Tests for the quartic arithmetic closure programme.
+"""Tests for the quartic arithmetic closure calculations.
 
 Verifies:
 1. Quartic contact invariant Q^ct_Vir = 10/(c(5c+22))
-2. Schur complement Sigma_2 = 5/(5c+22) (normalized)
+2. Virasoro normalized scalar 5/(5c+22), distinct from the raw Hankel Schur complement
 3. Hankel moment matrix structure and determinants
 4. Genuine residue kernel decay exponents and oscillation
 5. Li coefficient sign patterns for all standard families
 6. Compatibility ratios and locus structure
-7. Shadow moment generating functions
+7. Shadow moment generating functions, including beta-gamma scalar/class-C separation
 8. W_3 double pole structure
 9. Arithmetic closure: defect produces negative Li coefficients
 10. DS reduction preserves negativity pattern
@@ -178,6 +178,36 @@ class TestSchurComplement:
             asymp = mpf(1) / c_val
             assert fabs(S2 / asymp - 1) < mpf('0.01')
 
+    def test_virasoro_normalized_scalar_is_not_raw_hankel_schur(self):
+        """The positive normalized scalar is not the raw 2x2 Hankel Schur complement."""
+        from lib.quartic_arithmetic_closure import (
+            hankel_determinants,
+            hankel_moment_matrix,
+            schur_complement_general,
+            schur_complement_virasoro,
+            virasoro_shadow_moments,
+        )
+        for c_val in [1, 13, 26]:
+            c = mpf(c_val)
+            moments = virasoro_shadow_moments(c, 6)
+            M = hankel_moment_matrix(moments)
+            dets = hankel_determinants(M)
+
+            normalized = schur_complement_virasoro(c)
+            raw = schur_complement_general('virasoro', c)
+
+            expected_normalized = moments[2] * moments[4]
+            expected_raw = moments[4] - moments[3] ** 2 / moments[2]
+            expected_raw_closed = -(40 * c + 166) / (c * (5 * c + 22))
+
+            assert fabs(normalized - expected_normalized) < mpf('1e-40')
+            assert fabs(raw - expected_raw) < mpf('1e-40')
+            assert fabs(raw - expected_raw_closed) < mpf('1e-40')
+            assert fabs(raw - dets[1] / moments[2]) < mpf('1e-40')
+            assert normalized > 0
+            assert raw < 0
+            assert fabs(normalized - raw) > mpf('1e-20')
+
 
 # =============================================================================
 # Test 3: Hankel moment matrix
@@ -322,21 +352,16 @@ class TestResidueKernel:
 
     def test_real_zero_no_oscillation(self):
         """gamma=0: the cos factor has no oscillation."""
-        from lib.quartic_arithmetic_closure import genuine_residue_kernel
+        from lib.quartic_arithmetic_closure import decay_exponent, genuine_residue_kernel
         c_val = 26
         u0 = mpf(2)
         rho = mpc(mpf('0.5'), 0)
-        # The cos factor with gamma=0 is just cos(arg(A_c(rho))), a constant
         w1 = genuine_residue_kernel(c_val, rho, u0, mpf(1))
         w2 = genuine_residue_kernel(c_val, rho, u0, mpf(10))
-        # Ratio should be a pure power law (no oscillatory correction)
-        if fabs(w1) > mpf('1e-40') and fabs(w2) > mpf('1e-40'):
-            ratio = w2 / w1
-            # For pure power law: ratio = (10/1)^exponent * (10)^(-u0) / (1)^(-u0)
-            # which should be a real power of 10
-            log_ratio = log(fabs(ratio))
-            # Check that log_ratio / log(10) is approximately an integer combination
-            assert isinstance(float(log_ratio), float)  # just check it's well-defined
+        decay = decay_exponent(c_val, mpf('0.5'))
+        expected_ratio = power(10, decay - u0)
+        assert fabs(w1) > mpf('1e-40')
+        assert fabs(w2 / w1 - expected_ratio) < mpf('1e-40')
 
     def test_kernel_positive_large_delta(self):
         """Kernel decays to zero as Delta -> infinity."""
@@ -465,15 +490,14 @@ class TestCompatibilityLocus:
             "On-line and off-line should give different ratios"
 
     def test_compatibility_locus_well_defined(self):
-        """The compatibility locus computation runs and returns data."""
+        """The compatibility locus returns only tested real parts."""
         from lib.quartic_arithmetic_closure import compatibility_locus
         c_val = mpf(26)
         u0 = mpf(2)
         rho_range = [0.3, 0.5, 0.7]
-        # Use a very wide tolerance to just check the code runs
         locus = compatibility_locus(c_val, u0, rho_range, tol=mpf('100.0'))
-        # Should return a list (possibly empty if ratios are very far from 1)
         assert isinstance(locus, list)
+        assert all(sigma in rho_range for sigma in locus)
 
 
 # =============================================================================
@@ -499,13 +523,27 @@ class TestMomentGF:
         assert fabs(F_small) > 0
         assert fabs(F_larger) > fabs(F_small)
 
-    def test_betagamma_gf_terminates(self):
-        """Beta-gamma GF terminates: F_{bg}(t) = t^2."""
+    def test_betagamma_scalar_gf_terminates(self):
+        """Legacy beta-gamma scalar closed branch is F_bg(t) = t^2."""
         from lib.quartic_arithmetic_closure import shadow_moment_generating_function
-        for t_val in [0.1, 0.5]:
-            F = shadow_moment_generating_function('betagamma', t_val)
-            expected = mpf(1) * mpf(t_val) ** 2
-            assert fabs(F - expected) < mpf('1e-30')
+        for family in ['betagamma', 'betagamma_closed_scalar']:
+            for t_val in [0.1, 0.5]:
+                t = mpf(t_val)
+                F = shadow_moment_generating_function(family, t)
+                expected = t ** 2
+                assert fabs(F - expected) < mpf('1e-30')
+
+    def test_betagamma_class_c_gf_carries_quartic_contact(self):
+        """The explicit class-C beta-gamma path has S_4 = -5/12."""
+        from lib.quartic_arithmetic_closure import shadow_moment_generating_function
+        for family in ['betagamma_class_c', 'bc_betagamma_class_c']:
+            for t_val in [0.1, 0.5]:
+                t = mpf(t_val)
+                F = shadow_moment_generating_function(family, t)
+                scalar = shadow_moment_generating_function('betagamma', t)
+                expected = t ** 2 - mpf(5) / 12 * t ** 4
+                assert fabs(F - expected) < mpf('1e-30')
+                assert fabs(F - scalar + mpf(5) / 12 * t ** 4) < mpf('1e-30')
 
 
 # =============================================================================
@@ -611,9 +649,20 @@ class TestShadowDepth:
         assert depth == 3
 
     def test_betagamma_contact(self):
-        """Beta-gamma is contact (depth 4)."""
+        """Beta-gamma standard-family classifier is contact (depth 4)."""
         from lib.quartic_arithmetic_closure import shadow_depth_class
         cls, depth = shadow_depth_class('betagamma')
+        assert cls == 'C'
+        assert depth == 4
+
+    def test_betagamma_explicit_paths_have_separate_depths(self):
+        """The scalar closed branch and class-C ambient branch have distinct depth labels."""
+        from lib.quartic_arithmetic_closure import shadow_depth_class
+        cls, depth = shadow_depth_class('betagamma_closed_scalar')
+        assert cls == 'G'
+        assert depth == 2
+
+        cls, depth = shadow_depth_class('betagamma_class_c')
         assert cls == 'C'
         assert depth == 4
 
@@ -645,10 +694,44 @@ class TestSchurComplementGeneral:
         assert fabs(S) < mpf('1e-40')
 
     def test_betagamma_zero(self):
-        """Beta-gamma Schur complement is zero (mu = 0)."""
+        """Legacy beta-gamma scalar closed branch has zero raw Schur complement."""
         from lib.quartic_arithmetic_closure import schur_complement_general
-        S = schur_complement_general('betagamma', 26)
-        assert fabs(S) < mpf('1e-40')
+        for family in ['betagamma', 'betagamma_closed_scalar']:
+            S = schur_complement_general(family, 26)
+            assert fabs(S) < mpf('1e-40')
+
+    def test_betagamma_class_c_raw_schur(self):
+        """The explicit class-C beta-gamma path has raw Schur complement -5/12."""
+        from lib.quartic_arithmetic_closure import schur_complement_general
+        scalar = schur_complement_general('betagamma', 26)
+        for family in ['betagamma_class_c', 'bc_betagamma_class_c']:
+            S = schur_complement_general(family, 26)
+            assert fabs(S + mpf(5) / 12) < mpf('1e-40')
+            assert fabs(S - scalar) > mpf('1e-20')
+
+    def test_betagamma_class_c_shadow_data(self):
+        """Class-C contact data is carried by the explicit data helper."""
+        from lib.quartic_arithmetic_closure import betagamma_class_c_shadow_data
+        data = betagamma_class_c_shadow_data()
+
+        assert data['family'] == 'betagamma'
+        assert data['dual_family'] == 'bc'
+        assert data['class'] == 'C'
+        assert data['shadow_class'] == 'C'
+        assert data['depth'] == 4
+        assert data['r_max'] == 4
+        assert fabs(data['S2'] - 1) < mpf('1e-40')
+        assert fabs(data['S3']) < mpf('1e-40')
+        assert fabs(data['S4'] + mpf(5) / 12) < mpf('1e-40')
+        assert fabs(data['tail_from_5']) < mpf('1e-40')
+        assert fabs(data['closed_collision_residue']) < mpf('1e-40')
+        assert fabs(data['bc_closed_collision_residue']) < mpf('1e-40')
+        assert fabs(data['genus0_closed_curvature']) < mpf('1e-40')
+        assert fabs(data['simple_ope_residue_beta_gamma'] - 1) < mpf('1e-40')
+        assert fabs(data['simple_ope_residue_gamma_beta'] + 1) < mpf('1e-40')
+        assert fabs(data['scalar_closed_branch']['S3']) < mpf('1e-40')
+        assert fabs(data['scalar_closed_branch']['S4']) < mpf('1e-40')
+        assert fabs(data['scalar_closed_branch']['closed_collision_residue']) < mpf('1e-40')
 
     def test_virasoro_negative(self):
         """Virasoro raw Schur complement mu_4 - mu_3^2/mu_2 < 0 for c > 0.
@@ -753,7 +836,7 @@ class TestW3QuarticContact:
 
 class TestQuarticClosureConjecture:
     def test_closure_test_runs(self):
-        """The quartic closure test runs without error."""
+        """The quartic closure test returns one entry per tested sigma."""
         from lib.quartic_arithmetic_closure import quartic_closure_test
         results = quartic_closure_test(
             c_values=[26],

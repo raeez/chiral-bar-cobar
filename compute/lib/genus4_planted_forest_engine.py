@@ -36,7 +36,8 @@ Total stable graphs at (4,0): 379
 Shadow visibility at genus 4:
   S_6 first appears (g_min(6) = floor(6/2) + 1 = 4)
   S_7 first appears (g_min(7) = floor(7/2) + 1 = 4)
-  S_8 does NOT appear (single-vertex (0,8) has odd dim, parity vanishing)
+  S_8 is absent because the single-vertex (0,8) graph has odd dimension
+  and vanishes by parity.
 
 Self-loop parity vanishing (prop:self-loop-vanishing):
   Single-vertex (g_v, 2k) with k self-loops, dim M_{g_v,2k} = 3g_v-3+2k ODD
@@ -100,10 +101,10 @@ def hodge_integral(graph: StableGraph) -> Fraction:
 
     Algorithm:
     1. Build half-edge structure: each edge has two half-edges.
-       For bridges (v1 != v2): assign "minus" end to the vertex with
-       LOWER genus (or higher valence if genera tie), matching the
-       intersection-theoretic convention where the sign comes from the
-       psi-class at the gluing target.
+       For bridges (v1 != v2), assign the minus end to the lower-indexed
+       endpoint of the canonical StableGraph edge tuple. This is the
+       canonical bridge-sign convention used by
+       theorem_genus4_virasoro_engine.
        For self-loops (v1 == v2): second half-edge is "minus".
     2. At each vertex v: enumerate psi-power assignments summing to
        dim M_{g(v), val(v)} = 3g(v) - 3 + val(v).
@@ -137,12 +138,8 @@ def hodge_integral(graph: StableGraph) -> Fraction:
     # Build half-edge assignment: for each vertex, list of (edge_idx, position)
     # position 0 = "plus" end, position 1 = "minus" end
     #
-    # Convention for bridges: "minus" end at the vertex with LOWER genus
-    # (higher-genus vertex gets "plus"). If genera are equal, "minus" at
-    # the vertex with higher valence (lower-valence vertex gets "plus").
-    # If both match, "minus" at the higher-indexed vertex.
-    # This matches the pixton_shadow_bridge convention where the sign comes
-    # from the "second" vertex which typically has higher genus.
+    # Canonical convention for bridges: "minus" end at the lower-indexed
+    # endpoint of the StableGraph edge tuple.
     vertex_halfedges: List[List[Tuple[int, int]]] = [[] for _ in range(nv)]
     for e_idx, (v1, v2) in enumerate(graph.edges):
         if v1 == v2:
@@ -150,23 +147,10 @@ def hodge_integral(graph: StableGraph) -> Fraction:
             vertex_halfedges[v1].append((e_idx, 0))
             vertex_halfedges[v1].append((e_idx, 1))
         else:
-            # Bridge: determine which end is "minus"
-            g1, g2 = genera[v1], genera[v2]
-            # Intersection-theoretic convention: "minus" at the vertex with
-            # HIGHER genus (= the "target" of the gluing). This matches
-            # the pixton_shadow_bridge convention where the genus-0 vertex
-            # is listed first ("source") and the higher-genus vertex is
-            # listed second ("target"), with the sign from the target.
-            if g1 > g2:
-                # v1 has higher genus -> minus at v1
-                vertex_halfedges[v1].append((e_idx, 1))  # minus at v1
-                vertex_halfedges[v2].append((e_idx, 0))  # plus at v2
-            elif g1 < g2:
-                # v2 has higher genus -> minus at v2
-                vertex_halfedges[v1].append((e_idx, 0))
-                vertex_halfedges[v2].append((e_idx, 1))
+            if v1 <= v2:
+                vertex_halfedges[v1].append((e_idx, 1))
+                vertex_halfedges[v2].append((e_idx, 0))
             else:
-                # Equal genera: minus at higher-indexed vertex (arbitrary but consistent)
                 vertex_halfedges[v1].append((e_idx, 0))
                 vertex_halfedges[v2].append((e_idx, 1))
 
@@ -467,9 +451,8 @@ def genus4_heisenberg_F4(k_val=None) -> Dict[str, Any]:
     F4_bernoulli = k * Integer(l4.numerator) / Integer(l4.denominator)
 
     # Path 3: A-hat generating function
-    # Ahat(ix) - 1 = (x/2)/sin(x/2) - 1 = sum_{g>=1} (-1)^g (2^{2g-1}-1) B_{2g}/(2g)! x^{2g}
-    # Wait: Ahat(ix) = (ix/2)/sinh(ix/2) = (x/2)/sin(x/2)
-    # which has all POSITIVE coefficients:
+    # Ahat(ix) = (ix/2)/sinh(ix/2) = (x/2)/sin(x/2)
+    # and has positive coefficients:
     # (x/2)/sin(x/2) = 1 + x^2/24 + 7x^4/5760 + 31x^6/967680 + 127x^8/154828800 + ...
     # F_g = kappa * coefficient of x^{2g} in (Ahat(ix) - 1)
     # At g=4: coefficient of x^8 = 127/154828800 = lambda_4^FP
@@ -629,7 +612,7 @@ def verify_self_loop_parity_g4() -> Dict[str, Any]:
 
     Single-vertex graphs at genus 4:
       (4, 0): 0 loops, dim = 9, no self-loops, not applicable.
-      (3, 2): 1 loop, dim = 8 EVEN, parity does NOT force vanishing.
+      (3, 2): 1 loop, dim = 8 EVEN, outside the parity-vanishing range.
       (2, 4): 2 loops, dim = 5 ODD, I = 0 by parity.
       (1, 6): 3 loops, dim = 3 ODD, I = 0 by parity.
       (0, 8): 4 loops, dim = 5 ODD, I = 0 by parity.
@@ -694,10 +677,11 @@ def verify_shadow_visibility_g4() -> Dict[str, Any]:
       S_5: g_min = 3, visible (first at genus 3)
       S_6: g_min = 4, FIRST VISIBLE at genus 4
       S_7: g_min = 4, FIRST VISIBLE at genus 4
-      S_8: g_min = 5, NOT visible at genus 4
+      S_8: g_min = 5, first visible after genus 4
 
     Verification: check that genus-4 PF graphs contain vertices (0, val)
-    for val = 6 and val = 7, but NOT val >= 8 with nonzero Hodge integral.
+    for val = 6 and val = 7, while every val >= 8 contribution has zero
+    Hodge integral.
     """
     pf_amps = genus4_pf_amplitudes()
 

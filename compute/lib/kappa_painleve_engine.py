@@ -1,206 +1,99 @@
-r"""kappa_painleve_engine.py -- kappa-deformed Painleve I from the shadow hierarchy.
+r"""Finite shadow coefficients and conditional Painleve-I rescaling.
 
-CONTEXT
-=======
+This module has four separate surfaces.
 
-The shadow hierarchy theorem (compute/lib/shadow_hierarchy_engine.py) shows that
-the shadow tau-function tau_shadow = tau_KW^kappa satisfies a kappa-DEFORMED KdV
-hierarchy:
+1. Finite scalar coefficient identity.
+   In Q[kappa][[q]]/(q^(G+1)),
+       log(tau_shadow,scal^{<=G}) = kappa log(tau_KW^{<=G}).
+   This is a finite formal identity.  It does not certify an analytic
+   tau function, KdV hierarchy, Hirota hierarchy, or Painleve system.
 
-    u_t + (6/kappa) u u_x + u_xxx = 0,                              (kappa-KdV)
+2. Direct KdV/Hirota residuals.
+   If a standard KdV potential v is rescaled to u = kappa v, then the
+   standard KdV residual has factor kappa*(kappa-1).  Hirota bilinear
+   terms have the same quadratic obstruction.  The residual vanishes at
+   kappa = 1, and the scalar unit point kappa = 0 is degenerate.
 
-where u = (1/kappa) d^2 log(tau_shadow)/dx^2.  The standard KdV (kappa = 1) is
-the Witten-Kontsevich integrable system.
+3. Stationary primary-line diagnostic.
+   The shadow hierarchy surface records
+       H(t)^2 = t^4 Q_L(t),
+       Q_L(t) = (2*kappa + 3*alpha*t)^2 + 2*Delta*t^2,
+       Delta = 8*kappa*S_4.
+   This is stationary primary-line data.  It is not a descendant
+   integrable hierarchy.
 
-INSTANTON SECTOR.  The non-perturbative sector of kappa-KdV is governed by the
-self-similar reduction u(x,t) = (kappa/6) y(s) with s = x/(some scale), giving:
+4. Conditional Painleve-I rescaling.
+   If a standard Painleve-I solution Y satisfies
+       Y''(X) = 6 Y(X)^2 + X,
+   then y(x) = kappa^(3/5) Y(kappa^(-1/5) x) satisfies
+       y''(x) = (6/kappa) y(x)^2 + x.
+   This is an ODE rescaling identity.  It requires an independent
+   isomonodromic or descendant construction beyond the finite scalar
+   coefficient identity.
 
-                y''(s) = (6/kappa) y(s)^2 + s.                  (kappa-Painleve I)
+Local sources:
+    chapters/examples/landscape_census.tex:126
+    chapters/examples/landscape_census.tex:180
+    chapters/connections/concordance.tex:4097
+    compute/lib/shadow_hierarchy_engine.py
+    compute/lib/motivic_shadow_partition_engine.py:764
+    compute/lib/topological_recursion_shadow_engine.py:996
 
-This is the kappa-deformed Painleve I equation.  At kappa = 1 it reduces to the
-standard Painleve I (with the conventional 6 y^2 nonlinear coupling).
-
-================================================================================
-THE RESCALING THEOREM (load-bearing identity)
-================================================================================
-
-Let Y(X) be a solution of the STANDARD Painleve I:
-
-                       Y''(X) = 6 Y(X)^2 + X.                            (P_I)
-
-Define y(x) := kappa^(3/5) Y(kappa^(-1/5) x).  Then y satisfies kappa-P_I:
-
-                       y''(x) = (6/kappa) y(x)^2 + x.                (kappa-P_I)
-
-Proof.  With X = kappa^(-1/5) x we have y'(x) = kappa^(2/5) Y'(X) and
-y''(x) = kappa^(1/5) Y''(X).  Substituting kappa^(1/5) Y'' = 6 (kappa^(1/5)) Y^2 + x
-on both sides matches kappa-P_I after dividing by kappa^(1/5).  QED.
-
-Consequence (the engine's main lever): every quantity for kappa-P_I is obtained
-from the standard P_I by the explicit rescaling.  In particular:
-   - tritronquee solution is unique and pole-free in the sector
-     |arg x| < 4 pi/5 centred on the negative real axis (sector unchanged:
-     kappa^(-1/5) is a positive real scaling)
-   - Boutroux equilibrium y_eq(x<<0) = -sqrt(-kappa x / 6)  (negative branch:
-     this is the pole-free branch, Joshi-Kruskal convention)
-   - first pole on the positive real axis: x_pole(kappa) = kappa^(1/5) X_pole
-     where X_pole = +2.37832... (standard P_I tritronquee first pole, on the
-     positive real axis)
-   - Stokes multipliers are kappa-INDEPENDENT (the rescaling is real positive
-     and does NOT cross any anti-Stokes ray; sectors and connection coefficients
-     are PROJECTIVELY invariant)
-
-================================================================================
-THE SEVEN TASKS (and their resolutions, with anti-pattern guards)
-================================================================================
-
-Task 1.  Solve kappa-P_I numerically at kappa = 1, 13, 24.
-   Resolution: solve standard P_I tritronquee, rescale.  See `solve_kappa_pi`.
-   No new numerics required for each kappa.  AP3 guard: we never copy a numerical
-   value between kappa values; everything goes through the rescaling.
-
-Task 2.  Compute the kappa-deformed tritronquee.
-   Resolution: kappa-tritronquee is just rescaled standard tritronquee.  Its
-   asymptotic on the negative real axis is y(x) ~ -sqrt(-kappa x / 6) (the
-   NEGATIVE-branch algebraic equilibrium; this is the pole-free branch in
-   the Joshi-Kruskal convention).  See `kappa_tritronquee_asymptotic`.
-
-Task 3.  Compute kappa-deformed Stokes multipliers.
-   Resolution: the irregular singularity of P_I is at infinity with Stokes
-   structure determined by the dominant balance y ~ +/- sqrt(-x/6).  The five
-   Stokes sectors S_k = {arg x in (k pi/5 - pi/5, k pi/5 + pi/5)} (k=0..4) have
-   Stokes multipliers s_0,...,s_4 satisfying the Kapaev cyclic relation
-   1 + s_k s_{k+1} + ... and a single complex parameter ((s_0 + s_3) s_2 = 0
-   on the tritronquee locus).  The kappa-deformation is a positive REAL
-   change of independent variable scale; it does NOT rotate sectors and the
-   Stokes data are KAPPA-INDEPENDENT modulo the trivial rescaling of the
-   action (the WKB action S(x) = (4/15) (-x)^(5/2) sqrt(2) x kappa^? -- see
-   `kappa_wkb_action_along_Boutroux`).
-
-Task 4.  Dispersionless limit kappa -> infinity.
-   Resolution: the rescaling y = kappa^(3/5) Y(kappa^(-1/5) x) shows that for
-   bounded x, kappa^(-1/5) x -> 0 as kappa -> infinity.  Y(X) at X = 0 is
-   bounded (Y(0) = some constant for tritronquee), so y(x) ~ kappa^(3/5) * Y(0)
-   diverges like kappa^(3/5).  The properly scaled "small dispersion" object
-   is u_lead := y(x) / kappa^(3/5).  This satisfies:
-       u_lead'' = (6/kappa) (kappa^(3/5) u_lead)^2 + x = 6 kappa^(1/5) u_lead^2 + x
-   which after rescaling X = kappa^(-1/5) x recovers standard P_I exactly.
-   The genuine dispersionless limit is the Riccati equation obtained by
-   dropping the y'' term:  0 = (6/kappa) y^2 + x  =>  y = sqrt(-kappa x / 6).
-   This is the algebraic equilibrium (Hopf shock front).
-   See `dispersionless_limit_riccati`.
-
-Task 5.  Fredholm determinant representation.
-   Resolution: tau_KW does NOT have a Tracy-Widom-style Fredholm representation
-   in the usual sense (Tracy-Widom is for the Airy kernel, governing the
-   distribution of the largest eigenvalue of GUE; the connection to P_II
-   is via the Hastings-McLeod solution, not P_I).  For Painleve I and the
-   shadow tau, the connection is via the (1,2) minimal model conformal block
-   and a 2x2 Riemann-Hilbert problem on the Boutroux contour.  We provide
-   the kernel structure but NOT a closed Fredholm formula.
-   See `pi_kernel_structure` and `tau_pi_minus_log_det_relation`.
-
-Task 6.  Isomonodromic deformation.
-   Resolution: the standard P_I is the isomonodromic deformation of the
-   2x2 system with one irregular singularity of Poincare rank 5/2 at infinity
-   (Jimbo-Miwa-Ueno).  The kappa-rescaling is conjugation by a constant
-   matrix and does NOT alter the monodromy data.  Hence kappa-P_I is also
-   isomonodromic, with kappa-INDEPENDENT Stokes multipliers (Task 3).
-   See `isomonodromic_check_kappa`.
-
-Task 7.  Random matrix interpretation.
-   Resolution: the Dyson beta-ensemble has soft-edge tail governed by P_II
-   (NOT P_I) for general beta, with beta = 2 GUE corresponding to Tracy-Widom F_2.
-   For matrix models leading to P_I, the natural setup is the (2,3) MINIMAL
-   MODEL or the cubic potential matrix model at the critical (Yang-Lee) point.
-   The "beta = kappa" identification is a metaphor: there is no soft-edge
-   ensemble with beta = 13 (or 24).  However, the multi-critical matrix model
-   with potential V(M) = M^2/2 + g M^4 at the multi-critical point has tau
-   function satisfying P_I, and the leading 1/N expansion is the genus
-   expansion of tau_KW^{kappa(g)} for a specific dependence kappa(g).  The
-   "kappa = 13 ensemble" is not standard; we report what is provable.
-   See `pi_matrix_model_correspondence` and `beta_ensemble_identification`.
-
-================================================================================
-KEY CONSTANTS (verified against the literature)
-================================================================================
-
-X_TRITRONQUEE_FIRST_POLE_POS_REAL = +2.378320...
-   First pole of the standard P_I tritronquee on the POSITIVE real axis.
-   (The tritronquee is pole-free along the entire negative real axis and
-   into the Boutroux sector; the first pole is in the complementary sector,
-   and along the real line the pole closest to origin is on the positive
-   side.)  Reference: Joshi-Kitaev, Stud. Appl. Math. 107 (2001) 253-291.
-   Also: Joshi-Kruskal, Phys. Lett. A 130 (1988) 129-137.
-   Numerical value independently confirmed in test_kappa_painleve_engine.py
-   by shooting from x = -1000 with the 1st-order Boutroux correction.
-
-Y_TRITRONQUEE_AT_ZERO = -0.187554...
-   Value of the tritronquee at X = 0.
-   Reference: Costin-Huang-Tanveer, Duke Math. J. 161 (2012) 1029-1086.
-
-YPRIME_TRITRONQUEE_AT_ZERO = +0.304906...
-   Derivative at X = 0.  NOTE POSITIVE SIGN: the tritronquee increases
-   through zero at X = 0 (moving from the Boutroux negative branch toward
-   the pole on the positive side).  Independently verified by shooting.
-
-ALPHA_BOUTROUX = 4/15 * sqrt(2)
-   Coefficient of the leading WKB action |x|^(5/2) for x -> -infty.
-
-================================================================================
-ANTI-PATTERN GUARDS
-================================================================================
-
-AP1: kappa formulas recomputed per family.  We use kappa = c/2 for Virasoro,
-     kappa = 24 for the moonshine module V^# (rank-of-Leech), NEVER copying
-     the value between families.
-AP3: No pattern matching.  Each numerical value is either solved from the
-     IVP or obtained from the rescaling theorem.
-AP10: All expected values cross-verified by 2+ independent paths.
-AP24: kappa + kappa' for Virasoro = c/2 + (26-c)/2 = 13, NOT 0.
-AP31: kappa = 0 does NOT mean tau = trivial; the kappa = 0 limit of kappa-P_I
-      is the linear equation y'' = x, with solution y = x^3/6 + c_1 x + c_0.
-      Triple-check: not a Painleve transcendent at kappa = 0.
-AP35: We never claim kappa-Stokes data EQUAL standard data without verifying
-      that the rescaling preserves the irregular structure.
-AP39: kappa = c/2 is Virasoro-specific; for Heisenberg kappa = k.
-AP44: kappa-KdV uses mode-coefficient (6/kappa); the lambda-bracket
-      coefficient would acquire 1/n! factors.
-AP48: For lattice VOAs, kappa = rank, not c/2.
-
-================================================================================
-DEPENDENCIES
-================================================================================
-
-shadow_hierarchy_engine.py    -- the kappa-deformed KdV (parent equation)
-shadow_painleve.py            -- shadow connection / Heun (different ODE family)
-bc_painleve_shadow_engine.py  -- multi-channel P_VI (different ODE family)
-
-REFERENCES
-----------
-[FIKN] Fokas, Its, Kapaev, Novokshenov, Painleve Transcendents, AMS 2006.
-[Kapaev] Kapaev, J. Phys. A 37 (2004) 11149-11167.  (Stokes data of P_I.)
-[JK] Joshi-Kitaev, Stud. Appl. Math. 107 (2001) 253-291.  (Tritronquee poles.)
-[CHT] Costin-Huang-Tanveer, Duke Math. J. 161 (2012) 1029-1086.  (Y(0).)
-[BMP] Bender-Mead-Pinsky, J. Math. Phys. 28 (1987) 509-513.  (Numerical P_I.)
-[GHM] Grava-Klein-Eggers, Nonlinearity 27 (2014) 2569-2604.  (Boutroux.)
+Painleve constants in this numerical module are the standard tritronquee
+normalization used by the existing tests: the first positive real pole
+2.37832054, Y(0) = -0.18755428, Y'(0) = 0.30490535, and
+alpha_Boutroux = 4*sqrt(2)/15.
 """
 
 from __future__ import annotations
 
 import math
-import cmath
-from dataclasses import dataclass, field
-from functools import lru_cache
-from typing import Any, Callable, Dict, List, Optional, Tuple
+from dataclasses import dataclass
+from fractions import Fraction
+from typing import Any, Dict, Optional, Tuple
 
 import numpy as np
 from scipy.integrate import solve_ivp
+
+from compute.lib.shadow_hierarchy_engine import (
+    finite_scalar_tau_identity as _finite_scalar_tau_identity,
+    hirota_bilinear_kappa_deformation as _hirota_bilinear_kappa_deformation,
+    kdv_residual_from_power as _kdv_residual_from_power,
+    stationary_riccati_diagnostics as _stationary_riccati_diagnostics,
+)
 
 
 # ============================================================================
 # Section 0: Universal constants (verified, multi-path)
 # ============================================================================
+
+LOCAL_FORMULA_SOURCES = {
+    'standard_family_constants': 'chapters/examples/landscape_census.tex:126',
+    'kernel_normalizations': 'chapters/examples/landscape_census.tex:180',
+    'concordance_kernel_normalizations': 'chapters/connections/concordance.tex:4097',
+    'finite_scalar_tau': 'compute/lib/shadow_hierarchy_engine.py:118',
+    'kdv_residual': 'compute/lib/shadow_hierarchy_engine.py:167',
+    'hirota_residual': 'compute/lib/shadow_hierarchy_engine.py:296',
+    'stationary_primary_line': 'compute/lib/shadow_hierarchy_engine.py:482',
+    'motivic_non_certification': 'compute/lib/motivic_shadow_partition_engine.py:764',
+    'tr_shadow_non_certification': 'compute/lib/topological_recursion_shadow_engine.py:996',
+}
+
+OBJECT_FIREWALLS = {
+    'A': 'input chiral algebra',
+    'B(A)': 'bar coalgebra T^c(s^{-1} Abar)',
+    'A^i': 'bar cohomology coalgebra H^* B(A)',
+    'A^!': 'Verdier or continuous-linear dual algebra',
+    'Z_ch^der(A)': 'derived chiral centre, computed by chiral Hochschild cochains',
+    'Omega(B(A))': 'bar-cobar inversion to A, not Koszul duality',
+}
+
+KERNEL_NORMALIZATIONS = {
+    'affine_raw_trace_form': 'k*Omega_tr/z',
+    'affine_KZ': 'Omega/((k+h^vee)*z)',
+    'Heisenberg': 'k/z',
+    'Virasoro': '(c/2)/z^3 + 2*T/z',
+}
 
 # Standard Painleve I tritronquee constants.
 # Source: Joshi-Kitaev (2001), Costin-Huang-Tanveer (2012), and independent
@@ -222,70 +115,160 @@ SECTOR_HALFWIDTH = 4.0 * math.pi / 5.0          # |arg x| < 4 pi/5
 
 
 # ============================================================================
-# Section 1: Family kappa values (no copying between families: AP1, AP39, AP48)
+# Section 1: Family kappa values
 # ============================================================================
 
 @dataclass(frozen=True)
 class KappaFamily:
     """Family-tagged kappa value with provenance."""
     name: str
-    kappa: float
-    source: str  # which formula was used (audit trail)
+    kappa: Fraction
+    source: str
 
 
-def kappa_virasoro(c: float) -> KappaFamily:
-    """Virasoro: kappa = c/2 (AP39, Virasoro-specific)."""
-    return KappaFamily(name=f"Virasoro_c={c}", kappa=c / 2.0,
-                       source="kappa(Vir_c) = c/2")
+def _as_fraction(value: Any) -> Fraction:
+    """Convert small exact inputs and decimal literals to Fraction."""
+    if isinstance(value, Fraction):
+        return value
+    if isinstance(value, int):
+        return Fraction(value, 1)
+    if isinstance(value, float):
+        return Fraction(str(value))
+    return Fraction(value)
 
 
-def kappa_heisenberg(k: float = 1.0) -> KappaFamily:
-    """Heisenberg: kappa = k (rank-1, level k).  AP1, AP48."""
-    return KappaFamily(name=f"Heisenberg_k={k}", kappa=float(k),
-                       source="kappa(H_k) = k")
+def kappa_virasoro(c: Any) -> KappaFamily:
+    """Virasoro: kappa = c/2."""
+    c_exact = _as_fraction(c)
+    return KappaFamily(name=f"Virasoro_c={c}", kappa=c_exact / 2,
+                       source="landscape_census.tex:142, kappa(Vir_c)=c/2")
+
+
+def kappa_heisenberg(k: Any = 1) -> KappaFamily:
+    """Rank-one Heisenberg: kappa = k."""
+    return KappaFamily(name=f"Heisenberg_k={k}", kappa=_as_fraction(k),
+                       source="landscape_census.tex:151, kappa(H_k)=k")
 
 
 def kappa_lattice(rank: int) -> KappaFamily:
-    """Lattice VOA: kappa = rank (AP48).  V_Niemeier has rank = 24."""
-    return KappaFamily(name=f"Lattice_rank={rank}", kappa=float(rank),
-                       source="kappa(V_Lambda) = rank(Lambda)")
+    """Lattice VOA: kappa = rank."""
+    return KappaFamily(name=f"Lattice_rank={rank}", kappa=Fraction(rank, 1),
+                       source="landscape_census.tex:1280, kappa(V_Lambda)=rank(Lambda)")
 
 
 def kappa_moonshine() -> KappaFamily:
-    """Moonshine module V^#: c = 24, but kappa is the bar-complex invariant.
-    For V^# the bar-complex calculation gives kappa = 12 (Virasoro contribution
-    only) per AP48.  We document BOTH conventions.
-
-    The user's question 'kappa = 24 (Monster)' refers to the Niemeier lattice
-    convention where kappa = rank = 24.  V^# itself has kappa = 12.
-    """
-    # Return the Niemeier-rank convention since the user explicitly mentioned 24.
-    return KappaFamily(name="V_natural_Niemeier_convention", kappa=24.0,
-                       source="kappa = rank(Niemeier lattice) = 24")
+    """Monster module V^natural: c = 24 and dim V_1 = 0, so kappa = 12."""
+    return KappaFamily(name="V_natural", kappa=Fraction(12, 1),
+                       source="landscape_census.tex:1280, kappa(V^natural)=12")
 
 
 def kappa_virasoro_self_dual() -> KappaFamily:
     """Virasoro self-dual point c = 13, kappa = 13/2.
 
-    Note: the user's question 'kappa = 13 (Virasoro self-dual)' refers to
-    the self-dual sum kappa + kappa' = c/2 + (26-c)/2 = 13.  At c = 13,
-    kappa = c/2 = 13/2, NOT 13.  The number 13 is the SUM, not kappa itself
-    (AP24).  We provide both:
-       - kappa(Vir_{c=13}) = 13/2 (the algebra at c=13)
-       - kappa_sum = 13 (the AP24 invariant)
+    The complementarity sum is kappa(Vir_c) + kappa(Vir_{26-c}) = 13.
+    At the fixed point c = 13, the individual scalar is 13/2.
     """
-    return KappaFamily(name="Virasoro_c=13_self_dual", kappa=6.5,
-                       source="kappa(Vir_13) = c/2 = 13/2; sum kappa+kappa'=13 (AP24)")
+    return KappaFamily(name="Virasoro_c=13_self_dual", kappa=Fraction(13, 2),
+                       source="landscape_census.tex:2534, kappa(Vir_13)=13/2")
 
 
-def kappa_AP24_sum() -> KappaFamily:
-    """The literal kappa = 13 the user asked about (the AP24 sum, not an algebra)."""
-    return KappaFamily(name="kappa_eq_13_literal", kappa=13.0,
-                       source="kappa+kappa' = 13 (Virasoro AP24); used as a benchmark")
+def kappa_virasoro_complementarity_sum() -> KappaFamily:
+    """Virasoro Verdier complementarity sum kappa(Vir_c)+kappa(Vir_{26-c})."""
+    return KappaFamily(name="Virasoro_complementarity_sum", kappa=Fraction(13, 1),
+                       source="landscape_census.tex:1801, c/2+(26-c)/2=13")
 
 
 # ============================================================================
-# Section 2: The rescaling theorem (the load-bearing identity)
+# Section 2: Finite scalar, residual, and stationary diagnostics
+# ============================================================================
+
+def finite_scalar_coefficient_identity(kappa: Any, g_max: int = 5) -> Dict[str, Any]:
+    """Exact finite-window scalar identity for log(tau_shadow).
+
+    This delegates to shadow_hierarchy_engine.py, the canonical compute
+    surface for the scalar coefficient lane.  The returned identity is
+    finite and formal; it does not certify analytic tau or hierarchy
+    membership.
+    """
+    result = _finite_scalar_tau_identity(_as_fraction(kappa), g_max)
+    result.update({
+        'analytic_tau_power_certified': False,
+        'hierarchy_membership_certified': False,
+        'painleve_from_scalar_tau_certified': False,
+        'non_certification_source': LOCAL_FORMULA_SOURCES['motivic_non_certification'],
+    })
+    return result
+
+
+def direct_kdv_residual(kappa: Any, g_max: int = 5) -> Dict[str, Any]:
+    """Exact KdV residual for the scalar power tau_KW^kappa.
+
+    If v satisfies u_t + 6*u*u_x + u_xxx = 0 and u = kappa*v, direct
+    substitution leaves 6*kappa*(kappa-1)*v*v_x.  This residual is a
+    failure diagnostic for arbitrary kappa, not a deformed hierarchy
+    construction.
+    """
+    k = _as_fraction(kappa)
+    result = _kdv_residual_from_power(k, g_max)
+    result.update({
+        'standard_kdv_residual_coefficient': 6 * k * (k - 1),
+        'standard_kdv_residual_formula': '6*kappa*(kappa-1)*u_KW*(u_KW)_x',
+        'certifies_kappa_deformed_kdv': False,
+        'certifies_analytic_tau_membership': False,
+    })
+    return result
+
+
+def direct_hirota_residual(kappa: Any, max_genus: int = 5) -> Dict[str, Any]:
+    """Exact Hirota obstruction for a scalar power tau_KW^kappa."""
+    k = _as_fraction(kappa)
+    result = _hirota_bilinear_kappa_deformation(k, max_genus)
+    result.update({
+        'hirota_quadratic_residual_factor': k * (k - 1),
+        'certifies_hirota_hierarchy': False,
+        'certifies_analytic_tau_membership': False,
+    })
+    return result
+
+
+def stationary_primary_line_diagnostics(
+    kappa: Any,
+    alpha: Any = 0,
+    S4: Any = 0,
+) -> Dict[str, Any]:
+    """Exact Q_L data for the stationary primary-line shadow diagnostic."""
+    result = _stationary_riccati_diagnostics(
+        _as_fraction(kappa),
+        _as_fraction(alpha),
+        _as_fraction(S4),
+    )
+    result.update({
+        'certifies_descendant_hierarchy': False,
+        'certifies_painleve_equation': False,
+        'object_firewall': OBJECT_FIREWALLS,
+        'kernel_normalizations': KERNEL_NORMALIZATIONS,
+    })
+    return result
+
+
+def painleve_certification_firewall(kappa: Any) -> Dict[str, Any]:
+    """Separate the conditional Painleve-I ODE from scalar tau data."""
+    k = _as_fraction(kappa)
+    return {
+        'kappa': k,
+        'finite_scalar_tau_identity': 'log(tau_shadow,scal^{<=G})=kappa log(tau_KW^{<=G})',
+        'conditional_painleve_ode_rescaling': k > 0,
+        'painleve_from_scalar_tau_certified': False,
+        'isomonodromic_structure_assumed_separately': True,
+        'descendant_hierarchy_assumed_separately': True,
+        'object_firewall': OBJECT_FIREWALLS,
+        'kernel_normalizations': KERNEL_NORMALIZATIONS,
+        'sources': LOCAL_FORMULA_SOURCES,
+    }
+
+
+# ============================================================================
+# Section 3: Conditional Painleve-I rescaling
 # ============================================================================
 
 def rescale_x_to_X(x: float, kappa: float) -> float:
@@ -341,7 +324,7 @@ def verify_rescaling_at(x: float, kappa: float, Y: float, Yprime: float,
 
 
 # ============================================================================
-# Section 3: Numerical solver for STANDARD Painleve I (then rescale)
+# Section 4: Numerical solver for standard Painleve I, then rescale
 # ============================================================================
 
 def standard_pi_rhs(t: float, state: np.ndarray) -> np.ndarray:
@@ -398,8 +381,8 @@ def solve_kappa_pi(x0: float, x1: float, y0: float, y0prime: float,
                    kappa: float, **kwargs) -> Dict[str, Any]:
     """Solve kappa-Painleve I directly:  y'' = (6/kappa) y^2 + x.
 
-    Provided for direct verification of the rescaling theorem.  In production,
-    one should solve standard P_I and then rescale.
+    This verifies the conditional ODE rescaling.  It does not assert that
+    tau_shadow is an analytic Painleve tau function.
     """
     if kappa == 0:
         raise ValueError("kappa = 0: equation degenerates to y'' = x (linear)")
@@ -433,7 +416,7 @@ def solve_kappa_pi(x0: float, x1: float, y0: float, y0prime: float,
 
 
 # ============================================================================
-# Section 4: Tritronquee (the unique pole-free solution)
+# Section 5: Tritronquee under the conditional rescaling
 # ============================================================================
 
 def tritronquee_initial_data() -> Tuple[float, float]:
@@ -500,7 +483,7 @@ def integrate_kappa_tritronquee(kappa: float, x_start: float = 0.0,
 
 
 # ============================================================================
-# Section 5: Stokes data (Kapaev) and the kappa-invariance
+# Section 6: Stokes data under positive real rescaling
 # ============================================================================
 
 # Kapaev's Stokes multipliers for the standard P_I.
@@ -514,10 +497,8 @@ def integrate_kappa_tritronquee(kappa: float, x_start: float = 0.0,
 #   y(x) ~ y_eq(x) (1 + sum b_k x^{-5k/2}) + s_k * exp(-S(x)) (1 + ...)
 # with S(x) = (4 sqrt(2)/15) (-x)^(5/2) the Boutroux WKB action.
 #
-# The TRITRONQUEE corresponds to s_0 = s_1 = s_2 = 0 (or equivalently, by the
-# cyclic relation, s_3 = s_4 = -1 and the rest determined).  Actually:
-# Kapaev's tritronquee has s_2 = 0 (the unique solution with no exponentially
-# small term in the central sector).
+# In Kapaev's normalization the tritronquee is characterized by s_2 = 0:
+# the central sector has no recessive exponential contribution.
 
 KAPAEV_TRITRONQUEE_STOKES = {
     's_0': 0.0,
@@ -531,19 +512,19 @@ KAPAEV_TRITRONQUEE_STOKES = {
 def kappa_stokes_multipliers(kappa: float) -> Dict[str, float]:
     """Stokes multipliers of the kappa-tritronquee.
 
-    Theorem (kappa-invariance of Stokes data): Since the rescaling
-    x = kappa^(1/5) X is a positive real homothety, it does NOT cross any
-    anti-Stokes ray and does NOT rotate the Stokes sectors.  Hence:
+    Theorem (kappa-invariance of Stokes data): the rescaling
+    x = kappa^(1/5) X is a positive real homothety.  It preserves the
+    anti-Stokes rays and the Stokes-sector labelling.  Hence:
 
         s_k(kappa-P_I tritronquee) = s_k(standard P_I tritronquee)
 
     for all k = 0,...,4.
 
-    Caveat (AP35): the Stokes multipliers are projectively invariant under
-    real positive rescaling of the independent variable.  Under a complex
-    rescaling x -> e^(i theta) x, sectors rotate by theta and Stokes data
-    transform by relabeling.  Since kappa^(1/5) is real positive for kappa > 0,
-    no rotation occurs.
+    The Stokes multipliers are projectively invariant under real positive
+    rescaling of the independent variable.  Under a complex rescaling
+    x -> e^(i theta) x, sectors rotate by theta and Stokes data transform
+    by relabeling.  Since kappa^(1/5) is real positive for kappa > 0, no
+    rotation occurs.
 
     Returns the same multipliers as the standard tritronquee.
     """
@@ -590,11 +571,11 @@ def trans_series_first_correction(x: float, kappa: float,
 
 
 # ============================================================================
-# Section 6: Dispersionless limit
+# Section 7: Algebraic dispersionless diagnostic
 # ============================================================================
 
 def dispersionless_limit_riccati(x: float, kappa: float) -> float:
-    """The dispersionless limit kappa -> infinity of kappa-P_I (Task 4).
+    """The algebraic large-kappa diagnostic of the conditional kappa-P_I.
 
     Drop y'' (dispersion) from y'' = (6/kappa) y^2 + x:
 
@@ -607,12 +588,9 @@ def dispersionless_limit_riccati(x: float, kappa: float) -> float:
     Whitham/Krichever dispersionless hierarchy this is the leading-order
     behaviour and the dispersive corrections build the full kappa-P_I.
 
-    Note: the user's task wrote y' = -(6/kappa) y^2 (a Riccati ODE) as the
-    dispersionless limit.  This is INCORRECT.  The correct dispersionless
-    limit is the ALGEBRAIC equilibrium (no derivative at all), which IS the
-    natural Riccati fixed-point.  The Riccati ODE y' = -(6/kappa) y^2
-    arises in a DIFFERENT context (a first-integral reduction), not from
-    dropping the dispersive y'' term in the leading large-kappa balance.
+    The derivative Riccati equation y' = -(6/kappa) y^2 belongs to a
+    different first-integral reduction.  Dropping y'' from the conditional
+    second-order equation gives the algebraic equilibrium above.
     """
     if x >= 0:
         return float('nan')
@@ -653,7 +631,7 @@ def verify_dispersionless_at_large_kappa(x: float, kappa_max: float = 1000.0,
 
 
 # ============================================================================
-# Section 7: Fredholm / kernel structure (Task 5)
+# Section 8: Fredholm and kernel boundary
 # ============================================================================
 
 def airy_kernel(x: float, y: float, s: float) -> float:
@@ -669,10 +647,9 @@ def airy_kernel(x: float, y: float, s: float) -> float:
         F_2(s) = det(I - K_Ai|_{[s, infty)}) = exp(-int_s^infty (x-s) q(x)^2 dx)
     where q is the Hastings-McLeod solution of Painleve II.
 
-    For Painleve I, the analogous Fredholm representation involves a 2x2
-    Riemann-Hilbert problem on the Boutroux contour, NOT the simple Airy kernel.
-    We provide the Airy kernel as a benchmark and a comparator (the user
-    asked about Tracy-Widom).
+    For Painleve I, the analogous representation uses a 2x2
+    Riemann-Hilbert problem on the Boutroux contour.  The Airy kernel is
+    included only as a benchmark against the soft-edge Tracy-Widom surface.
     """
     from scipy.special import airy
     Ai_x, Aip_x, _, _ = airy(x + s)
@@ -690,16 +667,12 @@ def pi_kernel_structure() -> Dict[str, str]:
     single irregular singular point at infinity of Poincare rank 7/2 (after
     the standard reduction).  The associated Riemann-Hilbert problem lives
     on a Stokes graph in the complex x-plane (5 anti-Stokes rays from
-    infinity).  The corresponding 'kernel' is NOT a simple Airy-type kernel;
-    it is a 2x2 matrix-valued kernel built from the unique solution to the
-    RH problem.
+    infinity).  The corresponding kernel is a 2x2 matrix-valued kernel built
+    from the unique solution to the RH problem.
 
-    Status: NOT a closed-form Fredholm representation a la Tracy-Widom.
-    The user's task asked specifically; we report the negative result with
-    the structural sketch.
-
-    AP41 / AP42 guard: we do NOT claim a non-existent Fredholm formula.
-    The Tracy-Widom distribution is for P_II (Hastings-McLeod), NOT P_I.
+    Status: the engine supplies no closed-form Fredholm representation of
+    Tracy-Widom type.  Tracy-Widom belongs to the P_II Hastings-McLeod
+    surface.
     """
     return {
         'painleve_type': 'P_I',
@@ -707,7 +680,7 @@ def pi_kernel_structure() -> Dict[str, str]:
         'poincare_rank': '7/2 (after standard scaling)',
         'rh_problem': '2x2 matrix RH on 5 anti-Stokes rays from infinity',
         'fredholm_status': (
-            'NOT a closed Tracy-Widom-style Fredholm determinant.  '
+            'No closed Tracy-Widom-style Fredholm determinant is supplied.  '
             'The natural object is the (2,3) minimal model conformal block, '
             'or the cubic-potential matrix model partition function near its '
             'critical point.'
@@ -728,8 +701,8 @@ def pi_kernel_structure() -> Dict[str, str]:
     }
 
 
-def tau_pi_minus_log_det_relation(x: float, kappa: float) -> Dict[str, float]:
-    """Sketch of the tau-function / log-determinant relation for kappa-P_I.
+def tau_pi_minus_log_det_relation(x: float, kappa: float) -> Dict[str, Any]:
+    """Conditional Painleve tau rescaling.
 
     The Painleve tau-function tau_PI(x) is defined by:
         d^2/dx^2 log tau_PI(x) = y(x)
@@ -740,39 +713,37 @@ def tau_pi_minus_log_det_relation(x: float, kappa: float) -> Dict[str, float]:
                         = kappa * log tau_std(kappa^(-1/5) x)  [up to linear in x]
 
     where the kappa^(2/5) factor comes from the double integral and the
-    Jacobian of the substitution.  Actually:
+    Jacobian of the substitution:
         d^2/dx^2 log tau_kappa = y(x) = kappa^(3/5) Y(X)
         with X = kappa^(-1/5) x.
         d^2 log tau_std/dX^2 = Y(X), and d/dx = kappa^(-1/5) d/dX, so
         d^2/dx^2 = kappa^(-2/5) d^2/dX^2.
-        Hence d^2/dx^2 [kappa^(3/5+2/5) log tau_std(X)] = kappa^(3/5) Y(X) Y(X)
-        Wait: kappa^(3/5+2/5) = kappa.
+        Hence d^2/dx^2 [kappa^(3/5+2/5) log tau_std(X)] = kappa^(3/5) Y(X).
         log tau_kappa(x) = kappa * log tau_std(X) + (linear in x).
 
     So tau_kappa(x) = (tau_std(X))^kappa * exp(linear in x).
-    THIS IS THE EXACT POWER LAW we expect from tau_shadow = tau_KW^kappa.
-
-    Cross-check: log tau is HARMONIC at x where the equation is regular,
-    and the kappa-power preserves harmonicity.  Confirmed.
-
-    Returns the relation as a dictionary of coefficients.
+    This identity is internal to the separately supplied Painleve-I
+    isomonodromic system.  It does not certify the scalar shadow power as
+    an analytic KW/KdV/Painleve tau function.
     """
     X = rescale_x_to_X(x, kappa)
     return {
         'X': X,
         'kappa_power': kappa,  # tau_kappa = tau_std^kappa (up to linear)
         'identity': 'log tau_kappa(x) = kappa * log tau_std(X) + linear',
-        'matches_shadow_KW': True,  # this IS the shadow-KW power identity
+        'painleve_tau_rescaling_certified': True,
+        'matches_shadow_KW': False,
+        'analytic_tau_power_certified': False,
+        'requires_isomonodromic_input': True,
     }
 
 
 # ============================================================================
-# Section 8: Isomonodromic deformation check
+# Section 9: Isomonodromic scope
 # ============================================================================
 
 def isomonodromic_check_kappa(kappa: float) -> Dict[str, Any]:
-    """Verify that kappa-P_I is isomonodromic and that the monodromy data
-    are kappa-independent (Task 6).
+    """Record the isomonodromic scope of the conditional kappa-P_I ODE.
 
     Argument:
     1. Standard P_I is isomonodromic for the JMU 2x2 system with one
@@ -780,13 +751,14 @@ def isomonodromic_check_kappa(kappa: float) -> Dict[str, Any]:
        reduction).  Reference: Jimbo-Miwa-Ueno, Physica 2D (1981).
     2. The kappa-rescaling X = kappa^(-1/5) x is a real positive change of
        variable.  In the JMU 2x2 system this acts as a conjugation by a
-       constant matrix on the irregular type, NOT a deformation of the
-       monodromy data.
+       constant matrix on the irregular type.  The monodromy data are
+       unchanged.
     3. Hence the formal monodromy and Stokes multipliers are unchanged.
     4. The deformation parameter (the 'time' of the JMU theory) for kappa-P_I
        is x itself.  As x varies, the monodromy is preserved.
 
-    Returns the structural verification.
+    The ODE inherits the standard P_I isomonodromic system by rescaling.
+    The scalar shadow identity does not supply that system by itself.
     """
     return {
         'kappa': kappa,
@@ -805,30 +777,34 @@ def isomonodromic_check_kappa(kappa: float) -> Dict[str, Any]:
         ),
         'stokes_data_kappa_dependent': False,
         'wkb_action_kappa_dependent': True,  # S(x) ~ kappa^(-1/2) (-x)^(5/2)
+        'ode_isomonodromic_if_standard_pi_supplied': True,
+        'tau_shadow_isomonodromic_certified': False,
+        'requires_external_jmu_system': True,
     }
 
 
 # ============================================================================
-# Section 9: Random matrix interpretation (Task 7)
+# Section 10: Random matrix boundary
 # ============================================================================
 
 def beta_ensemble_identification(kappa: float) -> Dict[str, Any]:
-    """Map kappa to the conventional beta-ensemble parameter (Task 7).
+    """Map kappa to the conventional beta-ensemble parameter.
 
-    The user's question conflates two different things:
+    Two parameters must be separated:
     1. The Dyson beta = 1, 2, 4 (orthogonal/unitary/symplectic) ensembles.
        These have soft-edge tail F_beta(s) governed by Painleve II
-       Hastings-McLeod, NOT P_I.
+       Hastings-McLeod.
     2. The 'kappa' of the shadow obstruction tower, equal to c/2 for Virasoro,
-       k for Heisenberg, rank for lattice, etc.  This is NOT the Dyson beta.
+       k for Heisenberg, rank for lattice, etc.  This is a shadow parameter,
+       distinct from Dyson beta.
 
-    There is NO standard beta = 13 ensemble.  However, there are several
+    There is no standard beta = 13 ensemble.  However, there are several
     bridges:
     a. The Stieltjes-Wigert / Mehta beta-ensemble for general beta > 0 has
        eigenvalue density obeying a beta-deformed Selberg integral.  At
        beta = kappa, the soft-edge tail is governed by a 'beta-Tracy-Widom'
-       distribution, which for general beta is NOT simply expressible via
-       Painleve II.
+       distribution whose general-beta expression is not a simple Painleve II
+       formula.
     b. For Painleve I specifically, the natural matrix model is the cubic
        potential V(M) = M^2/2 + g M^4/4 (or similar) at its multi-critical
        point.  The free energy at this critical point obeys P_I.  The
@@ -841,7 +817,7 @@ def beta_ensemble_identification(kappa: float) -> Dict[str, Any]:
        transcendents involved are P_II (HM) variants, not P_I.
 
     Conclusion: there is NO 'kappa = 13 random matrix ensemble' in the
-    standard sense.  The shadow kappa = 13 (Virasoro self-dual sum) is
+    standard sense.  The shadow kappa = 13 (Virasoro complementarity sum) is
     a CHIRAL ALGEBRA invariant, not a random matrix ensemble parameter.
     """
     standard_beta_kappas = {
@@ -858,14 +834,14 @@ def beta_ensemble_identification(kappa: float) -> Dict[str, Any]:
         'is_standard_dyson': any(abs(kk - kappa) < 1e-9 for kk in standard_beta_kappas.values()),
         'painleve_type_for_soft_edge': 'P_II Hastings-McLeod (Tracy-Widom)',
         'note': (
-            'P_I (this engine) is NOT the soft-edge transcendent.  '
-            'P_I governs the (2,3) MINIMAL MODEL / cubic critical matrix '
-            'model.  No standard ensemble has beta = 13 or 24.'
+            'P_I in this engine is the cubic-critical/minimal-model '
+            'transcendent.  The soft-edge Tracy-Widom surface is P_II '
+            'Hastings-McLeod.  No standard ensemble has beta = 13 or 24.'
         ),
         'shadow_kappa_meaning': (
             'kappa = c/2 (Virasoro), k (Heisenberg), rank (lattice).  '
-            'NOT a Dyson beta.  The number 13 is the AP24 self-dual sum, '
-            'not a beta value.'
+            'It is a shadow parameter distinct from Dyson beta.  The number '
+            '13 is the Virasoro complementarity sum, not a beta value.'
         ),
     }
 
@@ -904,7 +880,7 @@ def pi_matrix_model_correspondence(kappa: float) -> Dict[str, Any]:
 
 
 # ============================================================================
-# Section 10: Multi-path verification helpers
+# Section 11: Multi-path verification helpers
 # ============================================================================
 
 def verify_tritronquee_initial_data_by_shooting(
@@ -997,33 +973,44 @@ def cross_verify_kappa_pi_via_rescaling(kappa: float, x_eval: float = -1.0
 
 
 # ============================================================================
-# Section 11: Top-level summary report
+# Section 12: Top-level summary report
 # ============================================================================
 
 def kappa_pi_summary_for_kappa(kappa: float) -> Dict[str, Any]:
     """Top-level summary of kappa-P_I results for a given kappa value."""
     return {
         'kappa': kappa,
+        'certification_firewall': painleve_certification_firewall(kappa),
+        'finite_scalar_identity': finite_scalar_coefficient_identity(kappa, g_max=3),
+        'kdv_residual': direct_kdv_residual(kappa, g_max=3),
+        'hirota_residual': direct_hirota_residual(kappa, max_genus=3),
         'tritronquee_initial': kappa_tritronquee_initial_data(kappa),
         'first_pole_positive_real': kappa_tritronquee_first_pole(kappa),
         'asymptotic_at_x_neg_10': kappa_tritronquee_asymptotic(-10.0, kappa),
         'wkb_action_at_x_neg_10': kappa_wkb_action_along_Boutroux(-10.0, kappa),
         'stokes_multipliers': kappa_stokes_multipliers(kappa),
-        'isomonodromic': isomonodromic_check_kappa(kappa)['isomonodromic'],
+        'ode_isomonodromic_if_standard_pi_supplied': (
+            isomonodromic_check_kappa(kappa)['ode_isomonodromic_if_standard_pi_supplied']
+        ),
+        'tau_shadow_isomonodromic_certified': (
+            isomonodromic_check_kappa(kappa)['tau_shadow_isomonodromic_certified']
+        ),
         'beta_match': beta_ensemble_identification(kappa)['standard_beta_match'],
         'matrix_model': pi_matrix_model_correspondence(kappa)['minimal_model'],
     }
 
 
 def landscape_summary() -> Dict[str, Dict[str, Any]]:
-    """Summary across the user's three special kappa values.
+    """Summary across standard comparison values.
 
     kappa = 1: standard P_I (Witten-Kontsevich, GUE / beta=2)
-    kappa = 13: Virasoro AP24 self-dual sum (NOT a standard ensemble)
-    kappa = 24: Niemeier rank / Monster moonshine (NOT a standard ensemble)
+    kappa = 12: Monster module V^natural
+    kappa = 13: Virasoro complementarity sum
+    kappa = 24: Leech lattice VOA
     """
     return {
         'kappa_1_standard_PI': kappa_pi_summary_for_kappa(1.0),
-        'kappa_13_AP24_sum': kappa_pi_summary_for_kappa(13.0),
-        'kappa_24_Niemeier_Monster': kappa_pi_summary_for_kappa(24.0),
+        'kappa_12_moonshine': kappa_pi_summary_for_kappa(12.0),
+        'kappa_13_virasoro_complementarity_sum': kappa_pi_summary_for_kappa(13.0),
+        'kappa_24_leech_lattice': kappa_pi_summary_for_kappa(24.0),
     }

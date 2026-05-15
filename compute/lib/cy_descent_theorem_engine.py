@@ -56,10 +56,11 @@ HH^*(K3 x E) = HH^*(K3) tensor HH^*(E) by Kunneth for HH.
 K3 x E is a CY3 (c_1 = 0, dim = 3), so:
     HH^n(K3 x E) = bigoplus_{q-p=n} H^p(Omega^q_{K3 x E})
 
-Total: sum h^{p,q}(K3 x E) = 2 * chi(K3) = 2 * 24 = 48?
-No -- must compute from Kunneth on Hodge numbers.
+Total Hochschild dimension is computed from Kunneth on Hodge numbers:
+    sum h^{p,q}(K3 x E) = 96.
+This is separate from the even K-theory rank K_0(K3 x E) = 48.
 
-=== 5. QUIVER CHART DESCENT (the hard case) ===
+=== 5. QUIVER CHART DESCENT FOR ADE SINGULARITIES ===
 
 Replace smooth open sets with formal neighborhoods of singularities.
 Each ADE singularity gives Perf(Jac(Q,W)), the perfect complexes
@@ -76,14 +77,23 @@ For A_1 singularity (C^2/Z_2):
   - Cocycle: M tensor_B M^vee = id (Morita invertibility)
   - This closes because the A_1 flop is involutive.
 
-BEILINSON WARNINGS
-==================
-AP1:  Recompute every formula from first principles.
-AP10: Cross-verify all numerical values by 3+ paths.
-AP14: Descent for D^b != descent for QCoh != descent for IndCoh.
-AP25: B(A) is a coalgebra; D_Ran(B(A)) = B(A!) is an algebra.
-AP38: Literature conventions for Hochschild: we use cohomological.
-AP42: Descent holds PROVED (Toen/Lurie), not just "morally."
+OBJECT AND SCOPE GUARDRAILS
+===========================
+B(A) = T^c(s^{-1} bar A) is a conilpotent dg coalgebra. Its
+cohomology A^i = H^*(B(A)) is the Koszul dual coalgebra. The Koszul
+dual algebra A^! is obtained from A^i only after Verdier/linear duality
+under finite-type or completed hypotheses. This engine never constructs
+A^! directly from the bar coalgebra without the intervening A^i and the
+duality hypothesis.
+
+Omega(B(A)) -> A is bar-cobar inversion, not the construction of A^!.
+The chiral derived centre Z_ch^der(A) = ChirHoch^*(A,A) is the bulk
+derived centre; it is distinct from B(A), A^i, and A^!.
+
+The descent checks below concern Cech descent for D^b(Coh), QCoh, and
+Perf in the stated scheme-theoretic settings. They do not assert
+descent for IndCoh or for the chiral derived centre. Hochschild
+cohomology is cohomologically graded throughout.
 
 Manuscript references:
     cy_cech_descent_engine.py (basic Cech descent framework)
@@ -143,9 +153,12 @@ class DescentCondition:
     The hierarchy (from weakest to strongest):
         fpqc > fppf > etale > Nisnevich > Zariski
 
-    For coherent sheaves on separated schemes, Zariski suffices.
+    These predicates are sufficient-condition guards for this engine,
+    not a universal theorem about all sheaf theories. For coherent
+    sheaves on separated schemes, Zariski suffices.
     For quasi-coherent sheaves, fpqc suffices (Grothendieck).
-    For dg categories (Toen): Zariski for D^b, etale for D^perf.
+    For perfect complexes this module keeps the conservative
+    etale-or-finer guard used by the existing compatibility tests.
     """
 
     ZARISKI = "zariski"
@@ -432,13 +445,9 @@ def hodge_k3_times_e() -> Dict[Tuple[int, int], int]:
       dim_C = 3, c_1 = 0 (CY3)
       h^{p,q} computed via Kunneth from K3 and E.
 
-    Expected Hodge diamond (CY3):
-      h^{0,0} = 1
-      h^{1,0} = h^{0,1} = 1 (from E)
-      h^{2,0} = h^{0,2} = 1+1 = 2 (from K3's h^{2,0}*h^{0,0} + K3's h^{1,0}*E's h^{1,0} = 1+0 = 1... recompute)
-
-    Let me compute properly:
-      h^{p,q}(K3 x E) = sum_{a+c=p, b+d=q} h^{a,b}(K3) * h^{c,d}(E)
+    Kunneth formula:
+      h^{p,q}(K3 x E)
+        = sum_{a+c=p, b+d=q} h^{a,b}(K3) * h^{c,d}(E).
 
     K3 nonzero: (0,0):1, (2,0):1, (1,1):20, (0,2):1, (2,2):1
     E nonzero: (0,0):1, (1,0):1, (0,1):1, (1,1):1
@@ -607,7 +616,8 @@ class DescentSSProduct:
 
         chi(E_1) = sum (-1)^{p+q} E_1^{p,q}
 
-        This must equal chi(HH^*(K3 x E)) by spectral sequence convergence.
+        Spectral sequence convergence identifies this Euler
+        characteristic with chi(HH^*(K3 x E)).
         """
         return sum((-1) ** (p + q) * d
                    for (p, q), d in self.e1_page().items())
@@ -735,9 +745,9 @@ class QuiverChartDescent:
         For cyclic A_{n-1}: dim Pi = n^3 (Crawley-Boevey).
         General: dim Pi = |Gamma| * (r+1)^2 where r+1 = n_irreps.
 
-        WAIT: the formula is dim Pi = |Gamma| * |vertices|^2?
-        No. For A_{n-1}: Gamma = Z/n, |Gamma| = n, vertices = n.
-        dim Pi = n^3 = n * n^2 = |Gamma| * |vertices|^2.
+        Equivalently, dim Pi = |Gamma| * |vertices|^2. For
+        A_{n-1}: Gamma = Z/n, |Gamma| = n, vertices = n, hence
+        dim Pi = n^3.
 
         Check A_1: |Z/2| = 2, vertices = 2. dim = 2 * 4 = 8.
         The path algebra of the double of the A_1 quiver
@@ -895,9 +905,9 @@ def verify_quiver_cocycle_a1() -> Dict[str, Any]:
 
     For A_1 = C^2/Z_2:
     - McKay quiver: 2 vertices (trivial + sign rep), arrows a:0->1, b:1->0
-    - Preprojective algebra: Pi = kQ_dbl / (ab - ba, a*b* - b*a*)
-      ... actually for A_1: the preprojective relation is ab = ba
-      (the two paths around the double quiver are equal).
+    - Preprojective algebra: Pi is the doubled-quiver algebra modulo
+      the A_1 preprojective relation identifying the two length-two
+      paths around the double quiver.
     - Transition bimodule M: the restriction to the punctured disk
     - M is invertible because the A_1 flop is an involution
 
@@ -931,7 +941,7 @@ def verify_quiver_cocycle_a1() -> Dict[str, Any]:
     # For A_1 resolution (blowup of A_1 singularity):
     # The resolution has H^0 = C, H^2 = C (from the exceptional P^1), H^4 = C.
     # So rk H^*(resolution) = 3 (but this is the resolution, not the singular space).
-    # For our purposes, the cocycle check passes.
+    # The cocycle check used here is Morita invertibility.
     cocycle_closes = qcd.bimodule_cocycle_closes()
 
     # Path 4: Cartan matrix determinant

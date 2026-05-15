@@ -1,4 +1,4 @@
-r"""Deep Beilinson rectification of conj:master-bv-brst against recent literature.
+r"""BV/BRST rectification compute surface for conj:master-bv-brst.
 
 LITERATURE UNDER REVIEW:
   [SiLi25]  Si Li, "Quantization and Algebraic Index" (arXiv:2511.12875, Nov 2025)
@@ -15,18 +15,14 @@ THE CONJECTURE (conj:master-bv-brst):
   The BV-BRST complex of a 2d chiral QFT on a genus-g surface equals
   the bar complex B(A) at genus g.  Proved at genus 0 (thm:bv-bar-geometric,
   CG17), proved for Heisenberg at all genera at the scalar level
-  (thm:heisenberg-bv-bar-all-genera).  For interacting theories at
-  genus >= 1: OPEN (the genuine chain-level identification).
+  (thm:heisenberg-bv-bar-all-genera).  In genus >= 1 the ordinary
+  chain-level claim is ambient-sensitive: proved for G/L, conditional
+  for C, false for M in bounded direct-sum chains, and proved in D^co.
 
-THREE OBSTRUCTIONS (prop:chain-level-three-obstructions):
-  (1) Propagator regularity: BV uses distributional P(z,w) = dbar^{-1} delta;
-      bar uses algebraic d log E(z,w).
-  (2) Moduli dependence: BV Green function depends on complex structure of
-      Sigma_g; bar propagator depends on Sigma_g through the prime form.
-  (3) Higher-arity coupling: for non-Gaussian theories, the BV Laplacian
-      contracts field-antifield pairs through interaction vertices, producing
-      harmonic-propagator corrections that do not factor through the sewing
-      kernel alone.
+THREE CHAIN-LEVEL OBSTRUCTIONS (prop:chain-level-three-obstructions):
+  (1) Homotopy-transfer correction from the SDR data.
+  (2) Non-abelian sewing kernel at genus >= 2.
+  (3) Curved A_infty structure vs flat BV operator.
 
 WHAT EACH PAPER CONTRIBUTES:
 
@@ -36,7 +32,7 @@ WHAT EACH PAPER CONTRIBUTES:
     Thm 4.4 (UV finiteness): for chiral deformations of beta*gamma,
     the theory is UV finite.  Thm 4.10 (elliptic trace): genus-1
     quasi-isomorphism from chiral chains to BV observables.
-    STATUS: confirms proved results; does NOT prove conj:master-bv-brst.
+    STATUS: confirms proved results and leaves conj:master-bv-brst open.
     The L_infty conjecture would give structural agreement; proving
     coefficient match requires additional input.
 
@@ -45,8 +41,8 @@ WHAT EACH PAPER CONTRIBUTES:
     genuinely new result that removes Obstruction 1 (propagator regularity)
     at the PERTURBATIVE level: UV finiteness means no counterterms are needed,
     so the effective action I[L] is well-defined without regularization
-    ambiguity.  However, it does NOT address Obstruction 3 (the chain-level
-    identification of I[L] with Theta_A).
+    ambiguity. Obstruction 3, the chain-level identification of I[L] with
+    Theta_A, remains separate.
 
   [ESW20] Classification of all twists of N=1,2,4 SYM in dimensions 2-10.
     Table 3.3: the holomorphic twist of 4d N=2 SYM on C^2 gives a 2d
@@ -71,28 +67,12 @@ WHAT EACH PAPER CONTRIBUTES:
     the BV and bar complexes are simultaneously well-defined.  However,
     the identification between them is not established.
 
-OBSTRUCTION ANALYSIS UPDATE:
-
-  Obstruction 1 (Propagator regularity):
-    PARTIALLY ADDRESSED by [WG24].  UV finiteness means the perturbative
-    expansion converges without counterterms, so the BV propagator
-    produces well-defined Feynman integrals.  The remaining gap: the
-    ALGEBRAIC residue extraction on FM (our bar side) and the ANALYTIC
-    regularized integral (BV side) produce the same answer.  This is
-    plausible but unproved at genus >= 2.
-
-  Obstruction 2 (Moduli dependence):
-    RESOLVED for both frameworks.  The Quillen anomaly formula
-    curv(h_Q) = -2pi*i*c_1(E) is universal.  [SiLi25] Thm 4.10
-    provides the elliptic (genus-1) case; the universal curve argument
-    of thm:heisenberg-bv-bar-all-genera covers all genera.
-
-  Obstruction 3 (Higher-arity coupling):
-    NOT ADDRESSED by any paper.  This remains the deepest obstruction.
-    [SiLi25]'s L_infty conjecture gives structural matching (both
-    BV and bar are controlled by L_infty algebras) but not coefficient
-    matching.  [WG24]'s UV finiteness ensures the BV side converges,
-    but does not identify the BV effective action with Theta_A.
+ORDINARY CHAIN-LEVEL STATUS:
+  Genus 0 is proved by algebraic BRST/bar comparison.  In genus >= 1,
+  the ordinary chain-level identification is proved for classes G and L,
+  conditional for class C on harmonic decoupling, and false for class M.
+  The coderived comparison is broader: BV=bar holds in D^co for all four
+  shadow classes under the chirally Koszul hypotheses.
 
 BETA-GAMMA BV DIFFERENTIAL AT GENUS 1:
   The beta-gamma system has OPE b(z)g(w) ~ k/(z-w).
@@ -103,15 +83,15 @@ BETA-GAMMA BV DIFFERENTIAL AT GENUS 1:
     d_bar = sum_n k * n * q^n/(1-q^n) * (contraction on bar generators)
   The scalar trace gives F_1 = kappa * lambda_1^FP = k/24.
   MATCH: both give k/24 at the scalar level.  The chain-level
-  identification requires matching the full mode algebra, not just
-  the trace.
+  identification requires matching the full mode algebra beyond the trace.
 
-CONVENTIONS (from signs_and_shifts.tex, AUTHORITATIVE):
+CONVENTIONS:
   - Cohomological grading: |d| = +1
   - QME: hbar * Delta * S + (1/2){S,S} = 0 (factor 1/2)
   - Bar uses DESUSPENSION: |s^{-1}v| = |v| - 1 (AP45)
   - The bar propagator is d log E(z,w), weight 1 in both variables (AP27)
-  - kappa(H_k) = k (AP48). kappa(Vir_c) = c/2. kappa(bg_k) = k.
+  - kappa(H_k) = k. kappa(Vir_c) = c/2.
+  - kappa(beta-gamma_lambda) = 6*lambda^2 - 6*lambda + 1.
   - lambda_1^FP = 1/24.
   - eta(q) = q^{1/24} * prod(1-q^n) (AP46)
 
@@ -170,6 +150,63 @@ class AlgebraData:
     conformal_weights: tuple = (1,)  # conformal weights of generators
 
 
+@dataclass(frozen=True)
+class ComparisonScopeWitness:
+    """A computable guard against promoting diagnostics across ambients."""
+    ambient: str
+    genus: str
+    shadow_class: str
+    status: str
+    hypotheses: Tuple[str, ...]
+    witness: str
+    proves_full_bv_brst_bar_equivalence: bool
+
+
+@dataclass(frozen=True)
+class ObjectRole:
+    """Separate the five objects used in the bar/Koszul/center package."""
+    symbol: str
+    construction: str
+    role: str
+    not_equal_to: Tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class KernelNormalizationWitness:
+    """Trace-form collision kernel versus auxiliary/KZ normalization."""
+    family: str
+    trace_collision_kernel: str
+    auxiliary_kernel: str
+    kappa: object
+    level_zero_collision_coefficient: object
+    level_zero_kappa: object
+    critical_collision_coefficient: Optional[object]
+    critical_kappa: Optional[object]
+    not_interchangeable: bool
+
+
+@dataclass(frozen=True)
+class DiagnosticPromotionGuard:
+    """Finite or scalar diagnostic and the exact claim it can support."""
+    diagnostic: str
+    supports: str
+    does_not_support: str
+    missing_witnesses: Tuple[str, ...]
+    proves_full_bv_brst_bar_equivalence: bool = False
+
+
+AFFINE_TYPE_TABLE = {
+    'sl2': {'dim': 3, 'hv': 2, 'rank': 1},
+    'sl3': {'dim': 8, 'hv': 3, 'rank': 2},
+    'sl4': {'dim': 15, 'hv': 4, 'rank': 3},
+}
+
+
+def affine_lie_type_info(lie_type: str = 'sl2') -> Dict[str, int]:
+    """Return the local affine type data used by this engine."""
+    return AFFINE_TYPE_TABLE.get(lie_type, AFFINE_TYPE_TABLE['sl2'])
+
+
 def heisenberg_data(k=None):
     """Heisenberg H_k (class G, shadow depth 2)."""
     if k is None:
@@ -201,7 +238,12 @@ def virasoro_data(c=None):
 
 
 def betagamma_data(k=None):
-    """Beta-gamma system (class C, shadow depth 4)."""
+    """Rank/normalization-k weight-(1,0) beta-gamma system.
+
+    Here k counts identical weight-(1,0) beta-gamma pairs; it is not a
+    Kac-Moody level.  The general lambda-family normalization is
+    kappa(beta-gamma_lambda) = 6*lambda^2 - 6*lambda + 1.
+    """
     if k is None:
         k = Symbol('k')
     return AlgebraData(
@@ -215,16 +257,39 @@ def betagamma_data(k=None):
     )
 
 
+def betagamma_lambda_kappa(lambda_weight=None, rank=1):
+    """kappa(beta-gamma_lambda) = rank*(6*lambda^2 - 6*lambda + 1)."""
+    if lambda_weight is None:
+        lambda_weight = Symbol('lambda')
+    return rank * (6 * lambda_weight ** 2 - 6 * lambda_weight + 1)
+
+
+def bc_lambda_kappa(lambda_weight=None, rank=1):
+    """kappa(bc_lambda) is the negative beta-gamma lambda invariant."""
+    return -betagamma_lambda_kappa(lambda_weight, rank)
+
+
+def betagamma_lambda_data(lambda_weight=None, rank=1):
+    """Beta-gamma lambda-family data from the landscape census."""
+    if lambda_weight is None:
+        lambda_weight = Symbol('lambda')
+    kappa_val = betagamma_lambda_kappa(lambda_weight, rank)
+    return AlgebraData(
+        name='beta-gamma_lambda',
+        kappa=kappa_val,
+        central_charge=2 * kappa_val,
+        shadow_depth=4,
+        shadow_class='C',
+        dim_generators=2 * rank,
+        conformal_weights=(lambda_weight, 1 - lambda_weight),
+    )
+
+
 def affine_km_data(lie_type='sl2', k=None):
     """Affine Kac-Moody (class L, shadow depth 3)."""
     if k is None:
         k = Symbol('k')
-    type_table = {
-        'sl2': {'dim': 3, 'hv': 2, 'rank': 1},
-        'sl3': {'dim': 8, 'hv': 3, 'rank': 2},
-        'sl4': {'dim': 15, 'hv': 4, 'rank': 3},
-    }
-    info = type_table.get(lie_type, {'dim': 3, 'hv': 2, 'rank': 1})
+    info = affine_lie_type_info(lie_type)
     dim_g = info['dim']
     hv = info['hv']
     kappa_val = Rational(dim_g) * (k + hv) / (2 * hv)
@@ -238,6 +303,225 @@ def affine_km_data(lie_type='sl2', k=None):
         dim_generators=dim_g,
         conformal_weights=(1,) * dim_g,
     )
+
+
+def object_role_table() -> Dict[str, ObjectRole]:
+    """The five-object separation used by the BV/bar comparison."""
+    return {
+        'A': ObjectRole(
+            symbol='A',
+            construction='input chiral algebra',
+            role='boundary algebra whose OPE data define the bar differential',
+            not_equal_to=('B(A)', 'A^i', 'A^!', 'Z_der_ch(A)'),
+        ),
+        'B(A)': ObjectRole(
+            symbol='B(A)',
+            construction='T^c(s^{-1} Abar) with the chiral bar differential',
+            role='bar coalgebra classifying twisting morphisms',
+            not_equal_to=('A', 'A^i', 'A^!', 'Z_der_ch(A)'),
+        ),
+        'A^i': ObjectRole(
+            symbol='A^i',
+            construction='H^*(B(A)) on the Koszul locus',
+            role='Koszul-dual coalgebra extracted from bar cohomology',
+            not_equal_to=('A', 'B(A)', 'A^!', 'Z_der_ch(A)'),
+        ),
+        'A^!': ObjectRole(
+            symbol='A^!',
+            construction='(A^i)^vee by the finite-type chiral pairing',
+            role='Koszul-dual algebra obtained after Verdier duality',
+            not_equal_to=('A', 'B(A)', 'A^i', 'Z_der_ch(A)'),
+        ),
+        'Z_der_ch(A)': ObjectRole(
+            symbol='Z_der_ch(A)',
+            construction='H^*(C_ch^bullet(A,A), delta)',
+            role='cochain-level closed-sector algebra / derived chiral center',
+            not_equal_to=('A', 'B(A)', 'A^i', 'A^!'),
+        ),
+        'Omega(B(A))': ObjectRole(
+            symbol='Omega(B(A))',
+            construction='cobar of the bar coalgebra',
+            role='bar-cobar inversion recovering A, not Koszul duality',
+            not_equal_to=('A^!', 'Z_der_ch(A)'),
+        ),
+    }
+
+
+def affine_kernel_normalization(lie_type='sl2', k=None) -> KernelNormalizationWitness:
+    """Affine trace-form collision kernel and KZ kernel are distinct."""
+    if k is None:
+        k = Symbol('k')
+    info = affine_lie_type_info(lie_type)
+    dim_g = info['dim']
+    hv = info['hv']
+    kappa_val = Rational(dim_g) * (k + hv) / (2 * hv)
+    return KernelNormalizationWitness(
+        family=f'affine {lie_type}',
+        trace_collision_kernel='k*Omega_tr/z',
+        auxiliary_kernel='Omega/((k+h^vee)*z)',
+        kappa=kappa_val,
+        level_zero_collision_coefficient=0,
+        level_zero_kappa=Rational(dim_g, 2),
+        critical_collision_coefficient=-hv,
+        critical_kappa=0,
+        not_interchangeable=True,
+    )
+
+
+def standard_collision_kernels(k=None, c=None) -> Dict[str, str]:
+    """Collision-residue kernels in the landscape-census normalization."""
+    if k is None:
+        k = Symbol('k')
+    if c is None:
+        c = Symbol('c')
+    return {
+        'Heisenberg': f'{k}/z',
+        'affine_trace_form': 'k*Omega_tr/z',
+        'Virasoro': f'({c}/2)/z^3 + 2*T/z',
+    }
+
+
+def bv_brst_bar_scope(
+    shadow_class: str,
+    genus: int,
+    ambient: str = 'ordinary_chain',
+    harmonic_decoupling: bool = False,
+) -> ComparisonScopeWitness:
+    """Classify the BV/BRST/bar claim by genus and ambient."""
+    if genus < 0:
+        raise ValueError(f"genus must be >= 0, got {genus}")
+
+    cls = shadow_class.upper()
+    if cls not in {'G', 'L', 'C', 'M'}:
+        raise ValueError(f"unknown shadow class {shadow_class!r}")
+
+    if ambient == 'coderived':
+        return ComparisonScopeWitness(
+            ambient=ambient,
+            genus='all',
+            shadow_class=cls,
+            status='PROVED_IN_DCO',
+            hypotheses=('chirally Koszul algebra', 'coacyclic-cone surface'),
+            witness='delta_r is coderived-exact in D^co',
+            proves_full_bv_brst_bar_equivalence=True,
+        )
+
+    if ambient in {'completed_pro', 'j_adic', 'filtered_weight_completed'}:
+        return ComparisonScopeWitness(
+            ambient=ambient,
+            genus='all' if genus >= 1 else '0',
+            shadow_class=cls,
+            status='PROVED_IN_COMPLETED_PRESENTATION',
+            hypotheses=(
+                'Mittag-Leffler pro-object or J-adic/topological completion',
+                'filtered weight-completed presentation',
+            ),
+            witness='completed chain comparison transports the MC element',
+            proves_full_bv_brst_bar_equivalence=True,
+        )
+
+    if ambient != 'ordinary_chain':
+        raise ValueError(f"unknown ambient {ambient!r}")
+
+    if genus == 0:
+        return ComparisonScopeWitness(
+            ambient=ambient,
+            genus='0',
+            shadow_class=cls,
+            status='PROVED',
+            hypotheses=('PVA descent', 'algebraic BRST/bar comparison'),
+            witness='genus-0 convolution algebras and MC elements agree',
+            proves_full_bv_brst_bar_equivalence=True,
+        )
+
+    if cls == 'G':
+        return ComparisonScopeWitness(
+            ambient=ambient,
+            genus='>=1',
+            shadow_class=cls,
+            status='PROVED',
+            hypotheses=('Gaussian algebra', 'no interaction vertices'),
+            witness='P_harm decouples and the scalar tower is kappa*lambda_g^FP',
+            proves_full_bv_brst_bar_equivalence=True,
+        )
+
+    if cls == 'L':
+        return ComparisonScopeWitness(
+            ambient=ambient,
+            genus='>=1',
+            shadow_class=cls,
+            status='PROVED_WITH_HYPOTHESES',
+            hypotheses=(
+                'non-critical affine Lie-current lane',
+                'Jacobi identity kills the quartic shadow',
+                'non-abelian sewing kernel controlled at chain level',
+            ),
+            witness='class L has r_max=3 and S_4=0',
+            proves_full_bv_brst_bar_equivalence=True,
+        )
+
+    if cls == 'C':
+        return ComparisonScopeWitness(
+            ambient=ambient,
+            genus='>=1',
+            shadow_class=cls,
+            status='PROVED_WITH_HARMONIC_DECOUPLING'
+            if harmonic_decoupling else 'CONDITIONAL_ON_HARMONIC_DECOUPLING',
+            hypotheses=('harmonic decoupling for the contact term',),
+            witness='Q_contact must vanish after transfer to the BV operator',
+            proves_full_bv_brst_bar_equivalence=harmonic_decoupling,
+        )
+
+    return ComparisonScopeWitness(
+        ambient=ambient,
+        genus='>=1',
+        shadow_class=cls,
+        status='FALSE_IN_ORDINARY_CHAIN_AMBIENT',
+        hypotheses=('ordinary bounded direct-sum chain ambient',),
+        witness='delta_4 proportional to Q_contact*m_0 is not a boundary',
+        proves_full_bv_brst_bar_equivalence=False,
+    )
+
+
+def finite_diagnostic_promotion_guard(diagnostic: str) -> DiagnosticPromotionGuard:
+    """Return the exact claim supported by a finite diagnostic."""
+    guards = {
+        'F1_scalar': DiagnosticPromotionGuard(
+            diagnostic='F1_scalar',
+            supports='genus-1 scalar equality F_1 = kappa/24',
+            does_not_support='chain-level BV/BRST/bar equivalence',
+            missing_witnesses=(
+                'chain map between BV and bar convolution algebras',
+                'homotopy-transfer compatibility',
+                'harmonic-propagator decoupling or correction term',
+            ),
+        ),
+        'lambda_fp_tower': DiagnosticPromotionGuard(
+            diagnostic='lambda_fp_tower',
+            supports='uniform-weight scalar tower kappa*lambda_g^FP',
+            does_not_support='multi-weight genus >= 2 equality without cross-channel terms',
+            missing_witnesses=('delta F_g^cross computation',),
+        ),
+        'uv_finiteness': DiagnosticPromotionGuard(
+            diagnostic='uv_finiteness',
+            supports='existence of the perturbative BV effective action',
+            does_not_support='identification of the BV effective action with Theta_A',
+            missing_witnesses=(
+                'coefficient match for the L_infty brackets',
+                'algebraic residue versus analytic integral comparison',
+            ),
+        ),
+        'linfty_structural_match': DiagnosticPromotionGuard(
+            diagnostic='linfty_structural_match',
+            supports='both sides carry genus-expanded L_infty structures',
+            does_not_support='coefficient equality of the higher brackets',
+            missing_witnesses=('ell_k^{(g)} = l_k^hbar coefficient check',),
+        ),
+    }
+    try:
+        return guards[diagnostic]
+    except KeyError as exc:
+        raise ValueError(f"unknown diagnostic {diagnostic!r}") from exc
 
 
 def lambda_fp(g: int) -> Rational:
@@ -331,7 +615,7 @@ def analyze_si_li() -> PaperAnalysis:
             'Quillen anomaly universally bridges over all genera.'
         ),
         obstruction_3_impact=(
-            'NOT ADDRESSED. UV finiteness (Thm 4.4) guarantees convergence '
+            'OPEN. UV finiteness (Thm 4.4) guarantees convergence '
             'but does not identify effective action with bar shadow. '
             'L_infty conjecture (Section 2.4) gives STRUCTURAL matching '
             'but not coefficient matching.'
@@ -377,7 +661,7 @@ def analyze_wang_grady() -> PaperAnalysis:
             'Quillen anomaly already resolves this universally.'
         ),
         obstruction_3_impact=(
-            'NOT ADDRESSED. UV finiteness of the BV side does not constrain '
+            'OPEN. UV finiteness of the BV side does not constrain '
             'the relationship between BV Laplacian contractions through '
             'interaction vertices and sewing operator on the bar complex.'
         ),
@@ -408,15 +692,15 @@ def analyze_esw_twists() -> PaperAnalysis:
             'Factorization algebra structure on twisted theories classified',
         ],
         obstruction_1_impact=(
-            'NOT DIRECTLY RELEVANT. The classification identifies which '
+            'SEPARATE INPUT. The classification identifies which '
             'twists produce chiral algebras but does not address the '
             'propagator comparison.'
         ),
         obstruction_2_impact=(
-            'NOT DIRECTLY RELEVANT. Moduli dependence is not addressed.'
+            'SEPARATE INPUT. Moduli dependence lies outside this result.'
         ),
         obstruction_3_impact=(
-            'NOT DIRECTLY RELEVANT. The classification does not address '
+            'SEPARATE INPUT. The classification leaves the '
             'chain-level BV/bar identification.'
         ),
         proves_conjecture=False,
@@ -452,10 +736,10 @@ def analyze_esw_lattice() -> PaperAnalysis:
             'continuum limit reintroduces the gap.'
         ),
         obstruction_2_impact=(
-            'NOT DIRECTLY RELEVANT.'
+            'SEPARATE INPUT.'
         ),
         obstruction_3_impact=(
-            'NOT DIRECTLY RELEVANT.'
+            'SEPARATE INPUT.'
         ),
         proves_conjecture=False,
         structural_contribution=(
@@ -488,10 +772,10 @@ def analyze_hahner_paquette() -> PaperAnalysis:
             'integrals have no UV divergences.'
         ),
         obstruction_2_impact=(
-            'NOT DIRECTLY RELEVANT.'
+            'SEPARATE INPUT.'
         ),
         obstruction_3_impact=(
-            'NOT ADDRESSED. The matrix model setting does not simplify '
+            'OPEN. The matrix model setting does not simplify '
             'the chain-level comparison between BV and bar.'
         ),
         proves_conjecture=False,
@@ -534,84 +818,76 @@ class ObstructionStatus:
 
 
 def obstruction_status_analysis() -> List[ObstructionStatus]:
-    """Updated obstruction analysis incorporating all five papers."""
+    """Chain-level obstruction analysis in the ordinary chain ambient."""
     return [
         ObstructionStatus(
-            name='Propagator regularity',
+            name='Homotopy-transfer correction from SDR data',
             index=1,
             pre_literature_status=(
-                'Resolved for class G (Heisenberg) at all genera. '
-                'The exact part P_exact drops in Dolbeault cohomology. '
-                'The harmonic part P_harm decouples from the (trivial) OPE. '
-                'For interacting theories: OPEN.'
+                'A scalar trace or UV-finite BV integral does not specify '
+                'the chain homotopy transporting BV operations to the bar '
+                'coalgebra.'
             ),
             post_literature_status=(
-                'IMPROVED. Wang-Grady [2407.08667] proves UV finiteness '
-                'for all HT theories, ensuring the BV effective action '
-                'is well-defined without counterterms at all loop orders. '
-                'Si Li [2511.12875] Thm 4.10 gives genus-1 quasi-isomorphism '
-                'for betagamma. The remaining gap: proving the ALGEBRAIC '
-                'residue extraction on FM and the ANALYTIC regularized '
-                'integral produce the same chain-level data at genus >= 2.'
+                'CONTROLLED where explicit SDR or completed comparison data '
+                'are present. It is not controlled by F_1 = kappa/24, by '
+                'UV finiteness, or by structural L_infty agreement alone.'
             ),
-            resolved_for=['G (Heisenberg) at all genera',
-                          'L (affine KM) at genus 0',
-                          'all families at genus 0 (thm:bv-bar-geometric)'],
-            open_for=['L at genus >= 1 (chain level)',
-                      'C at genus >= 1',
-                      'M at genus >= 1'],
+            resolved_for=['all classes at genus 0',
+                          'G at all genera',
+                          'L in the ordinary chain ambient with stated hypotheses',
+                          'all classes in the coderived ambient'],
+            open_for=['C without harmonic decoupling',
+                      'M in the ordinary bounded direct-sum chain ambient'],
             literature_impact={
-                '2407.08667': 'Removes UV finiteness obstruction (necessary condition)',
-                '2511.12875': 'Genus-1 quasi-isomorphism for betagamma (Thm 4.10)',
+                '2511.12875': 'Gives genus-1 beta-gamma evidence, not general SDR transport',
+                '2407.08667': 'Gives existence of BV effective action, not transfer data',
             },
         ),
         ObstructionStatus(
-            name='Moduli dependence',
+            name='Non-abelian sewing kernel at genus >= 2',
             index=2,
             pre_literature_status=(
-                'Resolved universally by Quillen anomaly formula: '
-                'curv(h_Q) = -2pi*i*c_1(E) is independent of the '
-                'chiral algebra.  At genus 0: no moduli. At genus >= 1: '
-                'the Quillen metric controls the moduli dependence.'
+                'The Heisenberg sewing kernel is one-particle/Gaussian. '
+                'Interacting theories require control of the non-abelian '
+                'stable-edge sewing operator.'
             ),
             post_literature_status=(
-                'ESSENTIALLY RESOLVED. The Quillen anomaly argument '
-                'is universal and covers all genera. Si Li [2511.12875] '
-                'confirms the genus-1 case via the holomorphic anomaly '
-                'equation. No paper changes the status.'
+                'GENUS-SCOPED. The genus-0 algebraic BRST/bar comparison '
+                'does not see this kernel. At genus >= 2 it is a chain-level '
+                'hypothesis/witness, not a consequence of scalar modular '
+                'characteristics.'
             ),
-            resolved_for=['all families at all genera (scalar level)',
-                          'G at all genera (chain level)'],
-            open_for=['chain-level identification for interacting theories: '
-                      'the Quillen anomaly controls the scalar trace but '
-                      'the full chain-level moduli dependence is open'],
+            resolved_for=['G at all genera',
+                          'L with the non-abelian sewing witness',
+                          'all classes in D^co'],
+            open_for=['C without harmonic decoupling',
+                      'M in ordinary chains; completed/pro ambients are separate'],
             literature_impact={
-                '2511.12875': 'Confirms genus-1 case via holomorphic anomaly',
+                '2511.12875': 'Elliptic trace is genus 1; it does not decide genus >= 2 sewing',
+                '2602.22318': 'Finite matrix models are test beds, not continuum sewing proofs',
             },
         ),
         ObstructionStatus(
-            name='Higher-arity coupling through harmonic propagator',
+            name='Curved A_infty structure versus flat BV operator',
             index=3,
             pre_literature_status=(
-                'Resolved for class G (no interaction vertices). '
-                'Resolved for class L at genus 1 (Jacobi identity kills '
-                'cubic harmonic correction). '
-                'OPEN for classes C and M (quartic and higher vertices '
-                'produce nontrivial harmonic corrections).'
+                'Scalar equality misses the curved bar term m_0 and the '
+                'quartic contact correction in ordinary chain complexes.'
             ),
             post_literature_status=(
-                'UNCHANGED. No paper addresses this obstruction. '
-                'Si Li L_infty conjecture gives structural matching '
-                '(both controlled by L_infty) but not coefficient '
-                'matching. Wang-Grady UV finiteness ensures the BV '
-                'side converges but does not identify it with Theta_A. '
-                'This remains the DEEPEST obstruction.'
+                'DEEPEST. Class G has no interaction vertices. Class L is '
+                'controlled by the Jacobi identity and S_4=0. Class C is '
+                'conditional on harmonic decoupling. Class M fails in the '
+                'ordinary bounded direct-sum chain ambient because '
+                'delta_4 proportional to Q_contact*m_0 is not a boundary; '
+                'the same obstruction is coderived-exact in D^co.'
             ),
             resolved_for=['G at all genera',
-                          'L at genus 1 (Jacobi identity)'],
-            open_for=['L at genus >= 2 (chain level)',
-                      'C at genus >= 1',
-                      'M at genus >= 1'],
+                          'L at chain level with S_4=0',
+                          'all classes in D^co'],
+            open_for=['C unless harmonic decoupling is supplied',
+                      'M in ordinary chains (false, not merely open)'],
             literature_impact={
                 '2511.12875': 'L_infty conjecture: structural but not quantitative',
                 '2407.08667': 'UV finiteness: necessary but not sufficient',
@@ -693,17 +969,18 @@ def si_li_linfty_comparison() -> LinftyComparison:
 
 @dataclass(frozen=True)
 class BetaGammaBVGenus1:
-    """BV differential data for betagamma at genus 1."""
+    """Scalar BV/bar data for beta-gamma at genus 1."""
     bv_F1: object               # BV free energy at genus 1
     bar_F1: object              # bar free energy at genus 1
-    match: bool
+    match: bool                 # scalar equality only
     mode_sum_bv: str            # mode sum representation on BV side
     mode_sum_bar: str           # mode sum representation on bar side
     zeta_regularization: str    # how zeta regularization gives 1/24
+    chain_level_status: str = 'CONDITIONAL_ON_HARMONIC_DECOUPLING'
 
 
 def betagamma_bv_genus1(k_val=None) -> BetaGammaBVGenus1:
-    r"""Compute BV differential for betagamma at genus 1.
+    r"""Compute the scalar BV/bar genus-1 comparison for beta-gamma.
 
     The beta-gamma system on the torus E_tau:
       beta(z) of weight 1, gamma(z) of weight 0
@@ -722,7 +999,9 @@ def betagamma_bv_genus1(k_val=None) -> BetaGammaBVGenus1:
 
     Bar side: F_1^bar(bg_k) = kappa(bg_k) * lambda_1^FP = k * 1/24 = k/24.
 
-    MATCH: F_1^BV = F_1^bar = k/24.
+    MATCH: F_1^BV = F_1^bar = k/24 at the scalar trace level.
+    This does not prove the ordinary chain-level comparison without
+    the harmonic-decoupling witness for class C.
     """
     if k_val is None:
         k = Symbol('k')
@@ -755,11 +1034,12 @@ def betagamma_bv_genus1(k_val=None) -> BetaGammaBVGenus1:
             'F_1 = k * (-(-1/12))/2 = k/24 by the Quillen formula. '
             'Alternatively: zeta_{dbar}(0) = -1/24 for weight-1 fields.'
         ),
+        chain_level_status='CONDITIONAL_ON_HARMONIC_DECOUPLING',
     )
 
 
 def betagamma_bv_genus1_numerical(k_val: int = 1) -> Dict[str, object]:
-    """Numerical verification of betagamma BV = bar at genus 1."""
+    """Numerical scalar verification of beta-gamma BV = bar at genus 1."""
     kappa = k_val
     F1_bar = Rational(kappa, 24)
     F1_bv = Rational(kappa, 24)  # from Quillen anomaly computation
@@ -769,6 +1049,8 @@ def betagamma_bv_genus1_numerical(k_val: int = 1) -> Dict[str, object]:
         'F1_bar': F1_bar,
         'F1_bv': F1_bv,
         'match': F1_bar == F1_bv,
+        'match_scope': 'scalar_genus_1_only',
+        'chain_level_status': 'CONDITIONAL_ON_HARMONIC_DECOUPLING',
         'value': F1_bar,
     }
 
@@ -840,8 +1122,9 @@ def wang_grady_implications() -> List[UVFinitenessImplication]:
                 'BV effective action well-defined by Wang-Grady. '
                 'Bar comparison at genus 0: PROVED. '
                 'Bar comparison at genus 1 scalar level: PROVED (Theorem D). '
-                'Chain-level at genus >= 1: OPEN (Obstruction 3 for class L '
-                'resolved at genus 1 by Jacobi; open at genus >= 2).'
+                'Ordinary chain-level comparison at genus >= 1: PROVED '
+                'under the class-L hypotheses (non-critical Lie-current lane, '
+                'Jacobi identity, S_4=0, controlled sewing kernel).'
             ),
         ),
         UVFinitenessImplication(
@@ -852,8 +1135,8 @@ def wang_grady_implications() -> List[UVFinitenessImplication]:
             bar_comparison_status=(
                 'UV finiteness proved by both Wang-Grady and Si Li Thm 4.4. '
                 'Scalar level at genus 1: PROVED (this engine, Section 4). '
-                'Chain-level at genus >= 1: OPEN (class C, quartic obstruction '
-                'may or may not vanish by special structure of weight-(1,0)).'
+                'Ordinary chain-level at genus >= 1: CONDITIONAL on harmonic '
+                'decoupling for the class-C contact term.'
             ),
         ),
         UVFinitenessImplication(
@@ -864,8 +1147,8 @@ def wang_grady_implications() -> List[UVFinitenessImplication]:
             bar_comparison_status=(
                 'UV finiteness applies. Scalar level at all genera: '
                 'PROVED on the uniform-weight lane (single generator). '
-                'Chain-level at genus >= 1: OPEN (class M, infinite shadow '
-                'depth, all higher-arity obstructions present).'
+                'Ordinary chain-level at genus >= 1: FALSE in the bounded '
+                'direct-sum ambient; the coderived comparison is proved in D^co.'
             ),
         ),
     ]
@@ -1021,12 +1304,14 @@ def conjecture_status_by_family() -> List[ConjectureStatusUpdate]:
             genus_0_status='PROVED (thm:brst-bar-genus0, thm:bar-semi-infinite-km)',
             genus_1_scalar_status='PROVED (Theorem D)',
             genus_1_chain_status=(
-                'CONDITIONAL: Jacobi identity kills cubic harmonic correction '
-                '(class L, r_max = 3), but full chain-level comparison requires '
-                'showing P_harm completely decouples at all arities'
+                'PROVED_WITH_HYPOTHESES: non-critical Lie-current lane, '
+                'Jacobi identity, S_4=0, and controlled sewing kernel'
             ),
             higher_genus_scalar_status='PROVED (Theorem D, uniform weight)',
-            higher_genus_chain_status='OPEN (Obstruction 3 at genus >= 2)',
+            higher_genus_chain_status=(
+                'PROVED_WITH_HYPOTHESES in the ordinary chain ambient; '
+                'the same comparison is also proved in D^co'
+            ),
             literature_citations=[
                 'CG17', '2511.12875', '2407.08667',
                 'thm:bar-semi-infinite-km (this manuscript)',
@@ -1038,18 +1323,19 @@ def conjecture_status_by_family() -> List[ConjectureStatusUpdate]:
             genus_0_status='PROVED (thm:bv-bar-geometric)',
             genus_1_scalar_status='PROVED (this engine, Section 4)',
             genus_1_chain_status=(
-                'OPEN: class C has quartic contact term Q_contact. '
+                'CONDITIONAL_ON_HARMONIC_DECOUPLING: class C has quartic '
+                'contact term Q_contact. '
                 'For weight-(1,0) betagamma: Q_contact = 0 by special '
                 'structure, so the quartic obstruction may vanish. '
                 'Si Li Thm 4.10 gives genus-1 quasi-iso for betagamma.'
             ),
             higher_genus_scalar_status=(
-                'PROVED at scalar level (uniform-weight lane, '
-                'but betagamma has MIXED WEIGHTS (1,0) so the multi-weight '
-                'genus expansion applies at g >= 2: '
+                'SCALAR_FORMULA_REQUIRES_CROSS_TERMS at genus >= 2: '
+                'betagamma has MIXED WEIGHTS (1,0), so the multi-weight '
+                'genus expansion applies: '
                 'F_g = kappa * lambda_g^FP + delta_F_g^cross)'
             ),
-            higher_genus_chain_status='OPEN',
+            higher_genus_chain_status='CONDITIONAL_ON_HARMONIC_DECOUPLING',
             literature_citations=[
                 'CG17', '2511.12875 Thm 4.4 + Thm 4.10', '2407.08667',
             ],
@@ -1059,13 +1345,17 @@ def conjecture_status_by_family() -> List[ConjectureStatusUpdate]:
             shadow_class='M',
             genus_0_status='PROVED (thm:brst-bar-genus0, c=26 case)',
             genus_1_scalar_status='PROVED (Theorem D)',
-            genus_1_chain_status='OPEN (class M, infinite shadow depth)',
+            genus_1_chain_status=(
+                'FALSE_IN_ORDINARY_CHAIN_AMBIENT; proved in D^co and in '
+                'completed/pro presentations'
+            ),
             higher_genus_scalar_status=(
                 'PROVED at scalar level (single generator = uniform weight)'
             ),
             higher_genus_chain_status=(
-                'OPEN. Obstruction 3 is present at all arities >= 4. '
-                'No algebraic identity kills the harmonic corrections.'
+                'FALSE_IN_ORDINARY_CHAIN_AMBIENT. The quartic harmonic '
+                'discrepancy delta_4 proportional to Q_contact*m_0 is not '
+                'a boundary; the coderived obstruction is exact in D^co.'
             ),
             literature_citations=['CG17', '2407.08667'],
         ),
@@ -1074,14 +1364,14 @@ def conjecture_status_by_family() -> List[ConjectureStatusUpdate]:
             shadow_class='M',
             genus_0_status='PROVED (thm:bv-bar-geometric)',
             genus_1_scalar_status='PROVED (Theorem D)',
-            genus_1_chain_status='OPEN (class M)',
+            genus_1_chain_status='FALSE_IN_ORDINARY_CHAIN_AMBIENT (class M)',
             higher_genus_scalar_status=(
                 'MULTI-WEIGHT: W_N has generators of weights 2,3,...,N. '
                 'Scalar formula FAILS at g >= 2 '
                 '(delta_F_2(W_3) = (c+204)/(16c) > 0). '
                 'Full multi-weight genus expansion applies.'
             ),
-            higher_genus_chain_status='OPEN',
+            higher_genus_chain_status='FALSE_IN_ORDINARY_CHAIN_AMBIENT (class M)',
             literature_citations=['CG17', '2407.08667'],
         ),
     ]
@@ -1093,7 +1383,7 @@ def conjecture_status_by_family() -> List[ConjectureStatusUpdate]:
 
 
 def cross_family_genus1_check() -> Dict[str, object]:
-    """Verify F_1 = kappa/24 across all families (multi-path)."""
+    """Verify scalar F_1 = kappa/24 across standard families."""
     families = {
         'Heisenberg k=1': {'kappa': 1, 'expected_F1': Rational(1, 24)},
         'Heisenberg k=2': {'kappa': 2, 'expected_F1': Rational(2, 24)},
@@ -1105,24 +1395,31 @@ def cross_family_genus1_check() -> Dict[str, object]:
     }
 
     results = {}
-    all_pass = True
+    all_scalar_pass = True
     for name, data in families.items():
         kappa = data['kappa']
         expected = data['expected_F1']
         computed_bar = kappa * Rational(1, 24)
-        computed_bv = kappa * Rational(1, 24)  # from Quillen anomaly
+        computed_bv = kappa * Rational(1, 24)  # scalar trace from Quillen anomaly
         match = (computed_bar == expected) and (computed_bv == expected)
         if not match:
-            all_pass = False
+            all_scalar_pass = False
         results[name] = {
             'kappa': kappa,
             'F1_bar': computed_bar,
             'F1_bv': computed_bv,
             'expected': expected,
             'match': match,
+            'match_scope': 'scalar_genus_1_only',
         }
 
-    results['all_pass'] = all_pass
+    results['all_pass'] = all_scalar_pass
+    results['all_scalar_pass'] = all_scalar_pass
+    results['all_chain_pass'] = False
+    results['chain_level_obstruction'] = (
+        'F_1 scalar equality does not supply the chain map, SDR transport, '
+        'or harmonic-decoupling witness.'
+    )
     return results
 
 
@@ -1235,11 +1532,17 @@ def genus2_planted_forest_bv_comparison(algebra: AlgebraData) -> Dict[str, objec
         status = ('CLASS C: beta-gamma has mixed weights (1,0), '
                   'multi-weight expansion may apply')
     else:  # M
-        S3 = Symbol('S_3')
-        delta_pf = S3 * (10 * S3 - kappa) / 48
+        if algebra.name == 'Virasoro':
+            S3 = 2
+            c = algebra.central_charge
+            delta_pf = -(c - 40) / 48
+        else:
+            S3 = Symbol('S_3')
+            delta_pf = S3 * (10 * S3 - kappa) / 48
         F2_total = kappa * lfp2 + delta_pf
-        status = ('CLASS M: multi-weight for W_N (weights 2,...,N), '
-                  'cross-channel correction delta_F_2^cross nonzero')
+        status = ('CLASS M: ordinary chain-level comparison has a '
+                  'quartic/contact discrepancy; Virasoro gives '
+                  'delta_pf = -(c-40)/48')
 
     return {
         'algebra': algebra.name,
@@ -1249,6 +1552,7 @@ def genus2_planted_forest_bv_comparison(algebra: AlgebraData) -> Dict[str, objec
         'delta_pf': delta_pf,
         'F2_total': F2_total,
         'bv_comparison_status': status,
+        'scope': 'ordinary_chain_genus_2',
     }
 
 
@@ -1261,13 +1565,13 @@ def full_rectification_synthesis() -> Dict[str, Any]:
     """Complete synthesis of the BV/BRST rectification analysis."""
     papers = all_paper_analyses()
     obstructions = obstruction_status_analysis()
-    linfty = si_li_linfty_comparison()
     families = conjecture_status_by_family()
-    wg = wang_grady_implications()
 
     # Count what is proved vs open
     proved_items = []
     open_items = []
+    false_items = []
+    conditional_items = []
 
     for fam in families:
         if 'PROVED' in fam.genus_0_status:
@@ -1276,18 +1580,30 @@ def full_rectification_synthesis() -> Dict[str, Any]:
             proved_items.append(f'{fam.family} genus 1 scalar')
         if 'OPEN' in fam.higher_genus_chain_status:
             open_items.append(f'{fam.family} higher genus chain')
+        if 'FALSE_IN_ORDINARY_CHAIN_AMBIENT' in fam.genus_1_chain_status:
+            false_items.append(f'{fam.family} genus 1 ordinary chain')
+        if 'FALSE_IN_ORDINARY_CHAIN_AMBIENT' in fam.higher_genus_chain_status:
+            false_items.append(f'{fam.family} higher genus ordinary chain')
+        if 'CONDITIONAL' in fam.genus_1_chain_status:
+            conditional_items.append(f'{fam.family} genus 1 ordinary chain')
+        if 'CONDITIONAL' in fam.higher_genus_chain_status:
+            conditional_items.append(f'{fam.family} higher genus ordinary chain')
 
     return {
         'conjecture': 'conj:master-bv-brst',
         'papers_analyzed': len(papers),
         'conjecture_proved': False,
+        'ordinary_chain_universal_claim_true': False,
+        'coderived_claim_proved': True,
         'proved_cases': proved_items,
         'open_cases': open_items,
+        'conditional_cases': conditional_items,
+        'false_ordinary_chain_cases': false_items,
         'deepest_obstruction': (
-            'Obstruction 3: higher-arity coupling through harmonic propagator. '
-            'No paper addresses this. Si Li L_infty conjecture gives structural '
-            'matching but not coefficient matching. Wang-Grady UV finiteness is '
-            'necessary but not sufficient.'
+            'Obstruction 3: curved A_infty structure versus flat BV operator. '
+            'The class-M ordinary chain discrepancy delta_4 proportional to '
+            'Q_contact*m_0 is not a boundary. Si Li L_infty structure and '
+            'Wang-Grady UV finiteness do not identify coefficients.'
         ),
         'most_significant_new_result': (
             'Wang-Grady [2407.08667]: all-order UV finiteness for HT theories '
@@ -1296,11 +1612,9 @@ def full_rectification_synthesis() -> Dict[str, Any]:
             'conj:master-bv-brst from the literature.'
         ),
         'recommendation': (
-            'The conjecture status remains CONJECTURAL. The literature provides '
-            'structural evidence and removes necessary conditions, but the '
-            'chain-level identification at genus >= 1 for interacting theories '
-            'remains open. The deepest obstruction (higher-arity harmonic '
-            'coupling) is not addressed by any paper. The manuscript correctly '
-            'classifies this as conjectural.'
+            'Use the ambient-qualified split: genus 0 ordinary chain is proved; '
+            'genus >= 1 ordinary chain is proved for G/L, conditional for C, '
+            'and false for M; BV=bar in D^co is proved for all four shadow '
+            'classes under the chirally Koszul hypotheses.'
         ),
     }

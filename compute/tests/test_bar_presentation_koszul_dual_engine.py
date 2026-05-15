@@ -1,7 +1,7 @@
 r"""Tests for bar_presentation_koszul_dual_engine.py.
 
-Explicit presentations of Koszul dual algebras A! = (H*(B(A)))^v from
-bar cohomology.  60+ tests covering:
+Explicit presentations of Koszul dual algebras from the branch
+B(A) -> A^i=H^*(B(A)) -> A! by Verdier duality.  60+ tests covering:
 
     1. Generator identification (H^1(B(A))^v) for all standard families
     2. Relation vanishing (H^2(B(A)) = 0, Koszulness check)
@@ -12,8 +12,8 @@ bar cohomology.  60+ tests covering:
     7. Pairing matrix computation
     8. Edge cases and parameter variations
 
-Multi-path verification mandate: every numerical claim is checked by
-at least 2 independent methods (AP10, CLAUDE.md).
+Multi-path verification: every numerical claim is checked by at least
+2 independent methods.
 
 Manuscript references:
     cor:bar-cohomology-koszul-dual, thm:koszul-equivalences-meta,
@@ -21,8 +21,11 @@ Manuscript references:
 """
 
 import pytest
+from pathlib import Path
 from fractions import Fraction
 from sympy import Rational
+
+import compute.lib.bar_presentation_koszul_dual_engine as bar_presentations
 
 from compute.lib.bar_presentation_koszul_dual_engine import (
     # Dimension functions
@@ -74,9 +77,42 @@ from compute.lib.bar_presentation_koszul_dual_engine import (
     compute_all_complementarities,
     generate_dual_presentation_table,
     cross_validate_with_bar_complex_dims,
+    bar_koszul_object_firewall,
 )
 
 from compute.lib.utils import partition_number
+
+
+# =========================================================================
+# 0. AP25/Verdier object firewall
+# =========================================================================
+
+class TestAP25VerdierBranch:
+    """The bar presentation surface keeps bar-dual and Verdier-dual stages apart."""
+
+    def test_firewall_names_six_objects(self):
+        firewall = bar_koszul_object_firewall("A", "A!")
+        assert firewall["bar_complex"] == "B(A): ordered bar coalgebra"
+        assert firewall["bar_dual_coalgebra"] == "A^i = H^*(B(A))"
+        assert "Verdier" in firewall["koszul_dual_algebra"]
+        assert firewall["bar_cobar_inversion"] == "Omega(B(A)) = A"
+        assert firewall["derived_center"] == "Z_ch^der(A): bulk sector"
+
+    def test_presentations_carry_typed_branch(self):
+        pres = identify_heisenberg_generators(Rational(1))
+        assert "H^*(B(" in pres.bar_dual_name
+        assert "Verdier" in pres.duality_branch
+        assert "finite-type" in pres.verdier_hypotheses
+        assert "Omega(B(A))=A" in pres.verdier_hypotheses
+        assert pres.object_firewall["koszul_dual_algebra"].startswith("Sym^ch(V*)")
+
+    def test_source_rejects_raw_linear_dual_shortcut(self):
+        source = Path(bar_presentations.__file__).read_text()
+        raw_dual_shortcut = "A! = " + "(H*(B(A)))^v"
+        verdier_collapse = "D_Ran(B(A)) = " + "B(A!)"
+        assert raw_dual_shortcut not in source
+        assert verdier_collapse not in source
+        assert "A^i=H^*(B(A))" in source
 
 
 # =========================================================================

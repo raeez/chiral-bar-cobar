@@ -1,11 +1,15 @@
-r"""cy_wallcrossing_engine.py -- Kontsevich-Soibelman wall-crossing for K3 and K3 x E.
+r"""cy_wallcrossing_engine.py -- finite CY wall-crossing diagnostics.
 
 MATHEMATICAL CONTENT
 ====================
 
-This module computes Bridgeland stability conditions and KS wall-crossing
-formulas for K3 surfaces and K3 x E threefolds, connecting to the shadow
-obstruction tower of chiral algebras via the DT/bar correspondence.
+This module computes finite-window diagnostics around Bridgeland central
+charges, K3 Hilbert-scheme invariants, the degree-zero DT/PT MacMahon factor
+for K3 x E, and a truncated KS/scattering toy algebra.  It does not construct
+the global Bridgeland stability manifold, a complete KS support datum, a
+flop transformation, or a theorem identifying DT wall-crossing with the
+bar-cobar/shadow tower.  Those bridges are recorded here only as conditional
+diagnostic metadata.
 
 === 1. BRIDGELAND STABILITY ON K3 ===
 
@@ -44,7 +48,9 @@ For large volume, the walls are semicircles in the upper half-plane
 The Kontsevich-Soibelman wall-crossing formula at a wall W:
     A_W = prod_{gamma : Z(gamma) in R>0 * e^{i*phi}} T_gamma^{Omega(gamma)}
 where:
-    T_gamma acts on the quantum torus algebra: T_gamma(x_delta) = x_delta * (1 - x_gamma)^{<gamma,delta>}
+    T_gamma acts on the quantum torus algebra.  This module uses the
+    cluster/scattering sign convention
+        T_gamma(x_delta) = x_delta * (1 + x_gamma)^{<delta,gamma>_skew}
     Omega(gamma) = generalized DT invariant
     The product is taken in order of decreasing phase arg(Z(gamma)).
 
@@ -87,30 +93,27 @@ PRIMITIVE Mukai vectors. For non-primitive v = n*v_0:
     Omega(n*v_0) = sum_{k|n} (1/k^2) * mu(n/k) * J(k*v_0)
 (Mobius inversion of the multicover formula).
 
-=== 7. CONNECTION TO SHADOW TOWER ===
+=== 7. CONDITIONAL SHADOW DIAGNOSTIC ===
 
 The KS wall-crossing automorphism at a wall is:
     A_W = exp(sum_gamma Omega(gamma) Li_2(x_gamma))
 The shadow generating function H(t) = 2*kappa*t^2*sqrt(Q_L(t)) satisfies
 a DIFFERENT type of product formula: algebraicity of degree 2.
 
-The connection is: BOTH are controlled by MC elements in (different)
-convolution algebras. The KS automorphism is MC in the quantum torus;
-the shadow tower is MC in Def_cyc^mod(A). The BRIDGE is the
-factorization-algebra realization: for A = V_{K3} on an elliptic curve E,
-the bar complex B(A) on Ran(E) should produce the DT invariants of K3 x E
-via factorization homology (conditional on the d=3 functor, AP42).
+Both sides are controlled by MC elements, but in different dg Lie algebras.
+The primary KS formula lives on the motivic Hall/KS side; the shadow tower
+lives in Def_cyc^mod(A).  The comparison in this file is therefore a
+finite-window diagnostic, not a proof of a DT/bar correspondence.
 
 CONVENTIONS
 ===========
 - Mukai vector v = (r, c_1, s) = (rank, first Chern class, s = ch_2 + r)
-- Mukai pairing <v, w> = c_1 * c_1' - r*s' - r'*s (ANTISYMMETRIC for KS)
-  Note: the SYMMETRIC Mukai pairing is (v, w) = c_1*c_1' - r*s' - r'*s.
-  The ANTISYMMETRIC (Euler) pairing for KS is chi(v,w) = -<v,w> = r*s' + r'*s - c_1*c_1'.
-  We use <-,-> for the symmetric Mukai pairing.
-  The KS formula uses the Euler form chi(E,F) = sum (-1)^i dim Ext^i(E,F).
-  On K3: chi(v,w) = -(v,w) = r*s' + r'*s - c_1*c_1' (sign from Serre duality).
-  CAUTION: many references differ on sign conventions here.
+- Symmetric Mukai pairing: (v,w) = c_1*c_1' - r*s' - r'*s.
+- K3 Ext Euler characteristic: chi(E,F) = -(v(E),v(F)); this is symmetric
+  because K3 is 2-Calabi-Yau.
+- KS/scattering diagnostics need a skew pairing.  This module uses the
+  rank-H^4 skew projection <v,w>_skew = r*s' - r'*s.  It is not the K3
+  Ext Euler characteristic.
 - q = exp(2*pi*i*tau) counting parameter
 - K3 Hodge diamond: h^{0,0}=h^{2,0}=h^{0,2}=h^{2,2}=1, h^{1,1}=20
 - chi(K3) = 24, chi(K3 x E) = 0
@@ -139,6 +142,28 @@ from functools import lru_cache
 from typing import Any, Dict, FrozenSet, List, Optional, Sequence, Tuple, Union
 
 import numpy as np
+
+
+FINITE_WINDOW_DIAGNOSTIC_STATUS = "finite_window_diagnostic__exact_support_comparison_open"
+
+HOLOGRAPHIC_PACKAGE_KEYS = (
+    "A",
+    "A_i",
+    "A_bang",
+    "C",
+    "r_z",
+    "Theta_A",
+    "nabla_hol",
+)
+
+MODULAR_KOSZUL_PACKAGE_KEYS = (
+    "Fact_X(L)",
+    "barB_X(L)",
+    "Theta_L",
+    "L_L",
+    "(V_br,T_br)",
+    "R4_mod(L)",
+)
 
 
 # ============================================================================
@@ -236,19 +261,37 @@ class MukaiVector:
         """Symmetric Mukai pairing (v, w) = d*d'*H^2 - r*s' - r'*s."""
         return self.d * other.d * H_sq - self.r * other.s - other.r * self.s
 
-    def euler_pairing(self, other: 'MukaiVector', H_sq: int = 4) -> int:
-        """Euler pairing chi(v, w) = -(v, w) on K3 (by Serre duality + Noether).
+    def is_primitive(self) -> bool:
+        """Whether gcd(r,d,s)=1.  The zero vector is not primitive."""
+        return math.gcd(math.gcd(abs(self.r), abs(self.d)), abs(self.s)) == 1
 
-        chi(E, F) = sum_i (-1)^i dim Ext^i(E, F) = -<v(E), v(F)>.
-        This is the ANTISYMMETRIC pairing used in the KS formula.
+    def k3_ext_euler_characteristic(self, other: 'MukaiVector',
+                                    H_sq: int = 4) -> int:
+        """K3 Ext Euler characteristic chi(E,F)=-(v(E),v(F)).
 
-        Actually on K3, chi(E,F) = -<v(E), v(F)> where <-,-> is the Mukai
-        pairing, which is SYMMETRIC. So the Euler form is the NEGATIVE of the
-        Mukai pairing (not antisymmetric). For KS we need the antisymmetric
-        part, which on K3 with the standard Mukai pairing is:
-            chi^{antisym}(v, w) = r*s' - r'*s  (the rank-s exchange part)
+        This is symmetric on a K3 surface.  It is not the skew pairing used by
+        the truncated KS/scattering diagnostic below.
+        """
+        return -self.mukai_pairing(other, H_sq)
+
+    def ks_skew_pairing(self, other: 'MukaiVector', H_sq: int = 4) -> int:
+        """Skew charge pairing used by the finite KS/scattering diagnostic.
+
+        The true K3 Ext Euler characteristic is symmetric.  The KS toy
+        algebra in this file instead uses the rank-H^4 skew projection
+        r*s' - r'*s so that the A_2 pentagon has a nonzero skew form.
+        The H_sq argument is accepted for API symmetry and is not used.
         """
         return self.r * other.s - other.r * self.s
+
+    def euler_pairing(self, other: 'MukaiVector', H_sq: int = 4) -> int:
+        """Backward-compatible alias for ks_skew_pairing.
+
+        The name is retained because the existing KS helper calls it, but the
+        value is not chi(E,F) on K3.  Use k3_ext_euler_characteristic for the
+        symmetric K3 Ext Euler characteristic.
+        """
+        return self.ks_skew_pairing(other, H_sq)
 
     def __add__(self, other: 'MukaiVector') -> 'MukaiVector':
         return MukaiVector(self.r + other.r, self.d + other.d, self.s + other.s)
@@ -377,7 +420,7 @@ class Wall:
 def find_walls_rank1(v: MukaiVector, max_sub_rank: int = 5,
                      max_sub_degree: int = 5,
                      H_sq: int = 4) -> List[Wall]:
-    """Find walls of marginal stability for Mukai vector v on K3 (Picard rank 1).
+    """Find finite-window wall candidates for a Mukai vector on Picard-rank-1 K3.
 
     A wall exists for each decomposition v = v_1 + v_2 where v_1, v_2 are
     effective Mukai vectors with phi(v_1) = phi(v_2).
@@ -388,7 +431,12 @@ def find_walls_rank1(v: MukaiVector, max_sub_rank: int = 5,
     This gives a circle in the (B, omega) half-plane. We compute its
     center and radius.
 
-    Returns walls sorted by decreasing radius (= most important first).
+    The search window is finite: ranks and degrees are bounded by the input
+    parameters and s-components are scanned in the fixed range [-20,20).
+    Returned objects are central-charge alignment candidates, not a complete
+    Bridgeland wall decomposition.
+
+    Returns candidates sorted by decreasing radius.
     """
     walls = []
 
@@ -589,21 +637,88 @@ def find_walls_rank1(v: MukaiVector, max_sub_rank: int = 5,
                     walls.append(Wall(v1=v1, v2=v2, center_B=B_c, radius=R))
 
                 elif r1 == 0 and r2 > 0:
-                    # Rank 0 destabilizer: v1 = (0, d1, s1) is a torsion sheaf
+                    # Rank 0 destabilizer: v1 = (0, d1, s1) is a torsion sheaf.
                     # Z(0, d1, s1) = H_sq*d1*(B+iw) - s1
-                    # This is a line in (B,w). The wall is where this aligns with Z(v2).
-                    # Simplifies to a vertical line or circle.
                     if d1 == 0:
                         continue  # pure point sheaf, Z = -s1, no w dependence
-                    # Wall: B = s1 / (H_sq * d1) (vertical line, or more precisely
-                    # the wall intersects the B-axis at this point)
-                    B_wall = s1 / (H_sq * d1)
-                    # This is a degenerate "wall" -- vertical line in (B, omega)
-                    walls.append(Wall(v1=v1, v2=v2, center_B=B_wall, radius=float('inf')))
+                    # Alignment with the quadratic central charge of v2 gives:
+                    #   (H_sq*d1*r2/2)(B^2+w^2) - r2*s1*B
+                    #       + d2*s1 - d1*s2 = 0.
+                    # Hence a semicircle centered at B_c=s1/(H_sq*d1), whenever
+                    # the radius is real.  Earlier versions treated this as a
+                    # vertical line; direct central-charge evaluation falsifies
+                    # that shortcut except at the B-axis intercept.
+                    a = H_sq * d1 * r2 / 2
+                    if abs(a) < 1e-12:
+                        continue
+                    B_c = s1 / (H_sq * d1)
+                    R_sq = B_c ** 2 - (d2 * s1 - d1 * s2) / a
+                    if R_sq < 0:
+                        continue
+                    R = math.sqrt(R_sq)
+                    if R < 1e-10:
+                        continue
+                    walls.append(Wall(v1=v1, v2=v2, center_B=B_c, radius=R))
 
     # Sort by decreasing radius (most important walls first)
     walls.sort(key=lambda w: -w.radius if w.radius < float('inf') else -1e30)
     return walls
+
+
+def wall_alignment_diagnostic(
+    wall: Wall,
+    H_sq: int = 4,
+    height_fraction: float = 0.1,
+) -> Dict[str, Any]:
+    """Direct central-charge oracle for a finite semicircle wall candidate.
+
+    The diagnostic samples both arcs of the semicircle
+    (B-center)^2 + omega^2 = radius^2 and evaluates
+    Im(Z(v1) * conjugate(Z(v2))).  A physical marginal-stability arc also
+    requires positive real product; the finite candidate may contain an
+    opposite-phase arc as well.
+    """
+    if wall.radius == float('inf') or wall.radius <= 0:
+        return {
+            'status': 'not_finite_semicircle_candidate',
+            'finite_window_diagnostic': True,
+            'samples': [],
+            'max_abs_imaginary_residual': None,
+            'positive_alignment_sides': [],
+        }
+
+    if not (0 < height_fraction <= 1):
+        raise ValueError("height_fraction must lie in (0, 1]")
+
+    omega = wall.radius * height_fraction
+    horizontal = math.sqrt(max(wall.radius ** 2 - omega ** 2, 0.0))
+    samples = []
+
+    for side in (-1, 1):
+        B = wall.center_B + side * horizontal
+        sigma = BridgelandCentralCharge(B=B, omega=omega, H_sq=H_sq)
+        z1 = sigma.central_charge(wall.v1)
+        z2 = sigma.central_charge(wall.v2)
+        product = z1 * z2.conjugate()
+        samples.append({
+            'side': side,
+            'B': B,
+            'omega': omega,
+            'imaginary_residual': product.imag,
+            'real_part': product.real,
+            'positive_alignment': product.real > 0,
+        })
+
+    return {
+        'status': 'finite_semicircle_alignment_candidate',
+        'finite_window_diagnostic': True,
+        'samples': samples,
+        'max_abs_imaginary_residual': max(abs(s['imaginary_residual']) for s in samples),
+        'positive_alignment_sides': [
+            s['side'] for s in samples
+            if s['positive_alignment'] and abs(s['imaginary_residual']) < 1e-8
+        ],
+    }
 
 
 # ============================================================================
@@ -691,8 +806,19 @@ def dt_invariant_k3(v: MukaiVector, H_sq: int = 4) -> int:
 
     For v^2 = -2: Omega = chi(pt) = 1 (spherical object).
 
-    Returns 0 for unphysical vectors.
+    Non-primitive Mukai vectors require the Joyce-Song/KS multicover package
+    and chamber data.  This function deliberately refuses to apply the
+    primitive Hilbert-scheme formula to them.
+
+    Returns 0 for vectors with v^2 < -2 or with parity incompatible with the
+    K3 lattice.
     """
+    if not v.is_primitive():
+        raise ValueError(
+            "dt_invariant_k3 uses the primitive Hilb^n(K3) formula only; "
+            "non-primitive classes require Joyce-Song/KS multicover data."
+        )
+
     v_sq = v.mukai_norm_sq(H_sq)
     if v_sq % 2 != 0:
         return 0  # v^2 must be even for K3
@@ -712,14 +838,15 @@ class QuantumTorusAlgebra:
 
     The quantum torus has generators x_gamma for gamma in the lattice,
     with relation x_gamma * x_delta = (-1)^{<gamma,delta>} x_{gamma+delta}
-    where <-,-> is the antisymmetric (Euler) pairing.
+    where <-,-> is the skew charge pairing, not the symmetric K3 Ext Euler
+    characteristic.
 
     For computations, we work with the formal group ring C[[x_gamma]]
     and represent elements as dictionaries {gamma: coefficient}.
 
     The KS automorphism T_gamma acts by (cluster/scattering diagram convention):
         T_gamma(x_delta) = x_delta * (1 + x_gamma)^{<delta, gamma>}
-    where <delta, gamma> = delta.euler_pairing(gamma) is the Euler form
+    where <delta, gamma> = delta.euler_pairing(gamma) is the skew charge pairing
     with DELTA first, GAMMA second.
 
     CONVENTION NOTE: The literature has multiple sign conventions. We use
@@ -727,7 +854,7 @@ class QuantumTorusAlgebra:
     with (1 + x_gamma), NOT the (1 - x_gamma) convention sometimes used
     in the DT literature (AP38). The pentagon identity takes the standard form:
         T_{g1} T_{g2} = T_{g2} T_{g1+g2} T_{g1}
-    for <g1, g2> = 1 (meaning g1.euler_pairing(g2) = 1).
+    for <g1, g2> = 1 (meaning g1.ks_skew_pairing(g2) = 1).
     """
 
     def __init__(self, H_sq: int = 4, max_degree: int = 10):
@@ -750,7 +877,7 @@ class QuantumTorusAlgebra:
 
         T_gamma^omega(x_delta) = x_delta * (1 + x_gamma)^{omega * <delta, gamma>}
 
-        where <delta, gamma> = delta.euler_pairing(gamma) is the Euler form
+        where <delta, gamma> = delta.euler_pairing(gamma) is the skew charge pairing
         (delta.r * gamma.s - gamma.r * delta.s).
 
         The exponent is omega * <delta, gamma>. The expansion is:
@@ -923,6 +1050,15 @@ def macmahon_from_product(N: int) -> List[int]:
     return coeffs
 
 
+def signed_macmahon_coefficients(N: int) -> List[int]:
+    r"""Coefficients of M(-q).
+
+    If M(q)=sum pp(n)q^n, then M(-q)=sum (-1)^n pp(n)q^n.  This is the
+    sign convention in the degree-zero DT formula Z_DT,0=M(-q)^chi.
+    """
+    return [((-1) ** n) * coeff for n, coeff in enumerate(macmahon_coefficients(N))]
+
+
 def verify_macmahon_power_zero(N: int = 10) -> bool:
     """Verify that M(-q)^0 = 1 (trivially true, but checks the framework).
 
@@ -933,6 +1069,36 @@ def verify_macmahon_power_zero(N: int = 10) -> bool:
     trivial degree-0 DT.
     """
     return chi_k3_times_e() == 0
+
+
+def degree0_dt_pt_factorization_k3xe(N: int = 10) -> Dict[str, Any]:
+    r"""Degree-zero DT/PT factorization for K3 x E.
+
+    DT/PT wall-crossing uses
+        Z_DT = M(-q)^chi * Z_PT.
+    For X=K3 x E, chi(X)=0; hence M(-q)^0=1.  The degree-zero PT series
+    is also 1, so the reduced degree-zero DT series is exactly 1.  This
+    function keeps the signed MacMahon factor, reduced DT series, and PT
+    series as separate entries to prevent the common reduced/unreduced
+    conflation.
+    """
+    identity = [1] + [0] * N
+    dt0 = dt_degree0_k3xe(N)
+    macmahon_factor = identity[:]  # M(-q)^0
+    pt0 = identity[:]
+    reduced_dt0 = identity[:] if dt0 == macmahon_factor else []
+
+    return {
+        'status': 'exact_degree_zero_chi_zero',
+        'formula': 'Z_DT,0 = M(-q)^chi * Z_PT,0',
+        'chi_K3xE': chi_k3_times_e(),
+        'signed_macmahon_M_minus_q': signed_macmahon_coefficients(N),
+        'macmahon_signed_power_chi_zero': macmahon_factor,
+        'dt0': dt0,
+        'pt0': pt0,
+        'reduced_dt0': reduced_dt0,
+        'verified': dt0 == macmahon_factor == pt0 == reduced_dt0,
+    }
 
 
 # ============================================================================
@@ -1263,14 +1429,20 @@ def compare_ks_vs_shadow_monodromy(
     (from DT theory). The shadow connection lives in the modular
     convolution algebra (from the bar complex).
 
-    The bridge should be: for A = V_{K3}, the bar complex B(A) on Ran(E)
-    produces the DT invariants of K3 x E via factorization homology.
-    The shadow obstruction tower projects the MC element to finite arity.
+    The missing theorem is the exact KS-support comparison carrying ray data
+    into the modular shadow package.  This routine is only a finite-window
+    diagnostic: it keeps A, B(A), A^i, A^!, and the derived chiral centre
+    type-separated and records the bridge as open.
 
     This function computes both sides and returns a comparison dictionary.
     """
     # KS side: DT invariant for the given Mukai vector
-    omega_v = dt_invariant_k3(v, H_sq)
+    try:
+        omega_v: Optional[int] = dt_invariant_k3(v, H_sq)
+        dt_status = 'primitive_hilb_formula'
+    except ValueError as exc:
+        omega_v = None
+        dt_status = f'unsupported_nonprimitive: {exc}'
 
     # Find walls
     walls = find_walls_rank1(v, max_sub_rank=2, max_sub_degree=2, H_sq=H_sq)
@@ -1288,7 +1460,18 @@ def compare_ks_vs_shadow_monodromy(
         'shadow_metric_Q0': Q_at_0,
         'shadow_monodromy': shadow_connection_monodromy_k3(),
         'chi_k3xe': chi_k3_times_e(),
-        'bridge_status': 'conditional_on_d3_functor',  # AP42
+        'bridge_status': FINITE_WINDOW_DIAGNOSTIC_STATUS,
+        'dt_status': dt_status,
+        'ks_support_comparison': 'open',
+        'object_firewall': {
+            'A': 'boundary chiral algebra',
+            'B(A)': 'bar coalgebra/complex',
+            'A_i': 'H^*(B(A)) bar-dual coalgebra',
+            'A_bang': 'Verdier/continuous dual algebra under finite-type or completed hypotheses',
+            'Z_ch_der(A)': 'ChirHoch^*(A,A), the Hochschild/bulk centre',
+        },
+        'holographic_package_keys': HOLOGRAPHIC_PACKAGE_KEYS,
+        'modular_koszul_package_keys': MODULAR_KOSZUL_PACKAGE_KEYS,
     }
 
 
@@ -1300,7 +1483,7 @@ def verify_pentagon_identity(max_order: int = 8) -> Dict[str, Any]:
     r"""Verify the KS pentagon identity for the simplest wall-crossing.
 
     For two charges gamma_1, gamma_2 with <gamma_1, gamma_2> = 1
-    (Euler pairing g1.euler_pairing(g2) = 1), the pentagon identity is:
+    (skew charge pairing g1.ks_skew_pairing(g2) = 1), the pentagon identity is:
 
         T_{gamma_1} T_{gamma_2} = T_{gamma_2} T_{gamma_1+gamma_2} T_{gamma_1}
 
@@ -1317,11 +1500,11 @@ def verify_pentagon_identity(max_order: int = 8) -> Dict[str, Any]:
     up to the truncation degree.
     """
     # Choose gamma_1 = (1, 0, 0), gamma_2 = (0, 0, 1)
-    # Euler pairing: g1.euler(g2) = 1*1 - 0*0 = 1
+    # Skew charge pairing: g1.ks_skew_pairing(g2) = 1*1 - 0*0 = 1
     g1 = MukaiVector(1, 0, 0)
     g2 = MukaiVector(0, 0, 1)
 
-    # Check Euler pairing
+    # Check skew charge pairing
     chi_12 = g1.euler_pairing(g2)
     assert chi_12 == 1, f"Expected <g1,g2>=1, got {chi_12}"
 
@@ -1359,6 +1542,7 @@ def verify_pentagon_identity(max_order: int = 8) -> Dict[str, Any]:
         'pentagon_holds': all_match,
         'gamma_1': g1,
         'gamma_2': g2,
+        'skew_pairing': chi_12,
         'euler_pairing': chi_12,
         'probe_results': results,
     }

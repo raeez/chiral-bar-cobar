@@ -50,8 +50,13 @@ a LOCAL MODEL for the geometric Langlands correspondence. Eight modules:
    The AG conjecture: D-mod(Bun_G) = IndCoh(LocSys_{G^v})
    globalizes the local equivalence. Theorem A (bar-cobar adjunction)
    provides the FACTORIZATION-LEVEL input: the adjunction B -| Omega
-   on Ran(X) gives the local-to-global passage. The Verdier intertwining
-   D_Ran(B(A)) = B(A!) exchanges the two sides.
+   on Ran(X) gives the local-to-global passage. The Verdier passage is
+   type-correctly
+       D_Ran(B_X(A)) = A!_infty,
+   the homotopy Koszul-dual factorization algebra. On the finite-type,
+   completed, formal Koszul locus this identifies with the post-Verdier
+   algebra A!. It is not the bar coalgebra B_X(A!), and it is not the
+   cobar inversion Omega_X(B_X(A)) = A.
 
 6. BEILINSON-DRINFELD HITCHIN QUANTIZATION:
    The Hitchin system has:
@@ -598,8 +603,9 @@ def raskin_local_equivalence(lie_type: str, rank: int) -> Dict[str, Any]:
     Connection to our framework:
       - The adjunction B -| Omega (Theorem A) provides the formal setting
       - The uncurved bar complex (kappa = 0) gives an honest coalgebra
-      - Verdier intertwining D_Ran(B(A)) = B(A!) (Theorem A) exchanges
-        the automorphic and spectral sides
+      - Verdier duality sends the completed bar coalgebra to the homotopy
+        Koszul-dual factorization algebra A!_infty = D_Ran(B_X(A));
+        finite-type/completed formality identifies A!_infty with A!
       - The FF center = H^0(bar complex endomorphisms) = Fun(Op)
     """
     data = _lie_data(lie_type, rank)
@@ -619,8 +625,11 @@ def raskin_local_equivalence(lie_type: str, rank: int) -> Dict[str, Any]:
         ),
         'theorem_a_role': (
             'Bar-cobar adjunction B -| Omega on Ran(X) provides the '
-            'formal framework. Verdier intertwining D_Ran(B(A)) = B(A!) '
-            'exchanges the two sides.'
+            'formal framework. Verdier intertwining gives '
+            'A!_infty = D_Ran(B_X(A)); on the finite-type/completed '
+            'formal Koszul locus '
+            'A!_infty is quasi-isomorphic to A!. This is not B_X(A!) '
+            'and not Omega_X(B_X(A)).'
         ),
         'ff_center_role': (
             'Z(V_crit) = Fun(Op) is the endomorphism algebra of the '
@@ -649,9 +658,12 @@ def ag_categorical_langlands(lie_type: str, rank: int,
       local-to-global passage. The factorization structure of B(A)
       encodes the Ran-space data that AG requires.
 
-    The Verdier intertwining D_Ran(B(A)) = B(A!) is the factorization-
-    level exchange that, at the categorical level, becomes the
-    Langlands duality of D-mod and IndCoh.
+    The Verdier passage is the factorization-level exchange:
+      D_Ran(B_X(A)) = A!_infty,
+    with A!_infty quasi-isomorphic to the post-Verdier algebra A! only
+    under finite-type/completed formality hypotheses. The separate object
+    B_X(A!) is the bar coalgebra of the dual algebra, not the output of
+    Verdier dualizing B_X(A).
 
     At genus g:
       dim Bun_G(X) = dim(G) * (g - 1)
@@ -678,8 +690,11 @@ def ag_categorical_langlands(lie_type: str, rank: int,
             'factorization-level local-to-global passage.'
         ),
         'verdier_intertwining': (
-            'D_Ran(B(A)) = B(A!) exchanges automorphic and spectral '
-            'sides at the factorization level.'
+            'A!_infty = D_Ran(B_X(A)) is the homotopy Koszul-dual '
+            'factorization algebra; finite-type/completed formality '
+            'identifies A!_infty with A!. This factorization-level '
+            'Verdier passage is compatible with the automorphic/spectral '
+            'exchange, but it is not the coalgebra equality B_X(A!).'
         ),
         'status': 'Conjecture (Arinkin-Gaitsgory 2015)',
     }
@@ -1157,6 +1172,65 @@ def verify_verlinde_sl2_genus1(k: int) -> Dict[str, Any]:
     }
 
 
+def bar_koszul_object_firewall() -> Dict[str, Dict[str, str]]:
+    r"""Typed separation of the bar/Koszul/center objects.
+
+    Source anchors in the manuscript:
+      - rem:five-object-firewall-kp
+      - thm:bar-cobar-isomorphism-main
+
+    The point of the firewall is AP25 hygiene: cobar inversion, Verdier
+    duality, continuous finite-type duality, and the chiral derived center
+    are different functors with different outputs.
+    """
+    return {
+        'A': {
+            'notation': 'A',
+            'type': 'augmented chiral/factorization algebra on X',
+            'role': 'input algebra',
+        },
+        'B_A': {
+            'notation': 'B_X(A)',
+            'type': 'conilpotent complete factorization coalgebra on Ran(X)',
+            'role': 'bar coalgebra; it is not a chiral algebra A!',
+        },
+        'A_i': {
+            'notation': 'A^i = H^*(B_X(A))',
+            'type': 'intrinsic Koszul dual coalgebra',
+            'role': 'coalgebraic bar cohomology before Verdier or linear duality',
+        },
+        'A_shriek_infty': {
+            'notation': 'A!_infty = D_Ran(B_X(A))',
+            'type': 'homotopy Koszul-dual factorization algebra',
+            'role': (
+                'unconditional Verdier output; formal finite-type/completed '
+                'Koszul hypotheses identify it with A!'
+            ),
+        },
+        'A_shriek': {
+            'notation': 'A!',
+            'type': 'post-Verdier Koszul-dual chiral algebra',
+            'role': (
+                'obtained from A^i by Verdier or continuous finite-type '
+                'linear duality; not Omega_X(B_X(A))'
+            ),
+        },
+        'Omega_B_A': {
+            'notation': 'Omega_X(B_X(A))',
+            'type': 'cobar chiral/factorization algebra',
+            'role': (
+                'bar-cobar inversion recovers A on the conilpotent '
+                'complete Koszul/coderived locus'
+            ),
+        },
+        'Z_der_ch_A': {
+            'notation': 'Z_der_ch(A) = C^*_ch(A, A)',
+            'type': 'chiral Hochschild/derived-center bulk object',
+            'role': 'universal bulk; not B_X(A), A^i, A!, or Omega_X(B_X(A))',
+        },
+    }
+
+
 def full_langlands_dictionary() -> Dict[str, Dict[str, str]]:
     r"""Complete dictionary: bar-cobar <--> geometric Langlands.
 
@@ -1164,31 +1238,65 @@ def full_langlands_dictionary() -> Dict[str, Dict[str, str]]:
     """
     return {
         'bar_complex': {
-            'bar_cobar': 'B(A) -- factorization coalgebra on Ran(X)',
+            'bar_cobar': (
+                'B_X(A) -- conilpotent complete factorization coalgebra '
+                'on Ran(X)'
+            ),
             'geom_langlands': (
                 'Encodes D-mod(Gr_G) at critical level; '
                 'produces A-brane in Kapustin-Witten'
             ),
         },
         'cobar': {
-            'bar_cobar': 'Omega(B(A)) = A -- bar-cobar inversion (Thm B)',
+            'bar_cobar': (
+                'Omega_X(B_X(A)) ~= A -- bar-cobar inversion on the '
+                'conilpotent complete Koszul/coderived locus (Thm B)'
+            ),
             'geom_langlands': (
                 'Recovers the original chiral algebra / D-module. '
-                'NOT the Langlands dual (that is A!, not Omega(B(A))).'
+                'NOT the Langlands dual (that is A!, not Omega_X(B_X(A))).'
             ),
         },
         'verdier_dual': {
-            'bar_cobar': 'D_Ran(B(A)) = B(A!) -- Verdier intertwining (Thm A)',
+            'bar_cobar': (
+                'A!_infty = D_Ran(B_X(A)) -- homotopy Koszul dual; '
+                'finite-type/completed formality gives A!_infty ~= A!. '
+                'This is not B_X(A!).'
+            ),
             'geom_langlands': (
                 'Exchanges automorphic and spectral sides: '
                 'D-mod(Bun_G) <--> IndCoh(LocSys_{G^v})'
             ),
         },
         'koszul_dual': {
-            'bar_cobar': 'A! = H*(B(A))^v -- strict Koszul dual',
+            'bar_cobar': (
+                'A^i = H*(B_X(A)) is the Koszul dual coalgebra; '
+                'A! = (A^i)^vee only after Verdier/continuous '
+                'finite-type duality'
+            ),
             'geom_langlands': (
                 'The Langlands dual chiral algebra. '
                 'For affine KM: level k -> -k-2h^v (FF involution).'
+            ),
+        },
+        'derived_center': {
+            'bar_cobar': (
+                'Z_der_ch(A) = C^*_ch(A, A) -- chiral Hochschild bulk; '
+                'not B_X(A), A^i, A!, or Omega_X(B_X(A))'
+            ),
+            'geom_langlands': (
+                'Bulk/endoscopic operators are a derived-center object, '
+                'separate from the Koszul-dual algebra.'
+            ),
+        },
+        'object_firewall': {
+            'bar_cobar': (
+                'A, B_X(A), A^i, A!, Omega_X(B_X(A)), and Z_der_ch(A) '
+                'are separated by their defining functors.'
+            ),
+            'geom_langlands': (
+                'Geometric Langlands uses the Verdier/Koszul passage as a '
+                'factorization-level input without collapsing these objects.'
             ),
         },
         'kappa': {

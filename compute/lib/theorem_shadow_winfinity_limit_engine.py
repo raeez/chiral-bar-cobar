@@ -1,98 +1,59 @@
-r"""Shadow depth in the W_{1+\infty} limit: phase transition from class M to class G.
+r"""Finite W_N T-line shadow constants and formal W_{1+infty} diagnostics.
 
-MAIN RESULT (planar shadow degeneration theorem):
+Certified finite-N surface:
 
-    For each finite N >= 2, the principal W-algebra W_N has shadow depth
-    r_max = infinity (class M) on the T-line.  The critical discriminant is
+    For each finite N >= 2, the principal W-algebra W_N has a Virasoro
+    T-line.  On the non-singular Virasoro shadow surface c(5c+22) != 0,
+    the local canonical sources give
 
-        Delta(W_N) = 80 / (5c + 22),
+        S_2 = c/2,   S_3 = 2,
+        S_4 = 10/[c(5c+22)],   S_5 = -48/[c^2(5c+22)].
 
-    which is nonzero for all c != -22/5.  As N -> infinity at fixed level k,
-    the central charge c(W_N, k) diverges, and Delta -> 0.  The shadow metric
+    The critical discriminant is Delta_crit = 8*kappa*S_4 = 40/(5c+22).
+    The different coefficient 80/(5c+22) is the excess quadratic
+    coefficient in the metric
 
-        Q_L(t) = (c + 6t)^2 + (80/(5c+22)) t^2
+        Q_L(t) = (c + 6t)^2 + (80/(5c+22)) t^2.
 
-    degenerates to a perfect square Q_L^{planar}(t) = (c + 6t)^2.  The shadow
-    obstruction tower undergoes a PHASE TRANSITION from class M (infinite depth)
-    to class G (Gaussian, depth 2) in the planar limit.
+    Conflating these two constants gives a factor-of-two error.
 
-CLOSED-FORM PLANAR LIMITS:
+Formal large-c and large-N diagnostics:
 
-    The planar shadow coefficients L_r := lim_{c -> inf} c^{r-2} S_r satisfy
-    the exact closed form
+    The rescaled T-line coefficients L_r := lim_{c -> inf} c^{r-2} S_r
+    satisfy
 
-        L_r = (-1)^r  2 * 6^{r-2} / (9r)       for r >= 4.
+        L_r = (-1)^r * 2 * 6^{r-2}/(9r),  r >= 4.
 
-    S_3 = 2 is a universal constant (independent of c).  L_3 is not defined
-    in the c^{r-2} normalization because S_3 does not vanish.
-
-    Ratio recursion: L_{r+1} / L_r = -6r/(r+1).
-
-    Generating function (u = t/c):
+    The ordinary Taylor generating function is
 
         sum_{r >= 4} L_r u^{r-2}
-            = (1/(162 u^2)) [-log(1 + 6u) + 6u - 18u^2 + 72u^3].
+          = (1/(162 u^2))[-log(1+6u) + 6u - 18u^2 + 72u^3].
 
-    The logarithm in the generating function reflects the Taylor series of
-    sqrt(1 + epsilon) with epsilon = 80t^2 / [(c+6t)^2(5c+22)] -> 0.
+    These statements are scalar T-line diagnostics.  They do not certify a
+    W_{1+infty} hierarchy, an analytic tau function, an all-genus partition
+    function, Borel summability, resurgence data, or a class-G promotion of
+    the inverse-limit object.
 
-THREE INDEPENDENT DERIVATION PATHS:
+Channels and firewalls:
 
-    Path 1 (Denominator-numerator extraction):
-        S_r = P_{floor((r-4)/2)}(c) / [c^{r-3} (5c+22)^{floor((r-2)/2)}].
-        For large c: S_r ~ leading(P) / [c^{r-3} 5^{floor((r-2)/2)} c^{floor((r-2)/2)}].
-        Yields L_r for r = 4, ..., 8 from explicit formulas.
+    W_N has generators of spins s = 2, ..., N.  The scalar channel
+    curvatures kappa_s = c/s add to kappa(W_N) = c(H_N-1).  This is not a
+    substitute for multiweight cross-channel OPE data.  The A-hat/Bernoulli
+    lane is a separate scalar genus-asymptotic lane and is not evaluated here.
 
-    Path 2 (Convolution recursion at large c):
-        f(t) = sqrt(Q_L(t)) with Q_L = (c+6t)^2 + Delta t^2.
-        Perturbation theory in epsilon = Delta/c^2 yields the recursion
-        for L_r from the Taylor expansion of sqrt(1 + epsilon g(u)).
+Kernel normalizations used by this module's tests:
 
-    Path 3 (Shadow ODE degeneration):
-        The shadow connection nabla^sh = d - Q'/(2Q) dt has the degenerate
-        limit nabla^{planar} = d - 6/(c+6t) dt, whose flat sections are
-        (c + 6t)^{1/2}.  The L_r encode the deviation from this flat section.
+    affine raw trace form:        r^{KM}(z) = k*Omega_tr/z
+    affine KZ form:               r_KZ(z) = Omega/((k+h^vee)z)
+    Heisenberg collision form:    r^{Heis}(z) = k/z
+    Virasoro collision form:      r^{Vir}(z) = (c/2)/z^3 + 2T/z
 
-SCALING IN THE W_{1+inf} LIMIT:
+Canonical local sources:
 
-    Self-dual central charge: c_sd(W_N) = (N-1)(2N^2 + 2N + 1) ~ 2N^3.
-    Free-field central charge: c_ff(W_N) = N - 1.
-    Total modular characteristic: kappa(W_N) = (H_N - 1) c ~ log(N) * c.
-
-    At self-dual point:
-        S_r(c_sd) ~ L_r / c_sd^{r-2} ~ L_r / (2N^3)^{r-2}   for r >= 4.
-        S_3 = 2 for all N.
-        kappa(W_N, c_sd) ~ 2N^3 log(N).
-
-    At free-field point:
-        S_r(N-1) ~ L_r / (N-1)^{r-2} ~ L_r / N^{r-2}   for r >= 4.
-        kappa(W_N, N-1) ~ (N-1)(log N + gamma - 1) ~ N log(N).
-
-    't Hooft limit (lambda = N/(k+N) fixed, N -> inf):
-        c ~ -N^4/lambda (NEGATIVE for lambda > 0, all N >> 1).
-        The shadow tower is well-defined on the negative-c sheet but the
-        physical interpretation requires analytic continuation.
-        For lambda > 0: maximum N with c > 0 is N_max ~ 1/lambda - 1.
-
-MULTI-CHANNEL DECOMPOSITION:
-
-    W_N has N-1 generators of spins s = 2, ..., N.
-    Channel curvature: kappa_s = c/s.
-    Total: kappa(W_N) = sum_{s=2}^{N} c/s = (H_N - 1) c.
-    The T-line (s=2, Virasoro) carries the universal shadow data.
-    Higher-spin channels have alpha_s = 0 (by parity for odd s) and
-    channel-specific S4_s data.
-
-    In the large-N limit:
-        kappa(W_N) / c = H_N - 1 ~ log(N) + gamma - 1  (logarithmic growth).
-        kappa(W_N) / N -> 0  (harmonic sum grows slower than N).
-
-References:
-    thm:shadow-archetype-classification (higher_genus_modular_koszul.tex)
-    thm:single-line-dichotomy (higher_genus_modular_koszul.tex)
-    thm:winfty-all-stages-rigidity-closure (concordance.tex)
-    thm:stabilized-completion-positive (bar_cobar_adjunction_curved.tex)
-    prop:shadow-depth-phase-transition (higher_genus_modular_koszul.tex)
+    chapters/examples/landscape_census.tex, prop:virasoro-shadow-canonical
+    chapters/theory/shadow_tower_higher_coefficients.tex,
+        thm:shadow-series-closed-form-Virasoro
+    compute/lib/wn_central_charge_canonical.py
 """
 
 from __future__ import annotations
@@ -125,6 +86,65 @@ def anomaly_ratio(N: int) -> Fraction:
 
 
 EULER_MASCHERONI = 0.5772156649015329
+
+
+def kernel_normalization_constants() -> Dict[str, str]:
+    r"""Kernel normalizations from ``landscape_census.tex``.
+
+    The raw affine collision kernel and the KZ kernel use different
+    normalizations.  The level prefix in the trace-form kernel is part of the
+    datum and must not be dropped.
+    """
+    return {
+        'affine_raw_trace_form': 'r^{KM}(z) = k*Omega_tr/z',
+        'affine_kz_form': 'r_KZ(z) = Omega/((k+h^vee)z)',
+        'heisenberg_collision_form': 'r^{Heis}(z) = k/z',
+        'virasoro_collision_form': 'r^{Vir}(z) = (c/2)/z^3 + 2T/z',
+        'source': 'chapters/examples/landscape_census.tex',
+    }
+
+
+def analytic_certification_status() -> Dict[str, Any]:
+    r"""Certification boundary for this finite-shadow engine.
+
+    Finite T-line constants and formal large-c coefficients are computed
+    here.  Analytic, all-genus, hierarchy, Borel, resurgence, and
+    multiweight cross-channel claims require additional hypotheses or data.
+    """
+    return {
+        'finite_n_tline_constants_certified': True,
+        'formal_large_c_tline_diagnostics_certified': True,
+        'formal_large_n_scaling_diagnostics_certified': True,
+        'planar_class_g_promotion_certified': False,
+        'all_genus_partition_function_certified': False,
+        'analytic_tau_function_certified': False,
+        'borel_summability_certified': False,
+        'resurgence_data_certified': False,
+        'hierarchy_membership_certified': False,
+        'multiweight_cross_channel_certified': False,
+        'scalar_ahat_bernoulli_lane': 'separate_lane_not_evaluated_here',
+        'required_for_promotion': (
+            'multiweight OPE closure',
+            'analytic continuation domain',
+            'all-genus sewing construction',
+            'tau-function or hierarchy identification',
+            'Borel/resurgence estimates',
+        ),
+    }
+
+
+def object_firewall_status() -> Dict[str, Any]:
+    r"""Bar, dual, and bulk objects kept distinct for downstream callers."""
+    return {
+        'A': 'chiral algebra',
+        'B(A)': 'bar coalgebra',
+        'A^i': 'bar-cohomology dual coalgebra',
+        'A^!': 'Verdier continuous-linear dual algebra branch',
+        'Z_ch^der(A)': 'derived chiral centre, Hochschild/bulk branch',
+        'Omega(B(A))': 'bar-cobar inversion',
+        'Omega_BA_is_koszul_duality': False,
+        'bulk_is_koszul_dual': False,
+    }
 
 
 # ============================================================================
@@ -179,17 +199,37 @@ def kappa_total(N: int, c_val: Fraction) -> Fraction:
 def shadow_metric_coefficients(c_val: Fraction) -> Tuple[Fraction, Fraction, Fraction]:
     r"""Virasoro shadow metric Q_L(t) = q0 + q1*t + q2*t^2.
 
-    q0 = c^2, q1 = 12c, q2 = (180c + 872)/(5c + 22).
+    q0 = c^2, q1 = 12c, q2 = 36 + 80/(5c + 22).
+
+    The excess coefficient 80/(5c+22) is twice the critical
+    discriminant Delta_crit = 8*kappa*S_4 = 40/(5c+22).
     """
     q0 = c_val ** 2
     q1 = 12 * c_val
-    q2 = (180 * c_val + 872) / (5 * c_val + 22)
+    q2 = 36 + metric_excess_coefficient(c_val)
     return q0, q1, q2
 
 
-def critical_discriminant(c_val: Fraction) -> Fraction:
-    r"""Critical discriminant Delta = 8 kappa S_4 = 80/(5c+22) on the T-line."""
+def metric_excess_coefficient(c_val: Fraction) -> Fraction:
+    r"""Quadratic metric excess in Q_L(t): 80/(5c+22)."""
     return Fraction(80) / (5 * c_val + 22)
+
+
+def critical_discriminant(c_val: Fraction) -> Fraction:
+    r"""Critical discriminant Delta_crit = 8*kappa*S_4 = 40/(5c+22)."""
+    return Fraction(40) / (5 * c_val + 22)
+
+
+def finite_n_tline_constants(c_val: Fraction) -> Dict[str, Fraction]:
+    r"""Exact finite-c Virasoro T-line constants from local canonical sources."""
+    return {
+        'S2': c_val / 2,
+        'S3': Fraction(2),
+        'S4': Fraction(10) / (c_val * (5 * c_val + 22)),
+        'S5': Fraction(-48) / (c_val**2 * (5 * c_val + 22)),
+        'critical_discriminant': critical_discriminant(c_val),
+        'metric_excess': metric_excess_coefficient(c_val),
+    }
 
 
 def tline_shadow_tower(c_val: Fraction, max_r: int = 12) -> Dict[int, Fraction]:
@@ -278,16 +318,17 @@ def planar_limit_ratio(r: int) -> Fraction:
 
 
 def planar_limit_generating_function(u: float) -> float:
-    r"""Generating function sum_{r >= 4} L_r u^{r-2}.
+    r"""Ordinary Taylor generating function sum_{r >= 4} L_r u^{r-2}.
 
     = (1/(162 u^2)) * [-log(1 + 6u) + 6u - 18u^2 + 72u^3]
 
-    Valid for |6u| < 1, i.e. |u| < 1/6.
+    Valid as a scalar T-line Taylor series for |6u| < 1.  This is not a
+    Borel/resurgence certificate and not an all-genus tau function.
     """
     if abs(u) < 1e-15:
         return planar_limit_float(4)
     if abs(6 * u) >= 1:
-        raise ValueError(f"|6u| = {abs(6*u):.4f} >= 1: outside convergence radius")
+        raise ValueError(f"|6u| = {abs(6*u):.4f} >= 1: outside Taylor disk")
     return (1.0 / (162.0 * u**2)) * (
         -math.log(1.0 + 6.0 * u) + 6.0 * u - 18.0 * u**2 + 72.0 * u**3
     )
@@ -305,9 +346,9 @@ def planar_shadow_at_c(c_val: float, r: int) -> float:
 def finite_N_correction(c_val: Fraction, r: int) -> Fraction:
     r"""Exact S_r minus planar approximation L_r/c^{r-2}.
 
-    The difference delta_r(c) = S_r(c) - L_r/c^{r-2} encodes the 1/c
-    corrections to the planar limit.  These are the non-planar shadow
-    corrections at finite N.
+    The difference delta_r(c) = S_r(c) - L_r/c^{r-2} is a finite-c T-line
+    correction.  N enters only after a chosen W_N regime supplies c(N);
+    this function does not certify non-planar all-genus data.
     """
     if r < 4:
         raise ValueError("Correction not defined for r < 4")
@@ -318,10 +359,10 @@ def finite_N_correction(c_val: Fraction, r: int) -> Fraction:
 
 
 def subleading_coefficient(r: int) -> Fraction:
-    r"""Subleading coefficient M_r in S_r = L_r/c^{r-2} + M_r/c^{r-1} + ...
+    r"""Large-c estimate for M_r in S_r = L_r/c^{r-2} + M_r/c^{r-1} + ...
 
-    Extracted by computing S_r * c^{r-1} - L_r * c and taking c -> inf.
-    Uses exact arithmetic at c = 10^6 with Richardson acceleration.
+    Computes S_r*c^{r-1} - L_r*c at a large exact c.  This is a diagnostic
+    helper, not a proof of a full asymptotic expansion.
     """
     c1 = Fraction(10**5)
     c2 = Fraction(10**6)
@@ -335,21 +376,22 @@ def subleading_coefficient(r: int) -> Fraction:
     val1 = tower1[r] * c1**(r - 1) - L_r * c1
     val2 = tower2[r] * c2**(r - 1) - L_r * c2
 
-    # Richardson: M_r ~ val2 + (val2 - val1)/9
-    # (since the correction is O(1/c) and c2/c1 = 10)
+    # Retain both finite probes above so callers can replace this by a
+    # certified extrapolator without changing the local arithmetic.
     return val2
 
 
 # ============================================================================
-# 6.  Shadow depth phase transition
+# 6.  Finite depth and formal metric degeneration
 # ============================================================================
 
 def depth_class_at_c(c_val: Fraction) -> str:
     r"""Shadow depth class on the T-line at central charge c.
 
-    Delta = 80/(5c+22).
-    Delta != 0 for c != -22/5 => class M (infinite depth) at finite c.
-    Delta -> 0 as c -> inf => class G (Gaussian) in the planar limit.
+    For finite non-singular c the Virasoro T-line remains class M.  The
+    large-c vanishing of the metric excess is a formal degeneration of the
+    scalar metric, not a certified class-G shadow-depth statement for the
+    inverse-limit algebra.
     """
     if c_val == Fraction(-22, 5):
         return 'degenerate'
@@ -360,10 +402,11 @@ def depth_class_at_c(c_val: Fraction) -> str:
 
 def depth_transition_data(N_values: Optional[List[int]] = None,
                           regime: str = 'self_dual') -> List[Dict[str, Any]]:
-    r"""Track the shadow depth transition as N increases.
+    r"""Track finite-N T-line data and formal large-N degeneration diagnostics.
 
-    For each N, compute c, Delta, shadow growth rate rho, and the first
-    few shadow coefficients.
+    For each N, compute c, the critical discriminant, the metric excess,
+    the scalar T-line growth rate, and the first few shadow coefficients.
+    No row certifies class-G promotion or hierarchy membership.
 
     regime: 'self_dual' or 'free_field'.
     """
@@ -383,6 +426,7 @@ def depth_transition_data(N_values: Optional[List[int]] = None,
             continue
 
         delta = critical_discriminant(c)
+        metric_excess = metric_excess_coefficient(c)
         kap = kappa_total(N, c)
         rho_val = anomaly_ratio(N)
 
@@ -401,6 +445,8 @@ def depth_transition_data(N_values: Optional[List[int]] = None,
             'c_float': c_f,
             'Delta': delta,
             'Delta_float': float(delta),
+            'metric_excess': metric_excess,
+            'metric_excess_float': float(metric_excess),
             'kappa_total': kap,
             'anomaly_ratio': rho_val,
             'growth_rate': growth,
@@ -409,6 +455,9 @@ def depth_transition_data(N_values: Optional[List[int]] = None,
             'S5': tower.get(5, 0.0),
             'S6': tower.get(6, 0.0),
             'depth_class': 'M',
+            'formal_limit_depth_class': 'not_certified',
+            'planar_class_g_promotion_certified': False,
+            'hierarchy_membership_certified': False,
             'regime': regime,
         })
 
@@ -454,7 +503,8 @@ def large_N_scaling_self_dual(N_values: Optional[List[int]] = None,
         S_3 = 2  (constant).
         S_r ~ L_r / (2N^3)^{r-2}  for r >= 4  (vanishes as N^{-3(r-2)}).
         kappa ~ 2N^3 * log(N).
-        Delta ~ 80/(10N^3) = 8/N^3  (vanishes as N^{-3}).
+        Delta_crit ~ 40/(10N^3) = 4/N^3.
+        metric_excess ~ 80/(10N^3) = 8/N^3.
     """
     if N_values is None:
         N_values = [2, 3, 4, 5, 10, 20, 50, 100]
@@ -467,6 +517,7 @@ def large_N_scaling_self_dual(N_values: Optional[List[int]] = None,
         tower = tline_shadow_tower_float(c_f, max_r=max_r)
         kap = float(kappa_total(N, c))
         delta = float(critical_discriminant(c))
+        metric_excess = float(metric_excess_coefficient(c))
 
         row = {
             'N': N,
@@ -475,6 +526,9 @@ def large_N_scaling_self_dual(N_values: Optional[List[int]] = None,
             'kappa': kap,
             'Delta': delta,
             'Delta_times_N3': delta * N**3,
+            'metric_excess': metric_excess,
+            'metric_excess_times_N3': metric_excess * N**3,
+            'planar_class_g_promotion_certified': False,
         }
         for r in range(3, max_r + 1):
             row[f'S{r}'] = tower.get(r, 0.0)
@@ -501,7 +555,8 @@ def large_N_scaling_free_field(N_values: Optional[List[int]] = None,
     At c_ff = N-1:
         S_r ~ L_r / N^{r-2}  for r >= 4  (slower vanishing than self-dual).
         kappa ~ N log(N).
-        Delta ~ 80/(5N) = 16/N.
+        Delta_crit ~ 40/(5N) = 8/N.
+        metric_excess ~ 80/(5N) = 16/N.
     """
     if N_values is None:
         N_values = [2, 3, 5, 10, 20, 50, 100, 200]
@@ -516,6 +571,7 @@ def large_N_scaling_free_field(N_values: Optional[List[int]] = None,
         tower = tline_shadow_tower_float(c_f, max_r=max_r)
         kap = float(kappa_total(N, c))
         delta = float(critical_discriminant(c))
+        metric_excess = float(metric_excess_coefficient(c))
 
         row = {
             'N': N,
@@ -523,6 +579,9 @@ def large_N_scaling_free_field(N_values: Optional[List[int]] = None,
             'kappa': kap,
             'Delta': delta,
             'Delta_times_N': delta * N,
+            'metric_excess': metric_excess,
+            'metric_excess_times_N': metric_excess * N,
+            'planar_class_g_promotion_certified': False,
         }
         for r in range(3, max_r + 1):
             row[f'S{r}'] = tower.get(r, 0.0)
@@ -547,8 +606,10 @@ def thooft_c_exact(N: int, lam: Fraction) -> Fraction:
     lambda = N/(k+N), so k+N = N/lambda.
     c = (N-1) - N(N^2-1)(N/lambda - 1)^2 / (N/lambda).
 
-    For lambda > 0 and N >> 1: c ~ -N^4/lambda (negative).
-    Maximum N with c > 0: N_max ~ 1/lambda - 1.
+    For fixed 0 < lambda < 1 and N >= 2 this sheet has negative central
+    charge; asymptotically c ~ -N^4/lambda.  The free-field point
+    lambda = 0 is a separate limiting sheet, not a positive-c window at
+    fixed lambda > 0.
     """
     if lam <= 0 or lam >= 1:
         raise ValueError(f"lambda = {lam} must be in (0, 1)")
@@ -557,13 +618,15 @@ def thooft_c_exact(N: int, lam: Fraction) -> Fraction:
 
 
 def thooft_max_N(lam: float) -> int:
-    r"""Maximum N with positive central charge at given lambda.
+    r"""Sentinel bound for positive central charge at fixed lambda.
 
-    Approximate: N_max ~ floor(1/lambda - 1).
+    For 0 < lambda < 1, the exact Fateev-Lukyanov sheet has no positive
+    central charge for N >= 2.  Return 1 to signal that the positive-N scan
+    should be empty.  lambda = 0 is the separate free-field limit.
     """
     if lam <= 0:
         return 10**6  # effectively infinite
-    return max(1, int(1.0 / lam - 1))
+    return 1
 
 
 def thooft_shadow_data(lam: Fraction,
@@ -571,7 +634,9 @@ def thooft_shadow_data(lam: Fraction,
                        max_r: int = 8) -> Dict[str, Any]:
     r"""Shadow tower data in the 't Hooft limit at fixed lambda.
 
-    Only includes N values with c > 0.
+    Only includes N values with c > 0.  For fixed 0 < lambda < 1 this
+    list is empty on the Fateev-Lukyanov sheet; negative-c data would
+    require a separate analytic-continuation policy.
     """
     if N_values is None:
         N_max = thooft_max_N(float(lam))
@@ -607,6 +672,8 @@ def thooft_shadow_data(lam: Fraction,
         'lambda': float(lam),
         'data': data,
         'N_max_positive': thooft_max_N(float(lam)),
+        'positive_c_certified': bool(data),
+        'analytic_continuation_certified': False,
     }
 
 
@@ -619,6 +686,9 @@ def channel_kappa_decomposition(N: int, c_val: Fraction) -> Dict[str, Any]:
 
     kappa_s = c/s for spin-s generator.
     kappa_total = sum_{s=2}^{N} c/s = (H_N - 1) c.
+
+    This is scalar curvature bookkeeping only.  It does not compute
+    multiweight OPE couplings or cross-channel shadows.
     """
     channels = {}
     total_sum = Fraction(0)
@@ -637,6 +707,7 @@ def channel_kappa_decomposition(N: int, c_val: Fraction) -> Dict[str, Any]:
         'formula': kap_formula,
         'match': total_sum == kap_formula,
         'anomaly_ratio': anomaly_ratio(N),
+        'multiweight_cross_channel_certified': False,
     }
 
 
@@ -669,10 +740,11 @@ def kappa_over_c_convergence(N_values: Optional[List[int]] = None) -> List[Dict]
 # ============================================================================
 
 def growth_rate_tline(c_val: float) -> float:
-    r"""Shadow growth rate on the T-line.
+    r"""Scalar T-line shadow growth rate.
 
     rho = sqrt((180c + 872) / ((5c + 22) c^2)).
-    For large c: rho ~ 6/c.
+    For large c: rho ~ 6/c.  This is the Virasoro Taylor-series rate,
+    not an analytic tau-function or all-genus radius.
     """
     if c_val <= 0 or (5 * c_val + 22) <= 0:
         return float('inf')
@@ -683,11 +755,12 @@ def growth_rate_tline(c_val: float) -> float:
 
 def growth_rate_large_N(N_values: Optional[List[int]] = None,
                         regime: str = 'self_dual') -> List[Dict]:
-    r"""Track shadow growth rate as N increases.
+    r"""Track the scalar T-line Taylor rate as N increases.
 
     At self-dual c ~ 2N^3: rho ~ 6/(2N^3) = 3/N^3 -> 0.
     At free-field c = N-1: rho ~ 6/N -> 0.
-    In both cases the convergence radius R = 1/rho -> infinity.
+    In both cases the formal T-line Taylor radius 1/rho tends to infinity.
+    This does not certify analytic W_{1+infty} hierarchy membership.
     """
     if N_values is None:
         N_values = [2, 3, 5, 10, 20, 50, 100]
@@ -705,11 +778,15 @@ def growth_rate_large_N(N_values: Optional[List[int]] = None,
             continue
 
         rho = growth_rate_tline(c_f)
+        radius = 1.0 / rho if rho > 0 else float('inf')
         results.append({
             'N': N,
             'c': c_f,
             'growth_rate': rho,
-            'convergence_radius': 1.0 / rho if rho > 0 else float('inf'),
+            'formal_tline_radius': radius,
+            'convergence_radius': radius,
+            'radius_status': 'formal_tline_taylor_radius',
+            'analytic_tau_function_certified': False,
             'rho_times_c': rho * c_f,
             'regime': regime,
         })
@@ -758,7 +835,7 @@ def complementarity_scaling(N_values: Optional[List[int]] = None) -> List[Dict]:
 # ============================================================================
 
 def summary_table(N_values: Optional[List[int]] = None) -> List[Dict]:
-    r"""Complete summary for each N: c_sd, c_ff, kappa, Delta, S_3, S_4, rho."""
+    r"""Finite-N scalar summary: c, kappa, Delta_crit, metric excess, S_3, S_4, rho."""
     if N_values is None:
         N_values = [2, 3, 4, 5, 10, 20, 50, 100]
 
@@ -770,6 +847,8 @@ def summary_table(N_values: Optional[List[int]] = None) -> List[Dict]:
         kap_ff = kappa_total(N, c_ff)
         delta_sd = critical_discriminant(c_sd)
         delta_ff = critical_discriminant(c_ff)
+        excess_sd = metric_excess_coefficient(c_sd)
+        excess_ff = metric_excess_coefficient(c_ff)
 
         rows.append({
             'N': N,
@@ -779,11 +858,14 @@ def summary_table(N_values: Optional[List[int]] = None) -> List[Dict]:
             'kappa_free_field': float(kap_ff),
             'Delta_self_dual': float(delta_sd),
             'Delta_free_field': float(delta_ff),
+            'metric_excess_self_dual': float(excess_sd),
+            'metric_excess_free_field': float(excess_ff),
             'S3': 2.0,
             'S4_self_dual': float(s4_at_self_dual(N)),
             'S4_c2_self_dual': float(s4_times_c_squared_at_self_dual(N)),
             'growth_rate_sd': growth_rate_tline(float(c_sd)),
             'growth_rate_ff': growth_rate_tline(float(c_ff)),
+            'planar_class_g_promotion_certified': False,
         })
 
     return rows

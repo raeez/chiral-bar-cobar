@@ -17,7 +17,7 @@ Tests organized by section:
   14. Shadow CohFT entropy functional
   15. Consistency checks
 
-Multi-path verification (CLAUDE.md mandate):
+Multi-path verification:
   Path 1: Direct formula computation
   Path 2: Cross-family / cross-arity consistency
   Path 3: Numerical comparison with known values
@@ -42,13 +42,14 @@ from bps_entropy_shadow import (
     strominger_vafa_entropy_subleading,
     # Section 4
     shadow_to_entropy_correction_k3e, shadow_entropy_expansion_k3e,
-    bessel_asymptotic_coefficients,
+    bessel_asymptotic_coefficients, hankel_log_coefficients,
     # Section 5
     rademacher_leading_term_phi10, rademacher_subleading_phi10,
     # Section 6
     macmahon_log_asymptotics, macmahon_shadow_comparison,
     # Section 7
-    bessel_index_from_kappa, log_correction_from_kappa,
+    bessel_index_from_kappa, bps_shadow_bessel_index_k3e,
+    log_correction_from_kappa,
     # Section 8
     verify_bessel_shadow_match,
     # Section 9
@@ -67,6 +68,8 @@ from bps_entropy_shadow import (
     shadow_cohft_entropy,
     # Section 15
     verify_kappa_weight_consistency, verify_bessel_coefficients_exact,
+    holographic_package_entries, modular_koszul_package_projections,
+    koszul_object_firewall, kernel_normalizations,
 )
 
 PI = math.pi
@@ -97,7 +100,7 @@ class TestFaberPandharipande:
         assert lambda_fp(4) == Fraction(127, 154828800)
 
     def test_lambda_positive(self):
-        """All lambda_g^FP are POSITIVE (AP22: Bernoulli signs)."""
+        """All lambda_g^FP are positive after Bernoulli sign normalization."""
         for g in range(1, 8):
             assert lambda_fp(g) > 0, f"lambda_{g} must be positive"
 
@@ -115,7 +118,7 @@ class TestCY3Kappa:
     """Tests for CY3 modular characteristics kappa."""
 
     def test_kappa_k3_times_e(self):
-        """kappa(K3 x E) = 5.
+        """kappa_BKM(K3 x E) = 5.
 
         Path 1: weight(Delta_5) = 5.
         Path 2: (chi(K3) - 4)/4 = (24-4)/4 = 5.
@@ -139,20 +142,20 @@ class TestCY3Kappa:
         assert kappa_resolved_conifold() == Fraction(1)
 
     def test_kappa_additivity_k3_e(self):
-        """kappa(K3 x E) != kappa(K3) + kappa(E).
+        """kappa_BKM(K3 x E) != kappa_ch(K3) + kappa_ch(E).
 
-        5 != 2 + 1 = 3. The CY modular characteristic is NOT additive
-        under products. This is because kappa for a product CY3 involves
-        the MIXED Hodge structure, not just the sum.
+        5 != 2 + 1 = 3 because the BKM automorphic lane is not the
+        Heisenberg-Mukai product specialisation. The latter is the
+        separate value kappa_ch^{Heis}(K3 x E)=3.
         """
         assert kappa_k3_times_e() != kappa_k3() + kappa_elliptic()
 
     def test_kappa_not_half_euler(self):
-        """kappa(K3 x E) != chi_top(K3 x E)/2.
+        """kappa_BKM(K3 x E) != chi_top(K3 x E)/2.
 
-        AP48: kappa is NOT chi_top/2 in general.
+        The BKM kappa is not chi_top/2 in general.
         chi_top(K3 x E) = chi_top(K3) * chi_top(E) = 24 * 0 = 0.
-        kappa = 5 != 0.
+        kappa_BKM = 5 != 0.
         """
         chi_top_k3_times_e = 0  # chi(K3)*chi(E) = 24*0 = 0
         assert float(kappa_k3_times_e()) != chi_top_k3_times_e / 2
@@ -245,19 +248,29 @@ class TestShadowEntropyDictionary:
         assert abs(S3 - (-6.75 * math.log(100))) < 1e-10
 
     def test_arity_4_power_correction(self):
-        """Arity 4 gives the first power correction ~ 1/D.
+        """Arity 4 gives the first Hankel-log power correction ~ 1/sqrt(D).
 
-        Arity r maps to Bessel coefficient k = r - 2.
-        Arity 4 -> k = 2 -> a_2 / z^2.
+        Arity r >= 4 maps to Hankel-log coefficient k = r - 3.
+        Arity 4 -> k = 1 -> b_1 / z.
         """
         D = 10000
         S4 = shadow_to_entropy_correction_k3e(4, D)
-        # Should be a_2 / z^2 where z = 4*pi*sqrt(D) = 4*pi*100
+        # Should be b_1 / z where z = 4*pi*sqrt(D) = 4*pi*100
         z = FOUR_PI * 100
         nu = Fraction(19, 2)
-        coeffs = bessel_asymptotic_coefficients(nu, 2)
-        expected = float(coeffs[2]) / z ** 2
+        coeffs = hankel_log_coefficients(nu, 1)
+        expected = float(coeffs[1]) / z
         assert abs(S4 - expected) < 1e-12
+
+    def test_arity_5_power_correction(self):
+        """Arity 5 gives the logarithmic coefficient b_2/z^2."""
+        D = 10000
+        S5 = shadow_to_entropy_correction_k3e(5, D)
+        z = FOUR_PI * 100
+        nu = Fraction(19, 2)
+        coeffs = hankel_log_coefficients(nu, 2)
+        expected = float(coeffs[2]) / z ** 2
+        assert abs(S5 - expected) < 1e-12
 
     def test_higher_arity_decreasing(self):
         """Higher-arity corrections decrease in magnitude for large D."""
@@ -272,7 +285,8 @@ class TestShadowEntropyDictionary:
     def test_expansion_structure(self):
         """Full expansion returns consistent structure."""
         result = shadow_entropy_expansion_k3e(1000, max_arity=6)
-        assert result['kappa_K3E'] == 5
+        assert result['kappa_BKM_K3E'] == 5
+        assert result['kappa_K3E'] == 5  # compatibility alias
         assert result['weight_Phi10'] == 10
         assert 2 in result['contributions']
         assert result['S_BH'] > 0
@@ -374,13 +388,23 @@ class TestBesselIndex:
     """Tests for the Bessel index from shadow data."""
 
     def test_bessel_index_k3e(self):
-        """nu = 2*kappa - 3/2 = 10 - 3/2 = 17/2 for K3 x E."""
+        """Holomorphic Siegel bridge: nu = 2*kappa - 3/2 = 17/2."""
         nu = bessel_index_from_kappa(5, dim_moduli=3)
         assert nu == Fraction(17, 2)
+
+    def test_shadow_hankel_index_distinct(self):
+        """The local shadow-Hankel normalization is 19/2, not 17/2."""
+        assert bps_shadow_bessel_index_k3e() == Fraction(19, 2)
+        assert bps_shadow_bessel_index_k3e() != bessel_index_from_kappa(5)
 
     def test_log_correction_k3e(self):
         """Log correction is -27/4 for K3 x E."""
         assert log_correction_from_kappa(5) == Fraction(-27, 4)
+
+    def test_log_correction_not_universal_in_kappa(self):
+        """The Phi_10 logarithmic exponent is not a universal kappa formula."""
+        with pytest.raises(ValueError):
+            log_correction_from_kappa(1)
 
 
 # =========================================================================
@@ -420,7 +444,7 @@ class TestBesselCoefficients:
         """For nu=1/2, I_{1/2}(z) = sqrt(2/(pi*z))*sinh(z), all a_k should be computable.
 
         a_1(1/2) = -(4*1/4 - 1)/8 = 0/8 = 0.
-        Actually: 4*(1/2)^2 = 1, so 4*nu^2 - 1 = 0.
+        Since 4*(1/2)^2 = 1, the factor 4*nu^2 - 1 vanishes.
         Therefore a_k(1/2) = 0 for all k >= 1 (the product has a zero factor).
         This is correct: I_{1/2}(z) = sqrt(2/(pi*z))*sinh(z) which has
         EXACT Bessel expansion with a_0=1 and all a_k=0.
@@ -436,6 +460,21 @@ class TestBesselCoefficients:
         result = verify_bessel_coefficients_exact()
         assert result['all_match'] is True
 
+    def test_hankel_log_coefficients_exact(self):
+        """Log coefficients are independent from the raw Hankel coefficients.
+
+        For nu=19/2:
+          a_1=-45, a_2=990, a_3=-13860.
+          b_1=a_1=-45.
+          b_2=a_2-a_1^2/2=-45/2.
+          b_3=a_3-a_1*a_2+a_1^3/3=315.
+        """
+        coeffs = hankel_log_coefficients(Fraction(19, 2), 3)
+        assert coeffs[0] == Fraction(0)
+        assert coeffs[1] == Fraction(-45)
+        assert coeffs[2] == Fraction(-45, 2)
+        assert coeffs[3] == Fraction(315)
+
 
 # =========================================================================
 # Section 9: Cross-verification Bessel vs shadow
@@ -445,7 +484,7 @@ class TestBesselShadowMatch:
     """Tests for Bessel-shadow tower correspondence."""
 
     def test_match_at_large_D(self):
-        """Bessel and shadow match by construction of the dictionary."""
+        """Hankel-log coefficients and shadow powers use the same oracle."""
         result = verify_bessel_shadow_match(10000, max_arity=6)
         assert result['all_match'] is True
 
@@ -472,7 +511,7 @@ class TestEntropyComparison:
     def test_k3e_dominates_conifold(self):
         """K3 x E entropy > conifold entropy at same D.
 
-        K3 x E: S = 4*pi*sqrt(D) (from kappa=5).
+        K3 x E: S = 4*pi*sqrt(D) (from kappa_BKM=5).
         Conifold: S = 2*pi*sqrt(D) (from kappa=1).
         """
         table = entropy_comparison_table([100])
@@ -525,7 +564,7 @@ class TestBPSGenusExpansion:
         """All F_g are positive for positive kappa."""
         table = bps_genus_expansion(Fraction(5), g_max=7)
         for g, Fg in table.items():
-            assert Fg > 0, f"F_{g} should be positive for kappa=5"
+            assert Fg > 0, f"F_{g} should be positive for kappa_BKM=5"
 
     def test_genus_corrections_structure(self):
         """Genus corrections for BPS entropy have correct structure."""
@@ -645,12 +684,17 @@ class TestKappaWeightBridge:
     """Tests for the kappa-to-automorphic-weight bridge."""
 
     def test_k3e_weight(self):
-        """weight(Phi_10) = 2*kappa(K3 x E) = 10."""
+        """weight(Phi_10) = 2*kappa_BKM(K3 x E) = 10."""
         assert kappa_to_automorphic_weight(5) == 10
 
     def test_weight_to_log_correction(self):
         """Log correction for Phi_10 is -27/4."""
         assert weight_to_log_correction(10) == Fraction(-27, 4)
+
+    def test_weight_to_log_correction_not_weight_only(self):
+        """The Phi_10 reciprocal exponent is not exported to other weights."""
+        with pytest.raises(ValueError):
+            weight_to_log_correction(5)
 
 
 # =========================================================================
@@ -729,26 +773,73 @@ class TestConsistency:
             assert epsilon < 0.1, f"epsilon = {epsilon} not small at D={D}"
 
     def test_k3e_five_is_special(self):
-        """kappa=5 for K3 x E is consistent with chi(K3)=24.
+        """kappa_BKM=5 for K3 x E is consistent with chi(K3)=24.
 
-        (chi(K3) - 4)/4 = (24-4)/4 = 5 = kappa.
+        (chi(K3) - 4)/4 = (24-4)/4 = 5 = kappa_BKM.
         This is NOT chi(K3)/4 = 6. The -4 offset is important.
         """
         chi_K3 = 24
         kappa = (chi_K3 - 4) / 4
         assert kappa == 5
 
+    def test_holographic_package_has_seven_entries(self):
+        """The holographic package is the seven-entry package H(T)."""
+        entries = holographic_package_entries()
+        assert entries == (
+            "A",
+            "A^i",
+            "A^!",
+            "C",
+            "r(z)",
+            "Theta_A",
+            "nabla^hol",
+        )
+        assert len(entries) == 7
+
+    def test_modular_koszul_package_has_six_projections(self):
+        """The modular Koszul compute package is distinct and sixfold."""
+        projections = modular_koszul_package_projections()
+        assert projections == (
+            "Fact_X(L)",
+            "barB_X(L)",
+            "Theta_L",
+            "L_L",
+            "(V_L^br,T_L^br)",
+            "R_4^mod(L)",
+        )
+        assert len(projections) == 6
+        assert set(projections) != set(holographic_package_entries())
+
+    def test_koszul_object_firewall(self):
+        """A^!, Omega(B(A)), and Z_ch^der(A) are separate branches."""
+        firewall = koszul_object_firewall()
+        assert "H^*(B(A))" in firewall["A^i"]
+        assert "Verdier/continuous-linear dual" in firewall["A^!"]
+        assert "inversion recovering A" in firewall["Omega(B(A))"]
+        assert "ChirHoch^*(A,A)" in firewall["Z_ch^der(A)"]
+        assert firewall["A^!"] != firewall["Omega(B(A))"]
+        assert firewall["A^!"] != firewall["Z_ch^der(A)"]
+        assert firewall["B(A)"] != firewall["A^i"]
+
+    def test_kernel_normalization_firewall(self):
+        """Raw collision, KZ transport, and Virasoro kernels are distinct."""
+        kernels = kernel_normalizations()
+        assert kernels["affine_raw_collision"] == "k*Omega_tr/z"
+        assert kernels["affine_KZ_coefficient"] == "Omega/((k+h^vee)z)"
+        assert kernels["virasoro_collision"] == "(c/2)/z^3 + 2T/z"
+        assert kernels["affine_raw_collision"] != kernels["affine_KZ_coefficient"]
+
     def test_bessel_shadow_self_consistency(self):
         """The dictionary maps shadow->Bessel and Bessel->shadow consistently.
 
         For each arity r >= 4, the shadow contribution at discriminant D
-        equals a_{r-2} / (4*pi*sqrt(D))^{r-2}.
+        equals b_{r-3} / (4*pi*sqrt(D))^{r-3}.
         """
         D = 10000
         nu = Fraction(19, 2)
         for r in range(4, 8):
-            k = r - 2
-            coeffs = bessel_asymptotic_coefficients(nu, k)
+            k = r - 3
+            coeffs = hankel_log_coefficients(nu, k)
             z = FOUR_PI * math.sqrt(D)
             bessel_pred = float(coeffs[k]) / z ** k
             shadow_pred = shadow_to_entropy_correction_k3e(r, D)

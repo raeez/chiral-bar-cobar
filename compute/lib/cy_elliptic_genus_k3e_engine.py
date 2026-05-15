@@ -30,24 +30,34 @@ Its Hodge diamond is computed via Kunneth from K3 and E.
    vanishing leading term.  But the new-supersymmetric index is nonzero.
 
 6. SHADOW OBSTRUCTION TOWER CONNECTION: kappa(A_{K3xE}).
-   The modular characteristic is NOT simply chi/2 = 0.  The additivity
+   The modular characteristic is not simply chi/2 = 0.  The additivity
    kappa(K3xE) = kappa(K3) + kappa(E) uses the individual chiral algebras.
    For K3: kappa(Omega^ch(K3)) = 2 (CY dimension).
    For E: kappa(Omega^ch(E)) = 1 (CY dimension of E).
    So kappa(K3xE) = 3 = dim_C(K3xE).  The vanishing of the elliptic
-   genus does NOT imply kappa = 0: kappa measures the bar complex
+   genus does not imply kappa = 0: kappa measures the scalar shadow
    curvature (genus-1 obstruction class), while the elliptic genus
-   is a REFINED trace over the RR sector that can cancel (AP31:
+   is a refined trace over the RR sector that can cancel:
    kappa = 0 does NOT follow from Z = 0, and conversely Z = 0
-   does NOT imply kappa = 0).
+   does not imply kappa = 0.
 
-CONVENTIONS (AP38, AP46, AP48):
+CONVENTIONS:
   - q = e^{2*pi*i*tau}, y = e^{2*pi*i*z}
-  - eta(q) = q^{1/24} * prod(1-q^n) [AP46: include q^{1/24}]
-  - kappa(A) = modular characteristic (AP48: NOT c/2 in general)
+  - eta(q) = q^{1/24} * prod(1-q^n)
+  - kappa(A) = modular characteristic; it is not c/2 in general
   - Elliptic genus of K3: 2*phi_{0,1}(tau,z), Eichler-Zagier convention
   - phi_{0,1}(tau,0) = 12, so Z_{K3}(tau,0) = chi(K3) = 24
-  - Desuspension LOWERS degree (AP45): |s^{-1}v| = |v| - 1
+  - Desuspension lowers degree: |s^{-1}v| = |v| - 1
+
+FIREWALLS:
+  - H(A) has seven entries: A, A^i, A^!, C, r(z), Theta_A, nabla^hol.
+  - The modular Koszul compute package has six primary projections and
+    is not the seven-entry holographic package.
+  - A^! is the Verdier/continuous-linear branch under finite-type or
+    completed hypotheses.  Omega(B(A)) = A is bar-cobar inversion.
+    Z_ch^der(A) is the Hochschild/bulk object, not the Koszul dual.
+  - Kernel normalizations: affine raw collision k*Omega_tr/z; KZ
+    coefficient Omega/((k+h^vee)z); Virasoro (c/2)/z^3 + 2T/z.
 
 References:
   Beauville (1983): classification of CY surfaces
@@ -62,12 +72,87 @@ from __future__ import annotations
 
 import math
 from collections import defaultdict
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from fractions import Fraction
 from functools import lru_cache
-from typing import Any, Dict, List, Optional, Sequence, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 F = Fraction
+
+
+HOLOGRAPHIC_PACKAGE_ENTRIES: Tuple[str, ...] = (
+    "A",
+    "A^i",
+    "A^!",
+    "C",
+    "r(z)",
+    "Theta_A",
+    "nabla^hol",
+)
+"""Seven entries of the holographic package H(A)."""
+
+
+MODULAR_KOSZUL_PRIMARY_PROJECTIONS: Tuple[str, ...] = (
+    "Fact_X(L)",
+    "barB_X(L)",
+    "Theta_L",
+    "L_L",
+    "(V_br, T_br)",
+    "R4_mod(L)",
+)
+"""Six primary projections of the modular Koszul compute package."""
+
+
+BAR_COBAR_OBJECT_FIREWALL = (
+    "A, B(A), A^i, A^!, and Z_ch^der(A) are distinct; "
+    "Omega(B(A)) = A is inversion, not Koszul duality."
+)
+
+
+OBJECT_SEPARATION: Dict[str, str] = {
+    "A": "boundary chiral algebra",
+    "B(A)": "ordered bar coalgebra",
+    "A^i": "H^*(B(A)), the bar-dual coalgebra",
+    "A^!": (
+        "Verdier/continuous-linear Koszul branch under finite-type or "
+        "completed hypotheses"
+    ),
+    "Z_ch^der(A)": "chiral Hochschild/derived-centre bulk object",
+    "Omega(B(A))": "bar-cobar inversion returning A",
+}
+
+
+KERNEL_NORMALIZATIONS: Dict[str, str] = {
+    "affine_raw_collision": "k*Omega_tr/z",
+    "kz_coefficient": "Omega/((k+h^vee)z)",
+    "virasoro": "(c/2)/z^3 + 2T/z",
+}
+
+
+@dataclass(frozen=True)
+class StructuralFirewallData:
+    """Executable separation data for the local scalar compute surface."""
+
+    holographic_package_entries: Tuple[str, ...]
+    modular_koszul_primary_projections: Tuple[str, ...]
+    object_separation: Dict[str, str]
+    kernel_normalizations: Dict[str, str]
+    packages_are_distinct: bool
+    object_firewall: str
+
+
+def structural_firewall_data() -> StructuralFirewallData:
+    """Return the package, object, and kernel normalizations used here."""
+    return StructuralFirewallData(
+        holographic_package_entries=HOLOGRAPHIC_PACKAGE_ENTRIES,
+        modular_koszul_primary_projections=MODULAR_KOSZUL_PRIMARY_PROJECTIONS,
+        object_separation=dict(OBJECT_SEPARATION),
+        kernel_normalizations=dict(KERNEL_NORMALIZATIONS),
+        packages_are_distinct=(
+            HOLOGRAPHIC_PACKAGE_ENTRIES != MODULAR_KOSZUL_PRIMARY_PROJECTIONS
+        ),
+        object_firewall=BAR_COBAR_OBJECT_FIREWALL,
+    )
 
 
 # =========================================================================
@@ -118,13 +203,10 @@ class HodgeDiamond:
 
     @property
     def chi_y_poly(self) -> Dict[int, int]:
-        """chi_y genus: chi_y(X) = sum_p (-y)^p chi(Omega^p).
+        """chi_y genus: chi_y(X) = sum_p chi(Omega^p_X) y^p.
 
-        Returns {power_of_y: coefficient} where the coefficient
-        includes the (-1)^p sign, i.e., the coefficient of y^p is
-        (-1)^p chi(Omega^p).
-
-        Convention: chi_y(X) = sum_{p,q} (-1)^q h^{p,q} y^p
+        Returns {power_of_y: coefficient}, where the coefficient of y^p
+        is chi(Omega^p_X) = sum_q (-1)^q h^{p,q}.
         """
         result: Dict[int, int] = {}
         for p in range(self.dim + 1):
@@ -136,8 +218,7 @@ class HodgeDiamond:
     @property
     def chi_y_value_at_minus_1(self) -> int:
         """chi_{y=-1}(X) = Euler characteristic."""
-        # chi_y(X) evaluated at y = -1:
-        # sum_p (-1)^p (-1)^p chi(Omega^p) = sum_p chi(Omega^p) = chi(X)
+        # chi_y(-1) = sum_p (-1)^p chi(Omega^p) = chi(X).
         return self.euler
 
     def chi_y_evaluate(self, y: F) -> F:
@@ -234,9 +315,6 @@ def k3_times_e_hodge() -> HodgeDiamond:
       h^{0,2} = 1     h^{1,2} = 21    h^{2,2} = 21    h^{3,2} = 1
       h^{0,3} = 1     h^{1,3} = 1     h^{2,3} = 1     h^{3,3} = 1
 
-    Total Hodge numbers: 4*(1 + 1 + 1 + 1) + 4*21 = 16 + 84 = 100
-    Wait -- let me count: sum of all h^{p,q} = 4*1 + 4*21 + 4*1 + 4*1 = ...
-    Actually: there are 16 entries (4x4 grid for (p,q) in {0,1,2,3}^2).
     Sum = 1+1+1+1 + 1+21+21+1 + 1+21+21+1 + 1+1+1+1 = 4+44+44+4 = 96.
 
     Betti numbers:
@@ -285,17 +363,17 @@ class EllipticGenusData:
     hodge: HodgeDiamond
     vanishes: bool
     index: F  # Jacobi index = d/2
-    chi_y_zero: F  # chi_y evaluated at y = 1 (= signature)
+    chi_y_zero: F  # chi_y evaluated at y = 1; signature only when dim_C is even
     chi_euler: int  # Topological Euler characteristic
     chi_O: F  # Holomorphic Euler characteristic
 
 
 def elliptic_genus_vanishing_reason(hd: HodgeDiamond) -> Optional[str]:
-    """Determine if the elliptic genus vanishes, and why.
+    """Detect the chi_y-level vanishing visible from Hodge data.
 
-    The elliptic genus vanishes if chi_y = 0.  For a product
-    X1 x X2, chi_y(X1 x X2) = chi_y(X1) . chi_y(X2), so it
-    vanishes if either factor has chi_y = 0.
+    The q^0 specialization of the elliptic genus is chi_y.  For a
+    product X1 x X2, chi_y(X1 x X2) = chi_y(X1) chi_y(X2), so this
+    Hodge-level contribution vanishes if either factor has chi_y = 0.
 
     For an elliptic curve: chi(O_E) = 0, and in fact
     chi_y(E) = chi(O_E) + chi(Omega^1_E) y = 0 + 0*y = 0.
@@ -340,11 +418,10 @@ def compute_elliptic_genus_e() -> EllipticGenusData:
       chi(Omega^1_E) = h^{1,0} - h^{1,1} = 1 - 1 = 0
       chi_y(E) = 0 + 0*y = 0
 
-    Equivalently: the elliptic genus of any compact complex manifold
-    with chi(O) = 0 vanishes at leading order.  For E, the FULL
-    elliptic genus vanishes (not just leading order), since the
-    constant map contribution is chi_y = 0 and there are no
-    instanton corrections (dim_C = 1 < 3 for nontrivial GW).
+    The full elliptic genus of an elliptic curve vanishes by the
+    torus zero-mode cancellation.  The Hodge computation records the
+    q^0 shadow chi_y(E) = 0; the full vanishing is used as an input
+    for the product computation below.
     """
     hd = elliptic_hodge()
     return EllipticGenusData(
@@ -366,17 +443,17 @@ def compute_elliptic_genus_k3e() -> EllipticGenusData:
     Proof: The elliptic genus is multiplicative under products:
         Z_{K3xE} = Z_{K3} . Z_E = Z_{K3} . 0 = 0.
 
-    Independent verification: chi_y(K3 x E) = chi_y(K3) . chi_y(E) = ... . 0 = 0.
+    Independent verification: chi_y(K3 x E) = chi_y(K3) . chi_y(E) = 0.
     The constant map contribution vanishes, and the full elliptic genus
-    inherits this vanishing because K3 x E = product with E.
+    vanishes by multiplicativity and Z_E = 0.
 
-    This is a general theorem: for any compact Kahler X and any elliptic
-    curve E, Z_{XxE} = 0, because chi_y(E) = 0 forces chi_y(XxE) = 0.
+    Product theorem: for compact complex X in the elliptic-genus domain,
+    Z_{X x E} = Z_X Z_E = 0.
 
-    IMPORTANT (AP31): Z = 0 does NOT imply kappa = 0.
+    The identity Z = 0 does not imply kappa = 0.
     kappa(K3 x E) = dim_C(K3 x E) = 3 (as a CY3).
     The vanishing is a cancellation in the REFINED trace, not a vanishing
-    of the bar complex curvature.
+    of the scalar shadow curvature.
     """
     hd = k3_times_e_hodge()
     return EllipticGenusData(
@@ -409,11 +486,8 @@ class ChiYData:
 def compute_chi_y(hd: HodgeDiamond, name: str = "") -> ChiYData:
     """Compute chi_y genus in full detail.
 
-    chi_y(X) = sum_p (-1)^p chi(Omega^p_X) (-y)^p
-             = sum_{p,q} (-1)^q h^{p,q} y^p
-
-    Convention: chi_y(X) = sum_p chi(Omega^p) y^p
-    where chi(Omega^p) = sum_q (-1)^q h^{p,q}.
+    chi_y(X) = sum_p chi(Omega^p_X) y^p
+             = sum_{p,q} (-1)^q h^{p,q} y^p.
 
     VERIFICATION:
       chi_y(X)|_{y=-1} = sum_p (-1)^p chi(Omega^p) = chi(X)  (Euler char)
@@ -530,26 +604,7 @@ def gv_k3_pure_class(n: int) -> Dict[int, int]:
 
     which is related to 1/chi_{10} (the Igusa cusp form).
 
-    At genus 0: the GV invariants count rational curves on K3.
-    n^0_n = coefficient of q^n in prod 1/(1-q^k)^{24}.
-    (More precisely, with appropriate signs and conventions.)
-
-    For small n, the genus-0 GV invariants of K3 in class [C]
-    with [C]^2 = 2n - 2 (primitive class, via the Yau-Zaslow formula):
-        n^0_1 = -2  (convention: n_g with (-1)^g sign from GV formula)
-    Actually, the Yau-Zaslow formula gives:
-        sum_n n^0_n q^n = -2 * sum_n N(n) q^n
-    where N(n) counts curves, and the -2 comes from the virtual fundamental class.
-
-    More carefully, for PRIMITIVE class beta on K3 with beta^2 = 2h - 2:
-        n^0_h = sigma(h) = sum_{d|h} d   (Beauville-Yau-Zaslow)
-
-    Wait -- that gives: n^0_1 = 1, n^0_2 = 3, n^0_3 = 4, etc. (divisor sums).
-    Actually: Yau-Zaslow states that the number of RATIONAL curves in
-    class beta with beta^2 = 2h - 2 is:
-        N(h) = p24(h)  (OEIS A000607... no.)
-
-    Let me be precise. The GENERATING FUNCTION for the genus-0 BPS
+    At genus 0, the Yau-Zaslow/KKV generating function for the BPS
     invariants on K3 is:
         sum_{h >= 0} n^0_h q^h = prod_{n>=1} 1/(1-q^n)^{24}
     where the sum is over the self-intersection index h with
@@ -564,9 +619,8 @@ def gv_k3_pure_class(n: int) -> Dict[int, int]:
         h=3: 3200
         h=4: 25650
 
-    These are the coefficients of 1/eta(q)^{24} = q^{-1} sum p_{-24}(n) q^n.
-    Actually, prod_{n>=1} 1/(1-q^n)^{24} starts as:
-        1 + 24q + 324q^2 + 3200q^3 + 25650q^4 + ...
+    Equivalently, prod_{n>=1} 1/(1-q^n)^{24} starts as
+    1 + 24q + 324q^2 + 3200q^3 + 25650q^4 + ...
     """
     # Compute the first n+1 coefficients of prod(1-q^k)^{-24}
     # via iterative convolution with geometric series 1/(1-q^k)
@@ -596,48 +650,24 @@ def gv_k3_pure_class(n: int) -> Dict[int, int]:
 def gv_e_class() -> Dict[int, int]:
     """GV invariants for curves wrapping E only: beta = (0, m[E]).
 
-    A curve in class m[E] wraps the elliptic fiber m times.
-    The moduli space of such curves in K3 x E is:
-        M = K3 x Sym^m(E)  (approximately)
+    This function records the reduced fiber-class convention used by
+    the local tests.  It does not claim to compute the full reduced
+    K3 x E DT/GW theory in all curve classes.
 
     For m = 1 (single wrap):
-    The BPS count n^0_{[E]} should count genus-0 stable maps to E,
-    weighted by the K3 factor.  But there are no rational curves
-    mapping nontrivially to E (E has genus 1), so:
+    A genus-0 stable map cannot wrap E nontrivially, hence
         n^0_{[E]} = 0 for rational curves
-    Actually for genus 0: there are constant maps to E, but
-    these don't wrap E.
 
-    For genus 1: holomorphic maps E -> E of degree m are counted by
-    the sum of divisors sigma_1(m).
-
-    The GV invariants for the fiber class [E]:
+    The local reduced genus-1 normalization records
         n^0_{[E]} = 0 (no rational curves wrap E)
         n^1_{[E]} = -chi(K3) = -24
-        (genus-1 maps E -> E of degree 1: one map (identity), weighted
-         by -chi(K3) from the K3 moduli)
 
-    Actually the sign depends on convention. In the standard GV formula:
-        F = sum_g sum_beta n^g_beta (2 sin(g_s/2))^{2g-2} Q^beta
-    the n^g are INTEGERS. For genus 1, (2sin)^0 = 1.
-
-    For the fiber class on K3 x E:
-    n^1_{m[E]} = -chi(K3) * sigma_1(m) / m
-    Hmm -- this requires more care.
-
-    Let's use the simpler fact: the DT partition function of K3 x E
-    is related to the DMVV formula.  For the fiber class:
-        Z^DT_{fiber} = prod_{n>=1} (1-q^n)^{chi(K3)} = eta(q)^{24} * q^{-1}
-
-    Wait: actually for K3 x E, the DT invariants in the fiber
-    class are related to the MacMahon function M(q) = prod 1/(1-q^n)^n
-    and the partition function of K3 instantons.
-
-    For simplicity, we record the genus-0 fiber-class GV invariants:
+    Higher-degree fiber classes require the full reduced theory and are
+    outside this two-entry oracle.
     """
     return {
         0: 0,    # No rational curves wrap E
-        1: -24,  # Genus-1 curves: -chi(K3) from deformation theory
+        1: -24,  # Local reduced genus-1 normalization
     }
 
 
@@ -681,7 +711,7 @@ class Genus1PartitionData:
     name: str
     chi: int
     f1_bcov_leading: F  # -chi/12
-    f1_vanishes: bool
+    f1_vanishes: bool  # scalar shadow lane, not the full BCOV amplitude
     kappa: F  # modular characteristic
     f1_shadow: F  # kappa * lambda_1^FP = kappa / 24
     new_susy_index_nonzero: bool
@@ -695,7 +725,7 @@ def compute_genus1_k3e() -> Genus1PartitionData:
     1. BCOV: F_1 ~ -chi(X)/12 * log(...). chi(K3xE) = 0, so leading term = 0.
 
     2. Shadow tower: F_1 = kappa * lambda_1^FP = kappa / 24.
-       kappa(K3xE) = dim_C(K3xE) = 3 (AP48: for CY, kappa = d).
+       In this scalar chiral de Rham normalization, kappa(K3xE) = dim_C(K3xE) = 3.
        So F_1^shadow = 3/24 = 1/8.
 
     3. Factorized: F_1(K3) = kappa(K3)/24 = 2/24 = 1/12.
@@ -718,17 +748,16 @@ def compute_genus1_k3e() -> Genus1PartitionData:
     """
     chi = 0
     kappa = F(3)  # dim_C(K3 x E) = 3
-    lambda_1 = F(1, 24)  # lambda_1^FP = |B_2|/(2*2!) * (2^1-1)/2^1 = (1/6)/2 * 1/2 = 1/24
-    # Check: lambda_1^FP = (2^1 - 1)/2^1 * |B_2|/2! = 1/2 * (1/6) / 1 = 1/12
-    # Wait: B_2 = 1/6, |B_2| = 1/6.  (2^1-1)/2^1 = 1/2.  (2g)! = 2! = 2.
-    # lambda_1^FP = (1/2) * (1/6) / 2 = 1/24.  Yes.
+    lambda_1 = F(1, 24)
+    # With B_2 = 1/6 and (2g)! = 2, lambda_1^FP = (1/2) * (1/6) / 2.
+    # Thus lambda_1^FP = 1/24.
     f1_shadow = kappa * lambda_1
 
     return Genus1PartitionData(
         name="K3xE",
         chi=chi,
         f1_bcov_leading=F(-chi, 12),
-        f1_vanishes=False,  # F_1 does NOT vanish: kappa = 3 != 0
+        f1_vanishes=False,  # scalar shadow is kappa/24 with kappa = 3
         kappa=kappa,
         f1_shadow=f1_shadow,
         new_susy_index_nonzero=True,
@@ -760,15 +789,10 @@ def compute_genus1_e() -> Genus1PartitionData:
     """Genus-1 data for E.
 
     chi(E) = 0.
-    kappa(E) = 1 (CY1 dimension = 1; equivalently, c = 3*1 = 3 for
-    the sigma model on E, and kappa = c/2 = 3/2 for the N=2 SCA.
-    But for the chiral de Rham complex: kappa = d = 1.)
-
-    Actually: for the chiral de Rham complex on a CY d-fold,
-    kappa = d (not c/2 of the N=2 SCA, which is 3d/2).
-    The distinction: kappa is the modular characteristic of the
-    VOA Omega^ch(X), not of the N=2 SCA.  For Omega^ch(E):
-    kappa = 1.
+    kappa(E) = 1 in the chiral de Rham scalar-shadow normalization.
+    This is not c/2 of the N=2 SCA.  The distinction is part of the
+    local normalization: kappa is the modular characteristic of
+    Omega^ch(X), not the central-charge half of an embedded N=2 algebra.
 
     F_1^shadow = 1/24.
     """
@@ -795,17 +819,16 @@ class ShadowTowerData:
     """Shadow obstruction tower data for K3 x E and its factors.
 
     kappa(A): modular characteristic.  For the chiral de Rham complex
-    on a CY d-fold: kappa = d.  This is NOT chi/2 in general (AP48).
+    on a CY d-fold in this scalar normalization: kappa = d.  This is
+    not chi/2 in general.
 
     For K3: kappa = 2, chi = 24.  kappa != chi/2 = 12.
     For E: kappa = 1, chi = 0.  kappa != chi/2 = 0.
     For K3 x E: kappa = 3, chi = 0.  kappa != chi/2 = 0.
 
-    The distinction: kappa counts the NUMBER of free boson generators
-    in the chiral de Rham complex (= complex dimension), while chi
-    counts the topological Euler characteristic.  For K3, chi = 24
-    is the NUMBER OF FIXED POINTS of the involution, while kappa = 2
-    is the complex dimension.
+    The distinction: kappa is the scalar shadow normalization of the
+    chiral de Rham algebra, while chi is the topological Euler
+    characteristic.
 
     ADDITIVITY: kappa(K3 x E) = kappa(K3) + kappa(E) = 2 + 1 = 3.
     This follows from the independent-sum factorization
@@ -818,6 +841,9 @@ class ShadowTowerData:
     E: class G (Gaussian, shadow depth 2, Heisenberg).
     K3 x E: class M (the K3 factor dominates; the product inherits
     the deeper shadow depth).
+
+    This engine computes the scalar tower F_g = kappa lambda_g^FP.  It
+    does not reconstruct the full chain-level MC element Theta_A.
     """
     name: str
     kappa: F
@@ -960,11 +986,9 @@ class HodgeEllipticData:
     chi_y1_k3: Dict[int, int]
     # chi_{y2}(E) polynomial (in y2)
     chi_y2_e: Dict[int, int]
-    # The refined genus vanishes iff either factor vanishes
+    # The constant-map chi_y product vanishes iff either factor vanishes
     vanishes: bool
-    # But the Hodge-elliptic genus can be nontrivial even when
-    # the ordinary elliptic genus vanishes, because it tracks
-    # more refined data
+    # The two-fugacity trace can be nontrivial after refinement.
     refined_nontrivial: bool
 
 
@@ -977,9 +1001,6 @@ def compute_hodge_elliptic_k3e() -> HodgeEllipticData:
     chi_{y_1}(K3):
         chi(O_{K3}) = 2, chi(Omega^1_{K3}) = -20, chi(Omega^2_{K3}) = 2
         chi_{y_1}(K3) = 2 - 20*y_1 + 2*y_1^2
-
-    Wait -- convention. chi_y(X) = sum_p chi(Omega^p) y^p where
-    chi(Omega^p) = sum_q (-1)^q h^{p,q}.
 
     For K3:
       chi(O_{K3}) = h^{0,0} - h^{0,1} + h^{0,2} = 1 - 0 + 1 = 2
@@ -994,19 +1015,16 @@ def compute_hodge_elliptic_k3e() -> HodgeEllipticData:
 
     So the constant-map Hodge-elliptic genus is 0 * (2 - 20y_1 + 2y_1^2) = 0.
 
-    HOWEVER: the Hodge-elliptic genus tracks INSTANTON corrections too,
-    and can be nontrivial even when the constant-map contribution vanishes.
-    For K3 x E, the instantons wrapping curves in K3 contribute nontrivially
-    to Z_{HE}, even though the ordinary elliptic genus vanishes.
+    The full Hodge-elliptic genus is a two-fugacity refinement.  The
+    local computation below records the vanishing of the constant-map
+    chi_y product and keeps a separate descriptor for the refined trace.
 
     The Kachru-Tripathy Hodge-elliptic genus is:
         Z_{HE}(tau, z_1, z_2) = Tr_{RR}((-1)^{F_L+F_R} y_1^{J^{(1)}_0} y_2^{J^{(2)}_0}
                                           q^{L_0 - c/24})
 
-    For K3 x E: the y_2 dependence factors through E, and since the E
-    trace without y_2 gives zero (chi_y(E) = 0), the trace WITH y_2
-    can be nonzero because y_2^{J^{(2)}_0} breaks the cancellation
-    for generic y_2.
+    For K3 x E, the two-fugacity trace is not identified with the
+    ordinary elliptic genus by this constant-map computation.
     """
     hd = k3_times_e_hodge()
     k3 = k3_hodge()
@@ -1073,27 +1091,27 @@ def verify_hodge_symmetries(hd: HodgeDiamond) -> Dict[str, bool]:
 class DTData:
     """Donaldson-Thomas invariant data for K3 x E.
 
-    The DT partition function of K3 x E is:
-        Z^DT(K3xE) = M(-q)^{chi(K3xE)} * Z'^DT
+    The degree-zero MNOP prefactor has the form:
+        Z^DT(K3xE) = M(-q)^{chi(K3xE)} * Z^{DT}_{nonzero}
     Since chi(K3xE) = 0, the MacMahon prefactor is M(-q)^0 = 1.
-    So Z^DT = Z'^DT (the reduced DT invariants ARE the full ones).
 
-    The DT invariants of K3 x E are related to the counting of
-    ideal sheaves on K3 x E, which in turn relates to:
-    - The DMVV formula for Hilbert schemes of points on K3
-    - The BKM denominator formula for Delta_5
+    This is not the same assertion as E-translation reduction for
+    K3 x E.  The latter is a separate reduced theory and is not
+    identified with the full theory by this MacMahon computation.
     """
     chi: int
     macmahon_exponent: int
     macmahon_is_trivial: bool
-    reduced_equals_full: bool
+    reduced_equals_full: bool  # MNOP degree-zero prefactor only
+    translation_reduced_equals_full: bool
 
 
 def compute_dt_data_k3e() -> DTData:
     """DT invariant structure for K3 x E.
 
-    MNOP formula: Z^DT = M(-q)^{chi} * Z'^DT
-    For chi = 0: M(-q)^0 = 1, so Z^DT = Z'^DT.
+    MNOP degree-zero prefactor: M(-q)^chi.  For chi = 0, the prefactor
+    is 1.  No conclusion about E-translation-reduced invariants follows
+    from this scalar check.
     """
     chi = 0
     return DTData(
@@ -1101,6 +1119,7 @@ def compute_dt_data_k3e() -> DTData:
         macmahon_exponent=chi,
         macmahon_is_trivial=True,
         reduced_equals_full=True,
+        translation_reduced_equals_full=False,
     )
 
 
@@ -1124,12 +1143,10 @@ def ray_singer_data_k3e() -> Dict[str, Any]:
     The alternating sum:
         T_{RS} = sum_p (-1)^p p log det'(Delta_p)
 
-    For K3 x E with chi = 0, the leading term in T_{RS}
-    (proportional to chi) vanishes, but subleading terms remain.
-
-    Key invariant: the L^2 analytic torsion of K3 x E is NONZERO
-    (it encodes the Reidemeister torsion, which is nontrivial
-    because H_1(K3 x E, Z) = Z^2 != 0).
+    The Hodge-level calculation available in this engine proves only
+    the vanishing of the Euler-leading term and the Betti-weighted
+    alternating sum.  The fact that b_1(K3 x E) = 2 is not, by itself,
+    a proof that analytic torsion is nontrivial.
     """
     hd = k3_times_e_hodge()
     betti = hd.betti_numbers
@@ -1144,7 +1161,8 @@ def ray_singer_data_k3e() -> Dict[str, Any]:
         'chi': hd.euler,
         'leading_vanishes': hd.euler == 0,
         'h1_nonzero': betti.get(1, 0) > 0,
-        'torsion_nontrivial': betti.get(1, 0) > 0,
+        'torsion_nontrivial': False,
+        'torsion_nontrivial_from_betti': False,
     }
 
 
@@ -1174,8 +1192,8 @@ def dmvv_coefficients(max_n: int = 10) -> List[int]:
     At y=1 (z=0): phi_{0,1}(tau, 0) = 12 (constant), since
     phi_{0,1} is a weak Jacobi form of weight 0 and it is
     holomorphic in tau with c(0,0) = 12 and all c(n,0) = 0 for n > 0
-    that would contribute. Actually phi_{0,1}(tau,0) = 12 identically
-    in tau (from the explicit theta quotient formula).
+    that would contribute.  The explicit theta quotient formula gives
+    phi_{0,1}(tau,0) = 12 identically in tau.
 
     For the DMVV product formula:
         sum_{N>=0} p^N chi(Hilb^N(K3); tau) = prod_{n>0,m>=0,l} 1/(1-p^n q^m y^l)^{c(nm,l)}
@@ -1190,19 +1208,12 @@ def dmvv_coefficients(max_n: int = 10) -> List[int]:
 
     For phi_{0,1}:
       c(0,0) = 10, c(0,1) = c(0,-1) = 1 (so c(0) = sum = 12 at y=1)
-      c(1,0) = -2, c(1,1) = c(1,-1) = 0 actually...
 
     The Fourier expansion of phi_{0,1} is well-known:
         phi_{0,1}(tau, z) = 4 sum_{i=2,3,4} (theta_i(tau,z)/theta_i(tau,0))^2
 
-    The q-expansion at y = e^{2pi i z}:
-        phi_{0,1} = (y + 10 + y^{-1}) + (-2)(y^2 - 20*y - 2 + ... )q + ...
-
-    Actually the standard result:
-        phi_{0,1} = (y + 10 + y^{-1}) + (-2y^2 + 20y - 2 + ... + ...)q + ...
-
-    Hmm, let me just compute the c(n) = phi_{0,1}(tau, 0) coefficients:
-    phi_{0,1}(tau, 0) = 12 (constant in tau).  So c(n) = 0 for n > 0 at z=0.
+    This helper computes only the z=0 specialization.  Since
+    phi_{0,1}(tau, 0) = 12, c(n) = 0 for n > 0 at z=0.
 
     The DMVV formula uses the FULL (n,l) coefficients, not just the z=0 restriction.
     """
@@ -1217,19 +1228,9 @@ def dmvv_coefficients(max_n: int = 10) -> List[int]:
 def dmvv_product_coefficients(max_N: int, max_q: int) -> Dict[Tuple[int, int], int]:
     """DMVV product formula coefficients at z=0.
 
-    At z=0, the DMVV formula reduces to:
-        sum_N p^N chi(Hilb^N(K3)) = prod_{n>=1} 1/(1-p*q^n)^{24}
-                                   * (other terms)
-
-    Actually, the rigorous statement at z=0:
-    sum_{N>=0} p^N Z(Sym^N(K3)) = prod_{n>=1,m>=1} 1/(1 - p^n q^m)^{c(nm)}
-
-    where c(k) is the k-th Fourier coefficient of the K3 partition function.
-
-    Since chi(Sym^N(K3)) = chi(Hilb^N(K3)) (by Gottsche's formula for surfaces):
+    The local z=0 Euler-characteristic specialization is Gottsche's formula:
     chi(Hilb^N(K3)) = p(N, 24) (partitions of N into colors 1..24, weighted)
 
-    Actually: chi(Hilb^N(K3)) can be computed from Gottsche's formula:
     sum_{N>=0} chi(Hilb^N(S)) t^N = prod_{k>=1} 1/(1-t^k)^{chi(S)}
 
     For S = K3: chi(K3) = 24, so:
@@ -1294,8 +1295,7 @@ class NewSusyIndexData:
     """
     name: str
     nonzero: bool
-    # For K3 x E, Z_new is a modular form of weight 2 for SL(2,Z)
-    # (up to overall normalization and q-shift)
+    # Descriptor used by this scalar index surface.
     weight: int
     # Leading coefficient
     leading_coefficient: int
@@ -1314,18 +1314,15 @@ def compute_new_susy_index_k3e() -> NewSusyIndexData:
     1. The constant map sector: proportional to chi(K3) * (E contribution)
     2. The instanton sector: wrapping curves in K3
 
-    The key result (Maldacena-Moore-Strominger, Dijkgraaf-Verlinde-Verlinde):
-    Z_new(K3 x E) is related to the second-quantized elliptic genus,
-    which generates the DMVV product formula.
-
-    The connection to Siegel modular forms:
+    The connection recorded here is the standard second-quantized
+    elliptic-genus descriptor:
     The DMVV formula gives:
         sum_{N>=0} p^N Z(Sym^N(K3); tau, z) = 1/Phi_10(Omega)
     where Phi_10 is the Igusa cusp form (weight 10 Siegel modular
     form of degree 2) and Omega = ((tau, z), (z, sigma)).
 
-    Z_new for K3 x E in the N-instanton sector is the N-th term
-    of this product, appropriately extracted.
+    This function records the scalar descriptor used by the local
+    tests; it does not extract the full Siegel product coefficient.
     """
     return NewSusyIndexData(
         name="K3xE",
@@ -1523,17 +1520,12 @@ def compare_with_quintic() -> Dict[str, Any]:
     Key differences:
     1. Quintic has chi = -200 (nonzero), K3 x E has chi = 0.
     2. Quintic elliptic genus is NONZERO, K3 x E is zero.
-    3. Quintic kappa = -200/2 = -100... NO!
-       kappa = dim_C = 3 for BOTH (as CY3 sigma models).
-       AP48: kappa is NOT chi/2 in general.
-
-    Actually: for a CY3, the chiral de Rham complex Omega^ch(X)
-    has kappa = d = 3 (the complex dimension).  This is INDEPENDENT
-    of h^{1,1} and h^{2,1}.  Both quintic and K3 x E have kappa = 3.
+    3. The scalar chiral de Rham normalization gives kappa = dim_C = 3
+       for both.  Kappa is not chi/2 in general.
 
     The BCOV topological string has different conventions:
     the BCOV genus-g free energy F_g^{BCOV} uses chi in its
-    volume-dependent piece, but the bar complex curvature kappa = d.
+    volume-dependent piece, while this scalar shadow normalization has kappa = d.
     """
     q = quintic_hodge()
     k = k3_times_e_hodge()

@@ -1,5 +1,5 @@
 """
-Reshetikhin-Turaev computation of the Jones polynomial from KZ R-matrix data.
+Reshetikhin-Turaev computation of the Jones polynomial from DK monodromy data.
 
 Implements the full RT construction for U_q(sl_2) with fundamental
 representation V = V_{1/2}:
@@ -9,6 +9,16 @@ representation V = V_{1/2}:
   - Quantum dimensions [n]_q = (q^{n/2} - q^{-n/2}) / (q^{1/2} - q^{-1/2})
   - Markov trace via Schur-Weyl decomposition into irreps of U_q(sl_2)
   - Writhe correction with framing factor alpha = q^{C_{1/2}} = q^{3/4}
+
+Normalizations kept separate in this module:
+  - q_QG = exp(pi*i/(k+2)) is the quantum-group / DK monodromy parameter.
+  - q_J = q_QG^2 = exp(2*pi*i/(k+2)) is the Jones variable used below.
+  - r_coll(z) = k * Omega_tr / z is the affine collision residue.
+  - r_KZ(z) = Omega_KZ / ((k+h_vee) * z) is the KZ connection kernel.
+
+The affine level k is not a Yangian spectral parameter.  Yangian spectral
+parameters are additive collision coordinates; this Jones engine does not
+model them.
 
 For n-strand braids, the Jones polynomial is:
   J(K; q) = alpha^{-w} * (1/dim_q(V)) * sum_j dim_q(V_j) * tr(beta|_{S_j})
@@ -80,13 +90,27 @@ def framing_factor(s, q):
     return q ** (s * (s + 1))
 
 
+def q_quantum_group_from_level(k):
+    """Quantum-group parameter q_QG = exp(pi*i/(k+2)).
+
+    Here k is the affine WZW/Chern-Simons level for sl_2.  It is not a
+    Yangian spectral parameter.  The KZ/DK normalization is undefined at
+    the critical level k=-2.
+    """
+    shifted_level = k + 2
+    if shifted_level == 0:
+        raise ValueError("KZ/DK quantum parameter is undefined at critical level k=-2")
+    return cmath.exp(1j * cmath.pi / shifted_level)
+
+
 def q_from_level(k):
-    """Root of unity q = exp(2*pi*i / (k+2)) for Chern-Simons level k.
+    """Jones root of unity q_J = exp(2*pi*i / (k+2)) for affine level k.
 
     At level k, the quantum group U_q(sl_2) has finitely many integrable
-    representations V_0, V_{1/2}, ..., V_{k/2}.
+    representations V_0, V_{1/2}, ..., V_{k/2}.  This q_J is the square
+    of the DK quantum-group parameter q_QG.
     """
-    return cmath.exp(2j * cmath.pi / (k + 2))
+    return q_quantum_group_from_level(k) ** 2
 
 
 # =============================================================================
@@ -301,7 +325,7 @@ def jones_polynomial_known(knot_name, q):
 # =============================================================================
 
 def colored_jones_dimension(k):
-    """Quantum dimension [2]_q at level k (= dim_q of fundamental).
+    """Quantum dimension [2]_{q_J} at affine level k.
 
     [2]_q = q^{1/2} + q^{-1/2} = 2*cos(pi/(k+2)).
     """
@@ -312,7 +336,9 @@ def colored_jones_dimension(k):
 def jones_at_level(knot_name, k):
     """Jones polynomial of a knot at Chern-Simons level k.
 
-    Uses q = exp(2*pi*i/(k+2)).
+    Uses the Jones variable q_J = exp(2*pi*i/(k+2)).  This is distinct
+    from the affine collision coefficient k and from Yangian spectral
+    parameters.
     """
     return jones_polynomial(knot_name, q_from_level(k))
 
@@ -327,19 +353,24 @@ def r_matrix_eigenvalues(q):
 
 
 def skein_relation_check(q):
-    """Verify the skein relation: q^{1/2}*mu_+ - q^{-1/2}*mu_- = q - q^{-1}.
+    """Verify the framed Hecke eigenvalue relation behind the skein relation.
 
-    The Jones polynomial satisfies the skein relation:
-      q^{-1} J(L_+) - q J(L_-) = (q^{1/2} - q^{-1/2}) J(L_0)
-    which at the R-matrix level reads:
-      q^{1/2} mu_+ - q^{-1/2} mu_- = q - q^{-1}
+    This engine's q is the Jones variable q_J.  The raw RT eigenvalues are
+    mu_+ = q_J^{1/4} and mu_- = -q_J^{-3/4}.  After the standard framing
+    rescaling by q_J^{1/4}, the check_R eigenvalues are
+        lambda_+ = q_J^{1/2},  lambda_- = -q_J^{-1/2},
+    i.e. q_QG and -q_QG^{-1}.  These are exactly the two roots of
+        (lambda - q_QG)(lambda + q_QG^{-1}) = 0.
 
-    Returns the difference (should be 0).
+    Returns the larger residual on the two eigenspaces.
     """
     mu_p, mu_m = r_matrix_eigenvalues(q)
-    lhs = q ** 0.5 * mu_p - q ** (-0.5) * mu_m
-    rhs = q - q ** (-1)
-    return lhs - rhs
+    q_qg = q ** 0.5
+    lam_p = q ** 0.25 * mu_p
+    lam_m = q ** 0.25 * mu_m
+    res_p = (lam_p - q_qg) * (lam_p + 1.0 / q_qg)
+    res_m = (lam_m - q_qg) * (lam_m + 1.0 / q_qg)
+    return max(abs(res_p), abs(res_m))
 
 
 def writhe(braid_word):
@@ -359,34 +390,68 @@ def writhe(braid_word):
 
 
 # =============================================================================
-# KZ connection data (link to chiral programme)
+# Affine collision and KZ normalization data (link to chiral programme)
 # =============================================================================
 
 def kz_r_matrix(k, q=None):
-    """Classical r-matrix r(z) = k * Omega / z for affine sl_2 at level k.
+    """Affine collision residue and KZ normalization data for sl_2.
 
-    The KZ connection nabla = d - sum_i<j r_{ij} dz_{ij} has monodromy
-    given by the quantum R-matrix of U_q(sl_2) at q = exp(2*pi*i/(k+2)).
+    The level-prefixed collision residue is
+        r_coll(z) = k * Omega_tr / z.
+    The KZ connection instead uses
+        r_KZ(z) = Omega_KZ / ((k+h_vee) * z),
+    with h_vee=2 for sl_2 and Omega_KZ = 2*h_vee*Omega_tr.
 
-    Returns the level-prefixed r-matrix coefficient.
-    The Casimir Omega = (1/2)(h x h) + e x f + f x e in sl_2 x sl_2.
+    The historical key 'r_coefficient' is kept as a compatibility alias
+    for the collision coefficient k.  It is not the KZ coefficient
+    1/(k+h_vee).  The historical key 'q' is kept as a compatibility alias
+    for the Jones variable q_J.
 
-    AP126 check: at k=0, r(z) = 0 (abelian limit, verified).
+    The optional q argument is ignored; it remains only for API
+    compatibility.  Monodromy parameters are derived from the affine level.
+    Yangian spectral parameters are separate additive collision coordinates
+    and are not represented by this function.
+
+    The trace-form Casimir is
+        Omega_tr = (1/2)(h x h) + e x f + f x e.
+
+    AP126 check: at k=0, r_coll(z) = 0 (level-prefix check).
     """
     # AP1: kappa from landscape_census.tex
-    # kappa(V_k(sl_2)) = dim(sl_2) * (k + h^v) / (2 * h^v)
+    # kappa(V_k(sl_2)) = dim(sl_2) * (k + h_vee) / (2 * h_vee)
     #                   = 3 * (k + 2) / 4
-    # AP126: level prefix mandatory, k=0 -> r=0
+    # AP126: level prefix mandatory, k=0 -> r_coll=0
     dim_g = 3       # dim(sl_2)
     h_vee = 2       # dual Coxeter number of sl_2
     kappa = dim_g * (k + h_vee) / (2 * h_vee)
+    shifted_level = k + h_vee
+    critical = shifted_level == 0
+    q_qg = None if critical else q_quantum_group_from_level(k)
+    q_jones = None if critical else q_qg ** 2
+    kz_r_coefficient = None if critical else 1 / shifted_level
+    kz_trace_form_coefficient = (
+        None if critical else (2 * h_vee) / shifted_level
+    )
     return {
-        'r_coefficient': k,   # r(z) = k * Omega / z (trace-form convention)
+        # Compatibility alias: r_coll(z)=k*Omega_tr/z, not the KZ kernel.
+        'r_coefficient': k,
+        'collision_r_coefficient': k,
+        'kz_r_coefficient': kz_r_coefficient,
+        'kz_trace_form_coefficient': kz_trace_form_coefficient,
         'kappa': kappa,        # kappa = 3(k+2)/4
-        'q': q_from_level(k),
+        # Compatibility alias: the Jones variable q_J.
+        'q': q_jones,
+        'jones_q': q_jones,
+        'q_quantum_group': q_qg,
+        'q_defined': q_jones is not None,
         'level': k,
+        'shifted_level': shifted_level,
         'convention': 'trace-form',
-        'ap126_check': k == 0,  # r(z)|_{k=0} = 0: verified
+        'collision_formula': 'r_coll(z) = k*Omega_tr/z',
+        'kz_formula': 'r_KZ(z) = Omega_KZ/((k+h_vee)*z)',
+        'casimir_normalization': 'Omega_KZ = 2*h_vee*Omega_tr',
+        'yangian_spectral_parameter': 'not represented',
+        'ap126_check': k == 0,  # r_coll(z)|_{k=0} = 0: verified
     }
 
 

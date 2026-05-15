@@ -28,9 +28,12 @@ changes occur simultaneously:
     = C[S_2] tensor Lambda(dS_2), which has H^0 = C[S_2] (infinite-dim)
     and H^1 = C[S_2]*dS_2 (infinite-dim).  Bar Koszulness FAILS.
 
-(5) SHADOW TOWER COLLAPSES: The MC element Theta_A = 0 because both
-    kappa = 0 (uncurved) AND the critical-level algebra is commutative.
-    The entire shadow obstruction tower is trivial (AP31).
+(5) CRITICAL SHADOW SPLITS: kappa = 0 makes the bar complex uncurved, and
+    the Feigin-Frenkel center is commutative.  The full critical affine
+    VOA is not commutative: the current OPE still has the simple-pole
+    sl_2 bracket and the level double pole k(a,b)/(z-w)^2 with k=-2.
+    Thus the center-restricted MC part vanishes, but the full current
+    sector does not have Theta_A = 0.
 
 (6) AVERAGING MAP DEGENERATES: The averaging map av: g^{E1}_A -> g^{mod}_A
     satisfies av(r(z)) = kappa at degree 2 for abelian algebras.  For
@@ -45,9 +48,9 @@ changes occur simultaneously:
     = d^n - C(n+d-1, d-1) where d = dim(V).  This formula depends only
     on d = dim(V), not on k.  So ker(av) on the REPRESENTATION side is
     level-independent.  But the ALGEBRAIC effect of ker(av) changes:
-    at generic level, kappa != 0 forces curvature and the shadow tower
-    carries information; at critical level, kappa = 0 and the averaged
-    image is trivial.
+    at generic level, kappa != 0 forces curvature and the scalar shadow
+    carries information; at critical level, kappa = 0 and the scalar
+    curvature image is zero, while the trace-form current residue remains.
 
 ORDERED CHIRAL HOMOLOGY AT CRITICAL LEVEL
 ==========================================
@@ -373,6 +376,11 @@ class KZCriticalAnalysis:
     # Spectral sequence
     bicomplex_lambda: Union[float, Fraction]  # k + h^v
     d_crit_only: bool
+    # Critical affine split
+    ff_center_commutative: bool
+    full_affine_voa_commutative: bool
+    full_current_sector_noncommutative: bool
+    full_current_theta_vanishes: bool
 
 
 def kz_critical_analysis(k: Union[int, float, Fraction]) -> KZCriticalAnalysis:
@@ -418,6 +426,10 @@ def kz_critical_analysis(k: Union[int, float, Fraction]) -> KZCriticalAnalysis:
         bar_uncurved=is_crit,
         bicomplex_lambda=lam,
         d_crit_only=is_crit,
+        ff_center_commutative=is_crit,
+        full_affine_voa_commutative=False,
+        full_current_sector_noncommutative=True,
+        full_current_theta_vanishes=False,
     )
 
 
@@ -471,19 +483,18 @@ def averaging_analysis_critical(max_arity: int = 8) -> Dict[str, Any]:
         dim = d^2 - d*(d+1)/2 = d*(d-1)/2 = 1 for d=2.
         (The antisymmetric part of V tensor V.)
 
-        At critical level: kappa = 0, so the averaged image is TRIVIAL.
-        The entire convolution algebra g^{mod} at degree 2 vanishes.
-        But g^{E1} at degree 2 is NONTRIVIAL (the r-matrix r(z) = -2*Omega/z
-        is nonzero in trace-form).  So the kernel of av is LARGER in the
-        algebraic sense: it now includes the entire ordered data, not just
-        the antisymmetric part.
+        At critical level: kappa = 0, so the normalized scalar curvature
+        image is zero.  This is not a vanishing statement for the affine
+        current sector.  The ordered trace-form degree-2 residue
+        r(z) = -2*Omega/z is still nonzero.  The scalar shadow forgets
+        this ordered current-sector datum even though the trace-form average
+        k*dim(g)/(2*h^v) is the finite number -3/2.
 
         More precisely: at generic level, the full kappa = av(r(z)) + dim(g)/2
         is nonzero, so the
-        ordered datum r(z) projects to a nonzero scalar kappa.  The kernel
-        of av at the algebraic level is the "shape" of r(z) modulo its
-        scalar average.  At critical level, kappa = 0 and the entire
-        r-matrix data lives in ker(av) in the algebraic sense.
+        ordered datum r(z) projects to a nonzero scalar kappa.  At critical
+        level the normalized scalar curvature is kappa = 0, while the
+        trace-form current residue remains finite and nonzero.
     """
     d = SL2_FUND_DIM  # dim V = 2
 
@@ -522,16 +533,25 @@ def averaging_analysis_critical(max_arity: int = 8) -> Dict[str, Any]:
         'r_matrix_coefficient_critical': float(r_matrix_coefficient),
         'r_matrix_nonzero_at_critical': r_matrix_coefficient != 0,
         'kappa_dp_critical': float(kappa_dp),
+        'trace_form_average_critical': float(kappa_dp),
         'sugawara_shift': Fraction(SL2_DIM, 2),
         'sugawara_shift_float': SL2_DIM / 2.0,
         'sugawara_defined_at_critical': False,
         'kappa_as_limit': 'lim_{k->-2} kappa(k) = 0 (well-defined as limit)',
-        'algebraic_ker_av_grows': True,
+        'algebraic_ker_av_grows': False,
+        'ordered_current_data_lost_by_scalar_shadow': True,
+        'center_commutative': True,
+        'center_theta_vanishes': True,
+        'full_current_sector_noncommutative': True,
+        'full_current_theta_vanishes': False,
+        'current_ope_simple_pole_present': True,
+        'current_ope_double_pole_coefficient': float(k_crit),
         'reason': (
-            'At critical level kappa = 0: the averaged image of r(z) in '
-            'g^{mod} is zero.  The entire r-matrix datum r(z) = -2*Omega/z '
-            'lives in ker(av) algebraically, even though the representation-'
-            'theoretic ker(av) is level-independent.'
+            'At critical level the normalized scalar shadow has kappa = 0, '
+            'but the trace-form current residue r(z) = -2*Omega/z and its '
+            'finite average -3/2 remain nonzero.  The representation-'
+            'theoretic Reynolds kernel is level-independent; the scalar '
+            'shadow, not the full current OPE, is what degenerates.'
         ),
     }
 
@@ -1058,8 +1078,10 @@ def three_level_comparison() -> ThreeLevelComparison:
     (2) Integrable level k = 1: finite monodromy (roots of unity),
         fusion truncation, center C, Koszul, nontrivial shadow tower.
 
-    (3) Critical level k = -2: trivial monodromy, NO fusion truncation,
-        center = C[S_2] (infinite), NOT Koszul, trivial shadow tower.
+    (3) Critical level k = -2: trivial trace-form monodromy in this
+        two-channel model, NO fusion truncation, center = C[S_2]
+        (infinite), NOT Koszul.  The scalar/center shadow is trivial,
+        but the full affine current sector remains noncommutative.
     """
     return ThreeLevelComparison(
         kappa_generic='3*(k+2)/4, nonzero for k != -2',
@@ -1082,7 +1104,10 @@ def three_level_comparison() -> ThreeLevelComparison:
         H1_critical=8,
         shadow_generic='Nontrivial: class L (affine), r_max = 3',
         shadow_integrable_k1='Nontrivial: kappa = 9/4, same class L',
-        shadow_critical='TRIVIAL: Theta = 0 (commutativity, not just kappa=0)',
+        shadow_critical=(
+            'SPLIT: kappa=0 and FF center commutative; full current sector '
+            'noncommutative'
+        ),
         koszul_generic=True,
         koszul_integrable_k1=True,
         koszul_critical=False,
@@ -1301,16 +1326,17 @@ def summary_table() -> str:
     lines.append(f"    n=2: ker = 4 - 3 = 1 (antisymmetric)")
     lines.append(f"    n=3: ker = 8 - 4 = 4")
     lines.append(f"    n=4: ker = 16 - 5 = 11")
-    lines.append(f"  Algebraic-level: av(r(z)) = -3/2 and the Sugawara shift is +3/2, so kappa = 0")
-    lines.append(f"  The entire r-matrix datum r(z) = -2*Omega/z is in ker(av)")
+    lines.append(f"  Trace-form average: av_trace(r(z)) = -3/2")
+    lines.append(f"  Normalized scalar shadow: kappa = 0; Sugawara shift is undefined at critical level")
+    lines.append(f"  Current-sector datum r(z) = -2*Omega/z remains finite and nonzero")
     lines.append("")
 
     # Shadow tower
-    lines.append("SHADOW OBSTRUCTION TOWER:")
-    lines.append(f"  Theta_A = 0 (commutativity of FF center, not just kappa=0)")
-    lines.append(f"  All shadow invariants (kappa, C, Q, ...) vanish")
-    lines.append(f"  Shadow class: DEGENERATE (not G/L/C/M)")
-    lines.append(f"  Shadow depth: 0 (trivial)")
+    lines.append("CRITICAL SHADOW SPLIT:")
+    lines.append(f"  Scalar curvature kappa = 0, so the bar complex is uncurved")
+    lines.append(f"  FF center is commutative: center-restricted Theta vanishes")
+    lines.append(f"  Full affine current sector is noncommutative: full Theta does not vanish")
+    lines.append(f"  Shadow class: CRITICAL-SPLIT (outside ordinary G/L/C/M)")
     lines.append("")
 
     # Bicomplex

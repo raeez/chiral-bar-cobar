@@ -23,6 +23,7 @@ from fractions import Fraction
 
 import pytest
 
+import compute.lib.sft_bar_comparison_engine as sft_engine
 from compute.lib.sft_bar_comparison_engine import (
     deconcatenation_coproduct,
     reduced_coproduct,
@@ -50,6 +51,7 @@ from compute.lib.sft_bar_comparison_engine import (
     bar_euler_characteristic,
     bar_euler_characteristic_exact,
     coproduct_splitting_count,
+    bar_koszul_object_firewall,
     full_comparison_summary,
 )
 
@@ -613,6 +615,67 @@ class TestFullSummary:
         assert "bar_not_bulk" in distinctions
         assert "three_functors" in distinctions
         assert "genus_curvature" in distinctions
+        assert "object_firewall" in result
+
+
+class TestAP25ObjectFirewall:
+    """Guard against collapsing bar, cobar, Koszul, and bulk objects."""
+
+    def test_firewall_lists_typed_objects(self):
+        """The five AP25 objects have separate typed records."""
+        firewall = bar_koszul_object_firewall()
+        objects = firewall["objects"]
+
+        for key in ["A", "B_A", "Omega_B_A", "A_i", "A_shriek", "Z_der_ch_A"]:
+            assert key in objects
+            assert "type" in objects[key]
+            assert "construction" in objects[key]
+
+        assert "coalgebra" in objects["B_A"]["type"]
+        assert "cobar" in objects["Omega_B_A"]["type"]
+        assert "coalgebra" in objects["A_i"]["type"]
+        assert "Koszul dual algebra" in objects["A_shriek"]["type"]
+        assert "derived chiral center" in objects["Z_der_ch_A"]["type"]
+
+    def test_koszul_dual_requires_dualizability_hypotheses(self):
+        """A^! is reached from A^i only under finite-type/completed control."""
+        objects = bar_koszul_object_firewall()["objects"]
+        a_i = objects["A_i"]
+        a_shriek = objects["A_shriek"]
+
+        assert "H^*(B(A))" in a_i["construction"]
+        assert "finite-type" in a_i["hypotheses"]
+        assert "completed" in a_i["hypotheses"]
+        assert "D(A^i)" in a_shriek["construction"]
+        assert "finite-type" in a_shriek["hypotheses"]
+        assert "completed" in a_shriek["hypotheses"]
+        assert "not B(A)" in a_shriek["not_output"]
+        assert "not Omega(B(A))" in a_shriek["not_output"]
+
+    def test_dran_statement_is_not_bare_bar_of_dual_equality(self):
+        """The Verdier bar-side comparison is hypothesis-qualified."""
+        firewall = bar_koszul_object_firewall()
+        d_ran = firewall["objects"]["D_Ran_B_A"]
+        serialized = repr(full_comparison_summary())
+        stale_dran_bar_dual = "D_Ran(B(A))" + " = " + "B(A!)"
+
+        assert "finite-type" in d_ran["safe_statement"]
+        assert "completed" in d_ran["safe_statement"]
+        assert "not an unconditional identification" in d_ran["not_output"]
+        assert stale_dran_bar_dual not in serialized
+        assert stale_dran_bar_dual not in (sft_engine.__doc__ or "")
+
+    def test_cobar_reconstructs_a_not_koszul_dual_or_bulk(self):
+        """Omega(B(A)) is reconstruction, while Z^der_ch(A) is Hochschild bulk."""
+        objects = bar_koszul_object_firewall()["objects"]
+        cobar = objects["Omega_B_A"]
+        derived_center = objects["Z_der_ch_A"]
+
+        assert "reconstruction of A" in cobar["output"]
+        assert "not the Koszul dual algebra" in cobar["not_output"]
+        assert "not the Hochschild bulk" in cobar["not_output"]
+        assert "C^*_ch(A, A)" in derived_center["construction"]
+        assert "bulk" in derived_center["role"]
 
 
 # =========================================================================

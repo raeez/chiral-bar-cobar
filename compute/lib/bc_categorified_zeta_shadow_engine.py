@@ -1,4 +1,4 @@
-r"""Categorification of the shadow zeta function via the DK category.
+r"""Finite representation-zeta diagnostics adjacent to shadow zeta data.
 
 Mathematical foundation
 -----------------------
@@ -7,61 +7,53 @@ Dirichlet series encoding the shadow obstruction tower of a modular Koszul
 algebra A.  The DK categorical zeta zeta^{DK}_g(s) = sum_V dim(V)^{-s}
 counts irreducible representations by dimension.
 
-CATEGORIFICATION lifts these numerical invariants to chain-level structures:
+This module computes finite representation-theoretic diagnostics.  It does
+not construct a chiral Maurer-Cartan element, certify analytic continuation,
+prove a functional equation for finite truncations, or identify DK data with
+the scalar shadow tower.
 
-    (1) GROTHENDIECK RING ZETA: Replace dim(V) with [V] in K_0(Rep(g)),
-        producing a formal Dirichlet series in the representation ring.
+Certified finite identities:
 
-    (2) GRADED/DERIVED ZETA: Include conformal weight grading or homological
-        grading, yielding a q-deformation or t-refinement.
+    (1) Weyl dimension formula for type A highest weights.
 
-    (3) HALL ALGEBRA ZETA: Replace Rep(g) with D^b(Rep(g)); the Hall algebra
-        multiplication categorifies the Euler product.
+    (2) For sl_2, dim V_n = n+1.  Hence the finite partial sum
+        sum_{n=0}^{N-1} (n+1)^{-s} is the first N terms of zeta(s), and its
+        N -> infinity limit is the Riemann zeta only for Re(s) > 1.
 
-    (4) HOCHSCHILD HOMOLOGY: HH_*(DK_k) of the DK category at level k
-        provides chain-level invariants that decategorify to zeta values.
+    (3) In K_0(Rep(sl_N)), the augmentation [V] |-> dim(V) sends the finite
+        K-theory zeta sum at exponent s to the matching finite DK sum at
+        exponent s-1.
 
-    (5) KHOVANOV LIFT: The colored Jones polynomial J_V(K; q) lifts to
-        Khovanov homology Kh(K); the graded Euler characteristic recovers J.
+Diagnostic, non-certifying surfaces:
 
-    (6) KOSZUL DUALITY: The categorified zeta of A! should be related to
-        that of A via complementarity (Theorem C).
+    (1) q-weighted, Hall-style, alternating, and zero-search probes are finite
+        diagnostics unless a separate theorem supplies the categorical object
+        and convergence or continuation hypotheses.
 
-KEY IDENTITY (sl_2):
-    zeta^{DK}_{sl_2}(s) = sum_{n >= 0} (n+1)^{-s} = zeta(s)  (Riemann zeta)
-    More precisely with trivial rep excluded: sum_{n >= 1} (n+1)^{-s} = zeta(s) - 1.
+    (2) The reflection s |-> 1-s is a Riemann-zeta analytic diagnostic in the
+        rank-one case.  It is not the Verdier/Koszul dual branch A^!.
 
-    Including the trivial representation (dim 1):
-        sum_{n >= 0} (n+1)^{-s} = sum_{d >= 1} d^{-s} = zeta(s).
+    (3) The scalar comparison between shadow coefficients S_r(A) and
+        representation dimensions dim(V_lambda) is not a functor, not a
+        chiral MC theorem, and not a certificate for the R-matrix bridge.
 
-    This engine uses BOTH conventions with explicit flags.
+Object firewalls preserved here:
 
-FACTORIZATION STRUCTURE (sl_N):
-    For sl_2: zeta^{DK}(s) = zeta(s) exactly.
-    For sl_3: zeta^{DK}(s) = sum_{(a,b)} ((a+1)(b+1)(a+b+2)/2)^{-s}.
-    The multiplicative structure of representation rings suggests factorization
-    into shifted Riemann zeta products, but this is NOT exact for N >= 3 ---
-    the dimension function is polynomial of degree > 1 in the weights.
+    - Holographic package entries:
+      (A, A^i, A^!, C, r(z), Theta_A, nabla^hol).
+    - Modular Koszul compute package projections:
+      (Fact_X(L), barB_X(L), Theta_L, L_L, (V_br,T_br), R4_mod(L)).
+    - Omega(B(A))=A is bar-cobar inversion, not Koszul duality.
+    - A^! is the Verdier/continuous-linear dual branch under finite-type or
+      completed hypotheses.
+    - Z_ch^der(A)=ChirHoch^*(A,A) is Hochschild/bulk, not Koszul dual.
 
-Verification paths
-------------------
-    Path 1: Direct summation over dominant weights with Weyl dimension formula
-    Path 2: For sl_2, comparison with mpmath.zeta (Riemann zeta)
-    Path 3: Graded Euler characteristic: chi(categorified) = decategorified
-    Path 4: Khovanov Euler char = Jones polynomial (categorification axiom)
-    Path 5: Hall algebra product vs Euler product consistency
-    Path 6: Koszul duality complementarity ζ^{DK}(A) vs ζ^{DK}(A!)
-    Path 7: Hochschild homology dimension count
-    Path 8: Derived zeta with alternating signs vs underived
+Kernel constants used for firewall checks:
 
-Connections to the monograph
-----------------------------
-    - MC3 (cor:mc3-all-types): thick generation by evaluation modules
-    - DK bridge (thm:drinfeld-kohno-bridge): Y(g) <-> U_q(hat{g})
-    - Theorem C (complementarity): Q_g(A) + Q_g(A!) = H*(M-bar_g, Z(A))
-    - Shadow zeta zeta_A(s): Dirichlet series from shadow coefficients S_r(A)
-    - Khovanov homology: categorification of Jones polynomial
-    - Hall algebra: categorification of Euler product
+    - affine raw trace form: k*Omega_tr/z.
+    - KZ normalization: Omega/((k+h^vee)z).
+    - Heisenberg: k/z.
+    - Virasoro: (c/2)/z^3 + 2T/z.
 
 Conventions
 -----------
@@ -75,8 +67,8 @@ References
     Khovanov, "A categorification of the Jones polynomial", Duke 2000.
     Chari-Pressley, "A Guide to Quantum Groups", Cambridge 1994.
     Schiffmann, "Lectures on Hall algebras", arXiv:0611617.
-    thm:categorical-cg-all-types (yangians_drinfeld_kohno.tex)
-    concordance.tex: MC3 status
+    chapters/examples/landscape_census.tex: shadow coefficients and kernel
+    normalizations.
 """
 
 from __future__ import annotations
@@ -88,6 +80,63 @@ from itertools import product as iter_product
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
 import mpmath
+
+
+FINITE_DIAGNOSTIC_NONCERTIFYING = "finite_diagnostic_noncertifying"
+CERTIFIED_FINITE_IDENTITY = "certified_finite_identity"
+FORMAL_SERIES_IDENTITY_RE_GT_1 = "formal_dirichlet_identity_for_Re_s_gt_1"
+
+HOLOGRAPHIC_PACKAGE_FIELDS = (
+    "A",
+    "A^i",
+    "A^!",
+    "C",
+    "r(z)",
+    "Theta_A",
+    "nabla^hol",
+)
+
+MODULAR_KOSZUL_COMPUTE_PROJECTIONS = (
+    "Fact_X(L)",
+    "barB_X(L)",
+    "Theta_L",
+    "L_L",
+    "(V_br,T_br)",
+    "R4_mod(L)",
+)
+
+OBJECT_FIREWALL = {
+    "Omega(B(A))": "bar-cobar inversion recovering A; not Koszul duality",
+    "A^!": (
+        "Verdier/continuous-linear dual branch under finite-type or "
+        "completed hypotheses"
+    ),
+    "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/bulk object",
+    "A^i": "bar-dual/linear-dual branch, typed separately from A^!",
+    "B(A)": "bar coalgebra, typed separately from A and Omega(B(A))",
+}
+
+KERNEL_CONSTANTS = {
+    "affine_raw_trace_form": "k*Omega_tr/z",
+    "affine_KZ_normalization": "Omega/((k+h^vee)z)",
+    "heisenberg": "k/z",
+    "virasoro": "(c/2)/z^3 + 2T/z",
+}
+
+
+def categorified_zeta_firewall() -> Dict[str, Any]:
+    """Return the typed firewall used by this finite diagnostic module."""
+    return {
+        "holographic_package_fields": HOLOGRAPHIC_PACKAGE_FIELDS,
+        "modular_koszul_compute_projections": MODULAR_KOSZUL_COMPUTE_PROJECTIONS,
+        "object_firewall": dict(OBJECT_FIREWALL),
+        "kernel_constants": dict(KERNEL_CONSTANTS),
+        "diagnostic_status": FINITE_DIAGNOSTIC_NONCERTIFYING,
+        "certifies_chiral_mc": False,
+        "certifies_koszul_duality": False,
+        "certifies_analytic_continuation": False,
+        "certifies_holographic_package": False,
+    }
 
 
 # =========================================================================
@@ -211,9 +260,13 @@ def dk_categorical_zeta(rank: int, s, N_terms: int = 200,
 
 
 def sl2_dk_zeta(s, N: int = 200, include_trivial: bool = True) -> mpmath.mpf:
-    """sl_2 DK zeta: sum_{n >= 0} (n+1)^{-s} = zeta(s).
+    """Finite sl_2 DK zeta partial sum.
 
-    Without trivial: sum_{n >= 1} (n+1)^{-s} = zeta(s) - 1.
+    With the trivial representation included this computes
+    sum_{d=1}^{N} d^{-s}.  Without the trivial representation it computes
+    sum_{d=2}^{N+1} d^{-s}.  The infinite limit is zeta(s), respectively
+    zeta(s)-1, only in the convergence half-plane Re(s) > 1; this function
+    does not perform analytic continuation.
 
     Parameters
     ----------
@@ -237,6 +290,22 @@ def sl2_dk_zeta(s, N: int = 200, include_trivial: bool = True) -> mpmath.mpf:
         d = n + 1  # dim of V_n = n+1
         total += mpmath.power(mpmath.mpf(d), -s)
     return total
+
+
+def sl2_zeta_tail_bound(s, N: int, include_trivial: bool = True) -> mpmath.mpf:
+    """Integral-test upper bound for the omitted positive sl_2 tail.
+
+    Valid for real s > 1.  If the partial sum includes dimensions up to D,
+    then sum_{d>D} d^{-s} <= D^{1-s}/(s-1).
+    """
+    s = mpmath.mpf(s)
+    if s <= 1:
+        raise ValueError("sl_2 tail bound requires real s > 1")
+    if N <= 0:
+        raise ValueError("N must be positive")
+
+    largest_summed_dim = N if include_trivial else N + 1
+    return (mpmath.mpf(largest_summed_dim) ** (1 - s)) / (s - 1)
 
 
 def sl3_dk_zeta(s, N: int = 50) -> mpmath.mpf:
@@ -272,10 +341,12 @@ def sl3_dk_zeta(s, N: int = 50) -> mpmath.mpf:
 # =========================================================================
 
 def dk_zeta_factorization_test(rank: int, s, N_terms: int = 100) -> Dict[str, Any]:
-    """Test whether zeta^{DK}_{sl_N} factors into shifted Riemann zetas.
+    """Finite diagnostic for Riemann-zeta factorization patterns.
 
-    For sl_2: zeta^{DK}(s) = zeta(s) exactly.
-    For sl_3: test zeta^{DK}(s) vs products of zeta(ks - a) for various k, a.
+    For sl_2, dim V_n = n+1 gives the same Dirichlet coefficients as
+    zeta(s) in the half-plane Re(s) > 1.  For rank >= 2 this only compares
+    finite partial sums against candidate products; it does not certify an
+    Euler product, analytic continuation, or functional equation.
 
     Returns
     -------
@@ -298,6 +369,16 @@ def dk_zeta_factorization_test(rank: int, s, N_terms: int = 100) -> Dict[str, An
         'ratio': dk_val / riemann_val if abs(riemann_val) > 1e-30 else None,
         'is_riemann': False,
         'factorization_candidates': [],
+        'status': FINITE_DIAGNOSTIC_NONCERTIFYING,
+        'finite_truncation': True,
+        'certifies_rank1_dirichlet_identity': rank == 1,
+        'certifies_rank_ge_2_factorization': False,
+        'certifies_analytic_continuation': False,
+        'certified_statement': (
+            "For rank 1, dim V_n=n+1 gives the Riemann-zeta Dirichlet "
+            "coefficients in Re(s)>1. Higher-rank product candidates are "
+            "non-certifying finite diagnostics."
+        ),
     }
 
     # sl_2: exact match
@@ -335,16 +416,17 @@ def dk_zeta_factorization_test(rank: int, s, N_terms: int = 100) -> Dict[str, An
 
 def graded_categorical_zeta(rank: int, s, q, N: int = 100,
                             include_trivial: bool = False) -> mpmath.mpf:
-    """Graded DK zeta: zeta^{DK}(s, q) = sum dim(V)^{-s} * q^{h(V)}.
+    """Finite q-weighted DK diagnostic.
 
     The conformal weight h(V) for a representation V with highest weight
     lambda is the quadratic Casimir eigenvalue:
         h(V) = <lambda, lambda + 2*rho> / (2*(k + h^vee))
 
-    For the categorical zeta at generic q, we use the simplified version:
+    This finite diagnostic has no level parameter.  It uses the simplified
+    generic-level weight
         h(V) = C_2(V) / (2 * h^vee)
-    where C_2 = sum lambda_i (lambda_i + 2*rho_i) for sl_N in fundamental coords
-    and rho = (N-1, N-2, ..., 1, 0) in the partition basis.
+    and does not certify a conformal block, analytic q-series, or functional
+    equation.
 
     Parameters
     ----------
@@ -432,7 +514,7 @@ def k_theory_zeta(rank: int, s, N_terms: int = 100) -> Dict[str, Any]:
         'coefficients': dict mapping weight tuple -> mpf coefficient
         'euler_char': sum of dim(V) * dim(V)^{-s} = zeta^{DK}(s-1)
         'dk_value': zeta^{DK}(s) for comparison
-        'shift_identity': |euler_char - zeta^{DK}(s-1)| (should be ~ 0)
+        'shift_identity': |euler_char - zeta^{DK}(s-1)| for the finite support
     """
     s = mpmath.mpf(s) if isinstance(s, (int, float)) else mpmath.mpc(s)
     N = rank + 1
@@ -466,6 +548,13 @@ def k_theory_zeta(rank: int, s, N_terms: int = 100) -> Dict[str, Any]:
         'dk_value': dk_val,
         'dk_shifted': dk_shifted,
         'shift_identity': float(abs(euler_char - dk_shifted)),
+        'status': CERTIFIED_FINITE_IDENTITY,
+        'finite_support': True,
+        'certifies_scalar_shadow': False,
+        'certified_statement': (
+            "The K_0 augmentation [V] -> dim(V) sends the finite support "
+            "sum at s to the same finite DK support at s-1."
+        ),
     }
 
 
@@ -475,11 +564,10 @@ def k_theory_zeta(rank: int, s, N_terms: int = 100) -> Dict[str, Any]:
 
 def euler_characteristic_decategorification(rank: int, s,
                                              N_terms: int = 100) -> Dict[str, Any]:
-    """Verify chi(categorified zeta) = numerical zeta.
+    """Verify the finite K_0 augmentation identity.
 
-    The categorification axiom requires:
-        chi: K_0(Cat) -> Z  (the augmentation / dimension map)
-        chi(zeta^{cat}) = zeta^{num}
+    This is a representation-ring statement.  It is not a certification that
+    a scalar shadow zeta has been categorified by a chiral functor.
 
     For the DK category:
         chi(sum [V] dim(V)^{-s}) = sum dim(V) * dim(V)^{-s} = sum dim(V)^{1-s}
@@ -515,6 +603,9 @@ def euler_characteristic_decategorification(rank: int, s,
         'dk_at_s_minus_1': dk_shifted,
         'error': float(abs(kt['euler_char'] - dk_shifted)),
         'consistent': float(abs(kt['euler_char'] - dk_shifted)) < 0.01,
+        'status': CERTIFIED_FINITE_IDENTITY,
+        'certifies_scalar_shadow': False,
+        'certifies_chiral_functor': False,
     }
 
     if rank == 1:
@@ -706,7 +797,7 @@ def khovanov_euler_char(knot_type: str, q=None) -> mpmath.mpc:
 # =========================================================================
 
 def hall_algebra_zeta(rank: int, s, q_hall, N: int = 100) -> mpmath.mpf:
-    """Hall algebra version of the categorical zeta.
+    """Finite Hall-style diagnostic for the categorical zeta.
 
     The Hall algebra H(Rep(g)) over F_q has basis indexed by isomorphism
     classes of representations and structure constants given by extension
@@ -718,10 +809,12 @@ def hall_algebra_zeta(rank: int, s, q_hall, N: int = 100) -> mpmath.mpf:
 
     For sl_2 over F_q, the irreducible representations of GL_2(F_q) give
     a different counting problem, but the categorification principle says
-    the Hall algebra zeta should be related to the DK zeta via
-    specialization q -> 1.
+    the Hall-style finite sum can be compared with the DK zeta under
+    specialization q -> 1; this comparison is not a theorem in this module.
 
     Simplified model: we use |M| = q_hall^{dim(V)} for each irreducible V.
+    This is not a construction of the Hall algebra of a specified abelian
+    category and does not certify an Euler product.
 
     Parameters
     ----------
@@ -769,7 +862,7 @@ def hall_algebra_zeta(rank: int, s, q_hall, N: int = 100) -> mpmath.mpf:
 # =========================================================================
 
 def derived_zeta(rank: int, s, N: int = 100) -> mpmath.mpf:
-    """Derived categorical zeta: zeta^{D^b}(s) with homological signs.
+    """Finite alternating diagnostic for derived-category signs.
 
     In the derived category D^b(Rep(g)), each object has a homological
     degree.  The derived zeta includes alternating signs:
@@ -790,8 +883,9 @@ def derived_zeta(rank: int, s, N: int = 100) -> mpmath.mpf:
     unity, where Rep_q(g) is NOT semisimple.  At q = e^{2*pi*i/ell},
     the projective resolutions are nontrivial.
 
-    Simplified model: we assign (-1)^{parity(sum of weights)} as the
-    homological sign, giving a twisted zeta.
+    Diagnostic model: we assign (-1)^{parity(sum of weights)} as a parity
+    sign, giving a twisted finite sum.  This is not a projective-resolution
+    computation for a non-semisimple root-of-unity category.
 
     Parameters
     ----------
@@ -888,27 +982,31 @@ def hochschild_homology_dk(rank: int, k_level: int,
         'n_simples': n_simples,
         'euler_char': euler_char,
         'is_semisimple': all(d == 0 for d in hh_dims[1:]),
+        'status': CERTIFIED_FINITE_IDENTITY,
+        'scope': 'finite_semisimple_simple_count',
+        'certifies_bulk_object': False,
+        'z_ch_der_identification': False,
+        'bulk_firewall': OBJECT_FIREWALL["Z_ch^der(A)"],
     }
 
 
 # =========================================================================
-# 12. Categorical Riemann hypothesis: zeros of zeta^{DK}
+# 12. Finite zero-search diagnostic for zeta^{DK}
 # =========================================================================
 
 def categorical_riemann_hypothesis(rank: int, s_range: Tuple[float, float],
                                    n_points: int = 200,
                                    N_terms: int = 200) -> Dict[str, Any]:
-    """Search for zeros of zeta^{DK}_{sl_N}(s) on the critical strip.
+    """Search finite DK Dirichlet polynomials on the critical line.
 
-    For sl_2, zeta^{DK}(s) = zeta(s), so the zeros are the Riemann zeta
-    zeros (nontrivial zeros on Re(s) = 1/2 under RH).
+    The search line Re(s)=1/2 lies outside the convergence half-plane of the
+    positive Dirichlet series.  Values returned here are finite Dirichlet
+    polynomial diagnostics.  They do not certify zeros of an analytically
+    continued DK zeta, and they do not certify the Riemann hypothesis.
 
-    For sl_N with N >= 3, the DK zeta is a Dirichlet series with
-    non-multiplicative coefficients, so its zeros have a different
-    (and generally unknown) distribution.
-
-    We search along the critical line Re(s) = 1/2 by evaluating
-    the partial sum and looking for sign changes in the real/imaginary parts.
+    For sl_2, the comparison with listed Riemann-zero ordinates is only a
+    reference diagnostic; the finite partial sum is not the analytic
+    continuation of zeta(s).
 
     Parameters
     ----------
@@ -957,6 +1055,13 @@ def categorical_riemann_hypothesis(rank: int, s_range: Tuple[float, float],
         'candidate_zeros': candidate_zeros,
         'values': values[:20],  # first 20 for inspection
         'min_modulus': min_mod,
+        'status': FINITE_DIAGNOSTIC_NONCERTIFYING,
+        'finite_dirichlet_polynomial': True,
+        'search_line': 'Re(s)=1/2',
+        'series_converges_at_search_line': False,
+        'certifies_zeros': False,
+        'certifies_riemann_hypothesis': False,
+        'certifies_analytic_continuation': False,
     }
 
     # For sl_2, compare with known Riemann zeros
@@ -965,6 +1070,8 @@ def categorical_riemann_hypothesis(rank: int, s_range: Tuple[float, float],
         result['sl2_comparison'] = {
             'known_riemann_zeros': known_zeros,
             'found_near_known': [],
+            'comparison_only': True,
+            'uses_finite_partial_sum': True,
         }
         for kz in known_zeros:
             for cz in candidate_zeros:
@@ -976,27 +1083,19 @@ def categorical_riemann_hypothesis(rank: int, s_range: Tuple[float, float],
 
 
 # =========================================================================
-# 13. Koszul categorical duality: zeta^{DK}(A) vs zeta^{DK}(A!)
+# 13. Reflection diagnostic: zeta^{DK}(s) vs a finite 1-s probe
 # =========================================================================
 
 def koszul_categorical_duality(rank: int, s, N_terms: int = 100) -> Dict[str, Any]:
-    """Compare zeta^{DK}(A) with zeta^{DK}(A!) under Koszul duality.
+    """Compare zeta^{DK}(s) with a finite probe at 1-s.
 
-    For the DK category, Koszul duality A -> A! acts on representations.
-    At the level of the categorical zeta, this should relate to Theorem C
-    (complementarity).
+    This function keeps the historical API name but deliberately does not
+    construct A^!.  The reflection s |-> 1-s is an analytic Riemann-zeta
+    diagnostic in rank one, not the Verdier/continuous-linear dual branch.
 
-    For sl_2: A = sl_2 reps, A! involves the Koszul dual category.
-    The Koszul dual of Com is Lie (AP25: Com^! = Lie), so the dual
-    category has Lie algebra homology in place of symmetric algebra.
-
-    At the numerical level, the relation is:
-        zeta^{DK}(A, s) + zeta^{DK}(A!, s) should satisfy a functional equation
-        analogous to the complementarity Q_g(A) + Q_g(A!) = H*(M_g, Z(A)).
-
-    We test this by comparing:
-        (1) zeta^{DK}_{sl_N}(s) with itself (self-duality check)
-        (2) Functional equation zeta(s) + zeta(1-s) relation (via Gamma factors)
+    The returned zeta_A_dual is the finite DK partial sum at 1-s.  For
+    Re(1-s) <= 1 it is not a convergent Dirichlet-series value and not an
+    analytic continuation.
 
     Parameters
     ----------
@@ -1010,19 +1109,17 @@ def koszul_categorical_duality(rank: int, s, N_terms: int = 100) -> Dict[str, An
     Returns
     -------
     dict with:
-        'zeta_A': value of zeta^{DK}(A, s)
-        'zeta_A_dual': value at dual parameter
+        'zeta_A': finite zeta^{DK} value at s
+        'zeta_A_dual': finite zeta^{DK} value at the reflected parameter
         'sum': zeta_A + zeta_A_dual
-        'functional_equation_test': for sl_2, test xi(s) = xi(1-s)
+        'functional_equation_test': for sl_2, analytic xi(s) = xi(1-s) diagnostic
     """
     s = mpmath.mpf(s) if isinstance(s, (int, float)) else mpmath.mpc(s)
 
     zeta_A = dk_categorical_zeta(rank, s, N_terms=N_terms, include_trivial=True)
 
-    # The "Koszul dual" parameter: for the Riemann zeta, the functional
-    # equation relates zeta(s) to zeta(1-s) via Gamma factors.
-    # The completed zeta xi(s) = pi^{-s/2} Gamma(s/2) zeta(s) satisfies
-    # xi(s) = xi(1-s).
+    # Reflection diagnostic: for the analytically continued Riemann zeta,
+    # Gamma factors relate zeta(s) to zeta(1-s). This is not A^!.
     s_dual = 1 - s
     zeta_A_dual = dk_categorical_zeta(rank, s_dual, N_terms=N_terms,
                                        include_trivial=True)
@@ -1033,6 +1130,14 @@ def koszul_categorical_duality(rank: int, s, N_terms: int = 100) -> Dict[str, An
         'sum': zeta_A + zeta_A_dual,
         's': s,
         's_dual': s_dual,
+        'status': FINITE_DIAGNOSTIC_NONCERTIFYING,
+        'dual_object': 'analytic_reflection_s_to_1_minus_s_not_A_bang',
+        'zeta_A_dual_is_partial_sum': True,
+        'certifies_koszul_duality': False,
+        'certifies_theorem_c': False,
+        'certifies_analytic_continuation': False,
+        'functional_equation_certifies_duality': False,
+        'object_firewall': dict(OBJECT_FIREWALL),
     }
 
     # For sl_2: test the completed functional equation
@@ -1051,11 +1156,20 @@ def koszul_categorical_duality(rank: int, s, N_terms: int = 100) -> Dict[str, An
             result['xi_1_minus_s'] = xi_1ms
             result['functional_equation_error'] = float(abs(xi_s - xi_1ms))
             result['functional_equation_holds'] = float(abs(xi_s - xi_1ms)) < 1e-10
+            result['functional_equation_status'] = (
+                'analytic_riemann_zeta_check_not_finite_dk_sum'
+            )
+            result['analytic_continuation_source'] = (
+                'mpmath.zeta and gamma factors; not dk_categorical_zeta'
+            )
         except (ValueError, ZeroDivisionError):
             # Gamma pole at s = odd integer
             result['functional_equation_error'] = None
             result['functional_equation_holds'] = None
             result['gamma_pole'] = True
+            result['functional_equation_status'] = (
+                'gamma_pole_in_analytic_riemann_zeta_diagnostic'
+            )
 
     return result
 
@@ -1119,10 +1233,11 @@ def dimension_spectrum_analysis(rank: int, max_dim: int = 100) -> Dict[str, Any]
 
 def multipath_categorified_verification(s: float,
                                         N_terms: int = 500) -> Dict[str, Any]:
-    """Multi-path verification for the sl_2 identity zeta^{DK}(s) = zeta(s).
+    """Multi-path verification for sl_2 in the convergence half-plane.
 
     Computes zeta^{DK}_{sl_2}(s) by FOUR independent methods and
-    compares with the Riemann zeta.
+    compares with the Riemann zeta for real s > 1.  This does not certify
+    analytic continuation or a functional equation.
 
     Path 1: Direct sum over (n+1)^{-s} using sl_n_dim
     Path 2: Direct sum over d^{-s} for d = 1, 2, 3, ... (by definition of zeta)
@@ -1173,6 +1288,10 @@ def multipath_categorified_verification(s: float,
         'error_34': float(abs(path3 - path4)),
         'all_consistent': (float(abs(path1 - path3)) < 0.01
                            and float(abs(path2 - path3)) < 0.01),
+        'status': CERTIFIED_FINITE_IDENTITY,
+        'domain': 'real_s_gt_1',
+        'certifies_analytic_continuation': False,
+        'certifies_functional_equation': False,
     }
 
 
@@ -1191,28 +1310,25 @@ def _small_primes(n: int) -> List[int]:
 
 
 # =========================================================================
-# 16. Categorified shadow zeta: connecting shadow tower to DK category
+# 16. Scalar shadow/DK comparison
 # =========================================================================
 
 def shadow_to_dk_bridge(rank: int, s, shadow_coeffs: List[float],
                         N_terms: int = 100) -> Dict[str, Any]:
-    """Bridge between shadow zeta and DK categorical zeta.
+    """Finite scalar comparison between shadow zeta and DK zeta data.
 
     The shadow zeta zeta_A(s) = sum_{r >= 2} S_r(A) r^{-s} lives in the
     shadow obstruction tower.  The DK zeta zeta^{DK}(s) = sum dim(V)^{-s}
     lives in the representation category.
 
-    The CATEGORIFICATION BRIDGE asks: is there a functor F such that
-    F(shadow tower) = DK category and chi(F) recovers the shadow zeta
-    from the DK zeta?
+    This routine computes the two finite scalar sums and their ratio.  It
+    does not construct a functor from the shadow tower to a DK category, does
+    not recover a chiral MC element Theta_A, and does not certify the
+    R-matrix/Yangian bridge.
 
-    At the level of generating functions:
-        shadow zeta encodes arity-graded MC data (genus-0)
+    At the level of finite generating functions:
+        shadow zeta encodes supplied arity coefficients S_r(A)
         DK zeta encodes representation-dimension data
-
-    The connection goes through the R-matrix: the genus-0 binary shadow
-    r(z) = Res^{coll}_{0,2}(Theta_A) is the R-matrix of the Yangian,
-    and the Yangian categorifies the DK zeta.
 
     Parameters
     ----------
@@ -1253,6 +1369,17 @@ def shadow_to_dk_bridge(rank: int, s, shadow_coeffs: List[float],
         'dk_zeta': dk_val,
         'ratio': ratio,
         'log_ratio': log_ratio,
+        'comparison_type': 'scalar_finite_dirichlet_comparison',
+        'status': FINITE_DIAGNOSTIC_NONCERTIFYING,
+        'certifies_chiral_mc': False,
+        'certifies_functor': False,
+        'certifies_r_matrix_bridge': False,
+        'certifies_categorification': False,
+        'shadow_source': 'arity coefficients S_r(A)',
+        'dk_source': 'dominant-weight representation dimensions',
+        'object_firewall': dict(OBJECT_FIREWALL),
+        'holographic_package_fields': HOLOGRAPHIC_PACKAGE_FIELDS,
+        'modular_koszul_compute_projections': MODULAR_KOSZUL_COMPUTE_PROJECTIONS,
     }
 
 
@@ -1262,20 +1389,16 @@ def shadow_to_dk_bridge(rank: int, s, shadow_coeffs: List[float],
 
 def categorified_euler_product(rank: int, s,
                                N_primes: int = 50) -> Dict[str, Any]:
-    """Euler product decomposition of zeta^{DK}.
+    """Finite Euler-product diagnostic for zeta^{DK}.
 
-    For sl_2: zeta^{DK}(s) = zeta(s) = prod_p (1 - p^{-s})^{-1}.
-    The Euler product is the multiplicative structure of the integers.
+    For sl_2 and Re(s)>1, the infinite DK Dirichlet series has the same
+    coefficients as zeta(s), hence the standard Euler product applies in
+    that half-plane.
+    The finite computation below compares a finite prime product with a
+    finite partial sum.
 
-    Categorification: the Euler product lifts to a tensor product
-    decomposition in the Hall algebra:
-        zeta^{Hall} = tensor_p zeta^{Hall}_p
-    where zeta^{Hall}_p is the local factor at prime p.
-
-    For sl_N (N >= 3), the DK zeta does NOT have a standard Euler product
-    because the dimension function is not multiplicative.  However, the
-    FORMAL Euler product can be defined using the "prime representations"
-    (those not decomposable as tensor products of smaller irreps).
+    For sl_N (N >= 3), the diagnostic below is dimension-based bookkeeping.
+    It is not a Hall-algebra tensor product and not a certified Euler product.
 
     Parameters
     ----------
@@ -1291,7 +1414,7 @@ def categorified_euler_product(rank: int, s,
     dict with:
         'euler_product': product of local factors
         'dk_zeta': direct sum value
-        'ratio': euler_product / dk_zeta (should be ~ 1 for sl_2)
+        'ratio': euler_product / dk_zeta for the finite rank-one comparison
         'local_factors': list of (p, factor_p) pairs
     """
     s = mpmath.mpf(s)
@@ -1333,6 +1456,12 @@ def categorified_euler_product(rank: int, s,
         'ratio': ratio,
         'local_factors': local_factors[:10],  # first 10
         'is_multiplicative': (rank == 1),
+        'status': (FORMAL_SERIES_IDENTITY_RE_GT_1 if rank == 1
+                   else FINITE_DIAGNOSTIC_NONCERTIFYING),
+        'finite_truncation': True,
+        'certifies_euler_product': rank == 1,
+        'certifies_hall_factorization': False,
+        'certifies_analytic_continuation': False,
     }
 
 
@@ -1341,18 +1470,19 @@ def categorified_euler_product(rank: int, s,
 # =========================================================================
 
 def hkr_theorem_dk(rank: int, k_level: int) -> Dict[str, Any]:
-    """Hochschild-Kostant-Rosenberg theorem for the DK category.
+    """Semisimple Hochschild-homology count for the finite DK category.
 
     For a smooth commutative algebra A, HKR gives:
         HH_n(A) = Omega^n(A) (differential forms)
 
-    For the DK category (a non-commutative, semisimple category),
-    the HKR analogue is:
+    For the semisimple finite DK category considered here, the relevant
+    finite statement is:
         HH_0(Rep_k(g)) = Z(Rep_k(g)) = center
     and HH_n = 0 for n > 0 (semisimple).
 
-    The interesting case is at root of unity where Rep_q(g) becomes
-    a non-semisimple finite category with nontrivial Hochschild cohomology.
+    This function does not identify the chiral derived centre
+    Z_ch^der(A)=ChirHoch^*(A,A), and does not construct the Hochschild/bulk
+    slot C in a holographic package.
 
     Parameters
     ----------
@@ -1379,6 +1509,10 @@ def hkr_theorem_dk(rank: int, k_level: int) -> Dict[str, Any]:
         'global_dim': global_dim,
         'hkr_holds': hh['is_semisimple'],  # HKR trivializes for semisimple
         'n_simples_formula': f"C({k_level + rank}, {rank})",
+        'status': CERTIFIED_FINITE_IDENTITY,
+        'scope': 'semisimple_HH_count_not_chiral_HKR_theorem',
+        'certifies_bulk_slot': False,
+        'z_ch_der_identification': False,
     }
 
 
@@ -1444,10 +1578,11 @@ def representation_ring_structure(rank: int,
 # =========================================================================
 
 def master_categorification_check(s: float = 2.0) -> Dict[str, Any]:
-    """Run all categorification checks at once.
+    """Run the finite representation-zeta diagnostic suite.
 
-    Verifies the key identity zeta^{DK}_{sl_2}(s) = zeta(s) and
-    the categorification axiom chi(K-theory zeta) = shifted DK zeta.
+    The suite verifies finite representation identities and records which
+    surfaces are non-certifying.  It does not certify a chiral MC theorem,
+    analytic continuation, or Koszul duality.
 
     Parameters
     ----------
@@ -1510,6 +1645,8 @@ def master_categorification_check(s: float = 2.0) -> Dict[str, Any]:
     results['functional_equation'] = {
         'holds': kcd.get('functional_equation_holds', False),
         'error': kcd.get('functional_equation_error', None),
+        'status': kcd.get('functional_equation_status', None),
+        'certifies_koszul_duality': kcd.get('certifies_koszul_duality', False),
     }
 
     # Overall
@@ -1523,5 +1660,9 @@ def master_categorification_check(s: float = 2.0) -> Dict[str, Any]:
         results['sl2_dimension_spectrum']['is_complete'],
     ])
     results['all_verified'] = all_verified
+    results['status'] = FINITE_DIAGNOSTIC_NONCERTIFYING
+    results['certifies_chiral_mc'] = False
+    results['certifies_koszul_duality'] = False
+    results['certifies_analytic_continuation'] = False
 
     return results

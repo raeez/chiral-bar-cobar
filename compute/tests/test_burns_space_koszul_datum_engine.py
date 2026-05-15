@@ -504,7 +504,7 @@ class TestPlantedForest:
 # =========================================================================
 
 class TestTwoLoopPrediction:
-    """Verify the two-loop self-dual gravity prediction."""
+    """Verify the scoped genus-2 scalar coefficient."""
 
     def test_F2_value(self):
         """F_2 = 7/1440."""
@@ -521,6 +521,20 @@ class TestTwoLoopPrediction:
         pred = burns_two_loop_prediction()
         assert pred['ratio_F2_F1'] == Rational(7, 240)
 
+    def test_F2_is_scalar_projection_with_scoped_physical_reading(self):
+        """F_2 is the genus-2 scalar coefficient; two-loop reading is extra."""
+        pred = burns_two_loop_prediction()
+        assert pred['F_2'] == pred['kappa'] * pred['lambda_2_FP']
+        assert pred['kappa'] == 4
+        assert pred['lambda_2_FP'] == lambda_fp(2)
+        assert pred['F_2'] == Rational(7, 1440)
+
+        interpretation = pred['physical_interpretation']
+        assert 'genus-2 Burns scalar coefficient' in interpretation
+        assert 'modular Koszul projection' in interpretation
+        assert 'physical two-loop reading' in interpretation
+        assert 'separate self-dual-sector holographic comparison' in interpretation
+
 
 # =========================================================================
 # Section 11: Holographic datum (path: completeness check)
@@ -530,14 +544,73 @@ class TestHolographicDatum:
     """Verify the complete holographic modular Koszul datum."""
 
     def test_datum_has_all_components(self):
-        """H(Burns) has all 6 components: A, A!, bulk, r(z), Theta_A, nabla."""
+        """H(Burns) has the seven entries A, A^i, A!, C, r, Theta, nabla."""
         datum = burns_holographic_datum()
-        assert 'A' in datum
-        assert 'A_dual' in datum
+        expected_entries = (
+            'A',
+            'A_i',
+            'A_dual',
+            'C',
+            'r_matrix',
+            'Theta_A',
+            'nabla_hol',
+        )
+        assert datum['holographic_entries'] == expected_entries
+        assert len(datum['holographic_entries']) == 7
+        for entry in expected_entries:
+            assert entry in datum
         assert 'bulk' in datum
-        assert 'r_matrix' in datum
-        assert 'Theta_A' in datum
-        assert 'nabla_hol' in datum
+        assert 'bulk' not in datum['holographic_entries']
+
+    def test_datum_compute_surface_is_six_projections(self):
+        """The compute surface is six projections and does not erase A^i."""
+        datum = burns_holographic_datum()
+        package = datum['compute_projection_package']
+        assert package['kind'] == 'six-projection recovery package'
+        assert package['projections'] == (
+            'P_A',
+            'P_A!',
+            'P_C',
+            'P_r',
+            'P_Theta',
+            'P_nabla',
+        )
+        assert len(package['projections']) == 6
+        assert 'A_i' not in package['projections']
+        assert 'not a replacement for the A^i entry' in package['scope']
+
+    def test_datum_A_i_A_dual_C_are_distinct(self):
+        """A^i, A!, and C remain typed as coalgebra, dual algebra, and bulk."""
+        datum = burns_holographic_datum()
+        assert datum['A_i'] is not datum['A_dual']
+        assert datum['A_i'] is not datum['C']
+        assert datum['A_dual'] is not datum['C']
+
+        assert datum['A_i']['object_type'] == 'bar-dual coalgebra'
+        assert datum['A_i']['name'] == 'H^*(B^ch(A_Burns))'
+        assert datum['A_i']['route'] == 'A -> B^ch(A) -> H^*(B^ch(A))'
+        assert 'coalgebraic' in datum['A_i']['not_A_dual']
+        assert 'A!' in datum['A_i']['not_A_dual']
+
+        assert datum['A_dual']['name'] == '4 pairs of bc at lambda=1'
+        assert datum['A_dual']['c_dual'] == -8
+        assert datum['A_dual']['kappa_dual'] == -4
+        assert datum['A_dual']['route'] == (
+            'A -> A^i = H^*(B^ch(A)) -> A! = (A^i)^vee'
+        )
+        assert (
+            'not the definition of A!'
+            in datum['A_dual']['bar_cobar_inversion_role']
+        )
+
+        assert 'Z^der_ch(A)' in datum['C']['description']
+        assert 'ChirHoch^*(A,A)' in datum['C']['description']
+        assert 'not A, not A^i, not A!' in datum['C']['note']
+
+    def test_bulk_is_legacy_alias_for_C(self):
+        """The legacy bulk key aliases the C slot."""
+        datum = burns_holographic_datum()
+        assert datum['bulk'] is datum['C']
 
     def test_datum_genus_expansion(self):
         """Datum includes genus expansion for g=1,...,5."""
@@ -615,6 +688,27 @@ class TestParametric:
             for lam in [Rational(0), Rational(1, 2), Rational(1), Rational(1, 3)]:
                 result = parametric_burns_datum(n_bg=n, lam=lam)
                 assert result['complementarity_sum'] == 0
+
+    def test_parametric_output_is_compute_surface_not_holographic_package(self):
+        """Parametric output is a six-projection scalar surface."""
+        result = parametric_burns_datum()
+        assert result['compute_surface'] == 'six-projection scalar package'
+        assert 'holographic_entries' not in result
+        assert 'compute_projection_package' not in result
+        for package_entry in (
+            'A',
+            'A_i',
+            'A_dual',
+            'C',
+            'bulk',
+            'r_matrix',
+            'Theta_A',
+            'nabla_hol',
+        ):
+            assert package_entry not in result
+        assert result['dual_route'] == (
+            'A -> A^i = H^*(B^ch(A)) -> A! after finite-type Verdier duality'
+        )
 
 
 # =========================================================================

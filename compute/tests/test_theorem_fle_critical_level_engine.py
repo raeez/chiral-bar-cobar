@@ -26,8 +26,9 @@ Multi-path verification (CLAUDE.md mandate):
 Beilinson warnings:
   AP1:  kappa = dim(g)(k+h^v)/(2h^v), NEVER copy between families.
   AP9:  kappa != c/2 for affine KM.
-  AP31: kappa = 0 does NOT imply Theta = 0. At critical level, commutativity
-        of the FF center implies Theta = 0.
+  AP31: kappa = 0 leaves full Theta independent. At critical level,
+        commutativity belongs to the FF center; the affine current sector
+        remains noncommutative.
   AP33: Koszul dual V_{k'}(g) != V_{-k}(g).
   AP39: kappa != S_2 for rank > 1.
 """
@@ -48,6 +49,7 @@ from compute.lib.theorem_fle_critical_level_engine import (
     bar_hn_critical,
     bicomplex_interpolation,
     bicomplex_structure,
+    center_object_firewall,
     critical_deformation_data,
     ff_center_dim,
     fle_categorical_hierarchy,
@@ -55,6 +57,7 @@ from compute.lib.theorem_fle_critical_level_engine import (
     hochschild_periodicity,
     is_critical,
     kappa_affine,
+    kernel_normalization_diagnostics,
     koszul_dual_level,
     koszulness_at_critical_level,
     koszulness_survival_count,
@@ -71,7 +74,7 @@ from compute.lib.theorem_fle_critical_level_engine import (
 
 
 class TestShadowTowerCritical:
-    """Q1: Shadow obstruction tower vanishes at critical level."""
+    """Q1: Critical level splits scalar, center, and current-sector data."""
 
     def test_kappa_zero_at_critical_sl2(self):
         """kappa(sl_2, k=-2) = 3*(-2+2)/(2*2) = 0."""
@@ -95,30 +98,38 @@ class TestShadowTowerCritical:
             kap = kappa_affine(g, Fraction(-g.h_vee))
             assert kap == 0, f"kappa != 0 for {lt}_{rk}"
 
-    def test_shadow_tower_vanishes_sl2(self):
-        """Full shadow tower Theta = 0 at critical level for sl_2."""
+    def test_shadow_tower_split_sl2(self):
+        """Scalar and center shadows vanish; full current Theta does not."""
         g = lie_data("A", 1)
         result = shadow_tower_at_critical_level(g)
-        assert result['theta_A_vanishes'] is True
+        assert result['theta_A_vanishes'] is False
+        assert result['center_theta_vanishes'] is True
+        assert result['full_current_sector_noncommutative'] is True
+        assert result['scalar_projection_is_full_mc_data'] is False
+        assert result['shadow_aliases_scope'] == 'center/scalar only'
         assert result['shadow_kappa'] == 0
-        assert result['shadow_cubic_C'] == 0
-        assert result['shadow_quartic_Q'] == 0
-        assert result['shadow_depth_r_max'] == 0
+        assert result['center_shadow_cubic_C'] == 0
+        assert result['center_shadow_quartic_Q'] == 0
+        assert result['center_shadow_depth_r_max'] == 0
 
-    def test_ap31_not_violated(self):
-        """We are NOT deducing Theta = 0 from kappa = 0 alone (AP31)."""
+    def test_ap31_center_restriction(self):
+        """Theta vanishing is center-restricted, not a consequence of kappa alone."""
         g = lie_data("A", 1)
         result = shadow_tower_at_critical_level(g)
         assert result['ap31_violated'] is False
-        assert 'Commutativity' in result['reason_theta_vanishes']
+        assert 'center' in result['reason_theta_vanishes']
+        assert 'Feigin-Frenkel center' in result['reason_center_theta_vanishes']
 
-    def test_bar_nontrivial_despite_theta_zero(self):
-        """Bar complex is nontrivial even though Theta = 0."""
+    def test_bar_nontrivial_despite_kappa_zero(self):
+        """Bar complex is nontrivial even though scalar curvature is zero."""
         g = lie_data("A", 2)
         result = shadow_tower_at_critical_level(g)
         assert result['bar_complex_nontrivial'] is True
         assert result['bar_uncurved'] is True
         assert result['bar_cohomology_nontrivial'] is True
+        assert result['full_current_theta_vanishes'] is False
+        assert result['current_ope_double_pole_vanishes'] is False
+        assert result['current_ope_double_pole_coefficient'] == -3
 
     def test_discriminant_zero_at_critical(self):
         """Critical discriminant Delta = 8*kappa*S_4 = 0 when kappa = 0."""
@@ -231,6 +242,23 @@ class TestBarFFCenter:
             assert result['h0_equals_fun_op'] is True
             assert result['vacuum_unique'] is True
 
+    def test_ff_center_not_full_bar_or_derived_center(self):
+        """FF center is H^0 only, not the full bar package or derived center."""
+        g = lie_data("A", 2)
+        result = bar_cohomology_is_oper_forms(g, max_weight=8)
+        firewall = center_object_firewall(g)
+        assert result['h0_is_feigin_frenkel_center'] is True
+        assert result['full_bar_cohomology_is_oper_forms'] is True
+        assert result['full_bar_cohomology_is_ff_center'] is False
+        assert result['oper_forms_are_derived_structure_sheaf'] is False
+        assert result['ordinary_derived_center_identification'] is False
+        assert firewall['ff_center_is_h0_only'] is True
+        assert firewall['ff_center_is_ordinary_derived_center'] is False
+        assert firewall['ff_center_is_chiral_derived_center'] is False
+        assert firewall['ff_center_is_koszul_dual'] is False
+        assert firewall['omega_ba_equals_a_is_inversion_not_koszul_duality'] is True
+        assert firewall['a_shriek_is_verdier_continuous_linear_dual'] is True
+
 
 # ============================================================
 # Section 3: Q3 -- Koszulness at critical level
@@ -319,7 +347,7 @@ class TestFLEHierarchy:
         assert result['implications']['level_2_implies_level_3'] is True
 
     def test_converses_fail(self):
-        """The converses do NOT hold."""
+        """The converses fail."""
         g = lie_data("A", 2)
         result = fle_categorical_hierarchy(g)
         assert result['implications']['level_3_implies_level_2'] is False
@@ -348,22 +376,28 @@ class TestBicomplex:
     """Q5: d_k = d_crit + (k+h^v) delta."""
 
     def test_bicomplex_at_critical_level(self):
-        """At critical level, d_k = d_crit (delta contribution zero)."""
+        """At critical level, shifted perturbation vanishes but double pole remains."""
         g = lie_data("A", 1)
         result = bicomplex_structure(g, Fraction(-2))
         assert result['is_critical'] is True
         assert result['d_k_equals_d_crit'] is True
         assert result['delta_contribution_zero'] is True
+        assert result['shifted_delta_contribution_zero'] is True
+        assert result['critical_double_pole_present'] is True
+        assert result['critical_double_pole_coefficient'] == -2
         assert result['bar_uncurved'] is True
 
     def test_bicomplex_conditions_always_hold(self):
-        """d_crit^2 = 0, delta^2 = 0, {d_crit, delta} = 0 for all k."""
+        """Full object is curved; ordinary bicomplex only after curvature-flat restriction."""
         g = lie_data("A", 2)
         for k in [Fraction(-3), Fraction(1), Fraction(10)]:
             result = bicomplex_structure(g, k)
             assert result['d_crit_squared_zero'] is True
             assert result['delta_squared_zero'] is True
-            assert result['anticommutator_zero'] is True
+            assert result['anticommutator_zero'] is False
+            assert result['anticommutator'] == "[C_A_2/(2*3), -]"
+            assert result['curved_bicomplex_on_full_bar_object'] is True
+            assert result['ordinary_bicomplex_on_curvature_flat_subquotient'] is True
 
     def test_bicomplex_generic_level_curved(self):
         """At generic level, bar is curved (kappa != 0)."""
@@ -372,6 +406,7 @@ class TestBicomplex:
         assert result['is_critical'] is False
         assert result['bar_uncurved'] is False
         assert result['d_k_equals_d_crit'] is False
+        assert result['ordinary_generic_cohomology_requires_curvature_flat_surface'] is True
 
     def test_lambda_parameter(self):
         """lambda = k + h^v is 0 at critical, nonzero elsewhere."""
@@ -445,8 +480,8 @@ class TestOperSpace:
 class TestHochschildCriticalLevel:
     """Chiral Hochschild cohomology at critical level (BD comparison).
 
-    CORRECTED (2026-04-12): Theorem H does NOT apply at critical level
-    because chiral Koszulness fails.  The BD comparison theorem (BD04
+    Theorem H is outside the critical-level surface because chiral Koszulness
+    fails.  The BD comparison theorem (BD04
     Thm 4.5.2) identifies ChirHoch with continuous Lie cohomology:
         ChirHoch^*(V_{-h^v}(g)) = Lambda(P_i) x C[Theta_i]
     which is UNBOUNDED with polynomial growth O(n^{r-1}).
@@ -460,15 +495,18 @@ class TestHochschildCriticalLevel:
     def test_sl2_bd_comparison(self):
         """sl_2: ChirHoch at critical level identified with Lie cohomology by BD.
 
-        FT-5 analysis: chiral Koszulness (diagonal Ext concentration) FAILS
-        at critical level.  PBW degeneration holds but E_2 page has
-        off-diagonal Fun(Op) contributions.  Theorem H does NOT apply.
+        Chiral Koszulness (diagonal Ext concentration) fails at critical
+        level. PBW degeneration holds but E_2 page has
+        off-diagonal Fun(Op) contributions. Theorem H is outside this surface.
         BD comparison identifies ChirHoch = Lambda(P_1) x C[Theta_1],
         which is unbounded (4-periodic for sl_2).
         """
         g = lie_data("A", 1)
         result = hochschild_periodicity(g)
         assert result['bounded_by_theorem_h'] is False
+        assert result['theorem_h_scope'] == 'generic Koszul locus only'
+        assert result['critical_promoted_to_theorem_h'] is False
+        assert result['is_generic_level_result'] is False
         assert result['bd_comparison_applies'] is True
         assert result['amplitude'] == 'unbounded'
         assert result['chirhoch0_dim'] == 'infinite'  # FF center
@@ -479,6 +517,10 @@ class TestHochschildCriticalLevel:
         assert result['odd_generator_degrees'] == (3,)
         assert result['even_generator_degrees'] == (4,)
         assert result['sl2_period_4'] is True
+        assert result['chiral_derived_center_is_hochschild'] is True
+        assert result['feigin_frenkel_center_is_h0_only'] is True
+        assert result['ff_center_is_ordinary_derived_center'] is False
+        assert result['ff_center_is_koszul_dual'] is False
 
     def test_sl3_bd_comparison(self):
         """sl_3: ChirHoch at critical level unbounded O(n) by BD comparison.
@@ -497,6 +539,7 @@ class TestHochschildCriticalLevel:
         assert result['even_generator_degrees'] == (4, 6)
         assert result['lie_cohomology_unbounded'] is True
         assert result['is_strictly_periodic'] is False
+        assert result['critical_promoted_to_theorem_h'] is False
 
     def test_higher_rank_bd_comparison(self):
         """Higher rank: ChirHoch unbounded, polynomial growth O(n^{r-1})."""
@@ -509,6 +552,15 @@ class TestHochschildCriticalLevel:
             assert result['chirhoch0_dim'] == 'infinite'
             assert result['lie_cohomology_unbounded'] is True
             assert result['is_strictly_periodic'] is False
+
+    def test_theorem_h_not_promoted_to_critical_or_generic_falsehood(self):
+        """Critical BD comparison is not rebranded as Theorem H."""
+        for (lt, rk) in [("A", 1), ("A", 2), ("G", 2)]:
+            result = hochschild_periodicity(lie_data(lt, rk))
+            assert result['bounded_by_theorem_h'] is False
+            assert result['critical_promoted_to_theorem_h'] is False
+            assert result['amplitude'] != '[0,2]'
+            assert result['total_dim_bound'] is None
 
 
 # ============================================================
@@ -531,6 +583,9 @@ class TestCriticalDeformation:
         result = critical_deformation_data(g)
         assert result['bar_uncurved_at_critical'] is True
         assert result['bar_curved_at_deformed'] is True
+        assert result['ordinary_generic_cohomology_requires_curvature_flat_surface'] is True
+        assert result['theorem_h_applies_at_deformed_generic_level'] is True
+        assert result['ff_center_package_at_deformed_generic_level'] is False
 
     def test_oper_identification_only_at_critical(self):
         """The oper identification H^*(B) = Omega^*(Op) only holds at critical."""
@@ -558,7 +613,7 @@ class TestFFInvolution:
             assert k_dual == k_crit, f"Critical not fixed for {lt}_{rk}"
 
     def test_generic_not_fixed(self):
-        """Generic level is NOT a fixed point."""
+        """Generic level is away from the fixed point."""
         g = lie_data("A", 1)
         k = Fraction(1)
         k_dual = koszul_dual_level(g, k)
@@ -576,7 +631,49 @@ class TestFFInvolution:
 
 
 # ============================================================
-# Section 10: Full landscape sweep
+# Section 10: Kernel normalization firewall
+# ============================================================
+
+
+class TestKernelNormalizationFirewall:
+    """Trace-form collision residue and KZ normalization are separate."""
+
+    def test_trace_form_vs_kz_at_k0(self):
+        """At k=0, k*Omega_tr/z vanishes but KZ residue is nonzero."""
+        g = lie_data("A", 1)
+        result = kernel_normalization_diagnostics(g, Fraction(0))
+        assert result['trace_form_collision_residue'] == "0*Omega_tr/z"
+        assert result['kz_residue'] == "Omega_KZ/((2)*z)"
+        assert result['trace_form_vanishes_at_k0'] is True
+        assert result['kz_nonzero_at_k0_for_nonabelian_g'] is True
+        assert result['trace_form_and_kz_are_same_rational_function'] is False
+        assert result['normalizations_interchangeable'] is False
+
+    def test_critical_level_has_kz_pole_but_trace_double_pole(self):
+        """At k=-h^vee, KZ denominator vanishes but raw level does not."""
+        g = lie_data("A", 2)
+        result = kernel_normalization_diagnostics(g, Fraction(-3))
+        assert result['kz_parameter_defined'] is False
+        assert result['kz_parameter_has_critical_pole'] is True
+        assert result['critical_trace_double_pole_present'] is True
+        assert result['critical_trace_double_pole_coefficient'] == "-3"
+        assert result['trace_form_collision_residue'] == "-3*Omega_tr/z"
+        assert result['ff_fixed_point'] is True
+
+    def test_generic_level_shift_and_ff_involution_are_distinct(self):
+        """KZ shift k+h^vee and FF level k -> -k-2h^vee are both visible."""
+        g = lie_data("G", 2)
+        result = kernel_normalization_diagnostics(g, Fraction(1, 3))
+        assert result['shifted_level_k_plus_h_vee'] == "13/3"
+        assert result['kz_residue'] == "Omega_KZ/((13/3)*z)"
+        assert result['ff_dual_level'] == "-25/3"
+        assert result['ff_fixed_point'] is False
+        assert result['heisenberg_kernel'] == 'k/z'
+        assert result['virasoro_kernel'] == '(c/2)/z^3 + 2T/z'
+
+
+# ============================================================
+# Section 11: Full landscape sweep
 # ============================================================
 
 
@@ -588,8 +685,11 @@ class TestLandscapeSweep:
         result = full_fle_critical_analysis("A", 1, max_weight=8)
         assert result.h_vee == 2
         assert result.dim_g == 3
-        assert result.shadow_tower['theta_A_vanishes'] is True
+        assert result.shadow_tower['theta_A_vanishes'] is False
+        assert result.shadow_tower['center_theta_vanishes'] is True
         assert result.bicomplex['is_critical'] is True
+        assert result.center_firewall['ff_center_is_koszul_dual'] is False
+        assert result.kernel_normalization['kz_parameter_has_critical_pole'] is True
 
     def test_full_analysis_sl3(self):
         """Full analysis for sl_3."""
@@ -603,9 +703,12 @@ class TestLandscapeSweep:
         results = landscape_sweep(max_weight=6)
         assert len(results) == 14  # 14 standard simple types
         for key, analysis in results.items():
-            assert analysis.shadow_tower['theta_A_vanishes'] is True
+            assert analysis.shadow_tower['theta_A_vanishes'] is False
+            assert analysis.shadow_tower['center_theta_vanishes'] is True
             assert analysis.bicomplex['is_critical'] is True
             assert analysis.bar_ff_center['vacuum_unique'] is True
+            assert analysis.center_firewall['ff_center_is_h0_only'] is True
+            assert analysis.kernel_normalization['critical_trace_double_pole_present'] is True
 
     def test_landscape_oper_dims(self):
         """Oper dimension = rank for every type in the landscape."""
@@ -621,7 +724,7 @@ class TestLandscapeSweep:
 
 
 # ============================================================
-# Section 11: Cross-verification and consistency
+# Section 12: Cross-verification and consistency
 # ============================================================
 
 
@@ -652,26 +755,26 @@ class TestCrossVerification:
         """FLE (critical, kappa=0) and Koszulness (generic, kappa!=0) are
         complementary: they NEVER hold simultaneously for the same level."""
         g = lie_data("A", 2)
-        # At critical level: NOT Koszul (bar cohom spread across degrees)
+        # At critical level: bar cohomology spreads across degrees.
         kosz = koszulness_at_critical_level(g)
         assert 'FAILS' in kosz.k3_ext
 
         # At generic level: Koszul (bar cohom concentrated in degree 1)
         kap_gen = kappa_affine(g, Fraction(1))
-        assert kap_gen != 0  # NOT at critical level
+        assert kap_gen != 0
 
     def test_bicomplex_vs_shadow(self):
-        """At critical level, bicomplex says uncurved => shadow tower trivial."""
+        """At critical level, uncurved does not erase the current sector."""
         g = lie_data("A", 1)
         bc = bicomplex_structure(g, Fraction(-2))
         st = shadow_tower_at_critical_level(g)
         assert bc['bar_uncurved'] is True
-        assert st['theta_A_vanishes'] is True
-        # Both agree: critical level is the trivial point
+        assert st['center_theta_vanishes'] is True
+        assert st['theta_A_vanishes'] is False
 
 
 # ============================================================
-# Section 12: AP10 multi-path cross-verification
+# Section 13: AP10 multi-path cross-verification
 # ============================================================
 
 
@@ -679,7 +782,7 @@ class TestMultiPathCrossVerification:
     """Multi-path verification to prevent AP10 (hardcoded wrong values).
 
     Every numerical result is verified by at least 2 independent methods.
-    These tests do NOT hardcode expected values; they check algebraic
+    These tests use algebraic identities and cross-family consistency rather than hardcoding
     identities and cross-family consistency that would fail if any
     single computation path were wrong.
     """

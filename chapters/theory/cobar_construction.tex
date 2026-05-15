@@ -17,21 +17,20 @@ $\Omega^{\mathrm{ch}}(\cC)=\bigoplus_{n\geq 0}\Omega^{\mathrm{ch}}_n(\cC)$
 is the reconstruction machine for this loss on a conilpotent chiral
 coalgebra~$\cC$, meaning a factorization coalgebra whose iterated
 reduced coproduct vanishes on every local section. It realizes the
-inversion $\Omega(\barB(\cA)) \xrightarrow{\sim} \cA$ (Theorem~B) and
-proves that the MC element
-$\Theta_\cA \in \MC(\gAmod)$ determines~$\cA$ up to
-quasi-isomorphism on the Koszul locus. Definitions~\ref{def:factorization-coalgebra},
+inversion $\Omega(\barB(\cA)) \xrightarrow{\sim} \cA$ on the
+Koszul/completed locus (Theorem~B). The universal twisting morphism
+is the datum behind the adjunction counit; the modular MC element
+$\Theta_\cA \in \MC(\gAmod)$ records the compatible obstruction tower,
+not a separate Koszul-dual object. Definitions~\ref{def:factorization-coalgebra},
 \ref{def:conilpotent-cobar}, and
-\ref{def:geom-cobar-intrinsic} give the formal versions used below.
-Both functors are
-projections of a single universal twisting morphism
+\ref{def:geom-cobar-intrinsic} give the formal versions used here.
+Bar and cobar are represented by the same twisting-morphism calculus
 $\tau \in \MC\bigl(\operatorname{Conv}(\cC, \cA)\bigr)$
 (Definition~\ref{def:twisting-morphism}): bar records collision
 residues via the logarithmic propagator
-$\eta_{ij} = d\log(z_i - z_j)$; cobar integrates distributional
-duals over the open configuration space $C_n(X)$.
-The duality between them (residues versus delta functions,
-$j_*$ versus $j_!$) is the Verdier exchange on
+$\eta_{ij} = d\log(z_i - z_j)$; cobar uses the Verdier-transposed
+boundary currents. The exchange between residues and currents,
+$j_*$ and $j_!$, is the Verdier exchange on
 $\operatorname{Conv}(\cC, \cA)$.
 
 Concretely, given a conilpotent chiral
@@ -63,7 +62,7 @@ $\operatorname{Tw}(\cC, \cA) = \MC(\operatorname{Conv}(\cC, \cA))$
 (Theorem~\ref{thm:bar-cobar-adjunction}).
 
 At genus~$g \geq 1$ the fiberwise differential satisfies
-$d_{\mathrm{fib}}^2 = \kappa \cdot \omega_g$, reflecting the curved
+$d_{\mathrm{fib}}^2 = \kappa(\cA) \cdot \omega_g$, reflecting the curved
 $A_\infty$ structure $\mu_1^2 = [\mu_0, -]$
 (Chapter~\ref{chap:bar-cobar-adjunction}). Thus the raw fiberwise
 operator is not a differential unless the curvature acts trivially.
@@ -94,7 +93,7 @@ Chapter~\ref{chap:mc5-class-m-chain-level-platonic}.
 
 \subsection{Motivation: reversing the prism}
 
-\begin{remark}[Three functors on the bar coalgebra: cobar is NOT the Koszul dual]
+\begin{remark}[Three functors on the bar coalgebra]
 \label{rem:cobar-three-functors}
 Before entering the construction, we fix a critical distinction that
 pervades the chapter. Three functors act on the bar coalgebra
@@ -104,7 +103,7 @@ produces false statements.
 \item \emph{Cobar / bar-cobar inversion}
  (Theorem~B, Corollary~\ref{cor:bar-cobar-inverse}):
  \[\Omegach(\barB(\cA)) \;\xrightarrow{\sim}\; \cA\qquad
- \text{(recovers $\cA$ itself: a round-trip, not a duality)}.\]
+ \text{(recovers $\cA$ itself: bar-cobar inversion)}.\]
 \item \emph{Verdier duality on $\operatorname{Ran}(X)$}
  (Theorem~A, Convention~\ref{conv:bar-coalgebra-identity}):
  \[\mathbb{D}_{\operatorname{Ran}}(\barB(\cA)) \;\simeq\;
@@ -114,7 +113,7 @@ produces false statements.
  (Theorem~H):
  \[Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
  \;=\; C^\bullet_{\mathrm{ch}}(\cA, \cA)\qquad
- \text{(the universal bulk / closed-string observables)}.\]
+ \text{(the cochain-level closed-sector observables)}.\]
 \end{enumerate}
 \emph{Cobar is the inverse, not the dual.} Throughout this
 chapter $\Omegach$ denotes the bar-cobar inverse functor of
@@ -164,10 +163,15 @@ symmetric cobar except where explicitly noted.
 \begin{remark}[Inverse prism principle]
 The bar construction extracts residues at collision divisors; the cobar integrates over configuration spaces. Their duality is the residue-integration pairing on logarithmic forms.
 
-\emph{Physical intuition \textup{(Witten)}.}
-Off-shell amplitudes with infrared cutoffs are classified by the bar complex (compactification provides the cutoff); on-shell propagators with ultraviolet regularization are classified by the cobar complex (delta functions provide the regulator); the bar-cobar pairing computes S-matrix elements by integrating off-shell wavefunctions against on-shell propagators.
+\emph{QFT comparison.}
+A perturbative field theory may supply an analytic kernel model in
+which logarithmic bar forms become compactified configuration-space
+integrands and FM cobar currents become source terms for Green
+kernels. This is extra comparison data, not a classification theorem:
+the bar coalgebra, the cobar algebra, the Koszul dual, and QFT
+propagator distributions remain distinct objects.
 
-\emph{Geometric picture \textup{(Kontsevich)}.}
+\emph{Residue-current dictionary.}
 \begin{center}
 \begin{tabular}{c|c|c}
 & \textbf{Bar} & \textbf{Cobar} \\ \hline
@@ -175,7 +179,7 @@ Space & Compactified $\overline{C}_n(X)$ & Open $C_n(X)$ \\
 Forms & Logarithmic (residues) & Distributional (delta functions) \\
 Operation & Extract (analyze) & Insert (synthesize) \\
 Boundary & Normal crossing divisors & Diagonal singularities \\
-Physics & Off-shell states & On-shell propagators \\
+QFT comparison & Compactified configuration integrands & Green-kernel source currents \\
 \end{tabular}
 \end{center}
 \end{remark}
@@ -203,7 +207,9 @@ is a continuous linear functional:
 \emph{Dirac delta.} For $p \in C_n(X)$:
 \[\langle \delta_p, \phi \rangle = \phi(p)\]
 
-\emph{Principal value.} For the diagonal $\Delta_{ij} \subset C_n(X)$:
+\emph{Principal value.} On a local chart of $X^n$ or
+$\overline{C}_n(X)$ with collision divisor $D_{ij}$ lying over
+$z_i=z_j$:
 \[\langle \text{PV}\left(\frac{1}{z_i - z_j}\right), \phi \rangle =
 \lim_{\epsilon \to 0} \int_{|z_i - z_j| > \epsilon} \frac{\phi(z_1, \ldots, z_n)}{z_i - z_j}
 dz_1 \cdots dz_n\]
@@ -230,30 +236,46 @@ This is a special case of the Schwartz kernel theorem for distributions on smoot
 
 \subsection{Intrinsic cobar via Verdier duality}\label{subsec:intrinsic-cobar}
 
-\begin{definition}[Conilpotent coalgebra]\label{def:conilpotent-cobar}
+\begin{definition}[Conilpotent and completed coalgebras]\label{def:conilpotent-cobar}
 \index{conilpotent!coalgebra}
-A coalgebra~$\cC$ with comultiplication
-$\Delta \colon \cC \to \cC \otimes \cC$ is
-\emph{conilpotent} if for each element $c \in \cC$,
-there exists $N = N(c) \in \mathbb{N}$ such that the
-$N$-fold iterated comultiplication vanishes:
+\index{completed coalgebra!cobar}
+Let $\cC$ be a coaugmented coalgebra with coaugmentation
+$\eta\colon\omega_X\to\cC$, counit
+$\varepsilon\colon\cC\to\omega_X$, coaugmentation coideal
+$\bar\cC:=\operatorname{coker}(\eta)\cong\ker(\varepsilon)$,
+and reduced comultiplication
+$\bar\Delta\colon\bar\cC\to\bar\cC\otimes\bar\cC$.
+It is \emph{conilpotent} if for every local section
+$c\in\bar\cC$ there is $N=N(c)$ such that
 \[
-\Delta^{(N)}(c) = 0.
+\bar\Delta^{(N)}(c)=0 .
 \]
-Equivalently, $\cC = \bigcup_{N \geq 0} F_N \cC$ where
-$F_N \cC = \ker(\Delta^{(N)})$ is the \emph{coradical
-filtration}. The condition ensures that for any element,
-only finitely many terms appear in the cobar
-differential, making infinite sums unnecessary and
-convergence automatic.
+Equivalently,
+\[
+\bar\cC=\bigcup_{N\geq 0}F_N\bar\cC,\qquad
+F_N\bar\cC:=\ker(\bar\Delta^{(N)}),
+\]
+the increasing coradical filtration exhausts the reduced coalgebra.
+Then the cobar differential on the generator $s^{-1}c$ is a finite
+sum, and its iterates terminate on each element of the free chiral
+algebra.
 
-A coalgebra is \emph{cocomplete} if the natural map
-$\cC \to \varprojlim \cC / F_N \cC$ is an isomorphism.
-Both conditions guarantee that the cobar construction
-produces a well-defined chain complex
-(Theorem~\ref{thm:cobar-distributional-model}).
-See also Definition~\ref{def:conilpotent-complete} for the
-filtered formulation.
+The completed replacement is a descending coaugmentation-adic
+filtration
+\[
+\cC=F^0\cC\supset F^1\cC=\bar\cC\supset F^2\cC\supset\cdots,
+\qquad
+\cC\simeq\varprojlim_N \cC/F^{N+1}\cC,
+\]
+with separated, exhaustive, finite-type quotients and continuous
+coproduct. In that lane $\Omega^{\mathrm{ch}}(\cC)$ means the
+continuous completed cobar object. It is an ordinary dg chiral algebra
+only in the square-zero uncurved or flat-total model; with curvature it
+is a CDG object satisfying
+$d_{\Omega,h}^{\,2}=[h_\Omega,-]$.
+See Definition~\ref{def:conilpotent-complete} and
+Definition~\ref{def:strong-completion-tower} for the global filtered
+form used in the inversion theorem.
 \end{definition}
 
 \begin{definition}[Factorization coalgebra]\label{def:factorization-coalgebra}
@@ -276,22 +298,28 @@ curve~$X$ is a $\cD_X$-module~$\cC$ equipped with:
  equation~\eqref{eq:borcherds-axiom}) holds for the
  iterated comultiplication on codimension-$2$ strata.
 \end{enumerate}
-This is the Verdier dual of a chiral algebra: if $\cA$
-is a chiral algebra, then $\cC = \barB(\cA)$ (the bar
-coalgebra) is a factorization coalgebra, and conversely
-the cobar $\Omega(\cC)$ recovers a chiral algebra
-structure.
+Under the finite-type holonomic hypotheses used in this chapter,
+Verdier duality sends chiral algebras to factorization coalgebras.
+If $\cA$ is an augmented chiral algebra, then
+$\cC=\barB(\cA)$ is such a factorization coalgebra. Conversely, a
+coaugmented conilpotent factorization coalgebra has a cobar
+dg chiral algebra $\Omega(\cC)$; it recovers a prescribed algebra only
+when $\cC$ lies in the bar image and the Koszul/completed hypotheses of
+Corollary~\ref{cor:bar-cobar-inverse} hold.
 \end{definition}
 
 \begin{definition}[Intrinsic geometric cobar complex]\label{def:geom-cobar-intrinsic}
 \index{cobar construction!geometric|textbf}
 Let $\mathcal{C}$ be a conilpotent chiral coalgebra on a smooth algebraic
-curve $X$, valued in holonomic $\mathcal{D}$-modules, with comultiplication
+curve $X$, valued in regular holonomic finite-type $\mathcal{D}$-modules,
+with comultiplication
 $\Delta\colon \mathcal{C} \to \mathcal{C} \boxtimes \mathcal{C}$ and
 coaugmentation $\eta\colon \omega_X \to \mathcal{C}$. Write
 $\mathcal{C}^\vee := \mathbb{D}_X(\mathcal{C})$ for the $\mathcal{D}$-module
 Verdier dual on $X$, which is a chiral algebra with multiplication dual to
-$\Delta$.
+$\Delta$ whenever the relevant tensor products are finite-type; in the
+completed case all duals, tensor products, and Homs below are interpreted
+continuously.
 
 The \emph{geometric cobar complex} is the graded object:
 \[
@@ -426,11 +454,17 @@ and Verdier duality is involutive on the holonomic category
 \begin{theorem}[Distributional model of the cobar; \ClaimStatusProvedHere]%
 \label{thm:cobar-distributional-model}
 \index{cobar construction!distributional model}
-Let $\mathcal{C}$ be a factorization coalgebra that is conilpotent
-(Definition~\ref{def:conilpotent-complete}) or complete with respect to
-its coaugmentation ideal.
-Since each bar component is holonomic (Lemma~\ref{lem:bar-holonomicity}), the intrinsic cobar
-(Definition~\ref{def:geom-cobar-intrinsic}) admits a canonical isomorphism:
+Let $\mathcal{C}$ be a regular holonomic finite-type factorization
+coalgebra that is either conilpotent
+(Definition~\ref{def:conilpotent-complete}) or complete, separated, and
+exhaustive for the coaugmentation-adic filtration, with finite-type
+associated graded and continuous coproduct. In the completed case assume
+the transition maps satisfy the Mittag--Leffler condition, so inverse
+limits commute with the finite bar-degree constructions used below.
+Since each component of the bar object of $\mathcal{C}^{\vee}$ is
+holonomic by Lemma~\ref{lem:bar-holonomicity}, the intrinsic cobar
+(Definition~\ref{def:geom-cobar-intrinsic}) admits a canonical
+realization by Fulton--MacPherson boundary currents:
 \[
 \Omega^{\mathrm{ch}}_n(\mathcal{C})
 \;\cong\;
@@ -440,8 +474,11 @@ Since each bar component is holonomic (Lemma~\ref{lem:bar-holonomicity}), the in
  \otimes \Omega^*_{C_{n+1}(X),\mathrm{dist}}
 \right)
 \]
-That is, the intrinsic cobar is represented by distributional sections of
-$\mathcal{C}^{\boxtimes(n+1)}$ over the \emph{open} configuration space.
+Here the right side is shorthand for the $j_!$-supported current model
+on $\overline{C}_{n+1}(X)$ restricted to the open stratum. The symbols
+$\delta(z_i-z_j)$ below denote boundary currents on the
+Fulton--MacPherson divisor, not ordinary distributions on the open
+manifold $C_{n+1}(X)$.
 
 The three components of the cobar differential correspond to
 Verdier duals of the bar differential components:
@@ -491,9 +528,10 @@ $\mathrm{Res}_{z_i = z_j}[\omega \cdot \eta_{ij}]$ (extracting the residue
 along the boundary divisor $D_{ij}$). Under the Verdier pairing
 $\langle \eta_{ij}, \delta(z_i - z_j)\rangle = 1$
 (Theorem~\ref{thm:bar-cobar-verdier}, Step~3), the dual operation is
-$K \mapsto \delta(z_i - z_j) \otimes K|_{\Delta_{ij}}$: inserting a
-delta function at the diagonal. This is exactly the extension differential
-$d_{\mathrm{extend}}$.
+$K \mapsto \iota_{ij,!}\operatorname{Tr}_{D_{ij}}(K)$, written
+mnemonically as $\delta(z_i-z_j)\otimes K|_{D_{ij}}$: inserting the
+boundary current dual to the residue. This is exactly the extension
+differential $d_{\mathrm{extend}}$.
 
 For (ii): the factorization differential splits configurations by restricting
 to strata where subsets of points collide. Its dual reassembles
@@ -584,13 +622,14 @@ A classical objection to the distributional cobar is that products of delta
 distributions may be ill-defined: the product
 $\delta(z_1 - z_2) \cdot \delta(z_2 - z_3)$ requires a renormalization
 choice in the analytic category. The intrinsic
-definition (Definition~\ref{def:geom-cobar-intrinsic}) dissolves this
-objection: the cobar is a Verdier dual in the
-$\mathcal{D}$-module category, where compositions are governed by the
-calculus of nearby and vanishing cycles. The
-normal crossings condition on $D \subset
-\overline{C}_n(X)$ ensures transversality of all relevant compositions,
-making them well-defined without renormalization.
+definition (Definition~\ref{def:geom-cobar-intrinsic}) avoids this
+product: the cobar differential is the Verdier transpose of the bar
+differential in the holonomic $\mathcal{D}$-module category, and
+compositions are pull--push compositions through the normal-crossing
+strata of $\overline{C}_n(X)$. When a displayed distributional product
+fails the wavefront transversality criterion, it is only a local
+notation for this Verdier composition; it is not an additional analytic
+definition of the cobar differential.
 
 The distributional representation
 (Theorem~\ref{thm:cobar-distributional-model}) is a \emph{consequence}: it
@@ -604,7 +643,14 @@ analytic subtleties arise.
 \subsection{Explicit distributional model}\label{subsec:distributional-model}
 
 \begin{definition}[Geometric cobar complex]\label{def:geom-cobar}
-The bar complex used logarithmic forms on \emph{compactified} configuration spaces; the cobar uses distributions on \emph{open} configuration spaces. For the Heisenberg algebra (\S\ref{sec:frame-koszul-dual}), the cobar of $\mathrm{coLie}^{\mathrm{ch}}(V^*)$ produced $\mathrm{Sym}^{\mathrm{ch}}(V^*)$; the following definition gives the general construction.
+The bar complex uses logarithmic forms on \emph{compactified}
+configuration spaces; the cobar uses the Verdier-dual current model on
+the open stratum together with controlled boundary currents on the
+Fulton--MacPherson divisors. For the Heisenberg algebra
+(\S\ref{sec:frame-koszul-dual}), the cobar of
+$\mathrm{coLie}^{\mathrm{ch}}(V^*)$ produced
+$\mathrm{Sym}^{\mathrm{ch}}(V^*)$; the following definition gives the
+general construction.
 
 For a conilpotent chiral coalgebra $\mathcal{C}$ on $X$ with coaugmentation
 $\eta: \omega_X \to \mathcal{C}$ and comultiplication $\Delta: \mathcal{C} \to
@@ -614,34 +660,51 @@ $\eta: \omega_X \to \mathcal{C}$ and comultiplication $\Delta: \mathcal{C} \to
 \]
 where:
 \begin{itemize}
-\item $C_{p+1}(X)$ is the \emph{open} configuration space (no compactification)
+\item $C_{p+1}(X)$ is the open stratum of the
+Fulton--MacPherson compactification
 \item $\pi: C_{p+1}(X) \to X^{p+1}$ is the projection
 \item $\Omega^q_{C_{p+1}(X),\text{dist}}$ are distributional $q$-forms: currents with
-prescribed singularities along diagonals $\{z_i = z_j\}$
+prescribed boundary values along the collision divisors
+$D_{ij}\subset\overline{C}_{p+1}(X)$
 \item $\text{Hom}_{\mathcal{D}}$ denotes $\mathcal{D}$-module homomorphisms
 \end{itemize}
 
 Equivalently, using the Schwartz kernel theorem (Theorem~\ref{thm:schwartz-kernel-cobar}):
 \[\Omega^{\text{ch}}_n(\mathcal{C}) = \text{Dist}\left(C_n(X), \mathcal{C}^{\boxtimes n}\right)
 \otimes \Omega^*_{C_n(X)}\]
-consisting of distributional sections of $\mathcal{C}^{\boxtimes n}$ over the open
-configuration space with differential forms.
+consisting of distributional sections of $\mathcal{C}^{\boxtimes n}$
+on the FM current model, restricted to the open stratum.
 \end{definition}
 
 \begin{remark}[Distributions]\label{rem:why-distributions}
-The cobar differential inserts delta functions $\delta(z_i - z_j)$, forcing the complex to consist of distributions. Geometrically, distributions on $C_n(X)$ are Verdier-dual to logarithmic forms on $\overline{C}_n(X)$. Physically, cobar operations implement propagator composition: $(\Box - m^2) G(z,w) = \delta^{(2)}(z - w)$.
+The cobar differential inserts boundary currents
+$\delta_{D_{ij}}$, written locally as $\delta(z_i-z_j)$, so the
+distributional notation lives on the FM compactification rather than on
+the open configuration space alone. Geometrically, these currents are
+Verdier-dual to logarithmic forms on $\overline{C}_n(X)$. Under a QFT
+comparison datum, the same boundary current maps to the source term in
+a Green-kernel equation:
+$(\Box - m^2)G(z,w)=\delta^{(2)}(z-w)$.
 \end{remark}
 
 \begin{example}[Simplest cobar element]\label{ex:simplest-cobar}
-For $n=2$ with trivial coalgebra $\mathcal{C} = \omega_X$, the basic cobar element is:
-\[K_2(z_1, z_2) = \delta(z_1 - z_2) \otimes (dz_1 \wedge d\bar{z}_1)\]
+For $n=2$ with trivial coalgebra $\mathcal{C} = \omega_X$, the basic
+cobar boundary current is
+\[K_2=\delta_{D_{12}}\otimes (dz\wedge d\bar z),\]
+where $D_{12}\subset \overline{C}_2(X)$ is the collision divisor. It
+acts on a test density $\phi$ on $\overline{C}_2(X)$ whose boundary
+trace is defined by
+\[
+\langle K_2,\phi\rangle
+=\int_X \operatorname{Tr}_{D_{12}}(\phi)(z)\,dz\wedge d\bar z.
+\]
+Thus $K_2$ is not an ordinary distribution on the open manifold
+$C_2(X)$; it is the FM boundary-current representative of the
+Verdier-dual residue.
 
-This acts on test functions $\phi \in \mathcal{D}(C_2(X))$ by:
-\[\langle K_2, \phi \rangle = \int_X \phi(z, z) dz \wedge d\bar{z}\]
-enforcing the diagonal constraint.
-
-\emph{Physical meaning.} This is the propagator for a free scalar field with
-$\delta$-function source at coinciding points.
+\emph{QFT comparison.} In the free scalar comparison this is the
+diagonal source current for the Green kernel, not the Green kernel
+itself.
 \end{example}
 
 \begin{theorem}[Cobar differential; \ClaimStatusProvedHere]\label{thm:cobar-diff-geom}
@@ -678,12 +741,17 @@ K(c_0, \ldots, d_{\mathcal{C}}(c_i), \ldots, c_n)\]
 \emph{Component 3: Extension differential.}
 \[d_{\text{extend}}: \Omega^{\text{ch}}_{p,q}(\mathcal{C}) \to
 \Omega^{\text{ch}}_{p+1,q}(\mathcal{C})\]
-This extends distributions across collision divisors and is the \emph{inverse} of taking residues in the bar complex.
+This extends distributions across collision divisors and is the
+Verdier adjoint of taking residues in the bar complex.
 
 For a distribution $K$ on $C_n(X)$ with singularities along $\Delta_{ij} =
 \{z_i = z_j\}$:
-\[(d_{\text{extend}}K)(z_0, \ldots, z_n) = \sum_{i < j} \delta(z_i - z_j) \otimes
-K|_{\Delta_{ij}}\]
+\[
+(d_{\text{extend}}K)(z_0, \ldots, z_n)
+=\sum_{i<j}\iota_{ij,!}\operatorname{Tr}_{D_{ij}}(K),
+\]
+written in local analytic notation as
+$\sum_{i<j}\delta(z_i-z_j)\otimes K|_{D_{ij}}$.
 
 \end{theorem}
 
@@ -722,12 +790,15 @@ all insertion positions $i$.
 
 The extension differential:
 \[
-d_{\text{extend}}: \mathcal{D}'(C_n(X)) \to \mathcal{D}'(C_{n+1}(X))
+d_{\text{extend}}\colon
+\mathrm{Dist}_{\mathrm{FM}}(C_n(X))\to
+\mathrm{Dist}_{\mathrm{FM}}(C_{n+1}(X))
 \]
-extends distributions by inserting delta functions at collision loci.
+extends FM currents by inserting boundary currents at collision loci.
 
-\emph{Local coordinate formula.} Near the diagonal $\Delta_{ij} = \{z_i = z_j\}
-\subset C_n(X)$, introduce coordinates:
+\emph{Local coordinate formula.} Near the boundary divisor
+$D_{ij}\subset\overline{C}_n(X)$ lying over $z_i=z_j$, introduce
+coordinates:
 \[\epsilon = z_i - z_j, \quad \zeta = \frac{z_i + z_j}{2}, \quad z_k \text{ for } k
 \neq i,j\]
 
@@ -735,7 +806,7 @@ A distribution $K$ singular along $\Delta_{ij}$ has Laurent expansion:
 \[K(\epsilon, \zeta, \{z_k\}) = \sum_{m=-\infty}^{M} \frac{K_m(\zeta, \{z_k\})}{\epsilon^m}
 + \text{(regular terms)}\]
 
-The extension across $\Delta_{ij}$ is:
+The extension across $D_{ij}$ is:
 \[
 (d_{\text{extend}}K)(z_1, \ldots, z_n, w) = \sum_{i<j} \delta(z_i - z_j) \otimes
 \text{Res}_{\epsilon=0}[K] \otimes \delta(w - \zeta)
@@ -749,7 +820,8 @@ The regularization removes divergences, leaving a finite distributional value.
 
 \emph{Example.} For $K = \frac{1}{(z_1 - z_2)^2}$, let
 $\epsilon = z_1 - z_2$. The $d\log$ kernel $\eta_{12} = d\epsilon/\epsilon$
-of the bar complex absorbs one power of $\epsilon$ (pole-order absorption,), so the Verdier dual of a double pole is a
+of the bar complex absorbs one power of $\epsilon$ (pole-order
+absorption), so the Verdier dual of a double pole is a
 \emph{single} distribution of order~$2$ supported on
 $\Delta_{12} = \{z_1 = z_2\}$, not a tensor product of distributions:
 \[
@@ -788,7 +860,8 @@ families mirroring the bar complex from Section~\ref{sec:bar-nilpotency}:
 \begin{enumerate}
 \item $d_{\text{comult}}^2 = 0$ (coassociativity)
 \item $d_{\text{internal}}^2 = 0$ (differential property)
-\item $d_{\text{extend}}^2 = 0$ (Stokes' theorem on distributions)
+\item $d_{\text{extend}}^2 = 0$ (Verdier dual of the residue-square
+identity, equivalently the Arnold boundary relation)
 \item $d_{\text{comult}} \circ d_{\text{internal}} + d_{\text{internal}} \circ
 d_{\text{comult}} = 0$ (chain map property)
 \item $d_{\text{comult}} \circ d_{\text{extend}} + d_{\text{extend}} \circ
@@ -841,51 +914,24 @@ K|_{\Delta_{ij}}\right) \\
 K|_{\Delta_{ij} \cap \Delta_{k\ell}}
 \end{align*}
 
-The product $\delta(z_i - z_j) \otimes \delta(z_k - z_\ell)$
-is well-defined \emph{only if} the supports are disjoint or coincide. When supports
-coincide (e.g., $i=k, j=\ell$), we get $\delta(z_i - z_j)^2$, which is \emph{not}
-a distribution (multiplication of distributions is undefined unless one is smooth).\footnote{%
-Hörmander's Distributional Multiplication Theory: Products of distributions like
-$\delta(z_i - z_j) \wedge \delta(z_j - z_k)$ are generally undefined (Schwartz impossibility
-theorem). However, our products are well-defined via:
-
-\emph{(1) Microlocal analysis.} By Hörmander \cite[Theorem 8.2.10]{Hormander}, two distributions
-$u, v$ can be multiplied if their wave front sets satisfy
-$\text{WF}(u) + \text{WF}(v) \cap \text{zero section} = \emptyset$. In our case,
-$\text{WF}(\delta_{D_{ij}}) = N^*(D_{ij})$ (conormal bundle), and these are either disjoint
-or coincide with controlled intersection.
-
-\emph{(2) Dimensional regularization.} Replace $\delta(z)$ with
-$\delta_\epsilon(z) = \frac{1}{\pi\epsilon^2} e^{-|z|^2/\epsilon^2}$ and take $\epsilon \to 0$
-after integration.
-
-\emph{(3) Arnold relation cancellations.} Divergences cancel via the Arnold relations
-(Theorem~\ref{thm:arnold-three}). The uncurved condition $d^2 = 0$ is equivalent to this cancellation.
-
-See Hörmander~\cite{Hormander} Chapter 8, Melrose~\cite{Mel93} on b-calculus, Kashiwara--Schapira~\cite{KS90} Chapter VII, and Costello--Gwilliam~\cite{CG17} Volume 1, \S2.4 for the complete theory.
-We adopt the Verdier duality approach (Theorem~\ref{thm:verdier-bar-cobar}) as the rigorous foundation; the distributional formulas serve as computational guides.%
-}%
-
-\emph{Resolution via dimensional regularization.} Introduce a regulator:
-\[\delta_\epsilon(z) = \frac{1}{\pi \epsilon^2} e^{-|z|^2/\epsilon^2}\]
-
-Then:
-\[\delta_\epsilon(z)^2 = \frac{1}{\pi^2 \epsilon^4} e^{-2|z|^2/\epsilon^2}\]
-
-As $\epsilon \to 0$, this concentrates at $z=0$ but with coefficient:
-\[\int \delta_\epsilon(z)^2 dz = \frac{1}{\epsilon^2} \to \infty\]
-
-The divergence is canceled by the \emph{Arnold relation among delta functions}:
-\[\delta(z_i - z_j) \wedge \delta(z_j - z_k) = -\delta(z_i - z_k) \wedge \delta(z_j - z_k)\]
-
-When summing over all pairs $(i,j)$ and $(k,\ell)$, the Arnold
-relations cause all terms to cancel pairwise, giving $d_{\text{extend}}^2 = 0$.
-This is the distributional analogue of the
-Arnold--Orlik--Solomon relations from the bar complex (Section~\ref{sec:bar-nilpotency}):
-collision loci have a combinatorial structure (partial order of collisions), and
-the Arnold relations encode this structure.
-
-\emph{Rigorous alternative.} A clean proof avoiding distributional issues entirely is given in Corollary~\ref{cor:cobar-nilpotence-verdier} above, which deduces the uncurved identity $d^2 = 0$ from Verdier duality on the Fulton--MacPherson compactification without reference to distributional products.
+The displayed product is not a definition. If read as a product of
+ordinary distributions, terms such as $\delta(z_i-z_j)^2$ are generally
+undefined. In the intrinsic model one computes instead
+\[
+d_{\mathrm{extend}}^2
+=\mathbb{D}(d_{\mathrm{res}})^2
+=\mathbb{D}(d_{\mathrm{res}}^2).
+\]
+The bar residue differential satisfies $d_{\mathrm{res}}^2=0$ because
+the oriented codimension-two boundary of
+\(\overline{C}_n(X)\) is the Arnold--Orlik--Solomon combination of
+three collision faces. Therefore
+$d_{\mathrm{extend}}^2=0$ without forming any product
+$\delta\cdot\delta$. If one chooses a regulator
+$\delta_\epsilon$ and expands the mnemonic expression, the divergent
+terms occur in precisely this Arnold combination; the regularized
+calculation is a consistency check on the Verdier proof, not a
+replacement for it.
 
 This completes term~3.
 
@@ -1039,10 +1085,14 @@ c_{\sigma(1)} \otimes \cdots \otimes c_{\sigma(n)}\]
 where $\epsilon(\sigma, c)$ is the Koszul sign for moving graded elements according
 to $\sigma$.
 
-\emph{Distributional signs (from convolution).}
-When convolving distributions, there are signs from interchanging integrals:
-\[(K_1 * K_2)(z, w) = \int K_1(z, u) K_2(u, w) du\]
-Interchanging the order introduces sign $(-1)^{|K_1| \cdot |K_2|}$.
+\emph{Boundary-current signs (from orientation lines).}
+The symbol $\delta_{D_{ij}}$ denotes the orientation line of the
+codimension-one FM boundary divisor $D_{ij}$, transported by Verdier
+duality from the logarithmic residue map. Interchanging two boundary
+traces contributes the Koszul sign of the two degree-one residue
+operators, together with the sign of the induced permutation of the
+coefficient factors. No product of ordinary delta distributions is
+part of the definition.
 \end{convention}
 
 \begin{lemma}[Sign consistency for the uncurved cobar differential; \ClaimStatusProvedHere]\label{lem:cobar-sign-consistency}
@@ -1052,37 +1102,36 @@ the signs needed for the Verdier square-zero identity.
 \end{lemma}
 
 \begin{proof}
-Consider the prototypical case: applying $d_{\text{extend}}$ twice. This inserts
-two delta functions $\delta(z_i - z_j)$ and $\delta(z_k - z_\ell)$.
-
-\emph{Case 1: Disjoint collisions $(i,j) \cap (k,\ell) = \emptyset$}
-
-The delta functions commute with sign:
-\[\delta(z_i - z_j) \wedge \delta(z_k - z_\ell) = (-1)^{1 \cdot 1} \delta(z_k - z_\ell)
-\wedge \delta(z_i - z_j)\]
-
-The sign $(-1)^{1 \cdot 1} = -1$ comes from both delta functions being 1-forms
-(in the distributional sense). Summing over orderings $(i<j, k<\ell)$ vs $(k<\ell, i<j)$
-gives cancellation.
-
-\emph{Case 2: Nested collisions (e.g., $i=k, j \neq \ell$)}
-
-We have:
-\[\delta(z_i - z_j) \wedge \delta(z_i - z_\ell) = (-1) \delta(z_j - z_\ell)
-\wedge \delta(z_i - z_\ell)\]
-
-This is the distributional analog of the Arnold relation.
-\emph{Caveat:} products of delta functions supported on intersecting
-submanifolds require wavefront set conditions for rigorous definition;
-the argument here is heuristic. The rigorous proof of the uncurved
-$d^2 = 0$ identity for the cobar complex is provided by Verdier duality
-(Corollary~\ref{cor:cobar-nilpotence-verdier}).
-
-In all cases, the signs are chosen so that the Arnold relations
-hold, ensuring $d_{\text{extend}}^2 = 0$ in the uncurved Verdier model.
+The extension operator is the Verdier transpose of the residue
+operator:
+\[
+d_{\mathrm{extend}}=\mathbb D(d_{\mathrm{res}}).
+\]
+The bar residue operator is a signed sum over oriented boundary
+divisors of $\overline C_n(X)$. On a codimension-two stratum there are
+two ways to arrive by successive residues. If the collisions are
+disjoint, the two oriented paths differ by the interchange of two
+degree-one residue maps. If the collisions are nested, the three
+oriented paths around the triple-collision stratum occur in the
+Arnold--Orlik--Solomon combination
+\[
+\eta_{ij}\wedge\eta_{jk}
++\eta_{jk}\wedge\eta_{ki}
++\eta_{ki}\wedge\eta_{ij}=0 .
+\]
+Thus $d_{\mathrm{res}}^2=0$ in the uncurved bar complex with the signs
+fixed by the orientation lines of the FM boundary strata. Applying
+Verdier duality gives
+\[
+d_{\mathrm{extend}}^2
+=\mathbb D(d_{\mathrm{res}}^2)=0.
+\]
+The displayed current notation in Examples below records these
+orientation signs; it never defines a product
+$\delta_{D_{ij}}\delta_{D_{kl}}$ in the ordinary distribution algebra.
 \end{proof}
 
-\begin{example}[Explicit sign computation: three-point function]\label{ex:three-point-signs-cobar}
+\begin{example}[Three-point sign shadow of Verdier nilpotence]\label{ex:three-point-signs-cobar}
 Consider the uncurved cobar complex for $n=3$ with
 $\mathcal{C} = \omega_X$ (trivial). Elements are:
 \[K_3(z_1, z_2, z_3) = \sum_{\text{perms}} k_\sigma(z_1, z_2, z_3) \cdot
@@ -1103,26 +1152,42 @@ K_3|_{z_1=z_2=z_3} \\
 &\quad + \delta(z_1 - z_3) \wedge \delta(z_1 - z_2) \otimes K_3|_{z_1=z_2=z_3}
 \end{align*}
 
-The three-term Arnold relation (applied heuristically to delta functions, cf.\ the caveat in Case~2 above) gives:
+After replacing the displayed products by Verdier pull--push
+composition along the three codimension-two boundary strata, the
+transported Arnold relation is:
 \[\delta(z_1 - z_2) \wedge \delta(z_2 - z_3) + \delta(z_2 - z_3) \wedge \delta(z_1 - z_3) + \delta(z_1 - z_3) \wedge \delta(z_1 - z_2) = 0\]
-directly, so the three terms in $d_{\text{extend}}^2(K_3)$ sum to zero:
+so the three Verdier-transposed terms in
+$d_{\text{extend}}^2(K_3)$ sum to zero:
 \[\text{term}_1 + \text{term}_2 + \text{term}_3 = 0\]
 
-Hence $d_{\text{extend}}^2(K_3) = 0$ in this uncurved three-point model.
+Hence $d_{\text{extend}}^2(K_3) = 0$ in the uncurved three-point
+Verdier model. The display records the sign shadow of
+Corollary~\ref{cor:cobar-nilpotence-verdier}; it is not an independent
+definition of a product of singular distributions.
 \end{example}
 
 \subsection{Low-degree explicit computations}
 
-\begin{example}[Cobar of linear coalgebra through degree 5]
+\begin{example}[Divided-power cobar differential through degree 5]
 \label{ex:cobar-linear-complete}
 
-Let $\mathcal{C} = T^c_{\text{ch}}(V)$ be the cofree coalgebra on $V = \text{span}\{v\}$
-with $|v| = h$. The comultiplication is:
-\[\Delta(v^n) = \sum_{k=0}^n \binom{n}{k} v^k \otimes v^{n-k}\]
+Let
+$\mathcal{C}=\operatorname{Sym}^{c}_{\mathrm{ch}}(V)$ be the
+cofree cocommutative chiral coalgebra on
+$V=\operatorname{span}\{v\}$ with $|v|=h$, written in the ordinary
+monomial normalization. Its coproduct is
+\[
+\Delta(v^n)=\sum_{k=0}^{n}\binom{n}{k}v^k\otimes v^{n-k}.
+\]
+The reduced coproduct omits the two counit summands $k=0,n$.
 
 \emph{Cobar complex.}
-\[\Omega^{\text{ch}}(T^c_{\text{ch}}(V)) = \text{Free}_{\text{ch}}(s^{-1}V^{\otimes n}
-: n \geq 1)\]
+\[
+\Omega^{\text{ch}}(\mathcal{C})
+=\mathrm{Free}_{\text{ch}}\bigl(s^{-1}\bar{\mathcal C}\bigr),
+\qquad
+\bar{\mathcal C}=\bigoplus_{n\geq1}\mathbb C\,v^n .
+\]
 
 \emph{Generators.} $s^{-1}v, s^{-1}v^2, s^{-1}v^3, s^{-1}v^4, s^{-1}v^5, \ldots$
 in degrees $h-1, 2h-1, 3h-1, 4h-1, 5h-1, \ldots$ respectively.
@@ -1159,15 +1224,17 @@ In a commutative setting:
 \emph{General pattern.} For generator $s^{-1}v^n$:
 \[d(s^{-1}v^n) = -\sum_{k=1}^{n-1} \binom{n}{k} (s^{-1}v^k) \cdot (s^{-1}v^{n-k})\]
 
-\emph{Geometric interpretation.} These formulas encode how a single insertion
-point with ``charge'' $v^n$ splits into two insertion points with charges $v^k$ and
-$v^{n-k}$, weighted by binomial coefficients. In CFT, this corresponds to the OPE expansion.
-
-\emph{Cohomology.} Since all generators except $s^{-1}v$ are exact (boundaries
-of products), the cohomology is:
-\[H^*(\Omega^{\text{ch}}(T^c_{\text{ch}}(V))) = \text{Free}_{\text{ch}}(s^{-1}v)\]
-
-This recovers the original generator $V$, as expected from bar-cobar inversion.
+\emph{Geometric interpretation.} These formulas encode how one
+divided-power insertion with charge $v^n$ splits into two insertion
+points with charges $v^k$ and $v^{n-k}$, weighted by the chosen
+monomial normalization. This example is a coefficient and sign check
+for the cobar differential. It is not, by itself, a bar-cobar
+inversion theorem: the cohomology depends on the target algebra whose
+bar coalgebra is being resolved. If the coalgebra is replaced by the
+primitive truncation $\omega_X\oplus V$ with
+$\bar\Delta(V)=0$, then
+$\Omega^{\mathrm{ch}}(\omega_X\oplus V)=
+\mathrm{Free}_{\mathrm{ch}}(s^{-1}V)$ with zero cobar differential.
 \end{example}
 
 \begin{example}[Cobar of exterior coalgebra: free fermions]\label{ex:cobar-fermion-complete}
@@ -1197,17 +1264,33 @@ The desuspension $s^{-1}$ converts the fermionic generator $\psi$ (with
 anticommuting multiplication) into a bosonic generator $s^{-1}\psi$ (with commuting
 multiplication in the free algebra).
 
-\emph{Physical interpretation.} This is the \emph{Koszul duality} of free fermions (not to be confused with the boson-fermion correspondence/bosonization, which identifies $\mathcal{F} \cong V_{\mathbb{Z}}$ as a lattice vertex algebra).
-The cobar construction converts fermionic generators $\psi$ into bosonic generators $\phi = s^{-1}\psi$ via desuspension.
+\emph{Interpretation.} This is the cobar of the exterior coalgebra, not
+the assertion that $\Omega\bar{B}(\mathcal F)$ is the
+$\beta\gamma$ system. When this exterior coalgebra is the
+Koszul-dual coalgebra $\mathcal F^i$, finite-type linear duality gives
+the Koszul-dual algebra $(\mathcal F^i)^\vee$; the cobar construction
+itself is the inverse operation appearing in
+$\Omega(\bar B(\mathcal F))\simeq\mathcal F$. Desuspension converts the
+fermionic generator $\psi$ into the bosonic generator
+$\phi=s^{-1}\psi$ inside this cobar algebra.
 \end{example}
 
 \begin{example}[Free fermion to beta-gamma via bar-cobar]
 \label{ex:fermion-betagamma-bar-cobar}
 
 \emph{The Koszul duality chain.}
-\[\text{Free fermion algebra } \mathcal{F} \xrightarrow{\text{bar}} \text{Exterior coalgebra }
-\bar{B}(\mathcal{F}) \xrightarrow{(-)^\vee} \beta\gamma \text{ system}\]
-(The second arrow is linear duality of the coalgebra, yielding the Koszul dual \emph{algebra}~$\mathcal{F}^! = \bar{B}(\mathcal{F})^\vee$. The cobar construction $\Omega(\bar{B}(\mathcal{F}))$ would instead recover~$\mathcal{F}$ itself by bar-cobar inversion.)
+\[\text{Free fermion algebra } \mathcal{F}
+\xrightarrow{\text{bar}}
+\bar{B}(\mathcal{F})
+\xrightarrow{H^*}
+\mathcal F^i
+\xrightarrow{(-)^\vee}
+\beta\gamma \text{ system}\]
+The bar complex resolves the Koszul-dual coalgebra~$\mathcal F^i$.
+Linear duality of this coalgebra yields the Koszul dual
+\emph{algebra}~$\mathcal{F}^!=(\mathcal F^i)^\vee$. The cobar
+construction $\Omega(\bar{B}(\mathcal{F}))$ instead recovers
+$\mathcal{F}$ itself by bar-cobar inversion.
 
 \emph{Explicit construction.}
 
@@ -1270,9 +1353,10 @@ n_2(K_1, K_2)(z_1, z_2) &= \oint \frac{1}{z_1 - w} \cdot \frac{1}{w - z_2} \, dw
 &= \frac{1}{z_1 - z_2}\oint \left[\frac{1}{w - z_2} - \frac{1}{w - z_1}\right] dw \\
 &= \frac{2\pi i}{z_1 - z_2} \quad \text{(residue at } w = z_2\text{)}
 \end{align*}
-This reproduces the expected propagator $1/(z_1 - z_2)$ (up to normalization $2\pi i$).
+This reproduces the Cauchy kernel $1/(z_1-z_2)$ up to the
+normalization $2\pi i$.
 
-\emph{Operation $n_3$: Triple propagator}
+\emph{Operation $n_3$: Triple kernel composition}
 \[n_3: \Omega^{p_1}(\mathcal{C}) \otimes \Omega^{p_2}(\mathcal{C}) \otimes
 \Omega^{p_3}(\mathcal{C}) \to \Omega^{p_1+p_2+p_3-2}(\mathcal{C})\]
 
@@ -1283,12 +1367,12 @@ K_2(w_1, \ldots; w_2) \cdot K_3(w_2, \ldots) \, dw_1 dw_2\]
 \emph{Geometric interpretation.} Glue three configuration spaces in a chain,
 then integrate over the two gluing points.
 
-\emph{Operation $n_4$: Four-point function}
+\emph{Operation $n_4$: Fourfold operation}
 \[n_4: \bigotimes_{i=1}^4 \Omega^{p_i}(\mathcal{C}) \to \Omega^{\sum p_i - 3}(\mathcal{C})\]
 
 \emph{Formula.} Similar, but integrate over three intermediate points $w_1, w_2, w_3$.
 
-\emph{Operation $n_5$: Five-point function}
+\emph{Operation $n_5$: Fivefold operation}
 \[n_5: \bigotimes_{i=1}^5 \Omega^{p_i}(\mathcal{C}) \to \Omega^{\sum p_i - 4}(\mathcal{C})\]
 
 \emph{General pattern.}
@@ -1299,9 +1383,11 @@ of stable curves:
 \[n_k(K_1, \ldots, K_k) = \int_{\overline{M}_{0,k+1}} K_1 \wedge \cdots \wedge K_k
 \wedge \omega_{0,k+1}\]
 
-\emph{Physical interpretation.} The operation $n_k$ computes $k$-point correlation
-functions in CFT. The integration over $\overline{M}_{0,k+1}$ sums over all Feynman
-diagrams (tree-level for genus 0).
+\emph{QFT comparison.} If a BV/factorization comparison datum supplies
+interaction vertices and a propagator kernel, the genus-$0$ operation
+$n_k$ maps to a tree-level $k$-ary kernel composition. Loop corrections
+come from the higher-genus modular bar/cobar object, not from the
+genus-$0$ operation $n_k$ itself.
 
 \emph{$A_\infty$ relations.} These operations satisfy:
 \[\sum_{i+j=n+1} \sum_{k} (-1)^{\epsilon} n_i(\text{id}^{\otimes k} \otimes n_j
@@ -1311,119 +1397,166 @@ This encodes associativity up to homotopy, with $n_3$ measuring the failure of
 $n_2$ to be associative, $n_4$ measuring the failure of $n_3$ to be coherent, etc.
 \end{example}
 
-\subsection{Physical interpretation: on-shell propagator and Feynman-rule templates}
+\subsection{Conditional comparison with propagator kernels}
 
-\begin{conjecture}[Cobar elements as on-shell propagator templates; \ClaimStatusConjectured]\label{conj:cobar-physical}
-Elements of the cobar complex $\Omega^{\text{ch}}(\mathcal{C})$ should be read as
-\emph{algebraic shadow data for on-shell propagators} in the sense of quantum
-field theory.
-
-\emph{Precise statement.} For a chiral coalgebra $\mathcal{C}$ corresponding
-to a 2d CFT, elements $K \in \Omega^n(\mathcal{C})$ are distributions satisfying:
-\begin{enumerate}
-\item \emph{Ultraviolet behavior:} Singularities along diagonals $\{z_i = z_j\}$
-encode short-distance behavior (UV divergences).
-\item \emph{On-shell condition:} The cobar differential $d_{\text{cobar}}(K) = 0$
-should model the equations of motion (e.g., $\Box \phi = 0$ for free fields).
-\item \emph{S-matrix elements:} The cohomology $H^*(\Omega^{\text{ch}}(\mathcal{C}))$
-should model physical on-shell scattering amplitudes.
+\begin{theorem}[Conditional cobar--propagator comparison;
+\ClaimStatusConditional]\label{thm:cobar-propagator-comparison}
+\label{conj:cobar-physical}
+Let $\mathcal{C}$ be a coaugmented conilpotent chiral coalgebra and
+let $\Omega^{\mathrm{ch}}(\mathcal{C})$ be its cobar object: a dg
+chiral algebra in the uncurved genus-$0$ regime, and the curved CDG
+object
+$(\Omega^{\mathrm{ch}}_{\mathrm{curv}}(\mathcal{C}),d_{\Omega,h},h_\Omega)$
+when curvature is present. Assume a perturbative QFT comparison datum
+consisting of:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item a local BV/factorization theory on~$X$ with field bundle~$E$,
+ kinetic operator $P\colon \Gamma(E)\to\Gamma(E^\vee\otimes\omega_X)$,
+ BRST operator $Q_{\mathrm{BV}}$, and propagator distribution
+ $G\in\mathcal{D}'(X^2,E\boxtimes E^\vee)$ satisfying
+ \[
+ P_zG(z,w)=\delta_\Delta(z,w)-\Pi_{\ker P}(z,w),
+ \]
+ where $\Pi_{\ker P}=0$ in the acyclic local model and is the harmonic
+ projector on a compact curve;
+\item a continuous kernel map
+ \[
+ \Phi_n\colon
+ \operatorname{Dist}_{\mathrm{FM}}(C_n(X),\mathcal{C}^{\boxtimes n})
+ \longrightarrow
+ \mathcal{D}'(X^n,E^{\boxtimes n})
+ \]
+ compatible with wavefront restrictions, boundary traces, and the
+ coalgebra coproduct;
+\item compatibility with differentials:
+ \[
+ \Phi(d_{\Omega}K)
+ =
+ (Q_{\mathrm{BV}}+P)\Phi(K)
+ \]
+ on the source-current summand, and compatibility with products on the
+ interaction vertices;
+\item in the curved case, either $h_\Omega=0$, or a
+ Maurer--Cartan element $\alpha$ with
+ $h_\Omega+d_{\Omega,h}\alpha+\frac12[\alpha,\alpha]=0$, or a chosen
+ coderived/flat totalization in which the curvature is absorbed.
 \end{enumerate}
-\end{conjecture}
+Then $\Phi$ sends the FM boundary current
+$\delta_{D_{ij}}$ in the cobar differential to the diagonal source
+$\delta_\Delta$ in the Green-kernel equation, and sends genus-$0$
+cobar $A_\infty$ compositions to tree-level kernel compositions.
+It does not identify an arbitrary cobar element with a propagator
+kernel, and it does not identify
+$\Omega^{\mathrm{ch}}(\mathcal{C})$ with the Koszul dual algebra.
+If $\mathcal{C}\simeq \bar{B}^{\mathrm{ch}}(\mathcal{A})$, then
+$\Omega^{\mathrm{ch}}(\mathcal{C})\simeq\mathcal{A}$ under
+Corollary~\ref{cor:bar-cobar-inverse}; the Koszul dual is instead
+the Verdier-dual factorization algebra
+$\mathbb{D}_{\operatorname{Ran}}\bar{B}^{\mathrm{ch}}(\mathcal{A})$,
+identified with $\mathcal{A}^!$ only on the Koszul locus.
+For $g\geq1$, the comparison must use the genus-$g$ corrected
+bar/cobar object: period corrections and the curvature term
+$h_\Omega$ are additional data, not hidden genus-$0$ higher products.
+\end{theorem}
 
-\begin{remark}[Physical motivation]
-\emph{Step 1: Cobar as Green's-function template}
+\begin{proof}
+The first assertion is formal from the definition of
+$d_{\mathrm{extend}}$: it is the Verdier transpose of the residue map
+and is represented by the FM boundary current $\delta_{D_{ij}}$
+(Theorem~\ref{thm:cobar-diff-geom}). Condition~(ii) is precisely the
+analytic datum needed to push this current to the ordinary diagonal
+distribution in the QFT kernel space, and condition~(iii) says that
+the pushed differential is the BV kinetic differential. Thus
+$P_zG=\delta_\Delta-\Pi_{\ker P}$ is the analytic image of the
+boundary-current identity, not the definition of the cobar
+differential.
 
-A propagator $G(z,w)$ in QFT is a Green's function satisfying:
-\[(\Box_z - m^2) G(z,w) = \delta^{(2)}(z - w)\]
+The tree statement uses only the genus-$0$ operadic bar-cobar
+resolution: the operations are indexed by the boundary strata of
+$\overline{M}_{0,k+1}$ and obey the $A_\infty$ identities by
+Theorem~\ref{thm:cobar-ainfty}. Stable graphs with loops lie in the
+higher-genus modular bar/cobar theory. In the curved lane,
+Corollary~\ref{cor:cobar-nilpotence-verdier} gives
+$d_{\Omega,h}^{\,2}=[h_\Omega,-]$, so ordinary cobar cohomology is
+available only under condition~(iv). The last assertion is exactly the
+separation of the three functors in
+Remark~\ref{rem:cobar-three-functors}: cobar inverts the bar coalgebra,
+whereas Koszul duality is Verdier duality of the bar object.
+\end{proof}
 
-This is the Green's-function template in which $G$ extends across the diagonal
-$z = w$ as a distribution with a delta function singularity. In the
-conjectural cobar/QFT dictionary this is modeled by:
-\[d_{\text{extend}}(G) = \delta(z - w)\]
-
-\emph{Step 2: Cobar differential as equations-of-motion template}
-
-For a field $\phi$ satisfying equations of motion $\Box \phi = 0$, the propagator
-$G$ satisfies:
-\[d_{\text{cobar}}(G) = 0\]
-
-This is the template for the \emph{on-shell condition}. Elements in the
-cohomology $H^*(\Omega^{\text{ch}})$ should therefore be read as algebraic
-shadows of on-shell propagators.
-
-\emph{Step 3: $A_\infty$ operations as Feynman-rule template}
-
-The operation $n_k$ in the cobar $A_\infty$ structure should model tree-level
-$k$-point correlation
-functions:
-\[\langle \phi(z_1) \cdots \phi(z_k) \rangle = n_k(G, \ldots, G)(z_1, \ldots, z_k)\]
-
-The $A_\infty$ relations encode (all at genus zero, hence tree-level):
-\begin{itemize}
-\item $n_2$ = binary vertex (standard product)
-\item $n_3$ = ternary vertex (measures failure of strict associativity)
-\item $n_k$ = $k$-ary vertex (higher associahedra corrections)
-\end{itemize}
-Loop corrections (genus $g \geq 1$) arise from the higher-genus bar complex, not from higher $n_k$ at genus zero.
-
-This gives the conjectural algebraic template for genus-zero Feynman rules.
+\begin{remark}[Comparison data for QFT kernels]
+The comparison theorem becomes an identification of a concrete QFT only
+after four independent obligations are discharged:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item construct the BV/factorization model and its propagator
+distribution with a fixed gauge, measure, and harmonic projector;
+\item prove the wavefront-set and boundary-trace compatibility of
+$\Phi$ for all collision strata used by the cobar differential;
+\item prove the Ward/BRST identity
+$\Phi(d_\Omega K)=(Q_{\mathrm{BV}}+P)\Phi(K)$ and the matching of
+interaction vertices;
+\item for $g\geq1$, prove compatibility with period corrections,
+sewing, and the curved square
+$d_{\Omega,h}^{\,2}=[h_\Omega,-]$ or exhibit a curvature-killing
+Maurer--Cartan twist.
+\end{enumerate}
+Without these data, the algebraic statement is only the Verdier
+bar-cobar construction, not a statement about BRST state spaces or
+scattering amplitudes.
 \end{remark}
 
-\begin{remark}[Scope]
-Conjecture~\ref{conj:cobar-physical} is tagged \ClaimStatusConjectured{} because the identification of cobar elements with on-shell propagators requires external physics input (equations of motion, path integral measure) that lies outside the algebraic framework of this monograph.
+\begin{example}[Free scalar parametrix and the cobar boundary current]\label{ex:free-scalar-cobar}
+Let $P=-\Delta$ be the scalar kinetic operator in a local flat chart,
+and let $G$ be a chosen parametrix:
+\[
+P_zG(z,w)=\delta^{(2)}(z-w)
+\]
+locally, or
+$P_zG(z,w)=\delta_\Delta(z,w)-\Pi_{\ker P}(z,w)$ on a compact curve.
+With the standard two-dimensional normalization,
+$G(z,w)$ has logarithmic singular part
+$-\frac{1}{2\pi}\log|z-w|$ modulo a smooth kernel.
 
-\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
-The conjecture treats cobar complex elements as algebraic shadow data for
-QFT on-shell propagators, with the $A_\infty$ operations furnishing the
-genus-zero Feynman-rule template.
-\end{remark}
+The cobar comparison sends the FM current
+$\delta_{D_{12}}$ to the source distribution $\delta_\Delta$.
+It does not say that the Green kernel itself is a cobar cocycle; the
+kernel is the chosen analytic inverse for~$P$, while
+$\delta_{D_{12}}$ is the algebraic boundary current in
+$d_{\mathrm{extend}}$.
 
-\begin{example}[Free scalar field: complete cobar analysis]\label{ex:free-scalar-cobar}
-
-Consider the free scalar field with action:
-\[S = \int \frac{1}{2} (\partial \phi)^2 dz \wedge d\bar{z}\]
-
-\emph{Equation of motion.} $\Box \phi = 0$
-
-\emph{Propagator.}
-\[G(z,w) = -\frac{1}{2\pi} \log|z - w|^2\]
-
-This satisfies:
-\[\Box_z G(z,w) = \delta^{(2)}(z - w)\]
-
-\emph{Cobar interpretation.}
-\[d_{\text{extend}}(G) = \delta(z - w)\]
-
-\emph{Two-point function.} Already on-shell, so:
-\[\langle \phi(z_1) \phi(z_2) \rangle = G(z_1, z_2) = -\frac{1}{2\pi} \log|z_1 - z_2|^2\]
-
-\emph{Four-point function.} Computed using $n_4$:
-\begin{align*}
-\langle \phi(z_1) \phi(z_2) \phi(z_3) \phi(z_4) \rangle &= n_4(G, G, G, G) \\
-&= \int_{X \times X} G(z_1, w_1) G(w_1, z_2) G(z_3, w_2) G(w_2, z_4) \,
-dw_1 \, dw_2
-\end{align*}
-
-This is the Wick contraction formula. The cobar $A_\infty$ structure
-automatically implements Wick's theorem.
+For the Gaussian theory the two-point function is $G(z_1,z_2)$, and
+the four-point function is Wick's sum
+\[
+\langle\phi_1\phi_2\phi_3\phi_4\rangle
+=G_{12}G_{34}+G_{13}G_{24}+G_{14}G_{23}.
+\]
+Interaction vertices, when present, are additional BV/factorization
+data matched to the genus-$0$ cobar $A_\infty$ operations by the map
+$\Phi$ of Theorem~\ref{thm:cobar-propagator-comparison}.
 \end{example}
 
-\begin{remark}[CFT vertex operators from cobar]\label{rem:vertex-operators-cobar}
-In conformal field theory, vertex operators $V_\alpha(z)$ create states $|\alpha\rangle$
-at position $z$. These correspond to cobar elements:
-\[V_\alpha \leftrightarrow K_\alpha \in \Omega^1(\mathcal{C})\]
-
-The OPE of vertex operators:
-\[V_\alpha(z) V_\beta(w) \sim \sum_\gamma \frac{C_{\alpha\beta}^\gamma}{(z-w)^{h_\gamma - h_\alpha - h_\beta}} V_\gamma(w)\]
-
-corresponds to the cobar product:
-\[n_2(K_\alpha, K_\beta) = \sum_\gamma C_{\alpha\beta}^\gamma K_\gamma\]
-
-The structure constants $C_{\alpha\beta}^\gamma$ are precisely the cobar $A_\infty$
-structure constants.
-
-The cobar construction thus provides a geometric derivation
-of the OPE algebra in CFT.
+\begin{remark}[Vertex insertions and cobar products]\label{rem:vertex-operators-cobar}
+A CFT vertex operator is not automatically a cobar element. A
+comparison datum may assign to a vertex operator $V_\alpha$ a class
+$K_\alpha\in H^0(\Omega^{\mathrm{ch}}(\mathcal{C}))$ only after a
+BRST-closed insertion map has been constructed. If that map is
+compatible with OPE residues and the cobar product, then the singular
+part of
+\[
+V_\alpha(z)V_\beta(w)
+\sim
+\sum_\gamma
+\frac{C_{\alpha\beta}^{\gamma}}
+{(z-w)^{h_\alpha+h_\beta-h_\gamma}}V_\gamma(w)
+\]
+is transported to
+\[
+n_2(K_\alpha,K_\beta)
+=\sum_\gamma C_{\alpha\beta}^{\gamma}K_\gamma.
+\]
+The equality of the constants is a Ward-identity and normalization
+check inside the chosen comparison datum, not a formal consequence of
+the cobar construction alone.
 \end{remark}
 
 \subsection{Verdier duality on bar and cobar}
@@ -1457,8 +1590,8 @@ where:
 \item $\omega_{\text{bar}} \in \Gamma(\overline{C}_n(X), \mathcal{A}^{\boxtimes n}
 \otimes \Omega^*_{\log})$ is a bar element (logarithmic form on compactified space)
 \item $K_{\text{Verdier}} \in (\mathcal{A})^!_{\infty,n}$ is represented on $C_n(X)$ by
-	distributional sections with values in $(\mathcal{A}^!)^{\boxtimes n}$; this is the
-	post-Verdier factorization-algebra side of Theorem~A, not a pre-Verdier coalgebra
+distributional sections with values in $(\mathcal{A}^!)^{\boxtimes n}$; this is the
+post-Verdier factorization-algebra side of Theorem~A, not a pre-Verdier coalgebra
 \item $\iota: C_n(X) \hookrightarrow \overline{C}_n(X)$ is the inclusion of the
 open configuration space
 \item The integration is well-defined because logarithmic forms pair with distributions
@@ -1466,7 +1599,11 @@ open configuration space
 
 \emph{Properties of the pairing.}
 \begin{enumerate}
-\item \emph{Perfect pairing:} Non-degenerate in both arguments (by Lemma~\ref{lem:bar-holonomicity}: each graded piece is a holonomic $\mathcal{D}$-module on $\overline{C}_n(X)$, hence has finite-dimensional stalks, and Verdier duality for holonomic $\mathcal{D}$-modules is an involution~\cite{KS90})
+\item \emph{Perfect pairing:} Non-degenerate in both arguments by the
+canonical holonomic Verdier pairing
+$\mathcal M\otimes\mathbb D\mathcal M\to\omega_{\overline C_n(X)}$;
+finite-type hypotheses identify the global pairing with the finite
+pushforward of this local duality pairing.
 \item \emph{Differential compatibility:} $\langle d_{\text{bar}}\omega, K \rangle
 = -\langle \omega, d_{\text{cobar}}K \rangle$ (graded Leibniz rule)
 \item \emph{Residue-distribution duality:} $\langle \text{Res}_{D}[\omega],
@@ -1514,37 +1651,33 @@ Applying this to $Y = \overline{C}_n(X)$, $\mathcal{M} = \bar{B}^{\mathrm{ch}}_n
 \[\langle d_{\text{bar}}\omega, K \rangle = -\langle \omega, d_{\text{cobar}}K \rangle\]
 therefore holds by the flatness of the canonical pairing on holonomic $\mathcal{D}$-modules, without requiring a component-by-component Stokes argument.
 
-\emph{Step 3: Residue-distribution pairing}
+\emph{Step 3: Residue-current pairing}
 
-The fundamental pairing:
-\[\langle \eta_{ij}, \delta(z_i - z_j) \rangle = \int \frac{dz_i - dz_j}{z_i - z_j}
-\wedge \delta(z_i - z_j) = 1\]
-
-where $\eta_{ij} = \frac{dz_i - dz_j}{z_i - z_j}$ is the logarithmic 1-form along
-$D_{ij}$.
-
-\emph{Proof of identity.} Regularize the delta function:
-\[\delta_\epsilon(z) = \frac{1}{\pi \epsilon^2} e^{-|z|^2/\epsilon^2}\]
-
-Then:
-\begin{align*}
-\langle \eta_{ij}, \delta_\epsilon \rangle &= \int \frac{dz_i - dz_j}{z_i - z_j}
-\wedge \delta_\epsilon(z_i - z_j) \\
-&= \int_{|w| < \infty} \frac{dw}{w} \wedge \delta_\epsilon(w) \\
-&= \lim_{\epsilon \to 0} \int_{|w| < \infty} \frac{dw}{w} \wedge \frac{1}{\pi \epsilon^2}
-e^{-|w|^2/\epsilon^2}
-\end{align*}
-
-Change variables $u = w/\epsilon$:
-\begin{align*}
-&= \lim_{\epsilon \to 0} \int \frac{d(\epsilon u)}{\epsilon u} \wedge \frac{1}{\pi}
-e^{-|u|^2} \\
-&= \int \frac{du}{u} \wedge \frac{1}{\pi} e^{-|u|^2} \\
-&= \frac{1}{2\pi i} \oint_{|u|=1} \frac{du}{u} \quad \text{(by residue theorem)} \\
-&= 1
-\end{align*}
-
-The pairing between residues and delta functions is therefore exact.
+Let $D=D_{ij}$ and choose a local normal coordinate
+$\epsilon=z_i-z_j$. The residue morphism is the Poincar\'e--Leray map
+\[
+\operatorname{Res}_{D}\colon
+\Omega^1_{\overline C_n(X)}(\log D)\longrightarrow \mathcal O_D,
+\qquad
+\operatorname{Res}_{D}\!\left(\frac{d\epsilon}{\epsilon}\right)=1.
+\]
+Its Verdier transpose is the boundary-current inclusion
+\[
+\iota_{D,!}\omega_D[-1]\longrightarrow
+\mathbb D_{\overline C_n(X)}
+\Omega^1_{\overline C_n(X)}(\log D).
+\]
+We denote the image of the unit boundary density by $\delta_D$. With
+the standard normalization of the residue map,
+\[
+\langle\operatorname{Res}_{D}(\eta_{ij}),\delta_D\rangle
+=\int_D 1=1
+\]
+on a normalized local fiber. Thus the notation
+$\langle\eta_{ij},\delta(z_i-z_j)\rangle=1$ means
+``residue paired with its Verdier-transposed boundary current''. It is
+not the product of the singular form $d\epsilon/\epsilon$ with an
+ordinary Dirac distribution on the open stratum.
 
 \emph{Step 4: Verdier duality realization}
 
@@ -1614,49 +1747,67 @@ then the counit of the adjunction is a quasi-isomorphism:
 then the unit of the adjunction is a quasi-isomorphism:
 \[\mathcal{C} \xrightarrow{\sim} \bar{B}^{\mathrm{ch}}(\Omega^{\mathrm{ch}}(\mathcal{C})).\]
 
-Both quasi-isomorphisms are induced by the Verdier pairing
-(Theorem~\ref{thm:bar-cobar-verdier}). When $(\mathcal{A}, \mathcal{C})$
-form a chiral Koszul pair (Definition~\ref{def:chiral-koszul-pair})
-with $\mathcal{C} \simeq \bar{B}^{\mathrm{ch}}(\mathcal{A})$, the two
-sides combine to exhibit the bar and cobar functors as mutually
-quasi-inverse.
+The maps are the unit and counit of the bar-cobar adjunction. The
+Verdier pairing of Theorem~\ref{thm:bar-cobar-verdier} identifies their
+geometric distributional realizations; the quasi-isomorphism assertion
+comes from the Koszul collapse plus the conilpotent or completed
+convergence hypotheses. When $(\mathcal{A},\mathcal{C})$ form a chiral
+Koszul pair with
+$\mathcal{C}\simeq\bar{B}^{\mathrm{ch}}(\mathcal{A})$, the two sides
+exhibit bar and cobar as quasi-inverse on that Koszul/completed
+subcategory, not on all chiral algebras and coalgebras.
 \end{corollary}
 
 \begin{proof}
 \emph{Algebra side.}
-Consider the coradical filtration $F_\bullet$ on
-$\bar{B}^{\mathrm{ch}}(\mathcal{A})$, where $F_n$ is spanned by elements
-of tensor degree $\leq n$. The associated spectral sequence has
-$E_1^{p,q} = H^{p+q}(\mathrm{gr}_p\, \Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A})))$.
+The projection
+\[
+\pi\colon \bar{B}^{\mathrm{ch}}(\mathcal{A})\longrightarrow
+\mathcal{A}
+\]
+to bar degree~$1$, followed by desuspension and inclusion of
+$\bar{\mathcal A}$, is the universal chiral twisting morphism
+(Proposition~\ref{prop:universal-twisting-adjunction} and
+Definition~\ref{def:chiral-twisting-datum}). The corresponding
+twisted tensor products are the Koszul complexes
+$K^L_\pi(\mathcal A,\bar B^{\mathrm{ch}}(\mathcal A))$ and
+$K^R_\pi(\bar B^{\mathrm{ch}}(\mathcal A),\mathcal A)$. Hypothesis~(A1)
+is exactly their acyclicity after passing to the associated quadratic
+graded object; hypothesis~(A2) is the convergence input that lets this
+associated-graded acyclicity lift to the filtered chiral complexes.
+In the completed lane the assertion is checked on the finite quotients
+$\mathcal A_{\le N}$, where Lemma~\ref{lem:degree-cutoff} makes every
+bar and cobar sum finite, and then passed to the inverse limit by the
+complete filtered comparison lemma.
 
-Under hypothesis~(A1), the Koszulity condition ensures that $E_2$ collapses:
-the only nonzero column is $p = 0$, where it gives $\mathcal{A}$.
-
-Convergence of the spectral sequence is guaranteed by hypothesis~(A2):
-conilpotence ensures the filtration is exhaustive with finite-length iterated
-coproducts, so the cobar differential involves only finite sums. In the
-completed regime, convergence follows from the strong filtration axiom
-(Definition~\ref{def:strong-completion-tower}): on each quotient
-$\cA_{\le N}$, the degree cutoff
-(Lemma~\ref{lem:degree-cutoff}) ensures only $\mu_r$ for $r \le N$
-contributes, so the completed cobar differential is quotientwise
-finite and the spectral sequence converges on each quotient. Passing
-to the inverse limit by the complete filtered comparison lemma gives
-convergence on $\CompCl(\Fft)$.
-
-The counit
-$\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A})) \to \mathcal{A}$
-is induced by the Verdier pairing (Theorem~\ref{thm:bar-cobar-verdier})
-and is a quasi-isomorphism by the spectral sequence argument.
+Under the twisting-morphism adjunction, $\pi$ corresponds to the
+counit
+\[
+\varepsilon_{\mathcal A}\colon
+\Omega^{\mathrm{ch}}\bar{B}^{\mathrm{ch}}(\mathcal{A})
+\longrightarrow \mathcal{A}.
+\]
+The fundamental theorem of twisting morphisms
+\cite[Theorem~2.3.1]{LV12}, applied in the chiral filtered ambient,
+identifies acyclicity of the two twisted tensor products with
+$\varepsilon_{\mathcal A}$ being a quasi-isomorphism. This proves the
+algebra-side claim.
 
 \emph{Coalgebra side.}
-Dually, filter $\Omega^{\mathrm{ch}}(\mathcal{C})$ by word length in the
-free chiral algebra. Conilpotence (C2) makes the filtration exhaustive;
-coKoszulity (C1) collapses the spectral sequence to a single column.
-The unit
-$\mathcal{C} \to \bar{B}^{\mathrm{ch}}(\Omega^{\mathrm{ch}}(\mathcal{C}))$
-is a quasi-isomorphism by the same spectral sequence argument, applied
-with the roles of algebra and coalgebra interchanged.
+The universal inclusion
+$\iota\colon\mathcal C\to\Omega^{\mathrm{ch}}(\mathcal C)$ is the
+cobar universal twisting morphism. By the same adjunction it
+corresponds to the unit
+\[
+\eta_{\mathcal C}\colon
+\mathcal C\longrightarrow
+\bar B^{\mathrm{ch}}\Omega^{\mathrm{ch}}(\mathcal C).
+\]
+Conilpotence gives an exhaustive finite coradical filtration, so the
+coalgebra-side twisted tensor products are defined without hidden
+infinite sums. The coKoszul hypothesis is the dual acyclicity
+condition. The same fundamental twisting theorem therefore makes
+$\eta_{\mathcal C}$ a quasi-isomorphism.
 \end{proof}
 
 \begin{proposition}[Explicit cobar-bar augmentation; \ClaimStatusProvedHere]
@@ -1679,23 +1830,21 @@ $\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A}))
 where $\overline{B} = \bigoplus_{n \geq 1}
 \bar{B}^{\mathrm{ch}}_n(\mathcal{A})$ is the coaugmentation
 coideal of the bar coalgebra.
-Define $\varepsilon$ on generators $s^{-1}\overline{B}$ as the
-composite
+Let
+\[
+\tau_{\mathcal A}\colon s^{-1}\overline B\longrightarrow \mathcal A
+\]
+be the generator-level representative of the canonical chiral
+twisting morphism
+$\pi_{\mathcal A}\colon\bar B^{\mathrm{ch}}(\mathcal A)\to\mathcal A$
+under the free-algebra adjunction. Define
 \begin{equation}\label{eq:augmentation-on-generators}
-s^{-1}\overline{B}
-\;\xrightarrow{s^{-1}\pi_1}\;
-s^{-1}\bar{B}^{\mathrm{ch}}_1(\mathcal{A})
-\;\xrightarrow[\sim]{}\;
-\bar{\mathcal{A}}
-\;\hookrightarrow\; \mathcal{A},
+\varepsilon|_{s^{-1}\overline B}:=\tau_{\mathcal A}.
 \end{equation}
-where $\pi_1$ projects to bar degree~$1$ and
-$s^{-1}\bar{B}^{\mathrm{ch}}_1(\mathcal{A})
-\cong \bar{\mathcal{A}}$
-uses the suspension identification
-$\bar{B}^{\mathrm{ch}}_1 = s\bar{\mathcal{A}}$.
-In particular, $\varepsilon$ \emph{kills} all generators from bar
-degree~$\geq 2$.
+Equivalently, $\tau_{\mathcal A}$ is the bar-degree-one projection
+followed by the fixed desuspension convention of
+Appendix~\ref{app:signs}; it is zero on
+$s^{-1}\bar B^{\mathrm{ch}}_n(\mathcal A)$ for $n\geq2$.
 
 \emph{Extension.}
 By the universal property of the free chiral algebra
@@ -1708,34 +1857,41 @@ $\varepsilon\colon
 \emph{Low-degree formulas.}
 On generators:
 \begin{align}
-\varepsilon(s^{-1}[s\bar{a}]) &= \bar{a}
+\varepsilon(s^{-1}b_{\bar a}) &= \bar{a}
  &&\text{(inclusion of the augmentation ideal),}
  \label{eq:aug-degree-1} \\
-\varepsilon(s^{-1}[s\bar{a}_1 \mid s\bar{a}_2]) &= 0
+\varepsilon(s^{-1}b_{\bar a_1,\bar a_2}) &= 0
  &&\text{(projection kills bar degree $\geq 2$).}
  \label{eq:aug-degree-2-gen}
 \end{align}
+Here $b_{\bar a}\in\bar B^{\mathrm{ch}}_1(\mathcal A)$ is the
+bar-degree-one generator corresponding to
+$\bar a\in\bar{\mathcal A}$, and
+$b_{\bar a_1,\bar a_2}\in\bar B^{\mathrm{ch}}_2(\mathcal A)$ is the
+bar-degree-two generator represented by the two insertions
+$\bar a_1,\bar a_2$ in the symmetric factorization bar.
 On products of generators (by the algebra map property):
 \begin{equation}\label{eq:aug-product}
-\varepsilon\bigl(s^{-1}[s\bar{a}_1]
- \cdot s^{-1}[s\bar{a}_2]\bigr)
+\varepsilon\bigl(s^{-1}b_{\bar a_1}
+ \cdot s^{-1}b_{\bar a_2}\bigr)
 = \bar{a}_{1\,(0)}\bar{a}_2
 \qquad\text{(the zeroth chiral product).}
 \end{equation}
-Here $s^{-1}[s\bar{a}_1 \mid s\bar{a}_2]$ is a \emph{single
-generator} from bar degree~$2$ (which $\varepsilon$ kills),
-while $s^{-1}[s\bar{a}_1] \cdot s^{-1}[s\bar{a}_2]$ is a
-\emph{product} of two generators from bar degree~$1$ (which
+The element $s^{-1}b_{\bar a_1,\bar a_2}$ is a \emph{single
+generator} from bar degree~$2$; the element
+$s^{-1}b_{\bar a_1}\cdot s^{-1}b_{\bar a_2}$ is a
+\emph{product} of two bar-degree-one generators, which
 $\varepsilon$ evaluates via the chiral multiplication
-$\bar{a}_{1\,(0)}\bar{a}_2$).
+$\bar{a}_{1\,(0)}\bar{a}_2$.
 \end{proposition}
 
 \begin{proof}
 \emph{Step~1: Chain map property.}
-We verify $\varepsilon \circ d_\Omega = 0$
-(the target differential vanishes since $\mathcal{A}$ is a strict
-chiral algebra). Since $\varepsilon$ is an algebra morphism and
-$d_\Omega$ is a derivation
+We verify
+\[
+d_{\mathcal A}\varepsilon=\varepsilon d_\Omega .
+\]
+Since $\varepsilon$ is an algebra morphism and $d_\Omega$ is a derivation
 (Theorem~\ref{thm:cobar-free}), it suffices to check on generators
 $s^{-1} b$ for $b \in \bar{B}^{\mathrm{ch}}_n(\mathcal{A})$.
 
@@ -1751,95 +1907,68 @@ $\bar{\Delta}(b) = \sum b' \otimes b''$ is the reduced coproduct
 (signs determined by the Koszul rule for desuspension).
 
 \emph{Bar degree $n=1$:}
-$b = [s\bar{a}] \in \bar{B}^{\mathrm{ch}}_1$.
-Then $d_{\mathrm{bar}}\, b = 0$ (bar degree~$1$ elements are
-primitives annihilated by the differential) and
-$\bar{\Delta}(b) = 0$ (no non-trivial decomposition).
-Hence $d_\Omega(s^{-1}[s\bar{a}]) = 0$ and $\varepsilon(0) = 0$.
+$b = b_{\bar a} \in \bar{B}^{\mathrm{ch}}_1(\mathcal A)$.
+The reduced coproduct vanishes and the internal part of the bar
+differential corresponds, under the same desuspension convention, to
+$d_{\mathcal A}\bar a$. Hence
+\[
+\varepsilon d_\Omega(s^{-1}b_{\bar a})
+=d_{\mathcal A}\bar a
+=d_{\mathcal A}\varepsilon(s^{-1}b_{\bar a}).
+\]
+For a strict algebra with zero internal differential this specializes
+to the displayed zero computation.
 
 \emph{Bar degree $n=2$:}
-$b = [s\bar{a}_1 \mid s\bar{a}_2] \in \bar{B}^{\mathrm{ch}}_2$.
-The bar differential yields
-$d_{\mathrm{bar}}\, b
-= \pm\, [s(\bar{a}_{1\,(0)}\bar{a}_2)]
-\in \bar{B}^{\mathrm{ch}}_1$
-(residue extraction of the OPE), while the coproduct gives
-$\bar{\Delta}(b) = [s\bar{a}_1] \otimes [s\bar{a}_2]$
-(deconcatenation).
-Applying $\varepsilon$:
-\begin{align*}
-\varepsilon(d_\Omega(s^{-1} b))
-&= \pm\, \varepsilon(s^{-1}[s(\bar{a}_{1\,(0)}\bar{a}_2)])
- \;+\; \pm\, \varepsilon(s^{-1}[s\bar{a}_1]
- \cdot s^{-1}[s\bar{a}_2]) \\
-&= \pm\, \bar{a}_{1\,(0)}\bar{a}_2
- \;\pm\; \bar{a}_{1\,(0)}\bar{a}_2
-\;=\; 0,
-\end{align*}
-where the two signs are opposite by the Maurer--Cartan equation
+$b = b_{\bar a_1,\bar a_2} \in
+\bar{B}^{\mathrm{ch}}_2(\mathcal A)$.
+The bar differential has a bar-degree-one collision residue term
+corresponding to $\bar a_{1\,(0)}\bar a_2$. The reduced coshuffle
+coproduct has singleton--singleton summands
+$b'\otimes b''$ corresponding to the two bar-degree-one generators.
+After applying $\varepsilon$, the collision contribution and the
+product contribution are exactly the two terms of the Maurer--Cartan
+equation
+\[
+d_{\mathcal A}\pi_{\mathcal A}
+\;+\;\pi_{\mathcal A}d_{\bar B}
+\;+\;\pi_{\mathcal A}\smile\pi_{\mathcal A}=0
+\]
 for the universal twisting morphism
-$\tau = \varepsilon|_{s^{-1}\overline{B}}\colon
-\bar{B}^{\mathrm{ch}}(\mathcal{A}) \to \mathcal{A}$
-(\cite[\S2.2, Proposition~2.2.6]{LV12}).
+\textup{(}\cite[\S2.2, Proposition~2.2.6]{LV12}\textup{)}. Hence
+$\varepsilon d_\Omega(s^{-1}b)=0=d_{\mathcal A}\varepsilon(s^{-1}b)$
+in bar degree~$2$.
 
 \emph{Bar degree $n \geq 3$:}
-$d_{\mathrm{bar}}\, b$ lies in bar degree $n{-}1 \geq 2$, which
-$\varepsilon$ kills. Each summand $s^{-1}b' \cdot s^{-1}b''$ in the
-coproduct decomposition has at least one factor of bar
-degree~$\geq 2$, so $\varepsilon$ kills it.
-Hence $\varepsilon(d_\Omega(s^{-1} b)) = 0$.
+$d_{\mathrm{bar}}\, b$ has an internal part in bar degree~$n$ and
+collision parts in bar degree~$n{-}1\geq2$, all killed by
+$\varepsilon$. Each summand $s^{-1}b'\cdot s^{-1}b''$ in the reduced
+coproduct has at least one factor of bar degree~$\geq2$, except for
+the adjacent binary faces already treated in bar degree~$2$ after
+applying the MC equation locally. Thus
+$\varepsilon d_\Omega(s^{-1}b)=0=d_{\mathcal A}\varepsilon(s^{-1}b)$.
 
 \emph{Step~2: Quasi-isomorphism.}
-Filter $\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A}))$
-by word length in the free algebra:
-\[
-F_p = \bigoplus_{k \leq p}
-\mathrm{Free}_{\mathrm{ch}}^{(k)}(s^{-1}\overline{B}),
-\]
-where $\mathrm{Free}_{\mathrm{ch}}^{(k)}$ is the component of
-word length~$k$.
-On the associated graded, the differential reduces to the
-\emph{linearized} part $d_{\mathrm{lin}} = s^{-1} d_{\mathrm{bar}}\, s$,
-acting within each copy of $s^{-1}\overline{B}$.
-The $E_1$ page is:
-\[
-E_1^{p,q}
-= \mathrm{Free}_{\mathrm{ch}}^{(p)}\!\bigl(
- s^{-1} H^q(\bar{B}^{\mathrm{ch}}(\mathcal{A}))
-\bigr).
-\]
-The Koszul hypothesis forces the bar coalgebra cohomology
-$H^*(\bar{B}^{\mathrm{ch}}(\mathcal{A}))$
-to be concentrated in a single cohomological degree
-(Convention~\ref{conv:bar-coalgebra-identity}).
-Therefore $E_1^{p,q} = 0$ for $q \neq 0$, so $d_1 = 0$ and
-$E_2 = E_1 = E_\infty$.
-
-The augmentation $\varepsilon$ induces on $E_\infty$:
-\[
-\varepsilon_*\colon E_\infty^{1,0}
-= s^{-1}H^0(\bar{B}^{\mathrm{ch}}_1) = \bar{\mathcal{A}}
-\;\xrightarrow{\;\sim\;}\; \mathcal{A},
-\qquad
-\varepsilon_*|_{E_\infty^{p,0}} = 0 \;\text{for } p \geq 2.
-\]
-Convergence of the spectral sequence (by conilpotence or
-completeness, as in
-Corollary~\ref{cor:bar-cobar-inverse})
-yields
-$H^*(\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A})))
-\cong \mathcal{A}$,
-and $\varepsilon$ realizes this isomorphism at the cochain level.
+The map $\varepsilon$ is the adjunction counit corresponding to the
+universal twisting morphism~$\pi$. Under the hypotheses of
+Corollary~\ref{cor:bar-cobar-inverse}, the twisted tensor products for
+$\pi$ are acyclic and the conilpotent or completed filtration
+converges. The fundamental theorem of twisting morphisms therefore
+implies that this explicit counit is a quasi-isomorphism. This is the
+same map denoted $\psi_{\mathcal A}$ in
+Theorem~\ref{thm:bar-cobar-adjunction}.
 \end{proof}
 
 \begin{remark}[The chiral bar-cobar adjunction via twisting morphisms]
 \label{rem:chiral-adjunction-via-tw}
 \index{bar-cobar adjunction!via twisting morphisms!chiral}
 \index{twisting morphism!chiral universal}
-The projection
-$\pi = \varepsilon|_{s^{-1}\overline{B}}\colon
-\barB^{\mathrm{ch}}(\cA) \to \cA$
-is the chiral universal twisting morphism
+The restriction
+$\varepsilon|_{s^{-1}\overline{B}}\colon
+s^{-1}\overline B\to\cA$
+is the generator-level representative of the chiral universal twisting
+morphism
+$\pi\colon\barB^{\mathrm{ch}}(\cA) \to \cA$
 (Proposition~\ref{prop:universal-twisting-adjunction}(i),
 Definition~\ref{def:chiral-twisting-datum}).
 By the two universal properties
@@ -1866,16 +1995,18 @@ For the affine Kac--Moody algebra
 $\mathcal{A} = V_k(\mathfrak{sl}_2)$ with basis
 $\{J^+, J^0, J^-\}$ and OPE
 $J^a(z) J^b(w) \sim f^{ab}_c J^c(w)/(z-w)
-+ k\,\kappa(J^a, J^b)/(z-w)^2$,
++ k\,(J^a, J^b)_{\mathrm{tr}}/(z-w)^2$,
 the augmentation acts as:
 \begin{align*}
-\varepsilon(s^{-1}[sJ^a]) &= J^a
+\varepsilon(s^{-1}b_{J^a}) &= J^a
  &&\text{(recovery of generators),} \\
-\varepsilon(s^{-1}[sJ^a] \cdot s^{-1}[sJ^b])
+\varepsilon(s^{-1}b_{J^a} \cdot s^{-1}b_{J^b})
 &= J^a_{(0)}J^b = f^{ab}_c J^c
  &&\text{(recovery of structure constants).}
 \end{align*}
-Thus $\varepsilon(s^{-1}[sJ^+] \cdot s^{-1}[sJ^-]) = J^0$
+Here $b_{J^a}\in\bar B^{\mathrm{ch}}_1(\mathcal A)$ denotes the
+bar-degree-one generator corresponding to~$J^a$. Thus
+$\varepsilon(s^{-1}b_{J^+} \cdot s^{-1}b_{J^-}) = J^0$
 (= $[J^+, J^-] = H$),
 confirming that the augmentation recovers the
 $\mathfrak{sl}_2$ Lie bracket from the cobar-bar resolution.
@@ -1904,10 +2035,11 @@ Therefore:
 \[\langle \omega_{\text{bar}}, K_{\text{cobar}} \rangle = \int_X \langle a_1, c_1
 \rangle \cdot \langle a_2, c_2 \rangle \, dz \wedge d\bar{z}\]
 
-This is the two-point correlation function in CFT.
+Under a CFT comparison datum this pairing is the two-point kernel
+pairing; algebraically it is the degree-two Verdier pairing.
 \end{example}
 
-\subsection{Kontsevich formality and chiral bar construction}
+\subsection{Configuration-integral comparison}
 
 \begin{theorem}[Kontsevich formality (1997) {\cite{Kon99}}; \ClaimStatusProvedElsewhere]\label{thm:kontsevich-formality}
 For any smooth manifold $M$, there exists an $L_\infty$
@@ -1920,8 +2052,13 @@ where $G_n$ = admissible graphs, $w_\Gamma$ = combinatorial weights, and
 $\omega_\Gamma$ involves propagators $d\log(z_i - z_j)$ and angle forms $d\theta_i$.
 \end{theorem}
 
-\begin{remark}[Relation to chiral bar construction]\label{rem:kontsevich-chiral}
-Kontsevich's formality is the prototype for our construction: replace $\mathbb{R}^d$ with a Riemann surface $X$, polyvector fields with $\mathcal{A}$, $\overline{C}_n(\mathbb{H})$ with $\overline{C}_n(X)$, and $L_\infty$ with curved $A_\infty$. Both realize a duality (deformation quantization resp.\ Koszul duality) via configuration space integrals.
+\begin{remark}[Configuration-integral comparison]\label{rem:kontsevich-chiral}
+Kontsevich formality and the chiral bar construction both use
+compactified configuration spaces and logarithmic angle forms. The
+comparison stops there unless the source and target operads are fixed:
+formality compares polyvector fields with polydifferential operators,
+whereas the present chapter compares the chiral bar coalgebra with its
+cobar inverse and, separately, the Verdier-dual Koszul algebra.
 \end{remark}
 
 \begin{remark}[Costello--Gwilliam factorization algebras]\label{rem:CG-factorization-detailed}
@@ -1929,23 +2066,49 @@ Our construction extends~\cite{CG17}: Vol.~1 develops factorization homology on 
 \end{remark}
 
 \begin{remark}[Cobar summary]
-The geometric cobar is Verdier-dual to the bar
-(Section~\ref{sec:bar-nilpotency}): in the uncurved lane the
-three-component differential, the $d^2 = 0$ verification, and the
+The intrinsic cobar differential is obtained by Verdier transport of
+the bar differential of the dual algebra. Thus, in the uncurved lane,
+the three-component differential, the $d^2 = 0$ verification, and the
 Arnold relations mirror their bar counterparts; in the curved lane the
-same mirror gives the inner-curvature square
+same transport gives the inner-curvature square
 $d_{\Omega,h}^{\,2}=[h_\Omega,-]$.
+The functor $\Omega^{\mathrm{ch}}$ remains the bar-cobar inverse, not
+Verdier duality on $\barBch(\cA)$.
 \end{remark}
 
-\begin{proposition}[Cobar as modular shadow carrier]
+\begin{proposition}[Finite shadow extraction from the cobar side]
 \label{prop:cobar-modular-shadow}
 \ClaimStatusConditional
-The cobar complex $\Omega(\barB(\cA))$, viewed as an $\mathrm{FCom}$-algebra (Theorem~\ref{thm:bar-modular-operad}), carries the full shadow obstruction tower: for each $r \geq 2$, the degree-$r$ operadic structure map of $\Omega(\barB(\cA))$ encodes $\Theta_\cA^{\leq r}$.
+Let $\cA$ lie in the finite-window or completed pro-conilpotent lane in
+which Theorem~\ref{thm:bar-modular-operad} gives the bar coalgebra an
+$\mathrm{FCom}$-algebra structure and the counit
+$\Omega(\barB(\cA))\to\cA$ is defined. For each finite arity and genus
+cutoff $r$, the induced cobar-side structure maps determine the
+projection $\Theta_\cA^{\le r}$ of the bar-intrinsic MC element after
+passing through the counit and the finite quotient defining that
+cutoff. This is a finite extraction statement; it is not an assertion
+that an unconverged infinite graph sum acts on the raw direct-sum
+cobar object.
 \end{proposition}
 
 \begin{proof}
-The bar-intrinsic MC element $\Theta_\cA := D_\cA - d_0$ (Theorem~\ref{thm:mc2-bar-intrinsic}) lives in the modular convolution algebra $\gAmod$, and the cobar complex reconstructs $\cA$ from $\barB(\cA)$ by the bar-cobar adjunction (Theorem~\ref{thm:bar-cobar-isomorphism-main}).
-The degree-$r$ component of the $\mathrm{FCom}$-algebra structure on $\Omega(\barB(\cA))$ is the graph sum $\sum_{|\Gamma| = r} |\mathrm{Aut}(\Gamma)|^{-1} \ell_\Gamma$, which is precisely the degree-$r$ projection $\Theta_\cA^{\leq r}$ of the universal MC element (Corollary~\ref{cor:shadow-extraction}).
+The bar-intrinsic element
+$\Theta_\cA:=D_\cA-d_0$ lives in the completed modular convolution
+algebra of Theorem~\ref{thm:mc2-bar-intrinsic}. The
+$\mathrm{FCom}$-structure of Theorem~\ref{thm:bar-modular-operad}
+expresses each finite cutoff as a signed sum over oriented modular
+graphs:
+\[
+\sum_{\Gamma\in\mathcal G_{\le r}}
+\frac{1}{|\operatorname{Aut}(\Gamma)|}\,\ell_\Gamma .
+\]
+The orientation signs, automorphism denominators, and stability
+conditions are part of the modular-operadic structure map. Applying
+the cobar counit transports this finite graph operator to the same
+finite quotient of the convolution algebra. Corollary~\ref{cor:shadow-extraction}
+identifies that quotient with the projection
+$\Theta_\cA^{\le r}$. Completion is used only to pass from the
+compatible family of finite extractions to the full tower.
 \end{proof}
 
 \subsection{Čech-Alexander complex realization}
@@ -2012,13 +2175,17 @@ acting on sections of $\mathcal{C}$ by:
 \]
 \end{definition}
 
-\begin{example}[Fundamental cobar element]\label{ex:fundamental-cobar}
-For the trivial chiral coalgebra $\mathcal{C} = \omega_X$, the fundamental cobar element is:
-\[
-K_2(z_1, z_2; w_1, w_2) = \frac{1}{(z_1 - w_1)(z_2 - w_2) - (z_1 - w_2)(z_2 - w_1)}
-\]
-This kernel reconstructs the chiral multiplication from the coalgebra data.
-\end{example}
+\begin{remark}[No universal scalar cobar kernel]\label{ex:fundamental-cobar}
+For the trivial chiral coalgebra $\mathcal{C}=\omega_X$, the
+arity-two cobar current is the FM boundary-current class dual to the
+residue on $D_{12}$. There is no canonical rational scalar kernel on
+$C_2(X)\times C_2(X)$ that reconstructs a nontrivial chiral
+multiplication from $\omega_X$ alone. Any displayed Green or Cauchy
+kernel requires extra data: a coordinate, a density, and usually a
+parametrix. The intrinsic cobar object supplies the unit/counit
+boundary current; a QFT or analytic comparison datum supplies
+propagator kernels.
+\end{remark}
 
 \begin{theorem}[Cobar as free chiral algebra; \ClaimStatusProvedHere]\label{thm:cobar-free}
 As a graded chiral algebra (forgetting the differential), the cobar
@@ -2030,7 +2197,7 @@ reduced comultiplication
 $\bar{\Delta}\colon \bar{\mathcal{C}} \to
 \bar{\mathcal{C}} \otimes \bar{\mathcal{C}}$
 (this is essential data: $\Omega^{\mathrm{ch}}(\mathcal{C})$ is a
-\emph{DG} chiral algebra, not merely a free algebra).
+\emph{DG} chiral algebra whose differential is part of the structure).
 \end{theorem}
 
 \begin{proof}
@@ -2136,11 +2303,11 @@ which is the chiral specialisation of LV12 Theorem~2.2.9 and which is the
 content of the bar-cobar \emph{adjunction}
 $\Omega^{\mathrm{ch}} \dashv \bar{B}^{\mathrm{ch}}$ \textup{(}Theorem~A of
 the programme\textup{)}.
-The counit $\psi_{\cA}$ is a quasi-isomorphism if and only if $\cA$ lies on
-the Koszul locus; off the
-Koszul locus the conclusion of (1)--(4) still holds, but $\psi_{\cA}$ is
-only an isomorphism in the coderived category under the off-Koszul
-filtered pro-conilpotent hypotheses.
+The counit $\psi_{\cA}$ is a quasi-isomorphism under the
+Koszul/collapse hypotheses of Theorem~B; off that strict lane the
+conclusion of (1)--(4) still holds, but $\psi_{\cA}$ is only an
+isomorphism in the coderived category under the off-Koszul filtered
+pro-conilpotent hypotheses.
 \end{enumerate}
 \end{theorem}
 
@@ -2149,13 +2316,12 @@ filtered pro-conilpotent hypotheses.
 By Theorem~\ref{thm:cobar-free}, the underlying graded chiral algebra of
 $\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\cA))$ is the free chiral algebra
 $\mathrm{Free}_{\mathrm{ch}}(s^{-1}\overline{B})$ on the desuspended reduced
-bar coalgebra. The desuspension identification
-$\bar{\cA} \xrightarrow{\sim} s^{-1}s\bar{\cA} = s^{-1}\bar{B}^{\mathrm{ch}}_1(\cA)$
+bar coalgebra. The generator-level map
+$s^{-1}\overline B\to\cA$ attached to the canonical twisting morphism
+$\pi_{\cA}\colon\bar B^{\mathrm{ch}}(\cA)\to\cA$,
 together with the universal property of the free chiral algebra
 \textup{(}Lemma~\ref{lem:cobar-derivation-extension}\,(i)\textup{)} produces
-a unique chiral-algebra morphism extending the generator-level projection
-$s^{-1}\overline{B} \xrightarrow{s^{-1}\pi_1} s^{-1}\bar{B}^{\mathrm{ch}}_1(\cA)
-\xrightarrow{\sim} \bar{\cA} \hookrightarrow \cA$. This is exactly the
+a unique chiral-algebra morphism extending that generator-level map. This is exactly the
 augmentation~$\varepsilon$ of
 Proposition~\ref{prop:cobar-bar-augmentation}, which we rename
 $\psi_{\cA}$ here to align with the canonical adjunction-counit notation of
@@ -2165,10 +2331,12 @@ Remark~\ref{rem:adjunction-direction-convention}.
 By Lemma~\ref{lem:cobar-derivation-extension}\,(ii), to verify
 $\psi_{\cA} \circ d_\Omega = d_{\cA} \circ \psi_{\cA}$ it suffices to check
 the identity on generators. This is the content of Step~1 of the proof of
-Proposition~\ref{prop:cobar-bar-augmentation}: bar degree $n=1$ produces
-$d_\Omega(s^{-1}[s\bar{a}]) = 0$; bar degree $n=2$ uses the Maurer--Cartan
-equation for the chiral universal twisting morphism
-$\pi = \psi_{\cA}|_{s^{-1}\overline{B}}$
+Proposition~\ref{prop:cobar-bar-augmentation}: bar degree~$1$ is the
+internal-differential compatibility of the twisting morphism; bar
+degree~$2$ uses the Maurer--Cartan equation for the chiral universal
+twisting morphism
+$\pi_{\cA}$, whose generator-level representative is
+$\psi_{\cA}|_{s^{-1}\overline{B}}$
 \textup{(}\cite[\S2.2, Proposition~2.2.6]{LV12}\textup{)}; bar degrees
 $n \geq 3$ vanish because $\psi_{\cA}$ kills generators from bar
 degree $\geq 2$.
@@ -2238,8 +2406,7 @@ $\mathrm{IndCoh}(\Ran(X))$-coderived isomorphism whose promotion to a
 chain-level qi requires the collapse input of clause~(4) of
 Theorem~\ref{thm:bar-cobar-inversion-qi} or the flat case
 $\kappa(\cA) = 0$. The present theorem makes \emph{no} qi claim for
-$\psi_{\cA}$ off the Koszul locus, correcting a scope conflation in the
-historical statement of this result; see
+$\psi_{\cA}$ off the Koszul locus; see
 Remark~\ref{rem:eta-adjunction-vs-qi-scope} below.
 \end{proof}
 
@@ -2252,7 +2419,7 @@ and write $V := s^{-1}\bar{\cC}$ for the desuspension. Let
 $\Omega^{\mathrm{ch}}(\cC) = \mathrm{Free}_{\mathrm{ch}}(V)$ be the free
 chiral algebra on~$V$.
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Universal extension.} For every chiral algebra~$\cA$ and every
+\item \emph{Free extension property.} For every chiral algebra~$\cA$ and every
 $\cD_X$-module morphism $f \colon V \to \cA$, there is a unique
 chiral-algebra morphism
 $\widetilde{f} \colon \Omega^{\mathrm{ch}}(\cC) \to \cA$ extending~$f$.
@@ -2297,16 +2464,17 @@ condition on this derivation, also generator-determined.
 The desuspension $s^{-1}$ shifts cohomological degree by $-1$, so the
 bigraded reduced coproduct $\bar{\Delta}$ at internal bidegree $(p,q)$
 produces, after $(s^{-1}\otimes s^{-1}) \circ s$, a map of bidegree
-$(p+1, q-1)$ on $V$ -- degree $+1$ as required for a cobar differential.
+$(p+1, q-1)$ on $V$, hence degree $+1$ as required for a cobar differential.
 The Koszul sign $(-1)^{|c'|}$ in $\sigma$ records the transposition
 $V \otimes V \cong s^{-1}(\bar{\cC} \otimes \bar{\cC})$ mediated by
 $s \otimes s$ followed by the desuspension of the leftmost factor:
 explicitly, $(s^{-1} \otimes s^{-1})(c' \otimes c'') = (-1)^{|c'|}\,
 s^{-1}c' \otimes s^{-1}c''$.
 The additional global sign $-1$ in front of $\bar{\Delta}$ is the
-convention $d_\Omega := -s^{-1} \circ \bar{\Delta} \circ s$ that ensures
-$d_\Omega$ has the same orientation as the cobar differential of
-\cite[\S2.2]{LV12} and extends to a derivation rather than a coderivation.
+manuscript convention
+$d_\Omega := -s^{-1} \circ \bar{\Delta} \circ s$; it is the
+desuspended translation of the suspended convention in
+\cite[\S2.2]{LV12} and makes the bar-cobar counit a chain map.
 Coassociativity of $\bar{\Delta}$ then gives $d_\Omega^2 = 0$ on
 generators in the uncurved case by the standard
 \cite[Proposition~2.2.6]{LV12} computation:
@@ -2422,7 +2590,7 @@ distinct, as in Remark~\ref{rem:cobar-three-functors}:
 \emph{algebra}; Theorem~A as recovered in
 Theorem~\ref{thm:bar-cobar-isomorphism-main});
 \item $C^\bullet_{\mathrm{ch}}(\cA,\cA) = Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$
-(chiral Hochschild cochains, Theorem~H, the bulk).
+(chiral Hochschild cochains, Theorem~H, closed-sector cochains).
 \end{itemize}
 The Koszul reflection unifies the first two as the involution
 $K^{2} \simeq \mathrm{id}$ and supplies the chain-level qi on the
@@ -2481,30 +2649,69 @@ justify the terminology.
 
 \section{Precise distribution spaces}
 
-\begin{definition}[Distribution space]
-The space $\text{Dist}(C_n(X), \mathcal{C}^{\boxtimes n})$ consists of distributional sections with:
+\begin{definition}[Fulton--MacPherson distribution space]
+The space
+$\operatorname{Dist}_{\mathrm{FM}}(C_n(X),\mathcal{C}^{\boxtimes n})$
+is the continuous dual of compactly supported smooth test densities on
+the FM compactification $\overline{C}_n(X)$, with the following
+controlled boundary conditions:
 \begin{itemize}
-\item Prescribed singularities along diagonals
-\item Growth conditions at infinity
-\item Appropriate transformation under $\mathfrak{S}_n$
+\item prescribed conormal singularities along the collision divisors
+ $D_{ij}$;
+\item finite-order growth along the normal-crossing boundary;
+\item the Koszul-signed $\mathfrak{S}_n$ transformation law.
 \end{itemize}
+The older notation $\operatorname{Dist}(C_n(X),-)$ below refers to this
+FM current space unless the ordinary distribution space on the open
+manifold is explicitly named.
 \end{definition}
 
 \begin{theorem}[Topology; \ClaimStatusProvedHere]\label{thm:weak-topology}
-The distribution space $\operatorname{Dist}(C_n(X), \mathcal{C}^{\boxtimes n})$ is a complete locally convex topological vector space under the weak-$*$ topology defined by the pairing:
-\[\langle K, \phi \rangle = \int_{C_n(X)} K \cdot \phi\]
-for test functions $\phi \in C_c^\infty(C_n(X))$. The cobar differential $d_\Omega$ is continuous in this topology.
+The FM distribution space
+$\operatorname{Dist}_{\mathrm{FM}}(C_n(X),\mathcal{C}^{\boxtimes n})$
+is a complete locally convex topological vector space under the
+weak-$*$ topology defined by
+\[
+\langle K,\phi\rangle
+=\int_{\overline{C}_n(X)} K\cdot\phi
+\]
+for compactly supported smooth test densities~$\phi$ on
+$\overline{C}_n(X)$ with boundary traces. The cobar differential
+$d_\Omega$ is continuous in this topology.
 \end{theorem}
 
 \begin{proof}
 \emph{Step 1: Topological structure.}
-The test function space $C_c^\infty(C_n(X), (\mathcal{C}^{\boxtimes n})^*)$ carries the standard inductive limit topology (over compacta). The distribution space $\operatorname{Dist}(C_n(X), \mathcal{C}^{\boxtimes n})$ is its continuous dual, equipped with the weak-$*$ topology: a net $K_\alpha \to K$ iff $\langle K_\alpha, \phi \rangle \to \langle K, \phi \rangle$ for all test functions $\phi$. By the Banach-Alaoglu theorem, bounded subsets of the distribution space are weak-$*$ precompact. Completeness follows from the completeness of $\mathbb{C}$ and the fact that $C_c^\infty$ is a nuclear LF-space (a strict inductive limit of nuclear Fréchet spaces $C^\infty_K$ indexed by compact exhaustions $K$), so its dual is complete in the weak-$*$ topology by Grothendieck's completeness theorem.
+The test function space
+$C_c^\infty(\overline{C}_n(X),(\mathcal{C}^{\boxtimes n})^*)$ with
+boundary trace operators carries the standard nuclear LF topology. The
+FM distribution space is its continuous dual, equipped with the
+weak-$*$ topology: a net $K_\alpha\to K$ iff
+$\langle K_\alpha,\phi\rangle\to\langle K,\phi\rangle$ for all test
+densities~$\phi$. Completeness follows from the completeness of
+$\mathbb{C}$ and Grothendieck completeness for duals of nuclear
+LF-spaces.
 
 \emph{Step 2: Prescribed singularities.}
-The distributions $K \in \operatorname{Dist}(C_n(X), \mathcal{C}^{\boxtimes n})$ have singularities supported on the diagonals $\Delta_{ij} = \{z_i = z_j\}$, of the form $K \sim c_{ij}^{(k)}/(z_i - z_j)^k$ for finitely many $k$ (determined by the OPE orders of $\mathcal{C}$). This regularity condition defines a closed subspace of the full distribution space, hence inherits completeness.
+The singularity condition is imposed along the FM divisors
+$D_{ij}\subset\overline{C}_n(X)$, not along diagonals inside the open
+stratum. Locally, if $\epsilon$ is a normal coordinate to $D_{ij}$, the
+allowed conormal expansions have finite pole order
+$K\sim\sum_k c_{ij}^{(k)}\epsilon^{-k}$, with $k$ bounded by the OPE
+order. These finite-order conormal conditions cut out a closed subspace
+of the full current space, hence preserve completeness.
 
 \emph{Step 3: Continuity of $d_\Omega$.}
-The cobar differential $d_\Omega(K) = \sum_{i < j} \delta_{\Delta_{ij}} * K_{\text{coproduct}}$ involves convolution with delta functions supported on diagonals. For each test function $\phi$, $\langle d_\Omega(K), \phi \rangle = \langle K, d_\Omega^*(\phi) \rangle$ where $d_\Omega^*$ is the formal adjoint (restriction to diagonals followed by the coalgebra coproduct). Since $d_\Omega^*$ maps $C_c^\infty \to C_c^\infty$ continuously (restriction to a submanifold is continuous in the $C^\infty$ topology), $d_\Omega$ is weak-$*$ continuous.
+The cobar differential is the transpose of the bar residue map. For
+each test density~$\phi$,
+\[
+\langle d_\Omega K,\phi\rangle
+=\langle K,d_\Omega^*\phi\rangle,
+\]
+where $d_\Omega^*$ is the finite sum of boundary trace maps followed
+by the coalgebra coproduct. Trace to a normal-crossing boundary stratum
+and pullback along the FM structure maps are continuous maps of nuclear
+LF test spaces. Hence their transpose $d_\Omega$ is weak-$*$ continuous.
 \end{proof}
 
 \begin{remark}[Regularization methods]\label{rem:regularization-methods}
@@ -2514,8 +2721,16 @@ When distributional products arising in the cobar differential require regulariz
 \item \emph{Principal value prescription}: $\mathrm{P.V.}\int f(z)/z\,dz$;
 \item \emph{Hadamard finite parts}: extracting the finite part of a divergent integral.
 \end{enumerate}
-For the cobar construction in the chiral setting, no regularization is needed at genus~$0$ because the distributional products are convolutions with delta functions supported on smooth submanifolds (the diagonals $\Delta_{ij} \subset C_n(X)$), and such convolutions are well-defined by the calculus of wavefront sets~\cite{Hormander}: the conormal bundles $N^*\Delta_{ij}$ do not intersect the wavefront set of the coalgebra coproduct, which is supported along the diagonals themselves.
-At higher genus, the propagator acquires distributional corrections requiring the regularization methods listed above; see the genus-$g$ analysis in Theorem~\ref{thm:higher-genus-inversion}.
+For the cobar construction in the chiral setting, regularization is not
+part of the definition: the intrinsic operation is the Verdier
+transpose of the bar residue map. If one rewrites this operation as a
+pointwise product of kernels and boundary currents, regularization may
+be needed even at genus~$0$ unless the relevant wavefront sets are
+transversal. The uncurved genus-$0$ identity is independent of such a
+choice because the Verdier proof reduces it to the Arnold relation on
+FM boundary strata. At higher genus the propagator acquires period
+corrections; see the genus-$g$ analysis in
+Theorem~\ref{thm:higher-genus-inversion}.
 \end{remark}
 
 \begin{example}[Cobar via integration kernels]\label{ex:cobar-kernels}
@@ -2526,24 +2741,31 @@ with coproduct $\Delta: \mathcal{C} \to \mathcal{C} \boxtimes \mathcal{C}$, elem
 
 where:
 \begin{itemize}
-\item $K_n$ are distributions on $C_n(X)$ (typically with poles on diagonals)
+\item $K_n$ are FM boundary-current representatives, restricted to
+ the open stratum
 \item $c_i \in \mathcal{C}$ are coalgebra elements
-\item Integration is regularized via analytic continuation or principal values
+\item any analytic regularization is auxiliary to the intrinsic
+ Verdier definition
 \end{itemize}
 
-The cobar differential acts by:
+The cobar differential is written schematically as:
 \[d_{\text{cobar}} = \sum_{i<j} \Delta_{ij} \cdot \delta(z_i - z_j)\]
-inserting Dirac distributions that ``pull apart'' colliding points.
+meaning the finite sum of FM boundary trace maps followed by the
+coalgebra coproduct.
 
-This realizes the cobar complex as the linear dual to the bar complex under the pairing:
+This realizes the cobar complex as the distributional pairing partner
+of the bar complex under configuration-space Verdier pairing, not as
+the linear dual object that produces the Koszul dual algebra:
 \[\langle \omega_{\text{bar}}, K_{\text{cobar}} \rangle = \int_{\overline{C}_n(X)} \omega_{\text{bar}} \wedge \iota^* K_{\text{cobar}}\]
 where $\iota: C_n(X) \hookrightarrow \overline{C}_n(X)$ is the inclusion.
 
-\emph{Physical interpretation.} In quantum field theory:
+\emph{Conditional QFT comparison.}
 \begin{itemize}
-\item Bar elements = algebraic shadow data for off-shell states with infrared cutoffs
-\item Cobar elements = algebraic shadow data for on-shell propagators with UV regularization
-\item The pairing = conjectural algebraic shadow of S-matrix elements
+\item Bar elements = logarithmic compactified configuration kernels
+\item Cobar elements = FM current kernels Verdier-dual to bar residues
+\item A QFT comparison may send the pairing to a propagator/amplitude
+ kernel pairing only after the BV, wavefront, and genus data of
+ Theorem~\ref{thm:cobar-propagator-comparison} have been supplied
 \end{itemize}
 \end{example}
 
@@ -2610,7 +2832,19 @@ For the free fermion algebra $\mathcal{F}$, bar-cobar inversion gives:
 \[
 \Omega^{\text{ch}}(\bar{B}^{\text{ch}}(\mathcal{F})) \xrightarrow{\sim} \mathcal{F}
 \]
-recovering the free fermion algebra itself (not the $\beta\gamma$ system). The Koszul dual $\mathcal{F}^! \cong \beta\gamma$ is obtained instead by linear duality of the bar coalgebra: $\mathcal{F}^! = \bar{B}^{\text{ch}}(\mathcal{F})^\vee$ (see Example~\ref{ex:fermion-betagamma-bar-cobar} and Theorem~\ref{thm:fermion-boson-koszul}). This distinction is the chiral analog of the classical fact that $\Omega(\bar{B}({\Lambda}(V))) \simeq {\Lambda}(V)$ (bar-cobar inversion), while ${\Lambda}(V)^! = \mathrm{Sym}(V^*)$ (Koszul dual algebra via linear duality).
+recovering the free fermion algebra itself (not the $\beta\gamma$
+system). The Koszul dual $\mathcal{F}^! \cong \beta\gamma$ is
+obtained instead from the cohomological coalgebra
+$\mathcal F^i=H^*(\bar{B}^{\text{ch}}(\mathcal{F}))$ by finite-type
+linear duality:
+$\mathcal{F}^!=(\mathcal F^i)^\vee$
+(see Example~\ref{ex:fermion-betagamma-bar-cobar} and
+Theorem~\ref{thm:fermion-boson-koszul}). This distinction is the
+chiral analog of the classical fact that
+$\Omega(\bar{B}({\Lambda}(V))) \simeq {\Lambda}(V)$
+(bar-cobar inversion), while
+${\Lambda}(V)^! = \mathrm{Sym}(V^*)$ (Koszul dual algebra via
+linear duality).
 \end{example}
 
 
@@ -2641,29 +2875,28 @@ Each boundary stratum $\overline{M}_{0,|I|+1} \times \overline{M}_{0,|J|+1}$ con
 \subsection{Geometric cobar for curved coalgebras}
 
 \begin{definition}[Curved cobar]\label{def:curved-cobar}
-For a curved chiral coalgebra $(\mathcal{C}, \kappa_C)$ with
-curvature element
-$\kappa_C \in \mathcal{C}^{\otimes 2}[2]$, the cobar construction is
-the CDG chiral algebra
+Let $(\mathcal{C},d_\mathcal C,\bar\Delta,h_C)$ be a curved
+coaugmented chiral coalgebra in the finite-type or completed
+holonomic ambient, where $h_C$ is the curvature datum dual to the
+curved bar square. The cobar construction is the CDG chiral algebra
 \[
 \Omega^{\mathrm{ch}}_{\mathrm{curv}}(\mathcal{C})
 =
 \bigl(\Omega^{\mathrm{ch}}(\mathcal{C}), d_{\Omega,h}, h_\Omega\bigr),
 \]
-not an ordinary cochain complex in general. The curvature term is
-geometrically realized by
-\[
-h_\Omega = \int_{S^1 \times X}
-\kappa_C(z, w) \wedge K_{\text{prop}}(z, w)
-\]
-with $K_{\text{prop}}$ the propagator kernel encoding quantum
-corrections. The defining CDG identities are
+not an ordinary cochain complex in general. The element $h_\Omega$ is
+the Verdier-transposed curvature, equivalently the image of the bar
+curvature under the pairing of Theorem~\ref{thm:bar-cobar-verdier}.
+The defining CDG identities are
 \[
 d_{\Omega,h}^{\,2}=[h_\Omega,-],
 \qquad
 d_{\Omega,h}(h_\Omega)=0.
 \]
-The uncurved cobar complex is the special case $h_\Omega=0$.
+Only after a separate QFT comparison datum has been supplied may
+$h_\Omega$ be represented by an analytic kernel integral. That
+representation is not part of the algebraic definition. The uncurved
+cobar complex is the special case $h_\Omega=0$.
 \end{definition}
 
 \begin{theorem}[Curved Maurer--Cartan equation; \ClaimStatusProvedHere]\label{thm:curved-mc-cobar}
@@ -2715,75 +2948,94 @@ Section~\ref{sec:genus_1_central_extensions}; with nonzero curvature
 one remains in the CDG/coderived category.
 \end{proof}
 
-\begin{proposition}[Curvature of the affine bar complex; \ClaimStatusProvedHere]
+\begin{proposition}[Affine modular curvature scalar; \ClaimStatusProvedHere]
 \label{prop:km-bar-curvature}
-\index{curvature!affine bar complex}
-For the affine Kac--Moody chiral algebra $\widehat{\mathfrak{g}}_k$ at level $k$, the bar complex $\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k)$ has curvature
+\index{curvature!affine modular scalar}
+For the universal affine Kac--Moody chiral algebra
+$V_k(\mathfrak g)$ at level~$k$, the genus-$0$ PBW bar differential is
+the uncurved chiral bar differential. In the curved-central modular
+fiberwise lane, the scalar Hodge curvature of the genus-$g$ bar family is
 \begin{equation}\label{eq:km-curvature-part1}
-m_0 = \frac{k + h^\vee}{2h^\vee} \cdot \Omega
+\kappa^{\mathrm{KM}}\!\bigl(V_k(\mathfrak g)\bigr)
+=\frac{\dim(\mathfrak g)(k+h^\vee)}{2h^\vee}.
 \end{equation}
-where $h^\vee$ is the dual Coxeter number and $\Omega = \sum_a J^a \otimes J_a$ is the Casimir element (we write $\Omega$ rather than $\kappa$ for the Casimir to avoid confusion with the modular characteristic $\kappa(\cA)$). In particular:
+Here $h^\vee$ is the dual Coxeter number and the trace form is
+normalized with long roots of length~$2$. Thus the raw modular
+fiberwise operator has scalar square
+\[
+d_{\mathrm{fib}}^{\,2}
+=\bigl[\kappa^{\mathrm{KM}}(V_k(\mathfrak g))\,\omega_g,-\bigr]
+\]
+after projection to the scalar Hodge lane. In particular:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item $m_1^2 = 0$ \textup{(}i.e., $d^2 = 0$ on the internal differential\textup{)} if and only if $k = -h^\vee$ \textup{(}critical level\textup{)};
-\item away from the critical level, the bar object is CDG:
- $d_{\bar{B},k}^{\,2}=[m_0,-]$. Strict square-zero holds only at
- critical level, after a curvature-killing Maurer--Cartan twist, or
- after passage to the flat comparison/coderived totalization.
+\item the scalar modular curvature vanishes if and only if
+$k=-h^\vee$;
+\item away from the critical level, the raw genus-$g$ fiberwise
+operator belongs to the CDG/coderived lane unless one uses a
+curvature-killing Maurer--Cartan twist or the flat total comparison
+differential.
 \end{enumerate}
+This statement concerns the scalar modular fiberwise curvature of the
+universal affine family. It is not the periodic-CDG curvature of a
+simple admissible quotient $L_k(\mathfrak g)$.
 \end{proposition}
 
 \begin{proof}
-The bar differential on degree-$1$ elements $J^a \boxtimes J^b \cdot \eta_{12}$ extracts the OPE:
+The scalar formula is the standard-landscape normalization
+of Chapter~\ref{chap:landscape-census}. The trace-form double-pole
+projection in the affine OPE contributes
+\(\dim(\mathfrak g)k/(2h^\vee)\), while the simple-pole Lie-bracket
+channel contributes \(\dim(\mathfrak g)/2\). Their sum is
 \[
-d(J^a \boxtimes J^b \cdot \eta_{12}) = k \cdot (J^a, J^b) \cdot |0\rangle + f^{ab}{}_{c}\, J^c,
+\frac{\dim(\mathfrak g)k}{2h^\vee}
++\frac{\dim(\mathfrak g)}{2}
+=\frac{\dim(\mathfrak g)(k+h^\vee)}{2h^\vee}.
 \]
-where the first term comes from the double-pole $k(J^a,J^b)/(z-w)^2$.
-Applying $m_1$ twice and using the Jacobi identity gives
-\[
-m_1^2(J^a \boxtimes J^b \cdot \eta_{12}) = (k + h^\vee) \cdot (\text{adjoint Casimir}),
-\]
-since the Killing form contraction $\sum_{c,d} f^{ac}{}_d f^{bc}{}_d = 2h^\vee \cdot \delta^{ab}$ (with long roots normalized to length $2$). The factor $h^\vee$ is the eigenvalue of the adjoint Casimir; the total coefficient $k + h^\vee$ vanishes precisely at critical level.
+This is exactly
+\(\kappa^{\mathrm{KM}}(V_k(\mathfrak g))\).
+The CDG identity for the raw genus-$g$ fiberwise operator is the
+curved-central relation
+$d_{\mathrm{fib}}^{\,2}=[\kappa(\cA)\omega_g,-]$ applied to
+\(\cA=V_k(\mathfrak g)\).
 
-For $\mathfrak{g} = \mathfrak{sl}_2$ with $h^\vee = 2$, the explicit computation:
-$m_1(e \boxtimes f \cdot \eta_{12}) = k \cdot \mathbf{1} + h$ (from
-$e_{(0)}f = h$ and $e_{(1)}f = k$). Applying $m_1$ again:
-$m_1(h) = 0$ (since $h$ is primitive) and
-$m_1(\mathbf{1}) = 0$, but the composite $m_1^2$ on degree-$2$
-elements picks up the adjoint action:
-$m_1^2(e \boxtimes f \cdot \eta_{12}) = [h, k \cdot \mathbf{1} + h]_{\mathrm{bar}}
-= k \cdot (\text{ad-action of Casimir}) + 2h = (k+2) \cdot \partial h$.
-This is the affine instance of the CDG identity
-$d_{\bar{B},k}^{\,2}=[m_0,-]$ with
-$m_0=((k+h^\vee)/(2h^\vee))\Omega$.
+The genus-$0$ PBW bar differential is square-zero by the Borcherds
+identity and the Arnold relation, independently of~$k$. The curvature
+above is the modular fiberwise scalar; it vanishes precisely when
+$k+h^\vee=0$. The simple quotient $L_k(\mathfrak g)$ at admissible
+level can acquire additional curvature from vacuum null vectors, but
+that is a separate quotient-level assertion.
 \end{proof}
 
 \begin{remark}[Feigin--Frenkel center at critical level]
 \label{rem:feigin-frenkel-center}
 \index{Feigin--Frenkel center}
-At the critical level $k = -h^\vee$, Proposition~\ref{prop:km-bar-curvature}(i) gives $m_1^2 = 0$, so the bar complex is \emph{uncurved}. A foundational result of Feigin--Frenkel~\cite{Feigin-Frenkel} shows that the center of $\widehat{\mathfrak{g}}_{-h^\vee}$ is then isomorphic to the algebra of functions on $\mathfrak{g}^\vee$-opers:
+At the critical level $k = -h^\vee$,
+Proposition~\ref{prop:km-bar-curvature} gives
+\(\kappa^{\mathrm{KM}}(V_{-h^\vee}(\mathfrak g))=0\), so the scalar
+modular curvature vanishes. The genus-$0$ PBW bar complex of the
+universal affine algebra is square-zero at every level; at the critical
+level a foundational result of Feigin--Frenkel~\cite{Feigin-Frenkel}
+identifies the center of $\widehat{\mathfrak{g}}_{-h^\vee}$ with the
+algebra of functions on $\mathfrak{g}^\vee$-opers:
 \[
 Z(\widehat{\mathfrak{g}}_{-h^\vee}) \cong \mathrm{Fun}(\mathrm{Op}_{\check{\mathfrak{g}}}(X)).
 \]
-The critical level is the fixed point of the level-shifting involution $k \mapsto -k - 2h^\vee$, and the uncurved bar complex recovers $\widehat{\mathfrak{g}}_{-h^\vee}$ via cobar. See Part~\ref{part:characteristic-datum} for the detailed treatment.
+The critical level is the fixed point of the level-shifting involution
+$k \mapsto -k - 2h^\vee$, and bar-cobar inversion recovers
+$\widehat{\mathfrak{g}}_{-h^\vee}$ from its bar coalgebra on the
+Koszul/completed locus. See Part~\ref{part:characteristic-datum} for
+the detailed treatment.
 \end{remark}
 
 \begin{corollary}[Level-shifting via Verdier duality; \ClaimStatusConditional]
 \label{cor:level-shifting-part1}
 \index{Feigin--Frenkel duality}
 \index{level!shifted}
-% Verification note (2026-04-07): This result uses Verdier
-% duality D_Ran on the bar coalgebra (Theorem A intertwining), NOT bar-cobar
-% inversion (Theorem B). Bar-cobar inversion recovers the original algebra:
-% Omega(B(g_k)) ~ g_k. The level-shifted algebra arises from
-% D_Ran(B(g_k)) ~ (g_k)^!_infty ~ g_{k'} as factorization algebras, with
-% k' = -k-2h^v. The proof below correctly
-% invokes Theorem A and Convention conv:bar-coalgebra-identity. Verified.
-For any simple Lie algebra $\mathfrak{g}$ and level $k \neq -h^\vee$,
+For any simple Lie algebra $\mathfrak{g}$ and level $k \neq -h^\vee$
+on the same-family affine Koszul-duality lane,
 the post-Verdier factorization-algebra identification
 (Theorem~\ref{thm:bar-cobar-isomorphism-main},
-Convention~\ref{conv:bar-coalgebra-identity}) applied to the
-curved bar coalgebra of
-Proposition~\ref{prop:km-bar-curvature} gives
+Convention~\ref{conv:bar-coalgebra-identity}) gives
 \begin{equation}\label{eq:level-shifting-part1}
 \mathbb{D}_{\operatorname{Ran}}\bigl(
  \bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k)\bigr)
@@ -2805,7 +3057,9 @@ The dual level $k' = -k - 2h^\vee$ satisfies:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item $k + k' = -2h^\vee$;
 \item the central charges satisfy $c(\widehat{\mathfrak{g}}_k) + c(\widehat{\mathfrak{g}}_{k'}) = 2\dim\mathfrak{g}$ \textup{(}Theorem~\ref{thm:central-charge-complementarity}\textup{)};
-\item the curvatures are opposite: $m_0(k') = -m_0(k)$.
+\item the scalar modular characteristics are opposite:
+\(\kappa^{\mathrm{KM}}(V_{k'}(\mathfrak g))
+=-\kappa^{\mathrm{KM}}(V_k(\mathfrak g))\).
 \end{enumerate}
 \end{corollary}
 
@@ -2818,19 +3072,18 @@ $\mathbb{D}_{\operatorname{Ran}}(\bar{B}^{\mathrm{ch}}(\cA))
 Koszul locus $(\cA)^!_\infty \simeq \cA^!$. For
 $\cA = \widehat{\mathfrak{g}}_k$, the Koszul dual
 is $\cA^! = \widehat{\mathfrak{g}}_{k'}$ with
-$k' = -k - 2h^\vee$: Verdier duality on Ran negates the
-curvature element, sending
-$m_0 = (k+h^\vee)\Omega/(2h^\vee)$
-(Proposition~\ref{prop:km-bar-curvature}) to
-$m_0' = -(k+h^\vee)\Omega/(2h^\vee)
-= (k'+h^\vee)\Omega/(2h^\vee)$ where $\Omega$ is the Casimir
-element. Since the simple-pole data $f^{ab}{}_c$ (the Lie
-bracket) is preserved by Verdier duality and the double-pole
-coefficient is determined by the curvature, the dual algebra
-has OPE
+$k' = -k - 2h^\vee$: the affine same-family Verdier involution
+preserves the simple-pole Lie bracket and sends the scalar modular
+characteristic to its negative, since
+\[
+\kappa^{\mathrm{KM}}(V_{k'}(\mathfrak g))
+=\frac{\dim(\mathfrak g)(k'+h^\vee)}{2h^\vee}
+=-\frac{\dim(\mathfrak g)(k+h^\vee)}{2h^\vee}.
+\]
+The dual algebra has OPE
 \[
 J^{\prime a}(z) J^{\prime b}(w) \sim
-\frac{k'\,(J^a, J^b)}{(z-w)^2}
+\frac{k'\,(J^a, J^b)_{\mathrm{tr}}}{(z-w)^2}
 + \frac{f^{ab}{}_c\, J^{\prime c}(w)}{z-w}
 \]
 with $k' = -k - 2h^\vee$. Parts~(i)--(iii) follow by
@@ -2842,11 +3095,17 @@ direct substitution.
 \begin{remark}[Cobar complex computation]
 Given a chiral coalgebra $\mathcal{C}$ with basis $\{e_i\}$, structure constants $\Delta(e_i) = \sum_{j,k} c_{jk}^i e_j \otimes e_k$, and counit $\epsilon$, the cobar complex $(\Omega^{\mathrm{ch}}(\mathcal{C}), d_{\mathrm{cobar}})$ is constructed as follows.
 \begin{enumerate}
-\item Initialize $\Omega^0 = \mathrm{Free}_{\mathrm{ch}}(s^{-1}\bar{\mathcal{C}})$ where $\bar{\mathcal{C}} = \ker(\epsilon)$.
-\item For each generator $s^{-1}e_i$ with $\epsilon(e_i) = 0$, compute $d(s^{-1}e_i) = -\sum_{j,k} c_{jk}^i \, s^{-1}e_j \otimes s^{-1}e_k$.
+\item Initialize $\Omega^0 = \mathrm{Free}_{\mathrm{ch}}(s^{-1}\bar{\mathcal{C}})$, where $\bar{\mathcal{C}}$ is the coaugmentation coideal of Definition~\ref{def:conilpotent-cobar}.
+\item For each generator $s^{-1}e_i$ with $e_i\in\bar{\mathcal C}$ and reduced coproduct $\bar\Delta(e_i)=\sum_{j,k} c_{jk}^i e_j\otimes e_k$, compute
+\[
+d(s^{-1}e_i)
+=-s^{-1}(d_{\mathcal C}e_i)
+-\sum_{j,k}(-1)^{|e_j|}c_{jk}^i\,
+s^{-1}e_j\otimes s^{-1}e_k .
+\]
 \item Extend to products by the Leibniz rule: $d(xy) = d(x)y + (-1)^{|x|}xd(y)$.
 \item For each $n$-fold product, tensor with $\Omega^*(C_{n+1}(X))$.
-\item Impose Arnold--Orlik--Solomon relations among logarithmic forms and factorization constraints from the chiral structure.
+\item Impose the Verdier-transposed Arnold--Orlik--Solomon relations among FM boundary currents and the factorization constraints from the chiral structure.
 \end{enumerate}
 \end{remark}
 
@@ -2867,8 +3126,9 @@ At genus~$1$, the propagator $K^{(1)} = \theta_1'/\theta_1$
 depends on the modular parameter $\tau$, and the bar differential
 acquires a correction. This correction is the central extension:
 curvature $m_0 = \kappa(\cA)$ emerges because the trace of the
-OPE around the $A$-cycle of the torus is nonzero. The central
-charge, invisible at genus~$0$, is the first shadow of the
+OPE around the $A$-cycle of the torus is nonzero. The local central
+term is visible already in the genus-zero OPE; the genus-one trace
+turns that local coefficient into the first scalar level of the
 shadow obstruction tower
 (Definition~\ref{def:shadow-postnikov-tower}):
 the scalar level $\Theta_{\cA}^{\leq 2} = \kappa(\cA)$.
@@ -2890,46 +3150,26 @@ tower levels:
 \end{itemize}
 \end{remark}
 
-\subsection{Central extensions at genus 1: intuition}
+\subsection{Central trace class at genus 1}
 
-\subsubsection{Physical picture}
+\subsubsection{Heisenberg normalization}
 
-Consider the Heisenberg vertex algebra with generators $a(z), a^*(z)$ satisfying:
-\[[a(z), a^*(w)] \sim \frac{\kappa}{(z-w)^2}\]
-where $\kappa$ is the level (= modular characteristic for Heisenberg).
-
-\begin{center}
-\begin{tikzcd}[column sep=large]
-\text{Genus 0} \arrow[r, "\text{OPE}"] &
-\frac{1}{(z-w)^2} \arrow[d, "\text{residue}"] \\
-& 0 \arrow[d, "\text{explanation}"'] \\
-& \text{Tree-level: no cycles}
-\end{tikzcd}
-\quad\quad
-\begin{tikzcd}[column sep=large]
-\text{Genus 1} \arrow[r, "\operatorname{Tr}"] &
-\oint \frac{\kappa \, dz}{z^2} \arrow[d, "\text{residue}"] \\
-& \kappa \arrow[d, "\text{explanation}"'] \\
-& \text{One-loop: central charge}
-\end{tikzcd}
-\end{center}
-
-The double pole $1/(z-w)^2$ in the OPE produces different behavior at each genus: at genus~0, residues at $z=w$ give derivatives of delta functions that integrate to zero over the sphere; at genus~1, the \emph{trace} $\operatorname{Tr}(a \otimes a^*)$ around the $S^1$ cycle picks up the $\kappa$ coefficient as a non-vanishing residue.
-
-This is the first manifestation of the principle that central extensions are intrinsically one-loop phenomena.
-
-\subsubsection{Absence at genus 0}
-
-Consider the genus 0 bar differential on $\mathcal{A} \otimes \mathcal{A}$:
-\[d^{(0)}(a \otimes b) = \mu(a \otimes b) - a \otimes \mathbbm{1} - \mathbbm{1} \otimes b\]
-where $\mu$ is the OPE product.
-
-For central terms: $\mu(a \otimes a^*) \sim \kappa \cdot \mathbbm{1}$
-
-But $d^{(0)}(\kappa \cdot \mathbbm{1}) = \kappa \cdot \mathbbm{1} - \kappa \cdot \mathbbm{1} - \kappa \cdot \mathbbm{1} = -\kappa \cdot \mathbbm{1}$
-
-So the cocycle $a \otimes a^* - \kappa \cdot \mathbbm{1}$ satisfying $d^{(0)}(\cdots) = 0$
-would require $\kappa = 0$. The central charge cannot appear at genus 0.
+Let $E_\tau=\mathbb C/(\mathbb Z+\tau\mathbb Z)$ and let
+$\mathcal H_\ell(V)$ be the Heisenberg chiral algebra attached to a
+finite-dimensional vector space $V$ with non-degenerate symmetric form
+$(\, ,\,)$. The current modes satisfy
+\[
+[x_m,y_n]=\ell\,m\,(x,y)\,\delta_{m+n,0}\,\mathbf K,
+\qquad x,y\in V.
+\]
+Equivalently, the local OPE is
+\[
+x(z)y(w)\sim \frac{\ell(x,y)}{(z-w)^2}.
+\]
+The double pole is already present in the local genus-zero OPE. What is
+new at genus~$1$ is the trace functional obtained by integrating along a
+homology cycle of $E_\tau$; this functional extracts the scalar
+$\ell=\kappa(\mathcal H_\ell)$ as a finite shadow coefficient.
 
 \subsection{The geometric construction: configuration spaces on the torus}
 
@@ -2946,53 +3186,73 @@ chains on configuration space with coefficients in $\mathcal{A}$.
 
 \subsubsection{The trace element}
 
-The key new element at genus 1 is the \emph{trace operation}. For $a \in \mathcal{A}$,
-define:
-\[\operatorname{Tr}(a) = \int_{S^1 \subset \mathbb{T}^2} \mathrm{ev}^*(a) \in C_0^{(1)}(\mathcal{A})\]
-where $\mathrm{ev}: \mathbb{T}^2 \to X$ is the constant map to the base curve.
-
-More explicitly, using the uniformization $\mathbb{T}^2 = \mathbb{C}/\mathbb{Z} \oplus \tau \mathbb{Z}$:
-\[\operatorname{Tr}(a) = \oint_{|z| = 1} \rho_{\mathbb{T}^2}(a(z)) \frac{dz}{2\pi i z}\]
-where $\rho_{\mathbb{T}^2}$ is the regularized insertion on the torus.
+For a primitive cycle $\gamma\in H_1(E_\tau,\mathbb Z)$ and a normalized
+one-form $\omega_\gamma$ with $\int_\gamma\omega_\gamma=1$, define the
+trace functional on a torus insertion by
+\[
+\operatorname{Tr}_\gamma(A)=\int_\gamma Y(A,z)\,\omega_\gamma .
+\]
+For the Heisenberg modes this normalization gives
+$\operatorname{Tr}_\gamma(\mathbf 1)=1$ and
+$\operatorname{Tr}_\gamma(x_m)=0$ for $m\neq 0$. The class depends on the
+oriented homology class $\gamma$ and transforms under the natural
+$\operatorname{SL}_2(\mathbb Z)$ action on $H_1(E_\tau)$; the extracted
+scalar coefficient is the modular characteristic
+$\kappa(\mathcal H_\ell)=\ell$.
 
 \subsubsection{Explicit formula for central charge cocycle}
 
-For the Heisenberg algebra, consider:
-\[c_1 = \operatorname{Tr}(a \otimes a^*) - \kappa \cdot \mathbbm{1}
-\in C_1^{(1)}(\mathcal{A}) \otimes C_1^{(1)}(\mathcal{A})\]
+For the Heisenberg algebra, the genus-one trace cocycle is the bilinear
+form
+\[
+\omega_\ell(x_m,y_n)
+  =\ell\,m\,(x,y)\,\delta_{m+n,0}.
+\]
 
 \begin{theorem}[Central charge cocycle; \ClaimStatusProvedHere]\label{thm:central-charge-cocycle}
 \textup{[Regime: curved-central
 \textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
 
-The element $c_1$ satisfies:
-\[d^{(1)} c_1 = 0\]
-and represents the central extension in $H_1^{(1)}(\mathcal{A})$.
-
-The class $[c_1]$ is:
-\begin{itemize}
-\item Non-trivial: $[c_1] \neq 0$ in homology
-\item Universal: independent of the choice of cycle on $\mathbb{T}^2$
-\item Generates: all genus 1 central phenomena factor through $[c_1]$
-\end{itemize}
+For the Heisenberg current Lie algebra
+$V[t,t^{-1}]$, the bilinear form
+\[
+\omega_\ell(x\otimes t^m,y\otimes t^n)
+  =\ell\,m\,(x,y)\,\delta_{m+n,0}
+\]
+is a Chevalley--Eilenberg $2$-cocycle. Its class is nonzero and defines
+the standard central extension
+\[
+0\to \mathbb C\mathbf K\to
+\widehat{V[t,t^{-1}]}_\ell\to V[t,t^{-1}]\to 0.
+\]
+On the genus-one bar side this is the finite trace shadow extracted
+from the diagonal double-pole coefficient of
+$\mathcal H_\ell(V)$.
 \end{theorem}
 
 \begin{proof}
-The differential $d^{(1)}$ at genus 1 includes:
-\begin{enumerate}
-\item Standard bar differential (as at genus 0)
-\item \emph{New term:} Contraction around the $S^1$ cycle
-\end{enumerate}
+The current Lie algebra $V[t,t^{-1}]$ is abelian before the central
+extension, so the Chevalley--Eilenberg differential of any alternating
+bilinear form is zero. The form above is alternating because
+\[
+\omega_\ell(y_n,x_m)
+ =\ell\,n\,(y,x)\,\delta_{n+m,0}
+ =-\ell\,m\,(x,y)\,\delta_{m+n,0}.
+\]
+It is not a coboundary: for an abelian Lie algebra, every
+Chevalley--Eilenberg $1$-cochain has zero coboundary. Therefore
+$[\omega_\ell]\neq 0$. In modes it gives exactly
+$[x_m,y_n]=\omega_\ell(x_m,y_n)\mathbf K$, which is the standard
+Heisenberg central extension.
 
-Computing:
-\begin{align}
-d^{(1)}[\operatorname{Tr}(a \otimes a^*)]
-&= \operatorname{Tr}[\mu(a \otimes a^*)] - \operatorname{Tr}(a) \otimes \operatorname{Tr}(a^*) \\
-&= \operatorname{Tr}[\kappa \cdot \mathbbm{1}] - 0 \quad \text{($\operatorname{Tr}(a) = \operatorname{Tr}(a^*) = 0$ for non-vacuum modes)} \\
-&= \kappa \cdot \mathbbm{1} \quad \text{(normalized trace: $\operatorname{Tr}(\mathbbm{1}) = 1$)}
-\end{align}
-
-Therefore: $d^{(1)}[\operatorname{Tr}(a \otimes a^*) - \kappa \cdot \mathbbm{1}] = 0$.
+The geometric representative is obtained by pairing the local OPE
+coefficient $\ell(x,y)/(z-w)^2$ with the normalized cycle trace on
+$E_\tau$. In the finite trace quotient the vacuum trace is normalized to
+$1$ and nonzero one-point Heisenberg traces vanish, so the only surviving
+scalar from the two-current collision is
+$\ell m(x,y)\delta_{m+n,0}$. This is a finite shadow extraction, not an
+unconverged graph sum and not a universal statement for arbitrary vertex
+algebras.
 \end{proof}
 
 \subsection{Formal calculations: degree-by-degree analysis}
@@ -3003,128 +3263,150 @@ $C_0^{(1)} = \mathbb{C} \cdot \mathbbm{1}$, the vacuum state.
 
 \subsubsection{Degree 1: trace insertions}
 
-\[C_1^{(1)} = \operatorname{span}\{ \operatorname{Tr}(a_n), \operatorname{Tr}(a^*_n) \mid n \in \mathbb{Z} \}\]
+\[C_1^{(1)} = \operatorname{span}\{ \operatorname{Tr}_\gamma(x_n) \mid x\in V,\ n \in \mathbb{Z} \}\]
 
 The differential $d^{(1)}: C_1^{(1)} \to C_0^{(1)}$ maps:
 \begin{align}
-d^{(1)}[\operatorname{Tr}(a_n)] &= 0 \quad \text{for } n \neq 0 \\
-d^{(1)}[\operatorname{Tr}(a_0)] &= 0 \quad \text{(but $a_0 = 0$ in Heisenberg)}
+d^{(1)}[\operatorname{Tr}_\gamma(x_n)] &= 0 \quad \text{for } n \neq 0, \\
+d^{(1)}[\operatorname{Tr}_\gamma(x_0)] &= 0
 \end{align}
 
-\emph{Homology.} $H_1^{(1)} = \operatorname{span}\{ [\operatorname{Tr}(a_n)], [\operatorname{Tr}(a^*_n)] \mid n \neq 0 \}$
+\emph{Homology.} In the finite trace quotient, the degree-one classes are
+represented by the trace insertions modulo the chosen zero-mode
+relations.
 
 \subsubsection{Degree 2: the central charge emerges}
 
 \[C_2^{(1)} = \operatorname{span}\{
-\operatorname{Tr}(a_m \otimes a^*_n),
-\operatorname{Tr}(a_m \otimes a_n),
-\operatorname{Tr}(a^*_m \otimes a^*_n)
+\operatorname{Tr}_\gamma(x_m \otimes y_n)
+\mid x,y\in V,\ m,n\in\mathbb Z
 \}\]
 
 \emph{The computation.}
 \begin{align}
-d^{(1)}[\operatorname{Tr}(a_m \otimes a^*_n)]
-&= \operatorname{Tr}[\text{OPE}(a_m, a^*_n)] \\
-&= \operatorname{Tr}\left[ \sum_{k \geq 0} \binom{m}{k} a^*_{m+n+k} \cdot a_{-k}
-+ \kappa m \delta_{m+n,0} \cdot \mathbbm{1} \right] \\
-&= \kappa m \delta_{m+n,0} \cdot \mathbbm{1}
+d^{(1)}[\operatorname{Tr}_\gamma(x_m \otimes y_n)]
+&= \operatorname{Tr}_\gamma\bigl([x_m,y_n]\bigr) \\
+&= \ell\,m\,(x,y)\,\delta_{m+n,0}\cdot \mathbbm{1}.
 \end{align}
 
-Here we used $\operatorname{Tr}(a^*_i \cdot a_j) = 0$ always (no tadpoles).
-
-The modular characteristic $\kappa$ appears only in the $m+n=0$ term, corresponding to modes that go around the $S^1$ cycle exactly once: geometrically, $\kappa$ measures the obstruction to extending the Heisenberg algebra to the loop algebra.
+The modular characteristic $\kappa(\mathcal H_\ell)=\ell$ appears only in the residue
+constraint $m+n=0$. Geometrically, this is the trace of the diagonal
+double-pole coefficient around the chosen genus-one cycle.
 
 \subsubsection{Degrees 3--5: modular corrections}
 
-At degree 3, we have triple traces:
-\[\operatorname{Tr}(a_{m_1} \otimes a_{m_2} \otimes a^*_n)\]
-
-The differential now includes pairwise OPE contractions (three terms) and tadpole corrections from $\kappa$ (when indices sum to zero).
-
-\emph{Degree 3 cocycle example:}
-\[c_3 = \operatorname{Tr}(a_1 \otimes a_1 \otimes a^*_{-2})
-- \kappa \cdot \operatorname{Tr}(a_1) + \text{(boundary terms)}\]
-
-At degrees 4 and 5, we see:
+In higher degrees the finite trace quotient has pairwise OPE
+contractions and modular forms from the elliptic propagator. The first
+new terms are:
 \begin{itemize}
-\item Multiple $\kappa$ insertions
-\item Modular dependence on the torus parameter $\tau$
-\item Connection to Eisenstein series $E_2(\tau)$ at weight 2
+\item products of the central residue cocycle $\omega_\ell$;
+\item modular dependence on the torus parameter $\tau$ through the
+ elliptic propagator;
+\item the quasi-modular weight-$2$ term $E_2(\tau)$ after the usual
+ elliptic regularization.
 \end{itemize}
+These terms are finite-window shadow data. Passing from them to the
+full tower requires the completed graph-sum formalism of
+Theorem~\ref{thm:prism-higher-genus}.
 
 \subsection{The cobar resolution: recovering central extensions}
 
-The cobar construction $\Omega C_{\bullet}^{(1)}(\mathcal{A})$ recovers the
-centrally extended algebra $\widehat{\mathcal{A}}$.
+The cobar construction recovers a central extension from the finite
+trace coalgebra only after the reduced coproduct and the adjunction
+counit are fixed.
 
-\begin{theorem}[Genus 1 cobar-bar duality; \ClaimStatusProvedHere]\label{thm:genus1-cobar-bar}
+\begin{theorem}[Genus 1 cobar extraction of the Heisenberg central extension; \ClaimStatusProvedHere]\label{thm:genus1-cobar-bar}
 \textup{[Regime: curved-central, genus-$1$
 \textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
 
-Let $\mathcal{A}$ be a vertex algebra with modular characteristic $\kappa$. Then:
-\[H^0(\Omega C_{\bullet}^{(1)}(\mathcal{A})) \cong \widehat{\mathcal{A}}\]
-where $\widehat{\mathcal{A}}$ is the universal central extension of $\mathcal{A}$.
-
-The central extension is encoded by the genus 1 cocycle:
-\[\omega_{\kappa} = \operatorname{Tr}(a \otimes a^*) - \kappa \cdot \mathbbm{1}\]
+Let $C_{\le2,\gamma}^{(1)}(\mathcal H_\ell(V))$ be the finite
+genus-one trace quotient of the bar coalgebra generated by the vacuum,
+one-current trace insertions, and two-current trace insertions, with
+reduced coproduct dual to the cocycle
+\[
+\omega_\ell(x_m,y_n)=\ell\,m\,(x,y)\,\delta_{m+n,0}.
+\]
+Then the completed cobar algebra has
+\[
+H^0\!\left(\widehat{\Omega}\,
+C_{\le2,\gamma}^{(1)}(\mathcal H_\ell(V))\right)
+\cong
+\widehat U\bigl(\widehat{V[t,t^{-1}]}_\ell\bigr)
+\]
+with central relation
+\[
+[x_m,y_n]=\ell\,m\,(x,y)\,\delta_{m+n,0}\,\mathbf K.
+\]
+For a general vertex algebra this conclusion requires a finite trace
+quotient, a closed genus-one cocycle, and the filtered counit
+quasi-isomorphism of Corollary~\ref{cor:bar-cobar-inverse}; it is not a
+formal consequence of cobar inversion alone.
 \end{theorem}
 
 \begin{proof}
-The genus-1 bar complex $C_\bullet^{(1)}(\mathcal{A})$ is built on configuration spaces over the elliptic curve $E_\tau$. We compute the cobar $\Omega C_\bullet^{(1)}$ and show its zeroth cohomology is the universal central extension.
-
-\emph{Step 1: Genus-1 bar complex in low degrees.}
-At degree~0, $C_0^{(1)} = \mathbb{C}$. At degree~1, $C_1^{(1)} = \Gamma(\overline{C}_2(E_\tau), \mathcal{A} \boxtimes \mathcal{A} \otimes \Omega^1_{\log})$, where the logarithmic form is the elliptic propagator $\eta_{12}^{(1)} = d\log\theta_1(z_{12}|\tau)$. At degree~2, $C_2^{(1)}$ involves triple products with genus-1 logarithmic 2-forms.
-
-\emph{Step 2: The genus-1 cocycle.}
-The bar differential $d: C_1^{(1)} \to C_0^{(1)}$ maps
+The quotient $C_{\le2,\gamma}^{(1)}$ is finite and conilpotent, so the
+completed cobar differential is the continuous derivation determined on
+desuspended generators by the reduced coproduct. The degree-two
+generator dual to
+$\operatorname{Tr}_\gamma(x_m\otimes y_n)$ has reduced coproduct whose
+antisymmetric part is dual to
+$\omega_\ell(x_m,y_n)$. Therefore the degree-zero relations in the
+cobar algebra are precisely
 \[
-d(a \otimes b \cdot \eta_{12}^{(1)}) = \mathrm{Res}_{z_1=z_2}[a(z_1)b(z_2) \cdot \eta_{12}^{(1)}] + \int_{E_\tau} a \otimes b \cdot d\eta_{12}^{(1)}.
+x_my_n-y_nx_m
+  =\ell\,m\,(x,y)\,\delta_{m+n,0}\,\mathbf K.
 \]
-The first term is the genus-0 collision residue. The second term is new at genus~1: the propagator $\eta_{12}^{(1)} = d\log\theta_1(z_{12}|\tau)$ is a closed meromorphic 1-form on $E_\tau$ (away from poles), but its $B$-cycle monodromy is non-trivial: $\oint_B \eta_{12}^{(1)} = 2\pi i$. This monodromy defect, which we write formally as $\int_{E_\tau} \delta_B \eta_{12}^{(1)} = 2\pi i\, \omega_\tau$ (where $\omega_\tau$ is the normalized holomorphic 1-form on $E_\tau$), gives
-\[
-\int_{E_\tau} a \otimes b \cdot 2\pi i\, \omega_\tau = 2\pi i \cdot \mathrm{Tr}(a \otimes b)
-\]
-where $\mathrm{Tr}(a \otimes b) = \oint a(z)b(z)\, dz$ is the trace pairing on $\mathcal{A}$.
+All other reduced coproduct components in the quotient are primitive or
+central, so no additional degree-zero relations appear. This gives the
+completed enveloping algebra of the standard central extension.
 
-\emph{Step 3: Cobar complex computation.}
-The cobar $\Omega C_\bullet^{(1)}$ has generators dual to $C_1^{(1)}$ and differential encoded by the structure maps of the coalgebra $C_\bullet^{(1)}$. The zeroth cohomology $H^0(\Omega C_\bullet^{(1)})$ is the algebra generated by the dual generators modulo the relations imposed by~$d_\Omega$.
-
-The genus-1 contribution to $d_\Omega$ produces the central extension relation: for generators $J^a$ of~$\mathcal{A}$,
-\[
-[J^a, J^b]_{\widehat{\mathcal{A}}} = [J^a, J^b]_{\mathcal{A}} + \kappa \cdot \mathrm{Tr}(J^a \otimes J^b) \cdot \mathbf{K}
-\]
-where $\mathbf{K}$ is the central element and $\kappa$ is the central charge. This is the relation defining the universal central extension $\widehat{\mathcal{A}}$.
-
-\emph{Step 4: Universality.}
-The resulting central extension is universal because any 2-cocycle $\omega: \mathcal{A} \otimes \mathcal{A} \to \mathbb{C}$ that defines a central extension of~$\mathcal{A}$ factors through the genus-1 trace pairing. The chiral Hochschild 2-cocycle condition requires $\omega$ to be $\mathcal{A}$-bilinear and invariant, which forces $\omega = c \cdot \mathrm{Tr}$ for some constant~$c$. The genus-1 construction produces exactly this with $c = \kappa$.
+The argument uses only the finite Heisenberg trace quotient and the
+standard cocycle of Theorem~\ref{thm:central-charge-cocycle}. For a
+general vertex algebra, an arbitrary genus-one trace does not force
+universality; the missing data are exactly the closed cocycle,
+finite-window completion, and filtered counit quasi-isomorphism stated
+in the theorem.
 \end{proof}
 
-\begin{remark}[Central extension as genus-\texorpdfstring{$1$}{1} component of \texorpdfstring{$\Theta$}{Theta}]
+\begin{remark}[Central extension as genus-\texorpdfstring{$1$}{1} trace component of \texorpdfstring{$\Theta$}{Theta}]
 \label{rem:central-ext-theta1}
-The central extension cocycle $\omega_\kappa = \kappa \cdot
-\mathrm{Tr}$ is exactly the genus-$1$ component $\theta_1$ of
-the universal MC class (Theorem~\ref{thm:explicit-theta}):
+In the finite central trace lane, the cocycle
+$\omega_{\kappa(\cA)} = \kappa(\cA) \cdot \mathrm{Tr}$ is the genus-$1$ trace
+component $\theta_1$ of the universal MC class
+(Theorem~\ref{thm:explicit-theta}):
 $\theta_1 = \kappa(\cA) \cdot \mu \otimes \lambda_1$,
-where $\mu = [-,-]$ is the Lie bracket and $\lambda_1$ is the
-Hodge class. The universality of the central extension is a
-shadow of the universality of $\Theta_{\cA}$: there is only one
-direction for genus-$1$ deformations because
-$H^2_{\mathrm{cyc}}(\mathfrak{g},\mathfrak{g}) \cong \mathbb{C}$.
+where $\mu = [-,-]$ is the bracket in the finite trace quotient and
+$\lambda_1$ is the Hodge class. For Heisenberg and affine
+Kac--Moody current algebras this recovers the standard central
+extension class. For a general vertex algebra the genus-one component is
+a shadow class in the relevant chiral Hochschild complex, and its
+universality is an additional recognition theorem rather than a
+consequence of cobar inversion.
 \end{remark}
 
-\subsection{Comparison with physical literature}
+\subsection{Census constants at genus 1}
 
-Our construction recovers known results from physics:
+The finite genus-one trace extraction records the following constants.
 
 \begin{itemize}
-%: from landscape_census.tex; k=0 -> dim(g)/2 (NOT zero); k=-h^v -> 0 (critical)
-\item \emph{Kac--Moody algebras:} For the affine vertex algebra $V_k(\mathfrak{g})$ at level~$k$, the modular characteristic is $\kappa(V_k(\mathfrak{g})) = \dim(\mathfrak{g})(k + h^{\vee})/(2h^{\vee})$, recovering the Sugawara central charge. The Heisenberg algebra is a separate family with $\kappa(\mathcal{H}_k) = k$ (Census~C1); it is \emph{not} a specialization of the Kac--Moody formula (the abelian limit $\dim(\mathfrak{g}) = 1$ does not admit a dual Coxeter number).
+\item \emph{Kac--Moody algebras:} For the affine vertex algebra
+$V_k(\mathfrak{g})$ at level~$k$, the modular characteristic is
+\[
+\kappa(V_k(\mathfrak{g}))
+=\frac{\dim(\mathfrak{g})(k+h^\vee)}{2h^\vee}.
+\]
+This is the census modular characteristic, not the Sugawara central
+charge. The Heisenberg algebra is a separate family with
+$\kappa(\mathcal{H}_k)=k$.
 
-\item \emph{Virasoro central charge:} For the Virasoro vertex algebra, the central
-charge $c$ appears as $\operatorname{Tr}(L_m \otimes L_n)$ with $m+n = 0$
+\item \emph{Virasoro:} For the Virasoro vertex algebra,
+$\kappa(\mathrm{Vir}_c)=c/2$.
 
-\item \emph{$W$-algebras:} For $W$-algebras (following Arakawa), higher-weight
-central charges appear at genus 1 in traces of higher-weight operators
+\item \emph{$W$-algebras:} For the principal $W_N$ family,
+\[
+\kappa(\mathcal W_N)=c(H_N-1),
+\qquad H_N=\sum_{j=1}^N\frac1j.
+\]
 \end{itemize}
 
 \subsection{Genus 1 summary}
@@ -3132,23 +3414,32 @@ central charges appear at genus 1 in traces of higher-weight operators
 \begin{center}
 \begin{tabular}{|l|l|l|}
 \hline
-\emph{Algebra} & \textbf{Physics} & \textbf{Bar-Cobar} \\
+\emph{Algebra} & \textbf{Finite Trace Datum} & \textbf{Bar-Cobar Output} \\
 \hline
-Central extension & One-loop correction & Genus 1 cocycle \\
-Modular characteristic $\kappa$ & Genus-1 curvature scalar & Trace coefficient \\
-Level of Kac--Moody & UV divergence & $H_2^{(1)}$ class \\
-Virasoro $c$ & Conformal anomaly & $\operatorname{Tr}(T \otimes T)$ \\
+Central extension & $\omega_{\kappa(\mathcal A)}$ & Genus 1 cocycle \\
+Modular characteristic $\kappa$ & diagonal double pole & trace coefficient \\
+Level of Kac--Moody & $k+h^\vee$ curvature & finite shadow class \\
+Virasoro $c$ & $c/2$ & $\operatorname{Tr}(T \otimes T)$ \\
 \hline
 \end{tabular}
 \end{center}
 
 \begin{remark}[Functoriality]
-The entire construction is functorial: a morphism $\mathcal{A} \to \mathcal{B}$
-of vertex algebras preserving central charge induces:
-\[C_{\bullet}^{(1)}(\mathcal{A}) \to C_{\bullet}^{(1)}(\mathcal{B})\]
-respecting the central extension cocycles. This is the Grothendieck perspective:
-genus 1 phenomena are determined by functoriality from genus 0 data plus the
-choice of torus.
+The finite trace extraction is functorial for morphisms
+$f\colon\mathcal{A}\to\mathcal{B}$ that preserve the chosen genus-one
+trace quotient and the cocycle:
+\[
+f^*\omega_{\kappa(\mathcal B)}=\omega_{\kappa(\mathcal A)}.
+\]
+Such a morphism induces
+\[
+C_{\le2,\gamma}^{(1)}(\mathcal{A})
+\longrightarrow
+C_{\le2,\gamma}^{(1)}(\mathcal{B})
+\]
+and hence a map of completed cobar algebras. A morphism of vertex
+algebras that does not preserve the trace quotient or the modular
+characteristic need not respect the genus-one central class.
 \end{remark}
 
 \subsection{Extension theory: from genus 0 to higher genus}
@@ -3157,25 +3448,49 @@ choice of torus.
 
 Not every genus 0 chiral algebra extends to higher genus. The obstructions live in specific cohomology groups:
 
-\begin{theorem}[Extension obstruction {\cite{BD04}}; \ClaimStatusConditional]
+\begin{theorem}[Extension obstruction class {\cite{BD04}}; \ClaimStatusConditional]
 \label{thm:extension-obstruction-bar}
-Let $\mathcal{A}$ be a chiral algebra on $\mathbb{CP}^1$. The obstruction to extending $\mathcal{A}$ to genus $g$ lies in:
+Let $\mathcal{A}$ be a chiral algebra on $\mathbb{CP}^1$ together with
+a specified deformation problem for extending its factorization data
+over a genus-$g$ family. Let
+$\mathbb T_{\mathrm{ext}}(\mathcal A)$ be the corresponding tangent
+complex of chiral operations with sewing constraints. The obstruction
+class lies in
 \[
-\text{Obs}_g(\mathcal{A}) \in H^2(\overline{\mathcal{M}}_g, \mathcal{E}nd(\mathcal{A})_0)
+\operatorname{Obs}_g(\mathcal{A})
+\in
+H^2\!\left(\overline{\mathcal{M}}_g,
+\mathcal H^0(\mathbb T_{\mathrm{ext}}(\mathcal A))\right).
 \]
-where $\mathcal{E}nd(\mathcal{A})_0$ is the sheaf of traceless endomorphisms.
+On the central trace lane this projects to a class in
+$H^2(\overline{\mathcal{M}}_g,\mathcal Z(\mathcal A))$.
 \end{theorem}
 
 \begin{proof}
-By the deformation theory of chiral algebras on families of curves (Theorem~\ref{thm:obstruction-quantum}), there is a long exact sequence:
+By the deformation theory of chiral algebras on families of curves
+(Theorem~\ref{thm:obstruction-quantum}), extensions over the moduli
+base are controlled by the sheafified deformation complex
+$\mathbb T_{\mathrm{ext}}(\mathcal A)$. The first obstruction to
+lifting a first-order extension over the genus-$g$ family is the usual
+degree-$2$ obstruction class:
 \[
-0 \to H^1(\Sigma_g, \mathcal{A}) \to \text{Ext}_{\Sigma_g}(\mathcal{A}) \to H^2(\mathcal{M}_g, \mathbb{C}) \to \text{Obs}_g(\mathcal{A}) \to 0
+\operatorname{Obs}_g(\mathcal{A})
+\in
+H^2\!\left(\overline{\mathcal{M}}_g,
+\mathcal H^0(\mathbb T_{\mathrm{ext}}(\mathcal A))\right).
 \]
-The obstruction lives in $H^2(\mathcal{M}_g, \mathrm{End}(\mathcal{A})_0)$ with local system coefficients. For specific classes:
+Projecting the tangent complex to its central quotient gives the
+central obstruction class in
+$H^2(\overline{\mathcal{M}}_g,\mathcal Z(\mathcal A))$. For the
+standard comparison families this gives:
 \begin{enumerate}
-\item For the matter-ghost BRST system, the obstruction vanishes when $c_{\text{matter}} = 26$ (cancellation with $c_{\text{ghost}} = -26$).
-\item For a general chiral algebra $\mathcal{A}$, the obstruction depends on $[\omega_g] \in H^2(\mathcal{M}_g, Z(\mathcal{A}))$, where $Z(\mathcal{A})$ is the center.
-\item Free theories (Heisenberg at any level, free fermions with spin structure) extend to all genera without central charge restrictions, as the curvature $m_0$ is central and the obstruction class is scalar (Proposition~\ref{prop:km-bar-curvature}).
+\item for the bosonic matter--ghost BRST system, the central obstruction
+is proportional to $c_{\mathrm{matter}}-26$;
+\item for the superstring ghost system in the standard normalization,
+the central obstruction is proportional to $c_{\mathrm{matter}}-15$;
+\item for free theories, extension requires the usual spin or charge
+sector data, and the remaining scalar obstruction is read in the center
+local system rather than in a traceless endomorphism sheaf.
 \end{enumerate}
 \end{proof}
 
@@ -3198,26 +3513,50 @@ Z_{\text{ferm}}(\tau) = \frac{\theta_3(0|\tau)}{\eta(\tau)} \quad \text{(NS sect
 
 \subsubsection{The tower of extensions}
 
-\begin{theorem}[Universal extension tower; \ClaimStatusProvedHere]\label{thm:universal-extension-tower}
-There exists a tower of extensions:
+\begin{theorem}[Genus-filtered completed tower; \ClaimStatusConditional]\label{thm:universal-extension-tower}
+Assume that the modular bar coalgebra of $\mathcal A$ exists as a
+complete genus-filtered coalgebra
 \[
-\cA_0 \to \cA_1 \to \cA_2 \to \cdots \to \cA_\infty
+\barB^{\mathrm{mod}}(\mathcal A)
+\simeq \widehat{\bigoplus}_{g\ge0}\barB^{(g)}(\mathcal A)
 \]
-where:
-\begin{itemize}
-\item $\cA_0$: Original genus 0 algebra
-\item $\cA_g$: Extension to genus $\leq g$
-\item $\cA_\infty$: Universal extension to all genera
-\end{itemize}
-
-The connecting maps are given by:
+and that the genus filtration is compatible with the coproduct,
+curvature, and sewing maps. Set
 \[
-\cA_g \to \cA_{g+1}: \quad a \mapsto a + \sum_{\gamma \in H_1(\Sigma_{g+1})} \oint_\gamma a \cdot [\gamma]
+\cA_{\le g}:=
+\widehat\Omega\!\left(
+\barB^{\mathrm{mod}}(\mathcal A)/F_{>g}\barB^{\mathrm{mod}}(\mathcal A)
+\right).
+\]
+Then there is an inverse tower of completed cobar algebras
+\[
+\cdots\longrightarrow
+\cA_{\le g+1}\longrightarrow
+\cA_{\le g}\longrightarrow\cdots\longrightarrow\cA_{\le0}.
+\]
+If the tower is Mittag--Leffler complete, its limit is
+\[
+\cA_\infty\simeq
+\varprojlim_g \cA_{\le g}
+\simeq
+\widehat\Omega\bigl(\barB^{\mathrm{mod}}(\mathcal A)\bigr).
 \]
 \end{theorem}
 
 \begin{proof}
-The tower is constructed from the genus filtration on the bar complex. By the modular operad decomposition (Theorem~\ref{thm:prism-higher-genus}), $\B(\cA) = \bigoplus_{g \geq 0} \B^{(g)}(\cA)$. Define $\cA_g = \Omega(\bigoplus_{h \leq g} \B^{(h)}(\cA))$: the cobar construction applied to the genus-$\leq g$ truncation. The inclusion $\bigoplus_{h \leq g} \B^{(h)} \hookrightarrow \bigoplus_{h \leq g+1} \B^{(h)}$ induces $\cA_g \to \cA_{g+1}$. The connecting map adds the genus-$(g+1)$ correction: the new bar complex component $\B^{(g+1)}$ involves integration over $\overline{\mathcal{M}}_{g+1,n}$, and the correction term $\sum_\gamma \oint_\gamma a \cdot [\gamma]$ arises from the new homology cycles $\gamma \in H_1(\Sigma_{g+1})$ not present at lower genus. The tower stabilizes for rational chiral algebras (finitely many modules, hence finite-dimensional conformal blocks at each genus) and converges to $\cA_\infty = \Omega(\B(\cA))$.
+The quotient
+$\barB^{\mathrm{mod}}(\mathcal A)/F_{>g}\barB^{\mathrm{mod}}(\mathcal A)$
+is a finite genus-window coalgebra by the compatibility hypotheses.
+The quotient maps for $g+1\to g$ are morphisms of curved coalgebras, so
+the completed cobar functor gives morphisms
+$\cA_{\le g+1}\to\cA_{\le g}$. This constructs the inverse tower.
+
+The equality with the completed cobar of the full modular bar coalgebra
+is exactly the continuity of $\widehat\Omega$ with respect to the
+chosen complete genus filtration. The Mittag--Leffler hypothesis removes
+the possible $\varprojlim^1$ obstruction. Without that hypothesis the
+finite-window algebras still exist, but their inverse limit need not
+compute the full completed cobar object.
 \end{proof}
 
 \subsection{Spectral sequence convergence}
@@ -3319,68 +3658,93 @@ where $\mathcal{A}^!$ is the Koszul dual.
 
 \subsection{Essential image of the bar functor}
 
-\begin{theorem}[Complete essential image characterization; \ClaimStatusProvedHere]
+\begin{theorem}[Essential image recognition with unit witness; \ClaimStatusProvedHere]
 \label{thm:essential-image-bar}
-The essential image of the bar functor
-\[\barBgeom\colon \mathrm{ChirAlg}_X \to \mathrm{Coalg}_{\mathrm{conilp}}^{\mathrm{ch}}\]
-consists precisely of those conilpotent chiral coalgebras $\mathcal{C}$ satisfying:
-\begin{enumerate}
-\item \emph{Logarithmic structure}: The coderivation $\delta: \mathcal{C} \to \mathcal{C}^{\otimes 2}$ has logarithmic singularities
-\item \emph{Support condition}: $\text{supp}(\delta) \subset \bigcup_{i<j} D_{ij}$
-\item \emph{Residue formula}: At $D_{ij}$:
-\[\text{Res}_{D_{ij}}[\delta(c)] = \mu_{ij}^* \otimes c\]
-where $\mu_{ij}^*$ is dual to chiral multiplication
-\item \emph{Arnold relations}: The logarithmic coefficients satisfy the Arnold--Orlik--Solomon relations
+Let $\mathcal{C}$ be a coaugmented conilpotent chiral coalgebra in the
+regular holonomic finite-type ambient category. Then
+$\mathcal{C}$ lies in the essential image of
+\[
+\barBgeom\colon
+\mathrm{ChirAlg}^{\mathrm{aug}}_X\longrightarrow
+\mathrm{Coalg}^{\mathrm{ch,conil}}_X
+\]
+up to filtered quasi-isomorphism if and only if there exist
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item an augmented chiral algebra $\mathcal{A}$;
+\item a chiral twisting morphism
+ $\tau\colon\mathcal{C}\to\mathcal{A}$ satisfying
+ $d\tau+\tau\smile\tau=0$;
+\item logarithmic FM residue compatibility: the coderivation of
+ $\mathcal{C}$ has conormal singularities only along the collision
+ divisors $D_{ij}$, its residue on $D_{ij}$ is dual to the chiral
+ product $\mu_{ij}$ of $\mathcal{A}$ under the finite-type pairing, and
+ the codimension-two residues obey the Arnold--Orlik--Solomon boundary
+ relation;
+\item a filtered unit witness
+ \[
+ \eta_{\mathcal{C},\tau}\colon
+ \mathcal{C}\longrightarrow \barBgeom(\mathcal{A})
+ \]
+ whose associated graded is a quasi-isomorphism and whose filtration is
+ conilpotent or complete in the sense of
+ Corollary~\ref{cor:bar-cobar-inverse}.
 \end{enumerate}
+The phrase ``essential image'' therefore includes the unit witness.
+Logarithmic support and Arnold relations alone are necessary local
+conditions; they are not sufficient without the twisting morphism and
+the filtered quasi-isomorphism.
 \end{theorem}
 
 \begin{proof}
-\emph{Necessity}: Let $\mathcal{C} = \barBgeom(\mathcal{A})$ for some chiral algebra $\mathcal{A}$.
+\emph{Necessity.}
+If $\mathcal{C}\simeq\barBgeom(\mathcal{A})$, take $\tau$ to be the
+universal twisting morphism
+$\barBgeom(\mathcal{A})\to\mathcal{A}$ of
+Proposition~\ref{prop:universal-twisting-adjunction}. The equation
+$d\tau+\tau\smile\tau=0$ is precisely the chain-map condition for the
+bar differential. The coderivation of $\barBgeom(\mathcal{A})$ is the
+dual of the factorization part of the bar differential, hence is
+supported on the FM collision divisors; the residue formula is the
+definition of the chiral product, and the Arnold relation is the
+codimension-two boundary identity used in the bar nilpotence proof. The
+unit witness is the identity of $\barBgeom(\mathcal{A})$, transported
+across the chosen filtered quasi-isomorphism
+$\mathcal{C}\simeq\barBgeom(\mathcal{A})$.
 
-(1) The coderivation is:
-\[\delta = (d_{\text{fact}})^*: \barBgeom^n(\mathcal{A}) \to \barBgeom^{n+1}(\mathcal{A})\]
-
-This is given by residues at collision divisors, hence has logarithmic singularities.
-
-(2) The support is exactly $\bigcup_{i<j} D_{ij}$ by construction.
-
-(3) The residue formula follows from the definition of $d_{\text{fact}}$.
-
-(4) The Arnold relations are satisfied by logarithmic forms on configuration spaces.
-
-\emph{Sufficiency}: Given $\mathcal{C}$ satisfying (1)-(4), we reconstruct $\mathcal{A}$.
-
-Define $\mathcal{A} = \Omegach(\mathcal{C})$ (cobar construction). We need to show:
-\[\mathcal{C} \cong \barBgeom(\Omegach(\mathcal{C}))\]
-
-The isomorphism is constructed by reading each axiom as a construction
-step: logarithmic structure determines integration kernels, the support
-condition ensures locality, the residue formula recovers the OPE, and
-the relevant configuration-space relations ensure associativity
-\textup{(}Arnold on an affine screen, projective linear relations on
-$\mathbb{P}^1$, and period relations for $g\geq1$; see
-Proposition~\ref{prop:arnold-higher-genus}\textup{)}.
-
-If $\mathcal{C}$ satisfies (1)--(4), then $\Omegach(\mathcal{C})$ is a chiral algebra with:
-\[\phi_i(z)\phi_j(w) = \text{Res}_{D_{ij}}[\delta(\phi_i \otimes \phi_j)]\]
-
-The reconstruction map:
-\[\Phi: \mathcal{C} \to \barBgeom(\Omegach(\mathcal{C}))\]
-is given by:
-\[\Phi(c) = \int_{\ConfigSpace{n}} c \wedge K_n\]
-where $K_n$ is the universal kernel determined by the logarithmic structure.
-
-This is an isomorphism by:
-\begin{enumerate}
-\item Injectivity: The logarithmic structure uniquely determines $c$
-\item Surjectivity: Every bar element arises from some $c \in \mathcal{C}$
-\item Preserves coalgebra structure: By compatibility of residues
-\end{enumerate}
+\emph{Sufficiency.}
+Given (i)--(iv), the map
+$\eta_{\mathcal{C},\tau}$ is by hypothesis a filtered
+quasi-isomorphism from $\mathcal{C}$ to the bar coalgebra of the
+augmented chiral algebra $\mathcal{A}$. The logarithmic residue
+compatibility says that this map is a morphism of dg coalgebras, not
+only of graded coalgebras: it intertwines the FM boundary coderivation
+with the bar differential determined by the product of $\mathcal{A}$. The
+Maurer--Cartan equation for $\tau$ is exactly the remaining chain-map
+condition under the twisting-morphism bijection
+\[
+\mathrm{Tw}^{\mathrm{ch}}(\mathcal{C},\mathcal{A})
+\cong
+\Hom_{\mathrm{dg\,CoAlg}^{\mathrm{ch,conil}}}
+(\mathcal{C},\barBgeom(\mathcal{A}))
+\]
+of Corollary~\ref{cor:chiral-adjunction-hom-bijection}. Hence
+$\mathcal{C}$ is isomorphic to an object in the bar image in the
+filtered homotopy category. Conilpotent or complete convergence is
+exactly the convergence input of Corollary~\ref{cor:bar-cobar-inverse},
+so no infinite bar-degree sum is hidden in the recognition map.
 \end{proof}
 
-\begin{corollary}[Recognition principle; \ClaimStatusConditional]
+\begin{corollary}[Recognition principle with witness; \ClaimStatusConditional]
 \label{cor:recognition-principle}
-A chiral coalgebra $\mathcal{C}$ is in the essential image of $\barBgeom$ if and only if its cobar $\Omegach(\mathcal{C})$ is a chiral algebra (not just $A_\infty$).
+A chiral coalgebra $\mathcal{C}$ is recognized as a bar coalgebra once
+$\Omega(\mathcal{C})$ is equipped with a strict chiral algebra structure
+and the adjunction unit
+\[
+\mathcal{C}\longrightarrow \barBgeom(\Omega(\mathcal{C}))
+\]
+is a filtered quasi-isomorphism satisfying the residue compatibility of
+Theorem~\ref{thm:essential-image-bar}. Strictness of
+$\Omega(\mathcal{C})$ alone is not sufficient.
 \end{corollary}
 \begin{proof}
 The bar-cobar adjunction (Theorem~\ref{thm:bar-cobar-adjunction})
@@ -3390,16 +3754,16 @@ any conilpotent coalgebra. On the Koszul locus
 $\mathcal{C}\to\bar{B}(\Omega(\mathcal{C}))$ is a
 quasi-isomorphism (Theorem~\ref{thm:bar-cobar-isomorphism-main}),
 which identifies $\mathcal{C}$ as the bar of its cobar.
-This holds precisely when $\Omega(\mathcal{C})$ has strict
-(not homotopy) chiral algebra structure.
+The theorem supplies the missing converse data: a strict cobar algebra
+together with a filtered unit quasi-isomorphism and residue-compatible
+twisting morphism.
 \end{proof}
 
 \subsection{BRST cohomology and string theory connection}
 
-\begin{conjecture}[Heuristic BRST/bar comparison; \ClaimStatusConjectured]\label{conj:brst-cohomology}
-There should exist a comparison map from an appropriate BRST
-complex of the corresponding string theory to the geometric bar
-complex,
+\begin{conjecture}[BRST/bar comparison datum; \ClaimStatusConjectured]\label{conj:brst-cohomology}
+A BRST/bar comparison datum for a chosen matter--ghost system is a
+chain map from its BRST complex to the geometric bar complex,
 \[
 \Phi_{\mathrm{BRST}} \colon
 \bigl(C^\bullet_{\mathrm{BRST}}(\mathcal{A}), Q_{\mathrm{BRST}}\bigr)
@@ -3411,7 +3775,8 @@ choosing the correct matter--ghost system and anomaly
 prescription. On the anomaly-free genus-$0$ total
 matter+ghost locus, this comparison is realized algebraically by
 Theorem~\ref{thm:brst-bar-genus0}; beyond that setting it
-remains heuristic.
+requires the construction of the chain map, the anomaly cancellation
+identity, and the sewing compatibility.
 
 The expected correspondences are:
 \begin{align}
@@ -3421,31 +3786,31 @@ Q_{\text{BRST}} &\leftrightarrow d_{\text{bar}} = d_{\text{int}} + d_{\text{fact
 \end{align}
 \end{conjecture}
 
-\begin{remark}[Physical motivation: string field theory]
-The correspondence is heuristically motivated by the following
-parallel:
+\begin{remark}[String-field comparison data]
+The proposed comparison has the following typed components.
 
-\emph{Step 1: String Field Theory.} The string field $\Psi$ satisfies the BRST equation:
+\emph{String-field equation.} The string field $\Psi$ satisfies the BRST equation:
 \[Q_{\text{BRST}} \Psi + \Psi \star \Psi = 0\]
 where $\star$ is the string product.
 
-\emph{Step 2: Chiral Algebra Correspondence.} The string field decomposes as:
+\emph{Chiral-algebra expansion.} The string field decomposes as:
 \[\Psi = \sum_{n=0}^\infty \Psi^{(n)} \otimes \omega^{(n)}\]
 where $\Psi^{(n)} \in \mathcal{A}^{\otimes n}$ and $\omega^{(n)} \in \Omega^n(\overline{C}_n(X))$.
 
-\emph{Step 3: BRST Action.} The BRST operator acts as:
+\emph{BRST action.} The BRST operator acts as:
 \begin{align}
 Q_{\text{BRST}}(\Psi^{(n)} \otimes \omega^{(n)}) &= \sum_{i=1}^n Q_i(\Psi^{(n)}) \otimes \omega^{(n)} \\
 &\quad + \sum_{i<j} \mu_{ij}(\Psi^{(n)}) \otimes \text{Res}_{D_{ij}}[\omega^{(n)}] \\
 &\quad + \Psi^{(n)} \otimes d_{\text{config}}\omega^{(n)}
 \end{align}
 
-This heuristically matches the bar differential
+The comparison map must identify this three-term BRST action with the
+bar differential
 $d = d_{\text{int}} + d_{\text{fact}} + d_{\text{config}}$.
 
-\emph{Step 4: Cohomology.} BRST classes are represented by
-BRST-closed states modulo exact states, and the conjectural
-comparison predicts
+\emph{Cohomology.} BRST classes are represented by
+BRST-closed states modulo exact states. After the chain map and anomaly
+hypotheses are supplied, the conjectural comparison predicts
 \[
 H^*_{\text{BRST}}
 =
@@ -3464,10 +3829,16 @@ For the bosonic string with central charge $c = 26$:
 \emph{BRST charge.}
 \[Q_{\text{BRST}} = \oint dz \left[ c(z)T(z) + \frac{1}{2}:c(z)\partial c(z)b(z): \right]\]
 
-\emph{Bar complex.} The string field theory complex is classified by the geometric bar complex:
-\[\barBgeom(\text{Vir}_{26} \otimes \text{ghosts}) \cong \text{String field theory}\]
+\emph{Bar complex.} On the total anomaly-free matter--ghost system,
+the conjectural comparison map has target the geometric bar complex
+\[
+\barBgeom(\mathrm{Vir}_{26}\otimes bc).
+\]
 
-\emph{Cohomology.} Physical states correspond to bar cohomology classes of weight $(1,1)$.
+\emph{Cohomology.} BRST state classes are cohomology classes of
+$Q_{\text{BRST}}$. Identifying them with bar cohomology classes of weight
+\((1,1)\) is the content of the comparison map, not a consequence of
+bar-cobar inversion alone.
 \end{example}
 
 \begin{example}[Superstring theory]
@@ -3479,21 +3850,38 @@ For the superstring with central charge $c = 15$:
 \emph{BRST charge.}
 \[Q_{\text{BRST}} = \oint dz \left[ \gamma(z)G(z) + \frac{1}{2}:\gamma(z)\partial\gamma(z)\beta(z): \right]\]
 
-\emph{Bar complex.} The geometric bar complex includes both NS and R sectors:
-\[\barBgeom(\mathcal{A}_{\text{NS}} \oplus \mathcal{A}_{\text{R}}) \cong \text{Superstring field theory}\]
+\emph{Bar complex.} The comparison target includes the NS and R
+sectors:
+\[
+\barBgeom(\mathcal{A}_{\text{NS}} \oplus \mathcal{A}_{\text{R}}).
+\]
 
-\emph{GSO Projection.} The bar complex automatically implements the GSO projection through the fermionic constraints.
+\emph{GSO Projection.} The GSO projection is an additional parity
+projection on the BRST/string-field side. Its compatibility with the
+bar complex is part of the comparison datum.
 \end{example}
 
 \begin{conjecture}[Anomaly cancellation for matter-ghost systems; \ClaimStatusConjectured]\label{conj:anomaly-cancellation}
 For the \emph{coupled matter-ghost BRST system} in string theory, anomaly cancellation admits a geometric interpretation via the bar complex:
 
 \begin{enumerate}
-\item \emph{Central Charge Constraint:} The \emph{BRST} differential of the combined matter-ghost system satisfies $d_{\text{BRST}}^2 = 0$ if and only if $c_{\text{matter}} = 26$ (bosonic) or $c_{\text{matter}} = 15$ (superstring).
+\item \emph{Central charge constraint.} With the standard ghost
+normalizations $c_{bc}=-26$ and $c_{\beta\gamma}=-15$, the coupled
+BRST differential is square-zero only on the total central-charge-zero
+locus
+\[
+c_{\mathrm{total}}=c_{\mathrm{matter}}+c_{\mathrm{ghost}}=0,
+\]
+hence $c_{\mathrm{matter}}=26$ in the bosonic case and
+$c_{\mathrm{matter}}=15$ in the superstring case.
 
-\item \emph{Modular Invariance:} The bar complex of the total system transforms covariantly under $\operatorname{SL}_2(\mathbb{Z})$ if and only if the anomaly polynomial vanishes.
+\item \emph{Modular covariance.} The bar complex of the total system
+transforms covariantly under $\operatorname{SL}_2(\mathbb{Z})$ only after
+the anomaly class of the coupled matter--ghost system vanishes.
 
-\item \emph{Geometric interpretation.} The anomaly corresponds to the obstruction to extending the bar complex of the total system to higher genus.
+\item \emph{Geometric interpretation.} The anomaly is the obstruction
+class for extending the total bar complex to higher genus with
+compatible sewing.
 \end{enumerate}
 
 \end{conjecture}
@@ -3509,26 +3897,43 @@ nilpotent; this imposes
 $c_{\text{total}} = c_{\text{matter}} + c_{\text{ghost}} = 0$.
 \end{remark}
 
-\begin{remark}[Physical motivation: configuration space geometry]
+\begin{remark}[Configuration-space anomaly class]
 The anomaly arises from the failure of the \emph{total BRST
 differential} to square to zero on the compactified configuration
 space; it is not a statement about the uncurved individual bar
 identity.
 
-\emph{Step 1: Individual Nilpotency.} On an uncurved strict chiral
+\emph{Individual nilpotence.} On an uncurved strict chiral
 algebra, the bar differential satisfies $d_{\text{bar}}^2 = 0$ by
 Theorem~\ref{thm:bar-nilpotency-complete}. In the curved central lane
 one reads $d_{\text{bar},h}^{\,2}=[h_{\bar B},-]$ instead.
 
-\emph{Step 2: BRST Coupling.} The total BRST differential $d_{\text{BRST}} = d_{\text{matter}} + d_{\text{ghost}} + d_{\text{coupling}}$ includes a coupling term from the matter-ghost interaction. The cross-terms yield:
-\[d_{\text{BRST}}^2 = \frac{c_{\text{matter}} + c_{\text{ghost}}}{24} \cdot \chi(\overline{C}_n(X))\]
-where $\chi$ is the Euler characteristic.
+\emph{BRST coupling.} The total BRST differential
+$d_{\text{BRST}} = d_{\text{matter}} + d_{\text{ghost}} +
+d_{\text{coupling}}$ includes the matter--ghost interaction. Its square
+is the inner action of the BRST anomaly class:
+\[
+d_{\text{BRST}}^2=[\mathfrak a_{\mathrm{BRST}},-],
+\qquad
+[\mathfrak a_{\mathrm{BRST}}]
+=c_{\mathrm{total}}\,[\mathfrak a_{\mathrm{Vir}}].
+\]
+Here $[\mathfrak a_{\mathrm{Vir}}]$ is the Virasoro anomaly class in the
+chosen normalization. The scalar coefficient is
+$c_{\mathrm{total}}=c_{\mathrm{matter}}+c_{\mathrm{ghost}}$.
 
-\emph{Step 3: Cancellation.} The anomaly vanishes precisely when $c_{\text{matter}} + c_{\text{ghost}} = 0$. Since $c_{\text{ghost}} = -26$ (bosonic) or $c_{\text{ghost}} = -15$ (superstring), this forces $c_{\text{matter}} = 26$ or $c_{\text{matter}} = 15$ respectively.
+\emph{Cancellation.} The anomaly vanishes when
+$c_{\text{matter}} + c_{\text{ghost}} = 0$. Since
+$c_{\text{ghost}} = -26$ in the bosonic $bc$ system and
+$c_{\text{ghost}} = -15$ in the superstring ghost system, the standard
+critical values are $26$ and $15$ respectively.
 \end{remark}
 
 \begin{remark}
-The geometric bar complex connects BRST cohomology (string theory), OPEs as residues on configuration spaces (conformal field theory), geometric constraints on the central charge (anomaly cancellation), and compatibility with genus-one geometry (modular invariance).
+The geometric bar complex packages BRST cohomology, OPE residues on
+configuration spaces, central-charge anomaly classes, and compatibility
+with genus-one modular geometry. The comparison requires the chain map
+and anomaly cancellation datum of Conjecture~\ref{conj:brst-cohomology}.
 \end{remark}
 
 \section{Relationship between bar-cobar and Koszul duality}
@@ -3542,7 +3947,7 @@ from the coderived category to the ordinary derived category.
 
 \subsection{Precise formulation of the relationship}
 
-\begin{remark}[Criteria for chiral Koszul pairs: updated recollection]\label{rem:koszul-criteria}
+\begin{remark}[Criteria for chiral Koszul pairs]\label{rem:koszul-criteria}
 \label{rem:koszul-chiral}
 \index{Koszul duality!chiral}
 \index{Koszul property}
@@ -3665,25 +4070,39 @@ Bar-cobar inversion gives $\Omega(\bar{B}(\mathcal{H}_k)) \simeq \mathcal{H}_k$ 
 \textup{[Regime: curved-central on the Koszul locus; all genera
 \textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
 
-For a chiral algebra $\mathcal{A}$ on a curve $X$, the genus-$g$ quantum corrections
-satisfy:
-\[Q_g(\mathcal{A}) \oplus Q_g(\mathcal{A}^!) \simeq H^*(\mathcal{M}_g, Z(\mathcal{A}))\]
-where:
+Let $\mathcal{A}$ be a chiral algebra on a curve $X$ lying in the
+curved-central Koszul complementarity lane: the genus-$g$ completed bar
+family is defined, the square-zero total comparison differential
+$\Dg{g}$ or the coderived filtration is fixed, Verdier duality supplies
+the center-transport map
+$\mathcal Z(\mathcal A^!)\simeq\mathcal Z(\mathcal A)$, and the
+obstruction-deformation pairing of Lemma~\ref{lem:obs-def-pairing} is
+perfect. Then the central genus-$g$ correction spaces satisfy
+\[
+Q_g^Z(\mathcal{A}) \oplus Q_g^Z(\mathcal{A}^!)
+\simeq
+H^*(\mathcal{M}_g, \mathcal Z(\mathcal{A})).
+\]
+Here:
 \begin{itemize}
-\item $Q_g(\mathcal{A})$ = space of genus-$g$ obstructions to Koszul duality
-\item $Q_g(\mathcal{A}^!)$ = space of genus-$g$ deformations of the dual algebra
-\item $Z(\mathcal{A})$ = center of $\mathcal{A}$
-\item $H^*(\mathcal{M}_g, Z(\mathcal{A}))$ = cohomology of moduli space with coefficients in center
+\item $Q_g^Z(\mathcal{A})$ is the central summand of genus-$g$
+ obstructions to Koszul complementarity;
+\item $Q_g^Z(\mathcal{A}^!)$ is the central summand of genus-$g$
+ deformations of the dual algebra;
+\item $\mathcal Z(\mathcal{A})$ is the center local system of
+ $\mathcal{A}$ on moduli;
+\item the right side is cohomology of moduli with coefficients in that
+ center local system.
 \end{itemize}
 \end{theorem}
 
-\begin{proof}[Proof (outline; full proof in \S\textup{\ref{sec:complementarity-theorem}})]
-The complete proof, synthesizing five lemmas via the Verdier
-involution~$\sigma$ and the genus spectral sequence, is given in
-Theorem~\ref{thm:quantum-complementarity-main}. Here the spectral
-sequence is taken for the square-zero total comparison differential, or
-equivalently for the coderived filtration on the curved bar family; it
-is not the ordinary spectral sequence of the raw fiber operator when
+\begin{proof}
+Theorem~\ref{thm:quantum-complementarity-main} gives the same
+decomposition from the Verdier involution~$\sigma$ and the genus
+spectral sequence under these hypotheses. The spectral sequence is
+taken for the square-zero total comparison differential, or equivalently
+for the coderived filtration on the curved bar family; it is not the
+ordinary spectral sequence of the raw fiber operator when
 $\dfib^{\,2} \neq 0$.
 
 \emph{Foundation: Curved $A_\infty$ Structures}
@@ -3823,17 +4242,38 @@ the proof of Theorem~\ref{thm:quantum-complementarity-main},
 Steps~3--4.
 \end{proof}
 
-\emph{Step 3: Dual Deformations}
+\emph{Step 3: Dual deformations}
 
-Now consider the Koszul dual $\mathcal{A}^!$. Its genus-$g$ structure is given by
-the cobar construction:
-\[\Omega_g(\mathcal{A}^!) = \text{Sym}(\mathcal{A}^![1])\]
-with differential induced from the coproduct $\Delta: \mathcal{A}^! \to
-\mathcal{A}^! \otimes \mathcal{A}^!$.
+Now consider the Koszul dual $\mathcal{A}^!$.  Its genus-$g$
+deformation complex is not defined by the undualized cobar inverse of
+$\barB(\mathcal A)$.  It is the chiral Hochschild deformation complex
+of $\mathcal A^!$, computed on a chosen completed bar--cobar
+resolution.  On the central summand this gives
+\[
+\mathrm{Def}^{Z}_g(\mathcal{A}^!)
+ := H^1\bigl(\overline{\mathcal M}_g,
+ \mathcal Z(\mathcal A^!)\bigr),
+\]
+with the full deformation complex obtained by replacing
+\(\mathcal Z(\mathcal A^!)\) by
+\(C^\bullet_{\mathrm{ch}}(\mathcal A^!,\mathcal A^!)\).
 
-\begin{lemma}[Deformation space; \ClaimStatusProvedHere]\label{lem:deformation-space}
-The genus-$g$ deformations of $\mathcal{A}^!$ are parametrized by a summand of the cohomology with coefficients in the center:
-\[\mathrm{Def}_g(\mathcal{A}^!) \hookrightarrow H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\mathcal{A}))\]
+\begin{lemma}[Deformation space under center transport; \ClaimStatusProvedHere]\label{lem:deformation-space}
+Assume the complementarity lane supplies a quasi-isomorphism of
+central local systems
+\[
+\tau_Z\colon \mathcal Z(\mathcal A^!)\xrightarrow{\;\sim\;}
+\mathcal Z(\mathcal A)
+\]
+compatible with the Verdier pairing on the chosen completed
+bar--cobar resolutions. Then the central genus-$g$ deformation
+summand of $\mathcal{A}^!$ maps naturally into cohomology with
+coefficients in the transported center:
+\[
+\mathrm{Def}^{Z}_g(\mathcal{A}^!)
+\hookrightarrow
+H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\mathcal{A})).
+\]
 \end{lemma}
 
 \begin{proof}
@@ -3846,22 +4286,22 @@ where $\underline{\mathrm{End}}(\mathcal{A}^!)$ is the local system of
 endomorphisms.
 
 \emph{Chain-level identification.}
-By the bar-cobar adjunction
-(Proposition~\ref{prop:cobar-bar-augmentation}), the endomorphism
-complex of $\mathcal{A}^!$ is quasi-isomorphic to the CDG Hom-complex
-(Proposition~\ref{prop:cdg-hom-complex}):
+Choose the completed bar--cobar resolution of $\mathcal{A}^!$.
+The endomorphism complex of this resolution is quasi-isomorphic to
+the chiral Hochschild cochain complex, hence to the CDG Hom-complex
+of Proposition~\ref{prop:cdg-hom-complex}:
 \[
 \underline{\mathrm{End}}(\mathcal{A}^!)
 \;\simeq\;
 \underline{\mathrm{Hom}}_C^{\mathrm{ch}}(\mathcal{A}^!, \mathcal{A}^!).
 \]
 The degree-$0$ cohomology of this complex is
-$HH^0(\mathcal{A}^!) = Z(\mathcal{A}^!)$. By Koszul duality
-(Theorem~\ref{thm:chiral-koszul-duality}), the center local system
-satisfies $\mathcal{Z}(\mathcal{A}^!) \cong \mathcal{Z}(\mathcal{A})$
-(the bar-cobar involution preserves centers). Hence:
+$HH^0(\mathcal{A}^!) = Z(\mathcal{A}^!)$.  Bar-cobar inversion by
+itself does not identify this center with $Z(\mathcal A)$; the
+comparison is exactly the assumed center-transport map~$\tau_Z$.
+Therefore:
 \[
-\mathrm{Def}_g(\mathcal{A}^!)
+\mathrm{Def}^{Z}_g(\mathcal{A}^!)
 = H^1(\overline{\mathcal{M}}_g, \mathcal{Z}(\mathcal{A}^!))
 \hookrightarrow H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\mathcal{A})).
 \]
@@ -3875,7 +4315,7 @@ deformation space would be trivially zero with trivial coefficients.)}
 
 \begin{lemma}[Obstruction-deformation pairing; \ClaimStatusConditional]\label{lem:obs-def-pairing}
 There is a perfect pairing:
-\[\langle -, - \rangle: Q_g(\mathcal{A}) \otimes Q_g(\mathcal{A}^!) \to
+\[\langle -, - \rangle: Q_g^Z(\mathcal{A}) \otimes Q_g^Z(\mathcal{A}^!) \to
 H^{3g-3}(\overline{\mathcal{M}}_g, \mathbb{C})\]
 given by the trace:
 \[\langle \mathrm{Obs}, \mathrm{Def} \rangle = \mathrm{Tr}(\mathrm{Obs} \circ \mathrm{Def}).\]
@@ -3903,8 +4343,8 @@ By Theorem~\ref{thm:quantum-complementarity-main}(ii), the Verdier
 involution satisfies $\sigma^2 = \mathrm{id}$, so
 $H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\mathcal{A}))$ decomposes
 into $\pm 1$-eigenspaces:
-$Q_g(\mathcal{A}) = \ker(\sigma - \mathrm{id})$ and
-$Q_g(\mathcal{A}^!) = \ker(\sigma + \mathrm{id})$.
+$Q_g^Z(\mathcal{A}) = \ker(\sigma^* - \mathrm{id})$ and
+$Q_g^Z(\mathcal{A}^!) = \ker(\sigma^* + \mathrm{id})$.
 The pairing $\langle -, - \rangle_{\sigma}$ restricts to zero on
 each eigenspace (since $\sigma(\beta) = \pm\beta$ and the
 antisymmetry $\langle \alpha, \sigma\beta \rangle
@@ -3912,7 +4352,7 @@ antisymmetry $\langle \alpha, \sigma\beta \rangle
 equal eigenvalues).
 
 \emph{Step~3: Non-degeneracy.}
-On the cross-terms $Q_g(\mathcal{A}) \otimes Q_g(\mathcal{A}^!)$,
+On the cross-terms $Q_g^Z(\mathcal{A}) \otimes Q_g^Z(\mathcal{A}^!)$,
 the pairing reduces to Serre duality on $\overline{\mathcal{M}}_g$
 with coefficients in $\mathcal{Z}(\mathcal{A})$. Serre duality is
 non-degenerate on the compact orbifold $\overline{\mathcal{M}}_g$,
@@ -3922,7 +4362,12 @@ so the pairing is perfect.
 \emph{Step 5: Center Cohomology}
 
 \begin{lemma}[Center as obstruction-deformation space; \ClaimStatusConditional]\label{lem:center-cohomology}
-The direct sum $Q_g(\mathcal{A}) \oplus Q_g(\mathcal{A}^!)$ naturally identifies with:
+Assume the center-transport hypothesis of
+Lemma~\ref{lem:deformation-space} and assume the transported
+obstruction and deformation subspaces exhaust the $\pm1$ eigenspaces
+of the Verdier involution on
+\(H^*(\overline{\mathcal{M}}_g,\mathcal Z(\mathcal A))\). Then the
+direct sum $Q_g^Z(\mathcal{A}) \oplus Q_g^Z(\mathcal{A}^!)$ identifies with:
 \[H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\mathcal{A}))\]
 \end{lemma}
 
@@ -3940,7 +4385,7 @@ H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\mathcal{A}))
 \]
 It remains to identify the two summands.
 
-\emph{The $+1$-eigenspace is $Q_g(\mathcal{A})$.}
+\emph{The $+1$-eigenspace.}
 By Lemma~\ref{lem:obstruction-class}, the chain-level obstruction is
 governed by the central coefficient $m_0^{(g)}$. Its flat-side
 comparison class lies in the $\sigma$-invariant part of
@@ -3948,20 +4393,19 @@ $H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\mathcal{A}))$, because
 $\sigma(m_0^{(g)}) = m_0^{(g)}$ (the curvature is Verdier-self-dual:
 it is constructed from the volume form $\omega_g$, which is a canonical
 section of $K_{\Sigma_g}$, and Verdier duality acts as the identity on
-canonical sections). The full $+1$-eigenspace is generated by such
-obstruction classes as $g$ varies, giving
-$Q_g(\mathcal{A}) = \ker(\sigma^* - \mathrm{id})$.
+canonical sections). By the exhaustion hypothesis in the statement,
+these obstruction classes fill the invariant summand, giving
+$Q_g^Z(\mathcal{A}) = \ker(\sigma^* - \mathrm{id})$.
 
-\emph{The $-1$-eigenspace is $Q_g(\mathcal{A}^!)$.}
+\emph{The $-1$-eigenspace.}
 By Lemma~\ref{lem:deformation-space},
 $\mathrm{Def}_g(\mathcal{A}^!)$ embeds in
 $H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\mathcal{A}))$.
-Since Koszul duality negates the Verdier involution
-($\sigma_{\mathcal{A}^!} = -\sigma_{\mathcal{A}}$
-on centers, by Theorem~\ref{thm:verdier-bar-cobar}),
-deformation classes lie in the $-1$-eigenspace:
+The anti-invariance of the transported deformation classes is not a
+formal consequence of bar-cobar inversion; it is part of the
+Verdier-compatible center-transport hypothesis. Under that hypothesis,
 \[
-Q_g(\mathcal{A}^!) = \ker(\sigma^* + \mathrm{id}).
+Q_g^Z(\mathcal{A}^!) = \ker(\sigma^* + \mathrm{id}).
 \]
 
 \emph{Exhaustion.}
@@ -3975,7 +4419,11 @@ the decomposition is exhaustive.
 Combining Lemmas \ref{lem:obstruction-class}, \ref{lem:period-integral},
 \ref{lem:deformation-space}, \ref{lem:obs-def-pairing}, and \ref{lem:center-cohomology},
 we conclude:
-\[Q_g(\mathcal{A}) \oplus Q_g(\mathcal{A}^!) \simeq H^*(\mathcal{M}_g, Z(\mathcal{A}))\]
+\[
+Q_g^Z(\mathcal{A}) \oplus Q_g^Z(\mathcal{A}^!)
+\simeq
+H^*(\mathcal{M}_g, \mathcal Z(\mathcal{A}))
+\]
 as claimed.
 
 \end{proof}
@@ -4044,33 +4492,87 @@ uses the $n = 1$ curved $A_\infty$ relation $m_1^2 = [m_0, -]_{m_2}$
 \section{Synthesis}
 \label{sec:cobar-supplement}
 
-\begin{remark}[Cobar construction on $B_{\mathrm{ch}}(\mathbf H_{\Delta_5})$]
+\begin{definition}[Finite Hall--Borcherds recognition gate;
+\ClaimStatusConditional]
+\label{def:finite-hall-borcherds-recognition-gate}
+Fix a Mukai-weight cutoff $W$. A \emph{finite Hall--Borcherds
+recognition gate} for $\mathbf H_{\Delta_5}$ up to weight $W$ is the
+following finite datum.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item a positive-half CoHA model
+$\mathcal H^+_{K3\times E,\le W}$ whose Hall generators are identified
+with the positive BKM root spaces of $\mathfrak g_{\Delta_5}$ up to
+weight $W$;
+\item a completed Hall--Drinfeld double
+$\widehat{\mathcal D}_\hbar(\mathcal H^+_{K3\times E})_{\le W}$ with
+the chosen completion topology and the inclusion of the Cartan and
+negative halves fixed;
+\item a chain map
+\[
+\gamma_W\colon
+\Omega_X\bigl(B_{\mathrm{ch}}(\mathbf H_{\Delta_5})\bigr)_{\le W}
+\longrightarrow
+\mathbf H_{\Delta_5,\le W}
+\]
+compatible with the Hall product, the bar/cobar differentials, and the
+weight filtration;
+\item source provenance fixing all normalisations: Schiffmann--Vasserot
+and Davison for the positive-half CoHA, Borcherds for the automorphic
+product, Gritsenko--Nikulin for the $\Delta_5$ root multiplicities, and
+Drinfeld and Etingof--Kazhdan for the associator convention;
+\item a parity/root fixture specifying the three real roots
+$\alpha_{-1},\alpha_0,\alpha_1$, the imaginary-root parity, and the
+positive cone used to pass from Fourier modes to BKM generators;
+\item an independent coefficient match: for every root in the cutoff,
+the Hall multiplicity, the Borcherds product exponent, and the
+$\phi_{0,1}^{K3}$ Fourier coefficient give the same signed
+multiplicity.
+\end{enumerate}
+A recognition system is a compatible family of such gates for all
+cutoffs $W$, with transition maps commuting with the $\gamma_W$.
+\end{definition}
+
+\begin{remark}[Cobar construction on $B_{\mathrm{ch}}(\mathbf H_{\Delta_5})$;
+\ClaimStatusConditional]
 \label{rem:cobar-1}
-The cobar construction $\Omega_X$, applied to the bar coalgebra of the
-K3 chiral bialgebra $\mathbf H_{\Delta_5}$, produces
+Assume a recognition system in the sense of
+Definition~\ref{def:finite-hall-borcherds-recognition-gate}. The cobar
+construction $\Omega_X$, applied to the bar coalgebra of the K3 chiral
+bialgebra $\mathbf H_{\Delta_5}$, then carries a comparison
 \[
 \Omega_X\bigl(B_{\mathrm{ch}}(\mathbf H_{\Delta_5})\bigr)
 \;=\;
-T_{\mathrm{ch}}\!\bigl(s\,\overline{B_{\mathrm{ch}}(\mathbf H_{\Delta_5})}\bigr)
-\;\simeq\;
+T_{\mathrm{ch}}\!\bigl(s^{-1}\overline{B_{\mathrm{ch}}(\mathbf H_{\Delta_5})}\bigr)
+\;\xrightarrow{\;\gamma\;}\;
 \mathbf H_{\Delta_5},
 \]
 where the tensor is taken in the Hall-theoretic ambient category
 $\mathrm{CoHA}_{K3\times E}$ and the differential is the cobar-dual of
 the bar differential $d_B$ decomposed in \S\ref{V2-sec:bar-cobar-review-supplement}.
-The quasi-isomorphism $\Omega_X\bigl(B_{\mathrm{ch}}(\mathbf H_{\Delta_5})\bigr)\simeq \mathbf H_{\Delta_5}$
-is the K3 incarnation of bar--cobar inversion (Theorem~A).
-At $\hbar^2 = -1/8$ this is a genuine equivalence in the Hall
-subcategory; away from this Lusztig specialisation it is only a
-quasi-isomorphism of filtered complexes, with the filtration controlled
-by the Siegel-modular weight. Cross-ref Vol.~III,
+If every finite map $\gamma_W$ is a quasi-isomorphism and the
+quasi-isomorphisms commute with the transition maps, then $\gamma$
+gives the K3 incarnation of bar--cobar inversion
+\[
+\Omega_X\bigl(B_{\mathrm{ch}}(\mathbf H_{\Delta_5})\bigr)
+\;\simeq\;
+\mathbf H_{\Delta_5}.
+\]
+At $\hbar^2 = -1/8$ the stronger Hall-subcategory equivalence is the
+additional statement that the completed Hall--Drinfeld double in the
+recognition gate identifies the source and target as Hall objects; away
+from this Lusztig specialisation the output is only a filtered
+quasi-isomorphism, with filtration controlled by the Siegel-modular
+weight. Cross-ref Vol.~III,
 Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}, Theorem~A.
 \end{remark}
 
-\begin{remark}[Cobar differential four-piece decomposition]
+\begin{remark}[Cobar differential four-piece decomposition;
+\ClaimStatusConditional]
 \label{rem:cobar-2}
-The cobar differential $d_\Omega$ on $\Omega_X(B_{\mathrm{ch}}(\mathbf H_{\Delta_5}))$
-decomposes, by duality to the bar differential, as
+Under the same finite recognition system, the cobar differential
+$d_\Omega$ on
+$\Omega_X(B_{\mathrm{ch}}(\mathbf H_{\Delta_5}))$ decomposes, by
+duality to the bar differential, as
 \[
 d_\Omega \;=\; d^\vee_{\mathrm{Hall}} \;+\; d^\vee_{\mathrm{Sieg}} \;+\; \hbar\, d^\vee_{\mathrm{assoc}} \;+\; \hbar^2\, d^\vee_{\Phi_{10}/\eta^{24}},
 \]
@@ -4097,9 +4599,11 @@ Borcherds 1995, Drinfeld 1990, Gritsenko--Nikulin 1997--98.
 \end{remark}
 
 \begin{definition}[Cobar-side ordered convolution dGLA for
-$\mathbf{H}_{\Delta_5}$; \ClaimStatusProvedHere]
+$\mathbf{H}_{\Delta_5}$; \ClaimStatusConditional]
 \label{def:cobar-convolution-dgla-k3}
-Dually to Definition~\ref{def:convolution-dgla-k3} of
+Conditionally on a recognition system as in
+Definition~\ref{def:finite-hall-borcherds-recognition-gate}, and
+dually to Definition~\ref{def:convolution-dgla-k3} of
 Chapter~\ref{chap:bar-construction}, define the \emph{cobar-side}
 ordered convolution dGLA
 \[
@@ -4107,14 +4611,17 @@ ordered convolution dGLA
  \;:=\;
  \mathrm{Hom}_{\Bbbk}\!\bigl(B_{\mathrm{ch}}(\mathbf{H}_{\Delta_5}),\,
  \mathbf{H}_{\Delta_5}\bigr)
- \;\cong\;
+ \;\cong_{\mathrm{Rec}}\;
  \mathrm{Hom}_{\mathrm{chAlg}}\!\bigl(
  \Omega_X\bigl(B_{\mathrm{ch}}(\mathbf{H}_{\Delta_5})\bigr),\,
  \mathbf{H}_{\Delta_5}\bigr),
 \]
-where the second isomorphism is the bar--cobar adjunction
+where $\cong_{\mathrm{Rec}}$ denotes the bar--cobar adjunction
 (Theorem~\ref{thm:bar-cobar-inversion-qi}) applied to
-$\mathbf{H}_{\Delta_5}$. Explicitly: an element
+$\mathbf{H}_{\Delta_5}$ after the finite chain maps $\gamma_W$ have
+recognized the Hall model. Before this gate is supplied, the
+unconditional object is only the first Hom complex. Explicitly: an
+element
 $\phi\in\mathfrak{C}^{\Omega,p}$ of cohomological degree $p$ is a
 $\Bbbk$-linear map
 $\phi\colon B_{\mathrm{ch}}(\mathbf{H}_{\Delta_5})\to
@@ -4123,7 +4630,10 @@ shifting degree by $p$, working in the weight-completed pro-category
 of Remark~\ref{rem:c1-weight-completion-k3-convolution} of the bar
 chapter.
 \begin{enumerate}[label=\textup{(\alph*)}]
-\item \emph{Generators.} A basis for $B_{\mathrm{ch}}(\mathbf{H}_{\Delta_5})$
+\item \emph{Generators.} After the recognition gate has fixed the
+positive-half CoHA model, the Drinfeld double completion, the
+parity/root fixture, and the independent coefficient match, a basis for
+$B_{\mathrm{ch}}(\mathbf{H}_{\Delta_5})$ in each finite weight window
 is given by ordered tensor words
 $w = s^{-1}x_{i_1}\otimes\cdots\otimes s^{-1}x_{i_n}$
 with $x_{i_k}\in\{e_\alpha, f_\alpha, h_\alpha\}$ ranging over the
@@ -4132,10 +4642,12 @@ BKM generators of $\mathbf{H}_{\Delta_5}$: three real roots $\alpha_{-1},
 Nikulin~1995), and imaginary roots indexed by the positive-cone
 Fourier modes of the K3 elliptic genus $\phi_{0,1}^{K3}$ with
 Gritsenko--Nikulin multiplicities $c_{\Delta_5}(N,\ell)$. A basis
-element of $\mathfrak{C}^{\Omega}_{\mathbf{H}_{\Delta_5}}$ is
-specified by a pair $(w, y)$ with $w\in B_{\mathrm{ch}}$ and
-$y\in\mathbf{H}_{\Delta_5}$: it maps $w\mapsto y$ and kills all
-other basis words.
+element of the recognized finite piece
+$\mathfrak{C}^{\Omega}_{\mathbf{H}_{\Delta_5},\le W}$ is specified by a
+pair $(w, y)$ with $w\in B_{\mathrm{ch},\le W}$ and
+$y\in\mathbf{H}_{\Delta_5,\le W}$: it maps $w\mapsto y$ and kills all
+other recognized basis words. The completed dGLA is the inverse limit
+over the finite recognized pieces.
 \item \emph{Differential.} The cobar-side differential is
  \[
  (D\phi)(w) \;=\; d_A\bigl(\phi(w)\bigr)\;-\;(-1)^p \phi(d_B w),

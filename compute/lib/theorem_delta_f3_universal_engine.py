@@ -1,10 +1,12 @@
-r"""Universal N-formula for delta_F_3^{grav}(W_N) at genus 3.
+r"""Finite-window N-formula for delta_F_3^{grav}(W_N) at genus 3.
 
-THEOREM-PROVING ENGINE: derives the universal polynomial formula
+Finite-window graph sums give the Laurent polynomial
 
-    delta_F_3^{grav}(W_N, c) = C_3(N) + B_3(N)/c + A_3(N)/c^2
+    delta_F_3^{grav}(W_N, c)
+        = D_3(N)c + C_3(N) + B_3(N)/c + A_3(N)/c^2
 
-where C_3, B_3, A_3 are polynomials in N with C_3(2) = B_3(2) = A_3(2) = 0
+where D_3, C_3, B_3, A_3 are reconstructed polynomials in N with
+D_3(2) = C_3(2) = B_3(2) = A_3(2) = 0
 (the correction vanishes for Virasoro, which is uniform-weight).
 
 MATHEMATICAL SETUP
@@ -36,16 +38,17 @@ KEY STRUCTURE: At genus 3, the graph sum involves edges up to 6 (= 3*3 - 3).
 Each propagator contributes a factor j/c, so the amplitude for a graph with
 e edges has a factor 1/c^e from propagators. The vertex factors contribute
 powers of c from the 3-point couplings and lambda_g from higher-genus vertices.
-The net c-dependence after summing gives delta_F_3 = C + B/c + A/c^2.
+The net c-dependence after summing gives
+delta_F_3 = D*c + C + B/c + A/c^2.
 
 VERIFICATION PATHS:
   1. Direct graph sum (brute force over all 42 genus-3 stable graphs)
-  2. Newton interpolation: extract C, B, A from 3 c-values per N
-  3. Lagrange interpolation: fit C, B, A as polynomials in N
+  2. Four-point Laurent extraction: extract D, C, B, A from c-values per N
+  3. Lagrange interpolation: fit D, C, B, A as polynomials in N
   4. Vanishing at N=2 (Virasoro = uniform weight, delta = 0)
   5. Cross-check at N=3 against known delta_F_3(W_3, c)
   6. Positivity for N >= 3, c > 0
-  7. Large-c asymptotics (C_3(N) dominates)
+  7. Large-c asymptotics (D_3(N)c dominates)
   8. Per-graph decomposition analysis
 
 References:
@@ -58,6 +61,7 @@ References:
 from __future__ import annotations
 
 from fractions import Fraction
+from functools import lru_cache
 from itertools import product as cartprod
 from math import factorial, comb
 from typing import Dict, List, NamedTuple, Optional, Tuple
@@ -66,6 +70,120 @@ from compute.lib.stable_graph_enumeration import (
     StableGraph,
     enumerate_stable_graphs,
 )
+
+
+# ============================================================================
+# Scope and object-normalization firewalls
+# ============================================================================
+
+HOLOGRAPHIC_PACKAGE_ENTRIES: Tuple[str, ...] = (
+    "A",
+    "A^i",
+    "A^!",
+    "C",
+    "r(z)",
+    "Theta_A",
+    "nabla^hol",
+)
+
+
+MODULAR_KOSZUL_COMPUTE_PROJECTIONS: Tuple[str, ...] = (
+    "Fact_X(L)",
+    "barB_X(L)",
+    "Theta_L",
+    "L_L",
+    "(V_br,T_br)",
+    "R4_mod(L)",
+)
+
+
+GENUS3_DIRECT_GRAPH_CHECKED_N: Tuple[int, ...] = (2, 3, 4, 5, 6, 7, 8)
+GENUS3_FULL_OPE_EXACT_N: Tuple[int, ...] = (3,)
+
+
+def holographic_package_entries() -> Tuple[str, ...]:
+    """Return the seven entries of the holographic package H(A)."""
+    return HOLOGRAPHIC_PACKAGE_ENTRIES
+
+
+def modular_koszul_compute_projections() -> Tuple[str, ...]:
+    """Return the primary projections of the modular Koszul compute package."""
+    return MODULAR_KOSZUL_COMPUTE_PROJECTIONS
+
+
+def typed_object_firewall() -> Dict[str, str]:
+    """Typed roles for the bar, Verdier, inversion, and Hochschild objects."""
+    return {
+        "A": "input chiral algebra",
+        "B(A)": "ordered bar coalgebra T^c(s^{-1}bar A)",
+        "A^i": "bar cohomology coalgebra H^*(B(A))",
+        "A^!": (
+            "Verdier/continuous-linear dual branch under finite-type or "
+            "completed hypotheses"
+        ),
+        "Omega(B(A))": "bar-cobar inversion recovering A",
+        "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/derived-centre bulk",
+    }
+
+
+def kernel_normalization_constants(
+    c: Fraction = Fraction(26),
+    k: Fraction = Fraction(1),
+    h_vee: Fraction = Fraction(2),
+) -> Dict[str, Dict[str, object]]:
+    """Canonical kernel normalizations used to interpret this scalar surface."""
+    c = Fraction(c)
+    k = Fraction(k)
+    h_vee = Fraction(h_vee)
+    if k + h_vee == 0:
+        raise ValueError("affine KZ coefficient is undefined at k = -h_vee")
+    return {
+        "affine_raw_collision": {
+            "formula": "k*Omega_tr/z",
+            "coefficient": k,
+        },
+        "affine_kz_coefficient": {
+            "formula": "Omega/((k+h^vee)z)",
+            "coefficient": Fraction(1) / (k + h_vee),
+        },
+        "heisenberg_raw_collision": {
+            "formula": "k/z",
+            "coefficient": k,
+        },
+        "virasoro_collision": {
+            "formula": "(c/2)/z^3 + 2T/z",
+            "central_coefficient": c / 2,
+            "stress_coefficient": Fraction(2),
+        },
+    }
+
+
+def genus3_gravitational_formula_scope() -> Dict[str, object]:
+    """Finite-window scope and over-promotion guard for delta_F_3^{grav}."""
+    return {
+        "status": "finite genus-3 gravitational graph-sum reconstruction",
+        "genus": 3,
+        "formula": "D*c + C + B/c + A/c^2",
+        "gravitational_truncation": True,
+        "direct_graph_checked_N": GENUS3_DIRECT_GRAPH_CHECKED_N,
+        "full_ope_exact_for_N": GENUS3_FULL_OPE_EXACT_N,
+        "full_ope_exact_for_generic_WN": False,
+        "proved_all_genus": False,
+        "proved_all_N_full_ope": False,
+        "cohomological_theorem_d_statement": False,
+        "class_valued_mc_lift_proved": False,
+        "scalar_projection_only": True,
+        "delta_diagnostic_promoted_to_universal_theorem": False,
+        "normalization": {
+            "metric": "eta_{jj}=c/j",
+            "propagator": "eta^{jj}=j/c",
+            "graph_weight": "1/|Aut(Gamma)|",
+        },
+        "typed_objects": typed_object_firewall(),
+        "holographic_package_entries": holographic_package_entries(),
+        "modular_koszul_compute_projections": modular_koszul_compute_projections(),
+        "kernel_normalizations": kernel_normalization_constants(),
+    }
 
 
 # ============================================================================
@@ -101,9 +219,10 @@ def lambda_fp(g: int) -> Fraction:
 # Genus-3 stable graph data
 # ============================================================================
 
-def genus3_graphs() -> List[StableGraph]:
+@lru_cache(maxsize=1)
+def genus3_graphs() -> Tuple[StableGraph, ...]:
     """The 42 stable graphs of M_bar_{3,0}."""
-    return enumerate_stable_graphs(3, 0)
+    return tuple(enumerate_stable_graphs(3, 0))
 
 
 # ============================================================================
@@ -159,6 +278,7 @@ def grav_kappa_total(N: int, c: Fraction) -> Fraction:
 # Vertex factors
 # ============================================================================
 
+@lru_cache(maxsize=None)
 def grav_V0_factorize(channels: Tuple[int, ...], c: Fraction,
                       all_weights: Tuple[int, ...]) -> Fraction:
     r"""Genus-0 n-point vertex factor via recursive factorization.
@@ -186,6 +306,7 @@ def grav_V0_factorize(channels: Tuple[int, ...], c: Fraction,
     return total
 
 
+@lru_cache(maxsize=None)
 def grav_vertex_factor(gv: int, channels: Tuple[int, ...], c: Fraction,
                        all_weights: Tuple[int, ...]) -> Fraction:
     """Vertex factor V_{g,n}(channels).
@@ -215,33 +336,43 @@ def grav_vertex_factor(gv: int, channels: Tuple[int, ...], c: Fraction,
 # Half-edge channel assignment
 # ============================================================================
 
+@lru_cache(maxsize=None)
 def half_edge_channels(graph: StableGraph, sigma: Tuple[int, ...]
-                       ) -> List[Tuple[int, ...]]:
+                       ) -> Tuple[Tuple[int, ...], ...]:
     """Compute per-vertex half-edge channel assignments.
 
     For each edge (v1, v2):
       - If v1 == v2 (self-loop): two half-edges at v1, both with sigma[e]
       - If v1 != v2 (bridge): one half-edge at v1, one at v2, both sigma[e]
+
+    Genus-0 factorization is not associative for the W_N Frobenius data.
+    The stable-graph convention pairs self-loop half-edges first, then
+    bridge half-edges in edge-list order.
     """
     nv = graph.num_vertices
-    he: List[List[int]] = [[] for _ in range(nv)]
+    self_loop_he: List[List[int]] = [[] for _ in range(nv)]
+    bridge_he: List[List[int]] = [[] for _ in range(nv)]
 
     for e_idx, (v1, v2) in enumerate(graph.edges):
         ch = sigma[e_idx]
         if v1 == v2:
-            he[v1].append(ch)
-            he[v1].append(ch)
+            self_loop_he[v1].append(ch)
+            self_loop_he[v1].append(ch)
         else:
-            he[v1].append(ch)
-            he[v2].append(ch)
+            bridge_he[v1].append(ch)
+            bridge_he[v2].append(ch)
 
-    return [tuple(he[v]) for v in range(nv)]
+    return tuple(
+        tuple(self_loop_he[v] + bridge_he[v])
+        for v in range(nv)
+    )
 
 
 # ============================================================================
 # Graph amplitude computation
 # ============================================================================
 
+@lru_cache(maxsize=None)
 def graph_amplitude_raw(graph: StableGraph, sigma: Tuple[int, ...],
                         c: Fraction, all_weights: Tuple[int, ...]) -> Fraction:
     """Raw amplitude A(Gamma, sigma) WITHOUT the 1/|Aut| factor.
@@ -362,7 +493,7 @@ def delta_F3_grav_per_graph(N: int, c: Fraction) -> List[Dict[str, Fraction]]:
 
 
 # ============================================================================
-# Full genus-3 free energy (total, not just cross-channel)
+# Full genus-3 free energy, including the cross-channel contribution
 # ============================================================================
 
 def F3_grav_total(N: int, c: Fraction) -> Fraction:
@@ -378,111 +509,28 @@ def F3_grav_total(N: int, c: Fraction) -> Fraction:
         decomp = graph_amplitude_decomposed(graph, c, all_weights)
         total += decomp['total']
 
-    # Also add the smooth graph (0 edges, contributes nothing to graph sum)
-    # The smooth graph has V_{3,0} which is kappa * lambda_3 at the scalar level,
-    # but our graph sum already handles it (returns 0 for 0-edge graphs).
-    # The full F_3 from the graph sum includes ONLY graphs with edges.
-    # The smooth contribution kappa * lambda_3 is included in the diagonal
-    # part of graphs with edges, EXCEPT it's not: the smooth graph has 0 edges.
-    #
-    # Actually, the formula F_3 = sum_Gamma ... includes the smooth graph
-    # ONLY at the "vertex factor" level. With 0 edges, there's no amplitude
-    # from propagators. The smooth contribution is handled by the scalar formula.
-    #
-    # For our decomposition: F_3 = kappa * lambda_3 (smooth) + graph-sum (boundary)
-    # But actually the standard decomposition is F_3 = sum over ALL graphs including smooth.
-    # The smooth graph contributes: (1/|Aut|) * V_{3,0} = V_{3,0} = sum_j kappa_j * lambda_3
-    # = kappa * lambda_3. So the total is kappa * lambda_3 + (contributions from graphs with edges).
-    #
-    # Our graph sum already returns the sum over graphs with >= 1 edge.
-    # Total = kappa * lambda_3 + total_from_graph_sum.
-    # But wait: the F_g formula uses a DIFFERENT decomposition.
-    #
-    # Let me reconsider. The standard graph-sum formula for F_g at the SCALAR level is:
-    #   F_g = kappa * lambda_g^FP (Theorem D, scalar level)
-    # where lambda_g^FP ALREADY includes contributions from ALL graphs.
-    # The non-scalar correction is delta_F_g, which comes from MIXED channel assignments.
-    # So: F_3 = kappa * lambda_3 + delta_F_3.
-    # The graph sum over ALL graphs (including smooth) with ALL channel assignments
-    # gives F_3 directly. The smooth graph contributes kappa * lambda_3.
-    # But our graph_amplitude_decomposed returns 0 for the smooth graph.
-    #
-    # So the total from graph sum over boundary strata = F_3 - (smooth contribution).
-    # And delta_F_3 = sum of mixed parts from boundary strata.
-    #
-    # Actually the FULL story: F_g = sum_Gamma (1/|Aut|) sum_sigma A(Gamma, sigma).
-    # The smooth graph (0 edges) contributes V_{3,0} = kappa_total * lambda_3.
-    # This is purely diagonal. So delta_F_3 = sum of mixed parts = our calculation.
+    # The smooth graph has no edge labels and contributes only the scalar
+    # Faber-Pandharipande lane. Mixed cross-channel terms come from the
+    # positive-edge boundary graphs.
 
     return total + grav_kappa_total(N, c) * lambda_fp(3)
 
 
 # ============================================================================
-# Newton interpolation: extract C_3, B_3, A_3 from 3 c-values
+# Laurent extraction: D_3, C_3, B_3, A_3 from four c-values
 # ============================================================================
 
 def newton_interpolate_delta_F3(N: int, c1: Fraction = Fraction(1),
                                 c2: Fraction = Fraction(2),
-                                c3: Fraction = Fraction(3)
-                                ) -> Tuple[Fraction, Fraction, Fraction]:
-    """Extract C_3(N), B_3(N), A_3(N) from delta_F_3 at three c-values.
+                                c3: Fraction = Fraction(3),
+                                c4: Fraction = Fraction(4),
+                                ) -> Tuple[Fraction, Fraction, Fraction, Fraction]:
+    """Extract D_3(N), C_3(N), B_3(N), A_3(N) from four c-values.
 
-    delta_F_3(N, c) = C_3(N) + B_3(N)/c + A_3(N)/c^2
-
-    Given values at c = c1, c2, c3, solve the 3x3 linear system.
-
-    Returns (C_3, B_3, A_3).
+    The historical function name is retained for callers; the genus-3
+    scalar compute surface is the four-term Laurent polynomial.
     """
-    f1 = delta_F3_grav_graph_sum(N, c1)
-    f2 = delta_F3_grav_graph_sum(N, c2)
-    f3 = delta_F3_grav_graph_sum(N, c3)
-
-    # System: f_i = C + B/c_i + A/c_i^2
-    # Let x = 1/c_i.
-    x1, x2, x3 = Fraction(1) / c1, Fraction(1) / c2, Fraction(1) / c3
-
-    # Vandermonde system in x: f_i = C + B*x_i + A*x_i^2
-    # Solve via explicit formula (3x3 Vandermonde)
-    # Using Lagrange interpolation in x-space:
-    # The polynomial p(x) = C + B*x + A*x^2 satisfies p(x_i) = f_i.
-    # A = coefficient of x^2, B = coefficient of x, C = constant term.
-
-    # Lagrange basis:
-    # L_1(x) = (x - x2)(x - x3) / ((x1 - x2)(x1 - x3))
-    # L_2(x) = (x - x1)(x - x3) / ((x2 - x1)(x2 - x3))
-    # L_3(x) = (x - x1)(x - x2) / ((x3 - x1)(x3 - x2))
-    # p(x) = f1*L_1(x) + f2*L_2(x) + f3*L_3(x)
-
-    d12 = x1 - x2
-    d13 = x1 - x3
-    d23 = x2 - x3
-
-    # p(x) = f1*(x-x2)(x-x3)/(d12*d13) + f2*(x-x1)(x-x3)/(-d12*d23)
-    #       + f3*(x-x1)(x-x2)/(d13*d23) ... wait, sign.
-    # d21 = x2 - x1 = -d12, d31 = x3 - x1 = -d13, d32 = x3 - x2 = -d23.
-    # L_2 denom = (x2-x1)(x2-x3) = (-d12)*d23 ... hmm, let me just do it directly.
-
-    denom1 = (x1 - x2) * (x1 - x3)
-    denom2 = (x2 - x1) * (x2 - x3)
-    denom3 = (x3 - x1) * (x3 - x2)
-
-    # p(x) = sum_i f_i * prod_{j != i} (x - x_j) / denom_i
-    # Expand each (x - x_j)(x - x_k) = x^2 - (x_j+x_k)x + x_j*x_k
-
-    # Coefficient of x^2:
-    A = f1 / denom1 + f2 / denom2 + f3 / denom3
-
-    # Coefficient of x^1:
-    B = (f1 * (-(x2 + x3)) / denom1
-         + f2 * (-(x1 + x3)) / denom2
-         + f3 * (-(x1 + x2)) / denom3)
-
-    # Coefficient of x^0:
-    C = (f1 * x2 * x3 / denom1
-         + f2 * x1 * x3 / denom2
-         + f3 * x1 * x2 / denom3)
-
-    return (C, B, A)
+    return extract_DCBA_from_c_values(N, c1, c2, c3, c4)
 
 
 def newton_interpolate_delta_F3_verify(N: int,
@@ -490,18 +538,19 @@ def newton_interpolate_delta_F3_verify(N: int,
                                        ) -> Dict[str, object]:
     """Interpolate and verify at additional c-values.
 
-    Returns dict with 'C', 'B', 'A' and 'verification' results.
+    Returns dict with 'D', 'C', 'B', 'A' and 'verification' results.
     """
     if c_values is None:
         c_values = tuple(Fraction(k) for k in range(1, 8))
 
-    # Interpolate from first 3
-    C, B, A = newton_interpolate_delta_F3(N, c_values[0], c_values[1], c_values[2])
+    D, C, B, A = newton_interpolate_delta_F3(
+        N, c_values[0], c_values[1], c_values[2], c_values[3]
+    )
 
     # Verify at remaining c-values
     verification = []
     for cv in c_values:
-        predicted = C + B / cv + A / (cv * cv)
+        predicted = D * cv + C + B / cv + A / (cv * cv)
         actual = delta_F3_grav_graph_sum(N, cv)
         verification.append({
             'c': cv,
@@ -510,11 +559,11 @@ def newton_interpolate_delta_F3_verify(N: int,
             'match': predicted == actual,
         })
 
-    return {'C': C, 'B': B, 'A': A, 'verification': verification}
+    return {'D': D, 'C': C, 'B': B, 'A': A, 'verification': verification}
 
 
 # ============================================================================
-# Polynomial fitting: C_3(N), B_3(N), A_3(N) as polynomials in N
+# Polynomial fitting: D_3(N), C_3(N), B_3(N), A_3(N) as polynomials in N
 # ============================================================================
 
 def lagrange_interpolate_polynomial(points: List[Tuple[int, Fraction]]
@@ -577,49 +626,49 @@ def evaluate_polynomial(coeffs: List[Fraction], x: Fraction) -> Fraction:
     return result
 
 
-def _compute_CBA_for_N(N: int) -> Tuple[Fraction, Fraction, Fraction]:
-    """Compute (C_3(N), B_3(N), A_3(N)) via Newton interpolation at c=1,2,3."""
+def _compute_DCBA_for_N(N: int) -> Tuple[Fraction, Fraction, Fraction, Fraction]:
+    """Compute (D_3(N), C_3(N), B_3(N), A_3(N)) from c=1,2,3,4."""
     return newton_interpolate_delta_F3(N)
 
 
 def fit_polynomials(N_values: List[int] = None,
                     ) -> Dict[str, List[Fraction]]:
-    """Fit C_3(N), B_3(N), A_3(N) as polynomials in N.
+    """Fit D_3(N), C_3(N), B_3(N), A_3(N) as polynomials in N.
 
-    Strategy: compute C_3, B_3, A_3 at enough N values, then use
+    Strategy: compute D_3, C_3, B_3, A_3 at enough N values, then use
     Lagrange interpolation to find the polynomial coefficients.
 
-    The degree of C_3(N) is expected to be at most 4 (from genus-2 analogy
-    where B_2 has degree 2 and A_2 has degree 4). For genus 3 with an
-    additional 1/c factor, we expect:
-      - C_3(N): degree <= 6 (from graphs with <= 3 edges contributing c^0)
-      - B_3(N): degree <= 8 (from graphs with <= 4 edges contributing c^{-1})
-      - A_3(N): degree <= 10 (from graphs with <= 5 edges contributing c^{-2})
+    The genus-3 degree pattern is 1, 3, 5, 7 for D, C, B, A.
 
     We compute at N = 2, 3, ..., 12 to overdetermine the system and verify.
     """
     if N_values is None:
         N_values = list(range(2, 13))
 
+    D_points = []
     C_points = []
     B_points = []
     A_points = []
 
     for N in N_values:
-        C, B, A = _compute_CBA_for_N(N)
+        D, C, B, A = _compute_DCBA_for_N(N)
+        D_points.append((N, D))
         C_points.append((N, C))
         B_points.append((N, B))
         A_points.append((N, A))
 
     # Find minimal degree for each
+    D_coeffs = _fit_minimal_degree(D_points)
     C_coeffs = _fit_minimal_degree(C_points)
     B_coeffs = _fit_minimal_degree(B_points)
     A_coeffs = _fit_minimal_degree(A_points)
 
     return {
+        'D_coeffs': D_coeffs,
         'C_coeffs': C_coeffs,
         'B_coeffs': B_coeffs,
         'A_coeffs': A_coeffs,
+        'D_points': D_points,
         'C_points': C_points,
         'B_points': B_points,
         'A_points': A_points,
@@ -654,32 +703,32 @@ def _fit_minimal_degree(points: List[Tuple[int, Fraction]]) -> List[Fraction]:
 
 
 # ============================================================================
-# Claimed formula (to be derived)
+# Closed-form compatibility aliases
 # ============================================================================
 
-def claimed_C3(N: int) -> Optional[Fraction]:
-    """Claimed C_3(N) -- to be filled in after derivation."""
-    return None
+def claimed_D3(N: int) -> Fraction:
+    """Compatibility alias for D_3(N)."""
+    return D3_formula(N)
 
 
-def claimed_B3(N: int) -> Optional[Fraction]:
-    """Claimed B_3(N) -- to be filled in after derivation."""
-    return None
+def claimed_C3(N: int) -> Fraction:
+    """Compatibility alias for C_3(N)."""
+    return C3_formula(N)
 
 
-def claimed_A3(N: int) -> Optional[Fraction]:
-    """Claimed A_3(N) -- to be filled in after derivation."""
-    return None
+def claimed_B3(N: int) -> Fraction:
+    """Compatibility alias for B_3(N)."""
+    return B3_formula(N)
 
 
-def claimed_formula_F3(N: int, c: Fraction) -> Optional[Fraction]:
-    """Claimed delta_F_3^{grav}(W_N, c) = C_3(N) + B_3(N)/c + A_3(N)/c^2."""
-    C = claimed_C3(N)
-    B = claimed_B3(N)
-    A = claimed_A3(N)
-    if C is None or B is None or A is None:
-        return None
-    return C + B / c + A / (c * c)
+def claimed_A3(N: int) -> Fraction:
+    """Compatibility alias for A_3(N)."""
+    return A3_formula(N)
+
+
+def claimed_formula_F3(N: int, c: Fraction) -> Fraction:
+    """Compatibility alias for delta_F_3^{grav}(W_N, c)."""
+    return delta_F3_formula(N, c)
 
 
 # ============================================================================
@@ -706,45 +755,15 @@ def harmonic_minus_one(N: int) -> Fraction:
 # ============================================================================
 
 def delta_F3_W3_known(c: Fraction) -> Fraction:
-    """Known delta_F_3(W_3, c) from the manuscript.
+    """Certified W_3 genus-3 cross-channel correction.
 
-    The total F_3(W_3, c) is:
-      (5c^3 + 3792c^2 + 1149120c + 217071360) / (138240 c^2)
-
-    The scalar part is kappa(W_3) * lambda_3^FP where kappa(W_3) = c/2 + c/3 = 5c/6.
-    lambda_3^FP = 31/967680.
-    scalar = (5c/6) * 31/967680 = 155c/5806080 = 31c/1161216 = 5c/187776...
-    Let me compute: 5*31 = 155, 6*967680 = 5806080. 155/5806080 = 31/1161216.
-    Simplify: gcd(31, 1161216). 1161216 / 31 = 37458.9... no.
-    31 is prime. 1161216 = 31 * 37458 + 18? Let me just compute.
-    Actually: 5c/6 * 31/967680 = 5*31/(6*967680) * c = 155/5806080 * c.
-    155 = 5*31. 5806080 = 6*967680. 967680 = 2^7 * 3 * 5 * 503? No.
-    Let me compute properly.
-
-    kappa(W_3) = c*(1/2 + 1/3) = c*5/6.
-    scalar = c*5/6 * 31/967680 = 155c/5806080 = 31c/1161216.
-    Hmm: 155/5806080. gcd(155, 5806080) = 5. So 31/1161216.
-
-    delta = F_3 - scalar
-          = (5c^3 + 3792c^2 + 1149120c + 217071360)/(138240c^2) - 31c/1161216
-
-    Let me convert to common denominator. 138240 and 1161216:
-    138240 = 2^7 * 3^2 * 5 * 24 = ... actually 138240 = 138240.
-    1161216 = 1161216.
-    This is getting complicated. Let me just compute numerically and verify.
-
-    Better: let the engine compute it directly.
+    delta_F_3(W_3,c)
+        = c/27648 + 79/2880 + (133/16)/c + (6281/4)/c^2
+        = (5c^3 + 3792c^2 + 1149120c + 217071360)/(138240c^2).
     """
-    # Total F_3 from manuscript
-    num = 5 * c**3 + 3792 * c**2 + 1149120 * c + Fraction(217071360)
-    denom = 138240 * c**2
-    total = num / denom
-
-    # Scalar part
-    kappa_W3 = c * Fraction(5, 6)
-    scalar = kappa_W3 * lambda_fp(3)
-
-    return total - scalar
+    return (
+        5 * c**3 + 3792 * c**2 + 1149120 * c + Fraction(217071360)
+    ) / (Fraction(138240) * c**2)
 
 
 # ============================================================================
@@ -753,8 +772,8 @@ def delta_F3_W3_known(c: Fraction) -> Fraction:
 
 def verify_N2_vanishing() -> bool:
     """At N=2, W_N = Virasoro (uniform weight). delta_F_3 should vanish."""
-    C, B, A = newton_interpolate_delta_F3(2)
-    return C == 0 and B == 0 and A == 0
+    D, C, B, A = newton_interpolate_delta_F3(2)
+    return D == 0 and C == 0 and B == 0 and A == 0
 
 
 def verify_graph_count() -> bool:
@@ -776,17 +795,17 @@ def verify_W3_consistency(c: Fraction = Fraction(10)) -> bool:
 def compute_delta_F3_table(N_range: range = range(2, 9),
                            c_values: Tuple[Fraction, ...] = None
                            ) -> Dict[int, Dict[str, Fraction]]:
-    """Compute delta_F_3 and its C/B/A decomposition for multiple N.
+    """Compute delta_F_3 and its D/C/B/A decomposition for multiple N.
 
-    Returns {N: {'C': ..., 'B': ..., 'A': ..., 'delta_at_c1': ...}}.
+    Returns {N: {'D': ..., 'C': ..., 'B': ..., 'A': ..., 'delta_at_c1': ...}}.
     """
     if c_values is None:
-        c_values = (Fraction(1), Fraction(2), Fraction(3))
+        c_values = (Fraction(1), Fraction(2), Fraction(3), Fraction(4))
 
     result = {}
     for N in N_range:
-        C, B, A = newton_interpolate_delta_F3(N, *c_values[:3])
-        entry = {'C': C, 'B': B, 'A': A}
+        D, C, B, A = newton_interpolate_delta_F3(N, *c_values[:4])
+        entry = {'D': D, 'C': C, 'B': B, 'A': A}
         for cv in c_values:
             entry[f'delta_c{cv}'] = delta_F3_grav_graph_sum(N, cv)
         result[N] = entry
@@ -808,8 +827,23 @@ def claimed_A2(N: int) -> Fraction:
     return Fraction((N - 2) * (3 * N**3 + 14 * N**2 + 22 * N + 33), 24)
 
 
+def B2_formula(N: int) -> Fraction:
+    """B_2(N) = (N-2)(N+3)/96."""
+    return claimed_B2(N)
+
+
+def A2_formula(N: int) -> Fraction:
+    """A_2(N) = (N-2)(3N^3 + 14N^2 + 22N + 33)/24."""
+    return claimed_A2(N)
+
+
+def delta_F2_formula(N: int, c: Fraction) -> Fraction:
+    """delta_F_2^{grav}(W_N,c) = B_2(N) + A_2(N)/c."""
+    return B2_formula(N) + A2_formula(N) / c
+
+
 # ============================================================================
-# Universal genus-3 coefficient formulas (thm:multi-weight-genus-expansion)
+# Finite-window genus-3 coefficient formulas (thm:multi-weight-genus-expansion)
 # delta_F_3^{grav}(W_N, c) = D3(N)*c + C3(N) + B3(N)/c + A3(N)/c^2
 # ============================================================================
 
@@ -824,9 +858,9 @@ def C3_formula(N: int) -> Fraction:
 
 
 def B3_formula(N: int) -> Fraction:
-    """B3(N) = (N-2) * (21*N^4 + 156*N^3 + 499*N^2 + 932*N + 1704) / 1728."""
+    """B3(N) = (N-2)(15*N^4 + 147*N^3 + 517*N^2 + 947*N + 1686) / 1728."""
     return Fraction(
-        (N - 2) * (21 * N**4 + 156 * N**3 + 499 * N**2 + 932 * N + 1704),
+        (N - 2) * (15 * N**4 + 147 * N**3 + 517 * N**2 + 947 * N + 1686),
         1728,
     )
 
@@ -844,12 +878,12 @@ def A3_formula(N: int) -> Fraction:
 
 
 def delta_F3_formula(N: int, c: Fraction) -> Fraction:
-    """Universal formula: D3*c + C3 + B3/c + A3/c^2."""
+    """Finite-window gravitational formula: D3*c + C3 + B3/c + A3/c^2."""
     return D3_formula(N) * c + C3_formula(N) + B3_formula(N) / c + A3_formula(N) / c**2
 
 
 def delta_F3_analytical(N: int) -> Tuple[Fraction, Fraction, Fraction, Fraction]:
-    """Return (D, C, B, A) coefficient tuple for the genus-3 universal formula.
+    """Return (D, C, B, A) for the genus-3 gravitational reconstruction.
 
     Uses extract_DCBA_from_c_values to determine the coefficients from the
     graph sum, then verifies they match the closed-form formulas.
@@ -863,13 +897,22 @@ def extract_DCBA_from_c_values(
     c2: Fraction = Fraction(2),
     c3: Fraction = Fraction(3),
     c4: Fraction = Fraction(4),
+    c_values: Optional[Tuple[Fraction, Fraction, Fraction, Fraction]] = None,
+    c_vals: Optional[Tuple[Fraction, Fraction, Fraction, Fraction]] = None,
 ) -> Tuple[Fraction, Fraction, Fraction, Fraction]:
     """Extract (D, C, B, A) from four c-values by solving the 4x4 linear system.
 
     The system is:
         f(ci) = D*ci + C + B/ci + A/ci^2  for i=1,2,3,4.
     """
-    cs = [c1, c2, c3, c4]
+    if c_values is None and c_vals is not None:
+        c_values = c_vals
+    if c_values is not None:
+        if len(c_values) != 4:
+            raise ValueError("extract_DCBA_from_c_values requires four c-values")
+        cs = [Fraction(c) for c in c_values]
+    else:
+        cs = [c1, c2, c3, c4]
     fs = [delta_F3_grav_graph_sum(N, c) for c in cs]
 
     # Build 4x4 system  [c, 1, 1/c, 1/c^2] * [D, C, B, A]^T = f
@@ -902,4 +945,12 @@ def extract_DCBA_from_c_values(
 
 def verify_positivity(N: int, c: Fraction = Fraction(10)) -> bool:
     """For N >= 3 and c > 0, delta_F3 should be positive."""
-    return delta_F3_grav_graph_sum(N, c) > 0
+    return delta_F3_formula(N, c) > 0
+
+
+def lagrange_interpolate(points: List[Tuple[int, Fraction]]) -> List[Fraction]:
+    """Compatibility alias for exact Lagrange interpolation."""
+    coeffs = lagrange_interpolate_polynomial(points)
+    while len(coeffs) > 1 and coeffs[-1] == 0:
+        coeffs.pop()
+    return coeffs

@@ -1,8 +1,9 @@
-r"""Givental R-matrix for the shadow CohFT: string equation and reconstruction.
+r"""Givental R-matrix diagnostics for the shadow CohFT.
 
-This module implements the Givental--Teleman reconstruction programme for
-the shadow CohFT (thm:shadow-cohft), with careful analysis of which CohFT
-axioms hold and where the flat-unit obstruction (AP30) manifests.
+This module implements finite-window checks around the Givental--Teleman
+input data for the shadow CohFT (thm:shadow-cohft), with careful analysis
+of which CohFT axioms are certified and where the flat-unit obstruction
+(AP30) manifests.
 
 MATHEMATICAL FRAMEWORK
 ======================
@@ -40,16 +41,16 @@ where R(z) in End(V)[[z]] satisfies:
   - R(-z)^T eta R(z) = eta  (symplecticity)
   - R is determined by the Dubrovin connection of the Frobenius manifold
 
-For the shadow CohFT WITHOUT flat unit, Teleman's reconstruction does
-NOT directly apply.  However:
+For a shadow CohFT WITHOUT flat unit, Teleman's reconstruction does
+NOT directly apply.  This engine therefore keeps the following lanes
+separate:
 
-(1) Givental's FORMULA still makes sense and produces genus-g amplitudes.
-(2) The formula reproduces F_g = kappa * lambda_g^FP for all g (verified).
+(1) finite R-matrix coefficient diagnostics;
+(2) the scalar uniform-weight genus lane F_g = kappa * lambda_g^FP;
 (3) The string equation FAILS: R(z) * e != e for nontrivial R.
 (4) The failure is measured by the STRING DEFECT sigma(z) := R(z)*e - e.
-(5) A MODIFIED string equation holds: the shadow CohFT satisfies a
-    WEIGHTED string equation where the insertion of e is corrected by
-    the string defect sigma(z).
+(5) A modified string equation is recorded only as a finite-window
+    diagnostic unless a full CohFT construction is supplied.
 
 RANK-1 ANALYSIS
 ===============
@@ -63,21 +64,18 @@ FAILS with defect sigma(z) = (6/c)z + O(z^2).
 
 For affine: R^{symp}(z) = 1 + r_1 z + ..., string equation also fails.
 
-The STRING DEFECT sigma(z) encodes the genus-0 higher-point corrections
-to the unit insertion.  It is equivalent to the statement that the
-shadow CohFT is a CohFT WITHOUT flat unit.
+The STRING DEFECT sigma(z) is a necessary finite-window test for the
+rank-1 formal unit.  It is not equivalent to the full CohFT flat-identity
+axiom, which also requires the vacuum to lie in the chosen state space V.
 
 GENUS-2 VERIFICATION
 ====================
 
-The Givental formula for F_2 uses the 7 stable graphs of M-bar_{2,0}.
-For the UNIVERSAL (Hodge) part: F_2 = kappa * lambda_2^FP = kappa * 7/5760.
-The R-matrix dresses the vertex factors; for the symplectic R-matrix,
-the dressed F_2 still equals kappa * lambda_2^FP (because the Hodge
-CohFT IS the trivial CohFT dressed by the A-hat R-matrix).
-
-For the FAMILY-SPECIFIC R-matrix (from the shadow connection), the
-additional dressing produces the planted-forest corrections at genus 2.
+The full Givental formula for F_2 uses the stable graphs of
+M-bar_{2,0}.  This module does not implement that graph sum.  The
+certified scalar value is the uniform-weight lane
+F_2 = kappa * lambda_2^FP = kappa * 7/5760; family-specific planted-forest
+and multi-weight corrections are separate compute packages.
 
 WITTEN--KONTSEVICH INTERSECTION NUMBERS
 ========================================
@@ -85,15 +83,17 @@ WITTEN--KONTSEVICH INTERSECTION NUMBERS
 The Witten--Kontsevich tau function encodes all intersection numbers
 <tau_{d_1} ... tau_{d_n}>_g on M-bar_{g,n}.  Known values:
 
-  <tau_0>_1 = 1/24                (= lambda_1^FP)
+  <tau_1>_1 = 1/24                (one-point formula)
   <tau_1 tau_1>_1 = 1/24
-  <tau_3>_2 = 1/1152
-  <tau_2 tau_1>_2 = 1/576
-  <tau_1 tau_1 tau_1>_2 = 1/288
-  <tau_5>_3 = 1/82944
+  <tau_1 tau_1 tau_1>_1 = 1/12
+  <tau_4>_2 = 1/1152
+  <tau_4 tau_1>_2 = 1/384
+  <tau_3 tau_2>_2 = 29/5760
+  <tau_7>_3 = 1/82944
 
 The string equation relates <..., tau_0>_g to lower-point functions.
-The dilaton equation relates <..., tau_1>_g to (2g-2+n) * lower-point.
+The dilaton equation relates <tau_1, ...>_g to
+(2g-2+n_remaining) times the lower-point function.
 
 All arithmetic is exact (sympy.Rational).
 
@@ -150,19 +150,23 @@ def wk_intersection(g: int, insertions: Tuple[int, ...]) -> Rational:
       <tau_0 tau_{d_1} ... tau_{d_n}>_g
         = sum_{j: d_j>0} <tau_{d_1} ... tau_{d_j-1} ... tau_{d_n}>_g
 
-    Dilaton equation (remove tau_1, n >= 2):
+    Dilaton equation (remove tau_1, n_rem >= 1):
       <tau_1 tau_{d_1} ... tau_{d_n}>_g
         = (2g-2+n) <tau_{d_1} ... tau_{d_n}>_g
+      where n is the number of remaining insertions after tau_1 is removed.
 
     One-point formula (Dijkgraaf 1995):
       <tau_{3g-2}>_g = 1 / (24^g * g!)
 
-    DVV L_1 constraint (for n >= 2, d_1 >= 2):
-      (2d_1+1) <tau_{d_1} tau_{d_S}>_g
-        = sum_{j in S} (2d_j+1) <tau_{d_1+d_j-1} tau_{d_{S\j}}>_g
-        + (1/2) sum_{a+b=d_1-1} <tau_a tau_b tau_{d_S}>_{g-1}
-        + (1/2) sum_{a+b=d_1-1, g1+g2=g, I+J=S}
-                <tau_a tau_{d_I}>_{g1} <tau_b tau_{d_J}>_{g2}
+    DVV recursion (for n >= 2, d_1 >= 2):
+      (2d_1+1)!! <tau_{d_1} tau_{d_S}>_g
+        = sum_{j in S} ((2d_1+2d_j-1)!!/(2d_j-1)!!)
+              <tau_{d_1+d_j-1} tau_{d_{S\j}}>_g
+        + (1/2) sum_{a+b=d_1-2} (2a+1)!!(2b+1)!!
+              <tau_a tau_b tau_{d_S}>_{g-1}
+        + (1/2) sum_{a+b=d_1-2, g1+g2=g, I+J=S}
+              (2a+1)!!(2b+1)!!
+              <tau_a tau_{d_I}>_{g1} <tau_b tau_{d_J}>_{g2}
 
     References: Witten 1991, Kontsevich 1992, Dijkgraaf 1995.
     """
@@ -207,11 +211,17 @@ def wk_intersection(g: int, insertions: Tuple[int, ...]) -> Rational:
                     g, tuple(sorted(new_ins, reverse=True)))
         return result
 
-    # Dilaton equation: if any d_i = 1 and n >= 2
+    # Dilaton equation: if any d_i = 1 and n >= 2.
+    # The coefficient uses the number of remaining markings after tau_1
+    # is removed.  Using the original total n gives the false values
+    # <tau_1 tau_1>_1 = 1/12 and <tau_4 tau_1>_2 = 1/288.
     if 1 in d_list and n >= 2:
         reduced = list(d_list)
         reduced.remove(1)
-        chi = 2 * g - 2 + n
+        n_remaining = len(reduced)
+        chi = 2 * g - 2 + n_remaining
+        if chi <= 0:
+            return Rational(0)
         return chi * wk_intersection(
             g, tuple(sorted(reduced, reverse=True)))
 
@@ -228,38 +238,38 @@ _WK_TABLE: Dict[Tuple[int, Tuple[int, ...]], Rational] = {
     (0, (0, 0, 0)): Rational(1),
     # Genus 1: dim = n. <tau_{d_1}...tau_{d_n}>_1 needs sum d_i = n.
     (1, (1,)): Rational(1, 24),            # 1-point formula: 1/(24*1!)
-    (1, (1, 1)): Rational(1, 12),          # dilaton: 2 * 1/24
-    (1, (1, 1, 1)): Rational(1, 4),        # dilaton: 3 * 1/12
-    (1, (1, 1, 1, 1)): Rational(1),        # dilaton: 4 * 1/4
+    (1, (1, 1)): Rational(1, 24),          # dilaton: 1 * 1/24
+    (1, (1, 1, 1)): Rational(1, 12),       # dilaton: 2 * 1/24
+    (1, (1, 1, 1, 1)): Rational(1, 4),     # dilaton: 3 * 1/12
     # Genus 2: dim = 3 + n. <tau_{d_1}...>_2 needs sum d_i = 3 + n.
     (2, (4,)): Rational(1, 1152),          # 1-point: 1/(24^2 * 2!)
-    (2, (4, 1)): Rational(1, 288),         # dilaton: 4 * 1/1152
-    (2, (3, 2)): Rational(5, 8064),        # DVV: 5/(7*1152)
-    (2, (4, 1, 1)): Rational(5, 288),      # dilaton: 5 * 1/288
-    (2, (4, 1, 1, 1)): Rational(5, 48),    # dilaton: 6 * 5/288
+    (2, (4, 1)): Rational(1, 384),         # dilaton: 3 * 1/1152
+    (2, (3, 2)): Rational(29, 5760),       # DVV
+    (2, (4, 1, 1)): Rational(1, 96),       # dilaton: 4 * 1/384
+    (2, (4, 1, 1, 1)): Rational(5, 96),    # dilaton: 5 * 1/96
     # Genus 3: dim = 6 + n.
     (3, (7,)): Rational(1, 82944),         # 1-point: 1/(24^3 * 3!)
 }
 
 
 def _dvv_recursion(g: int, d_tuple: Tuple[int, ...]) -> Rational:
-    r"""DVV recursion (Virasoro L_1 constraint) for n >= 2.
+    r"""DVV recursion for n >= 2 with string/dilaton exhausted.
 
-    The L_1 Virasoro constraint gives, for d_1 >= 2:
+    For d_1 >= 2 the Witten--Kontsevich recursion is
 
-      (2*d_1 + 1) <tau_{d_1} tau_{d_S}>_g =
+      (2*d_1 + 1)!! <tau_{d_1} tau_{d_S}>_g =
 
-        sum_{j in S} (2*d_j + 1) <tau_{d_1+d_j-1} tau_{d_{S\j}}>_g
+        sum_{j in S} ((2*d_1 + 2*d_j - 1)!! / (2*d_j - 1)!!)
+          <tau_{d_1+d_j-1} tau_{d_{S\j}}>_g
 
-      + (1/2) sum_{a+b = d_1-1} <tau_a tau_b tau_{d_S}>_{g-1}
+      + (1/2) sum_{a+b=d_1-2} (2a+1)!!(2b+1)!!
+          <tau_a tau_b tau_{d_S}>_{g-1}
 
-      + (1/2) sum_{a+b = d_1-1, g1+g2=g, I+J=S}
-              <tau_a tau_{d_I}>_{g1} * <tau_b tau_{d_J}>_{g2}
+      + (1/2) sum_{a+b=d_1-2, g1+g2=g, I+J=S}
+          (2a+1)!!(2b+1)!!
+          <tau_a tau_{d_I}>_{g1} <tau_b tau_{d_J}>_{g2}.
 
-    This is applied only when n >= 2 and all d_i >= 2 (string and dilaton
-    have already been exhausted).
-
-    Reference: Dijkgraaf-Verlinde-Verlinde 1991.
+    Reference: Dijkgraaf--Verlinde--Verlinde 1991.
     """
     d_list = list(d_tuple)
     n = len(d_list)
@@ -269,13 +279,13 @@ def _dvv_recursion(g: int, d_tuple: Tuple[int, ...]) -> Rational:
         return _lambda_fp(g_val)
 
     if n == 1:
-        # Should not reach here (handled by 1-point formula above)
+        # Should not reach here (handled by 1-point formula above).
         d = d_list[0]
         if d == 3 * g_val - 2 and g_val >= 1:
             return Rational(1, 24 ** g_val * factorial(g_val))
         return Rational(0)
 
-    # For n >= 2: find the largest d_i to use as d_1
+    # Use the largest insertion as d_1.
     idx_max = 0
     for i in range(1, n):
         if d_list[i] > d_list[idx_max]:
@@ -283,35 +293,45 @@ def _dvv_recursion(g: int, d_tuple: Tuple[int, ...]) -> Rational:
 
     d_list[0], d_list[idx_max] = d_list[idx_max], d_list[0]
     d1 = d_list[0]
-    rest = d_list[1:]  # S = {d_2, ..., d_n}
+    rest = d_list[1:]
 
     if d1 < 2:
-        # All d_i in {0, 1} with n >= 2: string/dilaton should have handled.
         return Rational(0)
 
-    prefactor = Rational(1, 2 * d1 + 1)
+    lhs_coeff = Rational(_degree_odd_double_factorial(d1))
     result = Rational(0)
 
-    # Term 1: sum_{j in S} (2*d_j+1) <tau_{d1+dj-1}, tau_{S\j}>_g
+    # Merge terms.
     for j in range(len(rest)):
         dj = rest[j]
-        coeff = 2 * dj + 1
+        coeff = Rational(
+            _degree_odd_double_factorial(d1 + dj - 1),
+            _degree_odd_double_factorial(dj - 1),
+        )
         new_rest = rest[:j] + rest[j+1:]
         new_ins = tuple(sorted([d1 + dj - 1] + new_rest, reverse=True))
         result += coeff * wk_intersection(g_val, new_ins)
 
-    # Term 2: nonseparating node
-    # (1/2) sum_{a+b=d1-1} <tau_a, tau_b, rest>_{g-1}
+    # Nonseparating node terms.
     if g_val >= 1:
-        for a in range(d1):
-            b = d1 - 1 - a
+        for a in range(d1 - 1):
+            b = d1 - 2 - a
+            coeff = Rational(
+                _degree_odd_double_factorial(a)
+                * _degree_odd_double_factorial(b),
+                2,
+            )
             new_ins = tuple(sorted([a, b] + rest, reverse=True))
-            result += Rational(1, 2) * wk_intersection(g_val - 1, new_ins)
+            result += coeff * wk_intersection(g_val - 1, new_ins)
 
-    # Term 3: separating degeneration
-    # (1/2) sum_{a+b=d1-1, g1+g2=g, I+J=S}
-    for a in range(d1):
-        b = d1 - 1 - a
+    # Separating degeneration terms.
+    for a in range(d1 - 1):
+        b = d1 - 2 - a
+        coeff = Rational(
+            _degree_odd_double_factorial(a)
+            * _degree_odd_double_factorial(b),
+            2,
+        )
         for g1 in range(g_val + 1):
             g2 = g_val - g1
             for mask in range(1 << len(rest)):
@@ -325,11 +345,22 @@ def _dvv_recursion(g: int, d_tuple: Tuple[int, ...]) -> Rational:
                 n_J = len(ins_J)
                 if 2 * g1 - 2 + n_I <= 0 or 2 * g2 - 2 + n_J <= 0:
                     continue
-                result += (Rational(1, 2)
+                result += (coeff
                            * wk_intersection(g1, ins_I)
                            * wk_intersection(g2, ins_J))
 
-    return prefactor * result
+    return result / lhs_coeff
+
+
+@lru_cache(maxsize=128)
+def _degree_odd_double_factorial(d: int) -> int:
+    r"""Return (2d+1)!!, with (-1)!! = 1 when d = -1."""
+    if d < 0:
+        return 1
+    result = 1
+    for value in range(1, 2 * d + 2, 2):
+        result *= value
+    return result
 
 
 @lru_cache(maxsize=32)
@@ -540,22 +571,21 @@ def string_defect(family: str, max_order: int = 8, use_symplectic: bool = True,
     where e is the unit vector of the Frobenius manifold.  For rank 1,
     e = 1 and this reduces to R(z) = 1.
 
-    The STRING DEFECT is sigma(z) := R(z) * e - e = sum_{k>=1} R_k z^k.
-    It measures the failure of the flat identity axiom (CohFT-3).
+    The R-STRING DEFECT is sigma(z) := R(z) * e - e = sum_{k>=1} R_k z^k.
+    Its vanishing is necessary for the rank-1 formal unit to be fixed.
+    It is not by itself a proof of the CohFT flat identity: AP30 also
+    requires the vacuum vector |0> to lie in the chosen state space V.
 
     AP30 ANALYSIS:
     The flat identity requires |0> in V (generating space of primaries).
-    For Heisenberg: V = span{alpha} (weight 1), |0> has weight 0.
-        However, for Heisenberg R = Id, so sigma = 0.  The string equation
-        holds DESPITE |0> not being in V, because R is trivial.
-    For Virasoro: V = span{T} (weight 2), |0> has weight 0.
-        R != Id, so sigma != 0.  The string equation genuinely fails.
-    For affine: V = span{J^a} (weight 1), |0> has weight 0.
-        R != Id (on the Killing line), so sigma != 0.
+    This routine defaults to the rank-1 primary-line diagnostic.  On that
+    restricted line the caller must pass vacuum_in_V=True before the
+    returned has_flat_unit field may become True.
 
     Returns:
         sigma: list of string defect coefficients [0, sigma_1, sigma_2, ...]
-        has_flat_unit: whether the string equation holds (sigma = 0)
+        string_defect_vanishes: whether the finite R-window fixes e
+        has_flat_unit: whether vacuum_in_V and string_defect_vanishes both hold
         vacuum_in_V: whether |0> lies in V
         obstruction_order: lowest order at which sigma != 0 (None if sigma = 0)
         analysis: textual explanation
@@ -574,7 +604,7 @@ def string_defect(family: str, max_order: int = 8, use_symplectic: bool = True,
     sigma = list(R)
     sigma[0] = Rational(0)  # sigma_0 = R_0 - 1 = 0
 
-    has_flat_unit = all(simplify(s) == 0 for s in sigma)
+    string_defect_vanishes = all(simplify(s) == 0 for s in sigma)
 
     # Find first nonzero order
     obstruction_order = None
@@ -583,38 +613,42 @@ def string_defect(family: str, max_order: int = 8, use_symplectic: bool = True,
             obstruction_order = i
             break
 
-    # Vacuum analysis (AP30)
-    vacuum_in_V = False  # |0> never lies in the primary generating space
-    # for standard families (Heisenberg has weight-1 generators,
-    # Virasoro has weight-2, affine has weight-1).
+    # Vacuum analysis (AP30).  The default is the primary-line diagnostic;
+    # full state-space assertions must be supplied explicitly by the caller.
+    vacuum_in_V = bool(params.get('vacuum_in_V', False))
+    has_flat_unit = bool(vacuum_in_V and string_defect_vanishes)
+    flat_unit_reason = (
+        'vacuum in V and R(z)e=e in the checked window'
+        if has_flat_unit else
+        'R(z)e=e in the checked window, but AP30 still requires vacuum_in_V'
+        if string_defect_vanishes else
+        f'R(z)e-e first appears at z^{obstruction_order}'
+    )
 
     if family == 'heisenberg':
         analysis = (
-            "Heisenberg: V = span{alpha} (weight 1). |0> not in V. "
-            "However, R = Id (shadow connection is flat), so the string "
-            "equation holds trivially: sigma(z) = 0. The CohFT has a "
-            "FLAT UNIT by accident (trivial R-matrix), not by vacuum membership."
+            "Heisenberg primary-line diagnostic: R = Id, so sigma(z) = 0. "
+            "This certifies only that the formal rank-1 unit is fixed. "
+            "The CohFT flat identity is certified only when vacuum_in_V=True."
         )
     elif family == 'virasoro':
         analysis = (
-            f"Virasoro: V = span{{T}} (weight 2). |0> not in V. "
-            f"R != Id (class M, infinite series), so the string equation "
-            f"FAILS at order z^{obstruction_order} with "
+            f"Virasoro primary-line diagnostic: R != Id (class M), so "
+            f"R(z)e=e fails at order z^{obstruction_order} with "
             f"sigma_{obstruction_order} = {sigma[obstruction_order] if obstruction_order else 0}. "
-            f"The shadow CohFT is a CohFT WITHOUT flat unit (AP30)."
+            f"Teleman flat-unit input is not certified on this line."
         )
     elif family == 'affine_sl2':
         analysis = (
-            f"Affine sl_2: V = span{{J^a}} (weight 1). |0> not in V. "
-            f"R != Id on the Killing line (class L, polynomial), so the "
-            f"string equation FAILS at order z^{obstruction_order}. "
-            f"The shadow CohFT is a CohFT WITHOUT flat unit on this line."
+            f"Affine sl_2 Killing-line diagnostic: R != Id, so R(z)e=e "
+            f"fails at order z^{obstruction_order}.  This does not decide "
+            f"the full state-space flat identity."
         )
     elif family == 'betagamma':
         analysis = (
-            "Beta-gamma: V = span{beta} (weight 0). On the weight line, "
-            "alpha = S4 = 0, so R = Id and the string equation holds. "
-            "The quartic contact invariant lives on a different stratum."
+            "Beta-gamma weight-line diagnostic: alpha = S4 = 0, so R = Id "
+            "and sigma(z) = 0.  This is a finite rank-1 check, not a full "
+            "CohFT flat-unit certificate unless vacuum_in_V=True."
         )
     else:
         analysis = f"Family {family}: string defect analysis not available."
@@ -623,9 +657,14 @@ def string_defect(family: str, max_order: int = 8, use_symplectic: bool = True,
         'family': family,
         'sigma': sigma,
         'R_coefficients': R,
+        'string_defect_vanishes': string_defect_vanishes,
+        'formal_rank_one_unit_fixed': string_defect_vanishes,
         'has_flat_unit': has_flat_unit,
         'vacuum_in_V': vacuum_in_V,
         'obstruction_order': obstruction_order,
+        'flat_unit_reason': flat_unit_reason,
+        'diagnostic_scope': 'rank_one_primary_line_finite_R_window',
+        'checked_order': max_order,
         'analysis': analysis,
     }
 
@@ -648,18 +687,16 @@ def cohft_axiom_analysis(family: str, max_order: int = 8,
         composing shadow amplitudes via the propagator eta^{-1}.
 
     (CohFT-3) FLAT IDENTITY: CONDITIONAL (AP30).
-        Requires |0> in V.  Fails for all standard families except
-        those where R = Id (Heisenberg, beta-gamma on weight line).
-        Measured by the string defect sigma(z).
+        Requires |0> in V and a vanishing R-string defect.  The finite
+        coefficient check sigma(z)=0 is not a replacement for the vacuum
+        membership hypothesis.
 
-    (CohFT-3') MODIFIED STRING EQUATION: UNCONDITIONAL.
+    (CohFT-3') MODIFIED STRING EQUATION: FORMAL DIAGNOSTIC.
         For the shadow CohFT without flat unit, a MODIFIED string equation
-        holds.  The insertion of the vacuum is corrected by the R-matrix:
+        is expected.  This engine records the finite R-window correction:
             pi^* Omega_{g,n}(v_1,...,v_n) =
             sum_k Omega_{g,n+1}(v_1,...,v_n, R_k * e) * psi_{n+1}^k
-        where the psi-class insertion compensates for the non-flat unit.
-        This is exactly the content of Givental's formula when applied
-        to the forgetting morphism pi: M-bar_{g,n+1} -> M-bar_{g,n}.
+        It does not construct the full CohFT graph sum.
 
     (CohFT-4) DILATON: UNCONDITIONAL for all families.
         The dilaton equation <tau_1 prod tau_{d_i}>_g = (2g-2+n) <prod tau_{d_i}>_g
@@ -686,18 +723,14 @@ def cohft_axiom_analysis(family: str, max_order: int = 8,
             'CohFT-3 (flat identity)': {
                 'status': 'CONDITIONAL',
                 'holds': sd_result['has_flat_unit'],
-                'reason': (
-                    'Holds (R = Id)' if sd_result['has_flat_unit']
-                    else f"FAILS at order z^{sd_result['obstruction_order']} "
-                         f"(AP30: |0> not in V, R != Id)"
-                ),
+                'reason': sd_result['flat_unit_reason'],
             },
             "CohFT-3' (modified string)": {
-                'status': 'UNCONDITIONAL',
-                'holds': True,
+                'status': 'FINITE_WINDOW_DIAGNOSTIC',
+                'holds': None,
                 'reason': (
-                    'Givental R-matrix formula provides the modified string '
-                    'equation with psi-class corrections'
+                    'Records the finite R-coefficient correction terms; '
+                    'full modified-string CohFT construction is not implemented'
                 ),
             },
             'CohFT-4 (dilaton)': {
@@ -709,8 +742,8 @@ def cohft_axiom_analysis(family: str, max_order: int = 8,
         'teleman_applicable': sd_result['has_flat_unit'],
         'teleman_obstruction': (
             None if sd_result['has_flat_unit']
-            else 'Flat unit axiom fails (AP30); Teleman reconstruction requires '
-                 'flat unit.  Givental formula still produces well-defined amplitudes.'
+            else 'Teleman reconstruction requires semisimplicity and a flat unit. '
+                 f"This rank-one diagnostic reports: {sd_result['flat_unit_reason']}."
         ),
         'string_defect': sd_result,
     }
@@ -720,38 +753,31 @@ def cohft_axiom_analysis(family: str, max_order: int = 8,
 # Section 6: Givental reconstruction of genus-g amplitudes
 # =========================================================================
 
-def givental_Fg_from_wk(kappa_val, R_coeffs: List, g: int) -> Rational:
-    r"""Reconstruct F_g from R-dressed Witten--Kontsevich numbers.
+def scalar_genus_free_energy(kappa_val, g: int) -> Rational:
+    r"""Uniform-weight scalar genus lane: F_g = kappa * lambda_g^FP.
 
-    For a rank-1 CohFT, the Givental formula for the genus-g free energy
-    (no insertions) is obtained by summing over all stable graphs Gamma
-    of genus g with 0 external legs:
-
-        F_g = kappa * sum_Gamma (1/|Aut(Gamma)|) * prod_v V^R(g_v, n_v) * prod_e P
-
-    where V^R(g_v, n_v) is the R-dressed vertex factor at genus g_v with n_v
-    half-edges, and P = 1/kappa is the propagator.
-
-    For the TRIVIAL CohFT with R = Id:
-        V^R(g, n) = <tau_0^n>_g (Witten-Kontsevich with all d_i = 0)
-        This gives F_g = lambda_g^FP (the Hodge class).
-
-    For general R:
-        V^R(g, n) = sum_{d_1+...+d_n <= dim} R_{d_1}...R_{d_n} <tau_{d_1}...tau_{d_n}>_g
-    where dim = 3g - 3 + n.
-
-    For g = 1: only one graph (self-loop from genus-0 vertex).
-        F_1 = kappa * V^R(0, 2) * P / 2 + V^R(1, 0)
-        But V^R(1, 0) = 0 (unstable) and the self-loop gives
-        F_1 = (1/2) * sum_{d1+d2=1} R_{d1} R_{d2} * <tau_{d1} tau_{d2}>_0 * P
-        Wait -- this is the graph-sum approach.  Let me use the simpler
-        formula: F_g = kappa * lambda_g^FP (which is the CONTENT of the
-        shadow CohFT theorem, proved directly from the bar complex).
-
-    For verification, we check that the R-matrix dressed reconstruction
-    reproduces kappa * lambda_g^FP.
+    This is the Theorem-D scalar projection used throughout the compute
+    layer.  It is not a multi-weight cross-channel correction and it is
+    not a full Givental stable-graph reconstruction.
     """
     return kappa_val * _lambda_fp(g)
+
+
+def givental_Fg_from_wk(kappa_val, R_coeffs: List, g: int) -> Rational:
+    r"""Legacy wrapper for the scalar uniform-weight genus coefficient.
+
+    The name is retained for callers, but the function deliberately does
+    not claim to execute a full R-dressed Givental graph sum.  The supplied
+    R_coeffs are accepted only to keep the old API shape; the certified
+    value returned here is the scalar lane
+
+        F_g = kappa * lambda_g^FP.
+
+    Multi-weight cross-channel corrections and full CohFT graph sums are
+    separate constructions.
+    """
+    _ = R_coeffs
+    return scalar_genus_free_energy(kappa_val, g)
 
 
 def r_dressed_vertex(R_coeffs: List, g: int, n: int) -> Rational:
@@ -845,9 +871,9 @@ def genus2_verification(kappa_val, max_genus: int = 3) -> Dict[str, Any]:
     The shadow CohFT theorem (thm:shadow-cohft) states that the genus-g
     free energy is F_g = kappa * lambda_g^FP for all modular Koszul algebras.
 
-    The Givental reconstruction of F_g uses the full stable graph decomposition
-    of M-bar_{g,0} with R-dressed vertex factors and psi-class insertions.
-    The full formula is:
+    A full Givental reconstruction of F_g would use the stable graph
+    decomposition of M-bar_{g,0} with R-dressed vertex factors and
+    psi-class insertions:
 
         F_g = sum_Gamma (1/|Aut(Gamma)|) * (product of R-dressed vertices)
               * (product of edge propagators with psi-class contractions)
@@ -859,24 +885,23 @@ def genus2_verification(kappa_val, max_genus: int = 3) -> Dict[str, Any]:
     For the HODGE CohFT (R = A-hat): F_g = lambda_g^FP (top Hodge class).
     For the SHADOW CohFT: F_g = kappa * lambda_g^FP.
 
-    Rather than implementing the full Givental graph sum (which requires
-    careful treatment of psi-class contractions at each edge), we verify
-    the theorem by direct computation of lambda_g^FP via Bernoulli numbers,
-    cross-checked against the Witten-Kontsevich one-point formula.
+    This routine does not implement that graph sum.  It verifies the
+    scalar uniform-weight lane by direct computation of lambda_g^FP via
+    Bernoulli numbers and separately checks the Witten--Kontsevich
+    one-point formula as a descendant-recursion oracle.
 
     Verification paths:
     1. Bernoulli formula: lambda_g = (2^{2g-1}-1)|B_{2g}| / (2^{2g-1} (2g)!)
     2. One-point formula: <tau_{3g-2}>_g = 1/(24^g g!)
-    3. These must satisfy: lambda_g = <tau_{3g-2}>_g (Faber-Pandharipande).
-       Actually: lambda_g^FP is the integral of lambda_g against lambda_{g-1}
-       over M-bar_g (Faber's intersection number). The one-point number
-       <tau_{3g-2}>_g is a DIFFERENT intersection number on M-bar_{g,1}.
-       The relation between them involves the forgetful map.
+    3. These are different intersection-number lanes; equality is not
+       asserted.  Agreement of each with its own oracle prevents the
+       genus-one normalization and descendant-recursion constants from
+       being conflated.
     """
     results = {}
     for g in range(1, max_genus + 1):
         lfp = _lambda_fp(g)
-        F_g = kappa_val * lfp
+        F_g = scalar_genus_free_energy(kappa_val, g)
         one_pt = wk_intersection(g, (3 * g - 2,))
 
         results[g] = {
@@ -897,27 +922,19 @@ def genus2_verification(kappa_val, max_genus: int = 3) -> Dict[str, Any]:
 
 def teleman_analysis(family: str, max_genus: int = 3,
                      max_order: int = 10, **params) -> Dict[str, Any]:
-    r"""Full Teleman reconstruction analysis for a family.
+    r"""Teleman-input diagnostics for a family.
 
     Steps:
     1. Determine the Frobenius manifold (genus-0 data).
     2. Compute the symplectic R-matrix from shadow connection.
     3. Check semisimplicity.
     4. Check flat unit (AP30 string equation).
-    5. Reconstruct F_g via Givental formula.
+    5. Evaluate the scalar uniform-weight genus lane.
     6. Compare with direct computation kappa * lambda_g^FP.
 
-    For rank-1 families, the Frobenius manifold is ALWAYS semisimple
-    (1 canonical coordinate = 1 idempotent).  The obstruction is only
-    the flat unit.
-
-    Despite the flat unit obstruction, the Givental formula still
-    produces F_g = kappa * lambda_g^FP.  This is because the
-    R-matrix action on the ZERO-POINT function (no insertions)
-    does not involve the unit vector -- the unit enters only when
-    insertions are present.
-
-    Returns dict with full analysis.
+    The semisimplicity flag below is only the rank-1 formal Frobenius
+    window.  It is not a certificate that a full state-space CohFT with
+    flat unit has been constructed.
     """
     sd = _shadow_data(family, **params)
     kap = sd['kappa']
@@ -925,8 +942,9 @@ def teleman_analysis(family: str, max_genus: int = 3,
     # Symplectic R-matrix
     R = symplectic_r_from_shadow(kap, sd['alpha'], sd['S4'], max_order)
 
-    # Semisimplicity (always for rank 1)
-    is_semisimple = True  # rank-1 Frobenius manifolds are always semisimple
+    # Semisimplicity in the restricted rank-1 Frobenius window.
+    is_semisimple = True
+    semisimplicity_status = 'formal_rank_one_window_only'
 
     # String defect
     sd_result = string_defect(family, max_order, **params)
@@ -935,9 +953,10 @@ def teleman_analysis(family: str, max_genus: int = 3,
     genus_results = {}
     for g in range(1, max_genus + 1):
         F_g_givental = givental_Fg_from_wk(kap, R, g)
-        F_g_direct = kap * _lambda_fp(g)
+        F_g_direct = scalar_genus_free_energy(kap, g)
         genus_results[g] = {
             'F_g_givental': F_g_givental,
+            'F_g_label': 'scalar_uniform_weight_lane_not_graph_sum',
             'F_g_direct': F_g_direct,
             'match': simplify(F_g_givental - F_g_direct) == 0,
             'lambda_fp': _lambda_fp(g),
@@ -949,6 +968,7 @@ def teleman_analysis(family: str, max_genus: int = 3,
     return {
         'family': family,
         'is_semisimple': is_semisimple,
+        'semisimplicity_status': semisimplicity_status,
         'has_flat_unit': sd_result['has_flat_unit'],
         'teleman_applies': is_semisimple and sd_result['has_flat_unit'],
         'obstruction': sd_result['analysis'],
@@ -956,13 +976,13 @@ def teleman_analysis(family: str, max_genus: int = 3,
         'genus_results': genus_results,
         'genus_verification': genus_verify,
         'conclusion': (
-            'Teleman reconstruction applies directly.'
+            'Teleman reconstruction applies in this rank-one diagnostic only '
+            'after the caller supplies the flat-unit hypothesis.'
             if sd_result['has_flat_unit']
-            else 'Teleman reconstruction does NOT directly apply (AP30: no flat unit). '
-                 'However, the Givental formula still produces correct F_g = kappa * lambda_g^FP '
-                 'because the zero-point function does not involve the unit vector. '
-                 'The modified string equation (CohFT-3\') with psi-class corrections '
-                 'provides the correct replacement for the flat identity axiom.'
+            else 'Teleman reconstruction is not certified here: '
+                 f"{sd_result['flat_unit_reason']}.  The genus entries are "
+                 'scalar uniform-weight values kappa * lambda_g^FP, not a '
+                 'full Givental graph-sum reconstruction.'
         ),
     }
 
@@ -973,12 +993,12 @@ def teleman_analysis(family: str, max_genus: int = 3,
 
 def modified_string_equation(family: str, g: int, n: int,
                               max_order: int = 8, **params) -> Dict[str, Any]:
-    r"""The modified string equation for the shadow CohFT without flat unit.
+    r"""Finite-window modified string-equation diagnostic.
 
     Standard string equation (CohFT-3):
         Omega_{g,n+1}(v_1,...,v_n, e) = pi^* Omega_{g,n}(v_1,...,v_n)
 
-    Modified string equation (CohFT-3'):
+    Expected modified string equation (CohFT-3'):
         Omega_{g,n+1}(v_1,...,v_n, e) = pi^* Omega_{g,n}(v_1,...,v_n)
             - sum_{i=1}^n Omega_{g,n}(v_1,...,R_1*v_i,...,v_n) * psi_i
             + higher psi-class corrections from R_2, R_3, ...
@@ -997,7 +1017,8 @@ def modified_string_equation(family: str, g: int, n: int,
     The leading string defect at (0,3) -> (0,4) is:
         delta = R_1 * Omega_{0,4}(v,v,v,1) * psi_4
 
-    Returns dict with the string equation defect analysis.
+    This routine records the leading correction from the finite R-window.
+    It does not construct the full CohFT or prove the modified equation.
     """
     sd = _shadow_data(family, **params)
     kap = sd['kappa']
@@ -1008,19 +1029,26 @@ def modified_string_equation(family: str, g: int, n: int,
         'genus': g,
         'arity': n,
         'R_1': R[1] if len(R) > 1 else Rational(0),
+        'checked_order': max_order,
+        'diagnostic_scope': 'finite_R_window',
+        'full_cohft_constructed': False,
     }
 
     if simplify(R[1]) == 0 and all(simplify(R[i]) == 0 for i in range(1, min(4, len(R)))):
         result['defect'] = Rational(0)
-        result['analysis'] = 'R = Id, standard string equation holds.'
+        result['analysis'] = (
+            'R = Id in the checked window; standard string equation has no '
+            'R-defect in this finite diagnostic.'
+        )
         return result
 
     # Leading defect (from R_1 * psi term)
     result['leading_defect_coefficient'] = R[1]
     result['analysis'] = (
-        f"String equation fails with leading correction R_1 = {R[1]}. "
-        f"The modified string equation replaces pi^* Omega_{{g,n}} with "
-        f"sum_{{k>=0}} R_k * psi^k terms."
+        f"Finite R-window string diagnostic has leading correction R_1 = {R[1]}. "
+        f"A full modified string equation would replace pi^* Omega_{{g,n}} "
+        f"with sum_{{k>=0}} R_k * psi^k terms; that full CohFT construction "
+        f"is not implemented here."
     )
 
     return result
@@ -1031,10 +1059,12 @@ def modified_string_equation(family: str, g: int, n: int,
 # =========================================================================
 
 def symplecticity_check(R_coeffs: List, max_order: int = None) -> Dict[str, Any]:
-    r"""Verify R(-z)R(z) = 1 for a rank-1 R-matrix.
+    r"""Verify R(-z)R(z) = 1 for a finite rank-1 coefficient window.
 
-    For the symplectic R-matrix (odd-power exponent), this should hold
-    exactly.  For the complementarity propagator, it generally fails.
+    For a series constructed as exp(odd powers), vanishing through the
+    requested order is the expected finite-window shadow of exact
+    symplecticity.  This function receives only coefficients, so it does
+    not certify the infinite series beyond the checked order.
 
     Returns dict with defect coefficients and overall result.
     """
@@ -1053,13 +1083,28 @@ def symplecticity_check(R_coeffs: List, max_order: int = None) -> Dict[str, Any]
     defect[0] -= Rational(1)
 
     is_symplectic = all(simplify(d) == 0 for d in defect)
+    first_defect_order = next(
+        (i for i in range(len(defect)) if simplify(defect[i]) != 0),
+        None,
+    )
+    max_defect_order = max(
+        (i for i in range(len(defect)) if simplify(defect[i]) != 0),
+        default=None
+    )
 
     return {
         'defect': defect,
         'is_symplectic': is_symplectic,
-        'max_defect_order': max(
-            (i for i in range(len(defect)) if simplify(defect[i]) != 0),
-            default=None
+        'is_symplectic_to_order': is_symplectic,
+        'checked_order': n - 1,
+        'finite_window_only': True,
+        'exact_construction_certified': False,
+        'first_defect_order': first_defect_order,
+        'max_defect_order': max_defect_order,
+        'status': (
+            f'R(-z)R(z)=1 through z^{n - 1} for the supplied coefficients'
+            if is_symplectic else
+            f'first finite-window symplectic defect at z^{first_defect_order}'
         ),
     }
 
@@ -1119,17 +1164,25 @@ def r_matrix_comparison(family: str, max_order: int = 8,
         'order1_agree': order1_agree,
         'comp_is_symplectic': comp_symp['is_symplectic'],
         'symp_is_symplectic': symp_symp['is_symplectic'],
+        'comp_symplecticity': comp_symp,
+        'symp_symplecticity': symp_symp,
+        'diagnostic_scope': f'finite coefficients through z^{max_order}',
     }
 
 
 # =========================================================================
-# Section 12: Koszul dual R-matrix (c <-> 26-c for Virasoro)
+# Section 12: Verdier-dual Virasoro complementarity diagnostic
 # =========================================================================
 
 def koszul_dual_rmatrix(c_val, max_order: int = 8) -> Dict[str, Any]:
-    r"""R-matrix relation between Koszul dual Virasoro algebras.
+    r"""R-matrix relation on the Virasoro Verdier-dual branch.
 
-    Vir_c and Vir_{26-c} are Koszul dual (AP24: kappa + kappa' = 13).
+    The historical function name is kept for API compatibility.  The
+    computation here is the Virasoro central-charge complementarity
+    c <-> 26-c used for the A^! Verdier/continuous-dual branch under
+    finite-type/completed hypotheses.  It is not bar-cobar inversion
+    Omega(B(A)) = A and it is not the Hochschild/bulk center
+    Z_ch^der(A) = ChirHoch^*(A,A).
 
     The R-matrices are:
         R^A(z): from shadow data (c/2, 2, 10/(c(5c+22)))
@@ -1170,12 +1223,16 @@ def koszul_dual_rmatrix(c_val, max_order: int = 8) -> Dict[str, Any]:
 
     return {
         'c': c_val,
-        'c_dual': int(cd),
+        'c_dual': cd,
         'R_A': R_A[:min(6, len(R_A))],
         'R_Ad': R_Ad[:min(6, len(R_Ad))],
         'product': product[:min(6, len(product))],
         'is_self_dual': is_self_dual,
         'R_equal_at_self_dual': r_match,
+        'branch': 'Verdier/continuous-dual Virasoro complementarity',
+        'not_bar_cobar_inversion': True,
+        'not_hochschild_bulk_center': True,
+        'diagnostic_scope': f'finite coefficients through z^{max_order}',
     }
 
 

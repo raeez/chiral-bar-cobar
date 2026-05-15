@@ -26,6 +26,7 @@ import pytest
 from fractions import Fraction
 from math import factorial
 
+import compute.lib.primitive_kernel_full as pkf
 from compute.lib.primitive_kernel_full import (
     PrimitiveKernel,
     PrimitiveKernelComponent,
@@ -68,6 +69,7 @@ from compute.lib.primitive_kernel_full import (
     verify_kappa_additivity,
     # Shadow depth
     shadow_depth_class,
+    branch_scalar_depth_class,
     # Cross-validation
     cross_validate_kappa,
     STANDARD_FAMILIES,
@@ -371,6 +373,91 @@ class TestW3Kernel:
         k = w3_kernel()
         channels = k.active_channels()
         assert len(channels) == 3
+
+
+class TestConventionMetadata:
+    """Direct assertions for repaired scalar and collision conventions."""
+
+    def test_heisenberg_kappa_is_level_not_c_over_2(self):
+        """Rank-one Heisenberg records kappa(H_k) = k."""
+        for level in [Fraction(1, 2), Fraction(1), Fraction(3)]:
+            k = heisenberg_kernel(level)
+            summary = k.convention_summary()
+
+            assert k.kappa == level
+            assert k.level == level
+            assert k.central_charge is None
+            assert k.collision_residue == f"{level}/z"
+            assert summary["scalar_lane"] == "rank-one Heisenberg level lane"
+            assert summary["standard_shadow_class"] == "G"
+
+    def test_virasoro_kappa_and_collision_residue_metadata(self):
+        """Virasoro records kappa = c/2 and r^Vir(z)."""
+        for c_val in [Fraction(1), Fraction(26)]:
+            k = virasoro_kernel(c_val)
+            expected_kappa = c_val / 2
+            expected_residue = f"({expected_kappa})/z^3 + 2T/z"
+
+            assert k.kappa == expected_kappa
+            assert k.central_charge == c_val
+            assert k.collision_residue == expected_residue
+            assert k.convention_summary()["collision_residue"] == expected_residue
+            assert k.standard_shadow_class == "M"
+
+    def test_betagamma_closed_collision_residue_zero(self):
+        """betagamma has no pole-valued collision residue on the scalar line."""
+        for lam in [Fraction(0), Fraction(1), Fraction(1, 2)]:
+            k = betagamma_kernel(lam)
+
+            assert k.collision_residue == "0"
+            assert d_channel(k)[(0, 2)] == Fraction(0)
+            assert k.cubic == Fraction(0)
+            assert k.quartic == Fraction(0)
+
+    def test_betagamma_regular_contact_transport_separate_from_collision(self):
+        """Regular contact transport is not the pole-valued r-matrix."""
+        k = betagamma_kernel()
+
+        assert k.collision_residue == "0"
+        assert "not a pole-valued collision residue" in k.regular_contact_transport
+        assert k.has_planted_forest
+        assert k.planted_forest_value == Fraction(-5, 12)
+        assert "K_{0,4}^{amb}" in k.component_string(include_ambient=True)
+        assert "K_{0,4}" not in k.component_string()
+
+    def test_betagamma_class_c_vs_branch_scalar_split(self):
+        """Standard-family class C is separate from the branch scalar packet."""
+        k = betagamma_kernel()
+
+        assert k.standard_shadow_class == "C"
+        assert shadow_depth_class(k) == ("C", 4)
+        assert branch_scalar_depth_class(k) == ("G", 2)
+        assert k.scalar_lane == "rank-one weight-changing line (mu_bg = 0)"
+
+    def test_betagamma_ambient_s4_not_scalar_quartic(self):
+        """Ambient S_4 = -5/12 survives while the scalar quartic vanishes."""
+        k = betagamma_kernel()
+        shell = genus2_shell(k)
+        bv = betagamma_branch_bv()
+
+        assert k.planted_forest_value == Fraction(-5, 12)
+        assert shell["ambient_contact"] == Fraction(-5, 12)
+        assert shell["planted_forest"] == Fraction(0)
+        assert 4 not in bv.coefficients
+        assert verify_branch_bv_qme(bv)["is_gaussian"]
+
+    def test_object_firewall_metadata_is_present(self):
+        """The module-level object firewall keeps the five objects distinct."""
+        doc = pkf.__doc__ or ""
+
+        assert "Object firewall:" in doc
+        assert "A is the chiral algebra" in doc
+        assert "B(A) the ordered bar coalgebra" in doc
+        assert "A^i = H(B(A))" in doc
+        assert "A^!" in doc
+        assert "Z_ch^der(A)" in doc
+        assert "Omega(B(A)) = A is bar-cobar inversion" in doc
+        assert "not an identification" in doc
 
 
 # =====================================================================

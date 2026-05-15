@@ -447,7 +447,7 @@ class TestEngine:
         assert abs(result["direct"] - closed) / abs(closed) < 1e-6
 
     def test_engine_multiplicativity(self):
-        """Engine: multiplicativity test confirms NOT multiplicative."""
+        """Engine: multiplicativity test confirms failure of multiplicativity."""
         engine = CategoricalZetaHigherEngine(precision_dps=30)
         is_mult, n_viol = engine.multiplicativity_test()
         assert not is_mult

@@ -1,38 +1,44 @@
-r"""Tests for the categorification of shadow zeta via the DK category.
+r"""Tests for finite representation-zeta diagnostics adjacent to shadow data.
 
-Verification strategy (multi-path, per CLAUDE.md mandate):
+Verification strategy:
     Path 1: Direct representation-theoretic computation (Weyl dim formula)
-    Path 2: For sl_2: comparison with mpmath.zeta (Riemann zeta)
-    Path 3: Graded Euler characteristic: chi(categorified) = decategorified
-    Path 4: Khovanov Euler char = Jones polynomial (categorification axiom)
-    Path 5: Euler product consistency (sl_2: exact; sl_N: partial)
+    Path 2: For sl_2: comparison with mpmath.zeta in Re(s) > 1
+    Path 3: K_0 augmentation: finite K-theory zeta maps to shifted DK zeta
+    Path 4: Khovanov Euler char = Jones polynomial
+    Path 5: Euler product diagnostic (sl_2 in Re(s) > 1; sl_N partial)
     Path 6: K-theory shift identity: chi(zeta^K(s)) = zeta^{DK}(s-1)
     Path 7: Dimension spectrum completeness (sl_2: all positive integers)
-    Path 8: Functional equation xi(s) = xi(1-s) for sl_2
+    Path 8: Riemann xi(s) diagnostic for sl_2, non-certifying for DK duality
 
-The central identity:
-    zeta^{DK}_{sl_2}(s) = sum_{n >= 0} (n+1)^{-s} = zeta(s)   (Riemann zeta)
+Rank-one finite identity:
+    zeta^{DK}_{sl_2,N}(s) = sum_{n=0}^{N-1} (n+1)^{-s}.
+    Its N -> infinity limit is zeta(s) only for Re(s) > 1.
 
-    With trivial excluded: sum_{n >= 1} (n+1)^{-s} = zeta(s) - 1.
-
-References:
-    concordance.tex: MC3 (all simple types, cor:mc3-all-types)
-    yangians_drinfeld_kohno.tex: DK bridge
-    CLAUDE.md: multi-path verification mandate, AP1, AP10
+Object firewall tests keep DK diagnostics separate from Theta_A, A^!,
+Omega(B(A)), and Z_ch^der(A).
 """
 
 import cmath
 import math
+from pathlib import Path
 
 import mpmath
 import pytest
 
 from compute.lib.bc_categorified_zeta_shadow_engine import (
+    CERTIFIED_FINITE_IDENTITY,
+    FINITE_DIAGNOSTIC_NONCERTIFYING,
+    FORMAL_SERIES_IDENTITY_RE_GT_1,
+    HOLOGRAPHIC_PACKAGE_FIELDS,
+    KERNEL_CONSTANTS,
+    MODULAR_KOSZUL_COMPUTE_PROJECTIONS,
     # Dimension formulas
     sl_n_dim,
+    categorified_zeta_firewall,
     # DK categorical zeta
     dk_categorical_zeta,
     sl2_dk_zeta,
+    sl2_zeta_tail_bound,
     sl3_dk_zeta,
     # Factorization test
     dk_zeta_factorization_test,
@@ -51,9 +57,9 @@ from compute.lib.bc_categorified_zeta_shadow_engine import (
     derived_zeta,
     # Hochschild homology
     hochschild_homology_dk,
-    # Categorical Riemann hypothesis
+    # Finite zero-search diagnostic
     categorical_riemann_hypothesis,
-    # Koszul duality
+    # Reflected-parameter diagnostic
     koszul_categorical_duality,
     # Dimension spectrum
     dimension_spectrum_analysis,
@@ -70,6 +76,77 @@ from compute.lib.bc_categorified_zeta_shadow_engine import (
     # Master check
     master_categorification_check,
 )
+
+
+# =========================================================================
+# Section 0: Diagnostic status and object firewalls
+# =========================================================================
+
+class TestDiagnosticFirewalls:
+    """Typed firewalls for the finite diagnostic surface."""
+
+    def test_holographic_package_fields_exact(self):
+        firewall = categorified_zeta_firewall()
+        assert firewall['holographic_package_fields'] == HOLOGRAPHIC_PACKAGE_FIELDS
+        assert HOLOGRAPHIC_PACKAGE_FIELDS == (
+            "A",
+            "A^i",
+            "A^!",
+            "C",
+            "r(z)",
+            "Theta_A",
+            "nabla^hol",
+        )
+
+    def test_modular_koszul_compute_projections_exact(self):
+        firewall = categorified_zeta_firewall()
+        assert firewall['modular_koszul_compute_projections'] == (
+            "Fact_X(L)",
+            "barB_X(L)",
+            "Theta_L",
+            "L_L",
+            "(V_br,T_br)",
+            "R4_mod(L)",
+        )
+        assert firewall['modular_koszul_compute_projections'] == (
+            MODULAR_KOSZUL_COMPUTE_PROJECTIONS
+        )
+
+    def test_kernel_constants_are_trace_kz_separated(self):
+        firewall = categorified_zeta_firewall()
+        assert firewall['kernel_constants'] == KERNEL_CONSTANTS
+        assert KERNEL_CONSTANTS['affine_raw_trace_form'] == "k*Omega_tr/z"
+        assert KERNEL_CONSTANTS['affine_KZ_normalization'] == "Omega/((k+h^vee)z)"
+        assert KERNEL_CONSTANTS['heisenberg'] == "k/z"
+        assert KERNEL_CONSTANTS['virasoro'] == "(c/2)/z^3 + 2T/z"
+
+    def test_object_firewall_noncertifying(self):
+        firewall = categorified_zeta_firewall()
+        objects = firewall['object_firewall']
+        assert "bar-cobar inversion" in objects["Omega(B(A))"]
+        assert "Verdier/continuous-linear dual branch" in objects["A^!"]
+        assert "Hochschild/bulk object" in objects["Z_ch^der(A)"]
+        assert firewall['certifies_chiral_mc'] is False
+        assert firewall['certifies_koszul_duality'] is False
+        assert firewall['certifies_analytic_continuation'] is False
+
+    def test_owned_sources_have_no_attribution_tokens(self):
+        repo = Path(__file__).resolve().parents[2]
+        owned = (
+            repo / "compute/lib/bc_categorified_zeta_shadow_engine.py",
+            Path(__file__).resolve(),
+        )
+        forbidden = [
+            "Clau" + "de",
+            "Anth" + "ropic",
+            "Generated" + " with",
+            "Co-" + "Authored-By",
+            "L" + "LM",
+        ]
+        for path in owned:
+            text = path.read_text()
+            for token in forbidden:
+                assert token not in text
 
 
 # =========================================================================
@@ -173,7 +250,7 @@ class TestSlNDim:
 # =========================================================================
 
 class TestSl2IsRiemannZeta:
-    """The central discovery: zeta^{DK}_{sl_2}(s) = zeta(s)."""
+    """Rank-one DK coefficients are the Riemann-zeta coefficients."""
 
     def test_sl2_zeta_at_s2(self):
         """zeta^{DK}_{sl_2}(2) approx pi^2/6."""
@@ -218,6 +295,14 @@ class TestSl2IsRiemannZeta:
         expected = mpmath.pi ** 2 / 6
         assert abs(float(val - expected)) < 0.0001
 
+    def test_sl2_partial_sum_has_integral_tail_bound(self):
+        """Finite partial sum is bounded from the infinite Re(s)>1 value."""
+        partial = sl2_dk_zeta(2.0, N=100, include_trivial=True)
+        tail_bound = sl2_zeta_tail_bound(2.0, 100, include_trivial=True)
+        zeta_value = mpmath.zeta(2)
+        assert partial < zeta_value
+        assert zeta_value <= partial + tail_bound
+
     def test_dk_categorical_matches_sl2_dk(self):
         """dk_categorical_zeta(1, s) = sl2_dk_zeta(s)."""
         for s in [2.0, 3.0, 4.0]:
@@ -226,9 +311,11 @@ class TestSl2IsRiemannZeta:
             assert abs(float(v1 - v2)) < 0.01
 
     def test_factorization_sl2_is_riemann(self):
-        """dk_zeta_factorization_test confirms sl_2 = Riemann zeta."""
+        """Factorization diagnostic records the certified rank-one statement."""
         result = dk_zeta_factorization_test(1, 3.0, N_terms=500)
         assert result['is_riemann'] is True
+        assert result['certifies_rank1_dirichlet_identity'] is True
+        assert result['certifies_analytic_continuation'] is False
 
 
 # =========================================================================
@@ -269,6 +356,8 @@ class TestSl3DKZeta:
         ratio = result['ratio']
         assert ratio is not None
         assert abs(float(abs(ratio)) - 1.0) > 0.01  # definitively not equal
+        assert result['certifies_rank_ge_2_factorization'] is False
+        assert result['status'] == FINITE_DIAGNOSTIC_NONCERTIFYING
 
     def test_sl3_dimension_multiplicities(self):
         """sl_3 has dimension multiplicities (3 appears twice: fund + anti-fund)."""
@@ -296,6 +385,8 @@ class TestKTheoryZeta:
         """For sl_2: chi(zeta^K(s)) = zeta^{DK}(s-1) = zeta(s-1)."""
         result = k_theory_zeta(1, 3.0, N_terms=200)
         assert result['shift_identity'] < 0.1
+        assert result['status'] == CERTIFIED_FINITE_IDENTITY
+        assert result['certifies_scalar_shadow'] is False
 
     def test_shift_identity_sl3(self):
         """Shift identity for sl_3."""
@@ -325,12 +416,14 @@ class TestKTheoryZeta:
 # =========================================================================
 
 class TestDecategorification:
-    """chi(categorified) = numerical (the categorification axiom)."""
+    """Finite K_0 augmentation identity for the representation surface."""
 
     def test_sl2_decategorification(self):
         """Decategorification for sl_2."""
         result = euler_characteristic_decategorification(1, 3.0, N_terms=200)
         assert result['consistent'] is True
+        assert result['certifies_scalar_shadow'] is False
+        assert result['certifies_chiral_functor'] is False
 
     def test_sl2_riemann_check(self):
         """Euler char should match zeta(s-1) - 1 for sl_2 (trivial excluded)."""
@@ -563,6 +656,9 @@ class TestHochschildHomology:
         hh = hochschild_homology_dk(1, 3)
         assert hh['is_semisimple'] is True
         assert all(d == 0 for d in hh['hh_dims'][1:])
+        assert hh['scope'] == 'finite_semisimple_simple_count'
+        assert hh['certifies_bulk_object'] is False
+        assert hh['z_ch_der_identification'] is False
 
     def test_euler_char_equals_n_simples(self):
         """Euler characteristic of HH = n_simples (semisimple case)."""
@@ -584,27 +680,30 @@ class TestHochschildHomology:
 
 
 # =========================================================================
-# Section 11: Categorical Riemann hypothesis
+# Section 11: Finite zero-search diagnostic
 # =========================================================================
 
-class TestCategoricalRiemannHypothesis:
-    """Search for zeros of zeta^{DK} on the critical strip."""
+class TestFiniteZeroSearchDiagnostic:
+    """Finite critical-line probes are non-certifying diagnostics."""
 
     def test_sl2_finds_first_zero(self):
-        """For sl_2, should find zero near t = 14.135."""
+        """For sl_2, the output records comparison-only zero data."""
         result = categorical_riemann_hypothesis(1, (10.0, 20.0),
                                                  n_points=100, N_terms=200)
-        # Should find candidate near 14.135
-        found = any(abs(t - 14.135) < 2.0 for t in result['candidate_zeros'])
-        # Partial sums may not be accurate enough, so we just check structure
         assert isinstance(result['candidate_zeros'], list)
         assert 'sl2_comparison' in result
+        assert result['series_converges_at_search_line'] is False
+        assert result['certifies_zeros'] is False
+        assert result['certifies_riemann_hypothesis'] is False
+        assert result['sl2_comparison']['comparison_only'] is True
 
     def test_sl3_no_crash(self):
         """sl_3 zero search completes without error."""
         result = categorical_riemann_hypothesis(2, (5.0, 15.0),
                                                  n_points=20, N_terms=30)
         assert isinstance(result['candidate_zeros'], list)
+        assert result['status'] == FINITE_DIAGNOSTIC_NONCERTIFYING
+        assert result['certifies_analytic_continuation'] is False
 
     def test_output_structure(self):
         """Output has expected keys."""
@@ -616,19 +715,22 @@ class TestCategoricalRiemannHypothesis:
 
 
 # =========================================================================
-# Section 12: Koszul categorical duality
+# Section 12: Reflected-parameter diagnostic
 # =========================================================================
 
-class TestKoszulCategoricalDuality:
-    """Koszul duality on zeta^{DK}: functional equation."""
+class TestReflectedParameterDiagnostic:
+    """The s |-> 1-s probe is not the A^! branch."""
 
     def test_sl2_functional_equation(self):
-        """xi(s) = xi(1-s) for Riemann zeta (sl_2 case)."""
+        """xi(s) = xi(1-s) is recorded as an analytic rank-one diagnostic."""
         result = koszul_categorical_duality(1, 2.5, N_terms=200)
         assert result.get('functional_equation_holds', False) is True
+        assert result['certifies_koszul_duality'] is False
+        assert result['functional_equation_certifies_duality'] is False
+        assert result['dual_object'] == 'analytic_reflection_s_to_1_minus_s_not_A_bang'
 
     def test_sl2_functional_equation_multiple_s(self):
-        """Functional equation at multiple s values.
+        """Analytic Riemann-zeta diagnostic at multiple s values.
 
         Avoid odd integer s where Gamma((1-s)/2) has poles:
         s=3 -> Gamma(-1) pole, s=5 -> Gamma(-2) pole, etc.
@@ -637,12 +739,27 @@ class TestKoszulCategoricalDuality:
             result = koszul_categorical_duality(1, s, N_terms=200)
             err = result.get('functional_equation_error', 1.0)
             assert err < 1e-8, f"Functional equation failed at s={s}, error={err}"
+            assert result['functional_equation_status'] == (
+                'analytic_riemann_zeta_check_not_finite_dk_sum'
+            )
+            assert result['certifies_analytic_continuation'] is False
 
     def test_koszul_sum_structure(self):
-        """zeta(s) + zeta(1-s) has predictable behavior."""
+        """The reflected finite partial sum remains typed as a diagnostic."""
         result = koszul_categorical_duality(1, 3.5, N_terms=200)
         assert 'sum' in result
         assert math.isfinite(float(abs(result['sum'])))
+        assert result['zeta_A_dual_is_partial_sum'] is True
+        assert "Verdier/continuous-linear dual branch" in result['object_firewall']["A^!"]
+
+    def test_reflected_partial_sum_is_not_continuation_value(self):
+        """The finite 1-s DK sum is not mpmath's analytic continuation."""
+        s = 2.5
+        result = koszul_categorical_duality(1, s, N_terms=50)
+        reflected_partial = result['zeta_A_dual']
+        analytic_value = mpmath.zeta(1 - s)
+        assert float(abs(reflected_partial - analytic_value)) > 1.0
+        assert result['certifies_theorem_c'] is False
 
 
 # =========================================================================
@@ -699,6 +816,8 @@ class TestMultipathVerification:
         """Four paths agree at s=2."""
         result = multipath_categorified_verification(2.0, N_terms=500)
         assert result['all_consistent'] is True
+        assert result['domain'] == 'real_s_gt_1'
+        assert result['certifies_analytic_continuation'] is False
 
     def test_multipath_at_s3(self):
         """Four paths agree at s=3."""
@@ -739,6 +858,8 @@ class TestEulerProduct:
         ratio = result['ratio']
         assert ratio is not None
         assert abs(float(abs(ratio)) - 1.0) < 0.01
+        assert result['status'] == FORMAL_SERIES_IDENTITY_RE_GT_1
+        assert result['certifies_hall_factorization'] is False
 
     def test_sl2_is_multiplicative(self):
         """sl_2 dimension function is multiplicative (by uniqueness of ints)."""
@@ -749,6 +870,8 @@ class TestEulerProduct:
         """sl_3 dimension function is not multiplicative."""
         result = categorified_euler_product(2, 3.0, N_primes=20)
         assert result['is_multiplicative'] is False
+        assert result['certifies_euler_product'] is False
+        assert result['status'] == FINITE_DIAGNOSTIC_NONCERTIFYING
 
     def test_local_factors_positive(self):
         """All local factors are positive for real s > 1."""
@@ -762,7 +885,7 @@ class TestEulerProduct:
 # =========================================================================
 
 class TestShadowDKBridge:
-    """Bridge between shadow zeta and DK categorical zeta."""
+    """Scalar comparison between supplied shadow coefficients and DK data."""
 
     def test_heisenberg_shadow(self):
         """Heisenberg shadow coefficients: S_2 = kappa, S_r = 0 for r > 2."""
@@ -771,18 +894,23 @@ class TestShadowDKBridge:
         result = shadow_to_dk_bridge(1, 3.0, shadow_coeffs, N_terms=200)
         assert math.isfinite(float(abs(result['shadow_zeta'])))
         assert math.isfinite(float(abs(result['dk_zeta'])))
+        assert result['comparison_type'] == 'scalar_finite_dirichlet_comparison'
+        assert result['certifies_chiral_mc'] is False
+        assert result['certifies_functor'] is False
 
     def test_virasoro_shadow(self):
         """Virasoro shadow coefficients: infinite tower (class M)."""
-        # First few shadow coefficients for Virasoro at c=1
+        # landscape_census.tex: S_2=c/2, S_3=2, S_4=10/[c(5c+22)].
         c = 1.0
         kappa = c / 2
-        S3 = 2.0  # S_3 = 2 for Virasoro (c-independent; AP9)
+        S3 = 2.0
         S4 = 10 / (c * (5 * c + 22))  # Q^contact
         shadow_coeffs = [kappa, S3, S4]
         result = shadow_to_dk_bridge(1, 3.0, shadow_coeffs, N_terms=200)
         assert result['shadow_zeta'] is not None
         assert result['dk_zeta'] is not None
+        assert result['certifies_r_matrix_bridge'] is False
+        assert result['holographic_package_fields'] == HOLOGRAPHIC_PACKAGE_FIELDS
 
     def test_bridge_ratio_finite(self):
         """Shadow/DK ratio is finite."""
@@ -790,6 +918,8 @@ class TestShadowDKBridge:
         result = shadow_to_dk_bridge(1, 3.0, shadow_coeffs, N_terms=200)
         assert result['ratio'] is not None
         assert math.isfinite(float(abs(result['ratio'])))
+        assert result['status'] == FINITE_DIAGNOSTIC_NONCERTIFYING
+        assert result['certifies_categorification'] is False
 
 
 # =========================================================================
@@ -803,6 +933,8 @@ class TestHKR:
         """HKR trivializes for semisimple categories."""
         result = hkr_theorem_dk(1, 3)
         assert result['hkr_holds'] is True
+        assert result['certifies_bulk_slot'] is False
+        assert result['z_ch_der_identification'] is False
 
     def test_center_dim_matches(self):
         """Center dimension = number of simples."""
@@ -909,6 +1041,9 @@ class TestMasterVerification:
         assert result['khovanov_trefoil']['verified'] is True
         assert result['khovanov_figure_eight']['verified'] is True
         assert result['sl2_dimension_spectrum']['is_complete'] is True
+        assert result['certifies_chiral_mc'] is False
+        assert result['certifies_koszul_duality'] is False
+        assert result['certifies_analytic_continuation'] is False
 
     def test_all_verified(self):
         """All sub-checks pass."""

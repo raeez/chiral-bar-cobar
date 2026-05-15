@@ -343,6 +343,15 @@ class TestDualityDiscrimination:
         assert '0' in koszul.kappa_relation
         assert 'N_f' in mirror.kappa_relation
 
+    def test_koszul_transformation_uses_bar_dual_then_verdier(self):
+        """Koszul duality passes through A^i before A!."""
+        dualities = four_dualities()
+        koszul = [d for d in dualities if d.duality_name == 'Koszul duality'][0]
+        assert 'A^i=H^*(B(A))' in koszul.transformation
+        assert 'Verdier duality' in koszul.transformation
+        raw_dual_shortcut = 'A -> A! = ' + '(H*(B(A)))^v'
+        assert raw_dual_shortcut not in koszul.transformation
+
 
 # ===========================================================================
 # AXIS 8: CoHA-BAR BRIDGE (3 tests)

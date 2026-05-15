@@ -1,68 +1,34 @@
-r"""Twisted holographic partition functions at Riemann zeta zero parameters.
+r"""Scalar zeta-zero evaluations for the twisted-holography package.
 
-MATHEMATICAL FRAMEWORK
-======================
+The manuscript datum is the seven-entry typed record
 
-This module computes standard holographic quantities — boundary partition
-functions, bulk shadows, BTZ thermodynamics, Chern-Simons partition functions,
-anomaly polynomials, and open/closed annulus amplitudes — evaluated at spectral
-parameters determined by the nontrivial zeros rho_n of the Riemann zeta function.
+    H(T) = (A, A^i, A^!, C, r(z), Theta_A, nabla^hol).
 
-EPISTEMIC STATUS (AP42)
-=======================
+This module does not construct the full holomorphic-topological theory.  It
+keeps a scalar/typed-summary shadow of the datum while evaluating numerical
+functions at parameters built from the positive imaginary parts rho_n of the
+nontrivial zeros 1/2 + i*rho_n of the Riemann zeta function.
 
-The evaluation of holographic quantities at zeta-zero parameters is EXPLORATORY
-NUMEROLOGY, not established mathematics or physics.  There is no published theorem
-or physical principle that relates the nontrivial zeros of zeta(s) to holographic
-modular parameters.  The mapping tau_n = i*(1 + rho_n)/(4*pi) is an ANSATZ with
-no derivation.  The Selberg zeta for the BTZ quotient Gamma\H^3 is DISTINCT from
-the Riemann zeta (see bc_btz_spectral_zeta_engine.py for the precise relation).
+The zeta-zero evaluation is exploratory.  There is no theorem or physical
+principle in this repository that identifies Riemann zeta zeros with modular,
+BTZ, celestial, or Chern-Simons parameters.  The map
 
-What IS mathematically rigorous in this module:
-  - Boundary partition functions Z_partial(tau) = Tr(q^{L_0 - c/24})
-  - Bulk shadow free energies F_g from the proved shadow CohFT (thm:shadow-cohft)
-  - BTZ thermodynamics and Cardy formula (AP20: kappa(A), not kappa_eff)
-  - Chern-Simons partition function on the solid torus at integer/rational level
-  - Anomaly polynomials I_8 as topological invariants
-  - Annulus trace = kappa * lambda_1 at genus 1 (proved, thm:annulus-trace)
-  - Open/closed duality: derived center Z^der_ch(A) (thm:thqg-swiss-cheese)
+    tau_n = i * (1 + rho_n) / (4*pi)
 
-What is NUMEROLOGICAL / CONJECTURAL:
-  - The mapping from zeta zeros to modular parameters
-  - Any claimed "coincidence" between zeta-zero evaluations and physical quantities
-  - The term "Benjamin-Chang programme" does not correspond to a published programme
+is only a convergence-friendly probe: q_n = exp(2*pi*i*tau_n)
+= exp(-(1+rho_n)/2).  It is not the Selberg zeta of the BTZ quotient; that
+geometry is handled by bc_btz_spectral_zeta_engine.py.
 
-CONVENTIONS
-===========
+The rigorous scalar computations retained here are:
+  - q-series partition functions with q = exp(2*pi*i*tau);
+  - Faber-Pandharipande lambda_g numbers and F_g = kappa(A) lambda_g;
+  - Cardy/BTZ algebraic identities at the chosen beta_n;
+  - Chern-Simons solid-torus normalizations at integer level;
+  - annulus trace kappa(A) lambda_1;
+  - typed separation of B(A), A^i, A^!, Omega(B(A)), and Z_ch^der(A).
 
-  - kappa(Vir_c) = c/2 (AP1, AP9, AP20)
-  - kappa_eff = kappa(matter) + kappa(ghost), vanishes at c=26 (AP29)
-  - delta_kappa = kappa - kappa' (complementarity asymmetry), vanishes at c=13 (AP29)
-  - The bar propagator is d log E(z,w), weight 1 in both variables (AP27)
-  - r-matrix pole order = OPE pole order - 1 (AP19)
-  - Dedekind eta: eta(q) = q^{1/24} * prod(1-q^n) (AP46)
-  - COHOMOLOGICAL grading, bar uses DESUSPENSION (AP45)
-  - Z_partial(tau) = Tr(q^{L_0-c/24}) with q = e^{2*pi*i*tau}
-
-FAMILIES
-========
-
-  Heisenberg H_k:  kappa = k,  c = 1 (at level k=1, convention-dependent)
-  Affine KM V_k(g): kappa = dim(g)*(k+h^v)/(2*h^v), c = k*dim(g)/(k+h^v)
-  Virasoro Vir_c:  kappa = c/2
-  W_N at level k:  kappa = c*(H_N - 1)
-
-References:
-    BTZ 1992: hep-th/9204099
-    Cardy 1986: the Cardy formula for asymptotic density of states
-    Witten 1989: CS and the Jones polynomial
-    Dijkgraaf-Maldacena-Moore-Verlinde 2000: hep-th/0005003 (Farey tail)
-    Costello-Paquette 2022: celestial holography from twisted holography
-    Strominger 2014: BMS supertranslations and celestial holography
-    thm:shadow-cohft (higher_genus_modular_koszul.tex)
-    thm:theorem-d (higher_genus_modular_koszul.tex)
-    thm:annulus-trace (thqg_open_closed_realization.tex)
-    thm:thqg-swiss-cheese (thqg_open_closed_realization.tex)
+The numerical probes at rho_n are recorded as probes, not as holographic
+predictions.
 """
 
 from __future__ import annotations
@@ -120,6 +86,41 @@ RIEMANN_ZETA_ZEROS = [
 ]
 
 
+HOLOGRAPHIC_PACKAGE_ENTRIES: Tuple[str, ...] = (
+    "A",
+    "A^i",
+    "A^!",
+    "C",
+    "r(z)",
+    "Theta_A",
+    "nabla^hol",
+)
+
+TYPED_FIREWALL_OBJECTS: Tuple[str, ...] = (
+    "A",
+    "B(A)",
+    "A^i",
+    "A^!",
+    "Omega(B(A))",
+    "Z_ch^der(A)",
+)
+
+
+def _as_fraction(x) -> Fraction:
+    """Coerce exact scalar input to Fraction."""
+    if isinstance(x, Fraction):
+        return x
+    return Fraction(x)
+
+
+def _fraction_label(x) -> str:
+    """Compact exact label for algebra names."""
+    frac = _as_fraction(x)
+    if frac.denominator == 1:
+        return str(frac.numerator)
+    return f"{frac.numerator}/{frac.denominator}"
+
+
 # ===========================================================================
 # Section 1: Modular characteristics (exact arithmetic)
 # ===========================================================================
@@ -127,10 +128,10 @@ RIEMANN_ZETA_ZEROS = [
 def kappa_virasoro(c) -> Fraction:
     """kappa(Vir_c) = c/2.
 
-    AP1/AP9: authoritative formula.
-    AP20: this is kappa(A) for A = Vir_c, NOT kappa_eff.
+    This is kappa(A) for A = Vir_c.  It is not kappa_eff, which adds the
+    ghost contribution.
     """
-    return Fraction(c) / Fraction(2)
+    return _as_fraction(c) / Fraction(2)
 
 
 def kappa_heisenberg(k) -> Fraction:
@@ -138,29 +139,64 @@ def kappa_heisenberg(k) -> Fraction:
 
     Single generator of weight 1 at level k.
     """
-    return Fraction(k)
+    return _as_fraction(k)
 
 
 def kappa_kac_moody(dim_g: int, k, h_dual) -> Fraction:
     """kappa(V_k(g)) = dim(g) * (k + h^v) / (2*h^v).
 
-    AP1: recomputed from first principles for each family.
+    This is the affine-family modular characteristic, not c/2 in general.
     """
-    return Fraction(dim_g) * (Fraction(k) + Fraction(h_dual)) / (2 * Fraction(h_dual))
+    return Fraction(dim_g) * (_as_fraction(k) + _as_fraction(h_dual)) / (2 * _as_fraction(h_dual))
 
 
 def kappa_wn(c, N: int) -> Fraction:
     """kappa(W_N) = c * (H_N - 1) where H_N = sum_{j=1}^N 1/j.
 
-    AP1/AP9: distinct from c/2 for N >= 3.
+    This agrees with Virasoro at N=2 and differs from c/2 for N >= 3.
     """
     H_N = sum(Fraction(1, j) for j in range(1, N + 1))
-    return Fraction(c) * (H_N - 1)
+    return _as_fraction(c) * (H_N - 1)
 
 
 def central_charge_km(dim_g: int, k, h_dual) -> Fraction:
     """Central charge c(V_k(g)) = k * dim(g) / (k + h^v)."""
-    return Fraction(k) * Fraction(dim_g) / (Fraction(k) + Fraction(h_dual))
+    return _as_fraction(k) * Fraction(dim_g) / (_as_fraction(k) + _as_fraction(h_dual))
+
+
+def central_charge_betagamma(lam=1) -> Fraction:
+    r"""Central charge of the bosonic beta-gamma system.
+
+    c_{beta gamma}(lambda) = 2 * (6 lambda^2 - 6 lambda + 1).
+    """
+    lam = _as_fraction(lam)
+    return 2 * (6 * lam * lam - 6 * lam + 1)
+
+
+def kappa_betagamma(lam=1) -> Fraction:
+    r"""Modular characteristic of beta-gamma_lambda.
+
+    kappa(beta gamma_lambda) = c_{beta gamma}(lambda) / 2
+    = 6 lambda^2 - 6 lambda + 1.
+    """
+    return central_charge_betagamma(lam) / 2
+
+
+def central_charge_bc(lam=1) -> Fraction:
+    r"""Central charge of the fermionic bc system.
+
+    c_{bc}(lambda) = -2 * (6 lambda^2 - 6 lambda + 1).
+    """
+    return -central_charge_betagamma(lam)
+
+
+def kappa_bc(lam=1) -> Fraction:
+    r"""Modular characteristic of bc_lambda.
+
+    The beta-gamma/bc free-field pair cancels on the scalar lane:
+    kappa(beta gamma_lambda) + kappa(bc_lambda) = 0.
+    """
+    return central_charge_bc(lam) / 2
 
 
 def kappa_ghost() -> Fraction:
@@ -175,7 +211,6 @@ def kappa_ghost() -> Fraction:
 def kappa_eff(kappa_matter: Fraction) -> Fraction:
     """Effective curvature kappa_eff = kappa(matter) + kappa(ghost).
 
-    AP29: this is DISTINCT from delta_kappa = kappa - kappa'.
     Vanishes at c_matter = 26 (bosonic string critical dimension).
     """
     return kappa_matter + kappa_ghost()
@@ -184,7 +219,6 @@ def kappa_eff(kappa_matter: Fraction) -> Fraction:
 def delta_kappa(kappa_A: Fraction, kappa_A_dual: Fraction) -> Fraction:
     """Complementarity asymmetry delta_kappa = kappa(A) - kappa(A!).
 
-    AP29: DISTINCT from kappa_eff.
     For KM/free fields: delta_kappa = 2*kappa(A) (since kappa+kappa'=0).
     For Virasoro: kappa(Vir_c) + kappa(Vir_{26-c}) = 13, so
       delta_kappa = c/2 - (26-c)/2 = c - 13.
@@ -234,7 +268,8 @@ def lambda_fp(g: int) -> Fraction:
 
     lambda_g^FP = (2^{2g-1} - 1) / 2^{2g-1} * |B_{2g}| / (2g)!
 
-    These are POSITIVE for all g >= 1 (AP22: Bernoulli signs).
+    These are positive for all g >= 1; the absolute Bernoulli value fixes the
+    sign convention.
 
     Verified values:
         g=1: 1/24
@@ -251,7 +286,7 @@ def lambda_fp(g: int) -> Fraction:
 
 
 # ===========================================================================
-# Section 3: Zeta-zero to modular parameter mapping (NUMEROLOGICAL)
+# Section 3: Zeta-zero to modular parameter mapping (formal probe)
 # ===========================================================================
 
 def zeta_zero(n: int) -> float:
@@ -270,15 +305,15 @@ def zeta_zero(n: int) -> float:
 def modular_parameter_from_zeta_zero(n: int) -> complex:
     r"""Map zeta zero rho_n to modular parameter tau_n.
 
-    NUMEROLOGICAL ANSATZ (no physical derivation):
+    Formal probe map:
         tau_n = i * (1 + rho_n) / (4*pi)
 
     This places tau in the upper half-plane (Im(tau) > 0) for rho_n > 0.
     The nome is q_n = e^{2*pi*i*tau_n} = e^{-(1+rho_n)/2}.
 
-    NOTE: This mapping is ARBITRARY.  It is chosen so that |q_n| < 1
+    The map is chosen so that |q_n| < 1
     (ensuring convergence of q-series) and so that larger rho_n gives
-    smaller |q_n| (stronger convergence).
+    smaller |q_n| (stronger convergence).  No physical derivation is assumed.
     """
     rho_n = zeta_zero(n)
     return 1j * (1.0 + rho_n) / (4.0 * PI)
@@ -297,28 +332,27 @@ def nome_from_zeta_zero(n: int) -> complex:
 
 
 def spectral_parameter_from_zeta_zero(n: int) -> complex:
-    r"""Spectral parameter s_n = (1 + i*rho_n)/2 on the critical line.
+    r"""Spectral parameter s_n = 1/2 + i*rho_n on the critical line.
 
     This is the standard parameterization of the critical strip:
-    the n-th zero is at s = 1/2 + i*rho_n, so s_n = (1 + i*rho_n)/2
-    is the ACTUAL location of the zero.
+    the n-th zero is at s_n = 1/2 + i*rho_n.
     """
     rho_n = zeta_zero(n)
     return complex(0.5, rho_n)
 
 
 def mellin_parameter_from_zeta_zero(n: int) -> complex:
-    r"""Mellin/conformal dimension Delta_n = (1 + i*rho_n)/2.
+    r"""Mellin/conformal dimension probe Delta_n = 1/2 + i*rho_n.
 
     In celestial holography, the Mellin transform of a bulk scattering
-    amplitude has conformal dimension Delta.  Setting Delta to the spectral
-    parameter s_n gives the celestial OPE coefficient at the zeta zero.
+    amplitude has conformal dimension Delta.  This function sets Delta to
+    the Riemann-zero spectral parameter for a formal numerical probe.
 
-    NOTE: This identification is FORMAL.  Celestial conformal dimensions are
+    This identification is formal.  Celestial conformal dimensions are
     real for physical operators; complex Delta corresponds to principal-series
     representations (which DO appear in the celestial basis, cf. Pasterski-
-    Shao-Strominger).  But the claim that zeta zeros have special significance
-    for celestial amplitudes is UNPROVED.
+    Shao-Strominger).  The claim that zeta zeros have special significance
+    for celestial amplitudes is not established.
     """
     return spectral_parameter_from_zeta_zero(n)
 
@@ -329,8 +363,6 @@ def mellin_parameter_from_zeta_zero(n: int) -> complex:
 
 def dedekind_eta(tau: complex, n_max: int = 200) -> complex:
     r"""Dedekind eta function: eta(tau) = q^{1/24} * prod_{n>=1} (1 - q^n).
-
-    AP46: the q^{1/24} prefactor is NOT optional.
 
     Parameters
     ----------
@@ -354,27 +386,15 @@ def dedekind_eta(tau: complex, n_max: int = 200) -> complex:
 
 def boundary_partition_virasoro(tau: complex, c: float = 26.0,
                                  n_max: int = 200) -> complex:
-    r"""Boundary partition function Z_partial(tau) for the Virasoro algebra.
+    r"""Verma-character boundary partition function for Virasoro.
 
-    Z(tau) = Tr(q^{L_0 - c/24}) = q^{-c/24} / prod_{n>=1}(1 - q^n)
-           = q^{-c/24} / (eta(tau) * q^{-1/24})
-           = q^{(-c+1)/24} / eta(tau)     ... NO:
+    The computed scalar is
 
-    Careful (AP46): eta(tau) = q^{1/24} prod(1-q^n).
-    So prod(1-q^n) = eta(tau) / q^{1/24} = eta(tau) * q^{-1/24}.
+        Z(tau) = q^{-c/24} * prod_{n>=1} (1 - q^n)^{-1},
 
-    For pure Virasoro (single copy, no fermions):
-        Z(tau) = q^{-c/24} * prod_{n>=2} (1-q^n)^{-1}
-               = q^{-c/24} * (1-q)^{-1} ... NO.
-
-    Standard: Z(tau) = q^{(1-c)/24} / eta(tau) for the Virasoro module
-    generated by L_{-n} for n >= 2 on the vacuum.  But the FULL partition
-    function of the Verma module at generic c is:
-
-        Z(tau) = q^{-c/24} / prod_{n>=1}(1-q^n) = q^{-c/24} / (eta/q^{1/24})
-               = q^{(-c+1)/24} / eta(tau)
-
-    We compute directly for numerical stability.
+    with q = exp(2*pi*i*tau).  This is the Verma-module character used by
+    the numerical probes, not the irreducible vacuum VOA character with the
+    L_{-1} quotient removed.
     """
     if tau.imag <= 0:
         raise ValueError(f"Need Im(tau) > 0, got Im(tau) = {tau.imag}")
@@ -441,7 +461,7 @@ def boundary_Z_at_zeta_zero(n: int, c: float = 26.0,
                              **kwargs) -> complex:
     r"""Evaluate the boundary partition function at the n-th zeta zero parameter.
 
-    tau_n = i*(1+rho_n)/(4*pi)  [NUMEROLOGICAL ANSATZ]
+    tau_n = i*(1+rho_n)/(4*pi), used only as a formal numerical probe.
 
     Returns Z_partial(tau_n) for the specified algebra.
     """
@@ -479,8 +499,8 @@ def bulk_shadow_Fg(kappa_val: Fraction, g: int) -> Fraction:
     This is the SCALAR LANE contribution (proved for uniform-weight
     algebras at all genera; genus 1 unconditional for all families).
 
-    AP31: F_g depends on kappa, not the full Theta_A.  Higher-arity
-    corrections exist for class M algebras at g >= 2.
+    This scalar projection depends on kappa, not on the full Theta_A.
+    Higher-arity corrections exist for class M algebras at g >= 2.
     """
     return Fraction(kappa_val) * lambda_fp(g)
 
@@ -488,7 +508,7 @@ def bulk_shadow_Fg(kappa_val: Fraction, g: int) -> Fraction:
 def bulk_shadow_effective(c_matter: float, g: int) -> float:
     r"""Effective bulk shadow: F_g^{eff} = kappa_eff * lambda_g^FP.
 
-    AP29: kappa_eff = kappa(matter) + kappa(ghost) = c/2 - 13.
+    kappa_eff = kappa(matter) + kappa(ghost) = c/2 - 13.
     At c=26: kappa_eff = 0, so ALL scalar free energies vanish.
     This is the anomaly cancellation condition for the bosonic string.
     """
@@ -516,6 +536,146 @@ def bulk_shadow_table(c_matter: float, g_max: int = 5) -> Dict[str, Any]:
         'F_g_matter': matter,
         'F_g_effective': effective,
         'anomaly_cancelled': (kappa_e == 0),
+    }
+
+
+# ===========================================================================
+# Section 6b: Seven-entry typed package
+# ===========================================================================
+
+def _algebra_label(algebra: str = 'virasoro', c: float = 26.0, **kwargs) -> str:
+    """Human-readable boundary algebra label for the A slot."""
+    if algebra == 'virasoro':
+        return f"Vir_{_fraction_label(c)}"
+    if algebra == 'heisenberg':
+        return f"H_{_fraction_label(kwargs.get('k', kwargs.get('level', 1)))}"
+    if algebra == 'kac_moody':
+        dim_g = kwargs.get('dim_g', 3)
+        k = kwargs.get('k', 1)
+        h_dual = kwargs.get('h_dual', 2)
+        return f"V_{_fraction_label(k)}(g_dim={dim_g},h_dual={h_dual})"
+    if algebra == 'betagamma':
+        return f"betagamma_{_fraction_label(kwargs.get('lam', 1))}"
+    if algebra == 'bc':
+        return f"bc_{_fraction_label(kwargs.get('lam', 1))}"
+    raise ValueError(f"Unknown algebra: {algebra}")
+
+
+def _dual_label(algebra: str = 'virasoro', c: float = 26.0, **kwargs) -> str:
+    """Human-readable Verdier/Koszul companion label for the A^! slot."""
+    if algebra == 'virasoro':
+        return f"Vir_{_fraction_label(_as_fraction(26) - _as_fraction(c))}"
+    if algebra == 'heisenberg':
+        return "Sym^ch(V*)"
+    if algebra == 'kac_moody':
+        return f"Verdier/Koszul companion of {_algebra_label(algebra, c, **kwargs)}"
+    if algebra == 'betagamma':
+        return f"bc_{_fraction_label(kwargs.get('lam', 1))}"
+    if algebra == 'bc':
+        return f"betagamma_{_fraction_label(kwargs.get('lam', 1))}"
+    raise ValueError(f"Unknown algebra: {algebra}")
+
+
+def _kappa_for_algebra(algebra: str = 'virasoro', c: float = 26.0, **kwargs) -> Fraction:
+    """Exact kappa(A) for supported A-slot families."""
+    if algebra == 'virasoro':
+        return kappa_virasoro(c)
+    if algebra == 'heisenberg':
+        return kappa_heisenberg(kwargs.get('k', kwargs.get('level', 1)))
+    if algebra == 'kac_moody':
+        return kappa_kac_moody(
+            kwargs.get('dim_g', 3),
+            kwargs.get('k', 1),
+            kwargs.get('h_dual', 2),
+        )
+    if algebra == 'betagamma':
+        return kappa_betagamma(kwargs.get('lam', 1))
+    if algebra == 'bc':
+        return kappa_bc(kwargs.get('lam', 1))
+    raise ValueError(f"Unknown algebra: {algebra}")
+
+
+def _r_matrix_summary(algebra: str = 'virasoro', c: float = 26.0, **kwargs) -> str:
+    """Scalar r(z) slot with line/contact data kept out of the closed slot."""
+    if algebra == 'virasoro':
+        return f"r^Vir(z) = {_fraction_label(kappa_virasoro(c))}/z^3 + 2T/z"
+    if algebra == 'heisenberg':
+        k = kwargs.get('k', kwargs.get('level', 1))
+        return f"r^Heis(z) = {_fraction_label(k)}/z"
+    if algebra == 'kac_moody':
+        k = kwargs.get('k', 1)
+        return f"r^KM(z) = {_fraction_label(k)}*Omega/z"
+    if algebra in ('betagamma', 'bc'):
+        return "closed r(z) = 0; simple OPE/contact datum is boundary data"
+    raise ValueError(f"Unknown algebra: {algebra}")
+
+
+def seven_entry_package_at_zeta_zero(
+    n: int,
+    c: float = 26.0,
+    algebra: str = 'virasoro',
+    **kwargs,
+) -> Dict[str, Any]:
+    r"""Return the seven-entry scalar/typed-summary package.
+
+    The package entries are exactly
+
+        (A, A^i, A^!, C, r(z), Theta_A, nabla^hol).
+
+    The zeta zero index is validated so that this record can be attached to
+    zeta-zero scans, but the typed package itself is a property of A and its
+    scalar shadow, not a property of the zero rho_n.
+    """
+    zeta_zero(n)
+    A = _algebra_label(algebra, c, **kwargs)
+    return {
+        "A": A,
+        "A^i": f"H^*(B^ch({A})) bar-dual coalgebra",
+        "A^!": _dual_label(algebra, c, **kwargs),
+        "C": f"Z_ch^der({A}) = C_ch^bullet({A},{A})",
+        "r(z)": _r_matrix_summary(algebra, c, **kwargs),
+        "Theta_A": _kappa_for_algebra(algebra, c, **kwargs),
+        "nabla^hol": True,
+    }
+
+
+def typed_object_firewall(
+    c: float = 26.0,
+    algebra: str = 'virasoro',
+    **kwargs,
+) -> Dict[str, Any]:
+    """Separate B(A), A^i, A^!, Omega(B(A)), and Z_ch^der(A)."""
+    A = _algebra_label(algebra, c, **kwargs)
+    A_dual = _dual_label(algebra, c, **kwargs)
+    return {
+        "A": f"{A}: boundary chiral algebra",
+        "B(A)": (
+            f"B(A) = B^ch({A}) is the chiral bar coalgebra complex; "
+            "its cohomology gives A^i, but the complex is not A^i itself"
+        ),
+        "A^i": (
+            f"A^i = H^*(B^ch({A})) bar-dual coalgebra; "
+            "not B(A), not A^!, not Omega(B(A)), and not Z_ch^der(A)"
+        ),
+        "A^!": (
+            f"{A_dual}: Verdier/Koszul companion; "
+            "not B(A), not A^i, not Omega(B(A)), and not Z_ch^der(A)"
+        ),
+        "Omega(B(A))": (
+            f"Omega(B(A)) recovers {A} by bar-cobar inversion; "
+            "not A^! and not Z_ch^der(A)"
+        ),
+        "Z_ch^der(A)": (
+            f"Z_ch^der({A}) is the chiral Hochschild/derived-center C slot; "
+            "not B(A), not A^i, not A^!, and not Omega(B(A))"
+        ),
+        "forbidden_identifications": (
+            "B(A) != A^i",
+            "A^i != A^!",
+            "Omega(B(A)) != A^!",
+            "Z_ch^der(A) != Omega(B(A))",
+            "Z_ch^der(A) != A^!",
+        ),
     }
 
 
@@ -586,8 +746,8 @@ def twisted_Z_at_zeta_zero(n: int, c: float = 26.0,
     n : zeta zero index (1-indexed)
     c : central charge
     z_mode : how to set the twist parameter z
-        'half_rho': z = rho_n / 2  (NUMEROLOGICAL)
-        'spectral': z = s_n / 2 = (1 + i*rho_n) / 4  (NUMEROLOGICAL)
+        'half_rho': z = rho_n / 2  (formal probe)
+        'spectral': z = (1/2 + i*rho_n) / 2  (formal probe)
         'zero': z = 0 (reduces to untwisted partition function)
     """
     tau = modular_parameter_from_zeta_zero(n)
@@ -644,20 +804,25 @@ def celestial_soft_factor(Delta: complex, spin: int = 2) -> complex:
         return 1.0 / (Delta - 1.0 + spin - 2.0)
 
 
-def celestial_collinear_kernel(Delta_1: complex, Delta_2: complex,
-                                spin_1: int = 2, spin_2: int = 2) -> complex:
-    r"""Celestial collinear splitting kernel B(Delta_1, Delta_2).
+def celestial_collinear_kernel(
+    Delta_1: complex,
+    Delta_2: complex,
+    spin_1: int = 2,
+    spin_2: int = 2,
+    normalization: str = "unit_euler_beta",
+) -> complex:
+    r"""Unshifted Euler-beta collinear kernel B(Delta_1, Delta_2).
 
-    For two gravitons with celestial dimensions Delta_1, Delta_2, the
-    collinear limit gives a kernel proportional to the Beta function:
+    The scalar kernel stored by this engine is
 
         B(Delta_1, Delta_2) = Gamma(Delta_1) * Gamma(Delta_2) / Gamma(Delta_1 + Delta_2)
 
-    This is the celestial OPE coefficient in the collinear limit.
-
-    We use the Gamma function from cmath (via the reflection formula for
-    complex arguments).
+    with unit normalization and no spin, colour, coupling, or shifted-weight
+    dressing.  The spin parameters are retained for API compatibility but do
+    not change this scalar Euler-beta value.
     """
+    if normalization != "unit_euler_beta":
+        raise ValueError(f"Unknown kernel normalization: {normalization}")
     try:
         import scipy.special as sp
         g1 = sp.gamma(complex(Delta_1))
@@ -667,13 +832,19 @@ def celestial_collinear_kernel(Delta_1: complex, Delta_2: complex,
             return complex(float('inf'), 0)
         return g1 * g2 / g12
     except ImportError:
-        # Fallback: use Stirling for large |Delta|
-        # For small Delta, use the recurrence Gamma(z+1) = z*Gamma(z)
         return _gamma_ratio_fallback(Delta_1, Delta_2)
 
 
 def _gamma_ratio_fallback(a: complex, b: complex) -> complex:
     """Fallback Beta(a,b) = Gamma(a)*Gamma(b)/Gamma(a+b) via Stirling."""
+    a_complex = complex(a)
+    b_complex = complex(b)
+    if abs(a_complex.imag) < 1e-15 and abs(b_complex.imag) < 1e-15:
+        if a_complex.real > 0 and b_complex.real > 0:
+            numerator = math.gamma(a_complex.real) * math.gamma(b_complex.real)
+            denominator = math.gamma(a_complex.real + b_complex.real)
+            return complex(numerator / denominator, 0.0)
+
     # Stirling: log Gamma(z) ~ z*log(z) - z - 0.5*log(z) + 0.5*log(2*pi)
     def log_stirling(z):
         z = complex(z)
@@ -683,13 +854,13 @@ def _gamma_ratio_fallback(a: complex, b: complex) -> complex:
     return cmath.exp(log_beta)
 
 
-def celestial_at_zeta_zero(n: int, spin: int = 2) -> Dict[str, complex]:
+def celestial_at_zeta_zero(n: int, spin: int = 2) -> Dict[str, Any]:
     r"""Celestial soft factor and collinear kernel at zeta-zero parameter.
 
-    Delta_n = (1 + i*rho_n)/2  (the spectral parameter on the critical line).
+    Delta_n = 1/2 + i*rho_n  (the spectral parameter on the critical line).
 
-    NOTE (AP42): this evaluation has no established physical meaning.
-    The celestial conformal dimension for physical gravitons is REAL.
+    This evaluation has no established physical meaning.
+    The celestial conformal dimension for physical gravitons is real.
     Complex Delta corresponds to principal-series representations.
     """
     Delta = mellin_parameter_from_zeta_zero(n)
@@ -704,6 +875,7 @@ def celestial_at_zeta_zero(n: int, spin: int = 2) -> Dict[str, complex]:
         'Delta': Delta,
         'soft_factor': soft,
         'collinear_kernel': collinear,
+        'kernel_normalization': 'unit_euler_beta',
         'abs_soft': abs(soft),
         'abs_collinear': abs(collinear),
     }
@@ -796,9 +968,9 @@ def cardy_matches_btz(c: float, beta: float, tol: float = 1e-10) -> bool:
     The BTZ entropy S_BH = pi^2*c/(3*beta).
     The Cardy entropy at energy E = pi^2*c/(6*beta^2) is
         S_Cardy = 2*pi*sqrt(c*E/6) = 2*pi*sqrt(c * pi^2*c/(36*beta^2))
-                = 2*pi^2*c / (6*beta) ... NO.
+                = pi^2*c / (3*beta).
 
-    Let me be careful.  In the canonical ensemble at temperature T = 1/beta:
+    In the canonical ensemble at temperature T = 1/beta:
         E = (pi^2 / 6) * c * T^2 = (pi^2 * c) / (6 * beta^2)
         S = beta * E + log Z ~ (pi^2 / 3) * c * T = (pi^2 * c) / (3 * beta)
 
@@ -807,8 +979,6 @@ def cardy_matches_btz(c: float, beta: float, tol: float = 1e-10) -> bool:
              = 2*pi * pi*sqrt(c^2/(36)) / beta
              = 2*pi^2*c / (6*beta)
              = pi^2*c / (3*beta)
-
-    Yes, they match: S_BH = S_Cardy = pi^2*c/(3*beta).
     """
     S_btz = PI ** 2 * c / (3.0 * beta)
     E = PI ** 2 * c / (6.0 * beta ** 2)
@@ -842,7 +1012,7 @@ def anomaly_polynomial_I4(c: float, p1: float = 1.0) -> float:
 
 def anomaly_polynomial_I8(c: float, p1: float = 1.0,
                            p2: float = 0.0) -> float:
-    r"""Anomaly 8-form I_8 for a holographic system.
+    r"""Anomaly 8-form I_8 for the scalar comparison system.
 
     For a 6d (2,0) SCFT (relevant for M5-branes), the anomaly polynomial is:
         I_8 = (1/48) * [p_2(R) - (1/4)*(p_1(R))^2 + (1/4)*p_1(R)*p_1(N)]
@@ -851,8 +1021,8 @@ def anomaly_polynomial_I8(c: float, p1: float = 1.0,
     the coefficient of p_2 is determined by the a-anomaly, and p_1^2
     by the c-anomaly.  In 2d, I_8 reduces to products of I_4 by factorization.
 
-    At the EXPLORATORY level: we evaluate I_8 with curvature parameter
-    scaled by rho_n (zeta zero).  This has NO established physical meaning.
+    In the zeta-zero scan the curvature parameter is scaled by rho_n.
+    That scan has no established physical meaning.
 
     Parameters
     ----------
@@ -860,7 +1030,7 @@ def anomaly_polynomial_I8(c: float, p1: float = 1.0,
     p1 : first Pontryagin class value
     p2 : second Pontryagin class value
     """
-    # For 2d holographic system: I_8 factorizes as products of 4-forms
+    # For the 2d scalar comparison, I_8 factorizes as products of 4-forms
     # I_8 = c_1 * p_2 + c_2 * p_1^2
     # where c_1 = c^2/576, c_2 = -c^2/2304 (from squaring I_4)
     c1_coeff = c ** 2 / 576.0
@@ -871,7 +1041,7 @@ def anomaly_polynomial_I8(c: float, p1: float = 1.0,
 def anomaly_at_zeta_zero(n: int, c: float = 26.0) -> Dict[str, float]:
     r"""Anomaly polynomial evaluated with rho_n-scaled curvature.
 
-    NUMEROLOGICAL: sets p_1 = rho_n * omega (no physical justification).
+    This sets p_1 = rho_n * omega as a formal numerical probe.
     """
     rho_n = zeta_zero(n)
     I4 = anomaly_polynomial_I4(c, p1=rho_n)
@@ -942,7 +1112,7 @@ def cs_partition_solid_torus(k: int, rank: int = 1,
 def cs_at_zeta_zero(n: int, rank: int = 2) -> Dict[str, Any]:
     r"""CS partition function at level k_n derived from zeta zero.
 
-    NUMEROLOGICAL ANSATZ: k_n = round((1+rho_n)/2).
+    Formal probe: k_n = round((1+rho_n)/2).
     CS level must be a positive integer, so we round to the nearest integer.
 
     For rho_1 ~ 14.13: k_1 ~ round(7.57) = 8.
@@ -975,8 +1145,8 @@ def annulus_trace_genus1(kappa_val) -> Fraction:
     PROVED (thm:annulus-trace): the annulus trace Tr_A in HH_*(A)
     at genus 1 is kappa(A) * lambda_1^FP.
 
-    AP34: This is the FIRST modular shadow of the open sector.
-    It is NOT the derived center (which is the universal bulk).
+    This is the first modular shadow of the open sector.  It is not the
+    derived center C = Z_ch^der(A).
     """
     return Fraction(kappa_val) * lambda_fp(1)
 
@@ -1035,10 +1205,8 @@ def _partition_count(n: int) -> int:
 def open_closed_at_zeta_zero(n: int, c: float = 26.0) -> Dict[str, Any]:
     r"""Open/closed data at zeta-zero parameters.
 
-    Returns:
-        - Annulus trace (genus-1 open-to-closed map)
-        - Boundary partition function
-        - Complementarity data (c vs 26-c)
+    Returns the annulus trace, boundary partition function, complementarity
+    data (c vs 26-c), and typed seven-entry package data.
     """
     rho_n = zeta_zero(n)
     tau_n = modular_parameter_from_zeta_zero(n)
@@ -1049,12 +1217,13 @@ def open_closed_at_zeta_zero(n: int, c: float = 26.0) -> Dict[str, Any]:
     annulus = annulus_trace_genus1(kappa_A)
     annulus_dual = annulus_trace_genus1(kappa_A_dual)
 
-    # Complementarity sum (AP24)
     # For Virasoro: kappa + kappa' = c/2 + (26-c)/2 = 13
     kappa_sum = kappa_A + kappa_A_dual
 
     Z_boundary = boundary_partition_virasoro(tau_n, c=c)
     Z_boundary_dual = boundary_partition_virasoro(tau_n, c=26.0 - c)
+    seven_entry = seven_entry_package_at_zeta_zero(n, c=c)
+    firewall = typed_object_firewall(c=c)
 
     return {
         'n': n,
@@ -1065,32 +1234,38 @@ def open_closed_at_zeta_zero(n: int, c: float = 26.0) -> Dict[str, Any]:
         'kappa': float(kappa_A),
         'kappa_dual': float(kappa_A_dual),
         'kappa_sum': float(kappa_sum),
-        'kappa_sum_exact': kappa_sum,  # Should be 13 for Virasoro (AP24)
+        'kappa_sum_exact': kappa_sum,
         'annulus_trace': float(annulus),
         'annulus_trace_dual': float(annulus_dual),
         'Z_boundary': Z_boundary,
         'Z_boundary_dual': Z_boundary_dual,
         'abs_Z_boundary': abs(Z_boundary),
         'abs_Z_boundary_dual': abs(Z_boundary_dual),
+        'seven_entry_package': seven_entry,
+        'typed_firewall': firewall,
+        'A': seven_entry['A'],
+        'A^i': seven_entry['A^i'],
+        'A^!': seven_entry['A^!'],
+        'C': seven_entry['C'],
     }
 
 
 # ===========================================================================
-# Section 13: Complementarity and holographic dictionary
+# Section 13: Complementarity and scalar typed dictionary
 # ===========================================================================
 
 def complementarity_check(c: float) -> Dict[str, Any]:
     r"""Complementarity data for the Koszul pair (Vir_c, Vir_{26-c}).
 
-    AP24: kappa(Vir_c) + kappa(Vir_{26-c}) = c/2 + (26-c)/2 = 13.
+    kappa(Vir_c) + kappa(Vir_{26-c}) = c/2 + (26-c)/2 = 13.
     NOT zero (except at c=13 where kappa = kappa' = 13/2).
 
-    AP29: delta_kappa = kappa - kappa' = c/2 - (26-c)/2 = c - 13.
+    delta_kappa = kappa - kappa' = c/2 - (26-c)/2 = c - 13.
     kappa_eff = kappa(matter) + kappa(ghost) = c/2 - 13 = (c-26)/2.
 
     At c=13: delta_kappa = 0 (self-dual point).
     At c=26: kappa_eff = 0 (anomaly cancellation, critical string).
-    These are DIFFERENT conditions at DIFFERENT central charges (AP29).
+    These are different conditions at different central charges.
     """
     kappa_A = kappa_virasoro(Fraction(c))
     kappa_A_dual = kappa_virasoro(Fraction(26) - Fraction(c))
@@ -1110,7 +1285,7 @@ def complementarity_check(c: float) -> Dict[str, Any]:
 
 
 def holographic_dictionary_entry(c: float, n: int) -> Dict[str, Any]:
-    r"""Full holographic dictionary entry at zeta zero n for central charge c.
+    r"""Full scalar/typed dictionary entry at zeta zero n for central charge c.
 
     Compiles:
       - Boundary: Z_partial, kappa, annulus trace
@@ -1127,6 +1302,8 @@ def holographic_dictionary_entry(c: float, n: int) -> Dict[str, Any]:
     cs = cs_at_zeta_zero(n)
     anomaly = anomaly_at_zeta_zero(n, c)
     comp = complementarity_check(c)
+    seven_entry = seven_entry_package_at_zeta_zero(n, c=c)
+    firewall = typed_object_firewall(c=c)
 
     return {
         'boundary': boundary,
@@ -1136,6 +1313,8 @@ def holographic_dictionary_entry(c: float, n: int) -> Dict[str, Any]:
         'cs': cs,
         'anomaly': anomaly,
         'complementarity': comp,
+        'seven_entry_package': seven_entry,
+        'typed_firewall': firewall,
     }
 
 
@@ -1268,11 +1447,11 @@ def tachyon_mass_at_zeta_zeros(n_max: int = 10) -> List[Dict[str, Any]]:
 
 def full_holographic_scan(c: float = 26.0, n_max: int = 10,
                            g_max: int = 5) -> Dict[str, Any]:
-    r"""Full scan of holographic data at zeta-zero parameters.
+    r"""Full scan of scalar typed data at zeta-zero parameters.
 
     Returns a comprehensive dictionary with all computations.
 
-    DISCLAIMER: The zeta-zero evaluations are NUMEROLOGICAL.  The
+    The zeta-zero evaluations are formal probes.  The
     mathematically rigorous content is the formulas themselves (partition
     functions, Cardy, BTZ, shadows, CS), not their evaluation at
     zeta-zero parameters.
@@ -1286,6 +1465,8 @@ def full_holographic_scan(c: float = 26.0, n_max: int = 10,
     cs_table = {n: cs_at_zeta_zero(n) for n in range(1, n_max + 1)}
     consistency = cardy_btz_consistency(c, n_max)
     comp = complementarity_check(c)
+    seven_entry = seven_entry_package_at_zeta_zero(1, c=c)
+    firewall = typed_object_firewall(c=c)
 
     return {
         'c': c,
@@ -1297,4 +1478,6 @@ def full_holographic_scan(c: float = 26.0, n_max: int = 10,
         'cs': cs_table,
         'cardy_consistency': consistency,
         'complementarity': comp,
+        'seven_entry_package': seven_entry,
+        'typed_firewall': firewall,
     }

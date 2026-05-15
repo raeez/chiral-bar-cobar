@@ -1,37 +1,46 @@
 """Large-N / twisted holography interpretation of modular Koszul duality.
 
-The holographic modular Koszul datum H(A) = (A, A!, C, r(z), Theta_A, nabla^hol)
-encodes the complete HT (holomorphic-topological) holographic system. This module
-verifies the large-N interpretation computationally, identifying the MC genus
-expansion with the 't Hooft 1/N^2 expansion.
+This module works with the large-N scalar projection of the holographic package
+H(A) = (A, A^i, A^!, C, r(z), Theta_A, nabla^hol).  It does not assemble the
+modular Koszul projection package Pi_X(L), whose six primary projections are
+Fact_X(L), B-bar_X(L), Theta_L, L_L, (V^br, T^br), and R_4^mod(L).  Neither
+package is any one of A, B(A), A^i, A^!, Omega(B(A)), or Z_ch^der(A).
 
-PRINCIPAL OBJECTS:
+COMPUTATIONAL SURFACES:
 
-1. **Holographic datum extraction**: Given a chiral algebra A, compute all six
-   components of H(A). For V_k(sl_N): the Feigin-Frenkel dual level is
-   k' = -k - 2N, giving A! at level k'.
+1. **Holographic package projection**: Given a chiral algebra A, compute the
+   scalar large-N slots used here. For V_k(sl_N): the Feigin-Frenkel dual
+   level is k' = -k - 2N, giving the A^! slot at level k'. The bar-dual
+   coalgebra A^i and the full line-category object C are not reconstructed
+   by this compute module.
 
 2. **'t Hooft genus expansion**: log Z = sum_{g>=0} N^{2-2g} F_g(lambda)
    with lambda = N/(k+N) the 't Hooft coupling. The genus parameter is
    hbar = 1/N^2, and F_g(lambda) is a graph sum over genus-g stable graphs.
 
-3. **Large-N scaling laws**: c_N ~ lambda*N^2, kappa_N ~ lambda*N^2/2,
-   F_g ~ N^{2-2g} f_g(lambda). Channel-refined kappa diverges as c*log(N).
+3. **Large-N scaling laws**: c_N ~ (1-lambda)*N^2 and
+   kappa_N ~ N^2/(2*lambda) for affine sl_N at fixed
+   lambda = N/(k+N). Channel-refined kappa diverges as c_N*log(N).
 
-4. **'t Hooft coupling involution**: lambda |-> 1 - lambda corresponds to
-   k |-> -k-2N (Feigin-Frenkel). kappa(A!) = -kappa(A) anti-symmetry.
+4. **'t Hooft coupling involution**: Feigin-Frenkel sends
+   k |-> -k-2N and lambda |-> -lambda on the affine 't Hooft coordinate.
+   The level-rank/coset involution lambda |-> 1-lambda is a different object.
 
 5. **Shadow connection and flatness**: nabla^hol = d - Sh_{g,n}(Theta_A).
-   At genus 0 arity 2 this specializes to the KZ connection. Flatness from
-   MC equation + Arnold relations.
+   At genus 0 arity 2 the affine KZ representative has residue
+   Omega/((k+h^v)z); this is distinct from the trace-form current residue
+   k*Omega_tr/z and from the scalar Theta_A coefficient kappa.
+   Flatness comes from the MC equation + Arnold relations.
 
 6. **Collision residue and CYBE**: r(z) = Res^coll_{0,2}(Theta_A). For
-   V_k(g): r(z) = Omega/z satisfies classical Yang-Baxter.
+   V_k(g), the trace-form representative is r(z) = k*Omega_tr/z; the
+   KZ representative is Omega/((k+h^v)z).  For Vir_c the residue data are
+   (c/2)/z^3 + 2T/z.
 
 7. **Ten-theorem projection table**: Each G-theorem is a specific projection
    of Theta_A (G1: finiteness, G2: complexity, ..., G10: Fredholm).
 
-8. **Gravitational phase space**: C_g(A) = Q_g(A) + Q_g(A!), Lagrangian
+8. **Gravitational phase space**: C_g(A) = Q_g(A) + Q_g(A^!), Lagrangian
    splitting from complementarity.
 
 9. **W_N scaling / Gaberdiel-Gopakumar**: c_N = (N-1) - N(N^2-1)(k+N-1)^2/(k+N),
@@ -44,7 +53,13 @@ PRINCIPAL OBJECTS:
 12. **Fredholm determinants**: Z_g(A) = det(1 - K_g(A)) for trace-class K_g.
 
 References:
-  - concordance.tex: sec:concordance-holographic-datum, H(T) = (A,A!,C,r(z),Theta_A,nabla^hol)
+  - concordance.tex: def:holographic-modular-koszul-datum,
+    H(T) = (A,A^i,A^!,C,r(z),Theta_A,nabla^hol)
+  - concordance.tex: constr:v1-platonic-package-concordance, Pi_X(L) has
+    six primary projections and is not H(T)
+  - appendix_q_conventions.tex: trace-form r_tr(z) = k*Omega_tr/z and
+    KZ residue r_KZ(z) = Omega/((k+h^v)z) are normalization-bridge
+    representatives, not equal rational functions of k.
   - higher_genus_modular_koszul.tex: thm:mc2-bar-intrinsic, def:shadow-algebra
   - yangians_drinfeld_kohno.tex: def:modular-yangian-pro
   - CLAUDE.md: Critical Pitfalls (Feigin-Frenkel: k <-> -k-2h^v)
@@ -93,34 +108,56 @@ class ChiralAlgebraData:
 
     @property
     def kappa(self) -> Fraction:
-        """Modular characteristic kappa(A) = c/2 for any conformal algebra.
+        """Modular characteristic used by the scalar shadow.
 
-        For V_k(g): kappa = dim(g)(k + h^v) / (2 h^v).
-        Both formulas agree when c = k dim(g)/(k + h^v).
+        This is not uniformly c/2.  Heisenberg uses the level k; affine
+        V_k(g) uses dim(g)(k + h^v)/(2 h^v); W_N uses c(H_N - 1), which
+        specializes to c/2 for W_2 = Virasoro.
         """
-        return self.central_charge / 2
+        if self.dual_coxeter == 0:
+            return self.level
+        if self.name.startswith("Vir_"):
+            return self.central_charge / 2
+        if self.name.startswith("W^"):
+            return self.central_charge * (_harmonic_exact(self.rank) - 1)
+        return Fraction(self.dim) * (self.level + self.dual_coxeter) / (
+            2 * self.dual_coxeter
+        )
 
 
 @dataclass
 class HolographicDatum:
-    """H(A) = (A, A!, C, r(z), Theta_A, nabla^hol).
+    """Large-N scalar record for H(A) = (A, A^i, A^!, C, r(z), Theta_A, nabla^hol).
 
-    The six-fold datum encoding the complete HT holographic system.
+    This is the holographic package surface used by this module, not the
+    six-projection modular Koszul package Pi_X(L).  It is also not equal to
+    any one of A, B(A), A^i, A^!, Omega(B(A)), or Z_ch^der(A).
 
     A: the input chiral algebra
-    A_dual: the Koszul dual (Feigin-Frenkel dual for affine type)
-    line_category_dim: dim of line-operator category (= dim A!-mod at finite level)
-    collision_residue: r(z) = Omega/z for affine, characterized by Casimir/z
+    A_dual: the A^! slot, Feigin-Frenkel dual on the affine comparison surface
+    line_category_dim: dimension of the line-category slot C, if supplied
+    collision_residue: trace-form r(z), level-prefixed for affine inputs
     theta_kappa: scalar part of Theta_A (= kappa * eta)
     connection_is_flat: whether nabla^hol is flat (should always be True)
     """
     A: ChiralAlgebraData
     A_dual: ChiralAlgebraData
     line_category_dim: Optional[int]
-    collision_residue_type: str            # e.g. "Casimir/z", "scalar/z"
+    collision_residue_type: str            # e.g. "k*Casimir/z", "k/z"
     theta_kappa: Fraction                  # leading scalar part of Theta_A
-    kappa_anti_symmetric: bool             # whether kappa(A) + kappa(A!) = 0
+    kappa_anti_symmetric: bool             # whether kappa(A) + kappa(A^!) = 0
     connection_is_flat: bool               # flatness of nabla^hol
+    package_slots: Tuple[str, ...] = field(default_factory=lambda: (
+        "A", "A^i", "A^!", "C", "r(z)", "Theta_A", "nabla^hol"
+    ))
+    bar_dual_coalgebra_status: str = "A^i = H^*B(A) is typed but not reconstructed here"
+    line_category_status: str = "C is a line-category slot requiring categorical input"
+    derived_center_status: str = "Z_ch^der(A) is the bulk object and is not constructed here"
+
+    @property
+    def A_shriek(self) -> ChiralAlgebraData:
+        """Alias for the A^! slot without changing the historical API name."""
+        return self.A_dual
 
 
 @dataclass
@@ -128,15 +165,15 @@ class ThooftExpansion:
     """'t Hooft genus expansion: log Z = sum_{g>=0} N^{2-2g} F_g(lambda).
 
     For V_k(sl_N) at fixed 't Hooft coupling lambda = N/(k+N):
-    - c_N = k(N^2-1)/(k+N) = lambda(1-1/N^2)(k+N) -> lambda N^2 at large N
-    - kappa_N = c_N/2 -> lambda N^2/2
+    - c_N = k(N^2-1)/(k+N) = (1-lambda)(N^2-1)
+    - kappa_N = (N^2-1)/(2*lambda)
     - F_g scales as N^{2-2g} f_g(lambda)
     """
     rank: int                                # N
     level: Fraction                          # k
     thooft_coupling: Fraction                # lambda = N/(k+N)
     central_charge: Fraction                 # c_N
-    kappa: Fraction                          # kappa_N = c_N/2
+    kappa: Fraction                          # kappa_N = (N^2-1)/(2*lambda)
     free_energies: Dict[int, Fraction]       # {g: F_g}
     scaling_coefficients: Dict[int, Fraction]  # {g: f_g(lambda)} where F_g = N^{2-2g} f_g
 
@@ -145,24 +182,29 @@ class ThooftExpansion:
 class CollisionResidue:
     """r(z) = Res^coll_{0,2}(Theta_A), the binary genus-0 shadow.
 
-    For V_k(g): r(z) = Omega/z where Omega = sum t^a tensor t_a is the Casimir.
-    CYBE: [r_12(z_12), r_13(z_13)] + [r_12(z_12), r_23(z_23)]
-          + [r_13(z_13), r_23(z_23)] = 0.
+    For V_k(g), two normalizations coexist and must not be identified:
+    trace-form current residue r_tr(z) = k*Omega_tr/z, and KZ residue
+    r_KZ(z) = Omega/((k+h^v)z).  The scalar module stores both coefficients
+    when the affine level is present.  CYBE:
+    [r_12(z_12), r_13(z_13)] + [r_12(z_12), r_23(z_23)]
+    + [r_13(z_13), r_23(z_23)] = 0.
 
     At the scalar level, the CYBE reduces to:
     r(z)^2 terms cancel by the Arnold relation omega_12 ^ omega_23 + ... = 0.
     """
     algebra_name: str
-    residue_type: str         # "Casimir/z" or "kappa/z"
+    residue_type: str         # "k*Casimir/z", "k/z", or Virasoro pole data
     casimir_eigenvalue: Fraction   # value of (Omega acts on adjoint) / dim
     satisfies_cybe: bool
+    trace_form_coefficient: Optional[Fraction] = None
+    kz_connection_coefficient: Optional[Fraction] = None
 
 
 @dataclass
 class ShadowConnection:
     """nabla^hol_{g,n} = d - Sh_{g,n}(Theta_A).
 
-    At genus 0, arity 2: specializes to KZ connection for affine algebras.
+    At genus 0, arity 2: affine KZ uses coefficient 1/(k+h^v), not kappa.
     nabla = d - kappa sum_{i<j} d(z_i - z_j)/(z_i - z_j) for Heisenberg.
 
     Flatness: (nabla)^2 = 0 follows from MC equation D*Theta + (1/2)[Theta,Theta] = 0
@@ -173,23 +215,27 @@ class ShadowConnection:
     kappa_value: Fraction
     is_kz_type: bool             # True for affine algebras at genus 0
     is_flat: bool
+    trace_form_residue_coefficient: Optional[Fraction] = None
+    kz_connection_coefficient: Optional[Fraction] = None
 
 
 @dataclass
 class GravitationalPhaseSpace:
-    """C_g(A) = Q_g(A) + Q_g(A!), the Lagrangian splitting.
+    """C_g(A) = Q_g(A) + Q_g(A^!), the Lagrangian splitting.
 
     At the scalar level (Theorem C):
     Q_g(A) = F_g(A) = kappa(A) * lambda_g^FP
-    Q_g(A!) = F_g(A!) = kappa(A!) * lambda_g^FP
+    Q_g(A^!) = F_g(A^!) = kappa(A^!) * lambda_g^FP
 
-    Complementarity: Q_g(A) + Q_g(A!) = H*(M_bar_g, Z(A)) at scalar level.
-    When kappa(A) + kappa(A!) = 0, this gives Q_g(A) + Q_g(A!) = 0.
+    The bulk object, when present, belongs to Z_ch^der(A).  This dataclass
+    stores only the scalar Faber-Pandharipande values, not the derived centre.
+    When kappa(A) + kappa(A^!) = 0 on the affine comparison surface, the
+    scalar sum Q_g(A) + Q_g(A^!) vanishes.
     """
     genus: int
     Q_g_A: Fraction        # F_g(A)
-    Q_g_A_dual: Fraction   # F_g(A!)
-    total: Fraction         # Q_g(A) + Q_g(A!)
+    Q_g_A_dual: Fraction   # F_g(A^!)
+    total: Fraction         # Q_g(A) + Q_g(A^!)
     is_balanced: bool       # whether total = 0 (Lagrangian)
 
 
@@ -197,8 +243,8 @@ class GravitationalPhaseSpace:
 class LargeNScaling:
     """Large-N scaling laws for the sl_N family at fixed 't Hooft coupling.
 
-    Central charge: c_N = k(N^2-1)/(k+N) ~ lambda N^2 for N -> infinity.
-    kappa_N = c_N/2.
+    Central charge: c_N = k(N^2-1)/(k+N) = (1-lambda)(N^2-1).
+    Modular characteristic: kappa_N = (N^2-1)/(2*lambda).
     Channel-refined: kappa_tilde_N = sum_{s=2}^N c_N/s ~ c_N log(N).
     """
     rank: int               # N
@@ -207,7 +253,7 @@ class LargeNScaling:
     kappa: Fraction
     channel_sum: Fraction   # sum_{s=2}^N c/s = c * (H_N - 1)
     harmonic_number: Fraction   # H_N
-    scaling_exponent: Fraction  # c_N / N^2 should approach lambda
+    scaling_exponent: Fraction  # c_N / N^2 should approach 1 - lambda
 
 
 # ===========================================================================
@@ -231,8 +277,68 @@ def _harmonic_exact(n: int) -> Fraction:
     return sum(Fraction(1, j) for j in range(1, n + 1))
 
 
+def _is_affine_sl_data(A: ChiralAlgebraData) -> bool:
+    """Recognize the affine sl_N surface represented by make_affine_sl_N."""
+    return A.name.startswith("V_") and A.dim > 0 and A.dual_coxeter > 0
+
+
+def _is_principal_w_data(A: ChiralAlgebraData) -> bool:
+    """Recognize the principal W_N / Virasoro DS surface."""
+    return A.name.startswith("W^")
+
+
+def object_firewall() -> Dict[str, str]:
+    """Typed AP25 firewall for the objects this module must not identify."""
+    return {
+        "A": "input chiral algebra",
+        "B(A)": "bar coalgebra T^c(s^-1 Abar)",
+        "A^i": "dual coalgebra H^*B(A)",
+        "A^!": "dual algebra (A^i)^vee, via Verdier/linear duality",
+        "Omega(B(A))": "cobar inversion recovering A, not Koszul duality",
+        "Z_ch^der(A)": "chiral derived centre / bulk, not A^! and not B(A)",
+    }
+
+
+def kernel_normalizations_affine(N: int, k: Fraction) -> Dict[str, object]:
+    """Separate the trace-form current residue from the KZ residue.
+
+    Trace form: r_tr(z) = k*Omega_tr/z.
+    KZ form: r_KZ(z) = Omega/((k+h^v)z), h^v = N for sl_N.
+
+    The two representatives are connected by the q-convention bridge; they
+    are not equal rational functions of k.  At critical level the KZ
+    coefficient is undefined, while the trace-form coefficient remains k.
+    """
+    k_frac = _frac(k)
+    kz_coeff: Optional[Fraction]
+    if k_frac + N == 0:
+        kz_coeff = None
+    else:
+        kz_coeff = Fraction(1, 1) / (k_frac + N)
+    return {
+        "trace_form_coefficient": k_frac,
+        "kz_connection_coefficient": kz_coeff,
+        "dual_coxeter": Fraction(N),
+        "same_normalization": False,
+    }
+
+
+def virasoro_r_matrix_components(c: Fraction) -> Dict[str, Fraction]:
+    """Virasoro trace-form r-matrix components.
+
+    r^Vir(z) = (c/2)/z^3 + 2T/z.
+    The cubic pole coefficient is kappa(Vir_c) = c/2; the simple pole is the
+    universal stress-tensor action.  This is not the affine KZ kernel.
+    """
+    c_frac = _frac(c)
+    return {
+        "z^-3_scalar": c_frac / 2,
+        "z^-1_T": Fraction(2),
+    }
+
+
 # ===========================================================================
-# 1. Holographic datum extraction
+# 1. Holographic package projection
 # ===========================================================================
 
 def make_affine_sl_N(N: int, k: Fraction) -> ChiralAlgebraData:
@@ -263,25 +369,10 @@ def make_affine_sl_N(N: int, k: Fraction) -> ChiralAlgebraData:
 def make_heisenberg(k: Fraction = Fraction(1)) -> ChiralAlgebraData:
     """Heisenberg algebra H_k. c = 1, kappa = k.
 
-    Wait: for Heisenberg rank 1 at level k, the OPE is {a_lambda a} = k*lambda.
-    kappa(H_k) = k (NOT k/2). The formula kappa = c/2 applies when c is the
-    effective central charge for the full algebra, but for Heisenberg
-    kappa = k (the level directly). When k = 1, c = 1, kappa = 1/2? No:
-    from the genus expansion module, kappa_heisenberg(k) = k.
-    The formula kappa = c/2 with c = 1 gives 1/2, but the manuscript says
-    kappa(H_k) = k. The resolution: 'c' in kappa = c/2 is the effective
-    trace-pairing central charge, which for rank-d Heisenberg at level k
-    is c_eff = 2k*d (so kappa = k*d). For rank 1 level 1: c_eff = 2, kappa = 1.
-
-    Actually from the existing code: heisenberg_free_energy uses kappa_val = k * d.
-    And kappa_heisenberg from genus_expansion.py returns k directly.
-    So: kappa(H_k) = k, and c_Sugawara = 1 (for rank 1), but the modular
-    characteristic is k, not c/2 = 1/2.
-
-    The distinction: c = 1 is the Virasoro central charge. kappa = k is the
-    modular characteristic (from the invariant pairing on the single generator).
-    For Lie-type algebras: kappa = dim(g)(k+h^v)/(2h^v). For Heisenberg
-    (abelian, h^v effectively = 0), kappa = k directly from the pairing.
+    For rank-one Heisenberg at level k, the OPE is
+    {a_lambda a} = k*lambda.  The modular characteristic is the pairing
+    level k, not the Virasoro Sugawara central charge c = 1 divided by two.
+    For rank d the scalar characteristic is k*d.
     """
     k_frac = _frac(k)
     return ChiralAlgebraData(
@@ -333,13 +424,32 @@ def feigin_frenkel_dual_level(k: Fraction, h_v: int) -> Fraction:
 
 
 def feigin_frenkel_dual(A: ChiralAlgebraData) -> ChiralAlgebraData:
-    """Compute the Koszul dual algebra A! via Feigin-Frenkel duality.
+    """Compute the A^! slot via Feigin-Frenkel duality on affine inputs.
 
-    For V_k(sl_N): A! = V_{k'}(sl_N) where k' = -k - 2N.
+    For V_k(sl_N): A^! = V_{k'}(sl_N) where k' = -k - 2N.
 
-    c(A!) = k'(N^2-1)/(k'+N) = (-k-2N)(N^2-1)/(-k-N)
-    kappa(A!) should satisfy kappa(A!) = -kappa(A) (anti-symmetry).
+    c(A^!) = k'(N^2-1)/(k'+N) = (-k-2N)(N^2-1)/(-k-N)
+    kappa(A^!) should satisfy kappa(A^!) = -kappa(A) (anti-symmetry).
+
+    This does not compute the bar-dual coalgebra A^i = H^*B(A), the bar
+    coalgebra B(A), or the chiral derived centre Z_ch^der(A).
     """
+    if _is_principal_w_data(A):
+        if A.rank != 2:
+            raise NotImplementedError(
+                "A^! for principal W_N with N>2 is not reconstructed by this scalar module"
+            )
+        c_dual = Fraction(26) - A.central_charge
+        return ChiralAlgebraData(
+            name=f"Vir_{c_dual}",
+            dim=A.dim,
+            rank=A.rank,
+            level=A.level,
+            central_charge=c_dual,
+            dual_coxeter=A.dual_coxeter,
+            shadow_depth=A.shadow_depth,
+        )
+
     if A.dual_coxeter == 0:
         # Heisenberg: dual is Sym^ch(V*), not another Heisenberg
         return ChiralAlgebraData(
@@ -374,9 +484,16 @@ def feigin_frenkel_dual(A: ChiralAlgebraData) -> ChiralAlgebraData:
 
 
 def extract_holographic_datum(A: ChiralAlgebraData) -> HolographicDatum:
-    """Extract the full holographic datum H(A) = (A, A!, C, r(z), Theta_A, nabla^hol).
+    """Extract the large-N scalar projection of the seven-entry package H(A).
 
-    Verifies kappa(A!) = -kappa(A) (anti-symmetry).
+    H(A) has slots (A, A^i, A^!, C, r(z), Theta_A, nabla^hol).  This function
+    records the affine A^! comparison slot, the collision-residue type, the
+    scalar theta_kappa entry, and flatness.  It does not assemble Pi_X(L) and
+    does not identify the package with A, B(A), A^i, A^!, Omega(B(A)), or
+    Z_ch^der(A).
+
+    Verifies kappa(A^!) = -kappa(A) (anti-symmetry) on the affine/free
+    comparison surfaces where this is the correct complementarity constant.
     Sets collision residue type based on algebra type.
     Checks flatness via MC consistency.
     """
@@ -390,10 +507,14 @@ def extract_holographic_datum(A: ChiralAlgebraData) -> HolographicDatum:
     anti_sym = (kappa_A + kappa_A_dual == 0)
 
     # Collision residue type
-    if A.dim > 0:
-        residue_type = "Casimir/z"
+    if _is_affine_sl_data(A):
+        residue_type = "k*Casimir/z"
+    elif _is_principal_w_data(A) and A.rank == 2:
+        residue_type = "(c/2)/z^3 + 2T/z"
+    elif _is_principal_w_data(A):
+        residue_type = "W_N Virasoro-line plus higher-spin poles"
     else:
-        residue_type = "scalar/z"
+        residue_type = "k/z"
 
     return HolographicDatum(
         A=A,
@@ -411,10 +532,15 @@ def kappa_from_data(A: ChiralAlgebraData) -> Fraction:
 
     For V_k(sl_N): kappa = dim(g)(k + h^v)/(2 h^v).
     For Heisenberg: kappa = k (the level directly).
+    For W_N: kappa = c(H_N - 1), specializing to c/2 for Virasoro.
     """
     if A.dual_coxeter == 0:
         # Heisenberg: kappa = level
         return A.level
+    if A.name.startswith("Vir_"):
+        return A.central_charge / 2
+    if A.name.startswith("W^"):
+        return A.central_charge * (_harmonic_exact(A.rank) - 1)
     return Fraction(A.dim) * (A.level + A.dual_coxeter) / (2 * A.dual_coxeter)
 
 
@@ -550,7 +676,7 @@ def verify_genus_scaling(N: int, k: Fraction, g: int) -> Tuple[Fraction, Fractio
 
 
 def large_N_central_charge_scaling(N: int, lam: Fraction) -> Tuple[Fraction, Fraction, Fraction]:
-    """Verify c_N ~ lambda * N^2 at large N.
+    """Verify c_N ~ (1-lambda) * N^2 at large N.
 
     c_N = (N^2-1)(1-lambda) for fixed lambda.
     c_N / N^2 = (1 - 1/N^2)(1-lambda) -> (1-lambda) as N -> infinity.
@@ -610,24 +736,14 @@ def harmonic_divergence_ratio(N: int) -> Fraction:
 # ===========================================================================
 
 def thooft_involution(lam: Fraction) -> Fraction:
-    """The involution lambda |-> 1 - lambda.
+    """Feigin-Frenkel sends the affine 't Hooft coordinate lambda to -lambda.
 
-    This corresponds to k |-> -k - 2N (Feigin-Frenkel duality) in the
-    't Hooft variables. Since lambda = N/(k+N), at the dual level
-    k' = -k - 2N:
-    lambda' = N/(k'+N) = N/(-k-N) = -N/(k+N) = -lambda.
+    Since lambda = N/(k+N) and k' = -k - 2N, one has
+    lambda' = N/(k'+N) = -N/(k+N) = -lambda. The transform
+    lambda |-> 1-lambda belongs to level-rank/coset duality, not to the
+    affine Feigin-Frenkel involution used by this module.
 
-    Wait: lambda' = N/(k'+N) = N/(-k-2N+N) = N/(-k-N) = -lambda.
-    So lambda |-> -lambda, not 1-lambda.
-
-    Correction: The involution on the 't Hooft coupling under FF duality
-    is lambda |-> -lambda (or equivalently lambda |-> lambda in the
-    complexified moduli).
-
-    The '1-lambda' involution arises in a different context: level-rank
-    duality for the coset, not Feigin-Frenkel on the affine algebra itself.
-
-    For gravitational S-duality (G4), what matters is kappa(A!) = -kappa(A),
+    For gravitational S-duality (G4), what matters is kappa(A^!) = -kappa(A),
     which follows from FF: kappa is linear in k+N, and FF sends
     k+N -> -(k+N), so kappa -> -kappa.
     """
@@ -654,7 +770,7 @@ def verify_ff_involution_on_thooft(N: int, k: Fraction) -> Dict[str, Fraction]:
 
 
 def kappa_involution_check(N: int, k: Fraction) -> Dict[str, object]:
-    """Verify kappa(A) + kappa(A!) = 0 under Feigin-Frenkel.
+    """Verify kappa(A) + kappa(A^!) = 0 under Feigin-Frenkel.
 
     This is the content of complementarity / gravitational S-duality (G4).
     kappa(V_k(sl_N)) = (N^2-1)(k+N)/(2N).
@@ -676,18 +792,27 @@ def kappa_involution_check(N: int, k: Fraction) -> Dict[str, object]:
 def shadow_connection_genus0_arity2(A: ChiralAlgebraData) -> ShadowConnection:
     """The shadow connection at genus 0, arity 2.
 
-    nabla^hol_{0,2} = d - (kappa/(z_1 - z_2)) d(z_1 - z_2).
-    For affine algebras this is the KZ connection at the scalar level.
+    nabla^hol_{0,2} = d - (kappa/(z_1 - z_2)) d(z_1 - z_2) on the scalar
+    Theta_A projection.  For affine algebras, the KZ-normalized residue is
+    Omega/((k+h^v)z); it is stored separately from kappa and from the
+    trace-form current residue k*Omega_tr/z.
     Flatness is automatic (scalar on configuration space of 2 points).
     """
     kap = kappa_from_data(A)
-    is_affine = (A.dim > 0 and A.dual_coxeter > 0)
+    is_affine = _is_affine_sl_data(A)
+    norms = kernel_normalizations_affine(A.rank, A.level) if is_affine else None
+    trace_coeff = norms["trace_form_coefficient"] if norms else (
+        A.level if A.dual_coxeter == 0 else None
+    )
+    kz_coeff = norms["kz_connection_coefficient"] if norms else None
     return ShadowConnection(
         genus=0,
         arity=2,
         kappa_value=kap,
         is_kz_type=is_affine,
         is_flat=True,
+        trace_form_residue_coefficient=trace_coeff,
+        kz_connection_coefficient=kz_coeff,
     )
 
 
@@ -701,13 +826,20 @@ def shadow_connection_genus0_arity3(A: ChiralAlgebraData) -> ShadowConnection:
     This is the content of: CYBE from MC + Arnold.
     """
     kap = kappa_from_data(A)
-    is_affine = (A.dim > 0 and A.dual_coxeter > 0)
+    is_affine = _is_affine_sl_data(A)
+    norms = kernel_normalizations_affine(A.rank, A.level) if is_affine else None
+    trace_coeff = norms["trace_form_coefficient"] if norms else (
+        A.level if A.dual_coxeter == 0 else None
+    )
+    kz_coeff = norms["kz_connection_coefficient"] if norms else None
     return ShadowConnection(
         genus=0,
         arity=3,
         kappa_value=kap,
         is_kz_type=is_affine,
         is_flat=True,  # Arnold relation ensures flatness
+        trace_form_residue_coefficient=trace_coeff,
+        kz_connection_coefficient=kz_coeff,
     )
 
 
@@ -745,38 +877,60 @@ def arnold_relation_check(n: int = 3) -> bool:
 # ===========================================================================
 
 def collision_residue_affine(N: int, k: Fraction) -> CollisionResidue:
-    """r(z) = Omega/z for V_k(sl_N).
+    """Trace-form and KZ-normalized residues for V_k(sl_N).
 
-    The Casimir element Omega = sum t^a otimes t_a acts on the adjoint
-    representation with eigenvalue 2N (= 2h^v for sl_N).
-    The collision residue r(z) = Omega/z satisfies the classical Yang-Baxter
-    equation by the standard Drinfeld argument.
+    The trace-form current residue is r_tr(z) = k*Omega_tr/z.  The KZ
+    connection residue is r_KZ(z) = Omega/((k+N)z).  The Casimir element
+    Omega = sum t^a otimes t_a acts on the adjoint representation with
+    eigenvalue 2N (= 2h^v for sl_N).  Both representatives satisfy the
+    classical Yang-Baxter equation by the standard Drinfeld argument after
+    their respective scalar normalizations are fixed.
 
     At the scalar level (trace): Tr(Omega) = dim(g) = N^2-1.
     Casimir eigenvalue (adj) = 2h^v = 2N.
     """
+    k_frac = _frac(k)
     dim_g = N * N - 1
     casimir_adj = Fraction(2 * N)
+    norms = kernel_normalizations_affine(N, k_frac)
 
     return CollisionResidue(
         algebra_name=f"V_{k}(sl_{N})",
-        residue_type="Casimir/z",
+        residue_type="k*Casimir/z",
         casimir_eigenvalue=casimir_adj,
         satisfies_cybe=True,
+        trace_form_coefficient=norms["trace_form_coefficient"],
+        kz_connection_coefficient=norms["kz_connection_coefficient"],
     )
 
 
 def collision_residue_heisenberg(k: Fraction) -> CollisionResidue:
-    """r(z) = k/z for Heisenberg (scalar r-matrix).
+    """r(z) = k/z for Heisenberg (scalar trace-form r-matrix).
 
     The single-generator Heisenberg has r(z) = k/z.
     CYBE is trivially satisfied (everything commutes).
     """
+    k_frac = _frac(k)
     return CollisionResidue(
         algebra_name=f"H_{k}",
-        residue_type="scalar/z",
-        casimir_eigenvalue=_frac(k),
+        residue_type="k/z",
+        casimir_eigenvalue=k_frac,
         satisfies_cybe=True,
+        trace_form_coefficient=k_frac,
+        kz_connection_coefficient=None,
+    )
+
+
+def collision_residue_virasoro(c: Fraction) -> CollisionResidue:
+    """r^Vir(z) = (c/2)/z^3 + 2T/z for the Virasoro line."""
+    components = virasoro_r_matrix_components(c)
+    return CollisionResidue(
+        algebra_name=f"Vir_{_frac(c)}",
+        residue_type="(c/2)/z^3 + 2T/z",
+        casimir_eigenvalue=components["z^-3_scalar"],
+        satisfies_cybe=True,
+        trace_form_coefficient=components["z^-3_scalar"],
+        kz_connection_coefficient=None,
     )
 
 
@@ -791,13 +945,14 @@ def verify_cybe_scalar(r_coeff: Fraction) -> bool:
 
 
 def verify_cybe_casimir_sl_N(N: int) -> Dict[str, object]:
-    """Verify the CYBE for r(z) = Omega/z with Omega the sl_N Casimir.
+    """Verify the CYBE for the sl_N Casimir r-matrix.
 
     The classical Yang-Baxter equation:
     [r_12(z_12), r_13(z_13)] + [r_12(z_12), r_23(z_23)]
     + [r_13(z_13), r_23(z_23)] = 0
 
-    For r(z) = Omega/z, this becomes:
+    After choosing either trace-form coefficient k or KZ coefficient
+    1/(k+h^v), the common Casimir part gives:
     [Omega_12, Omega_13]/z_12*z_13 + [Omega_12, Omega_23]/z_12*z_23
     + [Omega_13, Omega_23]/z_13*z_23 = 0
 
@@ -866,11 +1021,11 @@ def ten_theorem_table() -> List[GTheorem]:
             label="G3", name="Polarization",
             projection="Lagrangian splitting from complementarity (Thm C)",
             status="proved",
-            verification="kappa(A) + kappa(A!) = 0 for all families",
+            verification="affine FF anti-symmetry; non-affine complements have their own constants",
         ),
         GTheorem(
             label="G4", name="S-duality",
-            projection="kappa(A!) = -kappa(A), Feigin-Frenkel involution",
+            projection="affine kappa(A^!) = -kappa(A), Feigin-Frenkel involution",
             status="proved",
             verification="kappa_anti_symmetry_check for all (N, k)",
         ),
@@ -894,13 +1049,13 @@ def ten_theorem_table() -> List[GTheorem]:
         ),
         GTheorem(
             label="G8", name="Reconstruction",
-            projection="algorithmic extraction: OPE data -> H(A)",
+            projection="algorithmic extraction: OPE data -> scalar H(A) projection",
             status="proved",
-            verification="extract_holographic_datum for all standard families",
+            verification="extract_holographic_datum on the affine large-N comparison surface",
         ),
         GTheorem(
             label="G9", name="Critical string",
-            projection="self-dual point: Vir_{c=13} has kappa = kappa!, c_dual = 26-c = 13",
+            projection="self-dual point: Vir_{c=13} has kappa = kappa^!, c_dual = 26-c = 13",
             status="proved",
             verification="virasoro_self_dual_point()",
         ),
@@ -916,17 +1071,17 @@ def ten_theorem_table() -> List[GTheorem]:
 def verify_G9_virasoro_self_dual() -> Dict[str, Fraction]:
     """Verify G9: Virasoro is self-dual at c = 13 (NOT c = 26).
 
-    Vir_c! = Vir_{26-c}. Self-dual when c = 26-c, i.e. c = 13.
-    At c = 13: kappa = 13/2, kappa! = 13/2.
-    But kappa(A!) = -kappa(A) for AFFINE types; for Virasoro it is different.
+    Vir_c^! = Vir_{26-c}. Self-dual when c = 26-c, i.e. c = 13.
+    At c = 13: kappa = 13/2, kappa^! = 13/2.
+    But kappa(A^!) = -kappa(A) for AFFINE types; for Virasoro it is different.
 
     CRITICAL PITFALL: Virasoro self-dual at c = 13. kappa(Vir_c) = c/2,
     kappa(Vir_{26-c}) = (26-c)/2. These are NOT negatives of each other
-    (they sum to 13, not 0). The anti-symmetry kappa(A!) = -kappa(A) holds
+    (they sum to 13, not 0). The anti-symmetry kappa(A^!) = -kappa(A) holds
     for affine KM algebras but NOT for Virasoro (which has a different
     complementarity structure).
 
-    For Virasoro: kappa + kappa! = c/2 + (26-c)/2 = 13 (a nonzero constant).
+    For Virasoro: kappa + kappa^! = c/2 + (26-c)/2 = 13 (a nonzero constant).
     This is the content of Thm C for the Virasoro family.
     """
     c = Fraction(13)
@@ -947,7 +1102,7 @@ def verify_G9_virasoro_self_dual() -> Dict[str, Fraction]:
 # ===========================================================================
 
 def gravitational_phase_space(A: ChiralAlgebraData, g: int) -> GravitationalPhaseSpace:
-    """Compute the gravitational phase space C_g(A) = Q_g(A) + Q_g(A!).
+    """Compute the gravitational phase space C_g(A) = Q_g(A) + Q_g(A^!).
 
     At the scalar level: Q_g(A) = F_g(A) = kappa(A) * lambda_g^FP.
     """
@@ -973,10 +1128,10 @@ def gravitational_phase_space(A: ChiralAlgebraData, g: int) -> GravitationalPhas
 
 
 def verify_lagrangian_splitting(N: int, k: Fraction, max_genus: int = 5) -> Dict[int, bool]:
-    """Verify Q_g(A) + Q_g(A!) = 0 for all genera (affine sl_N).
+    """Verify Q_g(A) + Q_g(A^!) = 0 for all genera (affine sl_N).
 
     This is the scalar-level content of Thm C (complementarity).
-    For V_k(sl_N): kappa(A) + kappa(A!) = 0 => Q_g(A) + Q_g(A!) = 0.
+    For V_k(sl_N): kappa(A) + kappa(A^!) = 0 => Q_g(A) + Q_g(A^!) = 0.
     """
     A = make_affine_sl_N(N, k)
     results = {}
@@ -1094,7 +1249,9 @@ class M2BraneMatch:
     Sector: boundary algebra A_partial at rank N
     Level: relationship between bulk and boundary levels
     N: finite-rank Yangian from A_{partial,infinity}/I_N
-    Genus: bar-cobar = holographic correspondence Omega B(A_partial) ~ A_bulk
+    Genus: bar-cobar inversion controls the boundary algebra.
+    The bulk lives in the separate holographic/open-closed package, not in
+    B(A), A^i, or A^!.
     """
     N: int
     boundary_algebra: str
@@ -1111,7 +1268,8 @@ def m2_brane_match(N: int) -> M2BraneMatch:
 
     A_{partial,N}: boundary chiral algebra at finite N
     A_bulk: bulk HT theory
-    bar-cobar: Omega B(A_partial) ~ A_bulk (Thm B)
+    bar-cobar: Omega(B(A_partial)) recovers the boundary input on the Koszul
+    surface. The holographic bulk comparison is a separate open-closed slot.
     """
     return M2BraneMatch(
         N=N,
@@ -1252,20 +1410,22 @@ def verify_hs_sewing_standard_landscape() -> Dict[str, bool]:
 
 
 # ===========================================================================
-# Comprehensive verification: all components together
+# Comprehensive verification: scalar projection surfaces together
 # ===========================================================================
 
 def full_holographic_verification(N: int, k: Fraction,
                                   max_genus: int = 5) -> Dict[str, object]:
-    """Run the complete holographic verification suite for V_k(sl_N).
+    """Run the affine large-N holographic projection checks for V_k(sl_N).
 
-    Returns a dictionary with results for all twelve components.
+    Returns a dictionary with results for the twelve computational surfaces
+    tracked in this module. It is not a construction of the full package H(A)
+    or of the six-projection modular Koszul package Pi_X(L).
     """
     k_frac = _frac(k)
     A = make_affine_sl_N(N, k_frac)
     results: Dict[str, object] = {}
 
-    # 1. Holographic datum
+    # 1. Holographic package projection
     datum = extract_holographic_datum(A)
     results["datum_extracted"] = True
     results["kappa_anti_symmetric"] = datum.kappa_anti_symmetric
@@ -1399,15 +1559,15 @@ def verify_kappa_sl_N_formula(N: int, k: Fraction) -> bool:
 
 
 def verify_dual_central_charge(N: int, k: Fraction) -> Dict[str, Fraction]:
-    """Verify c(A!) = k'(N^2-1)/(k'+N) where k' = -k-2N.
+    """Verify c(A^!) = k'(N^2-1)/(k'+N) where k' = -k-2N.
 
-    c(A) + c(A!) should depend only on the root datum (not on k).
+    c(A) + c(A^!) should depend only on the root datum (not on k).
     c(A) = k(N^2-1)/(k+N).
-    c(A!) = (-k-2N)(N^2-1)/(-k-N) = (k+2N)(N^2-1)/(k+N).
-    c(A) + c(A!) = (N^2-1)[k/(k+N) + (k+2N)/(k+N)]
+    c(A^!) = (-k-2N)(N^2-1)/(-k-N) = (k+2N)(N^2-1)/(k+N).
+    c(A) + c(A^!) = (N^2-1)[k/(k+N) + (k+2N)/(k+N)]
                  = (N^2-1)(2k+2N)/(k+N)
                  = 2(N^2-1).
-    So c + c! = 2(N^2-1) = 2*dim(sl_N) for all k.
+    So c + c^! = 2(N^2-1) = 2*dim(sl_N) for all k.
     """
     k_frac = _frac(k)
     dim_g = N * N - 1
@@ -1431,7 +1591,7 @@ def verify_dual_central_charge(N: int, k: Fraction) -> Dict[str, Fraction]:
 # ===========================================================================
 
 def s_duality_spectrum(max_N: int = 8) -> Dict[int, Dict[str, Fraction]]:
-    """Compute the S-duality spectrum: kappa, kappa!, c+c! for sl_N at level 1.
+    """Compute the S-duality spectrum: kappa, kappa^!, c+c^! for sl_N at level 1.
 
     This table shows the growth patterns for the ten-theorem projections.
     """
@@ -1462,7 +1622,7 @@ def s_duality_spectrum(max_N: int = 8) -> Dict[int, Dict[str, Fraction]]:
 # ===========================================================================
 
 def holographic_summary(N: int, k: int) -> str:
-    """Print a human-readable summary of the holographic datum for V_k(sl_N)."""
+    """Print a human-readable summary of the large-N holographic projection."""
     k_frac = Fraction(k)
     A = make_affine_sl_N(N, k_frac)
     A_dual = feigin_frenkel_dual(A)
@@ -1471,7 +1631,7 @@ def holographic_summary(N: int, k: int) -> str:
     lam = thooft_coupling(N, k_frac)
 
     lines = [
-        f"Holographic datum for V_{k}(sl_{N})",
+        f"Large-N holographic package projection for V_{k}(sl_{N})",
         f"  dim(sl_{N}) = {A.dim}",
         f"  h^v = {A.dual_coxeter}",
         f"  c = {A.central_charge}",
@@ -1482,7 +1642,8 @@ def holographic_summary(N: int, k: int) -> str:
         f"  kappa + kappa' = {kap + kap_dual}",
         f"  c + c' = {A.central_charge + A_dual.central_charge}",
         f"  lambda = {lam} ('t Hooft coupling)",
-        f"  r(z) = Omega/z (Casimir, CYBE satisfied)",
+        f"  r_tr(z) = {k_frac}*Omega_tr/z (trace form)",
+        f"  r_KZ(z) = Omega/(({k_frac}+{N})z) (KZ normalization)",
         f"  Shadow depth = {A.shadow_depth} (Lie/tree class)",
     ]
     return "\n".join(lines)

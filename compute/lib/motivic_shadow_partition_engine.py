@@ -1,137 +1,45 @@
-r"""Motivic shadow partition function and the universal Hodge structure.
+r"""Finite formal motivic-shadow coefficient windows.
 
-DEEP RESEARCH FOCUS
-===================
+This module deliberately proves less than an analytic tau-function theorem.
+It computes the scalar diagonal genus window
 
-The Kontsevich-Witten tau function
+    log(tau_shadow) = kappa * sum_{g >= 1} lambda_g^FP q^g,
+    q = hbar^2,
 
-    tau_KW = exp( sum_{g >= 1} lambda_g^FP * hbar^{2g} )
+inside the finite quotient R[[q]]/(q^(g_max + 1)).  The corresponding
+unit series tau_shadow is obtained by the formal exponential recurrence.
+No finite window proves analytic convergence, Kontsevich-Witten hierarchy
+membership, KdV/Hirota equations, a Beilinson regulator theorem, or a
+motivic Galois group.
 
-has rational coefficients lambda_g^FP = (2^{2g-1} - 1) |B_{2g}| / (2^{2g-1} (2g)!),
-so tau_KW lies in the polynomial ring  Q[[hbar^2]].  The shadow tau function
+Exact coefficient facts certified here:
 
-    tau_shadow(kappa, hbar) = tau_KW^kappa = exp( kappa * sum_g lambda_g^FP hbar^{2g} )
+  * lambda_g^FP = (2^(2g-1) - 1)|B_(2g)|/(2^(2g-1)(2g)!).
+  * If kappa is rational, every finite tau coefficient lies in Q.
+  * If kappa lies in a number field K, every finite tau coefficient lies
+    in K.  No root extraction is introduced by nonintegral rational kappa.
+  * If kappa is an indeterminate, the q^n coefficient lies in Q[kappa]
+    with degree at most n.
 
-is the universal genus expansion of the shadow obstruction tower (Theorem D
-on the uniform-weight lane, thm:theorem-d in higher_genus_modular_koszul.tex).
+Scope firewalls:
 
-This module is COMPLEMENTARY to the existing engines:
+  * The scalar formula is the uniform-weight scalar-diagonal lane.  A
+    multi-weight algebra has cross-channel terms not certified by this
+    engine.
+  * kappa = 0 gives the scalar unit series only; it is not Theta_A = 0.
+  * The holographic package has seven entries
+    (A, A^i, A^!, C, r(z), Theta_A, nabla^hol).
+  * The modular Koszul compute package has six projections
+    (Fact_X(L), barB_X(L), Theta_L, L_L, (V_br,T_br), R4_mod(L)).
+  * A, B(A), A^i, A^!, Omega(B(A)), and Z_ch^der(A) are distinct:
+    Omega(B(A)) = A is bar-cobar inversion, A^! is the Verdier /
+    continuous-linear dual branch, and Z_ch^der(A) is Hochschild bulk.
 
-  * theorem_tau_shadow_kw_engine.py        — proves the IDENTITY tau_sh = tau_KW^kappa
-  * shadow_motivic_hodge_engine.py          — Hodge realization of the shadow CURVE
-  * bc_motivic_galois_shadow_engine.py      — Tannakian formalism for Mot_shadow
-  * motivic_shadow_periods.py               — Kontsevich-Zagier period classification
-  * rigid_oper_motives_engine.py            — rigid oper => Q(0) Tate (TRIVIAL)
-
-This engine answers the SEVEN OPEN QUESTIONS about tau_shadow itself viewed as
-a pro-object in the genus expansion:
-
-  Q1. tau_KW lies in Q[[hbar^2]] (rational); tau_shadow = tau_KW^kappa for
-      integer kappa is also in Q[[hbar^2]]; for non-integer kappa it lives in
-      WHICH coefficient extension?
-  Q2. The "motive" of F_g(kappa) = kappa * lambda_g^FP at fixed g.
-  Q3. The shadow Hodge structure at genus g and the (g, g) Hodge piece.
-  Q4. Periods of the genus-g free energy: rational, MZV, transcendental?
-  Q5. The shadow motive M^sh viewed as a pro-object: motivic Galois group.
-  Q6. Connection to Deligne mixed Hodge structures and Beilinson motivic
-      cohomology of M-bar_g.
-  Q7. Negative motivic results: things that LOOK natural but FAIL.
-
-GROUND TRUTH (verified by computation, not by narrative):
-
-  (R1) tau_KW in Q[[hbar^2]] — coefficients are rational, no transcendence.
-  (R2) tau_shadow at integer kappa lives in Q[[hbar^2]] (PROVED below by
-       computation through genus 8).
-  (R3) tau_shadow at NON-INTEGER kappa = p/q lies in Q[[hbar^2]] still.  The
-       coefficient field does not enlarge!  Reason: F_g(kappa) = kappa *
-       lambda_g^FP is LINEAR in kappa, so the coefficients of the genus
-       expansion are kappa * (rational) = rational whenever kappa in Q.
-  (R4) For kappa in a number field K, tau_shadow lies in K[[hbar^2]].  For
-       kappa transcendental (Witten conjecture for Virasoro at non-rational c),
-       the coefficient field is Q(kappa).
-  (R5) The motivic weight of F_g viewed via the Hodge realization on
-       H^*(M-bar_g) is (g, g) — pure Tate of weight 2g.  The integral
-       int_{M-bar_g} lambda_g^FP-class is itself rational (the period is
-       rational), but the AMBIENT Hodge piece has weight 2g.
-  (R6) M^sh as pro-motive: G_mot(M^sh) is a 1-dimensional torus G_m acting
-       by the COCHARACTER weight = 2g on the genus-g piece.  This is the
-       pro-Tate motive prod_g Q(g)^{1}, with motivic Galois group G_m
-       (the Tate substack of the motivic Galois group).
-  (R7) NEGATIVE: tau_KW^kappa is NOT a KdV tau function for kappa != 0, 1
-       (already proved in theorem_tau_shadow_kw_engine; we re-derive at the
-       motivic level here).
-  (R8) NEGATIVE: F_g(kappa) is NOT an MZV at any genus.  The naive guess
-       F_g ~ zeta(2g) FAILS — Faber-Pandharipande shows F_g has the form
-       (rational) * pi^{2g}^{0} = rational, not (rational) * zeta(2g).
-  (R9) NEGATIVE: the period map kappa -> tau_shadow(kappa) is NOT injective
-       on the level of motivic Galois orbits — kappa and -kappa both give
-       valid pro-Tate motives (the Galois group acts trivially on Q).
-
-KEY DISTINCTIONS (anti-pattern checks):
-  AP31: kappa = 0 gives tau_shadow = 1, but does NOT mean the FULL Theta_A
-        vanishes; it means only the SCALAR projection vanishes.
-  AP32: F_g = kappa * lambda_g^FP holds at all genera ONLY for uniform-weight
-        algebras.  Multi-weight: F_g receives cross-channel corrections.
-  AP48: kappa(A) is NOT c/2 in general — for lattice VOAs, kappa = rank.
-
-CONNECTION TO BEILINSON MOTIVIC COHOMOLOGY:
-
-The Beilinson regulator
-  r_p: H^p_M(M-bar_g, Q(p)) -> H^p_D(M-bar_g(R), R(p))
-detects the transcendental content of motivic classes.  For the
-Faber-Pandharipande class lambda_g * psi^{2g-2}, the regulator vanishes
-(the class is purely TATE), so the period
-
-    int_{M-bar_{g,1}} psi^{2g-2} lambda_g = lambda_g^FP in Q
-
-is RATIONAL — confirmed numerically through g = 8.
-
-CONNECTION TO DELIGNE MHS:
-
-The mixed Hodge structure on H^*(M-bar_g, Q) carries a weight filtration W_*
-and Hodge filtration F^*.  The lambda_g class lives in W_{2g} and F^g, hence
-has Hodge type (g, g) and weight 2g (PURE).  The shadow obstruction class
-obs_g(A) = kappa(A) * lambda_g inherits this Hodge type.
-
-Therefore the motive of F_g is Q(-g) (Tate twist of weight 2g), and the
-INTEGRATED period (after pairing with [M-bar_{g,1}] cap psi^{2g-2}) lands
-in H^0_M(point, Q(0)) = Q.  This is why F_g is RATIONAL despite the
-ambient Hodge piece having weight 2g.
-
-THE KEY MOTIVIC FACT:
-
-The shadow partition function tau_shadow is (motivically) a SECTION of the
-trivial line bundle on the moduli of central charges, with FIBER at kappa
-equal to the determinant line det(prod_g Q(-g)^{lambda_g^FP}).  The motivic
-Galois group acts via the cocharacter sending hbar^{2g} -> hbar^{2g} and
-preserves all periods.
-
-CONJECTURE (Beilinson-Deligne for shadow motives):  The shadow pro-motive
-M^sh is mixed Tate over Q, and its motivic Galois group is the formal
-multiplicative group prod_g G_m / (relations from KW's bilinear identities).
-
-This module verifies all rational statements computationally and exposes
-the conjectural Beilinson-Deligne picture for downstream theorem chasing.
-
-Manuscript references:
-    thm:theorem-d                    (higher_genus_modular_koszul.tex)
-    thm:mc2-bar-intrinsic            (higher_genus_modular_koszul.tex)
-    thm:multi-weight-genus-expansion (higher_genus_modular_koszul.tex)
-    rem:motivic-decomposition        (arithmetic_shadows.tex)
-    rem:kummer-motive                (arithmetic_shadows.tex)
-    prop:shadow-periods              (arithmetic_shadows.tex)
-    Beilinson 1985 (motivic cohomology, regulator)
-    Deligne 1971 (theorie de Hodge II — MHS construction)
-    Faber-Pandharipande 2003 (FP03, Ann. Math. 157)
-    Kontsevich 1992 (matrix integrals and intersection theory)
-
-CAUTIONS:
-  AP1  — kappa(A) is family-specific; lambda_g^FP is universal.
-  AP31 — tau_shadow = 1 (kappa = 0) does NOT mean Theta_A = 0.
-  AP32 — multi-weight algebras break the kappa-linear genus formula.
-  AP38 — convention check: lambda_g^FP normalized via Bernoulli (not
-         Eichler-Zagier or DVV).
-  AP48 — kappa(V_Lambda) = rank(Lambda), NOT c/2.
+Canonical anchors:
+    thm:theorem-d, thm:multi-weight-genus-expansion
+        (higher_genus_modular_koszul.tex)
+    chapters/connections/concordance.tex, construction of Pi_X(L)
+    Faber-Pandharipande 2003, Ann. Math. 157
 """
 
 from __future__ import annotations
@@ -139,7 +47,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from fractions import Fraction
 from functools import lru_cache
-from typing import Any, Dict, FrozenSet, List, Optional, Tuple
+from typing import Any, Dict, FrozenSet, List, Mapping, Optional, Sequence, Tuple
 
 from sympy import (
     Integer,
@@ -155,6 +63,7 @@ from sympy import (
     factor,
     factorial,
     log,
+    minimal_polynomial,
     nsimplify,
     pi as sym_pi,
     series,
@@ -164,6 +73,75 @@ from sympy import (
     symbols,
     together,
 )
+
+
+# =============================================================================
+# Structural firewalls
+# =============================================================================
+
+HOLOGRAPHIC_PACKAGE_ENTRIES: Tuple[str, ...] = (
+    "A",
+    "A^i",
+    "A^!",
+    "C",
+    "r(z)",
+    "Theta_A",
+    "nabla^hol",
+)
+
+MODULAR_KOSZUL_COMPUTE_PROJECTIONS: Tuple[str, ...] = (
+    "Fact_X(L)",
+    "barB_X(L)",
+    "Theta_L",
+    "L_L",
+    "(V_br,T_br)",
+    "R4_mod(L)",
+)
+
+TYPED_OBJECT_ROLES: Mapping[str, str] = {
+    "A": "input chiral algebra",
+    "B(A)": "ordered bar coalgebra T^c(s^-1 Abar)",
+    "A^i": "bar cohomology coalgebra H^*(B(A))",
+    "A^!": "Verdier/continuous-linear dual branch",
+    "Omega(B(A))": "bar-cobar inversion recovering A",
+    "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild bulk",
+}
+
+
+def holographic_package_entries() -> Tuple[str, ...]:
+    """The seven entries of the holographic package."""
+
+    return HOLOGRAPHIC_PACKAGE_ENTRIES
+
+
+def modular_koszul_compute_projections() -> Tuple[str, ...]:
+    """The six projections of the modular Koszul compute package."""
+
+    return MODULAR_KOSZUL_COMPUTE_PROJECTIONS
+
+
+def typed_object_firewall() -> Dict[str, str]:
+    """Roles that keep bar, dual, inversion, and bulk objects distinct."""
+
+    return dict(TYPED_OBJECT_ROLES)
+
+
+def structural_firewall_summary() -> Dict[str, Any]:
+    """Package cardinalities and object roles used by this compute surface."""
+
+    return {
+        "holographic_package_entries": holographic_package_entries(),
+        "holographic_package_size": len(HOLOGRAPHIC_PACKAGE_ENTRIES),
+        "modular_koszul_compute_projections": modular_koszul_compute_projections(),
+        "modular_koszul_compute_projection_size": len(
+            MODULAR_KOSZUL_COMPUTE_PROJECTIONS
+        ),
+        "packages_are_distinct": (
+            set(HOLOGRAPHIC_PACKAGE_ENTRIES)
+            != set(MODULAR_KOSZUL_COMPUTE_PROJECTIONS)
+        ),
+        "object_roles": typed_object_firewall(),
+    }
 
 
 # =============================================================================
@@ -205,77 +183,237 @@ def faber_pandharipande_table(g_max: int = 8) -> Dict[int, Rational]:
 # 1.  Q1 — coefficient field of tau_shadow
 # =============================================================================
 
+def _validate_g_max(g_max: int) -> None:
+    if g_max < 1:
+        raise ValueError(f"g_max must be >= 1; got {g_max}")
+
+
+def _is_rational_scalar(value: Any) -> bool:
+    if isinstance(value, (int, Rational, Fraction)):
+        return True
+    flag = getattr(value, "is_rational", None)
+    return flag is True
+
+
+def _algebraic_extension_degree(value: Any) -> Optional[int]:
+    if _is_rational_scalar(value):
+        return 1
+    if getattr(value, "is_algebraic", None) is not True:
+        return None
+    try:
+        return Poly(minimal_polynomial(value)).degree()
+    except Exception:
+        return None
+
+
+def _formal_exponential_coefficients(
+    log_coefficients: Mapping[int, Any], g_max: int
+) -> Tuple[Any, ...]:
+    r"""Return coefficients of exp(L(q)) through q^g_max.
+
+    If E(q) = exp(L(q)), E_0 = 1 and
+
+        n E_n = sum_{i=1}^n i L_i E_{n-i}.
+
+    This is an identity in the finite quotient R[[q]]/(q^(g_max + 1)).
+    """
+
+    _validate_g_max(g_max)
+    coeffs: List[Any] = [Integer(1)]
+    for n in range(1, g_max + 1):
+        total = Integer(0)
+        for i in range(1, n + 1):
+            total += i * log_coefficients.get(i, Integer(0)) * coeffs[n - i]
+        coeffs.append(cancel(total / n))
+    return tuple(coeffs)
+
+
 def tau_shadow_genus_coefficient(kappa, g: int) -> Any:
     r"""Coefficient of hbar^{2g} in log(tau_shadow(kappa, hbar)).
 
     log(tau_shadow) = sum_{g >= 1} F_g(kappa) * hbar^{2g},
         F_g(kappa) = kappa * lambda_g^FP.
 
-    The coefficient is LINEAR in kappa.
+    This is a scalar-lane formal coefficient, linear in kappa.
     """
     if g < 1:
         raise ValueError("genus g must be >= 1")
     return kappa * lambda_fp(g)
 
 
-def coefficient_field_signature(kappa) -> Dict[str, Any]:
-    """Identify the smallest field containing all coefficients of tau_shadow.
+def formal_shadow_log_coefficients(kappa, g_max: int = 8) -> Dict[int, Any]:
+    """Exact coefficients of log(tau_shadow) in q = hbar^2 through q^g_max."""
 
-    PRINCIPLE: F_g(kappa) = kappa * lambda_g^FP, where lambda_g^FP is rational.
-    Therefore the coefficients of log(tau_shadow) lie in:
+    _validate_g_max(g_max)
+    return {g: tau_shadow_genus_coefficient(kappa, g) for g in range(1, g_max + 1)}
+
+
+def tau_shadow_exp_coefficients(kappa, g_max: int = 8) -> Tuple[Any, ...]:
+    """Exact unit-series coefficients of tau_shadow through q^g_max.
+
+    The return tuple is (a_0, ..., a_g_max) for
+    tau_shadow = sum a_n q^n in R[[q]]/(q^(g_max + 1)).
+    """
+
+    return _formal_exponential_coefficients(
+        formal_shadow_log_coefficients(kappa, g_max), g_max
+    )
+
+
+def coefficient_field_signature(kappa) -> Dict[str, Any]:
+    """Identify the coefficient field certified by the finite formal engine.
+
+    F_g(kappa) = kappa * lambda_g^FP has rational lambda_g^FP.  The
+    formal exponential recurrence uses only addition, multiplication, and
+    division by integers, so tau coefficients stay in the field generated
+    by kappa.  For symbolic kappa, each finite q^n coefficient is a
+    polynomial in kappa of degree at most n.
+
+    The certified coefficient fields are:
       - Q                 if kappa in Q
       - K                 if kappa in K (a number field) and K contains Q
-      - Q(kappa)          if kappa is transcendental
-      - Q[[hbar]] is a power-series ring; the COEFFICIENT field of
-        log(tau_shadow) equals the field generated by kappa over Q.
-
-    The exponential tau_shadow = exp(log) lives in the same coefficient
-    field's POWER SERIES RING — the exponential of a power series with
-    rational coefficients has rational coefficients.
+      - Q(kappa), with finite coefficients in Q[kappa], if kappa is an
+        indeterminate or a transcendental constant.
     """
-    if isinstance(kappa, (int, Rational, Fraction)):
+    if _is_rational_scalar(kappa):
         return {
             "kappa": kappa,
             "field": "Q",
+            "coefficient_ring": "Q",
             "extension_degree": 1,
             "rational": True,
+            "algebraic": True,
             "transcendental": False,
-            "ring_for_log_tau": "Q[[hbar^2]]",
-            "ring_for_tau":     "Q[[hbar^2]]",
+            "finite_polynomial_degree_bound": 0,
+            "ring_for_log_tau": "Q[[q]]",
+            "ring_for_tau": "Q[[q]]",
+            "analytic_convergence_proved": False,
         }
-    # Symbolic kappa: treat as transcendental indeterminate.
+    algebraic_degree = _algebraic_extension_degree(kappa)
+    if algebraic_degree is not None:
+        return {
+            "kappa": kappa,
+            "field": "Q(kappa)",
+            "coefficient_ring": "Q(kappa)",
+            "extension_degree": algebraic_degree,
+            "rational": False,
+            "algebraic": True,
+            "transcendental": False,
+            "finite_polynomial_degree_bound": None,
+            "ring_for_log_tau": "Q(kappa)[[q]]",
+            "ring_for_tau": "Q(kappa)[[q]]",
+            "analytic_convergence_proved": False,
+        }
     return {
         "kappa": kappa,
         "field": "Q(kappa)",
+        "coefficient_ring": "Q[kappa] in each finite window",
         "extension_degree": float("inf"),
         "rational": False,
+        "algebraic": False,
         "transcendental": True,
-        "ring_for_log_tau": "Q(kappa)[[hbar^2]]",
-        "ring_for_tau":     "Q(kappa)[[hbar^2]]",
+        "finite_polynomial_degree_bound": "degree(q^n coefficient) <= n",
+        "ring_for_log_tau": "Q[kappa][[q]] in finite windows",
+        "ring_for_tau": "Q[kappa][[q]] in finite windows",
+        "analytic_convergence_proved": False,
     }
 
 
 def verify_no_field_extension(kappa, g_max: int = 8) -> Dict[str, Any]:
-    """Q1 ANSWER: For rational kappa, tau_shadow lives in Q[[hbar^2]].
+    """Q1 answer in a finite formal window.
 
-    There is NO field extension introduced by taking the kappa-th power.
-    The reason is that F_g(kappa) is LINEAR in kappa (not a transcendental
-    function), so kappa in Q implies F_g(kappa) in Q for every g.
+    For rational kappa, both log and exponential coefficients lie in Q.
+    For algebraic or symbolic kappa, the finite window stays in the field
+    or polynomial ring generated by kappa.  This is a coefficient theorem,
+    not an analytic statement about a power function.
 
     Returns the explicit verification through genus g_max.
     """
-    coeffs = {}
-    for g in range(1, g_max + 1):
-        c = tau_shadow_genus_coefficient(kappa, g)
-        coeffs[g] = c
+    _validate_g_max(g_max)
+    log_coeffs = formal_shadow_log_coefficients(kappa, g_max)
+    tau_coeffs = tau_shadow_exp_coefficients(kappa, g_max)
     sig = coefficient_field_signature(kappa)
-    sig["coefficients"] = coeffs
-    sig["all_in_field"] = all(
+    sig["log_coefficients"] = log_coeffs
+    sig["tau_coefficients"] = tau_coeffs
+    sig["coefficients"] = log_coeffs
+    sig["all_log_coefficients_in_field"] = all(
         isinstance(c, (Rational, int, Fraction))
         or (hasattr(c, "is_rational") and c.is_rational)
-        for c in coeffs.values()
+        for c in log_coeffs.values()
     ) if isinstance(kappa, (int, Rational, Fraction)) else None
+    sig["all_tau_coefficients_in_field"] = all(
+        isinstance(c, (Rational, int, Fraction))
+        or (hasattr(c, "is_rational") and c.is_rational)
+        for c in tau_coeffs
+    ) if _is_rational_scalar(kappa) else None
+    sig["all_in_field"] = sig["all_log_coefficients_in_field"]
     return sig
+
+
+def scalar_lane_certificate(
+    family: str,
+    generator_weights: Sequence[int],
+    scalar_diagonal: bool = True,
+) -> Dict[str, Any]:
+    """Certify whether the kappa-linear scalar window applies by itself."""
+
+    if not generator_weights:
+        raise ValueError("generator_weights must be nonempty")
+    weights = tuple(generator_weights)
+    uniform_weight = len(set(weights)) == 1
+    on_scalar_lane = uniform_weight and bool(scalar_diagonal)
+    return {
+        "family": family,
+        "generator_weights": weights,
+        "uniform_weight": uniform_weight,
+        "scalar_diagonal": bool(scalar_diagonal),
+        "scalar_lane_certified": on_scalar_lane,
+        "multi_weight_cross_channels_omitted": not uniform_weight,
+        "claim": (
+            "F_g = kappa*lambda_g^FP certified on this scalar lane"
+            if on_scalar_lane
+            else "scalar diagonal only; cross-channel corrections not certified"
+        ),
+    }
+
+
+def finite_formal_coefficient_window(
+    kappa,
+    g_max: int = 8,
+    *,
+    family: str = "scalar formal input",
+    generator_weights: Sequence[int] = (1,),
+    scalar_diagonal: bool = True,
+) -> Dict[str, Any]:
+    """Strongest theorem certified by this module.
+
+    In R[[q]]/(q^(g_max + 1)), q = hbar^2, the scalar-diagonal window is
+
+        tau_shadow = exp(kappa * sum_{g=1}^{g_max} lambda_g^FP q^g)
+
+    with exact coefficients.  The statement is finite and formal.
+    """
+
+    _validate_g_max(g_max)
+    lane = scalar_lane_certificate(family, generator_weights, scalar_diagonal)
+    log_coeffs = formal_shadow_log_coefficients(kappa, g_max)
+    tau_coeffs = tau_shadow_exp_coefficients(kappa, g_max)
+    return {
+        "kappa": kappa,
+        "g_max": g_max,
+        "variable": "q = hbar^2",
+        "modulus": f"q^{g_max + 1}",
+        "lambda_fp": faber_pandharipande_table(g_max),
+        "log_coefficients": log_coeffs,
+        "tau_coefficients": tau_coeffs,
+        "coefficient_field": coefficient_field_signature(kappa),
+        "lane": lane,
+        "finite_formal_identity_certified": lane["scalar_lane_certified"],
+        "analytic_tau_identity_proved": False,
+        "kw_kdv_theorem_proved": False,
+        "motivic_galois_group_proved": False,
+        "convergence_proved": False,
+    }
 
 
 # =============================================================================
@@ -324,7 +462,7 @@ class TateMotive:
 
 
 def motive_of_Fg(g: int) -> TateMotive:
-    r"""The motive of the genus-g free energy F_g.
+    r"""Formal Tate label of the genus-g free energy coefficient.
 
     F_g lives in H^0(point, Q) AFTER pairing with the integration cycle
     [M-bar_{g,1}] cap psi^{2g-2}.  The AMBIENT Hodge piece on M-bar_g
@@ -336,12 +474,11 @@ def motive_of_Fg(g: int) -> TateMotive:
     (which is the canonical isomorphism int: H^{2g}(M-bar_g, Q(-g)) -> Q),
     the class becomes a rational number.
 
-    So:
-      Class-level motive of F_g:           Q(-g)
+    The finite coefficient engine records:
+      Class-level Tate label:              Q(-g)
       Integrated rational period of F_g:   Q  (= Q(0))
 
-    This is the standard period pattern: a class of weight 2g pairs with
-    a cycle of weight -2g to give a number of weight 0.
+    This is not a standalone construction of a global shadow motive.
     """
     return TateMotive(n=g)
 
@@ -362,15 +499,11 @@ def integrated_period_of_Fg(g: int, kappa) -> Any:
 
 @dataclass(frozen=True)
 class ShadowHodgeStructure:
-    """Pure Hodge structure on the genus-g shadow piece.
+    """Formal Hodge label on the genus-g scalar shadow piece.
 
-    By the analysis above, the shadow class obs_g(A) = kappa(A) * lambda_g
-    lives in the (g, g) Hodge piece of H^{2g}(M-bar_g, Q).  This piece
-    is isomorphic to Q(-g)^{h^{g,g}} where h^{g,g} = dim H^{2g}(M-bar_g)
-    in the (g, g) Hodge component.
-
-    For our purposes (the SCALAR shadow), only the kappa-line matters,
-    so the relevant motive is the rank-1 sub Q(-g) generated by lambda_g.
+    The finite scalar window records the expected (g, g) Tate label of
+    the lambda_g line.  It does not compute the full Hodge structure of
+    H^*(M-bar_g).
     """
     genus: int
     weight: int
@@ -383,12 +516,12 @@ class ShadowHodgeStructure:
 
     @property
     def is_pure(self) -> bool:
-        """The (g, g) piece is pure of weight 2g."""
+        """The formal (g, g) label is pure of weight 2g."""
         return True
 
     @property
     def is_tate(self) -> bool:
-        """It IS a Tate twist Q(-g)."""
+        """The finite-window label is the Tate symbol Q(-g)."""
         return True
 
     def hodge_polynomial(self) -> str:
@@ -397,10 +530,11 @@ class ShadowHodgeStructure:
 
 
 def shadow_hodge_filtration(g_max: int = 8) -> Dict[int, ShadowHodgeStructure]:
-    """The shadow Hodge filtration on the genus expansion.
+    """Formal Hodge-type labels on the scalar genus expansion.
 
-    For each genus g, the shadow class is pure Tate of type (g, g).
-    The whole tau_shadow is a pro-object in the category of pure Tate motives.
+    For each genus g, the scalar lambda_g class is recorded with type
+    (g, g).  This is a finite-window bookkeeping statement, not a global
+    pro-motive theorem.
     """
     return {g: ShadowHodgeStructure.for_genus(g) for g in range(1, g_max + 1)}
 
@@ -424,7 +558,10 @@ def period_classification(g: int, kappa) -> Dict[str, Any]:
     """Classify the genus-g free energy period.
 
     For kappa rational, F_g(kappa) = kappa * lambda_g^FP is rational.
-    No MZV (multiple zeta value), no zeta(2g), no transcendental period.
+    No positive-weight MZV, no zeta(2g), no transcendental period is
+    detected in the integrated coefficient.  Rational numbers are the
+    weight-zero part of the usual MZV algebra; this function rules out
+    nontrivial MZV content, not membership of Q in that algebra.
 
     The naive expectation: F_g should involve zeta(2g) (since
     lambda_g^FP comes from Bernoulli numbers, and zeta(2g) ~ B_{2g} * pi^{2g}).
@@ -435,48 +572,38 @@ def period_classification(g: int, kappa) -> Dict[str, Any]:
     "pi^{2g}-stripped" zeta value, hence rational.
     """
     F = tau_shadow_genus_coefficient(kappa, g)
+    sig = coefficient_field_signature(kappa)
+    is_rat = is_rational_period(F)
+    if is_rat or sig["algebraic"]:
+        transcendence_degree = 0
+    else:
+        transcendence_degree = 1
     return {
         "genus": g,
         "kappa": kappa,
         "F_g": F,
         "lambda_g_FP": lambda_fp(g),
-        "is_rational": is_rational_period(F),
-        "is_mzv": False,            # NEVER an MZV
+        "is_rational": is_rat,
+        "is_mzv": False,            # Legacy key: means no nontrivial MZV here.
+        "is_nontrivial_mzv": False,
+        "mzv_weight": 0 if is_rat else None,
         "involves_pi": False,       # pi^{2g} stripped via Bernoulli normalization
         "involves_zeta": False,     # zeta(2g) absorbed into lambda_g^FP
-        "transcendence_degree": 0,  # over Q
+        "transcendence_degree": transcendence_degree,
         "motive": motive_of_Fg(g),
         "integrated_to": "Q(0)",
     }
 
 
 def deligne_critical_value_check(g: int) -> Dict[str, Any]:
-    r"""Verify Deligne's critical-value formula for F_g.
+    r"""Check the Bernoulli/zeta normalization behind lambda_g^FP.
 
-    Deligne's conjecture: for a critical value of an L-function attached
-    to a motive M of weight w, the value lies in (period of M) * Q.
+    This is an exact arithmetic identity:
 
-    For F_g (motive Q(-g) integrated):
-      * Period of Q(-g) is (2*pi*i)^g
-      * The integrated F_g = kappa * lambda_g^FP is rational
-      * lambda_g^FP * (2*pi*i)^g should be a "Deligne period"
+      lambda_g^FP is a rational multiple of zeta(2g)/(2*pi)^(2g).
 
-    Specifically: lambda_g^FP = (2^{2g-1} - 1) * |B_{2g}| / (2^{2g-1} (2g)!)
-    and  zeta(2g) = (-1)^{g+1} (2 pi)^{2g} B_{2g} / (2 (2g)!).
-
-    Therefore:
-      lambda_g^FP * (2 pi i)^{2g}
-        = (2^{2g-1} - 1)/(2^{2g-1}) * |B_{2g}| (2 pi i)^{2g} / (2g)!
-        = (2^{2g-1} - 1)/(2^{2g-1}) * (-1)^{g+1} * 2 * zeta(2g) * (-1)^g
-        = -(2^{2g-1} - 1)/(2^{2g-1}) * 2 * zeta(2g)
-
-    So lambda_g^FP * (2 pi i)^{2g} is a rational multiple of zeta(2g).
-    This is Deligne's critical value formula: the period of Q(-g) integrated
-    against lambda_g lands in Q * zeta(2g) — which is itself a period of Q(g).
-
-    The DELIGNE WEIGHT of F_g is therefore COMPATIBLE: the formal period
-    pairs (g, g)-class with (g, g)-cycle to give weight-0 number, and the
-    "decompactified" period brings back the pi^{2g} = (2pi)^{2g} factor.
+    It is a Deligne-compatible normalization check, not a proof of a
+    Deligne critical-value theorem for a newly constructed motive.
     """
     lam = lambda_fp(g)
     # Compute the rational multiple of zeta(2g).
@@ -501,30 +628,25 @@ def deligne_critical_value_check(g: int) -> Dict[str, Any]:
         "reconstructed": reconstructed,
         "matches": (lam == reconstructed),
         "interpretation": (
-            "lambda_g^FP = rational multiple of zeta(2g)/(2pi)^{2g}: Deligne OK"
+            "lambda_g^FP = rational multiple of zeta(2g)/(2pi)^{2g}; "
+            "normalization check only"
         ),
+        "deligne_theorem_certified": False,
     }
 
 
 # =============================================================================
-# 5.  Q5 — pro-motive M^sh and its motivic Galois group
+# 5.  Q5 — formal Tate labels and motivic Galois boundary
 # =============================================================================
 
 @dataclass(frozen=True)
 class ShadowProMotive:
-    """The pro-object M^sh = prod_{g >= 1} Q(-g) in the category of motives.
+    """Formal Tate bookkeeping object for the finite scalar window.
 
-    Each genus-g layer is the rank-1 Tate motive Q(-g).  The TOTAL motive
-    is a pro-object (formal infinite product), with motivic Galois group
-    equal to the formal multiplicative group of the cocharacter lattice
-    (= the Tate substack).
-
-    G_mot(M^sh) = G_m   (single-parameter torus, acting by the cocharacter
-                         that sends hbar -> t * hbar, hence the genus-g
-                         coefficient kappa * lambda_g^FP transforms as
-                         t^{2g} * kappa * lambda_g^FP).
-
-    Equivalently, M^sh is a SCALING-EQUIVARIANT pro-Tate motive.
+    Each genus-g layer is labelled by the rank-1 Tate symbol Q(-g).
+    This records the weight grading visible in the coefficient window.
+    It is not a construction of a global pro-motive and does not certify
+    a motivic Galois group.
     """
     genera: Tuple[int, ...]
 
@@ -538,8 +660,13 @@ class ShadowProMotive:
 
     @property
     def motivic_galois_group(self) -> str:
-        """The motivic Galois group is G_m (single torus)."""
-        return "G_m"
+        """Only the formal Tate weight torus is visible in this engine."""
+        return "formal_Tate_weight_torus_not_certified_G_mot"
+
+    @property
+    def certified_motivic_galois_group(self) -> bool:
+        """This finite coefficient engine does not prove a Galois group."""
+        return False
 
     @property
     def cocharacter_weight(self) -> Dict[int, int]:
@@ -548,7 +675,7 @@ class ShadowProMotive:
 
     @property
     def is_mixed_tate(self) -> bool:
-        """All layers are pure Tate => the pro-object is mixed Tate."""
+        """The formal layers are Tate; this is not a global motive theorem."""
         return True
 
     @property
@@ -558,12 +685,16 @@ class ShadowProMotive:
 
 
 def shadow_pro_motive(g_max: int = 8) -> ShadowProMotive:
-    """Construct the truncated shadow pro-motive."""
+    """Construct the truncated formal Tate bookkeeping object."""
     return ShadowProMotive.truncate(g_max)
 
 
 def motivic_galois_action(g: int, t: Symbol) -> Any:
-    """The motivic Galois group G_m acts on the genus-g layer by t^{2g}."""
+    """Formal Tate weight action on the genus-g layer by t^{2g}.
+
+    This is the weight cocharacter visible in the finite window, not a
+    proof that a motivic Galois group has been constructed.
+    """
     return t ** (2 * g)
 
 
@@ -572,30 +703,24 @@ def motivic_galois_action(g: int, t: Symbol) -> Any:
 # =============================================================================
 
 def beilinson_regulator_vanishing(g: int) -> Dict[str, Any]:
-    r"""Verify that the Beilinson regulator on lambda_g vanishes.
+    r"""Finite-window regulator boundary.
 
-    The Beilinson regulator
-        r_p: H^p_M(M-bar_g, Q(p)) -> H^p_D(M-bar_g(R), R(p))
-    detects the transcendental content of motivic cohomology classes.
+    This engine verifies only the rational integrated Faber-Pandharipande
+    coefficient.  It does not prove a Beilinson regulator vanishing theorem
+    for a motivic cohomology class on M-bar_g.
 
-    For PURE TATE classes (which lambda_g is), the regulator vanishes
-    because the class is purely algebraic (Hodge type (g, g)).
-
-    Concretely: lambda_g lifts to a class in CH^g(M-bar_g) ⊗ Q (the
-    rational Chow group), and the cycle class map lands in the (g, g)
-    Hodge piece.  The regulator measures the OBSTRUCTION to such a
-    lift, and for purely Tate classes the obstruction is zero.
-
-    Returns: vanishing flag and explanation.
+    Returns a non-certification flag plus the exact rational period that
+    the coefficient computation does prove.
     """
     return {
         "genus": g,
         "class": f"lambda_{g}",
         "motive": motive_of_Fg(g),
-        "regulator_vanishes": True,
+        "regulator_vanishes": None,
+        "regulator_vanishing_certified": False,
         "reason": (
-            f"lambda_{g} is purely Tate Q(-{g}), Hodge type ({g},{g}); "
-            "the Beilinson regulator vanishes on pure Tate classes."
+            "finite formal coefficients prove rational integrated periods, "
+            "not a Beilinson regulator theorem"
         ),
         "period_in_Q": True,
         "period_value": lambda_fp(g),
@@ -603,13 +728,16 @@ def beilinson_regulator_vanishing(g: int) -> Dict[str, Any]:
 
 
 def deligne_mhs_summary(g_max: int = 8) -> Dict[int, Dict[str, Any]]:
-    """Summary of the Deligne MHS data for each genus layer.
+    """Formal Deligne-type labels for each finite genus layer.
 
     For each g:
       * Weight filtration:  W_{2g} = full piece, W_{2g-1} = 0  (PURE)
       * Hodge filtration:   F^g = full piece, F^{g+1} = 0
       * Hodge type:         (g, g)
       * Bidegree:           h^{g,g} = 1 on the kappa-line
+
+    The labels record the Tate model used by the coefficient window.  They
+    are not a proof of the full mixed Hodge structure of M-bar_g.
     """
     out = {}
     for g in range(1, g_max + 1):
@@ -622,6 +750,8 @@ def deligne_mhs_summary(g_max: int = 8) -> Dict[int, Dict[str, Any]]:
             "h_pq": {(g, g): 1},
             "is_pure": True,
             "tate_twist": -g,  # Q(-g)
+            "mhs_theorem_certified": False,
+            "formal_tate_label": True,
         }
     return out
 
@@ -631,38 +761,40 @@ def deligne_mhs_summary(g_max: int = 8) -> Dict[int, Dict[str, Any]]:
 # =============================================================================
 
 def kdv_negative_result(kappa, g_max: int = 8) -> Dict[str, Any]:
-    """tau_shadow = tau_KW^kappa is NOT a KdV tau function for kappa != 0, 1.
+    """Record the KdV boundary of the finite coefficient engine.
 
-    Reason: the KdV equation
-        (D_1^4 + 3 D_2^2 - 4 D_1 D_3) tau . tau = 0
-    is BILINEAR in tau, not multiplicative.  Taking the kappa-th power
-    breaks the bilinear structure: if tau satisfies KdV, then tau^kappa
-    does not (unless kappa = 0 or 1).
-
-    This is a structural negative result, independent of the specific
-    coefficients lambda_g^FP.
-
-    Verification: the LHS evaluated on tau^kappa does not vanish for
-    generic kappa.
+    The finite formal motivic window does not prove that tau_KW^kappa is
+    a KW/KdV tau function.  The only analytic KdV-compatible scalar cases
+    named here are kappa = 0 (unit series) and kappa = 1 (the original KW
+    normalization, supplied externally).  For other kappa this function
+    records the known bilinear obstruction as an external boundary, not as
+    a motivic proof.
     """
+    in_exception_set = (kappa == 0 or kappa == 1)
     return {
         "kappa": kappa,
-        "satisfies_kdv": (kappa == 0 or kappa == 1),
+        "satisfies_kdv": in_exception_set,
+        "satisfies_kdv_certified_by_this_engine": False,
+        "analytic_kw_tau_function_certified_by_this_engine": False,
         "reason": (
-            "KdV is bilinear in tau; (tau)^kappa is generally not a tau "
-            "function for kappa != 0, 1."
+            "finite q-coefficients do not certify Hirota/KdV equations; "
+            "the generic obstruction is bilinear and external to this "
+            "motivic coefficient check"
         ),
         "exception": "kappa = 0: tau = 1 (trivially satisfies); "
                      "kappa = 1: tau = tau_KW (Witten's theorem).",
-        "negative_result": "tau_shadow is NOT a KdV tau function in general.",
+        "negative_result": "tau_shadow is not certified as a KdV tau function.",
     }
 
 
 def mzv_negative_result(g: int) -> Dict[str, Any]:
-    """F_g is NOT a multiple zeta value at any genus.
+    """The integrated coefficient has no positive-weight MZV content.
 
     The naive guess: F_g should involve MZV(2, 2, ..., 2) (g times) or
-    similar.  This is FALSE: F_g = kappa * lambda_g^FP is RATIONAL.
+    similar.  The finite scalar coefficient is rational up to kappa.
+    Since Q is the weight-zero part of the MZV algebra, the precise
+    negative statement is absence of nontrivial positive-weight MZV
+    content.
 
     The Bernoulli numbers in lambda_g^FP come from the SAME source as
     zeta(2g), but the (2pi)^{2g} factor is STRIPPED, leaving Q.
@@ -675,6 +807,8 @@ def mzv_negative_result(g: int) -> Dict[str, Any]:
         "F_g_form": "kappa * lambda_g^FP",
         "lambda_g_FP": lambda_fp(g),
         "is_mzv": False,
+        "is_nontrivial_mzv": False,
+        "mzv_weight": 0,
         "is_rational": True,
         "naive_guess": "MZV(2,...,2) [g times] or polylog(2g)",
         "actual": "rational number",
@@ -686,24 +820,23 @@ def mzv_negative_result(g: int) -> Dict[str, Any]:
 
 
 def injectivity_negative_result() -> Dict[str, Any]:
-    """The kappa -> tau_shadow(kappa) map is NOT injective on Galois orbits.
+    """Separate finite scalar injectivity from abstract Tate-shape loss.
 
-    Two distinct kappa values may give the same Galois-orbit data on
-    tau_shadow, since the motivic Galois group G_m acts trivially on Q.
-
-    Concretely: kappa and -kappa give different tau_shadow, but their
-    motives both factor as prod_g Q(-g), distinguished only by the rank
-    of the kappa-line at each layer.
-
-    For the FULL theta-A (not just the scalar projection), injectivity
-    holds — but the scalar shadow alone is not enough.
+    In the finite formal scalar series, kappa is recovered from the q^1
+    coefficient because lambda_1^FP = 1/24.  If one forgets all scalar
+    coefficients and keeps only the abstract Tate weight shape, kappa is
+    lost.  This engine does not prove a motivic Galois-orbit statement.
     """
     return {
+        "finite_formal_scalar_injective": True,
+        "recovery_formula": "kappa = 24 * [q^1] log(tau_shadow)",
+        "abstract_tate_shape_injective": False,
+        "galois_orbit_injectivity_certified": False,
         "injective_on_motives": False,
-        "injective_on_values": True,  # the values F_g(kappa) are linear in kappa
+        "injective_on_values": True,
         "explanation": (
-            "Two kappa values give different tau_shadow values, but the "
-            "abstract motive prod_g Q(-g) is the same up to twisting by kappa."
+            "finite coefficients remember kappa; the bare formal Tate "
+            "weight shape does not"
         ),
         "remedy": "Use the full Theta_A (all arities) to recover injectivity.",
     }
@@ -751,40 +884,31 @@ def verify_lambda_fp_table(g_max: int = 8) -> Dict[int, Dict[str, Any]]:
 
 def tau_shadow_log_expansion(kappa, g_max: int = 6) -> Dict[int, Any]:
     """Coefficient-by-coefficient expansion of log(tau_shadow)."""
-    return {g: tau_shadow_genus_coefficient(kappa, g) for g in range(1, g_max + 1)}
+    return formal_shadow_log_coefficients(kappa, g_max)
 
 
 def tau_shadow_exp_expansion(kappa, g_max: int = 4) -> Any:
-    """Compute tau_shadow as a power series in hbar through hbar^{2*g_max}.
+    """Compute the finite formal tau series in hbar through hbar^{2*g_max}.
 
-    tau_shadow = exp( kappa * sum_g lambda_g^FP * hbar^{2g} )
+    This is the image of the q-window under q = hbar^2.  It is not an
+    analytic convergence claim.
     """
     h = Symbol("hbar")
-    log_tau = sum(kappa * lambda_fp(g) * h ** (2 * g) for g in range(1, g_max + 1))
-    return series(exp(log_tau), h, 0, 2 * g_max + 2).removeO()
+    coeffs = tau_shadow_exp_coefficients(kappa, g_max)
+    return sum(coeffs[g] * h ** (2 * g) for g in range(0, g_max + 1))
 
 
 # =============================================================================
-# 9.  Universal Hodge structure on the shadow pro-motive
+# 9.  Formal Hodge labels on the finite scalar window
 # =============================================================================
 
 @dataclass(frozen=True)
 class UniversalShadowHodgeStructure:
-    """The universal Hodge structure underlying tau_shadow.
+    """Formal finite-window Hodge labels underlying the scalar coefficients.
 
-    Combining all genera, this is the pro-Hodge structure
-        bigoplus_{g >= 1} Q(-g)
-    with weight grading 2g on each layer.
-
-    Realizations:
-      * Betti:    H_B = bigoplus Q^{(g, g)}                (Q-vector space)
-      * de Rham:  H_dR = bigoplus Q (with Hodge filtration F^* concentrated
-                  on bidegree (g, g))
-      * etale:    H_ell = bigoplus Q_ell(-g) (Galois rep where Frob_p
-                  acts by p^g)
-
-    The COMPARISON ISOMORPHISMS H_B otimes C ~ H_dR otimes C are governed
-    by the periods (2*pi*i)^g on the genus-g layer.
+    Combining genera through g_max gives the formal direct sum of labels
+    Q(-g).  Frobenius and crystalline outputs below are model labels, not
+    a constructed etale realization of tau_shadow.
     """
     g_max: int
 
@@ -802,18 +926,18 @@ class UniversalShadowHodgeStructure:
         return sum(t ** (2 * g) for g in range(1, self.g_max + 1))
 
     def frobenius_eigenvalues(self, p: int) -> List[int]:
-        """Frobenius eigenvalues at prime p: {p^g for g = 1, ..., g_max}."""
+        """Formal Tate-model Frobenius eigenvalues p^g."""
         return [p ** g for g in range(1, self.g_max + 1)]
 
     def galois_action_is_abelian(self) -> bool:
-        """The Galois action factors through Z_p (cyclotomic character)."""
+        """The formal Tate model is abelian; no Galois theorem is proved."""
         return True
 
     def is_mixed_tate(self) -> bool:
         return True
 
     def is_crystalline(self) -> bool:
-        """Tate motives are crystalline at every prime."""
+        """Formal Tate labels are crystalline in the model."""
         return True
 
 
@@ -828,8 +952,8 @@ def universal_shadow_hodge(g_max: int = 8) -> UniversalShadowHodgeStructure:
 def example_heisenberg(level_k: int = 1, g_max: int = 6) -> Dict[str, Any]:
     """Heisenberg H_k example: kappa = k (integer for level k).
 
-    The shadow partition function is tau_KW^k.  All coefficients rational.
-    Class G in the shadow taxonomy.
+    The finite scalar window has rational coefficients.  Class G in the
+    shadow taxonomy.
     """
     kappa = Rational(level_k)
     return {
@@ -893,13 +1017,13 @@ def example_lattice_voa(rank: int, g_max: int = 6) -> Dict[str, Any]:
 # =============================================================================
 
 def shadow_motivic_summary(g_max: int = 6) -> Dict[str, Any]:
-    """Top-level summary of the motivic structure of tau_shadow."""
+    """Top-level summary of the finite formal motivic-shadow window."""
     return {
         "Q1_coefficient_field": {
-            "rational_kappa": "Q[[hbar^2]]",
-            "number_field_kappa": "K[[hbar^2]]",
-            "transcendental_kappa": "Q(kappa)[[hbar^2]]",
-            "verdict": "linear-in-kappa => no field extension introduced",
+            "rational_kappa": "Q[[q]] in finite windows",
+            "number_field_kappa": "K[[q]] in finite windows",
+            "transcendental_kappa": "Q[kappa][[q]] coefficientwise",
+            "verdict": "formal exponential recurrence introduces no field beyond kappa",
         },
         "Q2_motive_at_genus": {
             f"g={g}": {
@@ -921,20 +1045,20 @@ def shadow_motivic_summary(g_max: int = 6) -> Dict[str, Any]:
             "deligne_critical_value": "compatible (pi^{2g} stripped)",
         },
         "Q5_pro_motive": {
-            "object": "prod_{g >= 1} Q(-g)",
-            "motivic_galois_group": "G_m",
-            "is_mixed_tate": True,
+            "object": "formal finite Tate labels Q(-g)",
+            "motivic_galois_group": "not certified by this engine",
+            "formal_weight_torus": True,
             "is_pure": False,
         },
         "Q6_beilinson": {
-            "regulator_vanishes": True,
-            "reason": "purely Tate => no transcendental extensions",
-            "deligne_mhs": "pure (g, g) at each genus",
+            "regulator_vanishes": "not certified",
+            "reason": "finite coefficients certify rational periods only",
+            "deligne_mhs": "formal (g, g) labels at each genus",
         },
         "Q7_negative_results": {
-            "kdv_tau": "FAILS for kappa != 0, 1",
-            "mzv_at_F_g": "FAILS — F_g is rational",
-            "scalar_injectivity": "FAILS — full Theta_A needed",
+            "kdv_tau": "not certified by finite motivic coefficients",
+            "mzv_at_F_g": "no positive-weight MZV content in rational F_g",
+            "scalar_injectivity": "finite scalar coefficients recover kappa; abstract Tate shape does not",
         },
         "table_lambda_fp": faber_pandharipande_table(g_max),
         "universal_hodge": universal_shadow_hodge(g_max),

@@ -21,6 +21,8 @@ import math
 import pytest
 from fractions import Fraction
 
+import compute.lib.bcov_bar_complex as bcov
+
 F = Fraction
 
 from compute.lib.bcov_bar_complex import (
@@ -157,9 +159,6 @@ class TestPolyvectorSpaces:
 
         Path 1: from product Hodge diamond.
         Path 2: dim(PV*(K3)) * dim(PV*(E)).
-
-        NOTE: The task stated 48, which is WRONG. The correct dimension
-        is 96 = 24 * 4 via Kunneth.
         """
         pv = pv_k3_times_e()
         assert pv.total_dim == 96
@@ -253,12 +252,23 @@ class TestBCOVLinf:
         assert bcov_linf_conifold().kappa == F(1)
 
     def test_k3xe_kappa(self):
-        """kappa(K3 x E) = 5 (weight of Igusa cusp form Delta_5).
+        """kappa_BKM(K3 x E) = 5 (weight of primitive Delta_5).
 
-        NOT chi_top/2 = 0. The CY Euler characteristic is different
-        from the topological Euler characteristic (AP48).
+        This is the BKM/BPS lane, not the compact total-space
+        kappa_cat(K3 x E)=0 and not the Heisenberg-Mukai value 3.
         """
         assert bcov_linf_k3_times_e().kappa == F(5)
+
+    def test_k3xe_scalar_lanes_are_distinct(self):
+        """K3 x E has compact Euler, Heisenberg-Mukai, and BKM lanes."""
+        compact_euler = F(k3_times_e_hodge().euler, 2)
+        heisenberg_mukai = k3_hodge().chi_O + F(1)  # K3 plus level-one E.
+        bkm = bcov_linf_k3_times_e().kappa
+
+        assert compact_euler == F(0)
+        assert heisenberg_mukai == F(3)
+        assert bkm == F(5)
+        assert len({compact_euler, heisenberg_mukai, bkm}) == 3
 
     def test_quintic_kappa(self):
         """kappa(quintic) = -100 = chi/2 = -200/2."""
@@ -298,6 +308,81 @@ class TestBCOVLinf:
     def test_k3xe_has_yukawa(self):
         """K3 x E has Yukawa coupling from intersection form."""
         assert bcov_linf_k3_times_e().yukawa_nonzero is True
+
+
+# =========================================================================
+# Section 4b: Scalar scope and object firewall tests
+# =========================================================================
+
+class TestScalarScopeAndObjectFirewalls:
+    """Pin the compute-lane scalar scope of the BCOV bar module."""
+
+    def test_bar_complex_has_no_dual_or_centre_payload(self):
+        """B(A) carries source L-infinity data, not A^i, A^!, or centre data."""
+        bar = bar_complex_k3_times_e()
+        fields = set(bar._fields)
+
+        assert bar.linf_data is not bar
+        assert bar.linf_data.name == "K3xE"
+        assert fields == {
+            "name",
+            "linf_data",
+            "bar_dims",
+            "bar_euler",
+            "max_bar_degree",
+            "genus_amplitudes",
+        }
+        assert fields.isdisjoint({
+            "ai",
+            "a_i",
+            "a_dual",
+            "a_bang",
+            "koszul_dual",
+            "verdier_dual",
+            "derived_centre",
+            "derived_center",
+        })
+
+    def test_shadow_comparison_is_scalar_only(self):
+        """Shadow/BCOV agreement records scalar amplitudes only."""
+        comp = compare_shadow_bcov("K3xE", F(5), max_genus=3)
+        fields = set(comp._fields)
+        comparison_doc = " ".join((bcov.ShadowTowerComparison.__doc__ or "").split())
+
+        assert comp.agreement is True
+        assert comp.kappa_shadow == comp.kappa_bcov == F(5)
+        assert comp.genus_amplitudes_shadow == comp.genus_amplitudes_bcov
+        assert fields == {
+            "name",
+            "kappa_shadow",
+            "kappa_bcov",
+            "genus_amplitudes_shadow",
+            "genus_amplitudes_bcov",
+            "agreement",
+        }
+        assert fields.isdisjoint({
+            "voa",
+            "factorisation_algebra",
+            "factorization_algebra",
+            "derived_centre",
+            "derived_center",
+            "full_identification",
+        })
+        assert "This records equality of scalar amplitudes" in comparison_doc
+        assert "not a full VOA, factorisation-algebra, or derived-centre" in comparison_doc
+
+    def test_holographic_package_boundary_is_documented(self):
+        """The module pins H(T) as seven entries and not a computed payload."""
+        doc = bcov.__doc__ or ""
+        normalized_doc = " ".join(doc.split())
+
+        assert "COMPUTE-LANE SCALAR SHADOW:" in doc
+        assert "kappa_Euler(X) = chi(X)/2" in doc
+        assert "do not identify the full VOA or the full factorisation algebra" in normalized_doc
+        assert "A, B(A), A^i, A^!, and the chiral derived centre" in doc
+        assert "It does not compute A^i, Verdier/Koszul dual A^!" in doc
+        assert "(A, A^i, A^!, C, r(z), Theta_A, nabla_hol)" in doc
+        assert doc.count("A^i") >= 2
 
 
 # =========================================================================
@@ -448,13 +533,21 @@ class TestGenusAmplitudes:
         b = bar_complex_k3_times_e()
         assert b.genus_amplitudes[1] == F(5, 24)
 
+    def test_f1_k3xe_uses_bkm_lane_not_euler_or_heisenberg(self):
+        """The selected K3 x E scalar lane is BKM 5."""
+        b = bar_complex_k3_times_e()
+
+        assert b.linf_data.kappa == F(5)
+        assert b.genus_amplitudes[1] == F(5, 24)
+        assert b.genus_amplitudes[1] != F(0)
+        assert b.genus_amplitudes[1] != F(3, 24)
+
     def test_f1_quintic(self):
         """F_1(quintic) = -100/24 = -25/6.
 
         Path 1: kappa * 1/24 = -100/24 = -25/6.
         Path 2: from BCOV: F_1 = -chi/12 * log(discriminant) + ...
-        The constant map piece is chi/2 * 1/24 = -200/48 = -25/6... wait:
-        kappa = chi/2 = -100.  F_1 = -100/24 = -25/6.  CHECK.
+        The constant-map scalar lane has kappa = chi/2 = -100.
         """
         linf = bcov_linf_quintic()
         b = compute_bar_complex(linf)
@@ -687,7 +780,7 @@ class TestBarDimConsistency:
 # =========================================================================
 
 class TestDesuspension:
-    """Verify desuspension shifts degrees correctly (AP45)."""
+    """Verify desuspension shifts degrees correctly."""
 
     def test_c3_desuspended_degrees(self):
         """After desuspension, C^3 PV has degrees -2, -1, 0, 1.

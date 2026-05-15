@@ -1,27 +1,26 @@
 r"""Tests for shadow_integrable_hierarchy.py.
 
-Tests the connection between the shadow obstruction tower and integrable
-hierarchies (KdV, Boussinesq, Gelfand-Dickey).
+Tests finite scalar and primary-line diagnostics from the shadow
+obstruction tower.  Full KdV, Boussinesq, Gelfand-Dickey, Toda, and
+Painleve hierarchy assertions require separate descendant or Lax data.
 
 30+ tests organized into sections:
   1. Faber-Pandharipande numbers (multi-path)
   2. Virasoro shadow data
   3. Shadow generating function
   4. A-hat genus consistency
-  5. KdV flow verification
-  6. Riccati as stationary KdV
-  7. Shadow depth classification
-  8. W_3 Boussinesq structure
-  9. W_N Gelfand-Dickey classification
-  10. Planted-forest quantum corrections
+  5. KW-compatible scalar coefficients
+  6. Riccati primary-line diagnostics
+  7. Shadow depth scope
+  8. W_3 finite window
+  9. W_N conditional hierarchy metadata
+  10. Planted-forest scalar corrections
   11. Spectral curve
   12. Cross-family consistency
 """
 
-# VERIFIED: [DC] hardcoded expected values below are direct evaluations of the
-# formulas, recurrences, or enumerations under test. [LC] the same literals are
-# anchored by small-parameter, vanishing, critical/self-dual, or finite-depth
-# specializations elsewhere in the surrounding test module.
+# Hardcoded expected values below are direct evaluations of the formulas,
+# recurrences, or finite-window specializations under test.
 
 import pytest
 from sympy import Rational, Symbol, cancel, factor, simplify, sqrt, expand
@@ -238,11 +237,11 @@ class TestAhatConsistency:
 
 
 # =========================================================================
-# Section 5: KdV flow verification
+# Section 5: KW-compatible scalar coefficients
 # =========================================================================
 
-class TestKdVFlows:
-    """Verify KdV flows from the shadow tau-function."""
+class TestKWCompatibleScalarWindow:
+    """Verify scalar coefficients compatible with the KW/KdV lift."""
 
     def test_F1_value(self):
         """F_1 = c/48 (= kappa/24)."""
@@ -267,7 +266,8 @@ class TestKdVFlows:
     def test_ratio_F2_F1_squared(self):
         """F_2/F_1^2 = 7/(5c) = 14/(10c).
 
-        This ratio is a consequence of the KdV equation at genus 2.
+        This ratio is a scalar coefficient check compatible with the
+        rank-1 KW/KdV lift.
         """
         results = verify_kdv_flows_virasoro(max_genus=4)
         assert results['F_2/F_1^2']['match']
@@ -280,11 +280,11 @@ class TestKdVFlows:
 
 
 # =========================================================================
-# Section 6: Riccati as stationary KdV
+# Section 6: Riccati primary-line diagnostics
 # =========================================================================
 
-class TestRiccatiStationaryKdV:
-    """Test the Riccati algebraicity as stationary KdV reduction."""
+class TestRiccatiPrimaryLine:
+    """Test the Riccati algebraicity on the primary line."""
 
     def test_mc_residuals_vanish(self):
         """The MC residuals at arities 5-8 all vanish (the recursion is exact)."""
@@ -309,28 +309,28 @@ class TestRiccatiStationaryKdV:
 
 
 # =========================================================================
-# Section 7: Shadow depth classification
+# Section 7: Shadow depth scope
 # =========================================================================
 
 class TestShadowDepthClassification:
-    """Test the shadow depth -> hierarchy type classification."""
+    """Test the shadow depth scope classification."""
 
-    def test_class_G_trivial(self):
-        """Class G has trivial hierarchy."""
+    def test_class_G_terminating_primary_line(self):
+        """Class G has a terminating primary-line tower."""
         cl = shadow_depth_hierarchy_classification()
-        assert cl['G']['hierarchy'] == 'trivial'
+        assert cl['G']['hierarchy'] == 'primary-line tower terminates'
         assert cl['G']['depth'] == 2
 
-    def test_class_L_gelfand_dickey(self):
-        """Class L has Gelfand-Dickey hierarchy."""
+    def test_class_L_finite_scalar_window(self):
+        """Class L records the finite Lie/tree scalar window."""
         cl = shadow_depth_hierarchy_classification()
-        assert 'Gelfand-Dickey' in cl['L']['hierarchy']
+        assert 'finite Lie/tree' in cl['L']['hierarchy']
         assert cl['L']['depth'] == 3
 
-    def test_class_M_full(self):
-        """Class M has full Gelfand-Dickey_N hierarchy."""
+    def test_class_M_primary_line_window(self):
+        """Class M has an infinite primary-line scalar tower."""
         cl = shadow_depth_hierarchy_classification()
-        assert 'Gelfand-Dickey' in cl['M']['hierarchy']
+        assert 'primary-line scalar tower' in cl['M']['hierarchy']
         assert cl['M']['depth'] == 'infinity'
 
     def test_four_classes_present(self):
@@ -340,11 +340,11 @@ class TestShadowDepthClassification:
 
 
 # =========================================================================
-# Section 8: W_3 Boussinesq structure
+# Section 8: W_3 finite window
 # =========================================================================
 
-class TestW3Boussinesq:
-    """Test the W_3 Frobenius manifold and Boussinesq hierarchy."""
+class TestW3FiniteWindow:
+    """Test finite W_3 shadow constants and line projections."""
 
     def test_w3_eta_diagonal(self):
         """The W_3 metric is diagonal: eta = diag(c/2, c/3)."""
@@ -358,10 +358,11 @@ class TestW3Boussinesq:
         frob = w3_frobenius_data()
         assert frob['rank'] == 2
 
-    def test_w3_hierarchy_name(self):
-        """W_3 generates the Boussinesq hierarchy."""
+    def test_w3_hierarchy_scope(self):
+        """W_3 finite constants are Boussinesq-compatible with descendant input."""
         frob = w3_frobenius_data()
-        assert 'Boussinesq' in frob['hierarchy']
+        assert 'Boussinesq-compatible' in frob['hierarchy']
+        assert frob['scope'] == 'finite genus-0 shadow constants'
 
     def test_w3_structure_constant_TTT(self):
         """c^T_{TT} = 4/c."""
@@ -392,35 +393,36 @@ class TestW3Boussinesq:
                 assert gf['W_line'][r] == 0, \
                     f"Odd-arity W-line coefficient S_{r} should vanish"
 
-    def test_w3_wdvv_automatic(self):
-        """WDVV is automatic for rank 2."""
+    def test_w3_wdvv_finite_window(self):
+        """The displayed rank-2 constants have no finite-window WDVV obstruction."""
         result = verify_w3_boussinesq_consistency()
-        assert result['WDVV'] == 'automatic for rank 2'
+        assert result['WDVV'] == 'no finite-window rank-2 obstruction'
 
 
 # =========================================================================
-# Section 9: W_N Gelfand-Dickey classification
+# Section 9: W_N conditional hierarchy metadata
 # =========================================================================
 
-class TestWNGelfandDickey:
-    """Test W_N -> N-th Gelfand-Dickey hierarchy classification."""
+class TestWNConditionalHierarchyMetadata:
+    """Test W_N rank and Lax-order metadata."""
 
-    def test_w2_is_kdv(self):
-        """W_2 (Virasoro) gives KdV."""
+    def test_w2_kdv_metadata(self):
+        """W_2 metadata has KdV rank and Lax order."""
         cl = wn_hierarchy_classification(2)
         assert 'KdV' in cl['hierarchy_name']
         assert cl['n_dynamical_fields'] == 1
         assert cl['lax_order'] == 2
+        assert 'descendant CohFT' in cl['hierarchy_status']
 
-    def test_w3_is_boussinesq(self):
-        """W_3 gives Boussinesq (3-KdV)."""
+    def test_w3_boussinesq_metadata(self):
+        """W_3 metadata has Boussinesq rank and Lax order."""
         cl = wn_hierarchy_classification(3)
         assert 'Boussinesq' in cl['hierarchy_name']
         assert cl['n_dynamical_fields'] == 2
         assert cl['lax_order'] == 3
 
-    def test_w4_gelfand_dickey_4(self):
-        """W_4 gives 4-KdV."""
+    def test_w4_gelfand_dickey_4_metadata(self):
+        """W_4 metadata has 4-KdV rank."""
         cl = wn_hierarchy_classification(4)
         assert '4-KdV' in cl['hierarchy_name']
         assert cl['n_dynamical_fields'] == 3
@@ -432,19 +434,19 @@ class TestWNGelfandDickey:
             assert cl['shadow_CohFT_rank'] == N - 1
             assert cl['n_dynamical_fields'] == N - 1
 
-    def test_wn_frobenius_manifold(self):
-        """W_N corresponds to A_{N-1} Frobenius manifold."""
+    def test_wn_frobenius_manifold_metadata(self):
+        """W_N records the expected A_{N-1} Frobenius label."""
         for N in range(2, 6):
             cl = wn_hierarchy_classification(N)
             assert cl['frobenius_manifold'] == f'A_{N-1} singularity'
 
 
 # =========================================================================
-# Section 10: Planted-forest quantum corrections
+# Section 10: Planted-forest scalar corrections
 # =========================================================================
 
 class TestPlantedForestCorrections:
-    """Test planted-forest corrections as quantum integrable deformations."""
+    """Test planted-forest corrections in the scalar window."""
 
     def test_genus_1_no_correction(self):
         """No planted-forest correction at genus 1."""
@@ -475,7 +477,7 @@ class TestPlantedForestCorrections:
 # =========================================================================
 
 class TestSpectralCurve:
-    """Test the shadow spectral curve."""
+    """Test the primary-line shadow spectral curve."""
 
     def test_discriminant(self):
         """disc(Q_L) = -320c^2/(5c+22)."""
@@ -498,13 +500,13 @@ class TestSpectralCurve:
 # =========================================================================
 
 class TestCrossFamilyConsistency:
-    """Cross-family consistency checks (AP10: never trust single-family alone)."""
+    """Cross-family consistency checks for finite scalar windows."""
 
     def test_heisenberg_tau_function(self):
-        """Heisenberg tau = exp(k * hbar^2/24) (only genus 1 survives).
+        """Heisenberg scalar series has F_g = k * lambda_g^FP.
 
         For Heisenberg, S_3 = S_4 = ... = 0, so all planted-forest
-        corrections vanish.  The full tau-function is the scalar one.
+        corrections vanish in this scalar window.
         """
         F = shadow_tau_function(Symbol('k'), max_genus=4)
         # F_g = k * lambda_g^FP for all g
@@ -533,14 +535,15 @@ class TestCrossFamilyConsistency:
         assert cancel(total - expected) == 0
 
     def test_mc_integrability_structure(self):
-        """MC equation encodes the full integrability chain."""
+        """MC equation records finite projections and external hierarchy input."""
         result = mc_as_integrability()
         assert 'WDVV' in result['genus_0_projection']
         assert 'Getzler' in result['genus_1_projection']
+        assert 'descendant' in result['all_genera']
         assert len(result['identification_chain']) == 4
 
     def test_summary_completeness(self):
-        """Summary theorem covers all four shadow classes."""
+        """Summary covers all four shadow classes."""
         summary = shadow_hierarchy_summary()
         cl = summary['classification']
         assert 'G' in cl
@@ -548,10 +551,11 @@ class TestCrossFamilyConsistency:
         assert 'C' in cl
         assert 'M' in cl
 
-    def test_summary_rank_1_proved(self):
-        """Rank-1 hierarchy is marked as PROVED."""
+    def test_summary_rank_1_scope(self):
+        """Rank-1 summary separates scalar checks from the KW/KdV lift."""
         summary = shadow_hierarchy_summary()
-        assert summary['rank_1']['status'] == 'PROVED'
+        assert summary['rank_1']['scope'] == 'finite scalar coefficient window verified'
+        assert 'descendant potential' in summary['rank_1']['hierarchy']
 
 
 # =========================================================================
@@ -559,7 +563,7 @@ class TestCrossFamilyConsistency:
 # =========================================================================
 
 class TestMultiPathVerification:
-    """Multi-path verification of key results (AP10 defense)."""
+    """Multi-path verification of key finite-window identities."""
 
     def test_F2_three_paths(self):
         """F_2 = 7c/11520 verified three ways.
@@ -577,16 +581,8 @@ class TestMultiPathVerification:
         lam2 = Rational((2 ** 3 - 1) * abs(B_4), 2 ** 3 * factorial(4))
         F2_path2 = cancel(c / 2 * lam2)
 
-        # Path 3 (u/sin(u) coefficient)
-        # [u^4] u/sin(u) = (-1)^3 (2-16) B_4 / 24 = (-1)(-14)(-1/30)/24 = -14/(30*24) = -7/360
-        # Wait: (-1)^{2+1} = -1, (2 - 2^4) = -14, B_4 = -1/30
-        # coeff = (-1)(-14)(-1/30)/24 = -14/720 = -7/360
-        # Then [x^4] (x/2)/sin(x/2) = (-7/360) / 2^4 = -7/5760 ... negative?
-        # Hmm. Let me recheck.
-        # u/sin(u) = 1 + u^2/6 + 7u^4/360 + ...
-        # Check: 7/360 > 0. So the coefficient is +7/360.
-        # [x^4](x/2)/sin(x/2) = (7/360)/16 = 7/5760. Yes, positive.
-        # The formula with signs needs care. Let me just use the positive value.
+        # Path 3: [u^4] u/sin(u) = 7/360, hence
+        # [x^4] (x/2)/sin(x/2) = (7/360)/16 = 7/5760.
         lam2_path3 = Rational(7, 5760)
         F2_path3 = cancel(c / 2 * lam2_path3)
 

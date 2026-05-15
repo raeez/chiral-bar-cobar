@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 r"""
-platonic_blue_team.py — BLUE TEAM defence of conj:platonic-adjunction.
+platonic_blue_team.py — BLUE TEAM checks for the modular Koszul package.
 
-The modular factorization adjunction states:
-    U^mod_X ⊣ Prim^mod
-i.e. the universal modular factorization envelope is left adjoint to
-the modular primitive-current functor.
+Current theorem surface:
+  - The modular envelope U^mod_X(L) and current map
+        L -> U^mod_X(L)
+    are the proved construction.
+  - The stronger adjunction U^mod_X ⊣ Prim^mod is a frontier statement;
+    this module records standard-family evidence and criteria, not a proof
+    of the global adjunction.
 
 Input: cyclically admissible Lie conformal algebra L
        (def:cyclically-admissible in higher_genus_modular_koszul.tex).
@@ -13,26 +16,29 @@ Input: cyclically admissible Lie conformal algebra L
        (ii) complete descending filtration, (iii) bounded pole order,
        (iv) invariant residue pairing.
 
-Output: six-fold modular Koszul datum
+Output: modular Koszul projection package with six primary projections
     Pi_X(L) = (Fact_X(L), barB_X(L), Theta_L, L_L, (V^br, T^br), R_4^mod(L))
 
-The adjunction is proved in thm:platonic-adjunction via:
-  - Unit: eta_L : L -> Prim^mod(U^mod_X(L))
-  - Counit: tilde(phi) : U^mod_X(L) -> F  from  phi : L -> Prim^mod(F)
-  - Nishinaka genus-0 envelope provides the base; modular bar extends to all genera
+This is not the holographic seven-entry package
+    H(T) = (A, A^i, A^!, C, r(z), Theta_A, nabla^hol)
+and it is not any one of the five distinct objects
+    A, B(A), A^i, A^!, Z_ch^der(A).
+The bar entry is a chain-level bar coalgebra projection.  It produces
+A^i only after cohomology and A^! only after the Verdier duality step.
+The derived chiral centre belongs to the holographic/bulk layer.
 
 This module builds computational evidence for:
-  (a) Modular Koszul datum data verification for all standard families
+  (a) Six-projection modular Koszul package checks for standard families
   (b) Independent sum factorization (prop:independent-sum-factorization)
   (c) Cubic gauge triviality (thm:cubic-gauge-triviality)
   (d) Genus-0 envelope recovery (Nishinaka 2025/26)
-  (e) Left adjoint existence criteria (SAFT / local presentability)
-  (f) Unit-counit triangle identities
-  (g) Milnor-Moore factorization theorem for bar coalgebras
+  (e) Frontier adjunction criteria (SAFT / local presentability)
+  (f) Unit-counit sanity checks on standard PBW families
+  (g) Milnor-Moore-style primitive recovery checks for bar coalgebras
 
 Mathematical references:
-  - conj:platonic-adjunction in concordance.tex (conjectural statement)
-  - thm:platonic-adjunction in higher_genus_modular_koszul.tex (proved statement)
+  - constr:v1-platonic-package-concordance in concordance.tex
+  - conj:universal-modular-factorization-envelope in concordance.tex
   - constr:platonic-package in higher_genus_modular_koszul.tex
   - def:cyclically-admissible in higher_genus_modular_koszul.tex
   - thm:cubic-gauge-triviality in higher_genus_modular_koszul.tex
@@ -225,12 +231,45 @@ STANDARD_FAMILIES = {
 }
 
 
+MODULAR_KOSZUL_PRIMARY_PROJECTIONS = (
+    'Fact_X',
+    'barB_X',
+    'Theta_L',
+    'det_line',
+    'branch',
+    'R_4_mod',
+)
+
+HOLOGRAPHIC_SEVEN_ENTRY_PACKAGE = (
+    'A',
+    'A^i',
+    'A^!',
+    'C',
+    'r(z)',
+    'Theta_A',
+    'nabla_hol',
+)
+
+FIVE_DISTINCT_OBJECTS = (
+    'A',
+    'B(A)',
+    'A^i',
+    'A^!',
+    'Z_ch^der(A)',
+)
+
+
 # ========================================================================
-# 3. Modular Koszul datum: six-fold datum
+# 3. Modular Koszul package: six primary projections
 # ========================================================================
 
 class PlatonicPackage:
-    """The six-fold modular Koszul datum Pi_X(L) from constr:platonic-package.
+    """The modular Koszul projection package Pi_X(L).
+
+    The package has six primary projections.  It is a typed compute-side
+    shadow of the modular Koszul construction, not the holographic
+    seven-entry package and not an identification of A, B(A), A^i, A^!,
+    and Z_ch^der(A).
 
     Components:
       (1) Fact_X(L)     : genus-0 factorization envelope (Nishinaka)
@@ -246,7 +285,7 @@ class PlatonicPackage:
         self._build()
 
     def _build(self):
-        """Construct the six components from the input data."""
+        """Construct the six primary projections from the input data."""
         # (1) Genus-0 envelope exists by Nishinaka [Nish26]
         self.fact_exists = self.input.is_cyclically_admissible()
 
@@ -303,14 +342,36 @@ class PlatonicPackage:
             return 'gauge-dependent'  # M class
 
     def is_complete(self) -> bool:
-        """Check all six components exist."""
-        return (self.fact_exists and self.bar_exists and
-                self.theta_exists and self.det_line_exists and
-                self.branch_exists and self.quartic_exists)
+        """Check that the six primary projections are present.
+
+        The historical method name is retained for API compatibility.
+        "Complete" here means "all six projections exist"; it does not
+        assert the holographic seven-entry datum or identify any of the
+        five objects A, B(A), A^i, A^!, Z_ch^der(A).
+        """
+        return (
+            len(MODULAR_KOSZUL_PRIMARY_PROJECTIONS) == 6
+            and self.fact_exists
+            and self.bar_exists
+            and self.theta_exists
+            and self.det_line_exists
+            and self.branch_exists
+            and self.quartic_exists
+        )
 
     def summary(self) -> Dict[str, Any]:
-        """Return a summary of the package."""
+        """Return a typed summary of the modular Koszul package."""
         return {
+            'package_type': 'modular_koszul_projection_package',
+            'primary_projections': MODULAR_KOSZUL_PRIMARY_PROJECTIONS,
+            'projection_count': len(MODULAR_KOSZUL_PRIMARY_PROJECTIONS),
+            'not_holographic_package': True,
+            'holographic_package_entries': HOLOGRAPHIC_SEVEN_ENTRY_PACKAGE,
+            'separates_five_objects': FIVE_DISTINCT_OBJECTS,
+            'completion_scope': (
+                'six primary projections; completed package requires '
+                'the Mittag-Leffler condition on the shadow tower'
+            ),
             'input': self.input.name,
             'shadow_class': self.input.shadow_class,
             'kappa': self.input.kappa,
@@ -610,18 +671,23 @@ class Genus0EnvelopeEngine:
 # ========================================================================
 
 class AdjointExistenceEngine:
-    """Verify conditions for the modular factorization adjunction to exist.
+    """Record criteria for the frontier modular factorization adjunction.
 
-    The adjunction U^mod_X ⊣ Prim^mod requires:
-      (A) Prim^mod is well-defined (Milnor-Moore for factorization coalgebras)
+    The proved construction is the modular envelope U^mod_X(L) and current
+    map.  The stronger adjunction U^mod_X ⊣ Prim^mod is a frontier
+    statement; these routines check the standard-family evidence and
+    categorical criteria that would enter such a proof.
+
+    The adjunction would require:
+      (A) Prim^mod is well-defined as a primitive-current extraction
       (B) U^mod_X is well-defined (Nishinaka genus-0 + modular bar extension)
-      (C) Triangle identities hold
+      (C) Unit-counit identities hold in the intended ambient category
 
     Evidence strategies:
       1. Special Adjoint Functor Theorem (SAFT):
          If Prim^mod preserves limits and LCA_cyc is locally presentable
-      2. Explicit unit-counit construction (the proof in thm:platonic-adjunction)
-      3. Milnor-Moore analogue for factorization coalgebras
+      2. Explicit unit-counit checks on the standard PBW families
+      3. Milnor-Moore-style primitive recovery checks for bar coalgebras
     """
 
     @staticmethod
@@ -651,29 +717,31 @@ class AdjointExistenceEngine:
         """Check that Prim^mod preserves limits.
 
         Prim^mod is defined as ker(bar_Delta), the kernel of the
-        reduced coproduct. Kernels commute with limits (as a
-        right adjoint composed with an equalizer).
+        reduced coproduct. In the standard-family equalizer model,
+        kernels commute with limits.
 
         More precisely:
         - Prim^mod(F) = ker(bar_Delta_F : F -> F ⊗ F)
         - For a diagram F_i, lim Prim^mod(F_i) = Prim^mod(lim F_i)
-          because ker commutes with lim in an abelian category.
+          because ker commutes with lim in the abelian target.
         """
         return {
             'preserves_products': True,
             'preserves_equalizers': True,
             'preserves_limits': True,
             'reason': 'ker(bar_Delta) = equalizer of (bar_Delta, 0); limits commute',
+            'scope': 'standard-family equalizer model',
+            'global_adjunction_status': 'frontier',
         }
 
     @staticmethod
     def check_prim_preserves_filtered_colimits() -> Dict:
         """Check whether Prim^mod preserves filtered colimits.
 
-        For a LEFT adjoint to exist, we need the RIGHT adjoint
-        (= Prim^mod) to preserve limits, NOT colimits.
-        But for SAFT we also need the source category (LCA_cyc)
-        to be locally presentable.
+        For a left adjoint to exist, the candidate right adjoint
+        Prim^mod must preserve limits, not colimits.  This records the
+        criterion used by the frontier adjunction programme; it is not a
+        proof of the global adjunction in concordance.tex.
 
         Note: U^mod_X as LEFT adjoint automatically preserves colimits.
         """
@@ -682,11 +750,13 @@ class AdjointExistenceEngine:
             'reason': 'left adjoints preserve colimits (automatic)',
             'prim_preserves_limits': True,
             'saft_applicable': True,
+            'global_adjunction_status': 'frontier',
+            'proves_global_adjunction': False,
         }
 
     @staticmethod
     def verify_unit_counit(family_data: CyclicAdmissibleData) -> Dict:
-        """Verify the unit-counit construction for a specific family.
+        """Check the unit-counit model for a standard PBW family.
 
         Unit: eta_L : L -> Prim^mod(U^mod_X(L))
           - Maps each generator to the corresponding primitive current
@@ -699,6 +769,10 @@ class AdjointExistenceEngine:
         Triangle identity:
           epsilon_{U(L)} ∘ U(eta_L) = id_{U(L)}
           Prim(epsilon_F) ∘ eta_{Prim(F)} = id_{Prim(F)}
+
+        The returned boolean ``adjunction_verified`` is retained as the
+        historical API name.  Its scope is the standard-family model check,
+        not the global frontier adjunction.
         """
         # For PBW algebras, the unit is injective:
         # L -> Prim(U(L)) is the PBW embedding
@@ -715,24 +789,27 @@ class AdjointExistenceEngine:
             'triangle_1': True,  # epsilon_U(L) ∘ U(eta_L) = id
             'triangle_2': True,  # Prim(epsilon_F) ∘ eta_{Prim(F)} = id
             'adjunction_verified': unit_injective and counit_surjective,
+            'scope': 'standard PBW family; not a proof of the global adjunction',
+            'global_adjunction_status': 'frontier',
+            'proves_global_adjunction': False,
         }
 
 
 # ========================================================================
-# 8. Milnor-Moore factorization for bar coalgebras
+# 8. Milnor-Moore-style primitive recovery for bar coalgebras
 # ========================================================================
 
 class MilnorMooreEngine:
-    """Verify the Milnor-Moore theorem for factorization coalgebras.
+    """Check Milnor-Moore-style primitive recovery for bar coalgebras.
 
     Classical Milnor-Moore: a connected cocommutative coalgebra
     over a field of characteristic 0 is the universal enveloping
     coalgebra of its primitive Lie algebra.
 
-    Chiral analogue (thm:platonic-adjunction, proof step (i)):
-    barB(F) is cocommutative (thm:bar-modular-operad) =>
-    Prim^mod(F) is a Lie conformal subalgebra, and
-    F ≅ U(Prim^mod(F)) when F is connected/conilpotent.
+    Compute-side use: for standard connected/conilpotent families, the
+    reduced bar coalgebra supports primitive-current recovery checks.  This
+    is evidence for the frontier adjunction criterion, not an assertion that
+    the holographic package or global adjunction has been constructed.
     """
 
     @staticmethod
@@ -747,6 +824,7 @@ class MilnorMooreEngine:
             'family': family,
             'bar_cocommutative': True,
             'reason': 'thm:bar-modular-operad: B(A) is FCom-algebra',
+            'scope': 'bar coalgebra projection, not A^i, A^!, or bulk',
         }
 
     @staticmethod
@@ -770,7 +848,7 @@ class MilnorMooreEngine:
 
     @staticmethod
     def milnor_moore_applies(family_data: CyclicAdmissibleData) -> Dict:
-        """Check that the Milnor-Moore theorem applies to U(L).
+        """Check the standard-family Milnor-Moore hypotheses for U(L).
 
         Conditions: char 0 (automatic), connected (L_0 = 0 or L_0 = C·1),
         cocommutative (automatic from bar construction).
@@ -782,7 +860,11 @@ class MilnorMooreEngine:
             'connected': connected,
             'cocommutative': True,
             'milnor_moore_applies': connected,
-            'conclusion': 'F ≅ U(Prim(F))' if connected else 'need connectivity',
+            'conclusion': (
+                'standard-family primitive recovery check passes'
+                if connected else 'need connectivity'
+            ),
+            'scope': 'frontier adjunction evidence; not a global proof',
         }
 
 
@@ -794,12 +876,15 @@ class ModularExtensionEngine:
     """Verify the modular extension from genus-0 to all genera.
 
     The genus-0 envelope Fact_X(L) exists by Nishinaka [Nish26].
-    The modular extension to U^mod_X(L) uses:
+    The finite-window modular extension to U^mod_X(L) uses:
       (a) Bar construction on Fact_X(L) gives barB_X(L)
       (b) barB carries FCom-algebra structure (thm:bar-modular-operad)
       (c) Completed tensor with G_mod gives all-genera data
       (d) MC element Theta_L is bar-intrinsic (thm:mc2-bar-intrinsic)
       (e) MC5 sewing gives analytic continuation (thm:general-hs-sewing)
+
+    Passing from finite windows to the completed package is conditional on
+    the Mittag-Leffler condition for the cohomology tower of quotients.
     """
 
     @staticmethod
@@ -835,13 +920,16 @@ class ModularExtensionEngine:
 
     @staticmethod
     def shadow_tower_termination(family_data: CyclicAdmissibleData) -> Dict:
-        """Check shadow obstruction tower termination for the modular extension.
+        """Check finite-window shadow tower termination.
 
         The shadow obstruction tower Theta^{<=r} terminates at r_max for:
           G: r_max = 2
           L: r_max = 3
           C: r_max = 4
           M: r_max = infinity (but each finite truncation exists)
+
+        The inverse-limit entry is retained for API compatibility and is
+        now explicitly scoped by the Mittag-Leffler hypothesis.
         """
         sc = family_data.shadow_class
         terminates = sc in ('G', 'L', 'C')
@@ -853,6 +941,8 @@ class ModularExtensionEngine:
             'terminates': terminates,
             'all_finite_truncations_exist': True,
             'inverse_limit_exists': True,  # thm:recursive-existence
+            'inverse_limit_hypothesis': 'Mittag-Leffler cohomology tower',
+            'completed_package_status': 'conditional on Mittag-Leffler',
         }
 
 
@@ -861,9 +951,11 @@ class ModularExtensionEngine:
 # ========================================================================
 
 class NumericalVerificationEngine:
-    """Numerical checks for the modular factorization adjunction.
+    """Numerical checks for the modular Koszul projection package.
 
-    Verifies structural properties at specific parameter values.
+    Verifies structural properties at specific parameter values.  These
+    checks support the six-projection package and its frontier adjunction
+    criteria; they do not assemble the holographic seven-entry datum.
     """
 
     @staticmethod
@@ -956,13 +1048,13 @@ class NumericalVerificationEngine:
 # ========================================================================
 
 def run_full_blue_team_verification() -> Dict:
-    """Run the complete BLUE team verification suite for conj:platonic-adjunction.
+    """Run the BLUE team verification suite for the modular Koszul package.
 
     Returns a summary with all test results.
     """
     results = {}
 
-    # (a) Modular Koszul datum for all standard families
+    # (a) Six-projection modular Koszul package for all standard families
     pkg_results = {}
     for name, factory in STANDARD_FAMILIES.items():
         data = factory()
@@ -1012,7 +1104,7 @@ def run_full_blue_team_verification() -> Dict:
         data = factory()
         results['unit_counit'][name] = ae.verify_unit_counit(data)
 
-    # (g) Milnor-Moore
+    # (g) Milnor-Moore-style primitive recovery
     mm = MilnorMooreEngine()
     results['milnor_moore'] = {}
     for name, factory in STANDARD_FAMILIES.items():
@@ -1035,6 +1127,11 @@ def run_full_blue_team_verification() -> Dict:
         'all_packages_complete': all(
             p['is_complete'] for p in pkg_results.values()),
         'n_families_tested': len(pkg_results),
+        'package_type': 'modular_koszul_projection_package',
+        'projection_count': len(MODULAR_KOSZUL_PRIMARY_PROJECTIONS),
+        'global_adjunction_status': 'frontier',
+        'holographic_package_assembled': False,
+        'completed_package_status': 'conditional on Mittag-Leffler',
     }
 
     return results

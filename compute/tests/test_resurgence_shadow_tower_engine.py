@@ -1,28 +1,19 @@
-r"""Tests for the resurgence and Borel summability of the shadow obstruction tower.
+r"""Tests for scalar A-hat shadow-tower diagnostics.
 
-Verifies all 10 components of the resurgence programme:
-1. Borel transform B(t) of the shadow partition function
-2. Singularity structure of B(t) (poles at t = 2*pi*n*i)
-3. Stokes automorphism and Stokes multipliers
-4. Alien derivative and resurgence relation
-5. Trans-series structure
-6. One-instanton correction
-7. Median resummation
-8. Numerical Borel-Pade resummation through 20 terms
-9. Bridge equation and MC equation connection
-10. Resurgent structure of Q^contact and higher shadows
+The file pins two kinds of output.
 
-Multi-path verification (CLAUDE.md mandate: 3+ independent paths per claim):
-- Path 1: Direct computation from Borel transform formulas
-- Path 2: Cross-check against closed-form A-hat generating function
-- Path 3: Large-order resurgent relations
-- Path 4: Numerical Borel-Pade pole extraction
-- Path 5: Koszul complementarity constraints
+Certified exact facts:
+1. F_g = kappa * lambda_g^FP.
+2. sum lambda_g^FP hbar^{2g} = (hbar/2)/sin(hbar/2) - 1.
+3. The scalar hbar-radius is 2*pi and the scalar u-radius is (2*pi)^2.
+4. A-hat poles and residues are exact.
+5. Standard family constants match the local landscape census.
 
-References:
-    compute/lib/resurgence_shadow_tower_engine.py
-    prop:universal-instanton-action (higher_genus_modular_koszul.tex)
-    thm:shadow-double-convergence (higher_genus_modular_koszul.tex)
+Uncertified diagnostics:
+finite Borel transforms, Pade windows, median-style quadrature, formal
+Stokes multipliers, formal alien derivatives, arity-radius diagnostics,
+and Verdier scalar complementarity must not be promoted to analytic
+resurgence theorems or nonperturbative completions.
 """
 
 import sys
@@ -40,11 +31,48 @@ FOUR_PI_SQ = (2.0 * PI) ** 2
 
 
 # =====================================================================
+# Section 0: Certification and firewalls
+# =====================================================================
+
+class TestCertificationFirewalls:
+    """Pin the exact/diagnostic boundary of this engine."""
+
+    def test_certification_report_refuses_analytic_promotion(self):
+        from lib.resurgence_shadow_tower_engine import certification_report
+        report = certification_report()
+        assert report['exact_scalar_ahat_coefficients']
+        assert report['scalar_hbar_radius_certified'] == TWO_PI
+        assert report['scalar_u_radius_certified'] == FOUR_PI_SQ
+        assert math.isinf(report['borel_transform_radius_certified'])
+        assert not report['borel_summability_certified']
+        assert not report['median_resummation_certified']
+        assert not report['stokes_automorphism_certified']
+        assert not report['alien_derivatives_certified']
+        assert not report['nonperturbative_completion_certified']
+        assert not report['unique_continuation_from_finite_data_certified']
+
+    def test_object_firewall_distinguishes_dual_branches(self):
+        from lib.resurgence_shadow_tower_engine import object_firewall
+        firewall = object_firewall()
+        assert firewall['Omega(B(A))'] == 'bar-cobar inversion of A, not Koszul duality'
+        assert 'Verdier' in firewall['A^!']
+        assert 'Hochschild' in firewall['Z_ch^der(A)']
+
+    def test_kernel_constant_firewall(self):
+        from lib.resurgence_shadow_tower_engine import kernel_constant_firewall
+        constants = kernel_constant_firewall()
+        assert constants['heisenberg_collision'] == 'k/z'
+        assert constants['affine_raw_trace_form'] == 'k*Omega_tr/z'
+        assert constants['affine_kz'] == 'Omega/((k+h^vee)z), Omega=2*h^vee*Omega_tr'
+        assert constants['virasoro_collision'] == '(c/2)/z^3 + 2T/z'
+
+
+# =====================================================================
 # Section 1: Borel transform of the genus expansion
 # =====================================================================
 
 class TestBorelTransformGenus:
-    """Test the Borel transform B(t) = sum F_g t^{2g-1}/(2g-1)!."""
+    """Test the diagnostic transform B(t) = sum F_g t^{2g-1}/(2g-1)!."""
 
     def test_borel_at_zero_is_zero(self):
         """B(0) = 0 (the series starts at t^1)."""
@@ -63,8 +91,8 @@ class TestBorelTransformGenus:
         leading = F_g_scalar(kappa, 1) * t / math.gamma(2)
         assert abs(val - leading) / abs(leading) < 1e-3
 
-    def test_borel_converges_inside_radius(self):
-        """B(t) converges for |t| < 2*pi."""
+    def test_borel_transform_finite_at_sample_points(self):
+        """The diagnostic transform is finite at ordinary sample points."""
         from lib.resurgence_shadow_tower_engine import borel_transform_genus
         kappa = 1.0
         for t in [1.0, 3.0, 5.0, 6.0]:
@@ -72,7 +100,7 @@ class TestBorelTransformGenus:
             assert math.isfinite(abs(val))
 
     def test_borel_convergence_rate(self):
-        """Successive terms of B(t) decrease for |t| < 2*pi."""
+        """Successive terms of B(t) decrease in a small sample window."""
         from lib.resurgence_shadow_tower_engine import F_g_scalar
         kappa = 1.0
         t = 3.0
@@ -81,7 +109,6 @@ class TestBorelTransformGenus:
             Fg = F_g_scalar(kappa, g)
             term = abs(Fg * t ** (2 * g - 1) / math.gamma(2 * g))
             terms.append(term)
-        # Terms should be decreasing for t = 3 < 2*pi
         for i in range(5, len(terms) - 1):
             assert terms[i + 1] < terms[i], f"Term {i+1} not decreasing"
 
@@ -116,25 +143,28 @@ class TestBorelTransformGenus:
 # =====================================================================
 
 class TestBorelSingularities:
-    """Test the singularity structure of the Borel transform."""
+    """Test the exact scalar A-hat pole structure."""
 
     def test_nearest_singularity_at_two_pi(self):
-        """The nearest Borel singularity is at hbar = 2*pi."""
+        """The nearest exact A-hat pole is at hbar = 2*pi."""
         from lib.resurgence_shadow_tower_engine import nearest_borel_singularity
         sing = nearest_borel_singularity()
         assert abs(sing.location_hbar - TWO_PI) < 1e-12
+        assert sing.certification == 'certified_scalar_ahat_bernoulli'
+        assert not sing.borel_singularity_certified
 
-    def test_instanton_action_is_four_pi_squared(self):
-        """The universal instanton action is A = (2*pi)^2."""
+    def test_first_u_pole_is_four_pi_squared(self):
+        """The first scalar u-plane pole is A = (2*pi)^2."""
         from lib.resurgence_shadow_tower_engine import (
-            nearest_borel_singularity, INSTANTON_ACTION,
+            nearest_borel_singularity, INSTANTON_ACTION, SCALAR_FIRST_U_POLE,
         )
         sing = nearest_borel_singularity()
         assert abs(sing.instanton_action - FOUR_PI_SQ) < 1e-10
         assert abs(INSTANTON_ACTION - FOUR_PI_SQ) < 1e-10
+        assert abs(SCALAR_FIRST_U_POLE - FOUR_PI_SQ) < 1e-10
 
     def test_singularities_at_integer_multiples(self):
-        """Singularities at hbar = 2*pi*n for n = 1, 2, 3, ..."""
+        """A-hat poles at hbar = 2*pi*n for n = 1, 2, 3, ..."""
         from lib.resurgence_shadow_tower_engine import borel_singularity_locations
         sings = borel_singularity_locations(5)
         for i, s in enumerate(sings):
@@ -143,7 +173,7 @@ class TestBorelSingularities:
             assert abs(s.location_u - (TWO_PI * n) ** 2) < 1e-8
 
     def test_singularities_are_simple_poles(self):
-        """All Borel singularities are simple poles."""
+        """All A-hat singularities in this list are simple poles."""
         from lib.resurgence_shadow_tower_engine import borel_singularity_locations
         for s in borel_singularity_locations(5):
             assert s.singularity_type == 'simple_pole'
@@ -157,27 +187,31 @@ class TestBorelSingularities:
             assert abs(s.residue - expected) < 1e-10
 
     def test_convergence_radius_verification(self):
-        """The ratio |F_{g+1}/F_g| converges to 1/(4*pi^2)."""
+        """The scalar ratio |F_{g+1}/F_g| converges to 1/(4*pi^2)."""
         from lib.resurgence_shadow_tower_engine import verify_borel_radius_from_coefficients
         result = verify_borel_radius_from_coefficients(1.0, g_max=40)
         assert result['converged']
         assert abs(result['predicted_u_radius'] - FOUR_PI_SQ) < 1e-10
+        assert math.isinf(result['borel_transform_radius'])
+        assert not result['borel_summability_certified']
+        assert not result['analytic_continuation_from_finite_data_certified']
 
-    def test_borel_radius_equals_two_pi(self):
-        """The convergence radius in hbar is 2*pi."""
-        from lib.resurgence_shadow_tower_engine import BOREL_RADIUS
-        assert abs(BOREL_RADIUS - TWO_PI) < 1e-12
+    def test_borel_radius_is_not_scalar_radius(self):
+        """The diagnostic Borel radius is infinite; the scalar radius is 2*pi."""
+        from lib.resurgence_shadow_tower_engine import BOREL_RADIUS, SCALAR_HBAR_RADIUS
+        assert math.isinf(BOREL_RADIUS)
+        assert abs(SCALAR_HBAR_RADIUS - TWO_PI) < 1e-12
 
 
 # =====================================================================
-# Section 3: Stokes automorphism
+# Section 3: Formal residue multipliers
 # =====================================================================
 
-class TestStokesAutomorphism:
-    """Test the Stokes multipliers and automorphism structure."""
+class TestFormalResidueMultipliers:
+    """Test formal residue multipliers without analytic promotion."""
 
     def test_leading_stokes_multiplier_formula(self):
-        """S_1 = -4*pi^2*kappa*i (prop:universal-instanton-action)."""
+        """Formal S_1 = -4*pi^2*kappa*i."""
         from lib.resurgence_shadow_tower_engine import stokes_multiplier_leading
         for kappa in [0.5, 1.0, 6.5, 13.0]:
             S1 = stokes_multiplier_leading(kappa)
@@ -185,14 +219,14 @@ class TestStokesAutomorphism:
             assert abs(S1 - expected) < 1e-10
 
     def test_stokes_multiplier_purely_imaginary(self):
-        """S_1 is purely imaginary for real kappa."""
+        """The formal S_1 is purely imaginary for real kappa."""
         from lib.resurgence_shadow_tower_engine import stokes_multiplier_leading
         S1 = stokes_multiplier_leading(1.0)
         assert abs(S1.real) < 1e-15
         assert abs(S1.imag) > 1.0  # non-zero
 
     def test_stokes_multiplier_n_alternating_sign(self):
-        """S_n has alternating sign: S_n = (-1)^n * 4*pi^2*n*kappa*i."""
+        """Formal S_n has alternating sign."""
         from lib.resurgence_shadow_tower_engine import stokes_multiplier_n
         kappa = 1.0
         for n in range(1, 6):
@@ -201,7 +235,7 @@ class TestStokesAutomorphism:
             assert S_n.imag * expected_sign > 0
 
     def test_stokes_multiplier_linear_in_kappa(self):
-        """S_n is linear in kappa."""
+        """Formal S_n is linear in kappa."""
         from lib.resurgence_shadow_tower_engine import stokes_multiplier_n
         for n in range(1, 4):
             S_k1 = stokes_multiplier_n(1.0, n)
@@ -209,7 +243,7 @@ class TestStokesAutomorphism:
             assert abs(S_k3 - 3.0 * S_k1) < 1e-10
 
     def test_stokes_multiplier_proportional_to_n(self):
-        """|S_n| is proportional to n."""
+        """The formal multiplier magnitude is proportional to n."""
         from lib.resurgence_shadow_tower_engine import stokes_multiplier_n
         kappa = 1.0
         for n in range(1, 6):
@@ -217,7 +251,7 @@ class TestStokesAutomorphism:
             assert abs(abs(S_n) - FOUR_PI_SQ * n) < 1e-10
 
     def test_stokes_discontinuity_exponentially_suppressed(self):
-        """The Stokes discontinuity is exponentially suppressed at small hbar."""
+        """The formal discontinuity ansatz is exponentially suppressed."""
         from lib.resurgence_shadow_tower_engine import stokes_discontinuity_u_plane
         kappa = 1.0
         disc_small = abs(stokes_discontinuity_u_plane(kappa, 1.0))
@@ -225,7 +259,7 @@ class TestStokesAutomorphism:
         assert disc_small < disc_large  # larger u = less suppression
 
     def test_stokes_virasoro_c13_self_dual(self):
-        """At c=13 (self-dual), kappa = kappa' = 13/2."""
+        """At c=13, the formal multiplier is symmetric in c and 26-c."""
         from lib.resurgence_shadow_tower_engine import (
             stokes_multiplier_leading, kappa_virasoro,
         )
@@ -241,11 +275,11 @@ class TestStokesAutomorphism:
 # Section 4: Alien derivatives
 # =====================================================================
 
-class TestAlienDerivatives:
-    """Test the alien derivative and resurgence relation."""
+class TestFormalAlienDiagnostics:
+    """Test formal alien-derivative diagnostics."""
 
     def test_alien_derivative_at_leading_singularity(self):
-        """Delta_{A_1} F^{(0)} = S_1 * F^{(1)} = S_1 at leading order."""
+        """The formal leading value equals the formal residue multiplier."""
         from lib.resurgence_shadow_tower_engine import (
             alien_derivative_perturbative, stokes_multiplier_leading,
         )
@@ -255,7 +289,7 @@ class TestAlienDerivatives:
         assert abs(alien - S1) < 1e-10
 
     def test_alien_derivative_chain_factorizes(self):
-        """Delta^k = S_1^k for simple resurgent structure."""
+        """The formal diagnostic chain records powers of S_1."""
         from lib.resurgence_shadow_tower_engine import (
             alien_derivative_chain, stokes_multiplier_leading,
         )
@@ -265,12 +299,16 @@ class TestAlienDerivatives:
         for item in chain:
             k = item['level']
             assert abs(item['alien_derivative'] - S1 ** k) < 1e-8
+            assert item['certification'] == 'analytic_resurgence_hypothesis_not_certified'
+            assert not item['alien_derivative_certified']
 
-    def test_resurgence_large_order_approaches_1(self):
-        """The ratio F_g / (2*kappa/(2*pi)^{2g}) approaches 1 for large g."""
+    def test_scalar_large_order_approaches_1(self):
+        """The scalar A-hat large-order ratio approaches 1."""
         from lib.resurgence_shadow_tower_engine import verify_alien_derivative_resurgence
         result = verify_alien_derivative_resurgence(1.0, g_max=25)
         assert result['approaching_1']
+        assert result['certification'] == 'certified_scalar_ahat_bernoulli'
+        assert not result['alien_derivative_certified']
         # The ratio at g=20 should be closer to 1 than at g=5
         r20 = result['ratio_at_g20']
         assert r20 is not None
@@ -282,7 +320,7 @@ class TestAlienDerivatives:
 # =====================================================================
 
 class TestTransseries:
-    """Test the trans-series structure."""
+    """Test the formal trans-series diagnostic."""
 
     def test_transseries_data_structure(self):
         """TransseriesData has correct components."""
@@ -292,6 +330,8 @@ class TestTransseries:
         assert len(ts.perturbative) == 20
         assert len(ts.one_instanton) == 20
         assert len(ts.two_instanton) == 20
+        assert ts.certification == 'analytic_resurgence_hypothesis_not_certified'
+        assert not ts.completion_certified
 
     def test_perturbative_sector_matches_Fg(self):
         """The perturbative sector is F_g."""
@@ -303,8 +343,8 @@ class TestTransseries:
         for g in range(1, 16):
             assert abs(ts.perturbative[g - 1] - F_g_scalar(kappa, g)) < 1e-15
 
-    def test_one_instanton_coefficients_decay(self):
-        """One-instanton coefficients decay as 1/(2*pi)^{2g}."""
+    def test_one_pole_coefficients_decay(self):
+        """Formal one-pole coefficients decay as 1/(2*pi)^{2g}."""
         from lib.resurgence_shadow_tower_engine import one_instanton_coefficients
         kappa = 1.0
         coeffs = one_instanton_coefficients(kappa, g_max=20)
@@ -316,8 +356,8 @@ class TestTransseries:
         expected = 1.0 / FOUR_PI_SQ
         assert abs(ratios[-1] - expected) / expected < 0.01
 
-    def test_two_instanton_faster_decay(self):
-        """Two-instanton coefficients decay faster than one-instanton."""
+    def test_two_pole_faster_decay(self):
+        """Formal two-pole coefficients decay faster than one-pole coefficients."""
         from lib.resurgence_shadow_tower_engine import (
             one_instanton_coefficients, two_instanton_coefficients,
         )
@@ -329,7 +369,7 @@ class TestTransseries:
             assert abs(inst2[g - 1]) < abs(inst1[g - 1])
 
     def test_transseries_evaluate_near_zero(self):
-        """Trans-series ~ perturbative for small hbar (instanton suppressed)."""
+        """The formal ansatz is close to perturbative data for small hbar."""
         from lib.resurgence_shadow_tower_engine import (
             build_transseries, transseries_evaluate, genus_series_partial_sum,
         )
@@ -342,7 +382,7 @@ class TestTransseries:
         assert abs(ts_val - pert_val) / abs(pert_val) < 1e-10
 
     def test_transseries_sigma_equals_S1(self):
-        """The trans-series parameter sigma = S_1."""
+        """The formal parameter sigma equals the formal S_1."""
         from lib.resurgence_shadow_tower_engine import (
             build_transseries, stokes_multiplier_leading,
         )
@@ -353,45 +393,47 @@ class TestTransseries:
 
 
 # =====================================================================
-# Section 6: One-instanton correction
+# Section 6: Formal one-pole correction
 # =====================================================================
 
-class TestOneInstantonCorrection:
-    """Test the one-instanton correction to the shadow partition function."""
+class TestFormalOnePoleCorrection:
+    """Test the formal one-pole correction."""
 
-    def test_instanton_exponentially_suppressed(self):
+    def test_formal_exponential_suppressed(self):
         """exp(-A/hbar^2) is negligible for small hbar."""
         from lib.resurgence_shadow_tower_engine import one_instanton_correction
         result = one_instanton_correction(1.0, 0.5)
         assert result['exp_suppression'] < 1e-50
+        assert result['certification'] == 'analytic_resurgence_hypothesis_not_certified'
+        assert not result['nonperturbative_sector_certified']
 
-    def test_instanton_grows_with_hbar(self):
-        """The instanton contribution grows as hbar increases."""
+    def test_formal_exponential_grows_with_hbar(self):
+        """The formal exponential grows as hbar increases."""
         from lib.resurgence_shadow_tower_engine import one_instanton_correction
         r1 = one_instanton_correction(1.0, 1.0)
         r2 = one_instanton_correction(1.0, 3.0)
         assert r2['exp_suppression'] > r1['exp_suppression']
 
-    def test_instanton_action_is_universal(self):
-        """The instanton action A = (2*pi)^2 is independent of kappa."""
+    def test_first_u_pole_is_universal(self):
+        """The first scalar u-pole A = (2*pi)^2 is independent of kappa."""
         from lib.resurgence_shadow_tower_engine import one_instanton_correction
         r1 = one_instanton_correction(0.5, 2.0)
         r2 = one_instanton_correction(5.0, 2.0)
         assert abs(r1['instanton_action'] - r2['instanton_action']) < 1e-12
 
-    def test_instanton_relative_size(self):
-        """The instanton correction is much smaller than perturbative at hbar = 1."""
+    def test_formal_correction_relative_size(self):
+        """The formal correction is much smaller than perturbative at hbar = 1."""
         from lib.resurgence_shadow_tower_engine import one_instanton_correction
         result = one_instanton_correction(1.0, 1.0)
         assert result['relative_to_perturbative'] < 1e-10
 
 
 # =====================================================================
-# Section 7: Median resummation
+# Section 7: Median-style diagnostics
 # =====================================================================
 
-class TestMedianResummation:
-    """Test the median Borel resummation."""
+class TestMedianDiagnostics:
+    """Test median-style numerical diagnostics without certification."""
 
     def test_closed_form_ahat(self):
         """Verify the A-hat generating function."""
@@ -434,15 +476,18 @@ class TestMedianResummation:
 
     @pytest.mark.slow
     def test_median_agrees_with_exact(self):
-        """Median Borel sum agrees with exact closed form within convergence radius."""
+        """The median-style diagnostic is explicitly uncertified."""
         from lib.resurgence_shadow_tower_engine import median_borel_sum
         result = median_borel_sum(1.0, 1.0, epsilon=0.05, g_max=40,
                                   n_quad=1000, xi_max=30.0)
+        assert result['certification'] == 'finite_window_diagnostic'
+        assert not result['median_resummation_certified']
+        assert not result['unique_analytic_continuation_certified']
         if result['exact'] is not None and result['median_vs_exact'] is not None:
             assert result['median_vs_exact'] < 0.1  # reasonable numerical accuracy
 
     def test_stokes_jump_imaginary_at_real_hbar(self):
-        """S_+ - S_- should be approximately imaginary for real hbar > 0."""
+        """The lateral quadrature jump remains finite for real hbar > 0."""
         from lib.resurgence_shadow_tower_engine import lateral_borel_sum
         kappa = 1.0
         hbar = 1.0 + 0.0j
@@ -456,11 +501,11 @@ class TestMedianResummation:
 
 
 # =====================================================================
-# Section 8: Borel-Pade resummation
+# Section 8: Finite-window Pade diagnostics
 # =====================================================================
 
-class TestBorelPade:
-    """Test the Borel-Pade resummation through 20 terms."""
+class TestFiniteWindowPade:
+    """Test finite-window Pade diagnostics."""
 
     def test_pade_at_small_hbar(self):
         """Pade agrees with partial sum for small hbar."""
@@ -474,7 +519,7 @@ class TestBorelPade:
         assert abs(pade_val - partial_val) / abs(partial_val) < 0.01
 
     def test_pade_matches_closed_form(self):
-        """Pade approximant matches exact closed form."""
+        """Pade approximant approximates the exact scalar closed form."""
         from lib.resurgence_shadow_tower_engine import (
             pade_approximant_genus, genus_series_closed_form,
         )
@@ -484,7 +529,7 @@ class TestBorelPade:
         exact = genus_series_closed_form(kappa, hbar)
         assert abs(pade_val - exact) / abs(exact) < 0.05
 
-    def test_pade_poles_converge_to_instanton_action(self):
+    def test_pade_poles_approximate_first_u_pole(self):
         """The nearest real positive Pade pole should approximate (2*pi)^2.
 
         At finite Pade order, the pole location is approximate. We check
@@ -506,13 +551,16 @@ class TestBorelPade:
                 assert abs(nearest - FOUR_PI_SQ) / FOUR_PI_SQ < 0.50
 
     def test_borel_pade_virasoro_structure(self):
-        """Full Borel-Pade analysis for Virasoro produces valid data."""
+        """Finite-window Virasoro Pade analysis produces valid data."""
         from lib.resurgence_shadow_tower_engine import borel_pade_virasoro
         result = borel_pade_virasoro(1.0, g_max=16)
         assert result['c'] == 1.0
         assert result['kappa'] == 0.5
         assert result['expected_nearest'] == FOUR_PI_SQ
         assert len(result['comparisons']) > 0
+        assert result['certification'] == 'finite_window_diagnostic'
+        assert not result['analytic_continuation_certified']
+        assert not result['borel_summability_certified']
 
     def test_pade_improves_with_order(self):
         """Higher-order Pade gives better approximation."""
@@ -544,27 +592,33 @@ class TestBorelPade:
 # =====================================================================
 
 class TestBridgeEquation:
-    """Test the bridge equation and MC equation connection."""
+    """Test bridge-equation diagnostics without analytic promotion."""
 
     def test_bridge_arity_2_trivial(self):
         """kappa is exact, so bridge equation at arity 2 is trivial."""
         from lib.resurgence_shadow_tower_engine import bridge_equation_arity_r
         result = bridge_equation_arity_r(1.0, 2)
-        assert result['bridge_satisfied']
+        assert result['bridge_satisfied'] is None
+        assert result['finite_shadow_exact']
+        assert not result['analytic_bridge_certified']
         assert result['alien_derivative'] == 0.0
 
     def test_bridge_arity_3_trivial(self):
         """Cubic shadow alpha = 2 is exact."""
         from lib.resurgence_shadow_tower_engine import bridge_equation_arity_r
         result = bridge_equation_arity_r(1.0, 3)
-        assert result['bridge_satisfied']
+        assert result['bridge_satisfied'] is None
+        assert result['finite_shadow_exact']
+        assert not result['analytic_bridge_certified']
         assert result['alien_derivative'] == 0.0
 
     def test_bridge_arity_4_nontrivial(self):
-        """Quartic shadow has nontrivial bridge equation."""
+        """Quartic bridge data is not analytically certified."""
         from lib.resurgence_shadow_tower_engine import bridge_equation_arity_r
         result = bridge_equation_arity_r(1.0, 4)
-        assert result['bridge_satisfied']
+        assert result['bridge_satisfied'] is None
+        assert not result['finite_shadow_exact']
+        assert not result['analytic_bridge_certified']
 
     def test_bridge_mc_consistency_structure(self):
         """MC consistency check returns valid data."""
@@ -573,21 +627,24 @@ class TestBridgeEquation:
         assert 'mc_equation' in result
         assert 'bridge_equation' in result
         assert result['instanton_action'] == FOUR_PI_SQ
+        assert not result['analytic_bridge_certified']
+        assert result['consistency_proof'] is None
 
-    def test_bridge_all_arities_satisfied(self):
-        """Bridge equation satisfied at all arities 2 through 8."""
+    def test_bridge_all_arities_uncertified(self):
+        """No finite-arity diagnostic certifies the analytic bridge equation."""
         from lib.resurgence_shadow_tower_engine import bridge_equation_arity_r
         for r in range(2, 9):
             result = bridge_equation_arity_r(1.0, r)
-            assert result['bridge_satisfied']
+            assert result['bridge_satisfied'] is None
+            assert not result['analytic_bridge_certified']
 
 
 # =====================================================================
-# Section 10: Q^contact and higher shadows resurgence
+# Section 10: Q^contact and higher-shadow diagnostics
 # =====================================================================
 
-class TestQcontactResurgence:
-    """Test the resurgent structure of Q^contact and higher shadows."""
+class TestQcontactDiagnostics:
+    """Test Q^contact arity-radius diagnostics."""
 
     def test_qcontact_formula(self):
         """Q^contact = 10/(c(5c+22)) for Virasoro."""
@@ -612,23 +669,28 @@ class TestQcontactResurgence:
         assert result['depth_class'] == 'M'
 
     def test_arity_borel_entire(self):
-        """The arity-direction Borel transform is entire."""
+        """The arity-direction Borel claim remains a diagnostic."""
         from lib.resurgence_shadow_tower_engine import qcontact_resurgence
         result = qcontact_resurgence(13.0)
-        assert result['arity_borel_entire']
+        assert result['arity_borel_entire'] is None
+        assert result['arity_borel_entire_diagnostic']
+        assert not result['arity_borel_entire_certified']
 
     def test_arity_stokes_constant_logarithmic(self):
-        """The arity Stokes constant is 2*pi*i (logarithmic monodromy)."""
+        """The arity Stokes constant is only a hypothesis."""
         from lib.resurgence_shadow_tower_engine import qcontact_resurgence
         result = qcontact_resurgence(13.0)
-        assert abs(result['arity_stokes_constant'] - 2.0j * PI) < 1e-10
+        assert result['arity_stokes_constant'] is None
+        assert abs(result['arity_stokes_constant_hypothesis'] - 2.0j * PI) < 1e-10
+        assert not result['arity_stokes_constant_certified']
 
     def test_arity_convergence_radius_positive(self):
-        """Arity convergence radius is positive for c > 0."""
+        """The Q_L arity-radius diagnostic is positive for c > 0."""
         from lib.resurgence_shadow_tower_engine import qcontact_resurgence
         for c_val in [1.0, 13.0, 25.0]:
             result = qcontact_resurgence(c_val)
             assert result['arity_convergence_radius'] > 0
+            assert not result['arity_radius_certified_from_finite_window']
 
     def test_branch_points_conjugate(self):
         """Branch points of Q_L are complex conjugate for c > 0."""
@@ -639,11 +701,11 @@ class TestQcontactResurgence:
 
 
 # =====================================================================
-# Section 11: Higher shadow resurgence
+# Section 11: Higher-shadow asymptotic diagnostics
 # =====================================================================
 
-class TestHigherShadowResurgence:
-    """Test the resurgent structure of higher shadow coefficients."""
+class TestHigherShadowDiagnostics:
+    """Test asymptotic diagnostics for higher shadow coefficients."""
 
     def test_shadow_coefficients_recursive_S2(self):
         """S_2 = kappa = c/2 for Virasoro."""
@@ -677,13 +739,14 @@ class TestHigherShadowResurgence:
             assert math.isfinite(abs(val))
 
     def test_higher_shadow_growth_rate(self):
-        """Growth rate of |S_r|^{1/r} converges to rho."""
+        """Finite-window growth rates are positive diagnostics."""
         from lib.resurgence_shadow_tower_engine import higher_shadow_resurgence
         result = higher_shadow_resurgence(13.0, r_max=20)
         rates = result['growth_rates']
+        assert result['certification'] == 'arity_radius_diagnostic'
+        assert result['finite_window_only']
+        assert not result['all_arity_resurgence_certified']
         if len(rates) >= 3:
-            # Growth rate should converge (not necessarily to rho_leading
-            # since rho_exact != rho_leading for finite c)
             assert rates[-1] > 0
 
     def test_leading_ratio_approaches_1(self):
@@ -701,7 +764,7 @@ class TestHigherShadowResurgence:
 # =====================================================================
 
 class TestLargeOrderRelations:
-    """Test the large-order resurgent relations for F_g."""
+    """Test finite-pole large-order estimates for F_g."""
 
     def test_large_order_leading_term(self):
         """Leading term: F_g ~ 2*kappa/(2*pi)^{2g}."""
@@ -716,8 +779,8 @@ class TestLargeOrderRelations:
         # Should be within 1% at g = 15
         assert abs(Fg - predicted) / abs(Fg) < 0.01
 
-    def test_large_order_multi_instanton_improvement(self):
-        """Including more instantons improves the prediction at moderate g."""
+    def test_large_order_multi_pole_improvement(self):
+        """Including more A-hat poles improves the estimate at moderate g."""
         from lib.resurgence_shadow_tower_engine import (
             large_order_prediction, F_g_scalar,
         )
@@ -727,16 +790,17 @@ class TestLargeOrderRelations:
         err_1 = abs(Fg - large_order_prediction(kappa, g, n_inst=1))
         err_3 = abs(Fg - large_order_prediction(kappa, g, n_inst=3))
         err_5 = abs(Fg - large_order_prediction(kappa, g, n_inst=5))
-        # More instantons should improve (or at least not worsen significantly)
+        # More pole terms should improve, or at least not worsen significantly.
         assert err_5 <= err_1 * 1.01  # allow tiny numerical noise
 
     def test_large_order_verification(self):
-        """The large-order verification should show improving errors."""
+        """The large-order comparison stays explicitly scalar-certified."""
         from lib.resurgence_shadow_tower_engine import large_order_verification
         result = large_order_verification(1.0, g_max=20, n_inst=5)
-        # Error at g=15 should be small
         assert result['error_at_g15'] is not None
         assert result['error_at_g15'] < 0.001
+        assert result['certification'] == 'certified_scalar_ahat_bernoulli'
+        assert not result['nonperturbative_completion_certified']
 
     def test_large_order_kappa_linearity(self):
         """F_g and its prediction are both linear in kappa."""
@@ -758,23 +822,26 @@ class TestLargeOrderRelations:
         g = 20
         predicted = large_order_prediction(kappa, g, n_inst=1)
         bernoulli_asymp = 2.0 * kappa / TWO_PI ** (2 * g)
-        # Should match to within 1% (subleading instanton corrections are small)
+        # Should match to within 1%; subleading pole corrections are small.
         assert abs(predicted - bernoulli_asymp) / abs(bernoulli_asymp) < 0.01
 
 
 # =====================================================================
-# Section 13: Koszul complementarity
+# Section 13: Verdier scalar complementarity diagnostic
 # =====================================================================
 
-class TestKoszulComplementarity:
-    """Test the non-perturbative structure from Koszul complementarity."""
+class TestVerdierScalarComplementarity:
+    """Test Verdier scalar complementarity without nonperturbative promotion."""
 
     def test_kappa_plus_kappa_dual_virasoro(self):
-        """kappa + kappa' = 13 for Virasoro (AP24)."""
+        """kappa + kappa' = 13 for Virasoro on the Verdier scalar branch."""
         from lib.resurgence_shadow_tower_engine import koszul_complementarity_np
         for c_val in [1.0, 6.0, 13.0, 25.0]:
             result = koszul_complementarity_np(c_val, 1.0)
             assert abs(result['kappa_sum'] - 13.0) < 1e-12
+            assert not result['nonperturbative_completion_certified']
+            assert 'Verdier scalar branch' in result['dual_branch']
+            assert result['object_firewall']['Omega(B(A))'] == 'bar-cobar inversion of A, not Koszul duality'
 
     def test_self_dual_at_c13(self):
         """c = 13 is the Virasoro self-dual point."""
@@ -789,11 +856,12 @@ class TestKoszulComplementarity:
         result = koszul_complementarity_np(1.0, 1.0)
         assert not result['is_self_dual']
 
-    def test_instanton_exponentially_small(self):
+    def test_formal_exponential_small(self):
         """exp(-A/hbar^2) is tiny for hbar = 1."""
         from lib.resurgence_shadow_tower_engine import koszul_complementarity_np
         result = koszul_complementarity_np(13.0, 1.0)
         assert result['exp_suppression'] < 1e-15
+        assert result['F_np_certification'] == 'finite_window_diagnostic'
 
 
 # =====================================================================
@@ -808,6 +876,7 @@ class TestGevreyAnalysis:
         from lib.resurgence_shadow_tower_engine import gevrey_order
         result = gevrey_order(1.0, g_max=30)
         assert result['gevrey_order'] == 0
+        assert not result['borel_summability_certified']
 
     def test_gevrey_ratio_converges(self):
         """The ratio |F_{g+1}/F_g| converges to 1/(4*pi^2)."""
@@ -820,14 +889,17 @@ class TestGevreyAnalysis:
         from lib.resurgence_shadow_tower_engine import optimal_truncation
         result = optimal_truncation(1.0, 1.0)
         assert result['within_convergence']
+        assert not result['certified_optimal_truncation']
 
-    def test_optimal_truncation_order(self):
-        """N* ~ A/hbar^2 for the u-plane series."""
+    def test_legacy_truncation_scale_is_diagnostic(self):
+        """N* ~ A/hbar^2 is retained only as a diagnostic scale."""
         from lib.resurgence_shadow_tower_engine import optimal_truncation
         hbar = 3.0
         result = optimal_truncation(1.0, hbar)
         expected_Nstar = int(FOUR_PI_SQ / hbar ** 2)
         assert result['N_star_predicted'] == expected_Nstar
+        assert result['certification'] == 'finite_window_diagnostic'
+        assert not result['certified_optimal_truncation']
 
 
 # =====================================================================
@@ -853,8 +925,8 @@ class TestCrossConsistency:
         from_fg = sum(F_g_scalar(kappa, g) * hbar ** (2 * g) for g in range(1, 50))
         assert abs(exact - from_fg) / abs(exact) < 1e-12
 
-    def test_instanton_action_three_paths(self):
-        """Instanton action A = (2*pi)^2 verified by three paths.
+    def test_first_u_pole_three_paths(self):
+        """The first scalar u-pole A = (2*pi)^2 verified by three paths.
 
         Path 1: Location of nearest pole of (hbar/2)/sin(hbar/2) at hbar = 2*pi
         Path 2: From ratio F_{g+1}/F_g -> 1/A as g -> inf
@@ -882,11 +954,11 @@ class TestCrossConsistency:
                 nearest = min(real_pos)
                 assert abs(nearest - A_direct) / A_direct < 0.3
 
-    def test_stokes_constant_two_paths(self):
-        """S_1 = -4*pi^2*kappa*i verified by two paths.
+    def test_formal_residue_multiplier_two_paths(self):
+        """Formal S_1 = -4*pi^2*kappa*i checked by residue conventions.
 
         Path 1: Direct from residue computation
-        Path 2: From the large-order relation
+        Path 2: Convention comparison with the u-plane residue
         """
         from lib.resurgence_shadow_tower_engine import (
             stokes_multiplier_leading, F_g_scalar,
@@ -940,7 +1012,7 @@ class TestCrossConsistency:
 # =====================================================================
 
 class TestVirasoroLandscape:
-    """Test resurgence across the Virasoro landscape of central charges."""
+    """Test scalar diagnostics across Virasoro central charges."""
 
     @pytest.mark.parametrize("c_val", [0.5, 1.0, 6.0, 13.0, 25.0])
     def test_shadow_invariants_consistent(self, c_val):
@@ -976,7 +1048,7 @@ class TestVirasoroLandscape:
 
     @pytest.mark.parametrize("c_val", [1.0, 13.0, 25.0])
     def test_stokes_multiplier_c_dependence(self, c_val):
-        """S_1 = -4*pi^2*(c/2)*i = -2*pi^2*c*i for Virasoro."""
+        """Formal S_1 = -4*pi^2*(c/2)*i = -2*pi^2*c*i for Virasoro."""
         from lib.resurgence_shadow_tower_engine import (
             stokes_multiplier_leading, kappa_virasoro,
         )

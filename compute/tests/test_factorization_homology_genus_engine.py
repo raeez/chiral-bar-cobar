@@ -13,7 +13,7 @@ Comprehensive test suite (50+ tests) covering:
 10. Bar-to-factorization-homology dictionary
 11. Multi-path verification: Verlinde vs direct computation
 
-All numerical checks use 3+ independent verification paths per AP mandate.
+All numerical checks use 3+ independent verification paths.
 """
 
 import math
@@ -398,7 +398,7 @@ class TestHSSewing:
 # ======================================================================
 
 class TestComplementarity:
-    """Verify shadow complementarity F_g(A) + F_g(A!) at each genus."""
+    """Verify shadow complementarity F_g(A) + F_g(A^!) at each genus."""
 
     def test_km_anti_symmetry(self):
         """KM: kappa(g_k) + kappa(g_{-k-2h*}) = 0."""
@@ -566,7 +566,8 @@ class TestBarFHDictionary:
         expected_keys = [
             "bar_differential", "bar_coalgebra_structure", "bar_as_fh",
             "modular_operad", "hs_sewing_equals_fh_convergence",
-            "verdier_duality", "shadow_projection", "e_n_vs_chiral",
+            "verdier_duality", "five_object_separation",
+            "shadow_projection", "e_n_vs_chiral",
         ]
         for key in expected_keys:
             assert key in d, f"Missing key: {key}"
@@ -577,6 +578,23 @@ class TestBarFHDictionary:
         for key, val in d.items():
             assert isinstance(val, str)
             assert len(val) > 10
+
+    def test_verdier_duality_is_not_literal_bar_equality(self):
+        """Verdier dictionary separates finite-type and completed branches."""
+        entry = bar_to_fh_dictionary()["verdier_duality"]
+        stale_literal = "D_Ran(B(A))" + " = " + "B(A" + "!)"
+        assert stale_literal not in entry
+        assert "Finite-type branch" in entry
+        assert "Completed branch" in entry
+        assert "rather than a literal equality" in entry
+
+    def test_bar_dual_inversion_centre_are_separate_objects(self):
+        """The dictionary does not collapse the five duality-sensitive objects."""
+        entry = bar_to_fh_dictionary()["five_object_separation"]
+        for token in ["B(A)", "A^i", "A^!", "Omega(B(A))", "Z_ch^der(A)"]:
+            assert token in entry
+        assert "distinct objects" in entry
+        assert "None of these identifications follows" in entry
 
 
 # ======================================================================
@@ -1068,19 +1086,19 @@ class TestPoincareDuality:
     """Poincare-Koszul duality for KM families."""
 
     def test_sl2_complementarity(self):
-        """sl_2: F_g(A) + F_g(A!) = 0 at all genera."""
+        """sl_2: F_g(A) + F_g(A^!) = 0 at all genera."""
         result = poincare_koszul_duality_check(2, 1, 5)
         for g, check in result["checks"].items():
             assert check["complementarity_holds"], f"Failed at g={g}"
 
     def test_sl3_complementarity(self):
-        """sl_3: F_g(A) + F_g(A!) = 0 at all genera."""
+        """sl_3: F_g(A) + F_g(A^!) = 0 at all genera."""
         result = poincare_koszul_duality_check(3, 1, 4)
         for g, check in result["checks"].items():
             assert check["complementarity_holds"], f"Failed at g={g}"
 
     def test_sl2_k3_complementarity(self):
-        """sl_2 at k=3: F_g(A) + F_g(A!) = 0."""
+        """sl_2 at k=3: F_g(A) + F_g(A^!) = 0."""
         result = poincare_koszul_duality_check(2, 3, 3)
         for g, check in result["checks"].items():
             assert check["complementarity_holds"]

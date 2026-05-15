@@ -1,9 +1,13 @@
-r"""Borel summability of the shadow genus expansion.
+r"""Scalar shadow genus convergence and Borel diagnostics.
 
-THEOREM (thm:shadow-borel-summability):
+Audit surface for the label ``thm:shadow-borel-summability``.
 
-    The shadow genus expansion F(x) = sum_{g >= 1} F_g x^{2g} for any
-    uniform-weight modular Koszul algebra A is Borel summable.
+    This module certifies only the scalar Virasoro/Faber-Pandharipande
+    coefficient sector where F_g = kappa * lambda_g^FP.  The ordinary scalar
+    genus series F(x) = sum_{g >= 1} F_g x^{2g} converges for |x| < 2*pi.
+    That scalar fact is not a proof of analytic continuation, a
+    nonperturbative completion, BTZ/JT recovery, or any all-genus
+    multi-weight partition theorem.
 
     Precisely:
 
@@ -18,73 +22,60 @@ THEOREM (thm:shadow-borel-summability):
         This is strictly milder than the Gevrey-1 (factorial) divergence
         of the string genus expansion.
 
-    (iii) BOREL TRANSFORM:
-        The Borel transform B[F](xi) = sum_{g >= 1} F_g xi^{2g} / (2g)!
+    (iii) ORDINARY GENUS GENERATING FUNCTION:
+        The ordinary generating function
+            G[F](xi) = sum_{g >= 1} F_g xi^{2g}
         has the closed form:
-            B[F](xi) = kappa * (xi / (2 sin(xi/2)) - 1)
-        This is meromorphic with simple poles at xi = 2 pi n, n in Z \ {0}.
-        It is ANALYTIC in the cut plane C \ {(-inf, -2pi] union [2pi, +inf)}.
+            G[F](xi) = kappa * (xi / (2 sin(xi/2)) - 1).
+        It is meromorphic with simple poles at xi = 2*pi*n,
+        n in Z \ {0}.  These are poles of G[F], not singularities of
+        the true Borel transform.
 
-    (iv) BOREL SUM:
-        The Borel-Laplace integral
-            S_theta[F](x) = integral_0^{e^{i*theta}*inf}
-                            B[F](xi) e^{-xi/x^2} d(xi/x^2)
-        converges for all x with Re(e^{i*theta}/x^2) > 0, provided
-        theta avoids the Stokes directions theta = 0, pi.
+    (iv) TRUE BOREL TRANSFORMS:
+        In the variable t = x^2,
+            B_t[F](s) = sum_{g >= 1} F_g s^g/g!
+        is entire.  The even transform
+            B_even[F](xi) = sum_{g >= 1} F_g xi^{2g}/(2g)!
+        is also entire.  There are no Borel-plane poles at xi = 2*pi*n.
 
-    (v) STOKES PHENOMENON:
-        At the Stokes rays arg(x^2) = 0, pi, the lateral Borel sums
-        S_{0+}[F] and S_{0-}[F] differ by the Stokes automorphism:
-            S_{0+}[F] - S_{0-}[F] = S_1 * e^{-A/x^2} * S_+[F^{(1)}](x)
-        where:
-            A = (2 pi)^2       (universal instanton action)
-            S_1 = -4 pi^2 kappa i   (leading Stokes constant, from MC equation)
-            F^{(1)} = one-instanton sector
-
-    (vi) MC CONSTRAINT ON STOKES DATA:
-        The Maurer-Cartan equation D Theta + (1/2)[Theta, Theta] = 0 constrains
-        the full trans-series via Ecalle's bridge equation. The Stokes constants
-        S_n = (-1)^n * 4 pi^2 n kappa i are DETERMINED by the MC structure.
+    (v) CONDITIONAL LAPLACE RECONSTRUCTION:
+        The standard Borel-Laplace integral in t reconstructs the convergent
+        analytic sum in its disk of convergence.  Since B_t[F] is entire in
+        this scalar sector, the paired lateral integrals have zero mathematical
+        jump in any common convergence sector.  This is conditional on the
+        exact scalar coefficient formula and does not certify the full shadow
+        obstruction tower.
 
 PROOF STRATEGY:
-    (a) The closed form B[F](xi) = kappa * (xi/(2 sin(xi/2)) - 1) is verified
+    (a) The closed form G[F](xi) = kappa * (xi/(2 sin(xi/2)) - 1) is verified
         by checking that its Taylor expansion matches F_g = kappa * lambda_g^FP
         term by term using the identity lambda_g^FP = (2^{2g-1}-1)|B_{2g}|/(2^{2g-1}(2g)!).
-    (b) The meromorphic structure (simple poles at 2 pi n) is manifest.
-    (c) The Borel-Laplace integral converges by the exponential decay of
-        e^{-xi/x^2} and the at-most-polynomial growth of B[F](xi) in strips.
-    (d) The Stokes constants are computed as 2 pi i times the residues of B[F]:
-        Res_{xi=2 pi n} B[F](xi) = (-1)^n * 2 pi n * kappa.
-    (e) The MC equation is verified to predict S_n correctly.
+    (b) The meromorphic structure of G[F] gives ordinary pole residues
+        Res_{xi=2*pi*n} G[F](xi) = (-1)^n * 2*pi*n * kappa.
+    (c) Dividing the already geometric coefficients by g! or (2g)! makes the
+        corresponding Borel transforms entire.
+    (d) The coefficient ratio F_{g-1}/F_g tends to (2*pi)^2.
 
 MULTI-WEIGHT EXTENSION (W_3, W_N):
-    For multi-weight algebras, F_g = kappa * lambda_g^FP + delta_F_g^cross.
-    The cross-channel corrections are RATIONAL in c with at most polynomial
-    growth in g. Their Borel transform B[F^{cross}](xi) is therefore an
-    ENTIRE function of xi (no poles). The full Borel transform
-    B[F^{full}] = B[F^{scalar}] + B[F^{cross}] has the SAME poles as the
-    scalar part. The instanton action A = (2 pi)^2 is UNCHANGED. The Stokes
-    constants acquire additive cross-channel corrections that are subleading.
+    Not implemented here.  This engine proves the scalar sector and exposes
+    the exact proof obligation for cross-channel corrections: their own
+    coefficient growth must be computed before any Borel or pole statement is
+    asserted.
 
 COMPARISON WITH STRING GENUS EXPANSION:
     String:  F_g^{string} ~ (2g)! * A^{-2g}  (Gevrey-1, factorial divergence)
     Shadow:  S_r ~ rho^r * r^{-5/2}           (Gevrey-0, geometric divergence)
 
-    The shadow expansion is Borel summable WITHOUT AMBIGUITY along non-Stokes
-    directions. The string expansion is NOT Borel summable along the positive
-    real axis (dense Stokes rays from the full moduli space). This is the
-    fundamental distinction: the shadow expansion, being an algebraic-function
-    expansion, has a FINITE Borel singularity set, while the string expansion
-    (controlled by the full M-bar_{g,n} geometry) has dense singularities.
+    This engine verifies the growth-class separation.  It does not compute
+    the Borel singularity set of the full string genus expansion, and it does
+    not infer string/nonperturbative Borel summability from scalar shadow data.
 
 References:
     thm:shadow-growth-rate (higher_genus_modular_koszul.tex)
     thm:riccati-algebraicity (higher_genus_modular_koszul.tex)
     prop:universal-instanton-action (higher_genus_modular_koszul.tex)
-    prop:shadow-stokes-multipliers (higher_genus_modular_koszul.tex)
     rem:shadow-borel-summability (higher_genus_modular_koszul.tex)
     theorem_shadow_s11_s15_engine.py (growth rate data)
-    theorem_w3_stokes_resurgence_engine.py (Stokes data)
 """
 
 from __future__ import annotations
@@ -97,7 +88,113 @@ from typing import Any, Dict, List, Optional, Tuple
 
 
 # ============================================================================
-# 0. Exact arithmetic primitives
+# 0. Scope and certification firewalls
+# ============================================================================
+
+def object_and_kernel_firewalls() -> Dict[str, Any]:
+    r"""Canonical object and kernel separations used by this diagnostic engine.
+
+    Sources:
+        CLAUDE.md "Essential constants" and "Five objects, never conflate";
+        chapters/examples/landscape_census.tex, standard-family constants.
+    """
+    return {
+        'objects_distinct': {
+            'A': 'chiral algebra',
+            'B(A)': 'bar coalgebra T^c(s^{-1} Abar)',
+            'A^i': 'bar cohomology / dual coalgebra branch',
+            'A^!': 'Verdier or continuous-linear dual algebra branch',
+            'Z_ch^der(A)': 'derived chiral centre / Hochschild bulk branch',
+        },
+        'bar_cobar_inversion': 'Omega(B(A)) = A',
+        'bar_cobar_inversion_is_koszul_duality': False,
+        'koszul_dual_branch': 'A^! is Verdier/continuous-linear dual, not Omega(B(A))',
+        'bulk_branch': 'Z_ch^der(A) is Hochschild bulk, not Koszul duality',
+        'kernel_constants': {
+            'affine_collision_trace_form': 'r^{KM}(z) = k*Omega_tr/z',
+            'affine_kz_normalization': 'r_KZ(z) = Omega/((k+h^vee)z)',
+            'heisenberg_collision': 'r^{Heis}(z) = k/z',
+            'virasoro_collision': 'r^{Vir}(z) = (c/2)/z^3 + 2T/z',
+        },
+        'holographic_package_entries': (
+            'A', 'A^i', 'A^!', 'C', 'r(z)', 'Theta_A', 'nabla^hol',
+        ),
+        'modular_koszul_compute_package_projections': (
+            'Fact_X(L)', 'barB_X(L)', 'Theta_L', 'L_L',
+            '(V_br,T_br)', 'R4_mod(L)',
+        ),
+        'scalar_projection_is_full_maurer_cartan_data': False,
+    }
+
+
+def analytic_certification_firewall() -> Dict[str, Any]:
+    r"""Status split for scalar coefficients, diagnostics, and analytic claims."""
+    return {
+        'scalar_coefficient_series': {
+            'status': 'certified_exact',
+            'formula': 'F_g = kappa * lambda_g^FP',
+            'scope': 'uniform-weight scalar lane; Virasoro has no cross-channel term',
+        },
+        'ordinary_scalar_singularities': {
+            'status': 'certified_exact',
+            'formula': 'G[F](xi) = kappa*(xi/(2*sin(xi/2)) - 1)',
+            'singularities': 'simple poles at xi = 2*pi*n, n != 0',
+            'are_true_borel_singularities': False,
+        },
+        'true_borel_transforms': {
+            'status': 'certified_for_scalar_coefficients',
+            't_transform': 'B_t[F](s) = sum F_g s^g/g! is entire',
+            'even_transform': 'B_even[F](xi) = sum F_g xi^(2g)/(2g)! is entire',
+            'singularity_set': (),
+        },
+        'ordinary_t_plane_singularities': {
+            'status': 'certified_exact_for_reconstructed_scalar_sum',
+            'formula': 't = (2*pi*n)^2 for n != 0',
+            'nearest_positive': '(2*pi)^2',
+            'are_true_borel_singularities': False,
+        },
+        'shadow_radius_diagnostic': {
+            'status': 'asymptotic_diagnostic',
+            'formula': 'rho(c) = sqrt((180c+872)/((5c+22)c^2))',
+            'certifies_borel_summability': False,
+            'certifies_analytic_continuation': False,
+        },
+        'pade_darboux_diagnostics': {
+            'status': 'diagnostic_only',
+            'certifies_ecalle_stokes_data': False,
+            'certifies_alien_calculus': False,
+        },
+        'scalar_projection': {
+            'status': 'projection_only',
+            'certifies_full_maurer_cartan_data': False,
+            'certifies_full_shadow_tower': False,
+        },
+        'finite_windows': {
+            'status': 'diagnostic_only',
+            'certifies_borel_summability': False,
+            'certifies_nonperturbative_completion': False,
+        },
+        'conditional_laplace_reconstruction': {
+            'status': 'conditional_scalar_statement',
+            'requires': 'exact scalar coefficient formula and a convergent Laplace sector',
+            'certifies_full_shadow_tower': False,
+        },
+        'multiweight_extension': {
+            'status': 'not_certified_here',
+            'missing_input': 'growth and singularity analysis of delta F_g^cross',
+        },
+        'nonperturbative_completion': {'status': 'not_certified_here'},
+        'btz_jt_recovery': {'status': 'not_certified_here'},
+        'ecalle_stokes_alien_calculus': {'status': 'not_certified_here'},
+        'all_genus_virasoro_or_multiweight_partition_theorem': {
+            'status': 'not_certified_here',
+        },
+        'object_firewalls': object_and_kernel_firewalls(),
+    }
+
+
+# ============================================================================
+# 1. Exact arithmetic primitives
 # ============================================================================
 
 @lru_cache(maxsize=256)
@@ -140,6 +237,14 @@ def virasoro_shadow_metric_coeffs(c_val: float) -> Tuple[float, float, float]:
     return q0, q1, q2
 
 
+def virasoro_shadow_metric_coeffs_exact(c_frac: Fraction) -> Tuple[Fraction, Fraction, Fraction]:
+    """Exact Virasoro metric coefficients in the trace-form convention."""
+    q0 = c_frac ** 2
+    q1 = 12 * c_frac
+    q2 = Fraction(180 * c_frac + 872, 5 * c_frac + 22)
+    return q0, q1, q2
+
+
 def shadow_metric_branch_points(c_val: float) -> Tuple[complex, complex]:
     """Zeros of Q_L(t) = q0 + q1*t + q2*t^2. Always a conjugate pair for c > 0."""
     q0, q1, q2 = virasoro_shadow_metric_coeffs(c_val)
@@ -154,6 +259,12 @@ def growth_rate(c_val: float) -> float:
     """Growth rate rho(c) = 1/|t_*| where t_* is the nearest branch point."""
     t_plus, t_minus = shadow_metric_branch_points(c_val)
     return 1.0 / min(abs(t_plus), abs(t_minus))
+
+
+def growth_rate_squared_exact(c_frac: Fraction) -> Fraction:
+    r"""Exact Virasoro growth-rate square rho(c)^2 = q2/q0."""
+    q0, _, q2 = virasoro_shadow_metric_coeffs_exact(c_frac)
+    return q2 / q0
 
 
 def convergence_radius_shadow(c_val: float) -> float:
@@ -257,7 +368,7 @@ def F_g_exact(g: int, c_frac: Fraction) -> Fraction:
 
 
 # ============================================================================
-# 4. Borel transform: CLOSED FORM
+# 4. Ordinary genus generating function and true Borel transforms
 # ============================================================================
 
 def genus_generating_function(xi: complex, kappa: float) -> complex:
@@ -275,17 +386,17 @@ def genus_generating_function(xi: complex, kappa: float) -> complex:
         Therefore G[F](xi) = kappa * (xi/(2 sin(xi/2)) - 1).
 
     The function xi/(2 sin(xi/2)) is meromorphic with simple poles at
-    xi = 2 pi n for n in Z \ {0}. These poles control the Borel singularities.
+    xi = 2*pi*n for n in Z \ {0}.  These are singularities of the ordinary
+    generating function.
 
     RELATION TO BOREL TRANSFORM:
         The Borel transform B[F](xi) = sum F_g xi^{2g} / (2g)! is different:
         it divides each term by an ADDITIONAL (2g)!. The generating function
-        G[F] and the Borel transform B[F] have the SAME singularity locations
-        (at xi = 2 pi n) but different singularity types.
+        G[F] is meromorphic, while this even Borel transform is entire.
     """
     xi = complex(xi)
     if abs(xi) < 1e-15:
-        return complex(kappa / 24.0 * abs(xi) ** 2) if abs(xi) > 0 else 0j
+        return kappa * xi ** 2 / 24.0
     half = xi / 2.0
     sin_half = cmath.sin(half)
     if abs(sin_half) < 1e-30:
@@ -310,19 +421,15 @@ def genus_generating_function_series(xi: complex, kappa: float, g_max: int = 60)
     return result
 
 
-def borel_transform_series(xi: complex, kappa: float, g_max: int = 60) -> complex:
-    r"""Borel transform via truncated series.
+def borel_transform_even_series(xi: complex, kappa: float, g_max: int = 80) -> complex:
+    r"""Even Borel transform via truncated series.
 
-    B[F](xi) = sum_{g=1}^{g_max} F_g * xi^{2g} / (2g)!
-             = sum_{g=1}^{g_max} kappa * lambda_g^FP * xi^{2g} / (2g)!
+    B_even[F](xi) = sum_{g=1}^{g_max} F_g * xi^{2g} / (2g)!
+                  = sum_{g=1}^{g_max} kappa * lambda_g^FP * xi^{2g} / (2g)!
 
-    This is the standard Borel transform of sum F_g t^g evaluated at t = xi^2,
-    adapted to the even-power structure F(x) = sum F_g x^{2g}.
-
-    The Borel transform has the SAME singularity locations as the generating
-    function (at xi = 2 pi n) because dividing by (2g)! does not change
-    the radius of convergence (the singularities are determined by the
-    closest pole of the generating function).
+    Since F_g is geometric in g, the extra (2g)! denominator makes this
+    transform entire.  In particular it is finite at xi = 2*pi*n, where the
+    ordinary generating function G[F] has poles.
     """
     xi = complex(xi)
     result = 0j
@@ -333,6 +440,36 @@ def borel_transform_series(xi: complex, kappa: float, g_max: int = 60) -> comple
         if g > 5 and abs(term) < 1e-30 * max(abs(result), 1e-100):
             break
     return result
+
+
+def borel_transform_t_series(s: complex, kappa: float, g_max: int = 80) -> complex:
+    r"""Standard Borel transform in t = x^2.
+
+    For f(t) = sum_{g>=1} F_g t^g, the standard Borel transform is
+
+        B_t[f](s) = sum_{g>=1} F_g s^g/g!.
+
+    The coefficients F_g = kappa*lambda_g^FP are geometric with radius
+    (2*pi)^2 in the t-plane, hence B_t[f] is entire.
+    """
+    s = complex(s)
+    result = 0j
+    for g in range(1, g_max + 1):
+        lfp = float(_lambda_fp_exact(g))
+        term = kappa * lfp * s ** g / math.factorial(g)
+        result += term
+        if g > 5 and abs(term) < 1e-30 * max(abs(result), 1e-100):
+            break
+    return result
+
+
+def borel_transform_series(xi: complex, kappa: float, g_max: int = 80) -> complex:
+    r"""Compatibility wrapper for the even Borel transform.
+
+    Use ``borel_transform_t_series`` for the standard Borel transform in
+    t = x^2.  This wrapper is not the meromorphic closed form G[F].
+    """
+    return borel_transform_even_series(xi, kappa, g_max=g_max)
 
 
 # ============================================================================
@@ -404,7 +541,7 @@ def verify_convergence_at_c(c_val: float, max_r: int = 25) -> bool:
     # because H(t) = t^2 * sqrt(Q_L(t)) and sum S_r t^r = (H(t) - c*t^2 - 6*t^3)/...
     # More precisely: sqrt(Q_L(t)) = sum a_n t^n, and S_r = a_{r-2}/r.
     # So sum_{r=2}^R S_r = sum_{r=2}^R a_{r-2}/r.
-    # This is NOT the same as H(1).
+    # This differs from H(1).
     # The correct comparison: check that partial sums stabilize.
     sums = result['partial_sums']
     if len(sums) < 5:
@@ -471,55 +608,42 @@ def borel_laplace_integral(x_sq: float, kappa: float,
                            theta: float = 0.0,
                            n_points: int = 2000,
                            xi_max: float = 50.0) -> complex:
-    r"""Numerical Borel-Laplace integral along direction theta.
+    r"""Numerical standard Borel-Laplace integral in t = x^2.
 
-    The genus expansion F(x) = sum_{g>=1} F_g x^{2g} has generating function
-    G(xi) = sum F_g xi^{2g} = kappa * (xi/(2*sin(xi/2)) - 1).
+    For f(t) = sum_{g>=1} F_g t^g and t = x^2, use
 
-    Rewriting in the variable t = xi^2, define
-        g(t) = G(sqrt(t)) = sum F_g t^g.
-    The Borel transform in t is B_t[g](s) = sum F_g s^g / g!, and the
-    Borel-Laplace sum is
-        S[F](x^2) = integral_0^{inf} B_t[g](s) e^{-s/x^2} ds/x^2.
+        S_theta[f](t) = integral_0^{exp(i*theta)*inf}
+                        B_t[f](s) * exp(-s/t) ds/t.
 
-    Equivalently, changing variables s = xi^2 (ds = 2*xi*dxi):
-        S[F](x^2) = integral_0^{inf} G(xi) * (2*xi/x^2) * e^{-xi^2/x^2} dxi/x^2
+    Here B_t[f](s) = sum F_g s^g/g! is entire.  For the positive real
+    t used by the tests, the integral converges when
+    Re(exp(i*theta)/t) is larger than the exponential type 1/(2*pi)^2.
 
-    For non-Stokes directions, rotate the contour in the xi-plane by theta.
-    The Stokes directions (where the contour crosses poles of G at xi = 2*pi*n)
-    are theta = 0, pi.
-
-    For practical computation, we integrate directly in the xi-plane using the
-    generating function G(xi) with the Gaussian kernel e^{-xi^2/x^2}.
+    The ``xi_max`` parameter is the finite cutoff in the standard Borel
+    variable s; the name remains for caller compatibility.
 
     Parameters:
         x_sq: the value of x^2 (positive real)
         kappa: the modular characteristic kappa(A)
-        theta: direction angle in the Borel plane
+        theta: direction angle in the s-Borel plane
         n_points: quadrature points
         xi_max: upper integration limit
 
-    Returns the Borel sum.
+    Returns the truncated Borel-Laplace sum.
     """
     if x_sq <= 0:
         raise ValueError("x^2 must be positive")
-    if abs(theta) < 1e-10 or abs(abs(theta) - math.pi) < 1e-10:
-        theta = theta + 0.01
-
     dt = xi_max / n_points
     direction = cmath.exp(1j * theta)
     result = 0j
 
     for i in range(1, n_points + 1):
-        t = (i - 0.5) * dt
-        xi = t * direction
-        dist_to_pole = abs(xi - 2.0 * math.pi)
-        if dist_to_pole < 0.01:
-            continue
+        u = (i - 0.5) * dt
+        s = u * direction
         try:
-            g_val = genus_generating_function(xi, kappa)
-            exponential = cmath.exp(-xi ** 2 / x_sq)
-            integrand = g_val * 2.0 * xi * exponential / x_sq ** 2 * direction
+            b_val = borel_transform_t_series(s, kappa)
+            exponential = cmath.exp(-s / x_sq)
+            integrand = b_val * exponential * direction / x_sq
             result += integrand * dt
         except (OverflowError, ZeroDivisionError):
             continue
@@ -531,16 +655,11 @@ def lateral_borel_sums(x_sq: float, kappa: float,
                        epsilon: float = 0.05,
                        n_points: int = 3000,
                        xi_max: float = 60.0) -> Dict[str, complex]:
-    r"""Compute lateral Borel sums S_{0+} and S_{0-} along the Stokes ray.
+    r"""Compute paired lateral Borel-Laplace integrals.
 
-    S_{0+} = lim_{theta -> 0+} S_theta[F]
-    S_{0-} = lim_{theta -> 0-} S_theta[F]
-
-    The discontinuity S_{0+} - S_{0-} encodes the Stokes phenomenon.
-    The Stokes jump at the leading singularity xi = 2*pi is:
-        disc = 2*pi*i * Res_{xi=2*pi} [G(xi) * 2*xi * e^{-xi^2/x^2}]
-             = 2*pi*i * [(-1)^1 * 2*pi*kappa] * [2*(2*pi)] * e^{-A/x^2}
-    where A = (2*pi)^2.
+    In this scalar sector the true Borel transform is entire.  Therefore the
+    mathematical lateral jump is zero whenever the contour rotation remains
+    in a convergent sector.
     """
     s_plus = borel_laplace_integral(x_sq, kappa, theta=epsilon,
                                     n_points=n_points, xi_max=xi_max)
@@ -555,13 +674,13 @@ def lateral_borel_sums(x_sq: float, kappa: float,
 
 
 # ============================================================================
-# 8. Stokes constants from residues of B[F]
+# 8. Ordinary generating-function pole residues
 # ============================================================================
 
-def borel_residue(n: int, kappa: float) -> float:
-    r"""Residue of B[F](xi) at xi = 2*pi*n.
+def ordinary_genus_pole_residue(n: int, kappa: float) -> float:
+    r"""Residue of G[F](xi) at xi = 2*pi*n.
 
-    B[F](xi) = kappa * (xi / (2 sin(xi/2)) - 1)
+    G[F](xi) = kappa * (xi / (2 sin(xi/2)) - 1)
     has simple poles at xi = 2*pi*n with:
 
         Res_{xi=2*pi*n} = kappa * lim_{xi -> 2*pi*n} (xi - 2*pi*n) * xi / (2 sin(xi/2))
@@ -578,89 +697,91 @@ def borel_residue(n: int, kappa: float) -> float:
     return kappa * ((-1) ** n) * 2.0 * math.pi * n
 
 
-def stokes_constant_from_residue(n: int, kappa: float) -> complex:
-    r"""Stokes constant S_n = 2*pi*i * Res_{xi=2*pi*n} B[F](xi).
+def ordinary_genus_pole_circulation(n: int, kappa: float) -> complex:
+    r"""Pole circulation 2*pi*i * Res_{xi=2*pi*n} G[F](xi).
 
-    S_n = 2*pi*i * kappa * (-1)^n * 2*pi*n
-        = (-1)^n * 4*pi^2 * n * kappa * i
+    This is an ordinary contour integral around a pole of G[F].  It is not a
+    lateral-jump constant for the true Borel transform, which is entire here.
     """
-    return 2.0j * math.pi * borel_residue(n, kappa)
+    return 2.0j * math.pi * ordinary_genus_pole_residue(n, kappa)
 
 
-def stokes_constant_from_mc(n: int, kappa: float) -> complex:
-    r"""Stokes constant from the MC equation (independent verification).
+def scalar_genus_singularity_audit(kappa: float, n: int = 1) -> Dict[str, Any]:
+    r"""Separate ordinary poles, reconstructed-sum singularities, and Borel data.
 
-    The MC equation D*Theta + (1/2)[Theta,Theta] = 0 constrains the Stokes
-    multipliers via Ecalle's bridge equation. For the scalar sector:
-
-        S_n = (-1)^n * 4*pi^2 * n * kappa * i
-
-    This is the SAME formula as from the Borel residue. The agreement is
-    a consequence of the fact that the Borel transform has a known closed
-    form determined entirely by kappa.
-
-    prop:universal-instanton-action: A = (2*pi)^2.
-    prop:shadow-stokes-multipliers: S_1 = -4*pi^2*kappa*i.
+    The scalar closed form has ordinary poles in the xi-plane.  The analytic
+    sum in the variable t = xi^2 has singularities at t = (2*pi*n)^2.  The
+    true Borel transforms obtained by dividing by g! or (2g)! are entire.
+    Consequently ordinary residues are not Stokes constants for this scalar
+    Borel transform, and no alien calculus data is certified here.
     """
-    return ((-1) ** n) * 4.0 * math.pi ** 2 * n * kappa * 1j
+    if n == 0:
+        raise ValueError("n must be nonzero")
+    xi0 = 2.0 * math.pi * n
+    t0 = xi0 ** 2
+    residue = ordinary_genus_pole_residue(n, kappa)
 
-
-def verify_stokes_residue_vs_mc(kappa: float, n_max: int = 5) -> List[Tuple[int, complex, complex, float]]:
-    """Verify: Stokes constant from residue matches MC prediction for n=1..n_max.
-
-    Returns [(n, S_n_residue, S_n_mc, |difference|)].
-    """
-    results = []
-    for n in range(1, n_max + 1):
-        s_res = stokes_constant_from_residue(n, kappa)
-        s_mc = stokes_constant_from_mc(n, kappa)
-        diff = abs(s_res - s_mc)
-        results.append((n, s_res, s_mc, diff))
-    return results
+    return {
+        'kappa': kappa,
+        'n': n,
+        'ordinary_xi_plane': {
+            'function': 'G[F](xi) = kappa*(xi/(2*sin(xi/2)) - 1)',
+            'pole': xi0,
+            'residue': residue,
+            'circulation': 2.0j * math.pi * residue,
+        },
+        'ordinary_t_plane': {
+            'variable': 't = xi^2',
+            'singularity': t0,
+            'nearest_positive_singularity': INSTANTON_ACTION if abs(n) == 1 else None,
+            'are_borel_plane_singularities': False,
+        },
+        'true_borel_t_plane': {
+            'transform': 'B_t[F](s) = sum F_g s^g/g!',
+            'singularity_set': (),
+            'entire': True,
+        },
+        'true_borel_even_plane': {
+            'transform': 'B_even[F](xi) = sum F_g xi^(2g)/(2g)!',
+            'singularity_set': (),
+            'entire': True,
+        },
+        'ordinary_residue_is_stokes_constant': False,
+        'ecalle_stokes_alien_calculus_certified': False,
+        'scalar_projection_certifies_full_maurer_cartan_data': False,
+    }
 
 
 # ============================================================================
-# 9. Stokes jump verification (numerical)
+# 9. Lateral Borel-Laplace jump diagnostic
 # ============================================================================
 
-def stokes_jump_numerical(x_sq: float, kappa: float,
-                          epsilon: float = 0.03,
-                          n_points: int = 4000,
-                          xi_max: float = 80.0) -> Dict[str, Any]:
-    r"""Compute and verify the Stokes jump at the leading Stokes ray.
+def lateral_borel_jump_diagnostic(x_sq: float, kappa: float,
+                                  epsilon: float = 0.03,
+                                  n_points: int = 4000,
+                                  xi_max: float = 80.0) -> Dict[str, Any]:
+    r"""Measure the paired lateral Borel-Laplace difference.
 
-    The Stokes jump at arg(x^2) = 0 is:
-        S_{0+}[F] - S_{0-}[F] = S_1 * e^{-A/x^2} * (1 + higher instantons)
-
-    where A = (2*pi)^2 and S_1 = -4*pi^2*kappa*i.
-
-    At leading order in x -> 0, the jump is purely imaginary:
-        Im(S_{0+} - S_{0-}) ~ -4*pi^2*kappa * e^{-(2*pi)^2/x^2}
-
-    We verify this numerically.
+    The scalar sector has an entire true Borel transform, so the mathematical
+    jump is zero in any common convergence sector.  This diagnostic records
+    the numerical difference between the two truncated quadratures.
     """
     lateral = lateral_borel_sums(x_sq, kappa, epsilon=epsilon,
                                  n_points=n_points, xi_max=xi_max)
     disc = lateral['discontinuity']
 
-    # Leading prediction
-    A = (2.0 * math.pi) ** 2
-    S1 = stokes_constant_from_residue(1, kappa)
-    leading_jump = S1 * cmath.exp(-A / x_sq)
-
-    # Ratio of numerical to predicted
-    ratio = disc / leading_jump if abs(leading_jump) > 1e-50 else complex('inf')
+    leading_jump = 0j
 
     return {
         'x_sq': x_sq,
         'kappa': kappa,
         'discontinuity': disc,
         'leading_prediction': leading_jump,
-        'ratio_numerical_to_predicted': ratio,
+        'ratio_numerical_to_predicted': None,
         'disc_abs': abs(disc),
-        'leading_abs': abs(leading_jump),
-        'instanton_action': A,
-        'S1': S1,
+        'leading_abs': 0.0,
+        'instanton_action': INSTANTON_ACTION,
+        'ordinary_pole_circulation': ordinary_genus_pole_circulation(1, kappa),
     }
 
 
@@ -668,20 +789,23 @@ def stokes_jump_numerical(x_sq: float, kappa: float,
 # 10. Borel analyticity verification
 # ============================================================================
 
-def borel_analyticity_strip(kappa: float,
-                            im_range: float = 1.0,
-                            re_range: Tuple[float, float] = (0.1, 6.0),
-                            n_points: int = 200) -> Dict[str, Any]:
-    r"""Verify analyticity of B[F](xi) in the strip |Im(xi)| < im_range,
+def genus_generating_function_analyticity_strip(kappa: float,
+                                                im_range: float = 1.0,
+                                                re_range: Tuple[float, float] = (0.1, 6.0),
+                                                n_points: int = 200) -> Dict[str, Any]:
+    r"""Sample the ordinary function G[F](xi) away from its poles.
+
+    The exact closed form proves analyticity away from xi = 2*pi*n.  This
+    helper is only a finite numerical regularity diagnostic in the strip
+    |Im(xi)| < im_range,
     Re(xi) in [re_range[0], re_range[1]], away from xi = 2*pi.
 
-    The Borel transform B[F](xi) = kappa*(xi/(2*sin(xi/2)) - 1) is analytic
+    The ordinary generating function G[F](xi) = kappa*(xi/(2*sin(xi/2)) - 1) is analytic
     everywhere except at the poles xi = 2*pi*n. In the strip between
     0 and 2*pi, it should be well-behaved.
 
     We verify this by checking:
     1. The function is finite at all sample points
-    2. The Cauchy-Riemann equations are approximately satisfied
     """
     re_vals = [re_range[0] + i * (re_range[1] - re_range[0]) / n_points
                for i in range(n_points + 1)]
@@ -713,6 +837,18 @@ def borel_analyticity_strip(kappa: float,
         'max_abs_value': max_val,
         'min_dist_to_pole': min_dist_to_pole,
     }
+
+
+def borel_analyticity_strip(kappa: float,
+                            im_range: float = 1.0,
+                            re_range: Tuple[float, float] = (0.1, 6.0),
+                            n_points: int = 200) -> Dict[str, Any]:
+    r"""Compatibility wrapper for G[F] strip analyticity.
+
+    The true Borel transforms are entire; this helper samples the ordinary
+    generating function away from its poles.
+    """
+    return genus_generating_function_analyticity_strip(kappa, im_range, re_range, n_points)
 
 
 # ============================================================================
@@ -750,13 +886,14 @@ INSTANTON_ACTION = (2.0 * math.pi) ** 2  # A = (2*pi)^2 ~ 39.478
 
 
 def verify_instanton_action(c_val: float, g_max: int = 12) -> Dict[str, Any]:
-    r"""Verify A = (2*pi)^2 from the large-genus ratio of F_g.
+    r"""Verify the t-plane radius A = (2*pi)^2 from the large-genus ratio.
 
     For F_g = kappa * lambda_g^FP with lambda_g^FP ~ 2/(2*pi)^{2g}
     at large g (from Bernoulli asymptotics |B_{2g}| ~ 2*(2g)!/(2*pi)^{2g}),
     the ratio F_{g-1}/F_g approaches (2*pi)^2.
 
-    Verification: this limit should converge to (2*pi)^2.
+    This number is the first ordinary-generating-function singular radius in
+    t = x^2.  It is not a pole of the true Borel transform.
     """
     kappa = kappa_virasoro(c_val)
     estimates = []
@@ -811,25 +948,31 @@ def oscillatory_parameters(c_val: float) -> Dict[str, float]:
 
 
 # ============================================================================
-# 14. Full Borel summability data package
+# 14. Scalar Borel diagnostics data package
 # ============================================================================
 
 def borel_summability_data(c_val: float, max_r: int = 25, g_max: int = 10
                            ) -> Dict[str, Any]:
-    """Complete Borel summability data at a given c.
+    """Scalar Borel diagnostic data at a given c.
 
-    Collects all relevant quantities:
+    The function name is retained for caller compatibility.  The payload
+    deliberately distinguishes certified scalar facts from non-certified
+    analytic claims.  It does not certify full Borel summability of the
+    shadow obstruction tower from a finite coefficient window.
+
+    Collects:
     - Growth rate rho and convergence radius R = 1/rho
-    - Gevrey class (always 0 for shadow)
+    - Gevrey class diagnostic for the shadow tower coefficients
     - Branch point locations and oscillatory parameters
-    - Instanton action verification
-    - Stokes constant from residue and MC
-    - Borel analyticity in the strip [0, 2*pi)
+    - t-plane radius from the scalar genus coefficients
+    - ordinary generating-function pole circulation
+    - G[F] analyticity in the strip [0, 2*pi)
     """
     kappa = kappa_virasoro(c_val)
     rho = growth_rate(c_val)
     c_star = critical_central_charge()
     t_plus, t_minus = shadow_metric_branch_points(c_val)
+    certification = analytic_certification_firewall()
 
     return {
         'c': c_val,
@@ -841,11 +984,27 @@ def borel_summability_data(c_val: float, max_r: int = 25, g_max: int = 10
         'branch_points': (t_plus, t_minus),
         'discriminant': shadow_discriminant(c_val),
         'instanton_action': INSTANTON_ACTION,
-        'S1_from_residue': stokes_constant_from_residue(1, kappa),
-        'S1_from_mc': stokes_constant_from_mc(1, kappa),
-        'S1_match': abs(stokes_constant_from_residue(1, kappa) -
-                        stokes_constant_from_mc(1, kappa)) < 1e-10,
+        'ordinary_pole_residue_n1': ordinary_genus_pole_residue(1, kappa),
+        'ordinary_pole_circulation_n1': ordinary_genus_pole_circulation(1, kappa),
+        'ordinary_t_plane_nearest_singularity': INSTANTON_ACTION,
+        'true_borel_singularity_set': (),
+        'true_borel_transform_entire': True,
+        'lateral_jump_expected': 0j,
         'gevrey_class': 0,
+        'certification': certification,
+        'scalar_borel_summability_certified': True,
+        'scalar_borel_summability_scope': 'Borel-Laplace reconstruction of the convergent scalar series',
+        'bare_shadow_borel_summability_certified': False,
+        'finite_window_certifies_summability': False,
+        'pade_darboux_certifies_stokes_data': False,
+        'ecalle_stokes_data_certified': False,
+        'full_maurer_cartan_data_certified': False,
+        'global_resurgence_certified': False,
+        'analytic_continuation_certified': False,
+        'nonperturbative_completion_certified': False,
+        'btz_jt_recovery_certified': False,
+        'multiweight_extension_certified': False,
+        'all_genus_partition_theorem_certified': False,
     }
 
 
@@ -856,15 +1015,16 @@ def borel_summability_data(c_val: float, max_r: int = 25, g_max: int = 10
 def shadow_vs_string_comparison(c_val: float, g_max: int = 15) -> Dict[str, Any]:
     r"""Compare Borel structure of shadow vs string genus expansion.
 
-    Shadow: F_g^{sh} = kappa * lambda_g^FP ~ kappa * 2/(2*pi)^{2g}
-        Growth: GEOMETRIC (Gevrey-0). Borel summable.
-        Singularities: simple poles at xi = 2*pi*n.
+    Scalar shadow: F_g^{sh} = kappa * lambda_g^FP ~ kappa * 2/(2*pi)^{2g}
+        Growth: GEOMETRIC (Gevrey-0).  The ordinary series is convergent
+        for |x| < 2*pi; the true Borel transforms are entire.
 
     String: F_g^{str} ~ (2g)! * A^{-2g}
-        Growth: FACTORIAL (Gevrey-1). NOT Borel summable along real axis.
-        Singularities: branch cuts at xi = A*n, dense on the real axis.
+        Growth: FACTORIAL (Gevrey-1) in this toy comparison sequence.
 
-    The shadow expansion is algebraic; the string expansion is transcendental.
+    This function verifies coefficient-growth separation only.  It does not
+    decide the Borel singularity geometry of the full string expansion, and
+    it does not certify the full shadow obstruction tower as Borel summable.
     """
     kappa = kappa_virasoro(c_val)
 
@@ -891,6 +1051,10 @@ def shadow_vs_string_comparison(c_val: float, g_max: int = 15) -> Dict[str, Any]
         'string_to_shadow_ratio': ratios,
         'shadow_gevrey': 0,
         'string_gevrey': 1,
-        'shadow_borel_summable': True,
-        'string_borel_summable_on_real_axis': False,
+        'shadow_borel_summable': None,
+        'shadow_borel_summable_scope': 'not a bare global certificate',
+        'scalar_borel_summability_certified': True,
+        'shadow_series_convergent': True,
+        'string_borel_summable_on_real_axis': None,
+        'string_borel_geometry_certified': False,
     }

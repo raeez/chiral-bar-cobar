@@ -17,7 +17,7 @@ Multi-path verification:
   Path 11: Depth-class consistency at genus 4
   Path 12: Shadow visibility (S_6, S_7 first at genus 4)
   Path 13: Heisenberg F_4 = k * lambda_4^FP (no corrections)
-  Path 14: Cross-genus growth analysis (factorial growth)
+  Path 14: Cross-genus finite-window growth analysis
   Path 15: Cross-genus lambda_g^FP consistency (g=1..4)
 """
 
@@ -33,7 +33,8 @@ from compute.lib.theorem_genus4_multiweight_engine import (
     lambda_fp_path2,
     lambda_fp_from_ahat,
     # Shadow data
-    virasoro_shadow,
+    virasoro_weighted_riccati_shadow,
+    virasoro_manuscript_shadow,
     w3_shadow,
     heisenberg_shadow,
     affine_sl2_shadow,
@@ -42,10 +43,13 @@ from compute.lib.theorem_genus4_multiweight_engine import (
     delta_F3_W3,
     delta_F4_W3,
     delta_F4_W3_coefficients,
+    delta_F4_W3_graph_sum_certificate,
+    delta_F4_W3_from_graph_sum_certificate,
     delta_F4_W3_from_thm_d_engine,
     delta_F4_W3_decomposition,
     # Free energy decomposition
     genus4_free_energy,
+    w3_genus4_channel_decomposition,
     # A-hat verification
     ahat_verification,
     # Growth analysis
@@ -61,6 +65,7 @@ from compute.lib.theorem_genus4_multiweight_engine import (
     # S_6, S_7 cross-verification
     virasoro_S6_from_convolution,
     virasoro_S6_from_shadow_metric,
+    virasoro_S6_manuscript_null_state,
     virasoro_S7_from_convolution,
     virasoro_S7_from_shadow_metric,
     # Comparison table
@@ -68,6 +73,34 @@ from compute.lib.theorem_genus4_multiweight_engine import (
     # Summary
     full_verification_summary,
 )
+
+
+def _solve_linear_system(matrix, rhs):
+    """Small exact Gaussian elimination for interpolation tests."""
+    rows = [[Fraction(entry) for entry in row] + [Fraction(val)]
+            for row, val in zip(matrix, rhs)]
+    n = len(rows)
+    for col in range(n):
+        pivot = next(row for row in range(col, n) if rows[row][col] != 0)
+        rows[col], rows[pivot] = rows[pivot], rows[col]
+        pivot_val = rows[col][col]
+        rows[col] = [entry / pivot_val for entry in rows[col]]
+        for row in range(n):
+            if row == col or rows[row][col] == 0:
+                continue
+            factor = rows[row][col]
+            rows[row] = [entry - factor * pivot_entry
+                         for entry, pivot_entry in zip(rows[row], rows[col])]
+    return [rows[row][-1] for row in range(n)]
+
+
+def _interpolate_delta_f4_certificate_coefficients():
+    """Reconstruct P(c) from graph-sum certificate values at c=1,...,5."""
+    cert = delta_F4_W3_graph_sum_certificate()
+    xs = [Fraction(c) for c in range(1, 6)]
+    ys = [cert[int(c)] * c**3 for c in xs]
+    matrix = [[c**power for power in range(4, -1, -1)] for c in xs]
+    return _solve_linear_system(matrix, ys)
 
 
 # ============================================================================
@@ -142,6 +175,21 @@ class TestLambda4FP:
 class TestDeltaF4:
     """Verification of delta_F_4(W_3) closed-form formula."""
 
+    def test_integer_inputs_remain_exact_rationals(self):
+        """Integer c inputs are coerced to Fraction, not Python float."""
+        assert isinstance(delta_F2_W3(26), Fraction)
+        assert isinstance(delta_F3_W3(26), Fraction)
+        assert isinstance(delta_F4_W3(26), Fraction)
+
+    def test_singular_c_rejected(self):
+        """The cross-channel formulas have a pole at c=0."""
+        with pytest.raises(ValueError):
+            delta_F2_W3(0)
+        with pytest.raises(ValueError):
+            delta_F3_W3(0)
+        with pytest.raises(ValueError):
+            delta_F4_W3(0)
+
     def test_closed_form_c1(self):
         """delta_F_4 at c=1 from closed-form formula."""
         c = Fraction(1)
@@ -176,6 +224,37 @@ class TestDeltaF4:
         """thm_d_engine formula matches closed-form at c=100."""
         c = Fraction(100)
         assert delta_F4_W3(c) == delta_F4_W3_from_thm_d_engine(c)
+
+    def test_graph_sum_certificate_values(self):
+        """Stored finite-window certificate records exact graph-sum values."""
+        cert = delta_F4_W3_graph_sum_certificate()
+        assert cert[1] == Fraction(703023590623, 2177280)
+        assert cert[7] == Fraction(414869575201, 426746880)
+
+    def test_closed_form_matches_graph_sum_certificate_window(self):
+        """Closed form matches the graph-sum certificate at c=1,...,7."""
+        for c_val in range(1, 8):
+            c = Fraction(c_val)
+            assert delta_F4_W3(c) == delta_F4_W3_from_graph_sum_certificate(c)
+
+    def test_graph_sum_certificate_reconstructs_numerator(self):
+        """Interpolation from certificate values reconstructs P_4(c)."""
+        coeffs = _interpolate_delta_f4_certificate_coefficients()
+        expected = [
+            Fraction(287, 17418240),
+            Fraction(268881, 17418240),
+            Fraction(115455816, 17418240),
+            Fraction(29725133760, 17418240),
+            Fraction(5594347866240, 17418240),
+        ]
+        assert coeffs == expected
+
+        # The two unused certificate points are genuine holdouts.
+        for c_val in [6, 7]:
+            c = Fraction(c_val)
+            reconstructed = sum(coeff * c**power
+                                for coeff, power in zip(coeffs, range(4, -1, -1)))
+            assert reconstructed == delta_F4_W3_from_graph_sum_certificate(c) * c**3
 
     def test_decomposition_matches_formula(self):
         """c-power decomposition sums to the closed-form at c=26."""
@@ -225,67 +304,100 @@ class TestDeltaF4:
 # ============================================================================
 
 class TestShadowCoefficients:
-    """Three-way verification of Virasoro S_6 and S_7."""
+    """Virasoro shadow normalisation firewall and weighted checks."""
 
     def test_S6_three_paths_c26(self):
-        """S_6 at c=26: shadow dict, convolution, shadow metric all agree."""
+        """Weighted S_6 at c=26: dict, convolution, metric all agree."""
         c = Fraction(26)
-        vir = virasoro_shadow(c)
+        vir = virasoro_weighted_riccati_shadow(c)
         s6_dict = vir['S_6']
         s6_conv = virasoro_S6_from_convolution(c)
         s6_metr = virasoro_S6_from_shadow_metric(c)
         assert s6_dict == s6_conv == s6_metr
 
     def test_S7_three_paths_c26(self):
-        """S_7 at c=26: shadow dict, convolution, shadow metric all agree."""
+        """Weighted S_7 at c=26: dict, convolution, metric all agree."""
         c = Fraction(26)
-        vir = virasoro_shadow(c)
+        vir = virasoro_weighted_riccati_shadow(c)
         s7_dict = vir['S_7']
         s7_conv = virasoro_S7_from_convolution(c)
         s7_metr = virasoro_S7_from_shadow_metric(c)
         assert s7_dict == s7_conv == s7_metr
 
     def test_S6_three_paths_c1(self):
-        """S_6 three-way agreement at c=1."""
+        """Weighted S_6 three-way agreement at c=1."""
         c = Fraction(1)
-        vir = virasoro_shadow(c)
+        vir = virasoro_weighted_riccati_shadow(c)
         assert vir['S_6'] == virasoro_S6_from_convolution(c)
         assert vir['S_6'] == virasoro_S6_from_shadow_metric(c)
 
     def test_S7_three_paths_c1(self):
-        """S_7 three-way agreement at c=1."""
+        """Weighted S_7 three-way agreement at c=1."""
         c = Fraction(1)
-        vir = virasoro_shadow(c)
+        vir = virasoro_weighted_riccati_shadow(c)
         assert vir['S_7'] == virasoro_S7_from_convolution(c)
         assert vir['S_7'] == virasoro_S7_from_shadow_metric(c)
 
+    def test_manuscript_S6_null_state_formula(self):
+        """Manuscript S_6 is thm:S6-Vir-closed, not the weighted coefficient."""
+        c = Fraction(1)
+        expected = Fraction(4) * (240 * c + 1031) / (c**3 * (5 * c + 22)**2)
+        assert expected == Fraction(5084, 729)
+        assert virasoro_S6_manuscript_null_state(c) == expected
+        assert virasoro_manuscript_shadow(c)['S_6'] == expected
+
+    def test_weighted_and_manuscript_S6_are_distinct(self):
+        """The weighted Riccati metric coefficient is not the manuscript S_6."""
+        for c_val in [1, 10, 26, 50]:
+            c = Fraction(c_val)
+            weighted = virasoro_weighted_riccati_shadow(c)['S_6']
+            manuscript = virasoro_manuscript_shadow(c)['S_6']
+            assert weighted != manuscript
+
     def test_S6_positive(self):
-        """S_6 > 0 for all c > 0 (numerator 45c+193 > 0)."""
+        """Weighted and manuscript S_6 are positive for all tested c > 0."""
         for c_val in [1, 10, 26, 50, 100]:
             c = Fraction(c_val)
-            assert virasoro_shadow(c)['S_6'] > 0
+            assert virasoro_weighted_riccati_shadow(c)['S_6'] > 0
+            assert virasoro_manuscript_shadow(c)['S_6'] > 0
 
     def test_S7_negative(self):
-        """S_7 < 0 for all c > 0 (prefactor -2880, numerator 15c+61 > 0)."""
+        """Weighted S_7 < 0 for all tested c > 0."""
         for c_val in [1, 10, 26, 50, 100]:
             c = Fraction(c_val)
-            assert virasoro_shadow(c)['S_7'] < 0
+            assert virasoro_weighted_riccati_shadow(c)['S_7'] < 0
 
     def test_S6_formula_explicit(self):
-        """S_6(c=1) = 80*238 / (3*1*729) = 19040/2187."""
+        """Weighted S_6(c=1) = 80*238 / (3*1*729) = 19040/2187."""
         c = Fraction(1)
         expected = Fraction(80) * (45 + 193) / (3 * 1 * (5 + 22) ** 2)
         # 80*238 / (3 * 729) = 19040/2187
         assert expected == Fraction(19040, 2187)
-        assert virasoro_shadow(c)['S_6'] == expected
+        assert virasoro_weighted_riccati_shadow(c)['S_6'] == expected
 
     def test_known_lower_shadows_consistent(self):
         """S_3, S_4, S_5 at c=26 match the known values."""
         c = Fraction(26)
-        vir = virasoro_shadow(c)
+        vir = virasoro_weighted_riccati_shadow(c)
         assert vir['S_3'] == Fraction(2)
         assert vir['S_4'] == Fraction(10) / (26 * (5 * 26 + 22))
         assert vir['S_5'] == Fraction(-48) / (26 ** 2 * (5 * 26 + 22))
+
+    def test_virasoro_singular_levels_rejected(self):
+        """Both Virasoro normalisations reject c=0 and c=-22/5."""
+        for bad_c in [Fraction(0), Fraction(-22, 5)]:
+            with pytest.raises(ValueError):
+                virasoro_weighted_riccati_shadow(bad_c)
+            with pytest.raises(ValueError):
+                virasoro_manuscript_shadow(bad_c)
+
+    def test_w3_t_line_carries_both_s6_normalisations(self):
+        """W3 T-line exposes weighted and manuscript S_6 separately."""
+        data = w3_shadow(Fraction(26))
+        assert data['T_normalization'] == 'weighted_riccati'
+        assert data['S_6_T_weighted'] == virasoro_weighted_riccati_shadow(26)['S_6']
+        assert data['S_6_T_manuscript'] == virasoro_manuscript_shadow(26)['S_6']
+        assert data['S_6_T_weighted'] != data['S_6_T_manuscript']
 
 
 # ============================================================================
@@ -515,6 +627,26 @@ class TestFreeEnergyDecomposition:
             result = genus4_free_energy('W_3', Fraction(c_val))
             assert result['total_F4'] > 0, f"F_4 not positive at c={c_val}"
 
+    def test_w3_diagonal_scalar_lane_separate_from_cross_channel(self):
+        """The FP scalar lane and cross-channel lane are separate summands."""
+        c = Fraction(26)
+        decomp = w3_genus4_channel_decomposition(c)
+        fp4 = Fraction(127, 154828800)
+        assert decomp['scalar_T'] == (c / 2) * fp4
+        assert decomp['scalar_W'] == (c / 3) * fp4
+        assert decomp['scalar_total'] == Fraction(5) * c / 6 * fp4
+        assert decomp['cross_channel'] == delta_F4_W3(c)
+        assert decomp['cross_channel'] != decomp['scalar_total']
+
+    def test_w3_channel_decomposition_matches_free_energy(self):
+        """genus4_free_energy agrees with the explicit T/W decomposition."""
+        c = Fraction(50)
+        decomp = w3_genus4_channel_decomposition(c)
+        free_energy = genus4_free_energy('W_3', c)
+        assert free_energy['scalar_F4'] == decomp['scalar_total']
+        assert free_energy['delta_cross'] == decomp['cross_channel']
+        assert free_energy['total_F4'] == decomp['total_F4']
+
     def test_affine_uniform(self):
         """Affine sl_2 is uniform-weight at genus 4."""
         result = genus4_free_energy('affine_sl2', Fraction(1))
@@ -555,5 +687,6 @@ class TestFullVerification:
         assert sv['S6_nonzero_virasoro']
         assert sv['S7_nonzero_virasoro']
         # S_6, S_7 cross-verification
-        assert summary['S6_cross']['all_agree']
+        assert summary['S6_weighted_cross']['all_agree']
+        assert summary['S6_normalization_firewall']['distinct']
         assert summary['S7_cross']['all_agree']

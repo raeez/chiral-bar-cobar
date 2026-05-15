@@ -38,6 +38,8 @@ from compute.lib.mumford_chiodo_multiweight_engine import (
     c1_E_h_genus1,
     ch_k_interior_coefficient,
     faber_pandharipande_lambda_g,
+    genus2_boundary_pairing_status,
+    genus2_higher_hodge_diagnostic_polynomial,
     ch_2_E_h_genus2_structural,
     c1_E_h_genus2,
     c2_E_h_genus2_exact,
@@ -62,6 +64,8 @@ from compute.lib.mumford_chiodo_multiweight_engine import (
     INT_KAPPA1_KAPPA2,
     INT_KAPPA1_LAMBDA1_SQ,
     INT_KAPPA1_LAMBDA2,
+    INTERIOR_C3_PAIRING_GENUS2,
+    COLLISION_PAIRING_H1_H2_GENUS2,
 )
 
 
@@ -132,6 +136,15 @@ class TestBernoulliPolynomials:
         """B_3(x) + B_3(1-x) = 0 (odd about x = 1/2)."""
         for x in range(-5, 10):
             assert bernoulli_poly(3, x) + bernoulli_poly(3, 1 - x) == Fraction(0)
+
+    def test_b3_boundary_sign(self):
+        """The genus-2 boundary correction has coefficient -B_3(h) * P."""
+        h2 = genus2_higher_hodge_diagnostic_polynomial(2)
+        h3 = genus2_higher_hodge_diagnostic_polynomial(3)
+        assert bernoulli_poly(3, 2) == Fraction(3)
+        assert h2['P_coefficient'] == Fraction(-3)
+        assert bernoulli_poly(3, 3) == Fraction(15)
+        assert h3['P_coefficient'] == Fraction(-15)
 
 
 # ====================================================================
@@ -253,6 +266,12 @@ class TestFaberIntersections:
         assert INT_KAPPA1_LAMBDA2 == Fraction(7, 5760)
         assert INT_KAPPA1_LAMBDA2 == faber_pandharipande_lambda_g(2)
 
+    def test_lambda1_lambda2_not_lambda2_FP(self):
+        """AP38 guard: int lambda_1*lambda_2 is not lambda_2^FP."""
+        assert INT_LAMBDA1_LAMBDA2 == Fraction(1, 1152)
+        assert INT_KAPPA1_LAMBDA2 == Fraction(7, 5760)
+        assert INT_LAMBDA1_LAMBDA2 != INT_KAPPA1_LAMBDA2
+
 
 # ====================================================================
 # 6. Engine internal verifications (multi-path, per AP10)
@@ -318,7 +337,63 @@ class TestCh2Genus2:
 
 
 # ====================================================================
-# 8. Contamination analysis (the heart of AP27)
+# 8. Genus-2 boundary pairing discipline
+# ====================================================================
+
+class TestGenus2BoundaryPairingDiscipline:
+    """The compactified pairing P = int kappa_1*c_3 is not constructed here."""
+
+    def test_boundary_pairing_marked_unresolved(self):
+        status = genus2_boundary_pairing_status()
+        assert status['exact_compactified_integral_available'] is False
+        assert status['interior_diagnostic_pairing'] == Fraction(29, 34560)
+        assert status['collision_pairing_h1_h2'] == Fraction(1003, 8640)
+
+    def test_h1_diagnostic_exact_without_boundary_pairing(self):
+        diagnostic = genus2_higher_hodge_diagnostic_polynomial(1)
+        assert diagnostic['P_coefficient'] == Fraction(0)
+        assert diagnostic['value'] == Fraction(7, 5760)
+        assert diagnostic['exact_compactified_integral_available'] is True
+
+    def test_h2_diagnostic_polynomial_matches_source_formula(self):
+        diagnostic = genus2_higher_hodge_diagnostic_polynomial(2)
+        # e(2)^2/480 - (2 - 1/2)/576 = 169/480 - 1/384 = 671/1920.
+        assert diagnostic['P_independent_part'] == Fraction(671, 1920)
+        assert diagnostic['P_coefficient'] == Fraction(-3)
+        assert diagnostic['value'] is None
+        assert diagnostic['exact_compactified_integral_available'] is False
+
+    def test_h2_integral_requires_explicit_boundary_pairing(self):
+        with pytest.raises(ValueError, match='compactified integral is unresolved'):
+            integral_psi2_c2_E_h_genus2(2)
+
+    def test_collision_pairing_is_not_scalar_lane_proof(self):
+        I1 = integral_psi2_c2_E_h_genus2(1)
+        I2_collision = integral_psi2_c2_E_h_genus2(
+            2, P=COLLISION_PAIRING_H1_H2_GENUS2)
+        assert I1 == I2_collision == Fraction(7, 5760)
+
+        diff = c2_E_h_minus_c2_E_1_genus2(2)
+        assert diff['lambda_1_sq'] == Fraction(83)
+        assert diff['lambda_2'] == Fraction(2)
+        assert diff['c3_coeff'] == Fraction(-3)
+
+    def test_interior_pairing_is_explicit_diagnostic_only(self):
+        unresolved = integrated_contamination_genus2(2)
+        assert unresolved['integral'] == Fraction(1003, 2880)
+        assert unresolved['exact_compactified_integral_available'] is False
+        assert unresolved['P_used'] is None
+        assert unresolved['integral_interpretation'] == (
+            'P-independent diagnostic only; not an exact compactified integral')
+
+        diagnostic = integrated_contamination_genus2(2, P=INTERIOR_C3_PAIRING_GENUS2)
+        expected = Fraction(1003, 2880) - 3 * Fraction(29, 34560)
+        assert diagnostic['integral'] == expected
+        assert diagnostic['P_used'] == INTERIOR_C3_PAIRING_GENUS2
+
+
+# ====================================================================
+# 9. Contamination analysis (the heart of AP27)
 # ====================================================================
 
 class TestContamination:
@@ -347,13 +422,24 @@ class TestContamination:
         assert result['integral'] == Fraction(0)
 
     def test_integrated_contamination_h2_nonzero(self):
-        """int kappa_1 * [c_2(E_2) - c_2(E_1)] != 0."""
-        result = integrated_contamination_genus2(2)
-        assert result['integral'] != Fraction(0)
+        """The h=2 structural contamination is nonzero; integration needs P."""
+        unresolved = integrated_contamination_genus2(2)
+        assert unresolved['integral'] == Fraction(1003, 2880)
+        assert unresolved['P_independent_part'] == Fraction(1003, 2880)
+        assert unresolved['P_coefficient'] == Fraction(-3)
+        assert unresolved['exact_compactified_integral_available'] is False
+
+        at_P0 = integrated_contamination_genus2(2, P=Fraction(0))
+        assert at_P0['integral'] == Fraction(1003, 2880)
+        assert at_P0['integral'] != Fraction(0)
+
+        collision = integrated_contamination_genus2(
+            2, P=COLLISION_PAIRING_H1_H2_GENUS2)
+        assert collision['integral'] == Fraction(0)
 
 
 # ====================================================================
-# 9. Genus-1 universality (obs_1 = kappa * lambda_1, unconditional)
+# 10. Genus-1 universality (obs_1 = kappa * lambda_1, unconditional)
 # ====================================================================
 
 class TestGenus1Universality:
@@ -377,7 +463,7 @@ class TestGenus1Universality:
 
 
 # ====================================================================
-# 10. Integral psi^2 c_2(E_h) at genus 2
+# 11. Integral psi^2 c_2(E_h) at genus 2
 # ====================================================================
 
 class TestIntegralGenus2:
@@ -394,15 +480,15 @@ class TestIntegralGenus2:
             I_1 = integral_psi2_c2_E_h_genus2(1, P=P)
             assert I_1 == Fraction(7, 5760)
 
-    def test_integral_h2_differs(self):
-        """I(2) != I(1) -- multi-weight contamination is real."""
+    def test_integral_h2_differs_at_explicit_P0(self):
+        """I(2;0) != I(1), but this is a diagnostic specialization."""
         I_1 = integral_psi2_c2_E_h_genus2(1)
-        I_2 = integral_psi2_c2_E_h_genus2(2)
+        I_2 = integral_psi2_c2_E_h_genus2(2, P=Fraction(0))
         assert I_1 != I_2
 
 
 # ====================================================================
-# 11. delta_F_2(W_3) = (c + 204) / (16c) — THE LOAD-BEARING FORMULA
+# 12. delta_F_2(W_3) = (c + 204) / (16c) — THE LOAD-BEARING FORMULA
 #     Verified by 3+ independent paths per the multi-path mandate.
 # ====================================================================
 
@@ -448,6 +534,24 @@ class TestDeltaF2W3:
         except (ImportError, Exception):
             pytest.skip("w3_genus3_cross_channel engine not available")
 
+    def test_path4_large_n_A_B_oracle(self):
+        """Path 4: W_N closed coefficients specialize to W_3."""
+        from compute.lib.theorem_large_n_delta_f2_engine import (
+            A_exact,
+            B_exact,
+            delta_F2_grav_closed,
+        )
+        assert A_exact(3) == Fraction(51, 4)
+        assert B_exact(3) == Fraction(1, 16)
+        for c_val in [Fraction(2), Fraction(50), Fraction(100)]:
+            assert delta_F2_grav_closed(3, c_val) == self._delta_F2_closed(c_val)
+
+    def test_path5_frontier_engine_agreement(self):
+        """Path 5: Theorem-D frontier engine carries the same W_3 formula."""
+        from compute.lib.theorem_thm_d_multiweight_frontier_engine import w3_genus2_cross
+        for c_val in [Fraction(2), Fraction(50), Fraction(100)]:
+            assert w3_genus2_cross(c_val) == self._delta_F2_closed(c_val)
+
     def test_vanishes_uniform_weight_heisenberg(self):
         """delta_F_2 = 0 for uniform-weight algebras.
 
@@ -455,20 +559,19 @@ class TestDeltaF2W3:
         The cross-channel correction vanishes: no mixed channels.
         For Heisenberg: F_g = kappa * lambda_g^FP exactly.
         """
-        # For uniform-weight, delta_F_2 = 0 by definition:
-        # there is only one channel, so no cross-channel graphs.
-        # The formula (c+204)/(16c) is specific to W_3 (two channels).
-        # For Heisenberg (single channel): delta_F_2 = 0.
-        # Verify: at the Heisenberg central charge, the W_3 formula gives
-        # nonzero -- this confirms the formula is W_3-specific, NOT universal.
-        # There is no Heisenberg cross-channel correction.
-        pass  # Structural: single-channel algebras have delta_F = 0 by definition
+        # With one channel there are no assignments using two distinct channels.
+        channels = ('H',)
+        two_edge_assignments = [(a, b) for a in channels for b in channels]
+        mixed = [assignment for assignment in two_edge_assignments
+                 if len(set(assignment)) >= 2]
+        assert mixed == []
+        assert self._delta_F2_closed(Fraction(1)) != Fraction(0)
 
     def test_vanishes_uniform_weight_virasoro(self):
         """Virasoro is single-generator (uniform weight h=2): delta_F_2 = 0."""
-        # Virasoro has ONE generator T, so all graphs are single-channel.
-        # delta_F_2^cross(Vir) = 0 identically for all c.
-        pass  # Structural: single-generator algebras have zero cross-channel
+        from compute.lib.theorem_large_n_delta_f2_engine import delta_F2_grav_closed
+        for c_val in [Fraction(1), Fraction(10), Fraction(100)]:
+            assert delta_F2_grav_closed(2, c_val) == Fraction(0)
 
     def test_positive_for_c_positive(self):
         """(c + 204) / (16c) > 0 for all c > 0."""
@@ -520,7 +623,7 @@ class TestDeltaF2W3:
 
 
 # ====================================================================
-# 12. General W_N cross-channel at genus 2 (formula: B(N) + A(N)/c)
+# 13. General W_N cross-channel at genus 2 (formula: B(N) + A(N)/c)
 # ====================================================================
 
 class TestWNGenus2CrossChannel:
@@ -550,8 +653,9 @@ class TestWNGenus2CrossChannel:
 
     def test_w2_virasoro_zero(self):
         """W_2 = Virasoro (single generator): delta_F_2 = 0."""
-        # Virasoro has one generator -> no cross-channel.
-        pass  # Structural test
+        from compute.lib.theorem_large_n_delta_f2_engine import delta_F2_grav_closed
+        for c_val in [Fraction(1), Fraction(10), Fraction(100)]:
+            assert delta_F2_grav_closed(2, c_val) == Fraction(0)
 
     def test_w3_formula(self):
         """W_3: delta_F_2 = (c + 204)/(16c) = 51/(4c) + 1/16."""
@@ -562,7 +666,7 @@ class TestWNGenus2CrossChannel:
 
 
 # ====================================================================
-# 13. Vertex contribution analysis (AP27 structural)
+# 14. Vertex contribution analysis (AP27 structural)
 # ====================================================================
 
 class TestVertexContribution:
@@ -577,14 +681,16 @@ class TestVertexContribution:
         assert va['vertices_introduce_E_h'] is False
 
     def test_hypothetical_h2_large(self):
-        """If bar used E_2, contamination would be enormous."""
+        """If bar used E_2, the P-independent diagnostic is already large."""
         va = vertex_contribution_analysis()
-        # The ratio should be large (>> 1), showing AP27 violation detectable
-        assert va['contamination_hypothetical_h2'] is not None
+        assert va['contamination_hypothetical_h2'] == Fraction(2006, 7)
+        assert va['contamination_hypothetical_status'].startswith('unresolved')
+        assert va['h2_P_independent_ratio_to_FP'] == Fraction(2006, 7)
+        assert va['h2_P_coefficient'] == Fraction(-3)
 
 
 # ====================================================================
-# 14. Interior Chern character coefficients
+# 15. Interior Chern character coefficients
 # ====================================================================
 
 class TestInteriorChernCharacter:
@@ -613,7 +719,7 @@ class TestInteriorChernCharacter:
 
 
 # ====================================================================
-# 15. Sensitivity analysis
+# 16. Sensitivity analysis
 # ====================================================================
 
 class TestSensitivity:
@@ -630,10 +736,11 @@ class TestSensitivity:
         sens = contamination_sensitivity(2)
         assert sens['P_coefficient'] != Fraction(0)
         assert sens['P_coefficient'] == -bernoulli_poly(3, 2)
+        assert sens['collision_pairing_to_cancel'] == COLLISION_PAIRING_H1_H2_GENUS2
 
 
 # ====================================================================
-# 16. GRR Chern class full diagnostic
+# 17. GRR Chern class full diagnostic
 # ====================================================================
 
 class TestGRRChernClasses:

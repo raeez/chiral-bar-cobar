@@ -1,11 +1,18 @@
-r"""Twisted holography dictionary from the universal MC element Theta_A.
+r"""Twisted holography dictionary anchored at the universal MC element Theta_A.
 
-DERIVATION: The Costello-Gaiotto twisted holography dictionary is DERIVED
-from the universal MC element Theta_A := D_A - d_0 in MC(g^mod_A).
+ANCHOR: The Costello-Gaiotto projection dictionary uses the universal MC
+element Theta_A := D_A - d_0 in the ordered convolution dGLA.  The true
+Maurer-Cartan equation is
 
-The holographic modular Koszul datum H(T) = (A, A!, C, r(z), Theta_A, nabla^hol)
-packages the full HT holographic system.  Every component is a projection of
-Theta_A (Theorem thm:thqg-projection in twisted_holography_quantum_gravity.tex).
+  DTheta_A + 1/2[Theta_A,Theta_A] = 0.
+
+The holographic modular Koszul package has seven structural entries
+H(T) = (A, A^i, A^!, C, r(z), Theta_A, nabla^hol).  This engine computes
+the scalar and collision projections visible from Theta_A
+(Theorem thm:thqg-projection in twisted_holography_quantum_gravity.tex).
+It does not construct A^i, A^!, or C from Theta_A alone.  The bar-dual
+coalgebra A^i, the Verdier/Koszul branch A^!, and the derived-centre
+bulk slot C are distinct objects.
 
 PROJECTION STRUCTURE:
 
@@ -39,10 +46,10 @@ EXPLICIT sl_2 VERIFICATION:
   OPE: J^a(z) J^b(w) ~ k*delta^{ab}/(z-w)^2 + f^{abc} J^c(w)/(z-w)
 
   Collision residue (AP19: d log absorbs one pole):
-    r^{coll}(z) = Omega_{sl_2} / z   where Omega = sum_a t^a tensor t_a
+    r^{coll}(z) = k*Omega_{sl_2} / z   where Omega = sum_a t^a tensor t_a
 
   In fundamental rep (C^2):
-    r^{fund}(z) = P/z  where P = permutation on C^2 tensor C^2
+    r^{fund,coll}(z) = k*P/z  where P = permutation on C^2 tensor C^2
 
   CYBE: [r_{12}(z_{12}), r_{13}(z_{13})] + [r_{12}(z_{12}), r_{23}(z_{23})]
         + [r_{13}(z_{13}), r_{23}(z_{23})] = 0
@@ -51,11 +58,16 @@ EXPLICIT sl_2 VERIFICATION:
   The three terms correspond to the three codimension-2 strata of FM_3.
   Vanishing follows from the Arnold relation on H^*(FM_3(C)).
 
-  Quantum R-matrix: R(z) = 1 - hbar*P/z + O(hbar^2)
+  Yang/KZ-normalized R-matrix: R(z) = 1 - hbar*P/z + O(hbar^2)
   This satisfies the quantum YBE:
     R_{12}(u) R_{13}(u+v) R_{23}(v) = R_{23}(v) R_{13}(u+v) R_{12}(u)
 
-  The monodromy of the KZ connection nabla_{0,n} = d - sum r^{ij}(z_ij) dz_ij
+  The trace-form collision kernel k*Omega/z and the KZ/Sugawara kernel
+  Omega/((k+h^vee)z) are different normalizations, not interchangeable
+  bare Omega/z formulas.
+
+  The monodromy of the KZ/Sugawara connection
+    nabla_{0,n} = d - (1/(k+2)) sum Omega^{ij} dz_ij/z_ij
   gives the quantum group R-matrix of U_q(sl_2) where q = exp(pi*i/(k+2)).
   This is the Drinfeld-Kohno theorem, which in our framework is the statement
   that the genus-0 shadow connection monodromy = R-matrix.
@@ -64,7 +76,8 @@ CONVENTIONS (anti-pattern compliance):
   AP19: r-matrix pole orders ONE BELOW OPE (d log kernel absorption)
   AP20: kappa(A) intrinsic to A, not to physical system
   AP24: kappa + kappa' = 0 for KM; != 0 for W-algebras
-  AP25: B(A) coalgebra, D_Ran(B(A)) = B(A!) algebra, Omega(B(A)) = A
+  AP25: B(A) coalgebra, A^i = H*(B(A)), A^! from Verdier duality,
+        Omega(B(A)) = A is inversion.
   AP27: bar propagator d log E(z,w) weight 1 regardless of field weight
   AP33: H_k^! = Sym^ch(V*) != H_{-k} (same kappa, different algebras)
   AP39: kappa != c/2 in general; kappa = c/2 ONLY for Virasoro
@@ -82,12 +95,17 @@ References:
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from fractions import Fraction
 from math import comb, factorial
 from typing import Any, Dict, List, Optional, Tuple
 
 import numpy as np
+
+
+MC_EQUATION = "DTheta_A + 1/2[Theta_A,Theta_A] = 0"
+MC_EQUATION_SCOPE = "ordered convolution dGLA"
+SEVEN_ENTRY_PACKAGE = ("A", "A^i", "A^!", "C", "r(z)", "Theta_A", "nabla^hol")
 
 
 # =========================================================================
@@ -191,6 +209,8 @@ class CollisionResidue:
 
     This is the classical r-matrix controlling the binary scattering.
     Pole orders are AFTER AP19 d-log absorption.
+    For matrix-valued kernels, scalar_poles records the coefficient of the
+    distinguished tensor (Casimir/permutation), not the averaged kappa.
     """
     algebra_name: str
     # poles[n] = coefficient of z^{-n} in r^{coll}(z)
@@ -230,22 +250,52 @@ class QuantumRMatrix:
     satisfies_qybe: bool
 
 
+@dataclass(frozen=True)
+class KernelNormalization:
+    """Collision and holomorphic-connection kernel factors.
+
+    The affine trace-form collision residue is k*Omega/z.  The KZ/Sugawara
+    connection uses Omega/((k+h^vee)z).  This record keeps the two factors
+    typed apart so a bare Omega/z shortcut cannot pass silently.
+    """
+    family: str
+    collision_residue_factor: Optional[Fraction]
+    holomorphic_connection_factor: Optional[Fraction]
+    collision_kernel: str
+    holomorphic_connection_kernel: str
+    comparison_scope: str
+
+
 @dataclass
 class HolographicDictionary:
-    """The full Costello-Gaiotto dictionary derived from Theta_A.
+    """Costello-Gaiotto projection dictionary anchored at Theta_A.
 
-    All six components of H(T) = (A, A!, C, r(z), Theta_A, nabla^hol)
-    are determined by Theta_A (thm:thqg-projection).
+    The seven-entry package is (A, A^i, A^!, C, r(z), Theta_A, nabla^hol).
+    This dataclass keeps legacy A^! and line-category fields for API
+    compatibility while exposing the bar-dual coalgebra slot explicitly.
     """
+    package_entries: Tuple[str, ...]
     boundary: ChiralAlgebraData
+    bar_complex_name: str
+    bar_dual_name: str
+    bar_dual_scope: str
     koszul_dual_kappa: Fraction
     koszul_dual_name: str
-    line_category: str  # description of C = A!-mod
+    bar_cobar_inversion_name: str
+    bulk_slot_name: str
+    line_category: str  # line/evaluation category; not automatically Z_ch^der(A)
+    derived_center_scope: str
     collision_residue: CollisionResidue
+    kernel_normalization: KernelNormalization
     yangian: Optional[YangianData]
     quantum_r: Optional[QuantumRMatrix]
+    theta_scope: str
+    nabla_hol_scope: str
+    mc_equation: str
+    mc_equation_scope: str
+    object_types: Dict[str, str]
     shadow_connection_flat: bool
-    kappa_sum: Fraction  # kappa(A) + kappa(A!) -- 0 for KM, nonzero for W
+    kappa_sum: Fraction  # kappa(A) + kappa(A^!) -- 0 for KM, nonzero for W
     # Three-path verification
     path_a_mc_projection: bool
     path_b_boundary_ope: bool
@@ -418,9 +468,11 @@ def extract_collision_residue(A: ChiralAlgebraData) -> CollisionResidue:
     elif A.family.startswith("affine"):
         # OPE: k*delta^{ab}/z^2 + f^{abc}/z
         # Collision residue (AP19): k*delta^{ab}/z + (regular)
-        # The Casimir Omega/z is the matrix-valued r-matrix.
-        # Scalar projection: kappa = dim(g)*(k+h^v)/(2*h^v)
-        scalar_poles = {1: A.kappa}
+        # The trace-form Casimir kernel is k*Omega/z.
+        # Its averaged scalar shadow is av(r) = k*dim(g)/(2*h^v);
+        # kappa = av(r) + dim(g)/2, not the coefficient of r(z).
+        level_coeff = A.level if A.level is not None else Fraction(0)
+        scalar_poles = {1: level_coeff} if level_coeff != 0 else {}
         is_matrix = True
 
     elif A.family == "virasoro":
@@ -435,11 +487,9 @@ def extract_collision_residue(A: ChiralAlgebraData) -> CollisionResidue:
         # OPE: 1/(z-w) for (beta, gamma) pair
         # Collision residue (AP19): simple pole -> regular, drops out!
         # The beta-gamma r-matrix is trivial at the scalar level.
-        # The non-scalar part gives a matrix-valued r-matrix E_{12}/z
-        # after bar construction.
-        # At scalar level: kappa contributes to the genus tower.
+        # Class-C data lives in higher shadows; this function records no
+        # singular arity-2 collision kernel.
         scalar_poles = {}  # scalar projection is zero at arity 2
-        is_matrix = True
 
     else:
         # Generic: extract from OPE data
@@ -457,6 +507,62 @@ def extract_collision_residue(A: ChiralAlgebraData) -> CollisionResidue:
     )
 
 
+def kernel_normalization(A: ChiralAlgebraData) -> KernelNormalization:
+    """Return the exact kernel factors used by r(z) and nabla^hol."""
+    if A.family == "heisenberg":
+        return KernelNormalization(
+            family=A.family,
+            collision_residue_factor=A.kappa,
+            holomorphic_connection_factor=A.kappa,
+            collision_kernel="k/z",
+            holomorphic_connection_kernel="k dz/z",
+            comparison_scope="scalar Heisenberg normalization; kappa=k",
+        )
+
+    if A.family.startswith("affine") and A.level is not None:
+        kz_factor = Fraction(1) / (A.level + A.dual_coxeter)
+        return KernelNormalization(
+            family=A.family,
+            collision_residue_factor=A.level,
+            holomorphic_connection_factor=kz_factor,
+            collision_kernel="k*Omega/z",
+            holomorphic_connection_kernel="Omega/((k+h^vee)z) dz",
+            comparison_scope=(
+                "trace-form collision residue and KZ/Sugawara connection "
+                "are compared after normalization"
+            ),
+        )
+
+    if A.family == "virasoro":
+        return KernelNormalization(
+            family=A.family,
+            collision_residue_factor=A.kappa,
+            holomorphic_connection_factor=None,
+            collision_kernel="(c/2)/z^3 + 2T/z",
+            holomorphic_connection_kernel="Virasoro oper connection",
+            comparison_scope="Virasoro uses cubic plus simple collision poles",
+        )
+
+    if A.family == "betagamma":
+        return KernelNormalization(
+            family=A.family,
+            collision_residue_factor=Fraction(0),
+            holomorphic_connection_factor=None,
+            collision_kernel="0 at scalar arity 2",
+            holomorphic_connection_kernel="free-field regular scalar connection",
+            comparison_scope="simple beta-gamma OPE drops to the regular part",
+        )
+
+    return KernelNormalization(
+        family=A.family,
+        collision_residue_factor=None,
+        holomorphic_connection_factor=None,
+        collision_kernel="not computed",
+        holomorphic_connection_kernel="not computed",
+        comparison_scope="family not implemented",
+    )
+
+
 def collision_residue_leading_pole(r: CollisionResidue) -> int:
     """Leading pole order of r(z) after AP19 absorption."""
     if not r.scalar_poles:
@@ -471,6 +577,20 @@ def collision_residue_matches_ope(A: ChiralAlgebraData,
     Check that the scalar poles of r(z) are consistent with the
     OPE data of A after AP19 absorption.
     """
+    if A.family == "heisenberg":
+        return r.scalar_poles == ({1: A.kappa} if A.kappa != 0 else {})
+
+    if A.family.startswith("affine"):
+        expected = A.level if A.level is not None else Fraction(0)
+        expected_poles = {1: expected} if expected != 0 else {}
+        return r.is_matrix_valued and r.scalar_poles == expected_poles
+
+    if A.family == "virasoro":
+        return r.scalar_poles.get(3) == A.kappa
+
+    if A.family == "betagamma":
+        return r.scalar_poles == {}
+
     for ope in A.ope_data:
         coll = ope.collision_residue_poles()
         for n, coeff in coll.items():
@@ -487,9 +607,11 @@ def collision_residue_matches_ope(A: ChiralAlgebraData,
 def verify_cybe_from_mc(A: ChiralAlgebraData) -> bool:
     """Verify that CYBE follows from the (0,3) MC equation.
 
-    The MC equation D*Theta + (1/2)[Theta, Theta] = 0 at (g=0, r=3):
+    The MC equation DTheta_A + 1/2[Theta_A,Theta_A] = 0 in the ordered
+    convolution dGLA, projected to (g=0, r=3), gives:
 
-      D_A * Theta^{(0,3)} + (1/2)[Theta^{(0,2)}, Theta^{(0,2)}]_{(0,3)} = 0
+      D Theta_A^{(0,3)}
+      + 1/2[Theta_A^{(0,2)}, Theta_A^{(0,2)}]_{(0,3)} = 0
 
     The bracket term, evaluated on the three boundary strata of FM_3(C),
     produces exactly the three terms of the CYBE:
@@ -504,7 +626,8 @@ def verify_cybe_from_mc(A: ChiralAlgebraData) -> bool:
     because all commutators of scalars vanish.
 
     For matrix-valued r-matrices (affine sl_N): CYBE for the
-    Casimir r-matrix Omega/z is a standard result (Casimir is ad-invariant).
+    trace-form Casimir r-matrix k*Omega/z is a standard result
+    (Casimir is ad-invariant; scalar multiples preserve CYBE).
     """
     r = extract_collision_residue(A)
 
@@ -514,7 +637,7 @@ def verify_cybe_from_mc(A: ChiralAlgebraData) -> bool:
 
     if A.family.startswith("affine"):
         # The Casimir Omega satisfies [Omega_{12}, Omega_{13}] + cyc = 0
-        # because Omega is ad-invariant. This is the standard result.
+        # because Omega is ad-invariant; multiplying by k preserves CYBE.
         return True
 
     # For other matrix-valued cases, CYBE follows from the MC equation
@@ -615,7 +738,9 @@ def extract_yangian_data(A: ChiralAlgebraData) -> Optional[YangianData]:
 
     For affine sl_N at level k:
       The Yangian Y(sl_N) is the deformation quantization of the
-      Poisson structure determined by r(z) = Omega/z.
+      Poisson structure determined by the Casimir kernel.  The raw
+      collision residue is k*Omega/z; the Yang/KZ convention divides
+      by the appropriate level-dependent normalization.
       The quantum parameter is q = exp(pi*i/(k+N)).
 
     For Heisenberg:
@@ -646,7 +771,7 @@ def extract_yangian_data(A: ChiralAlgebraData) -> Optional[YangianData]:
             lie_algebra=f"sl_{N}",
             rank=N - 1,
             dim=dim,
-            r_matrix_pole=1,  # Omega/z: single pole
+            r_matrix_pole=1,  # k*Omega/z: single collision pole
             cybe_verified=True,
             rtt_consistent=True,
             quantum_parameter=None,  # exact q requires analytic continuation
@@ -714,9 +839,10 @@ def quantum_r_matrix(A: ChiralAlgebraData) -> QuantumRMatrix:
       R(z) = 1 - hbar*P/z + hbar^2*(P^2/z^2 - ...) + ...
       = (z - hbar*P) / z  (Yang R-matrix, exact to leading order)
 
-    The Drinfeld-Kohno theorem: monodromy of the KZ connection
+    The Drinfeld-Kohno theorem: monodromy of the KZ/Sugawara connection
       nabla_{0,n} = d - (1/(k+h^v)) sum_{i<j} (Omega^{ij}/(z_i - z_j)) d(z_i - z_j)
     gives the quantum group R-matrix of U_q(g) where q = exp(pi*i/(k+h^v)).
+    This connection kernel is not the trace-form collision residue k*Omega/z.
     """
     r = extract_collision_residue(A)
     F1 = A.kappa * _lambda_fp(1)  # F_1 = kappa * lambda_1 = kappa/24
@@ -735,8 +861,9 @@ def yang_r_matrix_numerical(N: int, z: complex, hbar: complex = 1.0) -> np.ndarr
     Satisfies the quantum YBE in difference form:
       R_{12}(u-v) R_{13}(u) R_{23}(v) = R_{23}(v) R_{13}(u) R_{12}(u-v)
 
-    The collision residue r(z) = P/z is recovered as the leading term
-    of R(z)/z = I - hbar*P/z at large z.
+    The Yang/KZ-normalized Casimir kernel P/z is recovered as the
+    leading term of R(z)/z = I - hbar*P/z at large z.  This is not the
+    trace-form affine collision coefficient k*Omega/z.
     """
     P = _permutation_matrix(N)
     dim2 = N * N
@@ -784,15 +911,19 @@ def verify_qybe_yang_numerical(N: int, z_vals: Optional[List[complex]] = None,
 def shadow_connection_genus0(A: ChiralAlgebraData, n: int) -> Dict[str, Any]:
     """Shadow connection nabla^{hol}_{0,n} at genus 0.
 
-    nabla_{0,n} = d - sum_{i<j} r^{ij}(z_i - z_j) d(z_i - z_j)
+    nabla^{hol}_{0,n} is flat by the ordered MC equation and the Arnold
+    relation.  For affine algebras the raw collision residue and the
+    KZ/Sugawara connection coefficient are stored separately.
 
     For affine sl_N at level k, this is the KZ connection:
       nabla_{KZ} = d - (1/(k+h^v)) sum_{i<j} (Omega^{ij}/(z_i - z_j)) d(z_i - z_j)
 
     Flatness: (nabla_{0,n})^2 = 0
-    This follows from the MC equation for Theta_A (thm:thqg-flatness).
+    This follows from DTheta_A + 1/2[Theta_A,Theta_A] = 0
+    (thm:thqg-flatness).
     """
     r = extract_collision_residue(A)
+    normalization = kernel_normalization(A)
     n_pairs = n * (n - 1) // 2
 
     is_kz = A.family.startswith("affine")
@@ -805,31 +936,36 @@ def shadow_connection_genus0(A: ChiralAlgebraData, n: int) -> Dict[str, Any]:
         "n_points": n,
         "n_pairs": n_pairs,
         "r_matrix": r,
+        "kernel_normalization": normalization,
         "is_kz_type": is_kz,
         "kz_level_factor": kz_level_factor,
         "is_flat": True,  # from MC equation
-        "flat_reason": "MC equation + Arnold relations",
+        "flat_reason": f"{MC_EQUATION} in the {MC_EQUATION_SCOPE} + Arnold relations",
     }
 
 
 def kz_connection_matches_shadow(A: ChiralAlgebraData) -> bool:
-    """Verify the KZ connection matches the genus-0 shadow connection.
+    """Verify KZ compatibility with the genus-0 shadow connection.
 
     For affine sl_N at level k:
-      nabla_{0,n}^{shadow} = d - sum_{i<j} r^{ij}(z_{ij}) dz_{ij}
+      r^{coll}(z) = k*Omega/z
       nabla_{KZ} = d - (1/(k+N)) sum_{i<j} (Omega^{ij}/z_{ij}) dz_{ij}
 
-    These match because:
-      r^{coll}(z) = Omega/z  and the normalization factor 1/(k+h^v)
-      is absorbed into the overall MC normalization.
+    The function checks compatibility after the Sugawara/KZ
+    normalization.  It is not asserting equality of k*Omega/z and
+    Omega/((k+h^vee)z).
     """
     if not A.family.startswith("affine"):
         return False  # KZ only for affine algebras
+    if A.level is None:
+        return False
 
-    # The shadow connection at (0,n) uses r(z) = Omega/z
-    # KZ uses Omega/(k+h^v) * 1/z
-    # These match with the appropriate normalization of Theta_A.
-    return True
+    normalization = kernel_normalization(A)
+    return (
+        normalization.collision_residue_factor == A.level
+        and normalization.holomorphic_connection_factor
+        == Fraction(1) / (A.level + A.dual_coxeter)
+    )
 
 
 # =========================================================================
@@ -837,7 +973,7 @@ def kz_connection_matches_shadow(A: ChiralAlgebraData) -> bool:
 # =========================================================================
 
 def koszul_dual_kappa(A: ChiralAlgebraData) -> Fraction:
-    """kappa(A!) for the Koszul dual.
+    """kappa(A^!) for the Verdier/Koszul branch.
 
     AP24: kappa + kappa' = 0 for KM/free fields.
           kappa + kappa' = rho*K for W-algebras.
@@ -865,7 +1001,7 @@ def koszul_dual_kappa(A: ChiralAlgebraData) -> Fraction:
 
 
 def kappa_sum(A: ChiralAlgebraData) -> Fraction:
-    """kappa(A) + kappa(A!).
+    """kappa(A) + kappa(A^!).
 
     AP24: This is NOT always zero!
     = 0 for KM, free fields, lattice, principal W
@@ -876,14 +1012,15 @@ def kappa_sum(A: ChiralAlgebraData) -> Fraction:
 
 
 # =========================================================================
-# 8. Full holographic dictionary extraction
+# 8. Holographic dictionary extraction
 # =========================================================================
 
 def extract_holographic_dictionary(A: ChiralAlgebraData) -> HolographicDictionary:
-    """Extract the full Costello-Gaiotto dictionary from Theta_A.
+    """Extract the Costello-Gaiotto projection dictionary from Theta_A.
 
     This is the master function: given the boundary algebra A,
-    reconstruct H(T) = (A, A!, C, r(z), Theta_A, nabla^hol).
+    assemble the visible entries of
+    H(T) = (A, A^i, A^!, C, r(z), Theta_A, nabla^hol).
 
     Three-path verification:
       Path A: r(z) from MC projection (extract_collision_residue)
@@ -891,12 +1028,18 @@ def extract_holographic_dictionary(A: ChiralAlgebraData) -> HolographicDictionar
       Path C: Yangian from RTT (extract_yangian_data)
     """
     r = extract_collision_residue(A)
+    normalization = kernel_normalization(A)
     Y = extract_yangian_data(A)
     R = quantum_r_matrix(A)
     kd_kappa = koszul_dual_kappa(A)
     k_sum = kappa_sum(A)
 
-    # Determine Koszul dual name
+    bar_complex_name = f"B^ch({A.name})"
+    bar_dual_name = f"H^*({bar_complex_name})"
+    bar_dual_scope = "A^i is the bar-dual coalgebra; it is not A^!."
+    bar_cobar_inversion_name = f"Omega({bar_complex_name}) -> {A.name}"
+
+    # Determine Verdier/Koszul branch name
     if A.family == "heisenberg":
         dual_name = f"Sym^ch(V*) [kappa={kd_kappa}]"
     elif A.family.startswith("affine") and A.level is not None:
@@ -908,8 +1051,27 @@ def extract_holographic_dictionary(A: ChiralAlgebraData) -> HolographicDictionar
     else:
         dual_name = f"{A.name}!"
 
-    # Line category
+    # Line/evaluation category.  This is not automatically the derived centre
+    # without the separate open-closed comparison theorem.
     line_cat = f"{dual_name}-mod"
+    bulk_slot_name = f"Z_ch^der({A.name})"
+    derived_center_scope = (
+        "C is the Z_ch^der(A) bulk slot after comparison; it is not "
+        "B(A), A^i, A^!, or Omega(B(A))."
+    )
+    theta_scope = f"Theta_A satisfies {MC_EQUATION} in the {MC_EQUATION_SCOPE}."
+    nabla_hol_scope = (
+        "nabla^hol is the holomorphic connection entry; for affine inputs "
+        "it uses the KZ/Sugawara factor, not the trace-form collision factor."
+    )
+    object_types = {
+        "A": "boundary chiral algebra",
+        "B(A)": "ordered bar coalgebra T^c(s^{-1}bar A)",
+        "A^i": "bar cohomology coalgebra H^*(B(A))",
+        "A^!": "Verdier/Koszul dual algebra obtained from A^i",
+        "Omega(B(A))": "bar-cobar inversion object returning A",
+        "Z_ch^der(A)": "derived-centre Hochschild bulk object C",
+    }
 
     # Three-path verification
     path_a = True  # MC projection always works (proved: thm:mc2-bar-intrinsic)
@@ -917,13 +1079,26 @@ def extract_holographic_dictionary(A: ChiralAlgebraData) -> HolographicDictionar
     path_c = Y is not None and Y.cybe_verified
 
     return HolographicDictionary(
+        package_entries=SEVEN_ENTRY_PACKAGE,
         boundary=A,
+        bar_complex_name=bar_complex_name,
+        bar_dual_name=bar_dual_name,
+        bar_dual_scope=bar_dual_scope,
         koszul_dual_kappa=kd_kappa,
         koszul_dual_name=dual_name,
+        bar_cobar_inversion_name=bar_cobar_inversion_name,
+        bulk_slot_name=bulk_slot_name,
         line_category=line_cat,
+        derived_center_scope=derived_center_scope,
         collision_residue=r,
+        kernel_normalization=normalization,
         yangian=Y,
         quantum_r=R,
+        theta_scope=theta_scope,
+        nabla_hol_scope=nabla_hol_scope,
+        mc_equation=MC_EQUATION,
+        mc_equation_scope=MC_EQUATION_SCOPE,
+        object_types=object_types,
         shadow_connection_flat=True,
         kappa_sum=k_sum,
         path_a_mc_projection=path_a,
@@ -941,11 +1116,11 @@ def sl2_explicit_verification(k: Fraction) -> Dict[str, Any]:
 
     This is the prototypical example:
       Boundary: A = V_k(sl_2)
-      Line operators: C = Rep_q(sl_2) (at non-root-of-unity level)
-      Holographic dictionary: Z_bulk[source] = <boundary operator>
+      Line/evaluation model: Rep_q(sl_2) (at non-root-of-unity level)
+      Bulk slot: C = Z_ch^der(A), compared separately with line data
 
     Verification:
-    1. r(z) = Omega/z from collision residue (AP19: double pole -> simple)
+    1. r(z) = k*Omega/z from collision residue (AP19: double pole -> simple)
     2. CYBE from (0,3) MC equation + Arnold
     3. R(z) = 1 - hbar*P/z satisfies QYBE (Yang R-matrix)
     4. KZ connection matches shadow at (0,n)
@@ -963,6 +1138,8 @@ def sl2_explicit_verification(k: Fraction) -> Dict[str, Any]:
     result["r_matrix_leading_pole"] = collision_residue_leading_pole(r)
     result["r_matrix_is_casimir_type"] = r.is_matrix_valued
     result["r_matrix_scalar_coeff"] = r.scalar_poles.get(1, Fraction(0))
+    result["collision_kernel_factor"] = H.kernel_normalization.collision_residue_factor
+    result["kz_sugawara_factor"] = H.kernel_normalization.holomorphic_connection_factor
 
     # 2. CYBE
     result["cybe_from_mc"] = verify_cybe_from_mc(A)

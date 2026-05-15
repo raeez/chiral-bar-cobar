@@ -1,10 +1,10 @@
-r"""Tests for BTZ quantum gravity engine: black hole entropy from the shadow CohFT.
+r"""Tests for BTZ quantum-gravity diagnostics from finite shadow data.
 
 Tests organized by section:
   1.  Faber-Pandharipande intersection numbers (exact arithmetic)
   2.  Virasoro shadow data (kappa, S_3, S_4, S_5)
   3.  Free energies F_g (scalar + planted-forest)
-  4.  Shadow partition function Z^sh
+  4.  Finite shadow partition diagnostic Z^sh
   5.  Bekenstein-Hawking entropy (classical)
   6.  One-loop (genus-1) quantum correction
   7.  Two-loop (genus-2) quantum correction
@@ -15,7 +15,7 @@ Tests organized by section:
   12. Farey tail expansion
   13. Renyi entropy
   14. Entanglement entropy
-  15. A-hat generating function and convergence
+  15. Scalar A-hat generating function and convergence diagnostics
   16. Special central charges (c=1, 13, 24, 26)
   17. Large-c semiclassical limit
   18. Cross-checks and consistency
@@ -64,6 +64,7 @@ from btz_quantum_gravity_engine import (
     # Section 11
     ahat_generating_function, scalar_free_energy_sum, ahat_closed_form,
     verify_ahat_identity, shadow_convergence_radius,
+    free_energy_certification, borel_summability_status,
     # Section 12
     full_entropy_report,
     # Section 13
@@ -106,7 +107,7 @@ class TestFaberPandharipande:
         assert lambda_fp(5) == Fraction(73, 3503554560)
 
     def test_all_positive(self):
-        """lambda_g^FP > 0 for all g >= 1 (AP22: Bernoulli signs are correct)."""
+        """lambda_g^FP > 0 for all g >= 1."""
         for g in range(1, 9):
             assert lambda_fp(g) > 0, f"lambda_{g}^FP must be positive"
 
@@ -203,7 +204,7 @@ class TestFreeEnergies:
         assert len(table) == 5
 
     def test_F_g_all_positive_virasoro(self):
-        """All scalar free energies are positive (from positive lambda_g^FP)."""
+        """Scalar free energies are positive when kappa > 0."""
         for g in range(1, 8):
             assert F_g_scalar(Fraction(12), g) > 0
 
@@ -213,7 +214,7 @@ class TestFreeEnergies:
 # =========================================================================
 
 class TestShadowPartitionFunction:
-    """Z^sh = exp(sum F_g * hbar^{2g})."""
+    """Finite Z^sh diagnostic = exp(sum F_g * hbar^{2g})."""
 
     def test_Z_at_hbar_zero(self):
         """Z^sh(hbar=0) = exp(0) = 1."""
@@ -314,8 +315,8 @@ class TestOneLoopCorrection:
         S_1 = entropy_correction_genus_g(c, M, 1)
         assert S_1 < 0
 
-    def test_three_routes_agree(self):
-        """F_1 from heat kernel = shadow tower = Selberg zeta = c/48."""
+    def test_shadow_F1_equals_c_over_48(self):
+        """The scalar shadow identity gives F_1 = c/48."""
         for c in [1, 12, 24, 26]:
             F1_shadow = float(virasoro_free_energy(c, 1))
             F1_exact = float(c) / 48.0
@@ -325,7 +326,9 @@ class TestOneLoopCorrection:
         data = explicit_1loop_correction(24, 10)
         assert abs(data['F_1'] - 0.5) < 1e-14
         assert data['log_coefficient'] == -1.5
-        assert data['three_routes_agree']
+        assert data['scalar_shadow_certified']
+        assert data['btz_log_input_status'] == 'external_3d_gravity_input'
+        assert not data['external_routes_certified_here']
 
 
 # =========================================================================
@@ -399,7 +402,7 @@ class TestThreeLoopCorrection:
 # =========================================================================
 
 class TestHigherLoopCorrections:
-    """Genus 4-5 corrections (scalar only at these genera)."""
+    """Genus 4-5 scalar-window corrections."""
 
     def test_F4_scalar(self):
         """F_4^{sc}(Vir_24) = 12 * 127/154828800."""
@@ -434,11 +437,13 @@ class TestHigherLoopCorrections:
     def test_explicit_4loop(self):
         data = explicit_4loop_correction(24, 10)
         assert data['F_4_scalar'] > 0
+        assert not data['certification']['full_free_energy_certified']
 
     def test_explicit_5loop(self):
         data = explicit_5loop_correction(24, 10)
         assert data['F_5_scalar'] > 0
-        assert 'first computation' in data['note']
+        assert not data['certification']['full_free_energy_certified']
+        assert 'scalar Bernoulli term only' in data['note']
 
     def test_corrections_decrease_with_genus(self):
         """Higher-genus corrections are monotonically decreasing in absolute value."""
@@ -471,6 +476,8 @@ class TestFullEntropyExpansion:
         assert 'S_5' in data
         assert 'S_total' in data
         assert 'F_table' in data
+        assert data['certification'][4]['certified_component'] == 'scalar_only_g4'
+        assert not data['certification'][5]['full_free_energy_certified']
 
     def test_quantum_corrections_table(self):
         rows = quantum_corrections_table(24, 10, g_max=5)
@@ -556,6 +563,8 @@ class TestFareyTail:
         """Farey tail entropy approaches BH entropy at high temperature."""
         data = farey_tail_entropy(24, M=100, N_farey=3)
         assert data['S_BH'] > 0
+        assert data['btz_input_status'] == 'external_3d_gravity_input'
+        assert not data['partition_recovery_certified']
         # The Farey correction should be small for large M
         if data['log_Z_farey'] > -1e10 and data['log_Z_btz'] > -1e10:
             assert abs(data['farey_correction']) < data['S_BH']
@@ -615,10 +624,12 @@ class TestRenyiEntropy:
         assert abs(S_2 / S_EE - 0.75) < 1e-10
 
     def test_renyi_with_shadow_corrections(self):
-        """Shadow corrections at genus >= 2 contribute to Renyi entropy."""
+        """Replica corrections are conditional finite-window data."""
         data = renyi_entropy_with_shadow_corrections(24, 2, g_max=3)
         assert 'corrections' in data
         assert 'S_n_total' in data
+        assert data['analytic_input_status'] == 'conditional_replica_input'
+        assert not data['certified_by_scalar_lane']
         # The corrections should be present (not all zero for Virasoro)
         assert data['total_correction'] != 0.0
 
@@ -639,7 +650,7 @@ class TestEntanglementEntropy:
         assert abs(S - expected) < 1e-10
 
     def test_complementarity_sum(self):
-        """S_EE(c) + S_EE(26-c) = (26/3)*log(L/eps) (AP24)."""
+        """S_EE(c) + S_EE(26-c) = (26/3)*log(L/eps)."""
         L_eps = 1000
         for c in [1, 6, 13, 20, 25]:
             data = entanglement_complementarity(c, L_eps)
@@ -661,10 +672,12 @@ class TestEntanglementEntropy:
         assert abs(S - S_dual) < 1e-14
 
     def test_corrections_present_virasoro(self):
-        """Class M (Virasoro) has nonzero shadow corrections."""
+        """Conditional Virasoro corrections are present in the finite window."""
         data = entanglement_entropy_with_corrections(24, g_max=5)
         # At least some corrections should be nonzero
         assert data['total_correction'] != 0.0
+        assert data['analytic_input_status'] == 'conditional_replica_input'
+        assert not data['certified_higher_genus_terms']
 
     def test_corrections_formula(self):
         """delta_S^{(g)} = (2g-1)*F_g for the n->1 limit."""
@@ -681,7 +694,7 @@ class TestEntanglementEntropy:
 # =========================================================================
 
 class TestAHatGeneratingFunction:
-    """A-hat(ix) - 1 = (x/2)/sin(x/2) - 1."""
+    """Scalar A-hat lane: A-hat(ix) - 1 = (x/2)/sin(x/2) - 1."""
 
     def test_ahat_at_zero(self):
         """A-hat(i*0) - 1 = 0."""
@@ -695,22 +708,28 @@ class TestAHatGeneratingFunction:
         assert abs(val - expected) / expected < 0.01
 
     def test_series_matches_closed_form(self):
-        """sum lambda_g * hbar^{2g} = A-hat closed form."""
+        """Scalar sum lambda_g * hbar^{2g} matches the A-hat closed form."""
         for c in [1, 12, 24]:
             data = verify_ahat_identity(c, hbar=0.5, g_max=20)
             assert data['match'], f"A-hat identity fails at c={c}"
+            assert data['lane'] == 'scalar_bernoulli_ahat'
 
     def test_convergence_radius(self):
-        """Convergence radius is 2*pi."""
+        """Scalar convergence radius is 2*pi; full Virasoro is not certified."""
         assert abs(shadow_convergence_radius() - TWO_PI) < 1e-12
+        assert shadow_convergence_radius('virasoro_full') is None
 
     def test_series_convergent_inside_radius(self):
-        """The series converges for hbar < 2*pi."""
+        """The scalar series converges for hbar < 2*pi."""
         c = 24
         hbar = 3.0  # well inside radius 2*pi ~ 6.28
         series = scalar_free_energy_sum(c, hbar, g_max=30)
         closed = ahat_closed_form(c, hbar)
         assert abs(series - closed) < 1e-10
+
+    def test_borel_summability_not_certified_here(self):
+        data = borel_summability_status('virasoro_full')
+        assert not data['borel_summability_certified']
 
 
 # =========================================================================
@@ -727,12 +746,12 @@ class TestSpecialCentralCharges:
         assert abs(data['F_table'][1] - 0.5) < 1e-12
 
     def test_critical_string_c26(self):
-        """c=26: kappa=13. Dual algebra Vir_0 is uncurved."""
+        """c=26: kappa(Vir_26)=13 in the scalar Virasoro lane."""
         data = critical_string_c26(M=10)
         assert abs(data['kappa'] - 13.0) < 1e-12
 
     def test_self_dual_c13(self):
-        """c=13: kappa = 13/2 = kappa'. Self-dual."""
+        """c=13: scalar complementarity fixed point."""
         data = self_dual_c13(M=10)
         assert abs(data['kappa'] - 6.5) < 1e-12
 
@@ -743,11 +762,11 @@ class TestSpecialCentralCharges:
         assert abs(data['F_table'][1] - 1.0 / 24.0) < 1e-12
 
     def test_monster_kappa(self):
-        """Monster V^natural: kappa(Vir_24) = 12 (AP48: this uses Virasoro formula)."""
+        """This engine uses the Virasoro c=24 value kappa(Vir_24) = 12."""
         assert float(kappa_virasoro(24)) == 12.0
 
     def test_c26_dual_is_c0(self):
-        """Vir_26^! = Vir_0: kappa(Vir_0) = 0."""
+        """The scalar complementarity partner has kappa(Vir_0) = 0."""
         assert kappa_virasoro(0) == Fraction(0)
 
 
@@ -813,16 +832,20 @@ class TestCrossChecks:
         assert data['match']
 
     def test_convergence_diagnostics_large_M(self):
-        """Large M: the expansion converges."""
+        """Large M: scalar Bernoulli diagnostic lies inside its radius."""
         data = convergence_diagnostics(24, 1000, g_max=5)
         assert data['convergent']
+        assert data['scalar_bernoulli_convergent']
         assert data['epsilon'] < TWO_PI
+        assert data['convergence_certification'] == 'scalar_bernoulli_ahat'
+        assert not data['full_virasoro_convergence_certified']
 
     def test_convergence_diagnostics_ratios(self):
-        """Decay ratios should be < 1 for convergent expansion."""
+        """Finite-window decay ratios are asymptotic diagnostics."""
         data = convergence_diagnostics(24, 100, g_max=5)
         for r in data['decay_ratios'][1:]:  # skip g=1->2 (different scaling)
             assert r < 1.0, f"Decay ratio {r} >= 1"
+        assert not data['borel_status']['borel_summability_certified']
 
     def test_entropy_landscape_monotone_in_c(self):
         """At fixed M, S_BH increases with c."""
@@ -839,6 +862,8 @@ class TestCrossChecks:
         assert 'beta_HP_classical' in report
         assert 'convergent' in report
         assert 'ahat_check' in report
+        assert report['convergence_certification'] == 'scalar_bernoulli_ahat'
+        assert not report['full_virasoro_convergence_certified']
 
     def test_F_g_polynomial_in_kappa(self):
         """F_g^{scalar} = kappa * lambda_g^FP is linear in kappa."""
@@ -848,11 +873,17 @@ class TestCrossChecks:
             assert abs(F_k2 - 2 * F_k1) < 1e-14
 
     def test_heisenberg_no_planted_forest(self):
-        """Heisenberg (class G) has zero planted-forest at ALL genera."""
+        """Heisenberg (class G) has zero planted-forest in this scalar lane."""
         for g in range(1, 6):
             F_heis = heisenberg_free_energy(1, g)
             F_scalar = F_g_scalar(Fraction(1), g)
             assert F_heis == F_scalar
+
+    def test_free_energy_certification_firewall(self):
+        assert free_energy_certification('virasoro', 3)['full_free_energy_certified']
+        cert_g4 = free_energy_certification('virasoro', 4)
+        assert cert_g4['certified_component'] == 'scalar_only_g4'
+        assert not cert_g4['full_free_energy_certified']
 
     def test_virasoro_has_planted_forest_g2(self):
         """Virasoro (class M) has nonzero planted-forest at genus >= 2 (generic c)."""

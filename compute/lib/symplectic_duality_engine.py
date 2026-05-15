@@ -32,8 +32,10 @@ upgraded to: Q_g(A) and Q_g(A!) are complementary Lagrangians in the
 
 The symplectic duality interpretation:
 
-1. The chiral algebra A of a 4D N=2 SCFT has Koszul dual A! related to
-   the 3D mirror T^! via the Schur index/chiral algebra correspondence.
+1. The chiral algebra A of a 4D N=2 SCFT has a Verdier/Koszul dual
+   algebra A! related to the 3D mirror T^! via the Schur index/chiral
+   algebra correspondence.  This is the Verdier branch, not the
+   bar-cobar counit Omega(B(A)) -> A and not the Hochschild bulk.
 
 2. The (-1)-shifted symplectic structure on the ambient complementarity
    formal moduli problem M_comp(A) (thm:ambient-complementarity-fmp)
@@ -71,13 +73,22 @@ PHYSICAL EXAMPLES
 4. Jordan quiver: Hilb^n(C^2).
    Chiral algebra related to W_{1+infinity} / Heisenberg.
 
-CONVENTIONS (from CLAUDE.md anti-patterns):
+CONVENTION FIREWALL (compute-facing):
     AP1:  kappa formulas recomputed per family, never copied
     AP8:  Virasoro self-dual at c=13, NOT c=26
     AP19: r-matrix pole order one below OPE
     AP20: kappa(A) intrinsic to A, not to physical system
     AP24: kappa + kappa' = 0 for KM/free; = rho*K for W-algebras; = 13 for Vir
-    AP25: B(A) coalgebra, D_Ran(B(A)) = B(A!) algebra, Omega(B(A)) = A
+    AP25/AP34/AP50:
+           B(A) is the bar coalgebra T^c(s^{-1} Abar).
+           A^i is H^*(B(A)), the bar-cohomology coalgebra.
+           A! is ((A^i)^vee) on the finite-type Koszul surface.
+           D_Ran(B(A)) is the Verdier branch: finite-type/perfect gives A!,
+           while the completed/pro branch gives A!_inf or the completed
+           algebra-side B(A!) object.
+           Omega(B(A)) -> A is inversion, not Koszul duality.
+           Z_ch^der(A) = ChirHoch^*(A,A) is Hochschild bulk, not B(A), A^i,
+           A!, Omega(B(A)), or D_Ran(B(A)).
     AP29: delta_kappa != kappa_eff (distinct objects)
     AP33: H_k^! = Sym^ch(V*) != H_{-k} as algebras
     AP39: kappa != c/2 for general VOA
@@ -131,6 +142,100 @@ def _harmonic(n: int) -> Fraction:
 def _anomaly_ratio_wn(N: int) -> Fraction:
     """rho_N = H_N - 1 for W_N = W(sl_N)."""
     return _harmonic(N) - 1
+
+
+# ===========================================================================
+# 0. OBJECT CONVENTIONS: BAR, VERDIER, COBAR, HOCHSCHILD
+# ===========================================================================
+
+@dataclass(frozen=True)
+class KoszulObjectConvention:
+    """Typed convention entry for the bar/dual/bulk firewall."""
+    symbol: str
+    kind: str
+    construction: str
+    branch: str
+    output: str
+    distinct_from: Tuple[str, ...] = field(default_factory=tuple)
+
+
+def koszul_object_firewall() -> Dict[str, KoszulObjectConvention]:
+    """Return the finite-type/completed AP25 convention firewall.
+
+    The entries are conventions, not computed invariants.  They keep the
+    scalar symplectic-duality code from silently identifying the bar
+    coalgebra, bar cohomology coalgebra, Verdier dual algebra, cobar
+    reconstruction, and chiral derived centre.
+    """
+    symbols = (
+        "A",
+        "B(A)",
+        "A^i",
+        "A^!",
+        "D_Ran(B(A))",
+        "Omega(B(A))",
+        "Z_ch^der(A)",
+    )
+    all_other = {symbol: tuple(s for s in symbols if s != symbol) for symbol in symbols}
+
+    return {
+        "A": KoszulObjectConvention(
+            symbol="A",
+            kind="chiral algebra",
+            construction="input algebra",
+            branch="original",
+            output="A",
+            distinct_from=all_other["A"],
+        ),
+        "B(A)": KoszulObjectConvention(
+            symbol="B(A)",
+            kind="bar coalgebra",
+            construction="T^c(s^{-1} Abar)",
+            branch="bar",
+            output="bar coalgebra",
+            distinct_from=all_other["B(A)"],
+        ),
+        "A^i": KoszulObjectConvention(
+            symbol="A^i",
+            kind="bar-cohomology coalgebra",
+            construction="H^*(B(A))",
+            branch="bar cohomology",
+            output="dual coalgebra before linear/Verdier dualization",
+            distinct_from=all_other["A^i"],
+        ),
+        "A^!": KoszulObjectConvention(
+            symbol="A^!",
+            kind="Koszul dual algebra",
+            construction="((A^i)^vee) on the finite-type Koszul surface",
+            branch="finite-type Verdier/linear dual",
+            output="strict dual algebra when the finite-type pairing is perfect",
+            distinct_from=all_other["A^!"],
+        ),
+        "D_Ran(B(A))": KoszulObjectConvention(
+            symbol="D_Ran(B(A))",
+            kind="Verdier algebra-side branch",
+            construction="Verdier dual of the bar coalgebra on Ran",
+            branch="finite-type or completed Verdier",
+            output="finite-type: A^!; completed/pro: A^!_inf or completed B(A!)",
+            distinct_from=all_other["D_Ran(B(A))"],
+        ),
+        "Omega(B(A))": KoszulObjectConvention(
+            symbol="Omega(B(A))",
+            kind="cobar reconstruction",
+            construction="bar-cobar counit",
+            branch="inversion",
+            output="A",
+            distinct_from=all_other["Omega(B(A))"],
+        ),
+        "Z_ch^der(A)": KoszulObjectConvention(
+            symbol="Z_ch^der(A)",
+            kind="chiral derived centre",
+            construction="ChirHoch^*(A,A)",
+            branch="Hochschild bulk",
+            output="bulk E_2/E_3-type Hochschild object, not a bar or Verdier object",
+            distinct_from=all_other["Z_ch^der(A)"],
+        ),
+    }
 
 
 # ===========================================================================
@@ -345,7 +450,8 @@ class GaugeTheoryDatum:
 
     Associated chiral algebra data (via BLLPRR or Costello-Li):
       A    = chiral algebra of the boundary
-      A^!  = Koszul dual = chiral algebra of the dual boundary
+      A^!  = Verdier/Koszul dual algebra of the dual boundary, not
+             Omega(B(A)) and not Z_ch^der(A)
     """
     name: str
     coulomb_description: str
@@ -752,7 +858,9 @@ def verify_lagrangian_heisenberg(k, genus: int = 1) -> LagrangianVerification:
     """Verify Lagrangian condition for Heisenberg.
 
     Class G: the simplest case.  Q_g(H_k) is spanned by kappa * lambda_g.
-    The Verdier pairing pairs Q_g(H_k) with Q_g(H_{-k}) perfectly.
+    The Verdier pairing pairs Q_g(H_k) with Q_g(H_k^!) perfectly.
+    The dual has scalar kappa -k, but H_k^! is Sym^ch(V*) rather than
+    the literal Heisenberg algebra H_{-k}.
     """
     kap = kappa_heisenberg(k)
     kap_dual = kappa_dual_heisenberg(k)

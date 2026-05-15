@@ -1,20 +1,21 @@
-r"""Tests for Hodge-bundle j-dependence.
+r"""Tests for Hodge-bundle j-dependence diagnostics.
 
-RESULT: the integral is a POLYNOMIAL in j of degree 2g, NOT a constant.
-This kills the naive higher-weight-bundle route
+RESULT: higher-weight Hodge bundles have different GRR data from E_1.
+At genus 2 this engine checks a parametric polynomial in the unresolved
+boundary pairing P.  This kills the naive higher-weight-bundle route
     int psi^{2g-2} c_g(E_j) = lambda_g^FP for all j,
 but it does NOT resolve op:multi-generator-universality itself.
 The actual open problem is about the standard E_1-based bar
 construction and the remaining identification Γ_A = κ(A)Λ.
 
-The proof has three levels:
+The diagnostic has three levels:
 1. STRUCTURAL: B_3(1) = 0 but B_3(j) != 0 for j >= 2, introducing new
-   kappa-class contributions to c_g(E_j) absent from c_g(E_1) = lambda_g.
-2. DEGREE: The integral is a polynomial of degree 2g with nonzero leading
-   coefficient (from the Mumford exponent e(j) = 6j^2-6j+1), hence non-constant.
-3. EXACT: At genus 2, I_2(j) = e(j)^2/480 - B_3(j)*P - (j-1/2)/576
-   where Q = 1/576 is exactly determined and makes the integral non-constant
-   independent of the boundary parameter P.
+    kappa-class contributions to c_g(E_j) absent from c_g(E_1) = lambda_g.
+2. DEGREE: The genus-2 parametric polynomial has P-independent leading
+   coefficient 3/40, inherited from e(j)^2 with e(j)=6j^2-6j+1.
+3. PARAMETRIC GENUS 2: I_2(j;P) = e(j)^2/480 - B_3(j)*P - (j-1/2)/576.
+   The boundary pairing P is not reconstructed in this engine; the
+   P-independent exact check is the j^4 coefficient 3/40.
 """
 
 import pytest
@@ -33,10 +34,17 @@ from compute.lib.hodge_bundle_universality import (
     interior_c2_expression,
     integral_psi2_c2_Ej_genus2,
     integral_psi2_c2_Ej_genus2_parametric,
+    genus2_parametric_polynomial_coefficients,
+    evaluate_genus2_coefficients,
+    boundary_parameter_for_equal_genus2_values,
+    boundary_parameter_for_fp_collision,
+    genus2_diagnostic_status,
     verify_j1_constraint,
     prove_j_dependence_by_degree,
     alternative_proof,
     general_genus_argument,
+    P_INTERIOR_DIAGNOSTIC,
+    GENUS2_BOUNDARY_PARAMETER_STATUS,
     INT_KAPPA1_LAMBDA1SQ,
     INT_KAPPA1_LAMBDA2,
     INT_KAPPA1_KAPPA2,
@@ -282,7 +290,7 @@ class TestJ1Constraint:
         assert verify_j1_constraint(Fraction(0))
 
     def test_j1_for_P_interior(self):
-        assert verify_j1_constraint(INT_KAPPA1_KAPPA2 / 6)
+        assert verify_j1_constraint(P_INTERIOR_DIAGNOSTIC)
 
     def test_j1_for_P_arbitrary(self):
         for P in [Fraction(1, 100), Fraction(1), Fraction(-7, 13), Fraction(1000)]:
@@ -300,18 +308,28 @@ class TestJ1Constraint:
 # ============================================================
 
 class TestJDependence:
-    """Tests proving that int psi^{2g-2} c_g(E_j) depends on j."""
+    """Tests for the parametric genus-2 Hodge-bundle diagnostic."""
 
-    def test_I2_differs_j1_j2(self):
-        """I_2(1) != I_2(2) for ANY value of P."""
-        for P in [Fraction(0), Fraction(29, 34560), Fraction(1, 10)]:
+    def test_I2_differs_j1_j2_for_diagnostic_windows(self):
+        """I_2(1) != I_2(2) for the tested finite-window P values."""
+        collision = boundary_parameter_for_equal_genus2_values(1, 2)
+        for P in [Fraction(0), P_INTERIOR_DIAGNOSTIC, Fraction(1, 10)]:
+            assert P != collision
             I_1 = integral_psi2_c2_Ej_genus2_parametric(1, P)
             I_2 = integral_psi2_c2_Ej_genus2_parametric(2, P)
             assert I_1 != I_2, f"I_2(1) = I_2(2) at P = {P}"
 
+    def test_pairwise_collision_parameter_is_explicit(self):
+        """The formula has a special P where I_2(1;P)=I_2(2;P)."""
+        P = boundary_parameter_for_equal_genus2_values(1, 2)
+        assert P == Fraction(1003, 8640)
+        I_1 = integral_psi2_c2_Ej_genus2_parametric(1, P)
+        I_2 = integral_psi2_c2_Ej_genus2_parametric(2, P)
+        assert I_1 == I_2 == faber_pandharipande_lambda_g(2)
+
     def test_I2_grows_with_j(self):
-        """I_2(j) grows dramatically with j (leading term ~ 3j^4/40)."""
-        P = INT_KAPPA1_KAPPA2 / 6
+        """I_2(j; P_INTERIOR_DIAGNOSTIC) grows in this finite window."""
+        P = P_INTERIOR_DIAGNOSTIC
         values = [integral_psi2_c2_Ej_genus2_parametric(j, P) for j in range(1, 6)]
         for i in range(len(values) - 1):
             assert values[i + 1] > values[i], \
@@ -324,7 +342,7 @@ class TestJDependence:
 
     def test_degree4_polynomial(self):
         """I_2(j) is a degree-4 polynomial in j (5th differences vanish)."""
-        P = INT_KAPPA1_KAPPA2 / 6
+        P = P_INTERIOR_DIAGNOSTIC
         vals = [integral_psi2_c2_Ej_genus2_parametric(j, P) for j in range(1, 8)]
         diffs = list(vals)
         for _ in range(5):
@@ -333,22 +351,18 @@ class TestJDependence:
 
     def test_degree_exactly_4(self):
         """4th differences are nonzero (degree is exactly 4, not less)."""
-        P = INT_KAPPA1_KAPPA2 / 6
+        P = P_INTERIOR_DIAGNOSTIC
         vals = [integral_psi2_c2_Ej_genus2_parametric(j, P) for j in range(1, 7)]
         diffs = list(vals)
         for _ in range(4):
             diffs = [diffs[i + 1] - diffs[i] for i in range(len(diffs) - 1)]
         assert diffs[0] != Fraction(0), "4th difference should be nonzero"
 
-    def test_Q_term_forces_nonconstancy(self):
-        """Even with P=0, the Q = 1/576 term makes I_2(j) non-constant.
-
-        I_2(j)|_{P=0} = e(j)^2/480 - (j-1/2)/576.
-        The (j-1/2)/576 term is explicitly j-dependent.
-        """
-        I_1 = integral_psi2_c2_Ej_genus2_parametric(1, Fraction(0))
-        I_2 = integral_psi2_c2_Ej_genus2_parametric(2, Fraction(0))
-        assert I_1 != I_2
+    def test_leading_term_forces_nonconstancy_for_all_P(self):
+        """The j^4 coefficient is 3/40 for every boundary parameter P."""
+        for P in [Fraction(0), Fraction(1003, 8640), Fraction(-7, 13)]:
+            coeffs = genus2_parametric_polynomial_coefficients(P)
+            assert coeffs[4] == Fraction(3, 40)
 
     def test_B3_vanishing_is_unique_to_j1(self):
         """B_3(j) = 0 only for j = 0, 1/2, 1 among rationals.
@@ -361,7 +375,7 @@ class TestJDependence:
 
         This is the Serre duality constraint on the virtual integral.
         """
-        P = INT_KAPPA1_KAPPA2 / 6
+        P = P_INTERIOR_DIAGNOSTIC
         for j in range(1, 6):
             I_j = integral_psi2_c2_Ej_genus2_parametric(j, P)
             I_1mj = integral_psi2_c2_Ej_genus2_parametric(1 - j, P)
@@ -409,9 +423,9 @@ class TestManuscriptImplications:
 
     def test_lambda_g_FP_is_j1_only(self):
         """lambda_g^FP = int psi^{2g-2} lambda_g uses lambda_g = c_g(E_1).
-        For j >= 2, the integral is DIFFERENT."""
+        At the interior diagnostic P, the j=2 value is different."""
         fp = faber_pandharipande_lambda_g(2)
-        P = INT_KAPPA1_KAPPA2 / 6
+        P = P_INTERIOR_DIAGNOSTIC
         I_2 = integral_psi2_c2_Ej_genus2_parametric(2, P)
         assert I_2 != fp
 
@@ -429,10 +443,9 @@ class TestManuscriptImplications:
         assert rank_Ej(3, 2) == 5
 
     def test_ap16_confirmed(self):
-        """AP16: integrated identity != class identity.
+        """AP16: class identity fails; integrated check is finite-window.
         c_g(E_j) != c_g(E_1) as classes for j >= 2.
-        int psi^{2g-2} c_g(E_j) != int psi^{2g-2} c_g(E_1) for j >= 2.
-        Both the class-level AND the integrated-level universality FAIL."""
+        At P_INTERIOR_DIAGNOSTIC the integrated values differ too."""
         # Class level: different kappa-class content
         c2_1 = interior_c2_expression(1)
         c2_3 = interior_c2_expression(3)
@@ -440,7 +453,7 @@ class TestManuscriptImplications:
         assert c2_3['kappa_2'] != Fraction(0)
 
         # Integrated level: different numerical values
-        P = INT_KAPPA1_KAPPA2 / 6
+        P = P_INTERIOR_DIAGNOSTIC
         I_1 = integral_psi2_c2_Ej_genus2_parametric(1, P)
         I_3 = integral_psi2_c2_Ej_genus2_parametric(3, P)
         assert I_1 != I_3
@@ -456,9 +469,10 @@ class TestGeneralGenus:
         for g in range(1, 6):
             info = general_genus_argument(g)
             assert info['leading_degree'] == 2 * g
+            assert info['status'].startswith('leading-term diagnostic')
 
     def test_ratio_grows_exponentially(self):
-        """The j=2 to j=1 ratio grows as 13^g."""
+        """The formal Mumford-exponent leading ratio grows as 13^g."""
         for g in range(1, 6):
             assert 13 ** g > 1
 
@@ -502,43 +516,29 @@ class TestExactFormula:
                 e_j = Fraction(mumford_exponent(j))
                 assert I_j + I_1mj == e_j ** 2 / 240
 
-    def test_boundary_P_is_bounded(self):
-        """The boundary correction P_bdry cannot make I_2(j) constant.
+    def test_coefficients_match_parametric_formula(self):
+        """The expanded polynomial coefficients evaluate to the formula."""
+        for P in [Fraction(0), P_INTERIOR_DIAGNOSTIC, Fraction(1003, 8640)]:
+            coeffs = genus2_parametric_polynomial_coefficients(P)
+            assert coeffs[4] == Fraction(3, 40)
+            assert coeffs[0] == Fraction(17, 5760)
+            for j in range(-3, 6):
+                assert evaluate_genus2_coefficients(j, P) == integral_psi2_c2_Ej_genus2_parametric(j, P)
 
-        For I_2(j) to be constant, we would need the Q term to be cancelled.
-        But Q = 1/576 is P-independent. The B_3(j)*P term is a DIFFERENT
-        polynomial from (j-1/2) (B_3 is degree 3, j-1/2 is degree 1).
-        So no value of P can cancel the (j-1/2)/576 contribution.
-        """
-        # For I(j) = const for all j, we'd need:
-        # d/dj [e(j)^2/480 - B_3(j)*P - (j-1/2)/576] = 0
-        # e(j)*e'(j)/240 - B_3'(j)*P - 1/576 = 0 for all j
-        # This is a polynomial equation of degree 3 in j that must vanish
-        # identically. The constant term is:
-        # e(0)*e'(0)/240 - B_3'(0)*P - 1/576
-        # = 1*(-6)/240 - (1/2)*P - 1/576
-        # = -1/40 - P/2 - 1/576
-        # For the j^3 coefficient: 12*12/240 - 6*P/6 = 144/240 - P = 3/5 - P
-        # For this to vanish: P = 3/5.
-        # For the j^0 coefficient: -1/40 - (3/5)/2 - 1/576 = -1/40 - 3/10 - 1/576
-        # = -1/40 - 3/10 - 1/576 = -0.025 - 0.3 - 0.00174 = -0.32674 != 0.
-        # So NO value of P makes the derivative identically zero.
-        # Verify this:
+    def test_boundary_status_is_not_exactly_computed(self):
+        """The default P is an interior diagnostic, not a full boundary computation."""
+        status = genus2_diagnostic_status()
+        assert status['formula_status'] == 'exact conditional on supplied P'
+        assert status['boundary_parameter_status'] == GENUS2_BOUNDARY_PARAMETER_STATUS
+        assert status['P_used'] == P_INTERIOR_DIAGNOSTIC
+        assert status['leading_coefficient_j4'] == Fraction(3, 40)
+        assert status['nonconstant_for_all_P']
 
-        # j^3 coefficient of d/dj I: from e(j)^2/480 -> 4*36j^3/480 = 144j^3/480 = 3j^3/10
-        # from B_3(j)*P -> B_3'(j)*P = (3j^2 - 3j + 1/2)*P, j^3 coeff is 0... wait.
-        # B_3(j) = j^3 - 3j^2/2 + j/2. B_3'(j) = 3j^2 - 3j + 1/2.
-        # So d/dj [B_3(j)*P] = (3j^2 - 3j + 1/2)*P. The j^2 coefficient of d/dj I involves:
-        # from e(j)^2: d/dj[36j^4] = 144j^3, so at j^3 level in d/dj: 144/480 = 3/10.
-        # from B_3: at j^2 level in d/dj: 3P.
-        # from Q: 1/576 (constant in d/dj, no j^2 term).
-        # So d/dj I at j^2 level: ... this is getting complicated.
-        # Let's just verify numerically that I(1) != I(2) for all reasonable P.
-
-        for P in [Fraction(0), Fraction(3, 5), Fraction(29, 34560)]:
-            I_1 = integral_psi2_c2_Ej_genus2_parametric(1, P)
-            I_2 = integral_psi2_c2_Ej_genus2_parametric(2, P)
-            assert I_1 != I_2, f"I_2(1) = I_2(2) at P = {P}"
+    def test_fp_collision_parameter_for_j2(self):
+        """A special P makes the j=2 value equal lambda_2^FP."""
+        P = boundary_parameter_for_fp_collision(2)
+        assert P == Fraction(1003, 8640)
+        assert integral_psi2_c2_Ej_genus2_parametric(2, P) == faber_pandharipande_lambda_g(2)
 
 
 # ============================================================
@@ -548,16 +548,17 @@ class TestExactFormula:
 class TestNumericalResults:
 
     def test_I2_values_interior_P(self):
-        """Verify specific numerical values using P = 29/34560 (interior approx)."""
-        P = Fraction(29, 34560)
+        """Verify finite-window values using P = 29/34560."""
+        P = P_INTERIOR_DIAGNOSTIC
         assert integral_psi2_c2_Ej_genus2_parametric(1, P) == Fraction(7, 5760)
         # j=2: 169/480 - 3*(29/34560) - 3/(2*576) = 169/480 - 87/34560 - 1/384
         I_2 = integral_psi2_c2_Ej_genus2_parametric(2, P)
         assert I_2 == Fraction(3997, 11520)
+        assert integral_psi2_c2_Ej_genus2(2) == I_2
 
     def test_ratio_j2_to_j1(self):
-        """The ratio I(2)/I(1) is about 285 (interior P)."""
-        P = Fraction(29, 34560)
+        """The diagnostic ratio I(2)/I(1) is about 285."""
+        P = P_INTERIOR_DIAGNOSTIC
         I_1 = integral_psi2_c2_Ej_genus2_parametric(1, P)
         I_2 = integral_psi2_c2_Ej_genus2_parametric(2, P)
         ratio = I_2 / I_1
@@ -565,8 +566,8 @@ class TestNumericalResults:
         assert float(ratio) > 200  # dramatic j-dependence
 
     def test_monotonicity(self):
-        """I_2(j) is monotonically increasing for j >= 1."""
-        P = Fraction(29, 34560)
+        """I_2(j; P_INTERIOR_DIAGNOSTIC) is increasing for this finite window."""
+        P = P_INTERIOR_DIAGNOSTIC
         prev = integral_psi2_c2_Ej_genus2_parametric(1, P)
         for j in range(2, 10):
             curr = integral_psi2_c2_Ej_genus2_parametric(j, P)
@@ -575,32 +576,22 @@ class TestNumericalResults:
 
 
 # ============================================================
-# Definitive result
+# Scope guard
 # ============================================================
 
 class TestDefinitiveResult:
-    """The definitive answer to op:multi-generator-universality."""
+    """The Hodge-bundle diagnostic does not solve cross-channel universality."""
 
-    def test_answer_is_j_dependent(self):
-        """int_{Mbar_{2,1}} psi^2 c_2(E_j) DEPENDS on j.
+    def test_parametric_answer_is_not_constant(self):
+        """I_2(j;P) is never a constant polynomial in j.
 
-        PROOF: I_2(j) = e(j)^2/480 - B_3(j)*P - (j-1/2)/576 is a
-        polynomial of degree 4 in j with leading coefficient 3/40 != 0.
-        The j=1 value is 7/5760 = lambda_2^FP.
-        For j >= 2, the value is dramatically different.
-        The (j-1/2)/576 term alone ensures non-constancy, independent
-        of the boundary parameter P.
+        The exact P-independent statement available here is the degree-4
+        leading coefficient.  Pairwise collisions at selected j can occur
+        for special P and are tested above.
         """
         fp = faber_pandharipande_lambda_g(2)
         assert fp == Fraction(7, 5760)
-
-        # For ANY P, I(1) != I(2)
-        import random
-        for _ in range(20):
-            num = random.randint(-1000, 1000)
-            den = random.randint(1, 1000)
-            P = Fraction(num, den)
-            I_1 = integral_psi2_c2_Ej_genus2_parametric(1, P)
-            I_2 = integral_psi2_c2_Ej_genus2_parametric(2, P)
-            assert I_1 == fp  # j=1 always gives FP value
-            assert I_1 != I_2  # but j=2 is always different
+        for P in [Fraction(0), P_INTERIOR_DIAGNOSTIC, Fraction(1003, 8640)]:
+            coeffs = genus2_parametric_polynomial_coefficients(P)
+            assert coeffs[4] == Fraction(3, 40)
+            assert integral_psi2_c2_Ej_genus2_parametric(1, P) == fp

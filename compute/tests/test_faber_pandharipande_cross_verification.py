@@ -1,4 +1,4 @@
-r"""Definitive cross-verification tests for Faber-Pandharipande numbers.
+r"""Finite-window cross-verification tests for Faber-Pandharipande numbers.
 
 Tests lambda_g^FP = (2^{2g-1}-1)/(2^{2g-1}) * |B_{2g}|/(2g)! via 6 methods.
 
@@ -12,7 +12,7 @@ Test organization:
   - Asymptotic behavior (ratio -> 1)
   - Cross-check against existing utils.lambda_fp
   - Positivity and monotonicity
-  - Comparison with published values
+  - Comparison with local manuscript oracle values
   Total: 100+ tests
 
 References: [FP00], [Fab99], concordance.tex (Theorem D).
@@ -21,7 +21,9 @@ References: [FP00], [Fab99], concordance.tex (Theorem D).
 import pytest
 from sympy import Rational, simplify, factorial, pi, Abs, bernoulli as sympy_bernoulli
 
+import compute.lib.faber_pandharipande_cross_verification as fp_cv
 from compute.lib.faber_pandharipande_cross_verification import (
+    DEFAULT_VERIFICATION_GENUS_MAX,
     method1_bernoulli_recurrence,
     method2_ahat_series,
     method3_zeta_values,
@@ -39,7 +41,25 @@ from compute.lib.faber_pandharipande_cross_verification import (
     verify_bernoulli_kummer_congruence,
     _bernoulli_binomial_recurrence,
     _bernoulli_akiyama_tanigawa,
+    scalar_diagonal_free_energy,
 )
+
+
+ORACLE_FP_VALUES_G1_TO_G10 = {
+    # Local manuscript oracle: chapters/examples/landscape_census.tex,
+    # prop:fp-coefficients. Each value is also obtained by direct
+    # substitution of the Bernoulli number displayed there.
+    1: Rational(1, 24),
+    2: Rational(7, 5760),
+    3: Rational(31, 967680),
+    4: Rational(127, 154828800),
+    5: Rational(73, 3503554560),
+    6: Rational(1414477, 2678117105664000),
+    7: Rational(8191, 612141052723200),
+    8: Rational(16931177, 49950709902213120000),
+    9: Rational(5749691557, 669659197233029971968000),
+    10: Rational(91546277357, 420928638260761696665600000),
+}
 
 
 # =====================================================================
@@ -74,6 +94,14 @@ class TestMethod3ZetaValues:
         val = method3_zeta_values(g)
         assert isinstance(val, Rational)
         assert val > 0
+
+    def test_method3_does_not_call_bernoulli_oracle(self, monkeypatch):
+        """The zeta route must not silently be Method 4 in disguise."""
+        def forbidden_bernoulli(_):
+            raise AssertionError("method3_zeta_values called sympy_bernoulli")
+
+        monkeypatch.setattr(fp_cv, "sympy_bernoulli", forbidden_bernoulli)
+        assert method3_zeta_values(6) == ORACLE_FP_VALUES_G1_TO_G10[6]
 
 
 class TestMethod4SympyBernoulli:
@@ -137,6 +165,12 @@ class TestCrossMethodAgreement:
 class TestKnownValues:
     """Verify specific lambda_g^FP values computed by hand."""
 
+    def test_default_window_is_local_oracle_window(self):
+        assert DEFAULT_VERIFICATION_GENUS_MAX == 10
+
+    def test_first_ten_values_match_local_manuscript_oracle(self):
+        assert definitive_table(10) == ORACLE_FP_VALUES_G1_TO_G10
+
     def test_g1_equals_1_over_24(self):
         """lambda_1 = |B_2|/(2*2!) * (2^1-1)/2^1 = (1/6)/(2*2) * 1/2.
 
@@ -195,6 +229,11 @@ class TestKnownValues:
         """
         assert definitive_table(5)[5] == Rational(73, 3503554560)
 
+    @pytest.mark.parametrize("g,expected", ORACLE_FP_VALUES_G1_TO_G10.items())
+    def test_every_method_matches_oracle_value(self, g, expected):
+        for name, val in all_methods(g).items():
+            assert simplify(val - expected) == 0, f"g={g}, {name}: {val}"
+
     def test_g1_from_euler_characteristic(self):
         """lambda_1 = chi(M_{1,1})/12 = 2/(12*24)... no.
 
@@ -215,6 +254,7 @@ class TestGeneratingFunction:
     def test_generating_function_all_match(self):
         result = verify_generating_function(10)
         assert result['all_match']
+        assert result['scope'] == 'finite exact rational window 1 <= g <= 10'
 
     def test_constant_term_is_one(self):
         result = verify_generating_function(1)
@@ -244,6 +284,7 @@ class TestAhatRelationship:
     def test_ahat_all_match(self):
         result = verify_ahat_relationship(10)
         assert result['all_match']
+        assert result['scope'] == 'finite exact rational window 1 <= g <= 10'
 
     @pytest.mark.parametrize("g", range(1, 11))
     def test_ahat_coefficient_genus_g(self, g):
@@ -523,7 +564,7 @@ class TestFormulaDecomposition:
 # =====================================================================
 
 class TestFreeEnergy:
-    """Verify F_g(A) = kappa(A) * lambda_g^FP for specific algebras."""
+    """Verify scalar diagonal F_g(A) = kappa(A) * lambda_g^FP examples."""
 
     def test_heisenberg_f1(self):
         """F_1(H_k) = k * 1/24 = k/24."""
@@ -531,6 +572,7 @@ class TestFreeEnergy:
         k = Symbol('k')
         fp = method4_sympy_bernoulli(1)
         assert fp == Rational(1, 24)
+        assert scalar_diagonal_free_energy(k, 1) == k / 24
 
     def test_virasoro_f1(self):
         """F_1(Vir_c) = (c/2) * 1/24 = c/48."""
@@ -549,6 +591,15 @@ class TestFreeEnergy:
         fp = method4_sympy_bernoulli(1)
         assert fp == Rational(1, 24)
         # kappa(sl_2_k) = 3(k+2)/4, so F_1 = 3(k+2)/96 = (k+2)/32
+
+    def test_multi_weight_cross_channel_slot_is_not_absorbed(self):
+        """At g >= 2 the scalar lane is not the full multi-weight formula."""
+        from sympy import Symbol
+        kappa = Symbol('kappa')
+        delta_cross = Symbol('delta_F_cross')
+        scalar = scalar_diagonal_free_energy(kappa, 2)
+        full_multi_weight = scalar + delta_cross
+        assert simplify(full_multi_weight - scalar) == delta_cross
 
 
 # =====================================================================
@@ -618,16 +669,34 @@ class TestEdgeCases:
     """Edge cases and boundary conditions."""
 
     def test_method1_rejects_g0(self):
-        with pytest.raises(AssertionError):
+        with pytest.raises(ValueError):
             method1_bernoulli_recurrence(0)
 
+    def test_method2_rejects_g0(self):
+        with pytest.raises(ValueError):
+            method2_ahat_series(0)
+
+    def test_method3_rejects_g0(self):
+        with pytest.raises(ValueError):
+            method3_zeta_values(0)
+
     def test_method4_rejects_g0(self):
-        with pytest.raises(AssertionError):
+        with pytest.raises(ValueError):
             method4_sympy_bernoulli(0)
 
+    def test_method5_rejects_g0(self):
+        with pytest.raises(ValueError):
+            method5_exponential_generating_function(0)
+
     def test_method6_rejects_g0(self):
-        with pytest.raises(AssertionError):
+        with pytest.raises(ValueError):
             method6_akiyama_tanigawa(0)
+
+    def test_series_methods_reject_too_low_precision(self):
+        with pytest.raises(ValueError):
+            method2_ahat_series(3, precision=6)
+        with pytest.raises(ValueError):
+            method5_exponential_generating_function(3, precision=6)
 
 
 # =====================================================================
@@ -685,6 +754,10 @@ class TestAP38Traps:
         """1/240 is int_{M-bar_{2,0}} lambda_2, NOT lambda_2^FP."""
         assert definitive_table(2)[2] != Rational(1, 240)
 
+    def test_lambda_2_marked_vs_unmarked_ratio(self):
+        """The marked FP value is 7/24 of the unmarked genus-2 integral 1/240."""
+        assert simplify(definitive_table(2)[2] / Rational(1, 240)) == Rational(7, 24)
+
     def test_lambda_2_is_not_1_over_1152(self):
         """1/1152 was a wrong value found in a historical test (AP38)."""
         assert definitive_table(2)[2] != Rational(1, 1152)
@@ -715,7 +788,7 @@ class TestAP38Traps:
 # =====================================================================
 
 class TestAdditivity:
-    """F_g(A oplus B) = F_g(A) + F_g(B) since kappa is additive."""
+    """Scalar diagonal F_g(A oplus B) is linear because kappa is additive."""
 
     @pytest.mark.parametrize("g", range(1, 6))
     def test_linearity(self, g):

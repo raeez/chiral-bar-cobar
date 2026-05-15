@@ -1,7 +1,7 @@
 """Tests for E8 lattice VOA bar complex.
 
 Ground truth from comp:E8-generators, comp:E8-bar-deg2, comp:E8-curvature,
-comp:E8-koszul-dual in detailed_computations.tex.
+comp:E8-koszul-dual in chapters/examples/bar_complex_tables.tex.
 """
 
 import pytest
@@ -66,6 +66,7 @@ class TestBarDeg2:
     def test_type_counts(self):
         counts = e8_bar_deg2_type_counts()
         assert counts["type_I_cartan_cartan"] == 64
+        assert counts["type_II_cartan_root"] == 3840
         assert counts["type_III_root_root"] == 57600
         assert counts["total"] == 61504
 
@@ -113,8 +114,14 @@ class TestBarDeg2:
         assert len(vac) == 0
 
     def test_nonzero_count(self):
-        """1920 + 13440 + 240 = 15600."""
-        assert e8_nonzero_diff_count() == 15600
+        """3840 + 13440 + 240 = 17520; adding 8 Cartan diagonals gives 17528."""
+        counts = e8_bar_deg2_type_counts()
+        assert counts["nonzero_cartan_root"] == 2 * 8 * 240 == 3840
+        assert counts["nonzero_root_root_minus1"] == 240 * 56 == 13440
+        assert counts["nonzero_root_root_minus2"] == 240
+        assert e8_nonzero_diff_count(include_cartan_diagonal=False) == 17520
+        assert counts["nonzero_cartan_cartan_diagonal"] == 8
+        assert e8_nonzero_diff_count() == 17528
 
     def test_neighbors(self):
         """Each root has 56 neighbors at inner product -1."""

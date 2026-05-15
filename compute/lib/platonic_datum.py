@@ -1,12 +1,19 @@
-"""Modular Koszul datum: the six-fold datum from a cyclically admissible Lie conformal algebra.
+"""Modular Koszul package for cyclically admissible Lie conformal input.
 
-The Modular Koszul datum Pi_X(L) is the crown jewel computational object of the
-modular Koszul duality programme.  It packages ALL data for a given chiral
-algebra into a single structured datum:
+The package Pi_X(L) is the compute-side projection package attached to a
+cyclically admissible Lie conformal algebra.  It records six primary
+projections needed by the modular Koszul calculations:
 
     Pi_X(L) = (Fact_X(L), B-bar_X(L), Theta_L, L_L, (V^br, T^br), R_4^mod(L))
 
-The six components:
+These projections are not the holographic seven-entry package, and they are
+not themselves any of the five distinct objects A, B(A), A^i, A^!, or
+Z_ch^der(A).  In this module, B-bar_X(L) is the ordered bar-coalgebra
+projection, Theta_L is the shadow obstruction tower, and any Verdier dual,
+Koszul-dual algebra, or Hochschild-centre object belongs to a higher layer
+with its own hypotheses.
+
+The six projections:
   1. Fact_X(L) — Factorization algebra data (OPE + bar complex dimensions)
   2. B-bar_X(L) — Bar coalgebra (bar complex with differential, desuspended)
   3. Theta_L — Universal MC element (shadow obstruction tower: kappa, C, Q, ...)
@@ -21,7 +28,7 @@ Factory functions construct the package for each standard family:
 The assembler ``assemble_platonic_package`` validates admissibility,
 calls the modular Koszul engine, extracts primitive kernel data,
 computes branch space and shadow generating function, and returns
-the full package with internal consistency checks.
+the projection package with internal consistency checks.
 
 Depth decomposition d = 1 + d_arith + d_alg classifies shadow complexity:
   - d_alg in {0, 1, 2, infinity}: algebraic depth from OPE structure
@@ -172,10 +179,11 @@ class BranchSpace:
 
 @dataclass
 class PlatonicPackage:
-    """The full Modular Koszul datum Pi_X(L) — the six-fold datum.
+    """The modular Koszul projection package Pi_X(L).
 
-    Packages ALL modular Koszul data for a given chiral algebra into
-    a single structured object.
+    The object carries six primary projections used by the compute layer.
+    It does not identify A, B(A), A^i, A^!, or Z_ch^der(A), and it does
+    not replace the holographic seven-entry package.
 
     Components (constr:platonic-package):
       1. factorization_data — Fact_X(L): bar dims, generating function data
@@ -191,10 +199,10 @@ class PlatonicPackage:
       - shadow_growth_rate: rho(A) growth rate invariant
       - shadow_depth_class: G/L/C/M classification
       - primitive_kernel: cofree-coderivation reduction K_A
-      - koszul_dual_package: reference to dual package
+      - koszul_dual_package: optional Verdier-dual package reference
       - complementarity_sum: kappa(A) + kappa(A!)
       - depth_decomposition: d = 1 + d_arith + d_alg
-      - modular_koszul_datum: full ModularKoszulDatum from the engine
+      - modular_koszul_datum: engine-level ModularKoszulDatum
     """
     # Identity
     name: str
@@ -236,7 +244,7 @@ class PlatonicPackage:
     # ------------------------------------------------------------------
 
     def summary(self) -> str:
-        """Human-readable summary of the Modular Koszul datum."""
+        """Human-readable summary of the modular Koszul package."""
         pk_str = (
             self.primitive_kernel.component_string()
             if self.primitive_kernel else "N/A"
@@ -249,7 +257,7 @@ class PlatonicPackage:
 
         lines = [
             f"{'=' * 60}",
-            f" Modular Koszul datum: {self.name}",
+            f" Modular Koszul package: {self.name}",
             f"{'=' * 60}",
             "",
             "--- Input (Cyclic Admissible Data) ---",
@@ -631,11 +639,11 @@ def _build_shadow_metric(kappa: Any, alpha: Any, S4: Any) -> Any:
 # =========================================================================
 
 def assemble_platonic_package(data: CyclicAdmissibleData) -> PlatonicPackage:
-    """Assemble the full Modular Koszul datum from cyclically admissible data.
+    """Assemble the modular Koszul package from cyclically admissible data.
 
     Pipeline:
       1. Validate cyclical admissibility
-      2. Call compute_datum() for the full ModularKoszulDatum
+      2. Call compute_datum() for the engine ModularKoszulDatum
       3. Extract primitive kernel for the family
       4. Compute branch space from primitive kernel
       5. Extract R_4^mod from quartic resonance data
@@ -917,7 +925,7 @@ def _lattice_admissible_data(rank=None) -> CyclicAdmissibleData:
 # =========================================================================
 
 def heisenberg_package(level=None) -> PlatonicPackage:
-    """Construct the Modular Koszul datum for the Heisenberg algebra H_k.
+    """Construct the modular Koszul package for the Heisenberg algebra H_k.
 
     Shadow data: kappa = k (the level, NOT k/2), alpha = 0, S_4 = 0, Delta = 0.
     Class G (Gaussian), depth 2. Branch space dim 0. R_4 = 0.
@@ -965,7 +973,7 @@ def heisenberg_package(level=None) -> PlatonicPackage:
 
 
 def affine_sl2_package(level=None) -> PlatonicPackage:
-    """Construct the Modular Koszul datum for affine V_k(sl_2).
+    """Construct the modular Koszul package for affine V_k(sl_2).
 
     Shadow data: kappa = 3(k+2)/4, alpha = 1, S_4 = 0, Delta = 0.
     Class L (Lie/tree), depth 3. Branch space dim 3 (= dim sl_2). R_4 = 0.
@@ -1015,7 +1023,7 @@ def affine_sl2_package(level=None) -> PlatonicPackage:
 
 
 def affine_sl3_package(level=None) -> PlatonicPackage:
-    """Construct the Modular Koszul datum for affine V_k(sl_3).
+    """Construct the modular Koszul package for affine V_k(sl_3).
 
     Shadow data: kappa = 4(k+3)/3, alpha = 1, S_4 = 0, Delta = 0.
     Class L (Lie/tree), depth 3. Branch space dim 8 (= dim sl_3). R_4 = 0.
@@ -1067,7 +1075,7 @@ def affine_sl3_package(level=None) -> PlatonicPackage:
 
 
 def virasoro_package(central_charge=None) -> PlatonicPackage:
-    """Construct the Modular Koszul datum for the Virasoro algebra Vir_c.
+    """Construct the modular Koszul package for the Virasoro algebra Vir_c.
 
     Shadow data: kappa = c/2, alpha = 2, S_4 = 10/(c(5c+22)), Delta = 40/(5c+22).
     Class M (Mixed), depth infinity. Branch space dim 1. Q^ct = 10/(c(5c+22)).
@@ -1130,7 +1138,7 @@ def virasoro_package(central_charge=None) -> PlatonicPackage:
 
 
 def w3_package(central_charge=None) -> PlatonicPackage:
-    """Construct the Modular Koszul datum for the W_3 algebra.
+    """Construct the modular Koszul package for the W_3 algebra.
 
     Shadow data: kappa_T = c/2, kappa_W = c/3, class M, depth infinity.
     Two shadow lines: T-line (Virasoro) and W-line (even arities).
@@ -1188,7 +1196,7 @@ def w3_package(central_charge=None) -> PlatonicPackage:
 
 
 def betagamma_package() -> PlatonicPackage:
-    """Construct the Modular Koszul datum for the beta-gamma system.
+    """Construct the modular Koszul package for the beta-gamma system.
 
     Shadow data: kappa = -1, alpha = nonzero, S_4 = -5/12, class C, depth 4.
     Branch space dim 1 (contact mode). R_4 = quartic contact.
@@ -1238,7 +1246,7 @@ def betagamma_package() -> PlatonicPackage:
 
 
 def free_fermion_package() -> PlatonicPackage:
-    """Construct the Modular Koszul datum for the free fermion.
+    """Construct the modular Koszul package for the free fermion.
 
     Shadow data: kappa = -1/2, class C, depth 4.
     Central charge c = 1/2. Branch space dim 1.
@@ -1288,7 +1296,7 @@ def free_fermion_package() -> PlatonicPackage:
 
 
 def lattice_package(rank=None) -> PlatonicPackage:
-    """Construct the Modular Koszul datum for the lattice VOA V_Lambda.
+    """Construct the modular Koszul package for the lattice VOA V_Lambda.
 
     Shadow data: kappa = rank(Lambda), class G, depth 2.
     Central charge c = rank(Lambda). Branch space dim 0. R_4 = 0.
@@ -1341,7 +1349,7 @@ def independent_sum_package(
     pkg1: PlatonicPackage,
     pkg2: PlatonicPackage,
 ) -> PlatonicPackage:
-    """Modular Koszul datum for L_1 oplus L_2 with vanishing mixed OPE.
+    """Modular Koszul package for L_1 oplus L_2 with vanishing mixed OPE.
 
     By prop:independent-sum-factorization:
       - kappa is additive: kappa(L1 + L2) = kappa(L1) + kappa(L2)
@@ -1434,10 +1442,10 @@ def independent_sum_package(
 # =========================================================================
 
 def standard_landscape() -> Dict[str, PlatonicPackage]:
-    """Return the full Modular Koszul datum atlas for all standard families.
+    """Return the modular Koszul package atlas for all standard families.
 
     This is the computational realization of the standard landscape census
-    (landscape_census.tex) as Modular Koszul datums.
+    (landscape_census.tex) as modular Koszul packages.
     """
     return {
         'heisenberg': heisenberg_package(),

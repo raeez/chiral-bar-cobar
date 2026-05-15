@@ -681,7 +681,9 @@ def compare_cp_koszul_duality() -> TwistedHolographyComparison:
             "Twisted supergravity on AdS_3 = Koszul dual of boundary (CP 2020)."
         ),
         our_framework=(
-            "B(A) = factorization coalgebra.  D_Ran(B(A)) = B(A!) (Verdier).  "
+            "B(A) = factorization coalgebra and A^i = H^*(B(A)).  "
+            "A^! is obtained from A^i by Verdier/linear duality under the "
+            "finite-type or completed hypotheses.  "
             "Omega(B(A)) = A (inversion).  "
             "Derived center Z^der_ch(A) = universal bulk (NOT bar complex).  "
             "AP25: bar != bulk.  AP34: inversion != open-to-closed."

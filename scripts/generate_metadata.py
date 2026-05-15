@@ -96,13 +96,22 @@ class Claim:
     file: str      # relative path
     line: int      # 1-indexed line number
     title: str     # optional title from [...] argument
+    node_key: str = ""
+    aliases: list[str] = field(default_factory=list)
     labels_in_block: list[str] = field(default_factory=list)
     refs_in_block: list[str] = field(default_factory=list)
     cites_in_block: list[str] = field(default_factory=list)
 
+    def __post_init__(self) -> None:
+        if not self.node_key:
+            self.node_key = f"{self.file}#{self.env_type}:{self.line}:{self.label}"
+        if not self.aliases:
+            labels = [self.label] + self.labels_in_block
+            self.aliases = list(dict.fromkeys(label for label in labels if label))
+
     def to_dict(self) -> dict:
         d = asdict(self)
-        # Remove empty lists for compactness
+        # Remove empty lists for compactness.
         if not d["labels_in_block"]:
             del d["labels_in_block"]
         if not d["refs_in_block"]:
@@ -119,6 +128,7 @@ class LabelEntry:
     file: str
     line: int
     env_type: Optional[str] = None  # if inside a theorem-like env
+    occurrence_index: int = 0
 
 
 # ---------------------------------------------------------------------------
@@ -278,6 +288,8 @@ def extract_claims(path: Path) -> list[Claim]:
                 label_line = env_start + local_idx + 1
                 break
 
+        aliases = list(dict.fromkeys(block_labels)) or [primary_label]
+
         claim = Claim(
             label=primary_label,
             env_type=env_name,
@@ -285,6 +297,8 @@ def extract_claims(path: Path) -> list[Claim]:
             file=rel_path,
             line=label_line,
             title=title,
+            node_key=f"{rel_path}#{env_name}:{env_start + 1}:{len(claims) + 1}",
+            aliases=aliases,
             labels_in_block=block_labels if len(block_labels) > 1 else [],
             refs_in_block=block_refs,
             cites_in_block=block_cites,
@@ -302,6 +316,7 @@ def extract_all_labels(path: Path) -> list[LabelEntry]:
     text = strip_comments(path.read_text(encoding="utf-8", errors="ignore"))
     lines = text.splitlines()
     entries: list[LabelEntry] = []
+    occurrence_counts: Counter[str] = Counter()
 
     env_stack: list[str] = []
     for i, line in enumerate(lines):
@@ -309,6 +324,7 @@ def extract_all_labels(path: Path) -> list[LabelEntry]:
             env_stack.append(begin_match.group(1))
         for match in LABEL_RE.finditer(line):
             label = match.group(1)
+            occurrence_counts[label] += 1
             env_type = next(
                 (env for env in reversed(env_stack) if env in CLAIM_ENVS),
                 None,
@@ -318,6 +334,7 @@ def extract_all_labels(path: Path) -> list[LabelEntry]:
                 file=rel_path,
                 line=i + 1,
                 env_type=env_type,
+                occurrence_index=occurrence_counts[label],
             ))
         for end_match in re.finditer(r"\\end\{([a-zA-Z]+)\}", line):
             env_name = end_match.group(1)
@@ -422,6 +439,17 @@ def break_index_scan_terms(text: str) -> str:
     return text
 
 
+def claim_aliases(claim: Claim) -> list[str]:
+    """Return every TeX label that aliases this claim node."""
+    aliases = claim.aliases or [claim.label] + claim.labels_in_block
+    return list(dict.fromkeys(alias for alias in aliases if alias))
+
+
+def dot_quote(text: str) -> str:
+    """Quote a Graphviz identifier or label payload."""
+    return '"' + text.replace("\\", "\\\\").replace('"', '\\"') + '"'
+
+
 # ---------------------------------------------------------------------------
 # Output generation
 # ---------------------------------------------------------------------------
@@ -519,21 +547,14 @@ def write_census_json(claims: list[Claim], all_files: list[Path]) -> None:
           f"total={census['totals']['total_claims']}")
 
 
-def write_dependency_graph(claims: list[Claim], all_labels: dict[str, LabelEntry]) -> None:
+def write_dependency_graph(claims: list[Claim], all_labels: list[LabelEntry]) -> None:
     """Write metadata/dependency_graph.dot — theorem dependency DAG."""
-    # Build set of claim labels for filtering
-    claim_labels = {c.label for c in claims}
-    # Also include secondary labels from multi-label blocks
+    # Labels are aliases, not node identities.  A duplicated label can name
+    # several claim occurrences; references fan out to every matching node.
+    label_to_claims: dict[str, list[Claim]] = defaultdict(list)
     for c in claims:
-        for lab in c.labels_in_block:
-            claim_labels.add(lab)
-
-    # Map secondary labels to primary
-    label_to_primary: dict[str, str] = {}
-    for c in claims:
-        label_to_primary[c.label] = c.label
-        for lab in c.labels_in_block:
-            label_to_primary[lab] = c.label
+        for lab in claim_aliases(c):
+            label_to_claims[lab].append(c)
 
     out_path = METADATA_DIR / "dependency_graph.dot"
     with open(out_path, "w", encoding="utf-8") as f:
@@ -562,50 +583,85 @@ def write_dependency_graph(claims: list[Claim], all_labels: dict[str, LabelEntry
 
         for claim in claims:
             color = status_colors.get(claim.status, "#ffffff")
-            safe_label = claim.label.replace(":", "_").replace("-", "_")
             short_title = claim.title[:40] + "..." if len(claim.title) > 40 else claim.title
-            display = f"{claim.label}\\n{claim.env_type} [{claim.status[:2]}]"
+            display = (
+                f"{claim.label}\\n{claim.env_type} [{claim.status[:2]}]"
+                f"\\n{claim.file}:{claim.line}"
+            )
             if short_title:
                 display += f"\\n{short_title}"
-            f.write(f'  {safe_label} [label="{display}", style=filled, fillcolor="{color}"];\n')
+            f.write(
+                f"  {dot_quote(claim.node_key)} "
+                f"[label={dot_quote(display)}, style=filled, fillcolor={dot_quote(color)}];\n"
+            )
 
         f.write("\n")
 
         # Edges: claim -> refs that are also claims
+        edges: set[tuple[str, str]] = set()
         for claim in claims:
-            src = claim.label.replace(":", "_").replace("-", "_")
             for ref in claim.refs_in_block:
-                primary = label_to_primary.get(ref)
-                if primary and primary != claim.label:
-                    dst = primary.replace(":", "_").replace("-", "_")
-                    f.write(f"  {src} -> {dst};\n")
+                for target in label_to_claims.get(ref, []):
+                    if target.node_key == claim.node_key:
+                        continue
+                    edges.add((claim.node_key, target.node_key))
+        for src, dst in sorted(edges):
+            f.write(f"  {dot_quote(src)} -> {dot_quote(dst)};\n")
 
         f.write("}\n")
 
     # Count edges
-    edge_count = sum(
-        1 for c in claims
-        for r in c.refs_in_block
-        if label_to_primary.get(r) and label_to_primary.get(r) != c.label
-    )
+    edge_count = len(edges)
     print(f"  dependency_graph.dot: {len(claims)} nodes, {edge_count} edges")
 
 
-def write_label_index(all_labels: dict[str, LabelEntry]) -> None:
+def write_label_index(all_labels: list[LabelEntry], claims: list[Claim]) -> None:
     """Write metadata/label_index.json — all labels with locations."""
+    alias_to_node_keys: dict[str, list[str]] = defaultdict(list)
+    for claim in claims:
+        for alias in claim_aliases(claim):
+            alias_to_node_keys[alias].append(claim.node_key)
+
+    labels_by_name: dict[str, list[LabelEntry]] = defaultdict(list)
+    for entry in all_labels:
+        labels_by_name[entry.label].append(entry)
+
     index = {}
-    for label, entry in sorted(all_labels.items()):
-        index[label] = {
-            "file": entry.file,
-            "line": entry.line,
+    for label, entries in sorted(labels_by_name.items()):
+        occurrences = []
+        for entry in entries:
+            occurrence = {
+                "file": entry.file,
+                "line": entry.line,
+                "occurrence_index": entry.occurrence_index,
+            }
+            if entry.env_type:
+                occurrence["env_type"] = entry.env_type
+            occurrences.append(occurrence)
+
+        item = {
+            "occurrences": occurrences,
+            "claim_node_keys": alias_to_node_keys.get(label, []),
+            "duplicate": len(occurrences) > 1 or len(alias_to_node_keys.get(label, [])) > 1,
         }
-        if entry.env_type:
-            index[label]["env_type"] = entry.env_type
+        # Backward-compatible first occurrence fields; consumers that need
+        # correctness must read occurrences.
+        first = occurrences[0]
+        item["file"] = first["file"]
+        item["line"] = first["line"]
+        if "env_type" in first:
+            item["env_type"] = first["env_type"]
+        index[label] = item
 
     out_path = METADATA_DIR / "label_index.json"
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(index, f, indent=2, ensure_ascii=False)
-    print(f"  label_index.json: {len(index)} labels")
+    total_occurrences = sum(len(entries) for entries in labels_by_name.values())
+    duplicate_labels = sum(1 for item in index.values() if item["duplicate"])
+    print(
+        f"  label_index.json: {len(index)} labels, "
+        f"{total_occurrences} occurrences, {duplicate_labels} duplicates"
+    )
 
 
 def write_theorem_registry(
@@ -964,15 +1020,12 @@ def main() -> None:
         file_claims = extract_claims(path)
         all_claims.extend(file_claims)
 
-    # Extract all labels
-    all_labels: dict[str, LabelEntry] = {}
+    # Extract all label occurrences.  Labels are aliases; duplicate labels
+    # must remain visible to the auditor.
+    all_labels: list[LabelEntry] = []
     for path in all_tex_files:
         for entry in extract_all_labels(path):
-            existing = all_labels.get(entry.label)
-            if existing is None:
-                all_labels[entry.label] = entry
-            elif existing.env_type is None and entry.env_type is not None:
-                all_labels[entry.label] = entry
+            all_labels.append(entry)
 
     print(f"\n  Extracted {len(all_claims)} tagged claims from {len(all_tex_files)} files")
 
@@ -981,7 +1034,7 @@ def main() -> None:
     write_claims_jsonl(all_claims)
     write_census_json(all_claims, all_tex_files)
     write_dependency_graph(all_claims, all_labels)
-    write_label_index(all_labels)
+    write_label_index(all_labels, all_claims)
     write_theorem_registry(all_claims, active_files, all_tex_files)
     write_theorem_index(all_claims)
     write_verified_formulas()

@@ -116,29 +116,56 @@ A coalgebra is conilpotent if $\bigcup_n F_nC = C$, equivalently, if every eleme
 \end{definition}
 
 \begin{proposition}[Collision trees and coradical degree; \ClaimStatusProvedHere]\label{prop:geom-conilpotent}
-For the geometric bar complex:
-\[\bar{B}^{\mathrm{geom}}_n(\mathcal{A}) = \Gamma(\overline{C}_{n+1}(X), \mathcal{A}^{\boxtimes(n+1)} \otimes \Omega^*_{\log})\]
-
-The conilpotent filtration manifests as:
-\begin{itemize}
-\item $F_0$: Forms supported on the deepest stratum (all points colliding)
-\item $F_1$: Forms supported on strata with at most one collision cluster
-\item $F_n$: Forms supported on strata with at most $n$ nested collision levels
-\end{itemize}
-
-A form has collision depth~$n$ if it involves configurations where $n$ distinct groups of points simultaneously collide.
+For the geometric bar model
+\[
+\bar B^{\mathrm{geom}}_r(\mathcal A)
+=
+\Gamma(\overline C_r(X),
+\mathcal A^{\boxtimes r}\otimes\Omega^*_{\log}),
+\]
+the coradical filtration is the finite bar-length filtration:
+\[
+F_k\bar B^{\mathrm{geom}}(\mathcal A)
+=
+\bk\oplus\bigoplus_{1\le r\le k}
+\bar B^{\mathrm{geom}}_r(\mathcal A).
+\]
+The Fulton--MacPherson collision-tree filtration is a geometric
+refinement of this filtration, not a direct-sum decomposition by
+support on boundary strata.  If $G_k$ denotes the subspace of log
+forms whose iterated residue expansion has no tree of depth $>k$,
+then
+\[
+\bar\Delta(G_k)\subset
+\sum_{i+j\le k-1}G_i\otimes G_j.
+\]
+Thus collision depth is a geometric witness for conilpotence, while
+the coradical degree itself is measured by iterated deconcatenation.
 \end{proposition}
 
 \begin{proof}
-The Fulton--MacPherson compactification $\overline{C}_{n+1}(X)$ has a natural stratification indexed by trees~$T$ encoding collision patterns. A stratum~$S_T$ corresponds to a configuration where the set $\{z_0, \ldots, z_n\}$ collides according to the tree~$T$: the leaves are the points, and each internal vertex represents a cluster of points that have collided.
-
-Define the \emph{depth} of a tree $T$ as the maximal number of internal vertices on a root-to-leaf path. The conilpotent filtration on $\bar{B}^{\mathrm{geom}}(\mathcal{A})$ is then:
+On the tensor coalgebra $T^c(s^{-1}\bar A)$ the reduced coproduct is
+deconcatenation:
 \[
-F_k \bar{B}^{\mathrm{geom}}_n = \bigoplus_{\substack{T \in \mathrm{Trees}(n+1) \\ \mathrm{depth}(T) \leq k}} \Gamma(S_T, \mathcal{A}^{\boxtimes(n+1)} \otimes \Omega^*_{\log}).
+\bar\Delta[a_1|\cdots|a_r]
+=
+\sum_{i=1}^{r-1}
+[a_1|\cdots|a_i]\otimes[a_{i+1}|\cdots|a_r].
 \]
-This is ascending ($F_0 \subset F_1 \subset \cdots$) and exhaustive ($\bigcup_k F_k = \bar{B}^{\mathrm{geom}}_n$) because every tree has finite depth.
+After $r$ reduced coproducts every word of length~$r$ has vanished.
+Hence the coradical filtration is exactly the filtration by word
+length, with the coaugmentation in degree~$0$.
 
-To verify this is the conilpotent filtration of Definition~\ref{def:conilpotent-filtration}: the reduced coproduct $\bar{\Delta}$ on $\bar{B}$ is the deconcatenation coproduct, which geometrically corresponds to ``splitting'' a configuration into two sub-configurations along a cut of the collision tree. Cutting a tree at an internal vertex reduces the depth by at least one in each factor, so $\bar{\Delta}(F_k) \subset \sum_{i+j=k-1} F_i \otimes F_j$, matching Definition~\ref{def:conilpotent-filtration}.
+The compactification $\overline C_r(X)$ is stratified by rooted
+collision trees.  An iterated logarithmic residue chooses a chain of
+boundary divisors, equivalently a nested collision tree.  Cutting such
+a tree along an internal edge is the geometric incarnation of a
+deconcatenation cut.  Each cut shortens the maximal root-to-leaf chain
+in the remaining factors, so the displayed inclusion for $G_k$ follows.
+Every collision tree is finite, and every bar word has finite length;
+therefore the filtration is ascending and exhaustive.  No assertion is
+made that logarithmic forms split as a direct sum of forms supported on
+strata.
 \end{proof}
 
 \subsection{Convergence by finite windows}
@@ -146,7 +173,9 @@ To verify this is the conilpotent filtration of Definition~\ref{def:conilpotent-
 \begin{theorem}[Finite-window convergence; \ClaimStatusProvedHere]\label{thm:completion-convergence}
 Let $A$ be a separated complete augmented filtered chiral
 $A_\infty$-algebra with a strong finite-window filtration
-\textup{(}Definition~\textup{\ref{idea:I-adic}}\textup{)}.  Then:
+\textup{(}Definition~\textup{\ref{idea:I-adic}}\textup{)}, and assume
+that the finite-stage maps induced on bar complexes are strict
+epimorphisms of complexes on every finite bar-length window.  Then:
 \begin{enumerate}
 \item the inverse limit
  $\widehat{\bar B}_X(A)=\varprojlim_N\bar B_X(A_{\le N})$
@@ -166,9 +195,19 @@ $A_\infty$-algebra with a strong finite-window filtration
  \[
  \partial\widehat\tau+\widehat\tau\star\widehat\tau=0;
  \]
-\item for each cohomological degree~$m$, if the finite-stage
- cohomology system
- $\{H^m(\bar B_X(A_{\le N}))\}_N$ is Mittag--Leffler, then
+\item for each cohomological degree~$m$ there is a Milnor exact
+ sequence
+ \[
+ 0\to
+ \varprojlim\nolimits_N^1 H^{m-1}(\bar B_X(A_{\le N}))
+ \to
+ H^m(\widehat{\bar B}_X(A))
+ \to
+ \varprojlim_N H^m(\bar B_X(A_{\le N}))
+ \to0;
+ \]
+\item if, in degree~$m$, the finite-stage cohomology system
+ $\{H^m(\bar B_X(A_{\le N}))\}_N$ is strict Mittag--Leffler, then
  \[
  H^m(\widehat{\bar B}_X(A))
  \cong
@@ -190,7 +229,9 @@ chiral coalgebras
 \bar B_X(A_{\le N+1})\longrightarrow\bar B_X(A_{\le N})
 \]
 compatible with coproduct, coaugmentation, differential, and curvature.
-The inverse limit therefore carries these structures componentwise.
+The strict epimorphism hypothesis makes this a strict inverse system
+of complexes, so the inverse limit carries these structures
+componentwise in the category of separated complete complexes.
 Each finite quotient is conilpotent by bar length; the limit is
 pro-conilpotent and separated because $A\simeq\varprojlim_N A_{\le N}$.
 
@@ -203,7 +244,8 @@ transition maps; their inverse limit is the displayed completed
 Maurer--Cartan element.  Continuity is precisely the statement that
 every component is detected after projection to some finite window.
 
-The cohomology statement is the Milnor exact sequence
+The cohomology statement is Milnor's exact sequence for a strict tower
+of complexes:
 \[
 0\to
 \varprojlim\nolimits_N^1 H^{m-1}(\bar B_X(A_{\le N}))
@@ -213,7 +255,8 @@ H^m(\widehat{\bar B}_X(A))
 \varprojlim_N H^m(\bar B_X(A_{\le N}))
 \to0 .
 \]
-The Mittag--Leffler hypothesis kills the derived limit term.
+Strict Mittag--Leffler kills the derived limit term.  This is the only
+place where exactness of inverse limits is used.
 \end{proof}
 
 \begin{remark}[Polynomial growth is not a convergence theorem]\label{rem:completion-convergence-window}
@@ -265,6 +308,10 @@ and assume the finite-stage counits
 \epsilon_N\colon \Omega_X\bar B_X(A_{\le N})\longrightarrow A_{\le N}
 \]
 are compatible quasi-isomorphisms in the square-zero total model.
+Assume also that the cone tower
+$K_N=\operatorname{Cone}(\epsilon_N)$ is strict Mittag--Leffler
+\textup{(}for example, the transition maps
+$K_{N+1}\twoheadrightarrow K_N$ are degreewise surjective\textup{)}.
 Then the completed counit
 \[
 \widehat\epsilon\colon
@@ -282,8 +329,10 @@ quasi-isomorphism.
 \begin{proof}
 The maps $\epsilon_N$ form a morphism of inverse systems.  Let
 $K_N=\operatorname{Cone}(\epsilon_N)$.  Each $K_N$ is acyclic in the
-square-zero total model by the finite-stage bar--cobar theorem, and
-the transition maps are surjective finite-window maps.  The Milnor
+square-zero total model by the finite-stage bar--cobar theorem.  The
+strict Mittag--Leffler hypothesis on the cone tower is part of the
+completed statement; it is not a formal consequence of acyclicity of
+the individual cones.  The Milnor
 sequence gives
 \[
 0\to\varprojlim\nolimits_N^1H^{m-1}(K_N)
@@ -519,7 +568,18 @@ operations preserve total conformal weight after the reduced-weight
 shift used in the bar construction, and the finite weight windows
 $A_{\le N}$ lie in the finite-stage bar--cobar regime.  Then
 $\widehat{\bar B}(A)=\varprojlim_N\bar B(A_{\le N})$ is well-defined,
-and every fixed total weight~$w$ stabilizes at stage~$N=w$.
+and every fixed total weight~$w$ stabilizes at stage~$N=w$.  More
+precisely,
+\[
+\widehat{\bar B}(A)\cong
+\prod_{w\ge0}\bar B(A_{\le w})_w,
+\qquad
+\bar B(A)=\bigoplus_{w\ge0}\bar B(A)_w
+\]
+with the direct sum sitting as the polynomial subcomplex of the
+completed product.  The passage from finite windows to the completed
+object is exact only because the weightwise inverse systems are
+eventually constant.
 
 Two standard cases follow.
 \begin{enumerate}
@@ -582,7 +642,7 @@ arguments of this chapter.
 \end{remark}
 
 %% ====================================================================
-%% MC4 SPLITTING AND RESONANCE-FILTERED COMPLETION
+%% STABILIZED AND RESONANCE-FILTERED COMPLETION
 %% ====================================================================
 \section{Stabilized and resonance-filtered completion}
 \label{sec:mc4-splitting}
@@ -595,16 +655,16 @@ criterion.  Infinite-generator towers separate into positive towers,
 where weight windows stabilize, and resonant towers, where a
 finite-dimensional weight-zero sector remains.
 
-\begin{remark}[The MC4 splitting: positive vs.\ resonant]
+\begin{remark}[Positive and resonant towers]
 \label{rem:mc4-splitting}
 The completed bar-cobar problem for infinite-generator chiral
 algebras splits into two independent sub-problems:
 \begin{itemize}
-\item \emph{MC4$^+$ (positive towers).}
+\item \emph{Positive towers.}
  When the algebra carries an honest positive weight grading
  (conformal weight, spin, loop degree) and the bar differential
- preserves total weight, the completion problem is
- \emph{already solved} by weightwise stabilization:
+ preserves total weight, the completion problem is reduced by
+ weightwise stabilization:
  the weight-$w$ summand of the reduced bar complex depends only on
  the finite truncation $\cA_{\le w}$, and the completed
  counit is a quasi-isomorphism weight by weight.
@@ -612,13 +672,13 @@ algebras splits into two independent sub-problems:
  Proposition~\ref{prop:mc4-weight-cutoff} and
  Corollary~\ref{cor:winfty-weight-cutoff}.
  \emph{Positive towers include $\mathcal{W}_{1+\infty}$,
- affine Yangians, and standard RTT towers.}
-\item \emph{MC4$^0$ (resonant towers).}
+ Drinfeld/RTT positive towers, and standard RTT algebras.}
+\item \emph{Finite resonance towers.}
  When the algebra has a finite-dimensional weight-zero
  resonance piece on which higher operations can preserve
  filtration degree~$0$, the stabilization argument does not
- apply directly. Completion is obstructed by weight-zero
- propagation, and new techniques are needed.
+ apply directly.  The remaining datum is the finite curved factor
+ carrying weight-zero propagation.
  \emph{The Virasoro algebra, $\mathcal{W}_N$ algebras
  ($N \ge 3$), and non-quadratic chiral algebras with central
  terms belong to this regime.}
@@ -636,6 +696,7 @@ finite-dimensional curved factor.
 Let $\cA = \prod_{w \ge 0} \cA_w$ be a complete augmented
 $A_\infty$-algebra such that:
 \begin{enumerate}
+\item each $\cA_w$ is finite-dimensional;
 \item every $A_\infty$-operation $m_n$ preserves total weight;
 \item the curvature $m_0$ has strictly positive weight;
 \item each truncation
@@ -667,33 +728,31 @@ is an isomorphism of chain complexes.
 
 The finite-stage counits
 $\Omega(\bar B(\cA_{\le N})) \xrightarrow{\sim} \cA_{\le N}$
-are quasi-isomorphisms by hypothesis~(3). Restricting to
+are quasi-isomorphisms by hypothesis~(4). Restricting to
 the weight-$w$ summand (which stabilizes at stage~$w$)
 gives a quasi-isomorphism on each weight piece. Taking the
-product over~$w$ gives the completed statement, using the
-Mittag--Leffler criterion (which is automatic since each
-weight space is finite-dimensional and the system is
-eventually constant).
+product over~$w$ gives the completed statement.  Products of
+weightwise quasi-isomorphisms are exact here because the tower is
+eventually constant in each finite-dimensional weight and therefore
+strict Mittag--Leffler.
 \end{proof}
 
-\begin{remark}[Relation to existing MC4 criteria]
+\begin{remark}[Relation to finite-window criteria]
 \label{rem:stabilized-vs-mc4-criteria}
 Theorem~\ref{thm:stabilized-completion-positive} is the
 positive-tower special case of the strong completion-tower
 theorem (Theorem~\ref{thm:completed-bar-cobar-strong}),
-which proves MC4 in full generality under the strong filtration
-axiom (Definition~\ref{def:strong-completion-tower}).
+under the strong filtration axiom
+(Definition~\ref{def:strong-completion-tower}).
 The weight-cutoff criterion of
 Proposition~\ref{prop:mc4-weight-cutoff} and its application to
 the $\mathcal{W}_\infty$ tower in
 Corollary~\ref{cor:winfty-weight-cutoff} are concrete instances.
-The present formulation
-makes explicit that \emph{positive towers are unconditionally
-solved}: the completion is not a new obstruction but a tautological
-consequence of weight stabilization. For any target with an
-honest positive spin/loop/conformal grading ($\mathcal{W}_{1+\infty}$,
-affine Yangians, positive RTT towers), the ``completed bar/cobar''
-problem is already reduced to finite truncations.
+For any target with an honest positive spin, loop, or conformal
+grading \textup{(}$\mathcal{W}_{1+\infty}$, Drinfeld/RTT positive
+towers, positive RTT algebras\textup{)}, the completed bar-cobar
+problem is reduced to finite truncations and strict weightwise
+Mittag--Leffler.
 \end{remark}
 
 \subsection{Resonance rank}
@@ -739,6 +798,39 @@ side, with only a finite resonance slice carrying the
 central term and normal-ordering corrections?''
 \end{remark}
 
+\begin{lemma}[Exact tensoring with a finite resonance tower; \ClaimStatusProvedHere]
+\label{lem:finite-resonance-tensor-exact}
+Let
+\[
+P=\prod_{w\ge0}P_w,\qquad
+Q=\prod_{\ell\ge0}Q_\ell
+\]
+be completed products of complexes over~$\bk$, with every
+$P_w$ and $Q_\ell$ finite-dimensional.  The completed tensor product
+for the product filtrations is
+\[
+P\widehat\otimes Q
+\cong
+\prod_{w,\ell\ge0}(P_w\otimes Q_\ell).
+\]
+If $f:P\to P'$ and $g:Q\to Q'$ are products of weightwise
+quasi-isomorphisms and the corresponding inverse systems are strict
+Mittag--Leffler, then
+$f\widehat\otimes g$ is a quasi-isomorphism.  No exactness assertion is
+made here for arbitrary completed tensor products with an
+infinite-dimensional unfiltered factor.
+\end{lemma}
+
+\begin{proof}
+The displayed tensor product is the inverse limit over finite
+rectangles $(w,\ell)\le(N,L)$.  On each rectangle tensoring is exact,
+because it is a finite tensor product of complexes of vector spaces.
+The transition maps are projections, hence strict epimorphisms.  The
+Milnor sequence has vanishing $\varprojlim^1$ by strict
+Mittag--Leffler, so cohomology commutes with the limit.  This proves
+both the formula and preservation of quasi-isomorphisms.
+\end{proof}
+
 \subsection{Resonance-filtered completion}
 
 \begin{theorem}[Resonance-filtered completed bar/cobar;
@@ -750,7 +842,9 @@ Assume $\cA = R_\cA \;\widehat{\oplus}\; \cA^{>0}$ with:
  Theorem~\textup{\ref{thm:stabilized-completion-positive}};
 \item $R_\cA$ is a finite-dimensional curved $A_\infty$-subalgebra;
 \item every mixed higher product with at least one resonance input and
- at least one $\cA^{>0}$-input strictly lowers positive weight.
+ at least one $\cA^{>0}$-input strictly lowers positive weight;
+\item the compatible finite-stage counit cone tower is strict
+ Mittag--Leffler.
 \end{enumerate}
 Define the \emph{resonance-filtered completed bar coalgebra}
 \[
@@ -759,14 +853,18 @@ Define the \emph{resonance-filtered completed bar coalgebra}
 \Bigl(\prod_{w \ge 0}
  \bar B\bigl((\cA^{>0})_{\le w}\bigr)_w\Bigr)
 \;\widehat{\otimes}\;
-\bar B(R_\cA).
+\widehat{\bar B}(R_\cA),
 \]
+where $\widehat{\bar B}(R_\cA)$ is completed in bar length.  Since
+$R_\cA$ is finite-dimensional, each resonance bar-length piece is
+finite-dimensional.
 Then the total bar differential splits as
 \[
 D = D^+ + D_R + D_{\mathrm{mix}},
 \]
 where $D^+$ is the stabilized positive-weight differential,
-$D_R$ is finite-dimensional, and $D_{\mathrm{mix}}$ is
+$D_R$ is the bar differential on the resonance-length completion, and
+$D_{\mathrm{mix}}$ is
 locally nilpotent on every finite positive-weight window
 \textup{(}each application strictly lowers positive weight\textup{)}.
 Consequently:
@@ -774,7 +872,8 @@ Consequently:
 \item $D$ is continuous in the completed topology;
 \item $\widehat{\bar B}^{\mathrm{res}}(\cA)$ is a complete
  curved dg coalgebra; and
-\item if the finite-stage counits are quasi-isomorphisms, then
+\item if the finite-stage counits are compatible quasi-isomorphisms,
+ then
  \[
  \Omega\bigl(\widehat{\bar B}^{\mathrm{res}}(\cA)\bigr)
  \simeq \cA.
@@ -790,11 +889,14 @@ vanishes for $n > w$. Thus the full differential is a finite
 perturbation of $D^+ + D_R$ on each window and a continuous
 perturbation after completion. The stabilized positive sector is
 controlled by Theorem~\ref{thm:stabilized-completion-positive};
-the resonance sector is finite-dimensional and therefore
-automatically well-behaved; and the mixed term converges by the
-weight bound. The filtered homological perturbation lemma
-(applied to the filtration by positive weight)
-then gives completed bar-cobar recovery.
+the completed tensor product with the resonance sector is exact by
+Lemma~\ref{lem:finite-resonance-tensor-exact}; and the mixed term
+converges by the weight bound. The filtered homological perturbation
+lemma applies on each finite positive-weight and resonance-length
+window.  Passing to the completed limit uses the strict
+Mittag--Leffler hypothesis on the finite-stage counit cones and
+Theorem~\ref{thm:completed-bar-cobar}, giving completed bar-cobar
+recovery.
 \end{proof}
 
 \begin{construction}[The resonance spectral sequence]
@@ -818,9 +920,8 @@ $H^*(\barB(\cA), D)$. The pages are:
  positive weight, with $d_0 = D^+ + D_R$ (the weight-preserving
  part of the differential);
 \item $E_1 \cong H^*(\barB(\cA^{>0}), D^+) \otimes
- H^*(\barB(R_\cA), D_R)$ (the tensor product of the
- stabilized bar cohomology and the finite-dimensional
- resonance bar cohomology);
+ H^*(\widehat{\barB}(R_\cA), D_R)$, computed by finite
+ positive-weight and finite resonance-length windows;
 \item $d_1$: the first correction from $D_{\mathrm{mix}}$,
  which lowers positive weight by exactly~$1$;
 \item $E_r$ for $r \ge 2$: successive corrections from the mixed
@@ -834,12 +935,13 @@ In particular, the spectral sequence is
 is computed by a finite number of pages.
 
 \emph{Computational significance.}
-The $E_1$ page is computable:
+The $E_1$ page is computable by finite windows:
 $H^*(\barB(\cA^{>0}), D^+)$ is determined by the stabilized
 positive-weight theory
 (Theorem~\ref{thm:stabilized-completion-positive}), and
-$H^*(\barB(R_\cA), D_R)$ is computable because $R_\cA$ is
-finite-dimensional. The differentials $d_r$ for $r \ge 1$ are
+$H^*(\widehat{\barB}(R_\cA), D_R)$ is computed by the
+bar-length tower of the finite-dimensional resonance algebra. The
+differentials $d_r$ for $r \ge 1$ are
 explicit: they are determined by the coupling between the
 resonance piece and the positive sector through the
 mixed $A_\infty$-operations. The spectral sequence provides a
@@ -865,8 +967,8 @@ $\delta \ge w$ it degenerates at $E_2$
 \end{proposition}
 
 \begin{proof}
-Each application of $d_r$ lowers positive weight by
-exactly~$r \cdot \delta$. For an element of positive weight~$w$,
+Each non-zero application of $d_r$ lowers positive weight by at
+least~$r \cdot \delta$. For an element of positive weight~$w$,
 no term can be lowered more than~$w$, so $d_r = 0$ for
 $r > w/\delta$. Hence $E_{\lfloor w/\delta \rfloor + 1}
 = E_\infty$ for weight-$w$ elements.
@@ -904,8 +1006,8 @@ $\mathcal{W}_N$ \textup{(}$N \ge 3$\textup{)} & $1$ & $1$
 $\mathcal{W}_{1+\infty}$ & $0$ & $0$
  & Positive conformal-weight tower;
  stabilization applies \\
-$Y(\mathfrak{g})$ \textup{(}Yangians\textup{)} & $0$ & $0$
- & Positive RTT-weight tower;
+$Y_{\mathrm{RTT}}(\mathfrak{g})$ \textup{(}Drinfeld/RTT tower\textup{)} & $0$ & $0$
+ & Positive loop-weight tower;
  stabilization applies
 \end{tabular}
 \end{center}
@@ -935,7 +1037,8 @@ is direct from the positive-energy state-space grading:
 $R_\cA=H_0$, each $V_h$ is finite-dimensional, and for Virasoro
 $\dim H_0 \leq \dim V_0 = 1$.
 
-\emph{Positive towers} ($\mathcal{W}_{1+\infty}$, $Y(\mathfrak{g})$):
+\emph{Positive towers}
+($\mathcal{W}_{1+\infty}$ and Drinfeld/RTT positive towers):
 The tower structure provides a positive conformal-weight (resp.\
 RTT-weight) grading. The curvature at each finite stage is
 absorbed into the finite-type bar-cobar regime, and the
@@ -943,77 +1046,88 @@ stabilized completion of
 Theorem~\ref{thm:stabilized-completion-positive} applies.
 The infinite-generator limit has $R_\cA = 0$ because the
 curvature at each stage is handled by the finite truncation.
+This row concerns ordinary Drinfeld/RTT towers.  It is not the K3
+Hall--Drinfeld or BKM target object, whose completion data live in the
+separate Vol.~III comparison lane.
 \end{proof}
 
 \begin{corollary}[Virasoro resonance spectral sequence;
 \ClaimStatusProvedHere]
 \label{cor:virasoro-resonance-ss}
-For $\mathrm{Vir}_c$ with $\rho = 1$, the resonance spectral
-sequence of
+Assume $\mathrm{Vir}_c$ admits a resonance splitting with
+$R_{\mathrm{Vir}}=\bk\cdot m_0$, that the resonance bar factor has
+$H^*(\widehat{\barB}(R_{\mathrm{Vir}}),D_R)\cong\bk$, and that the
+finite-stage counit cones are strict Mittag--Leffler.  Then the
+resonance spectral sequence of
 Construction~\textup{\ref{const:resonance-spectral-sequence}}
 has:
 \begin{itemize}
 \item $E_1 \cong H^*(\barB(\mathrm{Vir}_c^{>0}))$
- \textup{(}since $H^*(\barB(R_{\mathrm{Vir}})) = \bk$\textup{)};
-\item the same-family shadow $\mathrm{Vir}_{26-c}$ is the
- $E_1$ page \textup{(}the ``zeroth approximation'' to the true
- dual, computed from the positive-weight bar cohomology alone\textup{)};
+ \textup{(}since the resonance bar cohomology is scalar by
+ hypothesis\textup{)};
+\item if a separate Verdier--Koszul finite-stage computation identifies
+ $H^*(\barB(\mathrm{Vir}_c^{>0}))$ with the same-family shadow
+ $\mathrm{Vir}_{26-c}$, then $\mathrm{Vir}_{26-c}$ is this
+ $E_1$ page;
 \item the differentials $d_r$ for $r \ge 1$ are the corrections
  from the central charge coupling.
 \end{itemize}
-In particular, $\mathrm{Vir}_{26-c}$ is reinterpreted as the
-first page of the resonance spectral sequence, not the final dual.
+Thus the same-family shadow is a first-page identification only under
+the stated Verdier--Koszul input; it is not the completed dual by
+itself.
 \end{corollary}
 
 \begin{proof}
-Since $R_{\mathrm{Vir}} = \bk \cdot m_0$ with trivial
-differential, $H^*(\barB(R)) = \bk$. The $E_1$ page is
-therefore $H^*(\barB(\mathrm{Vir}_c^{>0})) \otimes \bk
-= H^*(\barB(\mathrm{Vir}_c^{>0}))$. This is the
-bar cohomology of the ``decurved'' Virasoro algebra (the
-algebra with central charge set to zero in the bar complex),
-which computes the same-family Koszul dual
-$\mathrm{Vir}_{26-c}$ at the M/S-level. The higher pages
-$d_r$ compute corrections from the curvature coupling $m_0$,
-producing the full H-level Koszul dual.
+The general resonance spectral sequence gives
+\[
+E_1\cong
+H^*(\barB(\mathrm{Vir}_c^{>0}),D^+)\otimes
+H^*(\widehat{\barB}(R_{\mathrm{Vir}}),D_R).
+\]
+The scalar-resonance hypothesis reduces the second factor to~$\bk$.
+The optional identification with $\mathrm{Vir}_{26-c}$ is not a
+consequence of completion; it is exactly the additional
+Verdier--Koszul computation named in the statement.  The higher
+differentials are induced by $D_{\mathrm{mix}}$, hence by the central
+charge coupling.
 \end{proof}
 
-\begin{remark}[The Virasoro resonance model (resolved)]
+\begin{remark}[The Virasoro resonance model]
 \label{rem:virasoro-resonance-model}
-The Virasoro algebra $\mathrm{Vir}_c$ admits a
-positive-energy filtration on the state-space bar complex
-with a finite-dimensional resonance piece
-$R_{\mathrm{Vir}} = \mathbb{k} \cdot m_0$ carrying
-the central term. The resonance construction uses four facts:
+The Virasoro state-space bar complex carries a positive-energy
+filtration.  In the transferred models considered here the central
+term gives a one-dimensional resonance candidate
+$R_{\mathrm{Vir}} = \mathbb{k} \cdot m_0$.  The resonance construction
+uses four mathematical inputs:
 \begin{enumerate}
-\item \emph{Finite-dimensionality of the resonance slice}:
- proved by Theorem~\ref{thm:platonic-completion}
- on the transferred model
+\item \emph{Finite-dimensionality of the resonance slice}: this is a
+ hypothesis of the transferred model in
+ Theorem~\ref{thm:platonic-completion}
  \textup{(}$R_\cA = H_0$, $\dim H_0 \le \dim V_0 < \infty$\textup{)}.
  For Virasoro: $\dim V_0 = 1$ (just the vacuum), so
  $\dim R_{\mathrm{Vir}} \le 1$.
  Proposition~\ref{prop:resonance-ranks-standard} computes
  $\dim R_{\mathrm{Vir}} = 1$.
 \item \emph{Strict positive-weight drop of mixed
- operations}: Steps~1 and~3 of
- Theorem~\ref{thm:platonic-completion} show that the
- transferred operations respect reduced weight and that the
- mixed differential strictly lowers positive conformal weight.
+ operations}: this is the reduced-weight hypothesis in
+ Theorem~\ref{thm:platonic-completion}; once imposed, the mixed
+ differential strictly lowers positive conformal weight.
 \item \emph{Compatibility with $\mathcal{W}_N$
- approximants}: the DS-reduction functor preserves the
+ approximants}: this holds when the DS-reduction functor preserves the
  positive-energy grading (the BRST differential commutes
- with~$L_0$), so the resonance decomposition is compatible
+ with~$L_0$), so that the resonance decomposition is compatible
  with the $N \to \infty$ limit.
-\item \emph{DS-reduction compatibility}: follows from (3),
- since the resonance-filtered completion commutes with
- exact weight-preserving functors.
+\item \emph{Exactness through functors}: resonance-filtered completion
+ commutes with a weight-preserving functor only when that functor is
+ exact on the finite windows and preserves the strict
+ Mittag--Leffler cone tower.
 \end{enumerate}
-Consequently, the same-family shadow $\mathrm{Vir}_{26-c}$
-is rigorously the \emph{depth-zero resonance shadow} (the
-image of the resonance truncation $R_{\mathrm{Vir}}$),
-and the genuine $\mathcal{W}_\infty$-type dual is recovered
-from the full completed object
-$\widehat{\bar B}^{\mathrm{res}}(\mathrm{Vir}_c)$.
+Under these inputs, the same-family shadow $\mathrm{Vir}_{26-c}$ can
+occur only as the first-page Verdier--Koszul shadow named in
+Corollary~\ref{cor:virasoro-resonance-ss}.  The completed dual is
+computed from the full object
+$\widehat{\bar B}^{\mathrm{res}}(\mathrm{Vir}_c)$, with the higher
+pages carrying the central-charge corrections.
 \end{remark}
 
 \subsection{The Resonance completion theorem}
@@ -1022,10 +1136,24 @@ $\widehat{\bar B}^{\mathrm{res}}(\mathrm{Vir}_c)$.
 \label{thm:platonic-completion}%
 \index{platonic completion theorem|textbf}%
 \index{resonance rank!finiteness|textbf}%
-Every separated complete chiral $A_\infty$-algebra $\cA$
-obtained by a weight-preserving homological transfer from a
-positive-energy chiral algebra admits a canonical
-decomposition
+Let $\cA$ be a separated complete chiral $A_\infty$-algebra obtained
+from a positive-energy chiral algebra
+$\mathcal V=\prod_{h\ge0}V_h$ by a weight-preserving strong
+deformation retract, with every $V_h$ finite-dimensional.  Assume:
+\begin{enumerate}
+\item the transferred operations satisfy the residue-weight identity
+ \[
+ h\bigl(\tilde m_k(x_1,\ldots,x_k)\bigr)
+ =
+ \sum_i h(x_i)-(k-1)
+ \]
+ whenever the right-hand side is non-negative, and the operation
+ vanishes otherwise;
+\item every finite reduced-weight truncation lies in the finite-stage
+ bar-cobar regime; and
+\item the finite-stage counit cone tower is strict Mittag--Leffler.
+\end{enumerate}
+Then $\cA$ admits the closed decomposition
 \[
 \cA \cong R_\cA \;\widehat{\oplus}\; \cA^+_\cA
 \]
@@ -1038,18 +1166,18 @@ coalgebra is then
 \simeq
 \widehat{\bar B}^{\mathrm{st}}(\cA^+_\cA)
 \;\widehat{\otimes}\;
-\bar B(R_\cA),
+\widehat{\bar B}(R_\cA),
 \]
 and the completed cobar recovers~$\cA$.
 
-For $\mathcal{W}_{1+\infty}$, affine Yangians, and positive
-RTT towers, one has $R_\cA = 0$.
+For $\mathcal{W}_{1+\infty}$, Drinfeld/RTT positive towers, and
+positive RTT algebras satisfying these hypotheses, one has
+$R_\cA = 0$.
 For Virasoro and non-quadratic $\mathcal{W}$-families, one has
-$0 < \dim R_\cA < \infty$.
-The same-family shadow $\mathrm{Vir}_{26-c}$ is the image of the
-resonance truncation~$R_\cA$, while the genuine
-$\mathcal{W}_\infty$-type dual is recovered only from the full
-completed object.
+$0 < \dim R_\cA < \infty$ when the stated resonance model has been
+verified.  Any identification of the same-family shadow
+$\mathrm{Vir}_{26-c}$ is a separate Verdier--Koszul computation of
+the first page, not a consequence of the decomposition alone.
 \end{theorem}
 
 \begin{proof}
@@ -1078,11 +1206,8 @@ For $x \in H_h$ with $h > 0$, define the reduced weight
 \[
 \nu(x) := h - 1.
 \]
-The binary chiral product lowers conformal weight by exactly~$1$:
-if $a \in H_{h(a)}$ and $b \in H_{h(b)}$, then the residue
-product has weight $h(a) + h(b) - 1$. Each planar tree
-contributing to $\tilde m_k$ has $k-1$ internal vertices, so
-for homogeneous $x_i \in H_{h_i}$ one has
+The residue-weight hypothesis gives, for homogeneous
+$x_i\in H_{h_i}$,
 \[
 h\bigl(\tilde m_k(x_1, \ldots, x_k)\bigr)
 =
@@ -1121,8 +1246,8 @@ Each reduced-weight truncation
 =
 \prod_{1 \le h \le N+1} H_h
 \]
-is finite-dimensional, hence lies in the finite-type bar-cobar
-regime. Therefore
+is finite-dimensional and lies in the finite-stage bar-cobar regime
+by hypothesis. Therefore
 Theorem~\ref{thm:stabilized-completion-positive} applies to
 $\cA^+_\cA$ with respect to the reduced weight~$\nu$.
 
@@ -1160,7 +1285,7 @@ Consider the completed tensor product
 =
 \widehat{\bar B}^{\mathrm{st}}(\cA^+_\cA)
 \;\widehat{\otimes}\;
-\bar B(R_\cA).
+\widehat{\bar B}(R_\cA).
 \]
 For a bar word, define its \emph{positive conformal weight}
 $w_+$ to be the sum of the conformal weights of the
@@ -1194,10 +1319,10 @@ D_{\mathrm{mix}}^n = 0
 This is the required topological nilpotence. The perturbation
 argument used in the proof of
 Theorem~\ref{thm:resonance-filtered-bar-cobar} depends only on
-that nilpotence, so it applies here with the decreasing
+that nilpotence, so it applies here with the finite increasing
 filtration
 \[
-\mathcal F^p
+\mathcal F_{\le p}
 :=
 \{\text{bar chains of positive conformal weight } \le p\}.
 \]
@@ -1207,7 +1332,7 @@ Combining this with Step~1 gives
 \simeq
 \widehat{\bar B}^{\mathrm{st}}(\cA^+_\cA)
 \;\widehat{\otimes}\;
-\bar B(R_\cA),
+\widehat{\bar B}(R_\cA),
 \]
 and the completed cobar recovers~$\cA$.
 
@@ -1222,11 +1347,13 @@ complexes are quasi-isomorphisms:
 \bar B(\cA) \xrightarrow{\sim} \bar B(\mathcal V).
 \]
 Because the SDR data preserve conformal weight, these maps are
-weightwise quasi-isomorphisms. Passing to the completed products
-over weight pieces therefore preserves quasi-isomorphisms. Hence
-the resonance-filtered completed bar coalgebra constructed above
-computes the same completed bar-cobar type as the original
-positive-energy chiral algebra~$\mathcal V$.
+weightwise quasi-isomorphisms.  Passing to the completed products over
+weight and resonance-length pieces preserves quasi-isomorphisms by
+Lemma~\ref{lem:finite-resonance-tensor-exact} and the strict
+Mittag--Leffler cone hypothesis. Hence the resonance-filtered
+completed bar coalgebra constructed above computes the same completed
+bar-cobar type as the original positive-energy chiral
+algebra~$\mathcal V$.
 
 The specific resonance ranks for the standard families are
 computed in Proposition~\ref{prop:resonance-ranks-standard}:
@@ -1253,24 +1380,24 @@ weight. The passage from modes to states is the HTT
 finite-dimensional after transfer.
 \end{remark}
 
-\begin{construction}[Completion towers as MC4 inverse limits]
+\begin{construction}[Completion towers as strict inverse limits]
 \label{constr:completion-mc4}
 The strong completion-tower theorem
-(Theorem~\ref{thm:completed-bar-cobar-strong}) resolves MC4
-by the degree cutoff lemma
+(Theorem~\ref{thm:completed-bar-cobar-strong}) uses the degree cutoff
+lemma
 (Lemma~\ref{lem:degree-cutoff}): the strong filtration axiom
 \[
 \mu_r(F^{i_1}, \ldots, F^{i_r})
 \subset F^{i_1 + \cdots + i_r}
 \]
-ensures that continuity and Mittag-Leffler are automatic,
-yielding the completed bar-cobar homotopy equivalence on
+ensures continuity and strict Mittag--Leffler for the finite-window
+tower, yielding the completed bar-cobar homotopy equivalence on
 $\operatorname{CompCl}(\mathcal{F}_{\mathrm{ft}})$. The
 resonance rank $\rho(\cA)$
 (Definition~\ref{def:resonance-rank}) classifies completion
 difficulty.
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{MC4$^+$ (positive towers, $\rho = 0$).}
+\item \emph{Positive towers, $\rho = 0$.}
  Weight stabilization
  (Theorem~\ref{thm:stabilized-completion-positive})
  reduces the completed bar-cobar problem to a finite
@@ -1281,9 +1408,9 @@ difficulty.
  stabilize for $n$ exceeding a bound depending only on
  the weight grading, so
  $\varprojlim^1 = 0$ and the inverse limit is exact.
- Examples: $\mathcal{W}_{1+\infty}$, affine Yangians,
- RTT algebras.
-\item \emph{MC4$^0$ (resonant towers, $\rho > 0$).}
+ Examples: $\mathcal{W}_{1+\infty}$, Drinfeld/RTT positive
+ towers, RTT algebras.
+\item \emph{Finite resonance towers, $\rho > 0$.}
  The resonance-filtered bar-cobar
  (Theorem~\ref{thm:resonance-filtered-bar-cobar})
  decomposes the problem into a finite-dimensional
@@ -1292,9 +1419,9 @@ difficulty.
  \simeq
  \widehat{\bar B}^{\mathrm{st}}(\cA^+)
  \,\widehat{\otimes}\,
- \bar B(R_\cA)$.
- The completion difficulty is concentrated in the
- finite-dimensional factor $\bar B(R_\cA)$.
+ \widehat{\bar B}(R_\cA)$.
+ The remaining completion difficulty is concentrated in the
+ bar-length tower of the finite-dimensional resonance algebra.
  Examples: $\mathrm{Vir}_c$ ($\rho = 1$),
  non-quadratic $\mathcal{W}_N$ ($\rho < \infty$,
  Theorem~\ref{thm:platonic-completion}).
@@ -1303,10 +1430,8 @@ difficulty.
  reduces convergence of the completed bar-cobar to
  finite matrix stabilization at each weight window,
  and the uniform PBW bridge
- (Theorem~\ref{thm:uniform-pbw-bridge}) connects
- MC1 (PBW concentration) to MC4 (completed
- bar-cobar): every PBW-concentrated chiral algebra
- admits a completed bar-cobar homotopy equivalence.
+ (Theorem~\ref{thm:uniform-pbw-bridge}) connects PBW concentration
+ to completed bar-cobar inversion on the stated finite-window locus.
 \end{enumerate}
 \end{construction}
 
@@ -1318,7 +1443,7 @@ mathematical order on quotient constructions:
 \item Positive towers are governed by
  Theorem~\ref{thm:stabilized-completion-positive}; the completed
  counit is checked weight by weight.
-\item For Yangian/$\mathcal{W}_{1+\infty}$-type targets, the
+\item For Drinfeld/RTT and $\mathcal{W}_{1+\infty}$-type targets, the
  unshifted completed envelope precedes shifted quotients.  The
  kernel $\to$ completed envelope $\to$ boundary quotient order is
  forced by the coideal structure
@@ -1332,12 +1457,9 @@ mathematical order on quotient constructions:
  Remark~\ref{rem:virasoro-resonance-model}; its completed bar object
  is controlled by the finite-dimensional resonance factor
  $R_{\mathrm{Vir}}$.
-\item The dependency chain
- $\text{MC3} \Rightarrow \text{MC4} \Rightarrow \text{MC5}$
- is enforced by the constructions: PBW concentration supplies the
- finite windows, completed bar--cobar supplies the inverse limit, and
- the BV/BRST dictionary is a later interpretation of that completed
- object.
+\item PBW concentration supplies the finite windows, completed
+ bar--cobar supplies the inverse limit, and the BV/BRST dictionary is a
+ later interpretation of that completed object.
 \end{enumerate}
 \end{remark}
 
@@ -1351,14 +1473,11 @@ The completed bar--cobar package consists of:
  \textup{(}Theorem~\ref{thm:completion-convergence},
  Proposition~\ref{prop:geom-conilpotent}\textup{)};
 \item the inverse-limit criteria used by the standard
- $\mathcal{W}_\infty$ and Yangian towers in the MC4 package of
- Chapter~\ref{chap:concordance};
+ $\mathcal{W}_\infty$ and Drinfeld/RTT positive towers;
 \item the compatibility of these completed models with the
  Beilinson--Drinfeld filtered framework
  \textup{(}Theorem~\ref{thm:BD-chiral-homology}\textup{)};
-\item the MC4 splitting into positive
- \textup{(}$\mathrm{MC4}^+$, resolved by stabilization\textup{)}
- and resonant \textup{(}$\mathrm{MC4}^0$\textup{)} regimes
+\item the splitting into positive and finite-resonance regimes
  \textup{(}Remark~\ref{rem:mc4-splitting}\textup{)};
 \item stabilized completion for positive towers
  \textup{(}Theorem~\ref{thm:stabilized-completion-positive}\textup{)};
@@ -1368,16 +1487,14 @@ The completed bar--cobar package consists of:
  \textup{(}Theorem~\ref{thm:resonance-filtered-bar-cobar}\textup{)};
 \item the Resonance completion theorem
  \textup{(}Theorem~\ref{thm:platonic-completion}\textup{)},
- which proves that every positive-energy chiral algebra is
- represented, for completed bar-cobar purposes, by a
- finite-resonance transferred model, identifying the
- irreducible core of MC4 as a finite resonance problem.
+ which proves, under reduced-weight and strict Mittag--Leffler
+ hypotheses, that the completed bar-cobar type is represented by a
+ finite-resonance transferred model.
 \end{enumerate}
 The Resonance completion theorem
 \textup{(}Theorem~\ref{thm:platonic-completion}\textup{)}
-is the sharp finite-window form: every positive-energy chiral algebra
-has the same completed bar--cobar type as a finite-resonance
-transferred model.  The remaining algebraic computation is the
+is the sharp finite-window form for positive-energy transferred models
+satisfying its hypotheses.  The remaining algebraic computation is the
 resonance spectral sequence for $\mathrm{Vir}_c$ and the
 non-quadratic $\mathcal W_N$ algebras, together with the
 Verdier--Koszul identification of the H-level target from its higher
@@ -1387,37 +1504,60 @@ pages.
 \section{Synthesis}
 \label{sec:nc-supplement}
 
-\begin{remark}[Siegel-elliptic dynamical $R$-matrix and Hall completion]
+\begin{remark}[Siegel-elliptic comparison kernels and Hall completion]
 \label{rem:nc-1}
-The Siegel-elliptic dynamical $R$-matrix
+For the K3 Hall comparison one may posit a Siegel-elliptic dynamical
+kernel
 \[
  R_{\mathrm{Sieg,dyn}}(z_1, z_2;\,\tau, w):\
  V(z_1)\otimes V(z_2) \to V(z_2)\otimes V(z_1)
 \]
-is the Pasol--Zagier 2013 universal Igusa-form $R$-matrix on
-$\mathrm{Sp}_4(\mathbb Z)$-modular locus, with spectral parameters
-$(z_1,z_2)$ on K3 configuration and dynamical parameters $(\tau,w)$ on
-the Siegel upper half-space $\mathbb H_2$. The nilpotent completion of
-the chiral Hall algebra $\mathcal Y^{\mathrm{Hall}}_\hbar(\mathrm{CoHA}_{K3\times E})$
-under repeated $R_{\mathrm{Sieg,dyn}}$-braiding crystallises, via
-Davison 2017 CY-$3$ extension, to the Hall--Drinfeld double $\mathbf H_{\Delta_5}$
+with spectral parameters $(z_1,z_2)$ on the configuration side and
+dynamical parameters $(\tau,w)$ on $\mathbb H_2$.  This chapter does
+not construct such a kernel and does not identify it with an ordinary
+Drinfeld Yangian $R$-matrix.  The nilpotent completion of the chiral
+Hall algebra
+$\mathcal Y^{\mathrm{Hall}}_\hbar(\mathrm{CoHA}_{K3\times E})$
+supplies only the completed ambient in which a Vol.~III
+Hall--Drinfeld target $\mathbf H_{\Delta_5}^{\mathrm{tgt}}$ can be
+tested after the target-side comparison maps have been constructed.
+Recognition as the compact source $\mathbf H_{\Delta_5}$ is a
+Vol.~III source-gate statement, not a construction in this chapter
 \cite{PasolZagier2013,SchiffmannVasserot2012,Davison2017}. Cross-ref
 Vol.~III Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
 \end{remark}
 
-\begin{remark}[Nilpotent completion depth and the universal identity]
+\begin{remark}[K3 comparison constants do not bound nilpotence]
 \label{rem:nc-2}
-The depth of the nilpotent completion is constrained by the universal
-identity $\hbar^2 \cdot K^{\kappa_{\mathrm{ch}}} = -1$ at $\hbar^2 = -1/8$:
-the completion truncates at order $8$ in the Mukai-Koszul conductor,
-matching the Lusztig specialisation. At CY-$2$ (K3) the completion is
-weight-$5$ (since $K^{\kappa_{\mathrm{ch}}} = 8 = 2\cdot 4$, $c_+ = 4$),
-consistent with $\Delta_5$ as the completion's classifying cocycle
+The identity
+\[
+\hbar^2 K^{\kappa_{\mathrm{ch}}}=-1,\qquad
+K^{\kappa_{\mathrm{ch}}}=8,\qquad
+\hbar^2=-1/8
+\]
+is a comparison normalisation for the K3 target lane.  It is not a
+nilpotence bound and it does not imply that the completed bar tower
+truncates at order~$8$.  The Vol.~I completion remains the inverse
+limit over finite windows.
+
+The K3 constants occupy different registers:
+\[
+K^{\kappa_{\mathrm{ch}}}=8=2c_+,\quad c_+=4,\quad
+\kappa_{\mathrm{ch}}^{\mathrm{Heis}}(K3\times E)=3,\quad
+\kappa_{\mathrm{BKM}}(\Delta_5)=5,
+\]
+while $\kappa_{\mathrm{cat}}(K3\times E)=0$,
+$\kappa_{\mathrm{fiber}}(K3)=24$, and $\chi(\mathcal O_{K3})=2$ are
+separate invariants.  The numerical equality $5=3+2$ is the
+$N=1$ coincidence recorded in the concordance, not a product formula.
+The automorphic forms $\Delta_5$ and $\Phi_{10}^{\mathrm{un}}$ are
+target comparison outputs for the Vol.~III BKM/Hall lane, not input
+data proving a truncation of nilpotent completion
 \cite{Lusztig1990,GritsenkoNikulin1998}. Cross-ref
 Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
 \end{remark}
 
-\section{higher-coherence obstruction tower}
+\section{Higher-coherence obstruction tower}
 \label{sec:nc-supplement-ii}
 
 \begin{remark}[Pentagon coboundary at $\hbar^3, \hbar^4, \hbar^5$]
@@ -1459,29 +1599,34 @@ reducible via the Zagier double-shuffle relations).
 
 \begin{remark}[$A_\infty$-quasi-Hopf: the tower does not truncate]
 \label{rem:nc-Ainfty-open}
-The conclusion is structural. For BKM-flavoured inputs
-(Borcherds 1992 monstrous Lie superalgebras, Gritsenko--Nikulin 1998
-automorphic forms) the imaginary-root cone of
-$\widehat{\mathfrak{g}}^{\mathrm{super}}_{\Delta_5}$ is infinite-dimensional
-and contributes to every order in $\hbar$: the higher-coherence
-$\phi^{(n)}$ is non-zero for \emph{every} $n \ge 3$, with
-asymptotic dimension-count
+The conclusion is structural and belongs to the target lane.  For BKM
+target inputs whose imaginary-root cone is infinite-dimensional
+\textup{(}Borcherds 1992; Gritsenko--Nikulin 1998\textup{)}, the
+Vol.~III comparison may have higher-coherence contributions in
+unbounded $\hbar$-orders.  Under the Vol.~III imaginary-root counting
+hypothesis the target-side dimensions have asymptotic form
 \[
 \dim\,c_n^{(K3)} \;\sim\; n^{-27/4}\,\exp\!\bigl(4\pi\sqrt{n}\bigr)
 \]
 by Hardy--Ramanujan asymptotics applied to the Gritsenko--Nikulin~1998
 Section~4 imaginary-root counting formula
 \cite{GritsenkoNikulin1998,Borcherds1992,HardyRamanujan1918}.
-Consequently, $\mathbf H_{\Delta_5}$ is a \emph{genuine} $A_\infty$-quasi-Hopf
-algebra, not a quasi-Hopf algebra in Drinfeld's original sense: the
-Markl--Shnider--Stasheff 2002 obstruction tower is infinite. The
+This is not a Vol.~I proof that every compact source has a non-zero
+class in every order.  It says that no finite nilpotence bound follows
+from the K3 comparison constants alone.  If a compact source is
+recognised by the Vol.~III
+$\mathbf H_{\Delta_5}^{\mathrm{tgt}}$ comparator and has non-zero
+classes in unbounded orders, it carries a genuine
+$A_\infty$-quasi-Hopf structure rather than only a quasi-Hopf structure
+in Drinfeld's original sense.  The
 controlling universal object is the chain-level Markl--Shnider--Stasheff
 complex $\mathrm{MSS}^\bullet(\widehat{\mathfrak g}^{\mathrm{super}}_{\Delta_5})$
 over the \emph{pro-}Lie-bialgebra
 $t^{\mathrm{Sieg},\mathrm{super}}_{2,[2]} \oplus \mathfrak n_+^{\mathrm{imag}}$
-(the super-Manin pair of the K3 BKM); the nilpotent completion of the
-present chapter is exactly the weight-completed ambient that makes
-this universal object well-defined. Ambient-qualifier
+(the super-Manin pair of the K3 BKM).  The nilpotent completion of the
+present chapter supplies one pro-conilpotent weight-completed ambient
+for this comparison; it does not recognise the compact Hall source.
+Ambient-qualifier
 discipline applies: the chain-level statement holds on the
 pro-object ambient; the $(\infty,1)$-categorical statement holds in
 the category of presentable $A_\infty$-Hopf $\infty$-operads
@@ -1490,7 +1635,7 @@ theorems, both load-bearing). Cross-ref Vol.~III
 Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
 \end{remark}
 
-\section{deep motivic coherences $\phi^{(8,9,10)}$}
+\section{Deep motivic coherences $\phi^{(8,9,10)}$}
 \label{sec:nc-supplement-iii}
 
 \begin{remark}[Brown's motivic dimension and Deligne's weight-$8$/$9$/$10$ bases]
@@ -1717,7 +1862,8 @@ has raw weight $-12$ and in-tower weight $5\cdot 12 = 60$; since
 $n = 12$ is even, the exponent $12/2 = 6$ is integer and the leg
 lives on the full $\mathrm{Sp}_4(\mathbb{Z})$ paramodular quotient
 (Gritsenko--Nikulin $1998$ \S$4$). Weight~$12$ is the \emph{highest
-weight at which Brown's motivic MZV theorem is proved on the nose};
+weight at which Brown's motivic MZV theorem is used here without the
+Zagier--Hoffman conjecture};
 weights~$\ge 13$ become conjectural on the Zagier--Hoffman
 depth-reduction conjecture (Brown $2012$
 \texttt{arXiv:$1301.3053$}; partial progress in Brown $2017$ on the
@@ -1743,12 +1889,12 @@ recurrence, and the Borcherds leg at each $m$ has finite
 imaginary-root dimension by Hardy--Ramanujan; hence
 $\lim^1 = 0$ and $\mathrm{obs}_\infty$ restricted to
 weight~$\le 12$ is a well-defined object of the weight-filtered
-completion on the nose, without any recourse to the Zagier--Hoffman
+completion, without any recourse to the Zagier--Hoffman
 conjecture. Above weight~$12$ the statement becomes conditional on
 that conjecture; the $A_\infty$-tower continues to admit the
 Mittag--Leffler formalism assuming Zagier--Hoffman
 depth-reduction holds, with an explicit recovery of the
-on-the-nose statement for each concrete weight where the
+unconditional statement for each concrete weight where the
 conjecture is verified.
 \cite{Brown2011,Brown2012,Deligne2013,MarklShniderStasheff2002,
  HardyRamanujan1918}.
@@ -1795,7 +1941,7 @@ universal connection on $\overline{M}_{0, 5}$, normalised by $12!$.
 This pairing is the explicit chain-level witness of the pro-unipotent
 motivic-Galois action on the pentagon face of Stasheff's $K_4$ at
 weight~$12$, and realises the \emph{first depth-$4$ associator datum}
-of the tower on the nose.
+of the tower as a chain-level class.
 \cite{Brown2011,Brown2012,Brown2017,BroadhurstKreimer1997,
  Deligne2013,Drinfeld1990,Goncharov2001}.
 \end{remark}
@@ -1822,8 +1968,8 @@ latfnd-w17-II-25-1,Borcherds1998,GritsenkoNikulin1998}.
 Consequently $\Phi_{12}$ does \emph{not} appear as a factor of
 $\phi^{(12)}$; the unique Borcherds contribution to $\phi^{(12)}$ is
 the K$3$-lattice-compatible $(\Phi_{10}^{\mathrm{un}})^{6}/\eta^{144}$. The
-classification invariant and the Fake-Monster invariant at weight~$12$
-are independent observables. The direct compute witness is the
+K$3$ target comparison invariant and the Fake-Monster invariant at
+weight~$12$ are independent observables. The direct compute witness is the
 predicate \texttt{borcherds\_leg\_is\_fake\_monster()}, which checks
 the Borcherds leg against the Fake-Monster lattice invariant rather
 than identifying it with the K3 lattice contribution
@@ -1872,7 +2018,7 @@ partial-sum reconstruction of the Hoffman~$1997$ strict-inequality
 nested series at cutoff $N = 3000$ to $\sim 0.2\%$ in
 \texttt{zeta\_3333\_from\_partial\_sums()}). This is the first
 depth-$4$ motivic Galois invariant of the pentagon coboundary
-\emph{computed on the nose}: earlier analyses reached only
+\emph{computed at chain level}: earlier analyses reached only
 depth-$\le 3$ classes, and the depth-$4$ invariant is inaccessible
 from any weight-$\le 11$ or depth-$\le 3$ datum
 (Brown~$2011$~Thm~$1.2$).
@@ -1935,7 +2081,7 @@ $c_{12}^{(9)} = \zeta(3, 3, 3, 3)/12!$ therefore holds
 \label{rem:nc-open-horizon}
 Weight $12$ is the last weight where every coefficient $c_{w}^{(i)}$
 of $\phi^{(w)}$ is unconditionally defined: Brown~$2011$ Thm~$1.2$
-establishes the Deligne motivic MZV basis on the nose through
+establishes the Deligne motivic MZV basis through
 weight $12$, including the first depth-$4$ generator
 $\zeta(3, 3, 3, 3)$. At weight $\ge 13$ the explicit basis requires
 the Zagier--Hoffman depth-reduction conjecture (Brown~$2012$
@@ -1971,8 +2117,8 @@ tail of the
 $A_\infty$-tower is K$3$-specific: for every finite weight truncation,
 the Borcherds leg contributes roughly ten orders of magnitude more
 independent coefficient directions than the motivic MZV legs, and the
-Mittag--Leffler pro-limit is unconditionally well-defined on the nose
-through weight~$12$ because each truncated weight still has finite
+strict Mittag--Leffler pro-limit is defined through weight~$12$
+because each truncated weight still has finite
 Hardy--Ramanujan dimension (circle method of
 Hardy--Ramanujan~$1918$ applied to the
 $1/\Phi_{10}^{\mathrm{un}}$ Fourier expansion,
@@ -1980,48 +2126,43 @@ Gritsenko--Nikulin~$1998$ Sec~$4$).
 \cite{HardyRamanujan1918,GritsenkoNikulin1998,Brown2011}.
 \end{remark}
 
-\begin{remark}[$\mathfrak{grt}_1$-transitivity on the K$3$-BKM
-quantisation space]
+\begin{remark}[Target transitivity for the K$3$-BKM comparison datum]
 \label{rem:nc-grt1-bkm-transitivity-vol1}
-The Drinfeld twist action of the pro-unipotent Grothendieck--Teichm\"uller
-group $\exp(\widehat{\mathfrak{grt}}_1)$ on the space of Drinfeld
-associators is transitive on the affine Kac--Moody sub-locus by
-Etingof--Kazhdan~$2000$ Part~V Thm.~$2.2$; on the K$3$-BKM Lie
-superalgebra $\mathfrak g_{\Delta_5}$ the imaginary cone contributes
-an obstruction cocycle $\mathrm{ob}^{\mathrm{GN}} \in H^2(\mathfrak{grt}_1;
-\widehat{\mathrm{Imag}})$ that vanishes on the Koszul locus
-$\overline{\mathcal A_2}\smallsetminus\bigcup_{n\;\text{admissible}}H_n$
--- the same Koszul locus on which the chiral bar--cobar adjunction
-is strict (Theorem~$B$, Beilinson tightening). On that locus, the
-super-Etingof--Kazhdan quantisation space
-$\Quant^{\mathrm{GN, Koszul}}(\mathfrak g_{\Delta_5})/
-(\mathbb Z/2)_{\mathrm{super}}$ is a torsor over
-$\exp(\widehat{\mathfrak{grt}}_1)$. The statement is unconditional
-through motivic weight~$12$ (the depth-$4$ generator
-$\mathsf g_{3, 3, 3, 3} \in \mathrm{gr}^4_{\mathcal D}\mathfrak{grt}_1$
-of Remark~\ref{rem:nc-grt1-weight-12} pairs to
-$c_{12}^{(9)} = \zeta(3, 3, 3, 3)/12!$ per
-Remark~\ref{rem:nc-c12-explicit}, and the pairing kills
-the obstruction term by term) and conditional on
-Zagier--Hoffman depth-reduction above weight~$12$
-(Remark~\ref{rem:nc-open-horizon}). Full statement and
-proof: Vol~III \S~\ref{V3-sec:qgf-grt1-bkm},
-Theorem~\ref{V3-thm:qgf-grt1-bkm-transitivity}. The three verification
-paths (affine limit = EK~$2000$ Part~V; motivic-Galois pairing =
-Drinfeld--Deligne; graph-complex cohomology = Willwacher~$2015$ +
-Schnepper--Willwacher~$2017$) witness the scope from three disjoint
-primary sources.
+The Drinfeld twist action of the pro-unipotent
+Grothendieck--Teichm\"uller group
+$\exp(\widehat{\mathfrak{grt}}_1)$ on Drinfeld associators is
+transitive on the affine Kac--Moody sub-locus by
+Etingof--Kazhdan~$2000$ Part~V Thm.~$2.2$. For the K$3$-BKM target
+datum of $\mathfrak g_{\Delta_5}$ the imaginary cone contributes an
+extra class
+\[
+\mathrm{ob}^{\mathrm{GN}} \in
+H^2(\mathfrak{grt}_1;\widehat{\mathrm{Imag}}_{\Delta_5}) .
+\]
+Vol.~I controls the affine EK mechanism and the motivic associator
+coordinates. It does not prove the vanishing of
+$\mathrm{ob}^{\mathrm{GN}}$, and Brown's unconditional motivic basis
+through weight~$12$ is not a classification of the compact K$3$-BKM
+Hall source through weight~$12$. Under the target-side hypothesis
+$\mathrm{ob}^{\mathrm{GN}}=0$ on the Koszul locus
+$\overline{\mathcal A_2}\smallsetminus\bigcup_{n\;\text{admissible}}H_n$,
+the super-Etingof--Kazhdan target quantisation space
+$\Quant^{\mathrm{GN, Koszul}}_{\mathrm{tgt}}(\mathfrak g_{\Delta_5})/
+(\mathbb Z/2)_{\mathrm{super}}$ becomes a torsor over
+$\exp(\widehat{\mathfrak{grt}}_1)$. Recognition of a compact Hall
+source $\mathbf H_{\Delta_5}$ requires the Vol.~III source gates
+together with the cohomology/Heegner-characteristic comparison.
 \cite{Drinfeld1990,Brown2012,Willwacher2015,SchnepperWillwacher2017,
  GritsenkoNikulin1998,Borcherds1995}.
 \end{remark}
 
-\begin{theorem}[$\mathrm{GRT}_1^{\mathrm{super}}$-torsor structure on
-super-EK quantisations of $\mathfrak g_{\Delta_5}$]
+\begin{theorem}[Conditional target $\mathrm{GRT}_1^{\mathrm{super}}$-torsor
+for $\mathfrak g_{\Delta_5}$]
 \label{thm:nc-grt1-super-torsor-delta5}
-\ClaimStatusProvedHere
+\ClaimStatusConditional
 Let
 \[
-\mathcal Q(\mathfrak g_{\Delta_5})
+\mathcal Q^{\mathrm{tgt}}(\mathfrak g_{\Delta_5})
 \;:=\;
 \bigl\{\mathbf H : \mathbf H/\hbar = U(\mathfrak g_{\Delta_5}),
 \,\mathbf H \text{ super-quasi-Hopf},
@@ -2042,18 +2183,32 @@ of Theorem~B. Let
 \]
 denote the semidirect product of the pro-unipotent Grothendieck--Teichm\"uller
 group with the $\mathbb Z/2$ super-sign of the Etingof--Kazhdan
-super-twist. Then $\mathcal Q(\mathfrak g_{\Delta_5})$ is a
-\emph{principal homogeneous space} (torsor) over
-$\mathrm{GRT}_1^{\mathrm{super}}$: any two super-EK quantisations of
-$\mathfrak g_{\Delta_5}$ are related by a unique element of
-$\mathrm{GRT}_1^{\mathrm{super}}$ acting by Drinfeld twist on the
-associator. The statement is unconditional through motivic
-weight~$12$ and conditional on Zagier--Hoffman depth-reduction above
-weight~$12$.
+super-twist. Assume:
+\begin{enumerate}
+\item the Etingof--Kazhdan super-quantisation functor extends from the
+affine Kac--Moody Manin-pair backbone to the completed
+Gritsenko--Nikulin BKM target datum;
+\item the imaginary-cone obstruction
+$\mathrm{ob}^{\mathrm{GN}}\in
+H^2(\mathfrak{grt}_1;\widehat{\mathrm{Imag}}_{\Delta_5})$ vanishes on
+the Koszul locus;
+\item whenever $\mathcal Q^{\mathrm{tgt}}(\mathfrak g_{\Delta_5})$ is
+used to recognise a compact object $\mathbf H_{\Delta_5}$, the
+Vol.~III Hall/CoHA source-recognition gates and the
+cohomology/Heegner-characteristic comparison have been supplied.
+\end{enumerate}
+Under these hypotheses
+$\mathcal Q^{\mathrm{tgt}}(\mathfrak g_{\Delta_5})$ is a principal
+homogeneous space over $\mathrm{GRT}_1^{\mathrm{super}}$: any two
+target super-EK quantisations are related by a unique
+$\mathrm{GRT}_1^{\mathrm{super}}$ Drinfeld twist. Brown's motivic
+basis gives unconditional associator coordinates through weight~$12$;
+it does not give an unconditional classification of the K$3$-BKM
+compact Hall source through weight~$12$.
 \end{theorem}
 
 \begin{proof}
-Three ingredients assemble into the torsor statement.
+Three ingredients assemble into the conditional target statement.
 
 \emph{Ingredient~$1$ (affine backbone, Etingof--Kazhdan~$1996$--$2000$
 Parts~I--V).} By EK~$1996$ Part~I Thm.~$4.2$ the pro-unipotent group
@@ -2063,9 +2218,10 @@ a Manin pair; the super-extension (EK~$2000$ Part~V Thm.~$2.2$) adds
 the $\mathbb Z/2$-graded module structure. On the affine Kac--Moody
 sub-locus $\Delta_{\mathrm{aff}}\subset\Delta(\mathfrak g_{\Delta_5})$
 (real-root part, signature $(2, 1)$) this
-recovers the classical affine-KM torsor statement.
+recovers the classical affine-KM torsor statement. This is the
+unconditional Vol.~I mechanism.
 
-\emph{Ingredient~$2$ (imaginary-cone extension).} On
+\emph{Ingredient~$2$ (conditional imaginary-cone extension).} On
 $\Delta_+^{\mathrm{im}}$ the multiplicities $\mathrm{mult}(\alpha) =
 c_{K3}(4nm - \ell^2)$ obey the pro-completion convergence of
 Definition~$\ref{V3-def:qgf-imag-pro}$; the $\grt_1$-action lifts to
@@ -2073,9 +2229,10 @@ $\widehat{\Imag}$ through the Ihara-bracket filtration
 (Drinfeld~$1990$~\S$5$; Furusho~$2011$ \emph{Ann.\ Math.}~$174$
 Thm.~$4$). The obstruction cocycle
 $\mathrm{ob}^{\mathrm{GN}} \in H^2(\grt_1;\widehat\Imag)$ of
-Remark~\ref{rem:nc-grt1-bkm-transitivity-vol1} vanishes on the Koszul
-locus (Theorem~$\ref{V3-thm:qgf-grt1-bkm-transitivity}$(iii)), removing
-the only obstacle to transitivity.
+Remark~\ref{rem:nc-grt1-bkm-transitivity-vol1} is the additional
+target hypothesis. If it vanishes, the affine torsor transports to the
+completed Gritsenko--Nikulin target datum; without that vanishing,
+Vol.~I has no transitivity theorem for the K$3$-BKM target.
 
 \emph{Ingredient~$3$ (freeness).} Equivariance of the
 Gritsenko--Nikulin character identity
@@ -2095,11 +2252,13 @@ acts freely.
 
 Combining the three ingredients, on the Koszul locus the
 $\mathrm{GRT}_1^{\mathrm{super}}$-action on
-$\mathcal Q(\mathfrak g_{\Delta_5})$ is simply transitive, yielding
-the torsor structure. The unconditional range through motivic
-weight~$12$ is Brown~$2011$ \emph{Ann.\ Math.}~$175$ Thm.~$1.2$
-(depth reduction proved on the nose for all MZV weights~$\le 12$);
-above weight~$12$ the statement is conditional on Zagier--Hoffman.
+$\mathcal Q^{\mathrm{tgt}}(\mathfrak g_{\Delta_5})$ is simply
+transitive precisely under the stated target obstruction hypothesis.
+The weight~$12$ assertion belongs only to the motivic-coordinate
+window: Brown~$2011$ \emph{Ann.\ Math.}~$175$ Thm.~$1.2$ supplies the
+MZV basis through weight~$12$; above weight~$12$ those coordinates are
+conditional on Zagier--Hoffman. Neither fact constructs nor classifies
+the compact Hall source $\mathbf H_{\Delta_5}$.
 \end{proof}
 
 \begin{remark}[Orbit description via Drinfeld associator conjugation]
@@ -2138,9 +2297,9 @@ $\exp(\widehat\grt_1)$ preserves $W$-invariance
  EtingofKazhdan2000}.
 \end{remark}
 
-\begin{remark}[Geometric interpretation: moduli of super-MC elements]
+\begin{remark}[Geometric interpretation: target super-MC moduli]
 \label{rem:nc-grt1-geometric-interpretation}
-The $\mathrm{GRT}_1^{\mathrm{super}}$-torsor structure of
+The conditional target $\mathrm{GRT}_1^{\mathrm{super}}$-torsor of
 Theorem~$\ref{thm:nc-grt1-super-torsor-delta5}$ admits the following
 geometric interpretation
 (Kontsevich~$2003$ \emph{Lett.\ Math.\ Phys.}~$66$ \S$4$;
@@ -2149,7 +2308,7 @@ Maurer--Cartan elements of the super-convolution dGLA
 $\mathrm{Conv}\bigl(B^{\mathrm{ch}}(\mathfrak g_{\Delta_5}^{\mathrm{super}}),
 \Omega^{\mathrm{ch}}\bigr)$ is a formal dg-scheme whose moduli of
 complex structures is, in the sense of Kontsevich's deformation
-quantisation, a
+quantisation and under the obstruction-vanishing hypothesis, a
 $\mathrm{GRT}_1^{\mathrm{super}}$-torsor. The $\grt_1$-action is the
 \emph{motivic-Galois action} on the periods of the associated
 formal twistor family: each $\sigma_{2n+1}$ deforms the MC
@@ -2158,62 +2317,79 @@ $\zeta(2n+1)$ (or, at weight~$12$, the depth-$4$ irreducible
 $\zeta(3, 3, 3, 3)$) pairs with the Drinfeld--Deligne period
 isomorphism
 $\mathfrak{grt}_1 \cong \mathrm{Lie}(\pi_1^{\mathrm{mot, U}}(\mathbb P^1\!-\!\{0,1,\infty\}))$
-(Deligne~$2013$ Bourbaki~$1054$). Geometrically, the super-EK
-quantisation space of $\mathfrak g_{\Delta_5}$ is therefore the
-moduli of complex structures on super-MC moduli, and the torsor
-structure encodes the motivic-Galois action on its associated
-periods.
+(Deligne~$2013$ Bourbaki~$1054$). Geometrically, Vol.~I sees the
+target super-EK comparison space of $\mathfrak g_{\Delta_5}$ as the
+moduli of complex structures on super-MC moduli. The passage from this
+target moduli problem to the compact Hall source is a separate
+Vol.~III recognition problem.
 \cite{Kontsevich2003,BarNatan1995,Deligne2013,Furusho2011}.
 \end{remark}
 
-\begin{corollary}[Uniqueness of $\mathbf H_{\Delta_5}$ up to $\mathrm{GRT}_1^{\mathrm{super}}$]
+\begin{corollary}[$\Delta_5$ target criterion for $\mathbf H_{\Delta_5}$]
 \label{cor:nc-h-delta5-unique-up-to-grt1}
-\ClaimStatusProvedHere
-The classification cohomology
-$H^2(\mathfrak g_{\Delta_5})^{\mathbb Z/2,\,K(1)}
-\cong \mathbb C\cdot\Delta_5$
-of the synthesis (Gritsenko--Nikulin~$1998$
-\S$3$ and \S$5$) pairs with the
-$\mathrm{GRT}_1^{\mathrm{super}}$-torsor structure of
-Theorem~$\ref{thm:nc-grt1-super-torsor-delta5}$ to give
+\ClaimStatusConditional
+Assume the Vol.~III source-recognition package for
+$\mathbf H_{\Delta_5}$: finite Hall/CoHA source, compact Hopf pairing,
+source-to-target comparison maps, radical descent, no-extra-relations,
+PBW compatibility, and exact inverse-limit passage
+(Vol.~III Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic},
+Definition~\ref{V3-def:k3-chiral-bialgebra} and
+Theorem~\ref{V3-thm:k3-structural-genesis}). Assume also a proved
+cohomology/Heegner-characteristic comparison
 \[
-\mathbf H_{\Delta_5}
-\;\in\;
-\mathcal Q(\mathfrak g_{\Delta_5})\big/\mathrm{GRT}_1^{\mathrm{super}}
-\;\cong\; \{\mathrm{pt}\}.
+\chi_{\mathrm{Heg}}\colon
+H^2(\mathfrak g_{\Delta_5})^{\mathbb Z/2,\,K(1)}
+\longrightarrow
+\mathbb C\cdot\Delta_5
 \]
-That is, $\mathbf H_{\Delta_5}$ is the unique element of the
-quotient: all super-EK quantisations of $\mathfrak g_{\Delta_5}$ are
-$\mathrm{GRT}_1^{\mathrm{super}}$-related, and the $\Delta_5$-class
-is the unique classification invariant.
+identifying the recognised source deformation class with the
+Bruinier--Heegner characteristic line and proving that this target line
+is the relevant one-dimensional comparison quotient. Under these
+hypotheses the $\Delta_5$-line is a complete target comparator for the
+$\mathrm{GRT}_1^{\mathrm{super}}$-torsor of
+Theorem~\ref{thm:nc-grt1-super-torsor-delta5}:
+\[
+\mathbf H_{\Delta_5}^{\mathrm{tgt}}
+\;\in\;
+\mathcal Q^{\mathrm{tgt}}(\mathfrak g_{\Delta_5})
+\big/\mathrm{GRT}_1^{\mathrm{super}}
+\quad\text{with}\quad
+\mathrm{im}(\chi_{\mathrm{Heg}})=\mathbb C\cdot\Delta_5 .
+\]
+Equivalently, after those gates are supplied, any two recognised
+compact sources whose Heegner characteristic has the same normalised
+$\Delta_5$ image lie in the same
+$\mathrm{GRT}_1^{\mathrm{super}}$-orbit. Without the source-recognition
+and Heegner-comparison inputs, Vol.~I retains only this target criterion.
 \end{corollary}
 
 \begin{proof}
-The one-dimensional classification cohomology
-$H^2(\mathfrak g_{\Delta_5})^{\mathbb Z/2, K(1)} = \mathbb C\cdot\Delta_5$
-was established in Gritsenko--Nikulin~$1998$ \S$3$ Thm.~$2.3$ as
-the unique K3-BKM Siegel-automorphic-product obstruction class
-compatible with the $K(1)$-paramodular group and the super-sign
-$\mathbb Z/2$. This is the \emph{only} cohomological obstruction to
-quantisation (EK~$1996$ Part~I Thm.~$4.1$ extends to the BKM case
-via the Koszul-locus vanishing of
-Theorem~$\ref{V3-thm:qgf-grt1-bkm-transitivity}$(iii)), and its image
-in the quantisation torsor of
-Theorem~$\ref{thm:nc-grt1-super-torsor-delta5}$ gives a single
-orbit. Passage to the quotient by
-$\mathrm{GRT}_1^{\mathrm{super}}$ collapses the orbit to a point,
-which is precisely $\mathbf H_{\Delta_5}$.
+Theorem~\ref{thm:nc-grt1-super-torsor-delta5} controls the target
+super-EK quantisations of the BKM Manin-pair datum; it neither
+constructs the compact Hall source nor computes
+$H^2(\mathfrak g_{\Delta_5})$ intrinsically. The Vol.~III recognition
+package promotes the target datum to a sourced compact object only
+after the Hall/CoHA source, pairing, comparison, PBW, and inverse-limit
+gates have been verified. The additional
+cohomology/Heegner-characteristic comparison identifies the source
+deformation class with the automorphic $\Delta_5$ line. Under precisely
+these assumptions, equality of the normalised $\Delta_5$ characteristic
+places two recognised sources in the same target
+$\mathrm{GRT}_1^{\mathrm{super}}$-orbit by the torsor theorem. This is a
+conditional recognition criterion, not an unconditional classification
+of $\mathbf H_{\Delta_5}$ inside Vol.~I.
 \end{proof}
 
-\begin{remark}[Assembly of the torsor proof from EK Parts I--V]
+\begin{remark}[Assembly of the conditional target torsor proof from EK Parts I--V]
 \label{rem:nc-grt1-ek-parts-assembly}
 The proof of Theorem~\ref{thm:nc-grt1-super-torsor-delta5} assembles
-five Etingof--Kazhdan structural pieces into a single transitivity
-statement; each piece is classical for quasi-triangular Lie
-bialgebras and extended here to the K$3$-BKM setting by the
-Koszul-locus control of Theorem~$B$ and the automorphic denominator
-of Definition~\ref{V3-def:qgf-quant-delta5}(c). The decomposition makes
-the proof verifiable against five independent primary witnesses:
+five Etingof--Kazhdan structural pieces into a conditional target
+transitivity statement. Each piece is classical for quasi-triangular
+Lie bialgebras; the K$3$-BKM passage enters only through the completed
+Gritsenko--Nikulin target datum and the imaginary-cone vanishing
+hypothesis of Theorem~\ref{thm:nc-grt1-super-torsor-delta5}. The
+decomposition makes the target mechanism verifiable against five
+independent primary witnesses:
 \begin{itemize}
 \item \emph{Part~I (EK~$1996$ Sel.~Math.~$2$).} Existence and
  uniqueness, up to $\grt_1$-gauge, of a quantisation
@@ -2229,16 +2405,18 @@ the proof verifiable against five independent primary witnesses:
  to the Manin-pair embedding
  $(\Delta_{\mathrm{aff}}, \mathrm{triangular})
  \hookrightarrow (\Delta(\mathfrak g_{\Delta_5}), \mathrm{imaginary})$;
- the functoriality transports the affine torsor structure to its
- imaginary-cone extension along the Gritsenko--Nikulin lift.
+ under the obstruction-vanishing hypothesis, this functoriality
+ transports the affine torsor structure to the target imaginary-cone
+ extension along the Gritsenko--Nikulin lift.
 \item \emph{Part~III (EK~$1998$ Sel.~Math.~$4$~\S$3$).} Twist
  invariance: if $\Phi, \Phi'$ are two Drinfeld associators related
  by $f \in \exp(\widehat\grt_1)$, the induced quantisations
  $Q_\Phi, Q_{\Phi'}$ are canonically isomorphic as super-quasi-Hopf
  algebras via the twist $R^{\Phi'} = f_{321} R^\Phi f^{-1}$. This
  supplies the \emph{action} of $\mathrm{GRT}_1$ on
- $\mathcal Q(\mathfrak g_{\Delta_5})$ by Drinfeld twist; together
- with Part~I it supplies surjectivity (transitivity).
+ $\mathcal Q^{\mathrm{tgt}}(\mathfrak g_{\Delta_5})$ by Drinfeld
+ twist; together with Part~I and the target obstruction hypothesis it
+ supplies transitivity.
 \item \emph{Part~IV (EK~$2000$ Sel.~Math.~$6$).} Kac--Moody
  extension: the affine-KM case is controlled by the imaginary
  sector being trivial. The $\mathfrak g_{\Delta_5}$-case is its
@@ -2264,11 +2442,12 @@ Parts~(I, IV)+Part~V (affine + BKM + super), Parts~(II, III)+IV
  EtingofKazhdan2000,EtingofKazhdan2008}.
 \end{remark}
 
-\begin{remark}[Verification via $\phi^{(3)}$ transforming under
+\begin{remark}[Target verification via $\phi^{(3)}$ transforming under
 $\sigma_3 \in \widehat{\mathfrak{grt}}_1$]
 \label{rem:nc-grt1-phi3-verification}
-A concrete chain-level witness of the $\mathrm{GRT}_1^{\mathrm{super}}$
-torsor action is the weight-$3$ component $\phi^{(3)}$ of the
+A concrete chain-level witness of the conditional target
+$\mathrm{GRT}_1^{\mathrm{super}}$ action is the weight-$3$ component
+$\phi^{(3)}$ of the
 universal associator, written in the reference basis as
 \[
 \phi^{(3)}
@@ -2328,7 +2507,7 @@ $c_{\Phi_{10}^{\mathrm{un}}/\eta^{24}}^{(3)}$.
 \begin{remark}[Explicit orbit structure
 $\mathrm{GRT}_1\cdot\Phi^{\mathrm{KZ}}_{\mathrm{ref}}$]
 \label{rem:nc-grt1-explicit-orbit}
-Unfolding the torsor of
+Unfolding the target torsor of
 Theorem~\ref{thm:nc-grt1-super-torsor-delta5} at the
 associator level gives, for the reference KZ associator
 $\Phi^{\mathrm{KZ}}_{\mathrm{ref}}$ (normalised by
@@ -2380,15 +2559,15 @@ shifts the weight-$3$ coefficient
 $c_{\mathrm{symm}}^{(3)} \to c_{\mathrm{symm}}^{(3)} + a_1\zeta(3)$
 of the universal super-EK associator
 (Rem.~\ref{rem:nc-grt1-phi3-verification}); this is the concrete
-torsor action on the super-quasi-Hopf datum of
-$\mathbf H_{\Delta_5}$.
+torsor action on the target super-quasi-Hopf datum later compared with
+$\mathbf H_{\Delta_5}$ by the Vol.~III recognition gates.
 \cite{Drinfeld1990,Brown2012,Brown2017,Willwacher2015,
  SchnepperWillwacher2017}.
 \end{remark}
 
-\begin{remark}[Motivic-Galois geometric interpretation of the torsor]
+\begin{remark}[Motivic-Galois geometric interpretation of the target torsor]
 \label{rem:nc-grt1-motivic-geometric}
-The $\mathrm{GRT}_1^{\mathrm{super}}$-torsor structure of
+The conditional target $\mathrm{GRT}_1^{\mathrm{super}}$-torsor of
 Theorem~\ref{thm:nc-grt1-super-torsor-delta5} admits a motivic
 interpretation via the Deligne--Goncharov motivic fundamental group
 of $\mathbb P^1\smallsetminus\{0, 1, \infty\}$
@@ -2405,7 +2584,8 @@ Deligne Bourbaki~$1054$, $2013$):
 \]
 Under this isomorphism the motivic Galois group
 $\mathrm{Gal}^{\mathrm{mot, U}}$ acts on the de~Rham realisation of
-the KZ associator by precisely the Drinfeld twist action of Theorem~\ref{thm:nc-grt1-super-torsor-delta5}.
+the KZ associator by the Drinfeld twist action used in
+Theorem~\ref{thm:nc-grt1-super-torsor-delta5}.
 The super-sign $(\mathbb Z/2)_{\mathrm{super}}$ is the
 Frobenius-anti-holomorphic involution of the Hodge structure at the
 tangential base-point $\vec{01}$, acting on the super-grading as
@@ -2496,13 +2676,19 @@ $\mathrm{Sym}^3(\mathfrak g)^{\mathfrak g}\oplus\Lambda^3(\mathfrak g)^{\mathfra
 For $\mathfrak g$ simple, the dimension of
 $\mathrm{Sym}^3(\mathfrak g)^{\mathfrak g}$ equals the number of
 degree-$3$ primitive generators of $\mathrm{Sym}(\mathfrak g)^{\mathfrak g}$:
-one for $A_{n\ge 2}$ \textup{(}the $d$-tensor\textup{)}, one for $E_6$,
-one for $E_7$ via $\dim = 248 - 1$ count, and zero for $B_n, C_n, D_n,
-G_2, F_4, E_8$ because the Betti numbers of the compact simple group
-$G$ encode the primitive degrees (Coxeter~$1951$; Chevalley). The
-$E_8$ primitive degrees $\{2, 8, 12, 14, 18, 20, 24, 30\}$ exclude
-degree~$3$; equivalently, the third Casimir of $E_8$ is expressible as
-a power of the quadratic Casimir up to higher-degree corrections.
+one for type $A_{n\ge 2}$ \textup{(}the $d$-tensor\textup{)}, and zero
+for $B_n, C_n, D_n, G_2, F_4, E_6, E_7, E_8$.  By Chevalley's theorem
+the primitive degrees are the exponents plus one.  Thus
+\[
+\deg(E_6)=\{2,5,6,8,9,12\},\qquad
+\deg(E_7)=\{2,6,8,10,12,14,18\},
+\]
+and
+\[
+\deg(E_8)=\{2,8,12,14,18,20,24,30\}.
+\]
+The $E_8$ list excludes degree~$3$; equivalently, there is no
+$E_8$-invariant homogeneous polynomial of degree~$3$.
 Hence $c_{E_8}^{\mathrm{sym}, 3} = 0$ identically.
 \cite{Drinfeld1990,Kohno1985,BarNatan1995,Coxeter1951}.
 \end{proof}
@@ -2720,10 +2906,10 @@ Remark~\ref{rem:nc-phi-25-tightening}.
 \cite{Brown2017,BroadhurstKreimer1997,Hoffman1997}.
 \end{remark}
 
-\section{GRT$_1$-transitivity on the full BKM quantisation space}
+\section{Conditional GRT$_1$-transitivity on full BKM target loci}
 \label{sec:nc-grt1-full-bkm-conditional}
 
-\begin{theorem}[GRT$_1^{\mathrm{super}}$-transitivity on the Full BKM locus]
+\begin{theorem}[Conditional GRT$_1^{\mathrm{super}}$-transitivity on full BKM target loci]
 \label{thm:nc-grt1-full-bkm-conditional}
 \ClaimStatusConjectured
 Let $\mathcal Q_{\mathrm{full}}(\mathfrak g_{\mathrm{BKM}})$ be the
@@ -2741,12 +2927,15 @@ $\le$ the motivic depth of the Cartan type}. The affine case
 \textup{(}$\mathfrak g_{\mathrm{BKM}} = \widehat{\mathfrak g}^{\mathrm{aff}}$,
 imaginary cone trivial\textup{)} is unconditional
 \textup{(}Etingof--Kazhdan~$2000$ Part~V Thm.~$2.2$\textup{)}. The
-K$3$-specialised case $\mathfrak g_{\Delta_5}$ is unconditional
-through motivic weight~$12$
-\textup{(}Theorem~\ref{thm:nc-grt1-super-torsor-delta5}\textup{)}.
-The general BKM case remains conjectural pending the imaginary-cone
-obstruction computation, which is an open question of
-Gritsenko--Nikulin type.
+K$3$-specialised target datum $\mathfrak g_{\Delta_5}$ is the
+conditional case of
+Theorem~\ref{thm:nc-grt1-super-torsor-delta5}: its motivic associator
+coordinates are unconditional through weight~$12$, but the compact
+Hall-source recognition and any classification of
+$\mathbf H_{\Delta_5}$ require the Vol.~III gates plus the
+cohomology/Heegner comparison. The general BKM case remains
+conjectural pending the imaginary-cone obstruction computation, which
+is an open question of Gritsenko--Nikulin type.
 \end{theorem}
 
 \begin{proof}[Proof of the conditionality]
@@ -2766,12 +2955,15 @@ mechanism \textup{(}Borcherds~$1998$ Thm.~$13.1$\textup{)} from the
 K$3$-BKM, and the two are not related by a universal argument. The
 three obstructions specialise: (i) is trivial in the affine case
 (no imaginary roots); (ii) is satisfied for K$3$-BKM via the Igusa
-$\Phi_{10}^{\mathrm{un}}$ cover; (iii) vanishes for $\mathfrak g_{\Delta_5}$ by
-Theorem~\ref{V3-thm:qgf-grt1-bkm-transitivity}(iii). A general proof
-requires a uniform imaginary-cone vanishing argument across all
-Lorentzian Kac--Moody root systems, which is an open problem of
-Gritsenko--Nikulin type \textup{(}Gritsenko--Nikulin~$2002$
-\emph{Russian Math.\ Surveys}~$57$ \S$5$ open question~$7$\textup{)}.
+$\Phi_{10}^{\mathrm{un}}$ cover; (iii) becomes the K$3$ target-side
+vanishing hypothesis of
+Theorem~\ref{thm:nc-grt1-super-torsor-delta5}. Vol.~I therefore proves
+the affine EK and motivic mechanisms, not the source classification of
+$\mathbf H_{\Delta_5}$. A general proof requires a uniform
+imaginary-cone vanishing argument across all Lorentzian Kac--Moody root
+systems, which is an open problem of Gritsenko--Nikulin type
+\textup{(}Gritsenko--Nikulin~$2002$ \emph{Russian Math.\ Surveys}~$57$
+\S$5$ open question~$7$\textup{)}.
 \cite{Borcherds1992,Borcherds1998,GritsenkoNikulin1998,
  GritsenkoNikulin2002,EtingofKazhdan2000}.
 \end{proof}
@@ -2789,12 +2981,13 @@ purity of \texttt{virasoro\_motivic\_purity.tex}
 Rem.~\ref{rem:vmp-grt-action-trivial-on-vir}: GRT$_1$ acts trivially
 on the Virasoro shadow tower because every $S_r(\Vir_c)$ is rational
 in $c$\textup{)}; \textup{(c)}~row $\bB$ \textup{(}K$3$-Heisenberg +
-Mukai enhancement\textup{)} is unconditional through motivic
-weight~$12$, doubly conditional on ZH + BK through weights $13\le n
-\le 24$, and triply conditional on ZH + BK + depth-$5$ existence
-for $n \ge 25$. The $K^\kappa = 8$ ceiling is therefore established
-unconditionally; the GRT$_1$-transitivity above the weight-$12$ bar
-is conditional.
+Mukai enhancement\textup{)} has only its motivic associator coordinate
+window unconditional through weight~$12$. Its K$3$-BKM target torsor is
+conditional on the imaginary-cone vanishing hypothesis, and its compact
+Hall-source recognition is conditional on the Vol.~III source gates
+plus cohomology/Heegner comparison. The $K^\kappa = 8$ ceiling is a
+target comparison invariant in this chapter, not an unconditional
+classification of the K$3$ row through weight~$12$.
 \end{remark}
 
 \section{Higher shadow corrections $\delta^{(n \ge 7)}$ beyond $C_{n-1}\cdot d_n$}

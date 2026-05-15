@@ -1,4 +1,4 @@
-r"""Twisted holography on K3 x E: Costello-Li programme and holographic Koszul datum.
+r"""Twisted holography on K3 x E: Costello-Li programme and holographic Koszul package.
 
 MATHEMATICAL FRAMEWORK
 ======================
@@ -10,8 +10,8 @@ This engine implements the programme for X = K3 x E (a compact CY3), computing:
 1. The HT twist of type IIB on K3 x E
 2. The Kodaira-Spencer (BCOV) theory on K3 x E
 3. The boundary chiral algebra A_E from KS reduction along K3
-4. The Koszul dual A_E^! (bulk algebra)
-5. The holographic modular Koszul datum H(K3 x E)
+4. The bar-dual coalgebra A_E^i and Verdier/Koszul branch A_E^!
+5. The holographic modular Koszul package H(K3 x E)
 
 === 1. HT TWIST OF TYPE IIB ON K3 x E ===
 
@@ -66,38 +66,45 @@ corresponding to the 24 harmonic forms on K3 generating 24 free bosons
 in the topological reduction. This is NOT the K3 sigma model (c=6).
 The 24 matches chi(K3) = 24 and the rank of the Mukai lattice.
 
-=== 4. KOSZUL DUALITY IN TWISTED HOLOGRAPHY ===
+=== 4. BAR AND VERDIER DUALITY IN TWISTED HOLOGRAPHY ===
 
-Costello-Li: the bulk algebra A_bulk and boundary algebra A_bdy are Koszul dual.
+Costello-Li: the bulk and boundary theories are related by the bar and
+Verdier-dual comparison surface, not by identifying bar-cobar inversion with
+Koszul duality.
   A_bdy = A_E  (boundary chiral algebra on E)
-  A_bulk = A_E^!  (Koszul dual)
+  A_E^i = H^*(B^{ch}(A_E))  (bar-dual coalgebra)
+  A_E^! = Verdier/Koszul branch after finite-type rectification
+  C = Z_ch^der(A_E)  (derived-centre bulk slot)
 
-From the monograph (Theorem A): D_Ran(B(A)) = B(A^!)
+From the monograph (Theorem A): D_Ran(B(A)) identifies the Verdier-dual
+bar construction on the finite-type surface.  The inversion
+Omega B(A) ~= A is a separate bar-cobar statement.
   kappa(A_E) depends on the algebra structure.
 
 For the free-field boundary algebra (24 bosons from K3 cohomology):
   kappa(A_E) = 24  (rank of the lattice = number of free bosons)
   (AP48: for free bosons, kappa = rank, NOT c/2 in general)
 
-For the Koszul dual:
+For the Verdier/Koszul branch:
   kappa(A_E^!) = -24  (Koszul complementarity for free fields: kappa + kappa' = 0)
   (AP24: kappa + kappa' = 0 holds for KM/free fields)
 
-=== 5. HOLOGRAPHIC MODULAR KOSZUL DATUM ===
+=== 5. HOLOGRAPHIC MODULAR KOSZUL PACKAGE ===
 
-The holographic datum (from the monograph's framework):
-  H(K3 x E) = (A, A^!, C, r(z), Theta_A, nabla^hol)
+The holographic package (from the monograph's framework):
+  H(K3 x E) = (A, A^i, A^!, C, r(z), Theta_A, nabla^hol)
 
 Components:
   A = boundary chiral algebra (free-field, c=24, kappa=24)
-  A^! = Koszul dual (kappa = -24)
+  A^i = bar-dual coalgebra of A
+  A^! = Verdier/Koszul branch (dual boundary/line slot, kappa = -24)
   C = chiral derived center Z^der_ch(A) (universal bulk observables)
   r(z) = collision r-matrix (genus-0 binary shadow of Theta_A)
   Theta_A = universal MC element (shadow obstruction tower)
   nabla^hol = holographic shadow connection
 
 For the free-field boundary algebra:
-  r(z) = Omega/z  where Omega is the Casimir (24-dim identity divided by normalization)
+  r(z) = Omega/z with Omega = sum_a J_a tensor J_a in unit-level OPE normalization
   Shadow depth = class G (Gaussian, terminates at arity 2) for the free part
   Theta_A^{<=2} = kappa (the scalar shadow, exhausts the tower for free fields)
 
@@ -612,8 +619,8 @@ def boundary_ope_k3e() -> ChiralAlgebraOPE:
     OPE structure: each boson is an INDEPENDENT Heisenberg field at level 1:
       J^a(z) J^b(w) ~ delta^{ab} / (z-w)^2
 
-    The level matrix is delta^{ab} (positive definite, unit level), NOT the
-    Mukai pairing G^{ab} (which has indefinite signature (4,20)).
+    The level matrix is delta^{ab} (positive definite, unit level), not the
+    indefinite Mukai form of signature (4,20).
 
     DISTINCTION (AP48, corrected during rectification):
     - The Mukai pairing enters through the LATTICE structure: vertex operators
@@ -647,26 +654,27 @@ def boundary_ope_k3e() -> ChiralAlgebraOPE:
 # =========================================================================
 
 class KoszulDualData(NamedTuple):
-    """Koszul duality data for the boundary chiral algebra.
+    """Verdier/Koszul branch data for the boundary chiral algebra.
 
-    From Theorem A: D_Ran(B(A)) = B(A^!)
-    The Koszul dual A^! of a free-field algebra is computed from
-    the dual generators with negated level.
+    From Theorem A, D_Ran(B(A)) supplies the finite-type Verdier-dual
+    bar construction.  The branch A^! of a free-field algebra is computed
+    from the dual generators with the pairing sign reversed; the inversion
+    Omega B(A) ~= A remains a separate bar-cobar statement.
     """
     name: str
 
     # kappa values
     kappa_boundary: F       # kappa(A)
-    kappa_bulk: F           # kappa(A^!)
+    kappa_verdier_koszul: F # kappa(A^!), the Verdier/Koszul branch
     kappa_sum: F            # kappa(A) + kappa(A^!) (should be 0 for free fields, AP24)
 
     # Central charges
     c_boundary: int
-    c_bulk: int
+    c_verdier_koszul: int
 
-    # The Koszul dual of free bosons at level k is free bosons at level -k
-    # (AP33: H_k^! = Sym^ch(V*), which has kappa = -k for Heisenberg;
-    #  this extends to the free-field boundary algebra)
+    # The free-field Verdier/Koszul branch has the dual generators and
+    # opposite kappa. AP33: H_k^! = Sym^ch(V*) has kappa = -k for
+    # Heisenberg; it is not the same object as the bar-cobar inversion.
     dual_generators: int
     dual_shadow_class: str
 
@@ -677,20 +685,19 @@ class KoszulDualData(NamedTuple):
 
 
 def koszul_dual_k3e() -> KoszulDualData:
-    r"""Koszul duality for the K3 x E boundary chiral algebra.
+    r"""Verdier/Koszul branch for the K3 x E boundary chiral algebra.
 
-    The boundary algebra A_E is free-field (24 bosons with Mukai pairing).
+    The boundary algebra A_E is free-field: 24 unit-level bosons whose
+    lattice charge sector is indexed by the Mukai lattice.
     For free-field algebras:
       kappa(A) = 24 (number of generators = rank)
       kappa(A^!) = -24 (AP24: kappa + kappa' = 0 for free fields)
 
     Central charge:
-      c(A) = 24, c(A^!) = 24 (the Koszul dual of Heis_k is Heis_{-k},
-      which has the same c but opposite kappa)
-
-    Wait: for Heisenberg at level k, c = 1 (always), kappa = k.
-    The Koszul dual at level -k has c = 1, kappa = -k.
-    So for 24 free bosons: c(A) = 24, c(A^!) = 24, but kappa flips sign.
+      c(A) = 24 and c(A^!) = 24.  For a Heisenberg factor, c = 1
+      while kappa is the level.  Reversing the pairing changes kappa
+      from k to -k and leaves the central charge of the free boson
+      factor equal to 1.
 
     AP33 CAUTION: H_k^! = Sym^ch(V*) != H_{-k}. They have the same kappa
     but are different algebras. We use kappa values only, not algebra identity.
@@ -706,10 +713,10 @@ def koszul_dual_k3e() -> KoszulDualData:
     return KoszulDualData(
         name="K3xE",
         kappa_boundary=kappa_A,
-        kappa_bulk=kappa_A_dual,
+        kappa_verdier_koszul=kappa_A_dual,
         kappa_sum=kappa_A + kappa_A_dual,  # Should be 0
         c_boundary=24,
-        c_bulk=24,
+        c_verdier_koszul=24,
         dual_generators=24,
         dual_shadow_class="G",  # Free field -> class G
         complementarity_sum_genus1=F(kappa_A + kappa_A_dual, 24),  # Should be 0
@@ -744,87 +751,21 @@ class ShadowTowerData(NamedTuple):
 
 
 def _faber_pandharipande_lambda(g: int) -> F:
-    r"""Faber-Pandharipande intersection number lambda_g^FP.
+    r"""Positive shadow coefficient from the A-hat expansion.
 
-    lambda_g^FP = |B_{2g}| / (2g * (2g)!)
+    The genus shadow convention used here is
 
-    For g=1: |B_2|/(2*2!) = (1/6)/4 = 1/24
-    For g=2: |B_4|/(4*4!) = (1/30)/96 = 1/2880
+        (x/2)/sinh(x/2) = sum_{g >= 0} c_g x^{2g},
+        lambda_g^FP := |c_g|.
 
-    CORRECTION: The standard shadow tower formula uses the A-hat expansion:
-      F_g = kappa * a_g where sum a_g t^{2g} = (t/2)/sinh(t/2) - 1
-      a_1 = -1/24 (signed), |a_1| = 1/24
-
-    Actually, the correct FP number is:
-      lambda_g^FP = int_{M_g} lambda_g = |B_{2g}| / (2g * (2g)!)
-
-    Verified values:
-      lambda_1 = 1/24
-      lambda_2 = 1/240  ... wait let me recompute.
-
-    B_2 = 1/6, B_4 = -1/30, B_6 = 1/42, B_8 = -1/30.
-    lambda_1 = (1/6)/(2*2) = 1/24. Correct.
-    lambda_2 = (1/30)/(4*24) = 1/2880.
-
-    But the A-hat genus convention from the shadow tower is:
-      (x/2)/sinh(x/2) = 1 - x^2/24 + 7x^4/5760 - ...
-    So the coefficient of x^{2g} is a_g:
-      a_0 = 1, a_1 = -1/24, a_2 = 7/5760, a_3 = -31/967680
-
-    The F_g formula is F_g = kappa * |a_g| = kappa * (-1)^g * a_g.
-
-    So lambda_g^FP = |a_g|.
-    lambda_1 = 1/24
-    lambda_2 = 7/5760
-
-    Note: 7/5760 != 1/2880. The FP number from the A-hat genus is NOT
-    |B_{2g}|/(2g*(2g)!). The correct relation involves the full A-hat
-    polynomial, not just the leading Bernoulli number.
-
-    We compute from the power series (x/2)/sinh(x/2) directly.
+    Thus lambda_1^FP = 1/24, lambda_2^FP = 7/5760, and
+    lambda_3^FP = 31/967680.  These are the coefficients used by the
+    shadow tower, not the single Bernoulli quotient
+    |B_{2g}|/(2g(2g)!).
     """
     if g < 1:
         return F(0)
-    # Compute from the Taylor expansion of (x/2)/sinh(x/2)
-    # sinh(x/2) = sum_{k>=0} (x/2)^{2k+1} / (2k+1)!
-    # (x/2)/sinh(x/2) = 1 / (1 + sum_{k>=1} (x/2)^{2k} / (2k+1)!)
-    # = 1 / (1 + u/6 + u^2/120 + u^3/5040 + ...) where u = x^2/4
-    #
-    # Compute by series inversion up to order g.
-    # Let S(u) = 1 + sum_{k=1}^{N} s_k u^k, s_k = 1/((2k+1)! * 4^k)
-    # Then 1/S(u) = sum_{n=0}^{N} a_n u^n where a_0 = 1 and
-    # a_n = -sum_{j=1}^{n} s_j * a_{n-j}
-
-    N = g  # We need coefficient of u^g (corresponding to x^{2g})
-    # s_k = 1 / ((2k+1)! * 4^k)
-    s = [F(0)] * (N + 1)
-    for k in range(1, N + 1):
-        s[k] = F(1, math.factorial(2 * k + 1) * (4 ** k))
-
-    a = [F(0)] * (N + 1)
-    a[0] = F(1)
-    for n in range(1, N + 1):
-        a[n] = -sum(s[j] * a[n - j] for j in range(1, n + 1))
-
-    # a[g] is the coefficient of u^g = (x^2/4)^g in (x/2)/sinh(x/2)
-    # The coefficient of x^{2g} is a[g] / 4^g... wait, no.
-    # u = x^2/4, so u^g = x^{2g}/4^g.
-    # (x/2)/sinh(x/2) = sum a_n u^n = sum a_n x^{2n}/4^n
-    # Coefficient of x^{2g} = a[g] / 4^g.
-    #
-    # Wait, that's wrong. Let me redo this.
-    # (x/2)/sinh(x/2) = (x/2) / sum_{k>=0} (x/2)^{2k+1}/(2k+1)!
-    # = 1 / sum_{k>=0} (x/2)^{2k}/(2k+1)!
-    # = 1 / sum_{k>=0} x^{2k} / (4^k (2k+1)!)
-    # Let u = x^2. Then the denominator is sum_{k>=0} u^k / (4^k (2k+1)!)
-    # = 1 + u/24 + u^2/1920 + ...
-    #
-    # Actually let me just compute the series coefficients directly.
-    # (x/2)/sinh(x/2) in terms of Bernoulli numbers:
-    # = sum_{n>=0} (2^{2n} - 2) * |B_{2n}| / (2n)! * x^{2n} / 2^{2n}
-    # Hmm, that doesn't look right either. Let me just use the series inversion.
-
-    # Recompute with u = x^2:
+    N = g
     # Denominator D(u) = sum_{k>=0} u^k / (4^k * (2k+1)!)
     # D_0 = 1, D_k = 1/(4^k * (2k+1)!)
     # 1/D(u) = sum c_n u^n
@@ -888,14 +829,23 @@ class RMatrixData(NamedTuple):
 
     r(z) = Res^{coll}_{0,2}(Theta_A)
 
-    For free bosons with level matrix G^{ab}:
-      r(z) = sum_{a,b} G^{ab} J^a tensor J^b / z
+    For free bosons normalized by
+      J_a(z) J_b(w) ~ delta_ab / (z-w)^2,
+    the AP19 collision residue is
+      r(z) = sum_a J_a tensor J_a / z.
+
+    The Mukai form on H^*(K3) is the lattice-charge pairing.  It is not
+    the Heisenberg OPE level matrix in this engine's normalization.
     (single pole, AP19: OPE has pole order 2, r-matrix has pole order 1).
     """
     name: str
     max_pole_order: int
-    r_matrix_dim: int        # dimension of the r-matrix space (rank of G^{ab})
-    is_triangular: bool      # True for non-degenerate pairing
+    r_matrix_dim: int        # dimension of the r-matrix space
+    kernel_normalization: F  # coefficient in Omega/z for unit-level currents
+    level_matrix_signature: Tuple[int, int]  # OPE level signature
+    lattice_signature: Tuple[int, int]       # Mukai lattice signature
+    pairing_source: str
+    is_triangular: bool      # False: symmetric abelian kernel, not skew triangular
     yang_baxter: bool        # r-matrix satisfies classical YBE
     casimir_eigenvalue: F    # eigenvalue of the Casimir on the adjoint
 
@@ -903,23 +853,24 @@ class RMatrixData(NamedTuple):
 def r_matrix_k3e() -> RMatrixData:
     r"""R-matrix for the K3 x E boundary chiral algebra.
 
-    For 24 free bosons with Mukai pairing G^{ab} of signature (4,20):
-      r(z) = G^{ab} J_a tensor J_b / z
+    For 24 free bosons at unit Heisenberg level:
+      J_a(z) J_b(w) ~ delta_ab / (z-w)^2,
+      r(z) = sum_a J_a tensor J_a / z.
 
-    This is the CANONICAL r-matrix of the free-boson algebra.
-    Single pole (pole order 1, consistent with AP19).
+    This is the canonical collision kernel in the OPE normalization used
+    by boundary_ope_k3e().  There is no extra factor of 1/2, no division
+    by rank 24, and no insertion of the indefinite Mukai form.
 
     The r-matrix satisfies the classical Yang-Baxter equation because
     the free-boson algebra is quadratic (class G).
 
-    The Casimir Omega = G^{ab} J_a J_b has eigenvalue:
+    The Casimir Omega = sum_a J_a J_a has eigenvalue:
       On the adjoint (= free boson space itself): Omega|_{adj} = 0
     (free bosons are abelian; the Casimir acts as zero on the adjoint
     because there are no structure constants f^{abc}).
 
-    Actually for a free-field (abelian) algebra, the r-matrix is:
-      r(z) = Omega / z where Omega = sum G^{ab} J_a tensor J_b
-    is the identity operator (contracted with the pairing).
+    For a free-field (abelian) algebra, the r-matrix is:
+      r(z) = Omega / z where Omega = sum_a J_a tensor J_a.
     The CYBE is trivially satisfied because [r_{12}, r_{13}] = 0
     (the generators commute in the free-field algebra).
     """
@@ -927,7 +878,11 @@ def r_matrix_k3e() -> RMatrixData:
         name="K3xE",
         max_pole_order=1,
         r_matrix_dim=24,
-        is_triangular=False,  # The Mukai pairing is symmetric, not triangular
+        kernel_normalization=F(1),
+        level_matrix_signature=(24, 0),
+        lattice_signature=(4, 20),
+        pairing_source="inverse OPE level matrix delta^{ab}",
+        is_triangular=False,  # Symmetric abelian kernel, not a skew triangular one
         yang_baxter=True,     # CYBE trivially satisfied for abelian algebras
         casimir_eigenvalue=F(0),  # Abelian: Casimir acts as 0 on adjoint
     )
@@ -978,10 +933,9 @@ def derived_center_k3e() -> DerivedCenterData:
       Inn(h) = 0 (abelian: ad = 0).
       So ChirHoch^1 = End(h) = h tensor h* = 24^2 = 576-dimensional.
 
-      Wait: this counts derivations at the Lie ALGEBRA level. For the
-      VERTEX algebra (chiral setting on a curve), the derivation sheaf
-      analysis is more subtle. The chiral derivations of the Heisenberg
-      VOA V_h at level k include:
+      This is the fibre-level derivation count for the abelian current
+      algebra.  The sheaf of chiral derivations on a curve also records
+      level deformations of the Heisenberg VOA V_h at level k:
         - Constant rotations: End(h) = 24^2 = 576
         - Level deformations: Sym^2(h*) = dim 300 (symmetric bilinear forms)
       These are the first-order deformations of the level matrix.
@@ -990,17 +944,18 @@ def derived_center_k3e() -> DerivedCenterData:
         ChirHoch^1 = H^0(X, Der(A)/Inn(A)) ⊕ H^1(X, Z(A))
       On E (genus 1): H^0(E, O) = H^1(E, O) = 1.
       So the global sections contribute: Der/Inn (on E) + H^1(E, Z(A)).
-      For simplicity, we compute the FIBRE dimensions (local on E):
+      The present engine records the FIBRE dimensions (local on E):
         ChirHoch^1|_pt = End(h) = 576 (abelian: no inner derivations).
 
-      Actually, for the polynomial P_A(t) from Theorem H:
+      For the polynomial P_A(t) from Theorem H:
         P_A(t) = dim Z(A) + dim ChirHoch^1 * t + dim Z(A!) * t^2
-      For free bosons: Z(A) = rank, Z(A!) = rank (Koszul dual of free = free).
+      For free bosons: Z(A) = rank and the finite-type Verdier branch has
+      generator-rank center Z(A!) = rank.
       ChirHoch^1 = rank^2 (endomorphisms, since abelian).
 
-      But wait: the Koszul dual of 24 free bosons at level G^{ab} is
-      24 free bosons at level -G^{ab} (AP33: same generators, negated level).
-      Z(A!) = 24 (still abelian, still central).
+      The free-field Verdier/Koszul branch has the same 24 generators with
+      the Mukai pairing negated (AP33).  Hence the generator-rank centre
+      contribution in degree 2 is again 24.
 
     ChirHoch^2(A) = Z(A!)^dual.
       dim = 24 (same as Z(A!)).
@@ -1028,16 +983,90 @@ def derived_center_k3e() -> DerivedCenterData:
 
 
 # =========================================================================
-# Section 7: Holographic modular Koszul datum
+# Section 7: Holographic modular Koszul package
 # =========================================================================
 
-class HolographicDatum(NamedTuple):
-    """Holographic modular Koszul datum H(T) = (A, A^!, C, r(z), Theta_A, nabla^hol).
+class TypedObjectRecord(NamedTuple):
+    """Typed AP25/AP34 object record."""
+    symbol: str
+    object_type: str
+    construction: str
+    role: str
+    not_output: str
 
-    This is the six-fold datum packaging the full HT holographic system
-    into a single modular MC problem.
+
+def ap25_object_firewall_k3e() -> Dict[str, Any]:
+    """Keep B(A), A^i, A^!, Omega(B(A)), and Z_ch^der(A) typed apart."""
+    objects = {
+        "A": TypedObjectRecord(
+            symbol="A_E",
+            object_type="boundary chiral algebra",
+            construction="24-generator unit-level free-field algebra from PV*(K3)",
+            role="input algebra for the seven-entry package",
+            not_output="not B(A), not A^i, not A^!, and not Z_ch^der(A)",
+        ),
+        "B_A": TypedObjectRecord(
+            symbol="B(A_E)",
+            object_type="bar factorization coalgebra",
+            construction="T^c(s^{-1} A_{E,+}) with bar differential",
+            role="bar resolution and source of the bar-dual coalgebra",
+            not_output="not A_E, not A_E^!, not Omega(B(A_E)), not the bulk",
+        ),
+        "A_i": TypedObjectRecord(
+            symbol="A_E^i",
+            object_type="bar-dual coalgebra",
+            construction="H^*(B(A_E)) under the free-field Koszul hypotheses",
+            role="coalgebraic bar-dual before Verdier/linear duality",
+            not_output="not the Verdier/Koszul algebra A_E^!",
+        ),
+        "Omega_B_A": TypedObjectRecord(
+            symbol="Omega(B(A_E))",
+            object_type="cobar dg algebra",
+            construction="cobar reconstruction of the bar coalgebra",
+            role="bar-cobar inversion recovering A_E",
+            not_output="not A_E^! and not Z_ch^der(A_E)",
+        ),
+        "A_shriek": TypedObjectRecord(
+            symbol="A_E^!",
+            object_type="Verdier/Koszul branch",
+            construction="dual of A_E^i after finite-type or completed duality",
+            role="dual boundary/line slot with kappa -24",
+            not_output="not B(A_E), not Omega(B(A_E)), and not the bulk C",
+        ),
+        "Z_der_ch_A": TypedObjectRecord(
+            symbol="Z_ch^der(A_E)",
+            object_type="derived chiral center / Hochschild cochains",
+            construction="C^*_ch(A_E, A_E), computed with a bar resolution",
+            role="bulk slot C of the seven-entry package",
+            not_output="not A_E^i and not A_E^!",
+        ),
+    }
+
+    return {
+        "objects": objects,
+        "package_entries": (
+            "A", "A^i", "A^!", "C=Z_ch^der(A)", "r(z)", "Theta_A", "nabla^hol",
+        ),
+        "forbidden_collapses": (
+            "Omega(B(A)) reconstructs A; it does not construct A^!.",
+            "A^i is a coalgebra until Verdier/linear duality is applied.",
+            "A^! is the dual boundary/line slot, not the bulk slot C.",
+            "Z_ch^der(A) is the Hochschild bulk, not the bar coalgebra.",
+        ),
+        "objects_kept_distinct": len({record.symbol for record in objects.values()}) == 6,
+    }
+
+
+class HolographicDatum(NamedTuple):
+    """Holographic modular Koszul package H(T).
+
+    The seven structural entries are
+    (A, A^i, A^!, C, r(z), Theta_A, nabla^hol).  The bar-dual coalgebra
+    A^i is not the Verdier/Koszul branch A^!, and neither is the
+    bar-cobar inversion Omega B(A) ~= A.
     """
     name: str
+    package_entries: Tuple[str, ...]
 
     # Component 1: Boundary chiral algebra A
     boundary_generators: int
@@ -1045,24 +1074,35 @@ class HolographicDatum(NamedTuple):
     boundary_kappa: F
     boundary_shadow_class: str
 
-    # Component 2: Koszul dual A^!
-    bulk_kappa: F
+    # AP25 object surface
+    bar_complex_description: str
+
+    # Component 2: Bar-dual coalgebra A^i
+    bar_dual_generators: int
+    bar_dual_description: str
+
+    # Bar-cobar inversion Omega(B(A))
+    cobar_inversion_result: str
+
+    # Component 3: Verdier/Koszul branch A^!
+    verdier_koszul_kappa: F
     kappa_sum: F  # kappa(A) + kappa(A^!) (0 for free fields, AP24)
 
-    # Component 3: Derived center C = Z^der_ch(A)
+    # Component 4: Derived center C = Z^der_ch(A)
+    derived_center_description: str
     derived_center_polynomial: List[int]
 
-    # Component 4: r-matrix r(z)
+    # Component 5: r-matrix r(z)
     r_matrix_pole_order: int
     r_matrix_dim: int
 
-    # Component 5: Universal MC element Theta_A
+    # Component 6: Universal MC element Theta_A
     theta_shadow_depth: int
     theta_kappa: F
     theta_cubic: F
     theta_quartic: F
 
-    # Component 6: Holographic shadow connection nabla^hol
+    # Component 7: Holographic shadow connection nabla^hol
     # nabla^hol_{g,n} = d - Sh_{g,n}(Theta_A)
     # For free fields: Sh_{g,n} = kappa * (genus-g contribution)
     connection_singular: bool  # whether the connection has singularities
@@ -1077,10 +1117,11 @@ class HolographicDatum(NamedTuple):
 
 
 def holographic_datum_k3e() -> HolographicDatum:
-    r"""Full holographic modular Koszul datum for K3 x E.
+    r"""Holographic modular Koszul package for K3 x E.
 
-    This packages the complete Costello-Li twisted holography data
-    into the monograph's six-fold framework.
+    This records the seven structural entries used by the Vol I
+    holographic package and keeps the bar-dual coalgebra A^i separate
+    from the Verdier/Koszul branch A^!.
 
     VERIFICATION (3 independent paths):
 
@@ -1112,25 +1153,35 @@ def holographic_datum_k3e() -> HolographicDatum:
 
     return HolographicDatum(
         name="K3xE",
+        package_entries=(
+            "A", "A^i", "A^!", "C=Z_ch^der(A)", "r(z)", "Theta_A", "nabla^hol",
+        ),
         # Component 1: Boundary
         boundary_generators=24,
         boundary_central_charge=24,
         boundary_kappa=kappa,
         boundary_shadow_class="G",
-        # Component 2: Bulk
-        bulk_kappa=kappa_dual,
+        # AP25: bar object and cobar inversion are typed apart
+        bar_complex_description="B(A_E): bar factorization coalgebra T^c(s^{-1} A_{E,+})",
+        # Component 2: Bar-dual coalgebra
+        bar_dual_generators=24,
+        bar_dual_description="H^*(B^ch(A_E)) for the 24-generator free-field algebra",
+        cobar_inversion_result="Omega(B(A_E)) ~= A_E (bar-cobar inversion)",
+        # Component 3: Verdier/Koszul branch A^!, not the bulk C
+        verdier_koszul_kappa=kappa_dual,
         kappa_sum=kappa + kappa_dual,  # = 0
-        # Component 3: Derived center
+        # Component 4: Derived center
+        derived_center_description="C = Z_ch^der(A_E), the Hochschild bulk slot",
         derived_center_polynomial=[24, 576, 24],
-        # Component 4: r-matrix
+        # Component 5: r-matrix
         r_matrix_pole_order=1,
         r_matrix_dim=24,
-        # Component 5: Theta_A
+        # Component 6: Theta_A
         theta_shadow_depth=2,
         theta_kappa=kappa,
         theta_cubic=F(0),
         theta_quartic=F(0),
-        # Component 6: Connection
+        # Component 7: Connection
         connection_singular=True,
         connection_residue=F(1, 2),
         # Moduli
@@ -1344,14 +1395,14 @@ def hkr_decomposition_k3() -> HKRDecomposition:
 # =========================================================================
 
 class MukaiPairingData(NamedTuple):
-    """Mukai pairing on H^*(K3) and its role in the boundary OPE.
+    """Mukai pairing on H^*(K3) and its role in the lattice charge sector.
 
     The Mukai pairing on H^*(K3) = H^0 + H^2 + H^4:
       <alpha, beta>_{Mukai} = int_{K3} (alpha^v . beta)
     where alpha^v = (-1)^{p(p-1)/2} alpha for alpha in H^{2p}.
 
-    For K3: alpha^v = alpha for H^0, H^4 (p=0,2: (-1)^0 = 1, (-1)^1 = -1).
-    Wait: Mukai vector convention: v(E) = ch(E).sqrt(td(K3)).
+    For K3, the Mukai vector convention is
+      v(E) = ch(E).sqrt(td(K3)).
     The Mukai pairing is:
       <v, w> = -int_{K3} v^0 w^4 + int_{K3} v^2 w^2 - int_{K3} v^4 w^0
 
@@ -1376,9 +1427,12 @@ class MukaiPairingData(NamedTuple):
     h2_rank: int                  # 22
     h2_signature: Tuple[int, int]  # (3, 19)
 
-    # This is the lattice that determines the boundary OPE level matrix
+    # This is the lattice charge pairing.  The Heisenberg OPE level matrix
+    # in boundary_ope_k3e() is the positive unit matrix.
     is_even: bool
     is_unimodular: bool
+    determines_heisenberg_ope_level: bool
+    heisenberg_ope_signature: Tuple[int, int]
 
 
 def mukai_pairing_k3() -> MukaiPairingData:
@@ -1387,11 +1441,13 @@ def mukai_pairing_k3() -> MukaiPairingData:
     The Mukai lattice Gamma_{K3} = H^*(K3, Z) = U^4 + (-E_8)^2
     has rank 24, signature (4, 20), even, unimodular.
 
-    This lattice determines the level matrix G^{ab} of the boundary OPE:
-      J^a(z) J^b(w) ~ G^{ab} / (z-w)^2
+    This lattice indexes charge sectors and vertex-operator monodromy.
+    It does not determine the Heisenberg OPE level matrix in this engine:
+      J_a(z) J_b(w) ~ delta_ab / (z-w)^2.
 
     The 24 generators of the boundary chiral algebra correspond to the
-    24 lattice directions, with the OPE determined by the Mukai inner product.
+    24 lattice directions; the OPE kernel is normalized separately by the
+    positive unit level matrix.
     """
     return MukaiPairingData(
         name="Mukai_K3",
@@ -1405,6 +1461,8 @@ def mukai_pairing_k3() -> MukaiPairingData:
         h2_signature=(3, 19),
         is_even=True,
         is_unimodular=True,
+        determines_heisenberg_ope_level=False,
+        heisenberg_ope_signature=(24, 0),
     )
 
 
@@ -1435,12 +1493,13 @@ class ModuliData(NamedTuple):
     arithmetic_group: str  # O(3,19;Z)
 
     # B-field moduli
-    b_field_dim: int    # h^{1,1}(K3 x E) for the B-field = 21+1 = 22... no
-    # Actually B-field on K3 x E lives in H^2(K3 x E, R/Z):
+    b_field_dim: int    # h^{1,1}(K3 x E) = 21
+    # The B-field on K3 x E lives in H^2(K3 x E, R/Z):
     # h^{1,1}(K3xE) = h^{1,1}(K3)*h^{0,0}(E) + h^{1,0}(K3)*h^{0,1}(E)
     #               + h^{0,0}(K3)*h^{1,1}(E) + h^{0,1}(K3)*h^{1,0}(E)
     #               = 20*1 + 0*1 + 1*1 + 0*1 = 21
-    # Wait: we need h^2 from the product. b_2(K3xE) = sum h^{p,q} for p+q=2.
+    # The real second Betti number is obtained separately from the full
+    # product Hodge diamond by summing h^{p,q} for p+q=2.
 
     # Symmetry group of K3 moduli
     k3_moduli_symmetry: str

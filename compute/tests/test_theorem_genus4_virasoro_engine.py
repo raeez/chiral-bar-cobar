@@ -557,6 +557,17 @@ class TestSpecificCoefficients:
         from compute.lib.theorem_genus4_virasoro_engine import genus4_exact_coefficients
         assert genus4_exact_coefficients()[(4, 2, 0, 0, 0, 0)] == Rational(1, 1769472)
 
+    def test_kappa4_S3_squared_not_alternate_sign_value(self):
+        """The competing 5/15925248 value is the alternate-sign surface."""
+        from compute.lib.theorem_genus4_virasoro_engine import (
+            genus4_kappa4_s3_squared_certificate,
+        )
+        cert = genus4_kappa4_s3_squared_certificate()
+        assert cert['canonical_value'] == Fraction(1, 1769472)
+        assert cert['competing_alternate_sign_value'] == Fraction(5, 15925248)
+        assert cert['canonical_value'] != cert['competing_alternate_sign_value']
+        assert cert['canonical_over_alternate_ratio'] == Fraction(9, 5)
+
     def test_S4_S6(self):
         """Coefficient of S_4 * S_6 is -35/6."""
         from compute.lib.theorem_genus4_virasoro_engine import genus4_exact_coefficients
@@ -579,7 +590,104 @@ class TestSpecificCoefficients:
 
 
 # ============================================================================
-# Section 13: Virasoro rational function structure
+# Section 13: Class-L restriction and coefficient conflict certificate
+# ============================================================================
+
+class TestClassLRestrictionCertificate:
+    """Prevent conflation of the canonical class-L restriction with the older sign surface."""
+
+    def test_class_l_restriction_has_11_terms(self):
+        """The class-L lane keeps exactly the S_4=...=S_7=0 terms."""
+        from compute.lib.theorem_genus4_virasoro_engine import (
+            genus4_class_l_restriction_coefficients,
+        )
+        coeffs = genus4_class_l_restriction_coefficients()
+        assert len(coeffs) == 11
+        assert coeffs[(0, 6)] == Fraction(425, 576)
+        assert coeffs[(1, 1)] == Fraction(-123589, 165888)
+
+    def test_class_l_restriction_kappa4_s3_squared(self):
+        """On the canonical class-L restriction, (4,2) is 1/1769472."""
+        from compute.lib.theorem_genus4_virasoro_engine import (
+            genus4_class_l_restriction_coefficients,
+            genus4_class_l_formula_symbolic,
+        )
+        coeffs = genus4_class_l_restriction_coefficients()
+        assert coeffs[(4, 2)] == Fraction(1, 1769472)
+
+        kappa = Symbol('kappa')
+        S3 = Symbol('S_3')
+        poly = Poly(genus4_class_l_formula_symbolic(), kappa, S3, domain='QQ')
+        assert poly.coeff_monomial(kappa ** 4 * S3 ** 2) == Rational(1, 1769472)
+
+    def test_kappa4_s3_squared_graph_witnesses(self):
+        """The two canonical witness graphs sum to 1/1769472."""
+        from compute.lib.theorem_genus4_virasoro_engine import (
+            genus4_kappa4_s3_squared_certificate,
+        )
+        cert = genus4_kappa4_s3_squared_certificate()
+        canonical = cert['canonical_witnesses']
+        alternate = cert['alternate_sign_witnesses']
+
+        assert [row['coefficient_contribution'] for row in canonical] == [
+            Fraction(1, 5308416),
+            Fraction(1, 2654208),
+        ]
+        assert sum(row['coefficient_contribution'] for row in canonical) == Fraction(1, 1769472)
+        assert alternate[0]['hodge_integral'] == Fraction(-1, 331776)
+        assert sum(row['coefficient_contribution'] for row in alternate) == Fraction(5, 15925248)
+
+    def test_conflict_is_sign_convention_not_shadow_normalization(self):
+        """The certificate rejects a normalization identification."""
+        from compute.lib.theorem_genus4_virasoro_engine import (
+            EDGE_PROPAGATOR_SIGN_CONVENTION,
+            genus4_kappa4_s3_squared_certificate,
+        )
+        cert = genus4_kappa4_s3_squared_certificate()
+        assert cert['edge_propagator_sign_convention'] == EDGE_PROPAGATOR_SIGN_CONVENTION
+        assert cert['normalization_conflict'] is False
+        assert cert['sign_convention_conflict'] is True
+        assert cert['resolution'] == 'use canonical_value'
+
+    def test_alternate_sign_fails_genus3_anchor(self):
+        """The alternate bridge-sign convention already changes genus-3 coefficients."""
+        from compute.lib.stable_graph_enumeration import _enumerate_general
+        from compute.lib.pixton_shadow_bridge import ShadowData
+        from compute.lib.theorem_genus3_planted_forest_full_engine import (
+            genus3_exact_coefficients,
+            is_planted_forest,
+            vertex_weight,
+        )
+        from compute.lib.genus4_planted_forest_engine import (
+            hodge_integral as alternate_hodge_integral,
+        )
+
+        kappa = Symbol('kappa')
+        S3 = Symbol('S_3')
+        S4 = Symbol('S_4')
+        S5 = Symbol('S_5')
+        shadow = ShadowData('g3_alt_sign', kappa, S3, S4, shadows={5: S5})
+        total = Integer(0)
+
+        for graph in _enumerate_general(3, 0):
+            if not is_planted_forest(graph):
+                continue
+            I = alternate_hodge_integral(graph)
+            total += cancel(
+                vertex_weight(graph, shadow)
+                * Rational(I.numerator, I.denominator)
+                / graph.automorphism_order()
+            )
+
+        alternate = Poly(expand(total), kappa, S3, S4, S5, domain='QQ').as_dict()
+        canonical = genus3_exact_coefficients()
+        assert alternate[(2, 2, 0, 0)] == Rational(5, 6912)
+        assert canonical[(2, 2, 0, 0)] == Rational(1, 1152)
+        assert alternate[(2, 2, 0, 0)] != canonical[(2, 2, 0, 0)]
+
+
+# ============================================================================
+# Section 14: Virasoro rational function structure
 # ============================================================================
 
 class TestVirasoroRationalFunction:
@@ -624,7 +732,7 @@ class TestVirasoroRationalFunction:
 
 
 # ============================================================================
-# Section 14: Consistency with shadow arity engine
+# Section 15: Consistency with shadow arity engine
 # ============================================================================
 
 class TestShadowArityConsistency:
@@ -654,7 +762,7 @@ class TestShadowArityConsistency:
 
 
 # ============================================================================
-# Section 15: Genus-2 planted-forest cross-check
+# Section 16: Genus-2 planted-forest cross-check
 # ============================================================================
 
 class TestGenus2CrossCheck:
@@ -673,3 +781,45 @@ class TestGenus2CrossCheck:
         expected = S3 * (10 * S3 - kappa) / 48
         diff = expand(result - expected)
         assert diff == 0
+
+
+# ============================================================================
+# Section 17: Finite-scope and object-separation firewalls
+# ============================================================================
+
+class TestCertificationFirewall:
+    """Genus-4 data must not be promoted to larger theorem surfaces."""
+
+    def test_no_all_genus_or_hierarchy_promotion(self):
+        """This engine certifies finite genus-4 data only."""
+        from compute.lib.theorem_genus4_virasoro_engine import (
+            genus4_certification_firewall,
+        )
+        cert = genus4_certification_firewall()
+        assert cert['certified_surface'] == 'finite genus-4 planted-forest graph sum'
+        assert cert['all_genus_virasoro_formula_certified'] is False
+        assert cert['borel_planted_forest_sector_certified'] is False
+        assert cert['planted_forest_closed_form_certified'] is False
+        assert cert['tau_or_hierarchy_identification_certified'] is False
+        assert cert['full_higher_valence_mc_recursion_certified'] is False
+
+    def test_kernel_constants_are_preserved(self):
+        """Kernel normalizations stay separated."""
+        from compute.lib.theorem_genus4_virasoro_engine import (
+            genus4_certification_firewall,
+        )
+        kernels = genus4_certification_firewall()['kernel_normalizations']
+        assert kernels['affine_raw_trace'] == 'r^KM(z) = k*Omega_tr/z'
+        assert kernels['affine_KZ'] == 'r^KZ(z) = Omega/((k+h^vee)z)'
+        assert kernels['heisenberg'] == 'r^Heis(z) = k/z'
+        assert kernels['virasoro'] == 'r^Vir(z) = (c/2)/z^3 + 2T/z'
+
+    def test_object_firewalls_are_preserved(self):
+        """Bar-cobar inversion, Verdier duality, and Hochschild bulk stay distinct."""
+        from compute.lib.theorem_genus4_virasoro_engine import (
+            genus4_certification_firewall,
+        )
+        firewalls = genus4_certification_firewall()['object_firewalls']
+        assert firewalls['Omega(B(A))'] == 'bar-cobar inversion returning A, not Koszul duality'
+        assert firewalls['A^!'].startswith('Verdier/continuous-linear dual branch')
+        assert firewalls['Z_ch^der(A)'] == 'ChirHoch^*(A,A), the Hochschild/derived-centre bulk'

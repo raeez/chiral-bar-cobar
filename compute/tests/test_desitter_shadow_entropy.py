@@ -33,6 +33,9 @@ from desitter_shadow_entropy import (
     F_g_ds_convention_B, F_g_ds_exact,
     # Section 3: dS entropy
     gibbons_hawking_entropy, gibbons_hawking_entropy_exact,
+    gibbons_hawking_entropy_shadow_rescaled,
+    shadow_rescaled_c_from_brown_henneaux,
+    brown_henneaux_c_from_shadow_rescaled,
     ds_entropy_genus_expansion, ds_entropy_complex_expansion,
     # Section 4: Nariai
     nariai_point, nariai_entropy_expansion, nariai_maximality_check,
@@ -158,9 +161,17 @@ class TestGibbonsHawking:
             assert gibbons_hawking_entropy(c) > 0
 
     def test_S_dS_formula(self):
-        """S_dS = pi * c_dS."""
+        """S_dS = pi*c_BH/3 in Brown-Henneaux normalization."""
         for c in [1, 6, 13, 24]:
-            assert abs(gibbons_hawking_entropy(c) - PI * c) < TOL
+            assert abs(gibbons_hawking_entropy(c) - PI * c / 3.0) < TOL
+
+    def test_shadow_rescaled_formula(self):
+        """If c_shadow=c_BH/3, the same entropy is written pi*c_shadow."""
+        c_bh = 24
+        c_shadow = shadow_rescaled_c_from_brown_henneaux(c_bh)
+        assert abs(gibbons_hawking_entropy(c_bh)
+                   - gibbons_hawking_entropy_shadow_rescaled(c_shadow)) < TOL
+        assert abs(brown_henneaux_c_from_shadow_rescaled(c_shadow) - c_bh) < TOL
 
     def test_S_dS_linear_in_c(self):
         s1 = gibbons_hawking_entropy(1)
@@ -168,9 +179,9 @@ class TestGibbonsHawking:
         assert abs(s2 / s1 - 2.0) < TOL
 
     def test_S_dS_exact(self):
-        """Exact coefficient of pi is c_dS."""
-        assert gibbons_hawking_entropy_exact(13) == 13
-        assert gibbons_hawking_entropy_exact(26) == 26
+        """Exact coefficient of pi is c_BH/3."""
+        assert gibbons_hawking_entropy_exact(13) == Fraction(13, 3)
+        assert gibbons_hawking_entropy_exact(26) == Fraction(26, 3)
 
 
 class TestDSEntropyExpansion:
@@ -234,7 +245,7 @@ class TestNariai:
 
     def test_nariai_S_tree(self):
         info = nariai_point()
-        assert abs(info['S_tree'] - 13 * PI) < TOL
+        assert abs(info['S_tree'] - 13 * PI / 3.0) < TOL
 
     def test_nariai_complementarity(self):
         info = nariai_point()
@@ -243,7 +254,7 @@ class TestNariai:
     def test_nariai_expansion(self):
         result = nariai_entropy_expansion(3)
         assert result['is_nariai']
-        assert abs(result['S_tree'] - 13 * PI) < TOL
+        assert abs(result['S_tree'] - 13 * PI / 3.0) < TOL
 
     def test_nariai_not_maximum(self):
         """The Nariai point does NOT maximize entropy (S is monotone in c)."""
@@ -403,7 +414,7 @@ class TestQuasiDeSitter:
         result = slow_roll_entropy_change(100, 0.001, 0, 1, 2)
         if abs(result['delta_tree']) > 1e-10:
             ratio = abs(result['delta_quantum'] / result['delta_tree'])
-            assert ratio < 0.01  # quantum < 1% of tree
+            assert ratio < 0.03  # quantum remains small after Brown-Henneaux normalization
 
 
 # =========================================================================
@@ -416,10 +427,10 @@ class TestBanks:
         assert result['N'] > 0
 
     def test_banks_log_N_equals_S(self):
-        """log(N) = S_dS = pi*c_dS."""
+        """log(N) = S_dS = pi*c_BH/3."""
         c = 10
         result = banks_hilbert_space_dimension(c)
-        assert abs(result['log_N'] - PI * c) < TOL
+        assert abs(result['log_N'] - PI * c / 3.0) < TOL
 
     def test_banks_N_grows_with_c(self):
         N1 = banks_hilbert_space_dimension(1)['N']
@@ -442,7 +453,7 @@ class TestBanks:
     def test_banks_correction_small(self):
         """Quantum corrections are small: |correction/tree| << 1."""
         result = banks_dimension_quantum_corrected(10, 3)
-        assert abs(result['relative_correction']) < 0.01
+        assert abs(result['relative_correction']) < 0.03
 
 
 # =========================================================================
@@ -462,13 +473,13 @@ class TestHartleHawking:
         assert abs(result['log_psi_sq'] - expansion['S_total']) < TOL
 
     def test_HH_tree_level(self):
-        """Tree level: log|Psi_HH|^2 = pi*c_dS."""
+        """Tree level: log|Psi_HH|^2 = pi*c_BH/3."""
         c = 10
         result = hartle_hawking_norm_squared(c, 0)
         # max_g=0 means no corrections, but code starts at g=1
         # so with max_g=2, check tree dominates
         result2 = hartle_hawking_norm_squared(c, 2)
-        assert abs(result2['S_tree'] - PI * c) < TOL
+        assert abs(result2['S_tree'] - PI * c / 3.0) < TOL
 
     def test_HH_genus_ratio(self):
         """Genus ratios converge to 1/(2*pi)^2."""
@@ -583,7 +594,7 @@ class TestCrossChecks:
             assert abs(f_ds - f_ads) < TOL
 
     def test_tree_entropy_ratio_ads_ds(self):
-        """BTZ: S = 2*pi*sqrt(c*Delta/6). dS: S = pi*c_dS.
+        """BTZ: S = 2*pi*sqrt(c*Delta/6). dS: S = pi*c_BH/3.
         These are different objects (BTZ depends on Delta)."""
         c = 24
         # Just verify they are different functional forms

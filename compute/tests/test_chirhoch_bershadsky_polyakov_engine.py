@@ -9,7 +9,7 @@ Organized by:
   IV.   Hochschild polynomial P_BP(t)
   V.    Deformation-obstruction
   VI.   Koszul duality
-  VII.  N=2 constraints
+  VII.  Feigin-Semikhatov constraints
   VIII. Comparison with principal W-algebras
   IX.   Special levels
   X.    Master computation and verification
@@ -44,7 +44,8 @@ from compute.lib.chirhoch_bershadsky_polyakov_engine import (
     all_deformations_unobstructed_bp,
     # Koszul duality
     koszul_duality_check_bp,
-    # N=2
+    # Feigin-Semikhatov normal form
+    feigin_semikhatov_constraints_on_chirhoch,
     n2_sca_constraints_on_chirhoch,
     # Comparison
     comparison_with_principal,
@@ -156,7 +157,7 @@ class TestChirHoch1:
         """G+, G- (fermionic, weight 3/2) contribute 0 to bosonic H^1.
         # VERIFIED: [DC] fermionic generators give odd (anticommuting) derivations,
         #           not in the bosonic part of ChirHoch^1
-        # VERIFIED: [SY] N=2 SUSY locks G+/G- to J and T
+        # VERIFIED: [SY] Feigin-Semikhatov OPE constrains G+/G- with J and T
         """
         da = derivation_analysis_bp()
         assert da.fermionic_contribution == 0
@@ -299,27 +300,38 @@ class TestKoszulDuality:
 
 
 # ===================================================================
-# VII. N=2 constraints
+# VII. Feigin-Semikhatov constraints
 # ===================================================================
 
-class TestN2Constraints:
-    """N=2 SCA structure constrains ChirHoch^1."""
+class TestFeiginSemikhatovConstraints:
+    """Feigin-Semikhatov W_3^{(2)} structure constrains ChirHoch^1."""
 
     def test_j_level_locked(self):
-        """J-level kJ = c/3 is locked to c by N=2 structure."""
-        n2 = n2_sca_constraints_on_chirhoch()
-        assert n2["j_level_locked"]
+        """J-level is (2k+3)/3 in Feigin-Semikhatov normal form."""
+        fs = feigin_semikhatov_constraints_on_chirhoch()
+        assert fs["j_level_locked"]
+        assert str(fs["j_level_formula"]) == "2*k/3 + 1"
 
     def test_fermionic_locked(self):
-        """G+, G- are locked by SUSY."""
-        n2 = n2_sca_constraints_on_chirhoch()
-        assert n2["fermionic_locked_by_susy"]
+        """G+, G- are constrained by the FS OPE, not by N=2 SUSY."""
+        fs = feigin_semikhatov_constraints_on_chirhoch()
+        assert fs["is_feigin_semikhatov_bp"]
+        assert fs["is_n2_sca"] is False
+        assert fs["fermionic_constrained_by_fs_ope"]
+        assert fs["spectral_flow_is_automorphism"] is False
 
     def test_naive_vs_actual(self):
-        """Naive 4 derivations reduced to 2 by N=2 constraints."""
-        n2 = n2_sca_constraints_on_chirhoch()
-        assert n2["naive_derivation_count"] == 4
-        assert n2["actual_outer_derivations"] == 2
+        """Naive 4 derivations reduced to 2 by FS OPE constraints."""
+        fs = feigin_semikhatov_constraints_on_chirhoch()
+        assert fs["naive_derivation_count"] == 4
+        assert fs["actual_outer_derivations"] == 2
+        assert "Feigin-Semikhatov" in fs["reduction_mechanism"]
+
+    def test_n2_wrapper_is_corrected(self):
+        """Legacy wrapper now records the Feigin-Semikhatov BP surface."""
+        data = n2_sca_constraints_on_chirhoch()
+        assert data["is_n2_sca"] is False
+        assert data["is_feigin_semikhatov_bp"] is True
 
 
 # ===================================================================

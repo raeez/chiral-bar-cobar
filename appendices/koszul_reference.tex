@@ -15,12 +15,34 @@ result appears in both locations, the version in
 
 \begin{theorem}[Extended Koszul duality; \ClaimStatusConditional]
 \label{thm:extended-koszul-appendix}
-If $(\mathcal{A}, \mathcal{A}^!)$ form a genus-0 Koszul dual pair with central curvature at
-all genera, then under suitable finiteness and convergence conditions:
-\[\left(\bigoplus_{g \geq 0} \mathcal{A}^{(g)}, \bigoplus_{g \geq 0} (\mathcal{A}^!)^{(g)}\right)\]
-form a multi-genus Koszul dual pair with pairing:
-\[\langle -, - \rangle: \mathcal{A}^{(g)} \otimes (\mathcal{A}^!)^{(g)} \to \mathbb{C}[\![\hbar]\!]\]
-where $\hbar$ tracks the genus.
+Let $(\mathcal{A},\mathcal{A}^{!})$ be a genus-$0$ chiral Koszul
+pair and assume the higher-genus bar objects are finite-window
+complete, mapping-class equivariant, and centrally curved in the
+sense of Theorem~\ref{thm:higher-genus-inversion}. Put
+\[
+\mathcal{A}^{\mathrm i,(g)}:=\barB^{\mathrm{ch},(g)}(\mathcal{A}),
+\qquad
+\mathcal{A}^{!,(g)}:=
+\mathbb{D}_{\Ran}\mathcal{A}^{\mathrm i,(g)}
+\]
+on the Verdier-finite lane. Then the completed genus series
+\[
+\widehat{\mathcal{A}}=\prod_{g\geq 0}\hbar^{2g-2}\mathcal{A}^{(g)},
+\qquad
+\widehat{\mathcal{A}^{\mathrm i}}
+=\prod_{g\geq 0}\hbar^{2g-2}\mathcal{A}^{\mathrm i,(g)}
+\]
+is a compatible higher-genus Koszul system: the counits
+\[
+\Omega^{\mathrm{ch}}_g
+\mathcal{A}^{\mathrm i,(g)}
+\xrightarrow{\;\sim\;}
+\mathcal{A}^{(g)}
+\]
+are quasi-isomorphisms on the higher-genus Koszul locus, and
+Verdier duality sends the bar-dual coalgebra
+$\mathcal{A}^{\mathrm i,(g)}$ to the algebra
+$\mathcal{A}^{!,(g)}$.
 \end{theorem}
 
 \begin{proof}
@@ -69,19 +91,72 @@ See Definition~\ref{def:chiral-koszul-pair} for the chiral Koszul pair
 formulation.
 \end{remark}
 
+\begin{remark}[Quadratic candidate dual versus full chiral Koszulness:
+MA-12 endpoint discipline]
+\label{rem:quadratic-vs-full-koszulness-koszul-ref}
+\index{MA-12 (finite-spin / quadratic / classical = full theorem)}
+The Gui--Li--Zeng quadratic chiral duality~\cite{GLZ22} produces a
+\emph{candidate} Koszul dual $\cA^!_{\mathrm{GLZ}} = \cA(s^{-1}N^\vee
+\omega^{-1}, P^\perp)$ together with a Maurer--Cartan comparison map
+\[
+\operatorname{Hom}_{\mathrm{ChirAlg}}(\cA, \cB)
+\;\longleftrightarrow\;
+\MC\bigl(\cA^!_{\mathrm{GLZ}} \otimes \cB\bigr).
+\]
+This is \emph{not} full chiral Koszulness. Bare promotion of the
+quadratic candidate to the full Koszulness theorem is the master
+pattern MA-12 (\emph{quadratic = full theorem}); the endpoint
+hypothesis package required to lift the candidate to the
+inversion-theorem statement
+$\Omega^{\mathrm{ch}}\Bbar^{\mathrm{ch}}(\cA) \xrightarrow{\sim} \cA$
+has three independent ingredients (a) quadratic-dual candidate;
+(b) MC comparison map upgraded to a quasi-isomorphism of convolution
+dg Lie algebras; (c) bar--cobar adjunction $K^2 \simeq \id$ on the
+comparison locus. The full statement is
+Theorem~\ref{thm:full-koszulness-separate} in
+Appendix~\ref{app:dual-methodology}; this remark is its
+forward-reference inside the genus-graded reference apparatus.
+
+Type signatures separating the two:
+\emph{Quadratic candidate} carries (Open quadrant; quadratic chiral
+data; level $1\!\rightarrow\!2$; HP = $E_\infty$-chiral + quadratic
+$(N,P)$ + dualizable). \emph{Full Koszulness} carries (Open quadrant;
+bar--cobar inversion; level $1\!\leftrightarrow\!2$; HP = quadratic
+candidate + MC quasi-isomorphism + $K^2 \simeq \id$ on comparison
+locus). The first is necessary, the second is sufficient.
+\end{remark}
+
 \begin{theorem}[Genus-graded Koszul duality theorem; \ClaimStatusConditional]
 \label{thm:genus-graded-koszul-duality-appendix}
-If $\mathcal{A}$ is genus-graded Koszul with each $\mathcal{A}^{(g)}$ connected, augmented,
-locally finite-dimensional, and with central curvature, then the classical Koszul dual
-\[\mathcal{A}^! := \bigoplus_{g \geq 0} \operatorname{Ext}_{\mathcal{A}^{(g)}}^*(\mathbb{k}, \mathbb{k})\]
-is also genus-graded Koszul, and $(\mathcal{A}^!)^! \cong \mathcal{A}$.
-
-\smallskip\noindent\textit{Note.}
-The formula $\mathcal{A}^! = \bigoplus_g \operatorname{Ext}^*_{\mathcal{A}^{(g)}}(\mathbb{k},\mathbb{k})$
-is the \emph{classical} (BGS) Koszul dual, valid when each $\mathcal{A}^{(g)}$ is a
-classical quadratic algebra. For the chiral Koszul dual (Definition~\ref{def:chiral-koszul-pair}),
-the bar construction replaces $\operatorname{Ext}$; the two coincide on the classical locus but
-diverge for general vertex algebras (see Remark~\ref{rem:classical-vs-chiral-koszulness}).
+Let $\mathcal{A}$ be genus-graded Koszul, with each
+$\mathcal{A}^{(g)}$ connected, augmented, finite-window complete, and
+centrally curved. The chiral bar-dual coalgebra is
+\[
+\mathcal{A}^{\mathrm i}:=
+\bigoplus_{g\geq 0}\barB^{\mathrm{ch},(g)}(\mathcal{A}),
+\]
+completed $\hbar$-adically when infinitely many genera contribute.
+On the Verdier-finite lane the Koszul dual algebra is
+\[
+\mathcal{A}^{!}:=\mathbb{D}_{\Ran}(\mathcal{A}^{\mathrm i}).
+\]
+The classical formula
+\[
+\bigoplus_{g\geq 0}
+\operatorname{Ext}^{*}_{\mathcal{A}^{(g)}}(\mathbb{k},\mathbb{k})
+\]
+computes the same algebra only on the ordinary quadratic finite-type
+locus, where classical linear duality identifies Ext with the dual of
+the bar-dual coalgebra. Outside that locus it computes a classical
+associated-graded shadow — a quadratic Koszul candidate, in the
+sense of Gui--Li--Zeng~\cite{GLZ22}, that requires the additional
+MC-comparison and bar--cobar inversion ingredients of
+Remark~\ref{rem:quadratic-vs-full-koszulness-koszul-ref} and
+Theorem~\ref{thm:full-koszulness-separate} to lift to a full
+Koszulness statement. For genuine vertex algebras the object
+$\mathcal{A}^{\mathrm i}$ is the chiral bar coalgebra, and
+$\mathcal{A}^{!}$ is the post-Verdier algebra
+$\mathbb{D}_{\Ran}\mathcal{A}^{\mathrm i}$.
 \end{theorem}
 
 \begin{proof}
@@ -95,29 +170,82 @@ involutivity by bar-cobar inversion
 
 \subsection{Genus-graded chiral Koszul duality}
 
-For chiral algebras across all genera, a modified definition is needed:
+For chiral algebras across all genera the data must remember the
+coalgebra before Verdier duality.
 
 \begin{definition}[Genus-graded chiral Koszul duality]
-Genus-graded chiral algebras $\mathcal{A} = \bigoplus_{g \geq 0} \mathcal{A}^{(g)}$ and $\mathcal{B} = \bigoplus_{g \geq 0} \mathcal{B}^{(g)}$ are Koszul dual if:
-\[\mathcal{A}^{(g)} \otimes_\tau \mathcal{B}^{(g)} \;\simeq\; \mathbb{C}\]
-in the derived category of chiral modules at each genus $g$ (i.e., the Koszul complex $\mathcal{A}^{(g)} \otimes_\tau \mathcal{B}^{(g)}$ is acyclic, where $\tau: \bar{B}(\mathcal{A}^{(g)}) \to \mathcal{B}^{(g)}$ is the twisting morphism), with modular covariance under $\operatorname{Sp}(2g, \mathbb{Z})$ transformations.
+A genus-graded chiral Koszul datum is a system
+\[
+(\mathcal{A}^{(g)},\mathcal{C}^{(g)},\tau^{(g)})_{g\geq 0}
+\]
+where $\mathcal{A}^{(g)}$ is an augmented chiral algebra,
+$\mathcal{C}^{(g)}$ is a coaugmented conilpotent chiral coalgebra
+or a finite-window topologically conilpotent completion,
+and $\tau^{(g)}\colon\mathcal{C}^{(g)}\to\mathcal{A}^{(g)}$ is a
+chiral twisting morphism. It is Koszul if
+\[
+\mathcal{A}^{(g)}\otimes_{\tau^{(g)}}\mathcal{C}^{(g)}
+\simeq \mathbb{C}
+\]
+in the derived category of chiral modules for every genus~$g$, and if
+the finite-window system is equivariant for the mapping-class group.
+Then
+\[
+\mathcal{A}^{\mathrm i,(g)}=\mathcal{C}^{(g)},
+\qquad
+\mathcal{A}^{!,(g)}=\mathbb{D}_{\Ran}\mathcal{C}^{(g)}
+\]
+whenever the Verdier dual algebra is defined.
 \end{definition}
 
 \subsection{Curved and filtered generalizations across genera}
 
 \begin{definition}[Genus-graded curved Koszul duality]
-A genus-graded curved algebra $(\mathcal{A}^{(g)}, d^{(g)}, m_0^{(g)})$ with $(d^{(g)})^2 = [m_0^{(g)}, -]$ has curved dual:
-\[((\mathcal{A}^{(g)})^!, d^{!(g)}, m_0^{!(g)})\]
-where the dual curvature $m_0^{!(g)}$ is determined by the genus-graded Koszul pairing (the precise sign depends on the grading conventions; see Positselski \cite{Positselski11} for the foundational theory of curved Koszul duality). At genus $g \geq 1$, the duality pairing depends on the period matrix $\Omega \in \mathfrak{H}_g$ of the underlying curve, and the curvature transforms covariantly under $\text{Sp}(2g, \mathbb{Z})$.
+A genus-graded curved $A_\infty$ chiral algebra
+$(\mathcal{A}^{(g)},m_0^{(g)},m_1^{(g)},m_2^{(g)},\ldots)$ satisfies
+\[
+(m_1^{(g)})^2=[m_0^{(g)},-].
+\]
+Its bar-dual object is the curved chiral coalgebra
+\[
+\mathcal{A}^{\mathrm i,(g)}=\barB^{\mathrm{ch},(g)}(\mathcal{A}),
+\]
+not the algebra $\mathcal{A}^{!,(g)}$. When the finite-window Verdier
+duality hypotheses hold, the dual algebra is
+$\mathcal{A}^{!,(g)}=\mathbb{D}_{\Ran}\mathcal{A}^{\mathrm i,(g)}$.
+The dual curvature is transported by the suspended Verdier pairing;
+the sign is the suspension sign fixed in
+Appendix~\ref{app:signs}. Mapping-class covariance is a
+condition on the whole family over the universal curve, not on a
+single period matrix.
 \end{definition}
 
 \subsection{Computational tools across genera}
 
 \begin{lemma}[Genus-graded Koszul complex resolution; \ClaimStatusConditional]
 \label{lem:genus-graded-koszul-resolution-appendix}
-For genus-graded Koszul $\mathcal{A}$ with central curvature, the minimal resolution of $\mathbb{k}$ at genus $g$ is:
-\[\cdots \to \mathcal{A}^{(g)} \otimes (\mathcal{A}^!)_{(2)}^{(g)} \to \mathcal{A}^{(g)} \otimes (\mathcal{A}^!)_{(1)}^{(g)} \to \mathcal{A}^{(g)} \to \mathbb{k}\]
-where $(\mathcal{A}^!)_{(n)}^{(g)}$ is the degree $n$ part of $\mathcal{A}^!$ at genus $g$; the differential in this complex depends on the genus-$g$ conformal structure through the propagator on $\overline{C}_n(\Sigma_g)$.
+For genus-graded Koszul $\mathcal{A}$ with central curvature, the
+minimal chiral resolution of $\mathbb{k}$ at genus~$g$ is the twisted
+bar resolution
+\[
+\cdots \to
+\mathcal{A}^{(g)}\otimes
+(\mathcal{A}^{\mathrm i,(g)})_{(2)}
+\to
+\mathcal{A}^{(g)}\otimes
+(\mathcal{A}^{\mathrm i,(g)})_{(1)}
+\to
+\mathcal{A}^{(g)}
+\to
+\mathbb{k}.
+\]
+The differential is induced by the universal twisting morphism
+$\tau^{(g)}\colon\mathcal{A}^{\mathrm i,(g)}\to\mathcal{A}^{(g)}$.
+In the geometric model its coefficients are logarithmic propagators
+on $\overline{C}_n(\Sigma_g)$, together with the OPE residue maps
+along collision strata. If finite-type Verdier duality is available,
+dualizing the coalgebra factors rewrites the same resolution in terms
+of the algebra $\mathcal{A}^{!,(g)}$.
 \end{lemma}
 
 \begin{proof}
@@ -130,110 +258,126 @@ bar-cobar inversion (Theorem~\ref{thm:higher-genus-inversion}).
 
 \subsection{Physical interpretation across genera}
 
-The genus-graded Koszul duality corresponds to the genus expansion of string amplitudes (Chapter~\ref{ch:genus-expansions}); connections to electric-magnetic duality, open-closed string duality, and mirror symmetry appear in the connections chapters.
+The genus-graded Koszul system supplies the algebraic skeleton for the
+genus expansion of string amplitudes
+(Chapter~\ref{ch:genus-expansions}). Electric-magnetic duality,
+open-closed duality, and mirror symmetry enter only through the
+connection theorems that name their hypotheses.
 
 \subsection{Genus-graded Maurer--Cartan elements and twisting}
 
 \begin{theorem}[Genus-graded MC elements parametrize deformations; \ClaimStatusProvedElsewhere]
 \label{thm:genus-graded-mc-appendix}
-For a genus-graded chiral algebra $\mathcal{A} = \bigoplus_{g \geq 0} \mathcal{A}^{(g)}$
-with central curvature and its bar complex $\bar{B}(\mathcal{A})$:
-
-\emph{1. Genus-graded Maurer--Cartan equation.}
-\[\alpha^{(g)} \in \barBgeom^{(g)}(\mathcal{A}), \quad d^{(g)}\alpha^{(g)} + \frac{1}{2}[\alpha^{(g)}, \alpha^{(g)}] = 0\]
-with modular corrections from period integrals.
-
-\emph{2. Genus-graded twisting.}
-Each MC element $\alpha^{(g)}$ yields a twisted differential:
-\[d_{\alpha^{(g)}}^{(g)} = d^{(g)} + [\alpha^{(g)}, -]\]
-with $(d_{\alpha^{(g)}}^{(g)})^2 = 0$ and modular covariance.
-
-\emph{3. Genus-graded deformation.}
-MC elements correspond to first-order deformations of $\mathcal{A}^{(g)}$:
-\[\mu_{\alpha^{(g)}}^{(g)}(a \otimes b) = \mu^{(g)}(a \otimes b) + \langle \alpha^{(g)}, a \otimes b \rangle\]
-with genus corrections.
-
-\emph{4. Geometric interpretation across genera.}
-On configuration spaces, MC elements are:
-\begin{itemize}
-\item Closed 1-forms on $\overline{C}_2^{(g)}(\Sigma_g)$ with prescribed residues and period integrals
-\item Flat connections on the punctured configuration space with modular structure
-\item Solutions to the classical Yang--Baxter equation with genus corrections
-\end{itemize}
-
-\emph{5. Genus-graded moduli space.}
-\[\mathcal{M}_{\text{MC}}^{(g)}(\mathcal{A}) = \{\text{MC elements at genus } g\}/\text{gauge equivalence}\]
-(gauge equivalence in the Deligne--Getzler--Hinich $\infty$-groupoid of $\Convinf$)
-parametrizes deformations of the chiral algebra structure at each genus.
+Let
+\[
+\mathfrak{g}^{(g)}_{\mathcal{A}}
+=\operatorname{Conv}\bigl(\mathcal{A}^{\mathrm i,(g)},\mathcal{A}^{(g)}\bigr)
+\]
+be the completed convolution dg Lie algebra controlling genus-$g$
+chiral operations. Formal genus-$g$ deformations are Maurer--Cartan
+elements
+\[
+\alpha^{(g)}\in
+\mathfrak{g}^{(g),1}_{\mathcal{A}}[[t]],
+\qquad
+D^{(g)}\alpha^{(g)}
+\;+\;\frac{1}{2}[\alpha^{(g)},\alpha^{(g)}]=0.
+\]
+For a fixed curved background $\Theta^{(g)}$ this is equivalently the
+perturbation equation
+\[
+D_{\Theta^{(g)}}\beta^{(g)}
+\;+\;\frac{1}{2}[\beta^{(g)},\beta^{(g)}]=0.
+\]
+The twisted operator
+$D^{(g)}_{\alpha}=D^{(g)}+[\alpha^{(g)},-]$ squares to zero exactly
+when the displayed MC equation holds. Gauge equivalence is the
+Deligne--Getzler--Hinich groupoid of the pronilpotent convolution
+algebra. Logarithmic one-form representatives and classical
+Yang--Baxter equations occur on the current/r-matrix sublocus; they
+are not the definition of a general chiral MC element.
 \end{theorem}
 
 \begin{proof}
 This is Theorem~\ref{thm:genus-graded-mc} in
-\S\ref{app:koszul_higher_genus}. The proof applies the
-genus-0 Maurer--Cartan theory
-(Theorem~\ref{ex:mc-deformations}) at each genus~$g$,
-using strict nilpotence
-(Theorem~\ref{thm:genus-induction-strict}) to ensure
-$(d^{(g)})^2 = 0$ and Theorem~\ref{ex:mc-periods} for
-the geometric realization via period integrals.
-The twisted nilpotence $(d_\alpha^{(g)})^2 = 0$ follows from
-the standard computation for dg Lie algebras combined with
-the MC equation; modular covariance follows from the
-equivariance of the bar differential under the mapping class
-group (Theorem~\ref{thm:prism-higher-genus}). See the proof
-of Theorem~\ref{thm:genus-graded-mc} for full details.
+\S\ref{app:koszul_higher_genus}. The controlling dg Lie algebra is
+the chiral Hochschild convolution algebra
+(Theorem~\ref{thm:linfty-cochains}), realized geometrically by
+kernels on configuration spaces
+(Theorem~\ref{thm:geometric-chiral-hochschild}). The equality
+$(D+[\alpha,-])^2=0$ is the standard dg Lie computation and is
+equivalent to the MC equation. The higher-genus compatibility follows
+from mapping-class equivariance of the bar differential
+(Theorem~\ref{thm:prism-higher-genus}).
 \end{proof}
 
 \subsection{Koszul duality at higher genus: the tower structure}
 \label{app:koszul-reference-higher-genus}
 
-The genus 0 Koszul duality:
-\[\Omega C_{\bullet}^{(0)}(\mathcal{A}) \simeq \mathcal{A}\]
-extends to all genera by the modular operad structure.
+The genus-$0$ counit
+\[
+\Omega^{\mathrm{ch}}\mathcal{A}^{\mathrm i,(0)}
+\xrightarrow{\;\sim\;}
+\mathcal{A}^{(0)}
+\]
+extends to higher genus only on the higher-genus Koszul locus and in
+the completed curved ambient of Theorem~\ref{thm:higher-genus-inversion}.
 
 \subsubsection{\texorpdfstring{The genus $g$ statement}{The genus g statement}}
 
-For each $g \geq 0$, there is a duality:
-\[\Omega^{(g)} C_{\bullet}^{(g)}(\mathcal{A}) \simeq \mathcal{A}^{(g)}\]
-where:
-\begin{itemize}
-\item $\Omega^{(g)}$ is the genus $g$ cobar construction
-\item $\mathcal{A}^{(g)}$ is the genus $g$ component of $\mathcal{A}$
-\end{itemize}
+For each $g\geq 0$ in that locus there is a counit
+\[
+\Omega^{(g)}\mathcal{A}^{\mathrm i,(g)}
+\xrightarrow{\;\sim\;}
+\mathcal{A}^{(g)}.
+\]
+Here $\Omega^{(g)}$ is the genus-$g$ cobar construction and
+$\mathcal{A}^{\mathrm i,(g)}$ is the genus-$g$ bar-dual coalgebra.
 
 \subsubsection{Compatibility}
 
-The genus stratification satisfies:
-\[\partial: C_{\bullet}^{(g)} \to C_{\bullet}^{(g-1)}\]
-(boundary/degeneration maps) compatible with:
-\[\iota: \mathcal{A}^{(g-1)} \to \mathcal{A}^{(g)}\]
-(restriction maps).
-
-This gives a \emph{tower of Koszul dualities}:
-\begin{center}
-\begin{tikzcd}[column sep=small]
-\cdots \arrow[r] & C_{\bullet}^{(2)}(\mathcal{A}) \arrow[r] \arrow[d, "\Omega^{(2)}"] &
-C_{\bullet}^{(1)}(\mathcal{A}) \arrow[r] \arrow[d, "\Omega^{(1)}"] &
-C_{\bullet}^{(0)}(\mathcal{A}) \arrow[d, "\Omega^{(0)}"] \\
-\cdots \arrow[r] & \mathcal{A}^{(2)} \arrow[r] &
-\mathcal{A}^{(1)} \arrow[r] &
-\mathcal{A}^{(0)}
-\end{tikzcd}
-\end{center}
+The boundary maps are residue maps along the Deligne--Mumford
+boundary. A nonseparating boundary component lowers the genus by one;
+a separating boundary component lands in a tensor product of the two
+lower-genus factors. Thus the tower is not a single chain
+$C^{(g)}\to C^{(g-1)}$. It is a modular-operadic system whose arrows
+are the clutching and residue maps
+\[
+\operatorname{Res}_{\mathrm{nonsep}}\colon
+\mathcal{A}^{\mathrm i,(g)}
+\to \mathcal{A}^{\mathrm i,(g-1)},\qquad
+\operatorname{Res}_{\mathrm{sep}}\colon
+\mathcal{A}^{\mathrm i,(g)}
+\to
+\mathcal{A}^{\mathrm i,(g_1)}\widehat{\otimes}
+\mathcal{A}^{\mathrm i,(g_2)}.
+\]
+The cobar counits commute with these maps by the modular operad
+axioms.
 
 \subsubsection{The limit}
 
-Taking the inverse limit:
-\[\mathcal{A}_{\text{complete}} = \varprojlim_g \mathcal{A}^{(g)}\]
-gives the \emph{completed chiral algebra}, encoding all genus contributions.
+The all-genus object is the $\hbar$-adic completed product
+\[
+\widehat{\mathcal{A}}
+=\prod_{g\geq 0}\hbar^{2g-2}\mathcal{A}^{(g)}.
+\]
+Finite-window quotients, not the raw direct sum over all genera, carry
+the strict algebraic topology used by Theorem~\ref{thm:higher-genus-inversion}.
 
 \subsubsection{Modular invariance}
 
-At each genus $g$, the duality respects the action of the mapping class group $\Gamma_g = \operatorname{MCG}(\Sigma_g)$:
-\[\Omega^{(g)}(\sigma^* C_{\bullet}^{(g)}(\mathcal{A})) \simeq \sigma^* \mathcal{A}^{(g)}\]
-for $\sigma \in \Gamma_g$.
-
-This ensures that genus $g$ quantum corrections are modular-invariant.
+At each genus $g$, the counit is equivariant for the mapping-class
+group $\Gamma_g=\operatorname{MCG}(\Sigma_g)$:
+\[
+\Omega^{(g)}(\sigma^*\mathcal{A}^{\mathrm i,(g)})
+\simeq
+\sigma^*\mathcal{A}^{(g)}
+\qquad(\sigma\in\Gamma_g).
+\]
+Scalar genus-$g$ amplitudes obtained by integration over the proper
+Deligne--Mumford stack are therefore modular invariant when the input
+chain is mapping-class equivariant.
 
 
 \section{Classification of chiral algebras by Koszul type}
@@ -245,131 +389,178 @@ See Proposition~\ref{prop:classification-table} in Appendix~\ref{app:existence-c
 % SECTION: ESSENTIAL IMAGE CHARACTERIZATION
 %================================================================
 
-\section{\texorpdfstring{Essential image: when is $\widehat{\mathcal{C}} = \mathcal{A}^!$?}{Essential image: when is C = A !?}}
+\section{\texorpdfstring{Essential image: when is $\widehat{\mathcal{C}} = \mathcal{A}^{\mathrm i}$?}{Essential image: when is C = A i?}}
 \label{sec:essential-image-koszul}
 
 \subsection{The characterization problem}
 
 \begin{question}[Inverse problem]\label{q:inverse-problem-koszul}
-Given a chiral coalgebra $\widehat{\mathcal{C}}$, when does there exist a chiral
-algebra $\mathcal{A}$ such that:
-\[\widehat{\mathcal{C}} \cong \mathcal{A}^!\]
-(as Koszul dual)?
+Given a chiral coalgebra $\widehat{\mathcal{C}}$, when does there
+exist a chiral algebra $\mathcal{A}$ such that
+\[
+\widehat{\mathcal{C}}\simeq\mathcal{A}^{\mathrm i}
+=\barB^{\mathrm{ch}}(\mathcal{A})?
+\]
+When this holds, the Koszul dual algebra is
+$\mathcal{A}^{!}=\mathbb{D}_{\Ran}\widehat{\mathcal{C}}$ on the
+Verdier-finite lane.
 
-Equivalently: what is the \emph{essential image} of the Koszul duality functor?
+The invariant form of the question asks for the \emph{essential image}
+of the chiral bar coalgebra functor.
 \end{question}
 
 \begin{remark}\label{rem:why-essential-image-matters}
-The essential image question decomposes into four subproblems: \emph{recognition} (given a coalgebra, determine whether it is a Koszul dual), \emph{completeness} (whether every coalgebra arises), \emph{uniqueness} (whether $\mathcal{A}$ is determined by $\mathcal{A}^!$), and \emph{reconstruction} (recovering $\mathcal{A}$ from $\widehat{\mathcal{C}}$).
+The essential image question has four parts: recognition of bar-dual
+coalgebras, completeness of the bar functor, uniqueness of
+$\mathcal{A}$ up to the bar-cobar equivalence, and reconstruction by
+$\Omega^{\mathrm{ch}}\widehat{\mathcal{C}}$.
 \end{remark}
 
 \subsection{Main characterization theorem}
 
-\begin{theorem}[Essential image of Koszul duality; \ClaimStatusProvedHere]\label{thm:essential-image-koszul}
-A chiral coalgebra $\widehat{\mathcal{C}}$ is (isomorphic to) the Koszul dual
-$\mathcal{A}^!$ of some chiral algebra $\mathcal{A}$ if and only if:
+\begin{theorem}[Essential image of the chiral bar-dual coalgebra; \ClaimStatusProvedHere]\label{thm:essential-image-koszul}
+A coaugmented chiral coalgebra $\widehat{\mathcal{C}}$ in the
+finite-type complete $E_1$-chiral lane is equivalent to the bar-dual
+coalgebra $\mathcal{A}^{\mathrm i}$ of a chiral algebra
+$\mathcal{A}$ if and only if the following five conditions hold.
 
 \begin{enumerate}
-\item \emph{Conilpotency.} $\widehat{\mathcal{C}}$ is conilpotent: every element of $\ker(\epsilon)$ is annihilated by a sufficiently high iterate of the reduced coproduct $\bar{\Delta}$:
- \[\ker(\epsilon) = \bigcup_{n \geq 0} \ker(\bar{\Delta}^{(n)})\]
+\item \emph{Coaugmented connected.} The coradical is the ground field,
+and the coaugmentation and counit split it:
+ \[\mathbb{C}\xrightarrow{\eta}\widehat{\mathcal{C}}
+ \xrightarrow{\epsilon}\mathbb{C},
+ \qquad \epsilon\eta=\operatorname{id}_{\mathbb{C}}.\]
 
-\item \emph{Connected.} The counit is surjective onto the ground field:
- \[\epsilon: \widehat{\mathcal{C}} \twoheadrightarrow \mathbb{C}\]
+\item \emph{Algebraic or topological conilpotency.} In the algebraic
+lane every element of $\ker(\epsilon)$ is killed by a high enough
+iterate of the reduced coproduct:
+\[
+\ker(\epsilon)=\bigcup_{n\geq 0}\ker(\bar{\Delta}^{(n)}).
+\]
+In the completed lane there are finite-window quotients
+$\widehat{\mathcal{C}}_{\leq N}$ such that
+$\widehat{\mathcal{C}}\simeq\varprojlim_N
+\widehat{\mathcal{C}}_{\leq N}$, each
+$\widehat{\mathcal{C}}_{\leq N}$ is conilpotent, and the reduced
+coproduct is continuous and lowers the window filtration.
 
-\item \emph{Geometric representability.} $\widehat{\mathcal{C}}$ admits a presentation as sections of a $\mathcal{D}_X$-module coalgebra on the Ran space of~$X$; equivalently, there exists a factorization coalgebra~$\mathcal{F}$ such that $\widehat{\mathcal{C}} \simeq \Gamma(\mathrm{Ran}(X),\, \mathcal{F})$, compatible with the operadic structure of the Fulton--MacPherson compactification
+\item \emph{Geometric representability.} $\widehat{\mathcal{C}}$
+admits a presentation as a factorization coalgebra on $\Ran(X)$,
+computed by logarithmic forms on the Fulton--MacPherson
+compactifications and compatible with collision residues.
 
-\item \emph{Curvature centrality.} Any curvature term $\mu_0 \in \widehat{\mathcal{C}}^2$ (degree-$2$ component)
- is central in the dual algebra
+\item \emph{Curvature compatibility.} In the strict lane the curvature
+acts centrally, so the internal differential squares to zero. In the
+curved lane the identity is the CDG relation $d^2=[\mu_0,-]$ and the
+object is read in the coderived/contraderived Positselski ambient.
 
-\item \emph{Formal completeness.} $\widehat{\mathcal{C}}$ is complete with respect
- to its coaugmentation coideal
+\item \emph{Bar-cobar unit.} The cobar algebra
+$\Omega^{\mathrm{ch}}(\widehat{\mathcal{C}})$ exists in the same
+ambient, and the adjunction unit
+\[
+\eta_{\widehat{\mathcal{C}}}\colon
+\widehat{\mathcal{C}}\longrightarrow
+\barB^{\mathrm{ch}}\Omega^{\mathrm{ch}}(\widehat{\mathcal{C}})
+\]
+is a quasi-isomorphism in the strict finite-type lane, respectively a
+coacyclic equivalence in the curved finite-window lane.
 \end{enumerate}
 
-Each condition reflects a structural property of bar coalgebras:
-conilpotency ensures the cobar differential converges,
-connectedness ensures augmentation,
-geometric representability ensures the coalgebra lives on configuration spaces (not abstractly),
-curvature centrality ensures $d^2 = [\mu_0, -]$ (the curved $A_\infty$ relation),
-and formal completeness ensures the inverse limit over finite stages is well-behaved.
-
-When these conditions hold, the algebra $\mathcal{A}$ is recovered by:
-\[\mathcal{A} = \Omega(\widehat{\mathcal{C}})\]
-(cobar construction), and this is unique up to quasi-isomorphism.
+When these conditions hold,
+\[
+\mathcal{A}=\Omega^{\mathrm{ch}}(\widehat{\mathcal{C}})
+\]
+is the reconstructed algebra and
+$\widehat{\mathcal{C}}\simeq\mathcal{A}^{\mathrm i}$. On the
+Verdier-finite lane the Koszul dual algebra is
+$\mathcal{A}^{!}=\mathbb{D}_{\Ran}\widehat{\mathcal{C}}$. The object
+$\mathcal{A}^{!}$ is not the cobar algebra
+$\Omega^{\mathrm{ch}}(\widehat{\mathcal{C}})$; the latter is the
+bar-cobar reconstruction of $\mathcal{A}$.
 \end{theorem}
 
-\begin{proof}[Proof outline]
-The proof has two directions, each established by the lemmas and theorems in the following subsections.
+\begin{proof}
+Necessity is the construction of the chiral bar coalgebra. The
+coaugmentation is dual to the augmentation of $\mathcal{A}$, the
+reduced coproduct is deconcatenation and lowers tensor length, the
+Fulton--MacPherson model is Definition~\ref{def:geometric-bar}, and
+curvature satisfies the curved $A_\infty$ or CDG identity. The
+bar-cobar unit is the coalgebra-side form of
+Theorem~\ref{thm:e1-chiral-koszul-duality} in the strict lane and of
+Theorem~\ref{thm:chiral-positselski-weight-completed} in the completed
+curved lane.
 
-\emph{($\Rightarrow$) Necessity.} If $\widehat{\mathcal{C}} = \mathcal{A}^!$,
-then conditions (1)-(5) hold.
-
-This follows from properties of the Koszul dual construction:
-\begin{itemize}
-\item (1) Conilpotency: Automatic for Koszul duals (Theorem~\ref{thm:koszul-conilpotent})
-\item (2) Connected: Dual to augmentation of $\mathcal{A}$
-\item (3) Geometric: Bar complex construction is geometric (Definition~\ref{def:bar-geometric})
-\item (4) Curvature: Central obstructions in $\mathcal{A}$ give central curvature
-\item (5) Completeness: Induced by filtration on $\mathcal{A}$
-\end{itemize}
-
-\emph{($\Leftarrow$) Sufficiency.} If conditions (1)-(5) hold, define:
-\[\mathcal{A} = \Omega(\widehat{\mathcal{C}})\]
-
-We must show:
-\begin{enumerate}
-\item $\mathcal{A}$ is a well-defined chiral algebra
-\item $\bar{B}(\mathcal{A}) \simeq \widehat{\mathcal{C}}$ (bar-cobar inversion)
-\item $\mathcal{A}$ has $\widehat{\mathcal{C}}$ as its Koszul dual
-\end{enumerate}
-
-This is established in the following subsections.
+Conversely, condition (5) gives
+\[
+\widehat{\mathcal{C}}\simeq
+\barB^{\mathrm{ch}}\Omega^{\mathrm{ch}}(\widehat{\mathcal{C}})
+\]
+in the stated ambient. With
+$\mathcal{A}:=\Omega^{\mathrm{ch}}(\widehat{\mathcal{C}})$ this says
+exactly that $\widehat{\mathcal{C}}$ is the bar-dual coalgebra
+$\mathcal{A}^{\mathrm i}$. Applying $\mathbb{D}_{\Ran}$, when the
+Verdier-finiteness hypotheses hold, produces the algebra
+$\mathcal{A}^{!}$ and not a second cobar reconstruction.
 \end{proof}
 
 \subsection{Conilpotency and connectedness}
 
-\begin{lemma}[Conilpotency is necessary; \ClaimStatusProvedHere]\label{lem:conilpotency-necessary}
-If $\widehat{\mathcal{C}} = \mathcal{A}^!$ for some $\mathcal{A}$, then $\widehat{\mathcal{C}}$
-is conilpotent.
+\begin{lemma}[Algebraic and completed conilpotency; \ClaimStatusProvedHere]\label{lem:conilpotency-necessary}
+If
+$\widehat{\mathcal{C}}\simeq
+\mathcal{A}^{\mathrm i}=\barB^{\mathrm{ch}}(\mathcal{A})$
+for some augmented chiral algebra $\mathcal{A}$, then the algebraic
+bar coalgebra is conilpotent. Its finite-window completion is
+topologically conilpotent, not necessarily elementwise conilpotent.
 \end{lemma}
 
 \begin{proof}
-Let $I \subseteq \mathcal{A}$ be the augmentation ideal (kernel of the counit). Then:
-\[\mathcal{A} = \mathbb{C} \oplus I\]
-
-The Koszul dual is built from $I$:
-\[\mathcal{A}^! = \text{sub-coalgebra of } \text{Cofree}(s^{-1}I^*) \text{ cogenerated by } R^\perp\]
-where $R^\perp \subset (s^{-1}I^*)^{\otimes 2}$ is the orthogonal complement of the relation space, $s^{-1}$ denotes the desuspension (cohomological convention), and ``cogenerated by $R^\perp$'' means the largest sub-coalgebra of $\text{Cofree}(s^{-1}I^*)$ whose degree-2 component lies in $R^\perp$. (For a Koszul algebra, the sub-coalgebra cogenerated by $R^\perp$ suffices; for general algebras, one passes to a smaller sub-coalgebra.)
-
-For any element $c \in \mathcal{A}^!$, write:
-\[c = c_0 + c_1 + c_2 + \cdots\]
-where $c_n \in (s^{-1}I^*)^{\otimes n}$.
-
-The iterated comultiplication is:
-\[\Delta^n(c) = \sum_{i_0 + \cdots + i_k = n} c_{i_0} \otimes \cdots \otimes c_{i_k}\]
-
-As $n \to \infty$, the image of $\Delta^n$ consists only of elements with arbitrarily
-many tensor factors. Since $I$ is the augmentation ideal, these eventually vanish.
-
-Therefore:
-\[\bigcap_n \text{coker}(\Delta^n) = \{0\}\]
-
-This is conilpotency.
+Let $\bar{\mathcal{A}}$ be the augmentation ideal. The underlying
+coalgebra of the chiral bar construction is the ordered tensor
+coalgebra
+\[
+T^c(s^{-1}\bar{\mathcal{A}})
+=\bigoplus_{n\geq 0}(s^{-1}\bar{\mathcal{A}})^{\otimes n}
+\]
+with the deconcatenation coproduct, realized geometrically on
+ordered configuration spaces. If $c$ has tensor length at most $N$,
+then the $(N+1)$-fold reduced coproduct $\bar\Delta^{(N+1)}(c)$
+vanishes. Every element in the algebraic bar coalgebra has finite
+tensor length. Hence
+\[
+\ker(\epsilon)=\bigcup_{N\geq 0}\ker(\bar\Delta^{(N)}).
+\]
+In the completed finite-window model an element may have infinitely
+many nonzero tensor-length components. The correct assertion is
+therefore
+\[
+\widehat{\mathcal{C}}
+\simeq
+\varprojlim_N \widehat{\mathcal{C}}_{\leq N},
+\]
+where each quotient $\widehat{\mathcal{C}}_{\leq N}$ is conilpotent
+and the reduced coproduct is continuous for the inverse-limit
+topology. No fixed iterate of $\bar\Delta$ need kill an arbitrary
+completed element before passing to a finite window.
 \end{proof}
 
 \begin{lemma}[Connectedness characterizes augmentation; \ClaimStatusProvedHere]\label{lem:connectedness-augmentation}
-A coalgebra $\widehat{\mathcal{C}}$ is connected (has surjective counit $\epsilon: \widehat{\mathcal{C}}
-\twoheadrightarrow \mathbb{C}$) if and only if it is the dual of an augmented algebra.
+For finite-type objects, coaugmented connected coalgebras are dual to
+augmented algebras.
 \end{lemma}
 
 \begin{proof}
-The counit $\epsilon$ of a coalgebra dualizes to the unit $\eta$ of an algebra:
-\[\eta: \mathbb{C} \to \mathcal{A} \quad \leftrightarrow \quad \epsilon: \widehat{\mathcal{C}}
-\to \mathbb{C}\]
-
-Surjectivity of $\epsilon$ means:
-\[\epsilon(c) \neq 0 \text{ for some } c \in \widehat{\mathcal{C}}\]
-
-This is equivalent to $\eta$ being injective, i.e., $\mathcal{A}$ is augmented.
+If $C$ is coaugmented and connected, the splitting
+$\mathbb{C}\xrightarrow{\eta} C\xrightarrow{\epsilon}\mathbb{C}$
+dualizes to an algebra splitting
+\[
+\mathbb{C}\xrightarrow{u} C^\vee\xrightarrow{\varepsilon}\mathbb{C}.
+\]
+Thus $C^\vee$ is augmented. Conversely, the augmentation of a
+finite-type algebra $A$ dualizes to a coaugmentation of $A^\vee$, and
+the unit of $A$ dualizes to the counit of $A^\vee$. Connectedness is
+the assertion that the coradical is exactly the image of the
+coaugmentation.
 \end{proof}
 
 \subsection{Geometric representability}
@@ -385,10 +576,13 @@ if there exists:
 \end{enumerate}
 \end{definition}
 
-\begin{theorem}[Koszul duals are geometrically representable; \ClaimStatusProvedHere]\label{thm:koszul-geom-rep}
-If $\widehat{\mathcal{C}} = \mathcal{A}^!$ for a chiral algebra $\mathcal{A}$, then
-$\widehat{\mathcal{C}}$ is geometrically representable via:
-\[\mathcal{A}^! \simeq \bar{B}^{\text{geom}}(\mathcal{A}) =
+\begin{theorem}[Bar-dual coalgebras are geometrically representable; \ClaimStatusProvedHere]\label{thm:koszul-geom-rep}
+If
+$\widehat{\mathcal{C}}\simeq
+\mathcal{A}^{\mathrm i}=\barB^{\mathrm{ch}}(\mathcal{A})$
+for a chiral algebra $\mathcal{A}$, then $\widehat{\mathcal{C}}$ is
+geometrically representable via
+\[\mathcal{A}^{\mathrm i} \simeq \bar{B}^{\text{geom}}(\mathcal{A}) =
 \bigoplus_{n \geq 0} \Gamma\left(\overline{C}_n(X), \mathcal{A}^{\boxtimes n}
 \otimes \Omega^\bullet\right)\]
 \end{theorem}
@@ -397,111 +591,108 @@ $\widehat{\mathcal{C}}$ is geometrically representable via:
 The geometric bar complex (Definition~\ref{def:geometric-bar}) provides the
 geometric realization:
 
-\emph{Step~1.} The factorization algebra is:
+The factorization algebra is
 \[\mathcal{F}_{C_n}(U) = \Gamma(U, \mathcal{A}^{\boxtimes n}|_U)\]
 for $U \subseteq C_n(X)$.
 
-\emph{Step~2.} Factorization homology is computed via the bar complex:
-\[\bar{B}^{\text{geom}}(\mathcal{A}) = \int_{C_\bullet(X)} \mathcal{F}\]
+Factorization homology is computed by the bar complex
+\[
+\bar{B}^{\text{geom}}(\mathcal{A})
+= \int_{C_\bullet(X)} \mathcal{F}
+\]
+by Theorem~\ref{thm:bar-factorization-homology}.
 
-This was proven in Theorem~\ref{thm:bar-factorization-homology}.
-
-\emph{Step~3.} By Koszul duality
-(Theorem~\ref{thm:bar-concentration}):
-\[\bar{B}^{\text{geom}}(\mathcal{A}) \simeq (\mathcal{A}^!)^\vee\]
-as dg coalgebras. Here $(\mathcal{A}^!)^\vee$ is the linear dual
-of the Koszul dual algebra~$\mathcal{A}^!$, i.e.\ the Koszul dual
-coalgebra: the bar construction computes factorization homology, and
-the resulting coalgebra is identified with the dual of~$\mathcal{A}^!$
-by the Verdier pairing on~$\overline{C}_n(X)$. Therefore
-$\mathcal{A}^!$ is geometrically representable.
+By Theorem~\ref{thm:bar-concentration} on the Koszul locus, the
+geometric bar coalgebra is the bar-dual coalgebra
+$\mathcal{A}^{\mathrm i}$. The algebra $\mathcal{A}^{!}$ appears only
+after Verdier duality:
+\[
+\mathcal{A}^{!}=\mathbb{D}_{\Ran}\mathcal{A}^{\mathrm i}.
+\]
 \end{proof}
 
-\begin{corollary}[Converse: geometric representability implies Koszul; \ClaimStatusConditional]\label{cor:geom-implies-koszul}
+\begin{corollary}[Converse with the unit criterion; \ClaimStatusConditional]\label{cor:geom-implies-koszul}
 If $\widehat{\mathcal{C}}$ is geometrically representable by a factorization algebra
-$\mathcal{F}$ on configuration spaces, and satisfies conilpotency + connectedness,
-then:
-\[\widehat{\mathcal{C}} = \mathcal{A}^!\]
-for $\mathcal{A} = \Omega(\widehat{\mathcal{C}})$.
+$\mathcal{F}$ on configuration spaces, is coaugmented connected,
+algebraically or topologically conilpotent, curvature-compatible, and
+finite-window complete, and if the unit
+\[
+\eta_{\widehat{\mathcal{C}}}\colon
+\widehat{\mathcal{C}}\to
+\barB^{\mathrm{ch}}\Omega^{\mathrm{ch}}(\widehat{\mathcal{C}})
+\]
+is a quasi-isomorphism in the strict lane or a coacyclic equivalence
+in the curved completed lane, then
+\[\widehat{\mathcal{C}} \simeq \mathcal{A}^{\mathrm i}\]
+for $\mathcal{A} = \Omega^{\mathrm{ch}}(\widehat{\mathcal{C}})$.
 \end{corollary}
 
 \begin{proof}
-Define $\mathcal{A} = \Omega(\widehat{\mathcal{C}})$, the cobar construction
-of the coalgebra. We must show that $\mathcal{A}$ is a well-defined chiral algebra
-and that $\bar{B}(\mathcal{A}) \simeq \widehat{\mathcal{C}}$.
+Define $\mathcal{A}=\Omega^{\mathrm{ch}}(\widehat{\mathcal{C}})$.
+The connected and conilpotent hypotheses make the reduced coproduct
+available and make the cobar differential convergent, either
+elementwise in the algebraic lane or continuously in finite windows.
+In the strict lane $d_\Omega^2=0$ by coassociativity and compatibility
+with the internal differential. In the curved lane its square is the
+prescribed inner curvature, and the object is interpreted in the
+coderived Positselski ambient.
 
-\emph{Step~1. Well-definedness of $\mathcal{A}$.}
-By hypothesis, $\widehat{\mathcal{C}}$ is conilpotent and connected. Conilpotency
-ensures that the cobar construction $\Omega(\widehat{\mathcal{C}})$ converges
-(the cobar differential involves the reduced coproduct $\bar{\Delta}$, and
-conilpotency ensures that iterated application of $\bar{\Delta}$ terminates on
-each element). Connectedness provides the augmentation
-$\varepsilon\colon \widehat{\mathcal{C}} \to \mathbb{C}$ needed to define
-the reduced coproduct. The cobar differential satisfies
-$d_\Omega^2 = 0$ because $\widehat{\mathcal{C}}$ is a dg coalgebra
-(the coassociativity of $\Delta$ implies the cobar differential squares to zero).
-
-\emph{Step~2. Geometric bar complex of $\mathcal{A}$.}
 By Theorem~\ref{thm:geometric-equals-operadic-bar}, the geometric bar
 construction of $\mathcal{A}$ agrees with the operadic bar construction.
-The operadic bar of a cobar algebra $\bar{B}(\Omega(\widehat{\mathcal{C}}))$
-is related to $\widehat{\mathcal{C}}$ by the bar-cobar inversion:
-by Theorem~\ref{thm:bar-cobar-inversion-qi}, the coalgebra-side unit
-$\eta\colon \widehat{\mathcal{C}}\to
-\bar{B}(\Omega(\widehat{\mathcal{C}}))$
-is a quasi-isomorphism for uncurved conilpotent coalgebras.
-
-\emph{Step~3. Geometric representability is preserved.}
-Since $\widehat{\mathcal{C}}$ is geometrically representable, there exists
-a factorization algebra $\mathcal{F}$ on configuration spaces with
-$\widehat{\mathcal{C}} \simeq \int_{C_\bullet(X)} \mathcal{F}$.
-The bar complex $\bar{B}(\mathcal{A})$ also computes factorization homology
-(Theorem~\ref{thm:koszul-geom-rep}). Therefore:
+The unit hypothesis gives
 \[
-\bar{B}(\mathcal{A}) \simeq \widehat{\mathcal{C}}
+\widehat{\mathcal{C}}\simeq
+\barB^{\mathrm{ch}}\Omega^{\mathrm{ch}}(\widehat{\mathcal{C}})
+=\barB^{\mathrm{ch}}(\mathcal{A})
 \]
-as chiral coalgebras. Since $\bar{B}(\mathcal{A})$ is the Koszul dual
-coalgebra, we conclude $\widehat{\mathcal{C}} \simeq \bar{B}(\mathcal{A})$,
-and applying linear duality recovers the Koszul dual algebra
-$\mathcal{A}^! = \bar{B}(\mathcal{A})^\vee$.
+as chiral coalgebras, strictly or in the coderived category according
+to the lane. Thus
+$\widehat{\mathcal{C}}\simeq\mathcal{A}^{\mathrm i}$. The geometric
+representability identifies this coalgebra with the corresponding
+factorization-homology model on configuration spaces. On the
+Verdier-finite lane $\mathbb{D}_{\Ran}$ gives the algebra
+$\mathcal{A}^{!}$.
 \end{proof}
 
 \subsection{Curvature and centrality}
 
-\begin{theorem}[Curvature must be central; \ClaimStatusProvedHere]\label{thm:curvature-central-appendix}
-Let $\widehat{\mathcal{C}}$ be a curved coalgebra with curvature:
-\[\mu_0 \in \widehat{\mathcal{C}}^2\]
-
-If $\widehat{\mathcal{C}} = \mathcal{A}^!$ for some algebra $\mathcal{A}$, then
-$\mu_0$ must be \emph{central} in the sense:
-\[\mu_0 \text{ commutes with all operations in } \mathcal{A}\]
+\begin{theorem}[Central curvature and internal strictness; \ClaimStatusProvedHere]\label{thm:curvature-central-appendix}
+Let $\mathcal{A}$ be a curved $A_\infty$ chiral algebra with
+zero-ary operation $m_0$. The unary operator $m_1$ is an internal
+differential if and only if $m_0$ acts centrally:
+\[
+m_1^2=[m_0,-]=0.
+\]
+The stronger uncurved condition is $m_0=0$. If $m_0$ is not central,
+the correct object is curved/CDG and must be read in the coderived or
+completed curved lane.
 \end{theorem}
 
 \begin{proof}
 We verify centrality directly from the curved $A_\infty$ relations
 (cf.~Positselski~\cite{Positselski11}).
 
-A curved $A_\infty$-algebra carries \emph{two}
-differentials that must be carefully distinguished:
+A curved $A_\infty$-algebra carries two operators with different
+square laws:
 \begin{itemize}
 \item The \emph{bar differential} $d_{\bar{B}}$ on the tensor coalgebra
 $\bar{B}(\mathcal{A}) = (T^c(s^{-1}\bar{\mathcal{A}}),\, d_{\bar{B}})$,
 which encodes all the operations $m_0, m_1, m_2, \ldots$
-simultaneously. The condition $d_{\bar{B}}^2 = 0$ is \emph{equivalent} to
-the full system of curved $A_\infty$ relations; it holds
-unconditionally.
+simultaneously. In a curvature-killed or period-corrected total model
+this operator is square-zero. In the raw curved CDG model its square is
+the inner curvature action.
 \item The \emph{internal differential} $m_1$ on the algebra
 $\mathcal{A}$ itself. In the curved case, $m_1^2 \neq 0$ in general:
 $m_1$ fails to be a differential, and the failure is measured by the
 curvature~$m_0$.
 \end{itemize}
 
-\emph{Step~1. Degree-$0$ relation (cocycle condition).}
+The degree-$0$ relation gives the cocycle condition.
 The curved $A_\infty$ relation at degree~$n=0$ has a single term
 $(r,s,t) = (0,0,0)$, giving $m_1(m_0) = 0$. Thus $m_0$ is a cocycle
 for~$m_1$.
 
-\emph{Step~2. Degree-$1$ relation (curvature identity).}
+The degree-$1$ relation gives the curvature identity.
 At degree~$n=1$, the three terms $(r,s,t)$ with $r+s+t=1$ are:
 \begin{align*}
 (0,1,0) &: \; (-1)^{0 \cdot 1 + 0}\, m_1(m_1(a)) = m_1^2(a), \\
@@ -516,123 +707,157 @@ m_1^2(a) = m_2(m_0, a) - m_2(a, m_0) = [m_0, a]_{m_2}
 This is the \emph{curvature identity}: $m_1$ squares not to zero but
 to the inner derivation $[m_0, -]$.
 
-\emph{Step~3. Centrality implies strictness.}
 From~\eqref{eq:curvature-identity}, two regimes emerge:
 
 \begin{enumerate}[label=(\roman*)]
 \item \emph{Curved} ($m_0$ not central): $[m_0, a]_{m_2} \neq 0$ for
 some~$a$, so $m_1^2 \neq 0$, and $\mathcal{A}$ has no internal
 differential. The bar differential $d_{\bar{B}}$ on $\bar{B}(\mathcal{A})$
-nonetheless satisfies $d_{\bar{B}}^2 = 0$; this is guaranteed by the full
-system of curved $A_\infty$ relations (including the degree-$1$
-relation above), which are \emph{equivalent} to $d_{\bar{B}}^2 = 0$. So the
-bar complex is always a well-defined dg coalgebra, even when the
-algebra itself is not a dg algebra.
+is then a curved/CDG differential with square governed by the same
+inner curvature. The completed bar object is well-defined in the
+curved Positselski ambient, not as a raw strict dg coalgebra.
 
-\item \emph{Uncurved / strict} ($m_0$ central): $[m_0, a]_{m_2} = 0$
+\item \emph{Internally strict} ($m_0$ central): $[m_0, a]_{m_2} = 0$
 for all~$a$, so $m_1^2 = 0$ and $m_1$ is an honest differential.
-The algebra $(\mathcal{A}, m_1)$ is then a genuine dg algebra.
+The algebra $(\mathcal{A}, m_1)$ is then a genuine dg algebra. It is
+uncurved only in the stronger case $m_0=0$.
 \end{enumerate}
 
-\emph{Step~4. Examples.}
+The standard examples fix the normalization.
 \begin{itemize}
 \item \emph{Heisenberg at level~$\kappa$.} The curvature is
 $m_0 = -\kappa \cdot \omega$, a scalar multiple of the symplectic
 pairing. Scalars commute with everything:
 $[-\kappa \omega, a]_{m_2} = 0$ for all~$a$. So $\mathcal{H}_\kappa$
-is strict (uncurved) at \emph{every} level, and $m_1$ is a genuine
-differential.
+has an internally strict differential at every level. It is uncurved
+only at $\kappa=0$.
 
-\item \emph{Kac--Moody at level~$k$.} The curvature is
-$m_0 = (k + h^\vee) \cdot C$, where $C$ is the Casimir element.
-By Schur's lemma for the adjoint representation, $C$ is central in
-the enveloping algebra $U(\mathfrak{g})$: $[C, x] = 0$ for all
-$x \in \mathfrak{g}$. Hence $[m_0, a]_{m_2} = (k+h^\vee)[C,a] = 0$
-for all~$a$, and $\widehat{\mathfrak{g}}_k$ is strict at every level.
-At the critical level $k = -h^\vee$ the curvature vanishes entirely
-($m_0 = 0$), and the algebra is uncurved in the stronger sense of
-having no curvature term at all.
+\item \emph{Kac--Moody at level~$k$.} The shifted curvature is
+proportional to $k+h^\vee$. The completed bar object away from the
+critical level is curved and satisfies the CDG identity
+$d_{\barB,k}^{\,2}=[m_0,-]$. Strict square-zero occurs at the critical
+level or after imposing a twisted flat model in which the curvature
+has been killed. The scalar invariant remains
+\[
+\kappa(V_k(\mathfrak{g}))
+=\frac{\dim(\mathfrak{g})(k+h^\vee)}{2h^\vee}.
+\]
 \end{itemize}
 
-\emph{Step~5. Summary.}
 In the bar construction $\bar{B}(\mathcal{A})$, the curvature $\mu_0$
-is the image of $m_0$ under the desuspension $s^{-1}\!: \mathcal{A}
-\to s^{-1}\mathcal{A}$. The bar condition $d_{\bar{B}}^2 = 0$ always holds
-and encodes all curved $A_\infty$ relations simultaneously: degree~$0$
-gives Step~1, degree~$1$ gives Step~2. Centrality of~$m_0$ is the
-\emph{additional} condition under which the internal differential~$m_1$
-itself squares to zero, i.e., the algebra is uncurved.
+is the image of $m_0$ under the desuspension
+$s^{-1}\colon\mathcal{A}\to s^{-1}\mathcal{A}$. The curved
+$A_\infty$ identities encode the two displayed relations:
+$m_1(m_0)=0$ and $m_1^2=[m_0,-]$. Centrality of $m_0$ is precisely the
+extra condition under which the internal differential itself squares
+to zero; vanishing of $m_0$ is the separate condition that removes
+curvature altogether.
 \end{proof}
 
 \begin{example}[Virasoro central charge]\label{ex:virasoro-central-charge-curvature}
-The Virasoro algebra provides a third illustration of curvature
-centrality. The central extension is determined by the Lie algebra
-$2$-cocycle $\frac{1}{12}(m^3 - m)\delta_{m+n,0}$, so the central
-charge~$c$ is a curvature term. Centrality is immediate: $[c, L_n] = 0$
-for all~$n$, so $c$ generates $Z(\mathrm{Vir}) = \mathbb{C} \cdot c$.
-In the bar coalgebra, $c$~appears as the curvature element~$\mu_0$ in
-the coalgebra differential, and the curvature
-identity~\eqref{eq:curvature-identity} gives $m_1^2 = [c, -] = 0$:
-the Virasoro algebra is strict at every value of~$c$,
-as stated in Theorem~\ref{thm:curvature-central-appendix}.
+The Virasoro central extension is determined by the Lie algebra
+$2$-cocycle $\frac{1}{12}(m^3-m)\delta_{m+n,0}$. The scalar central
+charge commutes with all $L_n$, but the completed Virasoro bar model
+still carries a model-dependent curved term whose scalar invariant is
+\[
+\kappa(\Vir_c)=c/2.
+\]
+Strictness is a statement about the chosen curved model, not a
+consequence of the centrality of the symbol $c$ alone.
 \end{example}
 
 \subsection{Formal completeness}
 
 \begin{definition}[Coaugmentation coideal]\label{def:coaugmentation-coideal}
-For a connected coalgebra $\widehat{\mathcal{C}}$ with counit $\epsilon: \widehat{\mathcal{C}}
-\to \mathbb{C}$, the \emph{coaugmentation coideal} is:
-\[\bar{\mathcal{C}} = \ker(\epsilon)\]
-
-This is the ``reduced'' part of the coalgebra (the kernel of the counit).
+For a coaugmented connected coalgebra
+$\mathbb{C}\xrightarrow{\eta}\widehat{\mathcal{C}}
+\xrightarrow{\epsilon}\mathbb{C}$, the \emph{coaugmentation coideal}
+is
+\[
+\bar{\mathcal{C}}=\ker(\epsilon)\simeq
+\operatorname{coker}(\eta).
+\]
+It is the reduced coalgebra on which the reduced coproduct
+$\bar\Delta$ is defined. In the completed lane the finite-window
+topology is the inverse-limit topology coming from the quotients that
+retain bounded tensor length, not the naive powers of a multiplication
+ideal.
 \end{definition}
 
 \begin{theorem}[Completion characterization; \ClaimStatusConditional]\label{thm:completion-characterization}
 \textup{(Positselski \cite{Positselski11})}
-A coalgebra $\widehat{\mathcal{C}}$ satisfying the conditions of Theorem~\ref{thm:essential-image-koszul} (conilpotency, connectedness, geometric representability, curvature centrality) is the Koszul dual of some algebra $\mathcal{A}$ if and only if it is \emph{complete} with respect to its coaugmentation coideal:
-\[\widehat{\mathcal{C}} = \varprojlim_n \widehat{\mathcal{C}} / \bar{\mathcal{C}}^n\]
+A coalgebra $\widehat{\mathcal{C}}$ satisfying the geometric,
+connected, conilpotent, and curvature-compatible hypotheses of
+Theorem~\ref{thm:essential-image-koszul} can be a completed
+bar-dual coalgebra $\mathcal{A}^{\mathrm i}$ only in the
+finite-window topology:
+\[
+\widehat{\mathcal{C}}
+\simeq
+\varprojlim_N \widehat{\mathcal{C}}_{\leq N},
+\]
+where $\widehat{\mathcal{C}}_{\leq N}$ is the quotient keeping bar
+length at most $N$. Conversely, such a complete coalgebra is
+bar-dual to
+$\mathcal{A}:=\Omega^{\mathrm{ch}}(\widehat{\mathcal{C}})$ exactly
+when the unit criterion of Theorem~\ref{thm:essential-image-koszul}
+holds.
 \end{theorem}
 
 \begin{proof}
 \emph{($\Rightarrow$) Necessity.}
-If $\widehat{\mathcal{C}} = \mathcal{A}^!$, then the filtration on $\mathcal{A}$ by
-powers of the augmentation ideal induces a cofiltration on $\widehat{\mathcal{C}}$:
-\[F^n\widehat{\mathcal{C}} = \{c : \Delta^k(c) \in (\bar{\mathcal{C}})^{\otimes k}
-\text{ for } k \leq n\}\]
-
-The completion is:
-\[\widehat{\mathcal{C}} = \varprojlim_n \widehat{\mathcal{C}} / \bar{\mathcal{C}}^n\]
-
-This holds by construction of $\mathcal{A}^!$.
+If $\widehat{\mathcal{C}}\simeq\barB^{\mathrm{ch}}(\mathcal{A})$,
+the tensor-length filtration gives finite bar windows
+$\widehat{\mathcal{C}}_{\leq N}$. The completed bar coalgebra is the
+inverse limit of these windows by construction.
 
 \emph{($\Leftarrow$) Sufficiency.}
-If $\widehat{\mathcal{C}}$ is complete, define:
-\[\mathcal{A} = \Omega(\widehat{\mathcal{C}})\]
+If $\widehat{\mathcal{C}}$ is complete in this topology and satisfies
+the unit criterion, define
+\[
+\mathcal{A}=\Omega^{\mathrm{ch}}(\widehat{\mathcal{C}}).
+\]
+Completeness gives convergence of the cobar construction, while the
+unit criterion gives
+\[
+\barB^{\mathrm{ch}}(\mathcal{A}) \simeq \widehat{\mathcal{C}}
+\]
+in the strict or coderived ambient specified there.
 
-The completeness ensures that the cobar construction converges, giving a well-defined
-algebra structure on $\mathcal{A}$.
-
-By bar-cobar inversion (Theorem~\ref{thm:bar-cobar-inversion-qi}):
-\[\bar{B}(\mathcal{A}) \simeq \widehat{\mathcal{C}}\]
-
-Therefore $\widehat{\mathcal{C}} = \mathcal{A}^!$.
+Therefore
+$\widehat{\mathcal{C}}\simeq\mathcal{A}^{\mathrm i}$, and
+$\mathcal{A}^{!}$ is obtained from
+$\widehat{\mathcal{C}}$ by Verdier duality when that duality is
+available.
 \end{proof}
 
 \subsection{Uniqueness of the algebra}
 
 \begin{theorem}[Uniqueness up to quasi-isomorphism; \ClaimStatusConditional]\label{thm:uniqueness-algebra}
-If $\widehat{\mathcal{C}} = \mathcal{A}^! = \mathcal{B}^!$ for two chiral algebras
+If $\widehat{\mathcal{C}}\simeq \mathcal{A}^{\mathrm i}
+\simeq \mathcal{B}^{\mathrm i}$ for two chiral algebras
 $\mathcal{A}$ and $\mathcal{B}$, then:
 \[\mathcal{A} \simeq \mathcal{B}\]
 (quasi-isomorphic as chiral algebras).
 \end{theorem}
 
 \begin{proof}
-The cobar construction provides canonical algebra structures:
-\[\mathcal{A} \simeq \Omega(\mathcal{A}^!) = \Omega(\widehat{\mathcal{C}}) =
-\Omega(\mathcal{B}^!) \simeq \mathcal{B}\]
+The cobar construction provides canonical algebra reconstructions:
+\[
+\mathcal{A}\simeq
+\Omega^{\mathrm{ch}}(\mathcal{A}^{\mathrm i})
+\simeq
+\Omega^{\mathrm{ch}}(\widehat{\mathcal{C}})
+\simeq
+\Omega^{\mathrm{ch}}(\mathcal{B}^{\mathrm i})
+\simeq
+\mathcal{B}.
+\]
 
-All quasi-isomorphisms are via the bar-cobar adjunction (Theorem~\ref{thm:bar-cobar-inversion-qi}).
+These quasi-isomorphisms are bar-cobar inversion maps
+(Theorem~\ref{thm:bar-cobar-inversion-qi}); they do not identify the
+coalgebra $\widehat{\mathcal{C}}$ with either algebraic Koszul dual
+$\mathcal{A}^{!}$ or $\mathcal{B}^{!}$ before Verdier duality.
 \end{proof}
 
 \begin{remark}[Non-uniqueness at the strict level]\label{rem:non-uniqueness-strict}
@@ -640,12 +865,15 @@ The theorem only guarantees quasi-isomorphism, not strict isomorphism. Different
 presentations of the same chiral algebra (e.g., different choices of generators
 and relations) give strictly different algebras that are quasi-isomorphic.
 
-\emph{Example.} The Heisenberg algebra can be presented as:
+\emph{Example.} The Heisenberg chiral algebra can be presented after
+choosing different Darboux bases of the same symplectic vector space:
 \begin{itemize}
-\item $\mathcal{H}_1 = \text{Free}(a, a^*) / ([a, a^*] - 1)$
-\item $\mathcal{H}_2 = \text{Free}(x, p) / ([x, p] - i\hbar)$
+\item generators $(a_i,a_i^*)$ with OPE
+$a_i(z)a_j^*(w)\sim k\delta_{ij}/(z-w)^2$;
+\item generators $(x_i,p_i)$ obtained from $(a_i,a_i^*)$ by a
+symplectic change of basis.
 \end{itemize}
 
-These are different presentations (different generators), but $\mathcal{H}_1 \simeq \mathcal{H}_2$
-as chiral algebras, and both have the same Koszul dual.
+These are different presentations, but they define isomorphic chiral
+algebras and hence the same bar-dual coalgebra.
 \end{remark}

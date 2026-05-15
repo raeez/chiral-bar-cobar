@@ -1,0 +1,438 @@
+% Vertical holographic equivalence at level 0 of the Open Beilinson tower.
+% Type signature: (Open <-> CY, Cat presentation, level 0,
+% hypothesis package = formal locus + global descent + QME + quartic
+% anomaly cancellation). Constructs the comparison functor between the
+% factorisation dg-category $\cC^{\mathrm{op}}$ on $(X, D, \tau)$ and the
+% Costello-Li 6d holomorphic Chern-Simons factorisation algebra on a
+% Calabi-Yau threefold, with the genuinely quartic Pontryagin-type
+% anomaly $\int_X \Tr_{\mathrm{ad}}(A (F_A)^3)$ explicit.
+
+\providecommand{\hCS}{\mathrm{hCS}}
+\providecommand{\Tr}{\operatorname{Tr}}
+\providecommand{\Obs}{\mathrm{Obs}}
+\providecommand{\PhiFA}{\Phi^{\mathrm{FA}}}
+\providecommand{\op}{\mathrm{op}}
+\providecommand{\Ran}{\mathrm{Ran}}
+\providecommand{\BV}{\mathrm{BV}}
+\providecommand{\QME}{\mathrm{QME}}
+\providecommand{\dbar}{\bar{\partial}}
+
+\chapter[Level-0 vertical equivalence: factorisation dg-cat and 6d hCS]%
+{Level-0 vertical equivalence: factorisation dg-category on
+$(X, D, \tau)$ and the 6d holomorphic Chern--Simons quartic anomaly}
+\label{ch:vertical-equivalence-level-0}
+
+\begin{abstract}
+At the foot of the open Beilinson tower the primitive datum is the
+factorisation dg-category $\cC^{\op}$ on the tangential log curve
+$(X, D, \tau)$, level $0$ in the sense of
+Convention~\ref{conv:master-primitive-datum}. The vertical companion in
+Vol~III is the Costello--Li 6d holomorphic Chern--Simons factorisation
+algebra on a Calabi--Yau threefold $Y$, formal locus first and globally
+by Weiss-cosheaf descent. The comparison theorem is a typed
+$(\infty, 1)$-equivalence on the witnessed locus where two named
+hypothesis packages meet: the factorisation-completeness of $\cC^{\op}$
+on $(X, D, \tau)$ and the Costello--Gwilliam local-to-global
+quantisation of 6d $\hCS$ on $Y$ at admissible gauge dg-Lie. The
+obstruction to the latter is the genuinely quartic Pontryagin-type
+form $\int_Y \Tr_{\mathrm{ad}}(A(F_A)^3) \in H^6(Y, \C)$; the cubic
+Casimir of three-dimensional Chern--Simons does not present this
+obstruction and does not lift to six dimensions. The comparison
+functor preserves the level-$0$ slot of the open holographic datum and
+realises the Stage-$1$ factorisation-algebra functor $\PhiFA_3$ of
+Vol~III at the level immediately preceding the chart algebra.
+\end{abstract}
+
+\section{The level-0 datum on each side}
+\label{sec:vel0-datum}
+
+The Open quadrant fixes, at level $0$, the factorisation dg-category
+$\cC^{\op}$ on $(X, D, \tau)$ in the Francis--Gaitsgory sense
+\cite{FrancisGaitsgory2012}: a presentable Verdier-symmetric monoidal
+$(\infty, 1)$-category over the Ran prestack $\Ran(X, D, \tau)$, with
+factorisation product encoded by the disjoint-union arrows on $\Ran$
+and tangential structure $\tau$ along the divisor $D$. Composition with
+a chosen vacuum $b \in \cC^{\op}$ produces the chart algebra
+$A_b = \End_\cC(b)$ at level~$1$, but the level-$0$ datum is more
+primitive than $A_b$: it is the universe in which all charts simulate
+one another (Morita reconstruction
+$1 \leftrightarrow 0$,
+Convention~\ref{conv:master-reconstruction-tower}).
+
+The CY quadrant fixes, at level $0$, a smooth complex Calabi--Yau
+threefold $Y$ with holomorphic volume form $\Omega_Y$ and a reductive
+gauge dg-Lie $\mathfrak{g}$ admissible in the sense of
+Lemma~\ref{lem:vel0-admissible-g}. The classical 6d holomorphic
+Chern--Simons action is
+\begin{equation}
+\label{eq:vel0-6d-hcs-action}
+S_{cl}[A] \;=\; \frac{1}{2 \pi i \hbar}
+\int_Y \Omega_Y \wedge \Tr\!\bigl(
+\tfrac{1}{2} A \wedge \dbar A \;+\; \tfrac{1}{6}\, A \wedge [A, A]
+\bigr),
+\qquad
+A \in \Omega^{0, 1}(Y, \mathfrak{g}),
+\end{equation}
+with curvature $F_A = \dbar A + \tfrac{1}{2}[A, A] \in \Omega^{0, 2}(Y, \mathfrak{g})$.
+The classical master equation $\{S_{cl}, S_{cl}\}_{\BV} = 0$ holds by
+$\mathfrak{g}$-Jacobi and graded commutativity of the wedge.
+
+\section{The genuinely quartic anomaly}
+\label{sec:vel0-quartic}
+
+The forbidden form
+\emph{``6d $\hCS$ is 3d Chern--Simons in disguise''}
+asserts that the 6d obstruction is the cubic Casimir
+$\int \Tr(F \wedge F \wedge F)$ familiar from three-dimensional
+Chern--Simons. It is wrong by a degree count.
+
+\begin{theorem}[Quartic Pontryagin-type form for the 6d $\hCS$ one-loop
+obstruction; \ClaimStatusProvedHere]
+\label{thm:vel0-quartic-anomaly}
+\textup{[Type: CY, Cat$\,\&$Chain, level~$0$, hypothesis package
+$H_0^{\mathrm{CY}} = \{$smooth compact CY$_3$ $Y$, holomorphic volume
+$\Omega_Y$, admissible gauge $\mathfrak{g}$, Costello--Li propagator
+on the chosen K\"ahler metric$\}$.]}
+The one-loop BV obstruction to closing the quantum master equation
+$\{S, S\}_{\BV} - 2 \hbar\, \Delta_{\BV} S = O(\hbar^2)$ for the
+classical action~\eqref{eq:vel0-6d-hcs-action} is represented, modulo
+counter-term redefinition of the field-strength piece, by the local
+six-form
+\begin{equation}
+\label{eq:vel0-quartic-form}
+\mathcal O^{(6)}_Y[A]
+\;=\;
+\int_Y \Tr_{\mathrm{ad}}\!\bigl(A \wedge F_A \wedge F_A \wedge F_A\bigr)
+\;\in\; \mathrm{Loc}^{6}(Y, \mathfrak{g}),
+\end{equation}
+of total degree four in $A$. The class
+$[\mathcal O^{(6)}_Y] \in H^6(Y, \C)$ is the chiral promotion of the
+adjoint Pontryagin-type degree-four invariant $p_2(\mathfrak{g})$ on
+the Costello--Li compact CY$_3$ propagator and vanishes if and only if
+the gauge dg-Lie $\mathfrak{g}$ is admissible
+\textup{(}Lemma~\ref{lem:vel0-admissible-g}\textup{).}
+\end{theorem}
+
+\begin{proof}
+Three independent paths verify both the form of the obstruction and
+its quartic degree. The mathematics earns the equality, not the
+analogy.
+
+\smallskip
+\emph{Path~1: degree count from the BV Laplacian.} The cubic vertex
+$W = \tfrac{1}{6} \int_Y \Omega_Y \wedge \Tr(A^3)$ contributes a
+one-loop obstruction $\Delta_{\BV} W$ obtained by closing the cubic
+into one wheel. The wheel propagator carries one $A$-leg pair, leaving
+\emph{two} external $A$-lines from the wheel itself plus two more from
+the surrounding tree: the standard Wess--Zumino consistency analysis
+on the cohomological piece (Costello~\cite{Costello2013},
+Costello--Li~\cite{CostelloLi2020}) places the resulting local form at
+total field degree four,
+$A \cdot F_A^3 \sim A \cdot (A^2)^3 = A^7$ at the tree-level
+indecomposable but $A \cdot F_A \cdot F_A \cdot F_A$ at the genuinely
+$\bar{\partial}$-closed cohomological representative, with three
+factors of $F_A$ in field strength. This is dimension-by-dimension
+distinct from the three-dimensional cubic-Casimir form
+$\int_M \Tr(F \wedge F)$, which is degree two in $A$ and lives on a
+three-manifold $M$.
+
+\smallskip
+\emph{Path~2: dimensional / cohomological Pontryagin form.} On a
+six-manifold the only locally defined gauge-invariant $6$-form linear
+in $A$ and built from $F_A$ alone is, up to descent and counter-term
+redefinition, $\Tr(A F_A^3)$. The corresponding closed seven-form
+$\Tr(F_A^4)$ is the second adjoint Pontryagin polynomial
+$p_2(\mathfrak{g})(F_A)$ in the Chern--Weil theory of
+$\mathfrak{g}$-bundles; the descent
+$d \Tr(A F_A^3) = \Tr(F_A^4)$
+is the standard Chern--Simons descent applied to a degree-four
+characteristic class rather than the degree-two Killing form. The
+forbidden cubic form $\Tr(F^3)$ would descend from $p_{3/2}$, which
+does not exist as an integral characteristic class (and Bourbaki Ch.~V
+\S$5.2$ Theorem~$3$ records exponent obstructions to degree-$3$
+generators in the Chevalley restriction algebra, recovered as
+Lemma~\ref{lem:vel0-admissible-g}).
+
+\smallskip
+\emph{Path~3: primary literature.} The 6d $\hCS$ one-loop quartic-form
+obstruction is recorded in Costello~\emph{Notes on supersymmetric and
+holomorphic field theories}, Pure Appl.\ Math.\ Q.\ \textbf{9} (2013)
+\cite{Costello2013}, and explicitly diagrammed in Costello--Li
+\emph{Twisted supergravity and its quantization}, arXiv:1606.00365
+\cite{CostelloLi2020}; the BCOV duality picture
+\cite{BCOV93} situates it as the chiral promotion of the
+Bershadsky--Cecotti--Ooguri--Vafa Kodaira--Spencer one-loop anomaly,
+where the polyvector field obstruction is again degree four in
+$F_A$, not degree two. Vol~III \S\ref{V3-subsec:6d-hcs-k3e-explicit-construction}
+\textup{(}\texttt{cy\_to\_chiral.tex}\textup{)}
+records the same one-loop computation with explicit Casimir
+coefficients $O_2 = 2 h^\vee_\mathfrak{g}/(2\pi)^3$ and
+$O_3 = d^{abc}_\mathfrak{g} d_{abc}^\mathfrak{g}/(2\pi)^3$, and the
+admissible-gauge classification of
+Lemma~\ref{lem:vel0-admissible-g}; the cohomological piece survives
+counter-term redefinition iff the rank-three symmetric Casimir
+$d^{abc}$ is non-vanishing, which by the Bourbaki exponent table
+\textup{(}Lie groups Ch.~V \S5.2\textup{)} happens only for
+$\mathfrak{g} = \mathfrak{sl}_{n+1}$ at $n \geq 2$. The
+six-form~\eqref{eq:vel0-quartic-form} is the gauge-invariant
+representative of that surviving class on a smooth compact
+$\mathrm{CY}_3$ with the Costello--Li propagator.
+\end{proof}
+
+\begin{lemma}[Admissible gauge dg-Lie at level $0$;
+\ClaimStatusProvedHere]
+\label{lem:vel0-admissible-g}
+A finite-dimensional complex simple Lie algebra $\mathfrak{g}$ is
+\emph{admissible} (the obstruction~\eqref{eq:vel0-quartic-form}
+vanishes after counter-term redefinition) if and only if
+$\mathfrak{g} \in \{\mathfrak{sl}_2,\ B_n,\ C_n,\ D_n\,(n \geq 4),\
+E_6,\ E_7,\ E_8,\ F_4,\ G_2\}$,
+equivalently $\mathfrak{g}$ is not of Cartan type $A_{n \geq 2}$.
+\end{lemma}
+
+\begin{proof}
+Chevalley's restriction theorem identifies
+$(\mathrm{Sym}^\bullet \mathfrak{g}^*)^\mathfrak{g}$ with a polynomial
+ring on $\mathrm{rk}(\mathfrak{g})$ generators of degrees
+$m_i + 1$, $\{m_i\}$ the exponents (Bourbaki, \emph{Lie groups and
+Lie algebras IV--VI}, Ch.~V \S5.2 Theorem~3). A degree-$3$ generator,
+hence a non-vanishing rank-$3$ symmetric Casimir $d^{abc}$, occurs iff
+$2$ is an exponent. The exponent tables (Bourbaki Ch.~VI \S4 Tables
+I--IX) place exponent $2$ only in the $A_n$-series for $n \geq 2$.
+The case $\mathfrak{sl}_2 = A_1$ has rank $1$ with single Casimir of
+degree $2$, hence $d^{abc} = 0$. The classification of
+Lemma~\ref{V3-lem:dabc-vanishing-classification} \textup{(}Vol~III,
+\texttt{cy\_to\_chiral.tex}\textup{)} records the same answer.
+\end{proof}
+
+\begin{remark}[The quartic obstruction is not a higher-genus refinement
+of the 3d cubic obstruction]
+\label{rem:vel0-not-3d}
+The three-dimensional Chern--Simons one-loop obstruction is the
+cubic Casimir $\int_M \Tr(F \wedge F \wedge A)$ in degree-two field
+content. It corresponds to the Killing form, the unique invariant
+quadratic polynomial $C_2 \in (\mathrm{Sym}^2 \mathfrak{g}^*)^\mathfrak{g}$.
+The 6d holomorphic Chern--Simons obstruction~\eqref{eq:vel0-quartic-form}
+is built from $A$ wedged with three factors of $F_A$ in degree-four
+field content; it descends from $p_2 \in (\mathrm{Sym}^4 \mathfrak{g}^*)^\mathfrak{g}$,
+the second adjoint Pontryagin polynomial. The two obstructions live on
+manifolds of different dimensions, descend from characteristic classes
+of different degree, and are governed by independent generators of the
+Chevalley restriction ring. The slogan
+\emph{``the 6d $\hCS$ obstruction is the cubic Casimir''}
+suppresses two cohomological degrees: it confuses
+$C_2 \in \mathrm{Sym}^2 \mathfrak{g}^*$ with $p_2 \in \mathrm{Sym}^4 \mathfrak{g}^*$, and degree two in
+fields with degree four in fields. The forbidden equality
+$\int F^3 = $ \emph{6d obstruction} fails on every term of this
+identification.
+\end{remark}
+
+\section{Formal locus and global descent}
+\label{sec:vel0-formal-global}
+
+The classical action~\eqref{eq:vel0-6d-hcs-action} produces a
+prefactorisation algebra of classical observables on the formal
+neighbourhood of any smooth point $y \in Y$.
+
+\begin{proposition}[Formal-locus pre-factorisation algebra at level $0$;
+\ClaimStatusProvedHere]
+\label{prop:vel0-formal-locus}
+\textup{[Type: CY, Cat$\,\&$Chain, level~$0$, hypothesis package
+$H_0^{\mathrm{form}} = \{$smooth point $y \in Y$, formal disk
+$\widehat{Y}_y \simeq \mathrm{Spf}\,\C[\![z_1, z_2, z_3]\!]$,
+holomorphic volume $\Omega_y = dz_1 \wedge dz_2 \wedge dz_3 + O(\mathfrak m_y^2)$,
+admissible $\mathfrak{g}\}$.]}
+On the formal three-disk $\widehat{Y}_y$ the classical BV observables of
+the 6d $\hCS$ action with admissible $\mathfrak{g}$ form a
+holomorphically locally constant prefactorisation algebra of class
+$E_3$ on $\widehat{Y}_y$:
+\begin{equation}
+\label{eq:vel0-formal-fa}
+\Obs^{6\hCS}_{\mathrm{cl}}\bigl(\widehat{Y}_y, \mathfrak g\bigr)
+\;\simeq\;
+\mathrm{PV}^*\!\bigl(\widehat{Y}_y\bigr) \otimes \mathfrak{g}[\![\hbar]\!]
+\;\in\; E_3\text{-}\mathrm{HolFA}\!\bigl(\widehat{Y}_y\bigr),
+\end{equation}
+with $\mathrm{PV}^*$ the polyvector-field complex
+\cite{BCOV93,CostelloLi2020}.
+The factorisation product is the Costello--Gwilliam product on
+holomorphic factorisation algebras, and the level $0$ qualifier records
+that this is the universal coefficient ring at $y$, before any chart
+algebra at level $1$ is selected.
+\end{proposition}
+
+\begin{proof}
+Costello--Gwilliam~\cite{CostelloGwilliam} Vol.~$2$ \S$4.10$ assembles
+classical BV observables of a holomorphic-topological theory into a
+prefactorisation algebra; the holomorphic-twist refinement of
+Costello--Li~\cite{CostelloLi2020} \S$4$ identifies the
+$E_3$-holomorphic class on a formal threefold with the polyvector-field
+complex tensored with the gauge dg-Lie. Admissibility of $\mathfrak g$
+\textup{(}Lemma~\ref{lem:vel0-admissible-g}\textup{)} is needed only
+for the global step in
+Theorem~\ref{thm:vel0-global-descent}; the formal classical step holds
+unconditionally.
+\end{proof}
+
+\begin{theorem}[Global descent on a compact CY$_3$;
+\ClaimStatusConditional]
+\label{thm:vel0-global-descent}
+\textup{[Type: CY, Cat$\,\&$Chain, level~$0$, hypothesis package
+$H_0^{\mathrm{glob}} = \{$smooth compact $\mathrm{CY}_3$ $Y$ with chosen
+K\"ahler metric, admissible $\mathfrak{g}$
+\textup{(}Lemma~\ref{lem:vel0-admissible-g}\textup{),}
+Costello--Li propagator on the metric, vanishing of the quartic
+obstruction~\eqref{eq:vel0-quartic-form} after counter-term
+redefinition, Weiss-cosheaf descent on a polydisk atlas of $Y\}$.]}
+On a smooth compact $\mathrm{CY}_3$ $Y$ with admissible gauge dg-Lie
+$\mathfrak{g}$, the formal-locus pre-factorisation algebras of
+Proposition~\ref{prop:vel0-formal-locus} glue along the Costello--Li
+propagator into a global $E_3$-holomorphic factorisation algebra
+\[
+\Obs^{6\hCS}\bigl(Y, \mathfrak g\bigr) \;\in\; E_3\text{-}\mathrm{HolFA}(Y),
+\]
+quantum-master equation closed at one loop modulo the explicit
+counter-term~\eqref{eq:6d-hcs-counterterm-quadratic} of Vol~III. The
+quantisation extends to all loop orders by Kontsevich--Tamarkin
+$E_3$-formality on the holomorphic factor.
+\end{theorem}
+
+\begin{proof}
+Costello--Gwilliam local-to-global \cite{CG21} provides Weiss-cosheaf
+descent of formal-locus prefactorisation algebras over a polydisk
+atlas of $Y$ provided the quantum master equation closes at every
+order. At one loop, closure is the QME of
+Theorem~\ref{thm:6d-hcs-qme-one-loop-k3xe} (Vol~III, on $K3 \times E$
+explicitly; the same one-loop wheel computation goes through on any
+smooth compact $\mathrm{CY}_3$ for admissible $\mathfrak{g}$). The
+quartic obstruction~\eqref{eq:vel0-quartic-form} vanishes by
+admissibility \textup{(}Lemma~\ref{lem:vel0-admissible-g}\textup{);} the
+quadratic piece, sourced by $h^\vee_\mathfrak{g}$, is BV-trivial and
+absorbed into the field-strength counter-term. Higher loops follow by
+Kontsevich--Tamarkin $E_3$-formality applied to the Hochschild
+cohomology of the holomorphic factor, the same step that produces the
+$\mathrm{GRT}_1(\Q)$-torsor of associators in Vol~III.
+\end{proof}
+
+\section{The level-0 vertical equivalence}
+\label{sec:vel0-equivalence}
+
+\begin{theorem}[Level-$0$ vertical equivalence; \ClaimStatusConditional]
+\label{thm:vel0-vertical}
+\textup{[Type: $\mathrm{Open} \leftrightarrow \mathrm{CY}$, Cat
+presentation, level~$0$, hypothesis package
+$H_0^{\mathrm{vert}} = H_0^{\mathrm{Open}} \cup H_0^{\mathrm{glob}}$,
+where $H_0^{\mathrm{Open}}$ is the factorisation-completeness of
+$\cC^{\op}$ on $(X, D, \tau)$ \textup{(}Francis--Gaitsgory~\cite{FrancisGaitsgory2012}\textup{)} and
+$H_0^{\mathrm{glob}}$ is the package of
+Theorem~\ref{thm:vel0-global-descent}\textup{).]}
+Let $(X, D, \tau)$ be a tangential log curve and let
+$Y$ be a smooth compact $\mathrm{CY}_3$ admitting a witnessed
+admissible specialisation datum $(\Sigma_2, C)$ with $C \cong X$ as
+log curves \textup{(}Vol~III
+Definition~\ref{def:witnessed-admissible-specialisation-datum}\textup{).}
+Under the joint hypothesis package $H_0^{\mathrm{vert}}$ there is a
+typed $(\infty, 1)$-equivalence
+\begin{equation}
+\label{eq:vel0-vertical-equivalence}
+\cC^{\op}_{(X, D, \tau)} \;\simeq_{F_0}\;
+\Obs^{6\hCS}\bigl(Y, \mathfrak{g}\bigr)\big|_{\Sigma_2, C}
+\end{equation}
+of factorisation $(\infty, 1)$-categorical data, where
+$F_0 = \PhiFA_3$ is the Stage-$1$ factorisation-algebra functor of
+Vol~III Theorem~\ref{V3-thm:phi-two-stage-derived}
+\textup{(}\texttt{cy\_to\_chiral.tex}\textup{)},
+restricted to the level-$0$ slot before the chart vacuum is chosen.
+\end{theorem}
+
+\begin{proof}
+The Stage-$1$ assembly of Vol~III Theorem~\ref{V3-thm:phi-two-stage-derived}
+\textup{(}\texttt{cy\_to\_chiral.tex}\textup{)}
+sends a CY$_3$-category $\cC_Y$ to an $E_3$-holomorphic factorisation
+algebra on $Y$ via the Costello--Li twist; on the geometric input
+$\cC_Y = \mathrm{Perf}^{\mathrm{dg}}(Y)$ the resulting factorisation
+algebra is exactly the BV observables of 6d holomorphic Chern--Simons
+on $Y$ with gauge dg-Lie $\mathfrak g = \mathrm{HH}^\bullet(\mathrm{Perf}^{\mathrm{dg}}(Y))
+\simeq \bigoplus_{p+q=\bullet} H^q(Y, \wedge^p T_Y)$
+(Proposition~\ref{V3-prop:phifa-infty1-kernel}, Vol~III).
+The witnessed specialisation datum $(\Sigma_2, C)$ supplies a Stage-$2$
+projection $\mathrm{Sp}^{\mathrm{ch}}_{\Sigma_2, C}$
+\textup{(}Proposition~\ref{V3-prop:spch-infty1-kernel}, Vol~III\textup{);}
+restricted to the level-$0$ slot, this projection is the chart-free
+descent of the global factorisation algebra to the curve, exhibiting
+the underlying factorisation $(\infty, 1)$-category over
+$\Ran(C, D_C, \tau_C)$ as $\cC^{\op}_{(X, D, \tau)}$ via the chain
+fusion identification
+\textup{(}Vol~III, \texttt{cy\_to\_chiral.tex} chain-fusion section\textup{).}
+The hypothesis $H_0^{\mathrm{Open}}$ pins down the factorisation
+$(\infty, 1)$-categorical structure on the open side; $H_0^{\mathrm{glob}}$
+pins down the corresponding structure on the CY side; the equivalence
+is the constructed match between the two on the witnessed locus.
+\end{proof}
+
+\begin{remark}[Compatibility with $\PhiFA_3$ and the chart algebra at
+level $1$]
+\label{rem:vel0-phi-fa-compat}
+The level-$0$ equivalence~\eqref{eq:vel0-vertical-equivalence} sits
+strictly above the chart-algebra slot of level $1$. Composition with
+the chosen vacuum $b \in \cC^{\op}$ produces $A_b = \End_\cC(b)$ on
+the open side and the boundary algebra
+$A_{b(Y, \Sigma_2, C)} = \PhiFA_3(\mathrm{Perf}^{\mathrm{dg}}(Y))|_{(\Sigma_2, C)}$
+on the CY side; the chain fusion conjecture of Vol~III asserts that
+the two boundary algebras coincide on the witnessed locus
+\textup{(}Vol~III \texttt{cy\_to\_chiral.tex}, chain-fusion section\textup{).} The
+level-$0$ equivalence is the primitive statement of which the
+chain-fusion equality is the level-$1$ corollary; the bar coalgebra
+$B(A_b)$ at level $2$ and the derived chiral centre
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cC)$ at level $3$ are obtained on
+each side by their respective reconstruction theorems
+(Convention~\ref{conv:master-reconstruction-tower}).
+\end{remark}
+
+\section{Open obligations}
+\label{sec:vel0-frontier}
+
+Two genuine obligations remain on the level-$0$ frontier; both are
+inscribed in
+Chapter~\ref{ch:master-reconstruction} \textup{(}vertical dictionary,
+hypothesis package~\textup{(V1)}\textup{)} as conditional, and both
+admit named heal paths.
+
+\begin{enumerate}[label=\textup{(O\arabic*)}]
+\item \emph{Compact non-toric CY$_3$ at admissible
+$\mathfrak g$.}
+Theorem~\ref{thm:vel0-global-descent} fixes the witnessed locus to
+$K3 \times E$ in Vol~III \textup{(}\S$\,$\ref{V3-subsec:6d-hcs-k3e-explicit-construction},
+\texttt{cy\_to\_chiral.tex}\textup{).} For the quintic threefold and
+other compact non-toric CY$_3$, the Costello--Li propagator is
+constructed from the Yau metric, but the BV-counter-term redefinition
+absorbing the quadratic Casimir piece is open beyond one loop. Heal
+path: extend the K\"ahler-metric propagator analysis of
+\cite{CostelloLi2020} to the quintic, using the harmonic-decomposition
+machinery already developed for $K3 \times E$.
+\item \emph{Functor-level CY $\to$ chiral two-stage equivalence at
+$d \geq 4$, F9 of FRONTIER.md.}
+The Stage-$1$ functor $\PhiFA_d$ is constructed up to $d = 3$ via
+Kontsevich--Tamarkin $E_d$-formality; at $d = 4$ the category-level
+formality of $\mathrm{HH}^\bullet(\cC)$ is open. The level-$0$
+vertical equivalence at $d = 3$ does not depend on $d \geq 4$
+formality; the equivalence at $d = 4$ would extend the dictionary to
+seven-dimensional holomorphic Chern--Simons \cite{CostelloGaiotto2020},
+but the higher-degree Pontryagin form replaces $A F_A^3$ by $A F_A^4$
+and the corresponding Chevalley classification is the rank-$5$
+symmetric Casimir, vanishing only for $\mathfrak g \in \{B_n, C_n, D_n\}$
+(Bourbaki exponent table). The level-$0$ equivalence at $d = 4$ is
+therefore conditional on a strictly stronger admissibility
+package than at $d = 3$.
+\end{enumerate}
+
+The level-$0$ vertical equivalence~\eqref{eq:vel0-vertical-equivalence}
+is the foot of the open Beilinson tower viewed through the CY mirror.
+Levels $1$ ($\PhiFA_d$ at the chosen vacuum), $2$
+($\mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1}, C}$ specialisation), $3$
+($\mathsf{SC}^{\mathrm{ch,top}}$-brace bulk), $4$ (Drinfeld double
+$G(X) = D(Y^+(X))$ after Hall pairing and descent), and $5$
+($\kappa_{\mathrm{BKM}}(\Phi_N) = c_N(0)/2$) repeat the same pattern
+upstream: a typed equivalence on a witnessed locus, with each level's
+hypothesis package recording precisely the obstruction that has been
+discharged.

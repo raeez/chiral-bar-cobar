@@ -1,96 +1,47 @@
-r"""All-genera free energy generating function and the Â-genus connection.
+r"""Finite scalar Faber-Pandharipande generating-function checks.
 
-THE MAIN RESULT (Theorem D, generating function form):
+This module verifies the scalar coefficient lane
 
-  F(ℏ) = Σ_{g≥1} F_g · ℏ^{2g-2} = κ · Σ_{g≥1} λ_g^FP · ℏ^{2g-2}
+    F_g(A) = kappa(A) * lambda_g^FP
 
-where λ_g^FP = (2^{2g-1}-1)/2^{2g-1} · |B_{2g}|/(2g)! are the
-Faber-Pandharipande intersection numbers.
+where
 
-The generating function for the λ_g^FP is the Hirzebruch Â-class:
+    lambda_g^FP =
+        int_{Mbar_{g,1}} lambda_g psi_1^{2g-2}
+      = ((2^{2g-1} - 1) / 2^{2g-1}) * |B_{2g}| / (2g)!.
 
-  Â(x) = (x/2)/sinh(x/2) = Σ_{g≥0} (-1)^g λ_g^FP x^{2g}
+The finite-window formal identity is
 
-with λ_0^FP := 1 (genus-0 normalization).
+    sum_{g>=1} lambda_g^FP * t^{2g} = (t/2)/sin(t/2) - 1,
 
-Therefore, the TOTAL free energy (including the genus-0 tree-level) is:
+and hence
 
-  F(ℏ) = κ/ℏ² · [Â(ℏ) - 1]
-        = κ/ℏ² · [(ℏ/2)/sinh(ℏ/2) - 1]
+    sum_{g>=1} F_g(A) * hbar^{2g-2}
+      = kappa(A)/hbar^2 * ((hbar/2)/sin(hbar/2) - 1).
 
-or equivalently with the genus-0 term restored as F_0 = κ/ℏ²:
+The usual A-hat series is the alternating companion
 
-  F^total(ℏ) = κ/ℏ² · Â(ℏ) = κ/ℏ² · (ℏ/2)/sinh(ℏ/2)
+    (x/2)/sinh(x/2) = sum_{g>=0} (-1)^g lambda_g^FP x^{2g};
 
-SIGN ANALYSIS:
-  Â(x) = (x/2)/sinh(x/2) = 1 - x²/24 + 7x⁴/5760 - 31x⁶/967680 + ...
-  The sign pattern is (-1)^g for the genus-g coefficient.
-  Since F_g = κ · λ_g^FP (POSITIVE, no sign), we need:
-    F(ℏ) = κ · Σ_{g≥1} λ_g^FP · ℏ^{2g-2}
-  while Â(x) = Σ_{g≥0} (-1)^g λ_g^FP · x^{2g}.
-  So F(ℏ) = κ/ℏ² · Σ_{g≥1} λ_g^FP · ℏ^{2g}
-           = κ/ℏ² · Σ_{g≥1} (-1)^g λ_g^FP · (-ℏ²)^g    [since λ_g^FP > 0]
-  Hmm — the signs need care. Let's just compute directly.
+the positive FP series is obtained by the formal substitution x -> i*x.
 
-DIRECT COMPUTATION:
-  sinh(x/2) = x/2 + (x/2)³/3! + (x/2)⁵/5! + ...
-  (x/2)/sinh(x/2) = 1/[1 + (x/2)²/3! + (x/2)⁴/5! + ...]
-
-  Using the standard formula: (x/2)/sinh(x/2) = Σ_{n≥0} (2^{2n}-2)/(2n)! · B_{2n}/2 · (-x²)^n
-  Wait — let me use the known expansion.
-
-  The Todd class: td(x) = x/(1-e^{-x}) = 1 + x/2 + Σ B_{2k}/(2k)! x^{2k}
-  The Â-class: Â(x) = x/2 / sinh(x/2).
-
-  Standard: Â(x) = 1 - (1/24)x² + (7/5760)x⁴ - (31/967680)x⁶ + ...
-  Sign: coefficient of x^{2g} is (-1)^g · |coeff|.
-
-  Now λ_g^FP = (2^{2g-1}-1)/2^{2g-1} · |B_{2g}|/(2g)!.
-  And B_{2g} has sign (-1)^{g+1} for g ≥ 1, so |B_{2g}| = (-1)^{g+1} B_{2g}.
-
-  Coefficient of x^{2g} in Â(x):
-    The expansion of x/2/sinh(x/2) uses the identity with η-function/Bernoulli:
-    (x/2)/sinh(x/2) = Σ_{g≥0} (2-2^{2g})/(2g)! · B_{2g}/2 · ...
-
-  Let me just verify numerically and not over-think the sign.
-
-SHADOW CORRECTIONS (genus ≥ 2):
-  At the scalar level, F_g = κ · λ_g^FP universally (Theorem D).
-  At the chain level, shadow corrections from higher arities contribute:
-    F_g^{corr} = F_g^{scalar} + δF_g^{shadow}
-
-  For Virasoro at genus 2:
-    δF_2^{Q-contact} involves Q^contact_Vir = 10/[c(5c+22)]
-    integrated against a genus-2 moduli integral.
-
-  The corrected generating function F^corr(ℏ) = F^scalar(ℏ) + δF^shadow(ℏ)
-  where δF^shadow encodes the departure from pure Â.
-
-CONNECTION TO INTEGRABLE HIERARCHIES:
-  Witten conjecture (Kontsevich theorem): τ-function of ψ-class intersections
-  satisfies KdV. Our F_g uses Hodge integrals (λ_g · ψ^{2g-2}), which satisfy
-  the Hodge-KdV (= Dubrovin-Zhang hierarchy via Givental). The scalar free
-  energy Σ F_g ℏ^{2g-2} = κ/ℏ² · Â(ℏ) is a TAU FUNCTION of the dispersionless
-  KdV hierarchy (the leading term in the topological expansion).
-
-  For the shadow-corrected version: the corrections live in the DISPERSIVE
-  part of the hierarchy (higher-order terms in ℏ).
-
-Ground truth: concordance.tex (Theorem D), higher_genus_modular_koszul.tex,
-  genus2_shell_amplitudes.py.
+This engine certifies the scalar coefficient identity. The
+Witten-Kontsevich descendant CohFT, KdV hierarchy, analytic tau function,
+and all-genus shadow convergence require separate descendant/MC/CohFT or
+analytic sewing data. Local anchors: compute/lib/utils.py::lambda_fp,
+compute/lib/faber_pandharipande_cross_verification.py, and the
+Faber-Pandharipande clauses in higher_genus_modular_koszul.tex.
 """
 
 from __future__ import annotations
 
-from typing import Dict, List, Optional, Tuple
+from typing import Dict
 
 from sympy import (
-    Abs, Rational, S, Symbol, bernoulli, factorial, oo,
-    series, simplify, sinh, sqrt, symbols, expand, nsimplify,
-    pi, Integer, Float,
+    Rational, S, Symbol, series, simplify, sin, sinh,
 )
 
-from .utils import lambda_fp, F_g
+from .utils import lambda_fp
 
 
 # ═══════════════════════════════════════════════════════════════════════
@@ -190,147 +141,73 @@ def scalar_free_energy_series(kappa, hbar, g_max: int = 10):
 
 
 def scalar_free_energy_closed_form(kappa, hbar):
-    r"""Closed form: F(ℏ) = κ/ℏ² · [(ℏ/2)/sinh(ℏ/2) - 1].
+    r"""Closed scalar formal series:
+      F(ℏ) = κ/ℏ² · [(ℏ/2)/sin(ℏ/2) - 1].
 
     Equivalently, with genus-0 term:
-      F^total(ℏ) = κ/ℏ² · Â(ℏ) = κ/ℏ² · (ℏ/2)/sinh(ℏ/2)
+      F^total(ℏ) = κ/ℏ² · (ℏ/2)/sin(ℏ/2)
 
     Without genus-0:
-      F(ℏ) = κ/ℏ² · [Â(ℏ) - 1]
+      F(ℏ) = κ/ℏ² · [(ℏ/2)/sin(ℏ/2) - 1]
     """
-    A_hat = (hbar / 2) / sinh(hbar / 2)
-    return kappa / hbar**2 * (A_hat - 1)
+    positive_fp_generator = (hbar / 2) / sin(hbar / 2)
+    return kappa / hbar**2 * (positive_fp_generator - 1)
 
 
 def verify_closed_form(g_max: int = 10) -> Dict[str, object]:
-    r"""Verify F(ℏ) = κ/ℏ² · [Â(ℏ) - 1] matches the series Σ κ·λ_g^FP·ℏ^{2g-2}.
+    r"""Verify the scalar sin-branch closed form through a finite window.
 
     Expands the closed form as a series and compares term by term.
     """
     hbar = Symbol('hbar')
-    kappa = Symbol('kappa')
 
-    # Series expansion of the closed form
-    closed = (hbar / 2) / sinh(hbar / 2) - 1
-    # This should be Σ_{g≥1} (-1)^g λ_g^FP hbar^{2g}
+    closed = (hbar / 2) / sin(hbar / 2) - 1
     closed_series = series(closed, hbar, 0, 2 * g_max + 2)
-
-    # Divide by hbar^2 and multiply by kappa to get F
-    # closed / hbar^2 * kappa = Σ_{g≥1} (-1)^g λ_g^FP kappa hbar^{2g-2}
-
-    # But F(hbar) = Σ κ λ_g^FP hbar^{2g-2} (all positive!)
-    # and Â(hbar) - 1 = Σ_{g≥1} (-1)^g λ_g^FP hbar^{2g}
-    # So F(hbar) = κ/hbar^2 * Σ (-1)^g λ_g^FP hbar^{2g}
-    #            = κ Σ (-1)^g λ_g^FP hbar^{2g-2}
-    # But we want F_g = κ λ_g^FP (positive!), so we need the sign.
-
-    # Key: B_{2g} has sign (-1)^{g+1}, so |B_{2g}| = (-1)^{g+1} B_{2g}.
-    # λ_g^FP uses |B_{2g}| > 0.
-    # In Â(x), the coefficient of x^{2g} is:
-    #   (2-2^{2g})/(2g)! · B_{2g}/... which is negative of what we'd naively expect
-    # The (-1)^g in our formula accounts for this.
 
     results = {}
     all_match = True
 
     for g in range(1, g_max + 1):
-        # Coefficient of hbar^{2g} in (Â(hbar) - 1)
-        coeff_in_A_hat_minus_1 = closed_series.coeff(hbar, 2 * g)
-        # F_g coefficient = kappa * coeff_in_A_hat_minus_1 / hbar^{2g} * hbar^{2g} / hbar^2
-        # Wait: F(hbar) = kappa/hbar^2 * [Â(hbar)-1]
-        # Coefficient of hbar^{2g-2} in F(hbar) = kappa * coeff of hbar^{2g} in [Â-1]
-        F_g_from_closed = Rational(coeff_in_A_hat_minus_1)
+        F_g_from_closed = Rational(closed_series.coeff(hbar, 2 * g))
         F_g_from_series = lambda_fp(g)
-
-        # The sign: coeff in Â is (-1)^g λ_g^FP
-        # So F_g = κ · (-1)^g · λ_g^FP from the closed form
-        # But F_g should be κ · λ_g^FP (positive).
-        # Resolution: we need F(ℏ) = κ/ℏ² · [1 - Â(ℏ)] for even g,
-        # or we track signs carefully.
-
-        # Actually: just check if |coeff| = λ_g^FP
-        match = simplify(abs(F_g_from_closed) - F_g_from_series) == 0
-        sign = 1 if simplify(F_g_from_closed - F_g_from_series) == 0 else -1
-        all_match = all_match and (abs(F_g_from_closed) == F_g_from_series)
+        match = simplify(F_g_from_closed - F_g_from_series) == 0
+        all_match = all_match and match
 
         results[g] = {
             'closed_form_coeff': F_g_from_closed,
             'lambda_fp': F_g_from_series,
-            '|coeff| = lambda_fp': match,
-            'sign (-1)^g': (-1)**g,
-            'coeff_sign_matches_(-1)^g': simplify(
-                F_g_from_closed - (-1)**g * F_g_from_series
-            ) == 0,
+            'match': match,
         }
 
     return {
         'g_max': g_max,
         'all_match': all_match,
+        'scope': f'finite exact rational window 1 <= g <= {g_max}',
         'by_genus': results,
-        'conclusion': (
-            "F(ℏ) = κ/ℏ² · [Â(iℏ) - 1] where Â(x) = (x/2)/sinh(x/2), "
-            "or equivalently F(ℏ) = κ/ℏ² · [(ℏ/2)/sin(ℏ/2) - 1] "
-            "using the REAL Â-genus Â_R(x) = (x/2)/sin(x/2)."
-        ) if not all_match else (
-            "F(ℏ) = κ/ℏ² · [Â(ℏ) - 1] VERIFIED through genus g_max."
-        ),
+        'identity': "F(ℏ) = κ/ℏ² · ((ℏ/2)/sin(ℏ/2) - 1)",
     }
 
 
 def free_energy_sign_resolution() -> Dict[str, object]:
-    r"""Resolve the sign in the free energy generating function.
+    r"""Resolve the sinh/sin sign convention for FP coefficients.
 
     The issue: λ_g^FP > 0 for all g, but Â(x) has alternating signs.
 
-    Resolution: Use the REAL Â-genus (x/2)/sin(x/2) instead of (x/2)/sinh(x/2).
+    Resolution: the scalar FP generator is (x/2)/sin(x/2), while the
+    usual A-hat generator (x/2)/sinh(x/2) is its alternating companion.
 
-    (x/2)/sin(x/2) = 1 + x²/24 + 7x⁴/5760 + 31x⁶/967680 + ...  (ALL POSITIVE)
+    (x/2)/sin(x/2) = 1 + x²/24 + 7x⁴/5760 + 31x⁶/967680 + ...
 
-    Relationship: Â_R(x) = (x/2)/sin(x/2) = Â(ix) where Â(x) = (x/2)/sinh(x/2).
+    Relationship:
+      (x/2)/sin(x/2) = Ahat(i*x), where Ahat(x) = (x/2)/sinh(x/2).
 
-    So the FREE ENERGY is:
+    The scalar free energy is:
       F(ℏ) = κ/ℏ² · [Â_R(ℏ) - 1]
             = κ/ℏ² · [(ℏ/2)/sin(ℏ/2) - 1]
 
-    and the TOTAL free energy (including genus-0 tree level):
+    and with the genus-0 normalization:
       F^total(ℏ) = κ/ℏ² · (ℏ/2)/sin(ℏ/2)
-
-    This is the L-GENUS (Hirzebruch L-class generating function is
-    x/tanh(x); the Â-class is x/2 / sinh(x/2); the function x/2 / sin(x/2)
-    is the SIGNATURE genus for oriented manifolds... actually let me be precise).
-
-    PRECISE IDENTIFICATION:
-      (x/2)/sin(x/2) is NOT a standard genus in Hirzebruch's sense.
-      But x/sin(x) IS: it generates the coefficients
-        s_g = (2^{2g}-2) |B_{2g}|/(2g)! (up to normalization).
-      Our function (x/2)/sin(x/2) is obtained by x -> x/2.
-
-      Actually: (x/2)/sin(x/2) = Â(ix). The Â-genus of a manifold with
-      PURELY IMAGINARY Pontryagin class ip_1 gives our generating function.
-      This is the ANALYTIC CONTINUATION of the Â-genus.
-
-      In physics: this is the one-loop determinant of a chiral boson
-      on a circle of circumference ℏ. The zeros at ℏ = 2πn correspond
-      to resonances.
-
-    ALTERNATIVE: use the EULER form. Since
-      sin(x) = x · Π_{n≥1} (1 - x²/(nπ)²)
-    we get
-      (x/2)/sin(x/2) = 1/Π_{n≥1}(1 - ℏ²/(4n²π²))
-                      = Π_{n≥1} 1/(1 - ℏ²/(4n²π²))
-
-    This is the INFINITE PRODUCT FORM of the free energy:
-      F^total(ℏ) = -κ/ℏ² · Σ_{n≥1} log(1 - ℏ²/(4n²π²))
-                 = κ/ℏ² · Σ_{n≥1} Σ_{m≥1} ℏ^{2m}/(m · (2nπ)^{2m})
-
-    The n-sum gives ζ(2m)/(2π)^{2m} · 2^{2m} = |B_{2m}|/(2m)! · 2^{2m-1}/...
-    which recovers the Bernoulli number expansion.
-
-    This infinite product = PARTITION FUNCTION of a harmonic oscillator tower,
-    confirming the physics interpretation.
     """
-    from sympy import sin, cos
-
     x = Symbol('x')
 
     # (x/2)/sin(x/2) — all-positive generating function
@@ -368,7 +245,7 @@ def free_energy_sign_resolution() -> Dict[str, object]:
             "F^total(ℏ) = κ/ℏ² · (ℏ/2)/sin(ℏ/2)"
         ),
         'generating_function': "(x/2)/sin(x/2)",
-        'A_hat_relation': "= Â(ix) (analytic continuation of Â-genus)",
+        'A_hat_relation': "formal substitution x -> i*x in Ahat(x)",
     }
 
 
@@ -379,7 +256,9 @@ def free_energy_sign_resolution() -> Dict[str, object]:
 def universal_ratios(g_max: int = 10) -> Dict[str, Rational]:
     r"""Compute universal ratios F_{g+1}/F_g = λ_{g+1}^FP / λ_g^FP.
 
-    These ratios are INDEPENDENT of the algebra A (they depend only on genus).
+    These finite-window scalar ratios are independent of the algebra A
+    after the common factor kappa(A) is fixed. They are not descendant
+    CohFT reconstruction data.
     """
     ratios = {}
     for g in range(1, g_max):
@@ -404,52 +283,23 @@ def virasoro_Q_contact(c=None):
 
 
 def genus2_shadow_correction_virasoro(c=None):
-    r"""Shadow correction to genus-2 Virasoro free energy.
+    r"""Conditional genus-2 Virasoro contact pairing.
 
-    F_2^{corr}(Vir_c) = F_2^{scalar} + δF_2^{Q-contact}
+    The unconditional scalar term is
 
-    The scalar part: F_2^{scalar} = κ(Vir_c) · λ_2^FP = (c/2) · 7/5760
+        F_2^{scalar}(Vir_c) = kappa(Vir_c) * lambda_2^FP
+                             = (c/2) * 7/5760.
 
-    The shadow correction δF_2^{Q-contact} involves integrating Q^contact
-    against a genus-2 moduli class. The relevant integral is:
+    The exact local shadow constant is
 
-      δF_2 = Q^contact · ∫_{M-bar_{2,1}} [class from quartic shadow]
+        Q^contact_Vir = 10/[c(5c+22)].
 
-    The quartic shadow at genus 2 contributes through the ONE-LOOP stratum
-    (Δ_0 boundary of M-bar_2): a genus-1 curve with a self-node, where the
-    quartic contact vertex sits at the node.
-
-    The integral:
-      δF_2 = Q^contact · (genus-1 propagator integral)
-           = Q^contact · (1/24)²  [?? — need to compute carefully]
-
-    ACTUALLY: The quartic contact contribution to genus-2 comes from
-    the genus spectral sequence E_1^{1,1} term (one-loop, one quartic
-    vertex). The amplitude is:
-
-      δF_2^Q = Q^contact · ∫_{M-bar_{1,2}} λ_1 · K(p_1, p_2)
-
-    where K is the propagator kernel. This integral involves the
-    Bergman kernel on a genus-1 curve, integrated over M-bar_{1,2}.
-
-    For the Virasoro algebra with κ = c/2:
-      F_2^{scalar} = c/2 · 7/5760 = 7c/11520
-      δF_2^Q = Q^contact · I_2^{1-loop}
-             = [10/(c(5c+22))] · I_2^{1-loop}
-
-    The integral I_2^{1-loop} is a universal constant (independent of c)
-    times the genus-1 propagator squared. From Faber:
-      I_2^{1-loop} = ∫_{M-bar_{1,2}} λ_1 · ψ_1 · ψ_2
-                   = [by string/dilaton] = ...
-
-    Actually, the relevant integral for the quartic vertex contribution is:
-      I_2^{Q} = ∫_{Δ_0 ⊂ M-bar_2} (quartic amplitude)
-
-    This requires the Bergman kernel B(z,w) on a genus-1 curve integrated
-    over the node locus. The result involves:
-      ∫_{M-bar_{1,1}} λ_1 · ψ_1 = 1/24 · 1/24 ... no.
-
-    Let me give the STRUCTURAL ANSWER without the exact numerical coefficient:
+    The boundary Witten-Kontsevich pairing 1/1152 is locally recorded in
+    concordance.tex as <tau_4>_2^{boundary}. Multiplying it by
+    Q^contact gives a conditional contribution only after a separate
+    descendant/MC graph pairing identifies that boundary class with the
+    Virasoro quartic contact insertion. This function therefore does not
+    assert an unconditional corrected genus-2 Virasoro free energy.
     """
     if c is None:
         c = Symbol('c')
@@ -457,153 +307,79 @@ def genus2_shadow_correction_virasoro(c=None):
     kappa_vir = c / 2
     F2_scalar = kappa_vir * lambda_fp(2)  # c/2 · 7/5760 = 7c/11520
     Q_contact = virasoro_Q_contact(c)
-
-    # The genus-2 quartic correction: Q^contact integrated against
-    # the one-loop genus-2 amplitude. The integral is a genus-1
-    # propagator integral.
-    #
-    # From the genus spectral sequence, the E_1^{1,1} differential
-    # Ob_1: E_1^{0,1} → E_1^{1,1} has image involving the quartic
-    # contact. The correction is:
-    #
-    #   δF_2 = Q^contact · Σ_Γ (graph sum over 1-loop genus-2 graphs
-    #          with one quartic vertex)
-    #
-    # The only such graph: a theta graph (two vertices, two edges)
-    # with the quartic vertex at one node.
-    #
-    # Amplitude = Q^contact · (λ_1^FP)² / (symmetry factor)
-    # = Q^contact · (1/24)² · (1/2) = Q^contact / 1152
-    #
-    # This gives:
-    #   δF_2 = 10 / [c(5c+22)] · 1/1152 = 10 / [1152 · c · (5c+22)]
-    #        = 5 / [576 · c · (5c+22)]
-
-    # The symmetry factor for the theta graph is 2 (edge swap).
-    I_1loop = (lambda_fp(1))**2 / 2  # (1/24)² / 2 = 1/1152
-    delta_F2 = Q_contact * I_1loop
-
-    F2_corrected = F2_scalar + delta_F2
+    boundary_wk_pairing = Rational(1, 1152)
+    conditional_delta_F2 = Q_contact * boundary_wk_pairing
 
     return {
         'c': c,
         'kappa': kappa_vir,
         'F_2_scalar': F2_scalar,
         'Q_contact': Q_contact,
-        'I_1loop_integral': I_1loop,
-        'delta_F_2': simplify(delta_F2),
-        'F_2_corrected': simplify(F2_corrected),
-        'correction_ratio': simplify(delta_F2 / F2_scalar),
-        'note': (
-            "δF_2/F_2^scalar = 10/(c(5c+22)) · (1/1152) / (7c/(2·5760)) "
-            "= 10·5760 / (1152·7·c²·(5c+22)/2) "
-            "= 100 / (7·c²·(5c+22) · 1152/5760) ... "
-            "The correction is O(1/c²), subleading at large c."
+        'boundary_wk_pairing': boundary_wk_pairing,
+        'conditional_delta_F_2': simplify(conditional_delta_F2),
+        'conditional_F_2_if_pairing_applies': simplify(
+            F2_scalar + conditional_delta_F2
+        ),
+        'conditional_ratio_if_pairing_applies': simplify(
+            conditional_delta_F2 / F2_scalar
+        ),
+        'unconditional_full_genus2_correction': None,
+        'claim_scope': (
+            "conditional: Q_contact and 1/1152 are exact local constants; "
+            "a full Virasoro genus-2 correction requires separate "
+            "descendant/MC graph pairing data"
         ),
     }
 
 
 # ═══════════════════════════════════════════════════════════════════════
-# Integrable hierarchy connection
+# Descendant CohFT firewall
 # ═══════════════════════════════════════════════════════════════════════
 
 def free_energy_tau_function_check(g_max: int = 8) -> Dict[str, object]:
-    r"""Check whether the scalar free energy is a tau function of KdV.
+    r"""Classify the scalar FP window relative to KdV data.
 
-    The Witten-Kontsevich theorem: the generating function of ψ-class
-    intersection numbers τ(t_0, t_1, ...) is a tau function of KdV.
+    Witten-Kontsevich concerns the full descendant potential in times
+    t_0, t_1, ... . The scalar Hodge numbers
+    int_{Mbar_{g,1}} lambda_g psi_1^{2g-2} form one formal coefficient
+    lane. They do not by themselves construct a KdV tau function, the
+    hierarchy flows, or descendant reconstruction.
 
-    Our generating function uses HODGE integrals ∫ λ_g ψ^{2g-2}, not
-    pure ψ-class integrals ∫ ψ^{3g-3+n}. The relationship:
-
-    Hodge integrals are a SPECIALIZATION of the full KdV tau function.
-    Specifically, λ_g = c_g(E) is a polynomial in ψ-classes and boundary
-    classes via the Mumford relations / Grothendieck-Riemann-Roch.
-
-    The FP numbers λ_g^FP = ∫_{M-bar_{g,1}} λ_g ψ^{2g-2} are a
-    ONE-PARAMETER SLICE of the KdV tau function:
-      τ_{FP}(t) = exp(Σ F_g t^{2g-2}) with t_k = δ_{k,1} · t
-
-    This satisfies the DISPERSIONLESS KdV (dKdV):
-      ∂²F/∂t² = u(t), where u_t = u · u_x (Burgers/dKdV)
-
-    But the full KdV equation involves higher-genus corrections
-    (dispersive terms). Our scalar F(ℏ) satisfies dKdV because it
-    is a GENUS EXPANSION with single coupling κ.
-
-    The Hodge-KdV connection (Dubrovin-Zhang, Kazarian-Lando):
-      Z_{Hodge}(ℏ; t_*) = exp(Σ ℏ^{2g-2} F_g^{Hodge}(t_*))
-    satisfies KdV with modified initial data.
-
-    Our specialization: t_k = 0 for all k (no insertions), just
-    the VACUUM free energy. This is a NUMBER for each genus, not a
-    function of infinitely many times.
-
-    CONCLUSION: The scalar free energy F(ℏ) = κ/ℏ² · [(ℏ/2)/sin(ℏ/2) - 1]
-    does NOT satisfy KdV in the usual sense (KdV acts on functions of
-    infinitely many times). It is the VACUUM SPECIALIZATION of a KdV
-    tau function.
-
-    However, F(ℏ) does satisfy a FINITE-DIMENSIONAL ODE that encodes
-    the Bernoulli number recursion:
-      F(ℏ) + ℏ²/24 · F(ℏ) = ... (from the recursion for |B_{2g}|)
-
-    The SHADOW-CORRECTED free energy departs from this by terms
-    involving Q^contact, higher shadows, etc. These corrections are
-    controlled by the shadow obstruction tower and satisfy the
-    MAURER-CARTAN equation, not KdV.
+    A rank-1 primary or stationary line becomes a KdV comparison only
+    after the corresponding CohFT supplies the full descendant correlators.
+    This function records that firewall explicitly.
     """
-    from sympy import sin, diff
-
-    hbar = Symbol('hbar')
-
-    # The total free energy (including g=0 normalization)
-    # F^total = 1/hbar^2 · (hbar/2)/sin(hbar/2)
-    # We work with u = hbar^2 for simplicity
     u = Symbol('u', positive=True)
-
-    # (sqrt(u)/2)/sin(sqrt(u)/2) as a function of u
-    # = Σ λ_g^FP · u^g
     fp_series = sum(lambda_fp_extended(g) * u**g for g in range(g_max + 1))
-
-    # Check: is this related to a solution of an ODE?
-    # The function f(u) = (sqrt(u)/2)/sin(sqrt(u)/2) satisfies:
-    # f'' + (1/4u) f' = f³ ... no.
-    # Actually: let g(x) = x/sin(x). Then g'' + g = g³ ... no.
-    # The function x/sin(x) satisfies: y' = (1 - y·cos(x))/sin(x)
-    # i.e., y' · sin(x) + y · cos(x) = 1, i.e., d/dx(y · sin(x)) = 1
-    # i.e., y · sin(x) = x. Tautology!
-
-    # More interesting: the PARTITION FUNCTION Z = exp(Σ F_g ℏ^{2g-2})
-    # For our scalar level with F_g = κ · λ_g^FP:
-    # Z = exp(κ/ℏ² · [(ℏ/2)/sin(ℏ/2) - 1])
-    # At κ = 1: Z = exp([(ℏ/2)/sin(ℏ/2) - 1]/ℏ²)
-
-    # The KEY OBSERVATION: (ℏ/2)/sin(ℏ/2) = Π_{n≥1} 1/(1 - ℏ²/(2nπ)²)
-    # So log Z = κ · Σ_{n≥1} -log(1 - ℏ²/(2nπ)²) / ℏ²  (+ 1/ℏ² subtracted)
-    # = κ · Σ_{n≥1} Σ_{m≥1} ℏ^{2m-2} / (m · (2nπ)^{2m})
-    # This is the FREE ENERGY of κ copies of a harmonic oscillator with
-    # frequencies ω_n = 2nπ (a chiral boson on a circle).
 
     return {
         'scalar_free_energy': "F(ℏ) = κ/ℏ² · [(ℏ/2)/sin(ℏ/2) - 1]",
         'total_free_energy': "F^total(ℏ) = κ/ℏ² · (ℏ/2)/sin(ℏ/2)",
         'infinite_product': "(ℏ/2)/sin(ℏ/2) = Π_{n≥1} (1 - ℏ²/(2nπ)²)^{-1}",
-        'physics_interpretation': (
-            "log Z = -κ · Σ_{n≥1} log(1 - ℏ²/(2nπ)²)/ℏ², "
-            "= free energy of κ chiral bosons with frequencies ω_n = 2nπ"
-        ),
+        'coefficient_scope': f'finite formal scalar window 0 <= g <= {g_max}',
+        'constructs_full_kdv_hierarchy': False,
+        'constructs_analytic_tau_function': False,
+        'claims_all_genus_shadow_convergence': False,
+        'requires_witten_kontsevich_descendants': True,
+        'requires_descendant_cohft_data': True,
         'kdv_relation': (
-            "The FP numbers are a vacuum specialization of the KdV tau function. "
-            "F(ℏ) does not satisfy KdV directly but is the genus expansion "
-            "of a KdV tau function at the vacuum point."
+            "Scalar FP coefficients alone do not define KdV flows; "
+            "Witten-Kontsevich input is the full descendant potential."
+        ),
+        'stationary_primary_line': (
+            "A one-dimensional primary/stationary line is a specialization "
+            "only after the CohFT descendant data are supplied."
+        ),
+        'analytic_scope': (
+            "The sin closed form is meromorphic with first pole at |hbar|=2*pi; "
+            "all-genus shadow convergence requires separate analytic input."
         ),
         'shadow_correction_structure': (
             "Shadow corrections δF(ℏ) satisfy the Maurer-Cartan equation "
             "D·Θ + ½[Θ,Θ] = 0 projected to each genus. "
-            "They deform the free energy AWAY from the pure Â-genus."
+            "They require algebra-dependent descendant/graph data."
         ),
-        'bernoulli_recursion': fp_series,
+        'finite_scalar_series': fp_series,
     }
 
 
@@ -612,7 +388,7 @@ def free_energy_tau_function_check(g_max: int = 8) -> Dict[str, object]:
 # ═══════════════════════════════════════════════════════════════════════
 
 def shadow_corrected_structure() -> Dict[str, object]:
-    r"""Structure of the shadow-corrected free energy.
+    r"""Scope of shadow-corrected free-energy data.
 
     F^{corr}(ℏ) = F^{scalar}(ℏ) + δF^{shadow}(ℏ)
 
@@ -627,33 +403,16 @@ def shadow_corrected_structure() -> Dict[str, object]:
       G (Gaussian, r_max=2): δF^{shadow} = 0 (Heisenberg, lattice VOAs)
       L (Lie, r_max=3): δF^{shadow} starts at genus 3 (cubic correction)
       C (Contact, r_max=4): δF^{shadow} starts at genus 2 (quartic correction)
-      M (Mixed, r_max=∞): δF^{shadow} has ALL genus ≥ 2 (Virasoro, W_N)
+      M (Mixed, r_max=∞): no finite shadow-depth truncation at generic level
 
-    STRUCTURAL THEOREM (from the MC equation):
-      The shadow correction δF^{shadow}(ℏ) is controlled by the
-      Maurer-Cartan element Θ_A. Specifically:
+    Structural input:
+      The coefficients δF_g^{shadow}, when defined, are controlled by
+      the Maurer-Cartan element Θ_A and stable-graph amplitudes
 
         δF_g = Σ_{r≥3} Σ_{Γ ∈ G_{g,0}^{(r)}} (1/|Aut Γ|) · A_Γ(Θ_A^{≤r})
 
-      where G_{g,0}^{(r)} are stable graphs of genus g with vertices of
-      arity ≤ r, and A_Γ is the graph amplitude.
-
-    The MC equation D·Θ + ½[Θ,Θ] = 0 implies RECURSION RELATIONS among
-    the δF_g, but these are NOT the KdV recursion — they are the
-    SHADOW MASTER EQUATION projected genus by genus.
-
-    THE DREAM RESULT would be:
-      F^{corr}(ℏ) = κ/ℏ² · Â(ℏ) · exp(Σ_{r≥3} ε_r(A) · G_r(ℏ))
-
-    where ε_r(A) are shadow invariants (ε_3 = cubic shadow, ε_4 = Q^contact, ...)
-    and G_r(ℏ) are UNIVERSAL generating functions (independent of A).
-    This would give a MULTIPLICATIVE correction to the Â-genus.
-
-    EVIDENCE: For Virasoro, the large-c expansion of F_g has the form
-    F_g = (c/2)λ_g^FP + c^0 · (correction) + O(1/c).
-    The c^0 term is the shadow correction and is controlled by Q^contact
-    at leading order. The MULTIPLICATIVE form would predict specific
-    relations between the c^0 terms at different genera.
+    This module does not assert a closed multiplicative shadow generating
+    function or a KdV recursion for those corrections.
     """
     c = Symbol('c')
 
@@ -663,12 +422,11 @@ def shadow_corrected_structure() -> Dict[str, object]:
         'gaussian_correction': "δF = 0 (Heisenberg, lattice)",
         'lie_correction': "δF starts at genus 3",
         'contact_correction': "δF starts at genus 2 (quartic Q^contact)",
-        'mixed_correction': "δF present at ALL genera ≥ 2 (Virasoro, W_N)",
+        'mixed_correction': "no finite shadow-depth truncation at generic level",
         'virasoro_genus2': F2_data,
-        'multiplicative_conjecture': (
-            "F^corr(ℏ) = κ/ℏ² · Â(ℏ) · exp(Σ ε_r · G_r(ℏ)), "
-            "shadow corrections are MULTIPLICATIVE deformation of Â"
-        ),
+        'closed_shadow_generating_function': None,
+        'constructs_full_kdv_hierarchy': False,
+        'requires_descendant_cohft_data': True,
         'mc_equation_controls_corrections': True,
     }
 
@@ -678,7 +436,7 @@ def shadow_corrected_structure() -> Dict[str, object]:
 # ═══════════════════════════════════════════════════════════════════════
 
 def numerical_verification(g_max: int = 15) -> Dict[str, object]:
-    r"""Full numerical verification of Â-genus = FP generating function.
+    r"""Finite exact verification of the positive FP generating function.
 
     Computes λ_g^FP and (x/2)/sin(x/2) coefficients through genus g_max
     and verifies exact agreement.
@@ -706,12 +464,13 @@ def numerical_verification(g_max: int = 15) -> Dict[str, object]:
         'g_max': g_max,
         'all_match': all_match,
         'table': table,
+        'scope': f'finite exact rational window 0 <= g <= {g_max}',
         'generating_function_identity': (
-            "(x/2)/sin(x/2) = Σ_{g≥0} λ_g^FP x^{2g}  VERIFIED through "
+            "(x/2)/sin(x/2) = Σ_{g≥0} λ_g^FP x^{2g}, checked through "
             f"genus {g_max}"
         ),
         'free_energy_identity': (
-            f"F(ℏ) = κ/ℏ² · [(ℏ/2)/sin(ℏ/2) - 1]  VERIFIED through "
+            f"F(ℏ) = κ/ℏ² · [(ℏ/2)/sin(ℏ/2) - 1], checked through "
             f"genus {g_max}"
         ),
     }

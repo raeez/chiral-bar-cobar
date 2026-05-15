@@ -1,15 +1,6 @@
 \documentclass[11pt,reqno]{amsart}
 \usepackage[localtheorems]{raeez-math-template}
 
-% ================================================================
-% Paper E: E_n-Chiral Algebras, Derived Centres,
-%          and the Operadic Circle
-% STATUS: SECTIONS 1--5 FILLED (algebraic-geometric foundation)
-% TARGET: Inventiones Mathematicae (or Annals)
-% LENGTH: 80-100pp
-% ================================================================
-
-
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{lemma}[theorem]{Lemma}
@@ -19,7 +10,6 @@
 \newtheorem{definition}[theorem]{Definition}
 \newtheorem{construction}[theorem]{Construction}
 \newtheorem{example}[theorem]{Example}
-\newtheorem{warning}[theorem]{Warning}
 \theoremstyle{remark}
 \newtheorem{remark}[theorem]{Remark}
 \newtheorem{convention}[theorem]{Convention}
@@ -88,14 +78,15 @@ and the Operadic Circle}
  Waterloo, ON N2L 2Y5, Canada}
 \email{rlorgat@perimeterinstitute.ca}
 
-\date{\today}
+\date{}
 
 \begin{abstract}
 $\En$-chiral algebras are factorisation algebras on configuration
 spaces of algebraic curves, inherently geometric. We construct bar
 complexes at every operadic level ($n = 1, 2, 3, \infty$) on every
 curve geometry (formal disk, punctured disk, annulus, nodal curves,
-pair of pants), and prove that the derived chiral centre
+pair of pants), and prove that, on the stated Koszul and
+topologisation loci, the derived chiral centre
 $\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ carries $\Etwo$ structure from
 $\Eone$ input (Deligne) and $\Ethree$ from $\Etwo$ input (higher Deligne).
 The Swiss-cheese operad $\SCchtop$ governs the pair
@@ -104,9 +95,11 @@ itself. The topologisation theorem establishes
 $\SCchtop + \text{conformal vector} \simeq \Ethree^{\mathrm{top}}$ for
 affine Kac--Moody at non-critical level (chain-level) and, via
 Drinfeld--Sokolov reduction, for Virasoro and all $\cW$-algebras
-(cohomological, with model-level $(\Ethree)_\infty$). The $\En$ operadic circle
-$\Ethree \to \Etwo \to \Eone \to \Etwo \to \Ethree$ is proved to close for
-simple $\fg$ via the $\Ethree$ identification theorem. Five notions of
+(cohomological, with model-level $(\Ethree)_\infty$ under the stated
+DS hypotheses). Under the intrinsic-formality and local-to-global
+hypotheses of Theorem~\ref{thm:e-e3-identification}, the $\En$
+operadic circle closes for simple $\fg$ at the level of formal
+\(\Ethree\)-deformation families. Five notions of
 $\Eone$-chiral algebra are distinguished. The chiral quantum group
 equivalence identifies three structures ($R$-matrix, $\Ainf$,
 coproduct) on the Koszul locus.
@@ -925,12 +918,13 @@ Gerstenhaber braces. The brace operations satisfy:
 $\SCchtop$ is $C^\bullet_{\mathrm{ch}}$]
 \label{thm:e-center-hochschild}
 Let $\cA$ be an $\Einf$-chiral algebra on a curve $X$ and
-$A = \cA|_{\{z_0\}}$ the fiber at a basepoint. The
-\emph{operadic centre} of $A$ in the Swiss-cheese operad
+$A = \cA|_{\{z_0\}}$ the fibre at a basepoint, after choosing a
+formal-disk trivialisation near \(z_0\). The local
+\emph{operadic centre} of \(A\) in the Swiss-cheese operad
 $\SCchtop$ is quasi-isomorphic to the chiral Hochschild cochain
 complex as $\Etwo$-algebras:
 \begin{equation}\label{eq:e-center-qi}
-Z_{\SCchtop}(A)
+Z_{\SCchtop}^{\mathrm{loc}}(A)
 \;\simeq\;
 C^\bullet_{\mathrm{ch}}(\cA, \cA).
 \end{equation}
@@ -943,17 +937,19 @@ space for the braces and the cup product.
 \begin{proof}
 By the operadic centre construction
 (Definition~\ref{def:e-operadic-centre} below), an element
-of $Z_{\SCchtop}(A)$ at degree $(k,m)$ is a map
+of \(Z_{\SCchtop}^{\mathrm{loc}}(A)\) at degree \((k,m)\) is a map
 \[
 \phi_{k,m}\colon
-\FM_k(\bC) \times \Eone(m) \;\longrightarrow\;
+\overline{\FM}_{k,m}(\bH;\bR) \;\longrightarrow\;
 \Hom(A^{\otimes m}, A),
 \]
-equivariant for $\Sigma_k$ on $\FM_k(\bC)$ and $\Sigma_m$
-on $\Eone(m)$. The $\Eone(m)$ factor provides the open inputs;
-the $\FM_k(\bC)$ factor provides the closed/holomorphic
-inputs. Taking the limit over all $m$, the components assemble
-into the chiral Hochschild cochain complex~\eqref{eq:e-chirHoch}.
+with the symmetric equivariance on the interior labels and the ordered
+boundary incidence inherited from the mixed Swiss-cheese sector. The
+boundary inputs provide the module variables; the interior points
+provide the holomorphic chiral insertions. Taking the equaliser over
+the mixed-sector composition maps, and then gluing these local
+formalisations over \(X\), gives the chiral Hochschild cochain
+complex~\eqref{eq:e-chirHoch}.
 The closed-sector composition maps in $\SCchtop$ (FM insertion
 in~$\bC$) produce the brace operations, and the compatibility
 conditions of the operadic centre are precisely the higher
@@ -1061,7 +1057,7 @@ $J^a(z) \mapsto J^a(z) + \epsilon\,\phi^a(z)$.
 
 \subsection{Three Hochschild theories: chiral, topological, categorical}
 
-\begin{warning}[Three Hochschild theories: chiral, topological, categorical]
+\begin{remark}[Three Hochschild theories: chiral, topological, categorical]
 \label{warn:e-three-hochschild}
 Three distinct Hochschild-type constructions appear in the $\En$ operadic circle: chiral, topological, and categorical. The geometry of the base space
 determines which of the chiral/topological/categorical theories applies.
@@ -1086,7 +1082,7 @@ representation category. The three constructions give different
 answers for the same algebra, and their relationship is the
 content of the $\En$ operadic circle
 (Section~\ref{sec:en-circle}).
-\end{warning}
+\end{remark}
 
 \subsection{The $\SCchtop$ structure on the pair
 $(\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA), \cA)$}
@@ -1174,13 +1170,20 @@ open/topological) with three sectors:
  open output):
  \[
  \SCchtop((\mathsf{ch}^k, \mathsf{top}^m);\,\mathsf{top})
- \;=\; \FM_k(\bC) \times \Eone(m).
+ \;=\; \overline{\FM}_{k,m}(\bH;\bR).
  \]
+ This is the Fulton--MacPherson space of \(k\) interior points and
+ \(m\) boundary-ordered points in the upper half-plane, with its
+ incidence strata. Its open stratum is
+ \(\Conf_k(\bH)\times\Conf_m(\bR)\); the product
+ \(\FM_k(\bC)\times\Eone(m)\) is only the decoupled open-stratum
+ approximation.
  No mixed operations with closed output: the closed colour
  receives no information from the open colour.
 \end{enumerate}
-Composition is componentwise: FM insertion in $\bC$,
-interval insertion in $\Eone$. The no-open-to-closed rule
+Composition inserts interior configurations into interior points,
+boundary configurations into boundary points, and records collisions
+where interior points approach the boundary. The no-open-to-closed rule
 is the directionality constraint
 $\SCchtop(\ldots,\mathsf{top},\ldots;\,\mathsf{ch})
 = \varnothing$.
@@ -1191,7 +1194,7 @@ $\SCchtop(\ldots,\mathsf{top},\ldots;\,\mathsf{ch})
 The Swiss-cheese operad is two-coloured with a strict
 directionality constraint. Dunn additivity
 ($\En \otimes E_m \simeq E_{n+m}$) applies to
-\emph{single-coloured} operads. The product structure
+\emph{single-coloured} operads. The decoupled open-stratum product
 $\FM_k(\bC) \times \Eone(m)$ in the mixed sector does
 \emph{not} imply that $\SCchtop$ is $\Etwo \otimes \Eone = \Ethree$:
 the directionality constraint (no open-to-closed) breaks the
@@ -1623,7 +1626,8 @@ bulk.
 \begin{theorem}[Cohomological topologisation via DS reduction]
 \label{thm:e-topologisation-DS}
 Let $\fg$ be a finite-dimensional simple Lie algebra,
-$f \in \fg$ any nilpotent element, and $k \neq -h^\vee$.
+$f \in \fg$ a nilpotent element admitting the standard good integral
+grading used in Drinfeld--Sokolov reduction, and $k \neq -h^\vee$.
 The $\cW$-algebra $\cW = \cW^k(\fg, f)$ obtained by
 Drinfeld--Sokolov reduction from $V_k(\fg)$ admits an
 $\Ethree^{\mathrm{top}}$-structure on the BRST cohomology of
@@ -1646,7 +1650,9 @@ $\cW^k(\mathfrak{sl}_3, f_{\min})$.
 The Costello--Gaiotto theorem~\cite{CostelloGaiotto} provides the
 $3$d holomorphic--topological theory: holomorphic Chern--Simons
 for~$\fg$ at level~$k$, with DS boundary conditions determined
-by~$f$. The $3$d bulk is independent of~$f$.
+by~$f$. The statement is made on the locus where those boundary
+conditions are represented by the standard BRST complex associated
+to the chosen good grading. The $3$d bulk is independent of~$f$.
 
 The DS-transported antighost is
 $G' = G_{\mathrm{Sug}} + G_{\mathrm{imp}}$, where
@@ -1909,25 +1915,28 @@ $\Einf$-topologisation}
 Theorem~\textup{\ref{thm:e-topologisation}} promotes
 $\SCchtop$ to $\Ethree^{\mathrm{top}}$ by a single inner
 conformal vector $T(z)$ with antighost $G(z)$ satisfying
-$T = [Q, G]$. When the chiral algebra carries a \emph{tower} of
-inner higher-spin Casimir fields $\{T^{(n)}\}_{2 \leq n \leq
-N+1}$, each admitting its own BRST primitive, the topologisation
-iterates: a depth-$k$ inner stress tower promotes $\SCchtop$ to
-$E_{k+2}^{\mathrm{top}}$. The principal $\cW_N$-algebra
-$\cW_N$ realises exactly a depth-$(N-1)$ tower, and the limit
-$\cW_\infty$ realises $\Einf$-topologisation.
+$T = [Q, G]$. When the chiral algebra carries a finite \emph{tower}
+of inner higher-spin Casimir fields
+$\{T^{(n)}\}_{2 \leq n \leq N+1}$, each with a compatible BRST
+primitive, the topologisation iterates on that finite rung: a
+depth-$k$ inner stress tower promotes $\SCchtop$ to
+$E_{k+2}^{\mathrm{top}}$. For principal $\cW_N$-algebras this is a
+finite-rung criterion. The $\cW_\infty$ limit requires a completed
+tower with controlled derived inverse-limit obstruction; it is not a
+formal consequence of the finite theorem.
 
 \begin{theorem}[Iterated Sugawara construction]
 \label{thm:iterated-sugawara-standalone}
-\ClaimStatusProvedHere
 Let $\cA$ be a chiral algebra carrying a higher-spin Casimir
 tower $\{T^{(n)}\}_{2 \leq n \leq N+1}$ of inner fields
 \textup{(}so each $T^{(n)} \in \cA$ and the OPE closes among
-them\textup{)}. Suppose each $T^{(n)}$ admits a BRST primitive
+them\textup{)}. Suppose the first \(k\) fields in this tower admit
+BRST primitives
 $G^{(n)} \in \cA$ with
 $T^{(n)} = [Q_{\mathrm{tot}}, G^{(n)}]$ on the BRST cohomology
-of the $3$d holomorphic--topological theory associated with
-$\cA$. Then the depth-$k$ sub-tower $\{T^{(2)}, \ldots,
+of the associated \(3\)d holomorphic--topological theory, and suppose
+the resulting \(E_1\)-directions commute up to the specified coherent
+homotopies. Then the depth-$k$ sub-tower $\{T^{(2)}, \ldots,
 T^{(k+1)}\}$ topologises $\SCchtop$ to $E_{k+2}^{\mathrm{top}}$:
 \[
 H_Q^\bullet\bigl(\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)\bigr)
@@ -1936,7 +1945,7 @@ E_{k+2}^{\mathrm{top}}\text{-algebra.}
 \]
 \end{theorem}
 
-\begin{proof}[Proof sketch]
+\begin{proof}
 For each $n$ the pair $(T^{(n)}, G^{(n)})$ makes the
 corresponding $C$-translation $\partial_{C,n}$ equal to
 $[Q, G^{(n)}]$, hence $Q$-exact on cohomology. A single
@@ -1956,44 +1965,47 @@ giving the claimed structure.
 \textup{(i)} Virasoro $\mathrm{Vir}_c$ \textup{(}$N=2$,
 depth $1$\textup{)}: $\Ethree^{\mathrm{top}}$.
 \textup{(ii)} Principal $\cW_N$ \textup{(}depth $N-1$\textup{)}:
-$E_{N+1}^{\mathrm{top}}$.
+$E_{N+1}^{\mathrm{top}}$ when the finite-rung hypotheses of
+Theorem~\ref{thm:iterated-sugawara-standalone} are satisfied.
 \textup{(iii)} Principal $\cW_\infty[\Psi]$ \textup{(}depth
-$\infty$\textup{)}: $\Einf^{\mathrm{top}}$.
+$\infty$\textup{)}: $\Einf^{\mathrm{top}}$ only after passage to a
+completed tower with vanishing derived inverse-limit obstruction.
 \end{corollary}
 
 \begin{remark}[The operadic spiral]
 \label{rem:operadic-spiral-sa}
 The iterated-Sugawara ladder and the $\En$ operadic circle
-\eqref{eq:e-circle} together realise an infinite bidirectional
-spiral. The bar construction descends the operadic level by
-one; the derived centre ascends it by one. The iterated
-Sugawara collapses any number of holomorphic directions into
-topological ones. Meeting at $\Einf$, the spiral records that
-$3$d quantum gravity in Vol~II is the $N = 2$ shadow of a
-$3d + \infty$ topological theory.
+\eqref{eq:e-circle} have opposite finite-rung effects. The bar
+construction descends the operadic level by one; the derived centre
+ascends it by one. A compatible tower of inner higher-spin fields adds
+topological directions one at a time. The infinite-rung limit is a
+completion problem, not a formal consequence of the finite ladder.
 \end{remark}
 
 \subsection[Chiral higher Deligne and the SC ch,top heptagon]{Chiral higher Deligne and the \SCchtop\ heptagon}
 \label{subsec:chiral-higher-deligne}
 
-The operadic circle closes through the \emph{chiral higher
-Deligne theorem}: the derived chiral centre
-$\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ is the universal
-$\Ethree$-chiral algebra on which the Swiss-cheese operad
-$\SCchtop$ acts.
+The operadic circle closes only after the Deligne, Swiss-cheese, and
+topologisation comparisons are placed in the same model. The derived
+chiral centre \(\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)\) carries the
+unconditional \(\Etwo\) structure supplied by chiral Deligne. The
+\(\Ethree\) statement below is the formal-family comparison under the
+listed rigidity and PBW hypotheses.
 
-\begin{theorem}[Chiral higher Deligne; Vol~II]
+\begin{theorem}[Chiral higher Deligne comparison]
 \label{thm:chiral-higher-Deligne-sa}
-\ClaimStatusProvedElsewhere
 Let $\cA$ be an $\Eone$-chiral algebra on a smooth curve $X$.
-The derived chiral centre $\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)
-= \mathrm{ChirHoch}^\bullet(\cA, \cA)$ is the universal
-$\Ethree$-chiral algebra acted on by $\SCchtop$ through the
-heptagon edges $(3) \leftrightarrow (4) \leftrightarrow (5)$ of
-the five-presentation pentagon of $\SCchtop$-algebras. The
-concentration theorem for $\mathrm{ChirHoch}^\bullet(\cA)$ in
-degrees $\{0,1,2\}$ is a consequence of $\Ethree$-rigidity at a
-point together with PBW collapse.
+The derived chiral centre
+\(\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)
+= \mathrm{ChirHoch}^\bullet(\cA,\cA)\) carries the \(\Etwo\)-structure
+of chiral Deligne. If, in addition, the \(\SCchtop\)-action, PBW
+collapse, and intrinsic-formality hypotheses of
+Theorem~\ref{thm:e-e3-identification} hold in the chosen model, then
+this \(\Etwo\)-structure extends to the formal \(\Ethree\)-deformation
+family used in the heptagon comparison. The concentration theorem for
+\(\mathrm{ChirHoch}^\bullet(\cA)\) in degrees \(\{0,1,2\}\) is not a
+formal consequence of \(\Ethree\)-rigidity alone; it also uses the
+PBW-collapse hypothesis.
 \end{theorem}
 
 \begin{remark}[The seven faces of $\SCchtop$]
@@ -2115,9 +2127,10 @@ The five arrows are:
  $Z \colon \Eone\text{-}\mathsf{Cat} \to
  \Etwo\text{-}\mathsf{Cat}$ recovers an
  $\Etwo$-braided monoidal category from $\Eone$-module
- data. This is the categorified analogue of the averaging
- map. The Drinfeld centre is the \emph{sole source of
- nontrivial braiding}: direct restriction from
+ data. It is the right adjoint to forgetting the braiding from
+ \(\Etwo\)-monoidal categories to \(\Eone\)-monoidal categories.
+ The Drinfeld centre is the source of non-symmetric half-braiding in
+ this circle: direct restriction from
  $\Ethree^{\mathrm{top}}$ to $\Etwo$ gives only
  symmetric braiding, because
  $\pi_1(\Conf_2(\bR^3))$ is trivial.
@@ -2137,7 +2150,7 @@ The five arrows are:
 \end{enumerate}
 \end{definition}
 
-\begin{theorem}[Arrow 3 as the sole source of braiding]
+\begin{theorem}[Arrow 3 as the source of non-symmetric braiding]
 \label{thm:e-arrow3-braiding}
 Let $A$ be an $\Ethree^{\mathrm{top}}$-algebra.
 \begin{enumerate}[label=\textup{(\roman*)}]
@@ -2155,7 +2168,7 @@ Let $A$ be an $\Ethree^{\mathrm{top}}$-algebra.
  strands).
 \item The non-symmetric braiding in the Drinfeld centre is
  therefore not inherited from the original $\Ethree$
- restriction; it is created by arrow~$3$. For
+ restriction; it enters through arrow~$3$. For
  $\Einf$-chiral algebras, the braiding is symmetric
  \textup{(}the $R$-matrix is trivial\textup{)}. For
  $\Eone$-chiral algebras, the braiding is non-symmetric
@@ -2184,8 +2197,8 @@ braiding is non-symmetric.
 Part~(iii): since $\Ethree$ restriction gives only symmetric
 braiding and the Drinfeld centre produces non-symmetric
 braiding, the non-symmetric part is created by arrow~$3$.
-This is the mathematical content of the statement that the
-Drinfeld centre is the sole source of nontrivial braiding.
+This is the precise sense in which arrow~$3$ contributes the
+non-symmetric braiding in the circle.
 \end{proof}
 
 \subsection{The $\SCchtop$ intermediary}
@@ -2641,7 +2654,7 @@ associator controls the regularisation of the formal power
 series expansion.
 \end{proof}
 
-\begin{warning}[Each notion has its own derived centre]
+\begin{remark}[Each notion has its own derived centre]
 \label{warn:e-five-derived-centres}
 The five notions of $\Eone$-chiral algebra lead to five
 a priori distinct derived centres:
@@ -2666,7 +2679,7 @@ On the Koszul locus, \textup{(B)} and \textup{(C)} give the
 same derived centre \textup{(}by
 Theorem~\ref{thm:e-bc-comparison}\textup{)}. The comparison
 of the remaining notions is open.
-\end{warning}
+\end{remark}
 
 \begin{remark}[Symmetric input simplifies everything]
 \label{rem:e-symmetric-simplifies}
@@ -3296,19 +3309,22 @@ all $\Eone$-chiral algebras with topologisable bulk.
 \label{conj:e-drinfeld-center-equals-bulk}
 Let $\cA$ be an $\Eone$-chiral algebra
 \textup{(}Notion~B, Definition~\ref{def:e-five-notions}\textup{)}
-and $U_\cA = \cA \bowtie \cA^!$ the Drinfeld double.
+and let \(U_\cA = \cA \bowtie \cA^!\) denote the completed chiral
+Drinfeld double on the Koszul locus.
 Assume the topologisation hypotheses of
 Section~\ref{sec:topologisation}, so that the bulk
 $\Ethree^{\mathrm{top}}$-algebra and the derived chiral centre
-are defined. Then there is an equivalence of
+are defined. Then the expected comparison is an equivalence of
 $\Ethree^{\mathrm{top}}$-algebras:
 \begin{equation}\label{eq:e-closing}
-Z(U_\cA)
+\mathcal Z\!\left(\mathrm{Mod}^{\mathrm{compl}}_{U_\cA}\right)
 \;\simeq\;
 \cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA),
 \end{equation}
-where $Z$ denotes the Drinfeld centre and
-$\cZ^{\mathrm{der}}_{\mathrm{ch}}$ the derived chiral centre.
+where \(\mathcal Z\) denotes the Drinfeld centre of the completed
+module category, not the ordinary centre of the algebra object
+\(U_\cA\), and \(\cZ^{\mathrm{der}}_{\mathrm{ch}}\) denotes the
+derived chiral centre.
 \end{conjecture}
 
 \subsection{Three obstructions}
@@ -3318,7 +3334,9 @@ Three obstructions to a proof are identified.
 \begin{enumerate}[label=\textup{(\Roman*)}]
 \item \emph{Pointwise reduction for class M.}
  For class G and L algebras (Heisenberg, affine Kac--Moody),
- the Drinfeld centre $Z(U_\cA)$ can be computed stalk-wise:
+ the Drinfeld centre
+ \(\mathcal Z(\mathrm{Mod}^{\mathrm{compl}}_{U_\cA})\) can be computed
+ stalk-wise:
  the centre at each point of the Ran space agrees with the
  chiral Hochschild cochains, and the global assembly is
  straightforward. For class M algebras (Virasoro, $\cW_N$),
@@ -3368,15 +3386,16 @@ higher Deligne conjecture.
 
 \begin{proof}
 \emph{If (I) is resolved:} the Drinfeld centre is computed
-stalk-wise for all classes, so $Z(U_\cA)$ is computed as a
-chiral Hochschild cochain complex. The comparison with
+stalk-wise for all classes, so
+\(\mathcal Z(\mathrm{Mod}^{\mathrm{compl}}_{U_\cA})\) is computed as
+a chiral Hochschild cochain complex. The comparison with
 $\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ is the chiral
 centre theorem (Theorem~\ref{thm:e-center-hochschild}).
 
 \emph{If (II) is resolved:} the Drinfeld double $U_\cA$ is
 a well-defined $\Eone$-chiral algebra, and
-$Z(U_\cA)$ is a well-defined $\Etwo$-braided monoidal
-category. The derived centre
+\(\mathcal Z(\mathrm{Mod}^{\mathrm{compl}}_{U_\cA})\) is a
+well-defined $\Etwo$-braided monoidal category. The derived centre
 $\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ is also an
 $\Etwo$-algebra by the chiral centre theorem. The comparison
 of the two $\Etwo$-algebras reduces to matching their
@@ -3409,8 +3428,9 @@ The following cases are verified:
 \item \emph{Heisenberg $H_k$, $k \neq 0$
  \textup{(}class G\textup{)}.}
  The Drinfeld double $U_{H_k} = H_k \bowtie H_k^!$ has
- centre $Z(U_{H_k}) = \bC^3$ (Proposition~\ref{prop:e-heis-complete}),
- matching the derived centre
+ completed module Drinfeld centre
+ \(\mathcal Z(\mathrm{Mod}^{\mathrm{compl}}_{U_{H_k}})\simeq \bC^3\)
+ (Proposition~\ref{prop:e-heis-complete}), matching the derived centre
  $\cZ^{\mathrm{der}}_{\mathrm{ch}}(H_k) = \bC^3$
  (Example~\ref{ex:e-heis-chirhoch}). All three obstructions
  are trivially resolved: pointwise reduction works (class G),
@@ -3455,7 +3475,7 @@ Let $C = \Barord(H_k)$ and $C^e = C \otimes C^{\mathrm{op}}$. The
 chiral Drinfeld centre of the $\Eone$-monoidal category of complete
 $H_k$-modules admits an identification
 \begin{equation}\label{eq:e-heis-morita}
-Z(H_k\textup{-mod}^{\mathrm{compl}})
+\mathcal Z(H_k\textup{-mod}^{\mathrm{compl}})
 \;\simeq\;
 \mathrm{Coext}_{C^e}^*(C_\Delta, C_\Delta)
 \;\simeq\;
@@ -3497,12 +3517,12 @@ The Drinfeld centre of an $\Eone$-monoidal category $\cC$
 is the category of pairs $(M, \gamma)$ where $\gamma$
 is a half-braiding. For a module category $\cC = A\text{-mod}$,
 the endomorphism algebra of the identity functor is
-$Z(\cC) = \mathrm{Nat}(\id_\cC, \id_\cC)
+\mathcal Z(\cC) = \mathrm{Nat}(\id_\cC, \id_\cC)
 = \HH^*(A, A)$.
 More precisely, the Hochschild cochain complex
 $C^*(A, A)$ computes the derived endomorphisms
 of the identity bimodule:
-$Z(\cC) \simeq R\!\Hom_{A^e}(A, A) = \HH^*(A, A)$.
+\mathcal Z(\cC) \simeq R\!\Hom_{A^e}(A, A) = \HH^*(A, A)$.
 The monoidal equivalence of Step~1 transports this to
 the coalgebra side: the Drinfeld centre of
 $C$-comod is the coHochschild self-extension
@@ -3518,9 +3538,9 @@ The chiral Hochschild--coHochschild duality
 \]
 Composing Steps~1--3:
 \[
-Z(H_k\text{-mod}^{\mathrm{compl}})
+\mathcal Z(H_k\text{-mod}^{\mathrm{compl}})
 \;\simeq\;
-Z(C\text{-comod}^{\mathrm{conil}})
+\mathcal Z(C\text{-comod}^{\mathrm{conil}})
 \;\simeq\;
 \mathrm{Coext}_{C^e}^*(C_\Delta, C_\Delta)
 \;\simeq\;
@@ -3533,10 +3553,10 @@ Z(C\text{-comod}^{\mathrm{conil}})
 \begin{theorem}[Closing conjecture for class G]
 \label{thm:e-closing-class-g}
 For the Heisenberg algebra $H_k$ at level $k \neq 0$, the
-$\En$ operadic circle closes: there is an equivalence of
-$\Ethree^{\mathrm{top}}$-algebras
+$\En$ operadic circle closes on the completed module-category model:
+there is an equivalence of $\Ethree^{\mathrm{top}}$-algebras
 \begin{equation}\label{eq:e-closing-class-g}
-Z(U_{H_k})
+\mathcal Z(\mathrm{Mod}^{\mathrm{compl}}_{U_{H_k}})
 \;\simeq\;
 \cZ^{\mathrm{der}}_{\mathrm{ch}}(H_k).
 \end{equation}
@@ -3581,7 +3601,7 @@ $\Barord(H_k)$, which is identified with the chiral
 Hochschild cohomology by Hochschild--coHochschild
 duality. The result:
 \[
-Z(H_k\text{-mod})
+\mathcal Z(H_k\text{-mod}^{\mathrm{compl}})
 \;\simeq\;
 \ChirHoch^*(H_k, H_k)
 \;=\;
@@ -3594,8 +3614,9 @@ $\cZ^{\mathrm{der}}_{\mathrm{ch}}(H_k) = \bC \oplus \bC[-1] \oplus \bC[-2]$
 carries trivial $\Pthree$ bracket (the Gerstenhaber
 bracket vanishes because $H_k$ is commutative: the Lie
 bracket $[J, J] = 0$ forces all brackets on Hochschild
-cohomology to vanish). The Drinfeld centre
-$Z(U_{H_k})$ also has trivial $\Pthree$ bracket
+cohomology to vanish). The completed module Drinfeld centre
+\(\mathcal Z(\mathrm{Mod}^{\mathrm{compl}}_{U_{H_k}})\) also has
+trivial $\Pthree$ bracket
 (the $R$-matrix $S(z) = \id$ gives symmetric braiding,
 hence trivial bracket on the centre). By $\Ethree$
 formality (Theorem~\ref{thm:e-e3-formality}), the
@@ -3632,13 +3653,16 @@ The closing conjecture for affine Kac--Moody algebras at
 non-critical level follows from obstruction~(I) resolution
 combined with the $\Ethree$ identification theorem.
 
-\begin{lemma}[Stalk-wise reduction for class L]
+\begin{lemma}[Conditional stalk-wise reduction for class L]
 \label{lem:e-km-stalkwise}
 Let $V_k(\fg)$ be the universal affine vertex algebra at
-non-critical level $k \neq -h^\vee$, with $\fg$ simple. The
-Drinfeld centre $Z(V_k(\fg)\textup{-mod})$ is computed by
-the stalk-wise centre at each point of $\Ran(X)$: no
-$\Ainf$ correction at degree $\ge 4$ contributes.
+non-critical level $k \neq -h^\vee$, with $\fg$ simple. Assume the
+Ran-space assembly of the completed module Drinfeld centre is
+compatible with the PBW completion and with the degree-\(3\)
+associator data. Then
+\(\mathcal Z(V_k(\fg)\textup{-mod}^{\mathrm{compl}})\) is computed by
+the stalk-wise centre at each point of \(\Ran(X)\): no \(\Ainf\)
+correction at degree \(\ge 4\) contributes on this locus.
 \end{lemma}
 
 \begin{proof}
@@ -3659,13 +3683,15 @@ indexed by the Ran space, and each stalk contributes the
 full centre data.
 \end{proof}
 
-\begin{theorem}[Closing conjecture for class L]
+\begin{theorem}[Conditional closing comparison for class L]
 \label{thm:e-closing-class-l}
-For $V_k(\fg)$ with $\fg$ simple and $k \neq -h^\vee$,
-the $\En$ operadic circle closes: there is an equivalence
-of $\Ethree^{\mathrm{top}}$-algebras
+For $V_k(\fg)$ with $\fg$ simple and $k \neq -h^\vee$, assume the
+stalk-wise reduction, PBW-completed bar--cobar module comparison, and
+CFG factorization-algebra identification hypotheses. Then the
+\(\En\) operadic circle closes on this locus: there is an equivalence
+of \(\Ethree^{\mathrm{top}}\)-algebras
 \begin{equation}\label{eq:e-closing-class-l}
-Z(U_{V_k(\fg)})
+\mathcal Z(\mathrm{Mod}^{\mathrm{compl}}_{U_{V_k(\fg)}})
 \;\simeq\;
 \cZ^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg)).
 \end{equation}
@@ -3684,7 +3710,7 @@ By Lemma~\ref{lem:e-km-stalkwise}, the stalk-wise
 centre computes the full Drinfeld centre for class~L.
 The chiral centre theorem
 (Theorem~\ref{thm:e-center-hochschild}) then identifies
-$Z(V_k(\fg)\text{-mod})$ with the chiral Hochschild
+\(\mathcal Z(V_k(\fg)\text{-mod}^{\mathrm{compl}})\) with the chiral Hochschild
 cochains $C^\bullet_{\mathrm{ch}}(V_k(\fg), V_k(\fg))$.
 By the theorem on resolution of any one obstruction
 (Theorem~\ref{thm:e-one-obstruction}), the closing
@@ -3697,7 +3723,8 @@ $H^*(\cZ^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg)))
 \cong C^*(\fg)$ is determined by the Gerstenhaber
 bracket $\{\phi_a, \phi_b\} = \lambda\,f_{ab}{}^c\,\phi_c$
 (Remark~\ref{rem:e-e3-to-p3}). The $\Pthree$-structure
-on $Z(U_{V_k(\fg)})$ is determined by the braiding of
+on \(\mathcal Z(\mathrm{Mod}^{\mathrm{compl}}_{U_{V_k(\fg)}})\) is
+determined by the braiding of
 the Drinfeld double. For affine Kac--Moody at non-critical
 level, the braiding is the KZ braiding, whose classical
 limit is the $r$-matrix
@@ -3723,7 +3750,7 @@ parameter $\lambda = k + h^\vee$ and agree at each order,
 the two $\Ethree$-algebras are isomorphic as formal
 deformation families:
 \[
-Z(U_{V_k(\fg)})
+\mathcal Z(\mathrm{Mod}^{\mathrm{compl}}_{U_{V_k(\fg)}})
 \;\simeq\;
 \cZ^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))
 \;\simeq\;
@@ -3919,8 +3946,8 @@ for all standard families.
  AMS Colloquium Publications, vol.~51, 2004.
 
 \bibitem{CFG25} K.~Costello, D.~Francis, and O.~Gwilliam,
- \emph{Perturbative quantization of Chern--Simons theory and the
- derived center}, in preparation, 2025.
+ \emph{Chern--Simons factorization algebras and knot polynomials},
+ arXiv:2602.12412, 2026.
 
 \bibitem{CostelloGaiotto} K.~Costello and D.~Gaiotto, \emph{Vertex
  algebras and $3$d $\cN=4$ gauge theories}, J.\ High Energy Phys.\
@@ -3962,8 +3989,8 @@ for all standard families.
 \bibitem{Idrissi22} N.~Idrissi, \emph{Real homotopy of configuration
  spaces}, Lecture Notes in Math.\ \textbf{2303}, Springer, 2022.
 
-\bibitem{KhanZeng25} A.~Khan and Y.~Zeng, \emph{$\Ethree$-algebras
- from chiral algebras}, preprint, 2025.
+\bibitem{KhanZeng25} A.~Z.~Khan and K.~Zeng, \emph{Poisson Vertex
+ Algebras and Three-Dimensional Gauge Theory}, arXiv:2502.13227, 2025.
 
 \bibitem{Knudsen18} B.~Knudsen, \emph{Higher enveloping algebras},
  Geom.\ Topol.\ \textbf{22} (2018), 4013--4066.

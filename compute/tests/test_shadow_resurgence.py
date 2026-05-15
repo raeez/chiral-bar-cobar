@@ -1,36 +1,31 @@
-r"""Tests for the shadow resurgence engine.
+r"""Tests for scalar shadow arity diagnostics.
 
 Verifies:
-1. Shadow data: kappa, alpha, S4, Delta for all 15 algebras
-2. Shadow coefficients: convolution recursion matches known values
+1. Shadow data: kappa, alpha, S4, Delta for standard one-lane data
+2. Shadow coefficients: exact finite towers and class-M recursion
 3. Borel transform: coefficients, evaluation, entirety
 4. Darboux coefficient: consistency with asymptotic formula
-5. Stokes constants: exact vs numerical, leading order 2*pi*i
-6. Optimal truncation: N*(A) formula, monotonicity
-7. Borel reconstruction: method C vs method A cross-validation
+5. Stokes-like diagnostics remain non-certified
+6. Term-minimizing arity-window diagnostics
+7. Darboux asymptotic approximation cross-validation
 8. Branch points: locations, conjugacy, modulus = 1/rho
-9. Instanton actions: A_pm = 1/t_pm
-10. Class G/L: trivial Stokes (S_1 = 0), infinite convergence radius
-11. Class M: nontrivial Stokes, Borel-Pade singularity detection
-12. W_3: T-line vs W-line distinct resurgence
-13. Koszul duality: rho(c) vs rho(26-c), self-dual at c=13
-14. Specific targets: S_1(Vir,c=1/2), S_1(Vir,c=13), N*(Vir,c=4)
-15. Full atlas: 15 algebras, consistency checks
+9. Reciprocal branch diagnostics are not certified instanton actions
+10. Finite-depth classes have rho = 0 and no Darboux tail
+11. Class M has nonzero Darboux diagnostics and finite-window Pade poles
+12. W_3: T-line vs W-line distinct branch diagnostics
+13. Virasoro complementarity checks are scalar diagnostics only
+14. Specific targets: Virasoro diagnostics and N*(Vir,c=4)
+15. Diagnostic atlas: standard algebras, consistency checks
 
 Cross-engine verification:
     - shadow_radius.py: rho values match
-    - resurgence_frontier_engine.py: Borel coefficients match
+    - resurgence_frontier_engine.py: coefficient recursion matches
     - shadow_tower_recursive.py: S_r values match
 
 Manuscript references:
     thm:shadow-radius, thm:riccati-algebraicity, thm:single-line-dichotomy,
     def:shadow-metric, thm:shadow-connection
 """
-
-# VERIFIED: [DC] hardcoded expected values below are direct evaluations of the
-# formulas, recurrences, or enumerations under test. [LC] the same literals are
-# anchored by small-parameter, vanishing, critical/self-dual, or finite-depth
-# specializations elsewhere in the surrounding test module.
 
 import sys
 sys.path.insert(0, 'compute')
@@ -52,7 +47,7 @@ class TestShadowData:
         from lib.shadow_resurgence import heisenberg_data
         for n in [1, 2, 3, 8, 24]:
             d = heisenberg_data(n)
-            assert abs(d.kappa - n / 2.0) < 1e-14
+            assert abs(d.kappa - float(n)) < 1e-14
 
     def test_heisenberg_class_G(self):
         from lib.shadow_resurgence import heisenberg_data
@@ -95,6 +90,8 @@ class TestShadowData:
         d = betagamma_data()
         assert abs(d.kappa - (-1.0)) < 1e-14
         assert d.depth_class == 'C'
+        assert d.alpha == 0.0
+        assert abs(d.S4 + 5.0 / 12.0) < 1e-14
 
     def test_virasoro_kappa(self):
         from lib.shadow_resurgence import virasoro_data
@@ -208,14 +205,20 @@ class TestBranchPoints:
         disc = d.q1**2 - 4.0 * d.q0 * d.q2
         assert abs(disc) < 1e-10
 
-    def test_instanton_actions_reciprocal(self):
-        """A_pm = 1/t_pm."""
+    def test_reciprocal_branch_diagnostics(self):
+        """The legacy reciprocal branch values are 1/t_pm for class M."""
         from lib.shadow_resurgence import virasoro_data
         d = virasoro_data(13.0)
         t_p, t_m = d.branch_points
         A_p, A_m = d.instanton_actions
         assert abs(A_p * t_p - 1.0) < 1e-10
         assert abs(A_m * t_m - 1.0) < 1e-10
+
+    def test_reciprocal_branch_values_not_certified_instantons(self):
+        from lib.shadow_resurgence import analytic_certification_firewall
+        firewall = analytic_certification_firewall()
+        assert firewall['analytic_resurgence']['status'] == 'analytic_resurgence_hypothesis'
+        assert firewall['arity_metric_branch_points']['certifies_borel_summability'] is False
 
 
 # =====================================================================
@@ -236,9 +239,19 @@ class TestShadowCoefficients:
         from lib.shadow_resurgence import heisenberg_data, shadow_coefficients
         d = heisenberg_data(1)
         coeffs = shadow_coefficients(d, max_r=10)
-        assert abs(coeffs[2] - 0.5) < 1e-14
+        assert abs(coeffs[2] - 1.0) < 1e-14
         for r in range(3, 11):
             assert abs(coeffs[r]) < 1e-14
+
+    def test_betagamma_class_C_finite_tower(self):
+        from lib.shadow_resurgence import betagamma_data, shadow_coefficients
+        d = betagamma_data()
+        coeffs = shadow_coefficients(d, max_r=8)
+        assert abs(coeffs[2] + 1.0) < 1e-14
+        assert coeffs[3] == 0.0
+        assert abs(coeffs[4] + 5.0 / 12.0) < 1e-14
+        for r in range(5, 9):
+            assert coeffs[r] == 0.0
 
     def test_affine_only_S2_S3(self):
         from lib.shadow_resurgence import affine_sl2_data, shadow_coefficients
@@ -392,76 +405,127 @@ class TestDarbouxCoefficient:
 
 
 # =====================================================================
-# Section 6: Stokes constants
+# Section 6: Stokes-like diagnostics and firewalls
 # =====================================================================
 
-class TestStokesConstants:
-    """Test Stokes constant computation."""
+class TestStokesDiagnostics:
+    """Test non-certified Stokes-like diagnostics."""
 
-    def test_class_G_stokes_zero(self):
-        from lib.shadow_resurgence import heisenberg_data, stokes_constant_exact
+    def test_class_G_diagnostic_zero(self):
+        from lib.shadow_resurgence import heisenberg_data, stokes_constant_diagnostic
         d = heisenberg_data(1)
-        S1 = stokes_constant_exact(d)
+        S1 = stokes_constant_diagnostic(d)
         assert abs(S1) < 1e-14
 
-    def test_class_L_stokes_zero(self):
-        from lib.shadow_resurgence import affine_sl2_data, stokes_constant_exact
+    def test_class_L_diagnostic_zero(self):
+        from lib.shadow_resurgence import affine_sl2_data, stokes_constant_diagnostic
         d = affine_sl2_data(1.0)
-        S1 = stokes_constant_exact(d)
+        S1 = stokes_constant_diagnostic(d)
         assert abs(S1) < 1e-14
 
-    def test_class_M_stokes_nonzero(self):
-        from lib.shadow_resurgence import virasoro_data, stokes_constant_exact
+    def test_class_C_diagnostic_zero(self):
+        from lib.shadow_resurgence import betagamma_data, stokes_constant_diagnostic
+        d = betagamma_data()
+        S1 = stokes_constant_diagnostic(d)
+        assert abs(S1) < 1e-14
+
+    def test_class_M_diagnostic_nonzero(self):
+        from lib.shadow_resurgence import virasoro_data, stokes_constant_diagnostic
         d = virasoro_data(1.0)
-        S1 = stokes_constant_exact(d)
+        S1 = stokes_constant_diagnostic(d)
         assert abs(S1) > 1e-5
 
-    def test_stokes_modulus_order_2pi(self):
-        """Leading order: |S_1| ~ 2*pi (sqrt monodromy)."""
+    def test_diagnostic_is_not_exact_stokes(self):
         from lib.shadow_resurgence import virasoro_data, stokes_constant_exact
+        with pytest.raises(NotImplementedError):
+            stokes_constant_exact(virasoro_data(13.0))
+
+    def test_diagnostic_modulus_finite(self):
+        """The Darboux-normalized diagnostic is finite for regular Virasoro c."""
+        from lib.shadow_resurgence import virasoro_data, stokes_constant_diagnostic
         for c in [1.0, 13.0, 25.0]:
             d = virasoro_data(c)
-            S1 = stokes_constant_exact(d)
-            # |S_1| should be within order of magnitude of 2*pi
-            assert 0.1 < abs(S1) / (2.0 * math.pi) < 100.0
+            S1 = stokes_constant_diagnostic(d)
+            assert math.isfinite(abs(S1))
+            assert abs(S1) > 0.0
 
-    def test_stokes_virasoro_half(self):
-        """Compute S_1(Vir, c=1/2) -- the specific target."""
+    def test_virasoro_half_diagnostic(self):
+        """Compute the Virasoro c=1/2 Darboux diagnostic."""
         from lib.shadow_resurgence import stokes_constant_virasoro
         result = stokes_constant_virasoro(0.5)
-        S1 = result['S1_exact']
+        S1 = result['stokes_diagnostic']
         assert abs(S1) > 1e-5
         assert math.isfinite(abs(S1))
-        # Record the value for the manuscript
+        assert result['stokes_certified'] is False
         assert result['N_star'] >= 2
 
-    def test_stokes_virasoro_13(self):
-        """Compute S_1(Vir, c=13) -- the self-dual target."""
+    def test_virasoro_13_diagnostic(self):
+        """Compute the Virasoro c=13 Darboux diagnostic."""
         from lib.shadow_resurgence import stokes_constant_virasoro
         result = stokes_constant_virasoro(13.0)
-        S1 = result['S1_exact']
+        S1 = result['stokes_diagnostic']
         assert abs(S1) > 1e-5
         assert math.isfinite(abs(S1))
+        assert result['stokes_certified'] is False
 
-    def test_stokes_exact_vs_numerical(self):
-        """Exact and numerical Stokes constants should agree (up to numerical errors)."""
-        from lib.shadow_resurgence import virasoro_data, stokes_constant_exact, stokes_constant_numerical
+    def test_diagnostic_formula_vs_fit(self):
+        """Closed Darboux diagnostic and high-arity fit agree in magnitude."""
+        from lib.shadow_resurgence import (
+            virasoro_data, stokes_constant_diagnostic,
+            stokes_constant_fit_diagnostic,
+        )
         d = virasoro_data(13.0)
-        S1_exact = stokes_constant_exact(d)
-        S1_num = stokes_constant_numerical(d, max_r=100)
-        # Numerical extraction has limited precision; check order of magnitude
+        S1_closed = stokes_constant_diagnostic(d)
+        S1_num = stokes_constant_fit_diagnostic(d, max_r=100)
         if abs(S1_num) > 1e-10:
-            ratio = abs(S1_exact) / abs(S1_num)
+            ratio = abs(S1_closed) / abs(S1_num)
             assert 0.1 < ratio < 10.0, f"ratio={ratio:.4f}"
 
-    def test_stokes_koszul_duality(self):
-        """At c=13 (self-dual), |S_1(c)| = |S_1(26-c)|."""
-        from lib.shadow_resurgence import virasoro_data, stokes_constant_exact
+    def test_diagnostic_self_dual_c13(self):
+        """At c=13 the scalar Virasoro diagnostic is self-paired."""
+        from lib.shadow_resurgence import virasoro_data, stokes_constant_diagnostic
         d = virasoro_data(13.0)
         d_dual = virasoro_data(26.0 - 13.0)
-        S1 = stokes_constant_exact(d)
-        S1_dual = stokes_constant_exact(d_dual)
+        S1 = stokes_constant_diagnostic(d)
+        S1_dual = stokes_constant_diagnostic(d_dual)
         assert abs(abs(S1) - abs(S1_dual)) < 1e-10
+
+    def test_analytic_firewall_blocks_promotion(self):
+        from lib.shadow_resurgence import analytic_certification_firewall
+        firewall = analytic_certification_firewall()
+        assert firewall['true_borel_transform']['finite_plane_singularities_certified'] is False
+        assert firewall['arity_metric_branch_points']['certifies_borel_summability'] is False
+        assert firewall['pade_and_asymptotic_fits']['certifies_alien_derivatives'] is False
+        assert firewall['pade_and_asymptotic_fits']['certifies_stokes_automorphisms'] is False
+        assert firewall['scalar_ahat_bernoulli']['are_true_borel_singularities'] is False
+        assert firewall['stokes_or_median_resummation']['status'] == 'not_certified_here'
+        assert firewall['nonperturbative_completion']['status'] == 'not_certified_here'
+        assert firewall['btz_jt_recovery']['status'] == 'not_certified_here'
+        assert firewall['all_genus_virasoro_or_multiweight_partition_theorem']['status'] == 'not_certified_here'
+
+    def test_object_and_kernel_firewalls(self):
+        from lib.shadow_resurgence import object_and_kernel_firewalls
+        firewall = object_and_kernel_firewalls()
+        assert firewall['objects_distinct']['A'] == 'chiral algebra'
+        assert firewall['bar_cobar_inversion'] == 'Omega(B(A)) = A'
+        assert firewall['bar_cobar_inversion_is_koszul_duality'] is False
+        assert 'Verdier' in firewall['koszul_dual_branch']
+        assert 'Hochschild' in firewall['bulk_branch']
+        kernels = firewall['kernel_constants']
+        assert kernels['affine_collision_trace_form'] == 'r^{KM}(z) = k*Omega_tr/z'
+        assert kernels['affine_kz_normalization'] == 'r_KZ(z) = Omega/((k+h^vee)z)'
+        assert kernels['heisenberg_collision'] == 'r^{Heis}(z) = k/z'
+        assert kernels['virasoro_collision'] == 'r^{Vir}(z) = (c/2)/z^3 + 2T/z'
+
+    def test_certification_profile_blocks_promotion(self):
+        from lib.shadow_resurgence import certification_profile, virasoro_data
+        profile = certification_profile(virasoro_data(13.0))
+        assert profile['stokes_certified'] is False
+        assert profile['analytic_continuation_certified'] is False
+        assert profile['borel_summability_certified'] is False
+        assert profile['nonperturbative_completion_certified'] is False
+        assert profile['btz_jt_recovery_certified'] is False
+        assert profile['multiweight_partition_theorem_certified'] is False
 
 
 # =====================================================================
@@ -478,16 +542,11 @@ class TestOptimalTruncation:
         assert N >= 100  # effectively infinite
 
     def test_class_L_finite(self):
-        """Class L has rho = 2/3 > 0 (from alpha != 0), so N* is finite.
-
-        N* = floor(5/(2*log(3/2))) = 6.  The shadow obstruction tower terminates at
-        depth 3, but the optimal-truncation formula uses the branch-point
-        radius, not the termination depth (AP10 fix).
-        """
+        """Class L terminates at depth 3, so the arity window is unbounded."""
         from lib.shadow_resurgence import affine_sl2_data, optimal_truncation_order
         d = affine_sl2_data(1.0)
         N = optimal_truncation_order(d)
-        assert N == 6
+        assert N >= 100
 
     def test_virasoro_c4(self):
         """N*(Vir, c=4) -- specific target from the problem."""
@@ -501,7 +560,7 @@ class TestOptimalTruncation:
     def test_virasoro_c26_small_N(self):
         """At c=26, rho ~ 0.232.
 
-        N* = floor(5/(2*log(1/0.232))) = floor(1.71) = 2 (AP10 fix).
+        N* = floor(5/(2*log(1/0.232))) = floor(1.71) = 2.
         Even though rho < 1, the formula 5/(2*log(1/rho)) can be small
         when rho is not much less than 1.
         """
@@ -513,10 +572,10 @@ class TestOptimalTruncation:
     def test_rho_decreases_with_c(self):
         """rho decreases with c (for c above the critical cubic root).
 
-        N* = floor(5/(2*log(1/rho))) is NOT monotonically increasing
-        in c because log(1/rho) can grow faster than 5/2 shrinks.
+        N* = floor(5/(2*log(1/rho))) lacks monotone increase in c
+        because log(1/rho) can grow faster than 5/2 shrinks.
         The correct structural test is that rho itself is monotone
-        decreasing for c >> c* (AP10 fix).
+        decreasing for c >> c*.
         """
         from lib.shadow_resurgence import virasoro_data
         rho_4 = virasoro_data(4.0).rho
@@ -535,17 +594,17 @@ class TestOptimalTruncation:
 
 
 # =====================================================================
-# Section 8: Borel reconstruction (method C)
+# Section 8: Darboux asymptotic approximation
 # =====================================================================
 
-class TestBorelReconstruction:
-    """Test Borel reconstruction (method C) vs exact (method A)."""
+class TestDarbouxApproximation:
+    """Test Darboux asymptotic approximation vs exact recursion."""
 
     def test_class_G_exact(self):
         from lib.shadow_resurgence import heisenberg_data, borel_reconstruct
         d = heisenberg_data(1)
         recon = borel_reconstruct(d, max_r=10)
-        assert abs(recon[2] - 0.5) < 1e-14
+        assert abs(recon[2] - 1.0) < 1e-14
         for r in range(3, 11):
             assert abs(recon[r]) < 1e-14
 
@@ -573,7 +632,8 @@ class TestBorelReconstruction:
         cv = cross_validate(d, max_r=20)
         assert 'relative_errors' in cv
         assert 'darboux_C' in cv
-        assert 'stokes_S1' in cv
+        assert 'stokes_diagnostic' in cv
+        assert cv['stokes_certified'] is False
         assert 'N_star' in cv
 
     def test_cross_validate_tail_error_small(self):
@@ -585,49 +645,51 @@ class TestBorelReconstruction:
 
 
 # =====================================================================
-# Section 9: W_3 Borel singularities
+# Section 9: W_3 branch diagnostics
 # =====================================================================
 
-class TestW3BorelSingularities:
-    """Test W_3 Borel singularity analysis."""
+class TestW3BranchDiagnostics:
+    """Test W_3 branch-point diagnostics."""
 
     def test_T_line_matches_virasoro(self):
-        from lib.shadow_resurgence import w3_borel_singularities, virasoro_data
-        w3 = w3_borel_singularities(2.0)
+        from lib.shadow_resurgence import w3_branch_point_diagnostics, virasoro_data
+        w3 = w3_branch_point_diagnostics(2.0)
         vd = virasoro_data(2.0)
         assert abs(w3['T_line']['rho'] - vd.rho) < 1e-10
 
     def test_W_line_distinct_from_T(self):
-        from lib.shadow_resurgence import w3_borel_singularities
-        w3 = w3_borel_singularities(2.0)
+        from lib.shadow_resurgence import w3_branch_point_diagnostics
+        w3 = w3_branch_point_diagnostics(2.0)
         # W-line has different rho from T-line
         assert abs(w3['W_line']['rho'] - w3['T_line']['rho']) > 1e-5
 
     def test_W_line_branch_points_exist(self):
-        from lib.shadow_resurgence import w3_borel_singularities
-        w3 = w3_borel_singularities(2.0)
+        from lib.shadow_resurgence import w3_branch_point_diagnostics
+        w3 = w3_branch_point_diagnostics(2.0)
         bp = w3['W_line']['branch_points']
         assert abs(bp[0]) > 1e-10
 
-    def test_W_line_stokes_nonzero(self):
-        from lib.shadow_resurgence import w3_borel_singularities
-        w3 = w3_borel_singularities(2.0)
-        S1 = w3['W_line']['stokes_S1']
+    def test_W_line_diagnostic_nonzero(self):
+        from lib.shadow_resurgence import w3_branch_point_diagnostics
+        w3 = w3_branch_point_diagnostics(2.0)
+        S1 = w3['W_line']['stokes_diagnostic']
         assert abs(S1) > 1e-10
+        assert w3['W_line']['stokes_certified'] is False
+        assert w3['borel_singularities_certified'] is False
 
     def test_both_lines_have_N_star(self):
-        from lib.shadow_resurgence import w3_borel_singularities
-        w3 = w3_borel_singularities(2.0)
+        from lib.shadow_resurgence import w3_branch_point_diagnostics
+        w3 = w3_branch_point_diagnostics(2.0)
         assert w3['T_line']['N_star'] >= 2
         assert w3['W_line']['N_star'] >= 2
 
 
 # =====================================================================
-# Section 10: Full atlas
+# Section 10: Diagnostic atlas
 # =====================================================================
 
-class TestResurgenceAtlas:
-    """Test the full 15-algebra resurgence atlas."""
+class TestDiagnosticAtlas:
+    """Test the standard diagnostic atlas."""
 
     def test_atlas_has_15_entries(self):
         from lib.shadow_resurgence import build_resurgence_atlas
@@ -639,40 +701,36 @@ class TestResurgenceAtlas:
         atlas = build_resurgence_atlas(max_r=15)
         for name, entry in atlas.items():
             if entry.data.depth_class == 'G':
-                assert abs(entry.stokes_S1) < 1e-14
+                assert abs(entry.stokes_diagnostic) < 1e-14
                 assert abs(entry.darboux_C) < 1e-14
 
-    def test_atlas_class_M_nontrivial(self):
+    def test_atlas_class_M_nonzero_diagnostic(self):
         from lib.shadow_resurgence import build_resurgence_atlas
         atlas = build_resurgence_atlas(max_r=15)
         found_M = False
         for name, entry in atlas.items():
             if entry.data.depth_class == 'M':
                 found_M = True
-                assert abs(entry.stokes_S1) > 1e-10
+                assert abs(entry.stokes_diagnostic) > 1e-10
+                assert entry.stokes_certified is False
                 assert abs(entry.darboux_C) > 1e-10
                 assert entry.N_star >= 2
         assert found_M
 
     def test_atlas_coefficients_consistent(self):
-        """S_2 = |kappa| for every algebra in the atlas.
-
-        The sqrt(Q_L) expansion uses a_0 = 2|kappa| (positive branch),
-        so S_2 = a_0/2 = |kappa|, not kappa.  For betagamma (kappa=-1),
-        S_2 = 1 (AP10 fix).
-        """
+        """S_2 equals the signed scalar kappa after finite-depth repair."""
         from lib.shadow_resurgence import build_resurgence_atlas
         atlas = build_resurgence_atlas(max_r=10)
         for name, entry in atlas.items():
-            assert abs(entry.coefficients[2] - abs(entry.data.kappa)) < 1e-10
+            assert abs(entry.coefficients[2] - entry.data.kappa) < 1e-10
 
 
 # =====================================================================
-# Section 11: Borel-Pade singularity detection
+# Section 11: Pade pole diagnostics
 # =====================================================================
 
 class TestBorelPade:
-    """Test Pade-based Borel singularity detection."""
+    """Test finite-window Pade pole diagnostics."""
 
     @pytest.mark.skipif(True, reason="numpy may not be available")
     def test_pade_approximant_basic(self):
@@ -684,15 +742,16 @@ class TestBorelPade:
         assert Q is not None
 
     def test_borel_pade_returns_structure(self):
-        from lib.shadow_resurgence import virasoro_data, borel_pade_singularities
+        from lib.shadow_resurgence import virasoro_data, borel_pade_pole_diagnostics
         try:
             import numpy as np
         except ImportError:
             pytest.skip("numpy not available")
         d = virasoro_data(13.0)
-        result = borel_pade_singularities(d, max_r=20)
+        result = borel_pade_pole_diagnostics(d, max_r=20)
         assert 'nearest_pole' in result
-        assert 'predicted_A_plus' in result
+        assert 'predicted_reciprocal_branch_plus' in result
+        assert result['pade_poles_certified_singularities'] is False
 
     def test_borel_pade_nearest_pole_exists(self):
         """Pade approximant should produce finite poles.
@@ -700,16 +759,15 @@ class TestBorelPade:
         The nearest Pade pole modulus may not closely match the predicted
         singularity modulus due to numerical conditioning of the Pade
         matrix at moderate order.  The structural test is that Pade
-        poles exist and are finite (AP10 fix: loosened from 50% to
-        existence check).
+        poles exist and are finite.
         """
-        from lib.shadow_resurgence import virasoro_data, borel_pade_singularities
+        from lib.shadow_resurgence import virasoro_data, borel_pade_pole_diagnostics
         try:
             import numpy as np
         except ImportError:
             pytest.skip("numpy not available")
         d = virasoro_data(13.0)
-        result = borel_pade_singularities(d, max_r=30, pade_order=10)
+        result = borel_pade_pole_diagnostics(d, max_r=30, pade_order=10)
         assert result['nearest_pole'] is not None
         assert result['nearest_modulus'] > 0
         assert result['predicted_modulus'] is not None
@@ -730,7 +788,7 @@ class TestRatioRhoExtraction:
         error at r=60 due to oscillating subleading corrections from the
         conjugate branch point.  Richardson extrapolation with a 1/r^2
         model actually worsens the estimate for this oscillatory pattern.
-        The correct structural check is the raw ratio (AP10 fix).
+        The structural check is the raw ratio.
         """
         from lib.shadow_resurgence import virasoro_data, ratio_rho_extraction
         d = virasoro_data(13.0)
@@ -745,7 +803,7 @@ class TestRatioRhoExtraction:
         ratio |S_{r+1}/S_r| oscillates around rho.  Richardson
         extrapolation may not converge well in the divergent regime.
         The correct structural test is that the raw ratio is of the
-        correct order of magnitude (AP10 fix).
+        correct order of magnitude.
         """
         from lib.shadow_resurgence import virasoro_data, ratio_rho_extraction
         d = virasoro_data(1.0)
@@ -803,11 +861,11 @@ class TestCrossEngineConsistency:
 
 
 # =====================================================================
-# Section 14: Koszul duality properties
+# Section 14: Virasoro complementarity diagnostics
 # =====================================================================
 
-class TestKoszulDuality:
-    """Test resurgence properties under Koszul duality."""
+class TestVirasoroComplementarityDiagnostics:
+    """Test scalar Virasoro diagnostics under c -> 26-c."""
 
     def test_self_dual_c13_equal_rho(self):
         from lib.shadow_resurgence import virasoro_data
@@ -815,23 +873,22 @@ class TestKoszulDuality:
         d_dual = virasoro_data(13.0)  # self-dual
         assert abs(d.rho - d_dual.rho) < 1e-14
 
-    def test_koszul_pair_rho(self):
+    def test_complementary_pair_rho(self):
         """rho(c) != rho(26-c) in general."""
         from lib.shadow_resurgence import virasoro_data
         d = virasoro_data(1.0)
         d_dual = virasoro_data(25.0)
-        # Not equal in general
+        assert abs(d.rho - d_dual.rho) > 1e-10
         assert d.rho > 0
         assert d_dual.rho > 0
 
-    def test_koszul_pair_stokes(self):
-        """Stokes constants for Koszul dual pair."""
-        from lib.shadow_resurgence import virasoro_data, stokes_constant_exact
+    def test_complementary_pair_diagnostics(self):
+        """Darboux diagnostics for complementary Virasoro parameters."""
+        from lib.shadow_resurgence import virasoro_data, stokes_constant_diagnostic
         d = virasoro_data(1.0)
         d_dual = virasoro_data(25.0)
-        S1 = stokes_constant_exact(d)
-        S1_dual = stokes_constant_exact(d_dual)
-        # Both should be nonzero
+        S1 = stokes_constant_diagnostic(d)
+        S1_dual = stokes_constant_diagnostic(d_dual)
         assert abs(S1) > 1e-5
         assert abs(S1_dual) > 1e-5
 
@@ -841,27 +898,33 @@ class TestKoszulDuality:
 # =====================================================================
 
 class TestDepthClassification:
-    """Test depth class determines resurgence type."""
+    """Test depth class determines finite/asymptotic diagnostic type."""
 
-    def test_G_trivial_resurgence(self):
-        from lib.shadow_resurgence import standard_landscape, stokes_constant_exact, darboux_coefficient
+    def test_G_finite_diagnostic(self):
+        from lib.shadow_resurgence import standard_landscape, stokes_constant_diagnostic, darboux_coefficient
         for d in standard_landscape():
             if d.depth_class == 'G':
-                assert abs(stokes_constant_exact(d)) < 1e-14
+                assert abs(stokes_constant_diagnostic(d)) < 1e-14
                 assert abs(darboux_coefficient(d)) < 1e-14
 
-    def test_L_trivial_resurgence(self):
-        from lib.shadow_resurgence import standard_landscape, stokes_constant_exact
+    def test_L_finite_diagnostic(self):
+        from lib.shadow_resurgence import standard_landscape, stokes_constant_diagnostic
         for d in standard_landscape():
             if d.depth_class == 'L':
-                assert abs(stokes_constant_exact(d)) < 1e-14
+                assert abs(stokes_constant_diagnostic(d)) < 1e-14
 
-    def test_M_nontrivial_resurgence(self):
-        from lib.shadow_resurgence import standard_landscape, stokes_constant_exact
+    def test_C_finite_diagnostic(self):
+        from lib.shadow_resurgence import standard_landscape, stokes_constant_diagnostic
+        for d in standard_landscape():
+            if d.depth_class == 'C':
+                assert abs(stokes_constant_diagnostic(d)) < 1e-14
+
+    def test_M_nonzero_asymptotic_diagnostic(self):
+        from lib.shadow_resurgence import standard_landscape, stokes_constant_diagnostic
         for d in standard_landscape():
             if d.depth_class == 'M':
-                S1 = stokes_constant_exact(d)
-                assert abs(S1) > 1e-10, f"{d.name}: |S_1| = {abs(S1)}"
+                S1 = stokes_constant_diagnostic(d)
+                assert abs(S1) > 1e-10, f"{d.name}: diagnostic = {abs(S1)}"
 
 
 # =====================================================================
@@ -884,5 +947,5 @@ class TestSummaryOutput:
         s = resurgence_summary(d, max_r=15)
         assert 'Vir' in s
         assert 'M' in s
-        assert 'Stokes' in s
+        assert 'Stokes diagnostic' in s
         assert 'Darboux' in s

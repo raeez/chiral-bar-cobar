@@ -10,9 +10,9 @@ Verification paths:
   (c) Complementarity sum check — Theorem C consistency
   (d) Genus expansion — F_g + F_g' = 0 at multiple genera
   (e) Cross-family consistency — additivity, subalgebra decomposition
-  (f) Anti-pattern cross-checks — AP19, AP24, AP33, AP48, AP50
+  (f) Anti-pattern cross-checks — AP19, AP24, AP25, AP33, AP48, AP50
 
-Total: 86 tests.
+Total: 116 tests.
 """
 
 import pytest
@@ -420,12 +420,14 @@ class TestAntiPatternCrossChecks:
         assert kappa_k3() != K3_CENTRAL_CHARGE / 2
         assert kappa_k3() == F(2)
 
-    # AP50: homotopy vs strict Koszul dual
+    # AP50: homotopy vs Verdier/linear-dual Koszul algebra
     def test_ap50_homotopy_agrees_on_koszul_locus(self):
-        """AP50: A^!_infty = A^! on the Koszul locus."""
+        """AP50: A^!_infty agrees with A^! only under hypotheses."""
         hvs = homotopy_vs_strict_koszul_dual_k3()
         assert hvs['is_koszul'] is True
         assert hvs['homotopy_dual_agrees_with_strict'] is True
+        assert hvs['objects_kept_distinct'] is True
+        assert 'hypotheses' in hvs['reason']
 
     def test_ap50_a_infinity_formal(self):
         """AP50: on Koszul locus, m_k = 0 for k >= 3."""
@@ -433,13 +435,44 @@ class TestAntiPatternCrossChecks:
         assert hvs['higher_operations_vanish'] is True
         assert hvs['a_infinity_formal'] is True
 
-    # AP25/AP34: three distinct functors
-    def test_ap25_three_functors_distinct(self):
+    # AP25/AP34: functor separation and five-object separation
+    def test_ap25_boundary_functors_distinct(self):
         """AP25: bar-cobar, Verdier, derived center are DIFFERENT."""
         bbp = boundary_bulk_passage_k3()
         assert bbp['bar_cobar_inversion']['result'] != bbp['koszul_duality']['result']
         assert bbp['koszul_duality']['result'] != bbp['derived_center']['result']
         assert bbp['bar_cobar_inversion']['result'] != bbp['derived_center']['result']
+
+    def test_ap25_bar_dual_coalgebra_named(self):
+        """AP25: A^i is the bar-dual coalgebra, not the dual algebra."""
+        hvs = homotopy_vs_strict_koszul_dual_k3()
+        assert hvs['bar_construction'].startswith('B(A)')
+        assert hvs['bar_dual_coalgebra'].startswith('A^i = H*(B(A))')
+        assert 'coalgebra' in hvs['bar_dual_coalgebra']
+        assert 'A^i' in hvs['strict_dual_construction']
+
+    def test_ap25_koszul_dual_requires_duality_hypotheses(self):
+        """AP25: A^! appears only after Verdier/linear duality hypotheses."""
+        hvs = homotopy_vs_strict_koszul_dual_k3()
+        assert 'Verdier/continuous-linear dual' in hvs['strict_dual_construction']
+        assert 'finite-type or completed' in hvs['strict_dual_construction']
+        assert 'Verdier or continuous linear duality defined' in hvs['duality_hypotheses']
+
+    def test_ap25_five_objects_distinct(self):
+        """AP25: B(A), A^i, A^!, Omega(B(A)), and Z^ch_der(A) stay separate."""
+        bbp = boundary_bulk_passage_k3()
+        objects = {
+            bbp['bar_construction']['object'],
+            bbp['bar_dual_coalgebra']['object'],
+            bbp['bar_cobar_inversion']['result'],
+            bbp['koszul_duality']['result'],
+            bbp['derived_center']['result'],
+        }
+        assert len(objects) == 5
+        assert bbp['bar_dual_coalgebra']['type'] == 'coalgebra'
+        assert 'hypotheses' in bbp['koszul_duality']['result']
+        assert 'bulk' in bbp['derived_center']['result']
+        assert bbp['objects_kept_distinct'] is True
 
 
 # =========================================================================

@@ -6084,3 +6084,475 @@ rules, obstruction complexes, and universal properties written and
 proved. **Counter**: every habitat theorem begins with definitions and
 first nontrivial coordinate checks before any equivalence or realization
 claim.
+
+---
+
+## Master patterns MA-1 through MA-13 + AP-META-shadow-equals-object (2026-05-09)
+
+The deepest false pattern in this programme is **shadow $\neq$ object**:
+forgetful image $\neq$ source. Every false idea is a forgetful functor
+mistaken for an equivalence; each carries a *companion reconstruction
+theorem* with named hypothesis package. The thirteen master patterns
+MA-1 \dots MA-13 below are the canonical specialisations across the
+Open-quadrant Beilinson tower (factorisation dg-cat $\to$ chart $A_b$
+$\to$ bar $B(A_b)$ $\to$ derived chiral centre $\to$ operators $\to$
+modular shadow). They are sourced verbatim from `CLAUDE.md` "Master
+patterns to detect (MA-1 \dots MA-13)" and are hook-actionable inputs
+for `scripts/hooks/beilinson-gate.sh`.
+
+The umbrella meta-pattern AP-META-shadow-equals-object closes the list:
+any inscription that asserts a cross-level equality without naming the
+reconstruction theorem and its hypothesis package is a latent
+shadow$=$object violation, even if it does not match a more specific
+MA-$n$ regex.
+
+### MA-1: shadow = object (the meta-violation)
+
+**Forbidden:** any cross-level equality `X = Y` between a forgetful
+image and its source written as an equivalence with no named
+reconstruction theorem and no hypothesis package. Slogans:
+*"the modular shadow recovers the operator algebra"*; *"the partition
+function determines the chiral algebra"*; *"the Hilbert series is the
+algebra"*.
+
+**Why:** every step of the Beilinson tower is a forgetful functor;
+the right adjoint (when it exists) is the reconstruction theorem,
+which carries a hypothesis package. Suppressing the package collapses
+five distinct levels (factorisation dg-cat, chart, bar, derived
+centre, operators, scalar) into one. Five distinct mathematical
+objects masquerade as one; the type signature
+(*quadrant, presentation, level, hypothesis package*) is destroyed.
+
+**How to apply:** when an inscription asserts `X = Y` with $X$ a
+scalar / numerical / shadow object and $Y$ an algebra / category /
+operator-level object (or vice versa), demand the reconstruction
+theorem name and its hypothesis package. If absent, halt and either
+replace the equality with the correct adjunction with comparison map,
+or quarantine pending the reconstruction theorem inscription.
+
+**Companion theorem:** Master Reconstruction Theorem (Vol I climax) —
+the Open Beilinson tower has five reconstruction theorems (Morita;
+Theorem A; Theorem H / B; Drinfeld-double; modular reconstruction)
+each with named hypothesis packages.
+
+**Detection regex:** `(modular shadow|partition function|Hilbert series|scalar invariant)\s*(=|determines|recovers|equals|is)\s*(operator|algebra|category|chiral algebra|VOA|vertex)`
+
+### MA-2: $A$ as primitive open object
+
+**Forbidden:** treating the chart algebra $A$ as the primitive Open
+object, with no factorisation dg-category and no chosen vacuum.
+Slogans: *"$A$ is the primitive open sector"*; *"the chiral algebra
+$A$ generates the open sector"*; *"open chiral algebra $A$"* without
+a chosen vacuum.
+
+**Why:** the Open primitive at level 0 is the factorisation dg-category
+$\mathcal{C}^{\mathrm{op}}$ on the tangential log curve $(X, D, \tau)$.
+The chart algebra $A_b = \mathrm{End}_{\mathcal{C}}(b)$ at level 1 is
+a *Morita shadow* of $\mathcal{C}^{\mathrm{op}}$ at the chosen vacuum
+$b$. Calling $A$ primitive identifies a level-1 Morita shadow with
+the level-0 primitive object and suppresses the vacuum choice.
+
+**How to apply:** every $A$ in Open-quadrant prose carries either
+$A_b$ subscript with vacuum $b$ named, or an explicit
+$A = \mathrm{End}_{\mathcal{C}}(b)$ unfolding. Bare "primitive
+$A$" with no $\mathcal{C}^{\mathrm{op}}$ or no vacuum is a violation.
+
+**Companion theorem:** Morita reconstruction (level 1 $\leftrightarrow$
+level 0). Hypothesis package: $\mathcal{C}^{\mathrm{op}}$
+factorisation dg-category on $(X, D, \tau)$; vacuum $b$ a generator
+of $\mathcal{C}^{\mathrm{op}}$; tangential structure compatible with
+the choice.
+
+**Detection regex:** `(primitive|fundamental).{0,30}(chart algebra|chiral algebra A|open algebra A)\b|\bA\b\s+(is|as)\s+the\s+primitive\s+open`
+
+### MA-3: modularity = closed-algebra property
+
+**Forbidden:** asserting that modularity is an intrinsic property of a
+closed chiral / vertex algebra, with no trace and no clutching.
+Slogans: *"$V$ is modular"* (intrinsic); *"$V$ has modular
+characters"* without modular-trace data; *"the closed sector is
+modular"* without naming the open category whose trace produced it.
+
+**Why:** modularity is not an attribute carried by a closed-algebra
+object. It is the output of a modular trace on the open factorisation
+category, with clutching data assembling genus-$g$ partition functions
+on $\overline{M}_{g,n}$. The closed shadow has modular consequences
+because the open category was traced through; modularity is a
+data-of-a-trace property, not an intrinsic property of the closed
+output.
+
+**How to apply:** every "modular" attribute predicated on a closed
+object must point to the open category and the trace producing it,
+or to the clutching data on $\overline{M}_{g,n}$. If neither is
+named, the modularity claim is shadow-level.
+
+**Companion theorem:** modular reconstruction (level 5 $\to$ level 4) —
+modular trace + clutching on the open category recovers line / brane
+operators. Hypothesis package: open factorisation category;
+modular-trace data; clutching morphisms compatible with the genus-$g$
+boundary structure of $\overline{M}_{g,n}$.
+
+**Detection regex:** `(\bmodular\s+(VOA|chiral algebra|vertex algebra)\b|is\s+modular\s+as\s+a\s+(closed|chiral algebra))`
+
+### MA-4: $\mathrm{Bar}(A) = $ bulk
+
+**Forbidden:** asserting that the bar complex $B(A_b) = T^c(s^{-1}\bar A_b)$
+is the bulk. Slogans: *"$\mathrm{Bar}(A)$ is the bulk"*; *"$B(A)$
+is the closed sector"*; *"the bar complex computes the closed
+algebra"*.
+
+**Why:** the bar complex at level 2 is the *twisting coalgebra* —
+a coalgebra computing Maurer–Cartan elements in the convolution
+dGLA, NOT the bulk. The bulk lives one level higher at level 3 as
+the derived chiral centre $Z^{\mathrm{der}}_{\mathrm{ch}}(A_b) \simeq
+\mathrm{ChirHoch}^\bullet(A_b, A_b)$. Conflating $B(A_b)$ with bulk
+identifies a level-2 twisting coalgebra with a level-3 Hochschild
+cochain complex.
+
+**How to apply:** when "bar" / "$B(A)$" / "twisting coalgebra"
+appears together with "bulk" / "closed sector" / "centre" in the
+same paragraph, verify that the "bulk" attribute is on
+$Z^{\mathrm{der}}_{\mathrm{ch}}(A_b)$ or $\mathrm{ChirHoch}^\bullet$,
+not on $B(A_b)$. The five-objects-never-conflate rule
+($A_b, B(A_b), A_b^i, A_b^!, Z^{\mathrm{der}}_{\mathrm{ch}}(A_b)$)
+applies here.
+
+**Companion theorem:** Theorem H / Theorem B (level 1 $\to$ level 3)
+— derived chiral centre is the bulk via Hochschild cochains.
+Hypothesis package: finiteness; completion (Class $\mathbf M$
+requires completed / pro / $J$-adic ambient); Hochschild
+concentration $\subset \{0, 1, 2\}$; Koszul locus for the level-3
+inversion lift.
+
+**Detection regex:** `\b(B|\\Bar|bar)\s*\(\s*A[_b]?\s*\).{0,40}(bulk|closed sector|derived centre|Drinfel?d centre)|bar.{0,30}is\s+the\s+bulk`
+
+### MA-5: $E_1$-bar direction explains 2d $\to$ 3d HT
+
+**Forbidden:** asserting that the $E_1$-bar direction by itself
+explains the 2d $\to$ 3d holomorphic-topological lift. Slogans:
+*"the bar direction lifts 2d chiral to 3d HT"*; *"$E_1$-bar
+explains the open / closed transition"*; *"bar = HT lift"*.
+
+**Why:** the 2d $\to$ 3d HT lift is governed by chiral
+Deligne–Tamarkin / Swiss-cheese, with two distinct directions
+(holomorphic chiral $E_1$ + transverse topological $E_1$). The
+bar complex is a *computational model* on the chiral side and
+does not by itself supply the transverse topological direction.
+Promoting bar to "the lift" suppresses the Swiss-cheese
+two-coloured structure.
+
+**How to apply:** every "bar direction $\to$ HT" inscription must
+either name Swiss-cheese / Deligne–Tamarkin and the second
+(transverse topological) direction, or qualify scope to "bar as
+computational model on the chiral $E_1$ side". Bare promotion
+of bar to HT lift is forbidden.
+
+**Companion theorem:** chiral Deligne–Tamarkin / Swiss-cheese
+(level 2 ↔ level 3 with transverse topological lift). Hypothesis
+package: two-coloured Swiss-cheese operad with chiral and
+topological colours; conformal vector controlling Q-translations;
+SC$^{\mathrm{ch,top}}$ structure on the derived-centre pair.
+
+**Detection regex:** `(bar|B\(A\)).{0,40}(2d.{0,3}3d|HT lift|holomorphic.topological lift|open.closed transition)`
+
+### MA-6: five $\kappa$ are one invariant
+
+**Forbidden:** asserting that the five $\kappa$-measurements
+$\{\kappa_{\mathrm{cat}}, \kappa^{\mathrm{Hodge}}_{\mathrm{ch}},
+\kappa^{\mathrm{Heis}}_{\mathrm{ch}}, \kappa_{\mathrm{BKM}},
+\kappa_{\mathrm{fiber}}\}$ are one invariant. Slogans:
+*"$\kappa_{\mathrm{BKM}} = \kappa_{\mathrm{ch}} +
+\chi(\mathcal{O}_{\mathrm{fiber}})$"*; *"the $\kappa$-invariant"* (singular,
+unsubscripted); *"$\kappa$ is the modular weight"* without
+indexing family.
+
+**Why:** the five $\kappa$ are five distinct invariants per family,
+indexed by source (categorical Künneth, chiral Hodge supertrace,
+chiral Heisenberg, BKM Borcherds-weight, fibre Euler characteristic).
+The classification axis is the *collapse pattern* across these five
+under averaging, not any single value. Conflating them is the
+Wave-16 K3$\times$E error; the apparent identity
+$\kappa_{\mathrm{BKM}} = \kappa_{\mathrm{ch}} +
+\chi(\mathcal{O}_{\mathrm{fiber}})$ is an $N=1$ accident that fails
+already at $N=2$.
+
+**How to apply:** every $\kappa$ symbol carries a subscript
+identifying which of the five measurements it indexes. Bare $\kappa$
+with no subscript triggers the violation. The 5$\times$5
+$\kappa$-stratification matrix on the five archetypes
+G / L / C / M / B is the only correct organisational frame.
+
+**Companion theorem:** Theorem C — $\kappa + \kappa^!$ in
+family-stratum ceiling. Hypothesis package: five $\kappa$
+measurements per family explicitly named; collapse pattern
+specified; archetype row in the 5$\times$5 matrix identified.
+
+**Detection regex:** `\\kappa_\{?BKM\}?\s*=\s*\\kappa_\{?ch\}?\s*\+\s*\\chi|\bthe\s+\\?kappa\s+invariant\b|\\kappa(?![_^a-zA-Z\{])`
+
+### MA-7: one-stage $\Phi_d$
+
+**Forbidden:** asserting that $\Phi_d : \mathrm{CY}_d\text{-Cat}
+\to \mathrm{ChirAlg}$ is a single-stage direct functor.
+Slogans: *"$\Phi_d$ is a direct functor"*;
+*"$\Phi_d : \mathrm{CY}_d\text{-Cat} \to \mathrm{ChirAlg}$"*
+without $\Sigma_{d-1}, C$ specialisation data; *"$\Phi_3$
+sends the CY$_3$ category to the chiral algebra directly"*.
+
+**Why:** the canonical CY$_d$-to-chiral functor factors through
+two stages: $\Phi_d^{(\Sigma_{d-1}, C)} =
+\mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1}, C} \circ \Phi_d^{\mathrm{FA}}$.
+Stage one lands in factorisation algebras on a transverse
+$(d-1)$-real-dimensional manifold; stage two specialises to a
+chiral algebra on a curve $C$. Calling $\Phi_d$ a one-stage
+functor suppresses the choice of transverse manifold and curve
+data, conflating two distinct levels.
+
+**How to apply:** every $\Phi_d$ inscription names both
+$\Sigma_{d-1}$ (transverse manifold) and $C$ (curve), and either
+displays the two-stage decomposition or cites it. Bare $\Phi_d$
+without superscript is shadow-level and triggers the violation.
+
+**Companion theorem:** two-stage CY$\to$Chiral functor
+(Vol III, level 1 $\to$ level 2). Hypothesis package:
+$\Phi_d^{\mathrm{FA}}$ factorisation-algebra stage with curved
+$\beta\gamma$-system input; $\mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1}, C}$
+specialisation data $(\Sigma_{d-1}, C)$ named; anomaly cancellation
+through the quartic $\int_X \mathrm{Tr}_{\mathrm{ad}}(A(F_A)^3)$.
+
+**Detection regex:** `\\Phi_[345d]\s*(:|\()\s*(CY|\\mathrm\{CY)|Phi_d.{0,20}direct\s+functor|Phi_d.{0,20}CY.{0,3}Cat.{0,5}ChirAlg`
+
+### MA-8: $Y^+(X) = G(X)$
+
+**Forbidden:** identifying the positive half $Y^+(X)$ of the
+chiral Yangian with the full quantum group $G(X)$. Slogans:
+*"$Y^+(X) = G(X)$"*; *"the CoHA is the full Yangian"*;
+*"$\mathrm{CoHA}(\mathbb{C}^3) = W_{1+\infty}$"* (truth:
+$= Y^+(\mathfrak{gl}_1)$); *"the positive half is the chiral
+quantum group"*.
+
+**Why:** $Y^+(X)$ at level 4 is the positive (Hall) half;
+the full chiral quantum group $G(X)$ is the Drinfeld double
+$D(Y^+(X))$ formed after Hall pairing, completion, integral
+form passage, and global descent. Calling the positive half the
+full quantum group identifies the level-4 Hall input with its
+level-3 Drinfeld-double output and skips four named operations.
+
+**How to apply:** every $Y^+(X)$ in the same paragraph as $G(X)$
+must show the four-step bridge (Hall pairing, completion,
+integral form, descent) or cite the Drinfeld-double construction
+explicitly. Conflating CoHA with the full chiral quantum group
+is the standard form of this violation.
+
+**Companion theorem:** Drinfeld-double reconstruction
+(level 4 $\to$ level 3). Hypothesis package: Hall pairing on
+$Y^+(X) \otimes Y^-(X)$; completion in the Hall topology;
+integral form preserving the Cartan; global descent from formal
+to compact CY (matched-conventions target datum, obstruction
+vector, null-homotopies).
+
+**Detection regex:** `Y\^?\s*\+\s*\([^)]+\)\s*=\s*G\(|CoHA\s*\(\s*\\mathbb\{?C\}?\^3\s*\)\s*=\s*W_\{?1\+\\?infty|positive\s+half\s+is\s+the\s+(full|chiral)\s+quantum\s+group`
+
+### MA-9: 6d hCS = 3d CS in disguise
+
+**Forbidden:** asserting that 6d holomorphic Chern–Simons is 3d
+Chern–Simons in disguise, with cubic Casimir as the obstruction.
+Slogans: *"6d hCS reduces to 3d CS"*; *"the obstruction is
+$\int \mathrm{Tr}(F \wedge F \wedge F)$"* (cubic) for 6d hCS;
+*"6d hCS anomaly = $c_3$"*.
+
+**Why:** 6d hCS on a Calabi–Yau threefold has *quartic*
+obstruction $\int_X \mathrm{Tr}_{\mathrm{ad}}(A(F_A)^3)$
+(degree-4 in the gauge field $A$, not degree-3 cubic Casimir).
+The 3d-CS analogy fails at the level of the anomaly polynomial.
+Conflating 6d hCS with 3d CS suppresses the dimensional shift in
+the anomaly degree and identifies different invariant theory.
+
+**How to apply:** every 6d hCS anomaly statement carries the
+quartic form $\int_X \mathrm{Tr}_{\mathrm{ad}}(A(F_A)^3)$ or
+explicit cubic-Casimir disclaimer (with Vol-III scope-qualified
+exception). Bare "6d hCS = 3d CS in disguise" is forbidden.
+
+**Companion theorem:** level-0 holographic equivalence to
+Vol III's 6d hCS (via factorisation dg-cat on $(X, D, \tau)$).
+Hypothesis package: CY$_3$ trivialisation $\omega_X \cong
+\mathcal{O}_X$; quartic anomaly polynomial; formal locus + global
+descent (matched-conventions, QME, locality).
+
+**Detection regex:** `6d\s+hCS.{0,20}3d\s+CS|6d\s+holomorphic\s+CS.{0,20}reduces\s+to|6d\s+hCS.{0,30}cubic\s+Casimir`
+
+### MA-10: local HT globalises automatically
+
+**Forbidden:** asserting that a local formal-disk HT theorem
+extends automatically to a compact-target / global HT theorem.
+Slogans: *"local HT lifts globally"*; *"formal local Hamiltonian
+BF $\Rightarrow$ compact twisted M-theory background"*;
+*"the local theorem implies the compact CY consequence"*.
+
+**Why:** globalising a local HT theorem requires four named
+mechanisms: descent (sheaf-level gluing across charts), QME
+(quantum master equation on global sections), anomaly
+cancellation (matched-conventions target datum + null-homotopies
+for degrees, pairings, periods, central classes), and locality
+(no non-local global obstructions). Skipping any of these
+silently identifies a local result with a global one and is the
+standard topological-strings critique target (AP2177).
+
+**How to apply:** every local-to-global HT inscription must
+display or cite all four mechanisms; missing any one triggers
+the violation. The Vol I bar-cobar discipline mirrors the
+topological-strings AP2173 / AP2177 / AP2180 chain.
+
+**Companion theorem:** Costello–Gwilliam globalisation.
+Hypothesis package: descent on the factorisation site; QME
+on global sections; anomaly cancellation through matched
+conventions; locality of all global obstructions.
+
+**Detection regex:** `local\s+HT.{0,30}(globalises?|globalize|extends?)\s+(automatically|directly|trivially)|formal\s+local.{0,30}compact\s+(CY|Calabi|M-theory)`
+
+### MA-11: scalar shadow = operator algebra
+
+**Forbidden:** asserting that a level-5 scalar shadow (modular
+form, partition function, $\kappa$-tuple) equals or
+constructs the level-4 operator algebra. Slogans:
+*"$\Delta_5$ constructs the BPS Hilbert space"*;
+*"$Z_{\mathrm{BPS}}$ is the gravitational path integral"*;
+*"the partition function is the algebra"*.
+
+**Why:** scalar shadows at level 5 are obtained from operators
+at level 4 by modular trace and clutching. The reverse
+direction (scalar $\to$ operator) requires solving an
+operator-level Pfaffian / square-root reconstruction problem,
+which is a non-trivial open problem. $\Delta_5 = \mathrm{Grit}(\eta^9
+\vartheta_1)$ is a Borcherds denominator, not a Hilbert space;
+the operator-level Pfaffian remains an open problem (canonical
+preamble row 38).
+
+**How to apply:** every "modular form constructs operator
+algebra" inscription names the Pfaffian / square-root problem
+and labels the claim conjectural, or restricts to the well-defined
+trace direction (operators $\to$ scalar). The forbidden form is
+direct level-5 $\to$ level-4 reconstruction without the named
+obstruction.
+
+**Companion theorem:** modular reconstruction (level 5 $\to$
+level 4). Hypothesis package: open category structure;
+modular-trace data; clutching morphisms; operator-level Pfaffian
+solution (open problem; Vol II climax target).
+
+**Detection regex:** `\\Delta_5\s+(constructs?|gives?|produces?)\s+(BPS|Hilbert|operator|algebra)|Z_\{?BPS\}?\s+is\s+the\s+(gravitational|path\s+integral|operator)|partition\s+function\s+is\s+the\s+(algebra|operator)`
+
+### MA-12: finite-spin / quadratic / classical = full theorem
+
+**Forbidden:** asserting that a finite-spin truncation,
+quadratic-only relation, or classical limit equals the full
+theorem. Slogans: *"$W_\infty[\lambda] \Rightarrow E_\infty$
+unconditional"*; *"PVA Jacobi $\Rightarrow$ all-loop quantum HT
+theory"*; *"finite-spin Yangian = full Yangian"*; *"the
+classical r-matrix gives the quantum group"*.
+
+**Why:** every truncation has a named endpoint hypothesis
+package — finite-spin requires Prochazka–Rapcak / Costello–
+Gaiotto–Lurie / Procházka–Saemann; quadratic-only requires
+Yamada / Penkava–Vanhaecke; classical-limit requires the KZ
+analytic SDR (Strong Deformation Retract). Promoting a
+truncated result to the full theorem suppresses these endpoint
+hypotheses and is a textbook scope-inflation violation.
+
+**How to apply:** every truncation-to-full implication carries
+the named endpoint hypothesis or is labelled "conditional on
+$\langle$endpoint$\rangle$". Bare promotion of a finite-spin /
+quadratic / classical result to the full unconditional theorem
+triggers the violation.
+
+**Companion theorem:** truncation lift theorems (per family).
+Hypothesis package: Prochazka–Rapcak (W-algebra finite-spin
+extensions); CKL (Costello–Kim–Lurie analytic SDR);
+Penkava–Vanhaecke (PVA-to-quantum); Yamada (quadratic-to-PBW);
+KZ analytic SDR (classical-to-quantum r-matrix).
+
+**Detection regex:** `W_\\?infty\[\\?lambda\].{0,30}E_\\?infty.{0,30}unconditional|PVA\s+Jacobi.{0,30}all.loop|finite.spin\s+Yangian\s+=\s+full|classical\s+r.matrix\s+(gives?|produces?)\s+(the\s+)?quantum`
+
+### MA-13: ordinary = completed ambient
+
+**Forbidden:** treating the ordinary direct-sum chain-level
+ambient as equivalent to the completed / pro / $J$-adic ambient,
+particularly for Class $\mathbf M$ statements. Slogans:
+*"$M$-class chain-level theorem in the ordinary ambient"*
+(without completion qualifier); *"the bar complex of $M$ in
+direct-sum"*; *"$M$-class Hochschild $\subset \{0,1,2\}$"*
+without completion.
+
+**Why:** Class $\mathbf M$ chain-level mathematics requires the
+*completed / pro / $J$-adic* ambient — the ordinary direct-sum
+ambient does not carry the convergence required for the chain
+homotopies to live. The $h_M$ universal chain-homotopy is the
+weight-completed Felder BRST; the Zamolodchikov norm
+$c(5c+22)/10$ diverges at $c \in \{0, -22/5, -218/45\}$ in the
+ordinary ambient. Without completion, the chain-level Theorem H
+concentration $\subset \{0,1,2\}$ fails at Class $\mathbf M$.
+
+**How to apply:** every Class $\mathbf M$ chain-level claim
+displays the ambient qualifier (one of: weight-completed,
+pro-object, coderived, $J$-adic). Bare Class $\mathbf M$
+statements without ambient qualifier (and not in a generic
+expository context) are violations. This is the basis of
+Pattern 236 in the hook.
+
+**Companion theorem:** Theorem H Class $\mathbf M$ scope.
+Hypothesis package: weight-completed / pro / $J$-adic ambient;
+Felder BRST resolution; Zamolodchikov norm finite at the
+chosen $c$; chain-level concentration $\subset \{0,1,2\}$ in
+the completed ambient.
+
+**Detection regex:** `(class\s+M|class.M|MC5).{0,40}(chain.level|chain-level|ordinary|direct.sum)(?!.{0,80}(weight.completed|pro.object|coderived|J.adic|completed))`
+
+### AP-META-shadow-equals-object: umbrella meta-pattern
+
+**Forbidden:** any cross-level equality between objects on
+distinct rungs of the Beilinson tower (factorisation dg-cat
+$\to$ chart $A_b$ $\to$ bar $B(A_b)$ $\to$ derived chiral centre
+$\to$ operators $\to$ modular shadow) without a named
+reconstruction theorem and explicit hypothesis package.
+Slogans: any of MA-1 through MA-13 instances; also
+*"the modular form is the algebra"* as a generic catchall.
+
+**Why:** the deepest false pattern in this programme. Every
+forgetful step (vacuum-choice; Theorem A bar / cobar
+inversion; Theorem H derived-centre extraction; line-operator
+extraction; modular trace / clutching) has a right-adjoint
+reconstruction theorem with named hypothesis package.
+Forgetting that package collapses the five-level tower into
+one level and identifies five distinct mathematical objects
+($A_b$, $B(A_b)$, $A_b^i$, $A_b^!$,
+$Z^{\mathrm{der}}_{\mathrm{ch}}(A_b)$) as one. MA-1 through
+MA-13 are specific specialisations of this meta-pattern; this
+entry catches violations that do not match any specific MA-$n$
+regex but still assert cross-level equality without the
+reconstruction-theorem name.
+
+**How to apply:** every cross-level equality `X = Y`, where
+$X$ and $Y$ live on distinct levels of the Beilinson tower,
+carries a *named* reconstruction theorem (Morita, Theorem A,
+Theorem H, Theorem B, Drinfeld-double, modular reconstruction,
+two-stage $\Phi_d$, Costello–Gwilliam globalisation) with a
+hypothesis package displayed inline or cited within ten lines.
+Absence of the reconstruction theorem name is the violation.
+
+**Companion theorem:** Master Reconstruction Theorem (Vol I
+climax) — the Open Beilinson tower has five reconstruction
+theorems with named hypothesis packages and KSDual as
+$\mathbb{Z}/2$-fixed sublocus where the four-quadrant grid
+degenerates to self-dual form.
+
+**Detection regex:** `(=|\\simeq|\\cong|equals|recovers|determines|constructs)\s+(?:the\s+)?(bulk|operator algebra|chiral algebra|partition function|modular form|Hilbert space|category|primitive object)(?!.{0,200}(Morita|Theorem\s+[ABHC]|Drinfel?d.double|modular reconstruction|two.stage|Costello.Gwilliam|reconstruction\s+theorem|hypothesis\s+package))`
+
+**Operating rule for MA-1 \dots MA-13 + AP-META.** Before any
+inscription crossing two or more levels of the Beilinson tower,
+verify (a) the reconstruction-theorem name is in the same
+paragraph or cited within ten lines; (b) the hypothesis package
+is displayed or labelled with explicit forward-reference; (c)
+no MA-$n$ regex above triggers on the inscribed text. A
+violation halts inscription; replacement or quarantine
+follows. False positives — annotate scope inline (e.g.,
+"generic expository scope, MA-$n$ does not apply here") and
+proceed.

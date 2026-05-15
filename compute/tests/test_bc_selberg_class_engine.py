@@ -1,8 +1,8 @@
-r"""Tests for BC-71: Selberg class axiom verification for shadow zeta functions.
+r"""Tests for Selberg-class checks on shadow zeta functions.
 
 Multi-path verification of all Selberg axiom results:
     Path 1: Direct axiom verification from definition
-    Path 2: Cross-check via complementarity: if axiom holds for A, check A!
+    Path 2: Cross-check via complementarity: if axiom holds for A, check A^!
     Path 3: Numerical evaluation at s = 1/2 + it for several t
     Path 4: Consistency with shadow depth classification G/L/C/M
     Path 5: Independent recomputation of shadow coefficients from first principles
@@ -14,10 +14,9 @@ Multi-path verification of all Selberg axiom results:
     - Edge cases (c=0, c=26, c=13 self-dual)
     - Complementarity equation
 
-CAUTION (AP10): NO hardcoded expected values without independent verification.
-    All expected values are computed from first principles within the test.
-CAUTION (AP1): kappa formulas are family-specific. NEVER copy between families.
-CAUTION (AP39): S_2 = kappa != c/2 in general (only for Virasoro).
+Hardcoded expected values in this file are paired with an independent
+derivation in the test body or comment.  The kappa formula is
+family-specific; S_2 = c/2 is used only on the Virasoro line.
 """
 
 import math
@@ -54,6 +53,12 @@ from compute.lib.bc_selberg_class_engine import (
     selberg_degree,
     selberg_conductor,
     full_selberg_landscape,
+    holographic_package_entries,
+    modular_koszul_primary_projections,
+    typed_firewall_objects,
+    object_firewall_summary,
+    kernel_normalization_firewall,
+    two_term_zero_real_part,
     SelbergAxiomResult,
     SelbergClassVerification,
     _is_prime_power,
@@ -77,7 +82,7 @@ TOL_NUM = 1e-6
 
 
 # ============================================================================
-# VIRASORO SHADOW COEFFICIENTS — independent verification (AP10)
+# VIRASORO SHADOW COEFFICIENTS: independent verification
 # ============================================================================
 
 class TestVirasororShadowCoefficients:
@@ -165,6 +170,72 @@ class TestVirasororShadowCoefficients:
 
 
 # ============================================================================
+# OBJECT AND KERNEL FIREWALLS
+# ============================================================================
+
+class TestObjectAndKernelFirewalls:
+    """Typed package boundaries used by the Selberg surface."""
+
+    def test_holographic_package_has_seven_entries(self):
+        entries = holographic_package_entries()
+        assert entries == (
+            "A",
+            "A^i",
+            "A^!",
+            "C",
+            "r(z)",
+            "Theta_A",
+            "nabla^hol",
+        )
+        assert len(entries) == 7
+
+    def test_modular_koszul_compute_package_has_six_projections(self):
+        projections = modular_koszul_primary_projections()
+        assert projections == (
+            "Fact_X(L)",
+            "barB_X(L)",
+            "Theta_L",
+            "L_L",
+            "(V_L^br, T_L^br)",
+            "R_4^mod(L)",
+        )
+        assert len(projections) == 6
+        assert "A^!" not in projections
+        assert "C" not in projections
+
+    def test_holographic_and_compute_packages_are_distinct(self):
+        entries = set(holographic_package_entries())
+        projections = set(modular_koszul_primary_projections())
+        assert entries != projections
+        assert entries.isdisjoint({"Fact_X(L)", "barB_X(L)", "L_L"})
+
+    def test_bar_dual_verdier_inversion_and_bulk_are_typed_apart(self):
+        firewall = object_firewall_summary("Vir_c")
+        assert typed_firewall_objects() == (
+            "A",
+            "B(A)",
+            "A^i",
+            "A^!",
+            "Omega(B(A))",
+            "Z_ch^der(A)",
+        )
+        assert "bar cohomology coalgebra" in firewall["A^i"]
+        assert "Verdier/continuous-linear dual branch" in firewall["A^!"]
+        assert "bar-cobar inversion" in firewall["Omega(B(A))"]
+        assert "chiral Hochschild derived-centre bulk" in firewall["Z_ch^der(A)"]
+        assert "Omega(B(A)) != A^!" in firewall["forbidden_identifications"]
+        assert "Z_ch^der(A) != A^!" in firewall["forbidden_identifications"]
+
+    def test_kernel_normalizations_keep_collision_and_kz_separate(self):
+        kernels = kernel_normalization_firewall()
+        assert kernels["heisenberg_raw_collision"] == "k/z"
+        assert kernels["affine_raw_collision"] == "k*Omega_tr/z"
+        assert kernels["affine_kz_kernel"] == "Omega/((k+h^vee)z)"
+        assert kernels["virasoro_collision"] == "(c/2)/z^3 + 2T/z"
+        assert kernels["affine_raw_collision"] != kernels["affine_kz_kernel"]
+
+
+# ============================================================================
 # AXIOM S1: RAMANUJAN BOUND — 10 tests
 # ============================================================================
 
@@ -191,50 +262,14 @@ class TestAxiomS1:
         assert result.satisfied is True
 
     def test_virasoro_S1_c1(self):
-        """Virasoro c=1: rho < 1 => exponential decay => S1 satisfied."""
+        """Virasoro c=1 has rho > 1, hence exponential coefficient growth."""
         coeffs = virasoro_shadow_coefficients_numerical(1.0, 50)
         result = verify_S1_ramanujan(coeffs, 'M')
-        assert result.satisfied is True
         rho = result.numerical_data["rho"]
-        # Independent check: rho^2 = (180+872)/(1*(5+22)) = 1052/27 ~ 38.96
-        # rho ~ 6.24... Wait, that's > 1. Let me recheck.
-        # rho^2 = (180*1+872)/(1^2*(5*1+22)) = 1052/27 ~ 38.96
-        # rho ~ 6.24. This is > 1!
-        # Actually this means the series DIVERGES for c=1 (small c).
-        # The shadow radius rho < 1 requires large enough c.
-        # For c=1: rho ~ 6.24 > 1.
-        # So S1 may actually FAIL for c=1.
-        # Let me check what the verify function says.
-        # It checks the numerical growth rate from the last few coefficients.
-        # With max_r=50 and rho>1, the consecutive ratios should converge to rho.
-        # Actually the growth rate from the existing engine may give rho > 1.
-        # In that case S1 FAILS.
-        # This is correct: for small c, the shadow tower diverges.
-        #
-        # BUT WAIT: the abscissa computation in the existing engine says
-        # "rho < 1 => entire" and the existing tests at c=1 work.
-        # Let me re-examine: rho^2 = alpha/c^2 where alpha = (180c+872)/(5c+22).
-        # For c=1: alpha = 1052/27 ~ 38.96. rho = sqrt(38.96)/1 ~ 6.24.
-        # So rho > 1 for c=1. This means S_r GROWS exponentially!
-        # But then |S_r| ~ rho^r which is NOT O(n^eps). S1 FAILS.
-        #
-        # Actually I need to reconsider. The CONVERGENCE radius R = |c|/sqrt(alpha).
-        # For c=1: R = 1/sqrt(38.96) ~ 0.160. rho = 1/R ~ 6.24.
-        # Wait no: rho is defined as the growth rate |S_{r+1}/S_r| -> rho.
-        # But rho = 1/R = sqrt(alpha)/|c|.
-        #
-        # Hmm, but the shadow_zeta_function_engine docstring says:
-        # "For rho < 1: sigma_c = -inf (converges for all s, entire!)"
-        # "For rho > 1: sigma_c = +inf (diverges for all s)"
-        #
-        # So at c=1, rho > 1, the shadow zeta DIVERGES. S1 fails.
-        # This is actually CORRECT and IMPORTANT.
-        #
-        # Re-examine: the test might be asserting the WRONG thing.
-        # For c=1 with rho ~ 6.24 > 1, S1 should FAIL.
-        # Let me fix the assertion.
-        if rho > 1.0:
-            assert result.satisfied is False  # S1 fails for divergent towers
+        rho_sq = (180.0 + 872.0) / (5.0 + 22.0)
+        assert abs(rho_sq - 1052.0 / 27.0) < TOL
+        assert rho > 1.0
+        assert result.satisfied is False
 
     def test_virasoro_S1_c25(self):
         """Virasoro c=25: rho should be < 1 for large c => S1 satisfied.
@@ -361,24 +396,14 @@ class TestAxiomS2:
         assert result.satisfied is True
 
     def test_virasoro_S2_small_c_divergent(self):
-        """For small c with rho > 1: S2 should still technically be satisfied
-        because the ALGEBRAIC structure provides analytic continuation even
-        when the Dirichlet series diverges.
-
-        Actually: the verify function checks convergence of the series.
-        For rho > 1, the series diverges, but the algebraic generating function
-        STILL provides analytic continuation via Riccati algebraicity.
-        The function reports rho > 1 as failure for the Dirichlet series,
-        which is correct from the Selberg perspective.
-        """
+        """For small c with rho > 1, no Selberg Dirichlet half-plane exists."""
         c_val = 2.0
         rho = virasoro_shadow_radius(c_val)
         if rho > 1.0:
             coeffs = virasoro_shadow_coefficients_numerical(c_val, 30)
             result = verify_S2_analytic_continuation(coeffs, 'M')
-            # The verify function may or may not flag this
-            # depending on its interpretation. The KEY point is rho > 1.
             assert result.numerical_data["rho"] > 1.0
+            assert result.satisfied is False
 
     def test_S2_no_pole_for_finite_towers(self):
         """Finite towers cannot have a pole at s=1 (or anywhere)."""
@@ -404,7 +429,7 @@ class TestAxiomS2:
 class TestAxiomS3:
     """Selberg axiom S3: functional equation with gamma factors.
 
-    MAIN RESULT: S3 FAILS for ALL shadow zeta functions.
+    S3 is not certified for the represented shadow zeta functions.
     The complementarity equation is a c-duality, not an s-reflection.
     """
 
@@ -427,13 +452,13 @@ class TestAxiomS3:
         assert result.satisfied is False
 
     def test_virasoro_S3_fails(self):
-        """Virasoro: complementarity is NOT a Selberg functional equation."""
+        """Virasoro complementarity is not a Selberg functional equation."""
         coeffs = virasoro_shadow_coefficients_numerical(25.0, 50)
         result = verify_S3_functional_equation(coeffs, 'M', c_val=25.0)
         assert result.satisfied is False
 
     def test_S3_fails_universally(self):
-        """S3 fails for EVERY family. This is the main negative result."""
+        """The represented families have no certified Selberg S3 equation."""
         for name, coeffs, cls in [
             ("Heis", heisenberg_shadow_coefficients(1.0, 20), 'G'),
             ("sl2", affine_sl2_shadow_coefficients(1.0, 20), 'L'),
@@ -444,7 +469,7 @@ class TestAxiomS3:
             assert result.satisfied is False, f"S3 should fail for {name}"
 
     def test_complementarity_equation_holds(self):
-        """The complementarity equation zeta_c + zeta_{26-c} = zeta_D DOES hold.
+        """The complementarity equation zeta_c + zeta_{26-c} = zeta_D holds.
 
         This is tested by verifying the sum is self-consistent.
         """
@@ -464,7 +489,7 @@ class TestAxiomS3:
                 assert abs(z_A + z_dual - z_D) < TOL
 
     def test_complementarity_NOT_s_reflection(self):
-        """The complementarity equation is c <-> 26-c, NOT s <-> 1-s.
+        """The complementarity equation is c <-> 26-c, not s <-> 1-s.
 
         Verify that zeta_A(s) != zeta_A(1-s) for generic s.
         """
@@ -480,7 +505,6 @@ class TestAxiomS3:
         """kappa(Vir_c) + kappa(Vir_{26-c}) = c/2 + (26-c)/2 = 13.
 
         This is the arity-2 projection of complementarity.
-        CAUTION (AP24): kappa + kappa' = 13 for Virasoro, NOT 0.
         """
         for c_val in [1.0, 5.0, 10.0, 13.0, 20.0, 25.0]:
             kappa_sum = virasoro_kappa(c_val) + virasoro_kappa(26.0 - c_val)
@@ -518,8 +542,9 @@ class TestAxiomS3:
 class TestAxiomS4:
     """Selberg axiom S4: Euler product (supported on prime powers).
 
-    MAIN RESULT: S4 FAILS for ALL families.
-    Shadow coefficients are NOT multiplicative.
+    S4 fails for the represented families because the shadow zeta is not
+    Selberg-normalized and the augmented logarithm detects non-prime-power
+    support.
     """
 
     def test_heisenberg_S4_fails(self):
@@ -548,7 +573,7 @@ class TestAxiomS4:
         assert result.satisfied is False
 
     def test_virasoro_non_multiplicative(self):
-        """Shadow coefficients are NOT multiplicative: S_{6} != S_2 * S_3 in general.
+        """Shadow coefficients are not multiplicative: S_6 != S_2 * S_3.
 
         For Virasoro at c=25:
         S_2 = 25/2 = 12.5, S_3 = 2.
@@ -559,8 +584,7 @@ class TestAxiomS4:
         S2 = coeffs[2]
         S3 = coeffs[3]
         S6 = coeffs[6]
-        # S_6 should NOT equal S_2 * S_3
-        assert abs(S6 - S2 * S3) > 1e-5, "Shadow coefficients should NOT be multiplicative"
+        assert abs(S6 - S2 * S3) > 1e-5
 
     def test_heisenberg_trivially_multiplicative(self):
         """Heisenberg: only one nonzero term, so multiplicativity is vacuous."""
@@ -587,13 +611,13 @@ class TestAxiomS4:
         assert is_mult is False
 
     def test_log_coefficients_non_prime_power_support(self):
-        """For Virasoro: log(1+F) has nonzero coefficients at n=6 (not prime power)."""
+        """For Virasoro, log(1+F) has nonzero coefficient at n=6."""
         coeffs = virasoro_shadow_coefficients_numerical(25.0, 20)
         b = dirichlet_log_coefficients(coeffs, 20)
-        # n=6 = 2*3 is NOT a prime power
         assert not _is_prime_power(6)
-        # b_6 should be nonzero
-        assert abs(b.get(6, 0.0)) > 1e-15, "b_6 should be nonzero (non-multiplicative)"
+        expected_b6 = coeffs[6] - coeffs[2] * coeffs[3]
+        assert abs(b.get(6, 0.0) - expected_b6) < TOL
+        assert abs(b.get(6, 0.0)) > 1e-15
 
     def test_prime_power_detection(self):
         """Verify the prime power detector."""
@@ -661,8 +685,11 @@ class TestAxiomS5:
         re_s0 = math.log(ratio) / math.log(3.0 / 2.0)
         # log(16/27) ~ -0.524, log(3/2) ~ 0.405
         # re_s0 ~ -1.29
-        # This is OUTSIDE [0,1]!
-        assert re_s0 < 0.0, "Zeros should be outside critical strip for affine sl_2"
+        assert re_s0 < 0.0
+        coeffs = affine_sl2_shadow_coefficients(k_val, 10)
+        result = verify_S5_critical_strip(coeffs, 'L', max_r=10)
+        assert result.satisfied is False
+        assert abs(result.numerical_data["zero_real_part"] - re_s0) < TOL
 
     def test_betagamma_zeros_outside_strip(self):
         """Beta-gamma: three-term polynomial has zeros outside [0,1] generically."""
@@ -685,7 +712,7 @@ class TestAxiomS5:
         assert isinstance(result, SelbergAxiomResult)
 
     def test_affine_zeros_have_constant_real_part(self):
-        """For kappa*2^{-s} + alpha*3^{-s} = 0: all zeros have the SAME Re(s).
+        """For kappa*2^{-s} + alpha*3^{-s} = 0: all zeros have the same Re(s).
 
         Zeros: s_n = (log(alpha/kappa) + i*pi*(2n+1)) / log(3/2).
         So Re(s_n) = log(alpha/kappa) / log(3/2) for all n.
@@ -698,12 +725,13 @@ class TestAxiomS5:
 
         re_s = math.log(ratio) / math.log(3.0 / 2.0)
         im_spacing = math.pi / math.log(3.0 / 2.0)
+        coeffs = affine_sl2_shadow_coefficients(k_val, 10)
+        assert abs(two_term_zero_real_part(coeffs) - re_s) < TOL
 
         # Verify at first two zeros
         for n in range(3):
             t_n = math.pi * (2 * n + 1) / math.log(3.0 / 2.0)
             s_n = complex(re_s, t_n)
-            coeffs = affine_sl2_shadow_coefficients(k_val, 10)
             z_n = shadow_zeta_numerical(coeffs, s_n, 10)
             assert abs(z_n) < 1e-8, f"Should be zero at s_{n} = {s_n}"
 
@@ -731,50 +759,50 @@ class TestFullVerification:
     """Full Selberg class verification for each family."""
 
     def test_heisenberg_not_in_selberg_class(self):
-        """Heisenberg is NOT in the Selberg class (S3, S4 fail)."""
+        """Heisenberg lies outside the Selberg class because S3 and S4 fail."""
         result = verify_heisenberg(1.0)
         assert result.in_selberg_class is False
         assert "S3" in result.failing_axioms
         assert "S4" in result.failing_axioms
 
     def test_affine_sl2_not_in_selberg_class(self):
-        """Affine sl_2 is NOT in the Selberg class."""
+        """Affine sl_2 lies outside the Selberg class."""
         result = verify_affine_sl2(1.0)
         assert result.in_selberg_class is False
         assert "S3" in result.failing_axioms
         assert "S4" in result.failing_axioms
 
     def test_betagamma_not_in_selberg_class(self):
-        """Beta-gamma is NOT in the Selberg class."""
+        """Beta-gamma lies outside the Selberg class."""
         result = verify_betagamma(0.5)
         assert result.in_selberg_class is False
 
     def test_virasoro_not_in_selberg_class(self):
-        """Virasoro is NOT in the Selberg class."""
+        """Virasoro lies outside the Selberg class."""
         result = verify_virasoro(25.0, max_r=30)
         assert result.in_selberg_class is False
         assert "S3" in result.failing_axioms
         assert "S4" in result.failing_axioms
 
     def test_w3_t_line_not_in_selberg_class(self):
-        """W_3 T-line is NOT in the Selberg class."""
+        """W_3 T-line lies outside the Selberg class."""
         result = verify_w3_t_line(50.0, max_r=30)
         assert result.in_selberg_class is False
 
     def test_w3_w_line_not_in_selberg_class(self):
-        """W_3 W-line is NOT in the Selberg class."""
+        """W_3 W-line lies outside the Selberg class."""
         result = verify_w3_w_line(50.0, max_r=30)
         assert result.in_selberg_class is False
 
     def test_no_family_in_selberg_class(self):
-        """The UNIVERSAL negative result: NO standard family is in the Selberg class.
+        """No represented standard family is in the Selberg class.
 
         The shadow zeta function is a genuinely new kind of Dirichlet series.
         """
         landscape = full_selberg_landscape(max_r=20)
         for name, result in landscape.items():
             assert result.in_selberg_class is False, \
-                f"{name} should NOT be in the Selberg class"
+                f"{name} should lie outside the Selberg class"
 
     def test_failing_axioms_always_include_S3_S4(self):
         """S3 and S4 fail for EVERY family (the universal failures)."""
@@ -791,7 +819,7 @@ class TestFullVerification:
 # ============================================================================
 
 class TestComplementarity:
-    """Complementarity functional equation: the structural equation that DOES hold."""
+    """Complementarity relation on the Virasoro Verdier branch."""
 
     def test_complementarity_D2_universal(self):
         """D_2 = kappa(c) + kappa(26-c) = 13 for all c."""
@@ -854,7 +882,7 @@ class TestComplementarity:
                     f"D_{r}(c={c_val}) != D_{r}(c={26-c_val})"
 
     def test_complementarity_zeta_sum(self):
-        """zeta_A(s) + zeta_{A!}(s) evaluated at s=2 via complementarity."""
+        """zeta_A(s) + zeta_{A^!}(s) evaluated at s=2 via complementarity."""
         c_val = 10.0
         c_dual = 16.0
         coeffs_A = virasoro_shadow_coefficients_numerical(c_val, 40)
@@ -1001,7 +1029,7 @@ class TestCrossFamilyConsistency:
             assert verify_S2_analytic_continuation(coeffs, cls).satisfied is True
 
     def test_S3_S4_fail_universally(self):
-        """S3 and S4 fail for ALL shadow classes."""
+        """S3 and S4 fail for all represented shadow classes."""
         for cls, gen in [
             ('G', lambda: heisenberg_shadow_coefficients(1.0, 20)),
             ('L', lambda: affine_sl2_shadow_coefficients(1.0, 20)),
@@ -1013,12 +1041,12 @@ class TestCrossFamilyConsistency:
             assert verify_S4_euler_product(coeffs, cls).satisfied is False
 
     def test_kappa_family_specificity(self):
-        """kappa is family-specific (AP1): cannot copy between families.
+        """kappa is family-specific and cannot be copied between families.
 
         Heisenberg: kappa = k.
         Affine sl_2: kappa = 3(k+2)/4.
         Virasoro: kappa = c/2.
-        These are DIFFERENT formulas.
+        These are different formulas.
         """
         k = 1.0
         kappa_heis = heisenberg_shadow_coefficients(k, 5)[2]
@@ -1071,9 +1099,9 @@ class TestCrossFamilyConsistency:
             assert abs(coeffs_M[r]) > 1e-15
 
     def test_koszul_dual_kappa_sum(self):
-        """Koszul dual complementarity for kappa (AP24).
+        """Verdier-branch complementarity for kappa.
 
-        Virasoro: kappa + kappa' = 13 (NOT 0).
+        Virasoro: kappa + kappa' = 13.
         Heisenberg: kappa + kappa' = k + (-k) = 0.
         """
         # Virasoro
@@ -1181,9 +1209,8 @@ class TestW3MultiLine:
         kappa_W = coeffs[2]
         expected = c_val / 3.0
         # The W-line kappa_W is computed from the quadratic polynomial
-        # Q_W. Let me check: the engine computes a0 = sqrt(4*kappa_W^2)
-        # = 2*|kappa_W|. Then result[2] = a0/2 = |kappa_W|.
-        # kappa_W = c/3, so result[2] = c/3.
+        # Q_W: a0 = sqrt(4*kappa_W^2) = 2*|kappa_W|, hence
+        # result[2] = a0/2 = c/3 for c > 0.
         assert abs(kappa_W - expected) < TOL
 
     def test_w3_both_lines_class_M(self):
@@ -1232,7 +1259,7 @@ class TestFullLandscape:
         # with the right parameters; check if present
         if 'C' not in classes:
             # bg at lambda=0.5 might have c=-1 which makes kappa=-1/2
-            pass  # Acceptable
+            assert 'C' not in classes
 
     def test_landscape_all_fail_selberg(self):
         """All families in landscape fail Selberg class membership."""

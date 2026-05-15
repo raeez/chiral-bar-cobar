@@ -17,13 +17,16 @@ CRITICAL PITFALLS TESTED:
 - AP19: r-matrix vs OPE pole orders (indirect)
 - AP20: kappa(A) vs kappa_eff distinction
 - AP24: complementarity sum != 0 for Virasoro
-- AP25/AP34: bar != Verdier dual != cobar != derived center
+- AP25/AP34: B(A) is a coalgebra; A^i = H^*(B(A)); A^!
+  is obtained from A^i by Verdier/linear duality under hypotheses;
+  Omega(B(A)) = A is inversion; Z_ch^der(A) is Hochschild bulk
 - AP33: H_k^! = Sym^ch(V*) != H_{-k}
 """
 
 import pytest
 from fractions import Fraction
 
+import compute.lib.derived_center_explicit as dce
 from compute.lib.derived_center_explicit import (
     # Basic invariants
     kappa,
@@ -56,6 +59,63 @@ from compute.lib.derived_center_explicit import (
     # Master package
     full_derived_center_package,
 )
+
+
+def _collapsed_doc(obj):
+    return " ".join((obj.__doc__ or "").split())
+
+
+# ======================================================================
+#  Section 0: Open/closed firewall
+# ======================================================================
+
+class TestOpenClosedFirewall:
+    """Pin the bar, dual, cobar, and bulk objects as distinct surfaces."""
+
+    def test_module_docstring_states_firewall(self):
+        doc = _collapsed_doc(dce)
+        required = (
+            "B(A) is a coalgebra",
+            "A^i=H^*(B(A))",
+            "A^! is obtained from A^i",
+            "Verdier/linear duality",
+            "Omega(B(A)) = A is bar-cobar inversion",
+            "derived center Z^der_ch(A) is NOT the bar complex",
+            "Bar/cobar = twisting morphisms; derived center = bulk operators",
+            "Hochschild cochains",
+        )
+        for phrase in required:
+            assert phrase in doc
+
+    def test_bulk_package_uses_hochschild_surface_not_bar_or_cobar_keys(self):
+        pkg = full_derived_center_package("Heisenberg", k=2)
+        assert pkg["family"] == "Heisenberg"
+        assert pkg["kappa"] == kappa("Heisenberg", k=2)
+        assert pkg["HH_dimensions"] == {0: 1, 1: 1, 2: 1}
+        assert pkg["annulus_trace_identity"] == pkg["kappa"]
+        assert "bar_complex" not in pkg
+        assert "bar_cohomology" not in pkg
+        assert "cobar_inversion" not in pkg
+        assert "koszul_dual" not in pkg
+
+    @pytest.mark.parametrize(
+        ("family", "params", "dual_kappa", "expected_sum"),
+        [
+            ("Heisenberg", {"k": 2}, Fraction(-2), Fraction(0)),
+            ("Affine_sl2", {"k": 1}, Fraction(-9, 4), Fraction(0)),
+            ("Virasoro", {"c": 26}, Fraction(0), Fraction(13)),
+        ],
+    )
+    def test_bulk_kappa_is_not_dual_kappa(
+        self, family, params, dual_kappa, expected_sum
+    ):
+        pkg = full_derived_center_package(family, **params)
+        comp = verify_complementarity(family, **params)
+        assert pkg["kappa"] == comp["kappa_A"]
+        assert pkg["annulus_trace_identity"] == comp["kappa_A"]
+        assert comp["kappa_A_dual"] == dual_kappa
+        assert pkg["kappa"] != comp["kappa_A_dual"]
+        assert comp["sum"] == expected_sum
 
 
 # ======================================================================
@@ -633,10 +693,8 @@ class TestChiralHKR:
     def test_virasoro_hkr_theorem_h_bounded(self):
         """Theorem H: amplitude [0,2], HH^0 = HH^1 = HH^2 = 1.
 
-        Supersedes the earlier unbounded polynomial-ring model
-        (AP94 prohibits degree-3+ classes; the previous assertions
-        HH^4 = 1 etc. were synchronized against a compute engine
-        that contradicted Theorem H).
+        The chiral Hochschild functor used here has no degree-3+
+        periodicity generator.
         """
         assert chiral_hkr_dimension("Virasoro", 0) == 1
         assert chiral_hkr_dimension("Virasoro", 1) == 1
@@ -650,10 +708,9 @@ class TestChiralHKR:
     def test_w3_hkr_theorem_h_bounded(self):
         """Theorem H: amplitude [0,2], HH^0 = HH^1 = HH^2 = 1.
 
-        Supersedes the earlier unbounded bigraded polynomial-ring
-        model (AP94).  At generic central charge Z(W_3) is
-        one-dimensional, so by Theorem H each of HH^{0,1,2} has
-        dimension 1 and HH^n vanishes for n >= 3.
+        At generic central charge Z(W_3) is one-dimensional, so by
+        Theorem H each of HH^{0,1,2} has dimension 1 and HH^n
+        vanishes for n >= 3.
         """
         assert chiral_hkr_dimension("W3", 0) == 1
         assert chiral_hkr_dimension("W3", 1) == 1

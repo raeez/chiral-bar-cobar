@@ -10,14 +10,17 @@ Boecherer coefficient (eq:bocherer-coefficient-def in arithmetic_shadows.tex).
 KEY PROPERTIES:
   (i)   Positive semi-definite (sum of rank-one forms)
   (ii)  Diagonal K^{(2)}(D,D) = sum |B_f(D)|^2 / <f,f> >= 0
-  (iii) For SK lifts: |B_f(D)|^2 ~ L(k-1, g x chi_D) * |D|^{k-2}
-  (iv)  Spectral support matches Nyman-Beurling kernel
+  (iii) For SK lifts: |B_f(D)|^2 is proportional to
+        L(k-1, g x chi_D) * |D|^{k-2} after the Petersson and
+        archimedean normalizations are included.
+  (iv)  Genus 2 reaches the central point; it does not by itself recover the
+        full Nyman-Beurling L^2 norm.
 
 IMPLEMENTATIONS:
   1. Leech lattice (rank 24, k=12): S_12(Sp(4,Z)) is 1-dimensional (chi_12 = SK(f_22)).
      Kernel is rank-one.
-  2. Rank-48 lattice (k=24): S_24(Sp(4,Z)) has dim >= 2.
-     Kernel is rank >= 2.
+  2. Rank-48 lattice (k=24): S_24(Sp(4,Z)) has dimension 5.
+     Kernel rank is at most 5, with equality only after a coefficient-rank check.
   3. Boecherer coefficients from Fourier-Jacobi expansion.
   4. Waldspurger formula verification for SK lifts.
 
@@ -252,13 +255,21 @@ def fundamental_discriminants(bound: int) -> List[int]:
 
 def twisted_l_function(s: complex, eigenvalue_func, chi_D: int,
                        nmax: int = 500) -> complex:
-    r"""Compute L(s, f x chi_D) = sum_{n>=1} a(n) chi_D(n) n^{-s}.
+    r"""Truncated Dirichlet partial sum for L(s, f x chi_D).
+
+    This computes
+
+        sum_{1 <= n <= nmax} a(n) chi_D(n) n^{-s}.
 
     For a Hecke eigenform f with eigenvalues given by eigenvalue_func,
     and a Dirichlet character chi_D (Kronecker symbol).
 
-    This uses direct summation (Dirichlet series, NOT the Euler product)
-    for numerical approximation.
+    This uses direct summation (Dirichlet series, NOT the Euler product).
+    At the central point for f_22 (s = 11, weight 22) this is a finite
+    diagnostic only: the Dirichlet series is not an absolutely convergent
+    evaluation of the analytically continued central L-value. Use the returned
+    value in Waldspurger checks only as a truncation witness, never as a proof
+    of the exact central value.
 
     Parameters
     ----------
@@ -274,7 +285,7 @@ def twisted_l_function(s: complex, eigenvalue_func, chi_D: int,
     Returns
     -------
     complex
-        Approximate value of L(s, f x chi_D).
+        Finite partial sum for L(s, f x chi_D).
     """
     total = 0.0
     for n in range(1, nmax + 1):
@@ -286,13 +297,15 @@ def twisted_l_function(s: complex, eigenvalue_func, chi_D: int,
 
 def twisted_l_euler(s: complex, eigenvalue_func, chi_D: int,
                     prime_bound: int = 200) -> complex:
-    r"""Compute L(s, f x chi_D) via the Euler product.
+    r"""Truncated absolute Euler-product diagnostic for L(s, f x chi_D).
 
     L(s, f x chi_D) = prod_p (1 - a(p)*chi_D(p)*p^{-s} + chi_D(p)^2*p^{k-1-2s})^{-1}
 
     where k is the weight. For f_22, k = 22.
 
-    For numerical stability, we take the log and sum, then exponentiate.
+    For numerical stability, we take the log of absolute Euler factors and
+    exponentiate. This discards phase information and is not an exact central
+    L-value routine.
     """
     primes = _primes_up_to(prime_bound)
     log_L = 0.0
@@ -464,30 +477,28 @@ def chi12_boecherer_coefficient(D: int) -> Fraction:
 
 
 def _automorphism_count(a: int, b: int, c: int) -> int:
-    """Number of automorphisms of the form (a, b, c), i.e. |Aut(T)|.
+    """Boecherer epsilon denominator for the reduced form (a, b, c).
+
+    This is the denominator used in eq:bocherer-coefficient-def, not the raw
+    GL_2(Z) stabilizer size. Raw stabilizers contain at least the orientation
+    and sign symmetries; the weighted class-sum convention below gives
+    epsilon = 1 for a generic reduced class, 4 for the square class, and 6 for
+    the Eisenstein class.
 
     For a reduced binary quadratic form ax^2 + bxy + cy^2:
-    - Generic (a < c, 0 < b < a): |Aut| = 1
-    - a = c, b != 0: |Aut| = 2 (swap x,y with sign adjustment)
-    - b = 0, a < c: |Aut| = 2 (x -> -x)
-    - b = 0, a = c: |Aut| = 4 (dihedral: x<->y and x->-x)
-    - b = a, a = c: |Aut| = 6 (hexagonal, D = -3: Eisenstein integers)
+    - Generic (a < c, 0 < b < a): epsilon = 1
+    - a = c, b != 0: epsilon = 2 (swap x,y with sign adjustment)
+    - b = 0, a < c: epsilon = 2 (x -> -x)
+    - b = 0, a = c: epsilon = 4 (dihedral: x<->y and x->-x)
+    - b = a, a = c: epsilon = 6 (hexagonal, D = -3: Eisenstein integers)
     - b = 0, a = c, and a = b (impossible since b=0): N/A
-
-    For the GL(2,Z) class (including orientation-reversal):
-    the count doubles in some cases. We use the standard
-    convention from Siegel modular form theory.
     """
     disc = b * b - 4 * a * c
     if disc == -3:
-        # Q(sqrt(-3)): Aut = Z/6Z, |Aut| = 6
-        # But for GL(2,Z) the count is 6 / 2 = 3... careful.
-        # Standard: epsilon(T) = |Aut(T)| / 2 for the Boecherer sum.
-        # Actually the standard convention is: epsilon(T) = |{gamma in GL_2(Z) : gamma^t T gamma = T}|
-        # For D = -3: this is 6 (the Eisenstein units).
+        # Eisenstein unit denominator.
         return 6
     elif disc == -4:
-        # Q(sqrt(-1)): Aut = Z/4Z, |Aut| = 4.
+        # Gaussian unit denominator.
         return 4
     elif a == c and b == 0:
         return 4
@@ -502,7 +513,7 @@ def _automorphism_count(a: int, b: int, c: int) -> int:
 # ============================================================================
 
 def waldspurger_proportionality(D: int, k: int = 12, nmax: int = 500) -> Dict[str, Any]:
-    r"""Verify the Waldspurger formula for chi_12 = SK(f_22).
+    r"""Diagnostic for the Waldspurger formula for chi_12 = SK(f_22).
 
     For the Saito-Kurokawa lift F = SK(g) of weight k, the Boecherer
     coefficient satisfies:
@@ -511,7 +522,10 @@ def waldspurger_proportionality(D: int, k: int = 12, nmax: int = 500) -> Dict[st
     For chi_12 (k=12, g = f_22):
         |B_{chi_12}(D)|^2  ~  L(11, f_22 x chi_D) * |D|^{10}
 
-    This function computes both sides (numerically) and checks proportionality.
+    This function computes the exact Boecherer side and a truncated Dirichlet
+    partial sum for the L-side. It deliberately does not claim to evaluate the
+    analytic continuation at the central point or the omitted positive
+    Petersson/archimedean normalization.
 
     Parameters
     ----------
@@ -526,16 +540,18 @@ def waldspurger_proportionality(D: int, k: int = 12, nmax: int = 500) -> Dict[st
     -------
     dict with:
         'D': the discriminant
-        'B_squared': |B(D)|^2 (from Boecherer coefficient)
-        'L_value': L(k-1, f_22 x chi_D) numerically
+        'B_squared_exact': |B(D)|^2 (from Boecherer coefficient)
+        'L_partial_sum': truncated Dirichlet sum at k-1
         'D_factor': |D|^{k-2}
-        'waldspurger_rhs': L_value * D_factor
-        'ratio': B_squared / waldspurger_rhs (should be constant across D)
+        'waldspurger_rhs_partial': |L_partial_sum| * |D|^{k-2}
+        'ratio_partial': B_squared / waldspurger_rhs_partial
+        'diagnostic_status': explicit warning that this is not a proof
     """
     B_D = chi12_boecherer_coefficient(D)
-    B_sq = float(B_D ** 2)
+    B_sq_exact = B_D ** 2
+    B_sq = float(B_sq_exact)
 
-    # L(11, f_22 x chi_D) via direct summation
+    # L(11, f_22 x chi_D) via a direct partial sum only.
     L_val = twisted_l_function(
         k - 1, _f22_coefficient, D, nmax=nmax
     )
@@ -548,11 +564,20 @@ def waldspurger_proportionality(D: int, k: int = 12, nmax: int = 500) -> Dict[st
     return {
         'D': D,
         'B_D': B_D,
+        'B_squared_exact': B_sq_exact,
         'B_squared': B_sq,
+        'L_partial_sum': L_val,
         'L_value': L_val,
         'D_factor': D_factor,
+        'waldspurger_rhs_partial': rhs,
         'waldspurger_rhs': rhs,
+        'ratio_partial': ratio,
         'ratio': ratio,
+        'normalization_status': 'Petersson norm and archimedean Waldspurger factor omitted',
+        'diagnostic_status': (
+            'truncated Dirichlet partial sum at the central point; '
+            'not an exact central L-value computation'
+        ),
     }
 
 
@@ -560,11 +585,11 @@ def waldspurger_proportionality_table(
     disc_list: Optional[List[int]] = None,
     nmax: int = 500,
 ) -> List[Dict[str, Any]]:
-    r"""Compute the Waldspurger proportionality for a list of discriminants.
+    r"""Compute truncated Waldspurger diagnostics for a list of discriminants.
 
-    Returns a table of {D, B^2, L-value, ratio} for each discriminant.
-    The ratios should all be equal (up to numerical precision) if the
-    Waldspurger formula holds.
+    Returns a table of {D, B^2, partial L-sum, partial ratio} for each
+    discriminant. Ratio constancy is not asserted here: the central L-values
+    require analytic continuation and the omitted normalization factors.
     """
     if disc_list is None:
         disc_list = [-3, -4, -7, -8, -11, -15, -20, -24]
@@ -678,71 +703,67 @@ def verify_kernel_positivity(kernel_data: Dict) -> Dict[str, Any]:
 # 8. RANK-48 LATTICE: TWO-EIGENFORM KERNEL
 # ============================================================================
 
-# At rank 48, k = 24. The space S_24(Sp(4,Z)) has dimension >= 2.
-# In fact: dim M_24(Sp(4,Z)) can be computed from the Igusa-Tsuyumine
-# dimension formula. The cusp space S_24(Sp(4,Z)) contains both
-# Saito-Kurokawa lifts and genuine eigenforms.
-#
-# dim S_k(Sp(4,Z)):
-#   k = 10: 1 (chi_10, but this is the OTHER Igusa cusp form)
-#   k = 12: 1 (chi_12 = SK(f_22))
-#   k = 14: 0
-#   k = 16: 1
-#   k = 18: 1
-#   k = 20: 2 (first time dim > 1: 1 SK + 1 genuine)
-#   k = 22: 2
-#   k = 24: 3 (2 SK + 1 genuine, OR 1 SK + 2 genuine)
-#
-# More precisely: the SK subspace at weight k has dimension = dim S_{2k-2}(SL_2(Z)).
-# For k=24: dim S_{46}(SL_2(Z)) = floor(46/12) - (1 if 46%12==2 else 0) = 3 - 0 = 3.
-# Wait: dim S_k(SL_2(Z)) = floor(k/12) - 1 if k ≡ 2 mod 12, else floor(k/12).
-# For k = 46: 46/12 = 3.833..., floor = 3. 46 mod 12 = 10 != 2. So dim = 3.
-# No wait: dim S_k = floor(k/12) when k ≡ 2 mod 12, and floor(k/12) otherwise...
-# Actually: dim M_k(SL_2(Z)) = floor(k/12) + 1 if k ≡ 2 mod 12 ? No.
-# dim M_k = floor(k/12) if k ≡ 2 mod 12; floor(k/12) + 1 otherwise.
-# dim S_k = dim M_k - 1.
-# k=46: 46 mod 12 = 10. dim M_46 = floor(46/12)+1 = 3+1 = 4. dim S_46 = 3.
-# So the SK subspace of S_24(Sp(4,Z)) has dimension 3.
-#
-# The genuine (non-SK) subspace:
-# dim S_24(Sp(4,Z)) - dim_SK = dim S_24(Sp(4,Z)) - 3.
-#
-# From the Tsuyumine formula or tables:
-# dim S_24(Sp(4,Z)) = 5 (total, from Ibukiyama's tables).
-# So: 3 SK + 2 genuine = 5 eigenforms in S_24(Sp(4,Z)).
-#
-# For the rank-48 lattice, k = 24, and the kernel is rank 5 in general.
+# At rank 48, k = 24. The even part of Igusa's full-level genus-2 ring is
+# C[E_4, E_6, chi_10, chi_12]. The cusp ideal is (chi_10, chi_12). Counting
+# weighted monomials gives dim S_24(Sp(4,Z)) = 5. The Saito-Kurokawa subspace
+# has dimension dim S_46(SL_2(Z)) = 3, so the genuine subspace has dimension 2.
+# The Beurling kernel therefore has rank at most 5; equality requires the five
+# Boecherer coefficient vectors to be independent on the sampled discriminants.
 
-CUSP_DIMS_SP4 = {
-    10: 1,
-    12: 1,
-    14: 0,
-    16: 1,
-    18: 1,
-    20: 2,
-    22: 2,
-    24: 5,
-    26: 4,
-    28: 6,
-    30: 6,
-}
+
+@lru_cache(maxsize=None)
+def _igusa_even_cusp_dimension(k: int) -> int:
+    """Dimension of the even full-level genus-2 cusp space at weight k.
+
+    Igusa's even ring is C[E_4, E_6, chi_10, chi_12]. A monomial is cuspidal
+    exactly when it contains chi_10 or chi_12.
+    """
+    if k < 0 or k % 2 != 0:
+        return 0
+
+    count = 0
+    for e4 in range(k // 4 + 1):
+        for e6 in range(k // 6 + 1):
+            for c10 in range(k // 10 + 1):
+                for c12 in range(k // 12 + 1):
+                    if c10 + c12 == 0:
+                        continue
+                    weight = 4 * e4 + 6 * e6 + 10 * c10 + 12 * c12
+                    if weight == k:
+                        count += 1
+    return count
+
+
+@lru_cache(maxsize=None)
+def _sl2_modular_dimension(k: int) -> int:
+    """Dimension of M_k(SL_2(Z)) from C[E_4, E_6]."""
+    if k < 0 or k % 2 != 0:
+        return 0
+
+    count = 0
+    for e4 in range(k // 4 + 1):
+        rem = k - 4 * e4
+        if rem >= 0 and rem % 6 == 0:
+            count += 1
+    return count
+
+
+def _sl2_cusp_dimension(k: int) -> int:
+    """Dimension of S_k(SL_2(Z)); the cusp ideal is Delta * M_{k-12}."""
+    if k < 12:
+        return 0
+    return _sl2_modular_dimension(k - 12)
 
 
 def siegel_cusp_dimension(k: int) -> int:
     """Dimension of S_k(Sp(4,Z)) for even k >= 10.
 
-    Uses the Igusa-Tsuyumine-Ibukiyama dimension formula.
-    For small k, return tabulated values.
+    Uses the exact even-ring count from Igusa's presentation
+    C[E_4, E_6, chi_10, chi_12], with cusp ideal (chi_10, chi_12).
     """
-    if k in CUSP_DIMS_SP4:
-        return CUSP_DIMS_SP4[k]
-
-    # For k even, k >= 10, the dimension formula (Igusa 1964/Tsuyumine 1986):
-    # This is a polynomial in k with corrections at small k.
-    # Rough formula for large k (k >= 10, even):
-    # dim S_k(Sp(4,Z)) ~ (k-2)(k-3)(k-4)/720 + lower order
-    # We implement the exact formula from Ibukiyama's tables for k <= 60.
-    raise NotImplementedError(f"Cusp dimension for k={k} not tabulated")
+    if k < 0 or k % 2 != 0:
+        raise NotImplementedError(f"Cusp dimension for k={k} outside even full-level ring")
+    return _igusa_even_cusp_dimension(k)
 
 
 def saito_kurokawa_dimension(k: int) -> int:
@@ -750,19 +771,21 @@ def saito_kurokawa_dimension(k: int) -> int:
 
     This equals dim S_{2k-2}(SL_2(Z)) (the space of elliptic cusp forms).
     """
-    weight_elliptic = 2 * k - 2
-    if weight_elliptic < 12:
+    if k < 0 or k % 2 != 0:
         return 0
-    # dim S_w(SL_2(Z))
-    if weight_elliptic % 12 == 2:
-        return weight_elliptic // 12
-    else:
-        return weight_elliptic // 12
+    weight_elliptic = 2 * k - 2
+    return _sl2_cusp_dimension(weight_elliptic)
 
 
 def genuine_cusp_dimension(k: int) -> int:
     """Dimension of the genuine (non-SK) cusp subspace of S_k(Sp(4,Z))."""
-    return siegel_cusp_dimension(k) - saito_kurokawa_dimension(k)
+    total = siegel_cusp_dimension(k)
+    sk_dim = saito_kurokawa_dimension(k)
+    if sk_dim > total:
+        raise ValueError(
+            f"SK dimension {sk_dim} exceeds dim S_{k}(Sp(4,Z)) = {total}"
+        )
+    return total - sk_dim
 
 
 def rank48_kernel_structure() -> Dict[str, Any]:
@@ -781,18 +804,13 @@ def rank48_kernel_structure() -> Dict[str, Any]:
     k = 24
     total_dim = siegel_cusp_dimension(k)
     sk_dim = saito_kurokawa_dimension(k)
-    genuine_dim = total_dim - sk_dim
+    genuine_dim = genuine_cusp_dimension(k)
 
     # Weight of underlying elliptic forms for SK lifts
     elliptic_weight = 2 * k - 2  # = 46
 
     # Dimension of S_46(SL_2(Z))
     # dim = 3 (computed above)
-
-    # The 3 weight-46 eigenforms are:
-    # Delta * E_34, Delta * E_32 * E_2 (not modular!), ...
-    # Actually S_46 is spanned by products/Hecke eigenforms.
-    # The basis of S_46 consists of 3 Hecke eigenforms.
 
     return {
         'rank': 48,
@@ -809,6 +827,7 @@ def rank48_kernel_structure() -> Dict[str, Any]:
         ),
         'waldspurger_applies_to': f'{sk_dim} SK components',
         'boecherer_applies_to': f'{genuine_dim} genuine components (DPSS20)',
+        'rank_status': 'upper bound; equality requires independent Boecherer coefficient vectors',
     }
 
 
@@ -828,29 +847,35 @@ def spectral_comparison() -> Dict[str, Any]:
     NB:      Nyman-Beurling kernel involves zeta(s)*zeta(1-s)/(s(1-s))
              with spectral support on Re(s) = 1/2.
 
-    The genus-2 kernel matches the NB spectral support, resolving
-    the genus-1 structural mismatch (Gap D narrowed).
+    The genus-2 kernel reaches central values and narrows the genus-1
+    mismatch. It does not recover the full Nyman-Beurling L^2 norm from a
+    finite genus-2 diagnostic.
     """
     return {
         'genus_1': {
             'L_values': 'Re(s) > 1 (Rankin-Selberg)',
-            'matches_NB': False,
+            'critical_line_access': False,
+            'matches_NB_full_norm': False,
             'obstruction': 'structural separation theorem',
         },
         'genus_2': {
             'L_values': 'Re(s) = 1/2 (Boecherer/Waldspurger central values)',
-            'matches_NB': True,
+            'critical_line_access': True,
+            'matches_NB_spectral_support': True,
+            'matches_NB_full_norm': False,
             'mechanism': 'Boecherer factorization of SK lifts',
+            'residual_gap': 'single central values do not determine the full L^2(0,1) norm',
         },
         'nyman_beurling': {
             'L_values': 'Re(s) = 1/2 (critical line)',
             'kernel': 'zeta(s)*zeta(1-s) / (s*(1-s))',
+            'requires': 'full critical-line norm, not a single central value',
         },
         'escalation': {
             'genus_g': 'L(1/2, Sym^{g-1}(f) x chi_D) via Newton-Thorne',
             'all_genera_limit': 'full spectral data on critical line',
         },
-        'gap_d_status': 'narrowed at genus 2; spectral support aligned',
+        'gap_d_status': 'narrowed at genus 2; full Nyman-Beurling norm still open',
     }
 
 

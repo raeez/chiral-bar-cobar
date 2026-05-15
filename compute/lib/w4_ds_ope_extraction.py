@@ -1,7 +1,7 @@
 """W_4 principal DS OPE extraction for the standard MC4 stage-4 packet.
 
 Extracts the four higher-spin principal targets and records the two
-theorematic Virasoro-target identities inside the exact six-entry
+proved Virasoro-target identities inside the exact six-entry
 stage-4 packet from rem:mc4-winfty-computation-target in concordance.tex.
 
 TARGET COEFFICIENTS (from prop:winfty-mc4-frontier-package):
@@ -36,7 +36,7 @@ RESULTS:
 
 References:
   - concordance.tex: rem:mc4-winfty-computation-target
-  - bar_cobar_construction.tex: cor:winfty-ds-stage4-ope-blocks
+  - bar_cobar_adjunction_curved.tex: cor:winfty-ds-stage4-ope-blocks
   - w4_stage4_coefficients.py: structural scaffold (seed sets, exact packet)
   - Hornfeck, Nucl. Phys. B 407 (1993) 57
   - Blumenhagen et al., Nucl. Phys. B 461 (1996) 460
@@ -324,7 +324,7 @@ def w4_full_ope_coefficients(c=None):
       c_334^2, c_444^2, C_{3,4;3;0,4}^2, C_{3,4;4;0,3}^2
       (the four higher-spin principal targets, squared and rational in c)
       C_{4,4;2;0,6} = 2, C_{3,4;2;0,5} = 0
-      (the two theorematic Virasoro-target identities)
+      (the two proved Virasoro-target identities)
     """
     if c is None:
         c = Symbol('c')

@@ -10,22 +10,22 @@ shadows, and critical centres}
 
 Three constructions carrying Hochschild language meet a chiral algebra,
 but only one is Theorem~H. The local chiral Hochschild cochain complex
-on the curve is the tangent complex of the chiral MC moduli. The
+on the reference curve is the tangent complex of the chiral MC moduli. The
 associative Hochschild complex of a chosen formal-disk mode algebra is
 a fibrewise algebraic shadow. The Gel'fand--Fuchs complex is continuous
 Lie algebra cohomology of the positive modes; it is not Hochschild
 cohomology, and scalar GF cochains appear only after a coefficient
 choice.
 
-The chapter constructs the resulting comparison maps only on this
-formal-disk surface and only to their images. It does not identify
-local chiral Hochschild cochains with the categorical Hochschild
-cochains of a dg or Calabi--Yau category, nor with the
+The comparison maps live only on this formal-disk surface and only to
+their images. They do not identify local chiral Hochschild cochains with
+the categorical Hochschild cochains of a dg or Calabi--Yau category, with
+topological Hochschild homology of a ring spectrum, or with the
 product-ambient/Hall Hochschild theories of Vol.~III. Those theories
-have different inputs, different coefficient objects, and different
-ambient products. Theorem~H remains the curve-level statement for
-$\ChirHoch^\bullet$; Theorem~C remains the scalar
-centre-complementarity statement at the scope recorded in
+have different inputs, coefficient objects, and ambient products.
+Theorem~H remains the curve-level statement for
+$\ChirHoch^\bullet$ on a fixed reference curve; Theorem~C remains the
+scalar centre-complementarity statement at the scope recorded in
 Theorem~\ref{thm:derived-centre-complementarity-strengthened}.
 At critical level the Feigin--Frenkel centre compares the chiral and
 mode centres in degree zero; ordinary trivial-coefficient GF
@@ -34,20 +34,22 @@ cohomology is not thereby identified with the oper algebra.
 \section{Three complexes, three gradings, three operads}
 \label{sec:three-three-three}
 
-Fix a chiral algebra~$\cA$ on a smooth projective curve~$X$ with
-vacuum section $\mathbf{1}\in\cA$ and $\cD_X$-module structure. Choose
-a formal coordinate at a point of~$X$ and a PBW-filtered
+Fix a chiral algebra~$\cA$ on a smooth projective reference curve~$X$
+with vacuum section $\mathbf{1}\in\cA$ and $\cD_X$-module structure.
+Choose a formal coordinate at a point of~$X$ and a PBW-filtered
 formal-disk mode algebra $A_{\mathrm{mode}}$ associated with that
-choice. Throughout this chapter $\cA$ is assumed chirally Koszul
-(Definition~\ref{def:koszul-chiral-algebra}) and at non-critical level
-where relevant; the critical-level statements are flagged separately
-in~\S\ref{sec:critical-level-ff}. Whenever a scalar
+choice. The non-critical statements assume that $\cA$ lies on the
+proved Theorem~H surface: PBW chiral Koszul, $E_\infty$-completed,
+finite-type/perfect, and away from critical affine levels and the
+non-generic simple-quotient points excluded in
+Theorem~\ref{thm:main-koszul-hoch}. Critical-level statements are
+confined to~\S\ref{sec:critical-level-ff}. Whenever a scalar
 Gel'fand--Fuchs target is used, a continuous invariant functional or a
 central-extension coefficient module is part of the data.
 
 \begin{definition}[The three comparison complexes; \ClaimStatusProvedElsewhere]
 \label{def:three-hochschild-complexes}
-We recall the three complexes used in this chapter:
+The three complexes are:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Chiral Hochschild cochains} $\ChirHoch^*(\cA)$: the
  complex of multilinear
@@ -84,10 +86,37 @@ We recall the three complexes used in this chapter:
 \end{enumerate}
 \end{definition}
 
+\begin{remark}[Theorem H lane]
+\label{rem:theorem-H-reference-curve-lane}
+The symbol $\ChirHoch^\bullet(\cA)$ denotes the curve-level chiral
+Hochschild cochain complex of the chiral algebra~$\cA$ on the fixed
+reference curve~$X$. Its cohomology satisfies
+\[
+ H^n(\ChirHoch^\bullet(\cA))=0 \qquad (n\ge 3)
+\]
+under the hypotheses of
+Theorem~\ref{thm:hochschild-polynomial-growth}, by the ordered
+Fulton--MacPherson collision-depth spectral sequence, the
+pure-braid Orlik--Solomon contraction, the PBW chiral Koszul
+comparison, the averaging step of
+Corollary~\ref{cor:hochschild-averaging-symmetric}, and the
+curve-level Verdier shift. A nonzero degree-$3$ or higher cohomology
+class therefore belongs to another ambient, such as mode-algebra
+Hochschild cohomology, continuous GF cohomology, categorical
+Hochschild cohomology, or THH, and requires a named comparison
+obligation before it can be compared with Theorem~H.
+\end{remark}
+
 \begin{remark}[Excluded Hochschild theories]
 \label{rem:excluded-hochschild-theories}
 \index{Hochschild cohomology!categorical!excluded from Theorem H}
 \index{Hall--Drinfeld double!Hochschild scope}
+Topological Hochschild homology
+$\mathrm{THH}(R)$ is factorization homology of an $E_1$-ring spectrum
+over the circle. Its circle action, cyclotomic refinements, and
+spectrum-level input are not part of the curve-level
+$\ChirHoch^\bullet(\cA)$ complex.
+
 The categorical Hochschild complex
 $\HH^\bullet_{\mathrm{cat}}(\mathcal C)$ of a dg category~$\mathcal C$
 is the derived endomorphism algebra of the identity functor; with a
@@ -106,6 +135,50 @@ specialisation functor may produce a chiral algebra on a reference
 curve, but the resulting curve-level $\ChirHoch^\bullet$ is a new
 chiral object; it is not the categorical or Hall Hochschild complex
 itself.
+\end{remark}
+
+\begin{remark}[Derived centre and open/closed comparison]
+\label{rem:derived-centre-not-physical-bulk-without-comparison}
+The chiral derived centre is the cochain-level closed-sector object
+\[
+ Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
+ := C^\bullet_{\mathrm{ch}}(\cA,\cA)
+ = \RHom_{\cA\text{-}\cA}^{\mathrm{fact}}(\cA,\cA),
+\]
+with its brace dg algebra structure
+(Section~\ref{sec:chiral-center-theorem}). It is the endocentral
+object through which local closed-sector actions on the boundary
+chiral algebra factor. A physical bulk object is not identified with
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ by notation. Such an
+identification is a theorem only after a named open/closed comparison
+quasi-isomorphism
+\[
+ \mathrm{OC}_{\cA}\colon
+ \mathcal O^{\mathrm{phys}}_{\mathrm{bulk}}(\cA)
+ \xrightarrow{\;\sim\;}
+ Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
+\]
+has been constructed in the relevant open/closed theory. Without
+$\mathrm{OC}_{\cA}$, only the cochain-level derived centre is in
+scope.
+\end{remark}
+
+\begin{remark}[Five-object firewall]
+\label{rem:five-object-firewall-three-hochschild}
+For a chiral algebra~$\cA$ the five objects
+\[
+ \cA,\qquad
+ B^{\mathrm{ch}}(\cA)=T^c(s^{-1}\bar{\cA}),\qquad
+ \cA^{\mathrm i}=H^\bullet B^{\mathrm{ch}}(\cA),\qquad
+ \cA^!=(\cA^{\mathrm i})^\vee \text{ after Verdier duality},\qquad
+ Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
+\]
+are never interchangeable. Bar--cobar inversion is the statement that
+$\Omega^{\mathrm{ch}}B^{\mathrm{ch}}(\cA)$ recovers~$\cA$ on the
+inversion lane. Verdier Koszul duality produces~$\cA^!$ from the
+intrinsic bar-dual coalgebra~$\cA^{\mathrm i}$. The derived centre is
+the Hochschild cochain object. None of these constructions produces
+one of the other four by a change of name.
 \end{remark}
 
 \begin{remark}[Distinguishing gradings]
@@ -162,11 +235,13 @@ HH$_{\mathrm{mode}} \to$ CE; \ClaimStatusConditional]
 \index{Theta 2 intertwiner@$\Theta_2$ intertwiner}
 The associative mode algebra $A_{\mathrm{mode}}$ generates a Lie
 algebra $\mathrm{Lie}(A_{\mathrm{mode}})$ via the commutator
-bracket. For $A_{\mathrm{mode}}$ freely generated (as is the case for
-all freely strongly generated chiral algebras in the standard
-landscape), the positive-mode subalgebra $L_+$ coincides with
-$\mathrm{Lie}(\cA)_{>0}$ from
-Definition~\ref{def:three-hochschild-complexes}. The antisymmetrization
+bracket. The chosen mode functor sends the positive modes of~$\cA$ to a
+closed Lie subalgebra
+$L_+\subset \mathrm{Lie}(A_{\mathrm{mode}})$, equipped with the
+conformal-weight topology. If the PBW mode model is faithful on
+positive modes, this subalgebra identifies with
+$\mathrm{Lie}(\cA)_{>0}$; otherwise $L_+$ is the image after quotienting
+by the positive-mode kernel. The antisymmetrization
 map
 \[
  \mathrm{Alt}\colon
@@ -224,14 +299,13 @@ the full truncated complexes.
 locus; \ClaimStatusConditional]
 \label{thm:three-hochschild-chain-level-agreement-low-degree}
 \index{Theorem!three-Hochschild chain-level image comparison}
-Let $\cA$ be a chirally Koszul algebra at non-critical level, freely
-strongly generated, perfect at each conformal weight. Assume the
+Let $\cA$ lie on the proved Theorem~H surface named above. Assume the
 formal-disk PBW comparison makes $\Theta_1$ a filtered chain map after
-quotienting by the spectral-variable kernel, and fix a coefficient
-datum~$\ell$ for the CE/GF target. Let $\tau_{\le 2}$ denote stupid
-truncation to cochain degrees $\{0,1,2\}$. Then the chosen maps compare
-the low-degree surfaces only after passing to the indicated
-images/quotients:
+quotienting by the spectral-variable kernel, assume the positive-mode
+image~$L_+$ and coefficient datum~$\ell$ are fixed for the CE/GF target,
+and let $\tau_{\le 2}$ denote stupid truncation to cochain degrees
+$\{0,1,2\}$. Then the chosen maps compare the low-degree surfaces only
+after passing to the indicated images/quotients:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item $\Theta_1$ induces a quasi-isomorphism from the quotient of
  $\tau_{\le 2}\ChirHoch^*(\cA)$ by the spectral-variable kernel onto
@@ -304,7 +378,7 @@ $\cF$ (free fermion)
 $V_k(\fg)$ generic
 & $\bC$ & $\fg$ & $\bC$
 & $\bC$ & $0$ & $0$
-& $\bC$ & $0$ & $H^2(\fg)$ \\
+& $\bC$ & $0$ & $\bC\langle\omega_{\fg}\rangle$ \\
 $\mathrm{Vir}_c$ generic
 & $\bC$ & $0$ & $\bC$
 & $\bC$ & $0$ & $0$
@@ -312,6 +386,43 @@ $\mathrm{Vir}_c$ generic
 \bottomrule
 \end{tabular}
 \end{center}
+Here $\omega_{\fg}$ is the standard affine residue/Killing
+central-extension cocycle, not the ordinary finite-dimensional
+Lie-algebra cohomology group $H^2(\fg;\bC)$.
+
+Define the low-degree alternating characters
+\[
+ \chi_{\le 2}^{\mathrm{ch}}(\cA)
+ :=\sum_{n=0}^{2}(-1)^n\dim H^n(\ChirHoch^\bullet(\cA)),
+ \quad
+ \chi_{\le 2}^{\mathrm{mode}}(\cA)
+ :=\sum_{n=0}^{2}(-1)^n\dim H^n\HH^\bullet(A_{\mathrm{mode}}),
+\]
+and
+\[
+ \chi_{\le 2}^{\mathrm{GF}}(L_+)
+ :=\sum_{n=0}^{2}(-1)^n
+ \dim H^n_{\mathrm{cont}}(L_+;\bC).
+\]
+For the same four witnesses one obtains:
+\[
+\begin{array}{c|ccc}
+\text{family} & \chi_{\le 2}^{\mathrm{ch}}
+& \chi_{\le 2}^{\mathrm{mode}}
+& \chi_{\le 2}^{\mathrm{GF}}\\
+\hline
+\cH_k & 1 & 1 & 2\\
+\cF & 2 & 1 & 2\\
+V_k(\mathfrak{sl}_2) & -1 & 1 & 2\\
+\mathrm{Vir}_c & 2 & 1 & 2
+\end{array}
+\]
+The Heisenberg row is decisive:
+$\ChirHoch^\bullet(\cH_k)$ has dimensions $(1,1,1)$ and
+$\chi_{\le 2}^{\mathrm{ch}}=1$, whereas the bounded scalar
+GF table has dimensions $(1,0,1)$ and
+$\chi_{\le 2}^{\mathrm{GF}}=2$. Euler characteristic is therefore
+not a comparison invariant for the native complexes.
 
 The table refines
 Remark~\ref{rem:critical-level-dimensional-divergence}: the three
@@ -334,9 +445,12 @@ Three inequivalent statements are at play:
 \begin{enumerate}[label=\textup{(\alph*)}]
 \item \emph{Identical cohomological dimensions.} FALSE at generic
  level. Witness: $\ChirHoch^1(\cH_k) = \bC$ vs $\HH^1(A_1) = 0$.
-\item \emph{Same low-degree Euler characteristic.} Not invariantly
- true without fixing coefficients. Trivial-coefficient GF, adjoint CE,
- and a scalar anomaly coefficient can give different Euler shadows.
+\item \emph{Same low-degree Euler characteristic.} FALSE for the
+ ordinary scalar GF target. Witness:
+ $\chi_{\le 2}^{\mathrm{ch}}(\cH_k)=1-1+1=1$ while
+ $\chi_{\le 2}^{\mathrm{GF}}(L_+)=1-0+1=2$. Trivial-coefficient GF,
+ adjoint CE, and a scalar anomaly coefficient can give different
+ Euler shadows.
 \item \emph{Chain-level quasi-isomorphism onto image via
  $\Theta_1,\Theta_{2,\ell},\Theta_{3,\ell}$.} Conditional on the PBW
  and coefficient hypotheses above, and only on the truncated range
@@ -370,7 +484,8 @@ their respective images for all $n\ge 0$. The image of
 $[\Theta_1]$ in $H^n\HH^*$ is the mode-visible part of the chiral
 class. The image of $[\Theta_{2,\ell}]$ in continuous cohomology is
 the $\ell$-visible part. No surjectivity onto full scalar GF cohomology
-or full mode Hochschild cohomology is asserted.
+or full mode Hochschild cohomology is asserted, and the native
+low-degree Euler characteristics need not agree.
 \end{theorem}
 
 \begin{proof}
@@ -382,8 +497,12 @@ Theorem~\ref{thm:three-hochschild-chain-level-agreement-low-degree}
 upgrades to a cohomological statement by passage from
 chain-level quasi-isomorphism onto image to cohomology. The
 antisymmetrization statement is the same argument with coefficients
-carried by~$\ell$. The theorem does not require, and does not imply,
-any high-degree vanishing theorem for $H^*(A_{\mathrm{mode}})$.
+carried by~$\ell$. Euler characteristic is additive inside a fixed
+finite complex or an exact sequence; it is not preserved by a map that
+first quotients the chiral complex by the spectral kernel and then
+projects to a coefficient-selected CE image. The theorem does not
+require, and does not imply, any high-degree vanishing theorem for
+$H^*(A_{\mathrm{mode}})$.
 \end{proof}
 
 \begin{remark}[Gel'fand--Fuchs unboundedness is a property of
@@ -447,14 +566,17 @@ lie in the image of the chiral comparison map.
 
 \begin{remark}[Why Theorem~H does not extend to GF]
 \label{rem:why-theorem-H-not-GF}
-Theorem~H is the $[0,2]$ amplitude bound for chiral Hochschild on
-a curve. The bound uses the $\cD_X$-module dimension
-$\dim_\bC X = 1$, giving cohomological amplitude $\le 2$ for
-$\mathrm{Ext}^n_{\cD_{X^{n+2}}}$. GF cohomology is an
-infinite-dimensional Lie-algebra cohomology computed on
-$\mathrm{Lie}(\cA)$ without curve data: no curve-dimension bound
-applies. The unboundedness of GF is therefore a feature, not a
-defect. The same boundary excludes topological Hochschild homology,
+Theorem~H is the $[0,2]$ amplitude bound for chiral Hochschild on the
+PBW-completed generic curve surface. The bound is not a bare formal
+consequence of $\dim_\bC X=1$: it uses the ordered
+Fulton--MacPherson collision-depth spectral sequence, the
+pure-braid Orlik--Solomon contraction of the positive Arnold classes,
+the PBW chiral Koszul comparison, the averaging step, and the
+curve-level Verdier shift. GF cohomology is continuous Lie algebra
+cohomology of the positive-mode algebra with a chosen coefficient
+module; it has no FM collision filtration on~$X$ and no PBW/Arnold
+contraction. Its unboundedness is therefore a feature, not a defect.
+The same boundary excludes topological Hochschild homology,
 categorical Hochschild cochains of dg/CY categories, and
 product-ambient Hall Hochschild theories: their inputs are not chiral
 algebras on the curve~$X$, and Theorem~H does not control their
@@ -530,7 +652,7 @@ objects.
 
 \begin{remark}[Chain vs cohomological boundary]
 \label{rem:three-hochschild-chain-cohomology-boundary}
-Summarising the chapter's boundary map:
+The boundary has three strata:
 \begin{itemize}[nosep]
 \item $n=0$: at critical level, the chiral centre and mode centre
  share the Feigin--Frenkel oper algebra; ordinary
@@ -539,13 +661,16 @@ Summarising the chapter's boundary map:
  onto image via $\Theta_1,\Theta_{2,\ell},\Theta_{3,\ell}$ under the
  PBW and coefficient hypotheses.
 \item $n\ge 3$: $H^n(\ChirHoch^\bullet)=0$ by Theorem~H, while
- scalar GF may continue unbounded. No uniform high-degree statement
- about $\HH^*_{\mathrm{mode}}$ is part of Vol.~I.
+ scalar GF may continue unbounded. The vanishing is the reference-curve
+ chiral Hochschild statement of
+ Remark~\ref{rem:theorem-H-reference-curve-lane}; no uniform
+ high-degree statement about $\HH^*_{\mathrm{mode}}$ is part of
+ Vol.~I.
 \end{itemize}
 This is the sharp statement.
 \end{remark}
 
-\section{Consequences and propagation}
+\section{Formal-disk and cross-ambient boundary}
 \label{sec:three-hochschild-consequences}
 
 \begin{corollary}[Scoped formal-disk comparison]
@@ -559,8 +684,9 @@ $\Theta_1,\Theta_{2,\ell},\Theta_{3,\ell}$
 quotient by the spectral-variable kernel, and coefficient datum~$\ell$
 have been fixed. On $\tau_{\le 2}$ these maps are
 quasi-isomorphisms onto their images. Above the curve-level amplitude,
-Theorem~H gives $H^n(\ChirHoch^\bullet)=0$ for $n\ge 3$, while scalar
-GF may remain unbounded
+Theorem~H gives
+$H^n(\ChirHoch^\bullet(\cA))=0$ on the reference curve for
+$n\ge 3$, while scalar GF may remain unbounded
 (Proposition~\ref{prop:three-hochschild-high-degree-divergence}).
 
 At critical level $k=-h^\vee$, the Feigin--Frenkel centre compares
@@ -572,7 +698,7 @@ formal-disk shadows with categorical Hochschild cochains of a dg/CY
 category or with product-ambient Hall Hochschild theories.
 \end{corollary}
 
-\begin{remark}[Cross-volume boundary]
+\begin{remark}[Cross-ambient boundary]
 \label{rem:three-hochschild-propagation}
 Volume~II may interpret the three formal-disk maps as boundary
 truncation, commutator-Lie descent, and anomaly projection. That

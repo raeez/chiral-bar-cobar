@@ -113,38 +113,39 @@ and the Ordered Bar Complex}
   Waterloo, ON N2L 3G1, Canada}
 \email{rlorgat@perimeterinstitute.ca}
 
-\date{\today}
+\date{}
 
 \begin{abstract}
 The Knizhnik--Zamolodchikov connection on conformal blocks
 of the affine Kac--Moody algebra $\widehat{\fg}_k$ has
-monodromy valued in the braid group.  The quantum group
-$U_q(\fg)$ has a universal $R$-matrix that also furnishes
+monodromy valued in the braid group.  The quantum loop algebra
+$U_{q_{\mathrm{KL}}}(L\fg)$ has a universal $R$-matrix that also furnishes
 braid representations.  That these representations coincide
-is the Drinfeld--Kohno theorem.  We prove that the ordered
-chiral bar complex $B^{\mathrm{ord}}(V^k(\fg))$ provides
-the bridge: its collision residue
-$r(z) = k\Omega/z$ (trace-form convention; the level
-prefix $k$ is essential and $r|_{k=0} = 0$)
-is simultaneously the infinitesimal datum
-underlying the KZ connection and the classical limit of the
-quantum $R$-matrix.  The bar differential encodes the chiral
+on evaluation modules is the Drinfeld--Kohno theorem.  The ordered
+chiral bar complex $B^{\mathrm{ord}}(V^k(\fg))$ provides the bridge:
+its collision residue
+$r^{\mathrm{coll}}(z) = k\Omega_{\mathrm{tr}}/z$ (trace-form
+convention; the level prefix $k$ is essential and
+$r^{\mathrm{coll}}|_{k=0} = 0$) is the ordered OPE datum, while the
+KZ connection uses the separately normalised spectral datum
+$r^{\mathrm{KZ}}(z)=\Omega_{\mathrm{KZ}}/((k+h^\vee)z)$.  These are
+two normalisations of the affine monodromy datum, not the same
+rational function of $k$.  The bar differential encodes the chiral
 OPE, the deconcatenation coproduct encodes the $\Eone$
 composition, and the monodromy of the resulting Kohno
 connection is the $R$-matrix.
 
-We organise the comparison into four stages.
+The comparison has four stages.
 At DK-0, the KZ monodromy on evaluation modules equals the
 quantum $R$-matrix representation (the classical theorem).
 At DK-1, the spectral Drinfeld strictification converts
 the $\Ainf$ bar-complex structure into a genuine
-associative structure with spectral parameter, controlled
-by a cohomological obstruction that vanishes for all simple
-Lie algebras by root-space one-dimensionality.  At DK-2,
-the dg-shifted Yangian $\Ydg_\hbar(\fg)$ is identified as
-the line-side Koszul dual of the affine algebra.  At DK-3,
-the strictification extends to all simple types.  We verify
-the entire bridge on the Heisenberg algebra (where the
+associative structure with spectral parameter on the stated
+evaluation-generated core.  At DK-2 and DK-3, the generated-core
+comparison identifies the dg-shifted Yangian surface and verifies the
+strictification obstruction on simple types.  The full
+factorisation/category extension remains a named proof obligation.
+We verify the bridge on the Heisenberg algebra (where the
 $R$-matrix is scalar) and on $\mathfrak{sl}_2$ (where
 the $4 \times 4$ $R$-matrix reproduces colored Jones
 polynomials via bar-complex monodromy).
@@ -160,30 +161,21 @@ polynomials via bar-complex monodromy).
 This paper uses two closely related but distinct deformation
 parameters, and we fix the convention once and for all.
 \begin{itemize}
-\item \textbf{Canonical (Kazhdan--Lusztig).} We set
+\item \textbf{Half-braiding (Kazhdan--Lusztig).} We set
 \[
-  q \;:=\; \exp\!\bigl(2\pi i/(k+\hv)\bigr).
+  q_{\mathrm{KL}} \;:=\; \exp\!\bigl(\pi i/(k+\hv)\bigr).
 \]
-All $R$-matrices, braiding monodromies, quantum-group
-identifications ($U_q(\fg)$, $\Rep_q(\fg)$, Kazhdan--Lusztig
-equivalence) and the default statements of DK-0, DK-1, DK-2, DK-3
-use this $q$ throughout.
-\item \textbf{Drinfeld.} Where the half-monodromy is displayed
-directly (singlet/triplet eigenvalue tables, half-braiding
-computations), we write
+Half-braiding computations and eigenvalue tables use
+$q_{\mathrm{KL}}$.
+\item \textbf{Full pure-loop monodromy.} We set
 \[
-  q_{\mathrm{D}} \;:=\; \exp\!\bigl(\pi i/(k+\hv)\bigr),
-  \qquad
-  q \;=\; q_{\mathrm{D}}^{2}.
+  q_{\mathrm{DK}} \;:=\; q_{\mathrm{KL}}^2
+  = \exp\!\bigl(2\pi i/(k+\hv)\bigr).
 \]
-The Drinfeld variable $q_{\mathrm{D}}$ appears ONLY in displays
-explicitly marked with the subscript $\mathrm{D}$.
+Full pure-braid monodromy displays use \(q_{\mathrm{DK}}\).
 \end{itemize}
-\textbf{Bridge to \texttt{en\_koszul\_duality.tex}.} Vol I's
-\texttt{en\_koszul\_duality} uses the Kazhdan--Lusztig convention
-throughout; earlier drafts of the present paper had used both.
-After this note, every new occurrence of $q$ defaults to
-Kazhdan--Lusztig unless explicitly marked $q_{\mathrm{D}}$.
+Thus every occurrence of a \(q\)-parameter below is explicitly
+subscripted when the distinction matters.
 \end{remark}
 
 % ================================================================
@@ -218,21 +210,22 @@ and the Arnold form
 $\omega_{ij} = d\log(z_i - z_j)$ is a bar-construction
 coefficient, not the connection form.
 
-Independently, the quantum group $U_q(\fg)$ at
-$q = e^{\pi i/(\kp)}$ produces braid group representations
+Independently, the quantum group $U_{q_{\mathrm{KL}}}(\fg)$ at
+$q_{\mathrm{KL}} = e^{\pi i/(\kp)}$ produces braid group representations
 from its universal $R$-matrix
-$\cR \in U_q(\fg)^{\widehat{\otimes}\,2}$.  On any
+$\cR \in U_{q_{\mathrm{KL}}}(\fg)^{\widehat{\otimes}\,2}$.  On any
 collection of finite-dimensional $\fg$-modules
 $V_1, \ldots, V_n$, the braided monoidal structure of
-$\Rep_q(\fg)$ defines a representation
-$\rho_n^{U_q} \colon B_n \to \GL(V_1 \otimes \cdots \otimes V_n)$.
+$\Rep_{q_{\mathrm{KL}}}(\fg)$ defines a representation
+$\rho_n^{U_{q_{\mathrm{KL}}}} \colon B_n
+\to \GL(V_1 \otimes \cdots \otimes V_n)$.
 
 The Drinfeld--Kohno theorem~\cite{Kohno87, Drinfeld90}
 states that these two braid representations coincide:
 \begin{equation}\label{eq:dk-theorem-intro}
 \rho_n^{\mathrm{KZ}}
 \;\simeq\;
-\rho_n^{U_q(\fg)}.
+\rho_n^{U_{q_{\mathrm{KL}}}(\fg)}.
 \end{equation}
 The proof passes through a third object: the Drinfeld
 associator $\Phi \in U(\fg)^{\widehat{\otimes}\,3}[\![\hbar]\!]$,
@@ -261,11 +254,6 @@ r_{ij}(z)
 \frac{k\,\Omega_{ij}}{z}
 \end{equation}
 in the trace-form convention.
-% PE-1: r-matrix. family: affine KM. r(z) = k*Omega/z.
-% level parameter: k. OPE pole order: 2. r-matrix pole: 1.
-% AP126: r(z)|_{k=0} = 0. Y. AP141: no bare Omega/z.
-% Critical: r(z)|_{k=-h^v} = -h^v*Omega/z (finite, trace-form).
-% Source: ordered_associative_chiral_kd.tex:445,5547.
 This collision residue is the seed from which all four
 objects grow:
 \begin{enumerate}[label=(\arabic*)]
@@ -297,66 +285,40 @@ projection; the quantum $R$-matrix is the exponentiated
 degree-$2$ projection.  The bar complex holds all degrees
 simultaneously.
 
-\subsection{The four stages}
+\subsection{The four bridge assertions}
 
-We organize the comparison into a four-stage ladder, each
-stage adding algebraic depth.
-
-\begin{center}
-\renewcommand{\arraystretch}{1.3}
-\begin{tabular}{cll}
-\toprule
-\textbf{Stage} & \textbf{Content} & \textbf{Status} \\
-\midrule
-DK-0 & KZ monodromy $=$ quantum $R$-matrix on evaluation
-  modules & Proved \\
-DK-1 & Spectral Drinfeld strictification
-  ($\Ainf \to$ associative) & Proved \\
-DK-2 & $\Ydg_\hbar(\fg)$ as line-side Koszul dual &
-  Proved \\
-DK-3 & Complete strictification for all simple types &
-  Proved \\
-\bottomrule
-\end{tabular}
-\end{center}
-
-DK-0 is the classical Drinfeld--Kohno theorem.  DK-1
-replaces the analytic associator by an algebraic
-strictification controlled by a cohomological obstruction.
-DK-2 identifies the resulting strict algebra with the
-dg-shifted Yangian.  DK-3 verifies that the obstruction
-vanishes for all simple Lie algebras by exploiting
-root-space one-dimensionality.
+The comparison consists of four assertions: DK-0 identifies KZ
+monodromy with the quantum-group $R$-matrix on evaluation modules;
+DK-1 strictifies the spectral $\Ainf$ bar product; DK-2 identifies the
+strict algebra with the dg-shifted Yangian; DK-3 proves type-uniform
+vanishing of the strictification obstruction.
 
 \subsection{The pure-braid Orlik--Solomon route to Koszulity}
 \label{sec:dk-os-route}
 
-The Shelton--Yuzvinsky theorem asserts that the Orlik--Solomon
-algebra $\mathrm{OS}(\mathcal{A})$ of any supersolvable arrangement
-$\mathcal{A}$ is Koszul. The pure-braid arrangement
+Arnold~\cite{Arnold69} and Orlik--Solomon~\cite{OS80} identify the
+cohomology algebra of the pure-braid arrangement, and
+Shelton--Yuzvinsky~\cite{SheltonYuzvinsky97} prove Koszulity for
+supersolvable arrangements. The pure-braid arrangement
 $\mathcal{A}_n^{\mathrm{PB}}$ (hyperplanes $z_i = z_j$) is
 supersolvable by induction on $n$, hence the pure-braid
 Orlik--Solomon algebra $\mathrm{OS}(\mathfrak{t}_n)$ is Koszul. This
 is the purely combinatorial input on which the chiral
 Drinfeld--Kohno programme rests.
 
-\begin{theorem}[Pure-braid Orlik--Solomon Koszulity
+\begin{theorem}[Pure-braid Orlik--Solomon flatness input
 route]\label{thm:dk-os-koszul}
 Let $\fg$ be simple and $V^k(\fg)$ the universal affine vertex
 algebra at non-critical level. Then:
 \begin{enumerate}[label=\textup{(\roman*)}]
- \item $H^\bullet(B^{\mathrm{ord}}(V^k(\fg))) \cong
- \mathrm{OS}(\mathfrak{t}_n) \otimes V^k(\fg)^{\otimes n}$ as
- $\Sigma_n$-twisted graded objects (the ordered bar concentrates
- in weight $1$ on cohomology; PBW collapse);
+ \item $\mathrm{OS}(\mathfrak{t}_n)$ controls the configuration-space
+ $d\log$ forms entering the ordered bar differential;
  \item the collision residue $r(z) = k\Omega_{\mathrm{tr}}/z$
  (trace-form) solves CYBE in the Knizhnik--Drinfeld sense;
- \item the Cherednik monodromy representation of the pure braid
- group factors through $H^\bullet(B^{\mathrm{ord}}(V^k(\fg)))$.
+ \item affine bar concentration requires a separate PBW/Koszul input.
 \end{enumerate}
-Consequence: the ordered-Koszul property of $V^k(\fg)$ is
-witnessed combinatorially by $\mathrm{OS}(\mathfrak{t}_n)$
-Koszulity, without analytic input beyond $d\log$ absorption.
+The OS algebra supplies the flatness/CYBE input; it does not by itself
+compute \(H^\bullet(B^{\mathrm{ord}}(V^k(\fg)))\).
 \end{theorem}
 
 \begin{lemma}[$R$-twisted $\Sigma_n$-descent]\label{lem:dk-r-twist-descent}
@@ -383,20 +345,18 @@ structure.
 
 \begin{corollary}[Chiral Kac--Kazhdan formal smoothness]
 \label{cor:dk-chiral-kk-smooth}
-Combined with the Francis--Gaitsgory bar-cobar $(\infty,2)$-equivalence
-lifted to the properad level, the pure-braid Orlik--Solomon
-Koszulity route (Theorem~\ref{thm:dk-os-koszul}) and the $R$-twisted
-$\Sigma_n$-descent (Lemma~\ref{lem:dk-r-twist-descent}) imply that
-the chiral Kac--Kazhdan category is formally smooth at the properad
-level: every conilpotent-complete factorization deformation of a
-Koszul-locus chiral algebra extends to all orders.
+Assume the Francis--Gaitsgory bar-cobar $(\infty,2)$-equivalence has
+been lifted to the properad level and that the affine PBW/Koszul
+concentration input holds.  Then the pure-braid Orlik--Solomon
+flatness input (Theorem~\ref{thm:dk-os-koszul}) and the $R$-twisted
+$\Sigma_n$-descent (Lemma~\ref{lem:dk-r-twist-descent}) give formal
+smoothness for conilpotent-complete factorization deformations on the
+Koszul locus.
 \end{corollary}
 
 \begin{remark}[Four Yangian types must be kept distinct]
 \label{rem:four-yangian-types-dk}
-The Drinfeld--Kohno bridge relates three of the four Yangian notions
-(Definition~\ref{def:four-yangian-types-3hbar} in the companion
-paper on three-parameter $\hbar$):
+The Drinfeld--Kohno bridge separates four Yangian incarnations:
 \begin{itemize}
  \item DK-0 is a statement about $Y_\hbar(\fg)$ (classical).
  \item DK-1 and DK-2 produce $Y^{\mathrm{dg}}_\hbar(\fg)$ (dg-shifted).
@@ -436,22 +396,22 @@ and the desuspension satisfies $|s^{-1}v| = |v| - 1$.
 Two conventions for the affine classical $r$-matrix
 coexist in the literature and in this programme:
 \begin{enumerate}[label=(\roman*)]
-\item \emph{Trace-form:}
-  $r(z) = k\Omega/z$.
+\item \emph{Trace-form collision residue:}
+  $r^{\mathrm{coll}}(z) = k\Omega_{\mathrm{tr}}/z$.
   At $k = 0$, the $r$-matrix vanishes (abelian limit).
   At $k = -\hv$, the $r$-matrix is $-\hv\Omega/z$ (finite;
   the critical-level pathology is in the Sugawara
   construction, not in $r$ itself).
-\item \emph{KZ normalization:}
-  $r(z) = \Omega/((\kp)z)$.
+\item \emph{KZ spectral normalization:}
+  $r^{\mathrm{KZ}}(z) = \Omega_{\mathrm{KZ}}/((\kp)z)$.
   At $k = 0$, the $r$-matrix is $\Omega/(\hv z) \neq 0$
   for non-abelian $\fg$ (the Lie bracket persists).
   At $k = -\hv$, the $r$-matrix diverges (Sugawara singularity).
 \end{enumerate}
-The bridge identity is
-$k\Omega_{\mathrm{tr}} = \Omega/(\kp)$ at generic~$k$,
-where the subscript distinguishes the two Casimir
-normalizations.
+There is no identity \(k\Omega_{\mathrm{tr}}=\Omega_{\mathrm{KZ}}/\kp\)
+as rational functions of \(k\).  Passing from one display to the other
+means changing the normalised invariant form and the monodromy
+normalisation.
 In this paper we use the KZ normalization for
 the connection (matching the standard KZ equation) and the
 trace-form for the bar-complex collision residue (where the
@@ -477,9 +437,6 @@ T^c(s^{-1}\bar{\cA}),
 where $\bar{\cA} = \ker(\varepsilon)$ is the augmentation
 ideal (not $\cA$ itself) and
 $|s^{-1}v| = |v| - 1$ is the desuspension.
-% PE-4: bar complex. object: T^c(s^{-1} A-bar). AP132: Y.
-% AP22: |s^{-1}v| = |v| - 1. Y.  Coproduct: deconcatenation.
-% Grading: cohomological |d| = +1. Y. verdict: ACCEPT.
 The differential $d_B$ encodes the chiral OPE residues at
 the boundary strata of the Fulton--MacPherson
 compactification
@@ -591,9 +548,8 @@ triple collisions.
 
 \begin{proposition}[KZ connection from the Kohno connection]
 \label{prop:dk-kz-from-kohno}
-For the affine algebra $V^k(\fg)$, the Kohno
-connection~\eqref{eq:dk-kohno} with collision
-residue~\eqref{eq:dk-collision-residue} is
+For the affine algebra $V^k(\fg)$, the KZ-normalized Kohno
+connection is
 \begin{equation}\label{eq:dk-kz}
 \nabla_{\mathrm{KZ}}
 \;=\;
@@ -604,16 +560,14 @@ d
 \Omega_{ij}\,
 \frac{d(z_i - z_j)}{z_i - z_j}\,,
 \end{equation}
-where we have passed to the KZ normalization via
-$k\Omega_{\mathrm{tr}} = \Omega/(\kp)$.
+where \(\Omega_{ij}\) is the KZ-normalised Casimir.  The trace-form
+collision residue remains \(r^{\mathrm{coll}}(z)=k\Omega_{\mathrm{tr}}/z\).
 \end{proposition}
 
 \begin{proof}
-Substitute the trace-form collision
-residue~\eqref{eq:dk-collision-residue} into the Kohno
-connection~\eqref{eq:dk-kohno}:
+The trace-form collision residue gives the ordered OPE connection
 \[
-\nabla
+\nabla_{\mathrm{coll}}
 \;=\;
 d
 \;-\;
@@ -626,11 +580,9 @@ d
 k\,\Omega_{ij}\,
 \frac{dz_{ij}}{z_{ij}}\,.
 \]
-In the KZ normalization,
-$k\,\Omega_{\mathrm{tr}} = \Omega_{\mathrm{KZ}}/(\kp)$,
-giving~\eqref{eq:dk-kz}.  This is the
-Knizhnik--Zamolodchikov
-connection~\cite{KZ84}.  The $d\tau$ term of the
+The KZ equation uses the separately normalized spectral datum
+\(\Omega_{\mathrm{KZ}}/\kp\), giving~\eqref{eq:dk-kz}.  This is the
+Knizhnik--Zamolodchikov connection~\cite{KZ84}.  The $d\tau$ term of the
 Knizhnik--Zamolodchikov--Bernard connection is absent: we
 are at genus~$0$.
 \end{proof}
@@ -657,7 +609,7 @@ R_{12}
 \oint_\gamma r_{12}(z)\,dz
 \Bigr)
 \;=\;
-e^{\Omega_{12}/(\kp)}\,,
+\exp\!\left(\frac{2\pi i}{\kp}\,\Omega_{12}\right)\,,
 \end{equation}
 where $\cP$ denotes path-ordering.
 At general~$n$, the pure braid group
@@ -669,10 +621,8 @@ $\nabla$ induces a monodromy representation
 \qquad
 \gamma_{ij} \mapsto R_{ij}.
 \]
-The Yang--Baxter equation
-$R_{12}\,R_{13}\,R_{23} = R_{23}\,R_{13}\,R_{12}$
-is the exponentiated form of the CYBE~\eqref{eq:dk-cybe},
-so $\rho$ is a well-defined representation.
+The braid relations are obtained from flat KZ monodromy together with
+the Drinfeld associator.
 \end{theorem}
 
 \begin{proof}
@@ -697,28 +647,27 @@ Since $\Omega_{12}$ acts as a single endomorphism (not a
 sum of $z$-dependent terms), the path-ordering is trivial
 and $R_{12} = e^{2\pi i k\Omega_{12}}$ in the trace
 normalization where $r_{\mathrm{tr}}(z) = k\Omega/z$.
-In the Kazhdan--Lusztig (KZ) normalization where
+In the KZ normalization where
 $r_{\mathrm{KZ}}(z) = \Omega/((\kp) z)$, the monodromy reads
 \[
- R_{12}
+ \Mon_\gamma^{\mathrm{KZ}}
  \;=\;
  \exp\!\left(\frac{2\pi i}{\kp}\,\Omega_{12}\right)
  \;=\;
- q^{\Omega_{12}},
+ q_{\mathrm{DK}}^{\Omega_{12}},
  \qquad
- q := \exp\!\left(\frac{2\pi i}{\kp}\right).
+ q_{\mathrm{DK}} := \exp\!\left(\frac{2\pi i}{\kp}\right).
 \]
 The factor of $2\pi i$ in the exponent is \emph{structural},
 not a contour normalization: it governs the braiding monodromy
-and identifies the Kazhdan--Lusztig root of unity $q$ at integer
-level. In particular, at level $k$ a positive integer, $q$ is
-a primitive $(\kp)$-th root of unity and the braiding restricts
-to the quantum-group $\mathrm{Rep}_q(\mathfrak{g})$ on the
-evaluation-generated core (Kazhdan--Lusztig equivalence).
+and identifies the full pure-loop parameter \(q_{\mathrm{DK}}\).
+The half-braiding parameter is
+\(q_{\mathrm{KL}}=\exp(\pi i/\kp)\), so
+\(q_{\mathrm{DK}}=q_{\mathrm{KL}}^2\).
 
-The Yang--Baxter equation follows from flatness:
-$\nabla^2 = 0$ implies the CYBE~\eqref{eq:dk-cybe},
-and the exponential map sends the CYBE to the YBE.
+The Yang--Baxter equation is a monodromy consequence of the flat KZ
+connection and the Drinfeld associator.  It is not obtained by a bare
+formal exponentiation of the CYBE.
 \end{proof}
 
 \begin{remark}[$R$-twisted descent]
@@ -767,14 +716,14 @@ the monodromy representation
 \]
 of the KZ connection~\eqref{eq:dk-kz} is isomorphic to
 the braid group representation obtained from the braided
-monoidal structure of $\Rep_q(\fg)$ via the universal
-$R$-matrix of $U_q(\fg)$:
+monoidal structure of $\Rep_{q_{\mathrm{KL}}}(\fg)$ via the universal
+$R$-matrix of $U_{q_{\mathrm{KL}}}(\fg)$:
 \begin{equation}\label{eq:dk0}
 \rho_n^{\mathrm{KZ}}
 \;\simeq\;
-\rho_n^{U_q(\fg)},
+\rho_n^{U_{q_{\mathrm{KL}}}(\fg)},
+\qquad q_{\mathrm{KL}}=e^{\pi i/\kp}.
 \end{equation}
-where $q = e^{\pi i/(\kp)}$.
 \end{theorem}
 
 \subsection{The Drinfeld associator}
@@ -832,8 +781,9 @@ algebra on two generators $t_{12}, t_{23}$) satisfies the
 pentagon and hexagon equations.  It provides an equivalence
 of braided monoidal categories between the completion
 $\hat{\ft}_n\text{-}\mathrm{mod}$
-(with KZ braiding) and $\Rep_q(\fg)$ (with $R$-matrix
-braiding) at $q = e^{\hbar}$, $\hbar = \pi i/(\kp)$.
+(with KZ braiding) and $\Rep_{q_{\mathrm{KL}}}(\fg)$ (with $R$-matrix
+braiding) at $q_{\mathrm{KL}} = e^{\hbar}$,
+$\hbar = \pi i/(\kp)$.
 
 The pentagon equation for $\Phi$ states
 that the two parenthesizations
@@ -850,16 +800,14 @@ For the affine algebra $V^k(\fg)$, the higher $\Ainf$
 operations $m_k$ ($k \geq 3$) vanish on the
 evaluation-generated core
 ${\mathrm{Core}}_{\mathrm{eval}}(\widehat{\mathfrak{g}}_k)$.
-(This is the one-loop exactness of the BV--BRST
-differential on the eval core: only the quadratic part of
-the chiral action contributes; see Vol~I,
-Theorem~\ref{V1-thm:chiral-mc3-eval-core} in
-\texttt{five\_theorems\_modular\_koszul.tex}.)  The full superconnection on the bar complex
+(This is evaluation-core one-loop exactness of the BV--BRST
+differential: only the quadratic part of the chiral action
+contributes.)  The full superconnection on the bar complex
 therefore collapses to the Kohno connection, and the
 bar-complex monodromy equals the KZ monodromy:
 $\rho_n^{\mathrm{bar}} = \rho_n^{\mathrm{KZ}}$.
 Combining with Step~2:
-$\rho_n^{\mathrm{KZ}} \simeq \rho_n^{U_q(\fg)}$.
+$\rho_n^{\mathrm{KZ}} \simeq \rho_n^{U_{q_{\mathrm{KL}}}(\fg)}$.
 \end{proof}
 
 \subsection{The DK square}
@@ -881,9 +829,9 @@ D^b(\Rep_{\mathrm{fd}}^{\mathrm{eval}}(Y_\hbar(\fg)))
 & D^b(\Rep_{\mathrm{fd}}^{\mathrm{eval}}(Y_{-\hbar}(\fg)))
  \ar[d, "\Phi_K"]
 \\
-D^b(\Rep_{\mathrm{fd}}(U_q(\fg)))
- \ar[r, "q \mapsto q^{-1}"']
-& D^b(\Rep_{\mathrm{fd}}(U_{q^{-1}}(\fg)))
+D^b(\Rep_{\mathrm{fd}}(U_{q_Y}(L\fg)))
+ \ar[r, "{q_Y\mapsto q_Y^{-1},\,z\mapsto z^{-1}}"']
+& D^b(\Rep_{\mathrm{fd}}(U_{q_Y^{-1}}(L\fg)))
 \end{tikzcd}
 \end{equation}
 where:
@@ -892,21 +840,22 @@ where:
   coalgebra; bar-cobar supplies the separate inversion witness. It reverses
   the braiding: $R(u; \hbar) \mapsto R^{-1}(u; \hbar)
   = R(u; -\hbar)$.
-\item $\Phi_K$ is the Kazhdan equivalence
+\item $\Phi_K$ is the evaluation-module Kazhdan--Drinfeld comparison
   $\Rep_{\mathrm{fd}}(Y_\hbar(\fg))
   \xrightarrow{\sim}
-  \Rep_{\mathrm{fd}}(U_q(\fg))\big|_{q = e^\hbar}$,
+  \Rep_{\mathrm{fd}}(U_{q_Y}(L\fg))\big|_{q_Y = e^\hbar}$,
   the monoidal equivalence that sends the rational
   $R$-matrix of the Yangian to the trigonometric
-  $R$-matrix of the quantum group.
-\item The bottom arrow is the Hopf algebra involution
-  $q \mapsto q^{-1}$, sending
-  $\cR_q \mapsto \cR_q^{-1} = \cR_{q^{-1}}$.
+  $R$-matrix of the quantum loop algebra.
+\item The bottom arrow is the Hopf algebra involution with loop
+  inversion, sending
+  $\cR_{q_Y}(z) \mapsto \cR_{q_Y}^{-1}(z)
+  = \cR_{q_Y^{-1}}(z^{-1})$.
 \end{enumerate}
 The commutativity states: Koszul duality on ordered
 configuration spaces geometrically implements the quantum
 group involution.  The algebraic operation
-$q \mapsto q^{-1}$ is realized by Verdier duality, which
+$q_Y \mapsto q_Y^{-1}$ with $z\mapsto z^{-1}$ is realized by Verdier duality, which
 reverses the orientation of collision cycles.
 \end{theorem}
 
@@ -915,17 +864,13 @@ The top arrow sends evaluation modules
 $V(a)_\hbar \mapsto V(-a)_{-\hbar}$ and reverses the
 braiding.
 
-The left vertical (Kazhdan) sends $V(a)_\hbar$ to
-$V_q(e^a)$.  The bottom arrow sends
-$V_q(e^a) \mapsto V_{q^{-1}}(e^a)$.
+The left vertical sends $V(a)_\hbar$ to the quantum-loop evaluation
+module $V_{q_Y}(e^a)$.  The bottom arrow sends
+$V_{q_Y}(e^a) \mapsto V_{q_Y^{-1}}(e^{-a})$.
 
 Following the right vertical first:
-$V(-a)_{-\hbar} \mapsto V_{q^{-1}}(e^{-a})$.
-Upon restriction to $U_{q^{-1}}(\fg)$ (forgetting the loop
-algebra evaluation point), $V_{q^{-1}}(e^{-a})$ and
-$V_{q^{-1}}(e^a)$ carry the same highest-weight
-representation.  The square commutes at the level of
-$U_{q^{-1}}(\fg)$-module categories.
+$V(-a)_{-\hbar} \mapsto V_{q_Y^{-1}}(e^{-a})$.
+Thus the square commutes before forgetting the loop evaluation point.
 
 The braiding compatibility follows from the geometric
 content of the top arrow: Verdier duality on
@@ -933,7 +878,8 @@ $\overline{\FM}_n^{\mathrm{ord}}(\CC)$ reverses the
 orientation of the collision cycle $\gamma_{12}$,
 sending the KZ monodromy $\sigma \mapsto \sigma^{-1}$.
 Under the Kazhdan identification, this is
-$\cR_q \mapsto \cR_q^{-1} = \cR_{q^{-1}}$.
+$\cR_{q_Y}(z) \mapsto \cR_{q_Y}^{-1}(z)
+= \cR_{q_Y^{-1}}(z^{-1})$.
 \end{proof}
 
 \subsection{Four-path verification for $\mathfrak{sl}_2$}
@@ -945,8 +891,8 @@ $V_{j_1} \otimes \cdots \otimes V_{j_n}$ for
 $\widehat{\mathfrak{sl}}_2$ at level~$k$:
 \begin{enumerate}[label=(\arabic*)]
 \item KZ monodromy of $\nabla_{\mathrm{KZ}}$;
-\item quantum Casimir eigenvalues $q^{C_2}$ at
-  $q = e^{\pi i/(k+2)}$;
+\item quantum Casimir eigenvalues \(q_{\mathrm{KL}}^{C_2}\) at
+  \(q_{\mathrm{KL}} = e^{\pi i/(k+2)}\);
 \item Yangian $R$-matrix $R^Y(u) = u \cdot I + iP$
   at the Drinfeld specialization
   $u_D = \cot(\pi/(k+2))$;
@@ -977,8 +923,9 @@ F_1(z) &= z^{2/(k+2)}\,{}_2F_1\bigl(
 are the $\mathfrak{sl}_2$ conformal blocks in the
 $s$-channel.  Their braiding eigenvalues in the singlet
 and triplet channels are
-$R_0 = -q^{-3/2}$ and $R_1 = q^{1/2}$, where
-$q = e^{i\pi/(k+2)}$.
+$R_0 = -q_{\mathrm{KL}}^{-3/2}$ and
+$R_1 = q_{\mathrm{KL}}^{1/2}$, where
+$q_{\mathrm{KL}} = e^{i\pi/(k+2)}$.
 
 % ================================================================
 % SECTION 4: DK-1
@@ -1144,13 +1091,11 @@ $\Phi^G = 1$.
 The eval-core restriction in
 Theorems~\ref{thm:dk0}, \ref{thm:dk-square},
 \ref{thm:dk-strictification}, and~\ref{thm:dk-yangian-koszul}
-is : the bar-cobar identifications are proved on
+is part of the statement: the bar-cobar identifications are proved on
 ${\mathrm{Core}}_{\mathrm{eval}}(\widehat{\mathfrak{g}}_k)$,
 where the MC3 cocycle conditions are unconditional.
-Extension to the full category of smooth $V^k(\fg)$-modules
-(beyond evaluation modules and their tensor generates) is
-conjectural; the downstream DK-4 and DK-5 identifications
-are correspondingly conditional on this extension.
+The full smooth-module category requires a separate thick-generation
+theorem.
 \end{remark}
 
 \begin{proof}
@@ -1243,9 +1188,8 @@ $R_{12}(u-v)\,T_1(u)\,T_2(v)
 where $T(u) = \sum_{k \geq 0} T_k\,u^{-k}$ is the
 generating matrix.  These are the defining relations of the
 Yangian $Y_\hbar(\fg)$.  The identification with the
-standard Yangian (generated by $\fg[t]$ with the Drinfeld
-coproduct) follows from the Drinfeld new realization
-theorem.
+standard Yangian follows from Drinfeld's new
+realization~\cite{Drinfeld88}.
 \end{proof}
 
 % ================================================================
@@ -1550,7 +1494,7 @@ full $\Eone$-factorization categories:
 \[
 \operatorname{Fact}_{\Eone}(\cY(\fg))
 \;\simeq\;
-\operatorname{Fact}_{\Eone}(U_q(\fg))^{\op},
+\operatorname{Fact}_{\Eone}(U_{q_{\mathrm{KL}}}(\fg))^{\op},
 \]
 where $\cY(\fg)$ is the Yangian $\Eone$-chiral algebra.
 The extension beyond evaluation objects requires the thick
@@ -1581,10 +1525,6 @@ r^{\mathrm{Heis}}(z)
 \;=\;
 \frac{k}{z}\,.
 \end{equation}
-% PE-1: r-matrix. family: Heis. r(z) = k/z.
-% level: k. OPE pole: 2. r-matrix pole: 1.
-% AP126: r(z)|_{k=0} = 0. Y. No bare Omega.
-% verdict: ACCEPT.
 This is scalar: there is no Casimir tensor because the
 Lie bracket vanishes.
 
@@ -1617,14 +1557,11 @@ R^{\mathrm{Heis}}
 e^{2\pi i k}.
 \]
 This is a scalar phase: the quantum group
-$U_q(\mathrm{Heis})$ is commutative, the $R$-matrix is
+$U_{q_{\mathrm{KL}}}(\mathrm{Heis})$ is commutative, the $R$-matrix is
 $e^{k\hbar/z}$ (as a formal power series in $1/z$), and
 the braid representation is abelian.
 
 \subsection{The shadow invariant}
-% PE-2: kappa. family: Heis. kappa = k.
-% census: C1. k=0 -> 0. Y. AP39: kappa = S_2? Y (k = k).
-% verdict: ACCEPT.
 The modular characteristic of the Heisenberg algebra is
 $\kappa(\cH_k) = k$.  The averaging map
 $\av(r(z)) = \av(k/z) = k = \kappa$ is exact: for abelian
@@ -1662,19 +1599,19 @@ E \otimes F + F \otimes E + \tfrac{1}{2}H \otimes H
 \]
 The dual Coxeter number is $\hv = 2$, so the KZ parameter
 is $\hbar = \pi i/(k+2)$ and
-$q = e^{\pi i/(k+2)}$.
+$q_{\mathrm{KL}} = e^{\pi i/(k+2)}$.
 
 \subsection{The collision residue and KZ connection}
 
-The collision residue for $\widehat{\mathfrak{sl}}_2$ at
+The trace-form collision residue for $\widehat{\mathfrak{sl}}_2$ at
 level~$k$ is
 \[
-r(z)
+r^{\mathrm{coll}}(z)
 \;=\;
 \frac{k\,\Omega}{z}
 \]
-in the trace form, or equivalently
-$\Omega/((k+2)z)$ in the KZ normalization.
+in the trace form.  The KZ connection below uses the separately
+normalised spectral datum $\Omega/((k+2)z)$.
 The KZ connection on $\Conf_n(\CC)$ with fibre
 $V_{j_1} \otimes \cdots \otimes V_{j_n}$ is
 \[
@@ -1690,52 +1627,42 @@ d
 \subsection{The $4 \times 4$ $R$-matrix}
 
 On the tensor square $V_{1/2} \otimes V_{1/2}$ of the
-fundamental representation, the Casimir $\Omega$ acts with
-eigenvalue $+1/4$ on the symmetric (triplet, $j = 1$)
-component and $-3/4$ on the antisymmetric (singlet,
-$j = 0$) component.  The KZ monodromy is
+fundamental representation, the KZ Casimir exponent acts with
+eigenvalue \(1/2\) on the symmetric triplet and \(-3/2\) on the
+antisymmetric singlet.  The full pure-loop KZ monodromy is
 \begin{equation}\label{eq:dk-sl2-r}
-R
+\Mon^{\mathrm{KZ}}
 \;=\;
 \exp\!\left(\frac{2\pi i}{k+2}\,\Omega\right)
 \;=\;
-q^{\Omega},
+q_{\mathrm{KL}}^{2\Omega},
 \qquad
-q \;=\; \exp\!\left(\frac{2\pi i}{k+2}\right),
+q_{\mathrm{KL}} \;=\; \exp\!\left(\frac{\pi i}{k+2}\right),
 \end{equation}
-so that on eigencomponents
+so that on the singlet-triplet decomposition
 \begin{equation}\label{eq:dk-sl2-r-matrix}
-R
-\;=\;
-\begin{pmatrix}
-q^{1/4} & 0 & 0 & 0 \\
-0 & q^{1/4}\cos\theta
-  & i\,q^{1/4}\sin\theta & 0 \\
-0 & i\,q^{1/4}\sin\theta
-  & q^{1/4}\cos\theta & 0 \\
-0 & 0 & 0 & q^{1/4}
-\end{pmatrix}
-\end{equation}
-in the basis $\{v_+ \otimes v_+,\, v_+ \otimes v_-,\,
-v_- \otimes v_+,\, v_- \otimes v_-\}$, where
-$\theta$ depends on the normalization of the contour
-integral.
-
-More precisely, in the singlet-triplet basis, the
-$R$-matrix diagonalizes to
-\begin{equation}\label{eq:dk-sl2-eigenvalues}
-R
+\Mon^{\mathrm{KZ}}
 \;=\;
 \operatorname{diag}(
-\underbrace{q_{\mathrm{D}}^{1/2}, q_{\mathrm{D}}^{1/2}, q_{\mathrm{D}}^{1/2}}_{\text{triplet}},\;
-\underbrace{-q_{\mathrm{D}}^{-3/2}}_{\text{singlet}}
+\underbrace{q_{\mathrm{KL}}^{1/2}, q_{\mathrm{KL}}^{1/2},
+q_{\mathrm{KL}}^{1/2}}_{\text{triplet}},\;
+\underbrace{q_{\mathrm{KL}}^{-3/2}}_{\text{singlet}}
+).
+\end{equation}
+The braid operator includes the permutation:
+\begin{equation}\label{eq:dk-sl2-eigenvalues}
+P\,q_{\mathrm{KL}}^{C_{12}}
+\;=\;
+\operatorname{diag}(
+\underbrace{q_{\mathrm{KL}}^{1/2},q_{\mathrm{KL}}^{1/2},
+q_{\mathrm{KL}}^{1/2}}_{\text{triplet}},\;
+\underbrace{-q_{\mathrm{KL}}^{-3/2}}_{\text{singlet}}
 ),
 \end{equation}
-written in the Drinfeld normalization $q_{\mathrm{D}} = e^{i\pi/(k+2)}$
-so that $q_{\mathrm{D}}^2 = q$ equals the Kazhdan--Lusztig root of
-unity used in equations~\eqref{eq:dk-sl2-r}--\eqref{eq:dk-sl2-r-matrix}.
-The relative phase between the singlet and triplet is $-q_{\mathrm{D}}^{-2} = -q^{-1}$,
-which is the fundamental building block of the colored Jones polynomial.
+where \(C_{12}=C_2(j)-C_2(1/2)-C_2(1/2)\) on the \(j\)-channel.
+The minus sign is the antisymmetric action of \(P\), not a KZ
+monodromy eigenvalue.  The relative Hecke-braiding phase is
+\(-q_{\mathrm{KL}}^{-2}\).
 
 \subsection{Four-point conformal blocks}
 
@@ -1783,7 +1710,7 @@ J_n(K; q)
 \end{equation}
 where $\rho_m^{\mathrm{KZ}}$ is the KZ monodromy
 representation at level~$k$ with
-$q = e^{i\pi/(k+2)}$, and the trace requires the Markov
+$q_{\mathrm{KL}} = e^{i\pi/(k+2)}$, and the trace requires the Markov
 normalization \textup{(}writhe correction and quantum
 dimension factor\textup{)}.
 \end{proposition}
@@ -1797,9 +1724,11 @@ The colored Jones polynomial is the quantum group invariant
 of $K$: the trace of the braid representation with Markov
 normalization.  The raw trace of the braid closure gives
 the unnormalized invariant; the Markov normalization
-(writhe correction via $q^{\pm w(K) \cdot C_2}$ and
+(writhe correction via \(q_{\mathrm{KL}}^{\pm w(K) \cdot C_2}\) and
 division by the quantum dimension
-$[n]_q = (q^{n/2} - q^{-n/2})/(q^{1/2} - q^{-1/2})$)
+$[n]_{q_{\mathrm{KL}}}
+= (q_{\mathrm{KL}}^{n/2} - q_{\mathrm{KL}}^{-n/2})/
+(q_{\mathrm{KL}}^{1/2} - q_{\mathrm{KL}}^{-1/2})$)
 produces the standard colored Jones polynomial.
 
 In the bar-complex language: the braid closure corresponds
@@ -1812,13 +1741,14 @@ is the framing anomaly from the quadratic Casimir.
 \begin{remark}[The non-trivial content]
 For $\mathfrak{sl}_2$, the entire Drinfeld--Kohno bridge is
 explicit: the KZ equation is hypergeometric, the $R$-matrix
-eigenvalues are $q^{1/2}$ and $-q^{-3/2}$, the associator
+eigenvalues are \(q_{\mathrm{KL}}^{1/2}\) and
+\(-q_{\mathrm{KL}}^{-3/2}\), the associator
 has an explicit formula as a formal power series in
 $\Omega_{12}$ and $\Omega_{23}$, and the colored Jones
 polynomial is computable from the monodromy matrices.
 
 The bar-complex perspective adds the following: the
-collision residue $r(z) = k\Omega/z$ is the degree-$2$
+collision residue $r^{\mathrm{coll}}(z) = k\Omega_{\mathrm{tr}}/z$ is the degree-$2$
 projection of the Maurer--Cartan element
 $\Theta_\cA \in \fg^{\Eone}_\cA$; the CYBE is $d_B^2 = 0$
 at degree $2$; the associator is the degree-$3$ shadow; and
@@ -1834,10 +1764,20 @@ reconstruct the quantum group on evaluation modules.
 % ================================================================
 \begin{thebibliography}{99}
 
+\bibitem{Arnold69}
+V.~I.~Arnold,
+\emph{The cohomology ring of the group of dyed braids},
+Mat.\ Zametki \textbf{5} (1969), 227--231.
+
 \bibitem{Drinfeld85}
 V.~G.~Drinfeld,
 \emph{Hopf algebras and the quantum Yang--Baxter equation},
 Soviet Math.\ Dokl.\ \textbf{32} (1985), 254--258.
+
+\bibitem{Drinfeld88}
+V.~G.~Drinfeld,
+\emph{A new realization of Yangians and quantized affine algebras},
+Soviet Math.\ Dokl.\ \textbf{36} (1988), 212--216.
 
 \bibitem{Drinfeld90}
 V.~G.~Drinfeld,
@@ -1870,6 +1810,16 @@ V.~G.~Knizhnik and A.~B.~Zamolodchikov,
 \emph{Current algebra and Wess--Zumino model in two
 dimensions},
 Nuclear Phys.\ B \textbf{247} (1984), 83--103.
+
+\bibitem{OS80}
+P.~Orlik and L.~Solomon,
+\emph{Combinatorics and topology of complements of hyperplanes},
+Invent.\ Math.\ \textbf{56} (1980), 167--189.
+
+\bibitem{SheltonYuzvinsky97}
+B.~Shelton and S.~Yuzvinsky,
+\emph{Koszul algebras from graphs and hyperplane arrangements},
+J.\ London Math.\ Soc.\ \textbf{56} (1997), 477--490.
 
 \end{thebibliography}
 

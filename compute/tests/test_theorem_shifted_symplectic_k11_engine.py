@@ -1,12 +1,12 @@
 r"""Tests for theorem_shifted_symplectic_k11_engine.py.
 
-Verification strategy (multi-path, per CLAUDE.md mandate):
+Verification surface:
   1. Shifted symplectic degree computation
   2. PTVV structure verification
   3. (P1) finite weight spaces for all standard families
   4. (P2) nondegenerate invariant form
-  5. (P3) dual regularity via Holstein-Rivera
-  6. Cyclic pairing perfectness
+  5. (P3) dual regularity with Holstein-Rivera scope control
+  6. Scalar cyclic-pairing diagnostics
   7. Holstein-Rivera CY exchange
   8. Calaque-Safronov AKSZ data
   9. Fang PVA construction
@@ -21,9 +21,8 @@ Verification strategy (multi-path, per CLAUDE.md mandate):
 """
 
 import pytest
-from fractions import Fraction
-from sympy import Rational
 
+import compute.lib.theorem_shifted_symplectic_k11_engine as k11_engine
 from compute.lib.theorem_shifted_symplectic_k11_engine import (
     # Section 1: shifted symplectic
     shifted_symplectic_degree,
@@ -50,6 +49,7 @@ from compute.lib.theorem_shifted_symplectic_k11_engine import (
     # Section 9: K11 analysis
     k11_conditionality_analysis,
     k11_full_landscape_census,
+    k11_firewall_report,
     # Section 10: Theorem B
     shifted_symplectic_inversion_analysis,
     # Section 11: complementarity
@@ -63,6 +63,9 @@ from compute.lib.theorem_shifted_symplectic_k11_engine import (
     _multipartition_number,
     _family_kappa,
     _family_kappa_dual,
+    K11_REQUIRED_HYPOTHESES,
+    K11_STATUS_CONDITIONAL,
+    SCALAR_DIAGNOSTIC_SCOPE,
 )
 
 from compute.lib.entanglement_shadow_engine import (
@@ -74,6 +77,117 @@ from compute.lib.entanglement_shadow_engine import (
     shadow_depth_class,
     STANDARD_KAPPAS,
 )
+
+
+AP25_REQUIRED_CONVENTION_MARKERS = (
+    'AP25: B(A) is a coalgebra',
+    'A^i=H^*(B(A))',
+    'A^! is obtained from A^i',
+    'Verdier/linear duality',
+    'finite-type or completed hypotheses',
+    'Omega(B(A)) = A is inversion',
+)
+
+AP25_FORBIDDEN_SHORTHANDS = (
+    'A! = H*(B(A))^v',
+    'A! = ' + '(H*(B(A)))^v',
+    'A! = H^*(B(A))^v',
+    'A! = (H^*(B(A)))^v',
+    '(P1)+(P2) for A! =',
+)
+
+OVERPROMOTION_FORBIDDEN_PHRASES = (
+    'PERFECTNESS FOR FREE',
+    'This removes the need',
+    'Holstein-Rivera removes (P3)',
+    'K11 is unconditional for the entire standard landscape',
+    'under (P1)+(P2) alone',
+    'DIRECT construction',
+    'CONSEQUENCE of shifted symplectic geometry',
+)
+
+
+def _string_fragments(value):
+    """Extract exposed text from nested dict/list return values."""
+    if isinstance(value, str):
+        return [value]
+    if isinstance(value, dict):
+        fragments = []
+        for item in value.values():
+            fragments.extend(_string_fragments(item))
+        return fragments
+    if isinstance(value, (list, tuple, set)):
+        fragments = []
+        for item in value:
+            fragments.extend(_string_fragments(item))
+        return fragments
+    return []
+
+
+def _joined_string_fragments(value):
+    return '\n'.join(_string_fragments(value))
+
+
+def _exposed_k11_convention_payloads():
+    return {
+        'p3': verify_p3_dual_regularity('heisenberg', 3),
+        'holstein_rivera': holstein_rivera_exchange('heisenberg'),
+        'k11': k11_conditionality_analysis('heisenberg'),
+        'theorem_b': shifted_symplectic_inversion_analysis(),
+        'remaining': what_remains_conditional(),
+    }
+
+
+# ===================================================================
+# 0. AP25/K11 CONVENTION FIREWALL
+# ===================================================================
+
+class TestAP25K11ConventionFirewall:
+    """Keep exposed K11 text from collapsing the AP25 object distinction."""
+
+    def test_module_docstring_states_ap25_firewall(self):
+        doc = k11_engine.__doc__ or ''
+        for marker in AP25_REQUIRED_CONVENTION_MARKERS:
+            assert marker in doc
+
+    def test_exposed_k11_text_rejects_stale_ap25_shortcuts(self):
+        for source, payload in _exposed_k11_convention_payloads().items():
+            exposed_text = _joined_string_fragments(payload)
+            for shorthand in AP25_FORBIDDEN_SHORTHANDS:
+                assert shorthand not in exposed_text, (
+                    f'{source} exposes stale AP25 shortcut: {shorthand}'
+                )
+
+    def test_firewall_packages_and_kernel_constants_are_exact(self):
+        report = k11_firewall_report()
+        assert report['holographic_package'] == (
+            'A', 'A^i', 'A^!', 'C', 'r(z)', 'Theta_A', 'nabla^hol',
+        )
+        assert report['modular_koszul_compute_package'] == (
+            'Fact_X(L)', 'barB_X(L)', 'Theta_L', 'L_L',
+            '(V_br,T_br)', 'R4_mod(L)',
+        )
+        assert report['bar_cobar_inversion'] == (
+            'Omega(B(A))=A is bar-cobar inversion, not Koszul duality'
+        )
+        assert 'Hochschild/bulk' in report['derived_center']
+        assert report['kernel_constants'] == {
+            'affine_trace_raw': 'k*Omega_tr/z',
+            'affine_kz': 'Omega/((k+h^vee)z)',
+            'heisenberg': 'k/z',
+            'virasoro': '(c/2)/z^3 + 2T/z',
+        }
+
+    def test_exposed_text_rejects_theorem_overpromotion(self):
+        payloads = _exposed_k11_convention_payloads()
+        payloads['module_docstring'] = k11_engine.__doc__ or ''
+        payloads['landscape'] = k11_full_landscape_census()
+        for source, payload in payloads.items():
+            exposed_text = _joined_string_fragments(payload)
+            for phrase in OVERPROMOTION_FORBIDDEN_PHRASES:
+                assert phrase not in exposed_text, (
+                    f'{source} exposes overpromotion phrase: {phrase}'
+                )
 
 
 # ===================================================================
@@ -197,11 +311,11 @@ class TestP2NondegenerateForm:
 
 
 # ===================================================================
-# 5. (P3) DUAL REGULARITY VIA HOLSTEIN-RIVERA
+# 5. (P3) DUAL REGULARITY WITH HOLSTEIN-RIVERA SCOPE
 # ===================================================================
 
 class TestP3DualRegularity:
-    """Verify (P3) follows from (P1)+(P2) via Holstein-Rivera."""
+    """Verify P3 by explicit dual data; HR24 does not remove it."""
 
     @pytest.mark.parametrize("family", [
         'heisenberg', 'virasoro', 'affine_sl2', 'betagamma', 'w3',
@@ -211,12 +325,17 @@ class TestP3DualRegularity:
         assert result['p3_satisfied']
 
     def test_holstein_rivera_applicable(self):
-        """Holstein-Rivera applies to all smooth Koszul algebras."""
+        """Holstein-Rivera supplies A-side fiber CY, not general P3 removal."""
         for family in ['heisenberg', 'virasoro', 'affine_sl2']:
             result = verify_p3_dual_regularity(family, 5)
             assert result['holstein_rivera_applicable']
             assert result['smooth']
             assert result['koszul']
+            assert result['p3_source'] == 'explicit_dual_family_check'
+            assert not result['p3_redundant_under_hr24']
+            assert result['hr24_scope'] == (
+                'fiber-level proper CY for B(A), not B(A^!)'
+            )
 
 
 # ===================================================================
@@ -224,7 +343,7 @@ class TestP3DualRegularity:
 # ===================================================================
 
 class TestCyclicPairingPerfectness:
-    """Verify the cyclic pairing is perfect for standard families."""
+    """Verify scalar pairing diagnostics without full-derived promotion."""
 
     @pytest.mark.parametrize("family", [
         'heisenberg', 'virasoro', 'affine_sl2', 'betagamma',
@@ -232,6 +351,8 @@ class TestCyclicPairingPerfectness:
     def test_genus_1_perfect(self, family):
         result = cyclic_pairing_matrix(family, 1)
         assert result['perfect']
+        assert result['scope'] == SCALAR_DIAGNOSTIC_SCOPE
+        assert not result['full_derived_perfectness_verified']
 
     def test_heisenberg_genus_2(self):
         result = cyclic_pairing_matrix('heisenberg', 2)
@@ -239,12 +360,17 @@ class TestCyclicPairingPerfectness:
 
     def test_full_perfectness_heisenberg(self):
         result = verify_perfectness_full('heisenberg', 3)
-        assert result['perfect_all_genera']
-        assert result['k11_applicable']
+        assert result['scalar_perfect_all_genera']
+        assert not result['perfect_all_genera']
+        assert not result['full_derived_perfectness_verified_by_engine']
+        assert result['theorem_perfectness_applicable']
+        assert result['applicability_status'] == K11_STATUS_CONDITIONAL
 
     def test_full_perfectness_virasoro(self):
         result = verify_perfectness_full('virasoro', 3)
-        assert result['perfect_all_genera']
+        assert result['scalar_perfect_all_genera']
+        assert result['theorem_perfectness_applicable']
+        assert result['required_hypotheses'] == K11_REQUIRED_HYPOTHESES
 
 
 # ===================================================================
@@ -263,11 +389,15 @@ class TestHolsteinRivera:
         assert result['smooth_cy_on_A']
         assert result['proper_cy_on_B']
 
-    def test_p3_follows(self):
-        """(P3) follows from CY exchange on Koszul locus."""
+    def test_p3_does_not_follow_from_hr24(self):
+        """(P3) is checked on the dual side, not removed by HR24."""
         for family in ['heisenberg', 'virasoro', 'affine_sl2']:
             result = holstein_rivera_exchange(family)
-            assert result['p3_follows']
+            assert not result['p3_follows']
+            assert result['p3_satisfied_by_explicit_dual_check']
+            assert result['missing_for_k11_without_p3'] == (
+                'proper CY on B(A^!) and perfectness of L_A + K_A + L_A^!'
+            )
 
     def test_cy_dimension_is_1(self):
         """All chiral algebras on curves have CY dimension 1."""
@@ -314,6 +444,8 @@ class TestFangPVA:
     def test_pva_bracket_matches(self, family):
         result = pva_from_shifted_symplectic(family)
         assert result['pva_bracket_matches']
+        assert result['scope'] == 'conditional_arc_space_shadow'
+        assert not result['full_derived_symplectic_input_verified']
 
     def test_r_matrix_is_mc(self):
         """R-matrix = MC element of PVA deformation complex."""
@@ -341,6 +473,10 @@ class TestPridhamQuantization:
     def test_unique_quantization(self, family):
         result = pridham_quantization(family, 1)
         assert result['unique_quantization']
+        assert result['status'] == (
+            'conditional_on_exact_perfect_shifted_symplectic_input'
+        )
+        assert not result['perfectness_verified_by_engine']
 
     def test_associator_independent_genus_1(self):
         """At genus 1 (shift = 0), quantization is associator-independent."""
@@ -370,6 +506,10 @@ class TestLagrangianCondition:
     def test_lagrangian(self, family):
         result = verify_lagrangian_condition(family, 1)
         assert result['lagrangian']
+        assert result['scalar_lagrangian']
+        assert result['scope'] == SCALAR_DIAGNOSTIC_SCOPE
+        assert not result['full_derived_lagrangian_verified']
+        assert result['theorem_status'] == K11_STATUS_CONDITIONAL
 
     def test_isotropy(self):
         result = verify_lagrangian_condition('heisenberg', 1)
@@ -400,26 +540,32 @@ class TestK11Conditionality:
         'heisenberg', 'virasoro', 'affine_sl2', 'affine_sl3',
         'betagamma', 'bc', 'w3', 'lattice',
     ])
-    def test_k11_unconditional(self, family):
+    def test_k11_status_remains_conditional(self, family):
         result = k11_conditionality_analysis(family)
-        assert result['k11_status'] == 'unconditional'
+        assert result['k11_status'] == K11_STATUS_CONDITIONAL
+        assert result['hypotheses_satisfied_for_standard_family']
+        assert not result['full_derived_verified_by_engine']
 
-    def test_weakened_hypothesis(self):
-        """After Holstein-Rivera, K11 needs only (P1)+(P2)."""
+    def test_hypothesis_is_not_weakened_to_p1_p2(self):
+        """Holstein-Rivera does not delete the dual-side P3 input."""
         for family in ['heisenberg', 'virasoro', 'affine_sl2']:
             result = k11_conditionality_analysis(family)
-            assert result['weakened_hypothesis'] == '(P1)+(P2)'
+            assert result['weakened_hypothesis'] == '(P1)+(P2)+(P3)'
+            assert result['required_hypotheses'] == K11_REQUIRED_HYPOTHESES
 
-    def test_holstein_rivera_removes_p3(self):
-        """Holstein-Rivera is applicable and removes (P3)."""
+    def test_holstein_rivera_does_not_remove_p3(self):
+        """Holstein-Rivera is applicable only on the A-side bar coalgebra."""
         for family in ['heisenberg', 'virasoro', 'affine_sl2']:
             result = k11_conditionality_analysis(family)
             assert result['holstein_rivera']
+            assert not result['p3_removed_by_hr24']
+            assert result['hr24_fiber_perfectness_only']
 
     def test_irreducible_hypothesis(self):
-        """(P2) is irreducible: the form must be nondegenerate."""
+        """The nondegenerate form and dual regularity remain load-bearing."""
         result = k11_conditionality_analysis('heisenberg')
         assert 'nondegenerate' in result['irreducible_hypothesis'].lower()
+        assert 'dual regularity' in result['irreducible_hypothesis'].lower()
 
 
 # ===================================================================
@@ -429,13 +575,17 @@ class TestK11Conditionality:
 class TestLandscapeCensus:
     """Full landscape census for K11."""
 
-    def test_all_unconditional(self):
+    def test_all_conditional_with_hypotheses_satisfied(self):
         result = k11_full_landscape_census()
-        assert result['all_unconditional']
+        assert not result['all_unconditional']
+        assert result['all_conditional']
+        assert result['all_hypotheses_satisfied_for_standard_family']
 
-    def test_universal_weakened_hypothesis(self):
+    def test_no_universal_p1_p2_weakening(self):
         result = k11_full_landscape_census()
-        assert result['universal_weakened_hypothesis'] == '(P1)+(P2)'
+        assert result['universal_weakened_hypothesis'] is None
+        assert not result['p3_removed_by_hr24']
+        assert result['required_hypotheses'] == K11_REQUIRED_HYPOTHESES
 
     def test_all_families_present(self):
         result = k11_full_landscape_census()
@@ -460,8 +610,8 @@ class TestComplementaritySums:
         assert result['sum'] == 0
         assert result['anti_symmetric']
 
-    def test_virasoro_not_antisymmetric(self):
-        """AP24: kappa(Vir_c) + kappa(Vir_{26-c}) = 13, NOT 0."""
+    def test_virasoro_complementarity_sum(self):
+        """AP24: kappa(Vir_c) + kappa(Vir_{26-c}) = 13."""
         result = complementarity_sum('virasoro')
         assert result['sum'] == 13
         assert not result['anti_symmetric']
@@ -490,6 +640,10 @@ class TestTheoremBAnalysis:
     def test_not_new_proof(self):
         result = shifted_symplectic_inversion_analysis()
         assert not result['new_proof']
+        assert result['logical_status'] == (
+            'conditional_reformulation_not_independent_proof'
+        )
+        assert 'perfectness and nondegeneracy hypotheses' in result['requires']
 
     def test_conceptual_upgrade(self):
         result = shifted_symplectic_inversion_analysis()
@@ -516,9 +670,14 @@ class TestFullSynthesis:
     ])
     def test_full_analysis(self, family):
         result = full_shifted_symplectic_analysis(family)
-        assert result['k11_unconditional']
+        assert not result['k11_unconditional']
+        assert result['k11_status'] == K11_STATUS_CONDITIONAL
+        assert result['hypotheses_satisfied_for_standard_family']
+        assert not result['p3_removed_by_hr24']
+        assert not result['full_derived_symplectic_verified_by_engine']
         assert result['cy_exchange_valid']
         assert result['lagrangian']
+        assert result['scalar_lagrangian']
         assert result['quantization_unique']
         assert result['pva_matches']
 
@@ -536,7 +695,8 @@ class TestWhatRemains:
 
     def test_p3_removed(self):
         result = what_remains_conditional()
-        assert result['p3_removed']
+        assert not result['p3_removed']
+        assert result['p3_irreducible_in_general']
 
     def test_p2_irreducible(self):
         result = what_remains_conditional()
@@ -549,17 +709,21 @@ class TestWhatRemains:
     def test_weakened_correctly(self):
         result = what_remains_conditional()
         assert result['weakened_from'] == '(P1)+(P2)+(P3)'
-        assert result['weakened_to'] == '(P1)+(P2)'
+        assert result['weakened_to'] == '(P1)+(P2)+(P3)'
 
     def test_removed_by_holstein_rivera(self):
         result = what_remains_conditional()
-        assert 'Holstein-Rivera' in result['removed_by']
+        assert result['removed_by'] is None
+        assert result['hr24_fiber_perfectness_only']
+        assert result['family_level_perfectness_requires_base_change']
 
     def test_still_open_items(self):
         result = what_remains_conditional()
         assert len(result['still_open']) >= 3
         # Critical level is in the open items
         assert any('critical' in item.lower() for item in result['still_open'])
+        assert any('relative bar perfectness' in item.lower()
+                   for item in result['still_open'])
 
 
 # ===================================================================
@@ -648,7 +812,8 @@ class TestEdgeCases:
     def test_bc_ghost_negative_kappa(self):
         """bc ghosts have kappa = -13."""
         result = k11_conditionality_analysis('bc')
-        assert result['k11_status'] == 'unconditional'
+        assert result['k11_status'] == K11_STATUS_CONDITIONAL
+        assert result['hypotheses_satisfied_for_standard_family']
 
     def test_complementarity_bc(self):
         """bc + bc_dual: kappa + kappa' = -13 + 13 = 0."""
@@ -657,8 +822,9 @@ class TestEdgeCases:
 
     def test_w3_analysis(self):
         result = full_shifted_symplectic_analysis('w3')
-        assert result['k11_unconditional']
+        assert not result['k11_unconditional']
+        assert result['k11_status'] == K11_STATUS_CONDITIONAL
 
     def test_lattice_analysis(self):
         result = k11_conditionality_analysis('lattice')
-        assert result['k11_status'] == 'unconditional'
+        assert result['k11_status'] == K11_STATUS_CONDITIONAL

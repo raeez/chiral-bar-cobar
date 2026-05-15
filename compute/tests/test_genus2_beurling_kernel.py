@@ -23,6 +23,7 @@ References:
 import math
 import pytest
 from fractions import Fraction
+from itertools import product
 
 from compute.lib.genus2_beurling_kernel import (
     # chi_12 coefficients and Boecherer
@@ -74,6 +75,50 @@ def clear_caches():
 
 SMALL_DISCS = [-3, -4, -7, -8, -11, -15, -20, -24]
 ALL_FUND_DISCS_TO_24 = [-3, -4, -7, -8, -11, -15, -19, -20, -23, -24]
+
+
+def igusa_even_cusp_dimension_oracle(k: int) -> int:
+    """Count cusp monomials in C[E4,E6,chi10,chi12] at weight k."""
+    if k < 0 or k % 2:
+        return 0
+    total = 0
+    for e4 in range(k // 4 + 1):
+        for e6 in range(k // 6 + 1):
+            for c10 in range(k // 10 + 1):
+                for c12 in range(k // 12 + 1):
+                    if c10 + c12 == 0:
+                        continue
+                    if 4 * e4 + 6 * e6 + 10 * c10 + 12 * c12 == k:
+                        total += 1
+    return total
+
+
+def sl2_cusp_dimension_oracle(k: int) -> int:
+    """Count Delta*M_{k-12} monomials in C[E4,E6]."""
+    if k < 12 or k % 2:
+        return 0
+    target = k - 12
+    total = 0
+    for e4 in range(target // 4 + 1):
+        rem = target - 4 * e4
+        if rem >= 0 and rem % 6 == 0:
+            total += 1
+    return total
+
+
+def raw_gl2_stabilizer_count_oracle(a: int, b: int, c: int, bound: int = 3) -> int:
+    """Brute-force raw GL_2(Z) stabilizer count for these small forms."""
+    total = 0
+    for p, q, r, s in product(range(-bound, bound + 1), repeat=4):
+        det = p * s - q * r
+        if abs(det) != 1:
+            continue
+        A = a * p * p + b * p * r + c * r * r
+        B = 2 * a * p * q + b * (p * s + q * r) + 2 * c * r * s
+        C = a * q * q + b * q * s + c * s * s
+        if (A, B, C) == (a, b, c):
+            total += 1
+    return total
 
 
 # ============================================================================
@@ -198,31 +243,40 @@ class TestFundamentalDiscriminants:
 # ============================================================================
 
 class TestAutomorphismCounts:
-    """Tests for |Aut(T)| of binary quadratic forms."""
+    """Tests for the epsilon(T) denominator in the Boecherer sum."""
 
     def test_disc_minus_3(self):
-        """D = -3 (Eisenstein integers): |Aut| = 6."""
+        """D = -3 (Eisenstein integers): epsilon = 6."""
         assert _automorphism_count(1, 1, 1) == 6
 
     def test_disc_minus_4(self):
-        """D = -4 (Gaussian integers): |Aut| = 4."""
+        """D = -4 (Gaussian integers): epsilon = 4."""
         assert _automorphism_count(1, 0, 1) == 4
 
     def test_generic_form(self):
-        """Generic form with a < c, 0 < b < a: |Aut| = 1."""
+        """Generic reduced class: epsilon = 1 in this weighted convention."""
         assert _automorphism_count(2, 1, 1) == 1
 
     def test_b_zero_a_less_c(self):
-        """b = 0, a < c: |Aut| = 2."""
+        """b = 0, a < c: epsilon = 2."""
         assert _automorphism_count(1, 0, 2) == 2
 
     def test_a_equals_c_b_nonzero(self):
-        """a = c, b != 0: |Aut| = 2."""
+        """a = c, b != 0: epsilon = 2."""
         assert _automorphism_count(2, 2, 2) == 2
 
     def test_b_zero_a_equals_c(self):
-        """b = 0, a = c (but disc != -4): |Aut| = 4."""
+        """b = 0, a = c (but disc != -4): epsilon = 4."""
         assert _automorphism_count(2, 0, 2) == 4
+
+    def test_epsilon_is_not_raw_gl2_stabilizer(self):
+        """Direct GL_2(Z) enumeration distinguishes raw stabilizers from epsilon."""
+        assert raw_gl2_stabilizer_count_oracle(2, 1, 1) == 4
+        assert raw_gl2_stabilizer_count_oracle(1, 0, 1) == 8
+        assert raw_gl2_stabilizer_count_oracle(1, 1, 1) == 12
+        assert _automorphism_count(2, 1, 1) == 1
+        assert _automorphism_count(1, 0, 1) == 4
+        assert _automorphism_count(1, 1, 1) == 6
 
 
 # ============================================================================
@@ -340,27 +394,26 @@ class TestF22HeckeEigenvalues:
 # ============================================================================
 
 class TestTwistedLFunctions:
-    """Tests for L(s, f_22 x chi_D) computation."""
+    """Tests for truncated L(s, f_22 x chi_D) diagnostics."""
 
-    def test_L_positive(self):
-        """L(11, f_22 x chi_{-3}) is a positive real number (at s=11 > 1)."""
-        L = twisted_l_function(11, _f22_coefficient, -3, nmax=100)
-        assert L > 0, f"L-value should be positive, got {L}"
+    def test_L_partial_sum_real_in_absolute_region(self):
+        """At s=13 the Dirichlet series is safely in an absolute-convergence region."""
+        L = twisted_l_function(13, _f22_coefficient, -3, nmax=80)
+        assert isinstance(L, float)
+        assert math.isfinite(L)
 
-    def test_L_convergence(self):
-        """L-function converges: more terms gives closer to limit."""
-        L_100 = twisted_l_function(11, _f22_coefficient, -4, nmax=100)
-        L_200 = twisted_l_function(11, _f22_coefficient, -4, nmax=200)
-        L_500 = twisted_l_function(11, _f22_coefficient, -4, nmax=500)
-        # Values should stabilize
-        assert abs(L_200 - L_500) < abs(L_100 - L_500), \
-            "L-function should converge as nmax increases"
+    def test_L_absolute_region_stabilizes(self):
+        """In the absolute region, larger truncations stabilize."""
+        L_40 = twisted_l_function(13, _f22_coefficient, -4, nmax=40)
+        L_80 = twisted_l_function(13, _f22_coefficient, -4, nmax=80)
+        L_120 = twisted_l_function(13, _f22_coefficient, -4, nmax=120)
+        assert abs(L_80 - L_120) < abs(L_40 - L_120)
 
     def test_L_different_D(self):
-        """L-values at different D are distinct."""
-        L_m3 = twisted_l_function(11, _f22_coefficient, -3, nmax=200)
-        L_m4 = twisted_l_function(11, _f22_coefficient, -4, nmax=200)
-        assert abs(L_m3 - L_m4) > 1e-6, "L-values at different D should differ"
+        """Twisted partial sums at fixed s distinguish small characters."""
+        L_m3 = twisted_l_function(13, _f22_coefficient, -3, nmax=80)
+        L_m4 = twisted_l_function(13, _f22_coefficient, -4, nmax=80)
+        assert abs(L_m3 - L_m4) > 1e-8, "L-partial sums at different D should differ"
 
 
 # ============================================================================
@@ -368,15 +421,19 @@ class TestTwistedLFunctions:
 # ============================================================================
 
 class TestWaldspurgerProportionality:
-    """Tests for |B(D)|^2 ~ L(11, f_22 x chi_D) * |D|^10."""
+    """Tests for exact Boecherer side plus truncated Waldspurger diagnostics."""
 
     def test_waldspurger_returns_dict(self):
         """waldspurger_proportionality returns a well-formed dict."""
         w = waldspurger_proportionality(-3, nmax=100)
         assert 'D' in w
+        assert 'B_squared_exact' in w
         assert 'B_squared' in w
+        assert 'L_partial_sum' in w
         assert 'L_value' in w
+        assert 'ratio_partial' in w
         assert 'ratio' in w
+        assert 'diagnostic_status' in w
         assert w['D'] == -3
 
     def test_B_squared_positive(self):
@@ -390,24 +447,25 @@ class TestWaldspurgerProportionality:
         for D in [-3, -4, -7, -8]:
             w = waldspurger_proportionality(D, nmax=100)
             B = chi12_boecherer_coefficient(D)
+            assert w['B_squared_exact'] == B ** 2
             assert abs(w['B_squared'] - float(B ** 2)) < 1e-10
 
-    def test_waldspurger_ratios_approximate_constancy(self):
-        """Waldspurger ratios should be approximately constant.
+    def test_waldspurger_diagnostic_does_not_claim_exact_l_value(self):
+        """The central L-side is flagged as a truncation, not an exact oracle."""
+        w = waldspurger_proportionality(-3, nmax=100)
+        assert 'not an exact central L-value' in w['diagnostic_status']
+        assert 'Petersson norm' in w['normalization_status']
 
-        Due to slow L-function convergence at s=11, we only test that
-        ratios are within 2 orders of magnitude (not exact constancy).
-        The L-series at s=11 converges poorly with 500 terms.
-        """
+    def test_waldspurger_table_keeps_partial_ratios_finite(self):
+        """Truncated ratios are finite diagnostics, not constancy evidence."""
         results = waldspurger_proportionality_table(
-            disc_list=[-3, -4, -7, -8], nmax=500
+            disc_list=[-3, -4], nmax=100
         )
-        ratios = [r['ratio'] for r in results if r['ratio'] < 1e10 and r['ratio'] > 0]
-        if len(ratios) >= 2:
-            log_ratios = [math.log10(r) for r in ratios]
-            spread = max(log_ratios) - min(log_ratios)
-            # Allow up to 5 orders of magnitude spread (L convergence is poor)
-            assert spread < 6, f"Waldspurger ratio spread too large: 10^{spread:.1f}"
+        assert len(results) == 2
+        for row in results:
+            assert math.isfinite(row['ratio_partial'])
+            assert row['ratio_partial'] > 0
+            assert 'not an exact central L-value' in row['diagnostic_status']
 
 
 # ============================================================================
@@ -519,24 +577,42 @@ class TestSiegelCuspDimensions:
         assert siegel_cusp_dimension(12) == 1
 
     def test_dim_14(self):
-        """dim S_14(Sp(4,Z)) = 0 (no cusp forms at weight 14)."""
-        assert siegel_cusp_dimension(14) == 0
+        """dim S_14(Sp(4,Z)) = 1, witnessed by chi_10 * E_4."""
+        assert siegel_cusp_dimension(14) == 1
 
     def test_dim_20(self):
-        """dim S_20(Sp(4,Z)) = 2 (first weight with dim > 1)."""
-        assert siegel_cusp_dimension(20) == 2
+        """dim S_20(Sp(4,Z)) = 3 by the Igusa even-ring count."""
+        assert siegel_cusp_dimension(20) == 3
 
     def test_dim_24(self):
         """dim S_24(Sp(4,Z)) = 5."""
         assert siegel_cusp_dimension(24) == 5
 
+    def test_sp4_cusp_dimensions_match_igusa_ring_oracle(self):
+        """Public dimension routine matches independent monomial counting."""
+        for k in [0, 4, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30]:
+            assert siegel_cusp_dimension(k) == igusa_even_cusp_dimension_oracle(k)
+
     def test_sk_dimension_12(self):
         """dim SK subspace at k=12: dim S_22(SL_2(Z)) = 1."""
         assert saito_kurokawa_dimension(12) == 1
 
+    def test_sk_dimension_14(self):
+        """dim SK at k=14: dim S_26(SL_2(Z)) = 1, not floor(26/12)=2."""
+        assert saito_kurokawa_dimension(14) == 1
+
     def test_genuine_dimension_12(self):
         """No genuine eigenforms at k=12."""
         assert genuine_cusp_dimension(12) == 0
+
+    def test_sk_dimensions_match_sl2_oracle(self):
+        """SK dimension is dim S_{2k-2}(SL_2Z), checked by Delta*M_{w-12}."""
+        for k in [10, 12, 14, 16, 18, 20, 22, 24]:
+            assert saito_kurokawa_dimension(k) == sl2_cusp_dimension_oracle(2 * k - 2)
+
+    def test_genuine_dimension_20(self):
+        """At k=20, dim S_20=3 and dim SK=2, leaving one genuine form."""
+        assert genuine_cusp_dimension(20) == 1
 
     def test_sk_dimension_24(self):
         """dim SK at k=24: dim S_46(SL_2(Z)) = 3."""
@@ -567,6 +643,7 @@ class TestRank48KernelStructure:
         """Kernel rank bounded by cusp space dimension."""
         info = rank48_kernel_structure()
         assert info['kernel_max_rank'] == 5
+        assert 'upper bound' in info['rank_status']
 
 
 # ============================================================================
@@ -579,12 +656,16 @@ class TestSpectralComparison:
     def test_genus_1_does_not_match_nb(self):
         """Genus-1 L-values at Re(s) > 1 do not match NB critical line."""
         s = spectral_comparison()
-        assert s['genus_1']['matches_NB'] is False
+        assert s['genus_1']['critical_line_access'] is False
+        assert s['genus_1']['matches_NB_full_norm'] is False
 
-    def test_genus_2_matches_nb(self):
-        """Genus-2 central L-values at Re(s) = 1/2 match NB spectral support."""
+    def test_genus_2_narrows_but_does_not_solve_nb(self):
+        """Genus-2 reaches the central point but not the full NB norm."""
         s = spectral_comparison()
-        assert s['genus_2']['matches_NB'] is True
+        assert s['genus_2']['critical_line_access'] is True
+        assert s['genus_2']['matches_NB_spectral_support'] is True
+        assert s['genus_2']['matches_NB_full_norm'] is False
+        assert 'single central values' in s['genus_2']['residual_gap']
 
     def test_escalation_structure(self):
         """Genus escalation uses symmetric power L-functions."""

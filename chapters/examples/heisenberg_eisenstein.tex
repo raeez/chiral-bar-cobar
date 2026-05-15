@@ -10,35 +10,44 @@
 \section{The algebra and shadow archetype}
 \label{sec:heisenberg-archetype}
 
-The Heisenberg algebra~$\cH_\kappa$ is the Gaussian archetype: the
-unique entry of the standard landscape that satisfies
-$\kappa^{\mathrm{Heis}}(\cH_k) = k$ as a free parameter (not as a
-function of a level shift), the unique entry whose modular Koszul
-triple has zero quadratic complementarity sum
-$\kappa^{\mathrm{Heis}}(\cH_k) + \kappa^{\mathrm{Heis}}(\cH_k^!) = 0$,
-and the unique entry that lies in quadrichotomy class~G with shadow
-depth $r_{\max} = 2$ (Theorem~\ref{thm:quadrichotomy},
-Chapter~\ref{chap:shadow-quadrichotomy-platonic}). It is the simplest
-modular Koszul algebra: the shadow obstruction tower terminates at
-degree~$2$, the complementarity potential is exactly quadratic, and
-the full open/closed MC element reduces to the scalar modular
-characteristic~$\kappa^{\mathrm{Heis}}$. All five main theorems
-(A through~D and~H) are immediate. The genus expansion is controlled
-entirely by~$\kappa^{\mathrm{Heis}}$ and assembles into the
+The Heisenberg algebra~$\cH_k$ is the Gaussian archetype. Its
+rank-one level~$k$ is exactly the programme invariant:
+\[
+\kappa(\cH_k)=k.
+\]
+For a rank-$d$ diagonal Heisenberg algebra
+$\cH_\ell^{\oplus d}$ at common level~$\ell$, the trace over
+the $d$ generators gives
+\[
+\kappa(\cH_\ell^{\oplus d})=d\,\ell .
+\]
+This is the abelian normalization recorded in the landscape census;
+it is not the affine formula with $h^\vee=0$, and it is not produced
+by a level shift. In the rank-one formulas below the subscript
+$\kappa$ denotes the Heisenberg level itself, so
+$\kappa(\cH_\kappa)=\kappa$.
+
+The modular Koszul triple has zero scalar complementarity sum
+$\kappa(\cH_k)+\kappa(\cH_k^!)=0$, and the shadow tower lies in
+quadrichotomy class~G with depth $r_{\max}=2$
+(Theorem~\ref{thm:quadrichotomy},
+Chapter~\ref{chap:shadow-quadrichotomy-platonic}). The open/closed
+MC element keeps the analytic propagator tensors, but its nonlinear
+shadow projections vanish beyond the scalar line; the scalar genus
+expansion is controlled by~$\kappa(\cH_k)$ and assembles into the
 $\hat{A}$-genus.
 
-The κ-value $\kappa^{\mathrm{Heis}}(\cH_k) = k$ is the
+The value $\kappa(\cH_k) = k$ is the
 $\BRSTGauged$-evaluation of the universal conductor functor
 $K(\cA) = -c_{\mathrm{ghost}}(\BRST(\cA))$ specialised to the
 abelian-CS BRST resolution: a single $bc$ pair carrying ghost charge
 $-2k$ resolves $\cH_k$, so
-$K(\cH_k) = -(-2k)/2 = k = \kappa^{\mathrm{Heis}}(\cH_k)$
+$K(\cH_k) = -(-2k)/2 = k = \kappa(\cH_k)$
 (Corollary~\ref{cor:uc-K-heisenberg},
 Chapter~\ref{chap:universal-conductor}). The seed
-$\kappa^{\mathrm{Heis}}$ is verified against the master table of
-Chapter~\ref{ch:landscape-census}, row Heisenberg
-(\texttt{landscape\_census.tex}, equation~\eqref{eq:census-triples},
-triple $\mathfrak{T}_{\cH} = (\cH_\kappa, \mathrm{Sym}^{\mathrm{ch}}(V^*), \kappa/z)$).
+$\kappa(\cH_k)=k$ is verified against the master table of
+Chapter~\ref{ch:landscape-census}, where the Heisenberg collision
+residue is $r^{\mathrm{coll}}_{\cH}(z)=k/z$.
 
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
@@ -51,7 +60,7 @@ OPE $J(z)\,J(w) \sim \kappa/(z{-}w)^2$ \\
 \textbf{Koszul dual} & $\cH_\kappa^! = \operatorname{Sym}^{\mathrm{ch}}(V^*)$,
 $\kappa(\cH_\kappa^!) = -\kappa$ \\
 \textbf{Complementarity} & $\kappa_{\mathrm{Heis}}(\cH_\kappa) + \kappa_{\mathrm{Heis}}(\cH_\kappa^!) = 0$ \textup{(}free-field type~I\textup{)} \\
-\textbf{$r$-matrix} & $r(z) = \kappa/z$ (single pole, no Lie bracket) \\
+\textbf{$r$-matrix} & $r^{\mathrm{Heis}}_\kappa(z) = \kappa/z$ (single pole, no Lie bracket) \\
 \textbf{Genus expansion} & $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$ GF $= (\kappa/\hbar^2)(\hat{A}(i\hbar) - 1)$
 \end{tabular}
 \end{center}
@@ -65,7 +74,7 @@ algebra is
 \;=\;
 \bigl(\,\cH_\kappa,\;\;
 \operatorname{Sym}^{\mathrm{ch}}(V^*),\;\;
-r(z) = \kappa/z\,\bigr).
+r^{\mathrm{Heis}}_\kappa(z) = \kappa/z\,\bigr).
 \end{equation}
 The Koszul dual $\cH_\kappa^! =
 \operatorname{Sym}^{\mathrm{ch}}(V^*)$ is the curved symmetric
@@ -73,21 +82,41 @@ chiral algebra on the dual space (not isomorphic to~$\cH_\kappa$
 itself), and the $r$-matrix has a single simple pole
 (the $d\log$-absorbed residue of the double-pole OPE).
 
+The five bar-Koszul and closed-sector objects remain separate. For
+$A=\cH_k$,
+\[
+\begin{aligned}
+A&=\cH_k,\\
+B(A)&=T^c(s^{-1}\bar A),\\
+A^{\mathrm{i}}&=H^\bullet B(A),\\
+A^!&=\mathbb{D}_{\Ran}(A^{\mathrm{i}})
+   =\operatorname{Sym}^{\mathrm{ch}}(V^*)\quad
+   \text{with }m_0=-k\omega,\\
+Z^{\mathrm{der}}_{\mathrm{ch}}(A)
+&=\ChirHoch^\bullet(A,A).
+\end{aligned}
+\]
+The equivalence $\Omega B(A)\simeq A$ is bar-cobar inversion. It is
+not the construction of the Koszul dual algebra. The Koszul dual
+algebra is the Verdier dual of the Koszul-dual coalgebra, not the
+level-reflected Heisenberg algebra~$\cH_{-k}$. The derived centre is
+the Hochschild closed-sector object; it is not $A$, $B(A)$, $A^{\mathrm i}$,
+or~$A^!$.
+
 The Heisenberg bar complex at genus~$0$
 (Chapter~\ref{ch:heisenberg-frame}) is controlled by the logarithmic
-propagator $d\log(z-w)$. At higher genus, the propagator acquires
-corrections from the period matrix: near the diagonal,
-the Green's function on a genus-$g$ surface decomposes as
-$G(z,w) = \log(z-w) + \sum_{k \geq 1} c_k(\Omega)\,(z-w)^{2k}$,
-with Taylor coefficients $c_k(\Omega)$ equal to the
-Eisenstein series $G_{2k}$. These enter the bar
-differential as genus corrections. The Heisenberg is the simplest
-nontrivial instance of Theorem~D: $\kappa$ determines a universal generating function with
-$\hat{A}$-genus shape, verifiable term by
-term against the Eisenstein expansion of the period matrix.
+propagator $d\log(z-w)$. At genus~$1$ this is replaced by the
+simple-pole elliptic kernel
+$G_\tau(z)=\zeta_\tau(z)-G_2(\tau)z$, with
+$G_2(\tau)=\pi^2E_2(\tau)/3$. At genus~$g\ge2$ the kernel is
+$\partial_z\log E(z,w)$ for the prime form. Its local coefficients
+are jet tensors depending on the point and the chosen coordinate;
+only their scalar contractions descend to modular or tautological
+classes. The Heisenberg is the simplest nontrivial instance of
+Theorem~D: $\kappa$ determines the scalar genus tower
+$F_g=\kappa\lambda_g^{\mathrm{FP}}$.
 
-\section{Compute \texorpdfstring{$\Theta^{\mathrm{oc}}$}{Theta oc}:
-bar complex, shadow obstruction tower, and modular characteristic}
+\section{The Heisenberg open--closed scalar}
 \label{sec:heisenberg-theta-oc}
 
 \begin{proposition}[Gaussian shadow termination for
@@ -96,9 +125,14 @@ bar complex, shadow obstruction tower, and modular characteristic}
 \label{prop:heisenberg-eisenstein-master-mc}
 For the Heisenberg algebra~$\cH_\kappa$, the shadow
 obstruction tower terminates at weight~$2$:
-$\Theta^{\leq 2} = \kappa$, all higher obstructions vanish
-($o_r = 0$ for $r \geq 3$), and
-$\Theta_{\cH_\kappa} = \kappa \cdot \eta \otimes \Lambda$.
+$\Theta^{\leq 2}_{\mathrm{scal}} = \kappa$, all higher shadow
+obstructions vanish ($o_r = 0$ for $r \geq 3$), and the scalar
+projection of the MC element is
+\[
+\pi_{\mathrm{scal}}(\Theta_{\cH_\kappa})
+=\kappa \cdot \eta \otimes \Lambda .
+\]
+The full tensor kernel still records the genus-dependent propagator.
 \end{proposition}
 
 \begin{proof}
@@ -107,7 +141,7 @@ $\alpha^i(z)\,\alpha^j(w) \sim
  \kappa\,\delta^{ij}/(z-w)^2$.
 There is \emph{no simple pole}, so the chiral bracket
 $\{-,-\} = 0$ (the bracket extracts the $(z-w)^{-1}$
-coefficient, which is absent). Consequently:
+coefficient, which is absent).
 
 \emph{Step~1: All transferred $L_\infty$ brackets of
 degree $\geq 3$ vanish.}
@@ -131,14 +165,18 @@ By Step~1, all such vertices vanish, so $o_r = 0$.
 
 \emph{Step~3: Tower terminates.}
 Since $o_r = 0$ for $r \geq 3$, the MC element
-$\Theta^{\leq 2} = \kappa$ extends uniquely (and
-trivially) to all higher degrees:
-$\Theta_{\cH_\kappa} = \Theta^{\leq 2} = \kappa$.
-For the Heisenberg family (a single-generator,
-uniform-weight algebra), the scalar identity
-$\Theta_{\cH_\kappa} = \kappa \cdot \eta \otimes \Lambda$
-with $\eta$ the propagator and $\Lambda$ the volume form.
-This is exact Gaussianity
+$\Theta^{\leq 2}_{\mathrm{scal}} = \kappa$ extends trivially in the
+shadow filtration:
+$\Theta^{\leq r}_{\mathrm{scal}}=\kappa$ for all $r\ge2$.
+For the Heisenberg family, this says
+\[
+\pi_{\mathrm{scal}}(\Theta_{\cH_\kappa})
+= \kappa \cdot \eta \otimes \Lambda,
+\]
+with $\eta$ the bar propagator and $\Lambda$ the tautological volume
+class. The equality is a scalar-shadow statement, not an assertion
+that the full MC tensor has no prime-form or Bergman-kernel
+dependence. This is exact Gaussianity
 (Remark~\ref{rem:unifying-principle}).
 \end{proof}
 
@@ -160,6 +198,103 @@ invariant (Theorem~\ref{thm:shadow-homotopy-invariance});
 ordinary FM for the Heisenberg (no punctures needed in the abelian case),
 and the tropicalization is empty beyond depth~$1$.
 The Heisenberg is the unique family where all three pillars are strict.
+\end{remark}
+
+\begin{remark}[Chart-class enumeration: Heisenberg]
+\label{rem:heisenberg-chart-class-enumeration}
+\index{chart-class!Heisenberg}
+\emph{Type signature:} (Open quadrant; chart presentation;
+Beilinson level~$1$; HP = factorisation dg-cat
+$\mathcal{C}^{\mathrm{op}}$ on $(X, D, \tau)$, vacuum $b$,
+$A_b = \mathrm{End}_\mathcal{C}(b)$; archetype label invariant
+under Morita equivalence on the level-$1\to 0$ fibre).
+The chart algebra
+\[
+A_b^{\cH, k} = \mathrm{End}_{\mathcal{C}^{\mathrm{op}}_X}(b^{\cH,k})
+\;\simeq\; \cH_k\otimes_{\mathcal{D}_X}(\,\cdot\,)
+\]
+on the standard vacuum $b^{\cH,k}$ realises the rank-one Heisenberg
+chiral algebra at level~$k$. The five-archetype label is~$\mathsf{G}$
+(Gaussian, $r_{\max}=2$); on the rank-$d$ diagonal Heisenberg
+the label is unchanged. The class-$\mathsf{G}$ chart class is
+Morita-rigid: every chart presentation of $\cH_k$ yields the same
+Gaussian shadow tower because all higher transferred brackets vanish
+identically on the convolution $sL_\infty$-algebra. The Wakimoto
+embedding $\cH_k\hookrightarrow V_k(\fg)$ at $\fg=\fgl_1$ identifies
+the rank-one Heisenberg chart with the rank-one Cartan oscillator
+sub-chart of any affine Kac--Moody chart, so class~$\mathsf{G}$ is
+chart-independent on the abelian sub-locus. Within Vol~III the
+matching $\Phi_d^{\mathrm{FA}}$-evaluation at the same vacuum yields
+the holographic CY companion (Vol~III, level~$1\leftrightarrow 1$),
+specialising at $d=2$ to the curved abelian
+$\beta\gamma$-system input on $T^*\Sigma$.
+\end{remark}
+
+\begin{remark}[Theorem A in four lanes: Heisenberg]
+\label{rem:heisenberg-theorem-A-four-lanes}
+\index{Theorem A!four lanes!Heisenberg}
+On the chart algebra $A_b^{\cH,k}=\cH_k$, Theorem~A
+(Theorem~\ref{thm:A-infinity-2} in
+Chapter~\ref{chap:theorem-A-infinity-2}) appears in the four lanes
+$\mathrm{L}1,\mathrm{L}2,\mathrm{L}3,\mathrm{L}4$:
+\begin{itemize}
+\item \emph{$\mathrm{L}1$ (chain level, $\mathrm{Ch}(\mathrm{Vect})$).}
+The bar--cobar adjunction is realised by the Gaussian Koszul complex
+$\bar{B}^{\mathrm{ch}}(\cH_k)\simeq
+\mathrm{Sym}^c(V^*[-1])$ with curvature $m_0=-k\,\omega$
+(Theorem~\ref{thm:heisenberg-koszul-dual-early}); the witness chain
+homotopy is the trivial Gaussian one $h_G=0$ (no transferred higher
+bracket).
+\item \emph{$\mathrm{L}2$ (Quillen-equivalence).}
+The Vallette bar--cobar Quillen equivalence
+\cite[Theorem~2.1]{Val16} applies in the Francis--Gaitsgory
+factorisation ambient on the Koszul locus
+(here the entire chart algebra is Koszul);
+the Hinich~\cite{Hinich2003} symmetric-monoidal promotion is
+unobstructed because $\cH_k$ is exactly Gaussian.
+\item \emph{$\mathrm{L}3$ ($(\infty,1)$-categorical).}
+The $(\infty,1)$-localisation gives the adjoint equivalence between
+the conilpotent-cofree coalgebra $\Bbarch_X(\cH_k)$ and the
+Verdier-dual symmetric chiral algebra $\cH_k^! = \mathrm{Sym}^{\mathrm{ch}}(V^*)$.
+\item \emph{$\mathrm{L}4$ ($(\infty,2)$-properad).}
+Theorem~$A^{\infty,2}$ (Theorem~\ref{thm:A-infinity-2})
+inscribes the $(\infty,2)$-categorical adjoint equivalence on the
+properadic envelope; on the Gaussian sub-properad the equivalence is
+strictly Quillen, with no higher properadic correction
+(class-$\mathsf{G}$ formality).
+\end{itemize}
+The four lanes coincide on the entire chart locus of $\cH_k$
+because $\cH_k$ is Koszul without resonance.
+\end{remark}
+
+\begin{remark}[Five-$\kappa$ stratification: Heisenberg]
+\label{rem:heisenberg-five-kappa-stratification}
+\index{kappa stratification@$\kappa$-stratification!Heisenberg row G}
+The five $\kappa$-measurements
+$\{\kappa_{\mathrm{cat}}, \kappa^{\mathrm{Hodge}}_{\mathrm{ch}},
+\kappa^{\mathrm{Heis}}_{\mathrm{ch}}, \kappa_{\mathrm{BKM}},
+\kappa_{\mathrm{fiber}}\}$ on the row $\mathsf{G}$ of the
+$5\times 5$ stratification matrix at the rank-one Heisenberg
+$\cH_k$ evaluate as
+\[
+\kappa_{\mathrm{cat}}^{\cH_k}=k,\qquad
+\kappa^{\mathrm{Hodge}}_{\mathrm{ch}}(\cH_k)=k,\qquad
+\kappa^{\mathrm{Heis}}_{\mathrm{ch}}(\cH_k)=k,\qquad
+\kappa_{\mathrm{BKM}}=0,\qquad
+\kappa_{\mathrm{fiber}}=0.
+\]
+The first three coincide because the Heisenberg is the
+defining algebra of the chiral Heisenberg projection (the
+$\kappa^{\mathrm{Heis}}_{\mathrm{ch}}$ functional is normalised to
+agree with the chart scalar on $\cH_k$ itself);
+$\kappa_{\mathrm{BKM}}$ vanishes because the Heisenberg is not a
+Borcherds--Kac--Moody algebra; $\kappa_{\mathrm{fiber}}$ vanishes
+because no fibre datum is present on the abelian chart.
+\emph{Type signature:} (Open quadrant; chart-level scalar tuple;
+Beilinson level~$5$; HP = five distinct measurements named;
+collapse pattern $r_{\max}=2$). MA-6 discipline: the five
+$\kappa$-measurements are not a single invariant; their coincidence
+on $\cH_k$ is a class-$\mathsf{G}$ collapse, not a definition.
 \end{remark}
 
 \begin{remark}[Four-level structure: Heisenberg]
@@ -204,11 +339,9 @@ from the Heisenberg Fock space to the symmetric algebra of the
 Bergman space of the disk.
 Moriwaki~\cite{Moriwaki26b} identifies a conformally flat 2-disk
 algebra on $\operatorname{Sym} A^2(D)$ with the ind-Hilbert completion
-of the affine Heisenberg vertex algebra. This suggests that the
-sewing envelope (\S\ref{sec:analytic-completion}) of the algebraic
-Heisenberg VOA is exactly $\operatorname{Sym} A^2(D)$, making
-the Heisenberg the first model in which the entire analytic
-completion programme is explicit.
+of the affine Heisenberg vertex algebra. The conditional sewing
+theorem below uses this identification as the analytic completion
+input for the algebraic Heisenberg VOA.
 \end{remark}
 
 \begin{theorem}[Heisenberg sewing theorem;
@@ -232,7 +365,7 @@ Under the mode--Bergman correspondence~$\Theta$
 \end{enumerate}
 \end{theorem}
 
-\begin{proof}[Proof references]
+\begin{proof}
 Clause~(i) is the ind-Hilbert identification of
 Moriwaki~\cite{Moriwaki26b}, which exhibits a conformally flat 2-disk
 algebra structure on~$\operatorname{Sym} A^2(D)$ isomorphic to the
@@ -251,19 +384,22 @@ The Hilbert--Schmidt condition
 trace-class, so the determinant converges absolutely.
 \end{proof}
 
-\begin{remark}\label{rem:heisenberg-sewing-status}
-Clause~(i) depends on the external identification
-of Moriwaki~\cite{Moriwaki26b}. Clauses~(ii)--(iv) are proved
-here and constitute the bridge from formal
-factorization algebra data to the analytic sewing programme
-of~\S\ref{sec:analytic-completion}.
+\begin{remark}[Analytic sewing input]\label{rem:heisenberg-sewing-input}
+The analytic input is Moriwaki's identification
+of the completed Heisenberg disk algebra with
+$\operatorname{Sym}A^2(D)$~\cite{Moriwaki26b}. Once this completion
+is fixed, the algebraic bar differential, pair-of-pants sewing, and
+closed amplitudes are the Gaussian collision operator, second
+quantization of one-particle Bergman restriction, and the resulting
+Fredholm determinant.
 \end{remark}
 
-\section{Extract projections: \texorpdfstring{$r$}{r}-matrix, complementarity,
-genus expansion, bulk, lines}
+\section{Collision residue, scalar complementarity, and genus tower}
 \label{sec:heisenberg-projections}
 
-The full MC element $\Theta_{\cH_\kappa} = \kappa \cdot \eta \otimes \Lambda$
+The scalar projection
+$\pi_{\mathrm{scal}}(\Theta_{\cH_\kappa})
+= \kappa \cdot \eta \otimes \Lambda$
 is Gaussian (Proposition~\ref{prop:heisenberg-gaussian-termination}).
 The five standard projections follow.
 
@@ -275,7 +411,8 @@ The five standard projections follow.
 \label{prop:heisenberg-r-matrix}
 The collision residue of the MC element is:
 \begin{equation}\label{eq:heisenberg-r-matrix}
-r(z) \;=\; \operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_{\cH_\kappa})
+r^{\mathrm{Heis}}_\kappa(z)
+\;=\; \operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_{\cH_\kappa})
 \;=\; \frac{\kappa}{z}.
 \end{equation}
 This is a single pole: the Heisenberg $r$-matrix has no
@@ -287,17 +424,25 @@ The OPE $J(z)\,J(w) \sim \kappa/(z{-}w)^2$ has a double pole.
 The bar construction extracts the residue along
 $d\log(z{-}w) = dz/(z{-}w)$, absorbing one power of
 $(z{-}w)$ (Remark~\ref{rem:heisenberg-bar-absorbs-pole} below).
-The collision residue is therefore
-$r(z) = \operatorname{Res}_{z=0}[\kappa/(z{-}w)^2 \cdot d\log(z{-}w)]
-= \kappa/z$, a single simple pole.
+Put $t=z-w$. The singular OPE measure is
+$\kappa\,t^{-2}\,dt$. Since $dt=t\,d\log t$, the same singularity
+written in the $d\log$ measure has coefficient
+$\kappa\,t^{-1}$. Thus
+\[
+r^{\mathrm{coll}}_{\cH}(t)=\frac{\kappa}{t}.
+\]
 There is no $(z{-}w)^{-1}$ term in the OPE (no Lie bracket), so
-$r(z)$ has no constant term: $r(z) = \kappa/z$ exactly.
+$r^{\mathrm{coll}}_{\cH}(t)$ has no bracket contribution:
+$r^{\mathrm{coll}}_{\cH}(t)=\kappa/t$ exactly.
 \end{proof}
 
 \begin{remark}[Pole absorption and the pre-dualisation distinction]
 \label{rem:heisenberg-bar-absorbs-pole}
 \index{pole absorption!Heisenberg example}
-The collision $r$-matrix $r(z) = \operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_{\cH_\kappa})$ lives one pole order below the OPE
+The collision $r$-matrix
+$r^{\mathrm{Heis}}_\kappa(z)
+= \operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_{\cH_\kappa})$
+lives one pole order below the OPE
 (the bar kernel absorbs one pole): the OPE has a
 double pole $\kappa/z^2$; the collision residue has a single pole
 $\kappa/z$. The $d\log$ extraction sends $z^{-n}$ to
@@ -305,7 +450,14 @@ $z^{-(n-1)}$. For a general chiral algebra with OPE
 poles at orders $n_1 > n_2 > \ldots$, the collision residue has
 poles at orders $n_1-1 > n_2-1 > \ldots$.
 
-The collision residue $r(z) = \kappa/z$ is a post-extraction object: it is the $r$-matrix of the bar complex after $d\log$~absorption. The pre-extraction (``pre-dualisation'') singular OPE $J(z)\,J(w) \sim \kappa/(z{-}w)^2$ has one higher pole order and is not to be confused with $r(z)$.
+The collision residue
+$r^{\mathrm{Heis}}_\kappa(z)=\kappa/z$ is a post-extraction object:
+it is the level-prefixed $r$-matrix of the bar complex after
+$d\log$~absorption.
+The pre-extraction singular OPE
+$J(z)\,J(w) \sim \kappa/(z{-}w)^2$ has one higher pole order.
+It is not the Koszul dual algebra and not the level-reflected
+Heisenberg algebra.
 \end{remark}
 
 \subsection{Complementarity}
@@ -319,12 +471,13 @@ complementarity:
 \begin{equation}\label{eq:heisenberg-complementarity}
 \text{(free-field type~I):}\qquad \kappa_{\mathrm{Heis}}(\cH_\kappa) + \kappa_{\mathrm{Heis}}(\cH_\kappa^!) \;=\; 0 \qquad \text{(not the Virasoro $13$).}
 \end{equation}
-The dual algebra $\cH_\kappa^! = \operatorname{Sym}^{\mathrm{ch}}(V^*)$
-is the symmetric chiral algebra on the dual space, with
-curvature $m_0 = -\kappa \cdot \omega_1$. At level
-$\kappa = 0$ the bar complex is uncurved; at $\kappa \neq 0$ both
-$\cH_\kappa$ and $\cH_\kappa^!$ are curved, with opposite
-curvatures.
+The dual algebra $\cH_\kappa^! =
+\operatorname{Sym}^{\mathrm{ch}}(V^*)$ is the symmetric chiral
+algebra on the dual space, with curvature
+$m_0=-\kappa\cdot\omega$. The source vertex algebra
+$\cH_\kappa$ is not replaced by $\cH_{-\kappa}$; its genus-$g$
+bar curvature is the scalar class $\kappa\lambda_g$, while the
+Verdier-dual algebra carries the opposite scalar characteristic.
 \end{proposition}
 
 \begin{proof}
@@ -332,15 +485,14 @@ The Koszul dual $\cH_\kappa^! = \operatorname{Sym}^{\mathrm{ch}}(V^*)$
 is the symmetric chiral algebra on the dual space
 (Theorem~\ref{thm:heisenberg-bar-complex-genus0}, \S\ref{thm:frame-heisenberg-koszul-dual});
 it has modular characteristic $\kappa(\cH_\kappa^!) = -\kappa$, giving
-the free-field pairing $\kappa_{\mathrm{Heis}} + \kappa_{\mathrm{Heis}}' = 0$ This is the abelian case of Theorem~\ref{thm:modular-characteristic}(iv).
-(Note: $\cH_\kappa^! = \operatorname{Sym}^{\mathrm{ch}}(V^*)
-\neq \cH_{-\kappa}$; the Koszul dual is a
-\emph{different} algebra. This is Koszul duality, not bosonization;
-see Remark~\ref{rem:bosonization-not-koszul}.)
+the free-field pairing
+$\kappa_{\mathrm{Heis}}+\kappa_{\mathrm{Heis}}'=0$. This is the
+abelian case of Theorem~\ref{thm:modular-characteristic}(iv).
+The identity is scalar complementarity; it is not a statement that
+$\Theta_{\cH_\kappa^!}=-\Theta_{\cH_\kappa}$ as full MC elements.
 \end{proof}
 
 \begin{remark}[Quantum complementarity]
-\textup{(}UNIFORM-WEIGHT\textup{})
 \label{rem:heisenberg-quantum-complementarity}
 At genus~$g$, the complementarity theorem
 (Theorem~\ref{thm:quantum-complementarity}) gives:
@@ -348,6 +500,10 @@ At genus~$g$, the complementarity theorem
 Q_g(\cH_\kappa) + Q_g(\cH_\kappa^!)
 \;=\; H^*(\overline{\mathcal{M}}_g,\, Z(\cH_\kappa)).
 \]
+Here $Z(\cH_\kappa)$ is the ordinary centre local system appearing in
+the scalar complementarity statement; it is not the bulk
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cH_\kappa)
+=\ChirHoch^\bullet(\cH_\kappa,\cH_\kappa)$.
 The Heisenberg is the archetype where the decomposition is
 maximally symmetric: both sides contribute equally with
 $F_g(\cH_\kappa) = \kappa \cdot \lambda_g^{\mathrm{FP}}$ and
@@ -362,15 +518,26 @@ of the scalar projections.
 \subsubsection{Eisenstein series and modular forms}
 \label{subsec:eisenstein-recollection}
 
-The genus-$g$ propagator on a curve $C$ of genus $g$ involves the
-Green's function $G(z,w)$, whose expansion near the diagonal has
-coefficients in the ring of Siegel modular forms. The Eisenstein
-series $G_{2k}(\tau)$ appear because they are the Taylor coefficients
-of the Weierstrass $\wp$-function, which is the genus-$1$ propagator.
+At genus~$1$ two normalizations occur. The normalized Eisenstein
+series $E_{2m}$ has constant term~$1$. The lattice Eisenstein series
+is
+\[
+G_{2m}(\tau)
+=\sum_{(a,b)\ne(0,0)}(a+b\tau)^{-2m}
+=2\zeta(2m)E_{2m}(\tau)\qquad (m\ge2),
+\]
+while the regularized weight-$2$ value is
+$G_2(\tau)=\pi^2E_2(\tau)/3$. The simple-pole Heisenberg kernel is
+the primitive of the double-pole current kernel:
+\[
+G_\tau(z)=\frac1z-G_2(\tau)z-G_4(\tau)z^3-G_6(\tau)z^5-\cdots .
+\]
+Thus $E_2$ enters first through $G_2$ and is quasi-modular; the
+higher $G_{2m}$ are scalar multiples of the modular forms $E_{2m}$.
 
 \begin{definition}[Eisenstein series]\label{def:eisenstein-series}
 \index{Eisenstein series|textbf}
-For $k \geq 2$ even, the weight-$k$ Eisenstein series is:
+For even $k \geq 2$, the normalized weight-$k$ Eisenstein series is:
 \begin{equation}
 E_k(\tau) = 1 - \frac{2k}{B_k} \sum_{n=1}^{\infty} \sigma_{k-1}(n) q^n
 \end{equation}
@@ -403,7 +570,7 @@ E_2\left(\frac{a\tau+b}{c\tau+d}\right) = (c\tau + d)^2 E_2(\tau)
 + \frac{6c(c\tau + d)}{\pi i}
 \end{equation}
 
-The extra term for $E_2$ is the \emph{holomorphic anomaly}.
+The extra term for $E_2$ is the holomorphic modular anomaly.
 \end{proposition}
 
 \begin{definition}[Dedekind eta function]\label{def:eta-function}
@@ -455,13 +622,17 @@ simple-pole propagator is Theorem~\ref{thm:heisenberg-all-genus} below.
 \subsection{\texorpdfstring{Genus 1: elliptic functions and $E_2$}{Genus 1: elliptic functions and E 2}}
 \label{subsec:heisenberg-genus-one-complete}
 
-\begin{theorem}[Complete genus-1 Heisenberg correlators; \ClaimStatusProvedHere]\label{thm:heisenberg-genus-one-complete}
-On an elliptic curve $E_\tau = \mathbb{C}/(\mathbb{Z} + \tau\mathbb{Z})$, the
-Heisenberg two-point function is:
+\begin{theorem}[Genus-1 Heisenberg bar kernels;
+\ClaimStatusProvedHere]\label{thm:heisenberg-genus-one-complete}
+On an elliptic curve
+$E_\tau = \mathbb{C}/(\mathbb{Z} + \tau\mathbb{Z})$, the
+simple-pole Heisenberg bar two-point kernel is
 \begin{equation}
-\langle a(z_1) a(z_2) \rangle_{E_\tau} = \kappa \cdot G_\tau(z_1 - z_2)
+\langle a(z_1) a(z_2) \rangle^{\mathrm{bar}}_{E_\tau}
+= \kappa \cdot G_\tau(z_1 - z_2)
 \end{equation}
-where $G_\tau(z)$ is the regularized elliptic Green function, defined using the Weierstrass $\zeta$-function (which has a simple pole like $G_\tau$, unlike $\wp$ which has a double pole):
+where $G_\tau(z)$ is the simple-pole elliptic bar kernel, defined
+using the Weierstrass $\zeta$-function:
 \begin{equation}
 G_\tau(z) = \zeta_\tau(z) - \frac{\pi^2 E_2(\tau)}{3}\, z
 \end{equation}
@@ -471,9 +642,19 @@ where:
 \frac{1}{z - m - n\tau} + \frac{1}{m+n\tau} + \frac{z}{(m+n\tau)^2}
 \right]
 \end{equation}
+All bar-kernel $n$-point functions are obtained by Wick contraction:
+odd correlators vanish, and for $n=2r$,
+\begin{equation}
+\left\langle \prod_{\nu=1}^{2r}a(z_\nu)\right\rangle^{\mathrm{bar}}_{E_\tau}
+=\kappa^r
+\sum_{\mathrm{pairings}\ P}
+\prod_{\{i,j\}\in P}G_\tau(z_i-z_j).
+\end{equation}
+The current--current elliptic correlator is the double-pole carrier
+$\kappa(-\partial_zG_\tau)(z)$, not the bar kernel itself.
 \end{theorem}
 
-\begin{proof}[Derivation from first principles]
+\begin{proof}
 
 \emph{Step~1: Weierstrass regularization.}
 
@@ -489,33 +670,58 @@ The subtraction of $2\eta_1 z$ cancels the quasi-period under $z \mapsto z + 1$,
 
 \emph{Step~3: Laurent expansion.}
 
-Expanding $G_\tau$ near $z=0$ (using $\zeta_\tau(z) = 1/z + O(z^3)$ since $\zeta$ is odd):
+Expanding $G_\tau$ near $z=0$ gives the normalized Eisenstein
+coefficients
 \begin{align}
-G_\tau(z) &= \frac{1}{z} - \frac{\pi^2 E_2(\tau)}{3} z + O(z^3)
+G_\tau(z)
+&= \frac{1}{z} - G_2(\tau)z - G_4(\tau)z^3
+-G_6(\tau)z^5-\cdots  \\
+&= \frac{1}{z} - \frac{\pi^2 E_2(\tau)}{3} z
+-\frac{\pi^4 E_4(\tau)}{45}z^3
+-\frac{2\pi^6 E_6(\tau)}{945}z^5-\cdots .
 \end{align}
 
 \emph{Step~4: Eisenstein series appearance.}
 
-The coefficient of $z$ in the expansion involves the lattice Eisenstein series:
+The coefficient of $z$ in the expansion involves the regularized
+lattice Eisenstein series:
 \[G_2(\tau) = \sum_{(m,n) \neq (0,0)} \frac{1}{(m+n\tau)^2} = \frac{\pi^2}{3} E_2(\tau)\]
 
-This is the first appearance of Eisenstein series in the genus expansion.
+Wick's theorem for the Gaussian Heisenberg field gives the displayed
+$n$-point formula. Differentiating the simple-pole kernel gives the
+typed current carrier
+\[
+(-\partial_zG_\tau)(z)=\wp_\tau(z)+G_2(\tau),
+\]
+so the current OPE keeps its double-pole principal part while the
+ordered bar complex uses the primitive simple-pole kernel.
 \end{proof}
 
 \begin{remark}[Holomorphic anomaly]\label{rem:E2-holomorphic-anomaly}
 \index{holomorphic anomaly!E2 in Heisenberg genus expansion@$E_2$ in Heisenberg genus expansion}
-The appearance of $E_2$ introduces a \emph{holomorphic anomaly}: under modular
-transformations, the two-point function transforms as:
+The appearance of $E_2$ introduces the genus-$1$ holomorphic
+anomaly. With $z'=z/(c\tau+d)$ and
+$\gamma\tau=(a\tau+b)/(c\tau+d)$, the theta-kernel transformation is
 \begin{equation}
-\langle a(z_1) a(z_2) \rangle_{\gamma \cdot \tau} = (c\tau + d)^2
-\langle a((c\tau+d)^{-1}z_1) a((c\tau+d)^{-1}z_2) \rangle_\tau
-+ \text{anomaly}
+G_{\gamma\tau}(z')
+=(c\tau+d)G_\tau(z)+2\pi i\,c\,z .
 \end{equation}
-
-The anomaly term is:
-\[\text{anomaly} = -\frac{6c\kappa}{\pi i} \cdot z_{12}\]
-
-This is the obstruction class computed in Theorem~\ref{thm:heisenberg-obs}.
+Equivalently,
+\[
+\langle a(z'_1)a(z'_2)\rangle_{\gamma\tau}
+=(c\tau+d)\langle a(z_1)a(z_2)\rangle_\tau
++2\pi i\,c\,\kappa\,z_{12}.
+\]
+The same anomaly is the inhomogeneous term in
+\[
+E_2(\gamma\tau)
+=(c\tau+d)^2E_2(\tau)
++\frac{6c(c\tau+d)}{\pi i}.
+\]
+Scalar modular descent replaces $E_2$ by
+$\widehat{E}_2=E_2-3/(\pi\operatorname{Im}\tau)$; the loss of
+holomorphicity is the genus-$1$ obstruction computed in
+Theorem~\ref{thm:heisenberg-obs}.
 \end{remark}
 
 \begin{computation}[Partition function at genus 1]\label{comp:heisenberg-partition-g1}
@@ -542,14 +748,26 @@ since $Z = 1/\eta(\tau)$ transforms contravariantly to $\eta$.
 \subsection{\texorpdfstring{Genus 2: Siegel modular forms $E_4$ and $E_6$}{Genus 2: Siegel modular forms E 4 and E 6}}
 \label{subsec:heisenberg-genus-two}
 
-\begin{theorem}[Genus-2 Heisenberg correlators; \ClaimStatusProvedHere]\label{thm:heisenberg-genus-two}
+\begin{theorem}[Genus-2 Heisenberg kernel; \ClaimStatusProvedHere]\label{thm:heisenberg-genus-two}
 On a genus-2 Riemann surface $\Sigma_2$ with period matrix
 $\Omega = \begin{pmatrix} \tau_1 & z \\ z & \tau_2 \end{pmatrix} \in \mathcal{H}_2$,
 the Heisenberg two-point function is:
 \begin{equation}
 \langle a(w_1) a(w_2) \rangle_{\Sigma_2} = \kappa \cdot G_{\Omega}(w_1, w_2)
 \end{equation}
-where $G_{\Omega}$ is the genus-2 Green function (derivative of the prime form with respect to $w_1$). The Heisenberg algebra is a \emph{free} (Gaussian) theory: the two-point function at any genus is exactly the Green's function, with no perturbative corrections in $\kappa$. The Eisenstein series $E_4(\Omega), E_6(\Omega)$ appear in the \emph{expansion of the Green's function itself} near the diagonal (encoding the geometry of $\Sigma_2$), not as separate quantum corrections.
+where
+\[
+G_\Omega(w_1,w_2)=\partial_{w_1}\log E(w_1,w_2;\Omega)
+\]
+and $E$ is the prime form. The Heisenberg algebra is Gaussian:
+the two-point function is this kernel with scalar prefactor
+$\kappa$, with no perturbative corrections in~$\kappa$. The local
+coefficients of $G_\Omega$ are prime-form jet tensors. Their scalar
+Siegel modular contractions, when such contractions are formed, lie
+in Igusa's genus-2 modular-form ring generated by
+$E_4^{(2)},E_6^{(2)},\chi_{10},\chi_{12}$; the local coefficients
+themselves are not canonically equal to $E_4^{(2)}$ and
+$E_6^{(2)}$.
 \end{theorem}
 
 \begin{proof}
@@ -560,46 +778,83 @@ no perturbative corrections. We construct this explicitly for $g = 2$.
 
 \emph{Step~1: Prime form construction.}
 
-The genus-2 prime form is:
-\[E(w_1, w_2; \Omega) = \frac{\theta[\delta](w_1 - w_2; \Omega)}
-{\sqrt{dw_1}\sqrt{dw_2}} \cdot \exp(\text{period correction})\]
+For an odd theta characteristic~$\delta$, the genus-2 prime form is
+\[
+E(w_1,w_2;\Omega)
+=\frac{\theta[\delta](\int_{w_2}^{w_1}\omega,\Omega)}
+{h_\delta(w_1)h_\delta(w_2)},
+\]
+where $h_\delta$ is the corresponding half-differential. This is a
+$(-1/2,-1/2)$-form with a simple zero on the diagonal.
 
 \emph{Step~2: Laurent expansion of the genus-2 Green function.}
 
-The chiral propagator $G_\Omega(w_1, w_2) = \partial_{w_1}\!\log E(w_1,w_2;\Omega)$ has a Laurent expansion near the diagonal $w_1 = w_2$:
-\[G_\Omega(w_1, w_2) = \frac{1}{w_1-w_2} + \sum_{k \geq 0} c_k(\Omega)(w_1-w_2)^k\]
-where the coefficients $c_k(\Omega)$ depend on $\Omega$ and on the base point, with the even-index coefficients related to Siegel modular forms (cf.\ the general formula in Theorem~\ref{thm:heisenberg-all-genus}).
-(N.B.\ this is not a ``loop correction''; the Heisenberg theory is free and the Green function is exact at every genus.)
+In a local coordinate $t=w_1-w_2$, the chiral propagator has the
+form
+\[
+G_\Omega(w_1,w_2)=\frac1t+\sum_{m\ge0}c_m(w_2;\Omega)t^m .
+\]
+The coefficients $c_m$ are local tensors built from the Bergman
+projective connection and its covariant derivatives. They depend on
+the point and on the local coordinate, so they are not scalar Siegel
+modular forms by themselves. This is not a loop correction; the
+Heisenberg theory is free and the kernel is exact.
 
 \emph{Step~3: Siegel modular forms.}
 
-For genus 2, the relevant Siegel Eisenstein series of weight $k$ is:
+For genus~$2$, scalar modular functions obtained from global
+contractions of these tensors live in Igusa's ring. The Siegel
+Eisenstein series of weight~$k$ is
 \[
 E_k^{(2)}(\Omega) = \sum_{(C,D)} \det(C\Omega + D)^{-k}
 \]
-where the sum is over a set of representatives for the bottom rows of $\mathrm{Sp}_4(\mathbb{Z})$ matrices. These are Siegel modular forms of weight $k$ for $\mathrm{Sp}_4(\mathbb{Z})$; the Fourier expansion involves sums over half-integral positive semi-definite $2 \times 2$ matrices (unlike the genus-1 case, where the expansion is over integers).
+where the sum is over representatives for the bottom rows of
+$\mathrm{Sp}_4(\mathbb{Z})$ matrices. Igusa's theorem supplies the
+ambient scalar ring
+$\mathbb{C}[E_4^{(2)},E_6^{(2)},\chi_{10},\chi_{12}]$ with the
+standard relation in even weight. Thus the Heisenberg kernel carries
+period-matrix dependence through the prime form, while the scalar
+modular projection is governed by the genus-2 Siegel modular ring.
 \end{proof}
 
-\begin{remark}[Geometric interpretation]\label{rem:genus-two-physical}
-The genus-2 Green function coefficients are weight-4 and weight-6 Siegel Eisenstein series for $\mathrm{Sp}(4,\mathbb{Z})$, arising from the exact propagator (the Heisenberg theory is free at every genus).
+\begin{remark}[Prime-form jet carrier]\label{rem:genus-two-prime-form-carrier}
+The genus-2 kernel has simple-pole principal part and prime-form
+jet coefficients. Weight-$4$ and weight-$6$ Siegel Eisenstein series
+enter after scalar modular contraction; cusp generators also occur in
+the full scalar ring. The Heisenberg theory remains free at every
+genus.
 \end{remark}
 
-\begin{theorem}[Genus-2 obstruction class for \texorpdfstring{$\mathcal{H}_\kappa$}{H_kappa}; \ClaimStatusConditional]\label{thm:heisenberg-genus2-obstruction}
+\begin{theorem}[Genus-2 obstruction class for \texorpdfstring{$\mathcal{H}_\kappa$}{H kappa}; \ClaimStatusConditional]\label{thm:heisenberg-genus2-obstruction}
 \index{obstruction class!genus-2 Heisenberg}
-The genus-2 bar complex of the Heisenberg algebra has curvature:
+The scalar genus-2 projection of the Heisenberg bar curvature is:
 \begin{equation}\label{eq:heisenberg-genus2-curvature}
-(d^{(2)})^2 = \kappa \cdot \lambda_2
+(d^{(2)}_{\mathrm{scal}})^2 = \kappa \cdot \lambda_2
 \end{equation}
-where $\lambda_2 = c_2(\mathbb{E}) \in H^4(\overline{\mathcal{M}}_2)$ is the second Chern class of the rank-$2$ Hodge bundle $\mathbb{E} \to \overline{\mathcal{M}}_2$. The obstruction class is:
+where $\lambda_2 = c_2(\mathbb{E}) \in
+H^4(\overline{\mathcal{M}}_2)$ is the second Chern class of the
+rank-$2$ Hodge bundle. The obstruction class lands in the Hochschild
+bulk:
 \begin{equation}
-\operatorname{obs}_2(\mathcal{H}_\kappa) = \kappa \cdot \lambda_2 \in H^4(\overline{\mathcal{M}}_2,\, Z(\mathcal{H}_\kappa))
-\quad \end{equation}
-consistent with the genus universality theorem (Theorem~\ref{thm:genus-universality}) with obstruction coefficient $\kappa_{\mathrm{obs}}(\mathcal{H}_\kappa) = \kappa$ (where $\kappa_{\mathrm{obs}}$ on the left denotes the obstruction coefficient of Definition~\ref{def:genus-g-obstruction} and $\kappa$ on the right is the Heisenberg level).
+\operatorname{obs}_2(\mathcal{H}_\kappa)
+= \kappa \cdot \lambda_2
+\in H^4\!\left(\overline{\mathcal{M}}_2,\,
+Z^{\mathrm{der}}_{\mathrm{ch}}(\mathcal{H}_\kappa)\right).
+\end{equation}
+The coefficient is the Heisenberg level, equivalently
+$\kappa_{\mathrm{obs}}(\mathcal{H}_\kappa)=\kappa$ in
+Definition~\ref{def:genus-g-obstruction}.
 \end{theorem}
 
 \begin{proof}
 \emph{Step~1: Period matrix and propagator.}
-Fix a genus-2 surface $\Sigma_2$ with canonical homology basis $(A_1, A_2, B_1, B_2)$ and period matrix $\Omega = \begin{pmatrix} \tau_1 & z \\ z & \tau_2 \end{pmatrix} \in \mathfrak{H}_2$. Let $\omega_1, \omega_2$ be the normalized abelian differentials ($\int_{A_i} \omega_j = \delta_{ij}$, $\int_{B_i} \omega_j = \Omega_{ij}$). The genus-2 propagator is:
+Fix a genus-2 surface $\Sigma_2$ with symplectic homology basis
+$(A_1, A_2, B_1, B_2)$ and period matrix
+$\Omega = \begin{pmatrix} \tau_1 & z \\ z & \tau_2 \end{pmatrix}
+\in \mathfrak{H}_2$. On this local chart let
+$\omega_1,\omega_2$ be the normalized abelian differentials
+($\int_{A_i}\omega_j=\delta_{ij}$,
+$\int_{B_i}\omega_j=\Omega_{ij}$). The genus-2 propagator is:
 \begin{equation}\label{eq:genus2-propagator}
 K^{(2)}(w_1, w_2 | \Omega) = \partial_{w_1} \log E(w_1, w_2; \Omega)
 \end{equation}
@@ -613,29 +868,46 @@ K^{(2)}(w_1 + \delta_{B_j}, w_2) &= K^{(2)}(w_1, w_2) - 2\pi i \cdot \omega_j(w_
 \end{align}
 At genus~1, there was one B-cycle producing a \emph{constant} shift $-2\pi i$ (equation~\eqref{eq:B-cycle-quasi-periodicity}). At genus~2, there are two B-cycles, each producing a shift by the \emph{function-valued} abelian differential $-2\pi i \cdot \omega_j$. The passage from constant to function-valued monodromies is the key new feature at genus~$\geq 2$.
 
-\emph{Step~3: Curvature from two B-cycles.}
-The curvature $(d^{(2)})^2$ arises from the failure of B-cycle periodicity, exactly as at genus~1 (Theorem~\ref{thm:heisenberg-obs}). At genus~2, the two independent B-cycle monodromies contribute:
+\emph{Step~3: Curvature from the B-cycle defect matrix.}
+The curvature arises from the failure of $B$-cycle single-valuedness,
+as in genus~$1$ (Theorem~\ref{thm:heisenberg-obs}). At genus~$2$ the
+two $B$-cycle defects form a local frame-dependent vector
+$(-2\pi i\,\omega_1,-2\pi i\,\omega_2)$. Under a change of symplectic
+basis this vector transforms by the Hodge transition matrix; the
+scalar obstruction is therefore not the exterior product of two
+globally chosen one-forms. It is the invariant determinant of the
+Hodge-curvature matrix:
 \begin{equation}\label{eq:genus2-curvature-product}
-(d^{(2)})^2 = \kappa \cdot (-2\pi i)^2 \cdot [\omega_1 \wedge \omega_2]
+(d^{(2)}_{\mathrm{scal}})^2
+= \kappa \cdot
+\det\!\left(\frac{F_{\mathbb E}}{2\pi i}\right),
 \end{equation}
-where $[\omega_1 \wedge \omega_2]$ denotes the class in $H^4(\overline{\mathcal{M}}_2)$ obtained by the exterior product of the two B-cycle defects. (At genus~1, the single B-cycle defect $-2\pi i$ gave $(d^{(1)})^2 = \kappa \cdot (-2\pi i) \cdot [1] = \kappa \cdot \omega_1 = \kappa \cdot c_1(\mathbb{E})$.)
+where $F_{\mathbb E}$ is the curvature of the Hodge connection on the
+rank-$2$ bundle~$\mathbb E$.
 
 \emph{Step~4: Identification with $\lambda_2$.}
-The abelian differentials $\omega_1, \omega_2$ are global sections of the rank-2 Hodge bundle $\mathbb{E} \to \overline{\mathcal{M}}_2$ (whose fiber over $[\Sigma_2]$ is $H^0(\Sigma_2, \Omega^1_{\Sigma_2})$). Their exterior product $\omega_1 \wedge \omega_2 \in \det(\mathbb{E})$ represents $c_2(\mathbb{E}) = \lambda_2$ via the Chern--Weil correspondence (absorbing the $(-2\pi i)^2$ into the cohomological normalization). Therefore:
+Chern--Weil theory identifies
+$\det(F_{\mathbb E}/2\pi i)$ with
+$c_2(\mathbb E)=\lambda_2$. This globalizes the local monodromy
+calculation without choosing global holomorphic one-forms on the
+Hodge bundle. Therefore:
 \begin{equation}
-(d^{(2)})^2 = \kappa \cdot \lambda_2 \in H^4(\overline{\mathcal{M}}_2)
+(d^{(2)}_{\mathrm{scal}})^2
+= \kappa \cdot \lambda_2 \in H^4(\overline{\mathcal{M}}_2).
 \end{equation}
 \end{proof}
 
 \begin{computation}[Genus-2 free energy via universality]\label{comp:heisenberg-F2-universality}
-\textup{(}UNIFORM-WEIGHT\textup{})
 By Theorem~\ref{thm:genus-universality} with $\kappa(\mathcal{H}_\kappa) = \kappa$ and the Faber--Pandharipande $\lambda_g$ formula:
 \begin{equation}
 F_2(\mathcal{H}_\kappa) = \kappa \cdot \frac{2^3-1}{2^3} \cdot \frac{|B_4|}{4!} = \kappa \cdot \frac{7}{8} \cdot \frac{1/30}{24} = \frac{7\kappa}{5760}
 \end{equation}
 where $B_4 = -1/30$ is the fourth Bernoulli number.
 
-\emph{Consistency check}: At $\kappa = 1$, this gives $F_2 = 7/5760 = 0.001215\ldots$, matching the DMVV result (Theorem~\ref{thm:dmvv-agreement}). In addition:
+\emph{Consistency check}: At $\kappa = 1$, this gives
+$F_2 = 7/5760 = 0.001215\ldots$, matching the
+Faber--Pandharipande scalar formula
+(Theorem~\ref{thm:dmvv-agreement}). In addition:
 \begin{equation}
 \frac{F_2}{F_1} = \frac{7/5760}{1/24} = \frac{7}{240}
 \end{equation}
@@ -676,10 +948,11 @@ structure of the genus expansion
 (Theorem~\ref{thm:heisenberg-all-genus}).
 \end{remark}
 
-\begin{computation}[Partition function at genus 2]\label{comp:partition-genus-two}
-The genus-2 partition function is:
+\begin{computation}[Genus-2 zero-mode determinant]\label{comp:partition-genus-two}
+The genus-2 zero-mode determinant is:
 \begin{equation}
-Z_{\Sigma_2}^{\mathcal{H}} = \frac{1}{\det(\mathrm{Im}\,\Omega)^{1/2}}
+Z_{0,\Sigma_2}^{\mathcal{H}}
+= \det(\operatorname{Im}\Omega)^{-1/2}
 \end{equation}
 where $\Omega$ is the $2 \times 2$ period matrix of $\Sigma_2$.
 This is the \emph{zero-mode contribution} to the full partition
@@ -693,10 +966,21 @@ non-holomorphic partition function involves
 $1/\det(\mathrm{Im}\,\Omega)^{1/2}$ times these oscillator
 contributions.)
 
-The modular weight is:
-\[Z_{\gamma \cdot \Omega}^{\mathcal{H}} = \det(C\Omega + D)^{-1/2}
-\cdot Z_{\Omega}^{\mathcal{H}}\]
-for $\gamma \in Sp_4(\mathbb{Z})$.
+For $\gamma=\bigl(\begin{smallmatrix}A&B\\ C&D\end{smallmatrix}\bigr)
+\in Sp_4(\mathbb Z)$,
+\[
+\operatorname{Im}(\gamma\Omega)
+=(C\Omega+D)^{-T}\operatorname{Im}\Omega\,
+(\overline{C\Omega+D})^{-1},
+\]
+hence
+\[
+Z_{0,\gamma\Omega}^{\mathcal H}
+=|\det(C\Omega+D)|\,Z_{0,\Omega}^{\mathcal H}.
+\]
+This is a non-holomorphic density. It is not a holomorphic Siegel
+modular form of weight $-1/2$, and it is not the oscillator
+determinant.
 \end{computation}
 
 \subsection{\texorpdfstring{General genus $g$: the expansion}{General genus g: the expansion}}
@@ -712,10 +996,14 @@ where $G_{\Omega_g}$ is the genus-$g$ Green function constructed from the prime 
 The geometry of $\Sigma_g$ enters through $G_{\Omega_g}$, whose Laurent expansion near $z_1 = z_2$ takes the form:
 \begin{align}
 g=0: \quad & G(z_1, z_2) = \frac{1}{z_1 - z_2} \quad \text{(chiral propagator)} \\
-g=1: \quad & G_\tau(z_1, z_2) = \zeta_\tau(z_1-z_2) - \frac{\pi^2 E_2(\tau)}{3}\,(z_1-z_2) \\
-g \geq 2: \quad & G_{\Omega_g}(z_1, z_2) = \frac{1}{z_1-z_2} + \sum_{k \geq 0} c_k(\Omega_g)(z_1-z_2)^k \quad \text{(chiral propagator $\partial_z \log E(z_1,z_2)$)}
+g=1: \quad & G_\tau(z_1, z_2) = \zeta_\tau(z_1-z_2) - G_2(\tau)(z_1-z_2) \\
+g \geq 2: \quad & G_{\Omega_g}(z_1, z_2) = \partial_{z_1}\log E(z_1,z_2;\Omega_g).
 \end{align}
-The Eisenstein series and Siegel modular forms appear as \emph{coefficients of the Green function expansion}, encoding the moduli dependence, not as quantum corrections to a perturbative series. The Heisenberg algebra is free: there are no loop corrections.
+For $g=1$ the local coefficients are the lattice Eisenstein series
+$G_{2m}(\tau)$. For $g\ge2$ they are prime-form jet tensors; scalar
+modular forms appear only after choosing global contractions or scalar
+projections. The Heisenberg algebra is free: there are no loop
+corrections.
 \end{theorem}
 
 \begin{proof}
@@ -729,204 +1017,256 @@ the chiral derivative of the prime form on $\Sigma_g$.
 
 The full partition function sums over genera: $Z = \sum_{g \geq 0} \hbar^{2g-2} Z_g$. For the Heisenberg algebra (a free theory), each genus-$g$ contribution is exact; it is \emph{not} a perturbative loop correction. Rather, $Z_g$ encodes the propagator on $\Sigma_g$ through the period matrix $\Omega_g$.
 
-\emph{Step~2: Modular weight.}
+\emph{Step~2: Local coefficients.}
 
-At genus $g$, the correlation function is a modular form whose weight is determined by the number of insertions and the genus.
+At genus~$1$ the elliptic function is translation-invariant, so the
+Taylor coefficients are scalar functions of~$\tau$:
+$G_2(\tau),G_4(\tau),\ldots$. At genus~$g\ge2$ there is no
+translation-invariant coordinate. A Laurent coefficient of
+$\partial\log E$ is a section of a jet bundle over the universal
+curve, constructed from the Bergman projective connection and its
+covariant derivatives. It becomes a scalar modular form only after a
+specified contraction or integration.
 
-\emph{Step~3: Modular constraints on expansion coefficients.}
+\emph{Step~3: Scalar projections.}
 
-The coefficient $c_k(\Omega_g)$ in the Laurent expansion
-$G_{\Omega_g}(z_1,z_2) = (z_1-z_2)^{-1} + \sum_{k\geq 0} c_k(\Omega_g)(z_1-z_2)^k$
-is a function of the period matrix $\Omega_g \in \mathcal{H}_g$, holomorphic on the Siegel upper half-space. Since the partition function must transform as a section of a line bundle on $\mathcal{M}_g$ (i.e.\ as a Siegel modular form), each coefficient $c_k(\Omega_g)$ must be a Siegel modular form of the appropriate weight under $Sp_{2g}(\mathbb{Z})$. The weight is fixed by the requirement that the product $(z_1-z_2)^{-1} \cdot c_k(\Omega_g)(z_1-z_2)^k$ be an $(r, s)$-form of total weight zero on $\Sigma_g \times \Sigma_g$; each additional factor of $(z_1-z_2)$ has conformal weight $(1,0)$, so $c_k$ must have modular weight $k+1$.
-
-\emph{Step~4: Generation by explicit modular forms.}
-
-For $g = 1$: The graded ring $\bigoplus_k M_k(SL_2(\mathbb{Z}))$ is generated by $E_4$ and $E_6$; by Eisenstein's theorem, every even-weight modular form is a polynomial in these two. The quasi-Eisenstein series $E_2$ appears in $G_\tau$ at weight 2 as the unique quasi-modular form (Theorem~\ref{thm:eta-appearance}).
-
-For $g = 2$: The ring of Siegel modular forms for $Sp_4(\mathbb{Z})$ is classically known (Igusa \cite{Igusa62}): it is generated by cusp forms $\chi_{10}, \chi_{12}$ and Eisenstein series $E_4, E_6$ (of degrees 10, 12, 4, 6 respectively). The genus-2 Green function expansion has coefficients in this ring, as verified explicitly in Theorem~\ref{thm:heisenberg-genus-two}.
-
-For general $g$: The structure of the Siegel modular forms ring $M_*(\mathrm{Sp}_{2g}(\mathbb{Z}))$ is finitely presented for $g \leq 3$ by classical results \cite{Freitag83}, and the generators of the ring are known explicitly in those cases. The concrete expansion claimed in this theorem is therefore \emph{complete and rigorous for $g \leq 3$}. For $g \geq 4$, the ring of Siegel modular forms is not fully described, and the assertion about the coefficient ring means that the expansion coefficients lie in the finitely generated subalgebra of $M_*(\mathrm{Sp}_{2g}(\mathbb{Z}))$ determined by the modular weight constraints of Step~3.
+The scalar genus tower used by Theorem~D is not the list of local
+prime-form coefficients. It is the tautological projection
+\[
+F_g(\cH_\kappa)=\kappa\,\lambda_g^{\mathrm{FP}}.
+\]
+For $g=1$ its holomorphic derivative is proportional to
+$\kappa E_2(\tau)$, with the anomaly described in
+Remark~\ref{rem:E2-holomorphic-anomaly}. For $g=2$, scalar
+period-matrix functions obtained from global contractions live in
+Igusa's Siegel modular-form ring. No statement here asserts a
+universal first coefficient $E_{2g}^{(g)}$ for all $g$.
 \end{proof}
 
-\subsection{Modular weight computations for each genus}
+\subsection{Kernel coefficients and scalar modular projections}
 \label{subsec:modular-weights-all-genus}
 
 \begin{table}[ht]
 \centering
-\caption{Modular weights at each genus (propagator pole order is $1$ at all genera)}
+\caption{Heisenberg kernel normalizations and scalar modular projections}
 \label{tab:modular-weights}
 \begin{tabular}{|c|c|c|}
 \hline
-\textbf{Genus $g$} & \textbf{Leading Eisenstein} & \textbf{Weight} \\
+\textbf{Genus $g$} & \textbf{Kernel coefficient} & \textbf{Scalar projection} \\
 \hline
-0 & (none) & 0 \\
+0 & $1/z$ & none \\
 \hline
-1 & $E_2$ (quasi-modular) & 2 \\
+1 & $G_2=\pi^2E_2/3$; $G_{2m}=2\zeta(2m)E_{2m}$ & $E_2\mapsto \widehat{E}_2$ anomaly \\
 \hline
-2 & $E_4, E_6$ (Siegel) & 4, 6 \\
+2 & prime-form jet tensors & Igusa ring: $E_4^{(2)},E_6^{(2)},\chi_{10},\chi_{12}$ \\
 \hline
-3 & $E_6, E_8, E_{10}$ (Siegel) & 6, 8, 10 \\
+3 & prime-form jet tensors & scalar Siegel forms after contraction \\
 \hline
-$g \leq 3$ & $E_{2g}, E_{2g+2}, \ldots, E_{4g-2}$ & $2g, 2g+2, \ldots, 4g-2$ \\
+$g\ge4$ & prime-form jet tensors & no universal leading Eisenstein claim \\
 \hline
 \end{tabular}
 \end{table}
 
-\begin{proposition}[Modular weight formula \cite{Igusa62}; \ClaimStatusProvedElsewhere]\label{prop:modular-weight-formula}
-At genus $g$, the Green function expansion involves Siegel Eisenstein series
-$E_k^{(g)}(\Omega)$ for even weights $k > g+1$ (by Klingen's convergence
-bound). For $g \leq 3$, the leading (lowest weight) series contributing to the propagator
-expansion has weight~$2g$; for $g \geq 4$, the minimum converging even weight is $\lceil g+2 \rceil_{\mathrm{even}}$, which is strictly less than $2g$. The ring
-of Siegel modular forms at genus $g \geq 3$ is more complex than the
-Eisenstein series alone; for $g = 2$, the full ring includes cusp forms
-$\chi_{10}$ and $\chi_{12}$ (Igusa's generators) in addition to Eisenstein
-series.
-
+\begin{proposition}[Eisenstein normalization and scalar scope
+\cite{Igusa62,Klingen67}; \ClaimStatusProvedElsewhere]\label{prop:modular-weight-formula}
+The following statements are the scalar facts used in this example.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item At genus~$1$, the simple-pole kernel has coefficients
+$G_2=\pi^2E_2/3$ and $G_{2m}=2\zeta(2m)E_{2m}$ for $m\ge2$.
+Only $E_2$ is quasi-modular.
+\item At genus~$2$, scalar modular contractions of prime-form jet
+tensors lie in Igusa's ring generated by
+$E_4^{(2)},E_6^{(2)},\chi_{10},\chi_{12}$.
+\item Klingen's convergence bound says that the Siegel Eisenstein
+series $E_k^{(g)}$ converges absolutely for even $k>g+1$. This is a
+statement about the existence of scalar Eisenstein series, not a
+statement that the first local coefficient of $\partial\log E$ is
+$E_{\lceil g+2\rceil_{\mathrm{even}}}^{(g)}$.
+\end{enumerate}
 \end{proposition}
 
 \begin{proof}
-The Green function on a genus-$g$ surface expands in Siegel modular forms of $\mathrm{Sp}(2g, \mathbb{Z})$. The period matrix $\Omega \in \mathfrak{H}_g$ has $g(g+1)/2$ independent entries. By Klingen's convergence theorem, $E_{k}^{(g)}(\Omega)$ converges absolutely for even $k > g+1$. For $g \leq 3$, the minimum converging even weight is $2g$ (since $g+2 \leq 2g$ when $g \geq 2$, and $g=1$ uses the quasi-modular $E_2$). For $g \geq 4$, the minimum converging even weight drops below $2g$: at genus~4, $E_6^{(4)}$ already converges (weight $6 > 5 = g+1$), though $2g = 8$. Whether the Green function expansion at genus $g \geq 4$ genuinely begins at weight~$2g$ (for reasons beyond convergence) is a question we do not address here.
+Part~(i) is the standard Laurent expansion of
+$\zeta_\tau(z)-G_2(\tau)z$. Part~(ii) is Igusa's description of the
+genus-$2$ scalar Siegel modular-form ring. Part~(iii) is Klingen's
+convergence theorem for Siegel Eisenstein series. The distinction
+between local jet tensors and scalar modular forms is forced by the
+coordinate dependence of the prime-form expansion.
 \end{proof}
 
 \begin{remark}[Scope]
-Every claim in this proposition is established in the literature:
-(i)~Klingen's convergence bound for Siegel Eisenstein series
-(\ClaimStatusProvedElsewhere, \cite{Klingen67});
-(ii)~the leading weight $2g$ follows from~(i);
-(iii)~the structure of the ring of Siegel modular forms at genus~$2$
-(Igusa's generators $\chi_{10}, \chi_{12}$) is classical
-(\ClaimStatusProvedElsewhere, Igusa \cite{Igusa62}).
-The \emph{precise expansion coefficients} at genus $g \geq 3$
-(beyond what is stated here) depend on open problems in the
-theory of Siegel modular forms; these are not claimed by this
-proposition.
+The propagator pole order is always one in the bar kernel. The
+Eisenstein hierarchy is exact in genus~$1$ because the elliptic curve
+is a group. In genus~$g\ge2$, the exact object is the prime-form
+kernel; scalar Siegel modular forms enter only after global
+projection.
 \end{remark}
 
 \subsection{Eta function in partition functions}
 \label{subsec:eta-partition-functions}
 
-\begin{theorem}[Partition function and determinant regularization; \ClaimStatusProvedHere]\label{thm:eta-appearance}
-The partition function of a free non-compact boson on a genus-$g$ surface $\Sigma_g$ is:
+\begin{theorem}[Partition-function normalizations and determinant line; \ClaimStatusProvedHere]\label{thm:eta-appearance}
+Let $\mathcal H_\kappa^{\oplus d}$ be the rank-$d$ Heisenberg vertex
+algebra, with level $\kappa$ used to normalize the current OPE. Its
+chiral oscillator character is
 \begin{equation}
-Z_{\Sigma_g}^{\mathcal{H}} = \frac{1}{\det(\mathrm{Im}\,\Omega_g)^{1/2}}
+\chi_{\mathcal H_\kappa^{\oplus d}}(\tau)
+=\operatorname{Tr}_{\mathsf F_d}\!\left(q^{L_0-d/24}\right)
+=\eta(\tau)^{-d}.
 \end{equation}
-where $\Omega_g$ is the period matrix (consistent with Computation~\ref{comp:partition-genus-two}).
+The level $\kappa$ changes the normalization of the current two-point
+function and hence the ordered-bar scalar $\kappa(\mathcal H_\kappa)$;
+it does not change the number of oscillator modes in the Fock trace.
 
-At genus~$1$, the Dedekind eta function appears via the operator formalism: $\mathrm{Tr}(q^{L_0 - c/24}) = 1/\eta(\tau)$ (holomorphic partition function).
-
-The eta function provides the \emph{determinant regularization}:
-\[|\eta(\tau)|^{-2} = q^{-1/24}\bar{q}^{-1/24} \cdot \det'(\bar{\partial}_0)^{-1} \cdot (\mathrm{Im}\,\tau)^{1/2}\]
-where $\det'(\bar{\partial}_0)$ is the zeta-regularized determinant of the
-scalar Laplacian. (The \emph{holomorphic} partition function $1/\eta(\tau)$
-captures the chiral half; the full partition function involves $|\eta|^{-2}$
-times a non-holomorphic factor from the zero-mode integration.)
+For the non-chiral rank-one free boson on the flat elliptic curve
+$E_\tau$, after fixing the target-volume convention, the modular
+factor is
+\begin{equation}
+Z_{E_\tau}^{\mathrm{bos}}
+=C_{\mathrm{vol}}\,
+(\operatorname{Im}\tau)^{-1/2}|\eta(\tau)|^{-2}.
+\end{equation}
+In the standard scalar Laplacian normalization behind the
+Kronecker-limit formula,
+\begin{equation}
+(\det{}'_{\zeta}\Delta_{E_\tau})^{-1/2}
+=C_\Delta'\,
+(\operatorname{Im}\tau)^{-1}|\eta(\tau)|^{-2}.
+\end{equation}
+The missing factor $(\operatorname{Im}\tau)^{1/2}$ is the normalized
+constant-mode measure. Thus the combined zero-mode and oscillator
+factor is
+\begin{equation}
+(\operatorname{Im}\tau)^{1/2}
+(\det{}'_{\zeta}\Delta_{E_\tau})^{-1/2}
+=C_\Delta\,
+(\operatorname{Im}\tau)^{-1/2}|\eta(\tau)|^{-2},
+\end{equation}
+with $C_{\mathrm{vol}}$, $C_\Delta'$, and $C_\Delta$ depending only
+on the chosen metric and volume normalizations. At genus $g$, the
+zero-mode period normalization and the oscillator contribution combine
+as the Quillen norm of the determinant line of $\bar\partial$ on
+$\Sigma_g$, coupled to the period matrix $\Omega_g$. This combined
+analytic datum is not the product
+$\prod_i\eta(\Omega_{ii})^{-1}$ except in the separating degeneration
+where $\Sigma_g$ breaks into elliptic components.
 \end{theorem}
 
 \begin{proof}
-\emph{Step~1: Fock space.}
+The rank-$d$ Heisenberg Fock space is a tensor product of $d$ copies of
+the polynomial algebra generated by $a_{-n}$, $n>0$. Each mode
+contributes $(1-q^n)^{-d}$, and the vacuum-energy shift gives
+\[
+\operatorname{Tr}_{\mathsf F_d}\!\left(q^{L_0-d/24}\right)
+=q^{-d/24}\prod_{n\ge1}(1-q^n)^{-d}
+=\eta(\tau)^{-d}.
+\]
+The parameter $\kappa$ enters the OPE
+$J(z)J(w)\sim \kappa(z-w)^{-2}$; rescaling the current changes this
+two-point normalization but not the oscillator counting.
 
-The Heisenberg Fock space at genus $g$ has vacuum $|0\rangle$ annihilated by $a_n$
-for $n > 0$.
-
-\emph{Step~2: Trace computation.}
-
-The partition function is:
-\[Z_g = \text{Tr}_{F_g} q^{L_0 - c/24}\]
-
-For each oscillator mode $a_n$ with $n > 0$, there is a contribution:
-\[\prod_{n=1}^{\infty} \frac{1}{1 - q^n} = q^{1/24}\eta(\tau)^{-1}\]
-
-\emph{Step~3: Genus $g$ generalization.}
-
-At genus~$g$, the partition function depends on the full period matrix
-$\Omega_g \in \mathfrak{H}_g$ (a $g \times g$ symmetric matrix with
-$g(g+1)/2$ independent entries), \emph{not} merely on its diagonal entries
-$\tau_i = \Omega_{ii}$. The result is:
-\[Z_g = \frac{1}{\det(\mathrm{Im}\,\Omega_g)^{1/2}}\]
-which reduces to $1/(\mathrm{Im}\,\tau)^{1/2}$ at genus~$1$ (compatible
-with $|\eta(\tau)|^{-2} \cdot q^{1/24}\bar{q}^{1/24}$ after removing the
-holomorphic anomaly). The factorization
-$Z_g \propto \prod_{i=1}^g \eta(\tau_i)^{-1}$ holds only in the
-degeneration limit where $\Sigma_g$ pinches into $g$ copies of
-genus-$1$ surfaces.
+For the non-chiral free boson, the Kronecker-limit formula identifies
+the zeta-regularized scalar Laplacian determinant on $E_\tau$ with
+the factor
+$C(\operatorname{Im}\tau)^2|\eta(\tau)|^4$.  Taking the inverse square
+root gives
+$C'(\operatorname{Im}\tau)^{-1}|\eta(\tau)|^{-2}$. The normalized
+constant-mode integration contributes
+$(\operatorname{Im}\tau)^{1/2}$, so the full non-chiral rank-one
+modular factor is
+$(\operatorname{Im}\tau)^{-1/2}|\eta(\tau)|^{-2}$, up to the displayed
+constant. For higher genus the same construction is the Quillen norm
+of $\det R\Gamma(\Sigma_g,\mathcal O_{\Sigma_g})$, coupled to the
+period matrix. Since $\Omega_g$ has off-diagonal periods, no product
+of diagonal eta functions is invariantly defined away from the
+separating boundary.
 \end{proof}
 
-\subsection{Comparison with physics literature (Dijkgraaf et al.)}
+\subsection{Faber--Pandharipande scalar free energy and DMVV separation}
 \label{subsec:physics-comparison}
 
-\begin{theorem}[Agreement with Dijkgraaf--Moore--Verlinde--Verlinde; \ClaimStatusProvedHere]\label{thm:dmvv-agreement}
+\begin{theorem}[Faber--Pandharipande scalar free energy; \ClaimStatusProvedHere]\label{thm:dmvv-agreement}
 \index{Mumford formula}
 \index{free energy!genus expansion}
-These formulas match the results of Dijkgraaf et al. \cite{DMVV} for topological
-field theory partition functions.
-
-Specifically, for the Heisenberg algebra (free boson) at level $\kappa = 1$, the free energy at genus $g$ is :
+For the Heisenberg algebra at ordered-bar scalar
+$\kappa(\mathcal H_\kappa)=\kappa$, the scalar genus-$g$ free energy
+is
 \begin{equation}
-F_g^{\text{Heisenberg}} = \int_{\overline{\mathcal{M}}_{g,1}} \psi_1^{2g-2}\,\lambda_g
-= \frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!} \qquad \textup{(}UNIFORM-WEIGHT\textup{})
+F_g(\mathcal H_\kappa)
+=\kappa\int_{\overline{\mathcal M}_{g,1}}\psi_1^{2g-2}\lambda_g
+=\kappa\,
+\frac{2^{2g-1}-1}{2^{2g-1}}\,
+\frac{|B_{2g}|}{(2g)!}.
 \end{equation}
-where $\psi_1$ is the cotangent line class at the marked point and $\lambda_g = c_g(\mathbb{E})$ is the top Chern class of the Hodge bundle (the integrand has degree $(2g-2)+g = 3g-2 = \dim\overline{\mathcal{M}}_{g,1}$, giving dimensional consistency). This is the Faber--Pandharipande $\lambda_g$ formula \cite{FP03}.
+Here $\psi_1$ is the cotangent line class at the marked point and
+$\lambda_g=c_g(\mathbb E)$ is the top Chern class of the Hodge bundle.
+The integrand has degree $(2g-2)+g=3g-2=\dim\overline{\mathcal M}_{g,1}$.
+For $\kappa=1$ the first values are
+\begin{equation}
+F_1=\frac1{24},\qquad
+F_2=\frac7{5760},\qquad
+F_3=\frac{31}{967680}.
+\end{equation}
+This is the Faber--Pandharipande $\lambda_g$ formula \cite{FP03}.
+The Dijkgraaf--Moore--Verlinde--Verlinde formula \cite{DMVV} concerns
+elliptic genera of symmetric products and their Hecke expansion. It is
+a different construction and is not a proof of the ordered-bar scalar
+$\kappa$ or of the Hodge integral above.
 \end{theorem}
 
-\begin{proof}[Verification]
-
-\emph{Step~1: DMVV formula as Hodge integral.}
-
-Dijkgraaf et al.\ compute the free boson free energy as an integral over $\overline{\mathcal{M}}_{g,1}$ (the marked point records the vertex operator insertion):
-\[F_g = \int_{\overline{\mathcal{M}}_{g,1}} \psi_1^{2g-2}\,\lambda_g\]
-where $\lambda_g = c_g(\mathbb{E})$ is the top Chern class of the Hodge bundle and $\psi_1$ is the cotangent line class at the marked point. The integrand has degree $(2g-2) + g = 3g-2 = \dim \overline{\mathcal{M}}_{g,1}$, confirming dimensional consistency.
-
-\emph{Step~2: Hodge integral evaluation.}
-
-The $\lambda_g$-formula (Faber--Pandharipande \cite{FP03}) evaluates this Hodge integral:
-\[\int_{\overline{\mathcal{M}}_{g,1}} \psi_1^{2g-2}\,\lambda_g = \frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!}\]
-
-\emph{Step~3: Explicit values.}
-
-\begin{align}
-g=1: \quad F_1 &= \frac{1}{2} \cdot \frac{1/6}{2}
-= \frac{1}{24} \quad \checkmark \\
-g=2: \quad F_2 &= \frac{7}{8} \cdot \frac{1/30}{24}
-= \frac{7}{5760} \quad \checkmark \\
-g=3: \quad F_3 &= \frac{31}{32} \cdot \frac{1/42}{720}
-= \frac{31}{967680} \quad \checkmark
-\end{align}
-
-These are the Hodge integral evaluations of Faber--Pandharipande~\cite{FP03}.
+\begin{proof}
+The marked point records the scalar insertion in the topological
+gravity projection. Thus the relevant tautological class is
+$\psi_1^{2g-2}\lambda_g$, whose degree equals the complex dimension
+$3g-2$ of $\overline{\mathcal M}_{g,1}$. Faber--Pandharipande
+\cite{FP03} evaluate the resulting Hodge integral:
+\[
+\int_{\overline{\mathcal M}_{g,1}}\psi_1^{2g-2}\lambda_g
+=
+\frac{2^{2g-1}-1}{2^{2g-1}}\,
+\frac{|B_{2g}|}{(2g)!}.
+\]
+Multiplication by the ordered-bar scalar $\kappa(\mathcal H_\kappa)$
+is the Heisenberg specialization of Theorem~\ref{thm:genus-universality}.
+Substituting $B_2=1/6$, $B_4=-1/30$, and $B_6=1/42$ gives the three
+values displayed in the statement. The DMVV theorem is not used in
+this calculation; its symmetric-product Hecke variables live in a
+separate elliptic-genus problem.
 \end{proof}
 
-\begin{remark}[Physical interpretation]\label{rem:witten-perspective}
-\textup{(}LOCAL: scalar lane\textup{})
-In topological gravity, $F_g$ is the genus-$g$ free energy and $\lambda_g$ obstructs trivializing the tangent bundle of moduli space. Bernoulli numbers arise from the asymptotic expansion of the partition function.
+\begin{remark}[Scalar topological-gravity projection]\label{rem:witten-perspective}
+In the scalar topological-gravity projection, $F_g$ is the
+genus-$g$ free energy and $\lambda_g$ is the Hodge obstruction class.
+Bernoulli numbers enter through the Faber--Pandharipande
+$\lambda_g$ evaluation, equivalently through the asymptotic expansion
+of the free-boson determinant.
 \end{remark}
 
-\subsection{Summary}
+\subsection{Genus carriers}
 \label{subsec:heisenberg-dictionary-complete}
 
 \begin{table}[ht]
 \centering
-\caption{Heisenberg genus expansion}
+\caption{Heisenberg genus carriers}
 \label{tab:heisenberg-complete-dictionary}
 \begin{tabular}{|l|l|l|}
 \hline
 \textbf{Genus} & \textbf{Modular forms} & \textbf{Interpretation} \\
 \hline
-$g=0$ & (none) & Tree level, classical \\
+$g=0$ & (none) & rational bar kernel \\
 \hline
-$g=1$ & $E_2(\tau)$, $\eta(\tau)$ & One loop, central charge \\
+$g=1$ & $E_2(\tau)$, $\eta(\tau)$ & elliptic kernel and determinant \\
 \hline
-$g=2$ & $E_4(\Omega)$, $E_6(\Omega)$ & Two loops, quantum OPE \\
+$g=2$ & $E_4^{(2)},E_6^{(2)},\chi_{10},\chi_{12}$ after scalar projection & prime-form kernel \\
 \hline
-$g=3$ & $E_6, E_8, E_{10}$ & Three loops \\
+$g=3$ & scalar Siegel forms after contraction & prime-form kernel \\
 \hline
-$g \geq 4$ & $E_{2g}, \ldots, E_{4g-2}$ & Multi-loop \\
+$g \geq 4$ & no universal leading Eisenstein claim & prime-form kernel \\
 \hline
 \end{tabular}
 \end{table}
 
-% [Summary block removed: the content is covered by the preceding theorems and table.]
-
-\subsection{Computational tables: explicit coefficients}
+\subsection{Explicit coefficient checks}
 \label{subsec:explicit-coefficients-tables}
 
 \begin{table}[ht]
@@ -990,8 +1330,8 @@ $g$ & $F_g$ (exact) & $F_g$ (decimal) \\
 \label{sec:higher-rank-heisenberg-eisenstein}
 \index{Heisenberg algebra!higher rank!Eisenstein expansion}
 
-For the rank-$d$ Heisenberg algebra $\mathcal{H}_\kappa^{\oplus d}$
-(corresponding to $d$ free bosons at level $\kappa$), the genus
+For the rank-$d$ Heisenberg algebra $\mathcal{H}_\ell^{\oplus d}$
+(corresponding to $d$ free bosons at common level $\ell$), the genus
 expansion inherits a factored structure from the tensor product.
 
 \subsection{\texorpdfstring{Rank-$d$ bar complex at genus 1}{Rank-d bar complex at genus 1}}
@@ -1002,19 +1342,26 @@ expansion inherits a factored structure from the tensor product.
 
 The rank-$d$ Heisenberg algebra has generators
 $a^i(z)$ ($i = 1, \ldots, d$) with OPE
-$a^i(z) a^j(w) \sim \kappa \delta^{ij}/(z-w)^2$.
-The stress tensor is $T = \frac{1}{2\kappa} \sum_{i=1}^d
+$a^i(z) a^j(w) \sim \ell \delta^{ij}/(z-w)^2$.
+The stress tensor is $T = \frac{1}{2\ell} \sum_{i=1}^d
 \normord{a^i a^i}$, giving central charge $c = d$.
 
 \emph{Genus-1 two-point function.}
 On $E_\tau$, the two-point function is:
 \[
 \langle a^i(z_1) a^j(z_2) \rangle_{E_\tau}
-= \kappa \delta^{ij} \cdot \widetilde{G}_\tau(z_1 - z_2)
+= \ell \delta^{ij} \cdot \widetilde{G}_\tau(z_1 - z_2)
 \]
 where $\widetilde{G}_\tau(z) = \wp_\tau(z) + \frac{\pi^2}{3} E_2(\tau)$
-is the regularized Weierstrass function (with the Eisenstein
-correction ensuring modular covariance). Note: $\widetilde{G}_\tau$ has a double pole at $z=0$ and equals $-\partial_z G_\tau(z)$, where $G_\tau$ is the simple-pole Green function of Theorem~\ref{thm:heisenberg-genus-one-complete}. To avoid confusion: throughout this chapter, $G_\tau$ always denotes the simple-pole propagator (Section~\ref{subsec:heisenberg-genus-one-complete}), while $\widetilde{G}_\tau$ denotes its negative derivative, the double-pole correlator; the two should not be conflated.
+is the holomorphic regularized current kernel. It is a quasi-Jacobi
+carrier; modular descent replaces $E_2$ by
+$\widehat E_2=E_2-3/(\pi\operatorname{Im}\tau)$. The kernel
+$\widetilde{G}_\tau$ has a double pole at $z=0$ and equals
+$-\partial_z G_\tau(z)$, where $G_\tau$ is the simple-pole bar kernel
+of Theorem~\ref{thm:heisenberg-genus-one-complete}. Throughout this
+chapter, $G_\tau$ denotes the simple-pole ordered-bar propagator and
+$\widetilde{G}_\tau$ denotes its negative derivative, the
+double-pole current correlator.
 
 \emph{Curvature from first principles.}
 We derive the genus-1 curvature by explicit residue computation,
@@ -1031,13 +1378,13 @@ The bar differential extracts the OPE by taking the residue
 at $z_1 = z_2$:
 \begin{equation}\label{eq:heisenberg-bar-diff-genus1}
 \dfib(a^i \boxtimes a^j \cdot \eta_{12}^{\mathrm{ell}})
-= \operatorname{Res}_{z_1 = z_2}
-\!\Bigl[\frac{\kappa\delta^{ij}}{(z_1-z_2)^2}
+= \operatorname{Coeff}_{d\log(z_1-z_2)}
+\!\Bigl[\frac{\ell\delta^{ij}\,d(z_1-z_2)}{(z_1-z_2)^2}
 \cdot K^{(1)}(z_1 - z_2|\tau)\Bigr]
 \cdot |0\rangle.
 \end{equation}
 Since the Heisenberg OPE is \emph{purely} double-pole
-($a^i(z)a^j(w) \sim \kappa\delta^{ij}/(z-w)^2$, with no
+($a^i(z)a^j(w) \sim \ell\delta^{ij}/(z-w)^2$, with no
 simple-pole term), the bar differential on degree-$1$ elements
 produces only a vacuum contribution: there is no
 current-valued output as in the Kac--Moody case.
@@ -1063,37 +1410,31 @@ amounts to: (i)~extract the OPE
 residue (Step~1), then (ii)~contract the result with
 a second propagator and take the $B$-cycle defect.
 For the Heisenberg algebra, the only OPE contribution
-is the double pole $\kappa\delta^{ij}/(z-w)^2$.
+is the double pole $\ell\delta^{ij}/(z-w)^2$.
 The Laurent expansion of $K^{(1)}(z|\tau)$ near $z = 0$
 is:
 \[
 K^{(1)}(z|\tau) = \frac{1}{z}
 - \frac{\pi^2}{3}E_2(\tau)\,z + O(z^3).
 \]
-The residue
-$\operatorname{Res}_{z=0}\!\bigl[\kappa\delta^{ij}/z^2
-\cdot K^{(1)}(z|\tau)\bigr]$
-extracts the coefficient of $1/z$ in
-$K^{(1)}(z|\tau)/z^2 = 1/z^3 + O(1/z)$:
+The local collision extraction is the same $d\log$ calculation as
+in Proposition~\ref{prop:heisenberg-r-matrix}:
 \[
-\operatorname{Res}_{z=0}
-\frac{\kappa\delta^{ij}}{z^2}\cdot
-\Bigl(\frac{1}{z} + O(z)\Bigr)
-= \kappa\delta^{ij}\cdot
-\operatorname{Res}_{z=0}\frac{1}{z^3} = 0
+\ell\delta^{ij}z^{-2}\,dz
+=\ell\delta^{ij}z^{-1}\,d\log z .
 \]
-at genus~$0$ (where the propagator is exact).
-At genus~$1$, the curvature arises \emph{not} from the
-local residue but from the \emph{global monodromy defect}:
+It produces the binary scalar residue
+$r^{ij}(z)=\ell\delta^{ij}/z$. The genus-$1$ curvature is not a
+new local residue. It is the global monodromy defect:
 when $\dfib$ is squared, the $B$-cycle shift
 $-2\pi i$ acts on the vacuum coefficient
-$\kappa\delta^{ij}\cdot|0\rangle$ from the first
+$\ell\delta^{ij}\cdot|0\rangle$ from the first
 application of $\dfib$.
 Concretely, the Quillen anomaly formula gives:
 \begin{equation}\label{eq:heisenberg-dfib-squared}
 \dfib^{\,2}(a^i \boxtimes a^j
 \cdot \eta_{12}^{\mathrm{ell}})
-= \kappa\delta^{ij}\cdot\omega_1
+= \ell\delta^{ij}\cdot\omega_1
 \end{equation}
 where $\omega_1 = c_1(\mathbb{E})
 \in H^2(\overline{\mathcal{M}}_{1,1})$
@@ -1105,38 +1446,43 @@ The genus-1 curvature of the \emph{full} rank-$d$
 algebra is obtained by summing over the diagonal
 self-contraction of each generator:
 \begin{align}
-m_0^{(ij)} &= \kappa\delta^{ij}\cdot\omega_1,
+m_0^{(ij)} &= \ell\delta^{ij}\cdot\omega_1,
 \label{eq:rank-d-curvature}
 \\
 m_0 &= \sum_{i=1}^d m_0^{(ii)}
-= d\kappa\cdot\omega_1.
+= d\ell\cdot\omega_1.
 \end{align}
 The obstruction coefficient is the scalar
 prefactor:
 \begin{equation}\label{eq:heisenberg-kappa-formula}
-\boxed{\;\kappa(\mathcal{H}_\kappa^{\oplus d})
-= d\kappa.\;}
+\boxed{\;\kappa(\mathcal{H}_\ell^{\oplus d})
+= d\ell.\;}
 \end{equation}
 
 \emph{Step~5: Consistency checks.}
 \begin{enumerate}[label=(\roman*)]
 \item \emph{Central charge comparison.}
-At $\kappa = 1$: $\kappa(\mathcal{H}_1^{\oplus d}) = d = c$.
-The obstruction coefficient equals the central charge.
+At level $\ell = 1$:
+$\kappa(\mathcal{H}_1^{\oplus d}) = d = c$.
+At general level the central charge remains $c=d$, while the
+programme invariant is $d\ell$.
 \item \emph{Additivity.}
-$\kappa(\mathcal{H}_\kappa^{\oplus d_1}
-\oplus \mathcal{H}_\kappa^{\oplus d_2})
-= (d_1 + d_2)\kappa
-= \kappa(\mathcal{H}_\kappa^{\oplus d_1})
-+ \kappa(\mathcal{H}_\kappa^{\oplus d_2})$,
+$\kappa(\mathcal{H}_\ell^{\oplus d_1}
+\oplus \mathcal{H}_\ell^{\oplus d_2})
+= (d_1 + d_2)\ell
+= \kappa(\mathcal{H}_\ell^{\oplus d_1})
++ \kappa(\mathcal{H}_\ell^{\oplus d_2})$,
 confirming the additivity of
 Theorem~\ref{thm:modular-characteristic}(iii).
 \item \emph{Koszul anti-symmetry.}
-The Koszul dual $(\mathcal{H}_\kappa)^!
+The Koszul dual $(\mathcal{H}_\ell)^!
 = \operatorname{Sym}^{\mathrm{ch}}(V^*)$
-(not $\mathcal{H}_{-\kappa}$; see Remark~\ref{rem:bosonization-not-koszul}); it has modular characteristic $-\kappa$, giving
-$\kappa' = d(-\kappa) = -d\kappa = -\kappa$,
-so for the Heisenberg free-field family the pairing is $\kappa_{\mathrm{Heis}} + \kappa_{\mathrm{Heis}}' = 0$ \item \emph{Gaussian shadow termination.}
+(not $\mathcal{H}_{-\ell}$; see
+Remark~\ref{rem:bosonization-not-koszul}); it has modular
+characteristic $-\ell$ per generator, hence total characteristic
+$-d\ell$. The free-field scalar pairing is
+$d\ell+(-d\ell)=0$.
+\item \emph{Gaussian shadow termination.}
 Since the Heisenberg OPE has no simple pole,
 the self-contraction loop producing the curvature
 is the \emph{only} contribution to the shadow obstruction tower.
@@ -1145,15 +1491,15 @@ $\mathfrak{Q} = 0$), confirming shadow depth
 $r_{\max} = 2$ (class~G).
 \end{enumerate}
 
-This completes the first-principles derivation of
-$\kappa(\mathcal{H}_\kappa^{\oplus d}) = d\kappa$
+The first-principles residue and monodromy calculation gives
+$\kappa(\mathcal{H}_\ell^{\oplus d}) = d\ell$
 (Theorem~\ref{thm:heisenberg-obs}).
 
 \emph{Comparison table.}
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
 \begin{tabular}{c|ccccccc}
-$d$ & $c$ & $\kappa$ & $F_1$ & $F_2$ & $F_3$ & $F_4$ & $F_5$ \\
+$d$ & $c$ & $\kappa(\mathcal H_1^{\oplus d})$ & $F_1$ & $F_2$ & $F_3$ & $F_4$ & $F_5$ \\
 \hline
 $1$ & $1$ & $1$ & $1/24$ & $7/5760$ & $31/967680$ & $127/154828800$ & $73/3503554560$ \\
 $2$ & $2$ & $2$ & $1/12$ & $7/2880$ & $31/483840$ & $127/77414400$ & $73/1751777280$ \\
@@ -1164,13 +1510,11 @@ $26$ & $26$ & $26$ & $13/12$ & $91/2880$ & $403/483840$ & $1651/77414400$ & $949
 \end{tabular}
 \end{center}
 
-The case $d = 24$ gives $F_1 = 1$ (an integer: the unique level at
-which the genus-1 obstruction is a unit). This is \emph{not}
-coincidental: $d = 24$ corresponds to the Leech lattice VOA, and
-the integrality of $F_1$ reflects the Leech lattice
-being the unique even unimodular lattice of rank~24 with no roots.
+At level~$1$, the case $d = 24$ gives $F_1 = 1$. This is the
+Leech-lattice normalization of the rank-$24$ free-boson theory.
 
-The case $d = 26$ gives $\kappa = 26$, and the Virasoro subalgebra
+At level~$1$, the case $d = 26$ gives
+$\kappa(\mathcal H_1^{\oplus 26}) = 26$, and the Virasoro subalgebra
 has $\kappa_{\mathrm{Vir}} = c/2 = 13$
 (Remark~\ref{rem:vir-bosonic-string-genus}). The factor-of-2
 discrepancy: $26 = 2 \times 13$ reflects the difference between the
@@ -1181,76 +1525,55 @@ subalgebra (spin-2 generator $T = \frac{1}{2}\normord{JJ}$).
 
 \subsection{\texorpdfstring{Eisenstein hierarchy for the rank-$d$ bar complex}{Eisenstein hierarchy for the rank-d bar complex}}
 
-\begin{proposition}[Multi-boson Eisenstein corrections;
+\begin{proposition}[Multi-boson elliptic coefficients;
 \ClaimStatusProvedHere]
 \label{prop:multi-boson-eisenstein}
 \index{Eisenstein series!multi-boson corrections}
-For the rank-$d$ Heisenberg algebra at level $\kappa$, the elliptic
-bar complex corrections (Theorem~\ref{thm:elliptic-vs-rational})
-satisfy:
+For the rank-$d$ Heisenberg algebra at common level~$\ell$, the
+elliptic bar kernel is diagonal in the generator index:
+\[
+\langle a^i(z_1)a^j(z_2)\rangle_{E_\tau}^{\mathrm{bar}}
+=\ell\delta^{ij}G_\tau(z_1-z_2),
+\qquad
+G_\tau(z)=\frac1z-\sum_{m\ge1}G_{2m}(\tau)z^{2m-1}.
+\]
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item The leading correction at degree $n$ is
-$\mathcal{E}^{(1)}_n = d\kappa \cdot E_2(\tau)
-\cdot V_n$, where $V_n$ is a finite-dimensional vector space
-depending on the bar degree.
-\item At degree~$2$:
+\item the scalar genus-$1$ obstruction coefficient is
+$d\ell$;
+\item the first elliptic correction is
 \begin{equation}\label{eq:multi-boson-E2}
-\mathcal{E}^{(1)}_2(\mathcal{H}_\kappa^{\oplus d}, \tau)
-= d\kappa \cdot E_2(\tau) \cdot \bC
+d\ell\,G_2(\tau)
+=d\ell\,\frac{\pi^2}{3}E_2(\tau);
 \end{equation}
-(one-dimensional, corresponding to the curvature correction).
-\item The next correction involves $E_4(\tau)$ and appears at
-degree $\geq 3$:
+\item the higher local elliptic coefficients are
 \begin{equation}\label{eq:multi-boson-E4}
-\mathcal{E}^{(2)}_3 = d\kappa^2 \cdot E_4(\tau) \cdot \bC
+d\ell\,G_{2m}(\tau)
+=d\ell\,2\zeta(2m)E_{2m}(\tau)\qquad (m\ge2)
 \end{equation}
-with the coefficient $d\kappa^2$ arising from the iteration of
-two propagator corrections.
-\item The generating function for the total Eisenstein correction
-at genus~$1$ is:
-\begin{equation}\label{eq:multi-boson-eisenstein-gen}
-\sum_{n \geq 2} \dim \mathcal{E}^{(k)}_n \cdot q^n
-= d \cdot \left(\sum_{m=1}^{\infty} \sigma_1(m) q^m\right)
-\cdot p(n-2, k)
-\end{equation}
-where $\sigma_1(m) = \sum_{d|m} d$ is the sum-of-divisors function
-(the coefficient of $q^m$ in $E_2(\tau) - 1$) and $p(n, k)$ counts
-partitions of $n$ with at most $k$ correction insertions.
+before Wick multiplication by additional contraction edges.
 \end{enumerate}
+No universal scalar term $d\ell^2E_4(\tau)$ exists without first
+choosing a graph, a bar degree, and a contraction pattern; powers of
+$\ell$ count Wick contraction edges, while the trace over generator
+indices contributes the factor~$d$ for each diagonal loop.
 \end{proposition}
 
 \begin{proof}
-Part~(i) follows from the factorization of the rank-$d$ two-point
-function: $\langle a^i a^j \rangle_{E_\tau} = \kappa\delta^{ij}
-G_\tau$, so the leading correction (involving one insertion of
-$c_1(\tau) = -\pi^2 E_2(\tau)/3$) scales as $d\kappa$.
-
-Part~(ii): at degree~2, the correction arises from replacing
-$\eta_{12}^{\mathrm{rat}} = d\log(z_1-z_2)$ with
-$\eta_{12}^{\mathrm{ell}} = d\log\theta_1(z_1-z_2|\tau)$.
-The difference $\delta_{12} = \eta_{12}^{\mathrm{ell}}
-- \eta_{12}^{\mathrm{rat}}$ is regular at $z_1 = z_2$
-(Theorem~\ref{thm:elliptic-vs-rational}, Step~1), and the
-leading coefficient is $c_1(\tau) = -\pi^2 E_2(\tau)/3$.
-For each pair $(i, j)$ with $i = j$, this contributes
-$\kappa \cdot E_2(\tau)$ to the curvature correction, and summing
-over $i = 1, \ldots, d$ gives~\eqref{eq:multi-boson-E2}.
-
-Part~(iii): the $E_4$ correction requires two insertions of
-the correction $c_k(\tau)$ in the propagator expansion. The
-leading term $c_2(\tau) = -G_4(\tau) \in M_4(\mathrm{SL}_2(\bZ))$
-contributes at degree~$3$ (where three propagator factors allow
-one $c_2$ insertion plus two polar terms). The coefficient $d\kappa^2$
-arises from the OPE contraction of two pairs in
-$\mathcal{H}^{\oplus d}$.
-
-Part~(iv) follows from the structure of the correction-order
-spectral sequence (Theorem~\ref{thm:elliptic-vs-rational},
-Steps~2--3).
+The diagonal OPE
+$a^i(z)a^j(w)\sim\ell\delta^{ij}(z-w)^{-2}$ gives the bar residue
+$\ell\delta^{ij}/z$ after $d\log$ extraction. Tensor factorization
+then reduces the rank-$d$ kernel to the rank-one kernel times
+$\delta^{ij}$. Taking the scalar trace over the diagonal generator
+index gives $\sum_i\ell=d\ell$. The Laurent expansion of
+$G_\tau$ gives $G_2=\pi^2E_2/3$ and
+$G_{2m}=2\zeta(2m)E_{2m}$ for $m\ge2$, which proves the displayed
+coefficients. Wick products multiply one copy of~$\ell$ per
+contraction edge; there is no graph-independent scalar
+$E_4$ correction at bar degree~$3$.
 \end{proof}
 
 
-\subsection{Explicit genus-2 Heisenberg computation}
+\subsection{Genus-2 period-matrix carrier and scalar projection}
 
 \begin{computation}[Heisenberg at genus 2: period matrix dependence]
 \label{comp:heisenberg-genus2-period}
@@ -1268,65 +1591,63 @@ Near $z = w$, the prime form behaves as:
 E(z,w|\Omega) = (z-w)\bigl(1 + c_2(\Omega)(z-w)^2
 + c_4(\Omega)(z-w)^4 + \cdots\bigr)
 \]
-where the coefficients $c_{2k}(\Omega)$ are Siegel modular forms of
-weight $2k+2$ for $\mathrm{Sp}(4, \bZ)$. The leading correction
-$c_2(\Omega)$ is related to the Siegel Eisenstein series
-$E_4^{(2)}(\Omega)$ of degree~2.
+in a chosen local coordinate. The coefficients are local prime-form
+jet tensors. After scalar contraction they map to the genus-$2$
+Siegel modular-form ring; before that contraction they are not
+canonical scalar modular forms.
 
 \emph{Degree-2 curvature.}
-The genus-2 curvature of the Heisenberg bar complex:
-\begin{align}
-m_0^{(2)} &= \kappa \cdot
-\operatorname{Res}_{z_1 = z_2}\bigl[\eta_{12}^{(2)}
-\wedge \eta_{12}^{(2)}\bigr]\big|_{\text{vacuum}} \\
-&= \kappa \cdot \bigl(1 + c_2(\Omega) + \cdots\bigr)
-\end{align}
+The genus-2 scalar curvature is not the square of the local
+one-form $\eta_{12}^{(2)}$ on the diagonal. It is the global
+Hodge-class obstruction
+\[
+m_0^{(2)}=\kappa\,\lambda_2,
+\qquad
+\lambda_2=c_2(\mathbb E)\in H^4(\overline{\mathcal M}_2),
+\]
+obtained from the two independent $B$-cycle monodromy defects.
 The free energy at genus~2 is:
 \[
 F_2(\mathcal{H}_\kappa) = \kappa \cdot \int_{\overline{\mathcal{M}}_{2,1}}
 \psi_1^2 \lambda_2 = \kappa \cdot \frac{7}{5760}
 \]
-(Theorem~\ref{thm:heisenberg-all-genera}).
+(Theorem~\ref{thm:heisenberg-all-genus}).
 
 \emph{Period matrix integration.}
-The integral over $\overline{\mathcal{M}}_2$ extracts the
-Siegel-modular-invariant part of the curvature. The period matrix
+The period matrix
 $\Omega = \bigl(\begin{smallmatrix} \tau_1 & \tau_{12} \\
 \tau_{12} & \tau_2 \end{smallmatrix}\bigr)$ parameterizes the
-complex structure of $\Sigma_2$, and the modular-invariant
-integral:
+complex structure of $\Sigma_2$ and supplies analytic representatives
+for the prime-form kernel. The scalar bar free energy is the
+tautological projection
 \[
-\int_{\overline{\mathcal{M}}_2} \lambda_2
-= \frac{1}{240} \quad (\text{Faber's formula})
+\int_{\overline{\mathcal{M}}_{2,1}}\psi_1^2\lambda_2=7/5760,
 \]
-Combined with the $\psi$-class integral
-$\int_{\overline{\mathcal{M}}_{2,1}} \psi_1^2 \lambda_2
-= 7/5760$, this gives the genus-2 contribution as claimed.
+not the integral of a pointwise coefficient $c_2(\Omega)$.
 
 \emph{Explicit numerical values for rank-$d$ Heisenberg at genus~2.}
 \begin{center}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{c|ccc}
-$d$ & $F_2$ (exact) & $F_2$ (decimal) & Physical model \\
+$d$ & $F_2$ (exact) & $F_2$ (decimal) & Algebraic carrier \\
 \hline
-$1$ & $7/5760$ & $1.215 \times 10^{-3}$ & Free boson \\
-$2$ & $7/2880$ & $2.431 \times 10^{-3}$ & Complex boson \\
-$8$ & $7/720$ & $9.722 \times 10^{-3}$ & $E_8$ root lattice \\
-$24$ & $7/240$ & $2.917 \times 10^{-2}$ & Leech lattice \\
-$26$ & $91/2880$ & $3.160 \times 10^{-2}$ & Bosonic string matter
+$1$ & $7/5760$ & $1.215 \times 10^{-3}$ & rank-$1$ Heisenberg \\
+$2$ & $7/2880$ & $2.431 \times 10^{-3}$ & rank-$2$ Heisenberg \\
+$8$ & $7/720$ & $9.722 \times 10^{-3}$ & $E_8$ lattice Heisenberg \\
+$24$ & $7/240$ & $2.917 \times 10^{-2}$ & Leech lattice Heisenberg \\
+$26$ & $91/2880$ & $3.160 \times 10^{-2}$ & rank-$26$ Heisenberg
 \end{tabular}
 \end{center}
 \end{computation}
 
 
-\subsection{Comparison: bar complex vs.\ partition function}
+\subsection{Scalar bar free energy and analytic partition functions}
 
 \begin{remark}[Systematic comparison at genus~\texorpdfstring{$g$}{g}]
-\textup{(}LOCAL: scalar lane\textup{})
 \label{rem:bar-vs-partition-systematic}
 \index{bar complex!vs.\ partition function}
 
-The bar-complex free energy $F_g$ and the physical partition
+The bar-complex free energy $F_g$ and the analytic partition
 function $Z_g$ encode different information.
 For the rank-$d$ Heisenberg at level $\kappa = 1$:
 
@@ -1355,16 +1676,16 @@ $\kappa \lambda_g \in H^{2g}(\overline{\mathcal{M}}_g)$
 (Proposition~\ref{prop:bar-tautological-filtration}).
 The partition function $Z_g$ is a function on $\mathcal{M}_g$,
 encoding the full spectral data of the Laplacian on $\Sigma_g$.
-The two are related by :
+They are not equal as mathematical objects. The scalar projection is
 \[
 F_g = \kappa \cdot \int_{\overline{\mathcal{M}}_{g,1}}
 \psi_1^{2g-2} \lambda_g
-= \text{``coefficient of } \lambda_g \text{ in }
-\log Z_g\text{''}
 \]
-in the sense that $F_g$ captures the leading tautological
-contribution to $\log Z_g$ in the large-$k$ expansion
-(Remark~\ref{rem:verlinde-asymptotics}).
+and the determinant-line partition function retains all non-tautological
+spectral dependence. The comparison map is the projection from the
+Quillen anomaly class to its $\lambda_g$ coefficient
+(Remark~\ref{rem:verlinde-asymptotics}), not a scalar equality
+between $F_g$ and $\log Z_g$.
 \end{remark}
 
 
@@ -1386,7 +1707,7 @@ quadratic.
 \label{subsec:heisenberg-tower-construction}
 \index{shadow obstruction tower!Heisenberg construction}
 
-We instantiate the tower construction template
+Apply the universal tower construction
 (Construction~\ref{constr:tower-template}) for
 $\mathcal{H}_\kappa$.
 
@@ -1570,7 +1891,6 @@ at the scalar level.
 \end{proof}
 
 \begin{computation}[OPE derivation of Heisenberg shadow vanishing]
-\textup{(}UNIFORM-WEIGHT\textup{})
 \label{comp:heisenberg-shadow-ope-derivation}
 The explicit OPE-level computations underlying
 Theorem~\ref{thm:heisenberg-exact-linearity} are as follows.
@@ -1810,13 +2130,12 @@ survives.
 \label{subsec:heisenberg-gaussian-archetype}
 
 \begin{remark}[Exact Gaussianity and the scalar genus tower]
-\textup{(}UNIFORM-WEIGHT\textup{})
 \label{rem:heisenberg-exact-gaussianity}
 \index{Heisenberg algebra!Gaussianity}
 The Heisenberg is the unique frame family whose complementarity
 potential is exactly quadratic through all orders. This is the
 algebraic reason the Heisenberg genus tower
-is determined by $\kappa$ alone: the full modular shadow
+is determined by $\kappa$ alone: the scalar modular shadow
 characteristic
 \[
 \mathrm{ch}_{\mathrm{mod}}(\mathcal{H}_\kappa;\hbar)
@@ -1868,15 +2187,16 @@ that all other families can be calibrated against it: every
 completion invariant is measured relative to this zero point.
 
 In the holographic modular Koszul datum
-$\mathcal{H}(T) = (\cA, \cA^!, C, r(z), \Theta_\cA, \nabla^{\mathrm{hol}})$
+$\mathcal{H}(T) = (\cA, \cA^!, C, r^{\mathrm{coll}}(z), \Theta_\cA, \nabla^{\mathrm{hol}})$
 of the concordance
 (\S\ref{subsec:completion-kinematics-programme}),
 the Heisenberg specialisation is: $\cA = \mathcal{H}_k$,
 $\cA^! = \operatorname{Sym}^{\mathrm{ch}}(V^*)$ with $\kappa(\cA^!) = -k$ (the chiral symmetric algebra, not $\cH_{-k}$),
 $C = $ direct-sum complementarity,
-$r(z) = k/z$ (the abelian $r$-matrix),
-$\Theta_{\mathcal{H}_k} = k \cdot \eta \otimes \Lambda$
-(scalar, no higher corrections),
+$r^{\mathrm{Heis}}_k(z) = k/z$ (the abelian $r$-matrix),
+$\pi_{\mathrm{scal}}(\Theta_{\mathcal{H}_k})
+= k \cdot \eta \otimes \Lambda$
+(scalar projection, no higher shadow corrections),
 $\nabla^{\mathrm{hol}} = d$ (flat, since the shadow vanishes).
 Every subsequent family is measured against this datum.
 \end{remark}
@@ -1994,46 +2314,47 @@ since $[\Theta_{\mathcal{H}}, -] = 0$ on all higher corollas.
 
 The sewing amplitudes of the preceding sections assemble genus by
 genus, but a genus-$g$ amplitude alone does not know how it decomposes
-under degeneration to a nodal curve. The modular cooperad conjecture
-(\S\ref{sec:concordance-modular-cooperad-completion}) demands a
+under degeneration to a nodal curve. The global modular cooperad
+completion
+(\S\ref{sec:concordance-modular-cooperad-completion}) asks for a
 system of cocomposition maps $\{\delta_\Gamma\}$ indexed by stable
 bordered graphs, satisfying coassociativity, self-sewing = trace, and
 compatibility with the closed-sector MC element
 $\Theta^{\mathrm{oc}}$. For a general chiral algebra, verifying these
 axioms requires the full derived structure of the open-sector
-category. The Heisenberg is the first case where the verification
-succeeds completely: the one-particle Bergman reduction
-(Theorem~\ref{thm:heisenberg-one-particle-sewing}) collapses the
-infinite-dimensional categorical cooperad to operator algebra on the
+category. In the Heisenberg class-G Fock packet, the one-particle
+Bergman reduction
+(Theorem~\ref{thm:heisenberg-one-particle-sewing}) reduces the
+restricted trace-class verification to operator algebra on the
 Bergman space $A^2(D)$, where coassociativity is the multiplicativity
 of Fredholm determinants.
 
 \subsection{The open-sector category}
 \label{subsec:heisenberg-open-sector-category}
 
-\begin{proposition}[Open-sector category for Heisenberg;
+\begin{proposition}[Completed Fock open sector for Heisenberg;
 \ClaimStatusProvedHere]
 \label{prop:heisenberg-open-sector}
 \index{Heisenberg!open-sector category}
-The open-sector category $\Cop(\cH_\kappa)$ has the following
-structure.
+Let $\Cop(\cH_\kappa)$ denote the completed Fock open sector: the
+idempotent-complete dg subcategory generated by finite direct sums of
+Fock modules and completed in conformal weight for trace-class
+sewing. It has the following structure.
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Objects.} The Fock modules
  $\cF_\lambda$ ($\lambda \in \mathbb{C}$), generated by a
  highest-weight vector $|\lambda\rangle$ with
  $\alpha_0\,|\lambda\rangle = \lambda\,|\lambda\rangle$
  and $\alpha_n\,|\lambda\rangle = 0$ for $n > 0$.
-\item \emph{Semisimplicity.} Every finitely generated
- $\cH_\kappa$-module is a direct sum of Fock modules:
- $\Cop(\cH_\kappa) = \Perf(\cH_\kappa) \simeq
- \operatorname{Vect}^{\oplus}$, the semisimple category
- of graded vector spaces with $\cF_\lambda$ as simple objects.
+\item \emph{Semisimplicity in the Fock envelope.} Objects in this
+ completed Fock sector are finite direct sums of the $\cF_\lambda$.
+ No assertion is made here about arbitrary $\cH_\kappa$-modules.
 \item \emph{Dualizability.} Each $\cF_\lambda$ is dualizable
- in $\mathrm{dgCat}$: the dual is
+ in the completed trace-class sense: the dual is
  $\cF_\lambda^\vee \simeq \cF_{-\lambda}$ under the contragredient
  pairing, and the evaluation and coevaluation maps are induced by the
- Shapovalov form. In particular, $\Cop(\cH_\kappa)$ is
- smooth and proper as a dg-category.
+ Shapovalov form. Weight spaces are finite-dimensional, and the
+ $q$-completed trace converges for sewing parameters $|q|<1$.
 \end{enumerate}
 \end{proposition}
 
@@ -2045,14 +2366,12 @@ act on $\cF_\lambda = \mathbb{C}[x_1, x_2, \ldots] \otimes
 $\alpha_n = n\kappa\,\partial_{x_n}$ (annihilation, $n > 0$), and
 $\alpha_0 = \lambda$.
 
-Part~(ii): Semisimplicity follows from the abelian structure of the
-Heisenberg algebra. Every module decomposes by the eigenvalue of
-$\alpha_0$; each eigenspace is a Fock module. There are no
-extensions: $\operatorname{Ext}^1_{\cH_\kappa}(\cF_\lambda,
-\cF_\mu) = 0$ for all $\lambda, \mu$ (the Heisenberg bar complex
-is concentrated in bar degree~$0$ on modules, since the OPE is
-quadratic and the transferred $A_\infty$-module operations vanish
-for $n \geq 3$).
+Part~(ii): The statement is by definition a statement about the Fock
+envelope. The Heisenberg OPE has no simple-pole bracket, so the
+transferred $A_\infty$-module operations that would mix Fock summands
+vanish for $n\ge3$. This gives a semisimple completed envelope on the
+chosen Fock generators; it is not a classification of all
+$\cH_\kappa$-modules.
 
 Part~(iii): Dualizability of the simple objects in a semisimple
 category is automatic: the contragredient module $\cF_\lambda^\vee$
@@ -2065,9 +2384,10 @@ nondegenerate on each weight space, so the evaluation
 $\operatorname{ev}\colon \cF_\lambda^\vee \otimes \cF_\lambda
 \to \mathbb{C}$ and coevaluation
 $\operatorname{coev}\colon \mathbb{C} \to \cF_\lambda \otimes
-\cF_\lambda^\vee$ satisfy the snake identities. Smoothness
-and properness follow from finite-dimensionality of each weight
-space and the nondegenerate pairing.
+\cF_\lambda^\vee$ satisfy the snake identities on the completed Fock
+sector. Finite-dimensionality of each conformal-weight space gives
+trace-class $q$-traces for $|q|<1$; uncompleted Fock spaces are not
+proper finite-dimensional objects.
 \end{proof}
 
 \subsection{The sewing cocomposition maps}
@@ -2140,14 +2460,15 @@ parameters $q_e$ mediate the decomposition.
 \end{construction}
 
 \begin{theorem}[CT-$2$ for Heisenberg: modular cooperad on $\Cop(\cH_\kappa)$;
-\textup{(}UNIFORM-WEIGHT\textup{})
 \ClaimStatusConditional]
 \label{thm:heisenberg-modular-cooperad}
 \label{thm:ct2-heisenberg}
 \index{modular cooperad!Heisenberg!main theorem}
 \index{CT-2!Heisenberg|textbf}
-The open-sector category $\Cop(\cH_\kappa) = \Perf(\cH_\kappa)$
-admits a modular cooperad structure
+Assume the completed Fock open sector of
+Proposition~\ref{prop:heisenberg-open-sector} and sewing parameters
+$|q_e|<1$ on every internal edge. Then the completed Fock packet inside
+$\Cop(\cH_\kappa)$ carries a trace-class modular cooperad structure
 $\{\delta_\Gamma\}_{\Gamma \in \mathcal{G}^{\mathrm{bord}}}$
 indexed by stable bordered graphs
 \textup{(}Construction~\textup{\ref{constr:heisenberg-cocomposition}}\textup{)},
@@ -2188,24 +2509,29 @@ satisfying:
  The closed projection recovers the genus tower :
  $\pi_{\mathrm{cl}}(\delta_\Gamma(Z_g))
  = \kappa \cdot \lambda_g^{\mathrm{FP}}$ for all~$g$.
-\item \textbf{Partition function.}
- The genus-$g$ partition function is
+\item \textbf{Scalar determinant amplitude.}
+ The obstruction-weighted scalar determinant amplitude is
  \begin{equation}\label{eq:heisenberg-cooperad-partition}
- Z_g(\cH_\kappa;\,\Omega)
+ Z_g^{\mathrm{scal}}(\cH_\kappa;\,\Omega)
  \;=\;
  (\det\operatorname{Im}\Omega)^{-\kappa/2}
  \cdot (\zetareg\Delta_{\Sigma_g})^{-\kappa/2}.
  \end{equation}
+ For an actual rank-$d$ level-one free-boson theory this specializes
+ to $\kappa=d$; for rank one at arbitrary level it is the scalar
+ obstruction lane. The unweighted oscillator character remains the
+ rank-one Fock character.
 \item \textbf{Determination by $\Theta^{\mathrm{oc}}$.}
- The cooperad is determined by the open/closed MC element
+ The scalar closed projection and the trace-class completed-Fock
+ cocompositions are determined by the Heisenberg component of
  $\Theta^{\mathrm{oc}}_{\cH_\kappa}$: the Getzler--Kapranov
- correspondence~\cite{GeK98} identifies cooperad cocompositions
- with evaluations of $\Theta^{\mathrm{oc}}$ on stable bordered
+ correspondence~\cite{GeK98} identifies these restricted
+ cocompositions with evaluations of the MC element on stable bordered
  graphs.
 \end{enumerate}
-This is the first complete proof of the modular cooperad conjecture
-\textup{(}\S\textup{\ref{sec:concordance-modular-cooperad-completion}}\textup{)}
-for any chiral algebra.
+This proves the class-G completed-Fock model of the cooperad axioms.
+It does not construct the full modular cooperad on arbitrary boundary
+conditions of the global open factorization category.
 \end{theorem}
 
 \begin{proof}
@@ -2386,13 +2712,15 @@ for each simple object~$\cF_\lambda$.
 
 \medskip\noindent
 \textit{Proof of~\textup{(IV)}: closed-sector compatibility.}
-The closed projection $\pi_{\mathrm{cl}}$ of the open/closed MC
+The closed scalar projection $\pi_{\mathrm{cl}}$ of the open/closed MC
 element (Theorem~\ref{thm:thqg-oc-projection}(i)) sends
 $\Theta^{\mathrm{oc}}_{\cH_\kappa} \mapsto
-\Theta_{\cH_\kappa} = \kappa \cdot \eta \otimes \Lambda$
+\pi_{\mathrm{scal}}(\Theta_{\cH_\kappa})
+= \kappa \cdot \eta \otimes \Lambda$
 (Proposition~\ref{prop:heisenberg-gaussian-termination}). The
 genus-$g$ component is
-$\Theta_{\cH_\kappa}|_g = \kappa \cdot \lambda_g^{\mathrm{FP}}
+$\pi_{\mathrm{scal}}(\Theta_{\cH_\kappa})|_g
+= \kappa \cdot \lambda_g^{\mathrm{FP}}
 = F_g(\cH_\kappa)$ which is the genus tower of Theorem~D.
 
 The cooperad cocomposition $\delta_\Gamma$ in the closed sector is
@@ -2419,11 +2747,11 @@ which holds because the closed projection commutes with the sewing
 operations (Theorem~\ref{thm:thqg-mc-forced-consistency}(a,c)).
 
 \medskip\noindent
-\textit{Proof of~\textup{(V)}: partition function.}
-The partition function is obtained by tracing the cooperad over
-all stable graphs of type $(g,0)$:
+\textit{Proof of~\textup{(V)}: scalar determinant amplitude.}
+The scalar determinant amplitude is obtained by tracing the completed
+Fock cooperad over all stable graphs of type $(g,0)$:
 \begin{align*}
-Z_g(\cH_\kappa;\,\Omega)
+Z_g^{\mathrm{scal}}(\cH_\kappa;\,\Omega)
 &\;=\;
 \sum_{\Gamma \in \mathcal{G}_{g,0}}
 \frac{1}{|\operatorname{Aut}(\Gamma)|}
@@ -2459,12 +2787,14 @@ $\Theta^{\mathrm{oc}}$.}
 The Heisenberg is class~G (shadow depth $r_{\max} = 2$;
 Proposition~\ref{prop:heisenberg-gaussian-termination}), so the
 shadow obstruction tower terminates:
-$\Theta_{\cH_\kappa} = \kappa \cdot \eta \otimes \Lambda$
-with all higher obstructions vanishing ($o_r = 0$ for $r \geq 3$).
-The modular cooperad is therefore determined by two operations:
-separating clutching (binary cocomposition) and non-separating
-clutching (genus-raising self-sewing). Both are one-parameter
-families controlled by the single scalar~$\kappa$.
+$\pi_{\mathrm{scal}}(\Theta_{\cH_\kappa})
+= \kappa \cdot \eta \otimes \Lambda$
+with all higher shadow obstructions vanishing ($o_r = 0$ for
+$r \geq 3$).
+The closed scalar projection is therefore determined by two
+operations: separating clutching (binary cocomposition) and
+non-separating clutching (genus-raising self-sewing). Both are
+one-parameter families controlled by the single scalar~$\kappa$.
 
 The Getzler--Kapranov correspondence~\cite{GeK98} identifies the
 cooperad structure maps with evaluations of the MC element
@@ -2478,13 +2808,17 @@ D^{\mathrm{oc}}\Theta^{\mathrm{oc}}
 \]
 (Theorem~\ref{thm:thqg-oc-mc-equation}) encodes all cooperad
 relations simultaneously. For the Heisenberg,
-$\Theta^{\mathrm{oc}}_{\cH_\kappa}$ is purely scalar (determined
-by $\kappa$), so the MC equation reduces to a scalar identity at
-each $(g,n)$. The cooperad cocompositions $\delta_\Gamma$ of
-(I)--(V) are recovered as evaluations
-$\delta_\Gamma = \operatorname{ev}_\Gamma(\Theta^{\mathrm{oc}})$,
-and coassociativity (II) is the chain-level identity encoding
-the codimension-$2$ stratum cancellation on $\overline{\mathcal{M}}_{g,n}$.
+$\pi_{\mathrm{scal}}(\Theta^{\mathrm{oc}}_{\cH_\kappa})$ is the
+single scalar class $\kappa$, while the open trace-class component is
+the second-quantized Bergman sewing operator. Within the completed
+Fock packet, the cocompositions $\delta_\Gamma$ of (I)--(V) are
+recovered as evaluations
+$\delta_\Gamma = \operatorname{ev}_\Gamma(\Theta^{\mathrm{oc}})$.
+This is a restricted determination statement, not a construction of
+the global modular cooperad on all boundary conditions.
+Coassociativity (II) is the chain-level identity encoding the
+codimension-$2$ stratum cancellation on
+$\overline{\mathcal{M}}_{g,n}$.
 \end{proof}
 
 \begin{remark}[Why the Heisenberg is special]
@@ -2515,10 +2849,10 @@ open sector) and the coassociativity proof must use the full MC
 equation rather than operator-algebraic arguments.
 \end{remark}
 
-\begin{remark}[Invoked results and new content]
+\begin{remark}[Trace-class inputs for the Heisenberg cooperad]
 \label{rem:ct2-heisenberg-dependencies}
 \index{CT-2!Heisenberg!dependencies}
-The proof assembles five existing results:
+The trace-class cooperad proof has five mathematical inputs.
 \begin{enumerate}[label=\textup{(\arabic*)},nosep]
 \item the Heisenberg sewing theorem
  (Theorem~\ref{thm:heisenberg-sewing-vol1}): the sewing envelope is
@@ -2539,14 +2873,12 @@ The proof assembles five existing results:
  $\Theta^{\mathrm{oc}}_\cA \in \operatorname{MC}(\mathfrak{g}^{\mathrm{oc}})$
  at all genera.
 \end{enumerate}
-All five are proved in preceding chapters. The content specific to
-Theorem~\ref{thm:ct2-heisenberg} is the \emph{composition}: verifying
-that the Fredholm-determinant amplitudes on the Morita-trivial
-open-sector category assemble into a cooperad. This verification is
-operator-algebraic (associativity of composition on $A^2(D)$ plus
-multiplicativity of $\det$), which is why the Heisenberg is the
-first algebra for which the modular cooperad conjecture admits a
-complete proof.
+Together they identify the Fredholm-determinant amplitudes on the
+completed Fock open-sector packet with the cocompositions of a
+trace-class cooperad. The verification is operator-algebraic:
+associativity of composition on $A^2(D)$ and multiplicativity of
+Fredholm determinants give the coassociativity identities on the
+completed-Fock class-G packet.
 \end{remark}
 
 \begin{remark}[Cooperad vs Feynman transform]
@@ -2568,35 +2900,39 @@ composition on the bar side (the codimension-$2$ stratum identity
 on~$\overline{\mathcal{M}}_{g,n}$).
 \end{remark}
 
-\section{Synthesis}
+\section{\texorpdfstring{$\Delta_5$}{Delta5} normalization firewall}
 \label{sec:heisens-supplement}
 
-\begin{remark}[Heisenberg-Eisenstein at the Borel cusp of $\bar{\mathcal A}_2^{\mathrm{BB}}$]
+\begin{remark}[Heisenberg boundary and the $\Delta_5$ normalization firewall]
 \label{rem:heisens-1}
-The Heisenberg-Eisenstein construction, applied at the K3 base point
-of the chiral bialgebra $\mathbf H_{\Delta_5}$, produces the Gritsenko 1995 additive lift
+The class-G Heisenberg boundary at the Borel cusp of
+$\bar{\mathcal A}_2^{\mathrm{BB}}$ records the Gaussian,
+semi-abelian degeneration of the K3 Mukai-lattice sector. It does
+not produce $\Delta_5$, and it does not reconstruct the chiral
+bialgebra $\mathbf H_{\Delta_5}$.
+
+The automorphic input is separate. In Gritsenko's normalization, the
+Igusa cusp form of weight $5$ is obtained from the Jacobi cusp form
+$\eta^9\vartheta_1$ of weight $5$ and index $1/2$:
 \[
-\Delta_5 \;=\; \mathrm{Grit}\bigl(\phi^{J,\mathrm{Eis}}_{5,1}\bigr) \;\in\; M_5^{\mathrm{cusp}}(\mathrm{Sp}_4(\mathbb Z),\mathrm{ch}),
+\Delta_5=\operatorname{Grit}(\eta^9\vartheta_1)
+\qquad
+\text{\cite{Gritsenko1999,EichlerZagier1985}.}
 \]
-where $\phi^{J,\mathrm{Eis}}_{5,1}$ is the Jacobi-Eisenstein series of
-weight $5$ and index $1$, and $\mathrm{Grit}$ is the Gritsenko additive
-lift raising a Jacobi form to a Siegel modular form via Fourier-Jacobi
-expansion. At the Borel cusp of $\bar{\mathcal A}_2^{\mathrm{BB}}$
-(the class-G Heisenberg chamber in Theorem~C on the $\mathcal B$-family), the K3
-chiral bialgebra $\mathbf H_{\Delta_5}$ degenerates to the Heisenberg
-algebra $\mathcal H(\Lambda_{\mathrm{Muk}})$ on the Mukai lattice, with
-$\kappa_{\mathrm{ch}} = \mathrm{rk}(V_+) = 4 = c_+(\mathrm{Mukai}(K3))$.
-This Heisenberg degeneration is the Eisenstein part of the
-Arthur--Hecke decomposition for the unnormalised Igusa square
-$\Phi_{10}^{\mathrm{un}}=\Delta_5^2$:
-\[
-L(s,\Phi_{10}^{\mathrm{un}})
-=L(s,\Delta\otimes E_6)\cdot\zeta(s-9)\cdot\zeta(s-8).
-\]
-The two $\zeta$-shifts correspond to the two Heisenberg-dual directions
-in the Eisenstein-modular spectrum. The Oberdieck--Pandharipande
-reduced-DT normalization is instead
-$D_5^2=(64^{-1}\Delta_5)^2=4096^{-1}\Delta_5^2$; it is not used in
-this Arthur--Hecke statement. Primary-lit: Gritsenko 1995, Eichler-Zagier 1985
-(Jacobi forms), Langlands-Shahidi theory.
+The Borcherds-product normalization realizes the same automorphic
+divisor from the weak Jacobi form $\phi_{0,1}^{K3}$, with the usual
+normalization constant separated
+\cite{Borcherds1998,GritsenkoNikulin1998}. The
+Oberdieck--Pandharipande reduced-DT convention uses
+$D_5=64^{-1}\Delta_5$; this is a normalization bridge, not a
+Heisenberg $\kappa$-value. At the Mukai Heisenberg boundary the
+chiral scalar is $\kappa_{\mathrm{ch}}=4$ in the Route-B convention,
+whereas the Borcherds denominator has weight $5$. These are distinct
+invariants.
+
+Any Andrianov-style spinor $L$-factorization for a normalized Siegel
+eigenline belongs to the automorphic
+$\Delta_5$ problem \cite{Andrianov1974,Arthur2013Endoscopic}. It is
+not a consequence of the Gaussian Heisenberg boundary data proved in
+this section.
 \end{remark}

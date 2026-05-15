@@ -65,7 +65,8 @@ the DMVV formula — bypassing the abstract d=3 CY functor entirely.
    The shadow obstruction tower Theta_{A_{K3}} projects to:
      (a) kappa = 2 (genus-1 scalar curvature from the K3 sigma model)
      (b) The BKM root system via the phi_{0,1} Fourier expansion
-     (c) The Igusa cusp form Delta_5 via the full product formula
+     (c) The primitive Gritsenko-Nikulin BKM denominator Delta_5 via
+         the full product formula
 
    Path: Shadow tower -> product formula -> BKM denominator -> Delta_5
    This is the CHIRAL-ALGEBRAIC route to the BKM, bypassing string theory.
@@ -974,15 +975,16 @@ def k3_complementarity() -> Dict[str, Any]:
 
 
 # =========================================================================
-# 10. Igusa cusp form connection
+# 10. BKM denominator / Igusa-square connection
 # =========================================================================
 
 def igusa_cusp_form_from_shadow(nmax: int = 5) -> Dict[str, Any]:
     r"""Verify the connection: shadow tower -> product formula -> Delta_5.
 
     The denominator of the BKM superalgebra g_{Delta_5} is
-    (1/64) * Delta_5(Z) where Delta_5 is the Igusa cusp form of weight 5
-    on the Siegel upper half-space H_2.
+    (1/64) * Delta_5(Z), where Delta_5 is the theta-normalized
+    Gritsenko-Nikulin weight-5 form with order-2 multiplier. Its square
+    is the unnormalised weight-10 Igusa form Phi_10^{un}.
 
     The product formula (Borcherds, Gritsenko-Nikulin, Lorgat):
       (1/64) * Delta_5(Z) = e^{pi*i*(z1+z2+z3)}
@@ -1293,7 +1295,9 @@ def full_bridge_summary() -> Dict[str, Any]:
        exp(-Theta_A) = prod_{alpha>0} (1 - e^{-alpha})^{mult(alpha)}
        where mult(alpha) = c(D) from phi_{0,1} (the K3 elliptic genus).
 
-    5. The product formula gives (1/64) * Delta_5 (Igusa cusp form of weight 5).
+    5. The product formula gives (1/64) * Delta_5. Squaring gives the
+       unnormalised Igusa weight-10 form Phi_10^{un} = Delta_5^2; the
+       OP/DT scalar uses D_5 = 64^{-1} Delta_5.
 
     6. BYPASSES THE d=3 FUNCTOR: this derivation uses ONLY:
        - The K3 sigma model (well-defined VOA)

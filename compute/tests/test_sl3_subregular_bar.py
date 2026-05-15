@@ -2,12 +2,12 @@
 
 Proves:
   1. BP_k = W^k(sl_3, f_{subreg}) is chirally Koszul (PBW-Slodowy collapse).
-  2. kappa(BP_k) = (k-15)/(6(k+3)), via 3 independent paths.
+  2. kappa(BP_k) = (1/6)(2 - 24(k+1)^2/(k+3)), via 3 independent paths.
   3. Koszul dual: (BP_k)^! = BP_{-k-6} (self-dual family).
   4. DS from V_k(sl_3) preserves Koszulness but not SC formality.
   5. The naive kappa ghost-subtraction formula is FALSE.
   6. Shadow class M (infinite depth) on the T-line.
-  7. N=2 SCA structure with charge conservation.
+  7. Feigin-Semikhatov BP structure with charge conservation.
 
 Multi-path verification (AP10): every kappa value verified by 3+ paths.
 Cross-family consistency (AP1): no hardcoded values without derivation.
@@ -37,6 +37,7 @@ from compute.lib.sl3_subregular_bar import (
     bp_koszul_conductor,
     bp_koszul_dual,
     bp_nth_products,
+    bp_primary_ope_normal_form,
     ds_bar_intertwining,
     kappa_all_paths_agree,
     kappa_deficit_analysis,
@@ -51,6 +52,7 @@ from compute.lib.sl3_subregular_bar import (
 )
 
 k = Symbol('k')
+fs = bp_primary_ope_normal_form(k)
 
 
 # ===================================================================
@@ -421,27 +423,27 @@ class TestShadowDepth:
 
 
 # ===================================================================
-# I. N=2 superconformal structure (3 tests)
+# I. Feigin-Semikhatov BP structure (3 tests)
 # ===================================================================
 
-class TestN2SCA:
-    """N=2 superconformal algebra structure."""
+class TestFeiginSemikhatovBP:
+    """Feigin-Semikhatov BP normal-form structure."""
 
-    def test_is_n2(self):
-        """BP is an N=2 SCA."""
-        n2 = n2_sca_structure()
-        assert n2["is_n2_sca"]
+    def test_is_fs_bp(self):
+        """BP uses the Feigin-Semikhatov W_3^{(2)} normal form."""
+        data = n2_sca_structure()
+        assert data["is_feigin_semikhatov_bp"]
+        assert data["is_n2_sca"] is False
 
     def test_j_level(self):
-        """J level = c/3."""
-        n2 = n2_sca_structure()
-        cc = bp_central_charge(k)
-        assert simplify(n2["j_level"] - cc / 3) == 0
+        """J level = (2k+3)/3."""
+        data = n2_sca_structure()
+        assert simplify(data["j_level"] - fs["J_level"]) == 0
 
     def test_charge_conservation(self):
         """All bar differentials preserve J-charge."""
-        n2 = n2_sca_structure()
-        assert n2["charge_conservation"]
+        data = n2_sca_structure()
+        assert data["charge_conservation"]
 
 
 # ===================================================================
@@ -459,22 +461,19 @@ class TestOPEStructure:
                 assert (a, b) in products
 
     def test_tt_virasoro(self):
-        """T_(3)T = c/2 (Virasoro)."""
+        """T_(3)T = c_BP(k)/2 (Virasoro)."""
         products = bp_nth_products()
-        cc = Symbol('c')
-        assert products[("T", "T")][3] == {"vac": cc / 2}
+        assert simplify(products[("T", "T")][3]["vac"] - fs["central_charge"] / 2) == 0
 
     def test_gpgm_pole3(self):
-        """G+_(2)G- = 2c/3."""
+        """G+_(2)G- = (k+1)(2k+3)."""
         products = bp_nth_products()
-        cc = Symbol('c')
-        assert products[("G+", "G-")][2] == {"vac": 2 * cc / 3}
+        assert simplify(products[("G+", "G-")][2]["vac"] - fs["G_pairing"]) == 0
 
     def test_jj_level(self):
-        """J_(1)J = c/3 (U(1) level)."""
+        """J_(1)J = (2k+3)/3."""
         products = bp_nth_products()
-        cc = Symbol('c')
-        assert products[("J", "J")][1] == {"vac": cc / 3}
+        assert simplify(products[("J", "J")][1]["vac"] - fs["J_level"]) == 0
 
     def test_charge_conservation_gpgp(self):
         """G+_(n)G+ = 0 for all n (charge +2 -> forbidden)."""
@@ -550,28 +549,22 @@ class TestCrossFamilyConsistency:
             from compute.lib.bershadsky_polyakov_bar import (
                 ds_bar_commutation_kappa,
             )
-            # The old engine stores kappa_T = c/2 and kappa_J = c/6.
-            # These are the T-line and J-line kappa values, NOT the total kappa.
+            # The companion engine stores T-line curvature and FS J-current level.
+            # These are sector data, NOT the total modular characteristic.
             # The total kappa = rho * c = c/6.
             data = ds_bar_commutation_kappa()
             kappa_T = data["kappa_T"]
-            kappa_J = data["kappa_J"]
-            # kappa_T = c/2, kappa_J = c/6
+            j_level = data["J_level"]
+            # kappa_T = c/2, J_level = (2k+3)/3.
             # The total kappa for BP = rho * c = c/6
-            # This equals kappa_J, NOT kappa_T!
-            # The total kappa is the sum weighted by the anomaly ratio contribution
-            # of each sector, which is NOT kappa_T + kappa_J.
-            #
-            # Actually: rho = 1/6 and kappa = (1/6)*c.
-            # kappa_T = c/2 is the Virasoro-sector contribution.
-            # kappa_J = c/6 is the J-sector contribution.
-            # The fermionic sectors contribute: -2*(2/(3*2))*c = -(2/3)*c each.
-            # Wait, that doesn't work either. Let me just verify the formula.
+            # and is not the J-current level.
             rho = bp_anomaly_ratio()
             cc = bp_central_charge(k)
             our_kappa = simplify(rho * cc)
             # = c/6
             assert simplify(our_kappa - cc / 6) == 0
+            assert simplify(kappa_T - cc / 2) == 0
+            assert simplify(j_level - fs["J_level"]) == 0
         except ImportError:
             pytest.skip("bershadsky_polyakov_bar not available")
 

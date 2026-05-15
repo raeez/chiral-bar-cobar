@@ -224,9 +224,9 @@ def delta_pf_genus3_class_L(kappa: Fraction, S3: Fraction) -> Fraction:
 
 
 # Genus 4: 11-term polynomial in (kappa, S_3) for class L.
-# Source: genus4_planted_forest_engine.py graph sum over 379 stable graphs,
-# restricted to class L (S_4 = S_5 = S_6 = S_7 = 0).
-# Independently verified at SU(2), SU(3), SU(4) against numerical engine.
+# Source: theorem_genus4_virasoro_engine canonical class-L restriction
+# with bridge sign on the lower-indexed endpoint of each StableGraph edge.
+# The older 379-graph surface used the alternate sign for one witness graph.
 # Keys: (a, b) for kappa^a * S_3^b.
 
 GENUS4_PF_CLASS_L: Dict[Tuple[int, int], Fraction] = {
@@ -234,7 +234,7 @@ GENUS4_PF_CLASS_L: Dict[Tuple[int, int], Fraction] = {
     (1, 5): Fraction(-515, 9216),       # kappa * S_3^5
     (2, 4): Fraction(421, 221184),      # kappa^2 * S_3^4
     (3, 3): Fraction(-7, 196608),       # kappa^3 * S_3^3
-    (4, 2): Fraction(5, 15925248),      # kappa^4 * S_3^2
+    (4, 2): Fraction(1, 1769472),       # kappa^4 * S_3^2
     (1, 3): Fraction(-19319, 27648),    # kappa * S_3^3 [mixed low-degree]
     (2, 2): Fraction(9223, 331776),     # kappa^2 * S_3^2
     (1, 2): Fraction(2317, 1536),       # kappa * S_3^2
@@ -248,7 +248,8 @@ def delta_pf_genus4_class_L(kappa: Fraction, S3: Fraction) -> Fraction:
     """Genus-4 planted-forest correction for class L (S_4 = ... = S_7 = 0).
 
     11-term polynomial in (kappa, S_3), total degree <= 6 = 2(4-1).
-    Triple-verified against genus4_planted_forest_engine at SU(2), SU(3), SU(4).
+    The (4,2) coefficient is fixed by the canonical bridge-sign audit in
+    theorem_genus4_virasoro_engine.
     """
     result = Fraction(0)
     for (a, b), coeff in GENUS4_PF_CLASS_L.items():

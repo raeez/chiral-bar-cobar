@@ -17,8 +17,8 @@ enumerate all 7 stable graphs of M_bar_{2,0}, assign multi-channel Feynman
 rules from the W_3 OPE, sum over all channel assignments, and determine
 whether the result equals kappa(W_3) * lambda_2^FP.
 
-FEYNMAN RULES (bar-complex CohFT)
-===================================
+FEYNMAN RULES (finite-window bar-complex graph model)
+=====================================================
 
 Propagator (AP27: weight-1 bar propagator for ALL channels):
     eta^{ii} = 1/kappa_i   where kappa_T = c/2, kappa_W = c/3
@@ -32,8 +32,14 @@ Genus-0 trivalent vertex (3-point function C_{ijk}):
         T_{(1)}W = 3W  =>  C^W_{TW} = 3  =>  C_{TWW} = eta_{WW} * 3 = c
         W_{(3)}W = 2T  =>  C^T_{WW} = 2  =>  C_{WWT} = eta_{TT} * 2 = c
 
-Genus-0 4-valent vertex (factorization through boundary divisor):
+Genus-0 4-valent vertex (chosen factorization through boundary divisor):
     V_{0,4}(i1,i2|j1,j2) = sum_m eta^{mm} * C_{i1,i2,m} * C_{m,j1,j2}
+
+    This is a finite-window graph rule, not a crossing-invariant Frobenius
+    CohFT four-point class.  The OPE-derived product is not associative:
+    (T*T)*W - T*(T*W) = -3W.  Hence mixed four-point values depend on the
+    chosen factorization; the banana graph uses the self-loop pairing
+    (0,1)|(2,3) on half-edge order (e0,e0,e1,e1).
 
 Genus-1 vertex with 1 marked point:
     V_{1,1}(i) = kappa_i / 24    (per-channel genus-1 universality, PROVED)
@@ -58,28 +64,26 @@ where:
     F_2^{per-channel} = kappa * lambda_2^FP = (5c/6) * (7/5760) = 7c/6912
     delta_F2^{cross}  = (c + 204) / (16c)
 
-The cross-channel correction is NONZERO for all c > 0. Therefore:
+For this stated finite-window graph rule, the cross-channel correction is
+NONZERO for all c > 0. Therefore:
 
-    F_2(W_3) != kappa(W_3) * lambda_2^FP    (at the naive CohFT level)
+    F_2(W_3) != kappa(W_3) * lambda_2^FP
+        (inside this finite-window graph model)
 
-This means either:
-(a) The R-matrix corrections (not included here) cancel delta_F2, or
-(b) The genus-2 formula for multi-weight algebras genuinely differs from
-    kappa * lambda_2.
-
-This is the computational content of op:multi-generator-universality.
+The engine does not decide the full R-matrix-corrected CohFT.  It proves the
+exact rational boundary-window identity used by op:multi-generator-universality.
 
 MULTI-PATH VERIFICATION
 ========================
 
 Path 1: Direct enumeration over all channel assignments (brute force)
 Path 2: Closed-form analytic formulas for each graph (hand-derived)
-Path 3: Per-channel universality cross-check (diagonal sum = kappa * lambda_2)
+Path 3: Per-channel universality cross-check (diagonal lane plus smooth Hodge term)
 Path 4: Orbifold Euler characteristic verification (sum of 1/|Aut| * chi)
 Path 5: Koszul duality constraint (c <-> 100-c complementarity sum)
 Path 6: Large-c asymptotics (cross-channel -> 1/16 as c -> infinity)
 Path 7: Z_2 parity constraint (odd-W channels vanish)
-Path 8: Single-generator limit (W decouples: recover Virasoro result)
+Path 8: Single-generator lane firewall (T-only boundary separated from smooth term)
 
 References:
     thm:theorem-d (higher_genus_modular_koszul.tex): F_g = kappa * lambda_g^FP
@@ -156,11 +160,19 @@ def kappa_total(c: Fraction) -> Fraction:
 
 
 # ============================================================================
-# W_3 Frobenius algebra data
+# W_3 OPE channel data
 # ============================================================================
 
+CHANNELS = ('T', 'W')
+
+FOUR_POINT_PAIRINGS = {
+    '01|23': ((0, 1), (2, 3)),
+    '02|13': ((0, 2), (1, 3)),
+    '03|12': ((0, 3), (1, 2)),
+}
+
 def metric(channel: str, c: Fraction) -> Fraction:
-    """Frobenius metric eta_{ii} = kappa_i (diagonal, from leading OPE pole)."""
+    """Diagonal channel metric eta_{ii} = kappa_i (from the leading OPE pole)."""
     if channel == 'T':
         return kappa_T(c)
     elif channel == 'W':
@@ -189,7 +201,7 @@ def structure_constant_upper(i: str, j: str, k: str) -> Fraction:
     if (w_in + w_out) % 2 == 1:
         return Fraction(0)
 
-    # Nonvanishing cases (order-independent in i,j by symmetry of CohFT metric)
+    # Nonvanishing cases (order-independent in i,j by the symmetric channel metric)
     pair = tuple(sorted([i, j]))
     if pair == ('T', 'T') and k == 'T':
         return Fraction(2)
@@ -198,6 +210,56 @@ def structure_constant_upper(i: str, j: str, k: str) -> Fraction:
     if pair == ('W', 'W') and k == 'T':
         return Fraction(2)
     return Fraction(0)
+
+
+def product_upper(i: str, j: str) -> Dict[str, Fraction]:
+    """OPE-derived upper-index product i*j = sum_k C^k_{ij} k.
+
+    This product is commutative on the finite channel set {T,W}, but it is not
+    associative.  The nonassociativity is the reason four-point graph windows
+    must record their chosen factorization instead of being treated as a
+    crossing-invariant Frobenius-algebra operation.
+    """
+    return {
+        k: structure_constant_upper(i, j, k)
+        for k in CHANNELS
+        if structure_constant_upper(i, j, k) != 0
+    }
+
+
+def _multiply_linear_by_basis(vec: Dict[str, Fraction], basis: str) -> Dict[str, Fraction]:
+    """Multiply a finite channel vector by one basis element."""
+    out = {ch: Fraction(0) for ch in CHANNELS}
+    for left, coeff in vec.items():
+        for right, val in product_upper(left, basis).items():
+            out[right] += coeff * val
+    return {ch: val for ch, val in out.items() if val != 0}
+
+
+def associator_upper(i: str, j: str, k: str) -> Dict[str, Fraction]:
+    """Return (i*j)*k - i*(j*k), in the basis {T,W}."""
+    left = _multiply_linear_by_basis(product_upper(i, j), k)
+    right = _multiply_linear_by_basis(product_upper(j, k), i)
+    return {
+        ch: left.get(ch, Fraction(0)) - right.get(ch, Fraction(0))
+        for ch in CHANNELS
+        if left.get(ch, Fraction(0)) - right.get(ch, Fraction(0)) != 0
+    }
+
+
+def associativity_violations() -> List[Dict[str, object]]:
+    """Exact finite-channel associator table for {T,W}."""
+    violations = []
+    for i in CHANNELS:
+        for j in CHANNELS:
+            for k in CHANNELS:
+                assoc = associator_upper(i, j, k)
+                if assoc:
+                    violations.append({
+                        'triple': (i, j, k),
+                        'associator': assoc,
+                    })
+    return violations
 
 
 def structure_constant_lower(i: str, j: str, k: str, c: Fraction) -> Fraction:
@@ -218,25 +280,62 @@ def genus0_3pt(channels: Tuple[str, str, str], c: Fraction) -> Fraction:
     return structure_constant_lower(channels[0], channels[1], channels[2], c)
 
 
-def genus0_4pt(ch_pair1: Tuple[str, str], ch_pair2: Tuple[str, str],
-               c: Fraction) -> Fraction:
-    """Genus-0 4-point function in s-channel factorization.
+def genus0_4pt_by_pairing(channels: Tuple[str, str, str, str],
+                          c: Fraction,
+                          pairing: str = '01|23') -> Fraction:
+    """Genus-0 four-point graph window for a chosen factorization.
 
-    V_{0,4}(i1,i2|j1,j2) = sum_m eta^{mm} * C_{i1,i2,m} * C_{j1,j2,m}
+    The three allowed pairings are:
+        01|23, 02|13, 03|12.
 
-    Universality for W_3: V_{0,4}(i,i|j,j) = 2c for ALL (i,j).
-    Proof: only T-channel contributes since C_{iiT} = c for both i=T,W.
-    eta^{TT} * c * c = (2/c) * c^2 = 2c.
+    For W_3 mixed channels these values are not all equal because the
+    OPE-derived product is not associative.  This function deliberately exposes
+    that dependence so the graph engine cannot be misread as a full
+    crossing-invariant Frobenius CohFT.
     """
-    i1, i2 = ch_pair1
-    j1, j2 = ch_pair2
+    if pairing not in FOUR_POINT_PAIRINGS:
+        raise ValueError(f"Unknown four-point pairing: {pairing}")
+
+    left_idx, right_idx = FOUR_POINT_PAIRINGS[pairing]
+    left = (channels[left_idx[0]], channels[left_idx[1]])
+    right = (channels[right_idx[0]], channels[right_idx[1]])
+
     total = Fraction(0)
-    for m in ('T', 'W'):
-        c_left = structure_constant_lower(i1, i2, m, c)
-        c_right = structure_constant_lower(j1, j2, m, c)
+    for m in CHANNELS:
+        c_left = structure_constant_lower(left[0], left[1], m, c)
+        c_right = structure_constant_lower(right[0], right[1], m, c)
         if c_left != 0 and c_right != 0:
             total += propagator(m, c) * c_left * c_right
     return total
+
+
+def genus0_4pt(ch_pair1: Tuple[str, str], ch_pair2: Tuple[str, str],
+               c: Fraction) -> Fraction:
+    """Genus-0 four-point graph window in the 01|23 factorization.
+
+    V_{0,4}(i1,i2|j1,j2) = sum_m eta^{mm} * C_{i1,i2,m} * C_{j1,j2,m}
+
+    In the banana graph this is the self-loop pairing on half-edge order
+    (e0,e0,e1,e1).  For diagonal pairs V_{0,4}(i,i|j,j) = 2c for all
+    i,j because only the T-channel contributes.  Mixed four-point values in
+    the other two pairings are 3c, not 2c.
+    """
+    return genus0_4pt_by_pairing((ch_pair1[0], ch_pair1[1],
+                                  ch_pair2[0], ch_pair2[1]), c, '01|23')
+
+
+def four_point_pairing_window(channels: Tuple[str, str, str, str],
+                              c: Fraction) -> Dict[str, object]:
+    """Exact values for all three four-point factorizations."""
+    values = {
+        pairing: genus0_4pt_by_pairing(channels, c, pairing)
+        for pairing in FOUR_POINT_PAIRINGS
+    }
+    return {
+        'channels': channels,
+        'values': values,
+        'pairing_independent': len(set(values.values())) == 1,
+    }
 
 
 def genus1_1pt(channel: str, c: Fraction) -> Fraction:
@@ -685,6 +784,24 @@ def analytic_barbell(c: Fraction) -> Dict[str, Fraction]:
     }
 
 
+def banana_mixed_amplitude_by_pairing(c: Fraction,
+                                      pairing: str = '01|23') -> Fraction:
+    """Mixed banana contribution for a chosen 4-point factorization.
+
+    The canonical engine uses 01|23, the self-loop pairing on half-edge order
+    (e0,e0,e1,e1), giving 3/c.  The two crossed factorizations give 9/(2c).
+    This exact rational probe is the firewall against treating the mixed W_3
+    graph window as a crossing-invariant Frobenius four-point function.
+    """
+    G = GRAPHS[2]
+    total = Fraction(0)
+    for sigma in (('T', 'W'), ('W', 'T')):
+        channels = (sigma[0], sigma[0], sigma[1], sigma[1])
+        vertex = genus0_4pt_by_pairing(channels, c, pairing)
+        total += propagator(sigma[0], c) * propagator(sigma[1], c) * vertex
+    return total / G['aut']
+
+
 ANALYTIC_FUNCTIONS = {
     'fig_eight': analytic_fig_eight,
     'banana': analytic_banana,
@@ -760,9 +877,9 @@ def F2_universal(c: Fraction) -> Fraction:
 
 
 def F2_naive(c: Fraction) -> Fraction:
-    """F_2 from naive CohFT sum (without R-matrix corrections).
+    """F_2 from the finite-window graph sum.
 
-    F_2^{naive} = F_2^{per-channel} + delta_F2^{cross}
+    F_2^{window} = F_2^{per-channel} + delta_F2^{cross}
     """
     return F2_universal(c) + cross_channel_correction(c)
 
@@ -818,6 +935,53 @@ def F2_complete_analysis(c: Fraction) -> Dict[str, object]:
     }
 
 
+def finite_window_audit(c_values: Optional[List[Fraction]] = None) -> List[Dict[str, object]]:
+    """Exact rational finite-window checks for the W_3 genus-2 graph surface.
+
+    The audit records the facts that matter for this module:
+    - enumeration equals the closed formulas graph by graph;
+    - the barbell term 21/(4c) is included in the mixed correction;
+    - the banana mixed term depends on the 4-point factorization;
+    - the OPE-derived product is nonassociative, so this is a graph-window
+      computation rather than a scalar Virasoro/Frobenius lane.
+    """
+    if c_values is None:
+        c_values = [Fraction(1), Fraction(2), Fraction(4), Fraction(13),
+                    Fraction(26), Fraction(50), Fraction(100)]
+
+    assoc = associativity_violations()
+    rows = []
+    for c in c_values:
+        graph_matches = {}
+        for name, func in ANALYTIC_FUNCTIONS.items():
+            idx = next(i for i, G in enumerate(GRAPHS) if G['name'] == name)
+            enum = graph_amplitude_total(idx, c)
+            analytic = func(c)
+            graph_matches[name] = all(enum[key] == analytic[key]
+                                      for key in ('all_T', 'all_W', 'mixed', 'total'))
+
+        decomp = cross_channel_decomposition(c)
+        banana_pairings = {
+            pairing: banana_mixed_amplitude_by_pairing(c, pairing)
+            for pairing in FOUR_POINT_PAIRINGS
+        }
+        mixed_4pt = four_point_pairing_window(('T', 'T', 'W', 'W'), c)
+
+        rows.append({
+            'c': c,
+            'graph_matches': graph_matches,
+            'all_graphs_match': all(graph_matches.values()),
+            'cross_formula_match': decomp['match'],
+            'barbell_mixed': decomp['barbell'],
+            'barbell_expected': Fraction(21) / (4 * c),
+            'banana_pairings': banana_pairings,
+            'mixed_four_point_window': mixed_4pt,
+            'associativity_violations': assoc,
+            'associative': len(assoc) == 0,
+        })
+    return rows
+
+
 # ============================================================================
 # Verification Path 3: Per-channel universality cross-check
 # ============================================================================
@@ -828,8 +992,8 @@ def per_channel_check(c: Fraction) -> Dict[str, Fraction]:
     Each channel independently contributes F_2^{(i)} = kappa_i * lambda_2^FP.
     The sum is (kappa_T + kappa_W) * lambda_2^FP = kappa * lambda_2^FP.
 
-    This is proved by per-channel universality (each generator yields a
-    single-generator CohFT at each channel, with R-matrix R = Id at genus 0).
+    This is the scalar-lane check after adjoining the smooth genus-2 Hodge
+    term forced by kappa_i * lambda_2^FP in each diagonal channel.
     """
     fp2 = lambda_fp(2)
     diag_T = Fraction(0)
@@ -1052,8 +1216,9 @@ def proportionality_test(c_values: Optional[List[Fraction]] = None
 
     RESULT: delta_F2 = (c+204)/(16c) != 0 for any c > 0.
 
-    This means F_2(W_3) != kappa(W_3) * lambda_2^FP at the naive CohFT level.
-    The R-matrix corrections (not included in this computation) may modify this.
+    This means F_2(W_3) != kappa(W_3) * lambda_2^FP inside the stated
+    finite-window graph model.  The engine does not compute the full
+    R-matrix-corrected CohFT.
     """
     if c_values is None:
         c_values = [Fraction(1), Fraction(2), Fraction(4), Fraction(13),
@@ -1083,9 +1248,9 @@ def proportionality_test(c_values: Optional[List[Fraction]] = None
         'universality_at_any_c': any_zero,
         'formula_confirmed': all_match_formula,
         'conclusion': (
-            'F_2(W_3) = kappa*lambda_2 + (c+204)/(16c) at the naive CohFT level. '
+            'F_2(W_3) = kappa*lambda_2 + (c+204)/(16c) in the finite-window graph model. '
             'The cross-channel correction (c+204)/(16c) is NONZERO for all c > 0. '
-            'Whether R-matrix corrections cancel this is op:multi-generator-universality (OPEN).'
+            'The full R-matrix-corrected CohFT is outside this engine.'
         ),
     }
 
@@ -1128,6 +1293,9 @@ def compute_full_summary(c: Fraction) -> Dict[str, object]:
 
         # Path 8: Single-generator limit
         'path8_single_gen': single_generator_limit(c),
+
+        # Finite-window attack probes
+        'finite_window_audit': finite_window_audit([c])[0],
 
         # The key result
         'cross_channel_correction': cross_channel_correction(c),

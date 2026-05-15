@@ -1,23 +1,23 @@
-r"""Tests for the resurgence arithmetic frontier engine.
+r"""Tests for the scalar shadow arithmetic frontier engine.
 
-Comprehensive verification of the arity-direction resurgence arithmetic
-of the shadow obstruction tower, covering:
+Targeted verification of exact scalar arithmetic and non-certifying
+frontier diagnostics for the shadow obstruction tower, covering:
 
 1. Shadow data correctness for all families
 2. Shadow coefficients: convolution recursion, high precision
-3. Borel transform: coefficients, evaluation, singularity locations
+3. Borel transform: coefficients, evaluation, reciprocal branch markers
 4. Pade approximant singularity detection and convergence
-5. Stokes constants: monodromy, numerical extraction, PSLQ
-6. Alien derivatives: structure, bridge equation, depth dependence
-7. Transseries: perturbative + instanton sectors
-8. Lateral Borel sums: S_+/S_-, median resummation
+5. Monodromy diagnostics: growth ratios and PSLQ
+6. Alien-calculus diagnostics: explicitly non-certifying markers
+7. Transseries diagnostics: perturbative + candidate sectors
+8. Lateral Borel diagnostics: S_+/S_-, median value
 9. Exact closed-form comparison
 10. Shadow ODE analytic continuation
 11. p-adic Borel transform and singularity comparison
-12. Peacock patterns mod p
+12. Mod-p coefficient patterns
 13. Multi-path verification
 14. Cross-family consistency
-15. Koszul duality: rho(c) vs rho(26-c)
+15. Verdier scalar complementarity: rho(c) vs rho(26-c)
 16. Self-dual c=13 properties
 17. Edge cases: c near 0, c critical, c large
 
@@ -52,6 +52,80 @@ def _has_mpmath():
 
 PI = math.pi
 TWO_PI = 2.0 * PI
+
+
+# =====================================================================
+# Section 0: Exact scalar contract and firewalls
+# =====================================================================
+
+class TestExactScalarContract:
+    """Test exact arithmetic and non-certification boundaries."""
+
+    def test_virasoro_metric_exact_c13(self):
+        from lib.resurgence_arithmetic_frontier_engine import (
+            virasoro_shadow_metric_exact,
+        )
+        c = Fraction(13, 1)
+        metric = virasoro_shadow_metric_exact(c)
+        assert metric.kappa == Fraction(13, 2)
+        assert metric.alpha == Fraction(2, 1)
+        assert metric.S4 == Fraction(10, c * (5 * c + 22))
+        assert metric.q0 == c ** 2
+        assert metric.q1 == 12 * c
+        assert metric.q2 == Fraction(180 * c + 872, 5 * c + 22)
+        assert metric.Delta == Fraction(40, 5 * c + 22)
+        assert metric.discriminant == Fraction(-320 * c ** 2, 5 * c + 22)
+        assert metric.rho_squared == metric.q2 / metric.q0
+
+    def test_scalar_metric_exact_affine_square(self):
+        from lib.resurgence_arithmetic_frontier_engine import (
+            scalar_shadow_metric_exact,
+        )
+        metric = scalar_shadow_metric_exact(Fraction(9, 4), Fraction(1), Fraction(0))
+        assert metric.q0 == Fraction(81, 4)
+        assert metric.q1 == Fraction(27, 1)
+        assert metric.q2 == Fraction(9, 1)
+        assert metric.Delta == 0
+        assert metric.discriminant == 0
+
+    def test_firewall_schemas_are_explicit(self):
+        from lib.resurgence_arithmetic_frontier_engine import (
+            HOLOGRAPHIC_PACKAGE_FIELDS,
+            KERNEL_NORMALIZATION_FORMULAS,
+            MODULAR_KOSZUL_PROJECTION_FIELDS,
+            OBJECT_SEPARATION_FIREWALLS,
+        )
+        assert HOLOGRAPHIC_PACKAGE_FIELDS == (
+            "A", "A^i", "A^!", "C", "r(z)", "Theta_A", "nabla^hol",
+        )
+        assert MODULAR_KOSZUL_PROJECTION_FIELDS == (
+            "Fact_X(L)", "barB_X(L)", "Theta_L", "L_L",
+            "(V_br,T_br)", "R4_mod(L)",
+        )
+        assert KERNEL_NORMALIZATION_FORMULAS["affine_raw_trace"] == "k*Omega_tr/z"
+        assert KERNEL_NORMALIZATION_FORMULAS["affine_kz"] == "Omega/((k+h^vee)z)"
+        assert KERNEL_NORMALIZATION_FORMULAS["heisenberg"] == "k/z"
+        assert KERNEL_NORMALIZATION_FORMULAS["virasoro"] == "(c/2)/z^3 + 2T/z"
+        assert "inversion, not Koszul duality" in (
+            OBJECT_SEPARATION_FIREWALLS["bar_cobar_inversion"]
+        )
+        assert "Hochschild bulk" in OBJECT_SEPARATION_FIREWALLS["hochschild_bulk"]
+
+    def test_frontier_status_is_non_certifying(self):
+        from lib.resurgence_arithmetic_frontier_engine import (
+            DIAGNOSTIC_NON_CERTIFYING,
+            frontier_diagnostic_status,
+            virasoro_data,
+        )
+        status = frontier_diagnostic_status(virasoro_data(13.0))
+        assert status["ordinary_borel_transform_entire"] is True
+        assert status["certifies_borel_singularities"] is False
+        assert status["certifies_borel_summability"] is False
+        assert status["certifies_ecalle_stokes"] is False
+        assert status["certifies_alien_calculus"] is False
+        assert status["certifies_zeta_zero_theorem"] is False
+        assert status["certifies_full_mc_data"] is False
+        assert status["certification"] == DIAGNOSTIC_NON_CERTIFYING
 
 
 # =====================================================================
@@ -331,10 +405,10 @@ class TestBorelTransform:
             assert np.isfinite(abs(B_val))
 
 
-class TestBorelSingularities:
-    """Test Borel singularity location prediction."""
+class TestBranchPointDiagnostics:
+    """Test reciprocal branch-point diagnostics."""
 
-    def test_singularity_at_reciprocal_branch_point(self):
+    def test_marker_at_reciprocal_branch_point(self):
         from lib.resurgence_arithmetic_frontier_engine import (
             virasoro_data, borel_singularity_locations,
         )
@@ -344,7 +418,7 @@ class TestBorelSingularities:
         assert abs(zeta_p * d.branch_plus - 1.0) < 1e-12
         assert abs(zeta_m * d.branch_minus - 1.0) < 1e-12
 
-    def test_singularities_conjugate(self):
+    def test_markers_conjugate(self):
         from lib.resurgence_arithmetic_frontier_engine import (
             virasoro_data, borel_singularity_locations,
         )
@@ -352,7 +426,7 @@ class TestBorelSingularities:
         zeta_p, zeta_m = borel_singularity_locations(d)
         assert abs(zeta_p - zeta_m.conjugate()) < 1e-12
 
-    def test_singularity_modulus_equals_rho(self):
+    def test_marker_modulus_equals_rho(self):
         from lib.resurgence_arithmetic_frontier_engine import (
             virasoro_data, borel_singularity_locations,
         )
@@ -361,7 +435,7 @@ class TestBorelSingularities:
             zeta_p, zeta_m = borel_singularity_locations(d)
             assert abs(abs(zeta_p) - d.rho) < 1e-10
 
-    def test_heisenberg_no_singularities(self):
+    def test_heisenberg_no_branch_markers(self):
         from lib.resurgence_arithmetic_frontier_engine import (
             heisenberg_data, locate_all_borel_singularities,
         )
@@ -369,7 +443,7 @@ class TestBorelSingularities:
         sings = locate_all_borel_singularities(d)
         assert len(sings) == 0
 
-    def test_affine_no_singularities(self):
+    def test_affine_no_branch_markers(self):
         from lib.resurgence_arithmetic_frontier_engine import (
             affine_sl2_data, locate_all_borel_singularities,
         )
@@ -377,15 +451,21 @@ class TestBorelSingularities:
         sings = locate_all_borel_singularities(d)
         assert len(sings) == 0
 
-    def test_virasoro_many_singularities(self):
+    def test_virasoro_two_branch_markers(self):
         from lib.resurgence_arithmetic_frontier_engine import (
-            virasoro_data, locate_all_borel_singularities,
+            DIAGNOSTIC_NON_CERTIFYING,
+            virasoro_data,
+            locate_all_borel_singularities,
         )
         d = virasoro_data(13.0)
         sings = locate_all_borel_singularities(d)
-        assert len(sings) >= 2  # At least the leading pair
+        assert len(sings) == 2
+        for entry in sings:
+            assert entry["type"] == "reciprocal_branch_marker"
+            assert entry["certified_borel_singularity"] is False
+            assert entry["certification"] == DIAGNOSTIC_NON_CERTIFYING
 
-    def test_singularities_sorted_by_modulus(self):
+    def test_markers_sorted_by_modulus(self):
         from lib.resurgence_arithmetic_frontier_engine import (
             virasoro_data, locate_all_borel_singularities,
         )
@@ -413,10 +493,14 @@ class TestPadeSingularities:
     def test_pade_poles_match_branch_points(self):
         """Pade poles of the original series should approximate branch points."""
         from lib.resurgence_arithmetic_frontier_engine import (
-            virasoro_data, borel_pade_singularities,
+            DIAGNOSTIC_NON_CERTIFYING,
+            virasoro_data,
+            borel_pade_singularities,
         )
         d = virasoro_data(13.0)
         result = borel_pade_singularities(d, max_r=50)
+        assert result["certified_borel_singularities"] is False
+        assert result["certification"] == DIAGNOSTIC_NON_CERTIFYING
         if 'pole_match' in result:
             for label, match in result['pole_match'].items():
                 # Relative error < 30% (Pade for algebraic functions)
@@ -448,11 +532,11 @@ class TestPadeSingularities:
 
 
 # =====================================================================
-# Section 5: Stokes constants
+# Section 5: Monodromy diagnostics
 # =====================================================================
 
-class TestStokesConstants:
-    """Test Stokes constant computation."""
+class TestMonodromyDiagnostics:
+    """Test monodromy-jump diagnostics."""
 
     def test_monodromy_prediction(self):
         from lib.resurgence_arithmetic_frontier_engine import (
@@ -481,11 +565,15 @@ class TestStokesConstants:
     def test_numerical_rho_verification(self):
         """Numerical ratio test: S_{r+1}/S_r -> rho for large r."""
         from lib.resurgence_arithmetic_frontier_engine import (
-            virasoro_data, stokes_constant_numerical,
+            DIAGNOSTIC_NON_CERTIFYING,
+            virasoro_data,
+            stokes_constant_numerical,
         )
         d = virasoro_data(13.0)
         result = stokes_constant_numerical(d, max_r=60)
         assert result['converged']
+        assert result["certifies_ecalle_stokes"] is False
+        assert result["certification"] == DIAGNOSTIC_NON_CERTIFYING
         # rho from ratios should match predicted rho
         rho_num = result['rho_from_ratios']
         rho_pred = result['rho']
@@ -503,11 +591,15 @@ class TestStokesConstants:
     def test_pslq_rho_recognition(self):
         """PSLQ should identify rho^2 as rational for rational c."""
         from lib.resurgence_arithmetic_frontier_engine import (
-            virasoro_data, stokes_constant_pslq,
+            DIAGNOSTIC_NON_CERTIFYING,
+            virasoro_data,
+            stokes_constant_pslq,
         )
         d = virasoro_data(13.0)
         result = stokes_constant_pslq(d, max_r=100, dps=30)
-        # S_1 is exact: 2*pi*i
+        assert result["certifies_ecalle_stokes"] is False
+        assert result["certification"] == DIAGNOSTIC_NON_CERTIFYING
+        # S_1 is the scalar monodromy-jump normalization.
         assert result['near_2pi_i']
         # rho from numerical ratios should approximately match predicted
         # (slow convergence due to r^{-3/2} correction)
@@ -516,7 +608,7 @@ class TestStokesConstants:
         assert abs(rho_num - rho_pred) / rho_pred < 0.1
 
     def test_stokes_c_independent_for_virasoro(self):
-        """The Stokes constant S_1 = 2*pi*i is universal (monodromy argument)."""
+        """The monodromy-jump diagnostic is c-independent for Virasoro."""
         from lib.resurgence_arithmetic_frontier_engine import (
             virasoro_data, stokes_constant_from_monodromy,
         )
@@ -527,11 +619,11 @@ class TestStokesConstants:
 
 
 # =====================================================================
-# Section 6: Alien derivatives
+# Section 6: Alien-calculus diagnostics
 # =====================================================================
 
-class TestAlienDerivatives:
-    """Test alien derivative structure."""
+class TestAlienDiagnostics:
+    """Test non-certifying alien-calculus diagnostic structure."""
 
     def test_heisenberg_no_alien_derivatives(self):
         from lib.resurgence_arithmetic_frontier_engine import (
@@ -541,6 +633,7 @@ class TestAlienDerivatives:
         aliens = alien_derivative_structure(d, max_r=10, max_k=3)
         for entry in aliens:
             assert abs(entry['S_k']) < 1e-14
+            assert entry["certifies_alien_calculus"] is False
 
     def test_affine_no_alien_derivatives(self):
         from lib.resurgence_arithmetic_frontier_engine import (
@@ -550,19 +643,24 @@ class TestAlienDerivatives:
         aliens = alien_derivative_structure(d, max_r=10, max_k=3)
         for entry in aliens:
             assert abs(entry['S_k']) < 1e-14
+            assert entry["certifies_alien_calculus"] is False
 
-    def test_virasoro_infinite_alien_tower(self):
+    def test_virasoro_candidate_marker_tower(self):
         from lib.resurgence_arithmetic_frontier_engine import (
-            virasoro_data, alien_derivative_structure,
+            DIAGNOSTIC_NON_CERTIFYING,
+            virasoro_data,
+            alien_derivative_structure,
         )
         d = virasoro_data(13.0)
         aliens = alien_derivative_structure(d, max_r=30, max_k=5)
-        # All alien derivatives should be nonzero for class M
+        # Candidate markers are nonzero for class M, but non-certifying.
         for entry in aliens:
             assert abs(entry['S_k']) > 1e-10
+            assert entry["certifies_alien_calculus"] is False
+            assert entry["certification"] == DIAGNOSTIC_NON_CERTIFYING
 
     def test_alien_omega_k_multiples(self):
-        """Alien derivative positions should be at integer multiples of omega_1."""
+        """Candidate marker positions are integer multiples of omega_1."""
         from lib.resurgence_arithmetic_frontier_engine import (
             virasoro_data, alien_derivative_structure,
         )
@@ -574,7 +672,7 @@ class TestAlienDerivatives:
             assert abs(entry['omega_k'] - expected) < 1e-12
 
     def test_stokes_constants_decay(self):
-        """S_k should decay as 1/k (logarithmic branch point)."""
+        """Diagnostic amplitudes decay as 1/k in this scalar model."""
         from lib.resurgence_arithmetic_frontier_engine import (
             virasoro_data, alien_derivative_structure,
         )
@@ -587,7 +685,7 @@ class TestAlienDerivatives:
 
 
 class TestBridgeEquation:
-    """Test bridge equation verification."""
+    """Test scalar convolution recursion verification."""
 
     def test_heisenberg_trivial(self):
         from lib.resurgence_arithmetic_frontier_engine import (
@@ -607,12 +705,18 @@ class TestBridgeEquation:
 
     def test_virasoro_bridge(self):
         from lib.resurgence_arithmetic_frontier_engine import (
-            virasoro_data, bridge_equation_check,
+            EXACT_SCALAR_PROJECTION,
+            virasoro_data,
+            bridge_equation_check,
         )
         d = virasoro_data(13.0)
         result = bridge_equation_check(d, max_r=30)
         assert result['bridge_satisfied']
         assert result['max_residual'] < 1e-10
+        assert result["checked_identity"] == "f(t)^2 = Q_L(t) coefficient recursion"
+        assert result["certification"] == EXACT_SCALAR_PROJECTION
+        assert result["certifies_full_mc_data"] is False
+        assert result["certifies_alien_calculus"] is False
 
     def test_bridge_multiple_c(self):
         from lib.resurgence_arithmetic_frontier_engine import (
@@ -652,7 +756,7 @@ class TestTransseries:
         assert abs(result['total'] - result['perturbative']) < 1e-14
 
     def test_virasoro_transseries_evaluates(self):
-        """Transseries evaluation produces finite results."""
+        """Diagnostic transseries evaluation produces finite results."""
         from lib.resurgence_arithmetic_frontier_engine import (
             virasoro_data, transseries_evaluate,
         )
@@ -660,8 +764,9 @@ class TestTransseries:
         result = transseries_evaluate(d, 0.05 + 0.0j)
         assert np.isfinite(abs(result['perturbative']))
         assert np.isfinite(abs(result['total']))
-        # The 1-instanton sector should be finite
+        # The candidate sector should be finite.
         assert np.isfinite(abs(result['one_instanton']))
+        assert result["certifies_resurgence"] is False
 
 
 # =====================================================================
@@ -684,18 +789,19 @@ class TestMedianResummation:
         assert diff / scale < 0.1  # Allow for numerical quadrature error
 
     def test_median_real_for_real_t(self):
-        """Median sum should be approximately real for real t."""
+        """Median diagnostic should be approximately real for real t."""
         from lib.resurgence_arithmetic_frontier_engine import (
             virasoro_data, median_borel_sum,
         )
         d = virasoro_data(13.0)
         result = median_borel_sum(d, t=0.1, max_r=30, n_quad=500)
+        assert result["certifies_borel_summability"] is False
         median = result['median']
         if abs(median) > 1e-10:
             assert abs(median.imag) / abs(median) < 0.1  # Approximately real
 
     def test_heisenberg_small_stokes_jump(self):
-        """Heisenberg: Stokes jump should be very small (polynomial Borel)."""
+        """Heisenberg: lateral jump should be very small (polynomial Borel)."""
         from lib.resurgence_arithmetic_frontier_engine import (
             heisenberg_data, median_borel_sum,
         )
@@ -869,6 +975,7 @@ class TestPAdicBorel:
         d = virasoro_data(2.0)
         result = p_adic_singularity_comparison(d, primes=[2, 3, 5], max_r=20)
         assert 'archimedean_radius' in result
+        assert result["certifies_p_adic_singularities"] is False
         for p in [2, 3, 5]:
             assert p in result
             assert result[p]['R_p'] > 0
@@ -882,10 +989,11 @@ class TestPAdicBorel:
         assert 'p' in result
         assert result['p'] == 2
         assert 'has_p_adic_stokes' in result
+        assert result["certifies_p_adic_stokes"] is False
 
 
 # =====================================================================
-# Section 11: Peacock patterns
+# Section 11: Mod-p coefficient patterns
 # =====================================================================
 
 class TestPeacockPattern:
@@ -921,6 +1029,7 @@ class TestPeacockPattern:
         assert 'residue_distribution' in result
         assert 'mod_values' in result
         assert len(result['mod_values']) == 49
+        assert result["certifies_garoufalidis_zagier_peacock"] is False
 
     def test_peacock_multi_prime(self):
         from lib.resurgence_arithmetic_frontier_engine import (
@@ -938,7 +1047,7 @@ class TestPeacockPattern:
 # =====================================================================
 
 class TestMultiPathVerification:
-    """Test multi-path verification of resurgence structure."""
+    """Test multi-path verification of scalar diagnostic structure."""
 
     def test_borel_singularity_multipath(self):
         from lib.resurgence_arithmetic_frontier_engine import (
@@ -949,6 +1058,7 @@ class TestMultiPathVerification:
         assert 'path_1_predicted' in result
         assert 'path_2_pade' in result
         assert 'path_4_p_adic' in result
+        assert result["certified_borel_singularities"] is False
 
     def test_stokes_multipath(self):
         from lib.resurgence_arithmetic_frontier_engine import (
@@ -958,6 +1068,7 @@ class TestMultiPathVerification:
         result = verify_stokes_multipath(d, max_r=40)
         assert 'path_1_monodromy' in result
         assert abs(result['path_1_monodromy'] - 2j * PI) < 1e-12
+        assert result["certifies_ecalle_stokes"] is False
 
 
 # =====================================================================
@@ -968,7 +1079,7 @@ class TestCrossFamilyConsistency:
     """Test consistency across algebra families."""
 
     def test_depth_class_determines_singularities(self):
-        """Class G/L: no singularities. Class M: singularities."""
+        """Class G/L: no markers. Class M: branch markers."""
         from lib.resurgence_arithmetic_frontier_engine import (
             heisenberg_data, affine_sl2_data, virasoro_data,
             locate_all_borel_singularities,
@@ -996,22 +1107,22 @@ class TestCrossFamilyConsistency:
 
 
 # =====================================================================
-# Section 14: Koszul duality and self-duality
+# Section 14: Verdier scalar complementarity and self-duality
 # =====================================================================
 
-class TestKoszulDuality:
-    """Test Koszul duality properties of resurgence structure."""
+class TestVerdierScalarComplementarity:
+    """Test scalar Verdier-complement properties of the diagnostic structure."""
 
     def test_c13_self_dual_rho(self):
-        """At c=13, Vir_c and its Koszul dual Vir_{26-c}=Vir_13 are the same."""
+        """At c=13, the Virasoro scalar complement has the same rho."""
         from lib.resurgence_arithmetic_frontier_engine import virasoro_data
         d = virasoro_data(13.0)
         d_dual = virasoro_data(26.0 - 13.0)
         assert abs(d.rho - d_dual.rho) < 1e-12
         assert abs(d.theta - d_dual.theta) < 1e-12
 
-    def test_koszul_pair_complementary_rho(self):
-        """rho(c) and rho(26-c) should differ for c != 13."""
+    def test_scalar_complementary_rho(self):
+        """rho(c) and the scalar complement rho(26-c) differ for c != 13."""
         from lib.resurgence_arithmetic_frontier_engine import virasoro_data
         for c in [1.0, 5.0, 20.0, 25.0]:
             d = virasoro_data(c)
@@ -1021,14 +1132,14 @@ class TestKoszulDuality:
                 assert abs(d.rho - d_dual.rho) > 1e-6
 
     def test_complementarity_sum_AP24(self):
-        """kappa + kappa' = 13 for Virasoro (AP24)."""
+        """kappa + kappa' = 13 for the Virasoro scalar complement."""
         from lib.resurgence_arithmetic_frontier_engine import virasoro_data
         for c in [1.0, 2.0, 13.0, 25.0]:
             d = virasoro_data(c)
             assert abs(d.kappa + d.kappa_dual - 13.0) < 1e-12
 
     def test_heisenberg_kappa_antisymmetric(self):
-        """kappa + kappa' = 0 for Heisenberg (AP24)."""
+        """kappa + kappa' = 0 for the Heisenberg scalar complement."""
         from lib.resurgence_arithmetic_frontier_engine import heisenberg_data
         d = heisenberg_data(1, 3.0)
         assert abs(d.kappa + d.kappa_dual) < 1e-14
@@ -1097,7 +1208,7 @@ class TestEdgeCases:
 # =====================================================================
 
 class TestResurgenceSummary:
-    """Test the resurgence summary function."""
+    """Test the arithmetic diagnostic summary function."""
 
     def test_summary_virasoro(self):
         from lib.resurgence_arithmetic_frontier_engine import (
@@ -1106,8 +1217,10 @@ class TestResurgenceSummary:
         d = virasoro_data(13.0)
         s = resurgence_summary(d, max_r=20)
         assert s['depth_class'] == 'M'
-        assert s['n_singularities'] > 0
+        assert s['n_branch_markers'] == 2
+        assert s['n_certified_borel_singularities'] == 0
         assert abs(s['S_1'] - 2j * PI) < 1e-12
+        assert s["diagnostic_status"]["certifies_ecalle_stokes"] is False
 
     def test_summary_heisenberg(self):
         from lib.resurgence_arithmetic_frontier_engine import (
@@ -1187,13 +1300,13 @@ class TestVirasoroSpecificC:
 
 
 # =====================================================================
-# Section 18: Instanton actions
+# Section 18: Reciprocal branch markers
 # =====================================================================
 
-class TestInstantonActions:
-    """Test instanton action computation."""
+class TestReciprocalBranchMarkers:
+    """Test compatibility alias for reciprocal branch markers."""
 
-    def test_instanton_modulus_is_rho(self):
+    def test_marker_modulus_is_rho(self):
         from lib.resurgence_arithmetic_frontier_engine import virasoro_data
         for c in [1.0, 2.0, 13.0, 25.0]:
             d = virasoro_data(c)
@@ -1201,18 +1314,18 @@ class TestInstantonActions:
             assert abs(abs(A_p) - d.rho) < 1e-10, f"c={c}"
             assert abs(abs(A_m) - d.rho) < 1e-10, f"c={c}"
 
-    def test_instanton_actions_conjugate(self):
+    def test_markers_conjugate(self):
         from lib.resurgence_arithmetic_frontier_engine import virasoro_data
         for c in [1.0, 13.0, 25.0]:
             d = virasoro_data(c)
             A_p, A_m = d.instanton_actions
             assert abs(A_p - A_m.conjugate()) < 1e-12
 
-    def test_heisenberg_no_instanton(self):
-        """Heisenberg: branch points at infinity, so instanton actions are trivial."""
+    def test_heisenberg_no_finite_marker(self):
+        """Heisenberg: branch points at infinity, so reciprocal markers are trivial."""
         from lib.resurgence_arithmetic_frontier_engine import heisenberg_data
         d = heisenberg_data()
-        # rho = 0 means no finite instanton actions
+        # rho = 0 means no finite reciprocal branch markers.
         assert d.rho == 0.0
         # Branch points at infinity
         assert d.branch_plus == complex('inf')
@@ -1295,8 +1408,8 @@ class TestArithmeticProperties:
 class TestAdditionalVerification:
     """Additional multi-path verification tests."""
 
-    def test_borel_singularity_3_paths_virasoro_c1(self):
-        """3-path verification for Virasoro c=1."""
+    def test_branch_marker_3_paths_virasoro_c1(self):
+        """3-path branch-marker check for Virasoro c=1."""
         from lib.resurgence_arithmetic_frontier_engine import (
             virasoro_data, borel_singularity_locations,
             borel_pade_singularities, p_adic_singularity_comparison,
@@ -1312,7 +1425,7 @@ class TestAdditionalVerification:
         p_adic = p_adic_singularity_comparison(d, primes=[2], max_r=20)
         assert 2 in p_adic
 
-    def test_borel_singularity_3_paths_virasoro_c13(self):
+    def test_branch_marker_3_paths_virasoro_c13(self):
         from lib.resurgence_arithmetic_frontier_engine import (
             virasoro_data, borel_singularity_locations,
             borel_pade_singularities, p_adic_singularity_comparison,
@@ -1325,7 +1438,7 @@ class TestAdditionalVerification:
         p_adic = p_adic_singularity_comparison(d, primes=[2, 3], max_r=20)
         assert 2 in p_adic
 
-    def test_stokes_3_paths_virasoro(self):
+    def test_monodromy_3_paths_virasoro(self):
         from lib.resurgence_arithmetic_frontier_engine import (
             virasoro_data, stokes_constant_from_monodromy,
             stokes_constant_numerical,

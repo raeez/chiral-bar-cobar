@@ -1,16 +1,16 @@
 r"""Tests for the quantum spectral curve and exact WKB from the shadow ODE.
 
 Verifies:
-1. Classical spectral curve y^2 = V(t) from the shadow metric
+1. WKB classical curve y^2 = V(t) from the shadow metric
 2. WKB expansion S_n(t) computed recursively
 3. One-loop WKB = shadow connection (fundamental identification)
 4. Voros coefficients (period integrals)
 5. Universal results (classical period = pi, Koszul sign = -1)
 6. Indicial exponents universal (always 1/2)
 7. Riccati equation residuals vanish at each order
-8. Painleve VI from W_3 multi-channel system
+8. Painleve VI candidate from W_3 multi-channel singularities
 9. Genus expansion from WKB
-10. Borel singularities
+10. Formal Borel singularity candidates
 11. Special central charges (c = 1/2, 1, 13, 25, 26)
 12. Cross-verification with shadow connection module
 
@@ -26,11 +26,11 @@ import pytest
 
 from sympy import (
     I, Rational, Symbol, cancel, diff, expand, factor,
-    log, pi, simplify, solve, sqrt, S, Poly,
+    limit, log, pi, simplify, solve, sqrt, S, Poly,
 )
 
 from compute.lib.quantum_spectral_curve import (
-    # Section 1: Classical spectral curve
+    # Section 1: WKB classical curve
     shadow_metric_poly,
     shadow_metric_coefficients,
     schwarzian_potential,
@@ -40,6 +40,7 @@ from compute.lib.quantum_spectral_curve import (
     wkb_leading_order,
     wkb_one_loop,
     wkb_recursive_coefficients,
+    wkb_closed_form_coefficients,
     wkb_expansion_virasoro,
     # Section 3: Voros coefficients
     voros_period_classical,
@@ -70,6 +71,7 @@ from compute.lib.quantum_spectral_curve import (
     wkb_coefficients_numerical,
     # Section 12: Verification
     verify_wkb_riccati,
+    verify_wkb_riccati_symbolic,
     verify_one_loop_is_shadow_connection,
     verify_indicial_exponents_universal,
     # Section 13: Special c values
@@ -84,11 +86,11 @@ t = Symbol('t')
 
 
 # =========================================================================
-# 1. Classical spectral curve
+# 1. WKB classical curve
 # =========================================================================
 
 class TestClassicalSpectralCurve:
-    """Tests for the classical spectral curve y^2 = V(t)."""
+    """Tests for the WKB classical curve y^2 = V(t)."""
 
     def test_shadow_metric_polynomial_form(self):
         """Q_L(t) = (2*kappa + 3*alpha*t)^2 + 2*Delta*t^2."""
@@ -125,10 +127,11 @@ class TestClassicalSpectralCurve:
         assert curve['genus'] == 0
 
     def test_virasoro_classical_curve(self):
-        """Virasoro classical curve has the correct branch points."""
+        """Virasoro WKB curve has two finite regular singular points."""
         curve = virasoro_classical_curve()
         assert curve['genus'] == 0
-        assert len(curve['branch_points']) == 2
+        assert len(curve['singular_points']) == 2
+        assert curve['wkb_branch_points'] == []
 
     def test_schwarzian_vanishes_when_delta_zero(self):
         """V(t) = 0 when Delta = 0 (classes G and L)."""
@@ -136,13 +139,24 @@ class TestClassicalSpectralCurve:
         V = schwarzian_potential(kappa, alpha, S.Zero)
         assert V == 0
 
-    def test_branch_points_are_zeros_of_Q(self):
-        """Branch points of V(t) are the zeros of Q_L(t)."""
+    def test_singular_points_are_zeros_of_Q(self):
+        """Finite singular points of V(t) are the zeros of Q_L(t)."""
         kappa, alpha, Delta = c/2, Rational(2), Rational(40)/(5*c+22)
         curve = classical_spectral_curve(kappa, alpha, Delta)
         Q = curve['Q']
-        for bp in curve['branch_points']:
+        for bp in curve['singular_points']:
             assert simplify(Q.subs(t, bp)) == 0
+
+    def test_wkb_curve_has_double_poles_not_branch_points(self):
+        """For y^2=C/Q^2, zeros of Q are double poles, not WKB branch points."""
+        kappa, alpha, Delta = Rational(3), Rational(2), Rational(5)
+        curve = classical_spectral_curve(kappa, alpha, Delta)
+        V = curve['V']
+        assert curve['wkb_branch_points'] == []
+        for pole in curve['singular_points']:
+            leading = limit((t - pole)**2 * V, t, pole)
+            # C / Q'(pole)^2 = -1/4 for this quadratic shadow metric.
+            assert simplify(leading + Rational(1, 4)) == 0
 
 
 # =========================================================================
@@ -212,6 +226,21 @@ class TestWKBExpansion:
         for n in range(5):
             assert n in Sp
 
+    def test_closed_form_oracle_matches_recursion(self):
+        """Quadratic Q_L gives p=sqrt(C)*sqrt(1-hbar^2)/Q+hbar*Q'/(2Q)."""
+        kappa, alpha, Delta = Rational(3), Rational(2), Rational(5)
+        recursive = wkb_recursive_coefficients(kappa, alpha, Delta, max_order=8)
+        closed = wkb_closed_form_coefficients(kappa, alpha, Delta, max_order=8)
+        for n in range(9):
+            assert simplify(recursive[n] - closed[n]) == 0
+
+    def test_symbolic_riccati_residuals_vanish_through_order_8(self):
+        """Exact Riccati residuals vanish, not just sampled numerical values."""
+        kappa, alpha, Delta = Rational(3), Rational(2), Rational(5)
+        result = verify_wkb_riccati_symbolic(kappa, alpha, Delta, max_order=8)
+        assert result['all_zero']
+        assert all(residual == 0 for residual in result['residuals'].values())
+
 
 # =========================================================================
 # 3. Voros coefficients — universal results
@@ -221,10 +250,16 @@ class TestVorosCoefficients:
     """Tests for the Voros coefficients and their universal properties."""
 
     def test_classical_period_is_pi(self):
-        """The classical half-period is universally pi."""
+        """The real-line classical action is universally pi."""
         kappa, alpha, Delta = Rational(3), Rational(2), Rational(5)
         result = voros_period_classical(kappa, alpha, Delta)
-        assert result['half_period'] == pi
+        assert result['real_line_action'] == pi
+
+    def test_finite_pole_to_pole_action_not_claimed(self):
+        """The pi action is not a finite endpoint-to-endpoint pole integral."""
+        kappa, alpha, Delta = Rational(3), Rational(2), Rational(5)
+        result = voros_period_classical(kappa, alpha, Delta)
+        assert result['finite_pole_to_pole_defined'] is False
 
     def test_compact_period_vanishes(self):
         """The compact cycle period vanishes (sum of residues = 0)."""
@@ -454,32 +489,34 @@ class TestStokesAndODE:
         assert 'no accessory parameter' in result['painleve_type'].lower() or \
                'none' in result['painleve_type'].lower()
 
-    def test_w3_is_painleve_vi(self):
-        """W_3 2-channel system gives Painleve VI."""
+    def test_w3_is_painleve_candidate(self):
+        """W_3 scalar two-channel package gives only a PVI candidate."""
         result = w3_shadow_ode_type(10.0)
-        assert result['painleve_type'] == 'PVI'
+        assert result['painleve_type'] == 'PVI_candidate'
+        assert 'no isomonodromic' in result['painleve_status']
         assert result['n_singular_points'] == 4
 
 
 # =========================================================================
-# 9. Painleve VI from W_3
+# 9. Painleve VI candidate from W_3
 # =========================================================================
 
 class TestPainleveVI:
-    """Tests for Painleve VI from the W_3 multi-channel system."""
+    """Tests for the formal PVI candidate from the W_3 scalar package."""
 
     def test_four_singularities(self):
         """W_3 2-channel has exactly 4 singular points."""
         result = painleve_from_w3(10.0)
         assert len(result['singularities']) == 4
 
-    def test_painleve_type_is_PVI(self):
-        """Painleve type is PVI."""
+    def test_painleve_type_is_candidate(self):
+        """Four static singularities produce a PVI candidate, not a theorem."""
         result = painleve_from_w3(10.0)
-        assert result['painleve_type'] == 'PVI'
+        assert result['painleve_type'] == 'PVI_candidate'
+        assert result['PVI_parameters_status'] == 'formal_exponent_difference_candidate'
 
     def test_pvi_parameters(self):
-        """PVI parameters: alpha = delta = 1/2, beta = gamma = 0."""
+        """Formal PVI parameter candidate: alpha=delta=1/2, beta=gamma=0."""
         result = painleve_from_w3(10.0)
         params = result['PVI_parameters']
         assert abs(params['alpha'] - 0.5) < 1e-10
@@ -520,26 +557,26 @@ class TestPainleveVI:
 
 
 # =========================================================================
-# 10. Borel singularities
+# 10. Formal Borel singularity candidates
 # =========================================================================
 
 class TestBorelSingularities:
     """Tests for the Borel singularity structure."""
 
     def test_fundamental_action_is_pi(self):
-        """A_1 = pi (universal for all shadow Schrodinger equations)."""
+        """The formal real-line action candidate is A_1 = pi."""
         result = borel_singularities_from_wkb(5.0, 2.0, 3.0)
         assert abs(result['A_1'] - math.pi) < 1e-14
 
     def test_borel_singularities_at_n_pi(self):
-        """Borel singularities at xi = n*pi for n = 1, 2, ..., 5."""
+        """Formal Borel candidates at xi = n*pi for n = 1, 2, ..., 5."""
         result = borel_singularities_from_wkb(5.0, 2.0, 3.0)
         for n in range(1, 6):
             expected = n * math.pi
             assert abs(result['borel_singularities'][n-1] - expected) < 1e-14
 
-    def test_borel_universal_across_algebras(self):
-        """A_1 = pi for different algebra data."""
+    def test_borel_candidate_across_algebras(self):
+        """The same formal A_1 candidate is returned for different algebra data."""
         test_cases = [
             (0.5, 2.0, 1.0),
             (13.0, 2.0, 0.3),
@@ -548,6 +585,7 @@ class TestBorelSingularities:
         for kap, alp, delt in test_cases:
             result = borel_singularities_from_wkb(kap, alp, delt)
             assert abs(result['A_1'] - math.pi) < 1e-14
+            assert result['status'] == 'formal_candidate_from_real_line_action'
 
 
 # =========================================================================
@@ -555,7 +593,7 @@ class TestBorelSingularities:
 # =========================================================================
 
 class TestTopologicalRecursion:
-    """Tests for topological recursion on the spectral curve."""
+    """Tests for scalar topological-recursion input data."""
 
     def test_omega_01_matches_S0_prime(self):
         """omega_{0,1}(t) = sqrt(C)/Q_L(t) = S_0'(t)."""
@@ -574,10 +612,11 @@ class TestTopologicalRecursion:
         assert abs(bergman(1.0, 0.5) - 4.0) < 1e-14  # 1/(0.5)^2 = 4
 
     def test_F1_shadow_matches_kappa_over_24(self):
-        """F_1 from shadow obstruction tower = kappa/24."""
+        """F_1 from shadow obstruction tower is not claimed as exact TR F_1."""
         kappa, alpha, Delta = 5.0, 2.0, 3.0
         result = topological_recursion_F1(kappa, alpha, Delta)
         assert abs(result['F1_shadow'] - kappa/24.0) < 1e-14
+        assert result['identification_status'] == 'normalization_dependent_not_identical_to_shadow_F1'
 
 
 # =========================================================================
@@ -633,10 +672,10 @@ class TestSpecialCentralCharges:
             assert data.kappa > 0
             assert data.Delta > 0
 
-    def test_c13_self_dual_branch_points_symmetric(self):
-        """At c = 13 self-dual: branch points have enhanced symmetry."""
+    def test_c13_self_dual_singular_points_symmetric(self):
+        """At c = 13 self-dual: scalar singular points are conjugate."""
         data = virasoro_c13_self_dual()
-        # Branch points should be complex conjugates
+        # The two zeros of Q_L should be complex conjugates.
         assert abs(data.t_plus - data.t_minus.conjugate()) < 1e-10
 
 
@@ -695,6 +734,21 @@ class TestNumericalWKB:
             Qp_val = 12*kappa*alpha + 2*(9*alpha**2 + 2*Delta)*tv
             expected = Qp_val / (2*Q_val)
             assert abs(S1p[i] - expected) < 1e-10
+
+    def test_numerical_S2_matches_symbolic_transport_oracle(self):
+        """Numerical transport uses d(S_1')/dt, not a second difference."""
+        c_val = 10.0
+        result = wkb_coefficients_numerical(c_val, max_order=2, n_grid=401)
+        # c=10 gives kappa=5 and Delta=40/(5c+22)=5/9 exactly.
+        Sp_exact = wkb_recursive_coefficients(Rational(5), Rational(2),
+                                              Rational(5, 9), max_order=2)
+        t_grid = result['t_grid']
+        S2p = result['Sp'][2]
+
+        for i in [100, 160, 200, 240, 300]:
+            tv = float(t_grid[i])
+            expected = complex(Sp_exact[2].subs(t, tv))
+            assert abs(S2p[i] - expected) < 2e-5
 
 
 # =========================================================================
@@ -785,14 +839,14 @@ class TestSymbolicNumericalConsistency:
 
 
 # =========================================================================
-# 16. Koszul duality of the spectral curve
+# 16. Verdier-dual Virasoro scalar lane
 # =========================================================================
 
-class TestKoszulDuality:
-    """Tests for Koszul duality properties of the spectral curve."""
+class TestVerdierDualScalarLane:
+    """Tests for the c -> 26-c scalar lane, not an identification with A^!."""
 
     def test_dual_spectral_curve_c_to_26_minus_c(self):
-        """Koszul dual spectral curve: c -> 26 - c."""
+        """Virasoro-sector dual central charge: c -> 26 - c."""
         data_c10 = virasoro_wkb_data(10.0, max_order=2, n_points=300)
         data_c16 = virasoro_wkb_data(16.0, max_order=2, n_points=300)
         # kappa(10) = 5, kappa(16) = 8
@@ -802,7 +856,7 @@ class TestKoszulDuality:
         assert abs(data_c10.kappa + data_c16.kappa - 13.0) < 1e-14
 
     def test_self_dual_at_c13(self):
-        """At c = 13: spectral curve is self-dual."""
+        """At c = 13: the scalar central-charge lane is self-dual."""
         data = virasoro_c13_self_dual()
         assert abs(data.kappa - 6.5) < 1e-14
         # Self-dual: kappa + kappa' = 2*6.5 = 13
@@ -829,10 +883,10 @@ class TestW3SelfDual:
 
     def test_w3_painleve_at_c50(self):
         """W_3 at c = 50 (self-dual for W_3 with conductor 100)."""
-        # At c = 50: Koszul dual is W_3 at c = 100 - 50 = 50 (self-dual)
+        # At c = 50 the scalar central-charge involution c -> 100-c is fixed.
         result = painleve_from_w3(50.0)
         assert len(result['singularities']) == 4
-        assert result['painleve_type'] == 'PVI'
+        assert result['painleve_type'] == 'PVI_candidate'
 
     def test_w3_painleve_c_dependence(self):
         """Cross-ratio varies smoothly with c."""
@@ -927,8 +981,8 @@ class TestWKBDataContainer:
         assert data.Delta > 0
         assert data.C_schwarzian > 0
 
-    def test_branch_points_are_conjugate(self):
-        """Branch points are complex conjugates for c > 0."""
+    def test_singular_points_are_conjugate(self):
+        """Zeros of Q_L are complex conjugates for c > 0."""
         data = virasoro_wkb_data(10.0, max_order=2, n_points=300)
         assert abs(data.t_plus - data.t_minus.conjugate()) < 1e-10
 

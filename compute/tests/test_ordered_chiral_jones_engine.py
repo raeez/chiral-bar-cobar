@@ -14,8 +14,9 @@ Convention notes:
   - q is the Jones variable directly (NOT t = q^2 Kassel convention)
   - V_K(q) = -q^{-4} + q^{-3} + q^{-1} for the trefoil
   - kappa = k + h^v = k + 2 for sl_2
-  - q_quant = exp(pi*i/kappa) for the quantum group parameter
-  - check_R eigenvalues: q_quant (sym), -q_quant^{-1} (anti)
+  - q_QG = exp(pi*i/kappa) for the quantum group parameter
+  - q_J = q_QG^2 is the Jones polynomial variable
+  - check_R eigenvalues: q_QG (sym), -q_QG^{-1} (anti)
   - kappa(V_k(sl_2)) = 3(k+2)/4 (AP1, AP39: kappa != c/2)
 
 Expected value verification:
@@ -35,6 +36,8 @@ import pytest
 
 from compute.lib.ordered_chiral_jones_engine import (
     sl2_casimir_on_tensor,
+    q_quantum_group_from_level,
+    q_jones_from_level,
     kz_connection_matrix,
     degree_3_chain_complex_data,
     kz_monodromy_exact_2pt,
@@ -54,6 +57,8 @@ from compute.lib.ordered_chiral_jones_engine import (
     jones_trefoil_laurent,
     jones_trefoil_mirror_laurent,
     OrderedChiralJonesData,
+    verify_hecke_relation,
+    verify_braid_relation,
 )
 
 
@@ -69,9 +74,9 @@ Q_GENERIC_2 = cmath.exp(0.7j)
 Q_GENERIC_3 = cmath.exp(1.1j)
 
 # Root-of-unity q values (for CS level k)
-Q_LEVEL_3 = cmath.exp(1j * PI / 5)    # k=3, kappa=5
-Q_LEVEL_5 = cmath.exp(1j * PI / 7)    # k=5, kappa=7
-Q_LEVEL_10 = cmath.exp(1j * PI / 12)  # k=10, kappa=12
+Q_LEVEL_3 = cmath.exp(2j * PI / 5)    # Jones q_J at k=3, kappa=5
+Q_LEVEL_5 = cmath.exp(2j * PI / 7)    # Jones q_J at k=5, kappa=7
+Q_LEVEL_10 = cmath.exp(2j * PI / 12)  # Jones q_J at k=10, kappa=12
 
 TOL = 1e-8
 TOL_NUMERICAL = 1e-6  # looser tolerance for numerical ODE integration
@@ -136,19 +141,14 @@ class TestCasimirOperator:
 
         evals = sorted(np.linalg.eigvalsh(S.real))
 
-        # V^{tensor 3} = V_{3/2} (dim 4) + 2 * V_{1/2} (dim 2 each, total 4)
-        # On V_{3/2}: Omega_sum = (C_2(3/2) - 3*C_2(1/2))/2 * 3
-        # C_2(j) = j(j+1): C_2(3/2) = 15/4, C_2(1/2) = 3/4
-        # Actually Omega_sum = sum_{i<j} Omega_{ij} = (C_{total} - sum C_i)/2
-        # = (C_total - 3 * 3/4)/2
-        # On V_{3/2}: (15/4 - 9/4)/2 = 6/4/2 = 3/4
-        # On V_{1/2}: (3/4 - 9/4)/2 = -6/4/2 = -3/4
-        # So eigenvalues: 3/4 (mult 4) and -3/4 (mult 4).
+        # In the trace-form normalization used here, Omega has eigenvalues
+        # +1/2 on Sym^2 and -3/2 on Lambda^2.  The three-pair sum therefore
+        # has eigenvalues +3/2 on V_{3/2} and -3/2 on the two V_{1/2} summands.
 
-        assert abs(evals[0] - (-0.75)) < TOL
-        assert abs(evals[3] - (-0.75)) < TOL
-        assert abs(evals[4] - 0.75) < TOL
-        assert abs(evals[7] - 0.75) < TOL
+        assert abs(evals[0] - (-1.5)) < TOL
+        assert abs(evals[3] - (-1.5)) < TOL
+        assert abs(evals[4] - 1.5) < TOL
+        assert abs(evals[7] - 1.5) < TOL
 
     def test_casimir_symmetry(self):
         """Omega_{ij} = Omega_{ji} (the Casimir is symmetric in i, j)."""
@@ -296,14 +296,22 @@ class TestDrinfeldKohno:
     def test_sym_eigenvalue_match(self):
         """KZ and quantum R-matrix agree on Sym^2 eigenvalue.
 
-        # VERIFIED: both give q_quant = exp(pi*i/kappa) on Sym^2
-        # [DC] KZ: exp(2*pi*i * (1/2)/kappa) = exp(pi*i/kappa) = q_quant
-        # [DC] check_R: eigenvalue q_quant on Sym^2 (Kassel)
+        # VERIFIED: both give q_QG = exp(pi*i/kappa) on Sym^2
+        # [DC] KZ: exp(2*pi*i * (1/2)/kappa) = exp(pi*i/kappa) = q_QG
+        # [DC] check_R: eigenvalue q_QG on Sym^2 (Kassel)
         """
         for k in [1, 2, 3, 5, 10]:
             data = drinfeld_kohno_eigenvalue_comparison(k)
             assert data['sym_eigenvalue_match'] < TOL, \
                 f"Sym eigenvalue mismatch at k={k}: {data['sym_eigenvalue_match']}"
+
+    def test_q_qg_and_q_jones_are_distinct(self):
+        """DK uses q_QG, while the Jones polynomial is evaluated at q_J=q_QG^2."""
+        for k in [1, 3, 5, 10]:
+            q_qg = q_quantum_group_from_level(k)
+            q_j = q_jones_from_level(k)
+            assert abs(q_j - q_qg ** 2) < TOL
+            assert abs(q_j - q_qg) > 1e-6
 
 
 # =========================================================================
@@ -389,13 +397,12 @@ class TestJonesTrefoilFivePaths:
     def test_jones_at_root_of_unity(self):
         """Jones polynomial at roots of unity (CS specialization).
 
-        At q = exp(pi*i/kappa), the Jones polynomial is the quantum
+        At q_J = exp(2*pi*i/kappa), the Jones polynomial is the quantum
         invariant from Chern-Simons theory at level k.
         All five paths must agree at these special values too.
         """
         for k in [3, 5, 7]:
-            kappa = k + 2
-            q = cmath.exp(1j * PI / kappa)
+            q = q_jones_from_level(k)
             result = verify_trefoil_five_paths(q)
             assert result['all_agree'], \
                 f"Paths disagree at k={k}: max disc = {result['max_discrepancy']}"
@@ -663,7 +670,7 @@ class TestCrossEngineConsistency:
         for q in [Q_GENERIC, Q_GENERIC_2]:
             val_ours = jones_trefoil_from_rmatrix(q)
             from compute.lib.knot_invariant_shadow_engine import jones_from_braid
-            val_shadow = jones_from_braid([1, 1, 1], 2, q)
+            val_shadow = jones_from_braid([1, 1, 1], 2, q ** 0.5)
             assert abs(val_ours - val_shadow) < TOL
 
 
@@ -684,7 +691,7 @@ class TestHeckeRelation:
         # [DC] Direct matrix computation
         # [LT] Kassel GTM 155, Prop. XVII.3.1
         """
-        for q in [Q_GENERIC, Q_GENERIC_2, Q_LEVEL_5]:
+        for q in [Q_GENERIC, Q_GENERIC_2, q_quantum_group_from_level(5)]:
             residual = verify_hecke_relation(q, 2)
             assert residual < TOL, \
                 f"Hecke relation fails: residual = {residual}"
@@ -695,7 +702,7 @@ class TestHeckeRelation:
         # VERIFIED: residual < 1e-12
         # [DC] Direct 8x8 matrix multiplication
         """
-        for q in [Q_GENERIC, Q_GENERIC_2, Q_LEVEL_5]:
+        for q in [Q_GENERIC, Q_GENERIC_2, q_quantum_group_from_level(5)]:
             residual = verify_braid_relation(q, 2)
             assert residual < TOL, \
                 f"Braid relation fails: residual = {residual}"

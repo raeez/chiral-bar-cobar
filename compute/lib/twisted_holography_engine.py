@@ -1,55 +1,72 @@
-r"""Twisted holography engine: Costello-Li programme via modular Koszul duality.
+r"""Twisted holography engine: scalar shadows of the HT/Koszul package.
 
-Costello-Li (2019-2023) identified boundary/bulk/defect algebras in twisted
-gauge theories with chiral algebra data controlled by bar-cobar duality.
-The holographic modular Koszul datum
+Costello-Li type twisted-holography examples relate boundary, line, and
+bulk presentations through bar, Verdier, Hochschild, collision, and
+Maurer-Cartan constructions. The manuscript's seven-entry holographic
+modular Koszul datum is
 
-    H(T) = (A, A!, C, r(z), Theta_A, nabla^hol)
+    H(T) = (A, A^i, A!, C, r(z), Theta_A, nabla^hol)
 
-encodes the full holomorphic-topological (HT) holographic system.
+where A^i is the bar-dual coalgebra, A! is the Verdier/Koszul companion
+only after the strictification hypotheses are met, and
+C = Z_ch^der(A) is the pinned chiral Hochschild bulk slot.
+
+This engine does not construct the full HT theory. It records the
+seven-entry package at the scalar/typed-summary level:
+
+    (A, A^i, A!, C, r(z), Theta_A, nabla^hol).
+
+The A^i slot is the bar-dual coalgebra H^*(B^ch(A)); the A! slot is a
+Verdier/Koszul companion summary. Neither slot is Omega(B(A)).
+Bar-cobar inversion recovers A, while C is pinned to Z_ch^der(A).
 
 PRINCIPAL OBJECTS:
 
-1. **GL(1) Chern-Simons**: boundary = Heisenberg H_k, bulk derived center =
-   Fock space C[d phi, d^2 phi, ...], Koszul dual = H_{-k} at the level of
-   modular characteristics (AP33: H_k^! = Sym^ch(V*), NOT H_{-k} as algebras).
+1. **GL(1) Chern-Simons**: boundary = Heisenberg H_k. The C-slot is the
+   derived-centre/Fock model, while the Verdier/Koszul companion is
+   Sym^ch(V*) with kappa = -k (same scalar characteristic as H_{-k}, not the
+   same algebra).
 
-2. **GL(N) Chern-Simons at level k**: boundary = affine gl(N)_k, bulk =
-   W_{1+infty} at c = N via large-N duality (Gaberdiel-Gopakumar).
+2. **GL(N) Chern-Simons at level k**: boundary = affine gl(N)_k; the
+   large-N comparison slot is W_{1+infty} at c = N (Gaberdiel-Gopakumar).
 
 3. **M2 brane (ABJM)**: boundary = chiral algebra from BRST reduction.
    This engine stores the reduced scalar convention kappa_red = -N^2;
-   the full pre-BRST package has kappa = -(N^2+1).
+   the unreduced pre-BRST package has kappa = -(N^2+1).
 
 4. **Twisted M-theory on CY5**: boundary = chiral algebra on M5 wrapping divisor,
-   holographic datum from Calabi-Yau data.
+   with scalar datum supplied from Calabi-Yau data.
 
 5. **Holographic shadow connection**: nabla^hol_{g,n} = d - Sh_{g,n}(Theta_A).
    Heisenberg: flat (Gaussian, depth 2). Affine: log singularities (Lie, depth 3).
    Virasoro: essential singularity (Mixed, depth infinity).
 
-6. **Anomaly cancellation**: kappa(boundary) + kappa(bulk ghosts) = 0 at
-   critical dimension. Bosonic string: c/2 + (-13) = 0 at c = 26.
+6. **Anomaly cancellation/complementarity**: the engine records the scalar
+   kappa-sum of a boundary algebra with its companion or ghost sector.
+   Bosonic string: c/2 + (-13) = 0 at c = 26.
 
-7. **Holographic entanglement entropy**: S_EE = (c/3) log(L/eps) from kappa,
-   plus quantum corrections from higher-arity shadows.
+7. **Holographic entanglement scalar**: the CFT leading coefficient
+   c/3 is recorded; an RT/bulk interpretation requires the separate
+   open/closed comparison.
 
 8. **GZ commuting differentials**: Gaiotto-Zhang d_1, d_2 with
    d_1^2 = d_2^2 = d_1 d_2 + d_2 d_1 = 0 are the arity-2 projection of the
    MC equation.
 
-MULTI-PATH VERIFICATION: each result verified via 3+ independent routes.
+MULTI-PATH VERIFICATION: where the code says "three paths", it means three
+scalar projections in this compute model, not a primary-source proof of the
+full seven-entry HT lift.
 
 CONVENTIONS (from CLAUDE.md anti-patterns):
   AP1:  kappa formulas recomputed per family, never copied
   AP19: r-matrix pole order one below OPE
   AP20: kappa(A) is intrinsic to A, not to a physical system
   AP24: kappa + kappa' = 0 for KM/free; = rho*K for W-algebras
-  AP25: B(A) coalgebra, D_Ran(B(A)) = B(A!) algebra, Omega(B(A)) = A
+  Firewall: B(A), A^i, A^!, Omega(B(A)), and Z_ch^der(A) are typed apart
   AP27: bar propagator d log E(z,w) weight 1 regardless of field weight
   AP29: delta_kappa != kappa_eff (two different objects)
   AP33: H_k^! = Sym^ch(V*) != H_{-k}
-  AP34: bar-cobar inversion != open-to-closed; derived center = bulk
+  Derived centre: bar-cobar inversion != open-to-closed; C = Z_ch^der(A)
   AP39: kappa != c/2 for general VOA; kappa = c/2 only for Virasoro
   AP44: OPE mode / n! = lambda-bracket coefficient (divided powers)
   AP48: kappa depends on full algebra, not just Virasoro subalgebra
@@ -64,11 +81,22 @@ References:
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from fractions import Fraction
 from functools import lru_cache
 from math import comb
 from typing import Dict, List, Optional, Tuple
+
+
+HOLOGRAPHIC_SLOT_ORDER: Tuple[str, ...] = (
+    "A",
+    "A^i",
+    "A^!",
+    "C",
+    "r(z)",
+    "Theta_A",
+    "nabla^hol",
+)
 
 
 # ===========================================================================
@@ -170,27 +198,89 @@ class TwistedHolographicAlgebra:
 
 @dataclass
 class HolographicDatum:
-    """H(T) = (A, A!, C, r(z), Theta_A, nabla^hol).
+    """Seven-entry scalar/typed-summary record for H(T).
 
-    The six-fold holographic modular Koszul datum.
+    Manuscript datum:
+        H(T) = (A, A^i, A!, C, r(z), Theta_A, nabla^hol).
+
+    The non-scalar slots are typed summaries: A^i is the bar-dual
+    coalgebra H^*(B^ch(A)); A! is the Verdier/Koszul companion summary;
+    C is the derived-centre bulk slot Z_ch^der(A). This is a
+    compatibility record, not a proof that the strict HT holographic
+    lift exists.
     """
     A: TwistedHolographicAlgebra          # boundary algebra
-    A_dual: TwistedHolographicAlgebra     # Koszul dual (defect)
-    bulk_description: str                  # description of bulk theory
+    A_dual: TwistedHolographicAlgebra     # legacy alias for the A! summary
+    bulk_description: str                  # legacy alias for C = Z_ch^der(A)
     collision_residue_type: str            # "Casimir/z", "scalar/z", etc.
     theta_kappa: Fraction                  # scalar part of Theta_A
-    kappa_sum: Fraction                    # kappa(A) + kappa(A!)
+    kappa_sum: Fraction                    # kappa(A) + kappa(A!) summary
     complementarity_type: str              # "anti-symmetric" or "shifted"
-    connection_is_flat: bool               # nabla^hol flatness
+    connection_is_flat: bool               # formal scalar MC/Arnold flatness flag
+    bar_dual_coalgebra: str = ""           # A^i = H^*(B^ch(A)) summary
+
+    @property
+    def A_i(self) -> str:
+        """The A^i slot: bar-dual coalgebra, not the Verdier companion."""
+        return self.bar_dual_coalgebra
+
+    @property
+    def A_shriek(self) -> TwistedHolographicAlgebra:
+        """The A^! slot, retained separately from A^i and Omega(B(A))."""
+        return self.A_dual
+
+    @property
+    def C(self) -> str:
+        """The C slot: Z_ch^der(A), not the bar coalgebra or A^!."""
+        return self.bulk_description
+
+    @property
+    def r_z(self) -> str:
+        """The r(z) slot: the collision-residue type recorded by the engine."""
+        return self.collision_residue_type
+
+    @property
+    def Theta_A(self) -> Fraction:
+        """The scalar coefficient of the universal MC element Theta_A."""
+        return self.theta_kappa
+
+    @property
+    def nabla_hol(self) -> bool:
+        """The formal scalar flatness flag for nabla^hol."""
+        return self.connection_is_flat
+
+    def seven_entry_package(self) -> Dict[str, object]:
+        """Return the seven holographic slots in manuscript order."""
+        return {
+            "A": self.A,
+            "A^i": self.A_i,
+            "A^!": self.A_shriek,
+            "C": self.C,
+            "r(z)": self.r_z,
+            "Theta_A": self.Theta_A,
+            "nabla^hol": self.nabla_hol,
+        }
+
+    def object_firewall(self) -> Dict[str, object]:
+        """Return the firewall separating the bar, dual, cobar, and C slots."""
+        return holographic_object_firewall(
+            self.A,
+            A_dual=self.A_dual,
+            bar_dual_coalgebra=self.bar_dual_coalgebra,
+            derived_center=self.bulk_description,
+        )
 
 
 @dataclass
 class BoundaryBulkMap:
-    """The boundary-to-bulk map computed via three independent paths.
+    """Genus-1 scalar boundary/bulk comparison via three projections.
 
     Path 1: Annulus trace Tr_A = HH_*(A)
     Path 2: Hochschild cochains C^*_ch(A, A)
     Path 3: Shadow projection Sh_{1,0}(Theta_A)
+
+    Equality of the three numbers is a compute-level compatibility check.
+    It does not assert the full global open/closed comparison.
     """
     kappa: Fraction
     F_1_annulus: Fraction       # from annulus trace: kappa/24
@@ -205,7 +295,7 @@ class ShadowConnectionData:
 
     Properties:
         singularity_type: 'none' (flat), 'logarithmic', 'essential'
-        is_flat: flatness from MC equation
+        is_flat: formal flatness of the scalar shadow projection
         is_kz_type: whether this specializes to KZ at (0,2)
     """
     genus: int
@@ -218,7 +308,7 @@ class ShadowConnectionData:
 
 @dataclass
 class AnomalyCancellation:
-    """kappa(boundary) + kappa(bulk ghosts) = 0 at critical dimension."""
+    """Scalar kappa-balance for boundary plus ghost/companion sector."""
     boundary_name: str
     boundary_kappa: Fraction
     ghost_kappa: Fraction
@@ -261,13 +351,16 @@ class GaberdielGopakumar:
 
     Boundary: W_N algebra at level k
     Bulk: higher-spin gravity on AdS_3 with fields of spin 2, 3, ..., N
+
+    The code records central-charge and kappa scalars. It does not prove the
+    full large-N duality or identify all bulk fields.
     """
     N: int
     level: Fraction
     thooft: Fraction
     c_boundary: Fraction
     kappa_boundary: Fraction
-    c_bulk: Fraction                 # c_bulk should match c_boundary
+    c_bulk: Fraction                 # scalar model sets this to c_boundary
     kappa_dual: Fraction
     kappa_sum: Fraction
     boundary_bulk_match: bool
@@ -302,8 +395,7 @@ def make_affine_gl_N(N: int, k: Fraction) -> TwistedHolographicAlgebra:
     """Affine gl(N)_k.
 
     gl(N) = sl(N) + u(1).
-    c = k*N^2/(k+N) + 1 = (k*N^2 + k + N) / (k+N).
-    Actually for gl(N)_k: c(gl_N) = c(sl_N) + c(u(1)) = k(N^2-1)/(k+N) + 1.
+    c(gl_N) = c(sl_N) + c(u(1)) = k(N^2-1)/(k+N) + 1.
 
     kappa(gl_N) = kappa(sl_N) + kappa(u(1)).
     kappa(sl_N) = (N^2-1)(k+N)/(2N).
@@ -365,8 +457,8 @@ def make_virasoro(c: Fraction) -> TwistedHolographicAlgebra:
     """Virasoro algebra Vir_c.
 
     kappa(Vir_c) = c/2.
-    Koszul dual: Vir_{26-c}.
-    Self-dual at c = 13, NOT c = 26 (AP8).
+    Verdier/Koszul companion on the strict Virasoro lane: Vir_{26-c}.
+    Self-companion scalar at c = 13, NOT c = 26 (AP8).
     Shadow depth = infinity (class M).
     """
     c = _frac(c)
@@ -461,8 +553,10 @@ def make_abjm(N: int, k: int) -> TwistedHolographicAlgebra:
 def make_cy5_m5(c: Fraction, kappa: Fraction) -> TwistedHolographicAlgebra:
     """M5 brane wrapping a divisor in CY5 (twisted M-theory).
 
-    The exact algebra depends on the Calabi-Yau. We parametrize by c and kappa.
-    Shadow depth = infinity in general.
+    The exact algebra depends on the Calabi-Yau geometry. This constructor
+    parametrizes only the scalar central charge and modular characteristic;
+    it is not a complete CY5 boundary algebra model. Shadow depth is taken
+    to be infinite in the generic mixed case.
     """
     c = _frac(c)
     kappa = _frac(kappa)
@@ -480,7 +574,7 @@ def make_cy5_m5(c: Fraction, kappa: Fraction) -> TwistedHolographicAlgebra:
 
 
 # ===========================================================================
-# 2. Koszul dual construction
+# 2. Verdier/Koszul companion construction
 # ===========================================================================
 
 def feigin_frenkel_dual_level(k: Fraction, h_v: int) -> Fraction:
@@ -492,14 +586,18 @@ def feigin_frenkel_dual_level(k: Fraction, h_v: int) -> Fraction:
 
 
 def koszul_dual(A: TwistedHolographicAlgebra) -> TwistedHolographicAlgebra:
-    """Compute the Koszul dual A!.
+    """Compute the scalar Verdier/Koszul companion used by this engine.
 
-    For affine sl(N)_k: A! at k' = -k - 2N via Feigin-Frenkel.
-    For Heisenberg H_k: A! = Sym^ch(V*) with kappa(A!) = -k.
+    This is not bar-cobar inversion: Omega(B(A)) recovers A. The strict
+    algebra A! exists only after the finite-type/completed Verdier
+    rectification hypotheses in the manuscript.
+
+    For affine sl(N)_k: companion at k' = -k - 2N via Feigin-Frenkel.
+    For Heisenberg H_k: companion = Sym^ch(V*) with kappa = -k.
         AP33: H_k^! != H_{-k} as algebras; but kappa(H_k^!) = -k = kappa(H_{-k}).
-    For Virasoro Vir_c: A! = Vir_{26-c}. kappa(A!) = (26-c)/2.
-    For W^k(sl_N): dual at k' = -k - 2N.
-    For ABJM: kappa(A!) = -kappa(A) = N^2 (CS anti-symmetry).
+    For Virasoro Vir_c: companion = Vir_{26-c}. kappa = (26-c)/2.
+    For W^k(sl_N): companion at k' = -k - 2N.
+    For ABJM/CY5: only the opposite-kappa scalar companion is represented.
     """
     if A.family == "heisenberg":
         return TwistedHolographicAlgebra(
@@ -586,7 +684,7 @@ def koszul_dual(A: TwistedHolographicAlgebra) -> TwistedHolographicAlgebra:
             dim_lie=0,
         )
     elif A.family == "cy5":
-        # For CY5, dual kappa is -kappa (Calabi-Yau mirror)
+        # Parametric opposite-kappa scalar companion; not a full CY5 dual model.
         return TwistedHolographicAlgebra(
             name=f"({A.name})!",
             family="cy5_dual",
@@ -602,17 +700,89 @@ def koszul_dual(A: TwistedHolographicAlgebra) -> TwistedHolographicAlgebra:
         raise ValueError(f"Unknown family: {A.family}")
 
 
+def bar_dual_coalgebra_summary(A: TwistedHolographicAlgebra) -> str:
+    """Typed summary of A^i = H^*(B^ch(A)).
+
+    This is the cohomology coalgebra of the chiral bar complex. It is
+    not the bar complex itself, not the Verdier/Koszul companion A^!,
+    not Omega(B(A)), and not the Hochschild bulk slot C.
+    """
+    return (
+        f"A^i = H^*(B^ch({A.name})) bar-dual coalgebra; "
+        "not B(A), not A^!, not Omega(B(A)), and not Z_ch^der(A)"
+    )
+
+
+def derived_center_summary(A: TwistedHolographicAlgebra, comparison: str) -> str:
+    """Typed summary of C = Z_ch^der(A)."""
+    return (
+        f"C = Z_ch^der({A.name}) = C_ch^bullet({A.name}, {A.name}); "
+        f"{comparison}; not B(A), not A^i, not A^!, and not Omega(B(A))"
+    )
+
+
+def holographic_object_firewall(
+    A: TwistedHolographicAlgebra,
+    A_dual: Optional[TwistedHolographicAlgebra] = None,
+    bar_dual_coalgebra: Optional[str] = None,
+    derived_center: Optional[str] = None,
+) -> Dict[str, object]:
+    """Separate B(A), A^i, A^!, Omega(B(A)), and Z_ch^der(A).
+
+    The firewall encodes the manuscript distinction:
+    A^i is H^*(B^ch(A)); A^! is a Verdier/Koszul companion after the
+    rectification hypotheses; Omega(B(A)) recovers A by bar-cobar
+    inversion; Z_ch^der(A) is the pinned derived-centre bulk slot.
+    """
+    if A_dual is None:
+        A_dual = koszul_dual(A)
+    if bar_dual_coalgebra is None:
+        bar_dual_coalgebra = bar_dual_coalgebra_summary(A)
+    if derived_center is None:
+        derived_center = derived_center_summary(A, "derived-centre bulk slot")
+
+    return {
+        "A": f"{A.name}: boundary chiral algebra",
+        "B(A)": (
+            f"B(A) = B^ch({A.name}) is the chiral bar coalgebra complex; "
+            "its cohomology gives A^i, but the complex is not A^i itself"
+        ),
+        "A^i": bar_dual_coalgebra,
+        "A^!": (
+            f"{A_dual.name}: Verdier/Koszul companion summary; "
+            "not B(A), not A^i, not Omega(B(A)), and not Z_ch^der(A)"
+        ),
+        "Omega(B(A))": (
+            f"Omega(B(A)) recovers {A.name} by bar-cobar inversion; "
+            "not A^! and not Z_ch^der(A)"
+        ),
+        "Z_ch^der(A)": derived_center,
+        "forbidden_identifications": (
+            "B(A) != A^i",
+            "A^i != A^!",
+            "Omega(B(A)) != A^!",
+            "Z_ch^der(A) != Omega(B(A))",
+            "Z_ch^der(A) != A^!",
+        ),
+    }
+
+
 # ===========================================================================
 # 3. Holographic datum extraction
 # ===========================================================================
 
 def extract_holographic_datum(A: TwistedHolographicAlgebra) -> HolographicDatum:
-    """Extract H(T) = (A, A!, C, r(z), Theta_A, nabla^hol).
+    """Extract the seven-entry scalar/typed-summary record of H(T).
 
-    The holographic datum is computed from the boundary algebra A.
-    The bulk description depends on the family.
+    The full manuscript datum has seven entries
+    (A, A^i, A!, C, r(z), Theta_A, nabla^hol). This function records the
+    boundary algebra A, the bar-dual coalgebra summary A^i, the
+    Verdier/Koszul companion summary A!, the C = Z_ch^der(A) slot, the
+    collision residue type, the scalar theta coefficient, and the formal
+    connection-flatness flag. It does not identify A! with Omega(B(A)).
     """
     A_dual = koszul_dual(A)
+    A_i = bar_dual_coalgebra_summary(A)
 
     # Collision residue type (AP19: r-matrix pole order one below OPE)
     if A.family == "affine":
@@ -624,16 +794,20 @@ def extract_holographic_datum(A: TwistedHolographicAlgebra) -> HolographicDatum:
     else:
         residue_type = "general"
 
-    # Bulk description
+    # C-slot presentation. These strings are derived-centre summaries, not
+    # identifications with the bar complex, the line model, or A^!.
     bulk_descriptions = {
-        "heisenberg": "Fock space C[d phi, d^2 phi, ...]",
-        "affine": f"Higher-spin gravity / W_{{1+inf}} at c={A.rank}",
-        "virasoro": "Liouville gravity",
-        "w_algebra": f"Higher-spin gravity with spins 2,...,{A.rank}",
-        "abjm": f"11d SUGRA on AdS_4 x S^7/Z_{A.level}",
-        "cy5": "Twisted M-theory on CY5",
+        "heisenberg": "Fock/Hochschild model C[d phi, d^2 phi, ...]",
+        "affine": f"Higher-spin/W_{{1+inf}} comparison model at c={A.rank}",
+        "virasoro": "Liouville comparison model",
+        "w_algebra": f"Higher-spin comparison model with spins 2,...,{A.rank}",
+        "abjm": f"ABJM SUGRA comparison model AdS_4 x S^7/Z_{A.level}",
+        "cy5": "Twisted M-theory comparison model on CY5",
     }
-    bulk = bulk_descriptions.get(A.family, "Unknown bulk")
+    bulk = derived_center_summary(
+        A,
+        bulk_descriptions.get(A.family, "unknown comparison model"),
+    )
 
     kappa_sum = A.kappa + A_dual.kappa
 
@@ -651,20 +825,24 @@ def extract_holographic_datum(A: TwistedHolographicAlgebra) -> HolographicDatum:
         theta_kappa=A.kappa,
         kappa_sum=kappa_sum,
         complementarity_type=comp_type,
-        connection_is_flat=True,  # by MC equation (thm:mc2-bar-intrinsic)
+        # Formal scalar consequence of the MC equation and Arnold relations;
+        # the global HT lift remains subject to the comparison hypotheses.
+        connection_is_flat=True,
+        bar_dual_coalgebra=A_i,
     )
 
 
 # ===========================================================================
-# 4a. GL(1) Chern-Simons: full holographic data
+# 4a. GL(1) Chern-Simons: scalar holographic data
 # ===========================================================================
 
 def gl1_holographic_datum(k: Fraction = Fraction(1)) -> HolographicDatum:
-    """GL(1) CS at level k: the simplest twisted holography example.
+    """GL(1) CS at level k: the finite Heisenberg scalar package.
 
     Boundary: Heisenberg H_k (free boson at level k)
-    Bulk derived center: Fock space C[d phi, d^2 phi, ...]
-    Koszul dual: Sym^ch(V*) with kappa = -k (AP33: NOT H_{-k} as algebra)
+    Bulk/Hochschild slot: Fock model C[d phi, d^2 phi, ...]
+    Verdier/Koszul companion: Sym^ch(V*) with kappa = -k
+        (AP33: NOT H_{-k} as algebra)
 
     The boundary-to-bulk map comes from the annulus trace Tr_A ~ HH_*(A).
     Complementarity: kappa(H_k) + kappa(H_k^!) = k + (-k) = 0.
@@ -674,16 +852,17 @@ def gl1_holographic_datum(k: Fraction = Fraction(1)) -> HolographicDatum:
 
 
 def gl1_boundary_bulk_map(k: Fraction = Fraction(1)) -> BoundaryBulkMap:
-    """Boundary-to-bulk map for GL(1) CS via 3 independent paths.
+    """Genus-1 GL(1) scalar boundary/bulk comparison via three projections.
 
     Path 1 (annulus trace): Tr_A: HH_*(A) -> C. At genus 1:
         F_1 = kappa/24 = k/24.
-    Path 2 (Hochschild cochains): C^*_ch(A, A) = derived center.
+    Path 2 (Hochschild cochains): C^*_ch(A, A) is the derived-centre slot.
         The genus-1 contribution is kappa/24.
     Path 3 (shadow projection): Sh_{1,0}(Theta_A) = kappa * lambda_1^FP.
         lambda_1^FP = 1/24, so F_1 = kappa/24.
 
-    All three agree: this is the genus-1 universality theorem.
+    All three scalar projections agree; this is not a replacement for the
+    full seven-entry open/closed comparison.
     """
     k = _frac(k)
     kappa = k  # kappa(H_k) = k
@@ -702,7 +881,7 @@ def gl1_complementarity(k: Fraction = Fraction(1)) -> Dict[str, Fraction]:
     """Verify kappa(H_k) + kappa(H_k^!) = 0.
 
     kappa(H_k) = k.
-    kappa(H_k^!) = -k (by AP33, the Koszul dual Sym^ch(V*) has kappa = -k).
+    kappa(H_k^!) = -k (by AP33, the companion Sym^ch(V*) has kappa = -k).
     Sum = 0.
 
     Multi-path verification:
@@ -729,23 +908,24 @@ def gl_N_holographic_datum(N: int, k: Fraction) -> HolographicDatum:
     """GL(N) CS at level k.
 
     Boundary: affine gl(N)_k.
-    Bulk: W_{1+infty} at c = N (large-N Gaberdiel-Gopakumar).
-    Koszul dual: gl(N) at k' = -k - 2N.
+    Bulk/Hochschild comparison slot: W_{1+infty} at c = N in the
+    large-N Gaberdiel-Gopakumar lane.
+    Verdier/Koszul companion scalar: gl(N) at k' = -k - 2N.
     """
     A = make_affine_gl_N(N, k)
     return extract_holographic_datum(A)
 
 
 def gaberdiel_gopakumar_data(N: int, k: Fraction) -> GaberdielGopakumar:
-    """Gaberdiel-Gopakumar duality for W_N at level k.
+    """Gaberdiel-Gopakumar scalar compatibility data for W_N at level k.
 
     Boundary: W^k(sl_N) with c = (N-1) - N(N^2-1)(k+N-1)^2/(k+N).
-    Bulk: higher-spin Vasiliev theory on AdS_3 with spins 2,...,N,
-          with bulk central charge matching the boundary.
-    Koszul dual: W^{k'}(sl_N) at k' = -k - 2N.
+    Higher-spin comparison slot: spins 2,...,N, with scalar central charge
+          set equal to the boundary value in this compute model.
+    Verdier/Koszul companion scalar: W^{k'}(sl_N) at k' = -k - 2N.
 
     The 't Hooft coupling lambda = N/(k+N).
-    At large N: the boundary-bulk match becomes the duality.
+    The large-N duality itself is not proved by this scalar record.
     """
     k = _frac(k)
     h_v = N
@@ -778,7 +958,7 @@ def gaberdiel_gopakumar_data(N: int, k: Fraction) -> GaberdielGopakumar:
 
 
 def gaberdiel_gopakumar_boundary_bulk(N: int, k: Fraction) -> BoundaryBulkMap:
-    """Boundary-to-bulk map for GG duality via 3 paths.
+    """Genus-1 GG scalar boundary/bulk comparison via three projections.
 
     For W^k(sl_N): kappa = c*(H_N - 1) (AP1/AP9).
     F_1 = kappa/24 = c*(H_N - 1)/24.
@@ -811,7 +991,7 @@ def kappa_sl_N(N: int, k: Fraction) -> Fraction:
 
 
 def kappa_anti_symmetry_sl_N(N: int, k: Fraction) -> Dict[str, object]:
-    """Verify kappa(A) + kappa(A!) = 0 for sl(N)_k.
+    """Compute kappa(A) + kappa(A!) = 0 for sl(N)_k.
 
     kappa = (N^2-1)(k+N)/(2N).
     kappa' = (N^2-1)(k'+N)/(2N) where k' = -k-2N.
@@ -834,12 +1014,13 @@ def kappa_anti_symmetry_sl_N(N: int, k: Fraction) -> Dict[str, object]:
 # ===========================================================================
 
 def abjm_holographic_datum(N: int, k: int) -> HolographicDatum:
-    """ABJM holographic datum at rank N, CS level k.
+    """ABJM scalar holographic datum at rank N, CS level k.
 
     Boundary: BRST reduction of V_k(gl_N) x V_{-k}(gl_N) x Sb^{4N^2}.
     This datum uses the reduced scalar convention
     c_red = -2N^2, kappa_red = -N^2.
-    Bulk: 11d SUGRA on AdS_4 x S^7/Z_k.
+    The physical 11d SUGRA interpretation is a conditional holographic lift,
+    not an output of this scalar constructor.
     """
     A = make_abjm(N, k)
     return extract_holographic_datum(A)
@@ -876,10 +1057,12 @@ def abjm_shadow_data(N: int, k: int) -> Dict[str, object]:
 # ===========================================================================
 
 def cy5_holographic_datum(c: Fraction, kappa: Fraction) -> HolographicDatum:
-    """Holographic datum for M5 brane wrapping divisor in CY5.
+    """Scalar holographic datum for an M5 brane wrapping a divisor in CY5.
 
-    The full datum H(T) = (A, A!, C, r(z), Theta_A, nabla^hol).
-    c and kappa are determined by the CY5 geometry.
+    The full seven-entry datum is
+    H(T) = (A, A^i, A!, C, r(z), Theta_A, nabla^hol). This function stores
+    only the parameterized scalar shadow; c and kappa are supplied from the
+    CY5 geometry or a separate computation.
     """
     A = make_cy5_m5(c, kappa)
     return extract_holographic_datum(A)
@@ -914,7 +1097,8 @@ def holographic_shadow_connection(
       The shadow connection has irregular singularity at infinity
       from the infinite tower of obstructions.
 
-    Flatness: always True from MC equation + Arnold relations.
+    The returned flatness flag is the formal scalar MC/Arnold projection.
+    It is not a certificate of the full global HT comparison.
     """
     # Singularity type from shadow depth
     if A.shadow_depth <= 2:
@@ -932,7 +1116,7 @@ def holographic_shadow_connection(
         arity=n,
         kappa=A.kappa,
         singularity_type=sing_type,
-        is_flat=True,  # MC + Arnold
+        is_flat=True,  # formal MC/Arnold projection
         is_kz_type=is_kz,
     )
 
@@ -940,12 +1124,14 @@ def holographic_shadow_connection(
 def shadow_connection_flatness_check(
     A: TwistedHolographicAlgebra, max_arity: int = 5
 ) -> Dict[Tuple[int, int], bool]:
-    """Check flatness of nabla^hol at all (g, n) with 2g-2+n > 0.
+    """Evaluate formal scalar flatness flags for stable (g, n).
 
-    Flatness is a formal consequence of:
+    In the compute model, flatness is recorded as a formal consequence of:
     1. MC equation: D*Theta + (1/2)[Theta,Theta] = 0
     2. Arnold relations on configuration spaces
     3. Codimension-2 face cancellation on M-bar_{g,n}
+
+    The function does not construct the global connection.
     """
     results = {}
     for g in range(0, 4):
@@ -985,22 +1171,12 @@ def anomaly_cancellation_bosonic_string(c: Fraction) -> AnomalyCancellation:
 
 
 def anomaly_cancellation_affine(N: int, k: Fraction) -> AnomalyCancellation:
-    """Anomaly cancellation for affine sl(N)_k + bc ghosts.
+    """Scalar kappa-balance for affine sl(N)_k and its companion.
 
-    For the topological string on the WZW model:
-    kappa(sl_N) = (N^2-1)(k+N)/(2N).
-    Ghost contribution for N^2-1 bc pairs at appropriate weights:
-    kappa(ghost) = -(N^2-1)/2 (one bc pair per generator, each contributing -1/2).
-
-    Wait: the ghost content depends on the specific twist. For the
-    holomorphic twist of 4d CS (Costello): the ghost system is a
-    single bc pair at weights (1,0), giving kappa(ghost) = -1/2 per
-    complex dimension of the gauge group. For sl(N): ghost kappa = -(N^2-1)/2.
-
-    At k = -N + (N^2-1)/(N^2-1) ... this doesn't simplify nicely.
-    Actually: the anomaly cancellation in the Costello-Li setup comes from
-    kappa(A) + kappa(A!) = 0 (Koszul complementarity), NOT from matter + ghosts.
-    For affine families this IS the statement of anomaly cancellation.
+    kappa(sl_N) = (N^2-1)(k+N)/(2N), and the Feigin-Frenkel companion at
+    k' = -k - 2N has the opposite scalar kappa. This is the modular
+    complementarity calculation. It is not a separate derivation of a
+    physical ghost system for every twist.
     """
     k = _frac(k)
     A = make_affine_sl_N(N, k)
@@ -1012,7 +1188,7 @@ def anomaly_cancellation_affine(N: int, k: Fraction) -> AnomalyCancellation:
     return AnomalyCancellation(
         boundary_name=A.name,
         boundary_kappa=kappa_A,
-        ghost_kappa=kappa_dual,  # dual plays the role of the ghost sector
+        ghost_kappa=kappa_dual,  # compatibility field: companion contribution
         total=total,
         cancels=(total == 0),
         critical_value=None,  # anti-symmetry holds for all k
@@ -1022,9 +1198,9 @@ def anomaly_cancellation_affine(N: int, k: Fraction) -> AnomalyCancellation:
 def anomaly_cancellation_general(
     A: TwistedHolographicAlgebra
 ) -> AnomalyCancellation:
-    """General anomaly cancellation via Koszul complementarity.
+    """General scalar kappa-balance via Verdier/Koszul complementarity.
 
-    For families with kappa + kappa' = 0: cancellation is automatic.
+    For families with kappa + kappa' = 0, this records scalar balance.
     For Virasoro: kappa + kappa' = 13 (shifted, not anti-symmetric).
     """
     A_dual = koszul_dual(A)
@@ -1045,10 +1221,11 @@ def anomaly_cancellation_general(
 # ===========================================================================
 
 def holographic_entanglement(A: TwistedHolographicAlgebra) -> HolographicEntanglement:
-    """Entanglement entropy from the shadow CohFT.
+    """Entanglement leading coefficient from the shadow CohFT scalar.
 
     Leading: S_EE = (c/3) log(L/eps).
-    This is the Ryu-Takayanagi formula from the shadow at the scalar level.
+    This is the CFT leading coefficient; the Ryu-Takayanagi reading requires
+    the separate holographic/open-closed comparison.
 
     From kappa: S_EE = (c/3) log(L/eps) where c = 2*kappa for Virasoro-type.
     For general algebras: the leading coefficient is c/3 where c is the
@@ -1098,7 +1275,7 @@ def entanglement_quantum_correction_depth(A: TwistedHolographicAlgebra) -> int:
 # ===========================================================================
 
 def gz_differentials(A: TwistedHolographicAlgebra) -> GZDifferentials:
-    """Gaiotto-Zhang commuting differentials as MC projection.
+    """Gaiotto-Zhang commuting differentials as an arity-2 MC projection.
 
     The MC equation D*Theta + (1/2)[Theta,Theta] = 0 at arity 2 gives:
     d_1 = bar differential (internal)
@@ -1109,8 +1286,9 @@ def gz_differentials(A: TwistedHolographicAlgebra) -> GZDifferentials:
     d_2^2 = 0 (sewing differential squares to zero)
     d_1 d_2 + d_2 d_1 = 0 (anticommutativity from MC)
 
-    This is exactly the GZ structure: two commuting differentials on the
-    bar complex whose interaction is controlled by the MC element.
+    This records the arity-2 shadow of the GZ structure: two commuting
+    differentials on the bar complex whose interaction is controlled by the
+    MC element.
 
     The scalar level: kappa controls the coupling between d_1 and d_2.
     """
@@ -1132,8 +1310,8 @@ def gz_from_mc_equation(kappa: Fraction) -> Dict[str, object]:
       This is the bar differential squaring to zero (d^2 = 0 on B(A)).
 
     Component (sew, sew): d_2^2 = 0.
-      This is the sewing differential squaring to zero.
-      At genus 0: trivial. At genus 1: curvature m_0 obstructed by kappa.
+      This is the sewing differential squaring to zero in the projected
+      MC package after the scalar curvature term is included.
 
     Component (bar, sew) + (sew, bar): d_1 d_2 + d_2 d_1 = 0.
       This is the Leibniz compatibility of bar and sewing.
@@ -1191,7 +1369,7 @@ def complementarity_at_genus(
 def three_path_F1_verification(
     A: TwistedHolographicAlgebra
 ) -> BoundaryBulkMap:
-    """Verify F_1 via three independent paths.
+    """Compare F_1 via three scalar projections.
 
     Path 1: Annulus trace. F_1 = kappa/24.
     Path 2: Hochschild cochains. F_1 = kappa * lambda_1^FP = kappa/24.
@@ -1216,19 +1394,25 @@ def three_path_F1_verification(
 def verify_koszul_pair(
     A: TwistedHolographicAlgebra
 ) -> Dict[str, object]:
-    """Full Koszul pair verification for a holographic pair (A, A!).
+    """Compatibility report for A and its Verdier/Koszul companion summary.
 
-    Checks:
+    This is a seven-entry scalar/typed-summary report. It separates
+    A^i, A^!, C, and bar-cobar inversion and does not assert that the
+    full HT holographic lift has been constructed.
+
+    Checks recorded:
     1. kappa(A) computed correctly from the family formula
-    2. kappa(A!) computed correctly
+    2. kappa(companion) computed correctly in the family lane
     3. Complementarity: kappa + kappa' correct for family type
-    4. Collision residue r(z) = Omega/z (for affine) or scalar/z
+    4. Collision residue r(z) = Casimir/z (for affine) or scalar/z
     5. Shadow depth classification (G/L/C/M)
-    6. Connection flatness from MC
+    6. Formal scalar connection flatness from MC/Arnold
     7. F_g values at g = 1, 2, 3
     """
     A_dual = koszul_dual(A)
     datum = extract_holographic_datum(A)
+    seven_entry = datum.seven_entry_package()
+    firewall = datum.object_firewall()
 
     F_values = {}
     for g in range(1, 4):
@@ -1246,7 +1430,12 @@ def verify_koszul_pair(
 
     return {
         "A": A.name,
+        "A_i": datum.A_i,
         "A_dual": A_dual.name,
+        "A_shriek": A_dual.name,
+        "C": datum.C,
+        "holographic_slots": HOLOGRAPHIC_SLOT_ORDER,
+        "seven_entry_package": seven_entry,
         "kappa_A": A.kappa,
         "kappa_A_dual": A_dual.kappa,
         "kappa_sum": A.kappa + A_dual.kappa,
@@ -1256,6 +1445,15 @@ def verify_koszul_pair(
         "shadow_depth": A.shadow_depth,
         "connection_flat": datum.connection_is_flat,
         "F_g": F_values,
+        "object_firewall": firewall,
+        "dual_slot_scope": firewall["A^!"],
+        "bulk_slot_scope": firewall["Z_ch^der(A)"],
+        "bar_cobar_scope": firewall["Omega(B(A))"],
+        "completion_status": (
+            "seven-entry scalar/typed-summary package recorded; strict HT lift "
+            "requires Verdier rectification, Hochschild, and open/closed "
+            "comparison hypotheses"
+        ),
         "datum_complete": True,
     }
 
@@ -1273,7 +1471,8 @@ def collision_residue(A: TwistedHolographicAlgebra) -> Dict[str, object]:
     For W_N: r(z) has poles up to z^{-(2N-1)}.
 
     CYBE: [r_12, r_13] + [r_12, r_23] + [r_13, r_23] = 0.
-    Always satisfied by MC + Arnold.
+    The returned flag records the formal MC/Arnold scalar projection, not an
+    independently constructed global r-matrix proof for every family.
     """
     if A.family == "heisenberg":
         max_pole = 1
@@ -1302,8 +1501,9 @@ def collision_residue(A: TwistedHolographicAlgebra) -> Dict[str, object]:
         "residue_type": residue_type,
         "max_pole_order": max_pole,
         "leading_coefficient": casimir_value,
-        "satisfies_cybe": True,  # by MC + Arnold
+        "satisfies_cybe": True,  # formal scalar MC/Arnold projection
         "arnold_relation_verified": True,
+        "cybe_scope": "formal scalar shadow; global HT lift conditional",
     }
 
 
@@ -1314,9 +1514,9 @@ def collision_residue(A: TwistedHolographicAlgebra) -> Dict[str, object]:
 def full_holographic_sweep(
     families: Optional[List[TwistedHolographicAlgebra]] = None
 ) -> Dict[str, Dict[str, object]]:
-    """Run full holographic verification across standard families.
+    """Run the scalar compatibility sweep across standard families.
 
-    Returns a dictionary keyed by algebra name with full verification data.
+    Returns a dictionary keyed by algebra name with the seven-entry report.
     """
     if families is None:
         families = [
@@ -1339,9 +1539,9 @@ def full_holographic_sweep(
 
 
 def anomaly_cancellation_sweep() -> Dict[str, bool]:
-    """Verify anomaly cancellation for all standard families.
+    """Evaluate scalar kappa-balance for standard families.
 
-    For affine families: kappa + kappa' = 0 (automatic from Feigin-Frenkel).
+    For affine families: kappa + kappa' = 0 by the Feigin-Frenkel level rule.
     For bosonic string: c/2 - 13 = 0 at c = 26.
     """
     results = {}
@@ -1372,7 +1572,7 @@ def anomaly_cancellation_sweep() -> Dict[str, bool]:
 
 
 def koszul_pair_sweep() -> Dict[str, bool]:
-    """Verify Koszul pairs for all standard holographic examples."""
+    """Return legacy booleans for completed seven-entry scalar reports."""
     results = {}
 
     families = [

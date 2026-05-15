@@ -170,13 +170,13 @@ def virasoro_algebra(c=None) -> OPEAlgebra:
 
 
 def free_fermion_algebra() -> OPEAlgebra:
-    """Free fermion (bc ghost system) with generators b (weight 2), c (weight -1).
+    """Free fermion algebra in its one-generator presentation.
 
-    Actually for the free fermion algebra with one generator psi of weight 1/2,
-    OPE: psi(z)psi(w) ~ 1/(z-w).
-
-    But for Koszul duality purposes, we use the standard presentation.
-    The free fermion F has: F^! = beta-gamma (VF014).
+    The generator psi has weight 1/2 and satisfies
+    psi(z)psi(w) ~ 1/(z-w).  This is the finite free-fermion lane used
+    by the bar-dimension tables.  The bc/beta-gamma ghost systems live on
+    their own contact-data lanes and are not represented by this one-field
+    model.
     """
     return OPEAlgebra(
         generators=[Generator("psi", weight=1, index=0)],
@@ -192,45 +192,15 @@ def free_fermion_algebra() -> OPEAlgebra:
 # ---------------------------------------------------------------------------
 
 def arnold_dimension(n: int) -> int:
-    """Dimension of the bar-relevant part of OS algebra at n points.
+    """Dimension of the top Arnold piece used by the finite bar model.
 
-    For n generators in bar degree n-1, the relevant space is
-    H^{n-1}(C_n(C), C) which has dimension (n-1)!.
+    For n points on the affine line the top Orlik-Solomon component of
+    H^*(Conf_n(C), C) has dimension (n-1)!.  This helper returns that
+    Arnold factor.  The full chiral bar degree also carries tensor,
+    Lie/Harrison, and completion data; the family-specific dimension
+    functions below encode those separate factors directly.
 
-    But for bar degree d with d+1 points on P^1, we need:
-    dim H^0(FM_{d+1}(P^1), Omega^d_log) which by Arnold = d!
-
-    Actually, the correct count for the bar complex on P^1:
-    At bar degree d, we have d+1 points, and the log forms give
-    dim = d! (from the OS algebra).
-
-    For the BAR complex specifically (not the full tensor power):
-    dim B-bar^d = dim(A-bar)^d * d! / d! = ... no, that's wrong.
-
-    Let me be more careful. The bar complex is:
-    B-bar^d = (s^{-1}A-bar)^{otimes d} tensored with the
-    d-th component of the bar cooperad.
-
-    For the associative bar complex (no Arnold): dim = dim(A-bar)^d.
-    For the commutative bar complex: reduced, so dim is smaller.
-    For the chiral bar complex on P^1: Arnold relations reduce it.
-
-    The key formula: for generators of a LIE-type algebra (like KM),
-    the bar degree d component has basis indexed by
-    {(a_1, ..., a_d) : generators} with the relations from Arnold.
-
-    For the LIE operad bar (Chevalley-Eilenberg complex):
-    dim = C(n, d) where n = dim(g) ... this is Lambda^d(g).
-
-    For the COM operad bar (Harrison complex):
-    dim = partition-related.
-
-    For the CHIRAL bar on P^1:
-    This is more subtle because the chiral operad combines
-    Lie and Com aspects.
-
-    SAFE APPROACH: Compute case-by-case using known values,
-    then verify against the Master Table.
+    Thus this function is not a universal bar-dimension formula.
     """
     # (n-1)! for OS algebra top degree
     from math import factorial

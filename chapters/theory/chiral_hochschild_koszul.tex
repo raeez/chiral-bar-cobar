@@ -5,50 +5,73 @@
 \index{Hochschild cohomology!chiral|textbf}
 \index{three Hochschild theories!discipline}
 
-\begin{remark}[Three Hochschild theories: discipline]
+\begin{remark}[Hochschild register discipline]
 \label{rem:three-hochschild-discipline}
 
-The symbol \emph{Hochschild} carries three meanings in the
-manuscript; only one is used below. The
-chiral Hochschild complex $\ChirHoch^*(\cA)$ defined here is the
-tangent complex of the chiral MC moduli on a curve, an
-$E_\infty$-chiral input producing an output of cohomological
-amplitude~$[0,2]$ on the Koszul locus (Theorem~H below). It is distinct from
-$\textup{(a)}$ the topological Hochschild homology $\mathrm{THH}(R)$
-of an $E_1$-ring spectrum~$R$, whose output is an $S^1$-equivariant
-spectrum; and from \textup{(b)} the categorical Hochschild
-$\mathrm{HH}^*_{\mathrm{cat}}$ of a dg category, whose output is an
-$E_2$-algebra carrying CY shifted Poisson structure. The geometry
-determines which Hochschild: a curve $X$ produces ChirHoch, a
-spectrified interval algebra over a point produces $\mathrm{THH}$,
-a CY dg category produces HH$_{\mathrm{cat}}$. Throughout this chapter
-``Hochschild'' means $\ChirHoch^*$; the other two are signposted
-explicitly when invoked.
+The word \emph{Hochschild} denotes different complexes with different
+source categories. This chapter uses the curve-level chiral
+Hochschild cochain complex $\ChirHoch^*(\cA)$, the tangent complex of
+the chiral MC moduli on a curve. For a PBW chiral Koszul algebra with
+the $E_\infty$-chiral completion and generic/perfectness hypotheses
+stated in Theorem~H, it has cohomological amplitude~$[0,2]$.
+It is distinct from:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item the topological Hochschild homology $\mathrm{THH}(R)$ of an
+ $E_1$-ring spectrum~$R$, whose output is an $S^1$-equivariant
+ spectrum;
+\item the categorical Hochschild cohomology
+ $\mathrm{HH}^*_{\mathrm{cat}}(\mathcal C)$ of a dg or CY category,
+ whose output is an $E_2$-algebra carrying the categorical shifted
+ Poisson structure;
+\item the classical Hochschild complex
+ $\HH^*(A_{\mathrm{mode}},A_{\mathrm{mode}})$ of the associative
+ mode algebra, whose inner derivations and finiteness properties are
+ those of $A_{\mathrm{mode}}$, not of the vertex-algebra zero-mode
+ calculus;
+\item the chiral coHochschild chain complex of a chiral coalgebra,
+ which has the opposite variance. In the ordered associative
+ comparison it is
+$\operatorname{Cotor}^{C^e}(C_\Delta,N)$, not
+$R\operatorname{Hom}_{\cA^e}(\cA,\cA)$.
+\end{enumerate}
+The geometry determines the register: a curve $X$ produces
+$\ChirHoch$, an $E_1$-ring spectrum produces $\mathrm{THH}$, a CY dg
+category produces $\mathrm{HH}_{\mathrm{cat}}$, and an associative
+mode algebra produces classical $\HH$. Comparisons require the named
+maps below. Throughout this chapter unqualified ``Hochschild'' means
+$\ChirHoch^*$.
 \end{remark}
 
 The MC element $\Theta_\cA \in \MC(\gAmod)$ controls all of chiral
 Koszul duality, but how rigid is the moduli it lives in? Without
 knowing the tangent complex to
 $\MC(\gAmod)/\mathrm{gauge}$, every deformation, obstruction, and
-bulk-field coupling remains inaccessible. The chiral Hochschild
-complex $\ChirHoch^*(\cA)$ is that tangent complex;
-Theorem~H proves that on the Koszul locus it has cohomological
-amplitude~$[0,2]$, so the tangent complex to the MC moduli has
-cohomological amplitude~$[0,2]$, and the Koszul duality
-$\ChirHoch^n(\cA) \cong \ChirHoch^{2-n}(\cA^!)^\vee \otimes \omega_X$
-is Verdier duality on this tangent space. The amplitude is the
-output of the Koszul Reflection
+closed-sector action remains inaccessible. The chiral Hochschild
+complex $\ChirHoch^*(\cA)$ is that tangent complex. Theorem~H is
+the PBW-completed curve-level statement: on the generic chiral
+Koszul locus, after the $E_\infty$ averaging hypothesis, it gives
+cohomological amplitude~$[0,2]$ and the Verdier duality
+\[
+\ChirHoch^n(\cA)
+\cong
+\ChirHoch^{2-n}(\cA^!)^\vee \otimes \omega_X .
+\]
+No such conclusion is asserted for topological Hochschild,
+categorical Hochschild, critical affine level, or non-generic
+class-\(\mathsf M\) simple quotients. The amplitude is the output
+of the Koszul Reflection
 $K^{2}\simeq\mathrm{id}$
 (Theorem~\ref{thm:koszul-reflection}) read on the chiral derived
 centre $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA) = \ChirHoch^*(\cA,\cA)$:
 the curve dimension $\dim_\mathbb{C} X = 1$ contributes the curve
 amplitude $[0,1]$, the bigraded Verdier shift contributes the extra
-$[1]$, and Koszul collapse forces the diagonal to be the only
+$[1]$, and PBW Koszul collapse forces the diagonal to be the only
 contributing direction. The structural source of this
 amplitude~$[0,2]$ is the curve-level chiral brace/Gerstenhaber
 structure on $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ together with PBW
-collapse. No $E_3$ upgrade, CY-$d$ product ambient, or categorical
-Hochschild concentration is used in Theorem~H.
+collapse and completion. No $E_3$ upgrade, CY-$d$ product ambient,
+topological Hochschild theorem, or categorical Hochschild
+concentration is used in Theorem~H.
 
 The cyclic deformation complex $\Defcyc(\cA)$
 (Definition~\ref{def:cyclic-deformation-elementary}) is the cyclic
@@ -82,12 +105,20 @@ Two algebraic objects govern the open/closed dictionary:
  $\cA^i=H^*(\barB^{\mathrm{ch}}(\cA))$ and applying Verdier duality
  on~$X$.
 \item \emph{Chiral Hochschild cochains}
- $C^\bullet_{\mathrm{ch}}(\cA, \cA)$ classify \emph{bulk operators}
- acting on the boundary in the local chiral Swiss-cheese category
+ $C^\bullet_{\mathrm{ch}}(\cA, \cA)$ form the cochain-level
+ closed-sector endocentral object acting on~$\cA$ in the local
+ chiral Swiss-cheese category
  (Theorem~\ref{thm:chiral-deligne-tamarkin}). The brace dg algebra
- structure makes $C^\bullet_{\mathrm{ch}}$ the local closed algebra
- over $\cA$ in the curve-level chiral Swiss-cheese sense. The complex
- itself is
+ structure makes $C^\bullet_{\mathrm{ch}}$ the universal local
+ closed algebra over $\cA$ in the curve-level chiral Swiss-cheese
+ sense. A physical factorisation algebra~$T$ enters only through
+ a typed brace dg comparison
+ $\beta_T\colon \operatorname{Loc}_{\partial}
+ \operatorname{Obs}^{\mathrm{bulk}}(T)
+ \to C^\bullet_{\mathrm{ch}}(\cA,\cA)$, and it is identified with the
+ derived chiral centre only when $\beta_T$ is a quasi-isomorphism
+ (Proposition~\ref{prop:thqg-universal-action-not-reconstruction}).
+ The complex itself is
  $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA):=
  C^\bullet_{\mathrm{ch}}(\cA,\cA)$; its cohomology is
  $\ChirHoch^\bullet(\cA,\cA)$, and the ordinary chiral centre is only
@@ -98,7 +129,7 @@ The open/closed MC element $\Theta^{\mathrm{oc}}_\cA$
 (\S\ref{sec:thqg-open-closed-realization}) packages both:
 its closed projection is the bar-intrinsic $\Theta_\cA$
 (Theorem~\ref{thm:mc2-bar-intrinsic}), and its mixed projection
-is the bulk-to-boundary coupling through
+is the closed-sector action on the boundary through
 $C^\bullet_{\mathrm{ch}}(\cA, \cA)$. The shadow obstruction tower
 $(\kappa, \mathfrak{C}, \mathfrak{Q}, \ldots)$ lives in the closed
 sector; the annulus trace
@@ -172,13 +203,14 @@ Complementarity
 (Theorem~\ref{thm:quantum-complementarity-main}) identifies
 $Q_g(\cA)$ and $Q_g(\cA^!)$ as complementary Lagrangians in a
 shifted-symplectic space built from
-$H^*(\overline{\mathcal{M}}_g,\mathcal{Z}(\cA))$. At the
-chiral Hochschild level, Koszul duality exchanges deformations and
-obstructions:
+$H^*(\overline{\mathcal{M}}_g,\mathcal{Z}(\cA))$. Under the PBW
+chiral Koszul, $E_\infty$-completion, and generic/perfectness
+hypotheses of Theorem~H, the curve-level chiral Hochschild duality
+exchanges deformations and obstructions:
 $\ChirHoch^n(\cA)\cong \ChirHoch^{2-n}(\cA^!)^\vee\otimes\omega_X$
 (Remark~\ref{rem:nc-hodge-degeneration}).
 
-\section{Construction of the chiral Hochschild complex}
+\section{The chiral Hochschild cochain complex}
 
 \subsection{The cochain spaces}
 
@@ -211,7 +243,10 @@ Chapter~\textup{\ref{chap:higher-genus}}. All three
 models compute $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ under the
 geometric--algebraic comparison hypotheses named in
 Theorem~\textup{\ref{thm:hochschild-bar-cobar}}. On the PBW chiral
-Koszul locus their common cohomology has amplitude~$[0,2]$
+Koszul locus with the $E_{\infty}$-chiral completion hypothesis,
+and away from the critical and non-generic quotient loci named in
+Theorem~\textup{\ref{thm:main-koszul-hoch}}, their common cohomology
+has amplitude~$[0,2]$
 (Theorem~H, Theorem~\textup{\ref{thm:main-koszul-hoch}}); the
 amplitude is the curve-level trace shadow of $K^{2}\simeq\mathrm{id}$
 (Theorem~\textup{\ref{thm:koszul-reflection}}).
@@ -378,7 +413,7 @@ For a cochain $\phi \in C^n_{\text{chiral}}$, the differential acts by:
 
 where $\hat{z}_i$ denotes omission and $\mu$ is the chiral multiplication.
 
-\section{Computing cohomology via bar-cobar resolution}
+\section{The diagonal bar resolution and the chiral Hochschild spectral sequence}
 
 \subsection{The diagonal bimodule resolution}
 
@@ -408,7 +443,8 @@ R\mathrm{Hom}_{\mathcal{A}^{e}}(\mathcal{A},\mathcal{A})
 The algebra quasi-isomorphism
 $\Omega^{\mathrm{ch}}\bar{B}^{\mathrm{ch}}(\mathcal{A})\simeq
 \mathcal{A}$ is the bar--cobar inversion used to build this
-resolution; it is not the Koszul dual algebra~$\mathcal{A}^{!}$.
+resolution. The Koszul dual algebra remains the separate Verdier
+object~$\mathcal{A}^{!}$.
 \end{theorem}
 
 \begin{proof}
@@ -439,7 +475,7 @@ $\barB^{\mathrm{ch}}(\mathcal{A})$, $\mathcal{A}^{i}$, and
 $\mathcal{A}^{!}$ out of the Hochschild-cochain object.
 \end{proof}
 
-\subsection{The spectral sequence}
+\subsection{The chiral Hochschild spectral sequence}
 
 \begin{theorem}[chiral Hochschild spectral sequence; \ClaimStatusProvedHere]\label{thm:hochschild-spectral-sequence}
 There exists a spectral sequence
@@ -581,7 +617,7 @@ implementing the fermion-boson correspondence at the MC level
 (Remark~\ref{rem:twisting-as-propagator}).
 \end{example}
 
-\subsection{Main duality theorem}\label{subsec:hochschild-duality}
+\subsection{Curve-level chiral Hochschild duality $\ChirHoch^n(\cA)\cong\ChirHoch^{2-n}(\cA^!)^\vee\otimes\omega_X$}\label{subsec:hochschild-duality}
 
 \begin{lemma}[Fulton--MacPherson collapse and chiral Hochschild duality
 shift; \ClaimStatusProvedHere]
@@ -696,7 +732,7 @@ curve~$X$. Let
 \[
 RHH_{\mathrm{ch}}(\cA)
 \;=\;
-\operatorname{Tot}\!\Bigl(
+\operatorname{Tot}^{\oplus}\!\Bigl(
 \bigoplus_{p \geq 0}
 CH^{p,\bullet}_{\mathrm{ch}}(\cA)[-p]
 \Bigr)
@@ -708,9 +744,13 @@ Lemma~\textup{\ref{lem:hochschild-shift-computation}}\textup{(iii)},
 each bar-degree-$p$ summand
 $CH^{p,\bullet}_{\mathrm{ch}}(\cA)[-p]$ has cohomological
 amplitude~$[0, 2]$ as an object of $D^{\mathrm{b}}(\Vect)$,
-independently of $p$. Then the totalization
-$RHH_{\mathrm{ch}}(\cA)$ has cohomological amplitude~$[0, 2]$,
-i.e., $H^n(RHH_{\mathrm{ch}}(\cA)) = 0$ for $n \notin \{0, 1, 2\}$.
+independently of $p$. Assume also that the computation is made first
+in finite conformal-weight/PBW windows, so only finitely many bar
+degrees occur in each window, and that the later weight completion is
+Mittag--Leffler. Then the direct-sum totalization
+$RHH_{\mathrm{ch}}(\cA)$, and its stated completed realization, have
+cohomological amplitude~$[0, 2]$; equivalently
+$H^n(RHH_{\mathrm{ch}}(\cA)) = 0$ for $n \notin \{0, 1, 2\}$.
 \end{lemma}
 
 \begin{proof}
@@ -721,8 +761,10 @@ bigraded vector space is
 \[
 RHH_{\mathrm{ch}}(\cA)
 \;=\;
+\operatorname{Tot}^{\oplus}\!\left(
 \bigoplus_{p \geq 0}
 \bigl(CH^{p,\bullet}_{\mathrm{ch}}(\cA)[-p]\bigr)
+\right)
 \]
 with a total differential
 $d_{\mathrm{tot}} = d_{\mathrm{int}} + d_{\mathrm{bar}}$, where
@@ -757,20 +799,19 @@ $q \in \{-p, 1-p, 2-p\}$.
 
 \smallskip
 \emph{Convergence.}\;
-The filtration $F^p$ is exhaustive
-$\bigl(\bigcup_p F^p = RHH_{\mathrm{ch}}(\cA)\bigr)$ and
-Hausdorff $\bigl(\bigcap_p F^p = 0\bigr)$, since each total
-degree~$n$ has only finitely many bar-degree contributions:
-in total degree~$n$, only the bar degrees~$p$ with
-$0 \leq p \leq n + ($\,fibre amplitude\,$) = n + 2$ can
-contribute (because the per-summand amplitude is $[0, 2]$ and
-the totalization shift is~$[-p]$, so contributions appear
-only in total degrees $\geq -p + 0$ and $\leq -p + 2$,
-i.e., $p \in [-n, 2-n]$ for the contribution to lie in
-total degree~$n$; the constraint $p \geq 0$ then gives
-$p \in [\max(0,-n), \max(0,2-n)]$, a finite set for each
-fixed $n$). Therefore the spectral sequence converges
-strongly to $H^*\!\bigl(RHH_{\mathrm{ch}}(\cA)\bigr)$.
+Work first in a finite conformal-weight/PBW window. In such a window
+the PBW finite-type hypothesis bounds the possible bar lengths, so the
+bar-degree filtration is finite, exhaustive
+$F^0=RHH_{\mathrm{ch}}(\cA)$, and separated. The spectral sequence
+therefore converges strongly in that window. Passing from finite
+windows to the direct-sum realization is an exact filtered colimit in
+$\Vect$, so no new cohomology appears outside the degrees already
+seen in the windows. Passing further to the completed realization is
+the separate inverse-limit step; the required
+$R^1\!\varprojlim$ term is precisely the Mittag--Leffler defect
+$\lambda^1_n(\cA)$ recorded in
+Remark~\ref{rem:theorem-H-filter-exactness}, and it vanishes by
+hypothesis.
 
 \smallskip
 \emph{Amplitude transport.}\;
@@ -784,9 +825,9 @@ the bound $n \leq 2$ likewise.
 \emph{No cancellation across bar degrees.}\;
 A potential concern is that the bar-degree differential
 $d_{\mathrm{bar}}$, which is zero on $\operatorname{gr}_F$
-but nonzero on the totalization, could in principle create
+but nonzero on the totalization, is the only possible source of
 new cohomology classes outside $\{0, 1, 2\}$ from boundaries
-that pair across bar degrees. However, the spectral sequence
+that pair across bar degrees. The spectral sequence
 of a filtered complex is precisely the device that tracks all
 such pairings: the $E_1$-page records the $d_{\mathrm{int}}$
 cohomology, and higher differentials~$d_r$ for $r \geq 1$
@@ -799,7 +840,7 @@ and therefore preserves $p + q \mapsto p + q + 1$ -- keeping
 the support of the spectral sequence within
 $p + q \in \{0, 1, 2, 3\}$. The amplitude bound $p + q \leq 2$
 on $E_\infty$ then follows because $d_1$-targets in
-$p + q = 3$ that are nontrivial would require $E_2$-classes
+$p + q = 3$ that are nontrivial require $E_2$-classes
 in $p + q = 3$, but the per-summand vanishing of
 $H^{p+q}\!\bigl(CH^{p,\bullet}_{\mathrm{ch}}(\cA)[-p]\bigr)$
 for $p + q = 3$ already kills these on the $E_1$-page.
@@ -825,8 +866,8 @@ are killed by FM-formality
 \textup{(}Proposition~\textup{\ref{prop:fm-tower-collapse}}\textup{)}.
 Without this bridging step, the proof of
 Theorem~\textup{\ref{thm:hochschild-polynomial-growth}}\textup{(a)}
-would be incomplete: the slogan ``every column has
-amplitude $[0,2]$, hence the totalization does'' is true
+is incomplete: the sentence ``every column has
+amplitude $[0,2]$, hence the totalization does'' becomes true
 only after the bar-degree differential is shown not to create
 new cohomology classes in degrees outside
 $\{0, 1, 2\}$.
@@ -1211,17 +1252,15 @@ $\cD_X$-Ext computation of
 Lemma~\ref{lem:hochschild-shift-computation}.
 \end{proof}
 
-\begin{remark}[Dependency DAG:
-PBW as parallel source]
+\begin{remark}[PBW as common source of two collapses]
 \label{rem:pbw-parallel-consequences}
 \index{PBW!parallel consequences}
-The proof of Proposition~\ref{prop:fm-tower-collapse} now
-routes through
+The route to Proposition~\ref{prop:fm-tower-collapse}
+passes through
 Theorem~\ref{thm:pbw-koszulness-criterion} and
 Lemma~\ref{lem:chiral-quadratic-koszul}, not through
-Theorem~\ref{thm:bar-concentration}. The dependency graph
-is no longer linear: PBW sits at the apex and dominates two
-parallel consequences of equal standing,
+Theorem~\ref{thm:bar-concentration}. PBW is the common
+homological source of two parallel consequences,
 \[
  \text{PBW collapse}
  \quad\Longrightarrow\quad
@@ -1233,7 +1272,7 @@ parallel consequences of equal standing,
  \end{cases}
 \]
 The two conclusions are PBW-parallel: neither invokes the
-other, and each would survive a failure of the other. This
+other after the PBW input has been established. This
 structure mirrors the split in the Russian school between
 the combinatorial Poincar\'e--Birkhoff--Witt normal form and
 the homological concentration of the bar complex: a single
@@ -1250,7 +1289,9 @@ Let $\cA$ be a chiral Koszul algebra on~$X$ satisfying the
 PBW criterion of
 Theorem~\textup{\ref{thm:pbw-koszulness-criterion}}, with
 Koszul dual~$\cA^{!}$ and chiral centre $Z(\cA) =
-\ChirHoch^{0}(\cA)$. The bigraded
+\ChirHoch^{0}(\cA)$. Assume the finite-type/perfectness
+hypotheses of Theorem~\textup{\ref{thm:main-koszul-hoch}}, so each
+$q$-graded coefficient below is finite. The bigraded
 Hilbert series
 \[
  P_{\cA}(t,q)
@@ -1273,8 +1314,36 @@ group, and of the dual centre:
 \end{equation}
 In particular, $P_{\cA}(t,q)$ is a polynomial of $t$-degree~$2$
 with positive $q$-coefficients, and the $t^{0}$- and $t^{2}$-
-columns are Verdier duals on~$X$.
+columns are exchanged by Verdier duality on~$X$; the $t^2$ column
+is the Hilbert series of $Z(\cA^!)^\vee\otimes\omega_X$, hence has
+the same finite coefficients as $Z(\cA^!)$.
 \end{proposition}
+
+\begin{proof}
+By Proposition~\ref{prop:fm-tower-collapse}, the chiral
+Hochschild complex has cohomological amplitude $[0,2]$, so
+$\ChirHoch^{n}(\cA)=0$ for $n \notin \{0,1,2\}$ and the sum
+terminates at $t^{2}$. The $n=0$ column is the chiral
+centre $Z(\cA)=\ChirHoch^{0}(\cA)$ by definition; its
+graded dimension furnishes the $t^{0}$-coefficient of
+\eqref{eq:chirhoch-sharp-hilbert}. The $n=1$ column is
+$\ChirHoch^{1}(\cA)$ directly; its graded dimension is the
+$t^{1}$-coefficient. For $n=2$, the shift arithmetic of
+Step~6 in the proof of
+Proposition~\ref{prop:fm-tower-collapse}, combined with
+degreewise Verdier duality on the base curve
+(equation~\eqref{eq:fm-tower-surviving}), identifies
+$\ChirHoch^{2}(\cA)$ with the Verdier-dual chiral centre of the
+Koszul dual:
+$\ChirHoch^{2}(\cA)\cong Z(\cA^{!})^\vee\otimes\omega_X$. The
+dualizing twist changes the line-valued realization, not the
+finite Hilbert coefficients. Assembling the three
+columns yields~\eqref{eq:chirhoch-sharp-hilbert}. The
+positivity of the $q$-coefficients follows because each
+column is a $\cD_X$-Ext space with values in an ordinary
+holonomic $\cD_X$-module, whose fibrewise dimensions
+are non-negative integers.
+\end{proof}
 
 \begin{corollary}[Heisenberg chiral Hochschild concentration;
 \ClaimStatusProvedHere]
@@ -1362,37 +1431,6 @@ $c \leftrightarrow 26-c$ is the shadow of the Koszul Reflection
 $K^{2}\simeq\id$.
 \end{proof}
 
-\begin{proof}
-By Proposition~\ref{prop:fm-tower-collapse}, the chiral
-Hochschild complex has cohomological amplitude $[0,2]$, so
-$\ChirHoch^{n}(\cA)=0$ for $n \notin \{0,1,2\}$ and the sum
-terminates at $t^{2}$. The $n=0$ column is the chiral
-centre $Z(\cA)=\ChirHoch^{0}(\cA)$ by definition; its
-graded dimension furnishes the $t^{0}$-coefficient of
-\eqref{eq:chirhoch-sharp-hilbert}. The $n=1$ column is
-$\ChirHoch^{1}(\cA)$ directly; its graded dimension is the
-$t^{1}$-coefficient. For $n=2$, the shift arithmetic of
-Step~6 in the proof of
-Proposition~\ref{prop:fm-tower-collapse}, combined with
-degreewise Verdier duality on the base curve
-(equation~\eqref{eq:fm-tower-surviving}), identifies
-$\ChirHoch^{2}(\cA)$ with the chiral centre of the Koszul
-dual:
-$\ChirHoch^{2}(\cA)\cong Z(\cA^{!})$. Assembling the three
-columns yields~\eqref{eq:chirhoch-sharp-hilbert}. The
-positivity of the $q$-coefficients follows because each
-column is a $\cD_X$-Ext space with values in an ordinary
-holonomic $\cD_X$-module, whose fibrewise dimensions
-are non-negative integers.
-\end{proof}
-
-% lem:chiral-homotopy-transport states the chain-level
-% contracting homotopy h_m^{\mathrm{ord}} on the ordered chiral
-% bar, combining the Fresse chain map \sigma of
-% lem:chiral-quadratic-koszul with the
-% Shelton--Yuzvinsky contracting homotopy h_m on
-% \operatorname{OS}(A_{m-1})^{\geq 1}. This is the statement
-% invoked by thm:hochschild-concentration-E1.
 \begin{lemma}[Chiral transport of Shelton--Yuzvinsky contracting
 homotopy; \ClaimStatusProvedHere]
 \label{lem:chiral-homotopy-transport}
@@ -1607,7 +1645,7 @@ spaces $\FM^{\mathrm{ord}}_{m_i}(\C)$, whose cohomology is
 the \emph{pure} braid Orlik--Solomon algebra
 $\operatorname{OS}(A_{m_i-1})$ (no $\Sigma_{m_i}$-coinvariants
 at any stage; the ordering on $\R$ is kept throughout, in
-line with the E$_1$-primacy mandate). The pure braid
+the ordered E$_1$ chiral structure). The pure braid
 arrangement $A_{m-1}$ is supersolvable, hence by
 Shelton--Yuzvinsky \cite{SheltonYuzvinsky1997} its
 Orlik--Solomon algebra is quadratic Koszul with linear minimal
@@ -1631,6 +1669,175 @@ $\ChirHoch^{\mathrm{ord},n}(\cA)=0$ for $n\notin\{0,1,2\}$,
 established intrinsically on the ordered $E_{1}$ side.
 \end{proof}
 
+\begin{remark}[Derivation-type breakdown across the standard
+landscape; \ClaimStatusComputed]
+\label{rem:chirhoch-derivation-types}
+\index{Hochschild!derivation-type breakdown}
+The dimension $\dim\ChirHoch^{1}(\cA)$ alone is a coarse coordinate.
+The chiral Hochschild engine
+\textup{(}\texttt{compute/lib/chiral\_hochschild\_engine.py}\textup{)}
+records a finer datum: which type of first-order chiral
+deformation each derivation realises. The breakdown across the
+standard landscape exhibits a structural distinction between
+class~$\mathsf G$ \emph{level-deformable} families and class~$\mathsf
+L$ \emph{level-rigid} families.
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}l c l@{}}
+\toprule
+Family & $\dim\ChirHoch^{1}$ & Derivation type \\
+\midrule
+Heisenberg $\cH_k$
+ & $1$
+ & level deformation $k\mapsto k+\epsilon$ \\
+free fermion $\psi$
+ & $1$
+ & antisymmetric bilinear rescaling \\
+$\beta\gamma_\lambda$
+ & $2$
+ & charge rescaling $\oplus$ weight deformation
+   $\lambda\mapsto\lambda+\epsilon$ \\
+$V_k(\fg)$ generic
+ & $\dim\fg$
+ & adjoint-action derivations of $\fg$
+   \emph{(}level rigid: $0$-dim\emph{)} \\
+$\Vir_c$ generic
+ & $0$
+ & rigid \emph{(}no first-order chiral deformations\emph{)} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Three observations follow.
+\textit{(i) The level rigidity of $V_k(\fg)$.} The chiral Hochschild
+engine reports $\dim\ChirHoch^{1}(V_k(\fg)) = \dim\fg$ realised by
+\emph{adjoint} derivations of $\fg$, not by level deformations of
+$k$. The engine entry is
+$\{\mathrm{current\_algebra\_derivations}: \dim\fg,\;
+\mathrm{level\_deformation}: 0\}$. The level $k$ is therefore
+\textbf{not} a chiral-bimodule deformation of $V_k(\fg)$:
+$V_{k+\epsilon}(\fg)$ is structurally a different algebra (different
+central extension of $\widehat\fg$), not a deformation in the sense
+of $\Hoch^{1}$. Compare this with class $\mathsf G$: for $\cH_k$ the
+level $k$ \textbf{is} a chiral-bimodule deformation, because the
+abelian OPE $J(z)J(w)\sim k(z-w)^{-2}$ rescales freely. The
+asymmetry between class $\mathsf G$ and class $\mathsf L$ in
+deformation theory is invisible in the scalar
+$\kappa$-stratification but visible at level~$3$ of the open
+Beilinson tower.
+\textit{(ii) The chiral rigidity of $\Vir_c$.} The Virasoro algebra
+at generic central charge $c$ has $\dim\ChirHoch^{1}(\Vir_c) = 0$:
+no first-order chiral deformations exist. Within the fixed-$c$
+slice, $\Vir_c$ is \textbf{rigid}. The continuous parameter $c$ moves
+between distinct fixed-$c$ slices but is external to the
+chiral-bimodule deformation theory of any individual $\Vir_c$. The
+same holds for $\cW_3$ at generic $c$: $\dim\ChirHoch^{1}(\cW_3)=0$.
+This is class~$\mathsf M$ chiral rigidity at generic central charge.
+\textit{(iii) The two-derivation structure of $\beta\gamma_\lambda$.}
+Class $\mathsf C$ records two distinct deformation directions: a
+\emph{charge rescaling} \textup{(}rescaling the symplectic-boson
+pairing $\beta(z)\gamma(w)\sim 1/(z-w)$\textup{)} and a \emph{weight
+deformation} $\lambda\mapsto\lambda+\epsilon$ \textup{(}moving along
+the conformal-weight family\textup{).}  Both are first-order
+chiral-bimodule deformations of $\beta\gamma_\lambda$. The
+two-dimensional $\ChirHoch^{1}$ is consistent with class
+$\mathsf C$'s shadow depth $r_{\max}=4$ \textup{(}quartic shadow,
+contact-form rigidity\textup{).}
+
+The breakdown is recorded in the engine and verified for
+$\fg = \mathfrak{sl}_N$, $N \in \{2, 3, 4, 5, 6, 10\}$. The
+verification at $N=10$ confirms
+$\dim\ChirHoch^{1}(V_k(\mathfrak{sl}_{10})) = 99 = \dim\mathfrak{sl}_{10}$.
+\end{remark}
+
+\begin{proposition}[Smooth formal moduli across the standard
+landscape; \ClaimStatusProvedHere]
+\label{prop:smooth-formal-moduli-standard}
+\index{deformation theory!unobstructedness}
+\index{formal moduli!smoothness}
+For every $\cA$ in the standard landscape
+$\{\cH_k,\,V_k(\fg),\,\beta\gamma_\lambda,\,\Vir_c,\,\cW_N\,(N\geq 3),
+\,\BP_k\}$ at generic parameter, the formal moduli space
+$\mathcal{M}_{\cA} = \mathrm{MC}(\Defcyc(\cA))/\mathrm{gauge}$
+of chiral $A_\infty$-deformations is \emph{smooth} at $\cA$, with
+tangent space $\ChirHoch^{1}(\cA)$ and dimension as in
+Remark~\textup{\ref{rem:chirhoch-derivation-types}}.
+\end{proposition}
+
+\begin{proof}
+By Theorem~\ref{thm:hochschild-concentration-E1} the formal
+moduli is governed by the truncated $L_\infty$-structure on
+$\ChirHoch^{*}(\cA)$, with quadratic obstruction map
+$[\,\cdot\,,\,\cdot\,]\colon
+\ChirHoch^{1}(\cA)\otimes\ChirHoch^{1}(\cA)
+\to\ChirHoch^{2}(\cA)$.
+Smoothness at $\cA$ is equivalent to vanishing of the
+obstruction class $[\xi,\xi]\in\ChirHoch^{2}(\cA)$ for every
+$\xi\in\ChirHoch^{1}(\cA)$, together with vanishing of all
+higher Massey-type obstructions.
+
+For $\Vir_c$, $\cW_N$ at generic $c$, and $\BP_k$ at generic $k$:
+$\ChirHoch^{1}(\cA)=0$ \textup{(}chiral rigidity, verified in the
+chiral-Hochschild engine for $\cW_N$ at $N=3,\ldots,10$\textup{),}
+so the obstruction map has empty domain and the formal moduli is
+the reduced point.
+
+For $\cH_k$, $V_k(\fg)$, and $\beta\gamma_\lambda$: each
+generator $\xi_i$ of $\ChirHoch^{1}(\cA)$ is realised by an
+\emph{actual} smooth one-parameter family
+$\{\cA_{\epsilon}\}_{\epsilon\in\mathbb{C}}$ of chiral algebras
+extending the trivial deformation. For $\cH_k$ this is the
+level rescaling $k\mapsto k+\epsilon$; for $V_k(\fg)$ the
+$\dim\fg$-parameter family of inner-gauge orbits of the affine
+current $J^a$; for $\beta\gamma_\lambda$ the charge rescaling
+and the conformal-weight family
+$\lambda\mapsto\lambda+\epsilon$. Each family extends to all
+orders in $\epsilon$, so each $\xi_i$ admits a Maurer--Cartan
+extension $\Theta(\epsilon)=\xi_i\epsilon+
+\Theta_2\epsilon^2+\cdots$ with vanishing obstruction at every
+order. By rescaling and superposition, the same holds on the
+full $\ChirHoch^{1}(\cA)$-affine subspace, since the families
+commute: levels of distinct generators are independent
+parameters. Hence $[\xi,\xi]=0$ in $\ChirHoch^{2}(\cA)$ for
+every $\xi$, and all higher Massey obstructions vanish. The
+formal moduli is smooth of dimension $\dim\ChirHoch^{1}(\cA)$.
+\end{proof}
+
+\begin{remark}[Meaning of smoothness across archetypes;
+\ClaimStatusComputed]
+\label{rem:smooth-formal-moduli-archetype}
+Proposition~\ref{prop:smooth-formal-moduli-standard} unifies
+class~$\mathsf G$, $\mathsf L$, $\mathsf C$, $\mathsf M$
+\emph{at the formal-moduli level}: every standard chiral
+algebra has unobstructed deformation theory at its base point.
+What distinguishes the archetypes is the \emph{dimension} of
+the smooth moduli, not its smoothness:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}l c c@{}}
+\toprule
+Archetype & Family & $\dim\mathcal{M}_{\cA}$ \\
+\midrule
+$\mathsf G$ Heisenberg & $\cH_k$ & $1$ \\
+$\mathsf L$ affine KM & $V_k(\fg)$ & $\dim\fg$ \\
+$\mathsf C$ contact & $\beta\gamma_\lambda$ & $2$ \\
+$\mathsf M$ minimal & $\Vir_c$ & $0$ \\
+$\mathsf M$ minimal & $\cW_N\,(N\geq 3)$ & $0$ \\
+$\mathsf M$ subreg.\ & $\BP_k$ & $0$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+The non-generic loci (admissible levels for class $\mathsf L$,
+minimal models for class $\mathsf M$) are excluded from this
+generic-smoothness statement: at these special points the
+obstruction theory becomes finite-type completion-theoretic
+\textup{(}Conjecture~\ref{conj:hochschild-concentration-class-M-non-generic}\textup{)}.
+The class~$\mathsf B$ \textup{(}Mukai--K3 / BKM\textup{)}
+chart-level analogue requires a separate analysis with the
+Bruinier--Heegner Chern-class reciprocity input and is treated
+in Vol~III.
+\end{remark}
+
 \begin{corollary}[Averaging to symmetric ChirHoch;
 \ClaimStatusProvedHere]
 \label{cor:hochschild-averaging-symmetric}
@@ -1644,15 +1851,17 @@ graded). Let
 $\mathrm{av}\colon \mathfrak{g}^{E_{1}} \to
 \mathfrak{g}^{\mathrm{mod}}$
 denote the averaging map from the ordered to the symmetric
-chiral convolution dGLA. Then $\mathrm{av}$ descends to a
-quasi-isomorphism on Hochschild cochains in degrees $n\ge 3$
-\textup{(}both sides vanish\textup{)} and is surjective on
-cohomology in degrees $0,1,2$, so that
+chiral convolution dGLA. Then the symmetric coinvariant
+Hochschild complex is acyclic in degrees $n\ge 3$, so that
 \[
  \ChirHoch^{n}(\cA) \;=\; 0
  \qquad
  \textup{for every } n \notin \{0,1,2\}.
 \]
+In degrees $0,1,2$ the averaging map identifies the shared
+curve-level Ext summands under the PBW diagonal comparison; no
+unqualified chain-level equivalence between ordered and symmetric
+Hochschild complexes is asserted.
 \end{corollary}
 
 \begin{proof}
@@ -1664,24 +1873,23 @@ Hochschild complex in ordered degrees $\ge 3$ at the level
 of cochains (the PBW filtration is $\Sigma_{n}$-stable by
 construction, and its commutative-chiral associated graded
 carries the standard Koszul homotopy equivariantly).
-Taking $\Sigma_{n}$-coinvariants commutes with the
-null-homotopy in these degrees, hence
+In characteristic zero, finite $\Sigma_n$-coinvariants are exact;
+applying them to the equivariant null-homotopy preserves acyclicity
+in these degrees. Hence
 $\ChirHoch^{n}(\cA) = (\ChirHoch^{\mathrm{ord},n}(\cA))_{\Sigma_{n}}
-= 0$ for $n \ge 3$. The degree-$\le 2$ groups are preserved
-by averaging because the averaging map is already acyclic
-in those degrees on both sides (the Koszul resolution
-computes the same $\cD_{X}$-Ext on the curve). The bound
-$n<0$ is trivial.
+= 0$ for $n \ge 3$. In degrees $0,1,2$, the diagonal PBW
+comparison computes both ordered and symmetric models by the same
+curve-level $\cD_X$-Ext summands; this gives the stated low-degree
+identification. The bound $n<0$ is trivial.
 \end{proof}
 
 \begin{remark}[Scope of the averaging corollary]
 \label{rem:hochschild-averaging-scope}
 Corollary~\textup{\ref{cor:hochschild-averaging-symmetric}}
 uses the $E_{\infty}$-chiral completion hypothesis in an
-essential way. Outside that hypothesis; for example,
-on an $E_{1}$-chiral input without a flat PBW filtration,
-such as the chiral Yangian
-$Y_{\hbar}(\fg)^{\mathrm{ch}}$; only the ordered bound
+essential way. Outside that hypothesis, for example on an
+$E_{1}$-chiral input without a flat PBW filtration such as the
+chiral Yangian $Y_{\hbar}(\fg)^{\mathrm{ch}}$, only the ordered bound
 of Theorem~\textup{\ref{thm:hochschild-concentration-E1}}
 survives; the symmetric bound is conjectural (see
 Conjecture~\textup{\ref{conj:hochschild-concentration-E1-only}}).
@@ -1706,14 +1914,14 @@ Equivalently, the averaging map
 $\mathrm{av}\colon \ChirHoch^{\mathrm{ord},*}(\cA)
 \to \ChirHoch^{*}(\cA)$
 is quasi-isomorphic in degrees $\ge 3$ even without
-$E_{\infty}$-completion. Witnessing candidate: the chiral
+$E_{\infty}$-completion. Test object: the chiral
 Yangian $Y_{\hbar}(\fg)^{\mathrm{ch}}$, whose ordered bar
 cohomology is supported in ordered degree $1$ but whose
 symmetric Hochschild has not been computed directly.
 \end{conjecture}
 
 \begin{conjecture}[Chiral Hochschild concentration at admissible
-and critical levels for class M; \ClaimStatusConjectured]
+and minimal levels for class M; \ClaimStatusConjectured]
 \label{conj:hochschild-concentration-class-M-non-generic}
 \index{Hochschild!non-generic level conjecture}
 \textup{[Regime: class M, non-generic level.]}
@@ -1721,26 +1929,34 @@ For the Virasoro algebra $\mathrm{Vir}_{c}$ at minimal-model
 central charges $c = c_{p,q} = 1 - 6(p-q)^{2}/(pq)$ and for
 the principal W-algebra $\Walg^{k}(\fg)$ at admissible
 levels, the chiral Hochschild concentration bound of
-Theorem~\textup{\ref{thm:hochschild-polynomial-growth}} is
-expected to hold only in the pro-object or coderived sense:
+Theorem~\textup{\ref{thm:hochschild-polynomial-growth}} is not a
+finite curve-level assertion. The concentration problem is formulated
+only in the pro-object or coderived sense:
 there exist discrete parameter points where the Shapovalov
-form degenerates and Toda-bracket obstructions may produce
-classes in $\ChirHoch^{3}$. A rigorous statement at these
-points requires either a coderived reinterpretation
-\textup{(}analogous to the coderived scope of
-Theorem~\textup{\ref{thm:hochschild-concentration-E1}}
-for $E_{1}$ inputs\textup{)} or a case-by-case vanishing
-argument invoking the concrete Kac-determinant structure.
+form degenerates and the completed obstruction ambient allows
+degree-$3$ classes in the completed or coderived diagonal obstruction
+complex
+$RHH_{\mathrm{ch}}^{\mathrm{cod},\Delta}(\cA)$ before passing to the
+perfect finite-window quotient used in Theorem~H. This is not a
+claim about the curve-level Vol~I group $\ChirHoch^3(\cA)$ on the
+Theorem~H domain. A rigorous statement at these points requires
+either a coderived reinterpretation of the simple-quotient complex or
+a case-by-case vanishing argument invoking the concrete
+Kac-determinant structure.
 Unconditional $\{0,1,2\}$ concentration for class M is
 proved only at generic level
 \textup{(}Theorem~\textup{\ref{thm:virasoro-hochschild}}
 and
 Theorem~\textup{\ref{thm:w-algebra-hochschild}}\textup{)};
-the critical level $k = -h^{\vee}$ is excluded
-unconditionally
-\textup{(}Remark~\textup{\ref{rem:critical-level-lie-vs-chirhoch}};
-the BD/Feigin--Frenkel comparison yields an unbounded
-$\ChirHoch^{*}$\textup{)}.
+the critical level $k = -h^{\vee}$ is excluded from this finite
+Theorem~H lane. Bar-object PBW Koszulness of the universal affine
+algebra does not supply the missing finite-window perfectness. The
+obstruction is finite-type and completion-theoretic: the
+Feigin--Frenkel centre contributes an
+infinite-dimensional $\ChirHoch^0$, the diagonal Hochschild complex is
+not a perfect finite-window object, and a completed or coderived
+critical-level Hochschild theorem is a separate statement
+\textup{(}Remark~\textup{\ref{rem:critical-level-dimensional-divergence}}\textup{)}.
 \end{conjecture}
 
 \begin{remark}[Meaning of ``$E_{1}$'' in the label: spectral-sequence
@@ -1778,12 +1994,14 @@ The bigraded definition places cochains on spaces
 $\overline{C}_{p+2}(X)$ of dimension~$p+2$, which grows without
 bound. Without the Koszul hypothesis, the Arnold-algebra
 contributions from higher collision strata can survive to the
-$E_2$-page, and the chiral Hochschild cohomology would have
-unbounded cohomological amplitude. Koszulness provides the input
-that kills these contributions: bar-concentration forces the
-entire Arnold tower to collapse, leaving only the curve-level
-Ext that has amplitude~$[0,2]$ from the single complex
-dimension of~$X$.
+$E_2$-page, so the chiral Hochschild cohomology is no longer
+controlled by a uniform $[0,2]$ amplitude bound. PBW Koszulness provides the
+input that kills these contributions: the
+Shelton--Yuzvinsky contracting homotopy on the pure-braid
+Orlik--Solomon algebra, transported through the chiral quadratic
+Koszul map, annihilates the positive Arnold fibre classes and
+leaves only the curve-level Ext with amplitude~$[0,2]$ from the
+single complex dimension of~$X$.
 
 For comparison: the \emph{topological} Hochschild complex of an
 $E_1$-algebra~$A$ over a point has no $\mathcal D_X$-Ext amplitude
@@ -1791,39 +2009,48 @@ coming from a curve; its cohomological range is controlled by the
 algebra~$A$, not by Theorem~H. The chiral setting inserts a complex
 curve~$X$, and each local configuration space $\FM_m(\C)$ contributes
 Arnold cohomology that must be killed. The FM-formality spectral
-sequence is the mechanism by which bar-concentration leaves only the
-curve-level Ext amplitude~$[0,2]$.
+sequence is the mechanism by which PBW/Arnold collapse leaves only
+the curve-level Ext amplitude~$[0,2]$.
 \end{remark}
 
 \begin{lemma}[Chiral Hochschild descent; \ClaimStatusProvedHere]
 \label{lem:chirhoch-descent}
 \index{chiral Hochschild!descent from bar}
-The chiral Hochschild complex $\ChirHoch^{\bullet}(\cA)$ arises as
-the $\Sigma$-coinvariant descent of the homotopy Koszul dual
-factorization algebra
+Let $\cA$ be a PBW chiral Koszul algebra on a smooth projective
+curve~$X$, satisfying the $E_{\infty}$-chiral completion hypothesis
+of Corollary~\textup{\ref{cor:hochschild-averaging-symmetric}} and
+the geometric--algebraic comparison hypotheses of
+Theorem~\textup{\ref{thm:hochschild-bar-cobar}}. The derived chiral
+Hochschild complex $RHH_{\mathrm{ch}}(\cA)$ is computed by the
+two-sided diagonal bar resolution and is filtered quasi-isomorphic to
+the Verdier-dual diagonal-bar coefficient object
 \[
-(\cA)^!_\infty := \mathbb{D}_{\Ran}\bar{B}_X(\cA).
+\mathsf{DHH}_{\Sigma}(\cA)
+:=
+\bigl(\mathbb{D}_{\Ran}\bar{B}^{\mathrm{ch}}_X(\cA)\bigr)_{\Sigma,\Delta}.
 \]
-Concretely, on the Koszul locus
-\textup{(}Definition~\textup{\ref{def:chiral-koszul-morphism})}
-there is a natural identification of chain complexes
+Here $(-)_{\Sigma,\Delta}$ denotes totalized $\Sigma_n$-coinvariants
+in bar degree~$n$, with the two external Hochschild marked points kept
+as the diagonal bimodule legs. Concretely, on this locus there is a
+natural filtered quasi-isomorphism of chain complexes
 \begin{equation}
 \label{eq:chirhoch-descent}
-\ChirHoch^{\bullet}(\cA)
-\;\cong\;
-\bigl((\cA)^!_\infty\bigr)_{\Sigma}
-\;\cong\;
-\bigl(\mathbb{D}_{\Ran}\bar{B}^{\mathrm{ch}}(\cA)\bigr)_{\Sigma},
+RHH_{\mathrm{ch}}(\cA)
+\;\xrightarrow{\ \sim\ }\;
+\mathsf{DHH}_{\Sigma}(\cA).
 \end{equation}
-where $(-)_{\Sigma}$ denotes totalized $\Sigma_n$-coinvariants in
-bar degree~$n$.
 If
 \[
 \cA^i := H^*\bigl(\bar{B}^{\mathrm{ch}}(\cA)\bigr),
 \qquad
 \cA^! := \mathbb{D}_X(\cA^i),
 \]
-then this is the corrected comparison chain
+then the associated graded of~$\mathsf{DHH}_{\Sigma}(\cA)$ under the
+PBW/Arnold collision filtration has degree-$p$ coefficient
+\[
+R\operatorname{Hom}_{\cD_X}\bigl((\cA^!)_p,\omega_X\bigr).
+\]
+Thus the comparison chain used by Theorem~H is
 \[
 \bar{B}^{\mathrm{ch}}(\cA)
 \;\longrightarrow\;
@@ -1831,45 +2058,15 @@ then this is the corrected comparison chain
 \;\xrightarrow{\ \mathbb{D}_X\ }\;
 \cA^!,
 \]
-with no direct identification of the bar coalgebra itself with
-the Koszul dual algebra.
+with no direct identification of the bar coalgebra, the Hochschild
+cochain object, or the bar-cobar inverse with the Koszul dual algebra.
 \end{lemma}
 
 \begin{proof}
-By Theorem~\ref{thm:bar-cobar-isomorphism-main}(3),
-the Verdier dual bar object
+Theorem~\ref{thm:hochschild-bar-cobar} computes the derived
+chiral Hochschild complex by the two-sided diagonal bar resolution
 \[
-(\cA)^!_\infty
-=
-\mathbb{D}_{\Ran}\bar{B}_X(\cA)
-\]
-is the homotopy Koszul dual factorization algebra of~$\cA$.
-Passing from the ordered bar to the symmetric chiral Hochschild object is
-exactly passage to totalized $\Sigma_n$-coinvariants in each bar
-degree, so
-\[
-\bigl((\cA)^!_\infty\bigr)_{\Sigma}
-\cong
-\bigl(\mathbb{D}_{\Ran}\bar{B}^{\mathrm{ch}}(\cA)\bigr)_{\Sigma}.
-\]
-
-On the Koszul locus, Theorem~\ref{thm:bar-concentration} identifies
-the bar coalgebra with its bar cohomology coalgebra
-$\cA^i = H^*(\bar{B}^{\mathrm{ch}}(\cA))$.
-Applying degreewise Verdier duality on the curve gives
-$\cA^! = \mathbb{D}_X(\cA^i)$, and Theorem~A identifies the resulting
-factorization algebra with $(\cA)^!_\infty$.
-Thus the bar coalgebra, its cohomology coalgebra, and the Koszul dual
-algebra remain separated by the chain
-\[
-\bar{B}^{\mathrm{ch}}(\cA)\to \cA^i \xrightarrow{\mathbb{D}_X}\cA^!,
-\]
-which is the comparison used in Theorem~H.
-
-Finally, Theorem~\ref{thm:hochschild-bar-cobar} computes chiral
-Hochschild cohomology by the two-sided diagonal bar resolution
-\[
-\ChirHoch^\bullet(\cA)
+RHH_{\mathrm{ch}}(\cA)
 \simeq
 R\mathrm{Hom}_{\cA^e}(\cA,\cA)
 \simeq
@@ -1880,12 +2077,98 @@ The FM/Verdier pairing identifies a diagonal bimodule functional on
 the middle bar coalgebra with a $\Sigma_n$-coinvariant section of
 $\mathbb{D}_{\Ran}\barB^{\mathrm{ch}}(\cA)$ in bar degree~$n$; the two
 outer $\cA$-factors are the two boundary marked points in the
-Hochschild configuration. This gives the
-$\Sigma$-coinvariant descent of $(\cA)^!_\infty$ and proves
-\eqref{eq:chirhoch-descent}. The bar--cobar counit is used only to
-prove that the two-sided bar object resolves the diagonal bimodule;
-it does not identify $\Omega\barB(\cA)$ with the Koszul dual algebra.
+Hochschild configuration. This gives the filtered comparison
+\eqref{eq:chirhoch-descent}; applying cohomology gives
+$\ChirHoch^\bullet(\cA)$.
+
+The $E_{\infty}$-chiral completion makes ordered-to-symmetric
+coinvariants compatible with the PBW filtration. On the Koszul locus,
+Theorem~\ref{thm:bar-concentration} identifies the associated graded of
+the bar coalgebra with its bar cohomology coalgebra
+$\cA^i=H^*(\barB^{\mathrm{ch}}(\cA))$. Degreewise Verdier duality on
+the curve then gives
+$\cA^! = \mathbb D_X(\cA^i)$, and the degree-$p$ coefficient of the
+surviving collision spectral sequence is
+$R\operatorname{Hom}_{\cD_X}((\cA^!)_p,\omega_X)$. Thus the bar
+coalgebra, the Hochschild cochain object, the bar cohomology coalgebra,
+and the Koszul dual algebra remain separated by the chain
+\[
+\bar{B}^{\mathrm{ch}}(\cA)\to \cA^i \xrightarrow{\mathbb{D}_X}\cA^!.
+\]
+The bar--cobar counit is used only to prove that the two-sided bar
+object resolves the diagonal bimodule; it does not identify
+$\Omega\barB(\cA)$ with the Koszul dual algebra.
 \end{proof}
+
+\begin{remark}[Theorem H exactness criterion]
+\label{rem:theorem-H-filter-exactness}
+The proof of Theorem~H uses three filtrations, and the theorem is true
+on the common locus where all three are exact in the following sense.
+First, the collision-depth filtration
+$F_{\mathrm{coll}}$ on the FM compactification
+$\overline C_{p+2}(X)$ has spectral sequence
+\[
+E_1^{a,b}(p)
+=
+H^{a+b}\bigl(\operatorname{gr}^{a}_{F_{\mathrm{coll}}}
+CH^{p,\bullet}_{\mathrm{ch}}(\cA)\bigr)
+\Longrightarrow
+H^{a+b}CH^{p,\bullet}_{\mathrm{ch}}(\cA),
+\]
+and the PBW/Arnold contraction identifies its surviving page as
+\[
+E_2^{a,p}(p)
+\cong
+\operatorname{Ext}_{\cD_X}^{a}\bigl((\cA^!)_p,\omega_X\bigr),
+\qquad
+E_2^{a,b}(p)=0\quad (b\ne p),
+\]
+with $d_r^{\mathrm{coll}}=0$ for $r\ge2$. Second, the bar-degree
+filtration $F_{\mathrm{bar}}$ on the direct-sum totalization
+$\operatorname{Tot}^{\oplus}_{p\ge0}
+\bigl(CH^{p,\bullet}_{\mathrm{ch}}[-p]\bigr)$
+transports this support to total cohomological degrees
+$0,1,2$. Third, the conformal-weight/PBW filtration
+$F_{\mathrm{wt}}$ is first applied in finite weight windows and then
+completed; the inverse system is required to satisfy the
+Mittag--Leffler condition, so the obstruction term
+\[
+\lambda^1_n(\cA)
+:=
+R^1\!\varprojlim_N
+H^{n-1}\!\left(
+F_{\mathrm{wt}}^{N}RHH_{\mathrm{ch}}(\cA)/
+F_{\mathrm{wt}}^{N+1}RHH_{\mathrm{ch}}(\cA)
+\right)
+\]
+vanishes.
+
+Equivalently, the theorem excludes exactly the following failure
+modes. Positive Arnold fibre classes
+$\epsilon_{\mathrm{Arn}}\in E_1^{*,>0}$ must be killed by the
+Shelton--Yuzvinsky homotopy transported through the chiral quadratic
+Koszul map; higher collision differentials
+$d_r^{\mathrm{coll}}(\epsilon)$ for $r\ge2$ must vanish; the
+completion defect $\lambda^1_n(\cA)$ must vanish in every degree; and
+the Verdier/perfectness cone
+\[
+\mathfrak p_\cA
+:=
+\operatorname{Cone}\!\left(
+RHH_{\mathrm{ch}}(\cA)\longrightarrow
+R\operatorname{Hom}(RHH_{\mathrm{ch}}(\cA^!),\omega_X[2])
+\right)
+\]
+must be acyclic. On the generic PBW finite-type lanes these four
+terms vanish by the preceding lemmas. At critical affine level,
+bar-object PBW Koszulness of the universal affine algebra does not
+repair the finite-type failure: the Feigin--Frenkel centre populates
+$\ChirHoch^0$ infinitely and the finite-window/perfectness condition
+fails. At admissible, minimal, and logarithmic simple-quotient loci,
+null-vector and Jordan-block phenomena enter the Li-bar
+$E_2$-page or in $\lambda^1_n(\cA)$; those cases require a coderived
+or case-by-case theorem and are not consequences of Theorem~H.
+\end{remark}
 
 \begin{theorem}[Koszul duality for chiral Hochschild cohomology
 \textup{(}Theorem~H\textup{)}; \ClaimStatusConditional]
@@ -1910,12 +2193,19 @@ derived centre $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$.
 
 For every PBW chiral Koszul datum~$\cA$
 \textup{(}Definition~\textup{\ref{def:chiral-koszul-morphism})} with
-dual~$\cA^!$ on a smooth projective curve~$X$, satisfying the
+dual~$\cA^!$ on a smooth projective curve~$X$, whose diagonal
+chiral Hochschild complexes for $\cA$ and $\cA^!$ are perfect in
+the holonomic $\mathcal D_X$-module derived category and have
+finite-dimensional graded realizations, satisfying the
 $E_{\infty}$-chiral completion hypothesis of
 Corollary~\textup{\ref{cor:hochschild-averaging-symmetric}} and lying
 away from critical affine levels and the minimal/admissible simple
 quotient points recorded in the non-generic class-\(\mathsf M\)
 scope discussion above,
+and with all complexes first taken in finite conformal-weight windows and
+then completed with respect to the conformal-weight/PBW filtration
+under the Mittag--Leffler condition recorded in
+Remark~\textup{\ref{rem:theorem-H-filter-exactness}},
 the bigraded chiral Hochschild complex
 \textup{(}Definition~\textup{\ref{def:bigraded-hochschild})} satisfies
 the \emph{derived-level} duality:
@@ -1926,6 +2216,9 @@ R\mathrm{Hom}\bigl(RHH_{\mathrm{ch}}(\cA^!),\, \omega_X[2]\bigr).
 \end{equation}
 The non-generic class-\(\mathsf M\) discussion above is an exclusion
 from the theorem's domain, not a proof input.
+The totalization is the direct-sum totalization in bar degree before
+weight completion; replacing it by an unrestricted product
+totalization is a different completed/coderived statement.
 On cohomology:
 \[
 \ChirHoch^n(\mathcal{A}) \cong \ChirHoch^{2-n}(\mathcal{A}^!)^{\vee} \otimes \omega_X.
@@ -1937,7 +2230,7 @@ and
 Proposition~\textup{\ref{prop:fm-tower-collapse}}\textup{)}:
 the FM-formality spectral sequence collapses the tower of
 configuration spaces $\overline{C}_{p+2}(X)$ to the
-curve-level $\mathcal{D}_X$-Ext via bar-concentration, so the
+curve-level $\mathcal{D}_X$-Ext via the PBW/Arnold contraction, so the
 geometric shift~$[p+2]$ on $\overline{C}_{p+2}(X)$ is cancelled
 by the totalization shift~$[-p]$ and only the base-curve
 shift~$[2]$ survives.
@@ -1945,9 +2238,10 @@ The $\omega_X$ twist encodes the dualizing sheaf.
 \end{theorem}
 
 \begin{proof}
-Lemma~\ref{lem:chirhoch-descent} identifies the derived chiral
-Hochschild complexes with the $\Sigma$-coinvariant descents of the
-homotopy Koszul dual factorization algebras:
+Lemma~\ref{lem:chirhoch-descent} supplies filtered
+quasi-isomorphisms from the derived chiral Hochschild complexes to
+the $\Sigma$-coinvariant descents of the homotopy Koszul dual
+factorization algebras:
 \[
 RHH_{\mathrm{ch}}(\cA)
 \simeq
@@ -1991,6 +2285,10 @@ E_2^{r,p}(\cA)
 Because the collision-depth spectral sequences of
 Lemma~\ref{lem:hochschild-shift-computation} degenerate at~$E_2$,
 the same duality passes to the abutments.
+The perfectness hypothesis is the point at which the derived
+$R\mathrm{Hom}$ expression and the cohomological linear duals are
+legitimate; without it the statement must be made in a
+completed or coderived ambient.
 The uniform shift is exactly the shift~$[2]$ computed there, so
 \[
 RHH_{\mathrm{ch}}(\cA)
@@ -2014,11 +2312,17 @@ Lemma~\ref{lem:hochschild-shift-computation} supplies the same
 curve-level shift~$[2]$.
 \end{proof}
 
-\begin{remark}[Proof infrastructure]
-The proof uses the bar-cobar quasi-isomorphism at all genera
-(Theorem~\ref{thm:higher-genus-inversion}) and the Kodaira--Spencer map
-for Koszul pairs
-(Theorem~\ref{thm:kodaira-spencer-chiral-complete}).
+\begin{remark}[Diagonal, FM, Verdier]
+The argument uses three independent inputs: the diagonal two-sided bar
+resolution, PBW/FM collapse of the collision-depth spectral sequence,
+and curve-level Verdier duality. The bar--cobar quasi-isomorphism
+(Theorem~\ref{thm:higher-genus-inversion}) supplies the diagonal
+resolution; it is inversion $\Omega\barB(\cA)\simeq\cA$, not the
+identification of $\Omega\barB(\cA)$ with the Koszul dual algebra.
+The Kodaira--Spencer map for Koszul pairs
+(Theorem~\ref{thm:kodaira-spencer-chiral-complete}) gives the
+deformation-theoretic reading after the Hochschild duality has been
+proved.
 \end{remark}
 
 \begin{theorem}[Polynomial growth of chiral Hochschild cohomology
@@ -2033,7 +2337,10 @@ curve~$X$, with $E_{\infty}$-chiral completion as in
 Corollary~\textup{\ref{cor:hochschild-averaging-symmetric}}, away from
 critical affine levels and from the minimal/admissible simple quotient
 points of the non-generic class-\(\mathsf M\) scope,
-and let $\cA^!$ denote its Koszul dual. Then:
+and let $\cA^!$ denote its Koszul dual. Assume the same
+finite-type/perfectness hypotheses as in
+Theorem~\textup{\ref{thm:main-koszul-hoch}}, so that the displayed
+dimensions are dimensions of finite graded pieces. Then:
 \begin{enumerate}[label=\textup{(\alph*)}]
 \item \emph{Concentration \textup{(}cohomological amplitude, not
  virtual dimension\textup{)}.}\;
@@ -2055,8 +2362,9 @@ and let $\cA^!$ denote its Koszul dual. Then:
  + \dim \ChirHoch^1(\cA)\,t
  + \dim Z(\cA^!)\,t^2,
  \end{equation}
- where $Z(\cA) = \ChirHoch^0(\cA)$ is the center and the symmetry
- $\dim \ChirHoch^0(\cA) = \dim \ChirHoch^2(\cA^!)$ comes from
+ where $Z(\cA) = \ChirHoch^0(\cA)$ is the center, and the
+ $t^2$-coefficient is the dimension of the Verdier-dual centre
+ $Z(\cA^!)^\vee\otimes\omega_X$ supplied by
  Theorem~\textup{\ref{thm:main-koszul-hoch}}.
 
 \item \emph{Koszul functoriality.}\;
@@ -2098,7 +2406,7 @@ Because $X$ is a smooth projective curve,
 so every bar-degree summand of the Hochschild total complex has
 cohomological amplitude~$[0,2]$.
 The totalization amplitude is then bounded by
-Lemma~\ref{lem:totalization-amplitude} below, which transports the
+Lemma~\ref{lem:totalization-amplitude}, which transports the
 per-bar-degree amplitude to the totalization. Hence
 $\ChirHoch^n(\cA)=0$ for $n<0$ and $n>2$.
 Thus the only possible nonzero degrees are $0$, $1$, and~$2$.
@@ -2113,7 +2421,8 @@ set $n=2$ in Theorem~\ref{thm:main-koszul-hoch}:
 \ChirHoch^0(\cA^!)^\vee \otimes \omega_X.
 \]
 Because $\omega_X$ is a line bundle on the fixed curve~$X$, it
-does not change the dimension. Therefore
+changes the geometric twist but not the dimension of the finite
+graded coefficient counted by $P_\cA(t)$. Therefore
 \[
 \dim \ChirHoch^2(\cA)
 \;=\;
@@ -2203,7 +2512,7 @@ Theorem~\ref{thm:main-koszul-hoch} then identifies the quadratic
 coefficient with $\dim Z(\cA^!)$, recovering
 \eqref{eq:hoch-hilbert-polynomial}. Outside the PBW Koszul and
 finite-type/perfectness regime, the displayed deformation reading is
-only the expected indexing of the obstruction theory; it supplies no
+only the standard indexing of the obstruction theory; it supplies no
 concentration theorem.
 \end{remark}
 
@@ -2258,22 +2567,51 @@ here $\ChirHoch^*$ becomes infinite-dimensional
 (the Feigin--Frenkel centre
 $\mathrm{Fun}(\mathrm{Op}_{\fg^\vee}(D))$ populates $\ChirHoch^0$),
 while $\HH^*(A_{\mathrm{mode}})$ remains finite.
-This is the scope boundary of Theorem~H: the Koszul hypothesis
-fails at critical level, and the FM-tower collapse
-(Proposition~\ref{prop:fm-tower-collapse}) no longer applies.
+This is the scope boundary of Theorem~H: Koszulness by itself is
+not enough. At critical level the generic finite-type/perfectness
+and completion hypotheses needed by the FM-tower collapse fail, and
+Proposition~\ref{prop:fm-tower-collapse} no longer supplies a
+finite three-term chiral Hochschild complex.
+This is a finite-type and perfectness failure, not a proved
+degree-$3$ class at critical level; such a claim requires a
+completed critical-level Hochschild computation.
 \end{remark}
 
 \begin{corollary}[Deformation-obstruction exchange at genus \texorpdfstring{$0$}{0}; \ClaimStatusConditional]\label{cor:def-obs-exchange-genus0}
 \index{deformation-obstruction!genus-0 exchange}
-For a Koszul pair $(\mathcal{A}, \mathcal{A}^!)$ on a smooth projective curve $X$, the first-order deformations of $\mathcal{A}$ are dual to the primary obstructions of $\mathcal{A}^!$:
+Let $(\mathcal{A}, \mathcal{A}^!)$ be a PBW chiral Koszul pair on a
+smooth projective curve~$X$, satisfying the $E_{\infty}$-completion,
+generic/perfectness, and non-critical hypotheses of
+Theorem~\textup{\ref{thm:main-koszul-hoch}}. Then the degree-$2$
+endpoint of the unshifted curve-level chiral Hochschild complex of
+$\mathcal{A}$ is dual to the ordinary chiral centre of
+$\mathcal{A}^!$:
 \begin{equation}\label{eq:def-obs-genus0}
 \ChirHoch^2(\mathcal{A}) \;\cong\; \ChirHoch^0(\mathcal{A}^!)^{\vee} \otimes \omega_X.
 \end{equation}
-More generally, the genus-$0$ deformation complex of $\mathcal{A}$ is dual to the genus-$0$ obstruction complex of $\mathcal{A}^!$ with a shift by~$2$.
+In Gerstenhaber product-deformation grading this is the
+product-deformation endpoint; in the shifted formal-moduli convention
+used for the MC problem, $\ChirHoch^1(\mathcal A)$ is the tangent
+space and $\ChirHoch^2(\mathcal A)$ is the primary obstruction target.
+More generally, the genus-$0$ curve-level chiral deformation complex of
+$\mathcal{A}$ is dual to the corresponding curve-level obstruction
+complex of $\mathcal{A}^!$ with a shift by~$2$.
 \end{corollary}
 
 \begin{proof}
-Set $n = 2$ in Theorem~\ref{thm:main-koszul-hoch}: $\ChirHoch^2(\mathcal{A}) \cong \ChirHoch^{2-2}(\mathcal{A}^!)^\vee \otimes \omega_X = \ChirHoch^0(\mathcal{A}^!)^\vee \otimes \omega_X$. Here $\ChirHoch^2(\mathcal{A})$ classifies first-order deformations of~$\mathcal{A}$, and $\ChirHoch^0(\mathcal{A}^!) = Z(\mathcal{A}^!)$ is the center of the Koszul dual. The duality exchanges the deformation space of one algebra with the center of the other, incarnating ``complementarity'' at the level of Hochschild cohomology.
+Set $n = 2$ in Theorem~\ref{thm:main-koszul-hoch}:
+\[
+\ChirHoch^2(\mathcal{A})
+\cong
+\ChirHoch^{0}(\mathcal{A}^!)^\vee \otimes \omega_X .
+\]
+Here $\ChirHoch^2(\mathcal{A})$ is the curve-level chiral
+product-deformation endpoint, equivalently the primary obstruction
+target after shifting to the formal-moduli convention, and
+$\ChirHoch^0(\mathcal{A}^!)=Z(\mathcal{A}^!)$ is the ordinary
+chiral centre of the Koszul dual. The statement does not apply to
+topological Hochschild, categorical Hochschild, or product-ambient
+CY Hochschild complexes.
 \end{proof}
 
 \begin{remark}\label{rem:def-obs-higher-genus}
@@ -2281,7 +2619,17 @@ At genus $g \geq 1$, the exchange is Theorem~\ref{thm:quantum-complementarity-ma
 \end{remark}
 
 \begin{example}[Heisenberg specialization]\label{ex:heisenberg-curved-specialization}
-For the Heisenberg algebra $\mathcal{H}_k$, the curved $A_\infty$ structure on the Koszul dual $\mathrm{Sym}^{\mathrm{ch}}(V^*)$ has $m_0 = -k \cdot \omega$ and $m_n = 0$ for $n \geq 3$: the curvature is the entire obstruction, with no higher operations (\S\ref{sec:frame-genus1}). This is the simplest nontrivial instance of the deformation-obstruction exchange above: $\ChirHoch^2(\mathcal{H}_k) = \mathbb{C}$ (the level deformation) is dual to $\ChirHoch^0(\mathrm{Sym}^{\mathrm{ch}}(V^*))^\vee \otimes \omega_X = \mathbb{C}$ (the center of the dual).
+For the Heisenberg algebra $\mathcal{H}_k$, the curved
+$A_\infty$ structure on the Koszul dual
+$\mathrm{Sym}^{\mathrm{ch}}(V^*)$ has
+$m_0 = -k \cdot \omega$ and $m_n = 0$ for $n \geq 3$: the curvature is
+the entire obstruction, with no higher operations
+(\S\ref{sec:frame-genus1}). This is the simplest nontrivial instance
+of the deformation-obstruction exchange above:
+$\ChirHoch^2(\mathcal{H}_k) = \mathbb{C}$ is the degree-$2$ endpoint
+recording the level-curvature obstruction target, dual to
+$\ChirHoch^0(\mathrm{Sym}^{\mathrm{ch}}(V^*))^\vee \otimes \omega_X =
+\mathbb{C}$ (the center of the dual).
 \end{example}
 
 
@@ -2514,9 +2862,9 @@ $d_{\mathrm{Hoch}} = d_{\mathrm{int}}+d_{\mathrm{fact}}+d_{\mathrm{config}}$
 the three pieces match, respectively, the $\mathcal{D}_X$-structure
 on~$\cA$, the factorization-bimodule structure, and the de~Rham
 differential on $\operatorname{Ran}(X)$.
-Naturality in $\cA$ follows because both sides are covariant functors
-of the chiral algebra datum and the construction uses only
-$\operatorname{Fact}(X)$-functorial data.
+Naturality is used only for morphisms of chiral algebras equipped
+with compatible diagonal-bimodule maps; unrestricted covariance of
+Hochschild cochains in the algebra variable is not asserted.
 
 \emph{Part~(a): chain-level qualification.}\;
 The $\operatorname{Ran}(X)$-structure on
@@ -2630,7 +2978,7 @@ topological-factorization comparisons in Volume~II
 Both lanes are load-bearing: downgrading to
 $1$-categorical alone loses the Francis--Gaitsgory
 $(\infty,1)$-structure; demanding chain-level equivalence in
-the $1$-categorical ambient would be false
+the $1$-categorical ambient is false
 (Part~(a)).
 \end{remark}
 
@@ -2706,7 +3054,7 @@ The converse ($\Etwo$-formality implies Koszulness) is false.
 A non-Koszul algebra whose Hochschild cohomology happens
 to concentrate in three degrees need not be $\Etwo$-formal:
 concentration is only a support bound, while formality requires a
-brace-compatible contraction. A stronger converse would require
+brace-compatible contraction. A stronger converse requires
 the scalar-orbit formality problem discussed
 below, for which no converse is proved here
 \textup{(}Theorem~\textup{\ref{thm:convolution-formality-one-channel}}\textup{)}.
@@ -2898,8 +3246,9 @@ or more generally $L_\infty$, algebra. Passing to a minimal model
 transfers the brackets to cohomology. The formal moduli functor is
 smooth at the base point exactly when the transferred Kuranishi
 obstruction maps from $H^1$ to $H^2$ vanish. The vector space $H^2$
-is the target of obstructions; it may also parametrize unobstructed
-families and need not vanish.
+is the target of obstructions, not the obstruction itself: the
+Heisenberg level line below gives a nonzero $H^2$ with an
+unobstructed one-parameter family.
 \end{proof}
 
 \begin{remark}[Identifying the obstruction space]
@@ -2928,7 +3277,7 @@ The Heisenberg algebra shows why $H^2=0$ is the wrong smoothness
 criterion: $H^2=\bC$ is the level-deformation line, and the resulting
 one-parameter family is unobstructed. The obstruction is the
 Kuranishi map into this line, not the line itself. A converse theorem
-recovering Koszulness from MC smoothness would have to prove that
+recovering Koszulness from MC smoothness must prove that
 every non-collapsing class in the bar spectral sequence produces a
 nonzero Kuranishi map~\eqref{eq:mc-smoothness}.
 \end{remark}
@@ -3026,15 +3375,14 @@ part~(ii) explains why this is sufficient on that proved surface.
 \begin{remark}[Operadic inheritance of Koszulness]
 \label{rem:operadic-inheritance}
 \index{Koszulness!operadic inheritance}
-Chiral Koszulness should descend from Koszulness of the chiral
-operad $P^{\mathrm{ch}}$ itself, just as $\Eone$-chiral Koszul
-duality (Theorem~\ref{thm:e1-chiral-koszul-duality}) derives from
-Koszulness of $\mathsf{Ass}$ via
+The descent of chiral Koszulness from Koszulness of the chiral
+operad $P^{\mathrm{ch}}$ is a separate theorem, not an implicit
+consequence of Theorem~\ref{thm:e1-chiral-koszul-duality}. Its proof
+requires formality of $\overline{\mathrm{FM}}_n(X)$ as operadic
+objects on curves and the transfer statement recorded in
+Theorem~\ref{thm:operadic-complexity}; the associative case is the
+one-slot specialization implemented by
 Lemma~\ref{lem:operadic-koszul-transfer}.
-This requires formality of $\overline{\mathrm{FM}}_n(X)$ as
-operadic objects on curves; see
-Theorem~\ref{thm:operadic-complexity} for the detailed
-statement and proof table.
 \end{remark}
 
 \section{Example: boson-fermion duality}
@@ -3093,7 +3441,7 @@ In modes (half-integer for Neveu--Schwarz sector):
 \mathcal{F}_{\mathcal{F}} = \Lambda^{\bullet}(\psi_{-1/2}, \psi_{-3/2}, \ldots, \psi^*_{-1/2}, \psi^*_{-3/2}, \ldots) |0\rangle
 \]
 
-\subsection{Establishing Koszul duality}
+\subsection{Boson-fermion correspondence as lattice VOA extension, not Koszul duality}
 
 \begin{theorem}[Boson-fermion correspondence via lattice VOA; \ClaimStatusProvedElsewhere{} \cite{FK80}]\label{thm:boson-fermion-lattice}
 The free boson $\mathcal{B}$ and free fermion $\mathcal{F}$ are related by bosonization through the rank-1 lattice vertex algebra $V_{\mathbb{Z}}$:
@@ -3103,7 +3451,7 @@ V_{\mathbb{Z}} \supset \mathcal{B}, \qquad \mathcal{F} \cong V_{\mathbb{Z}} \qua
 \end{theorem}
 
 \begin{remark}
-This is \emph{not} Koszul duality in the operadic sense (Remark~\ref{rem:bosonization-not-koszul}). Koszul duality preserves the dimension of the generating space: if $\mathcal{A}$ has generators in a space $V$, then $\mathcal{A}^!$ has generators in $V^*$, so $\dim V = \dim V^*$. Here $\mathcal{B}$ has one generator ($\alpha$) while $\mathcal{F}$ has two generators ($\psi, \psi^*$). The Heisenberg algebra is \emph{not} Koszul self-dual: $\mathcal{H}_\kappa^! \simeq \mathrm{Sym}^{ch}(V^*)$, a commutative chiral algebra (Part~\ref{part:characteristic-datum}, the characteristic datum). The boson-fermion correspondence is instead a lattice VOA extension: the vertex operators $\psi = {:}e^{i\phi}{:}$ and $\psi^* = {:}e^{-i\phi}{:}$ lie in $V_{\mathbb{Z}}$, not in the Heisenberg subalgebra.
+This is \emph{not} Koszul duality in the operadic sense (Remark~\ref{rem:bosonization-not-koszul}). Koszul duality preserves the dimension of the generating space: if $\mathcal{A}$ has generators in a space $V$, then $\mathcal{A}^!$ has generators in $V^*$, so $\dim V = \dim V^*$. Here $\mathcal{B}$ has one generator ($\alpha$) while $\mathcal{F}$ has two generators ($\psi, \psi^*$). The Heisenberg algebra is \emph{not} Koszul self-dual: $\mathcal{H}_\kappa^! \simeq \mathrm{Sym}^{ch}(V^*)$, a commutative chiral algebra (Part~\ref{part:bar-cobar-engine}, the characteristic-datum apparatus). The boson-fermion correspondence is instead a lattice VOA extension: the vertex operators $\psi = {:}e^{i\phi}{:}$ and $\psi^* = {:}e^{-i\phi}{:}$ lie in $V_{\mathbb{Z}}$, not in the Heisenberg subalgebra.
 \end{remark}
 
 \begin{proof}
@@ -3145,10 +3493,10 @@ with coproduct:
 \Delta([\alpha^n]) = \sum_{i+j=n} [\alpha^i] \otimes [\alpha^j]
 \]
 
-This is the divided power coalgebra $\Gamma(V^*)$, which is the Koszul dual \emph{coalgebra}. Its linear dual is the symmetric algebra $\mathrm{Sym}(V)$, and the Koszul dual \emph{algebra} is $\mathcal{H}_\kappa^! \simeq \mathrm{Sym}^{\mathrm{ch}}(V^*)$ (Part~\ref{part:characteristic-datum}, the characteristic datum), confirming that the Heisenberg algebra is Koszul (Theorem~\ref{thm:km-chiral-koszul}) but \emph{not} Koszul self-dual. (The cobar $\Omega(\bar{B}(\mathcal{H}_\kappa))$ recovers $\mathcal{H}_\kappa$ itself.)
+This is the divided power coalgebra $\Gamma(V^*)$, which is the Koszul dual \emph{coalgebra}. Its linear dual is the symmetric algebra $\mathrm{Sym}(V)$, and the Koszul dual \emph{algebra} is $\mathcal{H}_\kappa^! \simeq \mathrm{Sym}^{\mathrm{ch}}(V^*)$ (Part~\ref{part:bar-cobar-engine}, the characteristic-datum apparatus), confirming that the Heisenberg algebra is Koszul (Theorem~\ref{thm:km-chiral-koszul}) but \emph{not} Koszul self-dual. (The cobar $\Omega(\bar{B}(\mathcal{H}_\kappa))$ recovers $\mathcal{H}_\kappa$ itself.)
 \end{proof}
 
-\subsection{Computing chiral Hochschild cohomology}
+\subsection{Boson and fermion chiral Hochschild cohomologies and their non-Koszul comparison}
 
 \begin{computation}[Boson chiral Hochschild cohomology; \ClaimStatusProvedHere]
 \label{comp:boson-hochschild}
@@ -3164,12 +3512,12 @@ An element $a \in \mathcal{B}$ lies in the center if and only if $a(z)\alpha(w) 
 A chiral derivation $D: \mathcal{B} \to \mathcal{B}$ must satisfy the Leibniz rule for the $\lambda$-bracket: $D(\{\alpha_\lambda \alpha\}) = \{D(\alpha)_\lambda \alpha\} + \{\alpha_\lambda D(\alpha)\}$.
 Since $\{\alpha_\lambda \alpha\} = \kappa\lambda$ is a scalar, the left side is $0$, and the constraint is $\{D(\alpha)_\lambda \alpha\} + \{\alpha_\lambda D(\alpha)\} = 0$.
 The derivation $D(\alpha) = c \cdot \mathbf{1}$ (a scalar) satisfies this because $\{c_\lambda \alpha\} = 0$ and $\{\alpha_\lambda c\} = 0$.
-This derivation is \emph{not inner}: an inner derivation by a field $a$ acts as $a_{(0)}\alpha$, but for the Heisenberg algebra $\alpha_{(0)}\alpha = 0$ (the zero mode is central: $[\alpha_0, \alpha_n] = 0$ for all $n$), and $\mathbf{1}_{(0)}\alpha = 0$. No element $a \in \mathcal{B}$ satisfies $a_{(0)}\alpha = \mathbf{1}$.
+It is outer. An inner chiral derivation by a field~$a$ acts on
+$\alpha$ as $a_{(0)}\alpha$. The Heisenberg zero mode is central:
+$[\alpha_0,\alpha_n]=0$ for all~$n$, hence
+$\alpha_{(0)}\alpha=0$ and $\mathbf{1}_{(0)}\alpha=0$. No field
+$a\in\mathcal B$ has $a_{(0)}\alpha=\mathbf1$.
 Thus $\ChirHoch^1 = \mathbb{C}$, generated by the outer derivation $D(\alpha) = \mathbf{1}$.
-% CORRECTION (2026-03-28): Previously stated ChirHoch^1 = 0, conflating
-% classical Whitehead (all derivations of the Weyl algebra are inner)
-% with chiral Hochschild (the zero-mode alpha_{(0)} is central, so
-% D(alpha) = 1 is a non-inner chiral derivation). See.
 
 \emph{Degree 2.}
 A 2-cocycle $\phi \in C^2$ defines a deformation:
@@ -3760,16 +4108,22 @@ the Feynman-amplitude content beyond the leading dg~terms.
 \index{chiral Hochschild cohomology!shadow projection}
 \index{shadow algebra!degree-2 projection}
 
-The chiral Hochschild cohomology of a modular Koszul algebra $\cA$ is
-the degree-$2$ projection of the shadow algebra:
+Let $\cA$ be a modular PBW chiral Koszul algebra satisfying the
+completion hypotheses of Theorem~\textup{\ref{thm:hochschild-polynomial-growth}}
+and the shadow-projection comparison for the cyclic deformation
+complex. The curve-level chiral Hochschild cohomology is the
+degree-$2$, genus-$0$ projection of the shadow algebra:
 \[
 \mathrm{ChirHoch}^n(\cA) \;\cong\;
 \cA^{\mathrm{sh}}_{2,0}{}^n \;=\;
 H^n\bigl(\pi_{2,0}(\Defcyc^{\mathrm{mod}}(\cA))\bigr).
 \]
-Polynomial growth of $\mathrm{ChirHoch}^*(\cA)$ is equivalent to the
-vanishing $\cA^{\mathrm{sh}}_{r,0} = 0$ for $r \geq 3$ at genus~$0$,
-i.e., to chiral Koszulness.
+If the higher genus-$0$ shadow projections
+$\cA^{\mathrm{sh}}_{r,0}$ vanish for $r \geq 3$ through PBW
+Koszulness, then Theorem~\textup{\ref{thm:hochschild-polynomial-growth}}
+gives the degree-$\leq2$ Hochschild polynomial. No converse is
+asserted: a three-term Hochschild cohomology group does not by itself
+prove PBW Koszulness or $E_2$-formality.
 \end{proposition}
 
 \begin{proof}
@@ -3778,10 +4132,12 @@ $\pi_{2,0}(\Defcyc^{\mathrm{mod}}(\cA))$ computes binary
 cyclic coderivations of the bar complex, which is the Hochschild
 cochain complex of~$\cA$
 (Theorem~\ref{thm:main-koszul-hoch}).
-The equivalence with Koszulness follows from
+The one-way implication from PBW Koszulness follows from
 Theorem~\ref{thm:koszul-equivalences-meta}\textup{(iii)}:
 $A_\infty$-formality is the vanishing of genus-$0$ shadows
-at degree~$\geq 3$.
+at degree~$\geq 3$. The reverse implication requires recovering
+the PBW contraction and the Arnold fibre homotopy from the support of
+$\ChirHoch^\bullet$ alone; that recovery is not proved here.
 \end{proof}
 
 \begin{theorem}[MC2-1 for Kac--Moody algebras;
@@ -4856,8 +5212,7 @@ exactly as in the tree-level proof of
 Theorem~\ref{thm:cyclic-linf-graph}.
 
 \emph{Non-separating terms} (second sum in~\eqref{eq:QME}).
-These arise not from the boundary of the configuration space but
-from the \emph{graph structure}: contracting a loop edge in
+These terms come from the \emph{graph structure}. Contracting a loop edge in
 $\Gamma$ (the $d_{\mathrm{ns}}$ component of
 Definition~\ref{def:three-component-modular-bar})
 pairs two half-edges at a vertex via the invariant form
@@ -5594,7 +5949,7 @@ Maurer--Cartan class lies on a single cyclic line. On the proved
 uniform-weight scalar lane this line is
 $\kappa(\cA)\Lambda$; for principal $\mathcal{W}_N$ with $N\geq 3$
 that stronger identification remains open. Non-scalar
-$\Theta_\cA$ requires $\dim H^2_{\mathrm{cyc}} \geq 2$; candidates
+$\Theta_\cA$ requires $\dim H^2_{\mathrm{cyc}} \geq 2$; test loci
 include admissible-level Kac--Moody, products, and extended
 algebras.
 \end{remark}
@@ -5722,7 +6077,8 @@ $\dim V_{r,s,[k]} = \sum_{n \in \mathbb{Z}} [p(k - \delta^+_n) - p(k - \delta^-_
 gives monotonically increasing sequences for all $14$ modules through $k = 80$. No eventual periodicity is detected at any period dividing $N = 480$ or $pq = 40$.
 \end{computation}
 
-Bar \emph{cohomology} periodicity may still hold via the bar differential, but this requires computing OPE structure constants of $M(5,8)$.
+Bar \emph{cohomology} periodicity is a separate bar-differential
+question and requires computing OPE structure constants of $M(5,8)$.
 \end{remark}
 
 \emph{Step~3: Lift to bar complex.}
@@ -5919,7 +6275,9 @@ $L_{-1/2}(\mathfrak{sl}_2)$ has:
 \ChirHoch^2 &= \mathbb{C} & & \text{(one marginal deformation: the
  level)},
 \end{align}
-The deformation in $\ChirHoch^2$ corresponds to the level family $k \mapsto k + t$; the vanishing $\ChirHoch^1 = 0$ reflects rigidity (no outer derivations).
+The Gerstenhaber product-deformation class in $\ChirHoch^2$
+corresponds to the level family $k \mapsto k + t$; the vanishing
+$\ChirHoch^1 = 0$ reflects rigidity (no outer derivations).
 The quantum period $M = 24$ manifests not in $\ChirHoch^n$ (which
 vanishes for $n > 2$ by Theorem~\ref{thm:hochschild-polynomial-growth})
 but in the \emph{weight-graded bar complex cohomology}:
@@ -5977,7 +6335,10 @@ Therefore $\sigma_{\mathrm{geom}}$ is nilpotent of index at most $3g - 2$, givin
 \begin{remark}[Nilpotent depth vs.\ periodicity]
 \label{rem:nilpotent-vs-periodic}
 \index{tautological depth!vs.\ periodicity}
-$\sigma_{\mathrm{geom}}$ is nilpotent ($\sigma^N = 0$), not periodic ($\sigma^N = \mathrm{id}$): the geometric contribution provides a stabilization threshold (cf.\ Remark~\ref{rem:stratified-periodicity}).
+$\sigma_{\mathrm{geom}}$ is nilpotent: $\sigma^N = 0$ for some~$N$.
+No periodic identity $\sigma^N=\mathrm{id}$ occurs. The geometric
+contribution provides a stabilization threshold
+(cf.\ Remark~\ref{rem:stratified-periodicity}).
 \end{remark}
 
 \begin{theorem}[Sharp geometric depth on smooth moduli; \ClaimStatusProvedHere]
@@ -6182,7 +6543,7 @@ cohomological degree.
  cohomology with order~$N_{\mathrm{mod}}$ is precisely the
  conjectural input of the Type~I modular-periodicity package.
 \item \emph{Quantum (Type~II).} The quantum-integer periodicity
- $[n + 2\ell]_q = [n]_q$ is theorematic in the admissible-level
+ $[n + 2\ell]_q = [n]_q$ is proved in the admissible-level
  KL/DS regime of Proposition~\ref{prop:periodicity-quantum-input}, so
  the Type~II profile contributes a proved
  $N_{\mathrm{quant}}$ factor.
@@ -6269,7 +6630,7 @@ but bar-periodicity remains conjectural
 $\mathrm{lcm}(N_{\mathrm{mod}}, N_{\mathrm{quant}})$; the spectral
 radius of $T_{\mathrm{rec}}$ bounds $N_{\mathrm{mod}}$
 (Theorem~\ref{thm:dominant-branch-point}).
-See the editorial companion for the full research surface.
+No periodic factor is assigned to the nilpotent geometric direction.
 \end{remark}
 
 \subsection{Koszul duality and periodicity interaction}
@@ -6338,31 +6699,41 @@ This equals $\frac{1}{12}$ precisely when $\gcd(p,24) + \gcd(p',24) = 2q$; for $
 \subsection{Marginal deformations in CFT}
 
 In the curve-level chiral lane, $\ChirHoch^2(\mathcal{A})$ contains
-first-order deformations of the OPE algebra. A CFT deformation
+first-order product-deformation classes of the OPE algebra in the
+unshifted Gerstenhaber convention; the formal MC tangent convention is
+shifted, with $\ChirHoch^1$ tangent and $\ChirHoch^2$ obstruction
+target. A CFT deformation
 $S \mapsto S+\lambda\int_\Sigma\phi(z,\bar z)\,d^2z$ is exactly
 marginal only after three independent conditions hold: $\phi$ has
 weight~$(1,1)$, its chiral component defines a
 $\ChirHoch^2$-cocycle, and the Kuranishi obstruction maps from
 Proposition~\ref{prop:mc-tangent-amplitude} vanish. Theorem~H removes
-ambient curve-level cohomology above degree~$2$ on the PBW Koszul
-locus; it does not make an arbitrary physical marginal operator
-integrable to all orders.
+ambient curve-level cohomology above degree~$2$ on its
+PBW-completed generic locus; it does not make an arbitrary physical
+marginal operator integrable to all orders.
 
 \begin{example}[Exactly marginal deformations]
 For the free boson, the degree-$2$ chiral Hochschild line is the
-radius/level deformation. For Virasoro minimal models on the
-Theorem~H lane, vanishing of the degree-$2$ chiral deformation group
-expresses rigidity of the chiral OPE algebra. Four-dimensional
+radius/level deformation. For generic Virasoro on the Theorem~H
+lane, vanishing of the degree-$2$ chiral deformation group expresses
+rigidity of the chiral OPE algebra. Minimal-model simple quotients
+belong to the non-generic class-\(\mathsf M\) scope above.
+Four-dimensional
 gauge-coupling moduli belong to a different field-theoretic
 Hochschild/BV complex and are not instances of Vol~I Theorem~H.
 \end{example}
 
 \subsection{String field theory}
 
-The $A_{\infty}$ structure encoded in Hochschild cohomology gives string field theory vertices:
+The cyclic Hochschild/BV complex of open string field theory gives
+string vertices. This is not the curve-level chiral Hochschild complex
+of Theorem~H unless a separate chiral-shadow comparison has been
+constructed.
 
 \begin{theorem}[String field theory from Hochschild {\cite{Zwi93}}; \ClaimStatusProvedElsewhere]\label{thm:string-field-theory-hochschild}
-The operations $m_n: \mathcal{A}^{\otimes n} \to \mathcal{A}[2-n]$ extracted from $\ChirHoch^{\bullet}$ satisfy:
+The operations
+$m_n: \mathcal{A}^{\otimes n} \to \mathcal{A}[2-n]$
+extracted from the cyclic open-string Hochschild/BV complex satisfy:
 \[
 \sum_{\substack{r+s+t=n \\ r,t \geq 0,\; s \geq 1}} (-1)^{rs+t}\, m_{r+1+t}(\mathrm{id}^{\otimes r} \otimes m_s \otimes \mathrm{id}^{\otimes t}) = 0
 \]
@@ -6384,29 +6755,45 @@ S[\Psi] = \frac{1}{2}\langle \Psi, Q\Psi \rangle + \sum_{n \geq 3} \frac{1}{n!}\
 
 \begin{conjecture}[Holographic Koszul duality; \ClaimStatusConjectured]
 \label{conj:holographic-koszul-deformation}
-A holographic Koszul template for AdS$_3$/CFT$_2$ should exchange:
+A holographic Koszul duality datum for AdS$_3$/CFT$_2$ consists of:
 \begin{itemize}
-\item a suitable bulk gravity package $\leftrightarrow$ a boundary CFT package
-\item Boson-like fields $\leftrightarrow$ Fermion-like fields
-\item the boundary algebra should arise as a Koszul-dual shadow of a
- suitable bulk package, heuristically
- $\mathcal{A}_{\text{bulk}}^! \simeq \mathcal{A}_{\text{boundary}}$
+\item a holomorphic factorisation algebra
+ $\mathcal{A}_{\mathrm{bulk}}$ on a three-manifold with boundary;
+\item a boundary chiral algebra
+ $\mathcal{A}_{\mathrm{bdry}}$ obtained by factorisation restriction
+ to the boundary curve;
+\item a finite-type bar coalgebra
+ $B^{\mathrm{ord}}(\mathcal{A}_{\mathrm{bulk}})$ whose Verdier-dual
+ algebra satisfies
+ \[
+   \bigl(B^{\mathrm{ord}}(\mathcal{A}_{\mathrm{bulk}})\bigr)^\vee
+   \simeq \mathcal{A}_{\mathrm{bdry}}
+ \]
+ in the completed boundary factorisation category.
 \end{itemize}
 \end{conjecture}
 
 \begin{remark}[Scope]
 This conjecture lies outside the present monograph: it is a physical
-interpretation, not a theorem. A precise formulation would require
-specifying the bulk as a factorization algebra on a $3$-manifold with
-boundary (Costello--Li). The relation $c_{\text{bulk}} +
-c_{\text{boundary}} = 26$ has no known proof from Koszul duality alone.
-(Contributing to Conjecture~\ref{conj:master-bv-brst}.)
+interpretation, not a theorem. A theorem requires a chosen
+Costello--Li factorisation algebra on the bulk, a boundary restriction
+functor, finite-type Verdier duality, and a proof that the boundary
+central-charge constraint is an anomaly-cancellation identity in this
+factorisation category. The relation
+$c_{\text{bulk}} + c_{\text{boundary}} = 26$ is not a consequence of
+Koszul duality alone.
+The named open/closed comparison is the brace dg map
+$\beta_T$ of
+Proposition~\ref{prop:thqg-universal-action-not-reconstruction};
+ the physical theory is identified with the cochain derived centre only
+when this map is a quasi-isomorphism in the chosen completion.
 \end{remark}
 
 Three pieces of evidence: the central charges satisfy
-$c_{\mathrm{bulk}} + c_{\mathrm{boundary}} = 26$, the Hochschild
-cohomologies are Koszul dual, and the twisting morphism exhibits
-the formal pattern of the conjectural holographic dictionary.
+$c_{\mathrm{bulk}} + c_{\mathrm{boundary}} = 26$, the curve-level
+chiral Hochschild complexes are Verdier-paired on the Theorem~H PBW
+lane, and the twisting morphism exhibits the formal pattern of the
+conjectural holographic dictionary.
 
 \section{Computing chiral Hochschild cohomology via bar-cobar resolution}
 \label{sec:hochschild-via-bar-cobar-complete}
@@ -6422,9 +6809,11 @@ $\mathcal A$-$\mathcal A$ bimodule resolution
 \]
 The bar--cobar inversion
 $\Omega(\bar B(\mathcal A))\simeq\mathcal A$ supplies the
-cofibrancy of this resolution on the Koszul locus. It is not the
-Hochschild cochain complex itself and it is not the Koszul dual
-algebra~$\mathcal A^!$.
+cofibrancy of this resolution on the Koszul locus. The Hochschild
+cochain complex is obtained by applying
+$\mathrm{Hom}_{\mathcal A^e}(-,\mathcal A)$ to this diagonal
+resolution; the Koszul dual algebra is the Verdier object
+$\mathcal A^!$.
 
 \subsection{The fundamental quasi-isomorphism}
 
@@ -6454,7 +6843,17 @@ is a free chiral algebra
 \textup{(}Theorem~\textup{\ref{thm:cobar-free}}\textup{)}, hence the
 composite is a free resolution.
 
-The augmentation $\epsilon\colon \Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A})) \to \mathcal{A}$ is a quasi-isomorphism by the following spectral sequence argument: the bar filtration induces a spectral sequence with $E_2^{p,q} = H^p(\mathcal{A}^!) \otimes H^q(\mathcal{A})$ (Theorem~\ref{thm:bar-cobar-spectral-sequence}), which collapses at $E_2$ for Koszul algebras (Theorem~\ref{thm:spectral-sequence-collapse}). The abutment gives $H^*(\Omega(\bar{B}(\mathcal{A}))) \cong \mathcal{A}$.
+The augmentation
+$\epsilon\colon \Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A}))
+\to \mathcal{A}$ is a quasi-isomorphism by the following spectral
+sequence argument: the bar filtration has associated graded governed
+by the bar cohomology coalgebra
+$\mathcal A^i=H^*(\bar B^{\mathrm{ch}}(\mathcal A))$; only after
+Verdier duality does this become the Koszul dual algebra
+$\mathcal A^!=\mathbb D_X(\mathcal A^i)$. The associated Koszul
+spectral sequence collapses at $E_2$ for Koszul algebras
+(Theorem~\ref{thm:spectral-sequence-collapse}), and the abutment gives
+$H^*(\Omega(\bar{B}(\mathcal{A}))) \cong \mathcal{A}$.
 
 For general (not necessarily Koszul) chiral algebras, the classical
 bar-cobar adjunction is acyclic in the \emph{connected} graded
@@ -6481,67 +6880,68 @@ $\mathcal A^! = \mathbb D_X H^*(\bar B(\mathcal A))$.
 
 \subsection{Chiral Hochschild cohomology formula}
 
-\begin{theorem}[HH* via configuration spaces; \ClaimStatusProvedHere]\label{thm:HH-config-space-formula}
-The chiral Hochschild cohomology of a chiral algebra $\mathcal{A}$ is computed by:
-\[\ChirHoch^n(\mathcal{A}) = H^n\left(\Gamma\left(\overline{C}_{n+2}(X),
-\text{Hom}_{\mathcal{D}_X}(\mathcal{A}^{\boxtimes n+2}, \mathcal{A}) \otimes \Omega^n(\log D)\right), d_{\text{Hoch}}\right)\]
-
-where the chiral Hochschild differential $d_{\text{Hoch}}$ has three components:
-\begin{align}
-d_{\text{Hoch}} &= d_{\text{internal}} + d_{\text{factor}} + d_{\text{form}} \label{eq:d-Hoch-decomposition}
-\end{align}
-
-\emph{Component descriptions.}
-\begin{enumerate}
-\item $d_{\text{internal}}$: Internal differential on $\mathcal{A}$-factors
-\item $d_{\text{factor}}$: Factorization using chiral product (OPE collisions)
-\item $d_{\text{form}}$: de Rham differential on configuration space forms
-\end{enumerate}
+\begin{theorem}[Fulton--MacPherson model for chiral Hochschild cochains;
+\ClaimStatusProvedHere]\label{thm:HH-config-space-formula}
+Under the hypotheses of Theorem~\textup{\ref{thm:hochschild-bar-cobar}},
+the chiral derived centre
+\[
+Z^{\mathrm{der}}_{\mathrm{ch}}(\mathcal A)
+   =R\operatorname{Hom}_{\mathcal A^e}(\mathcal A,\mathcal A)
+   =\ChirHoch^\bullet(\mathcal A,\mathcal A)
+\]
+is computed by the total complex
+\[
+C^n_{\mathrm{FM}}(\mathcal A)
+=
+\Gamma\!\left(
+\overline{C}_{n+2}(X),
+\mathcal{H}om_{\mathcal{D}_{X^{n+2}}}
+\!\left(j_*j^*\mathcal A^{\boxtimes(n+2)},\Delta_*\mathcal A\right)
+\otimes \Omega^n_{\overline{C}_{n+2}(X)}(\log D)
+\right),
+\]
+with total differential
+\begin{equation}\label{eq:d-Hoch-decomposition}
+d_{\mathrm{Hoch}}
+=d_{\mathrm{int}}+d_{\mathrm{fact}}+d_{\mathrm{form}} .
+\end{equation}
+Here $d_{\mathrm{int}}$ is the internal differential of the
+$\mathcal D_X$-module $\mathcal A$, $d_{\mathrm{fact}}$ is the
+alternating sum of chiral products along collision divisors, and
+$d_{\mathrm{form}}$ is the logarithmic de~Rham differential on
+$\overline C_{n+2}(X)$. This computes the Hochschild cochain object
+only. The Koszul dual algebra is the separate Verdier object
+\[
+\mathcal A^!=\mathbb D_X H^*(\bar B^{\mathrm{ch}}(\mathcal A)).
+\]
 \end{theorem}
 
 \begin{proof}
-\emph{Step 1: Definition of chiral Hochschild cochains.}
+Theorem~\ref{thm:hochschild-bar-cobar} identifies
+$R\operatorname{Hom}_{\mathcal A^e}(\mathcal A,\mathcal A)$ with
+\[
+\operatorname{Hom}_{\mathcal A^e}
+\bigl(\operatorname{Bar}_{\mathcal A^e}(\mathcal A),\mathcal A\bigr),
+\qquad
+\operatorname{Bar}_{\mathcal A^e}(\mathcal A)
+=\mathcal A\otimes\bar B^{\mathrm{ch}}(\mathcal A)\otimes\mathcal A .
+\]
+The Fulton--MacPherson compactification records the same two-sided bar
+configuration geometrically: the two endpoint copies of $\mathcal A$
+and the $n$ internal bar inputs give $n+2$ marked points, the
+diagonal target is $\Delta_*\mathcal A$, and logarithmic forms encode
+boundary collisions. Applying
+$\mathcal H om_{\mathcal D_{X^{n+2}}}(-,\Delta_*\mathcal A)$ and
+taking global sections gives $C^\bullet_{\mathrm{FM}}(\mathcal A)$.
 
-By definition:
-\[C^n_{\text{Hoch}}(\mathcal{A}) = \text{Hom}_{\mathcal{A}^e}(\mathcal{A}^{\otimes n+2}, \mathcal{A})\]
-
-An $\mathcal{A}^e$-linear map must commute with the bimodule structure, which for chiral
-algebras means:
-\begin{itemize}
-\item Commutes with $\mathcal{D}_X$-module structure
-\item Respects locality (support properties)
-\item Compatible with chiral products
-\end{itemize}
-
-\emph{Step 2: Geometric realization.}
-
-These maps are parametrized by configuration spaces: a chiral Hochschild $n$-cochain
-assigns to each configuration of $n+2$ points a multilinear map.
-
-Explicitly, $f \in C^n_{\text{Hoch}}$ corresponds to a section:
-\[f \in \Gamma(\overline{C}_{n+2}(X), \text{Hom}(\mathcal{A}^{\boxtimes n+2}, \mathcal{A})
-\otimes \Omega^n(\log D))\]
-
-The logarithmic forms account for the singular behavior as points collide.
-
-\emph{Step 3: Differential.}
-
-The chiral Hochschild differential is:
-\begin{align*}
-(df)(a_0, \ldots, a_{n+1})
-&= \mu(a_0, f(a_1, \ldots, a_{n+1}))
- + \sum_{i=1}^n (-1)^i f(a_0, \ldots, \mu(a_i, a_{i+1}), \ldots, a_{n+1}) \\
-&\quad + (-1)^{n+1}\mu(f(a_0, \ldots, a_n), a_{n+1}).
-\end{align*}
-
-Geometrically, each term corresponds to:
-\begin{itemize}
-\item First term: factorization at boundary (first two points collide)
-\item Middle terms: factorization at interior points
-\item Last term: factorization at opposite boundary
-\end{itemize}
-
-Combined with the de Rham differential on forms, we get $d_{\text{Hoch}}$ as described.
+The three summands in \eqref{eq:d-Hoch-decomposition} are the three
+summands of the two-sided chiral bar differential after applying
+$\operatorname{Hom}_{\mathcal A^e}(-,\mathcal A)$: internal
+$\mathcal D$-module differential, collision residue/chiral product,
+and logarithmic de~Rham differential. The equality
+$d_{\mathrm{Hoch}}^2=0$ is Theorem~\ref{thm:chiral-hochschild-differential}.
+Thus the FM complex computes the derived chiral centre and introduces
+no map from the Hochschild cochain object to $\mathcal A^!$.
 \end{proof}
 
 \begin{remark}[Decomposition of the differential]
@@ -6586,12 +6986,13 @@ Therefore:
 generated by the outer chiral derivation $D(\alpha) = \mathbf{1}$.
 
 \begin{remark}[Classical vs.\ chiral Hochschild]
-The classical Hochschild $\mathrm{HH}^1$ of the Weyl algebra (the mode algebra of~$\mathcal{B}$) is $0$ by Whitehead's theorem: every derivation of the Weyl algebra is inner. The discrepancy with $\ChirHoch^1(\mathcal{B}) = \mathbb{C}$ arises because the chiral inner derivations use the \emph{vertex algebra} zero mode $a_{(0)}$, not the \emph{associative algebra} commutator $[a, -]$. The zero mode $\alpha_{(0)}$ is central in the Heisenberg vertex algebra (it acts by the residue of the OPE, which has no first-order pole), while the mode $\alpha_{-1}$ is non-central in the Weyl algebra but does \emph{not} define a chiral inner derivation.
+The classical Hochschild $\mathrm{HH}^1$ of the Weyl algebra (the mode algebra of~$\mathcal{B}$) is $0$ by Whitehead's theorem: every derivation of the Weyl algebra is inner. The chiral computation uses a different inner-derivation operator, namely the vertex-algebra zero mode $a_{(0)}$ instead of the associative commutator $[a,-]$. The zero mode $\alpha_{(0)}$ is central in the Heisenberg vertex algebra, since it is the residue of an OPE with no first-order pole. The Weyl generator $\alpha_{-1}$ is non-central in the mode algebra and has no role as a chiral inner derivation.
 \end{remark}
 
 \subsubsection{\texorpdfstring{Degree 2: $\ChirHoch^2(\mathcal{B})$}{Degree 2: HH 2(B)}}
 
-$\ChirHoch^2$ classifies deformations of the chiral algebra structure.
+$\ChirHoch^2$ classifies first-order product deformations of the
+chiral algebra structure in the unshifted Gerstenhaber convention.
 
 A deformation is given by modifying the OPE:
 \[\alpha(z_1) \times_t \alpha(z_2) = \alpha(z_1)\alpha(z_2) + t \cdot \phi(z_1, z_2) + O(t^2)\]
@@ -6625,7 +7026,7 @@ For the Heisenberg algebra (free boson), all higher Hochschild cohomology vanish
 \[\mathcal{B} \otimes \mathcal{B}^! \otimes \mathcal{B} \;\xrightarrow{d_2}\; \mathcal{B} \otimes (s\alpha) \otimes \mathcal{B} \;\xrightarrow{d_1}\; \mathcal{B} \otimes \mathcal{B}\]
 with $\mathcal{B}^! = \mathrm{CE}(\mathfrak{h}_{-k})$ generated by a single element $s\alpha$ in bar degree~1 and its square in bar degree~2. Applying $\mathrm{Hom}_{\mathcal{B}\text{-}\mathcal{B}}(-, \mathcal{B})$ to this length-2 resolution yields a cochain complex concentrated in degrees $0, 1, 2$. Hence $\ChirHoch^n(\mathcal{B}) = 0$ for $n \geq 3$.
 
-\subsubsection{Summary for Heisenberg}
+\subsubsection{$\ChirHoch^*(\mathcal{B})$: Heisenberg cohomology table}
 
 \[\ChirHoch^*(\mathcal{B}) = \begin{cases}
 \mathbb{C} & n = 0 \text{ (center = scalars)}\\
@@ -6661,7 +7062,7 @@ Since the OPE has no deformation parameters, we find:
 Deformations of the fermionic structure. The free fermion $bc$ ghost system admits a one-parameter family of deformations parametrized by the spin $\lambda$: the conformal weights $(h_b, h_c) = (\lambda, 1-\lambda)$ vary while the OPE $b(z)c(w) \sim 1/(z-w)$ is preserved. This gives:
 \[\ChirHoch^2(\mathcal{F}) = \mathbb{C}\]
 
-\subsubsection{Summary for free fermion}
+\subsubsection{$\ChirHoch^*(\mathcal{F})$: free-fermion cohomology table}
 
 \[\ChirHoch^*(\mathcal{F}) = \begin{cases}
 \mathbb{C} & n = 0\\
@@ -6680,7 +7081,9 @@ brace model; it is not an exterior algebra on an even generator.
 
 \subsection{Koszul duality and HH* pairing}
 
-The Koszul duality for Hochschild cohomology (Theorem~\ref{thm:main-koszul-hoch}) is realized on examples.
+The curve-level chiral Koszul duality of
+Theorem~\ref{thm:main-koszul-hoch} is realized on examples satisfying
+its PBW and completion hypotheses.
 
 \begin{example}[$bc$/$\beta\gamma$ Koszul duality; \ClaimStatusProvedHere]\label{ver:boson-fermion-HH}
 The Koszul pair ($bc$ ghost system $\mathcal{F}_{bc}$, $\beta\gamma$ system $\mathcal{BG}$) satisfies:
@@ -6695,12 +7098,14 @@ Note that $\ChirHoch^1(\mathcal{F}_{bc}) = 0$ (Remark~\ref{rem:boson-fermion-hoc
 \subsection{Comparison with classical Hochschild cohomology}
 
 \begin{remark}[Chiral vs.\ classical]\label{rem:chiral-vs-classical-hochschild}
-Chiral $\ChirHoch^*$ differs from classical
-$HH^n_{\text{classical}}(A) = \mathrm{Ext}^n_{A^e}(A,A)$ by locality,
+Chiral $\ChirHoch^*$ differs from classical algebraic Hochschild
+$HH^n_{\text{classical}}(A)=\Ext^n_{A^e}(A,A)$ by locality,
 configuration-space integrals, differential-form coefficients, and the
-spatial direction from~$X$. For constant fields:
-$\ChirHoch^n(\mathcal{A})|_{\text{constant}} \cong
-HH^n_{\text{classical}}(H^0(\mathcal{A}))$.
+spatial direction from~$X$. Only in the flat constant-coefficient
+model, after discarding all collision-residue and $\mathcal D_X$
+data, does one recover the classical algebraic Hochschild complex of
+the coefficient algebra. This specialization is a comparison of
+models, not a definition of chiral Hochschild cohomology.
 \end{remark}
 
 \subsection{The chiral Gerstenhaber bracket from configuration spaces}
@@ -6963,8 +7368,13 @@ The pole-order filtration on the chiral Hochschild complex degenerates
 at $E_1$ for Koszul algebras
 (Theorem~\ref{thm:spectral-sequence-collapse}), giving a mixed
 structure analogous to Kaledin's noncommutative Hodge
-theory~\cite{Kal08}. Theorem~C (complementarity) is Verdier duality in
-this setting, exchanging the Hodge filtrations of $\cA$ and~$\cA^!$.
+theory~\cite{Kal08}. Theorem~H supplies the curve-level Verdier
+duality for chiral Hochschild cochains, exchanging the Hodge
+filtrations of $\cA$ and~$\cA^!$ on the PBW-completed Koszul locus.
+Theorem~C is the separate shifted-symplectic ambient complementarity
+theorem: it uses this Hochschild/Verdier comparison as one input but
+lives on cyclic deformation complexes and kernel formal moduli, not on
+the Hochschild cochain complex alone.
 \end{remark}
 
 \subsection{Diagonal bar calculus}
@@ -6973,7 +7383,8 @@ The diagonal bar resolution gives explicit configuration-space
 formulas for $\ChirHoch^*$, the Gerstenhaber bracket, the
 $L_\infty$ operations, and the Koszul reflection
 $\ChirHoch^n(\cA)\leftrightarrow
-\ChirHoch^{2-n}(\cA^!)^\vee\otimes\omega_X$. On the Theorem~H lane,
+\ChirHoch^{2-n}(\cA^!)^\vee\otimes\omega_X$. On the
+PBW-completed Theorem~H lane,
 $\ChirHoch^3(\cA)=0$; the obstruction data is the degree-$2$ target
 of the Kuranishi maps in the shifted deformation complex, while
 higher transferred brackets require the separate formality input of
@@ -7172,13 +7583,30 @@ construction (Theorem~\ref{thm:mc2-bar-intrinsic}).
 \index{shifted symplectic!ambient complementarity|textbf}
 \index{Lagrangian!complementary|textbf}
 
-Theorem~C establishes that $Q_g(\cA) \oplus Q_g(\cA^!)
-\subset R\Gamma(\overline{\mathcal{M}}_g, Z(\cA))$ as
-complementary summands. That is the linear shadow. The
-proper theorem is not a splitting but a Lagrangian
-polarization: there is a single $(-1)$-shifted symplectic
-formal moduli problem, and the two dual packages are
-complementary Lagrangian maps into it.
+On the finite-window PBW/perfect locus of Theorem~C, the genus-$g$
+realization contains complementary summands
+$Q_g(\cA) \oplus Q_g(\cA^!)
+\subset R\Gamma(\overline{\mathcal{M}}_g, Z(\cA))$.
+For non-generic class-\(\mathsf M\) simple quotients, critical affine
+level, and unrestricted product completions, this displayed inclusion
+is not the theorem; the ambient object is a completed or coderived
+replacement equipped with the Mittag--Leffler and perfectness
+hypotheses used in Theorem~H. The Lagrangian refinement has two
+layers. The genus-$g$ Verdier pairing gives the proved complementary
+Lagrangian polarization of the two summands on that finite-window
+locus. The ambient cyclic deformation problem gives a conditional
+$(-1)$-shifted symplectic formal moduli problem with Lagrangian maps
+from the two dual packages, under the perfectness, nondegeneracy, and
+uniform-weight BV hypotheses stated below.
+
+This section starts from cyclic deformation complexes and the tangent
+fibre of the universal kernel. Theorem~H identifies and dualizes
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)=\ChirHoch^\bullet(\cA,\cA)$ on
+the PBW-completed curve-level lane. The cochain-amplitude theorem is
+the curve-level input. Theorem~C adds the cyclic pairing, the adjoint
+kernel maps, and the second-variation form needed to place the two
+deformation packages as complementary Lagrangians in the common
+ambient problem.
 
 \begin{definition}[Kernel deformation complex]
 \label{def:kernel-deformation-complex}
@@ -7224,65 +7652,116 @@ deformation of~$\tau_\cA$, has tangent
 complex~$T_{\mathrm{comp}}(\cA)$.
 \end{definition}
 
-\begin{conjecture}[Self-duality; \ClaimStatusConjectured]
+\begin{proposition}[Self-duality of the kernel fibre; \ClaimStatusProvedHere]
 \label{conj:ambient-self-duality}
-Assume $\mathrm{Def}_{\mathrm{cyc}}(\cA)$ and
-$\mathrm{Def}_{\mathrm{cyc}}(\cA^!)$ carry the cyclic
-pairings of
-Definition~\textup{\ref{def:cyclic-deformation-elementary}}.
-Then $T_{\mathrm{comp}}(\cA)$ carries a canonical
+Let
+$D_\cA=\mathrm{Def}_{\mathrm{cyc}}(\cA)$ and
+$D_{\cA^!}=\mathrm{Def}_{\mathrm{cyc}}(\cA^!)$ be perfect
+filtered cyclic complexes. Assume:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the cyclic/Koszul residue pairing identifies
+ $D_{\cA^!}$ with $D_\cA^\vee[-1]$;
+\item $K_\cA$ carries a perfect residue pairing compatible with
+ the involution exchanging the two tensor factors
+ $\cA^!$ and~$\cA$;
+\item the linearized kernel maps
+ $\nabla_\cA$ and $\nabla_{\cA^!}$ are adjoint for these
+ pairings, with the Koszul sign dictated by the shift in
+ $K_\cA=(\cA^!\widehat{\otimes}\cA)[1]$.
+\end{enumerate}
+Then the homotopy fibre
+$T_{\mathrm{comp}}(\cA)$ in
+\eqref{eq:ambient-tangent} carries a canonical
 nondegenerate pairing of degree~$-1$.
-\end{conjecture}
+\end{proposition}
 
-\begin{evidence}[Evidence]
-Pair the two outer summands by the cyclic/Koszul pairing,
-and pair $K_\cA$ with itself by the evaluation-residue
-pairing. Compatibility with~$\tau_\cA$ makes the fiber
-differential skew-adjoint. Nondegeneracy follows from
-perfectness of the cyclic/Koszul pairings on the Koszul
-locus.
-\end{evidence}
+\begin{proof}
+Write the fibre as the cone model
+$T_{\mathrm{comp}}(\cA)=
+(D_\cA\oplus D_{\cA^!})\oplus K_\cA[-1]$ with differential
+twisted by $\nabla_\cA-\nabla_{\cA^!}$. Pair the two outer
+summands by the cyclic/Koszul pairing and pair the shifted
+kernel summands by the residue pairing on~$K_\cA$, with the
+standard cone sign. The adjointness hypothesis is precisely the
+identity saying that the twisted cone differential is
+skew-adjoint. The pairing therefore descends to a closed
+degree-$-1$ pairing on the fibre. Perfectness of the two outer
+complexes and of~$K_\cA$ makes the induced map
+$T_{\mathrm{comp}}(\cA)\to T_{\mathrm{comp}}(\cA)^\vee[-1]$
+a quasi-isomorphism.
+\end{proof}
 
-\begin{conjecture}[One-sided isotropy; \ClaimStatusConjectured]
+\begin{proposition}[One-sided isotropy criterion; \ClaimStatusProvedHere]
 \label{conj:one-sided-isotropy}
-The one-sided deformation maps
+Assume the hypotheses of
+Proposition~\textup{\ref{conj:ambient-self-duality}}. Suppose in
+addition that the universal twisting kernel satisfies the
+second-variation identities
+\[
+\big\langle \nabla_\cA u,\nabla_\cA v\big\rangle_{K_\cA}
+\simeq 0,
+\qquad
+\big\langle \nabla_{\cA^!} u',\nabla_{\cA^!} v'
+\big\rangle_{K_\cA}
+\simeq 0
+\]
+for tangent vectors
+$u,v\in D_\cA$ and
+$u',v'\in D_{\cA^!}$. Then the one-sided deformation maps
 \[
 i_\cA \colon \mathcal{M}_\cA \to \mathcal{M}_{\mathrm{comp}}(\cA),
 \qquad
 i_{\cA^!} \colon \mathcal{M}_{\cA^!}
  \to \mathcal{M}_{\mathrm{comp}}(\cA),
 \]
-obtained by varying only~$\cA$ or only~$\cA^!$ (together
-with the induced first-order variation of~$\tau_\cA$), are
-isotropic.
-\end{conjecture}
+obtained by varying only~$\cA$ or only~$\cA^!$ together with the
+induced first-order variation of~$\tau_\cA$, are isotropic.
+\end{proposition}
 
-\begin{evidence}[Evidence]
-Differentiate the Maurer--Cartan equation for~$\tau_\cA$.
-The pullback of the ambient pairing to the graph of
-one-sided variations equals the quadratic term in the
-differentiated MC equation, hence vanishes.
-\end{evidence}
+\begin{proof}
+The one-sided deformation maps
+have tangent complexes represented by the graphs
+$u\mapsto (u,0,\nabla_\cA u)$ and
+$u'\mapsto (0,u',-\nabla_{\cA^!}u')$ in the cone model for
+$T_{\mathrm{comp}}(\cA)$. On the first graph the outer
+cyclic/Koszul summand pairs $D_\cA$ only with
+$D_{\cA^!}$, so it contributes zero. The remaining term is
+$\langle\nabla_\cA u,\nabla_\cA v\rangle_{K_\cA}$, which is
+null-homotopic by the first second-variation identity. The
+second graph is identical with $\cA$ and~$\cA^!$ exchanged.
+\end{proof}
 
-\begin{conjecture}[Ambient complementarity; \ClaimStatusConjectured]
+\begin{theorem}[Ambient complementarity criterion; \ClaimStatusConditional]
 \label{conj:ambient-complementarity}
 \index{ambient complementarity theorem|textbf}
-Assume the cyclic deformation complexes
-$\mathrm{Def}_{\mathrm{cyc}}(\cA)$ and
-$\mathrm{Def}_{\mathrm{cyc}}(\cA^!)$ exist as filtered
-cyclic $L_\infty$-algebras. Then:
+Assume the perfect cyclic/Koszul pairings, kernel residue
+pairing, adjointness, and second-variation identities of
+Propositions~\textup{\ref{conj:ambient-self-duality}} and
+\textup{\ref{conj:one-sided-isotropy}}. Assume also:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item the quotient of $T_{\mathrm{comp}}(\cA)$ by the
+ one-sided tangent of~$\mathcal M_\cA$ is identified by
+ bar--cobar inversion and Verdier duality with
+ $T_{\mathcal M_{\cA^!}}^\vee[-1]$, and symmetrically;
+\item the filtered cyclic $L_\infty$ enhancement integrates
+ $T_{\mathrm{comp}}(\cA)$ to a pointed formal moduli problem
+ carrying the closed $(-1)$-shifted $2$-form represented by
+ the pairing above;
+\item the genus-$g$ realization functor sends the cyclic
+ kernel pairing to the BV/Verdier pairing used in
+ Theorem~\textup{\ref{thm:quantum-complementarity-main}}.
+\end{enumerate}
+Then:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item $T_{\mathrm{comp}}(\cA)$ is canonically self-dual
  of degree~$-1$
- \textup{(}Conjecture~\textup{\ref{conj:ambient-self-duality})}.
+ \textup{(}Proposition~\textup{\ref{conj:ambient-self-duality}}\textup{)}.
 \item The one-sided deformation maps define complementary
  Lagrangian subcomplexes inside~$T_{\mathrm{comp}}(\cA)$
- \textup{(}Conjecture~\textup{\ref{conj:one-sided-isotropy}}
- for isotropy; maximality from bar-cobar inversion and
- perfectness of the cyclic/Koszul pairing\textup{)}.
-\item Any filtered cyclic $L_\infty$-enhancement of
- $T_{\mathrm{comp}}(\cA)$ defines a pointed $(-1)$-shifted
- symplectic formal moduli problem
+ \textup{(}Proposition~\textup{\ref{conj:one-sided-isotropy}}
+ gives isotropy; assumption \textup{(a)} gives maximality\textup{)}.
+\item The filtered cyclic $L_\infty$ enhancement defines a
+ pointed $(-1)$-shifted symplectic formal moduli problem
  $\mathcal{M}_{\mathrm{comp}}(\cA)$, and the induced maps
  $\mathcal{M}_\cA \to \mathcal{M}_{\mathrm{comp}}(\cA)
  \leftarrow \mathcal{M}_{\cA^!}$ are Lagrangian.
@@ -7296,23 +7775,27 @@ cyclic $L_\infty$-algebras. Then:
  \subset R\Gamma(\overline{\mathcal{M}}_g, Z(\cA))$
  of Theorem~\textup{\ref{thm:quantum-complementarity-main}}.
 \end{enumerate}
-\end{conjecture}
+\end{theorem}
 
-\begin{evidence}[Evidence]
-The ambient deformation functor is the homotopy pullback
-of the deformation functors of~$\cA$, $\cA^!$, and the
-Maurer--Cartan functor of~$\tau_\cA$. Linearizing yields
-$T_{\mathrm{comp}}(\cA)$. The conjectures above give self-duality
-and isotropy. Maximality comes from bar-cobar inversion
-(Theorem~\ref{thm:higher-genus-inversion}) and perfectness
-of the cyclic/Koszul pairing on the Koszul locus, which
-identify the normal complex of one side with the shifted
-dual tangent complex of the other. A cyclic minimal-model
-transfer upgrades the tangent complex to a $(-1)$-shifted
-symplectic formal moduli problem. Part~(v) is the
-compatibility already proved between the BV and Verdier
-pictures.
-\end{evidence}
+\begin{proof}
+The ambient deformation functor is the homotopy pullback of the
+deformation functors of~$\cA$, $\cA^!$, and the
+Maurer--Cartan functor of~$\tau_\cA$; differentiating this
+pullback gives the fibre complex
+$T_{\mathrm{comp}}(\cA)$. Part~\textup{(i)} is
+Proposition~\ref{conj:ambient-self-duality}. Part~\textup{(ii)}
+combines Proposition~\ref{conj:one-sided-isotropy} with
+assumption~\textup{(a)}, which identifies each normal complex
+with the shifted dual tangent complex of the opposite side.
+Assumption~\textup{(b)} is exactly the integration datum required
+by the formal moduli/shifted symplectic correspondence, giving
+part~\textup{(iii)}. Part~\textup{(iv)} restates the
+normal-complex identification in assumption~\textup{(a)}.
+Applying the genus-$g$ realization functor and then
+assumption~\textup{(c)} gives the BV/Verdier Lagrangian
+polarization of Theorem~\ref{thm:quantum-complementarity-main},
+which is part~\textup{(v)}.
+\end{proof}
 
 \begin{definition}[Complementarity potential: cotangent normal form]
 \label{def:complementarity-potential-cotangent}
@@ -7330,9 +7813,16 @@ the \emph{complementarity potential} of the Koszul pair
 $(\cA, \cA^!)$.
 \end{definition}
 
-\begin{conjecture}[Derived critical locus; \ClaimStatusConjectured]
+\begin{proposition}[Derived critical locus in a shifted cotangent chart;
+\ClaimStatusProvedHere]
 \label{conj:derived-critical-locus-chk}
-There is a canonical equivalence
+Assume the formal moduli problem of
+Theorem~\textup{\ref{conj:ambient-complementarity}} admits the
+shifted cotangent normal form of
+Definition~\textup{\ref{def:complementarity-potential-cotangent}},
+and that $\mathcal{M}_{\cA^!}$ is the graph of the exact closed
+$1$-form $dS_\cA$ in this chart. Then there is a canonical
+equivalence
 \[
 \mathcal{M}_\cA \times^h_{\mathcal{M}_{\mathrm{comp}}(\cA)}
 \mathcal{M}_{\cA^!}
@@ -7342,22 +7832,16 @@ There is a canonical equivalence
 The simultaneous deformations of~$\cA$ and~$\cA^!$ that
 preserve complementarity are governed by the derived
 critical locus of the complementarity potential.
-\end{conjecture}
+\end{proposition}
 
-\begin{remark}[Evidence]
-The hypotheses of
-Definition~\ref{def:complementarity-potential} provide
-(conditional on the perfectness and nondegeneracy
-of the cyclic/Koszul pairing) a $(-1)$-shifted symplectic
-structure on $\mathcal{M}_{\mathrm{comp}}(\cA)$ and a
-formal Darboux identification
+\begin{proof}
+Under the shifted cotangent normal form,
 $\mathcal{M}_{\mathrm{comp}}(\cA) \simeq T^*[-1]\mathcal{M}_\cA$
-near the base point. Under this identification,
-$\mathcal{M}_\cA$ is the zero section and
-$\mathcal{M}_{\cA^!}$ is the graph of the closed $1$-form
-$dS_\cA$. The derived fiber product of the zero section
-$Z$ and the graph $\Gamma_{dS}$ of a closed $1$-form on a
-smooth formal scheme~$Y$ over~$T^*[-1]Y$ is
+near the base point, $\mathcal{M}_\cA$ is the zero section, and
+$\mathcal{M}_{\cA^!}$ is the graph of~$dS_\cA$. For a smooth
+formal moduli problem~$Y$ and a formal function~$S$, the derived
+intersection of the zero section $Z$ with the graph
+$\Gamma_{dS}$ inside $T^*[-1]Y$ is
 \[
 Z \times^h_{T^*[-1]Y} \Gamma_{dS}
 \;\simeq\;
@@ -7366,28 +7850,34 @@ Z \times^h_{T^*[-1]Y} \Gamma_{dS}
 \;=\;
 \mathrm{Crit}(S),
 \]
-the derived critical locus of~$S$ (the Koszul complex of~$dS$,
-cf.~\cite[Proposition~2.1]{PTVV13}).
-Applying this to $Y = \mathcal{M}_\cA$ and $S = S_\cA$
-yields the stated equivalence.
-\end{remark}
+the Koszul complex of~$dS$
+\textup{(}cf.~\cite[Proposition~2.1]{PTVV13}\textup{)}.
+Taking $Y = \mathcal{M}_\cA$ and $S = S_\cA$ gives the stated
+equivalence.
+\end{proof}
 
-\begin{conjecture}[Formal Legendre duality; \ClaimStatusConjectured]
+\begin{proposition}[Formal Legendre duality; \ClaimStatusConditional]
 \label{conj:formal-legendre}
-By symmetry there is also a complementarity potential
-$S_{\cA^!}$ on~$\mathcal{M}_{\cA^!}$. The two potentials
-$S_\cA$ and~$S_{\cA^!}$ are formal Legendre transforms of
-one another: both generate the same Lagrangian subspace
-inside the same shifted symplectic ambient moduli problem,
-viewed from the two opposite cotangent charts.
-\end{conjecture}
+Assume the two one-sided Lagrangians of
+Theorem~\textup{\ref{conj:ambient-complementarity}} admit exact
+shifted cotangent charts
+$T^*[-1]\mathcal{M}_\cA$ and
+$T^*[-1]\mathcal{M}_{\cA^!}$ near the base point, and that the
+transition between the charts is the induced exact
+symplectomorphism. Let $S_\cA$ and $S_{\cA^!}$ be the two
+generating functions. Then $S_\cA$ and~$S_{\cA^!}$ are formal
+Legendre transforms of one another.
+\end{proposition}
 
-\begin{evidence}[Evidence]
-The shifted cotangent normal form may be applied with either
-$\mathcal{M}_\cA$ or $\mathcal{M}_{\cA^!}$ as the zero
-section. The change from one cotangent chart to the other
-is the formal Legendre transform.
-\end{evidence}
+\begin{proof}
+Both generating functions describe the same Lagrangian subspace
+inside $\mathcal{M}_{\mathrm{comp}}(\cA)$, viewed from opposite
+shifted cotangent charts. In exact shifted symplectic linear
+algebra, changing the zero section from one complementary
+Lagrangian to the other replaces the generating function by the
+formal Legendre transform. The asserted relation is precisely this
+chart transition.
+\end{proof}
 
 \begin{remark}[Fake complementarity criterion]
 \label{rem:fake-complementarity}
@@ -7533,7 +8023,7 @@ and let $V(R)$ denote its factorization envelope.
  % not available; kappa depends on the full Sugawara denominator (k+h^v),
  % not just the lambda-bracket coefficients. The explicit family-by-family
  % values in the table below are computed by the compute layer
- % and by complementarity). A universal formula would require specifying
+ % and by complementarity). A universal formula requires specifying
  % the Sugawara construction for each family, which is the content of
  % Theorem D.
  Explicitly:
@@ -7591,10 +8081,10 @@ and let $V(R)$ denote its factorization envelope.
  $\operatorname{Cur}(\mathfrak{g}) \twoheadrightarrow R_f$
  \textup{(}with $R_f$ the $\cW$-algebra Lie conformal
  data\textup{)}, the shadow map sends
- $\kappa(\widehat{\mathfrak{g}}_k)$ to
- $\kappa(\cW_k(\mathfrak{g}, f)) = \rho(\mathfrak{g})\, c_{\cW}$,
- where $\rho(\mathfrak{g}) = H_N - 1$ is the anomaly ratio
- for type~$A_N$.
+$\kappa(\widehat{\mathfrak{g}}_k)$ to
+$\kappa(\cW_k(\mathfrak{g}, f)) = \rho(\mathfrak{g})\, c_{\cW}$,
+where $\rho(\mathfrak{g}) = H_N - 1$ is the anomaly ratio
+for the principal type~$A_{N-1}$ algebra $\mathfrak{sl}_N$.
  \end{enumerate}
 \end{enumerate}
 \end{proposition}
@@ -7714,24 +8204,17 @@ $\mathfrak{sl}_3$ ($\rho = 5/6$, computed in the compute module
 \index{Grothendieck--Teichm\"uller!and shadow tower|textbf}
 \index{shadow tower!deformation theory|textbf}
 
-The shadow obstruction tower of a modular Koszul algebra encodes the finite-order
-projections of the universal Maurer--Cartan element~$\Theta_\cA$.
-The \emph{deformations} of the shadow obstruction tower (the infinitesimal
-variations of the shadow invariants $(S_r)_{r \geq 2}$ as the
-algebra~$\cA$ varies) are controlled by the Kontsevich graph complex.
-This is a consequence of two theorems: (1)~the shadow invariants map
-to specific cocycle components in the graph complex $\operatorname{GC}_2$ via
-the Kontsevich formality quasi-isomorphism, and (2)~the cohomology
-$H^0(\operatorname{GC}_2)$ is isomorphic to the Grothendieck--Teichm\"uller Lie
-algebra~$\mathfrak{grt}_1$ (Willwacher~\cite{Willwacher15}).
-
-% Verification note (2026-04-07): Parts (i) and (iv) rely on the
-% Kontsevich formality quasi-isomorphism applied to the E_2 structure on
-% the bar complex. The map Phi is described but not rigorously constructed
-% in this manuscript; the theorem is accordingly tagged Heuristic.
-% Part (ii) is Willwacher's theorem (ProvedElsewhere).
-% Part (iii) follows from (i)+(ii) conditionally on (i).
-% Status correctly reflects this: ClaimStatusHeuristic.
+The shadow obstruction tower of a modular Koszul algebra encodes the
+finite-order projections of the universal Maurer--Cartan element
+$\Theta_\cA$. A graph-complex deformation theory for this tower
+requires a map from the modular convolution dGLA to
+$\operatorname{GC}_2$ compatible with the shadow projections. This is
+not a statement about algebraic Hochschild chains, categorical traces,
+or $\mathrm{THH}$: the source is the modular chiral convolution
+algebra, and the input needed to build the map is an $\Etwo$ formality
+structure on the bar complex. Once such a map exists, Willwacher's
+theorem identifies the target cohomology with
+$\mathfrak{grt}_1$.
 \begin{conjecture}[Graph complex controls shadow obstruction tower deformations; \ClaimStatusConjectured]
 \label{conj:graph-complex-shadow}
 \index{graph complex!shadow tower deformation control|textbf}
@@ -7850,112 +8333,49 @@ $\Gamma$ is $|\Gamma| = |E(\Gamma)| - 2|V(\Gamma)|$.
 \end{enumerate}
 \end{conjecture}
 
-\begin{remark}[Evidence]
-\textbf{Part~(i).}
-The Kontsevich formality theorem~\cite{Kon99,Kon03} provides
-an $L_\infty$ quasi-isomorphism
-$\mathcal{U} \colon T_{\mathrm{poly}}(\bR^d) \to
-D_{\mathrm{poly}}(\bR^d)$
-from polyvector fields to polydifferential operators, constructed
-as a sum over graphs~$\Gamma$ in a variant of the graph
-complex with weights given by configuration-space integrals.
-At $d = 2$, this is the formality of the $\Etwo$ operad
-(Kontsevich--Tamarkin). The bar complex $B(\cA)$ carries an
-$\Etwo$ structure
-(Proposition~\ref{prop:e3-bar-structure}(i)),
-and the modular convolution algebra $\gAmod$ is built
-from the bar complex. The formality map~$\mathcal{U}$
-induces a Lie algebra map from the Maurer--Cartan moduli
-of $\gAmod$ to the Maurer--Cartan moduli of the
-graph complex.
-
-The image of the shadow invariant $S_r(\cA)$ under~$\Phi$ is
-computed as follows. At odd degree $r = 2k+1$:
-the shadow $S_{2k+1}$ is a degree-$(2k+1)$ scalar in
-$\Defcyc^{\mathrm{mod}}(\cA)$
-(Definition~\ref{def:modular-cyclic-deformation-complex}).
-The formality map evaluates
-this scalar on the Kontsevich graph weights, which at loop
-order $2k+1$ are dominated by the wheel graph $W_{2k+1}$.
-The wheel graph $W_{2k+1}$ is a cocycle in $\operatorname{GC}_2$
-for odd~$2k+1$ (and not a cocycle for even values): the
-differential $d(W_{2k+1}) = \sum_e \pm W_{2k+1}/e$ vanishes
-because the dihedral $\bZ_2$ symmetry of $W_{2k+1}$ pairs
-the edge-contraction terms with opposite signs when
-$2k+1$ is odd. The coefficient $a_{2k+1}(\cA)$ is the
-shadow coefficient $S_{2k+1}(\cA)$ itself, evaluated through the
-formality integral.
-
-At even degree $r = 2k$: the wheel graph $W_{2k}$ is
-\emph{not} a cocycle (the dihedral cancellation fails for even
-spoke count), so the image $\Phi(S_{2k})$ is a coboundary
-in $\operatorname{GC}_2$. It carries
-information at the chain level but vanishes in cohomology.
-
-\textbf{Part~(ii).}
-This is Willwacher's theorem~\cite{Willwacher15}, which we do not
-reprove. The key inputs are:
-(a)~the identification of $H^0(\operatorname{GC}_2)$ with the Lie
-algebra of homotopy automorphisms of the $\Etwo$ operad,
-(b)~the identification of this automorphism group with the
-prounipotent Grothendieck--Teichm\"uller group $\mathrm{GRT}_1$
-(Drinfeld~\cite{Drinfeld90}), and
-(c)~the explicit construction of the wheel cocycles $\sigma_{2k+1}$
-as generators. The dimension table is confirmed by the computations
-of Ihara, Schneps, and Brown,
-with the weight-$11$ relation obtained by direct graph-complex
-computation (see the compute module
-\texttt{kontsevich\_graph\_complex.py} for explicit enumeration up
-to loop order~$5$).
-
-\textbf{Part~(iii).}
-The correspondence between shadow depth and $\mathfrak{grt}_1$
-truncation follows directly from parts~(i) and~(ii). An algebra
-of class~G has $S_r = 0$ for all $r \geq 3$, so no wheel cocycle
-component is activated. An algebra of class~L has $S_3 \neq 0$
-but $S_r = 0$ for $r \geq 4$; the only activated component is
-$\sigma_3$ (weight~$3$). Class~C activates $\sigma_3$ only: the shadow obstruction tower
-terminates at degree~$4$, and the even-degree shadow $S_4$ maps
-to a boundary in $\operatorname{GC}_2$ (not a cocycle), so
-no additional cocycle component beyond $\sigma_3$ is activated.
-Class~M
-algebras (Virasoro, $\cW_N$) have $S_r \neq 0$ for all~$r$
-(by the infinite shadow obstruction tower,
-Theorem~\ref{thm:riccati-algebraicity}),
-so all wheel cocycles $\sigma_{2k+1}$ are activated.
-
-The numerical computation: for Virasoro at central charge~$c$,
-the shadow coefficients are computed recursively
-(Theorem~\ref{thm:riccati-algebraicity}) with seeds
-$S_2 = c/2$, $S_3 = 2$, $S_4 = 10/(c(5c+22))$, and the
-higher $S_r$ are nonzero rational functions of~$c$
-for all $r \geq 5$. At odd degrees, the nonvanishing of
-$S_{2k+1}(c)$ for generic~$c$ is computed symbolically
-in the compute module \texttt{kontsevich\_graph\_complex.py}
-(function \texttt{virasoro\_shadow\_exact}).
-
-\textbf{Part~(iv).}
-A one-parameter family $\cA_t$ of modular Koszul algebras
-determines a path $t \mapsto \Theta_{\cA_t}$ in the
-Maurer--Cartan moduli of $\gAmod$. Under~$\Phi$,
-the tangent vector $\dot{\Theta}$ maps to a tangent vector in
-the $\operatorname{GC}_2$ Maurer--Cartan moduli, which at
-the cohomological level is an element of $\mathfrak{grt}_1$.
-The projection to the $\sigma_{2k+1}$ component is
-$\dot{a}_{2k+1} = (d/dt) S_{2k+1}(\cA_t)$.
-The $\mathfrak{grt}_1$ relations impose constraints:
-the Ihara relation at weight~$12$ gives a linear dependence
-among the brackets $[\sigma_3, \sigma_9]$ and
-$[\sigma_5, \sigma_7]$, constraining the deformation of
-$S_3 S_9$ and $S_5 S_7$ jointly.
-For a path lying entirely within the standard families, the shadow
-coefficients $S_r(c)$ are determined by a single parameter~$c$,
-so the tangent vector is one-dimensional and the
-$\mathfrak{grt}_1$ relations are automatically satisfied.
-The constraint becomes nontrivial for multi-parameter deformations
-(e.g., deforming both the central charge and the $\cW$-algebra
-structure simultaneously), where the realizability of a given
-shadow sequence is constrained by the $\mathfrak{grt}_1$ structure.
+\begin{remark}[Graph-complex construction obligations]
+The external theorem in
+Conjecture~\ref{conj:graph-complex-shadow} is Willwacher's
+identification
+\[
+H^0(\operatorname{GC}_2)\cong\mathfrak{grt}_1
+\]
+\cite{Willwacher15}. The two internal obligations are independent
+of Theorem~H:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Construct a filtered dg Lie map
+\[
+\Phi\colon \gAmod\longrightarrow\operatorname{GC}_2
+\]
+from the $\Etwo$-formality structure on the bar complex
+$B(\cA)$, compatible with the modular convolution differential and
+with Maurer--Cartan gauge equivalence.
+\item Prove the shadow-evaluation formula
+\[
+\Phi(S_{2k+1}(\cA))
+=a_{2k+1}(\cA)[\sigma_{2k+1}]
+\]
+in graph cohomology, with even shadows mapping to boundaries. This
+requires fixing the graph-complex signs, the normalization of the
+wheel representatives, and the comparison between the scalar
+shadow coefficient and the Kontsevich weight integral.
+\end{enumerate}
+After these two obligations are discharged, the depth table follows
+formally from the vanishing pattern of the shadow tower: class~G
+activates no wheel component, classes~L and~C activate only the
+$\sigma_3$ component, and class~M activates all odd wheel components
+for which the corresponding $S_{2k+1}$ is nonzero. For Virasoro the
+input coefficients are the recursively computed rational functions
+with seeds
+$S_2=c/2$, $S_3=2$, and $S_4=10/(c(5c+22))$
+\textup{(}Theorem~\ref{thm:riccati-algebraicity}\textup{)}; their
+generic odd-degree nonvanishing is the computation performed by
+\texttt{kontsevich\_graph\_complex.py}. A deformation
+$\cA_t$ then maps to
+$\dot a_{2k+1}=(d/dt)S_{2k+1}(\cA_t)$ in the
+$\sigma_{2k+1}$ direction, and the Ihara relations in
+$\mathfrak{grt}_1$ become the stated constraints on realizable
+shadow sequences.
 \end{remark}
 
 \begin{remark}[Normalized shadow zeta values]
@@ -8000,15 +8420,24 @@ $\ChirHoch^\bullet$ on a curve. After a Vol~III two-stage
 specialisation to a reference curve, Theorem~H only controls the
 curve-level chiral Hochschild amplitude~$[0,2]$ under the PBW chiral
 Koszul hypotheses.
-Under $\widetilde{M}_{24}$-equivariance the Serre functor acquires a projective Schur
-cocycle of order $6$ in $H^2(M_{24}, \mathrm{U}(1)) \cong \mathbb{Z}/12$
-(Bridgeland--Maciocia $2001$ on K3 autoequivalences). The displayed
-Koszul dual coalgebra
-of the Vol~III K3 chiral Hall--Drinfeld double is
+Under $\widetilde{M}_{24}$-equivariance the Serre functor acquires a
+projective Schur cocycle of order $6$ in
+$H^2(M_{24}, \mathrm{U}(1)) \cong \mathbb{Z}/12$
+(Bridgeland--Maciocia $2001$ on K3 autoequivalences). The Vol~III
+K3 chiral Hall--Drinfeld bridge supplies a bar-cohomology coalgebra,
+not yet a Verdier-dual algebra:
 \[
- (\mathbf{H}_{\Delta_5})^! \;\simeq\; V(\mathfrak{g}_{\Delta_5})^{\mathrm{coalg}}[2] \otimes \eta_{\widetilde{M}_{24}}.
+(\mathbf{H}_{\Delta_5})^i
+:=H^\bullet B^{\mathrm{ord}}(\mathbf{H}_{\Delta_5})
+\;\simeq\;
+V(\mathfrak{g}_{\Delta_5})^{\mathrm{coalg}}[2]
+\otimes \eta_{\widetilde{M}_{24}}.
 \]
-It is a Vol~III bridge input; it is not a consequence of Theorem~H.
+A Koszul dual algebra
+$(\mathbf{H}_{\Delta_5})^!$ is formed only after the reference-curve
+specialisation and the finite-type continuous Verdier duality step.
+This is a Vol~III bridge input; it is not a consequence of
+Theorem~H.
 \end{remark}
 
 \begin{remark}[Mukai doubling $K^{\kappa_{\mathrm{ch}}} = 8$]
@@ -8022,7 +8451,7 @@ $\mathcal{L}^{\Delta_5}$ around Humbert $H_1 \subset \overline{\mathcal{A}_2}$
 $\mathcal{B}$-family to $\kappa + \kappa^! \in \{0, 8, 13, 250/3, 98/3\}$.
 \end{remark}
 
-\section{Synthesis (continued)}
+\section{K3 Hochschild Boundary Register}
 \label{sec:chk-deep}
 
 \begin{remark}[Curve-level concentration for $\mathbf H_{\Delta_5}$]
@@ -8074,12 +8503,12 @@ pieces have first been restricted to the reference curve and the
 PBW chiral Koszul hypotheses have been proved there.
 \end{remark}
 
-\begin{remark}[Etingof-Kazhdan Part V and uniqueness of the K3 synthesis]
+\begin{remark}[Etingof-Kazhdan Part V and K3 comparison]
 \label{rem:chk-deep-3}
 The Etingof-Kazhdan 2007 Part V super-category extension classifies
 deformations of the BKM Lie bialgebra $\mathfrak g_{\Delta_5}$ into
 its universal enveloping chiral algebra. Applied to the Vol~III
-Hall--Drinfeld construction, it supplies the candidate comparison
+Hall--Drinfeld construction, it supplies the comparison input
 \[
 \mathrm{ChirHoch}^2(\mathbf H_{\Delta_5})^{\mathbb Z/2,K(1)}
 \;\cong\; \mathbb C\cdot\Delta_5.

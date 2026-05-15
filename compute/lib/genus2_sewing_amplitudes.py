@@ -1,77 +1,47 @@
 r"""Genus-2 sewing amplitudes from factorization.
 
-Constructs genus-2 partition functions by sewing two punctured tori,
-verifies Siegel modular properties, and computes period matrices
-from sewing parameters.
+This module implements a finite numerical surface for genus-2 sewing:
+integer-partition state counts, genus-1 modular forms, normalized
+separating period matrices, and oscillator sewing factors for free-field
+families.  It is a compute oracle for the formulas used in the manuscript,
+not a replacement for the full analytic sewing theorem.
 
-THE MATHEMATICAL FRAMEWORK:
+Separating and nonseparating plumbing have different period asymptotics.
+For a separating degeneration obtained by sewing two punctured tori, the
+period matrix approaches a block diagonal matrix,
 
-  A genus-2 surface Sigma_2 can be obtained by:
-    (a) Sewing two punctured tori E_1 \ {p_1} and E_2 \ {p_2}
-        (separating degeneration, two genus-1 building blocks)
-    (b) Sewing a twice-punctured torus E \ {p_1, p_2}
-        (nonseparating degeneration, one genus-1 building block)
+    Omega(epsilon) = ((tau_1, epsilon), (epsilon, tau_2)) + O(epsilon^2),
 
-  In case (a), the sewing parameter is w in C^* with |w| < 1.
-  Local coordinates z_i near p_i give the sewing relation z_1 * z_2 = w.
-  The period matrix of the resulting genus-2 surface is:
+in a normalized off-diagonal sewing coordinate epsilon.  Thus the
+off-diagonal entry tends to 0.  The logarithmic term
+log(q)/(2*pi*i) belongs to a nonseparating pinched-handle degeneration,
+where a handle period diverges; it is not the separating off-diagonal
+entry.
 
-    tau = ( tau_1   delta )
-          ( delta   tau_2 )
+For the Heisenberg oscillator sector the separating sewing factor is
 
-  where tau_1, tau_2 are the modular parameters of the two tori,
-  and delta is determined by the sewing parameter w through:
-    delta = -(1/(2*pi*i)) * log(w) + (Bergman kernel corrections)
+    sum_n p_r(n) w^n = prod_{m>=1} (1 - w^m)^(-r),  |w| < 1,
 
-SEWING CONSTRUCTION (separating case):
+and the holomorphic normalization used here is
 
-  The genus-2 partition function is:
-    Z_2(A) = sum_{m,n} <phi_m|_{E_1} w^{L_0} |phi_n>_{E_2}
-           = sum_n dim(V_n) * w^n * Z_1(E_1)_n * Z_1(E_2)_n
+    Z_2^hol(H_r) = eta(q_1)^(-r) eta(q_2)^(-r)
+                   prod_{m>=1} (1 - w^m)^(-r).
 
-  where the sum runs over a complete orthonormal basis {phi_n}
-  of the state space, weighted by the sewing propagator w^{L_0}.
+The returned affine and beta-gamma values are oscillator/PBW-envelope
+checks.  They do not assert equality with every quotient, zero-mode, or
+background-charge completion of the corresponding chiral theory.
 
-  For Heisenberg:
-    Z_2(H) = det(1 - K_{Bergman})^{-1} * (det Im tau)^{-1/2}
+The scalar genus-g coefficients use the Faber--Pandharipande convention
+from chapters/examples/landscape_census.tex:
 
-  where K_{Bergman} is the integral operator with kernel given by
-  the Bergman kernel on the genus-2 surface, and tau is the period matrix.
-
-SIEGEL MODULAR FORMS:
-
-  The genus-2 partition function of a rational CFT of central charge c
-  is a Siegel modular form of weight -c/2 for Sp(4, Z).
-
-  The Siegel upper half-space H_2 = {tau in M_2(C) : tau^T = tau, Im tau > 0}.
-  Sp(4, Z) acts by: tau -> (A*tau + B)(C*tau + D)^{-1}.
-
-  Important Siegel modular forms at genus 2:
-    - chi_10: Igusa cusp form of weight 10 = product of even theta constants
-    - chi_12: weight 12 form
-    - E_4, E_6: Siegel-Eisenstein series
-
-FAY TRISECANT IDENTITY AT GENUS 2:
-
-  The Fay trisecant identity relates the prime form, theta function,
-  and Szego kernel on a Riemann surface.  At genus 2, this gives
-  nontrivial identities among Siegel modular forms that constrain
-  the sewing amplitudes.
-
-PERIOD MATRIX FROM SEWING:
-
-  Given sewing parameters (tau_1, tau_2, w), the genus-2 period matrix is:
-    Omega = ( tau_1           -log(w)/(2pi i) )
-            ( -log(w)/(2pi i)  tau_2           )
-  + corrections from the Bergman kernel propagator.
-
-  At leading order in w, the off-diagonal entry is simply delta = log(w)/(2pi i).
+    lambda_g^FP = ((2^(2g-1)-1)/2^(2g-1)) * |B_{2g}|/(2g)!.
 
 Ground truth:
   thm:general-hs-sewing, thm:heisenberg-sewing,
   betagamma_determinant.py (Quillen determinant at genus 2),
   mc5_higher_genus.py (genus-g bridge),
-  higher_genus_foundations.tex, quantum_corrections.tex.
+  higher_genus_foundations.tex, quantum_corrections.tex,
+  chapters/examples/landscape_census.tex.
 """
 
 from __future__ import annotations
@@ -202,56 +172,44 @@ def eisenstein_E6(q: complex, N: int = 100) -> complex:
 
 def period_matrix_from_sewing(tau1: complex, tau2: complex,
                                w: complex, correction_order: int = 5) -> np.ndarray:
-    """Compute the genus-2 period matrix from sewing data.
+    """Compute a normalized separating genus-2 period matrix.
 
-    The separating degeneration: sewing two punctured tori E_1, E_2
-    with sewing parameter w (|w| < 1).
+    The separating degeneration sews two punctured tori E_1, E_2.  The
+    argument ``w`` is the normalized off-diagonal period coordinate used by
+    this compute model.  In this coordinate w -> 0 gives the separating
+    boundary.
 
     Period matrix (2x2 symmetric):
       Omega = ( tau_1   delta )
               ( delta   tau_2 )
 
-    where delta = -(1/(2*pi*i)) log(w) + sum_{n>=1} a_n w^n
+    where delta = w + O(w^2).
 
-    The correction terms a_n involve the Eisenstein series and
-    encode the back-reaction of the sewing on the period matrix.
+    The optional correction terms are local numerical probes built from
+    Eisenstein series.  They are not used as a primary source for Yamada's
+    full period-matrix expansion.
 
-    At leading order: delta = -(1/(2*pi*i)) log(w).
-
-    First correction (from the Bergman kernel on the torus):
-      a_1 = 0 (by symmetry of the propagator)
-      The leading correction is O(w^2) and involves E_2(tau_1) * E_2(tau_2).
-
-    We include corrections through order w^{correction_order}.
+    The nonseparating logarithmic asymptotic log(q)/(2*pi*i) is deliberately
+    absent here.
     """
     # Leading-order off-diagonal entry
-    delta_0 = -(1.0 / (2.0 * np.pi * 1j)) * np.log(w)
+    delta_0 = complex(w)
 
-    # Corrections from Bergman kernel propagator
-    # The Bergman kernel on the torus E_tau is:
-    #   B(z, w|tau) = -(d_z d_w log theta_1(z-w|tau) + E_2(tau)/(12))
-    # The sewing correction to the period matrix involves
-    # integrals of this kernel over the sewing region.
-    #
-    # At order w^n, the correction to delta is:
-    #   delta_n = (contribution from n-fold iteration of Bergman kernel)
-    #
-    # For the leading nontrivial correction:
+    # Optional modeled corrections.  These keep the expected E_2/E_4
+    # dependence visible for numerical stability checks; the paired oracle
+    # tests use correction_order=0 for identities that fix normalization.
     q1 = np.exp(2j * np.pi * tau1)
     q2 = np.exp(2j * np.pi * tau2)
 
     delta_correction = 0.0 + 0j
     if correction_order >= 2:
-        # O(w^2) correction from the connected two-point kernel:
-        # proportional to the product of Eisenstein series on each torus.
-        # The coefficient is determined by the normalization of the
-        # Bergman kernel expansion.
+        # O(w^2) Eisenstein probe.
         e2_1 = eisenstein_E2(q1, 50)
         e2_2 = eisenstein_E2(q2, 50)
         delta_correction += (w ** 2 / (2.0 * np.pi * 1j)) * e2_1 * e2_2 / (144.0)
 
     if correction_order >= 4:
-        # O(w^4) correction: involves E_4 and cross terms
+        # O(w^4) Eisenstein probe.
         e4_1 = eisenstein_E4(q1, 50)
         e4_2 = eisenstein_E4(q2, 50)
         delta_correction += (w ** 4 / (2.0 * np.pi * 1j)) * e4_1 * e4_2 / (86400.0)
@@ -355,7 +313,7 @@ def igusa_chi10(Omega: np.ndarray, N: int = 6) -> complex:
     chi_10(Omega) = prod_{even [a;b]} Theta[a;b](Omega, 0)
 
     This is a Siegel modular form of weight 10 for Sp(4, Z).
-    It vanishes on the Jacobian locus (separating degeneration).
+    In genus 2 it vanishes on the decomposable/separating divisor.
     """
     product = 1.0 + 0j
     for a, b in even_theta_characteristics_genus2():
@@ -373,61 +331,20 @@ def heisenberg_genus2_sewing(tau1: complex, tau2: complex, w: complex,
                               N_eta: int = 200) -> Dict:
     """Genus-2 partition function for rank-r Heisenberg via sewing.
 
-    Two punctured tori sewn with parameter w:
-      Z_2(H_r) = sum_n p_r(n) * |w|^{2n} * Z_1(E_1, n) * Z_1(E_2, n)
+    In the oscillator normalization used here, two punctured tori are sewn
+    through the propagator w^{L_0}.  The rank-r Heisenberg weight-n
+    multiplicity is the r-colored partition number p_r(n), hence
 
-    where p_r(n) = number of r-colored partitions = dim(V_n) for rank-r Heis.
+      Z_sew(H_r) = sum_n p_r(n) w^n
+                  = prod_{m>=1}(1-w^m)^(-r).
 
-    For the CHIRAL partition function (holomorphic sector only):
-      Z_2^{hol}(H_r) = sum_n p_r(n) * w^n * (eta(q_1)^{-r} at weight n)
-                                              * (eta(q_2)^{-r} at weight n)
+    With eta(q) = q^(1/24) prod_{m>=1}(1-q^m), the holomorphic value
+    returned by this function is
 
-    Actually, the sewing formula for the holomorphic partition function is:
-      Z_2(H_r) = [prod_{n>=1} (1-q_1^n)^{-r}] * [prod (1-q_2^n)^{-r}]
-                * sum_n p_r(n) w^n
+      eta(q_1)^(-r) eta(q_2)^(-r) prod_{m>=1}(1-w^m)^(-r).
 
-    Wait -- more carefully: the genus-2 partition function from sewing
-    two tori at a separating node is:
-
-      Z_2 = sum_n (sum over states at weight n) w^n * <state|state>_{sewing}
-
-    For Heisenberg, the state space at weight n has dimension p_r(n),
-    and the sewing operator is diagonal with all eigenvalues 1
-    (the Shapovalov form is trivial for free fields). So:
-
-      Z_2^{sewing} = sum_n p_r(n) * w^n
-
-    and this must be combined with the genus-1 partition functions
-    on each side. The full answer is:
-
-      Z_2(H_r; tau_1, tau_2, w) = eta(q_1)^{-r} * eta(q_2)^{-r}
-                                  * [sum_n p_r(n) w^n]
-
-    But sum_n p_r(n) w^n = prod_{n>=1} (1-w^n)^{-r}
-
-    (generating function for r-colored partitions).
-
-    So: Z_2(H_r) = prod_{n>=1} [(1-q_1^n)(1-q_2^n)(1-w^n)]^{-r}
-                 = [eta(q_1) * eta(q_2) * eta(w)]^{-r}
-                  * q_1^{r/24} * q_2^{r/24} * w^{r/24}
-    Wait -- need to be careful about the q^{1/24} factors.
-
-    The precise formula: the Heisenberg genus-2 partition function
-    from separating degeneration is controlled by the Bergman kernel
-    on the degenerate genus-2 surface. For rank-1 Heisenberg:
-
-      Z_2(H_1; Omega) = det(Im Omega)^{-1/2} * |det_Fredholm(1-K)|^{-2}
-
-    From sewing: K is the sewing operator with kernel the Bergman
-    kernel connecting the two tori. In the degeneration limit:
-
-      det(1 - K) = 1 - sum_{n>=1} d_n w^n + ...
-
-    For Heisenberg the one-particle reduction gives:
-      det(1 - K) = prod_{n>=1}(1 - w^n)
-
-    So: Z_2(H_1) ~ |eta(w)|^{-2} * Z_1(tau_1) * Z_1(tau_2)
-    in the separating degeneration limit.
+    Replacing the last product by eta(w)^(-r) introduces the additional
+    factor w^(-r/24).
     """
     q1 = np.exp(2j * np.pi * tau1)
     q2 = np.exp(2j * np.pi * tau2)
@@ -477,20 +394,14 @@ def heisenberg_genus2_sewing(tau1: complex, tau2: complex, w: complex,
 
 
 def heisenberg_genus2_bergman(Omega: np.ndarray, rank: int = 1) -> Dict:
-    """Genus-2 Heisenberg partition function from the Bergman kernel.
+    """Gaussian zero-mode factor for the genus-2 Heisenberg partition function.
 
     For rank-r Heisenberg at genus g:
-      Z_g(H_r) = det(Im Omega)^{-r/2}
+      Z_g^{zero}(H_r) = det(Im Omega)^{-r/2}
 
-    This is the FULL partition function (including both holomorphic
-    and anti-holomorphic sectors).
-
-    The holomorphic partition function involves the determinant of
-    the Laplacian (Bergman kernel) on the surface.
-
-    For the chiral partition function at genus 2:
-      Z_2^{chir}(H_r; Omega) = (det(-i*(Omega - bar{Omega})/2))^{-r/2}
-                               * (Fredholm factor)^{-r}
+    The full analytic partition function also contains oscillator and
+    determinant-line factors.  Those are handled separately by the sewing
+    product above.
 
     At genus 2: Omega is 2x2, so det(Im Omega) = Im(Omega_11)*Im(Omega_22) - Im(Omega_12)^2.
     """
@@ -593,15 +504,17 @@ def virasoro_genus2_sewing(c: float, tau1: complex, tau2: complex,
 
 def affine_sl2_genus2_sewing(k: float, tau1: complex, tau2: complex,
                               w: complex, N_modes: int = 15) -> Dict:
-    """Genus-2 partition function for affine sl_2 at level k via sewing.
+    """PBW oscillator-envelope sewing for affine sl_2 at level k.
 
-    The vacuum module character:
-      chi_vac(q) = q^{-c/24} * prod_{n>=1}(1-q^n)^{-3}
+    The universal current algebra has three current generators at each
+    positive mode.  Ignoring integrable-quotient null vectors and zero-mode
+    representation data gives the PBW oscillator product
 
-    where c = 3k/(k+2).
+      prod_{n>=1}(1-q^n)^(-3).
 
-    Sewing factor: sum d_n^{aff} w^n where d_n^{aff} = 3-colored partitions(n).
-    The generating function: prod_{n>=1}(1-w^n)^{-3}.
+    This function verifies that oscillator envelope and the Sugawara
+    central charge c = 3k/(k+2).  It is not the full integrable
+    affine-character formula at positive integer level.
     """
     c_val = 3.0 * k / (k + 2.0)
     q1 = np.exp(2j * np.pi * tau1)
@@ -638,7 +551,7 @@ def affine_sl2_genus2_sewing(k: float, tau1: complex, tau2: complex,
 def fay_trisecant_genus2_numerical(Omega: np.ndarray, z1: complex,
                                     z2: complex, z3: complex,
                                     z4: complex, N: int = 6) -> Dict:
-    """Numerical verification of the Fay trisecant identity at genus 2.
+    """Theta-constant data used by genus-2 Fay/Igusa checks.
 
     The Fay identity relates the prime form E(z,w) and theta function:
 
@@ -646,18 +559,9 @@ def fay_trisecant_genus2_numerical(Omega: np.ndarray, z1: complex,
     = E(z1,z4)*E(z2,z3)*theta[delta](z1+z2-z4-z3|Omega)*theta[delta](0|Omega)
     + E(z1,z2)*E(z3,z4)*theta[delta](z1-z3+z2-z4|Omega)*theta[delta](z3-z4+z1-z2|Omega)
 
-    This is an identity between theta functions with genus-2 period matrix.
-
-    We verify a SIMPLIFIED VERSION: the addition formula for theta functions.
-    For the even theta constant (z=0), the Fay identity reduces to the
-    Riemann theta relation, which can be checked numerically.
-
-    Riemann theta relation (genus 2):
-      sum_{a in (Z/2Z)^2} Theta[a;0](z1|Omega) * Theta[a;0](z2|Omega)
-        * Theta[a;0](z3|Omega) * Theta[a;0](z4|Omega)
-    is invariant under z4 -> -z1-z2-z3-z4 (up to a phase).
-
-    We verify a simpler identity: the product formula for theta constants.
+    This routine does not prove the full trisecant identity.  It computes
+    the ten even theta constants and their Igusa product chi_10, which are
+    the finite numerical invariants exercised by the paired tests.
     """
     # Compute theta with characteristics at various points
     # Use even characteristics
@@ -858,36 +762,27 @@ def verify_siegel_modular_weight(Omega: np.ndarray, gen: Dict,
 # ======================================================================
 
 def genus2_free_energy_expansion(kappa: float, g_max: int = 3) -> Dict:
-    """Free energy at genus 2 from the A-hat generating function.
+    """Scalar free-energy coefficients in the FP normalization.
 
-    F_g = kappa * lambda_g^FP where lambda_g^FP = |B_{2g}| / (2g * (2g)!).
+    F_g = kappa * lambda_g^FP, with
 
-    F_1 = kappa / 24        = kappa * 1/24
-    F_2 = kappa / 240       = kappa * 1/240
-    F_3 = kappa / 6048      = kappa * 1/6048
+      lambda_g^FP = ((2^(2g-1)-1)/2^(2g-1)) * |B_{2g}|/(2g)!.
 
-    These are EXACT (from the Bernoulli numbers).
-    B_2 = 1/6, B_4 = -1/30, B_6 = 1/42.
-
-    lambda_1^FP = |B_2|/(2*2!) = (1/6)/(4) = 1/24
-    lambda_2^FP = |B_4|/(4*4!) = (1/30)/(96) = 1/2880  ... wait.
-
-    Let me recompute:
-      lambda_g = |B_{2g}| / (2g * (2g)!)
-
-    g=1: |B_2|/(2*2!) = (1/6)/4 = 1/24. CHECK.
-    g=2: |B_4|/(4*4!) = (1/30)/96 = 1/2880.
-    g=3: |B_6|/(6*6!) = (1/42)/4320 = 1/181440.
+    Therefore lambda_1^FP = 1/24, lambda_2^FP = 7/5760,
+    and lambda_3^FP = 31/967680.  These are the values tabulated in
+    chapters/examples/landscape_census.tex.
     """
-    from sympy import bernoulli as bern, factorial as fact, Rational, Abs
+    from sympy import Rational, bernoulli as bern, factorial as fact
 
     results = {}
     for g in range(1, g_max + 1):
         B2g = bern(2 * g)
-        lambda_g = abs(B2g) / (2 * g * fact(2 * g))
+        fp_factor = Rational(2 ** (2 * g - 1) - 1, 2 ** (2 * g - 1))
+        lambda_g = fp_factor * abs(B2g) / fact(2 * g)
         F_g_val = kappa * float(lambda_g)
         results[g] = {
             'B_2g': float(B2g),
+            'fp_factor': float(fp_factor),
             'lambda_g': float(lambda_g),
             'F_g': F_g_val,
         }
@@ -900,19 +795,16 @@ def verify_heisenberg_genus2_limit(tau1: complex = 0.3 + 1.0j,
                                      w_val: complex = 0.1) -> Dict:
     """Verify Heisenberg genus-2 partition function against known formulas.
 
-    For rank-1 Heisenberg:
-      Z_2 = eta(q_1)^{-1} * eta(q_2)^{-1} * eta(w)^{-1}
-            * q_1^{-1/24} * q_2^{-1/24} * w^{-1/24}   ... hmm.
+    The holomorphic chiral partition function from oscillator sewing is
 
-    Actually the careful formula: the holomorphic chiral partition function
-    from sewing is:
       Z_2^{chiral} = chi_vac(tau_1) * chi_vac(tau_2) * sum_n d_n w^n
 
     For Heisenberg with chi_vac = eta^{-1} and d_n = p(n):
+
       Z_2^{chiral} = eta(q_1)^{-1} * eta(q_2)^{-1} * prod(1-w^n)^{-1}
 
-    This can also be written as prod of three eta^{-1} factors (up to
-    the q^{1/24} normalization issue). We verify numerically.
+    The final factor equals eta(w)^(-1) only after multiplying by
+    w^(-1/24).  The check below isolates the product part of eta(w).
     """
     data = heisenberg_genus2_sewing(tau1, tau2, w_val, rank=1)
 
@@ -945,16 +837,16 @@ def verify_heisenberg_genus2_limit(tau1: complex = 0.3 + 1.0j,
 
 def betagamma_genus2_sewing(lam: float, tau1: complex, tau2: complex,
                              w: complex, N_modes: int = 15) -> Dict:
-    """Genus-2 partition function for betagamma at weight lambda.
+    """Oscillator-envelope genus-2 sewing for a beta-gamma system.
 
     The bg system has c = 2(6*lam^2 - 6*lam + 1) and two sectors
     (beta of weight lam, gamma of weight 1-lam).
 
-    The genus-1 character: eta(q)^{-2} (independent of lam for oscillators).
+    The oscillator genus-1 factor is eta(q)^{-2}, independent of lam.
     The sewing factor: prod(1-w^n)^{-2} (two oscillator species).
 
-    So Z_2(bg) = eta(q_1)^{-2} * eta(q_2)^{-2} * prod(1-w^n)^{-2}
-               = Heisenberg rank-2 sewing.
+    Hence this oscillator envelope equals rank-2 Heisenberg sewing.  The
+    statement does not include zero-mode or background-charge refinements.
 
     This is consistent with the Mumford isomorphism:
     det line exponent = -(6*lam^2 - 6*lam + 1) - (6*(1-lam)^2 - 6*(1-lam) + 1)

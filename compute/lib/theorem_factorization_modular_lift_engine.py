@@ -294,14 +294,14 @@ GENUS3_PF_CLASS_L: Dict[Tuple[int, int], Fraction] = {
 
 
 # Genus-4 planted-forest polynomial for class L.
-# Source: genus4_planted_forest_engine.py, verified at SU(2..4).
+# Source: theorem_genus4_virasoro_engine canonical class-L restriction.
 
 GENUS4_PF_CLASS_L: Dict[Tuple[int, int], Fraction] = {
     (0, 6): Fraction(425, 576),
     (1, 5): Fraction(-515, 9216),
     (2, 4): Fraction(421, 221184),
     (3, 3): Fraction(-7, 196608),
-    (4, 2): Fraction(5, 15925248),
+    (4, 2): Fraction(1, 1769472),
     (1, 3): Fraction(-19319, 27648),
     (2, 2): Fraction(9223, 331776),
     (1, 2): Fraction(2317, 1536),

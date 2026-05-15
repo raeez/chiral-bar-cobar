@@ -1,39 +1,46 @@
-r"""ABJM holographic modular Koszul datum: the first M-theory example.
+r"""ABJM holographic modular Koszul datum: scalar M-theory comparison.
 
 ABJM theory (Aharony-Bergman-Jafferis-Maldacena, 2008) is the 3d N=6
 Chern-Simons-matter theory with gauge group U(N)_k x U(N)_{-k} and
 bifundamental matter, dual to M-theory on AdS_4 x S^7/Z_k at large N.
 
-THE HOLOGRAPHIC MODULAR KOSZUL DATUM H(ABJM):
+SEVEN-ENTRY HOLOGRAPHIC PACKAGE AND COMPUTE PROJECTION:
 
-  H(ABJM) = (A, A!, C, r(z), Theta_A, nabla^hol)
+  H(ABJM) = (A, A^i, A!, C, r(z), Theta_A, nabla^hol)
 
 where:
   A = boundary chiral algebra of the holomorphic twist
-  A! = Koszul dual (S-dual boundary VOA)
-  C = bulk 3d TFT (Rozansky-Witten type on target T*(C^N/Z_k))
+  A^i = bar-dual coalgebra H^*(B(A))
+  A! = Verdier/Koszul companion obtained from A^i on the Koszul locus
+  C = Z_ch^der(A), the chiral Hochschild bulk slot
   r(z) = boundary collision residue (R-matrix)
   Theta_A = universal MC element (bar-intrinsic)
   nabla^hol = holographic shadow connection
 
-BOUNDARY VOA IDENTIFICATION:
+This module records the ABJM compute package as six primary projections:
+
+  (A, A_dual_summary, C_description, residue_type, theta_kappa,
+   nabla_flat_flag),
+
+together with compatibility scalars c(A), kappa(A), kappa(A!), the
+complementarity sum, and shadow depth.  The scalar and descriptor
+projections below are not VOA reconstruction.  The five objects
+A, B(A), A^i, A!, and Z_ch^der(A) are kept distinct; Omega(B(A)) = A is
+bar-cobar inversion, not Koszul duality.
+
+BOUNDARY ALGEBRA DESCRIPTOR:
 
 The holomorphic twist of ABJM at level k was studied by Costello-Gaiotto
-(2018-2020) in the context of twisted holography. The boundary VOA for the
-holomorphic twist of the 3d N=4 Chern-Simons-matter sector is built from:
+(2018-2020) in the context of twisted holography. In the descriptor used by
+this compute module, the boundary algebra for the holomorphic twist of the
+3d N=4 Chern-Simons-matter sector has three visible inputs:
 
   - Two copies of affine gl(N) at levels k and -k (from CS sectors)
   - Symplectic bosons (bifundamental matter contribution)
 
-At N=1, k=1: the two U(1) CS sectors give two Heisenberg algebras at levels
-k=1 and k=-1, and the bifundamental matter gives a bc (beta-gamma) system.
-The combined boundary VOA has:
-
-  c(A) = c(H_1) + c(H_{-1}) + c(bg) = 1 + 1 + 2 = 4  (WRONG for N=6 twist)
-
-CAREFUL: The N=6 supersymmetric twist is more constrained. The holomorphic
-twist of ABJM with maximal SUSY preserves an osp(6|4) symmetry. The boundary
-chiral algebra at the simplest level (N=1, k=1) is:
+The N=6 supersymmetric twist is more constrained than the separate
+sector count. It preserves an osp(6|4) symmetry. At the simplest level
+(N=1, k=1), the boundary chiral-algebra descriptor is:
 
   A_{ABJM}(1,1) = 4 symplectic bosons = Sp(4) current algebra at level -1/2
 
@@ -42,7 +49,8 @@ holomorphic twist, become 4 symplectic boson pairs. For U(1)_1 x U(1)_{-1}
 the CS sector is topological (abelian CS at level 1 is trivial up to framing)
 and the matter sector dominates.
 
-For general N, k: the boundary VOA is the BRST reduction
+For general N, k, the boundary chiral-algebra descriptor is represented by
+the BRST reduction
   A_{ABJM}(N,k) = H^0_{BRST}( V_k(gl_N) otimes V_{-k}(gl_N) otimes Sb^{4N^2} )
 where Sb^{4N^2} denotes 4N^2 symplectic bosons (bifundamental matter).
 
@@ -57,7 +65,7 @@ This module uses the reduced scalar convention in which the two
 level-opposite CS sectors are cancelled before the matter shadow is
 read:
   kappa_red(A_{ABJM}(N,k)) = -N^2.
-The full pre-BRST modular characteristic of
+The unreduced pre-BRST scalar modular characteristic of
 V_k(gl_N) x V_{-k}(gl_N) x Sb^{4N^2} is computed in
 twisted_holography_comparison_engine.py and equals -(N^2+1).
 
@@ -106,7 +114,7 @@ The Airy connection is: nabla^Airy = d/dt - (0, 1; t, 0) dt on C^2.
 Its flat sections are (Ai(t), Ai'(t)) and (Bi(t), Bi'(t)).
 
 The shadow connection nabla^sh has regular singularities (logarithmic),
-while the Airy connection has an IRREGULAR singularity at infinity
+while the Airy connection has an irregular singularity at infinity
 (Stokes phenomenon). The passage from nabla^sh to nabla^Airy requires
 the large-N limit, which is an irregular degeneration (confluence of
 regular singularities).
@@ -166,7 +174,7 @@ def _rat(x) -> Rational:
 
 
 # ===========================================================================
-# 1. ABJM boundary VOA data
+# 1. ABJM boundary algebra data
 # ===========================================================================
 
 @dataclass(frozen=True)
@@ -182,7 +190,7 @@ class ABJMData:
 
     @property
     def central_charge(self) -> Fraction:
-        """Central charge of the boundary VOA.
+        """Central charge of the boundary algebra descriptor.
 
         The CS sectors at levels k and -k contribute:
           c_CS = N^2 * k / (k + N) + N^2 * (-k) / (-k + N)
@@ -191,13 +199,13 @@ class ABJMData:
         But at k=1: second term diverges.
 
         For the holomorphic twist with maximal SUSY:
-        The effective central charge of the boundary VOA is determined by
-        the matter content after BRST reduction. The 4N^2 symplectic bosons
+        The effective central charge of the descriptor is determined by the
+        matter content after BRST reduction. The 4N^2 symplectic bosons
         each contribute c = -1, giving c_matter = -4N^2.
         The ghost system for BRST contributes c_ghost = 2N^2.
         Net: c = -4N^2 + 2N^2 = -2N^2.
 
-        More carefully: the boundary VOA after holomorphic twist has
+        In this reduced scalar convention the holomorphic-twist descriptor has
         c = -2N^2 from the N=6 SUSY constraint.
         """
         return Fraction(-2 * self.N * self.N)
@@ -208,12 +216,12 @@ class ABJMData:
 
         This is the reduced scalar convention used by the ABJM Airy
         shadow tests: the level-opposite CS pair is cancelled before
-        the matter shadow is read. The full pre-BRST package has
+        the matter shadow is read. The unreduced pre-BRST package has
         kappa = -(N^2 + 1), computed in
         twisted_holography_comparison_engine.kappa_abjm.
 
         Physical interpretation: the negative sign reflects that the
-        ABJM boundary VOA is non-unitary (symplectic bosons have
+        ABJM boundary descriptor is non-unitary (symplectic bosons have
         indefinite metric). The absolute value |kappa| = N^2 controls
         the one-loop free energy.
         """
@@ -221,22 +229,22 @@ class ABJMData:
 
     @property
     def kappa_dual(self) -> Fraction:
-        """Modular characteristic of the Koszul dual.
+        """Modular characteristic of the Verdier/Koszul companion summary.
 
-        Under S-duality (k -> 1/k in an appropriate sense for CS-matter):
-        the Koszul dual has kappa' such that kappa + kappa' = 0
-        for the CS sector (affine KM anti-symmetry).
+        At the scalar projection level, the companion slot has kappa'
+        such that kappa + kappa' = 0 for the reduced CS-matter package.
 
-        For ABJM: the Koszul dual is ABJM at the "dual level" in the
-        sense of 3d mirror symmetry. At the level of kappa:
+        For ABJM: the companion is represented by the opposite scalar
+        characteristic, matching the 3d mirror/S-dual descriptor:
           kappa(A!) = N^2 (opposite sign from matter-dominated regime)
-        so kappa + kappa' = 0.
+        so kappa + kappa' = 0. This is not the bar-cobar object
+        Omega(B(A)); that construction recovers A by inversion.
         """
         return -self.kappa
 
     @property
     def complementarity_sum(self) -> Fraction:
-        """kappa(A) + kappa(A!) for the ABJM boundary VOA.
+        """kappa(A) + kappa(A!) for the ABJM scalar companion pair.
 
         For the CS-matter system: the CS sectors have anti-symmetric kappa
         (affine KM, kappa + kappa' = 0). The matter sector, being
@@ -249,7 +257,7 @@ class ABJMData:
     def shadow_depth(self) -> int:
         """Shadow depth classification.
 
-        For N=1: the boundary VOA is free-field (symplectic bosons),
+        For N=1: the boundary descriptor is free-field (symplectic bosons),
         giving shadow depth 2 (Gaussian class G) or 4 (contact class C
         for beta-gamma at general lambda).
 
@@ -316,8 +324,8 @@ def abjm_free_energy_one_loop(N: int, k: int) -> Fraction:
 
     Note the sign: kappa_red is negative for the ABJM matter shadow.
 
-    CAREFUL: this is the PERTURBATIVE one-loop around the trivial
-    saddle. The full localization result has additional contributions.
+    This is the perturbative one-loop contribution around the trivial
+    saddle. The S^3 localization result has additional contributions.
     The shadow formula F_1 = kappa_red/24 is the universal genus-1 formula
     from modular Koszul duality (Theorem D, genus-1 universality).
     """
@@ -528,30 +536,41 @@ def abjm_r_matrix_general(N: int, k: int) -> Dict[str, object]:
 
 
 # ===========================================================================
-# 5. Full holographic datum
+# 5. Holographic compute shadow
 # ===========================================================================
 
 @dataclass
 class ABJMHolographicDatum:
-    """The complete holographic modular Koszul datum for ABJM.
+    """Six-projection compute shadow of the seven-entry ABJM package.
 
-    H(ABJM) = (A, A!, C, r(z), Theta_A, nabla^hol)
+    Manuscript datum:
+        H(ABJM) = (A, A^i, A!, C, r(z), Theta_A, nabla^hol).
+
+    This dataclass stores descriptor and scalar projections. It omits the
+    bar-dual coalgebra A^i as an object and stores only a scalar summary of
+    the Verdier/Koszul companion slot A!. It is a compatibility record, not
+    a reconstruction of the ABJM boundary algebra or HT theory.
     """
     abjm: ABJMData
 
     @property
     def A_name(self) -> str:
-        """Name of the boundary VOA."""
+        """Name of the boundary algebra descriptor."""
         return f"A_ABJM({self.abjm.N},{self.abjm.k})"
 
     @property
+    def A_bar_dual_name(self) -> str:
+        """Descriptor for the bar-dual coalgebra A^i."""
+        return f"H^*(B({self.A_name}))"
+
+    @property
     def A_dual_name(self) -> str:
-        """Name of the Koszul dual VOA."""
+        """Name of the Verdier/Koszul companion summary."""
         return f"A_ABJM({self.abjm.N},{self.abjm.k})!"
 
     @property
     def bulk_tft(self) -> str:
-        """The bulk 3d TFT: Rozansky-Witten on T*(C^N/Z_k).
+        """Descriptor for the C = Z_ch^der(A) comparison slot.
 
         The bulk of the holomorphic twist of ABJM is a 3d topological
         theory of Rozansky-Witten type, with target the hyperkahler
@@ -573,13 +592,14 @@ class ABJMHolographicDatum:
 
     @property
     def connection_is_flat(self) -> bool:
-        """The holographic shadow connection is flat (MC equation)."""
+        """Formal scalar MC/Arnold flatness flag for nabla^hol."""
         return True
 
     def summary(self) -> Dict[str, str]:
-        """Human-readable summary of the holographic datum."""
+        """Human-readable summary preserving legacy keys plus scope guards."""
         return {
             "A": self.A_name,
+            "A^i": self.A_bar_dual_name,
             "A!": self.A_dual_name,
             "c(A)": str(self.abjm.central_charge),
             "kappa(A)": str(self.abjm.kappa),
@@ -589,11 +609,15 @@ class ABJMHolographicDatum:
             "r(z)": self.r_matrix_type,
             "shadow_depth": str(self.abjm.shadow_depth),
             "nabla^hol flat": str(self.connection_is_flat),
+            "dual_slot_scope": "A! is a Verdier/Koszul companion scalar summary, not Omega(B(A))",
+            "bar_cobar_scope": "Omega(B(A)) recovers A by inversion; it is not the A! slot",
+            "bulk_slot_scope": "C is Z_ch^der(A), distinct from A, B(A), A^i, and A!",
+            "compute_package_scope": "six primary projections: scalar/descriptor package; not VOA reconstruction",
         }
 
 
 def make_abjm_datum(N: int, k: int) -> ABJMHolographicDatum:
-    """Construct the ABJM holographic datum at rank N, level k."""
+    """Construct the ABJM holographic compute shadow at rank N, level k."""
     return ABJMHolographicDatum(abjm=ABJMData(N=N, k=k))
 
 
@@ -623,9 +647,9 @@ def abjm_F_g(N: int, k: int, g: int) -> Fraction:
     For ABJM in the reduced scalar convention:
     kappa_red = -N^2, so F_g = -N^2 * lambda_g^FP.
 
-    This is the PERTURBATIVE genus expansion (small kappa regime).
-    The full non-perturbative answer is the Airy function, which
-    resums this expansion and adds exponential corrections.
+    This is the perturbative genus expansion (small kappa regime).
+    The Airy non-perturbative answer resums this expansion and adds
+    exponential corrections.
     """
     kappa = Fraction(-N * N)
     return kappa * lambda_fp(g)
@@ -641,7 +665,7 @@ def abjm_F1_vs_known(N: int, k: int) -> Tuple[Fraction, Fraction, bool]:
 
     The known perturbative one-loop free energy of ABJM on S^3 around
     the trivial saddle is:
-      F_1^{pert} = -N^2/12 * log(k)  (for the full localization)
+      F_1^{pert} = -N^2/12 * log(k)  (S^3 localization convention)
 
     The shadow formula gives F_1 = kappa/24 = -N^2/24.
 
@@ -674,7 +698,7 @@ def abjm_large_N_scaling_exponents() -> Dict[str, Rational]:
     F_g (genus g >= 2)    | N^{2-2g}  | genus expansion (perturbative)
     Z(N) (partition fn)   | exp(N^{3/2}) | non-perturbative
 
-    The N^{3/2} scaling of F_0 is NON-PERTURBATIVE: it requires resumming
+    The N^{3/2} scaling of F_0 is non-perturbative: it requires resumming
     the genus expansion. The perturbative genus expansion has F_g ~ N^{2-2g}
     (from the 't Hooft expansion with kappa ~ N^2), but the leading free
     energy goes as N^{3/2}, not N^2.
@@ -731,7 +755,7 @@ def airy_equation_coefficients() -> Tuple[int, int, int]:
     Here p(x) = 0, q(x) = -x.
 
     Returns (a, b, c) for ay'' + by' + cy = 0: (1, 0, -x).
-    Actually returns symbolic: we just note the structure.
+    The returned triple records the coefficient pattern.
     """
     return (1, 0, -1)  # y'' + 0*y' + (-x)*y = 0
 
@@ -794,10 +818,10 @@ def painleve_type_classification() -> Dict[str, str]:
 # ===========================================================================
 
 def abjm_k_dependence(N: int, k_values: List[int] = None) -> List[Dict]:
-    """Study the k-dependence of the ABJM holographic datum.
+    """Study the k-dependence of the ABJM holographic compute shadow.
 
     At fixed N, varying k:
-    - kappa(A) = -N^2 (independent of k for the boundary VOA)
+    - kappa(A) = -N^2 (independent of k for the boundary descriptor)
     - C_k = 2/(pi^2*k) (the Airy scale depends on k)
     - B_k = 1/3 + k/24 - 1/(6k) (the shift depends on k)
     - F_0 ~ pi*sqrt(2k)/3 * N^{3/2} (the sphere free energy scales as sqrt(k))
@@ -907,7 +931,7 @@ def compare_airy_vs_matrix_model(N: int, k: int) -> Dict[str, float]:
 # ===========================================================================
 
 def abjm_complementarity_check(N: int, k: int) -> Dict[str, object]:
-    """Verify complementarity for the ABJM holographic datum.
+    """Verify complementarity for the ABJM holographic compute shadow.
 
     kappa_red(A) + kappa_red(A!) equals 0 in the reduced scalar
     convention (affine KM anti-symmetry for the CS sector already
@@ -984,15 +1008,16 @@ def abjm_membrane_instanton_action(N: int, k: int, m: int) -> sympy.Expr:
 # ===========================================================================
 
 def abjm_datum_N1_k1() -> Dict[str, object]:
-    """The complete holographic datum for ABJM at N=1, k=1.
+    """Six-projection ABJM holographic compute shadow at N=1, k=1.
 
-    This is the simplest M-theory holographic example.
+    This is the simplest ABJM M-theory scalar example.
 
-    A = boundary VOA (4 symplectic bosons after holomorphic twist)
+    A = boundary algebra descriptor (4 symplectic bosons after holomorphic twist)
+    A^i = bar-dual coalgebra descriptor, not constructed here
     c(A) = -2
     kappa(A) = -1
-    A! = Koszul dual, kappa(A!) = 1
-    C = RW(T*C) (Rozansky-Witten on T*C, a free theory)
+    A! = Verdier/Koszul companion scalar summary, kappa(A!) = 1
+    C = Z_ch^der(A) descriptor, represented by RW(T*C)
     r(z) = Omega/z (trivial Casimir for U(1)xU(1))
     Theta_A: MC element with kappa = -1
     nabla^hol: flat connection (genus-0 shadow is trivial for N=1)
@@ -1005,9 +1030,10 @@ def abjm_datum_N1_k1() -> Dict[str, object]:
 
     return {
         "A": "4 symplectic bosons (holomorphic twist of ABJM(1,1))",
+        "A_i": "H^*(B(A_ABJM(1,1)))",
         "c_A": data.central_charge,
         "kappa_A": data.kappa,
-        "A_dual": "Koszul dual of A_ABJM(1,1)",
+        "A_dual": "Verdier/Koszul companion summary for A_ABJM(1,1)",
         "kappa_A_dual": data.kappa_dual,
         "complementarity": data.complementarity_sum,
         "C_bulk": datum.bulk_tft,
@@ -1017,25 +1043,36 @@ def abjm_datum_N1_k1() -> Dict[str, object]:
         "connection_flat": True,
         "B_k": abjm_B_k(1),
         "C_k": float(abjm_C_k(1)),
+        "dual_slot_scope": "A_dual is the Verdier/Koszul companion summary, not Omega(B(A))",
+        "bar_cobar_scope": "Omega(B(A)) recovers A by inversion",
+        "bulk_slot_scope": "C_bulk represents C = Z_ch^der(A), distinct from A, B(A), A_i, and A_dual",
+        "compute_package_scope": "six primary projections: scalar/descriptor package; not VOA reconstruction",
     }
 
 
 def abjm_datum_N2_k1() -> Dict[str, object]:
-    """Holographic datum for ABJM at N=2, k=1.
+    """Holographic compute shadow for ABJM at N=2, k=1.
 
     A = BRST reduction of gl(2)_1 x gl(2)_{-1} x Sb^{16}
+    A^i = bar-dual coalgebra descriptor, not constructed here
+    A! = Verdier/Koszul companion scalar summary
     c(A) = -8
     kappa(A) = -4
     """
     data = ABJMData(N=2, k=1)
     return {
         "A": f"A_ABJM(2,1)",
+        "A_i": "H^*(B(A_ABJM(2,1)))",
         "c_A": data.central_charge,
         "kappa_A": data.kappa,
         "kappa_A_dual": data.kappa_dual,
         "complementarity": data.complementarity_sum,
         "shadow_depth": data.shadow_depth,
         "F_1": abjm_free_energy_one_loop(2, 1),
+        "dual_slot_scope": "A_dual is the Verdier/Koszul companion summary, not Omega(B(A))",
+        "bar_cobar_scope": "Omega(B(A)) recovers A by inversion",
+        "bulk_slot_scope": "C = Z_ch^der(A) is distinct from A, B(A), A_i, and A_dual",
+        "compute_package_scope": "six primary projections: scalar/descriptor package; not VOA reconstruction",
     }
 
 

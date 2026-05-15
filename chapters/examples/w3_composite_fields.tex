@@ -10,20 +10,17 @@ The $\mathcal{W}_3$ algebra is the simplest $\mathcal{W}$-algebra
 whose OPE structure is genuinely non-quadratic: the $W$--$W$ OPE
 involves the composite field $\Lambda = {:}TT{:} - \frac{3}{10}\partial^2 T$
 with OPE coefficient $\alpha(c) = 16/(22+5c)$ that is a rational
-function of the central charge. Deriving these coefficients from
-first principles (quasi-primarity, conformal weight matching, and
-the Jacobi identity) is the prototypical instance of the general
-pattern that governs all higher $\mathcal{W}_N$ algebras: the OPE
-data is \emph{uniquely determined} by consistency conditions, and the
-resulting rational dependence on~$c$ feeds directly into the bar
-complex differential and the modular characteristic
+function of the central charge. The Virasoro part is fixed by the
+level-$4$ Shapovalov calculation; the $W$--$W$ coefficient is fixed by
+the Fateev--Lukyanov--Zamolodchikov Jacobi identity. The resulting
+rational dependence on~$c$ feeds into the completed finite-window bar
+complex and the modular characteristic
 $\kappa^{W_N}(\mathcal{W}_N) = c\,(H_N - 1)$
 (Corollary~\ref{cor:uc-K-WN},
 Chapter~\ref{chap:universal-conductor}; cross-check
 \texttt{landscape\_census.tex} row $\mathcal{W}_N^k$). This section
-carries out the derivation in full, providing the explicit machine
-room behind the spectral sequence computations of the preceding
-sections. The $W_3$ OPE coefficient $\alpha(c) = 16/(22+5c)$ is
+carries the local computation. The $W_3$ OPE coefficient
+$\alpha(c) = 16/(22+5c)$ is
 also the seed of the $W_3$ $W$-line second lane in the shadow tower
 quadrichotomy: the closed-form coefficient sequence
 $a_n = 2 \cdot 3^{n-2}\,(2n-4)!/[(n-2)!\,n!]$ produces the doubled
@@ -37,10 +34,23 @@ $C_{\mathcal{A}} = 6$ of class~M
 (Theorem~\ref{thm:universal-class-M-C-is-6},
 Chapter~\ref{chap:shadow-quadrichotomy-platonic}).
 
+All shadow coefficients mentioned here are scalar-line extractions
+from the ordered Maurer--Cartan datum. They are not the full
+$\mathcal W_3$ quartic tensor. On the Virasoro $T$-line
+$S_4=10/[c(5c+22)]$ and $S_5=-48/[c^2(5c+22)]$; on the pure
+$W$-line $S_4^W=2560/[c(5c+22)^3]$. The full contact tensor contains
+the mixed channels $Q_{TTTT}$, $Q_{TTWW}$, $Q_{WWWW}$ and the
+weight-$6$ Gram block described below.
+
 \section{\texorpdfstring{The $W_3$ composite field: all coefficients explicit}{The W-3 composite field: all coefficients explicit}}
 \label{sec:w3-composite-complete}
 
-The $\mathcal{W}_3$ OPE coefficient $\alpha(c) = 16/(22 + 5c)$ is determined by a single constraint: the Jacobi identity admits exactly one solution. The composite field $\Lambda = {:}TT{:} - \frac{3}{10}\partial^2 T$ is the unique quasi-primary of weight~$4$, and $\alpha(c)$ is the unique coefficient compatible with associativity. Both facts are derived from first principles below and verified against the literature at every special value of~$c$.
+The $\mathcal{W}_3$ OPE coefficient $\alpha(c) = 16/(22 + 5c)$ is
+determined by the Jacobi identity after the Zamolodchikov normalization
+of $W$ has fixed the leading $c/3$ and $2T$ terms. The composite field
+$\Lambda = {:}TT{:} - \frac{3}{10}\partial^2 T$ is the unique
+level-$4$ Virasoro quasi-primary in the $L_{-2}^2,L_{-4}$ plane. The
+calculations below keep these two normalizations separate.
 
 \subsection{\texorpdfstring{The composite field $\Lambda$}{The composite field Lambda}}
 \label{subsec:lambda-complete-formula}
@@ -54,7 +64,7 @@ The \emph{quasi-primary composite field} of weight~$4$ in the Virasoro algebra i
 \end{equation}
 where $:TT:$ is the normally ordered square of the stress tensor.
 The coefficient $-3/10$ is the unique value making $\Lambda$ quasi-primary
-(Proposition~\ref{prop:lambda-modes}).
+(Theorem~\ref{thm:lambda-coefficients-derivation}).
 
 In the $W$--$W$ OPE, $\Lambda$ appears together with the stress tensor conformal block
 (Theorem~\ref{thm:lambda-coefficients-derivation}). The full $(z-w)^{-2}$ coefficient is:
@@ -62,96 +72,51 @@ In the $W$--$W$ OPE, $\Lambda$ appears together with the stress tensor conformal
 W(z)W(w) \sim \cdots + \frac{\tfrac{3}{10}\,\partial^2 T(w) + \tfrac{16}{22+5c}\,\Lambda(w)}{(z-w)^2}
 + \frac{\tfrac{1}{15}\,\partial^3 T(w) + \tfrac{8}{22+5c}\,\partial\Lambda(w)}{z-w} + \cdots
 \end{equation}
-where the $\partial^2 T$ and $\partial^3 T$ terms arise from Taylor-expanding the stress tensor conformal block $c/3 \cdot T(w)/(z-w)^4$.
+where the $\partial^2T$ and $\partial^3T$ terms are the
+$L_{-1}$-descendants in the stress-tensor conformal family, fixed by
+the Virasoro Ward identity once the coefficient of $T$ is normalized
+to~$2$.
 \end{definition}
 
-\begin{theorem}[Derivation of coefficients; \ClaimStatusProvedHere]\label{thm:lambda-coefficients-derivation}
+\begin{theorem}[Virasoro composite and Fateev--Lukyanov coefficient; \ClaimStatusProvedElsewhere]\label{thm:lambda-coefficients-derivation}
 \index{quasi-primary field|textbf}
-The composite field $\Lambda$ and its OPE coefficient are uniquely determined:
+In the Zamolodchikov normalization
+$W(z)W(w)\sim (c/3)(z-w)^{-6}+2T(w)(z-w)^{-4}+\cdots$,
+the weight-$4$ composite and its $W$--$W$ coefficient are:
 \begin{enumerate}
-\item $\Lambda$ has conformal weight $\Delta = 4$
-\item $\Lambda$ is quasi-primary: $T(z)\Lambda(w) \sim \frac{4\Lambda(w)}{(z-w)^2}
-+ \frac{\partial\Lambda(w)}{z-w}$ (no $(z-w)^{-3}$ term).
-This uniquely fixes the coefficient of $\partial^2 T$ to $-3/10$.
-\item The Jacobi identity $[T, [W, W]] + \text{cyclic} = 0$ determines
-the OPE coefficient $16/(22+5c)$.
+\item the unique Virasoro quasi-primary state in the
+span of $L_{-2}^{2}|0\rangle$ and $L_{-4}|0\rangle$ is
+\[
+|\Lambda\rangle=L_{-2}^{2}|0\rangle-\frac35L_{-4}|0\rangle,
+\qquad
+\Lambda={:}TT{:}-\frac{3}{10}\partial^2T;
+\]
+\item the field is quasi-primary, not primary:
+\begin{equation}\label{eq:T-lambda-ope}
+T(z)\Lambda(w)\sim
+\frac{\frac{5c+22}{5}\,T(w)}{(z-w)^4}
++\frac{4\Lambda(w)}{(z-w)^2}
++\frac{\partial\Lambda(w)}{z-w};
+\end{equation}
+in particular the $(z-w)^{-3}$ pole vanishes and the fourth-order
+pole records $L_2|\Lambda\rangle=\frac{5c+22}{5}L_{-2}|0\rangle$;
+\item its Zamolodchikov norm is
+\[
+\langle\Lambda|\Lambda\rangle=\frac{c(5c+22)}{10};
+\]
+\item the Jacobi identity for the $W_3$ modes fixes
+\[
+\alpha(c)=\frac{16}{22+5c}
+\]
+as the coefficient of $\Lambda$ in the $(z-w)^{-2}$ term of
+$W(z)W(w)$.
 \end{enumerate}
 \end{theorem}
 
-\begin{proof}[Derivation]
-
-\emph{Step~1: Conformal weight constraint.}
-
-The field $\Lambda$ appears in the $W$-$W$ OPE as:
-\[W(z)W(w) \sim \frac{\Lambda(w)}{(z-w)^2} + \cdots\]
-
-Since $W$ has weight 3, the weight of $\Lambda$ must be:
-\[\Delta_\Lambda = 3 + 3 - 2 = 4\]
-
-Both $:TT:$ and $\partial^2 T$ have weight 4, so this is satisfied.
-
-\emph{Step~2: Quasi-primary condition.}
-
-A quasi-primary field $\Phi$ of weight $\Delta$ satisfies:
-\[T(z)\Phi(w) \sim \frac{\Delta \Phi(w)}{(z-w)^2} + \frac{\partial\Phi(w)}{z-w}\]
-
-For $\Lambda = \alpha :TT: + \beta \partial^2 T$, compute $T \times \Lambda$:
-
-\emph{Step~2a.} $T(z) \times :TT:(w)$
-\begin{align}
-T(z) :T(w)T(w): &\sim \frac{c/2}{(z-w)^4} T(w) + \frac{2T(w)}{(z-w)^2} T(w)
-+ \frac{\partial T(w)}{z-w} T(w) \\
-&\quad + T(w) \left[\frac{2T(w)}{(z-w)^2} + \frac{\partial T(w)}{z-w}\right] \\
-&= \frac{c\, T(w)}{(z-w)^4} + \frac{4 {:}TT{:}(w)}{(z-w)^2}
-+ \frac{\text{derivatives}}{z-w}
-\end{align}
-
-\emph{Step~2b.} $T(z) \times \partial^2 T(w)$
-\begin{align}
-T(z) \partial^2 T(w) &\sim \frac{\partial^2}{\partial w^2}\left[\frac{2T(w)}{(z-w)^2}
-+ \frac{\partial T(w)}{z-w}\right] \\
-&= \frac{4\partial^2 T(w)}{(z-w)^2} + \frac{\text{derivatives}}{z-w}
-\end{align}
-
-\emph{Step~2c.} Combine with quasi-primary condition.
-
-For $\Lambda = \alpha :TT: + \beta \partial^2 T$ to be quasi-primary with weight 4:
-\[T(z)\Lambda(w) = \frac{4\Lambda(w)}{(z-w)^2} + \frac{\partial\Lambda(w)}{z-w}
-+ \frac{c \cdot \text{anomaly}}{(z-w)^4}\]
-
-Matching coefficients:
-\begin{align}
-\text{From } (z-w)^{-2}: \quad 4\alpha :TT: + 4\beta \partial^2 T &= 4\Lambda \\
-&= 4\alpha :TT: + 4\beta \partial^2 T \quad \checkmark
-\end{align}
-
-The $(z-w)^{-4}$ anomaly term $(\alpha c + 12\beta)T(w)$ is allowed for a quasi-primary field (only the $(z-w)^{-3}$ coefficient must vanish). The coefficients $\alpha, \beta$ are ultimately determined by the Jacobi identity in Step~3.
-
-\emph{Step~3: Jacobi identity (associativity of OPE).}
-
-The key constraint comes from the Jacobi identity:
-\[[T_m, [W_n, W_p]] + [W_n, [W_p, T_m]] + [W_p, [T_m, W_n]] = 0\]
-
-Expand using the $W$-$W$ OPE:
-\[[W_m, W_n] = \frac{c}{360}m(m^2-1)(m^2-4)\delta_{m+n,0}
-+ (m-n)\alpha(c)\Lambda_{m+n} + \cdots\]
-
-Then compute $[T_0, [W_m, W_n]]$:
-\begin{align}
-[T_0, (m-n)\alpha \Lambda_{m+n}] &= (m-n)\alpha [T_0, \Lambda_{m+n}] \\
-&= (m-n)\alpha \cdot 4\Lambda_{m+n}
-\end{align}
-
-The Jacobi identity requires this to match the other two terms. After extensive
-algebra (see Appendix~\ref{app:w3-jacobi-full}), this gives:
-\[\alpha = \frac{16}{22 + 5c}\]
-
-\emph{Step~4: Determine $\beta$ from quasi-primarity.}
-
-Write $\Lambda = {:}TT{:} + \beta\,\partial^2 T$ and impose $L_1 \Lambda = 0$
-(quasi-primarity). In the vacuum module, $L_{-1}|0\rangle = 0$, so the
-weight-4 state is $|\Lambda\rangle = L_{-2}^2|0\rangle + \beta \cdot 2L_{-4}|0\rangle$.
-Computing $L_1|\Lambda\rangle$:
+\begin{proof}
+The state corresponding to ${:}TT{:}+\beta\partial^2T$ is
+$L_{-2}^{2}|0\rangle+2\beta L_{-4}|0\rangle$. Since
+$L_{-1}|0\rangle=0$,
 \[
 L_1 L_{-2}^2|0\rangle = 3L_{-3}|0\rangle, \qquad
 L_1(2L_{-4}|0\rangle) = 10L_{-3}|0\rangle,
@@ -159,12 +124,38 @@ L_1(2L_{-4}|0\rangle) = 10L_{-3}|0\rangle,
 so $L_1|\Lambda\rangle = (3 + 10\beta)L_{-3}|0\rangle$. Setting this to zero
 gives $\beta = -3/10$, independent of the central charge~$c$.
 
-Hence
-\[\Lambda = :TT: - \frac{3}{10}\,\partial^2 T, \qquad
-\text{OPE coefficient} = \frac{16}{22+5c}\]
+The same Virasoro calculation gives the fourth-order pole. Namely
+\[
+L_2\bigl(L_{-2}^{2}|0\rangle-\tfrac35L_{-4}|0\rangle\bigr)
+=\bigl(c+8-\tfrac{18}{5}\bigr)L_{-2}|0\rangle
+=\frac{5c+22}{5}L_{-2}|0\rangle,
+\]
+while $L_3|\Lambda\rangle=L_4|\Lambda\rangle=0$. This is precisely
+\eqref{eq:T-lambda-ope}.
+
+The norm follows from the level-$4$ Shapovalov products
+\[
+\langle L_{-2}^{2}|L_{-2}^{2}\rangle=\frac{c(c+8)}2,\qquad
+\langle L_{-4}|L_{-2}^{2}\rangle=3c,\qquad
+\langle L_{-4}|L_{-4}\rangle=5c.
+\]
+Therefore
+\[
+\langle\Lambda|\Lambda\rangle
+=\frac{c(c+8)}2-\frac65\cdot 3c+\frac9{25}\cdot5c
+=\frac{c(5c+22)}{10}.
+\]
+
+The coefficient $\alpha(c)$ is the Fateev--Lukyanov--Zamolodchikov
+solution of the remaining Jacobi identity for the $W_3$ modes; see
+Zamolodchikov~\cite{Zamolodchikov} and
+Bouwknegt--Schoutens~\cite{Bouwknegt-Schoutens},
+or equivalently Proposition~\ref{prop:fateev-lukyanov-alpha}. In the
+normalization fixed by the leading pole $c/3$ and the $2T$ term, the
+unique solution is $\alpha(c)=16/(22+5c)$.
 \end{proof}
 
-\subsection{\texorpdfstring{Explicit mode expansion of $\Lambda$}{Explicit mode expansion of}}
+\subsection{\texorpdfstring{Explicit mode expansion of $\Lambda$}{Explicit mode expansion of Lambda}}
 \label{subsec:lambda-mode-expansion}
 
 \begin{proposition}[Mode expansion; \ClaimStatusProvedHere]\label{prop:lambda-modes}
@@ -222,8 +213,8 @@ These explicit formulas allow concrete computation in any representation.
 \index{central charge!W3 OPE coefficient dependence@$\mathcal{W}_3$ OPE coefficient dependence}
 The OPE coefficient $\alpha(c) = \frac{16}{22+5c}$ multiplying $\Lambda$ in the $W$--$W$ OPE has the following properties:
 \begin{enumerate}
-\item \emph{Pole at $c = -22/5 = -4.4$.} The composite field diverges
-\item \emph{$c \to \infty$ limit.} $\alpha(c) \to 0$ (classical limit, no quantum correction)
+\item \emph{Pole at $c = -22/5 = -4.4$.} The coefficient $\alpha(c)$ has a pole and $\Lambda$ becomes null.
+\item \emph{$c \to \infty$ limit.} $\alpha(c) \to 0$ in the fixed Zamolodchikov normalization.
 \item \emph{$c = 2$ (Toda).} $\alpha(2) = \frac{16}{32} = \frac{1}{2}$
 \item \emph{$c = -2$ (minimal model).} $\alpha(-2) = \frac{16}{12} = \frac{4}{3}$
 \item \emph{$c = 100$ (large $c$).} $\alpha(100) = \frac{16}{522} \approx 0.0307$
@@ -234,15 +225,20 @@ The OPE coefficient $\alpha(c) = \frac{16}{22+5c}$ multiplying $\Lambda$ in the 
 
 \emph{Case~1: $c = -22/5$ (pole).}
 
-At this value, the denominator $22 + 5c = 0$, so $\alpha \to \infty$. This is a
-\emph{critical central charge} where the $W_3$ algebra degenerates.
+At this value, the denominator $22 + 5c = 0$, so $\alpha$ has a pole in
+the fixed Zamolodchikov normalization. The field $\Lambda$ does not
+diverge; its norm
+$\langle\Lambda|\Lambda\rangle=c(5c+22)/10$ vanishes, and the
+universal $W_3$ presentation must be quotiented or renormalized.
 
 \emph{Case~2: $c \to \infty$ (classical limit).}
 
-As $c \to \infty$, $\alpha \to 0$, so the full $(z-w)^{-2}$ coefficient in the $W$--$W$ OPE becomes:
+As $c \to \infty$, $\alpha \to 0$ in the fixed normalization, so the
+full $(z-w)^{-2}$ coefficient in the $W$--$W$ OPE becomes:
 \[\tfrac{3}{10}\,\partial^2 T + \alpha\,\Lambda \;\xrightarrow{\;c \to \infty\;}\; \tfrac{3}{10}\,\partial^2 T\]
 
-The $:TT:$ contribution (contained in $\Lambda$) vanishes, leaving only the derivative term. This is the \emph{classical Poisson bracket} limit.
+The $:TT:$ contribution is suppressed by $1/c$ in this normalization.
+Other classical normalizations rescale $W$ before taking the limit.
 
 \emph{Case~3: $c = 2$ (Toda field theory).}
 
@@ -278,9 +274,9 @@ The composite field contribution is suppressed: $\alpha \sim 16/(5c)$ as $c \to 
 \begin{tabular}{|l|c|c|c|c|}
 \hline
 \textbf{Source} & \textbf{$\alpha(c)$} & \textbf{$\beta(c)$} & \textbf{Normalization} &
-\textbf{Match?} \\
+\textbf{Scope} \\
 \hline
-\textbf{Our result} & $\frac{16}{22+5c}$ & $\frac{3}{10}$ & Standard & -- \\
+\textbf{This normalization} & $\frac{16}{22+5c}$ & $\frac{3}{10}$ & Zamolodchikov & fixed leading pole \\
 \hline
 Zamolodchikov '85 & $\frac{16}{22+5c}$ & $\frac{3}{10}$ & Standard & \\
 \hline
@@ -300,17 +296,21 @@ Two independent conditions determine the $W$--$W$ OPE structure:
 \item \emph{Quasi-primarity} ($L_1 \Lambda = 0$) uniquely fixes the coefficient $-3/10$ of $\partial^2 T$ in the composite field $\Lambda = {:}TT{:} - \tfrac{3}{10}\partial^2 T$.
 \item \emph{The Jacobi identity} (associativity of the $W$-algebra) uniquely determines the OPE coefficient $\alpha = \frac{16}{22+5c}$ multiplying $\Lambda$ in the $(z-w)^{-2}$ term.
 \end{enumerate}
-Both values are convention-independent: they depend only on~$c$ and the Virasoro algebra structure, not on the normalization of~$W$.
-Different normalizations of~$W$ (e.g., Fateev--Lukyanov vs.\ Zamolodchikov) change the
-overall coefficient of $\Lambda$ in the $WW$ OPE, but not $\Lambda$ itself or the ratio $\alpha$.
+The field $\Lambda$ and the coefficient $-3/10$ are independent of
+the normalization of~$W$. The numerical value
+$\alpha=16/(22+5c)$ is attached to the Zamolodchikov normalization
+$W(z)W(w)\sim (c/3)(z-w)^{-6}+2T(w)(z-w)^{-4}+\cdots$; rescaling $W$
+rescales all $WW$ coefficients until the leading pole is normalized
+again.
 \end{remark}
 
 \subsection{Verification against Zamolodchikov for special values}
 \label{subsec:arakawa-verification-special}
 
-\begin{theorem}[Zamolodchikov verification; \ClaimStatusProvedHere]\label{thm:arakawa-verification-complete}
+\begin{theorem}[Zamolodchikov normalization checks; \ClaimStatusProvedElsewhere]\label{thm:arakawa-verification-complete}
 Our quasi-primary field $\Lambda = :TT: - \frac{3}{10} \partial^2 T$ (Definition~\ref{def:lambda-complete}), which appears in the $WW$ OPE with coefficient $\frac{16}{22+5c}$, matches
-Zamolodchikov's results \cite{Zamolodchikov} for all special values of $c$.
+Zamolodchikov's normalization \cite{Zamolodchikov} at the standard
+test values of $c$.
 \end{theorem}
 
 \begin{proof}[Verification]
@@ -321,33 +321,33 @@ Zamolodchikov \cite[eq.~(3.6)]{Zamolodchikov} computes the $(z-w)^{-2}$ coeffici
 $W$--$W$ OPE at $c = 2$, giving
 $\alpha = \frac{1}{2}$ for the $\Lambda$-coefficient.
 
-Our formula: $\alpha(2) = \frac{16}{32} = \frac{1}{2}$. \checkmark
+Substitution gives $\alpha(2) = \frac{16}{32} = \frac{1}{2}$.
 
 \emph{Value~2: $c = -2$.}
 
 Zamolodchikov \cite{Zamolodchikov} gives
 $\alpha = \frac{4}{3}$ at $c = -2$.
 
-Our formula: $\alpha(-2) = \frac{16}{12} = \frac{4}{3}$. \checkmark
+Substitution gives $\alpha(-2) = \frac{16}{12} = \frac{4}{3}$.
 
 \emph{Value~3: $c = 100$ (large $c$ limit).}
 
 Zamolodchikov \cite{Zamolodchikov} notes that as $c \to \infty$:
 \[\alpha(c) \sim \frac{16}{5c} \to 0\]
 
-Our formula: $\alpha(100) = \frac{16}{522} = \frac{8}{261} \approx 0.0307$, which
+Substitution gives $\alpha(100) = \frac{16}{522} = \frac{8}{261} \approx 0.0307$, which
 matches $\frac{16}{500} = 0.032$ to good approximation.
 
 \emph{Value~4: Critical level ($k = -h^\vee = -3$).}
 
-At critical level for $\widehat{\mathfrak{sl}}_3$ the Sugawara construction is undefined ($k + h^\vee = 0$); Feigin--Frenkel \cite{Feigin-Frenkel} show that $W_3$ degenerates to a commutative
-algebra. In the formal $c$-parametrization this corresponds to
+At critical level for $\widehat{\mathfrak{sl}}_3$ the Sugawara construction is undefined ($k + h^\vee = 0$).  The Feigin--Frenkel centre is the commutative oper algebra; the affine current sector itself is not made commutative by $k=-h^\vee$.  In the formal $c$-parametrization this corresponds to
 $c \to -\infty$.
 
-Our formula: As $c \to -\infty$, $\alpha \to \frac{16}{5c} \to 0^-$ (from below),
+As $c \to -\infty$, $\alpha \to \frac{16}{5c} \to 0^-$ (from below),
 which gives degeneracy.
 
-All special values match Zamolodchikov exactly.
+These substitutions test the same normalized coefficient; they are not
+additional tensor identities for the full $\mathcal W_3$ shadow.
 \end{proof}
 
 \subsection{OPE with all terms expanded}
@@ -363,21 +363,34 @@ W(z)W(w) &= \frac{c/3}{(z-w)^6} + \frac{2T(w)}{(z-w)^4} + \frac{\partial T(w)}{(
 \label{eq:w-w-ope-full}
 \end{align}
 
-where $\Lambda = {:}TT{:} - \tfrac{3}{10}\partial^2 T$ is the quasi-primary composite (Definition~\ref{def:lambda-complete}), and the $\partial^2 T$, $\partial^3 T$ terms arise from Taylor-expanding the stress tensor conformal block.
+where $\Lambda = {:}TT{:} - \tfrac{3}{10}\partial^2 T$ is the
+quasi-primary composite (Definition~\ref{def:lambda-complete}). The
+coefficients of $\partial^2T$ and $\partial^3T$ are the stress-tensor
+Virasoro-block descendant coefficients, not Taylor coefficients of the
+central pole.
 \end{theorem}
 
 \begin{proof}[Coefficient determination]
 
 \emph{$(z-w)^{-6}$ term.} Central charge, $c/3$ by normalization.
 
-\emph{$(z-w)^{-4}$ term.} Stress tensor, coefficient 2 by conformal bootstrap.
+\emph{$(z-w)^{-4}$ term.} Stress tensor, coefficient 2 by the
+Zamolodchikov normalization.
 
-\emph{$(z-w)^{-3}$ term.} Derivative of stress tensor, coefficient 1 by conformal covariance.
+\emph{$(z-w)^{-3}$ term.} The first $L_{-1}$-descendant in the
+stress-tensor family is $\partial T$ with coefficient~$1$.
 
-\emph{$(z-w)^{-2}$ term.} The full coefficient is a linear combination of the quasi-primary $\Lambda$ and the Virasoro descendant $\partial^2 T$:
+\emph{$(z-w)^{-2}$ term.} The weight-$4$ coefficient splits into
+the Virasoro descendant $L_{-1}^2T$ and the new quasi-primary line
+$\mathbb C\Lambda$:
 \[\tfrac{3}{10}\,\partial^2 T + \tfrac{16}{22+5c}\,\Lambda = \tfrac{16}{22+5c}\,{:}TT{:} + \tfrac{3(6+5c)}{10(22+5c)}\,\partial^2 T\]
+The coefficient $3/10$ is the stress-tensor conformal-block
+coefficient; the coefficient $16/(22+5c)$ is the
+Fateev--Lukyanov--Zamolodchikov Jacobi coefficient.
 
-\emph{$(z-w)^{-1}$ term.} Derivative of the $(z-w)^{-2}$ coefficient:
+\emph{$(z-w)^{-1}$ term.} The Virasoro Ward identity fixes the next
+descendant coefficients: $1/15$ on the stress-tensor family and
+one half of the quasi-primary coefficient on the $\Lambda$ family:
 \[\tfrac{1}{15}\,\partial^3 T + \tfrac{8}{22+5c}\,\partial\Lambda\]
 
 \emph{$(z-w)^{0}$ term (regular).} Weight-6 composite fields, including $:{:}TT{:}T{:}$, ${:}\partial T\, \partial T{:}$, and $\partial^4 T$. Their precise coefficients are determined by the Jacobi identity but are not needed for the bar complex computation.
@@ -387,14 +400,18 @@ where $\Lambda = {:}TT{:} - \tfrac{3}{10}\partial^2 T$ is the quasi-primary comp
 \label{subsec:jacobi-computational-verification}
 
 \begin{computation}[Jacobi identity check]\label{comp:jacobi-verification}
-We verify the Jacobi identity:
+The mode identity is:
 \[[L_m, [W_n, W_p]] + [W_n, [W_p, L_m]] + [W_p, [L_m, W_n]] = 0\]
 
-explicitly for low modes $m, n, p \in \{-2, -1, 0, 1, 2\}$.
+The low-mode window $m,n,p\in\{-2,-1,0,1,2\}$ checks the convention
+used in Theorem~\ref{thm:w-w-ope-complete}.
 
 \emph{Example: $m=0, n=1, p=-1$.}
 
-Since $[W_1, W_{-1}]$ has mode number $0$ and $\Lambda$ has conformal weight $4$, we have $[L_0, \Lambda_0] = 0$ (the zero mode of a primary field of weight $h$ satisfies $[L_0, \Phi_n] = -n\Phi_n$). Thus $[L_0, [W_1, W_{-1}]] = 0$.
+Since $[W_1, W_{-1}]$ has mode number $0$ and $\Lambda$ has conformal
+weight $4$, we have $[L_0, \Lambda_0] = 0$: the zero mode of any
+homogeneous field of weight $h$ satisfies
+$[L_0,\Phi_n]=-n\Phi_n$. Thus $[L_0,[W_1,W_{-1}]]=0$.
 
 For the remaining terms: $[L_0, W_{-1}] = (0-(-1))W_{-1} = W_{-1}$ (using $[L_m, W_n] = (2m-n)W_{m+n}$ at $m=0$), so $[W_{-1}, L_0] = -W_{-1}$ and $[W_1, [W_{-1}, L_0]] = -[W_1, W_{-1}]$. Similarly $[L_0, W_1] = -W_1$, so $[W_{-1}, [L_0, W_1]] = -[W_{-1}, W_1] = [W_1, W_{-1}]$.
 
@@ -403,7 +420,9 @@ The sum is $0 - [W_1, W_{-1}] + [W_1, W_{-1}] = 0$, confirming the Jacobi identi
 For non-trivial checks (e.g., $m=1, n=2, p=-3$), the Jacobi identity constrains the coefficient of $L_{m+n}$ in the $W$--$W$ OPE to be:
 \[\gamma(m,n) = \frac{(m-n)(2m^2 - mn + 2n^2 - 8)}{30}\]
 
-With this complete formula, the Jacobi identity holds for all modes.
+Together with $\alpha(c)=16/(22+5c)$, this is the
+Zamolodchikov--Fateev--Lukyanov commutator convention; the displayed
+window tests the signs and mode shifts used below.
 \end{computation}
 
 \subsection{Summary table: all coefficients for all central charges}
@@ -437,7 +456,12 @@ $\infty$ & $0$ & $0$ & Classical limit \\
 
 \subsection{Comparison with literature}
 
-All sources in Table~\ref{tab:lambda-comparison} agree on $\Lambda = {:}TT{:} - \tfrac{3}{10}\,\partial^2 T$ and $\alpha = \tfrac{16}{22+5c}$. The only apparent discrepancy is Fateev--Lukyanov's coefficient $\frac{32}{44+10c}$, which arises from their rescaled $W' = 2W$ and simplifies to $\frac{16}{22+5c}$ (the ratio $C_{33}^{\Lambda}/C_{33}^{1}$ is convention-independent).
+All sources in Table~\ref{tab:lambda-comparison} agree on
+$\Lambda = {:}TT{:} - \tfrac{3}{10}\,\partial^2 T$. In the
+normalization where the leading $WW$ pole is $c/3$ and the
+stress-tensor coefficient is~$2$, the $\Lambda$ coefficient is
+$16/(22+5c)$. Fateev--Lukyanov's displayed
+$32/(44+10c)$ is the same rational function.
 
 \subsection{\texorpdfstring{Weight-6 composite fields in $W_3$}{Weight-6 composite fields in W3}}
 \label{sec:w3-deg4-composites}
@@ -446,154 +470,91 @@ All sources in Table~\ref{tab:lambda-comparison} agree on $\Lambda = {:}TT{:} - 
 
 The $(z-w)^0$ (regular) term in the $W$--$W$ OPE
 (Theorem~\ref{thm:w-w-ope-complete}) involves weight-6 fields.
-Weight 6 arises because $\Delta_W + \Delta_W - 0 = 6$. The space
-of weight-6 fields built from $T$ and its derivatives is spanned by:
+Weight~$6$ is forced by $\Delta_W+\Delta_W=6$. The Virasoro
+descendant sector contains $\partial^4T$ and $\partial^2\Lambda$,
+but the regular $WW$ sector is not a pure Virasoro tensor statement:
+it also contains the quasi-primary square of the spin-$3$ generator.
+The quartic envelope is the finite-dimensional contact block
 \[
-{:}T{:}T{:}T{:}{:},\quad {:}T\,\partial^2 T{:},\quad {:}\partial T\,\partial T{:},
-\quad \partial^4 T, \quad {:}T\Lambda{:},\quad \partial^2\Lambda.
+Q^{\mathrm{ct}}_{\mathcal W_3}=Q_4\oplus Q_6,\qquad
+Q_4=\langle\Lambda\rangle,\qquad
+Q_6=\langle\Lambda_2,\Lambda_3\rangle.
 \]
-Among these, $\partial^4 T$ and $\partial^2\Lambda$ are Virasoro descendants
-(i.e., of the form $L_{-1}^k\Phi$ for some $\Phi$), and so the quasi-primary
-fields form a smaller subspace.
 
 \begin{definition}[Weight-6 quasi-primary composites]\label{def:w3-weight6-composites}
 \index{Lambda2@$\Lambda_2$ (weight-6 composite)}
 \index{Lambda3@$\Lambda_3$ (weight-6 composite)}
-Define the following weight-6 normal-ordered products:
-\begin{align}
-\Lambda_2 &= {:}T\Lambda{:} - \tfrac{9}{10}\,{:}T\,\partial^2 T{:}
- + \tfrac{1}{2}\,{:}\partial T\,\partial T{:}
- + \tfrac{9}{70}\,\partial^4 T \label{eq:lambda2-def} \\
-\Lambda_3 &= {:}T{:}TT{:}{:} - \tfrac{6}{7}\,{:}T\,\partial^2 T{:}
- + \tfrac{3}{7}\,{:}\partial T\,\partial T{:}
- + \tfrac{1}{14}\,\partial^4 T \label{eq:lambda3-def}
-\end{align}
-Here ${:}T{:}TT{:}{:}$ denotes the iterated normal-ordered product
-$:T(z)\cdot(:T(z)T(z):):$, which is well-defined by iterated Wick contraction.
+Let $Q_6$ be the image of the regular $W(z)W(w)$ coefficient in the
+weight-$6$ quotient by $L_{-1}$-descendants, and let
+\begin{equation}\label{eq:lambda2-def}
+\Lambda_2,\Lambda_3\in Q_6
+\end{equation}
+be any basis diagonalizing the Shapovalov form after extension of
+scalars to $\mathbb C(c)$. The visible rank-one line is
+\begin{equation}\label{eq:lambda3-def}
+\Xi_W:=\Pi_{\mathrm{qp}}({:}W^2{:})\in Q_6,
+\end{equation}
+where $\Pi_{\mathrm{qp}}$ denotes projection to the $L_1$-kernel
+modulo $L_{-1}$-descendants. Thus $\Xi_W$ is one line in the full
+weight-$6$ contact block, not a replacement for $Q_6$.
 \end{definition}
 
 \begin{proposition}[Quasi-primarity of \texorpdfstring{$\Lambda_2$}{Lambda_2} and \texorpdfstring{$\Lambda_3$}{Lambda_3};
-\ClaimStatusProvedHere]\label{prop:lambda23-quasiprimary}
+\ClaimStatusProvedElsewhere]\label{prop:lambda23-quasiprimary}
 \index{quasi-primary field!weight-6 verification}
-The fields $\Lambda_2$ and $\Lambda_3$ are quasi-primary:
-$L_1\Lambda_2 = L_1\Lambda_3 = 0$. They are the unique (up to
-scalar) quasi-primary combinations of weight~$6$ built from the
-Virasoro field $T$ and its normal-ordered products that are linearly
-independent modulo descendants.
+The block $Q_6=\langle\Lambda_2,\Lambda_3\rangle$ is the two-dimensional
+weight-$6$ quasi-primary contact block extracted from the regular
+$WW$ sector. Every element of $Q_6$ is annihilated by $L_1$ modulo
+descendants, and no scalar line in $Q_6$ determines the full contact
+Gram determinant.
 \end{proposition}
 
 \begin{proof}
-We verify $L_1\Lambda_2 = 0$; the argument for $\Lambda_3$ is
-analogous.
-
-\emph{Step~1: Mode-level formulation.}
-The weight-6 state corresponding to $\Lambda_2$ in the vacuum
-module is:
-\[
-|\Lambda_2\rangle = L_{-2}\Lambda_{-2}|0\rangle
- - \tfrac{9}{10}\, L_{-2}\cdot 2L_{-4}|0\rangle
- + \tfrac{1}{2}\, L_{-3}L_{-3}|0\rangle
- + \tfrac{9}{70}\cdot 24\, L_{-6}|0\rangle
-\]
-where $\Lambda_{-2}|0\rangle = L_{-2}^2|0\rangle
-- \frac{3}{10}\cdot 2L_{-4}|0\rangle = L_{-2}^2|0\rangle
-- \frac{3}{5}L_{-4}|0\rangle$.
-Thus:
-\[
-|\Lambda_2\rangle = L_{-2}^3|0\rangle - \tfrac{3}{5}L_{-2}L_{-4}|0\rangle
- - \tfrac{9}{5}L_{-2}L_{-4}|0\rangle
- + \tfrac{1}{2}L_{-3}^2|0\rangle + \tfrac{108}{35}L_{-6}|0\rangle.
-\]
-Simplifying: $|\Lambda_2\rangle = L_{-2}^3|0\rangle
- - \tfrac{12}{5}L_{-2}L_{-4}|0\rangle + \tfrac{1}{2}L_{-3}^2|0\rangle
- + \tfrac{108}{35}L_{-6}|0\rangle$.
-
-\emph{Step~2: Action of $L_1$.}
-Using the Virasoro commutation relations
-$[L_1, L_{-n}] = (1+n)L_{1-n}$ and
-$L_n|0\rangle = 0$ for $n \geq -1$:
-\begin{align}
-L_1 L_{-2}^3|0\rangle &= 3L_{-1}L_{-2}^2|0\rangle
- + 3 \cdot 2 L_{-2}L_{-1}L_{-2}|0\rangle + \cdots, \nonumber
-\end{align}
-where the computation proceeds by nested commutation.
-The general pattern is: each $L_1$ commutation past $L_{-k}$
-produces $(1+k)L_{1-k}$, and terms with $L_0$ or $L_{-1}$
-adjacent to $|0\rangle$ must be further reduced.
-
-After systematic computation (moving $L_1$ past each factor
-and collecting terms involving the basis vectors
-$L_{-5}|0\rangle$, $L_{-2}L_{-3}|0\rangle$, $L_{-3}L_{-2}|0\rangle$,
-and $L_{-1}L_{-4}|0\rangle$ at weight 5):
-\begin{align}
-L_1|\Lambda_2\rangle
-&= \bigl(9 - \tfrac{12}{5}\cdot 5 + \tfrac{1}{2}\cdot 8
- + \tfrac{108}{35}\cdot 0\bigr) L_{-2}L_{-3}|0\rangle \nonumber \\
-&\quad + \bigl(\text{coefficient of }L_{-5}|0\rangle\bigr)\cdot L_{-5}|0\rangle + \cdots
-\nonumber
-\end{align}
-A direct computation in the basis $\{L_{-5}|0\rangle,\,
-L_{-2}L_{-3}|0\rangle,\, L_{-3}L_{-2}|0\rangle\}$ of weight-5
-singular vectors shows that every coefficient vanishes with
-the stated choice of constants. (This is a linear algebra exercise
-in the $3$-dimensional space of weight-5 descendants; the three
-constraints $L_1|\Lambda_2\rangle = 0$ projected onto each basis
-vector yield three equations in the four undetermined coefficients
-of $\Lambda_2$, leaving a one-parameter family.)
-
-\emph{Step~3: Uniqueness.}
-The weight-6 subspace of the vacuum module has dimension~$7$
-(partitions of~$6$: $6, 5{+}1, 4{+}2, 3{+}3, 3{+}2{+}1,
-2{+}2{+}2, 2{+}1{+}1{+}1$), of which the descendants
-$L_{-1}\cdot(\text{weight-5 states})$ span a $3$-dimensional
-subspace. The quasi-primary condition $L_1|\Phi\rangle = 0$
-defines a $4$-dimensional subspace (the kernel of the linear
-map $L_1\colon V_6 \to V_5$ has dimension $7 - 3 = 4$ by the
-representation theory of $\mathfrak{sl}_2 \hookrightarrow
-\text{Vir}$). Modulo the identity descendant
-$\partial^4 T$ and the descendant $\partial^2\Lambda$, there
-remain exactly two independent quasi-primaries: $\Lambda_2$ and
-$\Lambda_3$.
+The statement is the weight-$6$ block of
+Theorem~\ref{thm:nms-w3-full-quartic-gram} and Proposition~\ref{prop:w-w3-weight6-resonance}.
+The projection $\Pi_{\mathrm{qp}}$ is finite-dimensional in the
+weight-$6$ window: solve $L_1v=0$ and quotient the image of $L_{-1}$
+from weight~$5$. The regular part of the Zamolodchikov $WW$ OPE
+lands in this quotient with rank~$2$ for generic $c$.
 \end{proof}
 
-\begin{computation}[Two-point functions of weight-6 composites;
-\ClaimStatusProvedHere]\label{comp:weight6-two-point}
-The two-point functions on the Riemann sphere are:
-\begin{align}
-\langle \Lambda_2(z)\,\Lambda_2(w) \rangle
- &= \frac{N_{\Lambda_2}(c)}{(z-w)^{12}}, \label{eq:lambda2-twopt} \\
-\langle \Lambda_3(z)\,\Lambda_3(w) \rangle
- &= \frac{N_{\Lambda_3}(c)}{(z-w)^{12}}, \label{eq:lambda3-twopt}
-\end{align}
-where $N_{\Lambda_i}(c)$ are polynomials in $c$ determined by
-Wick contraction. Explicitly, for $\Lambda_2 = {:}T\Lambda{:}
-+ \cdots$:
-\begin{align}
-N_{\Lambda_2}(c) &= \langle 0|(\Lambda_2)_6 \cdot (\Lambda_2)_{-6}|0\rangle
-\nonumber \\
-&= \tfrac{c(2c-1)(5c+22)(7c+68)}{4200}. \label{eq:N-lambda2}
-\end{align}
-This vanishes at $c = 0$ (trivially), $c = 1/2$, and $c = -22/5$;
-these are precisely the values where the weight-6 quasi-primary
-space degenerates. The factor $5c + 22$ reflects the $W_3$
-critical central charge from Theorem~\ref{thm:c-scaling}.
+\begin{computation}[Weight-6 Gram determinant;
+\ClaimStatusProvedElsewhere]\label{comp:weight6-two-point}
+Let $G_6=(\langle\Lambda_i|\Lambda_j\rangle)_{1\leq i,j\leq2}$ be
+the Shapovalov Gram matrix on the full weight-$6$ contact block.
+After clearing the nonzero normalization factor of the chosen basis,
+\begin{equation}\label{eq:lambda2-twopt}
+\det G_6
+\doteq c^2(2c-1)(5c+22).
+\end{equation}
+Together with
+\begin{equation}\label{eq:lambda3-twopt}
+G_4=\langle\Lambda|\Lambda\rangle=\frac{c(5c+22)}{10},
+\end{equation}
+the full contact determinant has divisor
+\begin{equation}\label{eq:N-lambda2}
+\det(G_4\oplus G_6)
+\doteq c^3(2c-1)(5c+22)^2.
+\end{equation}
+The factor $2c-1$ belongs to the full weight-$6$ block and is
+invisible from the Virasoro $\Lambda$ line alone.
 \end{computation}
 
 \begin{remark}[Regular term and bar complex]\label{rem:regular-term-bar}
 \index{bar complex!weight-6 contributions}
-The weight-6 composites $\Lambda_2$ and $\Lambda_3$ contribute to
-the bar differential $d_2\colon \bar{B}^2(\mathcal{W}_3) \to
-\bar{B}^1(\mathcal{W}_3)$ via the regular term in the $W$--$W$
-OPE. Specifically, the $(z-w)^0$ coefficient in the $W$--$W$ OPE
-is a linear combination:
+In the completed finite-window bar coalgebra, the regular $WW$ term
+contributes to the $W\otimes W$ component through its projection to
+$Q_6$:
 \[
 [W(z)W(w)]_{\text{reg}} = a_1(c)\,\Lambda_2(w) + a_2(c)\,\Lambda_3(w)
  + a_3(c)\,\partial^2\Lambda(w) + a_4(c)\,\partial^4 T(w)
 \]
 where the coefficients $a_i(c)$ are determined by the Jacobi identity
-(cf.\ Construction~\ref{const:w3-bar}). These contribute to
-the degree-2 bar differential on the $W \otimes W$ component of
-$\bar{B}^2(\mathcal{W}_3)$.
+(cf.\ Construction~\ref{const:w3-bar}). This is a finite-window
+statement inside $\widehat{\bar B}(\mathcal W_3)$; it is not an
+identification of the scalar-line shadows with the full bar coalgebra,
+with $\mathcal W_3^!$, or with
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\mathcal W_3)$.
 \end{remark}
 
 \subsection{Higher-spin composite fields}
@@ -607,87 +568,62 @@ weight $2N$. The quasi-primary projection of the normal-ordered
 square ${:}W^2{:}$ is the simplest such field, and its structure
 governs the non-linearity of the algebra.
 
-\begin{proposition}[Quasi-primary projection of \texorpdfstring{${:}W^2{:}$}{:W2:};
+\begin{proposition}[Finite-window quasi-primary projection of \texorpdfstring{${:}W^2{:}$}{:W2:};
 \ClaimStatusProvedHere]\label{prop:W-squared-qp}
 \index{quasi-primary projection}
 \index{normal-ordered product!quasi-primary projection}
-Let $W$ be a Virasoro-primary field of conformal weight~$N$.
-The quasi-primary projection of the normal-ordered square
-${:}W(z)W(z){:}$ is:
+Let $W$ be a Virasoro-primary field of conformal weight~$N$, and work
+in the finite conformal-weight window of weight~$2N$. The quotient by
+$L_{-1}$-descendants admits a canonical projection to the
+$L_1$-kernel:
 \begin{equation}\label{eq:W-squared-qp}
-{:}W^2{:}_{\mathrm{qp}} = {:}WW{:}
- - \sum_{k=1}^{N-1} \frac{(-1)^k\,(2N-1)!\,(2k)!}{(2N-1+2k)!\,k!\,(k-1)!}
- \,\partial^{2k}({:}WW{:})_{\mathrm{sing},k}
+{:}W^2{:}_{\mathrm{qp}}
+:=\Pi_{\mathrm{qp}}({:}WW{:}).
 \end{equation}
-where ${:}WW{:}_{\mathrm{sing},k}$ denotes the weight-$(2N-2k)$
-singular vector obtained from the $k$-th contraction.
-In particular, the leading correction is:
-\[
-{:}W^2{:}_{\mathrm{qp}} = {:}WW{:}
- - \frac{N}{4N-1}\,\partial^2\bigl({:}WW{:}_{\text{1-contr}}\bigr)
- + O(\partial^4).
-\]
+The coefficients of the descendant subtraction are obtained by solving
+a finite Shapovalov linear system. No universal scalar formula for
+those coefficients is used here.
 \end{proposition}
 
 \begin{proof}
-The quasi-primary condition is $L_1|{:}W^2{:}_{\mathrm{qp}}\rangle = 0$.
-On the vacuum module, $|{:}WW{:}\rangle = W_{-N}^2|0\rangle$.
-Using $[L_1, W_{-N}] = (N+1)W_{1-N}$ and the standard identity
-for $L_1$ acting on normal-ordered products:
-\[
-L_1\,{:}WW{:} = {:}(L_1 W)W{:} + {:}W(L_1 W){:} + \binom{2N}{1}\partial W \cdot W
-\]
-the anomalous term (from the single Wick contraction between $T$
-and ${:}WW{:}$) is proportional to $\partial({:}WW{:}_{\text{1-contr}})$.
-Setting $L_1(|\text{composite}\rangle + \alpha\,\partial^2|\text{correction}\rangle) = 0$
-and solving for $\alpha$ yields the coefficient $-N/(4N-1)$.
-The pattern continues inductively: at each order, the $L_1$
-anomaly from the $k$-th correction is cancelled by the
-$(k+1)$-th correction, terminating at $k = N-1$ because
-there are at most $N-1$ independent contractions between two
-fields of weight~$N$.
+The weight-$2N$ subspace of the vacuum module is finite-dimensional.
+The linear map $L_1\colon V_{2N}\to V_{2N-1}$ and the descendant map
+$L_{-1}\colon V_{2N-1}\to V_{2N}$ therefore define an ordinary finite
+linear-algebra problem. The Shapovalov form identifies a complement
+to the descendant image away from its determinant divisor, and the
+projection to $\ker L_1$ gives \eqref{eq:W-squared-qp}.
 \end{proof}
 
 \begin{example}[Specialization to \texorpdfstring{$W_3$}{W_3}]\label{ex:W-squared-W3}
 \index{W3 algebra@$\mathcal{W}_3$!WW square@${:}W^2{:}$ projection}
 For $N = 3$, the quasi-primary projection of ${:}W^2{:}$ is a
-weight-6 field. The leading correction has coefficient
-$-3/(4\cdot 3 - 1) = -3/11$. Explicitly:
+weight-$6$ field:
 \begin{equation}\label{eq:W2-W3}
-{:}W^2{:}_{\mathrm{qp}} = {:}WW{:}
- - \frac{3}{11}\,\partial^2\bigl(N_W\cdot T + \cdots\bigr)
- + \frac{93}{70(22+5c)}\,\partial^4 T
+\Xi_W=\Pi_{\mathrm{qp}}({:}W^2{:})\in Q_6.
 \end{equation}
-where the $\partial^2(\cdots)$ involves the single Wick
-contraction $W_{(1)}W = N_W\cdot T + \cdots$ (with
-$N_W = c/3$ from the sixth-order pole). The $\partial^4 T$
-coefficient depends on $c$ because it arises from the
-double contraction, which produces the stress tensor
-$T$ with coefficient $2$ and then the Virasoro central
-term.
+The line $\mathbb C\Xi_W$ is visible in a one-line projection, but the
+full quartic resonance requires the whole two-dimensional block $Q_6$.
 \end{example}
 
-\begin{computation}[Two-point function \texorpdfstring{$\langle {:}W^2{:}_{\mathrm{qp}}(z)\,
-{:}W^2{:}_{\mathrm{qp}}(w)\rangle$}{:W2:_qp(z) :W2:_qp(w)}; \ClaimStatusProvedHere]
+\begin{computation}[Visible norm of \texorpdfstring{$\Xi_W$}{XiW};
+\ClaimStatusProvedElsewhere]
 \label{comp:W2-twopt}
-The two-point function is obtained by Wick contraction. Using
-$\langle W(z)W(w)\rangle = (c/3)/(z-w)^6$ and the combinatorics
-of double Wick contractions:
+The unprojected Wick square has leading double contraction
 \begin{align}
 \langle {:}WW{:}(z)\, {:}WW{:}(w) \rangle
  &= 2\,\langle W(z)W(w)\rangle^2
  = \frac{2c^2/9}{(z-w)^{12}}. \label{eq:WW-wick}
 \end{align}
-After subtracting the descendant contributions (which involve
-cross-terms with $\partial^{2k}T$), the quasi-primary two-point
-function is:
+After the $L_1$ projection, the visible rank-one norm is
 \begin{equation}\label{eq:W2qp-twopt}
-\langle {:}W^2{:}_{\mathrm{qp}}(z)\, {:}W^2{:}_{\mathrm{qp}}(w)\rangle
- = \frac{c^2(5c+22)(2c-1)}{9 \cdot 350 \cdot (z-w)^{12}}.
+\langle \Xi_W(z)\,\Xi_W(w)\rangle
+=
+\frac{2c\bigl(875c^3+110975c^2+112880c-1931508\bigr)}
+ {315(5c+22)^2(z-w)^{12}}.
 \end{equation}
-This vanishes at $c = 0$, $c = -22/5$, and $c = 1/2$. The factor
-$5c + 22$ again reflects the critical central charge of the $W_3$
-algebra (Theorem~\ref{thm:c-scaling}).
+This rank-one norm is nonzero at $c=1/2$; the factor $2c-1$ is a
+determinant factor of the full block $G_6$, not of the visible line
+$\mathbb C\Xi_W$.
 \end{computation}
 
 \subsection{\texorpdfstring{Null vectors and degenerate $W_3$ representations}{Null vectors and degenerate W3 representations}}
@@ -699,9 +635,9 @@ algebra (Theorem~\ref{thm:c-scaling}).
 At special values of the conformal weight $h$, the $W_3$
 charge $w$, and the central charge $c$, the $W_3$ Verma module
 acquires null vectors. These null vectors impose relations on
-correlation functions and, from the bar-cobar perspective,
-correspond to relations in the bar complex that lower the
-cohomological dimension.
+correlation functions and, from the bar-cobar perspective, lower the
+rank of the corresponding completed finite-weight window after the
+null ideal is imposed.
 
 \begin{definition}[\texorpdfstring{$W_3$}{W_3} highest weight state and Verma module]
 \label{def:w3-hw-state}
@@ -836,45 +772,29 @@ points in the $(h,c)$-plane.
 \index{bar complex!null vectors as relations}
 \index{null vector!bar complex interpretation}
 A null vector $|\chi_\ell\rangle$ at level $\ell$ in the $W_3$
-Verma module $\mathcal{M}^{W_3}(c,h,w)$ corresponds to a
-relation in the bar complex $\bar{B}(\mathcal{W}_3)$ restricted
-to the $(c,h,w)$-sector. Specifically, if $d_{\bar{B}}$ denotes
-the bar differential, then the element $\xi_\ell \in \bar{B}^1$
-corresponding to $|\chi_\ell\rangle$ satisfies
-$d_{\bar{B}}(\xi_\ell) = 0$ and is exact:
-$\xi_\ell = d_{\bar{B}}(\eta)$ for some $\eta \in \bar{B}^0$.
+Verma module $\mathcal{M}^{W_3}(c,h,w)$ gives a relation in the
+finite conformal-weight window of the completed reduced bar coalgebra.
+Equivalently, in the simple quotient
+$L^{W_3}(c,h,w)=\mathcal{M}^{W_3}(c,h,w)/\mathrm{Rad}$, the image of
+$|\chi_\ell\rangle$ is zero before bar cohomology is formed.
 
-In particular, the bar cohomology $H^1(\bar{B}(\mathcal{W}_3))$
-at weight $h + \ell$ has strictly lower dimension for degenerate
-representations (where null vectors exist) than for generic
-representations.
+This statement does not assert that the corresponding element is
+automatically exact in the universal unreduced bar complex
+$\bar B(\mathcal W_3)$. Exactness is a statement about the chosen
+quotient module and the completed finite-window differential.
 \end{proposition}
 
 \begin{proof}
-The bar complex $\bar{B}^1(\mathcal{W}_3)$ at weight $h + \ell$
-is spanned by elements of the form $s^{-1}\phi$ where $\phi$ runs
-over weight-$(h+\ell)$ states in the augmentation ideal
-$\overline{\mathcal{W}}_3$ (cf.\ Construction~\ref{const:w3-bar}).
-A null vector $|\chi_\ell\rangle$ in the Verma module is, by
-definition, a state annihilated by all positive modes. In the
-bar complex, this translates to an element $\xi_\ell \in \bar{B}^1$
-for which $d_1(\xi_\ell) = 0$ (the component of $d_{\bar{B}}$
-from the linear part of the OPE).
-
-The element is exact because the null vector is a descendant:
-$|\chi_\ell\rangle = P(L_{-n}, W_{-m})|h,w\rangle$ for some
-polynomial $P$ in the negative modes. This polynomial $P$
-corresponds to an element $\eta \in \bar{B}^0$ (the degree-0
-bar complex at weight $h + \ell$, which records the descendants)
-such that $d_{\bar{B}}(\eta) = \xi_\ell$.
-
-The consequence for bar cohomology follows: each null vector
-at level $\ell$ converts a potential cohomology class in
-$H^1(\bar{B}^{h+\ell})$ into an exact element, reducing
-$\dim H^1$ by one. For minimal model representations (where
-the maximal number of null vectors occur), this reduction is
-responsible for the finite-dimensionality of the bar cohomology
-(cf.\ Example~\ref{ex:w3-minimal-modules}).
+The level-$\ell$ Shapovalov radical is the kernel of the Gram form
+$M_\ell(c,h,w)$. A null vector is precisely a nonzero element of this
+kernel. Passing from the Verma module to the simple quotient imposes
+the relation $|\chi_\ell\rangle=0$ in the weight-$h+\ell$ window.
+The completed bar coalgebra inherits the conformal-weight filtration,
+so the same relation removes the corresponding suspended generator
+from the associated graded of the finite window. Whether the removed
+generator represents a boundary in a larger universal complex depends
+on the completed differential and is not decided by the Kac determinant
+alone.
 \end{proof}
 
 \subsection{\texorpdfstring{The $W_3$ Kac determinant}{The W3 Kac determinant}}
@@ -988,31 +908,17 @@ that depend on the $W_3$ charge $w$ and have no Virasoro analogue.
 \begin{remark}[Kac determinant and bar complex filtration]
 \label{rem:kac-det-bar}
 \index{bar complex!Kac determinant filtration}
-The $W_3$ Kac determinant controls the bar complex of
-$\mathcal{W}_3$ as follows. The bar complex
-$\bar{B}^\bullet(\mathcal{W}_3)$ has a weight filtration by $L_0$
-eigenvalue; at weight $h + \ell$, the rank of the Gram matrix
-$M_\ell$ determines the dimension of the non-degenerate part of
-$\bar{B}^1$ in that weight sector. When $\det M_\ell = 0$
-(i.e., a null vector appears), the bar cohomology changes:
+The Kac determinant controls the Shapovalov rank in each
+finite conformal-weight window. When $\det M_\ell(c,h,w)\ne0$, no
+level-$\ell$ null relation is imposed by the module quotient. When
+$\det M_\ell(c,h,w)=0$, the simple quotient removes the radical and
+the completed bar coalgebra must be formed after this quotient.
 
-\begin{enumerate}
-\item At $\det M_\ell \neq 0$ \textup{(}generic\textup{)}: the
- bar complex at weight $h + \ell$ is acyclic in degree~$1$, and
- the spectral sequence from Theorem~\ref{thm:bar-cobar-spectral-sequence}
- has $E_1^{1,\ell} = 0$.
-\item At $\det M_\ell = 0$ \textup{(}degenerate\textup{)}: the bar
- complex acquires non-trivial cohomology $H^1(\bar{B}^{h+\ell})
- \neq 0$, and the spectral sequence has additional generators at
- $E_1^{1,\ell}$ corresponding to the null vectors
- \textup{(}Proposition~\ref{prop:null-bar-relation}\textup{)}.
-\end{enumerate}
-
-For the $W_3$ minimal models, the Kac determinant vanishes at
-infinitely many levels (all $\ell = rs$ with $1 \leq r \leq q-1$,
-$1 \leq s \leq p-1$), and the resulting bar complex has
-finite-dimensional cohomology groups, consistent with the
-rationality of these models.
+Thus the determinant gives the relation locus and the rank drop; it
+does not by itself prove degree-$1$ acyclicity or non-acyclicity of
+the full completed bar differential. Minimal-model finiteness is a
+statement about the quotient vertex algebra with all null ideals
+imposed, not about the unreduced universal $W_3$ Verma package.
 \end{remark}
 
 \begin{computation}[Level-2 Gram matrix; \ClaimStatusProvedHere]

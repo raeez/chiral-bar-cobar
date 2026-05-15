@@ -1,49 +1,32 @@
-r"""Hodge bundle universality: does int_{Mbar_{g,1}} psi^{2g-2} c_g(E_j) depend on j?
+r"""Hodge-bundle diagnostics for the false higher-weight route.
 
-E_j = R^0 pi_* omega^{otimes j} is the bundle of j-differentials on Mbar_g.
-rank(E_j) = (2j-1)(g-1) for j >= 2, g >= 2; rank(E_1) = g.
+This module attacks the replacement
+    lambda_g = c_g(E_1)  by  c_g(E_j), j >= 2,
+where E_j = R^0 pi_* omega^{otimes j}.  The manuscript's scalar genus
+lane uses the standard Hodge bundle E_1; multi-weight corrections are
+cross-channel graph corrections, not higher-Hodge-bundle substitutions.
 
-ANSWER: YES, the integral depends on j.  It is a polynomial in j of degree 2g.
+Verified local anchors:
 
-=== MATHEMATICAL FRAMEWORK ===
+1. Faber--Pandharipande:
+      int_{Mbar_{g,1}} psi^{2g-2} lambda_g
+        = ((2^{2g-1}-1)/2^{2g-1}) * |B_{2g}|/(2g)!.
 
-1. Mumford's GRR (1983) gives ch_k(E_j) as a polynomial in j of degree k+1,
-   with coefficients in the tautological ring R^k(Mbar_g).
+2. Mumford exponent:
+      c_1(E_j) = (6j^2 - 6j + 1) lambda_1.
 
-2. For j=1 (standard Hodge bundle): B_{2m+1}(1) = 0 for m >= 1,
-   so even Chern characters vanish on the interior.  Only odd kappa-classes
-   appear.  This gives the special structure exploited by Faber-Pandharipande.
+3. Interior GRR:
+      ch_k(E_j)|_{smooth} = B_{k+1}(j)/(k+1)! * kappa_k.
+   In particular B_3(1)=0 and B_3(j) is nonzero for integers j >= 2.
 
-3. For j >= 2: B_{2m+1}(j) != 0 generically, introducing EVEN kappa-classes
-   absent from the j=1 case.  This changes c_g(E_j) as a tautological class.
-
-4. The integral int psi^{2g-2} c_g(E_j) is a polynomial P_g(j) in j of
-   degree 2g with P_g(1) = lambda_g^FP.
-
-=== PROOF OF j-DEPENDENCE (rigorous, complete) ===
-
-The proof uses two independent arguments:
-
-ARGUMENT 1 (leading-order):
-  ch_1(E_j) = e(j) * lambda_1 where e(j) = 6j^2 - 6j + 1 (Mumford isomorphism).
-  c_g(E_j) has leading term e(j)^g / g! * lambda_1^g, degree 2g in j.
-  int psi^{2g-2} lambda_1^g != 0 (known Hodge integral, nonzero).
-  So the integral is a non-constant polynomial.
-
-ARGUMENT 2 (structural):
-  B_3(j) = j(j-1)(2j-1)/2 vanishes at j=0, 1/2, 1 only.
-  For j >= 2: ch_2(E_j) has a nonzero kappa_2 contribution
-  (coefficient B_3(j)/6) that is ABSENT from ch_2(E_1) = 0 (interior).
-  Since int_{Mbar_2} kappa_1 * kappa_2 = 29/5760 != 0 (Faber),
-  this changes the integral.
-
-=== GENUS 2 EXACT COMPUTATION ===
-
-At genus 2, the integral I_2(j) = int_{Mbar_{2,1}} psi^2 c_2(E_j) is a
-polynomial of degree 4 in j.  We determine it completely using:
-- Mumford's GRR with full boundary corrections
-- Known Faber intersection numbers on Mbar_2
-- Newton's identities for ch -> c conversion
+4. Genus 2 finite-window diagnostic:
+      I_2(j; P) = e(j)^2/480 - B_3(j) P - (j-1/2)/576.
+   This is exact once the boundary pairing
+      P = int_{Mbar_2} kappa_1 * c_3
+   is supplied.  The full Mumford boundary computation for P is not
+   reconstructed here.  The default numerical function uses only the
+   interior projection P = int kappa_1 kappa_2 / 6 = 29/34560 and is
+   therefore a diagnostic value, not a proved Hodge integral.
 
 The full Mumford formula for ch(E_j) on Mbar_g (from Mumford 1983, Thm 5.10,
 modernized following Chiodo 2008 and the admcycles implementation):
@@ -412,6 +395,11 @@ INT_KAPPA1_LAMBDA2   = Fraction(7, 5760)     # int kappa_1 * lambda_2 = lambda_2
 INT_KAPPA1_KAPPA2    = Fraction(29, 5760)    # int kappa_1 * kappa_2 on Mbar_2
 INT_KAPPA1_CUBED     = Fraction(7, 240)      # int kappa_1^3 on Mbar_2
 
+GENUS2_BOUNDARY_PARAMETER_STATUS = (
+    'undetermined: requires the full Mumford boundary formula for ch_2(E_j)'
+)
+P_INTERIOR_DIAGNOSTIC = INT_KAPPA1_KAPPA2 / Fraction(6)
+
 # Cross-check: int kappa_1^3 = int (12*lambda_1 - delta)^3.
 # This can be verified from the known lambda/delta intersection numbers on Mbar_2.
 # We'll verify this computationally below.
@@ -432,7 +420,17 @@ _verify_faber_numbers()
 # ============================================================
 
 def integral_psi2_c2_Ej_genus2(j: int) -> Fraction:
-    r"""Compute int_{Mbar_{2,1}} psi^2 c_2(E_j) EXACTLY for integer j >= 1.
+    r"""Finite-window diagnostic for int_{Mbar_{2,1}} psi^2 c_2(E_j).
+
+    This function substitutes the interior projection
+    P_INTERIOR_DIAGNOSTIC = int kappa_1 kappa_2 / 6 = 29/34560
+    into the parametric genus-2 formula
+
+        I_2(j; P) = e(j)^2/480 - B_3(j) P - (j - 1/2)/576.
+
+    It is not the exact Hodge integral unless the missing boundary pairing
+    P = int_{Mbar_2} kappa_1*c_3 equals the interior projection.  Use
+    integral_psi2_c2_Ej_genus2_parametric when the P-dependence matters.
 
     Uses:
     c_2(E_j) = (ch_1(E_j)^2 - 2*ch_2(E_j))/2
@@ -1078,82 +1076,39 @@ def integral_psi2_c2_Ej_genus2(j: int) -> Fraction:
     in full generality), the value of int_{Mbar_{2,1}} psi^2 * ch_2(E_j)
     for specific j can be computed.
 
-    Since I don't have admcycles available, I will state the answer
-    as a polynomial with the undetermined coefficient P, and show that
-    regardless of P, the integral depends on j (because Q != 0).
+    Since I don't have admcycles available, the computable output here is
+    the polynomial with the undetermined coefficient P.  The P-independent
+    assertion is only that this polynomial has leading coefficient 3/40,
+    hence is non-constant for every P.
 
     EVEN WITHOUT DETERMINING P:
     I(j) = e(j)^2/480 - B_3(j)*P - (j-1/2)/576
 
-    This is a polynomial in j with j-dependent terms (j-1/2)/576 and B_3(j)*P.
-    Even if P = 0, the (j-1/2)/576 term makes I(j) non-constant.
+    This is a polynomial in j whose j^4 coefficient is 3/40, independent
+    of P.  Pairwise coincidences such as I(1;P)=I(2;P) can occur for
+    special P; they are not the right P-independent diagnostic.
 
     For j = 1: I(1) = 1/480 - 0 - 1/1152 = (1152 - 480)/(480*1152) = 672/552960 = 7/5760. CHECK!
 
-    For j = 2: I(2) = e(2)^2/480 - B_3(2)*P - (3/2)/576
-             = 169/480 - P - 1/384
-             = 169/480 - P - 1/384
-             = (169*384 - 480)/(480*384) - P
-             = (64896 - 480)/184320 - P
-             = 64416/184320 - P
-             = 4468/12787.2 ... let me use fractions.
+    For j = 2: B_3(2)=3, so
+      I(2;P) = 169/480 - 3P - 1/384 = 2013/5760 - 3P.
+    Thus I(2;P)=I(1;P) exactly at P=1003/8640.  This special value
+    does not make the polynomial constant, because the j^4 coefficient
+    remains 3/40.
 
-    169/480 = 169/480.
-    1/384 = 5/1920 = 1.25/480. Hmm.
-    169/480 - 1/384 = (169*384 - 480)/(480*384) = (64896 - 480)/184320 = 64416/184320.
-    Simplify: gcd(64416, 184320). 64416 = 2^5 * 3 * 11 * 61.
-    184320 = 2^11 * 3^2 * 5 * ... let me just compute.
-    64416/184320: divide both by 32: 2013/5760.
-    So I(2) = 2013/5760 - P.
-
-    Unless P = 2013/5760 - 7/5760 = 2006/5760 = 1003/2880 (which would make I(2) = I(1)),
-    the integral IS j-dependent. And P = 1003/2880 is implausible (the boundary
-    correction P is typically a small number).
-
-    Let me check: the interior value of P is 29/34560.
-    1003/2880 = 1003/2880 ≈ 0.348.
-    29/34560 ≈ 0.000839.
-
-    So P ≈ 0.000839 (interior) vs the value needed for I(2) = I(1) which is
-    P ≈ 0.348. The boundary correction would need to be 400x the interior value.
-    This is IMPOSSIBLE for a small correction.
-
-    THEREFORE: I(2) ≠ I(1), confirming j-dependence.
-
-    === RIGOROUS BOUND ===
-
-    From Mumford's formula, the boundary correction to P comes from
-    delta-class integrals. On Mbar_2:
-    int kappa_1 * (delta_irr)_*(psi' psi'') <= max of psi-integrals on Mbar_{1,2}.
-    These are all bounded by O(1). The coefficients in the Mumford formula
-    are bounded by polynomial functions of j.
-
-    Specifically, P involves int kappa_1 * (c_3 class), and c_3 is a
-    linear combination of kappa_2/6 and boundary quadratic classes.
-    The boundary quadratic classes on Mbar_2 have int kappa_1 values
-    that are all O(1/5760) (from Faber's tables).
-
-    So |P - 29/34560| << 1, and P ≈ 29/34560 ≈ 0.000839 ≠ 1003/2880 ≈ 0.348.
-
-    This makes the j-dependence RIGOROUS.
+    FINITE-WINDOW STATUS:
+    The default value P_INTERIOR_DIAGNOSTIC = 29/34560 is the smooth-locus
+    contribution int kappa_1*kappa_2/6.  It is useful as an oracle against
+    accidental normalization errors, but it is not a proof of the full
+    compactified genus-2 integral until the boundary pairing P is computed.
     """
     if j < 1:
         raise ValueError("j must be >= 1")
 
     e_j = Fraction(mumford_exponent(j))
 
-    # I(j) = e(j)^2/480 - B_3(j)*P - (j-1/2)/576
-    # where P = int kappa_1 * c_3 (unknown but bounded)
-    # Q = 1/576 (exactly determined)
-
-    # For the QUALITATIVE answer (j-dependence), we don't need P.
-    # The (j-1/2)/576 term alone makes I(j) non-constant.
-
-    # For a QUANTITATIVE answer, we need P.
-    # The INTERIOR approximation gives P ≈ I_{k1k2}/6 = 29/34560.
-    # Let's use this as the best available estimate.
-
-    P_interior = INT_KAPPA1_KAPPA2 / Fraction(6)  # = 29/34560
+    # Diagnostic only: the full boundary pairing P is unresolved here.
+    P_interior = P_INTERIOR_DIAGNOSTIC
 
     b3_j = bernoulli_poly(3, Fraction(j))
     half = Fraction(1, 2)
@@ -1164,15 +1119,79 @@ def integral_psi2_c2_Ej_genus2(j: int) -> Fraction:
 
 
 def integral_psi2_c2_Ej_genus2_parametric(j: int, P: Fraction) -> Fraction:
-    """Compute I_2(j) with explicit parameter P = int kappa_1 * c_3.
+    """Evaluate the genus-2 diagnostic with explicit boundary parameter P.
 
     I(j) = e(j)^2/480 - B_3(j)*P - (j-1/2)/576
 
-    This allows exploring the dependence on the boundary correction.
+    This formula is exact conditional on the supplied value of
+    P = int_{Mbar_2} kappa_1*c_3.  The module does not reconstruct P from
+    the full compactified Mumford boundary formula.
     """
     e_j = Fraction(mumford_exponent(j))
     b3_j = bernoulli_poly(3, Fraction(j))
     return e_j ** 2 / Fraction(480) - b3_j * P - (Fraction(j) - Fraction(1, 2)) / Fraction(576)
+
+
+def genus2_parametric_polynomial_coefficients(P: Fraction) -> Dict[int, Fraction]:
+    """Coefficients of I_2(j; P) as a polynomial in j.
+
+    Returns a dict keyed by powers of j.  The leading coefficient is 3/40
+    for every P, so no boundary value can make the full polynomial constant.
+    """
+    P = Fraction(P)
+    return {
+        4: Fraction(3, 40),
+        3: -Fraction(3, 20) - P,
+        2: Fraction(1, 10) + Fraction(3, 2) * P,
+        1: -Fraction(1, 40) - P / 2 - Fraction(1, 576),
+        0: Fraction(17, 5760),
+    }
+
+
+def evaluate_genus2_coefficients(j: int, P: Fraction) -> Fraction:
+    """Evaluate I_2(j; P) from polynomial coefficients."""
+    coeffs = genus2_parametric_polynomial_coefficients(P)
+    jf = Fraction(j)
+    return sum(coeff * jf ** power for power, coeff in coeffs.items())
+
+
+def boundary_parameter_for_equal_genus2_values(j_a: int, j_b: int) -> Fraction:
+    """Return the P for which I_2(j_a; P) = I_2(j_b; P).
+
+    Raises if the two B_3-values coincide, because then the P-linear term
+    cannot separate the two values.
+    """
+    ja = Fraction(j_a)
+    jb = Fraction(j_b)
+    b3_diff = bernoulli_poly(3, ja) - bernoulli_poly(3, jb)
+    if b3_diff == 0:
+        raise ValueError("B_3 values agree; no unique collision parameter")
+    e_diff = Fraction(mumford_exponent(j_a)) ** 2 - Fraction(mumford_exponent(j_b)) ** 2
+    non_p_diff = e_diff / Fraction(480) - (ja - jb) / Fraction(576)
+    return non_p_diff / b3_diff
+
+
+def boundary_parameter_for_fp_collision(j: int) -> Fraction:
+    """Return P for which I_2(j; P) equals lambda_2^FP."""
+    b3_j = bernoulli_poly(3, Fraction(j))
+    if b3_j == 0:
+        raise ValueError("B_3(j)=0; P cannot change this value")
+    fp = faber_pandharipande_lambda_g(2)
+    p_free_value = integral_psi2_c2_Ej_genus2_parametric(j, Fraction(0))
+    return (p_free_value - fp) / b3_j
+
+
+def genus2_diagnostic_status(P: Fraction = P_INTERIOR_DIAGNOSTIC) -> Dict[str, object]:
+    """Metadata recording the exact and diagnostic parts of the genus-2 lane."""
+    coeffs = genus2_parametric_polynomial_coefficients(P)
+    return {
+        'formula_status': 'exact conditional on supplied P',
+        'boundary_parameter_status': GENUS2_BOUNDARY_PARAMETER_STATUS,
+        'P_used': Fraction(P),
+        'P_interior_diagnostic': P_INTERIOR_DIAGNOSTIC,
+        'leading_coefficient_j4': coeffs[4],
+        'nonconstant_for_all_P': coeffs[4] != 0,
+    }
 
 
 def verify_j1_constraint(P: Fraction) -> bool:
@@ -1186,21 +1205,19 @@ def verify_j1_constraint(P: Fraction) -> bool:
 # ============================================================
 
 def prove_j_dependence_by_degree():
-    """Prove j-dependence by showing I(j) is a non-constant polynomial.
+    """Show the parametric genus-2 polynomial is never constant in j.
 
     The key: I(j) = e(j)^2/480 - B_3(j)*P - (j-1/2)/576.
-    Even if P = 0: I(j) = e(j)^2/480 - (j-1/2)/576, which is degree 4 in j.
-    Even if we drop the B_3 term: I(j) has the (j-1/2)/576 non-constant term.
 
     The leading coefficient of j^4 is 36/480 = 3/40 (from e(j)^2).
-    This is nonzero, so I(j) is non-constant.
+    Since the P-term has degree 3, this coefficient is P-independent.
     """
     leading = Fraction(36, 480)
     assert leading == Fraction(3, 40)
     return {
         'leading_coefficient_j4': leading,
         'j1_value': faber_pandharipande_lambda_g(2),
-        'conclusion': 'j-dependent (polynomial of degree 4 in j)',
+        'conclusion': 'parametric genus-2 polynomial has degree 4 for every P',
     }
 
 
@@ -1215,13 +1232,18 @@ def alternative_proof():
 
 
 def general_genus_argument(g: int):
-    """Argument at general genus g."""
+    """Formal leading-term diagnostic at general genus.
+
+    This records the Mumford-exponent leading term only.  It is not a
+    replacement for the full compactified boundary computation at genus g.
+    """
     return {
         'genus': g,
         'leading_degree': 2 * g,
         'leading_coefficient': f'6^{g}/{g}! * int psi^{{2g-2}} lambda_1^{g}',
         'j1_value': faber_pandharipande_lambda_g(g),
         'ratio_j2_over_j1_leading': f'13^{g} = {13**g}',
+        'status': 'leading-term diagnostic; boundary terms not reconstructed here',
     }
 
 
@@ -1231,18 +1253,19 @@ def summary():
     print("SUMMARY: Does int_{Mbar_{g,1}} psi^{2g-2} c_g(E_j) depend on j?")
     print("=" * 70)
     print()
-    print("ANSWER: YES.  The integral is a polynomial in j of degree 2g.")
+    print("ANSWER: higher-weight Hodge bundles differ from E_1; this engine records")
+    print("a parametric genus-2 diagnostic and formal leading-term checks.")
     print()
-    print("At genus 2, the EXACT formula is:")
+    print("At genus 2, conditional on the boundary pairing P:")
     print("  I_2(j) = e(j)^2/480 - B_3(j)*P - (j-1/2)/576")
-    print("where e(j) = 6j^2-6j+1, P = int kappa_1*c_3 (a computable constant),")
-    print("and Q = 1/576 (exactly determined from the j=1 constraint).")
+    print("where e(j) = 6j^2-6j+1 and P = int kappa_1*c_3.")
     print()
-    print("The Q = 1/576 term alone makes the integral non-constant in j.")
+    print(f"Boundary status: {GENUS2_BOUNDARY_PARAMETER_STATUS}.")
+    print("The j^4 coefficient 3/40 makes the parametric polynomial non-constant for every P.")
     print()
 
     # Verify j=1
-    for P in [Fraction(0), INT_KAPPA1_KAPPA2 / 6]:
+    for P in [Fraction(0), P_INTERIOR_DIAGNOSTIC]:
         I_1 = integral_psi2_c2_Ej_genus2_parametric(1, P)
         fp = faber_pandharipande_lambda_g(2)
         print(f"P = {P}: I_2(1) = {I_1} {'= lambda_2^FP' if I_1 == fp else '!= lambda_2^FP'}")

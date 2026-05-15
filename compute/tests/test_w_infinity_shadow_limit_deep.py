@@ -1,7 +1,9 @@
-r"""Tests for the deep W_infinity large-N shadow obstruction tower analysis.
+r"""Tests for finite-N and formal large-N W_N shadow diagnostics.
 
-Systematic verification of the W_infinity shadow as a universal object, with
-multi-path verification per CLAUDE.md mandate (minimum 3 independent paths).
+The suite protects exact finite-N constants while preventing scalar
+diagnostics from being promoted to analytic W_infinity, all-genus,
+tau-function, Borel/resurgence, hierarchy, or multi-channel inverse-limit
+claims.
 
 STRUCTURE:
     Section 1:  Fundamental arithmetic (12 tests)
@@ -10,11 +12,11 @@ STRUCTURE:
     Section 4:  Multi-channel data for general W_N (8 tests)
     Section 5:  Large-N T-line scaling at fixed k (6 tests)
     Section 6:  Large-N scaling in 't Hooft limit (8 tests)
-    Section 7:  1/N expansion and planar shadow (6 tests)
-    Section 8:  Shadow growth rate convergence (10 tests)
-    Section 9:  Koszul conductor scaling (8 tests)
+    Section 7:  formal N-diagnostics and scalar A-hat lane
+    Section 8:  algebraic growth-rate diagnostics
+    Section 9:  FF/Verdier scalar conductor scaling
     Section 10: Higher-spin limit lambda=0 (8 tests)
-    Section 11: Universal shadow inverse limit (6 tests)
+    Section 11: Finite prefix compatibility
     Section 12: Cross-verification and consistency (11 tests)
 
 Total: 101 tests.
@@ -23,7 +25,7 @@ VERIFICATION PATHS:
     Path 1: Direct computation from formulas
     Path 2: Cross-engine consistency with w_infinity_shadow_limit.py
     Path 3: Limiting cases (N=2 -> Virasoro, lambda=0 -> free field)
-    Path 4: Symmetry/duality (FF duality, Koszul complementarity)
+    Path 4: Feigin-Frenkel/Verdier scalar complementarity
     Path 5: Asymptotic analysis (large-N, large-c limits)
     Path 6: Dimensional/scaling analysis
 
@@ -48,6 +50,10 @@ sys.path.insert(
 )
 
 from w_infinity_shadow_limit_deep import (
+    FINITE_N_EXACT,
+    NOT_CERTIFIED,
+    claim_certification_firewall,
+    scalar_ahat_bernoulli_free_energy,
     # Section 1: Fundamental arithmetic
     harmonic,
     anomaly_ratio,
@@ -81,7 +87,7 @@ from w_infinity_shadow_limit_deep import (
     # Section 8: Growth rate
     growth_rate_convergence,
     growth_rate_all_channels,
-    # Section 9: Koszul conductor
+    # Section 9: FF/Verdier scalar conductor
     koszul_conductor_ff,
     kappa_sum_ff,
     chiral_koszul_conductor,
@@ -111,6 +117,30 @@ def _collect_tower_mismatches(result):
         if eng_data.get('mismatches'):
             out[eng_name] = eng_data['mismatches']
     return out
+
+
+class TestCertificationFirewall:
+    """Certification boundaries for analytic and multi-channel claims."""
+
+    def test_analytic_promotions_are_not_certified(self):
+        firewall = claim_certification_firewall()
+        blocked = [
+            "winfinity_inverse_limit",
+            "all_genus_partition_function",
+            "analytic_tau_function",
+            "borel_resurgence",
+            "integrable_hierarchy_membership",
+            "multiweight_cross_channel_data",
+        ]
+        for key in blocked:
+            assert firewall[key]["certified"] is False
+
+    def test_scalar_ahat_lane_is_not_partition_function(self):
+        firewall = claim_certification_firewall()
+        assert firewall["scalar_ahat_bernoulli_lane"]["certified"] is True
+        assert firewall["scalar_ahat_bernoulli_lane"]["partition_function_certified"] is False
+        assert scalar_ahat_bernoulli_free_energy(Fraction(13), 1) == Fraction(13, 24)
+        assert scalar_ahat_bernoulli_free_energy(Fraction(1), 2) == Fraction(7, 5760)
 
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -320,7 +350,7 @@ class TestShadowTowerSingleChannel:
             assert abs(tower[2] - c_val / 2.0) < 1e-12
 
     def test_tline_s3_equals_2(self):
-        """S_3 on T-line = 2 (the universal cubic shadow for Virasoro)."""
+        """S_3 on T-line = 2 for the Virasoro scalar lane."""
         for c_val in [1.0, 10.0, 26.0]:
             tower = shadow_tower_tline(c_val)
             assert abs(tower[3] - 2.0) < 1e-12
@@ -331,11 +361,10 @@ class TestShadowTowerSingleChannel:
             tower = shadow_tower_tline(c_val)
             expected = 10.0 / (c_val * (5.0 * c_val + 22.0))
             # S_4 = a_2/4, and a_2 is computed from the recursion
-            # We need to check via the shadow metric, not the raw formula
-            # Actually: from the tower, S_4 should equal a_2/4 where
+            # From the tower, S_4 should equal a_2/4 where
             # a_2 = (q2 - a1^2)/(2*a0) and the shadow metric Q determines q2.
             # The Virasoro quartic is Q^contact = 10/(c(5c+22)).
-            # The tower S_4 = a_2/4.  Let's verify numerically.
+            # The tower S_4 = a_2/4.
             kap = c_val / 2.0
             alpha = 2.0
             S4 = 10.0 / (c_val * (5.0 * c_val + 22.0))
@@ -461,6 +490,28 @@ class TestMultiChannelData:
             c_val = 10.0  # arbitrary positive c
             channels = wn_channel_data(N, c_val)
             assert channels[0]['depth_class'] == 'M'
+            assert channels[0]['certification'] == FINITE_N_EXACT
+
+    def test_general_higher_channels_are_not_promoted(self):
+        """Finite kappa_s data alone does not certify higher-channel S4."""
+        channels = wn_channel_data(5, 10.0)
+        for ch in channels[1:]:
+            assert ch['S4'] is None
+            assert ch['Delta'] is None
+            assert ch['depth_class'] == NOT_CERTIFIED
+            assert ch['certification'] == NOT_CERTIFIED
+
+    def test_w3_wline_certified_only_at_N3(self):
+        """The W_3 W-line constant is not reused for general W_N channels."""
+        w3 = wn_channel_data(3, 10.0)[1]
+        assert w3['spin'] == 3
+        assert w3['certification'] == FINITE_N_EXACT
+        assert abs(w3['S4'] - 2560.0 / (10.0 * 72.0 ** 3)) < 1e-18
+
+        w5_spin3 = wn_channel_data(5, 10.0)[1]
+        assert w5_spin3['spin'] == 3
+        assert w5_spin3['S4'] is None
+        assert growth_rate_all_channels(5, 10.0)['W_3'] is None
 
     def test_kappa_grows_with_N(self):
         """Total kappa grows with N at fixed c > 0 (anomaly ratio increases)."""
@@ -486,18 +537,16 @@ class TestMultiChannelData:
 class TestLargeNFixedK:
     """Large-N behavior of T-line shadow at fixed level k."""
 
-    def test_c_grows_as_N_squared(self):
-        """At fixed k, c(W_N, k) ~ -N^2 for large N.
+    def test_c_grows_quartically(self):
+        """At fixed k, the canonical FL central charge is quartic negative.
 
-        c = (N-1)(k+N-N(N+1))/(k+N) = (N-1)(k-N^2)/(k+N).
-        For N >> k: c ~ -(N-1)*N^2/N = -(N-1)*N ~ -N^2.
-        More precisely: c/(N(N-1)) -> -1 as N -> infinity.
+        c(W_N,k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N) ~ -N^4.
         """
-        k = 5.0
+        k = Fraction(5)
         for N in [20, 50, 100]:
-            c_val = (N - 1) * (1.0 - N * (N + 1) / (k + N))
-            ratio = abs(c_val) / (N * (N - 1))
-            assert 0.7 < ratio < 1.05, f"N={N}: |c|/(N*(N-1)) = {ratio}"
+            c_val = float(c_WN(N, k))
+            ratio = abs(c_val) / (N ** 4)
+            assert 0.5 < ratio < 1.5, f"N={N}: |c|/N^4 = {ratio}"
 
     def test_c_negative_at_large_N(self):
         """For fixed k > 0, c(W_N, k) < 0 for N large enough."""
@@ -514,7 +563,7 @@ class TestLargeNFixedK:
         assert len(result['c_data']) > 0
 
     def test_s2_scales_as_c(self):
-        """S_2 = c/2, and c ~ -N^3/k at fixed k, so S_2 ~ -N^3/(2k)."""
+        """S_2 = c/2, and c ~ -N^4 at fixed k."""
         result = large_N_tline_scaling(N_values=[2, 3, 4, 5, 6], k_val=5.0, max_arity=4)
         s2_pts = result['tower_data'][2]
         # S_2 = c/2 and c grows rapidly with N
@@ -530,7 +579,7 @@ class TestLargeNFixedK:
     def test_exponents_computed(self):
         """Scaling exponents are finite numbers (or None if data insufficient)."""
         result = large_N_tline_scaling(N_values=[2, 3, 4, 5, 6, 7], k_val=5.0, max_arity=6)
-        # S_2 exponent should be ~ 3 (since S_2 ~ c ~ N^3)
+        # S_2 exponent is a finite-sample diagnostic for quartic growth.
         exp2 = result['exponents'].get(2)
         if exp2 is not None:
             assert abs(exp2) < 100  # sanity check
@@ -549,6 +598,7 @@ class TestLargeNTHooft:
         result = large_N_thooft_scaling(lam=0.01, max_arity=6)
         assert 'c_data' in result
         assert len(result['c_data']) > 0
+        assert result['analytic_certified'] is False
 
     def test_thooft_c_magnitude_grows(self):
         """At lambda = 0.01, |c| grows with N (quartic scaling)."""
@@ -571,18 +621,16 @@ class TestLargeNTHooft:
             assert rhos[-1] < rhos[0], \
                 f"rho should decrease: first={rhos[0]}, last={rhos[-1]}"
 
-    def test_thooft_s2_linear_in_N(self):
-        """S_2 = c/2 grows linearly in N at small lambda."""
+    def test_thooft_s2_quartic_magnitude(self):
+        """At fixed positive lambda, |S_2| follows the quartic FL scale."""
         result = large_N_thooft_scaling(lam=0.01, N_values=[5, 10, 20, 40], max_arity=4)
         s2_data = result['tower_data'].get(2, [])
         if len(s2_data) >= 2:
-            # S_2 = c/2 ~ N/2 for small lambda
             N1, s1 = s2_data[0]
             Nk, sk = s2_data[-1]
-            ratio = sk / s1
-            N_ratio = Nk / N1
-            # Should be approximately proportional to N
-            assert ratio > 1.0
+            ratio = abs(sk / s1)
+            quartic_ratio = (Nk / N1) ** 4
+            assert ratio > 0.1 * quartic_ratio
 
     def test_thooft_s3_constant(self):
         """S_3 = 2 independent of N (even in 't Hooft limit)."""
@@ -605,11 +653,9 @@ class TestLargeNTHooft:
                 assert math.isfinite(exp), f"arity {r}: exponent = {exp}"
 
     def test_thooft_normalized_s2_converges(self):
-        """S_2/c converges to 1/2 (kappa_T/c = 1/2 independent of N)."""
+        """S_2/c equals 1/2 wherever the scalar tower is defined."""
         for N in [3, 5, 10, 20]:
             c_val = thooft_c(N, 0.01)
-            if c_val <= 0:
-                continue
             tower = shadow_tower_tline(c_val, max_arity=4)
             assert abs(tower[2] / c_val - 0.5) < 1e-12
 
@@ -639,14 +685,14 @@ class TestOneOverNExpansion:
             assert err < 1.0 / (2 * N) + 0.01, f"N={N}: error={err}"
 
     def test_planar_shadow_runs(self):
-        """Planar shadow computation at lambda=0.01."""
+        """Positive fixed-lambda planar claims remain non-certified."""
         result = planar_shadow_tline(0.01, max_arity=6)
-        if 'error' not in result:
-            assert 'planar_coefficients' in result
+        assert result['analytic_certified'] is False
+        assert 'error' in result
 
-    def test_planar_s3_universal(self):
-        """S_3 = 2 is independent of N, so its planar limit is 2."""
-        result = planar_shadow_tline(0.01, max_arity=6)
+    def test_free_boundary_s3_diagnostic(self):
+        """At lambda=0, the scalar fit keeps S_3 = 2."""
+        result = planar_shadow_tline(0.0, max_arity=6)
         if 'error' not in result and result['planar_coefficients'].get(3) is not None:
             s3_planar = result['planar_coefficients'][3]
             assert abs(s3_planar - 2.0) < 0.1  # generous tolerance for numerical fit
@@ -695,7 +741,7 @@ class TestGrowthRateConvergence:
         assert abs(rho - 0.234) < 0.01
 
     def test_rho_times_N_converges_to_6(self):
-        """At lambda=0 (c=N-1): rho*N -> 6 as N -> infinity.
+        """At lambda=0 (c=N-1): sampled rho*N approaches 6.
 
         rho(c) ~ 6/c for large c, and c = N-1 ~ N.
         """
@@ -730,8 +776,9 @@ class TestGrowthRateConvergence:
             assert d['rho'] < 1.0, f"N={d['N']}: rho = {d['rho']}"
 
     def test_convergent_flag(self):
-        """Convergence flag correctly identifies rho < 1 vs rho > 1."""
+        """The rho flag records rho < 1, not analytic convergence."""
         result = growth_rate_convergence(lam=0.0, N_values=list(range(2, 21)))
+        assert result['analytic_certified'] is False
         for d in result['data']:
             assert d['convergent'] == (d['rho'] < 1.0)
 
@@ -778,59 +825,48 @@ class TestGrowthRateConvergence:
 
 
 class TestKoszulConductorScaling:
-    """Koszul conductor K_N and complementarity at large N."""
+    """FF/Verdier scalar conductor K_N^c and kappa sums."""
 
     def test_conductor_known_values(self):
-        """K_2 = 26 (Virasoro), K_3 = 100 (W_3), K_4 = 246 (W_4)."""
+        """K_2=26, K_3=100, K_4=246, K_5=488."""
         assert chiral_koszul_conductor(2) == Fraction(26)
         assert chiral_koszul_conductor(3) == Fraction(100)
         assert chiral_koszul_conductor(4) == Fraction(246)
+        assert chiral_koszul_conductor(5) == Fraction(488)
 
     def test_conductor_cubic_formula(self):
-        """K_N = 2(N^3 + 9N^2 - 27N + 23) matches known values."""
-        for N, K_expected in [(2, 26), (3, 100), (4, 246)]:
-            K_formula = 2 * (N ** 3 + 9 * N ** 2 - 27 * N + 23)
+        """K_N^c = 4N^3 - 2N - 2 matches canonical values."""
+        for N, K_expected in [(2, 26), (3, 100), (4, 246), (5, 488)]:
+            K_formula = 4 * N ** 3 - 2 * N - 2
             assert K_formula == K_expected
 
     def test_conductor_grows_as_N_cubed(self):
-        """K_N = 2(N^3 + 9N^2 - 27N + 23) ~ 2N^3 for large N.
-
-        The convergence K/(2N^3) -> 1 is slow due to the 9N^2 sub-leading term:
-        K/(2N^3) = 1 + 9/N - 27/N^2 + 23/N^3.
-        At N=10: ratio ~ 1.653. At N=100: ratio ~ 1.087.
-        """
+        """K_N^c/(4N^3) tends to 1."""
         result = koszul_conductor_scaling(N_values=list(range(2, 21)))
         for d in result:
             N = d['N']
-            ratio = d['K_over_2N3']
+            ratio = d['K_over_4N3']
             if N >= 10:
-                # K/(2N^3) = 1 + 9/N + O(1/N^2); check within 9/N + margin
-                expected = 1.0 + 9.0 / N
-                assert abs(ratio - expected) < 1.0, f"N={N}: K/(2N^3) = {ratio}"
-        # Check the trend: ratio decreases toward 1 with N
-        ratios = [d['K_over_2N3'] for d in result if d['K_over_2N3'] is not None and d['N'] >= 5]
+                expected = 1.0 - Fraction(1, 2 * N * N) - Fraction(1, 2 * N ** 3)
+                assert abs(ratio - float(expected)) < 1e-12, f"N={N}: K/(4N^3) = {ratio}"
+        ratios = [d['K_over_4N3'] for d in result if d['K_over_4N3'] is not None and d['N'] >= 5]
         for i in range(len(ratios) - 1):
-            assert ratios[i + 1] <= ratios[i] + 0.01
+            assert ratios[i + 1] > ratios[i]
 
-    def test_ff_sum_is_2N_minus_2(self):
-        """FF c-sum = 2(N-1)."""
+    def test_ff_sum_is_freudenthal_formula(self):
+        """FF c-sum is 2(N-1)+4N(N^2-1)."""
         for N in [2, 3, 5, 7, 10]:
-            assert koszul_conductor_ff(N) == 2 * Fraction(N - 1)
+            assert koszul_conductor_ff(N) == 2 * Fraction(N - 1) + 4 * Fraction(N * (N ** 2 - 1))
 
     def test_kappa_sum_ff_formula(self):
-        """kappa_ff_sum = 2(N-1)(H_N-1)."""
+        """kappa_ff_sum = K_N^c(H_N-1)."""
         for N in [2, 3, 5]:
-            expected = 2 * Fraction(N - 1) * anomaly_ratio(N)
+            expected = koszul_conductor_ff(N) * anomaly_ratio(N)
             assert kappa_sum_ff(N) == expected
 
     def test_kappa_sum_ff_virasoro(self):
-        """For Virasoro: kappa_ff_sum = 2*1*(1/2) = 1.
-
-        NOTE: This is NOT the Koszul kappa sum (which is 13 for Virasoro).
-        The FF duality and Koszul duality are DIFFERENT (AP33).
-        """
-        assert kappa_sum_ff(2) == Fraction(1)
-        # Compare: Koszul sum is rho*K = (1/2)*26 = 13
+        """For Virasoro: kappa_ff_sum = (1/2)*26 = 13."""
+        assert kappa_sum_ff(2) == Fraction(13)
         assert float(anomaly_ratio(2) * chiral_koszul_conductor(2)) == 13.0
 
     def test_conductor_scaling_runs(self):
@@ -840,11 +876,10 @@ class TestKoszulConductorScaling:
         assert all('K' in d for d in result)
 
     def test_kappa_complementarity_sum(self):
-        """kappa + kappa' = rho * K is consistent for known N."""
-        for N, K in [(2, 26), (3, 100), (4, 246)]:
+        """kappa + kappa' = rho * K_N^c is consistent for finite N."""
+        for N, K in [(2, 26), (3, 100), (4, 246), (5, 488)]:
             rho = anomaly_ratio(N)
             kap_sum = float(rho * Fraction(K))
-            # For N=2: 13.0; N=3: 250/3 ~ 83.33; N=4: 13*246/12 = 266.5
             assert kap_sum > 0
 
 
@@ -854,7 +889,7 @@ class TestKoszulConductorScaling:
 
 
 class TestHigherSpinLimit:
-    """Shadow tower in the higher-spin limit (lambda=0, free field)."""
+    """Scalar T-line diagnostics at the lambda=0 free-field boundary."""
 
     def test_higher_spin_c_equals_N_minus_1(self):
         """At lambda=0, c = N-1."""
@@ -909,7 +944,7 @@ class TestHigherSpinLimit:
     def test_higher_spin_s4_decreases(self):
         """S_4 decreases as 1/N^2 at lambda=0.
 
-        S_4 ~ 2/(5c^2) ~ 2/(5N^2) for large N.
+        S_4 ~ 2/c^2 ~ 2/N^2 for large N.
         """
         result = higher_spin_shadow(N_values=[5, 10, 20, 30], max_arity=6)
         s4_vals = [(d['N'], d['tower'][4]) for d in result['data']]
@@ -925,24 +960,26 @@ class TestHigherSpinLimit:
 
 
 # ═══════════════════════════════════════════════════════════════════════════
-# Section 11: Universal shadow inverse limit (6 tests)
+# Section 11: Finite prefix compatibility (6 tests)
 # ═══════════════════════════════════════════════════════════════════════════
 
 
-class TestUniversalShadow:
-    """Inverse limit structure of the W_infinity shadow."""
+class TestFinitePrefixCompatibility:
+    """Finite scalar prefix checks without inverse-limit promotion."""
 
     def test_tline_projection_exact(self):
-        """W_{N+k} T-line projects to W_N T-line (both = Virasoro at same c)."""
+        """T-line prefixes match because both are Virasoro at the same c."""
         c_val = 10.0
         result = universal_shadow_projection(3, 7, c_val, max_arity=8)
         assert result['tline_match']
+        assert result['projection_certified'] is False
 
     def test_channel_projection(self):
-        """W_7 channels 2..5 match W_5 channels exactly."""
+        """Scalar kappa_s prefixes match without certifying an OPE projection."""
         c_val = 10.0
         result = universal_shadow_projection(5, 7, c_val, max_arity=6)
         assert result['channel_match']
+        assert result['multi_channel_ope_certified'] is False
 
     def test_inverse_limit_tline_consistency(self):
         """T-line towers agree for all N at the same c."""
@@ -957,9 +994,10 @@ class TestUniversalShadow:
             assert kappas[i + 1] > kappas[i]
 
     def test_tline_tower_is_virasoro(self):
-        """The inverse limit T-line IS the Virasoro tower."""
+        """The sampled T-line compatibility table is the Virasoro tower."""
         c_val = 10.0
         result = inverse_limit_consistency(c_val, max_arity=8)
+        assert result['inverse_limit_certified'] is False
         tower = result['tower']
         # Compare with direct Virasoro computation
         vir_tower = shadow_tower_tline(c_val, max_arity=8)
@@ -967,12 +1005,13 @@ class TestUniversalShadow:
             assert abs(tower[r] - vir_tower[r]) < 1e-14
 
     def test_projection_different_N_pairs(self):
-        """Projection works for various (N_target, N_source) pairs."""
+        """Prefix comparisons work for various (N_target, N_source) pairs."""
         c_val = 10.0
         for N_t, N_s in [(2, 5), (3, 10), (5, 20), (7, 15)]:
             result = universal_shadow_projection(N_t, N_s, c_val, max_arity=6)
             assert result['tline_match']
             assert result['channel_match']
+            assert result['projection_certified'] is False
 
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -996,24 +1035,23 @@ class TestCrossVerification:
             assert data['match'], f"(N,k)={key}: sum={data['sum']} != {data['expected']}"
 
     def test_koszul_conductor_consistency(self):
-        """kappa + kappa' = rho * K for known conductors."""
+        """kappa + kappa' = rho * K_N^c for scalar conductors."""
         result = verify_koszul_conductor_consistency()
         for N, data in result.items():
             assert data['kappa_sum_float'] > 0
+            assert data['constructs_dual_object'] is False
 
     def test_tline_universality_cross_engine(self):
         """T-line towers from W_3, W_5, W_6, W_7 engines all agree with deep engine.
 
-        Genuine cross-engine verification: each W_N engine has its own
-        convolution recursion implementation.  Agreement across 5 independent
-        code paths at multiple c values is non-trivial.
+        Each W_N engine has its own convolution recursion implementation.
         """
         for c_val in [10.0, 26.0, 50.0]:
             result = verify_tline_universality(c_val=c_val, max_arity=8)
             # Require at least 3 independent engines to have been tested
             assert result['num_engines_tested'] >= 3, (
                 f"c={c_val}: only {result['num_engines_tested']} engines available "
-                f"(skipped: {result['engines_skipped']}); need >= 3 for genuine "
+                f"(skipped: {result['engines_skipped']}); need >= 3 for "
                 f"cross-engine verification"
             )
             # All towers must agree
@@ -1081,6 +1119,7 @@ class TestCrossVerification:
         result = comprehensive_scaling_analysis(lam=0.0, max_arity=6)
         assert 'c_vs_N' in result
         assert len(result['c_vs_N']) > 10
+        assert result['analytic_certified'] is False
 
     def test_comprehensive_rho_limit(self):
         """Comprehensive analysis confirms rho*N -> 6."""
@@ -1095,13 +1134,14 @@ class TestCrossVerification:
         # S_2 = c/2 at any c, so the "asymptotic" for r=2 is just c/2
         # at the last c_value (10000). The function returns the raw value.
         assert asymp[2] > 0  # S_2 = c/2 > 0
+        assert abs(asymp[4] - 2.0) < 0.01
+        assert abs(asymp[5] + 48.0 / 5.0) < 0.1
 
     def test_normalized_coefficients_consistency(self):
         """Normalized shadow coefficients are self-consistent."""
         result = normalized_shadow_coefficients(5, 10.0, max_arity=6)
         for r in range(2, 7):
             data = result[r]
-            # raw * c^{r-3} should equal c_stripped
             if data['c_stripped'] is not None:
-                expected = data['raw'] * 10.0 ** (r - 3)
+                expected = data['raw'] * 10.0 ** data['c_power']
                 assert abs(data['c_stripped'] - expected) < 1e-10

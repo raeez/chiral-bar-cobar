@@ -1,10 +1,15 @@
-r"""Exact full-OPE cross-channel correction delta_F2(W_4, c).
+r"""Exact finite W_4 scalar full-OPE cross-channel correction.
 
-THEOREM (first exact full-OPE cross-channel computation for W_4)
-================================================================
+CERTIFIED FINITE COMPUTE STATEMENT
+==================================
 
-The genus-2 cross-channel correction for the W_4 = W(sl_4, f_prin) algebra
-with ALL higher-spin exchange channels included is:
+This module certifies the genus-2 scalar cross-channel projection for the
+principal W_4 = W(sl_4, f_prin) algebra in the finite stage-4 DS/OPE packet,
+after choosing a square-root branch for the primary generator W4. It is not
+an all-genus theorem, not a generic W_N formula, and not the full MC element.
+
+On the positive DS branch, the scalar correction with all finite W_4
+higher-spin exchange channels used by this projection is:
 
     delta_F2^full(W_4, c) = R(c) + I_1(c) + I_2(c)
 
@@ -83,8 +88,20 @@ VERIFICATION PATHS
 3. Per-graph analytic formulas (each of 6 boundary graphs verified independently)
 4. Gravitational limit (g334=g444=0): recovers (7c+2148)/(48c) exactly
 5. Large-c limit: delta -> (3*sqrt(10) + 28)/192 + O(1/c) ~ 0.1952
-6. Koszul duality: checked at c <-> 246-c (no anomaly expected; verified)
-7. Comparison with W_3: delta_F2(W_4) > delta_F2(W_3) = (c+204)/(16c) for all c > 1/2
+6. Complementarity bookkeeping under c <-> 246-c: kappa(c)+kappa(246-c)=533/2.
+   The cross-channel correction itself is not asserted to be invariant.
+7. Comparison with W_3: sampled physical values and the large-c limit satisfy
+   delta_F2(W_4) > delta_F2(W_3) = (c+204)/(16c)
+
+NON-CERTIFIED BY THIS ENGINE
+============================
+
+This engine does not certify:
+    * a gravitational truncation as a full-OPE statement,
+    * an all-genus lift of the genus-2 scalar correction,
+    * a generic W_N extrapolation from the finite W_4 packet,
+    * the full ordered Maurer-Cartan datum Theta_A,
+    * a Koszul-dual identification of A^!, Z_ch^der(A), or Omega(B(A)).
 
 References:
     thm:theorem-d, op:multi-generator-universality,
@@ -137,6 +154,109 @@ def lambda_fp(g: int) -> Fraction:
 CHANNELS = ('T', 'W3', 'W4')
 WEIGHTS = {'T': 2, 'W3': 3, 'W4': 4}
 K4 = 246  # Koszul conductor for sl_4
+POSITIVE_DS_BRANCH = 1
+REAL_BRANCH_LOWER_BOUND = 0.5
+
+HOLOGRAPHIC_PACKAGE_ENTRIES = (
+    'A',
+    'A^i',
+    'A^!',
+    'C',
+    'r(z)',
+    'Theta_A',
+    'nabla^hol',
+)
+
+MODULAR_KOSZUL_COMPUTE_PACKAGE_PROJECTIONS = (
+    'Fact_X(L)',
+    'barB_X(L)',
+    'Theta_L',
+    'L_L',
+    '(V_br,T_br)',
+    'R4_mod(L)',
+)
+
+KERNEL_CONSTANTS = {
+    'affine_raw': 'k*Omega_tr/z',
+    'kz': 'Omega/((k+h^vee)z)',
+    'heisenberg': 'k/z',
+    'virasoro': '(c/2)/z^3 + 2T/z',
+}
+
+SCALAR_PROJECTION_CHANNELS_USED = (
+    'C_TTT',
+    'C_TW3W3',
+    'C_TW4W4',
+    'C_W3W3W4',
+    'C_W4W4W4',
+)
+
+SCALAR_PROJECTION_OMITS_FULL_MC_CHANNELS = (
+    'C_3,4;3;0,4',
+    'C_3,4;4;0,3',
+    'descendant/composite lambda-bracket terms',
+    'ordered convolution brackets in Theta_A',
+)
+
+NON_CERTIFIED_CLAIMS = (
+    'all-genus W4 free energy theorem',
+    'generic W_N delta_F2 formula',
+    'full ordered Maurer-Cartan datum',
+    'delta_F2 invariance under c -> 246-c',
+    'Koszul duality identification of Omega(B(A)), A^!, or Z_ch^der(A)',
+)
+
+FULL_OPE_SURFACE_SCOPE = {
+    'object': 'principal W_4 = W(sl_4,f_prin)',
+    'genus': 2,
+    'quantity': 'scalar cross-channel projection delta_F2',
+    'base_field': 'Q(c)',
+    'field_extension': 'Q(c,sqrt(g334^2),sqrt(g444^2))',
+    'branch_default': 'positive DS square-root branch',
+    'certified_locus': 'real c >= 1/2, away from displayed denominator poles',
+    'uses_full_mc_data': False,
+    'uses_generic_WN_extrapolation': False,
+}
+
+
+def certification_scope() -> Dict[str, Any]:
+    """Machine-readable scope and firewall diagnostics for this engine."""
+    return {
+        **FULL_OPE_SURFACE_SCOPE,
+        'scalar_projection_channels_used': SCALAR_PROJECTION_CHANNELS_USED,
+        'scalar_projection_omits_full_mc_channels': (
+            SCALAR_PROJECTION_OMITS_FULL_MC_CHANNELS
+        ),
+        'non_certified_claims': NON_CERTIFIED_CLAIMS,
+        'holographic_package_entries': HOLOGRAPHIC_PACKAGE_ENTRIES,
+        'modular_koszul_compute_package_projections': (
+            MODULAR_KOSZUL_COMPUTE_PACKAGE_PROJECTIONS
+        ),
+        'object_firewall': {
+            'Omega(B(A))=A': 'bar-cobar inversion, not Koszul duality',
+            'A^!': 'Verdier/continuous-linear dual branch under finite-type/completed hypotheses',
+            'Z_ch^der(A)': 'ChirHoch^*(A,A), the Hochschild bulk branch',
+        },
+        'kernel_constants': KERNEL_CONSTANTS,
+    }
+
+
+def _validate_sign(sign: int, name: str) -> int:
+    """Restrict square-root signs to the two algebraic branches."""
+    if sign not in (-1, 1):
+        raise ValueError(f"{name} must be +1 or -1, got {sign!r}")
+    return sign
+
+
+def _require_real_full_ope_domain(c: float) -> None:
+    """Require the real nonnegative square-root branch for this scalar surface."""
+    if not math.isfinite(c):
+        raise ValueError(f"central charge must be finite, got {c!r}")
+    if c < REAL_BRANCH_LOWER_BOUND:
+        raise ValueError(
+            "real W4 full-OPE scalar branch requires c >= 1/2; "
+            f"got c={c!r}"
+        )
 
 
 def kappa_channel(ch: str, c: float) -> float:
@@ -180,6 +300,41 @@ def g444_squared_float(c: float) -> float:
     """g444^2 as float."""
     return (112 * c**2 * (2*c - 1) * (3*c + 46)
             / ((c + 24) * (7*c + 68) * (10*c + 197) * (5*c + 3)))
+
+
+def signed_ope_couplings_float(c: float, sign334: int = 1,
+                               sign444: int = 1) -> Dict[str, float]:
+    """Signed square-root choices for the two OPE couplings.
+
+    The Hornfeck/Miura formulas certify g334^2 and g444^2. The scalar
+    correction lives in a quadratic field extension until a branch is chosen:
+
+        delta = R + sign334*I_1 + sign334*sign444*I_2.
+
+    This function exposes the branch instead of silently identifying the
+    square-root extension with the positive real numbers.
+    """
+    _require_real_full_ope_domain(c)
+    sign334 = _validate_sign(sign334, 'sign334')
+    sign444 = _validate_sign(sign444, 'sign444')
+    g334_abs = math.sqrt(g334_squared_float(c))
+    g444_abs = math.sqrt(g444_squared_float(c))
+    return {
+        'g334': sign334 * g334_abs,
+        'g444': sign444 * g444_abs,
+        'g334_sq': g334_abs * g334_abs,
+        'g444_sq': g444_abs * g444_abs,
+        'g334_g444': sign334 * sign444 * g334_abs * g444_abs,
+    }
+
+
+def w4_primary_branch_couplings_float(
+    c: float,
+    w4_branch: int = POSITIVE_DS_BRANCH,
+) -> Dict[str, float]:
+    """Couplings under the common W4 primary orientation W4 -> +/- W4."""
+    branch = _validate_sign(w4_branch, 'w4_branch')
+    return signed_ope_couplings_float(c, branch, branch)
 
 
 # ============================================================================
@@ -260,6 +415,7 @@ def irrational_part_1(c: float) -> float:
     From the 3c*g334 term in the master formula: 3c*g334/(192c) = g334/64.
     This is the lollipop graph's irrational contribution.
     """
+    _require_real_full_ope_domain(c)
     g334_sq = g334_squared_float(c)
     return math.sqrt(g334_sq) / 64
 
@@ -274,26 +430,58 @@ def irrational_part_2(c: float) -> float:
     From the 288*g334*g444 term: 288*g334*g444/(192c) = (3/2)*g334*g444/c.
     This combines contributions from the banana and barbell graphs.
     """
+    _require_real_full_ope_domain(c)
     g334_sq = g334_squared_float(c)
     g444_sq = g444_squared_float(c)
     return 1.5 * math.sqrt(g334_sq * g444_sq) / c
 
 
+def delta_F2_full_with_coupling_signs(c: float, sign334: int = 1,
+                                      sign444: int = 1) -> float:
+    r"""Scalar correction for explicit square-root signs.
+
+    The exact finite W_4 scalar surface is
+
+        R(c) + sign334*I_1(c) + sign334*sign444*I_2(c).
+
+    The positive DS branch is sign334=sign444=+1.
+    """
+    _require_real_full_ope_domain(c)
+    sign334 = _validate_sign(sign334, 'sign334')
+    sign444 = _validate_sign(sign444, 'sign444')
+    return (rational_part_float(c) + sign334 * irrational_part_1(c)
+            + sign334 * sign444 * irrational_part_2(c))
+
+
+def delta_F2_full_branch(c: float,
+                         w4_branch: int = POSITIVE_DS_BRANCH) -> float:
+    r"""Scalar correction under the common W4 primary orientation.
+
+    Changing W4 -> -W4 sends both g334 and g444 to their negatives. The
+    product term is invariant, while the lollipop g334 term changes sign.
+    """
+    branch = _validate_sign(w4_branch, 'w4_branch')
+    return delta_F2_full_with_coupling_signs(c, branch, branch)
+
+
 def delta_F2_full(c: float) -> float:
-    r"""The FULL cross-channel correction delta_F2(W_4, c).
+    r"""The positive-branch scalar cross-channel correction delta_F2(W_4, c).
 
     delta_F2^full = R(c) + I_1(c) + I_2(c)
 
-    Valid for c > 1/2 (unitarity bound for g444^2 > 0).
+    Valid on the real nonnegative branch for c >= 1/2. The endpoint c=1/2
+    has g444=0; below it the g444 square-root is not real.
     """
-    return rational_part_float(c) + irrational_part_1(c) + irrational_part_2(c)
+    return delta_F2_full_branch(c, POSITIVE_DS_BRANCH)
 
 
-def delta_F2_full_via_master(c: float) -> float:
-    """Compute delta_F2 via the master formula (independent path)."""
-    g334 = math.sqrt(g334_squared_float(c))
-    g444 = math.sqrt(g444_squared_float(c))
-    return _master_formula_float(c, g334, g444)
+def delta_F2_full_via_master(
+    c: float,
+    w4_branch: int = POSITIVE_DS_BRANCH,
+) -> float:
+    """Compute delta_F2 via the master formula for a W4 branch."""
+    couplings = w4_primary_branch_couplings_float(c, w4_branch)
+    return _master_formula_float(c, couplings['g334'], couplings['g444'])
 
 
 def higher_spin_correction(c: float) -> float:
@@ -331,10 +519,14 @@ def per_graph_mixed_symbolic() -> Dict[str, str]:
     }
 
 
-def per_graph_mixed_float(c: float) -> Dict[str, float]:
-    """Per-graph mixed amplitudes evaluated numerically."""
-    g334 = math.sqrt(g334_squared_float(c))
-    g444 = math.sqrt(g444_squared_float(c))
+def per_graph_mixed_float(
+    c: float,
+    w4_branch: int = POSITIVE_DS_BRANCH,
+) -> Dict[str, float]:
+    """Per-graph mixed amplitudes evaluated on a W4 primary branch."""
+    couplings = w4_primary_branch_couplings_float(c, w4_branch)
+    g334 = couplings['g334']
+    g444 = couplings['g444']
     return {
         'fig_eight':  0.0,
         'banana':     (3*g334*g444 + 52) / (4*c),
@@ -357,11 +549,14 @@ def per_graph_grav_only(c: float) -> Dict[str, float]:
     }
 
 
-def verify_per_graph_sum(c: float) -> Dict[str, Any]:
+def verify_per_graph_sum(
+    c: float,
+    w4_branch: int = POSITIVE_DS_BRANCH,
+) -> Dict[str, Any]:
     """Verify that per-graph contributions sum to the total."""
-    pg = per_graph_mixed_float(c)
+    pg = per_graph_mixed_float(c, w4_branch)
     graph_sum = sum(pg.values())
-    total = delta_F2_full(c)
+    total = delta_F2_full_branch(c, w4_branch)
     return {
         'per_graph': pg,
         'graph_sum': graph_sum,
@@ -395,22 +590,38 @@ def large_c_subleading() -> Dict[str, float]:
     r"""Large-c expansion: delta = A + B/c + O(1/c^2).
 
     Leading: A = (3*sqrt(10) + 28) / 192
-    Subleading: B = (162*10 + 288*sqrt(10)*4*sqrt(3)/5 + 8592) / 192
-              = (1620 + 1152*sqrt(30)/5 + 8592) / 192
-              = (10212 + 1152*sqrt(30)/5) / 192
+
+    The 1/c coefficient has three independent contributions:
+
+        R(c) = 7/48 + 851/(16c) + O(1/c^2)
+        I_1(c) = sqrt(10)/64 - 293*sqrt(10)/(840c) + O(1/c^2)
+        I_2(c) = 6*sqrt(30)/(5c) + O(1/c^2)
+
+    hence
+
+        B = 851/16 - 293*sqrt(10)/840 + 6*sqrt(30)/5.
     """
     A = (3*math.sqrt(10) + 28) / 192
-    B = (162*10 + 288*math.sqrt(10)*4*math.sqrt(3)/5 + 8592) / 192
-    return {'A': A, 'B': B}
+    B_rational = 851 / 16
+    B_I1 = -293 * math.sqrt(10) / 840
+    B_I2 = 6 * math.sqrt(30) / 5
+    return {
+        'A': A,
+        'B': B_rational + B_I1 + B_I2,
+        'B_rational': B_rational,
+        'B_I1': B_I1,
+        'B_I2': B_I2,
+    }
 
 
 # ============================================================================
-# Koszul duality: c <-> 246 - c
+# Complementarity bookkeeping: c <-> 246 - c
 # ============================================================================
 
-def koszul_dual_check(c: float) -> Dict[str, float]:
-    """Evaluate delta_F2 at c and at 246-c.
+def complementarity_check(c: float) -> Dict[str, float]:
+    """Evaluate complementarity data at c and at 246-c.
 
+    This is a kappa-complementarity check, not a delta_F2 invariance claim.
     At the self-dual point c=123, the function should be well-defined.
     kappa(c) + kappa(246-c) = 13*246/12 = 533/2.
     """
@@ -423,10 +634,20 @@ def koszul_dual_check(c: float) -> Dict[str, float]:
         'c_dual': K4 - c,
         'delta_at_c': d1,
         'delta_at_dual': d2,
+        'delta_difference': d1 - d2,
         'delta_sum': d1 + d2,
         'kappa_sum': kappa_total(c) + kappa_total(K4 - c),
         'kappa_sum_expected': 13*246/12,
     }
+
+
+def koszul_dual_check(c: float) -> Dict[str, float]:
+    """Compatibility alias for complementarity_check.
+
+    The returned data is not a Koszul-dual object identification. It records
+    only the conductor involution and the kappa sum.
+    """
+    return complementarity_check(c)
 
 
 # ============================================================================
@@ -568,13 +789,17 @@ def _graph_amplitude(graph_idx: int, sigma: Tuple[str, ...],
     return prop * vf
 
 
-def direct_graph_sum(c: float) -> Dict[str, Any]:
+def direct_graph_sum(
+    c: float,
+    w4_branch: int = POSITIVE_DS_BRANCH,
+) -> Dict[str, Any]:
     """Compute delta_F2 by direct enumeration over all graphs and channels.
 
     This is the independent verification path: no analytic formulas used.
     """
-    g334 = math.sqrt(g334_squared_float(c))
-    g444 = math.sqrt(g444_squared_float(c))
+    couplings = w4_primary_branch_couplings_float(c, w4_branch)
+    g334 = couplings['g334']
+    g444 = couplings['g444']
 
     total_mixed = 0.0
     per_graph = {}
@@ -600,6 +825,7 @@ def direct_graph_sum(c: float) -> Dict[str, Any]:
 
     return {
         'c': c,
+        'w4_branch': w4_branch,
         'delta_F2': total_mixed,
         'per_graph': per_graph,
         'g334': g334,
@@ -611,35 +837,40 @@ def direct_graph_sum(c: float) -> Dict[str, Any]:
 # Full evaluation with all diagnostics
 # ============================================================================
 
-def full_evaluation(c: float) -> Dict[str, Any]:
+def full_evaluation(
+    c: float,
+    w4_branch: int = POSITIVE_DS_BRANCH,
+) -> Dict[str, Any]:
     """Complete evaluation with all paths, decompositions, and comparisons."""
-    g334_sq = g334_squared_float(c)
-    g444_sq = g444_squared_float(c)
-    g334 = math.sqrt(g334_sq)
-    g444 = math.sqrt(g444_sq)
+    couplings = w4_primary_branch_couplings_float(c, w4_branch)
+    g334_sq = couplings['g334_sq']
+    g444_sq = couplings['g444_sq']
+    g334 = couplings['g334']
+    g444 = couplings['g444']
 
     R = rational_part_float(c)
     I1 = irrational_part_1(c)
     I2 = irrational_part_2(c)
-    full = R + I1 + I2
+    full = delta_F2_full_branch(c, w4_branch)
     grav = gravitational_part(c)
     hs_rat = rational_hs_part_float(c)
 
     # Independent verification paths
     master = _master_formula_float(c, g334, g444)
-    graph = direct_graph_sum(c)['delta_F2']
+    graph = direct_graph_sum(c, w4_branch)['delta_F2']
 
     kl = kappa_total(c) * float(lambda_fp(2))
 
     return {
         'c': c,
+        'w4_branch': w4_branch,
         'delta_F2_full': full,
         'R': R,
-        'I_1': I1,
+        'I_1': w4_branch * I1,
         'I_2': I2,
         'grav': grav,
         'hs_rational': hs_rat,
-        'hs_irrational': I1 + I2,
+        'hs_irrational': w4_branch * I1 + I2,
         'hs_total': full - grav,
         'master_formula': master,
         'graph_sum': graph,
@@ -654,6 +885,8 @@ def full_evaluation(c: float) -> Dict[str, Any]:
         'delta_ratio': full / kl if kl != 0 else None,
         'delta_W3': delta_F2_W3(c),
         'exceeds_W3': full > delta_F2_W3(c),
+        'certification_scope': FULL_OPE_SURFACE_SCOPE['quantity'],
+        'uses_full_mc_data': FULL_OPE_SURFACE_SCOPE['uses_full_mc_data'],
     }
 
 
@@ -661,7 +894,10 @@ def full_evaluation(c: float) -> Dict[str, Any]:
 # Numerical table
 # ============================================================================
 
-def numerical_table(c_values: Optional[List[float]] = None) -> List[Dict[str, Any]]:
+def numerical_table(
+    c_values: Optional[List[float]] = None,
+    w4_branch: int = POSITIVE_DS_BRANCH,
+) -> List[Dict[str, Any]]:
     """Evaluate delta_F2^full at a range of central charges."""
     if c_values is None:
         c_values = [1, 2, 4, 10, 26, 50, 100, 123, 200, 246]
@@ -669,14 +905,14 @@ def numerical_table(c_values: Optional[List[float]] = None) -> List[Dict[str, An
     for cv in c_values:
         if cv <= 0.5:
             continue
-        r = full_evaluation(cv)
+        r = full_evaluation(cv, w4_branch)
         results.append(r)
     return results
 
 
 if __name__ == '__main__':
     print("=" * 72)
-    print("Exact full-OPE delta_F2(W_4, c)")
+    print("Finite W_4 scalar full-OPE delta_F2(W_4, c)")
     print("=" * 72)
     print()
     print("FORMULA:")

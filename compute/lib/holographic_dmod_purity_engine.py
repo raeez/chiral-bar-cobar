@@ -16,8 +16,18 @@ This module develops the HOLOGRAPHIC INTERPRETATION:
   Bulk: 3d HT theory on X x R_+
 
 The holographic modular Koszul datum
-  H(T) = (A, A!, C, r(z), Theta_A, nabla^hol)
-(def:holographic-modular-koszul-datum) packages the full system.
+  H(T) = (A, A^i, A^!, C, r(z), Theta_A, nabla^hol)
+(def:holographic-modular-koszul-datum) is the seven-entry HT surface.
+This engine computes its D-module-purity/regularity projection, not the
+entire holographic package.
+
+Object discipline:
+  A             boundary chiral algebra
+  B(A)          bar coalgebra; Omega(B(A)) recovers A by bar-cobar inversion
+  A^i           H^*(B(A)), the bar-dual coalgebra
+  A^!           Verdier/linear Koszul branch, not Omega(B(A))
+  Z_ch^der(A)   chiral Hochschild/derived-centre bulk algebra
+  C             bulk/line channel of the holographic datum, not A, A^i, or A^!
 
 HOLOGRAPHIC DICTIONARY FOR D-MODULE PURITY
 ==========================================
@@ -116,6 +126,36 @@ from fractions import Fraction
 from typing import Dict, List, Optional, Tuple
 
 import numpy as np
+
+
+HOLOGRAPHIC_PACKAGE_ENTRIES: Tuple[str, ...] = (
+    'A',
+    'A^i',
+    'A^!',
+    'C',
+    'r(z)',
+    'Theta_A',
+    'nabla^hol',
+)
+
+HOLOGRAPHIC_PACKAGE_SURFACE = (
+    '(A, A^i, A^!, C, r(z), Theta_A, nabla^hol)'
+)
+
+PURITY_PROJECTION_SCOPE = (
+    'D-module-purity/regularity projection of the seven-entry '
+    'holographic package; not the full HT package and not the '
+    'six-projection modular Koszul compute package.'
+)
+
+OBJECT_SEPARATION = {
+    'A': 'boundary chiral algebra',
+    'B(A)': 'bar coalgebra; Omega(B(A)) recovers A by bar-cobar inversion',
+    'A^i': 'H^*(B(A)), the bar-dual coalgebra',
+    'A^!': 'Verdier/linear Koszul branch, distinct from A^i and Omega(B(A))',
+    'Z_ch^der(A)': 'chiral Hochschild/derived-centre bulk algebra',
+    'C': 'bulk/line channel of H(T), distinct from A, A^i, A^!, Z_ch^der(A)',
+}
 
 
 # =========================================================================
@@ -1467,8 +1507,15 @@ class HolographicPurityConjecture:
 
     CONJECTURE (holographic D-module purity):
     Let A be a chiral algebra on X satisfying the standing hypotheses
-    (H1)-(H4), and let H(T) = (A, A!, C, r(z), Theta_A, nabla^hol)
+    (H1)-(H4), and let
+    H(T) = (A, A^i, A^!, C, r(z), Theta_A, nabla^hol)
     be the associated holographic modular Koszul datum.
+
+    Here A^i = H^*(B(A)) is the bar-dual coalgebra and A^! is the
+    Verdier/linear Koszul branch.  Bar-cobar inversion
+    Omega(B(A)) ~= A is separate; it does not construct A^!.  The bulk
+    algebra Z_ch^der(A) and the package channel C are also distinct from
+    A, A^i, and A^!.
 
     Then the following are equivalent:
     (a) A is chirally Koszul (bar cohomology concentrated in degree 1).
@@ -1495,7 +1542,7 @@ class HolographicPurityConjecture:
       W-algebras, lattice VOAs) are D-module pure and bulk-regular.
     - All admissible-level simple quotients develop apparent singularities
       (FM misalignment) correlated with potential Koszulness failure.
-    - The CS/WZW case is a complete proof of the equivalence via the
+    - On the CS/WZW surface the converse implication is proved via the
       Hitchin connection.
     - No COUNTEREXAMPLE is known: no algebra that is D-module pure but
       not Koszul, nor one that is Koszul but not D-module pure.
@@ -1506,6 +1553,15 @@ class HolographicPurityConjecture:
         """Machine-readable conjecture statement."""
         return {
             'name': 'Holographic D-module purity conjecture',
+            'holographic_package': HOLOGRAPHIC_PACKAGE_SURFACE,
+            'holographic_package_entries': HOLOGRAPHIC_PACKAGE_ENTRIES,
+            'projection_scope': PURITY_PROJECTION_SCOPE,
+            'object_separation': OBJECT_SEPARATION,
+            'bar_cobar_scope': (
+                'Omega(B(A)) recovers A by inversion; A^i = H^*(B(A)); '
+                'A^! is obtained from A^i by Verdier/linear duality on the '
+                'finite-type or completed Koszul surface.'
+            ),
             'equivalences': ['(a) <=> (b) <=> (c) <=> (d)'],
             'proved_directions': [
                 '(a) => (b)',

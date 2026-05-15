@@ -6,6 +6,52 @@
 \providecommand{\Kosz}{\mathsf{Kosz}}
 \providecommand{\co}{\mathrm{co}}
 
+% Bicoloured primitive package macros, imported for cross-volume
+% coherence with Vol II (\texttt{chiral-bar-cobar-vol2:main.tex}).
+% The chiral algebra $\cA$ of this chapter is recovered as
+% $A_b = \mathrm{End}_{\openFactCat}(b)$ for a boundary chart $b$
+% (Vol II, Definition~\ref{def:bicoloured-primitive-package}).
+\providecommand{\openFactCat}{\cC^{\mathrm{open}}}
+\providecommand{\logCurve}{(X, D, \tau)}
+\providecommand{\kappaChHodge}{\kappa_{\mathrm{ch}}^{\mathrm{Hodge}}}
+\providecommand{\primPkgBicolour}{\bigl(\openFactCat|_{\logCurve},\, \cD^{\mathrm{cl}}|_{X};\, b,\, A_b,\, F^{\mathrm{cl}};\, \HalfBraid,\, \mathrm{tr}^{\mathrm{cl}}_{X};\, \TraceC\bigr)}
+\providecommand{\bulkChirHoch}[1]{\mathrm{HH}^\bullet_{\mathrm{ch}}\bigl(#1\bigr)}
+\providecommand{\HalfBraid}{\beta^{\mathrm{half}}}
+\providecommand{\TraceC}{\mathrm{tr}^{\mathrm{op}}_{\openFactCat}}
+
+\paragraph{Chart projection.}
+The chiral algebra $\cA$ of this chapter is throughout the endomorphism
+algebra
+$\cA \;=\; A_b \;=\; \mathrm{End}_{\openFactCat}(b)$
+of a boundary chart $b$ in the open factorisation dg-category
+$\openFactCat$ on the tangentially-decorated curve
+$\logCurve = (X, D, \tau)$, in the bicoloured primitive package of
+Vol~II
+\textup{(}\texttt{chiral-bar-cobar-vol2:chapters/theory/foundations.tex:def:bicoloured-primitive-package}\textup{)}.
+The
+bar-cobar inversion
+$\Omegach(\barBch(\cA))\xrightarrow{\sim}\cA$
+proved here is therefore an inversion \emph{at the level of the chart
+$b$}, not at the level of the operadic primitive
+$\primPkgBicolour$. On the universal stage chain
+$\mathsf{P}\xrightarrow{\alpha}\mathsf{C}\xrightarrow{\beta}
+ \mathsf{S}\xrightarrow{\gamma}\mathsf{Z}\xrightarrow{\delta}\mathsf{A}$
+the present chapter operates at level~$\mathsf{C}$ (chart):
+$\cA=A_b$ is the endomorphism object of one boundary vacuum,
+$\barBch(\cA)$ is its level-$\mathsf{S}$ shadow,
+and the level-$\mathsf{P}$ primitive $\primPkgBicolour$ together
+with the level-$\mathsf{Z}$ derived chiral centre
+$\bulkChirHoch{A_b}\simeq\Zderch{A_b}$ are the subject of Vol~II. The
+choice of $b$ is a chart (licensing type~$\alpha$); changing $b$
+produces Morita-equivalent endomorphism algebras whose bar complexes
+are quasi-isomorphic but whose ordered structure can shift. The
+inversion proved here is invariant under this choice, but the
+identification $\cA = A_b$ should be read as a projection from the
+bicoloured nine-tuple to its open-colour endomorphism object, in the
+sense of Beilinson--Drinfeld~\cite{BD04} and
+Lurie~\cite[\S5.5]{HA}; the homotopical machinery of the
+adjunction itself is that of Loday--Vallette~\cite{LV12}.
+
 The bar-cobar adjunction $\Omegach \dashv \barBch$ represents the
 space of twisting morphisms
 $\operatorname{Tw}(\cC, \cA) = \MC(\operatorname{Conv}(\cC, \cA))$
@@ -285,8 +331,15 @@ $\mu_0 \colon \mathbb{C} \to A$ is the \emph{curvature}.
 Setting $n = 1$ in~\eqref{eq:curved-ainfty-relations} gives
 $\mu_1^2 = [\mu_0, -]_{\mu_2}$, so $\mu_1$ is a differential
 only when $\mu_0$ is central with respect to~$\mu_2$.
-For $n \geq 2$ the relations coincide with those of an
-ordinary $A_\infty$~algebra.
+For $n \geq 2$ the curved relations do \emph{not} coincide with
+the ordinary $A_\infty$ relations unless $\mu_0=0$ or the
+curvature insertions vanish in the chosen model. The next relation
+already contains the terms
+$\mu_3(\mu_0,a,b)$, $\mu_3(a,\mu_0,b)$, and
+$\mu_3(a,b,\mu_0)$, with the Koszul signs of
+\eqref{eq:curved-ainfty-relations}. Thus centrality of~$\mu_0$
+kills only the binary commutator in $\mu_1^2$; it does not by
+itself uncurve the higher $A_\infty$ structure.
 \end{remark}
 
 \begin{remark}[Curvature, backreaction, and \texorpdfstring{$d^2$}{d\textasciicircum 2}]\label{rem:curvature-backreaction-terminology}
@@ -353,13 +406,17 @@ The curved $A_\infty$ relations $\sum_{r+s+t=n}(-1)^{rs+t}\mu_{r+1+t}(\mathrm{id
 \item $n=1$: $\mu_1^2(a) - \mu_2(\mu_0, a) + \mu_2(a, \mu_0) = 0$ for all $a$ \quad (failure of $\mu_1^2 = 0$).
 \end{itemize}
 
-Rearranging the $n=1$ relation: $\mu_1^2(a) = \mu_2(\mu_0, a) - \mu_2(a, \mu_0) = [\mu_0, a]_{\mu_2}$.
-
-The $n=2$ relation (Leibniz rule for $\mu_1$ acting on $\mu_2$) applied using $\mu_1(\mu_0) = 0$ from $n=0$ gives:
-\begin{equation}
-\mu_1(\mu_2(\mu_0, a)) = \mu_2(\mu_0, \mu_1(a))
-\end{equation}
-confirming that the inner derivation $[\mu_0, -]_{\mu_2}$ commutes with $\mu_1$, as required for the self-consistency of the curved structure.
+Rearranging the $n=1$ relation gives
+\[
+\mu_1^2(a)
+=\mu_2(\mu_0,a)-\mu_2(a,\mu_0)
+=[\mu_0,a]_{\mu_2}.
+\]
+No higher relation is needed for the two assertions of the theorem.
+The $n=2$ relation is a curved Leibniz identity with
+$\mu_0$-insertions in~$\mu_3$; after a curvature-killing MC twist, or
+on an associated model in which those insertions vanish, it reduces to
+the ordinary Leibniz rule.
 \end{proof}
 
 \subsection{I-adic completion: topology and convergence}
@@ -397,9 +454,8 @@ Completion $A \to \hat{A}$ is necessary when:
 For example, the Virasoro algebra and $W_\infty$ need completion,
 while Heisenberg and the finite-type Kac--Moody lanes do not.
 
-The key question is not \emph{whether} to complete, but \emph{how}: what
-structure on the filtration guarantees that the completed bar-cobar
-round-trip remains a quasi-isomorphism? The answer is the strong
+The key datum is the filtration structure that guarantees the completed
+bar-cobar round-trip remains a quasi-isomorphism. The answer is the strong
 filtration axiom
 $\mu_r(F^{i_1},\dots,F^{i_r}) \subset F^{i_1+\cdots+i_r}$
 (Definition~\ref{def:strong-completion-tower}), which ensures that the
@@ -411,35 +467,44 @@ $W_\infty$ is handled by the strong completion-tower theorem
 completion hypotheses.
 \end{theorem}
 
-\begin{proof}[Illustration: Virasoro (condition~(1))]
+\begin{proof}[Illustration: Virasoro finite windows]
 The Virasoro algebra has generators $\{L_n\}_{n \in \mathbb{Z}}$ with:
 \begin{equation}
 [L_m, L_n] = (m-n)L_{m+n} + \frac{c}{12}m(m^2-1)\delta_{m+n,0}
 \end{equation}
 
-Consider the bar complex element $\omega = L_{-2} \otimes L_2 \in \bar{B}^2(\text{Vir})$.
-Applying the bar differential involves the bracket:
+For a fixed bar word, the bracket is finite. For example,
+$\omega=L_{-2}\otimes L_2$ gives
 \begin{equation}
 d(\omega) = [L_{-2}, L_2] = -4L_0 - \tfrac{c}{2}.
 \end{equation}
-More generally, a bar element $L_m \otimes L_n$ with $m + n = 0$
-contributes central terms $\tfrac{c}{12}m(m^2 - 1)$; these
-accumulate as $|m| \to \infty$. Already at bar length~$3$, terms
-like $\sum_{k} L_{-k} \otimes L_k \otimes L_0$ involve
-infinitely many summands. This sum is \emph{infinite} and does
-not converge in the discrete topology. We need completion with
-respect to the conformal-weight filtration to make sense of it.
-
-In $\hat{\text{Vir}}$, the sum converges because the conformal-weight
-grading ensures that at any given total weight, only finitely many
-mode combinations contribute. Formally, the state space of
-$\mathrm{Vir}_c$ is graded by conformal weight with finite-dimensional
-weight spaces, so the completed bar differential is a well-defined
-continuous map in the inverse-limit topology.
+The completion issue is therefore not deconcatenation
+nonconilpotency of a finite word. It is the universal propagator and
+continuous duality surface. The compatible family
+\[
+\xi_N=\sum_{1\leq |k|\leq N}s^{-1}L_{-k}\otimes s^{-1}L_k
+\]
+has finite image in every conformal-weight quotient but no value in
+the discrete direct-sum bar complex. Its differential records the
+central coefficients
+$\tfrac{c}{12}k(k^2-1)$ and is again a compatible finite-window
+family. Thus the operations are finite on each weight window, while
+the inverse system itself lives in
+\[
+\widehat{\bar B}^{\mathrm{wt}}(\mathrm{Vir}_c)
+=\varprojlim_N\bar B(\mathrm{Vir}_{c,\leq N}),
+\]
+not in the raw direct sum. The conformal-weight completion is exactly
+the topology in which these compatible finite-window expressions,
+their curvature corrections, and the continuous Verdier dual are
+defined.
 \end{proof}
 
 \begin{remark}[Scope of the proof]\label{rem:completion-necessity-scope}
-The Virasoro example above establishes necessity for condition~(1).
+The Virasoro example above establishes necessity for retaining the
+finite-window inverse system behind condition~\textup{(1)}; it does
+not claim that the bar differential of a single finite Virasoro word is
+an infinite sum.
 Condition~(2) is demonstrated by the $\beta\gamma$-system: the
 raw direct-sum presentation has infinite-rank graded pieces, so the
 finite-type pro-conilpotent Positselski surface is not available
@@ -449,7 +514,7 @@ Chapter~\ref{ch:genus-expansions}).
 Condition~(3) is illustrated by affine $\widehat{\mathfrak{sl}}_2$ at non-integral level, where the Serre-type relations involve infinitely many generators (see~\S\ref{sec:three-theorems-sl2} in Chapter~\ref{ch:genus-expansions}).
 \end{remark}
 
-\begin{proposition}[Coacyclicity of curved bar complexes in the
+\begin{proposition}[Coacyclic-cone criterion for curved bar comparison in the
 second-kind ambient; \ClaimStatusConditional]
 \label{prop:curved-bar-acyclicity}
 \index{coacyclicity!curved bar complex}
@@ -459,14 +524,25 @@ coefficient $\kappa(\mathcal{A}) \neq 0$. Suppose the genus-$g$ bar
 data have been placed in an explicitly defined complete curved
 CDG-coalgebra/factorization model whose curvature is
 $h=m_0^{(g)}$ and whose coderived category is formed by Positselski's
-second-kind totalizations. At genus $g \geq 1$, the curved bar object
-$\bar{B}^{(g)}(\mathcal{A})$ is then
-\emph{coacyclic} in Positselski's coderived sense: its totalization
-lies in the thick subcategory generated by curved short-exact
-totalizations and closed under the direct sums admitted by the
-weight-completed ambient. No claim is made here that the underlying
-ordinary cochain complex is contractible after forgetting curvature
-and filtration.
+second-kind totalizations. Assume, in addition, that the finite-window
+bar-cobar comparison maps
+\[
+\epsilon_N\colon \Omega(C_N)\longrightarrow \mathcal{A}_{\leq N}
+\]
+have cones in the finite-stage coacyclic subcategories and that the
+cone tower is strict Mittag--Leffler in the sense of
+Definition~\ref{def:strict-ml-completed-chiral-coalgebra}. Then the
+completed cone of
+\[
+\widehat\epsilon\colon
+\widehat\Omega(\widehat C)\longrightarrow \widehat{\mathcal A}
+\]
+is coacyclic in the completed second-kind coderived category.
+The assertion is about the comparison cone. Nonzero curvature alone
+does not imply that the underlying curved bar object
+$\bar{B}^{(g)}(\mathcal{A})$ is zero in the coderived category, and it
+does not imply ordinary contractibility after forgetting curvature and
+filtration.
 \end{proposition}
 
 \begin{proof}
@@ -480,26 +556,39 @@ commutator $[m_0,-]_{m_2}$; that commutator may vanish. The curvature
 acts through the second-kind CDG totalization and the completed
 factorization structure.
 
-The standard Positselski argument~\cite[Remark~3.6]{Positselski11}
-is a second-kind statement: for a curved CDG-coalgebra
-$(C,d,h)$ with nonzero curvature, the relevant bar totalization is
-coacyclic in the coderived localization once the curved
-CDG-coalgebra and its exact second-kind ambient are fixed. Under the
-hypothesis of the proposition
-$C=\bar{B}^{(g)}(\mathcal{A})$ and $h=m_0^{(g)}\neq 0$. Thus the
-bar object becomes zero in the coacyclic quotient while the
-coderived comodule category over it remains the correct homotopy
-theory. This is precisely the reason ordinary cohomological
-invariants are not the right higher-genus invariant.
+Positselski's second-kind formalism~\cite[\S\S3--4]{Positselski11}
+defines weak equivalences by coacyclic cones inside the exact
+category of curved comodules. By hypothesis each finite window cone
+\[
+K_N:=\operatorname{Cone}(\epsilon_N)
+\]
+belongs to the finite-stage coacyclic subcategory. The transition maps
+are strict and the cone tower is Mittag--Leffler, so products,
+finite-stage totalizations, and the admitted direct sums used to
+generate coacyclic objects commute with the inverse limit. Therefore
+\[
+\widehat K:=\varprojlim_N K_N
+=\operatorname{Cone}(\widehat\epsilon)
+\]
+lies in the completed coacyclic subcategory. This proves the curved
+bar-cobar comparison in the coderived ambient.
+
+The proof deliberately uses the cone tower. A scalar class
+$\mcurv{g}=\kappa(\mathcal A)\lambda_g$ may be nonzero without being
+invertible and without giving a contracting homotopy for the bar
+object itself. Thus the theorem supplies the strongest true
+comparison available in this ambient: coacyclicity of the comparison
+cone under explicit finite-window and completion hypotheses.
 \end{proof}
 
 \begin{remark}[Necessity of exotic derived categories at higher genus]
 \label{rem:positselski-acyclicity}
 At genus $g \geq 1$ with $\kappa \neq 0$, coacyclicity of
-$\bar{B}^{(g)}(\mathcal{A})$ removes ordinary cohomological
-information from the bar object itself. The correct framework for
-the associated comodule homological algebra is Positselski's
-coderived category
+$\operatorname{Cone}(\widehat\epsilon)$ is a statement about the
+bar-cobar comparison map, not about the disappearance of the bar object
+itself. The raw curved bar coalgebra is still the object over which the
+associated comodule homological algebra is formed. The correct
+framework for that algebra is Positselski's coderived category
 $D^{\mathrm{co}}(\bar{B}^{(g)}\text{-}\mathrm{CoMod})$~\cite[\S\S3--4]{Positselski11},
 which is why Theorem~\ref{thm:positselski-chiral} requires the
 coderived/contraderived setting.
@@ -539,7 +628,8 @@ D^{\mathrm{co}}(C\text{-}\mathrm{comod}^{\mathrm{ch}})
 D(C\text{-}\mathrm{comod}^{\mathrm{ch}}).
 \]
 The coderived category reduces to the ordinary derived category.
-This is the regime of Theorem~B (bar-cobar inversion on the Koszul locus).
+This is the finite strict-ML regime of Theorem~B; the displayed
+bar-cobar inversion is the counit face of Theorem~A on the Koszul locus.
 
 \smallskip\noindent
 \emph{Genus $g \geq 1$ with $\kappa(\cA) \neq 0$
@@ -624,7 +714,7 @@ contributions at each weight:
 &\vdots
 \end{align}
 
-The full structure requires the complete filtered cooperad, not just a curved one.
+The full structure requires the complete filtered cooperad.
 \end{example}
 
 \begin{theorem}[When filtered reduces to curved; \ClaimStatusProvedHere]
@@ -995,7 +1085,7 @@ analytic (convergence of the inverse system) together with the choice
 of square-zero versus coderived ambient, and it admits a clean
 algebraic resolution once the correct filtration axiom is identified.
 
-\begin{example}[\texorpdfstring{$W_\infty$}{W-infinity}: MC4 completion (proved)]
+\begin{example}[\texorpdfstring{$W_\infty$}{W-infinity}: MC4 completion criterion]
 \label{ex:winfty-completion-frontier}
 
 The tower $W_\infty = \varprojlim_N W_N$ is the archetype of the
@@ -1003,19 +1093,24 @@ programmatic regime: each finite stage~$W_N$ is principal finite
 type with proved bar-cobar quasi-isomorphism, but infinitely many
 generators prevent a direct application of the finite-stage
 theorem. The strong completion-tower theorem
-(Theorem~\ref{thm:completed-bar-cobar-strong}) resolves this:
+(Theorem~\ref{thm:completed-bar-cobar-strong}) resolves this for
+models satisfying the strong filtration axiom:
 the strong filtration axiom
 $\mu_r(F^{i_1},\dots,F^{i_r}) \subset F^{i_1+\cdots+i_r}$
 makes the inverse-limit differential continuous and the
 Mittag--Leffler condition automatic, so the completed bar-cobar
 round-trip is a quasi-isomorphism in the square-zero total model and
 a coacyclic-cone equivalence in the curved CDG ambient.
+For the standard spin-truncation tower, which need not satisfy this
+strong axiom on the algebra itself, the replacement input is the
+bar-level weight-cutoff criterion of
+Proposition~\ref{prop:mc4-weight-cutoff}.
 
 The H-level comparison requires:
 \begin{enumerate}
 \item identify the separated complete H-level/factorization target whose finite quotients recover $W_N$;
 \item verify the exact residue identities of Proposition~\ref{prop:winfty-ds-residue-identity-criterion};
-\item close finite detection on $\mathcal{I}_N$, after which Corollary~\ref{cor:winfty-hlevel-comparison-criterion} makes the comparison formal.
+\item prove finite detection on $\mathcal{I}_N$, after which Corollary~\ref{cor:winfty-hlevel-comparison-criterion} makes the comparison formal.
 \end{enumerate}
 \end{example}
 
@@ -1033,13 +1128,13 @@ $\widehat\tau \in
 \MC\bigl(\widehat{\operatorname{Conv}}(\widehat{\bar B}^{\mathrm{ch}}(\cA),
 \cA)\bigr)$
 in the completed convolution algebra?}
-The answer is that a single axiom on the filtration (that
+For a strong completion tower, a single axiom on the filtration (that
 the $A_\infty$~operations respect the additive weight) makes
 the MC equation $\partial(\widehat\tau) + \widehat\tau \star
 \widehat\tau = 0$ converge in the inverse limit. Each component
 of this equation involves only finitely many terms
-(Lemma~\ref{lem:degree-cutoff}), so the passage to the completion
-is automatic.
+(Lemma~\ref{lem:degree-cutoff}); the passage to the completion is then
+quotientwise finite.
 
 \begin{definition}[Strong completion tower]
 \label{def:strong-completion-tower}
@@ -1112,7 +1207,7 @@ coacyclicity hypotheses are satisfied. Then:
  := \varprojlim_N \bar B^{\mathrm{ch}}(\cA_{\le N})$
  exists as a separated complete pronilpotent curved dg chiral
  coalgebra with continuous differential.
- It is the codomain of the completed twisting morphism
+ It is the domain of the completed twisting morphism
  $\widehat\tau\colon \widehat{\bar B}^{\mathrm{ch}}(\cA) \to \cA$.
  At each stage,
  $\widehat{\bar B}^{\mathrm{ch}}(\cA)/F^{N+1}
@@ -1145,17 +1240,17 @@ coacyclicity hypotheses are satisfied. Then:
 \item \emph{Dual acyclicity in the square-zero total model.}
  If $C = \varprojlim_N C_{\le N}$ is a separated complete
  pronilpotent curved dg chiral coalgebra with every finite
- quotient in the theorematic regime, then the completed unit
+ quotient in the proved finite-stage regime, then the completed unit
  $\widehat\eta \colon C \to
  \widehat{\bar B}^{\mathrm{ch}}\bigl(
  \widehat\Omega^{\mathrm{ch}}(C)\bigr)$
  is a quasi-isomorphism when the completed total differential squares
  to zero; in a curved CDG ambient the corresponding assertion is that
  its cone is coacyclic in the specified second-kind category.
-\item \emph{Completed Koszul duality.}
+\item \emph{Completed bar-cobar inversion.}
  In the square-zero total model, completed bar and completed cobar
  are quasi-inverse equivalences on the full subcategory of strong
- completion towers whose finite quotients lie in the theorematic
+ completion towers whose finite quotients lie in the proved finite-stage
  regime. In the genuinely curved CDG ambient, the same sentence means
  that the completed algebra-side counit and coalgebra-side unit have
  coacyclic cones in the specified second-kind coderived category; it
@@ -1166,10 +1261,15 @@ coacyclicity hypotheses are satisfied. Then:
  $\widehat{\operatorname{Conv}} :=
  \varprojlim_N \operatorname{Conv}(\bar B^{\mathrm{ch}}
  (\cA_{\le N}), \cA_{\le N})$,
- and this MC element represents the Koszul duality
+ and this MC element represents the completed bar-cobar
  equivalence by twisting representability
  \textup{(}Theorem~\textup{%
  \ref{thm:completed-twisting-representability})}.
+ The Verdier/Koszul-dual algebra $\cA^!$ is obtained separately
+ from $\mathbb{D}_{\Ran}\widehat{\bar B}^{\mathrm{ch}}(\cA)$ under
+ the finite-type/perfectness hypotheses of
+ Theorem~\ref{thm:reconstruction-vs-duality}; it is not the object
+ recovered by $\widehat\Omega\widehat{\bar B}$.
 \end{enumerate}
 \emph{This resolves the MC4 completion problem for strong completion
 towers. When the strong-filtration axiom holds, the degree cutoff
@@ -1189,7 +1289,7 @@ reduction principle
 
 \begin{proof}
 \emph{Step~1: the completed coalgebra
- \textup{(}codomain of $\widehat\tau$\textup{)}.}
+ \textup{(}domain of $\widehat\tau$\textup{)}.}
 Each quotient map $p_N\colon \cA_{\le N+1} \twoheadrightarrow
 \cA_{\le N}$ induces a morphism of finite-stage bar coalgebras
 $q_N\colon \bar B^{\mathrm{ch}}(\cA_{\le N+1}) \to
@@ -1672,9 +1772,10 @@ Proposition~\ref{prop:mc4-weight-cutoff} applies.
 Proposition~\ref{prop:mc4-weight-cutoff} and
 Corollary~\ref{cor:winfty-weight-cutoff} show that positive towers
 (those carrying a strict positive weight grading preserved by the bar
-differential) are \emph{unconditionally solved}:
+differential) are settled under those hypotheses:
 the weight-$w$ summand stabilizes at finite stage~$w$.
-This resolves the ``MC4$^+$'' sub-problem for
+This resolves the ``MC4$^+$'' sub-problem, in the positive-tower
+ambient, for
 $\mathcal{W}_{1+\infty}$, affine Yangians, and positive RTT towers.
 
 The residual ``MC4$^0$'' sub-problem concerns algebras with
@@ -1682,7 +1783,7 @@ weight-zero resonance: a finite-dimensional piece $R_\cA$ on which
 higher operations can preserve filtration degree~$0$
 (Definition~\ref{def:resonance-rank}). The resonance rank
 $\rho(\cA) := \dim H^*(R_\cA, m_1^{R_\cA})$ classifies the
-completion difficulty: $\rho = 0$ (positive, solved),
+completion difficulty: $\rho = 0$ (positive weight cutoff),
 $0 < \rho < \infty$ (finite resonance, tractable via
 Theorem~\ref{thm:resonance-filtered-bar-cobar}), or
 $\rho = \infty$ (wild).
@@ -1905,11 +2006,11 @@ quotients by the exact residue identities
 $\mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(N)
 =\mathsf{C}^{\mathrm{DS}}_{s,t;u;m,n}(N)$,
 discharged on the finite-detection packet $\mathcal{I}_N$, whose first
-live higher-spin stages are already reduced on the theorem surface to
+live higher-spin stages are reduced in this chapter to
 the stage-$3$ fifteen-coefficient packet and the exact stage-$4$
 six-entry identity packet on~$\mathcal{I}_4$, organized as three local
 OPE blocks and splitting into four higher-spin channels together with
-two theorematic principal Virasoro-target values
+two proved principal Virasoro-target values
 $\mathsf{C}^{\mathrm{DS}}_{4,4;2;0,6}=2$ and
 $\mathsf{C}^{\mathrm{DS}}_{3,4;2;0,5}=0$, with the corresponding
 residue-side contraction supplied only under the normalized two-point
@@ -2024,6 +2125,59 @@ Dually, define $\Cstr$ to be the class of separated complete pronilpotent
 curved dg chiral coalgebras $C = \varprojlim_N C_{\le N}$ such that each
 $C_{\le N}$ lies in the finite-stage essential image.
 \end{definition}
+
+\begin{proposition}[Essential image of the completed bar functor;
+\ClaimStatusConditional]
+\label{prop:completion-closure-essential-image}
+\index{bar functor!completed essential image}
+A separated complete pronilpotent curved dg chiral coalgebra
+$C=\varprojlim_N C_{\le N}$ lies in the essential image of
+$\widehat{\bar B}^{\mathrm{ch}}\colon\CompCl(\Fft)\to\Cstr$ in the
+localized square-zero/coderived sense if and only if the following
+finite-window conditions hold.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Each quotient $C_{\le N}$ lies in the finite-stage essential
+ image: there is $\cA_{\le N}\in\Fft$ and a finite-stage weak
+ equivalence
+ $C_{\le N}\simeq \bar B^{\mathrm{ch}}(\cA_{\le N})$.
+\item The algebras $\{\cA_{\le N}\}_N$ and the coalgebras
+ $\{C_{\le N}\}_N$ form compatible strict inverse systems with
+ surjective transition maps, continuous curvature, coproduct,
+ differential, and twisting morphisms.
+\item The cone towers of the finite-stage units and counits are
+ Mittag--Leffler and are respectively acyclic in the square-zero total
+ model or coacyclic in the curved second-kind model.
+\end{enumerate}
+Under these hypotheses
+$\cA:=\varprojlim_N\cA_{\le N}$ belongs to $\CompCl(\Fft)$ and
+$C\simeq\widehat{\bar B}^{\mathrm{ch}}(\cA)$ after localization.
+No object enters the essential image merely because its underlying
+graded coalgebra is complete or conilpotent; the finite-stage
+twisting morphisms and the ML cone control are part of the datum.
+\end{proposition}
+
+\begin{proof}
+If $C\simeq\widehat{\bar B}^{\mathrm{ch}}(\cA)$ for
+$\cA\in\CompCl(\Fft)$, quotienting by $F^{N+1}$ gives the finite-stage
+bar coalgebras
+$C_{\le N}\simeq\bar B^{\mathrm{ch}}(\cA_{\le N})$, and
+Theorem~\ref{thm:completed-bar-cobar-strong} gives the compatible
+unit, counit, and cone conditions.
+
+Conversely, assume \textup{(i)--(iii)}. The strict inverse system
+$\{\cA_{\le N}\}_N$ defines an object
+$\cA=\varprojlim_N\cA_{\le N}$ of $\CompCl(\Fft)$, and the compatible
+finite-stage equivalences assemble to a map
+\[
+C\longrightarrow \widehat{\bar B}^{\mathrm{ch}}(\cA).
+\]
+The cone of this map is the inverse limit of the finite-stage cones.
+The Mittag--Leffler hypothesis kills the Milnor
+$\varprojlim^1$ term in the square-zero total model; in the curved
+CDG model the same strict cone tower lies in the completed coacyclic
+subcategory by Proposition~\ref{prop:curved-bar-acyclicity}. Hence the
+assembled map is an equivalence in the chosen localization.
+\end{proof}
 
 \begin{corollary}[Homotopy-categorical equivalence on the completion
 closure; \ClaimStatusConditional]
@@ -2203,12 +2357,10 @@ quotientwise.
 Theorem~\ref{thm:completed-bar-cobar-strong} together with the
 coefficient-stability criterion
 (Theorem~\ref{thm:coefficient-stability-criterion}) and the uniform PBW
-bridge (Theorem~\ref{thm:uniform-pbw-bridge}) give the correct
-theorematic envelope for MC4. What was previously four abstract
-requirements (continuity, pro-nilpotence, Mittag--Leffler control, and
-inverse-limit identification) is now absorbed into a single structural
-axiom (strong completion tower) from which all formal properties follow
-automatically.
+bridge (Theorem~\ref{thm:uniform-pbw-bridge}) give the finite-window
+envelope for MC4. Continuity, pro-nilpotence, Mittag--Leffler control,
+and inverse-limit identification are consequences of the strong
+completion-tower axiom.
 
 The genuine example-specific residue for $\mathcal{W}_\infty$ and
 Yangian towers is now reduced to: \emph{verify coefficient stabilization
@@ -2223,18 +2375,15 @@ resonance rank is shown to be finite.
 
 %% End completion closure theory
 
-\begin{proposition}[Factorization realization package for
+\begin{proposition}[Factorization realization criterion for
 \texorpdfstring{$W_\infty$}{W_infty}; \ClaimStatusConditional]
 \label{prop:winfty-factorization-package}
-There exists a principal-stage compatible $W_\infty$ target
-$\mathcal{W}^{\mathrm{fact}}_\infty$ in the sense of
-Definition~\ref{def:winfty-principal-stage-compatible}, arising from a
-factorization-theoretic or physical completion of the principal
-$W$-tower. Equivalently:
+Let $\mathcal{W}^{\mathrm{fact}}_\infty$ be a
+factorization-theoretic completion of the principal $W$-tower. Suppose:
 \begin{enumerate}
 \item $\mathcal{W}^{\mathrm{fact}}_\infty$ carries a separated complete
  conformal-weight filtration;
-\item its finite quotients recover the theorematic principal finite-type
+\item its finite quotients recover the proved principal finite-type
  stages $W_N$;
 \item the induced bar-cobar data on those quotients agree with the
  standard finite-stage bar complexes; and
@@ -2245,8 +2394,11 @@ $W$-tower. Equivalently:
  identifies the factorization-theoretic completion with the standard
  principal-stage completed M-level package.
 \end{enumerate}
-The construction is Theorem~\ref{thm:winfty-factorization-kd}: the factorization
-target is constructed via $\Einf$-sectorwise convergence at each
+then $\mathcal{W}^{\mathrm{fact}}_\infty$ is a principal-stage
+compatible $W_\infty$ target in the sense of
+Definition~\ref{def:winfty-principal-stage-compatible}. The existence
+input is Theorem~\ref{thm:winfty-factorization-kd}: the factorization
+target is constructed there via $\Einf$-sectorwise convergence at each
 finite stage, with the DS--KD intertwining
 (Theorem~\ref{thm:ds-koszul-intertwine}) providing the
 finite-stage identifications and the Mittag--Leffler property
@@ -2305,7 +2457,7 @@ Corollary~\ref{cor:winfty-hlevel-comparison-criterion} apply.
 
 In particular, the remaining $\mathcal{W}_\infty$ construction problem
 is to prove that the higher-spin generators above stage $N$ define
-stable factorization ideals whose quotients recover the theorematic
+stable factorization ideals whose quotients recover the proved
 principal stages.
 \end{proposition}
 
@@ -2513,7 +2665,7 @@ and
 & \qquad (3,3,3,1),(3,3,3,2),(3,3,3,3)\}.
 \end{align*}
 In particular, the first genuinely new infinite-generator stage beyond
-the theorematic Virasoro block is the stage-$3$ packet of fifteen
+the proved Virasoro block is the stage-$3$ packet of fifteen
 primary coefficients: the two Virasoro coefficients, the single
 vanishing $W^{(2)}W^{(2)}\to W^{(3)}$ coefficient, five mixed
 $W^{(2)}$/$W^{(3)}$ coefficients, and seven $W^{(3)}$ self-coupling
@@ -2625,9 +2777,9 @@ and remove the odd self-OPE top-pole entries by setting
 \mid 2s-u \text{ odd}\bigr\}.
 \]
 Then, once the stage-$N$ packet identities on $\mathcal{I}_N$ are
-known, the stage-$(N+1)$ comparison closes as soon as the identities on
+known, the stage-$(N+1)$ comparison is equivalent to the identities on
 the reduced incremental packet
-$\mathcal{J}_{N+1}^{\mathrm{red}}$ are proved.
+$\mathcal{J}_{N+1}^{\mathrm{red}}$.
 
 For $N=3$, one has
 \[
@@ -2866,7 +3018,7 @@ sentence is then exactly the translation-propagation statement of
 Proposition~\ref{prop:winfty-ds-generator-seed}.
 \end{proof}
 
-\begin{proposition}[Stage-\texorpdfstring{$4$}{4} residual packet after the theorematic
+\begin{proposition}[Stage-\texorpdfstring{$4$}{4} residual packet after the proved
 \texorpdfstring{$W_3$}{W3} sector]
 \label{prop:winfty-ds-stage4-residual-packet}
 Fix $N=4$ and let $\mathcal{I}_4$ be the primary seed set of
@@ -3016,7 +3168,7 @@ six coefficients in the three top-pole OPE blocks
 W^{(3)}(z)W^{(3)}(w)
 &\sim
 \frac{c_{334}\,W^{(4)}(w)}{(z-w)^2}
-\quad\text{mod the theorematic $W_3$ sector and descendants},\\
+\quad\text{mod the proved $W_3$ sector and descendants},\\
 W^{(3)}(z)W^{(4)}(w)
 &\sim
 \frac{c_{342}\,W^{(2)}(w)}{(z-w)^5}
@@ -3029,7 +3181,7 @@ W^{(4)}(z)W^{(4)}(w)
 \frac{c_{442}\,W^{(2)}(w)}{(z-w)^6}
 +\frac{c_{444}\,W^{(4)}(w)}{(z-w)^4}\\
 &\qquad
-\quad\text{mod the theorematic Virasoro sector and descendants}.
+\quad\text{mod the proved Virasoro sector and descendants}.
 \end{align*}
 More precisely,
 \[
@@ -3246,7 +3398,7 @@ Consequently, the stage-$4$ mixed comparison problem reduces to:
  $\mathsf{C}_{3,4;4;0,3}$.
 \end{enumerate}
 Equivalently, the principal mixed stage-$4$ data consist of one
-theorematically zero $W^{(2)}$ target channel together with a
+proved-zero $W^{(2)}$ target channel together with a
 swap-even / swap-odd pair targeting $W^{(3)}$ and $W^{(4)}$.
 \end{corollary}
 
@@ -3380,7 +3532,7 @@ normalization.
 Apply Proposition~\ref{prop:winfty-ds-self-t-coefficient} with $s=4$.
 \end{proof}
 
-\begin{corollary}[Stage-\texorpdfstring{$4$}{4} principal target packet after theorematic
+\begin{corollary}[Stage-\texorpdfstring{$4$}{4} principal target packet after proved
 Virasoro-target elimination; \ClaimStatusConditional]
 \label{cor:winfty-ds-stage4-five-plus-zero}
 Assume the hypotheses of
@@ -3400,11 +3552,11 @@ residual principal stage-$4$ target packet decomposes as:
  \[
  \mathsf{C}_{3,4;4;0,3};
  \]
-\item the theorematic principal Virasoro-target value
+\item the proved principal Virasoro-target value
  \[
  \mathsf{C}^{\mathrm{DS}}_{4,4;2;0,6}=2;
  \]
-\item the theorematic principal Virasoro-target value
+\item the proved principal Virasoro-target value
  \[
  \mathsf{C}^{\mathrm{DS}}_{3,4;2;0,5}=0.
  \]
@@ -3416,7 +3568,7 @@ c_{334},\qquad c_{444},\qquad
 \mathsf{C}_{3,4;3;0,4},\qquad \mathsf{C}_{3,4;4;0,3},
 \]
 together with two Virasoro-target channels whose principal values are
-theorematically fixed to
+fixed by the preceding propositions:
 \[
 \mathsf{C}^{\mathrm{DS}}_{4,4;2;0,6}=2,
 \qquad
@@ -3452,10 +3604,10 @@ Corollary~\ref{cor:winfty-ds-stage4-five-plus-zero} apply. Then:
  \mathsf{C}^{\mathrm{res}}_{s,t;u;0,n}(N)
  =\mathsf{C}^{\mathrm{DS}}_{s,t;u;0,n}(N);
  \]
-\item at stage~$3$, that packet is already theorematically fixed by the
+\item at stage~$3$, that packet is already fixed by the
  explicit $W_3$ OPE: three nonzero primary coefficients and twelve
  forced vanishing statements;
-\item at stage~$4$, after removing the theorematic Virasoro and
+\item at stage~$4$, after removing the proved Virasoro and
  $W_3$ sectors, the first genuinely open higher-spin packet is exactly
  the exact six-entry identity packet on~$\mathcal{I}_4$
  \[
@@ -3498,8 +3650,8 @@ displayed six-entry identity form on~$\mathcal{I}_4$.
 \label{cor:winfty-stage4-closure-criterion}
 Under the hypotheses of
 Proposition~\ref{prop:winfty-mc4-frontier-package}, the standard
-\texorpdfstring{$W_\infty$}{W_infty} H-level comparison closes once the
-stagewise packet identities on~$\mathcal{I}_N$ are proved. The first
+\texorpdfstring{$W_\infty$}{W_infty} H-level comparison is reduced to
+the stagewise packet identities on~$\mathcal{I}_N$. The first
 genuinely open higher-spin packet is the exact six-entry stage-$4$
 identity packet on~$\mathcal{I}_4$. Within that packet, the residual
 higher-spin channels still to be matched are
@@ -3587,7 +3739,8 @@ Proposition~\ref{prop:winfty-mc4-frontier-package}. Assume further
 that $\mathcal{W}^{\mathrm{ht}}$ is stage-$4$ Ward-normalized in the
 sense of Definition~\ref{def:winfty-stage4-ward-normalized}. Then the
 two
-Virasoro-target residue channels are theorematically fixed:
+Virasoro-target residue channels are fixed by the Ward-normalized
+package:
 \[
 \mathsf{C}^{\mathrm{res}}_{3,4;2;0,5}(4)=0,
 \qquad
@@ -3689,11 +3842,11 @@ Mixed-weight orthogonality is forced by the Virasoro Ward
 identity
 (Proposition~\ref{prop:winfty-stage4-visible-orthogonality}). The
 full six-entry block of
-Proposition~\ref{prop:winfty-mc4-frontier-package} is closed by
-$\mathcal{W}_N$ rigidity
-(Theorem~\ref{thm:winfty-all-stages-rigidity-closure}) within the
-strong completion-tower framework
-(Theorem~\ref{thm:completed-bar-cobar-strong}).
+Proposition~\ref{prop:winfty-mc4-frontier-package} is reduced by the
+principal-stage identification input of
+Theorem~\ref{thm:winfty-all-stages-rigidity-closure}, inside the
+strong completion-tower framework of
+Theorem~\ref{thm:completed-bar-cobar-strong}.
 The reduction path is:
 Proposition~\ref{prop:winfty-stage4-visible-pairing-gap}, once the
 visible Virasoro Ward action is fixed, has exact remaining input
@@ -3737,7 +3890,7 @@ so $C_{s,t}=0$ whenever $s\neq t$.
 \end{proof}
 
 \begin{proposition}[Stage-\texorpdfstring{$4$}{4} visible
-\texorpdfstring{$W^{(3)}$}{W3} normalization from the theorematic
+\texorpdfstring{$W^{(3)}$}{W3} normalization from the proved
 \texorpdfstring{$W_3$}{W3} packet; \ClaimStatusConditional]
 \label{prop:winfty-stage4-visible-w3-normalization}
 Assume the hypotheses of
@@ -3750,17 +3903,23 @@ Virasoro Ward identity. Then the visible stage-$4$ coefficient
 \[
 \mathsf{C}^{\mathrm{res}}_{3,3;2;0,4}(4)=2
 \]
-is already theorematic, and hence
+is already fixed by the stage-$3$ packet, and hence
 \[
 \langle W^{(3)}(z)W^{(3)}(0)\rangle=\frac{c/3}{z^{6}}.
 \]
 \end{proposition}
 
 \begin{proof}
-The tuple $(3,3,2,4)\in\mathcal{I}_4^{W_3}$ is fixed by the theorematic stage-$3$ packet (Proposition~\ref{prop:winfty-ds-stage3-explicit-packet}): $\mathsf{C}^{\mathrm{res}}_{3,3;2;0,4}(4)=2$. Proposition~\ref{prop:winfty-formal-self-normalization-from-t} with $s=3$ then gives the displayed normalization.
+The tuple $(3,3,2,4)\in\mathcal{I}_4^{W_3}$ is fixed by the
+proved stage-$3$ packet
+(Proposition~\ref{prop:winfty-ds-stage3-explicit-packet}):
+$\mathsf{C}^{\mathrm{res}}_{3,3;2;0,4}(4)=2$.
+Proposition~\ref{prop:winfty-formal-self-normalization-from-t} with
+$s=3$ then gives the displayed normalization.
 \end{proof}
 
-\begin{proposition}[Stage-\texorpdfstring{$4$}{4} visible weight-\texorpdfstring{$4$}{4} normalization (Resolved)]
+\begin{proposition}[Stage-\texorpdfstring{$4$}{4} visible
+weight-\texorpdfstring{$4$}{4} normalization criterion]
 \label{prop:winfty-stage4-visible-diagonal-normalization}
 \ClaimStatusConditional{}
 Let $\mathcal{W}^{\mathrm{fact}}_\infty$ be a principal-stage
@@ -3775,6 +3934,10 @@ $\mathcal{F}_{\le 4}$ be its stage-$4$ quotient. Assume:
 \item the Virasoro field $T:=W^{(2)}$ acts on these visible generators
  by the standard stage-$4$ Virasoro Ward identity, including on
  itself.
+\item the stage-$4$ quotient is identified, with the chosen
+ strong-generator signs and two-point normalization, with the
+ principal Drinfeld--Sokolov $W_4$ stage of
+ Proposition~\ref{prop:w4-ds-ope-explicit}.
 \end{enumerate}
 Then the remaining visible self-pairing is normalized by
 \[
@@ -3787,16 +3950,19 @@ Drinfeld--Sokolov stage. Equivalently,
 \]
 \end{proposition}
 
-\begin{proof}[Resolution]
-Same argument as
-Proposition~\ref{prop:winfty-stage4-ward-inheritance}: the hypotheses
-give a $\mathcal{W}_4$ vertex algebra, whose two-point
-normalizations are fixed by $c$ via Zamolodchikov--Fateev--Lukyanov
-rigidity.
+\begin{proof}
+The added principal-stage identification supplies the normalized
+Drinfeld--Sokolov two-point function
+$\langle W^{(4)}(z)W^{(4)}(0)\rangle=(c/4)z^{-8}$. Then
+Proposition~\ref{prop:winfty-formal-self-t-coefficient} with $s=4$
+gives
+$\mathsf{C}^{\mathrm{res}}_{4,4;2;0,6}(4)=2$. Conversely,
+Proposition~\ref{prop:winfty-formal-self-normalization-from-t} with
+$s=4$ recovers the displayed two-point normalization from that scalar.
 \end{proof}
 
-\begin{proposition}[Automatic stage-\texorpdfstring{$4$}{4} Ward normalization from the
-visible Virasoro package (Resolved)]
+\begin{proposition}[Stage-\texorpdfstring{$4$}{4} Ward normalization
+criterion from the visible Virasoro package]
 \label{prop:winfty-stage4-ward-inheritance}
 \ClaimStatusConditional{}
 Let $\mathcal{W}^{\mathrm{fact}}_\infty$ be a principal-stage
@@ -3811,6 +3977,10 @@ $\mathcal{F}_{\le 4}$ be its stage-$4$ quotient. Assume:
 \item the Virasoro field $T:=W^{(2)}$ acts on these visible generators
  by the standard stage-$4$ Virasoro Ward identity, including on
  itself;
+\item the visible weight-$4$ self-pairing normalization of
+ Proposition~\ref{prop:winfty-stage4-visible-diagonal-normalization}
+ holds, equivalently
+ $\mathsf{C}^{\mathrm{res}}_{4,4;2;0,6}(4)=2$.
 \end{enumerate}
 Then the induced H-level target is stage-$4$ Ward-normalized in the
 sense of Definition~\ref{def:winfty-stage4-ward-normalized}. Consequently
@@ -3827,21 +3997,13 @@ higher-spin channels
 \]
 \end{proposition}
 
-\begin{proof}[Resolution]
-By Proposition~\ref{prop:winfty-stage4-visible-pairing-gap}, the
-open content is the single scalar identity
-$\mathsf{C}^{\mathrm{res}}_{4,4;2;0,6}(4)=2$, equivalently the
-weight-$4$ self-pairing normalization. The hypotheses give a vertex
-algebra with three Virasoro-primary generators of spins $2,3,4$. By
-Zamolodchikov--Fateev--Lukyanov rigidity, the $\mathcal{W}_4$ vertex
-algebra is uniquely determined by its central charge~$c$; in
-particular, the two-point normalizations are fixed by the conformal
-spin and the value of~$c$ alone. The Drinfeld--Sokolov computation
-(Proposition~\ref{prop:w4-ds-ope-explicit}, $121$~tests) gives the
-standard $\mathcal{W}_4$ two-point function
-$\langle W^{(4)}(z)W^{(4)}(0)\rangle = (c/4)/z^{8}$, so the
-self-pairing normalization holds and the six-entry block contracts
-to the four higher-spin channels.
+\begin{proof}
+Definition~\ref{def:winfty-stage4-ward-normalized} is exactly the
+visible Virasoro Ward package together with the weight-$4$ self-pairing
+normalization. The last hypothesis supplies that normalization, so the
+target is stage-$4$ Ward-normalized. The contraction from the six-entry
+packet to the four higher-spin channels is then precisely
+Corollary~\ref{cor:winfty-stage4-residue-four-channel}.
 \end{proof}
 
 \begin{corollary}[Equivalent exact forms of the remaining
@@ -4066,13 +4228,16 @@ and
 as on the principal side.
 \end{remark}
 
-\begin{proposition}[Stage-\texorpdfstring{$4$}{4} visible top-pole Borcherds transport (Resolved)]
+\begin{proposition}[Stage-\texorpdfstring{$4$}{4} visible top-pole
+Borcherds transport criterion]
 \label{prop:winfty-stage4-visible-borcherds-transport}
 \ClaimStatusConditional{}
 Assume the hypotheses of
-Proposition~\ref{prop:winfty-stage4-residue-pairing-reduction}. Then
-the visible stage-$4$ quotient residue calculus satisfies the transport
-square identity
+Proposition~\ref{prop:winfty-stage4-residue-pairing-reduction}. Assume,
+in addition, that the visible stage-$4$ quotient is identified with the
+principal Drinfeld--Sokolov $W_4$ stage, with the same central charge
+and chosen strong-generator signs. Then the visible stage-$4$ quotient
+residue calculus satisfies the transport square identity
 \[
 \bigl(\mathsf{C}^{\mathrm{res}}_{3,4;4;0,3}(4)\bigr)^2
 =
@@ -4084,27 +4249,19 @@ the swap-odd \(W^{(4)}\)-transport square is forced by the
 \((3,3)\)-square.
 \end{proposition}
 
-\begin{proof}[Resolution]
+\begin{proof}
 The principal Drinfeld--Sokolov computation
 (Proposition~\ref{prop:w4-ds-ope-explicit},
 Computation~\ref{comp:w4-ds-ope-extraction}, $121$~tests) gives all
 stage-$4$ OPE coefficients as explicit rational functions of~$c$;
 the inter-coefficient relation
-$\mathsf{C}_{3,4;4;0,3}^{\,2} = \tfrac{5}{7}\,c_{334}^{\,2}$
-is an algebraic consequence of the DS structure
-(Corollary~\ref{cor:w4-ds-stage4-square-class-reduction}).
-The $\mathcal{W}_4$ vertex algebra is uniquely determined by~$c$
-for generic~$c$ (Zamolodchikov--Fateev--Lukyanov rigidity):
-the Borcherds commutativity constrains all OPE structure constants as
-rational functions of~$c$, and the system has a unique solution.
-The visible quotient residue calculus at stage~$4$, under the
-hypotheses of
-Proposition~\ref{prop:winfty-stage4-residue-pairing-reduction}, produces
-a vertex algebra satisfying the $\mathcal{W}_4$ OPE axioms. By
-uniqueness this algebra is the standard $\mathcal{W}_4$ algebra,
-and the transport relation follows from the DS computation.
-Verified computationally ($18$~tests,
-\texttt{test\_w4\_borcherds\_transport.py}).
+$\mathsf{C}_{3,4;4;0,3}^{\,2} = \tfrac{5}{7}c_{334}^{\,2}$
+as an algebraic consequence of the DS structure
+(Corollary~\ref{cor:w4-ds-stage4-square-class-reduction}). The added
+identification hypothesis transports this DS identity to the visible
+residue calculus. Without that identification, the visible Ward and
+pairing package leaves the transport identity as the proof obligation
+isolated in Remark~\ref{rem:winfty-stage4-primitive-transport-gap}.
 \end{proof}
 
 \begin{corollary}[Equivalent exact forms of the remaining stage-\texorpdfstring{$4$}{4}
@@ -4184,7 +4341,7 @@ transport problem.
 \end{proposition}
 
 \begin{proof}
-\textup{(i)}: Corollary~\ref{cor:winfty-stage4-single-scalar-equivalent}. \textup{(ii)}: Corollary~\ref{cor:winfty-stage4-primitive-transport-square-triple} reduces to the primitive-plus-transport triple; Corollary~\ref{cor:winfty-stage4-visible-borcherds-two-primitive} closes it.
+\textup{(i)}: Corollary~\ref{cor:winfty-stage4-single-scalar-equivalent}. \textup{(ii)}: Corollary~\ref{cor:winfty-stage4-primitive-transport-square-triple} reduces to the primitive-plus-transport triple; Corollary~\ref{cor:winfty-stage4-visible-borcherds-two-primitive} records the equivalent two-primitive form.
 \end{proof}
 
 \begin{remark}[Stage-4 Ward inheritance from \texorpdfstring{$\mathcal W_4$}{W4} rigidity]
@@ -4196,16 +4353,16 @@ Ward inheritance
 (Proposition~\ref{prop:winfty-stage4-ward-inheritance}), and
 Borcherds transport
 (Proposition~\ref{prop:winfty-stage4-visible-borcherds-transport})) follow
-from $\mathcal{W}_4$ rigidity
-(Zamolodchikov--Fateev--Lukyanov): the visible quotient at stage~$4$
-is the $\mathcal{W}_4$ vertex algebra, uniquely determined by the
-central charge, so all OPE coefficients match the
-Drinfeld--Sokolov target. The stage-$4$ comparison thus reduces
-unconditionally to two primitive square classes
-(Corollary~\ref{cor:winfty-stage4-visible-borcherds-two-primitive}).
-Promotion through $\mathcal{I}_N$ for $N \geq 5$ follows from
-$\mathcal{W}_N$ rigidity at each stage
-(Theorem~\ref{thm:winfty-all-stages-rigidity-closure}).
+from $\mathcal{W}_4$ rigidity only after the visible stage-$4$ quotient
+has been identified with the principal Drinfeld--Sokolov $W_4$ stage,
+with central charge and strong-generator signs fixed. The unconditional
+bar-side output remains the six-entry packet of
+Proposition~\ref{prop:winfty-mc4-frontier-package}; the reduction to
+the two primitive square classes of
+Corollary~\ref{cor:winfty-stage4-visible-borcherds-two-primitive}
+requires that principal-stage identification. For $N\geq5$ the same
+point is the explicit proof obligation in
+Theorem~\ref{thm:winfty-all-stages-rigidity-closure}.
 \end{remark}
 
 \begin{proposition}[Uniform Virasoro-target contraction of reduced
@@ -4230,7 +4387,7 @@ $\mathcal{J}_{N+1}^{\mathrm{red}}$ are exactly
 (N{+}1,N{+}1;2;0,2N)
 \bigr\}.
 \]
-Their residue values are theorematically fixed by
+Their residue values are fixed by
 \[
 \mathsf{C}^{\mathrm{res}}_{s,N+1;2;0,s+N-1}(N+1)=0
 \qquad (3\le s\le N),
@@ -4274,7 +4431,7 @@ $W^{(2)},W^{(3)},W^{(4)},W^{(5)}$ satisfies the hypotheses of
 Propositions~\ref{prop:winfty-formal-mixed-virasoro-zero}
 and~\ref{prop:winfty-formal-self-t-coefficient}. Then the three
 Virasoro-target channels in $\mathcal{J}_5^{\mathrm{red}}$ are
-theorematically fixed:
+fixed:
 \[
 \mathsf{C}^{\mathrm{res}}_{3,5;2;0,6}(5)=0,
 \qquad
@@ -4399,7 +4556,7 @@ for targets $5,4,3$ respectively.
 \end{remark}
 
 \begin{proposition}[Stage-\texorpdfstring{$5$}{5} visible
-\texorpdfstring{$W^{(5)}$}{W5} normalization from the theorematic
+\texorpdfstring{$W^{(5)}$}{W5} normalization from the proved
 \texorpdfstring{$W^{(5)}$-$W^{(5)}\to T$}{W5-W5 to T} coefficient;
 \ClaimStatusConditional]
 \label{prop:winfty-stage5-visible-w5-normalization}
@@ -4414,7 +4571,7 @@ coefficient
 \[
 \mathsf{C}^{\mathrm{res}}_{5,5;2;0,8}(5)=2
 \]
-is already theorematic, and hence
+is already fixed by the stated hypotheses, and hence
 \[
 \langle W^{(5)}(z)W^{(5)}(0)\rangle=\frac{c/5}{z^{10}}.
 \]
@@ -4429,7 +4586,7 @@ vanishes on a visible \texorpdfstring{$W^{(5)}$}{W5}-pairing locus;
 \ClaimStatusConditional]
 \label{prop:winfty-stage5-target5-pole3-pairing-vanishing}
 Assume the hypotheses of
-Proposition~\ref{rem:winfty-stage5-target5-transport-singletons}.
+Remark~\ref{rem:winfty-stage5-target5-transport-singletons}.
 Assume further that the visible stage-$5$ quotient residue calculus
 carries a bilinear pairing \((-, -)_{\mathrm{vis}}\) on the span of
 \(W^{(2)},W^{(3)},W^{(4)},W^{(5)}\) such that:
@@ -4468,7 +4625,7 @@ from the self-return singleton on a visible
 \texorpdfstring{$W^{(5)}$}{W5}-pairing locus; \ClaimStatusConditional]
 \label{prop:winfty-stage5-target5-pole4-from-self-return}
 Assume the hypotheses of
-Proposition~\ref{rem:winfty-stage5-target5-transport-singletons} and
+Remark~\ref{rem:winfty-stage5-target5-transport-singletons} and
 Proposition~\ref{prop:winfty-stage5-target5-pole3-pairing-vanishing}.
 Then
 \[
@@ -4488,7 +4645,7 @@ vanishes on a visible \texorpdfstring{$W^{(4)}$}{W4}-pairing locus;
 \ClaimStatusConditional]
 \label{prop:winfty-stage5-target5-pole4-w4-vanishing}
 Assume the hypotheses of
-Proposition~\ref{rem:winfty-stage5-target5-transport-singletons}.
+Remark~\ref{rem:winfty-stage5-target5-transport-singletons}.
 Assume further that the visible stage-$5$ quotient residue calculus
 carries a bilinear pairing \((-, -)_{\mathrm{vis}}\) on the span of
 \(W^{(2)},W^{(3)},W^{(4)},W^{(5)}\) such that:
@@ -4543,7 +4700,7 @@ Proposition~\ref{prop:winfty-stage5-target5-pole4-from-self-return}.
 \texorpdfstring{$W^{(3)}$}{W3}-pairing locus; \ClaimStatusConditional]
 \label{prop:winfty-stage5-tail-from-w3-pairing}
 Under the hypotheses of
-Proposition~\ref{rem:winfty-stage5-tail-mechanism}, assume further
+Remark~\ref{rem:winfty-stage5-tail-mechanism}, assume further
 the visible stage-$5$ pairing package of
 Proposition~\ref{prop:winfty-stage5-target5-pole3-pairing-vanishing}
 with the $W^{(3)}$ invariant-pairing identity
@@ -4566,7 +4723,7 @@ Apply the $W^{(3)}$ invariant-pairing identity with \(n=1\), \(a=W^{(4)}\), \(b=
 \texorpdfstring{$W^{(4)}$}{W4}-pairing locus; \ClaimStatusConditional]
 \label{prop:winfty-stage5-tail-from-w4-pairing}
 Under the hypotheses of
-Proposition~\ref{rem:winfty-stage5-tail-mechanism}, assume the visible stage-$5$ pairing package of
+Remark~\ref{rem:winfty-stage5-tail-mechanism}, assume the visible stage-$5$ pairing package of
 Proposition~\ref{prop:winfty-stage5-target5-pole3-pairing-vanishing}
 with the $W^{(4)}$ invariant-pairing identity
 $\bigl(W^{(4)}_{(n)}a,b\bigr)_{\mathrm{vis}}
@@ -4750,7 +4907,7 @@ $A_5 = \mathsf{C}^{\mathrm{res}}_{3,5;4;0,4}(5)$.
 higher-spin packet]
 \label{prop:winfty-stage5-local-reduction-order}
 Assume the hypotheses of
-Corollary~\ref{rem:winfty-stage5-entry-transport}. Then the first
+Remark~\ref{rem:winfty-stage5-entry-transport}. Then the first
 stage-$5$ higher-spin problem separates into the following exact local
 order:
 \begin{enumerate}[label=\textup{(\roman*)}]
@@ -4806,20 +4963,20 @@ higher-spin channel either zero or determined by it.
 
 \begin{proof}
 Parts \textup{(i)}--\textup{(iii)} follow from the packet decompositions already established:
-Corollary~\ref{rem:winfty-stage5-entry-transport} for the entry/transport split,
-Corollary~\ref{rem:winfty-stage5-target5-corridor} for the target-$5$ corridor,
-and Proposition~\ref{rem:winfty-stage5-transport-pole-profiles} for the transport ladder ordering.
+Remark~\ref{rem:winfty-stage5-entry-transport} for the entry/transport split,
+Remark~\ref{rem:winfty-stage5-target5-corridor} for the target-$5$ corridor,
+and Remark~\ref{rem:winfty-stage5-transport-pole-profiles} for the transport ladder ordering.
 The visible-pairing refinement combines
 Propositions~\ref{prop:winfty-stage5-target5-pole3-pairing-vanishing}--\ref{prop:winfty-stage5-transport-cross-target-reduction}
 with Corollary~\ref{cor:winfty-stage5-effective-independent-frontier}.
 \end{proof}
 
-\begin{proposition}[Principal stage-\texorpdfstring{$5$}{5} target-\texorpdfstring{$5$}{5} corridor carries no
-new independent coefficient on the full visible pairing locus (Resolved)]
+\begin{proposition}[Principal stage-\texorpdfstring{$5$}{5}
+target-\texorpdfstring{$5$}{5} corridor normal form]
 \label{prop:winfty-stage5-principal-target5-no-new-independent-data}
 \ClaimStatusConditional{}
-Assume the hypotheses of
-Corollary~\ref{cor:winfty-stage5-effective-independent-frontier}. Then
+The principal stage-$5$ target-$5$ corridor carries no new independent
+coefficient precisely when the following identity package holds:
 \[
 \mathsf{C}^{\mathrm{DS}}_{3,4;5;0,2}(5)
 =
@@ -4839,12 +4996,11 @@ independent coefficient beyond the neighboring target-$4$/target-$3$
 channels.
 \end{proposition}
 
-\begin{proposition}[Principal stage-\texorpdfstring{$5$}{5} target-\texorpdfstring{$5$}{5} transport channels
-vanish on the full visible pairing locus (Resolved)]
+\begin{proposition}[Principal stage-\texorpdfstring{$5$}{5}
+target-\texorpdfstring{$5$}{5} transport normal form]
 \label{prop:winfty-stage5-principal-target5-transport-vanishing}
 \ClaimStatusConditional{}
-Assume the hypotheses of
-Corollary~\ref{cor:winfty-stage5-effective-independent-frontier}. Then
+The target-$5$ transport part of the principal stage-$5$ normal form is
 \[
 \mathsf{C}^{\mathrm{DS}}_{3,5;5;0,3}(5)=0,
 \qquad
@@ -4856,12 +5012,11 @@ pairing locus the principal target-$5$ corridor contracts to the tail
 singleton.
 \end{proposition}
 
-\begin{proposition}[Principal stage-\texorpdfstring{$5$}{5} tail singleton is tied to the
-neighboring target-\texorpdfstring{$4$}{4}/target-\texorpdfstring{$3$}{3} channels on the full visible pairing locus (Resolved)]
+\begin{proposition}[Principal stage-\texorpdfstring{$5$}{5} tail
+singleton cross-target normal form]
 \label{prop:winfty-stage5-principal-tail-cross-target-reduction}
 \ClaimStatusConditional{}
-Assume the hypotheses of
-Corollary~\ref{cor:winfty-stage5-effective-independent-frontier}. Then
+The tail-cross-target part of the principal stage-$5$ normal form is
 \[
 \mathsf{C}^{\mathrm{DS}}_{3,4;5;0,2}(5)
 =
@@ -4884,15 +5039,14 @@ Proposition~\ref{prop:winfty-stage5-principal-tail-cross-target-reduction}
 hold: the two transport vanishings together with the tail cross-target relation account for all five identities.
 \end{remark}
 
-\begin{proposition}[Principal residual stage-\texorpdfstring{$5$}{5} front carries one
-effective independent coefficient on the full visible pairing locus (Resolved)]
+\begin{proposition}[Principal residual stage-\texorpdfstring{$5$}{5}
+front normal form]
 \label{prop:winfty-stage5-principal-residual-front-one-coefficient}%
 \label{prop:winfty-stage5-principal-residual-front-vanishings}%
 \label{prop:winfty-stage5-principal-residual-cross-target-reduction}%
 \label{prop:winfty-stage5-principal-residual-front-factorization}%
 \ClaimStatusConditional{}
-Assume the hypotheses of
-Corollary~\ref{cor:winfty-stage5-effective-independent-frontier}. Then
+The residual-front part of the principal stage-$5$ normal form is
 \[
 \mathsf{C}^{\mathrm{DS}}_{5,5;4;0,6}(5)=0,
 \qquad
@@ -4915,14 +5069,12 @@ forms the \emph{residual cross-target reduction component};
 the full statement holds if and only if both components hold.
 \end{proposition}
 
-\begin{proposition}[Principal stage-\texorpdfstring{$5$}{5} one-coefficient normal form on the
-full visible pairing locus (Resolved)]
+\begin{proposition}[Principal stage-\texorpdfstring{$5$}{5}
+one-coefficient normal-form package]
 \label{prop:winfty-stage5-principal-one-coefficient-normal-form}
 \ClaimStatusConditional{}
-Assume the hypotheses of
-Corollary~\ref{cor:winfty-stage5-effective-independent-frontier}. Then
-the principal stage-$5$ target packet satisfies the same one-coefficient
-normal form:
+The principal stage-$5$ target packet satisfies the one-coefficient
+normal form exactly when the following package of identities holds:
 \[
 \mathsf{C}^{\mathrm{DS}}_{3,4;5;0,2}(5)
 =
@@ -4951,6 +5103,8 @@ singleton \((3,5;4;0,4)\). Equivalently again, this is the conjunction
 of
 Propositions~\ref{prop:winfty-stage5-principal-target5-no-new-independent-data}
 and~\ref{prop:winfty-stage5-principal-residual-front-one-coefficient}.
+This package is a principal-side input; it is not supplied by the
+residue-side visible-pairing reductions alone.
 \end{proposition}
 
 \begin{proposition}[Principal stage-\texorpdfstring{$5$}{5} one-coefficient normal form
@@ -4969,7 +5123,7 @@ and only if both of the following structural conditions hold:
 \end{proposition}
 
 \begin{proof}
-Combine Propositions~\ref{rem:winfty-stage5-principal-target5-factorization} and~\ref{prop:winfty-stage5-principal-residual-front-factorization}; together they account for all seven identities in the normal form.
+Combine Remark~\ref{rem:winfty-stage5-principal-target5-factorization} and Proposition~\ref{prop:winfty-stage5-principal-residual-front-factorization}; together they account for all seven identities in the normal form.
 \end{proof}
 
 \begin{proposition}[Stage-\texorpdfstring{$5$}{5} higher-spin comparison reduces to one
@@ -5005,8 +5159,8 @@ Proposition~\ref{prop:winfty-stage5-one-coefficient-reduction}. Then
 \]
 Equivalently, on the full visible
 \texorpdfstring{$W^{(3)}$}{W3}/\texorpdfstring{$W^{(4)}$}{W4}/\texorpdfstring{$W^{(5)}$}{W5}
-pairing locus the stage-$5$ higher-spin problem closes once the
-target-$4$ singleton \((3,5;4;0,4)\) is matched.
+pairing locus the stage-$5$ higher-spin problem is reduced to the
+target-$4$ singleton \((3,5;4;0,4)\).
 \end{proposition}
 
 \begin{corollary}[Exact remaining stage-\texorpdfstring{$5$}{5} visible-pairing input
@@ -5015,7 +5169,7 @@ package; \ClaimStatusConditional]
 Assume the hypotheses of
 Corollary~\ref{cor:winfty-stage5-effective-independent-frontier}. Then
 the full stage-$5$ higher-spin comparison on \(\mathcal{J}_5^{\mathrm{hs}}\)
-closes on the full visible pairing locus if and only if the following
+holds on the full visible pairing locus if and only if the following
 two inputs both hold:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item the packaged principal stage-$5$ one-coefficient normal form
@@ -5116,7 +5270,7 @@ Subtract the residue-side one-coefficient normal form from the principal-side no
 \label{prop:winfty-stage5-entry-identities}
 \ClaimStatusConditional{}
 Assume the hypotheses of
-Corollary~\ref{rem:winfty-stage5-entry-transport}. Then
+Remark~\ref{rem:winfty-stage5-entry-transport}. Then
 \[
 \mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(5)
 =
@@ -5128,14 +5282,14 @@ identities
 Propositions~\ref{prop:winfty-stage5-block-34}
 and~\ref{prop:winfty-stage5-block-55}
 both hold, in the reduction order dictated by
-Proposition~\ref{rem:winfty-stage5-entry-mixed-self}.
+Remark~\ref{rem:winfty-stage5-entry-mixed-self}.
 \end{proposition}
 
 \begin{proposition}[Stage-\texorpdfstring{$5$}{5} mixed transport identities]
 \label{prop:winfty-stage5-transport-identities}
 \ClaimStatusConditional{}
 Assume the hypotheses of
-Corollary~\ref{rem:winfty-stage5-entry-transport}. Then
+Remark~\ref{rem:winfty-stage5-entry-transport}. Then
 \[
 \mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(5)
 =
@@ -5147,7 +5301,7 @@ ladder identities
 Propositions~\ref{prop:winfty-stage5-transport-target-3}
 --\ref{prop:winfty-stage5-transport-target-5}
 all hold. By
-Proposition~\ref{rem:winfty-stage5-transport-pole-profiles}, the
+Remark~\ref{rem:winfty-stage5-transport-pole-profiles}, the
 natural local reduction order is target~$5$, then target~$4$, then
 target~$3$.
 \end{proposition}
@@ -5156,7 +5310,7 @@ target~$3$.
 \label{prop:winfty-stage5-transport-target-3}
 \ClaimStatusProvedElsewhere{}
 Assume the hypotheses of
-Corollary~\ref{rem:winfty-stage5-entry-transport}. Then
+Remark~\ref{rem:winfty-stage5-entry-transport}. Then
 \[
 \mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(5)
 =
@@ -5164,14 +5318,14 @@ Corollary~\ref{rem:winfty-stage5-entry-transport}. Then
 \]
 for every channel $(s,t;u;m,n)$ in the two-channel ladder
 $\mathcal{J}_5^{\mathrm{tr},3}$ of
-Proposition~\ref{rem:winfty-stage5-transport-target-ladders}.
+Remark~\ref{rem:winfty-stage5-transport-target-ladders}.
 \end{proposition}
 
 \begin{proposition}[Stage-\texorpdfstring{$5$}{5} transport target-\texorpdfstring{$4$}{4} ladder identities]
 \label{prop:winfty-stage5-transport-target-4}
 \ClaimStatusProvedElsewhere{}
 Assume the hypotheses of
-Corollary~\ref{rem:winfty-stage5-entry-transport}. Then
+Remark~\ref{rem:winfty-stage5-entry-transport}. Then
 \[
 \mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(5)
 =
@@ -5179,14 +5333,14 @@ Corollary~\ref{rem:winfty-stage5-entry-transport}. Then
 \]
 for every channel $(s,t;u;m,n)$ in the two-channel ladder
 $\mathcal{J}_5^{\mathrm{tr},4}$ of
-Proposition~\ref{rem:winfty-stage5-transport-target-ladders}.
+Remark~\ref{rem:winfty-stage5-transport-target-ladders}.
 \end{proposition}
 
 \begin{proposition}[Stage-\texorpdfstring{$5$}{5} transport target-\texorpdfstring{$5$}{5} ladder identities]
 \label{prop:winfty-stage5-transport-target-5}
 \ClaimStatusConditional{}
 Assume the hypotheses of
-Corollary~\ref{rem:winfty-stage5-entry-transport}. Then
+Remark~\ref{rem:winfty-stage5-entry-transport}. Then
 \[
 \mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(5)
 =
@@ -5194,20 +5348,20 @@ Corollary~\ref{rem:winfty-stage5-entry-transport}. Then
 \]
 for every channel $(s,t;u;m,n)$ in the two-channel ladder
 $\mathcal{J}_5^{\mathrm{tr},5}$ of
-Proposition~\ref{rem:winfty-stage5-transport-target-ladders}. Together
+Remark~\ref{rem:winfty-stage5-transport-target-ladders}. Together
 with Proposition~\ref{prop:winfty-stage5-block-34}, this matches every
 channel in the target-$5$ corridor of
-Corollary~\ref{rem:winfty-stage5-target5-corridor}; after the singleton
-tail input of Proposition~\ref{rem:winfty-stage5-reduced-tail-singleton}
+Remark~\ref{rem:winfty-stage5-target5-corridor}; after the singleton
+tail input of Remark~\ref{rem:winfty-stage5-reduced-tail-singleton}
 is matched, this is exactly the residual continuation identified in
-Corollary~\ref{rem:winfty-stage5-target5-residual} and the mixed
+Remark~\ref{rem:winfty-stage5-target5-residual} and the mixed
 transport mechanism identified in
-Proposition~\ref{rem:winfty-stage5-target5-transport-mechanism}.
+Remark~\ref{rem:winfty-stage5-target5-transport-mechanism}.
 Equivalently, the two singleton transport identities
 Propositions~\ref{prop:winfty-stage5-transport-target5-35}
 and~\ref{prop:winfty-stage5-transport-target5-45}
 both hold, in the pole order dictated by
-Proposition~\ref{rem:winfty-stage5-target5-transport-singletons}.
+Remark~\ref{rem:winfty-stage5-target5-transport-singletons}.
 \end{proposition}
 
 \begin{proposition}[Stage-\texorpdfstring{$5$}{5} target-\texorpdfstring{$5$}{5} transport singleton from
@@ -5215,14 +5369,14 @@ Proposition~\ref{rem:winfty-stage5-target5-transport-singletons}.
 \label{prop:winfty-stage5-transport-target5-35}
 \ClaimStatusProvedElsewhere{}
 Assume the hypotheses of
-Corollary~\ref{rem:winfty-stage5-entry-transport}. Then
+Remark~\ref{rem:winfty-stage5-entry-transport}. Then
 \[
 \mathsf{C}^{\mathrm{res}}_{3,5;5;0,3}(5)
 =
 \mathsf{C}^{\mathrm{DS}}_{3,5;5;0,3}(5).
 \]
 This is the first singleton in the residual target-$5$ continuation of
-Proposition~\ref{rem:winfty-stage5-target5-transport-singletons},
+Remark~\ref{rem:winfty-stage5-target5-transport-singletons},
 equivalently the pole-$3$ $W^{(5)}$-projection in
 $W^{(3)}(z)W^{(5)}(w)$.
 \end{proposition}
@@ -5232,14 +5386,14 @@ $W^{(3)}(z)W^{(5)}(w)$.
 \label{prop:winfty-stage5-transport-target5-45}
 \ClaimStatusProvedElsewhere{}
 Assume the hypotheses of
-Corollary~\ref{rem:winfty-stage5-entry-transport}. Then
+Remark~\ref{rem:winfty-stage5-entry-transport}. Then
 \[
 \mathsf{C}^{\mathrm{res}}_{4,5;5;0,4}(5)
 =
 \mathsf{C}^{\mathrm{DS}}_{4,5;5;0,4}(5).
 \]
 This is the second singleton in the residual target-$5$ continuation of
-Proposition~\ref{rem:winfty-stage5-target5-transport-singletons},
+Remark~\ref{rem:winfty-stage5-target5-transport-singletons},
 equivalently the pole-$4$ $W^{(5)}$-projection in
 $W^{(4)}(z)W^{(5)}(w)$.
 \end{proposition}
@@ -5262,11 +5416,11 @@ Blumenhagen--Eholzer--Flohr--Honecker--Hornfeck--H\"ubel
 \mathsf{C}^{\mathrm{DS}}_{3,4;5;0,2}(5).
 \]
 This is exactly the reduced tail comparison input isolated in
-Proposition~\ref{rem:winfty-stage5-reduced-tail-singleton}, the exact
+Remark~\ref{rem:winfty-stage5-reduced-tail-singleton}, the exact
 missing comparison mechanism isolated in
-Proposition~\ref{rem:winfty-stage5-tail-mechanism}, and the
+Remark~\ref{rem:winfty-stage5-tail-mechanism}, and the
 first singleton channel in the target-$5$ corridor of
-Corollary~\ref{rem:winfty-stage5-target5-corridor}.
+Remark~\ref{rem:winfty-stage5-target5-corridor}.
 \end{proposition}
 
 \begin{proof}
@@ -5351,7 +5505,7 @@ Corollary~\ref{cor:winfty-stage5-higher-spin-packet}. Then
 \]
 for every channel $(s,t;u;m,n)$ in the three-channel block
 $\mathcal{J}_5^{(3,5)}$ of
-Proposition~\ref{rem:winfty-stage5-higher-spin-subblocks}.
+Remark~\ref{rem:winfty-stage5-higher-spin-subblocks}.
 \end{proposition}
 
 \begin{proposition}[Stage-\texorpdfstring{$5$}{5}
@@ -5367,7 +5521,7 @@ Corollary~\ref{cor:winfty-stage5-higher-spin-packet}. Then
 \]
 for every channel $(s,t;u;m,n)$ in the three-channel block
 $\mathcal{J}_5^{(4,5)}$ of
-Proposition~\ref{rem:winfty-stage5-higher-spin-subblocks}.
+Remark~\ref{rem:winfty-stage5-higher-spin-subblocks}.
 \end{proposition}
 
 \begin{proposition}[Stage-\texorpdfstring{$5$}{5}
@@ -5527,7 +5681,7 @@ The fixed ratios from Corollary~\ref{cor:winfty-stage5-visible-network-collapse}
 \end{proof}
 
 \begin{theorem}[All-stages \texorpdfstring{$\mathcal{W}_\infty$}{W-infinity}
-MC4 closure via \texorpdfstring{$\mathcal{W}_N$}{W\_N} rigidity;
+MC4 rigidity reduction criterion;
 \ClaimStatusConditional]%
 \label{thm:winfty-all-stages-rigidity-closure}%
 \index{MC4!all-stages closure}%
@@ -5538,6 +5692,10 @@ further that at each stage~$N$ the stage-$N$ quotient of the
 $\mathcal{W}_\infty^{\mathrm{fact}}$ target carries visible generators
 $W^{(2)},\ldots,W^{(N)}$ that are even Virasoro-primary fields with
 the Virasoro field $T:=W^{(2)}$ acting by the standard Ward identity.
+Assume, in addition, the principal-stage identification input:
+for every $N\ge4$ the visible quotient is identified, after fixing
+central charge and strong-generator signs, with the principal
+Drinfeld--Sokolov stage $W_N$ and its normalized OPE constants.
 Then for every $N \ge 4$, all stage-$N$ defects vanish:
 \[
 \mathsf{D}_{s,t;u;m,n}(N)
@@ -5550,7 +5708,8 @@ Then for every $N \ge 4$, all stage-$N$ defects vanish:
 \qquad
 \text{for all $(s,t;u;m,n) \in \mathcal{I}_N$.}
 \]
-In particular, the stage-$4$ six-defect block, the stage-$5$
+In particular, under this added identification input, the stage-$4$
+six-defect block, the stage-$5$
 identity network
 \textup{(}Propositions~\textup{\ref{prop:winfty-stage5-principal-target5-no-new-independent-data}}%
 --\textup{\ref{prop:winfty-stage5-principal-one-coefficient-normal-form}},
@@ -5559,40 +5718,30 @@ and all higher-stage incremental packets $\mathcal{J}_{N+1}$ vanish.
 \end{theorem}
 
 \begin{proof}
-By induction on~$N$. \emph{Base case $N=4$.} The hypotheses give
-a vertex algebra with Virasoro-primary generators of spins~$2,3,4$.
-By Zamolodchikov--Fateev--Lukyanov rigidity, the $\mathcal{W}_4$
-vertex algebra is uniquely determined by its central charge~$c$ for
-generic~$c$. The Drinfeld--Sokolov computation
-(Proposition~\ref{prop:w4-ds-ope-explicit},
-Computation~\ref{comp:w4-ds-ope-extraction}, $121$~tests) gives all
-stage-$4$ coefficients as explicit rational functions of~$c$, so
-$\mathsf{D}(4)=0$ on~$\mathcal{I}_4$.
-In particular, Propositions~\ref{prop:winfty-stage4-visible-borcherds-transport},
-\ref{prop:winfty-stage4-ward-inheritance},
-and~\ref{prop:winfty-stage4-visible-diagonal-normalization} are
-the base stage of the rigidity induction.
+The principal-stage identification is exactly the missing comparison
+map between the residue calculus and the Drinfeld--Sokolov stage.
+After central charge and strong-generator signs are fixed, it
+identifies every visible OPE coefficient with the corresponding
+principal coefficient on the finite packet~$\mathcal{I}_N$. Hence each
+defect
+\(\mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(N)
+-\mathsf{C}^{\mathrm{DS}}_{s,t;u;m,n}(N)\)
+vanishes.
 
-\emph{Inductive step.} Assume the stage-$N$ defects vanish on
-$\mathcal{I}_N$. The stage-$(N+1)$ quotient adds the generator
-$W^{(N+1)}$, giving a vertex algebra with generators of spins
-$2,\ldots,N+1$. By $\mathcal{W}_{N+1}$ rigidity, this algebra is
-uniquely determined by~$c$. The Drinfeld--Sokolov computation extends
-to stage~$N+1$
-(Proposition~\ref{prop:winfty-ds-stage-growth-packet}), so the
-incremental packet $\mathcal{J}_{N+1}$ matches identically.
-
-\emph{Stage-$5$ specialization.} Setting $N=4$ in the inductive step,
-$\mathcal{W}_5$ rigidity forces all stage-$5$ coefficients to their
-DS values, giving
-Propositions~\ref{prop:winfty-stage5-principal-target5-no-new-independent-data},
-\ref{prop:winfty-stage5-principal-target5-transport-vanishing},
-\ref{prop:winfty-stage5-principal-tail-cross-target-reduction},
-\ref{prop:winfty-stage5-principal-residual-front-one-coefficient},
-\ref{prop:winfty-stage5-principal-one-coefficient-normal-form},
-and~\ref{prop:winfty-stage5-one-coefficient-comparison}, together with
-all downstream block, ladder, and packet propositions in
-Corollary~\ref{cor:winfty-stage5-visible-conjecture-network-collapse}.
+For \(N=4\), the principal constants are the explicit rational
+functions and Virasoro-target values of
+Proposition~\ref{prop:w4-ds-ope-explicit}; the added identification is
+therefore precisely the input required by
+Propositions~\ref{prop:winfty-stage4-visible-diagonal-normalization},
+\ref{prop:winfty-stage4-ward-inheritance}, and
+\ref{prop:winfty-stage4-visible-borcherds-transport}. For \(N=5\),
+the same identification is the principal one-coefficient normal-form
+package of
+Proposition~\ref{prop:winfty-stage5-principal-one-coefficient-normal-form}
+together with the singleton comparison
+Proposition~\ref{prop:winfty-stage5-one-coefficient-comparison}.
+Without this finite-stage identification, the theorem supplies a
+reduction criterion rather than a closure theorem.
 \end{proof}
 
 \begin{computation}[Full stage-\texorpdfstring{$4$}{4} reduction chain check]
@@ -5625,7 +5774,7 @@ checked computationally
  $\mathsf{C}^{\mathrm{DS}}_{4,4;2;0,6} = 2$ (universal $T$-coupling)
  and $\mathsf{C}^{\mathrm{DS}}_{3,4;2;0,5} = 0$ (mixed vanishing)
  split the stage-$4$ packet into $4$ higher-spin channels plus
- $2$ theorematic principal Virasoro-target values.
+ $2$ proved principal Virasoro-target values.
 \end{itemize}
 The full chain $29 \to 7 \to 6 = 4 + 2$ matches every intermediate
 cardinality and every explicit element of the manuscript displays.
@@ -5659,7 +5808,7 @@ c_{444}^{\,2}
 &= \tfrac{5}{7}\,c_{334}^{\,2}.
 \label{eq:c344-explicit}
 \end{align}
-The two theorematic Virasoro-target identities in
+The two proved Virasoro-target identities in
 Corollary~\textup{\ref{cor:winfty-ds-stage4-five-plus-zero}} are
 confirmed:
 \begin{equation}
@@ -5710,7 +5859,7 @@ $c_{334}^{\,2}$:
 \mathsf{C}_{3,4;4;0,3}^{\,2}
 = \tfrac{5}{7}\,c_{334}^{\,2}.
 \]
-Consequently, after removing the theorematic Virasoro-target values
+Consequently, after removing the proved Virasoro-target values
 \[
 \mathsf{C}^{\mathrm{DS}}_{4,4;2;0,6}=2,
 \qquad
@@ -5727,7 +5876,7 @@ The explicit formulas
 \eqref{eq:c343-explicit} and~\eqref{eq:c344-explicit} express the two
 mixed higher-spin squares directly in terms of~$c_{334}^{\,2}$, while
 \eqref{eq:w4-virasoro-target-identities-values} records the two
-theorematic Virasoro-target values. Hence the displayed pair
+proved Virasoro-target values. Hence the displayed pair
 $c_{334}^{\,2},c_{444}^{\,2}$ is the entire primitive higher-spin
 square-class input on the principal side.
 \end{proof}
@@ -5783,7 +5932,7 @@ computationally
 \item unitarity non-negativity ($c_{334}^2 \geq 0$, $c_{444}^2 \geq 0$)
  confirmed at all $\mathcal{W}(N, N{+}1)$ minimal models
  for $4 \leq N \leq 19$;
-\item both theorematic principal Virasoro-target values
+\item both proved principal Virasoro-target values
  $\mathsf{C}^{\mathrm{DS}}_{4,4;2;0,6} = 2$ and
  $\mathsf{C}^{\mathrm{DS}}_{3,4;2;0,5} = 0$ confirmed.
 \end{itemize}
@@ -5792,8 +5941,8 @@ computationally
 The completion-closure theory and the $\mathcal{W}_\infty$ seed-packet
 analysis above establish the structural content of MC4: the strong
 filtration axiom produces completed bar-cobar quasi-isomorphisms,
-and $\mathcal{W}_N$ rigidity at each finite stage closes the
-stagewise residue identities. The remainder of this chapter returns
+and the finite packet calculus isolates the exact stagewise residue
+identities. The remainder of this chapter returns
 to the foundational algebraic layer: the role of Maurer--Cartan
 elements in the curved setting, the genus-by-genus obstruction
 analysis, the bar complex as an algebra over the modular operad, and
@@ -6083,25 +6232,21 @@ The Heisenberg algebra $\mathcal{H}_k$ has OPE $J(z)J(w) = k/(z-w)^2 + \text{reg
 
 The period-corrected total bar differential satisfies
 $d_{\text{bar}}^2 = 0$ strictly.
-At genus~$1$, the differential includes the term:
-\[d_1 = d_0 + k \cdot \int_{\mathcal{M}_1} \omega_1\]
-where $\omega_1 \in H^*(\mathcal{M}_1, \mathcal{Z}(\mathcal{A}))$ is the genus-1 quantum correction class. (Here $\mathcal{M}_1 \cong \mathbb{H}/\mathrm{SL}_2(\mathbb{Z})$ is one-dimensional.)
-
-This modifies $d_0$ but the period-corrected genus-$1$ differential
-still satisfies $d_1^2 = 0$ strictly because $k$ is central and the
-geometric correction is included.
-
-\emph{Explicit check at genus $1$.}
-\begin{align}
-d_1^2(J \otimes J) &= d_1(d_1(J \otimes J)) \\
-&= d_1\left(\text{Res}_{z=w}(J(z)J(w)) + k \cdot \omega_1 \otimes J\right) \\
-&= d_1\left(\frac{k}{(z-w)^2} dz \, dw + k \cdot \omega_1 \otimes J\right) \\
-&= \text{Res}_{z=w}\left(\frac{k}{(z-w)^2}\right) + k \cdot \omega_1 \otimes \text{Res}(J)
-+ k \cdot \omega_1^2 \\
-&= 0 + 0 + 0 = 0 \quad \text{(strictly)}
-\end{align}
-
-The $\omega_1^2$ term vanishes because $\dim \mathcal{M}_1 = 1$, so $H^2(\mathcal{M}_1) = 0$.
+At genus~$1$ the raw fiberwise operator has curvature
+\[
+\dfib^{\,2}=k\cdot\omega_1\cdot\mathrm{id}
+\]
+in the notation of Convention~\ref{conv:higher-genus-differentials}.
+The corrected operator is
+\[
+\Dg{1}=\dfib+d_{\mathrm{per}}^{(1)}
+\]
+with the prime-form period term included. The identity
+$(\Dg{1})^2=0$ is the genus-$1$ case of
+Theorem~\ref{thm:quantum-diff-squares-zero}; it is not proved by
+discarding a term such as $\omega_1^2$. Centrality of
+$k\mathbf{1}$ kills the internal commutator, while the period
+correction cancels the geometric curvature.
 \end{example}
 
 \subsubsection{\texorpdfstring{Affine Kac--Moody (level $k$)}{Affine Kac--Moody (level k)}}
@@ -6331,10 +6476,10 @@ two codimension-$1$ strata containing it.
 
 \begin{remark}\label{rem:bar-modular-operad-consequences}%
 \index{genus tower!as modular operad corollary}%
-Theorem~\ref{thm:bar-modular-operad} makes the modular operad algebra structure,
-previously invoked implicitly as ``functorial compatibility with
-Getzler--Kapranov,'' into an explicit algebraic statement. All genus-tower
-structure (the decomposition $d_{\mathrm{full}} = \sum_g d_g$, the
+Theorem~\ref{thm:bar-modular-operad} identifies the modular operad
+algebra structure with the Getzler--Kapranov compatibility of
+edge contractions. All genus-tower structure
+(the decomposition $d_{\mathrm{full}} = \sum_g d_g$, the
 cross-genus cancellations in the proof of
 Theorem~\ref{thm:genus-induction-strict}, and the recursive computation of bar
 cohomology by genus) is a formal corollary of the bar complex being an
@@ -6698,7 +6843,8 @@ and is interpreted coderivedly.
 \end{theorem}
 
 \begin{proof}
-The proof assembles three previously established results into the claimed adjunction.
+The adjunction follows from functoriality, the bar-cobar Hom identity,
+and the square-zero total model.
 
 \emph{Functoriality.}
 By Theorem~\ref{thm:bar-functorial}, the bar construction $B$ is functorial: a morphism $f: \mathcal{A} \to \mathcal{B}$ of chiral algebras induces $B(f): B(\mathcal{A}) \to B(\mathcal{B})$ compatible with the coalgebra structures. The category $\mathrm{ChAlg}^{\mathrm{central,tot=0}}$ consists of chiral algebras whose curvature $\mu_0$ lies in the center $Z(\mathcal{A})$ and whose chosen total bar differential squares to zero.
@@ -6799,17 +6945,23 @@ complete intersection with no higher $A_\infty$~corrections.
 \subsection{Reconstruction versus Verdier--cobar duality}
 \label{subsec:reconstruction-vs-duality}
 
-The four-object distinction ($\cA$, $\barBch(\cA)$,
-$\cA^i = H^*(\barBch(\cA))$, $\cA^! = (\cA^i)^\vee$) is the most
-consequential structural point in the entire monograph.
+The five-object distinction
+\[
+\cA,\qquad
+\barBch(\cA),\qquad
+\cA^i = H^*(\barBch(\cA)),\qquad
+\cA^! = (\cA^i)^\vee,\qquad
+Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
+\]
+is the firewall for the whole bar-cobar theory.
 Theorems~A and~B are about the reconstruction functor $R_X$: they
 recover~$\cA$ from its collision data. Koszul duality (the
 interplay of $\cA$ with its dual partner~$\cA^!$) is about the
-\emph{distinct} functor~$K_X$. Every formula in the shadow
-obstruction tower, every modular characteristic, and every
-complementarity theorem depends on keeping these two operations
-apart. The following definition and theorem make the separation
-precise.
+\emph{distinct} functor~$K_X$. The derived chiral centre is a third
+operation, Hochschild rather than Verdier or cobar. Every formula in
+the shadow obstruction tower, every modular characteristic, and every
+complementarity theorem depends on keeping these operations apart. The
+following definition and theorem make the separation precise.
 
 \begin{definition}[The two functors]
 \label{def:reconstruction-vs-duality-functors}
@@ -6853,7 +7005,7 @@ K_X(\cA)
 \]
 \end{proof}
 
-\begin{remark}[Algebra versus coalgebra under Verdier duality]
+\begin{remark}[Five objects under Verdier duality and Hochschild cochains]
 \label{rem:four-objects}
 \index{Verdier duality!algebra versus coalgebra}
 The bar complex $\barBch(\cA)$ is a factorization \emph{coalgebra}.
@@ -6876,6 +7028,9 @@ $\barBch(\cA^!)$ & coalgebra & coproduct from $\cA^!$-collisions \\
 $\cA^{\scriptstyle \text{\normalfont !\textasciigrave}} = H^*(\barBch(\cA))$ & coalgebra & bar cohomology \\
 $\cA^! = (\cA^{\scriptstyle \text{\normalfont !\textasciigrave}})^\vee$ & algebra
  & Koszul dual algebra
+ \\
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ & algebra object
+ & chiral Hochschild cochains $C^\bullet_{\mathrm{ch}}(\cA,\cA)$
 \end{tabular}
 \end{center}
 The reconstruction functor $R_X = \Omegach_X \circ \barBch_X$
@@ -6883,7 +7038,11 @@ recovers~$\cA$ (an algebra). The duality functor $K_X =
 \mathbb{D}_{\Ran} \circ \barBch_X$ produces
 $\cA^!$ (an algebra): Verdier duality converts the coalgebra to an
 algebra, and the finite Koszul comparison identifies that algebra with
-the strict dual partner. The
+the strict dual partner. The derived centre
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ is
+$C^\bullet_{\mathrm{ch}}(\cA,\cA)$, the Hochschild closed-sector algebra acting on
+$\cA$; it is not a bar coalgebra, not bar cohomology, and not the
+Verdier-Koszul dual. The
 distinction: $\Omegach_X(\barBch_X(\cA)) \simeq \cA$, while
 $\mathbb{D}_{\Ran}\barBch_X(\cA) \simeq \cA^!$.
 \end{remark}
@@ -7211,7 +7370,7 @@ transgressions beyond the quadratic Casimir equation.
 
 \begin{proof}
 The projection $\pi$ sends $\theta \mapsto 0$ and is a dg~algebra
-map (not merely a chain map). Since $A_\mathfrak{g}/(q)$ with
+map. Since $A_\mathfrak{g}/(q)$ with
 zero differential and ordinary multiplication is already a strict
 dg~algebra model, the transferred $A_\infty$~structure is strict.
 \end{proof}
@@ -7353,7 +7512,7 @@ transgression is the projection of that MC element to the
 quadratic stratum.
 \end{remark}
 
-\section{curved bar-cobar at CY-$2$ / CY-$3$}
+\section{Curved Bar-Cobar at CY-$2$ / CY-$3$}
 \label{sec:bccurved-supplement}
 
 \begin{remark}[CY-$2$ curved bar-cobar at K3]
@@ -7368,23 +7527,29 @@ $K^{\kappa_{\mathrm{ch}}} = 2c_+ = 8$.
 
 \begin{remark}[Curved bar-cobar at $K3 \times E$ and the Hall--Drinfeld double]
 \label{rem:bccurved-K3xE-hall-drinfeld}
-At $K3 \times E$ ($d = 3$) the curved bar-cobar output is the K3 chiral
-Hall--Drinfeld double
+At $K3 \times E$ ($d = 3$) the curved bar-cobar output is a
+recognition target for the K3 chiral Hall--Drinfeld double
 $\mathcal{D}_\hbar(\mathcal{Y}^{\mathrm{Hall}}_\hbar(\mathrm{CoHA}_{K3 \times E}))$
 (Vol~III) with Schiffmann--Vasserot shuffle presentation attached to the Manin
 pair $(\mathfrak{g}_{\Delta_5}, \mathfrak{n}_+^{\mathrm{imag}} \oplus \mathfrak{h}^{\mathrm{imag,rk\,23}})$;
 signature-$(2,1)$ Cartan forbids Manin-triple Lagrangian decomposition.
-Classification invariant $H^2(\mathfrak{g}_{\Delta_5})^{\mathbb{Z}/2, K(1)} \cong \mathbb{C} \cdot \Delta_5$:
-the Igusa cusp form IS the gauge-class invariant.
+The finite Hall/CoHA source, Mukai/Siegel pairing,
+PBW/no-extra-relations check, radical quotient, parity fixture,
+completion, inverse-limit, and Heegner divisor comparison are gates for
+recognition. Vol~I does not construct an intrinsic
+$H^2(\mathfrak{g}_{\Delta_5})$ classification; the Igusa cusp form is
+the Heegner target against which the completed source is compared.
 \end{remark}
 
-\section{Synthesis (continued)}
+\section{K3 Hall Curvature and the Igusa Cusp Form}
 \label{sec:bcac-deep}
 
 \begin{remark}[Curved bar-cobar adjunction for $\mathbf H_{\Delta_5}$]
 \label{rem:bcac-deep-1}
-The curved bar-cobar adjunction on the K3 chiral bialgebra
-is controlled by the curvature element
+Assume the K3 Hall candidate has passed the source-recognition gates
+and write the resulting completed object as $\mathbf H_{\Delta_5}$. The
+curved bar-cobar adjunction on this object is controlled by the
+curvature element
 \[
 w^{\mathrm{chir}} \;=\; \hbar^2\cdot K^{\kappa_{\mathrm{ch}}}\cdot \mathbf{1}_{\mathbf H_{\Delta_5}} \;=\; -\mathbf{1}_{\mathbf H_{\Delta_5}}\quad\text{at $\hbar^2 = -1/8$},
 \]
@@ -7398,10 +7563,13 @@ pro-object/weight-completed and coderived, detected by comodules
 rather than by a raw chain inverse.
 \end{remark}
 
-\begin{remark}[Curved bar in the Hall subcategory]
+\begin{remark}[Curved bar in the Hall source category]
 \label{rem:bcac-deep-2}
-The curved bar $B^w(\mathbf H_{\Delta_5})$ is constructed in the Hall
-subcategory of $\mathrm{CoHA}_{K3\times E}$ with differential
+A candidate curved bar $B^w(\mathbf H_{\Delta_5})$ is recognized from
+finite Hall/CoHA windows of $\mathrm{CoHA}_{K3\times E}$ only after the
+pairing, PBW/no-extra-relations, radical, parity, completion,
+inverse-limit, and Heegner gates. On each finite window its differential
+has the form
 \[
 d_{B^w} \;=\; d_{\mathrm{Hall}} + d_{\mathrm{Sieg}} + \hbar\, d_{\mathrm{assoc}} + \hbar^2\, d_{\Phi_{10}/\eta^{24}} + w^{\mathrm{chir}}\cdot\mathrm{Id},
 \]
@@ -7428,22 +7596,20 @@ the unique stable point in this two-parameter deformation. Primary-lit:
 Mukai 1987, Borcherds 1992, Gritsenko-Nikulin 1996--98.
 \end{remark}
 
-\section{the curved bar-cobar pair on
+\section{The Curved Bar-Cobar Pair on
 the Humbert stratification}
 \label{sec:bcac-supplement}
 
-This chapter has established curved bar-cobar at the
-CDG-coalgebra level (Theorems \ref{thm:chiral-positselski-weight-completed}
-and relatives), with explicit curvature $w^{\mathrm{chir}}$ for
-the K3 chiral bialgebra $\mathbf{H}_{\Delta_5}$. The chain-level
-addition is the chain-level statement of curved bar-cobar inversion
-on the open Koszul locus of the Humbert stratification of
-$\overline{\mathcal{A}_2}$: there the curvature cancels exactly and
-the curved adjunction is strict. On each Humbert wall a distinct
-failure mode obstructs strict chain-level inversion; the repaired
+The curved CDG-coalgebra surface
+of Theorem~\ref{thm:chiral-positselski-weight-completed} carries the
+K3 chiral bialgebra $\mathbf{H}_{\Delta_5}$ with curvature
+$w^{\mathrm{chir}}$. On the open Koszul locus of the Humbert
+stratification of $\overline{\mathcal{A}_2}$ this curvature cancels
+exactly, so the curved adjunction is a strict chain-level inversion.
+On a Humbert wall strict inversion is obstructed; the surviving
 statement is weight-completed and coderived, with the
 $A_\infty$-deformation providing the minimal comodule-detected
-repair at $H_3$.
+homotopy at $H_3$.
 
 \begin{remark}[Curved bar-cobar strict inversion on
 $U = \overline{\mathcal{A}_2}\setminus(H_1\cup H_3\cup H_4)$]
@@ -7468,7 +7634,7 @@ strictly closed: $(d_{B^w})^2 = 0$ without the residual
 $w\cdot\mathrm{Id}$ piece. The curved cobar
 $\Omega^w(B^w(\mathbf{H}_{\Delta_5}))|_U \simeq
 \mathbf{H}_{\Delta_5}|_U$ is therefore a chain-level
-quasi-isomorphism, not merely a coderived equivalence. This is the
+quasi-isomorphism. This is the
 chain-level upgrade of
 Remark~\ref{rem:bcac-deep-1} from its K3-chiral ambient
 statement.
@@ -7507,8 +7673,8 @@ curved bar-cobar pair acquires the three-loop obstruction
  \phi^{(3)}|_{H_3}
  \;=\; -8 \cdot c_{\Phi_{10}/\eta^{24}}|_{H_3},
 \]
-the Costello-corrected value (replacing the naive $176256$ with the
-literature-anchored $-8$; \cite{Costello2013,CostelloGaiotto2018,
+the Costello--Gaiotto/Gritsenko--Nikulin normalized value
+\cite{Costello2013,CostelloGaiotto2018,
 GritsenkoNikulin1998}). The curved bar differential acquires the
 order-$\hbar^3$ correction
 \[
@@ -7562,8 +7728,11 @@ $\overline{\mathcal{A}_2}$]
 \label{thm:bcac-trichotomy}
 \index{curved bar-cobar adjunction!trichotomy}
 \index{bar-cobar inversion!global chain-level}
-The curved bar-cobar adjunction $(\Omega^w\dashv B^w)$ on the K3
-chiral bialgebra $\mathbf{H}_{\Delta_5}$ satisfies the three
+Assume the K3 Hall/CoHA source has passed the finite-source, pairing,
+PBW/no-extra-relations, radical, parity, completion, inverse-limit, and
+Heegner comparison gates, and write the recognized completed object as
+$\mathbf{H}_{\Delta_5}$. The curved bar-cobar adjunction
+$(\Omega^w\dashv B^w)$ on it satisfies the three
 ambient-qualified equivalences:
 \begin{enumerate}
 \item[\textup{(a)}] $\Omega^w(B^w(\mathbf{H}_{\Delta_5}))|_U
@@ -7588,11 +7757,11 @@ completed coderived $A_\infty$ ambient
 \end{enumerate}
 \end{theorem}
 
-\begin{proof}[Proof sketch]
-This theorem is the curved-bar-cobar translation of
-Theorem~\ref{thm:climax-W18-global-inversion}; the two differ
-only in ambient (curved CDG-coalgebra here, chiral bar complex in
-the climax chapter). Statement~(a): the curvature cancellation
+\begin{proof}
+Theorem~\ref{thm:climax-W18-global-inversion} supplies the same
+trichotomy in the chiral bar-complex ambient; the present theorem
+transports it to the curved CDG-coalgebra ambient. For statement~(a),
+the curvature cancellation
 $w^{\mathrm{chir}} + \mathrm{Id} = 0$ at $\hbar^2 = -1/8$,
 $K^{\kappa_{\mathrm{ch}}} = 8$
 (Remark~\ref{rem:bcac-deep-1}) is uniform on $U$ because the
@@ -7825,11 +7994,10 @@ Theorem~\ref{thm:bcac-trichotomy}(c) factors as
  \;=\;
  (-8)\cdot c_{\Phi_{10}/\eta^{24}}|_{H_3},
 \]
-where the coefficient $-8$ is now \emph{explicitly} identified as
-the $(3,1)$-Fourier coefficient of $\phi_{-2,1}$. This upgrades
-the Costello correction
-\cite{Costello2013,CostelloGaiotto2018} from a literature-anchored
-numerical value to a chain-level Fourier-coefficient reading:
+where the coefficient $-8$ is the $(3,1)$-Fourier coefficient of
+$\phi_{-2,1}$. Thus the Costello correction
+\cite{Costello2013,CostelloGaiotto2018} has the chain-level
+Fourier-coefficient reading:
 $\phi^{(n)}|_{H_n}$ is uniformly
 $c_{-2,1}(n,r_n)\cdot c_{\Phi_{10}/\eta^{24}}|_{H_n}$ at every
 admissible wall, with $c_{-2,1}(3,1)=-8$ as the leading three-loop

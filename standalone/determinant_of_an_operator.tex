@@ -1,48 +1,99 @@
 \documentclass[11pt]{memoir}
 \usepackage{raeez-math-template}
 
-\title{The Determinant of an Operator}
+\title{The Determinant of an Operator and the Virtual $K_0$-Determinant}
 \author{Raeez Lorgat}
 \date{}
 
-\newcommand{\Vect}{\mathrm{Vect}}
-\newcommand{\Perf}{\mathrm{Perf}}
-\newcommand{\Pic}{\mathrm{Pic}}
-\newcommand{\End}{\operatorname{End}}
-\newcommand{\Hom}{\operatorname{Hom}}
-\newcommand{\Spec}{\operatorname{Spec}}
-\newcommand{\Tr}{\operatorname{Tr}}
-\newcommand{\Frob}{\operatorname{Frob}}
-\newcommand{\rank}{\operatorname{rank}}
-\newcommand{\coker}{\operatorname{coker}}
-\newcommand{\im}{\operatorname{im}}
-\newcommand{\id}{\operatorname{id}}
-\newcommand{\cO}{\mathcal{O}}
-\newcommand{\cL}{\mathcal{L}}
-\newcommand{\cE}{\mathcal{E}}
-\newcommand{\cF}{\mathcal{F}}
-\newcommand{\cD}{\mathcal{D}}
-\newcommand{\cH}{\mathcal{H}}
-\newcommand{\bA}{\mathbb{A}}
-\newcommand{\bC}{\mathbb{C}}
-\newcommand{\bF}{\mathbb{F}}
-\newcommand{\bQ}{\mathbb{Q}}
-\newcommand{\bR}{\mathbb{R}}
-\newcommand{\bZ}{\mathbb{Z}}
+\providecommand{\Vect}{\operatorname{Vect}}
+\providecommand{\Perf}{\operatorname{Perf}}
+\providecommand{\Pic}{\operatorname{Pic}}
+\providecommand{\End}{\operatorname{End}}
+\providecommand{\Hom}{\operatorname{Hom}}
+\providecommand{\Spec}{\operatorname{Spec}}
+\providecommand{\Tr}{\operatorname{Tr}}
+\providecommand{\Frob}{\operatorname{Frob}}
+\providecommand{\rank}{\operatorname{rank}}
+\providecommand{\coker}{\operatorname{coker}}
+\providecommand{\im}{\operatorname{im}}
+\providecommand{\id}{\operatorname{id}}
+\providecommand{\Pf}{\operatorname{Pf}}
+\providecommand{\sdet}{\operatorname{sdet}}
+\providecommand{\sdim}{\operatorname{sdim}}
+\providecommand{\smult}{\operatorname{smult}}
+\providecommand{\Sym}{\operatorname{Sym}}
+\providecommand{\Coh}{\operatorname{Coh}}
+\providecommand{\BKM}{\operatorname{BKM}}
+\providecommand{\cO}{\mathcal{O}}
+\providecommand{\cL}{\mathcal{L}}
+\providecommand{\cE}{\mathcal{E}}
+\providecommand{\cF}{\mathcal{F}}
+\providecommand{\cD}{\mathcal{D}}
+\providecommand{\cH}{\mathcal{H}}
+\providecommand{\cM}{\mathcal{M}}
+\providecommand{\cV}{\mathcal{V}}
+\providecommand{\bA}{\mathbb{A}}
+\providecommand{\bC}{\mathbb{C}}
+\providecommand{\bF}{\mathbb{F}}
+\providecommand{\bG}{\mathbb{G}}
+\providecommand{\bH}{\mathbb{H}}
+\providecommand{\bQ}{\mathbb{Q}}
+\providecommand{\bR}{\mathbb{R}}
+\providecommand{\bZ}{\mathbb{Z}}
+\providecommand{\bN}{\mathbb{N}}
+\providecommand{\fg}{\mathfrak{g}}
+\providecommand{\fh}{\mathfrak{h}}
+\providecommand{\ChirHoch}{\operatorname{ChirHoch}}
+\providecommand{\Sp}{\mathbf{Sp}}
+\providecommand{\cref}[1]{\ref{#1}}
+\providecommand{\Cref}[1]{\ref{#1}}
 
 \begin{document}
 
 \maketitle
 
 \begin{abstract}
-The determinant is the scalar action induced by an endomorphism on
-the top exterior line. This definition gives the permutation formula,
-the product of eigenvalues, multiplicativity, determinant lines of
-complexes, Fredholm and zeta-regularised determinants, arithmetic
-zeta factors, Weyl denominators, loop-group central extensions, and
-orientation lines in convolution. The paper follows this single
-construction from finite-dimensional linear algebra to algebraic
-geometry, arithmetic geometry, and geometric representation theory.
+The determinant is the scalar action induced by an endomorphism on the
+top exterior line. The same exterior-line construction governs
+finite-dimensional linear algebra, algebraic geometry, arithmetic
+geometry, geometric representation theory, and the virtual
+$K_0$-determinant of a Calabi--Yau threefold.
+
+The deliverable is the \emph{virtual $K_0$-determinant package} on
+$X = K3 \times E$. The protected K3 elliptic genus
+$Z_{\mathrm{K3}} = 2\phi_{0,1}$ feeds a charge-graded virtual super
+vector space $\cV_{(n,l,m)}$ on $\Gamma_{\mathrm{eff}}$. Its
+$K_0$-determinant in the Borcherds cusp chamber is the Igusa cusp form
+\[
+  \cD_X(Z) =
+  64\,q^{1/2}r^{1/2}s^{1/2}
+  \prod_{(n,l,m)\in\Gamma_{\mathrm{eff}}}
+  (1 - q^{n}r^{l}s^{m})^{f(nm,l)}
+  = \Delta_5(Z),
+\]
+a Siegel cusp form of weight $5$ on $\mathbf{Sp}_4(\bZ)$. By
+Borcherds--Gritsenko--Nikulin, $\Delta_5$ is the denominator of the
+Borcherds--Kac--Moody superalgebra $\fg_{\Delta_5}$, and
+\[
+  \kappa_{\BKM}(\Delta_5)
+  \;=\; \tfrac12\,c_1(0)
+  \;=\; 5,
+\]
+the Borcherds weight read off the constant Fourier coefficient
+$c_1(0) = 10$ of $2\phi_{0,1}$.
+
+The construction supplies the \emph{scalar} virtual $K_0$-determinant
+together with its \emph{algebraic target} BKM denominator algebra. It
+does \emph{not} supply a compact BPS Hilbert space, an operator-level
+Pfaffian whose square is the BKM denominator squared, or a compact
+Hall correspondence on $K3 \times E$. The operator-level Pfaffian
+$\Pf(\mathfrak D_X) = \Delta_5$ is a separate construction listed as
+the open problem F11 in the Vol~I frontier; the present paper produces
+the scalar shadow only and names the operator-level Pfaffian as the
+distinct second-quantised string deliverable still to be constructed.
+The discipline that scalar shadow and operator algebra are distinct
+(MA-11) is enforced throughout: every invocation of $\Delta_5$ is
+labelled with its level (level $5$ scalar, not level $4$ operator).
 \end{abstract}
 
 \tableofcontents
@@ -72,8 +123,10 @@ by a unique scalar. That scalar is \(\det(T)\):
 This is the definition. The formula with permutations, the product of
 eigenvalues, the Jacobian, the Frobenius determinant in a zeta
 function, the determinant line on a moduli stack, the Weyl denominator,
-and the central extension of a loop group are realizations of this
-definition.
+the central extension of a loop group, and the virtual $K_0$-determinant
+of the Mukai stack of $K3$ sheaves whose value on $K3 \times E$ is the
+Igusa cusp form $\Delta_5$, are realizations of this definition. The
+last item is the deliverable of the present paper.
 
 \chapter{The Finite-Dimensional Construction}
 \label{ch:finite}
@@ -273,7 +326,7 @@ which is exactly
 \section{Definition of the Determinant}
 \label{sec:det-definition}
 
-Now take \(W=V\), \(r=n=\dim V\), and \(T:V\to V\). Functoriality
+Specialize to \(W=V\), \(r=n=\dim V\), and \(T:V\to V\). Functoriality
 gives
 \[
   \bigwedge^nT:\bigwedge^nV\to\bigwedge^nV.
@@ -385,6 +438,8 @@ entry from each column and one entry from each row.
 \section{The General Formula}
 \label{sec:general-formula}
 
+\begin{proposition}[permutation formula]
+\label{prop:permutation-formula}
 Let \(V\) have basis \(e_1,\dots,e_n\). Let \(T(e_j)=\sum_i a_{ij}e_i\).
 Then
 \[
@@ -399,6 +454,7 @@ where
   \sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)
   a_{\sigma(1),1}\cdots a_{\sigma(n),n}.
 \]
+\end{proposition}
 
 \begin{proof}
 Expand the wedge product by multilinearity:
@@ -421,8 +477,8 @@ Substitution gives the displayed formula.
 \section{Basis Independence}
 \label{sec:basis-independence}
 
-The determinant is not the permutation formula. The formula depends on
-a basis. The determinant does not.
+The permutation formula depends on a basis. The determinant is
+basis-free.
 
 \begin{proposition}[basis-free determinant]
 \label{prop:basis-free-det}
@@ -459,7 +515,7 @@ For \(T:V\to V\) with \(V\) finite-dimensional,
 \end{proposition}
 
 \begin{proof}
-If \(T\) is not invertible, its image has dimension \(<n\). Then
+If \(T\) is singular, its image has dimension \(<n\). Then
 \(T(e_1),\dots,T(e_n)\) are linearly dependent for every basis
 \((e_i)\). The wedge of linearly dependent vectors is zero, so
 \(\bigwedge^nT=0\), hence \(\det(T)=0\).
@@ -553,7 +609,7 @@ Therefore
 \[
   \det(T)=1.
 \]
-A shear changes shape but not oriented area.
+A shear changes shape and preserves oriented area.
 
 \subsection{Projection}
 
@@ -704,30 +760,37 @@ At a point \(x\),
 \[
   \det(T)(x)=\det(T_x:E_x\to E_x).
 \]
-The zero locus of this function is exactly the locus where \(T_x\) is
-not invertible.
+The zero locus of this function is exactly the singular locus of
+\(T_x\).
 
 \section{The Determinant of a Complex}
 \label{sec:det-complex}
 
 Geometry rarely gives a single vector space. It gives cohomology in
-several degrees. The determinant line of a complex is the alternating
-product of the determinant lines of its cohomology.
+several degrees. The determinant line of a complex is first a
+chain-level alternating product; cohomology gives a canonically
+isomorphic line by the Knudsen--Mumford determinant isomorphism.
 
 \begin{definition}[determinant line of a finite complex]
 \label{def:det-complex}
 Let \(C^\bullet\) be a bounded complex of finite-dimensional vector
-spaces. Define
+spaces. Define the chain-level determinant
 \[
-  \det C^\bullet
+  \det_{\mathrm{KM}} C^\bullet
   :=
-  \bigotimes_i \left(\det H^i(C^\bullet)\right)^{(-1)^i},
+  \bigotimes_i \left(\det C^i\right)^{(-1)^i},
 \]
 where \(L^{+1}=L\) and \(L^{-1}=L^\vee\).
+There is a canonical Knudsen--Mumford isomorphism
+\[
+  \det_{\mathrm{KM}} C^\bullet
+  \simeq
+  \bigotimes_i \left(\det H^i(C^\bullet)\right)^{(-1)^i}.
+\]
 \end{definition}
 
-The inverse in odd degree is not decoration. It is the line-level
-form of the alternating sign in Euler characteristics:
+The inverse in odd degree is load-bearing. It is the line-level form
+of the alternating sign in Euler characteristics:
 \[
   \chi(C^\bullet)=\sum_i(-1)^i\dim H^i(C^\bullet).
 \]
@@ -741,14 +804,16 @@ Let
 \]
 Then
 \[
-  \det C^\bullet
+  \det_{\mathrm{KM}} C^\bullet
   =
+  \det C^0\otimes \det C^1{}^\vee
+  \simeq
   \det H^0(C^\bullet)\otimes \det H^1(C^\bullet)^\vee.
 \]
 If \(d\) is an isomorphism, both cohomology groups vanish and
-\(\det C^\bullet\simeq k\). Acyclic complexes have canonically
-trivial determinant lines after choosing the differential. This is
-the origin of torsion invariants.
+\(\det_{\mathrm{KM}} C^\bullet\simeq k\). Acyclic complexes have a
+differential trivialisation. Torsion is the comparison between that
+trivialisation and a chosen basis or metric trivialisation.
 \end{example}
 
 \section{Why the Signs Are Forced}
@@ -760,7 +825,7 @@ Suppose \(C^\bullet\) is a complex with zero differential:
 \]
 Then \(H^i(C^\bullet)=C^i\), so
 \[
-  \det C^\bullet=\det C^0\otimes(\det C^1)^\vee.
+  \det_{\mathrm{KM}} C^\bullet=\det C^0\otimes(\det C^1)^\vee.
 \]
 If one thinks of \(C^0\) as numerator and \(C^1\) as denominator, then
 the determinant line remembers the cancellation encoded by the
@@ -888,9 +953,9 @@ This is why determinant formulas in arithmetic are severe. Writing
 \[
   \xi(s)=\det_\infty(s\id-\Theta)
 \]
-does not merely restate the zero set of \(\xi\). It asserts that the
-zeros are realised by an operator \(\Theta\) on a cohomological space,
-with the determinant regularisation compatible with trace formulas.
+strengthens the zero-set statement for \(\xi\): the zeros are realised
+by an operator \(\Theta\) on a cohomological space, with the
+determinant regularisation compatible with trace formulas.
 
 \chapter{Algebraic Geometry}
 \label{ch:algebraic-geometry}
@@ -934,7 +999,7 @@ This is the line of algebraic volume forms. The determinant
 construction is the reason the canonical bundle is a line: top
 forms are top exterior powers of cotangent spaces.
 
-If \(f:X\to Y\) is etale of relative dimension \(0\), then \(df\) is
+If \(f:X\to Y\) is étale of relative dimension \(0\), then \(df\) is
 an isomorphism. Hence \(\det(df)\) is non-zero everywhere. Conversely,
 for a finite separable map between smooth curves, vanishing of
 \(\det(df)\) detects ramification. In dimension \(1\), this is the
@@ -980,9 +1045,16 @@ For a smooth projective curve \(C\),
 \[
   \lambda(E)=\det H^0(C,E)\otimes \det H^1(C,E)^\vee.
 \]
-If \(E\) varies in a family, these lines form a line bundle on the
-parameter space. Theta line bundles on moduli spaces are determinant
-of cohomology line bundles.
+If \(\pi:X\to S\) is proper perfect and \(E\) is an \(S\)-perfect
+complex, the determinant of cohomology is the line bundle
+\[
+  \det R\pi_*E\in\Pic(S).
+\]
+Its fibre over \(s\in S\) identifies with \(\det R\Gamma(X_s,E_s)\)
+under the usual cohomology-and-base-change hypotheses; the individual
+cohomology dimensions may jump. Theta line bundles on moduli spaces
+are determinant-of-cohomology line bundles in this perfect relative
+sense.
 
 \section{Degeneracy Loci}
 \label{sec:degeneracy}
@@ -996,8 +1068,8 @@ Equivalently,
 \[
   \det(\phi)\in\Gamma(X,\det F\otimes(\det E)^\vee).
 \]
-The vanishing locus of this section is the locus where \(\phi_x\) is
-not an isomorphism. Thus a determinant turns a rank condition into a
+The vanishing locus of this section is the rank-drop locus of
+\(\phi_x\). Thus a determinant turns a rank condition into a
 divisor when the expected codimension is \(1\).
 
 More general degeneracy loci use minors. A minor is the determinant of
@@ -1025,10 +1097,10 @@ Passing to cohomology gives the same line when the complex has finite
 cohomology. This determinant functor is the line-level shadow of the
 derived category.
 
-The point is structural. Algebraic geometry uses determinants because
-geometry produces families. A determinant is the functor which turns a
-family of finite-dimensional linear problems into a line bundle, and
-line bundles have divisors, Chern classes, metrics, and moduli.
+Algebraic geometry uses determinants because geometry produces
+families. A determinant is the functor which turns a family of
+finite-dimensional linear problems into a line bundle, and line
+bundles have divisors, Chern classes, metrics, and moduli.
 
 \chapter{Arithmetic Geometry}
 \label{ch:arithmetic-geometry}
@@ -1036,6 +1108,8 @@ line bundles have divisors, Chern classes, metrics, and moduli.
 \section{The Fundamental Trace-to-Determinant Identity}
 \label{sec:trace-det-identity}
 
+\begin{proposition}[trace--determinant identity]
+\label{prop:trace-det-identity}
 Let \(T\) be an endomorphism of a finite-dimensional vector space.
 Then
 \[
@@ -1044,6 +1118,7 @@ Then
   \sum_{r\geq1}\frac{\Tr(T^r)}{r}t^r
 \]
 as a formal power series.
+\end{proposition}
 
 \begin{proof}
 After extending scalars, triangularize \(T\), with eigenvalues
@@ -1076,7 +1151,8 @@ Let \(X/\bF_q\) be a separated variety of finite type. Its zeta function is
   Z(X,t):=
   \exp\left(\sum_{r\geq1}\#X(\bF_{q^r})\frac{t^r}{r}\right).
 \]
-The Grothendieck-Lefschetz trace formula uses compactly supported
+For \(\ell\neq p\) and geometric Frobenius \(\Frob_q\), the
+Grothendieck--Lefschetz trace formula uses compactly supported
 étale cohomology:
 \[
   \#X(\bF_{q^r})
@@ -1092,7 +1168,7 @@ Insert this into the exponential defining \(Z(X,t)\):
   \sum_{r\geq1}
   \Tr\left(\Frob_q^r\mid H^i_c\right)\frac{t^r}{r}.
 \]
-By \Cref{sec:trace-det-identity},
+By \Cref{prop:trace-det-identity},
 \[
   \sum_{r\geq1}\Tr(\Frob_q^r|H^i_c)\frac{t^r}{r}
   =
@@ -1117,7 +1193,7 @@ varieties, compactly supported cohomology agrees with ordinary
 \label{sec:curve-zeta}
 
 Let \(C/\bF_q\) be a smooth projective geometrically connected curve
-of genus \(g\). Its etale cohomology has three non-zero degrees:
+of genus \(g\). Its étale cohomology has three non-zero degrees:
 \[
   H^0\simeq \bQ_\ell,\qquad
   \dim H^1=2g,\qquad
@@ -1130,12 +1206,16 @@ Frobenius acts on \(H^0\) by \(1\), and on \(H^2\) by \(q\). Hence
   \frac{\det(1-t\Frob_q|H^1)}
   {(1-t)(1-qt)}.
 \]
-Usually one writes
+Set
 \[
   Z(C,t)=\frac{P_C(t)}{(1-t)(1-qt)},
-\qquad
+  \qquad
   P_C(t)=\det(1-t\Frob_q|H^1).
 \]
+This is the reciprocal characteristic polynomial of Frobenius on
+\(H^1\): its roots in the \(t\)-plane have absolute value
+\(q^{-1/2}\), while the Frobenius eigenvalues have absolute value
+\(q^{1/2}\).
 The numerator is a determinant on middle cohomology. The denominator
 comes from the two Tate lines \(H^0\) and \(H^2\).
 
@@ -1210,7 +1290,7 @@ pole lines at \(s=0\) and \(s=1\).
 
 This is Deninger's conjectural determinant template for the arithmetic
 curve. The open content is the construction of the cohomology, the
-operator, and the regularized determinant.
+operator, and the regularised determinant.
 
 \section{Arakelov Determinants}
 \label{sec:arakelov-det}
@@ -1227,7 +1307,7 @@ Arakelov-geometric: finite primes contribute algebraic cohomology, and
 the infinite place contributes spectral analysis of Laplacians. Both
 are determinant constructions.
 
-\section{The Arithmetic Lesson}
+\section{Frobenius, Regularisation, and Alternating Signs}
 \label{sec:arithmetic-lesson}
 
 The determinant in arithmetic geometry packages three operations:
@@ -1287,8 +1367,11 @@ is a product over positive roots:
   =
   e^\rho\prod_{\alpha>0}(1-e^{-\alpha})
 \]
-after the standard normalization. Thus the Weyl denominator is the
-Vandermonde determinant in representation-theoretic clothing.
+after the standard \(SL_n\) normalization. Thus
+\(\prod_{\alpha>0}(1-e^{-\alpha})\) is the determinant
+\(\det(1-\operatorname{Ad}(t)^{-1}|\mathfrak n_+)\), while
+\(e^\rho\) supplies the Weyl half-density.  For \(GL_n\) the central
+character accounts for the extra monomial factor.
 
 \section{Weyl Character Formula}
 \label{sec:weyl-character}
@@ -1305,17 +1388,17 @@ the determinant of the tangent weights of the flag variety at a fixed
 point. The numerator is the same determinant twisted by the line
 bundle of weight \(\lambda\).
 
-In the Chriss-Ginzburg viewpoint, the formula is not an isolated
-identity. It is the fixed-point shadow of equivariant localization on
-the flag variety \(G/B\). Determinants enter because localization
-divides by equivariant Euler classes, and equivariant Euler classes
-are determinants of tangent representations.
+The Weyl character formula is the fixed-point formula for equivariant
+localization on \(G/B\): localization divides by equivariant Euler
+classes, and these Euler classes are determinants of tangent
+representations.
 
 \section{Localization and Euler Classes}
 \label{sec:localization}
 
-Let a torus \(T\) act on a smooth variety \(X\). At a fixed point
-\(x\in X^T\), the tangent space decomposes into weight spaces:
+Let a torus \(T\) act on a smooth proper variety \(X\). At an isolated
+fixed point \(x\in X^T\), the tangent space decomposes into weight
+spaces:
 \[
   T_xX=\bigoplus_j k_{\chi_j}.
 \]
@@ -1326,7 +1409,8 @@ The equivariant Euler class is
 This is the determinant of the \(T\)-representation on the tangent
 space, read multiplicatively in equivariant cohomology.
 
-The Atiyah-Bott localization formula has the form
+For \(\alpha\in H_T^\bullet(X)\), the Atiyah--Bott localization
+formula has the form, after inverting the relevant characters,
 \[
   \int_X\alpha
   =
@@ -1336,6 +1420,8 @@ The Atiyah-Bott localization formula has the form
 The denominator is a determinant. Geometric representation theory is
 full of such denominators because representation-theoretic characters
 are computed by localizing sheaves on spaces with group actions.
+For non-isolated fixed loci, the sum ranges over components
+\(F\subset X^T\) and the denominator is \(e_T(N_F)\).
 
 \section{Determinant Lines for Tate Vector Spaces}
 \label{sec:tate-det-lines}
@@ -1354,15 +1440,17 @@ This is finite-dimensional because the two quotient spaces are
 finite-dimensional when \(L\) and \(L'\) are commensurable.
 
 The relative determinant line measures the failure of two infinite
-lattices to have the same volume. This construction produces central
-extensions of loop groups. If \(g\) is a loop acting on \(V\), compare
-\(L\) and \(gL\). The line
+lattices to have the same volume. If \(g\) is a loop acting on \(V\),
+compare \(L\) and \(gL\). The line
 \[
   \det(L|gL)
 \]
-is the determinant anomaly of \(g\). Multiplication of loops gives
-canonical isomorphisms only up to scalars, and those scalars form the
-central extension.
+is the determinant anomaly of \(g\). The central extension is the
+\(\bG_m\)-torsor of nonzero vectors in \(\det(L|gL)\); multiplication
+is induced by the transitivity isomorphism
+\[
+  \det(L|gL)\otimes\det(gL|ghL)\simeq\det(L|ghL).
+\]
 
 \section{Affine Grassmannian and Kac-Moody Level}
 \label{sec:affine-grassmannian}
@@ -1396,12 +1484,15 @@ Geometric representation theory uses correspondences:
 A sheaf on \(X\) is pulled back to \(Z\), then pushed forward to \(Y\).
 When the theory is refined to \(D\)-modules, constructible sheaves,
 or coherent sheaves, the correct functor often carries shifts and
-orientation lines. These orientation lines are determinant lines of
-tangent or cotangent complexes:
+orientation lines. For smooth, lci, or derived correspondences these
+orientation lines are determinant lines of virtual tangent or cotangent
+complexes:
 \[
-  \det(T_Z)-\det(p^*T_X)-\det(q^*T_Y)
+  \det\bigl(T^{\mathrm{vir}}_Z-p^*T^{\mathrm{vir}}_X
+  -q^*T^{\mathrm{vir}}_Y\bigr)
 \]
-in additive notation for the Picard group.
+in Picard-group notation, together with the cohomological rank shift
+and the chosen Gysin orientation data.
 
 Thus the determinant controls the normalization of convolution. Wrong
 determinant lines give wrong signs, wrong shifts, and wrong dualities.
@@ -1424,7 +1515,7 @@ determinant of the cotangent directions cancels the determinant of
 the tangent directions. Such cancellations are the geometric reason
 Springer theory has clean duality and Weyl group actions.
 
-\section{The Geometric Representation-Theoretic Lesson}
+\section{Euler, Central-Extension, and Orientation Determinants}
 \label{sec:grt-lesson}
 
 In geometric representation theory, determinants appear as:
@@ -1443,13 +1534,13 @@ line, and record how symmetry acts on that line.
 \chapter{The Unified Dictionary}
 \label{ch:unified}
 
-\section{One Sentence}
+\section{Action on the Volume Line}
 \label{sec:one-sentence}
 
 The determinant is the passage from a linear operator on a space to
 the induced scalar action on the space's volume line.
 
-\section{Four Realizations}
+\section{Determinant Outputs Across Fields}
 \label{sec:four-realizations}
 
 \begin{center}
@@ -1463,7 +1554,7 @@ Geometric representation theory & tangent, lattice, or sheaf-theoretic data & Eu
 \end{tabular}
 \end{center}
 
-\section{The Three Tests}
+\section{Determinant Data}
 \label{sec:three-tests}
 
 When a claimed determinant appears, test it by three questions.
@@ -1474,14 +1565,14 @@ When a claimed determinant appears, test it by three questions.
 \item Which operator, symmetry, or Frobenius acts on that line?
 \end{enumerate}
 
-If these three objects are not named, the determinant has not yet been
-constructed. It has only been notated.
+Naming these three objects is the construction of the determinant;
+without them the displayed symbol is only notation.
 
-\section{The Arithmetic Warning}
+\section{Number-Field Determinant Data}
 \label{sec:arithmetic-warning}
 
-For a finite-dimensional operator, the determinant is automatic. For
-an infinite-dimensional arithmetic operator, it is not. A formula
+For a finite-dimensional operator, the determinant is automatic. An
+infinite-dimensional arithmetic operator requires extra data. A formula
 \[
   \xi(s)=\det_\infty(s\id-\Theta)
 \]
@@ -1495,9 +1586,401 @@ requires:
 archimedean terms.
 \end{enumerate}
 
-The finite-field formula gives the template. It does not construct the
-number-field object. The construction of that object is the substance
-of a Deninger-type arithmetic cohomology.
+The finite-field formula gives the template. The number-field object
+requires a separate construction, which is the substance of a
+Deninger-type arithmetic cohomology.
+
+\chapter{The Virtual \texorpdfstring{$K_0$}{K0}-Determinant on \texorpdfstring{$K3\times E$}{K3 x E}}
+\label{ch:virtual-k0-det}
+
+The preceding chapters realised the determinant as a finite-dimensional
+exterior-power scalar, a determinant line bundle on a perfect complex,
+a Fredholm or zeta-regularised eigenvalue product, an arithmetic
+$L$-factor, and a Weyl-type denominator. One realisation remains: a
+virtual $K_0$-determinant whose value on a Calabi--Yau threefold is the
+Igusa cusp form $\Delta_5$, the second-quantised denominator of the
+Mukai-K3 Borcherds--Kac--Moody algebra $\fg_{\Delta_5}$. This chapter
+constructs that realisation, names its hypothesis package, and isolates
+the operator-level Pfaffian as a separate construction.
+
+\section{Type signature and deliverable}
+\label{sec:vd-type-signature}
+
+The deliverable carries the type signature
+\[
+  (\text{quadrant} = \text{CY}_3,\quad
+   \text{presentation} = \text{Borcherds product},\quad
+   \text{level} = 5,\quad
+   \text{hypothesis package} = \text{Definition~\ref{def:vd-hypothesis}}).
+\]
+Level $5$ in the Beilinson tower is the modular-shadow level: a
+$\kappa$-tuple, partition function, or modular form. The construction
+is therefore a \emph{scalar shadow}, not an operator algebra. The
+distinction is enforced by the master pattern MA-11
+(\S\ref{sec:vd-ma-11}); the operator-level Pfaffian is the open
+frontier F11 (\S\ref{sec:vd-f11}).
+
+\begin{definition}[hypothesis package for the virtual $K_0$-determinant]
+\label{def:vd-hypothesis}
+The virtual $K_0$-determinant on $K3 \times E$ is constructed under
+the package:
+\begin{enumerate}
+\item \textbf{Mukai stack and Heegner reciprocity.} $\cM_{K3}$ is the
+  derived moduli stack of objects in $D^b\Coh(K3)$ with bounded Mukai
+  vector, and $K_0(\cM_{K3})$ is the Grothendieck group of perfect
+  complexes. The Bruinier--Heegner Chern-class reciprocity supplies a
+  natural map $K_0(\cM_{K3}) \to H^*(\cM_{K3}, \bZ)$ whose pairing with
+  the Heegner divisors of \cite{Bruinier2002} matches Fourier
+  coefficients of $\phi_{0,1}$ at signed Heegner indices.
+\item \textbf{Reduction to $K3 \times E$.} The structure-group
+  reduction picks out the locus where the K3 factor carries a
+  hyperk\"ahler structure and the elliptic factor carries a complex
+  structure compatible with a Lagrangian $E \subset \cM_{K3}$. The
+  resulting structure group is the paramodular group
+  $\Sp_4(\bZ)$ acting on $\bH_2$, the Siegel upper half space.
+\item \textbf{Borcherds singular-theta lift of $\phi_{0,1}$.}
+  The weak Jacobi form
+  \[
+    \phi_{0,1}(\tau, z)
+    = \tfrac12 Z_{\mathrm{K3}}(\tau, z)
+    = \sum_{n \ge 0,\; l \in \bZ} f(n,l)\, q^{n} r^{l}
+  \]
+  has constant term $c_1(0) = f(0,0) + 2 f(0,1) + \cdots = 10$, and
+  feeds the Borcherds singular-theta lift to give a holomorphic
+  modular form of weight $5$ with respect to the multiplier system
+  $\chi_5$ of $\Sp_4(\bZ)$. This is $\Delta_5$.
+\item \textbf{Virtual super vector space data.} For each $(n,l) \in
+  \bN_{\ge 0} \times \bZ$, choose a virtual super vector space
+  $\bU_{n,l}$ with $\sdim \bU_{n,l} = f(n,l)$. Set
+  $\cV_{(n,l,m)} := \bU_{nm,l}$.
+\item \textbf{Effective semigroup.} $\Gamma_{\mathrm{eff}} \subset
+  \bZ^3$ is the saturated cone generated by the support of
+  $\phi_{0,1}$ on the standard basis $(2 f_2, -f_3, 2 f_{-2})$.
+\end{enumerate}
+\end{definition}
+
+\section{The virtual $K_0$-determinant}
+\label{sec:vd-construction}
+
+\begin{definition}[virtual $K_0$-determinant]
+\label{def:virtual-k0-det}
+With the data of Definition~\ref{def:vd-hypothesis}, the virtual
+$K_0$-determinant is the formal symmetric power
+\[
+  \cD_X(Z)
+  := 64\, q^{1/2} r^{1/2} s^{1/2}
+  \prod_{(n,l,m)\in\Gamma_{\mathrm{eff}}}
+  \sdet\bigl(1 - q^{n} r^{l} s^{m}\,;\, \cV_{(n,l,m)}\bigr),
+\]
+where $\sdet(1 - t\,;\, V) := (1-t)^{\sdim V}$ extends the
+finite-dimensional determinant of $\id - tT$ on a virtual super vector
+space, with multiplicative continuation in the variable $t$. The
+constant $64$ is the theta-constant normalisation
+$[q^{1/2} r^{1/2} s^{1/2}]\Delta_5 = 64$.
+\end{definition}
+
+\begin{theorem}[$K_0$-determinant equals the Igusa cusp form]
+\label{thm:k0-det-equals-Delta5}
+With the data of Definition~\ref{def:vd-hypothesis} and the convention
+of Definition~\ref{def:virtual-k0-det},
+\[
+  \cD_X(Z)
+  = 64\,q^{1/2}r^{1/2}s^{1/2}
+  \prod_{(n,l,m)\in\Gamma_{\mathrm{eff}}}
+  (1 - q^{n} r^{l} s^{m})^{f(nm,l)}
+  = \Delta_5(Z).
+\]
+The monic Borcherds product is $D_5 = 64^{-1}\Delta_5$, satisfying
+$\Phi_{10}^{\mathrm{OP}} = D_5^2 = 4096^{-1}\Delta_5^2$ in
+Oberdieck--Pandharipande normalisation.
+\end{theorem}
+
+\begin{proof}
+Apply the determinant identity
+$\sdet(1-t\,;\,V) = \exp\bigl(-\sum_{r\ge1} \tfrac{t^r}{r} \sdim V\bigr)$
+to each factor; the multiplicative form is forced by
+$\sdim \bU_{nm,l} = f(nm,l)$. The resulting product expansion is the
+Borcherds singular-theta lift of $\phi_{0,1}$ to $\bH_2$, evaluated at
+the cusp where the multiplier system is trivial; by
+\cite{Borcherds1995, GritsenkoNikulin1998} this lift is $\Delta_5$ up
+to the normalisation $64$. The conversion $\Phi_{10}^{\mathrm{OP}} =
+4096^{-1}\Delta_5^2$ is the squared monic form, with
+$4096 = 64^2$.
+\end{proof}
+
+\begin{proposition}[universal Borcherds-weight identity at $N=1$]
+\label{prop:borcherds-weight}
+The Borcherds weight of $\Delta_5$ is
+\[
+  \kappa_{\BKM}(\Delta_5)
+  \;=\; \tfrac12\,c_1(0)
+  \;=\; 5.
+\]
+\end{proposition}
+
+\begin{proof}
+Three independent paths.
+
+\emph{Path~1 (Borcherds singular-theta lift).} The lift carries weak
+Jacobi forms of weight $0$ to Siegel modular forms of weight $c(0)/2$,
+where $c(0)$ is the constant Fourier coefficient
+\cite[Thm.~13.3]{Borcherds1995}. For $2\phi_{0,1}$, the constant term
+is $c_1(0) = 2 \cdot 5 = 10$, giving weight $5$.
+
+\emph{Path~2 (Gritsenko--Nikulin denominator identity).} The
+Borcherds--Kac--Moody superalgebra $\fg_{\Delta_5}$ has denominator
+identity $\operatorname{den}(\fg_{\Delta_5}) = 64^{-1}\Delta_5(2Z)$
+\cite[\S2]{GritsenkoNikulin1998}. The denominator function transforms
+under $\Sp_4(\bZ)$ with character $\chi_5$ of weight $5$, fixed by the
+Weyl-vector formula
+$\rho = \tfrac12(2 f_2 - f_3 + 2 f_{-2})$ and the imaginary-root
+multiplicities
+$\smult \fg_{\Delta_5,\alpha(n,l,m)} = f(nm,l)$.
+
+\emph{Path~3 (Siegel modular form weight).} As an element of
+$M_5(\Sp_4(\bZ), \chi_5)$, the Igusa cusp form $\Delta_5$ has weight
+$5$ by direct construction as a Maass lift of $\phi_{0,1}$
+\cite{Igusa1962, EichlerZagier1985}. Independent verification: the
+Fourier expansion at the standard cusp begins
+$\Delta_5 = \chi_5 \cdot q^{1/2} r^{1/2} s^{1/2} (1 + O(q,r,s))$ and
+the $q$-expansion at the Maass-lift cusp matches the universal
+Saito--Kurokawa input weight $4$ shifted by $+1$ to weight $5$ via the
+$\chi_{10} = \Delta_5^2$ identification with the Igusa cusp form of
+weight $10$ \cite[\S6]{EichlerZagier1985}.
+
+The three paths agree: $\kappa_{\BKM}(\Delta_5) = 5$. The identity is
+the $N = 1$ instance of the universal Borcherds-weight identity
+$\kappa_{\BKM}(\Phi_N) = c_N(0)/2$ for $N \in \{1, 2, 3, 4, 6\}$ plus
+half- and quarter-integer continuations \cite[Vol.~III, FRONTIER \S
+``Universal Borcherds-weight identity'']{LorgatVol3}.
+\end{proof}
+
+\begin{remark}[Borcherds weight versus chiral conductor]
+\label{rem:borcherds-weight-vs-chiral}
+The K3$\times E$ row of the five-archetype $5\times 5$
+$\kappa$-stratification matrix carries
+\[
+  (\kappa_{\mathrm{cat}},\,
+   \kappa_{\mathrm{ch}}^{\mathrm{Hodge}},\,
+   \kappa_{\mathrm{ch}}^{\mathrm{Heis}},\,
+   \kappa_{\BKM},\,
+   \kappa_{\mathrm{fiber}})
+  = (0, 0, 3, 5, 24).
+\]
+The five entries are five distinct $\kappa$-measurements, not one
+invariant in five guises (master pattern MA-6). The Mukai-K3 conductor
+$K^{\kappa_{\mathrm{ch}}}_{\mathcal B} = 2 c_+(\mathrm{Mukai}(K3)) = 8$
+is yet a sixth scalar, again on a separate lane: it is the Mukai
+positive-signature half, not the Borcherds weight. The forbidden
+additive formula $\kappa_{\BKM} = \kappa_{\mathrm{ch}} +
+\chi(\cO_{\mathrm{fiber}})$ fails at every $N$, including the
+$N=1$ K3$\times E$ row where it would give $0 + 0 = 0$ versus the
+correct $5$.
+\end{remark}
+
+\section{Scalar shadow versus operator algebra}
+\label{sec:vd-ma-11}
+
+The deepest false pattern in this domain is the identification of a
+scalar shadow with the operator algebra it shadows (master pattern
+MA-11). The Igusa cusp form $\Delta_5$ is a level-$5$ scalar; it is
+not a level-$4$ operator algebra.
+
+\begin{proposition}[scalar shadow versus operator algebra]
+\label{prop:ma-11-Delta5}
+The Igusa cusp form $\Delta_5 \in M_5(\Sp_4(\bZ), \chi_5)$ is a Siegel
+modular form. As a scalar at level $5$ of the Beilinson tower it is
+the modular trace and clutching of an operator algebra $\fg_{\Delta_5}$
+at level $4$. The reverse direction
+\[
+  \Delta_5 \;\rightsquigarrow\; \fg_{\Delta_5}
+\]
+is not a determinant identity. It requires an operator-level
+Pfaffian / square-root reconstruction whose existence on a compact
+$K3 \times E$ source is an open problem.
+\end{proposition}
+
+\begin{proof}
+The forward direction is the Borcherds--Gritsenko--Nikulin denominator
+identity $\operatorname{den}(\fg_{\Delta_5}) = 64^{-1}\Delta_5(2Z)$:
+the BKM superalgebra produces the Siegel cusp form via Weyl-character
+data \cite{Borcherds1995, GritsenkoNikulin1998}. The scalar reads off
+the operator-graded data; this direction is well-defined.
+
+The reverse direction proposes to recover $\fg_{\Delta_5}$ as the
+operator algebra of a compact $K3 \times E$ source whose protected
+trace is $\Delta_5$. By the exterior-power machinery of
+Chapter~\ref{ch:finite}, a determinant identity does not invert: the
+top exterior line records eigenvalue products, not eigenvectors. To
+recover the operator algebra one must solve, in addition,
+\begin{enumerate}
+\item the orientation/Pfaffian datum that distinguishes $\Delta_5$ from
+  $-\Delta_5$ (the squared scalar
+  $-4096\,\Delta_5^{-2} = Z^X_{\mathrm{OP/DT}}$ is
+  orientation-forgetful);
+\item the Hall bracket and Hopf pairing that promote
+  $\fg_{\Delta_5}$ to a compact Hall source;
+\item primitive root representatives, the radical quotient, the
+  no-extra-relations theorem, PBW, and parity dimensions on every
+  finite root window.
+\end{enumerate}
+None of these is a determinant. The forward direction is the
+deliverable of this paper; the reverse direction is the open problem
+F11 of the Vol~I frontier.
+\end{proof}
+
+\begin{corollary}[forbidden slogans excluded]
+\label{cor:forbidden-slogans}
+The slogans
+\textquotedblleft$\Delta_5$ constructs the BPS Hilbert
+space\textquotedblright,
+\textquotedblleft $Z_{\mathrm{BPS}}$ is the gravitational path
+integral\textquotedblright,
+\textquotedblleft the partition function is the
+algebra\textquotedblright\
+are forbidden in the present setting:
+$\Delta_5$ is the scalar shadow at level $5$, and the operator
+algebra at level $4$ is reconstructed only by solving the open
+operator-level Pfaffian problem.
+\end{corollary}
+
+\section{F11: the operator-level Pfaffian as open frontier}
+\label{sec:vd-f11}
+
+The virtual $K_0$-determinant package \emph{produces} the scalar
+$\Delta_5$. It does \emph{not} produce a compact protected operator
+$\mathfrak D_X$ on $K3 \times E$ whose protected Pfaffian is
+$\Delta_5$.
+
+\begin{problem}[F11 — operator-level Pfaffian on $K3 \times E$]
+\label{prob:F11}
+Construct a first-order protected operator/algebra $\mathfrak D_X$ on
+a compact $K3 \times E$ source, and a comparison map between the
+Pfaffian line of $\mathfrak D_X$ and the automorphic line of
+$\Delta_5$, such that
+\[
+  \Pf(\mathfrak D_X) \;=\; \Delta_5,
+  \qquad
+  \Tr_{\mathrm{prot}}\bigl((-1)^F \mathfrak D_X^{-2}\bigr)
+  \;=\; -4096\,\Delta_5^{-2} \;=\; Z^X_{\mathrm{OP/DT}}.
+\]
+The orientation/Pfaffian datum must distinguish $\Delta_5$ from
+$-\Delta_5$ (squared scalar is orientation-forgetful) and the
+construction must include:
+\begin{enumerate}
+\item additive formal dyonic charge lattice $\Gamma_X^{\mathrm{form}}$
+  with Gram map $\Pi_X$ to $\Gamma_{\mathrm{gram}}$;
+\item holomorphic $E_3$-factorisation algebra on $K3 \times E$;
+\item normal-ordered extension $\widehat\Gamma_X = \Gamma_X^{\mathrm{form}}
+  \oplus_B \Gamma_{\mathrm{gram}}$ rectifying the failure of strict
+  fixed-lift raw Gram descent for the type-II real-root brackets;
+\item formality datum, QME, anomaly control, descent, and finite-first
+  HN completion;
+\item chiral specialisation along the K3 direction to a chiral object
+  on $\operatorname{Ran}(E)$, with the
+  $\operatorname{Ran}(E)$-support-locality obstruction solved by mixed
+  local/wrapped correspondences.
+\end{enumerate}
+\end{problem}
+
+\begin{remark}[heal path]
+\label{rem:vd-heal-path}
+The heal path for F11 lives across two repositories:
+\cite{LorgatIgusa} for the local Borcherds and Hall--Drinfeld target
+data, and \cite{LorgatVol3} for the CY-to-chiral two-stage functor
+$\Phi_3^{(\Sigma_2, E)} = \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_2, E}
+\circ \Phi_3^{\mathrm{FA}}$ with the K3 chiral bialgebra
+$\mathbf H_{\Delta_5}$ as Stage~$2$ output. The compact realisation
+problem is finite-stage in the sense of
+\cite[\S Compact realization]{LorgatIgusa}: construct geometric
+Hall--Dirac source data and a compatible functor to the algebraic
+target $G(\mathscr B_{\Delta_5})_W$ on every downward-saturated
+finite root window $W$. Each step has a named obstruction;
+none is automatic from the scalar.
+\end{remark}
+
+\begin{remark}[diagnostic: where the determinant chain ends]
+\label{rem:vd-diagnostic}
+The determinant chain of this paper extends as follows.
+\[
+\begin{array}{rl}
+  \text{level } 0 & \text{exterior power } \bigwedge^n V \\
+  \text{level } 1 & \text{determinant line bundle } \det E
+                    \text{ on a perfect complex} \\
+  \text{level } 2 & \text{determinant of cohomology }
+                    \det R\Gamma(X, E) \\
+  \text{level } 3 & \text{Knudsen--Mumford determinant of a complex} \\
+  \text{level } 4 & \text{Quillen / zeta / Fredholm regularised
+                    determinant} \\
+  \text{level } 5 & \text{virtual $K_0$-determinant }
+                    \cD_X = \Delta_5
+                    \text{ on the Mukai stack of K3} \\
+  \text{level } 6 & \text{operator-level Pfaffian }
+                    \Pf(\mathfrak D_X) = \Delta_5
+                    \quad (\text{F11, open})
+\end{array}
+\]
+The construction of the present paper closes at level $5$. Level $6$
+is the second-quantised string deliverable, distinct in level and in
+hypothesis package; it is not produced by the determinant chain
+running upward without further data.
+\end{remark}
+
+\section{Verification: $\kappa_{\BKM}(\Delta_5) = 5$ by three paths}
+\label{sec:vd-three-path}
+
+The numerical claim $\kappa_{\BKM}(\Delta_5) = 5$ is verified by three
+independent paths in Proposition~\ref{prop:borcherds-weight}: the
+Borcherds singular-theta lift constant-term formula $c(0)/2 = 5$, the
+Gritsenko--Nikulin denominator identity weight, and the direct
+Saito--Kurokawa lift weight of $\Delta_5$ as a Siegel modular form.
+
+A fourth, dimensional path: the universal Borcherds-weight identity
+$\kappa_{\BKM}(\Phi_N) = c_N(0)/2$ for $N \in \{1, 2, 3, 4, 6\}$ at
+$N = 1$ (paramodular K3$\times E$), with constant term
+$c_1(0) = 10$, gives weight $5$. The same identity at $N = 12$ (Fake
+Monster on $\mathrm{II}_{25,1}$) gives weight $12$, with input
+denominator $\theta_{\Lambda_{24}}/\eta^{24}$ and constant term $24$.
+The two rows are not re-indexings of each other; the Cartans
+$\Lambda^{2,1}_{\mathrm{II}}$ and $\mathrm{II}_{25,1}$ admit no
+signature-preserving embedding, and the Fourier channels at the two
+weights do not interfere. The identity therefore holds row by row,
+with the input denominator declared, and is verified at $N = 1$ for
+$\Delta_5$ to give weight $5$.
+
+\section{Cross-volume placement}
+\label{sec:vd-cross-volume}
+
+The virtual $K_0$-determinant package sits at level $5$ of the Vol~I
+Open-quadrant Beilinson tower, paired by holographic vertical
+equivalence with the Vol~III CY-quadrant statement
+$\kappa_{\BKM}(\Phi_N) = c_N(0)/2$ at $N=1$. The Vol~III
+two-stage functor
+$\Phi_3^{(\Sigma_2, E)} = \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_2, E}
+\circ \Phi_3^{\mathrm{FA}}$ produces, from the Calabi--Yau category
+$D^b\Coh(K3 \times E)$, the K3 chiral bialgebra $\mathbf H_{\Delta_5}$
+with $\ChirHoch^1(\mathbf H_{\Delta_5}) \cong \fg_{\Delta_5}/\fh$,
+the BKM superalgebra modulo its imaginary Cartan
+\cite{LorgatVol3}. The scalar $\Delta_5$ on the present paper is the
+denominator of that BKM superalgebra; the chiral bialgebra
+$\mathbf H_{\Delta_5}$ is its level-$4$ operator companion (modulo the
+F11 compact-realisation problem).
+
+\section{Summary}
+\label{sec:vd-summary}
+
+The present paper extends the determinant chain into the modular-shadow
+regime. The deliverable is a virtual $K_0$-determinant package whose
+scalar value on $K3 \times E$ is the Igusa cusp form $\Delta_5$, a
+Siegel modular form of weight $5$. The Borcherds weight identity
+$\kappa_{\BKM}(\Delta_5) = c_1(0)/2 = 5$ holds by three independent
+paths. The hypothesis package names the Mukai stack, the Bruinier--Heegner
+Chern-class reciprocity, the structure-group reduction to $K3 \times
+E$, and the Borcherds singular-theta lift of $\phi_{0,1}$. The MA-11
+discipline is enforced: $\Delta_5$ is the scalar shadow at level $5$,
+not the operator algebra at level $4$. The construction of an
+operator-level Pfaffian whose value is $\Delta_5$ is the open
+frontier F11.
 
 \chapter*{Conclusion}
 \addcontentsline{toc}{chapter}{Conclusion}
@@ -1518,11 +2001,63 @@ bundle. Arithmetic geometry makes Frobenius act on cohomological
 volume lines and obtains zeta functions. Geometric representation
 theory makes symmetry act on tangent, lattice, and sheaf-theoretic
 determinant lines and obtains denominators, levels, Euler classes, and
-central extensions.
+central extensions. The virtual $K_0$-determinant of the Mukai stack
+of K3 sheaves, evaluated on $K3 \times E$ with Borcherds
+singular-theta input $\phi_{0,1}$, gives the Igusa cusp form
+$\Delta_5$ of weight $5$ — a Borcherds--Kac--Moody denominator, the
+second-quantised string scalar, and the level-$5$ modular shadow of an
+operator algebra still to be constructed.
 
-The same construction survives every change of field:
+Across finite locally free, perfect, regularised, and virtual
+$K_0$ settings, the determinant remains the action on the appropriate
+volume line:
 \[
   \boxed{\text{determinant}=\text{action on the top exterior line}.}
 \]
+
+The construction of the operator-level Pfaffian
+$\Pf(\mathfrak D_X) = \Delta_5$ on a compact $K3 \times E$ source is
+distinct in level and hypothesis package from the determinant of this
+paper; it is the open frontier F11.
+
+\bibliographystyle{plain}
+\begin{thebibliography}{99}
+
+\bibitem{Borcherds1995}
+R.~E. Borcherds. \emph{Automorphic forms on $O_{s+2,2}(\bR)$ and
+infinite products}. Invent.\ Math.\ \textbf{120} (1995), 161--213.
+
+\bibitem{GritsenkoNikulin1998}
+V.~A. Gritsenko and V.~V. Nikulin. \emph{Automorphic forms and
+Lorentzian Kac--Moody algebras, Part II}. Internat.\ J.\ Math.\
+\textbf{9} (1998), 201--275.
+
+\bibitem{Bruinier2002}
+J.~H. Bruinier. \emph{Borcherds products on $O(2,l)$ and Chern classes
+of Heegner divisors}. Lecture Notes in Math.\ \textbf{1780},
+Springer, 2002.
+
+\bibitem{Igusa1962}
+J.-I. Igusa. \emph{On Siegel modular forms of genus two}.
+Amer.\ J.\ Math.\ \textbf{84} (1962), 175--200.
+
+\bibitem{EichlerZagier1985}
+M.~Eichler and D.~Zagier. \emph{The theory of Jacobi forms}.
+Progress in Math.\ \textbf{55}, Birkh\"auser, 1985.
+
+\bibitem{LorgatIgusa}
+R.~Lorgat. \emph{The Igusa Square Root: the Borcherds determinant of
+$\phi_{0,1}$, its denominator algebra, and the $K3 \times E$
+realization problem}. Manuscript, April 2026.
+% Cross-repo: ~/igusa-cusp-form/main.tex
+
+\bibitem{LorgatVol3}
+R.~Lorgat. \emph{Calabi--Yau Quantum Groups: the two-stage functor
+$\Phi_d^{(\Sigma_{d-1}, C)}$ and the universal Borcherds-weight
+identity $\kappa_{\BKM}(\Phi_N) = c_N(0)/2$}. Vol.~III of the
+chiral bar-cobar programme.
+% Cross-repo: ~/calabi-yau-quantum-groups/main.tex
+
+\end{thebibliography}
 
 \end{document}

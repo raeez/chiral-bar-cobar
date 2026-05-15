@@ -13,14 +13,15 @@ the Wick rotation l -> i*l mapping AdS_3 to dS_3, the Brown-Henneaux
 central charge c = 3l/(2G_N) maps to an imaginary central charge.
 This module implements two conventions:
 
-  Convention A (Strominger):  c_dS is a real positive parameter, and
+  Convention A (Strominger):  c_dS is the Brown-Henneaux central charge
+    c_BH = 3*ell/(2G_N), stored as a real positive parameter, and
     the central charge of the boundary CFT is c = +/- i*c_dS.
     The modular characteristic kappa = c/2 maps to kappa_dS = c_dS/2
     (positive real), but the free energies F_g acquire phase factors.
 
   Convention B (real section):  The physically relevant entropy is the
     REAL PART of the analytically continued shadow obstruction tower:
-      S_dS = Re[ 2*pi*kappa_dS + sum_{g>=1} F_g(i*c_dS) * hbar^{2g} ]
+      S_dS = Re[ (2*pi/3)*kappa_dS + sum_{g>=1} F_g(i*c_dS) * hbar^{2g} ]
     where F_g(i*c) = (i*c/2) * lambda_g^FP is purely imaginary at odd g
     and real at even g.
 
@@ -33,8 +34,8 @@ CENTRAL RESULTS:
    entropy corrections.
 
 2. GIBBONS-HAWKING ENTROPY from the shadow obstruction tower:
-   S_dS^(0) = pi*c_dS  (tree-level, from the area law)
-   S_dS^(1) = pi*c_dS + (c_dS/48)*i  (one-loop, imaginary correction!)
+   S_dS^(0) = pi*c_dS/3  (tree-level, from the area law)
+   S_dS^(1) = pi*c_dS/3 + (c_dS/48)*i  (one-loop, imaginary correction!)
    The one-loop correction to dS entropy is imaginary in the naive
    continuation, reflecting the non-unitarity of the boundary theory.
    Physical interpretation: the imaginary part encodes the metastability
@@ -67,7 +68,7 @@ CENTRAL RESULTS:
    The shadow obstruction tower gives quantum corrections to |Psi_HH|^2 at each genus.
 
 8. HILBERT SPACE DIMENSION:
-   Banks' conjecture: dim(H_dS) = exp(S_dS) = exp(pi*c_dS).
+   Banks' conjecture: dim(H_dS) = exp(S_dS) = exp(pi*c_dS/3).
    The finite number of states is consistent with the shadow obstruction tower
    having a convergent genus expansion (Bernoulli decay).
 
@@ -106,6 +107,21 @@ beta_sym = Symbol('beta', positive=True)
 t_sym = Symbol('t')
 
 PI = math.pi
+
+
+def shadow_rescaled_c_from_brown_henneaux(c_bh_val) -> float:
+    """Convert Brown-Henneaux central charge to c_sh = c_BH/3.
+
+    With c_BH = 3*ell/(2G_N), the horizon entropy is
+    S_GH = pi*c_BH/3.  Some shadow notes absorb the factor 1/3 into
+    c_sh; then the same entropy is written S_GH = pi*c_sh.
+    """
+    return float(c_bh_val) / 3.0
+
+
+def brown_henneaux_c_from_shadow_rescaled(c_shadow_val) -> float:
+    """Convert the shadow-rescaled entropy parameter c_sh to c_BH."""
+    return 3.0 * float(c_shadow_val)
 
 
 # =========================================================================
@@ -192,7 +208,7 @@ def F_g_ds_convention_B(c_dS_val, g: int) -> float:
     that can be summed to produce the de Sitter entropy corrections.
 
     This convention is used for the entropy computation since
-    the Gibbons-Hawking entropy S_dS = pi*c_dS is real.
+    the Gibbons-Hawking entropy S_dS = pi*c_dS/3 is real.
     """
     lam = float(lambda_fp(g))
     return float(c_dS_val) / 2 * lam
@@ -211,31 +227,33 @@ def F_g_ds_exact(c_dS_val, g: int) -> Rational:
 # =========================================================================
 
 def gibbons_hawking_entropy(c_dS_val) -> float:
-    """Tree-level Gibbons-Hawking entropy: S_dS = pi * c_dS.
+    """Tree-level dS_3 Gibbons-Hawking entropy: S_dS = pi*c_BH/3.
 
-    From the area law: S = Area/(4 G_N) = pi l^2 / G_N.
-    With c_dS = 3l/(2G_N) and l^2 = 2 G_N c_dS / 3:
-      S = pi * (2 G_N c_dS / 3) / G_N = 2*pi*c_dS/3.
+    Here c_dS_val is the Brown-Henneaux central charge
+    c_BH = 3*ell/(2G_N).  The area law gives
+        S_GH = Area/(4G_N) = 2*pi*ell/(4G_N) = pi*ell/(2G_N)
+             = pi*c_BH/3.
 
-    However, in the shadow obstruction tower language, the tree-level entropy
-    is S^(0) = 2*pi*kappa_dS = 2*pi*(c_dS/2) = pi*c_dS.
-    This matches the standard result for dS_3:
-      S_dS = pi*l / (2*G_N) (in 3d) with c_dS = 3l/(2G_N).
-
-    Note: we use the shadow obstruction tower normalization S = 2*pi*kappa.
+    Equivalently, kappa(Vir_c) = c_BH/2 and the shadow-normalized tree
+    term is (2*pi/3)*kappa = pi*c_BH/3.
     """
-    return PI * float(c_dS_val)
+    return PI * float(c_dS_val) / 3.0
+
+
+def gibbons_hawking_entropy_shadow_rescaled(c_shadow_val) -> float:
+    """Tree-level entropy in the rescaled convention c_shadow = c_BH/3."""
+    return PI * float(c_shadow_val)
 
 
 def gibbons_hawking_entropy_exact(c_dS_val) -> Rational:
-    """Exact symbolic: S_dS = pi * c_dS (as a coefficient of pi)."""
-    return Rational(c_dS_val)
+    """Exact symbolic coefficient of pi in S_dS = pi*c_BH/3."""
+    return Rational(c_dS_val, 3)
 
 
 def ds_entropy_genus_expansion(c_dS_val, max_g: int = 5) -> Dict[str, Any]:
     """de Sitter entropy from the shadow obstruction tower genus expansion.
 
-    S_dS = pi*c_dS + sum_{g>=1} S_g  (Convention B)
+    S_dS = pi*c_dS/3 + sum_{g>=1} S_g  (Convention B)
 
     where S_g is the genus-g correction from the shadow free energy.
     At genus 1: S_1 = F_1 = kappa_dS/24 = c_dS/48.
@@ -243,7 +261,7 @@ def ds_entropy_genus_expansion(c_dS_val, max_g: int = 5) -> Dict[str, Any]:
     Returns the genus expansion through genus max_g.
     """
     kappa_dS = float(c_dS_val) / 2
-    S_tree = PI * float(c_dS_val)
+    S_tree = gibbons_hawking_entropy(c_dS_val)
 
     terms = {}
     corrections = {}
@@ -271,15 +289,15 @@ def ds_entropy_complex_expansion(c_dS_val, max_g: int = 5) -> Dict[str, Any]:
 
     F_g = (i*c_dS/2) * lambda_g^FP  is purely imaginary.
     The full entropy becomes:
-      S = pi*i*c_dS + sum_g (i*c_dS/2)*lambda_g^FP
+      S = pi*i*c_dS/3 + sum_g (i*c_dS/2)*lambda_g^FP
     which is purely imaginary.
 
     Physical interpretation: the imaginary entropy signals
     non-unitarity of the boundary CFT.  The MAGNITUDE |S| gives
-    the physical entropy, which equals pi*c_dS at tree level.
+    the physical entropy, which equals pi*c_dS/3 at tree level.
     """
     terms_complex = {}
-    total = 1j * PI * float(c_dS_val)  # tree-level i*pi*c_dS
+    total = 1j * gibbons_hawking_entropy(c_dS_val)  # tree-level i*pi*c_dS/3
 
     for g in range(1, max_g + 1):
         fg = F_g_ds_complex(c_dS_val, g)
@@ -293,7 +311,7 @@ def ds_entropy_complex_expansion(c_dS_val, max_g: int = 5) -> Dict[str, Any]:
         'total_real': total.real,
         'total_imag': total.imag,
         'terms': terms_complex,
-        'tree_level': 1j * PI * float(c_dS_val),
+        'tree_level': 1j * gibbons_hawking_entropy(c_dS_val),
     }
 
 
@@ -311,14 +329,14 @@ def nariai_point():
 
     Properties:
       kappa_dS = 13/2
-      S_dS^tree = 13*pi
+      S_dS^tree = 13*pi/3
       kappa + kappa' = 13 (complementarity sum for Virasoro)
     """
     return {
         'c_dS': 13,
         'kappa_dS': Fraction(13, 2),
-        'S_tree': 13 * PI,
-        'S_tree_exact_coeff': 13,  # coefficient of pi
+        'S_tree': 13 * PI / 3.0,
+        'S_tree_exact_coeff': Fraction(13, 3),  # coefficient of pi
         'complementarity_sum': 13,
         'is_self_dual': True,
     }
@@ -330,7 +348,7 @@ def nariai_entropy_expansion(max_g: int = 5) -> Dict[str, Any]:
     result['is_nariai'] = True
     result['complementarity'] = {
         'kappa_sum': 13,
-        'entropy_sum': 2 * PI * 13,  # 2*pi*kappa_sum = 26*pi
+        'entropy_sum': 2 * PI * 13 / 3.0,  # (2*pi/3)*kappa_sum
     }
     return result
 
@@ -338,7 +356,7 @@ def nariai_entropy_expansion(max_g: int = 5) -> Dict[str, Any]:
 def nariai_maximality_check(c_values=None, max_g: int = 3) -> Dict[str, Any]:
     """Check whether the Nariai point maximizes or extremizes the entropy.
 
-    At tree level S = pi*c_dS, which is monotonically increasing in c_dS
+    At tree level S = pi*c_dS/3, which is monotonically increasing in c_dS
     -- NOT maximized at c_dS = 13.  The Nariai point is special because
     of its self-duality, not because it maximizes entropy.
 
@@ -393,7 +411,7 @@ def ds_partition_function(c_dS_val, beta, max_g: int = 3) -> Dict[str, Any]:
     F_dS = -(1/beta) * sum_{g>=0} F_g * beta^{-2g}.
 
     At the saddle point beta = beta_dS = 1/T_dS = 2*pi*l:
-      Z_dS = exp(S_dS) = exp(pi*c_dS).
+      Z_dS = exp(S_dS) = exp(pi*c_dS/3).
 
     We compute Z_dS(beta) by evaluating the shadow obstruction tower at
     hbar = 1/beta (the genus counting parameter for thermodynamic
@@ -404,9 +422,9 @@ def ds_partition_function(c_dS_val, beta, max_g: int = 3) -> Dict[str, Any]:
     beta_val = float(beta)
     kappa_dS = float(c_dS_val) / 2.0
 
-    # Tree level: Z_0 = exp(2*pi*kappa_dS * beta / beta_dS)
+    # Tree level: Z_0 = exp((2*pi/3)*kappa_dS * beta / beta_dS)
     # At beta = beta_dS: Z_0 = exp(S_dS)
-    S_tree = PI * float(c_dS_val)
+    S_tree = gibbons_hawking_entropy(c_dS_val)
 
     # Genus corrections: F_g contributes at order beta^{-2g}
     log_Z = S_tree
@@ -537,12 +555,12 @@ def slow_roll_kappa(c_0, epsilon_sr, t) -> float:
 def slow_roll_entropy(c_0, epsilon_sr, t, max_g: int = 2) -> Dict[str, Any]:
     """de Sitter entropy during slow-roll inflation.
 
-    S(t) = pi*c(t) + sum_{g>=1} F_g(c(t))
+    S(t) = pi*c(t)/3 + sum_{g>=1} F_g(c(t))
 
     where c(t) = c_0*(1 - epsilon*t).
 
-    Also computes dS/dt = -pi*c_0*epsilon + sum_g dF_g/dt.
-    At tree level: dS/dt = -pi*c_0*epsilon < 0 (entropy decreases
+    Also computes dS/dt = -(pi/3)*c_0*epsilon + sum_g dF_g/dt.
+    At tree level: dS/dt = -(pi/3)*c_0*epsilon < 0 (entropy decreases
     as the universe inflates, since the Hubble radius shrinks
     in comoving coordinates -- wait, that is wrong.  During inflation
     the Hubble parameter H is approximately constant, so the horizon
@@ -554,7 +572,7 @@ def slow_roll_entropy(c_0, epsilon_sr, t, max_g: int = 2) -> Dict[str, Any]:
         return {'error': 'c(t) became non-positive'}
 
     kappa_t = c_t / 2.0
-    S_tree = PI * c_t
+    S_tree = gibbons_hawking_entropy(c_t)
 
     terms = {}
     S_total = S_tree
@@ -565,7 +583,7 @@ def slow_roll_entropy(c_0, epsilon_sr, t, max_g: int = 2) -> Dict[str, Any]:
 
     # Time derivatives
     dkappa_dt = -float(c_0) / 2.0 * float(epsilon_sr)
-    dS_tree_dt = PI * (-float(c_0) * float(epsilon_sr))
+    dS_tree_dt = PI * (-float(c_0) * float(epsilon_sr)) / 3.0
     dS_total_dt = dS_tree_dt
     for g in range(1, max_g + 1):
         dS_total_dt += dkappa_dt * float(lambda_fp(g))
@@ -589,7 +607,7 @@ def slow_roll_entropy_change(c_0, epsilon_sr, t1, t2, max_g: int = 2) -> Dict[st
     """Change in dS entropy between two times during slow-roll.
 
     Delta_S = S(t2) - S(t1).
-    At tree level: Delta_S = -pi*c_0*epsilon*(t2 - t1).
+    At tree level: Delta_S = -(pi/3)*c_0*epsilon*(t2 - t1).
     """
     s1 = slow_roll_entropy(c_0, epsilon_sr, t1, max_g)
     s2 = slow_roll_entropy(c_0, epsilon_sr, t2, max_g)
@@ -606,7 +624,7 @@ def slow_roll_entropy_change(c_0, epsilon_sr, t1, t2, max_g: int = 2) -> Dict[st
         'delta_S': delta_S,
         'delta_tree': delta_tree,
         'delta_quantum': delta_S - delta_tree,
-        'tree_prediction': -PI * float(c_0) * float(epsilon_sr) * (float(t2) - float(t1)),
+        'tree_prediction': -PI * float(c_0) * float(epsilon_sr) * (float(t2) - float(t1)) / 3.0,
     }
 
 
@@ -615,7 +633,7 @@ def slow_roll_entropy_change(c_0, epsilon_sr, t1, t2, max_g: int = 2) -> Dict[st
 # =========================================================================
 
 def banks_hilbert_space_dimension(c_dS_val) -> Dict[str, Any]:
-    """Banks conjecture: dim(H_dS) = exp(S_dS) = exp(pi*c_dS).
+    """Banks conjecture: dim(H_dS) = exp(S_dS) = exp(pi*c_dS/3).
 
     The de Sitter Hilbert space is conjectured to be finite-dimensional
     with dimension N = exp(S_dS).
@@ -626,7 +644,7 @@ def banks_hilbert_space_dimension(c_dS_val) -> Dict[str, Any]:
     The shadow obstruction tower is consistent with finiteness: the genus expansion
     converges (Bernoulli decay), and the total free energy is finite.
     """
-    S = PI * float(c_dS_val)
+    S = gibbons_hawking_entropy(c_dS_val)
     # Avoid overflow for large c_dS
     if S > 700:
         log_N = S
@@ -649,7 +667,7 @@ def banks_hilbert_space_dimension(c_dS_val) -> Dict[str, Any]:
 def banks_dimension_quantum_corrected(c_dS_val, max_g: int = 3) -> Dict[str, Any]:
     """Quantum-corrected Hilbert space dimension.
 
-    log(N) = S_dS + sum_{g>=1} F_g = pi*c_dS + sum_g (c_dS/2)*lambda_g^FP
+    log(N) = S_dS + sum_{g>=1} F_g = pi*c_dS/3 + sum_g (c_dS/2)*lambda_g^FP
 
     The corrections are tiny: at genus 1, F_1/S_tree = 1/(24*2*pi) ~ 0.007.
     """
@@ -676,13 +694,13 @@ def hartle_hawking_norm_squared(c_dS_val, max_g: int = 2) -> Dict[str, Any]:
 
     The no-boundary wavefunction: Psi_HH = exp(-I_E / hbar).
     The Euclidean action I_E is related to the shadow free energy by
-      I_E^{(0)} = -S_dS / 2 = -pi*c_dS / 2  (tree level, for the hemisphere).
+      I_E^{(0)} = -S_dS / 2 = -pi*c_dS / 6  (tree level, for the hemisphere).
 
     The norm squared is:
       |Psi_HH|^2 = exp(-2*Re(I_E/hbar))
 
     At tree level:
-      |Psi_HH|^2 = exp(S_dS) = exp(pi*c_dS)  (the Gibbons-Hawking result).
+      |Psi_HH|^2 = exp(S_dS) = exp(pi*c_dS/3)  (the Gibbons-Hawking result).
 
     Higher genus corrections modify this:
       log |Psi_HH|^2 = S_dS + sum_{g>=1} 2*F_g
@@ -691,7 +709,7 @@ def hartle_hawking_norm_squared(c_dS_val, max_g: int = 2) -> Dict[str, Any]:
     F_g, and the full sphere (= two hemispheres glued) gives 2*F_g.
 
     Actually, the standard relation is log Z = S_dS where Z = |Psi_HH|^2.
-    So log |Psi_HH|^2 = S_dS = pi*c_dS + sum F_g (no extra factor of 2).
+    So log |Psi_HH|^2 = S_dS = pi*c_dS/3 + sum F_g (no extra factor of 2).
     """
     expansion = ds_entropy_genus_expansion(c_dS_val, max_g)
     log_psi_sq = expansion['S_total']
@@ -745,7 +763,7 @@ def comparison_table(c_values=None, max_g: int = 3) -> Dict[str, Any]:
     """Comparison table of dS entropy at various c_dS values.
 
     For each c_dS, tabulate:
-      S_dS^(g) = pi*c_dS + sum_{g'=1}^{g} F_{g'} (cumulative through genus g)
+      S_dS^(g) = pi*c_dS/3 + sum_{g'=1}^{g} F_{g'} (cumulative through genus g)
 
     Default c_dS values: 1, 6, 13 (Nariai), 24, 100.
     """

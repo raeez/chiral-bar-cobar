@@ -25,9 +25,9 @@ CLAIM 4: CohFT axioms: (1) equivariance, (2) splitting unconditional;
   Path 2: String defect vanishes iff R = Id
   Path 3: Cross-family consistency
 
-CLAIM 5: Teleman reconstruction produces F_g = kappa * lambda_g^FP
-  Path 1: Direct Givental formula
-  Path 2: Graph-sum at genus 2
+CLAIM 5: The scalar uniform-weight lane gives F_g = kappa * lambda_g^FP
+  Path 1: Direct scalar-lane formula
+  Path 2: Genus-2 scalar coefficient check
   Path 3: Comparison with Faber-Pandharipande numbers
   Path 4: R-dressed vertex factors
 
@@ -106,11 +106,11 @@ class TestWittenKontsevich:
         # <tau_2>_0 = 0 (wrong dimension: need d = 0 for g=0 n=3, not n=1)
         assert wk_intersection(0, (2,)) == Rational(0)
         # <tau_0 tau_0>_0 = 0 (wrong dimension: d=0 but dim=1)
-        # Actually 2*0-2+2 = 0 which is not > 0, unstable.
+        # Here 2*0-2+2 = 0, so the two-point genus-zero term is unstable.
         assert wk_intersection(0, (0, 0)) == Rational(0)
 
     def test_string_equation_genus0(self):
-        """String equation: <tau_0 tau_0 tau_0 tau_0>_0 = <tau_0 tau_0 tau_0>_0 * 3 = ... wait.
+        """String equation gives zero for <tau_0 tau_0 tau_0 tau_0>_0.
 
         <tau_0^4>_0: dim = 3*0-3+4 = 1.  sum d_i = 0 != 1.  So = 0.
         The string equation removes tau_0: <tau_0 ... tau_0>_0 with n tau_0's.
@@ -125,10 +125,11 @@ class TestWittenKontsevich:
     def test_tau1_tau1_genus1(self):
         """<tau_1 tau_1>_1: dim = 2, sum d = 2.
 
-        Dilaton: <tau_1 tau_1>_1 = (2*1-2+2) * <tau_1>_1 = 2/24 = 1/12.
+        Dilaton uses the remaining marking count:
+        <tau_1 tau_1>_1 = (2*1-2+1) * <tau_1>_1 = 1/24.
         """
         result = wk_intersection(1, (1, 1))
-        assert result == Rational(1, 12), f"Got {result}, expected 1/12"
+        assert result == Rational(1, 24), f"Got {result}, expected 1/24"
 
     def test_tau0_tau1_genus1_dimension_fail(self):
         """<tau_0 tau_1>_1: dim = 2, sum d = 1 != 2. So = 0."""
@@ -149,19 +150,20 @@ class TestWittenKontsevich:
     def test_tau4_tau1_genus2(self):
         """<tau_4 tau_1>_2: dim = 5, sum d = 5.
 
-        Dilaton: (2*2-2+2) * <tau_4>_2 = 4/1152 = 1/288.
+        Dilaton uses the remaining marking count:
+        (2*2-2+1) * <tau_4>_2 = 3/1152 = 1/384.
         """
         result = wk_intersection(2, (4, 1))
-        assert result == Rational(1, 288), f"Got {result}, expected 1/288"
+        assert result == Rational(1, 384), f"Got {result}, expected 1/384"
 
     def test_tau3_tau2_genus2_dvv(self):
-        """<tau_3 tau_2>_2 = 5/8064 from DVV recursion.
+        """<tau_3 tau_2>_2 = 29/5760 from the DVV recursion.
 
-        DVV: 7*<tau_3 tau_2>_2 = 5*<tau_4>_2 = 5/1152, so 5/8064.
-        Cross-check: this is a genuine DVV computation (not from table).
+        This is a genuine two-point DVV value, independent of the
+        one-point formula and the dilaton equation.
         """
         result = wk_intersection(2, (3, 2))
-        assert result == Rational(5, 8064), f"Got {result}, expected 5/8064"
+        assert result == Rational(29, 5760), f"Got {result}, expected 29/5760"
 
     def test_tau5_tau0_genus2_string(self):
         """<tau_5 tau_0>_2 = 1/1152 via string equation from <tau_4>_2."""
@@ -291,7 +293,7 @@ class TestSymplecticRMatrix:
 # ====================================================================
 
 class TestComplementarityPropagator:
-    """Complementarity propagator sqrt(Q(z)/Q(0)) -- NOT symplectic."""
+    """Complementarity propagator sqrt(Q(z)/Q(0)) fails symplecticity."""
 
     def test_heisenberg_trivial(self):
         """Heisenberg: complementarity propagator = 1."""
@@ -306,7 +308,6 @@ class TestComplementarityPropagator:
         a = 3*alpha/kappa = 3*2/(9/4) = 8/3.
         R_1 = a/2 = 4/3.
         b = (9*4 + 0)/(4*(9/4)^2) = 36/(81/4) = 144/81 = 16/9.
-        R_2 = (b - a^2/4)/2 = (16/9 - 64/9)/(-) wait...
         R_2 = (4b - a^2)/8 = (64/9 - 64/9)/8 = 0.
         So R^comp = 1 + (4/3)z.
         """
@@ -345,15 +346,20 @@ class TestStringDefect:
     """String equation defect sigma(z) = R(z)*e - e."""
 
     def test_heisenberg_no_defect(self):
-        """Heisenberg: sigma = 0 (R = Id, string equation holds)."""
+        """Heisenberg: sigma = 0; flat unit still requires vacuum_in_V."""
         result = string_defect('heisenberg', 8, kappa=Rational(1))
-        assert result['has_flat_unit'] is True
+        result_with_vacuum = string_defect(
+            'heisenberg', 8, kappa=Rational(1), vacuum_in_V=True)
+        assert result['formal_rank_one_unit_fixed'] is True
+        assert result['has_flat_unit'] is False
+        assert result_with_vacuum['has_flat_unit'] is True
         assert result['obstruction_order'] is None
 
     def test_betagamma_no_defect(self):
-        """Beta-gamma: sigma = 0 on weight line."""
+        """Beta-gamma: sigma = 0 on the weight line."""
         result = string_defect('betagamma', 8)
-        assert result['has_flat_unit'] is True
+        assert result['formal_rank_one_unit_fixed'] is True
+        assert result['has_flat_unit'] is False
 
     def test_virasoro_has_defect(self):
         """Virasoro: sigma != 0 (string equation fails, AP30)."""
@@ -430,27 +436,32 @@ class TestCohFTAxioms:
             assert result['axioms']['CohFT-2 (splitting)']['holds'] is True
 
     def test_flat_identity_heisenberg(self):
-        """CohFT-3 (flat identity) holds for Heisenberg (R = Id)."""
+        """CohFT-3 needs the Heisenberg vacuum membership input."""
         result = cohft_axiom_analysis('heisenberg', 6, kappa=Rational(1))
-        assert result['axioms']['CohFT-3 (flat identity)']['holds'] is True
+        result_with_vacuum = cohft_axiom_analysis(
+            'heisenberg', 6, kappa=Rational(1), vacuum_in_V=True)
+        assert result['axioms']['CohFT-3 (flat identity)']['holds'] is False
+        assert result_with_vacuum['axioms']['CohFT-3 (flat identity)']['holds'] is True
 
     def test_flat_identity_virasoro_fails(self):
-        """CohFT-3 (flat identity) FAILS for Virasoro (AP30)."""
+        """CohFT-3 lacks the Virasoro flat-unit input."""
         result = cohft_axiom_analysis('virasoro', 6, c=Rational(26))
         assert result['axioms']['CohFT-3 (flat identity)']['holds'] is False
 
     def test_flat_identity_affine_fails(self):
-        """CohFT-3 (flat identity) FAILS for affine sl_2."""
+        """CohFT-3 lacks the affine sl_2 flat-unit input."""
         result = cohft_axiom_analysis('affine_sl2', 6, k=1)
         assert result['axioms']['CohFT-3 (flat identity)']['holds'] is False
 
     def test_modified_string_unconditional(self):
-        """CohFT-3' (modified string) holds for all families."""
+        """CohFT-3' is recorded as a finite-window diagnostic."""
         for fam, params in [('heisenberg', {'kappa': Rational(1)}),
                             ('virasoro', {'c': Rational(26)}),
                             ('affine_sl2', {'k': 1})]:
             result = cohft_axiom_analysis(fam, 4, **params)
-            assert result['axioms']["CohFT-3' (modified string)"]['holds'] is True
+            axiom = result['axioms']["CohFT-3' (modified string)"]
+            assert axiom['holds'] is None
+            assert axiom['status'] == 'FINITE_WINDOW_DIAGNOSTIC'
 
     def test_dilaton_unconditional(self):
         """CohFT-4 (dilaton) holds for all families."""
@@ -461,12 +472,15 @@ class TestCohFTAxioms:
             assert result['axioms']['CohFT-4 (dilaton)']['holds'] is True
 
     def test_teleman_heisenberg_applies(self):
-        """Teleman reconstruction applies to Heisenberg (semisimple + flat unit)."""
+        """Teleman applies only after the flat-unit input is certified."""
         result = cohft_axiom_analysis('heisenberg', 4, kappa=Rational(1))
-        assert result['teleman_applicable'] is True
+        result_with_vacuum = cohft_axiom_analysis(
+            'heisenberg', 4, kappa=Rational(1), vacuum_in_V=True)
+        assert result['teleman_applicable'] is False
+        assert result_with_vacuum['teleman_applicable'] is True
 
     def test_teleman_virasoro_fails(self):
-        """Teleman reconstruction does NOT apply to Virasoro (no flat unit)."""
+        """Teleman reconstruction lacks the Virasoro flat-unit input."""
         result = cohft_axiom_analysis('virasoro', 4, c=Rational(26))
         assert result['teleman_applicable'] is False
 
@@ -499,7 +513,7 @@ class TestRDressedVertex:
 
         With R = Id: R_0 = 1, R_1 = 0.
         dim = 3*1-3+1 = 1.  V = sum_{d=0}^1 R_d <tau_d>_1.
-        <tau_0>_1 = 0 (dimension: d=0 != 1=dim... wait, dim for (g=1,n=1) is 1.
+        <tau_0>_1 = 0 because dim for (g=1,n=1) is 1 and d=0.
         <tau_0>_1: sum d = 0 != 1. So = 0.)
         <tau_1>_1 = 1/24.
         V^R(1,1) = R_0 * <tau_0>_1 + R_1 * <tau_1>_1 = 1*0 + 0*(1/24) = 0.
@@ -525,7 +539,8 @@ class TestRDressedVertex:
         V = sum_{d1+d2=2} R_{d1} R_{d2} <tau_{d1} tau_{d2}>_1.
         With R = Id: only (d1,d2) = (0,0) contributes but sum = 0 != 2.
         So V = 0 (dimension mismatch for all nonzero R-terms).
-        Wait: R_0 = 1, others = 0.  (0,0): d1+d2 = 0 != 2.  So V = 0.
+        Since R_0 = 1 and all higher R_i vanish, only (0,0)
+        contributes; its degree sum is 0 rather than 2, so V = 0.
         """
         R = [Rational(1)] + [Rational(0)] * 10
         result = r_dressed_vertex(R, 1, 2)
@@ -537,7 +552,7 @@ class TestRDressedVertex:
 # ====================================================================
 
 class TestGiventalReconstruction:
-    """Givental formula reproduces F_g = kappa * lambda_g^FP."""
+    """Scalar uniform-weight lane computes F_g = kappa * lambda_g^FP."""
 
     def test_F1_heisenberg(self):
         """F_1 = kappa * 1/24 for Heisenberg."""
@@ -583,7 +598,7 @@ class TestGiventalReconstruction:
 # ====================================================================
 
 class TestGenusVerification:
-    """Verify F_g = kappa * lambda_g^FP by multiple independent paths."""
+    """Verify the scalar lane F_g = kappa * lambda_g^FP by independent paths."""
 
     def test_genus1_bernoulli(self):
         """F_1 = kappa * 1/24 via Bernoulli formula."""
@@ -633,14 +648,15 @@ class TestTelemanAnalysis:
     """Full Teleman reconstruction analysis."""
 
     def test_heisenberg_teleman_applies(self):
-        """Teleman applies to Heisenberg (semisimple + flat unit)."""
-        result = teleman_analysis('heisenberg', 3, 8, kappa=Rational(1))
+        """Teleman applies after the Heisenberg flat unit is supplied."""
+        result = teleman_analysis(
+            'heisenberg', 3, 8, kappa=Rational(1), vacuum_in_V=True)
         assert result['teleman_applies'] is True
         assert result['is_semisimple'] is True
         assert result['has_flat_unit'] is True
 
     def test_virasoro_teleman_fails(self):
-        """Teleman does NOT apply to Virasoro (no flat unit)."""
+        """Teleman lacks the Virasoro flat-unit input."""
         result = teleman_analysis('virasoro', 2, 8, c=Rational(26))
         assert result['teleman_applies'] is False
         assert result['is_semisimple'] is True
@@ -709,12 +725,12 @@ class TestRMatrixComparison:
             assert result['symp_is_symplectic']
 
     def test_complementarity_not_symplectic_affine(self):
-        """Complementarity propagator is NOT symplectic for affine."""
+        """Complementarity propagator fails symplecticity for affine."""
         result = r_matrix_comparison('affine_sl2', 6, k=1)
         assert not result['comp_is_symplectic']
 
     def test_complementarity_not_symplectic_virasoro(self):
-        """Complementarity propagator is NOT symplectic for Virasoro."""
+        """Complementarity propagator fails symplecticity for Virasoro."""
         result = r_matrix_comparison('virasoro', 6, c=Rational(26))
         assert not result['comp_is_symplectic']
 
@@ -846,8 +862,8 @@ class TestAtlas:
             # CohFT-1 and CohFT-2 always hold
             assert axioms['CohFT-1 (equivariance)']['holds'] is True
             assert axioms['CohFT-2 (splitting)']['holds'] is True
-            # CohFT-3' always holds
-            assert axioms["CohFT-3' (modified string)"]['holds'] is True
+            # CohFT-3' is a finite-window diagnostic, not a full axiom proof.
+            assert axioms["CohFT-3' (modified string)"]['holds'] is None
             # CohFT-4 always holds
             assert axioms['CohFT-4 (dilaton)']['holds'] is True
 
@@ -905,9 +921,9 @@ class TestMultiPathCrossChecks:
         # Path 2: WK recursion
         p2 = wk_intersection(2, (4,))
         assert p2 == Rational(1, 1152)
-        # Path 3: dilaton consistency: <tau_4 tau_1>_2 / 4 = <tau_4>_2
-        tau41 = wk_intersection(2, (4, 1))  # = 4 * <tau_4>_2 by dilaton
-        p3 = tau41 / 4
+        # Path 3: dilaton consistency: <tau_4 tau_1>_2 / 3 = <tau_4>_2
+        tau41 = wk_intersection(2, (4, 1))  # = 3 * <tau_4>_2 by dilaton
+        p3 = tau41 / 3
         assert p3 == Rational(1, 1152)
         # Cross-check
         assert p1 == p2 == p3
@@ -941,12 +957,15 @@ class TestMultiPathCrossChecks:
         Path 3: Affine (R!=Id, defect!=0)
         Path 4: Virasoro (R!=Id, defect!=0)
         """
-        # Flat unit families
+        # Formal-unit families. CohFT flat unit additionally needs vacuum_in_V.
         for fam, params in [('heisenberg', {'kappa': Rational(1)}),
                             ('betagamma', {})]:
             sd = string_defect(fam, 6, **params)
-            assert sd['has_flat_unit'] is True, f"{fam} should have flat unit"
-        # Non-flat-unit families
+            sd_with_vacuum = string_defect(fam, 6, **params, vacuum_in_V=True)
+            assert sd['formal_rank_one_unit_fixed'] is True
+            assert sd['has_flat_unit'] is False
+            assert sd_with_vacuum['has_flat_unit'] is True
+        # Nontrivial R families
         for fam, params in [('affine_sl2', {'k': 1}),
                             ('virasoro', {'c': Rational(26)})]:
             sd = string_defect(fam, 6, **params)
@@ -994,19 +1013,19 @@ class TestMultiPathCrossChecks:
     # CLAIM: WK dilaton equation consistency
 
     def test_wk_dilaton_equation_consistency(self):
-        """Dilaton: <tau_1 X>_g = (2g-2+n) <X>_g.
+        """Dilaton: <tau_1 X>_g = (2g-2+n_remaining) <X>_g.
 
         Verified at genus 1 and genus 2.
         """
-        # <tau_1, tau_1>_1: chi = 2. <tau_1>_1 = 1/24.
+        # <tau_1, tau_1>_1: chi = 1. <tau_1>_1 = 1/24.
         lhs = wk_intersection(1, (1, 1))
-        rhs = 2 * wk_intersection(1, (1,))
-        assert lhs == rhs == Rational(1, 12)
+        rhs = wk_intersection(1, (1,))
+        assert lhs == rhs == Rational(1, 24)
 
-        # <tau_4, tau_1>_2: chi = 4. <tau_4>_2 = 1/1152.
+        # <tau_4, tau_1>_2: chi = 3. <tau_4>_2 = 1/1152.
         lhs2 = wk_intersection(2, (4, 1))
-        rhs2 = 4 * wk_intersection(2, (4,))
-        assert lhs2 == rhs2 == Rational(1, 288)
+        rhs2 = 3 * wk_intersection(2, (4,))
+        assert lhs2 == rhs2 == Rational(1, 384)
 
     # CLAIM: Koszul self-duality at c=13
 

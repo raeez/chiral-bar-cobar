@@ -1,6 +1,6 @@
 r"""Tests for Vicedo envelope engine: prefactorization algebras and modular extension.
 
-Comprehensive test suite (55+ tests) verifying:
+Targeted test suite verifying:
   1. Lie conformal input construction for all standard families
   2. Cyclic admissibility checks (pass and fail cases)
   3. Vicedo prefactorization algebra genus-0 OPE data
@@ -13,12 +13,12 @@ Comprehensive test suite (55+ tests) verifying:
  10. Independent sum factorization (prop:independent-sum-factorization)
  11. CFG E_3-algebra comparison
  12. Shadow depth classification (G/L/C/M)
- 13. Full pipeline: Lie conformal -> modular Koszul datum
+ 13. Full pipeline: Lie conformal -> modular Koszul package
  14. Obstruction analysis
  15. Cross-family consistency checks
 
 AP1: Every kappa formula verified independently per family.
-AP10: Tests use cross-family consistency, not just hardcoded values.
+AP10: Tests use cross-family consistency rather than hardcoded values.
 AP19: r-matrix pole orders = OPE pole orders - 1.
 AP27: Bar propagator weight = 1 always.
 AP32: genus-1 != all-genera for multi-weight.
@@ -59,6 +59,11 @@ from compute.lib.theorem_vicedo_envelope_engine import (
     extend_to_genus2,
     # Modular envelope
     build_modular_envelope,
+    kernel_normalization,
+    modular_koszul_package_slots,
+    holographic_package_slots,
+    koszul_object_firewall,
+    envelope_scope_diagnostic,
     # Verification
     verify_polynomial_level_dependence,
     verify_independent_sum,
@@ -80,6 +85,11 @@ from compute.lib.theorem_vicedo_envelope_engine import (
 
 k_sym = Symbol('k')
 c_sym = Symbol('c')
+z_sym = Symbol('z')
+Omega_tr_sym = Symbol('Omega_tr')
+Omega_KZ_sym = Symbol('Omega_KZ')
+hvee_sym = Symbol('h_vee')
+T_sym = Symbol('T')
 
 
 def _sym_eq(a, b):
@@ -211,7 +221,7 @@ class TestKappaComputation:
     """Tests for kappa computation from Lie conformal input.
 
     AP1: each family has its OWN kappa formula.
-    AP10: cross-family consistency checks, not just hardcoded values.
+    AP10: cross-family consistency checks rather than hardcoded values.
     """
 
     def test_heisenberg_kappa_symbolic(self):
@@ -255,7 +265,7 @@ class TestKappaComputation:
         assert compute_kappa(L) == 13
 
     def test_w3_kappa(self):
-        """W_3 at central charge c: kappa = 5c/6 (AP1: NOT c/2)."""
+        """W_3 at central charge c: kappa = 5c/6."""
         L = w3_lca()
         assert _sym_eq(compute_kappa(L), Rational(5) * c_sym / 6)
 
@@ -310,22 +320,10 @@ class TestShadowDepthClass:
         L = affine_sl2_lca()
         assert compute_shadow_depth_class(L) == 'L'
 
-    def test_betagamma_class_G(self):
-        """betagamma: the bracket is at pole order 0, weight-0 generator.
-
-        Since betagamma has a weight-0 generator (gamma), and the bracket
-        beta_{(0)} gamma = 1 is nontrivial, this should be classified
-        based on the bracket structure.
-        """
+    def test_betagamma_class_C(self):
+        """betagamma is class C, not affine class L."""
         L = betagamma_lca()
-        depth = compute_shadow_depth_class(L)
-        # betagamma has a nontrivial bracket (pole order 0) but mixed weights
-        # The actual class is C (contact, r_max=4) from the manuscript.
-        # Our classifier should return 'L' or 'C' based on the weight.
-        # Since max_weight = 1 and has_bracket = True, classifier gives 'L'.
-        # The true depth class is C, but this requires deeper analysis.
-        # For structural testing: the classifier is approximate.
-        assert depth in ('L', 'C', 'M')
+        assert compute_shadow_depth_class(L) == 'C'
 
     def test_virasoro_class_M(self):
         """Virasoro: class M (non-abelian, weight 2)."""
@@ -416,6 +414,41 @@ class TestGenus0OPE:
 
 
 # =========================================================================
+# 6b. Kernel normalization firewall
+# =========================================================================
+
+class TestKernelNormalization:
+    """Trace-form collision kernels are not KZ-normalized kernels."""
+
+    def test_heisenberg_kernel_constant(self):
+        """Heisenberg collision residue is k/z with level prefix."""
+        diag = kernel_normalization('heisenberg')
+        assert _sym_eq(diag.collision_residue, k_sym / z_sym)
+        assert diag.kz_residue is None
+        assert diag.collision_at_level_zero == 0
+        assert diag.pole_orders == (1,)
+
+    def test_affine_kernel_trace_form_not_kz(self):
+        """Affine raw kernel k*Omega_tr/z differs from KZ normalization."""
+        diag = kernel_normalization('affine')
+        expected_collision = k_sym * Omega_tr_sym / z_sym
+        expected_kz = Omega_KZ_sym / ((k_sym + hvee_sym) * z_sym)
+        assert _sym_eq(diag.collision_residue, expected_collision)
+        assert _sym_eq(diag.kz_residue, expected_kz)
+        assert diag.collision_at_level_zero == 0
+        assert _sym_eq(diag.kz_at_level_zero, Omega_KZ_sym / (hvee_sym * z_sym))
+        assert simplify(diag.collision_residue - diag.kz_residue) != 0
+
+    def test_virasoro_kernel_cubic_pole(self):
+        """Virasoro collision residue is (c/2)/z^3 + 2T/z."""
+        diag = kernel_normalization('virasoro')
+        expected = (c_sym / 2) / z_sym**3 + 2 * T_sym / z_sym
+        assert _sym_eq(diag.collision_residue, expected)
+        assert diag.kz_residue is None
+        assert diag.pole_orders == (3, 1)
+
+
+# =========================================================================
 # 7. Nishinaka-Vicedo agreement
 # =========================================================================
 
@@ -449,6 +482,12 @@ class TestNishinakaVicedoAgreement:
             L = constructor()
             result = verify_nishinaka_vicedo_agreement(L)
             assert result['kappa_agree'] is True, f"Failed for {L.name}"
+
+    def test_agreement_does_not_promote_to_modular_theorem(self):
+        """Genus-0 agreement is a holomorphic-sector diagnostic only."""
+        result = verify_nishinaka_vicedo_agreement(affine_sl2_lca())
+        assert result['comparison_scope'] == 'genus_0_holomorphic_sector'
+        assert result['promotes_to_modular_koszul_theorem'] is False
 
 
 # =========================================================================
@@ -533,8 +572,8 @@ class TestGenus2Extension:
         assert g2.is_uniform_weight is True
         assert g2.delta_f2_cross == 0
 
-    def test_w3_not_uniform_weight(self):
-        """W_3 is NOT uniform-weight (weights 2 and 3)."""
+    def test_w3_multi_weight(self):
+        """W_3 is multi-weight, with generator weights 2 and 3."""
         L = w3_lca()
         pfa = build_vicedo_prefactorization(L)
         g1 = extend_to_genus1(pfa)
@@ -553,6 +592,16 @@ class TestGenus2Extension:
         g2 = extend_to_genus2(g1)
         delta = g2.delta_f2_cross
         assert delta != 0
+
+    def test_w3_cross_channel_exact_formula(self):
+        """W_3 genus-2 cross-channel correction is (c+204)/(16c)."""
+        L = w3_lca()
+        pfa = build_vicedo_prefactorization(L)
+        g1 = extend_to_genus1(pfa)
+        g2 = extend_to_genus2(g1)
+        expected = (c_sym + 204) / (16 * c_sym)
+        assert _sym_eq(g2.delta_f2_cross, expected)
+        assert _sym_eq(g2.delta_f2_cross.subs(c_sym, 100), Rational(19, 100))
 
     def test_w3_cross_channel_positive_for_positive_c(self):
         """W_3 at c=100: delta_F2 = (100+204)/(16*100) = 304/1600 > 0."""
@@ -608,6 +657,44 @@ class TestModularEnvelope:
         assert env.polynomial_degree_bound[2] == 1
         assert env.polynomial_degree_bound[3] == 2
         assert env.polynomial_degree_bound[4] == 3
+
+
+class TestPackageFirewalls:
+    """Package and object slots cannot collapse into one another."""
+
+    def test_modular_package_slots_are_six_projections(self):
+        """Modular Koszul package has six projections, not seven entries."""
+        assert modular_koszul_package_slots() == (
+            'Fact_X(L)',
+            'barB_X(L)',
+            'Theta_L',
+            'L_L',
+            '(V_br,T_br)',
+            'R4_mod(L)',
+        )
+
+    def test_holographic_package_slots_are_distinct(self):
+        """Holographic package is (A,A^i,A^!,C,r,Theta,nabla)."""
+        assert holographic_package_slots() == (
+            'A',
+            'A^i',
+            'A^!',
+            'C',
+            'r(z)',
+            'Theta_A',
+            'nabla^hol',
+        )
+        assert holographic_package_slots() != modular_koszul_package_slots()
+
+    def test_object_firewall_keeps_bar_verdier_hochschild_separate(self):
+        """A, B(A), A^i, A^!, Z_ch^der(A), Omega(B(A)) stay typed."""
+        firewall = koszul_object_firewall()
+        assert 'ordered bar coalgebra' in firewall['B(A)']
+        assert 'bar-dual coalgebra' in firewall['A^i']
+        assert 'Verdier' in firewall['A^!']
+        assert 'Hochschild bulk' in firewall['Z_ch^der(A)']
+        assert 'not Koszul duality' in firewall['Omega(B(A))']
+        assert 'Hochschild' not in firewall['A^!']
 
 
 # =========================================================================
@@ -701,6 +788,15 @@ class TestCFGComparison:
         result = cfg_comparison('sl_2')
         assert result.swiss_cheese_match is True
 
+    def test_cfg_comparison_does_not_identify_bar_with_A_bang(self):
+        """CFG boundary comparison keeps B(A), A^i, A^!, and bulk apart."""
+        result = cfg_comparison('sl_2')
+        assert result.promotes_to_modular_koszul_theorem is False
+        assert 'ordered bar coalgebra' in result.bar_complex_role
+        assert 'A^i=H^*(B(A))' in result.bar_complex_role
+        assert 'after Verdier' in result.bar_complex_role
+        assert 'Hochschild bulk' in result.derived_center_role
+
     def test_cfg_for_multiple_algebras(self):
         """CFG construction works for sl_2, sl_3, so_5."""
         for g in ['sl_2', 'sl_3', 'so_5']:
@@ -713,10 +809,10 @@ class TestCFGComparison:
 # =========================================================================
 
 class TestFullPipeline:
-    """Tests for the full pipeline: Lie conformal -> modular Koszul datum."""
+    """Tests for the full pipeline: Lie conformal -> modular Koszul package."""
 
     def test_heisenberg_pipeline(self):
-        """Heisenberg: full pipeline produces 6-fold datum."""
+        """Heisenberg: full pipeline produces the projection package."""
         L = heisenberg_lca()
         datum = full_pipeline(L)
         assert datum.bar_kappa == k_sym
@@ -769,6 +865,22 @@ class TestFullPipeline:
             datum = full_pipeline(L)
             assert datum.branch_rank == expected_rank, f"Failed for {L.name}"
 
+    def test_pipeline_records_package_not_holographic_slots(self):
+        """Full pipeline returns modular projections and records the comparison."""
+        datum = full_pipeline(affine_sl2_lca())
+        assert datum.package_slots == modular_koszul_package_slots()
+        assert datum.holographic_slots == holographic_package_slots()
+        assert datum.package_slots != datum.holographic_slots
+        assert datum.scope_diagnostic is not None
+        assert datum.scope_diagnostic.may_promote_diagnostic_to_theorem is False
+
+    def test_pipeline_object_firewall_records_inversion_not_duality(self):
+        """Omega(B(A))=A is inversion; A^! is the Verdier branch."""
+        datum = full_pipeline(heisenberg_lca())
+        assert 'bar-cobar inversion' in datum.object_firewall['Omega(B(A))']
+        assert 'not Koszul duality' in datum.object_firewall['Omega(B(A))']
+        assert 'Verdier' in datum.object_firewall['A^!']
+
 
 # =========================================================================
 # 15. Obstruction analysis
@@ -796,8 +908,8 @@ class TestObstructionAnalysis:
         assert analysis.is_uniform_weight is True
         assert 'scalar' in analysis.obstruction_source
 
-    def test_w3_not_uniform(self):
-        """W_3 is NOT uniform-weight: cross-channel obstruction."""
+    def test_w3_multi_weight_obstruction(self):
+        """W_3 has a multi-weight cross-channel obstruction."""
         L = w3_lca()
         analysis = analyze_obstruction(L)
         assert analysis.is_uniform_weight is False
@@ -818,10 +930,29 @@ class TestObstructionAnalysis:
         assert analysis.termination_arity == 3
 
     def test_virasoro_tower_infinite(self):
-        """Virasoro: shadow tower does NOT terminate (class M)."""
+        """Virasoro has an infinite class-M shadow tower."""
         L = virasoro_lca()
         analysis = analyze_obstruction(L)
         assert analysis.tower_terminates is False
+
+
+class TestEnvelopeScopeDiagnostic:
+    """Finite diagnostics carry theorem-scope boundaries explicitly."""
+
+    def test_multi_weight_scope_requires_cross_channel_terms(self):
+        """W_3 finite envelope data cannot promote scalar all-genera formulas."""
+        diagnostic = envelope_scope_diagnostic(w3_lca())
+        assert diagnostic.may_promote_diagnostic_to_theorem is False
+        assert 'g>=2 requires delta_F_g_cross' in diagnostic.all_genera_scope
+        assert 'finite OPE/KZ/Yangian diagnostics' in diagnostic.finite_kz_yangian_warning
+        assert 'R4_mod(L)' in diagnostic.finite_kz_yangian_warning
+
+    def test_uniform_scope_names_hypotheses(self):
+        """Uniform-weight scalar lane still records its PBW/uniform hypotheses."""
+        diagnostic = envelope_scope_diagnostic(virasoro_lca())
+        assert 'uniform-weight scalar lane' in diagnostic.all_genera_scope
+        assert 'PBW/uniform-weight hypotheses' in diagnostic.all_genera_scope
+        assert 'Mittag-Leffler' in diagnostic.modular_package_scope
 
 
 # =========================================================================

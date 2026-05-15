@@ -24,8 +24,8 @@ frontier investigations of the monograph's framework:
 
   PROBLEM 3 (Gaiotto):
     Gaiotto et al. work in 3d HT / 4d N=4 / M-theory:
-    - S-duality != Koszul duality (S_3 triality vs FF involution)
-    - 3d mirror != Koszul duality (mirror sum != Koszul sum)
+    - S-duality and Koszul duality are distinct (S_3 triality vs FF involution)
+    - 3d mirror and Koszul duality are distinct (mirror sum vs Koszul sum)
     - GKW higher operations = our SC^{ch,top} A-infinity operations
     - Shadow depth G/L/C/M REFINES GKW formality/non-formality
     - Y_{N1,N2,N3} landscape: all Koszul, classes G and M only
@@ -58,11 +58,13 @@ projections of this single object:
 
   (3) GAIOTTO: Theta_A at genus 0 in the HT twist is the GKW perturbative
       expansion.  The shadow depth class = the HT formality stratum.
-      The Koszul dual A! is NOT S-dual and NOT mirror.  It is a FOURTH duality:
+      The Koszul dual A! is distinct from the S-dual and from the mirror.
+      It is a fourth duality:
         S-duality: (N1,N2) <-> (N2,N1), Psi <-> 1/Psi  (physics)
         FF-duality: Psi <-> -Psi  (Feigin-Frenkel involution)
         3d mirror: Coulomb <-> Higgs (kappa_C + kappa_H = N_f)
-        Koszul: A <-> A!  (bar-cobar, kappa + kappa' = 0 for KM)
+        Koszul: A -> A^i=H^*(B(A)) -> A! by Verdier duality
+                 (kappa + kappa' = 0 for KM)
       These COINCIDE only in special cases (rank 1, free fields).
 
   The BRIDGE between (2) and (3) is the 4d CS / twisted holography framework:
@@ -81,7 +83,7 @@ This engine implements 10 cross-verification axes connecting the three problems:
   Axis 4: shadow depth vs formality (G/L/C/M refines GKW d'=1 non-formality)
   Axis 5: r-matrix agreement (bar collision = Costello 4d CS = Yangian RTT)
   Axis 6: form factor hierarchy (arity-k shadow = k-point CG amplitude)
-  Axis 7: duality discrimination (Koszul != S-dual != mirror != FF)
+  Axis 7: duality discrimination (Koszul, S-dual, mirror, FF)
   Axis 8: CoHA-bar bridge (CoHA multiplication dual to bar comultiplication)
   Axis 9: universality/descent (Cliff universal = D-module = etale descent)
   Axis 10: analytic hierarchy (C_2-cof, Koszul, HS-sewing orthogonality)
@@ -604,13 +606,16 @@ class DualityDiscrimination:
 def four_dualities() -> List[DualityDiscrimination]:
     """The four distinct dualities acting on chiral algebras.
 
-    CRITICAL: these are DIFFERENT operations with DIFFERENT fixed points.
+    These are distinct operations with distinct fixed points.
     They coincide only in degenerate cases.
     """
     return [
         DualityDiscrimination(
             duality_name='Koszul duality',
-            transformation='A -> A! = (H*(B(A)))^v, bar-cobar (Theorems A-B)',
+            transformation=(
+                'A -> A^i=H^*(B(A)); A^i -> A! by Verdier duality '
+                '(finite-type/completed branch)'
+            ),
             kappa_relation='kappa(A) + kappa(A!) = 0 (KM/free); rho*K (W-algebras)',
             vanishing_locus='c=13 for Virasoro (self-dual), c=0 for Heisenberg',
             is_involution=True,

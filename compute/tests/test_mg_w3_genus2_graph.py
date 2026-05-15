@@ -2,14 +2,14 @@ r"""Tests for the explicit genus-2 graph sum for W_3 (multi-weight).
 
 Comprehensive multi-path verification of the genus-2 free energy F_2(W_3).
 
-RESULT: F_2(W_3) = kappa*lambda_2 + (c+204)/(16c) at the naive CohFT level.
+RESULT: F_2(W_3) = kappa*lambda_2 + (c+204)/(16c) in the stated finite-window graph model.
 The cross-channel correction (c+204)/(16c) is NONZERO for all c > 0.
-The result is NOT proportional to lambda_2 without R-matrix corrections.
+The result is NOT proportional to lambda_2 inside this finite-window graph model.
 This is the computational content of op:multi-generator-universality.
 
 Test structure (8 verification paths):
-    1. Graph topology: 6 graphs, stability, genus, automorphisms
-    2. Frobenius algebra: metric, propagator, structure constants, Z_2 parity
+    1. Graph topology: 7 graphs total, 6 boundary graphs, stability, automorphisms
+    2. OPE channel data: metric, propagator, structure constants, Z_2 parity
     3. PATH 1 vs PATH 2: direct enumeration vs analytic formulas
     4. Per-graph amplitudes: exhaustive channel-by-channel verification
     5. Cross-channel correction: the multi-generator signal delta_F2
@@ -36,7 +36,9 @@ from mg_w3_genus2_graph_engine import (
     kappa_T, kappa_W, kappa_total,
     metric, propagator,
     structure_constant_upper, structure_constant_lower,
-    genus0_3pt, genus0_4pt,
+    product_upper, associator_upper, associativity_violations,
+    genus0_3pt, genus0_4pt, genus0_4pt_by_pairing,
+    four_point_pairing_window, banana_mixed_amplitude_by_pairing,
     genus1_1pt, genus1_2pt,
     # Graphs
     GRAPHS, verify_graph_topology,
@@ -55,6 +57,7 @@ from mg_w3_genus2_graph_engine import (
     koszul_duality_check, large_c_analysis,
     z2_parity_check, single_generator_limit,
     proportionality_test, compute_full_summary,
+    finite_window_audit,
 )
 
 # Standard test central charges
@@ -131,17 +134,17 @@ class TestGraphTopology(unittest.TestCase):
         self.assertEqual(max_e, 3)  # 3*2 - 3 = 3
 
     def test_inverse_aut_sum(self):
-        """Sum of 1/|Aut| = 1 + 1/2 + 1/8 + 1/2 + 1/12 + 1/2 + 1/8 = 71/24."""
+        """Sum of 1/|Aut| = 1 + 1/2 + 1/8 + 1/2 + 1/12 + 1/2 + 1/8 = 17/6."""
         total = sum(Fraction(1, G['aut']) for G in GRAPHS)
         self.assertEqual(total, Fraction(17, 6))
 
 
 # ============================================================================
-# 2. Frobenius algebra data
+# 2. OPE channel data
 # ============================================================================
 
-class TestFrobeniusAlgebra(unittest.TestCase):
-    """Verify the W_3 Frobenius algebra data."""
+class TestOPEChannelData(unittest.TestCase):
+    """Verify the W_3 OPE channel data."""
 
     def test_kappa_T(self):
         for c in C_VALS:
@@ -202,7 +205,7 @@ class TestFrobeniusAlgebra(unittest.TestCase):
                                              f"C_{{{i}{j}{k}}} = {val} != {c}")
 
     def test_4pt_universality(self):
-        """V_{0,4}(i,i|j,j) = 2c for ALL channel pairs."""
+        """In the canonical 01|23 window, V_{0,4}(i,i|j,j) = 2c."""
         for c in C_VALS:
             if c > 0:
                 for i in ('T', 'W'):
@@ -210,6 +213,32 @@ class TestFrobeniusAlgebra(unittest.TestCase):
                         val = genus0_4pt((i, i), (j, j), c)
                         self.assertEqual(val, 2 * c,
                                          f"V_{{0,4}}({i},{i}|{j},{j}) = {val}")
+
+    def test_product_is_not_associative(self):
+        """The OPE channel product is not a Frobenius-algebra product."""
+        self.assertEqual(product_upper('T', 'T'), {'T': Fraction(2)})
+        self.assertEqual(product_upper('T', 'W'), {'W': Fraction(3)})
+        self.assertEqual(associator_upper('T', 'T', 'W'), {'W': Fraction(-3)})
+        self.assertTrue(associativity_violations())
+
+    def test_mixed_4pt_pairing_dependence(self):
+        """Mixed W_3 four-point windows depend on factorization."""
+        for c in C_VALS:
+            window = four_point_pairing_window(('T', 'T', 'W', 'W'), c)
+            self.assertFalse(window['pairing_independent'])
+            self.assertEqual(genus0_4pt_by_pairing(('T', 'T', 'W', 'W'),
+                                                   c, '01|23'), 2 * c)
+            self.assertEqual(window['values']['01|23'], 2 * c)
+            self.assertEqual(window['values']['02|13'], 3 * c)
+            self.assertEqual(window['values']['03|12'], 3 * c)
+
+    def test_diagonal_4pt_pairing_independence(self):
+        """Pure diagonal four-point windows are pairing-independent."""
+        for c in C_VALS:
+            window = four_point_pairing_window(('T', 'T', 'T', 'T'), c)
+            self.assertTrue(window['pairing_independent'])
+            for val in window['values'].values():
+                self.assertEqual(val, 2 * c)
 
     def test_genus1_1pt(self):
         """V_{1,1}(i) = kappa_i/24."""
@@ -388,6 +417,16 @@ class TestBanana(unittest.TestCase):
         # Ratio test: all_W / all_T = (9/4) = (eta^W / eta^T)^2
         self.assertEqual(r['all_W'] / r['all_T'], Fraction(9, 4))
 
+    def test_mixed_pairing_firewall(self):
+        """Canonical banana mixed term uses 01|23; crossed windows differ."""
+        for c in C_VALS:
+            self.assertEqual(banana_mixed_amplitude_by_pairing(c, '01|23'),
+                             Fraction(3) / c)
+            self.assertEqual(banana_mixed_amplitude_by_pairing(c, '02|13'),
+                             Fraction(9) / (2 * c))
+            self.assertEqual(banana_mixed_amplitude_by_pairing(c, '03|12'),
+                             Fraction(9) / (2 * c))
+
 
 class TestDumbbell(unittest.TestCase):
     """Gamma_3: dumbbell (2 vertices g=1, 1 bridge)."""
@@ -505,6 +544,45 @@ class TestLollipop(unittest.TestCase):
             self.assertEqual(amp, Fraction(1, 8))
 
 
+class TestBarbell(unittest.TestCase):
+    """Gamma_6: barbell (two genus-0 vertices, two self-loops and a bridge)."""
+
+    def test_all_T(self):
+        """A^{TTT} = 1/c."""
+        for c in C_VALS:
+            r = graph_amplitude_total(6, c)
+            self.assertEqual(r['all_T'], Fraction(1) / c)
+
+    def test_all_W_vanishes(self):
+        """All-W has bridge W, so both vertices have odd W-count and vanish."""
+        for c in C_VALS:
+            r = graph_amplitude_total(6, c)
+            self.assertEqual(r['all_W'], Fraction(0))
+
+    def test_mixed(self):
+        """Mixed = 21/(4c), from (T,T,W), (W,T,T), and (W,T,W)."""
+        for c in C_VALS:
+            r = graph_amplitude_total(6, c)
+            self.assertEqual(r['mixed'], Fraction(21) / (4 * c))
+
+    def test_bridge_W_assignments_vanish(self):
+        """Any assignment with W on the bridge has odd W-count at each vertex."""
+        c = Fraction(26)
+        for sigma in [('T', 'W', 'T'), ('T', 'W', 'W'),
+                      ('W', 'W', 'T'), ('W', 'W', 'W')]:
+            self.assertEqual(graph_amplitude_single(6, sigma, c), Fraction(0))
+
+    def test_nonzero_mixed_raw_amplitudes(self):
+        """The three nonzero mixed raw amplitudes are 12/c, 12/c, and 18/c."""
+        c = Fraction(26)
+        self.assertEqual(graph_amplitude_single(6, ('T', 'T', 'W'), c),
+                         Fraction(12) / c)
+        self.assertEqual(graph_amplitude_single(6, ('W', 'T', 'T'), c),
+                         Fraction(12) / c)
+        self.assertEqual(graph_amplitude_single(6, ('W', 'T', 'W'), c),
+                         Fraction(18) / c)
+
+
 # ============================================================================
 # 6. Cross-channel correction
 # ============================================================================
@@ -520,13 +598,14 @@ class TestCrossChannel(unittest.TestCase):
             self.assertEqual(delta, expected)
 
     def test_decomposition(self):
-        """delta = 3/c (banana) + 9/(2c) (theta) + 1/16 (lollipop)."""
+        """delta = 3/c + 9/(2c) + 1/16 + 21/(4c)."""
         for c in C_VALS:
             decomp = cross_channel_decomposition(c)
             self.assertTrue(decomp['match'])
             self.assertEqual(decomp['banana'], Fraction(3) / c)
             self.assertEqual(decomp['theta'], Fraction(9) / (2 * c))
             self.assertEqual(decomp['lollipop'], Fraction(1, 16))
+            self.assertEqual(decomp['barbell'], Fraction(21) / (4 * c))
 
     def test_always_positive(self):
         """delta_F2 > 0 for all c > 0."""
@@ -545,11 +624,11 @@ class TestCrossChannel(unittest.TestCase):
             self.assertEqual(boundary['mixed'], cross_channel_correction(c))
 
     def test_c_dependent_piece(self):
-        """The 1/c piece is 15/(2c) = (banana + theta)."""
+        """The 1/c piece is 51/(4c) = banana + theta + barbell."""
         for c in C_VALS:
             decomp = cross_channel_decomposition(c)
-            c_dep = decomp['banana'] + decomp['theta']
-            self.assertEqual(c_dep, Fraction(15) / (2 * c))
+            c_dep = decomp['banana'] + decomp['theta'] + decomp['barbell']
+            self.assertEqual(c_dep, Fraction(51) / (4 * c))
 
     def test_c_independent_piece(self):
         """The c-independent piece is 1/16 (lollipop only)."""
@@ -578,6 +657,24 @@ class TestPerChannelUniversality(unittest.TestCase):
             total_boundary = r['F2_T_boundary'] + r['F2_W_boundary']
             full = full_boundary_sum(c)
             self.assertEqual(total_boundary, full['diagonal'])
+
+    def test_smooth_hodge_terms_close_diagonal_lanes(self):
+        """Smooth genus-2 Hodge insertions close each diagonal channel exactly."""
+        for c in C_VALS:
+            r = per_channel_check(c)
+            self.assertEqual(r['F2_T_boundary'] + r['smooth_T'],
+                             r['F2_T_expected'])
+            self.assertEqual(r['F2_W_boundary'] + r['smooth_W'],
+                             r['F2_W_expected'])
+
+    def test_smooth_hodge_closed_forms(self):
+        """Exact smooth terms forced by kappa_i * lambda_2^FP."""
+        for c in C_VALS:
+            r = per_channel_check(c)
+            expected_T = c / 5760 - Fraction(1, 16) - Fraction(8, 3) / c
+            expected_W = c / 8640 - Fraction(1, 48) - Fraction(9, 4) / c
+            self.assertEqual(r['smooth_T'], expected_T)
+            self.assertEqual(r['smooth_W'], expected_W)
 
 
 # ============================================================================
@@ -935,6 +1032,41 @@ class TestMultiPathIndependence(unittest.TestCase):
             boundary = full_boundary_sum(c)
             formula = cross_channel_correction(c)
             self.assertEqual(boundary['mixed'], formula)
+
+
+# ============================================================================
+# 19. Finite-window attack probes
+# ============================================================================
+
+class TestFiniteWindowAudit(unittest.TestCase):
+    """Exact rational checks that prevent scalar-lane overinterpretation."""
+
+    def test_window_all_graphs_match(self):
+        rows = finite_window_audit([Fraction(4), Fraction(26), Fraction(100)])
+        for row in rows:
+            self.assertTrue(row['all_graphs_match'])
+            self.assertTrue(row['cross_formula_match'])
+
+    def test_window_records_barbell_term(self):
+        rows = finite_window_audit([Fraction(26)])
+        row = rows[0]
+        self.assertEqual(row['barbell_mixed'], Fraction(21, 104))
+        self.assertEqual(row['barbell_expected'], Fraction(21, 104))
+
+    def test_window_records_pairing_dependence(self):
+        rows = finite_window_audit([Fraction(26)])
+        row = rows[0]
+        self.assertFalse(row['mixed_four_point_window']['pairing_independent'])
+        self.assertEqual(row['banana_pairings']['01|23'], Fraction(3, 26))
+        self.assertEqual(row['banana_pairings']['02|13'], Fraction(9, 52))
+        self.assertEqual(row['banana_pairings']['03|12'], Fraction(9, 52))
+
+    def test_window_records_nonassociativity(self):
+        rows = finite_window_audit([Fraction(26)])
+        self.assertFalse(rows[0]['associative'])
+        triples = {tuple(v['triple']): v['associator']
+                   for v in rows[0]['associativity_violations']}
+        self.assertEqual(triples[('T', 'T', 'W')], {'W': Fraction(-3)})
 
 
 if __name__ == '__main__':

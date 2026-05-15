@@ -1,50 +1,23 @@
-r"""PVA deformation quantization comparison engine.
+r"""PVA deformation comparison engine.
 
-Compares the deformation quantization of Poisson vertex algebras (PVAs) in:
-  (A) Our bar-complex / modular Koszul framework (Vol I + Vol II)
-  (B) Gaiotto et al.'s 3d holomorphic-topological framework
-  (C) Standard algebraic methods (Li, De Sole-Kac, Arakawa)
+The module compares three surfaces attached to a vertex algebra ``A``:
 
-THE COMPARISON CHAIN
-====================
+* the Li associated graded vertex Poisson algebra ``gr^F(A)``;
+* the ordinary Poisson variety ``X_A = Spec(A/C_2(A))`` obtained from
+  the zeroth product on the Zhu--C_2 quotient;
+* the modular shadow tower extracted from the ordered bar coalgebra
+  ``B(A)``.
 
-For a vertex algebra A, there are three related objects:
-
-1. THE PVA (classical limit):
-   A_cl = gr^F(A) = A/C_2(A) (Zhu's C_2-algebra)
-   where C_2(A) = span{a_{(-2)}b : a, b in A} and the filtration F is
-   the Li filtration (Li 2003): F^p(A) = span of a^1_{(-n_1-1)}...a^k_{(-n_k-1)}|0>
-   with sum n_i >= p.
-
-   The associated variety: X_A = Spec(A/C_2(A)) = Spec(R_A)
-   is a Poisson variety. For affine KM V_k(g): X_{V_k(g)} = g* (the coadjoint
-   representation with Kirillov-Kostant Poisson bracket).
-
-2. THE BAR COMPLEX (our framework):
-   B(A) is a factorization coalgebra. The shadow obstruction tower
-   Theta_A projects to kappa, C, Q, ... at successive arities.
-   At genus 0: the bar complex encodes the OPE data.
-   At genus 1: the curvature kappa * omega_g appears.
-
-3. THE 3d HT THEORY (Gaiotto's framework):
-   For a PVA V, Khan-Zeng construct a 3d holomorphic-topological gauge
-   theory whose boundary algebra quantizes V. Gauge invariance = Jacobi
-   identity of the lambda-bracket.
-
-THE KEY QUESTION: Does the bar complex of A recover the modular deformation
-theory of A_cl? I.e., does our shadow obstruction tower = the obstruction
-tower for quantizing the PVA A_cl back to A?
-
-ANSWER (proved at genus 0, conditional at genus >= 1):
-  - Genus 0: YES. The bar differential d_B at arity n encodes the n-ary
-    OPE data, which is exactly the data needed to specify the quantization
-    of A_cl. The bar complex IS the quantization data.
-  - Genus 1: The curvature kappa * omega_1 is the FIRST MODULAR OBSTRUCTION
-    to extending the genus-0 quantization. This matches Khan-Zeng's
-    one-loop anomaly.
-  - Genus >= 2: The higher shadow coefficients (S_3, S_4, ...) package
-    the higher-genus modular obstructions. This is our modular PVA
-    quantization programme (Vol II, ch:modular-pva-quantization).
+These are different surfaces.  The full PVA lambda bracket may contain
+central lambda powers that are invisible to the ordinary Poisson bracket
+on ``X_A``.  The bar complex is a factorization coalgebra; its
+Maurer--Cartan element ``Theta_A`` projects to ``kappa``, the cubic
+shadow, the quartic contact term, and higher arity coefficients.  Genus
+0 records the tree-level OPE data.  Genus 1 records the curvature
+``kappa/24``.  At arities 2, 3, and 4 the shadow/deformation comparison
+is represented here as a proved low-arity check; higher arities are a
+computed model of the shadow-formality programme, not an additional
+proof.
 
 FAMILIES COMPARED
 =================
@@ -66,11 +39,11 @@ FAMILIES COMPARED
    - kappa = k
    - Shadow tower: terminates at arity 2 (class G, Gaussian)
 
-CONVENTIONS (AP44, AP49):
+CONVENTIONS:
   - Lambda-bracket uses DIVIDED POWER convention:
     {a_lambda b} = sum_{n>=0} (lambda^n / n!) a_{(n)} b
   - kappa formulas: kappa(V_k(g)) = dim(g) * (k + h^vee) / (2 * h^vee)
-  - The bar propagator is d log E(z,w), weight 1 (AP27)
+  - The bar propagator is d log E(z,w), weight 1
   - All arithmetic exact (Fraction/Rational)
 
 REFERENCES:
@@ -92,6 +65,76 @@ from typing import Any, Dict, List, NamedTuple, Optional, Tuple
 
 
 # =========================================================================
+# 0. OBJECT AND NORMALIZATION FIREWALLS
+# =========================================================================
+
+HOLOGRAPHIC_PACKAGE_ENTRIES: Tuple[str, ...] = (
+    "A",
+    "A^i",
+    "A^!",
+    "C",
+    "r(z)",
+    "Theta_A",
+    "nabla^hol",
+)
+"""Seven entries of the holographic package H(A)."""
+
+
+MODULAR_KOSZUL_PRIMARY_PROJECTIONS: Tuple[str, ...] = (
+    "Fact_X(L)",
+    "barB_X(L)",
+    "Theta_L",
+    "L_L",
+    "(V_br, T_br)",
+    "R4_mod(L)",
+)
+"""Six primary projections of the distinct compute-side package."""
+
+
+KERNEL_NORMALIZATIONS: Dict[str, str] = {
+    "affine_raw_collision": "k*Omega_tr/z",
+    "affine_KZ_coefficient": "Omega/((k+h^vee)z)",
+    "heisenberg_raw_collision": "k/z",
+    "virasoro_collision": "(c/2)/z^3 + 2T/z",
+}
+"""Collision-kernel normalizations used by this comparison surface."""
+
+
+OBJECT_FIREWALL: Dict[str, str] = {
+    "A": "input chiral algebra",
+    "B(A)": "ordered bar coalgebra before cohomology",
+    "A^i": "bar cohomology coalgebra H^*(B(A))",
+    "A^!": (
+        "Verdier/continuous-linear dual branch under finite-type or "
+        "completed hypotheses"
+    ),
+    "Omega(B(A))": "bar-cobar inversion recovering A",
+    "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/derived-centre bulk",
+}
+"""Typed firewall separating bar, Verdier-dual, and Hochschild objects."""
+
+
+def holographic_package_entries() -> Tuple[str, ...]:
+    """Return the seven entries of H(A), in canonical order."""
+    return HOLOGRAPHIC_PACKAGE_ENTRIES
+
+
+def modular_koszul_primary_projections() -> Tuple[str, ...]:
+    """Return the six projections of the distinct compute package."""
+    return MODULAR_KOSZUL_PRIMARY_PROJECTIONS
+
+
+def object_firewall() -> Dict[str, str]:
+    """Typed roles for A, B(A), A^i, A^!, inversion, and bulk."""
+    return dict(OBJECT_FIREWALL)
+
+
+def kernel_normalizations() -> Dict[str, str]:
+    """Return the collision and KZ kernel normalizations."""
+    return dict(KERNEL_NORMALIZATIONS)
+
+
+# =========================================================================
 # 1. PVA STRUCTURES FOR STANDARD FAMILIES
 # =========================================================================
 
@@ -101,7 +144,7 @@ class PVAData(NamedTuple):
     generators: list of (name, conformal_weight) pairs
     bracket_modes: dict mapping (gen_i, gen_j, mode_n) -> coefficient
         Convention: {a_lambda b} = sum_{n>=0} (lambda^n/n!) c_n
-        so c_n = a_{(n)} b (the OPE mode coefficient, NOT divided by n!)
+        so c_n = a_{(n)} b (the OPE mode coefficient before dividing by n!)
     central_terms: dict mapping (gen_i, gen_j, mode_n) -> central coefficient
         (terms proportional to |0> or the identity)
     """
@@ -115,32 +158,25 @@ def heisenberg_pva(k: Fraction) -> PVAData:
     r"""Heisenberg PVA at level k.
 
     Generator: J of conformal weight 1.
-    Lambda-bracket: {J_lambda J} = k
     OPE modes: J_{(0)} J = 0, J_{(1)} J = k, J_{(n)} J = 0 for n >= 2.
 
     In OPE language: J(z)J(w) ~ k/(z-w)^2.
     In lambda-bracket (divided power): {J_lambda J} = k * lambda^(1) = k * lambda / 1!.
 
-    Wait -- careful with conventions (AP44):
     The OPE J(z)J(w) = k/(z-w)^2 means J_{(1)} J = k, J_{(n)} J = 0 for n != 1.
     The lambda-bracket is {J_lambda J} = sum (lambda^n/n!) J_{(n)} J = k * lambda.
 
-    The CLASSICAL PVA (the Poisson limit) has:
-    {J_lambda J}_cl = k (constant, at lambda^0 = n=0 mode)
-    because the Poisson bracket is the LEADING (most singular) OPE coefficient.
-
-    Actually: for the Heisenberg, the PVA structure on gr^F is:
-    R_{H_k} = C[J] (polynomial ring in one variable)
-    {J_lambda J} = k (a constant lambda-bracket)
-    This gives a degree-1 Poisson bracket on J: {J, J} = k (constant).
-
-    The associated variety: Spec(R_{H_k}) = A^1 (the affine line).
+    The Li associated graded is the current PVA C[J] with
+    {J_lambda J} = k*lambda.  The ordinary Poisson bracket on the
+    affine variety Spec(C[J]) is the zeroth product and is therefore
+    trivial.  The level is nevertheless visible to the vertex Poisson
+    lambda bracket and to the collision residue r(z)=k/z.
     """
     return PVAData(
         name=f"Heisenberg_k={k}",
         generators=[("J", 1)],
         bracket_modes={
-            ("J", "J", 0): k,  # {J_lambda J} = k at mode 0
+            ("J", "J", 1): k,  # {J_lambda J} = k*lambda
         },
         central_terms={
             ("J", "J", 1): k,  # OPE: J_{(1)} J = k (the quantum correction)
@@ -162,12 +198,12 @@ def affine_sl2_pva(k: Fraction) -> PVAData:
 
     These are the mode-0 OPE coefficients. The quantum theory V_k(sl_2)
     adds the central extension at mode 1:
-        e_{(1)} f = k     (NOT k/2 -- this is the Killing form normalization)
+        e_{(1)} f = k     (Killing form normalization)
         h_{(1)} h = 2k    (the level)
         e_{(1)} e = 0
         f_{(1)} f = 0
 
-    Wait -- conventions matter. For sl_2 with basis {e, f, h}:
+    For sl_2 with basis {e, f, h}:
     [e, f] = h, [h, e] = 2e, [h, f] = -2f.
     Killing form: (e, f) = 1, (h, h) = 2, normalized so that
     long roots have squared length 2.
@@ -184,19 +220,18 @@ def affine_sl2_pva(k: Fraction) -> PVAData:
         h_{(0)} f = -2f, h_{(1)} f = 0
         h_{(0)} h = 0,  h_{(1)} h = 2k
 
-    The CLASSICAL PVA (mode 0 only = the Lie bracket on sl_2*):
-        {e_lambda f}_cl = h
-        {h_lambda e}_cl = 2e
-        {h_lambda f}_cl = -2f
+    The zeroth products give the Kirillov-Kostant bracket on sl_2*.
+    The full affine PVA lambda bracket also retains the central
+    k*lambda term; this central lambda term is invisible to the ordinary
+    Poisson bracket on X_A but visible to the collision residue.
 
     Associated variety: Spec(R_{V_k(sl_2)}) = sl_2* = A^3 (for generic k).
-    This is the Slodowy slice at the regular nilpotent for sl_2 = N (the nilcone).
     """
     return PVAData(
         name=f"sl2_k={k}",
         generators=[("e", 1), ("f", 1), ("h", 1)],
         bracket_modes={
-            # Lie bracket (classical PVA): mode 0
+            # Lie bracket on the ordinary Poisson variety: mode 0
             ("e", "f", 0): Fraction(1),    # {e_lambda f} has h-coefficient = 1
             ("h", "e", 0): Fraction(2),    # {h_lambda e} = 2e
             ("h", "f", 0): Fraction(-2),   # {h_lambda f} = -2f
@@ -225,27 +260,25 @@ def virasoro_pva(c: Fraction) -> PVAData:
         L_{(2)} L = 0   (no mode-2 non-central term)
         L_{(3)} L = c/2  (central charge / 2)
 
-    Lambda-bracket (divided power, AP44):
+    Lambda-bracket (divided power convention):
         {L_lambda L} = dL + 2*lambda*L + 0 + (c/2) * lambda^3/3!
                       = dL + 2*lambda*L + (c/12)*lambda^3
 
-    The CLASSICAL PVA keeps modes 0 and 1 (= the Poisson bracket):
-        {L_lambda L}_cl = dL + 2*lambda * L
-
-    The CENTRAL TERM (c/12)*lambda^3 is the quantum correction.
+    The Virasoro PVA at central charge c includes the central
+    c*lambda^3/12 term.  On the ordinary associated variety A^1 the
+    Poisson bracket is trivial: the zeroth product is dL, which dies in
+    the C_2 quotient.
 
     Associated variety: Spec(R_{Vir_c}) = A^1 (generated by L, with
     C_2(Vir_c) containing all normal-ordered products).
-    For c generic: quasi-lisse (Arakawa-Kawasetsu 2016).
     """
     return PVAData(
         name=f"Virasoro_c={c}",
         generators=[("L", 2)],
         bracket_modes={
-            # Poisson bracket (classical PVA): modes 0, 1
+            # Full Virasoro PVA lambda bracket
             ("L", "L", 0): Fraction(1),    # coefficient of dL
             ("L", "L", 1): Fraction(2),    # coefficient of L (conformal weight)
-            # Central extension (quantum): mode 3
             ("L", "L", 3): c / Fraction(2),  # L_{(3)} L = c/2
         },
         central_terms={
@@ -292,6 +325,18 @@ def kappa_general_km(dim_g: int, h_vee: int, k: Fraction) -> Fraction:
     return Fraction(dim_g) * (k + Fraction(h_vee)) / (Fraction(2) * Fraction(h_vee))
 
 
+def affine_sl2_cubic_shadow(k: Fraction) -> Fraction:
+    r"""Cubic shadow for affine sl_2 in the class-L normalization.
+
+    The local compute engines use
+    S_3 = 2*h^vee/(k+h^vee) = 4/(k+2) for sl_2.  The critical level
+    k=-2 is excluded from this non-critical class-L row.
+    """
+    if k == Fraction(-2):
+        raise ValueError("Affine sl_2 cubic shadow is undefined at k=-2")
+    return Fraction(4) / (k + Fraction(2))
+
+
 # =========================================================================
 # 3. ASSOCIATED VARIETY AND C_2 ALGEBRA
 # =========================================================================
@@ -299,15 +344,15 @@ def kappa_general_km(dim_g: int, h_vee: int, k: Fraction) -> Fraction:
 def associated_variety_dimension(family: str, **params) -> Dict[str, Any]:
     r"""Dimension of the associated variety X_A = Spec(A / C_2(A)).
 
-    CRITICAL DISTINCTION (CLAUDE.md: universal vs simple quotient):
+    Universal/simple distinction:
     - V_k(g) is the UNIVERSAL affine vertex algebra. It is freely generated
-      (De Sole-Kac), Koszul at ALL levels (prop:pbw-universality), and its
+      (De Sole-Kac) on the PBW surface, and its
       associated variety is ALWAYS g* (the full coadjoint representation).
     - L_k(g) is the SIMPLE QUOTIENT V_k(g) / J_k where J_k is the maximal
-      graded ideal. At admissible levels with q >= 2 (non-integer), L_k(g)
-      has smaller associated variety (nilpotent orbit closure) and is
-      C_2-cofinite (Arakawa 2012). At positive integer levels, L_k(g) is
-      an integrable highest-weight module.
+      graded ideal. Positive integral simple quotients are lisse for sl_2.
+      Non-integral admissible simple quotients are quasi-lisse; their
+      associated varieties may be nilpotent orbit closures and therefore
+      need not be C_2-cofinite.
 
     By default, this function computes for V_k(g) (the universal algebra),
     which is the algebra whose bar complex and kappa we compute.
@@ -321,7 +366,7 @@ def associated_variety_dimension(family: str, **params) -> Dict[str, Any]:
         X_{H_k} = A^1 (generated by [J])
         dim X = 1
 
-    The KEY FACT (Arakawa 2012): A is C_2-cofinite iff X_A = {0} (a point).
+    Arakawa's criterion: A is C_2-cofinite iff X_A = {0}.
     """
     quotient = params.get("quotient", "universal")
 
@@ -331,21 +376,34 @@ def associated_variety_dimension(family: str, **params) -> Dict[str, Any]:
             "dimension": 1,
             "is_smooth": True,
             "c2_cofinite": False,
-            "poisson_type": "constant_bracket",
-            "description": "Affine line with constant Poisson bracket {J, J} = k",
+            "poisson_type": "trivial_on_variety",
+            "pva_lambda_bracket": "{J_lambda J} = k*lambda",
+            "description": "Affine line; the level appears in the PVA lambda bracket",
         }
     elif family == "affine_sl2":
         k = params.get("k", Fraction(1))
         is_admissible = _is_sl2_admissible(k)
 
-        if quotient == "simple" and is_admissible and k.denominator > 1:
+        if quotient == "simple" and k >= 0 and k.denominator == 1:
+            # Simple integrable quotient L_k(sl_2) at positive integral level.
+            return {
+                "variety": "{0}",
+                "dimension": 0,
+                "is_smooth": True,
+                "c2_cofinite": True,
+                "quasi_lisse": True,
+                "poisson_type": "zero",
+                "description": f"Point variety for simple integrable L_k at k={k}",
+            }
+        elif quotient == "simple" and is_admissible and k.denominator > 1:
             # Simple quotient L_k(sl_2) at non-integer admissible level:
-            # associated variety = nilpotent orbit closure, C_2-cofinite
+            # associated variety = nilpotent orbit closure, quasi-lisse.
             return {
                 "variety": "nilcone_sl2",
                 "dimension": 2,
                 "is_smooth": False,
-                "c2_cofinite": True,
+                "c2_cofinite": False,
+                "quasi_lisse": True,
                 "poisson_type": "Kirillov-Kostant_restricted",
                 "description": f"Nilcone of sl_2 (simple quotient L_k, admissible k={k})",
             }
@@ -399,16 +457,16 @@ def quantization_obstruction_genus0(family: str, **params) -> Dict[str, Any]:
     r"""Genus-0 quantization obstruction for a PVA.
 
     At genus 0, the quantization of a PVA V to a vertex algebra A is
-    controlled by the deformation complex Def(V) = (C^*(V, V), d_HKR).
+    controlled by the vertex-algebra deformation complex.  This engine
+    records the standard freely generated families, where De Sole-Kac
+    supplies the enveloping vertex algebra once the Lie conformal data
+    and filtration are fixed.
 
     The first obstruction lies in HH^3(V, V) (chiral Hochschild H^3).
 
     For FREELY GENERATED PVAs (De Sole-Kac):
-        The quantization is UNOBSTRUCTED: HH^3 = 0 in the relevant range.
+        The quantization is unobstructed: HH^3 = 0 in the relevant range.
         Every PVA structure integrates to a unique (up to equivalence) VA.
-
-    This is the analogue of Kontsevich's formality theorem for associative
-    algebras, transplanted to the vertex algebra setting.
 
     For the standard families:
         - Heisenberg: unobstructed (trivial deformation complex)
@@ -417,9 +475,9 @@ def quantization_obstruction_genus0(family: str, **params) -> Dict[str, Any]:
         - W_3: unobstructed at genus 0 (Khan-Zeng: gauge invariance = Jacobi)
 
     Connection to our framework:
-        The genus-0 bar complex B^{(0)}(A) encodes EXACTLY this quantization data.
-        The genus-0 MC equation (tree-level) = the homotopy transfer of the
-        A_infinity structure from the bar complex to cohomology.
+        The genus-0 bar complex B^{(0)}(A) records the same tree-level
+        OPE operations used by the enveloping construction.  The
+        modular genus >= 1 extension is a separate structure.
     """
     if family == "heisenberg":
         k = params.get("k", Fraction(1))
@@ -473,10 +531,10 @@ def quantization_obstruction_genus0(family: str, **params) -> Dict[str, Any]:
 def quantization_obstruction_genus1(family: str, **params) -> Dict[str, Any]:
     r"""Genus-1 quantization obstruction = modular anomaly.
 
-    At genus 1, the modular deformation theory introduces the FIRST
+    At genus 1, the modular deformation theory introduces the first
     genuinely new obstruction: the curvature kappa * omega_1.
 
-    This is the KEY COMPARISON:
+    Comparison:
     - In OUR framework: the genus-1 obstruction is obs_1 = kappa * lambda_1
       where lambda_1 = 1/24 is the first Faber-Pandharipande number.
       So F_1 = kappa / 24.
@@ -574,13 +632,15 @@ def shadow_vs_deformation_obstruction(family: str, max_arity: int = 6,
     The PVA deformation obstruction tower for A_cl -> A:
         Ob_0 (genus 0, tree-level) -> Ob_1 (genus 1, one-loop) -> Ob_2 (genus 2) -> ...
 
-    The IDENTIFICATION (proved at arities 2, 3, 4 by prop:shadow-formality-low-arity):
+    Low-arity comparison (proved at arities 2, 3, 4 by prop:shadow-formality-low-arity):
         Shadow obstruction at arity r <-> L_infinity formality obstruction at arity r
         kappa = first obstruction to extending to genus 1
         C (cubic) = second obstruction (controlled by S_3)
         Q (quartic) = third obstruction (controlled by S_4, the contact invariant)
 
-    For the STANDARD FAMILIES, we compute both sides and compare.
+    For higher arities this function compares the finite arithmetic
+    model used by the compute layer.  Equality above arity 4 is
+    reported as model agreement, not as a proof of all-arity formality.
     """
     if family == "heisenberg":
         k = params.get("k", Fraction(1))
@@ -611,6 +671,11 @@ def shadow_vs_deformation_obstruction(family: str, max_arity: int = 6,
             matches[r] = None  # Cannot compare (missing data)
 
     all_match = all(v is True for v in matches.values() if v is not None)
+    proved_match_through = min(max_arity, 4)
+    comparison_status = {
+        r: ("proved_low_arity" if r <= 4 else "computed_shadow_model")
+        for r in range(2, max_arity + 1)
+    }
 
     return {
         "family": family,
@@ -618,6 +683,8 @@ def shadow_vs_deformation_obstruction(family: str, max_arity: int = 6,
         "deformation_tower": deformations,
         "arity_matches": matches,
         "all_match": all_match,
+        "proved_match_through_arity": proved_match_through,
+        "comparison_status": comparison_status,
         "params": params,
     }
 
@@ -640,7 +707,7 @@ def _heisenberg_deformation_tower(k: Fraction, max_arity: int) -> Dict[int, Frac
 
     The Heisenberg VOA H_k is a free-field algebra. The PVA is just
     C[J] with constant bracket {J, J} = k. Quantization is trivially
-    unobstructed at ALL orders: the star product is just the Weyl algebra
+    unobstructed at all orders: the star product is just the Weyl algebra
     relation [J, J] = k (after dividing by hbar).
 
     All obstructions vanish: Ob_r = 0 for r >= 3.
@@ -656,71 +723,19 @@ def _affine_sl2_shadow_tower(k: Fraction, max_arity: int) -> Dict[int, Fraction]
     r"""Affine sl_2 shadow tower: terminates at arity 3 (class L).
 
     kappa = 3(k+2)/4.
-    S_3 = alpha * kappa where alpha is the cubic shadow coefficient.
-    For affine KM: alpha = 0 (no cubic self-coupling beyond Lie bracket).
+    S_3 = 4/(k+2) in the class-L normalization.
+    S_r = 0 for r >= 4.
 
-    Actually: for affine KM, the shadow tower terminates because the OPE
-    has at most double poles. The Lie bracket is the ONLY structure constant.
-    S_3 depends on the Lie structure, but the shadow tower has S_r = 0 for r >= 4.
-
-    The key formula: for affine sl_2,
-    S_2 = kappa = 3(k+2)/4
-    S_3 = 3*(k+2)/4 * alpha_{sl_2} where alpha_{sl_2} = 0
-    S_r = 0 for r >= 4 (class L terminates at arity 3)
-
-    Wait: class L terminates at arity 3, meaning S_4 = 0 but S_3 may be nonzero.
-    For affine KM, the cubic shadow is determined by the Lie bracket structure.
-    The cubic shadow C is controlled by the triple OPE structure.
-
-    For sl_2: the structure constants are f^{abc} (totally antisymmetric).
-    The cubic shadow S_3 = sum f^{abc} f^{abc} / (normalization).
-    For sl_2: this gives a nonzero S_3 proportional to kappa.
-
-    Correction: from the shadow metric, for affine KM:
-    Q_L(t) = (2*kappa + 3*alpha*t)^2 + 2*Delta*t^2
-    with alpha = structure-dependent and Delta = 8*kappa*S_4.
-    For class L: Delta = 0 (no quartic correction), so Q_L is a perfect square.
-    The tower terminates at arity 3: S_r = 0 for r >= 4.
-
-    S_3 for sl_2: from the cubic Casimir. But sl_2 has NO independent cubic Casimir
-    (rank 1, only quadratic Casimir). So S_3 = 0 for sl_2.
-
-    For sl_N with N >= 3: S_3 != 0 (the cubic Casimir exists).
+    The cubic shadow is the Lie bracket contribution.  It is not an
+    independent invariant polynomial on sl_2; it is the arity-3
+    operation generated by the non-abelian current OPE.  The quartic
+    shadow vanishes by Jacobi, so the tower terminates at arity 3.
     """
     kap = kappa_affine_sl2(k)
     tower = {2: kap}
-    # sl_2 has rank 1 => no cubic Casimir => S_3 = 0
-    # More precisely: the shadow depth is 2 for sl_2 (not 3)
-    # because sl_2 has only quadratic OPE structure.
-    # Actually, the generic affine KM has class L (shadow depth 3)
-    # because the OPE e(z)f(w) ~ k/(z-w)^2 + h(w)/(z-w) has both
-    # quadratic and linear poles. The cubic shadow comes from triple
-    # OPE compositions. For sl_2, by structure constant considerations:
-    # The only nonzero f^{abc} is f^{efh} = 1.
-    # S_3 for sl_2: this comes from the arity-3 graph sum, involving
-    # the triple vertex. For sl_2, this is nonzero.
-    #
-    # From the manuscript: affine KM of type A_1 has shadow class L
-    # with shadow depth r_max = 3. So S_3 may be nonzero but S_r = 0 for r >= 4.
-    #
-    # The explicit S_3 for sl_2 at level k:
-    # From the cubic structure constant contribution:
-    # S_3 = (sum_{abc} f^{abc} (k + h^vee)^{-1} ) * normalization
-    # For sl_2: the structure constant tensor gives
-    # S_3(sl_2) = something proportional to kappa.
-    # From the shadow metric for class L algebras:
-    # Q_L(t) = (2*kappa + 3*alpha*t)^2 (Delta = 0)
-    # So a_n = C(n, ...) * (3*alpha/(2*kappa))^n * kappa
-    # S_3 = a_1 / 3 = alpha (the cubic shadow coefficient)
-    # For sl_2: alpha = 0 because rank 1 => no independent cubic interaction.
-    # All higher S_r = 0 too.
-    #
-    # Actually for sl_2 (rank 1), the shadow tower should be class G (depth 2),
-    # not class L. The class L designation is for higher-rank affine KM (sl_N, N >= 3)
-    # where the cubic Casimir exists.
-    #
-    # For sl_2: class G with r_max = 2.
-    for r in range(3, max_arity + 1):
+    if max_arity >= 3:
+        tower[3] = affine_sl2_cubic_shadow(k)
+    for r in range(4, max_arity + 1):
         tower[r] = Fraction(0)
     return tower
 
@@ -733,12 +748,14 @@ def _affine_sl2_deformation_tower(k: Fraction, max_arity: int) -> Dict[int, Frac
 
     The deformation tower matches the shadow tower:
     Ob_2 = kappa = 3(k+2)/4 (the genus-1 one-loop anomaly)
-    Ob_r = 0 for r >= 3 (the Lie algebra structure is quadratic,
-    so all higher obstructions vanish for sl_2).
+    Ob_3 = S_3 = 4/(k+2) (the Lie cubic)
+    Ob_r = 0 for r >= 4 (Jacobi kills the quartic obstruction).
     """
     kap = kappa_affine_sl2(k)
     tower = {2: kap}
-    for r in range(3, max_arity + 1):
+    if max_arity >= 3:
+        tower[3] = affine_sl2_cubic_shadow(k)
+    for r in range(4, max_arity + 1):
         tower[r] = Fraction(0)
     return tower
 
@@ -752,7 +769,7 @@ def _virasoro_shadow_tower(c: Fraction, max_arity: int) -> Dict[int, Fraction]:
     S_5 = -48 / (c^2 * (5c + 22))
 
     The shadow metric: Q_L(t) = (c + 6t)^2 + 80t^2 / (5c + 22)
-    is NOT a perfect square (Delta = 40/(5c+22) != 0 generically),
+    is not a perfect square (Delta = 40/(5c+22) != 0 generically),
     so the tower is infinite.
 
     Convolution recursion: a_0 = c, a_1 = 6, a_n from recursion.
@@ -761,7 +778,7 @@ def _virasoro_shadow_tower(c: Fraction, max_arity: int) -> Dict[int, Fraction]:
     if c == 0:
         # kappa = 0 at c = 0, but shadow tower still has structure
         # (the higher arities S_3, S_4, ... can be nonzero)
-        # Actually at c = 0: kappa = 0, and the recursion degenerates.
+        # The recursion degenerates at c = 0 in this scalar chart.
         tower = {r: Fraction(0) for r in range(2, max_arity + 1)}
         return tower
 
@@ -813,7 +830,7 @@ def _virasoro_deformation_tower(c: Fraction, max_arity: int) -> Dict[int, Fracti
 
     At higher arities: the identification S_r = Ob_r is the content of
     the shadow-formality conjecture (proved at arities 2-4, conjectured generally).
-    We COMPUTE the deformation tower assuming the identification holds.
+    The function returns the shadow-model tower used for numerical comparison.
     """
     return _virasoro_shadow_tower(c, max_arity)
 
@@ -838,11 +855,11 @@ def gaiotto_comparison(family: str, **params) -> Dict[str, Any]:
       Q_g(A) + Q_g(A!) = H*(M_g, Z(A))
     - The shifted-symplectic Lagrangian geometry IS our complementarity
 
-    KEY IDENTIFICATION:
-    - Gaiotto's Coulomb branch M_C <-> our associated variety X_A
-    - Gaiotto's boundary VOA <-> our vertex algebra A
-    - Gaiotto's (-1)-shifted symplectic structure <-> our complementarity (Thm C)
-    - Khan-Zeng's 3d PVA sigma model <-> our modular bar construction
+    Comparison dictionary:
+    - Gaiotto's Coulomb branch M_C is compared with X_A
+    - Gaiotto's boundary VOA is compared with A
+    - Gaiotto's shifted symplectic structure is compared with Theorem C data
+    - Khan-Zeng's 3d PVA sigma model is compared with the modular bar construction
 
     For affine sl_2 at level k:
     - Coulomb branch = sl_2* = A^3 (the coadjoint representation)
@@ -855,7 +872,7 @@ def gaiotto_comparison(family: str, **params) -> Dict[str, Any]:
     - Boundary VOA = Vir_c
     - Our kappa = c/2 matches the one-loop anomaly
     - The infinite shadow tower = the infinite modular obstruction tower
-      of the 3d gravity theory (Movement I-X in Vol II)
+      of the 3d gravity comparison model
     """
     if family == "heisenberg":
         k = params.get("k", Fraction(1))
@@ -867,9 +884,10 @@ def gaiotto_comparison(family: str, **params) -> Dict[str, Any]:
             "associated_variety_dim": 1,
             "dims_match": True,
             "kappa_ours": kap,
-            "kappa_gaiotto": kap,  # Must match by universality
+            "kappa_gaiotto": kap,
             "kappas_match": True,
             "shifted_symplectic_match": True,
+            "comparison_scope": "dimension, kappa, and PVA lambda-bracket checks",
             "description": "Trivial case: H_k is a free field",
         }
     elif family == "affine_sl2":
@@ -887,6 +905,7 @@ def gaiotto_comparison(family: str, **params) -> Dict[str, Any]:
             "kappas_match": True,
             "sugawara_c": c_sugawara,
             "shifted_symplectic_match": True,
+            "comparison_scope": "dimension, kappa, and Kirillov-Kostant bracket checks",
             "description": f"sl_2 at k={k}: Coulomb branch = sl_2* = A^3",
         }
     elif family == "virasoro":
@@ -902,6 +921,7 @@ def gaiotto_comparison(family: str, **params) -> Dict[str, Any]:
             "kappa_gaiotto": kap,
             "kappas_match": True,
             "shifted_symplectic_match": True,
+            "comparison_scope": "dimension and kappa checks; jet-space PVA retained",
             "description": f"Vir at c={c}: infinite shadow tower = infinite modular obstruction",
         }
     else:
@@ -933,7 +953,7 @@ def full_comparison_table(max_level: int = 10) -> Dict[str, Any]:
     - kappa from our formula
     - kappa from Gaiotto's Coulomb branch anomaly
     - F_1 (genus-1 free energy)
-    - Shadow depth (class G for sl_2)
+    - Shadow depth (class L for sl_2)
     - Comparison: do all three frameworks agree?
     """
     results = {}
@@ -949,10 +969,11 @@ def full_comparison_table(max_level: int = 10) -> Dict[str, Any]:
             "kappa": kap,
             "sugawara_c": c_sug,
             "kappa_virasoro_subalgebra": kap_vir,
-            "kappa_vs_virasoro": kap != kap_vir,  # AP48: these are DIFFERENT
+            "kappa_vs_virasoro": kap != kap_vir,
             "F_1": F_1,
-            "shadow_class": "G",  # sl_2 is rank 1
-            "shadow_depth": 2,
+            "shadow_class": "L",
+            "shadow_depth": 3,
+            "S_3": affine_sl2_cubic_shadow(k),
             "genus_0_unobstructed": True,
             "genus_1_obstruction": F_1,
             "frameworks_agree": True,
@@ -989,7 +1010,7 @@ def virasoro_comparison_table(central_charges: Optional[List[Fraction]] = None) 
             "central_charge": c,
             "kappa": kap,
             "kappa_dual": kap_dual,
-            "kappa_sum": kap + kap_dual,  # Should be 13 (AP24)
+            "kappa_sum": kap + kap_dual,
             "F_1": F_1,
             "shadow_class": "M",
             "shadow_tower": tower,
@@ -1017,52 +1038,66 @@ def quasi_lisse_data(family: str, **params) -> Dict[str, Any]:
     chi_A(tau) = Tr_A q^{L_0 - c/24} satisfies a modular linear
     differential equation (MLDE).
 
-    For the standard families:
-    - V_k(sl_2) at positive integer k: quasi-lisse (X = nilcone, 2 leaves)
-    - L_k(sl_2) at admissible k: quasi-lisse (C_2-cofinite => quasi-lisse)
-    - Vir_c at c_{p,q} (minimal model): quasi-lisse (C_2-cofinite, X = {0})
-    - Vir_c at generic c: quasi-lisse (X = A^1, one leaf)
-    - H_k: NOT quasi-lisse (X = A^1, but infinitely many modules)
+    For the standard families in this compute surface:
+    - Universal V_k(sl_2): X = sl_2*, with infinitely many coadjoint leaves.
+    - Simple L_k(sl_2) at positive integral k: lisse, hence quasi-lisse.
+    - Simple L_k(sl_2) at non-integral admissible k: quasi-lisse, not
+      C_2-cofinite when X is the nilcone.
+    - Simple Virasoro minimal models: C_2-cofinite.
+    - Universal/generic Virasoro and Heisenberg have infinitely many leaves.
 
     The MLDE has order related to dim(X_A):
     For A with X_A of dim d: the MLDE has order >= 1 + d/2 (heuristic).
 
-    Connection to our framework:
-    The quasi-lisse condition is closely related to Koszulness:
-    - C_2-cofinite => Koszul (the PBW filtration collapses)
-    - Quasi-lisse + extra conditions => shadow tower structure
-    - The MLDE = the differential equation satisfied by the shadow
-      generating function (this is the shadow connection of thm:shadow-connection)
+    This function records quasi-lisse data only; it does not infer the
+    Verdier/Koszul dual A^! and does not identify MLDEs with the full
+    shadow tower outside the stated finite-leaf surfaces.
     """
     if family == "affine_sl2":
         k = params.get("k", Fraction(1))
+        quotient = params.get("quotient", "universal")
         is_pos_int = k > 0 and k.denominator == 1
         is_admissible = _is_sl2_admissible(k)
-        # For the UNIVERSAL algebra V_k(sl_2): X = sl_2* (dim 3) always.
-        # The simple quotient L_k at non-integer admissible has dim 2 (nilcone).
-        # Quasi-lisse: V_k is quasi-lisse for positive integer k (integrable).
-        # C_2-cofinite: only the simple quotient at non-integer admissible.
+        if quotient == "simple" and is_pos_int:
+            associated_dim = 0
+            quasi_lisse = True
+            c2_cofinite = True
+            mlde_order = 1
+        elif quotient == "simple" and is_admissible and k.denominator > 1:
+            associated_dim = 2
+            quasi_lisse = True
+            c2_cofinite = False
+            mlde_order = None
+        else:
+            associated_dim = 3
+            quasi_lisse = False
+            c2_cofinite = False
+            mlde_order = None
         return {
             "family": "affine_sl2",
             "level": k,
-            "quasi_lisse": is_pos_int or is_admissible,
-            "c2_cofinite": is_admissible and k.denominator > 1,
-            "associated_variety_dim": 3,  # V_k(sl_2) ALWAYS has X = sl_2*
-            "mlde_order": 2 if is_pos_int else None,
+            "quotient": quotient,
+            "quasi_lisse": quasi_lisse,
+            "c2_cofinite": c2_cofinite,
+            "associated_variety_dim": associated_dim,
+            "mlde_order": mlde_order,
             "kappa": kappa_affine_sl2(k),
             "connection_to_shadow": "Shadow connection = MLDE (genus-1 level)",
         }
     elif family == "virasoro":
         c = params.get("c", Fraction(1))
+        quotient = params.get("quotient", "simple" if _is_minimal_model_c(c) else "universal")
         # Check if c is a minimal model value c_{p,q}
         is_minimal = _is_minimal_model_c(c)
+        quasi_lisse = quotient == "simple" and is_minimal
         return {
             "family": "virasoro",
             "central_charge": c,
-            "quasi_lisse": True,  # Virasoro is always quasi-lisse
-            "c2_cofinite": is_minimal,
-            "associated_variety_dim": 0 if is_minimal else 1,
-            "mlde_order": 1 if is_minimal else 2,
+            "quotient": quotient,
+            "quasi_lisse": quasi_lisse,
+            "c2_cofinite": quasi_lisse,
+            "associated_variety_dim": 0 if quasi_lisse else 1,
+            "mlde_order": 1 if quasi_lisse else None,
             "kappa": kappa_virasoro(c),
             "connection_to_shadow": "Shadow connection = Virasoro MLDE",
         }
@@ -1071,7 +1106,7 @@ def quasi_lisse_data(family: str, **params) -> Dict[str, Any]:
         return {
             "family": "heisenberg",
             "level": k,
-            "quasi_lisse": False,  # Heisenberg is NOT quasi-lisse
+            "quasi_lisse": False,
             "c2_cofinite": False,
             "associated_variety_dim": 1,
             "mlde_order": None,
@@ -1125,7 +1160,7 @@ def de_sole_kac_quantization_data(family: str, **params) -> Dict[str, Any]:
     - De Sole-Kac's R corresponds to our genus-0 bar data B^{(0)}(A)
     - The universal enveloping V(R) is the tree-level quantization
     - Normal ordering ambiguity = gauge equivalence in the MC moduli
-    - The modular extension (genus >= 1) is NOT covered by De Sole-Kac
+    - The modular extension (genus >= 1) is outside De Sole-Kac
     """
     if family == "affine_sl2":
         k = params.get("k", Fraction(1))
@@ -1239,7 +1274,7 @@ def beem_rastelli_comparison(family: str, **params) -> Dict[str, Any]:
 
 
 # =========================================================================
-# 11. MASTER COMPARISON: ALL FRAMEWORKS
+# 11. MASTER COMPARISON: KAPPA AND LOW-ARITY CHECKS
 # =========================================================================
 
 def master_comparison(family: str, **params) -> Dict[str, Any]:
@@ -1275,7 +1310,7 @@ def master_comparison(family: str, **params) -> Dict[str, Any]:
     gaiotto = gaiotto_comparison(family, **params)
     dsk = de_sole_kac_quantization_data(family, **params)
 
-    # Check universal agreement
+    # Check kappa consistency across the represented comparison surfaces.
     all_kappas_match = (
         genus0["kappa"] == genus1["kappa"]
         and genus1["kappa"] == gaiotto["kappa_ours"]
@@ -1294,7 +1329,7 @@ def master_comparison(family: str, **params) -> Dict[str, Any]:
         "all_kappas_match": all_kappas_match,
         "genus_0_unobstructed": genus0["obstructed"] is False,
         "genus_1_obstruction_universal": True,
-        "summary": f"All frameworks agree for {family} with {params}",
+        "summary": f"Kappa and represented low-arity checks agree for {family} with {params}",
     }
 
 
@@ -1338,20 +1373,20 @@ def verify_all() -> Dict[str, bool]:
     results["kappa_Vir_c1"] = kappa_virasoro(Fraction(1)) == Fraction(1, 2)
     results["kappa_Vir_c26"] = kappa_virasoro(Fraction(26)) == Fraction(13)
 
-    # AP24: kappa + kappa_dual for Virasoro
+    # Virasoro complementarity: kappa + kappa_dual
     for c_int in [1, 13, 25]:
         c = Fraction(c_int)
         kap = kappa_virasoro(c)
         kap_dual = kappa_virasoro(Fraction(26) - c)
-        results[f"AP24_Vir_c{c_int}"] = (kap + kap_dual == Fraction(13))
+        results[f"Vir_complementarity_c{c_int}"] = (kap + kap_dual == Fraction(13))
 
-    # AP48: kappa(V_k(sl_2)) != kappa(Vir_{c_sugawara})
+    # The affine algebra and its Sugawara Virasoro subalgebra have different kappas.
     for k_int in [1, 2, 3]:
         k = Fraction(k_int)
         kap_km = kappa_affine_sl2(k)
         c_sug = _sugawara_c_sl2(k)
         kap_vir = kappa_virasoro(c_sug)
-        results[f"AP48_sl2_k{k_int}"] = (kap_km != kap_vir)
+        results[f"sl2_full_kappa_not_sugawara_kappa_k{k_int}"] = (kap_km != kap_vir)
 
     # Genus-1 free energy
     results["F1_formula"] = lambda_fp(1) == Fraction(1, 24)
@@ -1361,7 +1396,10 @@ def verify_all() -> Dict[str, bool]:
     results["H_shadow_terminates"] = all(h_tower[r] == 0 for r in range(3, 6))
 
     sl2_tower = _affine_sl2_shadow_tower(Fraction(1), 5)
-    results["sl2_shadow_terminates"] = all(sl2_tower[r] == 0 for r in range(3, 6))
+    results["sl2_cubic_shadow_nonzero"] = sl2_tower[3] == Fraction(4, 3)
+    results["sl2_shadow_terminates_after_cubic"] = all(
+        sl2_tower[r] == 0 for r in range(4, 6)
+    )
 
     # Virasoro shadow tower: S_4 = 10/(c(5c+22))
     v_tower = _virasoro_shadow_tower(Fraction(1), 5)
@@ -1436,25 +1474,24 @@ def w3_pva(c: Fraction) -> PVAData:
 
 
 def beta_gamma_pva(k: Fraction = Fraction(1)) -> PVAData:
-    r"""Beta-gamma (bc ghost) PVA at level k.
+    r"""Beta-gamma PVA at level k.
 
     Generators: beta (weight 1), gamma (weight 0).
     Lambda-bracket: {beta_lambda gamma} = k (constant, like Heisenberg but
-    with DIFFERENT conformal weights: h_beta=1, h_gamma=0).
+    with different conformal weights: h_beta=1, h_gamma=0).
 
     OPE: beta(z)gamma(w) ~ k/(z-w).
     Mode: beta_{(0)} gamma = k. (Single pole only.)
 
     The CLASSICAL PVA: {beta_lambda gamma}_cl = k.
 
-    kappa(beta-gamma) = k (same as Heisenberg, AP48 notwithstanding,
-    because both have rank 1 and the kappa formula for free fields gives k).
+    kappa(beta-gamma) = k in this normalization.
     Shadow class: C (contact/quartic, r_max = 4).
     The quartic shadow is NONZERO because gamma has weight 0.
 
     Associated variety: Spec(R_{bg}) = A^2 (generated by [beta], [gamma]).
 
-    KEY DISTINCTION from Heisenberg:
+    Distinction from Heisenberg:
     - Heisenberg: both generators have weight 1. Shadow class G (r_max = 2).
     - Beta-gamma: one generator weight 1, one weight 0. Shadow class C (r_max = 4).
     The weight-0 generator gamma violates positive grading, creating
@@ -1489,7 +1526,7 @@ def quantization_obstruction_genus2(family: str, **params) -> Dict[str, Any]:
 
     For multi-weight algebras: F_2 = kappa * lambda_2^FP + delta_F_2^cross
     where delta_F_2^cross is the cross-channel correction from mixed-propagator
-    graphs. This correction is NONVANISHING for W_3 (AP32, thm:multi-weight-genus-expansion):
+    graphs. This correction is nonzero for W_3 (thm:multi-weight-genus-expansion):
         delta_F_2(W_3) = (c + 204) / (16c) > 0 for all c > 0.
 
     lambda_2^FP = 7/5760.
@@ -1518,6 +1555,8 @@ def quantization_obstruction_genus2(family: str, **params) -> Dict[str, Any]:
     elif family == "affine_sl2":
         k = params.get("k", Fraction(1))
         kap = kappa_affine_sl2(k)
+        S_3_sl2 = affine_sl2_cubic_shadow(k)
+        delta_pf = S_3_sl2 * (Fraction(10) * S_3_sl2 - kap) / Fraction(48)
         return {
             "family": "affine_sl2",
             "genus": 2,
@@ -1526,9 +1565,10 @@ def quantization_obstruction_genus2(family: str, **params) -> Dict[str, Any]:
             "delta_F_2_cross": Fraction(0),  # Uniform-weight (all generators weight 1)
             "F_2_total": kap * lambda_2_fp,
             "lambda_2_fp": lambda_2_fp,
-            "planted_forest_correction": Fraction(0),  # S_3 = 0 for sl_2
+            "planted_forest_correction": delta_pf,
+            "S_3": S_3_sl2,
             "uniform_weight": True,
-            "description": "F_2 = kappa * 7/5760; uniform weight (all weight 1)",
+            "description": "F_2 scalar has no cross-channel term; class-L cubic remains in planted forests",
         }
     elif family == "virasoro":
         c = params.get("c", Fraction(1))
@@ -1557,9 +1597,8 @@ def quantization_obstruction_genus2(family: str, **params) -> Dict[str, Any]:
         c = params.get("c", Fraction(1))
         kap = kappa_w3(c)
         F_2_scalar = kap * lambda_2_fp
-        # W_3 is MULTI-WEIGHT (L weight 2, W weight 3) => cross-channel correction
+        # W_3 is multi-weight (L weight 2, W weight 3), giving cross-channel correction.
         # delta_F_2(W_3) = (c + 204) / (16c)
-        # This is PROVED to be nonzero for all c > 0 (thm:multi-weight-genus-expansion)
         if c > 0:
             delta_F_2 = (c + Fraction(204)) / (Fraction(16) * c)
         elif c == 0:
@@ -1580,7 +1619,7 @@ def quantization_obstruction_genus2(family: str, **params) -> Dict[str, Any]:
             "multi_weight_generators": [("L", 2), ("W", 3)],
             "description": (
                 f"F_2 = kappa*7/5760 + (c+204)/(16c); "
-                f"MULTI-WEIGHT cross-channel correction nonzero"
+                f"multi-weight cross-channel correction nonzero"
             ),
         }
     else:
@@ -1609,8 +1648,8 @@ def coulomb_branch_poisson_structure(family: str, **params) -> Dict[str, Any]:
     - The lambda-bracket {L_lambda L}_cl = dL + 2*lambda*L encodes the
       Virasoro Poisson structure on the JET SPACE of L, not on A^1 itself
 
-    The KEY DISTINCTION (AP57 from Vol II):
-    The PVA bracket is NOT the same as a Poisson bracket on the associated
+    Distinction:
+    The PVA bracket is not the same as a Poisson bracket on the associated
     variety. The PVA bracket encodes the FULL operadic structure (jets, derivatives)
     while the Poisson bracket on X_A is just the constant (lambda^0) part.
     """
@@ -1619,12 +1658,12 @@ def coulomb_branch_poisson_structure(family: str, **params) -> Dict[str, Any]:
         return {
             "family": "heisenberg",
             "associated_variety": "A^1",
-            "poisson_bracket_type": "constant",
-            "poisson_rank": 0,  # {J, J} = k is a constant, not a function of J
+            "poisson_bracket_type": "trivial_on_variety",
+            "poisson_rank": 0,
             "symplectic_leaves": "all_of_A1",
             "coulomb_match": True,
             "pva_enhances_poisson": True,
-            "enhancement": "Lambda-bracket {J_lambda J} = k adds k-dependence",
+            "enhancement": "Lambda-bracket {J_lambda J} = k*lambda adds k-dependence",
             "kappa": kappa_heisenberg(k),
         }
     elif family == "affine_sl2":
@@ -1700,11 +1739,11 @@ def li_filtration_data(family: str, **params) -> Dict[str, Any]:
     A is C_2-cofinite iff dim(A/C_2(A)) < infinity iff X_A = {0}.
 
     For standard families:
-    - H_k: R = C[J], X = A^1, dim = 1, NOT C_2-cofinite
-    - V_k(sl_2): R = C[e,f,h], X = sl_2*, dim = 3, NOT C_2-cofinite
-    - Vir_c: R = C[L], X = A^1, dim = 1, NOT C_2-cofinite (generic)
-    - Vir_{c_{p,q}}: R = C, X = {0}, dim = 0, C_2-cofinite (minimal model)
-    - W_3: R = C[L, W], X = A^2, dim = 2, NOT C_2-cofinite (generic)
+    - H_k: R = C[J], X = A^1, dim = 1, not C_2-cofinite
+    - V_k(sl_2): R = C[e,f,h], X = sl_2*, dim = 3, not C_2-cofinite
+    - Vir_c: R = C[L], X = A^1, dim = 1, not C_2-cofinite (generic)
+    - simple Vir_{c_{p,q}}: R = C, X = {0}, dim = 0, C_2-cofinite
+    - W_3: R = C[L, W], X = A^2, dim = 2, not C_2-cofinite (generic)
 
     The C_2 algebra inherits the PVA structure from gr^F.
     """
@@ -1719,7 +1758,7 @@ def li_filtration_data(family: str, **params) -> Dict[str, Any]:
             "associated_variety": "A^1",
             "c2_cofinite": False,
             "li_filtration_graded_dim": "1 + t + t^2 + ... = 1/(1-t)",
-            "pva_on_graded": "constant bracket {J, J} = k",
+            "pva_on_graded": "lambda bracket {J_lambda J} = k*lambda",
         }
     elif family == "affine_sl2":
         k = params.get("k", Fraction(1))
@@ -1783,37 +1822,35 @@ def li_filtration_data(family: str, **params) -> Dict[str, Any]:
 # =========================================================================
 
 def deformation_quantization_bridge(family: str, **params) -> Dict[str, Any]:
-    r"""The deformation quantization bridge: classical coisson -> quantum Koszul.
+    r"""Bridge from a vertex Poisson surface to the modular bar surface.
 
     The bridge has three levels:
 
-    LEVEL 1 (genus 0, tree-level):
+    Level 1 (genus 0, tree-level):
         PVA A_cl -> VA A is controlled by the genus-0 bar complex.
         For freely generated PVAs: UNOBSTRUCTED (De Sole-Kac).
         Bar differential d_B at arity n = the n-ary OPE data.
-        This is exactly the Kontsevich star product for the PVA.
 
-    LEVEL 2 (genus 1, one-loop):
-        The first MODULAR obstruction: kappa * lambda_1 = kappa/24.
+    Level 2 (genus 1, one-loop):
+        The first modular obstruction: kappa * lambda_1 = kappa/24.
         This matches Khan-Zeng's one-loop anomaly of the 3d HT sigma model.
         The modular bar complex B^{(1)}(A) has curvature kappa * omega_1.
 
-    LEVEL 3 (genus >= 2, all-loop):
+    Level 3 (genus >= 2):
         Full shadow obstruction tower Theta_A controls the modular extension.
         For uniform-weight algebras: F_g = kappa * lambda_g^FP at all genera.
         For multi-weight algebras: F_g = kappa * lambda_g^FP + delta_F_g^cross.
 
-    The IDENTIFICATION:
+    Low-arity comparison:
         Shadow obstruction at arity r <-> L_infinity formality obstruction at arity r
         This is PROVED at arities 2, 3, 4 (prop:shadow-formality-low-arity).
         Conjectured at all arities (the shadow-formality conjecture).
 
     Does deformation quantization of the Coulomb branch PVA give our bar complex?
-    ANSWER: At genus 0, YES (both encode the same OPE data).
-    At genus >= 1: the bar complex EXTENDS the deformation quantization
-    by packaging it into a modular invariant via the shadow obstruction tower.
-    The deformation quantization alone does NOT see genus >= 1 corrections;
-    those require the full modular bar construction.
+    At genus 0 both encode the same tree-level OPE data for the freely
+    generated families represented here.  At genus >= 1 the modular bar
+    construction adds curvature and shadow data not present in ordinary
+    genus-0 deformation quantization.
     """
     if family == "heisenberg":
         k = params.get("k", Fraction(1))
@@ -1841,6 +1878,7 @@ def deformation_quantization_bridge(family: str, **params) -> Dict[str, Any]:
             "bridge_level": 3,  # Full bridge (all genera match trivially)
             "shadow_class": "G",
             "does_dq_give_bar": True,
+            "does_dq_give_bar_scope": "genus-0 tree data; modular corrections are separate",
             "at_which_genus": "all (terminates at arity 2)",
         }
     elif family == "affine_sl2":
@@ -1867,9 +1905,10 @@ def deformation_quantization_bridge(family: str, **params) -> Dict[str, Any]:
                 "uniform_weight": True,
             },
             "bridge_level": 3,
-            "shadow_class": "G",  # sl_2 is rank 1, class G
+            "shadow_class": "L",
             "does_dq_give_bar": True,
-            "at_which_genus": "all (uniform weight, class G)",
+            "does_dq_give_bar_scope": "genus-0 tree data; modular corrections are separate",
+            "at_which_genus": "genus 0 tree data; modular extension through class-L shadow tower",
         }
     elif family == "virasoro":
         c = params.get("c", Fraction(1))
@@ -1897,6 +1936,7 @@ def deformation_quantization_bridge(family: str, **params) -> Dict[str, Any]:
             "bridge_level": 3,
             "shadow_class": "M",  # Infinite tower
             "does_dq_give_bar": True,
+            "does_dq_give_bar_scope": "genus-0 tree data; modular corrections are separate",
             "at_which_genus": (
                 "all genera (single generator => uniform weight; "
                 "but infinite shadow tower means infinitely many modular corrections)"
@@ -1932,11 +1972,12 @@ def deformation_quantization_bridge(family: str, **params) -> Dict[str, Any]:
                 "F_2_total": kap * Fraction(7, 5760) + delta_F_2,
                 "uniform_weight": False,
             },
-            "bridge_level": 2,  # At genus >= 2, scalar formula FAILS
+            "bridge_level": 2,
             "shadow_class": "M",
             "does_dq_give_bar": True,
+            "does_dq_give_bar_scope": "genus-0 tree data; modular corrections are separate",
             "at_which_genus": (
-                "genus 0-1: YES. genus >= 2: bar complex EXTENDS dq with "
+                "genus 0-1: matched scalar checks. genus >= 2: bar complex adds "
                 "cross-channel corrections delta_F_g^cross"
             ),
         }
@@ -2016,9 +2057,9 @@ def w3_shadow_comparison(c: Fraction, max_arity: int = 6) -> Dict[str, Any]:
     (proved by prop:shadow-formality-low-arity).
     At higher arities: conjectured.
 
-    The KEY DIFFERENCE from single-generator algebras:
+    Difference from single-generator algebras:
     W_3 is multi-weight (L weight 2, W weight 3), so at genus >= 2,
-    the scalar formula F_g = kappa * lambda_g FAILS.
+    the scalar formula F_g = kappa * lambda_g requires cross-channel correction.
     The correction is delta_F_g^cross from mixed-propagator graphs.
     """
     w3_tower = _w3_shadow_tower(c, max_arity)

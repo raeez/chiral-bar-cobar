@@ -1,11 +1,13 @@
 """Tests for the large-N / twisted holography module.
 
-Verifies the holographic modular Koszul datum H(A) = (A, A!, C, r(z), Theta_A, nabla^hol)
-and the large-N identification of the MC genus expansion with the 't Hooft 1/N^2 expansion.
+Verifies the scalar large-N projection of the seven-entry holographic
+package H(A) = (A, A^i, A^!, C, r(z), Theta_A, nabla^hol), distinct from
+the six-projection modular Koszul package Pi_X(L), and the large-N
+identification of the MC genus expansion with the 't Hooft 1/N^2 expansion.
 
 Organization:
   1. Algebra construction and basic data (V_k(sl_N), W_N, Heisenberg)
-  2. Holographic datum extraction and anti-symmetry
+  2. Seven-entry holographic package extraction and anti-symmetry
   3. 't Hooft genus expansion and scaling
   4. Feigin-Frenkel involution on 't Hooft coupling
   5. Shadow connection and flatness
@@ -43,6 +45,7 @@ from compute.lib.large_n_twisted_holography import (
     channel_harmonic_divergence,
     collision_residue_affine,
     collision_residue_heisenberg,
+    collision_residue_virasoro,
     e1_to_modular_projection,
     extract_holographic_datum,
     feigin_frenkel_dual,
@@ -53,6 +56,7 @@ from compute.lib.large_n_twisted_holography import (
     heisenberg_fredholm,
     holographic_summary,
     hs_sewing_criterion,
+    kernel_normalizations_affine,
     kappa_anti_symmetry_check,
     kappa_formula_table,
     kappa_from_data,
@@ -66,6 +70,7 @@ from compute.lib.large_n_twisted_holography import (
     make_heisenberg,
     make_virasoro_from_ds,
     make_w_N,
+    object_firewall,
     ribbon_genus_from_euler,
     run_family_sweep,
     s_duality_spectrum,
@@ -86,6 +91,7 @@ from compute.lib.large_n_twisted_holography import (
     verify_kappa_sl_N_formula,
     verify_genus_scaling,
     verify_lagrangian_splitting,
+    virasoro_r_matrix_components,
     wn_central_charge,
     wn_central_charge_large_N,
     wn_channel_refined_kappa,
@@ -153,6 +159,29 @@ class TestAlgebraConstruction:
             H = make_heisenberg(Fraction(k))
             assert kappa_from_data(H) == Fraction(k)
 
+    def test_kappa_property_is_family_specific(self):
+        """ChiralAlgebraData.kappa is not uniformly c/2."""
+        H = make_heisenberg(Fraction(3))
+        A = make_affine_sl_N(3, Fraction(2))
+        W3 = make_w_N(3, Fraction(1))
+        Vir = make_w_N(2, Fraction(1))
+
+        for algebra in [H, A, W3, Vir]:
+            assert algebra.kappa == kappa_from_data(algebra)
+
+        assert H.kappa == Fraction(3)
+        assert H.kappa != H.central_charge / 2
+
+        assert A.kappa == Fraction(A.dim) * (A.level + A.dual_coxeter) / (
+            2 * A.dual_coxeter
+        )
+        assert A.kappa != A.central_charge / 2
+
+        assert W3.kappa == W3.central_charge * (Fraction(1, 2) + Fraction(1, 3))
+        assert W3.kappa != W3.central_charge / 2
+
+        assert Vir.kappa == Vir.central_charge / 2
+
     def test_w_N_construction(self):
         """W_N algebras from DS reduction of sl_N."""
         W2 = make_w_N(2, Fraction(1))
@@ -183,14 +212,20 @@ class TestAlgebraConstruction:
 # ===========================================================================
 
 class TestHolographicDatum:
-    """Test extraction of H(A) = (A, A!, C, r(z), Theta_A, nabla^hol)."""
+    """Test extraction from H(A) = (A, A^i, A^!, C, r(z), Theta_A, nabla^hol)."""
 
     def test_datum_extraction_sl2(self):
         A = make_affine_sl_N(2, Fraction(1))
         datum = extract_holographic_datum(A)
         assert datum.kappa_anti_symmetric is True
         assert datum.connection_is_flat is True
-        assert datum.collision_residue_type == "Casimir/z"
+        assert datum.collision_residue_type == "k*Casimir/z"
+        assert datum.package_slots == (
+            "A", "A^i", "A^!", "C", "r(z)", "Theta_A", "nabla^hol"
+        )
+        assert datum.A_shriek == datum.A_dual
+        assert "not reconstructed" in datum.bar_dual_coalgebra_status
+        assert "not constructed" in datum.derived_center_status
 
     def test_datum_extraction_sl3(self):
         A = make_affine_sl_N(3, Fraction(2))
@@ -201,8 +236,17 @@ class TestHolographicDatum:
     def test_datum_extraction_heisenberg(self):
         H = make_heisenberg(Fraction(3))
         datum = extract_holographic_datum(H)
-        assert datum.collision_residue_type == "scalar/z"
+        assert datum.collision_residue_type == "k/z"
         assert datum.connection_is_flat is True
+
+    def test_object_firewall(self):
+        """AP25 firewall keeps bar, cobar, dual, and bulk typed apart."""
+        firewall = object_firewall()
+        assert firewall["B(A)"].startswith("bar coalgebra")
+        assert "dual coalgebra" in firewall["A^i"]
+        assert "dual algebra" in firewall["A^!"]
+        assert "inversion" in firewall["Omega(B(A))"]
+        assert "bulk" in firewall["Z_ch^der(A)"]
 
     def test_feigin_frenkel_dual_level(self):
         """k' = -k - 2h^v."""
@@ -218,7 +262,7 @@ class TestHolographicDatum:
         assert A_dual.rank == 3
 
     def test_kappa_anti_symmetry_all_ranks(self):
-        """kappa(A) + kappa(A!) = 0 for all sl_N at any level."""
+        """kappa(A) + kappa(A^!) = 0 for all sl_N at any level."""
         for N in range(2, 8):
             for k in [1, 2, 3, 5, 10]:
                 kap, kap_d, anti = kappa_anti_symmetry_check(N, Fraction(k))
@@ -232,11 +276,11 @@ class TestHolographicDatum:
                 assert verify_kappa_sl_N_formula(N, Fraction(k))
 
     def test_dual_central_charge_sum(self):
-        """c(A) + c(A!) = 2*dim(g) = 2(N^2-1) for sl_N."""
+        """c(A) + c(A^!) = 2*dim(g) = 2(N^2-1) for sl_N."""
         for N in range(2, 7):
             for k in [1, 2, 3]:
                 result = verify_dual_central_charge(N, Fraction(k))
-                assert result["match"], f"c+c! mismatch for sl_{N} at k={k}"
+                assert result["match"], f"c+c^! mismatch for sl_{N} at k={k}"
                 assert result["c_sum"] == Fraction(2 * (N * N - 1))
 
 
@@ -333,7 +377,7 @@ class TestFFInvolution:
                 assert result["sum"] == 0
 
     def test_kappa_involution(self):
-        """kappa(A) + kappa(A!) = 0 verified via kappa_involution_check."""
+        """kappa(A) + kappa(A^!) = 0 verified via kappa_involution_check."""
         for N in [2, 3, 4]:
             for k in [1, 2, 5]:
                 result = kappa_involution_check(N, Fraction(k))
@@ -365,6 +409,9 @@ class TestShadowConnection:
         A = make_affine_sl_N(3, Fraction(1))
         conn = shadow_connection_genus0_arity2(A)
         assert conn.is_kz_type
+        assert conn.trace_form_residue_coefficient == Fraction(1)
+        assert conn.kz_connection_coefficient == Fraction(1, 4)
+        assert conn.kappa_value != conn.kz_connection_coefficient
 
     def test_genus0_arity2_heisenberg(self):
         """Heisenberg is not KZ-type (abelian)."""
@@ -372,6 +419,8 @@ class TestShadowConnection:
         conn = shadow_connection_genus0_arity2(H)
         assert not conn.is_kz_type  # abelian
         assert conn.is_flat
+        assert conn.trace_form_residue_coefficient == Fraction(1)
+        assert conn.kz_connection_coefficient is None
 
     def test_genus0_arity3_flat(self):
         A = make_affine_sl_N(2, Fraction(1))
@@ -391,6 +440,18 @@ class TestShadowConnection:
             conn = shadow_connection_genus0_arity2(A)
             assert conn.kappa_value == kappa_from_data(A)
 
+    def test_kernel_normalization_bridge(self):
+        """Trace-form and KZ residues are stored as distinct coefficients."""
+        norms = kernel_normalizations_affine(3, Fraction(1))
+        assert norms["trace_form_coefficient"] == Fraction(1)
+        assert norms["kz_connection_coefficient"] == Fraction(1, 4)
+        assert norms["same_normalization"] is False
+
+    def test_kz_critical_level_is_undefined_but_trace_residue_remains(self):
+        norms = kernel_normalizations_affine(2, Fraction(-2))
+        assert norms["trace_form_coefficient"] == Fraction(-2)
+        assert norms["kz_connection_coefficient"] is None
+
 
 # ===========================================================================
 # 6. Collision residue and CYBE
@@ -401,8 +462,10 @@ class TestCollisionResidue:
 
     def test_affine_residue_type(self):
         r = collision_residue_affine(3, Fraction(1))
-        assert r.residue_type == "Casimir/z"
+        assert r.residue_type == "k*Casimir/z"
         assert r.satisfies_cybe
+        assert r.trace_form_coefficient == Fraction(1)
+        assert r.kz_connection_coefficient == Fraction(1, 4)
 
     def test_casimir_eigenvalue(self):
         """Casimir eigenvalue on adjoint = 2h^v = 2N for sl_N."""
@@ -412,16 +475,28 @@ class TestCollisionResidue:
 
     def test_heisenberg_residue(self):
         r = collision_residue_heisenberg(Fraction(3))
-        assert r.residue_type == "scalar/z"
+        assert r.residue_type == "k/z"
         assert r.satisfies_cybe
         assert r.casimir_eigenvalue == Fraction(3)
+        assert r.trace_form_coefficient == Fraction(3)
+        assert r.kz_connection_coefficient is None
+
+    def test_virasoro_residue(self):
+        components = virasoro_r_matrix_components(Fraction(26))
+        assert components["z^-3_scalar"] == Fraction(13)
+        assert components["z^-1_T"] == Fraction(2)
+
+        r = collision_residue_virasoro(Fraction(26))
+        assert r.residue_type == "(c/2)/z^3 + 2T/z"
+        assert r.trace_form_coefficient == Fraction(13)
+        assert r.kz_connection_coefficient is None
 
     def test_cybe_scalar(self):
         """Scalar CYBE is trivially satisfied."""
         assert verify_cybe_scalar(Fraction(5))
 
     def test_cybe_casimir_sl_N(self):
-        """CYBE for Casimir/z r-matrix holds for all sl_N."""
+        """CYBE for the level-prefixed Casimir r-matrix holds for all sl_N."""
         for N in [2, 3, 4, 5]:
             result = verify_cybe_casimir_sl_N(N)
             assert result["cybe_holds"]
@@ -467,7 +542,7 @@ class TestGTheorems:
         assert result["c"] + (26 - result["c"]) == 26
 
     def test_G4_anti_symmetry(self):
-        """G4 (S-duality): kappa(A!) = -kappa(A) for affine algebras."""
+        """G4 (S-duality): kappa(A^!) = -kappa(A) for affine algebras."""
         for N in [2, 3, 4, 5]:
             _, _, anti = kappa_anti_symmetry_check(N, Fraction(1))
             assert anti
@@ -478,7 +553,7 @@ class TestGTheorems:
 # ===========================================================================
 
 class TestGravitationalPhaseSpace:
-    """Test C_g(A) = Q_g(A) + Q_g(A!), Lagrangian splitting."""
+    """Test C_g(A) = Q_g(A) + Q_g(A^!), Lagrangian splitting."""
 
     def test_balanced_splitting_sl2(self):
         A = make_affine_sl_N(2, Fraction(1))
@@ -488,7 +563,7 @@ class TestGravitationalPhaseSpace:
             assert phase.total == 0
 
     def test_balanced_splitting_all_ranks(self):
-        """Lagrangian splitting Q_g(A) + Q_g(A!) = 0 for all (N, k, g)."""
+        """Lagrangian splitting Q_g(A) + Q_g(A^!) = 0 for all (N, k, g)."""
         for N in range(2, 6):
             for k in [1, 2, 3]:
                 result = verify_lagrangian_splitting(N, Fraction(k), 4)
@@ -496,7 +571,7 @@ class TestGravitationalPhaseSpace:
                     assert balanced, f"Not balanced: N={N}, k={k}, g={g}"
 
     def test_Q_g_values(self):
-        """Q_g(A) = kappa * lambda_g^FP, Q_g(A!) = kappa! * lambda_g^FP."""
+        """Q_g(A) = kappa * lambda_g^FP, Q_g(A^!) = kappa^! * lambda_g^FP."""
         A = make_affine_sl_N(3, Fraction(1))
         phase = gravitational_phase_space(A, 1)
         kap = kappa_from_data(A)
@@ -504,7 +579,7 @@ class TestGravitationalPhaseSpace:
         assert phase.Q_g_A == kap * lfp
 
     def test_Q_g_antisymmetric(self):
-        """Q_g(A!) = -Q_g(A) when kappa! = -kappa."""
+        """Q_g(A^!) = -Q_g(A) when kappa^! = -kappa."""
         A = make_affine_sl_N(4, Fraction(2))
         for g in range(1, 4):
             phase = gravitational_phase_space(A, g)

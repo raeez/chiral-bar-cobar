@@ -5,7 +5,7 @@ obstruction tower to Eynard-Orantin topological recursion.
 
 NINE STRUCTURAL QUESTIONS
 -------------------------
-Q1. Heisenberg (class G): Airy curve and F_g = kappa * lambda_g^FP
+Q1. Heisenberg (class G): degenerate curve and F_g = kappa * lambda_g^FP
 Q2. Virasoro (class M): spectral curve from shadow metric
 Q3. EO recursion kernel vs shadow connection
 Q4. Affine sl_2 (class L): degenerate spectral curve
@@ -43,6 +43,14 @@ from compute.lib.topological_recursion_shadow_engine import (
     lambda_fp,
     _bernoulli_number,
     ahat_coefficient,
+    faber_pandharipande_census_constants,
+    verify_faber_pandharipande_census,
+    # Firewalls
+    holographic_package_entries,
+    modular_koszul_primary_projections,
+    typed_firewall_objects,
+    object_firewall_summary,
+    kernel_normalizations,
     # Family data
     ShadowFamilyData,
     heisenberg_data,
@@ -72,6 +80,7 @@ from compute.lib.topological_recursion_shadow_engine import (
     kw_tau_function_log,
     shadow_tau_function_log,
     verify_tau_kw_power_relation,
+    finite_window_tr_shadow_theorem,
     # WP volumes
     wp_volume_closed,
     planted_forest_correction,
@@ -82,7 +91,7 @@ from compute.lib.topological_recursion_shadow_engine import (
     depth_vs_curve_genus_table,
     # CEO
     ceo_vs_shadow_discrepancy,
-    # Koszul duality
+    # Verdier-dual scalar lane
     koszul_dual_spectral_curve,
     # WK intersection
     wk_intersection,
@@ -99,6 +108,59 @@ try:
     HAS_MPMATH = True
 except ImportError:
     HAS_MPMATH = False
+
+
+# ====================================================================
+# Section 0: Package, object, and kernel firewalls (5 tests)
+# ====================================================================
+
+class TestPackageAndObjectFirewalls(unittest.TestCase):
+    """Bar, dual, bulk, and kernel normalizations stay typed apart."""
+
+    def test_holographic_package_has_seven_entries(self):
+        self.assertEqual(
+            holographic_package_entries(),
+            ("A", "A^i", "A^!", "C", "r(z)", "Theta_A", "nabla^hol"),
+        )
+        self.assertEqual(len(holographic_package_entries()), 7)
+
+    def test_modular_koszul_package_has_six_primary_projections(self):
+        projections = modular_koszul_primary_projections()
+        self.assertEqual(len(projections), 6)
+        self.assertNotEqual(projections, holographic_package_entries())
+        self.assertNotIn("A^!", projections)
+
+    def test_object_firewall_separates_bar_dual_inversion_and_bulk(self):
+        firewall = object_firewall_summary()
+        self.assertEqual(
+            typed_firewall_objects(),
+            ("A", "B(A)", "A^i", "A^!", "Omega(B(A))", "Z_ch^der(A)"),
+        )
+        self.assertIn("H^*(B(A))", firewall["A^i"])
+        self.assertIn("Verdier/continuous-linear dual", firewall["A^!"])
+        self.assertIn("bar-cobar inversion", firewall["Omega(B(A))"])
+        self.assertIn("ChirHoch^*(A,A)", firewall["Z_ch^der(A)"])
+        self.assertNotEqual(firewall["A^i"], firewall["A^!"])
+        self.assertNotEqual(firewall["Omega(B(A))"], firewall["A^!"])
+        self.assertNotEqual(firewall["Z_ch^der(A)"], firewall["A^!"])
+
+    def test_kernel_normalizations_separate_raw_collision_from_kz(self):
+        kernels = kernel_normalizations()
+        self.assertEqual(kernels["affine_raw_collision"], "k*Omega_tr/z")
+        self.assertEqual(kernels["affine_KZ_coefficient"], "Omega/((k+h^vee)z)")
+        self.assertEqual(kernels["virasoro_collision"], "(c/2)/z^3 + 2T/z")
+        self.assertNotEqual(
+            kernels["affine_raw_collision"],
+            kernels["affine_KZ_coefficient"],
+        )
+
+    def test_raw_affine_collision_vanishes_at_level_zero(self):
+        k = Fraction(0)
+        h_vee = Fraction(2)
+        raw_collision_coefficient = k
+        kz_coefficient = Fraction(1, 1) / (k + h_vee)
+        self.assertEqual(raw_collision_coefficient, 0)
+        self.assertEqual(kz_coefficient, Fraction(1, 2))
 
 
 # ====================================================================
@@ -140,6 +202,28 @@ class TestFaberPandharipande(unittest.TestCase):
         """A-hat coefficient at order 2g equals lambda_g^FP."""
         for g in range(1, 6):
             self.assertEqual(ahat_coefficient(g), lambda_fp(g))
+
+    def test_fp_census_constants_first_ten(self):
+        """Exact constants match landscape_census.tex prop:fp-coefficients."""
+        expected = {
+            1: Rational(1, 24),
+            2: Rational(7, 5760),
+            3: Rational(31, 967680),
+            4: Rational(127, 154828800),
+            5: Rational(73, 3503554560),
+            6: Rational(1414477, 2678117105664000),
+            7: Rational(8191, 612141052723200),
+            8: Rational(16931177, 49950709902213120000),
+            9: Rational(5749691557, 669659197233029971968000),
+            10: Rational(91546277357, 420928638260761696665600000),
+        }
+        self.assertEqual(faber_pandharipande_census_constants(10), expected)
+
+    def test_fp_census_formula_agrees(self):
+        """Bernoulli formula agrees with the finite census table."""
+        report = verify_faber_pandharipande_census(10)
+        for g in range(1, 11):
+            self.assertTrue(report[g]['matches'])
 
 
 # ====================================================================
@@ -210,12 +294,12 @@ class TestQ2VirasoroSpectralCurve(unittest.TestCase):
             self.assertFalse(data.is_degenerate)
 
     def test_virasoro_kappa(self):
-        """kappa(Vir_c) = c/2 (AP1)."""
+        """kappa(Vir_c) = c/2."""
         self.assertEqual(virasoro_data(Fraction(10)).kappa, Fraction(5))
         self.assertEqual(virasoro_data(Fraction(26)).kappa, Fraction(13))
 
     def test_virasoro_S4(self):
-        """Q^contact_Vir = 10/[c(5c+22)] (AP1)."""
+        """Q^contact_Vir = 10/[c(5c+22)]."""
         data = virasoro_data(Fraction(10))
         self.assertEqual(data.S4, Fraction(10, 10 * 72))
 
@@ -258,7 +342,8 @@ class TestQ2VirasoroSpectralCurve(unittest.TestCase):
 class TestQ3KernelComparison(unittest.TestCase):
     """Q3: EO recursion kernel vs shadow connection.
 
-    Both have simple poles at branch points with residue 1/2.
+    Both have simple-pole behaviour at branch points.  The scalar shadow
+    connection residue is 1/2; the EO kernel residue carries z0-data.
     The shadow connection monodromy is -1 (Koszul sign).
     """
 
@@ -279,16 +364,23 @@ class TestQ3KernelComparison(unittest.TestCase):
         data = virasoro_data(Fraction(10))
         result = compare_kernels_at_branch(data)
         self.assertFalse(result['degenerate'])
-        # Both have residue 1/2 at branch points
         self.assertAlmostEqual(
             result['shadow_connection_residue'], 0.5, places=10
         )
+        self.assertTrue(result['same_pole_order'])
+        self.assertIn('EO residue depends on z0', result['residue_identification'])
 
     def test_kernel_degenerate(self):
         """Degenerate curves: both kernels trivialize."""
         data = heisenberg_data(Fraction(1))
         result = compare_kernels_at_branch(data)
         self.assertTrue(result['degenerate'])
+
+    def test_degenerate_curve_has_no_branch_residue(self):
+        """The scalar residue is only defined at simple branch points."""
+        data = heisenberg_data(Fraction(1))
+        with self.assertRaises(ValueError):
+            shadow_connection_residue_at_branch(data)
 
     def test_monodromy_virasoro(self):
         """Monodromy of nabla^sh around branch point = -1 (Koszul sign)."""
@@ -323,7 +415,7 @@ class TestQ4AffineSl2(unittest.TestCase):
         self.assertEqual(data.Delta, Fraction(0))
 
     def test_affine_kappa(self):
-        """kappa(aff sl_2) = 3(k+2)/4 (AP1)."""
+        """kappa(aff sl_2) = 3(k+2)/4."""
         data = affine_sl2_data(Fraction(1))
         self.assertEqual(data.kappa, Fraction(9, 4))
 
@@ -333,8 +425,8 @@ class TestQ4AffineSl2(unittest.TestCase):
         tower = shadow_tower_from_QL(data, 8)
         self.assertNotEqual(tower[2], Rational(0))
         self.assertNotEqual(tower[3], Rational(0))
-        # S_4 = 0 implies tower is controlled by alpha only at higher arities
-        # For a perfect-square Q_L, the tower is determined by the linear term.
+        for r in range(4, 9):
+            self.assertEqual(tower[r], Rational(0))
 
 
 # ====================================================================
@@ -344,8 +436,8 @@ class TestQ4AffineSl2(unittest.TestCase):
 class TestQ5BetaGamma(unittest.TestCase):
     """Q5: Beta-gamma on primary line matches Vir c=2.
 
-    Shadow depth=4 by stratum separation. Standard EO does NOT
-    capture this.
+    Shadow depth=4 by stratum separation. Standard EO captures only the
+    primary-line curve.
     """
 
     def test_betagamma_same_curve_as_vir2(self):
@@ -368,15 +460,22 @@ class TestQ5BetaGamma(unittest.TestCase):
         self.assertFalse(bg.is_degenerate)
 
     def test_betagamma_eo_does_not_terminate(self):
-        """Standard EO on Vir c=2 curve does NOT terminate.
+        """Standard EO on the Vir c=2 curve continues.
 
-        This is a NEGATIVE RESULT: the spectral curve does not encode
-        the stratum separation that makes class C depth 4.
+        The spectral curve omits the stratum separation that makes class C
+        depth 4.
         """
         # The Virasoro c=2 curve has Delta != 0, so the EO recursion
         # produces nonzero omega_{g,n} at all genera.
         bg = betagamma_data()
         self.assertNotEqual(bg.Delta, Fraction(0))
+
+    def test_betagamma_primary_line_QL_has_nonzero_S5(self):
+        """The primary-line Q_L tower is not the full class-C depth datum."""
+        bg = betagamma_data()
+        tower = shadow_tower_from_QL(bg, 5)
+        self.assertEqual(bg.r_max, 4)
+        self.assertNotEqual(tower[5], Rational(0))
 
     def test_betagamma_free_energy_matches_vir2(self):
         """F_g for beta-gamma on primary line matches Virasoro c=2."""
@@ -460,11 +559,21 @@ class TestQ7CEOvsShadow(unittest.TestCase):
             )
 
     def test_decomposition_holds(self):
-        """F_g^{shadow} = F_g^{CEO} + delta_pf at all genera."""
-        for data in [heisenberg_data(), virasoro_data(Fraction(10))]:
-            result = ceo_vs_shadow_discrepancy(data, 3)
-            for g in range(1, 4):
-                self.assertTrue(result[g]['decomposition_holds'])
+        """F_g^{shadow} = F_g^{CEO} + delta_pf where the formula is present."""
+        result = ceo_vs_shadow_discrepancy(heisenberg_data(), 3)
+        for g in range(1, 4):
+            self.assertTrue(result[g]['decomposition_holds'])
+
+        result = ceo_vs_shadow_discrepancy(virasoro_data(Fraction(10)), 3)
+        for g in range(1, 3):
+            self.assertTrue(result[g]['decomposition_holds'])
+
+    def test_non_degenerate_genus3_pf_is_not_inferred_from_QL(self):
+        """Genus >= 3 non-degenerate corrections require stable-graph input."""
+        result = ceo_vs_shadow_discrepancy(virasoro_data(Fraction(10)), 3)
+        self.assertFalse(result[3]['closed_form_available'])
+        self.assertIsNone(result[3]['delta_pf'])
+        self.assertIn('stable-graph data beyond Q_L', result[3]['open_obligation'])
 
     def test_genus1_pf_zero_nondeg(self):
         """delta_pf^{(1,0)} = 0 for non-degenerate curves."""
@@ -496,7 +605,7 @@ class TestQ7CEOvsShadow(unittest.TestCase):
 # ====================================================================
 
 class TestQ8KWTauFunction(unittest.TestCase):
-    """Q8: tau_shadow = tau_KW^kappa."""
+    """Q8: log(tau_shadow) = kappa * log(tau_KW)."""
 
     def test_tau_kw_log_genus1(self):
         """log(tau_KW) coefficient at g=1 is 1/24."""
@@ -504,19 +613,20 @@ class TestQ8KWTauFunction(unittest.TestCase):
         self.assertEqual(kw[1], Rational(1, 24))
 
     def test_tau_shadow_equals_kappa_times_kw(self):
-        """Shadow tau-function = kappa-th power of KW tau-function."""
+        """Shadow tau logarithm is kappa times the KW tau logarithm."""
         data = virasoro_data(Fraction(10))
         result = verify_tau_kw_power_relation(data, 5)
         self.assertTrue(result['match_all'])
+        self.assertFalse(result['analytic_tau_power_asserted'])
 
     def test_tau_heisenberg_power(self):
-        """Heisenberg tau = tau_KW^k."""
+        """Heisenberg log tau = k * log(tau_KW)."""
         data = heisenberg_data(Fraction(7))
         result = verify_tau_kw_power_relation(data, 5)
         self.assertTrue(result['match_all'])
 
     def test_tau_affine_power(self):
-        """Affine tau = tau_KW^kappa where kappa = 3(k+2)/4."""
+        """Affine log tau has coefficient kappa = 3(k+2)/4."""
         data = affine_sl2_data(Fraction(2))
         result = verify_tau_kw_power_relation(data, 5)
         self.assertTrue(result['match_all'])
@@ -526,13 +636,35 @@ class TestQ8KWTauFunction(unittest.TestCase):
         kw = kw_tau_function_log(5)
         self.assertEqual(kw[2], Rational(7, 5760))
 
+    def test_finite_window_theorem_exact_coefficients_and_scope(self):
+        """The theorem engine proves coefficients and refuses analytic overclaims."""
+        data = virasoro_data(Fraction(10))
+        report = finite_window_tr_shadow_theorem(data, 5)
+        self.assertEqual(report['status'], 'proved_finite_window')
+        self.assertTrue(report['all_coefficients_match'])
+        self.assertEqual(report['coefficients'][5]['lambda_fp'],
+                         Rational(73, 3503554560))
+        self.assertEqual(report['coefficients'][5]['F_g_shadow'],
+                         Rational(5) * Rational(73, 3503554560))
+        self.assertFalse(report['scope']['analytic_tau_power_asserted'])
+        self.assertFalse(report['scope']['full_eo_recursion_theorem_asserted'])
+        self.assertFalse(report['scope']['convergence_radius_asserted'])
+        self.assertTrue(report['scope']['scalar_lane_only'])
+
+    def test_finite_window_theorem_separates_cross_channel_terms(self):
+        """Primary-line scalar data do not compute multi-weight corrections."""
+        report = finite_window_tr_shadow_theorem(betagamma_data(), 4)
+        self.assertTrue(report['scope']['single_channel_curve_only'])
+        self.assertFalse(report['scope']['multi_weight_cross_channel_terms_included'])
+        self.assertIn('separate graph/weight engine', report['cross_channel_obligation'])
+
 
 # ====================================================================
 # Section 10: Q9 -- WP volumes / Mirzakhani (4 tests)
 # ====================================================================
 
 class TestQ9WPVolumes(unittest.TestCase):
-    """Q9: Shadow tower uses ALGEBRAIC curve, WP uses TRANSCENDENTAL sine.
+    """Q9: Shadow tower uses an algebraic curve; WP uses the sine curve.
 
     These are different spectral curves.  The planted-forest corrections
     are the algebraic-to-transcendental bridge.
@@ -597,17 +729,19 @@ class TestShadowTowerConsistency(unittest.TestCase):
 # ====================================================================
 
 class TestSymplecticInvariance(unittest.TestCase):
-    """Free energies F_g are symplectic invariants of the spectral curve."""
+    """Distinguished-origin normalization for the shadow free energy."""
 
     def test_virasoro_symplectic(self):
         data = virasoro_data(Fraction(10))
         result = verify_symplectic_invariance(data)
-        self.assertTrue(result['symplectic_invariant'])
+        self.assertTrue(result['normalization_invariant'])
+        self.assertFalse(result['full_eo_symplectic_invariance_asserted'])
+        self.assertEqual(result['scope'], 'distinguished shadow-coordinate normalization')
 
     def test_heisenberg_symplectic(self):
         data = heisenberg_data(Fraction(5))
         result = verify_symplectic_invariance(data)
-        self.assertTrue(result['symplectic_invariant'])
+        self.assertTrue(result['normalization_invariant'])
 
     def test_kappa_determined_by_q0(self):
         """kappa = sqrt(q0)/2, determined by Q_L(0) alone."""
@@ -616,19 +750,20 @@ class TestSymplecticInvariance(unittest.TestCase):
 
 
 # ====================================================================
-# Section 13: Koszul duality on spectral curves (4 tests)
+# Section 13: Verdier-dual scalar lane on spectral curves (5 tests)
 # ====================================================================
 
-class TestKoszulDuality(unittest.TestCase):
-    """Koszul duality acts on the spectral curve.
+class TestVerdierDualScalarLane(unittest.TestCase):
+    """Virasoro Verdier-dual scalar lane on spectral curves.
 
-    Virasoro: Vir_c^! = Vir_{26-c}. kappa + kappa' = 13 (AP24).
+    Virasoro: Vir_c^! = Vir_{26-c}. kappa + kappa' = 13.
     """
 
     def test_virasoro_kappa_sum_13(self):
-        """kappa(Vir_c) + kappa(Vir_{26-c}) = 13 (AP24, NOT 0)."""
+        """kappa(Vir_c) + kappa(Vir_{26-c}) = 13."""
         result = koszul_dual_spectral_curve(virasoro_data(Fraction(10)))
         self.assertTrue(result['kappa_sum_is_13'])
+        self.assertIn('Verdier/continuous-linear', result['dual_branch'])
 
     def test_virasoro_self_dual_at_c13(self):
         """Virasoro is self-dual at c=13."""
@@ -636,7 +771,7 @@ class TestKoszulDuality(unittest.TestCase):
         self.assertTrue(result['self_dual_at_c13'])
 
     def test_virasoro_not_self_dual_at_c26(self):
-        """Virasoro is NOT self-dual at c=26 (AP8).
+        """Virasoro is not self-dual at c=26.
 
         The Koszul dual Vir_{26-26} = Vir_0 has kappa=0.
         """
@@ -648,6 +783,12 @@ class TestKoszulDuality(unittest.TestCase):
         """Spectral curves at c and 26-c are different for c != 13."""
         result = koszul_dual_spectral_curve(virasoro_data(Fraction(10)))
         self.assertNotEqual(result['q0'], result['q0_dual'])
+
+    def test_dual_curve_is_not_inversion_or_bulk(self):
+        """A^!, Omega(B(A)), and Z_ch^der(A) stay separate."""
+        result = koszul_dual_spectral_curve(virasoro_data(Fraction(10)))
+        self.assertIn('Omega(B(A)) = A', result['not_inversion'])
+        self.assertEqual(result['not_bulk'], 'Z_ch^der(A) = ChirHoch^*(A,A)')
 
 
 # ====================================================================
@@ -688,6 +829,18 @@ class TestAiryLimit(unittest.TestCase):
         # The Airy scale should be nonzero
         self.assertNotAlmostEqual(abs(result['airy_scale_plus']), 0.0)
 
+    def test_airy_scale_is_simple_root_derivative(self):
+        """At t_+, the Airy scale is Q_L'(t_+) = 2*q2*half_gap."""
+        data = virasoro_data(Fraction(10))
+        curve = ShadowSpectralCurve(data)
+        result = airy_limit_of_shadow(data)
+        q1 = float(data.q1)
+        q2 = float(data.q2)
+        qprime_at_plus = q1 + 2 * q2 * curve.t_plus
+        self.assertAlmostEqual(
+            abs(result['airy_scale_plus'] - qprime_at_plus), 0.0, places=10
+        )
+
     def test_heisenberg_no_airy_limit(self):
         data = heisenberg_data(Fraction(1))
         result = airy_limit_of_shadow(data)
@@ -710,7 +863,7 @@ class TestAiryLimit(unittest.TestCase):
 class TestShadowFlatSection(unittest.TestCase):
     """Flat section Phi(t) = sqrt(Q_L(t)/Q_L(0)).
 
-    AP23: H(t) = t^2*Phi(t)*sqrt(Q_L(0)) is NOT a flat section.
+    H(t) = t^2*Phi(t)*sqrt(Q_L(0)) is not a flat section.
     """
 
     def test_flat_section_at_origin(self):
@@ -744,7 +897,11 @@ class TestFullReport(unittest.TestCase):
         self.assertIn('Q6_depth_vs_genus', report)
         self.assertIn('Q7_ceo_vs_shadow', report)
         self.assertIn('Q8_kw_tau', report)
+        self.assertIn('Q8_finite_window_theorem', report)
         self.assertIn('Q9_wp_comparison', report)
+        self.assertFalse(
+            report['Q8_finite_window_theorem']['scope']['analytic_tau_power_asserted']
+        )
 
 
 # ====================================================================
@@ -813,7 +970,7 @@ class TestCrossFamilyConsistency(unittest.TestCase):
     def test_virasoro_complementarity(self):
         """F_g(Vir_c) + F_g(Vir_{26-c}) = 13 * lambda_g^FP.
 
-        kappa + kappa' = 13 for Virasoro (AP24).
+        kappa + kappa' = 13 for Virasoro.
         """
         c = Fraction(10)
         data = virasoro_data(c)
@@ -825,7 +982,7 @@ class TestCrossFamilyConsistency(unittest.TestCase):
     def test_ahat_generating_function(self):
         """sum_g F_g * x^{2g} = kappa * (A-hat(ix) - 1) at leading orders.
 
-        AP22: the hbar convention must be 2g, not 2g-2.
+        The hbar convention is 2g, not 2g-2.
         Verify: F_1 = kappa/24 matches [x^2] of kappa*(Ahat(ix)-1).
         """
         kappa = Rational(5)  # Vir c=10

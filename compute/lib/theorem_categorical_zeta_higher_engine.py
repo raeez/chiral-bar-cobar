@@ -40,16 +40,16 @@ KEY RESULTS (proved in this engine):
     Typical dimension at total k is ~ k^{|Phi^+|}.
     Convergence for s > r/|Phi^+| = 2/N.
 
-(6) NOT MULTIPLICATIVE for N >= 3:
+(6) FAILURE OF MULTIPLICATIVITY for N >= 3:
     The Dirichlet coefficients a_d = #{irreps of dim d} fail
     multiplicativity: for sl_3, a_3=2, a_5=0, but a_15=4 (not 0).
     This rules out an Euler product.  Structural reason: the
     representation ring of sl_N for N >= 3 has rank >= 2, and
-    dimension is NOT a ring homomorphism to the primes.
+    dimension is not a ring homomorphism to the primes.
 
 (7) NO UNIVERSAL FORMULA zeta^{DK}(s) = f(kappa, s):
     The categorical zeta depends on the Lie algebra sl_N (through
-    the representation theory), NOT on the level k.  Since kappa =
+    the representation theory), rather than the level k.  Since kappa =
     (N^2-1)(k+N)/(2N) depends on k, there is no function of kappa
     alone that gives zeta^{DK}.
 
@@ -497,7 +497,7 @@ def categorical_vs_shadow_ratio(N: int, s, k=1):
 def categorical_zeta_decay_exponent(s, N_values=None):
     """Measure the decay exponent alpha(s) in Z_N(s)-1 ~ N^{-alpha(s)}.
 
-    For the nontrivial part of the categorical zeta, the log-log slope
+    For the positive-degree part of the categorical zeta, the log-log exponent
     gives the effective decay exponent as N grows.
     """
     if N_values is None:

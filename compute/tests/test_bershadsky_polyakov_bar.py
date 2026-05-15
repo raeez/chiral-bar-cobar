@@ -40,6 +40,7 @@ from compute.lib.bershadsky_polyakov_bar import (
     bp_koszul_dual_generators,
     bp_nth_product,
     bp_nth_products,
+    bp_primary_ope_normal_form,
     bp_vacuum_character_coeffs,
     bp_vacuum_dim,
     ds_bar_commutation_central_charge,
@@ -53,6 +54,7 @@ from compute.lib.bershadsky_polyakov_bar import (
 
 c = Symbol('c')
 k = Symbol('k')
+fs = bp_primary_ope_normal_form(k)
 
 
 # ===================================================================
@@ -157,8 +159,8 @@ class TestNthProducts:
 
     # --- Virasoro ---
     def test_tt_pole4(self):
-        """T_(3)T = c/2."""
-        assert bp_nth_product("T", "T", 3) == {"vac": c / 2}
+        """T_(3)T = c_BP(k)/2."""
+        assert simplify(bp_nth_product("T", "T", 3)["vac"] - fs["central_charge"] / 2) == 0
 
     def test_tt_pole2(self):
         """T_(1)T = 2T."""
@@ -183,8 +185,8 @@ class TestNthProducts:
 
     # --- J x J ---
     def test_jj_pole2(self):
-        """J_(1)J = c/3."""
-        assert bp_nth_product("J", "J", 1) == {"vac": c / 3}
+        """J_(1)J = (2k+3)/3 in Feigin-Semikhatov normal form."""
+        assert simplify(bp_nth_product("J", "J", 1)["vac"] - fs["J_level"]) == 0
 
     def test_jj_no_pole1(self):
         """J_(0)J = 0 (no simple pole in JJ OPE)."""
@@ -201,33 +203,35 @@ class TestNthProducts:
 
     # --- G+ x G- ---
     def test_gpgm_pole3(self):
-        """G+_(2)G- = 2c/3 (inner product)."""
-        assert bp_nth_product("G+", "G-", 2) == {"vac": 2 * c / 3}
+        """G+_(2)G- = (k+1)(2k+3)."""
+        assert simplify(bp_nth_product("G+", "G-", 2)["vac"] - fs["G_pairing"]) == 0
 
     def test_gpgm_pole2(self):
-        """G+_(1)G- = 2J."""
-        assert bp_nth_product("G+", "G-", 1) == {"J": Rational(2)}
+        """G+_(1)G- = 3(k+1)J."""
+        assert simplify(bp_nth_product("G+", "G-", 1)["J"] - fs["GJ_coefficient"]) == 0
 
     def test_gpgm_pole1(self):
-        """G+_(0)G- = 2T + dJ."""
+        """G+_(0)G- = 3JJ + (3(k+1)/2)dJ - (k+3)T."""
         result = bp_nth_product("G+", "G-", 0)
-        assert result.get("T") == Rational(2)
-        assert result.get("dJ") == Rational(1)
+        assert result.get("JJ") == Rational(3)
+        assert simplify(result.get("dJ") - fs["dJ_coefficient"]) == 0
+        assert simplify(result.get("T") - fs["T_coefficient"]) == 0
 
     # --- G- x G+ (super-skew-symmetry) ---
     def test_gmgp_pole3(self):
-        """G-_(2)G+ = 2c/3 (same as G+G-)."""
-        assert bp_nth_product("G-", "G+", 2) == {"vac": 2 * c / 3}
+        """G-_(2)G+ has the same Feigin-Semikhatov pairing."""
+        assert simplify(bp_nth_product("G-", "G+", 2)["vac"] - fs["G_pairing"]) == 0
 
     def test_gmgp_pole2(self):
-        """G-_(1)G+ = -2J (opposite sign from G+G-)."""
-        assert bp_nth_product("G-", "G+", 1) == {"J": Rational(-2)}
+        """G-_(1)G+ = -3(k+1)J."""
+        assert simplify(bp_nth_product("G-", "G+", 1)["J"] + fs["GJ_coefficient"]) == 0
 
     def test_gmgp_pole1(self):
-        """G-_(0)G+ = 2T - dJ."""
+        """G-_(0)G+ = 3JJ - (3(k+1)/2)dJ - (k+3)T."""
         result = bp_nth_product("G-", "G+", 0)
-        assert result.get("T") == Rational(2)
-        assert result.get("dJ") == Rational(-1)
+        assert result.get("JJ") == Rational(3)
+        assert simplify(result.get("dJ") + fs["dJ_coefficient"]) == 0
+        assert simplify(result.get("T") - fs["T_coefficient"]) == 0
 
     # --- Vanishing OPEs ---
     def test_gpgp_vanishes(self):
@@ -291,24 +295,24 @@ class TestSkewSymmetry:
 
 class TestBarDifferential:
     def test_tt_vacuum(self):
-        """D(T x T) has vacuum component c/2."""
+        """D(T x T) has vacuum component c_BP(k)/2."""
         vac, _ = bp_bar_diff_deg2("T", "T")
-        assert vac.get("vac") == c / 2
+        assert simplify(vac.get("vac") - fs["central_charge"] / 2) == 0
 
     def test_jj_vacuum(self):
-        """D(J x J) has vacuum component c/3."""
+        """D(J x J) has vacuum component (2k+3)/3."""
         vac, _ = bp_bar_diff_deg2("J", "J")
-        assert vac.get("vac") == c / 3
+        assert simplify(vac.get("vac") - fs["J_level"]) == 0
 
     def test_gpgm_vacuum(self):
-        """D(G+ x G-) has vacuum component 2c/3."""
+        """D(G+ x G-) has Feigin-Semikhatov pairing."""
         vac, _ = bp_bar_diff_deg2("G+", "G-")
-        assert vac.get("vac") == 2 * c / 3
+        assert simplify(vac.get("vac") - fs["G_pairing"]) == 0
 
     def test_gmgp_vacuum(self):
-        """D(G- x G+) has vacuum component 2c/3."""
+        """D(G- x G+) has Feigin-Semikhatov pairing."""
         vac, _ = bp_bar_diff_deg2("G-", "G+")
-        assert vac.get("vac") == 2 * c / 3
+        assert simplify(vac.get("vac") - fs["G_pairing"]) == 0
 
     def test_gpgp_zero(self):
         """D(G+ x G+) = 0."""
@@ -326,11 +330,12 @@ class TestBarDifferential:
         assert bar1.get("T") == 2
 
     def test_gpgm_bar1_structure(self):
-        """D(G+ x G-) bar-1 has J(2) + T(2) + dJ(1)."""
+        """D(G+ x G-) bar-1 displays the Feigin-Semikhatov simple pole."""
         _, bar1 = bp_bar_diff_deg2("G+", "G-")
-        assert bar1.get("J") == 2
-        assert bar1.get("T") == 2
-        assert bar1.get("dJ") == 1
+        assert simplify(bar1.get("J") - fs["GJ_coefficient"]) == 0
+        assert bar1.get("JJ") == 3
+        assert simplify(bar1.get("T") - fs["T_coefficient"]) == 0
+        assert simplify(bar1.get("dJ") - fs["dJ_coefficient"]) == 0
 
     def test_asymmetry_gpgm_vs_gmgp(self):
         """D(G+ x G-) != D(G- x G+) (J coefficient signs differ)."""
@@ -350,25 +355,25 @@ class TestBarDifferential:
 
 class TestCurvature:
     def test_t_curvature(self):
-        """m_0(T) = c/2."""
+        """m_0(T) = c_BP(k)/2."""
         curv = bp_curvature()
-        assert curv["T"] == c / 2
+        assert simplify(curv["T"] - fs["central_charge"] / 2) == 0
 
     def test_j_curvature(self):
-        """m_0(J) = c/3."""
+        """m_0(J) = (2k+3)/3."""
         curv = bp_curvature()
-        assert curv["J"] == c / 3
+        assert simplify(curv["J"] - fs["J_level"]) == 0
 
     def test_fermionic_curvature(self):
-        """Fermionic cross-curvature = 2c/3."""
+        """Fermionic cross-curvature = (k+1)(2k+3)."""
         curv = bp_curvature()
-        assert curv["G+G-"] == 2 * c / 3
+        assert simplify(curv["G+G-"] - fs["G_pairing"]) == 0
 
     def test_curvature_ratio_t_j(self):
-        """m_0(T)/m_0(J) = 3/2 (ratio of leading pole orders)."""
+        """m_0(T)/m_0(J) is not the N=2 ratio 3/2."""
         curv = bp_curvature()
         ratio = simplify(curv["T"] / curv["J"])
-        assert ratio == Rational(3, 2)
+        assert simplify(ratio - Rational(3, 2)) != 0
 
 
 # ===================================================================
@@ -580,16 +585,10 @@ class TestCrossFamilyConsistency:
             )
 
     def test_curvature_ratios_consistent(self):
-        """Curvature ratios match conformal weight ratios.
-
-        m_0(T)/m_0(J) should equal T.weight * (T.weight-1) / [J.weight * (J.weight-1)]
-        since the leading self-OPE pole is controlled by conformal weight.
-        For T (weight 2): pole = c/2.  For J (weight 1): pole = c/3.
-        Ratio = (c/2)/(c/3) = 3/2.
-        """
+        """Curvature ratios use the FS J-level, not the N=2 c/3 level."""
         curv = bp_curvature()
         ratio = simplify(curv["T"] / curv["J"])
-        assert ratio == Rational(3, 2)
+        assert simplify(ratio - Rational(3, 2)) != 0
 
     def test_vacuum_dim_growth_consistent_with_generators(self):
         """Vacuum module dimensions grow consistently with generator data.

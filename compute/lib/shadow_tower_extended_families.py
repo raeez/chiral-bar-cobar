@@ -296,6 +296,21 @@ def bp_c_arakawa(k):
     return sp.Integer(2) - sp.Integer(24) * (k + 1) ** 2 / (k + 3)
 
 
+def bp_j_level_feigin_semikhatov(k):
+    r"""J-current level in the Feigin-Semikhatov BP normalization.
+
+    The Polyakov-Bershadsky current satisfies
+
+        J_{(1)} J = (2k + 3)/3.
+
+    This is the J-line scalar projection used by the BP bar engine.  It is
+    independent from the T-line scalar kappa(BP_k) = c(BP_k)/6 and from the
+    DS ghost scalar package.
+    """
+    k = sp.sympify(k)
+    return (sp.Integer(2) * k + sp.Integer(3)) / sp.Integer(3)
+
+
 def s3_bp_tline(k):
     r"""S_3 on T-line of BP_k: inherits Virasoro value 2.
 
@@ -307,9 +322,11 @@ def s3_bp_tline(k):
 def s3_bp_jline(k):
     r"""S_3 on J-line of BP_k: vanishes.
 
-    The J-current is abelian with J.J OPE J(z)J(w) ~ (k+1/2)/(z-w)^2
-    and no cubic term in the lambda-bracket, so S_3^J = 0 identically.
-    The line is class G, depth 2.
+    The J-current has scalar double pole
+    J(z)J(w) ~ ((2k+3)/3)/(z-w)^2 in Feigin-Semikhatov normal form and
+    no cubic term in the lambda-bracket.  Hence S_3^J = 0 identically.
+    The J-line is class G of depth 2.  This line scalar is not the
+    T-line kappa c(BP_k)/6.
     """
     return sp.Integer(0)
 

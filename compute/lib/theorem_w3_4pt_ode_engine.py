@@ -87,7 +87,6 @@ from typing import Any, Dict, List, Optional, Tuple
 from theorem_w3_commuting_hamiltonians_engine import (
     GENERATORS,
     WEIGHTS,
-    beta_composite,
     collision_residue_on_primary,
     k_max_family,
     kappa_T,
@@ -109,6 +108,127 @@ K_MAX_W3 = 5       # max collision depth for W_3
 K_MAX_VIR = 3       # max collision depth for Virasoro
 MAX_OPE_POLE_W3 = 6  # W-W OPE sixth-order pole
 DIFF_ORDER_W3 = 4   # operator order k_max - 1
+LAMBDA_COUPLING_NUMERATOR = Fraction(16)
+LAMBDA_COUPLING_DENOMINATOR_C_COEFF = Fraction(5)
+LAMBDA_COUPLING_DENOMINATOR_CONST = Fraction(22)
+LAMBDA_STATE_L4_COEFF = Fraction(-3, 5)
+LAMBDA_FIELD_D2T_COEFF = Fraction(-3, 10)
+UNIVERSAL_NORMALIZATION_SINGULAR_C = (Fraction(0), Fraction(-22, 5))
+
+
+def _zero_value_for(c):
+    return Fraction(0) if isinstance(c, Fraction) else 0
+
+
+def _is_zero(value) -> bool:
+    if isinstance(value, Fraction):
+        return value == 0
+    if isinstance(value, float):
+        return math.isclose(value, 0.0, rel_tol=0.0, abs_tol=1e-12)
+    return value == 0
+
+
+def lambda_coupling_denominator(c):
+    """Return the exact denominator 5c+22 of the W-W Lambda coupling."""
+    if isinstance(c, Fraction):
+        return LAMBDA_COUPLING_DENOMINATOR_C_COEFF * c + LAMBDA_COUPLING_DENOMINATOR_CONST
+    return 5 * c + 22
+
+
+def zamolodchikov_lambda_norm(c):
+    r"""Return <Lambda|Lambda> = c(5c+22)/10 in the Virasoro vacuum module."""
+    denominator = lambda_coupling_denominator(c)
+    if isinstance(c, Fraction):
+        return c * denominator / Fraction(10)
+    return c * denominator / 10
+
+
+def w3_lambda_coupling(c):
+    r"""Return beta(c) = 16/(5c+22), the W-W coefficient of Lambda."""
+    denominator = lambda_coupling_denominator(c)
+    if isinstance(c, Fraction):
+        return LAMBDA_COUPLING_NUMERATOR / denominator
+    return 16 / denominator
+
+
+def w3_universal_normalization_domain(c):
+    r"""Central-charge domain for the universal Zamolodchikov W_3 normalization.
+
+    The compute surface uses the universal normalization with
+    <Lambda|Lambda> = c(5c+22)/10 and beta = 16/(5c+22).  The
+    scalar-projection formulas are regular only on c(5c+22) != 0.
+    """
+    denominator = lambda_coupling_denominator(c)
+    metric_singular = _is_zero(c)
+    lambda_coupling_singular = _is_zero(denominator)
+    lambda_norm = zamolodchikov_lambda_norm(c)
+    regular = not (metric_singular or lambda_coupling_singular)
+    return {
+        'c': c,
+        'condition': 'c*(5c+22) != 0',
+        'lambda_coupling_denominator': denominator,
+        'lambda_norm': lambda_norm,
+        'metric_singular': metric_singular,
+        'lambda_coupling_singular': lambda_coupling_singular,
+        'singular': not regular,
+        'regular': regular,
+        'singular_c_values': UNIVERSAL_NORMALIZATION_SINGULAR_C,
+    }
+
+
+def require_regular_universal_normalization(c):
+    """Raise if the universal W_3 scalar-projection normalization is singular."""
+    domain = w3_universal_normalization_domain(c)
+    if not domain['regular']:
+        raise ValueError(
+            "W_3 universal Zamolodchikov normalization requires "
+            "c*(5c+22) != 0; got c={!r}".format(c)
+        )
+    return domain
+
+
+def w3_channel_kappa_matrix(c):
+    r"""Return the channel-refined W_3 kappa matrix diag(c/2, c/3).
+
+    The scalar trace is c(1/2+1/3)=5c/6.  This is a trace of two
+    distinct channel weights, not a uniform-weight replacement of the
+    T-line and W-line by one common entry.
+    """
+    if isinstance(c, Fraction):
+        kappa_t = c / Fraction(2)
+        kappa_w = c / Fraction(3)
+        trace = c * Fraction(5, 6)
+    else:
+        kappa_t = c / 2
+        kappa_w = c / 3
+        trace = 5 * c / 6
+
+    domain = w3_universal_normalization_domain(c)
+    return {
+        'matrix': {'T': kappa_t, 'W': kappa_w},
+        'trace': trace,
+        'harmonic_trace_formula': 'c*(1/2 + 1/3) = 5c/6',
+        'is_uniform_weight_reduction': False,
+        'entries_equal': kappa_t == kappa_w,
+        'regular_nonuniform': domain['regular'] and kappa_t != kappa_w,
+        'central_charge_domain': domain,
+    }
+
+
+def diagnostic_scope_4pt():
+    """Scope of this finite W_3 four-point ODE diagnostic."""
+    return {
+        'finite_ode_diagnostic': True,
+        'primary_scalar_projection_only': True,
+        'full_ope_computation': False,
+        'full_modular_koszul_theorem': False,
+        'derived_center_computation': False,
+        'needs_extra_data_for_scalar_ode': (
+            'null-vector ideal',
+            'fusion rules',
+            'representation-specific quotient',
+        ),
+    }
 
 
 # ============================================================================
@@ -217,7 +337,7 @@ def virasoro_bpz_4pt_hamiltonian(c, h1, h2, h3, h4):
 
 
 def w3_4pt_hamiltonian(c, h1, h2, h3, h4, w1, w2, w3_ch, w4):
-    r"""Full W_3 Hamiltonian for 4-point primaries on P^1.
+    r"""Channel-resolved W_3 Hamiltonian diagnostic for 4-point primaries.
 
     After SL(2) fixing z_1=0, z_2=z, z_3=1, z_4=infty, the W_3
     shadow connection gives:
@@ -234,8 +354,12 @@ def w3_4pt_hamiltonian(c, h1, h2, h3, h4, w1, w2, w3_ch, w4):
         h1..h4: conformal weights of the four primaries
         w1..w4: W_0 eigenvalues (spin-3 charges) of the four primaries
 
-    Returns dict with the full ODE structure.
+    Returns dict with the finite ODE diagnostic.  It is a primary
+    scalar projection plus channel bookkeeping, not the full W-W OPE and
+    not a modular Koszul or derived-center computation.
     """
+    domain = require_regular_universal_normalization(c)
+
     # T-sector (BPZ):
     bpz = virasoro_bpz_4pt_hamiltonian(c, h1, h2, h3, h4)
 
@@ -266,6 +390,8 @@ def w3_4pt_hamiltonian(c, h1, h2, h3, h4, w1, w2, w3_ch, w4):
     # correction involving the W-W OPE.
     ww_pole_0_depth3 = 2 * h1   # 2h_1 / z^3  (from W_{(3)}W = 2T)
     ww_pole_1_depth3 = 2 * h3   # 2h_3 / (z-1)^3
+    pole_0_depth3_scalar_projection = w_pole_0_depth3 + ww_pole_0_depth3
+    pole_1_depth3_scalar_projection = w_pole_1_depth3 + ww_pole_1_depth3
 
     # Depth 5 (from W-W OPE: W_{(5)}W = c/3):
     # Central charge term, trivial on primaries (scalar on vacuum)
@@ -277,7 +403,7 @@ def w3_4pt_hamiltonian(c, h1, h2, h3, h4, w1, w2, w3_ch, w4):
     ww_pole_1_depth4 = 0
 
     # Depth 1 (from W-W OPE: W_{(1)}W involves Lambda composite):
-    beta = beta_composite(c)
+    beta = w3_lambda_coupling(c)
     lambda_h1 = lambda_zero_mode_on_primary(c, h1)
     lambda_h3 = lambda_zero_mode_on_primary(c, h3)
     ww_pole_0_depth1 = beta * lambda_h1
@@ -304,7 +430,7 @@ def w3_4pt_hamiltonian(c, h1, h2, h3, h4, w1, w2, w3_ch, w4):
                 'position': 0,
                 'coefficients': {
                     1: ww_pole_0_depth1,
-                    3: w_pole_0_depth3,
+                    3: pole_0_depth3_scalar_projection,
                     5: ww_pole_0_depth5,
                 },
                 'depth_4_vanishes': True,
@@ -313,20 +439,38 @@ def w3_4pt_hamiltonian(c, h1, h2, h3, h4, w1, w2, w3_ch, w4):
                 'position': 1,
                 'coefficients': {
                     1: ww_pole_1_depth1,
-                    3: w_pole_1_depth3,
+                    3: pole_1_depth3_scalar_projection,
                     5: ww_pole_1_depth5,
                 },
                 'depth_4_vanishes': True,
             },
+            'w_ward_depth3': {
+                'pole_0': w_pole_0_depth3,
+                'pole_1': w_pole_1_depth3,
+            },
             'ww_depth3_from_2T': {
                 'pole_0': ww_pole_0_depth3,
                 'pole_1': ww_pole_1_depth3,
+            },
+            'ww_depth2_derivative': ww_depth2_derivative,
+            'central_only_depth5': {
+                'pole_0': ww_pole_0_depth5,
+                'pole_1': ww_pole_1_depth5,
+                'included_in_primary_scalar_projection': False,
+            },
+            'full_ope_terms_not_in_scalar_projection': {
+                1: 'Lambda quasi-primary before primary scalar evaluation',
+                2: 'dT descendant/derivative term',
+                4: 'zero: no weight-1 field',
+                5: 'vacuum central term',
             },
             'ward_cross': {
                 'coefficient': w_ward_cross,
                 'note': 'W-channel Ward identity cross-term from z_4=infty',
             },
         },
+        'central_charge_domain': domain,
+        'scope': diagnostic_scope_4pt(),
         'depth_4_vanishes': True,
         'k_max': K_MAX_W3,
         'diff_order': DIFF_ORDER_W3,
@@ -351,7 +495,8 @@ def extract_scalar_ode_coefficients(c, h1, h2, h3, h4, w1=0, w2=0, w3_ch=0, w4=0
     Returns a dict with {depth: {site: coefficient}} for each
     non-vanishing contribution.
     """
-    beta = beta_composite(c)
+    domain = require_regular_universal_normalization(c)
+    beta = w3_lambda_coupling(c)
     lambda_h1 = lambda_zero_mode_on_primary(c, h1)
     lambda_h3 = lambda_zero_mode_on_primary(c, h3)
 
@@ -413,9 +558,12 @@ def extract_scalar_ode_coefficients(c, h1, h2, h3, h4, w1=0, w2=0, w3_ch=0, w4=0
         'type': 'central',
         'site_0': c / 3,
         'site_1': c / 3,
+        'included_in_primary_scalar_projection': False,
         'note': 'W_{(5)}W = c/3, trivial on primaries',
     }
 
+    coefficients['_scope'] = diagnostic_scope_4pt()
+    coefficients['_central_charge_domain'] = domain
     return coefficients
 
 
@@ -533,13 +681,14 @@ def w_sector_leading_term(c, h_j, w_j=0):
 
     Returns the leading W-sector contributions at each depth.
     """
-    beta = beta_composite(c)
+    domain = require_regular_universal_normalization(c)
+    beta = w3_lambda_coupling(c)
     lambda_val = lambda_zero_mode_on_primary(c, h_j)
 
     result = {
         'depth_1_lambda': {
             'value': beta * lambda_val,
-            'formula': 'beta * (h^2 - 3h/5)',
+            'formula': '16/(5c+22) * (h^2 - 3h/5)',
             'beta': beta,
             'lambda_0': lambda_val,
             'is_nonlinear': True,
@@ -556,14 +705,22 @@ def w_sector_leading_term(c, h_j, w_j=0):
             'note': ('LEADING LINEAR W_3-specific scalar term; '
                      'from W_{(3)}W = 2T acting as 2 * L_0 eigenvalue'),
         },
+        'depth_3_w_charge': {
+            'value': w_j,
+            'formula': 'w_j',
+            'note': 'W-current Ward contribution, separate from W_{(3)}W = 2T',
+        },
         'depth_4_zero': {
             'value': 0,
             'note': 'W_{(4)}W = 0; no weight-1 field in vacuum module',
         },
         'depth_5_central': {
             'value': c / 3,
+            'included_in_primary_scalar_projection': False,
             'note': 'W_{(5)}W = c/3; central charge term, trivial on primaries',
         },
+        'central_charge_domain': domain,
+        'scope': diagnostic_scope_4pt(),
     }
 
     # The surviving depths in the W-W channel on primaries are 1, 3, 5
@@ -613,6 +770,9 @@ def ode_order_analysis(family='w3', N=3):
             'bpz_null_vector_order_21': 2,
             'matrix_ode_order': 1,
             'scalar_ode_order_degenerate': 2,
+            'finite_ode_diagnostic': True,
+            'full_modular_koszul_theorem': False,
+            'derived_center_computation': False,
             'note': ('Virasoro: BPZ null vector at level 2 gives 2nd order. '
                      'On generic primaries: first-order matrix ODE on conformal '
                      'block space of dimension determined by fusion rules.'),
@@ -628,6 +788,9 @@ def ode_order_analysis(family='w3', N=3):
             'w3_null_vector_order_01': 3,   # (0,1) degenerate: 3rd order
             'matrix_ode_order': 1,
             'max_scalar_ode_order': 5,
+            'finite_ode_diagnostic': True,
+            'full_modular_koszul_theorem': False,
+            'derived_center_computation': False,
             'note': ('W_3: on descendants the Hamiltonian is 4th order. '
                      'On generic primaries: first-order matrix ODE. '
                      'For degenerate reps: scalar ODE of order up to 5.'),
@@ -639,6 +802,9 @@ def ode_order_analysis(family='w3', N=3):
         'diff_order_descendants': max_diff_order,
         'diff_order_primaries_generic': 1,
         'matrix_ode_order': 1,
+        'finite_ode_diagnostic': True,
+        'full_modular_koszul_theorem': False,
+        'derived_center_computation': False,
         'note': f'W_{N}: Hamiltonian is order {max_diff_order} on descendants.',
     }
 
@@ -653,10 +819,10 @@ def w3_exceeds_virasoro_order():
     2. After d log absorption: k_max = 5 (vs 3 for Virasoro)
     3. Differential operator order = k_max - 1 = 4 (vs 2)
 
-    The extra order comes from depths 4 and 5 in the collision expansion.
-    Depth 4 vanishes (W_{(4)}W = 0), but depth 5 gives c/3 (central).
-    The effective extra contributions on descendants come from depths
-    3 and 5 of the W-W channel and the nonlinear depth-1 Lambda term.
+    The depths beyond the Virasoro range are 4 and 5.  Depth 4 vanishes
+    (W_{(4)}W = 0), while depth 5 is central.  The W-specific scalar
+    projection inside the Virasoro range also contains the nonlinear
+    depth-1 Lambda term and the depth-3 2T term.
     """
     vir_order = k_max_family('virasoro') - 1   # 2
     w3_order = k_max_family('w3') - 1           # 4
@@ -666,8 +832,14 @@ def w3_exceeds_virasoro_order():
         'w3_order': w3_order,
         'w3_exceeds': w3_order > vir_order,
         'ratio': w3_order / vir_order,
-        'extra_depths': [3, 5],   # W-W channel depths beyond Virasoro
+        'extra_depths': [4, 5],   # depths beyond the Virasoro range
+        'w_specific_active_depths': [1, 2, 3, 5],
+        'vanishing_extra_depths': [4],
+        'central_extra_depths': [5],
         'depth_4_vanishes': True,  # W_{(4)}W = 0
+        'finite_ode_diagnostic': True,
+        'full_modular_koszul_theorem': False,
+        'derived_center_computation': False,
         'source_of_extra_order': 'W-W OPE sixth-order pole -> k_max = 5',
     }
 
@@ -694,6 +866,16 @@ def verify_depth_4_vanishing(c_values=None):
 
     results = []
     for c in c_values:
+        domain = w3_universal_normalization_domain(c)
+        if not domain['regular']:
+            results.append({
+                'c': c,
+                'depth_4_vanishes': True,
+                'singular_witness': True,
+                'central_charge_domain': domain,
+            })
+            continue
+
         # Check all channel pairs at depth 4
         all_zero = True
         for a in GENERATORS:
@@ -712,6 +894,8 @@ def verify_depth_4_vanishing(c_values=None):
         results.append({
             'c': c,
             'depth_4_vanishes': all_zero,
+            'singular_witness': False,
+            'central_charge_domain': domain,
         })
 
     return {
@@ -738,6 +922,7 @@ def surviving_depths_on_primaries(c, h_j, w_j=0):
     The SURVIVING depths are those that contribute non-trivially
     as operators on the primary conformal block space.
     """
+    require_regular_universal_normalization(c)
     depths = {}
 
     for k in range(1, K_MAX_W3 + 1):
@@ -793,7 +978,10 @@ def surviving_depths_on_primaries(c, h_j, w_j=0):
 # Numerical evaluation of the 4-point Hamiltonian at specific z
 # ============================================================================
 
-def evaluate_hamiltonian_at_z(z, c, h1, h2, h3, h4, w1=0, w2=0, w3_ch=0, w4=0):
+def evaluate_hamiltonian_at_z(
+    z, c, h1, h2, h3, h4, w1=0, w2=0, w3_ch=0, w4=0,
+    include_central=False,
+):
     r"""Evaluate the 4-point Hamiltonian scalar part at a specific z value.
 
     The Hamiltonian on primaries has the form:
@@ -806,9 +994,12 @@ def evaluate_hamiltonian_at_z(z, c, h1, h2, h3, h4, w1=0, w2=0, w3_ch=0, w4=0):
     W-sector scalar terms (on primaries):
         (w_1 + 2h_1)/z^3 + (w_3 + 2h_3)/(z-1)^3 + ...
 
-    We evaluate this at a specific numerical z to verify consistency.
+    By default the central vacuum term is reported but not included in
+    the primary scalar projection.  Set include_central=True to include
+    the depth-5 vacuum scalar in the returned total.
     """
-    beta = beta_composite(c)
+    domain = require_regular_universal_normalization(c)
+    beta = w3_lambda_coupling(c)
     lambda_h1 = lambda_zero_mode_on_primary(c, h1)
     lambda_h3 = lambda_zero_mode_on_primary(c, h3)
 
@@ -822,8 +1013,9 @@ def evaluate_hamiltonian_at_z(z, c, h1, h2, h3, h4, w1=0, w2=0, w3_ch=0, w4=0):
     # W-sector depth 3 (W-Ward + W_{(3)}W):
     w_depth3 = (w1 + 2 * h1) / z**3 + (w3_ch + 2 * h3) / (z - 1)**3
 
-    # W-sector depth 5 (central, trivial on primaries but we include it):
-    w_depth5 = (c / 3) / z**5 + (c / 3) / (z - 1)**5
+    # W-sector depth 5 (central, trivial on primaries):
+    w_depth5_central = (c / 3) / z**5 + (c / 3) / (z - 1)**5
+    w_depth5 = w_depth5_central if include_central else _zero_value_for(c)
 
     # Depth 4 = 0
 
@@ -835,26 +1027,28 @@ def evaluate_hamiltonian_at_z(z, c, h1, h2, h3, h4, w1=0, w2=0, w3_ch=0, w4=0):
         'w_depth1': w_depth1,
         'w_depth3': w_depth3,
         'w_depth5': w_depth5,
+        'w_depth5_central': w_depth5_central,
+        'central_projection_included': include_central,
         'w_depth4': 0,   # Always zero
         'total': total,
         'w_sector_total': w_depth1 + w_depth3 + w_depth5,
+        'central_charge_domain': domain,
+        'scope': diagnostic_scope_4pt(),
     }
 
 
 # ============================================================================
-# W_3 minimal model at c = 2
+# W_3 universal normalization at c = 2
 # ============================================================================
 
 def w3_minimal_model_c2():
-    r"""W_3 minimal model at c = 2 (the simplest W_3 minimal model).
+    r"""Universal W_3 normalization at c = 2.
 
-    The W_3(sl_3) minimal model at c = 2 has p = 4, p' = 5.
-    Central charge: c = 2(1 - 12/20) = 2(1 - 3/5) = 4/5 ... wait.
-
-    Actually the W_3 minimal models have:
+    The W_3 minimal-model formula is:
         c = 2(1 - 12(p-p')^2 / (p * p'))
 
-    For the simplest: p = 3, p' = 4 gives c = 2(1 - 12/12) = 0.
+    The small examples do not make c=2 a minimal model:
+    p = 3, p' = 4 gives c = 2(1 - 12/12) = 0.
     p = 4, p' = 5: c = 2(1 - 12/20) = 2 * 2/5 = 4/5.
     p = 3, p' = 5: c = 2(1 - 12*4/15) = 2(1 - 16/5) = 2(-11/5) = -22/5.
 
@@ -865,7 +1059,8 @@ def w3_minimal_model_c2():
     kappa_total = 5/3
     """
     c = Fraction(2)
-    beta = beta_composite(c)   # 16/(22+10) = 16/32 = 1/2
+    domain = require_regular_universal_normalization(c)
+    beta = w3_lambda_coupling(c)  # 16/(22+10) = 16/32 = 1/2
     kt = kappa_T(c)             # 1
     kw = kappa_W(c)             # 2/3
     ktot = kappa_total(c)       # 5/3
@@ -880,6 +1075,9 @@ def w3_minimal_model_c2():
         'kappa_T_expected': Fraction(1),
         'kappa_W_expected': Fraction(2, 3),
         'kappa_total_expected': Fraction(5, 3),
+        'is_minimal_model_claim': False,
+        'central_charge_domain': domain,
+        'channel_kappa_matrix': w3_channel_kappa_matrix(c),
     }
 
 
@@ -893,7 +1091,7 @@ def w3_c2_specific_coefficients(h_j, w_j=0):
     """
     c = Fraction(2)
     beta = Fraction(1, 2)
-    lambda_val = h_j**2 - Fraction(3, 5) * h_j
+    lambda_val = h_j**2 + LAMBDA_STATE_L4_COEFF * h_j
 
     return {
         'c': c,
@@ -969,9 +1167,7 @@ def channel_structure_4pt(c):
     appears through the Ward identity structure (T acts on W-charged
     fields and vice versa).
     """
-    metric = zamolodchikov_metric(c)
-    eta_TT = 2 / c if not isinstance(c, Fraction) else Fraction(2) / c
-    eta_WW = 3 / c if not isinstance(c, Fraction) else Fraction(3) / c
+    domain = w3_universal_normalization_domain(c)
 
     # Active depths by channel:
     active = {
@@ -981,6 +1177,24 @@ def channel_structure_4pt(c):
         ('W', 'W'): [1, 2, 3, 5],  # depths 1,2,3,5; depth 4 vanishes
     }
 
+    if not domain['regular']:
+        return {
+            'metric': None,
+            'inverse_metric': None,
+            'active_depths_by_channel': active,
+            'depth_4_vanishes_all_channels': True,
+            'max_depth': K_MAX_W3,
+            'virasoro_max_depth': K_MAX_VIR,
+            'extra_w3_depths': [4, 5],
+            'central_charge_domain': domain,
+            'regular': False,
+            'reason': 'universal normalization singular at c*(5c+22)=0',
+        }
+
+    metric = zamolodchikov_metric(c)
+    eta_TT = 2 / c if not isinstance(c, Fraction) else Fraction(2) / c
+    eta_WW = 3 / c if not isinstance(c, Fraction) else Fraction(3) / c
+
     return {
         'metric': metric,
         'inverse_metric': {'TT': eta_TT, 'WW': eta_WW, 'TW': 0},
@@ -989,6 +1203,8 @@ def channel_structure_4pt(c):
         'max_depth': K_MAX_W3,
         'virasoro_max_depth': K_MAX_VIR,
         'extra_w3_depths': [4, 5],  # depths beyond Virasoro range
+        'central_charge_domain': domain,
+        'regular': True,
     }
 
 
@@ -1003,6 +1219,7 @@ def full_4pt_ode_summary(c, h1, h2, h3, h4, w1=0, w2=0, w3_ch=0, w4=0):
     T-sector restriction, W-sector leading term, Fuchsian structure,
     depth-4 vanishing verification, and numerical evaluation.
     """
+    domain = require_regular_universal_normalization(c)
     return {
         'hamiltonian': w3_4pt_hamiltonian(c, h1, h2, h3, h4, w1, w2, w3_ch, w4),
         'scalar_coefficients': extract_scalar_ode_coefficients(
@@ -1014,4 +1231,7 @@ def full_4pt_ode_summary(c, h1, h2, h3, h4, w1=0, w2=0, w3_ch=0, w4=0):
         'depth_4_vanishing': verify_depth_4_vanishing(),
         'fuchsian': fuchsian_structure_4pt(),
         'channel_structure': channel_structure_4pt(c),
+        'channel_kappa_matrix': w3_channel_kappa_matrix(c),
+        'central_charge_domain': domain,
+        'scope': diagnostic_scope_4pt(),
     }

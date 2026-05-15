@@ -1,36 +1,26 @@
-r"""Tests for the shadow partition function convergence atlas.
+r"""Tests for the shadow planted-forest convergence diagnostics atlas.
 
-Comprehensive verification of convergence radii for ALL standard families:
+Verification split by certified mathematical scope:
 
-1. GENUS CONVERGENCE: R_genus = 2*pi (universal)
-2. ARITY CONVERGENCE: R_arity = 1/rho (family-dependent)
-3. DOUBLE CONVERGENCE DOMAIN: D(A) = B(0, R_genus) x B(0, R_arity)
-4. SHADOW GROWTH RATE ATLAS: rho(A) for every standard family
-5. PERTURBATIVE vs NON-PERTURBATIVE: shadow (convergent) vs string (divergent)
-6. BOREL SUMMABILITY: shadow Borel transform is entire
-7. PHASE TRANSITION: c < c* divergent, c > c* convergent
-8. ANALYTIC CONTINUATION: complex hbar, Lorentzian evaluation
+1. Scalar A-hat/Bernoulli radius: R_genus = 2*pi.
+2. Finite-depth arity facts for terminating classes.
+3. Arity-radius diagnostics for Virasoro and W-line rows.
+4. Certification metadata preventing promotion to full all-genus analytic claims.
+5. Firewall checks separating A, B(A), A^i, A^!, and Z_ch^der(A).
 
-60+ tests covering the full convergence landscape.
+The tests do not assert Borel summability, analytic continuation, BTZ/JT
+recovery, nonperturbative completion, or full multiweight planted-forest
+partition data from scalar Bernoulli coefficients.
 
 Manuscript references:
-    thm:shadow-double-convergence (higher_genus_modular_koszul.tex)
     thm:shadow-radius (higher_genus_modular_koszul.tex)
     prop:genus-expansion-convergence (genus_expansions.tex)
     rem:convergence-vs-string (genus_expansions.tex)
     def:shadow-growth-rate (higher_genus_modular_koszul.tex)
+    prop:virasoro-shadow-canonical (landscape_census.tex)
 """
 
-# VERIFIED: [DC] hardcoded expected values below are direct evaluations of the
-# formulas, recurrences, or enumerations under test. [LC] the same literals are
-# anchored by small-parameter, vanishing, critical/self-dual, or finite-depth
-# specializations elsewhere in the surrounding test module.
-
 import math
-import cmath
-import pytest
-
-from sympy import Rational
 
 from compute.lib.shadow_pf_convergence_atlas import (
     # Kappa values
@@ -70,7 +60,7 @@ from compute.lib.shadow_pf_convergence_atlas import (
     # Analytic continuation
     analytic_continuation_complex_hbar,
     lorentzian_evaluation,
-    # Koszul
+    # Verdier branch diagnostics
     koszul_convergence_comparison,
     # Free field limit
     affine_sl2_free_field_limit,
@@ -86,10 +76,15 @@ from compute.lib.shadow_pf_convergence_atlas import (
     # Constants
     TWO_PI,
     TWO_PI_SQ,
-    PI,
+    EXACT_SCALAR_AHAT,
+    FINITE_DEPTH_EXACT,
+    SINGLE_LINE_DIAGNOSTIC,
+    ARITY_RADIUS_DIAGNOSTIC,
+    ANALYTIC_HYPOTHESIS_REQUIRED,
+    VERDIER_DUAL_BRANCH,
+    BAR_COBAR_INVERSION_FIREWALL,
+    HOCHSCHILD_BULK_FIREWALL,
 )
-
-from compute.lib.utils import lambda_fp
 
 
 # ============================================================================
@@ -100,12 +95,16 @@ class TestKappaValues:
     """Test kappa(A) for all standard families."""
 
     def test_kappa_heisenberg_rank1(self):
-        """kappa(H, rank 1) = 1/2."""
-        assert abs(kappa_heisenberg(1) - 0.5) < 1e-14
+        """kappa(H_1, rank 1) = 1."""
+        assert abs(kappa_heisenberg(1) - 1.0) < 1e-14
 
     def test_kappa_heisenberg_rank8(self):
-        """kappa(H, rank 8) = 4."""
-        assert abs(kappa_heisenberg(8) - 4.0) < 1e-14
+        """kappa(H_1^{oplus 8}) = 8."""
+        assert abs(kappa_heisenberg(8) - 8.0) < 1e-14
+
+    def test_kappa_heisenberg_rank_level_product(self):
+        """kappa(H_l^{oplus d}) = d*l."""
+        assert abs(kappa_heisenberg(3, level=2.0) - 6.0) < 1e-14
 
     def test_kappa_virasoro_c1(self):
         """kappa(Vir, c=1) = 1/2."""
@@ -230,7 +229,7 @@ class TestShadowRadius:
 # ============================================================================
 
 class TestGenusConvergence:
-    """Test the universal genus convergence radius R_genus = 2*pi."""
+    """Test the scalar A-hat genus convergence radius R_genus = 2*pi."""
 
     def test_convergence_radius_value(self):
         """R_genus = 2*pi ~ 6.2832."""
@@ -258,8 +257,8 @@ class TestGenusConvergence:
         val = genus_series_closed_form(kappa, TWO_PI - 0.001)
         assert abs(val) > 100  # should be very large
 
-    def test_genus_convergence_radius_is_universal(self):
-        """R_genus = 2*pi regardless of kappa."""
+    def test_genus_convergence_radius_is_scalar_kappa_independent(self):
+        """R_genus = 2*pi for the scalar A-hat series regardless of kappa."""
         # R_genus comes from the poles of (hbar/2)/sin(hbar/2),
         # independent of the multiplicative factor kappa.
         assert genus_convergence_radius() == TWO_PI
@@ -331,21 +330,22 @@ class TestShadowGrowthRateAtlas:
             if data.depth_class == 'M':
                 assert data.rho > 0.0, f"{key}: expected rho > 0, got {data.rho}"
 
-    def test_atlas_R_genus_universal(self):
-        """R_genus = 2*pi for ALL families."""
+    def test_atlas_R_genus_scalar_ahat(self):
+        """R_genus = 2*pi on the scalar A-hat lane for every atlas row."""
         atlas = shadow_growth_rate_atlas()
         for key, data in atlas.items():
             assert abs(data.R_genus - TWO_PI) < 1e-10, \
                 f"{key}: R_genus = {data.R_genus}"
 
     def test_atlas_genus_convergent_always(self):
-        """genus_convergent = True for ALL families."""
+        """genus_convergent records scalar A-hat convergence only."""
         atlas = shadow_growth_rate_atlas()
         for key, data in atlas.items():
             assert data.genus_convergent, f"{key}: genus not convergent"
+            assert data.genus_scope == EXACT_SCALAR_AHAT
 
     def test_atlas_double_convergent_when_rho_small(self):
-        """double_convergent iff rho < 1."""
+        """double_convergent is the scalar x arity diagnostic iff rho < 1."""
         atlas = shadow_growth_rate_atlas()
         for key, data in atlas.items():
             if data.rho < 1.0:
@@ -354,6 +354,28 @@ class TestShadowGrowthRateAtlas:
             elif data.rho > 1.0:
                 assert not data.double_convergent, \
                     f"{key}: rho={data.rho} > 1 but marked double convergent"
+
+    def test_class_m_not_promoted_to_full_partition_certificate(self):
+        """Class M rho diagnostics do not certify the full planted-forest PF."""
+        atlas = shadow_growth_rate_atlas()
+        for key, data in atlas.items():
+            if data.depth_class == 'M':
+                assert data.arity_scope == ARITY_RADIUS_DIAGNOSTIC, key
+                assert data.double_convergence_scope == ANALYTIC_HYPOTHESIS_REQUIRED, key
+                assert data.full_shadow_pf_certified is False, key
+
+    def test_terminating_classes_have_finite_depth_scope(self):
+        """Class G/L rows have finite-depth arity scope."""
+        atlas = shadow_growth_rate_atlas()
+        for key, data in atlas.items():
+            if data.depth_class in {'G', 'L'}:
+                assert data.arity_scope == FINITE_DEPTH_EXACT, key
+
+    def test_contact_class_stays_single_line_diagnostic(self):
+        """The beta-gamma row is not promoted to a full arity certificate."""
+        data = shadow_growth_rate_atlas()['betagamma']
+        assert data.arity_scope == SINGLE_LINE_DIAGNOSTIC
+        assert data.full_shadow_pf_certified is False
 
     def test_atlas_F1_equals_kappa_over_24(self):
         """F_1 = kappa/24 for all families."""
@@ -400,7 +422,7 @@ class TestDoubleConvergenceDomain:
 
     def test_domain_heisenberg(self):
         """Heisenberg: D = {|hbar| < 2*pi} x C (infinite arity radius)."""
-        dom = double_convergence_domain(0.5, 0.0, 'Heisenberg')
+        dom = double_convergence_domain(1.0, 0.0, 'Heisenberg')
         assert dom.R_genus == TWO_PI
         assert dom.R_arity == float('inf')
         assert dom.is_convergent
@@ -436,6 +458,16 @@ class TestDoubleConvergenceDomain:
                 assert entry['R_arity'] == float('inf')
                 assert entry['rho'] == 0.0
                 assert entry['double_convergent']
+                assert entry['arity_scope'] == FINITE_DEPTH_EXACT
+                assert entry['full_shadow_pf_certified'] is True
+
+    def test_domains_table_class_m_rows_are_not_certified_full_pf(self):
+        """Virasoro and W_3 rows stay arity diagnostics."""
+        table = double_convergence_domains_table()
+        for entry in table:
+            if entry['name'].startswith('Vir') or entry['name'].startswith('W_3'):
+                assert entry['arity_scope'] == ARITY_RADIUS_DIAGNOSTIC
+                assert entry['full_shadow_pf_certified'] is False
 
 
 # ============================================================================
@@ -443,7 +475,7 @@ class TestDoubleConvergenceDomain:
 # ============================================================================
 
 class TestShadowVsString:
-    """Test the shadow vs string perturbative comparison."""
+    """Test the scalar Bernoulli vs toy factorial comparison."""
 
     def test_ratio_decreases_monotonically(self):
         """F_g^{sh} / F_g^{str} decreases with g."""
@@ -467,6 +499,8 @@ class TestShadowVsString:
     def test_shadow_convergent_string_divergent(self):
         """Shadow terms decrease, string terms increase."""
         result = shadow_vs_string_comparison(1.0, max_genus=8)
+        assert result['shadow_scope'] == EXACT_SCALAR_AHAT
+        assert result['nonperturbative_completion_certified'] is False
         shadow = [d['F_g_shadow'] for d in result['data']]
         string = [d['F_g_string'] for d in result['data']]
         # Shadow decreases after g=1
@@ -482,14 +516,18 @@ class TestShadowVsString:
 # ============================================================================
 
 class TestBorelComparison:
-    """Test Borel summability comparison."""
+    """Test scalar Borel-transform diagnostics."""
 
     def test_borel_transform_finite(self):
-        """Shadow Borel transform is finite at all test points."""
+        """Scalar Borel transform is finite at the sampled points."""
         result = borel_comparison(1.0, [0.1, 0.5, 1.0, 2.0])
+        assert result['scope'] == EXACT_SCALAR_AHAT
+        assert result['scalar_borel_transform_entire'] is True
+        assert result['full_shadow_borel_certified'] is False
         for entry in result['results']:
             if not math.isnan(entry.get('Z_sh_exact', float('nan'))):
                 assert entry['borel_finite']
+                assert entry['full_shadow_borel_certified'] is False
 
     def test_exact_matches_partial_at_small_hbar(self):
         """Closed form matches partial sum at small hbar."""
@@ -497,6 +535,13 @@ class TestBorelComparison:
         for entry in result['results']:
             if entry.get('relative_error') is not None:
                 assert entry['relative_error'] < 1e-8
+                assert entry['scope'] == EXACT_SCALAR_AHAT
+
+    def test_borel_diagnostic_does_not_certify_full_shadow_pf(self):
+        """Borel metadata prevents promotion beyond the scalar A-hat lane."""
+        result = borel_comparison(1.0, [1.0])
+        assert result['full_shadow_borel_certified'] is False
+        assert result['results'][0]['full_shadow_borel_certified'] is False
 
 
 # ============================================================================
@@ -504,29 +549,35 @@ class TestBorelComparison:
 # ============================================================================
 
 class TestPhaseTransition:
-    """Test the phase transition at c = c* ~ 6.125."""
+    """Test the Virasoro arity-radius diagnostic at c = c* ~ 6.125."""
 
     def test_phase_transition_location(self):
         """c* is near 6.125."""
         result = phase_transition_scan()
+        assert result['scope'] == ARITY_RADIUS_DIAGNOSTIC
+        assert result['full_shadow_pf_certified'] is False
         assert abs(result['c_star'] - 6.125) < 0.01
 
     def test_divergent_below_c_star(self):
-        """All c < c* have phase = 'divergent'."""
+        """For c < c*, the arity diagnostic label is divergent."""
         result = phase_transition_scan([0.5, 1.0, 2.0, 4.0, 5.0])
         for entry in result['scan']:
+            assert entry['phase_scope'] == ARITY_RADIUS_DIAGNOSTIC
+            assert entry['full_shadow_pf_certified'] is False
             assert entry['phase'] == 'divergent', \
                 f"c={entry['c']}: expected divergent, got {entry['phase']}"
 
     def test_convergent_above_c_star(self):
-        """All c > c* have phase = 'convergent'."""
+        """For c > c*, the arity diagnostic label is convergent."""
         result = phase_transition_scan([7.0, 10.0, 13.0, 26.0])
         for entry in result['scan']:
+            assert entry['phase_scope'] == ARITY_RADIUS_DIAGNOSTIC
+            assert entry['full_shadow_pf_certified'] is False
             assert entry['phase'] == 'convergent', \
                 f"c={entry['c']}: expected convergent, got {entry['phase']}"
 
     def test_marginal_at_c_star(self):
-        """At c = c*, the phase is marginal (rho = 1)."""
+        """At c = c*, the arity diagnostic is marginal (rho = 1)."""
         c_star = critical_central_charge()
         result = phase_transition_scan([c_star])
         entry = result['scan'][0]
@@ -545,7 +596,7 @@ class TestPhaseTransition:
 # ============================================================================
 
 class TestAnalyticContinuation:
-    """Test analytic continuation to complex hbar."""
+    """Test the scalar A-hat closed form at complex hbar."""
 
     def test_complex_hbar_inside_disc(self):
         """Z^sh at complex hbar inside disc is finite and consistent."""
@@ -553,8 +604,16 @@ class TestAnalyticContinuation:
         for entry in results:
             assert entry['inside_disc']
             assert entry['finite']
+            assert entry['scope'] == EXACT_SCALAR_AHAT
+            assert entry['full_shadow_pf_certified'] is False
             # Closed form and partial sum should agree
             assert entry['relative_error'] < 1e-6
+
+    def test_complex_hbar_does_not_certify_full_pf_continuation(self):
+        """Scalar meromorphy is not a full shadow PF analytic continuation."""
+        entry = analytic_continuation_complex_hbar(1.0, [1.0 + 0j])[0]
+        assert entry['scope'] == EXACT_SCALAR_AHAT
+        assert entry['full_shadow_pf_certified'] is False
 
     def test_purely_imaginary_hbar(self):
         """At hbar = 2i (purely imaginary), Z^sh is finite."""
@@ -592,13 +651,15 @@ class TestAnalyticContinuation:
 # ============================================================================
 
 class TestLorentzian:
-    """Test Lorentzian (imaginary hbar) evaluation."""
+    """Test scalar evaluation on the imaginary hbar axis."""
 
     def test_lorentzian_is_real(self):
         """Z^sh(i*beta) is real for all real beta."""
         results = lorentzian_evaluation(1.0)
         for entry in results:
             assert entry['is_real']
+            assert entry['scope'] == EXACT_SCALAR_AHAT
+            assert entry['full_shadow_pf_certified'] is False
 
     def test_lorentzian_finite_for_all_beta(self):
         """Z^sh(i*beta) is finite for all real beta > 0."""
@@ -627,17 +688,18 @@ class TestLorentzian:
 
 
 # ============================================================================
-# Class 12: Koszul duality comparison
+# Class 12: Verdier-dual branch comparison
 # ============================================================================
 
-class TestKoszulDuality:
-    """Test Koszul duality and convergence."""
+class TestVerdierDualBranch:
+    """Test Virasoro A^! branch diagnostics and firewalls."""
 
     def test_kappa_sum_equals_13(self):
         """kappa(Vir_c) + kappa(Vir_{26-c}) = 13."""
         for c_val in [1.0, 5.0, 13.0, 25.0]:
             result = koszul_convergence_comparison(c_val)
             assert abs(result['kappa_sum'] - 13.0) < 1e-10
+            assert result['duality_branch'] == VERDIER_DUAL_BRANCH
 
     def test_self_dual_at_c13(self):
         """rho(13) = rho(13): self-dual."""
@@ -661,6 +723,14 @@ class TestKoszulDuality:
         # Products should vary
         assert max(products) - min(products) > 0.01
 
+    def test_duality_firewalls_are_explicit(self):
+        """A^!, bar-cobar inversion, and Hochschild bulk stay distinct."""
+        result = koszul_convergence_comparison(13.0)
+        assert result['duality_branch'] == VERDIER_DUAL_BRANCH
+        assert result['bar_cobar_inversion'] == BAR_COBAR_INVERSION_FIREWALL
+        assert result['hochschild_bulk_relation'] == HOCHSCHILD_BULK_FIREWALL
+        assert result['full_shadow_pf_certified'] is False
+
 
 # ============================================================================
 # Class 13: Affine free field limit
@@ -670,7 +740,7 @@ class TestFreeFieldLimit:
     """Test sl_2 convergence as k -> infinity."""
 
     def test_all_class_L(self):
-        """sl_2 is class L at ALL levels."""
+        """sl_2 remains class L at every sampled finite level."""
         results = affine_sl2_free_field_limit()
         for entry in results:
             assert entry['depth_class'] == 'L'
@@ -688,7 +758,7 @@ class TestFreeFieldLimit:
             assert abs(entry['kappa_over_k'] - expected_ratio) < 1e-10
 
     def test_R_arity_always_infinite(self):
-        """R_arity = infinity for ALL levels (class L, rho = 0)."""
+        """R_arity = infinity for sampled finite class-L levels."""
         results = affine_sl2_free_field_limit([1, 10, 100])
         for entry in results:
             assert entry['R_arity'] == float('inf')
@@ -711,6 +781,16 @@ class TestConvergenceTables:
         table = full_convergence_table()
         for entry in table:
             assert abs(entry['R_genus'] - TWO_PI) < 1e-10
+            assert entry['genus_scope'] == EXACT_SCALAR_AHAT
+
+    def test_full_table_class_m_no_full_pf_certificate(self):
+        """Class M table rows keep analytic-hypothesis status."""
+        table = full_convergence_table()
+        for entry in table:
+            if entry['class'] == 'M':
+                assert entry['arity_scope'] == ARITY_RADIUS_DIAGNOSTIC
+                assert entry['double_convergence_scope'] == ANALYTIC_HYPOTHESIS_REQUIRED
+                assert entry['full_shadow_pf_certified'] is False
 
     def test_virasoro_scan_covers_c_star(self):
         """Virasoro scan includes c* and both phases."""
@@ -726,7 +806,7 @@ class TestConvergenceTables:
 # ============================================================================
 
 class TestDoubleConvergenceBound:
-    """Test the analytic bound on |Z^sh|."""
+    """Test the scalar x arity majorant."""
 
     def test_polylog_at_zero(self):
         """Li_{5/2}(0) = 0."""
@@ -746,6 +826,8 @@ class TestDoubleConvergenceBound:
         result = double_convergence_bound(1.0, 0.5)
         assert result['bound'] > 0
         assert result['convergent']
+        assert result['analytic_hypothesis'] == ANALYTIC_HYPOTHESIS_REQUIRED
+        assert result['full_shadow_pf_certified'] is False
 
     def test_bound_divergent_at_rho_gt_1(self):
         """The bound is not finite for rho > 1."""
@@ -794,14 +876,14 @@ class TestBernoulliDecay:
 
 
 # ============================================================================
-# Class 17: Cross-family consistency checks (AP10)
+# Class 17: Cross-family consistency checks
 # ============================================================================
 
 class TestCrossFamilyConsistency:
-    """Cross-family consistency checks to catch AP10 violations.
+    """Cross-family consistency checks.
 
-    These are structural checks that hold universally, not just for
-    individual families.  They catch hardcoded-wrong-expected-value bugs.
+    These structural checks compare independent rows in the atlas.  They
+    catch hardcoded-wrong-expected-value bugs.
     """
 
     def test_kappa_additivity_heisenberg(self):
@@ -892,8 +974,8 @@ class TestSpecificNumericalValues:
         assert abs(kappa_affine_sl2(1) - 2.25) < 1e-14
 
     def test_F1_heisenberg_rank1(self):
-        """F_1(Heisenberg, rank 1) = (1/2)/24 = 1/48."""
-        assert abs(kappa_heisenberg(1) / 24.0 - 1.0 / 48.0) < 1e-14
+        """F_1(Heisenberg rank 1, level 1) = 1/24."""
+        assert abs(kappa_heisenberg(1) / 24.0 - 1.0 / 24.0) < 1e-14
 
     def test_genus_series_at_hbar_1(self):
         """Closed form at hbar=1: kappa * (0.5/sin(0.5) - 1)."""

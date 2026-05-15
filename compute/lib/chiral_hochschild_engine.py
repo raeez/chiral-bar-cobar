@@ -1,7 +1,8 @@
-"""Chiral Hochschild cohomology engine — computational Theorem H.
+"""Chiral Hochschild cohomology engine for the Theorem-H dimension surface.
 
-Computes ChirHoch*(A) for all standard families beyond Heisenberg,
-making Theorem H fully computational.
+Computes the standard-family dimension package for ChirHoch*(A).  The
+engine records the Betti vector and the local OPE normalizations used by
+Theorem H; it is not a chain model for the full derived center.
 
 THEOREM H (thm:hochschild-polynomial-growth): For chirally Koszul A,
 ChirHoch*(A) is concentrated in degrees {0, 1, 2} (quadratic regime)
@@ -9,24 +10,30 @@ with polynomial P_A(t) = dim Z(A) + dim ChirHoch^1(A)·t + dim Z(A!)·t².
 
 MATHEMATICAL CONTENT — THREE COHOMOLOGY GROUPS:
 
-  ChirHoch^0(A) = Z(A)         the CENTER of A
-  ChirHoch^1(A) = Der(A)/Inn(A) outer derivations modulo inner
-  ChirHoch^2(A) = Z(A!)^∨       dual of center of Koszul dual
+  ChirHoch^0(A) = Z(A)         the ordinary chiral center of A
+  ChirHoch^1(A)                curve-level first-order chiral classes
+  ChirHoch^2(A) = Z(A!)^∨       Verdier-dual center term on the Koszul locus
+
+The derived chiral center is the Hochschild object
+Z_ch^der(A) = RHom_{A^e}(A, A) = ChirHoch*(A, A).
+The ordinary center is only its H^0.  The two-sided bar resolution is a
+cofibrant replacement of the diagonal A-bimodule A used to compute this
+RHom; it is not A! itself.  The bar complex B(A), its cohomology A^i,
+and the Koszul dual algebra A! are kept distinct.  Omega(B(A)) = A is
+bar-cobar inversion.  A! is obtained from A^i by Verdier or continuous
+linear duality under finite-type/completed hypotheses.
 
 For the QUADRATIC regime (Heisenberg, affine KM, βγ, bc, free fermion),
-all three groups are finite-dimensional and the polynomial P_A(t) is
-a complete invariant of ChirHoch*.
+all three displayed dimensions are finite and the polynomial P_A(t)
+records the Betti vector of this dimension package.
 
-DERIVATION ANALYSIS (ChirHoch^1):
-- For affine ĝ_k: Der(ĝ_k) = g ⊕ C·d (g-valued + level deformation)
-  Inner derivations = g (via adjoint: a(z) ↦ [X, a(z)])
-  Outer derivations = Der/Inn = C (the level deformation k → k+ε)
-  HOWEVER: in the CHIRAL setting on a curve X, the full derivation
-  sheaf contributes dim(g) from H^0(X, g ⊗ Ω) and 1 from H^0(X, Ω).
-  The chiral Hochschild H^1 = g (not C^1) because on the curve the
-  "inner" derivations are LOCAL (same-point OPE), while the dim(g)
-  derivations from the current algebra are genuinely outer in the
-  chiral sense. See thm:hochschild-polynomial-growth proof.
+DERIVATION DIMENSION PACKAGE (ChirHoch^1):
+- For affine V_k(g) at generic non-critical level the local chiral
+  Hochschild computation returns dim(g).  This is not the Chevalley
+  cohomology group H^1(g,g), and it is not the one-dimensional level
+  tangent.  The current directions form the degree-1 slot; the level
+  tangent changes the OPE bilinear form and does not add an extra basis
+  vector in this convention.
 
 DEFORMATION-OBSTRUCTION PAIRING:
   For ξ ∈ ChirHoch^1(A), the Gerstenhaber bracket [ξ, ξ] ∈ ChirHoch^2(A)
@@ -34,16 +41,18 @@ DEFORMATION-OBSTRUCTION PAIRING:
   order. When [ξ, ξ] = 0, the deformation is UNOBSTRUCTED.
 
 KOSZUL FUNCTORIALITY:
-  The Feigin-Frenkel involution k ↦ -k - 2h∨ induces an isomorphism
+  For affine A = V_k(g), the Feigin-Frenkel involution k ↦ -k - 2h∨
+  induces an isomorphism
     ChirHoch^n(A) ≅ ChirHoch^{2-n}(A!)^∨ ⊗ ω_X
   In particular: dim ChirHoch^n(A) = dim ChirHoch^{2-n}(A!).
+  The Virasoro, βγ, and bc branches are recorded by their own
+  Verdier/continuous-linear dual data, not by the affine involution.
 
 References:
   thm:hochschild-polynomial-growth (chiral_hochschild_koszul.tex)
   thm:main-koszul-hoch (chiral_hochschild_koszul.tex)
   def:modular-cyclic-deformation-complex (chiral_hochschild_koszul.tex)
   thm:w-algebra-hochschild (hochschild_cohomology.tex)
-  CLAUDE.md: Theorem H, Critical Pitfalls (AP1, AP8, AP9)
 """
 
 from __future__ import annotations
@@ -65,6 +74,55 @@ from sympy import (
 )
 
 import numpy as np
+
+
+HOLOGRAPHIC_PACKAGE_ENTRIES: Tuple[str, ...] = (
+    "A",
+    "A^i",
+    "A^!",
+    "C",
+    "r(z)",
+    "Theta_A",
+    "nabla^hol",
+)
+"""Seven entries of the holographic package H(A)."""
+
+
+MODULAR_KOSZUL_PRIMARY_PROJECTIONS: Tuple[str, ...] = (
+    "Fact_X(L)",
+    "barB_X(L)",
+    "Theta_L",
+    "L_L",
+    "(V_L^br, T_L^br)",
+    "R_4^mod(L)",
+)
+"""Six primary projections of the modular Koszul compute package."""
+
+
+def holographic_package_entries() -> Tuple[str, ...]:
+    """Return the seven entries of H(A), in canonical order."""
+    return HOLOGRAPHIC_PACKAGE_ENTRIES
+
+
+def modular_koszul_primary_projections() -> Tuple[str, ...]:
+    """Return the six projections of the distinct compute package."""
+    return MODULAR_KOSZUL_PRIMARY_PROJECTIONS
+
+
+def bar_koszul_derived_center_firewall() -> Dict[str, str]:
+    """Typed roles for bar, duality, inversion, and derived center."""
+    return {
+        "A": "input chiral algebra",
+        "B(A)": "ordered bar coalgebra before cohomology",
+        "A^i": "bar cohomology coalgebra H^*(B(A))",
+        "A^!": (
+            "Verdier/continuous-linear dual branch of A^i under "
+            "finite-type or completed hypotheses"
+        ),
+        "Omega(B(A))": "bar-cobar inversion recovering A",
+        "Z_ch^der(A)": "RHom_{A^e}(A,A), the Hochschild derived-centre bulk",
+        "two-sided bar": "cofibrant diagonal A-bimodule replacement",
+    }
 
 
 # ============================================================
@@ -111,6 +169,32 @@ class ChiralAlgebraData:
         """True if this is in the W-algebra regime."""
         return self.regime == 'w_algebra'
 
+    def dual_coxeter(self) -> Optional[int]:
+        """Dual Coxeter number h∨ for KM algebras (type A only currently)."""
+        if not self.is_km():
+            return None
+        if self.lie_type == 'A':
+            return self.lie_rank + 1
+        return None  # B/C/D/E/F/G not implemented
+
+    def is_critical_level(self) -> bool:
+        """True if this is an affine KM algebra at the critical level k = -h∨.
+
+        At critical level the Feigin-Frenkel centre is INFINITE-dimensional
+        (the algebra of opers on the formal disk), so the standard
+        ChirHoch^0 = 1 generic-level result does NOT hold. Theorem H's
+        concentration in {0,1,2} explicitly excludes this case.
+        """
+        if not self.is_km():
+            return False
+        h_v = self.dual_coxeter()
+        if h_v is None:
+            return False
+        try:
+            return int(self.level) == -h_v
+        except (TypeError, ValueError):
+            return False  # symbolic level — treat as generic
+
 
 # ============================================================
 # Section 2: Standard family constructors
@@ -120,7 +204,8 @@ def heisenberg_data(k=None) -> ChiralAlgebraData:
     """Heisenberg vertex algebra H_k.
 
     Single weight-1 bosonic generator α(z) with OPE α(z)α(w) ~ k/(z-w)².
-    Center Z(H_k) = C (the vacuum). Koszul dual: Sym^ch(V*).
+    Center Z(H_k) = C (the vacuum).  A! branch: Sym^ch(V*) after the
+    A^i -> Verdier/continuous-linear dual step.
     """
     return ChiralAlgebraData(
         name='heisenberg',
@@ -215,7 +300,7 @@ def betagamma_data() -> ChiralAlgebraData:
 
     Two generators: β (weight 1, bosonic), γ (weight 0, bosonic).
     OPE: β(z)γ(w) ~ 1/(z-w).
-    Koszul dual: bc ghost system.
+    A! branch: bc ghost system.
     c = 2 (central charge of βγ).
     """
     return ChiralAlgebraData(
@@ -233,7 +318,7 @@ def bc_ghosts_data() -> ChiralAlgebraData:
 
     Two generators: b (weight 2, fermionic), c (weight -1, fermionic).
     OPE: b(z)c(w) ~ 1/(z-w).
-    Koszul dual: βγ system.
+    A! branch: βγ system.
     c = -26 (ghosts contribute -26 to central charge).
     """
     return ChiralAlgebraData(
@@ -266,7 +351,7 @@ def virasoro_data(c=None) -> ChiralAlgebraData:
     r"""Virasoro algebra Vir_c.
 
     Single weight-2 generator T(z). W-algebra regime.
-    Koszul dual: Vir_{26-c} (NOT self-dual except at c=13).
+    A! branch: Vir_{26-c} (not self-dual except at c=13).
     """
     cc = c if c is not None else Symbol('c')
     return ChiralAlgebraData(
@@ -321,34 +406,40 @@ def wN_data(N: int, c=None) -> ChiralAlgebraData:
 # ============================================================
 
 def center_dimension(data: ChiralAlgebraData) -> int:
-    """Compute dim Z(A) = dim ChirHoch^0(A).
+    """Compute dim Z(A) = dim ChirHoch^0(A) at GENERIC parameter.
 
-    The center of a vertex algebra A is the space of elements a such
-    that [a_{(n)}, b] = 0 for all b and all n >= 0. For standard families:
+    The center of a vertex algebra A is the space of states z such that
+    b_(n) z = 0 for every state b and every n >= 0. For standard families:
 
-    - Heisenberg H_k: Z = C (vacuum only, since α_{(0)} ≠ 0 on H_k)
+    - Heisenberg H_k: Z = C (vacuum only; α_(1) α = k|0> at k != 0)
     - Affine ĝ_k at GENERIC level: Z = C (vacuum only)
-      At CRITICAL level k = -h∨: Z is the Feigin-Frenkel center (infinite-dim)
-      We compute at generic level.
+      At CRITICAL level k = -h∨: Z is the Feigin-Frenkel center
+      (infinite-dimensional algebra of opers on the formal disk);
+      this function will RAISE ValueError to flag the non-generic regime.
     - βγ: Z = C (vacuum)
     - bc: Z = C (vacuum)
-    - Virasoro: Z = C (vacuum; T_{(0)} = L_0 acts nontrivially)
+    - Virasoro: Z = C (vacuum; T = L_{-2}|0> has positive weight)
     - W_3: Z = C (vacuum)
     - W_N: Z = C (vacuum at generic c)
 
-    IMPORTANT: At non-generic levels (critical, admissible), the center
-    can jump. We always compute at GENERIC level.
+    Raises ValueError at the critical level k = -h∨ for affine KM algebras,
+    where the Feigin-Frenkel centre is infinite-dimensional and Theorem H's
+    concentration in {0,1,2} explicitly excludes this case.
     """
-    # At generic level, all standard families have 1-dimensional center
-    # (the vacuum). This is because the generators act faithfully
-    # and the only element commuting with all modes is |0⟩.
+    if data.is_critical_level():
+        raise ValueError(
+            f"{data.name} at critical level k = -h∨ = {-data.dual_coxeter()}: "
+            f"Z(A) is the infinite-dimensional Feigin-Frenkel oper centre. "
+            f"Theorem H's {{0,1,2}} concentration excludes critical level."
+        )
     return 1
 
 
 def center_dimension_koszul_dual(data: ChiralAlgebraData) -> int:
     """Compute dim Z(A!) = dim ChirHoch^2(A).
 
-    By Koszul duality (thm:main-koszul-hoch):
+    On the Koszul locus, after passing through A^i = H^*(B(A)) and the
+    Verdier/continuous-linear dual branch:
       ChirHoch^2(A) = Z(A!)^∨
 
     For standard families at generic level:
@@ -360,13 +451,15 @@ def center_dimension_koszul_dual(data: ChiralAlgebraData) -> int:
     - W_3: center of dual = C → dim = 1
     - W_N: center of dual = C → dim = 1
 
-    At generic level, all Koszul duals also have 1-dimensional center.
+    At generic level, all listed dual branches also have 1-dimensional
+    center.  This is a statement about the A! branch, not about
+    Z_ch^der(A), which is RHom_{A^e}(A,A).
     """
     return 1
 
 
 # ============================================================
-# Section 4: ChirHoch^1 — derivation analysis (FRONTIER)
+# Section 4: ChirHoch^1 — derivation analysis
 # ============================================================
 
 @dataclass
@@ -394,45 +487,30 @@ class DerivationAnalysis:
 def _km_derivation_analysis(data: ChiralAlgebraData) -> DerivationAnalysis:
     """Derivation analysis for affine Kac-Moody algebras.
 
-    For ĝ_k with g simple of dimension d:
+    For V_k(g) with g simple of dimension d, this engine records the
+    dimension statement used by Theorem H:
 
-    DERIVATION SPACE Der(ĝ_k):
-    The derivations of the affine vertex algebra V_k(g) are:
-    (1) Inner derivations from J^a_{(0)}: these give ad(g) acting on V_k(g).
-        Dimension = dim(g) (but modulo center of g, which is 0 for simple g).
-    (2) Level deformation: the 1-parameter family k → k+ε gives a derivation
-        D_k acting as d/dk on the level.
-    (3) Sugawara derivation: L_0 = T_{(1)} (the energy operator) is inner
-        via the Sugawara construction T(z) = (1/2(k+h∨)) :J^a J_a:(z).
-        At generic level, T ∈ V_k(g), so L_0 is an inner derivation.
+      dim ChirHoch^1(V_k(g)) = dim(g)
 
-    CHIRAL Hochschild on a curve X:
-    ChirHoch^1(A) sits in a short exact sequence:
-      0 → H^0(X, Der(A)) → ChirHoch^1(A) → H^1(X, Inn(A)) → 0
-    For X = P^1 and A = ĝ_k: Der/Inn at the fiber level is the level
-    deformation (1-dimensional). But on the curve, the full g-valued
-    current derivations are captured by the Lie algebra-valued cohomology.
+    This is not obtained by replacing the chiral deformation complex with
+    ordinary Der(V_k(g))/Inn(V_k(g)), and it is not the Whitehead complex
+    C^*(g,g).  The finite-dimensional Lie algebra calculation gives
+    H^1(g,g)=0 for simple g, while the chiral OPE deformation complex has
+    current classes indexed by a basis of g.
 
-    The result: dim ChirHoch^1 = dim(g) for KM algebras.
-
-    This equals the number of strong generators because each current
-    J^a(z) represents a class in ChirHoch^1: the deformation
-    J^a(z) → J^a(z) + ε·J^a(z) (rescaling by ε·δ^a_b in direction b).
-    The level deformation k → k+ε corresponds to the TRACE derivation
-    (the Killing-form direction), which is captured as one of the dim(g)
-    derivations via the identification of the Killing form with the
-    invariant bilinear on g.
+    The level tangent k -> k + epsilon changes the invariant bilinear
+    form in the OPE.  In this dimension package it is not an additional
+    ChirHoch^1 basis vector beyond the dim(g) current classes.
     """
     d = data.lie_dim
     assert d is not None, "lie_dim required for KM derivation analysis"
 
     types = {
         'current_algebra_derivations': d,
-        'level_deformation': 0,  # absorbed into the d directions on curve
+        'level_deformation': 0,  # not a separate H^1 basis vector
     }
     obstructions = {
         'current_J^a': True,  # unobstructed: ĝ_k exists at all k
-        'level_k': True,       # unobstructed: ĝ_k exists at all k
     }
 
     return DerivationAnalysis(
@@ -510,12 +588,12 @@ def _bc_ghosts_derivation_analysis(data: ChiralAlgebraData) -> DerivationAnalysi
     r"""Derivation analysis for bc ghost system.
 
     Two generators: b(z) (weight 2, fermionic), c(z) (weight -1, fermionic).
-    Koszul dual of βγ.
+    The A! branch corresponding to βγ is bc.
 
-    By Koszul duality (thm:main-koszul-hoch):
+    On the finite-type/completed Verdier branch:
       dim ChirHoch^1(bc) = dim ChirHoch^1(βγ) = 2.
 
-    Derivation types match βγ by Koszul functoriality:
+    The dimension vector matches βγ by the A^i -> A! dual branch:
     (1) Ghost number rescaling
     (2) Conformal weight deformation
     """
@@ -564,15 +642,15 @@ def _virasoro_derivation_analysis(data: ChiralAlgebraData) -> DerivationAnalysis
     The Virasoro algebra has a unique deformation parameter, c, but in
     the chiral Hochschild convention that parameter is a deformation
     class in degree 2, not a derivation class in degree 1.  The quartic
-    pole in the T(z)T(w) OPE forces every generic degree-1 chiral
-    derivation to be inner.
+    pole in the T(z)T(w) OPE leaves no generic degree-1 chiral
+    cohomology class.
 
     NOTE: Per Theorem H, ChirHoch^*(Vir_c) is concentrated in degrees
     {0,1,2} with dim ChirHoch^0 = dim ChirHoch^2 = 1 and
-    dim ChirHoch^1 = 0 at generic c.  The historical "polynomial-ring" model
-    (ChirHoch^*(Vir_c) = C[Theta] with |Theta|=2, unbounded)
-    is REFUTED: that is continuous Lie cohomology of the
-    Witt algebra (Gelfand-Fuchs), a DIFFERENT functor.
+    dim ChirHoch^1 = 0 at generic c.  The polynomial-ring model
+    C[Theta] with |Theta|=2 computes continuous Lie cohomology of the
+    Witt algebra in the Gelfand-Fuchs lane, not chiral Hochschild
+    cohomology.
 
     Result: dim ChirHoch^1(Vir_c) = 0.
     """
@@ -597,19 +675,19 @@ def _w3_derivation_analysis(data: ChiralAlgebraData) -> DerivationAnalysis:
     by the Jacobi identity and the Virasoro subalgebra; the normalization
     is fixed by convention (e.g., W·W OPE coefficient = c/3).
 
-    Any degree-1 derivation D of W_3 must satisfy:
-    - D(T) ∈ W_3 of weight 2 → D(T) = α·T + β·∂²|0⟩ for constants α, β
-    - D(W) ∈ W_3 of weight 3 → D(W) = γ·W + δ·∂T for constants γ, δ
-    - Compatibility with OPE: D([T, T]_OPE) = [D(T), T] + [T, D(T)]
+    The generic low-weight state spaces are V_2 = C·T and
+    V_3 = C·∂T ⊕ C·W.  A weight-preserving state-level ansatz therefore
+    has D(T) = α·T and D(W) = γ·W + δ·∂T.  This ansatz is not yet a
+    chiral Hochschild class: it must satisfy translation covariance and
+    compatibility with the T·T, T·W, and W·W OPEs.
 
-    The OPE constraints force: α determines the conformal weight shift
-    (inner via L_0), β is the c-deformation, γ and δ are determined by
-    α and β via the W-algebra OPE relations.
+    The OPE constraints force the T-scaling to be only the
+    central-charge tangent direction, force γ from that tangent, and
+    kill δ by the higher-pole terms in the W·W OPE.
 
-    Inner derivations: L_0 (conformal weight grading).
     The central-charge deformation is a Hochschild degree-2 deformation
-    class.  In degree 1 the OPE constraints leave no generic outer
-    derivation.
+    class.  In degree 1 the OPE constraints leave no generic chiral
+    Hochschild class.
 
     Result: dim ChirHoch^1(W_3) = 0.
 
@@ -745,12 +823,12 @@ def compute_hochschild_polynomial(data: ChiralAlgebraData) -> HochschildPolynomi
 # Section 6: W-algebra regime — Theorem-H bounded amplitude
 # ============================================================
 #
-# PER AP94/AP95: ChirHoch^*(W^k(g)) is concentrated in {0, 1, 2}
-# (Theorem H, thm:hochschild-polynomial-growth).
+# ChirHoch^*(W^k(g)) is concentrated in {0, 1, 2}
+# by Theorem H (thm:hochschild-polynomial-growth).
 # The historical model ChirHoch*(W) = C[Θ_1, ..., Θ_r] giving
-# unbounded partition counts is REFUTED: that is the continuous
-# cohomology of the Witt / W-algebra Lie algebra (Gelfand-Fuchs),
-# a DIFFERENT functor from chiral Hochschild.
+# unbounded partition counts computes continuous cohomology of the
+# Witt / W-algebra Lie algebra (Gelfand-Fuchs), a different functor
+# from chiral Hochschild.
 #
 # This class retains the NAME WAlgebraHochschild for backward
 # import compatibility but its semantics are now the Theorem-H
@@ -762,13 +840,13 @@ def compute_hochschild_polynomial(data: ChiralAlgebraData) -> HochschildPolynomi
 class WAlgebraHochschild:
     """Theorem-H bounded ChirHoch for W-algebra regime.
 
-    Per AP94 and thm:hochschild-polynomial-growth, ChirHoch^*(W^k(g))
+    By thm:hochschild-polynomial-growth, ChirHoch^*(W^k(g))
     is concentrated in {0, 1, 2} with
       dim ChirHoch^0 = dim Z(W^k(g))   = 1  (vacuum center)
       dim ChirHoch^1                    = 0  (generic higher-pole rigidity)
       dim ChirHoch^2 = dim Z(W^k(g)^!) = 1
       dim ChirHoch^n = 0 for n not in {0, 1, 2}
-    Total dim = 2 (satisfies the Theorem-H bound dim <= 4).
+    Total dim = 2 for this generic W-algebra dimension package.
 
     The field ``gen_degrees`` records the strong-generator weights
     of the underlying W-algebra (for reference and OPE bookkeeping);
@@ -797,7 +875,7 @@ class WAlgebraHochschild:
 
     @property
     def amplitude(self) -> Tuple[int, int]:
-        """Cohomological amplitude [0, 2] (AP134: amplitude != vdim)."""
+        """Cohomological amplitude [0, 2]."""
         return (0, 2)
 
     @property
@@ -1021,11 +1099,15 @@ def verify_additivity_under_tensor(
     data_A: ChiralAlgebraData,
     data_B: ChiralAlgebraData,
 ) -> Dict[str, Any]:
-    """Verify Kunneth formula for ChirHoch of tensor products.
+    """Compute the Kunneth convolution for an external tensor product.
 
-    For A ⊗ B (with independent OPE):
+    For independent OPE data the external Kunneth polynomial is
       P_{A⊗B}(t) = P_A(t) · P_B(t)
-    in the quadratic regime.
+
+    The raw product can have degrees 3 and 4.  Those terms must not be
+    silently discarded: a separate curve-level projection or replacement
+    theorem is required before one obtains another Theorem-H amplitude
+    package in degrees {0,1,2}.
     """
     if data_A.regime != 'quadratic' or data_B.regime != 'quadratic':
         return {'applicable': False, 'reason': 'Requires quadratic regime'}
@@ -1033,29 +1115,30 @@ def verify_additivity_under_tensor(
     poly_A = compute_hochschild_polynomial(data_A)
     poly_B = compute_hochschild_polynomial(data_B)
 
-    # Product polynomial (truncated to degree 2 since we're on a curve)
+    # Product polynomial for the external tensor product.
     pA = poly_A.coefficients
     pB = poly_B.coefficients
 
-    # Full convolution product
     product = [0] * 5  # degrees 0 through 4
     for i in range(3):
         for j in range(3):
             product[i + j] += pA[i] * pB[j]
 
-    # On a curve: degrees > 2 must vanish for Koszul algebras
-    # The actual polynomial P_{A⊗B}(t) should have degree <= 2
-    # This is a nontrivial check of the concentration theorem.
+    higher_terms_vanish = all(product[i] == 0 for i in range(3, 5))
 
     return {
         'applicable': True,
         'P_A': pA,
         'P_B': pB,
         'P_product_full': product,
-        'P_product_truncated': product[:3],
-        'higher_terms_vanish': all(product[i] == 0 for i in range(3, 5)),
-        'note': ('Higher degree terms in the convolution product are '
-                 'killed by the concentration theorem (dim_C X = 1).'),
+        'P_product_truncated': product[:3],  # degree <= 2 prefix only
+        'higher_terms_vanish': higher_terms_vanish,
+        'requires_projection_or_resolution': not higher_terms_vanish,
+        'euler_full': sum(((-1) ** i) * coeff for i, coeff in enumerate(product)),
+        'note': (
+            'Raw Kunneth convolution is not itself a Theorem-H projection '
+            'when degree 3 or 4 terms are nonzero.'
+        ),
     }
 
 
@@ -1063,17 +1146,27 @@ def verify_euler_char_additivity(
     data_A: ChiralAlgebraData,
     data_B: ChiralAlgebraData,
 ) -> Dict[str, Any]:
-    """Verify χ(A ⊗ B) = χ(A) · χ(B)."""
+    """Verify Euler-characteristic multiplicativity for the raw product."""
     if data_A.regime != 'quadratic' or data_B.regime != 'quadratic':
         return {'applicable': False}
 
-    chi_A = compute_hochschild_polynomial(data_A).euler_characteristic
-    chi_B = compute_hochschild_polynomial(data_B).euler_characteristic
+    poly_A = compute_hochschild_polynomial(data_A)
+    poly_B = compute_hochschild_polynomial(data_B)
+    chi_A = poly_A.euler_characteristic
+    chi_B = poly_B.euler_characteristic
+    product = [0] * 5
+    for i, a_i in enumerate(poly_A.coefficients):
+        for j, b_j in enumerate(poly_B.coefficients):
+            product[i + j] += a_i * b_j
+    chi_tensor = sum(((-1) ** i) * coeff for i, coeff in enumerate(product))
     return {
+        'applicable': True,
         'chi_A': chi_A,
         'chi_B': chi_B,
         'product': chi_A * chi_B,
-        'matches': True,  # multiplicative by Kunneth
+        'chi_tensor_full': chi_tensor,
+        'P_product_full': product,
+        'matches': chi_tensor == chi_A * chi_B,
     }
 
 
@@ -1123,17 +1216,12 @@ def _ope_derivation_check_virasoro() -> Dict[str, Any]:
     D(T(z)T(w)) = D(T)(z)T(w) + T(z)D(T)(w)
 
     If D(T) = f(T, ∂T, ...) then the OPE constrains f severely.
-    Weight-2 fields in Vir_c: span{T, ∂²|0⟩ = L_{-2}|0⟩}.
-    So D(T) = α·T + β·(c/2)·∂²|0⟩ for constants α, β.
-
-    But T = L_{-2}|0⟩ and ∂²|0⟩ = L_{-2}|0⟩ = T... wait.
-    Actually in the vacuum module, L_{-2}|0⟩ = T, so weight-2
-    subspace is 1-dimensional at generic c: just C·T.
-    (There's no ∂²|0⟩ independent of T.)
-
-    Actually: the weight-2 subspace of Vir_c is:
-    - L_{-2}|0⟩ = T               (dimension 1)
-    - L_{-1}^2|0⟩ = 0             (L_{-1}|0⟩ = 0 by translation)
+    The generic vacuum module has
+    - V_0 = C|0⟩,
+    - V_1 = 0 because L_{-1}|0⟩ = 0,
+    - V_2 = C·L_{-2}|0⟩ = C·T.
+    Thus no independent ∂²|0⟩ state exists: translation kills the
+    vacuum, so ∂²|0⟩ = L_{-1}²|0⟩ = 0.
 
     So D(T) = α·T, and the OPE constraint gives:
     D(T(z)T(w)) = α·T(z)T(w) + T(z)·α·T(w) = 2α·(T(z)T(w))
@@ -1142,23 +1230,21 @@ def _ope_derivation_check_virasoro() -> Dict[str, Any]:
     Comparing: D(c)/2 = 2α·c/2 ⟹ D(c) = 2αc.
     And the T-dependent terms automatically match.
 
-    So: 1-parameter family of scaling derivations D_alpha: T -> alpha T,
-    c -> 2 alpha c.
-    Modding out by inner (L_0): L_0 gives T → 2T (weight grading).
-    The inner derivation ad(T_{(1)}) = L_0 has α = 2.
-
-    The central-charge variation is not a degree-1 derivation in the
-    chiral Hochschild convention; it is the degree-2 deformation class.
-    Therefore the generic degree-1 outer quotient is zero.
+    This calculation only detects the central-charge tangent direction.
+    In the curve-level chiral Hochschild grading that direction is the
+    degree-2 deformation class, not a degree-1 state-space derivation.
+    Therefore the generic degree-1 quotient is zero.
     """
     c = Symbol('c')
 
     return {
         'family': 'virasoro',
         'weight_2_space_dim': 1,
+        'state_space_basis_weight_2': ['L_{-2}|0> = T'],
+        'translation_vacuum': 'L_{-1}|0> = 0, so ∂²|0> = 0',
         'derivation_D_T': 'α·T',
         'ope_constraint': 'D(c) = 2α·c',
-        'inner_derivation': 'L_0 (α = 2, weight grading)',
+        'central_charge_class_degree': 2,
         'outer_quotient_dim': 0,
         'outer_generator': 'none; c-deformation lies in ChirHoch^2',
         'consistent': True,
@@ -1185,19 +1271,20 @@ def _ope_derivation_check_w3() -> Dict[str, Any]:
 
     Write D(T) = α·T, D(W) = γ·W + δ·∂T.
 
-    From T·W OPE: T(z)W(w) ~ 3W(w)·(z-w)^{-2} + ∂W(w)·(z-w)^{-1}.
-    D gives: α·T(z)W(w) + T(z)(γ·W + δ·∂T)(w) on LHS,
-             3(γW + δ∂T)(w)/(z-w)^2 + ... on RHS.
-    Matching the most singular term: (α+γ) = 3γ... no wait.
-
-    Actually L_0 acts: [L_0, W] = 3W (weight 3), [L_0, T] = 2T (weight 2).
-    Inner derivation from L_0: D(T) = 2T, D(W) = 3W.
-    This has α=2, γ=3, δ=0.
+    From the state-space side, the generic low weights are
+    - V_0 = C|0⟩,
+    - V_1 = 0,
+    - V_2 = C·T,
+    - V_3 = C·∂T ⊕ C·W.
+    Hence D(T) = α·T and D(W) = γ·W + δ·∂T are only the possible
+    weight-preserving state-level forms.  They are not yet chiral
+    Hochschild classes; they must satisfy translation covariance and
+    the full T·T, T·W, and W·W OPE system.
 
     The central-charge variation changes the W.W OPE coefficients and is
     counted in ChirHoch^2, the deformation group.  The degree-1 quotient
     is zero because:
-    - D_T type (D(T) ∝ T): absorbed by inner (L_0) + c-rescaling
+    - D_T type (D(T) ∝ T): only records the central-charge tangent
     - D_W type (D(W) ∝ W): forced by D_T via OPE compatibility
     - δ (D(W) ∝ ∂T): forced to be 0 by W·W OPE at order (z-w)^{-5}
 
@@ -1209,14 +1296,16 @@ def _ope_derivation_check_w3() -> Dict[str, Any]:
         'family': 'w3',
         'weight_2_space_dim': 1,
         'weight_3_space_dim': 2,
+        'state_space_basis_weight_2': ['T'],
+        'state_space_basis_weight_3': ['∂T', 'W'],
         'derivation_D_T': 'α·T',
         'derivation_D_W': 'γ·W + δ·∂T',
         'ope_constraints': [
             'TT: D(c) = 2α·c',
-            'TW: γ = α + (forced by OPE)',
+            'TW: γ is fixed by α after translation covariance',
             'WW: δ = 0, γ determined by α and c-dependence of :TT: coefficient',
         ],
-        'inner_derivation': 'L_0 (α=2, γ=3, δ=0)',
+        'central_charge_class_degree': 2,
         'outer_quotient_dim': 0,
         'outer_generator': 'none; c-deformation lies in ChirHoch^2',
         'consistent': True,
@@ -1301,9 +1390,9 @@ def verify_theorem_h_complete(data: ChiralAlgebraData) -> Dict[str, Any]:
     """Complete Theorem H verification for one family.
 
     Checks:
-    1. Concentration in {0, 1, 2} (quadratic) or non-negativity (W-algebra)
+    1. Concentration in {0, 1, 2}
     2. Polynomial P_A(t) has correct coefficients
-    3. Koszul functoriality: P_A determines P_{A!}
+    3. A^i -> A! dimension symmetry where this engine models it
     4. Deformations are unobstructed
     5. Euler characteristic
     """
@@ -1354,8 +1443,8 @@ def verify_theorem_h_complete(data: ChiralAlgebraData) -> Dict[str, Any]:
 def verify_universal_polynomial() -> Dict[str, Any]:
     """Verify P_A(t) = 1 + dim(H^1)·t + t² for all standard quadratic families.
 
-    This is the KEY computational prediction of Theorem H:
-    all standard quadratic Koszul algebras have P_A with p0 = p2 = 1.
+    This is the computational prediction of Theorem H on this standard
+    generic quadratic family list: P_A has p0 = p2 = 1.
     """
     families = {
         'heisenberg': heisenberg_data(),
@@ -1430,7 +1519,7 @@ def hochschild_spectral_sequence_E2(
 ) -> List[List[int]]:
     """E_2^{p,q} page of the Hochschild-to-ChirHoch spectral sequence.
 
-    For Koszul algebras, this collapses at E_2:
+    For the standard Koszul family package modeled here, this collapses at E_2:
       E_2^{p,0} = ChirHoch^p(A)
       E_2^{p,q} = 0 for q > 0
 
@@ -1547,8 +1636,8 @@ def summary_table() -> List[Dict[str, Any]]:
                              f'{result.polynomial.p2}t²')
             row['chi'] = result.polynomial.euler_characteristic
         else:
-            row['P_A(t)'] = 'polynomial ring (infinite)'
-            row['chi'] = None
+            row['P_A(t)'] = '1 + t² (Theorem-H bounded)'
+            row['chi'] = 2
 
         row['unobstructed'] = result.all_unobstructed
         table.append(row)

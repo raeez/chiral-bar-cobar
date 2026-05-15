@@ -1,18 +1,21 @@
-"""Modular tangent complex: L-infinity twisted differential d_{Theta_A}.
+"""Finite CE window for the modular tangent complex.
 
-The modular tangent complex L_A is the cyclic deformation complex Def_cyc(A)
-equipped with the twisted differential d_{Theta_A}. It governs infinitesimal
-deformations of A as a chiral algebra.
+The full modular tangent complex L_A is the cyclic deformation complex
+Def_cyc(A) equipped with the modular Maurer--Cartan twist d_{Theta_A}. This
+module computes the finite-dimensional Chevalley--Eilenberg oracle obtained
+from a small Lie algebra g. It is a diagnostic window, not the full chiral
+OPE/sewing construction.
 
 STRUCTURE:
-  The strict model is a dg Lie algebra (Def_cyc(A), d + [Theta_A, -]).
-  The full L-infinity model uses higher brackets ell_k with k >= 3.
+  The strict CE model uses C^n(g,g)=Hom(Lambda^n g,g) with cohomological
+  differential d_CE: C^n -> C^{n+1}. The Nijenhuis--Richardson insertion
+  bracket has degree -1 in this unshifted convention.
 
-  For algebras with finite shadow depth (classes G, L, C), the twist terminates:
-    d_{Theta_A} = d + [Theta_A^{<=r_max}, -]
-
-  For infinite shadow depth (class M, e.g., Virasoro at generic c), the full tower contributes.
-  Note: Virasoro IS chirally Koszul; shadow depth classifies complexity within the Koszul world.
+  In the implemented affine finite window the Killing cyclic cocycle is the
+  Lie bracket mu in C^2(g,g). The operator [mu,-]_NR is a degree-dependent
+  signed copy of d_CE in degrees 0, 1, 2. Consequently
+  d_CE + kappa[mu,-]_NR squares to zero in this CE window by d_CE^2=0, but
+  it does not compute the genus-one chiral curvature of Def_cyc^mod(A).
 
 COMPUTATIONAL APPROACH:
   At the level of the CE complex C*(g, g) = Hom(Lambda^* g, g):
@@ -21,20 +24,22 @@ COMPUTATIONAL APPROACH:
   - C^2 = Hom(Lambda^2 g, g) (dim d * C(d,2)) -- obstructions
   - C^3 = Hom(Lambda^3 g, g) (dim d * C(d,3)) -- higher obstructions
 
-  The Lie bracket mu in C^1(g,g) is itself an MC element: d_CE(mu) + (1/2)[mu,mu]_NR = 0
-  is the Jacobi identity. The twisted differential d_mu is the standard CE differential.
+  The Lie bracket mu in C^2(g,g) satisfies [mu,mu]_NR=0; this is the Jacobi
+  identity. The adjoint CE differential is [mu,-]_NR up to the degree signs
+  fixed below and checked by exact small-rank oracle tests.
 
-  The modular tangent complex adds the shadow obstruction tower data:
-  - Theta_A^{<=2} = kappa(A) * eta (Killing cocycle, kappa = dim(g)(k+h^v)/(2h^v))
-  - Theta_A^{<=3} = kappa*eta + C_3 (cubic shadow)
-  - Theta_A^{<=4} = kappa*eta + C_3 + Q_4 (quartic shadow)
+  The full modular tangent complex adds the shadow obstruction tower data.
+  This file records only exact CE-level checks for the affine Lie window and
+  explicit finite-window diagnostics where the full construction is absent.
 
 MATHEMATICAL IDENTIFICATIONS:
   For V_k(g) (universal affine vertex algebra at level k):
   - The CE complex C*(g, g) is the genus-0, critical-level specialization
     of the chiral deformation complex
-  - The kappa-twist d_{kappa*eta} has (d_{kappa*eta})^2 proportional to kappa,
-    giving the genus-1 curvature
+  - The CE-level kappa-twist d_CE + kappa[eta,-] squares to zero in the
+    implemented finite window because it is a signed rescaling of d_CE
+  - The chiral genus-one curvature belongs to the full modular deformation
+    complex, not to this finite-dimensional CE oracle
   - H^0(L_A) = center of g (= 0 for semisimple g)
   - H^1(L_A) = infinitesimal deformations modulo gauge
   - H^2(L_A) = obstructions to extending deformations
@@ -165,7 +170,9 @@ def nijenhuis_richardson_bracket(
 ) -> np.ndarray:
     """Compute [f, g]_NR for f in C^p(g,g), g in C^q(g,g).
 
-    The Nijenhuis-Richardson bracket [f,g]_NR in C^{p+q}(g,g) is defined by:
+    The Nijenhuis--Richardson bracket on C^n=Hom(Lambda^n g,g) has degree -1:
+    [C^p,C^q]_NR lies in C^{p+q-1}. With antisymmetric cochains it is defined
+    by insertion over unshuffles:
 
     [f,g]_NR(x_1,...,x_{p+q}) =
       sum_{sigma in Sh(q,p)} sgn(sigma) f(g(x_{sigma(1)},...,x_{sigma(q)}),
@@ -182,12 +189,12 @@ def nijenhuis_richardson_bracket(
     We implement only the cases needed for the tangent complex computations.
     """
     p, q = f_degree, g_degree
-    result_degree = p + q
+    result_degree = p + q - 1
 
     if result_degree < 0:
         return np.array([], dtype=object)
 
-    # Case p=1, q=1: [f,g] in C^2 is the commutator bracket
+    # Case p=1, q=1: [f,g] in C^1 is the commutator bracket.
     if p == 1 and q == 1:
         # f, g: Hom(g, g), both dim*dim vectors
         # [f,g](x) = f(g(x)) - g(f(x))
@@ -330,26 +337,25 @@ def sl3_deformation_complex() -> CyclicDeformationComplex:
 
 
 # ---------------------------------------------------------------------------
-# NOTE on Theta in C^1(g,g) vs C^2(g,g) and the NR Lie algebra
+# NOTE on Theta in C^2(g,g), CE signs, and the finite window
 # ---------------------------------------------------------------------------
 #
 # The NR bracket on C*(g,g) = Hom(Lambda^* g, g) has degree -1:
 #   [-,-]_NR: C^p x C^q -> C^{p+q-1}
 #
-# The Lie bracket mu in C^1(g,g) (taking 1 argument) is NOT an MC element
-# of the shifted NR Lie algebra; it is the structure that defines d_CE.
-# The CE differential d_CE encodes mu; the NR bracket [mu, mu]_NR = 0
-# is the Jacobi identity.
+# The Lie bracket mu takes two inputs, hence lies in C^2(g,g). In the shifted
+# NR dg Lie algebra it is the Maurer--Cartan element, and [mu,mu]_NR=0 is the
+# Jacobi identity. The CE differential is represented by [mu,-]_NR only after
+# fixing degree signs. With the ce_differential_* conventions imported from
+# mc2_cyclic_ce, the implemented affine window satisfies
 #
-# MC elements of the SHIFTED NR Lie algebra C*(g,g)[1] live in C^2(g,g).
-# The Killing cocycle eta in C^2(g,g) is such an MC candidate.
-# Since eta = mu (as computed: eta(a,b) = [a,b]), and [mu,mu]_NR = 0 (Jacobi),
-# eta is automatically MC. The twisted differential d_CE + kappa*[eta,-]
-# has d^2 = 0 for all kappa.
+#   [mu,-]_NR | C^n = (-1)^{n+1} d_CE | C^n       for n = 0, 1, 2.
 #
-# Genus-1 curvature arises in the CHIRAL deformation complex, which is
-# infinite-dimensional and carries the OPE/sewing data beyond the Lie bracket.
-# The KillingTwistedDifferential class below computes at the CE level.
+# Therefore d_CE + kappa[mu,-]_NR is a degreewise scalar multiple of d_CE in
+# this finite window. It squares to zero because d_CE^2=0, but its cohomology
+# can change when a scalar vanishes (kappa = +/-1). This CE fact must not be
+# promoted to a statement about the full chiral modular tangent complex: the
+# genus-one curvature lives in the OPE/sewing terms absent from this module.
 # ---------------------------------------------------------------------------
 
 
@@ -369,41 +375,14 @@ def _killing_bracket_matrix(
     The NR bracket [eta, x]_NR for eta in C^2, x in C^n gives an element of C^{n+1}.
 
     For the specific eta = killing cocycle where eta(e_a, e_b) = [e_a, e_b]:
-    [eta, x]_NR is computed by the standard NR formula.
+    [eta, x]_NR is computed directly in degrees n=0,1,2. The sign
+    convention is tied to ce_differential_* in mc2_cyclic_ce and is checked by
+    tests:
 
-    For eta in C^2 (takes 2 arguments), x in C^n (takes n arguments):
-    [eta, x]_NR takes n+1 arguments and is given by:
+      [eta,-]_NR | C^n = (-1)^{n+1} d_CE | C^n,  n=0,1,2.
 
-    [eta, x]_NR(v_0,...,v_n) =
-      sum_{i<j} (-1)^{i+j} eta(x(v_0,...,hat{i},...,hat{j},...,v_n), v_i, v_j)  [wrong degree]
-
-    Actually, the correct NR bracket for multilinear maps:
-    For f in Hom(V^{otimes p}, V), g in Hom(V^{otimes q}, V):
-    [f,g]_NR = f circ g - (-1)^{(p-1)(q-1)} g circ f
-
-    where (f circ g)(v_1,...,v_{p+q-1}) =
-      sum_{i=1}^p (-1)^{(i-1)(q-1)} f(v_1,...,v_{i-1}, g(v_i,...,v_{i+q-1}), v_{i+q},...,v_{p+q-1})
-
-    For eta (p=2), x (q=n): [eta, x]_NR = eta circ x - (-1)^{n-1} x circ eta.
-
-    (eta circ x)(v_1,...,v_{n+1}) =
-      x(v_2,...,v_{n+1}) inserted into eta's 1st slot: eta(x(v_2,...,v_{n+1}), v_1) * (-1)^0
-      + x(v_1, v_3,...,v_{n+1}) inserted into eta's 2nd slot:
-        eta(v_1, x(v_2,...)) * ... too complicated.
-
-    For ANTISYMMETRIC maps on g (Lie algebra cochains):
-    (eta circ x)(v_0,...,v_n) = sum_{sigma} sgn(sigma) eta(x(v_{sigma(0)},...,v_{sigma(n-1)}), v_{sigma(n)})
-
-    where we sum over (n, 1)-unshuffles. This means: choose which v goes into eta's second slot.
-
-    (eta circ x)(v_0,...,v_n) = sum_{j=0}^{n} (-1)^{n-j} eta(x(v_0,...,hat{j},...,v_n), v_j)
-
-    And (x circ eta) picks 2 consecutive and replaces them by eta's output:
-    (x circ eta)(v_0,...,v_n) = sum_{i<j} (-1)^{?} x(v_0,...,hat{i},...,hat{j},..., eta(v_i, v_j),...)
-
-    For Lie algebra cochains (antisymmetric), the formula simplifies.
-
-    Let me implement this directly for small n via explicit evaluation.
+    This finite window is deliberately explicit; it should not be used as a
+    black-box implementation of all NR degrees.
     """
     pairs = _wedge_pairs(dim)
     n_pairs = len(pairs)
@@ -430,38 +409,7 @@ def _killing_bracket_matrix(
         return result
 
     if n == 0:
-        # [eta, v] for v in C^0 = g, result in C^1 = Hom(g,g)
-        # [eta, v]_NR = eta circ v - (-1)^{0} v circ eta
-        # eta circ v: not well-defined (v takes 0 arguments, eta needs to insert output)
-        # v circ eta: eta(v_0, v_1) then apply... v takes 0 arguments.
-        #
-        # For p=2, q=0: [C^2, C^0]_NR -> C^1.
-        # (eta circ v)(w) = eta(v, w) -- eta takes the 0-arg output of "v" plus w.
-        # Actually v in C^0 = g is just a vector. The NR bracket with a degree-0 element:
-        # For f in C^p, v in C^0 = g: [f, v]_NR(w_1,...,w_p) = -sum_i f(w_1,...,[w_i, v],...,w_p)
-        #   (the infinitesimal gauge action of v on f).
-        #
-        # Hmm, this is the standard formula for the dg Lie algebra action.
-        #
-        # For eta in C^2, v in C^0:
-        # [eta, v]_NR(w) = ??? This should be in C^1.
-        #
-        # Using the explicit NR formula for antisymmetric cochains:
-        # [f, g]_NR for f in C^p, g in C^q, result in C^{p+q-1}:
-        # For p=2, q=0: result in C^1.
-        # [eta, v]_NR(w) = eta(v, w) - (-1)^{1*(-1)} ...
-        #
-        # The standard convention: for v in C^0 = g identified with inner derivations,
-        # [eta, v](w) = -eta(v, w) + [sum over insertions].
-        #
-        # Let me use the EXPLICIT formula. For the dg Lie algebra (C*(g,g)[1], [-,-]):
-        # MC elements are in degree 1 of the shifted complex = C^2(g,g).
-        # For eta in C^2(g,g) and v in C^0(g,g) = g:
-        # [eta, v]_NR in C^1(g,g) = Hom(g,g).
-        # [eta, v](w) = eta(v, w)  (the composition formula for NR bracket).
-        #
-        # This is the correct formula: [eta, v](w) = eta(v, w).
-
+        # [eta, v](w) = eta(v, w) = [v,w] = -d_CE(v)(w).
         mat = _np_zeros(dim * dim, dim)
         for vi in range(dim):  # basis e_{vi} in C^0
             for j in range(dim):  # argument e_j of the result in C^1
@@ -541,27 +489,6 @@ def _killing_bracket_matrix(
                     # {(0,2),1} sgn=-1: -eta(g(x,z), y)
                     # {(1,2),0} sgn=+1: eta(g(y,z), x)
 
-                    def eval_g(a: int, b: int) -> Dict[int, Fraction]:
-                        if a == b:
-                            return {}
-                        if a < b:
-                            p = pairs_idx.get((a, b))
-                            if p is None:
-                                return {}
-                            sgn = Fraction(1)
-                        else:
-                            p = pairs_idx.get((b, a))
-                            if p is None:
-                                return {}
-                            sgn = Fraction(-1)
-                        # g basis element maps (e_{ga}, e_{gb}) -> e_{g_m}
-                        # eval_g for the SPECIFIC basis element:
-                        if (a < b and (a, b) == (ga, gb)) or (a > b and (b, a) == (ga, gb)):
-                            return {g_m: sgn if a < b else -sgn}
-                        if (a < b and (a, b) != (ga, gb)):
-                            return {}
-                        return {}
-
                     # Evaluate g on basis: g(e_a, e_b) = sgn * delta_{(min,max),(ga,gb)} * e_{g_m}
                     def _g_eval(a: int, b: int) -> Dict[int, Fraction]:
                         if a == b:
@@ -619,13 +546,13 @@ class KillingTwistedDifferential:
     Here eta is the Killing cocycle eta(a,b) = [a,b] in C^2(g,g), identified
     with the Lie bracket mu. The kappa parameter is the modular characteristic.
 
-    KEY MATHEMATICAL FACT: Since eta = mu (the Lie bracket), the NR bracket
-    [eta, eta]_NR = [mu, mu]_NR = 0 is precisely the Jacobi identity.
-    Therefore (d_CE + kappa*[eta,-])^2 = 0 for ALL values of kappa.
-
-    This means the kappa-twisted CE complex is ALWAYS exact as a chain complex.
-    It represents rescaling the Lie bracket mu -> (1 + kappa)*mu, which
-    preserves the Jacobi identity.
+    CE-window fact: with this module's CE sign convention,
+    [eta,-]_NR on C^n equals (-1)^{n+1} d_CE in degrees n=0,1,2.
+    Therefore d_CE + kappa*[eta,-] is a degreewise scalar rescaling of
+    d_CE in the implemented window and squares to zero there for all kappa.
+    The cohomology is not asserted to equal ordinary CE cohomology at singular
+    twist scales: at kappa=1 the C^0 and C^2 differentials vanish, and at
+    kappa=-1 the C^1 differential vanishes.
 
     The genus-1 CURVATURE (d_{Theta_A})^2 proportional to kappa is a
     phenomenon of the full CHIRAL deformation complex Def_cyc^mod(A),
@@ -634,10 +561,9 @@ class KillingTwistedDifferential:
     - The sewing/genus structure produces genuine curvature at genus >= 1
     - The kappa term couples to the modular form omega_g on M_{g,n}
 
-    This module computes the CE-level twisted differential as a BASELINE:
-    it verifies that d^2 = 0 always holds at the Lie algebra level,
-    consistent with the Jacobi identity. The chiral curvature is computed
-    by the full bar complex machinery (see bar_cobar_adjunction_curved.tex).
+    This module computes the CE-level twisted differential as a baseline.
+    It does not construct R4_mod(L), the completed shadow tower, or the chiral
+    OPE/sewing curvature.
     """
 
     complex: CyclicDeformationComplex
@@ -672,21 +598,88 @@ class KillingTwistedDifferential:
         return _is_zero_matrix(self.d_squared_matrix(n))
 
     def verify_jacobi_implies_d_squared_zero(self, n: int) -> bool:
-        """Verify that (d_kappa)^2 = 0 for all kappa.
+        """Verify that (d_kappa)^2 = 0 in the implemented CE window.
 
-        Since eta = mu (the Lie bracket), [mu, mu]_NR = 0 (Jacobi identity).
-        Therefore d_CE + kappa*[eta,-] always has d^2 = 0.
-        This is a consistency check of the Jacobi identity.
+        Since eta = mu (the Lie bracket), [mu, mu]_NR = 0 is the Jacobi
+        identity. Under the degree signs used here, this finite-window twist
+        is a scalar rescaling of d_CE degree by degree.
         """
         return self.verify_d_squared_zero(n)
 
-    def twisted_cohomology_dims(self) -> Dict[int, int]:
-        """Cohomology of the twisted complex at kappa=0 (= CE cohomology).
+    def bracket_ce_sign(self, n: int) -> Optional[int]:
+        """Return the exact sign s with [eta,-]|C^n = s*d_CE|C^n.
 
-        At kappa != 0, (d_kappa)^2 != 0 in general, so this is only
-        meaningful at kappa = 0 (the CE baseline) or when the curvature vanishes.
+        The implemented affine CE window should return (-1)^(n+1) for
+        n=0,1,2. ``None`` means the bracket matrix is not a pure signed copy
+        of the CE differential.
         """
-        return self.complex.cohomology_dims()
+        bracket = _killing_bracket_matrix(
+            self.eta_vec(), self.complex.sc, self.complex.kap, self.complex.dim, n
+        )
+        d_ce = self.complex.differential(n)
+        if _is_zero_matrix(_mat_add(bracket, _mat_scale(Fraction(-1), d_ce))):
+            return 1
+        if _is_zero_matrix(_mat_add(bracket, d_ce)):
+            return -1
+        return None
+
+    def finite_window_diagnostics(self) -> Dict[str, object]:
+        """Exact diagnostics for the implemented CE window.
+
+        The returned data is intentionally scoped: degrees 0, 1, 2 are
+        implemented for [eta,-], and H^3 is computed only when C^4=0.
+        No statement about the completed chiral modular tangent complex is
+        inferred from this finite window.
+        """
+        signs: Dict[int, Optional[int]] = {}
+        scale_factors: Dict[int, Optional[Fraction]] = {}
+        for n in range(3):
+            sign = self.bracket_ce_sign(n)
+            signs[n] = sign
+            scale_factors[n] = (
+                None if sign is None else Fraction(1) + self.kappa * sign
+            )
+
+        return {
+            "finite_window_only": True,
+            "implemented_bracket_degrees": (0, 1, 2),
+            "full_chiral_curvature_computed": False,
+            "completed_shadow_tower_computed": False,
+            "bracket_ce_signs": signs,
+            "degree_scale_factors": scale_factors,
+            "d_squared_zero": {
+                0: self.verify_d_squared_zero(0),
+                1: self.verify_d_squared_zero(1),
+            },
+            "twisted_cohomology_dims": self.twisted_cohomology_dims(),
+        }
+
+    def twisted_cohomology_dims(self) -> Dict[int, int]:
+        """Cohomology dimensions in the implemented twisted CE window.
+
+        Computes H^0, H^1, H^2 from d_kappa in degrees 0, 1, 2. H^3 is
+        included only in the small case C^4=0, for example sl_2. This is a
+        finite-window calculation, not a completed modular tangent complex.
+        """
+        d0 = self.d_twisted_matrix(0)
+        d1 = self.d_twisted_matrix(1)
+        d2 = self.d_twisted_matrix(2)
+        if not _is_zero_matrix(_mat_multiply(d1, d0)):
+            raise ValueError("d_kappa^1 o d_kappa^0 is nonzero")
+        if not _is_zero_matrix(_mat_multiply(d2, d1)):
+            raise ValueError("d_kappa^2 o d_kappa^1 is nonzero")
+
+        r0 = _exact_rank(d0)
+        r1 = _exact_rank(d1)
+        r2 = _exact_rank(d2)
+        dims = {
+            0: self.complex.degree_dim(0) - r0,
+            1: self.complex.degree_dim(1) - r1 - r0,
+            2: self.complex.degree_dim(2) - r2 - r1,
+        }
+        if self.complex.degree_dim(4) == 0:
+            dims[3] = self.complex.degree_dim(3) - r2
+        return dims
 
 
 # ---------------------------------------------------------------------------
@@ -723,6 +716,47 @@ def kappa_virasoro(c: Fraction) -> Fraction:
     kappa = c/2.
     """
     return c / Fraction(2)
+
+
+def modular_tangent_scope_firewall() -> Dict[str, object]:
+    """Typed package slots enforced by this finite-window engine.
+
+    The entries are copied from the local concordance conventions. They keep
+    the finite CE tangent oracle separate from the holographic seven-entry
+    package and from the six projections of the modular Koszul compute
+    package.
+    """
+    return {
+        "holographic_package": (
+            "A",
+            "A^i",
+            "A^!",
+            "C",
+            "r(z)",
+            "Theta_A",
+            "nabla^hol",
+        ),
+        "modular_koszul_compute_package": (
+            "Fact_X(L)",
+            "barB_X(L)",
+            "Theta_L",
+            "L_L",
+            "(V_br,T_br)",
+            "R4_mod(L)",
+        ),
+        "object_separation": {
+            "A": "chiral algebra input",
+            "B(A)": "bar coalgebra",
+            "A^i": "bar cohomology coalgebra H^*(B(A))",
+            "A^!": (
+                "Verdier/continuous-linear dual branch under finite-type "
+                "or completed hypotheses"
+            ),
+            "Omega(B(A))": "bar-cobar inversion recovering A",
+            "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/bulk derived centre",
+        },
+        "ce_window_role": "finite Chevalley-Eilenberg tangent oracle; not R4_mod(L)",
+    }
 
 
 def heisenberg_tangent() -> Dict[str, object]:
@@ -897,7 +931,7 @@ def verify_sl2_rigidity() -> Dict[str, bool]:
     }
 
 
-def verify_sl2_killing_cocycle() -> Dict[str, bool]:
+def verify_sl2_killing_cocycle() -> Dict[str, object]:
     """Verify properties of the Killing 3-cocycle for sl_2."""
     sc = sl2_structure_constants()
     kap = sl2_killing_form()
@@ -912,10 +946,21 @@ def verify_sl2_killing_cocycle() -> Dict[str, bool]:
     d_eta = _mat_multiply(d2, eta.reshape(-1, 1))
     eta_is_cocycle = _is_zero_matrix(d_eta)
 
+    identity = _np_zeros(dim * dim, 1).reshape(-1)
+    for j in range(dim):
+        identity[j * dim + j] = Fraction(1)
+    d1 = ce_differential_1(sc, dim)
+    d_identity = _mat_multiply(d1, identity.reshape(-1, 1))
+    eta_column = eta.reshape(-1, 1)
+    eta_is_ordinary_ce_boundary = _is_zero_matrix(
+        _mat_add(d_identity, _mat_scale(Fraction(-1), eta_column))
+    )
+
     return {
         "killing_3form_nonzero": phi_012 != 0,
         "killing_3form_value": phi_012,
         "eta_is_ce_cocycle": eta_is_cocycle,
+        "eta_is_ordinary_ce_boundary": eta_is_ordinary_ce_boundary,
     }
 
 
@@ -950,12 +995,12 @@ def verify_killing_bracket_d_intertwining_sl2() -> Dict[str, bool]:
     }
 
 
-def verify_kappa_twist_curvature_sl2(k: Fraction) -> Dict[str, bool]:
-    """Verify d^2 = 0 for the kappa-twisted CE differential of sl_2.
+def verify_kappa_twist_curvature_sl2(k: Fraction) -> Dict[str, object]:
+    """Verify the CE-window kappa twist for sl_2.
 
-    Since eta = mu (Lie bracket), [mu, mu]_NR = 0 (Jacobi identity),
-    so (d_CE + kappa*[eta,-])^2 = 0 for ALL kappa. This holds at the
-    CE level; the genus-1 curvature is a chiral phenomenon.
+    Since eta = mu (Lie bracket), [mu, mu]_NR = 0 is the Jacobi identity.
+    The implemented finite-window differential squares to zero for all kappa,
+    but this does not compute the full chiral genus-one curvature.
     """
     cx = sl2_deformation_complex()
     kap = kappa_affine_sl2(k)
@@ -969,6 +1014,8 @@ def verify_kappa_twist_curvature_sl2(k: Fraction) -> Dict[str, bool]:
         "d_squared_zero_at_deg0": d2_zero_at_0,
         "d_squared_zero_at_deg1": d2_zero_at_1,
         "jacobi_consistent": tw.verify_jacobi_implies_d_squared_zero(0),
+        "finite_window_only": tw.finite_window_diagnostics()["finite_window_only"],
+        "full_chiral_curvature_computed": False,
     }
 
 

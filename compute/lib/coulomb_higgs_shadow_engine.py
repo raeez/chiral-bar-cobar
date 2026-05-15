@@ -43,17 +43,20 @@ Webster [arXiv:1611.06541] proved this for Coulomb/Higgs categories:
 
     Koszul dual of Coulomb category O ≃ Higgs category O
 
-This is NOT the same as our chiral Koszul duality A^! = (H*(B(A)))^v from
-Theorem A, but is a CATEGORICAL analogue: it operates on module categories
-rather than on the algebras themselves.  The relationship is:
+This is distinct from the chiral Koszul duality in Theorem A. The chiral
+construction first forms the bar-dual coalgebra A^i=H^*(B(A)) and then
+uses Verdier/linear duality, under finite-type or completed hypotheses, to
+produce A^!. The Webster operation is categorical: it operates on module
+categories rather than on the algebras themselves. The relationship is:
 
     BLPW/Webster: O(A_C) is Koszul dual to O(A_H)  [categorical]
-    Our Theorem A: B(A) -> D_Ran(B(A)) ≃ B(A^!)     [algebraic]
+    Our Theorem A: A^i=H^*(B(A)) -> A^! by Verdier duality  [algebraic]
 
 For the boundary VOA of a 3d N=4 theory (Costello-Gaiotto), the boundary
 chiral algebra IS a chiral algebra in BD's sense, and our bar complex
 applies.  The Koszul dual A^! of the boundary VOA on the Coulomb side
-is related to (but not identical with) the Higgs branch algebra.
+is related to the Higgs branch algebra through Langlands/mirror data, not
+by equality with the Higgs branch algebra.
 
 WHAT THIS ENGINE COMPUTES
 =========================
@@ -66,11 +69,11 @@ WHAT THIS ENGINE COMPUTES
 6. Comparison of categorical (BLPW) vs algebraic (Theorem A) Koszul duality
 
 CONVENTIONS (AP1, AP9, AP39, AP48):
-  - kappa for boundary VOA computed from the VOA data, NOT from c/2 blindly
+  - kappa for boundary VOA computed from the VOA data, not from c/2 alone
   - Exact rational arithmetic throughout
   - Each kappa verified by at least 2 independent methods
-  - Coulomb/Higgs branches are GEOMETRIC objects; their quantized algebras
-    are NOT automatically chiral algebras (the boundary VOA is)
+  - Coulomb/Higgs branches are geometric objects; their quantized algebras
+    become chiral input only after choosing the boundary VOA
 
 References:
   [BFN18] Braverman-Finkelberg-Nakajima, arXiv:1601.03586
@@ -303,8 +306,8 @@ def sqed_kappa_coulomb_boundary(N_f: int) -> Fraction:
         c(betagamma) = 2 - 12*lambda*(lambda - 1) = 2 for lambda = 1/2
         kappa(betagamma) = c/2 = 1 for lambda = 1/2
 
-    Actually, the precise conformal weights depend on the twist.
-    In the HT twist, the hypermultiplet scalars have weight 0 and 1:
+    The precise conformal weights depend on the twist. In the HT twist,
+    the hypermultiplet scalars have weight 0 and 1:
         (beta, gamma) with weights (0, 1): c = -1 per pair
     But for the Coulomb branch boundary VOA in the standard convention:
 
@@ -538,8 +541,8 @@ def type_a_quiver_coulomb_dim(gauge_ranks: List[int]) -> Fraction:
     (Each U(n_i) factor contributes n_i Coulomb moduli, each of complex dim 2
     in the hyperkahler sense, giving 2*n_i complex dimensions.)
 
-    Actually, for the Coulomb branch of a linear quiver with gauge ranks
-    (n_1, ..., n_L), the complex dimension of M_C is:
+    For the Coulomb branch of a linear quiver with gauge ranks
+    (n_1, ..., n_L), the BFN dimension formula is:
         dim_C(M_C) = sum_i n_i^2 - sum_{edges (i,j)} n_i * n_j + sum_i n_i * w_i
 
     For the standard type-A quiver with gauge (n_1,...,n_L) and
@@ -670,11 +673,12 @@ def webster_vs_chiral_koszul(N_f: int) -> Dict[str, str]:
         This is a duality of CATEGORIES of modules.
 
     Our chiral Koszul duality (Theorem A):
-        A^! = (H*(B(A)))^v
+        A^i = H^*(B(A)); A^! follows by Verdier/linear duality under
+        finite-type or completed hypotheses.
         This is a duality of ALGEBRAS.
 
-    For the boundary VOA of SQED(N_f), the chiral Koszul dual A^! is
-    NOT the Higgs branch algebra.  Instead:
+    For the boundary VOA of SQED(N_f), the chiral Koszul dual A^! follows
+    the Langlands-dual boundary VOA branch:
         A^! = boundary VOA on the LANGLANDS DUAL gauge theory
 
     The relationship:
@@ -846,7 +850,7 @@ def three_koszul_dualities_comparison() -> Dict[str, Dict[str, str]]:
 
     1. CHIRAL KOSZUL DUALITY (Theorem A, this monograph):
        Input: chiral algebra A on a curve X
-       Output: A^! = (H*(B(A)))^v, Koszul dual chiral algebra
+       Output: A^i=H^*(B(A)), then A^! by Verdier/linear duality
        Level: algebras (factorization algebras on Ran(X))
        Bar complex: B^ch(A) on FM_n(X)
 
@@ -860,7 +864,7 @@ def three_koszul_dualities_comparison() -> Dict[str, Dict[str, str]]:
        Input: 3d N=4 theory T
        Output: mirror theory T~ with M_C(T) = M_H(T~)
        Level: geometric (exchanges Coulomb and Higgs moduli spaces)
-       Not algebraic Koszul duality in any strict sense
+       Separate from algebraic Koszul duality
 
     RELATIONSHIP:
     - (1) and (2) coincide when: the category O of the chiral algebra A
@@ -871,15 +875,15 @@ def three_koszul_dualities_comparison() -> Dict[str, Dict[str, str]]:
       3d mirror M_H. This is the BLPW conjecture, proved for many cases.
     - (1) and (3) are related via: the boundary VOA of T on the Coulomb
       side has Koszul dual related to the boundary VOA on the Higgs side,
-      but they are NOT equal in general (the relationship goes through
-      the Langlands dual, not the mirror).
+      and agrees with it only on special loci; generally the relationship
+      goes through the Langlands dual.
     """
     return {
         "chiral_kd": {
             "source": "Theorem A (this monograph)",
             "level": "factorization algebras",
             "input": "chiral algebra A",
-            "output": "A^! = (H*(B(A)))^v",
+            "output": "A^i=H^*(B(A)); A^! via Verdier duality",
             "tool": "bar complex B^ch on FM_n(X)",
         },
         "categorical_kd": {

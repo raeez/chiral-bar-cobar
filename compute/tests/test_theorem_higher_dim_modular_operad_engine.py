@@ -1,29 +1,23 @@
-r"""Tests for the higher-dimensional modular operad engine.
+r"""Tests for curve-level modular-operad diagnostics.
 
-THEOREM: E_n modular operad amplitudes, ribbon graph counting,
-Feynman transform comparison (FCom vs FAss), Harer-Zagier verification.
+The tests keep four surfaces separate: stable pointed-curve graphs, raw
+ribbon multiplicities, normalized scalar FCom/FAss comparison, and finite
+kappa diagnostics.
 
-42 tests organized in 8 sections:
+Sections:
   I.   Ribbon graph structure counts (genus 0, 1, 2)
   II.  Genus-0 ribbon tree count = (2n-5)!!
   III. Graph enumeration consistency (genus 0-2)
   IV.  Harer-Zagier cell decomposition counts
   V.   Euler characteristic verification (chi(M_2) = -1/240)
-  VI.  E_n independence of shadow invariants kappa at arities 2-6
-  VII. FCom vs FAss scalar sector agreement (genus 1-3)
+  VI.  Finite E_n diagnostics for shadow invariants kappa
+  VII. FCom vs FAss scalar sector agreement with raw-ribbon obstruction
   VIII.E_1/E_infty ratio and orientation doubling
-
-MULTI-PATH VERIFICATION (AP10):
-  Every numerical value verified by at least 2 independent methods.
-  Harer-Zagier epsilon values verified against known tables.
-  Graph counts verified against existing stable_graph_enumeration.py.
-  Kappa values verified against theorem_kappa_en_invariance_engine.py.
 
 References:
   theorem_higher_dim_modular_operad_engine.py
   stable_graph_enumeration.py
   theorem_kappa_en_invariance_engine.py
-  CLAUDE.md: AP10, AP82, AP83, AP97, AP104
 """
 import pytest
 from fractions import Fraction
@@ -32,6 +26,8 @@ from compute.lib.theorem_higher_dim_modular_operad_engine import (
     # Utility
     double_factorial,
     catalan_number,
+    is_stable_curve_type,
+    validate_curve_modular_operad_domain,
     # Graph structures
     RibbonStableGraph,
     # Graph enumeration
@@ -60,8 +56,10 @@ from compute.lib.theorem_higher_dim_modular_operad_engine import (
     # Feynman transform
     fcom_scalar_amplitude,
     fass_scalar_amplitude,
+    raw_ribbon_scalar_amplitude,
+    ribbon_normalization_obstruction,
     verify_fcom_fass_scalar_agreement,
-    # Shadow E_n independence
+    # Shadow E_n finite diagnostics
     shadow_kappa_en,
     verify_shadow_en_independence,
     # Verification
@@ -95,14 +93,16 @@ class TestRibbonStructureCounts:
         assert gr.ribbon_structure_count() == 4
 
     def test_genus1_smooth_n0(self):
-        """g=1, n=0: smooth torus, val=0. ribbon_count = 1 (trivial)."""
+        """The unmarked smooth torus has a trivial cyclic count but is unstable."""
         gr = RibbonStableGraph(vertex_genera=(1,), edges=(), legs=())
         assert gr.ribbon_structure_count() == 1
+        assert not gr.is_stable
 
     def test_genus1_selfloop_n0(self):
-        """g=1, n=0: self-loop, val=2. (2-1)! = 1."""
+        """The unmarked self-loop has cyclic count 1 but is unstable."""
         gr = RibbonStableGraph(vertex_genera=(0,), edges=((0, 0),), legs=())
         assert gr.ribbon_structure_count() == 1
+        assert not gr.is_stable
 
     def test_genus2_theta(self):
         """g=2: theta graph, 2 vertices val=3 each, 3 edges. (2!)*(2!) = 4."""
@@ -183,15 +183,30 @@ class TestGraphEnumeration:
         graphs = enumerate_stable_graphs(0, 4)
         assert len(graphs) == 4
 
-    def test_genus1_n0_count(self):
-        """M_bar_{1,0}: 2 graphs (smooth + self-loop)."""
+    def test_genus1_n0_unstable(self):
+        """M_bar_{1,0} is not a stable pointed-curve type."""
         graphs = enumerate_stable_graphs(1, 0)
-        assert len(graphs) == 2
+        assert graphs == []
+        assert not is_stable_curve_type(1, 0)
 
     def test_genus1_n1_count(self):
         """M_bar_{1,1}: 2 graphs."""
         graphs = enumerate_stable_graphs(1, 1)
         assert len(graphs) == 2
+
+    def test_domain_guard_rejects_factorization_operad(self):
+        """Factorization operads are not silently treated as modular operads."""
+        with pytest.raises(ValueError):
+            validate_curve_modular_operad_domain(
+                2, 0, operad_kind="factorization"
+            )
+
+    def test_domain_guard_rejects_higher_dimensional_variety(self):
+        """The curve-level engine does not accept a surface/variety dimension."""
+        with pytest.raises(NotImplementedError):
+            validate_curve_modular_operad_domain(
+                2, 0, base_complex_dimension=2
+            )
 
     def test_genus2_n0_count(self):
         """M_bar_{2,0}: 7 graphs."""
@@ -301,26 +316,28 @@ class TestEulerCharacteristic:
 
 
 # ========================================================================
-# VI. E_n independence of shadow kappa
+# VI. Finite E_n diagnostics of shadow kappa
 # ========================================================================
 
 class TestShadowEnIndependence:
-    """Verify kappa is independent of operadic level n."""
+    """Finite diagnostics for kappa across operadic levels."""
 
     def test_heisenberg_n_independent(self):
-        """kappa(H_k) = k for all E_n levels."""
+        """kappa(H_k) = k across the tested curve-level E_n window."""
         result = verify_shadow_en_independence("heisenberg", 6, k=Fraction(3))
         assert result["all_equal"]
         assert result["kappa"] == Fraction(3)
+        assert result["finite_diagnostic"]
+        assert result["diagnostic_range"] == (1, 6)
 
     def test_virasoro_n_independent(self):
-        """kappa(Vir_c) = c/2 for all E_n levels."""
+        """kappa(Vir_c) = c/2 across the tested E_n window."""
         result = verify_shadow_en_independence("virasoro", 6, c=Fraction(26))
         assert result["all_equal"]
         assert result["kappa"] == Fraction(13)
 
     def test_affine_sl2_n_independent(self):
-        """kappa(sl_2 at level k) = 3(k+2)/4 for all E_n."""
+        """kappa(sl_2 at level k) is stable across the tested E_n window."""
         result = verify_shadow_en_independence(
             "affine", 6, lie_type="A", rank=1, k=Fraction(1))
         assert result["all_equal"]
@@ -328,22 +345,34 @@ class TestShadowEnIndependence:
         assert result["kappa"] == Fraction(9, 4)
 
     def test_w3_n_independent(self):
-        """kappa(W_3) = 5c/6 for all E_n."""
+        """kappa(W_3) = 5c/6 across the tested E_n window."""
         result = verify_shadow_en_independence("wn", 6, N=3, c=Fraction(12))
         assert result["all_equal"]
         assert result["kappa"] == Fraction(10)
 
     def test_betagamma_n_independent(self):
-        """kappa(betagamma) at lambda=1 for all E_n."""
+        """kappa(betagamma) at lambda=1 across the tested E_n window."""
         result = verify_shadow_en_independence("betagamma", 6, lam=1)
         assert result["all_equal"]
         assert result["kappa"] == Fraction(1)
 
     def test_lattice_rank4_n_independent(self):
-        """kappa(V_Lambda) = rank for all E_n."""
+        """kappa(V_Lambda) = rank across the tested E_n window."""
         result = verify_shadow_en_independence("lattice", 6, rank=4)
         assert result["all_equal"]
         assert result["kappa"] == Fraction(4)
+
+    def test_operadic_level_must_be_positive(self):
+        """n_operad=0 is not an E_n diagnostic."""
+        with pytest.raises(ValueError):
+            shadow_kappa_en("heisenberg", 0, k=Fraction(1))
+
+    def test_shadow_diagnostic_rejects_higher_dimensional_variety(self):
+        """The finite E_n diagnostic is not a CY_d factorization computation."""
+        with pytest.raises(NotImplementedError):
+            verify_shadow_en_independence(
+                "heisenberg", 3, base_complex_dimension=2, k=Fraction(1)
+            )
 
 
 # ========================================================================
@@ -351,21 +380,30 @@ class TestShadowEnIndependence:
 # ========================================================================
 
 class TestFComFAssAgreement:
-    """Verify FCom = FAss at the scalar level (genus 1-3)."""
+    """Verify normalized FCom = FAss and expose raw-ribbon excess."""
 
-    def test_genus1_agreement(self):
-        """FCom = FAss at genus 1, scalar level."""
-        result = verify_fcom_fass_scalar_agreement(1, Fraction(1))
+    def test_genus1_n0_rejected(self):
+        """The unmarked genus-1 pair is unstable for this modular operad."""
+        with pytest.raises(ValueError):
+            verify_fcom_fass_scalar_agreement(1, Fraction(1))
+
+    def test_genus1_n1_agreement(self):
+        """FCom = normalized FAss at stable (g,n)=(1,1)."""
+        result = verify_fcom_fass_scalar_agreement(1, Fraction(1), n=1)
         assert result["agree"], f"FCom={result['fcom']}, FAss={result['fass']}"
+        assert result["raw_ribbon"] == Fraction(2)
+        assert result["normalization_obstruction"] == Fraction(1, 2)
+        assert not result["raw_agrees"]
 
     def test_genus2_agreement(self):
-        """FCom = FAss at genus 2, scalar level."""
+        """FCom = normalized FAss at stable (g,n)=(2,0)."""
         result = verify_fcom_fass_scalar_agreement(2, Fraction(1))
         assert result["agree"], f"FCom={result['fcom']}, FAss={result['fass']}"
+        assert result["normalization_obstruction"] == Fraction(7, 4)
 
-    def test_genus1_agreement_kappa2(self):
-        """FCom = FAss at genus 1, kappa=2."""
-        result = verify_fcom_fass_scalar_agreement(1, Fraction(2))
+    def test_genus1_n1_agreement_kappa2(self):
+        """FCom = normalized FAss at stable (1,1), kappa=2."""
+        result = verify_fcom_fass_scalar_agreement(1, Fraction(2), n=1)
         assert result["agree"]
 
     def test_genus2_agreement_kappa3(self):
@@ -373,15 +411,32 @@ class TestFComFAssAgreement:
         result = verify_fcom_fass_scalar_agreement(2, Fraction(3))
         assert result["agree"]
 
-    def test_genus1_graph_count(self):
-        """Genus 1 has exactly 2 graphs."""
-        result = verify_fcom_fass_scalar_agreement(1)
+    def test_genus1_n1_graph_count(self):
+        """Stable (1,1) has exactly 2 graphs."""
+        result = verify_fcom_fass_scalar_agreement(1, n=1)
         assert result["num_graphs"] == 2
 
     def test_genus2_graph_count(self):
         """Genus 2 has exactly 7 graphs."""
         result = verify_fcom_fass_scalar_agreement(2)
         assert result["num_graphs"] == 7
+
+    def test_raw_ribbon_sum_is_obstruction_not_agreement(self):
+        """At genus 2, raw ribbon multiplicity is not the scalar theorem."""
+        raw = raw_ribbon_scalar_amplitude(2, Fraction(1))
+        fcom = fcom_scalar_amplitude(2, Fraction(1))
+        fass = fass_scalar_amplitude(2, Fraction(1))
+        assert fcom == fass == Fraction(17, 6)
+        assert raw == Fraction(55, 12)
+        assert raw - fcom == Fraction(7, 4)
+
+    def test_obstruction_record_matches_direct_values(self):
+        """The obstruction witness records raw and normalized values."""
+        result = ribbon_normalization_obstruction(1, Fraction(1), n=1)
+        assert result["fcom"] == Fraction(3, 2)
+        assert result["fass_normalized"] == Fraction(3, 2)
+        assert result["raw_ribbon"] == Fraction(2)
+        assert result["normalization_obstruction"] == Fraction(1, 2)
 
 
 # ========================================================================

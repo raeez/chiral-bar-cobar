@@ -1,11 +1,11 @@
 %% ================================================================
 %% Master Conjecture 3: Thick Generation on the Evaluation-Generated
-%% Core -- Five-Family Mechanism and Scope Discipline
+%% Core, Finite-Window Completion, and the Full-DK Boundary
 %%
-%% Platonic consolidation. Strengthens by clarifying scope, not by
-%% extending the domain of proof. The unconditional theorem lives on
-%% the evaluation-generated core; extension to the full Drinfeld-Kohno
-%% factorization category is conjectural and separately inscribed.
+%% The unconditional theorem lives on the evaluation-generated core.
+%% Finite-window completion requires a specified topology and
+%% Mittag--Leffler/coacyclic cone control.  The full Drinfeld--Kohno
+%% factorization category requires a separate compact-object theorem.
 %% ================================================================
 
 \chapter{MC3 on the evaluation-generated core: five-family thick generation}
@@ -13,9 +13,10 @@
 
 \providecommand{\ClaimStatusProvedHere}{\textsc{ProvedHere}}
 \providecommand{\ClaimStatusProvedElsewhere}{\textsc{ProvedElsewhere}}
+\providecommand{\ClaimStatusConditional}{\textsc{Conditional}}
 \providecommand{\ClaimStatusConjectured}{\textsc{Conjectured}}
 
-\section{Scope, setup, and the two domains of generation}
+\section{Evaluation core, finite-window completion, and full DK}
 \label{sec:mc3-platonic-scope}
 
 The third master conjecture of Volume~I concerns thick generation of
@@ -25,8 +26,8 @@ $Y_\hbar(\mathfrak{g})^{\mathrm{ch}}$ by evaluation-type modules.
 Read at full strength, MC3 asserts that the entire factorization
 category is generated under thick idempotent-complete closure by a
 finite or countable seed of evaluation-type modules and their
-prefundamental companions. This statement has two natural reading
-levels that differ by a conjectural completion step:
+prefundamental companions. The assertion has three categorical
+surfaces.
 
 \begin{enumerate}[label=\textup{(D\arabic*)},nosep]
 \item\label{it:mc3-eval-core}
@@ -40,38 +41,53 @@ levels that differ by a conjectural completion step:
  This is a genuine subcategory; every object is built from
  evaluation-type modules by iterated cones, retracts, and tensor
  products.
+\item\label{it:mc3-finite-window-completion}
+ \emph{Finite-window completion}
+ $\mathrm{DK}^{\mathrm{completed}}_{\mathfrak g,\nu}$:
+ after choosing a separated exhaustive finite-window parameter~$\nu$
+ and exact quotients
+ $\tau_{\le N}\colon\mathrm{DK}^{\mathrm{ev}}_{\mathfrak g}
+ \to\mathrm{DK}^{\mathrm{ev},\le N}_{\mathfrak g,\nu}$, set
+ \[
+  \mathrm{DK}^{\mathrm{completed}}_{\mathfrak g,\nu}
+  =
+  \varprojlim_N
+  \operatorname{Ind}
+  \bigl(\mathrm{DK}^{\mathrm{ev},\le N}_{\mathfrak g,\nu}\bigr).
+ \]
+ A completed object is a compatible tower of finite-window objects.
+ Generation here means windowwise compact thick generation followed by
+ Ind-completion and inverse limit.  It is not ordinary thick closure
+ under arbitrary filtered colimits.
 \item\label{it:mc3-full-DK}
- \emph{Full $\mathrm{DK}_\mathfrak{g}$}: the presentable stable
- $\infty$-category obtained as a compact-completed
- enhancement of $\mathrm{DK}^{\mathrm{ev}}_\mathfrak{g}$ via
- Francis--Gaitsgory pro-nilpotent completion; equivalently
- the target of the DK-side equivalence
- $\Phi_{\mathrm{DK}}$ of
- Theorem~\ref{thm:eval-core-identification}
- extended to the completed shifted envelope.
+ \emph{Full $\mathrm{DK}_\mathfrak{g}$}: the intended
+ Drinfeld--Kohno factorization category.  An equivalence
+ $\mathrm{DK}^{\mathrm{completed}}_{\mathfrak g,\nu}\simeq
+ \mathrm{DK}_\mathfrak{g}$ is an additional compact-object and
+ topology-comparison theorem, not a formal consequence of
+ \ref{it:mc3-eval-core} or~\ref{it:mc3-finite-window-completion}.
  \textup{(}This is not a bar-cobar inversion statement:
  $\Omega(B(A)) = A$ on the nose, with no completion involved;
  the category-level DK equivalence is derived from bar-cobar
  via the Koszul-pairing derived-center comparison of
- Chapter~\ref{chap:chiral-hochschild-koszul}, not by naming
- the bulk $\Omega(B(A))$.\textup{)}
+ Chapter~\ref{chap:deformation-theory}, not by naming
+ $\Omega(B(A))$ as the closed-sector object.\textup{)}
 \end{enumerate}
 
 \begin{principle}[Scope distinction for MC3]
 \label{princ:mc3-scope-distinction}
-\emph{Mistaking~\ref{it:mc3-eval-core} for~\ref{it:mc3-full-DK} is
-the principal type error.} Each family in the five-family
-mechanism proves thick generation \emph{of its evaluation-generated
-core}, not of the full factorization category. The extension
-from~\ref{it:mc3-eval-core} to~\ref{it:mc3-full-DK}
-is a separate problem, already unconditional in type~$A$
-\textup{(}Theorem~\ref{thm:mc3-type-a-resolution}, reducing to
-Conjecture~\ref{conj:dk-compacts-completion}\textup{)}, and
-conjectural in other simple types
-\textup{(}Conjecture~\ref{conj:mc3-automatic-generalization}\textup{)}.
-This chapter separates the unconditional statement on the
-evaluation-generated core from the conjectural full-category
-extension and assigns one of the five mechanisms to each family.
+\emph{The evaluation core, its finite-window completion, and full DK
+are distinct.} The five-family mechanism proves thick generation of
+\ref{it:mc3-eval-core}. The finite-window comparison chapter proves
+generation of~\ref{it:mc3-finite-window-completion} only after the
+chosen window tower satisfies the Mittag--Leffler and coacyclic-cone
+hypotheses. The full category~\ref{it:mc3-full-DK} is reached only by
+an additional compact-completion theorem. In type~$A$ this is the
+single remaining packet
+Conjecture~\ref{conj:dk-compacts-completion}; outside type~$A$ the
+same full-DK upgrade also requires the lift-and-lower and pro-Weyl
+packets of Conjectures~\ref{conj:rank-independence-step2} and
+\ref{conj:mc3-automatic-generalization}.
 \end{principle}
 
 \begin{remark}[Scope-qualified MC3 statement]
@@ -85,8 +101,103 @@ mechanism. The Baxter hyperplane is the coordinate signature of
 the rational type~$A$ mechanism only; four other families have
 different signatures \textup{(}none, none, theta divisor,
 parity-balance hyperplane\textup{)}.
-Extension to the full compact-completed DK category is unconditional
-in type~$A$ and conjectural elsewhere.
+Extension to a finite-window completed category is
+Theorem~\ref{thm:mc3-full-DK-in-completed-category} under the tower
+hypotheses of Definition~\ref{def:finite-window-mc3-tower}.
+Identifying that completed category with the full DK category is the
+compact-completion problem.
+\end{remark}
+
+\begin{proposition}[Finite-window upgrade boundary;
+\ClaimStatusProvedElsewhere]
+\label{prop:mc3-finite-window-upgrade-boundary}
+\index{MC3!finite-window upgrade boundary}%
+Let $\mathcal S\subset\mathrm{DK}^{\mathrm{ev}}_{\mathfrak g}$ be the
+seed of
+Theorem~\ref{thm:mc3-evaluation-core-five-family}, and let~$\nu$ be a
+finite-window parameter. If
+\textup{(i)} every compact window is generated by
+$\tau_{\le N}\mathcal S$,
+\textup{(ii)} the transition functors preserve compact generated
+subcategories, and
+\textup{(iii)} mapping spectra of compact-window towers satisfy the
+Mittag--Leffler condition, then
+\[
+ \widehat{\operatorname{Loc}}_\nu(\mathcal S)
+ =
+ \mathrm{DK}^{\mathrm{completed}}_{\mathfrak g,\nu}.
+\]
+If compact objects are detected windowwise, then
+\[
+ \widehat{\operatorname{Thick}}_\nu(\mathcal S)
+ =
+ \bigl(\mathrm{DK}^{\mathrm{completed}}_{\mathfrak g,\nu}\bigr)^\omega .
+\]
+In a curved CDG realization the comparison cone must be coacyclic in
+the second-kind coderived category in every finite window and the tower
+of cone cohomologies must be Mittag--Leffler. In a square-zero total
+model the same sentence reads ``acyclic''.
+\end{proposition}
+
+\begin{proof}
+This is the finite-window theorem
+Theorem~\ref{thm:mc3-full-DK-in-completed-category} together with
+Definition~\ref{def:finite-window-mc3-tower}. The cone clause is the
+Milnor exact-sequence argument of
+Proposition~\ref{prop:compact-approximation-exists}: the
+$\varprojlim^1$ term vanishes under Mittag--Leffler, and Positselski's
+second-kind ambient replaces ordinary acyclicity by coacyclicity.
+\end{proof}
+
+\begin{remark}[Derived centre and Theorem H are separate surfaces]
+\label{rem:mc3-derived-centre-hochschild-boundary}
+\index{derived center!MC3 boundary}%
+\index{Theorem H!MC3 boundary}%
+MC3 is a generation theorem for a DK module category. It does not
+identify chiral derived centres. The derived centre is
+\[
+ Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
+ =
+ \ChirHoch^\bullet(\cA,\cA),
+\]
+and the brace dg-algebra comparison
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)\simeq
+Z^{\mathrm{der}}_{\mathrm{ch}}(\cA^!)$ is controlled by the
+Morita-kernel criterion of
+Proposition~\ref{prop:derived-center-morita-criterion}; its naive
+$H^0$ shadow uses the completed central-pairing criterion
+Lemma~\ref{lem:naive-center-koszul-identification}.
+
+MC3 also does not prove Theorem~H. The chiral Hochschild amplitude
+$[0,2]$ is Theorem~\ref{thm:main-koszul-hoch} on the PBW
+E$_\infty$-chiral Koszul locus, with symmetric averaging supplied by
+Corollary~\ref{cor:hochschild-averaging-symmetric}. For an
+E$_1$-chiral Yangian input without that completion, the ordered
+concentration theorem
+Theorem~\ref{thm:hochschild-concentration-E1} survives, while the
+symmetric bound is Conjecture~\ref{conj:hochschild-concentration-E1-only}.
+\end{remark}
+
+\begin{remark}[Objects separated by the MC3 boundary]
+\label{rem:mc3-object-separation}
+\index{MC3!object separation}%
+MC3 lives in a DK module category.  For a chiral algebra~$\cA$ the
+objects
+\[
+ \cA,\qquad
+ \bar B_X(\cA),\qquad
+ \cA^{\mathrm i}:=H^\bullet \bar B_X(\cA),\qquad
+ \cA^!:=\mathbb D_{\Ran}(\cA^{\mathrm i}),\qquad
+ Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
+\]
+carry different functorial meanings.  The counit
+$\Omega_X\bar B_X(\cA)\to\cA$ is bar--cobar inversion.  The passage
+from $\cA^{\mathrm i}$ to $\cA^!$ is Verdier duality on the Ran
+space.  The bulk
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)=\ChirHoch^\bullet(\cA,\cA)$ is
+the chiral Hochschild cochain object.  A finite-window DK completion
+changes the topology of a module category; it does not identify any
+two of these five objects.
 \end{remark}
 
 \section{Central theorem: five-family thick generation on the evaluation-generated core}
@@ -132,11 +243,12 @@ $Y_\hbar(\mathrm{gl}_{m|n})$ super (parity-balance sub-case)
 \end{tabular}
 \end{center}
 In each family, the mechanism provides a non-degenerate pairing
-(Shapovalov, reflection-equation Shapovalov, or super-Shapovalov)
-on tensor products of evaluation modules at generic parameters,
-together with a central or invariant witness (quantum determinant,
-Sklyanin determinant, quantum Berezinian) guaranteeing that
-iterated tensor products remain in the evaluation-generated core.
+(Shapovalov, reflection-equation Shapovalov, elliptic Bethe, or
+super-Shapovalov) on the relevant tensor products at generic
+parameters, together with the family-specific witness that keeps
+fusion inside the evaluation-generated core: the QQ-system product
+expansion, the Sklyanin determinant, simple Bethe-subalgebra spectrum,
+the theta determinant, or the quantum Berezinian.
 \end{theorem}
 
 \begin{remark}[Super-Yangian scope: gl-super and osp-super sub-cases]
@@ -163,39 +275,71 @@ not as a specialisation of
 Proposition~\ref{prop:mc3-type-BCD-reflection-shapovalov-platonic}
 itself, and not to the parity-balance mechanism of
 Proposition~\ref{prop:mc3-super-parity-balance-platonic}.
-Vol~III's K3 super-Yangian target $Y_{\mathfrak{osp}(4|20)}$,
-forced by the Mukai signature $(4,20)$ being symmetric indefinite
-orthogonal, lies in the osp-super sub-case and is covered via the
-reflection-equation route. This scope split is uniform across
-super families whose bilinear form is symmetric indefinite
-(orthogonal) versus super-graded with parity swap (general linear).
+The K3 Mukai signature is not an example of this Kac
+orthosymplectic row.  Vol~III separates the ungraded orthogonal
+envelope $Y_\hbar(\mathfrak{so}(4,20))$ and the programme-specific
+Hodge-parity extension $Y_\hbar(\mathfrak{so}(4\mid20))$ from
+Kac's $\mathfrak{osp}(4\mid20)$
+\textup{(}\texttt{chapters/examples/k3\_yangian\_chapter.tex},
+\texttt{rem:k3y-stage-super-yangian-scope},
+\texttt{rem:gl-to-osp-correction}\textup{)}: the Mukai form is
+symmetric on both Hodge-parity summands, while Kac orthosymplectic
+type requires a symplectic form on the odd summand.  K3/Mukai
+material may enter the ordinary orthogonal reflection-equation row,
+or a separate non-Kac Hodge-parity comparison if that comparison is
+constructed; it is not covered by the Kac orthosymplectic conjecture
+below.
 \end{remark}
 
 \begin{proof}
-The five cases are Propositions~\ref{prop:mc3-type-A-asymptotic-prefundamentals-platonic},
+The mechanism rows are
+Propositions~\ref{prop:mc3-type-A-asymptotic-prefundamentals-platonic},
 \ref{prop:mc3-type-BCD-reflection-shapovalov-platonic},
 \ref{prop:mc3-uniform-chari-moura-platonic},
+\ref{prop:mc3-uniform-chari-moura-nonsimplylaced-platonic},
 \ref{prop:mc3-elliptic-theta-divisor-platonic}, and
 \ref{prop:mc3-super-parity-balance-platonic}.
-Each proposition is independently proved in
-Section~\ref{sec:mc3-five-family-propositions}. No case uses
-the rank-$1$ Baxter singular vector as hypothesis or conclusion;
-each provides its own family-specific witness.
+The two Chari--Moura/Hernandez propositions form the single uniform
+simple-Lie row: classical and simply-laced exceptional types are
+covered uniformly, while $G_2$ and $F_4$ enter by finite per-case
+verification of their fundamental $q$-characters. No case uses the
+rank-$1$ Baxter singular vector as hypothesis or conclusion; each
+provides its own family-specific witness.
 \end{proof}
+
+\begin{remark}[MC3 mechanisms and G/L/C/M shadows]
+\label{rem:mc3-vs-shadow-archetypes}
+\index{MC3!versus shadow classes}%
+The five MC3 families are module-category generation mechanisms, not
+the shadow-depth classes $\mathsf G/\mathsf L/\mathsf C/\mathsf M$.
+The latter are computed in the landscape census from the shadow tower:
+$r_{\max}=2$ for Gaussian class~$\mathsf G$, $r_{\max}=3$ for
+Lie/tree class~$\mathsf L$, $r_{\max}=4$ for contact/quartic
+class~$\mathsf C$, and $r_{\max}=\infty$ for mixed class~$\mathsf M$.
+The Theorem~C scalar sums are read from
+Proposition~\ref{prop:archetype-complementarity-bridge}, not from
+MC3.  The self-contained Vol~I ceiling is
+$\{0,13,250/3,98/3\}$: the value~$13$ is the Virasoro
+$\mathsf M$ witness, while $250/3$ and $98/3$ are the
+$\mathcal W_3$ and Bershadsky--Polyakov $\mathsf M$-extension
+values, not constants attached to all class~$\mathsf M$ algebras.
+The Mukai-enhanced $\mathsf B$-row adds the external value~$8$ only
+on the Vol~III K3/Mukai bridge, where
+$c_+(\mathrm{Mukai}(K3))=4$ and
+$K^{\kappa_{\mathrm{ch}}}=2c_+(\mathrm{Mukai}(K3))=8$.  This
+$\mathsf B$-row is neither a sixth MC3 mechanism nor a Kac
+orthosymplectic import.
+\end{remark}
 
 \begin{remark}[Assembly point]
 \label{rem:mc3-assembly-point}
-The thick generation statement is the assembly point: once each
-family provides a generation-with-witness mechanism, the
-evaluation-generated core of
-$\mathrm{DK}_\mathfrak{g}$ (a single well-defined subcategory
-in each case) is thickly generated. The five mechanisms do not
-``prove a single theorem'' in the sense of sharing a proof strategy;
-they prove the \emph{same conclusion} in the respective chart.
-This is the Drinfeld-school signature of the master conjecture:
-one structural statement, realized by chart-specific integrable
-mechanisms linked through rational, trigonometric, elliptic, graded,
-and boundary degenerations.
+The theorem has one conclusion and five proofs. In each chart the
+seed generates the same kind of object,
+$\mathrm{DK}^{\mathrm{ev}}_\mathfrak{g}$, but the witness differs:
+rational prefundamentals, reflection-equation pairing,
+multiplicity-free $\ell$-weights, elliptic Bethe regularity, or
+super-Berezinian parity balance. The common conclusion is ordinary
+thick generation of the evaluation core.
 \end{remark}
 
 \section{The five family-specific propositions}
@@ -223,36 +367,33 @@ hyperplane constraint on the spectral parameter~$a$ is required.
 The Hernandez--Jimbo limit
 $L^\pm_{\omega_i,a} = \lim_{k\to\infty} W^{(i)}_{k,a}$ exists in
 $\widehat{\mathcal{O}}$ as a pro-object, and its $q$-character
-admits the Frenkel--Hernandez product factorization
-\[
- \chi_q\!\big(L^\pm_{\omega_i,a}\big) \;=\; \Psi_{i,a}^{\pm 1}
- \prod_{j \ne i} Q_j^{\pm \delta_{i,j}}(a),
-\]
-where $\{Q_j\}$ are the QQ-system generators. Multiplicity-freeness
-of the $\ell$-character on every tensor product of asymptotic
-prefundamentals follows from the Mukhin--Varchenko Shapovalov
-determinant formula: the Shapovalov form is non-degenerate on every
-$\ell$-weight space, so the Bethe subalgebra has simple joint
-spectrum and separates simples. Closure under sub-quotients follows
-from the multiplicity-free property and the Frenkel--Mukhin
-algorithm; closure under tensor products follows from the QQ-system
-fusion relations. The Baxter singular-vector computation is never
-invoked: the negative prefundamental arises as a limit of
-finite-dimensional Kirillov--Reshetikhin modules, not as the simple
-cokernel of a rank-$1$ Verma exact sequence on $b = a - \tfrac12$.
+is the Frenkel--Hernandez completed monomial expansion with dominant
+$\ell$-weight $\Psi_{i,a}^{\pm1}$ and lower monomials generated by the
+simple-root variables of the QQ-system. The proof uses only the two
+properties supplied by that construction: triangularity with respect
+to the $\ell$-weight order and multiplicity-freeness on the generic
+tensor products under consideration. The Mukhin--Varchenko
+Shapovalov determinant formula gives non-degeneracy on these
+$\ell$-weight spaces, so the Bethe subalgebra has simple joint
+spectrum and separates simples. Closure under subquotients follows
+from multiplicity-freeness and the Frenkel--Mukhin algorithm; closure
+under tensor products follows from the QQ-system fusion relations. The
+Baxter singular-vector computation is not invoked: the negative
+prefundamental arises as a limit of finite-dimensional
+Kirillov--Reshetikhin modules, not as the simple cokernel of a
+rank-$1$ Verma exact sequence on $b = a - \tfrac12$.
 \end{proof}
 
 \begin{remark}[Why this retires the Baxter hyperplane in type~$A$]
 \label{rem:type-A-no-hyperplane}
-The rank-$1$ Baxter singular vector is visible only in the
+The rank-$1$ Baxter singular vector is visible in the
 rational-form presentation of $Y_\hbar(\mathrm{sl}_N)$ on
 $b = a - \tfrac12$. In the QQ-system / asymptotic KR presentation
 the same information is carried globally by the product
 factorization of $\chi_q(L^-_{i,a})$: the negative prefundamental
 is born with its full multiplicity-free $\ell$-character, so no
-hyperplane intervenes. This confirms the Baxter-hyperplane
-retraction: it was a chart-specific witness, not a universal
-obstruction.
+hyperplane is part of the generation hypothesis. The Baxter
+hyperplane is a chart-specific witness, not a universal obstruction.
 \end{remark}
 
 \subsection{Types B/C/D: reflection-equation Shapovalov}
@@ -273,7 +414,8 @@ boundary Yang--Baxter equation
 \]
 The evaluation-generated core of
 $\widehat{\mathcal{O}}(Y^{\mathrm{tw}}_\hbar)$ is thickly generated
-by the family $\{V_{\omega_1,a}\}_{a\in\mathbb{C}}$ at generic
+by the fundamental evaluation family
+$\{V_{\omega_i,a}\}_{i,\;a\in\mathbb{C}}$ at generic
 parameters in the Zariski-open sense on the joint parameter space
 $(q, a)$, excluding in particular the primitive-root-of-unity
 locus of $q$; root-of-unity specializations are out of scope for
@@ -288,7 +430,7 @@ The Manin-triple decomposition
 $Y^{\mathrm{tw}}_\hbar = Y^+_\hbar \bowtie Y^-_\hbar$ and the
 reflection-equation pairing
 $\langle\cdot,\cdot\rangle_{\mathrm{RE}}$ is non-degenerate on
-$\bigotimes_i V_{\omega_1,a_i}$ at generic spectral parameters
+$\bigotimes_i V_{\omega_{j_i},a_i}$ at generic spectral parameters
 (Letzter--Kolb coideal-subalgebra criterion; Molev--Ragoucy
 non-degeneracy for twisted Yangians). Molev--Ragoucy singular
 vectors in these tensor products supply explicit short exact
@@ -420,9 +562,10 @@ The Felder--Varchenko elliptic Bethe ansatz produces joint
 eigenvectors of the elliptic Bethe subalgebra
 $B_{\mathrm{ell}}(u) \subset
 E_{\rho,\eta}(\mathrm{sl}_N)[[u^{-1}]]$ parametrized by solutions
-of the elliptic Bethe equations. Simplicity of the joint spectrum
-holds outside the zero locus of the Jacobian theta function of the
-equations, which is a theta divisor
+of the elliptic Bethe equations. The Bethe-regular locus is the
+complement of the failure divisor: the zero locus of the elliptic
+Shapovalov determinant, equivalently the zero locus of the
+theta-Jacobian of the Bethe equations, which is a theta divisor
 $\Theta \subset \mathcal{E}_\rho^{N-1}$. Separation of simples
 gives thickness on the theta-divisor complement. The
 codimension-$1$ failure locus replaces the codimension-$1$ Baxter
@@ -551,13 +694,15 @@ $\mathbb{Z}/2$-graded composition thick-generation lemma. Each
 of (a), (b), (c) has partial evidence in the ACDFR series at rank
 $\mathfrak{osp}(1|2)$ and $\mathfrak{osp}(2|2)$ (graded braid
 identities, reflection equation verified pointwise), but the
-rank-$(m,2n)$ statement at arbitrary $(m,2n)$ and in particular
-at the Mukai rank $(4,20)$ of Vol~III's K3 super-Yangian is the
-residual frontier. The K3 super-Yangian conjecture
-$Y_{\mathfrak{osp}(4|20)}$ (Vol~III
-\texttt{chapters/examples/k3\_yangian\_chapter.tex},
-\texttt{conj:osp-yangian-mukai}) and the present proposition
-share the same (a)--(c) gap; closing either closes the other.
+rank-$(m,2n)$ statement at arbitrary Kac-orthosymplectic rank is the
+residual frontier.  This is a Kac orthosymplectic problem, not a
+K3/Mukai import: Vol~III's Mukai branch uses
+$Y_\hbar(\mathfrak{so}(4,20))$ and a possible non-Kac Hodge-parity
+$Y_\hbar(\mathfrak{so}(4\mid20))$, with the form symmetric on both
+graded parts.  A proof of the present Kac orthosymplectic conjecture
+would not by itself identify the K3 Hall--Drinfeld target;
+conversely, a K3 orthogonal/Hodge-parity comparison would not settle
+the arbitrary-rank Kac orthosymplectic reflection-equation theorem.
 \end{remark}
 
 \section{Baxter retraction: a type-A rational artifact}
@@ -589,9 +734,9 @@ normalization differs:
  $\mathbb{Z}/2$-graded Berezinian; the codim-$1$ locus is the
  parity-balance hyperplane.
 \end{enumerate}
-The Baxter hyperplane survives in the rational type~$A$ chart as
-the coordinate-dependent signature of the type-$A$ mechanism; it
-does not persist under degeneration from any other chart.
+The Baxter hyperplane survives in the rational type~$A$ chart as a
+coordinate-dependent witness of the type-$A$ mechanism; it is not a
+universal MC3 hypothesis.
 \end{proposition}
 
 \begin{proof}
@@ -600,11 +745,12 @@ $w_0 = -v_+ \otimes f \cdot v_0 \in V_1(a) \otimes L^-(b)$ is
 Yangian highest-weight precisely at $b = a - \tfrac12$, where the
 Shapovalov form on the rank-$1$ $\ell$-weight subspace vanishes
 along a single direction. Under degeneration
-elliptic~$\to$~trigonometric~$\to$~rational (Im~$\rho \to\infty$,
-$q \to 1$), the theta divisor collapses to a single point in each
-coordinate chart, and the residue of this collapse is the Baxter
-hyperplane; but the uniform Bethe-subalgebra simplicity survives
-degeneration as a Zariski-open condition, which is the
+elliptic~$\to$~trigonometric~$\to$~rational
+($\operatorname{Im}\rho \to\infty$, $q \to 1$), the theta-divisor
+failure locus degenerates to rational discriminant components; in the
+rank-$1$ type-$A$ chart one component is the Baxter hyperplane. The
+uniform Bethe-subalgebra simplicity survives degeneration as a
+Zariski-open condition, which is the
 multiplicity-free $\ell$-weight route of
 Proposition~\ref{prop:mc3-uniform-chari-moura-platonic}. Under the twisted
 B/C/D reflection-equation route, the Sklyanin determinant is
@@ -617,46 +763,48 @@ respective proposition in
 Section~\ref{sec:mc3-five-family-propositions}.
 \end{proof}
 
-\begin{remark}[What ``Baxter retraction'' means precisely]
+\begin{remark}[Meaning of Baxter retraction]
 \label{rem:baxter-retraction-meaning}
-The programme claim ``Baxter constraint retracted'' has the
-following precise content. As a \emph{universal} hypothesis of
-MC3, the rank-$1$ Baxter hyperplane is retracted: four of the five
-families do not require it, and the three non-trivial codim-$1$
-loci (theta divisor, parity-balance hyperplane, none) are mutually
-distinct. As a \emph{type-$A$-specific} computation, the rank-$1$
-Baxter singular vector remains a valid and useful witness of
-the type-$A$ CG decomposition and of the rational Shapovalov
-normalization. The two statements are consistent: the universal
-MC3 hypothesis is strictly weaker than ``Baxter hyperplane
-everywhere.''
+As a universal hypothesis of MC3, the rank-$1$ Baxter hyperplane is
+absent: four mechanism rows do not use it, and the non-trivial
+codimension-$1$ loci (theta divisor and parity-balance hyperplane) are
+different divisors. As a type-$A$ computation, the rank-$1$ Baxter
+singular vector remains a valid witness of the rational Shapovalov
+normalization. MC3 uses the first statement; the type-$A$ calculation
+supplies only a local witness.
 \end{remark}
 
-\section{The full-DK conjecture: scope beyond the evaluation-generated core}
+\section{The full-DK boundary}
 \label{sec:mc3-platonic-full-DK-conjectural}
 
-The evaluation-generated core
-$\mathrm{DK}^{\mathrm{ev}}_\mathfrak{g}$ is a proper subcategory
-of the full compact-completed DK factorization category
-$\mathrm{DK}_\mathfrak{g}$. The extension from one to the other
-is a separate, conjectural problem.
+The evaluation-generated core maps to its finite-window completion and
+to the intended full DK factorization category. Neither map is an
+identity by definition. The full-DK assertion requires a compact-object
+comparison after the finite-window theorem has been proved.
 
-\begin{theorem}[Full $\mathrm{DK}_\mathfrak{g}$ generation status;
- \ClaimStatusConjectured]
+\begin{theorem}[Full $\mathrm{DK}_\mathfrak{g}$ boundary;
+ \ClaimStatusConditional]
 \label{thm:mc3-full-DK-conjectural}
 \index{MC3!full DK!conjectural}%
 \index{Drinfeld-Kohno!full category!generation}%
-Let $\mathfrak{g}$ be a simple Lie algebra. Thick generation of the full
-factorization category
-$\mathrm{DK}_\mathfrak{g}$ beyond the evaluation-generated core
-is:
+Let $\mathfrak{g}$ be a simple Lie algebra in the range of
+Theorem~\ref{thm:mc3-evaluation-core-five-family}. The following are
+the exact implications beyond the evaluation core.
 \begin{enumerate}[label=\textup{(\roman*)},nosep]
+\item \emph{Finite-window completion.} If a finite-window parameter
+ $\nu$ satisfies the tower hypotheses of
+ Definition~\ref{def:finite-window-mc3-tower}, then the seed of
+ Theorem~\ref{thm:mc3-evaluation-core-five-family} generates
+ $\mathrm{DK}^{\mathrm{completed}}_{\mathfrak g,\nu}$ in the completed
+ sense of Definition~\ref{def:completed-thick-closure}. In the curved
+ lane the comparison is a coacyclic-cone statement in the second-kind
+ coderived category.
 \item \emph{Type~$A$ \textup{(}$\mathfrak{g} = \mathrm{sl}_N$,
- $N \ge 2$\textup{)}}: reduced to a single compact-completion
- packet \textup{(}Conjecture~\ref{conj:dk-compacts-completion}\textup{)}
- by Theorem~\ref{thm:mc3-type-a-resolution};
- the prefundamental CG, shifted-prefundamental generation, and
- pro-Weyl recovery are unconditional.
+ $N \ge 2$\textup{)}}. Theorem~\ref{thm:mc3-type-a-resolution}
+ proves the prefundamental CG, shifted-prefundamental generation, and
+ pro-Weyl recovery packets. The upgrade from the completed shifted
+ envelope to full $\mathrm{DK}_{\mathfrak{sl}_N}$ is exactly
+ Conjecture~\ref{conj:dk-compacts-completion}.
 \item \emph{Non-type-$A$ simple $\mathfrak{g}$}: shifted-envelope
  generation is conditional on
  Conjecture~\ref{conj:rank-independence-step2} \textup{(}Lemma~L:
@@ -667,11 +815,11 @@ is:
  decomposition proved on the evaluation-generated core extends to
  the completed/coderived enlargement conjecturally
  \textup{(}Conjecture~\ref{conj:mc3-sectorwise-all-types}\textup{)}.
-\item \emph{Silent non-coverage sectors}: the following five
+\item \emph{Non-coverage sectors}: the following five
  families lie outside the five-family union of
  Corollary~\ref{cor:five-family-union-coverage} and carry each
  their own conjectural MC3 reduction:
-\begin{enumerate}[label=\textup{(iv.\alph*)},nosep]
+\begin{enumerate}[label=\textup{(v.\alph*)},nosep]
 \item logarithmic $W(p)$ algebras in the Adamovi\'c--Milas sense
  \textup{(}obstruction: non-semisimple Virasoro with
  indecomposable reducibles\textup{)};
@@ -689,14 +837,14 @@ is:
  families \textup{(}obstruction: finite-dimensional simples,
  modular tensor category rigidity\textup{)}.
 \end{enumerate}
- None of (iv.a)--(iv.e) admits the evaluation-generated core
+ None of (v.a)--(v.e) admits the evaluation-generated core
  mechanism verbatim; each requires a separate investigation.
 \end{enumerate}
 In particular, MC3 in the strong sense of
 ``thick generation of $\mathrm{DK}_\mathfrak{g}$ by evaluation-type
 modules'' is not yet proved for any non-type-$A$ simple $\mathfrak{g}$,
 and remains conditional on a single compact-completion conjecture
-in type~$A$. The silent non-coverage sectors of clause~(iv) are
+in type~$A$. The non-coverage sectors of clause~(v) are
 outside the $\mathfrak{g}$-indexed simple-Lie-algebra framework
 altogether and each carries its own conjectural reduction.
 \end{theorem}
@@ -704,26 +852,25 @@ altogether and each carries its own conjectural reduction.
 \begin{remark}[Why the full-DK statement is harder]
 \label{rem:full-DK-harder}
 \ref{it:mc3-full-DK} demands control of the passage from the
-thick closure of evaluation-type modules inside
-$D^b(\mathcal{O}^{\mathrm{sh}}_{\le 0})$ to the localizing
-subcategory in a compact-completed enhancement. The compact
-identification (Neeman, Bondal--Van den Bergh) is standard; the
-compactness preservation and weight-bounded t-structure
-compatibility of the chosen completion are the conjectural
-hypotheses. In type~$A$ these reduce to a Mittag--Leffler condition
-on the pro-Weyl tower that is verified weight-by-weight; in other
-types the analogous Mittag--Leffler condition requires Lemma~L
-(lift-and-lower) that has not been established in the non-type-$A$
-literature.
+finite-window category
+$\mathrm{DK}^{\mathrm{completed}}_{\mathfrak g,\nu}$ to the intended
+factorization category $\mathrm{DK}_\mathfrak{g}$. The formal
+finite-window theorem supplies density and Mittag--Leffler cone
+control inside the chosen topology. It does not prove that every
+compact object of full DK is detected by that topology. In type~$A$
+the remaining compact-object problem is isolated by
+Conjecture~\ref{conj:dk-compacts-completion}; in other types the
+analogous statement also depends on Lemma~L.
 \end{remark}
 
 \section{Cross-family coverage and residual sectors}
 \label{sec:mc3-platonic-coverage}
 
-\begin{corollary}[Five-family union coverage; \ClaimStatusConditional]
+\begin{corollary}[Five-family coverage with osp sibling;
+\ClaimStatusConditional]
 \label{cor:five-family-union-coverage}
 \index{MC3!five-family coverage}%
-The union of the five families of
+The proved union of the five families of
 Theorem~\ref{thm:mc3-evaluation-core-five-family} covers:
 \begin{enumerate}[label=\textup{(\roman*)},nosep]
 \item every simple Lie algebra $\mathfrak{g}$ of classical type
@@ -738,16 +885,14 @@ Theorem~\ref{thm:mc3-evaluation-core-five-family} covers:
  Remark~\ref{rem:fm-nonsimplylaced-failure});
 \item elliptic Yangians $E_{\rho,\eta}(\mathrm{sl}_N)$ over an
  elliptic curve, via Proposition~\ref{prop:mc3-elliptic-theta-divisor-platonic};
-\item super-Yangians split into two sub-cases:
+\item the general-linear super-Yangians
  $Y_\hbar(\mathfrak{gl}_{m|n})$ via the parity-balance mechanism of
- Proposition~\ref{prop:mc3-super-parity-balance-platonic}, and
- $Y_\hbar(\mathfrak{osp}(m|2n))$ via the $\mathbb{Z}/2$-graded
- reflection-equation sub-case of
- Conjecture~\ref{conj:mc3-osp-super-reflection-equation-platonic}
- (sibling to the ordinary twisted $B/C/D$
- Proposition~\ref{prop:mc3-type-BCD-reflection-shapovalov-platonic};
- \ClaimStatusConjectured).
+ Proposition~\ref{prop:mc3-super-parity-balance-platonic}.
 \end{enumerate}
+The orthosymplectic super-Yangians
+$Y_\hbar(\mathfrak{osp}(m|2n))$ are the conjectural sibling of the
+twisted $B/C/D$ reflection-equation row:
+Conjecture~\ref{conj:mc3-osp-super-reflection-equation-platonic}.
 The union does not cover: logarithmic W-algebras $W(p)$ in the
 Adamovi\'c--Milas sense, $N=2$ superconformal vertex algebras,
 general coset constructions, lattice VOAs at non-rational weights,
@@ -767,8 +912,10 @@ Proposition~\ref{prop:mc3-type-A-asymptotic-prefundamentals-platonic}; the
 twisted forms B/C/D admit the reflection-equation route of
 Proposition~\ref{prop:mc3-type-BCD-reflection-shapovalov-platonic}.
 Propositions~\ref{prop:mc3-elliptic-theta-divisor-platonic} and
-\ref{prop:mc3-super-parity-balance-platonic} supply the elliptic and super
-cases. The non-coverage of logarithmic W, $\mathcal{N}=2$ SCA,
+\ref{prop:mc3-super-parity-balance-platonic} supply the elliptic and
+general-linear super cases. The orthosymplectic super case is
+Conjecture~\ref{conj:mc3-osp-super-reflection-equation-platonic}.
+The non-coverage of logarithmic W, $\mathcal{N}=2$ SCA,
 cosets, lattice, and root-of-unity cases is a scope statement;
 each of those families carries its own structural feature
 (non-reductive Hopf structure, mixed bosonic/fermionic strong
@@ -778,8 +925,9 @@ $\mathcal{N}=2$ SCA has a candidate reduction via the
 Kazama--Suzuki coset
 $\mathrm{SCA}_c \simeq
 \operatorname{Com}(\mathrm{U}(1), \widehat{\mathfrak{sl}}_{2,k}
-\otimes \psi\bar\psi)$, which would route MC3 through Family~(1)
-and Family~(6) if the coset preservation lemma held; this is
+\otimes \psi\bar\psi)$, which would route MC3 through the affine
+Yangian input and a coset-preservation theorem if that theorem held;
+this is
 Conjecture~\ref{conj:mc3-n2-sca-kazama-suzuki}, not a theorem.
 \end{proof}
 
@@ -815,80 +963,34 @@ reduction, theta-series representation theory,
 modular-tensor-category rigidity).
 \end{remark}
 
-\section{Status summary and dependency DAG}
-\label{sec:mc3-platonic-status-summary}
+\section{Falsification surfaces}
+\label{sec:mc3-platonic-falsification-surfaces}
 
-\begin{remark}[MC3 status, end-of-chapter summary]
-\label{rem:mc3-platonic-status}
-\begin{center}
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{lll}
-\toprule
-\textbf{Claim} & \textbf{Status} & \textbf{Reference} \\
-\midrule
-MC3 on $\mathrm{DK}^{\mathrm{ev}}_\mathfrak{g}$, five-family
- & unconditional
- & Theorem~\ref{thm:mc3-evaluation-core-five-family} \\
-MC3a \textup{(}categorical CG, all simple types\textup{)}
- & unconditional
- & Theorem~\ref{thm:categorical-cg-all-types} \\
-MC3b \textup{(}DK-2/3 on eval core, all simple types\textup{)}
- & unconditional
- & Corollary~\ref{cor:dk23-all-types} \\
-MC3c \textup{(}shifted envelope, type~$A$\textup{)}
- & unconditional
- & Theorem~\ref{thm:shifted-prefundamental-generation} \\
-MC3c \textup{(}shifted envelope, non-type-$A$\textup{)}
- & conditional \textup{(}Lemma~L\textup{)}
- & Conjecture~\ref{conj:rank-independence-step2} \\
-full $\mathrm{DK}_\mathfrak{g}$ type~$A$
- & conditional \textup{(}compact-completion\textup{)}
- & Conjecture~\ref{conj:dk-compacts-completion} \\
-full $\mathrm{DK}_\mathfrak{g}$ non-type-$A$
- & conjectural
- & Conjecture~\ref{conj:mc3-automatic-generalization} \\
-sectorwise completed/coderived
- & conjectural
- & Conjecture~\ref{conj:mc3-sectorwise-all-types} \\
-Baxter retraction as type-$A$ artifact
- & unconditional
- & Proposition~\ref{prop:baxter-retraction-type-A-artifact} \\
-Five-family coverage statement
- & unconditional \textup{(}scope\textup{)}
- & Corollary~\ref{cor:five-family-union-coverage} \\
-\bottomrule
-\end{tabular}
-\end{center}
-The programme position: MC3 is genuinely proved on the
-evaluation-generated core via five distinct mechanisms with a
-single consolidated statement; beyond the evaluation-generated
-core, three conjectures remain, each with an explicit reduction
-to a checkable Mittag--Leffler / lift-and-lower / sectorwise
-condition.
-\end{remark}
-
-\begin{remark}[Dependency DAG for the chapter]
-\label{rem:mc3-platonic-dag}
-\begin{center}
-\begin{tabular}{l}
-\textbf{Upstream}: Propositions~\ref{prop:mc3-type-A-asymptotic-prefundamentals-platonic},
-\ref{prop:mc3-type-BCD-reflection-shapovalov-platonic},
-\ref{prop:mc3-uniform-chari-moura-platonic},
-\ref{prop:mc3-elliptic-theta-divisor-platonic},
-\ref{prop:mc3-super-parity-balance-platonic}. \\
-\textbf{Consolidation}: Theorem~\ref{thm:mc3-evaluation-core-five-family}. \\
-\textbf{Signature retraction}: Proposition~\ref{prop:baxter-retraction-type-A-artifact}. \\
-\textbf{Scope statement}: Corollary~\ref{cor:five-family-union-coverage},
- Theorem~\ref{thm:mc3-full-DK-conjectural}. \\
-\textbf{Downstream}: thm:mc3-type-a-resolution, cor:mc3-all-types,
- conj:dk-compacts-completion. \\
-\end{tabular}
-\end{center}
-No claim of this chapter changes the underlying theorem surface without
-an explicit scope qualifier. In particular
-Theorem~\ref{thm:mc3-evaluation-core-five-family} is a
-consolidation of the existing five propositions at
-yangians\_computations.tex:4808--4989 into a single theorem.
+\begin{remark}[Tests for the MC3 boundary]
+\label{rem:mc3-boundary-falsification}
+\index{MC3!falsification surfaces}%
+The theorem on the evaluation core can fail only through a
+family-specific witness: a non-generic Shapovalov determinant, a false
+fundamental $q$-character multiplicity, an elliptic Bethe degeneracy
+off~$\Theta$, or a Berezinian parity-balance failure off its hyperplane.
+The finite-window upgrade can fail only through the tower: a compact
+window not generated by $\tau_{\le N}\mathcal S$, transition functors
+that do not preserve the generated compact subcategories, a nonzero
+$\varprojlim^1$ for cone cohomology, or a finite-window cone that is
+acyclic as a raw complex but not coacyclic in the second-kind coderived
+category. The full-DK upgrade can fail without touching either theorem:
+a compact object of $\mathrm{DK}_\mathfrak g$ may lie outside the
+essential image of the chosen finite-window completion. Derived-centre
+and Theorem~H failures are separate: they attack the Morita kernel or
+the symmetric Hochschild averaging step, not thick generation of
+$\mathrm{DK}^{\mathrm{ev}}_\mathfrak g$. A class~$\mathsf M$ failure
+at the raw direct-sum level attacks the uncompleted
+$\mathrm{Ch}(\mathrm{Vect})$ presentation; it does not refute the
+finite-window or pro-completed MC3 statement unless it produces a
+non-Mittag--Leffler tower in the chosen DK topology.  A K3/Mukai
+failure attacks this chapter only if the symmetric Mukai
+$\mathfrak{so}(4,20)$ or Hodge-parity $\mathfrak{so}(4\mid20)$
+envelope is falsely replaced by Kac $\mathfrak{osp}(4\mid20)$.
 \end{remark}
 
 %% ================================================================

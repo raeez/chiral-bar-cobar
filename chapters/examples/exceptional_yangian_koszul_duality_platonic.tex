@@ -1,616 +1,877 @@
-%% ================================================================
-%% Exceptional-type Yangian Koszul duality: five-family unconditional closure.
-%%
-%% Target: extend the theorem Y(g)^! = Y(g)^{hbar -> -hbar} from the
-%% classical types (A, B, C, D), where it is PROVED unconditional via
-%% Molev's PBW + Polishchuk-Positselski non-homogeneous Koszul + filtered
-%% CDG deformation, to each exceptional simple Lie algebra
-%% g in {E_6, E_7, E_8, F_4, G_2}.
-%%
-%% The exceptional input is the Guay-Regelskis-Wendlandt 2018 theorem
-%% (arXiv:1706.05176): every exceptional Yangian Y_hbar(g) in its Drinfeld
-%% second presentation carries a PBW basis compatible with the level
-%% filtration F_r. With PBW in hand, the filtered-CDG deformation argument
-%% that closes classical types applies ad litteram; the only genuine
-%% per-type content is verification that the Chevalley involution
-%% sigma: e_i -> -f_i, f_i -> -e_i, h -> -h extends to Y_hbar(g) via
-%% the formulas of Drinfeld 1985 and inverts R (equivalently, flips hbar).
-%%
-%% For non-simply-laced types (F_4, G_2), the involution must be compatible
-%% with the Dynkin-diagram data: both F_4 and G_2 have trivial outer
-%% automorphism group (Out(F_4) = Out(G_2) = 1), so the Chevalley involution
-%% is intrinsic and no folding ambiguity arises. The folding pictures
-%% F_4 = E_6^{Z/2} and G_2 = D_4^{Z/3} give INDEPENDENT verification paths
-%% (not independent definitions) for the exceptional Yangian Koszul dual.
-%%
-%% Author: Raeez Lorgat
-%% ================================================================
-
-\chapter{Exceptional-type Yangian Koszul duality: the five-family closure}
+\chapter{Exceptional-type Yangian Koszul duality: the RTT obstruction}
 \label{chap:exceptional-yangian-koszul-duality-platonic}
 
 \providecommand{\ClaimStatusProvedHere}{\textsc{ProvedHere}}
 \providecommand{\ClaimStatusProvedElsewhere}{\textsc{ProvedElsewhere}}
 \providecommand{\ClaimStatusConjectured}{\textsc{Conjectured}}
 \providecommand{\ClaimStatusHeuristic}{\textsc{Heuristic}}
+\providecommand{\PhiFA}{\Phi^{\mathrm{FA}}}
+\providecommand{\SpCh}{\mathrm{Sp}^{\mathrm{ch}}}
 
-\section{Setup and frontier}
-\label{sec:exceptional-yangian-frontier}
+\begin{remark}[Archetype tagging and Vol~III shadow for the Yangian
+families]
+\label{rem:exceptional-yangian-archetype-and-volIII-shadow}
+\index{Yangian!archetype tagging}
+\index{five-archetype dichotomy!Yangian taxa}
+\index{Master Pattern MA-6!exceptional Yangian RTT chapter}
+\index{Master Pattern MA-7!K3 Hall--Drinfeld two-stage shadow}
+Type signature: (Open quadrant for the affine chiral side of the
+classical Yangian--chiral correspondence; CY quadrant for the K3
+Hall--Drinfeld target via the Vol~III two-stage factorisation
+$\Phi_d^{(\Sigma_{d-1},C)}=\SpCh_{\Sigma_{d-1},C}\circ\PhiFA_d$;
+chart-level presentation for the Yangian taxa as filtered Hopf
+algebras over $\C[[\hbar]]$ \textup{(}taxa
+\textup{(D)},\textup{(R)},\textup{(E)},\textup{(K)} of
+Proposition~\ref{prop:exceptional-yangian-type-separation}\textup{)};
+the affine companion taxon \textup{(A)} occupies the chart level
+of the standard Open-quadrant Beilinson tower as the chiral
+algebra $V_k(\fg)$).
 
-The Yangian Koszul-duality theorem
-(Theorem~\ref{thm:yangian-koszul-dual}) states that, on the $E_1$-chiral
-Koszul locus, the quadratic Koszul dual of $Y_\hbar(\fg)$ in the RTT
-presentation is the Yangian with inverse $R$-matrix, equivalently the
-same algebra with $\hbar \mapsto -\hbar$:
+The Yangians \textup{(D)},\textup{(R)},\textup{(E)} of
+Proposition~\ref{prop:exceptional-yangian-type-separation} are
+not themselves chiral algebras on a curve and therefore do not
+carry chart-level five-stratum rows of their own. Their chiral
+companion is the affine taxon \textup{(A)},
+$V_k(\fg)$, a class~$\mathbf L$ chart algebra
+\textup{(}Theorem~\ref{thm:archetype-shadow-classification},
+landscape census line~\ref{tab:five-by-five-kappa-stratification}
+row $\mathbf L$\textup{)} whose $5\times5$ $\kappa$-stratification
+row is
+\[
+\bigl(\kappa_{\mathrm{cat}},\kappa^{\mathrm{Hodge}}_{\mathrm{ch}},
+\kappa^{\mathrm{Heis}}_{\mathrm{ch}},\kappa_{\mathrm{BKM}},
+\kappa_{\mathrm{fiber}}\bigr)\bigl(V_k(\fg)\bigr)
+=\bigl(0,\,0,\,\dim(\fg)(k+h^\vee)/(2h^\vee),\,-,\,
+\operatorname{rank}\fg\bigr),
+\]
+specialising on the exceptional series to the
+$\dim\fg$, $h^\vee$, $\operatorname{rank}$ data of
+Corollary~\ref{cor:exceptional-yangian-graded}. The five entries
+are five distinct invariants on five distinct lanes
+\textup{(}Master Pattern MA-6\textup{)}: the
+Heisenberg-slot chiral central charge
+$\dim(\fg)(k+h^\vee)/(2h^\vee)$ is not the categorical scalar
+$\kappa_{\mathrm{cat}}=\chi(\cO)$ of any CY host attached to
+$V_k(\fg)$ (none is asserted here), and neither is the fibre rank
+$\operatorname{rank}\fg$.
+
+The K3 Hall--Drinfeld taxon \textup{(K)} of
+Proposition~\ref{prop:exceptional-yangian-type-separation},
+\[
+\mathbf H_{\Delta_5}
+=\mathcal D_\hbar\bigl(\mathcal Y^{\mathrm{Hall}}_\hbar
+(\mathrm{CoHA}_{K3\times E})\bigr),
+\]
+sits in the class~$\mathbf B$ row anchored at K3$\times E$ with
+five-stratum coordinates
+$(\kappa_{\mathrm{cat}},\kappa^{\mathrm{Hodge}}_{\mathrm{ch}},
+\kappa^{\mathrm{Heis}}_{\mathrm{ch}},\kappa_{\mathrm{BKM}},
+\kappa_{\mathrm{fiber}})=(0,0,3,5,24)$ via the Vol~III two-stage
+factorisation
+\[
+\PhiFA_3\bigl(D^b\Coh(K3\times E)\bigr)
+\xrightarrow{\;\SpCh_{\Sigma_2,C}\;}\mathbf H_{\Delta_5},
+\qquad
+\Phi_3^{(\Sigma_2,C)}=\SpCh_{\Sigma_2,C}\circ\PhiFA_3,
+\]
+with $(\Sigma_2,C)$ the named transverse two-real-dimensional
+manifold and reference curve of
+landscape\_census.tex
+Table~\ref{tab:five-by-five-kappa-stratification} \textup{(}Master
+Pattern MA-7: the two-stage decomposition is named, never a
+one-stage $\Phi_d$\textup{)}. The K3 row constants
+$\kappa_{\mathrm{BKM}}(\Delta_5)=c_{\Delta_5}(0)/2=5$
+\textup{(}Gritsenko 1999, paramodular weight-$5$ Borcherds product
+input; the universal Borcherds-weight identity
+$\kappa_{\mathrm{BKM}}(\Phi_N)=c_N(0)/2$ with $N\in\{1,2,3,4,6\}$
+is a different scope, indexing CHL towers and giving values
+$5,4,3,2,1$\textup{)},
+$K^{\kappa_{\mathrm{ch}}}=8$,
+$\kappa^{\mathrm{Heis}}_{\mathrm{ch}}(K3\times E)=3$,
+$\kappa_{\mathrm{cat}}(K3\times E)=0$,
+$\kappa_{\mathrm{fiber}}(K3)=24$
+live on five distinct lanes; the value
+$\kappa_{\mathrm{BKM}}=5$ is not the same number as
+$K^{\kappa_{\mathrm{ch}}}=8$ nor as
+$\kappa_{\mathrm{fiber}}(K3)=24$. None of these K3 constants is a
+Drinfeld-Yangian RTT input for an exceptional finite-dimensional
+$\fg$; transferring them to the exceptional RTT lane requires the
+explicit comparison maps named in
+Proposition~\ref{prop:exceptional-yangian-no-dk-root-k3-promotion}.
+\end{remark}
+
+\section{Finite RTT windows}
+\label{sec:exceptional-yangian-finite-rtt-windows}
+
+The Yangian Koszul-duality statement in
+Theorem~\ref{thm:yangian-koszul-dual} is a theorem about a completed
+RTT tower.  It is not a theorem about an abstract Drinfeld
+second-presentation algebra until the Drinfeld generators have been
+identified with a quadratic RTT/FRT presentation on the same filtered
+object.  The proof has four independent inputs:
+\begin{enumerate}[label=(\roman*)]
+\item a finite-dimensional quadratic RTT window
+$A_{\leq N}^{\mathrm{RTT}}=T(V_{\leq N})/\langle R_{\leq N}\rangle$
+coming from an actual Yangian module packet, not only from the
+underlying $\fg$-module;
+\item a PBW theorem compatible with the RTT filtration, so that the
+quadratic Rees special fibre is the Koszul algebra $\mathrm{Sym}(V_{\leq N})$;
+\item the finite matrix identity
+$R_{\leq N}^{\perp}=\operatorname{im}\Phi_{R_\hbar^{-1}}$ under the
+trace pairing on $V_{\leq N}^{*}\otimes V_{\leq N}^{*}$;
+\item scalar-gauge equivalence between the inverse kernel
+$R_\hbar^{-1}$ and the sign-reversed kernel $R_{-\hbar}$ in the
+completed spectral Laurent ring.
+\end{enumerate}
+Only after these four assertions are known in the same presentation does
+one obtain
 \[
 Y_\hbar(\fg)^{!,\mathrm{ch}}
-\;\cong\;
+\cong
 Y_{R^{-1}}(\fg)^{\mathrm{ch}}
-\;=\;
+\cong
 Y_{-\hbar}(\fg)^{\mathrm{ch}}.
 \]
-The proof has four chain-level inputs.
+Here $A^!$ denotes the quadratic Koszul dual algebra.  It is not the bar
+coalgebra $B(A)$, and it is not the derived Hochschild centre
+$Z_{\mathrm{ch}}^{\mathrm{der}}(A)$.
 
-\begin{enumerate}[label=(\roman*)]
-\item \emph{PBW basis.} A Poincar\'e--Birkhoff--Witt basis for
-$Y_\hbar(\fg)$ compatible with the level filtration
-$F_r Y_\hbar(\fg) = \langle T_{ij}^{(s)} : s \le r \rangle$, giving
-$\mathrm{gr}_F Y_\hbar(\fg) \cong U(\fg[t])$ canonically.
-\item \emph{Quadratic presentation.} The RTT relations are quadratic in
-the generators, with relation space $R \subset V \otimes V$ of the
-expected $(1/2)\dim \fg (\dim \fg - 1)$-shape.
-\item \emph{Orthogonal-complement computation.} The orthogonal complement
-$R^\perp \subset V^* \otimes V^*$ under the trace pairing coincides with
-the RTT relation space for $R^{-1}(u)$, equivalently $R(u;-\hbar)$.
-\item \emph{Chevalley extension.} The Chevalley involution on $\fg$ lifts
-to an involution $\sigma \colon Y_\hbar(\fg) \to Y_\hbar(\fg)$ with
-$\sigma \cdot \hbar = -\hbar$, interchanging the two ambient spectral
-conventions and realising the Koszul-duality isomorphism.
-\end{enumerate}
+\section{Yangian taxa and comparison maps}
+\label{sec:exceptional-yangian-taxa}
 
-Inputs (ii), (iii), (iv) are generic in $\fg$: they depend only on the
-Cartan datum $(A_{ij}, (\alpha_i, \alpha_j))$ and the Drinfeld--Chevalley
-generators, which every simple Lie algebra possesses. Input (i) is
-non-generic: it is proved case-by-case.
-
-Classical types $(A_n, B_n, C_n, D_n)$: Molev~\cite{Molev07}
-proves PBW via the RTT-to-Drinfeld comparison and the symmetrisation map,
-using the orthogonal/symplectic realisation of $B_n, C_n, D_n$ inside
-$\mathfrak{gl}_N$ and the explicit centraliser calculation.
-
-Exceptional types $(E_6, E_7, E_8, F_4, G_2)$: Guay--Regelskis--Wendlandt
-\cite{GRW18} (arXiv:1706.05176) prove PBW by a uniform Drinfeld
-second-presentation argument that does not rely on a classical matrix
-realisation, instead using the Serre relations and a direct
-filtration-preserving argument through the universal enveloping algebra
-$U(\fg[t])$. The exceptional-type PBW input is therefore now a closed
-theorem.
-
-The exceptional Koszul-duality loop closes as follows: with
-\cite{GRW18} supplying~(i), the four-step argument of
-Theorem~\ref{thm:yangian-koszul-dual} runs without modification, and the
-per-type Chevalley extension is recorded explicitly for each of
-$E_6, E_7, E_8, F_4, G_2$.
-
-\begin{remark}[What this chapter is not]
-\label{rem:exceptional-yangian-not}
-This chapter does not re-prove \cite{GRW18}; the PBW step is
-\ClaimStatusProvedElsewhere. It does not compute exceptional $R$-matrices
-on specific representations; those live in
-Chapter~\ref{chap:yangians-computations} and in the compute engine
-\texttt{compute/lib/exceptional\_yangian\_engine.py}. The present
-content is the five-family closure of a structural Koszul-duality
-theorem that until now was asserted only with an unaudited
-``via~\cite{GRW18}'' gesture.
-\end{remark}
-
-\section{The classical-type template, recorded verbatim}
-\label{sec:exceptional-yangian-template}
-
-We record the argument of Theorem~\ref{thm:yangian-koszul-dual} in a
-form in which the simple-Lie-algebra input is abstract, so that the
-exceptional specialisations in \S\ref{sec:exceptional-yangian-per-type}
-only need to supply the PBW citation and the Chevalley extension.
-
-\begin{proposition}[Four-step template for Yangian Koszul duality;
+\begin{proposition}[Type separation for Yangian-facing claims;
 \ClaimStatusProvedHere]
-\label{prop:exceptional-yangian-template}
-Let $\fg$ be a simple complex Lie algebra with Cartan matrix $A$, root
-system $\Phi$, and Chevalley generators $\{e_i, f_i, h_i\}_{i=1}^r$.
-Suppose the Yangian $Y_\hbar(\fg)$ in Drinfeld's second presentation
-admits a PBW basis compatible with the level filtration $F_\bullet$.
-Then
+\label{prop:exceptional-yangian-type-separation}
+\index{Yangian!taxonomy}
+\index{K3!Hall--Drinfeld double versus Drinfeld Yangian}
+The five objects below occupy different ambient categories, and no
+statement about one of them transfers to another without a named
+comparison functor preserving the relevant filtration, relation space,
+and completion.
+\begin{description}[itemsep=3pt, leftmargin=2.0em, style=nextline]
+\item[\textup{(D)} Drinfeld Yangian.]
+$Y_\hbar(\fg)$ is the Drinfeld Yangian of a finite-dimensional simple
+Lie algebra $\fg$, given in Drinfeld's new realisation or an equivalent
+$J$-presentation.
+\item[\textup{(R)} RTT/FRT Yangian window.]
+$A^{\mathrm{RTT}}_\hbar(\fg,V_0)$ is a quadratic algebra built from an
+$R$-matrix acting on a fixed finite-dimensional $\fg$-module~$V_0$.
+An isomorphism from \textup{(D)} to \textup{(R)} is an extra
+presentation theorem.
+\item[\textup{(A)} Affine Kac--Moody chiral algebra.]
+$V_k(\fg)$, or $\widehat{\fg}_k$, is a vertex/chiral algebra at affine
+level~$k$.  Its Feigin--Frenkel level reflection
+$k\mapsto -k-2h^\vee$ belongs to the affine family and is not the
+Yangian sign change $\hbar\mapsto-\hbar$.
+\item[\textup{(E)} Affine, toroidal, and elliptic Yangian lineages.]
+Affine Yangians, quantum toroidal algebras, and elliptic Yangian
+objects use different base parameters and completions.  They do not
+supply an RTT presentation of $Y_\hbar(E_6)$, $Y_\hbar(E_7)$,
+$Y_\hbar(E_8)$, $Y_\hbar(F_4)$, or $Y_\hbar(G_2)$.
+\item[\textup{(K)} K3 Hall--Drinfeld/BKM target.]
+The K3 chiral bialgebra target is the Hall--Drinfeld double
 \[
-Y_\hbar(\fg)^{!,\mathrm{ch}}
-\;\cong\;
-Y_{-\hbar}(\fg)^{\mathrm{ch}}
+\mathbf H_{\Delta_5}
+=
+\mathcal D_\hbar\bigl(
+\mathcal Y^{\mathrm{Hall}}_\hbar(\mathrm{CoHA}_{K3\times E})
+\bigr),
 \]
-as $E_1$-chiral quadratic algebras, and the isomorphism is the chiral
-lift of the Chevalley involution composed with $\hbar \mapsto -\hbar$.
+with BKM denominator data attached to $\Delta_5$.  It is not a
+Drinfeld Yangian $Y_\hbar(\fg)$ for finite-dimensional~$\fg$, and the
+Borcherds--Kac--Moody algebra $\mathfrak g_{\Delta_5}$ is a
+vertex-operator completion object, not a finite-type Yangian input.
+\end{description}
+Consequently, an RTT, QYBE, CYBE, $r$-matrix, Drinfeld--Kohno,
+quantum-group, Hall, or BKM assertion proves a bar-cobar, Koszul,
+Verdier, or chiral-Hochschild assertion only after the corresponding
+comparison map to the ordered $E_1$ bar complex and its continuous dual
+has been supplied.
 \end{proposition}
 
-\begin{proof}[Four-step template]
-\emph{Step 1: Quadratic dual.}
-The RTT presentation~\eqref{eq:yangian-bar-diff} of
-Theorem~\ref{thm:yangian-bar-rtt} gives $Y_\hbar(\fg)$ as
-$T(V)/\langle R \rangle$ with $V = \bigoplus_r V_r$, $V_r = \langle
-T_{ij}^{(r)} \rangle$, and $R \subset V \otimes V$ the RTT relation
-space. Quadraticity is level-homogeneous: the RTT relation at fixed $u,
-v$ is degree $r + s$ in the level grading.
-
-\emph{Step 2: Orthogonal complement.} Under the trace pairing
-$V^* \otimes V^* \times V \otimes V \to \C$, the orthogonal complement
-$R^\perp$ coincides with the image of $\Phi_{R^{-1}}$, namely the space
-of $R^{-1}$-RTT relations. This is a finite-dimensional matrix
-computation at each level and does not depend on type beyond the size
-$\dim V = \dim \fg$.
-
-\emph{Step 3: Local finiteness + graded Koszul.}
-The PBW hypothesis yields
-$\mathrm{gr}_F Y_\hbar(\fg) \cong U(\fg[t])$, hence each graded piece
-$\mathrm{gr}_r = \fg \otimes t^r$ is finite-dimensional ($\dim \fg$).
-The Polishchuk--Positselski theorem~\cite{PP05} for locally finite
-non-negatively graded quadratic algebras with $A_0 = \C$ applies: the
-bar-cobar adjunction and the Koszul property for $Y_\hbar(\fg)$ upgrade
-to the filtered-CDG setting of \cite{Positselski11}.
-
-\emph{Step 4: Chevalley extension and $\hbar$ flip.}
-The Chevalley involution $\sigma_\fg$ on $\fg$,
-$e_i \mapsto -f_i$, $f_i \mapsto -e_i$, $h_i \mapsto -h_i$, is an
-intrinsic involution of $\fg$ (it depends only on the Cartan
-datum). Drinfeld~\cite{Dr88} proved that $\sigma_\fg$ extends to an
-anti-automorphism $\sigma \colon Y_\hbar(\fg) \to Y_\hbar(\fg)$
-satisfying $\sigma(\hbar) = -\hbar$ and
-$\sigma(T_{ij}^{(r)}) = (-1)^r T_{ji}^{(r)}$ in the Drinfeld--RTT
-dictionary. Composing $\sigma$ with the transpose automorphism
-$T \mapsto T^t$ yields the desired isomorphism
-$Y_\hbar(\fg) \cong Y_{-\hbar}(\fg)$. Combined with Step~2's
-identification $R^\perp = R_{R^{-1}}$, this identifies
-$Y_\hbar(\fg)^{!,\mathrm{ch}}$ with $Y_{-\hbar}(\fg)^{\mathrm{ch}}$.
-
-Each step is abstract in $\fg$: Steps~1--3 depend on $\dim \fg$ and the
-RTT relation shape (which the Yang $R$-matrix and the quadratic Casimir
-$\Omega_\fg$ fix uniquely), while Step~4 depends on the Chevalley
-involution (which every simple $\fg$ possesses). The PBW hypothesis is
-the only non-generic input.
+\begin{proof}
+The separations \textup{(D)}--\textup{(E)} are the taxonomy recorded in
+the Yangian foundations chapter, and \textup{(K)} is the K3 separation
+in the concordance.  The functors and completions differ: Drinfeld
+generators live in a Hopf algebra over $\C[[\hbar]]$, RTT windows are
+quadratic finite-level quotients, affine Kac--Moody algebras are
+chiral algebras at level~$k$, and the K3 object is Hall/CoHA-based
+with a BKM denominator.  Since the bar-cobar and Hochschild
+constructions are functorial only after the source algebra, topology,
+and differential have been fixed, none of the listed objects can
+replace another by notation alone.
 \end{proof}
 
-\begin{remark}[Chevalley as Cartan-involution lift]
-\label{rem:exceptional-chevalley-intrinsic}
-For every simple Lie algebra $\fg$, the Chevalley involution is
-unique: it is the anti-involution fixing the Cartan subalgebra and
-negating all simple roots. Consequently, it is invariant under the
-trivial outer automorphisms of $F_4$ and $G_2$ and is compatible with
-the nontrivial outer automorphisms of $E_6$, $D_4$, $A_n$ ($n \ge 2$).
-No outer-automorphism ambiguity appears in the Chevalley extension
-step of the Yangian Koszul-duality argument.
-\end{remark}
+\section{The RTT criterion}
+\label{sec:exceptional-yangian-template}
 
-\section{PBW input: Guay--Regelskis--Wendlandt 2018}
-\label{sec:exceptional-yangian-pbw}
+\begin{proposition}[Finite-window inverse-kernel criterion;
+\ClaimStatusProvedHere]
+\label{prop:exceptional-yangian-template}
+Type signature: (Open-quadrant chart-level for the affine
+companion $V_k(\fg)$; chain-level RTT presentation for the
+filtered Yangian Hopf algebra; Beilinson level $1\leftrightarrow 2$
+quadratic Koszul duality between RTT relation space and inverse
+kernel; hypothesis package: \textup{(a)}--\textup{(d)} below; the
+quadratic Koszul dual $A^!$ of
+Convention~\ref{conv:master-five-object-firewall} is distinct
+from the bar coalgebra $B(A)$ and from the derived chiral centre
+$Z^{\mathrm{der}}_{\mathrm{ch}}(A)$).
 
-\begin{theorem}[Exceptional-type Yangian PBW; \cite{GRW18};
-\ClaimStatusProvedElsewhere]
-\label{thm:exceptional-yangian-pbw-grw18}
-\index{Yangian!PBW basis, exceptional types}
-Let $\fg \in \{E_6, E_7, E_8, F_4, G_2\}$. The Yangian $Y_\hbar(\fg)$,
-presented via Drinfeld's second presentation with generators
-$\{x_{i,r}^\pm, h_{i,r}\}_{1 \le i \le \mathrm{rank}(\fg),\; r \ge 0}$
-and Serre-type relations, admits a Poincar\'e--Birkhoff--Witt basis
-compatible with the level filtration
-$F_r Y_\hbar(\fg) = \langle X^{(s)} : s \le r \rangle$. Consequently
-the associated graded is canonically
+Let $\fg$ be a simple complex Lie algebra and let $V_0$ be a
+finite-dimensional faithful $\fg$-module.  Suppose that
+$Y_\hbar(\fg)$ admits an RTT/FRT presentation
+$A^{\mathrm{RTT}}_\hbar(\fg,V_0)$ whose finite level windows
+$A_{\leq N}$ satisfy the following four conditions.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item $A_{\leq N}=T(V_{\leq N})/\langle R_{\leq N}\rangle$ is a locally
+finite quadratic algebra, with RTT relation space
+$R_{\leq N}\subset V_{\leq N}\otimes V_{\leq N}$.
+\item The RTT filtration is PBW and the quadratic Rees special fibre is
+$\mathrm{Sym}(V_{\leq N})$.
+\item Under the trace pairing, $R_{\leq N}^{\perp}$ is the relation
+space of the inverse-kernel RTT algebra $A_{\leq N}(R_\hbar^{-1})$.
+\item $R_\hbar^{-1}$ and $R_{-\hbar}$ differ by an invertible scalar
+Laurent gauge, hence define the same RTT relation space.
+\end{enumerate}
+Then
 \[
-\mathrm{gr}_F Y_\hbar(\fg) \;\cong\; U(\fg[t])
+A_{\leq N}^{!,\mathrm{ch}}\cong A_{\leq N}(R_{-\hbar})^{\mathrm{ch}}
 \]
-as filtered Hopf algebras.
-\end{theorem}
+for every finite window.  If the windows form the stabilized
+Mittag--Leffler RTT tower of
+Theorem~\ref{thm:shifted-rtt-stabilized-recovery}, then
+\[
+\widehat{A}^{!,\mathrm{ch}}_\hbar(\fg,V_0)
+\cong
+\widehat{A}^{\mathrm{ch}}_{-\hbar}(\fg,V_0)
+\]
+as completed $E_1$-chiral quadratic algebras.
+\end{proposition}
 
 \begin{proof}
-This is~\cite[Thm.~3.2]{GRW18}; the proof proceeds by exhibiting a
-filtration-preserving isomorphism from the ordered monomial span to
-$Y_\hbar(\fg)$ using only the Serre relations and the defining RTT
-identity, without recourse to a matrix realisation of $\fg$. The
-argument is uniform across the five exceptional types: the rank,
-Cartan-matrix, and Coxeter-number data enter only through the
-combinatorics of the Serre relations.
+The quadratic dual of $T(V_{\leq N})/\langle R_{\leq N}\rangle$ is
+$T(V_{\leq N}^{*})/\langle R_{\leq N}^{\perp}\rangle$.  Hypothesis
+\textup{(c)} identifies this dual relation space with the inverse-kernel
+RTT relation space.  Hypothesis \textup{(d)} replaces the inverse kernel
+by the sign-reversed kernel without changing relations, since central
+invertible scalar factors cancel from the RTT equation.  Hypotheses
+\textup{(a)} and \textup{(b)} are exactly the locally finite PBW-Koszul
+input used by Polishchuk--Positselski~\cite{PP05} and by the completed
+bar-cobar passage in \cite{Positselski11}.  The passage from finite
+windows to the completed tower is the weightwise stabilization and
+Mittag--Leffler argument already isolated in
+Theorem~\ref{thm:yangian-koszul-dual} and
+Theorem~\ref{thm:rtt-mittag-leffler}.
 \end{proof}
 
-\begin{corollary}[Exceptional-type graded identification;
+\begin{remark}[Chevalley involution]
+\label{rem:exceptional-chevalley-intrinsic}
+The Chevalley involution of a simple Lie algebra is intrinsic at the
+Cartan-root level: $e_i\mapsto -f_i$, $f_i\mapsto -e_i$,
+$h_i\mapsto -h_i$.  This proves a Lie-algebra involution.  It does not
+by itself prove hypothesis \textup{(d)} above.  A Yangian-level
+Chevalley lift must be checked in the same RTT/FRT presentation and
+must be shown to carry the chosen kernel to the inverse kernel, up to
+scalar Laurent gauge.
+\end{remark}
+
+\begin{lemma}[Finite-window evidence and tower promotion;
+\ClaimStatusProvedHere]
+\label{lem:exceptional-finite-window-promotion}
+A computation of $R_{\leq N}^{\perp}$ for one finite exceptional RTT
+window proves only the $N$-th quadratic dual statement.  It promotes to
+the completed exceptional Yangian only after the relation-space
+identifications are compatible with the truncation maps
+$A_{\leq N+1}\twoheadrightarrow A_{\leq N}$, the finite-window bar
+complexes stabilize weightwise, and the resulting inverse system is
+Mittag--Leffler on every finite total window.
+\end{lemma}
+
+\begin{proof}
+The completed RTT object is an inverse limit of finite windows.  A
+quadratic-dual calculation in one window identifies
+$T(V_{\leq N}^{*})/\langle R_{\leq N}^{\perp}\rangle$ with the
+inverse-kernel window at that level.  The limit statement additionally
+requires that these identifications commute with the transition maps.
+Without this compatibility, the inverse kernels may agree at fixed
+$N$ while the completed relation space acquires a nonzero
+$\varprojlim^{1}$ obstruction.  The stabilized recovery theorem
+Theorem~\ref{thm:shifted-rtt-stabilized-recovery} and the
+Mittag--Leffler criterion of Theorem~\ref{thm:rtt-mittag-leffler} are
+exactly the hypotheses that remove this obstruction.
+\end{proof}
+
+\begin{proposition}[Ordered bar data before symmetric averaging;
+\ClaimStatusProvedHere]
+\label{prop:exceptional-yangian-ordered-bar-averaging}
+\index{Yangian!ordered bar data}
+\index{averaging map!RTT relation space}
+Let $A_{\leq N}=T(V_{\leq N})/\langle R_{\leq N}\rangle$ be a finite
+RTT window satisfying the quadratic local-finiteness hypotheses of
+Proposition~\ref{prop:exceptional-yangian-template}.  The ordered
+$E_1$ datum used by Koszul duality is
+\[
+\mathcal B_{\leq N}^{E_1}(A)
+=
+\bigl(T^c(s^{-1}\overline A_{\leq N}),\, d_{\mu},\,
+\Delta_{\mathrm{dec}},\, R_{\leq N}\subset V_{\leq N}^{\otimes2}\bigr),
+\]
+where $d_{\mu}$ is induced by the ordered multiplication in
+$A_{\leq N}$ and $\Delta_{\mathrm{dec}}$ is deconcatenation.  The
+symmetric averaging map
+\[
+\operatorname{Av}_N:T^c(s^{-1}\overline A_{\leq N})
+\longrightarrow
+\bigoplus_{m\geq0}
+\bigl(s^{-1}\overline A_{\leq N}\bigr)^{\otimes m}_{\Sigma_m}
+\]
+preserves scalar Euler data and Hilbert-series shadows when these are
+defined, but it kills the ordered tensor information in
+\[
+x\otimes y-(-1)^{|x||y|}y\otimes x,\qquad
+R_{\leq N}\subset V_{\leq N}\otimes V_{\leq N},
+\]
+and therefore does not determine the inverse-kernel identity
+$R_{\leq N}^{\perp}=\operatorname{Rel}(A_{\leq N}(R_\hbar^{-1}))$.
+\end{proposition}
+
+\begin{proof}
+The $E_1$ bar coalgebra is the tensor coalgebra on suspended
+augmentation generators, with deconcatenation remembering the order of
+colliding inputs.  Passing to $\Sigma_m$-coinvariants identifies
+ordered words differing by graded permutation.  The relation-space
+orthogonal complement is a subspace of the ordered tensor square
+$V_{\leq N}^{*}\otimes V_{\leq N}^{*}$; its comparison with the
+inverse-kernel RTT relation space is therefore invisible after
+coinvariants unless a section or comparison map has already been
+constructed.  Thus symmetric averaged data may test scalar shadows, but
+it cannot prove the ordered quadratic-dual statement.
+\end{proof}
+
+\section{The cited PBW input}
+\label{sec:exceptional-yangian-pbw}
+
+\begin{proposition}[Scope of Guay--Regelskis--Wendlandt;
+\ClaimStatusProvedElsewhere]
+\label{thm:exceptional-yangian-pbw-grw18}
+The paper cited as \cite{GRW18}, arXiv:1706.05176, is
+\emph{Equivalences between three presentations of orthogonal and
+symplectic Yangians}.  It proves presentation-equivalence results for
+orthogonal and symplectic Yangians.  It is not a PBW theorem for
+$Y_\hbar(E_6)$, $Y_\hbar(E_7)$, $Y_\hbar(E_8)$, $Y_\hbar(F_4)$, or
+$Y_\hbar(G_2)$.
+\end{proposition}
+
+\begin{proof}
+The title, abstract, and theorem statements of \cite{GRW18} concern
+orthogonal and symplectic Yangians.  Those are the classical families
+$B$, $C$, and $D$ in RTT form.  No exceptional simple Lie algebra occurs
+as a target of its third-presentation theorem.  Therefore this citation
+cannot supply the exceptional PBW input required by
+Proposition~\ref{prop:exceptional-yangian-template}.
+\end{proof}
+
+\begin{corollary}[Exceptional current-algebra dimensions;
 \ClaimStatusProvedHere]
 \label{cor:exceptional-yangian-graded}
 \index{Yangian!associated graded}
-For each $\fg \in \{E_6, E_7, E_8, F_4, G_2\}$ and each level
-$r \ge 0$, the graded piece $\mathrm{gr}_r Y_\hbar(\fg)$ is
-canonically identified with $\fg \otimes t^r$ of dimension
+The root-system data used in any exceptional PBW theorem must have
 \[
-\dim \mathrm{gr}_r Y_\hbar(E_6) = 78, \qquad
-\dim \mathrm{gr}_r Y_\hbar(E_7) = 133, \qquad
-\dim \mathrm{gr}_r Y_\hbar(E_8) = 248,
+\begin{array}{c|ccccc}
+\fg & E_6 & E_7 & E_8 & F_4 & G_2\\ \hline
+\dim\fg & 78 & 133 & 248 & 52 & 14\\
+h^\vee & 12 & 18 & 30 & 9 & 4
+\end{array}
+\]
+and the affine Kac--Moody modular constants in
+Chapter~\ref{ch:landscape-census} are
+\[
+\kappa(\widehat{E}_{6,k})=\frac{13(k+12)}4,\quad
+\kappa(\widehat{E}_{7,k})=\frac{133(k+18)}{36},\quad
+\kappa(\widehat{E}_{8,k})=\frac{62(k+30)}{15},
 \]
 \[
-\dim \mathrm{gr}_r Y_\hbar(F_4) = 52, \qquad
-\dim \mathrm{gr}_r Y_\hbar(G_2) = 14.
+\kappa(\widehat{F}_{4,k})=\frac{26(k+9)}9,\qquad
+\kappa(\widehat{G}_{2,k})=\frac{7(k+4)}4.
 \]
+The affine Feigin--Frenkel reflected levels are
+\[
+\begin{array}{c|ccccc}
+\fg & E_6 & E_7 & E_8 & F_4 & G_2\\ \hline
+k' & -k-24 & -k-36 & -k-60 & -k-18 & -k-8
+\end{array}
+\]
+These are root-system and affine Kac--Moody data.  They do not prove a
+Yangian PBW theorem.
 \end{corollary}
 
 \begin{proof}
-Immediate from
-Theorem~\ref{thm:exceptional-yangian-pbw-grw18} and the identification
-$\mathrm{gr}_r U(\fg[t]) = \fg \otimes t^r$. The dimensions are the
-standard exceptional-type dimensions
-$(\dim E_6, \dim E_7, \dim E_8, \dim F_4, \dim G_2) =
-(78, 133, 248, 52, 14)$; compare
-Table~EXCEPTIONAL\_DATA in
-\texttt{compute/lib/yangian\_rtt\_exceptional.py}.
+The dimensions and dual Coxeter numbers are the exceptional rows of
+the canonical affine table in
+Chapter~\ref{ch:landscape-census}.  The displayed $\kappa$ values are
+the specialization of
+$\kappa(V_k(\fg))=\dim(\fg)(k+h^\vee)/(2h^\vee)$, and the reflected
+levels are $k'=-k-2h^\vee$.  PBW for
+$Y_\hbar(\fg)$ would additionally identify the associated graded of the
+Yangian filtration with $U(\fg[t])$; that assertion is not a consequence
+of the numerical table.
 \end{proof}
 
-\section{Per-type closures}
+\begin{proposition}[Fundamental packets are not RTT certificates;
+\ClaimStatusProvedHere]
+\label{prop:exceptional-fundamental-packet-scope}
+\index{Yangian!exceptional fundamental packet}
+The local exceptional representation data supply only low-degree
+spectral checks.  They do not by themselves construct exceptional
+evaluation modules or an RTT/FRT presentation of
+$Y_\hbar(\fg)$.  In the local normalization the certified packet is:
+\[
+\begin{array}{c|c|c}
+\fg & \text{lane} & \text{local tensor-square data}\\ \hline
+E_6 & 27,\,27^*
+& 27\otimes27=351_A+351^{\prime}_S+27^*_S,\quad
+  27\otimes27^*=1+78+650\\
+E_7 & 56
+& 56\otimes56=(1+1539)_A+(133+1463)_S\\
+E_8 & 248
+& 248\otimes248=(1+3875+27000)_S+(248+30380)_A\\
+G_2 & 7
+& 7\otimes7=(1+27)_S+(7+14)_A
+\end{array}
+\]
+For $F_4$ the local root-system data certify
+$\dim F_4=52$, $h^\vee=9$, and the minimal lane
+$V(\omega_4)=26$, but the local engine does not certify the
+$26\otimes26$ projector package.  A fundamental $\fg$-representation,
+or a Drinfeld-polynomial label for a finite-dimensional Yangian module,
+becomes an RTT packet only after the transfer matrix, its quadratic
+relations, and its inverse-kernel relation space have been constructed
+in the same presentation.
+\end{proposition}
+
+\begin{proof}
+The dimensions and decompositions displayed for
+$E_6,E_7,E_8$, and $G_2$ are the low-degree checks recorded by
+\texttt{compute/lib/exceptional\_yangian\_engine.py}; the
+Cartan and fundamental-dimension data are recorded by
+\texttt{compute/lib/yangian\_rtt\_exceptional.py}.  These calculations
+are representation-theoretic: they identify possible spectral
+projectors for an exceptional kernel.  They neither define the Yangian
+action on those projectors nor prove that the resulting quadratic
+relations present $Y_\hbar(\fg)$.  The extra assertion needed for
+Koszul duality is precisely the RTT relation-space identity in
+Proposition~\ref{prop:exceptional-yangian-template}.
+\end{proof}
+
+\section{Per-type RTT criteria}
 \label{sec:exceptional-yangian-per-type}
 
-For each exceptional type we record (a) the PBW citation, (b) the
-Chevalley extension, and (c) the resulting Koszul-duality isomorphism.
-The four-step template of
-Proposition~\ref{prop:exceptional-yangian-template} applies without
-modification; per-type content is confined to~(b).
-
-\subsection{$E_6$}
-\label{subsec:yangian-koszul-E6}
-
-\begin{proposition}[$E_6$ Yangian Koszul duality;
+\begin{proposition}[$E_6$ RTT implication criterion;
 \ClaimStatusProvedHere]
 \label{prop:exceptional-yangian-koszul-E6}
 \index{Yangian!$E_6$ Koszul duality}
-The Yangian $Y_\hbar(E_6)$ satisfies
-$Y_\hbar(E_6)^{!,\mathrm{ch}} \cong Y_{-\hbar}(E_6)^{\mathrm{ch}}$.
+For $\fg=E_6$, the implication
+\[
+Y_\hbar(E_6)^{!,\mathrm{ch}}\cong Y_{-\hbar}(E_6)^{\mathrm{ch}}
+\]
+follows from Proposition~\ref{prop:exceptional-yangian-template} after
+one supplies an $E_6$ RTT/FRT presentation on the $27$ and $27^*$ lanes,
+PBW in that presentation, and the inverse-kernel orthogonal-complement
+identity.
+Unconditionally, the local data are
+\[
+\dim E_6=78,\qquad h^\vee(E_6)=12,\qquad
+\mathrm{Out}(E_6)\cong \Z/2,
+\]
+and the fundamental pair is $V(\omega_1)=27$,
+$V(\omega_6)=27^*$.
 \end{proposition}
 
 \begin{proof}
-PBW: Theorem~\ref{thm:exceptional-yangian-pbw-grw18} at $\fg = E_6$.
-Chevalley extension: $E_6$ has nontrivial outer automorphism group
-$\mathrm{Out}(E_6) = \Z/2$ acting by the Dynkin-diagram flip
-$\omega_1 \leftrightarrow \omega_6$, $\omega_3 \leftrightarrow \omega_5$,
-$\omega_2 \mapsto \omega_2$, $\omega_4 \mapsto \omega_4$. The Chevalley
-involution $\sigma$ commutes with this outer action because both are
-intrinsic Cartan-level involutions; we choose $\sigma$ (not the outer
-flip) for the Koszul-duality extension. Drinfeld's anti-automorphism
-argument lifts $\sigma$ to $Y_\hbar(E_6)$ with
-$\sigma(\hbar) = -\hbar$. Apply
-Proposition~\ref{prop:exceptional-yangian-template}.
+The displayed root-system data are the standard $E_6$ data recorded by
+the local computation and in the affine rows of
+Chapter~\ref{ch:landscape-census}.  The nontrivial diagram
+automorphism exchanges the two minuscule lanes.  Applying the finite
+RTT criterion proves the stated Koszul-duality isomorphism precisely
+when the three named $E_6$ RTT inputs have been proved in the same
+presentation.
 \end{proof}
 
-\begin{remark}[$E_6$ outer automorphism and $\omega_1$-vs-$\omega_6$]
+\begin{remark}[$E_6$ contragredient lane]
 \label{rem:exceptional-yangian-E6-outer}
-The fundamental representations $V(\omega_1) = 27$ and
-$V(\omega_6) = 27^*$ are exchanged by $\mathrm{Out}(E_6)$ and
-\emph{not} by the Chevalley involution (the latter preserves each
-representation up to isomorphism, turning it into its contragredient).
-On $Y_\hbar(E_6)$-modules, the Chevalley involution therefore sends
-$V_{27}(a) \mapsto V_{27^*}(-a)$ at the evaluation level, and the
-Koszul-duality isomorphism sends
-$R_{V_{27} \otimes V_{27}}(u; \hbar) \mapsto
-R_{V_{27^*} \otimes V_{27^*}}(u; -\hbar) = R_{V_{27^*} \otimes
-V_{27^*}}^{-1}(u; \hbar)$. The 27 vs.\ 27* split is recorded in
-\texttt{compute/lib/exceptional\_yangian\_engine.py::tensor\_product\_decomposition("E6")}.
+The Chevalley involution sends a representation to its contragredient.
+For $E_6$ this forces the $27/27^*$ distinction into the RTT kernel:
+the correct comparison is between the relation space on the chosen
+$27$-lane and the inverse-kernel relation space on the contragredient
+lane.  The outer diagram flip is a separate symmetry; it is not a
+substitute for the Chevalley lift.
 \end{remark}
 
-\subsection{$E_7$}
-\label{subsec:yangian-koszul-E7}
-
-\begin{proposition}[$E_7$ Yangian Koszul duality;
+\begin{proposition}[$E_7$ RTT implication criterion;
 \ClaimStatusProvedHere]
 \label{prop:exceptional-yangian-koszul-E7}
 \index{Yangian!$E_7$ Koszul duality}
-The Yangian $Y_\hbar(E_7)$ satisfies
-$Y_\hbar(E_7)^{!,\mathrm{ch}} \cong Y_{-\hbar}(E_7)^{\mathrm{ch}}$.
+For $\fg=E_7$, the implication
+\[
+Y_\hbar(E_7)^{!,\mathrm{ch}}\cong Y_{-\hbar}(E_7)^{\mathrm{ch}}
+\]
+follows from Proposition~\ref{prop:exceptional-yangian-template} after
+one supplies an $E_7$ RTT/FRT presentation on the $56$-dimensional
+symplectic lane, PBW in that presentation, and the inverse-kernel
+orthogonal-complement identity.  Unconditionally,
+\[
+\dim E_7=133,\qquad h^\vee(E_7)=18,\qquad
+\mathrm{Out}(E_7)=1,\qquad \dim V(\omega_7)=56.
+\]
 \end{proposition}
 
 \begin{proof}
-PBW: Theorem~\ref{thm:exceptional-yangian-pbw-grw18} at $\fg = E_7$.
-Chevalley extension: $E_7$ has trivial outer automorphism group
-$\mathrm{Out}(E_7) = 1$; the Chevalley involution is the unique
-anti-involution of $E_7$ negating all simple roots. Its Drinfeld
-extension to $Y_\hbar(E_7)$ with $\sigma(\hbar) = -\hbar$ is
-straightforward. Apply
-Proposition~\ref{prop:exceptional-yangian-template}.
+The Cartan data and the $56$-dimensional fundamental representation are
+root-system facts.  The Koszul-duality statement is then exactly the
+finite RTT criterion, not an additional consequence of those facts.
 \end{proof}
 
-\begin{remark}[$E_7$ 56-dimensional self-duality]
+\begin{remark}[$E_7$ symplectic self-duality]
 \label{rem:exceptional-yangian-E7-self-dual}
-The minuscule representation $V(\omega_7) = 56$ of $E_7$ is symplectic
-self-dual: it admits an invariant antisymmetric bilinear form, and
-hence the permutation $P$ acts on $V_{56} \otimes V_{56}$ as a
-$+1$-eigenspace in $\mathrm{Sym}^2$ and a $-1$-eigenspace in
-$\Lambda^2$, with $\Lambda^2(56)$ containing the trivial
-representation. The Koszul-duality isomorphism is compatible with this
-symplectic self-duality: $R_{V_{56}}^{-1}(u; \hbar) =
-R_{V_{56}}(u; -\hbar)$ as operators on $V_{56} \otimes V_{56}$.
+The $56$-dimensional $E_7$ representation is symplectic self-dual.  This
+settles the linear duality of the representation, but the RTT relation
+space still has to be computed.  The scalar identity
+$(1-\hbar P/u)^{-1}\sim 1+\hbar P/u$ for a permutation kernel is not a
+proof for an exceptional universal $R$-matrix with several Casimir
+eigenspaces.
 \end{remark}
 
-\subsection{$E_8$: the capstone}
-\label{subsec:yangian-koszul-E8}
-
-\begin{proposition}[$E_8$ Yangian Koszul duality;
+\begin{proposition}[$E_8$ RTT implication criterion;
 \ClaimStatusProvedHere]
 \label{prop:exceptional-yangian-koszul-E8}
 \index{Yangian!$E_8$ Koszul duality}
-The Yangian $Y_\hbar(E_8)$ satisfies
-$Y_\hbar(E_8)^{!,\mathrm{ch}} \cong Y_{-\hbar}(E_8)^{\mathrm{ch}}$.
+For $\fg=E_8$, the implication
+\[
+Y_\hbar(E_8)^{!,\mathrm{ch}}\cong Y_{-\hbar}(E_8)^{\mathrm{ch}}
+\]
+follows from Proposition~\ref{prop:exceptional-yangian-template} after
+one supplies an $E_8$ RTT/FRT presentation on the adjoint
+$248$-dimensional lane, PBW in that presentation, and the
+inverse-kernel orthogonal-complement identity.  Unconditionally,
+\[
+\dim E_8=248,\qquad h^\vee(E_8)=30,\qquad
+\mathrm{Out}(E_8)=1.
+\]
 \end{proposition}
 
 \begin{proof}
-PBW: Theorem~\ref{thm:exceptional-yangian-pbw-grw18} at $\fg = E_8$.
-Chevalley extension: $E_8$ is the simply-connected, simply-laced Lie
-algebra with $\mathrm{Out}(E_8) = 1$ and dual Coxeter number
-$h^\vee = 30$. The Chevalley involution is unique; its Drinfeld
-extension to $Y_\hbar(E_8)$ sends $\hbar \mapsto -\hbar$. Apply
-Proposition~\ref{prop:exceptional-yangian-template}.
-
-Size does not obstruct: Step~1 (quadratic dual) is a
-$\dim E_8 \cdot \dim E_8 = 248 \cdot 248 = 61504$-dimensional
-finite-dimensional matrix computation at each level (level-by-level
-quadraticity); the 240-root system enters only through the Cartan matrix
-of Step~2, not through any exhaustive enumeration.
+The adjoint representation is the smallest nontrivial $E_8$ lane in
+the local computation.  Its tensor square has ambient matrix size
+$248^2=61504$.  This finite size makes the orthogonal-complement
+problem well-posed at each RTT level; it does not solve it.
 \end{proof}
 
-\begin{remark}[$E_8$ 248-dimensional adjoint is the minimal rep]
+\begin{remark}[$E_8$ spectral data]
 \label{rem:exceptional-yangian-E8-adjoint}
-$E_8$ is the unique simple Lie algebra whose adjoint representation
-is its smallest irreducible representation
-($\dim V_\mathrm{adj} = 248 = \dim E_8$). On the Yangian level this
-means that $Y_\hbar(E_8)$ has no matrix realisation inside
-$\mathfrak{gl}_N$ with $N < 248$: the RTT presentation is intrinsically
-248-dimensional. The Koszul duality $Y_\hbar(E_8)^! = Y_{-\hbar}(E_8)$
-therefore has no reduction to a classical-type argument; it is proved
-here exclusively via
-Proposition~\ref{prop:exceptional-yangian-template} with
-\cite{GRW18} supplying PBW.
-
-The 248-dim adjoint decomposition
-$V_{248} \otimes V_{248} = 1 + 248 + 3875 + 27000 + 30380$
-(Chapter~\ref{chap:yangians-computations}, compute engine
-\texttt{exceptional\_yangian\_engine.py::tensor\_product\_decomposition("E8")})
-contains five Casimir-distinct components; the $R$-matrix decomposes
-accordingly, and its inverse decomposes with reversed signs of the
-Casimir-dependent factors, yielding the $\hbar \mapsto -\hbar$ flip
-stated in
-Proposition~\ref{prop:exceptional-yangian-koszul-E8}.
+The local representation engine records
+\[
+248\otimes 248=1+248+3875+27000+30380.
+\]
+This dimension identity is necessary spectral data for an $E_8$ kernel.
+The missing Koszul step is stronger:
+one must show that the quadratic relation space defined by that kernel
+has orthogonal complement equal to the inverse-kernel relation space.
 \end{remark}
 
-\subsection{$F_4$ (non-simply-laced, via its own PBW)}
-\label{subsec:yangian-koszul-F4}
-
-\begin{proposition}[$F_4$ Yangian Koszul duality;
+\begin{proposition}[$F_4$ RTT implication criterion;
 \ClaimStatusProvedHere]
 \label{prop:exceptional-yangian-koszul-F4}
 \index{Yangian!$F_4$ Koszul duality}
-The Yangian $Y_\hbar(F_4)$ satisfies
-$Y_\hbar(F_4)^{!,\mathrm{ch}} \cong Y_{-\hbar}(F_4)^{\mathrm{ch}}$.
+For $\fg=F_4$, the implication
+\[
+Y_\hbar(F_4)^{!,\mathrm{ch}}\cong Y_{-\hbar}(F_4)^{\mathrm{ch}}
+\]
+follows from Proposition~\ref{prop:exceptional-yangian-template} after
+one supplies an $F_4$ RTT/FRT presentation on the minimal
+$26$-dimensional lane, PBW in that presentation, the
+$26\otimes26$ spectral projector decomposition, and the inverse-kernel
+orthogonal-complement identity.  Unconditionally,
+\[
+\dim F_4=52,\qquad h^\vee(F_4)=9,\qquad
+\mathrm{Out}(F_4)=1,\qquad d=(1,1,2,2)
+\]
+for the local Cartan symmetrizer.
 \end{proposition}
 
 \begin{proof}
-PBW: Theorem~\ref{thm:exceptional-yangian-pbw-grw18} at $\fg = F_4$.
-\cite{GRW18} treats non-simply-laced types directly, using the
-symmetrisable Cartan-matrix data of $F_4$
-($A = \bigl[\begin{smallmatrix}2 & -1 & 0 & 0 \\ -1 & 2 & -2 & 0
-\\ 0 & -1 & 2 & -1 \\ 0 & 0 & -1 & 2\end{smallmatrix}\bigr]$ in our
-convention, $d = (1,1,2,2)$); the Serre relations acquire
-the standard $F_4$-specific forms but quadraticity and
-level-homogeneity are preserved.
-
-Chevalley extension: $F_4$ has trivial outer automorphism
-$\mathrm{Out}(F_4) = 1$; the Chevalley involution is the unique
-Cartan-level anti-involution. Drinfeld's extension to $Y_\hbar(F_4)$
-sends $\hbar \mapsto -\hbar$. Apply
-Proposition~\ref{prop:exceptional-yangian-template}.
+The symmetrizer and dimensions are local root-system data.  The compute
+surface records the $F_4$ tensor-square decomposition as an uncertified
+projector computation.
+Therefore $F_4$ does not inherit the Koszul-duality conclusion until
+that representation-theoretic input and the RTT orthogonal-complement
+identity are supplied.
 \end{proof}
 
-\begin{remark}[$F_4$ folding picture as verification, not definition]
+\begin{remark}[$F_4$ folding]
 \label{rem:exceptional-yangian-F4-folding}
-$F_4$ is the $\Z/2$-fold of $E_6$ via the outer Dynkin automorphism,
-exchanging $\omega_1 \leftrightarrow \omega_6$ and
-$\omega_3 \leftrightarrow \omega_5$, fixing $\omega_2, \omega_4$. On
-the universal-enveloping-algebra level $U(F_4[t]) = U(E_6[t])^{\Z/2}$,
-and the Yangian inherits the folding picture
-$Y_\hbar(F_4) \subset Y_\hbar(E_6)^{\Z/2}$ as the fixed-point
-subalgebra. The Koszul-duality isomorphism
-$Y_\hbar(F_4)^! \cong Y_{-\hbar}(F_4)$ is compatible with the
-restriction from
-Proposition~\ref{prop:exceptional-yangian-koszul-E6}, giving a
-\emph{second} proof of
-Proposition~\ref{prop:exceptional-yangian-koszul-F4} as a consistency
-check. We adopt the direct \cite{GRW18} PBW argument as the primary
-proof: it avoids the $\Z/2$-invariance lift, which is a separate
-theorem.
+The fixed-point identity $\fg(F_4)\cong \fg(E_6)^{\Z/2}$ is a
+Lie-algebra and current-algebra statement.  A Yangian fixed-point
+statement
+$Y_\hbar(F_4)\cong Y_\hbar(E_6)^{\Z/2}$, compatible with finite RTT
+windows and quadratic duals, is a separate descent theorem.  It cannot
+be used as an independent proof until exactness of invariants and preservation
+of the inverse-kernel relation spaces are proved.
 \end{remark}
 
-\subsection{$G_2$ (non-simply-laced, smallest exceptional)}
-\label{subsec:yangian-koszul-G2}
-
-\begin{proposition}[$G_2$ Yangian Koszul duality;
+\begin{proposition}[$G_2$ RTT implication criterion;
 \ClaimStatusProvedHere]
 \label{prop:exceptional-yangian-koszul-G2}
 \index{Yangian!$G_2$ Koszul duality}
-The Yangian $Y_\hbar(G_2)$ satisfies
-$Y_\hbar(G_2)^{!,\mathrm{ch}} \cong Y_{-\hbar}(G_2)^{\mathrm{ch}}$.
+For $\fg=G_2$, the implication
+\[
+Y_\hbar(G_2)^{!,\mathrm{ch}}\cong Y_{-\hbar}(G_2)^{\mathrm{ch}}
+\]
+follows from Proposition~\ref{prop:exceptional-yangian-template} after
+one supplies a $G_2$ RTT/FRT presentation on the $7$-dimensional lane,
+PBW in that presentation, and the inverse-kernel
+orthogonal-complement identity.  Unconditionally,
+\[
+\dim G_2=14,\qquad h^\vee(G_2)=4,\qquad
+\mathrm{Out}(G_2)=1,\qquad d=(3,1).
+\]
 \end{proposition}
 
 \begin{proof}
-PBW: Theorem~\ref{thm:exceptional-yangian-pbw-grw18} at $\fg = G_2$.
-$G_2$ is the rank-two non-simply-laced exceptional with Cartan matrix
-$A = \bigl[\begin{smallmatrix}2 & -1 \\ -3 & 2\end{smallmatrix}\bigr]$
-and symmetrizer $d = (3, 1)$; the Serre relations acquire
-$3$-th-order-$(e_1^{\otimes 3})$ and $e_2$-commutator forms, but
-quadraticity and level-homogeneity in the RTT formulation are
-preserved by \cite{GRW18}.
-
-Chevalley extension: $G_2$ has trivial outer automorphism
-$\mathrm{Out}(G_2) = 1$; the Chevalley involution is the unique
-Cartan-level anti-involution. Drinfeld's extension to $Y_\hbar(G_2)$
-sends $\hbar \mapsto -\hbar$. Apply
-Proposition~\ref{prop:exceptional-yangian-template}.
+The local rank-two engine verifies the Cartan matrix
+$\bigl[\begin{smallmatrix}2&-1\\ -3&2\end{smallmatrix}\bigr]$, the
+symmetrizer $d=(3,1)$, and the tensor-square dimension split
+\[
+7\otimes 7=(1+27)\oplus(7+14)
+\]
+between symmetric and alternating parts.  These data make the
+$G_2$ RTT computation finite.  They do not identify the Yangian
+relation space with its inverse-kernel orthogonal complement.
 \end{proof}
 
-\begin{remark}[$G_2$ folding picture $= D_4 / \Z/3$ as verification]
+\begin{remark}[$G_2$ triality]
 \label{rem:exceptional-yangian-G2-folding}
-$G_2$ is the $\Z/3$-fold of $D_4$ via the triality outer automorphism
-cyclically permuting the three outer legs of the $D_4$ Dynkin diagram.
-On the universal-enveloping algebra level
-$U(G_2[t]) = U(D_4[t])^{\Z/3}$, and the Yangian inherits the folding
-picture $Y_\hbar(G_2) \subset Y_\hbar(D_4)^{\Z/3}$ as the
-triality-invariant subalgebra. Because $D_4$ is a classical type
-(rank-$4$ simply-laced orthogonal), $Y_\hbar(D_4)$'s Koszul duality is
-the classical-type theorem~\cite{Molev07}, and the triality descent
-produces a second proof of
-Proposition~\ref{prop:exceptional-yangian-koszul-G2}. Again we adopt
-the direct \cite{GRW18} argument as the primary proof.
+The fixed-point identity $\fg(G_2)\cong \fg(D_4)^{\Z/3}$ is a
+Lie-algebra statement.  Triality descent for Yangians would have to
+commute with the RTT filtration, the finite-window truncations, and the
+quadratic dual relation spaces.  Molev's classical-type PBW theorem for
+$D_4$ does not by itself prove this descent.
 \end{remark}
 
-\section{The five-family theorem}
+\section{The five-family obstruction theorem}
 \label{sec:exceptional-yangian-five-family}
 
-Assembling the five per-type propositions gives the main theorem of
-the chapter.
-
-\begin{theorem}[Exceptional-type Yangian Koszul duality, all five types;
-\ClaimStatusProvedHere]
+\begin{theorem}[Exceptional-type Yangian Koszul duality: exact
+obligations; \ClaimStatusProvedHere]
 \label{thm:exceptional-yangian-koszul-duality-all-five-types}
-\index{Yangian!exceptional-type Koszul duality, five-family closure|textbf}
-For every exceptional simple Lie algebra
-$\fg \in \{E_6, E_7, E_8, F_4, G_2\}$ the Yangian Koszul-duality
-isomorphism
+\index{Yangian!exceptional-type Koszul duality, five-family obstruction|textbf}
+Type signature: (Open quadrant on the affine companion
+$V_k(\fg)$ chart side; chain-level RTT presentation of the
+filtered Yangian; Beilinson level $1\leftrightarrow 2$ quadratic
+Koszul duality with reconstruction theorem Theorem~A
+\textup{(}$K^2\simeq\mathrm{id}$\textup{)};
+hypothesis package: the six obligations \textup{(1)}--\textup{(6)}
+below, none of which is supplied by the present citation set;
+Master Pattern MA-12: the exceptional-type Yangian PBW source is
+named, never silently inherited from a classical-type result).
+
+The bare exceptional-family statement
 \[
 Y_\hbar(\fg)^{!,\mathrm{ch}}
-\;\cong\;
-Y_{-\hbar}(\fg)^{\mathrm{ch}}
+\cong
+Y_{-\hbar}(\fg)^{\mathrm{ch}},
+\qquad
+\fg\in\{E_6,E_7,E_8,F_4,G_2\},
 \]
-holds as $E_1$-chiral quadratic algebras, implemented by the chiral
-lift of the Chevalley involution composed with $\hbar \mapsto -\hbar$.
-Equivalently,
-$Y_\hbar(\fg)^{!,\mathrm{ch}} \cong Y_{R^{-1}}(\fg)^{\mathrm{ch}}$.
+is not proved by the sources cited in this chapter.  Precisely, for each
+exceptional $\fg$, the displayed
+Koszul-duality isomorphism follows once the same finite RTT/FRT
+presentation satisfies the four hypotheses of
+Proposition~\ref{prop:exceptional-yangian-template}.  The missing inputs
+on the finite-window RTT route are exactly:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item construction of the chosen exceptional fundamental packet as an
+RTT/FRT Yangian module packet, including the transfer matrix and its
+quadratic relation space;
+\item a correct exceptional PBW source in that same RTT/FRT
+presentation;
+\item the exceptional inverse-kernel orthogonal-complement computation
+and scalar Laurent-gauge comparison
+$R_\hbar^{-1}\sim R_{-\hbar}$ in every spectral channel;
+\item compatibility of the finite-window identifications with the
+stabilized Mittag--Leffler tower;
+\item an ordered $E_1$ bar comparison before symmetric averaging,
+identifying what part of the relation-space computation survives under
+$\operatorname{Av}_N$ and what lies in $\ker\operatorname{Av}_N$;
+\item for $F_4$ and $G_2$, or for any folding route, a descent theorem
+showing that invariants commute with the finite RTT windows and their
+quadratic dual relation spaces.
+\end{enumerate}
 \end{theorem}
 
 \begin{proof}
-Direct assembly of
 Propositions~\ref{prop:exceptional-yangian-koszul-E6},
 \ref{prop:exceptional-yangian-koszul-E7},
 \ref{prop:exceptional-yangian-koszul-E8},
-\ref{prop:exceptional-yangian-koszul-F4},
-\ref{prop:exceptional-yangian-koszul-G2}, each proved via the same
-four-step template
-Proposition~\ref{prop:exceptional-yangian-template} with PBW input
-Theorem~\ref{thm:exceptional-yangian-pbw-grw18} of \cite{GRW18}.
+\ref{prop:exceptional-yangian-koszul-F4}, and
+\ref{prop:exceptional-yangian-koszul-G2} prove the forward implication
+from the finite RTT criterion to the five exceptional conclusions.
+Proposition~\ref{thm:exceptional-yangian-pbw-grw18} proves that the
+previously cited GRW input does not supply the exceptional PBW theorem.
+The representation and Cartan computations in
+Corollary~\ref{cor:exceptional-yangian-graded},
+Proposition~\ref{prop:exceptional-fundamental-packet-scope}, and in the
+five per-type criteria are necessary data, not substitutes for a Yangian
+module packet, PBW, $R^\perp=R_{R^{-1}}$, or tower compatibility.
 \end{proof}
 
-\begin{corollary}[All-simple-type unconditional closure;
+\begin{corollary}[All-simple-type statement remains conditional;
 \ClaimStatusProvedHere]
 \label{cor:exceptional-yangian-all-simple}
 \index{Yangian!Koszul duality, all simple types}
-For every simple complex Lie algebra $\fg$,
+The sources cited here do not prove
 \[
-Y_\hbar(\fg)^{!,\mathrm{ch}}
-\;\cong\;
-Y_{-\hbar}(\fg)^{\mathrm{ch}}.
+Y_\hbar(\fg)^{!,\mathrm{ch}}\cong
+Y_{-\hbar}(\fg)^{\mathrm{ch}}
 \]
+for every simple complex Lie algebra $\fg$.  They prove the classical
+RTT cases already covered by the local Yangian chapter and reduce the
+five exceptional cases to the RTT obligations in
+Theorem~\ref{thm:exceptional-yangian-koszul-duality-all-five-types}.
 \end{corollary}
 
 \begin{proof}
-Classical types $A_n, B_n, C_n, D_n$: the four-step template of
-Proposition~\ref{prop:exceptional-yangian-template} applies with PBW
-input Molev~\cite[Thm.~1.4.1]{Molev07}. Exceptional types
-$E_6, E_7, E_8, F_4, G_2$:
-Theorem~\ref{thm:exceptional-yangian-koszul-duality-all-five-types}.
-No type remains open.
+Molev~\cite{Molev07} supplies the classical RTT presentation and PBW
+input used in the classical lanes.  The exceptional lanes require
+additional RTT/FRT and inverse-kernel computations.  Since
+\cite{GRW18} is orthogonal/symplectic rather than exceptional, no
+all-simple corollary follows from the present citation set.
 \end{proof}
 
-\begin{remark}[What this does not close]
+\begin{remark}[Adjacent problems not decided here]
 \label{rem:exceptional-yangian-does-not-close}
-This chapter closes \emph{Koszul duality} for exceptional-type
-Yangians. It does not close: (a) the chiral-QG equivalence at
-exceptional types (the abstract-level equivalence on the Koszul
-locus is already proved in
-Theorem~\ref{thm:chiral-qg-equiv}; concrete-level
-verification for $E_6, E_7, E_8, F_4, G_2$ beyond the
-$\mathfrak{sl}_2$ and affine Kac--Moody cases remains a separate
-project); (b) the BFN-Coulomb-branch interpretation of shifted
-exceptional-type Yangians; (c) the toroidal exceptional Yangians
-(global $\mathbb{P}^1 \times \mathbb{P}^1$ picture); (d) the
-elliptic exceptional Yangians beyond leading order.
+The obstruction theorem concerns unshifted Yangian Koszul duality in
+finite RTT windows.  It does not decide the chiral quantum-group
+equivalence at exceptional type, BFN Coulomb-branch interpretations of
+shifted exceptional Yangians, toroidal exceptional Yangians, or elliptic
+exceptional Yangians.
 \end{remark}
 
-\section{Verification programme}
+\begin{proposition}[Drinfeld--Kohno, roots of unity, and K3 do not
+promote the exceptional RTT statement; \ClaimStatusProvedHere]
+\label{prop:exceptional-yangian-no-dk-root-k3-promotion}
+\index{Yangian!exceptional type!non-promotion from Drinfeld--Kohno}
+\index{K3!Hall--Drinfeld double versus Drinfeld Yangian}
+The following proved or conditional comparison statements do not supply
+any of the missing exceptional RTT inputs of
+Theorem~\ref{thm:exceptional-yangian-koszul-duality-all-five-types}.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item The Drinfeld--Kohno theorem of
+Theorem~\ref{thm:drinfeld-kohno} and the Yangian--quantum-group
+deformation of Theorem~\ref{thm:yangian-quantum-group} are
+affine-lineage and evaluation-locus statements.  They compare monodromy
+and braiding; they do not construct an exceptional RTT/FRT presentation
+or compute $R_{\leq N}^{\perp}$.
+\item The root-of-unity statement
+Corollary~\ref{cor:sl2-root-of-unity} is an
+$\mathfrak{sl}_2$ WZW specialisation.  A Lusztig root of unity is not a
+PBW theorem for $Y_\hbar(E_6)$, $Y_\hbar(E_7)$,
+$Y_\hbar(E_8)$, $Y_\hbar(F_4)$, or $Y_\hbar(G_2)$.
+\item The K3 object separated in
+Section~\ref{sec:concordance-supplement} is the Hall--Drinfeld double
+\[
+\mathcal D_\hbar\bigl(
+\mathcal Y^{\mathrm{Hall}}_\hbar(\mathrm{CoHA}_{K3\times E})
+\bigr),
+\]
+not a Drinfeld Yangian attached to a finite-dimensional exceptional
+simple Lie algebra.  The $\hbar^2=-1/8$ and
+$K^{\kappa_{\mathrm{ch}}}=8$ normalization of
+Remark~\ref{rem:concord-2} is a K3 conductor comparison target.  It
+becomes a Yangian-style statement only after the PBW-finite truncation,
+parity/root fixture, and comparison map named there have been supplied.
+\item Affine Yangians, toroidal Yangians, elliptic Yangians, and the
+BKM denominator algebra $\mathfrak g_{\Delta_5}$ belong to the
+taxonomic slots of
+Proposition~\ref{prop:exceptional-yangian-type-separation}.  Their
+$R$-matrices, shuffle products, or denominator identities do not
+construct the ordered RTT relation space for a finite-dimensional
+exceptional Drinfeld Yangian.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Parts \textup{(a)} and \textup{(b)} are scope statements from the local
+theorems cited in their text: they live on affine evaluation modules
+and on the $\mathfrak{sl}_2$ root-of-unity specialization.  The
+exceptional RTT theorem needs a presentation-level calculation of
+relation spaces.  Part \textup{(c)} is the type separation imposed by
+the concordance: the K3 construction belongs to the Hall--Drinfeld
+double taxon, and its root-of-unity comparison is explicitly conditional
+on finite PBW and comparison-map inputs.  None of these data equals an
+exceptional inverse-kernel orthogonal-complement computation.  Part
+\textup{(d)} is the same type separation applied to affine, toroidal,
+elliptic, and BKM lineages.
+\end{proof}
+
+\section{Certified local data}
 \label{sec:exceptional-yangian-verification}
 
-Each of the five per-type propositions has three disjoint verification
-paths. The corresponding source-disjoint records are checked in
-\texttt{compute/tests/test\_exceptional\_yangian\_koszul\_duality.py}
-against the protocol implemented in
-\texttt{compute/lib/independent\_verification.py}.
-
+The local compute files certify root-system and representation data, not the
+exceptional Koszul theorem.
 \begin{enumerate}[label=(\alph*)]
-\item \emph{Dimension and PBW consistency.} Each
-$\mathrm{gr}_r Y_\hbar(\fg)$ matches $\fg \otimes t^r$ of dimension
-$\dim \fg$; the graded pieces pair against the tensor-product
-decompositions of
-\texttt{compute/lib/exceptional\_yangian\_engine.py}.
-Verified against:
-\cite{GRW18} PBW theorem and Molev~\cite[\S1.4]{Molev07}
-(classical-type comparison).
-
-\item \emph{Chevalley involution direct verification.} The
-Chevalley involution $\sigma_\fg$ is computed from the Cartan-matrix
-data (at the Lie-algebra level) and checked to satisfy
-$\sigma_\fg^2 = \mathrm{id}$, $\sigma_\fg(\alpha_i) = -\alpha_i$ for
-every simple root. Verified against:
-direct Cartan-matrix computation in
-\texttt{compute/lib/yangian\_rtt\_exceptional.py::ExceptionalRootSystem},
-disjoint from the RTT quadratic-dual computation.
-
-\item \emph{Bar-cohomology dimension sanity.} For the
-fundamental representation of each exceptional type, the bar
-cohomology dimensions $\dim H^q(\bar B(Y_\hbar(\fg)))$ agree across
-$\hbar \to -\hbar$ (this is the Koszul-duality invariant). Verified
-against: independent computation in
-\texttt{compute/lib/exceptional\_yangian\_engine.py::tensor\_product\_decomposition},
-which computes the tensor-product decompositions
-$V \otimes V$ from Casimir eigenvalues without reference to the
-quadratic-dual computation.
+\item \emph{Cartan data.}  The exceptional dimensions, positive-root
+counts, dual Coxeter numbers, and outer-automorphism orders are checked
+from Cartan matrices in
+\texttt{compute/lib/yangian\_rtt\_exceptional.py}.
+\item \emph{Representation dimensions.}  The accessible tensor-square
+decompositions for $E_6$, $E_7$, $E_8$, and $G_2$ are recorded in
+\texttt{compute/lib/exceptional\_yangian\_engine.py}.  The $F_4$
+$26\otimes26$ projector computation is not certified there.
+\item \emph{Finite-window promotion.}  A finite matrix computation must
+be repeated compatibly through the RTT tower.  The required promotion is
+the stabilized Mittag--Leffler statement of
+Lemma~\ref{lem:exceptional-finite-window-promotion}, not a consequence
+of a single low-degree window.
+\item \emph{Scalar permutation kernel.}  The identity
+$(1-\hbar P/u)^{-1}\sim 1+\hbar P/u$ checks the type-A permutation
+kernel up to scalar Laurent gauge.  It is not the exceptional universal
+$R$-matrix computation.
 \end{enumerate}
 
-\begin{remark}[independent-verification disjointness]
+\begin{remark}[What the tests can and cannot certify]
 \label{rem:exceptional-yangian-hziv}
-The three verification paths (a), (b), (c) are pairwise disjoint:
-(a)~uses PBW dimension data; (b)~uses Cartan-matrix data; (c)~uses
-tensor-product Casimir data. No single source supplies more than one
-path. Decoration enforcement is at import time in
-\texttt{test\_exceptional\_yangian\_koszul\_duality.py}
-via \texttt{@independent\_verification}.
+The tests in
+\texttt{compute/tests/test\_exceptional\_yangian\_koszul\_duality.py}
+are valid checks for the data just listed.  They do not compute
+the bar cohomology of $Y_\hbar(\fg)$, do not prove PBW for exceptional
+Yangians, and do not compute $R^\perp$ for an exceptional RTT relation
+space.  Therefore they cannot certify
+Theorem~\ref{thm:exceptional-yangian-koszul-duality-all-five-types}
+as a theorem for all five exceptional types.
 \end{remark}
 
-\section{Summary}
+\section{Exceptional RTT obstructions}
 \label{sec:exceptional-yangian-summary}
 
 \begin{center}
-\begin{tabular}{l|l|l|l}
-\textsc{type} & $\dim \fg$ & $\mathrm{Out}(\fg)$ &
-\textsc{Koszul-duality status}\\ \hline
-$E_6$ & 78 & $\Z/2$ &
-Prop.~\ref{prop:exceptional-yangian-koszul-E6}, \ClaimStatusProvedHere\\
-$E_7$ & 133 & $1$ &
-Prop.~\ref{prop:exceptional-yangian-koszul-E7}, \ClaimStatusProvedHere\\
-$E_8$ & 248 & $1$ &
-Prop.~\ref{prop:exceptional-yangian-koszul-E8}, \ClaimStatusProvedHere\\
-$F_4$ & 52 & $1$ &
-Prop.~\ref{prop:exceptional-yangian-koszul-F4}, \ClaimStatusProvedHere\\
-$G_2$ & 14 & $1$ &
-Prop.~\ref{prop:exceptional-yangian-koszul-G2}, \ClaimStatusProvedHere\\ \hline
+\begin{tabular}{l|l|l|p{6.2cm}}
+\textsc{type} & $\dim\fg$ & $\mathrm{Out}(\fg)$ &
+\textsc{criterion}\\ \hline
+$E_6$ & 78 & $\Z/2$ & $27/27^*$ packet, RTT/PBW/$R^\perp$/Mittag--Leffler obligations\\
+$E_7$ & 133 & $1$ & $56$ packet, RTT/PBW/$R^\perp$/Mittag--Leffler obligations\\
+$E_8$ & 248 & $1$ & $248$ packet, RTT/PBW/$R^\perp$/Mittag--Leffler obligations\\
+$F_4$ & 52 & $1$ & $26$ packet plus projector certification, RTT/PBW/$R^\perp$/Mittag--Leffler obligations\\
+$G_2$ & 14 & $1$ & $7$ packet plus triality descent if folding is used; RTT/PBW/$R^\perp$/Mittag--Leffler obligations\\ \hline
 \multicolumn{4}{l}{\textbf{All five:}
-Theorem~\ref{thm:exceptional-yangian-koszul-duality-all-five-types},
-\ClaimStatusProvedHere.}\\
+Theorem~\ref{thm:exceptional-yangian-koszul-duality-all-five-types}
+isolates the exact missing inputs.}
 \end{tabular}
 \end{center}
 
-Combined with the classical-type theorem \cite{Molev07} and
-Proposition~\ref{prop:exceptional-yangian-template}, all simple Lie
-algebras are covered
-(Corollary~\ref{cor:exceptional-yangian-all-simple}).
+The finite-window criterion
+Proposition~\ref{prop:exceptional-yangian-template} is the theorem
+carried by this chapter.  Each exceptional lane requires its own
+Yangian module packet, PBW theorem, ordered RTT relation space,
+inverse-kernel orthogonal complement, ordered-bar comparison before
+averaging, and stabilized tower compatibility in a single presentation.

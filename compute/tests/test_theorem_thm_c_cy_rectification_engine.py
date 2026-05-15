@@ -26,9 +26,11 @@ Multi-path verification (per CLAUDE.md mandate):
   Path 3: HR24 interchange consistency
 """
 
+import inspect
 import unittest
 from fractions import Fraction
 
+import compute.lib.theorem_thm_c_cy_rectification_engine as cy_engine
 from compute.lib.theorem_thm_c_cy_rectification_engine import (
     smooth_cy_dimension_lie,
     smooth_cy_exists_affine_km,
@@ -46,6 +48,11 @@ from compute.lib.theorem_thm_c_cy_rectification_engine import (
     complementarity_dimensions_genus2,
     p3_redundancy_analysis,
     hr24_lie_algebra_application,
+    koszul_object_firewall,
+    typed_verdier_branch_report,
+    package_firewall_report,
+    kernel_normalization_report,
+    KERNEL_NORMALIZATION_CONSTANTS,
     FINDING_REGISTER,
 )
 
@@ -211,6 +218,8 @@ class TestProperCYOnBar(unittest.TestCase):
     def test_heisenberg_zero_no_proper(self):
         result = proper_cy_on_bar('heisenberg', {'k': 0})
         self.assertFalse(result['has_proper_cy'])
+        self.assertFalse(result['hr24_applies'])
+        self.assertIn('Theorem C complementarity', result['does_not_prove'])
 
     def test_affine_km_proper_cy(self):
         result = proper_cy_on_bar('affine_km', {'g_type': 'A', 'rank': 1, 'k': 1})
@@ -227,6 +236,116 @@ class TestProperCYOnBar(unittest.TestCase):
     def test_betagamma_proper_cy(self):
         result = proper_cy_on_bar('betagamma', {})
         self.assertTrue(result['has_proper_cy'])
+
+
+class TestAP25ObjectFirewall(unittest.TestCase):
+    """Test bar/Koszul/Verdier/cobar/centre object separation."""
+
+    def test_firewall_distinguishes_all_objects(self):
+        firewall = koszul_object_firewall()
+        expected = {
+            'A',
+            'B_X(A)',
+            'A^i',
+            'A!',
+            'Omega_X(B_X(A))',
+            'Z_der_ch(A)',
+        }
+        self.assertEqual(set(firewall), expected)
+        self.assertIn('coalgebra', firewall['B_X(A)']['kind'])
+        self.assertIn('coalgebra', firewall['A^i']['kind'])
+        self.assertIn('post-Verdier', firewall['A!']['kind'])
+        self.assertIn('inversion', firewall['Omega_X(B_X(A))']['kind'])
+        self.assertIn('Hochschild', firewall['Z_der_ch(A)']['construction'])
+        self.assertIn('A!', firewall['Omega_X(B_X(A))']['not'])
+        self.assertIn('B_X(A!)', firewall['A!']['not'])
+
+    def test_typed_verdier_branch_has_finite_type_completed_hypotheses(self):
+        branch = typed_verdier_branch_report()
+        self.assertEqual(branch['source'], 'B_X(A) as bar coalgebra')
+        self.assertEqual(branch['verdier_operation'], 'D_Ran(B_X(A))')
+        self.assertIn('A!_infty', branch['first_output'])
+        self.assertIn('finite type', branch['finite_type_branch'])
+        self.assertIn('completed', branch['completed_branch'])
+        self.assertIn('B_X(A!)', branch['not_outputs'])
+        self.assertIn('separate bar construction', branch['bar_of_dual_requires'])
+        self.assertIn('P3', branch['bar_of_dual_requires'])
+
+    def test_no_stale_verdier_bar_shorthand_in_engine_source(self):
+        source = inspect.getsource(cy_engine)
+        forbidden = [
+            'D_Ran(B(A)) = ' + 'B(A!)',
+            'D_Ran(B(A)) ~ ' + 'B(A!)',
+            'D_Ran(B_X(A)) = ' + 'B_X(A!)',
+            'D_Ran(B_X(A)) ~ ' + 'B_X(A!)',
+            'Omega(B(A)) = ' + 'A!',
+            'Omega_X(B_X(A)) = ' + 'A!',
+        ]
+        for phrase in forbidden:
+            self.assertNotIn(phrase, source)
+
+    def test_hr24_interchange_reports_typed_branch(self):
+        result = verify_hr24_interchange('heisenberg', {'k': 1})
+        branch = result['verdier_branch']
+        self.assertIn('A!_infty', branch['first_output'])
+        self.assertIn('B_X(A!)', branch['not_outputs'])
+        self.assertIn('P3', branch['bar_of_dual_requires'])
+
+    def test_p3_failure_not_repaired_by_verdier_branch(self):
+        """At k = -2h^v for sl_2, P2 holds but the dual level is zero."""
+        k11 = verify_k11_hypotheses('affine_km',
+                                    {'g_type': 'A', 'rank': 1, 'k': -4})
+        self.assertTrue(k11['P2']['holds'])
+        self.assertFalse(k11['P3']['holds'])
+
+        hr24 = verify_hr24_interchange('affine_km',
+                                       {'g_type': 'A', 'rank': 1, 'k': -4})
+        self.assertTrue(hr24['BA_proper_cy'])
+        self.assertFalse(hr24['BA_dual_proper_cy'])
+        self.assertFalse(hr24['all_verified'])
+        self.assertIn('B_X(A!)', hr24['verdier_branch']['not_outputs'])
+
+
+class TestPackageAndKernelFirewalls(unittest.TestCase):
+    """Test package cardinality and kernel normalization separation."""
+
+    def test_holographic_package_and_compute_package_are_distinct(self):
+        report = package_firewall_report()
+        self.assertEqual(
+            report['holographic_package_entries'],
+            ("A", "A^i", "A^!", "C", "r(z)", "Theta_A", "nabla^hol"),
+        )
+        self.assertEqual(
+            report['modular_koszul_compute_projections'],
+            ("Fact_X(L)", "barB_X(L)", "Theta_L", "L_L",
+             "(V_br,T_br)", "R4_mod(L)"),
+        )
+        self.assertTrue(report['packages_are_distinct'])
+        self.assertIn('Fact_X(L)', report['holographic_not_compute_projections'])
+        self.assertIn('A^!', report['compute_not_holographic_entries'])
+
+    def test_kernel_constants_match_canonical_normalizations(self):
+        self.assertEqual(KERNEL_NORMALIZATION_CONSTANTS['affine_raw_trace_form'],
+                         'k*Omega_tr/z')
+        self.assertEqual(KERNEL_NORMALIZATION_CONSTANTS['affine_KZ_normalization'],
+                         'Omega/((k+h^vee)z)')
+        self.assertEqual(KERNEL_NORMALIZATION_CONSTANTS['heisenberg'], 'k/z')
+        self.assertEqual(KERNEL_NORMALIZATION_CONSTANTS['virasoro'],
+                         '(c/2)/z^3 + 2T/z')
+
+    def test_kernel_coefficients_keep_raw_and_kz_apart(self):
+        report = kernel_normalization_report(k=1, h_v=2, c=26)
+        self.assertEqual(report['affine_raw_trace_form']['level_prefix'],
+                         Fraction(1))
+        self.assertEqual(report['affine_KZ_normalization']['coefficient'],
+                         Fraction(1, 3))
+        self.assertEqual(report['virasoro']['central_coefficient'],
+                         Fraction(13))
+        self.assertFalse(report['raw_equals_kz'])
+
+    def test_kz_normalization_undefined_at_critical_level(self):
+        with self.assertRaises(ValueError):
+            kernel_normalization_report(k=-2, h_v=2, c=26)
 
 
 class TestK11Hypotheses(unittest.TestCase):
@@ -427,6 +546,14 @@ class TestKappaComplementarity(unittest.TestCase):
         result = kappa_complementarity_sum('bc', {})
         self.assertEqual(result['sum'], 0)
 
+    def test_kappa_sum_is_scalar_projection_not_bulk_data(self):
+        result = kappa_complementarity_sum('virasoro', {'c': 7})
+        self.assertTrue(result['scalar_projection_only'])
+        self.assertEqual(result['projection_scope'],
+                         'Verdier scalar conductor lane')
+        self.assertIn('Z_ch^der(A)', result['not_full_bulk_data'])
+        self.assertIn('ChirHoch^*(A,A)', result['not_full_bulk_data'])
+
     def test_multiple_km_families_sum_zero(self):
         """Verify kappa + kappa' = 0 for multiple KM families."""
         for (g, r) in [('A', 1), ('A', 2), ('B', 2), ('G', 2)]:
@@ -476,12 +603,31 @@ class TestComplementarityDimensions(unittest.TestCase):
         self.assertEqual(result['dim_Q_A'], result['dim_Q_A_dual'])
         self.assertEqual(2 * result['dim_Q_A'], result['dim_H_total'])
 
+    def test_scalar_dimension_identity_does_not_promote_without_p2(self):
+        result = complementarity_dimensions_genus1('heisenberg', {'k': 0})
+        self.assertTrue(result['complementarity_holds'])
+        self.assertFalse(result['k11_valid'])
+        self.assertFalse(result['theorem_c_promoted'])
+        self.assertFalse(result['lagrangian'])
+        self.assertFalse(result['full_hochschild_bulk_data'])
+        self.assertIn('P2:', result['promotion_blockers'][0])
+
+    def test_scalar_dimension_identity_does_not_promote_without_p3(self):
+        result = complementarity_dimensions_genus2(
+            'affine_km', {'g_type': 'A', 'rank': 1, 'k': -4})
+        self.assertTrue(result['complementarity_holds'])
+        self.assertFalse(result['k11_valid'])
+        self.assertFalse(result['theorem_c_promoted'])
+        self.assertFalse(result['lagrangian'])
+        self.assertTrue(any(blocker.startswith('P3:')
+                            for blocker in result['promotion_blockers']))
+
 
 class TestP3Redundancy(unittest.TestCase):
     """Test P3 redundancy analysis."""
 
-    def test_p3_not_redundant_general(self):
-        """P3 is NOT redundant in general."""
+    def test_p3_independent_general(self):
+        """P3 is independent in general."""
         result = p3_redundancy_analysis('heisenberg', {'k': 1})
         self.assertFalse(result['p3_redundant'])
 

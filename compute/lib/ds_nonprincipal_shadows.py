@@ -8,7 +8,7 @@ MATHEMATICAL CONTENT:
 
 1. sl_3 NILPOTENT ORBITS:
    [3]     = principal   -> W_3 algebra
-   [2,1]   = subregular  -> Bershadsky-Polyakov (N=2 SCA)
+   [2,1]   = subregular  -> Feigin-Semikhatov W_3^{(2)} (Bershadsky-Polyakov)
    [1,1,1] = trivial     -> ŝl_3 itself
 
 2. sl_4 NILPOTENT ORBITS:
@@ -672,8 +672,9 @@ def shadow_data_principal(N: int, k_val: Fraction) -> Dict[str, Any]:
 def shadow_data_bershadsky_polyakov(k_val: Fraction) -> Dict[str, Any]:
     r"""Shadow data for Bershadsky-Polyakov W_k(sl_3, f_{(2,1)}).
 
-    The BP algebra is the N=2 SCA. On the T-line (Virasoro direction),
-    the shadow data uses the Virasoro subalgebra shadow with BP central charge.
+    The BP algebra is the Feigin-Semikhatov W_3^{(2)} algebra. On the
+    T-line (Virasoro direction), the shadow data uses the Virasoro
+    subalgebra shadow with BP central charge.
 
     For the J-line (u(1) direction), the shadow data is class G (depth 2)
     since J is a free current.

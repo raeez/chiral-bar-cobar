@@ -236,14 +236,11 @@ class TestAffineKM(unittest.TestCase):
         self.assertEqual(central_charge_sum_affine("E", 6), 156)  # E_6
         self.assertEqual(central_charge_sum_affine("E", 7), 266)  # E_7
 
-    def test_affine_critical_level_raises(self):
-        """kappa at critical level k=-h^v raises ValueError."""
-        with self.assertRaises(ValueError):
-            kappa_affine("A", 1, Fraction(-2))  # sl_2, h^v=2
-        with self.assertRaises(ValueError):
-            kappa_affine("A", 2, Fraction(-3))  # sl_3, h^v=3
-        with self.assertRaises(ValueError):
-            kappa_affine("E", 8, Fraction(-30))  # E_8, h^v=30
+    def test_affine_critical_level_kappa_vanishes(self):
+        """kappa vanishes at k=-h^v; only Sugawara central charge is undefined."""
+        self.assertEqual(kappa_affine("A", 1, Fraction(-2)), 0)   # sl_2, h^v=2
+        self.assertEqual(kappa_affine("A", 2, Fraction(-3)), 0)   # sl_3, h^v=3
+        self.assertEqual(kappa_affine("E", 8, Fraction(-30)), 0)  # E_8, h^v=30
 
 
 class TestWAlgebras(unittest.TestCase):

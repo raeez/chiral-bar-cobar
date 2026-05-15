@@ -1,7 +1,8 @@
 r"""Tests for bc_matrix_model_shadow_engine.py.
 
-Matrix model from shadow zeta: tests verifying the full bridge between
-the shadow obstruction tower and random matrix theory.
+Matrix-model diagnostics from the shadow obstruction tower. These tests
+separate exact finite scalar identities from conditional analytic or
+hierarchy claims.
 
 90+ tests covering:
 1. Shadow tower coefficients (Virasoro, Heisenberg, cross-verification)
@@ -10,21 +11,17 @@ the shadow obstruction tower and random matrix theory.
 4. Eigenvalue density and support (Gaussian and perturbed)
 5. Resolvent (asymptotics, Gaussian exact, branch cuts)
 6. Loop equations (Schwinger-Dyson verification)
-7. Genus expansion (F_g comparison, shadow vs matrix model)
+7. Genus expansion (scalar F_g interface vs shadow tower)
 8. Spectral curve (branch points, genus)
-9. Koszul complementarity (kappa + kappa' = 13, self-duality at c=13)
-10. Double-scaling exponents
+9. Verdier/Koszul branch complementarity (kappa + kappa' = 13)
+10. Tuned multicritical labels
 11. Kontsevich intersection numbers
 12. Shadow class dictionary
 
-Multi-path verification mandate (CLAUDE.md): every numerical result
-verified by at least 2 independent methods.
-
-Manuscript references:
-    thm:theorem-d (higher_genus_modular_koszul.tex)
-    thm:shadow-radius (higher_genus_modular_koszul.tex)
-    def:shadow-metric (higher_genus_modular_koszul.tex)
-    thm:riccati-algebraicity (higher_genus_modular_koszul.tex)
+Local source anchors:
+    chapters/examples/landscape_census.tex
+    compute/lib/utils.py
+    compute/lib/matrix_model_shadow.py
 """
 
 import cmath
@@ -35,6 +32,13 @@ from fractions import Fraction
 from sympy import Rational, bernoulli, factorial, simplify
 
 from compute.lib.bc_matrix_model_shadow_engine import (
+    # firewalls and normalizations
+    holographic_package_entries,
+    modular_koszul_primary_projections,
+    bar_koszul_object_firewall,
+    matrix_model_scope_firewall,
+    affine_kernel_normalizations,
+    virasoro_collision_kernel,
     # Section 0: shadow tower
     shadow_tower_coefficients,
     _virasoro_shadow_data,
@@ -86,6 +90,84 @@ PI = math.pi
 
 
 # ===========================================================================
+# 0. Firewalls and kernel normalization constants
+# ===========================================================================
+
+class TestFirewallsAndKernelNormalizations:
+    """Verify package arities and object/normalization firewalls."""
+
+    def test_holographic_package_has_seven_entries(self):
+        """H(T) has exactly seven entries in the canonical order."""
+        entries = holographic_package_entries()
+        assert entries == (
+            "A",
+            "A^i",
+            "A^!",
+            "C",
+            "r(z)",
+            "Theta_A",
+            "nabla^hol",
+        )
+        assert len(entries) == 7
+
+    def test_modular_koszul_package_has_six_primary_projections(self):
+        """Pi_X(L) has six projections and is distinct from H(T)."""
+        projections = modular_koszul_primary_projections()
+        assert projections == (
+            "Fact_X(L)",
+            "barB_X(L)",
+            "Theta_L",
+            "L_L",
+            "(V_L^br, T_L^br)",
+            "R_4^mod(L)",
+        )
+        assert len(projections) == 6
+        assert set(projections).isdisjoint(set(holographic_package_entries()))
+
+    def test_bar_koszul_hochschild_firewall(self):
+        """Omega(B(A)), A^!, and Z_ch^der(A) are three different objects."""
+        firewall = bar_koszul_object_firewall()
+        assert firewall["Omega(B(A))"] == "bar-cobar inversion, recovering A"
+        assert "Verdier/continuous-linear dual branch" in firewall["A^!"]
+        assert firewall["Z_ch^der(A)"] == "ChirHoch^*(A,A), the Hochschild/bulk object"
+        assert firewall["A^!"] != firewall["Z_ch^der(A)"]
+
+    def test_matrix_model_scope_firewall(self):
+        """Finite coefficients do not assert analytic or hierarchy theorems."""
+        firewall = matrix_model_scope_firewall()
+        assert "finite list S_2,...,S_rmax" in firewall["finite_scalar_coefficients"]
+        assert "exact only on the Gaussian branch" in firewall["stationary_primary_line_diagnostic"]
+        assert "not implied by finite shadow coefficients" in firewall["kw_tau_power"]
+        assert "descendant CohFT" in firewall["hierarchy_claim"]
+        assert "separate recursion theorem" in firewall["eo_recursion_claim"]
+        assert "separate input" in firewall["analytic_radius_claim"]
+        assert "independent analytic hypotheses" in firewall["all_genus_matrix_integral"]
+
+    def test_affine_trace_kz_normalizations_are_distinct(self):
+        """Raw collision k*Omega_tr/z and KZ Omega/((k+h^vee)z) are not equal."""
+        data = affine_kernel_normalizations(0, 2)
+        assert data["raw_collision"] == "k*Omega_tr/z"
+        assert data["kz_coefficient"] == "Omega/((k+h^vee)z)"
+        assert data["raw_collision_level_factor"] == Fraction(0)
+        assert data["kz_level_factor"] == Fraction(1, 2)
+        assert data["trace_to_kz_ratio"] == Fraction(0)
+
+    def test_affine_trace_to_kz_ratio(self):
+        """With Omega_KZ=Omega_tr, r_tr/r_KZ = k(k+h^vee)."""
+        data = affine_kernel_normalizations(3, 2)
+        assert data["raw_collision_level_factor"] == Fraction(3)
+        assert data["kz_level_factor"] == Fraction(1, 5)
+        assert data["trace_to_kz_ratio"] == Fraction(15)
+
+    def test_virasoro_collision_kernel_constants(self):
+        """Virasoro collision kernel is (c/2)/z^3 + 2T/z."""
+        kernel = virasoro_collision_kernel(26)
+        assert kernel["formula"] == "(c/2)/z^3 + 2T/z"
+        assert kernel["central_z_minus_3"] == Fraction(13)
+        assert kernel["stress_tensor_z_minus_1"] == Fraction(2)
+
+
+# ===========================================================================
 # 1. Shadow tower coefficients
 # ===========================================================================
 
@@ -119,7 +201,7 @@ class TestShadowTowerCoefficients:
         assert S4 == expected_S4
 
     def test_virasoro_kappa_is_c_over_2(self):
-        """AP39: kappa(Vir_c) = c/2."""
+        """kappa(Vir_c) = c/2."""
         for c_val in [1, 2, 10, 13, 26, 48]:
             kappa, _, _ = _virasoro_shadow_data(Fraction(c_val))
             assert kappa == Fraction(c_val, 2)
@@ -137,10 +219,9 @@ class TestShadowTowerCoefficients:
         assert coeffs[2] == Fraction(13)
 
     def test_virasoro_S3_equals_two(self):
-        """S_3 = alpha/3 * 3 = alpha... Actually S_3 = a_1/3 where a_1 = q1/(2*a0) = 12*kappa*alpha/(2*2*kappa) = 3*alpha.
-        S_3 = 3*alpha/3 = alpha = 2."""
+        """S_3 = a_1/3 = 2 for the Virasoro shadow metric."""
         # S_3 = a_1/3 = (12*kappa*alpha)/(2*2*kappa*3) = (12*alpha)/(12) = alpha = 2
-        # Wait: a_1 = q1/(2*a0) = 12*kappa*2 / (2*2*kappa) = 24*kappa/(4*kappa) = 6
+        # Directly, a_1 = q1/(2*a0) = 12*kappa*2 / (2*2*kappa) = 6
         # S_3 = a_1/3 = 6/3 = 2
         coeffs = shadow_tower_coefficients('virasoro', 26, r_max=4)
         assert coeffs[3] == Fraction(2)
@@ -170,6 +251,23 @@ class TestShadowTowerCoefficients:
             a2 = (q2 - a1 ** 2) / (2 * a0)
             S4_from_tower = a2 / 4
             assert coeffs[4] == S4_from_tower, f"S_4 mismatch at c={c_val}"
+
+    def test_virasoro_S5_known_formula(self):
+        """S_5 = -48/[c^2(5c+22)] from the Virasoro tower."""
+        for c_val in [1, 5, 10, 26]:
+            c_f = Fraction(c_val)
+            expected_S5 = Fraction(-48) / (c_f * c_f * (5 * c_f + 22))
+            coeffs = shadow_tower_coefficients('virasoro', c_val, r_max=5)
+            assert coeffs[5] == expected_S5
+
+    def test_virasoro_delta_is_not_S4(self):
+        """Delta = 8*kappa*S4 = 40/(5c+22), distinct from S4."""
+        c_f = Fraction(26)
+        kappa, _, S4 = _virasoro_shadow_data(c_f)
+        Delta = 8 * kappa * S4
+        assert S4 == Fraction(5, 1976)
+        assert Delta == Fraction(20, 76)
+        assert Delta != S4
 
     def test_custom_shadow_tower(self):
         """Custom shadow data: (kappa=1, alpha=0, S4=0) = Heisenberg."""
@@ -440,6 +538,23 @@ class TestResolvent:
         expected = 1.0 / z
         assert abs(omega - expected) < 0.01  # 1/z ~ 0.01 at z=100
 
+    def test_resolvent_asymptotic_negative_axis(self):
+        """The Gaussian square-root branch has omega(z) ~ 1/z at z -> -infinity."""
+        c_val = 26
+        z = complex(-100.0, 0.0)
+        omega = resolvent(c_val, z, r_max=2)
+        expected = 1.0 / z
+        assert abs(omega - expected) < 1e-6
+
+    def test_gaussian_resolvent_lower_boundary_density(self):
+        """For z=x-i0, Im omega/pi equals the Wigner density."""
+        c_val = 26
+        kappa_val = 13.0
+        x = 0.1
+        omega = resolvent(c_val, complex(x, -1e-8), r_max=2)
+        expected = wigner_semicircle(kappa_val, x)
+        assert abs(omega.imag / PI - expected) < 1e-6
+
     def test_resolvent_real_on_real_axis_outside_cut(self):
         """omega(z) is real for real z outside the support."""
         c_val = 26
@@ -501,8 +616,8 @@ class TestGenusExpansion:
             F = genus_expansion_coefficient(26, g)
             assert F > 0, f"F_{g} should be positive, got {F}"
 
-    def test_F_g_decay(self):
-        """F_g decays as 1/(2*pi)^{2g} (shadow double convergence)."""
+    def test_F_g_finite_window_decay(self):
+        """The sampled scalar F_g coefficients decrease in this genus window."""
         c_val = 26
         ratios = []
         for g in range(1, 6):
@@ -510,7 +625,7 @@ class TestGenusExpansion:
             F_g1_val = genus_expansion_coefficient(c_val, g + 1)
             if F_g_val > 0:
                 ratios.append(F_g1_val / F_g_val)
-        # Each ratio ~ 1/(2*pi)^2 ~ 0.0253
+        # The Bernoulli normalization gives small ratios in this range.
         for r in ratios:
             assert r < 0.1  # definitely decaying
 
@@ -547,7 +662,7 @@ class TestGenusExpansion:
     def test_lambda_fp_generating_function(self):
         """sum_{g>=1} lambda_g x^{2g} = (x/2)/sin(x/2) - 1.
 
-        Verify at x = 1 (moderate value where series converges).
+        Verify the finite partial sum at x = 1, below the first sine pole.
         """
         x = 1.0
         # Exact: (x/2)/sin(x/2) - 1
@@ -658,14 +773,14 @@ class TestKoszulComplementarity:
     """Verify Koszul duality relations for the matrix model."""
 
     def test_kappa_sum_equals_13(self):
-        """kappa(Vir_c) + kappa(Vir_{26-c}) = 13 (AP24)."""
+        """kappa(Vir_c) + kappa(Vir_{26-c}) = 13."""
         for c_val in [1, 5, 10, 13, 20, 25]:
             result = koszul_matrix_model(c_val, 1.0)
             assert result['kappa_sum_equals_13'], f"kappa sum != 13 at c={c_val}"
             assert abs(result['kappa_sum'] - 13.0) < 1e-12
 
     def test_self_dual_at_c_13(self):
-        """c = 13 is the Virasoro self-dual point (AP8)."""
+        """c = 13 is the Virasoro self-dual point."""
         result = koszul_matrix_model(13, 1.0)
         assert result['self_dual']
         assert abs(result['c'] - result['c_dual']) < 1e-12
@@ -677,7 +792,7 @@ class TestKoszulComplementarity:
             assert abs(result['c_dual'] - (26.0 - c_val)) < 1e-12
 
     def test_kappa_not_antisymmetric(self):
-        """kappa + kappa' = 13 != 0 (AP24: NOT anti-symmetric!)."""
+        """kappa + kappa' = 13, not an antisymmetry."""
         result = koszul_matrix_model(10, 1.0)
         assert result['kappa_sum'] > 0
         assert abs(result['kappa_sum'] - 13.0) < 1e-12
@@ -700,32 +815,41 @@ class TestKoszulComplementarity:
         assert abs(result['c_dual']) < 1e-12
         assert math.isnan(result['V_dual'])  # c=0 is degenerate
 
+    def test_koszul_result_keeps_object_firewall(self):
+        """The branch comparison does not identify A^! with inversion or bulk."""
+        result = koszul_matrix_model(10, 1.0)
+        assert result['dual_branch'] == 'Verdier/continuous-linear finite-type branch'
+        assert result['omega_bar_cobar_inversion'] is True
+        assert result['omega_bar_is_koszul_dual'] is False
+        assert result['z_ch_der_model'] == 'Z_ch^der(A)=ChirHoch^*(A,A)'
+        assert result['z_ch_der_is_koszul_dual'] is False
+
 
 # ===========================================================================
-# 12. Double-scaling exponent
+# 12. Tuned multicritical labels
 # ===========================================================================
 
-class TestDoubleScalingExponent:
-    """Verify string susceptibility exponents."""
+class TestTunedMulticriticalLabels:
+    """Verify labels after a separately imposed multicritical tuning."""
 
-    def test_gaussian_exponent(self):
-        """Gaussian (class G): gamma_str = -2/3."""
+    def test_gaussian_label(self):
+        """Gaussian (class G): gamma_str label = -2/3."""
         # At r_max = 2 (only S_2 nonzero): k=1, gamma = -2/3
         gamma = double_scaling_exponent(26, r_max=2)
         assert abs(gamma - (-2.0 / 3.0)) < 1e-12
 
-    def test_cubic_exponent(self):
-        """Cubic potential (class L, r_max=3): gamma_str = -2/5."""
+    def test_cubic_label(self):
+        """Cubic truncation (class L, r_max=3): gamma_str label = -2/5."""
         gamma = double_scaling_exponent(26, r_max=3)
         assert abs(gamma - (-2.0 / 5.0)) < 1e-12
 
-    def test_quartic_exponent(self):
-        """Quartic potential (class C, r_max=4): gamma_str = -2/7."""
+    def test_quartic_label(self):
+        """Quartic truncation (class C, r_max=4): gamma_str label = -2/7."""
         gamma = double_scaling_exponent(26, r_max=4)
         assert abs(gamma - (-2.0 / 7.0)) < 1e-12
 
-    def test_higher_multicritical(self):
-        """r_max=6: k=5, gamma_str = -2/11."""
+    def test_higher_window_label(self):
+        """r_max=6: k=5 label gives gamma_str = -2/11."""
         gamma = double_scaling_exponent(26, r_max=6)
         assert abs(gamma - (-2.0 / 11.0)) < 1e-12
 

@@ -2,10 +2,11 @@ r"""BC-84: Categorical zeta functions at roots of unity.
 
 Mathematical foundation
 -----------------------
-At q = exp(2*pi*i/(k+h^vee)), the quantum group U_q(g) has FINITELY many
-irreducible representations: the integrable highest-weight modules of the
-affine algebra hat{g} at level k.  The categorical zeta TRUNCATES to a
-finite sum, the "modular categorical zeta":
+At q_QG = exp(pi*i/(k+h^vee)), the quantum group U_q(g) has FINITELY
+many irreducible representations: the integrable highest-weight modules
+of the affine algebra hat{g} at level k.  The monodromy/Jones parameter
+is the square q_J = q_QG^2 = exp(2*pi*i/(k+h^vee)).  The categorical
+zeta TRUNCATES to a finite sum, the "modular categorical zeta":
 
     zeta^{mod}_{g,k}(s) = sum_{lambda integrable, nontrivial} dim_q(V_lambda)^{-s}
 
@@ -13,8 +14,8 @@ where dim_q is the quantum dimension (= ratio of S-matrix entries).
 
 KEY IDENTITY (sl_2 at level k):
     Integrable reps: V_0, V_1, ..., V_k with quantum dimensions
-    dim_q V_j = [j+1]_q = sin((j+1)*pi/(k+2)) / sin(pi/(k+2)),
-    where q = exp(2*pi*i/(k+2)).
+    dim_q V_j = [j+1]_{q_QG} = sin((j+1)*pi/(k+2)) / sin(pi/(k+2)),
+    where q_QG = exp(pi*i/(k+2)).
 
     The modular categorical zeta (excluding trivial V_0):
     zeta^{mod}_{sl_2,k}(s) = sum_{j=1}^{k} [j+1]_q^{-s}
@@ -33,7 +34,7 @@ VERLINDE FORMULA CONNECTION:
 
 SL_3 AT LEVEL K:
     Integrable weights: (a,b) with a,b >= 0 and a+b <= k.
-    Quantum dimension via the Weyl-Kac formula with q = exp(2*pi*i/(k+3)).
+    Quantum dimension via the Weyl-Kac formula with q_QG = exp(pi*i/(k+3)).
     dim_q V(a,b) = product over positive roots alpha of
     sin(<lambda+rho, alpha>*pi/(k+3)) / sin(<rho, alpha>*pi/(k+3))
 
@@ -273,7 +274,7 @@ def _g2_coroots_in_coroot_coords() -> List[Tuple[int, int]]:
     formula directly: sin-ratio with appropriate inner products.
 
     Actually, the cleanest approach: the quantum dimension formula for ANY simple
-    Lie algebra at level k with q = exp(2*pi*i/(k+h^vee)) is:
+    Lie algebra at level k with q_QG = exp(pi*i/(k+h^vee)) is:
 
     dim_q(V_lambda) = prod_{alpha > 0} sin(pi*(lambda+rho, alpha^vee)/(k+h^vee))
                                        / sin(pi*(rho, alpha^vee)/(k+h^vee))

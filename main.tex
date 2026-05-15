@@ -446,8 +446,12 @@ The local seed is the logarithmic form
 \eta_{12}=d\log(z_1-z_2)
 \]
 on the configuration space of two points of a smooth algebraic
-curve~$X$. On three points Arnold's relation is the nilpotence
-mechanism of the ordered chiral bar complex
+curve~$X$. On three points it obeys Arnold's relation
+\[
+\eta_{12}\wedge\eta_{23}+\eta_{23}\wedge\eta_{31}
++\eta_{31}\wedge\eta_{12}=0,
+\]
+the nilpotence mechanism of the ordered chiral bar complex
 \[
 \barB^{\mathrm{ord}}_X(\cA)=T^c(s^{-1}\bar\cA),
 \qquad |s^{-1}v|=|v|-1,
@@ -699,18 +703,98 @@ Throughout this manuscript:
 
 % ======================================================================
 %
-% PART I: THE BAR COMPLEX
+% PART I: FOUNDATIONS AND THE OPEN BEILINSON TOWER
 %
-% The proved core. Five theorems = four properties of the categorical
-% logarithm (existence, invertibility, branch structure, leading
-% coefficient) plus the coefficient ring. Nothing conjectural enters.
+% Beilinson levels 0-1: the tangential log curve (X, D, tau), the
+% factorisation dg-category C^op, the chart algebra A_b = End_C(b)
+% at a chosen vacuum b, and the Morita reconstruction theorem
+% identifying (C^op, b) up to Morita equivalence from A_b.
+%
+% Open quadrant. Cat & Chain presentation. Hypothesis package:
+% augmentation, completeness, finiteness on chosen weight grading.
 %
 % ======================================================================
 
-\part{The Bar Complex}
-\label{part:bar-complex}
+\part{Foundations and the Open Beilinson Tower}
+\label{part:foundations-beilinson-tower}%
+\phantomsection\label{part:bar-complex}% legacy alias for cross-references
+
+% --- Chapter-label aliases for cross-references using legacy ch:/chap: prefix variants ---
+\phantomsection\label{ch:bv-brst}%                       % alias of ch:v1-bv-brst (chapters/connections/bv_brst.tex)
+\phantomsection\label{ch:feynman}%                       % alias of ch:v1-feynman (chapters/connections/feynman_diagrams.tex)
+\phantomsection\label{ch:cobar}%                         % alias of chap:bar-cobar (chapters/theory/cobar_construction.tex)
+\phantomsection\label{ch:moonshine}%                     % alias of chap:moonshine
+\phantomsection\label{ch:higher-genus}%                  % alias of chap:higher-genus
+\phantomsection\label{ch:bershadsky-polyakov}%           % alias of chap:bershadsky-polyakov
+\phantomsection\label{ch:logarithmic-w-algebras}%        % alias of chap:logarithmic-w-algebras
+\phantomsection\label{ch:theorem-h-off-koszul-platonic}% % alias
+\phantomsection\label{ch:topologization-chain-level-platonic}% % alias
+\phantomsection\label{ch:y-algebras}%                    % alias of chap:y-algebras
+\phantomsection\label{ch:shadow-tower}%                  % alias of ch:shadow-tower-sub-subleading-platonic
+
+% Cross-volume chapter aliases (Vol II / Vol III chapters referenced from Vol I prose)
+\phantomsection\label{ch:phi-universal-trace}%           % Vol III chapters/theory/phi_universal_trace_platonic.tex
+\phantomsection\label{ch:ht-boundary}%                   % Vol II chapters/connections/holomorphic_topological.tex
+\phantomsection\label{ch:kontsevich-integral}%           % Vol II chapters/connections/kontsevich_integral.tex
+\phantomsection\label{ch:ym-boundary-theory}%            % Vol II chapters/connections/ym_boundary_theory.tex
+\phantomsection\label{ch:ym-instanton-screening}%        % Vol II chapters/connections/ym_instanton_screening.tex
+\phantomsection\label{ch:theorem-b-scope-platonic}%      % case-alias of ch:theorem-B-scope-platonic
+
+% More chapter-label aliases (canonical labels found in chapter files)
+\phantomsection\label{ch:chiral-koszul-pairs}%           % alias of chap:koszul-pairs
+\phantomsection\label{ch:chiral-climax-platonic}%        % alias of chap:climax-platonic
+\phantomsection\label{ch:hochschild-cohomology}%         % alias of chap:hochschild-calculus
+\phantomsection\label{ch:three-hochschild-unification-platonic}% % alias of chap:three-hochschild-unification
+\phantomsection\label{ch:chiral-hochschild-koszul}%      % alias of chap:deformation-theory
+\phantomsection\label{ch:cy-to-chiral-functor}%          % cross-volume Vol III ch:cy-to-chiral
+\phantomsection\label{V3-ch:cy-to-chiral}%               % canonical Vol III alias
+\phantomsection\label{chap:bar-complex}%                 % alias of part:bar-complex (legacy chapter-style ref)
+\phantomsection\label{chap:landscape-census}%            % alias of ch:landscape-census
+\phantomsection\label{chap:ordered-associative-chiral-kd}% % alias of ch:ordered-associative-chiral-kd
+\phantomsection\label{chap:shadow-tower-higher-coefficients}% % alias of ch:shadow-tower-higher-coefficients
+\phantomsection\label{chap:higher-genus-modular-koszul}% % alias for the higher-genus-modular-koszul chapter
+
+% Final round of chapter-label aliases (semantic redirects)
+\phantomsection\label{ch:characteristic-datum}%          % alias of part:characteristic-datum (legacy chapter-style ref to the part)
+\phantomsection\label{ch:chiral-quantum-group-equivalence}% % alias of ch:ordered-associative-chiral-kd (chiral QG equivalence theorem lives there)
+\phantomsection\label{ch:curved-dunn-higher-genus-topologisation}% % alias of ch:topologization-chain-level-platonic
+\phantomsection\label{ch:genus-complete}%                % chapter genus_complete.tex (no chapter label inscribed; alias points here)
+\phantomsection\label{ch:hcs-yangian-etale}%             % cross-volume Vol III chapter
+\phantomsection\label{ch:k3e-bkm-chapter}%               % cross-volume Vol III V3-ch:k3e-bkm
+\phantomsection\label{chap:factorization-swiss-cheese}%  % alias for Swiss-cheese chapter (Vol I or Vol II)
 
 \noindent
+Vol I of the four-quadrant programme treats the Open quadrant: a
+factorisation dg-category $\cC^{\op}$ on a tangential log curve
+$(X, D, \tau)$, a chosen vacuum $b \in \cC^{\op}$, and the chart
+algebra $A_b = \End_\cC(b)$. The five-level open Beilinson tower
+\[
+ \cC^{\op} \;\rightleftarrows\; A_b
+ \;\rightleftarrows\; B(A_b)
+ \;\xrightarrow{\;}\; Z^{\mathrm{der}}_{\mathrm{ch}}(A_b)
+ \;\xrightarrow{\;}\; \mathsf{Line}(A_b)
+ \;\xrightarrow{\;}\; (\kappa,\,Z_g,\,\Phi_N)
+\]
+organises the manuscript: Part~I builds levels~$0$ and~$1$; Part~II
+builds the bar coalgebra at level~$2$ via Theorem~A; Part~III builds
+the derived chiral centre at level~$3$ via Theorems~H and~B;
+Part~IV stratifies the chart algebra into five archetypes; Part~V
+builds the modular tower at levels~$4$ and~$5$ via Theorem~D;
+Part~VI inscribes the seven-face dictionary, the Master
+Reconstruction Theorem, the cross-volume vertical equivalences, and
+the open frontier.
+
+The reader entering this part has already met the tangential log
+curve, the factorisation dg-category, and the augmented chart algebra
+in the Heisenberg overture
+(Chapter~\ref{ch:heisenberg-frame}). Part~I supplies the
+foundations needed to develop those constructions for every chiral
+algebra in the standard landscape: classical Koszul duality recalled,
+the three depth invariants $p_{\max} \to k_{\max} \to r_{\max}$,
+the configuration-space geometry on which the bar differential will
+later be defined, and the Koszul-pair structure
+$(A_b, A_b^!)$ entering Theorem~A.
+
 Place sections $a_1, \ldots, a_n$ of a chiral algebra~$\cA$ at
 distinct points $z_1, \ldots, z_n$ on a smooth curve~$X$. Wedge the
 tensor $a_1(z_1) \otimes \cdots \otimes a_n(z_n)$ against the
@@ -798,6 +882,65 @@ the constructive content is the finite-order engine.
 % =====================================
 \include{chapters/theory/configuration_spaces}
 
+% ======================================================================
+%
+% PART II: THE BAR-COBAR ENGINE
+%
+% Beilinson level 1 ↔ 2: the bar coalgebra B(A_b) = T^c(s^{-1} bar A_b)
+% at level 2, with the bar-cobar adjunction (B, Omega) intertwined with
+% Verdier duality on Ran(X). Theorem A (parametric strength: weak /
+% strong / strongest-rejected) is the load-bearing reconstruction
+% theorem at this step. Chain-homotopy norm N(A_b) (chapter
+% \ref{ch:theorem-A-infinity-2}, conv:A-two-kappa-shriek).
+%
+% Open quadrant. Cat & Chain presentation, four-lane discipline
+% L1 chain / L2 Quillen / L3 (∞,1) / L4 (∞,2)-properad. Hypothesis
+% package: augmented + complete + finite-dim graded; for class~M off
+% the strict lane, the coderived/contraderived Positselski ambient
+% replaces the chain-level lane.
+%
+% ======================================================================
+
+\part{The Bar–Cobar Engine}
+\label{part:bar-cobar-engine}%
+\phantomsection\label{part:characteristic-datum}% legacy alias: characteristic-datum apparatus now lives in Part II
+
+\noindent
+Part~\ref{part:foundations-beilinson-tower} fixes the level-$1$ chart
+algebra $A_b = \End_\cC(b)$ at a chosen vacuum $b\in\cC^{\op}$. The
+question Part~\ref{part:bar-cobar-engine} answers is the natural one:
+\emph{Does $A_b$ admit a coalgebra-level dual that recovers $A_b$ on
+inversion, intertwined with Verdier duality on the Ran prestack?}
+
+Theorem~A is the affirmative answer in parametric strength. The bar
+functor
+$\Bbarch_X\colon \ChirAlg^{\aug}_X \to \ChirCoAlg^{\conil}_X$
+admits a left adjoint $\Omegach_X$ (the cobar functor); the counit
+$\varepsilon\colon \Omegach_X\Bbarch_X(A_b) \xrightarrow{\sim} A_b$
+is a chain-level quasi-isomorphism on the Koszul locus. Off the Koszul
+locus, the strongest possible reading
+\textup{(}$K^2 \simeq \mathrm{id}$ \emph{everywhere}\textup{)} fails; it
+is replaced by Theorem~H \textup{(}Hochschild concentration in
+$\{0,1,2\}$, Part~\ref{part:bulk}\textup{)} on the completed ambient.
+The categorical logarithm therefore exists in two flavours: a strict
+chain-level adjunction on $\Kosz(X)$, and a coderived/contraderived
+Positselski equivalence off the strict lane.
+
+Within Theorem~A, the universal Loday--Vallette twisting-morphism
+contraction $h_{\mathrm{LV}}$ specialises along the convolution
+$L_\infty$-algebra $\fg^{\Eone}_{A_b}=\Hom^{\fact}_X(\Bbarch_X(A_b),A_b)$
+to a chain-homotopy norm
+$\mathcal N(A_b) = \kappa(A_b) + \kappa^!_{\mathrm{LV}}(A_b)$
+\textup{(}the Verdier-Ran-on-bar reading at level~$2$,
+Convention~\ref{conv:A-two-kappa-shriek}\textup{);} this is distinct
+from the master-concordance algebra-level scalar Verdier sum
+$K^\kappa(A_b)$ \textup{(}level-$1$ reading\textup{).}
+The two scalars coincide only on class~$\mathsf B$ \textup{(}Mukai
+conductor $8$\textup{);} on the other archetypes,
+$\mathcal N$ records the chain-level pairing the Priddy contraction
+inverts, while $K^\kappa$ records the family-stratum complementarity
+ceiling that enters Theorem~C.
+
 % =====================================
 % Chapter 5: The Geometric Bar Complex
 % Bar construction, Arnold relations, signs, coalgebra structure.
@@ -857,13 +1000,109 @@ the constructive content is the finite-order engine.
 % =====================================
 \include{chapters/theory/theorem_A_infinity_2}
 
-% Core theorem sharpenings:
+% FTM seven-fold TFAE at genus zero (hub-and-spoke).
+\input{chapters/theory/ftm_seven_fold_tfae_platonic}
+
+% --- Bar-Cobar Engine: characteristic-datum apparatus ---
+% (Migrated from Part V to Part II in the platonic-ideal reconstitution:
+% the characteristic-datum machinery — fingerprint, branch-line
+% reductions, computational methods, universal conductor K, E_1
+% modular Koszul, ordered associative chiral KD, E_n Koszul duality —
+% extends Theorem A's level 1↔2 adjunction with the operadic
+% refinement that produces the modular characteristic kappa from the
+% bar-coalgebra structure.)
+
+% Part II frame: one fingerprint, five slots, five theorems.
+\input{chapters/frame/part_ii_platonic_introduction}
+
+\noindent
+The modular characteristic $\kappa(A_b)$ is the linear leading term of
+the categorical logarithm. The shadow obstruction tower
+$\kappa \to \Delta \to \mathfrak C \to \mathfrak Q \to \cdots$
+collects the higher-order finite-degree invariants; the all-degree
+limit is the universal Maurer--Cartan element $\Theta_{A_b}$
+(Theorem~\ref{thm:mc2-bar-intrinsic}). The chapters that follow build
+this tower constructively.
+
+% Branch-line reductions and analytic shadows (level-2 deformation
+% complex apparatus).
+\input{appendices/nonlinear_modular_shadows}
+\input{appendices/branch_line_reductions}
+
+% Computational methods: three-way verification of shadow obstruction
+% towers, bar cohomology, genus-2 free energies, DS-transferred towers,
+% explicit MC elements, N=2 SCA, and the decisive E_8 test.
+\input{chapters/theory/computational_methods}
+
+% Universal Conductor functor K = -c_ghost(BRST(.)) consolidating
+% per-family kappa formulas into ONE universal invariant on
+% BRST-gauged chiral algebras. Trinity Theorem K_E = K_c = K_g.
+\input{chapters/theory/universal_conductor_K_platonic}
+
+% --- E_1 wing: ordered associative parallel of Theorem A ---
+% E_1 modular Koszul duality, ordered chiral Koszul duality, E_n bar
+% complexes. The commutative engine uses symmetric configuration
+% spaces and the Fulton--MacPherson operad; the E_1 wing uses ordered
+% configurations and the ribbon modular operad.
+\input{chapters/theory/e1_modular_koszul}
+\input{chapters/theory/ordered_associative_chiral_kd}
+\input{chapters/theory/en_koszul_duality}
+
+% ======================================================================
+%
+% PART III: THE BULK
+%
+% Beilinson level 3: the derived chiral centre
+% Z^{der}_{ch}(A_b) = ChirHoch^bullet(A_b, A_b)
+% as the bulk identified with the level-3 reconstruction theorem.
+% Theorem H concentration in {0,1,2} (with completion for class M);
+% Theorem B Positselski inversion on the Koszul locus.
+%
+% Open quadrant. Cat & Chain presentation. Hypothesis package:
+% finiteness + completion (with class-M needing
+% completed/pro/J-adic). The bar coalgebra B(A_b) at level~2 is the
+% twisting datum, NOT the bulk; the bulk is Z^{der}_{ch}(A_b)
+% (Master Pattern MA-4 firewall).
+%
+% ======================================================================
+
+\part{The Bulk}
+\label{part:bulk}
+
+\noindent
+Part~\ref{part:bar-cobar-engine} produced the bar coalgebra
+$\Bbarch_X(A_b)$ at level~$2$. The reader will reasonably ask: where
+is the bulk algebra of the chart $A_b$? It is tempting to identify
+the bar coalgebra with the bulk, since the bar mediates between
+$A_b$ and its Verdier dual; this identification is wrong
+\textup{(}Master Pattern MA-4\textup{).} The bulk is the
+\emph{derived chiral centre} $Z^{\mathrm{der}}_{\mathrm{ch}}(A_b) =
+\ChirHoch^\bullet(A_b, A_b)$ at level~$3$ of the Beilinson tower; the
+bar coalgebra at level~$2$ is the twisting datum that resolves the
+diagonal bimodule $A_b$ over $A_b\otimes A_b^{\op}$ in the Hochschild
+calculus, but it is not the centre.
+
+Theorem~H sharpens the bulk: $\ChirHoch^\bullet(A_b)$ on the Koszul
+locus is concentrated in degrees $\{0,1,2\}$; on
+$V_k(\mathfrak g)$ at non-critical level
+$\ChirHoch^1 \cong \mathfrak g$ and $\ChirHoch^0,\ChirHoch^2$ are
+both one-dimensional, so the Hochschild polynomial is
+$P_{V_k(\mathfrak g)}(t) = 1 + \dim(\mathfrak g)\,t + t^2$
+\textup{(}verified for $\mathfrak{sl}_N$, $N \in \{2,3,4,5,6,10\}$ in
+\texttt{compute/lib/chiral\_hochschild\_engine.py}\textup{).}
+Theorem~B inscribes the strict bar--cobar inversion
+$\Omegach_X(\Bbarch_X(C))\xrightarrow{\sim} C$ on the Koszul locus and
+the weight-completed Positselski lane off it. The five-object
+firewall keeps the chart algebra, the bar coalgebra, the
+cohomology coalgebra, the Verdier dual, and the derived chiral
+centre distinct: bar $\neq$ bulk
+\textup{(}MA-4\textup{)}; $\Omega B(A_b) = A_b$ is bar--cobar
+inversion, not Koszul duality \textup{(}MA-4 corollary\textup{)}.
+
 % Theorem B scope: on/off Koszul locus sharpening.
 \input{chapters/theory/theorem_B_scope_platonic}
 % Theorem H off-Koszul formulation.
 \input{chapters/theory/theorem_h_off_koszul_platonic}
-% FTM seven-fold TFAE at genus zero (hub-and-spoke).
-\input{chapters/theory/ftm_seven_fold_tfae_platonic}
 % Koszulness characterization (vii) at multi-weight.
 \input{chapters/theory/koszulness_vii_multiweight_platonic}
 % Three Hochschild theories: chain maps, cohomological comparison.
@@ -873,197 +1112,20 @@ the constructive content is the finite-order engine.
 % MC3 on eval-generated core: five-family thick generation.
 \input{chapters/theory/mc3_five_family_platonic}
 
-% =====================================
-% Chapter 8: Higher Genus Extension and Quantum Corrections
-% From genus 0 to all genera. Deformation-obstruction complementarity.
-% =====================================
-% Stub dispatcher removed from live build; compile the substantive chapter files directly.
-% \include{chapters/theory/higher_genus}
-\clearpage
-\input{chapters/theory/higher_genus_foundations}
-\input{chapters/theory/higher_genus_complementarity}
-\input{chapters/theory/theorem_C_refinements_platonic}
-\input{chapters/theory/higher_genus_modular_koszul}
-\clearpage
-% Overlap archived.
-% omitted: chapters/theory/higher_genus_full.tex
-
-% Higher genus inversion theorem: induction on moduli space strata.
-% Merged into higher_genus; preserved at
-% archive/legacy/higher_genus_quasi_isomorphism_legacy.tex.
-% omitted: chapters/theory/higher_genus_quasi_isomorphism.tex
-
-% Koszul duality across genera: absorbed into higher_genus.tex §sec:koszul-across-genera.
-% Original standalone file preserved at chapters/theory/koszul_across_genera.tex.
-% omitted: chapters/theory/koszul_across_genera.tex
-
+% --- Bulk content: derived chiral centre and Hochschild calculus ---
+% (Migrated from Part V to Part III in the platonic-ideal reconstitution:
+% these chapters develop level-3 Bulk material — chiral Hochschild
+% complexes, modules, quantum corrections, Hochschild cohomology, and
+% the chain-level topologization that lifts the bar coalgebra to the
+% derived centre.)
 \include{chapters/theory/chiral_hochschild_koszul}
-
-% Three-level hierarchy: compressed into introduction.tex rem:three-level-dictionary.
-% Original standalone file preserved at chapters/theory/classical_to_chiral.tex.
-% omitted: chapters/theory/classical_to_chiral.tex
-
 \include{chapters/theory/chiral_modules}
 \include{chapters/theory/poincare_duality_quantum}
 \include{chapters/theory/quantum_corrections}
-
-% The filtered-curved hierarchy: when does filtering degenerate to curved?
-% Virasoro (curved) vs. W_3 (truly filtered). Convergence criteria.
-% \input (not \include): continues within the preceding chapter (Quantum Corrections)
 \input{chapters/theory/filtered_curved}
-
-% Chiral Hochschild cohomology, cyclic structure, Connes operator,
-% the Hochschild-cyclic spectral sequence with explicit E_2 computations.
-% \input (not \include): continues within the preceding chapter
 \input{chapters/theory/hochschild_cohomology}
 
-% =====================================
-% The Motivic Shadow Tower: S_r(A) in MZV^mot, GRT-motivic coaction,
-% Kummer-congruence prediction for Z_g closed forms, L^sh pole structure
-% kappa-motivic vs beta-modular split.
-% Depends on Vol II GRT-parametrized seven faces.
-% =====================================
-\include{chapters/theory/motivic_shadow_tower}
-
-% Platonic inscription (2026-04-17) -- full class-M motivic rationality:
-% Extends thm:virasoro-motivic-rationality-all-r from Virasoro to the
-% complete class M (W_N principal, BP Arakawa, W_infty generic Psi),
-% via the structural E_1-depth-1 theorem. Closes the E_1-vs-E_2 depth
-% distinction (thm:e1-vs-e2-mzv-depth-distinction).
-\include{chapters/theory/motivic_shadow_full_class_m_platonic}
-
-% Platonic master narrative (2026-04-17) -- Quadrichotomy Theorem,
-% Riccati master equation H^2 = t^4 Q_c, five corollaries, Borel-
-% geometric layer (iter 30-77). Sets the frame for the entire
-% shadow-tower block: every subsequent shadow_tower_*.tex chapter is
-% a subordinated lemma, witness, or asymptotic-layer specialisation.
-\input{chapters/theory/shadow_tower_quadrichotomy_platonic}
-
-% Shadow tower higher coefficients:
-% extension to higher coefficients S_r for r >= 5.
-\input{chapters/theory/shadow_tower_higher_coefficients}
-% Sub-subleading large-c Laurent layer: Gamma_r = A_r[484/25 +
-% 22(r-4)(r-5)/45 + (r-4)(r-5)(r-6)(r-7)/972], with
-% sporadicity of the Kummer-irregular prime 691 at r=8.
-\input{chapters/theory/shadow_tower_sub_subleading_platonic}
-% Conformal anomaly rigidity and its complementarity with Koszulness.
-\input{chapters/theory/conformal_anomaly_rigidity_platonic}
-% Chern-Weil level-shift theorem (connection kappa to the genus tower).
-\input{chapters/theory/chern_weil_level_shift_platonic}
-% Clutching uniqueness on the socle of the tautological ring.
-\input{chapters/theory/clutching_uniqueness_platonic}
-% Z_g Kummer-Bernoulli: Verlinde polynomial closed form + Kummer prediction.
-\input{chapters/theory/z_g_kummer_bernoulli_platonic}
-% Higher Kummer-irregular arithmetic duality: extends {691, 3617} to the
-% tower {691, 3617, 43867, 283, 617, 131, 593} through r = 13 (2026-04-17).
-\input{chapters/theory/higher_kummer_arithmetic_duality_platonic}
-% All-tier Laurent stratification via a bivariate hypergeometric
-% generating function (2026-04-17): Tier-K(r)/A_r = (-1)^(K+1) Sum
-% C(K-1,m) tau^(K-1-m) (r-4)_(2m) / (9^m m! (m+1)!) for every K >= 1,
-% proved via F(r,u) = (1/(1+tau u)) 2F1((4-r)/2, (5-r)/2; 2; -4u/(9(1+tau u))).
-\input{chapters/theory/all_tier_generating_function_platonic}
-
-% ======================================================================
-%
-% PART II: THE CHARACTERISTIC DATUM
-%
-% Ring 2 of the three concentric rings: the nonlinear modular shadow
-% obstruction tower kappa -> Delta -> [C] -> o^(r) -> Theta. The
-% algebraic engine extended beyond the linear regime into the genuine
-% geometry of complementarity, the graph calculus, and the full
-% Maurer--Cartan equation at all genera.
-%
-% ======================================================================
-
-\part{The Characteristic Datum}
-\label{part:characteristic-datum}
-
-% Part II introduction: one fingerprint, five slots, five theorems.
-\input{chapters/frame/part_ii_platonic_introduction}
-
-\noindent
-The modular characteristic~$\kappa(\cA)$ is the
-linear leading term of the categorical logarithm: at degree~$2$,
-$\kappa(\cA)=\mathrm{av}(r(z))$ in the abelian and scalar families,
-while non-abelian affine Kac--Moody satisfies
-$\kappa(V_k(\fg))=\mathrm{av}(r(z))+\dim(\fg)/2$. Even this scalar is
-extracted from the collision residue $r(z)$ by a
-$\Sigma_2$-coinvariant integral on the Fulton--MacPherson
-compactification $\overline{C}_2(X)$, so the shadow tower is rooted
-in curve geometry from the start.
-Part~\ref{part:characteristic-datum} develops the full nonlinear
-structure: the shadow obstruction tower
-$\kappa \to \Delta \to \mathfrak{C} \to \mathfrak{Q} \to \cdots$,
-each level a constructive finite-order invariant with obstruction
-classes in the cyclic deformation complex; the branch-line reductions
-that extract structural theorems from finite-dimensional quotients;
-and the computational methods that verify every formula by at least
-three independent paths. The all-degree limit is the universal
-Maurer--Cartan element~$\Theta_\cA$, proved by the bar-intrinsic
-construction (Theorem~\ref{thm:mc2-bar-intrinsic}).
-
-\input{appendices/nonlinear_modular_shadows}
-
-% Branch-line reductions: genus-2 transparency, universal genus-3 constant,
-% spectral cumulant hierarchy. The computational heart of Ring 2.
-\input{appendices/branch_line_reductions}
-
-% Computational methods: three-way verification of shadow obstruction towers,
-% bar cohomology, genus-2 free energies, DS-transferred towers,
-% explicit MC elements, N=2 SCA, and the decisive E_8 test.
-\input{chapters/theory/computational_methods}
-
-% Universal Conductor functor K = -c_ghost(BRST(.)) consolidating per-family
-% kappa formulas into ONE universal invariant on BRST-gauged chiral algebras.
-% Trinity Theorem K_E = K_c = K_g; eight per-family corollaries; five
-% falsifiable predictions; cross-volume bridge to Vol III's kappa_BKM via
-% the two-stage CY-to-chiral factorisation Phi_d = Sp^ch_{Sigma_{d-1},C}
-% composed with Phi^FA_d (K3-fibre specialisation on K3-fibered Class A only).
-% K is the FIRST characteristic datum of Part II.
-\input{chapters/theory/universal_conductor_K_platonic}
-
-% ======================================================================
-%
-% E_1 WING (absorbed into Part II: The Characteristic Datum)
-%
-% The ordered (associative) parallel to the commutative engine.
-% E_1 modular Koszul duality, ordered chiral Koszul duality,
-% E_n higher-dimensional bar complexes. The commutative engine
-% (Parts I--II) uses symmetric configuration spaces and the
-% Fulton--MacPherson operad; the E_1 wing uses ordered
-% configurations and the ribbon modular operad.
-%
-% ======================================================================
-
-%; E_1 Wing: absorbed into Part II (The Characteristic Datum) --
-
-\noindent
-The commutative engine of Parts~\ref{part:bar-complex}--\ref{part:characteristic-datum} uses symmetric configurations
-and the Fulton--MacPherson operad. The $E_1$ wing develops the
-ordered parallel: ribbon modular operads, $\mathsf{FAss}$,
-$E_1$ convolution algebras, ordered shadow obstruction towers, and the
-five $E_1$ theorem counterparts on their stated genus surfaces. The Catalan
-numbers govern the depth-$0$ layer; the classical $r$-matrix appears
-at degree~$2$, the Drinfeld associator at degree~$3$, and the quartic
-$R$-matrix identity at degree~$4$. The $\En$ hierarchy then lifts
-the entire mechanism from curves to higher-dimensional manifolds.
-
-% =====================================
-% E₁ MODULAR KOSZUL DUALITY
-% Ribbon modular operad, FAss, E₁ convolution algebra, E₁ shadow
-% Postnikov tower, and the five main theorems A^{E₁}--H^{E₁} at
-% all genera.
-% =====================================
-\input{chapters/theory/e1_modular_koszul}
-
-% ===================================== Ordered Associative Chiral Koszul Duality% Diagonal bicomodule, Hochschild-coHochschild dictionary, open trace formalism.
-\input{chapters/theory/ordered_associative_chiral_kd}
-
-% E_n Koszul duality: higher-dimensional bar complexes,
-% Totaro relations, connection to Ayala--Francis, the n=2 case.
-\input{chapters/theory/en_koszul_duality}
-
-% Platonic inscriptions (2026-04-16) -- E_n chain-level sharpenings:
+% --- E_n chain-level sharpenings (Bulk continued, level 3 -> derived centre) ---
 % Strict chain-level topologization for affine Kac-Moody.
 \input{chapters/theory/topologization_chain_level_platonic}
 % E_3 identification at chain level.
@@ -1071,41 +1133,70 @@ the entire mechanism from curves to higher-dimensional manifolds.
 % Genus-2 doubly-dynamical Yang-Baxter equation (face model, Fay trisecant).
 \input{chapters/theory/genus_2_ddybe_platonic}
 
-% The open/closed realization: proved theorem establishing the correct
-% architecture. The derived center is the universal bulk (not the bar
-% complex); the open factorization category is the primitive datum;
-% modularity is trace plus clutching on the open sector. Capstone of
-% Part II: bridges the closed-sector engine to the open/closed world
-% of Volume II.
+% The open/closed realization: derived centre is the universal bulk
+% (NOT the bar complex); modularity is trace plus clutching on the
+% open sector. Climax of Part III: Theorem H bridge to Vol II.
 \input{chapters/connections/thqg_open_closed_realization}
 
-% ======================================================================
-%
-% Two equations: Part II to Part III hinge.
-%
-% The chapter pivots Volume I from the characteristic datum (Part II)
-% to the standard landscape (Part III) via the two equations
-% d_bar = KZ^*(nabla_Arnold), kappa(A) = -c_ghost(BRST(A)).
-% Five main theorems A-D+H descend as corollaries; four classical
-% theorems (Drinfeld-Kohno, Verlinde, Borcherds, Arnold) become
-% specialisations. Cross-volume bridge to Vol II (Phi_hol) and
-% Vol III (Phi, universal trace identity at K3-fibered Class A).
-%
-% ======================================================================
-
+% Chiral climax: the Bulk's structural endpoint. Two equations
+% d_bar = KZ^*(nabla_Arnold), kappa(A) = -c_ghost(BRST(A)) ground
+% the level-3 derived centre in the level-1 chart and level-5 modular
+% scalar.
 \input{chapters/theory/chiral_climax_platonic}
 
+% =====================================
+% Chapter 8: Higher Genus Extension and Quantum Corrections
+% From genus 0 to all genera. Deformation-obstruction complementarity.
+% =====================================
+% Stub dispatcher removed from live build; compile the substantive chapter files directly.
+% \include{chapters/theory/higher_genus}
+\clearpage
+
 % ======================================================================
 %
-% PART III: THE STANDARD LANDSCAPE
+% PART IV: THE FIVE-ARCHETYPE LANDSCAPE
 %
-% What the engine produces. Each family computed through the full
-% programme: bar complex, Koszul dual, genus tower, modular characteristic.
+% The 5x5 kappa-stratification matrix on G/L/C/M/B archetypes. Each
+% chart algebra A_b admits five distinct kappa-measurements; the
+% collapse pattern across the 5 columns is the classification axis.
+% K3 x E anchors row B at (0, 0, 3, 5, 24); rows G, L, C, M have
+% a single non-zero entry in kappa^Heis_ch (rank of the canonical
+% Heisenberg subVOA).
 %
 % ======================================================================
 
-\part{The Standard Landscape}
+\part{The Five-Archetype Landscape}
 \label{part:standard-landscape}
+
+\noindent
+Parts~\ref{part:bar-cobar-engine}--\ref{part:bulk} produced, for every
+augmented chart algebra $A_b$, the bar coalgebra $\Bbarch_X(A_b)$, its
+derived chiral centre $Z^{\mathrm{der}}_{\mathrm{ch}}(A_b)$, and the
+Hochschild polynomial $P_{A_b}(t)$. The reader will reasonably ask:
+\emph{across the standard landscape of vertex algebras, how does the
+chart $A_b$ stratify, and what coordinates classify the strata?}
+
+The answer is the $5{\times}5$ $\kappa$-stratification matrix on the
+five archetypes $\mathsf G/\mathsf L/\mathsf C/\mathsf M/\mathsf B$
+with shadow depth $r_{\max} \in \{2, 3, 4, \infty, 5\}$. Each chart
+algebra admits five distinct $\kappa$-measurements
+\textup{(}categorical, chiral Hodge supertrace, Heisenberg-Mukai
+chiral shadow, Borcherds-Kac-Moody weight, fibre Euler
+characteristic\textup{);} the collapse pattern across columns is the
+classification axis. K3$\times E$ anchors row~$\mathsf B$ at
+$(0, 0, 3, 5, 24)$ and is the unique row with all five entries
+non-zero. The other rows collapse: $\mathsf G,\mathsf L,\mathsf C,
+\mathsf M$ have at most one non-zero entry
+$\kappa^{\mathrm{Heis}}_{\mathrm{ch}}$ recording the rank of the
+canonical Heisenberg subVOA \textup{(}Cartan
+$\mathfrak h \subset \fg$ for class $\mathsf L$;
+trivial for class $\mathsf M$ at generic $c$; rank-$1$ for class
+$\mathsf G$\textup{).} The modular characteristic $\kappa(A_b)$
+\textup{(}e.g.\ $c/2$ for $\mathrm{Vir}_c$,
+$\dim(\fg)(k+h^\vee)/(2h^\vee)$ for $V_k(\fg)$\textup{)} is a
+\emph{separate} invariant, recorded in
+Table~\ref{tab:master-invariants}; it is not one of the five
+stratification coordinates.
 
 \include{chapters/frame/part_iii_platonic_introduction}
 
@@ -1279,9 +1370,8 @@ inversion, not type exchange.
 \input{chapters/examples/yangians_foundations}
 \input{chapters/examples/yangians_computations}
 \input{chapters/examples/yangians_drinfeld_kohno}
-% Exceptional-type Yangian Koszul duality (2026-04-17): five-family closure
-% for g in {E_6, E_7, E_8, F_4, G_2} via GRW18 PBW + Chevalley extension +
-% filtered-CDG template; unconditional all simple types.
+% Exceptional-type Yangian Koszul duality: finite RTT inverse-kernel
+% criterion and obstruction theorem for g in {E_6, E_7, E_8, F_4, G_2}.
 \input{chapters/examples/exceptional_yangian_koszul_duality_platonic}
 
 % =====================================
@@ -1314,19 +1404,64 @@ inversion, not type exchange.
 
 % ======================================================================
 %
-% PART IV: PHYSICS BRIDGES
+% PART V: THE MODULAR TOWER
+% (relocated to come BEFORE the physics bridges, which absorb into
+% it as the level-4/level-5 witnesses of obs_g = kappa * lambda_g.)
 %
-% The categorical logarithm does not live in isolation. Its bar
-% differential is the BRST differential of a gauge theory; its genus
-% tower is the string perturbation series; its critical-level
-% specialization recovers the algebra of opers. Part IV traces
-% these bridges: bar constructions, BRST complexes, genus expansions,
-% and opers as concrete images of the same collision calculus.
+% Beilinson levels 4-5: line/brane operators and the modular trace +
+% clutching package. Theorem D obs_g(A_b) = kappa(A_b) * lambda_g
+% on the uniform-weight scalar lane. The Borel-Riccati shadow tower
+% with closed form |omega|^2(c) = c^2(5c+22)/[4(45c+218)] is the
+% modular spine.
+%
+% Open quadrant. Cat & Chain presentation. Modularity is NOT an
+% intrinsic closed-algebra property (MA-3 firewall): it is the
+% trace + clutching package on the open category.
 %
 % ======================================================================
 
-\part{Physics Bridges}
-\label{part:physics-bridges}
+\part{The Modular Tower}
+\label{part:modular-tower-physics}%
+\phantomsection\label{part:physics-bridges}% legacy alias
+
+\noindent
+Parts~\ref{part:bar-cobar-engine}--\ref{part:standard-landscape}
+construct the chart algebra $A_b$, the bar coalgebra
+$\Bbarch_X(A_b)$, the derived chiral centre
+$Z^{\mathrm{der}}_{\mathrm{ch}}(A_b)$, and the
+$5{\times}5$ $\kappa$-stratification matrix that classifies $A_b$
+into one of five archetypes. The reader will reasonably ask: how
+does this algebraic spine globalise across the moduli of curves?
+What governs the genus expansion of the partition function
+$Z_g(A_b)$, and what universal invariant of $A_b$ controls every
+genus simultaneously?
+
+The answer is Theorem~D and the modular tower at levels~$4$ and~$5$
+of the open Beilinson tower. At level~$4$ the line/brane operators of
+$A_b$ form a category $\mathsf{Line}(A_b)$ over the moduli of stable
+curves $\overline{\cM}_{g,n}$. At level~$5$, the modular trace
+$\Tr_{\cC}\colon \mathsf{Line}(A_b) \to \cO_{\overline{\cM}_{g,n}}$
+together with the clutching morphisms (compatible with separating /
+non-separating boundary divisors) produce the partition function
+$Z_g(A_b)$, the modular characteristic $\kappa(A_b)$, and the
+obstruction class
+$\mathrm{obs}_g(A_b) \in H^*(\overline{\cM}_{g,n})$.
+
+Theorem~D states $\mathrm{obs}_g(A_b) = \kappa(A_b)\,\lambda_g$ on
+the uniform-weight scalar lane. The Borel-Riccati spectral analysis
+of the shadow-tower coefficients $S_r$ closes a quadrichotomy
+across the open archetypes
+$\mathsf G/\mathsf L/\mathsf C/\mathsf M$ with shadow depth
+$r_{\max} \in \{2,3,4,\infty\}$, while $\mathsf B$ at depth $5$
+sits on its own Mukai-K3 row.
+
+The chapters that follow develop the modular tower along two
+parallel routes: the algebraic genus expansion via the bar complex
+on $\overline{\cM}_{g,n}$ (higher_genus_*, theorem_C_refinements,
+shadow_tower_*, conformal_anomaly, chern_weil, clutching), and the
+physics-bridge witnesses (Feynman diagrams, BV-BRST, Kontsevich
+weights, arithmetic shadows) that realise $\mathrm{obs}_g$ in
+concrete computations.
 
 \include{chapters/frame/part_iv_platonic_introduction}
 
@@ -1442,24 +1577,163 @@ $D_2(\cA, s) = -24\kappa \cdot \zeta(s)\,\zeta(s{-}1)$.
 % shadow--spectral correspondence, cusp singularity analysis.
 \input{chapters/connections/arithmetic_shadows}
 
-% ======================================================================
-% PART V: THE SEVEN FACES OF THE COLLISION RESIDUE
-%
-% The centrepiece. One mathematical object; the collision residue
-% r(z) = Res^coll_{0,2}(Theta_A); realized in seven independent
-% mathematical frameworks, all proved to agree.
-% ======================================================================
+% (Part V continues with the modular-tower algebraic core: higher
+% genus, shadow tower, conformal anomaly rigidity, Chern-Weil
+% level shift, clutching uniqueness, Kummer-Bernoulli, all-tier
+% generating function. The Part V declaration sits earlier in the
+% file as the platonic-ideal entry-point to the modular tower.)
 \ifannalsedition\else
-\part{The Seven Faces of the Collision Residue}
+\phantomsection\label{part:modular-tower}% canonical label for Part V
+
+\noindent
+The modular-tower algebraic core continues here with the genus
+expansion, the shadow-tower quadrichotomy with closed-form
+Borel--Riccati structure, and the arithmetic refinements through
+Kummer's congruence. The Borel-Riccati spectral
+analysis of the shadow-tower coefficients $S_r$ closes a
+quadrichotomy across the four open archetypes
+$\mathsf G/\mathsf L/\mathsf C/\mathsf M$ with shadow depth
+$r_{\max} \in \{2,3,4,\infty\}$, while $\mathsf B$ at depth $5$
+sits on its own Mukai-K3 row.
+
+\input{chapters/theory/higher_genus_foundations}
+\input{chapters/theory/higher_genus_complementarity}
+\input{chapters/theory/theorem_C_refinements_platonic}
+\input{chapters/theory/higher_genus_modular_koszul}
+\clearpage
+% Overlap archived.
+% omitted: chapters/theory/higher_genus_full.tex
+
+% Higher genus inversion theorem: induction on moduli space strata.
+% Merged into higher_genus; preserved at
+% archive/legacy/higher_genus_quasi_isomorphism_legacy.tex.
+% omitted: chapters/theory/higher_genus_quasi_isomorphism.tex
+
+% Koszul duality across genera: absorbed into higher_genus.tex §sec:koszul-across-genera.
+% Original standalone file preserved at chapters/theory/koszul_across_genera.tex.
+% omitted: chapters/theory/koszul_across_genera.tex
+
+% (chiral_hochschild_koszul, chiral_modules, poincare_duality_quantum,
+% quantum_corrections, filtered_curved, hochschild_cohomology migrated
+% to Part III: The Bulk in the platonic-ideal reconstitution.)
+
+% =====================================
+% The Motivic Shadow Tower: S_r(A) in MZV^mot, GRT-motivic coaction,
+% Kummer-congruence prediction for Z_g closed forms, L^sh pole structure
+% kappa-motivic vs beta-modular split.
+% Depends on Vol II GRT-parametrized seven faces.
+% =====================================
+\include{chapters/theory/motivic_shadow_tower}
+
+% Platonic inscription (2026-04-17) -- full class-M motivic rationality:
+% Extends thm:virasoro-motivic-rationality-all-r from Virasoro to the
+% complete class M (W_N principal, BP Arakawa, W_infty generic Psi),
+% via the structural E_1-depth-1 theorem. Closes the E_1-vs-E_2 depth
+% distinction (thm:e1-vs-e2-mzv-depth-distinction).
+\include{chapters/theory/motivic_shadow_full_class_m_platonic}
+
+% Platonic master narrative (2026-04-17) -- Quadrichotomy Theorem,
+% Riccati master equation H^2 = t^4 Q_c, five corollaries, Borel-
+% geometric layer (iter 30-77). Sets the frame for the entire
+% shadow-tower block: every subsequent shadow_tower_*.tex chapter is
+% a subordinated lemma, witness, or asymptotic-layer specialisation.
+\input{chapters/theory/shadow_tower_quadrichotomy_platonic}
+
+% Shadow tower higher coefficients:
+% extension to higher coefficients S_r for r >= 5.
+\input{chapters/theory/shadow_tower_higher_coefficients}
+% Sub-subleading large-c Laurent layer: Gamma_r = A_r[484/25 +
+% 22(r-4)(r-5)/45 + (r-4)(r-5)(r-6)(r-7)/972], with
+% sporadicity of the Kummer-irregular prime 691 at r=8.
+\input{chapters/theory/shadow_tower_sub_subleading_platonic}
+% Conformal anomaly rigidity and its complementarity with Koszulness.
+\input{chapters/theory/conformal_anomaly_rigidity_platonic}
+% Chern-Weil level-shift theorem (connection kappa to the genus tower).
+\input{chapters/theory/chern_weil_level_shift_platonic}
+% Clutching uniqueness on the socle of the tautological ring.
+\input{chapters/theory/clutching_uniqueness_platonic}
+% Z_g Kummer-Bernoulli: Verlinde polynomial closed form + Kummer prediction.
+\input{chapters/theory/z_g_kummer_bernoulli_platonic}
+% Higher Kummer-irregular arithmetic duality: extends {691, 3617} to the
+% tower {691, 3617, 43867, 283, 617, 131, 593} through r = 13 (2026-04-17).
+\input{chapters/theory/higher_kummer_arithmetic_duality_platonic}
+% All-tier Laurent stratification via a bivariate hypergeometric
+% generating function (2026-04-17): Tier-K(r)/A_r = (-1)^(K+1) Sum
+% C(K-1,m) tau^(K-1-m) (r-4)_(2m) / (9^m m! (m+1)!) for every K >= 1,
+% proved via F(r,u) = (1/(1+tau u)) 2F1((4-r)/2, (5-r)/2; 2; -4u/(9(1+tau u))).
+\input{chapters/theory/all_tier_generating_function_platonic}
+
+% ======================================================================
+%
+% PART II: THE CHARACTERISTIC DATUM
+%
+% Ring 2 of the three concentric rings: the nonlinear modular shadow
+% obstruction tower kappa -> Delta -> [C] -> o^(r) -> Theta. The
+% algebraic engine extended beyond the linear regime into the genuine
+% geometry of complementarity, the graph calculus, and the full
+% Maurer--Cartan equation at all genera.
+%
+% ======================================================================
+
+% (Characteristic-Datum apparatus migrated to Part II: the
+% nonlinear_modular_shadows + branch_line_reductions appendices,
+% computational_methods, universal_conductor_K, the E_1 wing
+% (e1_modular_koszul, ordered_associative_chiral_kd, en_koszul_duality),
+% and part_ii_platonic_introduction frame chapter all belong with
+% the Bar-Cobar Engine in the platonic-ideal reconstitution.
+% topologization_chain_level, e3_identification_chain_level,
+% genus_2_ddybe, thqg_open_closed_realization, chiral_climax_platonic
+% migrated to Part III: The Bulk.)
+
+% ======================================================================
+
+\part{Seven Faces and the Frontier}
 \label{part:seven-faces}
 
 \noindent
-One mathematical object, the collision residue
-$r(z) = \operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)$,
-realized in seven independent mathematical frameworks, all proved to
-agree. This part converts the abstract universality claim into a
-concrete checklist: seven frameworks, seven independent computations,
-one object.
+Parts~\ref{part:foundations-beilinson-tower}--\ref{part:modular-tower-physics}
+have built the open Beilinson tower from level~$0$
+\textup{(}factorisation dg-cat $\cC^{\op}$\textup{)} to level~$5$
+\textup{(}modular trace + clutching\textup{)}, and have established
+the proved core: Theorems~A, B, C, D, H. The reader will reasonably
+ask three closing questions:
+
+\textit{(i)} \emph{Is there a single mathematical object whose
+incarnations across the bar coalgebra, the line operators, the
+Yangian $r$-matrix, the Gaudin Hamiltonian, and the Sklyanin
+Poisson tensor are all forced to agree?} The seven-face dictionary
+on the comparison locus
+\textup{(}Theorem~\ref{thm:master-seven-face} of
+\texttt{master\_concordance.tex}\textup{)} answers this in the
+affirmative: the genus-zero binary collision residue
+$r_\cA(z) = \mathrm{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)$ is the
+single object whose images under seven typed comparison morphisms
+populate the seven faces.
+
+\textit{(ii)} \emph{Does the open Beilinson tower admit a vertical
+holographic equivalence to the CY-quadrant programme of Vol~III at
+every level?} The cross-volume vertical equivalences at levels~$0$
+\textup{(}factorisation dg-cat $\leftrightarrow$ 6d hCS\textup{),}
+$2$ \textup{(}bar coalgebra $\leftrightarrow$
+$\mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1}, C}$ specialisation\textup{),}
+and $4$ \textup{(}line operators $\leftrightarrow$ Drinfeld double
+$D(Y^+(X))$\textup{)} answer this in the affirmative on the witnessed
+loci, with explicit hypothesis packages and named obstruction
+classes.
+
+\textit{(iii)} \emph{Are the five Theorems A--H corollaries of a
+single structural meta-theorem?} The Master Reconstruction Theorem
+at the close of this part answers this in the affirmative: the
+five-level Beilinson tower has reconstruction theorems with named
+hypothesis packages at every step, KSDual is the
+$\mathbb{Z}/2$-fixed sublocus where every step degenerates from
+adjunction to strict equivalence, and Theorems~A--H are corollaries
+restratified by Beilinson-tower level.
+
+The collision residue is the geometric core of all three answers; the
+master concordance closes the volume by recording the seven-face
+dictionary, the cross-volume vertical equivalences, and the open
+frontiers F1--F12 in a single trilingual index.
 
 % The seven faces of the collision residue: master chapter for Part V.
 % One mathematical object (r(z) = Res^coll_{0,2}(Theta_A)) realized in
@@ -1487,8 +1761,15 @@ one object.
 % Modular holography, higher-spin geometry, entanglement, completion,
 % and the explicit boundary conditions of the collision-residue engine.
 % ======================================================================
-\part{Boundary Geometry}
+% (Continuation of Part VI: the boundary-geometry chapters develop
+% the strict hypotheses under which the collision calculus leaves the
+% Koszul locus, and inscribe the cross-volume vertical equivalences
+% at levels 0 and 4. The Master Reconstruction Theorem closes Part VI
+% as the structural climax that subsumes Theorems A, B, C, D, H as
+% corollaries restratified by Beilinson-tower level.)
+\section*{Continuation: Boundary Geometry}
 \label{part:v1-frontier}
+\addcontentsline{toc}{section}{Continuation: Boundary Geometry}
 
 \noindent
 Parts~\ref{part:bar-complex}--\ref{part:seven-faces} develop the proved core, its standard computations, its
@@ -1509,6 +1790,24 @@ which the collision calculus leaves the Koszul locus.
 \input{chapters/theory/nilpotent_completion}
 \input{chapters/theory/coderived_models}
 \input{chapters/connections/subregular_hook_frontier}
+
+% Cross-volume vertical equivalences. Level-0: factorisation dg-cat ↔
+% CY-cat via 6d hCS, formal locus + global descent, quartic anomaly
+% \int_X Tr_ad(A(F_A)^3). Level-4: line / brane operators ↔ Drinfeld
+% double D(Y^+(X)) with Hall pairing, completion, integral form,
+% stable-envelope transport, descent.
+\input{chapters/connections/vertical_equivalence_level_0}
+\input{chapters/connections/vertical_equivalence_level_4}
+
+% Master Reconstruction Theorem: structural climax of Vol I. The five-level
+% open Beilinson tower on a tangential log curve, reconstruction theorems
+% with named hypothesis packages at each step, KSDual as the Z/2-fixed
+% sublocus, vertical holographic dictionary to Vols II / III. Theorems
+% A, B, C, D, H are corollaries restratified by tower level. This is
+% the climactic chapter; the outlook + master concordance follow as
+% reading apparatus.
+\input{chapters/connections/master_reconstruction}
+
 \input{chapters/connections/outlook}
 
 % Master concordance: the trilingual dictionary connecting the seven-face
@@ -1543,6 +1842,8 @@ which the collision calculus leaves the Koszul locus.
 \ifannalsedition\else
  \input{appendices/dual_methodology}
 \fi
+\input{appendices/type_system}
+\input{appendices/vertical_equivalence_level_2}
 \input{appendices/notation_index}
 \input{appendices/q_convention_bridge_appendix}
 \ifannalsedition\else
@@ -1653,6 +1954,15 @@ which the collision calculus leaves the Koszul locus.
 \phantomsection\label{V3-prop:A-infty-structure-constants-humbert}% % V3:prop:A-infty-structure-constants-humbert
 \phantomsection\label{V3-prop:SV-e3-sugawara-toroidal}% % V3:prop:SV-e3-sugawara-toroidal
 \phantomsection\label{V3-prop:chi-3-nonvanishing-MNOP}% % V3:prop:chi-3-nonvanishing-MNOP
+\phantomsection\label{V3-def:phi-fa-and-sp}% % V3:def:phi-fa-and-sp (cy_to_chiral.tex)
+\phantomsection\label{V3-thm:phi-two-stage-factorisation}% % V3:thm:phi-two-stage-factorisation (cy_to_chiral.tex)
+\phantomsection\label{V3-prop:phi-fa-three-step-assembly}% % V3:prop:phi-fa-three-step-assembly (cy_to_chiral.tex)
+\phantomsection\label{V3-prop:native-en-level}% % V3:prop:native-en-level (cy_to_chiral.tex)
+\phantomsection\label{V3-subsec:6d-hcs-k3e-explicit-construction}% % V3:subsec:6d-hcs-k3e-explicit-construction (cy_to_chiral.tex)
+\phantomsection\label{V3-lem:dabc-vanishing-classification}% % V3:lem:dabc-vanishing-classification (cy_to_chiral.tex)
+\phantomsection\label{V3-thm:phi-two-stage-derived}% % V3:thm:phi-two-stage-derived (cy_to_chiral.tex)
+\phantomsection\label{V3-prop:phifa-infty1-kernel}% % V3:prop:phifa-infty1-kernel (cy_to_chiral.tex)
+\phantomsection\label{V3-prop:spch-infty1-kernel}% % V3:prop:spch-infty1-kernel (cy_to_chiral.tex)
 \phantomsection\label{V3-prop:class-m-borel-summability-bridge}% % V3:prop:class-m-borel-summability-bridge
 \phantomsection\label{V3-prop:cy-c-beyond-joyce-three-CY3}% % V3:prop:cy-c-beyond-joyce-three-CY3
 \phantomsection\label{V3-prop:k3-chacaltana-distler-24}% % V3:prop:k3-chacaltana-distler-24

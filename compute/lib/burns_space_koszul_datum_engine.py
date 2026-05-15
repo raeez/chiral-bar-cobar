@@ -1,17 +1,18 @@
-r"""Burns space holographic modular Koszul datum: the first celestial holography example.
+r"""Burns space modular Koszul compute surface for the holographic datum.
 
 PHYSICAL SETTING:
 
 Burns space is a self-dual deformation of Minkowski space, the simplest
 asymptotically flat spacetime with nonvanishing self-dual Weyl curvature.
-Costello-Paquette-Sharma (2306.00940) showed that ALL loop amplitudes in
-the self-dual sector on Burns space are computed by chiral algebra correlators
-of the boundary VOA on the celestial sphere S^2.
+Costello-Paquette-Sharma (2306.00940) identify the all-loop self-dual
+sector on Burns space with chiral algebra correlators of the boundary VOA
+on the celestial sphere S^2, in their perturbative bulk sense.
 
-This is the first complete identification of a holographic system where:
+This engine records the Burns-space boundary algebra on the modular Koszul
+compute lane:
   (1) The bulk is an asymptotically flat spacetime (not AdS).
-  (2) The holographic dictionary operates at ALL loop orders.
-  (3) The boundary algebra is explicitly identified.
+  (2) The CPS comparison is all-loop in the self-dual sector.
+  (3) The boundary algebra used by the scalar projections is explicit.
 
 THE BOUNDARY VOA:
 
@@ -39,7 +40,7 @@ ALTERNATIVE INTERPRETATION: In the formulation of Costello-Paquette (2201.02595)
 the celestial holography for self-dual gravity involves the algebra w_{1+infinity}
 as the symmetry algebra, and the boundary states transform in representations
 of this algebra.  The betagamma system provides the MATTER SECTOR of the
-boundary theory.  The full boundary VOA is:
+boundary theory.  The working boundary VOA used by this engine is:
 
   A_Burns = bg^{tensor 4} (4 pairs of betagamma at lambda=1)
 
@@ -49,27 +50,41 @@ the OPE is the tensor product OPE of 4 independent pairs.
 KEY DISTINCTION: This is a FREE-FIELD algebra (tensor product of bg pairs),
 NOT a BRST reduction.  The BRST reduction would give a smaller algebra
 (the invariant sector under gauge symmetry).  For self-dual gravity without
-gauge fields, there is no gauge constraint on the boundary; the full bg
-system is the boundary VOA.
+gauge fields, there is no gauge constraint on this boundary model; the bg
+system is the boundary VOA on this lane.
 
-MODULAR KOSZUL DATUM H(Burns):
+HOLOGRAPHIC PACKAGE AND COMPUTE PROJECTIONS:
 
-  H(Burns) = (A, A!, C_bulk, r(z), Theta_A, nabla^hol)
+The holographic modular Koszul package is seven-entry:
+
+  H(Burns) = (A, A^i, A!, C, r(z), Theta_A, nabla^hol)
 
 where:
-  A = bg^{tensor 4}_{lambda=1}   (4 pairs of bg at weight 1)
-  A! = bc^{tensor 4}_{lambda=1}  (Koszul dual: 4 pairs of bc ghosts)
-  C_bulk = Z^der_ch(A)           (chiral derived center = universal bulk)
-  r(z) = Res^{coll}_{0,2}(Theta_A)  (collision residue = r-matrix)
-  Theta_A = D_A - d_0            (bar-intrinsic MC element)
+  A = bg^{tensor 4}_{lambda=1}       (4 pairs of bg at weight 1)
+  A^i = H^*(B^ch(A))                 (bar-dual coalgebra, not A!)
+  A! = (A^i)^vee ~= bc^{tensor 4}_{lambda=1}
+       after finite-type Verdier/Koszul rectification
+  C = Z^der_ch(A) = ChirHoch^*(A,A)  (bulk/line comparison slot)
+  r(z) = Res^{coll}_{0,2}(Theta_A)   (collision residue = r-matrix)
+  Theta_A = D_A - d_0                (bar-intrinsic MC element)
   nabla^hol = d - Sh_{0,n}(Theta_A)  (holographic shadow connection)
+
+The six-projection modular Koszul compute package is separate:
+
+  P_bullet = (P_A, P_A!, P_C, P_r, P_Theta, P_nabla)
+
+These projections are recovery functors from the boundary-bulk comparison
+surface.  They do not remove the A^i slot.  The identity
+Omega B(A) ~= A is bar-cobar inversion; it is not the definition of A!,
+and it is not a derived-center computation.
 
 The form factors of Costello-Paquette-Sharma are identified with:
   F_k(z_1, ..., z_k) = Sh_{0,k}(Theta_A)  (genus-0 shadow projections)
 
-OUR EXTENSION: the full genus tower F_g = kappa(A_Burns) * lambda_g^FP
-gives HIGHER-LOOP amplitudes on Burns space that are NOT computed by
-Costello et al.  This is a prediction of the modular Koszul framework.
+The modular-Koszul scalar projection produces the genus tower
+F_g = kappa(A_Burns) * lambda_g^FP.  Interpreting these coefficients as
+higher-loop Burns-space amplitudes is a scoped prediction beyond the CPS
+genus-0 form-factor comparison, not part of the CPS theorem.
 
 SHADOW TOWER STRUCTURE:
 
@@ -83,22 +98,25 @@ For 4 independent copies (free-field additivity, prop:independent-sum-factorizat
 
 Shadow depth classification:
   Each bg pair at lambda=1 is class C (contact, r_max = 4).
-  The tensor product of class C algebras is class C (prop:independent-sum-factorization:
+  The tensor product of class C algebras is class C on bg-specific lines
+  (prop:independent-sum-factorization:
   vanishing mixed OPE implies shadows separate; each factor terminates at arity 4,
   so the product terminates at arity 4).
 
   HOWEVER: the T-line of the tensor product has the Virasoro subalgebra at c=8,
-  which is class M (infinite shadow depth on the T-line).  The GLOBAL shadow
-  depth of the full algebra is determined by the worst-case line: class C
-  (arity 4 termination on the betagamma-specific lines, infinite on the T-line).
+  which is class M (infinite shadow depth on the T-line).  This engine reports
+  both the bg-specific class C projection and the T-line class M projection,
+  rather than collapsing them into a single shadow-depth claim.
 
-  For the holographic modular Koszul datum, we compute both:
+  For the Burns compute surface, we record both:
   (a) T-line shadow tower (Virasoro at c=8, class M)
   (b) Global kappa and genus tower using the total kappa = 4
 
-KOSZUL DUAL:
+VERDIER/KOSZUL BRANCH:
 
-  A!_Burns = bc^{tensor 4}_{lambda=1}
+  A^i_Burns = H^*(B^ch(bg^{tensor 4}_{lambda=1}))
+  A!_Burns = (A^i_Burns)^vee ~= bc^{tensor 4}_{lambda=1}
+             on the finite-type Verdier/Koszul lane
 
 The bc system at lambda=1 has:
   c(bc, lambda=1) = -2(6*1^2 - 6*1 + 1) = -2
@@ -108,10 +126,11 @@ For 4 copies:
   c(A!_Burns) = -8
   kappa(A!_Burns) = -4
 
-Complementarity sum (AP24):
+Complementarity sum on this finite-type bg/bc lane:
   kappa(A) + kappa(A!) = 4 + (-4) = 0
 
-This is correct: bg/bc is a free-field pair with exact anti-symmetry (AP24 safe).
+This is a free-field Verdier/Koszul anti-symmetry.  It does not identify
+B(A), A^i, A!, or Z^der_ch(A).
 
 R-MATRIX:
 
@@ -141,8 +160,9 @@ F_g(A_Burns) = kappa(A_Burns) * lambda_g^FP = 4 * lambda_g^FP
   F_4 = 4 * 127/154828800 = 127/38707200
   F_5 = 4 * 73/3503554560 = 73/875888640
 
-The genus-2 shadow F_2 = 7/1440 gives a PREDICTION for the 2-loop self-dual
-gravity amplitude on Burns space.  This is a genuine extension of Costello et al.
+The genus-2 shadow F_2 = 7/1440 is the scalar genus-2 coefficient recorded
+by the modular Koszul projection.  Its physical two-loop interpretation is a
+separate holographic comparison.
 
 References:
   - Costello-Paquette-Sharma, arXiv:2306.00940 (Burns space holography)
@@ -235,7 +255,7 @@ def bg_kappa(lam: Rational) -> Rational:
 
 
 def bc_central_charge(lam: Rational) -> Rational:
-    """Central charge of the Koszul dual bc system: c_bc = -c_bg."""
+    """Central charge of the post-Verdier bc companion: c_bc = -c_bg."""
     return -bg_central_charge(lam)
 
 
@@ -288,30 +308,30 @@ class BurnsSpaceData:
         """Total kappa: kappa = n_bg * kappa_single (free-field additivity)."""
         return self.n_bg * self.kappa_single
 
-    # --- Koszul dual ---
+    # --- Finite-type Verdier/Koszul branch ---
     @property
     def c_dual_single(self) -> Rational:
-        """Central charge of a single bc pair (Koszul dual)."""
+        """Central charge of a single bc pair in the post-Verdier branch."""
         return bc_central_charge(self.lam)
 
     @property
     def c_dual_total(self) -> Rational:
-        """Total central charge of the Koszul dual: c! = n_bg * c_bc."""
+        """Total central charge of the post-Verdier branch: c! = n_bg * c_bc."""
         return self.n_bg * self.c_dual_single
 
     @property
     def kappa_dual_single(self) -> Rational:
-        """kappa of a single bc pair (Koszul dual)."""
+        """kappa of a single bc pair in the post-Verdier branch."""
         return bc_kappa(self.lam)
 
     @property
     def kappa_dual_total(self) -> Rational:
-        """Total kappa of the Koszul dual: kappa! = n_bg * kappa_bc."""
+        """Total kappa of the post-Verdier branch: kappa! = n_bg * kappa_bc."""
         return self.n_bg * self.kappa_dual_single
 
     @property
     def complementarity_sum(self) -> Rational:
-        """kappa(A) + kappa(A!) = 0 for free-field pairs (AP24 safe)."""
+        """kappa(A) + kappa(A!) on the finite-type bg/bc Verdier lane."""
         return self.kappa_total + self.kappa_dual_total
 
     # --- Shadow depth class ---
@@ -329,15 +349,15 @@ class BurnsSpaceData:
     def shadow_class_global(self) -> str:
         """Global shadow class of the tensor product.
 
-        Individual bg pairs are class C (r_max = 4).
+        Individual bg pairs are class C (r_max = 4) on bg-specific lines.
         The tensor product with vanishing mixed OPE has each factor's shadows
         separating independently. The product is class C on bg-specific lines.
 
         HOWEVER: the Virasoro (T-line) of the product has c = n_bg * c_single,
         which is class M for generic c != 0.  The T-line shadow tower is infinite.
 
-        The global classification is C (because the bg-specific shadow structure
-        terminates, even though the T-line sub-tower is infinite).
+        This property reports the bg-specific projection.  Use
+        shadow_class_T_line for the Virasoro T-line projection.
         """
         return 'C'
 
@@ -365,8 +385,9 @@ class BurnsSpaceData:
     def genus_free_energy(self, g: int) -> Rational:
         """F_g(A_Burns) = kappa_total * lambda_g^FP.
 
-        This is the genus-g free energy of the shadow tower, giving the
-        g-loop amplitude on Burns space in the self-dual sector.
+        This is the genus-g scalar coefficient of the Burns shadow tower.
+        Its physical loop-amplitude reading is a separate holographic
+        comparison, not part of this arithmetic computation.
         """
         return genus_free_energy(self.kappa_total, g)
 
@@ -579,20 +600,25 @@ def burns_genus_expansion_from_tower() -> Dict[int, Rational]:
 
 
 # =============================================================================
-# 7. Koszul dual and complementarity
+# 7. Verdier/Koszul branch and complementarity
 # =============================================================================
 
 def burns_koszul_dual() -> Dict[str, Any]:
-    """Koszul dual of Burns space boundary VOA.
+    """Finite-type Verdier/Koszul branch of the Burns boundary VOA.
 
+    The legacy API name is retained.  The mathematical route is:
+    A -> A^i = H^*(B^ch(A)) -> A! = (A^i)^vee.
     A!_Burns = bc^{tensor 4}_{lambda=1}
     kappa(A!) = -4
     c(A!) = -8
-    kappa + kappa' = 0 (exact anti-symmetry for free fields)
+    kappa + kappa' = 0 on this free-field Verdier/Koszul lane.
+
+    Bar-cobar inversion Omega B(A) ~= A is separate and does not define A!.
     """
     data = BurnsSpaceData()
     return {
         'A_name': 'bg^{tensor 4}_{lambda=1}',
+        'A_i_name': 'H^*(B^ch(bg^{tensor 4}_{lambda=1}))',
         'A_dual_name': 'bc^{tensor 4}_{lambda=1}',
         'c': data.c_total,
         'c_dual': data.c_dual_total,
@@ -601,6 +627,8 @@ def burns_koszul_dual() -> Dict[str, Any]:
         'complementarity_sum': data.complementarity_sum,
         'anti_symmetric': data.complementarity_sum == 0,
         'flavor': data.flavor,
+        'duality_route': 'A -> A^i = H^*(B^ch(A)) -> A! = (A^i)^vee',
+        'bar_cobar_inversion_role': 'Omega B(A) recovers A; it is not the definition of A!',
     }
 
 
@@ -679,11 +707,11 @@ def burns_planted_forest_g2() -> Dict[str, Rational]:
 
 
 # =============================================================================
-# 10. Two-loop QCD amplitude prediction
+# 10. Two-loop self-dual gravity scalar prediction
 # =============================================================================
 
 def burns_two_loop_prediction() -> Dict[str, Any]:
-    """Prediction: what 2-loop self-dual gravity amplitude does F_2 give?
+    """Scoped prediction attached to the genus-2 Burns scalar coefficient.
 
     The genus-2 free energy F_2(A_Burns) = kappa * lambda_2^FP
     = 4 * 7/5760 = 7/1440.
@@ -691,28 +719,26 @@ def burns_two_loop_prediction() -> Dict[str, Any]:
     In the Costello-Paquette-Sharma framework:
       F_k(z_1,...,z_k) = Sh_{0,k}(Theta_A)  (form factors at genus 0)
 
-    Our genus-2 shadow F_2 extends this to the WORLDSHEET genus-2 amplitude.
-    This is the SECOND quantum correction (beyond the tree-level and one-loop
-    amplitudes that Costello et al. compute).
+    The genus-2 shadow F_2 is the worldsheet-genus coefficient produced by
+    the modular Koszul scalar projection.  Treating it as a physical two-loop
+    self-dual gravity amplitude requires the extra holographic comparison.
 
     Physical interpretation:
       F_2 = 7/1440 is the coefficient of lambda_2 in the genus expansion.
-      This gives the 2-loop self-dual gravity partition function on Burns space.
+      This is the genus-2 scalar contribution attached to the Burns datum.
 
     CAUTION (AP42): this is a prediction at the PERTURBATIVE WORLDSHEET level.
-    The identification with a PHYSICAL 2-loop QCD/gravity amplitude requires
+    The identification with a physical 2-loop gravity amplitude requires
     additional steps:
-      (1) The Costello-Paquette-Sharma identification holds at ALL loop orders
-          (their Theorem 1.1), but "loop order" there refers to bulk perturbation
-          theory, not the worldsheet genus.
+      (1) The Costello-Paquette-Sharma identification is all-loop in their
+          bulk perturbative sense, not automatically worldsheet genus.
       (2) Our genus-g free energy is a WORLDSHEET genus contribution, which
           in the holographic dictionary corresponds to g-loop STRING corrections.
-      (3) For self-dual gravity: string = worldsheet, so F_2 IS the 2-loop
-          amplitude. For full gravity (beyond self-dual): additional sectors
-          contribute and F_2 is only the self-dual part.
+      (3) Passing from this scalar coefficient to a physical amplitude is an
+          additional self-dual-sector comparison; full gravity has extra sectors.
 
-    The precise statement: F_2 = 7/1440 is the 2-loop self-dual gravitational
-    correction to the Burns space partition function.
+    The precise compute statement: F_2 = 7/1440 is the genus-2 Burns scalar
+    coefficient in the modular Koszul projection.
     """
     data = BurnsSpaceData()
     F_2 = data.genus_free_energy(2)
@@ -726,24 +752,25 @@ def burns_two_loop_prediction() -> Dict[str, Any]:
         'lambda_2_FP': lambda_fp(2),
         'ratio_F2_F1': F_2 / F_1,
         'physical_interpretation': (
-            'F_2 = 7/1440 is the 2-loop self-dual gravitational correction '
-            'to the Burns space partition function. This extends the '
-            'Costello-Paquette-Sharma tree-level and one-loop results to '
-            'the next order in the worldsheet genus expansion.'
+            'F_2 = 7/1440 is the genus-2 Burns scalar coefficient in the '
+            'modular Koszul projection. Its physical two-loop reading is a '
+            'separate self-dual-sector holographic comparison.'
         ),
     }
 
 
 # =============================================================================
-# 11. Holographic modular Koszul datum H(Burns)
+# 11. Seven-entry holographic package and six-projection compute surface
 # =============================================================================
 
 def burns_holographic_datum() -> Dict[str, Any]:
-    """The complete holographic modular Koszul datum H(Burns).
+    """Seven-entry Burns package plus the six-projection compute surface.
 
-    H = (A, A!, C_bulk, r(z), Theta_A, nabla^hol)
+    H = (A, A^i, A!, C, r(z), Theta_A, nabla^hol)
 
-    This packages the full modular Koszul data of Burns space holography.
+    The returned legacy key 'bulk' is retained as an API alias for the C
+    slot.  It is the chiral Hochschild bulk/line comparison slot, not A,
+    A^i, A!, or the bar-cobar inverse Omega B(A) ~= A.
     """
     data = BurnsSpaceData()
     tower = burns_T_line_shadow_tower(max_r=10)
@@ -754,7 +781,26 @@ def burns_holographic_datum() -> Dict[str, Any]:
     pf = burns_planted_forest_g2()
     two_loop = burns_two_loop_prediction()
 
+    a_i_slot = {
+        'name': 'H^*(B^ch(A_Burns))',
+        'object_type': 'bar-dual coalgebra',
+        'route': 'A -> B^ch(A) -> H^*(B^ch(A))',
+        'not_A_dual': 'A^i is coalgebraic; A! is obtained only after finite-type Verdier duality.',
+    }
+    c_slot = {
+        'description': 'C = Z^der_ch(A) = ChirHoch^*(A,A), the bulk/line comparison slot',
+        'note': 'C is not A, not A^i, not A!, and not the bar-cobar inverse Omega B(A).',
+    }
+    compute_projection_package = {
+        'kind': 'six-projection recovery package',
+        'projections': ('P_A', 'P_A!', 'P_C', 'P_r', 'P_Theta', 'P_nabla'),
+        'scope': 'computed projections from the boundary-bulk comparison surface; not a replacement for the A^i entry',
+    }
+
     return {
+        'datum_kind': 'seven-entry holographic package with a compatible six-projection compute surface',
+        'holographic_entries': ('A', 'A_i', 'A_dual', 'C', 'r_matrix', 'Theta_A', 'nabla_hol'),
+        'compute_projection_package': compute_projection_package,
         # (1) Boundary algebra A
         'A': {
             'name': f'{data.n_bg} pairs of bg at lambda={data.lam}',
@@ -765,26 +811,28 @@ def burns_holographic_datum() -> Dict[str, Any]:
             'shadow_class_T_line': data.shadow_class_T_line,
             'shadow_depth_per_pair': data.shadow_depth_per_pair,
         },
-        # (2) Koszul dual A!
+        # (2) Bar-dual coalgebra A^i
+        'A_i': a_i_slot,
+        # (3) Post-Verdier/Koszul branch A!
         'A_dual': {
             'name': f'{data.n_bg} pairs of bc at lambda={data.lam}',
             'c_dual': data.c_dual_total,
             'kappa_dual': data.kappa_dual_total,
             'complementarity_sum': data.complementarity_sum,
+            'route': dual['duality_route'],
+            'bar_cobar_inversion_role': dual['bar_cobar_inversion_role'],
         },
-        # (3) Bulk (chiral derived center)
-        'bulk': {
-            'description': 'Z^der_ch(A) = chiral derived center (universal bulk)',
-            'note': 'The bulk = derived center, NOT the bar complex (AP34).',
-        },
-        # (4) R-matrix
+        # (4) C slot: chiral Hochschild bulk/line comparison
+        'C': c_slot,
+        'bulk': c_slot,
+        # (5) R-matrix
         'r_matrix': r_mat,
-        # (5) MC element Theta_A
+        # (6) MC element Theta_A
         'Theta_A': {
             'construction': 'Theta_A = D_A - d_0 (bar-intrinsic, thm:mc2-bar-intrinsic)',
             'T_line_tower': {r: str(tower[r]) for r in sorted(tower.keys())},
         },
-        # (6) Shadow connection
+        # (7) Shadow connection
         'nabla_hol': {
             'description': 'nabla^hol = d - Sh_{0,n}(Theta_A)',
             'T_line_metric': metric,
@@ -805,10 +853,12 @@ def parametric_burns_datum(
     n_bg: int = 4,
     lam: Rational = Rational(1),
 ) -> Dict[str, Any]:
-    """Compute Burns-type holographic datum for n_bg pairs of bg at weight lambda.
+    """Compute a Burns-type scalar projection package for bg data.
 
-    This generalizes the Burns space computation to arbitrary parameters.
-    The physical Burns space case is n_bg=4, lambda=1.
+    This generalizes the Burns scalar computation to arbitrary parameters.
+    The physical Burns space case is n_bg=4, lambda=1.  The output is the
+    six-projection compute surface, not the seven-entry holographic
+    package unless the A^i and Verdier/Koszul slots are supplied separately.
     """
     data = BurnsSpaceData(n_bg=n_bg, lam=lam)
     c_total = data.c_total
@@ -834,6 +884,8 @@ def parametric_burns_datum(
     return {
         'n_bg': n_bg,
         'lambda': lam,
+        'compute_surface': 'six-projection scalar package',
+        'dual_route': 'A -> A^i = H^*(B^ch(A)) -> A! after finite-type Verdier duality',
         'c_single': data.c_single,
         'c_total': c_total,
         'kappa_single': data.kappa_single,

@@ -11,9 +11,9 @@ of these at the zeros of the Riemann zeta function (the Benjamin-Chang
 programme).
 
 The Koszul Lagrangian isotropy condition (K11) extracts a stabilizer
-code from the bar complex at each conformal weight level h.  The
+code from the bar coalgebra at each conformal weight level h.  The
 weight-level code has parameters:
-    n_h = 2 * dim(V_h)    (ambient = A + A! at weight h)
+    n_h = 2 * dim(V_h)    (ambient = A plus the Verdier-dual A! summand)
     k_h = dim(V_h)         (code = one Lagrangian summand)
     d_h = f(shadow class)  (distance from shadow structure)
 
@@ -60,7 +60,10 @@ CAUTION (AP10): Cross-verify by multiple independent methods.
 CAUTION (AP14): Shadow depth != Koszulness.
 CAUTION (AP19): Bar r-matrix poles shifted by 1 from OPE.
 CAUTION (AP24): kappa(Vir_c) + kappa(Vir_{26-c}) = 13, NOT 0.
-CAUTION (AP25): Omega(B(A)) = A (inversion), D_Ran(B(A)) = B(A!) (duality).
+CAUTION (AP25): B(A) is a coalgebra; A^i=H^*(B(A)); A! comes from
+                A^i by Verdier/linear duality under finite-type or
+                completed hypotheses. Omega(B(A))=A is inversion.
+                Z_ch^der(A) is the bulk/derived centre.
 CAUTION (AP31): kappa = 0 does NOT imply Theta_A = 0.
 """
 
@@ -147,9 +150,14 @@ def code_parameters_at_weight(family: str, h: int, **kwargs) -> Dict:
     r"""Compute [[n_h, k_h, d_h]] code parameters at conformal weight h.
 
     The Koszul Lagrangian code at weight h has:
-        n_h = 2 * dim(V_h)      (ambient complex = A + A!)
+        n_h = 2 * dim(V_h)      (ambient complex = A plus Verdier-dual A!)
         k_h = dim(V_h)           (one Lagrangian summand)
         d_h = distance from shadow structure
+
+    Here B(A)=T^c(s^{-1}\bar A) is the bar coalgebra,
+    A^i=H^*(B(A)), and A! is obtained from A^i by Verdier/linear
+    duality under finite-type or completed hypotheses.  The identity
+    Omega(B(A))=A is bar-cobar inversion, not the construction of A!.
 
     The distance d_h depends on the shadow class:
         Class G: d_h = min(h, n_h - k_h + 1) cap at Singleton bound
@@ -295,9 +303,10 @@ def stabilizer_group_heisenberg(h: int, k_level: int = 1) -> Dict:
     For the Heisenberg algebra H_k at weight h:
     - The bar differential at arity 2 defines check operators
     - These generate a stabilizer subgroup of the Pauli group on n_h qubits
-    - The Lagrangian splitting Q(A) + Q(A!) gives CSS structure:
+    - The Lagrangian splitting Q(A) + Q(A!) gives CSS structure, where
+      Q(A!) denotes the post-Verdier/linear-dual summand:
         X-stabilizers from the bar differential of A
-        Z-stabilizers from the bar differential of A!
+        Z-stabilizers from the Verdier-dual check operators
 
     The stabilizer group has order |S| = 2^(n-k) = 2^k = 2^{dim V_h}.
 
@@ -1262,24 +1271,29 @@ def quantum_hamming_bound(n: int, k: int) -> int:
     r"""Quantum Hamming bound: max d such that sum_{j=0}^t C(n,j)*3^j <= 2^{n-k}.
 
     Where t = floor((d-1)/2).
+    The Hamming volume is accumulated as an exact integer recurrence
+    for C(n,j)3^j, so large finite-n checks do not pass through floats.
 
     >>> d = quantum_hamming_bound(10, 5)
     >>> d >= 1
     True
     """
-    target = 2 ** (n - k)
-    d = 1
-    while True:
-        t = (d - 1) // 2
-        total = 0.0
-        for j in range(t + 1):
-            log_term = _log_binomial(n, j) + j * math.log(3)
-            total += math.exp(log_term)
+    if n < 0:
+        return 0
+    exponent = n - k
+    if exponent < 0:
+        return 0
+
+    target = 1 << exponent
+    total = 0
+    term = 1
+    for t in range(n + 1):
+        if t > 0:
+            term = term * 3 * (n - t + 1) // t
+        total += term
         if total > target:
-            return d - 1
-        d += 1
-        if d > n:
-            return n
+            return min(2 * t, n)
+    return n
 
 
 def quantum_gv_bound(n: int, k: int) -> int:
@@ -1287,22 +1301,29 @@ def quantum_gv_bound(n: int, k: int) -> int:
 
     sum_{j=0}^{d-2} C(n,j)*3^j < 2^{n-k}.
     A code with these parameters EXISTS (non-constructive).
+    The strict finite-n inequality is evaluated with exact integer
+    Hamming volumes rather than floating exponentials.
 
     >>> d = quantum_gv_bound(10, 5)
     >>> d >= 1
     True
     """
-    target = 2 ** (n - k)
-    for d in range(n + 1, 0, -1):
-        total = 0.0
-        for j in range(d - 1):
-            if j > n:
-                break
-            log_term = _log_binomial(n, j) + j * math.log(3)
-            total += math.exp(log_term)
-        if total < target:
-            return d
-    return 1
+    if n < 0:
+        return 1
+    exponent = n - k
+    if exponent < 0:
+        return 1
+
+    target = 1 << exponent
+    total = 0
+    term = 1
+    for t in range(n + 1):
+        if t > 0:
+            term = term * 3 * (n - t + 1) // t
+        total += term
+        if total >= target:
+            return 1 if t == 0 else t + 1
+    return n + 1
 
 
 def verify_bounds(family: str, max_weight: int = 10, **kwargs) -> Dict:
@@ -1549,7 +1570,7 @@ def summary_report(max_weight: int = 8) -> str:
 
     lines = []
     lines.append("=" * 70)
-    lines.append("SHADOW CODE QEC ANALYSIS — BC-135")
+    lines.append("Shadow Code QEC ANALYSIS — BC-135")
     lines.append("=" * 70)
     lines.append("")
 

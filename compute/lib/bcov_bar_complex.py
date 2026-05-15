@@ -52,18 +52,31 @@ cohomology. The bar complex reduces to:
 
     B(H*(g)) = (T^c(s^{-1} H*(g)), d_2 + d_3 + ...)
 
-KEY IDENTITY (shadow tower connection):
+COMPUTE-LANE SCALAR SHADOW:
 
-For CY3 with chiral algebra A_X:
-    kappa(A_X) = chi(X)/2   (Euler characteristic / 2)
+The functions below use a scalar modular characteristic kappa_compute.
+For the compact Euler lane one has kappa_Euler(X) = chi(X)/2 when that
+lane is selected. Other lanes, such as the K3 x E BKM/BPS automorphic
+readout, carry different scalar values. These scalars compare constant
+map/shadow amplitudes; they do not identify the full VOA or the full
+factorisation algebra.
 
-The bar amplitudes F_g^{bar} at genus g give:
-    F_g^{bar} = kappa * lambda_g^{FP}   (scalar shadow)
+The bar amplitudes F_g^{bar} at genus g give, in the selected compute lane:
+    F_g^{bar} = kappa_compute * lambda_g^{FP}   (scalar shadow)
     F_g^{BCOV} = F_g^{bar} + instanton corrections
 
-The instanton corrections come from HIGHER-ARITY projections of the
+The instanton corrections come from higher-arity projections of the
 bar MC element, involving the Yukawa couplings C_{ijk} (genus-0 l_3)
 and their higher-genus descendants.
+
+OBJECT FIREWALL:
+
+A, B(A), A^i, A^!, and the chiral derived centre are different objects.
+This module computes BCOV polyvector data and the bar coalgebra on
+g = PV*(X). It does not compute A^i, Verdier/Koszul dual A^!, or the
+derived centre. If the holographic package H(T) is mentioned downstream,
+it has seven entries:
+    (A, A^i, A^!, C, r(z), Theta_A, nabla_hol)
 
 C^3 SPECIFICS
 =============
@@ -96,7 +109,7 @@ PV^{p,q}(Y) for compact-support cohomology:
     PV^{2,1} = H^1(/\^2 T_Y) = H^1(Omega_Y) = 0 (no complex structure def.)
     PV^{3,0} = H^0(/\^3 T_Y) = H^0(Omega^0) ~ 1-dim
 
-kappa(conifold) = chi/2 = 1.
+In the compact-cycle Euler compute lane, kappa_Euler(conifold) = chi/2 = 1.
 
 K3 x E SPECIFICS
 ================
@@ -122,19 +135,17 @@ For E (CY1): /\^p T_E = Omega^{1-p}_E, so:
 
 Total PV*(E) = 4-dimensional.
 
-PV*(K3 x E) = 24 * 4 = 96-dimensional (CORRECTION from task: 96, not 48).
-
-Actually for K3 x E as CY3: the polyvector fields decompose through
-the product formula. The BCOV-relevant grading groups these into:
+K3 x E is a CY3. Its polyvector fields decompose through the product
+formula:
     PV^{P,Q}(K3 x E) = bigoplus_{p1+p2=P, q1+q2=Q} PV^{p1,q1}(K3) tensor PV^{p2,q2}(E)
 
 Total dimension = dim PV*(K3) * dim PV*(E) = 24 * 4 = 96.
 
 CONVENTIONS (following Vol I):
     - Cohomological grading (|d| = +1)
-    - Bar uses DESUSPENSION: |s^{-1}v| = |v| - 1 (AP45)
-    - kappa(A) = chi(X)/2 for CY (AP48: this is specific to the CY B-model)
-    - Schouten bracket is GRADED antisymmetric with Koszul signs
+    - Bar uses desuspension: |s^{-1}v| = |v| - 1
+    - kappa is the selected compute-lane scalar, not a full VOA invariant
+    - Schouten bracket is graded antisymmetric with Koszul signs
     - All Fraction arithmetic for exact computations
 
 REFERENCES:
@@ -328,9 +339,9 @@ def pv_c3_truncated(max_deg: int = 1) -> PolyvectorSpace:
     the convention gh = p since there is no shift by CY dimension for
     non-compact spaces in the equivariant setting).
 
-    CORRECTION: For C^3 in the B-model, the relevant object is the
-    EQUIVARIANT polyvector fields with respect to the torus action.
-    After localization, each sector contributes a copy of the ground field.
+    In the C^3 B-model compute lane, the relevant object is the
+    equivariant polyvector field space for the torus action. After
+    localization, each sector contributes a copy of the ground field.
     The L-infinity structure on the equivariant cohomology reduces to
     the Schouten bracket on constant polyvectors.
     """
@@ -558,7 +569,7 @@ class BCOVLinfData(NamedTuple):
     pv: PolyvectorSpace
     l2_nontrivial: bool
     yukawa_nonzero: bool   # whether l_3 = C_{ijk} is nonzero
-    kappa: Fraction         # modular characteristic
+    kappa: Fraction         # selected compute-lane scalar characteristic
     shadow_depth_class: str  # G, L, C, or M
 
 
@@ -594,12 +605,12 @@ def bcov_linf_conifold() -> BCOVLinfData:
     """BCOV L-infinity data for the resolved conifold.
 
     The resolved conifold O(-1)+O(-1) -> P^1 has:
-    - kappa = chi/2 = 2/2 = 1
+    - kappa_Euler = chi/2 = 2/2 = 1 in this compute lane
     - l_2 = 0 on the 3-dim cohomology (BTT unobstructedness)
     - l_3 = C_{ttt} = 1 (the single Yukawa coupling, from the cubic
       prepotential F_0 = t^3/6 for the single Kahler modulus t)
 
-    WAIT: for the conifold, the prepotential is:
+    The conifold prepotential is:
         F_0 = t^3/6 + (instantons) = t^3/6 + sum_{d>=1} n_d Li_3(e^{-dt})
     where n_d = 1 for all d (single BPS state of each degree).
     The classical cubic gives C_{ttt} = d^3 F_0 / dt^3 = 1.
@@ -623,34 +634,35 @@ def bcov_linf_k3_times_e() -> BCOVLinfData:
     K3 x E is a compact CY3 with:
         chi(K3 x E) = chi(K3) * chi(E) = 24 * 0 = 0
 
-    So kappa = chi/2 = 0.
+    So the compact topological/BCOV Euler lane has value 0.
 
-    BUT: this is the TOPOLOGICAL Euler characteristic. The CY Euler
-    characteristic chi^CY for the B-model chiral algebra is NOT chi_top/2
-    in general (AP48). For K3 x E:
+    The BPS/BKM scalar lane used by this engine is a different
+    automorphic readout. For K3 x E:
 
-        kappa(K3 x E) = 5 (weight of Delta_5, the Igusa cusp form)
+        kappa_BKM(K3 x E) = 5 (weight of the primitive denominator Delta_5)
 
-    This is a DEEP result connecting the bar complex to automorphic forms.
-    The 5 comes from the categorical trace on HH_0(D^b(K3 x E)), not
-    from a naive Hodge-theoretic formula.
+    This is the BKM/BPS automorphic value, not the compact total-space
+    value kappa_cat(K3 x E)=0 and not the Heisenberg-Mukai chiral
+    specialisation kappa_ch^{Heis}(K3 x E)=3.
 
-    VERIFICATION: kappa = 5 is verified independently by:
-    1. Weight of the Igusa cusp form Delta_5 on Sp_4(Z)
+    Independent compute-lane checks for kappa_BKM = 5:
+    1. Weight of the primitive Gritsenko-Nikulin denominator Delta_5
     2. BKM superalgebra root multiplicities
-    3. Categorical trace computation on HH_0
-    4. Product formula: dim(Sp_4)/2 = 10/2 = 5
+    3. Borcherds product formula: c_{phi_{0,1}}(0)/2 = 10/2 = 5
+    4. Igusa-square check: Phi_10^{un}=Delta_5^2 has weight 10
 
     L-infinity structure:
     - l_2 = 0 on cohomology (BTT for K3 x E: unobstructed deformations)
     - l_3 nonzero: Yukawa couplings from the cubic prepotential.
       For K3 x E with moduli (t, tau, sigma), the prepotential has
       a cubic piece F_0^{cubic} = t * tau * sigma (intersection form).
-    - Higher l_k: from the BKM superalgebra structure (infinite tower).
+    - Higher l_k: encoded by the BKM/BPS infinite tower in this scalar lane.
 
     Shadow depth class: M (infinite tower from BKM Borcherds product).
-    The bar complex has infinite shadow depth because the DT partition
-    function is 1/Delta_5(Z)^2 (not a finite polynomial).
+    The bar complex has infinite shadow depth in the compute lane because
+    the DT partition function is controlled by the reciprocal Igusa square
+    Phi_10^{-1}=Delta_5^{-2} up to the chosen scalar normalisation. This
+    scalar statement is not a full VOA identification.
     """
     pv = pv_k3_times_e()
     return BCOVLinfData(
@@ -667,7 +679,7 @@ def bcov_linf_quintic() -> BCOVLinfData:
     """BCOV L-infinity data for the quintic CY3.
 
     chi(quintic) = -200.
-    kappa = chi/2 = -100.
+    kappa_Euler = chi/2 = -100 in the compact CY3 Euler compute lane.
 
     The quintic has h^{2,1} = 101 complex structure deformations
     and h^{1,1} = 1 Kahler modulus (for the B-model).
@@ -768,124 +780,23 @@ def _partition_sym(degrees: tuple, dims_items: tuple, remaining: int, idx: int) 
 def _faber_pandharipande(g: int) -> Fraction:
     r"""Faber-Pandharipande intersection number lambda_g on M_g.
 
-    lambda_g^{FP} = |B_{2g}| / (2g * (2g-2)!)
+    The scalar shadow convention used here takes lambda_g^{FP} to be the
+    absolute value of the coefficient a_g in
 
-    where B_{2g} is the 2g-th Bernoulli number.
+        (x/2)/sinh(x/2) = sum_{g>=0} a_g x^{2g}.
 
-    NOTE: This is the SIGNED formula. We use |B_{2g}| to get a positive
-    result. The Bernoulli numbers alternate: B_2 = 1/6, B_4 = -1/30, etc.
-
-    VERIFICATION at g=1: lambda_1 = |B_2| / (2 * 0!) = (1/6) / 2 = 1/12.
-    This matches int_{M_{1,1}} lambda_1 = 1/24 * (contribution from orbifold)...
-
-    Actually, the standard normalization is:
-        int_{M_g} lambda_g = |B_{2g}| / (2g * (2g)!) * (correction factor)
-
-    Let us use the exact formula from the shadow tower (Vol I eq. a_hat_coefficients):
-        a_hat_g = B_{2g} / ((2g)! * (2g))  (with sign)
-
-    Then F_g = kappa * a_hat_g.
-
-    For g=1: a_hat_1 = B_2 / (2 * 2) = (1/6) / 4 = 1/24.
-    So F_1 = kappa / 24.
+    Thus lambda_1^{FP}=1/24, lambda_2^{FP}=7/5760, and
+    lambda_3^{FP}=31/967680. The signed coefficients a_g enter the
+    A-hat series; this helper returns their absolute values for the
+    positive scalar amplitude factor.
     """
     if g < 1:
         return F(0)
-    from sympy import bernoulli as sym_bernoulli
-    b2g = F(int(sym_bernoulli(2 * g)))
-    # a_hat_g = B_{2g} / ((2g)! * (2g))  -- using the Vol I convention
-    # But we want |B_{2g}| for positive intersection numbers
-    # Actually, use the SIGNED Bernoulli for the generating function,
-    # then the result has a definite sign.
-    #
-    # The A-hat genus coefficient:
-    # A-hat(x) = (x/2) / sinh(x/2) = 1 - x^2/24 + 7x^4/5760 - ...
-    # So coefficient of x^{2g} in A-hat is a_g.
-    # a_1 = -1/24, a_2 = 7/5760, ...
-    #
-    # The shadow formula is F_g = kappa * lambda_g^{FP} where
-    # lambda_g^{FP} is POSITIVE. So:
-    #   lambda_1^{FP} = 1/24
-    #   lambda_2^{FP} = 7/5760
 
-    # Use the A-hat expansion directly.
-    # A-hat(ix) = (ix/2) / sin(ix/2) = (x/2) / sinh(x/2)
-    # Wait: A-hat(x) = prod_{j} x_j/2 / sinh(x_j/2) (for a vector bundle).
-    # For a single variable (rank 1 case):
-    # A-hat_1(x) = (x/2) / sinh(x/2) = sum_{g>=0} a_g x^{2g}
-    # a_0 = 1, a_1 = -1/24, a_2 = 7/5760, ...
-    #
-    # The FP number is lambda_g = |a_g| = (-1)^g * a_g  (a_g alternates).
-    # Actually a_g = (-1)^g * |B_{2g}| / (2g)! * (2^{2g-1} - 1) / 2^{2g-1}
-    # NO: that's the Todd class. A-hat is different.
-    #
-    # A-hat_1(x) = (x/2)/sinh(x/2).
-    # Let u = x^2/4. Then sinh(x/2) = sum_{k>=0} (x/2)^{2k+1}/(2k+1)!
-    # = (x/2) * sum_{k>=0} u^k / (2k+1)!
-    # So A-hat = 1 / (sum_{k>=0} u^k / (2k+1)!) = 1 / (1 + u/6 + u^2/120 + ...)
-    #
-    # Direct: (x/2)/sinh(x/2) = sum_{n>=0} (2^{2n} - 2) B_{2n} / (2n)! * (x/2)^{2n}
-    # ... this is getting complicated. Use the standard result.
-
-    # The standard Faber-Pandharipande result for the integral of lambda_g
-    # over M_g (used in the shadow tower) is:
-    #
-    #   int_{M_g} lambda_g = |B_{2g}| / (2g * (2g)!)
-    #
-    # (Faber-Pandharipande, Hodge integrals and moduli of curves, 2000)
-    #
-    # With the SIGNED Bernoulli number and the fact that B_{2g} has sign (-1)^{g+1}:
-    #   B_2 = 1/6, B_4 = -1/30, B_6 = 1/42, B_8 = -1/30, ...
-    #   |B_2| = 1/6, |B_4| = 1/30, |B_6| = 1/42, ...
-    #
-    # So lambda_1^FP = (1/6) / (2 * 2) = 1/24
-    #    lambda_2^FP = (1/30) / (4 * 24) = 1/2880... wait, that gives 7/5760?
-    #    Let me check: |B_4| / (4 * 4!) = (1/30) / 96 = 1/2880.
-    #    But the standard result is 7/5760 = 7/(5760).
-    #    1/2880 = 2/5760 ≠ 7/5760.
-    #
-    # OK, I need to be more careful. The correct formula from the Faber-Pandharipande
-    # intersection theory is (eq. a_hat_coefficients in Vol I):
-    #
-    #   a_hat_g = coefficient of x^{2g} in (x/2)/sinh(x/2)
-    #
-    # Computed:
-    #   g=1: -1/24
-    #   g=2: 7/5760
-    #   g=3: -31/967680
-    #
-    # These are (-1)^g * lambda_g^FP where lambda_g^FP > 0.
-
-    # Compute directly via the power series expansion
-    # (x/2)/sinh(x/2) = sum_{n>=0} ((-1)^n (2^{2n}-2) B_{2n}) / (2n)! * (x^2/4)^n
-    # ... this doesn't simplify nicely. Let's just compute the Taylor coefficients.
-
-    # Actually the exact formula is:
-    #   a_hat_g = (-1)^g * (2^{2g-1} - 1) * B_{2g} / ((2g)!)
-    #
-    # Wait, let me verify for g=1:
-    #   (-1)^1 * (2^1 - 1) * B_2 / 2! = (-1) * 1 * (1/6) / 2 = -1/12
-    #   But we said a_hat_1 = -1/24. So this formula is WRONG.
-    #
-    # The correct series expansion of (x/2)/sinh(x/2):
-    # sinh(x/2) = x/2 + (x/2)^3/6 + (x/2)^5/120 + ...
-    # = (x/2)(1 + x^2/24 + x^4/1920 + ...)
-    # So (x/2)/sinh(x/2) = 1/(1 + x^2/24 + x^4/1920 + ...)
-    # = 1 - x^2/24 + (x^2/24)^2 - x^4/1920 + ...
-    # = 1 - x^2/24 + x^4/576 - x^4/1920 + ...
-    # = 1 - x^2/24 + x^4 (1/576 - 1/1920) + ...
-    # = 1 - x^2/24 + x^4 (10/5760 - 3/5760) + ...
-    # = 1 - x^2/24 + 7x^4/5760 + ...
-    #
-    # Great! So a_hat_1 = -1/24, a_hat_2 = 7/5760. VERIFIED.
-
-    # Compute via the recursion: if f(x) = (x/2)/sinh(x/2) = sum a_n x^{2n},
-    # then f * sinh(x/2)/(x/2) = 1, i.e.,
-    # (sum a_n x^{2n}) * (sum x^{2m} / (4^m (2m+1)!)) = 1
-    #
-    # This gives: a_0 = 1, and for n >= 1:
-    # a_n = -sum_{m=1}^{n} a_{n-m} / (4^m * (2m+1)!)
-
+    # Since sinh(x/2)/(x/2) = sum_{m>=0} x^{2m}/(4^m (2m+1)!),
+    # the inverse-series coefficients satisfy:
+    # a_0 = 1,
+    # a_n = -sum_{m=1}^{n} a_{n-m}/(4^m (2m+1)!).
     a = [F(0)] * (g + 1)
     a[0] = F(1)
     for n in range(1, g + 1):
@@ -895,9 +806,7 @@ def _faber_pandharipande(g: int) -> Fraction:
             s += a[n - m] / denom
         a[n] = -s
 
-    # a[g] is the coefficient of x^{2g} in (x/2)/sinh(x/2)
-    # F_g = kappa * |a[g]| with appropriate sign convention
-    # The lambda_g^FP = |a[g]|
+    # a[g] is the signed coefficient of x^{2g}; the compute lane uses |a[g]|.
     return abs(a[g])
 
 
@@ -997,7 +906,7 @@ def bar_complex_k3_times_e(max_bar_degree: int = 4) -> BCOVBarComplex:
     """Bar complex of the BCOV L-infinity on K3 x E.
 
     96-dimensional PV space with rich structure.
-    kappa = 5 (from the Igusa cusp form Delta_5).
+    kappa_BKM = 5 (from the primitive Gritsenko-Nikulin denominator Delta_5).
     """
     return compute_bar_complex(bcov_linf_k3_times_e(), max_bar_degree)
 
@@ -1123,15 +1032,14 @@ def bcov_anomaly_genus2(kappa: Fraction, S4: Fraction = F(0)) -> Fraction:
 class ShadowTowerComparison(NamedTuple):
     """Comparison between BCOV amplitudes and shadow tower invariants.
 
-    For a CY3 X with B-model chiral algebra A_X:
+    For the scalar compute lane attached to a CY3 X:
     - The shadow tower Theta_A gives F_g^{shadow} at each genus g
     - The BCOV recursion gives F_g^{BCOV} at each genus g
-    - These MUST AGREE at the scalar level (constant map contribution)
+    - These agree at the scalar level (constant map contribution)
     - They may differ by instanton corrections (higher arity)
 
-    The agreement at the scalar level is a CONSEQUENCE of the
-    identification of the bar MC equation with the BCOV holomorphic
-    anomaly equation (the MC equation projects to BCOV).
+    This records equality of scalar amplitudes. It is not a full VOA,
+    factorisation-algebra, or derived-centre identification.
     """
     name: str
     kappa_shadow: Fraction
@@ -1145,7 +1053,8 @@ def compare_shadow_bcov(name: str, kappa: Fraction,
                         max_genus: int = 5) -> ShadowTowerComparison:
     """Compare shadow tower and BCOV amplitudes.
 
-    At the scalar level, both give F_g = kappa * a_hat_g.
+    At the selected compute-lane scalar level, both give
+    F_g = kappa * a_hat_g.
     """
     shadow_amps: Dict[int, Fraction] = {}
     bcov_amps: Dict[int, Fraction] = {}
@@ -1170,34 +1079,31 @@ def compare_shadow_bcov(name: str, kappa: Fraction,
 # =========================================================================
 
 def kappa_additivity_check() -> bool:
-    """Verify kappa additivity under product decomposition.
+    """Verify that the BKM lane is not the Heisenberg product lane.
 
-    For K3 x E, the naive product formula would give:
-        kappa(K3 x E) = kappa(K3) * kappa(E) ??
+    For K3 x E, the lane conflation would assert:
+        kappa_BKM(K3 x E) ?= kappa_ch(K3) + kappa_ch(E)
 
-    But this is WRONG. kappa is NOT multiplicative under products.
+    The BKM automorphic lane is separate from the Heisenberg-Mukai
+    product specialisation.
     For K3: kappa = chi(O_{K3}) = 2 (or, in the CY Euler char, kappa = 2).
     For E: kappa = 1 (Heisenberg at level 1).
-    Product: 2 * 1 = 2. But kappa(K3 x E) = 5 ≠ 2.
+    Sum: 2 + 1 = 3. But kappa_BKM(K3 x E) = 5.
 
-    The correct formula involves the FULL Hochschild data, not just
-    a simple multiplicative identity. This is a GENUINE nonlinearity:
-    the product CY category D^b(K3) tensor D^b(E) has a kappa that
-    depends on the interaction between the two factors.
-
-    The 5 = dim(Sp_4)/2 has NO simple decomposition into K3 and E invariants.
-    This is the BKM superalgebra structure at work.
+    The correct split is
+    kappa_cat(K3 x E)=0, kappa_ch^{Heis}(K3 x E)=3,
+    kappa_BKM(Delta_5)=5, and kappa_fiber(K3)=24.
     """
     kappa_k3 = F(2)
     kappa_e = F(1)
-    kappa_k3xe = F(5)
+    kappa_bkm_k3xe = F(5)
 
-    # kappa is NOT multiplicative
-    assert kappa_k3 * kappa_e != kappa_k3xe, \
-        "kappa should NOT be multiplicative for K3 x E"
+    # kappa_BKM is not the Heisenberg product/sum lane.
+    assert kappa_k3 + kappa_e != kappa_bkm_k3xe, \
+        "kappa_BKM should not be identified with the K3+E Heisenberg lane"
 
-    # The discrepancy is 5 - 2 = 3, which comes from the
-    # "interaction term" in the Hochschild complex.
+    # The old product trap 2*1=2 and the Heisenberg sum 2+1=3 both miss
+    # the BKM weight 5.
     return True
 
 
@@ -1236,22 +1142,17 @@ def pv_dimension_check() -> bool:
     PV*(E) = 4-dim
     PV*(K3 x E) = sum of products = 96-dim
 
-    WAIT: Let me recount PV*(K3).
     PV^{0,q}(K3) = H^{2,q}: h^{2,0}=1, h^{2,1}=0, h^{2,2}=1. Sum: 2.
     PV^{1,q}(K3) = H^{1,q}: h^{1,0}=0, h^{1,1}=20, h^{1,2}=0. Sum: 20.
     PV^{2,q}(K3) = H^{0,q}: h^{0,0}=1, h^{0,1}=0, h^{0,2}=1. Sum: 2.
-    Total PV*(K3) = 2 + 20 + 2 = 24. CHECK.
+    Total PV*(K3) = 2 + 20 + 2 = 24.
 
     PV^{0,q}(E) = H^{1,q}: h^{1,0}=1, h^{1,1}=1. Sum: 2.
     PV^{1,q}(E) = H^{0,q}: h^{0,0}=1, h^{0,1}=1. Sum: 2.
-    Total PV*(E) = 2 + 2 = 4. CHECK.
+    Total PV*(E) = 2 + 2 = 4.
 
-    PV*(K3 x E) by Kunneth: 24 * 4 = 96. CHECK.
-
-    CORRECTION: The task said "48-dimensional" for K3 x E. This is WRONG.
-    The correct answer is 96 = 24 * 4. The task may have been counting
-    only the h^{p,q} with p + q <= 3, but polyvector fields involve
-    ALL (p,q) pairs.
+    PV*(K3 x E) by Kunneth: 24 * 4 = 96. The computation uses all
+    PV^{p,q} terms, not only a half-diamond truncation.
     """
     pv_k = pv_k3()
     pv_e = pv_elliptic()
@@ -1261,7 +1162,7 @@ def pv_dimension_check() -> bool:
 
     assert pv_k.total_dim == 24
     assert pv_e.total_dim == 4
-    assert pv_kxe.total_dim == 96  # NOT 48 as stated in the task
+    assert pv_kxe.total_dim == 96
     assert pv_c3.total_dim == 8
     assert pv_con.total_dim == 3
 
@@ -1356,26 +1257,23 @@ def bar_dims_conifold_explicit() -> Dict[int, int]:
 def schouten_bracket_k3xe_structure() -> Dict[str, Any]:
     """Analyze the Schouten bracket structure on PV*(K3 x E).
 
-    By Bogomolov-Tian-Todorov (BTT), CY manifolds have UNOBSTRUCTED
-    deformations. This means:
+    Bogomolov-Tian-Todorov gives unobstructed complex deformations for
+    compact CY manifolds. In the cohomological minimal model used by
+    this compute lane:
 
-    1. The Schouten bracket on H*(PV*(X)) is TRIVIAL at the
-       cohomological level (l_2 vanishes on harmonic representatives).
+    1. The quadratic obstruction is killed in cohomology, so the stored
+       l_2 datum is zero.
 
-    2. The L-infinity algebra on H*(PV*(X)) is FORMAL: l_2 = 0,
-       and the nontrivial L-infinity structure starts at l_3.
+    2. The first nonzero structure retained by the scalar BCOV lane is
+       l_3.
 
     3. l_3 = C_{ijk} (Yukawa coupling) is the leading nontrivial
        bracket.
 
-    For K3 x E specifically:
-    - dim PV^{1,1} = h^{2,1}(K3 x E) = h^{2,0}(K3)*h^{0,1}(E) +
-      h^{1,1}(K3)*h^{1,0}(E) + ... = 1*1 + 0*0 + ... needs computation.
-
-    Let me compute h^{p,q}(K3 x E) properly:
+    For K3 x E, the CY3 polyvector decomposition is:
     h^{3-P, Q}(K3 x E) = sum_{(p1,q1)+(p2,q2)=(3-P,Q)} h^{p1,q1}(K3) * h^{p2,q2}(E)
 
-    This gives PV^{P,Q}(K3 x E) = h^{3-P, Q}(K3 x E).
+    Therefore PV^{P,Q}(K3 x E) = h^{3-P, Q}(K3 x E).
     """
     hd = k3_times_e_hodge()
     pv = pv_k3_times_e()
@@ -1394,7 +1292,7 @@ def schouten_bracket_k3xe_structure() -> Dict[str, Any]:
 
     h21 = hd.h(2, 1)
 
-    # Bracket vanishes on cohomology by BTT
+    # The cohomological minimal model stores the BTT-killed l_2 obstruction as zero.
     bracket_vanishes = True
 
     return {
@@ -1402,7 +1300,7 @@ def schouten_bracket_k3xe_structure() -> Dict[str, Any]:
         "total_dim": pv.total_dim,
         "deformation_dim": h21,  # = PV^{1,1} = h^{2,1}(K3xE)
         "bracket_vanishes_on_cohomology": bracket_vanishes,
-        "reason": "BTT (Bogomolov-Tian-Todorov) theorem",
+        "reason": "BTT minimal-model obstruction vanishing",
         "leading_nontrivial_bracket": "l_3 (Yukawa coupling)",
     }
 

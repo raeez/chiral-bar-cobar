@@ -1,22 +1,11 @@
-r"""Tests for matrix_model_shadow_engine: random matrix theory and the shadow tower.
+r"""Tests for finite matrix-model diagnostics of the scalar shadow lane.
 
-60+ tests covering all 10 computational themes with multi-path verification.
-
-Verification strategy (per CLAUDE.md multi-path mandate):
-- Path 1: Direct computation from defining formula
-- Path 2: Alternative formula / independent derivation
-- Path 3: Limiting case / special value check
-- Path 4: Cross-family consistency / additivity
-- Path 5: Literature comparison
-- Path 6: Numerical evaluation at specific parameters
-
-CAUTION (AP1):  kappa(H_k) = k, NOT k/2.
-CAUTION (AP9):  S_2 = kappa != c/2 in general.
-CAUTION (AP22): F_g values are POSITIVE.
-CAUTION (AP24): kappa(Vir_c) + kappa(Vir_{26-c}) = 13, NOT 0.
-CAUTION (AP38): Convention check on all hardcoded values.
-CAUTION (AP39): kappa != S_2 for non-rank-1 families.
-CAUTION (AP10): Cross-family consistency, not just single-family hardcoded tests.
+The hard constants are sourced from local canonical surfaces:
+kappa(H_k)=k, kappa(Vir_c)=c/2,
+kappa(V_k(g))=dim(g)(k+h^vee)/(2h^vee), and
+S_4(Vir_c)=10/(c(5c+22)).  The tests keep finite scalar coefficient
+checks separate from analytic tau, hierarchy, EO recursion, and
+convergence claims.
 """
 
 import math
@@ -53,7 +42,7 @@ from compute.lib.matrix_model_shadow_engine import (
     hermitian_resolvent_gaussian,
     unitary_matrix_model_density,
     hermitian_vs_unitary_comparison,
-    # Section 6: Double-scaling and KdV
+    # Section 6: Double-scaling coefficients and hierarchy boundary
     double_scaling_F_g,
     shadow_connection_string_equation,
     kdv_from_shadow_verify,
@@ -180,16 +169,20 @@ class TestSpectralCurve:
             assert abs(val) < 1e-12, f"y^2 should vanish at z={z_plus} for kappa={kappa}"
 
     def test_spectral_curve_comparison_gaussian(self):
-        """Full comparison for the Gaussian model."""
+        """Finite Gaussian comparison without an EO recursion claim."""
         result = spectral_curve_comparison(kappa_val=1.0)
         assert result['Q_L_is_constant_for_gaussian']
         assert result['free_energies_match']
+        assert result['finite_window_only']
+        assert not result['eo_recursion_theorem_proved']
 
     def test_virasoro_spectral_curve_class_M(self):
         """Virasoro at c=10 is class M (Delta != 0)."""
         result = virasoro_spectral_curve_vs_shadow(10.0)
         assert result['is_class_M']
         assert not result['Q_L_constant']
+        assert result['formal_matrix_potential_only']
+        assert not result['matrix_integral_constructed']
 
 
 # ===========================================================================
@@ -274,30 +267,11 @@ class TestKontsevichModel:
         # d=2, n=1, g=0: need 2 = -3+1 = -2. Fails.
         assert kontsevich_intersection((2,), 0) == Rational(0)
 
-    def test_genus0_witten_formula(self):
-        """<tau_{d1}...tau_{dn}>_0 = (n-3)!/prod(d_i!) for no zeros.
-
-        <tau_1 tau_1 tau_1>_0: sum d_i = 3 = 3*0-3+3 = 0. Selection: 3 != 0. => 0.
-        Actually: 3g-3+n = 0-3+3 = 0 != 3. So this vanishes.
-
-        <tau_0 tau_0 tau_0>_0 = (3-3)!/1 = 1.
-        <tau_0 tau_0 tau_1>_0: sum = 1 = 0-3+3 = 0. Selection: 1 != 0. => 0.
-        Wait: g=0, n=3, sum = 1. Need 1 = 3*0-3+3 = 0. Fails.
-
-        Let me pick a valid case: <tau_0 tau_1 tau_2>_0: sum = 3, n=3, g=0.
-        Need 3 = -3+3 = 0. 3 != 0, fails.
-
-        Actually for g=0: 3g-3+n = n-3. So sum d_i = n-3.
-        <tau_0^3>_0: sum=0, n=3: 0 = 0. OK.
-        <tau_0^4 tau_1>_0: sum=1, n=5: need 1 = 2. Fails.
-        <tau_0 tau_0 tau_0 tau_0>_0: sum=0, n=4: need 0 = 1. Fails.
-        <tau_1>_0: n=1, need d=3*0-3+1=-2. Fails.
-
-        Valid: <tau_0^{n} tau_{n-3}>_0 for n >= 3: sum = n-3, check.
-        <tau_0^3>_0 = 1 (already tested).
-        """
-        # <tau_0^3>_0 = 1 (base case, already tested above)
-        pass
+    def test_genus0_witten_formula_with_string_reduction(self):
+        """Genus-zero values obey the selection rule and string reduction."""
+        assert kontsevich_intersection((0, 0, 0), 0) == Rational(1)
+        assert kontsevich_intersection((0, 0, 0, 1), 0) == Rational(1)
+        assert kontsevich_intersection((0, 0, 0, 0), 0) == Rational(0)
 
     def test_string_equation(self):
         """Verify string equation: <tau_0 tau_{d1}...>_g = sum <...tau_{di-1}...>_g.
@@ -325,6 +299,9 @@ class TestKontsevichModel:
         """F_1^shadow = kappa * <tau_1>_1 = kappa/24."""
         result = shadow_vs_kontsevich_tau(Rational(1), max_genus=1)
         assert result['genus_data'][1]['shadow_eq_kappa_times_tau1']
+        assert result['finite_formal_identity_certified']
+        assert not result['analytic_tau_identity_proved']
+        assert not result['kw_kdv_theorem_proved']
 
     def test_kontsevich_tau_0_0_0_0_genus0(self):
         """<tau_0^4>_0 = 0 (selection rule: 0 != 4-3=1)."""
@@ -378,10 +355,11 @@ class TestHermitianVsUnitary:
             total += unitary_matrix_model_density(theta, kappa_val=2.0) * d_theta
         assert abs(total - 1.0) < 0.01, f"Integral = {total}, expected 1.0"
 
-    def test_hermitian_vs_unitary_same_bernoulli(self):
-        """Both models produce the same Bernoulli structure at genus >= 2."""
+    def test_hermitian_vs_unitary_scalar_bernoulli_lane(self):
+        """The comparison records a scalar Bernoulli lane, not integral equality."""
         result = hermitian_vs_unitary_comparison(kappa_val=1.0)
         assert result['both_bernoulli_at_higher_genus']
+        assert not result['matrix_integral_equality_proved']
 
     def test_resolvent_discontinuity(self):
         """omega(x+i0) - omega(x-i0) = -2*pi*i*rho(x) on the cut.
@@ -400,11 +378,11 @@ class TestHermitianVsUnitary:
 
 
 # ===========================================================================
-# THEME 6: Double-Scaling and KdV (5 tests)
+# THEME 6: Double-Scaling Coefficients and Hierarchy Boundary (5 tests)
 # ===========================================================================
 
-class TestDoubleScalingKdV:
-    """Tests for double-scaling limit and KdV hierarchy."""
+class TestDoubleScalingBoundaries:
+    """Tests for double-scaling coefficients and finite scalar diagnostics."""
 
     def test_double_scaling_F1(self):
         """a_1 = -1/24 (Painleve II genus-1 coefficient)."""
@@ -420,17 +398,22 @@ class TestDoubleScalingKdV:
         assert double_scaling_F_g(2) == Rational(-7, 2880)
 
     def test_shadow_connection_riccati(self):
-        """The shadow connection has Riccati structure: H^2 = t^4 * Q_L(t)."""
+        """The shadow connection records only a primary-line Riccati diagnostic."""
         result = shadow_connection_string_equation()
-        assert result['stationary_KdV']
+        assert result['stationary_primary_line_diagnostic']
+        assert not result['stationary_KdV']
+        assert result['descendant_cohft_required_for_kdv']
         assert 'H^2' in result['riccati_form']
         assert 'Q_L' in result['riccati_form']
 
-    def test_kdv_F1_F2_check(self):
-        """KdV verification: F_1 = 1/24, F_2 = 7/5760."""
+    def test_kdv_boundary_F1_F2_check(self):
+        """Finite scalar check: F_1 = 1/24 and F_2 = 7/5760."""
         result = kdv_from_shadow_verify(4)
         assert result['F1_check']['match']
         assert result['F2_check']['match']
+        assert result['claim_boundary']['finite_scalar_coefficients_only']
+        assert not result['claim_boundary']['kw_kdv_theorem_proved']
+        assert not result['claim_boundary']['gelfand_dickey_hierarchy_proved']
 
     def test_double_scaling_coefficients_nonzero(self):
         """The first three double-scaling coefficients are nonzero."""
@@ -439,22 +422,26 @@ class TestDoubleScalingKdV:
 
 
 # ===========================================================================
-# THEME 7: Virasoro Constraints = MC Equation (6 tests)
+# THEME 7: Finite MC/Virasoro Diagnostics (6 tests)
 # ===========================================================================
 
 class TestVirasoroConstraintsMC:
-    """Tests for the identification of Virasoro constraints with the MC equation."""
+    """Tests for finite MC/Virasoro boundary diagnostics."""
 
-    def test_string_equation_trivial_at_n0(self):
-        """String equation is trivially satisfied at n=0 (no marked points)."""
+    def test_string_equation_not_tested_at_n0(self):
+        """The no-marked scalar lane does not test the string equation."""
         result = virasoro_constraint_L_minus1(Rational(1), 2)
-        assert result['string_equation_trivially_satisfied_at_n0']
+        assert not result['string_equation_tested']
+        assert not result['string_equation_trivially_satisfied_at_n0']
+        assert result['descendant_potential_required']
 
     def test_dilaton_equation_eigenvalue(self):
-        """Dilaton eigenvalue is 2g-2 at genus g."""
+        """The scalar genus weight is 2g-2; descendant dilaton data is external."""
         for g in range(1, 6):
             result = virasoro_constraint_L0(Rational(1), g)
             assert result['dilaton_eigenvalue'] == 2 * g - 2
+            assert not result['dilaton_equation_tested']
+            assert result['descendant_potential_required']
 
     def test_mc_vs_virasoro_g1_n0(self):
         """MC at (g=1, n=0) gives F_1 = kappa/24."""
@@ -472,15 +459,14 @@ class TestVirasoroConstraintsMC:
         assert result['g1_n1']['match']
 
     def test_virasoro_at_several_kappa(self):
-        """The MC=Virasoro identification holds for any kappa.
-
-        F_1(kappa) = kappa/24 for all kappa. This is because kappa scales
-        the ENTIRE partition function; the Virasoro constraints are linear.
-        """
+        """The genus-one scalar coefficient is linear in kappa."""
         for k in [1, 2, 5, 13]:
             kappa = Rational(k)
             F1 = F_g(kappa, 1)
             assert simplify(F1 - kappa / 24) == 0
+        result = mc_vs_virasoro_identification(4)
+        assert not result['claim_boundary']['mc_equals_virasoro_theorem_proved']
+        assert not result['claim_boundary']['descendant_cohft_data_assumed']
 
 
 # ===========================================================================
@@ -499,7 +485,7 @@ class TestLargeN:
             assert key in params
 
     def test_genus_expansion_at_large_N(self):
-        """For large N, the combinatorial genus expansion converges."""
+        """For large N, sampled combinatorial contributions decrease."""
         result = thooft_genus_expansion_numerical(100, kappa_val=1.0, max_genus=6)
         # At N=100, contributions should decrease with genus
         data = result['genus_data']
@@ -540,14 +526,17 @@ class TestChernSimons:
         assert F1 == kappa_CS / 24
 
     def test_cs_shadow_comparison_all_match(self):
-        """CS perturbative free energies = shadow free energies for SU(2), k=1."""
+        """The SU(2), k=1 scalar CS lane matches the shadow coefficients."""
         result = cs_shadow_comparison(N=2, k=1, max_genus=5)
         assert result['all_match']
+        assert result['shadow_normalized_scalar_only']
+        assert not result['exact_matrix_integral_free_energy_proved']
 
     def test_cs_shadow_comparison_su3(self):
-        """CS = shadow for SU(3), k=2."""
+        """The SU(3), k=2 scalar CS lane matches the shadow coefficients."""
         result = cs_shadow_comparison(N=3, k=2, max_genus=4)
         assert result['all_match']
+        assert result['shadow_normalized_scalar_only']
 
     def test_marino_su2_k1_nonzero(self):
         """Z_CS(S^3, SU(2), k=1) is nonzero."""
@@ -555,17 +544,10 @@ class TestChernSimons:
         assert abs(Z) > 1e-10
 
     def test_marino_su2_exact(self):
-        """Z_CS(S^3, SU(2), k) = sqrt(2/(k+2)) * sin(pi/(k+2)).
+        """The module's SU(2), k=1 matrix-product normalization is exact.
 
-        For k=1: Z = sqrt(2/3) * sin(pi/3) = sqrt(2/3) * sqrt(3)/2 = sqrt(2)/2 * 1/sqrt(1) ...
-        Actually: sqrt(2/3) * sin(pi/3) = sqrt(2/3) * sqrt(3)/2 = sqrt(6)/6 * sqrt(3) = sqrt(2)/2 ...
-        Let me just compute directly: sqrt(2/3) * sin(pi/3) = 0.8165 * 0.8660 = 0.7071.
-
-        From the matrix model formula with N=2, k=1:
         Z = (k+N)^{-N/2} * prod_{1<=i<j<=N} 2*sin(pi(j-i)/(k+N))
         = 3^{-1} * 2*sin(pi/3) = (1/3) * 2*(sqrt(3)/2) = sqrt(3)/3 = 0.5774.
-
-        Hmm, let me compute both carefully.
         """
         # The formula: Z = kN^{-N/2} * product
         # For N=2, k=1: kN = 3, product = 2*sin(pi*1/3) = 2*(sqrt(3)/2) = sqrt(3)
@@ -637,7 +619,7 @@ class TestCrossCutting:
     """Cross-cutting verification tests."""
 
     def test_bernoulli_universality_all_positive(self):
-        """All shadow free energies (at kappa=1) are positive [AP22]."""
+        """All shadow free energies at kappa=1 are positive."""
         results = bernoulli_universality_check(8)
         for g, data in results.items():
             assert float(data['shadow_kappa1']) > 0, f"lambda_{g}^FP should be positive"
@@ -651,7 +633,7 @@ class TestCrossCutting:
     def test_ahat_generating_function(self):
         """The A-hat GF: sum lambda_g^FP * x^{2g} = (x/2)/sin(x/2) - 1.
 
-        This is the master identity unifying all the formulas [AP22].
+        The test is a finite formal coefficient check.
         """
         result = ahat_generating_function_check(8)
         assert result['all_match']
@@ -677,11 +659,13 @@ class TestCrossCutting:
             assert simplify(F_g(k1 + k2, g) - F_g(k1, g) - F_g(k2, g)) == 0
 
     def test_shadow_truncation_decreases(self):
-        """Truncation error decreases as max_genus increases (at large N)."""
+        """The next omitted term decreases in this large-N finite window."""
         N = 20
         errs = []
         for mg in range(2, 7):
             result = shadow_truncation_error(N, mg)
+            assert not result['rigorous_error_bound_proved']
+            assert not result['convergence_or_radius_proved']
             errs.append(result['next_term_magnitude'])
         for i in range(1, len(errs)):
             assert errs[i] < errs[i-1], "Truncation error should decrease"

@@ -1,30 +1,10 @@
-r"""Tests for shadow partition function convergence analysis.
+r"""Tests for scalar A-hat facts and shadow-radius diagnostics.
 
-Verifies all seven analytic results:
-1. Genus convergence radius = 2*pi
-2. Arity convergence (shadow radius, critical c*)
-3. Double convergence domain
-4. Residues and analytic continuation
-5. Borel transform entirety
-6. Boundary behavior (critical exponent alpha = 1)
-7. Modular properties
-
-Plus: Bernoulli decay, string comparison, class comparison,
-      high-precision verification, Virasoro family scan.
-
-60+ tests covering the full convergence landscape.
-
-Manuscript references:
-    prop:genus-expansion-convergence (genus_expansions.tex)
-    thm:shadow-double-convergence (higher_genus_modular_koszul.tex)
-    thm:shadow-radius (higher_genus_modular_koszul.tex)
-    rem:convergence-vs-string (genus_expansions.tex)
+The tests keep exact scalar Bernoulli/A-hat constants separate from
+arity-radius diagnostics and finite-window planted-forest probes.  They
+also prevent finite diagnostics from being promoted to analytic
+continuation, Borel summability, or nonperturbative completion.
 """
-
-# VERIFIED: [DC] hardcoded expected values below are direct evaluations of the
-# formulas, recurrences, or enumerations under test. [LC] the same literals are
-# anchored by small-parameter, vanishing, critical/self-dual, or finite-depth
-# specializations elsewhere in the surrounding test module.
 
 import math
 import cmath
@@ -85,6 +65,9 @@ from compute.lib.shadow_pf_convergence import (
     # Constants
     TWO_PI,
     TWO_PI_SQ,
+    SCALAR_AHAT_EXACT,
+    ARITY_RADIUS_DIAGNOSTIC,
+    FINITE_WINDOW_ONLY,
 )
 
 from compute.lib.utils import lambda_fp
@@ -181,9 +164,11 @@ class TestGenusConvergenceRadius:
         assert abs(ratio - 1.0) < 1e-14
 
     def test_verification_function(self):
-        """Full verification function returns consistent results."""
+        """Finite probe records its scalar source."""
         result = genus_convergence_verification(1.0, max_genus=30)
         assert result['convergence_radius'] == TWO_PI
+        assert result['radius_source'] == SCALAR_AHAT_EXACT
+        assert result['probe_status'] == FINITE_WINDOW_ONLY
         assert result['hbar_1']['relative_error'] < 1e-10
 
 
@@ -212,6 +197,7 @@ class TestBernoulliDecay:
     def test_bernoulli_asymptotic(self):
         """lambda_g / (2/(2*pi)^{2g}) -> 1 as g -> infty."""
         result = bernoulli_decay_coefficients(25)
+        assert result['certification'] == SCALAR_AHAT_EXACT
         # At g=20, the ratio should be close to 1
         ratio_g20 = result['data'][19]['ratio']  # index 19 = g=20
         assert abs(ratio_g20 - 1.0) < 0.01
@@ -310,10 +296,12 @@ class TestArityConvergence:
     def test_landscape_consistency(self):
         """Landscape function returns consistent data."""
         landscape = arity_convergence_landscape()
+        assert landscape['certification'] == ARITY_RADIUS_DIAGNOSTIC
         assert landscape['Heisenberg']['convergent'] is True
         assert landscape['Affine_sl2']['convergent'] is True
         assert landscape['Vir_c=13']['convergent'] is True
         assert landscape['Vir_c=1']['convergent'] is False
+        assert landscape['Beta_gamma']['status'] == 'not_certified_by_this_engine'
 
 
 # =========================================================================
@@ -321,7 +309,7 @@ class TestArityConvergence:
 # =========================================================================
 
 class TestDoubleConvergence:
-    """Test the double convergence domain D = {|hbar| < 2pi} x {|t| < 1/rho}."""
+    """Test scalar/arity diagnostic domains."""
 
     def test_domain_construction(self):
         """Construct domain for Vir c=13."""
@@ -330,6 +318,7 @@ class TestDoubleConvergence:
         assert abs(domain.R_genus - TWO_PI) < 1e-10
         assert abs(domain.R_arity - 1.0 / rho) < 1e-10
         assert domain.physical_point_in_domain is True
+        assert domain.certification == ARITY_RADIUS_DIAGNOSTIC
 
     def test_domain_heisenberg_infinite(self):
         """Heisenberg: arity radius is infinite."""
@@ -359,15 +348,15 @@ class TestDoubleConvergence:
         assert any('Heisenberg' in n for n in names)
         assert any('Affine' in n for n in names)
 
-    def test_table_genus_radius_universal(self):
-        """All families have the same genus radius = 2*pi."""
+    def test_table_genus_radius_scalar(self):
+        """All listed scalar lanes have genus radius = 2*pi."""
         table = double_convergence_table()
         for row in table:
             assert abs(row['R_genus'] - TWO_PI) < 1e-10
 
 
 # =========================================================================
-# Class 7: Residues and analytic continuation
+# Class 7: Scalar residues and meromorphic continuation
 # =========================================================================
 
 class TestResidues:
@@ -420,7 +409,7 @@ class TestResidues:
 # =========================================================================
 
 class TestBorelTransform:
-    """Test Borel transform properties."""
+    """Test scalar Borel facts and arity model diagnostics."""
 
     def test_borel_genus_series_at_zero(self):
         """Borel transform vanishes at zeta = 0."""
@@ -433,10 +422,13 @@ class TestBorelTransform:
             val = borel_transform_genus_series(1.0, z)
             assert math.isfinite(abs(val))
 
-    def test_borel_genus_series_entire_verification(self):
-        """Full entirety verification."""
+    def test_borel_genus_series_entire_source(self):
+        """Scalar entirety is sourced from the coefficient bound."""
         result = borel_transform_is_entire(1.0)
         assert result['is_entire'] is True
+        assert result['entire_source'] == SCALAR_AHAT_EXACT
+        assert result['probe_status'] == FINITE_WINDOW_ONLY
+        assert result['nonperturbative_completion_certified'] is False
 
     def test_borel_at_imaginary(self):
         """Borel transform finite on imaginary axis."""
@@ -453,18 +445,23 @@ class TestBorelTransform:
         # String coefficients are constant = 1
         assert all(c == 1.0 for c in result['string_borel_coefficients'])
 
-    def test_arity_borel_entire_for_rho_gt_1(self):
-        """Arity Borel transform is entire even for rho > 1."""
+    def test_arity_borel_model_finite_for_rho_gt_1(self):
+        """The factorial-damped model is finite even for rho > 1."""
         rho = 2.0  # divergent ordinary series
         for z in [1.0, 5.0, 10.0]:
             val = arity_borel_transform(rho, z)
             assert math.isfinite(abs(val))
 
-    def test_arity_borel_structure(self):
-        """Arity Borel singularity structure reports entire."""
+    def test_arity_borel_structure_not_a_summability_certificate(self):
+        """The arity model is not promoted to summability."""
         for rho in [0.5, 1.0, 2.0]:
             result = arity_borel_singularity_structure(rho)
-            assert result['borel_entire'] is True
+            assert result['borel_entire'] is None
+            assert result['borel_entire_diagnostic'] is True
+            assert result['borel_summability_certified'] is False
+            assert result['analytic_continuation_certified'] is False
+            assert result['nonperturbative_completion_certified'] is False
+            assert result['status'] == FINITE_WINDOW_ONLY
 
 
 # =========================================================================
@@ -504,16 +501,17 @@ class TestBoundaryBehavior:
 
 
 # =========================================================================
-# Class 10: Modular properties
+# Class 10: Genus-1 scalar coefficient
 # =========================================================================
 
 class TestModularProperties:
-    """Test modular properties at genus 1."""
+    """Test genus-1 scalar coefficient data."""
 
     def test_F1_heisenberg(self):
-        """F_1(Heisenberg rank 1) = 1/48."""
-        result = genus_1_shadow_modular(0.5)  # kappa = 1/2
-        assert abs(result['F_1'] - 1.0/48.0) < 1e-14
+        """F_1(Heisenberg level 1) = 1/24."""
+        result = genus_1_shadow_modular(1.0)
+        assert abs(result['F_1'] - 1.0/24.0) < 1e-14
+        assert result['modular_transformation_certified'] is False
 
     def test_F1_virasoro(self):
         """F_1(Vir_c) = c/48."""
@@ -581,12 +579,14 @@ class TestHighPrecision:
 # =========================================================================
 
 class TestVirasoroFamily:
-    """Test Virasoro convergence analysis across central charges."""
+    """Test Virasoro scalar and arity diagnostics across charges."""
 
     def test_virasoro_c13(self):
         """Vir c=13 (self-dual): convergent."""
         result = virasoro_full_convergence(13.0)
         assert result['arity_convergent'] is True
+        assert result['arity_status'] == ARITY_RADIUS_DIAGNOSTIC
+        assert result['nonperturbative_completion_certified'] is False
         assert result['kappa'] == 6.5
 
     def test_virasoro_c26(self):
@@ -630,13 +630,13 @@ class TestClassComparison:
     """Test comparison across the four depth classes."""
 
     def test_class_G_convergent(self):
-        """Class G (Heisenberg): always convergent."""
+        """Class G (Heisenberg): finite arity."""
         classes = class_comparison()
         assert classes['G']['double_convergent'] is True
         assert classes['G']['arity_R'] == float('inf')
 
     def test_class_L_convergent(self):
-        """Class L (Affine): always convergent."""
+        """Class L (Affine): finite arity."""
         classes = class_comparison()
         assert classes['L']['double_convergent'] is True
 
@@ -644,6 +644,7 @@ class TestClassComparison:
         """Class C (Beta-gamma): convergence undefined."""
         classes = class_comparison()
         assert classes['C']['double_convergent'] is None
+        assert classes['C']['status'] == 'not_certified_by_this_engine'
 
     def test_class_M_convergent(self):
         """Class M convergent (c=13): double convergent."""
@@ -697,15 +698,20 @@ class TestPolylogarithm:
 # =========================================================================
 
 class TestMasterSummary:
-    """Test the master convergence summary."""
+    """Test scalar facts and diagnostic firewall fields."""
 
     def test_master_c13(self):
-        """Master summary for c=13: fully convergent."""
+        """Master summary for c=13 keeps diagnostics explicit."""
         result = master_convergence_summary(13.0)
         assert result['genus_convergent'] is True
         assert result['arity_convergent'] is True
         assert result['double_convergent'] is True
         assert result['genus_borel_entire'] is True
+        assert result['genus_borel_entire_source'] == SCALAR_AHAT_EXACT
+        assert result['arity_borel_entire'] is None
+        assert result['arity_borel_entire_diagnostic'] is True
+        assert result['arity_borel_summability_certified'] is False
+        assert result['nonperturbative_completion_certified'] is False
         assert result['boundary_exponent'] == 1
 
     def test_master_c1(self):
@@ -714,6 +720,7 @@ class TestMasterSummary:
         assert result['genus_convergent'] is True
         assert result['arity_convergent'] is False
         assert result['double_convergent'] is False
+        assert result['analytic_continuation_certified'] is False
 
     def test_master_c26(self):
         """Master summary for c=26 (string)."""
@@ -730,6 +737,12 @@ class TestMasterSummary:
         """F_1 = kappa/24 = c/48."""
         result = master_convergence_summary(26.0)
         assert abs(result['F_1'] - 26.0 / 48.0) < 1e-14
+
+    def test_master_finite_window_no_full_tower_promotion(self):
+        """Finite planted-forest windows do not certify all-genus data."""
+        result = master_convergence_summary(13.0)
+        assert result['all_genus_virasoro_planted_forest_certified'] is False
+        assert result['finite_planted_forest_window_certifies_full_tower'] is False
 
 
 # =========================================================================

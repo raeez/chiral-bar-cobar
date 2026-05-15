@@ -1,4 +1,4 @@
-"""Coxeter anomaly species: S_n representation theory of the shadow obstruction tower.
+"""Finite-window Coxeter-anomaly diagnostics for shadow obstruction data.
 
 Tests two claims from raeeznotes95 against the established shadow obstruction tower:
 
@@ -12,24 +12,36 @@ CLAIM B (Chevalley-shadow correlation): The Chevalley quotient geometry
 Spec C[H_n]^{S_n} transitions from modular-curve type (n<=4) to cameral
 type (n>=5), correlating with the G/L/C/M shadow depth classification.
 
-METHOD: Lift the 1d shadow obstruction tower (virasoro_shadow_tower.py) to explicit
-multi-mode variables and test S_n transformation properties directly.
+METHOD: compare finite-window toy lifts against exact local invariants.  The
+module records diagnostics only; it does not identify finite reflection-group
+tests with full anomaly classes.
 
 Ground truth:
   - virasoro_shadow_tower.py: Sh_r coefficients on primary line
-  - modular_shadow_tower.py: all-arity master equation
-  - nonlinear_modular_shadows.tex: thm:nms-all-arity-master-equation
+  - chapters/examples/w_algebras_deep.tex: level-4 Lambda norm
+  - chapters/examples/w_algebras.tex: Coxeter anomaly is the missing
+    composite-operator quartic contact, not an S_n sign representation
 """
 
 from __future__ import annotations
 
-from itertools import permutations
+from itertools import combinations, permutations
 from math import factorial
-from typing import Tuple
 
 from sympy import (
-    Symbol, Rational, simplify, factor, expand, symbols, Poly
+    Matrix,
+    Poly,
+    Rational,
+    Symbol,
+    cancel,
+    expand,
+    factor,
+    fraction,
+    simplify,
+    symbols,
 )
+
+__test__ = False
 
 
 # =========================================================================
@@ -118,6 +130,31 @@ def vandermonde(modes):
     return expand(result)
 
 
+def _mode_polynomial_numerator(f, modes):
+    """Clear non-mode denominators and return the numerator in mode variables."""
+    numerator, denominator = fraction(cancel(f))
+    if Poly(denominator, *modes, domain='EX').total_degree() != 0:
+        raise ValueError("mode-dependent denominator is not a polynomial diagnostic")
+    return expand(numerator)
+
+
+def polynomial_divides(f, divisor, modes) -> bool:
+    """Return whether ``divisor`` divides ``f`` after clearing scalar denominators."""
+    if simplify(divisor) == 0:
+        raise ValueError("zero divisor")
+    numerator = _mode_polynomial_numerator(f, modes)
+    remainder = Poly(numerator, *modes, domain='EX').rem(
+        Poly(divisor, *modes, domain='EX')
+    )
+    return simplify(remainder.as_expr()) == 0
+
+
+def total_mode_degree(f, modes) -> int:
+    """Total degree after clearing denominators independent of the mode variables."""
+    numerator = _mode_polynomial_numerator(f, modes)
+    return Poly(numerator, *modes, domain='EX').total_degree()
+
+
 # =========================================================================
 # 2. Multi-mode shadow amplitudes
 # =========================================================================
@@ -140,12 +177,13 @@ def sewing_arity4_contact(m1, m2, m3, m4, C_coeff, P):
 
     WARNING: This function computes C(m_a,m_b,k)*P*C(k,m_c,m_d) which gives
     a degree-6 polynomial in the mode variables. The physical quartic shadow
-    Sh_4 has degree 4 and comes from the Λ-exchange mechanism (quasi-primary
+    Sh_4 has degree 4 and comes from the Lambda-exchange mechanism (quasi-primary
     intermediate states), NOT from direct sewing of cubics. See
     w3_multivariable_shadow.py for the correct computation.
 
-    This function is retained only for the S_n symmetry tests, which show
-    that even this incorrect object is fully symmetric (no sign representation).
+    This function is retained only as an attack surface. It is not fully
+    symmetric, is not anti-invariant, has zero sign projection, and is not
+    Vandermonde-divisible. Hence it supports no sign-representation claim.
 
     Q(m1,m2,m3,m4) = sum over (2,2)-partitions of
         P * C(m_a, m_b, k) * C(k, m_c, m_d)
@@ -193,7 +231,6 @@ def sewing_arity5(m1, m2, m3, m4, m5, C_coeff, Q_on_line, P):
     # And the quartic has 4 legs total: 3 external + 1 internal
 
     # All ways to partition {0,...,4} into (subset of 2 for cubic) and (subset of 3 for quartic)
-    from itertools import combinations
     for cubic_pair in combinations(range(5), 2):
         quartic_triple = [i for i in range(5) if i not in cubic_pair]
         a, b = cubic_pair
@@ -241,14 +278,11 @@ def test_claim_A_arity3():
 
 
 def test_claim_A_arity4():
-    """CENTRAL TEST: S_4 structure of the quartic contact sewing amplitude.
+    """Finite-window sign test for the raw degree-6 arity-4 toy lift.
 
-    The quartic Q arises from sewing two cubics C through propagator P.
-    We compute the full 4-mode sewing amplitude and decompose into
-    S_4 representations.
-
-    If the amplitude is NOT fully symmetric, the sign component would
-    support Claim A. If it IS fully symmetric, Claim A is REFUTED at arity 4.
+    This is not the physical quartic shadow.  The physical Virasoro quartic
+    comes from the weight-4 quasi-primary Lambda exchange and has degree 4.
+    The raw lift is tested only to prevent a false sign/Vandermonde claim.
     """
     m1, m2, m3, m4 = symbols('m1 m2 m3 m4')
     c = Symbol('c')
@@ -258,30 +292,38 @@ def test_claim_A_arity4():
 
     amp = sewing_arity4_contact(m1, m2, m3, m4, C_coeff, P)
     modes = [m1, m2, m3, m4]
+    delta = vandermonde(modes)
 
     sym = is_symmetric(amp, modes)
     anti = is_anti_invariant(amp, modes)
 
     sym_part = symmetrize(amp, modes)
     anti_part = antisymmetrize(amp, modes)
+    anti_part_vanishes = simplify(anti_part) == 0
 
     return {
         'amplitude': amp,
+        'amplitude_degree': total_mode_degree(amp, modes),
+        'physical_quartic_degree': 4,
         'is_fully_symmetric': sym,
         'is_anti_invariant': anti,
         'symmetric_projection': sym_part,
         'antisymmetric_projection': anti_part,
-        'anti_part_vanishes': simplify(anti_part) == 0,
+        'anti_part_vanishes': anti_part_vanishes,
+        'vandermonde_degree': total_mode_degree(delta, modes),
+        'is_vandermonde_divisible': polynomial_divides(amp, delta, modes),
+        'scope': 'raw_degree_6_toy_lift_not_physical_quartic',
+        'full_anomaly_class_inferred': False,
         'verdict': (
-            'SYMMETRIC → Claim A REFUTED at arity 4'
-            if sym else
-            'NOT SYMMETRIC → further decomposition needed'
+            'NO SIGN COMPONENT -> Claim A unsupported at arity 4'
+            if anti_part_vanishes else
+            'SIGN COMPONENT PRESENT -> inspect before using'
         ),
     }
 
 
 def test_claim_A_arity4_on_constraint():
-    """Test arity-4 on the constraint hyperplane m1+m2+m3+m4 = 0."""
+    """Raw arity-4 lift on the hyperplane m1+m2+m3+m4 = 0."""
     m1, m2, m3 = symbols('m1 m2 m3')
     c = Symbol('c')
     m4 = -(m1 + m2 + m3)
@@ -297,17 +339,15 @@ def test_claim_A_arity4_on_constraint():
     amp_line = amp.subs([(m1, t), (m2, t), (m3, t)])
     amp_line = expand(amp_line)
 
-    # Expected from 1d computation: Q_0 * t^4 where Q_0 = 10/[c(5c+22)]
-    # But the sewing of two cubics gives the OBSTRUCTION, not Q directly.
-    # Actually on the 1d line: {C, C}_H = 9 * P * 4 * t^4 = 36P * t^4 = 72/c * t^4
-    # Wait, this is C(t,t,k)*P*C(k,t,t) summed over partitions.
-    # With m1=m2=m3=t, m4=-3t:
-    # partition (01)(23): k = 2t, C(t,t,2t)=4t^3, C(2t,t,-3t)=-6t^3 → P*4t^3*(-6t^3)=-24Pt^6
-    # Hmm this gives degree 6 not 4. Let me recheck.
-
     return {
         'constrained_amplitude': amp,
         'on_primary_line': amp_line,
+        'constrained_degree': total_mode_degree(amp, [m1, m2, m3]),
+        'line_degree': Poly(_mode_polynomial_numerator(amp_line, [t]), t).total_degree(),
+        'physical_quartic_degree': 4,
+        'matches_physical_quartic_degree': False,
+        'scope': 'constraint_restriction_of_raw_degree_6_toy_lift',
+        'full_anomaly_class_inferred': False,
     }
 
 
@@ -322,16 +362,26 @@ def test_claim_A_arity5():
 
     amp = sewing_arity5(m1, m2, m3, m4, m5, C_coeff, Q_on_line, P)
     modes = [m1, m2, m3, m4, m5]
+    delta = vandermonde(modes)
 
     sym = is_symmetric(amp, modes)
+    anti_part = antisymmetrize(amp, modes)
 
     return {
-        'amplitude_degree': Poly(amp, *modes).total_degree() if amp != 0 else 0,
+        'amplitude': amp,
+        'amplitude_degree': total_mode_degree(amp, modes) if amp != 0 else 0,
+        'physical_quintic_degree': 5,
         'is_symmetric': sym,
+        'antisymmetric_projection': anti_part,
+        'anti_part_vanishes': simplify(anti_part) == 0,
+        'vandermonde_degree': total_mode_degree(delta, modes),
+        'is_vandermonde_divisible': polynomial_divides(amp, delta, modes),
+        'scope': 'toy_degree_7_cubic_quartic_lift_not_full_arity5_construction',
+        'full_anomaly_class_inferred': False,
         'verdict': (
-            'SYMMETRIC → no sign rep at arity 5'
+            'SYMMETRIC finite-window toy -> no sign rep at arity 5'
             if sym else
-            'NOT SYMMETRIC → check representation decomposition'
+            'NOT SYMMETRIC -> check representation decomposition'
         ),
     }
 
@@ -340,46 +390,59 @@ def test_claim_A_arity5():
 # 4. Claim B: Chevalley-shadow correlation
 # =========================================================================
 
-def test_claim_B():
-    """Test correlation between Chevalley quotient and shadow depth.
+def chevalley_A2_discriminant_packet():
+    """Exact A2 Chevalley discriminant on H_3 = {m1+m2+m3=0}.
 
-    Shadow depth | Chevalley quotient | Geometry
-    --------------|-------------------|----------
-    G (r_max=2)  | C[p_2] (A_1)      | affine line
-    L (r_max=3)  | C[p_2,p_3] (A_2)  | j-line (modular curve)
-    C (r_max=4)  | C[p_2,p_3,p_4] (A_3) | universal elliptic curve
-    M (r_max=∞)  | C[p_2,...] (A_∞)  | infinite Hitchin
+    For roots m_i with sum zero, Delta_3^2 equals the cubic discriminant
+    p2^3/2 - 3 p3^2, where p_j = sum_i m_i^j.  This is a finite
+    reflection-group identity only; it is not a shadow anomaly theorem.
+    """
+    m1, m2, m3 = symbols('m1 m2 m3')
+    constrained_m3 = -(m1 + m2)
+
+    delta_sq = expand(vandermonde([m1, m2, m3])**2)
+    delta_sq_H3 = expand(delta_sq.subs(m3, constrained_m3))
+    p2 = expand(m1**2 + m2**2 + constrained_m3**2)
+    p3 = expand(m1**3 + m2**3 + constrained_m3**3)
+    rhs = expand(p2**3 / 2 - 3 * p3**2)
+
+    return {
+        'A2_vandermonde_squared_on_H3': factor(delta_sq_H3),
+        'p2': p2,
+        'p3': p3,
+        'discriminant_in_power_sums': factor(rhs),
+        'identity_holds': simplify(delta_sq_H3 - rhs) == 0,
+        'scope': 'finite_A2_Chevalley_discriminant_only',
+        'full_anomaly_class_inferred': False,
+    }
+
+
+def test_claim_B():
+    """Finite type-A invariant-dimension diagnostic for Claim B.
 
     The raeeznotes95 claim: A_4 (n=5) marks the transition to cameral geometry.
 
-    The ACTUAL content: this correlation is TAUTOLOGICAL.
+    The supported content here is only dimensional:
     Shadow depth n means the n-point function terminates.
     A_{n-1} has rank n-1. The quotient P(2,...,n) has dimension n-1.
-    The transition at A_4 is just: dim ≥ 4 means not a surface.
+    The transition at A_4 is just: dimension >= 4 means not a surface.
 
     The NON-TAUTOLOGICAL question: WHY does the shadow obstruction tower terminate
-    at specific arities for specific families? Answer: A∞ formality
+    at specific arities for specific families? Answer: A-infinity formality
     (prop:shadow-formality-low-arity), not Chevalley geometry.
     """
-    # Verify discriminant dimensions
-    m1, m2, m3 = symbols('m1 m2 m3')
-
-    # A_2: discriminant of cubic
-    V3 = vandermonde([m1, m2, m3])
-    V3_sq = expand(V3**2)
-    # V3^2 should be a polynomial in p_2, p_3 (power sums)
-    # On m3 = -(m1+m2): this is the cubic discriminant
-    V3_sq_c = expand(V3_sq.subs(m3, -(m1 + m2)))
-
-    p2 = expand((m1**2 + m2**2 + (m1 + m2)**2))  # = 2(m1^2 + m1*m2 + m2^2)
-    p3 = expand((m1**3 + m2**3 - (m1 + m2)**3))  # = -3*m1*m2*(m1+m2)
+    a2 = chevalley_A2_discriminant_packet()
 
     return {
-        'A2_vandermonde_sq': V3_sq_c,
-        'A2_p2': p2,
-        'A2_p3': p3,
+        'A2_vandermonde_sq': a2['A2_vandermonde_squared_on_H3'],
+        'A2_p2': a2['p2'],
+        'A2_p3': a2['p3'],
+        'A2_identity_holds': a2['identity_holds'],
+        'chevalley_degrees_by_arity': {n: tuple(range(2, n + 1)) for n in range(2, 6)},
         'correlation_tautological': True,
-        'genuine_content': 'A∞ formality depth (prop:shadow-formality-low-arity)',
+        'genuine_content': 'A-infinity formality depth, not Chevalley geometry',
+        'scope': 'finite_reflection_group_dimension_diagnostic_only',
+        'full_anomaly_class_inferred': False,
     }
 
 
@@ -387,73 +450,103 @@ def test_claim_B():
 # 5. The GENUINE insight from raeeznotes95 (if any)
 # =========================================================================
 
+def virasoro_level4_finite_window_packet():
+    """Exact Virasoro level-4 packet from the local Lambda computation.
+
+    Local source: chapters/examples/w_algebras_deep.tex computes
+    det G = c^2(5c+22)/2 and
+    <Lambda|Lambda> = c(5c+22)/10.  The quartic shadow coefficient is
+    S_4 = 10/[c(5c+22)], so S_4 * <Lambda|Lambda> = 1.
+    """
+    c = Symbol('c')
+    gram = Matrix([
+        [5 * c, 3 * c],
+        [3 * c, Rational(1, 2) * c * (c + 8)],
+    ])
+    det_gram = factor(gram.det())
+    lambda_norm = c * (5 * c + 22) / 10
+    s4 = Rational(10) / (c * (5 * c + 22))
+    s4_denominator = c * (5 * c + 22)
+    shared_factor = 5 * c + 22
+
+    return {
+        'level4_gram': gram,
+        'vacuum_level4_gram_det': det_gram,
+        'lambda_norm': lambda_norm,
+        'S4': s4,
+        'S4_denominator': s4_denominator,
+        'S4_times_lambda_norm': cancel(s4 * lambda_norm),
+        'shared_factor': shared_factor,
+        'shared_denominator': s4_denominator,
+        'det_over_shared_factor': cancel(det_gram / shared_factor),
+        'det_over_S4_denominator': cancel(det_gram / s4_denominator),
+        'kac_shadow_connection_status': 'finite-window shared-factor check',
+        'scope': 'Virasoro_rank_one_level4_Lambda_window',
+        'full_anomaly_class_inferred': False,
+    }
+
+
 def identify_genuine_insight():
     """What raeeznotes95 gets right vs wrong.
 
-    WRONG (Claim A): Shadow obstruction tower anomaly coefficients live in the sign
-    representation of S_n. They DON'T — the OPE tensors m_j and κ_l are
-    SYMMETRIC bilinear forms, and the shadow obstruction tower builds symmetric tensors
-    from these. All shadow data at any arity is in the TRIVIAL S_n rep.
+    WRONG (Claim A): the tested finite-window shadow amplitudes live in
+    the S_n sign representation.  They do not.  The rank-one Virasoro
+    primary-line data are symmetric scalars; the raw arity-4 lift is not
+    physical and has zero sign projection.
 
     WRONG (Claim B): The Chevalley-shadow correlation is structural.
-    It's TAUTOLOGICAL — shadow depth n ↔ Chevalley rank n-1 is dimensional.
+    It is only a finite rank/dimension diagnostic here.
 
-    PARTIALLY RIGHT: The Vandermonde DOES appear — not as an anomaly
-    coefficient, but as the JACOBIAN of the Chevalley quotient map
-    H_n → H_n/S_n. This Jacobian controls the MEASURE in the sewing
-    integral, not the sewing amplitude.
+    PARTIALLY RIGHT: the Vandermonde appears as the Jacobian of the
+    Chevalley quotient map H_n -> H_n/S_n.  This module verifies the
+    finite A2 discriminant identity, not a sewing-amplitude theorem.
 
-    THE GENUINE (but unstated) INSIGHT: The shadow obstruction tower's coefficient
-    ring at arity n is C[p_2,...,p_n] = C[H_n]^{S_n} (the Chevalley
-    quotient). This means the Kac determinant (which controls shadow
-    singularities) should factor through the discriminant of the
-    Chevalley quotient. At A_2 (arity 3), the Kac determinant at
-    level 4 has factors c(5c+22), and the A_2 discriminant is
-    4p_2^3 - 27p_3^2. The DEEP question (NOT asked in raeeznotes95):
-    does the Kac determinant at level n factor through the A_{n-1}
-    discriminant when expressed in the correct "power sum" variables?
-
-    This would be a genuine structural result connecting:
-    - BPZ singular vector theory (Kac determinant)
-    - Coxeter geometry (Chevalley discriminant)
-    - Shadow obstruction tower singularities (denominators of Sh_n coefficients)
+    GENUINE FINITE-WINDOW CONTENT: the Virasoro level-4 Gram determinant,
+    the Lambda norm, and the quartic shadow denominator share the factor
+    c(5c+22).  That is a Kac-shadow singularity check in one exact window,
+    not a proof that finite reflection-group discriminants classify the full
+    anomaly package.
     """
-    c = Symbol('c')
-
-    # Kac determinant factors at level 4 (vacuum module)
-    kac_4 = c**2 * (2*c - 1) * (5*c + 22) * (7*c + 68)
-
-    # Shadow obstruction tower Q denominator
-    Q_denom = c * (5*c + 22)
-
-    # The factor (5c+22) appears in BOTH.
-    # This is the GENUINE connection — not S_n on mode labels,
-    # but the Kac determinant vanishing locus = shadow singularity locus.
-
-    # A_2 discriminant: Delta_3^2 = -4p_2^3 + 27p_3^2
-    # For the Virasoro algebra: p_2 ↔ c (central charge), p_3 ↔ cubic coupling
-    # The question: is (5c+22) a Chevalley discriminant factor?
-    # Answer: 5c+22 = 0 ↔ c = -22/5 (Lee-Yang). This is where the level-4
-    # quasi-primary Λ decouples. It's a BPZ singular vector condition.
+    level4 = virasoro_level4_finite_window_packet()
+    a2 = chevalley_A2_discriminant_packet()
 
     return {
-        'claim_A': 'REFUTED — shadow amplitudes are symmetric, not anti-invariant',
-        'claim_B': 'TAUTOLOGICAL — dimensional coincidence, not structural',
+        'claim_A': 'REFUTED in tested windows: no sign-representation component',
+        'claim_B': 'DIMENSIONAL finite-reflection diagnostic, not structural cause',
         'genuine_connection': (
-            'Kac determinant factors = shadow singularity loci. '
-            'The factor (5c+22) appears in both the level-4 Kac det '
-            'and Q^contact_Vir = 10/[c(5c+22)]. This is the BPZ '
-            'singular vector condition, not Chevalley geometry.'
+            'Finite-window Kac-shadow singularity: det G_4 = c^2(5c+22)/2, '
+            '<Lambda|Lambda> = c(5c+22)/10, and S4 = 10/[c(5c+22)]. '
+            'This is the Lambda-exchange/BPZ singular-vector window, not '
+            'Chevalley geometry.'
         ),
         'open_question': (
-            'Does the Kac determinant at level n factor through the '
-            'A_{n-1} discriminant in appropriate "spectral" variables? '
-            'This would connect BPZ theory to Coxeter geometry genuinely.'
+            'Whether higher Kac determinants factor through type-A '
+            'Chevalley discriminants in natural spectral variables remains '
+            'open in this module.'
         ),
-        'kac_level4': kac_4,
-        'Q_denominator': Q_denom,
-        'shared_factor': 5*c + 22,
+        'kac_level4': level4['vacuum_level4_gram_det'],
+        'Q_denominator': level4['S4_denominator'],
+        'shared_factor': level4['shared_factor'],
+        'shared_denominator': level4['shared_denominator'],
+        'lambda_norm': level4['lambda_norm'],
+        'S4_times_lambda_norm': level4['S4_times_lambda_norm'],
+        'A2_discriminant_identity_holds': a2['identity_holds'],
+        'kac_shadow_connection_status': level4['kac_shadow_connection_status'],
+        'scope': 'finite_window_diagnostics_only',
+        'full_anomaly_class_inferred': False,
     }
+
+
+for _diagnostic in (
+    test_claim_A_arity2,
+    test_claim_A_arity3,
+    test_claim_A_arity4,
+    test_claim_A_arity4_on_constraint,
+    test_claim_A_arity5,
+    test_claim_B,
+):
+    _diagnostic.__test__ = False
+del _diagnostic
 
 
 if __name__ == '__main__':

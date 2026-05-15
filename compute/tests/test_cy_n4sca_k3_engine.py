@@ -5,7 +5,7 @@ Multi-path verification:
   (b) Modular form / elliptic genus
   (c) Representation theory (Mathieu moonshine)
   (d) Shadow obstruction tower (genus-g free energy)
-  (e) Bar complex / Koszul duality
+  (e) Bar complex / Verdier dual branch
 
 Target: >= 120 tests.
 """
@@ -69,7 +69,7 @@ from compute.lib.cy_n4sca_k3_engine import (
     n4_bar_complex_dimensions,
     # Shadow depth
     shadow_depth_classification,
-    # Koszul dual
+    # Verdier dual branch
     koszul_dual_data,
     # Verification
     verify_phi01_at_z0,
@@ -141,7 +141,7 @@ class TestConstants:
 
 
 # =========================================================================
-# Section 2: N=4 SCA generator structure (15 tests)
+# Section 2: N=4 SCA generator structure
 # =========================================================================
 
 class TestN4SCAStructure:
@@ -213,6 +213,14 @@ class TestN4SCAStructure:
         data = n4_sca_k3()
         total_charge = sum(g.su2_charge for g in data.generators)
         assert total_charge == 0
+
+    def test_tilde_supercharge_charges_match_ope(self):
+        """The Gtilde charges match the J^3 OPE coefficients."""
+        data = n4_sca_k3()
+        charges = {g.name: g.su2_charge for g in data.generators}
+        ope = n4_ope_structure_constants()
+        assert charges["Gt+"] == ope["J3Gtp_1"]
+        assert charges["Gt-"] == ope["J3Gtm_1"]
 
     def test_general_level_construction(self):
         """N=4 SCA at general c = 6*k_R."""
@@ -415,7 +423,7 @@ class TestKappa:
         assert kappa_n4_k3_path_character() == Fraction(2)
 
     def test_path_complementarity(self):
-        """Path 3: kappa + kappa! = 0, kappa! = -2."""
+        """Path 3: kappa(A) + kappa(A^!) = 0 with kappa(A^!) = -2."""
         assert kappa_n4_k3_path_complementarity() == Fraction(2)
 
     def test_path_hodge(self):
@@ -452,12 +460,12 @@ class TestKappa:
             assert kappa_n4_general(Fraction(k)) == 2 * k
 
     def test_kappa_dual(self):
-        """kappa(A!) = -kappa(A) = -2."""
+        """kappa(A^!) = -kappa(A) = -2."""
         dual = koszul_dual_data()
         assert dual['kappa_A_dual'] == -dual['kappa_A']
 
     def test_complementarity_sum_zero(self):
-        """kappa + kappa! = 0 for the K3 sigma model."""
+        """kappa(A) + kappa(A^!) = 0 for the K3 sigma-model branch."""
         dual = koszul_dual_data()
         assert dual['complementarity_sum'] == 0
 
@@ -750,30 +758,27 @@ class TestBarComplex:
         assert 1.5 in weights
         assert 2.0 in weights
 
-    def test_bar_deg_2_nonempty(self):
-        """Bar degree 2 has nonzero dimension (binary OPE products)."""
+    def test_bar_deg_2_ordered_pair_count(self):
+        """Bar degree 2 has 8^2 ordered tensor pairs before the differential."""
         bar = n4_bar_complex_dimensions()
-        assert bar['bar_deg_2_ordered_pairs'] > 0
+        assert bar['bar_deg_2_ordered_pairs'] == 64
 
     def test_bar_deg_2_weight_2_exists(self):
-        """Weight 2 bar degree 2 elements exist (from J tensor J)."""
+        """Weight 2 bar degree 2 consists of the 3*3 ordered J tensor J pairs."""
         bar = n4_bar_complex_dimensions()
-        # Weight 2 = weight 1 + weight 1
-        assert Fraction(2) in bar['bar_deg_2_by_weight'] or 2.0 in bar['bar_deg_2_by_weight']
+        assert bar['bar_deg_2_by_weight'][Fraction(2)] == 9
 
-    def test_desuspension_lowers_degree(self):
-        """AP45: s^{-1}T has cohomological degree |T|-1 = 1, not |T|+1 = 3."""
-        # The desuspended T has degree 2-1 = 1 (AP45: desuspension LOWERS)
-        data = n4_sca_k3()
-        T = [g for g in data.generators if g.name == 'T'][0]
-        desuspended_degree = T.weight - 1
-        assert desuspended_degree == 1
+    def test_desuspension_uses_cohomological_not_conformal_degree(self):
+        """s^{-1} lowers cohomological degree; conformal weight is internal."""
+        bar = n4_bar_complex_dimensions()
+        degrees = bar['desuspended_cohomological_degrees']
+        assert degrees['T'] == -1
+        assert degrees['G+'] == 0
 
     def test_desuspension_j_degree(self):
-        """s^{-1}J has degree |J|-1 = 0 (weight 1 generator)."""
-        data = n4_sca_k3()
-        J = [g for g in data.generators if g.name == 'J3'][0]
-        assert J.weight - 1 == 0
+        """Bosonic currents have desuspended cohomological degree -1."""
+        bar = n4_bar_complex_dimensions()
+        assert bar['desuspended_cohomological_degrees']['J3'] == -1
 
 
 # =========================================================================
@@ -822,11 +827,11 @@ class TestShadowDepth:
 
 
 # =========================================================================
-# Section 11: Koszul dual (5 tests)
+# Section 11: Verdier dual branch
 # =========================================================================
 
-class TestKoszulDual:
-    """Verify Koszul duality data."""
+class TestVerdierDualBranch:
+    """Verify the Verdier/continuous-linear dual branch data."""
 
     def test_kappa_dual_value(self):
         dual = koszul_dual_data()
@@ -844,12 +849,11 @@ class TestKoszulDual:
         dual = koszul_dual_data()
         assert dual['central_charge'] == 6
 
-    def test_ap24_not_violated(self):
-        """AP24: for K3 (like KM/free fields), kappa+kappa'=0.
-        This is NOT the Virasoro-type complementarity (which gives 13)."""
+    def test_k3_complementarity_is_not_virasoro_thirteen(self):
+        """For the K3 branch kappa(A)+kappa(A^!)=0, not the Virasoro value 13."""
         dual = koszul_dual_data()
         assert dual['complementarity_sum'] == 0
-        assert dual['complementarity_sum'] != 13  # That's Virasoro
+        assert dual['complementarity_sum'] != 13
 
 
 # =========================================================================
@@ -955,7 +959,7 @@ class TestCrossChecks:
         assert kappa_n4_k3() == Fraction(2)
 
     def test_euler_char_matches_phi01_at_y1(self):
-        """chi(K3) = phi(K3; tau, 0) / 2 * ... wait: Z_{K3}(tau, 0) = 24."""
+        """Z_{K3}(tau, 0) = 24 = chi(K3)."""
         k3 = compute_k3_elliptic_genus(3)
         y0 = k3.evaluate_y0(3)
         assert y0[0] == 24
@@ -968,16 +972,11 @@ class TestCrossChecks:
         """F_1 = kappa/24."""
         assert kappa_n4_k3() / 24 == genus_g_free_energy(1)
 
-    def test_n4_not_same_as_n2(self):
-        """N=4 at c=6 is different from N=2 at c=6 (different kappa)."""
-        # N=2 at c=6: kappa = (6-c)/(2(3-c)) = 0/(-6) = 0  POLE! c=6 is ABOVE c=3 for N=2.
-        # Actually for N=2: c = 3k/(k+2), so c=6 requires k = 2*6/(3-6) = -4, which is the critical level.
-        # At k=-4 (critical level of sl(2)): kappa_{N=2} = (-4+4)/4 = 0.
-        # N=4 at c=6: kappa = 2.
-        # These are DIFFERENT.
+    def test_n4_kappa_is_not_n2_comparison_value(self):
+        """The K3 small-N=4 normalization gives kappa=2, not the N=2 comparison value 0."""
         kappa_n4 = kappa_n4_k3()
-        # N=2 at k=-4 (c=6) has kappa = 0
-        assert kappa_n4 != 0  # N=4 and N=2 give different kappa at c=6
+        assert kappa_n4 == 2
+        assert kappa_n4 != 0
 
 
 # =========================================================================
@@ -986,7 +985,7 @@ class TestCrossChecks:
 
 class TestMultiPathCrossVerification:
     """Multi-path verification: every key value is checked via >= 2
-    independent computation methods, NOT just hardcoded comparison.
+    independent computation methods and cross-family consistency.
 
     AP10: tests with hardcoded wrong expected values are the #1 failure mode.
     Cross-family consistency checks are the real verification.
@@ -1072,7 +1071,7 @@ class TestMultiPathCrossVerification:
             if D in disc_map:
                 assert disc_map[D] == c, \
                     f"Discriminant violation: D={D} at (n={n},l={l}): " \
-                    f"c={c} vs previous {disc_map[D]}"
+                    f"c={c} vs stored {disc_map[D]}"
             else:
                 disc_map[D] = c
 
@@ -1144,7 +1143,7 @@ class TestMultiPathCrossVerification:
         assert k_R_from_j3j3 == k_R_from_jpp == k_R_from_gg
 
     def test_complementarity_sum_from_both_kappas(self):
-        """kappa + kappa! = 0 verified from independent computations of each."""
+        """kappa(A) + kappa(A^!) = 0 verified from independent computations."""
         kappa_a = kappa_n4_k3_path_geometric()  # path 1
         kappa_a_dual = -kappa_n4_k3_path_n4_ward()  # path 5, negated
         assert kappa_a + kappa_a_dual == 0

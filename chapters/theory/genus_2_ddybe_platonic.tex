@@ -44,7 +44,7 @@ while the full three-term identity is certified by the engine
 (\texttt{face\_model\_ddybe\_engine.py},
 \texttt{verify\_face\_ddybe\_g2}) only to tolerance
 $\mathrm{relative}<10^{-4}$. The chapter keeps these facts on
-separate status surfaces.
+separate verification surfaces.
 
 Four statements form the genus-$2$ package:
 \begin{enumerate}[label=\textup{(\arabic*)}]
@@ -54,14 +54,14 @@ Four statements form the genus-$2$ package:
  to $\mathfrak{sl}_2$ evaluation modules as a flat connection
  on $\overline{\cM}_{2,n}\times\HHH_2$ with three independent
  modular directions $\Omega_{11}, \Omega_{12}, \Omega_{22}$.
- \emph{Status: ProvedElsewhere, CEE09.}
+ \emph{Verification: CEE09.}
 \item \textbf{Fay trisecant identity, correct name}
  (\cref{thm:fay-trisecant-genus-2-specific}): Fay's 1973
  Corollary~2.5 is the three-term Szeg\H{o} sum identity on
  $C_3(X)$ for all $g\ge 0$. A distinct four-factor theta-null
  product identity holds only on the theta divisor; the two
  statements are not interchangeable.
- \emph{Status: ProvedElsewhere, Fay 1973.}
+ \emph{Verification: Fay 1973.}
 \item \textbf{Face-model DDYBE, scope-restricted}
  (\cref{thm:g2-face-model-bypass-scope-restricted}): the
  genus-$2$ face-model DDYBE is satisfied
@@ -72,8 +72,8 @@ Four statements form the genus-$2$ package:
  tier-(T3) diagonal-$\Omega$ consistency check). The
  separating-degeneration regime carries no genuinely $g=2$
  content.
- \emph{Status: ProvedHere, scope-restricted; numerical
- evidence for \texttt{conj:g2-ddybe}.}
+ \emph{Verification: exact on the diagonal and numerical at generic
+ \(\Omega\) for the conjectural full DDYBE.}
 \item \textbf{Euler characteristic at degree~$2$}
  (\cref{cor:g2-chi-minus-12}): $\chi=-12$ follows from the
  rank-$4$ KZB local system on $\Sigma_2\setminus\{0\}$ via
@@ -509,7 +509,8 @@ The $10^{-4}$ ceiling is an engineering budget chosen
 conservatively above the float-$64$ accumulated roundoff of a
 cascade of $8\times 8$ matrix products ($\sim 10^{-14}$)
 and the $N=8$ truncation error of the genus-$2$ theta series;
-it is NOT a theoretical error term of the form $O(\hbar^2)$.
+it is a numerical threshold rather than a theoretical error term of the
+form $O(\hbar^2)$.
 The falsification-ladder test
 \texttt{test\_ddybe\_ladder\_plateau} records the residual at
 $N\in\{8,12,16\}$; the manuscript prior assertion that the
@@ -527,18 +528,18 @@ Direct consequence of (i).
 Regime~(ii) establishes: the face-model DDYBE
 \eqref{eq:ddybe} holds to one part in $10^4$ across
 $(z,w,\boldsymbol\lambda,\eta)$ parameter instances
-sampled at TWO distinct $\Omega$ values
+sampled at two distinct $\Omega$ values
 $\Omega_0, \Omega_1 \in \HHH_2 \setminus
 \{\text{diagonal locus}\}$:
 four parameter tuples at $\Omega_0$ plus one at $\Omega_1$.
-The sampling is POINTWISE at a pair of $\Omega$ values;
-it does NOT witness the full three-complex-dimensional
-$\Omega$-dependence of the claim, nor does it probe the
+The sampling is pointwise at two $\Omega$ values;
+it leaves the full three-complex-dimensional
+$\Omega$-dependence of the claim and the
 non-separating boundary stratum where $\Omega_{22}\to
 i\infty$ with $\Omega_{12}$ fixed nonzero
-(Remark~\ref{rem:g2-nonseparating-untested}). It does NOT
-establish: an exact proof of \eqref{eq:ddybe} at
-arbitrary $\Omega$, nor the stronger coupling
+(Remark~\ref{rem:g2-nonseparating-untested}) untested. It establishes
+neither an exact proof of \eqref{eq:ddybe} at
+arbitrary $\Omega$ nor the stronger coupling
 condition~\eqref{eq:ddybe-coupling} at chain level. The
 latter remains conjectural and forms the open content of
 \texttt{conj:g2-ddybe}.
@@ -575,9 +576,8 @@ drift.
 \end{tabular}
 \end{center}
 Tier~(T4) is the genuinely $g=2$ content; tiers~(T1)--(T3)
-are preparatory or degeneration checks. Total face-model
-test count: $32$ after the 2026-04-18 attack-heal additions
-(across \texttt{TestThetaFunctions},
+are preparatory or degeneration checks. The current face-model
+verification suite contains $32$ tests across \texttt{TestThetaFunctions},
 \texttt{TestBoltzmannWeightsG1}, \texttt{TestFaceDYBEG1},
 \texttt{TestClassicalLimit}, \texttt{TestGenus2Theta},
 \texttt{TestBoltzmannWeightsG2}, \texttt{TestFaceDDYBEG2}
@@ -588,25 +588,21 @@ and \texttt{test\_ddybe\_ladder\_plateau}),
 and \texttt{TestFullSuite}).
 \end{remark}
 
-\begin{remark}[Falsification-ladder discipline]
+\begin{remark}[Numerical stability test]
 \label{rem:tolerance-ladder-falsification}
 The $N=8$ truncation of the $32$ face-model tests above is a
-single snapshot on a falsification ladder. The regression test
+single finite-window snapshot. The regression test
 \texttt{test\_ddybe\_ladder\_plateau} runs
 \texttt{verify\_face\_ddybe\_g2} at $N\in\{8,12,16\}$ for two
 distinct generic-$\Omega$ parameter instances and asserts that
 the residual at $N\geq 12$ is below $10^{-6}$ and decreases
 (or plateaus) from $N=8$ to $N=12$ to $N=16$. Any failure of the
 $N\geq 12$ bound would indicate a finite-$\hbar$ DDYBE residual
-that the current engineering-budget bound $10^{-4}$ is not
-sensitive enough to rule out, and would force a downgrade of
-regime~(ii) from ``numerical evidence'' to ``numerical
-evidence with explicit residual $r_{\infty}>0$.'' As of the
-present session the ladder itself has not been numerically
-executed in the sandbox (numpy unavailable); the deferred
-execution is logged in
-\texttt{adversarial\_swarm\_20260418/attack\_heal\_g2\_ddybe\_20260418.md}
-\S6.
+that the $N=8$ bound $10^{-4}$ does not detect. Thus regime~(ii)
+is finite-window numerical evidence at $N=8$ until the
+$N\in\{12,16\}$ stability test is supplied; after a failed stability
+test it becomes numerical evidence with explicit residual
+$r_{\infty}>0$.
 \end{remark}
 
 \begin{remark}[Two distinct identities both due to Fay]
@@ -760,44 +756,44 @@ content is:
  Theorem~\ref{thm:g2-face-model-bypass-scope-restricted}(i)
  and carries no genuinely genus-$2$ content.
 \end{itemize}
-A follow-up wave may promote these remarks to propositions
-and update the engine docstring to reference
-\texttt{rem:g2p-g1-limit} and
-Theorem~\ref{thm:g2-face-model-bypass-scope-restricted}(i)
-respectively; the content is stable as of this chapter.
+The engine docstring should reference
+\texttt{rem:g2p-g1-limit} for the non-separating degeneration
+and Theorem~\ref{thm:g2-face-model-bypass-scope-restricted}(i)
+for the separating degeneration. These two anchors state exactly
+the genus-$1$ Felder reductions used by the computation.
 \end{remark}
 
 % ========================================================
-\section*{Summary of status}
+\section*{Verification anchors}
 
 \begin{center}
 \renewcommand{\arraystretch}{1.15}
 \begin{tabular}{@{}lll@{}}
 \toprule
-Claim & Status & Location \\
+Claim & Verification & Location \\
 \midrule
 Flat KZB connection on
  $\overline{\cM}_{2,n}\times\HHH_2$
- & ProvedElsewhere (CEE09) &
+ & CEE09 &
  \cref{thm:genus-2-kzb-connection-platonic} \\
 Fay trisecant (Szeg\H{o} three-term) at all $g$
- & ProvedElsewhere (Fay 1973) &
+ & Fay 1973 &
  \cref{thm:fay-trisecant-genus-2-specific} \\
 DDYBE at diagonal $\Omega$ (exact)
- & ProvedHere &
+ & Exact diagonal degeneration &
  \cref{thm:g2-face-model-bypass-scope-restricted}(i) \\
 DDYBE at generic $\Omega$ (numerical, $<10^{-4}$, 4 tests)
- & Numerical evidence &
+ & Four generic-\(\Omega\) residual tests at \(<10^{-4}\) &
  \cref{thm:g2-face-model-bypass-scope-restricted}(ii) \\
 DDYBE at separating boundary (factorised limit)
- & ProvedHere &
+ & Exact factorised limit &
  \cref{thm:g2-face-model-bypass-scope-restricted}(iii) \\
 $\chi=-12$ at degree~$2$, $g=2$, $s=1$
- & ProvedHere &
+ & Euler-characteristic computation &
  \cref{cor:g2-chi-minus-12} \\
 Full DDYBE~\eqref{eq:ddybe}--\eqref{eq:ddybe-coupling}
  at arbitrary $\Omega$
- & Conjectured &
+ & Open conjectural identity &
  \texttt{conj:g2-ddybe} \\
 \bottomrule
 \end{tabular}

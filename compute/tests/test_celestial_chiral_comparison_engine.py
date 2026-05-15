@@ -741,8 +741,7 @@ class TestKappaLargeN:
             assert kappas[i + 1] > kappas[i]
 
     def test_kappa_grows_faster_than_linear(self):
-        """kappa(W_N)/N -> infinity (faster than linear? No: H_N ~ ln N).
-        Actually kappa(W_N) = c*(H_N-1) ~ c*ln(N), sublinear in N."""
+        """kappa(W_N)=c(H_N-1) grows logarithmically and sublinearly."""
         c = Fraction(30)
         # kappa(W_100)/kappa(W_10) should be roughly ln(100)/ln(10)
         k10 = float(kappa_wn(10, c))

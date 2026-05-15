@@ -1,81 +1,60 @@
-r"""3D gravity partition function Z_{3d}(hbar) from the Virasoro shadow tower.
+r"""Finite-window Virasoro genus coefficients for 3d-gravity diagnostics.
 
-MATHEMATICAL FRAMEWORK
-======================
+This module computes the scalar Faber-Pandharipande lane and the
+currently available Virasoro planted-forest corrections.  It does not
+construct the full all-genus 3d gravity partition function.
 
-The 3D gravity partition function is the genus expansion:
+Exact scalar lane
+=================
 
-    Z_{3d}(hbar) = exp( sum_{g >= 0} F_g * hbar^{2g-2} )
+For g >= 1 the scalar coefficient is
 
-where F_g are the genus-g free energies of the Virasoro shadow tower.
+    F_g^{scalar}(Vir_c) = kappa(Vir_c) * lambda_g^{FP},
+    kappa(Vir_c) = c/2,
+    lambda_g^{FP} = (2^{2g-1} - 1) / 2^{2g-1} * |B_{2g}| / (2g)!.
 
-The free energy has a LOGARITHMIC expansion:
+The ordinary scalar generating function is
 
-    log Z_{3d}(hbar) = F_0 * hbar^{-2} + F_1 * hbar^0 + F_2 * hbar^2 + ...
+    sum_{g >= 1} F_g^{scalar} * hbar^{2g}
+        = kappa * ((hbar/2)/sin(hbar/2) - 1),
 
-The F_g are computed from the Faber-Pandharipande intersection numbers:
+with scalar-lane radius |hbar| = 2*pi.  This radius is a theorem about
+that ordinary scalar power series, not about the full Virasoro
+planted-forest series and not about a Borel transform.
 
-    F_g^{scalar}(Vir_c) = kappa(Vir_c) * lambda_g^{FP}    for g >= 1
+Known planted-forest window
+===========================
 
-where:
-    kappa(Vir_c) = c/2                              (census C2)
-    lambda_g^{FP} = (2^{2g-1} - 1) / 2^{2g-1} * |B_{2g}| / (2g)!
+For Virasoro the planted-forest correction is included where the local
+canonical engine supplies it:
 
-For Virasoro (class M), there are planted-forest corrections at g >= 2:
+    g = 1: scalar value, no planted-forest correction;
+    g = 2: scalar + delta_pf^{(2,0)};
+    g = 3: scalar + delta_pf^{(3,0)};
+    g >= 4: scalar component only in this module.
 
-    F_g^{full} = F_g^{scalar} + delta_pf^{(g,0)}
+The g >= 4 return values are therefore finite-window scalar components,
+not proved full Virasoro coefficients.
 
-GENERATING FUNCTION
-===================
+Analytic firewall
+=================
 
-The scalar part has a closed-form generating function:
+The Bernoulli scalar coefficients satisfy
 
-    sum_{g >= 1} F_g^{scalar} * hbar^{2g} = kappa * [(hbar/2)/sin(hbar/2) - 1]
+    lambda_g^{FP} ~ 2/(2*pi)^{2g},
+    |F_{g+1}/F_g| -> 1/(4*pi^2).
 
-This converges for |hbar| < 2*pi (radius of convergence from the
-nearest pole of 1/sin at hbar = 2*pi).
+This is geometric decay (Gevrey 0).  No Borel summability, all-genus
+analytic summation of the full planted-forest series, or BTZ closed
+form is asserted here.  The BTZ routine below is only the Cardy /
+Bekenstein-Hawking entropy formula
 
-BTZ ASYMPTOTICS
-===============
+    S_BTZ = 2*pi*sqrt(c*E/6).
 
-The asymptotic growth of F_g for large g is controlled by the
-nearest singularity of the generating function.  Since 1/sin(x/2)
-has poles at x = 2*pi*n, the scalar free energies satisfy:
-
-    lambda_g^{FP} ~ 2 * (1/(4*pi^2))^g    as g -> infinity
-
-This is GEOMETRIC decay (the (2g)! in the Bernoulli numerator is
-cancelled by the (2g)! in the denominator of lambda_g^{FP}).  Hence the
-genus expansion sum F_g * hbar^{2g} is a CONVERGENT series with radius
-of convergence 2*pi in hbar (set by the pole of 1/sin at x = 2*pi).
-
-The ratio:
-
-    |F_{g+1}/F_g| -> 1/(4*pi^2) ~ 0.02533    as g -> infinity
-
-The BTZ black hole entropy is related via saddle-point:
-
-    S_BTZ = 2*pi*sqrt(c*E/6)
-
-TWO SPECIAL CENTRAL CHARGES
-============================
-
-c = 13  (Virasoro self-dual point):
-  kappa = 13/2, kappa' = kappa(Vir_{26-13}) = 13/2
-  Complementarity: kappa + kappa' = 13
-  Self-dual: F_g(c=13) = F_g(c=13) (tautological, but the planted-forest
-  corrections are symmetric under c -> 26-c only at the scalar level)
-
-c = 26  (bosonic string critical dimension):
-  kappa = 13
-  This is the kappa_eff = 0 point: kappa(matter) + kappa(ghost) = 13 + (-13) = 0
-  The dual central charge is c' = 0, and kappa(Vir_0) = 0
-
-References:
-  Faber-Pandharipande 1998: lambda_g intersection numbers
-  Maloney-Witten 2010: 0712.0155 (pure gravity partition function)
-  thm:theorem-d (higher_genus_modular_koszul.tex)
-  btz_entropy_allgenus.py (canonical source for lambda_fp, kappa, etc.)
+Local sources:
+  compute/lib/btz_entropy_allgenus.py
+  chapters/examples/genus_expansions.tex
+  chapters/examples/landscape_census.tex
 """
 
 from __future__ import annotations
@@ -83,7 +62,7 @@ from __future__ import annotations
 import math
 from fractions import Fraction
 from functools import lru_cache
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List
 
 from sympy import bernoulli, factorial, Rational
 
@@ -101,20 +80,61 @@ from btz_entropy_allgenus import (
     lambda_fp_float,
     kappa_virasoro,
     F1_virasoro,
-    F2_scalar,
     F2_full,
-    F3_scalar,
     F3_full,
-    F4_scalar,
-    virasoro_S3,
-    virasoro_S4,
-    virasoro_S5,
-    bekenstein_hawking_entropy,
 )
 
 PI = math.pi
 TWO_PI = 2 * PI
 FOUR_PI_SQ = 4 * PI ** 2
+SCALAR_RADIUS_SCOPE = "scalar ordinary generating function"
+SCALAR_GEVREY_CLASS = 0
+
+
+def scalar_convergence_radius_exact() -> float:
+    r"""Exact radius of the scalar ordinary generating function.
+
+    The identity
+
+        sum_{g>=1} lambda_g^{FP} x^{2g} = (x/2)/sin(x/2) - 1
+
+    has first singularities at x = +/- 2*pi.  This is not a statement
+    about the full planted-forest Virasoro partition function.
+    """
+    return TWO_PI
+
+
+def virasoro_coefficient_scope(g: int) -> Dict[str, Any]:
+    r"""Scope of the Virasoro coefficient returned by this module."""
+    if g < 0:
+        raise ValueError(f"genus must be non-negative, got {g}")
+    if g == 0:
+        return {
+            "genus": g,
+            "coefficient": "regularized zero",
+            "includes_planted_forest": False,
+            "full_virasoro_value_known_here": False,
+        }
+    if g == 1:
+        return {
+            "genus": g,
+            "coefficient": "scalar exact",
+            "includes_planted_forest": False,
+            "full_virasoro_value_known_here": True,
+        }
+    if g in (2, 3):
+        return {
+            "genus": g,
+            "coefficient": "scalar plus computed planted-forest correction",
+            "includes_planted_forest": True,
+            "full_virasoro_value_known_here": True,
+        }
+    return {
+        "genus": g,
+        "coefficient": "scalar component only; planted-forest correction not computed here",
+        "includes_planted_forest": False,
+        "full_virasoro_value_known_here": False,
+    }
 
 
 # =========================================================================
@@ -149,9 +169,9 @@ def lambda_fp_independent(g: int) -> Fraction:
     the canonical lambda_fp from btz_entropy_allgenus.py.
 
     Exact values:
-        g=1: 1/24       # VERIFIED [DC] direct Bernoulli + [LT] Faber-Pandharipande 1998
-        g=2: 7/5760     # VERIFIED [DC] direct Bernoulli + [LT] Faber-Pandharipande 1998
-        g=3: 31/967680  # VERIFIED [DC] direct Bernoulli + [LT] Mumford 1983
+        g=1: 1/24
+        g=2: 7/5760
+        g=3: 31/967680
     """
     if g < 1:
         raise ValueError(f"lambda_fp requires g >= 1, got {g}")
@@ -165,7 +185,7 @@ def lambda_fp_independent(g: int) -> Fraction:
 
 
 # =========================================================================
-# Section 3: Free energies F_g (scalar and full)
+# Section 3: Free energies F_g (scalar and known Virasoro window)
 # =========================================================================
 
 def free_energy_scalar(g: int, kappa: Fraction) -> Fraction:
@@ -192,18 +212,18 @@ def free_energy_scalar(g: int, kappa: Fraction) -> Fraction:
     return kappa * lambda_fp(g)
 
 
-def free_energy_full_virasoro(g: int, c) -> Fraction:
-    r"""Full genus-g free energy for Virasoro at central charge c.
+def free_energy_virasoro_known_window(g: int, c) -> Fraction:
+    r"""Known Virasoro genus-g coefficient at central charge c.
 
-    Includes planted-forest corrections where available (g = 2, 3).
-    Falls back to scalar for g = 1 and g >= 4.
+    Includes planted-forest corrections exactly where this compute
+    layer has them (g = 2, 3).  For g >= 4 it returns only the scalar
+    component kappa(Vir_c) * lambda_g^{FP}; it is not a full Virasoro
+    coefficient at those genera.
 
     F_1 = kappa/24 = c/48
     F_2 = F_2^{scalar} + delta_pf^{(2,0)}
     F_3 = F_3^{scalar} + delta_pf^{(3,0)}
-    F_g = F_g^{scalar} for g >= 4  (planted-forest not yet computed)
-
-    (UNIFORM-WEIGHT for scalar part; ALL-WEIGHT corrections in delta_pf)
+    F_g = F_g^{scalar} for g >= 4  (scalar component only here)
     """
     c_frac = Fraction(c)
     if g < 0:
@@ -220,8 +240,19 @@ def free_energy_full_virasoro(g: int, c) -> Fraction:
     return free_energy_scalar(g, kappa_virasoro(c_frac))
 
 
+def free_energy_full_virasoro(g: int, c) -> Fraction:
+    r"""Compatibility wrapper for the known-window Virasoro coefficient.
+
+    The name is exact only for g <= 3 in this module.  For g >= 4 the
+    returned value is the scalar component, and
+    ``virasoro_coefficient_scope(g)`` records that the full
+    planted-forest correction is not computed here.
+    """
+    return free_energy_virasoro_known_window(g, c)
+
+
 # =========================================================================
-# Section 4: Partition function coefficients
+# Section 4: Scalar and known-window coefficient tables
 # =========================================================================
 
 def gravity_partition_coefficients_scalar(
@@ -246,9 +277,10 @@ def gravity_partition_coefficients_scalar(
 def gravity_partition_coefficients_virasoro(
     c, g_max: int = 9
 ) -> List[Fraction]:
-    r"""Full Virasoro free energies F_0, F_1, ..., F_{g_max} at central charge c.
+    r"""Known-window Virasoro coefficients F_0, ..., F_{g_max}.
 
-    Uses planted-forest corrections at g = 2, 3 where available.
+    Uses planted-forest corrections at g = 2, 3.  For g >= 4 the list
+    contains scalar components only.
 
     Parameters
     ----------
@@ -257,42 +289,45 @@ def gravity_partition_coefficients_virasoro(
 
     Returns
     -------
-    List of length g_max + 1, where entry g is F_g^{full}(Vir_c).
+    List of length g_max + 1, with the scope recorded by
+    virasoro_coefficient_scope(g).
     """
-    return [free_energy_full_virasoro(g, c) for g in range(g_max + 1)]
+    return [free_energy_virasoro_known_window(g, c) for g in range(g_max + 1)]
 
 
 def partition_function_table(c, g_max: int = 9) -> Dict[str, Any]:
-    r"""Complete table of Z_{3d} data for Virasoro at central charge c.
+    r"""Finite-window Virasoro coefficient table at central charge c.
 
-    Returns scalar and full coefficients, plus summary data.
+    Returns exact scalar coefficients and known-window coefficients.
     """
     c_frac = Fraction(c)
     kappa = kappa_virasoro(c_frac)
     scalar_coeffs = gravity_partition_coefficients_scalar(kappa, g_max)
-    full_coeffs = gravity_partition_coefficients_virasoro(c_frac, g_max)
+    known_coeffs = gravity_partition_coefficients_virasoro(c_frac, g_max)
 
     return {
         'c': c_frac,
         'kappa': kappa,
         'g_max': g_max,
         'F_scalar': scalar_coeffs,
-        'F_full': full_coeffs,
+        'F_known': known_coeffs,
+        'F_scope': [virasoro_coefficient_scope(g) for g in range(g_max + 1)],
         'F_scalar_float': [float(f) for f in scalar_coeffs],
-        'F_full_float': [float(f) for f in full_coeffs],
+        'F_known_float': [float(f) for f in known_coeffs],
     }
 
 
 # =========================================================================
-# Section 5: Generating function (closed form)
+# Section 5: Scalar ordinary generating function
 # =========================================================================
 
 def generating_function_closed_form(kappa_val: float, hbar: float) -> float:
-    r"""Closed-form generating function for the scalar genus expansion.
+    r"""Closed form for the scalar ordinary genus generating function.
 
     sum_{g >= 1} F_g^{scalar} * hbar^{2g} = kappa * [(hbar/2)/sin(hbar/2) - 1]
 
-    Convergent for |hbar| < 2*pi.
+    Convergent for |hbar| < 2*pi on the scalar lane.  This function
+    does not include planted-forest corrections.
 
     Parameters
     ----------
@@ -330,7 +365,7 @@ def generating_function_series(kappa_val: float, hbar: float, g_max: int = 30) -
 
 
 def verify_generating_function(c, hbar: float = 1.0, g_max: int = 30) -> Dict[str, Any]:
-    r"""Verify the A-hat generating function identity.
+    r"""Verify the scalar A-hat generating function identity.
 
     sum_{g>=1} F_g * hbar^{2g} = kappa * [(hbar/2)/sin(hbar/2) - 1]
     """
@@ -346,6 +381,8 @@ def verify_generating_function(c, hbar: float = 1.0, g_max: int = 30) -> Dict[st
         'closed_form_value': closed,
         'difference': abs(series - closed),
         'match': abs(series - closed) < 1e-10,
+        'scope': SCALAR_RADIUS_SCOPE,
+        'includes_planted_forest': False,
     }
 
 
@@ -375,15 +412,13 @@ def btz_entropy(c, E: float) -> float:
 # =========================================================================
 
 def asymptotic_ratios(coefficients: List[Fraction], start_g: int = 1) -> List[Dict[str, Any]]:
-    r"""Compute consecutive ratios |F_{g+1}/F_g| and extract growth diagnostics.
+    r"""Compute consecutive ratios |F_{g+1}/F_g| for scalar diagnostics.
 
     For the scalar Virasoro genus expansion, the asymptotic behavior is:
 
         |F_{g+1}/F_g| -> 1/(4*pi^2)    as g -> infinity
 
-    This is GEOMETRIC decay (convergent series, Gevrey-0), not factorial
-    growth.  The convergence radius of sum F_g * hbar^{2g} is 2*pi, set
-    by the nearest pole of 1/sin(x/2).
+    This is geometric decay (Gevrey 0), not factorial growth.
 
     The normalized ratio:
 
@@ -419,19 +454,19 @@ def asymptotic_ratios(coefficients: List[Fraction], start_g: int = 1) -> List[Di
             'raw_ratio': raw_ratio,
             'predicted_ratio': predicted,
             'normalized_ratio': normalized,
+            'scope': SCALAR_RADIUS_SCOPE,
         })
     return ratios
 
 
 def convergence_radius_from_ratios(coefficients: List[Fraction]) -> float:
-    r"""Estimate the convergence radius of sum F_g * hbar^{2g}.
+    r"""Finite-window estimate of the scalar radius from coefficient ratios.
 
     The radius is R = lim 1 / |F_g / F_{g-1}|^{1/2} in the hbar^{2g} variable.
 
-    For the scalar Virasoro expansion, R = 2*pi (from the pole of 1/sin at 2*pi).
-
-    We estimate R from the last few ratios via:
-        R ~ sqrt((2g)(2g-1) / |F_g/F_{g-1}|)
+    For the scalar Virasoro expansion, the exact radius is 2*pi from
+    the pole of 1/sin at 2*pi.  This function only estimates it from
+    the supplied finite window.
     """
     if len(coefficients) < 3:
         return float('inf')
@@ -450,21 +485,16 @@ def convergence_radius_from_ratios(coefficients: List[Fraction]) -> float:
 
 
 def btz_growth_comparison(c, g_max: int = 9) -> Dict[str, Any]:
-    r"""Compare asymptotic growth of F_g with BTZ predictions.
-
-    The BTZ saddle-point predicts that the genus expansion is an asymptotic
-    series with coefficients growing like (2g)! / (4*pi^2)^g.
-
-    This is the signature of Gevrey-1 divergence with Borel singularity
-    at t = 4*pi^2 (the action of the BTZ instanton).
-
-    The Borel sum recovers the non-perturbative BTZ entropy.
+    r"""Scalar Bernoulli growth diagnostics adjacent to the BTZ formula.
 
     Returns a comparison table with:
-    - Exact F_g values
-    - Asymptotic ratios
-    - Estimated convergence radius (should approach 2*pi)
-    - Comparison with 1/(4*pi^2) growth constant
+    - scalar F_g values;
+    - finite-window ratio diagnostics;
+    - finite-window radius estimate;
+    - exact scalar-lane radius and growth constant.
+
+    It asserts no Borel summability and no closed form for the full
+    planted-forest Virasoro partition function.
     """
     kappa = kappa_virasoro(c)
     coeffs = gravity_partition_coefficients_scalar(kappa, g_max)
@@ -477,10 +507,17 @@ def btz_growth_comparison(c, g_max: int = 9) -> Dict[str, Any]:
         'g_max': g_max,
         'coefficients': [float(f) for f in coeffs],
         'ratios': ratios,
-        'convergence_radius_estimated': R_est,
-        'convergence_radius_exact': TWO_PI,
-        'radius_relative_error': abs(R_est - TWO_PI) / TWO_PI,
-        'btz_growth_constant': 1.0 / FOUR_PI_SQ,
+        'radius_estimate_from_window': R_est,
+        'scalar_convergence_radius_exact': scalar_convergence_radius_exact(),
+        'radius_relative_error_to_scalar_exact': abs(R_est - TWO_PI) / TWO_PI,
+        'scalar_growth_constant_exact': 1.0 / FOUR_PI_SQ,
+        'gevrey_class': SCALAR_GEVREY_CLASS,
+        'scope': SCALAR_RADIUS_SCOPE,
+        'analytic_claims': {
+            'full_partition_convergence': False,
+            'borel_summability': False,
+            'btz_closed_form_from_scalar_series': False,
+        },
     }
 
 
@@ -489,9 +526,10 @@ def btz_growth_comparison(c, g_max: int = 9) -> Dict[str, Any]:
 # =========================================================================
 
 def self_dual_c13_table(g_max: int = 9) -> Dict[str, Any]:
-    r"""Partition function data at the self-dual point c = 13.
+    r"""Scalar and known-window coefficient data at c = 13.
 
-    At c = 13: kappa = 13/2, kappa' = kappa(Vir_{26-13}) = 13/2.
+    At c = 13: kappa = 13/2 and the same-family complementarity
+    partner Vir_{26-13} has kappa = 13/2.
     Complementarity: kappa + kappa' = 13 (census C8).
 
     The scalar free energies satisfy:
@@ -521,10 +559,10 @@ def self_dual_c13_table(g_max: int = 9) -> Dict[str, Any]:
 
 
 def critical_c26_table(g_max: int = 9) -> Dict[str, Any]:
-    r"""Partition function data at c = 26 (bosonic string critical dimension).
+    r"""Scalar and known-window coefficient data at c = 26.
 
     At c = 26: kappa = 13, kappa(Vir_0) = 0.
-    The dual algebra Vir^! = Vir_{26-c} = Vir_0 has kappa = 0.
+    The same-family scalar complementarity partner has central charge 0.
 
     Physical significance: the bosonic string has matter c = 26 and
     bc ghost c = -26, giving kappa_eff = kappa(matter) + kappa(ghost) = 13 + (-13) = 0.
@@ -560,10 +598,10 @@ def critical_c26_table(g_max: int = 9) -> Dict[str, Any]:
 # =========================================================================
 
 def comprehensive_summary(g_max: int = 9) -> Dict[str, Any]:
-    r"""Full summary for both c = 13 and c = 26, with BTZ comparison.
+    r"""Finite-window summary for c = 13 and c = 26.
 
-    This is the main entry point for the 3D gravity partition function
-    computation.
+    This is the main entry point for the scalar and known planted-forest
+    coefficient computation.
     """
     # Use at least 20 terms for the generating function series check
     # to ensure convergence to the 1e-10 threshold.
@@ -571,8 +609,8 @@ def comprehensive_summary(g_max: int = 9) -> Dict[str, Any]:
     return {
         'c13': self_dual_c13_table(g_max),
         'c26': critical_c26_table(g_max),
-        'btz_c13': btz_growth_comparison(13, g_max),
-        'btz_c26': btz_growth_comparison(26, g_max),
+        'scalar_growth_c13': btz_growth_comparison(13, g_max),
+        'scalar_growth_c26': btz_growth_comparison(26, g_max),
         'generating_function_c13': verify_generating_function(13, 1.0, gf_terms),
         'generating_function_c26': verify_generating_function(26, 1.0, gf_terms),
     }
@@ -586,7 +624,7 @@ if __name__ == '__main__':
     import json
 
     print("=" * 72)
-    print("3D Gravity Partition Function: Virasoro Shadow Tower")
+    print("Finite-window Virasoro coefficient diagnostics")
     print("=" * 72)
 
     for c_val in [13, 26]:
@@ -595,7 +633,7 @@ if __name__ == '__main__':
         print("-" * 60)
 
         coeffs = gravity_partition_coefficients_virasoro(c_val, 9)
-        print(f"{'g':>3}  {'F_g (exact)':>35}  {'F_g (float)':>18}")
+        print(f"{'g':>3}  {'F_g (known window)':>35}  {'F_g (float)':>18}")
         for g, fg in enumerate(coeffs):
             print(f"{g:>3}  {str(fg):>35}  {float(fg):>18.12e}")
 
@@ -610,8 +648,8 @@ if __name__ == '__main__':
         for r in btz['ratios']:
             print(f"  g={r['g']:>2}: |F_{{g+1}}/F_g| = {r['raw_ratio']:.6e}, "
                   f"normalized = {r['normalized_ratio']:.6f}")
-        print(f"  Estimated convergence radius: {btz['convergence_radius_estimated']:.6f}")
-        print(f"  Exact convergence radius:     {btz['convergence_radius_exact']:.6f}")
+        print(f"  Window radius estimate: {btz['radius_estimate_from_window']:.6f}")
+        print(f"  Scalar exact radius:    {btz['scalar_convergence_radius_exact']:.6f}")
 
     print("\nBTZ entropy at representative energies:")
     for c_val in [13, 26]:

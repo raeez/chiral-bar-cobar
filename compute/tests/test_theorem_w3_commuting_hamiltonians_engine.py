@@ -31,7 +31,6 @@ Manuscript references:
     comp:w3-nthproducts (bar_complex_tables.tex)
 """
 
-import math
 import unittest
 import sys
 import os
@@ -41,6 +40,11 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'lib'))
 
 from theorem_w3_commuting_hamiltonians_engine import (
     GENERATORS,
+    W3_CENTRAL_CHARGE_CONDUCTOR,
+    W3_KAPPA_CONDUCTOR,
+    W3_KAPPA_RATIO,
+    W3_SELF_DUAL_CENTRAL_CHARGE,
+    W3_SELF_DUAL_KAPPA,
     WEIGHTS,
     beta_composite,
     central_charge_from_level,
@@ -67,6 +71,8 @@ from theorem_w3_commuting_hamiltonians_engine import (
     w3_collision_residue_table,
     w3_hamiltonian_on_primaries,
     w3_hamiltonian_scalar_on_primaries,
+    w3_shadow_constants,
+    w3_uniform_weight_reduction,
     w3_ward_identities,
     wN_structure,
     zamolodchikov_metric,
@@ -331,6 +337,11 @@ class TestZamolodchikiMetric(unittest.TestCase):
             self.assertEqual(inv['TT'], Fraction(2) / c)
             self.assertEqual(inv['WW'], Fraction(3) / c)
 
+    def test_inverse_metric_singular_at_c_zero(self):
+        """The inverse channel metric is undefined at c = 0."""
+        with self.assertRaises(ValueError):
+            inverse_metric(Fraction(0))
+
     def test_metric_times_inverse_is_identity(self):
         """eta_{ab} * eta^{bc} = delta^c_a."""
         for c in C_VALUES:
@@ -367,6 +378,25 @@ class TestKappaValues(unittest.TestCase):
         for c in C_VALUES:
             self.assertEqual(kappa_total(c), kappa_T(c) + kappa_W(c))
 
+    def test_uniform_weight_reduction_conductor(self):
+        """Uniform W_3 scalar lane gives K^kappa = (5/6) * 100 = 250/3."""
+        c = Fraction(17)
+        result = w3_uniform_weight_reduction(c)
+        self.assertEqual(result['kappa_ratio'], W3_KAPPA_RATIO)
+        self.assertEqual(result['central_charge_conductor'], W3_CENTRAL_CHARGE_CONDUCTOR)
+        self.assertEqual(result['kappa_conductor'], W3_KAPPA_CONDUCTOR)
+        self.assertEqual(result['dual_central_charge'], Fraction(83))
+        self.assertEqual(result['dual_kappa'], Fraction(5) * Fraction(83) / 6)
+
+    def test_uniform_weight_reduction_is_not_bulk_or_mc_data(self):
+        """The scalar reduction is not derived-center or full MC data."""
+        result = w3_uniform_weight_reduction(Fraction(50))
+        self.assertEqual(result['self_dual_central_charge'], W3_SELF_DUAL_CENTRAL_CHARGE)
+        self.assertEqual(result['self_dual_kappa'], W3_SELF_DUAL_KAPPA)
+        self.assertFalse(result['all_weight_cross_terms_computed'])
+        self.assertFalse(result['derived_center_data'])
+        self.assertFalse(result['full_mc_data'])
+
 
 class TestBetaComposite(unittest.TestCase):
     """Verify the composite field coefficient beta = 16/(22+5c)."""
@@ -394,12 +424,31 @@ class TestBetaComposite(unittest.TestCase):
 
     def test_beta_singular_at_c_neg22over5(self):
         """beta is singular at c = -22/5 (degenerate W_3 algebra)."""
-        c = -22.0 / 5
-        with self.assertRaises((ZeroDivisionError, ValueError)):
-            # Should raise or return infinity
-            result = 16 / (22 + 5 * c)
-            if math.isinf(result):
-                raise ZeroDivisionError
+        with self.assertRaises(ValueError):
+            beta_composite(Fraction(-22, 5))
+
+    def test_shadow_constants_singular_at_c_zero(self):
+        """The scalar-shadow constants have a pole at c = 0."""
+        with self.assertRaises(ValueError):
+            w3_shadow_constants(Fraction(0))
+
+    def test_shadow_constants_singular_at_zamolodchikov_denominator(self):
+        """The scalar-shadow constants have a pole at 5c+22 = 0."""
+        with self.assertRaises(ValueError):
+            w3_shadow_constants(Fraction(-22, 5))
+
+    def test_shadow_constants_exact(self):
+        """T-line and W-line quartic constants match the manuscript anchors."""
+        c = Fraction(10)
+        result = w3_shadow_constants(c)
+        self.assertEqual(result['S2_T'], Fraction(5))
+        self.assertEqual(result['S3_T'], Fraction(2))
+        self.assertEqual(result['S4_T'], Fraction(1, 72))  # 10/[10*(50+22)]
+        self.assertEqual(result['S5_T'], Fraction(-1, 150))  # -48/[100*(50+22)]
+        self.assertEqual(result['S4_W'], Fraction(16, 23328))  # 2560/[10*72^3]
+        self.assertEqual(result['Lambda_norm'], Fraction(72))
+        self.assertEqual(result['T_line_S4_times_Lambda_norm'], Fraction(1))
+        self.assertEqual(result['T_line_S5_over_S4'], Fraction(-12, 25))
 
 
 class TestCollisionResiduesOnPrimaries(unittest.TestCase):
@@ -603,6 +652,8 @@ class TestWNStructure(unittest.TestCase):
         """W_3: K_3 = 100 (Fateev-Lukyanov: c + c' = 100)."""
         struct = wN_structure(3)
         self.assertEqual(struct['koszul_conductor'], 100)
+        self.assertEqual(struct['kappa_ratio'], Fraction(5, 6))
+        self.assertEqual(struct['kappa_conductor'], Fraction(250, 3))
 
 
 class TestKoszulConductor(unittest.TestCase):
@@ -659,39 +710,55 @@ class TestCommutativity(unittest.TestCase):
         result = verify_commutativity_4pt_w3(
             10.0, [0.5, 1.0, 1.5, 2.0], [0, 0, 0, 0])
         self.assertTrue(result['commutativity_automatic'])
+        self.assertEqual(result['w3_k_max'], 5)
+        self.assertEqual(result['w3_max_diff_order'], 4)
+        self.assertIsNone(result['universal_scalar_ode_order'])
+        self.assertFalse(result['full_integrability_proved'])
 
     def test_5pt_nontrivial(self):
-        """5-point commutativity is nontrivial (2D moduli)."""
+        """5-point commutativity is nontrivial and not proved by the scalar packet."""
         result = verify_commutativity_5pt_w3(
             10.0, [0.5, 1.0, 1.5, 2.0, 0.3], [0, 0, 0, 0, 0])
         self.assertFalse(result['commutativity_automatic'])
-        self.assertTrue(result['mc_implies_commutativity'])
+        self.assertTrue(result['scalar_primary_packet_commutes'])
+        self.assertFalse(result['full_commutator_evaluated'])
+        self.assertFalse(result['mc_implies_commutativity'])
+        self.assertFalse(result['full_integrability_proved'])
 
-    def test_5pt_mc_implies(self):
-        """MC equation implies [H_i, H_j] = 0 at all n (theorem)."""
+    def test_5pt_names_remaining_proof_obligation(self):
+        """The engine names the missing full differential-operator check."""
         result = verify_commutativity_5pt_w3(10.0, [1]*5)
-        self.assertTrue(result['mc_implies_commutativity'])
+        self.assertIn('proof_obligation', result)
+        self.assertIn('derivative and descendant terms', result['proof_obligation'])
 
 
 class TestODEOrderPrediction(unittest.TestCase):
     """Verify ODE order predictions from collision depth."""
 
     def test_virasoro_max_ode_order(self):
-        """Virasoro: max ODE order for 4-point = k_max = 3."""
+        """Virasoro: collision-depth and operator-order ceilings."""
         pred = ode_order_prediction('virasoro')
         self.assertEqual(pred['k_max'], 3)
         self.assertEqual(pred['max_diff_order'], 2)
+        self.assertFalse(pred['finite_depth_implies_full_integrability'])
 
     def test_w3_max_ode_order(self):
-        """W_3: max ODE order for 4-point = k_max = 5."""
+        """W_3: k_max = 5 gives order-4 operators, not a universal scalar ODE."""
         pred = ode_order_prediction('w3')
         self.assertEqual(pred['k_max'], 5)
         self.assertEqual(pred['max_diff_order'], 4)
+        self.assertIsNone(pred['max_ode_order_4pt'])
+        self.assertFalse(pred['finite_depth_implies_full_integrability'])
 
     def test_virasoro_bpz_null_vector(self):
         """Virasoro BPZ: (2,1) null vector gives 2nd-order ODE."""
         pred = ode_order_prediction('virasoro', degenerate_level=(2, 1))
         self.assertEqual(pred['null_vector_ode_order'], 2)
+
+    def test_w3_fundamental_null_vector_order(self):
+        """W_3 fundamental degenerate insertions give third-order scalar equations."""
+        pred = ode_order_prediction('w3', degenerate_level=(1, 0))
+        self.assertEqual(pred['null_vector_ode_order'], 3)
 
 
 class TestFullEvaluation(unittest.TestCase):
@@ -702,7 +769,9 @@ class TestFullEvaluation(unittest.TestCase):
         result = full_evaluation(Fraction(10), Fraction(2), Fraction(1))
         self.assertIn('central_charge', result)
         self.assertIn('kappa', result)
+        self.assertIn('uniform_weight_reduction', result)
         self.assertIn('beta_composite', result)
+        self.assertIn('shadow_constants', result)
         self.assertIn('k_max', result)
         self.assertIn('collision_residue_table', result)
         self.assertIn('cross_family', result)
@@ -722,6 +791,14 @@ class TestFullEvaluation(unittest.TestCase):
         c = Fraction(24)
         result = full_evaluation(c)
         self.assertEqual(result['kappa']['total'], Fraction(5) * c / 6)
+
+    def test_full_evaluation_uniform_reduction(self):
+        """Full evaluation carries the scoped uniform-weight package."""
+        result = full_evaluation(Fraction(24))
+        uniform = result['uniform_weight_reduction']
+        self.assertEqual(uniform['kappa_conductor'], Fraction(250, 3))
+        self.assertFalse(uniform['derived_center_data'])
+        self.assertFalse(uniform['full_mc_data'])
 
 
 class TestMultiPathVerification(unittest.TestCase):
@@ -786,6 +863,11 @@ class TestCentralChargeFromLevel(unittest.TestCase):
         """c(k=1) = 2 - 24*9/4 = 2 - 54 = -52."""
         c = central_charge_from_level(Fraction(1))
         self.assertEqual(c, Fraction(2) - Fraction(24) * Fraction(9) / Fraction(4))
+
+    def test_singular_level_k_minus_3(self):
+        """The Fateev-Lukyanov formula is singular at k = -3."""
+        with self.assertRaises(ValueError):
+            central_charge_from_level(Fraction(-3))
 
 
 class TestScalarHamiltonianOnPrimaries(unittest.TestCase):

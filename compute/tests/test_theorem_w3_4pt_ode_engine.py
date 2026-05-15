@@ -41,12 +41,15 @@ from theorem_w3_4pt_ode_engine import (
     K_MAX_W3,
     MAX_OPE_POLE_W3,
     channel_structure_4pt,
+    diagnostic_scope_4pt,
     evaluate_hamiltonian_at_z,
     extract_scalar_ode_coefficients,
     fuchsian_structure_4pt,
     full_4pt_ode_summary,
+    lambda_coupling_denominator,
     n_moduli,
     ode_order_analysis,
+    require_regular_universal_normalization,
     sl2_fixed_positions,
     surviving_depths_on_primaries,
     t_sector_restriction_4pt,
@@ -54,9 +57,13 @@ from theorem_w3_4pt_ode_engine import (
     virasoro_bpz_4pt_hamiltonian,
     w3_4pt_hamiltonian,
     w3_c2_specific_coefficients,
+    w3_channel_kappa_matrix,
     w3_exceeds_virasoro_order,
+    w3_lambda_coupling,
     w3_minimal_model_c2,
+    w3_universal_normalization_domain,
     w_sector_leading_term,
+    zamolodchikov_lambda_norm,
 )
 
 # Also import from the parent engine for cross-checks
@@ -75,6 +82,80 @@ from theorem_w3_commuting_hamiltonians_engine import (
 # Standard test values
 C_FRACTIONS = [Fraction(1), Fraction(2), Fraction(10), Fraction(50), Fraction(100)]
 C_FLOATS = [0.5, 1.0, 2.0, 4.0, 10.0, 24.0, 50.0]
+
+
+# ============================================================================
+# 0. Central-charge domain and W_3 channel weights
+# ============================================================================
+
+class TestCentralChargeDomainAndChannelWeights(unittest.TestCase):
+    """Verify exact W_3 singular denominators and channel-refined kappa."""
+
+    def test_lambda_coupling_denominator(self):
+        """The Lambda coupling denominator is exactly 5c+22."""
+        c = Fraction(10)
+        self.assertEqual(lambda_coupling_denominator(c), Fraction(72))
+        self.assertEqual(w3_lambda_coupling(c), Fraction(2, 9))
+
+    def test_lambda_norm_exact_formula(self):
+        """<Lambda|Lambda> = c(5c+22)/10."""
+        c = Fraction(10)
+        self.assertEqual(zamolodchikov_lambda_norm(c), Fraction(72))
+
+    def test_universal_domain_regular(self):
+        """c=2 lies on the non-singular universal normalization surface."""
+        domain = w3_universal_normalization_domain(Fraction(2))
+        self.assertTrue(domain['regular'])
+        self.assertEqual(domain['lambda_coupling_denominator'], Fraction(32))
+        self.assertEqual(domain['lambda_norm'], Fraction(32, 5))
+
+    def test_universal_domain_singular_c_zero(self):
+        """c=0 is a Zamolodchikov metric singularity."""
+        domain = w3_universal_normalization_domain(Fraction(0))
+        self.assertFalse(domain['regular'])
+        self.assertTrue(domain['metric_singular'])
+        self.assertFalse(domain['lambda_coupling_singular'])
+        self.assertEqual(domain['lambda_norm'], Fraction(0))
+
+    def test_universal_domain_singular_minus_22_over_5(self):
+        """c=-22/5 is the Lambda coupling and Lambda-norm singularity."""
+        c = Fraction(-22, 5)
+        domain = w3_universal_normalization_domain(c)
+        self.assertFalse(domain['regular'])
+        self.assertFalse(domain['metric_singular'])
+        self.assertTrue(domain['lambda_coupling_singular'])
+        self.assertEqual(domain['lambda_coupling_denominator'], 0)
+        self.assertEqual(domain['lambda_norm'], 0)
+
+    def test_require_regular_rejects_singular_values(self):
+        """Scalar projection formulas reject c(5c+22)=0."""
+        for c in (Fraction(0), Fraction(-22, 5)):
+            with self.assertRaises(ValueError):
+                require_regular_universal_normalization(c)
+            with self.assertRaises(ValueError):
+                w_sector_leading_term(c, Fraction(1, 2))
+
+    def test_depth_4_vanishing_survives_singular_witnesses(self):
+        """W_(4)W=0 is structural even where scalar normalization is singular."""
+        result = verify_depth_4_vanishing([Fraction(0), Fraction(-22, 5)])
+        self.assertTrue(result['all_vanish'])
+
+    def test_w3_channel_kappa_is_not_uniform_weight(self):
+        """W_3 has diag(c/2,c/3), with trace 5c/6."""
+        c = Fraction(6)
+        result = w3_channel_kappa_matrix(c)
+        self.assertEqual(result['matrix']['T'], Fraction(3))
+        self.assertEqual(result['matrix']['W'], Fraction(2))
+        self.assertEqual(result['trace'], Fraction(5))
+        self.assertFalse(result['is_uniform_weight_reduction'])
+        self.assertTrue(result['regular_nonuniform'])
+
+    def test_w3_channel_kappa_zero_is_singular_not_uniform(self):
+        """At c=0 equal channel entries do not license a uniform-weight reduction."""
+        result = w3_channel_kappa_matrix(Fraction(0))
+        self.assertTrue(result['entries_equal'])
+        self.assertFalse(result['is_uniform_weight_reduction'])
+        self.assertFalse(result['regular_nonuniform'])
 
 
 # ============================================================================
@@ -263,12 +344,22 @@ class TestODEOrder(unittest.TestCase):
     def test_depth_4_in_extra_depths(self):
         """Depth 4 listed as extra (beyond Virasoro) but vanishes."""
         result = w3_exceeds_virasoro_order()
+        self.assertEqual(result['extra_depths'], [4, 5])
+        self.assertEqual(result['vanishing_extra_depths'], [4])
+        self.assertEqual(result['central_extra_depths'], [5])
         self.assertTrue(result['depth_4_vanishes'])
 
     def test_w3_order_ratio(self):
         """W_3 order is exactly twice Virasoro order: 4/2 = 2."""
         result = w3_exceeds_virasoro_order()
         self.assertEqual(result['ratio'], 2.0)
+
+    def test_order_diagnostic_is_not_modular_koszul_theorem(self):
+        """The finite ODE order diagnostic is not promoted to Theorem C/H data."""
+        result = ode_order_analysis('w3')
+        self.assertTrue(result['finite_ode_diagnostic'])
+        self.assertFalse(result['full_modular_koszul_theorem'])
+        self.assertFalse(result['derived_center_computation'])
 
 
 # ============================================================================
@@ -341,6 +432,8 @@ class TestWSectorLeadingTerm(unittest.TestCase):
         lambda_val = lambda_zero_mode_on_primary(c, h_j)
         result = w_sector_leading_term(c, h_j)
         self.assertEqual(result['depth_1_lambda']['value'], beta * lambda_val)
+        self.assertEqual(result['depth_1_lambda']['formula'],
+                         '16/(5c+22) * (h^2 - 3h/5)')
 
     def test_surviving_depths_list(self):
         """W-W channel surviving depths are 1, 2, 3, 5."""
@@ -357,13 +450,25 @@ class TestWSectorLeadingTerm(unittest.TestCase):
             result = w_sector_leading_term(c, h_j)
             expected = c / Fraction(3)
             self.assertEqual(result['depth_5_central']['value'], expected)
+            self.assertFalse(
+                result['depth_5_central']['included_in_primary_scalar_projection']
+            )
+
+    def test_w_charge_is_separate_from_ww_2t(self):
+        """The W-current charge and W_(3)W=2T terms are separate sources."""
+        c = Fraction(10)
+        h_j = Fraction(1, 2)
+        w_j = Fraction(7, 5)
+        result = w_sector_leading_term(c, h_j, w_j=w_j)
+        self.assertEqual(result['depth_3_w_charge']['value'], w_j)
+        self.assertEqual(result['depth_3_scalar']['value'], 2 * h_j)
 
 
 # ============================================================================
 # 7. Specific coefficient values at c = 2
 # ============================================================================
 
-class TestC2MinimalModel(unittest.TestCase):
+class TestC2UniversalNormalization(unittest.TestCase):
     """Verify exact coefficients at c = 2."""
 
     def test_beta_at_c2(self):
@@ -386,6 +491,13 @@ class TestC2MinimalModel(unittest.TestCase):
         """kappa_total(c=2) = kappa_T + kappa_W = 5/3."""
         result = w3_minimal_model_c2()
         self.assertEqual(result['kappa_total'], Fraction(5, 3))
+
+    def test_c2_is_not_claimed_as_minimal_model(self):
+        """c=2 is a regular universal normalization point, not a minimal-model claim."""
+        result = w3_minimal_model_c2()
+        self.assertFalse(result['is_minimal_model_claim'])
+        self.assertTrue(result['central_charge_domain']['regular'])
+        self.assertEqual(result['channel_kappa_matrix']['trace'], Fraction(5, 3))
 
     def test_depth_1_lambda_at_c2_h_half(self):
         """At c=2, h=1/2: Lambda_0 = h^2 - 3h/5 = 1/4 - 3/10 = -1/20.
@@ -484,6 +596,21 @@ class TestChannelStructure(unittest.TestCase):
         c = Fraction(10)
         result = channel_structure_4pt(c)
         self.assertEqual(result['virasoro_max_depth'], 3)
+
+    def test_channel_structure_c_zero_singular_no_inverse_metric(self):
+        """At c=0 the inverse Zamolodchikov metric is not formed."""
+        result = channel_structure_4pt(Fraction(0))
+        self.assertFalse(result['regular'])
+        self.assertIsNone(result['metric'])
+        self.assertIsNone(result['inverse_metric'])
+        self.assertTrue(result['central_charge_domain']['metric_singular'])
+
+    def test_channel_structure_lambda_denominator_singular(self):
+        """At c=-22/5 the Lambda denominator kills the universal scalar lane."""
+        result = channel_structure_4pt(Fraction(-22, 5))
+        self.assertFalse(result['regular'])
+        self.assertTrue(result['central_charge_domain']['lambda_coupling_singular'])
+        self.assertEqual(result['active_depths_by_channel'][('W', 'W')], [1, 2, 3, 5])
 
 
 # ============================================================================
@@ -629,6 +756,35 @@ class TestWardIdentityStructure(unittest.TestCase):
         result = w3_4pt_hamiltonian(c, h, h, h, h, 0, 0, 0, 0)
         self.assertTrue(result['depth_4_vanishes'])
 
+    def test_w3_hamiltonian_depth_3_scalar_projection_keeps_sources(self):
+        """Depth 3 records W-charge and W_(3)W=2T separately and in total."""
+        c = Fraction(10)
+        h1 = Fraction(1, 2)
+        h3 = Fraction(3, 4)
+        w1 = Fraction(1, 5)
+        w3_ch = Fraction(2, 5)
+        result = w3_4pt_hamiltonian(c, h1, h1, h3, h1, w1, 0, w3_ch, 0)
+        w_sector = result['w_sector']
+        self.assertEqual(w_sector['w_ward_depth3']['pole_0'], w1)
+        self.assertEqual(w_sector['ww_depth3_from_2T']['pole_0'], 2 * h1)
+        self.assertEqual(
+            w_sector['pole_0']['coefficients'][3],
+            w1 + 2 * h1,
+        )
+        self.assertEqual(
+            w_sector['pole_1']['coefficients'][3],
+            w3_ch + 2 * h3,
+        )
+
+    def test_w3_hamiltonian_scope_is_scalar_projection(self):
+        """The Hamiltonian diagnostic marks full OPE data as out of scope."""
+        c = Fraction(10)
+        h = Fraction(1, 2)
+        result = w3_4pt_hamiltonian(c, h, h, h, h, 0, 0, 0, 0)
+        self.assertTrue(result['scope']['primary_scalar_projection_only'])
+        self.assertFalse(result['scope']['full_ope_computation'])
+        self.assertIn(2, result['w_sector']['full_ope_terms_not_in_scalar_projection'])
+
 
 # ============================================================================
 # 13. Lambda composite at specific values
@@ -760,6 +916,15 @@ class TestMultiPathDepthVerification(unittest.TestCase):
         self.assertEqual(coeffs[3]['site_0_w_ward'], w1)
         self.assertEqual(coeffs[3]['site_0_ww_2T'], 2 * h1)
 
+    def test_scalar_coefficients_mark_central_only_depth_5(self):
+        """Depth 5 is reported but not included in primary scalar projection."""
+        c = Fraction(10)
+        h = Fraction(1, 2)
+        coeffs = extract_scalar_ode_coefficients(c, h, h, h, h)
+        self.assertEqual(coeffs[5]['site_0'], c / Fraction(3))
+        self.assertFalse(coeffs[5]['included_in_primary_scalar_projection'])
+        self.assertTrue(coeffs['_scope']['primary_scalar_projection_only'])
+
 
 # ============================================================================
 # 15. Cross-check with W_3 commuting Hamiltonians engine
@@ -802,6 +967,8 @@ class TestCrossCheckWithParentEngine(unittest.TestCase):
         self.assertIn('depth_4_vanishing', result)
         self.assertTrue(result['order_exceeds_virasoro']['w3_exceeds'])
         self.assertTrue(result['depth_4_vanishing']['all_vanish'])
+        self.assertFalse(result['scope']['derived_center_computation'])
+        self.assertEqual(result['channel_kappa_matrix']['trace'], Fraction(25, 3))
 
 
 # ============================================================================
@@ -818,6 +985,14 @@ class TestAdditionalVerifications(unittest.TestCase):
     def test_diff_order_equals_kmax_minus_1(self):
         """Differential operator order = k_max - 1."""
         self.assertEqual(DIFF_ORDER_W3, K_MAX_W3 - 1)
+
+    def test_diagnostic_scope_rejects_theorem_promotion(self):
+        """Finite ODE diagnostics are not derived-center or modular Koszul outputs."""
+        scope = diagnostic_scope_4pt()
+        self.assertTrue(scope['finite_ode_diagnostic'])
+        self.assertTrue(scope['primary_scalar_projection_only'])
+        self.assertFalse(scope['full_modular_koszul_theorem'])
+        self.assertFalse(scope['derived_center_computation'])
 
     def test_w3_hamiltonian_returns_both_sectors(self):
         """w3_4pt_hamiltonian returns both BPZ and W sectors."""
@@ -840,11 +1015,38 @@ class TestAdditionalVerifications(unittest.TestCase):
                          + result['w_depth5'])
         self.assertAlmostEqual(result['total'], reconstructed, places=12)
 
-    def test_w_sector_vanishes_at_c_zero_not_physical(self):
-        """At c -> 0 (not physical), beta diverges; test c = 1/100 is finite."""
+    def test_central_depth_5_excluded_by_default(self):
+        """The default evaluation is the primary scalar projection, not central vac."""
+        z = Fraction(1, 3)
+        c = Fraction(3)
+        h = Fraction(1, 2)
+        result = evaluate_hamiltonian_at_z(z, c, h, h, h, h)
+        expected_central = (c / Fraction(3)) / z**5 + (c / Fraction(3)) / (z - 1)**5
+        self.assertEqual(result['w_depth5'], 0)
+        self.assertEqual(result['w_depth5_central'], expected_central)
+        self.assertFalse(result['central_projection_included'])
+
+    def test_central_depth_5_can_be_included_explicitly(self):
+        """include_central=True adds c/3 depth-5 vac term to the total."""
+        z = Fraction(1, 3)
+        c = Fraction(3)
+        h = Fraction(1, 2)
+        without = evaluate_hamiltonian_at_z(z, c, h, h, h, h)
+        with_central = evaluate_hamiltonian_at_z(
+            z, c, h, h, h, h, include_central=True
+        )
+        self.assertEqual(with_central['w_depth5'], with_central['w_depth5_central'])
+        self.assertEqual(
+            with_central['total'] - without['total'],
+            with_central['w_depth5_central'],
+        )
+        self.assertTrue(with_central['central_projection_included'])
+
+    def test_w_sector_near_c_zero_requires_nonzero_metric(self):
+        """Near c=0 the beta coupling is finite, while the metric pole is avoided."""
         c = Fraction(1, 100)
         h = Fraction(1, 2)
-        # beta = 16/(22 + 5/100) = 16/(22.05) = 1600/2205
+        # beta = 16/(22 + 5/100) = 16/(2205/100) = 320/441
         beta = beta_composite(c)
         self.assertEqual(beta, Fraction(16) / (Fraction(22) + 5 * c))
         # This should not raise an error

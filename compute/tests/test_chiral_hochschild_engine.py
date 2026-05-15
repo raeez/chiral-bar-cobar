@@ -6,7 +6,7 @@ Verifies Theorem H computationally: ChirHoch*(A) concentrated in degrees
 Organized by:
   I.   ChirHoch^0 = Z(A) (center computation)
   II.  ChirHoch^2 = Z(A!)^∨ (Koszul dual center)
-  III. ChirHoch^1 (derivation analysis — FRONTIER)
+  III. ChirHoch^1 (derivation analysis)
   IV.  Hilbert polynomial P_A(t) (unified)
   V.   Deformation-obstruction pairing
   VI.  Koszul functoriality and FF involution
@@ -21,12 +21,17 @@ References:
   thm:w-algebra-hochschild (hochschild_cohomology.tex)
 """
 
+from pathlib import Path
+
 import pytest
 from sympy import Symbol, Rational
 
 from compute.lib.chiral_hochschild_engine import (
     # Data constructors
     ChiralAlgebraData,
+    holographic_package_entries,
+    modular_koszul_primary_projections,
+    bar_koszul_derived_center_firewall,
     heisenberg_data,
     affine_sl2_data,
     affine_sl3_data,
@@ -159,7 +164,7 @@ class TestChirHoch2:
 
 
 # ===================================================================
-# III. ChirHoch^1 — derivation analysis (FRONTIER)
+# III. ChirHoch^1 — derivation analysis
 # ===================================================================
 
 class TestChirHoch1Heisenberg:
@@ -199,6 +204,14 @@ class TestChirHoch1AffineSl2:
     def test_all_unobstructed(self):
         da = derivation_analysis(affine_sl2_data())
         assert all(v for v in da.obstruction_to_extension.values())
+
+    def test_level_tangent_not_extra_h1_basis(self):
+        """The level tangent is not counted in addition to dim(g)."""
+        da = derivation_analysis(affine_sl2_data())
+        assert da.derivation_types["current_algebra_derivations"] == 3
+        assert da.derivation_types["level_deformation"] == 0
+        assert "level_k" not in da.obstruction_to_extension
+        assert da.dim_chirhoch1 == 3
 
 
 class TestChirHoch1AffineSl3:
@@ -307,6 +320,7 @@ class TestChirHoch1KMParametric:
         da = derivation_analysis(data)
         assert da.dim_chirhoch1 == expected_dim
         assert da.dim_chirhoch1 == N * N - 1
+        assert da.derivation_types["level_deformation"] == 0
 
 
 class TestChirHoch1WNParametric:
@@ -539,16 +553,44 @@ class TestFFInvolution:
         assert result['ff_applicable'] is False
 
 
+class TestObjectFirewalls:
+    """Typed separation of bar, duality, inversion, and bulk."""
+
+    def test_derived_center_is_hochschild_not_dual_branch(self):
+        firewall = bar_koszul_derived_center_firewall()
+        assert firewall["Z_ch^der(A)"].startswith("RHom_{A^e}(A,A)")
+        assert "Hochschild derived-centre bulk" in firewall["Z_ch^der(A)"]
+        assert "Verdier" in firewall["A^!"]
+        assert firewall["Z_ch^der(A)"] != firewall["A^!"]
+
+    def test_bar_cobar_inversion_not_koszul_duality(self):
+        firewall = bar_koszul_derived_center_firewall()
+        assert firewall["Omega(B(A))"] == "bar-cobar inversion recovering A"
+        assert "cofibrant diagonal A-bimodule replacement" in firewall["two-sided bar"]
+        assert firewall["Omega(B(A))"] != firewall["A^!"]
+
+    def test_holographic_package_has_seven_entries(self):
+        assert holographic_package_entries() == (
+            "A", "A^i", "A^!", "C", "r(z)", "Theta_A", "nabla^hol",
+        )
+
+    def test_modular_compute_package_is_six_projection_surface(self):
+        projections = modular_koszul_primary_projections()
+        assert len(projections) == 6
+        assert projections != holographic_package_entries()
+        assert "A^!" not in projections
+        assert "C" not in projections
+
+
 # ===================================================================
 # VII. W-algebra regime
 # ===================================================================
 
 class TestWAlgebraVirasoro:
-    """ChirHoch*(Vir_c) Theorem-H bounded amplitude [0,2], dim <= 4.
+    """ChirHoch*(Vir_c) Theorem-H bounded amplitude [0,2].
 
-    Per AP94/AP95, the Gelfand-Fuchs polynomial-ring model
-    ChirHoch*(Vir_c) = C[Θ] with |Θ|=2 (periodic, infinite) is
-    REFUTED (continuous Lie cohomology of Witt, a different functor).
+    The Gelfand-Fuchs polynomial-ring model computes continuous Lie
+    cohomology of Witt, a different functor.
     """
 
     def test_gen_degrees_recorded(self):
@@ -562,7 +604,7 @@ class TestWAlgebraVirasoro:
         assert w.amplitude == (0, 2)
 
     def test_total_dim_bounded(self):
-        """ChirHoch*(Vir_c) concentrated in {0,1,2} (Theorem H, AP94)."""
+        """ChirHoch*(Vir_c) concentrated in {0,1,2}."""
         w = compute_w_algebra_hochschild(virasoro_data())
         assert w.bounded_by_theorem_h is True  # Theorem H: amplitude [0,2]
 
@@ -587,10 +629,10 @@ class TestWAlgebraVirasoro:
 
 
 class TestWAlgebraW3:
-    """ChirHoch*(W_3) Theorem-H bounded amplitude [0,2], dim <= 4.
+    """ChirHoch*(W_3) Theorem-H bounded amplitude [0,2].
 
-    Per AP94/AP95, the polynomial-ring model C[Θ_1, Θ_2] with
-    partition counts is REFUTED.
+    The polynomial-ring model C[Theta_1, Theta_2] with partition counts
+    belongs to continuous Lie cohomology, not this functor.
     """
 
     def test_gen_degrees_recorded(self):
@@ -604,7 +646,7 @@ class TestWAlgebraW3:
         assert w.amplitude == (0, 2)
 
     def test_total_dim_bounded(self):
-        """ChirHoch*(W_3) concentrated in {0,1,2} (Theorem H, AP94)."""
+        """ChirHoch*(W_3) concentrated in {0,1,2}."""
         w = compute_w_algebra_hochschild(w3_data())
         assert w.bounded_by_theorem_h is True  # Theorem H: amplitude [0,2]
 
@@ -660,8 +702,6 @@ class TestWAlgebraWN:
         for N in range(2, 9):
             w = compute_w_algebra_hochschild(wN_data(N))
             assert w.dim_n(1) == 0
-
-    # --- AP10 multi-path verification ---
 
     def test_virasoro_bounded_two_paths(self):
         """Virasoro bounded total dim verified two ways.
@@ -724,15 +764,22 @@ class TestCrossFamilyConsistency:
             heisenberg_data(), affine_sl2_data()
         )
         assert result['matches'] is True
+        assert result['P_product_full'] == [1, 4, 5, 4, 1]
+        assert result['chi_tensor_full'] == -1
+        assert result['product'] == -1
 
     def test_tensor_product_polynomial(self):
-        """P_{H ⊗ ŝl_2}(t) properties."""
+        """Raw Kunneth product is not silently truncated to Theorem-H amplitude."""
         result = verify_additivity_under_tensor(
             heisenberg_data(), affine_sl2_data()
         )
         assert result['applicable'] is True
         assert result['P_A'] == [1, 1, 1]
         assert result['P_B'] == [1, 3, 1]
+        assert result['P_product_full'] == [1, 4, 5, 4, 1]
+        assert result['higher_terms_vanish'] is False
+        assert result['requires_projection_or_resolution'] is True
+        assert result['euler_full'] == -1
 
     def test_betagamma_bc_euler_product(self):
         """χ(βγ) · χ(bc) = 0 · 0 = 0."""
@@ -740,6 +787,8 @@ class TestCrossFamilyConsistency:
         assert r['chi_A'] == 0
         assert r['chi_B'] == 0
         assert r['product'] == 0
+        assert r['chi_tensor_full'] == 0
+        assert r['P_product_full'] == [1, 4, 6, 4, 1]
 
 
 # ===================================================================
@@ -758,11 +807,46 @@ class TestOPEVerification:
         result = _ope_derivation_check_virasoro()
         assert result['consistent'] is True
         assert result['outer_quotient_dim'] == 0
+        assert result['state_space_basis_weight_2'] == ['L_{-2}|0> = T']
+        assert result['translation_vacuum'] == 'L_{-1}|0> = 0, so ∂²|0> = 0'
+        assert result['central_charge_class_degree'] == 2
 
     def test_w3_ope(self):
         result = _ope_derivation_check_w3()
         assert result['consistent'] is True
         assert result['outer_quotient_dim'] == 0
+        assert result['state_space_basis_weight_2'] == ['T']
+        assert result['state_space_basis_weight_3'] == ['∂T', 'W']
+        assert result['central_charge_class_degree'] == 2
+
+    def test_no_stale_scratch_or_false_mode_surface(self):
+        engine_path = Path(__file__).resolve().parents[1] / "lib" / "chiral_hochschild_engine.py"
+        test_path = Path(__file__)
+        source = engine_path.read_text() + "\n" + test_path.read_text()
+        forbidden = [
+            "Act" + "ually",
+            "no " + "wa" + "it",
+            "h" + "m" + "m",
+            "per " + "CLAUDE",
+            "FRO" + "NTIER",
+            "A" + "P25",
+            "A" + "P94",
+            "A" + "P95",
+            "A" + "P10",
+            "REFU" + "TED",
+            "ag" + "ent",
+            "wa" + "ve",
+            "led" + "ger",
+            "polynomial ring " + "(infinite)",
+            "commuting with all " + "modes",
+            "T_{(0)} = " + "L_0",
+            "inner via " + "L_0",
+            "β·" + "∂²|0",
+            "[a_" + "{(n)}, b]",
+            "α_" + "{(0)}",
+        ]
+        for phrase in forbidden:
+            assert phrase not in source
 
 
 # ===================================================================
@@ -905,6 +989,14 @@ class TestSummaryTable:
         for row in table:
             assert row['unobstructed'] is True, \
                 f"Obstructed for {row['family']}"
+
+    def test_table_w_algebra_rows_are_bounded(self):
+        table = summary_table()
+        w_rows = [row for row in table if row['regime'] == 'w_algebra']
+        assert w_rows
+        for row in w_rows:
+            assert row['P_A(t)'] == '1 + t² (Theorem-H bounded)'
+            assert row['chi'] == 2
 
 
 # ===================================================================

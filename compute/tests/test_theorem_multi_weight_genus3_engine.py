@@ -1,6 +1,6 @@
 """Tests for the multi-weight genus-3 engine.
 
-60+ tests with multi-path verification covering:
+Targeted tests with multi-path verification covering:
 1. Closed-form verification at genus 2, 3, 4
 2. Cross-engine consistency (3 independent engines must agree)
 3. Non-gravitational correction analysis
@@ -19,7 +19,66 @@
 
 import unittest
 from fractions import Fraction
-from math import factorial
+
+
+class TestFiniteWindowTheoremCertificate(unittest.TestCase):
+    """Finite-window theorem surface and structural firewalls."""
+
+    def test_certified_window_and_closed_constants(self):
+        from compute.lib.theorem_multi_weight_genus3_engine import (
+            CERTIFIED_W3_GENUS_WINDOW,
+            w3_delta_Fg_closed,
+        )
+        self.assertEqual(CERTIFIED_W3_GENUS_WINDOW, (2, 3, 4))
+        self.assertEqual(w3_delta_Fg_closed(2, Fraction(10)), Fraction(107, 80))
+        self.assertEqual(w3_delta_Fg_closed(3, Fraction(10)), Fraction(5723669, 345600))
+        self.assertEqual(
+            w3_delta_Fg_closed(4, Fraction(10)),
+            Fraction(147585413411, 435456000),
+        )
+        with self.assertRaises(ValueError):
+            w3_delta_Fg_closed(5, Fraction(10))
+
+    def test_certificate_keeps_scalar_cross_and_boundary_lanes_apart(self):
+        from compute.lib.theorem_multi_weight_genus3_engine import (
+            w3_finite_window_theorem,
+        )
+        cert = w3_finite_window_theorem(2, Fraction(10))
+        self.assertTrue(cert["graph_matches_closed"])
+        self.assertTrue(cert["full_equals_grav"])
+        self.assertEqual(cert["nongrav_correction"], Fraction(0))
+        self.assertEqual(cert["scalar_fp_lane"], Fraction(35, 3456))
+        self.assertEqual(cert["cross_channel"], Fraction(107, 80))
+        self.assertEqual(cert["full_free_energy"], Fraction(23287, 17280))
+        self.assertEqual(cert["diagonal_boundary_diagnostic"], Fraction(10061, 17280))
+        self.assertFalse(cert["diagonal_boundary_is_scalar_lane"])
+
+    def test_package_firewalls(self):
+        from compute.lib.theorem_multi_weight_genus3_engine import (
+            holographic_package_entries,
+            modular_koszul_primary_projections,
+            object_firewall,
+        )
+        self.assertEqual(
+            holographic_package_entries(),
+            ("A", "A^i", "A^!", "C", "r(z)", "Theta_A", "nabla^hol"),
+        )
+        self.assertEqual(
+            modular_koszul_primary_projections(),
+            (
+                "Fact_X(L)",
+                "barB_X(L)",
+                "Theta_L",
+                "L_L",
+                "(V_br,T_br)",
+                "R4_mod(L)",
+            ),
+        )
+        firewall = object_firewall()
+        self.assertIn("ordered bar coalgebra", firewall["B(A)"])
+        self.assertIn("Verdier/continuous-linear dual branch", firewall["A^!"])
+        self.assertIn("bar-cobar inversion recovering A", firewall["Omega(B(A))"])
+        self.assertIn("ChirHoch^*(A,A)", firewall["Z_ch^der(A)"])
 
 
 class TestClosedFormGenus2(unittest.TestCase):
@@ -191,7 +250,7 @@ class TestHalfEdgeOrderingRegression(unittest.TestCase):
 
 
 class TestUniformWeightVanishing(unittest.TestCase):
-    """delta_F_g^cross = 0 for uniform-weight algebras."""
+    """delta_F_g^cross = 0 for the one-channel scalar lane."""
 
     def test_single_channel_genus2(self):
         """With only one channel, all assignments are diagonal."""
@@ -221,23 +280,29 @@ class TestUniformWeightVanishing(unittest.TestCase):
 
 
 class TestPerChannelUniversality(unittest.TestCase):
-    """Per-channel diagonal sum is consistent with the total diagonal.
-
-    The total diagonal amplitude (over all boundary graphs) for channel i
-    plus the smooth-curve contribution equals kappa_i * lambda_g.
-    Here we verify that the sum of per-channel diagonal boundary amplitudes
-    for T and W together equals (kappa_T + kappa_W) * lambda_g = kappa * lambda_g.
-    """
+    """Per-channel diagnostics must not collapse to the scalar FP lane."""
 
     def test_genus2_diagonal_sum(self):
         from compute.lib.theorem_multi_weight_genus3_engine import (
-            w3_per_channel_check, w3_kappa_total, lambda_fp,
+            w3_per_channel_check,
         )
         c = Fraction(26)
         r = w3_per_channel_check(2, c)
         # boundary_T + boundary_W is the total diagonal boundary contribution
         diag_total = r['boundary_T'] + r['boundary_W']
         self.assertGreater(diag_total, 0)
+        self.assertFalse(r['match_T'])
+        self.assertFalse(r['match_W'])
+
+    def test_genus2_exact_boundary_not_scalar_lane(self):
+        from compute.lib.theorem_multi_weight_genus3_engine import w3_per_channel_check
+        r = w3_per_channel_check(2, Fraction(10))
+        self.assertEqual(r['boundary_T'], Fraction(1921, 5760))
+        self.assertEqual(r['expected_T'], Fraction(7, 1152))
+        self.assertEqual(r['boundary_W'], Fraction(2149, 8640))
+        self.assertEqual(r['expected_W'], Fraction(7, 1728))
+        self.assertFalse(r['match_T'])
+        self.assertFalse(r['match_W'])
 
     def test_genus3_diagonal_sum(self):
         from compute.lib.theorem_multi_weight_genus3_engine import w3_per_channel_check
@@ -245,6 +310,40 @@ class TestPerChannelUniversality(unittest.TestCase):
         r = w3_per_channel_check(3, c)
         diag_total = r['boundary_T'] + r['boundary_W']
         self.assertGreater(diag_total, 0)
+        self.assertFalse(r['match_T'])
+        self.assertFalse(r['match_W'])
+
+
+class TestGraphChannelDecomposition(unittest.TestCase):
+    """Exact graph/channel decomposition and automorphism factors."""
+
+    def test_genus2_double_self_loop_graph(self):
+        from compute.lib.theorem_multi_weight_genus3_engine import (
+            boundary_graphs,
+            w3_graph_decomposed,
+        )
+        graph = boundary_graphs(2)[1]
+        self.assertEqual(graph.vertex_genera, (0,))
+        self.assertEqual(graph.edges, ((0, 0), (0, 0)))
+        self.assertEqual(graph.automorphism_order(), 8)
+        decomp = w3_graph_decomposed(graph, Fraction(10))
+        self.assertEqual(decomp["diagonal"], Fraction(13, 40))
+        self.assertEqual(decomp["mixed"], Fraction(3, 10))
+        self.assertEqual(decomp["total"], Fraction(5, 8))
+
+    def test_genus2_barbell_graph(self):
+        from compute.lib.theorem_multi_weight_genus3_engine import (
+            boundary_graphs,
+            w3_graph_decomposed,
+        )
+        graph = boundary_graphs(2)[5]
+        self.assertEqual(graph.vertex_genera, (0, 0))
+        self.assertEqual(graph.edges, ((0, 0), (1, 1), (0, 1)))
+        self.assertEqual(graph.automorphism_order(), 8)
+        decomp = w3_graph_decomposed(graph, Fraction(10))
+        self.assertEqual(decomp["diagonal"], Fraction(1, 10))
+        self.assertEqual(decomp["mixed"], Fraction(21, 40))
+        self.assertEqual(decomp["total"], Fraction(5, 8))
 
 
 class TestKoszulDuality(unittest.TestCase):
@@ -533,6 +632,10 @@ class TestLambdaFP(unittest.TestCase):
         from compute.lib.theorem_multi_weight_genus3_engine import lambda_fp
         self.assertEqual(lambda_fp(3), Fraction(31, 967680))
 
+    def test_g4(self):
+        from compute.lib.theorem_multi_weight_genus3_engine import lambda_fp
+        self.assertEqual(lambda_fp(4), Fraction(127, 154828800))
+
 
 class TestBernoulli(unittest.TestCase):
     """Bernoulli number verification."""
@@ -548,6 +651,10 @@ class TestBernoulli(unittest.TestCase):
     def test_B6(self):
         from compute.lib.theorem_multi_weight_genus3_engine import bernoulli_number
         self.assertEqual(bernoulli_number(6), Fraction(1, 42))
+
+    def test_B8(self):
+        from compute.lib.theorem_multi_weight_genus3_engine import bernoulli_number
+        self.assertEqual(bernoulli_number(8), Fraction(-1, 30))
 
 
 class TestFullDecomposition(unittest.TestCase):

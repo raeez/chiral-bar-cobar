@@ -2,17 +2,16 @@ r"""Tests for BC-85: Euler product structure of shadow zeta functions.
 
 Multi-path verification (>=3 paths per claim):
   Path 1: Direct computation of shadow coefficients and Euler product structure
-  Path 2: Moebius inversion / von Mangoldt support on prime powers
+  Path 2: Dirichlet inverse / log-derivative support on prime powers
   Path 3: Local factor rationality and Satake parameter extraction
   Path 4: Partial Euler product convergence to direct sum
   Path 5: Cross-family consistency (Heisenberg, affine, lattice, Virasoro)
 
-The central question: does zeta_A(s) = sum_{r>=2} S_r r^{-s} have an Euler product?
+The central question: does L_A(s) = 1 + sum_{r>=2} S_r r^{-s} have an Euler product?
 
-Answer: Standard shadow towers are NOT multiplicative (the convolution recursion
-is quadratic, not multiplicative).  Class G/L towers are trivially multiplicative
-(finitely many nonzero terms).  Class M (Virasoro, W_N) towers are NOT multiplicative:
-S_6 != S_2 * S_3 in general.
+Answer: finite support is not enough.  Class G examples here have an exact
+one-prime Euler product.  Class L already fails at S_6 != S_2 * S_3.  Class M
+(Virasoro, W_N) is not multiplicative: S_6 != S_2 * S_3 in general.
 
 CAUTION (AP1): kappa formulas are family-specific.
 CAUTION (AP10): Expected values are independently derived, not hardcoded from a single source.
@@ -193,7 +192,7 @@ class TestMultiplicativity:
         assert result['is_multiplicative']
 
     def test_lattice_trivially_multiplicative(self):
-        """Lattice: same as Heisenberg."""
+        """Lattice: only S_2 is nonzero, so the same one-prime product applies."""
         eng = _eng()
         S = eng.lattice_shadow_coefficients(8, max_r=30)
         result = eng.test_multiplicativity(S, max_r=30)
@@ -202,11 +201,11 @@ class TestMultiplicativity:
     def test_affine_sl2_multiplicativity(self):
         """Affine sl_2: S_2, S_3 nonzero, S_r = 0 for r >= 4.
         Test pairs: (2,3)=6, (2,5)=10, (3,5)=15, etc.
-        S_6 = 0, S_2*S_3 = kappa*2 != 0 in general => NOT multiplicative."""
+        S_6 = 0, S_2*S_3 != 0 in general => NOT multiplicative."""
         eng = _eng()
         S = eng.affine_sl2_shadow_coefficients(2, max_r=30)
         result = eng.test_multiplicativity(S, max_r=30)
-        # S_6 = 0 but S_2 * S_3 = 3 * 2 = 6 != 0
+        # S_6 = 0 but S_2 * S_3 = 3 * 1 = 3 != 0
         assert not result['is_multiplicative']
         # Check the specific failure at (2, 3)
         found_23 = False
@@ -283,45 +282,44 @@ class TestShadowVonMangoldt:
     """Test the shadow von Mangoldt function and Euler product diagnostics."""
 
     def test_heisenberg_von_mangoldt_prime_power_support(self):
-        """For Heisenberg (class G), only S_2 != 0, so Lambda_A is trivially
-        supported on {2} only => prime power support holds."""
+        """Heisenberg has L_A(s)=1+k2^{-s}; Lambda_A is supported on powers of 2."""
         eng = _eng()
         S = eng.heisenberg_shadow_coefficients(3, max_r=30)
-        Lambda = eng.shadow_von_mangoldt_mobius(S, max_r=30)
+        Lambda = eng.shadow_von_mangoldt_log_derivative(S, max_r=30)
         result = eng.von_mangoldt_prime_power_support(Lambda, max_r=30)
-        assert result['euler_product_holds']
+        assert result['prime_power_support_holds']
 
     def test_lattice_von_mangoldt_support(self):
-        """Lattice VOA: same as Heisenberg."""
+        """Lattice VOA has the same one-prime Euler-product support pattern."""
         eng = _eng()
         S = eng.lattice_shadow_coefficients(8, max_r=30)
-        Lambda = eng.shadow_von_mangoldt_mobius(S, max_r=30)
+        Lambda = eng.shadow_von_mangoldt_log_derivative(S, max_r=30)
         result = eng.von_mangoldt_prime_power_support(Lambda, max_r=30)
-        assert result['euler_product_holds']
+        assert result['prime_power_support_holds']
 
     def test_virasoro_von_mangoldt_NOT_prime_power(self):
         """For Virasoro (class M), the shadow von Mangoldt should have support
         on non-prime-powers, confirming no classical Euler product."""
         eng = _eng()
         S = eng.virasoro_shadow_coefficients_float(1.0, max_r=60)
-        Lambda = eng.shadow_von_mangoldt_mobius(S, max_r=60)
+        Lambda = eng.shadow_von_mangoldt_log_derivative(S, max_r=60)
         result = eng.von_mangoldt_prime_power_support(Lambda, max_r=60)
-        assert not result['euler_product_holds']
+        assert not result['prime_power_support_holds']
         assert len(result['non_prime_power_violations']) > 0
 
     def test_virasoro_c13_von_mangoldt_NOT_prime_power(self):
         """Self-dual c=13: still no Euler product."""
         eng = _eng()
         S = eng.virasoro_shadow_coefficients_float(13.0, max_r=60)
-        Lambda = eng.shadow_von_mangoldt_mobius(S, max_r=60)
+        Lambda = eng.shadow_von_mangoldt_log_derivative(S, max_r=60)
         result = eng.von_mangoldt_prime_power_support(Lambda, max_r=60)
-        assert not result['euler_product_holds']
+        assert not result['prime_power_support_holds']
 
     def test_virasoro_Lambda_6_nonzero(self):
         """Lambda_A(6) should be nonzero for Virasoro (6 is not a prime power)."""
         eng = _eng()
         S = eng.virasoro_shadow_coefficients_float(1.0, max_r=10)
-        Lambda = eng.shadow_von_mangoldt_mobius(S, max_r=10)
+        Lambda = eng.shadow_von_mangoldt_log_derivative(S, max_r=10)
         assert abs(Lambda[6]) > 1e-15
 
     def test_von_mangoldt_at_primes(self):
@@ -330,37 +328,63 @@ class TestShadowVonMangoldt:
         except d and p/d where one is 1)."""
         eng = _eng()
         S = eng.virasoro_shadow_coefficients_float(1.0, max_r=20)
-        Lambda = eng.shadow_von_mangoldt_mobius(S, max_r=20)
+        Lambda = eng.shadow_von_mangoldt_log_derivative(S, max_r=20)
         for p in [2, 3, 5, 7, 11, 13]:
             expected = S[p] * math.log(p)
             assert abs(Lambda[p] - expected) < 1e-12
 
-    def test_two_methods_agree_at_primes(self):
-        """At primes, both recursion and direct Moebius agree since there
-        are no proper divisors d with 2 <= d < p and p/d >= 2.
-        Lambda_rec(p) = S_p * log(p), Lambda_dir(p) = mu(1)*S_p*log(p) = S_p*log(p)."""
+    def test_classical_mobius_shortcut_agrees_at_primes_only(self):
+        """At primes, the correct recursion and the classical shortcut both give S_p log(p)."""
         eng = _eng()
         S = eng.virasoro_shadow_coefficients_float(1.0, max_r=30)
-        Lambda_rec = eng.shadow_von_mangoldt_mobius(S, max_r=30)
-        Lambda_dir = eng.shadow_von_mangoldt_direct_mobius(S, max_r=30)
+        Lambda_rec = eng.shadow_von_mangoldt_log_derivative(S, max_r=30)
+        Lambda_dir = eng.shadow_von_mangoldt_classical_mobius_shortcut(S, max_r=30)
         for p in [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]:
             assert abs(Lambda_rec[p] - Lambda_dir[p]) < 1e-12
 
-    def test_direct_mobius_vs_recursion_difference_measures_structure(self):
-        """The direct Moebius inversion sum_{d|n} mu(n/d) S_d log(d) is NOT
-        the same as the recursion-based von Mangoldt for general (non-multiplicative)
-        sequences.  The difference at composite n measures the failure of the
-        Dirichlet series to factor as an Euler product.
+    def test_dirichlet_inverse_oracle_agrees_with_recursion(self):
+        """The Dirichlet inverse formula Lambda_A=(a log)*a^{-1} matches recursion."""
+        eng = _eng()
+        for S in [
+            eng.heisenberg_shadow_coefficients(5, max_r=40),
+            eng.affine_sl2_shadow_coefficients(2, max_r=40),
+            eng.virasoro_shadow_coefficients_float(1.0, max_r=40),
+        ]:
+            S_float = {r: float(v) for r, v in S.items()}
+            Lambda_rec = eng.shadow_von_mangoldt_log_derivative(S_float, max_r=40)
+            Lambda_inv = eng.shadow_von_mangoldt_dirichlet_inverse(S_float, max_r=40)
+            for n in range(2, 41):
+                scale = max(1.0, abs(Lambda_rec[n]), abs(Lambda_inv[n]))
+                assert abs(Lambda_rec[n] - Lambda_inv[n]) < 1e-12 * scale
 
-        For Heisenberg with only S_2 nonzero:
-        Lambda_rec(4) = S_4*log(4) - Lambda(2)*S_2 = 0 - (k*log 2)*k = -k^2*log 2
-        Lambda_dir(4) = mu(2)*S_2*log 2 = (-1)*k*log 2 = -k*log 2
-        These DIFFER by (k^2 - k)*log 2 when k != 0, 1."""
+    def test_heisenberg_dirichlet_inverse_coefficients(self):
+        """For L_A(s)=1+k2^{-s}, a^{-1} has coefficients (-k)^j at 2^j."""
+        eng = _eng()
+        a = {1: 1.0}
+        a.update({n: 0.0 for n in range(2, 17)})
+        a[2] = 5.0
+        inv = eng.dirichlet_inverse_coefficients(a, max_r=16)
+        assert inv[1] == pytest.approx(1.0)
+        assert inv[2] == pytest.approx(-5.0)
+        assert inv[4] == pytest.approx(25.0)
+        assert inv[8] == pytest.approx(-125.0)
+        assert inv[16] == pytest.approx(625.0)
+        for n in [3, 5, 6, 7, 10, 12, 14, 15]:
+            assert inv[n] == pytest.approx(0.0)
+
+    def test_classical_mobius_shortcut_rejected_even_for_euler_product(self):
+        """The zeta-style Moebius shortcut is not the shadow log derivative.
+
+        Heisenberg has the exact Euler product L_A(s)=1+k2^{-s}.  The correct
+        coefficient is Lambda_A(4)=-k^2 log(2), while the classical shortcut
+        gives -k log(2).
+        """
         eng = _eng()
         S = eng.heisenberg_shadow_coefficients(5, max_r=10)
         S_float = {r: float(v) for r, v in S.items()}
-        Lambda_rec = eng.shadow_von_mangoldt_mobius(S_float, max_r=10)
-        Lambda_dir = eng.shadow_von_mangoldt_direct_mobius(S_float, max_r=10)
+        assert eng.test_multiplicativity(S, max_r=10)['is_multiplicative']
+        Lambda_rec = eng.shadow_von_mangoldt_log_derivative(S_float, max_r=10)
+        Lambda_dir = eng.shadow_von_mangoldt_classical_mobius_shortcut(S_float, max_r=10)
         # Lambda_rec(4) = 0*log(4) - (5*log 2)*5 = -25 log 2
         assert abs(Lambda_rec[4] - (-25.0 * math.log(2))) < 1e-12
         # Lambda_dir(4) = mu(2)*S_2*log 2 = -5 log 2
@@ -555,7 +579,7 @@ class TestPartialEulerProduct:
     """Test convergence of partial Euler product to direct sum."""
 
     def test_heisenberg_euler_product_exact(self):
-        """Heisenberg at level k: zeta_A(s) = 1 + k * 2^{-s}.
+        """Heisenberg at level k: L_A(s) = 1 + k * 2^{-s}.
         Euler product: F_2(2^{-s}) = 1 + k * 2^{-s}, F_p = 1 for p >= 3.
         So the partial Euler product equals the direct sum exactly."""
         eng = _eng()
@@ -567,7 +591,7 @@ class TestPartialEulerProduct:
             assert abs(direct - euler) < 1e-12
 
     def test_lattice_euler_product_exact(self):
-        """Lattice VOA rank r: same as Heisenberg at level r."""
+        """Lattice VOA rank r has L_A(s) = 1 + r * 2^{-s}."""
         eng = _eng()
         S = eng.lattice_shadow_coefficients(8, max_r=30)
         S_float = {r: float(v) for r, v in S.items()}
@@ -587,7 +611,7 @@ class TestPartialEulerProduct:
         assert abs(direct - euler) > 1e-10
 
     def test_factorization_obstruction_heisenberg(self):
-        """Heisenberg: E_A(s, P) = zeta_A(s) / prod F_p = 1 for P >= 2."""
+        """Heisenberg: E_A(s, P) = L_A(s) / prod F_p = 1 for P >= 2."""
         eng = _eng()
         S = eng.heisenberg_shadow_coefficients(5, max_r=30)
         S_float = {r: float(v) for r, v in S.items()}
@@ -702,9 +726,9 @@ class TestCrossFamilyComparisons:
             S_float = {r: float(v) for r, v in S.items()}
             result = eng.test_multiplicativity(S, max_r=30)
             assert result['is_multiplicative']
-            Lambda = eng.shadow_von_mangoldt_mobius(S_float, max_r=30)
+            Lambda = eng.shadow_von_mangoldt_log_derivative(S_float, max_r=30)
             support = eng.von_mangoldt_prime_power_support(Lambda, max_r=30)
-            assert support['euler_product_holds']
+            assert support['prime_power_support_holds']
 
     def test_class_L_no_euler_product(self):
         """Affine KM (class L): S_2 and S_3 nonzero, S_6 = 0 != S_2*S_3."""
@@ -863,7 +887,7 @@ class TestFullAnalysisPipeline:
                                                    max_r_mult=30, max_r_vm=30)
         assert result['family'] == "Heisenberg(k=5)"
         assert result['multiplicativity']['is_multiplicative']
-        assert result['von_mangoldt']['euler_product_holds']
+        assert result['von_mangoldt']['prime_power_support_holds']
 
     def test_virasoro_full_analysis(self):
         eng = _eng()
@@ -872,7 +896,7 @@ class TestFullAnalysisPipeline:
                                                    max_r_mult=30, max_r_vm=30)
         assert result['family'] == "Virasoro(c=1)"
         assert not result['multiplicativity']['is_multiplicative']
-        assert not result['von_mangoldt']['euler_product_holds']
+        assert not result['von_mangoldt']['prime_power_support_holds']
 
     def test_affine_full_analysis(self):
         eng = _eng()
@@ -946,14 +970,14 @@ class TestVonMangoldtSpecificValues:
         """Lambda_A(2) = S_2 * log(2) (no corrections: 2 is prime)."""
         eng = _eng()
         S = eng.virasoro_shadow_coefficients_float(1.0, max_r=10)
-        Lambda = eng.shadow_von_mangoldt_mobius(S, max_r=10)
+        Lambda = eng.shadow_von_mangoldt_log_derivative(S, max_r=10)
         assert abs(Lambda[2] - S[2] * math.log(2)) < 1e-14
 
     def test_Lambda_3_equals_S3_log3(self):
         """Lambda_A(3) = S_3 * log(3) (3 is prime)."""
         eng = _eng()
         S = eng.virasoro_shadow_coefficients_float(1.0, max_r=10)
-        Lambda = eng.shadow_von_mangoldt_mobius(S, max_r=10)
+        Lambda = eng.shadow_von_mangoldt_log_derivative(S, max_r=10)
         assert abs(Lambda[3] - S[3] * math.log(3)) < 1e-14
 
     def test_Lambda_4_recursion(self):
@@ -962,7 +986,7 @@ class TestVonMangoldtSpecificValues:
         Lambda(4) = S_4 * log(4) - Lambda(2) * S_2."""
         eng = _eng()
         S = eng.virasoro_shadow_coefficients_float(1.0, max_r=10)
-        Lambda = eng.shadow_von_mangoldt_mobius(S, max_r=10)
+        Lambda = eng.shadow_von_mangoldt_log_derivative(S, max_r=10)
         expected = S[4] * math.log(4) - Lambda[2] * S[2]
         assert abs(Lambda[4] - expected) < 1e-14
 
@@ -971,7 +995,7 @@ class TestVonMangoldtSpecificValues:
         Lambda(6) = S_6*log(6) - Lambda(2)*S_3 - Lambda(3)*S_2."""
         eng = _eng()
         S = eng.virasoro_shadow_coefficients_float(1.0, max_r=10)
-        Lambda = eng.shadow_von_mangoldt_mobius(S, max_r=10)
+        Lambda = eng.shadow_von_mangoldt_log_derivative(S, max_r=10)
         expected = S[6] * math.log(6) - Lambda[2] * S[3] - Lambda[3] * S[2]
         assert abs(Lambda[6] - expected) < 1e-14
 
@@ -983,7 +1007,7 @@ class TestVonMangoldtSpecificValues:
         eng = _eng()
         S = eng.heisenberg_shadow_coefficients(5, max_r=30)
         S_float = {r: float(v) for r, v in S.items()}
-        Lambda = eng.shadow_von_mangoldt_mobius(S_float, max_r=30)
+        Lambda = eng.shadow_von_mangoldt_log_derivative(S_float, max_r=30)
         assert abs(Lambda[2] - 5.0 * math.log(2)) < 1e-14
         # Non-prime-power values should be zero
         for n in range(2, 31):
@@ -1057,7 +1081,7 @@ class TestLocalFactorProperties:
         assert abs(coeffs[2] - S[25]) < 1e-14
 
     def test_heisenberg_local_factor_product_equals_zeta(self):
-        """For Heisenberg, prod_p F_p(p^{-s}) = 1 + k * 2^{-s} = zeta_A(s).
+        """For Heisenberg, prod_p F_p(p^{-s}) = 1 + k * 2^{-s} = L_A(s).
         Only p=2 contributes a nontrivial factor."""
         eng = _eng()
         S = eng.heisenberg_shadow_coefficients(7, max_r=30)
@@ -1088,7 +1112,7 @@ class TestShadowZetaDirect:
             assert abs(val - expected) < 1e-12
 
     def test_affine_zeta_manual(self):
-        """zeta_{sl_2,k=2}(s) = 1 + kappa*2^{-s} + S_3*3^{-s}, kappa=3, S_3=4/4=1."""
+        """L_{sl_2,k=2}(s) = 1 + kappa*2^{-s} + S_3*3^{-s}, kappa=3, S_3=4/4=1."""
         eng = _eng()
         S = eng.affine_sl2_shadow_coefficients(2, max_r=10)
         S_float = {r: float(v) for r, v in S.items()}
@@ -1098,7 +1122,7 @@ class TestShadowZetaDirect:
             assert abs(val - expected) < 1e-12
 
     def test_zeta_at_large_s_approaches_1(self):
-        """For any shadow sequence, zeta_A(s) -> 1 as s -> infinity."""
+        """For any shadow sequence, L_A(s) -> 1 as s -> infinity."""
         eng = _eng()
         S = eng.virasoro_shadow_coefficients_float(1.0, max_r=30)
         val = eng.shadow_zeta_direct(S, 100.0)
@@ -1125,9 +1149,9 @@ class TestMultipleCValues:
         """Von Mangoldt not supported on prime powers at any c."""
         eng = _eng()
         S = eng.virasoro_shadow_coefficients_float(float(c_val), max_r=40)
-        Lambda = eng.shadow_von_mangoldt_mobius(S, max_r=40)
+        Lambda = eng.shadow_von_mangoldt_log_derivative(S, max_r=40)
         result = eng.von_mangoldt_prime_power_support(Lambda, max_r=40)
-        assert not result['euler_product_holds']
+        assert not result['prime_power_support_holds']
 
     @pytest.mark.parametrize("c_val", [1, 5, 13, 25])
     def test_satake_well_defined(self, c_val):

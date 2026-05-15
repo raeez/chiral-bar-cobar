@@ -9,8 +9,10 @@ Ground truth from manuscript:
   N_{W_4} = c/4                                   [kappa_{44}]
   Sh_3 = 2x_T^3 + 3x_T x_3^2 + 4x_T x_4^2      [gravitational cubic]
         + c334 x_4 x_3^2                          [non-gravitational cubic]
+        + c444 x_4^3                              [W_4 self-cubic]
   Q_TTTT = 10/[c(5c+22)]                          [same as Virasoro/W_3]
-  Q_T4T4 = 64/c                                   [W_4-only, NO (5c+22)]
+  Q_T4T4 = 0                                      [Ward action removed]
+  Q_3434 = 4*C_34_W^2/c                           [W_4-only reduced contact]
   Q_3333 has both Lambda and W_4 terms            [two-channel exchange]
 """
 
@@ -41,6 +43,7 @@ c = Symbol('c')
 c334 = Symbol('c334')
 c444 = Symbol('c444')
 alpha_44 = Symbol('alpha_44')
+C_34_W = Symbol('C_34_W')
 x_T = Symbol('x_T')
 x_3 = Symbol('x_3')
 x_4 = Symbol('x_4')
@@ -127,7 +130,7 @@ class TestQuasiPrimaries:
 
 
 # ===========================================================================
-# TestCubic (C1-C6)
+# TestCubic (C1-C7)
 # ===========================================================================
 
 class TestCubic:
@@ -136,8 +139,8 @@ class TestCubic:
     def test_C1_gravitational_cubic(self):
         """Gravitational part: 2x_T^3 + 3x_T x_3^2 + 4x_T x_4^2."""
         sh3 = w4_cubic()
-        # Set c334=0 to isolate gravitational part
-        grav = expand(sh3.subs(c334, 0))
+        # Set higher-spin couplings to zero to isolate gravitational part
+        grav = expand(sh3.subs({c334: 0, c444: 0}))
         expected = expand(2*x_T**3 + 3*x_T*x_3**2 + 4*x_T*x_4**2)
         assert simplify(grav - expected) == 0
 
@@ -149,8 +152,8 @@ class TestCubic:
         assert coeff != 0
         assert c334 in coeff.free_symbols
 
-    def test_C3_charge_conservation_even_x3(self):
-        """W-charge conservation: all terms have even x_3 power."""
+    def test_C3_w3_parity_even_x3(self):
+        """W_3 parity: all terms have even x_3 power."""
         sh3 = w4_cubic()
         p = Poly(sh3, x_T, x_3, x_4)
         for monom, coeff in p.as_dict().items():
@@ -168,7 +171,7 @@ class TestCubic:
     def test_C5_gravitational_coefficients_match_weight(self):
         """Gravitational cubic: coefficient of x_T x_j^2 = h_j (conformal weight)."""
         sh3 = w4_cubic()
-        grav = expand(sh3.subs(c334, 0))
+        grav = expand(sh3.subs({c334: 0, c444: 0}))
         p = Poly(grav, x_T, x_3, x_4)
         # x_T^3 coefficient: h_T = 2
         assert p.nth(3, 0, 0) == 2
@@ -178,14 +181,26 @@ class TestCubic:
         assert p.nth(1, 0, 2) == 4
 
     def test_C6_full_cubic_form(self):
-        """Full cubic: 2x_T^3 + 3x_T x_3^2 + 4x_T x_4^2 + c334*x_4*x_3^2."""
+        """Full cubic includes the generic W_4 self-cubic."""
         sh3 = w4_cubic()
-        expected = 2*x_T**3 + 3*x_T*x_3**2 + 4*x_T*x_4**2 + c334*x_4*x_3**2
+        expected = (
+            2*x_T**3
+            + 3*x_T*x_3**2
+            + 4*x_T*x_4**2
+            + c334*x_4*x_3**2
+            + c444*x_4**3
+        )
         assert simplify(expand(sh3) - expand(expected)) == 0
+
+    def test_C7_w4_self_cubic_present(self):
+        """W_4 has even weight, so parity does not kill x_4^3."""
+        sh3 = w4_cubic()
+        coeff = Poly(sh3, x_T, x_3, x_4).nth(0, 0, 3)
+        assert simplify(coeff - c444) == 0
 
 
 # ===========================================================================
-# TestQuartic (Q1-Q7)
+# TestQuartic (Q1-Q8)
 # ===========================================================================
 
 class TestQuartic:
@@ -197,17 +212,16 @@ class TestQuartic:
         expected = Rational(10) / (c * (5*c + 22))
         assert simplify(q['Q_TTTT'] - expected) == 0
 
-    def test_Q2_T4T4_no_5c22(self):
-        """Q_T4T4 = 64/c — W_4-only channel, NO (5c+22)."""
+    def test_Q2_T4T4_removed_from_reduced_contact(self):
+        """Q_T4T4 = 0: the T-W_4 Ward action is cubic, not reduced quartic."""
         q = w4_quartic()
-        expected = Rational(64) / c
-        assert simplify(q['Q_T4T4'] - expected) == 0
+        assert q['Q_T4T4'] == 0
 
-    def test_Q3_T4T4_denominator_only_c(self):
-        """Q_T4T4 denominator is c alone (no (5c+22) factor)."""
+    def test_Q3_3434_denominator_only_c(self):
+        """Q_3434 denominator is c alone (no (5c+22) factor)."""
         q = w4_quartic()
-        Q_T4T4 = q['Q_T4T4']
-        d = denom(Q_T4T4)
+        Q_3434 = q['Q_3434']
+        d = denom(Q_3434)
         # denominator should be c, not c*(5c+22)
         assert simplify(d - c) == 0
 
@@ -238,12 +252,18 @@ class TestQuartic:
         assert c444 not in Q_TTTT.free_symbols
 
     def test_Q7_quartic_channel_count(self):
-        """Seven distinct quartic channels computed."""
+        """Eight reduced quartic coefficient slots are computed."""
         q = w4_quartic()
         expected_keys = ['Q_TTTT', 'Q_TT33', 'Q_TT44', 'Q_T4T4',
-                         'Q_3333', 'Q_3344', 'Q_4444']
+                         'Q_3333', 'Q_3344', 'Q_3434', 'Q_4444']
         for key in expected_keys:
             assert key in q, f"Missing channel {key}"
+
+    def test_Q8_3434_w4_exchange_square(self):
+        """Q_3434 is the reduced W_3-W_4 pair square through W_4 exchange."""
+        q = w4_quartic()
+        expected = Rational(4) * C_34_W**2 / c
+        assert simplify(q['Q_3434'] - expected) == 0
 
 
 # ===========================================================================
@@ -287,8 +307,8 @@ class TestAutonomy:
         """W_4-plane (x_3=0) gives a 2-generator system (T, W_4)."""
         checks = w4_autonomy_checks()
         sh3_W4 = checks['Sh_3_W4_plane']
-        # Should be 2x_T^3 + 4x_T x_4^2 (no x_3 terms)
-        expected = expand(2*x_T**3 + 4*x_T*x_4**2)
+        # Should be 2x_T^3 + 4x_T x_4^2 + c444*x_4^3 (no x_3 terms)
+        expected = expand(2*x_T**3 + 4*x_T*x_4**2 + c444*x_4**3)
         assert simplify(sh3_W4 - expected) == 0
 
 
@@ -314,13 +334,12 @@ class TestDenominator:
         da = w4_denominator_analysis()
         assert da['W4_channel_poles'] == [0]
 
-    def test_D3_lee_yang_regularity_Q_T4T4(self):
-        """Q_T4T4 is regular at c = -22/5 (Lee-Yang)."""
+    def test_D3_lee_yang_regularity_Q_3434(self):
+        """Q_3434 is regular at c = -22/5 in the reduced symbolic packet."""
         q = w4_quartic()
-        Q_T4T4 = q['Q_T4T4']
-        val = Q_T4T4.subs(c, Rational(-22, 5))
-        # Should be finite (= 64/(-22/5) = -320/22 = -160/11)
-        expected = Rational(64) / Rational(-22, 5)
+        Q_3434 = q['Q_3434']
+        val = Q_3434.subs(c, Rational(-22, 5))
+        expected = Rational(4) * C_34_W**2 / Rational(-22, 5)
         assert simplify(val - expected) == 0
 
     def test_D4_lambda_poles(self):
@@ -331,7 +350,7 @@ class TestDenominator:
 
 
 # ===========================================================================
-# TestStructure (S1-S3)
+# TestStructure (S1-S4)
 # ===========================================================================
 
 class TestStructure:
@@ -343,11 +362,16 @@ class TestStructure:
         assert s['Lambda_only'] == ['Q_TTTT', 'Q_TT33', 'Q_TT44']
 
     def test_S2_w4_only_channels(self):
-        """W_4-only channels: Q_T4T4."""
+        """W_4-only reduced contact channel: Q_3434."""
         s = w4_quartic_structure()
-        assert s['W4_only'] == ['Q_T4T4']
+        assert s['W4_only'] == ['Q_3434']
 
     def test_S3_both_channels(self):
         """Both-channel: Q_3333, Q_3344, Q_4444."""
         s = w4_quartic_structure()
         assert s['both'] == ['Q_3333', 'Q_3344', 'Q_4444']
+
+    def test_S4_reduced_zero_channels(self):
+        """Q_T4T4 is explicitly zero in the reduced contact packet."""
+        s = w4_quartic_structure()
+        assert s['reduced_zero'] == ['Q_T4T4']

@@ -1,19 +1,12 @@
 \documentclass[11pt,reqno]{amsart}
 \usepackage[localtheorems]{raeez-math-template}
 
-% ================================================================
-% Packages
-% ================================================================
 \usepackage{array}
 
-% ================================================================
-% Theorem environments
-% ================================================================
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{corollary}[theorem]{Corollary}
-\newtheorem{conjecture}[theorem]{Conjecture}
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
 \newtheorem{construction}[theorem]{Construction}
@@ -21,62 +14,56 @@
 \theoremstyle{remark}
 \newtheorem{remark}[theorem]{Remark}
 
-% ================================================================
-% Macros
-% ================================================================
-\newcommand{\cA}{\mathcal{A}}
-\newcommand{\cM}{\mathcal{M}}
-\newcommand{\barB}{\bar{B}}
-\newcommand{\Defcyc}{\mathrm{Def}_{\mathrm{cyc}}}
-\newcommand{\MC}{\mathrm{MC}}
-\newcommand{\Hom}{\mathrm{Hom}}
-\newcommand{\Ext}{\mathrm{Ext}}
-\newcommand{\Harr}{\mathrm{Harr}}
-\newcommand{\Aut}{\mathrm{Aut}}
-\newcommand{\fg}{\mathfrak{g}}
-\newcommand{\gmod}{\mathfrak{g}^{\mathrm{mod}}_{\cA}}
-\newcommand{\gmodzero}{\mathfrak{g}^{\mathrm{mod},(0)}_{\cA}}
-\newcommand{\Sh}{\mathrm{Sh}}
-\newcommand{\Vir}{\mathrm{Vir}}
-\newcommand{\Heis}{\mathrm{Heis}}
-\newcommand{\Ash}{\cA^{\mathrm{sh}}}
-\newcommand{\Linf}{L_\infty}
-\newcommand{\Ainf}{A_\infty}
-\newcommand{\Trees}{\mathsf{Trees}}
-\newcommand{\cW}{\mathcal{W}}
-
-\DeclareMathOperator{\Alt}{Alt}
+\providecommand{\cA}{\mathcal{A}}
+\providecommand{\cM}{\mathcal{M}}
+\providecommand{\barB}{\bar{B}}
+\providecommand{\Defcyc}{\mathrm{Def}_{\mathrm{cyc}}}
+\providecommand{\MC}{\mathrm{MC}}
+\providecommand{\Hom}{\mathrm{Hom}}
+\providecommand{\Ext}{\mathrm{Ext}}
+\providecommand{\CE}{\mathrm{CE}}
+\providecommand{\Aut}{\mathrm{Aut}}
+\providecommand{\fg}{\mathfrak{g}}
+\providecommand{\gmod}{\mathfrak{g}^{\mathrm{mod}}_{\cA}}
+\providecommand{\gmodzero}{\mathfrak{g}^{\mathrm{mod},(0)}_{\cA}}
+\providecommand{\Sh}{\mathrm{Sh}}
+\providecommand{\Vir}{\mathrm{Vir}}
+\providecommand{\Heis}{\mathrm{Heis}}
+\providecommand{\Ash}{\cA^{\mathrm{sh}}}
+\providecommand{\Linf}{L_\infty}
+\providecommand{\Ainf}{A_\infty}
+\providecommand{\Trees}{\mathsf{Trees}}
+\providecommand{\cW}{\mathcal{W}}
 
 \numberwithin{equation}{section}
 
 % ================================================================
 \begin{document}
 
-\title[Shadow tower equals formality tower]
+\title[Genus-zero shadow and formality obstruction]
 {The shadow obstruction tower of a chiral algebra\\
-is the $L_\infty$-formality obstruction tower}
+and the transferred $L_\infty$ tower}
 
 \author{Raeez Lorgat}
 \address{Department of Mathematics, Harvard University,
  Cambridge, MA 02138, USA}
 \email{rlorgat@math.harvard.edu}
 
-\date{\today}
+\date{}
 
 \begin{abstract}
 Let $\cA$ be a chiral algebra on a smooth projective curve and
 let $\gmod$ be its modular convolution dg Lie algebra, with
 bar-intrinsic Maurer--Cartan element
-$\Theta_{\cA}\in\MC(\gmod)$. We prove that the shadow
-obstruction tower $(\Sh_r(\cA))_{r\ge 2}$, defined as the
-finite-order projections of $\Theta_{\cA}$ under the bar
-filtration, coincides with the $\Linf$-formality obstruction
-tower of the genus-zero part $\gmodzero$. The identification is
-established at all degrees by induction from explicit base cases
-at $r=2,3,4$. As a corollary the operadic complexity conjecture
-is proved: the shadow termination degree, the transferred
-$\Ainf$-depth, and the $\Linf$-formality level of $\gmodzero$
-are a single invariant of the chiral algebra.
+$\Theta_{\cA}\in\MC(\gmod)$. In the verified chirally Koszul
+genus-zero cyclic setting, after a cyclic contraction of
+$\gmodzero$ onto its shadow cohomology is fixed, the finite-order
+shadow projections of $\Theta_{\cA}$ coincide with the transferred
+$\Linf$ bracket evaluations on the projected Maurer--Cartan
+element. Degree two is the curvature input; degrees $r\ge 3$ are
+the formality obstruction evaluations. For the standard families
+where the transfer data are constructed, this comparison identifies
+the shadow termination degree with the $\Linf$ obstruction level.
 \end{abstract}
 
 \subjclass[2020]{17B69, 18M70, 18N40, 81T40}
@@ -86,17 +73,16 @@ homotopy transfer, Maurer--Cartan, operadic complexity}
 
 \maketitle
 
-% ================================================================
-% 1. INTRODUCTION
-% ================================================================
 \section{Introduction}\label{sec:intro}
 
 \subsection{Formality and its obstructions}
 
-A dg Lie algebra $\fg$ is \emph{$\Linf$-formal} when its minimal
-model, obtained by homotopy transfer onto cohomology, carries
-trivial higher brackets $\ell_n=0$ for $n\ge 3$; equivalently,
-$\fg$ is $\Linf$ quasi-isomorphic to $(H^*(\fg),0,[-,-])$.
+A dg Lie algebra $\fg$ is \emph{$\Linf$-formal} if its minimal
+$\Linf$-model is $\Linf$-isomorphic to the strict graded Lie algebra
+$(H^*(\fg),0,[-,-]_H)$. For a fixed contraction, the transferred
+brackets $\ell_r^{\mathrm{tr}}$ are representatives; the obstruction
+is their class in the appropriate deformation complex after all
+lower obstructions have been killed.
 Kontsevich's formality theorem~\cite{Kontsevich03} proved that
 polyvector fields on a smooth manifold form an $\Linf$-formal
 dg Lie algebra, giving deformation quantization of Poisson
@@ -108,7 +94,7 @@ $\ell_r^{\mathrm{tr}}$ vanishes on cohomology; if $o_r=0$, a
 homotopy kills $\ell_r^{\mathrm{tr}}$ and the next obstruction
 lives one degree higher. The sequence $(o_r)_{r\ge 3}$ is the
 \emph{formality obstruction tower}; see
-Loday--Vallette~\cite{LodayVallette12}*{Ch.~10}.
+Loday--Vallette~\cite[Ch.~10]{LodayVallette12}.
 
 \subsection{The shadow tower of a chiral algebra}
 
@@ -125,7 +111,7 @@ curves in $\overline{\cM}_{g,n}$. The bar-intrinsic element
 $\Theta_{\cA}:=D_{\cA}-d_0\in\MC(\gmod)$ satisfies
 $D\Theta_{\cA}+\tfrac12[\Theta_{\cA},\Theta_{\cA}]=0$ and
 packages the full genus expansion of $\cA$
-\cite{Lorgat26}*{Thm.~H}. Its finite-degree truncations
+\cite[MC2 and modular convolution theorem]{Lorgat26}. Its finite-degree truncations
 $\Theta^{\le r}_{\cA}$ define the \emph{shadow obstruction
 tower}
 \[
@@ -137,52 +123,52 @@ where the bracket is genus-zero graph composition and
 $\nabla_H$ is the Hessian covariant derivative on the shadow
 algebra $\Ash$. The first three shadows are
 $\Sh_2(\cA)=\kappa(\cA)$ (the modular characteristic
-\cite{Lorgat26}*{Thm.~D}), $\Sh_3(\cA)=\mathfrak{C}(\cA)$
+\cite[Theorem~D]{Lorgat26}), $\Sh_3(\cA)=\mathfrak{C}(\cA)$
 (cubic shadow), and $\Sh_4(\cA)=\mathfrak{Q}(\cA)$ (quartic
 shadow).
 
-\subsection{The main theorem}
+\subsection{Shadow and transfer}
 
-The classical formality obstruction tower lives in Harrison
-cohomology of a dg Lie algebra; the shadow obstruction tower
-lives in the shadow algebra of a chiral algebra on a curve.
-Nothing in the definitions forces the two sequences to agree.
+The two towers are built in different complexes. The formality tower
+is the transferred cyclic Chevalley tower of the genus-zero
+convolution dg Lie algebra. The shadow tower is the scalar projection
+of the bar-intrinsic Maurer--Cartan recursion. The comparison is a
+theorem only after the genus-zero cyclic contraction is fixed.
 
-\begin{theorem}[Shadow--formality identification; verified scope]
-\label{thm:main}
-For every verified chirally Koszul standard algebra in the
-genus-zero cyclic setting, and for every degree $r\ge 2$,
+\begin{theorem}[Genus-zero shadow--formality comparison]
+\label{thm:n6-shadow-formality-summary}
+Let $\cA$ be a chirally Koszul standard algebra for which the
+genus-zero cyclic convolution complex, shadow projection, and cyclic
+contraction $(\iota,\pi,h)$ are constructed. Assume the cyclic
+stable-tree/HPL comparison lemma: after cyclic symmetrisation, the
+genus-zero stable-tree graph sum and the Kadeishvili--Merkulov
+transfer sum have identical signs, automorphism weights,
+propagators, and vertex decorations. For every $r\ge2$,
 \[
 \Sh_r(\cA)\;=\;\ell_r^{(0),\mathrm{tr}}
-(\Theta^{\le r-1}_{\cA},\dots,\Theta^{\le r-1}_{\cA}),
+\bigl(\pi\Theta^{\le r-1}_{\cA},\ldots,
+\pi\Theta^{\le r-1}_{\cA}\bigr)
+\quad\text{in }\Ash_{r,0},
 \]
-where $\ell_r^{(0),\mathrm{tr}}$ is the transferred genus-zero
-$\Linf$ bracket of degree $r$ on the minimal model of
-$\gmodzero$. Consequently the shadow obstruction tower of $\cA$
-is identical, as a sequence of cohomology classes, to the
-$\Linf$-formality obstruction tower of $\gmodzero$.
+relative to the fixed cyclic contraction. Degree $2$ is the
+curvature term. For $r\ge3$ this is the transferred formality
+obstruction evaluated on the truncated Maurer--Cartan class.
 \end{theorem}
 
-Theorem~\ref{thm:main} is the self-contained extraction of the
-shadow--formality identification theorem
-in~\cite{Lorgat26}*{Ch.~on higher-genus modular Koszul}. The
-proof is by induction on $r$: the base cases $r=2,3,4$ are
-verified explicitly
-(Proposition~\ref{prop:base-cases}) and the inductive step uses
-the Kadeishvili--Merkulov tree
+The proof has two ingredients. The cases $r=2,3,4$ are the
+explicit computations of Proposition~\ref{prop:base-cases}. For
+$r\ge 5$, the Kadeishvili--Merkulov tree
 formula~\cite{Kadeishvili80,Merkulov99} on the strict genus-zero
-convolution algebra. The tree sum defining
-$\ell_r^{(0),\mathrm{tr}}$ and the graph sum defining $\Sh_r$
-range over the same combinatorial data with matching propagators
-and coefficients.
+convolution algebra projects, after cyclic symmetrisation, to the
+same stable-tree graph sum that defines the shadow coefficient.
 
 \subsection{Consequences}
 
-Theorem~\ref{thm:main} resolves the operadic complexity
-conjecture: the shadow termination degree $r_{\max}(\cA)$, the
-transferred $\Ainf$-depth $d_\infty(\cA)$, and the
-$\Linf$-formality level $f_\infty(\cA)$ of $\gmodzero$ are a
-single invariant of $\cA$ (Corollary~\ref{cor:operadic-complexity}).
+Theorem~\ref{thm:n6-shadow-formality-summary} identifies the shadow termination degree
+$r_{\max}(\cA)$ with the $\Linf$ obstruction level
+$f_\infty(\cA)$ of $\gmodzero$ for the verified standard cyclic
+families. Operation-level equality with a transferred
+$\Ainf$-depth requires a separate nondegeneracy statement.
 The four shadow-depth classes are realized by Heisenberg (class
 \textbf{G}, $r_{\max}=2$, formal), affine Kac--Moody (class
 \textbf{L}, $r_{\max}=3$), $\beta\gamma$ (class \textbf{C},
@@ -190,16 +176,16 @@ $r_{\max}=4$), and Virasoro (class \textbf{M},
 $r_{\max}=\infty$, intrinsically non-formal); see
 Section~\ref{sec:examples}.
 
-\subsection{Organization}
+\subsection*{Scope}
 
-Section~\ref{sec:shadow-tower} defines the shadow obstruction
-tower. Section~\ref{sec:formality-tower} recalls the transferred
-$\Linf$ structure and the formality obstruction tower.
-Section~\ref{sec:base-cases} proves the identification at
-degrees $2,3,4$. Section~\ref{sec:main} proves
-Theorem~\ref{thm:main}. Section~\ref{sec:corollary} deduces the
-operadic complexity corollary. Section~\ref{sec:examples}
-verifies the four standard families.
+A verified chirally Koszul standard algebra is one for which the
+genus-zero cyclic convolution complex, the shadow cohomology
+projection, and a cyclic contraction
+$(\iota,\pi,h)$ have been constructed. All comparison statements
+below are relative to this fixed transfer datum.
+They do not assert formality of the full two-coloured
+$\mathrm{SC}^{\mathrm{ch,top}}$ operad, nor of the Calabi--Yau
+stage-one factorisation algebra before Stage-2 specialisation.
 
 \subsection*{Conventions}
 
@@ -243,19 +229,24 @@ The differential on $\gmod$ splits as $D=d_0+D_{\mathrm{int}}$,
 with $d_0$ linear and $D_{\mathrm{int}}$ the interacting piece
 encoding the chiral product and the Arnold form. The difference
 $\Theta_{\cA}:=D_{\cA}-d_0\in\gmod$ is a Maurer--Cartan
-element~\cite{Lorgat26}*{Thm.~on MC2 bar-intrinsic}:
+element~\cite[MC2 bar-intrinsic construction]{Lorgat26}:
 \begin{equation}\label{eq:mc-equation}
 D\Theta_{\cA}+\tfrac12[\Theta_{\cA},\Theta_{\cA}]=0.
 \end{equation}
-The element $\Theta_{\cA}$ is bar-intrinsic. The bar complex is
-filtered by tensor degree, $F^r\barB(\cA)=\bigoplus_{n\le
-r}(s^{-1}\bar{\cA})^{\otimes n}$, and the truncations
-$\Theta^{\le r}_{\cA}:=\Theta_{\cA}\bmod F^{r+1}$
-form a tower in which each term is determined up to a coboundary
-by the previous one, via the Maurer--Cartan recursion.
+The element $\Theta_{\cA}$ is bar-intrinsic. Write
+\[
+F_{\le r}\barB(\cA)=\bigoplus_{n\le r}
+(s^{-1}\bar{\cA})^{\otimes n},\qquad
+F_{>r}\barB(\cA)=\bigoplus_{n>r}
+(s^{-1}\bar{\cA})^{\otimes n}.
+\]
+The truncation $\Theta^{\le r}_{\cA}$ is the projection of
+$\Theta_{\cA}$ modulo $F_{>r}$. The Maurer--Cartan recursion
+determines each new degree up to a coboundary from the previous
+truncation.
 
 \begin{definition}[Shadow obstruction tower]
-\label{def:shadow}
+\label{def:n6-shadow-obstruction-tower}
 The \emph{degree-$r$ shadow} of $\cA$ is
 \begin{equation}\label{eq:shadow-definition}
 \Sh_r(\cA)\;:=\;-\nabla_H^{-1}\bigl(
@@ -276,14 +267,16 @@ $\Theta_{\cA}\equiv\Theta'_{\cA}$ mod gauge, then $\Sh_r(\cA)$
 and $\Sh_r'(\cA)$ coincide as cohomology classes in $\Ash_{r,0}$.
 
 \begin{remark}[Closed formulas]
-On the scalar lane, writing
-$\Theta_{\cA}=\kappa\cdot\eta\otimes\Lambda$, one has
+On the scalar projection, writing
+$\Theta_{\cA}=\kappa\cdot\eta\otimes\Lambda$ and
+$H(t)=\sum_{r\ge2}rS_r t^r$, one has
 $\Sh_2=\kappa$, $\Sh_3=\mathfrak{C}$, $\Sh_4=\mathfrak{Q}$, and
 the shadow metric identity
-$H(t)^2=4\kappa^2+12\kappa\mathfrak{C}\,t
-+(9\mathfrak{C}^2+16\kappa\mathfrak{Q})\,t^2+\cdots$
-determines $\Sh_r$ for $r\ge 5$ from $(\kappa,\mathfrak{C},
-\mathfrak{Q})$.
+\[
+H(t)^2=t^4\bigl(4\kappa^2+12\kappa\mathfrak{C}\,t
++(9\mathfrak{C}^2+16\kappa\mathfrak{Q})\,t^2\bigr)
+\]
+on the families where the Riccati reduction has been proved.
 \end{remark}
 
 % ================================================================
@@ -302,7 +295,7 @@ $-1$, satisfying $\pi\iota=\mathrm{id}$ and
 $\mathrm{id}-\iota\pi=[d,h]$.
 The homotopy transfer theorem of Kadeishvili~\cite{Kadeishvili80}
 and Kontsevich--Soibelman~\cite{KontsevichSoibelman00}, in the
-form of Loday--Vallette~\cite{LodayVallette12}*{\S10.3}, produces
+form of Loday--Vallette~\cite[\S10.3]{LodayVallette12}, produces
 a transferred $\Linf$-algebra structure
 $(H^*(\fg),0,\{\ell_n^{\mathrm{tr}}\}_{n\ge 2})$ quasi-isomorphic
 to $\fg$, with brackets computed by the Kadeishvili--Merkulov
@@ -329,7 +322,7 @@ the sequence
 \[
 \bigl(o_r(\fg)\bigr)_{r\ge 3},\qquad
 o_r(\fg)\;:=\;[\ell_r^{\mathrm{tr}}]\;\in\;
-H^*\bigl(\Harr^\bullet(\fg)\bigr).
+H^*\bigl(\CE^\bullet_{\mathrm{cyc}}(\fg)\bigr).
 \]
 If $o_r(\fg)=0$, an $\Linf$ homotopy kills
 $\ell_r^{\mathrm{tr}}$ and the next obstruction is defined.
@@ -339,16 +332,16 @@ For a pronilpotent dg Lie algebra with Maurer--Cartan element
 $\Theta$, evaluating the transferred brackets on $\Theta$
 produces a refined tower
 $(\ell_r^{\mathrm{tr}}(\Theta,\dots,\Theta))_{r\ge 2}$, which
-takes values in the convolution target rather than in Harrison
-cohomology; this refined tower is the one compared with the
-shadow tower.
+takes values in the convolution target.  Obstruction cohomology
+records the projected class.  The refined target-valued tower is
+the one compared with the shadow tower.
 
-\begin{remark}[Harrison equals cyclic at genus zero]
-For $\gmodzero$, the Harrison complex controlling
-$\Linf$-formality coincides with the genus-zero cyclic
-deformation complex $\Defcyc^{(0)}(\cA)$, since genus-zero
-stable graphs are trees and the Harrison differential on trees
-is precisely operadic composition.
+\begin{remark}[Cyclic deformation complex]
+For $\gmodzero$, the relevant deformation complex is the cyclic
+Chevalley complex of the genus-zero convolution dg Lie algebra.
+Under the chirally Koszul hypotheses and the chosen cyclic
+contraction, this complex maps to the shadow cohomology
+$\Ash_{*,0}$ by the projection $\pi$.
 \end{remark}
 
 % ================================================================
@@ -357,17 +350,18 @@ is precisely operadic composition.
 
 \begin{proposition}[Shadow--formality identification at low degree]
 \label{prop:base-cases}
-For every chiral algebra $\cA$ the following identities hold:
-\begin{enumerate}[\textup{(}i\textup{)}]
+For every verified chirally Koszul standard algebra in the fixed
+genus-zero cyclic transfer setting, the following identities hold:
+\begin{enumerate}[label=\textup{(\roman*)}]
 \item $\Sh_2(\cA)\;=\;\kappa(\cA)
-\;=\;\ell_2^{(0)}(\Theta_{\cA},\Theta_{\cA})$.
+\;=\;\ell_2^{(0)}(\pi\Theta_{\cA},\pi\Theta_{\cA})$.
 \item $\Sh_3(\cA)\;=\;\mathfrak{C}(\cA)
-\;=\;-h\bigl(\ell_3^{(0)}(\Theta^{\le 2}_{\cA},
-\Theta^{\le 2}_{\cA},\Theta^{\le 2}_{\cA})\bigr)$.
+\;=\;-h\bigl(\ell_3^{(0)}(\pi\Theta^{\le 2}_{\cA},
+\pi\Theta^{\le 2}_{\cA},\pi\Theta^{\le 2}_{\cA})\bigr)$.
 \item $\Sh_4(\cA)\;=\;\mathfrak{Q}(\cA)
-\;=\;\bigl[\ell_4^{(0),\mathrm{tr}}(\Theta^{\le 3}_{\cA},
-\Theta^{\le 3}_{\cA},\Theta^{\le 3}_{\cA},
-\Theta^{\le 3}_{\cA})\bigr]$.
+\;=\;\bigl[\ell_4^{(0),\mathrm{tr}}(\pi\Theta^{\le 3}_{\cA},
+\pi\Theta^{\le 3}_{\cA},\pi\Theta^{\le 3}_{\cA},
+\pi\Theta^{\le 3}_{\cA})\bigr]$.
 \end{enumerate}
 \end{proposition}
 
@@ -376,88 +370,77 @@ For every chiral algebra $\cA$ the following identities hold:
 genus-zero convolution Lie bracket; evaluating on
 $\Theta_{\cA}$ produces the scalar curvature
 $\kappa(\cA)\in\mathbb{Q}(c)$ by
-definition~\cite{Lorgat26}*{Thm.~D}. The identity
-$\Sh_2(\cA)=\kappa(\cA)$ is the degree-$2$ shadow on the scalar
-lane, so the three quantities agree.
+definition~\cite[Theorem~D]{Lorgat26}. The identity
+$\Sh_2(\cA)=\kappa(\cA)$ is the degree-$2$ scalar shadow, so the
+three quantities agree.
 
 \emph{Part (ii).} The ternary bracket $\ell_3^{(0)}$,
-computed by~\eqref{eq:tree-formula}, is a sum over
-$\Trees_3=\{T_s,T_t,T_u\}$, the three binary trees with three
-leaves. On the primary line $[\ell_3^{(0)}]=0$ since
+computed by~\eqref{eq:tree-formula}, projects after cyclic
+symmetrisation to the three $s$-, $t$-, and $u$-channel stable
+four-point trees. On the primary line $[\ell_3^{(0)}]=0$ since
 $H^1(\overline{\cM}_{0,4})=H^1(\mathbb{P}^1)=0$; at the chain
 level $\ell_3^{(0)}$ is exact and nonzero, and homotopy
 transfer gives
-$\mathfrak{C}(\cA)=-h(\ell_3^{(0)}(\Theta^{\le 2}_{\cA},
-\Theta^{\le 2}_{\cA},\Theta^{\le 2}_{\cA}))$.
+$\mathfrak{C}(\cA)=-h(\ell_3^{(0)}(\pi\Theta^{\le 2}_{\cA},
+\pi\Theta^{\le 2}_{\cA},\pi\Theta^{\le 2}_{\cA}))$.
 The cubic shadow $\mathfrak{C}(\cA)$, computed as the
-three-channel graph sum at degree three, matches this three-tree
-sum because each binary tree with three leaves corresponds to
-one of the $s$-, $t$-, $u$-channel genus-zero stable graphs with
-four external legs, with identical weights and propagators.
+three-channel graph sum at degree three, matches the cyclic
+projection of the transferred tree sum with identical weights and
+propagators.
 
 \emph{Part (iii).} The quaternary bracket $\ell_4^{(0)}$ is a
-sum over the $15$ trivalent trees with five leaves, the faces of
-the Stasheff associahedron $K_4$. Its transferred class
+planar HPL tree sum whose cyclic projection is indexed by the
+$15$ labelled genus-zero stable trees with five external legs.
+Its transferred class
 $\ell_4^{(0),\mathrm{tr}}$ lies in $H^*(\overline{\cM}_{0,5})$.
 The weight-four graph sum defining $\mathfrak{Q}(\cA)$
-enumerates precisely the same $15$ trees with matching weights,
-signs, and
-propagators~\cite{Lorgat26}*{App.~on nonlinear modular shadows},
+enumerates those labelled stable trees with matching weights,
+signs, and propagators
+\cite[appendix on nonlinear modular shadows]{Lorgat26},
 so $\Sh_4(\cA)=\mathfrak{Q}(\cA)=
-[\ell_4^{(0),\mathrm{tr}}(\Theta^{\le 3}_{\cA},\dots,
-\Theta^{\le 3}_{\cA})]$.
+[\ell_4^{(0),\mathrm{tr}}(\pi\Theta^{\le 3}_{\cA},\dots,
+\pi\Theta^{\le 3}_{\cA})]$.
 \end{proof}
 
 \begin{remark}[Degree-$2$: $\kappa$ is family-dependent]
 \label{rem:kappa-not-universal}
 The identity $\Sh_2(\cA)=\kappa(\cA)$ holds at degree two on the
-scalar lane for every chiral algebra in the standard landscape;
+scalar projection for the verified standard families;
 on the primary line this is the definition $S_2:=\kappa$.
 What is family-dependent is the value of $\kappa$ itself:
 $\kappa^{\Vir}=c/2$, $\kappa^{\Heis}=k$,
 $\kappa^{\mathrm{KM}}=\dim(\fg)(k+h^\vee)/(2h^\vee)$,
 $\kappa^{\cW_N}=c(H_N-1)$ with $H_N=\sum_{j=1}^N 1/j$. The
-coincidence $\kappa=c/2$ holds only for Virasoro, not universally;
-writing $\kappa=c/2$ for a non-Virasoro family is a standard
-error.
+formula $\kappa=c/2$ is Virasoro-specific.
 \end{remark}
 
 % ================================================================
-\section{The main theorem}\label{sec:main}
+\section{The comparison proof}\label{sec:n6-shadow-formality-proof}
 % ================================================================
 
-\begin{theorem}[Shadow obstruction tower equals formality
-obstruction tower]
-\label{thm:main-body}
-For every chiral algebra $\cA$ and every degree $r\ge 2$,
-\begin{equation}\label{eq:main-identity}
+\begin{theorem}[Genus-zero shadow--formality comparison]
+\label{thm:n6-shadow-formality-comparison}
+Let $\cA$ be a verified chirally Koszul standard algebra in the
+genus-zero cyclic setting, with fixed cyclic contraction
+$(\iota,\pi,h)$ of $\gmodzero$ onto $\Ash_{*,0}$. Assume the
+cyclic stable-tree/HPL comparison lemma. For every degree
+$r\ge 2$,
+\begin{equation}\label{eq:n6-shadow-formality-identity}
 \Sh_r(\cA)\;=\;\ell_r^{(0),\mathrm{tr}}
-(\Theta^{\le r-1}_{\cA},\dots,\Theta^{\le r-1}_{\cA}),
+\bigl(\pi\Theta^{\le r-1}_{\cA},\ldots,
+\pi\Theta^{\le r-1}_{\cA}\bigr)
+\quad\text{in }\Ash_{r,0},
 \end{equation}
 where $\ell_r^{(0),\mathrm{tr}}$ is the transferred genus-zero
 $\Linf$ bracket on the minimal model of $\gmodzero$.
-Consequently the shadow obstruction tower of $\cA$ coincides
-with the $\Linf$-formality obstruction tower of $\gmodzero$
-evaluated on the truncated Maurer--Cartan element.
+For $r=2$ this is the curvature input. For $r\ge3$ it is the
+formality obstruction evaluation on the truncated Maurer--Cartan
+element.
 \end{theorem}
 
 \begin{proof}
-Induction on the degree $r$. The base cases $r=2,3,4$ are
-Proposition~\ref{prop:base-cases}. The inductive step has four
-parts.
-
-\emph{Step 1: Restriction to genus zero.}
 Since genus-zero stable graphs are trees, $\gmodzero$ is a
-strict dg Lie algebra and the Harrison complex controlling
-$\Linf$-formality coincides with the genus-zero cyclic
-deformation complex $\Defcyc^{(0)}(\cA)$. The Harrison
-differential on trees is precisely operadic composition on
-$\gmodzero$, so
-$\Harr^\bullet(\gmodzero)\xrightarrow{\sim}\Ash_{*,0}$
-is an isomorphism, not merely an injection.
-
-\emph{Step 2: Homotopy transfer.}
-Choose a deformation retract $(\gmodzero,h,\Ash_{*,0})$ with
+strict dg Lie algebra. The fixed cyclic contraction satisfies
 $\pi\iota=\mathrm{id}$, $\mathrm{id}-\iota\pi=[D,h]$. The
 homotopy transfer
 theorem~\cite{Kadeishvili80,KontsevichSoibelman00,LodayVallette12}
@@ -465,94 +448,73 @@ produces a transferred $\Linf$ structure
 $(\Ash_{*,0},\{\ell_r^{(0),\mathrm{tr}}\})$, with brackets
 computed by~\eqref{eq:tree-formula}.
 
-\emph{Step 3: Tree formula equals shadow graph sum.}
-The degree-$r$ shadow $\Sh_r(\cA)$, by
-\eqref{eq:shadow-definition}, expands
-$[\Theta^{\le r-1}_{\cA},\Theta^{\le r-1}_{\cA}]_r^{(0)}$ as a
-sum over genus-zero stable graphs with $r$ external legs, with
-internal vertices decorated by lower-degree shadows
-$\Sh_j(\cA)$ ($j<r$) and internal edges by the propagator
-$P_{\cA}=\nabla_H^{-1}$. These are the same trees and the same
-propagators as in~\eqref{eq:tree-formula}:
-(a) a genus-zero stable graph with $r$ external legs is a
-planar rooted tree $T\in\Trees_r$ with valences determined by
-the graph;
-(b) the shadow propagator $P_{\cA}=h\circ\pi$ corresponds to
-the homotopy $h$;
-(c) the vertex evaluation
-$\Sh_j=\pi\circ\ell_j^{(0)}\circ\iota^{\otimes j}$ corresponds
-to the vertex decoration $[-,-]^{(0)}$.
-
-\emph{Step 4: Induction.}
 At $r=2$, both sides equal $\kappa(\cA)$ by
 Proposition~\ref{prop:base-cases}(i); the cases $r=3,4$ are
-parts (ii), (iii) of the same proposition. Assuming
-\eqref{eq:main-identity} through degree $r-1$, the graph sum for
-$\Sh_r(\cA)$ and the tree formula for
-$\ell_r^{(0),\mathrm{tr}}(\Theta^{\le r-1},\dots,
-\Theta^{\le r-1})$ range over identical planar rooted trees
-with identical internal-vertex decorations (via the inductive
-hypothesis), propagators, and signs. The two sums therefore
-agree as chains in $\Ash_{*,0}$, completing the induction.
+parts (ii), (iii). For $r\ge5$, assume
+\eqref{eq:n6-shadow-formality-identity} through degree $r-1$. The
+cyclic stable-tree/HPL comparison lemma identifies the graph sum for
+$\Sh_r(\cA)$ with the Kadeishvili--Merkulov tree formula for
+$\ell_r^{(0),\mathrm{tr}}(\pi\Theta^{\le r-1},\dots,
+\pi\Theta^{\le r-1})$: internal edges carry $h$, outputs are
+projected by $\pi$, and internal vertices are the lower-degree
+transferred brackets. The projected sums agree in $\Ash_{*,0}$.
 \end{proof}
 
-\begin{remark}[Genus corrections decouple; uniform-weight scope]
-Theorem~\ref{thm:main-body} is a genus-zero statement. On the
-uniform-weight scalar lane, the shadow obstruction tower
-$\Sh_r(\cA)$ decomposes, at each genus $g\ge 0$ separately, as
+\begin{remark}[Genus-zero projection and positive-genus terms]
+Theorem~\ref{thm:n6-shadow-formality-comparison} concerns the
+genus-zero projection. For scalar uniform-weight families the full
+shadow tower has the expansion
 \[
 \Sh_r(\cA)\;=\;\underbrace{\ell_r^{(0),\mathrm{tr}}
-(\Theta^{\le r-1}_{\cA},\dots)}_{\text{genus-zero formality}}
+(\pi\Theta^{\le r-1}_{\cA},\dots)}_{\text{genus-zero formality}}
 \;+\;\underbrace{\sum_{g\ge 1}\ell_r^{(g),\mathrm{tr}}(\dots)
 +\Lambda_P(\dots)}_{\text{genus }\ge 1\text{ corrections}},
 \]
-where $\Lambda_P$ is the BV loop operator. The classical and
-quantum contributions decouple at the level of the shadow
-decomposition: the quantum corrections form a parallel tower
-controlled by the quantum $\Linf$ structure, not by classical
-formality theory. At genus $g\ge 2$ with multi-weight
+where $\Lambda_P$ is the BV loop operator. The first summand is
+controlled by classical homotopy transfer. The positive-genus
+summands are governed by the quantum $\Linf$ operations and the BV
+loop operator. At genus $g\ge 2$ with multi-weight
 generators, the scalar formula for the genus corrections
 receives a cross-channel term $\delta F_g^{\mathrm{cross}}$;
-the genus-zero identification~\eqref{eq:main-identity}
-nevertheless holds verbatim.
+the genus-zero comparison~\eqref{eq:n6-shadow-formality-identity}
+is unchanged.
 \end{remark}
 
 % ================================================================
-\section{Operadic complexity, proved}\label{sec:corollary}
+\section{Common Depth}\label{sec:n6-common-depth}
 % ================================================================
 
-\begin{definition}[Three complexity invariants]
+\begin{definition}[Two genus-zero depth invariants]
 For a chiral algebra $\cA$, set
-$r_{\max}(\cA):=\sup\{r\ge 2:\Ash_{r,0}\ne 0\}$ (shadow
-termination degree),
-$d_\infty(\cA):=\sup\{n\ge 2:m_n^{\mathrm{tr}}\ne 0\}$
-(transferred $\Ainf$-depth on the minimal model of
-$\Defcyc(\cA)$), and
-$f_\infty(\cA):=\sup\{n\ge 2:\ell_n^{(0),\mathrm{tr}}\ne 0\}$
-($\Linf$-formality level of $\gmodzero$).
+$r_{\max}(\cA):=\sup\{r\ge 2:\Sh_r(\cA)\ne 0\}$ (shadow
+termination degree), and
+$f_\infty^\Theta(\cA):=\sup\{n\ge 2:
+\ell_n^{(0),\mathrm{tr}}(\pi\Theta^{\le n-1}_{\cA},\ldots,
+\pi\Theta^{\le n-1}_{\cA})\ne 0\}$
+(evaluated $\Linf$ obstruction level on the transferred genus-zero
+model).
 \end{definition}
 
-\begin{corollary}[Operadic complexity in the verified scope]
-\label{cor:operadic-body}
-$r_{\max}(\cA)=d_\infty(\cA)=f_\infty(\cA)$ for the verified
-chirally Koszul standard families in the genus-zero cyclic setting.
+\begin{corollary}[Evaluated common depth for the standard cyclic families]
+\label{cor:n6-evaluated-depth}
+For the verified chirally Koszul standard families in the
+genus-zero cyclic setting,
+\[
+r_{\max}(\cA)=f_\infty^\Theta(\cA).
+\]
 \end{corollary}
 
 \begin{proof}
-The equality $r_{\max}=f_\infty$ is immediate from
-Theorem~\ref{thm:main-body}: $\Sh_r(\cA)=0$ iff
-$\ell_r^{(0),\mathrm{tr}}$ vanishes on the truncated
-Maurer--Cartan element. For $f_\infty=d_\infty$, the tree
-formula gives
-$\ell_r^{(0),\mathrm{tr}}=\Alt(m_r^{\mathrm{tr}})$; since
-antisymmetrization is injective on cyclic cochains,
-$m_r^{\mathrm{tr}}=0$ iff $\ell_r^{(0),\mathrm{tr}}=0$.
+The equality is the evaluation identity of
+Theorem~\ref{thm:n6-shadow-formality-comparison}, degree by
+degree. Operation-level vanishing requires an independent
+nondegeneracy lemma for the transferred cyclic primitive component.
 \end{proof}
 
-\begin{corollary}[Depth classification]
-\label{cor:depth-classification}
-The standard landscape of chiral algebras is partitioned by the
-shadow depth into four classes, each realized by a standard
+\begin{corollary}[Coarse depth realisation]
+\label{cor:n6-coarse-depth-realisation}
+Within the constructed standard cyclic families, the four coarse
+shadow-depth classes are all realized:
 family:
 \[
 \textbf{G}\ (r_{\max}=2),\quad
@@ -567,12 +529,10 @@ minimal $\Linf$ model is quasi-isomorphic to a dg Lie algebra.
 \end{corollary}
 
 \begin{proof}
-Theorem~\ref{thm:main-body} identifies shadow depth with
-$\Linf$-formality level, and
-Corollary~\ref{cor:operadic-body} identifies both with the
-transferred $\Ainf$-depth. The depth is therefore an invariant
-of the $\Linf$ quasi-isomorphism class of $\gmodzero$.
-Examples in Section~\ref{sec:examples} realize each class.
+Theorem~\ref{thm:n6-shadow-formality-comparison} identifies shadow depth with the
+$\Linf$ obstruction level after evaluation on the transferred
+Maurer--Cartan element. The examples in Section~\ref{sec:examples}
+realize each coarse class.
 \end{proof}
 
 % ================================================================
@@ -591,7 +551,8 @@ $\textbf{G}$.
 \end{example}
 
 \begin{example}[Affine Kac--Moody; class \textbf{L}]
-The affine Kac--Moody vertex algebra $\widehat{\fg}_k$ has
+At non-critical level $k\ne-h^\vee$, the affine Kac--Moody
+vertex algebra $\widehat{\fg}_k$ has
 $\kappa(\widehat{\fg}_k)=\dim(\fg)(k+h^\vee)/(2h^\vee)$. The
 binary bracket is the Lie bracket on $\fg$; Jacobi kills all
 degree-four graph contributions, so $\ell_4^{(0),\mathrm{tr}}=0$,
@@ -599,16 +560,17 @@ while $\ell_3^{(0),\mathrm{tr}}\ne 0$ in general. Hence
 $r_{\max}(\widehat{\fg}_k)=3$. Class $\textbf{L}$.
 \end{example}
 
-\begin{example}[$\beta\gamma$; class \textbf{C}, shadow depth $4$]
-The rank-one bosonic ghost system $\beta\gamma$ has
-$r_{\max}(\beta\gamma)=4$: the brackets
+\begin{example}[$\beta\gamma_\lambda$; class \textbf{C}, shadow
+depth $4$]
+The standard rank-one $\beta\gamma_\lambda$ contact family has
+\[
+S_2=6\lambda^2-6\lambda+1,\qquad
+S_3=0,\qquad S_4=-\frac{5}{12},\qquad S_r=0\quad(r\ge5).
+\]
+Thus $r_{\max}(\beta\gamma_\lambda)=4$ at the generic contact
+points. Equivalently, the bracket
 $\ell_3^{(0),\mathrm{tr}}$ vanishes and
-$\ell_4^{(0),\mathrm{tr}}$ is nonzero. Rank-one rigidity kills
-degree-five graphs, giving
-$\ell_n^{(0),\mathrm{tr}}=0$ for $n\ge 5$. The primary
-invariants $(p_{\max},k_{\max},r_{\max})=(1,0,4)$ are pairwise
-distinct: simple OPE pole, zero collision depth, shadow depth
-four. Class $\textbf{C}$.
+$\ell_4^{(0),\mathrm{tr}}$ is nonzero. Class $\textbf{C}$.
 \end{example}
 
 \begin{example}[Virasoro; class \textbf{M}, obstructed at every
@@ -625,30 +587,32 @@ S_2&=\tfrac{c}{2},&
 S_3&=2\ \text{(}c\text{-independent)},&
 S_4&=\tfrac{10}{c(5c+22)},\\
 S_5&=-\tfrac{48}{c^2(5c+22)},&
-S_6&=\tfrac{80(45c+193)}{3c^3(5c+22)^2},&
-S_7&=-\tfrac{2880(15c+61)}{7c^4(5c+22)^2}.
+S_6&=\tfrac{4(240c+1031)}{c^3(5c+22)^2}.
 \end{align*}
-All $S_k$ are nonzero for generic $c$, so
-$r_{\max}(\Vir_c)=\infty$: Virasoro is intrinsically
-non-formal. The Maurer--Cartan recursion forces every
-coefficient to be nonzero, since the normal-ordered product
-$:\!T^n\!:$ generates operations at every degree. Class
-$\textbf{M}$.
+The weighted Riccati-metric coefficients $\widehat S^{wt}_6$ and
+$\widehat S^{wt}_7$ use a different normalization.
+Here $\Ext^1$ denotes the primary bar-cohomology line in the
+transferred shadow model. It is not a Hochschild-degree statement;
+Theorem H is the separate chiral Hochschild concentration theorem in
+degrees $\{0,1,2\}$, with symmetric descent obtained by averaging.
+For generic $c$ on the nonsingular Virasoro shadow surface, the
+Riccati recurrence and computed coefficients give infinitely many
+nonzero $S_k$. Thus $r_{\max}(\Vir_c)=\infty$. The normal-ordered
+composites are the source of possible operations, not the
+nonvanishing proof. Class $\textbf{M}$.
 \end{example}
 
-\begin{remark}[The four classes exhaust the standard landscape]
-Classes $\textbf{G},\textbf{L},\textbf{C},\textbf{M}$ are the
-only possibilities consistent with the shadow metric identity
-$H(t)^2=t^4 Q(t)$ with $\deg Q\le 2$. A finite depth in
-$\{5,6,\dots\}$ would force a higher-degree $Q$, excluded by the
-algebraicity theorem for the shadow generating
-function~\cite{Lorgat26}*{Thm.~on Riccati algebraicity}. Depth
-is therefore $2$, $3$, $4$, or $\infty$, and each is realized.
+\begin{remark}[The four standard depths]
+For the verified finite-type standard families governed by the
+quadratic Riccati reduction, the coarse shadow-depth classes are
+$\textbf{G}$, $\textbf{L}$, $\textbf{C}$, and $\textbf{M}$. The
+identity $H(t)^2=t^4Q(t)$ with $\deg Q\le2$ gives depths
+$2$, $3$, $4$, and $\infty$ for this scalar projection
+\cite[theorem on Riccati algebraicity]{Lorgat26}. This is a
+coarse classification of the standard cyclic families. Fine
+finite-depth towers require separate analysis.
 \end{remark}
 
-% ================================================================
-% Bibliography
-% ================================================================
 \begin{thebibliography}{99}
 
 \bibitem{BD04}

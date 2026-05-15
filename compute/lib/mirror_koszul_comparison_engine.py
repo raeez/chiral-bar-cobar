@@ -3,9 +3,9 @@ r"""Mirror symmetry vs Koszul duality: the precise commutative diagram.
 CENTRAL QUESTION
 ================
 
-Is 3d mirror symmetry the SAME as Koszul duality?
+Compare 3d mirror symmetry with chiral Koszul duality.
 
-ANSWER: NO. They are two of three generators of an S_3 triality group
+They are two of three generators of an S_3 triality group
 acting on the coupling constant Psi of 4d Chern-Simons theory.  The
 precise relationship is a commutative diagram with FOUR distinct dualities.
 
@@ -17,7 +17,8 @@ equivalently 4d Chern-Simons theory at coupling Psi on C x R x R_+.
 
 1. CHIRAL KOSZUL DUALITY (Theorem A, this monograph):
    Acts on: boundary VOA A
-   Sends: A -> A^! = (H*(B(A)))^v
+   Sends: A -> A^i = H^*(B(A)), then to A^! by Verdier/linear duality
+          under finite-type or completed hypotheses
    On coupling: Psi -> -Psi  (Feigin-Frenkel involution)
    On level: k -> -k - 2h^v
    On kappa: kappa -> -kappa (for affine type); kappa -> rho*K - kappa (for W-type)
@@ -29,7 +30,7 @@ equivalently 4d Chern-Simons theory at coupling Psi on C x R x R_+.
    Sends: Neumann(Psi) -> Dirichlet(1/Psi)
    On coupling: Psi -> 1/Psi
    On level: k = Psi - N -> k^S = 1/Psi - N
-   On kappa: kappa(k) -> kappa(1/Psi - N) (NOT -kappa!)
+   On kappa: kappa(k) -> kappa(1/Psi - N)
    Level: physical / categorical
    Proved: for boundary VOAs by Costello-Gaiotto.
 
@@ -45,7 +46,7 @@ equivalently 4d Chern-Simons theory at coupling Psi on C x R x R_+.
    Acts on: categories of modules (category O)
    Sends: O(M_C) -> O(M_H) (Koszul dual categories)
    On algebras: Ext_O(M_C) is Koszul dual to Ext_O(M_H)
-   Level: categorical (module categories, not algebras themselves)
+   Level: categorical (module categories)
    Proved: BLPW for conical symplectic resolutions, Webster for
            Coulomb/Higgs branches.
 
@@ -67,13 +68,13 @@ Starting from the boundary VOA A_C(T) on the Coulomb side of theory T:
       v                                 v
     A_D(T) at 1/Psi                 ...
 
-The diagram does NOT commute naively!  The compositions are:
+The naive diagram has two distinct compositions:
 
   (a) mirror . KD:  A_C(T) -> A_C(T)^! -> A_H(T~)^!
   (b) KD . mirror:  A_C(T) -> A_H(T~) -> A_H(T~)^!
 
-These agree only if the Koszul dual of A_C(T) equals A_H(T~), i.e., only
-if mirror symmetry IS Koszul duality.  This FAILS generically.
+These agree only at the special loci where the Koszul dual of A_C(T)
+equals A_H(T~).
 
 The correct structure: S-duality, Koszul duality, and the composition
 S . KD generate an S_3 triality acting on the coupling:
@@ -106,7 +107,7 @@ Koszul complementarity (Theorem D) gives:
 Mirror symmetry gives:
     kappa_C(T) + kappa_H(T) = N_f  for SQED(N_f)
 
-These are DIFFERENT sums of DIFFERENT pairs.  The mirror sum kappa_C + kappa_H
+These sums belong to different pairs.  The mirror sum kappa_C + kappa_H
 involves boundary VOAs on DIFFERENT branches of the SAME theory; the Koszul
 sum kappa + kappa' involves an algebra and its BAR-COMPLEX dual.
 
@@ -128,14 +129,14 @@ Theorem C gives:
 
 where A^! is the CHIRAL Koszul dual (Feigin-Frenkel dual at level -k-2N).
 
-This is NOT the same as the 3d mirror complementarity which would pair
-A_C with A_H.  The Theorem C pairing is:
+This is distinct from the 3d mirror complementarity pairing A_C with A_H.
+The Theorem C pairing is:
 
     Q_g(A_C) + Q_g(A_C^!)   [Coulomb side and its algebraic dual]
     Q_g(A_H) + Q_g(A_H^!)   [Higgs side and its algebraic dual]
 
-NOT:
-    Q_g(A_C) + Q_g(A_H)     [this is NOT a Koszul pair in general]
+The mirror pairing is:
+    Q_g(A_C) + Q_g(A_H)     [mirror pair, not the Koszul pair in general]
 
 The mirror pairing A_C, A_H is related to the Koszul pairing A, A^! only
 when mirror symmetry coincides with Koszul duality, i.e., only at special
@@ -147,7 +148,8 @@ CONVENTIONS (from CLAUDE.md):
     AP19: r-matrix pole order one below OPE (d log absorption)
     AP20: kappa(A) intrinsic to A, not to physical system
     AP24: kappa + kappa' = 0 for KM/free; = rho*K for W-algebras; = 13 for Vir
-    AP25: B(A) coalgebra, D_Ran(B(A)) = B(A!) algebra, Omega(B(A)) = A
+    AP25: B(A) coalgebra, A^i=H^*(B(A)), A^! from Verdier duality,
+          Omega(B(A))=A, Z_ch^der(A) bulk
     AP29: delta_kappa != kappa_eff (distinct objects)
     AP33: H_k^! = Sym^ch(V*) != H_{-k} as algebras
     AP39: kappa != c/2 for general VOA
@@ -214,7 +216,7 @@ def _frac(x) -> Fraction:
 def kappa_affine_sl(N: int, k: Num) -> Fraction:
     r"""kappa(sl_N, k) = (N^2-1)(k+N)/(2N).
 
-    AP1, AP39: This is NOT c/2 for N > 2.
+    AP1, AP39: for N > 2 the affine correction separates kappa from c/2.
     For N=1: sl_1 = 0 (trivial), dim = 0, so kappa = 0 for all k.
     """
     k_f = _frac(k)
@@ -330,9 +332,9 @@ class TrialityOrbit:
         S:     1/tau
         K:     -tau           (FF / Koszul)
         SK:    -1/tau         (composition S . K)
-        KS:    -tau           ... wait, let's be careful.
+        KS:    -tau           [same rational map as K on this restricted list]
 
-    Actually for the CORNER VOA, the S_3 triality acts as:
+    For corner VOAs, the S_3 triality acts as:
         e:     Psi
         (12):  1/Psi           [S-duality]
         (23):  1 - Psi          [the third transposition]
@@ -687,7 +689,7 @@ class ComplementarityComparison:
         kappa_C(T) + kappa_H(T) = ?  (depends on the theory T)
         For SQED(N_f): sum = N_f
 
-    These are DIFFERENT sums of DIFFERENT pairs.
+    These sums belong to different pairs.
     """
     algebra_name: str
     koszul_sum: Fraction         # kappa(A) + kappa(A^!)
@@ -790,7 +792,7 @@ def genus_g_obstruction_comparison(
     F_g(A) + F_g(A^!) = [kappa(A) + kappa(A^!)] * lambda_g^FP  [Koszul sum]
     F_g(A_C) + F_g(A_H) = [kappa_C + kappa_H] * lambda_g^FP    [Mirror sum]
 
-    These are DIFFERENT because kappa + kappa' != kappa_C + kappa_H.
+    They differ exactly when kappa + kappa' differs from kappa_C + kappa_H.
     """
     kA = _frac(kappa_A)
     kA_d = _frac(kappa_A_dual)
@@ -833,8 +835,8 @@ class CategoricalVsAlgebraicKD:
         The Koszul ring is Ext^*_O(L_i, L_j) where L_i are simples.
 
     Chiral algebraic (Theorem A):
-        A^! = (H*(B(A)))^v
-        This produces the DUAL ALGEBRA (not its module category).
+        A^i = H^*(B(A)); finite-type or completed Verdier duality gives A^!.
+        This produces the dual algebra rather than only its module category.
 
     The relationship:
         If A is formal (class G or L), then Rep(A) ~ O(M_C) and
@@ -1099,7 +1101,7 @@ def mirror_as_composition(N: int, psi: Num) -> Dict[str, Any]:
         KD:      Psi -> -Psi
         S.KD:    Psi -> -1/Psi
         KD.S:    Psi -> -1/Psi  (same!)
-        S.KD.S:  Psi -> -(1/Psi) -> -Psi  ... wait:
+        S.KD.S:  Psi -> -(1/Psi) -> -Psi:
             S: Psi -> 1/Psi
             KD: 1/Psi -> -1/Psi
             S: -1/Psi -> Psi/(-1) ... no, S just inverts:
@@ -1165,46 +1167,45 @@ def mirror_as_composition(N: int, psi: Num) -> Dict[str, Any]:
 def full_comparison_summary() -> Dict[str, str]:
     r"""Summary of the five key findings about mirror vs Koszul duality.
 
-    FINDING 1: 3d mirror symmetry != chiral Koszul duality.
-    Mirror symmetry exchanges Coulomb and Higgs branches (geometric);
-    Koszul duality produces the bar-complex dual algebra (algebraic).
-    They act on DIFFERENT objects and produce DIFFERENT outputs.
+    FINDING 1: 3d mirror symmetry and chiral Koszul duality are distinct.
+    Mirror symmetry exchanges Coulomb and Higgs branches. Koszul duality
+    passes through A^i=H^*(B(A)) and then through Verdier/linear duality.
 
-    FINDING 2: S-duality != Koszul duality (generically).
+    FINDING 2: S-duality and Koszul duality differ generically.
     The kappa discrepancy is:
         Delta = [(N^2+2N-1)/(2N)] * (Psi + 1/Psi)
     which vanishes only at Psi^2 = -1 (no real solutions).
 
-    FINDING 3: S_3 triality = <S-duality, (23)-transposition>, NOT
-    <S-duality, Koszul duality>. The FF involution Psi -> -Psi is
-    OUTSIDE the S_3 of the corner VOA triality.
+    FINDING 3: S_3 triality is generated by S-duality and a corner-VOA
+    transposition. The FF involution Psi -> -Psi lies outside that
+    corner-VOA S_3 action.
 
-    FINDING 4: Theorem C (complementarity) applies to (A, A^!) pairs,
-    NOT to (A_C, A_H) mirror pairs. The mirror sum kappa_C + kappa_H = N_f
-    is a DIFFERENT identity from the Koszul sum kappa + kappa' = 0 or 13.
+    FINDING 4: Theorem C complementarity applies to (A, A^!) pairs.
+    The mirror pair (A_C, A_H) carries its own identity
+    kappa_C + kappa_H = N_f. The Koszul sum is kappa + kappa' = 0 or 13.
 
-    FINDING 5: The four dualities (chiral KD, S-duality, 3d mirror,
-    categorical KD) are four DISTINCT operations that coincide only
-    at special loci in coupling/parameter space. No two are identical.
+    FINDING 5: Chiral KD, S-duality, 3d mirror symmetry, and categorical
+    KD are distinct operations. They coincide only at special loci in
+    coupling/parameter space.
     """
     return {
         'finding_1': (
-            "3d mirror symmetry != chiral Koszul duality. "
-            "Mirror exchanges branches (geometric); KD produces bar dual (algebraic)."
+            "3d mirror symmetry and chiral Koszul duality are distinct. "
+            "Mirror exchanges branches; KD passes through A^i and Verdier duality."
         ),
         'finding_2': (
-            "S-duality != Koszul duality (generically). "
+            "S-duality and Koszul duality differ generically. "
             "Discrepancy = [(N^2+2N-1)/(2N)]*(Psi+1/Psi). "
             "Coincide only at Psi = +/- i (no real solutions)."
         ),
         'finding_3': (
-            "S_3 triality of corner VOAs does NOT contain FF involution. "
+            "S_3 triality of corner VOAs excludes the FF involution. "
             "The S_3 acts by Mobius transformations {Psi, 1/Psi, 1-Psi, Psi/(Psi-1),...}; "
-            "FF sends Psi -> -Psi which is NOT a Mobius map preserving {0,1,inf}."
+            "FF sends Psi -> -Psi, outside the Mobius action preserving {0,1,inf}."
         ),
         'finding_4': (
-            "Theorem C complementarity applies to Koszul pairs (A, A!), "
-            "not mirror pairs (A_C, A_H). "
+            "Theorem C complementarity applies to Koszul pairs (A, A!). "
+            "Mirror pairs (A_C, A_H) carry a separate branch identity. "
             "Koszul sum: kappa+kappa'=0 (KM) or 13 (Vir). "
             "Mirror sum: kappa_C+kappa_H=N_f (SQED)."
         ),
@@ -1264,13 +1265,13 @@ class WebsterComparison:
         for type-A quiver gauge theories.
 
     Our Theorem A proves:
-        B(A) -> D_Ran(B(A)) = B(A^!) (Verdier intertwining)
-        for chiral algebras on curves.
+        A^i = H^*(B(A)); Verdier/linear duality carries the completed
+        finite-type branch to A^! for chiral algebras on curves.
 
     The question: when does the categorical equivalence
         O(A_C) ~ O(A_H)^{Koszul}
-    agree with the algebraic identity
-        A_C^! = (H*(B(A_C)))^v?
+    agree with the algebraic Verdier branch
+        A_C^i = H^*(B(A_C)) -> A_C^!?
 
     ANSWER: They agree when A_C is FORMAL (shadow class G or L).
     For non-formal algebras (class C, M), the chiral bar complex

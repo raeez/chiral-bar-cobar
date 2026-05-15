@@ -7,7 +7,7 @@ Q1. kappa vanishes at critical level (kappa = 0)
 Q2. Feigin-Frenkel center Z(V_{-2}(sl_2)) = C[S_2]
 Q3. Bar cohomology = Omega^*(Op), NOT Koszul-concentrated
 Q4. KZ connection divergence and monodromy trivialization
-Q5. Averaging map degeneration at critical level
+Q5. Averaging map and scalar-shadow degeneration at critical level
 Q6. Bicomplex interpolation from critical to generic
 
 Multi-path verification:
@@ -325,6 +325,10 @@ class TestKZCritical:
         """
         kz = kz_critical_analysis(Fraction(-2))
         assert kz.r_matrix_level_prefix == Fraction(-2)
+        assert kz.ff_center_commutative is True
+        assert kz.full_affine_voa_commutative is False
+        assert kz.full_current_sector_noncommutative is True
+        assert kz.full_current_theta_vanishes is False
 
     def test_r_matrix_k0_check(self):
         """AP141: r(z)|_{k=0} = 0*Omega/z = 0 (must vanish at k=0).
@@ -514,7 +518,7 @@ class TestAveragingCritical:
             assert ratios[i] <= ratios[i + 1] + 1e-15
 
     def test_kappa_zero_at_critical(self):
-        """At critical level, kappa = 0: the averaged image is trivial."""
+        """At critical level, the normalized scalar curvature is zero."""
         analysis = averaging_analysis_critical()
         assert analysis['kappa_is_zero'] is True
         assert analysis['kappa_critical'] == 0.0
@@ -528,19 +532,25 @@ class TestAveragingCritical:
         analysis = averaging_analysis_critical()
         assert analysis['r_matrix_nonzero_at_critical'] is True
         assert analysis['r_matrix_coefficient_critical'] == -2.0
+        assert analysis['full_current_sector_noncommutative'] is True
+        assert analysis['full_current_theta_vanishes'] is False
 
     def test_sugawara_undefined_at_critical(self):
         """Sugawara shift dim(g)/2 = 3/2 is undefined at critical level."""
         analysis = averaging_analysis_critical()
         assert analysis['sugawara_defined_at_critical'] is False
+        assert analysis['center_theta_vanishes'] is True
 
     def test_kappa_dp_critical(self):
         """kappa_dp = k*dim(g)/(2*h^v) = (-2)*3/4 = -3/2 at critical level.
 
-        VERIFIED: [DC] direct formula; [LT] C13.
+        This is the finite trace-form average, not the normalized scalar
+        shadow kappa, which is zero at critical level.
         """
         analysis = averaging_analysis_critical()
         assert abs(analysis['kappa_dp_critical'] - (-1.5)) < 1e-10
+        assert abs(analysis['trace_form_average_critical'] - (-1.5)) < 1e-10
+        assert analysis['ordered_current_data_lost_by_scalar_shadow'] is True
 
 
 # ============================================================
@@ -715,6 +725,8 @@ class TestFullAnalysis:
         analysis = full_critical_analysis(max_weight=10)
         assert analysis.kz_analysis.kz_diverges is True
         assert analysis.kz_analysis.sugawara_defined is False
+        assert analysis.kz_analysis.full_affine_voa_commutative is False
+        assert analysis.kz_analysis.full_current_theta_vanishes is False
 
     def test_full_analysis_bar_cohom(self):
         """Bar cohomology table in full analysis."""
@@ -733,6 +745,7 @@ class TestFullAnalysis:
         assert "kappa = 0" in table
         assert "DIVERGES" in table
         assert "C[S_2]" in table or "C[S2]" in table
+        assert "Full affine current sector is noncommutative" in table
 
 
 # ============================================================

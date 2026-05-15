@@ -207,6 +207,23 @@ INT_KAPPA1_KAPPA2 = Fraction(29, 5760)
 INT_KAPPA1_LAMBDA1_SQ = Fraction(1, 240)
 INT_KAPPA1_LAMBDA2 = Fraction(7, 5760)  # = lambda_2^FP
 
+# Genus-2 boundary pairing.
+#
+# The structural class c_3 below is the coefficient of B_3(h) in
+# ch_2(E_h).  Its compactified pairing with kappa_1 is
+#
+#     P = int_{Mbar_2} kappa_1 * c_3.
+#
+# The present compute module does not construct the full Mumford-Chiodo
+# boundary term producing P.  The interior value kappa_2/6 is kept only as a
+# diagnostic specialization; it is not an exact compactified integral.
+BOUNDARY_PAIRING_SYMBOL_GENUS2 = "P = int_{Mbar_2} kappa_1*c_3"
+UNRESOLVED_BOUNDARY_PAIRING_STATUS = (
+    "unresolved: full compactified Mumford-Chiodo boundary pairing not constructed here"
+)
+INTERIOR_C3_PAIRING_GENUS2 = INT_KAPPA1_KAPPA2 / Fraction(6)
+COLLISION_PAIRING_H1_H2_GENUS2 = Fraction(1003, 8640)
+
 # Additional intersection numbers needed for boundary computations.
 # On Mbar_2, the boundary divisors are delta_irr and delta_1.
 # The fundamental relation: kappa_1 = 12*lambda_1 - delta_irr - delta_1.
@@ -294,6 +311,23 @@ def _verify_faber_lambda2_FP():
 
 
 _verify_faber_lambda2_FP()
+
+
+def genus2_boundary_pairing_status() -> Dict[str, object]:
+    """Status of the unresolved genus-2 compactified boundary pairing.
+
+    The exact scalar-lane value at h = 1 does not need this pairing because
+    B_3(1) = 0.  Values at h != 1 with B_3(h) != 0 are conditional on an
+    explicit P.
+    """
+    return {
+        'symbol': BOUNDARY_PAIRING_SYMBOL_GENUS2,
+        'status': UNRESOLVED_BOUNDARY_PAIRING_STATUS,
+        'exact_compactified_integral_available': False,
+        'interior_diagnostic_pairing': INTERIOR_C3_PAIRING_GENUS2,
+        'collision_pairing_h1_h2': COLLISION_PAIRING_H1_H2_GENUS2,
+        'collision_meaning': 'I_2(2;P) = I_2(1;P) at this P, so numerical collision is not a scalar-lane proof',
+    }
 
 
 # ====================================================================
@@ -442,7 +476,7 @@ def c1_E_h_genus2(h: int) -> Dict[str, Fraction]:
 
 
 def c2_E_h_genus2_exact(h: int, P: Optional[Fraction] = None) -> Dict[str, Fraction]:
-    """c_2(E_h) on Mbar_2 in the {lambda_1^2, lambda_2} basis.
+    """c_2(E_h) on Mbar_2 as an exact structural decomposition.
 
     Uses Newton's identity: c_2 = (ch_1^2 - 2*ch_2)/2.
 
@@ -454,7 +488,9 @@ def c2_E_h_genus2_exact(h: int, P: Optional[Fraction] = None) -> Dict[str, Fract
              + [2*(h-1/2)] * lambda_2
              - B_3(h) * c_3
 
-    where c_3 is a class in R^2(Mbar_2) parameterized by P = int kappa_1 * c_3.
+    where c_3 is a class in R^2(Mbar_2).  The optional P argument is
+    accepted for API compatibility; integration against kappa_1 uses P in
+    integral_psi2_c2_E_h_genus2, not in this structural decomposition.
 
     For h = 1: c_2(E_1) = lambda_2 (since e(1) = 1, B_3(1) = 0, (1-1/2) = 1/2).
       c_2(E_1) = [1/2 - 1/2]*lambda_1^2 + [2*1/2]*lambda_2 - 0 = lambda_2.  CHECK!
@@ -473,6 +509,11 @@ def c2_E_h_genus2_exact(h: int, P: Optional[Fraction] = None) -> Dict[str, Fract
         'c3_coeff': -b3_h,  # coefficient of the unknown class c_3
         'B3_h': b3_h,
         'e_h': e_h,
+        'boundary_pairing_symbol': BOUNDARY_PAIRING_SYMBOL_GENUS2,
+        'boundary_pairing_status': (
+            'not needed for this class' if b3_h == 0
+            else UNRESOLVED_BOUNDARY_PAIRING_STATUS
+        ),
     }
 
 
@@ -521,7 +562,56 @@ def c2_E_h_minus_c2_E_1_genus2(h: int) -> Dict[str, Fraction]:
 # INTEGRATED CONTAMINATION at genus 2
 # ====================================================================
 
-def integrated_contamination_genus2(h: int, P: Optional[Fraction] = None) -> Dict[str, Fraction]:
+def genus2_higher_hodge_diagnostic_polynomial(h: int, P: Optional[Fraction] = None) -> Dict[str, object]:
+    """Exact genus-2 higher-Hodge diagnostic polynomial.
+
+    Source formula in higher_genus_foundations.tex:
+
+        I_2(h;P) = e(h)^2/480 - B_3(h) P - (h - 1/2)/576.
+
+    This is a polynomial in the unresolved boundary pairing
+    P = int_{Mbar_2} kappa_1*c_3.  If B_3(h) != 0 and P is absent, the
+    value is intentionally left unresolved.
+    """
+    h_frac = Fraction(h)
+    e_h = mumford_exponent(h)
+    b3_h = bernoulli_poly(3, h_frac)
+    half = Fraction(1, 2)
+
+    p_independent = e_h ** 2 / Fraction(480) - (h_frac - half) / Fraction(576)
+    p_coefficient = -b3_h
+
+    if p_coefficient == 0:
+        value = p_independent
+        p_used = None
+        status = 'exact: boundary pairing cancels because B_3(h)=0'
+        exact_available = True
+    elif P is None:
+        value = None
+        p_used = None
+        status = UNRESOLVED_BOUNDARY_PAIRING_STATUS
+        exact_available = False
+    else:
+        p_used = Fraction(P)
+        value = p_independent + p_coefficient * p_used
+        status = 'conditional on supplied boundary pairing P'
+        exact_available = False
+
+    return {
+        'h': h,
+        'e_h': e_h,
+        'B3_h': b3_h,
+        'P_independent_part': p_independent,
+        'P_coefficient': p_coefficient,
+        'P_used': p_used,
+        'value': value,
+        'boundary_pairing_symbol': BOUNDARY_PAIRING_SYMBOL_GENUS2,
+        'boundary_pairing_status': status,
+        'exact_compactified_integral_available': exact_available,
+        'formula': 'I_2(h;P)=e(h)^2/480 - B_3(h)*P - (h-1/2)/576',
+    }
+
+def integrated_contamination_genus2(h: int, P: Optional[Fraction] = None) -> Dict[str, object]:
     """int_{Mbar_2} kappa_1 * [c_2(E_h) - c_2(E_1)].
 
     This integral quantifies the ERROR that would occur at genus 2
@@ -537,19 +627,34 @@ def integrated_contamination_genus2(h: int, P: Optional[Fraction] = None) -> Dic
         + lambda_2_diff * INT_KAPPA1_LAMBDA2
         + c3_diff * P
 
-    where P = int kappa_1 * c_3 is the boundary parameter.
-
-    If P is not given, we use the interior approximation P = INT_KAPPA1_KAPPA2/6 = 29/34560.
+    where P = int kappa_1 * c_3 is the unresolved compactified boundary
+    pairing.  If P is not given and B_3(h) != 0, the returned numerical
+    value is only the P-independent diagnostic and is marked as not an
+    exact compactified integral.
     """
     diff = c2_E_h_minus_c2_E_1_genus2(h)
+    p_independent = (diff['lambda_1_sq'] * INT_KAPPA1_LAMBDA1_SQ
+                     + diff['lambda_2'] * INT_KAPPA1_LAMBDA2)
+    p_coefficient = diff['c3_coeff']
 
-    # Interior approximation for P
-    if P is None:
-        P = INT_KAPPA1_KAPPA2 / Fraction(6)  # = 29/34560
-
-    integral = (diff['lambda_1_sq'] * INT_KAPPA1_LAMBDA1_SQ
-                + diff['lambda_2'] * INT_KAPPA1_LAMBDA2
-                + diff['c3_coeff'] * P)
+    if p_coefficient == 0:
+        p_used = None
+        integral = p_independent
+        status = 'exact: boundary pairing cancels because B_3(h)=0'
+        exact_available = True
+        interpretation = 'exact compactified integral'
+    elif P is None:
+        p_used = None
+        integral = p_independent
+        status = UNRESOLVED_BOUNDARY_PAIRING_STATUS
+        exact_available = False
+        interpretation = 'P-independent diagnostic only; not an exact compactified integral'
+    else:
+        p_used = Fraction(P)
+        integral = p_independent + p_coefficient * p_used
+        status = 'conditional on supplied boundary pairing P'
+        exact_available = False
+        interpretation = 'conditional value for supplied P'
 
     # Also compute the lambda_2^FP value for comparison
     lambda2_FP = faber_pandharipande_lambda_g(2)
@@ -558,8 +663,14 @@ def integrated_contamination_genus2(h: int, P: Optional[Fraction] = None) -> Dic
         'h': h,
         'integral': integral,
         'lambda_2_FP': lambda2_FP,
-        'ratio_to_FP': integral / lambda2_FP if lambda2_FP != 0 else None,
-        'P_used': P,
+        'ratio_to_FP': integral / lambda2_FP if integral is not None and lambda2_FP != 0 else None,
+        'P_used': p_used,
+        'P_independent_part': p_independent,
+        'P_coefficient': p_coefficient,
+        'boundary_pairing_symbol': BOUNDARY_PAIRING_SYMBOL_GENUS2,
+        'boundary_pairing_status': status,
+        'exact_compactified_integral_available': exact_available,
+        'integral_interpretation': interpretation,
         'diff_lambda1_sq': diff['lambda_1_sq'],
         'diff_lambda2': diff['lambda_2'],
         'diff_c3': diff['c3_coeff'],
@@ -571,7 +682,7 @@ def integrated_contamination_genus2(h: int, P: Optional[Fraction] = None) -> Dic
 # ====================================================================
 
 def integral_psi2_c2_E_h_genus2(h: int, P: Optional[Fraction] = None) -> Fraction:
-    """Compute int_{Mbar_{2,1}} psi^2 c_2(E_h) exactly.
+    """Compute int_{Mbar_{2,1}} psi^2 c_2(E_h), conditional on P if needed.
 
     I(h) = int kappa_1 * c_2(E_h)
          = (e(h)^2/2 - (h-1/2)) * I_{kappa1 lambda1^2}
@@ -580,21 +691,18 @@ def integral_psi2_c2_E_h_genus2(h: int, P: Optional[Fraction] = None) -> Fractio
 
     where P = int kappa_1 * c_3 (boundary parameter).
 
-    At h = 1: I(1) = (1/2 - 1/2)*1/240 + 2*1/2*7/5760 - 0 = 7/5760 = lambda_2^FP.  CHECK.
+    At h = 1: I(1) = 7/5760 = lambda_2^FP for every P because B_3(1) = 0.
+    For B_3(h) != 0, P must be supplied explicitly; otherwise this module
+    would confuse an interior diagnostic with an exact compactified integral.
     """
-    if P is None:
-        P = INT_KAPPA1_KAPPA2 / Fraction(6)
-
-    h_frac = Fraction(h)
-    e_h = mumford_exponent(h)
-    b3_h = bernoulli_poly(3, h_frac)
-    half = Fraction(1, 2)
-
-    I_h = ((e_h ** 2 / 2 - (h_frac - half)) * INT_KAPPA1_LAMBDA1_SQ
-           + 2 * (h_frac - half) * INT_KAPPA1_LAMBDA2
-           - b3_h * P)
-
-    return I_h
+    diagnostic = genus2_higher_hodge_diagnostic_polynomial(h, P)
+    value = diagnostic['value']
+    if value is None:
+        raise ValueError(
+            "genus-2 compactified integral is unresolved without an explicit "
+            f"{BOUNDARY_PAIRING_SYMBOL_GENUS2}"
+        )
+    return value
 
 
 # ====================================================================
@@ -788,8 +896,15 @@ def contamination_sensitivity(h: int) -> Dict[str, Fraction]:
         'h': h,
         'P_independent_part': P_independent,
         'P_coefficient': P_coefficient,  # = -B_3(h)
+        'boundary_pairing_symbol': BOUNDARY_PAIRING_SYMBOL_GENUS2,
+        'boundary_pairing_status': UNRESOLVED_BOUNDARY_PAIRING_STATUS if P_coefficient != 0 else 'not needed',
+        'collision_pairing_to_cancel': (
+            -P_independent / P_coefficient if P_coefficient != 0 else None
+        ),
         'contamination_at_P0': P_independent,
-        'contamination_at_P_interior': P_independent + P_coefficient * INT_KAPPA1_KAPPA2 / Fraction(6),
+        'contamination_at_P_interior_diagnostic': (
+            P_independent + P_coefficient * INTERIOR_C3_PAIRING_GENUS2
+        ),
     }
 
 
@@ -848,8 +963,8 @@ def vertex_contribution_analysis():
 
       CONCLUSION: Vertex contributions do NOT introduce c_k(E_h) for h != 1.
       The contamination analysis above quantifies what WOULD happen if they
-      did, confirming that the error would be enormous (ratio 83 at h=2)
-      and therefore detectable.
+      did: at h=2 the lambda_1^2 coefficient is 83 before the unresolved
+      boundary pairing P is even chosen.
 
       WHAT REMAINS OPEN: Whether the COMBINATORICS of multi-channel graph
       sums (with different numerical vertex weights for T-channel vs W-channel)
@@ -857,6 +972,10 @@ def vertex_contribution_analysis():
       op:multi-generator-universality, and it is a question about the
       NUMERICAL structure of the graph sum, not about Hodge bundles.
     """
+    h2_sensitivity = contamination_sensitivity(2)
+    h3_sensitivity = contamination_sensitivity(3)
+    lambda2_FP = faber_pandharipande_lambda_g(2)
+
     return {
         'edges_use_E_1': True,
         'reason': 'd log E(z,w) has weight 1 regardless of field weight h (AP27)',
@@ -871,8 +990,13 @@ def vertex_contribution_analysis():
             'per channel) produce tautological classes proportional to lambda_g at '
             'genus >= 2. This is op:multi-generator-universality.'
         ),
-        'contamination_hypothetical_h2': integrated_contamination_genus2(2)['ratio_to_FP'],
-        'contamination_hypothetical_h3': integrated_contamination_genus2(3)['ratio_to_FP'],
+        'contamination_hypothetical_h2': h2_sensitivity['P_independent_part'] / lambda2_FP,
+        'contamination_hypothetical_h3': h3_sensitivity['P_independent_part'] / lambda2_FP,
+        'contamination_hypothetical_status': UNRESOLVED_BOUNDARY_PAIRING_STATUS,
+        'h2_P_independent_ratio_to_FP': h2_sensitivity['P_independent_part'] / lambda2_FP,
+        'h3_P_independent_ratio_to_FP': h3_sensitivity['P_independent_part'] / lambda2_FP,
+        'h2_P_coefficient': h2_sensitivity['P_coefficient'],
+        'h3_P_coefficient': h3_sensitivity['P_coefficient'],
     }
 
 
@@ -885,9 +1009,6 @@ def grr_chern_classes_genus2(h: int, P: Optional[Fraction] = None) -> Dict:
 
     Returns all Chern class data organized for multi-path verification.
     """
-    if P is None:
-        P = INT_KAPPA1_KAPPA2 / Fraction(6)
-
     h_frac = Fraction(h)
     e_h = mumford_exponent(h)
     b3_h = bernoulli_poly(3, h_frac)
@@ -898,7 +1019,8 @@ def grr_chern_classes_genus2(h: int, P: Optional[Fraction] = None) -> Dict:
     # c_2 = [e(h)^2/2 - (h-1/2)] lambda_1^2 + 2(h-1/2) lambda_2 - B_3(h)*c_3
 
     c2_data = c2_E_h_genus2_exact(h, P)
-    integral = integral_psi2_c2_E_h_genus2(h, P)
+    diagnostic = genus2_higher_hodge_diagnostic_polynomial(h, P)
+    integral = diagnostic['value']
     FP = faber_pandharipande_lambda_g(2)
 
     return {
@@ -910,9 +1032,11 @@ def grr_chern_classes_genus2(h: int, P: Optional[Fraction] = None) -> Dict:
         'c_2': c2_data,
         'integral_psi2_c2': integral,
         'lambda_2_FP': FP,
-        'ratio_to_FP': integral / FP if FP != 0 else None,
+        'ratio_to_FP': integral / FP if integral is not None and FP != 0 else None,
         'B_3_h': b3_h,
-        'P_used': P,
+        'P_used': diagnostic['P_used'],
+        'boundary_pairing_status': diagnostic['boundary_pairing_status'],
+        'exact_compactified_integral_available': diagnostic['exact_compactified_integral_available'],
     }
 
 
@@ -1030,7 +1154,7 @@ def full_diagnostic():
         print(f"  h={h}: P-indep = {float(sens['P_independent_part']):.8f}, "
               f"P-coeff = {sens['P_coefficient']}, "
               f"at P=0: {float(sens['contamination_at_P0']):.8f}, "
-              f"at P_int: {float(sens['contamination_at_P_interior']):.8f}")
+              f"at P_int diagnostic: {float(sens['contamination_at_P_interior_diagnostic']):.8f}")
     print()
 
     # Vertex analysis
@@ -1038,8 +1162,9 @@ def full_diagnostic():
     va = vertex_contribution_analysis()
     print(f"  Edges use E_1: {va['edges_use_E_1']}")
     print(f"  Vertices introduce E_h: {va['vertices_introduce_E_h']}")
-    print(f"  Hypothetical contamination at h=2: {float(va['contamination_hypothetical_h2']):.2f}x lambda_2^FP")
-    print(f"  Hypothetical contamination at h=3: {float(va['contamination_hypothetical_h3']):.2f}x lambda_2^FP")
+    print(f"  Hypothetical h=2 P-independent term: {float(va['h2_P_independent_ratio_to_FP']):.2f}x lambda_2^FP")
+    print(f"  Hypothetical h=3 P-independent term: {float(va['h3_P_independent_ratio_to_FP']):.2f}x lambda_2^FP")
+    print(f"  Boundary pairing status: {va['contamination_hypothetical_status']}")
     print()
 
     # Interior ch_k table

@@ -72,7 +72,8 @@ CAUTIONS:
   AP1:  kappa formulas are family-specific; never copy between families.
   AP14: Shadow depth classifies COMPLEXITY, not Koszulness.
   AP25: Omega(B(A)) = A (inversion, NOT duality).
-        D_Ran(B(A)) = B(A!) (Verdier intertwining).
+        B(A) is a coalgebra, A^i=H^*(B(A)), and A^! is obtained from
+        A^i by Verdier/linear duality under finite-type or completed hypotheses.
   AP31: kappa = 0 does NOT imply Theta_A = 0.
 
 Manuscript references:
@@ -186,7 +187,7 @@ def bar_differential_matrix_heisenberg(h: int, rank: int = 1) -> np.ndarray:
     # (from the OPE J(z)J(w) ~ k/(z-w)^2, extracting d log residue
     #  gives k*a * delta_{a,b} since Res_{z=w} a*k/(z-w) = k*a).
 
-    # Actually, more carefully: the bar differential on s^{-1}J_{-a} ⊗ s^{-1}J_{-b}
+    # The bar differential on s^{-1}J_{-a} tensor s^{-1}J_{-b}
     # extracts the regular part of the OPE.  For Heisenberg with
     # J_{(1)}J = k (the (z-w)^{-2} coefficient), the d log extraction
     # gives k*delta_{a,b} (matching mode indices).
@@ -296,9 +297,7 @@ def stabilizer_generators_heisenberg(h: int, k_level: int = 1) -> Dict:
     n_pairs = len(pairs)
 
     # The bar complex at arity 2 has:
-    # - Input space: dimension = number of pairs = floor((h-1)/2) for rank 1
-    #   (counting unordered pairs: a <= b, a+b=h)
-    #   Actually, ordered pairs: a from 1 to h-1, so h-1 pairs.
+    # - Input space: ordered pairs a from 1 to h-1, so h-1 pairs.
     # - Output space: dimension = p(h) (partitions of h)
     # - The bar differential maps input → output.
     # - Kernel of the transpose = stabilizer relations.

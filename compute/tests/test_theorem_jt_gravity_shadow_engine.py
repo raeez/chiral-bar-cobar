@@ -16,14 +16,15 @@ Section 10: Schwarzian limit (large c)
 Section 11: Matrix model identification
 Section 12: Large-g asymptotics
 Section 13: Generating functions
-Section 14: Full structural comparison
+Section 14: Structural comparison with certification boundaries
 Section 15: Connection via topological recursion
+Section 16: Object and analytic firewalls
 
 VERIFICATION PATHS (>= 3 per claim)
 ====================================
 
-Ratio non-constancy (the CENTRAL negative result):
-  (a) Explicit computation at g = 1, 2, 3, 4
+Ratio non-constancy:
+  (a) Explicit computation at g = 1, 2, 3
   (b) Lambda vs kappa class comparison (structural argument)
   (c) Large-g asymptotic divergence
   (d) Generating function comparison
@@ -38,15 +39,11 @@ Genus-1 match:
   (b) Mumford relation lambda_1 = kappa_1/12
   (c) Intersection number cross-check
 
-ANTI-PATTERNS GUARDED
-=====================
-AP1:  kappa recomputed from first principles for each family.
-AP3:  No pattern-matching; each ratio verified independently.
-AP10: Expected values from independent computation, not hardcoded.
-AP22: All F_g values verified positive.
-AP38: WP volumes in Mirzakhani convention, cross-checked.
-AP39: kappa(Vir_c) = c/2 (NOT c or c/12 or anything else).
-AP48: kappa depends on the full algebra, not just c.
+CONVENTION CHECKS
+=================
+The tests keep scalar Bernoulli/A-hat data, finite Virasoro data,
+WP/JT sine-curve data, EO recursion input, and external analytic
+gravity claims in separate lanes.
 """
 
 import math
@@ -58,6 +55,9 @@ from fractions import Fraction
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'lib'))
 
 from theorem_jt_gravity_shadow_engine import (
+    CERTIFIED, CONDITIONAL, EXTERNAL_INPUT, FINITE_WINDOW, NON_CERTIFIED,
+    object_kernel_firewall, gravity_claim_certification,
+    virasoro_shadow_constants,
     # Section 1
     bernoulli_exact, lambda_fp_exact,
     # Section 2
@@ -116,7 +116,7 @@ class TestBernoulliFoundations:
         assert lambda_fp_exact(1) == Fraction(1, 24)
 
     def test_lambda_2(self):
-        """lambda_2^FP = 7/5760 (NOT 1/1152 -- AP38)."""
+        """lambda_2^FP = 7/5760."""
         assert lambda_fp_exact(2) == Fraction(7, 5760)
 
     def test_lambda_3(self):
@@ -124,7 +124,7 @@ class TestBernoulliFoundations:
         assert lambda_fp_exact(3) == Fraction(31, 967680)
 
     def test_lambda_all_positive(self):
-        """All lambda_g^FP are positive (AP22)."""
+        """All lambda_g^FP are positive."""
         for g in range(1, 12):
             assert lambda_fp_exact(g) > 0
 
@@ -155,7 +155,7 @@ class TestShadowFreeEnergies:
         assert f2 == Rational(91, 5760)
 
     def test_F_g_positive_all_c(self):
-        """F_g > 0 for c > 0 (AP22)."""
+        """F_g > 0 for c > 0."""
         for c in [1, 2, 10, 26, 100]:
             for g in range(1, 6):
                 f = F_g_shadow_virasoro(c, g)
@@ -170,6 +170,27 @@ class TestShadowFreeEnergies:
             # f(20) = 2*f(10), f(30) = 3*f(10)
             assert abs(f_at_20 / f_at_10 - 2.0) < 1e-12
             assert abs(f_at_30 / f_at_10 - 3.0) < 1e-12
+
+
+class TestVirasoroShadowConstants:
+    """Canonical finite-window Virasoro constants."""
+
+    def test_c26_constants(self):
+        """At c=26: kappa=13, S4=5/1976, Delta=5/19."""
+        data = virasoro_shadow_constants(26.0)
+        assert data['status'] == CERTIFIED
+        assert abs(data['kappa'] - 13.0) < 1e-14
+        assert abs(data['S3'] - 2.0) < 1e-14
+        assert abs(data['S4'] - 5.0 / 1976.0) < 1e-14
+        assert abs(data['Delta'] - 5.0 / 19.0) < 1e-14
+        assert abs(data['Q_t2_extra_coefficient'] - 10.0 / 19.0) < 1e-14
+
+    def test_singular_central_charges_rejected(self):
+        """The canonical rational formulas exclude c=0 and c=-22/5."""
+        with pytest.raises(ValueError):
+            virasoro_shadow_constants(0.0)
+        with pytest.raises(ValueError):
+            virasoro_shadow_constants(-22.0 / 5.0)
 
 
 # =========================================================================
@@ -208,11 +229,11 @@ class TestJTFreeEnergies:
 
 
 # =========================================================================
-# Section 4: The ratio R_g (CENTRAL RESULT)
+# Section 4: The ratio R_g
 # =========================================================================
 
 class TestRatioNonConstancy:
-    """R_g = F_g^{JT} / F_g^{shadow} is NOT constant in g."""
+    """R_g = F_g^{JT} / F_g^{shadow} is not constant in g."""
 
     def test_ratio_g1_formula(self):
         """R_1(c) = 4*pi^2/c."""
@@ -230,14 +251,14 @@ class TestRatioNonConstancy:
     def test_ratio_varies_with_genus(self):
         """R_g at c = 26 varies with g (central negative result)."""
         ratios = {g: ratio_JT_shadow(26.0, g) for g in range(1, 4)}
-        # R_1, R_2, R_3 should NOT all be equal
+        # R_1, R_2, R_3 should not all be equal
         r_vals = list(ratios.values())
         # Check that max/min ratio > 1.05 (at least 5% variation)
         assert max(r_vals) / min(r_vals) > 1.05, \
             f"Ratios too close: {ratios}. Expected variation > 5%."
 
     def test_is_ratio_constant_returns_false(self):
-        """The normalized ratio is NOT constant."""
+        """The normalized ratio is not constant."""
         constant, ratios = is_ratio_constant()
         assert not constant, f"Ratio unexpectedly constant: {ratios}"
 
@@ -271,17 +292,20 @@ class TestGenus1Dictionary:
         d = genus_1_dictionary(1.0)  # any c
         assert abs(d['c_match_genus_1'] - 4.0 * PI2) < 1e-10
 
-    def test_e_S0_at_c26(self):
-        """At c = 26: e^{S_0} = 26/(4*pi^2) ~ 0.6580."""
+    def test_scalar_normalization_at_c26(self):
+        """At c = 26 the scalar g=1 normalization is 26/(4*pi^2)."""
         d = genus_1_dictionary(26.0)
         expected = 26.0 / (4.0 * PI2)
-        assert abs(d['e_S0_genus_1'] - expected) < 1e-10
-        assert 0.5 < d['e_S0_genus_1'] < 1.0
+        assert abs(d['scalar_normalization_to_JT_g1'] - expected) < 1e-10
+        assert 0.5 < d['scalar_normalization_to_JT_g1'] < 1.0
+        assert d['e_S0_genus_1'] is None
+        assert d['e_S0_genus_1_status'] == NON_CERTIFIED
+        assert d['jt_genus_weight_determines_S0'] is False
 
-    def test_e_S0_at_cmatch(self):
-        """At c = 4*pi^2: e^{S_0} = 1."""
+    def test_scalar_normalization_at_cmatch(self):
+        """At c = 4*pi^2 the scalar g=1 normalization is one."""
         d = genus_1_dictionary(4.0 * PI2)
-        assert abs(d['e_S0_genus_1'] - 1.0) < 1e-10
+        assert abs(d['scalar_normalization_to_JT_g1'] - 1.0) < 1e-10
 
 
 # =========================================================================
@@ -326,6 +350,8 @@ class TestSpectralCurves:
         comp = spectral_curve_comparison(26.0, 1.0)
         assert comp['shadow_degree'] == 2
         assert comp['JT_degree'] == 'transcendental'
+        assert comp['same_curve_certified'] is False
+        assert comp['comparison_status'] == NON_CERTIFIED
 
 
 # =========================================================================
@@ -411,6 +437,7 @@ class TestC26Analysis:
         """kappa(Vir_26) = 13."""
         data = c26_analysis()
         assert data['kappa'] == 13.0
+        assert data['constants_status'] == CERTIFIED
 
     def test_c26_shadow_F1(self):
         """F_1(Vir_26) = 13/24."""
@@ -450,7 +477,7 @@ class TestSchwarzianLimit:
             # F_JT_weighted scales as (1/c)^{2g-2}, so halves for each power
             ratio_scaling = d2['F_JT_weighted'] / d1['F_JT_weighted']
             expected_scaling = (100.0 / 200.0) ** (2 * g - 2)
-            # This should NOT be 2.0, demonstrating the mismatch
+            # This should not be 2.0; the c-dependence differs.
             assert abs(ratio_scaling - expected_scaling) / abs(expected_scaling) < 0.01
 
 
@@ -472,9 +499,10 @@ class TestMatrixModel:
         assert abs(mm['N'] - math.sqrt(13.0)) < 1e-10
 
     def test_N_not_integer_c26(self):
-        """N is NOT an integer at c = 26."""
+        """N is not an integer at c = 26."""
         mm = matrix_size_from_kappa(13.0)
         assert not mm['is_integer_N']
+        assert mm['double_scaled_JT_limit_certified'] is False
 
     def test_N_integer_at_kappa_1(self):
         """N = 1 at kappa = 1 (Witten-Kontsevich point)."""
@@ -530,8 +558,8 @@ class TestGeneratingFunctions:
         expected = kappa * h * h / 24.0
         assert abs(val - expected) / abs(expected) < 0.01
 
-    def test_gf_convergence_radius(self):
-        """GF converges for |hbar| < 2*pi, diverges at 2*pi."""
+    def test_scalar_gf_convergence_radius(self):
+        """The scalar A-hat GF has radius 2*pi."""
         kappa = 1.0
         # Well inside: should be finite
         assert math.isfinite(shadow_generating_function(kappa, 5.0))
@@ -554,19 +582,25 @@ class TestFullComparison:
     """Complete structural comparison between shadow and JT."""
 
     def test_shadow_not_equal_jt(self):
-        """The shadow expansion is NOT equal to JT (central negative result)."""
+        """The shadow expansion is not equal to JT."""
         comp = full_structural_comparison(26.0)
         assert comp['shadow_equals_JT'] is False
 
-    def test_shadow_convergent(self):
-        """Shadow genus expansion converges."""
+    def test_scalar_shadow_convergent_certified(self):
+        """Only the scalar Bernoulli/A-hat convergence is certified here."""
         comp = full_structural_comparison(26.0)
+        assert comp['scalar_shadow_convergent'] is True
+        assert comp['scalar_shadow_convergence_status'] == CERTIFIED
         assert comp['shadow_convergent'] is True
+        assert comp['shadow_convergent_scope'] == 'scalar Bernoulli/A-hat lane only'
+        assert comp['exact_scalar_radius_status'] == CERTIFIED
 
-    def test_jt_asymptotic(self):
-        """JT genus expansion is asymptotic (divergent)."""
+    def test_jt_asymptotic_external_only(self):
+        """JT asymptotics are external analytic input, not certified here."""
         comp = full_structural_comparison(26.0)
-        assert comp['jt_asymptotic'] is True
+        assert comp['jt_asymptotic'] is None
+        assert comp['jt_asymptotic_status'] == EXTERNAL_INPUT
+        assert comp['borel_summability_status'] == NON_CERTIFIED
 
     def test_shadow_curve_algebraic(self):
         """Shadow spectral curve is algebraic."""
@@ -583,18 +617,31 @@ class TestFullComparison:
         comp = full_structural_comparison(26.0)
         assert comp['ratio_constant'] is False
 
+    def test_no_gravity_overclaims(self):
+        """Scalar data has explicit EO, BTZ, and all-genus boundaries."""
+        comp = full_structural_comparison(26.0)
+        assert comp['full_EO_recursion_certified_from_Q_L'] is False
+        assert comp['eo_recursion_from_shadow_curve_status'] == CONDITIONAL
+        assert comp['btz_closed_form_recovery_status'] == NON_CERTIFIED
+        assert comp['all_genus_3d_partition_theorem_status'] == NON_CERTIFIED
+        assert comp['full_jt_partition_from_shadow'] is False
+
 
 # =========================================================================
 # Section 15: Connection via topological recursion
 # =========================================================================
 
 class TestTopologicalRecursionConnection:
-    """Both arise from top. rec. on DIFFERENT spectral curves."""
+    """Topological-recursion comparison on different spectral curves."""
 
-    def test_both_from_top_rec(self):
-        """Both shadow and JT arise from topological recursion."""
+    def test_full_eo_not_certified_from_shadow_curve(self):
+        """The quadratic shadow curve alone supplies only partial EO data."""
         conn = connection_via_topological_recursion(26.0)
-        assert conn['both_from_top_rec'] is True
+        assert conn['both_from_top_rec'] is None
+        assert conn['shadow_EO_status'] == CONDITIONAL
+        assert conn['full_EO_recursion_from_shadow_curve'] is False
+        assert conn['jt_sine_curve_status'] == EXTERNAL_INPUT
+        assert conn['double_scaled_JT_sector_certified'] is False
 
     def test_different_curves(self):
         """But on different spectral curves."""
@@ -610,6 +657,8 @@ class TestTopologicalRecursionConnection:
         """Genus-1 match is exact (Mumford relation)."""
         conn = connection_via_topological_recursion(26.0)
         assert conn['genus_1_match'] is True
+        assert conn['genus_1_match_status'] == CERTIFIED
+        assert abs(conn['genus_1_proportionality'] - 4.0 * PI2 / 26.0) < 1e-12
 
     def test_higher_genus_no_match(self):
         """Higher genus: no simple proportionality."""
@@ -617,7 +666,48 @@ class TestTopologicalRecursionConnection:
         assert conn['higher_genus_match'] is False
 
     def test_convergence_properties(self):
-        """Shadow converges, JT diverges."""
+        """Convergence statements are scoped by lane."""
         conn = connection_via_topological_recursion(26.0)
-        assert 'convergent' in conn['shadow_convergence']
-        assert 'factorial' in conn['jt_convergence'] or 'asymptotic' in conn['jt_convergence']
+        assert 'scalar A-hat lane' in conn['shadow_convergence']
+        assert 'external WP/JT asymptotic input' in conn['jt_convergence']
+        assert conn['borel_summability_status'] == NON_CERTIFIED
+
+
+# =========================================================================
+# Section 16: Object and analytic firewalls
+# =========================================================================
+
+class TestFirewalls:
+    """Object, kernel, and analytic certification boundaries."""
+
+    def test_object_firewall(self):
+        """The five objects remain distinct."""
+        fw = object_kernel_firewall()
+        assert fw['objects'] == ('A', 'B(A)', 'A^i', 'A^!', 'Z_ch^der(A)')
+        assert fw['bar_cobar_inversion'] == 'Omega(B(A)) = A'
+        assert fw['bar_cobar_inversion_is_koszul_duality'] is False
+        assert 'Verdier' in fw['koszul_dual_branch']
+        assert 'Hochschild' in fw['bulk_branch']
+
+    def test_kernel_constants(self):
+        """Kernel constants use the local canonical normalizations."""
+        kernels = object_kernel_firewall()['kernels']
+        assert kernels['affine_raw_trace_form'] == 'k*Omega_tr/z'
+        assert kernels['kz_connection'] == 'Omega/((k+h^vee)z)'
+        assert kernels['heisenberg'] == 'k/z'
+        assert kernels['virasoro'] == '(c/2)/z^3 + 2T/z'
+
+    def test_gravity_certification_map(self):
+        """Analytic gravity claims are not inferred from scalar shadows."""
+        cert = gravity_claim_certification()
+        assert cert['scalar_bernoulli_ahat_lane'] == CERTIFIED
+        assert cert['virasoro_shadow_constants'] == CERTIFIED
+        assert cert['wp_jt_sine_curve_data'] == EXTERNAL_INPUT
+        assert cert['wp_jt_finite_window']['status'] == FINITE_WINDOW
+        assert cert['wp_jt_finite_window']['certified_genera'] == (1, 2, 3)
+        assert cert['eo_recursion_from_shadow_curve'] == CONDITIONAL
+        assert cert['exact_scalar_radius_2pi'] == CERTIFIED
+        assert cert['jt_borel_summability'] == NON_CERTIFIED
+        assert cert['btz_closed_form_recovery_from_shadow'] == NON_CERTIFIED
+        assert cert['full_jt_partition_function_from_shadow'] == NON_CERTIFIED
+        assert cert['all_genus_3d_gravity_partition_theorem'] == NON_CERTIFIED

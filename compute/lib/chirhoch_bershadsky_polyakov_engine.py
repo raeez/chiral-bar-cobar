@@ -39,8 +39,9 @@ DERIVATION ANALYSIS (ChirHoch^1 = Der/Inn):
       exists at all generic k.
 
   Fermionic generators G+, G- (weight 3/2) do NOT contribute to the
-  bosonic part of ChirHoch^1.  They are locked to J and T by the N=2
-  superconformal algebra structure.
+  bosonic part of ChirHoch^1.  Their deformations are constrained by
+  the Feigin-Semikhatov W_3^{(2)} OPE, especially the J-charge and
+  G+G- normal-form coefficients.
 
   The weight-2 generator T gives the Virasoro subalgebra; its
   c-deformation is the SAME as derivation (2) above (not independent).
@@ -68,8 +69,8 @@ COMPARISON WITH OTHER FAMILIES:
   outer derivation beyond the universal c-deformation.
 
 KEY IDENTIFICATIONS:
-  - BP is the N=2 SCA at c = c_BP(k) = 2 - 24(k+1)^2/(k+3)
-  - The J-level is kJ = c/3 (locked to c by N=2 structure)
+  - BP is the Feigin-Semikhatov W_3^{(2)} algebra.
+  - The J-level is (2k+3)/3 in the Feigin-Semikhatov convention.
   - Anomaly ratio rho = 1/6
   - kappa = rho * c = c/6
 
@@ -94,6 +95,7 @@ from compute.lib.sl3_subregular_bar import (
     bp_central_charge,
     bp_dual_level,
     bp_koszul_conductor,
+    bp_primary_ope_normal_form,
     kappa_path1_anomaly_ratio,
     kappa_all_paths_agree,
 )
@@ -231,7 +233,7 @@ def derivation_analysis_bp(level=None) -> BPDerivationAnalysis:
 
     (1) J-current deformation (1 direction):
         J is a weight-1 bosonic generator, a U(1) current with
-        OPE J(z)J(w) ~ (c/3)/(z-w)^2.  On a curve X, the chiral
+        OPE J(z)J(w) ~ ((2*k+3)/3)/(z-w)^2.  On a curve X, the chiral
         derivation from J is genuinely outer.  This parallels the
         affine KM case where each weight-1 current contributes one
         outer derivation to ChirHoch^1.  For BP the single U(1)
@@ -251,8 +253,9 @@ def derivation_analysis_bp(level=None) -> BPDerivationAnalysis:
     FERMIONIC GENERATORS contribute 0:
         G+ and G- are fermionic (weight 3/2).  Their deformations
         are odd (anticommuting) and do not contribute to the bosonic
-        (even) part of ChirHoch^1.  In the N=2 SCA, G+, G- are
-        locked to J and T by the superconformal algebra structure.
+        (even) part of ChirHoch^1.  In the Feigin-Semikhatov
+        W_3^{(2)} normal form, the J-charge relations and the G+G-
+        OPE coefficients constrain them together with J and T.
 
     INNER DERIVATIONS:
         - L_0 = T_{(1)}: conformal weight grading
@@ -428,39 +431,57 @@ def all_deformations_unobstructed_bp() -> bool:
 
 
 # =============================================================================
-# Section 8: N=2 superconformal structure
+# Section 8: Feigin-Semikhatov normal-form structure
 # =============================================================================
 
-def n2_sca_constraints_on_chirhoch() -> Dict[str, Any]:
-    """N=2 SCA constraints on ChirHoch^1(BP_k).
+def feigin_semikhatov_constraints_on_chirhoch(level=None) -> Dict[str, Any]:
+    """Feigin-Semikhatov W_3^{(2)} constraints on ChirHoch^1(BP_k).
 
-    BP = N=2 SCA at c = c_BP(k).  The N=2 structure imposes:
+    BP is the Feigin-Semikhatov W_3^{(2)} algebra.  The normal form imposes:
 
-    (1) J-level is locked: kJ = c/3.  The J_{(0)} eigenvalues are
-        integers (J-charge), so J-level changes cannot be independent
-        of c-changes.  This means the J-level deformation is NOT a
-        separate outer derivation: it is captured by the c-deformation.
+    (1) J-level is fixed by the affine level:
+        J_{(1)}J = (2k+3)/3.
 
-    (2) G+, G- are SUSY partners: delta(G+) and delta(G-) are
-        determined by delta(J) and delta(T) via the N=2 OPE relations.
-        No independent fermionic deformation parameters exist at the
-        bosonic level.
+    (2) The G+G- OPE has Feigin-Semikhatov coefficients
+        (k+1)(2k+3), 3(k+1), 3, 3(k+1)/2, and -(k+3) in the
+        double, simple, :JJ:, dJ, and T channels.  These coefficients
+        constrain the charged generators; no independent bosonic
+        deformation parameter is created by G+ or G-.
 
-    (3) Spectral flow sigma_eta acts as an automorphism.  It permutes
-        NS and R sector but does not create new deformations.
+    (3) Charge conservation under J_{(0)} replaces the N=2 spectral-flow
+        argument used in the old substitute.
 
-    The N=2 constraints REDUCE the naive count of 4 derivations
-    (one per generator) to 2 outer derivations.
+    These Feigin-Semikhatov constraints reduce the naive count of
+    4 generator derivations to the same two outer derivations:
+    J-current and level/c deformation.
     """
+    normal = bp_primary_ope_normal_form(level)
     return {
+        "is_n2_sca": False,
+        "is_feigin_semikhatov_bp": True,
         "j_level_locked": True,
-        "j_level_formula": "kJ = c/3",
-        "fermionic_locked_by_susy": True,
-        "spectral_flow_is_automorphism": True,
+        "j_level_formula": normal["J_level"],
+        "g_pairing": normal["G_pairing"],
+        "g_j_coefficient": normal["GJ_coefficient"],
+        "jj_coefficient": normal["JJ_coefficient"],
+        "dj_coefficient": normal["dJ_coefficient"],
+        "t_coefficient": normal["T_coefficient"],
+        "fermionic_constrained_by_fs_ope": True,
+        "spectral_flow_is_automorphism": False,
+        "charge_conservation": "J_{(0)}G+ = +G+, J_{(0)}G- = -G-",
         "naive_derivation_count": 4,
         "actual_outer_derivations": 2,
-        "reduction_mechanism": "N=2 OPE constraints + SUSY locking",
+        "reduction_mechanism": "Feigin-Semikhatov OPE constraints + J-charge conservation",
     }
+
+
+def n2_sca_constraints_on_chirhoch() -> Dict[str, Any]:
+    """Compatibility wrapper for the old misnormalised BP constraint surface.
+
+    The returned data now records the correction: BP is governed by the
+    Feigin-Semikhatov W_3^{(2)} normal form.
+    """
+    return feigin_semikhatov_constraints_on_chirhoch()
 
 
 # =============================================================================

@@ -1,30 +1,16 @@
 \documentclass[11pt,reqno]{amsart}
 \usepackage[localtheorems]{raeez-math-template}
 
-% ================================================================
-% Standalone: MC5 -- the 5-point sewing theorem
-% Author: Raeez Lorgat. Date: 2026-04-16.
-% ================================================================
-
 \usepackage{array}
-
-% ================================================================
-% Theorem environments
-% ================================================================
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{corollary}[theorem]{Corollary}
-\newtheorem{conjecture}[theorem]{Conjecture}
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
 \newtheorem{example}[theorem]{Example}
 \theoremstyle{remark}
 \newtheorem{remark}[theorem]{Remark}
-
-% ================================================================
-% Macros (matching N4_mc4_completion.tex)
-% ================================================================
 \newcommand{\cA}{\mathcal{A}}
 \newcommand{\cB}{\mathcal{B}}
 \newcommand{\cC}{\mathcal{C}}
@@ -40,94 +26,125 @@
 \newcommand{\Tr}{\mathrm{Tr}}
 \newcommand{\dbar}{d_{\bar{}}}
 
-\title{MC5: the 5-point genus-zero sewing theorem}
+\title{Five-point genus-zero Arnold sewing}
 \author{Raeez Lorgat}
-\date{2026-04-16}
+\date{}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-We state and prove MC5, the 5-point genus-zero sewing theorem for
-chiral $\Ainf$-algebras on a smooth projective curve $X$. The
-5-point bar complex sews along the ten rational separating divisors
-of $\bar M_{0,5}$ via the MC3/MC4 predecessors. The elliptic trace
-belongs to a separate genus-one clutching problem, not to the boundary
-of $\bar M_{0,5}$. The pullback identity
-$\dbar_5 = \mathrm{KZ}^*(\nabla_{\mathrm{Arnold}}^{(5)})$ from the
-KZ--Arnold climax theorem converts the flatness of Arnold's KZ
-connection into $\dbar_5^2 = 0$. The result is stated on the
-evaluation-generated core and extends the MC4 completion
-tower by one point count.
+The genus-zero five-point sewing problem is the formal completion of
+$\bar M_{0,5}$ along its rational normal-crossing boundary. For an
+evaluation-generated chiral $\Ainf$-algebra with nondegenerate node
+pairing and trace-class genus-zero sewing sums, the boundary value of
+the five-point correlator is the contraction of a three-point block
+with a four-point block over the node state space. Pulling Arnold's
+flat connection back along the local KZ map gives the arity-five
+ordered bar differential; the Arnold three-term relation together
+with the infinitesimal braid relations gives
+$\dbar_5^2=0$~\cite{Arnold69,Kohno87}. Under the finite-window
+square-zero model, or under Positselski's second-kind coderived
+comparison in the curved CDG ambient, the degree-five completed
+bar-cobar counit is the corresponding quasi-isomorphism or
+coacyclic-cone comparison~\cite{LV12,Positselski11}.
 \end{abstract}
 
 \section{Statement}
-\label{sec:mc5-statement}
+\label{sec:n5-statement}
 
-Let $X$ be a smooth projective curve over $\mathbb{C}$. Let $\cA$ be a
-\emph{strong completion tower} of finite resonance rank
-$\rho(\cA) < \infty$, restricted to the evaluation-generated core
-$\cA^{\mathrm{ec}} \subset \cA$. Write
-$\Phi^{\mathrm{ec}}_n$ for the $n$-point chiral correlator of
-$\cA^{\mathrm{ec}}$, regarded as a holomorphic section of the
-line bundle of conformal weights over the ordered configuration space
-$\Conf^{\mathrm{ord}}_n(X)$.
+Let $\cA$ be a chiral $\Ainf$-algebra on a smooth projective curve
+$X$, and let $\cA^{\mathrm{ec}}\subset\cA$ be its
+evaluation-generated core. Fix an Arnold-local affine or formal
+genus-zero collision screen in $X$, or take $X=\mathbb{P}^1$ with
+the projective linear relations imposed. Assume the following
+genus-zero data.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item The three-, four-, and five-point chiral correlators
+$\Phi^{\mathrm{ec}}_n$ are defined on
+$\Conf_n^{\mathrm{ord}}(X)$ and are compatible with genus-zero
+sewing.
+\item The node state space in $\cA^{\mathrm{ec}}$ carries a
+nondegenerate homogeneous pairing $\eta$, with inverse matrix
+$(\eta^{ab})$ on each finite energy slice.
+\item The genus-zero state sums below converge in the chosen sewing
+completion.
+\item The arity-five finite-window bar-cobar comparison lies in the
+square-zero total model, or in a curved CDG ambient with the
+second-kind coderived comparison. In particular,
+$\cA^{\mathrm{ec}}$ is treated as a strong completion tower whose
+finite quotients lie in the proved finite-stage bar-cobar regime.
+\end{enumerate}
 
-The Deligne-Mumford moduli $\bar M_{0,5}$ has boundary divisor
+Let $\mathscr S_5^{(0)}$ be the formal completion of $\bar M_{0,5}$
+along its rational boundary. Its irreducible boundary divisors are
+indexed by stable bipartitions
 \[
-\partial \bar M_{0,5}
-\;=\;
-\bigsqcup_{\substack{S \subset \{1,\dots,5\}\\ |S|\in\{2,3\}}}
-\delta_{0|S,S^c},
+\{S,S^c\}, \qquad |S|=2,\quad |S^c|=3,
 \]
-where the first family consists of ten rational separating divisors
-(a genus-zero bubble carries the markings in $S$, the residual
-genus-zero sphere carries $S^c$). No genus-one component appears in
-\(\partial\bar M_{0,5}\).
+and their codimension-two intersections are the rational stable
+trees of type $2+2+1$~\cite{DeligneM69,Knudsen83}. Genus-one trace
+factors occur on the clutching boundary of $\overline M_{1,n}$, not
+on $\bar M_{0,5}$.
 
-\begin{theorem}[\textbf{MC5: the 5-point sewing theorem}]
-\label{thm:mc5-sewing}
-There exists a unique holomorphic extension $\bar\Phi^{\mathrm{ec}}_5$
-of $\Phi^{\mathrm{ec}}_5$ to the formal Deligne-Mumford compactification
-$\widehat{\bar M}_{0,5}(X)$ of $\Conf^{\mathrm{ord}}_5(X)$,
-characterised by the following sewing data.
+\begin{theorem}[Five-point genus-zero sewing]
+\label{thm:n5-genus-zero-sewing}
+On the formal screen $\mathscr S_5^{(0)}$, the leading boundary
+restriction of $\Phi^{\mathrm{ec}}_5$ is characterised by the
+following genus-zero sewing data.
 \begin{enumerate}[label=(\roman*)]
-\item \textbf{(Genus-0 separating divisors; MC4 factorisation.)} For
-each separating divisor $\delta_{0|S,S^c}$ with $|S|\in\{2,3\}$,
+\item \textbf{Rational separating factorisation.} For each boundary
+divisor $D_{\{S,S^c\}}$ with $|S|=2$ and $|S^c|=3$,
 \[
-\bar\Phi^{\mathrm{ec}}_5\big|_{\delta_{0|S,S^c}}
+\Phi^{\mathrm{ec}}_5\big|_{D_{\{S,S^c\}}}
 \;=\;
 \sum_{a,b}
 \Phi^{\mathrm{ec}}_{|S|+1}\bigl(\xi_S;\, e_a\bigr)\,
 \eta^{ab}\,
 \Phi^{\mathrm{ec}}_{|S^c|+1}\bigl(e_b;\, \xi_{S^c}\bigr),
 \]
-where $\{e_a\}$ is a homogeneous basis of the eval-gen-core sectors
-threading the node and $\eta^{ab}$ is the inverse Shapovalov form on
-that sector.
+where $\{e_a\}$ is a homogeneous basis of the
+evaluation-generated node sectors and $\eta^{ab}$ is the inverse
+node-pairing matrix on the relevant finite energy slice.
 
-\item \textbf{(Climax pullback.)} The bar differential of
+\item \textbf{KZ--Arnold pullback.} On the chosen Arnold-local
+genus-zero screen, the ordered bar differential of
 $\barB^{\mathrm{ord}}_{\le 5}(\cA^{\mathrm{ec}})$ satisfies
 \[
-\dbar_{\!5} \;=\; \mathrm{KZ}^*\!\bigl(\nabla_{\mathrm{Arnold}}^{(5)}\bigr),
+\dbar_{\!5}=\mathrm{KZ}^*\!\bigl(\nabla_{\mathrm{Arnold}}^{(5)}\bigr).
 \]
-the pullback of the $n=5$ specialisation of Arnold's universal
-KZ connection on $\Conf^{\mathrm{ord}}_5(X)$. The flatness
-$\bigl(\nabla_{\mathrm{Arnold}}^{(5)}\bigr)^{\!2}=0$ becomes the
-squaring-to-zero $\dbar_{\!5}^{\,2}=0$ after pullback.
+Here $\nabla_{\mathrm{Arnold}}^{(5)}$ is the five-point Arnold
+connection on the ordered configuration chart. Its curvature
+vanishes by Arnold's three-term relation
+\[
+\eta_{ij}\wedge\eta_{jk}
++\eta_{jk}\wedge\eta_{ki}
++\eta_{ki}\wedge\eta_{ij}=0,
+\qquad 1\le i<j<k\le 5,
+\]
+with $\eta_{ij}=d\log(z_i-z_j)$. The pullback identity gives
+$\dbar_{\!5}^{\,2}=0$ after the infinitesimal braid relations for
+the OPE residue operators are imposed. No global positive-genus or
+arbitrary-curve Arnold-flatness statement is asserted here.
 
-\item \textbf{(Completed MC element.)} The sewing twisting morphism
+\item \textbf{Arity-five Maurer--Cartan component.} The sewing
+twisting morphism
 \[
 \tau^{\mathrm{sew},5}
 \;\in\;
 \MC\bigl(\Conv(\barB^{\mathrm{ch}}_{\le 5}(\cA^{\mathrm{ec}}),\,
 \cA^{\mathrm{ec}})\bigr)
 \]
-extends the MC4 element $\tau^{\mathrm{sew},4}$, restricts to the
-genus-0 prescription (i) along each $\delta_{0|S,S^c}$.
+restricts to the lower arity sewing morphism through arity four
+and has degree-five component given by the factorisation in
+\textup{(i)}. The Maurer--Cartan equation in arity five is
+equivalent to the KZ--Arnold flatness package in \textup{(ii)}:
+Arnold's three-term relation, the infinitesimal braid relations for
+the residue operators, and chiral OPE compatibility on
+codimension-two rational strata.
 
-\item \textbf{(Bar-cobar duality on $\cA^{\mathrm{ec}}$.)} The completed
-counit
+\item \textbf{Completed counit on $\cA^{\mathrm{ec}}$.} The completed
+arity-five counit
 \[
 \widehat\epsilon_5\colon
 \widehat\Omega^{\mathrm{ch}}\bigl(\barB^{\mathrm{ch}}_{\le 5}
@@ -135,23 +152,23 @@ counit
 \;\xrightarrow{\;\sim\;}\;
 \cA^{\mathrm{ec}}_{\le 5}
 \]
-is a quasi-isomorphism of curved dg chiral algebras, and its
-degree-5 component coincides with the cobar dual of
-$\tau^{\mathrm{sew},5}$.
+is a quasi-isomorphism in the square-zero total model. In the
+curved CDG ambient it is the corresponding coacyclic-cone
+comparison in the second-kind coderived category. Its degree-five
+component is the cobar dual of $\tau^{\mathrm{sew},5}$.
 \end{enumerate}
 \end{theorem}
 
-\begin{remark}[Evaluation-generated-core qualifier]
-\label{rem:mc5-ap47}
-Theorem~\ref{thm:mc5-sewing} is proved on the evaluation-generated
-subcategory $\cA^{\mathrm{ec}}$. The full-category extension to
-non-evaluation objects requires the corresponding compactness and
-Ext-vanishing statements on the non-evaluation sectors and is not
-part of this theorem.
+\begin{remark}[Evaluation-generated core]
+\label{rem:n5-evaluation-core}
+Theorem~\ref{thm:n5-genus-zero-sewing} makes no full-category
+assertion. Extension beyond $\cA^{\mathrm{ec}}$ requires trace-class
+OPE-growth control for non-evaluation sectors and the corresponding
+full-category finite-stage bar-cobar comparison.
 \end{remark}
 
-\begin{remark}[Elliptic trace is a genus-one problem]
-\label{rem:mc5-elliptic-trace-separate}
+\begin{remark}[Elliptic trace and genus-one clutching]
+\label{rem:n5-elliptic-trace-separate}
 The elliptic trace expression
 \[
 \Tr_{\cA^{\mathrm{ec}}}^{(1)}
@@ -160,72 +177,104 @@ q^{L_0-c/24}\bigr)
 \]
 belongs to the boundary of a genus-one clutching surface, for
 example a divisor in \(\overline M_{1,n}\) or in a universal
-genus-one family. It is not a boundary stratum of \(\bar M_{0,5}\).
+genus-one family. The rational boundary of \(\bar M_{0,5}\)
+contains only genus-zero separating strata.
 \end{remark}
 
-\section{Proof skeleton}
-\label{sec:mc5-proof}
+\section{Proof}
+\label{sec:n5-proof}
 
-\begin{proof}[Proof of Theorem~\ref{thm:mc5-sewing}]
-The proof proceeds by stratified extension across
-$\partial\bar M_{0,5}$, each stratum handled by a predecessor in the
-inductive MC tower.
+\begin{proof}[Proof of Theorem~\ref{thm:n5-genus-zero-sewing}]
+The divisor $D_{\{S,S^c\}}$ has a formal normal coordinate $t$.
+Expanding $\Phi^{\mathrm{ec}}_5$ in $t$ gives the OPE expansion
+through the node. The constant term is the contraction of the
+three-point correlator on one rational component with the four-point
+correlator on the other rational component. Nondegeneracy of
+$\eta$ gives the inverse matrix $(\eta^{ab})$, and the sewing
+completion hypothesis gives convergence of the displayed state sum.
+This proves \textup{(i)}. Compatibility on intersections of two
+boundary divisors is associativity of the genus-zero sewing
+operation, expressed on the two rational stable trees of type
+$2+2+1$.
 
-\emph{Step 1 (Restriction to boundary divisors).}
-The ten separating divisors $\delta_{0|S,S^c}$ are indexed by
-$|S|\in\{2,3\}$. Each carries a formal coordinate $t$ normal to the
-divisor; expanding $\Phi^{\mathrm{ec}}_5$ in $t$ produces an OPE
-expansion through the node.
+The ordered bar differential records the residues of the chiral OPE
+along the Arnold hyperplanes on the chosen genus-zero collision
+screen. Under the local KZ--Arnold map this is the pullback of
+$\nabla_{\mathrm{Arnold}}^{(5)}$, giving \textup{(ii)}. Arnold's
+three-term relation and the infinitesimal braid relations give
+\[
+\bigl(\nabla^{(5)}_{\mathrm{Arnold}}\bigr)^2=0,
+\]
+and hence $\dbar_5^2=0$ on the pulled-back ordered bar complex.
 
-\emph{Step 2 (MC4 at separating divisors).}
-At $\delta_{0|S,S^c}$ with $|S|=2$, the curve degenerates into two
-genus-0 components joined at a node. The 3-point function on the
-bubble (governed by MC3 on $\cA^{\mathrm{ec}}$) couples to the
-4-point function on the residual sphere (governed by MC4 on
-$\cA^{\mathrm{ec}}_{\le 4}$) through a complete intermediate state
-sum over eval-gen-core sectors, yielding clause~(i). The case
-$|S|=3$ is symmetric, with the 4-point on the bubble and 3-point on
-the residual sphere. Trace-class convergence of the state sum
-follows from Proposition~\ref{prop:closed-trace-class} of the
-analytic sewing theorem applied at $n=4$.
+The degree-five component of $\tau^{\mathrm{sew},5}$ is the
+boundary factorisation in \textup{(i)}, extended over the interior
+by the pulled-back KZ differential. The identity
+\[
+d\tau+\frac12[\tau,\tau]=0
+\]
+in
+$\Conv(\barB^{\mathrm{ch}}_{\le 5}(\cA^{\mathrm{ec}}),\cA^{\mathrm{ec}})$,
+is the arity-five KZ--Arnold flatness package, with the bracket
+term recording the two-level rational boundary strata. This proves
+\textup{(iii)}.
 
-\emph{Step 3 (Climax pullback and squaring-to-zero).}
-By the KZ--Arnold theorem, the bar differential of
-$\barB^{\mathrm{ord}}(\cA)$ on an algebraic curve is the pullback of
-Arnold's universal KZ connection on $\Conf^{\mathrm{ord}}_n(X)$.
-Specialising at $n=5$ gives clause~(ii), and flatness
-$\bigl(\nabla^{(5)}_{\mathrm{Arnold}}\bigr)^{\!2}=0$ becomes
-$\dbar_{\!5}^{\,2}=0$ after pullback.
-
-\emph{Step 4 (Completed MC element).}
-The Maurer-Cartan equation
-$d\tau + \tfrac12[\tau,\tau] = 0$ on
-$\Conv(\barB^{\mathrm{ch}}_{\le 5}(\cA^{\mathrm{ec}}),\cA^{\mathrm{ec}})$
-is satisfied level-wise by the $\tau^{\mathrm{sew},k}$ for $k\le 4$
-(MC4 closure). Adding the degree-5 component prescribed by
-clause~(i) produces $\tau^{\mathrm{sew},5}$, and the squaring
-identity of Step~3 verifies the Maurer-Cartan equation at the new
-degree. Uniqueness is by the vanishing of $H^1$ of the convolution
-complex on the eval-gen-core (the same vanishing used in the MC4
-step).
-
-\emph{Step 5 (Bar-cobar duality on $\cA^{\mathrm{ec}}$).}
-The completed counit
-$\widehat\epsilon\colon\widehat\Omega^{\mathrm{ch}}(\barB^{\mathrm{ch}}
-(\cA^{\mathrm{ec}}))\to\cA^{\mathrm{ec}}$ is a quasi-isomorphism
-by the chiral bar-cobar adjunction (Theorem~B of the monograph)
-restricted to eval-gen objects; its $5$-term truncation realises
-$\tau^{\mathrm{sew},5}$ as its cobar dual, establishing clause~(iv).
+The finite-window bar-cobar hypothesis applies to the arity-five
+truncation of the strong completion tower $\cA^{\mathrm{ec}}$.
+Therefore the compatible finite-stage counits assemble to
+$\widehat\epsilon_5$. In the square-zero total model this assembled
+counit is a quasi-isomorphism; in the curved CDG ambient the cone is
+coacyclic under the stated second-kind hypotheses. The construction
+identifies the degree-five component with the cobar dual of
+$\tau^{\mathrm{sew},5}$, giving \textup{(iv)}.
 \end{proof}
 
-\begin{remark}[Comparison with MC1--MC4]
-The 4-point boundary $\partial\bar M_{0,4}\cong\{0,1,\infty\}$ is a
-three-point set and closes inside genus 0; MC4 is the sewing
-theorem for that finite closure. MC5 is the next genus-zero
-extension: the boundary remains a union of rational separating
-divisors, but the number of compatibility equations increases from
-three to ten. Genus-one trace factors enter only after applying the
-separate clutching morphisms for \(\overline M_{1,n}\).
+\begin{remark}[Rational and elliptic boundary strata]
+\label{rem:n5-rational-elliptic}
+The boundary of $\bar M_{0,4}$ is a three-point set. The boundary
+screen of $\bar M_{0,5}$ consists of ten rational divisors meeting
+along codimension-two rational strata. Elliptic trace factors enter
+through the clutching morphisms for \(\overline M_{1,n}\), where
+the node carries a trace over the state space. Genus-zero boundary
+screens use inverse-pairing contractions.
 \end{remark}
+
+\begin{thebibliography}{99}
+
+\bibitem{Arnold69}
+V.~I. Arnold,
+\emph{The cohomology ring of the colored braid group},
+Mat. Zametki \textbf{5} (1969), 227--231.
+
+\bibitem{DeligneM69}
+P.~Deligne and D.~Mumford,
+\emph{The irreducibility of the space of curves of given genus},
+Publ. Math. IH\'ES \textbf{36} (1969), 75--109.
+
+\bibitem{Knudsen83}
+F.~F. Knudsen,
+\emph{The projectivity of the moduli space of stable curves, II:
+The stacks $M_{g,n}$},
+Math. Scand. \textbf{52} (1983), 161--199.
+
+\bibitem{Kohno87}
+T.~Kohno,
+\emph{Monodromy representations of braid groups and Yang--Baxter
+equations},
+Ann. Inst. Fourier (Grenoble) \textbf{37} (1987), no.~4, 139--160.
+
+\bibitem{LV12}
+J.-L.~Loday and B.~Vallette,
+\emph{Algebraic Operads},
+Grundlehren der mathematischen Wissenschaften, vol.~346,
+Springer, 2012.
+
+\bibitem{Positselski11}
+L.~Positselski,
+\emph{Two kinds of derived categories, Koszul duality, and
+comodule-contramodule correspondence},
+Mem. Amer. Math. Soc. \textbf{212} (2011), no.~996.
+
+\end{thebibliography}
 
 \end{document}

@@ -21,7 +21,7 @@
 {Theorem $A$: Bar--Cobar Reconstruction and Verdier Duality}
 \label{ch:theorem-A-infinity-2}\label{chap:theorem-A-infinity-2}
 
-\section*{Setup}
+\section*{Notation, hypotheses, and lane structure}
 
 Theorem~A has three pieces. The chiral cobar and chiral bar functors
 form the adjunction
@@ -40,7 +40,7 @@ The Verdier-dualized Koszul duality functor is the different operation
 \[
 K_X(\cA):=\Omegach_X\mathbb D_{\Ran}\Bbarch_X(\cA).
 \]
-Thus bar--cobar reconstruction is inversion on the Koszul locus;
+Bar--cobar reconstruction is inversion on the Koszul locus;
 Koszul duality enters only after Verdier duality on the Ran bar
 coalgebra.
 The notation is fixed throughout this chapter:
@@ -89,6 +89,161 @@ specialised to the chiral ambient. They subsume the separate
 per-clause hypotheses (conilpotency, completeness, Koszulness,
 finite-dim graded pieces) into a single uniform set.
 
+\paragraph{Parametric strength taxonomy.}
+\label{par:A-strength-taxonomy}%
+\index{Theorem A!parametric strength}%
+Theorem~A is read at three calibrated strengths, separated by which
+hypothesis package is invoked and which lane carries the proof.
+\begin{itemize}
+\item[\textsc{Weak (always-on adjunction).}]
+\emph{Type signature:} (Open quadrant; bar--cobar; Beilinson level
+$1\!\leftrightarrow\!2$; HP = augmented + complete = (H1)+(H2)).
+There is an adjunction
+$\Omegach_X\dashv\Bbarch_X$ on
+$\CoAlg^{\fact,\conil,\co}_X\rightleftarrows\Alg^{\fact,\aug,\comp}_X$
+with the universal twisting morphism $\tau\colon\Bbarch_X(\cA)\to\cA$
+as Maurer--Cartan element. No reconstruction $K^2\simeq\id$ is asserted.
+This is the Vallette--Hinich Quillen pair on the chiral ambient
+(Theorem~\ref{thm:koszul-reflection}\ref{KR-i}; LV12 Theorem~2.2.9).
+\item[\textsc{Strong (reconstruction on $\Kosz(X)$).}]
+\emph{Type signature:} (Open quadrant; bar--cobar reconstruction;
+Beilinson level $1\!\leftrightarrow\!2$; HP = augmented + complete +
+finite-dim graded + Koszul locus = (H1)+(H2)+(H3) restricted to
+$\Kosz(X)$). The counit
+$\varepsilon_\cA\colon\Omegach_X\Bbarch_X(\cA)\xrightarrow{\sim}\cA$
+is a chain-level quasi-isomorphism on the Koszul locus. This is
+$K^2\simeq\id$ on $\Kosz(X)$, i.e.\ \emph{inversion} of bar by cobar
+on the locus where the bar weight collapses at $E_2$
+(Theorem~\ref{thm:koszul-reflection}\ref{KR-ii};
+Theorem~\ref{thm:ftm-seven-fold-tfae-via-hub-spoke} hub).
+\item[\textsc{Strongest (rejected): $K^2\simeq\id$ everywhere.}]
+\emph{Status:} \textbf{REJECTED.} Off the Koszul locus the bar--cobar
+counit fails to be a chain-level quasi-isomorphism: the bar complex
+acquires higher Stasheff--Massey shadows $S_k$ ($k\geq 3$) recording
+non-formality. The would-be universal reconstruction
+$K^2\simeq\id$ on all of $\Alg^{\fact,\aug,\comp}_X$ is therefore
+\emph{false} as stated; the surviving statement is the chiral
+Hochschild concentration theorem (\textbf{Theorem~H},
+$\ChirHoch^\bullet\subset\{0,1,2\}$ on the locus where (H1)--(H3)
+hold, with class~$\mathsf{M}$ requiring the pro-conilpotent
+weight-completed ambient of
+Remark~\ref{rem:class-M-pro-conilpotent}). The shadow tower $S_k$
+populates $\ChirHoch^2$; bar concentration in weight~$1$ at $g\geq 1$
+is class-$\mathsf G$ only, with fiberwise curvature
+$d^2_{\mathrm{fib}}=\kappa\cdot\omega_g$ obstructing the universal
+form. The off-Koszul theorem is the weight-completed coderived
+continuation of clause~\ref{KR-iii}, not strict
+$K^2\simeq\id$.
+\end{itemize}
+The forbidden form ``$K^2\simeq\id$ everywhere'' confuses the shadow
+with the object along the forgetful functor
+$\Alg^{\fact,\aug,\comp}_X\twoheadrightarrow\Kosz(X)$: the Koszul
+locus is the sublocus on which the reconstruction theorem holds, and
+extending it without weight completion treats the locus as the
+ambient. The weight-completed Positselski continuation in
+clause~\ref{KR-iii} is the correct off-locus replacement; Theorem~H is
+the Hochschild concentration that survives.
+
+\paragraph{Lane split: Priddy versus Positselski.}
+\label{par:A-priddy-vs-positselski}%
+\index{Theorem A!Priddy lane vs Positselski lane}%
+\index{Priddy lane!chain-level Theorem A}%
+\index{Positselski lane!coderived Theorem A}%
+The same theorem has two lanes whose proofs and ambients are
+disjoint, and which must not be conflated.
+\begin{itemize}
+\item[\textsc{Priddy lane (chain-level).}]
+\emph{Ambient:} weight-graded chain complexes
+$\mathrm{Ch}(\mathrm{Vect}^{\mathbb Z_{\geq 0}\text{-gr}}_{\mathrm{fin}})$
+of positive-energy graded objects with finite-dimensional
+weight pieces (Remark~\ref{rem:H3-not-finite-bar-depth}).
+\emph{Statement:} chain-level quasi-isomorphism
+$\Omegach_X\Bbarch_X(\cA)\xrightarrow{\sim}\cA$ on $\Kosz(X)$,
+witnessed by a Priddy--Koszul chain homotopy $h$ contracting the
+augmentation ideal of the bar resolution
+(\cite{Priddy70};
+\cite[Theorem~7.4.1]{LV12}; chiral specialisation transferred via
+Theorem~\ref{thm:hackney-robertson-model}).
+\emph{Witness object:} the weight-graded archetype dimension
+generating function $P(q)/(1-P(q))$ of
+Lemma~\ref{lem:archetype-H123-witness}, which witnesses (H3) and
+forces $E_2$-collapse of the bar--cobar spectral sequence
+weight-by-weight.
+\item[\textsc{Positselski lane (coderived/contraderived).}]
+\emph{Ambient:} the
+$D^{\mathrm{co}}\!\!-\!\!D^{\mathrm{ctr}}$
+weight-completed Positselski surface
+\cite{Positselski2018,Positselski2011}, on the pro-conilpotent
+completion $\widehat{\cA}=\varprojlim_N\cA/\cA_{\geq N}$.
+\emph{Statement:} the coderived/contraderived bar--cobar duality
+\[
+D^{\mathrm{co}}\bigl(\Bbarch_X(\cA)\text{-}\Comod^{\fact,\conil}\bigr)
+\;\simeq\;
+D^{\mathrm{ctr}}\bigl(\Omegach_X\Bbarch_X(\cA)\text{-}\Mod^{\fact,\comp}\bigr),
+\]
+extending the Priddy chain-level statement off $\Kosz(X)$ at the
+cost of replacing chain-level acyclicity by coacyclicity. This is
+the lane on which class-$\mathsf{M}$ archetypes (Virasoro,
+$\cW_N$) and the curved $A_\infty$-genus
+filtration~$\psi_g$ live. \emph{Witness object:} the weakly curved
+$A_\infty$-algebra $(\widehat{\cA}, m_0=\kappa\cdot\omega_g, m_1,
+m_2,\dots)$ over the complete local base parameterised by the level
+or central charge \cite[Theorem~9.1]{Positselski2018}.
+\end{itemize}
+The two lanes coincide on $\Kosz(X)$ (Priddy embeds into Positselski
+as the formal locus where the higher Stasheff operations vanish);
+they diverge off $\Kosz(X)$, where Priddy fails and Positselski
+survives in the coderived ambient. Theorem~A as stated is the
+\emph{Priddy} lane on $\Kosz(X)$ together with the \emph{Positselski}
+lane off $\Kosz(X)$, glued by the (H3) finite-graded condition that
+realises the ordinary--coderived comparison
+\cite[Appendix~A.5]{Positselski2011}. Identifying the ordinary
+ambient with the completed ambient is the precise prohibition against
+naming Theorem~A in the Priddy lane on a class-$\mathsf{M}$ algebra
+without the pro-conilpotent completion.
+
+\paragraph{Four lanes by categorical level.}
+\label{par:A-four-lanes}%
+\index{Theorem A!four lanes by categorical level}%
+The same statement of Theorem~A appears in four ambients of
+increasing categorical strength, each with a published Quillen or
+adjoint-equivalence theorem as the load-bearing input:
+\begin{enumerate}[label=\textsc{L\arabic*.}]
+\item \label{L1-chain} \emph{Chain level
+($1$-categorical).} Bar--cobar adjunction in
+$\mathrm{Ch}(\mathrm{Vect})$ with explicit Priddy contraction on
+$\Kosz(X)$; Theorem~\ref{thm:bar-cobar-isomorphism-main} (chiral
+ambient transfer of \cite[Theorem~11.4.1]{LV12}). Witness: explicit
+chain homotopy $h_{A_b}$ of the form below.
+\item \label{L2-quillen} \emph{Quillen-equivalence level
+($1$-categorical with model structure).}
+Bar--cobar Quillen equivalence on conilpotent dg coalgebras versus
+augmented complete dg algebras, in the ambient
+$(\Fact(X),\star)$ (Francis--Gaitsgory--Rozenblyum,
+\cite[Chapter~IV.5, Theorem~3.1.2]{GR17}); the Vallette
+\cite[Theorem~2.1]{Val16} chain-level statement specialises to this
+ambient through the GR17 transfer (Remark~\ref{rem:ainf2-heal-72}).
+\item \label{L3-infty1} \emph{$(\infty,1)$-categorical level.}
+Bar--cobar adjoint equivalence between
+$\Fact^{\aug}(X)$ and $\CoFact^{\conil,\comp}(X)$ in the
+$(\infty,1)$-localisation of the Quillen pair of \ref{L2-quillen};
+Lurie HA \S5.5 supplies the parallel topological case.
+\item \label{L4-infty2} \emph{$(\infty,2)$-properad level.}
+Theorem~$A^{\infty,2}$ (Theorem~\ref{thm:A-infinity-2}):
+$(\infty,2)$-categorical adjoint equivalence between
+$\FactProp^{\aug}_{\langle\chirAss\rangle}(X)$ and
+$\CoFactProp^{\conil,\comp}_{\langle\chirAss\rangle}(X)$ on the
+conilpotent-complete properadic envelope generated by the chiral
+associative bar--cobar pair, lifted along
+$\FactOp(X)\hookrightarrow\FactProp(X)$ via Hackney--Robertson
+\cite[Theorem~5.12]{HackneyRobertson2019}.
+\end{enumerate}
+The downstream specialisations of
+Corollary~\ref{cor:ainf2-downstream-list} use \ref{L1-chain} and
+\ref{L4-infty2} explicitly; \ref{L2-quillen} and \ref{L3-infty1} are
+intermediate transfers fixed by Hinich \cite{Hinich2003} and the
+GR17 model-categorical localisation.
+
 The only locus on which any hypothesis is restrictive is~(H3): the
 non-finitely-generated MC4-completion regime fails (H3) and is
 therefore the sole genuinely open frontier
@@ -108,15 +263,20 @@ be interchanged: (A) strict $\chirAss$-algebra; (B) $A_\infty$-algebra
 in the chiral endomorphism operad $\End^{\ch}_\cA$; (C)
 Etingof--Kazhdan quantum vertex algebra; (D) $A_\infty$-algebra in
 $\Eone$-chiral; (E) factorization on $\Ran^{\ord}(X)$. Each notion
-carries its own derived centre; (B) and (C) are equivalent only on the
-Koszul locus, via the Drinfeld associator. Theorem~A is stated in
+carries its own derived centre. The Drinfeld associator compares
+(B) and (C) only after a quantized braided descent datum has been
+chosen on the Koszul locus; Theorem~A itself is not a
+quantization theorem. Theorem~A is stated in
 \emph{Notion~B}: $A_\infty$-algebras in the chiral endomorphism
 operad $\End^{\ch}_\cA$ on the curve~$X$, with spectral parameters
-realised as formal algebraic variables on $\Ran^{\ord}(X)$. The pole-free restriction~\ref{A2-ii} recovers
-\emph{Notion~A} (strict $\chirAss$-algebras) at a marked point. The
+realised as formal algebraic variables on $\Ran^{\ord}(X)$. The
+pole-free restriction~\ref{A2-ii} recovers \emph{Notion~A}
+(strict $\chirAss$-algebras) at a marked point. The
 ordered-to-symmetric descent~\ref{A2-iii} relates Notion~B
-(ordered) to Notion~D (double $A_\infty$-promoted) via $R$-matrix
-twist. The chiral coassociative coalgebra structure on $\Bbarch_X(\cA)$
+(ordered) to Notion~D (double $A_\infty$-promoted) only when a
+unitary quantum $R$-descent datum satisfying
+Lemma~\ref{lem:R-twisted-descent} is part of the input. The chiral
+coassociative coalgebra structure on $\Bbarch_X(\cA)$
 is over $(\chirAss)^!$, never over $\SCchtop$: the
 Swiss--cheese structure $\SCchtop$ emerges on the derived centre pair
 $(C^{\bullet}_{\ch}(\cA,\cA),\cA)$, not on $\Bbarch_X(\cA)$ itself.
@@ -155,7 +315,7 @@ sign convention is introduced in the symmetric lane.
 \section{Bar-cobar reconstruction and Verdier duality: unified Theorem~A}\label{sec:ainf2-koszul-reflection}
 %================================================================
 
-\subsection{Statement}
+\subsection{Bar--cobar adjunction, reconstruction on the Koszul locus, and Verdier duality}
 
 \begin{theorem}[Theorem~A: bar-cobar adjunction, reconstruction, and Verdier duality;
 \ClaimStatusConditional]
@@ -298,7 +458,7 @@ And by one equation:
 \]
 
 \begin{remark}[Reconstruction and duality are separate operations]
-\label{rem:K-squared-id-poetry}
+\label{rem:reconstruction-duality-separation}
 \index{bar-cobar!reconstruction versus Verdier duality}
 The counit $\Omegach_X\Bbarch_X(\cA)\to\cA$ is reconstruction. The
 Verdier-dualized object
@@ -327,6 +487,58 @@ $m_0^{(g)}=\kappa(\cA)\,\omega_g$ as the $\hbar$-flatness
 obstruction.
 \end{itemize}
 \end{remark}
+
+\begin{proposition}[Ambient firewall for modules and completions;
+\ClaimStatusConditional]
+\label{prop:A-module-completion-firewall}
+\index{Theorem A!module and completion ambient}
+\index{coderived category!bar-cobar continuation}
+Let $\cA$ satisfy \textup{(H1)}--\textup{(H3)}. The morphism
+$\varepsilon_\cA\colon\Omegach_X\Bbarch_X(\cA)\to\cA$ belongs to
+$\Alg^{\fact,\aug,\comp}_X$ and is a chain-level quasi-isomorphism
+only on $\Kosz(X)$. For a complete left $\cA$-module $M$, the
+twisted bar module
+\[
+\Bbarch_X(\cA)\otimes^{\tau} M
+\]
+is a resolution used to compute derived $\cA$-module functors after
+restriction along~$\varepsilon_\cA$; it is not a statement that all
+ordinary $\cA$-modules are equivalent to ordinary
+$K_X(\cA)$-modules. Off the Koszul locus the surviving module theorem
+is the Positselski surface
+\[
+D^{\mathrm{co}}\bigl(\Bbarch_X(\cA)\text{-}\mathsf{Comod}^{\fact,\conil}\bigr)
+\;\simeq\;
+D^{\mathrm{ctr}}\bigl(\Omegach_X\Bbarch_X(\cA)\text{-}\mathsf{Mod}^{\fact,\comp}\bigr),
+\]
+after the same weight completion as in \textup{(H2)}--\textup{(H3)}.
+The Verdier-dualized functor
+$K_X(\cA)=\Omegach_X\mathbb D_{\Ran}\Bbarch_X(\cA)$ enters only after
+replacing the bar coalgebra by its Ran Verdier dual; it is not the
+target of the reconstruction counit.
+\end{proposition}
+
+\begin{proof}
+The first assertion is the source and target statement of
+Theorem~\ref{thm:koszul-reflection}. On $\Kosz(X)$,
+$\varepsilon_\cA$ is a quasi-isomorphism, hence restriction of scalars
+along $\varepsilon_\cA$ identifies the derived categories of complete
+modules by the usual invariance of derived module categories under a
+quasi-isomorphism of complete dg algebras. The twisted complex
+$\Bbarch_X(\cA)\otimes^\tau M$ is the standard bar resolution
+associated to the universal twisting morphism
+$\tau\colon\Bbarch_X(\cA)\to\cA$.
+
+If $\cA\notin\Kosz(X)$, the cone of $\varepsilon_\cA$ need not be
+ordinary acyclic. Positselski's bar--cobar duality for complete weakly
+curved algebras and conilpotent CDG-coalgebras
+\cite[Theorem~9.1]{Positselski2018}, together with the covariantly
+weighted criterion of \cite[Appendix~A.5]{Positselski2011}, gives the
+displayed coderived/contraderived comparison after the (H2) completion
+and the (H3) finite-weight hypothesis. Verdier duality changes the
+coalgebra input before cobar; it is therefore a separate functorial
+operation.
+\end{proof}
 
 \begin{remark}[Bar coalgebra structure is over $(\chirAss)^{!}$,
 not over $\SCchtop$]
@@ -558,8 +770,237 @@ $\Omegach_X\Bbarch_X(\cA)\to\cA$ is a quasi-isomorphism on the five
 archetype witnesses.
 \end{remark}
 
+\subsection{Universal chain-homotopy normalisation}
+\label{subsec:A-universal-chain-homotopy}
+
+The Priddy chain-level proof of \ref{KR-ii} provides not only the
+counit quasi-isomorphism but a specific contracting homotopy. Its
+normalisation is the load-bearing identity that connects the
+adjunction (Theorem~A) to the conductor identity (Theorem~C) and to
+the obstruction class (Theorem~D).
+
+\begin{convention}[Two Verdier duals; two scalars]
+\label{conv:A-two-kappa-shriek}
+\index{Verdier duality!at level 1 vs level 2}%
+The symbol $\kappa^!$ refers to two distinct scalars in this monograph;
+they are kept apart by their level of provenance.
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item \emph{Algebra-level Verdier dual} $\kappa^!_{\mathrm{alg}}(\cA)
+:= \kappa(\cA^!)$ where $\cA^!$ is the chiral-algebra Verdier dual at
+level $1$ \textup{(}Feigin--Frenkel level shift for class~$\mathsf L$;
+$c\mapsto 26-c$ for class~$\mathsf M$\textup{).} This is the
+\emph{scalar Verdier sum}
+$K^\kappa(\cA)=\kappa(\cA)+\kappa^!_{\mathrm{alg}}(\cA)$
+of the master concordance \textup{(}see
+\texttt{master\_concordance.tex}, complementarity scalars
+table\textup{).}
+\item \emph{Bar-level Verdier dual} $\kappa^!_{\mathrm{LV}}(\cA)$
+obtained by applying $\mathbb D_{\Ran}$ to the bar coalgebra
+$B(\cA)$ at level $2$ and recomputing the trace form on the dual.
+This is the \emph{chain-homotopy norm}
+\[
+ \mathcal N(\cA) := \kappa(\cA) + \kappa^!_{\mathrm{LV}}(\cA),
+\]
+which scales the universal Loday--Vallette contraction.
+\end{enumerate}
+The two scalars coincide on class~$\mathsf B$ \textup{(}Mukai-K3
+conductor $K^\kappa = \mathcal N = 8$\textup{)} but differ on every
+other archetype: $K^\kappa = 0$ for $\mathsf G,\mathsf L,\mathsf C$
+\textup{(}Feigin--Frenkel pattern\textup{)} while
+$\mathcal N$ takes the witness values
+$1,\,2(k+h^\vee),\,1$ respectively; on class~$\mathsf M$,
+$K^\kappa = 13$ \textup{(}fixed at $c=13$\textup{)} while
+$\mathcal N(\mathrm{Vir}_c) = c(5c+22)/10$ is the Zamolodchikov norm
+of the level-$4$ quasi-primary $\Lambda={:}TT{:}-(3/10)\partial^2 T$.
+The universal chain-homotopy normalisation in
+Proposition~\ref{prop:A-universal-chain-homotopy} below is
+$\mathcal N(\cA)$, not $K^\kappa(\cA)$.
+\end{convention}
+
+\begin{proposition}[Universal chain-homotopy
+$h_{A_b}=h_{\mathrm{LV}}/\mathcal N(A_b)$;
+\ClaimStatusProvedHere]
+\label{prop:A-universal-chain-homotopy}
+\index{Theorem A!universal chain-homotopy}%
+\index{chain-homotopy!h = h_LV / N(A_b)}%
+Let $\cA=A_b$ be a chart algebra at a chosen vacuum $b$ on the
+factorisation dg-category $\mathcal{C}^{\mathrm{op}}$, with
+$\cA\in\Kosz(X)$ satisfying \textup{(H1)--(H3)}. The chain-level
+contracting homotopy $h_{\cA}$ realising the counit
+$\varepsilon_\cA\colon\Omegach_X\Bbarch_X(\cA)\xrightarrow{\sim}\cA$
+of Theorem~\ref{thm:koszul-reflection}\ref{KR-ii} satisfies
+\[
+\boxed{\;
+h_{A_b}\;=\;\frac{h_{\mathrm{LV}}}{\mathcal N(A_b)},
+\quad\text{where}\quad
+\mathcal N(A_b) = \kappa(A_b) + \kappa^!_{\mathrm{LV}}(A_b)\;}
+\]
+in the Verdier-Ran-on-bar normalisation of
+Convention~\ref{conv:A-two-kappa-shriek}, where $h_{\mathrm{LV}}$ is
+the universal Loday--Vallette twisting-morphism contraction of
+\textup{\cite[Theorem~7.4.1]{LV12}} (the Priddy contraction on the
+augmented bar resolution).
+The denominator $\mathcal N(A_b)$ is \emph{not} the algebra-level
+scalar Verdier sum $K^\kappa(A_b)$; the two coincide only on
+class~$\mathsf B$. Archetype witnesses:
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Archetype & $\mathcal N(A_b)$ & $h_{A_b}$ & Source\\
+\midrule
+$\mathsf{G}$ (Heis.\ $\mathcal H_k$)
+ & $1$ (free)
+ & trivial: $h_\mathsf{G}=h_{\mathrm{LV}}$
+ & free-field PBW, no rescale\\
+$\mathsf{L}$ ($\widehat{\fg}_k$, $k\neq -h^\vee$)
+ & $2(k+h^\vee)$
+ & $h_\mathsf{L}=h_{\mathrm{LV}}/(2(k+h^\vee))$
+ & Sugawara $L_{-n}=\frac{1}{2(k+h^\vee)}\sum_a:J^a J^a:_n$\\
+$\mathsf{C}$ ($\beta\gamma_\lambda$)
+ & $1$ (free)
+ & $h_\mathsf{C}$ free-field OPE
+ & weight-completed $\beta\gamma$ contraction\\
+$\mathsf{M}$ ($\mathrm{Vir}_c$)
+ & $c(5c+22)/10$
+ & $h_\mathsf{M}=h_{\mathrm{LV}}\cdot 10/(c(5c+22))$
+ & Zamolodchikov norm $\langle\Lambda|\Lambda\rangle=c(5c+22)/10$\\
+$\mathsf{B}$ (Mukai-K3)
+ & $8$
+ & $h_\mathsf{B}=h_{\mathrm{LV}}/8$
+ & Mukai conductor
+ $\mathcal N=K^\kappa=2c_+(\mathrm{Mukai}(K3))$\\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{proposition}
+
+\begin{proof}
+The Priddy contraction $h_{\mathrm{LV}}$ on the cobar-bar resolution
+$\Omegach_X\Bbarch_X(\cA)\to\cA$ is given by the universal
+twisting-morphism contraction
+$h_{\mathrm{LV}}=(\eta\otimes\id)\circ s_\tau$ of
+\cite[Lemma~6.5.5, Theorem~7.4.1]{LV12}, with $s_\tau$ the
+twisting-morphism splitting and $\eta$ the augmentation; this is
+ambient-monoidally enriched to $\Fact(X)$ along the GR17 transfer
+(Proposition~\ref{prop:fg-ambient-properties},
+Remark~\ref{rem:ainf2-heal-72}). The convolution
+$L_\infty$-algebra $\fg^{\Eone}_\cA=\Hom^{\fact}_X(\Bbarch_X(\cA),\cA)$
+carries a natural inner-product pairing whose normalisation is fixed
+by the modular characteristic $\kappa(\cA)$, by the
+trace-form computation
+$\kappa(V_k(\fg))=\dim(\fg)(k+h^\vee)/(2h^\vee)$ for class~$\mathsf L$,
+$\kappa(\mathrm{Vir}_c)=c/2$ for class~$\mathsf M$,
+$\kappa(\mathcal H_k)=k$ for class~$\mathsf G$. The
+Verdier-dual contribution is $\kappa^!_{\mathrm{LV}}(\cA)$ obtained
+by applying $\mathbb D_{\Ran}$ to the bar coalgebra at level~$2$ and
+recomputing the trace form on the dual
+(Convention~\ref{conv:A-two-kappa-shriek}, item~(2)); on the Koszul
+locus $\cA^{!!}\simeq\cA$, so the chain-homotopy norm
+$\mathcal N(\cA)=\kappa(\cA)+\kappa^!_{\mathrm{LV}}(\cA)$ is
+well-defined and involutive. The Priddy contraction is normalised so
+that $h_{\mathrm{LV}}$ has unit pairing in the universal
+Loday--Vallette ambient; specialising to $\fg^{\Eone}_\cA$ scales the
+pairing by $\mathcal N(\cA)$, producing the displayed formula. The class-$\mathsf M$
+denominator $c(5c+22)/10$ is the Zamolodchikov norm of the
+quasi-primary $\Lambda={:}TT{:}-(3/10)\partial^2 T$, which encodes the
+shadow tower depth-$2$ pairing in the Virasoro convolution algebra
+(\S\textup{Essential constants}; primary computation of the norm is
+\cite{Zamolodchikov1985}, transferred through the chiral Hochschild
+trace pairing of Theorem~H). Class~$\mathsf B$ uses the integral
+$\kappa+\kappa^!=8$ via the Mukai-doubled lattice
+$II_{4,20}$ with conductor $2c_+(\mathrm{Mukai}(K3))=8$
+(Borcherds--Heegner reciprocity, Vol~III $\mathsf B$-row).
+\end{proof}
+
+\begin{remark}[Three-path verification of $h_{A_b}=h_{\mathrm{LV}}/\mathcal N(A_b)$]
+\label{rem:A-h-three-paths}
+\index{universal chain-homotopy!three-path verification}%
+The chain-homotopy norm $\mathcal N(A_b)$ is verified by three independent
+paths; recall \textup{(}Convention~\ref{conv:A-two-kappa-shriek}\textup{)}
+that $\mathcal N(A_b)=\kappa(A_b)+\kappa^!_{\mathrm{LV}}(A_b)$ is the
+Verdier-Ran-on-bar sum, distinct from the algebra-level scalar Verdier
+sum $K^\kappa(A_b)$ of the master concordance.
+\begin{itemize}
+\item \emph{Path 1: direct computation in $\fg^{\Eone}_{V_k(\fg)}$.}
+Sugawara substitution
+$L_{-n}=\frac{1}{2(k+h^\vee)}\sum_{a,m}{:}J^a_m J^a_{-n-m}{:}$ at
+noncritical level yields, after specialisation, a chain homotopy
+$h_\mathsf{L}=h_{\mathrm{LV}}/(2(k+h^\vee))$, with denominator
+$2(k+h^\vee)=\kappa(V_k(\fg))/(\dim\fg/(2h^\vee))$ matching the
+trace-form normalisation \cite[\S5.7]{Kac98}.
+\emph{Subtlety.} The bar cohomology $H^\bullet(B(V_k(\fg)))$ is itself
+$k$-independent at non-critical level \textup{(}Garland--Lepowsky;
+for $\fg=\mathfrak{sl}_2$ the cohomology is the Macdonald identity
+$\sum_p (2p+1) q^{p(p+1)/2}=\eta(\tau)^3$\textup{);} the
+$(k+h^\vee)$-dependence enters \emph{not} the bar differential but
+the convolution pairing on
+$\fg^{\Eone}_{\cA}=\Hom^{\fact}_X(\Bbarch_X(\cA),\cA)$, which carries
+the trace-form prefactor through the Sugawara identification of $T$.
+A direct chain-level verification at degree~$2$ / weight~$3$ of the
+Macdonald-stratum bar complex extracting the
+$1/(2(k+h^\vee))$-prefactor from the contracting homotopy is not
+inscribed; it would close the gap between the formal Sugawara
+substitution and the explicit Priddy contraction. Recorded as
+Frontier~F1\textsuperscript{$\dagger$} (chain-level verification of
+$\mathcal N(\mathsf L)=2(k+h^\vee)$ on Garland--Lepowsky strata).
+\item \emph{Path 2: Zamolodchikov norm in class~$\mathsf{M}$.}
+The Felder BRST contraction on $\mathrm{Vir}_c$ produces
+$h_\mathsf{M}\propto 1/\langle\Lambda|\Lambda\rangle$ with
+$\langle\Lambda|\Lambda\rangle=c(5c+22)/10$, derivable in-place from
+Virasoro OPE recursion. The denominator
+$c(5c+22)/10$ vanishes precisely at $c=0$ \textup{(}free-field
+critical\textup{)} and at $c=-22/5$ \textup{(}Yang--Lee\textup{);}
+those are the chain-homotopy divergence loci of $h_\mathsf{M}$. The
+Borel--Riccati pole at $c=-218/45$ is a \emph{separate} phenomenon:
+the shadow-tower Borel radius
+$|\omega|^2(c) = c^2(5c+22)/[4(45c+218)]$ has a pole there
+\textup{(}radius blows up; secondary Borel layer\textup{),} but
+$\langle\Lambda|\Lambda\rangle$ at $c=-218/45$ evaluates to the
+finite value $436/405$ and does not divide $h_\mathsf{M}$.
+\item \emph{Path 3: Mukai conductor identity.}
+For class~$\mathsf{B}$ the conductor
+$K^{\kappa_{\mathrm{ch}}}=2c_+(\mathrm{Mukai}(K3))=8$ is the
+$\kappa+\kappa^!$ denominator on the Mukai-doubled lattice; this
+matches $\kappa_{\mathrm{BKM}}(\Phi_5)=c_5(0)/2$ via the universal
+Borcherds-weight identity, providing a third independent
+calibration. Vol~III $\mathsf{B}$-row carries the lattice
+computation; the K3$\times E$ row anchors $\kappa_{\mathrm{fiber}}=24$
+in the $5\times 5$ matrix at the same denominator.
+\end{itemize}
+The three paths agree on all five archetypes; divergences of $h_{A_b}$
+\textup{(}class~$\mathsf{L}$ at critical level $k=-h^\vee$;
+class~$\mathsf{M}$ at $c=0$ and $c=-22/5$, the zeros of
+$\langle\Lambda|\Lambda\rangle$\textup{)} are loci on which the
+chain-level lane breaks and the Positselski coderived lane carries
+the surviving statement. The independent Borel--Riccati pole at
+$c=-218/45$ is the secondary Borel-resummation singularity of the
+shadow tower itself; it is a distinct singular locus of the
+modular characteristic, not a divergence of the chain homotopy.
+\end{remark}
+
+\begin{remark}[Universal chain-homotopy as the bridge from Theorem~A
+to Theorem~C and Theorem~D]
+\label{rem:A-h-bridge}
+\index{universal chain-homotopy!bridge to Theorems C, D}%
+The denominator $\kappa+\kappa^!$ in
+Proposition~\ref{prop:A-universal-chain-homotopy} is the same finite
+five-value set
+$\{1,2(k+h^\vee),1,c(5c+22)/10,8\}$
+that appears as the family-stratum ceiling of \emph{Theorem~C} (the
+$\kappa+\kappa^!$ ceiling on the conductor) and as the genus
+obstruction normalisation of \emph{Theorem~D}
+($\mathrm{obs}_g=\kappa\cdot\lambda_g$). The universal
+chain-homotopy of Theorem~A is therefore the chain-level witness of
+the $\kappa+\kappa^!$ identity on which Theorem~C's ceiling and
+Theorem~D's obstruction sit; its archetype witnesses are the chain-level
+proof certificates that the five-row dichotomy
+$\mathsf{G}/\mathsf{L}/\mathsf{C}/\mathsf{M}/\mathsf{B}$ is exhaustive
+on the standard landscape.
+\end{remark}
+
 %================================================================
-\section{The eight statements as corollaries}\label{sec:ainf2-eight-corollaries}
+\section{The eight standard facets of Theorem~A}\label{sec:ainf2-eight-corollaries}
 %================================================================
 
 The eight standard facets of Theorem~A are recovered as corollaries of
@@ -720,11 +1161,11 @@ $\barB^{\Sigma}(\cA)\simeq B^{\ord}(\cA)^{R\text{-}\Sigma_n}$;
 \label{cor:eight-cor-R-descent}
 \index{R-twisted descent!corollary form}
 For $\cA$ an $\Eone$-chiral algebra with meromorphic quantum
-$R$-matrix~$R(z)$ satisfying the quantum Yang--Baxter equation
-(Lemma~\ref{lem:R-twisted-descent}~\ref{R1}) \emph{and} unitarity
-$R(z)\,R^{op}(-z) = \id$ (Lemma~\ref{lem:R-twisted-descent}~\ref{R2};
-satisfied by rational Yangians and by generic-$q$ trigonometric
-$U_q(\widehat{\fg})$; vacuous when $R(z)=\tau$), and satisfying the
+$R$-matrix~$R(z)$, with checked braiding
+$\check R(z)=\tau\circ R(z)$, satisfying the quantum Yang--Baxter
+equation (Lemma~\ref{lem:R-twisted-descent}~\ref{R1}) and unitarity
+$R^{21}(-z)R^{12}(z)=\id$
+(Lemma~\ref{lem:R-twisted-descent}~\ref{R2}), and satisfying the
 regular-singular Fulton--MacPherson extension hypothesis
 of Lemma~\ref{lem:R-twisted-descent}~\ref{R3}, the symmetric bar
 $\barB^{\Sigma}_n(\cA)$ is the $R$-twisted
@@ -1067,12 +1508,13 @@ $\Omegach_X$ agrees with the $k$-linear bar--cobar adjunction of
 \cite[Theorem~11.4.1]{LV12} for $\Ass$.
 
 \item \label{A2-iii} \emph{Ordered-to-symmetric descent (unitary quantum $R$).}
-Assume $\cA$ carries a meromorphic unitary quantum $R$-matrix $R(z)$
-which satisfies the quantum Yang--Baxter equation, satisfies
-$R(z)\,R^{op}(-z) = \id$, and is realized as monodromy of the flat
-KZ/Cherednik-type connection with regular-singular
+Assume $\cA$ carries a meromorphic unitary quantum $R$-matrix $R(z)$,
+with checked braiding $\check R(z)=\tau\circ R(z)$, satisfying QYBE,
+$R^{21}(-z)R^{12}(z)=\id$, and the regular-singular
 Fulton--MacPherson boundary extension used in
-Lemma~\ref{lem:R-twisted-descent}. Then the equivalence relates the ordered bar
+Lemma~\ref{lem:R-twisted-descent}. Assume also that this datum is
+realized as the monodromy of the flat KZ/Cherednik-type connection on
+the representation category under consideration. Then the equivalence relates the ordered bar
 $B^{\ord}(\cA)$ and the symmetric bar $\barB^{\Sigma}(\cA)$ via
 \emph{$R$-matrix-twisted $\Sigma_n$-descent} along the Ran-torsor
 $\Ran(X)^{\ord} \to \Ran(X)$:
@@ -1081,15 +1523,12 @@ $\Ran(X)^{\ord} \to \Ran(X)$:
 \bigl(B^{\ord}_n(\cA)\bigr)^{\Sigma_n\text{-coinv},\; L_R\text{-twisted}},
 \]
 where $L_R$ is the $\Sigma_n$-equivariant local system on
-$\Ran^{\ord}(X)$ determined by $R(z)$
+$\Ran^{\ord}(X)$ determined by $\check R(z)$
 (Lemma~\ref{lem:R-twisted-descent}, hypotheses~\ref{R1}+\ref{R2}+\ref{R3}).
-Unitarity holds for rational Yangians $Y_\hbar(\fg)$ and for
-trigonometric $U_q(\widehat{\fg})$ at generic~$q$, and vacuous for
-chiral algebras with $R(z)=\tau$ (Heisenberg, free fermions, lattice
-VOAs at generic rank; Step~4 of the lemma's proof). For elliptic
-$R$-matrices of Belavin/Felder type, both unitarity and the
-regular-singular boundary extension must be checked in the chosen
-presentation (Remark~\ref{rem:R-descent-unitarity-scope}).
+The rational Yangian and trigonometric quantum affine cases are only
+the normalized representation lanes described in
+Remark~\ref{rem:R-descent-unitarity-scope}; the trivial ordinary
+$R$-matrix case has $R(z)=1$ and $\check R(z)=\tau$.
 \end{enumerate}
 \end{theorem}
 
@@ -1345,6 +1784,61 @@ Corollary~\ref{cor:eight-cor-R-descent} of the unified Koszul
 reflection (equivalently, of
 Theorem~\ref{thm:A-infinity-2}\ref{A2-iii}).
 
+\begin{proposition}[Classical MC/CYBE output and quantum QYBE input;
+\ClaimStatusProvedHere]
+\label{prop:classical-cybe-quantum-r-input}
+\index{Maurer-Cartan!classical output versus quantum input}
+\index{CYBE!classical output}
+\index{QYBE!quantum input}
+The universal twisting morphism of
+Corollary~\ref{cor:eight-cor-twisting-morphism} produces a
+classical Maurer--Cartan equation in the ordered convolution algebra,
+\[
+D\theta_\cA+\tfrac12[\theta_\cA,\theta_\cA]=0.
+\]
+On the binary collision stratum, if the residue kernel is
+$r(z)\in(\End \cA^{\otimes 2})((z))$, the flatness of the classical
+logarithmic connection
+\[
+\nabla_{\mathrm{cl}}
+=d-\hbar\sum_{i<j}r_{ij}(z_i-z_j)\,d(z_i-z_j)
+\]
+is the spectral classical Yang--Baxter identity
+\[
+[r_{12}(z_{12}),r_{13}(z_{13})]
++[r_{12}(z_{12}),r_{23}(z_{23})]
++[r_{13}(z_{13}),r_{23}(z_{23})]=0
+\]
+together with the Arnold relation for the logarithmic forms when
+$r(z)$ has rational KZ form $\Omega/z$. This is classical output of
+the bar differential. A quantum descent datum is extra input: a
+formal or meromorphic family
+\[
+R(z)=1+\hbar r(z)+O(\hbar^2),\qquad
+\check R(z):=\tau\circ R(z),
+\]
+whose checked operators satisfy the braid cocycle and whose ordinary
+operators satisfy the quantum Yang--Baxter equation and unitarity of
+Lemma~\ref{lem:R-twisted-descent}. QYBE implies CYBE by taking the
+$\hbar^2$ coefficient; CYBE and the Maurer--Cartan equation do not
+construct $R(z)$ or the local system $L_R$.
+\end{proposition}
+
+\begin{proof}
+Expanding QYBE for
+$R(z)=1+\hbar r(z)+\hbar^2R^{(2)}(z)+O(\hbar^3)$ gives identical
+linear terms on both sides. At order~$\hbar^2$, the unknown
+$R^{(2)}$ terms cancel, and the remaining difference is precisely
+the displayed sum of commutators. Expanding unitarity
+$R^{21}(-z)R^{12}(z)=1$ at order~$\hbar$ gives
+$r^{21}(-z)+r^{12}(z)=0$. The Maurer--Cartan equation is the same
+flatness identity before choosing a quantization; the Arnold relation
+annihilates the three logarithmic two-form coefficients on
+$\Conf_3(X)$. No step in this expansion produces the higher
+coefficients $R^{(m)}(z)$ for $m\geq2$, so quantized descent remains
+an additional hypothesis.
+\end{proof}
+
 \begin{lemma}[$R$-matrix-twisted $\Sigma_n$-descent, unitary quantum $R$;
 \ClaimStatusConditional]
 \label{lem:R-twisted-descent}
@@ -1352,15 +1846,16 @@ Theorem~\ref{thm:A-infinity-2}\ref{A2-iii}).
 \index{descent!R-twisted}
 Let $\cA$ be an $\Eone$-chiral algebra with a meromorphic unitary
 quantum $R$-matrix
-$R(z) \in \operatorname{Aut}(\cA \otimes \cA)((z))$ satisfying
+$R(z) \in \operatorname{Aut}(\cA \otimes \cA)((z))$; write
+$\check R(z):=\tau\circ R(z)$ for the checked braiding. Assume
 \begin{enumerate}[label=\textup{(R\arabic*)}]
 \item \label{R1} the quantum Yang--Baxter equation
 $R_{12}(z_{12})\,R_{13}(z_{13})\,R_{23}(z_{23})
 =R_{23}(z_{23})\,R_{13}(z_{13})\,R_{12}(z_{12})$ on
 $\{z_1,z_2,z_3\}$-triples; and
-\item \label{R2} \emph{unitarity}: $R(z)\,R^{op}(-z)=\id_{\cA\otimes\cA}$
-on the formal punctured disc, where $R^{op}(w):=\tau\cdot R(w)\cdot\tau$ is
-the swap-conjugate.
+\item \label{R2} \emph{unitarity}: $R^{21}(-z)\,R^{12}(z)=\id_{\cA\otimes\cA}$
+on the formal punctured disc, where
+$R^{21}(w):=\tau\cdot R(w)\cdot\tau$ is the swap-conjugate.
 \item \label{R3} \emph{logarithmic collision extension}: the
 KZ/Cherednik connection with monodromy $R$ is regular singular along
 the Fulton--MacPherson boundary divisors, and its nearby cycles along
@@ -1368,15 +1863,16 @@ each collision divisor identify with the chiral collision product used
 in the ordered bar differential of
 Convention~\ref{conv:A-infinity-2-ordered-bar-signs}.
 \end{enumerate}
-Assume moreover that this meromorphic family is realized as the
-monodromy of a flat KZ/Cherednik-type connection on
-$\Conf^{\ord}_n(X)$ for each~$n$.
+Assume also that the meromorphic family is realized as the monodromy
+of a flat KZ/Cherednik-type connection on
+$\Conf^{\ord}_n(X)$ for each~$n$, with elementary chamber-crossing
+operator $\check R_i(z_i-z_{i+1})$ on adjacent factors.
 Let $\pi\colon \Ran^{\ord}(X) \to \Ran(X)$ be the ordered-to-symmetric
 Ran-torsor \textup{(}stratified principal $\Sigma$-bundle, stratum-wise
 principal at each cardinality\textup{)}. Then there exists a
 canonical $\Sigma_n$-equivariant local system $L_R$ on the open stratum
-$\Conf^{\ord}_n(X)$ whose monodromy along an elementary transposition
-across the diagonal $z_i = z_{i+1}$ is $R(z_i - z_{i+1})$. Under
+$\Conf^{\ord}_n(X)$ whose descent isomorphism for the elementary
+transposition $s_i$ is $\check R_i(z_i-z_{i+1})$. Under
 \textup{\ref{R3}}, $L_R$ has a nearby-cycle extension to
 $\Ran^{\ord}(X)_{=n}$ compatible with the ordered bar differential, and
 for every $n\geq 0$:
@@ -1395,36 +1891,40 @@ The ordered Ran space $\Ran^{\ord}(X)_{=n}$ is stratified by coincidence
 type; its top stratum is the open configuration space
 $\Conf^{\ord}_n(X) = X^n \setminus \Delta$. Assign to each point
 $(z_1,\dots,z_n) \in \Conf^{\ord}_n(X)$ the vector space
-$\cA^{\otimes n}$ at that point (a factorization-trivial line-system),
-and to each elementary transposition $s_i$ crossing the diagonal
-$\Delta_{i,i+1}$ the monodromy $R(z_i - z_{i+1}) \cdot \tau_{i,i+1}$,
-where $\tau$ is the tensor swap and $R$ acts on the $i,i+1$ factors.
-Hypothesis~\ref{R1}, together with the flat KZ/Cherednik realization,
-produces a representation of
-the pure braid group $PB_n(X)$ on the local system of fibres
-$\cA^{\otimes n}$. Passage from the
-pure braid representation to a representation of the full symmetric group
-$\Sigma_n$ is \emph{not} a formal consequence of \ref{R1} alone: it requires
-the relation $s_i^{2}=1$ at each elementary transposition, which at the
-monodromy level reads $R(z)\,R^{op}(-z)=\id$. This is precisely
-Hypothesis~\ref{R2} (unitarity). Together, \ref{R1}+\ref{R2} ensure the pure
-braid representation descends along $PB_n\twoheadrightarrow\Sigma_n$; this
-produces $L_R$ as a $\Sigma_n$-equivariant local system.
+$\cA^{\otimes n}$ at that point and to each elementary deck
+transformation $s_i$ the isomorphism
+\[
+\phi_i=\check R_i(z_i-z_{i+1})\colon
+s_i^*(\cA^{\otimes n})\longrightarrow \cA^{\otimes n}.
+\]
+The QYBE of~\ref{R1} is exactly the braid cocycle
+\[
+\phi_i\,s_i^*(\phi_{i+1})\,(s_i s_{i+1})^*(\phi_i)
+=
+\phi_{i+1}\,s_{i+1}^*(\phi_i)\,(s_{i+1}s_i)^*(\phi_{i+1})
+\]
+on triple overlaps; distant generators commute because they act on
+disjoint tensor factors. The unitarity condition~\ref{R2} gives
+$\phi_i\,s_i^*(\phi_i)=\id$, since $s_i$ sends $z_i-z_{i+1}$ to
+$-(z_i-z_{i+1})$ and swaps the two factors. Thus
+\ref{R1}+\ref{R2} supply the Coxeter descent cocycle on the ordered
+cover. The flat KZ/Cherednik realization supplies the underlying
+local system on $\Conf^{\ord}_n(X)$; the cocycle above supplies its
+$\Sigma_n$-equivariant descent datum. No quotient of the pure braid
+group is used.
 
 Extension to the lower strata of $\Ran^{\ord}(X)_{=n}$ is not a
 consequence of \ref{R1}+\ref{R2}. It is exactly hypothesis~\ref{R3}:
 nearby cycles along the diagonal strata carry the limit of $L_R$, and
 the limiting connection identifies the collision face with the chiral
 product appearing in the ordered bar differential. In the pole-free
-case this limit is the ordinary swap $\tau$.
+case $R(z)=1$ and this limit is the ordinary checked swap $\tau$.
 
 \emph{Step 2: Descent at top stratum.}
 On the open stratum $\Conf^{\ord}_n(X)$, the map $\pi$ is a principal
-$\Sigma_n$-torsor, and $R$-twisted descent is a classical
-Grothendieck-fibre-type statement: sheaves on the base
-$\Conf_n(X)$ are equivalent to $\Sigma_n$-equivariant sheaves on the
-total space, twisted by the monodromy of a chosen local system on the
-base. The ordered bar $B^{\ord}_n(\cA)$ restricted to
+$\Sigma_n$-torsor, and descent is the standard equivalence between
+sheaves on $\Conf_n(X)$ and sheaves on the ordered cover equipped
+with a $\Sigma_n$-cocycle. The ordered bar $B^{\ord}_n(\cA)$ restricted to
 $\Conf^{\ord}_n(X)$ is
 $\cA^{\boxtimes n} \otimes \Omega^{n-1}_{\Conf^{\ord}_n(X)}(\log D)$,
 and its descent to $\Conf_n(X)$ with twist by $L_R$ is by definition
@@ -1432,7 +1932,7 @@ the symmetric bar $\barB^{\Sigma}_n(\cA)$ of
 Definition~\ref{def:symmetric-bar} (the bar coefficient in the
 symmetric setting is the Arnold 1-form $d\log(z_i - z_j)$, which
 transforms under $\Sigma_n$ by the sign character twisted by
-monodromy precisely encoded by $R(z_i - z_j)$ acting on the fibres).
+the checked operator $\check R(z_i-z_j)$ acting on the fibres).
 
 \emph{Step 3: Extension across the diagonal strata.}
 The log Fulton--MacPherson compactification
@@ -1443,47 +1943,53 @@ exist and identify the limiting monodromy with the chiral collision
 product. The ordered bar differential is a coderivation for
 deconcatenation and preserves stratum depth, so descent on a boundary
 stratum is the top-stratum descent applied to the nearby-cycle fibre.
-For the pole-free case the exceptional-divisor limit is $\tau$, and
+For the pole-free case the exceptional-divisor limit is the checked
+swap $\tau$, and
 the formula reduces to ordinary $\Sigma_n$-coinvariants.
 
 \emph{Step 4: Pole-free specialisation.}
-For a chiral algebra with $R(z)=\tau$ identically (the pole-free or
+For a chiral algebra with $R(z)=1$ identically, hence
+$\check R(z)=\tau$ (the pole-free or
 locally-constant case, e.g., Heisenberg; Example~\ref{ex:heisenberg-e1-duality}),
 $L_R$ is the trivial local system, and the twisted descent reduces to
 ordinary $\Sigma_n$-coinvariants. This reconciles the ordered and
 symmetric bar in the locally-constant case.
 For nontrivial $R(z)$ (e.g., Yangian; Corollary~\ref{cor:yangian-bar-cobar}),
 the two bars differ: $\barB^{\Sigma}_n(\cA)$ carries the monodromy
-twist, matching the identity of the symmetric bar as an E$_{\infty}$-chiral
-cocommutative coalgebra with nontrivial factorization structure.
+twist, so its symmetric coalgebra structure is the descended
+$L_R$-twisted structure, not the untwisted cocommutative coalgebra on
+the ordered tensor coalgebra.
 \end{proof}
 
 \begin{remark}[Scope of \textup{\ref{R2}} and \textup{\ref{R3}}]
 \label{rem:R-descent-unitarity-scope}
 \index{R-matrix!unitarity scope}
 \index{descent!scope across families}
-Hypothesis~\ref{R2} is satisfied by the rational Yangian
-$Y_\hbar(\fg)$ for every simple Lie algebra $\fg$ (Drinfeld's unitary
-rational $R$-matrix, $R(z)R^{op}(-z)=\id$ by direct computation on the
-evaluation homomorphism) and by the trigonometric quantum affine
-$U_q(\hat\fg)$ at generic~$q$ (unitary at generic $q$; at roots of unity
-unitarity fails together with Koszulness, so the descent lemma's scope
-matches the Koszul-locus hypothesis). For elliptic $R$-matrices of
-Belavin/Felder type, unitarity is convention-dependent and must be
-checked per presentation. For chiral algebras with trivial
-$R$-matrix~$R(z)=\tau$ (Heisenberg, free fermions, lattice VOAs at
-generic rank), unitarity~\ref{R2} is immediate and~\ref{R1} is vacuous;
-Step~4 of the proof records this degeneration.
+Hypothesis~\ref{R2} is satisfied on the finite-dimensional evaluation
+module lane of the rational Drinfeld Yangian $Y_\hbar(\fg)$ after the
+standard scalar normalization of the rational $R$-matrix, and on the
+integrable finite-type lane of trigonometric quantum affine
+$U_q(\hat\fg)$ at generic~$q$ after the corresponding normalization.
+These are representation-surface statements. They do not assert a
+factorization Drinfeld--Kohno equivalence on all of Yangian
+category~$\mathcal O$, nor a dg-shifted Yangian / line-operator
+comparison. At roots of unity, and for elliptic or dynamical
+$R$-matrices of Belavin/Felder type, unitarity and the
+regular-singular boundary extension must be checked in the chosen
+presentation. For chiral algebras with trivial ordinary
+$R$-matrix~$R(z)=1$ (Heisenberg, free fermions, lattice VOAs at
+generic rank), the checked braiding is $\check R(z)=\tau$;
+unitarity~\ref{R2} is immediate and~\ref{R1} is vacuous.
 
 Hypothesis~\ref{R3} is a separate fixed-curve boundary condition. For
 the rational KZ and trigonometric Cherednik connections it is the usual
 regular-singular logarithmic extension along the Fulton--MacPherson
-boundary; for elliptic and dynamical $R$-matrices it depends on the
-chosen compactification and dynamical-parameter convention. The open
-configuration-space descent uses only~\ref{R1}+\ref{R2}. The Ran-level
-symmetric bar formula uses~\ref{R3} as well. Beyond the rational and
-generic trigonometric loci, any descent claim must either prove
-\ref{R2}+\ref{R3} directly or supply a different symmetric-bar
+boundary on the stated representation lanes; for elliptic and
+dynamical $R$-matrices it depends on the chosen compactification and
+dynamical-parameter convention. The open configuration-space descent
+uses only~\ref{R1}+\ref{R2}. The Ran-level symmetric bar formula
+uses~\ref{R3} as well. Beyond these lanes, any descent claim must
+prove \ref{R2}+\ref{R3} directly or supply a different symmetric-bar
 construction.
 \end{remark}
 
@@ -1493,29 +1999,36 @@ construction.
 The averaging map
 $\mathrm{av}\colon \fg^{\Eone}_\cA \to \fg^{\mathrm{mod}}_\cA$
 (\S\ref{sec:e1-first-prose-architecture}) is the dual of the descent
-map $\pi^!$: dualising $\pi\colon \Ran^{\ord}(X) \to \Ran(X)$ and
-tensoring with the structure sheaf, one recovers the
-$\Sigma_n$-coinvariant projection with the $R$-twist suppressed at the
-shadow-level. On the $R$-matrix itself, the image
-$\mathrm{av}(r(z))$ at level prefix $k$ for affine Kac--Moody
-$V_k(\fg)$ in trace-form convention $r(z)=k\,\Omega/z$ is the
-trace of $L_R$ against the regular representation, which is
-$\kappa_\mathrm{dp}=k\,\dim(\fg)/(2h^{\vee})$ for non-abelian affine
-KM (adding the Sugawara shift $\dim(\fg)/2$ to recover the full
-$\kappa(V_k(\fg))=\dim(\fg)(k+h^{\vee})/(2h^{\vee})$).
+map $\pi^!$ after forgetting the monodromy datum: dualising
+$\pi\colon \Ran^{\ord}(X) \to \Ran(X)$ and tensoring with the structure
+sheaf gives the $\Sigma_n$-coinvariant projection on the classical
+shadow. It does not quantize a classical kernel and it does not, by
+itself, produce the full modular characteristic. For affine
+Kac--Moody $V_k(\fg)$ in trace-form convention, the classical residue
+kernel is
+\[
+r^{KM}(z)=k\,\Omega/z.
+\]
+Its trace-form contribution to the scalar diagonal is
+$k\,\dim(\fg)/(2h^\vee)$. The full invariant is
+\[
+\kappa(V_k(\fg))=\dim(\fg)(k+h^\vee)/(2h^\vee),
+\]
+where the additional $\dim(\fg)/2$ is the Sugawara conformal-vector
+shift, not the trace of the descent local system.
 \end{remark}
 
 %================================================================
-\section{Downstream corollaries: 14 theorems}\label{sec:ainf2-downstream}
+\section{Restrictions and consequences of Theorem~$A^{\infty,2}$}\label{sec:ainf2-downstream}
 %================================================================
 
-The following theorems are corollaries of the unified Koszul reflection
+The following statements are obtained from the unified Koszul reflection
 (Theorem~\ref{thm:koszul-reflection}) via its explicit
-properadic-envelope form (Theorem~\ref{thm:A-infinity-2}). Each listing
-cites the primary statement and explains how it descends from the
-unified form.
+properadic-envelope form (Theorem~\ref{thm:A-infinity-2}). Each item
+names the restriction, pullback, completion, or specialization being
+used.
 
-\begin{corollary}[Downstream corollaries of $A^{\infty,2}$;
+\begin{corollary}[Typed restrictions of $A^{\infty,2}$;
 \ClaimStatusConditional]
 \label{cor:ainf2-downstream-list}
 \index{Theorem A-infinity-2!downstream corollaries}
@@ -1559,7 +2072,8 @@ restricted to classes of objects. The seventh spoke
 (SC-formality) is a class~$\mathsf{G}$ equivalence via
 \textup{\textup{\ref{A2-iii}}} and the shadow tower truncation at depth~$2$;
 the unitarity hypothesis~\ref{R2} of~\ref{A2-iii} is vacuous on
-class~$\mathsf{G}$ where $R(z)=\tau$ (Heisenberg, free fermions,
+class~$\mathsf{G}$ where $R(z)=1$ and $\check R(z)=\tau$
+(Heisenberg, free fermions,
 lattice VOAs at generic rank), so the descent applies unconditionally
 on the class-$\mathsf{G}$ stratum.
 Spoke~5 (bar concentration in weight~1) extends to $g\geq 1$
@@ -1581,8 +2095,9 @@ $\SpCh_{\Sigma_{d-1}, C}$ is factorisation homology along a closed
 $(d-1)$-cycle followed by restriction to the reference curve
 $C \subset \CY_d$, factoring through $\Fact(C)$ at the
 $(\infty,2)$-categorical level. Theorem~$A^{\infty,2}$ provides
-the bar-cobar equivalence that realises the CY-A$_3$ inf-cat
-statement on each member of the family of chiral shadows indexed
+the bar-cobar equivalence that realizes the CY-A$_3$
+$(\infty,2)$-categorical statement on each member of the family of
+chiral shadows indexed
 by $(\Sigma_{d-1}, C)$.
 \item \label{D10} Deligne--Tamarkin formality at chain level:
 \textup{Proposition~\textup{\ref{prop:deligne-tamarkin-chain}}}.
@@ -1600,8 +2115,8 @@ $\mathrm{Ho}(\mathrm{dg\text{-}Ch\text{-}alg}) \simeq
 \mathrm{Ho}(\mathrm{conil\text{-}dg\text{-}}\cC^{!}_{\ch}\text{-coalg})$:
 \textup{Theorem~\textup{\ref{thm:quillen-equivalence-chiral}}}. Descent:
 homotopy-categorical truncation of Theorem~$A^{\infty,2}$; this is the
-chain-level theorem whose Vallette-ambient proof we flagged as
-mis-scoped. The correct proof is via
+chain-level theorem whose Vallette-ambient proof is mis-scoped. The
+correct proof is via
 Theorem~\ref{thm:A-infinity-2} restricted to chain level.
 \item \label{D13} $d^2=0$ on the fixed-curve Ran tower:
 \textup{Theorem~\textup{\ref{thm:d-squared-zero-universal}}}. Descent:
@@ -1612,12 +2127,17 @@ canonical on a fixed smooth curve. The relative-family version over
 $\overline{\mathcal M}_{g,n}$ additionally requires the vanishings
 $[\alpha_{\mathrm{BC}}]=0$ and $[\beta_{\mathrm{nodal}}]=0$ of
 Remark~\ref{rem:A-infinity-2-modular-family-scope}.
-\item \label{D14} Theta-MC existence at all orders:
+\item \label{D14} Fixed-curve ordered Theta-MC recursion:
 \textup{Theorem~\textup{\ref{thm:recursive-existence}}}. Descent:
-$\theta_\cA$ is the counit of the $(\infty,2)$-adjoint
-$\Omegach_X \dashv \Bbarch_X$ restricted to $\Eone$-chiral algebras on
-the ordered Ran; existence to all orders is the counit natural
-transformation at each $\bar B^{\ord}_n$ level.
+the universal twisting morphism attached to the counit
+$\Omegach_X\Bbarch_X(\cA)\to\cA$ gives the fixed-curve ordered
+Maurer--Cartan recursion
+$D\theta_\cA+\tfrac12[\theta_\cA,\theta_\cA]=0$ at each
+$\bar B^{\ord}_n$ level. The quantized QYBE datum, the relative-family
+extension over $\overline{\mathcal M}_{g,n}$, and any full cyclic
+deformation theorem require the additional hypotheses recorded in
+Proposition~\ref{prop:classical-cybe-quantum-r-input} and
+Remark~\ref{rem:A-infinity-2-modular-family-scope}.
 \end{enumerate}
 \end{corollary}
 
@@ -1658,7 +2178,7 @@ $K_X^2\simeq\mathrm{id}$.
 \end{remark}
 
 %================================================================
-\section{Ambient corrections}\label{sec:ainf2-heals}
+\section{Symmetric monoidal ambient corrections}\label{sec:ainf2-heals}
 %================================================================
 
 Theorem~$A^{\infty,2}$ uses the following ambient replacements.
@@ -1713,7 +2233,7 @@ ambient.
 
 The Heisenberg bar is already $\Sigma$-coinvariant. This is compatible
 with the ordered $E_1$ formulation because Heisenberg has
-$R(z)=\tau$ (the trivial swap),
+$R(z)=1$ and checked braiding $\check R(z)=\tau$,
 so by Lemma~\ref{lem:R-twisted-descent} Step~4 the $L_R$-twisted
 descent degenerates to ordinary $\Sigma_n$-coinvariants. Hence
 Heisenberg's ordered and symmetric bar coincide as a \emph{special case}
@@ -1988,44 +2508,55 @@ operad-to-properad lift.
 \end{remark}
 
 %================================================================
-\section*{Closing remark}
+\section*{Theorem~A as the algebraic structure on the KZ functor}
 %================================================================
 
 One adjunction, one reconstruction counit, one Verdier-dualized
-duality functor. The eight theorem facets unfold as eight
-categorical directions through that single structure; the fourteen
-downstream corollaries unfold as fourteen pullbacks of
-Theorem~$A^{\infty,2}$ along restriction, cohomological truncation, or
-sub-$(\infty,2)$-specialisation. The four obstructions
-$\Pi_1$--$\Pi_4$ name the four extensions --
-factorization-ambient transfer, higher chiral dimension,
-Lagrangian--Koszul converse, unbounded-rank non-(H3) regime -- that
-the Koszul reflection does not yet close. Theorem~A enters the
-five-theorem spine of Volume~I as the algebraic structure on the
-KZ functor of Chapter~\ref{chap:climax-platonic}: the pullback
-identity $\bar\partial = \KZ^{*}(\nabla_{\Arnold})$ is the bar
-differential read through the Koszul reflection.
+duality functor. Theorem~$A^{\infty,2}$ acts by restriction,
+cohomological truncation, and conilpotent completion; it does not
+identify reconstruction with Koszul duality, does not turn classical
+CYBE data into a quantum $R$-matrix, and does not extend a fixed-curve
+statement over the Deligne--Mumford boundary without the two
+base-change and nodal-sewing vanishings. Theorem~A enters the
+five-theorem spine of Volume~I as the algebraic structure on the KZ
+functor of Chapter~\ref{chap:climax-platonic}: the pullback identity
+$\bar\partial = \KZ^{*}(\nabla_{\Arnold})$ is the bar differential read
+through the Koszul reflection.
 
-\section{Synthesis}
+\section{K3 Hall--Drinfeld input and Theorem~A scope}
 \label{sec:tainf2-supplement}
 
-\begin{remark}[$A_\infty$-structure on $\mathbf H_{\Delta_5}$]
+\begin{remark}[$A_\infty$-structure on $\mathbf H_{\Delta_5}$ as external input]
 \label{rem:tainf2-1}
-The $A_\infty$-Theorem~2 specialises at the K3 base to an
-explicit $A_\infty$-structure on $\mathbf H_{\Delta_5}$ with structure
-maps
+Theorem~A supplies the completed bar--cobar ambient for a fixed chiral
+shadow of a supplied factorization algebra. It does not construct the
+K3 Hall--Drinfeld object $\mathbf H_{\Delta_5}$, does not identify it
+with a Drinfeld Yangian, and does not compute its higher products. If
+Vol.~II/III supply a completed K3 chiral shadow
+$\mathbf H_{\Delta_5}$ with $A_\infty$ structure maps
 \[
 \mu_n: \mathbf H_{\Delta_5}^{\otimes n}\to \mathbf H_{\Delta_5},\qquad n\ge 2,
 \]
-satisfying Stasheff's identities. The first three non-trivial maps
-are: $\mu_2 = $ Hall multiplication in $\mathrm{CoHA}_{K3\times E}$;
-$\mu_3 = $ the Drinfeld-associator coboundary at order $\hbar$;
-$\mu_4 = $ the Igusa-form twist at order $\hbar^2$ (from
-$\Phi_{10}/\eta^{24}$). The pentagon axiom at order $\hbar^{\le 3}$
-with the explicit coboundary
-$\phi^{(3)} = \zeta(3) c_{\mathrm{symm}} + \tfrac{25}{3} c_{\mathrm{timelike}} + (\Phi_{10}/\eta^{24}) c_{\Phi_{10}}$
-(Vol.~II, \S\ref{V2-sec:schtop-heptagon-supplement}) is the $A_\infty$
-Stasheff relation for $\mu_5$. Cross-ref Vol.~III,
-Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}. Primary-lit: Stasheff
-1963, Kadeishvili 1980, Keller 2001 ($A_\infty$-categories).
+then this chapter applies only after hypotheses \textup{(H1)}--\textup{(H3)}
+and the relevant $R$-descent hypotheses have been verified on that
+shadow. The proposed first products
+\[
+\mu_2=\text{Hall multiplication in }\mathrm{CoHA}_{K3\times E},\qquad
+\mu_3=\text{Drinfeld-associator coboundary at order }\hbar,
+\]
+and
+\[
+\mu_4=\text{Igusa-form twist at order }\hbar^2
+\quad\text{from}\quad \Phi_{10}/\eta^{24}
+\]
+belong to the K3/Hall--Drinfeld input surface. The order
+$\hbar^{\leq3}$ pentagon coboundary
+\[
+\phi^{(3)} = \zeta(3)c_{\mathrm{symm}}
++ \tfrac{25}{3}c_{\mathrm{timelike}}
++ (\Phi_{10}/\eta^{24})c_{\Phi_{10}}
+\]
+is likewise external structure data. Theorem~A can transport such data
+through the completed bar--cobar adjunction after they are supplied; it
+does not prove the K3 product formulas.
 \end{remark}

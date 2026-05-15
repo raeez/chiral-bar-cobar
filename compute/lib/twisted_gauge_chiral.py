@@ -85,12 +85,13 @@ Section 3 -- K3 x E x C WITH GL(N):
     of the boundary chiral algebra is determined by the intersection
     pairing on H^{0,*}(K3 x E) via the CS propagator.
 
-    The MODULAR CHARACTERISTIC of the resulting chiral algebra:
-      kappa = 5 = weight of Delta_5 (the Igusa cusp form of weight 5)
+    The BKM/BPS modular characteristic of the resulting automorphic lane:
+      kappa_BKM = 5 = weight of the primitive Delta_5 denominator
 
-    This is the key computation: the CY3 = K3 x E assigns kappa = 5 to the
-    boundary chiral algebra.  The value 5 comes from the categorical CY
-    Euler characteristic chi^CY(K3 x E), which equals (chi(K3) - 4) / 4 = 5.
+    This is a lane-specific computation. The compact total-space value is
+    kappa_cat(K3 x E)=0, and the Heisenberg-Mukai chiral specialisation is
+    kappa_ch^{Heis}(K3 x E)=3. The value 5 comes from the Borcherds
+    weight c_{phi_{0,1}}(0)/2 = 10/2.
 
 Section 4 -- TREE-LEVEL OPE FROM CS PROPAGATOR:
 
@@ -116,15 +117,15 @@ Section 4 -- TREE-LEVEL OPE FROM CS PROPAGATOR:
     on the K3 moduli (it is moduli-dependent for the full theory, but the
     shadow obstruction tower kappa is a topological invariant).
 
-Section 5 -- VERIFICATION OF kappa = 5 FOR K3 x E:
+Section 5 -- VERIFICATION OF kappa_BKM = 5 FOR K3 x E:
 
     Multiple verification paths:
-    (1) From the CY Euler characteristic: chi^CY(K3 x E) = 5.
-    (2) From the Igusa cusp form: Delta_5 has weight 5 on Sp(4,Z).
+    (1) From the K3 elliptic-genus constant term: c_{phi_{0,1}}(0)/2 = 5.
+    (2) From the primitive Delta_5 denominator: Delta_5 has weight 5.
     (3) From the DT partition function: the DT generating function for
         K3 x E is 1/Phi_{10}(Z) where Phi_{10} = Delta_5^2 has weight 10.
         The SQUARE ROOT has weight 5.
-    (4) From the BCOV holomorphic anomaly: F_1 = kappa/24.
+    (4) From the BKM-lane genus-1 scalar: F_1 = kappa_BKM/24.
     (5) From the BKM superalgebra: the denominator product for the
         generalized Kac-Moody algebra g_{K3xE} is Delta_5(Z), weight 5.
 
@@ -134,11 +135,11 @@ Section 6 -- GENERAL CY3 LANDSCAPE:
     from twisted gauge theory on CY3 x C depends on the CY3:
 
       CY3 = C^3:            kappa depends on gauge group (affine algebra)
-      CY3 = K3 x E:         kappa = 5  (class M, infinite tower)
+      CY3 = K3 x E:         kappa_BKM = 5  (class M, infinite tower)
       CY3 = quintic:         kappa = -25/3  (BCOV, conjectural for cat. kappa)
       CY3 = conifold:        kappa = 1  (class G, betagamma)
-      CY3 = T^6:             kappa = 0  (chi_top = 0 and chi^CY = 0)
-      CY3 = Enriques x E:   kappa = 1  (chi(Enriques) = 12, chi^CY = 1)
+      CY3 = T^6:             scalar lane = 0  (chi_top = 0)
+      CY3 = Enriques x E:   scalar lane = 1  (chi(Enriques) = 12)
 
 BEILINSON WARNINGS
 ==================
@@ -152,11 +153,11 @@ AP33: H_k^! = Sym^ch(V*) != H_{-k}.
 AP39: kappa != c/2 in general.
 AP48: kappa depends on full algebra, not just Virasoro subalgebra.
 
-CRITICAL DISTINCTION: chi^CY(C) (CY categorical Euler characteristic)
-is NOT chi_top(X) (topological Euler characteristic).
-  K3 x E: chi_top = 0, chi^CY = 5.
-  K3:     chi_top = 24, chi^CY = 2.
-  Quintic: chi_top = -200, chi^CY conjecturally = -25/3.
+CRITICAL DISTINCTION: the compact categorical value, the Heisenberg
+chiral specialisation, and the BKM/BPS automorphic value are distinct.
+  K3 x E: chi_top = 0, kappa_cat = 0, kappa_ch^{Heis}=3, kappa_BKM=5.
+  K3:     chi_top = 24, categorical surface scalar = 2.
+  Quintic: chi_top = -200, BCOV scalar conjecturally = -25/3.
 
 References:
   Costello, "Notes on supersymmetric and holomorphic field theories..." (2013)
@@ -389,57 +390,62 @@ class T6HodgeData(CY3HodgeData):
 
 
 # ===========================================================================
-# Section 2: CY Euler characteristic (categorical kappa)
+# Section 2: selected scalar lane
 # ===========================================================================
 
 def chi_cy(cy3: CY3HodgeData) -> Fraction:
-    r"""CY Euler characteristic chi^CY(D^b(X)) for a CY3.
+    r"""Legacy scalar readout used by this engine.
 
-    This is the categorical invariant controlling the modular characteristic
-    kappa of the boundary chiral algebra from twisted gauge theory.
+    For rigid/local examples this coincides with the geometric scalar used
+    by the boundary chiral algebra.  For K3 x E this compatibility API
+    returns the BKM/BPS lane kappa_BKM=5, not the compact categorical
+    total-space value kappa_cat(K3 x E)=0 and not the Heisenberg-Mukai
+    specialisation kappa_ch^{Heis}=3.
 
     CRITICAL DISTINCTION (from CLAUDE.md):
-      chi^CY != chi_top.  For K3 x E: chi_top = 0 but chi^CY = 5.
+      bare kappa is forbidden.  For K3 x E: chi_top = 0,
+      kappa_cat=0, kappa_ch^{Heis}=3, and this engine's BKM lane is 5.
 
-    The CY Euler characteristic is defined via the categorical trace on
-    Hochschild homology and the B-model topological string.
+    Away from K3 x E, the legacy name records the geometric scalar
+    defined via the categorical trace on Hochschild homology and the
+    B-model topological string.
 
     For standard CY3 families:
-      C^3:       chi^CY = 0 (trivial for the non-compact flat space)
-      K3 x E:    chi^CY = 5 = (chi(K3) - 4) / 4  [weight of Delta_5]
-      Quintic:   chi^CY = chi_top / 24 = -200/24 = -25/3  (BCOV)
-      Conifold:  chi^CY = 1  (single compact cycle)
-      T^6:       chi^CY = 0  (chi_top = 0 and abelian holonomy)
+      C^3:       selected scalar = 0 (trivial for the non-compact flat space)
+      K3 x E:    kappa_BKM = 5 = c_{phi_{0,1}}(0)/2  [weight of Delta_5]
+      Quintic:   BCOV scalar = chi_top / 24 = -200/24 = -25/3
+      Conifold:  selected scalar = 1  (single compact cycle)
+      T^6:       selected scalar = 0  (chi_top = 0 and abelian holonomy)
 
-    The formula chi^CY = chi_top / 24 is the BCOV formula, valid for rigid
-    CY3s (quintic etc.).  For non-rigid CY3s (K3 x E), the formula is
-    different because of the extra moduli.
+    The formula chi_top / 24 is the BCOV scalar formula, valid for rigid
+    CY3s (quintic etc.).  It is not the K3 x E BKM lane.
 
     For K3 x E specifically:
       The DT partition function is 1/Phi_{10}(Z) where Phi_{10} is the
-      Igusa cusp form of weight 10 = 2 * 5.  The SQUARE ROOT is Delta_5,
+      scalar Siegel form of weight 10 = 2 * 5.  The SQUARE ROOT is Delta_5,
       weight 5.  The weight of the denominator form gives kappa.
 
     Independent derivation for K3 x E:
       chi(K3) = 24.  The "CY defect" for a product CY3 = S x E is:
-      chi^CY(S x E) = chi(O_S) + (1/12) integral_S c_2(S)
-                     = chi(O_S) + chi(S)/12.
+      scalar(S x E) = chi(O_S) + (1/12) integral_S c_2(S)
+                    = chi(O_S) + chi(S)/12.
       For K3: chi(O_{K3}) = 2, chi(K3) = 24.
-      chi^CY(K3 x E) = 2 + 24/12 = 2 + 2 = 4 ... no, that gives 4.
+      This formula computes neither the compact total-space value 0 nor
+      the BKM value 5; it is the wrong lane.
 
     Actually the correct derivation uses the Gottsche formula / BKM:
       The generating function for DT invariants on K3 x E is:
         1/Delta_5(Z)^2 = 1/Phi_{10}(Z)
-      where Phi_{10} = Delta_5^2 is the Igusa form.
+      where Phi_{10} = Delta_5^2 is the scalar Siegel form.
       Z^DT = prod_{(n,l,m)>0} 1/(1-p^n q^l y^m)^{c(4nm-l^2)}
       The genus-1 free energy F_1 = log Z|_{g=1} gives kappa via F_1 = kappa/24.
 
     The direct computation (Bryan-Leung, Maulik-Pandharipande):
       F_1(K3 x E) = 5/24 * <fiber integral>
-    giving kappa = 5.
+    giving kappa_BKM = 5.
 
     Returns:
-        Fraction: the CY Euler characteristic chi^CY(D^b(X)).
+        Fraction: the scalar lane value used by this engine.
     """
     name = cy3.name
 
@@ -447,10 +453,10 @@ def chi_cy(cy3: CY3HodgeData) -> Fraction:
         # Flat space: no compact cycles, kappa depends on gauge group
         return Fraction(0)
     elif name == "K3xE":
-        # The weight of Delta_5: kappa = 5
+        # BKM/BPS lane: weight of Delta_5, kappa_BKM = 5.
         return Fraction(5)
     elif name == "quintic":
-        # BCOV: chi^CY = chi_top / 24 = -200/24 = -25/3
+        # BCOV scalar: chi_top / 24 = -200/24 = -25/3
         return Fraction(-25, 3)
     elif name == "conifold":
         # Single compact P^1: kappa = 1
@@ -541,10 +547,10 @@ class TwistedGaugeChiralData:
 
     @property
     def kappa_cy3(self) -> Fraction:
-        """kappa contribution from the CY3 geometry.
+        """Scalar contribution from the chosen CY3 lane.
 
         For CY3 = C^3: no geometric contribution (flat space).
-        For CY3 compact: chi^CY(X) is the geometric kappa.
+        For K3 x E this is the BKM/BPS lane, not compact kappa_cat.
 
         When the gauge group is trivial (N=1 abelian), the full kappa
         is entirely from the CY3 geometry.
@@ -556,12 +562,12 @@ class TwistedGaugeChiralData:
         """Total modular characteristic.
 
         For CY3 = C^3 with GL(N): kappa = kappa_gauge (the affine algebra).
-        For compact CY3 with GL(1): kappa = chi^CY(CY3).
-        For compact CY3 with GL(N), N > 1: kappa = N * chi^CY(CY3) + corrections
+        For compact CY3 with GL(1): kappa is the selected scalar lane.
+        For compact CY3 with GL(N), N > 1: kappa = N * scalar(CY3) + corrections
         (the full formula depends on the specific theory and is known
         only in special cases).
 
-        For the abelian case (N=1), the total kappa is chi^CY.
+        For the abelian case (N=1), the total kappa is the selected scalar lane.
         For the non-abelian case on C^3, the total kappa is the gauge kappa.
         For the non-abelian case on compact CY3, we use the product formula
         where it is known.
@@ -572,8 +578,8 @@ class TwistedGaugeChiralData:
             return self.kappa_cy3
         else:
             # For GL(N) on compact CY3: the leading term at large N is
-            # N^2 * chi^CY(CY3) from the trace in the adjoint.
-            # At N = 1: just chi^CY.
+            # N^2 times the selected scalar lane from the trace in the adjoint.
+            # At N = 1: just that scalar.
             # The exact formula for general N involves the 't Hooft coupling.
             # We give the tree-level (perturbative) answer.
             return Fraction(self.gauge_rank**2) * self.kappa_cy3
@@ -642,8 +648,9 @@ def su_n_data(N: int, k: int = 1) -> TwistedGaugeChiralData:
 def k3e_gl1_data() -> TwistedGaugeChiralData:
     """GL(1) gauge theory on K3 x E x C.
 
-    The boundary chiral algebra is the BKM-type algebra with kappa = 5.
-    This is the abelian case: the full kappa is chi^CY(K3 x E) = 5.
+    The boundary chiral algebra is the BKM-type algebra with
+    kappa_BKM = 5. This is not the compact total-space value
+    kappa_cat(K3 x E)=0.
     """
     return TwistedGaugeChiralData(
         cy3=K3xEHodgeData(),
@@ -859,14 +866,17 @@ def k3e_propagator_structure() -> Dict[str, Any]:
 
 
 # ===========================================================================
-# Section 7: Verification of kappa = 5 for K3 x E
+# Section 7: Verification of kappa_BKM = 5 for K3 x E
 # ===========================================================================
 
 def verify_kappa_k3e_path1_chi_cy() -> Dict[str, Any]:
-    """Path 1: kappa from CY Euler characteristic.
+    """Path 1: kappa_BKM from the K3 elliptic-genus constant term.
 
-    chi^CY(K3 x E) = 5 by direct computation:
-      (chi(K3) - 4) / 4 = (24 - 4) / 4 = 20/4 = 5.
+    This compatibility function keeps its old name, but it does not
+    compute the compact CY Euler value.  The compact total-space value is
+    chi(O_{K3 x E})=0.  The BKM/BPS automorphic value is
+      c_{phi_{0,1}}(0)/2 = 10/2 = 5,
+    equivalently (chi_top(K3) - 4)/4 = (24 - 4)/4 = 5.
 
     The formula (chi(K3) - 4)/4 arises from the Mukai lattice:
       rank(Mukai) = 24 = 2 + h^{1,1} + 2 = 4 + 20.
@@ -875,10 +885,11 @@ def verify_kappa_k3e_path1_chi_cy() -> Dict[str, Any]:
 
     Actually the cleanest derivation: Delta_5(Z) = prod_{(a,b) even} theta[a,b](Z)
     is a Siegel modular form of weight 5 (product of 10 theta constants,
-    each of weight 1/2).  The weight 5 is a FACT about the Igusa cusp form.
+    each of weight 1/2).  The weight 5 is a fact about the primitive
+    Delta_5 denominator; the scalar Siegel form Phi_{10} is its square.
 
-    The connection to chi^CY: by Theorem CY-D of the monograph,
-    kappa(A_{K3xE}) = chi^CY(D^b(K3 x E)) = 5.
+    The Heisenberg-Mukai chiral specialisation is the separate value
+    kappa_ch^{Heis}(K3 x E)=3.
     """
     # Formula 1: (chi(K3) - 4) / 4
     chi_K3 = 24
@@ -891,7 +902,7 @@ def verify_kappa_k3e_path1_chi_cy() -> Dict[str, Any]:
     kappa_formula3 = Fraction(10 * 1, 2)  # 10 * (1/2) = 5
 
     return {
-        'path': 'CY Euler characteristic',
+        'path': 'BKM constant term',
         'kappa_formula1': kappa_formula1,
         'kappa_formula2': kappa_formula2,
         'kappa_formula3': kappa_formula3,
@@ -900,9 +911,9 @@ def verify_kappa_k3e_path1_chi_cy() -> Dict[str, Any]:
 
 
 def verify_kappa_k3e_path2_igusa() -> Dict[str, Any]:
-    """Path 2: kappa from the Igusa cusp form Delta_5.
+    """Path 2: kappa_BKM from the primitive Delta_5 denominator.
 
-    Delta_5(Z) is the unique Siegel cusp form of weight 5 for Sp(4, Z).
+    Delta_5(Z) is the primitive Gritsenko-Nikulin denominator of weight 5.
     It is the product of the 10 even genus-2 theta constants:
       Delta_5(Z) = prod_{[a;b] even} theta[a;b](Z, 0).
 
@@ -911,10 +922,10 @@ def verify_kappa_k3e_path2_igusa() -> Dict[str, Any]:
 
     The DT partition function for K3 x E (Kawai-Yoshioka):
       Z^DT_{K3xE} = 1 / Phi_{10}(Z)
-    where Phi_{10} = Delta_5^2 is the Igusa cusp form of weight 10.
+    where Phi_{10}^{un} = Delta_5^2 is the scalar Siegel form of weight 10.
 
     Taking the square root: the denominator is Delta_5, weight 5.
-    Hence kappa = 5.
+    Hence kappa_BKM = 5.
     """
     # Number of even genus-2 theta characteristics
     num_even_chars = 10
@@ -927,7 +938,7 @@ def verify_kappa_k3e_path2_igusa() -> Dict[str, Any]:
     phi10_weight = 2 * delta5_weight
 
     return {
-        'path': 'Igusa cusp form',
+        'path': 'primitive Delta_5 denominator',
         'num_even_chars': num_even_chars,
         'theta_weight': theta_weight,
         'delta5_weight': delta5_weight,
@@ -938,9 +949,9 @@ def verify_kappa_k3e_path2_igusa() -> Dict[str, Any]:
 
 
 def verify_kappa_k3e_path3_genus1() -> Dict[str, Any]:
-    """Path 3: kappa from the genus-1 free energy.
+    """Path 3: kappa_BKM from the genus-1 free energy.
 
-    F_1(K3 x E) = kappa / 24.
+    F_1(K3 x E) = kappa_BKM / 24.
 
     The genus-1 DT/GW free energy for K3 x E is known:
       F_1 = 5/24
@@ -1023,7 +1034,7 @@ def verify_kappa_k3e_path5_dt() -> Dict[str, Any]:
 
 
 def verify_kappa_k3e_all_paths() -> Dict[str, Any]:
-    """Run all 5 verification paths for kappa(K3 x E) = 5.
+    """Run all 5 verification paths for kappa_BKM(K3 x E) = 5.
 
     Multi-path verification as required by CLAUDE.md:
     every numerical result must be verified by 3+ independent paths.

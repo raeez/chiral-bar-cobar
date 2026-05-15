@@ -1,25 +1,22 @@
-r"""Tests for Borel summability of the shadow genus expansion.
+r"""Tests for scalar shadow genus convergence and Borel diagnostics.
 
-35+ tests organized into 8 verification blocks:
+Tests organized into 8 verification blocks:
 
 Block 1: Shadow series convergence (c > c*)
 Block 2: Shadow series divergence (c < c*)
 Block 3: Gevrey-0 growth verification
-Block 4: Borel transform closed form vs series
-Block 5: Borel-Laplace integral and Stokes jump
-Block 6: Stokes constants: residue vs MC
+Block 4: Ordinary genus generating function vs series
+Block 5: True Borel transforms and Borel-Laplace reconstruction
+Block 6: Ordinary generating-function pole residues
 Block 7: Instanton action verification
 Block 8: Cross-checks and structural properties
 
-Multi-path verification mandate (CLAUDE.md):
+Multi-path checks:
     Every numerical claim verified by at least 3 independent paths.
 """
 
-import cmath
 import math
 from fractions import Fraction
-
-import pytest
 
 from compute.lib.theorem_borel_summability_shadow_engine import (
     INSTANTON_ACTION,
@@ -27,34 +24,39 @@ from compute.lib.theorem_borel_summability_shadow_engine import (
     F_g_virasoro,
     _bernoulli_exact,
     _lambda_fp_exact,
-    borel_analyticity_strip,
+    analytic_certification_firewall,
     borel_laplace_integral,
-    borel_residue,
+    borel_transform_even_series,
+    borel_transform_t_series,
     borel_summability_data,
     genus_generating_function,
+    genus_generating_function_analyticity_strip,
     genus_generating_function_series,
     convergence_radius_shadow,
     convergence_test_at_c,
     critical_central_charge,
     gevrey_class_test,
     growth_rate,
+    growth_rate_squared_exact,
     kappa_virasoro,
     lateral_borel_sums,
+    lateral_borel_jump_diagnostic,
     oscillatory_parameters,
+    ordinary_genus_pole_circulation,
+    ordinary_genus_pole_residue,
+    object_and_kernel_firewalls,
     partial_sum_shadow,
+    scalar_genus_singularity_audit,
     shadow_coefficients_exact,
     shadow_coefficients_numerical,
     shadow_discriminant,
     shadow_metric_branch_points,
     virasoro_shadow_metric_coeffs,
+    virasoro_shadow_metric_coeffs_exact,
     shadow_vs_string_comparison,
-    stokes_constant_from_mc,
-    stokes_constant_from_residue,
-    stokes_jump_numerical,
     verify_generating_function_vs_series,
     verify_convergence_at_c,
     verify_instanton_action,
-    verify_stokes_residue_vs_mc,
 )
 
 
@@ -179,6 +181,7 @@ class TestDivergenceRegion:
         assert abs(rho_sq - 1052.0 / 27.0) < 1e-10
         rho = math.sqrt(rho_sq)
         assert abs(rho - growth_rate(1.0)) < 1e-10
+        assert growth_rate_squared_exact(Fraction(1)) == Fraction(1052, 27)
 
 
 # ============================================================================
@@ -247,7 +250,7 @@ class TestGevrey0:
             "Exponent -5/2 gives larger rescaled values than -3/2, as expected"
 
     def test_not_gevrey1(self):
-        """Shadow coefficients do NOT have factorial growth.
+        """Shadow coefficients have subfactorial growth.
 
         String genus expansion: F_g^{string} ~ (2g)!, so |F_g|/(2g)! -> C != 0.
         Shadow: S_r ~ rho^r * r^{-5/2}, so |S_r|/r! -> 0.
@@ -272,7 +275,7 @@ class TestGevrey0:
 
 
 # ============================================================================
-# Block 4: Borel transform closed form vs series
+# Block 4: Ordinary genus generating function vs series
 # ============================================================================
 
 class TestGeneratingFunction:
@@ -322,6 +325,14 @@ class TestGeneratingFunction:
         expected = kappa * xi ** 2 / 24.0
         assert abs(val - expected) / abs(expected) < 0.01
 
+    def test_generating_function_complex_origin_direction(self):
+        """The near-origin branch is analytic: xi^2, not |xi|^2."""
+        kappa = 5.0
+        xi = 1e-16j
+        val = genus_generating_function(xi, kappa)
+        expected = kappa * xi ** 2 / 24.0
+        assert val == expected
+
     def test_f1_coefficient(self):
         """The xi^2 coefficient of G[F] is F_1 = kappa/24.
 
@@ -348,139 +359,144 @@ class TestGeneratingFunction:
 
 
 # ============================================================================
-# Block 5: Borel-Laplace integral and Stokes jump
+# Block 5: True Borel transforms and Borel-Laplace reconstruction
 # ============================================================================
 
-class TestBorelLaplace:
-    """Verify the Borel-Laplace integral and Stokes phenomenon."""
+class TestTrueBorelTransforms:
+    """Verify that the true Borel transforms are entire in this scalar sector."""
 
-    def test_borel_sum_nonStokes_direction(self):
+    def test_even_borel_finite_at_ordinary_pole(self):
+        """B_even is finite at xi=2*pi although G[F] has a pole there.
+
+        Path 1: G[F] diverges near xi=2*pi.
+        Path 2: B_even[F](2*pi) is a convergent series.
+        """
+        kappa = 13.0 / 2.0
+        near_pole = genus_generating_function(2.0 * math.pi - 1e-8, kappa)
+        even_borel = borel_transform_even_series(2.0 * math.pi, kappa, g_max=70)
+        assert abs(near_pole) > 1e8
+        assert math.isfinite(abs(even_borel))
+        assert abs(even_borel) < 100.0
+
+    def test_t_borel_entire_numerical_growth(self):
+        """B_t remains finite far beyond the ordinary t-plane radius."""
+        kappa = 6.5
+        for s in [INSTANTON_ACTION, 2 * INSTANTON_ACTION, -3 * INSTANTON_ACTION]:
+            val = borel_transform_t_series(s, kappa, g_max=80)
+            assert math.isfinite(abs(val))
+
+
+class TestBorelLaplace:
+    """Verify the true Borel-Laplace integral."""
+
+    def test_borel_sum_rotated_direction(self):
         """The Borel sum along theta=pi/4 converges and gives a finite result."""
         kappa = 13.0 / 2.0
         x_sq = 0.1
         result = borel_laplace_integral(x_sq, kappa, theta=math.pi / 4,
                                         n_points=2000, xi_max=50.0)
-        assert math.isfinite(abs(result)), "Borel sum should be finite off Stokes ray"
-        assert abs(result) > 0, "Borel sum should be nonzero"
-
-    def test_borel_sum_finite_and_real(self):
-        """The Borel sum at x^2=1.0 along theta=pi/6 is finite and nearly real.
-
-        For a non-Stokes direction, the Borel-Laplace integral converges
-        to a finite complex number. Since F(x) is real for real x, the
-        Borel sum along a non-Stokes direction should have small imaginary part.
-        """
-        kappa = 13.0 / 2.0
-        x_sq = 1.0
-        result = borel_laplace_integral(x_sq, kappa, theta=math.pi / 6,
-                                        n_points=2000, xi_max=40.0)
         assert math.isfinite(abs(result)), "Borel sum should be finite"
         assert abs(result) > 0, "Borel sum should be nonzero"
 
-    def test_lateral_sums_differ(self):
-        """S_{0+} and S_{0-} differ (Stokes phenomenon at theta=0).
+    def test_borel_sum_matches_convergent_series(self):
+        """Borel-Laplace reconstruction agrees with the convergent series.
 
-        The discontinuity should be purely imaginary at leading order:
-            S_{0+} - S_{0-} ~ 2i * Im(S_1) * e^{-A/x^2}
+        Path 1: direct closed form G[F](sqrt(t)).
+        Path 2: standard Borel-Laplace integral using B_t[F].
+        Path 3: truncated ordinary genus series.
         """
         kappa = 13.0 / 2.0
         x_sq = 0.5
-        lateral = lateral_borel_sums(x_sq, kappa, epsilon=0.05,
-                                     n_points=2000, xi_max=50.0)
+        result = borel_laplace_integral(x_sq, kappa, theta=0.0,
+                                        n_points=4000, xi_max=60.0)
+        closed = genus_generating_function(math.sqrt(x_sq), kappa)
+        series = genus_generating_function_series(math.sqrt(x_sq), kappa, g_max=40)
+        assert abs(closed - series) < 1e-10
+        assert abs(result - closed) / abs(closed) < 5e-4
+
+    def test_lateral_sums_agree(self):
+        """The true Borel transform is entire, so paired lateral sums agree."""
+        kappa = 13.0 / 2.0
+        x_sq = 0.5
+        lateral = lateral_borel_sums(x_sq, kappa, epsilon=0.02,
+                                     n_points=4000, xi_max=60.0)
         disc = lateral['discontinuity']
-        # The discontinuity should be nonzero
-        assert abs(disc) > 1e-15, "Stokes discontinuity should be nonzero"
-        # The discontinuity should be dominantly imaginary
-        # (since S_1 is purely imaginary and e^{-A/x^2} is real)
-        if abs(disc) > 1e-10:
-            assert abs(disc.imag) > 0.1 * abs(disc), \
-                "Stokes jump should have significant imaginary part"
+        scale = max(abs(lateral['mean_borel_sum']), 1.0)
+        assert abs(disc) / scale < 5e-3
 
-    def test_stokes_jump_exponential_suppression(self):
-        """The Stokes jump is exponentially small: |disc| ~ e^{-A/x^2}.
-
-        At x^2=0.1: e^{-A/x^2} = e^{-394.8} ~ 10^{-171}.
-        At x^2=1.0: e^{-A/x^2} = e^{-39.48} ~ 5e-18.
-        At x^2=5.0: e^{-A/x^2} = e^{-7.90} ~ 3.7e-4.
-        """
+    def test_lateral_jump_diagnostic_zero_prediction(self):
+        """The lateral-jump diagnostic records zero mathematical jump."""
         kappa = 1.0
-        # At x^2=5.0, the exponential is not too small to detect numerically
-        x_sq = 5.0
-        lateral = lateral_borel_sums(x_sq, kappa, epsilon=0.05,
-                                     n_points=2000, xi_max=50.0)
-        disc = lateral['discontinuity']
-        A = INSTANTON_ACTION
-        expected_scale = math.exp(-A / x_sq)  # ~ 3.7e-4
-        # The discontinuity should be on the order of S_1 * e^{-A/x^2}
-        # S_1 = -4*pi^2*kappa*i, |S_1| = 4*pi^2*kappa ~ 39.5
-        S1_abs = 4.0 * math.pi ** 2 * kappa
-        expected_disc = S1_abs * expected_scale
-        # Check order of magnitude (within a factor of 10)
-        assert abs(disc) < 100.0 * expected_disc, \
-            f"|disc|={abs(disc)} vs expected ~ {expected_disc}"
+        data = lateral_borel_jump_diagnostic(0.5, kappa, epsilon=0.02,
+                                             n_points=3000, xi_max=50.0)
+        assert data['leading_prediction'] == 0j
+        assert data['ratio_numerical_to_predicted'] is None
 
 
 # ============================================================================
-# Block 6: Stokes constants: residue vs MC
+# Block 6: Ordinary generating-function pole residues
 # ============================================================================
 
-class TestStokesConstants:
-    """Verify Stokes constants from Borel residues match MC prediction."""
+class TestOrdinaryPoleResidues:
+    """Verify residues of the ordinary genus generating function G[F]."""
 
-    def test_S1_residue_vs_mc_c13(self):
-        """S_1 from residue = S_1 from MC at c=13.
+    def test_residue_formula_c13(self):
+        """Residue of G[F] at xi=2*pi is -2*pi*kappa.
 
-        Path 1: Res_{xi=2*pi} B[F] = kappa * (-1)^1 * 2*pi = -2*pi*kappa.
-                 S_1 = 2*pi*i * (-2*pi*kappa) = -4*pi^2*kappa*i.
-        Path 2: MC equation: S_1 = -4*pi^2*kappa*i.
-        Path 3: Closed form residue extraction.
+        Path 1: local sine expansion.
+        Path 2: closed-form residue function.
+        Path 3: numerical finite-difference residue.
         """
         kappa = 13.0 / 2.0
-        s_res = stokes_constant_from_residue(1, kappa)
-        s_mc = stokes_constant_from_mc(1, kappa)
-        assert abs(s_res - s_mc) < 1e-10
+        res = ordinary_genus_pole_residue(1, kappa)
+        expected = -2.0 * math.pi * kappa
+        eps = 1e-7
+        xi0 = 2.0 * math.pi
+        numerical = eps * genus_generating_function(xi0 + eps, kappa)
+        assert abs(res - expected) < 1e-10
+        assert abs(numerical - expected) / abs(expected) < 1e-6
 
-    def test_S1_value_c13(self):
-        """S_1 = -4*pi^2*(13/2)*i at c=13."""
+    def test_pole_circulation_value_c13(self):
+        """2*pi*i times the xi=2*pi residue equals -4*pi^2*kappa*i."""
         kappa = 13.0 / 2.0
-        S1 = stokes_constant_from_mc(1, kappa)
+        S1 = ordinary_genus_pole_circulation(1, kappa)
         expected = -4.0 * math.pi ** 2 * kappa * 1j
         assert abs(S1 - expected) < 1e-10
-        # S1 should be purely imaginary
         assert abs(S1.real) < 1e-10
-        assert S1.imag < 0  # negative imaginary
+        assert S1.imag < 0
 
-    def test_Sn_residue_vs_mc_all_n(self):
-        """S_n from residue = S_n from MC for n=1,...,5 at c=26."""
+    def test_residue_formula_all_n(self):
+        """Res_{xi=2*pi*n} G[F] = (-1)^n * 2*pi*n*kappa."""
         kappa = 26.0 / 2.0
-        results = verify_stokes_residue_vs_mc(kappa, n_max=5)
-        for n, s_res, s_mc, diff in results:
-            assert diff < 1e-8, f"Mismatch at n={n}: |diff|={diff}"
+        for n in range(1, 6):
+            res = ordinary_genus_pole_residue(n, kappa)
+            expected = kappa * ((-1) ** n) * 2.0 * math.pi * n
+            assert abs(res - expected) < 1e-10
 
-    def test_stokes_alternating_sign(self):
-        """S_n has sign (-1)^n: S_1 < 0, S_2 > 0, S_3 < 0 (imaginary parts)."""
+    def test_pole_circulation_alternating_sign(self):
+        """Pole circulations alternate with (-1)^n."""
         kappa = 1.0
         for n in range(1, 6):
-            Sn = stokes_constant_from_mc(n, kappa)
+            Sn = ordinary_genus_pole_circulation(n, kappa)
             expected_sign = (-1) ** n
             assert Sn.imag * expected_sign > 0, \
                 f"S_{n} has wrong sign: Im(S_{n})={Sn.imag}"
 
-    def test_stokes_proportional_to_kappa(self):
-        """S_n(c1)/S_n(c2) = kappa(c1)/kappa(c2) for all n.
+    def test_pole_circulation_proportional_to_kappa(self):
+        """Pole circulation ratio is kappa(c1)/kappa(c2) for all n.
 
-        The Stokes constant is LINEAR in kappa.
+        The ordinary residue is linear in kappa.
         """
         kappa1 = kappa_virasoro(13.0)
         kappa2 = kappa_virasoro(26.0)
         for n in range(1, 4):
-            S1 = stokes_constant_from_mc(n, kappa1)
-            S2 = stokes_constant_from_mc(n, kappa2)
+            S1 = ordinary_genus_pole_circulation(n, kappa1)
+            S2 = ordinary_genus_pole_circulation(n, kappa2)
             ratio = S1 / S2
             expected = kappa1 / kappa2
             assert abs(ratio - expected) < 1e-10
 
-    def test_residue_formula(self):
+    def test_residue_formula_by_lhopital(self):
         """Verify the residue formula: Res_{xi=2*pi*n} = (-1)^n * 2*pi*n*kappa.
 
         Independent verification via L'Hopital on kappa*(xi/(2*sin(xi/2)) - 1):
@@ -492,7 +508,7 @@ class TestStokesConstants:
         """
         kappa = 3.5
         for n in [1, 2, 3]:
-            res = borel_residue(n, kappa)
+            res = ordinary_genus_pole_residue(n, kappa)
             expected = kappa * ((-1) ** n) * 2.0 * math.pi * n
             assert abs(res - expected) < 1e-10
 
@@ -502,7 +518,7 @@ class TestStokesConstants:
 # ============================================================================
 
 class TestInstantonAction:
-    """Verify the universal instanton action A = (2*pi)^2."""
+    """Verify the scalar t-plane radius A = (2*pi)^2."""
 
     def test_instanton_action_value(self):
         """A = (2*pi)^2 ~ 39.478."""
@@ -512,9 +528,9 @@ class TestInstantonAction:
     def test_instanton_from_genus_ratio_c13(self):
         """Extract A from F_g/F_{g-1} at c=13.
 
-        From Bernoulli asymptotics: |B_{2g}|/|B_{2g-2}| ~ (2g)(2g-1)/(2*pi)^2.
-        So F_g/F_{g-1} ~ 1/A * (2g)(2g-1).
-        Therefore A ~ (2g)(2g-1) * F_{g-1}/F_g.
+        The factorial in |B_{2g}| is already divided out in lambda_g^FP.
+        Hence F_g/F_{g-1} tends to 1/(2*pi)^2 and
+        F_{g-1}/F_g tends to A = (2*pi)^2.
         """
         result = verify_instanton_action(13.0, g_max=12)
         estimates = result['estimates']
@@ -535,46 +551,34 @@ class TestInstantonAction:
         best = result['estimates'][-1][1]
         assert abs(best - INSTANTON_ACTION) / INSTANTON_ACTION < 0.01
 
-    def test_borel_singularity_at_2pi(self):
-        """The first Borel singularity is at xi = 2*pi, giving A = (2*pi)^2.
+    def test_ordinary_singularity_and_true_borel_firewall(self):
+        """The ordinary pole at xi=2*pi is not a true Borel singularity.
 
         Path 1: xi/(2*sin(xi/2)) has first pole at xi = 2*pi.
-        Path 2: Instanton action is the reciprocal of the Borel radius.
+        Path 2: the even Borel transform is finite at xi = 2*pi.
+        Path 3: the t-Borel transform is finite at s = (2*pi)^2.
         """
-        # Path 1: check the pole
         kappa = 1.0
         xi_near = 2.0 * math.pi - 1e-6
         val = genus_generating_function(xi_near, kappa)
-        assert abs(val) > 1e4, "B[F] should diverge near xi=2*pi"
+        even_borel = borel_transform_even_series(2.0 * math.pi, kappa)
+        t_borel = borel_transform_t_series(INSTANTON_ACTION, kappa)
+        assert abs(val) > 1e4, "G[F] should diverge near xi=2*pi"
+        assert math.isfinite(abs(even_borel))
+        assert math.isfinite(abs(t_borel))
 
-        # Path 2: A = first singularity squared (since B[F](xi) has xi^{2g} terms)
-        # No -- A IS the singularity location. The first pole of B[F] is at xi=2*pi.
-        # The instanton action A = (2*pi)^2 is the xi^2 value at the first singularity.
-        # Wait -- the singularity is at xi = 2*pi, not xi^2 = (2*pi)^2.
-        # The relationship is: F(x) = sum F_g x^{2g}, B[F](xi) = sum F_g xi^{2g}/(2g)!.
-        # The variable xi in the Borel plane is conjugate to 1/x^2 in the Laplace transform.
-        # The first singularity at xi = 2*pi means A = 2*pi in the xi-plane,
-        # but A = (2*pi)^2 is the instanton action in the original x variable convention.
-        # Convention: F(x) = sum F_g x^{2g} = sum F_g (x^2)^g.
-        # Let t = x^2. Then F(t) = sum F_g t^g, Borel B[F](s) = sum F_g s^g / g!.
-        # But we use xi^{2g}/(2g)!, which is a different Borel transform.
-        #
-        # The convention is: B[F](xi) = sum F_g xi^{2g}/(2g)! is a power series in xi^2.
-        # The singularity at xi = 2*pi means in terms of zeta = xi^2, the singularity
-        # is at zeta = (2*pi)^2 = A. This is consistent.
-        first_sing = 2.0 * math.pi
-        A_from_sing = first_sing ** 2 if False else first_sing
-        # The instanton action A = (2*pi)^2 in the standard convention where
-        # the Borel transform is in the variable xi with F(x) = sum F_g x^{2g}.
-        # The LAPLACE integral is int B[F](xi) e^{-xi/x^2} dxi, so the singularity
-        # at xi = 2*pi gives suppression e^{-2*pi/x^2}, i.e. action = 2*pi in xi.
-        # But prop:universal-instanton-action states A = (2*pi)^2.
-        # Resolution: the convention in the manuscript is A = (2*pi)^2 for the
-        # x^2 variable, meaning in the Borel plane of the variable t = x^2:
-        # B_t[F](s) = sum F_g s^g/g! has singularity at s = (2*pi)^2.
-        # Our B[F](xi) = sum F_g xi^{2g}/(2g)! has singularity at xi = 2*pi.
-        # Both give the same physics: e^{-A/t} = e^{-(2pi)^2/x^2}.
-        assert abs(first_sing - 2.0 * math.pi) < 1e-10
+    def test_scalar_singularity_audit_separates_planes(self):
+        """Ordinary poles, reconstructed-sum singularities, and Borel data differ."""
+        kappa = 13.0 / 2.0
+        audit = scalar_genus_singularity_audit(kappa, n=1)
+        assert abs(audit['ordinary_xi_plane']['pole'] - 2.0 * math.pi) < 1e-12
+        assert abs(audit['ordinary_t_plane']['singularity'] - INSTANTON_ACTION) < 1e-12
+        assert audit['ordinary_t_plane']['are_borel_plane_singularities'] is False
+        assert audit['true_borel_t_plane']['singularity_set'] == ()
+        assert audit['true_borel_even_plane']['singularity_set'] == ()
+        assert audit['ordinary_residue_is_stokes_constant'] is False
+        assert audit['ecalle_stokes_alien_calculus_certified'] is False
+        assert audit['scalar_projection_certifies_full_maurer_cartan_data'] is False
 
 
 # ============================================================================
@@ -603,14 +607,17 @@ class TestStructural:
     def test_generating_function_analyticity_in_strip(self):
         """G[F] is analytic in the strip 0 < Re(xi) < 2*pi."""
         kappa = 6.5
-        result = borel_analyticity_strip(kappa, im_range=1.0,
-                                         re_range=(0.1, 6.0), n_points=100)
-        assert result['all_finite'], "B[F] has unexpected singularity in strip"
+        result = genus_generating_function_analyticity_strip(
+            kappa, im_range=1.0, re_range=(0.1, 6.0), n_points=100
+        )
+        assert result['all_finite'], "G[F] has unexpected singularity in strip"
 
-    def test_koszul_duality_kappa(self):
+    def test_virasoro_complementarity_kappa(self):
         """kappa(Vir_c) + kappa(Vir_{26-c}) = 13 (complementarity sum).
 
-        This is AP24: kappa + kappa' = 13 for Virasoro, NOT zero.
+        This is a Virasoro-sector complementarity identity.  It does not
+        identify Omega(B(A)) with A^! and it does not compute the bulk
+        Z_ch^der(A).
         """
         for c_val in [1.0, 5.0, 13.0, 20.0]:
             k = kappa_virasoro(c_val)
@@ -618,12 +625,16 @@ class TestStructural:
             assert abs(k + k_dual - 13.0) < 1e-10
 
     def test_shadow_vs_string_gevrey(self):
-        """Shadow is Gevrey-0, string is Gevrey-1."""
+        """Scalar shadow is Gevrey-0; this is not a bare summability certificate."""
         result = shadow_vs_string_comparison(13.0, g_max=10)
         assert result['shadow_gevrey'] == 0
         assert result['string_gevrey'] == 1
-        assert result['shadow_borel_summable'] is True
-        assert result['string_borel_summable_on_real_axis'] is False
+        assert result['shadow_borel_summable'] is None
+        assert result['shadow_borel_summable_scope'] == 'not a bare global certificate'
+        assert result['scalar_borel_summability_certified'] is True
+        assert result['shadow_series_convergent'] is True
+        assert result['string_borel_summable_on_real_axis'] is None
+        assert result['string_borel_geometry_certified'] is False
 
     def test_string_grows_faster(self):
         """String coefficients grow much faster than shadow at large genus.
@@ -648,13 +659,85 @@ class TestStructural:
             assert params['beat_period'] > 1.0
 
     def test_full_data_package(self):
-        """The borel_summability_data utility returns consistent data."""
+        """The borel_summability_data utility returns scoped diagnostic data."""
         data = borel_summability_data(13.0)
         assert data['converges_at_t1'] is True
-        assert data['S1_match'] is True
+        assert data['true_borel_transform_entire'] is True
+        assert data['true_borel_singularity_set'] == ()
+        assert abs(data['ordinary_t_plane_nearest_singularity'] - INSTANTON_ACTION) < 1e-10
+        assert data['lateral_jump_expected'] == 0j
         assert data['gevrey_class'] == 0
         assert abs(data['kappa'] - 6.5) < 1e-10
         assert abs(data['instanton_action'] - INSTANTON_ACTION) < 1e-10
+        expected_residue = -2.0 * math.pi * data['kappa']
+        assert abs(data['ordinary_pole_residue_n1'] - expected_residue) < 1e-10
+        assert data['scalar_borel_summability_certified'] is True
+        assert data['scalar_borel_summability_scope'] == 'Borel-Laplace reconstruction of the convergent scalar series'
+        assert data['bare_shadow_borel_summability_certified'] is False
+        assert data['finite_window_certifies_summability'] is False
+        assert data['pade_darboux_certifies_stokes_data'] is False
+        assert data['ecalle_stokes_data_certified'] is False
+        assert data['full_maurer_cartan_data_certified'] is False
+        assert data['global_resurgence_certified'] is False
+        assert data['analytic_continuation_certified'] is False
+        assert data['nonperturbative_completion_certified'] is False
+        assert data['btz_jt_recovery_certified'] is False
+        assert data['multiweight_extension_certified'] is False
+        assert data['all_genus_partition_theorem_certified'] is False
+
+    def test_certification_firewall_noncertifies_overclaims(self):
+        """Finite windows and scalar poles do not certify global analytic claims."""
+        firewall = analytic_certification_firewall()
+        assert firewall['scalar_coefficient_series']['status'] == 'certified_exact'
+        assert firewall['ordinary_scalar_singularities']['status'] == 'certified_exact'
+        assert firewall['ordinary_scalar_singularities']['are_true_borel_singularities'] is False
+        assert firewall['true_borel_transforms']['status'] == 'certified_for_scalar_coefficients'
+        assert firewall['true_borel_transforms']['singularity_set'] == ()
+        assert firewall['ordinary_t_plane_singularities']['are_true_borel_singularities'] is False
+        assert firewall['shadow_radius_diagnostic']['status'] == 'asymptotic_diagnostic'
+        assert firewall['shadow_radius_diagnostic']['certifies_borel_summability'] is False
+        assert firewall['shadow_radius_diagnostic']['certifies_analytic_continuation'] is False
+        assert firewall['pade_darboux_diagnostics']['certifies_ecalle_stokes_data'] is False
+        assert firewall['pade_darboux_diagnostics']['certifies_alien_calculus'] is False
+        assert firewall['scalar_projection']['certifies_full_maurer_cartan_data'] is False
+        assert firewall['finite_windows']['certifies_borel_summability'] is False
+        assert firewall['conditional_laplace_reconstruction']['certifies_full_shadow_tower'] is False
+        assert firewall['multiweight_extension']['status'] == 'not_certified_here'
+        assert firewall['nonperturbative_completion']['status'] == 'not_certified_here'
+        assert firewall['btz_jt_recovery']['status'] == 'not_certified_here'
+        assert firewall['ecalle_stokes_alien_calculus']['status'] == 'not_certified_here'
+        assert firewall['all_genus_virasoro_or_multiweight_partition_theorem']['status'] == 'not_certified_here'
+
+    def test_object_and_kernel_firewalls(self):
+        """Koszul-dual, bar-cobar, Hochschild, and kernel constants stay distinct."""
+        firewall = object_and_kernel_firewalls()
+        assert firewall['bar_cobar_inversion'] == 'Omega(B(A)) = A'
+        assert firewall['bar_cobar_inversion_is_koszul_duality'] is False
+        assert 'Verdier' in firewall['koszul_dual_branch']
+        assert 'Hochschild' in firewall['bulk_branch']
+        kernels = firewall['kernel_constants']
+        assert kernels['affine_collision_trace_form'] == 'r^{KM}(z) = k*Omega_tr/z'
+        assert kernels['affine_kz_normalization'] == 'r_KZ(z) = Omega/((k+h^vee)z)'
+        assert kernels['heisenberg_collision'] == 'r^{Heis}(z) = k/z'
+        assert kernels['virasoro_collision'] == 'r^{Vir}(z) = (c/2)/z^3 + 2T/z'
+        assert firewall['holographic_package_entries'] == (
+            'A', 'A^i', 'A^!', 'C', 'r(z)', 'Theta_A', 'nabla^hol',
+        )
+        assert firewall['modular_koszul_compute_package_projections'] == (
+            'Fact_X(L)', 'barB_X(L)', 'Theta_L', 'L_L',
+            '(V_br,T_br)', 'R4_mod(L)',
+        )
+        assert firewall['scalar_projection_is_full_maurer_cartan_data'] is False
+
+    def test_exact_growth_rate_from_shadow_metric(self):
+        """Exact rho^2 equals q2/q0 for the Virasoro shadow metric."""
+        q0, q1, q2 = virasoro_shadow_metric_coeffs_exact(Fraction(13))
+        assert q0 == Fraction(169)
+        assert q1 == Fraction(156)
+        assert q2 == Fraction(3212, 87)
+        rho_sq = growth_rate_squared_exact(Fraction(13))
+        assert rho_sq == q2 / q0
+        assert abs(float(rho_sq) - growth_rate(13.0) ** 2) < 1e-12
 
     def test_exact_vs_numerical_coefficients(self):
         """Exact (Fraction) and numerical (float) shadow coefficients agree.
@@ -672,6 +755,15 @@ class TestStructural:
                 rel_err = abs(ex_float - num) / abs(ex_float)
                 assert rel_err < 1e-10, \
                     f"Exact vs numerical mismatch at r={r}: rel_err={rel_err}"
+
+    def test_virasoro_shadow_coefficients_match_census(self):
+        """Exact S_2, S_3, S_4, S_5 match the local Virasoro census constants."""
+        c_frac = Fraction(13)
+        exact = shadow_coefficients_exact(c_frac, max_r=5)
+        assert exact[2] == Fraction(13, 2)
+        assert exact[3] == Fraction(2)
+        assert exact[4] == Fraction(10, 13 * (5 * 13 + 22))
+        assert exact[5] == Fraction(-48, 13 * 13 * (5 * 13 + 22))
 
     def test_F_g_exact_values(self):
         """Verify F_1 = kappa/24, F_2 = 7*kappa/5760 at c=13.

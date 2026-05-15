@@ -12,7 +12,7 @@ Verifies:
 
 References:
   - concordance.tex: rem:mc4-winfty-computation-target
-  - bar_cobar_construction.tex: cor:winfty-ds-stage4-ope-blocks
+  - bar_cobar_adjunction_curved.tex: cor:winfty-ds-stage4-ope-blocks
   - Hornfeck, Nucl. Phys. B 407 (1993) 57
   - Blumenhagen et al., Nucl. Phys. B 461 (1996) 460
 """
@@ -350,6 +350,39 @@ class TestFullOPE:
         ope = w4_full_ope_coefficients()
         # 3 curvatures + 4 stage-3 + 4 stage-4 squared + 2 Virasoro-target identities = 13
         assert len(ope) == 13
+
+    def test_stage4_surface_is_exact_six_entry_packet(self):
+        """Stage-4 W4 data is the six-entry coefficient packet, not a seven-entry package."""
+        front = frontier_package()
+        expected_packet = {
+            (3, 3, 4, 2),
+            (4, 4, 4, 4),
+            (3, 4, 3, 4),
+            (3, 4, 4, 3),
+            (4, 4, 2, 6),
+            (3, 4, 2, 5),
+        }
+        expected_higher_spin = {
+            (3, 3, 4, 2),
+            (4, 4, 4, 4),
+            (3, 4, 3, 4),
+            (3, 4, 4, 3),
+        }
+        expected_virasoro_targets = {
+            (4, 4, 2, 6),
+            (3, 4, 2, 5),
+        }
+
+        assert set(front["exact_identity_packet"]) == expected_packet
+        assert set(front["higher_spin_channels"]) == expected_higher_spin
+        assert set(front["virasoro_target_channels"]) == expected_virasoro_targets
+        assert front["n_packet"] == 6
+        assert front["n_higher_spin"] == 4
+        assert front["n_virasoro_target"] == 2
+        assert front["n_packet"] != 7
+
+        ope_keys = set(w4_full_ope_coefficients())
+        assert not any("holographic" in key.lower() for key in ope_keys)
 
     def test_at_specific_level(self):
         """w4_full_ope_at_level works at k=1."""

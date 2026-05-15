@@ -1,96 +1,48 @@
-r"""Random matrix theory and the shadow obstruction tower.
+r"""Finite matrix-model diagnostics for the scalar shadow lane.
 
-MATHEMATICAL FRAMEWORK
-======================
+The certified scalar input is
 
-The shadow obstruction tower of a modular Koszul algebra A produces genus-g
-free energies F_g(A) = kappa(A) * lambda_g^FP, where lambda_g^FP are the
-Faber-Pandharipande intersection numbers.  This module establishes a precise
-dictionary between this data and random matrix theory.
+    F_g(A) = kappa(A) * lambda_g^FP,
+    lambda_g^FP = (2^(2g-1)-1)|B_{2g}|/(2^(2g-1)(2g)!).
 
-TEN COMPUTATIONAL THEMES
-=========================
+This module compares that finite formal lane with matrix-model
+normalizations.  It does not prove analytic convergence, a
+Kontsevich-Witten tau-function identity for arbitrary kappa, KdV or
+Gelfand-Dickey hierarchy membership, or Eynard-Orantin recursion for the
+shadow metric without extra descendant CohFT or matrix-integral data.
 
-1. GAUSSIAN MATRIX MODEL
-   F_g^GUE = B_{2g}/(2g(2g-2)) in the combinatorial normalization.
-   In the intersection-theoretic normalization: F_g = lambda_g^FP.
-   Shadow at kappa=1: F_g^shadow = lambda_g^FP.  Match verified.
+Certified here:
 
-2. SPECTRAL CURVE COMPARISON
-   The matrix model spectral curve y^2 = V'(x)^2 - f(x) vs the shadow
-   metric Q_L(t) = (2kappa + 3alpha*t)^2 + 2*Delta*t^2.
-   For the Gaussian: V'(x) = kappa*x, so y^2 = kappa^2*x^2 - 4*kappa.
-   The shadow metric Q_L = 4*kappa^2 (constant for Heisenberg).
-   The RELATIONSHIP: Q_L is the coefficient algebra of the shadow
-   generating function H(t) = t^2*sqrt(Q_L(t)), which controls the
-   genus expansion.  The matrix model spectral curve y^2 is the saddle-
-   point equation.  They are NOT literally equal: Q_L controls arity
-   expansion (shadow tower) while y^2 controls the eigenvalue density.
+1. Gaussian comparison in the intersection-theoretic normalization:
+   at kappa=1, F_g^shadow = lambda_g^FP in any finite genus window.
 
-3. PENNER MODEL
-   The Penner model counts orbifold Euler characteristics of M_{g,n}:
-   F_g^Penner = B_{2g}/(2g(2g-2)) * (-1)^g = chi(M_{g,0}) for g >= 2.
-   Harer-Zagier formula: chi(M_g) = (-1)^g * B_{2g}/(2g(2g-2)) + delta_{g,1}/12.
-   The Penner potential V(M) = -log(1 - M) + M generates these via
-   the genus expansion.
+2. Spectral-curve diagnostics:
+   Q_L(t) = (2*kappa + 3*alpha*t)^2 + 2*Delta*t^2 with
+   Delta = 8*kappa*S_4.  The Gaussian matrix curve
+   y^2 = kappa^2*z^2 - 4*kappa and Q_L(t) are different objects.
 
-4. KONTSEVICH MODEL
-   The Kontsevich matrix integral computes intersection numbers
-   <tau_{d1}...tau_{dn}>_g = int_{M_{g,n}} psi_1^{d1}...psi_n^{dn}.
-   The shadow tau-function tau_shadow = exp(sum kappa * lambda_g^FP * hbar^{2g})
-   satisfies Virasoro constraints L_n tau = 0 (n >= -1), which are
-   EQUIVALENT to KdV.
+3. Penner and Harer-Zagier arithmetic:
+   chi(M_g) = (-1)^g B_{2g}/(2g(2g-2)) for g >= 2, with the genus-one
+   value chi(M_1) = -1/12.
 
-5. HERMITIAN VS UNITARY
-   Hermitian matrix model: eigenvalues on R, spectral curve y^2.
-   Unitary matrix model: eigenvalues on S^1, Fourier series.
-   The shadow curve Q_L(t) is a quadratic polynomial, matching the
-   genus-0 spectral curve of the Hermitian model at the saddle point.
+4. Kontsevich intersection-number checks:
+   only the explicitly computed string/dilaton/base intersection numbers
+   are used.  The finite scalar exponential is not promoted to a full
+   KW/KdV tau function.
 
-6. DOUBLE-SCALING AND KdV
-   Near a critical point, the matrix model free energies are governed
-   by the Painleve transcendents.  The shadow connection nabla^sh becomes
-   the string equation [P, Q] = 1 in the double-scaling limit.
+5. Large-N and Chern-Simons comparisons:
+   the returned values are normalization diagnostics or shadow-normalized
+   scalar evidence.  Exact matrix integrals carry additional analytic and
+   framing data not certified by the scalar window.
 
-7. VIRASORO CONSTRAINTS = MC EQUATION
-   The Virasoro constraints L_n Z = 0 on the matrix model partition
-   function are EQUIVALENT to the MC equation D*Theta + (1/2)[Theta,Theta] = 0
-   projected to arity n.  Verified at low genera/arities.
-
-8. LARGE-N / SHADOW PARAMETER IDENTIFICATION
-   In the 't Hooft limit: N -> infinity, g_s -> 0, t = N*g_s fixed.
-   The shadow expansion parameter is hbar^2 (genus counting).
-   Identification: N^{2-2g} <-> hbar^{2g-2}, so g_s = 1/N corresponds
-   to hbar = g_s.
-
-9. CHERN-SIMONS MATRIX MODEL
-   Marino's Chern-Simons matrix model: Z_CS(S^3, SU(N), k) as a matrix
-   integral.  The perturbative CS free energies F_g^CS are Bernoulli
-   numbers, matching the shadow through the same B_{2g} identity.
-
-10. GAUSSIAN AT FINITE N
-    The exact GUE partition function Z_N = prod_{j=1}^{N} j! satisfies
-    the genus expansion Z_N = exp(sum_{g=0}^inf N^{2-2g} F_g^GUE).
-    Truncation error from cutting at finite genus.
-
-CONVENTIONS (AP1, AP9, AP24, AP27, AP39, AP48)
-================================================
-- kappa(Heisenberg level k) = k  [AP39: NOT k/2]
-- kappa(Virasoro at c) = c/2
-- kappa(affine KM g_k) = dim(g)*(k+h^v)/(2h^v)
-- F_g values are POSITIVE [AP22]
-- lambda_g^FP = (2^{2g-1}-1)|B_{2g}| / (2^{2g-1} * (2g)!)
-- B_{2g} alternates in sign; |B_{2g}| is always positive
-- Q_L(t) = (2kappa + 3alpha*t)^2 + 2*Delta*t^2, Delta = 8*kappa*S_4
-- Bar propagator has weight 1 [AP27]: all channels use E_1
-
-Manuscript references:
-    thm:theorem-d (higher_genus_modular_koszul.tex)
-    thm:riccati-algebraicity (higher_genus_modular_koszul.tex)
-    def:shadow-metric (higher_genus_modular_koszul.tex)
-    thm:shadow-cohft (higher_genus_modular_koszul.tex)
-    rem:virasoro-constraints-tangent-complex (higher_genus_modular_koszul.tex)
-    cor:topological-recursion-mc-shadow (higher_genus_modular_koszul.tex)
+Canonical local sources:
+    chapters/examples/landscape_census.tex:
+        kappa(H_k)=k, kappa(Vir_c)=c/2,
+        kappa(V_k(g))=dim(g)(k+h^vee)/(2h^vee),
+        S_2=c/2, S_3=2, S_4=10/(c(5c+22)), S_5=-48/(c^2(5c+22)).
+    chapters/connections/concordance.tex:
+        r^Heis(z)=k/z, r^KM(z)=k*Omega/z,
+        r^Vir(z)=(c/2)z^-3+2Tz^-1.
 """
 
 from __future__ import annotations
@@ -164,8 +116,9 @@ def ratio_combinatorial_to_intersection(g: int) -> Rational:
 def verify_shadow_GUE_bridge(max_genus: int = 8) -> Dict[str, Any]:
     r"""Verify F_g^shadow(kappa=1) = lambda_g^FP = F_g^GUE_intersection.
 
-    The definitive bridge: the rank-1 Heisenberg algebra at kappa=1
-    produces the intersection-theoretic GUE free energies.
+    Finite bridge: the rank-1 Heisenberg algebra at kappa=1
+    produces the same finite scalar coefficients as the
+    intersection-theoretic GUE normalization through max_genus.
 
     Multi-path verification:
     Path 1: Direct formula F_g(kappa=1) = 1 * lambda_fp(g)
@@ -204,15 +157,11 @@ def verify_shadow_GUE_bridge(max_genus: int = 8) -> Dict[str, Any]:
 
 
 def gaussian_partition_function_exact(N: int) -> int:
-    r"""Exact partition function of the GUE at matrix size N.
+    r"""Shifted factorial product used for finite-N checks.
 
-    Z_N = prod_{j=1}^{N} Gamma(j+1) = prod_{j=1}^{N} j!
-
-    In the standard normalization Z_N = int dM exp(-N/2 * Tr M^2):
-    Z_N = (2*pi)^{N/2} * prod_{j=1}^{N-1} j! / N^{N^2/2}
-
-    We return the simplified product G_N = prod_{j=1}^{N} j! (the
-    Barnes G-function G(N+1) = prod_{j=0}^{N-1} j!).
+    The returned integer is prod_{j=1}^{N} Gamma(j+1) = prod_{j=1}^{N} j!.
+    It is the simplified product used by these tests, not a complete
+    normalized GUE integral.  In Barnes notation it equals G(N+2).
     """
     product = 1
     for j in range(1, N + 1):
@@ -221,18 +170,16 @@ def gaussian_partition_function_exact(N: int) -> int:
 
 
 def gaussian_log_partition_genus_expansion(N: int, max_genus: int = 5) -> Dict[str, Any]:
-    r"""Compare exact log Z_N with the genus expansion.
+    r"""Compare log G(N+1) with a finite asymptotic genus window.
 
     log Z_N = N^2 * F_0 + F_1 + N^{-2} * F_2 + ...
 
     where F_0 = -3/4 (for unit Gaussian, 't Hooft normalization),
     F_1 = (1/12) * log N + const, and F_g (g>=2) from Bernoulli numbers.
 
-    For the COMBINATORIAL normalization, the standard result is:
-    log(prod_{j=1}^{N} j!) = sum_{g=0}^{inf} N^{2-2g} * F_g^comb
-    with F_g^comb = B_{2g}/(2g(2g-2)) for g >= 2.
-
-    At finite N, the truncation error is O(N^{2-2*(max_genus+1)}).
+    For the combinatorial normalization, the Barnes asymptotic expansion
+    contains B_{2g}/(2g(2g-2)) for g >= 2.  This function returns a
+    truncation diagnostic, not a convergence or rigorous error bound.
     """
     # Exact value: log G(N+1) = sum_{j=0}^{N-1} log(j!)
     # = log(0!) + log(1!) + ... + log((N-1)!) = sum_{j=0}^{N-1} lgamma(j+1)
@@ -314,11 +261,14 @@ def spectral_curve_comparison(kappa_val: float = 1.0) -> Dict[str, Any]:
     H(t) = t^2 * sqrt(Q_L(t)), while y^2(z) is a function of the
     spectral parameter z and controls the eigenvalue density.
 
-    The BRIDGE: both encode the same Bernoulli number structure.
+    Finite scalar bridge: in the Gaussian/intersection normalization,
+    both coefficient lists agree with lambda_g^FP at kappa=1 in the
+    tested genus window.
+
     Q_L = 4*kappa^2 (constant for Gaussian) means the shadow tower
     terminates at arity 2 (class G).  The spectral curve y^2 = kappa*z^2 - 4
     has two branch points at z = +/- 2/sqrt(kappa), giving the Wigner
-    semicircle.  The genus-g free energies computed from either are equal.
+    semicircle.  No general EO recursion theorem is asserted here.
     """
     # Shadow side
     Q_L_val = shadow_metric_Q_L(0.0, kappa_val, 0.0, 0.0)
@@ -343,6 +293,8 @@ def spectral_curve_comparison(kappa_val: float = 1.0) -> Dict[str, Any]:
         'free_energies_match': all(
             abs(shadow_Fg[g] - gue_Fg[g]) < 1e-15 for g in range(1, 6)
         ),
+        'finite_window_only': True,
+        'eo_recursion_theorem_proved': False,
     }
 
 
@@ -354,10 +306,10 @@ def virasoro_spectral_curve_vs_shadow(c_val: float) -> Dict[str, Any]:
 
     Q_L(t) = (c + 6t)^2 + 160*t^2/(c*(5c+22))
 
-    This is NOT constant: the shadow tower is infinite (class M).
-    The corresponding matrix model has potential
-    V(x) = sum_{r>=2} (S_r/r) * x^r
-    with an INFINITE polynomial (truncated for computation).
+    This is not constant: the shadow tower is infinite (class M).
+    A formal matrix-potential analogy may use
+    V(x) = sum_{r>=2} (S_r/r) * x^r after separate model choices.
+    This function only evaluates the shadow metric coefficients.
     """
     if abs(c_val) < 1e-15:
         return {'error': 'c=0 is degenerate'}
@@ -383,6 +335,8 @@ def virasoro_spectral_curve_vs_shadow(c_val: float) -> Dict[str, Any]:
         'Q_L_values': Q_vals,
         'is_class_M': is_class_M,
         'Q_L_constant': not is_class_M,
+        'formal_matrix_potential_only': True,
+        'matrix_integral_constructed': False,
     }
 
 
@@ -397,7 +351,7 @@ def harer_zagier_euler_char(g: int) -> Rational:
         chi(M_g) = (-1)^g * B_{2g} / (2g * (2g - 2)) = (-1)^g * F_g^comb
 
     The SIGN: B_{2g} has sign (-1)^{g+1}, so (-1)^g * B_{2g} < 0 for all g >= 1.
-    Actually: B_2 = 1/6, B_4 = -1/30, B_6 = 1/42, ...
+    Here B_2 = 1/6, B_4 = -1/30, B_6 = 1/42, ...
     B_{2g} = (-1)^{g+1} * |B_{2g}|.
     So (-1)^g * B_{2g} = (-1)^g * (-1)^{g+1} * |B_{2g}| = -|B_{2g}|.
     chi(M_g) = -|B_{2g}| / (2g(2g-2)) for g >= 2.
@@ -570,18 +524,15 @@ def kontsevich_intersection(d_tuple: Tuple[int, ...], g: int) -> Rational:
 
 
 def shadow_vs_kontsevich_tau(kappa_val: Rational, max_genus: int = 4) -> Dict[str, Any]:
-    r"""Compare shadow free energies with Kontsevich intersection numbers.
+    r"""Compare finite shadow coefficients with selected Kontsevich numbers.
 
-    The shadow tau-function is tau^shadow(hbar) = exp(sum kappa*lambda_g*hbar^{2g}).
-    The Kontsevich tau-function tau^KW(hbar) = exp(sum F_g^KW * hbar^{2g-2}).
-
-    The relationship: tau^shadow = (tau^KW)^kappa rescaled.
-
-    More precisely, at genus g with no marked points (n=0):
-    F_g^shadow = kappa * lambda_g^FP
-    F_g^KW = sum of intersection numbers weighted appropriately
+    The scalar formal series is
+        tau_shadow = exp(sum_{g=1}^{max_genus} kappa*lambda_g^FP*q^g)
+    in Q[kappa][[q]]/(q^(max_genus+1)).
 
     The key check: F_1^shadow = kappa/24 = kappa * <tau_1>_1.
+    Higher-genus scalar lambda_g^FP values are not by themselves a
+    constructed descendant potential and do not prove a KW/KdV theorem.
     """
     results = {}
     for g in range(1, max_genus + 1):
@@ -603,7 +554,14 @@ def shadow_vs_kontsevich_tau(kappa_val: Rational, max_genus: int = 4) -> Dict[st
                 'lambda_g_FP': fp_val,
             }
 
-    return {'kappa': kappa_val, 'genus_data': results}
+    return {
+        'kappa': kappa_val,
+        'genus_data': results,
+        'finite_formal_identity_certified': True,
+        'analytic_tau_identity_proved': False,
+        'kw_kdv_theorem_proved': False,
+        'descendant_cohft_data_assumed': False,
+    }
 
 
 def verify_string_equation_kontsevich(d_list: Tuple[int, ...], g: int) -> Dict[str, Any]:
@@ -694,9 +652,9 @@ def hermitian_vs_unitary_comparison(kappa_val: float = 1.0) -> Dict[str, Any]:
     eigenvalues on S^1.  At large N, the Hermitian GUE produces the
     Wigner semicircle; the GW unitary model produces a cos-type density.
 
-    Both are governed by the SAME Bernoulli structure at genus g >= 2:
-    F_g is a rational multiple of B_{2g}.  The difference is in the
-    genus-0 (planar) free energy and the edge behavior.
+    The comparison below records the shared scalar Bernoulli lane used
+    by this module.  It is not a theorem that arbitrary Hermitian and
+    unitary matrix integrals have identical higher-genus free energies.
     """
     # Hermitian: semicircle, support [-2/sqrt(kappa), 2/sqrt(kappa)]
     R_hermitian = 2.0 / math.sqrt(kappa_val)
@@ -720,11 +678,12 @@ def hermitian_vs_unitary_comparison(kappa_val: float = 1.0) -> Dict[str, Any]:
         'unitary_support': unitary_support,
         'F_g_shadow': fg_match,
         'both_bernoulli_at_higher_genus': True,
+        'matrix_integral_equality_proved': False,
     }
 
 
 # ===========================================================================
-# 6. DOUBLE-SCALING LIMIT AND KdV
+# 6. DOUBLE-SCALING COEFFICIENTS AND HIERARCHY BOUNDARY
 # ===========================================================================
 
 def double_scaling_F_g(g: int) -> Rational:
@@ -747,31 +706,15 @@ def double_scaling_F_g(g: int) -> Rational:
 
 
 def shadow_connection_string_equation() -> Dict[str, Any]:
-    r"""The shadow connection nabla^sh in the double-scaling limit.
+    r"""Stationary primary-line diagnostic for the shadow connection.
 
     The shadow connection nabla^sh = d - Q'_L/(2 Q_L) dt has flat sections
     Phi(t) = sqrt(Q_L(t)/Q_L(0)).
 
-    In the double-scaling limit t -> t_c (critical point where Q_L vanishes),
-    with the parametrization t = t_c + epsilon * s:
-
-    Q_L(t) ~ epsilon^2 * q_2 * s^2 + O(epsilon^3)
-
-    The flat section Phi ~ |s| and the shadow generating function
-    H(t) ~ t_c^2 * epsilon * |s| become controlled by the Painleve II
-    transcendent.
-
-    The string equation of the KdV hierarchy is:
-    [P, Q] = 1 where P = d/dx, Q = d^2/dx^2 + u(x)
-
-    This is the STATIONARY REDUCTION of the shadow MC equation at the
-    critical point.
-
-    For the shadow at generic kappa (away from criticality):
-    - The Riccati equation H^2 = t^4 * Q_L(t) is the STATIONARY KdV constraint
-    - The shadow connection nabla^sh encodes the Lax pair
-    - The critical discriminant Delta = 8*kappa*S4 controls the deviation
-      from the pure KdV flow
+    The identity H(t)^2 = t^4 Q_L(t) is a finite algebraic diagnostic on
+    the primary scalar line.  A KdV string equation [P,Q]=1, Lax pair, or
+    double-scaling Painleve statement requires separate analytic or
+    descendant CohFT hypotheses and is not certified here.
     """
     # Verify the Riccati structure
     kappa_sym = Symbol('kappa', positive=True)
@@ -782,32 +725,24 @@ def shadow_connection_string_equation() -> Dict[str, Any]:
     Q_L = (2 * kappa_sym + 3 * alpha_sym * t)**2 + 16 * kappa_sym * S4_sym * t**2
     H_squared = t**4 * Q_L
 
-    # String equation: the KdV string equation is sum n*t_n * (partial F/partial t_{n-1}) = 0
-    # In our notation: the MC equation at arity 0 gives the string constraint.
-
     return {
         'riccati_form': 'H^2 = t^4 * Q_L(t)',
         'Q_L_expression': str(Q_L),
-        'stationary_KdV': True,
+        'stationary_primary_line_diagnostic': True,
+        'stationary_KdV': False,
         'shadow_connection': 'nabla^sh = d - Q_L\'/(2*Q_L) dt',
         'flat_section': 'Phi(t) = sqrt(Q_L(t)/Q_L(0))',
-        'double_scaling_relation': 'DS limit of shadow connection = string equation',
+        'double_scaling_relation_certified': False,
+        'descendant_cohft_required_for_kdv': True,
     }
 
 
 def kdv_from_shadow_verify(max_genus: int = 4) -> Dict[str, Any]:
-    r"""Verify the KdV hierarchy structure in the shadow free energies.
+    r"""Finite scalar checks adjacent to the KW/KdV story.
 
-    The KdV hierarchy implies the recursion (Dijkgraaf-Verlinde-Verlinde):
-
-    (2n+1) * <tau_n tau_0^2>_g = <tau_{n-1}>_g  (simplified string equation)
-
-    For the shadow at kappa=1 (rank-1, trivial R-matrix):
-    The partition function tau = exp(sum lambda_g^FP * hbar^{2g})
-    satisfies KdV, which is equivalent to the Virasoro constraints.
-
-    Verification: check that the shadow free energies are consistent with
-    the DVV recursion at low genus.
+    The function verifies F_1=lambda_1^FP and F_2=lambda_2^FP in the
+    scalar window.  It does not test Hirota equations, the full
+    Dijkgraaf-Verlinde-Verlinde recursion, or Gelfand-Dickey flows.
     """
     results = {}
 
@@ -820,11 +755,7 @@ def kdv_from_shadow_verify(max_genus: int = 4) -> Dict[str, Any]:
         'match': F1_shadow == tau1_1,
     }
 
-    # Verify F_2 = 7/5760 via the KdV structure
-    # The genus-2 free energy from KdV/DVV:
-    # F_2 = (1/240) * <tau_2>_1^2 + (1/1152) * <tau_4>_2
-    # <tau_2>_1 = 0 (selection: d=2, n=1, g=1 -> 2 = 3-3+1=1, fails)
-    # Actually: F_2 = lambda_2^FP = 7/5760
+    # Verify the exact Faber-Pandharipande coefficient lambda_2^FP.
     F2_shadow = lambda_fp(2)
     F2_expected = Rational(7, 5760)
     results['F2_check'] = {
@@ -833,45 +764,48 @@ def kdv_from_shadow_verify(max_genus: int = 4) -> Dict[str, Any]:
         'match': simplify(F2_shadow - F2_expected) == 0,
     }
 
+    results['claim_boundary'] = {
+        'finite_scalar_coefficients_only': True,
+        'kw_kdv_theorem_proved': False,
+        'gelfand_dickey_hierarchy_proved': False,
+        'descendant_cohft_data_assumed': False,
+    }
+
     return results
 
 
 # ===========================================================================
-# 7. VIRASORO CONSTRAINTS = MC EQUATION
+# 7. FINITE MC/VIRASORO DIAGNOSTICS
 # ===========================================================================
 
 def virasoro_constraint_L_minus1(kappa_val: Rational, g: int) -> Dict[str, Any]:
-    r"""L_{-1} constraint (string equation) on the shadow partition function.
+    r"""Arity-zero scalar record adjacent to the string equation.
 
-    The string equation at genus g with no marked points is trivially
-    satisfied: it constrains the descendant potential (with marked points),
-    not the free energy F_g = kappa * lambda_g^FP.
-
-    At the level of the MC equation: the arity-0 projection of
-    D*Theta + (1/2)[Theta,Theta] = 0 at genus g gives the relation
-    among F_g values, which is automatically satisfied because F_g = kappa * lambda_g^FP
-    and the lambda_g^FP satisfy all tautological relations.
+    The L_{-1} string equation is a statement about a descendant
+    potential with marked points.  A no-marked scalar coefficient
+    F_g = kappa*lambda_g^FP does not by itself satisfy or test that
+    equation.  This function records the scalar coefficient and the
+    missing hypothesis.
     """
     F_g_val = F_g(kappa_val, g)
     return {
         'genus': g,
         'F_g': F_g_val,
-        'string_equation_trivially_satisfied_at_n0': True,
-        'MC_arity_0_projection': 'tautological relation on lambda_g^FP',
+        'string_equation_tested': False,
+        'string_equation_trivially_satisfied_at_n0': False,
+        'descendant_potential_required': True,
+        'MC_arity_0_projection': 'scalar lambda_g^FP coefficient only',
     }
 
 
 def virasoro_constraint_L0(kappa_val: Rational, g: int) -> Dict[str, Any]:
-    r"""L_0 constraint (dilaton equation) on the shadow partition function.
+    r"""Arity-zero scalar weight adjacent to the dilaton equation.
 
     The dilaton equation: <tau_1 tau_{d1}...>_g = (2g-2+n) * <tau_{d1}...>_g.
 
-    For the free energy (n=0): the L_0 eigenvalue is (2g-2).
-    F_g is an eigenfunction of L_0 with eigenvalue (2g-2) * F_g / F_g = 2g-2.
-
-    This is automatic because F_g = kappa * lambda_g^FP and lambda_g^FP
-    is a tautological class on M_{g,0} which transforms correctly under
-    the dilaton.
+    The scalar free-energy lane records the expected genus weight 2g-2.
+    It is not a proof of the descendant dilaton equation unless the
+    descendant CohFT extension is supplied.
     """
     F_g_val = F_g(kappa_val, g)
     dilaton_eigenvalue = 2 * g - 2
@@ -879,27 +813,31 @@ def virasoro_constraint_L0(kappa_val: Rational, g: int) -> Dict[str, Any]:
         'genus': g,
         'F_g': F_g_val,
         'dilaton_eigenvalue': dilaton_eigenvalue,
-        'dilaton_equation_consistent': True,
+        'dilaton_equation_tested': False,
+        'descendant_potential_required': True,
     }
 
 
 def mc_vs_virasoro_identification(max_genus: int = 4) -> Dict[str, Any]:
-    r"""The MC equation projected to arity n = L_n Virasoro constraint.
+    r"""Finite overlap between MC arities and Virasoro-style constraints.
 
     The MC equation D*Theta + (1/2)[Theta,Theta] = 0, projected to
-    genus g and arity n, gives:
+    genus g and arity n, has the same low-dimensional scalar values as
+    the following Kontsevich intersection numbers in this finite window:
 
     At arity 0: sum over stable graphs Gamma of genus g with no external
     legs, weighted by 1/|Aut(Gamma)| * (product of shadow data at vertices).
 
-    At arity n >= 1: the projection involves n external legs (descendant
-    insertions), which are the tau_d insertions of the Kontsevich model.
+    With a supplied descendant extension, arity n >= 1 involves n
+    external legs and may be compared with tau_d insertions of the
+    Kontsevich model.
 
-    The identification: the arity-n MC projection at genus g IS the
-    L_{n-1} Virasoro constraint on the descendant potential.
+    The full identification with Virasoro constraints on the descendant
+    potential is conditional on supplied descendant CohFT data and is not
+    proved by these scalar checks.
 
-    Verification at low order:
-    - MC at (g=1, n=0): F_1 = kappa/24 (string and dilaton automatic)
+    Finite checks:
+    - MC at (g=1, n=0): F_1 = kappa/24
     - MC at (g=0, n=3): <tau_0^3>_0 = 1 (three-point on sphere)
     - MC at (g=1, n=1): <tau_1>_1 = 1/24 (torus one-point)
     """
@@ -913,7 +851,7 @@ def mc_vs_virasoro_identification(max_genus: int = 4) -> Dict[str, Any]:
         'MC_projection': F1,
         'expected': kappa / 24,
         'match': simplify(F1 - kappa / 24) == 0,
-        'virasoro_constraint': 'L_{-1} and L_0 both trivially satisfied',
+        'constraint_status': 'scalar arity-zero check; no descendant constraint certified',
     }
 
     # (g=0, n=3): <tau_0^3>_0 = 1
@@ -922,7 +860,7 @@ def mc_vs_virasoro_identification(max_genus: int = 4) -> Dict[str, Any]:
         'intersection': tau_000,
         'expected': Rational(1),
         'match': tau_000 == 1,
-        'virasoro_constraint': 'L_{-1}: <tau_0^3>_0 = 1',
+        'constraint_status': 'Kontsevich base value checked',
     }
 
     # (g=1, n=1): <tau_1>_1 = 1/24
@@ -931,7 +869,13 @@ def mc_vs_virasoro_identification(max_genus: int = 4) -> Dict[str, Any]:
         'intersection': tau_1,
         'expected': Rational(1, 24),
         'match': tau_1 == Rational(1, 24),
-        'virasoro_constraint': 'L_0: <tau_1>_1 = 1/24',
+        'constraint_status': 'Kontsevich genus-one value checked',
+    }
+
+    results['claim_boundary'] = {
+        'finite_low_arity_checks': True,
+        'mc_equals_virasoro_theorem_proved': False,
+        'descendant_cohft_data_assumed': False,
     }
 
     return results
@@ -1018,16 +962,13 @@ def thooft_genus_expansion_numerical(N: int, kappa_val: float = 1.0,
 # ===========================================================================
 
 def cs_perturbative_F_g(g: int, N: int = 2, k: int = 1) -> Rational:
-    r"""Perturbative Chern-Simons free energy at genus g for SU(N) at level k.
+    r"""Shadow-normalized CS scalar coefficient for SU(N) at level k.
 
-    The perturbative CS expansion on S^3 gives:
-
-    F_g^CS = B_{2g}/(2g(2g-2)) * dim(SU(N))   for g >= 2
-
-    where dim(SU(N)) = N^2 - 1.
-
-    This matches the shadow at kappa_CS = dim(g)*(k+h^v)/(2h^v)
-    = (N^2-1)*(k+N)/(2N).
+    The affine modular characteristic is
+        kappa_CS = dim(su_N)*(k+N)/(2N).
+    This function returns kappa_CS*lambda_g^FP.  It is a scalar shadow
+    comparison, not the complete S^3 Chern-Simons free energy with all
+    framing, normalization, and analytic matrix-integral data.
 
     At genus 1: F_1^CS = kappa_CS / 24.
     """
@@ -1040,22 +981,18 @@ def cs_perturbative_F_g(g: int, N: int = 2, k: int = 1) -> Rational:
     if g < 1:
         raise ValueError(f"Genus must be >= 1, got {g}")
 
-    # The perturbative CS free energy has the SAME Bernoulli structure
-    # as the shadow genus expansion.
     return F_g(kappa_CS, g)
 
 
 def cs_shadow_comparison(N: int = 2, k: int = 1, max_genus: int = 5) -> Dict[str, Any]:
-    r"""Compare CS perturbative free energies with the shadow tower.
+    r"""Compare the affine CS scalar lane with the shadow tower.
 
     For SU(N) at level k:
     kappa_CS = dim(SU(N)) * (k + N) / (2 * N) = (N^2 - 1)(k + N) / (2N)
 
-    The CS perturbative free energies ARE the shadow free energies:
-    F_g^CS = kappa_CS * lambda_g^FP.
-
-    This is not a coincidence: CS theory on S^3 computes the same
-    moduli-space integrals that the shadow obstruction tower encodes.
+    The verified statement is finite and scalar:
+        F_g^CS,shadow = kappa_CS * lambda_g^FP.
+    It is not a complete equality with the exact S^3 matrix integral.
     """
     dim_g = N**2 - 1
     h_dual = N
@@ -1078,6 +1015,8 @@ def cs_shadow_comparison(N: int = 2, k: int = 1, max_genus: int = 5) -> Dict[str
         'kappa_CS': kappa_CS,
         'genus_data': results,
         'all_match': all(r['match'] for r in results.values()),
+        'shadow_normalized_scalar_only': True,
+        'exact_matrix_integral_free_energy_proved': False,
     }
 
 
@@ -1110,7 +1049,8 @@ def cs_matrix_vs_perturbative(N: int = 2, k: int = 3) -> Dict[str, Any]:
     The exact partition function Z_CS is compared with
     exp(sum_{g=0}^{g_max} N^{2-2g} F_g^CS).
 
-    For small N, the genus expansion is asymptotic (not convergent).
+    For small N, the finite genus sum is only a truncation diagnostic.
+    No convergence or radius statement is certified.
     """
     exact_Z = marino_cs_matrix_model_partition(N, k)
     exact_log_Z = math.log(abs(exact_Z)) if exact_Z != 0 else float('-inf')
@@ -1138,6 +1078,7 @@ def cs_matrix_vs_perturbative(N: int = 2, k: int = 3) -> Dict[str, Any]:
         'exact_Z': exact_Z,
         'exact_log_Z': exact_log_Z,
         'genus_expansion': genus_log_Z,
+        'convergence_or_radius_proved': False,
     }
 
 
@@ -1187,6 +1128,8 @@ def gaussian_exact_free_energy_finite_N(N: int) -> Dict[str, Any]:
     The asymptotic expansion:
     log G(N+1) = (N^2/2)*log(N) - 3N^2/4 + (N/2)*log(2pi) - (1/12)*log(N)
                  + zeta'(-1) + sum_{g=2}^inf B_{2g}/(2g(2g-2)) * N^{2-2g}
+
+    The returned finite truncations do not certify convergence.
     """
     # Exact value
     log_G = sum(math.lgamma(j + 1) for j in range(N))
@@ -1217,20 +1160,19 @@ def gaussian_exact_free_energy_finite_N(N: int) -> Dict[str, Any]:
         'error_g1': abs(log_G - approx_g1),
         'approx_through_g7': approx_higher,
         'error_g7': abs(log_G - approx_higher),
-        'convergence_improves': abs(log_G - approx_higher) < abs(log_G - approx_g1),
+        'higher_truncation_improves_here': abs(log_G - approx_higher) < abs(log_G - approx_g1),
+        'convergence_or_radius_proved': False,
     }
 
 
 def shadow_truncation_error(N: int, max_genus: int, kappa_val: float = 1.0) -> Dict[str, Any]:
-    r"""Truncation error of the shadow genus expansion at finite N.
+    r"""Next-term diagnostic for the shadow genus expansion at finite N.
 
     The full shadow partition function is Z = exp(sum_{g>=1} kappa * lambda_g^FP * N^{2-2g}).
 
-    The error from truncating at genus max_genus is bounded by the
-    next term: |error| <= |F_{max_genus+1}| * N^{2-2*(max_genus+1)}.
-
-    For large N, this is O(N^{-2*max_genus}) which is EXCELLENT.
-    For small N (e.g. N=2), the series is asymptotic and may diverge.
+    The next omitted term is useful for finite-window diagnostics.  It is
+    not a rigorous truncation bound or radius-of-convergence statement
+    without separate analytic hypotheses.
     """
     # Truncated sum
     truncated = 0.0
@@ -1253,6 +1195,8 @@ def shadow_truncation_error(N: int, max_genus: int, kappa_val: float = 1.0) -> D
         'next_term_magnitude': abs(next_term),
         'next_term_order': N**(2 - 2 * (max_genus + 1)),
         'asymptotic_series': True,
+        'rigorous_error_bound_proved': False,
+        'convergence_or_radius_proved': False,
     }
 
 
@@ -1261,16 +1205,17 @@ def shadow_truncation_error(N: int, max_genus: int, kappa_val: float = 1.0) -> D
 # ===========================================================================
 
 def bernoulli_universality_check(max_genus: int = 8) -> Dict[int, Dict[str, Any]]:
-    r"""The Bernoulli structure is UNIVERSAL across all matrix/shadow models.
+    r"""Shared Bernoulli factors in this finite scalar comparison.
 
-    For ALL models:
+    In this module's finite window:
     - GUE combinatorial: F_g = |B_{2g}|/(2g(2g-2))
     - Shadow: F_g = kappa * (2^{2g-1}-1)|B_{2g}|/(2^{2g-1}(2g)!)
     - Penner: F_g = (-1)^g * B_{2g}/(2g(2g-2))
     - Double-scaling: a_g involves B_{2g} (from Painleve II recursion)
     - CS perturbative: F_g = kappa_CS * lambda_g^FP
 
-    The common factor is B_{2g}, the (2g)-th Bernoulli number.
+    The common recorded factor is B_{2g}, the (2g)-th Bernoulli number.
+    This is not a universal theorem for every matrix integral.
     """
     results = {}
     for g in range(1, max_genus + 1):
@@ -1287,9 +1232,10 @@ def bernoulli_universality_check(max_genus: int = 8) -> Dict[int, Dict[str, Any]
 
 
 def ahat_generating_function_check(max_genus: int = 8) -> Dict[str, Any]:
-    r"""Verify the A-hat generating function: sum lambda_g^FP * x^{2g} = (x/2)/sin(x/2) - 1.
+    r"""Verify the formal A-hat generating function through max_genus.
 
-    This is the master identity connecting ALL the free energy formulas.
+    The formal identity is
+        sum lambda_g^FP * x^{2g} = (x/2)/sin(x/2) - 1.
 
     Verification: expand (x/2)/sin(x/2) as a power series and compare
     coefficients at x^{2g} with lambda_g^FP.
@@ -1323,9 +1269,8 @@ def shadow_four_class_matrix_dictionary() -> Dict[str, Dict[str, Any]]:
     r"""The four shadow classes and their matrix model counterparts.
 
     Class G (Gaussian, r_max=2): Gaussian matrix model, Wigner semicircle
-    Class L (Lie/tree, r_max=3): Cubic matrix model, Painleve I at criticality
-    Class C (Contact/quartic, r_max=4): Quartic matrix model, Painleve II at criticality
-    Class M (Mixed, r_max=inf): Infinite-potential matrix model
+    The entries are analogies and finite diagnostics.  They do not supply
+    matrix integrals, EO recursion, or hierarchy theorems by themselves.
     """
     return {
         'G': {
@@ -1335,7 +1280,7 @@ def shadow_four_class_matrix_dictionary() -> Dict[str, Dict[str, Any]]:
             'eigenvalue_density': 'Wigner semicircle',
             'spectral_curve': 'y^2 = kappa^2 * z^2 - 4*kappa',
             'double_scaling': 'Airy (pure gravity)',
-            'integrable_hierarchy': 'trivial (free field)',
+            'integrable_hierarchy': 'not certified by scalar window',
         },
         'L': {
             'shadow_depth': 3,
@@ -1343,8 +1288,8 @@ def shadow_four_class_matrix_dictionary() -> Dict[str, Dict[str, Any]]:
             'matrix_potential': 'V(M) = (kappa/2) M^2 + (alpha/3) M^3',
             'eigenvalue_density': 'asymmetric one-cut',
             'spectral_curve': 'y^2 = cubic(z)',
-            'double_scaling': 'Painleve I (k=2)',
-            'integrable_hierarchy': 'KdV with S_3 nonzero',
+            'double_scaling': 'model-dependent multicritical diagnostic',
+            'integrable_hierarchy': 'requires descendant/model data',
         },
         'C': {
             'shadow_depth': 4,
@@ -1352,8 +1297,8 @@ def shadow_four_class_matrix_dictionary() -> Dict[str, Dict[str, Any]]:
             'matrix_potential': 'V(M) = (kappa/2) M^2 + (alpha/3) M^3 + (S4/4) M^4',
             'eigenvalue_density': 'one-cut or two-cut',
             'spectral_curve': 'y^2 = quartic(z)',
-            'double_scaling': 'Painleve II (k=3)',
-            'integrable_hierarchy': 'KdV with contact correction',
+            'double_scaling': 'model-dependent multicritical diagnostic',
+            'integrable_hierarchy': 'requires descendant/model data',
         },
         'M': {
             'shadow_depth': 'infinity',
@@ -1361,7 +1306,7 @@ def shadow_four_class_matrix_dictionary() -> Dict[str, Dict[str, Any]]:
             'matrix_potential': 'V(M) = sum_{r>=2} (S_r/r) M^r',
             'eigenvalue_density': 'determined by infinite potential',
             'spectral_curve': 'y^2 = transcendental',
-            'double_scaling': 'higher multicritical',
-            'integrable_hierarchy': 'full KdV tower',
+            'double_scaling': 'conditional higher-multicritical diagnostic',
+            'integrable_hierarchy': 'not certified without descendant CohFT data',
         },
     }

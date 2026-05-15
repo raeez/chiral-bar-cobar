@@ -1,8 +1,9 @@
 r"""sl_3 subregular W-algebra bar complex: Koszul duality proved.
 
-The sl_3 subregular W-algebra W^k(sl_3, f_{subreg}) coincides with the
+The sl_3 subregular W-algebra W^k(sl_3, f_{subreg}) is the
 Bershadsky-Polyakov algebra W_3^{(2)} = BP_k, the DS reduction of V_k(sl_3)
-at the MINIMAL nilpotent orbit (partition (2,1) in sl_3).
+at the MINIMAL nilpotent orbit (partition (2,1) in sl_3).  Its OPE surface
+    is the Feigin-Semikhatov W_3^{(2)} normal form.
 
 CLARIFICATION ON TERMINOLOGY: In sl_3, "subregular" = "minimal" since there
 are only three nilpotent orbits: zero (partition (1,1,1)), minimal/subregular
@@ -12,14 +13,14 @@ minimal and subregular are distinct.
 
 MAIN RESULTS:
   1. BP_k is chirally Koszul (PBW-Slodowy collapse, canonical arity 2).
-  2. kappa(BP_k) = (k-15)/(6(k+3)), verified by three independent paths.
+  2. kappa(BP_k) = (1/6)(2 - 24(k+1)^2/(k+3)), verified by three independent paths.
   3. The Koszul dual: (BP_k)^! = BP_{-k-6} (self-dual family, (2,1)^t = (2,1)).
   4. DS reduction from V_k(sl_3) PRESERVES Koszulness.
   5. DS does NOT preserve Swiss-cheese formality (shadow class M, not G).
   6. The kappa deficit kappa(V_k(sl_3)) - kappa(BP_k) is a RATIONAL FUNCTION
      of k (not a constant), disproving the naive ghost-subtraction formula.
   7. Shadow depth: class M (infinite) on the T-line generically.
-  8. Complementarity: kappa(k) + kappa(-k-6) = 1/3 (constant).
+  8. Complementarity: kappa(k) + kappa(-k-6) = 98/3 (constant).
 
 GENERATORS (4 strong generators):
   J   (conformal weight 1,   bosonic,   J-charge 0)
@@ -27,8 +28,8 @@ GENERATORS (4 strong generators):
   G-  (conformal weight 3/2, fermionic, J-charge -1)
   T   (conformal weight 2,   bosonic,   J-charge 0)
 
-CENTRAL CHARGE: c(k) = (k - 15)/(k + 3), from KRW with dim(g_0)=2,
-  dim(g_{1/2})=2, ||rho - rho_L||^2 = 3/2, h^v = 3.
+CENTRAL CHARGE: c(k) = 2 - 24(k+1)^2/(k+3) in the BP normalization
+used by the compute layer.
 
 KAPPA COMPUTATION (three independent paths):
   Path 1 (anomaly ratio): kappa = rho * c, rho = 1/6.
@@ -39,7 +40,7 @@ KAPPA COMPUTATION (three independent paths):
 KOSZUL DUAL:
   (2,1) is self-transpose, so BP_k is in a self-dual family.
   The dual level is k' = -k - 2N = -k - 6 (for sl_3, N=3).
-  (BP_k)^! = BP_{-k-6}, with c' = (-k-21)/(-k-3) = (k+21)/(k+3).
+  (BP_k)^! = BP_{-k-6}, with central charge c(-k-6).
   # AP140: K_BP=196, NOT 2 (corrected; prior value confused with ghost constant C_{(2,1)}=2)
   The Koszul conductor K_BP = c(k) + c(-k-6) = 196 is constant.
 
@@ -375,27 +376,52 @@ def ds_bar_intertwining() -> Dict[str, object]:
 # OPE structure (n-th products)
 # =============================================================================
 
-def bp_nth_products() -> Dict[Tuple[str, str], Dict[int, Dict[str, object]]]:
+def bp_primary_ope_normal_form(level=None) -> Dict[str, object]:
+    """Feigin-Semikhatov normal-form constants for BP_k = W_3^{(2)}."""
+    if level is None:
+        level = k
+    kk = sympify(level)
+    return {
+        "level": kk,
+        "central_charge": bp_central_charge(kk),
+        "J_level": (2 * kk + 3) / 3,
+        "G_pairing": (kk + 1) * (2 * kk + 3),
+        "GJ_coefficient": 3 * (kk + 1),
+        "JJ_coefficient": Rational(3),
+        "dJ_coefficient": Rational(3, 2) * (kk + 1),
+        "T_coefficient": -(kk + 3),
+        "convention": "Feigin-Semikhatov BP W_3^{(2)}",
+    }
+
+
+def bp_nth_products(level=None) -> Dict[Tuple[str, str], Dict[int, Dict[str, object]]]:
     """All singular n-th products for BP generators.
 
     Returns {(a, b): {n: {output: coeff}}} for all generator pairs.
-    Coefficients are rational functions of Symbol('c').
+    Coefficients are rational functions of the affine sl_3 level k.
     """
-    cc = Symbol('c')
+    fs = bp_primary_ope_normal_form(level)
+    cc = fs["central_charge"]
+    j_level = fs["J_level"]
+    g_pairing = fs["G_pairing"]
+    g_j = fs["GJ_coefficient"]
+    jj_coeff = fs["JJ_coefficient"]
+    dJ_coeff = fs["dJ_coefficient"]
+    t_coeff = fs["T_coefficient"]
 
     return {
         ("T", "T"): {3: {"vac": cc / 2}, 1: {"T": Rational(2)}, 0: {"dT": Rational(1)}},
         ("T", "J"): {1: {"J": Rational(1)}, 0: {"dJ": Rational(1)}},
         ("T", "G+"): {1: {"G+": Rational(3, 2)}, 0: {"dG+": Rational(1)}},
         ("T", "G-"): {1: {"G-": Rational(3, 2)}, 0: {"dG-": Rational(1)}},
-        ("J", "J"): {1: {"vac": cc / 3}},
+        ("J", "J"): {1: {"vac": j_level}},
         ("J", "G+"): {0: {"G+": Rational(1)}},
         ("J", "G-"): {0: {"G-": Rational(-1)}},
         ("J", "T"): {1: {"J": Rational(1)}},
-        ("G+", "G-"): {2: {"vac": 2 * cc / 3}, 1: {"J": Rational(2)},
-                        0: {"T": Rational(2), "dJ": Rational(1)}},
-        ("G-", "G+"): {2: {"vac": 2 * cc / 3}, 1: {"J": Rational(-2)},
-                        0: {"T": Rational(2), "dJ": Rational(-1)}},
+        ("G+", "G-"): {2: {"vac": g_pairing}, 1: {"J": g_j},
+                        0: {"JJ": jj_coeff, "dJ": dJ_coeff, "T": t_coeff}},
+        ("G-", "G+"): {2: {"vac": g_pairing}, 1: {"J": -g_j},
+                        0: {"JJ": jj_coeff, "dJ": -dJ_coeff, "T": t_coeff}},
         ("G+", "G+"): {},
         ("G-", "G-"): {},
         ("G+", "T"): {1: {"G+": Rational(3, 2)}, 0: {"dG+": Rational(1, 2)}},
@@ -411,25 +437,8 @@ def max_ope_generator_degree() -> int:
     Scan all OPE coefficients and find the maximum number of
     generators in any single output monomial.
 
-    For BP: all OPE outputs are either 'vac' (degree 0), single generators
-    (degree 1), or derivatives of single generators (degree 1).
-    The ONLY exception would be composite terms like :JJ:, :TJ:, etc.
-
-    In the BP OPEs as written, all outputs are single generators or derivatives.
-    But in the Feigin-Semikhatov realization (eq:bp-ef), the simple pole of EF
-    contains :3HH: which is generator-degree 2.
-
-    In the standard N=2 SCA normalization used in bp_nth_products():
-      G+_(0)G- = 2T + dJ
-    Both T and dJ are degree 1.  BUT in the Feigin-Semikhatov realization:
-      E_(0)F contains :HH: which is degree 2.
-
-    The discrepancy: the standard N=2 generators (J, G+, G-, T) absorb the
-    Sugawara combination T = T^perp + (1/(2*level_J))*:JJ: into T itself.
-    In the BP NORMAL FORM, the :HH: = :JJ:/(level_J)^2 is hidden inside T.
-    The canonical arity detection requires working in the RAW realization.
-
-    In the Feigin-Semikhatov realization: max generator degree = 2 (from :HH:).
+    In the Feigin-Semikhatov realization the G+G- simple pole contains the
+    composite :JJ:, so the maximum generator degree is exactly 2.
     """
     return 2
 
@@ -529,17 +538,16 @@ def shadow_depth_classification() -> Dict[str, object]:
       Delta = 8 * kappa_T * S4_T = 8 * (c/2) * 10/(c*(5c+22))
             = 40/(5c+22)
 
-    For BP: c = (k-15)/(k+3), so
-      5c + 22 = 5(k-15)/(k+3) + 22 = (5k-75+22k+66)/(k+3) = (27k-9)/(k+3) = 9(3k-1)/(k+3)
-      Delta = 40(k+3)/(9(3k-1))
+    For BP: c = 2 - 24(k+1)^2/(k+3), so the special levels are the
+    roots of c(k)=0 and 5c(k)+22=0.  They are not the old N=2-substitute
+    values k=15 and k=1/3.
 
     Delta = 0 only when k+3 = 0 (critical level, excluded) or k -> infinity.
     Delta is generically nonzero, so shadow class M (infinite depth).
 
     Special levels:
-      c = 0 at k = 15: kappa = 0, class G (uncurved).
-      5c + 22 = 0 at 3k - 1 = 0, i.e., k = 1/3: class L (depth 3).
-      c = -22/5 at k = 1/3.
+      c = 0 at the two roots of 12k^2+23k+9.
+      5c + 22 = 0 at the two roots of 60k^2+91k+23.
     """
     cc = bp_central_charge(k)
     kappa_T = cc / 2
@@ -597,37 +605,29 @@ def kappa_deficit_analysis() -> Dict[str, object]:
 
 
 # =============================================================================
-# N=2 superconformal structure
+# Feigin-Semikhatov BP structure
 # =============================================================================
 
 def n2_sca_structure() -> Dict[str, object]:
-    """N=2 superconformal algebra structure of BP.
+    """Compatibility wrapper for the old name; returns the BP FS structure.
 
-    The BP algebra W^k(sl_3, f_{(2,1)}) coincides with the N=2 SCA
-    in the Kazama-Suzuki normalization.  The N=2 structure is:
-      - U(1) current J at level kJ = c/3
-      - Supercurrents G+, G- of weight 3/2 and charges +1, -1
-      - Stress tensor T of weight 2
-      - Spectral flow parameter: eta = c/3
-
-    The N=2 algebra has special properties:
-      - Spectral flow automorphism: sigma_eta maps NS <-> R sectors
-      - Chiral ring: G+_0 cohomology in the R sector
-      - Witten index: Tr_R (-1)^F = 0 for non-degenerate N=2
-
-    For bar-cobar duality: the N=2 structure constrains the bar complex
-    via the U(1) charge conservation (all bar differentials preserve charge).
+    BP_k is governed here by the Feigin-Semikhatov W_3^{(2)} OPE.
+    Charge conservation remains true.
     """
-    cc = bp_central_charge(k)
-    j_level = cc / 3
+    fs = bp_primary_ope_normal_form(k)
 
     return {
-        "is_n2_sca": True,
-        "j_level": simplify(j_level),
-        "spectral_flow_parameter": simplify(j_level),
+        "is_n2_sca": False,
+        "is_feigin_semikhatov_bp": True,
+        "j_level": simplify(fs["J_level"]),
+        "g_pairing": simplify(fs["G_pairing"]),
+        "g_j_coefficient": simplify(fs["GJ_coefficient"]),
+        "jj_coefficient": fs["JJ_coefficient"],
+        "dJ_coefficient": simplify(fs["dJ_coefficient"]),
+        "T_coefficient": simplify(fs["T_coefficient"]),
         "charge_conservation": True,
-        "chiral_ring_exists": True,
-        "central_charge": simplify(cc),
+        "central_charge": simplify(fs["central_charge"]),
+        "convention": fs["convention"],
     }
 
 
@@ -689,8 +689,8 @@ def verify_sl3_subregular_bar() -> Dict[str, bool]:
     sd = shadow_depth_classification()
     results["shadow class M"] = sd["generic_class"] == "M"
 
-    # 12. N=2 structure
+    # 12. Feigin-Semikhatov BP structure
     n2 = n2_sca_structure()
-    results["is N=2 SCA"] = n2["is_n2_sca"]
+    results["is Feigin-Semikhatov BP"] = n2["is_feigin_semikhatov_bp"]
 
     return results

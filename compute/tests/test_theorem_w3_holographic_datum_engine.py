@@ -1,17 +1,20 @@
-r"""Tests for the complete holographic modular Koszul datum H(T) for W_3.
+r"""Tests for the finite W_3 holographic datum compute surface.
 
-THEOREM (Holographic Modular Koszul Datum for W_3):
-The six-fold package H(T) = (A, A!, C, r(z), Theta_A, nabla^hol) for the
-W_3 algebra is the first rank-2 example with genuinely multi-weight structure.
+COMPUTE CONTRACT:
+The seven structural labels H(T) = (A, A^i, A!, C, r(z), Theta_A, nabla^hol)
+are present, but this file tests finite W_3 projections of those labels. It
+does not assert a full holographic package theorem, a full MC element, or a
+full rank-2 holomorphic connection.
 
-MULTI-PATH VERIFICATION (3+ per claim, per CLAUDE.md mandate):
+MULTI-PATH VERIFICATION:
 
-Every numerical value is verified by at least 3 independent paths.
-Cross-family consistency (AP10) verified against Virasoro and sl_2_hat.
+The load-bearing scalar values are checked by independent algebraic,
+cross-family, limiting-case, or graph-decomposition paths where available.
+Cross-family consistency (AP10) is checked against Virasoro and sl_2_hat.
 
 ANTI-PATTERN AWARENESS:
-    AP1:  kappa(W_3) = 5c/6, NOT c/2. Independently recomputed.
-    AP10: Cross-family consistency checks, not just hardcoded values.
+    AP1:  kappa(W_3) = 5c/6. Independently recomputed.
+    AP10: Cross-family consistency checks beyond hardcoded values.
     AP19: r-matrix poles one below OPE poles.
     AP24: kappa + kappa' = 250/3 != 0 for W_3.
     AP27: bar propagator weight 1 for all channels.
@@ -35,18 +38,21 @@ from compute.lib.theorem_w3_holographic_datum_engine import (
     # Component (A): W_3 algebra
     w3_generators, kappa_w3, kappa_T, kappa_W,
     kappa_from_harmonic, anomaly_ratio, anomaly_ratio_from_exponents,
-    # Component (A!): Koszul dual
+    principal_wn_central_charge_complementarity,
+    # Component (A^i): bar-dual coalgebra
+    bar_dual_coalgebra_description, typed_apart_objects,
+    # Component (A!): Verdier/Koszul branch
     w3_dual_central_charge, kappa_w3_dual, complementarity_sum,
     self_dual_point, critical_string_point, w3_central_charge_complementarity,
     # Component (C): line-operator category
     line_category_description,
     # Component (r(z)): r-matrix
     r_matrix_channels, verify_pole_shift, r_matrix_total_pole_count,
-    max_r_matrix_pole_order, max_pole_from_weight,
+    max_r_matrix_pole_order, max_pole_from_weight, reference_kernel_formulas,
     # Component (Theta_A): MC element
     obs_genus1, F_genus1, F_genus2_per_channel, delta_F2_cross,
     F_genus2_total, delta_F2_large_c_limit, delta_F2_at_self_dual,
-    delta_F2_complementarity,
+    delta_F2_complementarity, finite_holographic_scope,
     # Component (nabla^hol): shadow connection
     shadow_metric_T_line, shadow_metric_W_line,
     critical_discriminant_T, critical_discriminant_W,
@@ -147,8 +153,10 @@ class TestKoszulDuality:
         for c in [C_GENERIC, C_LARGE, C_SMALL, C_SELF_DUAL]:
             assert c + w3_dual_central_charge(c) == Fraction(100)
 
-    def test_dual_cc_path2_known_constant(self):
-        """Path 2: authoritative value from w_algebras.tex line 1210."""
+    def test_dual_cc_path2_general_wn_formula(self):
+        """Path 2: W_N formula gives N=3 sum 100 and N=2 sum 26."""
+        assert principal_wn_central_charge_complementarity(2) == Fraction(26)
+        assert principal_wn_central_charge_complementarity(3) == Fraction(100)
         assert w3_central_charge_complementarity() == Fraction(100)
 
     def test_dual_cc_path3_involutivity(self):
@@ -244,6 +252,17 @@ class TestRMatrix:
         """TT channel has only odd poles (bosonic parity, weight 2)."""
         tt = r_matrix_channels()['TT']
         assert all(p % 2 == 1 for p in tt['rmatrix_poles'])
+
+    def test_reference_kernels_keep_kz_and_virasoro_normalizations(self):
+        """Raw affine, KZ, Heisenberg, and Virasoro kernels stay distinct."""
+        kernels = reference_kernel_formulas()
+        assert kernels['affine_raw_trace_form'] == 'k*Omega_tr/z'
+        assert kernels['affine_KZ'] == 'Omega_KZ/((k+h^vee)z)'
+        assert kernels['affine_raw_trace_form'] != kernels['affine_KZ']
+        assert kernels['heisenberg'] == 'k/z'
+        assert kernels['virasoro'] == '(c/2)/z^3 + 2T/z'
+        assert kernels['W3_TT'] == kernels['virasoro']
+        assert kernels['W3_WW'] == '(c/3)/z^5 + 2T/z^3 + dT/z^2 + ...'
 
 
 # ============================================================================
@@ -510,7 +529,7 @@ class TestOPEData:
 # ============================================================================
 
 class TestCrossFamilyConsistency:
-    """Cross-family consistency checks (AP10: not just hardcoded values)."""
+    """Cross-family consistency checks."""
 
     def test_virasoro_is_n2_special_case(self):
         """Virasoro = W_2: kappa = c * (H_2 - 1) = c/2."""
@@ -550,17 +569,47 @@ class TestCrossFamilyConsistency:
 # ============================================================================
 
 class TestFullDatum:
-    """Verify the complete holographic datum assembles correctly."""
+    """Verify the finite holographic datum assembles correctly."""
 
-    def test_datum_has_six_components(self):
-        """H(T) has exactly the six components: A, A!, C, r, Theta, nabla."""
+    def test_datum_has_seven_components(self):
+        """H(T) has exactly the seven entries: A, A^i, A!, C, r, Theta, nabla."""
         datum = holographic_datum(C_GENERIC)
-        assert 'A' in datum
-        assert 'A_dual' in datum
-        assert 'C' in datum
-        assert 'r' in datum
-        assert 'Theta' in datum
-        assert 'nabla' in datum
+        assert set(datum) == {'A', 'A_i', 'A_dual', 'C', 'r', 'Theta', 'nabla'}
+
+    def test_finite_scope_does_not_claim_full_package_theorem(self):
+        """The compute surface records finite projections, not a theorem proof."""
+        scope = finite_holographic_scope()
+        assert scope['entries'] == ('A', 'A_i', 'A_dual', 'C', 'r', 'Theta', 'nabla')
+        assert scope['claim_status'] == 'finite_compute_projection'
+        assert scope['not_full_holographic_package_theorem'] is True
+        assert 'full multiweight MC element' in scope['external_obligations']
+        assert 'full rank-2 holomorphic connection matrix' in scope['external_obligations']
+
+    def test_bar_dual_separate_from_A_dual(self):
+        """A^i is the bar-dual coalgebra projection, not the A! branch."""
+        datum = holographic_datum(C_GENERIC)
+        assert datum['A_i'] == bar_dual_coalgebra_description()
+        assert datum['A_i']['not_A_dual']
+        assert datum['A_i']['not_cobar_inversion']
+        assert datum['A_i']['not_derived_center']
+        assert datum['A_i']['name'] != datum['A_dual']['name']
+
+    def test_B_A_Ai_Adual_OmegaBA_Zder_are_typed_apart(self):
+        """B(A), A^i, A!, Omega(B(A)), and Z_ch^der(A) remain distinct."""
+        table = typed_apart_objects()
+        expected = {'B_A', 'A_i', 'A_dual', 'Omega_B_A', 'Z_ch_der_A'}
+        assert set(table) == expected
+        assert table['B_A']['kind'] == 'chiral_bar_complex'
+        assert table['A_i']['kind'] == 'bar_dual_coalgebra'
+        assert table['A_dual']['kind'] == 'Verdier_Koszul_branch'
+        assert table['Omega_B_A']['kind'] == 'bar_cobar_inversion'
+        assert table['Omega_B_A']['identifies_with'] == 'A'
+        assert table['Omega_B_A']['not_duality'] is True
+        assert table['Z_ch_der_A']['kind'] == 'derived_Hochschild_bulk_center'
+        assert table['Z_ch_der_A']['not_line_category'] is True
+        for key, row in table.items():
+            assert key not in row['not_equal_to']
+            assert set(row['not_equal_to']) == expected - {key}
 
     def test_datum_A_kappa(self):
         """Component A has correct kappa."""
@@ -568,15 +617,29 @@ class TestFullDatum:
         assert datum['A']['kappa'] == kappa_w3(C_GENERIC)
 
     def test_datum_A_dual_complementarity(self):
-        """A! has c + c' = 100 and kappa + kappa' = 250/3."""
+        """A! branch has c + c' = 100 and kappa + kappa' = 250/3."""
         datum = holographic_datum(C_GENERIC)
         assert datum['A_dual']['complementarity_cc'] == Fraction(100)
         assert datum['A_dual']['complementarity_kappa'] == Fraction(250, 3)
+        assert datum['A_dual']['branch'] == (
+            'Verdier/continuous-linear dual under finite-type completion'
+        )
+        assert datum['A_dual']['not_bar_cobar_inversion'] is True
+        assert datum['A_dual']['not_derived_center'] is True
 
     def test_datum_genus1_correct(self):
         """Theta component has correct genus-1 data."""
         datum = holographic_datum(C_GENERIC)
         assert datum['Theta']['genus_1']['obs_1'] == obs_genus1(C_GENERIC)
+
+    def test_theta_entry_is_not_full_mc_element(self):
+        """Scalar genus projections cannot be promoted to full Theta_A data."""
+        theta = holographic_datum(C_GENERIC)['Theta']
+        assert theta['scope'] == 'finite scalar projections of Theta_A'
+        assert theta['mc_anchor'] == 'thm:mc2-bar-intrinsic'
+        assert theta['not_full_mc_element'] is True
+        assert 'all multiweight brackets' in theta['missing_full_mc_data']
+        assert theta['genus_2']['not_full_genus_tower'] is True
 
     def test_datum_genus2_has_cross_channel(self):
         """Theta component has nonzero cross-channel correction."""
@@ -584,10 +647,19 @@ class TestFullDatum:
         assert datum['Theta']['genus_2']['delta_F2_cross'] != 0
 
     def test_datum_r_matrix_structure(self):
-        """r(z) component has correct structure."""
+        """r(z) component is the binary residue, not the full MC element."""
         datum = holographic_datum(C_GENERIC)
+        assert datum['r']['scope'] == 'binary collision residue, not the full MC element'
+        assert datum['r']['not_full_mc_element'] is True
         assert datum['r']['max_pole_order'] == 5
         assert datum['r']['total_pole_count'] == 4
+
+    def test_nabla_entry_is_line_restriction_not_full_connection(self):
+        """T/W line data cannot be promoted to the full multiweight connection."""
+        nabla = holographic_datum(C_GENERIC)['nabla']
+        assert nabla['scope'] == 'T-line and W-line scalar restrictions'
+        assert nabla['not_full_multiweight_connection'] is True
+        assert nabla['recorded_lines'] == ['T', 'W']
 
     def test_datum_at_self_dual_point(self):
         """At c = 50, kappa(A) = kappa(A!)."""
@@ -669,8 +741,17 @@ class TestLineCategory:
         """Category is Rep_q(sl_3)."""
         desc = line_category_description()
         assert desc['type'] == 'Rep_q(sl_3)'
+        assert desc['sector'] == 'line/evaluation'
         assert desc['rank'] == 2
         assert desc['simple_type'] == 'A_2'
+
+    def test_category_not_bulk_or_derived_center(self):
+        """The line category C is not Z_ch^der(A)."""
+        desc = line_category_description()
+        assert desc['not_bulk_category'] is True
+        assert desc['not_derived_center'] is True
+        assert desc['bulk_object'] == 'Z_ch^der(W_3)'
+        assert 'not identified' in desc['comparison_status']
 
     def test_mc3_proved(self):
         """MC3 is proved for all simple types."""

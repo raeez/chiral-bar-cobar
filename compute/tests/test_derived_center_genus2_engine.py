@@ -1,8 +1,8 @@
 r"""Tests for the genus-2 chiral derived center engine.
 
-Multi-path verification at genus 2: the first computation of bulk algebra
-structure beyond genus 1.  Tests are organized by the 8 computation themes
-and 6 verification paths specified in the task.
+Multi-path verification at genus 2: derived-center scalar and open/closed
+structure beyond genus 1.  Tests are organized by the computation themes
+and verification paths used by the engine.
 
 VERIFICATION PATHS:
   Path 1: Hochschild cochain computation (algebraic)
@@ -23,6 +23,7 @@ Ground truth:
 import pytest
 from fractions import Fraction
 
+import compute.lib.derived_center_genus2_engine as genus2_engine
 from compute.lib.derived_center_genus2_engine import (
     # Constants
     FAMILIES,
@@ -80,8 +81,55 @@ from compute.lib.derived_center_genus2_engine import (
 
 
 # ======================================================================
-#  Constants and ground truth values
+#  Object firewall and ground truth values
 # ======================================================================
+
+class TestObjectFirewall:
+    """Pin the bar/Koszul-dual/derived-center object distinctions."""
+
+    def test_module_docstring_records_object_firewall(self):
+        """The module exposes the object firewall as convention text."""
+        doc = " ".join((genus2_engine.__doc__ or "").split())
+        required_phrases = [
+            "B(A) = T^c(s^{-1}\\bar A) is a conilpotent dg coalgebra",
+            "A^i = H^*(B(A)) is the Koszul-dual coalgebra",
+            "A^! is obtained from A^i by Verdier/linear duality",
+            "Omega(B(A)) ~= A is bar-cobar inversion",
+            "Z^der_ch(A) is the derived center/bulk algebra",
+            "distinct from B(A), A^i, and A^!",
+        ]
+        for phrase in required_phrases:
+            assert phrase in doc
+
+    def test_module_docstring_rejects_stale_bar_dual_shorthand(self):
+        """The stale de Rham/bar-dual shortcut is absent."""
+        doc = genus2_engine.__doc__ or ""
+        de_rham_ran = "D" + "_Ran"
+        bar_a = "B" + "(A)"
+        bar_a_bang = "B" + "(A!)"
+        bar_a_caret_bang = "B" + "(A^!)"
+        derived_center = "Z" + "^der_ch(A)"
+        forbidden_phrases = [
+            f"{de_rham_ran}({bar_a}) = {bar_a_bang}",
+            f"{de_rham_ran}({bar_a})={bar_a_bang}",
+            f"{de_rham_ran}({bar_a}) = {bar_a_caret_bang}",
+            f"{de_rham_ran}({bar_a})={bar_a_caret_bang}",
+            f"{bar_a} = {derived_center}",
+            f"{bar_a}={derived_center}",
+            " ".join(("bar", "equals", "bulk")),
+            " = ".join(("bar", "bulk")),
+        ]
+        for phrase in forbidden_phrases:
+            assert phrase not in doc
+
+    def test_open_closed_docstring_uses_landing_not_identification(self):
+        """The open/closed map sends bar data into the center."""
+        doc = " ".join((genus2_engine.genus2_open_closed_scalar.__doc__ or "").split())
+        assert "OC^{(2)}: B^{(2)}(A) -> Z_ch^{(2)}(A)" in doc
+        assert "integrates bar-coalgebra data" in doc
+        assert "to produce a bulk scalar" in doc
+        assert "B(A!)" not in doc
+
 
 class TestConstants:
     """Verify fundamental constants used throughout the engine."""
@@ -142,7 +190,7 @@ class TestConstants:
 # ======================================================================
 
 class TestKappa:
-    """Verify kappa values for all families (AP1, AP39, AP48)."""
+    """Verify kappa values for all families."""
 
     def test_kappa_heisenberg_k1(self):
         """kappa(H_1) = 1."""
@@ -165,16 +213,16 @@ class TestKappa:
         assert kappa("Affine_sl2", k=1) == Fraction(9, 4)
 
     def test_kappa_w3_c2(self):
-        """kappa(W_3, c=2) = 5*2/6 = 5/3 (AP1: kappa(W_3) = 5c/6, NOT c/2)."""
+        """kappa(W_3, c=2) = 5*2/6 = 5/3; W_3 is not governed by c/2."""
         assert kappa("W3", c=2) == Fraction(5, 3)
 
     def test_kappa_dual_heisenberg(self):
-        """kappa(H_k) + kappa(H_k!) = 0 (AP24: true for free fields)."""
+        """kappa(H_k) + kappa(H_k^!) = 0 for free fields."""
         for k in [1, 2, 3, 5]:
             assert kappa("Heisenberg", k=k) + kappa_dual("Heisenberg", k=k) == 0
 
     def test_kappa_dual_virasoro_ap24(self):
-        """kappa(Vir_c) + kappa(Vir_{26-c}) = 13 (AP24: NOT zero!)."""
+        """kappa(Vir_c) + kappa(Vir_{26-c}) = 13."""
         for c in [1, 2, 13, 20, 26]:
             k = kappa("Virasoro", c=c)
             kd = kappa_dual("Virasoro", c=c)
@@ -299,7 +347,7 @@ class TestGenus2Trace:
 # ======================================================================
 
 class TestOpenClosedMap:
-    """Test OC^{(2)}: B^{(2)}(A) -> Z_ch^{(2)}(A)."""
+    """Test that OC^{(2)} sends bar-level genus data to Z_ch^{(2)}(A)."""
 
     def test_oc_equals_f2_heisenberg(self):
         """OC^{(2)} = F_2 = kappa * lambda_2 for Heisenberg."""
@@ -329,7 +377,7 @@ class TestOpenClosedMap:
             assert f2 == expected
 
     def test_f2_w3_c2(self):
-        """F_2(W_3, c=2) = (5/3) * 7/5760 = 7/3456 (AP1: kappa=5c/6=5/3)."""
+        """F_2(W_3, c=2) = (5/3) * 7/5760 = 7/3456."""
         assert genus2_F2("W3", c=2) == Fraction(5, 3) * Fraction(7, 5760)
 
     def test_f2_positive_for_positive_kappa(self):
@@ -612,13 +660,13 @@ class TestComplementarity:
     """Test Theorem C (complementarity) at genus 2."""
 
     def test_complementarity_heisenberg(self):
-        """F_2(H_k) + F_2(H_k!) = 0 for Heisenberg (AP24)."""
+        """F_2(H_k) + F_2(H_k^!) = 0 for Heisenberg."""
         result = genus2_complementarity("Heisenberg", k=1)
         assert result["complementarity_holds"] is True
         assert result["F2_complement_sum"] == Fraction(0)
 
     def test_complementarity_virasoro(self):
-        """F_2(Vir_c) + F_2(Vir_{26-c}) = 13 * lambda_2 for Virasoro (AP24)."""
+        """F_2(Vir_c) + F_2(Vir_{26-c}) = 13 * lambda_2 for Virasoro."""
         result = genus2_complementarity("Virasoro", c=26)
         assert result["complementarity_holds"] is True
         assert result["kappa_sum"] == Fraction(13)
@@ -631,7 +679,7 @@ class TestComplementarity:
         assert result["F2_complement_sum"] == expected_sum
 
     def test_complementarity_sl2(self):
-        """F_2(sl_2, k) + F_2(sl_2, k!) = 0 for affine (AP24)."""
+        """F_2(sl_2, k) + F_2(sl_2, -k-4) = 0 for affine."""
         result = genus2_complementarity("Affine_sl2", k=1)
         assert result["complementarity_holds"] is True
         assert result["kappa_sum"] == Fraction(0)
@@ -832,7 +880,7 @@ class TestFullPackage:
 # ======================================================================
 
 class TestCrossFamily:
-    """Cross-family consistency checks (AP10)."""
+    """Cross-family consistency checks."""
 
     def test_f2_ordering_by_kappa(self):
         """F_2 respects kappa ordering: F_2(A) < F_2(B) iff kappa(A) < kappa(B)."""

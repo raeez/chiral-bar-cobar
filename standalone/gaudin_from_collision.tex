@@ -22,7 +22,6 @@
 
 \theoremstyle{remark}
 \newtheorem{remark}[theorem]{Remark}
-\newtheorem{warning}[theorem]{Warning}
 
 %%% Macros
 \newcommand{\fg}{\mathfrak{g}}
@@ -75,8 +74,8 @@ $k_{\max} \leq 1$, trivial for $k_{\max} = 0$, and differential
 operators of order $k_{\max} - 1$ for $k_{\max} \geq 3$. This
 operator-order trichotomy partitions the standard landscape into
 three regimes. For $\cW_3$, the prediction is $4$th-order
-differential operators (from $k_{\max} = 5$). All claims are
-verified by $105 + 72$ tests.
+differential operators from \(k_{\max}=5\); the computational checks
+are recorded separately in Section~\ref{sec:compute}.
 \end{abstract}
 
 % ================================================================
@@ -99,29 +98,29 @@ $V_{\lambda_i}$ are $\fg$-modules. The Gaudin Hamiltonians are
 where $\Omega_{ij} = \sum_a t^a_i \otimes (t_a)_j$ is the Casimir
 tensor acting in the $i$-th and $j$-th factors.
 
-In 2026, Gaiotto and Zeng \cite{GZ26} introduced a family of
-commuting differential operators $\{H_i^{\mathrm{GZ}}\}$ on the
-moduli space $\mathcal{M}_{0,n}$ attached to any chiral algebra
-$\cA$. The construction uses the genus-zero shadow projections of
-$\Theta_\cA$: the collision residue coefficients generate the
-Hamiltonians. For affine Kac--Moody, $H_i^{\mathrm{GZ}}$ reduces to
-the Gaudin Hamiltonian divided by the shifted level:
+In the 2026 interface-holography paper of Gaiotto--Zeng~\cite{GZ26},
+the sphere Hamiltonians attached to chiral OPE data form a commuting
+family. On the affine Kac--Moody comparison surface, the corresponding
+kernel is the KZ-normalized collision residue, so
 \begin{equation}\label{eq:gz-gaudin}
  H_i^{\mathrm{GZ}}
  \;=\;
  \frac{1}{k + h^\vee}
  \, H_i^{\mathrm{Gaudin}}.
 \end{equation}
-For a general chirally Koszul algebra $\cA$, the GZ Hamiltonians are
-richer: the collision residue may have poles of order up to
-$k_{\max} = p_{\max} - 1$ (the collision depth), and each pole
-contributes a term of increasing differential operator order. The
-result is a family of commuting differential operators whose order
-is controlled by $k_{\max}$.
+For a general algebra in the standard bosonic chiral Koszul landscape,
+the GZ Hamiltonians are richer: the collision residue may have poles
+of order up to $k_{\max} = p_{\max} - 1$ (the collision depth), and
+each pole contributes a term of increasing differential operator
+order after the conformal-block or Ward-identity reduction. The result
+is a family of commuting differential operators whose order is
+controlled by $k_{\max}$ inside this standard landscape.
 
-This paper proves the identification \eqref{eq:gz-gaudin},
-establishes the operator-order trichotomy, and predicts the structure
-of the GZ Hamiltonians for class $M$ algebras (Virasoro, $\cW_N$).
+The affine comparison gives \eqref{eq:gz-gaudin}; the pole filtration
+gives the operator-order trichotomy; the same calculation applies to
+the class-$M$ Virasoro and \(\cW_N\) examples after the Ward-identity
+or \(W\)-constraint reduction appropriate to the conformal-block
+model.
 
 % ================================================================
 \section{The collision residue}\label{sec:collision}
@@ -192,7 +191,7 @@ Theorem~\ref{thm:gaudin-r-matrix-identification} below.
 
 \begin{theorem}[KZ-normalized collision residue and FFR r-matrix]
 \label{thm:gaudin-r-matrix-identification}
-\emph{(ProvedHere.)} Let $\widehat{\fg}_k$ be the affine Kac--Moody
+Let $\widehat{\fg}_k$ be the affine Kac--Moody
 algebra at non-critical level $k \neq -h^\vee$, with
 $\fg$ simple finite-dimensional and $h^\vee$ the dual Coxeter number.
 The trace-form collision residue and the KZ-normalized Gaudin kernel
@@ -204,14 +203,11 @@ r^{\mathrm{KZ}}(z)=\Omega_{\mathrm{KZ}}/((k+h^\vee)z),
 \quad
 \Omega_{\mathrm{KZ}}=2h^\vee\Omega_{\mathrm{tr}}.
 \]
-Thus the KZ-normalized chiral collision residue
-$\Res^{\mathrm{coll}}_{0,2}(\Theta_{\widehat{\fg}_k}) \in
-\widehat{\fg}_k^! \otimes \widehat{\fg}_k^! \, [\![z^{-1}]\!]$
-of Definition~\ref{def:collision-residue} gives the
-Feigin--Frenkel--Reshetikhin Gaudin r-matrix:
+Thus the trace-form collision residue extracted from
+\(\Theta_{\widehat{\fg}_k}\) is \(k\Omega_{\mathrm{tr}}/z\), while the
+Feigin--Frenkel--Reshetikhin Gaudin kernel is the KZ-normalized
+connection coefficient:
 \begin{equation}\label{eq:ffr-identification}
- \Res^{\mathrm{coll}}_{0,2}(\Theta_{\widehat{\fg}_k})
- \;=\;
  r_{\mathrm{Gaudin}}(z)
  \;:=\;
  \frac{\Omega}{(k + h^\vee)\, z},
@@ -248,28 +244,15 @@ central and Lie OPE terms. In KZ normalization,
 $r_1 = \Omega/(k+h^\vee)$, which is
 \eqref{eq:ffr-identification}.
 
-\textbf{(c) Comparison with the Yangian r-matrix and
-$\mathrm{GRT}^{\mathrm{fin}}$ gauge.} The Drinfeld Yangian
-$Y_\hbar(\fg)$ in its RTT presentation carries a classical r-matrix
-$r_Y(z) = \Omega_{\mathrm{tr}}/z$ with
-$\Omega_{\mathrm{tr}} = \sum_{i,j} E_{ij} \otimes E_{ji}$ the trace
-Casimir. On $\fg$ simple,
-$\Omega_{\mathrm{tr}} = (2h^\vee)^{-1} \Omega$ as tensors in
-$\fg \otimes \fg$, because the trace form and the Killing form are
-proportional with ratio $2h^\vee$ (Kac 1990 \S6). Hence
-$k \cdot r_Y(z) = k\,\Omega_{\mathrm{tr}}/z =
-\frac{k}{2h^\vee}\,\Omega/z$. The identity
-$\frac{k}{2h^\vee} = \frac{1}{k+h^\vee}$ fails as a rational
-function of $k$; the correct statement is that the two tensors
-$k\cdot \Omega_{\mathrm{tr}}/z$ and $\Omega/((k+h^\vee) z)$ represent
-the same element of the collision-residue module modulo the inner
-Casimir-rescaling subgroup $\mathrm{GRT}^{\mathrm{fin}}$, which acts
-on r-matrices by $\Omega \mapsto \lambda \Omega$ (a finite-dimensional
-subgroup of the associator torsor $\mathrm{GRT}_1$ detecting Casimir
-basis, not genuine face change; see \cite{Drinfeld90,EK96}). Thus the
-Yangian r-matrix and the Gaudin r-matrix are the same face
-(F5/F6 in the seven-faces nomenclature) up to a
-$\mathrm{GRT}^{\mathrm{fin}}$ gauge, not independent faces.
+\textbf{(c) Trace-form and KZ normalizations.} The Drinfeld Yangian
+classical kernel is \(r_Y(z)=\Omega_{\mathrm{tr}}/z\). For \(\fg\)
+simple, \(\Omega_{\mathrm{tr}}=(2h^\vee)^{-1}\Omega\) after passing
+from the trace form to the normalized invariant form~\cite[\S6]{Kac1990}.
+Thus \(k\,\Omega_{\mathrm{tr}}/z\) and
+\(\Omega/((k+h^\vee)z)\) are not identical rational functions of
+\(k\); they agree only after the normalization bridge fixed by the
+Sugawara/KZ convention. This is the comparison identifying the Yangian
+and Gaudin faces in the affine genus-zero kernel.
 \end{proof}
 
 Equation~\eqref{eq:ffr-identification} rewritten with explicit
@@ -287,28 +270,23 @@ normalization.
 \label{cor:ffr-critical-limit}
 The Gaudin Hamiltonians
 $H_i^{\mathrm{Gaudin}} = \sum_{j \neq i} \Omega_{ij}/(z_i - z_j)$
-at critical level $k = -h^\vee$ arise from the level-rescaled
-chiral collision residue as the limiting generators of the
-Feigin--Frenkel centre: the rescaled tensor
-$(k+h^\vee) \cdot r(z) = \Omega/z$ is regular at $k=-h^\vee$, and
-its binary projections generate the commuting quadratic shadow of
-$\mathfrak{z}(\widehat{\fg})$ at the critical level. Equivalently,
-the GZ Hamiltonians are a one-parameter family in $k$ whose
-normalised limit $\lim_{k \to -h^\vee}
-(k+h^\vee)\, H_i^{\mathrm{GZ}} = H_i^{\mathrm{Gaudin}}$ reconstructs
-the classical Gaudin Hamiltonians.
+at critical level $k = -h^\vee$ arise from the finite critical limit
+of the rescaled Segal--Sugawara fields. The unrescaled KZ connection
+is singular at \(k=-h^\vee\); the Feigin--Frenkel centre supplies the
+critical Gaudin algebra, and its quadratic generators have the
+classical shadow \(H_i^{\mathrm{Gaudin}}\).
 \end{corollary}
 
 \begin{proof}
-Multiply \eqref{eq:ffr-identification} by $(k+h^\vee)$: the
-rescaled residue is $\Omega/z$, independent of $k$. The GZ
-connection~\eqref{eq:gz-connection} with this rescaled residue gives
-$(k+h^\vee) \nabla^{\mathrm{GZ}} = d -
-\sum_{i<j} \Omega_{ij} \, dz_{ij}/(z_i - z_j)$; its $i$-th
-component is $H_i^{\mathrm{Gaudin}}$. At $k = -h^\vee$ the unrescaled
-$\nabla^{\mathrm{GZ}}$ is singular, which recovers the
-Feigin--Frenkel centre as the commutant of the singular connection
-(\cite{FFR1994}, Thm 1).
+For \(k\neq -h^\vee\), the KZ kernel is
+\(\Omega/((k+h^\vee)z)\). Multiplying the Segal--Sugawara fields by
+\(k+h^\vee\) removes the pole in the Sugawara normalization and has a
+finite critical limit. Feigin--Frenkel identify these limiting fields
+with generators of the centre at the critical level; Feigin--Frenkel--
+Reshetikhin identify their images with the Gaudin Hamiltonians
+\cite{FF92,FFR1994}. Thus the critical Gaudin algebra is the central
+limit of the rescaled Sugawara construction, not the value of the
+unrescaled KZ connection at \(k=-h^\vee\).
 \end{proof}
 
 % ================================================================
@@ -351,10 +329,9 @@ into \eqref{eq:gz-connection} gives
 \[
  \nabla^{\mathrm{GZ}}
  = d - \frac{1}{k+h^\vee}
- \sum_{i < j} \frac{\Omega_{ij}}{z_i - z_j} \, d\log(z_i - z_j).
+ \sum_{i < j} \frac{\Omega_{ij}}{z_i - z_j} \, dz_{ij}.
 \]
-Since $d\log(z_i - z_j) = d(z_i - z_j)/(z_i - z_j)$, the $i$-th
-component of the connection is
+Taking the coefficient of \(dz_i\) gives
 \[
  H_i^{\mathrm{GZ}}
  = \frac{1}{k+h^\vee}
@@ -367,11 +344,15 @@ component of the connection is
 The commutativity $[H_i^{\mathrm{Gaudin}}, H_j^{\mathrm{Gaudin}}] =
 0$ is a classical result proved by Feigin--Frenkel--Reshetikhin
 \cite{FFR1994} using the Bethe ansatz. In the present framework, it
-is a formal consequence of the Maurer--Cartan equation: the MC
-equation is $d\Theta + \frac{1}{2}[\Theta, \Theta] = 0$, and its
-genus-zero binary projection is exactly the commutativity of the
-Hamiltonians. This is a conceptual unification: the integrability of
-the Gaudin model is the genus-zero shadow of the full MC equation.
+is the genus-zero binary consequence of the Maurer--Cartan equation.
+The projection of \(d\Theta+\frac12[\Theta,\Theta]=0\) is the
+infinitesimal braid relation
+\[
+ [\Omega_{ij},\Omega_{kl}]=0,\qquad
+ [\Omega_{ij},\Omega_{ik}+\Omega_{jk}]=0
+\]
+for distinct indices. These identities imply
+\([H_i^{\mathrm{GZ}},H_j^{\mathrm{GZ}}]=0\).
 \end{remark}
 
 \begin{remark}[The KZ connection]\label{rem:kz-connection}
@@ -393,11 +374,12 @@ connections coincide.
 The collision depth $k_{\max}$ determines the differential-operator
 order of the GZ Hamiltonians. Three regimes arise.
 
-\begin{theorem}[Operator-order trichotomy]
+\begin{theorem}[Operator-order trichotomy in the standard landscape]
 \label{thm:operator-trichotomy}
-Let $\cA$ be a chirally Koszul chiral algebra with collision depth
-$k_{\max} = p_{\max} - 1$. The GZ Hamiltonians $H_i^{\mathrm{GZ}}$
-on $\mathcal{M}_{0,n}$ are:
+Let $\cA$ belong to the standard bosonic chiral Koszul landscape and
+let \(k_{\max}=p_{\max}-1\) be its collision depth. After the
+conformal-block or Ward-identity reduction, the GZ Hamiltonians
+\(H_i^{\mathrm{GZ}}\) on \(\mathcal M_{0,n}\) are:
 \begin{enumerate}[label=\textup{(\roman*)}]
  \item \emph{Trivial} ($H_i = 0$) if $k_{\max} = 0$, i.e.,
  $p_{\max} = 1$.
@@ -423,7 +405,8 @@ Concretely:
 \begin{itemize}
  \item If $k_{\max} = 0$: the collision residue vanishes identically
  (the bar propagator absorbs the only pole), so $H_i = 0$. This
- is the $\beta\gamma$ regime.
+ is the first-order free-field regime, including the standard
+ $\beta\gamma$ and free-fermion examples.
  \item If $k_{\max} = 1$: the collision residue is $r(z) = r_1/z$
  (simple pole only), and
  $H_i = \sum_{j \neq i} r_1^{ij}/(z_i - z_j)$ is a
@@ -471,18 +454,18 @@ The trichotomy partitions the standard landscape:
  & \textbf{Families} \\
 \midrule
 Trivial & $0$ & $H_i = 0$
- & $\beta\gamma$, symplectic fermions \\
+ & $\beta\gamma$, free fermion \\
 Gaudin & $1$ & $0$ (multiplication)
- & affine $\widehat{\fg}_k$, Heisenberg, free fermion \\
+ & affine $\widehat{\fg}_k$, Heisenberg \\
 Differential & $\geq 3$ & $k_{\max} - 1$
  & Virasoro ($k_{\max}=3$), $\cW_N$ ($k_{\max}=2N-1$) \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\begin{warning}[Shadow depth $\neq$ operator order]
+\begin{remark}[Shadow depth and operator order]
 \label{warn:shadow-vs-operator}
-The shadow depth $r_{\max}$ does NOT determine the operator order.
+The shadow depth $r_{\max}$ does not determine the operator order.
 The $\beta\gamma$ system has $r_{\max} = 4$ (class $C$) but
 $k_{\max} = 0$ (trivial Hamiltonians). The Heisenberg algebra has
 $r_{\max} = 2$ (class $G$) and $k_{\max} = 1$ (Gaudin regime). The
@@ -490,7 +473,7 @@ operator order is controlled by $k_{\max} = p_{\max} - 1$
 (the collision depth), not by $r_{\max}$ (the shadow depth). The
 two invariants are independent (Proposition~2.4 of the classification
 trichotomy paper).
-\end{warning}
+\end{remark}
 
 % ================================================================
 \section{Higher collision depths}\label{sec:higher}
@@ -525,22 +508,22 @@ odd-order poles: $z^{-3}$ and $z^{-1}$.
 
 \begin{proposition}[Virasoro GZ Hamiltonians]
 \label{prop:vir-gz-hamiltonians}
-The GZ Hamiltonians for the Virasoro algebra are $2$nd-order
-differential operators on $\mathcal{M}_{0,n}$:
+The Virasoro collision residue gives second-order GZ operators after
+the Ward-identity reduction on conformal blocks. On primary
+insertions of conformal weights \(h_j\), the local Ward form is
 \begin{equation}\label{eq:vir-gz}
  H_i^{\mathrm{GZ}}
  \;=\;
  \sum_{j \neq i}
  \biggl[
- \frac{c/2}{(z_i - z_j)^3}
- + \frac{2T_j}{z_i - z_j}
+ \frac{h_j}{(z_i - z_j)^2}
+ + \frac{\partial_{z_j}}{z_i - z_j}
  \biggr],
 \end{equation}
-where the cubic-pole term generates a $2$nd-order differential
-operator via the identification of the $z^{-3}$ coefficient with
-$\partial^2_{z_j}$ (after passing to local coordinates on
-$\mathcal{M}_{0,n}$). The operator order is
-$k_{\max} - 1 = 2$.
+with the quadratic stress-tensor channel supplying the second-order
+symbol in the full Virasoro GZ operator. The collision-depth bound is
+\(\operatorname{ord}(H_i^{\mathrm{GZ}})\leq k_{\max}-1=2\), and the
+central \(z^{-3}\) pole is the source of the top symbol.
 \end{proposition}
 
 \begin{remark}[Parity of collision poles]\label{rem:parity}
@@ -558,9 +541,11 @@ Laurent principal part.
 
 The $\cW_3$ algebra has generators $T$ (weight $2$) and $W$
 (weight $3$). The $W$-self-OPE has maximal pole $p_{\max}(WW) = 6$,
-so $k_{\max}(\cW_3) = 5$. The collision residue has poles
-$z^{-5}, z^{-3}, z^{-1}$ (odd orders only, by the bosonic parity
-argument).
+so $k_{\max}(\cW_3) = 5$. The central and primary collision channels
+have odd principal poles \(z^{-5},z^{-3},z^{-1}\). Lower-symbol terms
+coming from composite fields and the \(W\)-constraint reduction can
+also contribute even intermediate powers such as \(z^{-2}\); these do
+not change the top-order bound.
 
 \begin{proposition}[$\cW_3$ GZ Hamiltonians]
 \label{prop:w3-gz-hamiltonians}
@@ -603,7 +588,7 @@ $\cW_N$ & $2N$ & $2N-1$ & $2N-2$ & $M$ \\
 \end{tabular}
 \end{center}
 
-\begin{remark}[Depth $2$ from higher Gaudin]
+\begin{remark}[Higher Gaudin from higher collision depth]
 \label{rem:higher-gaudin}
 For $k_{\max} \geq 3$, the collision residue encodes ``higher Gaudin
 Hamiltonians'': the standard Gaudin Hamiltonians
@@ -611,10 +596,9 @@ Hamiltonians'': the standard Gaudin Hamiltonians
 (simple-pole) truncation. The higher poles produce operators that
 commute with the Gaudin Hamiltonians and with each other, extending
 the integrable system from the Gaudin model to a larger commutative
-algebra. For $\cW_N$, the integrable system has $\lfloor N/2 \rfloor
-+ 1$ independent generators (one per even-order Casimir of $\fsl_N$
-plus the energy-momentum contribution), each of different
-differential-operator order.
+algebra. For $\cW_N$, the generators of weights \(2,\ldots,N\)
+produce the corresponding hierarchy of collision-depth symbols, with
+top operator order \(2N-2\).
 \end{remark}
 
 % ================================================================
@@ -650,8 +634,10 @@ F7 for affine Kac--Moody. The remaining links are:
 For affine Kac--Moody at non-critical level:
 \begin{enumerate}[label=\textup{(\roman*)}]
  \item F1 $\Leftrightarrow$ F7: the twisting morphism at genus zero
- is $r(z) = \Omega/((k+h^\vee)z)$; the Gaudin Hamiltonian is its
- multi-point extension.
+ gives the trace-form collision kernel \(k\Omega_{\mathrm{tr}}/z\);
+ after the Sugawara/KZ normalization bridge this becomes
+ \(\Omega/((k+h^\vee)z)\), whose multi-point extension is the
+ Gaudin Hamiltonian kernel.
  \item F5 $\Leftrightarrow$ F6: the Yangian quantizes the Sklyanin
  bracket (Drinfeld~1985, Semenov-Tian-Shansky~1983).
  \item F4 $\Leftrightarrow$ F7: Theorem~\ref{thm:gaudin-from-collision}.
@@ -660,9 +646,11 @@ For affine Kac--Moody at non-critical level:
  \item F1 $\Leftrightarrow$ F2: the bar-cobar $R$-matrix is the
  line-operator $R$-twist (DNP identification).
 \end{enumerate}
-The chain F1--F2--F3--F4--F7--F5--F6 closes without obstruction.
-Each link is an independent theorem; the closure is the coherence of
-the seven-face programme.
+These comparisons identify the same genus-zero binary kernel under
+the stated normalizations. They do not identify the ambient source
+objects: the ordered bar twisting morphism, line-operator tensor
+category, PVA bracket, GZ connection, Yangian \(R\)-matrix, Sklyanin
+bracket, and Gaudin algebra remain distinct structures.
 \end{proposition}
 
 % ================================================================
@@ -670,18 +658,21 @@ the seven-face programme.
 \label{sec:elliptic-gaudin}
 % ================================================================
 
-At genus one, KZ regularizes to the KZB connection. The
+At genus one, KZ regularizes to the KZB connection
+\cite{Bernard88}. The
 non-dynamical elliptic classical $r$-matrix is the Belavin--Drinfeld
-matrix, with the full Weierstrass $\zeta_\tau$ in the Cartan channel
-and theta-function ratios in the root channels. The Felder
+matrix \cite{Belavin81,BelavinDrinfeld82}, with the full Weierstrass
+\(\zeta_\tau\) in the Cartan channel and theta-function ratios in the
+root channels. The Felder
 $R(z,\lambda,\tau)$ is a distinct dynamical IRF/face-model object
-satisfying the dynamical Yang--Baxter equation; for $\mathfrak{sl}_2$
-it is related to the Belavin matrix by a vertex--IRF gauge transform,
-not identical to the bare collision residue.
+satisfying the dynamical Yang--Baxter equation
+\cite{Felder94,FelderVarchenko96,EtingofVarchenko98}; for
+\(\mathfrak{sl}_2\) it is related to the Belavin matrix by a
+vertex--IRF gauge transform, not identical to the bare collision
+residue.
 
 \begin{theorem}[Elliptic Gaudin from chiral collision at
 $g=1$]\label{thm:elliptic-gaudin}
-\ClaimStatusProvedElsewhere
 Let $E_\tau = \CC/(\ZZ + \tau\ZZ)$ and $\widehat{\fsl}_2$ at
 non-critical level~$k$. The genus-one collision residue of
 $\Theta_{\widehat{\fsl}_2}$ on $E_\tau^{\times n} / \Sigma_n$
@@ -712,20 +703,23 @@ non-dynamical KZB/Belavin input.
 \begin{remark}[Heat-equation prefactor]
 \label{rem:heat-prefactor}
 The KZB connection contains a heat-equation term $\partial_\tau$
-coupled to the pairing $\tfrac{1}{2}(J \otimes J)$. The prefactor
-is $1/(4\pi i)$ on the diagonal part (matrix entries
-$a = b$) and $1/(2\pi i)$ off-diagonal ($a \neq b$); the factor of
-$2$ comes from the symmetric-matrix chain rule (FM34a). Heat
-equation: $\partial_\tau \wp_1 = (1/(4\pi i)) \partial_w(\wp +
-\wp^2)$ at machine precision in the numerical verification.
+coupled to the quadratic Cartan pairing. With the standard theta
+normalization, the heat equation is
+\[
+  4\pi i\,\partial_\tau \theta(z,\tau)=\partial_z^2\theta(z,\tau).
+\]
+This fixes the diagonal prefactor in the KZB connection. Off-diagonal
+root terms are normalized by the same theta-function convention, not
+by a separate numerical check.
 \end{remark}
 
 \begin{remark}[Szeg\H{o} three-term as universal modular
 identity]\label{rem:szego-fay}
 The Fay trisecant identity, originally for $g \geq 2$ theta
 functions, specializes at $g = 0$ and $g = 1$ to the Szeg\H{o}
-three-term identity (Fay 1973 Cor.~2.5), which holds universally at
-all $g \geq 0$. The three-term identity is the modular
+three-term identity \cite[Cor.~2.5]{Fay1973ThetaFunctions}, which
+holds universally at all $g \geq 0$. The three-term identity is the
+modular
 compatibility that replaces the pentagon in the elliptic and higher
 genus monodromy computations; at $g = 1$ it controls the
 Felder dynamical associator, at $g = 2$ it underlies the
@@ -785,11 +779,14 @@ sectors, has the structure
  r_{\cW_3}(z) =
  \frac{c/3}{z^5}
  + \frac{\alpha_3}{z^3}
+ + \frac{\alpha_2}{z^2}
  + \frac{\alpha_1}{z}
 \]
-where $\alpha_3, \alpha_1$ are elements of $\cW_3^! \otimes \cW_3^!$
-depending on $c$ and the $\cW_3$ structure constants. The compute
-engine verifies this at $c = 2$ (the free-field realization).
+where \(\alpha_3,\alpha_2,\alpha_1\) are elements of
+\(\cW_3^! \otimes \cW_3^!\) depending on \(c\) and the \(\cW_3\)
+structure constants. The \(z^{-2}\) coefficient is a lower-symbol
+term from composite-field reduction; it does not affect the
+fourth-order top symbol from \(z^{-5}\).
 \end{computation}
 
 % ================================================================
@@ -804,21 +801,33 @@ ansatz and critical level}, Comm.\ Math.\ Phys.\ \textbf{166}
 (1994), 27--62.
 
 \bibitem{GZ26}
-D.~Gaiotto, P.~Zeng, \emph{Holographic reconstruction of chiral
-algebras from commuting sphere Hamiltonians}, preprint 2026.
+D.~Gaiotto and K.~Zeng, \emph{Interface minimal model holography and
+topological string theory}, arXiv:2603.08783, 2026.
 
 \bibitem{DNP25}
-T.~Dimofte, N.~Niu, A.~Py, \emph{Line operators in $3$d
-holomorphic-topological gauge theory and categorified Koszul
-duality}, preprint 2025.
+T.~Dimofte, W.~Niu, and V.~Py, \emph{Line operators in $3$d
+holomorphic QFT: meromorphic tensor categories and dg-shifted
+Yangians}, arXiv:2508.11749, 2025.
 
 \bibitem{KZ25}
-Z.~Khan, P.~Zeng, \emph{Poisson vertex algebras and $3$d sigma
-models with holomorphic-topological boundary}, preprint 2025.
+A.~Z.~Khan and K.~Zeng, \emph{Poisson vertex algebras and
+three-dimensional gauge theory}, arXiv:2502.13227, 2025.
 
 \bibitem{Drinfeld1985}
 V.~G.~Drinfeld, \emph{Hopf algebras and the quantum Yang-Baxter
 equation}, Dokl.\ Akad.\ Nauk SSSR \textbf{283} (1985), 1060--1064.
+
+\bibitem{Drinfeld90}
+V.~G.~Drinfeld, \emph{Quasi-Hopf algebras}, Leningrad Math.\ J.\
+\textbf{1} (1990), 1419--1457.
+
+\bibitem{EK96}
+P.~Etingof and D.~Kazhdan, \emph{Quantization of Lie bialgebras I},
+Selecta Math.\ (N.S.) \textbf{2} (1996), 1--41.
+
+\bibitem{Kac1990}
+V.~G.~Kac, \emph{Infinite-Dimensional Lie Algebras}, 3rd ed.,
+Cambridge University Press, Cambridge, 1990.
 
 \bibitem{STS1983}
 M.~A.~Semenov-Tian-Shansky, \emph{What is a classical $r$-matrix?},
@@ -833,6 +842,37 @@ B.~Feigin, E.~Frenkel,
 \emph{Affine Kac--Moody algebras at the critical level and
 Gelfand--Dikii algebras}, Int.\ J.\ Mod.\ Phys.\ A \textbf{7},
 Suppl.\ 1A (1992), 197--215.
+
+\bibitem{Bernard88}
+D.~Bernard, \emph{On the Wess--Zumino--Witten models on the torus},
+Nucl.\ Phys.\ B \textbf{303} (1988), 77--93.
+
+\bibitem{Belavin81}
+A.~A.~Belavin, \emph{Dynamical symmetry of integrable quantum
+systems}, Nucl.\ Phys.\ B \textbf{180} (1981), 189--200.
+
+\bibitem{BelavinDrinfeld82}
+A.~A.~Belavin and V.~G.~Drinfeld, \emph{Solutions of the classical
+Yang--Baxter equation for simple Lie algebras}, Funct.\ Anal.\ Appl.\
+\textbf{16} (1982), 159--180.
+
+\bibitem{Felder94}
+G.~Felder, \emph{Elliptic quantum groups}, in \emph{Proceedings of the
+International Congress of Mathematicians}, Z\"urich, 1994.
+
+\bibitem{FelderVarchenko96}
+G.~Felder and A.~Varchenko, \emph{On representations of the elliptic
+quantum group \(E_{\tau,\eta}(\mathfrak{sl}_2)\)}, Comm.\ Math.\
+Phys.\ \textbf{181} (1996), 741--761.
+
+\bibitem{EtingofVarchenko98}
+P.~Etingof and A.~Varchenko, \emph{Solutions of the quantum dynamical
+Yang--Baxter equation and dynamical quantum groups}, Comm.\ Math.\
+Phys.\ \textbf{196} (1998), 591--640.
+
+\bibitem{Fay1973ThetaFunctions}
+J.~D.~Fay, \emph{Theta Functions on Riemann Surfaces}, Lecture Notes
+in Mathematics, vol.~352, Springer, Berlin, 1973.
 
 \bibitem{Lorgat2026a}
 R.~Lorgat, \emph{Modular Koszul duality: a monograph on bar-cobar

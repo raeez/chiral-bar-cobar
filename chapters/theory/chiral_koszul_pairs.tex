@@ -128,8 +128,10 @@ Confusing the two misidentifies what the shadow tower measures.
 On a point, the bar complex
 $\barB(A) = T^c(s^{-1}\bar{A})$ is built from tensor powers of
 the augmentation ideal; a classical twisting morphism
-$\tau \colon \barB(A) \to A^!$ is a degree-$+1$ element in the
+$\tau \colon \barB(A) \to A$ is a degree-$+1$ element in the
 convolution dg~Lie algebra satisfying $d\tau + \tau \star \tau = 0$.
+Its bar cohomology is the intrinsic coalgebra~$A^{\mathrm i}$; the
+dual algebra~$A^!$ appears only after finite linear or Verdier duality.
 On a curve~$X$, the chiral twisting morphism
 (Definition~\ref{def:chiral-twisting-datum}) lives in the chiral
 convolution algebra, where the star product is mediated by the
@@ -168,19 +170,13 @@ $R$-matrix, linking the Koszul pairs of this chapter to the
 Drinfeld--Kohno bridge of
 Chapter~\ref{chap:koszul-pair-structure}.
 
-The chapter proceeds in three stages.
-\S\ref{sec:chiral-twisting-data}ff.\ extracts from the
-Heisenberg example the general notion of chiral twisting data
-and formulates the PBW recognition criterion. The chiral Koszul
-pair (Definition~\ref{def:chiral-koszul-pair}) is then defined,
-and the full bar-cobar adjunction and inversion on the Koszul
-locus (Theorem~A) are proved. The Verdier intertwining that
-connects $\barB_X(\cA)$ with the homotopy dual factorization
-algebra~$\cA^!_\infty$ completes the
-genus-zero layer of the duality. The passage to higher genus
-(Chapter~\ref{chap:higher-genus}), where curvature enters and
-the fiberwise differential ceases to square to zero, builds on
-these structures.
+The Heisenberg calculation supplies the first model of the
+twisting datum. The PBW criterion turns that model into a
+recognition theorem for non-quadratic algebras. A chiral Koszul
+pair is the completed, finite-type, Verdier-compatible form of
+that datum; Theorem~A proves bar-cobar inversion on this locus,
+and the higher-genus chapter adds the curved term that appears
+when the fiberwise differential no longer squares to zero.
 
 % ================================================================
 % SECTION 8.1: FROM THE HEISENBERG EXAMPLE TO GENERAL TWISTING DATA
@@ -194,7 +190,9 @@ The bar complex of $\mathcal{H}_k$ (Chapter~\ref{ch:heisenberg-frame},
 Theorem~\ref{thm:frame-heisenberg-koszul-dual})
 produces the coalgebra $\bar{B}(\mathcal{H}_k)
 \simeq \mathrm{coLie}^{\mathrm{ch}}(V^*)$,
-whose cohomology gives the Koszul dual algebra
+whose cohomology gives the intrinsic bar-dual coalgebra
+$\mathcal{H}_k^{\mathrm i}$. On the finite-type Verdier lane this
+coalgebra dualizes to the Koszul dual algebra
 $\mathcal{H}_k^! = \mathrm{Sym}^{\mathrm{ch}}(V^*)$.
 The bar-cobar counit
 $\Omega_X(\bar{B}_X(\mathcal{H}_k)) \xrightarrow{\;\sim\;} \mathcal{H}_k$
@@ -372,8 +370,8 @@ component of~$c \in \cC$ under the shuffle/deconcatenation of
 Definition~\ref{def:chiral-twisting-datum}(3), and the right-hand
 side is read inside $\cA \otimes \Omega_X(\cC)$, which is the
 cone $\cA \oplus \Omega_X(\cC) \cdot \cA$ under the free-module
-identification. On the grading $n = 0$ summand the map is the
-obvious inclusion $a \otimes 1 \mapsto a \in \cA[-1]$. The
+identification. On the grading $n = 0$ summand the map is
+$a \otimes 1 \mapsto a \in \cA[-1]$. The
 bijection at each fixed weight level follows from the cofree
 decomposition $\Delta(c) = \sum c_{(1)}\otimes c_{(2)}$ of the
 chiral coproduct (Definition~\ref{def:chiral-twisting-datum}(3)),
@@ -961,13 +959,12 @@ that $\mathrm{gr}(f)$ is an isomorphism (since $f$ is a quasi-isomorphism
 of coalgebras), and conclude by spectral sequence comparison.
 \end{theorem}
 
-\subsection{The concept of chiral Koszul pairs: precise formulation}
+\subsection{Chiral Koszul pairs}
 
-To handle non-quadratic examples, we extend the notion of Koszul pairs
-beyond the quadratic setting. The defining property is a set of
-\emph{recognition criteria} (checkable conditions on the pair) from
-which the full bar-cobar identification follows as a theorem.
-No quasi-isomorphism statement is built into the definition itself.
+The Koszul-pair notion extends beyond the quadratic setting through a
+set of \emph{recognition criteria} (checkable conditions on the pair)
+from which the full bar-cobar identification follows as a theorem. No
+quasi-isomorphism statement is built into the definition itself.
 
 \begin{definition}[Chiral Koszul pair]\label{def:chiral-koszul-pair}
 \index{Koszul pair!chiral|textbf}
@@ -979,7 +976,17 @@ Definition~\textup{\ref{def:chiral-koszul-morphism})}
 (\cA_1, \cC_1, \tau_1, F_\bullet), \qquad
 (\cA_2, \cC_2, \tau_2, F_\bullet)
 \]
-equipped with Verdier-compatible factorization-algebra
+in one fixed completed lane: the coalgebras~$\cC_i$ are complete
+conilpotent factorization coalgebras, the filtrations are exhaustive
+and separated, each conformal-weight/bar-length piece is finite over
+the ground field or locally free of finite rank over~$\cO_X$, and the
+transition maps satisfy the Mittag--Leffler condition used in
+Lemma~\ref{lem:completion-convergence}. Verdier duals below are taken
+in the holonomic/perfect $\cD$-module factorization category, or in the
+equivalent continuous finite-window algebraic model. Without these
+topological and finite-type hypotheses one has twisting data, not a
+Verdier-Koszul pair. The pair is equipped with Verdier-compatible
+factorization-algebra
 identifications
 \[
 \mathbb{D}_{\operatorname{Ran}}(\cC_1) \simeq \Omega_X(\cC_2),
@@ -1034,6 +1041,52 @@ the Koszul locus~$\operatorname{Kosz}(X)$
 (Definition~\textup{\ref{def:koszul-locus}}).
 \end{definition}
 
+\begin{remark}[Five-object firewall]\label{rem:five-object-firewall-kp}
+For a chiral algebra~$\cA$ there are five objects, and no two of them
+are identified without an explicit functor:
+\[
+\cA,\qquad
+\barB_X(\cA),\qquad
+\cA^{\mathrm i},\qquad
+\cA^!,\qquad
+Z^{\mathrm{der}}_{\mathrm{ch}}(\cA).
+\]
+The bar entry has two ambient realizations. The symmetric bar
+$\barB_X^\Sigma(\cA)$ is the Ran bar coalgebra used in
+Theorem~A and in the comparison with Beilinson--Drinfeld factorization
+homology. The ordered bar
+$\barB_X^{\mathrm{ord}}(\cA)=T^c(s^{-1}\bar\cA)$ is the
+$\Eone$ refinement which remembers the tensor order and carries the
+Yangian, affine Yangian, and $r$-matrix constructions. It maps to the
+symmetric bar only after imposing the appropriate locality, descent, or
+averaging condition; it is not the same object before that passage.
+
+The symbol $\cA^{\mathrm i}$ denotes the intrinsic bar-dual coalgebra,
+computed by the relevant bar construction on the chosen lane. The symbol
+$\cA^!$ denotes the post-Verdier Koszul-dual chiral algebra, obtained
+from $\cA^{\mathrm i}$ by Verdier duality, or by continuous finite-type
+linear duality in the affine algebraic model. Finally,
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ is the cochain-level chiral
+Hochschild closed-sector actor and is not a Koszul dual. It becomes a
+physical bulk object only after a boundary local-operator comparison map
+has been supplied and proved to be a quasi-isomorphism in the chosen
+completion.
+
+Thus the type-correct maps are
+\[
+\barB_X(\cA)\longrightarrow\cA^{\mathrm i}
+\quad\text{a coalgebra quasi-isomorphism on the Koszul locus},
+\]
+\[
+\mathbb D_{\operatorname{Ran}}\cA^{\mathrm i}\simeq\cA^!
+\quad\text{as chiral algebras on the finite-type Verdier lane},\qquad
+\Omega_X\barB_X(\cA)\simeq\cA\quad\text{on the Koszul locus}.
+\]
+The last equivalence is bar-cobar inversion. It is not the definition of
+Koszul duality and it does not identify $\Omega_X\barB_X(\cA)$ with
+$\cA^!$.
+\end{remark}
+
 
 \begin{example}[Heisenberg specialization]\label{ex:heisenberg-koszul-pair}
 For the Heisenberg algebra $\mathcal{H}_k$ at level $k \neq 0$,
@@ -1047,12 +1100,12 @@ The explicit bar computation gives the bar coalgebra
 $\bar{B}^{\mathrm{ch}}(\mathcal{H}_k) \simeq
 \mathrm{coLie}^{\mathrm{ch}}(V^*)$.
 Applying Theorem~\ref{thm:bar-cobar-isomorphism-main} to this bar
-coalgebra identifies its Verdier dual factorization algebra with the
-Koszul dual algebra
+coalgebra identifies the Verdier dual of the resulting bar-dual
+coalgebra with the Koszul dual algebra
 $\mathcal{H}_k^! = \mathrm{Sym}^{\mathrm{ch}}(V^*)$:
 the bar complex $\bar{B}(\mathcal{H}_k)$ was computed degree by
 degree in \S\ref{sec:frame-bar-deg1}--\S\ref{sec:frame-bar-all},
-producing exactly the commutative Koszul dual
+producing the coalgebra whose finite dual is the commutative Koszul dual
 (\S\ref{sec:frame-koszul-dual}).
 Because $\mathcal{H}_k$ is abelian, the PBW spectral sequence
 (Theorem~\ref{thm:pbw-koszulness-criterion}) is trivial and the
@@ -1062,34 +1115,49 @@ Koszul complex $K_\tau(\mathcal{H}_k,
 
 \begin{example}[Explicit correspondence: \texorpdfstring{$bc$}{bc} ghost system and \texorpdfstring{$\beta\gamma$}{beta-gamma} system]
 \label{ex:bc-betagamma-koszul}
-Consider the chiral Koszul pair $(\mathcal{BC}, \mathcal{BG})$ where:
+On the split genus-$0$ finite-type quadratic lane, consider the
+Verdier-compatible pair $(\mathcal{BC}, \mathcal{BG})$ where:
 \begin{itemize}
-\item $\mathcal{BC}$ is the $bc$ ghost system with fermionic fields $b(z), c(z)$ and OPE $b(z)c(w) \sim \frac{1}{z-w}$
-\item $\mathcal{BG}$ is the $\beta\gamma$ system with bosonic fields $\beta(z), \gamma(z)$ and OPE $\beta(z)\gamma(w) \sim \frac{1}{z-w}$
+\item $\mathcal{BC}$ is the $bc$ ghost system with fermionic fields
+ $b(z), c(z)$ and OPE $b(z)c(w) \sim (z-w)^{-1}$;
+\item $\mathcal{BG}$ is the $\beta\gamma$ system with bosonic fields
+ $\beta(z), \gamma(z)$ and OPE
+ $\beta(z)\gamma(w) \sim (z-w)^{-1}$.
 \end{itemize}
 
-The bar-cobar isomorphism manifests as:
+The comparison has two type-distinct steps. First the bar computation
+gives the intrinsic coalgebra
+\[
+\bar{B}^{\mathrm{ch}}(\mathcal{BC})
+\xrightarrow{\;\sim\;}
+\mathcal{BC}^{\mathrm i}
+\]
+whose corelations are residue-orthogonal to the exterior
+relations. Second, after finite Verdier duality,
+$(\mathcal{BC}^{\mathrm i})^\vee$ is identified with the
+post-Verdier algebra~$\mathcal{BG}$. Thus the classical
+$\Lambda^* \leftrightarrow \mathrm{Sym}^*$ exchange appears only after
+the coalgebra step has been dualized.
 
-\emph{Algebra to coalgebra:}
+\emph{Generator-relation exchange.}
 \begin{align*}
-\text{$bc$ OPE: } b(z)c(w) &\sim \frac{1}{z-w} \quad \text{(fermionic, $\Lambda^*$ structure)} \\
-\text{$\beta\gamma$ OPE: } \beta(z)\gamma(w) &\sim \frac{1}{z-w} \quad \text{(bosonic, $\mathrm{Sym}^*$ structure)}
+\text{$bc$ OPE: } b(z)c(w) &\sim (z-w)^{-1}
+ \quad \text{(fermionic exterior relations)}, \\
+\text{$\beta\gamma$ OPE: } \beta(z)\gamma(w) &\sim (z-w)^{-1}
+ \quad \text{(bosonic symmetric dual algebra)}.
 \end{align*}
-
-\emph{Generators to Relations (Ext--Sym duality).}
-\begin{itemize}
-\item $\mathcal{BC}$: two fermionic generators $b, c$, with $b^2 = c^2 = 0$ (exterior algebra structure)
-\item $\mathcal{BG}$: two bosonic generators $\beta, \gamma$, with no nilpotency (symmetric algebra structure)
-\end{itemize}
-This is the chiral manifestation of classical $\Lambda^* \leftrightarrow \mathrm{Sym}^*$ Koszul duality.
 
 \emph{Geometric picture.}
 The bar complex $\bar{B}^{\text{ch}}(\mathcal{BC})$ involves:
 \[\bar{B}^{\text{ch}}(\mathcal{BC})_n = \Gamma\left(\overline{C}_n(X), (b \oplus c)^{\boxtimes n} \otimes \Omega^*_{\log}\right)\]
-The residues at collision divisors extract the coproduct structure, which cobar reconstructs into the $\beta\gamma$ algebra.
+The residues at collision divisors define the coproduct and the
+bar-dual corelations. Cobar reconstructs $\mathcal{BC}$ from this
+coalgebra on the Koszul locus; finite Verdier duality, not cobar
+reconstruction, identifies the post-Verdier algebra with
+$\mathcal{BG}$.
 \end{example}
 
-\subsection{Koszulness verification: the PBW deformation method}
+\subsection{PBW deformation as a Koszulness criterion}
 \label{sec:koszulness-verification}
 \index{Koszul property!verification}
 \index{PBW filtration!Koszulness verification}
@@ -1117,8 +1185,11 @@ Suppose:
  is classically Koszul: the Koszul complex
  $\barBgeom(\operatorname{gr}_F \cA) \otimes_\tau \operatorname{gr}_F \cA$
  is acyclic in positive degrees.
-\item\label{item:pbw-bounded} For each bar degree $n$ and conformal weight $h$, the
- chain group $\barBgeom^n_h(\cA)$ is finite-dimensional.
+\item\label{item:pbw-bounded} For each bar degree $n$ and conformal
+ weight $h$, the chain group $\barBgeom^n_h(\cA)$ is finite-dimensional,
+ the induced filtration on this bidegree is complete and separated, and
+ the finite-window quotients form the Mittag--Leffler system of
+ Lemma~\ref{lem:completion-convergence}.
 \end{enumerate}
 Then $\cA$ is chiral Koszul: the Koszul complex
 $\barBgeom(\cA) \otimes_\tau \cA$ is acyclic in positive degrees.
@@ -1132,8 +1203,9 @@ F_p K^n = \sum_{i+j = n} F_i \barBgeom(\cA) \otimes_\tau F_j \cA.
 \]
 This is a bounded-below, exhaustive filtration compatible with the
 differential (the bar differential and the twisting morphism $\tau$
-both respect $F$ since they are defined by the OPE, which respects
-conformal weight). The resulting spectral sequence has:
+both respect $F$ because the OPE is filtered by PBW degree; conformal
+weight supplies the finite windows in
+Hypothesis~\ref{item:pbw-bounded}). The resulting spectral sequence has:
 \[
 E_0^{p,q} = \operatorname{gr}^p_F K^{p+q},
 \qquad
@@ -1163,8 +1235,9 @@ All higher differentials $d_r$ for $r \geq 1$ are therefore zero
 (they map between zero groups), so the spectral sequence collapses
 at $E_1$.
 
-By completeness of the filtration and the bounded-below hypothesis,
-the spectral sequence converges:
+By Hypothesis~\ref{item:pbw-bounded}, the completion has no
+$R^1\varprojlim$ contribution in any fixed bidegree, and
+Lemma~\ref{lem:completion-convergence} gives strong convergence:
 $E_\infty = \operatorname{gr} H^*(K)$.
 Since $E_\infty$ is concentrated in degree~$0$,
 we conclude $H^n(K) = 0$ for $n > 0$.
@@ -1275,30 +1348,37 @@ By Theorem~\ref{thm:pbw-koszulness-criterion},
 $\mathrm{Vir}_c$ is chiral Koszul.
 \end{proof}
 
-\begin{corollary}[Bar cohomology computes Koszul dual; \ClaimStatusProvedHere]
+\begin{corollary}[Bar cohomology computes the bar-dual coalgebra; \ClaimStatusProvedHere]
 \label{cor:bar-cohomology-koszul-dual}
 \index{bar complex!Koszul dual computation}
 For a chiral Koszul algebra $\cA$ satisfying the hypotheses of
 Theorem~\textup{\ref{thm:pbw-koszulness-criterion}},
 the PBW spectral sequence on $\barBgeom(\cA)$ collapses
-at $E_2$, and the bar cohomology dimensions equal the
-dimensions of the Koszul dual:
+at $E_2$, and the bar cohomology is the intrinsic bar-dual
+coalgebra~$\cA^{\mathrm i}$. On a finite-type Verdier lane its
+continuous dual is the algebra~$\cA^!$; hence the finite graded
+dimensions agree:
 \[
-\dim H^n(\barBgeom(\cA)) = \dim (\cA^!)_n
-\qquad\textup{(identifying $(\cA^!)_n = H^n(\barBgeom(\cA))^\vee$)}.
+\dim H^n(\barBgeom(\cA))
+= \dim(\cA^{\mathrm i})_n
+= \dim(\cA^!)_n.
 \]
 In particular:
 \begin{enumerate}
 \item For $\widehat{\fg}_k$ at generic level:
- $\dim H^n(\barBgeom(\widehat{\fg}_k)) = \dim (\widehat{\fg}_k^!)_n$
+ $\dim H^n(\barBgeom(\widehat{\fg}_k))
+ = \dim(\widehat{\fg}_k^{\mathrm i})_n$, and after finite
+ continuous duality this equals $\dim(\widehat{\fg}_k^!)_n$
  \textup{(}Theorem~\textup{\ref{thm:universal-kac-moody-koszul})}.
  The Koszul dual $\widehat{\fg}_k^!$ has the same modular characteristic
  as $\widehat{\fg}_{-k-2h^\vee}$, but the two are distinct
- algebras: $\widehat{\fg}_k^!$ is the linear dual of the bar
- coalgebra, not the affine algebra at the dual level.
+algebras: $\widehat{\fg}_k^!$ is the linear dual of the bar
+coalgebra, not the affine algebra at the dual level.
 \item For $\mathrm{Vir}_c$:
- $\dim H^n(\barBgeom(\mathrm{Vir}_c)) = \dim (\mathrm{Vir}_c^!)_n$,
- the $n$-th graded piece of the Virasoro Koszul dual coalgebra.
+ $\dim H^n(\barBgeom(\mathrm{Vir}_c))
+ = \dim(\mathrm{Vir}_c^{\mathrm i})_n$; only after the finite-window
+ Verdier passage is this also the dimension of
+ $(\mathrm{Vir}_c^!)_n$.
 \end{enumerate}
 \end{corollary}
 
@@ -1394,8 +1474,10 @@ differential). Therefore $E_\infty = E_2$ and:
 H^n(\barBgeom(\cA)) \cong E_\infty^{n,0}
 = E_2^{n,0}
 = H^n_{\mathrm{CE}}\!\bigl(\fg \otimes t^{-1}\bC[t^{-1}],\, \bC\bigr)
-= (\cA^!)_n.
+= (\cA^{\mathrm i})_n.
 \]
+If the finite-type Verdier dual exists, the continuous dual of this
+coalgebraic piece is the corresponding graded piece of~$\cA^!$.
 For commutative chiral algebras (e.g.\ the Heisenberg algebra),
 the Lie bracket of $\fg$ vanishes, $d_1 = 0$,
 $E_\infty = E_2 = E_1 = \Lambda(V^*)$, and the bar cohomology
@@ -1787,8 +1869,8 @@ generated by their current, respectively stress-tensor, fields, so
 items~(1) and~(2) follow immediately. For
 $\mathcal{W}^k(\fg)$, the Feigin--Frenkel Miura theorem supplies a
 free strong generating set by the Miura images, so the same
-proposition applies. The final paragraph is the earlier
-universal-versus-simple warning specialized to these families.
+proposition applies. The final paragraph records the
+universal-versus-simple warning for these families.
 \end{proof}
 
 \begin{remark}[Critical level: PBW degeneration vs diagonal Ext concentration]
@@ -1843,11 +1925,16 @@ Theorem~H at critical level.
 Let $\cA$ be a conformal vertex algebra with Shapovalov form on the
 vacuum module. The \emph{bar-relevant range} is the set of conformal
 weights~$h$ with $\barBgeom^n_h(\cA) \neq 0$ for some $n > 0$.
-Then $\cA$ is chirally Koszul if and only if the Kac--Shapovalov
-determinant $\det G_h \neq 0$ for all~$h$ in the bar-relevant range.
+Assume the PBW filtration is flat and split by conformal weight, the
+bar spectral sequence is bidegreewise finite and strongly convergent,
+and the PBW-to-bar comparison is detected by the Shapovalov pairing:
+a nonzero class on the PBW page pairs nontrivially with some class in
+the same bar-relevant weight. Under these hypotheses, $\cA$ is chirally
+Koszul if and only if the Kac--Shapovalov determinant
+$\det G_h \neq 0$ for all~$h$ in the bar-relevant range.
 
-For universal algebras this holds unconditionally
-(Corollary~\ref{cor:universal-koszul}). The genuine content is for
+For universal algebras the PBW flatness and pairing hypotheses hold
+by Corollary~\ref{cor:universal-koszul}. The genuine content is for
 simple quotients: $L_k(\fg)$ has null vectors at
 $h = h_{\mathrm{sing}}(k)$ by the Kac--Kazhdan theorem; at admissible
 levels $k + h^\vee = p/q$, $(p,q)=1$, these lie in the bar-relevant
@@ -1866,14 +1953,16 @@ Shapovalov form~$G_h$ is non-degenerate in the bar-relevant
 range (a degenerate $G_h$ would give a null vector in the
 PBW-associated graded, contradicting strictness).
 
-Converse: $\det G_h \neq 0$ in the bar-relevant range means the
+Converse: under the PBW/Shapovalov detection hypothesis,
+$\det G_h \neq 0$ in the bar-relevant range means the
 PBW-to-bar comparison map
 $\operatorname{Sym}^{\mathrm{ch}}(V)_h \to \barBgeom_h(\cA)$ is
 injective at every bar-relevant weight. Injectivity forces
 $E_2$-collapse: a nonzero differential $d_r$ with $r \geq 2$ would
 kill an element that pairs nontrivially with the Shapovalov form
 (since the element is nonzero in $\operatorname{gr}_F$ and $G_h$ is
-non-degenerate), contradicting the $d_r$-exactness.
+non-degenerate), contradicting the $d_r$-exactness. Strong convergence
+then identifies the collapsed spectral sequence with bar cohomology.
 \end{proof}
 
 \begin{remark}[Rationality is not, by itself, a Koszul criterion]
@@ -1888,8 +1977,8 @@ category $V$-$\mathrm{gmod}$ controls Zhu theory and conformal
 blocks, whereas Ext groups in the
 chiral/factorization module setting are computed via the bar complex
 \textup{(}Corollary~\ref{cor:bar-computes-ext}\textup{)}.
-The manuscript does not identify these two Ext theories for
-general rational vertex algebras.
+No theorem here identifies these two Ext theories for general rational
+vertex algebras.
 
 Consequently, the implication
 \[
@@ -1942,41 +2031,65 @@ weight, the bar complex of $L_k$ is the quotient bar complex
 $\barB(V_k)/\barB(I_k)$, and the quotient bar spectral sequence
 degenerates at~$E_2$ by the Kac--Wakimoto character formula.
 
-For $\fg = \mathfrak{sl}_3$ at denominator $q \geq 3$,
-admissible Koszulness \emph{fails}. The bar spectral sequence
-has $E_1^{2,q} = \dim(\fg) = 8$ off-diagonal classes at
-Tor-weight~$q$. The Poisson differential $d_1$ acts as a
-derivation via the Lie bracket and kills all $6$ root-generator
-classes (corresponding to $E_1, E_2, E_3, F_1, F_2, F_3$),
-but the $2$ Cartan classes (corresponding to $H_1, H_2$)
-survive to $E_\infty$: the Cartan subalgebra
-$\mathfrak{h} \subset \mathfrak{sl}_3$ is abelian, so
-$d_1(x_{H_i}) = 0$, and the target of all higher differentials
-$d_r$ ($r \geq 2$) vanishes for degree reasons. Hence
-$\dim E_\infty^{2,q} = \mathrm{rk}(\fg) = 2 > 0$,
-and $H^2(\barB(L_k(\mathfrak{sl}_3))) \neq 0$.
+For $\fg = \mathfrak{sl}_3$ at denominator $q \geq 3$, the finite
+admissible Li--bar model isolates a Cartan obstruction. When the
+reduced associated graded in the bar-relevant window is the truncated
+Cartan/root model displayed in
+Theorem~\ref{thm:admissible-sl3-non-koszul-qge3}, the bar spectral
+sequence has eight off-diagonal generator classes: six root classes
+and two Cartan classes. The Poisson differential $d_1$ acts through
+the Lie bracket; it kills the root-generator classes, while the two
+Cartan classes survive the $d_1$ page because
+$[\mathfrak h,\mathfrak h]=0$. If no non-reduced extension or hidden
+higher differential hits those Cartan classes, they give
+$H^2(\barB(L_k(\mathfrak{sl}_3)))\neq0$.
 At denominator $q \leq 2$, the off-diagonal classes lie on the
-$E_1$ diagonal where $d_1 = 0$, and no obstruction appears;
-Koszulness at $q \leq 2$ remains compatible with the evidence.
+$E_1$ diagonal where $d_1 = 0$, and no obstruction appears; the present
+argument proves no non-Koszulness statement there.
 
 The mechanism is uniform: for any simple $\fg$ of
 $\mathrm{rk}(\fg) \geq 2$, the abelian Cartan subalgebra
 $\mathfrak{h}$ produces $\mathrm{rk}(\fg)$ classes in
 $E_1^{2,q}$ that are annihilated by the Lie-bracket derivation
-$d_1$ (since $[\mathfrak{h}, \mathfrak{h}] = 0$) and persist
-to $E_\infty$. This yields the following theorem.
+$d_1$ (since $[\mathfrak{h}, \mathfrak{h}] = 0$). Persistence to
+$E_\infty$ is the extra finite-model assertion isolated below.
 \end{remark}
 
-\begin{theorem}[Admissible non-Koszulness of $L_k(\mathfrak{sl}_3)$
-at denominator $q \geq 3$]%
+\begin{theorem}[Cartan obstruction in the finite admissible
+Li--bar model for $L_k(\mathfrak{sl}_3)$]%
 \label{thm:admissible-sl3-non-koszul-qge3}%
 \ClaimStatusConditional
 \index{admissible level!Koszulness obstruction}%
 \index{Cartan subalgebra!bar obstruction}%
 Let $k = -3 + p/q$ be a non-degenerate admissible level for
 $\widehat{\mathfrak{sl}}_3$, with coprime $p \geq 3$, $q \geq 3$.
-The simple quotient $L_k(\mathfrak{sl}_3)$ is \emph{not} chirally
-Koszul. More precisely:
+Assume the following finite admissible Li--bar package.
+\begin{enumerate}[label=\textup{(A\arabic*)}]
+\item The quotient bar complex is bidegreewise finite and the Li--bar
+ spectral sequence converges strongly in each conformal weight.
+\item In the bar-relevant window the reduced associated graded is
+ \[
+ R^{\mathrm{red}} \;\cong\;
+ \mathbb{C}[H_1]/(H_1^{d_C}) \otimes
+ \mathbb{C}[H_2]/(H_2^{d_C})
+ \otimes
+ \bigotimes_{\alpha > 0}
+ \mathbb{C}[x_\alpha]/(x_\alpha^{d_R}),
+ \qquad d_R=(p-2)q,\quad d_C=(p-1)q.
+ \]
+\item The $d_1$ differential on the resulting Li--bar page is the
+ Kirillov--Kostant Poisson differential of
+ Proposition~\ref{prop:li-bar-poisson-differential}.
+\item The non-reduced nilradical and extension data of $R_{L_k}$ do
+ not create a higher differential hitting the two Cartan classes
+ $[H_1]$ and~$[H_2]$.
+\item The periodic-CDG projection used in
+ Theorem~\ref{thm:admissible-kl-bar-cobar-adjunction} is available
+ and absorbs, rather than kills, the surviving Cartan classes.
+\end{enumerate}
+Then the simple quotient $L_k(\mathfrak{sl}_3)$ is \emph{not}
+chirally Koszul on the original, non-periodic bar complex. More
+precisely:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item $\dim H^2(\barB^{\mathrm{ch}}(L_k(\mathfrak{sl}_3)))
  \geq \mathrm{rk}(\mathfrak{sl}_3) = 2$.
@@ -1997,37 +2110,17 @@ Koszul. More precisely:
 \end{theorem}
 
 \begin{proof}
-\emph{Step~1 (Finite-length input via Arakawa and periodic-CDG).}
-On the non-degenerate admissible lane $X_{L_k} = \{0\}$, Arakawa's
-$C_2$-cofiniteness theorem (Arakawa 2015, Thm.~4.1) applies to
-$L_k(\mathfrak{sl}_3)$. The periodic-CDG filtration
-(Definition~\ref{def:periodic-cdg-filtration}) has finite-dimensional
-associated graded $\mathrm{gr}^n F$ in each conformal weight by
-Theorem~\ref{thm:periodic-cdg-is-koszul-compatible}. Finkelberg's
-semisimplification (Finkelberg 1996, Thm.~4.2) upgrades this to a
-finite-length block decomposition of the admissible
-Kazhdan--Lusztig category $\mathrm{KL}^{\mathrm{adm}}_k$. Hence
-$\barB^{\mathrm{ch}}(L_k)$ is a bounded complex of
-finite-dimensional spaces in each conformal weight, and the
-Li--bar spectral sequence of
-Construction~\ref{constr:li-bar-spectral-sequence} converges
-strongly weight by weight.
+\emph{Step~1 (Finite admissible model).}
+Hypothesis~\textup{(A1)} supplies the finite, strongly convergent
+Li--bar spectral sequence. Arakawa finite-length results and
+Finkelberg semisimplification are the standard sources of finite
+admissible control, but the theorem uses them only through the explicit
+finite package stated above.
 
 \emph{Step~2 \textup{(}$E_1$ page via K\"unneth on the truncated
 associated graded\textup{)}.}
-By Kac--Wakimoto admissibility, the null-vector ideal at
-$k = -3 + p/q$ has first highest-root null at conformal weight
-$h_\theta = (p-2)q$ and first simple-root null at
-$h_\alpha = (p-1)q$. The associated graded
-$R_{L_k} = \mathrm{gr}^F L_k$ is a finite quotient of
-$\mathrm{Sym}(\mathfrak{sl}_3^*)$ by its Jacobson-radical ideal;
-passing to the reduced quotient gives
-\[
-R^{\mathrm{red}} \;\cong\;
-\mathbb{C}[H_1]/(H_1^{d_C}) \otimes \mathbb{C}[H_2]/(H_2^{d_C})
-\otimes \bigotimes_{\alpha > 0} \mathbb{C}[x_\alpha]/(x_\alpha^{d_R}),
-\qquad d_R = h_\theta, \quad d_C = h_\alpha.
-\]
+Hypothesis~\textup{(A2)} gives the displayed reduced associated
+graded, with $h_\theta=(p-2)q$ and $h_\alpha=(p-1)q$.
 The K\"unneth decomposition of
 $\mathrm{Tor}^{R^{\mathrm{red}}}(\mathbb{C}, \mathbb{C})$ produces
 eight generator classes at $E_1^{2, *}$: six root-generator
@@ -2036,7 +2129,7 @@ $[H_1], [H_2]$ at conformal weight $h_\alpha$.
 
 \emph{Step~3 (Cartan obstruction: $d_1$ vanishes on Cartan
 classes).}
-By
+By Hypothesis~\textup{(A3)} and
 Proposition~\ref{prop:li-bar-poisson-differential}, the $d_1$
 differential on the Li--bar spectral sequence is the Poisson
 bracket on $R_V$, transported by the Killing form to the
@@ -2065,8 +2158,8 @@ degree $2 - r < 0$ is empty. Hence
 \[
 E_\infty^{2, h_\alpha} \;=\; E_2^{2, h_\alpha} \;\geq\; 2,
 \]
-with equality on the non-degenerate admissible lane by the
-engine computation of Path~V1 below.
+with equality in finite windows where Hypothesis~\textup{(A4)} has
+been checked directly.
 
 The rank $\geq 2$ threshold is genuine: for
 $\mathfrak{sl}_2$, the single Cartan class $[H]$ at
@@ -2086,7 +2179,7 @@ weights off the diagonal. Step~4 contradicts this at
 $(n, \text{weight}) = (2, h_\alpha)$ with dimension $\geq 2$,
 establishing~(i). Hence $\varepsilon$ fails on the original
 complex at weight $h_\alpha$, establishing the first half
-of~(ii). The periodic-CDG adjunction
+of~(ii). Under Hypothesis~\textup{(A5)}, the periodic-CDG adjunction
 Theorem~\ref{thm:admissible-kl-bar-cobar-adjunction} recovers
 a quasi-isomorphism modulo $\sigma_{2p}$: the surviving Cartan
 classes are absorbed into the $2p$-periodic direct sum of Ext
@@ -2131,8 +2224,8 @@ conformal weight~$5$
 \textup{(}Adamovi\'c--Milas;
 Feigin--Gainutdinov--Semikhatov--Tipunin\textup{)},
 which lies in the bar-relevant range ($h = 5 \geq 2 h_{\min} = 4$).
-The ``null vector at weight~$15$'' reported in earlier analyses is a
-Virasoro Kac determinant zero, not a $W(2)$ null vector; but the
+The Kac-determinant zero at weight~$15$ is a
+Virasoro phenomenon, not a $W(2)$ null vector; but the
 weight-$5$ singular vector is genuine and obstructs the PBW route.
 
 A potential alternative route uses the Kazhdan filtration:
@@ -2413,7 +2506,7 @@ obstruction at degenerate levels comes from two sources:
  controls only the reduced Li--bar $E_2$ page furnished by
  Theorem~\ref{thm:associated-variety-koszulness}(ii). Any
  diagonal-concentration statement established on that reduced
- surface is therefore evidence only for the reduced quotient,
+ surface is therefore a statement only for the reduced quotient,
  not for the full non-reduced algebra~$R_{L_k}$.
 \item \emph{Nilradical obstruction.}
  The nilradical $\mathcal{I} = \sqrt{0} \subset R_{L_k}$
@@ -2640,13 +2733,15 @@ duality) is a proved \emph{one-way} consequence on the Koszul
 locus; the converse from~\textup{(viii)} to the bar-cobar counit
 is not proved here. Item~\textup{(xi)} (the Lagrangian criterion)
 is conditional on perfectness of the bar-cobar normal complex and
-non-degeneracy of the ambient tangent complex; unconditional for
-the standard landscape by
-Proposition~\ref{prop:lagrangian-perfectness}. Item~\textup{(xii)}
+non-degeneracy of the ambient tangent complex. On the standard
+landscape these hypotheses are discharged by
+Proposition~\ref{prop:lagrangian-perfectness}; outside it they remain
+part of the statement. Item~\textup{(xii)}
 ($\mathcal{D}$-module purity) is a one-directional
 implication~\textup{(xii)}$\Rightarrow$\textup{(x)}; the converse
-is proved for affine Kac--Moody at non-critical level
-(Remark~\ref{rem:d-module-purity-content}) but open for Virasoro
+is proved for affine Kac--Moody at non-critical level only after the
+localization-weight package of
+Proposition~\ref{prop:d-module-purity-km}; it is open for Virasoro
 and $\mathcal{W}$ algebras.
 At special parameter values some equivalences require individual
 verification or fail; in particular the critical level
@@ -2667,7 +2762,13 @@ meta-theorem.
 \index{Koszul property!equivalences of characterizations|textbf}
 
 Let $\cA$ be a chiral algebra on a smooth projective curve~$X$
-with PBW filtration $F_\bullet$.
+with PBW filtration $F_\bullet$. The intrinsic equivalence core is
+read on the split finite-window PBW lane: conformal-weight/bar-length
+pieces are finite, the induced filtrations are Hausdorff, complete, and
+strongly convergent, and a conformal-weight splitting identifies
+$E_\infty$ with its associated graded. Outside this lane the theorem
+records only the implications whose stated hypotheses supply the
+missing convergence or comparison input.
 For a smooth projective curve~$\Sigma$, write
 $\mathsf{FH}_\Sigma(\cA)$ for the comparison package of
 Proposition~\ref{prop:bar-fh}: the Ran object attached to~$\cA$ is
@@ -2736,9 +2837,9 @@ the intrinsic core. Condition~\textup{(xii)} implies condition~\textup{(x)}
  reconstruction clause\textup{)}. This is the intrinsic counit of
  the bar-cobar adjunction, not the factorization-cohomology model of
  Proposition~\textup{\ref{prop:cobar-fh}}.
-\item[\textup{(vi)}] The Barr--Beck--Lurie comparison for the
- bar-cobar adjunction is an equivalence on the fiber over
- $\barBgeom(\cA)$.
+\item[\textup{(vi)}] The Barr--Beck--Lurie comparison functor attached
+ to the bar-cobar adjunction is an equivalence after restricting to the
+ Koszul bar-cobar component generated by~$\cA$.
 \item[\textup{(ix)}] The Kac--Shapovalov determinant
  $\det G_h \neq 0$ in the bar-relevant range
  \textup{(}Theorem~\textup{\ref{thm:kac-shapovalov-koszulness})}.
@@ -2807,9 +2908,11 @@ the intrinsic core. Condition~\textup{(xii)} implies condition~\textup{(x)}
 \smallskip
 \noindent\textbf{Conditional and partial:}
 \begin{enumerate}
-\item[\textup{(xi)}] The Lagrangian criterion: $\cM_\cA$ and
- $\cM_{\cA^!}$ are transverse Lagrangians in the $(-1)$-shifted
- symplectic deformation space~$\cM_{\mathrm{comp}}$.
+\item[\textup{(xi)}] The Lagrangian criterion: under perfectness,
+ non-degeneracy, and the tangent-complex comparison identifying the
+ completed twisted tensor product with the derived intersection,
+ $\cM_\cA$ and $\cM_{\cA^!}$ are transverse Lagrangians in the
+ $(-1)$-shifted symplectic deformation space~$\cM_{\mathrm{comp}}$.
 \item[\textup{(xii)}] $\mathcal{D}$-module purity: each
  $\barBgeom_n(\cA)$ is pure of weight~$n$ as a mixed Hodge module,
  with characteristic variety aligned to FM boundary strata.
@@ -3065,6 +3168,12 @@ Theorem~\ref{thm:main-koszul-hoch} and
 Theorem~\ref{thm:hochschild-polynomial-growth} prove duality,
 cohomological amplitude~$[0,2]$, and
 polynomial Hilbert growth on the Koszul locus.
+The interval $[0,2]$ is the curve-level chiral Hochschild amplitude:
+it uses the one-dimensional Fulton--MacPherson boundary calculus and
+the Verdier shift on a curve. It is not a statement about product
+ambients, categorical Hochschild cochains of Calabi--Yau categories, or
+topological Hochschild theory. Product or external tensor ambients
+require a K\"unneth comparison and may have larger total amplitude.
 A further identification of $\ChirHoch^*(\cA)$ as a free
 polynomial algebra is conditional on a Massey-vanishing
 consequence of Fulton--MacPherson formality and is not used in
@@ -3097,7 +3206,8 @@ $d_1(e_i) = 0$ on the associated graded, hence $E_2$-collapse.
 
 \medskip
 \textsc{Barr--Beck--Lurie monadicity}
-\textup{(i)}$\Leftrightarrow$\textup{(vi)}:
+\textup{(v)}$\Rightarrow$\textup{(vi)} and
+\textup{(vi)}$\Rightarrow$\textup{(i)}:
 
 \smallskip\noindent
 The Barr--Beck--Lurie theorem (\cite[Theorem~4.7.3.5]{HA}) states
@@ -3106,7 +3216,8 @@ $\barB_\kappa$ is conservative and preserves totalizations of
 $\barB_\kappa$-split cosimplicial objects.
 Conservativity: $\barB_\kappa$ detects quasi-isomorphisms on the
 Koszul locus by bar-cobar inversion~(v).
-Totalization preservation: on the Koszul locus, the bar-cobar
+Totalization preservation: on the Koszul bar-cobar component generated
+by~$\cA$, the bar-cobar
 adjunction is a Quillen equivalence
 (Theorem~\ref{thm:quillen-equivalence-chiral}). The derived
 adjunction on the underlying $\infty$-categories satisfies the
@@ -3183,31 +3294,36 @@ filtered objects. Hence $E_2$-collapse, hence~(i).
 \medskip
 \textsc{Lagrangian criterion}
 \textup{(i)}$\Leftrightarrow$\textup{(xi)}
-\emph{(unconditional for the standard landscape by
-Proposition~\textup{\ref{prop:lagrangian-perfectness}}; conditional
-on perfectness in general)}:
+\emph{(only under perfectness, non-degeneracy, and tangent-complex
+comparison; the standard landscape uses
+Proposition~\textup{\ref{prop:lagrangian-perfectness}} where its
+hypotheses have been verified)}:
 
 \smallskip\noindent
 \textup{(i)}$\Rightarrow$\textup{(xi)}:
 On the Koszul locus, the bar-cobar adjunction provides a free
-resolution, and the complementarity splitting
+resolution. Theorem~C supplies the Verdier-side homotopy eigenspace
+decomposition
 $\mathbf{Q}_g(\cA) \oplus \mathbf{Q}_g(\cA^!)
 \simeq H^*(\overline{\cM}_g, \cZ_\cA)$
-(Theorem~C) identifies $\cM_\cA$ and $\cM_{\cA^!}$ as
-complementary subspaces of $\cM_{\mathrm{comp}}$. The
-shifted-symplectic structure
+(not a negation of MC elements and not a scalar identity beyond its
+trace projection). Under perfectness and non-degeneracy this
+decomposition identifies $\cM_\cA$ and $\cM_{\cA^!}$ as complementary
+subspaces of $\cM_{\mathrm{comp}}$. The shifted-symplectic structure
 (Theorem~\ref{thm:ambient-complementarity-fmp})
 makes these subspaces isotropic; the complementarity splitting
 gives maximal dimension, hence Lagrangian.
 
 \smallskip\noindent
 \textup{(xi)}$\Rightarrow$\textup{(i)}:
-If $\cM_\cA$ and $\cM_{\cA^!}$ are transverse Lagrangians,
+If $\cM_\cA$ and $\cM_{\cA^!}$ are transverse Lagrangians and the
+tangent-complex comparison identifies their derived intersection with
+the completed twisted tensor product,
 their derived intersection
 $\cM_\cA \times^h_{\cM_{\mathrm{comp}}} \cM_{\cA^!}$
 is discrete (transverse Lagrangian intersection in a $(-1)$-shifted
-symplectic space has expected dimension~$0$). This derived
-intersection computes the twisted tensor product
+symplectic space has expected dimension~$0$). Under the comparison
+hypothesis this derived intersection computes the twisted tensor product
 $K_\tau(\cA, \cA^!)$; its acyclicity (i.e., discreteness of the
 intersection) is Koszulness
 (Definition~\ref{def:chiral-koszul-morphism}).
@@ -3237,7 +3353,7 @@ route through the same intermediate condition:
 \]
 and on the monadic side
 \[
-\textup{(i)} \Longleftrightarrow \textup{(vi)}
+\textup{(v)} \Rightarrow \textup{(vi)} \Rightarrow \textup{(i)}
 \quad\text{(Barr--Beck--Lurie monadicity).}
 \]
 
@@ -3362,14 +3478,14 @@ modules; see Remark~\textup{\ref{rem:d-module-purity-content}}).
 The converse direction (Koszulness implies D-module purity) is
 reduced to a single gap
 (Remark~\ref{rem:d-module-purity-content}).
-The converse of~\textup{(xii)} is proved for the affine
-Kac--Moody lineage
-(Proposition~\ref{prop:d-module-purity-km}); the non-affine
-case (Virasoro, $\cW$-algebras) remains open.
+The converse of~\textup{(xii)} is proved for the affine Kac--Moody
+lineage under the localization-weight package
+(Proposition~\ref{prop:d-module-purity-km}); the non-affine case
+(Virasoro, $\cW$-algebras) remains open.
 Beyond these twelve conditions, Sklyanin--Poisson rigidity
-(Theorem~\ref{thm:koszulness-from-sklyanin}) provides a
-Poisson-geometric proof of Koszulness restricted to the affine
-Kac--Moody subclass.
+(Theorem~\ref{thm:koszulness-from-sklyanin}) provides a conditional
+Poisson-geometric route to Koszulness restricted to the affine
+Kac--Moody subclass and to the Sklyanin--bar comparison package.
 \end{remark}
 
 \begin{proposition}[Closure of chiral Koszulness under
@@ -3471,7 +3587,10 @@ The four shadow-depth classes are ordered by the number of loop corrections need
 \item Class~$C$ (Contact, $r_{\max}=4$): two-loop exact.
 \item Class~$M$ (Mixed, $r_{\max}=\infty$): requires all-loop resummation.
 \end{itemize}
-This ordering refines the Koszulness programme: all four classes are chirally Koszul (bar $E_2$-collapse), but they differ in Swiss-cheese formality depth.
+This ordering refines the generic Koszul locus: the standard
+generic/universal representatives in all four classes are chirally
+Koszul (bar $E_2$-collapse), but they differ in Swiss-cheese formality
+depth.
 \end{remark}
 
 \begin{proposition}[Swiss-cheese non-formality by shadow class; \ClaimStatusConditional]
@@ -3701,31 +3820,28 @@ m_r^{\mathrm{SC}} = 0
 \;\;\Longrightarrow\;\;
 S_r(\cA) = \operatorname{av}(\text{degree-}r\text{ tree}) = 0.
 \end{equation}
-The first implication holds because the mixed-sector operation IS
-the genus-$0$ tree: vanishing of the open-colour output forces
-vanishing of the tree itself (the tree is a connected genus-$0$
-amplitude with a fixed set of external legs; it is not a formal
-cancellation but a structural vanishing of the tree sum). The
-second implication is the averaging identity: a zero tree has
-zero $\Sigma_n$-coinvariant projection.
+The first implication is the two-colour transfer hypothesis: the
+bulk-to-boundary structure map is injective on connected genus-$0$ trees
+of positive degree, so vanishing of the open-colour output forces
+vanishing of the underlying ordered tree. The second implication is the
+averaging identity: a zero tree has zero $\Sigma_n$-coinvariant
+projection.
 
-\begin{remark}[Open two-colour transfer frontier]
+\begin{remark}[Two-colour transfer hypothesis]
 \label{rem:sc-formal-open-transfer-frontier}
 The implication ``open-colour output vanishes $\Longrightarrow$
 underlying $\Eone$ tree vanishes'' is used here as an operational
 lemma supported by the injectivity of the bulk-to-boundary
 structure map on connected genus-$0$ trees of positive degree.
-A named inscription of this two-colour transfer lemma (the
-analogue of Theorem~\ref{thm:e1-primacy} in the
+It is the analogue of Theorem~\ref{thm:e1-primacy} in the
 ordered-to-mixed direction rather than the ordered-to-symmetric
-direction) is a frontier item: Theorem~\ref{thm:e1-primacy}(iv)
-establishes that $\ker(\operatorname{av})$ is non-trivial
-(contains the Drinfeld associator at degree~$3$), so the transfer
-from the mixed-sector vanishing to the ordered tree vanishing
-requires an injectivity statement genuinely different from the
-averaging map. Pending inscription, the converse direction of
-Proposition~\ref{prop:sc-formal-iff-class-g} is conditional on
-this lemma; the forward direction is unconditional.
+direction. Theorem~\ref{thm:e1-primacy}(iv) establishes that
+$\ker(\operatorname{av})$ is non-trivial (contains the Drinfeld
+associator at degree~$3$), so the transfer from mixed-sector vanishing
+to ordered-tree vanishing requires an injectivity statement genuinely
+different from the averaging map. The converse direction of
+Proposition~\ref{prop:sc-formal-iff-class-g} is conditional on this
+two-colour transfer lemma; the forward direction is unconditional.
 \end{remark}
 
 \emph{Step~2: $S_r = 0$ for all $r \geq 3$ is precisely class~$G$.}
@@ -3805,8 +3921,7 @@ Accordingly,
 with closed dimensions $(n{-}1)!$, open dimensions $m!$, and mixed
 dimensions $(k{-}1)!\binom{k+m}{m}$
 \textup{(}Proposition~\ref{prop:sc-koszul-dual-three-sectors}\textup{)}.
-The manuscript's retraction of operadic self-duality is therefore
-forced already in the classical algebraic model:
+Operadic self-duality already fails in the classical algebraic model:
 the closed $\operatorname{Com}$ sector is one-dimensional in each
 input degree, whereas the dual closed $\operatorname{Lie}$ sector has
 dimension $(n{-}1)!$.
@@ -3834,9 +3949,9 @@ consequence.
 \index{D-module purity!reduction to Saito weight}
 \index{Saito weight filtration!and PBW filtration}
 The converse direction of condition~\textup{(xii)} (Koszulness
-$\Longrightarrow$ D-module purity of~$\barBgeom_n(\cA)$) admits
-a five-step proof strategy. Steps~1--3 are established; step~4
-is the single remaining gap.
+$\Longrightarrow$ D-module purity of~$\barBgeom_n(\cA)$) reduces to a
+weight-comparison problem. The first three steps are formal or
+PBW-local; the fourth is the family-specific proof obligation.
 
 \begin{enumerate}[label=\textup{Step \arabic*.}]
 \item
@@ -3867,13 +3982,13 @@ strictness theorem for filtered $\cD$-modules.
 \textbf{The PBW filtration on $\barBgeom_n(\cA)$ equals
 the Saito weight filtration from mixed Hodge modules on
 $\FM_n(X)$.}
-For affine Kac--Moody algebras, this is
-\textup{proved} via chiral localization (relating
-$\barBgeom_n$ to $\cD$-modules on the affine Grassmannian)
-and the Hitchin connection (providing the variation of
-Hodge structure). For Virasoro and $\cW$-algebras, it is
-\textup{open}: the BPZ equations do not carry a known
-variation of Hodge structure.
+For affine Kac--Moody algebras this is the localization-weight
+comparison: chiral localization must identify $\barBgeom_n$ with the
+corresponding mixed Hodge module on the Beilinson--Drinfeld
+Grassmannian and identify the PBW filtration with the
+Saito--Kashiwara weight filtration. For Virasoro and $\cW$-algebras it
+is open: the BPZ equations do not presently supply a polarizable
+variation of Hodge structure controlling the bar filtration.
 
 \item
 Given steps~1--4, purity of $\barBgeom_n$ in weight~$n$
@@ -3882,52 +3997,51 @@ follows by the strictness of the weight filtration.
 \end{enumerate}
 
 \noindent
-Zero counterexamples have been found: across all tested
-families, null vectors simultaneously create off-diagonal
-bar cohomology \emph{and} mixed Hodge extensions.
-For the affine Kac--Moody lineage, the converse of~\textup{(xii)}
-is a theorem; the open case is the non-affine lineage
-(Virasoro, $\cW$-algebras), where the key missing ingredient
-is a Hodge-theoretic interpretation of the BPZ differential
-equations.
+Thus the exact proof obligation is the equality
+$F_\bullet^{\mathrm{PBW}}=W_\bullet^{\mathrm{Saito}}$ on the bar
+mixed Hodge module. Once this equality is known, Koszulness forces
+purity by strictness. Without it, PBW collapse proves bar
+concentration but not purity. The affine Kac--Moody lane is treated
+below under the localization-weight package; the non-affine lineage
+(Virasoro, $\cW$-algebras) remains open.
 \end{remark}
 
-\begin{proposition}[$\cD$-module purity for affine Kac--Moody algebras]
+\begin{proposition}[$\cD$-module purity for affine Kac--Moody
+under localization weights]
 \label{prop:d-module-purity-km}
 \ClaimStatusProvedHere
 \index{D-module purity!affine Kac--Moody|textbf}
-For $\cA = V_k(\fg)$ at generic level~$k$,
+For $\cA = V_k(\fg)$ at generic non-critical level~$k$, assume the
+localization-weight package: Frenkel--Gaitsgory chiral localization
+identifies each $\barBgeom_n(\cA)$ with the corresponding
+Beilinson--Drinfeld Grassmannian mixed Hodge module, the Hecke
+operations realizing the $n$ insertions are proper on the relevant
+finite windows, and the PBW filtration agrees with the
+Saito--Kashiwara weight filtration there. Then
 $\barBgeom_n(\cA)$ is pure of weight~$n$ as a mixed Hodge
-module on $\FM_n(X)$. The proof uses chiral localization
-\textup{(}Frenkel--Gaitsgory\textup{)} to identify
-$\barBgeom_n$ with a $\cD$-module on the affine
-Grassmannian, where purity follows from the Hitchin
-connection and Saito's theory.
+module on $\FM_n(X)$.
 \end{proposition}
 
 \begin{proof}
-At generic level, Frenkel--Gaitsgory chiral localization identifies
-the affine Kac--Moody factorization algebra with the corresponding
-twisted $\cD$-module on the affine Grassmannian. Under this
-identification, $\barBgeom_n(\cA)$ is obtained from the basic
-localized object by the standard Hecke/factorization operations that
-insert $n$ marked points. The Hitchin connection transports that
-family flatly over the curve, so the resulting object is a mixed Hodge
-module. Saito's purity theorem for intersection complexes, together
-with purity under proper pushforward, then shows that each bar
-insertion contributes one unit of weight. Hence
-$\barBgeom_n(\cA)$ is pure of weight~$n$.
+Under the localization-weight package, $\barBgeom_n(\cA)$ is represented
+by a mixed Hodge module on the Beilinson--Drinfeld Grassmannian whose
+restriction to each finite Hecke window is pure before the $n$ bar
+insertions. Proper Hecke pushforward preserves purity, and the
+Saito--Kashiwara weight comparison identifies the PBW degree of each
+insertion with one unit of Saito weight. Therefore the $n$-fold bar
+piece is pure of weight~$n$ on the corresponding FM stratum, and the
+proper descent to $\FM_n(X)$ preserves that weight.
 \end{proof}
 
 \subsection*{D-module purity: reduction and family dependence}
 \label{subsec:d-module-purity-reduction}
 
-The Kac--Moody case strengthens to a full equivalence. For
-other families, the two-way implication fails or remains
-conditional.
+Under the localization-weight package the Kac--Moody case strengthens
+to a full equivalence. For other families, the two-way implication
+remains conditional or open.
 
-\begin{proposition}[Kac--Moody equivalence via
-Saito--Kashiwara weight filtration;
+\begin{proposition}[Kac--Moody equivalence under
+Saito--Kashiwara weight comparison;
 \ClaimStatusConditional]
 \label{prop:d-module-purity-km-equivalence}
 \index{D-module purity!Kac--Moody equivalence|textbf}
@@ -3935,7 +4049,9 @@ Saito--Kashiwara weight filtration;
 \index{Kashiwara filtration!Kac--Moody}
 Let $\cA = V_k(\fg)$ be the universal affine Kac--Moody
 vertex algebra at generic level~$k$ on a smooth projective
-curve~$X$. The following are equivalent:
+curve~$X$. Assume the localization-weight package of
+Proposition~\ref{prop:d-module-purity-km}. Then the following are
+equivalent:
 \begin{enumerate}[label=\textup{(\alph*)}]
 \item $\cA$ is chirally Koszul
  \textup{(}condition~\textup{(i)} of
@@ -3964,24 +4080,23 @@ acyclicity, which in turn forces PBW strictness by the
 Kac--Shapovalov implication
 \textup{(ix)}$\Rightarrow$\textup{(ii)}.
 
-The new content is the converse \textup{(b)}$\Rightarrow$\textup{(c)}.
-Proposition~\ref{prop:d-module-purity-km} already supplies
-\textup{(a)}$\Rightarrow$\textup{(c)} via chiral localization
-and the Hitchin connection. We strengthen this to an
-equivalence by the Saito--Kashiwara weight comparison:
-the PBW filtration on~$V_k(\fg)$ coincides with the Saito
-weight filtration on the associated mixed Hodge module
-on~$\FM_n(X)$ after chiral localization to the affine
-Grassmannian. The comparison proceeds in three steps.
+The new content is the converse \textup{(b)}$\Rightarrow$\textup{(c)}
+under the stated localization-weight package. Proposition~\ref{prop:d-module-purity-km}
+supplies \textup{(a)}$\Rightarrow$\textup{(c)} after that package is
+installed. The converse uses the same Saito--Kashiwara weight
+comparison: the PBW filtration on~$V_k(\fg)$ is identified with the
+Saito weight filtration on the associated mixed Hodge module after
+chiral localization to the affine Grassmannian.
 
 First, Frenkel--Gaitsgory chiral localization identifies
 $\barBgeom_n(V_k(\fg))$ with a $\cD$-module on
 $\mathrm{Gr}_G^{(n)}$ (the $n$-th Beilinson--Drinfeld
 Grassmannian), carrying a canonical variation of mixed
-Hodge structure through the Hitchin connection.
+Hodge structure on the chosen finite windows.
 Second, the PBW filtration on the vacuum module lifts to
-a Hodge-theoretic filtration on this variation: the lift
-is the one identified by Mochizuki in his proof of Saito's
+a Hodge-theoretic filtration on this variation; the required
+identification is the Saito--Kashiwara comparison supplied by the
+hypothesis, in the same circle as Mochizuki's proof of Saito's
 decomposition theorem for pure twistor $\cD$-modules
 \textup{(}\cite{Mochizuki2015,Sabbah2014}\textup{)},
 where the Kashiwara filtration along a boundary divisor
@@ -4015,10 +4130,10 @@ $\cD$-module purity equivalence]
 \index{beta-gamma system@$\beta\gamma$ system!D-module purity}
 \index{W-algebra!principal Drinfeld--Sokolov reduction}
 The Kac--Moody equivalence of
-Proposition~\ref{prop:d-module-purity-km-equivalence} does
-not extend to the full standard landscape. The failure
-mechanism is family-specific, controlled by the shadow
-class of the algebra.
+Proposition~\ref{prop:d-module-purity-km-equivalence} is not available
+for the full standard landscape without additional Hodge-theoretic
+input. The missing input is family-specific and is visible in the
+shadow class of the algebra.
 
 \emph{Virasoro} \textup{(}class~$\mathbf{M}$,
 $r_{\max} = \infty$\textup{):}
@@ -4026,15 +4141,12 @@ $\mathrm{Vir}_c$ is chirally Koszul at generic~$c$
 (Table~\ref{tab:koszulness-landscape}), so condition~(ii)
 holds. The shadow depth is infinite: the shadow tower
 does not terminate, and the higher Massey products
-$S_r \neq 0$ for all $r \geq 4$ block the variation of
-Hodge structure on $\barBgeom_n(\mathrm{Vir}_c)$ from
-being pure. The BPZ differential equations do not carry a
-known polarization of twistor type, so Mochizuki's
-strictness theorem does not apply: condition~(xii) is
-strictly stronger than (ii), and the equivalence fails.
-Explicitly, PBW concentration holds but $\cD$-module
-purity has no established proof, and the shadow
-obstruction tower obstructs any naive weight assignment.
+$S_r \neq 0$ for infinitely many~$r$ obstruct the naive assignment of
+one Saito weight per PBW bar insertion. The BPZ differential equations
+do not carry a known polarization of twistor type, so Mochizuki's
+strictness theorem does not apply. Thus PBW concentration is proved,
+but $\cD$-module purity is an extra open statement rather than a
+consequence of condition~(ii).
 This is the \emph{shadow depth~$\infty$ vs.\ PBW
 concentration} gap.
 
@@ -4042,12 +4154,12 @@ concentration} gap.
 $r_{\max} = 4$\textup{):}
 The contact shadow $Q^{\mathrm{contact}} \neq 0$ at degree~$4$
 (Proposition~\ref{prop:swiss-cheese-nonformality-by-class})
-creates a parity obstruction on the Saito weight: the
-weight-$0$ generator~$\gamma$ forces the bar complex to
-carry a nontrivial quartic Massey product, which is
-incompatible with purity of the associated $\cD$-module.
-As for Virasoro, condition~(ii) holds but
-condition~(xii) is strictly stronger.
+marks a parity obstruction candidate for the Saito weight: the
+weight-$0$ generator~$\gamma$ gives a nontrivial quartic Massey product
+in the bar transfer. A proof that this Massey product is incompatible
+with purity would require a mixed-Hodge model for the $\beta\gamma$
+bar complex. As for Virasoro, condition~(ii) holds, but
+condition~(xii) is not proved from it.
 
 \emph{$\cW_N$ at principal nilpotent, generic central
 charge} \textup{(}class~$\mathbf{M}$\textup{):}
@@ -4071,21 +4183,18 @@ strata where higher shadow products interact) is the
 equivalence plausible; at the boundary, class~$\mathbf{M}$
 behavior reintroduces the Virasoro obstruction.
 
-The upshot is that condition~(xii) is family-dependent
-: it depends on more than $\dim(\fg)$ or Euler
-characteristic data, and the equivalence of (xii) with the
-Koszulness hierarchy survives only on the affine
-Kac--Moody lineage. For the non-affine families, the one-way
+The upshot is that condition~(xii) is family-dependent:
+it depends on more than $\dim(\fg)$ or Euler characteristic data, and
+the equivalence of (xii) with the Koszulness hierarchy is proved here
+only on the affine Kac--Moody lineage under the localization-weight
+package. For the non-affine families, the one-way
 implication (xii)$\Rightarrow$(x) holds unconditionally
 (Remark~\ref{rem:d-module-purity-content}, Steps 1--3, 5),
-but the converse requires family-specific input. Across
-all tested algebras, condition~(xii) refines condition~(x)
-strictly: no counterexample to (xii) has been produced
-where (x) nevertheless holds, consistent with the
-hypothesis that the shadow obstruction tower and the
-mixed-Hodge weight filtration measure the same
-obstruction through different functors, but a direct
-bridge is available only for Kac--Moody.
+but the converse requires family-specific input. The working
+hypothesis is that the shadow obstruction tower and the mixed-Hodge
+weight filtration measure the same obstruction through different
+functors; the direct bridge is presently available only for
+Kac--Moody.
 \end{remark}
 
 \begin{remark}[Computational verification landscape]
@@ -4095,16 +4204,17 @@ Items \textup{(i)--(v)}, \textup{(ix)}, and \textup{(x)}
 \textup{(}seven genuinely independent bidirectional equivalences
 \textup{)}, together with item~\textup{(vi)} as a listed
 consequence of~\textup{(v)} and the Hochschild
-consequence~\textup{(viii)}, have been verified
-computationally for a landscape of 17 algebras
+consequence~\textup{(viii)}, have been checked for a landscape of
+17 algebras
 (Table~\textup{\ref{tab:koszulness-landscape}}):
 13 proved Koszul via equivalences~\textup{(ii)} and~\textup{(ix)},
-2 proved not Koszul (Ising minimal model,
+1 proved not Koszul (Ising minimal model,
 $L(c_{3,4}, 0)$: Kac--Shapovalov null vector at $h = 6$
-in the bar-relevant range, so~\textup{(ix)} fails;
-$L_k(\mathfrak{sl}_3)$ at admissible $q \geq 3$:
-$\mathrm{rk}(\fg) = 2$ Cartan classes survive in $H^2$,
-Remark~\textup{\ref{rem:admissible-koszul-status}}),
+in the bar-relevant range, so~\textup{(ix)} fails), 1 conditional
+finite-model obstruction
+\textup{(}$L_k(\mathfrak{sl}_3)$ at admissible $q \geq 3$:
+$\mathrm{rk}(\fg) = 2$ Cartan classes survive in $H^2$ under
+Theorem~\textup{\ref{thm:admissible-sl3-non-koszul-qge3}}\textup{)},
 2 open ($L_1(\mathfrak{sl}_2)$ and triplet $\cW(2)$).
 The principal proof mechanism is PBW universality
 (Proposition~\textup{\ref{prop:pbw-universality}}), which
@@ -4126,6 +4236,31 @@ Koszul algebras). The factorization-homology clause~\textup{(vii)}
 is used only after the relevant $\mathsf{FH}_\Sigma$ comparison
 model has been verified; it is not a computational test for
 Koszulness in this table.
+\end{remark}
+
+\begin{remark}[Lattice examples and the same firewall]
+\label{rem:lattice-firewall-kp}
+For an even lattice~$\Lambda$ of rank~$d$, the Heisenberg currents in
+$V_\Lambda$ satisfy
+\[
+J^a(z)J^b(w)\sim \frac{(a,b)}{(z-w)^2},
+\qquad
+\kappa(V_\Lambda)=d.
+\]
+The lattice proof of Koszulness uses bosonization and the Gaussian
+symmetric Ran bar: connected genus-$0$ amplitudes reduce to Wick
+pairings, so the shadow tower stops at degree~$2$. This does not identify
+the bar coalgebra with the post-Verdier algebra. The first object is the
+Gaussian conilpotent coalgebra $V_\Lambda^{\mathrm i}$, carrying the
+lattice momentum grading and the discriminant-sector grading; only
+after Verdier or continuous finite-sector duality does one get
+$V_\Lambda^!$. In the unimodular case this finite-sector duality returns
+the same lattice VOA.
+
+The quantum lattice family $\Vlat_\Lambda^{N,q}$ lies on the strict
+ordered $\Eone$ lane. Its $q\mapsto -q$ pairing is therefore a statement
+about completed ordered finite windows before averaging; it is not a
+symmetric Ran-bar identity until the ordered data have descended.
 \end{remark}
 
 \begin{table}[ht]
@@ -4162,7 +4297,7 @@ $V_k(\mathfrak{sl}_2)$, admissible${}^{\ddagger}$
 $L_1(\mathfrak{sl}_2)$, integrable${}^{\ddagger}$
  & simple quot.\ & $3$ & Open & null vect.\ & $L$, $r_{\max}=3$ \\
 $L_k(\mathfrak{sl}_3)$, adm.\ $q \geq 3$${}^{\ddagger}$
- & simple quot.\ & $8$ & \textbf{Not K.}\ & Cartan $H^2$ & $L$, $r_{\max}=3$ \\
+ & simple quot.\ & $8$ & Cond.\ not K.\ & Cartan $H^2$ & $L$, $r_{\max}=3$ \\
 \midrule
 \multicolumn{6}{@{}l}{\textit{Virasoro and $\cW$-algebras}} \\[2pt]
 $\mathrm{Vir}_c$, generic $c$
@@ -4192,7 +4327,9 @@ Triplet $\cW(2)$
 \textit{Status}: Proved = chirally Koszul
 (Definition~\ref{def:chiral-koszul-morphism});
 Open = neither proved nor disproved;
-Not K.\ = proved not chirally Koszul.
+Not K.\ = proved not chirally Koszul; Cond.\ not K.\ = non-Koszul
+under the finite admissible Li--bar package of
+Theorem~\ref{thm:admissible-sl3-non-koszul-qge3}.
 \textit{Mechanism}: PBW univ.\ =
 Proposition~\ref{prop:pbw-universality};
 MC4 compl.\ =
@@ -4202,7 +4339,7 @@ Theorem~\ref{thm:lattice:koszul-morphism};
 null vect.\ = Kac--Shapovalov obstruction
 (Theorem~\ref{thm:kac-shapovalov-koszulness});
 Cartan~$H^2$ = abelian Cartan subalgebra classes
-surviving in $H^2(\barB)$
+surviving in $H^2(\barB)$ under the finite admissible Li--bar package
 (Remark~\ref{rem:admissible-koszul-status}).
 \textit{Shadow}: archetype class $G$/$L$/$C$/$M$
 (Theorem~\ref{thm:nms-archetype-trichotomy})
@@ -4253,7 +4390,13 @@ and PBW universality resolves the apparent paradox
 \index{Koszul property!convolution algebra formality}
 \index{formality!convolution algebra characterization}
 
-A chiral algebra $\cA$ is chirally Koszul if and only if the modular
+Assume the genus-$0$ obstruction-completeness package: the transferred
+$L_\infty$ minimal model of
+$\mathfrak{g}^{(0)}_\cA$ exists in the completed filtered category, the
+filtration is complete and separated with no $\varprojlim^1$ contribution
+in each conformal bidegree, and every finite-degree transferred bracket is
+detected by the corresponding shadow obstruction class. Then a chiral
+algebra $\cA$ is chirally Koszul if and only if the modular
 convolution algebra $\gAmod$ satisfies:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item The shadow algebra
@@ -4284,15 +4427,18 @@ Theorem~\ref{thm:koszul-equivalences-meta}, establishing
 (i)$\Leftrightarrow$(ii).
 Condition~(ii) (bar spectral sequence $E_2$-collapse) is the same
 statement expressed in spectral sequence language.
-For~(i)$\Leftrightarrow$(iii): a dg Lie algebra is formal if and only
-if all higher Massey brackets vanish.
+For~(i)$\Leftrightarrow$(iii): in the filtered obstruction-complete
+category just assumed, formality of a dg Lie algebra is equivalent to the
+vanishing of the transferred higher $L_\infty$ brackets on its minimal
+model.
 Proposition~\ref{prop:shadow-formality-low-degree} identifies
 the genus-$0$ obstruction classes with the transferred $L_\infty$
 brackets $\ell_{r+1}^{(0)}$ at degrees $r = 2,3,4$; at each
 higher degree the same inductive mechanism applies (the
 obstruction at degree $r{+}1$ is the next transferred bracket
-evaluated on the truncated MC element), establishing the
-identification at all finite degrees.
+evaluated on the truncated MC element). The detection hypothesis is
+exactly what promotes these finite-degree identifications to formality of
+the completed convolution algebra.
 \end{proof}
 
 \begin{remark}[Two transverse slices of the MC element]
@@ -4324,7 +4470,9 @@ $\mathcal{W}_N$ & $\infty$ & Mixed \\
 \hline
 \end{tabular}
 \end{center}
-All five are chirally Koszul (genus-$0$ slice is formal), yet the
+The generic or universal representatives in these five rows are chirally
+Koszul (genus-$0$ slice is formal), while special simple quotients can
+leave the Koszul locus. In the generic/universal rows the
 Virasoro algebra has infinite shadow depth
 ($\mathfrak{o}^{(5)}_{\mathrm{Vir}} \neq 0$
 at genus~$\geq 1$). The archetype classification
@@ -4384,10 +4532,10 @@ quotient or reduction.
 \end{remark}
 
 
-\begin{remark}[Class~$\mathbf{W}$: root multiplicities and the Koszul frontier]
+\begin{remark}[Class~$\mathbf{W}$: root multiplicities and the Koszul boundary]
 \label{rem:class-w-koszul-frontier}
 \index{wild quiver!root multiplicity mechanism}
-\index{Koszul property!frontier beyond class M}
+\index{Koszul property!boundary beyond class M}
 \index{Kronecker quiver!bar spectral sequence non-collapse}
 \index{root multiplicity!bar cohomology obstruction}
 
@@ -4440,12 +4588,14 @@ PBW diagonal. In the wild regime, the excess moduli inject
 off-diagonal classes into $H^2$ (and higher) that persist to
 $E_\infty$: condition~(ii) (PBW concentration) fails, and with
 it the equivalence chain. The conditional Lagrangian criterion
-\textup{(xi)} and the one-directional $\mathcal{D}$-module purity
-statement \textup{(xii)} fail \emph{a fortiori}, since both rely on
-$E_2$-collapse as input.
+\textup{(xi)} and the $\mathcal{D}$-module purity refinement
+\textup{(xii)} are no longer consequences of the Koszul core. This is
+only a failure of implication; no mixed-Hodge purity failure is asserted
+without a separate Saito-weight computation.
 
-\emph{Concrete instances.}
-Three classes of chiral algebras lie in class~$\mathbf{W}$:
+\emph{Concrete sources.}
+The following proven and conditional sources produce class~$\mathbf{W}$
+behavior:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Virasoro minimal models.}
  The simple quotient $L(c_{p,q}, 0)$ is non-Koszul by
@@ -4455,17 +4605,18 @@ Three classes of chiral algebras lie in class~$\mathbf{W}$:
 \item \emph{Admissible-level simple quotients at higher rank.}
  For $\fg$ with $\mathrm{rk}(\fg) \geq 2$ and denominator
  $q \geq 3$, the abelian Cartan subalgebra $\mathfrak{h}$
- contributes $\mathrm{rk}(\fg)$ classes to $E_1^{2,q}$ that
- survive to $E_\infty$
- (Theorem~\ref{thm:admissible-sl3-non-koszul-qge3} at
- $\mathrm{rk}(\fg) = 2$;
- Conjecture~\ref{conj:admissible-koszul-rank-obstruction}
- for $\mathrm{rk}(\fg) \geq 3$).
+ contributes $\mathrm{rk}(\fg)$ candidate classes to $E_1^{2,q}$.
+ At $\mathrm{rk}(\fg)=2$ their survival is conditional on the finite
+ admissible Li--bar package of
+ Theorem~\ref{thm:admissible-sl3-non-koszul-qge3}; in higher rank it is
+ conjectural
+ (Conjecture~\ref{conj:admissible-koszul-rank-obstruction}).
 \item \emph{Non-principal $\mathcal{W}$-algebras at wild nilpotent type.}
- Quantum Drinfeld--Sokolov reduction at a nilpotent $e$ whose
- associated Slodowy slice has wild representation type produces
- a $\mathcal{W}$-algebra whose Ext quiver has $m \geq 3$ arrows;
- the resulting bar complex inherits the wild root structure.
+ Under the expected finite DS--Li comparison, quantum
+ Drinfeld--Sokolov reduction at a nilpotent $e$ whose associated
+ Slodowy slice has wild representation type should produce a
+ $\mathcal{W}$-algebra whose Ext quiver has $m \geq 3$ arrows, so the
+ resulting bar complex would inherit the wild root structure.
 \end{enumerate}
 The replacement for the shadow obstruction tower in
 class~$\mathbf{W}$ is the motivic Donaldson--Thomas theory of
@@ -4485,17 +4636,20 @@ shadow tower would carry in the Koszul world
 The Koszulness meta-theorem
 (Theorem~\ref{thm:koszul-equivalences-meta}) characterizes chiral
 Koszulness intrinsically, through the bar complex and its spectral
-sequences. The next proposition gives a Poisson-geometric characterization that
-applies on the affine Kac--Moody locus and is logically independent of
+sequences. The next proposition gives a Poisson-geometric
+characterization that applies on the affine Kac--Moody locus after an
+explicit Sklyanin--bar comparison, and is then logically independent of
 the PBW spectral sequence.
 
 The classical $r$-matrix
 $r^{\mathrm{cl}}(z) = k\Omega/z$ of an affine algebra
 $\cA = \widehat{\fg}_k$ defines a Sklyanin--Poisson bracket on
-$(\fg^!)^*$ via the Semenov-Tian-Shansky
+$\fg^*$ via the Semenov--Tian--Shansky
 construction~\cite{STS83}. The infinitesimal rigidity of this
-bracket (vanishing of its second Poisson cohomology) turns out to
-be equivalent to chiral Koszulness for the affine family.
+bracket (vanishing of its second Poisson cohomology) becomes a
+Koszulness criterion only after the finite-window comparison identifies
+the PBW associated graded of the ordered bar deformation complex with
+the Lichnerowicz--Poisson complex.
 
 \begin{theorem}[Koszulness from Sklyanin--Poisson rigidity;
 \ClaimStatusConditional{} for affine KM]
@@ -4504,19 +4658,24 @@ be equivalent to chiral Koszulness for the affine family.
 \index{Poisson cohomology!vanishing|textbf}
 \index{Whitehead's second lemma!application to Poisson rigidity}
 
-For $\cA = \widehat{\fg}_k$ with $\fg$ semisimple, the
+For $\cA = \widehat{\fg}_k$ with $\fg$ semisimple at generic
+non-critical level, the
 Sklyanin--Poisson bracket
-$\{-,-\}_{\mathrm{STS}}$ on $(\fg^!)^*$ determined by the classical
+$\{-,-\}_{\mathrm{STS}}$ on $\fg^*$ determined by the classical
 $r$-matrix $r^{\mathrm{cl}}(z) = k\Omega/z$ has vanishing second
 Poisson cohomology:
 \[
-H^2_\pi\bigl((\fg^!)^*, \{-,-\}_{\mathrm{STS}}\bigr) = 0.
+H^2_\pi\bigl(\fg^*, \{-,-\}_{\mathrm{STS}}\bigr) = 0.
 \]
 Consequently the Sklyanin bracket is infinitesimally rigid: every
-first-order Poisson deformation is trivial. This rigidity is
-equivalent to chiral Koszulness of~$\cA$ on the affine KM locus,
-providing a Poisson-geometric proof of $E_2$-collapse independent
-of the PBW spectral sequence.
+first-order Poisson deformation is trivial. Assume, in addition, the
+Sklyanin--bar comparison package: in each finite PBW window the
+associated graded of the ordered bar deformation complex is the
+polynomial Lichnerowicz complex
+$(\mathfrak{X}^\bullet(\fg^*),[\pi_{\mathrm{STS}},-]_{\mathrm{SN}})$,
+and degree-two Poisson rigidity detects all off-diagonal bar classes.
+Under this package, rigidity gives a Poisson-geometric proof of
+$E_2$-collapse independent of the PBW spectral sequence.
 \end{theorem}
 
 \begin{proof}
@@ -4550,19 +4709,21 @@ kernel/image, CE comparison, and polynomial-degree spectral
 sequence) confirms $H^0_\pi = \mathbb{C}[C_2]$ (Casimir ring),
 $H^1_\pi = H^2_\pi = H^3_\pi = 0$.
 
-Equivalence with Koszulness:
+Comparison with Koszulness:
 the vanishing $H^2_\pi = 0$ means the Sklyanin bracket on
-$(\fg^!)^*$ has no nontrivial infinitesimal deformations.
+$\fg^*$ has no nontrivial infinitesimal deformations.
 The bar-dual coalgebra $\barBgeom(\cA)^{\mathrm i}$ carries
-$(\fg^!)^*$ as its semiclassical shadow; rigidity of the
+$\fg^*$ as its semiclassical shadow; rigidity of the
 Sklyanin bracket is the Poisson-geometric avatar of bar $E_2$-collapse
 (condition~(ii) of
-Theorem~\ref{thm:koszul-equivalences-meta}). For the affine family,
-the semiclassical limit is faithful: the Poisson complex
-$(\mathfrak{X}^\bullet, \delta_\pi)$ is the associated graded of
-the bar differential under the PBW filtration, and $E_2$-collapse
-of the bar spectral sequence is equivalent to acyclicity of this
-associated graded: precisely $H^2_\pi = 0$.
+Theorem~\ref{thm:koszul-equivalences-meta}). The Sklyanin--bar
+comparison hypothesis is precisely the assertion that this
+semiclassical shadow is faithful in finite PBW windows: the Poisson
+complex $(\mathfrak{X}^\bullet, \delta_\pi)$ is the associated graded of
+the ordered bar deformation complex, and degree-two Poisson cohomology
+controls the first possible off-diagonal bar obstruction. Under that
+comparison, $H^2_\pi=0$ rules out the obstruction and gives the claimed
+independent route to $E_2$-collapse.
 \end{proof}
 
 \begin{remark}[Scope and the class~$M$ obstruction]
@@ -4580,10 +4741,11 @@ for such brackets lies outside the scope of Whitehead's lemma:
 $H^2_{\mathrm{CE}}$ controls only the algebraic (order-$0$) sector.
 Extending the Sklyanin rigidity proof to class~$M$ requires a theory
 of differential Poisson cohomology that does not yet exist.
-This is a 14th characterization of chiral Koszulness, restricted to
-the affine KM subclass. On this subclass it is logically independent
-of the PBW spectral sequence and provides a second, Poisson-geometric
-route to $E_2$-collapse.
+This is a conditional 14th characterization of chiral Koszulness,
+restricted to the affine KM subclass and to the Sklyanin--bar comparison
+package. On that subclass it is logically independent of the PBW
+spectral sequence and provides a second, Poisson-geometric route to
+$E_2$-collapse.
 \end{remark}
 
 
@@ -4688,7 +4850,7 @@ language (PBW, bar, $\Ainfty$, BBL, FM) and their coherence data
 is the KZ associator; they cover a Zariski-open neighbourhood
 of $\Phi_{\mathrm{KZ}}$. The four supplementary charts
 $U_{11}, \ldots, U_{14}$ are established by direct argument at
-their own associators in the standalone manuscript
+their own associators in the standalone paper
 \cite[Propositions~2.5--2.8]{LorgatMKD1_stand}, which imports
 the Alekseev--Torossian associator~\cite{AT12}, the de~Rham--Betti
 associator~\cite{Deligne89}, the Enriquez elliptic
@@ -4721,16 +4883,18 @@ Switching between two classical criteria is an application of
 the Tamarkin $\Phi$-transfer.
 \end{remark}
 
-\begin{remark}[Open-frontier closures]
+\begin{remark}[Comparison packages]
 \label{rem:fm-closures-kp}
 
 
-Two frontier items close via the moduli scheme.
+The moduli scheme isolates two comparison packages.
 \textup{} (Virasoro Koszulness, circular bar--cobar):
-the Hodge--Betti chart $U_{12}$ provides a non-circular proof
+the Hodge--Betti chart $U_{12}$ would provide a non-circular proof
 via Feigin--Fuchs BGG resolution~\cite{FeiginFuchs90,RCW82} and
-Kac determinant non-degeneracy~\cite{KacBook}, recorded as
-Theorem~\ref{thm:virasoro-koszulness-non-circular-kp}.
+Kac determinant non-degeneracy~\cite{KacBook} after the polarizable
+Hodge--Betti realization of the Virasoro bar complex is constructed
+(Theorem~\ref{thm:virasoro-koszulness-non-circular-kp}). The unconditional
+proof remains the PBW proof of Theorem~\ref{thm:virasoro-chiral-koszul}.
 \textup{} (Yangian chiral lift): the associative
 Koszulness of $Y_\hbar(\fg)$
 (Proposition~\ref{prop:yangian-koszul-general}) is refined to
@@ -4741,12 +4905,16 @@ the open question is chart-surjectivity
 (Theorem~\ref{thm:yangian-chart-inclusion-kp}).
 \end{remark}
 
-\begin{theorem}[Virasoro Koszulness, non-circular; \ClaimStatusProvedHere]
+\begin{theorem}[Hodge--Betti lane for Virasoro Koszulness;
+\ClaimStatusConditional]
 \label{thm:virasoro-koszulness-non-circular-kp}
 \index{Virasoro algebra!non-circular Koszulness proof}
 \index{Feigin--Fuchs BGG resolution|textbf}
 For $\Vir_c$ at $c$ outside the minimal-model lattice
-$\{c_{p,q}\}$, the bar cohomology weight components satisfy
+$\{c_{p,q}\}$, assume a polarizable Hodge--Betti realization of the
+Feigin--Fuchs resolution whose induced weight filtration on
+$\barBgeom_n(\Vir_c)$ agrees with the PBW bar filtration in every finite
+window. Then the bar cohomology weight components satisfy
 \[
 H^\bullet(\Vir_c, \Vir_c)_{\mathrm{weight}\,r+1} = 0
 \qquad \text{for all } r \geq 2,
@@ -4787,13 +4955,13 @@ function. At $c \notin \{c_{p,q}\}$, $\det G_h \neq 0$ for every
 bar-relevant weight~$h$; the BGG resolution embeds faithfully in
 the bar complex.
 
-\emph{Step 3: Purity by Saito stability.}
-Each Verma module $M_{w\cdot 0}(c)$ has free PBW associated
-graded and is therefore pure of weight equal to its conformal
-weight as a mixed Hodge module. Saito's stability
-theorem~\cite{Saito} propagates purity through the exact
-sequence: the iterated bar complex
-$\barBgeom_n(\Vir_c)$ is pure of weight~$n$.
+\emph{Step 3: Conditional purity by Saito stability.}
+Under the Hodge--Betti hypothesis, each Verma module $M_{w\cdot 0}(c)$
+has a polarizable mixed-Hodge realization whose PBW associated graded is
+pure of weight equal to its conformal weight. Saito's stability
+theorem~\cite{Saito} then propagates purity through the exact sequence:
+the iterated bar complex $\barBgeom_n(\Vir_c)$ is pure of weight~$n$ in
+each finite window.
 
 \emph{Step 4: Off-diagonal weight vanishing.}
 Purity of weight~$n$ on $\barBgeom_n$ forces
@@ -4801,9 +4969,12 @@ $H^\bullet(\Vir_c, \Vir_c)_{\mathrm{weight}\,r+1} = 0$ for every
 $r \geq 2$ off the Koszul diagonal: any nonzero class in weight
 $r + 1 \neq n$ would violate purity.
 
-The four steps use Feigin--Fuchs (1), Kac (2), Saito (3), and
-purity (4). Bar--cobar inversion is not invoked, so the
-apparent circularity is closed.
+The four steps use Feigin--Fuchs (1), Kac (2), the assumed
+Hodge--Betti/Saito comparison (3), and purity (4). Bar--cobar inversion
+is not invoked. The open input is exactly the polarizable
+Hodge--Betti realization and its equality with the PBW bar filtration;
+without it this theorem does not prove $\mathcal D$-module purity for
+Virasoro.
 \end{proof}
 
 \begin{theorem}[Yangian chart inclusion; \ClaimStatusProvedHere]
@@ -4828,7 +4999,8 @@ $U_1^{\mathrm{assoc}}$ detects Yangian Koszulness in the
 classical sense of
 Proposition~\ref{prop:yangian-koszul-general}:
 PBW flatness $Y_\hbar \rightsquigarrow \mathrm{Sym}(V)$,
-RTT quadraticity, local finiteness.
+RTT quadraticity, the QYBE for the quantum line kernel
+$R(z)=1+\hbar r(z)+O(\hbar^2)$, and local finiteness.
 The Yangian carries a natural $\Eone$-chiral structure on the
 formal disk via its evaluation modules $V_u$; the PBW filtration
 is compatible with the chiral bracket. The associative chart
@@ -4837,7 +5009,11 @@ $(\Phi_{\mathrm{KZ}}, c^{\mathrm{assoc}}_{\mathrm{KZ}})$ maps to
 $(\Phi_{\mathrm{KZ}}, c^{\mathrm{chiral}}_{\mathrm{KZ}})$: both
 detect $\Etwo$-collapse of the same PBW spectral sequence (the
 associative one on $Y_\hbar$, the chiral one on its
-$\Eone$-chiral avatar). The map is defined on the whole
+$\Eone$-chiral avatar). The classical residue $r(z)$ satisfies the
+CYBE by the Arnold relation, but this checks only the semiclassical
+part of the chart. The chart inclusion uses the RTT-complete quantum
+lift and the QYBE input; a bare CYBE solution does not define a
+Yangian chart. The map is defined on the whole
 associative moduli by $\mathrm{GRT}_1$-equivariance.
 Openness: the chart $U_1^{\mathrm{assoc}}$ is the complement of
 the Shapovalov zero locus; its preimage in the chiral moduli is
@@ -5159,16 +5335,18 @@ giving primitive defect $\Delta^{\mathrm{prim}}_{\mathrm{Vir}}(t)
 = G_{\mathrm{Vir}}(t) - t$, which is nonzero starting at
 $t^3$. This nonvanishing defect is the kinematic signature of
 nonquadraticity and feeds directly into the MC4 completion
-programme
+package
 (\S\textup{\ref{subsec:shadow-postnikov-tower}}).
 \end{remark}
 
 \subsection{Geometric bar-cobar duality (Theorem~A)}
 \label{sec:theorem-a-statement}
 
-The homotopy Koszul dual $\cA^!_\infty := \mathbb{D}_{\Ran}\barB_X(\cA)$
-is unconditionally a factorization algebra
-(Chapter~\ref{chap:NAP-koszul-derivation}).
+Under the holonomic/perfect hypotheses of
+Definition~\ref{def:chiral-koszul-pair}, the homotopy Koszul dual
+$\cA^!_\infty := \mathbb{D}_{\Ran}\barB_X(\cA)$ is a factorization
+algebra (Chapter~\ref{chap:NAP-koszul-derivation}); outside that lane it
+is only a continuous/pro-object until dualizability is proved.
 Theorem~A identifies the conditions under which $\cA^!_\infty$ is
 \emph{formal}, quasi-isomorphic to the classical dual~$\cA^!$.
 
@@ -5267,7 +5445,8 @@ dual~$\cA_1^!$.
 
 \begin{remark}[Alternative proof via derived algebraic geometry]
 There is a second proof of
-Theorem~\ref{thm:bar-cobar-isomorphism-main} at the H-level of
+Theorem~\ref{thm:bar-cobar-isomorphism-main} in the
+$\infty$-categorical formulation of
 Remark~\ref{rem:theorem-a-model}. In the stable presentable
 $\infty$-category of augmented factorization algebras on
 $\Ran(X)$, the role of the terminal algebra~$k$ is played by the unit
@@ -5313,15 +5492,13 @@ part~\textup{(1)} gives
 \]
 and similarly with the indices reversed.
 
-This route is independent of the filtered-comparison lemmas. It
-therefore heals the gap whenever the missing step is the
-passage from the simplicial bar object to its dg presentation: both the
-adjunction in part~\textup{(1)} and the Verdier intertwining in
-part~\textup{(2)} follow at the H-level without that comparison. What
-remains external is the family-by-family verification that the
-Verdier-dual datum is represented by the opposite member of the chosen
-Koszul pair. That verification is not a filtered-comparison issue; it
-is exactly the role isolated in Theorem~\ref{thm:verdier-bar-cobar}.
+This route is independent of the filtered-comparison lemmas. It proves
+the adjunction in part~\textup{(1)} and the Verdier intertwining in
+part~\textup{(2)} before choosing an explicit dg presentation. The
+remaining input is family-specific: the Verdier-dual datum must be
+represented by the opposite member of the chosen Koszul pair. That
+verification is exactly the role isolated in
+Theorem~\ref{thm:verdier-bar-cobar}.
 \end{remark}
 
 \begin{proposition}[Relative extension from relative Verdier base change;
@@ -5370,11 +5547,13 @@ Theorem~\ref{thm:bar-cobar-isomorphism-main} assemble into
 equivalences of relative factorization algebras over~$S$, functorial
 under base change in~$S$.
 
-For the universal curve over $\overline{\mathcal{M}}_{g,n}$, the only
-additional input beyond Theorem~\ref{thm:bar-cobar-isomorphism-main}
-is the lift of the displayed relative Verdier identifications and the
-verification of \textup{(a)} and \textup{(b)} on the relative Ran
-space.
+For the universal smooth curve over $\mathcal{M}_{g,n}$, the additional
+inputs beyond Theorem~\ref{thm:bar-cobar-isomorphism-main} are the lift
+of the displayed relative Verdier identifications and the verification
+of \textup{(a)} and \textup{(b)} on the relative Ran space. Over
+$\overline{\mathcal{M}}_{g,n}$ the curve is nodal at the boundary, so an
+annular sewing comparison is an additional hypothesis rather than a
+formal consequence of this proposition.
 \end{proposition}
 
 \begin{proof}
@@ -5389,14 +5568,16 @@ fiber. The displayed relative Verdier identifications provide the
 algebra target on the total space, and hypothesis~\textup{(a)} is the
 exact condition needed to take Verdier duals degreewise in the
 relative holonomic category. These ingredients glue the fiberwise
-identifications over~$S$. The specialization
-$S=\overline{\mathcal{M}}_{g,n}$ is obtained by applying the same
-argument to the universal curve.
+identifications over~$S$. The universal smooth curve over
+$\mathcal M_{g,n}$ is covered by the same argument once
+\textup{(a)}--\textup{(c)} are verified there; the compactification
+$\overline{\mathcal M}_{g,n}$ has nodal boundary and requires the
+additional annular sewing comparison isolated below.
 \end{proof}
 
-\begin{remark}[Programme for the modular-family extension]
+\begin{remark}[Proof obligations for the modular-family extension]
 \label{rem:bar-cobar-relative-programme}
-\index{bar-cobar duality!modular-family programme}
+\index{bar-cobar duality!modular-family proof obligations}
 To prove the full modular-family statement over
 $\overline{\mathcal{M}}_{g,n}$, one must establish the two relative
 inputs isolated in
@@ -5427,54 +5608,61 @@ $\barB_{X_s}(\cA_s)$ is a bounded holonomic $\cD$-complex by
 the fixed-curve holonomicity established above. Kashiwara's
 base-change theorem for holonomic $\cD$-modules
 \textup{(}Kashiwara~\cite{Kas84}, Theorem~4.3.1\textup{)}
-preserves holonomicity under proper base change. The relative
-Ran space $\operatorname{Ran}(\mathcal{X}/S) \to S$ is
-ind-proper for a smooth proper family
-$\pi \colon \mathcal{X} \to S$, so the relative bar components
-assemble into a bounded complex of relative holonomic
-$\cD$-modules on the relative Fulton--MacPherson spaces.
+preserves holonomicity under proper base change. To obtain
+hypothesis~\textup{(a)} one must still assemble these fiberwise
+complexes into a bounded relative holonomic complex on the relative
+Fulton--MacPherson stages and check the bar-length transition maps.
+The ind-properness of
+$\operatorname{Ran}(\mathcal{X}/S)\to S$ for a smooth proper family is
+the geometric input; it is not by itself the completed relative bar
+object.
 
 \item \emph{Relative Verdier and base change on Ran.}
-Verdier duality commutes with proper base change by
-Verdier's original theorem. In the ind-scheme setting of the
-Ran space, the requisite extension is established by
+Verdier duality commutes with proper base change by Verdier's original
+theorem. In the ind-scheme setting of the Ran space,
 Gaitsgory--Rozenblyum~\textup{(}\cite{GR17},
-Vol.~II, Chapter~7, Theorem~7.3.4\textup{)}: for
-$\operatorname{Ran}(\mathcal{X}/S)$ ind-proper over~$S$, the
-relative Verdier functor
-$\mathbb{D}_{\operatorname{Ran}(\mathcal{X}/S)}$ commutes
-with~$f^!$ for proper morphisms $f \colon S' \to S$. In
-particular, hypothesis~\textup{(b)} of
-Proposition~\ref{prop:bar-cobar-relative-extension} is
-satisfied for smooth proper families.
+Vol.~II, Chapter~7, Theorem~7.3.4\textup{)} supply the ambient
+base-change theorem for ind-proper morphisms. To apply it to the
+completed bar complex one must still verify finite-stage compatibility:
+the bar truncations must be represented by holonomic complexes on the
+relative Fulton--MacPherson stages, the transition maps must satisfy the
+Mittag--Leffler condition, and Verdier duality must commute with the
+completed inverse limit. These verifications are precisely
+hypothesis~\textup{(b)} of
+Proposition~\ref{prop:bar-cobar-relative-extension}; they are not
+automatic from smoothness alone.
 
 \item \emph{Lifted relative Verdier pair.}
-The Koszul pair $(\cA, \cA^!)$ on a fixed curve lifts to a
-relative Koszul pair over~$S$ provided the twisting morphism
+The Koszul pair $(\cA, \cA^!)$ on a fixed curve lifts to a relative
+Koszul pair over~$S$ provided the twisting morphism
 $\tau \colon \barB(\cA) \to \cA$ is a natural transformation of
 $\cD$-module-valued functors on
-$\operatorname{Ran}(\mathcal{X}/S)$. This follows from the
-construction: $\tau$ is defined fiberwise by OPE residues at
-Fulton--MacPherson boundary strata, and these residues vary
-holomorphically in the fiber parameter of~$\pi$.
+$\operatorname{Ran}(\mathcal{X}/S)$. This is a separate pair-lift
+obligation: one must construct the OPE residue morphisms on the relative
+Fulton--MacPherson boundary strata, prove their holomorphic variation in
+the fiber parameter of~$\pi$, and check compatibility with factorization
+gluing. Fiberwise existence of~$\tau$ does not by itself give the
+relative natural transformation.
 \end{enumerate}
 
 \noindent
 \emph{Conclusion.}
-For smooth families $\pi \colon \mathcal{X} \to S$, all three
-inputs are satisfied, and the modular-family extension of
-Theorem~\textup{A} holds unconditionally. Over
+For smooth families $\pi \colon \mathcal{X} \to S$ satisfying the
+three inputs above, the modular-family extension of
+Theorem~\textup{A} holds over~$S$. This is a relative Verdier/base-change
+statement, not an automatic consequence of smoothness alone. Over
 $\overline{\mathcal{M}}_{g,n}$, the extension requires additional
 care at the boundary: the bar complex over a nodal fiber involves
 the annular bar $\barB^{\mathrm{ann}}$, which requires a separate
 sewing argument. The sewing comparison is partially established
 in Chapter~\ref{chap:higher-genus} \textup{(}the analytic
 Hilbert-space sewing theorem, proved for all genera\textup{)}; the
-remaining algebraic chain-level identification at nodal fibers is
-the content of the research programme in
+remaining algebraic chain-level identification at nodal fibers is the
+proof obligation recorded in
 Remark~\ref{rem:bar-cobar-relative-programme}. The strongest
-unconditional result is: smooth families unconditional;
-$\overline{\mathcal{M}}_{g,n}$ conditional on the nodal sewing
+unconditional result is: fixed smooth curve; smooth relative families
+after the displayed relative holonomicity, base-change, and pair-lift
+inputs; $\overline{\mathcal{M}}_{g,n}$ conditional on the nodal sewing
 comparison.
 \end{remark}
 
@@ -5511,7 +5699,7 @@ these identifications over a base.
 Convention~\ref{conv:proof-architecture}]
 \label{rem:theorem-a-model}
 \index{bar-cobar duality!model presentation}
-\emph{Step~A} (H-level):
+\emph{$\infty$-categorical adjunction.}
 The bar functor $\mathbf{B}_X$ and cobar functor
 $\boldsymbol{\Omega}_X$ form an adjoint pair
 \[
@@ -5528,32 +5716,32 @@ are equivalences: $\boldsymbol{\Omega}_X \mathbf{B}_X(\cA)
 homotopy dual factorization algebra via the post-Verdier equivalence
 $\mathbb{D}_{\operatorname{Ran}} \mathbf{B}_X(\cA) \simeq
 (\cA)^!_\infty \simeq \cA^!$ on the Koszul locus. This is the
-theorem; what follows are
-presentations.
+theorem; what follows are presentations of the same objects.
 
-\emph{Step~B} (M-level):
+\emph{Explicit dg model.}
 The explicit dg model uses the reduced bar complex
 $\bar{B}_X(\cA) = (T^c(s^{-1}\bar{\cA}),\, d_{\mathrm{bar}})$,
 with $d_{\mathrm{bar}}$ encoded by configuration-space integrals
-on $\overline{C}_n(X)$. The twisting morphism
-$\tau \colon \bar{B}_X(\cA) \to \cA^!$ is the degree-$+1$
-propagator extracted from the log form on $\overline{C}_2(X)$.
+on $\overline{C}_n(X)$. The universal twisting morphism
+$\tau \colon \bar{B}_X(\cA) \to \cA$ is the degree-$+1$
+OPE extraction against the log form on $\overline{C}_2(X)$. The
+post-Verdier comparison with~$\cA^!$ is a separate duality statement.
 The proof reduces to showing the unit and counit are
 quasi-isomorphisms, which follows from the Koszul conditions
 (Definition~\ref{def:chiral-koszul-morphism}).
 
-\emph{Reduction B$\to$A} (M-level $\to$ H-level):
+\emph{Model comparison.}
 Any two admissible dg presentations of the same factorization
 object are connected by a contractible space of
 quasi-isomorphisms
-(Proposition~\ref{prop:model-independence}). The M-level
-quasi-isomorphisms therefore determine the H-level equivalence
+(Proposition~\ref{prop:model-independence}). Hence the dg
+quasi-isomorphisms represent the $\infty$-categorical equivalence
 up to a contractible ambiguity.
 
-\emph{Step~C} (S-level):
-The cohomological shadow: the bar coalgebra
-$\bar{B}_X(\cA)$ has cohomology concentrated in bar
-degree~$1$, and the Koszul dual algebra~$\cA^!$ is
+\emph{Cohomology.}
+The bar coalgebra $\bar{B}_X(\cA)$ has cohomology
+$\cA^{\mathrm i}$ concentrated on the Koszul diagonal. When the
+finite-type Verdier dual exists, the post-Verdier algebra~$\cA^!$ is
 characterized by Verdier intertwining
 $\mathbb{D}_{\operatorname{Ran}}\bar{B}_X(\cA) \simeq
 \cA^!_\infty$ (factorization \emph{algebra}, not coalgebra;
@@ -5561,15 +5749,16 @@ Convention~\ref{conv:bar-coalgebra-identity}), with
 dimensions controlled by the spectral
 discriminant~$\Delta_{\cA}(x)$.
 
-\emph{Reduction B$\to$C} (M-level $\to$ S-level):
-Taking cohomology of the M-level dg model extracts the S-level
-data. Concretely, the PBW spectral sequence
+\emph{Cohomology extraction.}
+Taking cohomology of the dg model extracts the bar-dual coalgebra.
+Concretely, the PBW spectral sequence
 $E_1^{p,q} \Rightarrow H^{p+q}(\bar{B}_X(\cA))$ collapses
 at~$E_2$ on the Koszul locus
-(Corollary~\ref{cor:bar-cohomology-koszul-dual}, Step~4),
+(Corollary~\ref{cor:bar-cohomology-koszul-dual}),
 and the resulting Hilbert series
-$\sum_n \dim H^n(\bar{B}_X(\cA))\, x^n$ equals the Hilbert
-series of~$\cA^!$, with radius of convergence determined
+$\sum_n \dim H^n(\bar{B}_X(\cA))\, x^n$ is the Hilbert series
+of~$\cA^{\mathrm i}$. After finite Verdier duality it is also the
+Hilbert series of~$\cA^!$, with radius of convergence determined
 by~$\Delta_{\cA}(x)$.
 \end{remark}
 
@@ -5581,116 +5770,133 @@ by~$\Delta_{\cA}(x)$.
 \section{Yangians and affine Yangians: self-duality and Koszul theory}
 \label{sec:yangians-complete}
 
-The Yangian $Y(\mathfrak{g})$ and affine Yangian $Y_{\hbar}(\widehat{\mathfrak{g}})$
-provide examples where Koszul duality manifests as self-duality.
+The Yangian $Y(\mathfrak{g})$ and affine Yangian
+$Y_{\hbar}(\widehat{\mathfrak{g}})$ provide examples where the
+finite-window ordered quadratic shadow is self-dual. The full
+post-Verdier algebra-level statement requires the completed ordered bar
+coalgebra, continuous duality, and the RTT/QYBE quantum line-kernel
+datum; the CYBE collision residue is only its semiclassical
+codimension-$2$ shadow.
 
-For the RTT definition of $Y(\mathfrak{g})$, its Hopf structure, affine
-Yangian, connection to quantum groups, and physical interpretation,
-see Chapter~\ref{chap:yangians}. We record here only the Koszul-duality-specific results.
+For the type-A RTT definition, the Drinfeld presentation in all simple
+types, the Hopf structure, affine Yangians, and the physical
+interpretation, see Chapter~\ref{chap:yangians}. We record here only
+the Koszul-duality-specific results.
 
 \subsection{Self-duality}
 
-\begin{theorem}[Yangian quadratic dual; \ClaimStatusProvedHere]\label{thm:yangian-self-dual}
-In the RTT presentation, the Yangian $Y(\mathfrak{g})$ has \emph{quadratic dual}:
-\begin{equation}
-Y(\mathfrak{g})^{!_{\mathrm{quad}}} \;\cong\; Y_{R^{-1}}(\mathfrak{g}) \;\cong\; Y(\mathfrak{g})^{\hbar \to -\hbar}
+\begin{theorem}[Type-A Yangian quadratic shadow; \ClaimStatusProvedHere]\label{thm:yangian-self-dual}
+Let $Y^{\mathrm{RTT}}_\hbar(\mathfrak{gl}_N)$ be the completed RTT
+Yangian with Yang matrix
+\[
+R(u;\hbar)=1-\frac{\hbar P}{u},
+\]
+where $P$ is the permutation of $\mathbb C^N\otimes\mathbb C^N$. Fix a
+finite level window and let $Q_R$ be the homogeneous quadratic RTT
+algebra generated by the corresponding coefficients of $T(u)$, with
+relation
+\begin{equation}\label{eq:rtt-relation}
+R_{12}(u-v)\,T_1(u)\,T_2(v)
+=T_2(v)\,T_1(u)\,R_{12}(u-v).
 \end{equation}
-where $Y_{R^{-1}}$ is the RTT algebra with $R$-matrix replaced by $R^{-1}$. For the Yang $R$-matrix, $R^{-1}(u; \hbar) = R(u; -\hbar)$, so the quadratic dual is the Yangian at negative deformation parameter.
+Then the quadratic dual algebra of $Q_R$ is the RTT algebra with
+projectively inverse Yang matrix:
+\[
+Q_R^{!_{\mathrm{quad}}}\cong Q_{R^{-1}}.
+\]
+Equivalently, since
+\[
+R(u;\hbar)^{-1}
+=\left(1-\frac{\hbar^2}{u^2}\right)^{-1}
+\left(1+\frac{\hbar P}{u}\right)
+\sim R(u;-\hbar),
+\]
+and scalar rational factors cancel from the RTT relation, the type-A
+quadratic shadow is self-dual after the parameter change
+$\hbar\mapsto-\hbar$.
 
-For simply-laced $\mathfrak{g}$, since $Y(\mathfrak{g})^{\hbar \to -\hbar} \cong Y(\mathfrak{g})$ (via the algebra automorphism $T_{ij}^{(r)} \mapsto (-1)^r T_{ij}^{(r)}$), the Yangian is quadratic self-dual:
-\begin{equation}
-Y(\mathfrak{g})^{!_{\mathrm{quad}}} \;\cong\; Y(\mathfrak{g}) \quad (\text{simply-laced } \mathfrak{g})
-\end{equation}
-The explicit $\mathfrak{sl}_2$ computation is given in Chapter~\ref{chap:yangians}.
+This is a statement about the ordered $\Eone$ quadratic shadow. It does
+not identify the full symmetric Ran bar coalgebra with an RTT algebra,
+and it does not say that the Verdier-dual algebra $Y_\hbar(\mathfrak g)^!$
+is obtained by replacing $R$ with $R^{-1}$ outside the type-A RTT lane.
 \end{theorem}
 
 \begin{proof}[Proof of Theorem~\ref{thm:yangian-self-dual}]
-\emph{Step 1: RTT quadraticity.}
-Recall the RTT (Yang--Baxter) presentation: $Y(\mathfrak{g})$ is generated by a transfer matrix $T(u) = (T_{ij}(u)) \in \mathrm{End}(V) \otimes Y(\mathfrak{g})$ subject to
+Work in a finite level window, so all vector spaces are finite over
+$\mathbb C[[\hbar]]$ and continuous duals are ordinary duals in each
+bidegree. Write the RTT relation as the image of the linear map
 \[
-R_{12}(u-v)\, T_1(u)\, T_2(v)
-= T_2(v)\, T_1(u)\, R_{12}(u-v),
+\Phi_R(X)=R_{12}X-\sigma(X)R_{12}
 \]
-where $R_{12}(u) = 1 - \hbar P_{12}/u$ is the Yang $R$-matrix and $P_{12}$ is the permutation on $V \otimes V$. This relation is quadratic in $T$; since the bar complex of a quadratic algebra is determined by generators and relations (bar degrees $\leq 2$), the Koszul dual is computed from the relation space alone.
+on the quadratic tensor space of two matrix coefficients. The trace
+pairing on $\End(\mathbb C^N)^{\otimes 2}$ identifies the orthogonal
+complement of $\operatorname{Im}\Phi_R$ with the kernel of the adjoint
+map. Moving $R_{12}$ across the trace changes it to the inverse
+braiding, hence the adjoint relation is the RTT relation for
+$R^{-1}_{21}$, which is projectively the same Yang matrix in this
+normalization. Therefore the quadratic dual relation space is exactly
+the RTT relation space attached to $R^{-1}$.
 
-\emph{Step 2: Koszul dual via $R$-matrix inversion.}
-The quadratic dual has relation space $R^\perp$, the orthogonal
-complement of the RTT relations under the trace pairing on
-$\mathrm{End}(V)^{\otimes 2}$. Writing the RTT relation as
-$\Phi_R(X) = R_{12} X - \sigma(X) R_{12}$ and its dual as
-$\Phi_{R^{-1}}$, direct computation shows
-$R^\perp = \mathrm{Im}(\Phi_{R^{-1}})$. Thus the Koszul dual is the
-RTT algebra for $R^{-1}$.
-
-For the Yang $R$-matrix, $R^{-1}(u) = (1 - \hbar P/u)^{-1}$; since
-$P^2 = \mathrm{id}$, the geometric series gives
+For the Yang matrix, $P^2=1$, so
 \[
-R^{-1}(u) = \frac{u^2}{u^2 - \hbar^2}\,I
- + \frac{\hbar u}{u^2 - \hbar^2}\,P.
+\left(1-\frac{\hbar P}{u}\right)^{-1}
+=\left(1-\frac{\hbar^2}{u^2}\right)^{-1}
+\left(1+\frac{\hbar P}{u}\right).
 \]
-At the quadratic level, which is all the Koszul dual sees, the leading
-approximation $R^{-1}(u) \approx 1 + \hbar P/u = R(u; -\hbar)$
-suffices: the higher-order corrections affect only the higher
-filtration, not the quadratic relations.
-
-More precisely, the RTT relation
-$R_{12}T_1T_2 = T_2T_1R_{12}$ is quadratic in the generators
-$T_{ij}(u)$, and the Koszul dual is determined by the quadratic part of
-the relations, namely the orthogonal complement
-$R^\perp \subset V^{\otimes 2}$. The matrix $R^{-1}(u)$ enters through
-the dual RTT relation, but only the leading terms
-$(1 - \hbar P/u + O(\hbar^2))$ contribute to the quadratic orthogonal
-complement; higher-order terms in $R^{-1}$ produce relations of degree
-$\geq 3$ in the generators.
-
-\emph{Step 3: Self-duality for simply-laced $\mathfrak{g}$.}
-The automorphism $\phi\colon Y(\mathfrak{g}) \to Y(\mathfrak{g})$ defined by $T_{ij}^{(r)} \mapsto (-1)^r T_{ij}^{(r)}$ sends $\hbar \to -\hbar$ in the RTT relation (since the spectral parameter $u$ is not affected, only the mode-graded generators pick up signs). For simply-laced $\mathfrak{g}$, where all roots have the same length, this automorphism is well-defined and gives $Y(\mathfrak{g})^{\hbar \to -\hbar} \cong Y(\mathfrak{g})$.
-
-\emph{Step 4: Consistency.}
-At $\hbar = 0$: $Y(\mathfrak{g})$ degenerates to $U(\mathfrak{g}[t])$, and $R = R^{-1} = 1$, so the Koszul dual is the symmetric algebra $\mathrm{Sym}(V)$, which is self-dual at this degenerate level. At $\hbar \to \infty$: the $R$-matrix becomes the permutation $P$, and the algebra degenerates to the commutative polynomial ring, which is Koszul dual to the exterior algebra (i.e., $\mathrm{Sym}^! = \bigwedge$). Both limits are consistent.
+The scalar factor $\left(1-\hbar^2/u^2\right)^{-1}$ multiplies both
+sides of~\eqref{eq:rtt-relation} by the same invertible rational
+function and is invisible to the RTT ideal. Thus the inverse matrix
+defines the same quadratic algebra as $R(u;-\hbar)$. The bar-dual object
+computed here is the quadratic coalgebra $Q_R^{\mathrm i}$; the notation
+$Q_R^{!_{\mathrm{quad}}}$ appears only after finite continuous duality.
 \end{proof}
 
-\begin{proposition}[Yangian Koszulness for all simple \texorpdfstring{$\mathfrak{g}$}{g}; \ClaimStatusProvedHere]\label{prop:yangian-koszul-general}
+\begin{proposition}[Yangian ordered-bar Koszulness in finite windows;
+\ClaimStatusProvedHere]\label{prop:yangian-koszul-general}
 \index{Yangian!Koszulness!general type}
-For every simple Lie algebra~$\mathfrak{g}$, the Yangian
-$Y(\mathfrak{g})$ in the RTT presentation is Koszul: the bar
-spectral sequence degenerates at~$E_2$ and the quadratic dual
-computed above is the true Koszul dual.
+Let $\mathfrak g$ be a finite-dimensional simple Lie algebra and let
+$Y_\hbar(\mathfrak g)$ be Drinfeld's Yangian with augmentation and level
+filtration. For every finite level window $Y_{\hbar,\le m}(\mathfrak g)$,
+completed $\hbar$-adically and filtered by bar length, the ordered bar
+complex is bidegreewise finite and its PBW spectral sequence is diagonal:
+\[
+H^*(\barB_X^{\mathrm{ord}}(Y_{\hbar,\le m}(\mathfrak g)))
+\cong Y_{\hbar,\le m}(\mathfrak g)^{\mathrm i}
+\]
+as a conilpotent ordered chiral coalgebra. Passing to the inverse limit
+over~$m$ gives the completed intrinsic coalgebra
+$Y_\hbar(\mathfrak g)^{\mathrm i}$ whenever the finite windows form the
+Mittag--Leffler system of Lemma~\ref{lem:completion-convergence}.
+Only after continuous duality of these finite windows does one obtain a
+post-Verdier algebra $Y_\hbar(\mathfrak g)^!$.
 \end{proposition}
 
 \begin{proof}
-This follows from the Polishchuk--Positselski PBW criterion
-\cite[Ch.~4]{PP05} applied to $Y(\mathfrak{g})$.
-The three hypotheses are verified as follows.
-\begin{enumerate}
-\item \emph{PBW basis.}
- Molev~\cite{molev-yangians} establishes a PBW basis for
- $Y(\mathfrak{g})$ in the RTT presentation for every
- simple~$\mathfrak{g}$: ordered monomials in the generators
- $\{T_{ij}^{(r)}\}$ form a vector space basis, and the associated
- graded is the polynomial algebra $\mathrm{Sym}(V)$ with
- $V = \bigoplus_{r \geq 0} \mathrm{End}(\mathbb{C}^N)_r$,
- $N = \dim V_0$ the dimension of the chosen fundamental
- representation. This gives a flat deformation from
- $Y(\mathfrak{g})$ to $\mathrm{Sym}(V)$.
-\item \emph{Quadraticity.}
- The RTT relation~\eqref{eq:rtt-relation} is quadratic in the
- generators $T_{ij}^{(r)}$, so $Y(\mathfrak{g})$ is a quadratic
- algebra in the sense of Polishchuk--Positselski.
-\item \emph{Local finiteness.}
- Each level component $V_r = \mathrm{span}\{T_{ij}^{(r)}\}$
- has dimension $N^2 = (\dim V_0)^2$, which is finite and
- independent of~$r$. Since the RTT relation is homogeneous of
- degree $r+s$ in the level grading, the quadratic algebra is
- locally finite in a non-negative connected grading. This holds
- uniformly for all simple~$\mathfrak{g}$; no case-by-case
- verification is needed.
-\end{enumerate}
-The Polishchuk--Positselski criterion then gives: the PBW flat
-deformation from $Y(\mathfrak{g})$ to $\mathrm{Sym}(V)$ transfers
-acyclicity of the Koszul complex
-$K(\mathrm{Sym}(V)) = \mathrm{Sym}(V) \otimes \bigwedge(V^*)$
-to acyclicity of $K(Y(\mathfrak{g}))$, proving Koszulness.
+Drinfeld's PBW theorem \cite{Drinfeld85} gives the filtered
+identification
+$\operatorname{gr}Y_\hbar(\mathfrak g)\cong U(\mathfrak g[t])$.
+For the classical matrix types this is compatible with the RTT
+presentations treated by Molev \cite{Molev07,molev-yangians}; for the
+exceptional and uniform Drinfeld presentations the required PBW basis is
+the theorem of Guay--Regelskis--Wendlandt \cite[Thm.~3.2]{GRW18}. In a
+fixed level window all homogeneous pieces are finite-dimensional.
+
+Apply the Polishchuk--Positselski PBW theorem for locally finite
+quadratic-linear filtered algebras \cite[Ch.~4]{PP05}. The associated
+graded algebra $U(\mathfrak g[t]_{\le m})$ is PBW, and its further
+monomial-length associated graded is
+$\operatorname{Sym}(\mathfrak g[t]_{\le m})$, whose Koszul complex is
+the classical symmetric-exterior complex. The PBW theorem transfers this
+acyclicity to $Y_{\hbar,\le m}(\mathfrak g)$ and gives diagonal collapse
+of the ordered bar spectral sequence.
+
+The transition maps between finite windows are surjective in each fixed
+bar length and level. Hence the inverse system is bidegreewise
+Mittag--Leffler, so Lemma~\ref{lem:completion-convergence} identifies
+the completed inverse limit with the completed ordered bar coalgebra.
+The construction produces $Y_\hbar(\mathfrak g)^{\mathrm i}$ first. The
+algebra $Y_\hbar(\mathfrak g)^!$ is obtained only by the continuous
+Verdier-dual passage.
 \end{proof}
 
 % Hopf structure, physical interpretation, explicit computations, and quantum group
@@ -6003,6 +6209,9 @@ curve~$X$ satisfying:
 \item\label{hyp:poly} the transferred OPE residues preserve the
  residue-orthogonal corelations and satisfy the Borcherds and
  Arnold identities with the signs of Appendix~\ref{app:signs-shifts},
+\item\label{hyp:pbw-koszul} the associated graded quadratic chiral
+ algebra for the PBW filtration is Koszul, so the PBW bar spectral
+ sequence is diagonal at $E_2$,
 \item\label{hyp:smooth} the bar-length completion is
  bidegreewise Mittag--Leffler in the sense of
  Lemma~\ref{lem:completion-convergence}.
@@ -6029,7 +6238,10 @@ separate finite-length condition and is not automatic.
 Definition~\ref{def:intrinsic-koszul-dual} constructs
 $\mathcal{A}^{\mathrm i}_{\mathrm{cand}}$ from the presentation and
 residue pairing. Theorem~\ref{thm:coalgebra-axioms-verified} gives its
-coalgebra identities. Theorem~\ref{thm:bar-computes-koszul-dual-complete}
+coalgebra identities. Hypothesis~\ref{hyp:pbw-koszul} supplies the
+associated-graded Koszul comparison, and
+Hypothesis~\ref{hyp:smooth} removes the possible
+$\varprojlim^1$ obstruction. Theorem~\ref{thm:bar-computes-koszul-dual-complete}
 then supplies the completed bar comparison.
 \end{proof}
 
@@ -6084,81 +6296,64 @@ Fulton--MacPherson boundary geometry.
 % SUBSECTION: VIRASORO (WARM-UP)
 %================================================================
 
-\subsection{Warm-up: Virasoro algebra}
+\subsection{Virasoro Koszul-duality calculation}
 
 \begin{example}[Virasoro: first non-quadratic example]
 \label{ex:virasoro-completion-chiral}
+The Virasoro algebra is generated by the stress tensor $T(z)$ with
+OPE
+\[
+T(z)T(w)\sim
+\frac{c/2}{(z-w)^4}
++\frac{2T(w)}{(z-w)^2}
++\frac{\partial T(w)}{z-w}.
+\]
+The quartic pole is not discarded by multiplying the OPE by a logarithmic
+one-form and taking an ordinary one-variable residue. In the chiral bar
+complex the Fulton--MacPherson boundary map first expands the fields
+along the diagonal and then applies the residue operation. Equivalently,
+the binary part of the bar coderivation records the Virasoro products
+\[
+T_{(3)}T=\frac{c}{2}\mathbf 1,\qquad
+T_{(1)}T=2T,\qquad
+T_{(0)}T=\partial T
+\]
+with the suspension signs fixed in Appendix~\ref{app:signs-shifts}.
 
-The Virasoro algebra is generated by the stress tensor $T(z)$ with OPE:
-\[T(z)T(w) = \frac{c/2}{(z-w)^4} + \frac{2T(w)}{(z-w)^2} + \frac{\partial T(w)}{z-w} + \text{regular}\]
+Thus the completed bar-dual coalgebra is not the algebra
+$\mathrm{Vir}_c^!$. It is the conilpotent coalgebra
+\[
+\mathrm{Vir}_c^{\mathrm i}
+=H^*\!\left(
+\widehat{\barB_X^\Sigma(\mathrm{Vir}_c)},
+d_{\mathrm{bar}}
+\right),
+\]
+or the corresponding ordered coalgebra on the $\Eone$ lane. It is
+presented inside the completed cofree coalgebra on the descendants
+\[
+T,\partial T,\partial^2T,\ldots
+\]
+with a continuous coderivation whose arity-two components are the three
+displayed OPE modes and their $\partial$-translates. In a fixed conformal
+weight and bar length there are only finitely many descendants, and the
+bar-length quotients satisfy Lemma~\ref{lem:completion-convergence}.
 
-The quartic pole prevents a quadratic presentation.
-
-\medskip
-\noindent\emph{Step 1: Bar Complex}
-
-\[\bar{B}^0 = \mathbb{C} \quad (\text{vacuum})\]
-\[\bar{B}^1 = \Gamma(\overline{C}_2(X), T^{\boxtimes 2} \otimes \eta) \quad \text{where } \eta = \frac{dz_1 - dz_2}{z_1 - z_2}\]
-
-A typical element in $\bar{B}^1$:
-\[\alpha = T(z_1) \otimes T(z_2) \otimes \eta_{12}\]
-
-\medskip
-\noindent\emph{Step 2: Differential - The Quartic Pole}
-
-The bar differential acts as:
-\begin{align*}
-d(\alpha) &= d_{\text{res}}(T(z_1) \otimes T(z_2) \otimes \eta_{12}) \\
-&= \text{Res}_{z_1 \to z_2}\left[\frac{c/2}{(z_1-z_2)^4} + \frac{2T(z_2)}{(z_1-z_2)^2} + \frac{\partial T(z_2)}{z_1-z_2}\right] \cdot \eta_{12}
-\end{align*}
-
-The computation proceeds as follows:
-\[\eta_{12} = \frac{dz_1 - dz_2}{z_1 - z_2} \quad \Rightarrow \quad \eta_{12} \wedge \frac{1}{(z_1-z_2)^n} \sim \frac{dz_1}{(z_1-z_2)^{n+1}}\]
-
-The residue:
-\[\text{Res}_{z_1=z_2}\left[\frac{1}{(z_1-z_2)^{n+1}} dz_1\right] = \begin{cases} 1 & n = 0 \\ 0 & n > 0 \end{cases}\]
-
-Therefore:
-\begin{itemize}
-\item Quartic pole $(z_1-z_2)^{-4}$ with $\eta_{12}$: contributes $(z_1-z_2)^{-5} dz_1$ $\Rightarrow$ residue $= 0$
-\item Quadratic pole $(z_1-z_2)^{-2}$ with $\eta_{12}$: contributes $(z_1-z_2)^{-3} dz_1$ $\Rightarrow$ residue $= 0$
-\item Simple pole $(z_1-z_2)^{-1}$ with $\eta_{12}$: contributes $(z_1-z_2)^{-2} dz_1$ $\Rightarrow$ residue $= 0$
-\end{itemize}
-
-Hence $d(\alpha) = 0$ in $\bar{B}^0$.
-
-However, we must include higher-order terms via descendants.
-
-\medskip
-\noindent\emph{Step 3: Descendants and Completion}
-
-The Virasoro algebra has infinitely many generators:
-\[T, \partial T, \partial^2 T, \partial^3 T, \ldots\]
-
-The bar complex becomes:
-\[\bar{B}^1 = \bigoplus_{m,n \geq 0} \Gamma(\overline{C}_2(X), \partial^m T \otimes \partial^n T \otimes \eta)\]
-
-The differential mixes these:
-\[d(\partial^m T \otimes \partial^n T \otimes \eta) = \sum_{k,\ell} C_{mn}^{k\ell} \, \partial^k \partial^\ell T\]
-
-To define the Koszul dual, we need the \emph{I-adic completion}:
-\[\widehat{\bar{B}^1} = \varprojlim_N \left(\bigoplus_{m+n \leq N} \partial^m T \otimes \partial^n T \otimes \eta\right)\]
-
-\medskip
-\noindent\emph{Step 4: The Completed Coalgebra Structure}
-
-The Koszul dual is:
-\[\text{Vir}^! = \widehat{T^c(T^*)}\]
-the \emph{completed cofree coalgebra} on the dual generator $T^*$.
-
-\emph{Coproduct.}
-\[\Delta(T^*) = T^* \boxtimes 1 + 1 \boxtimes T^*\]
-\[\Delta(\partial^n T^*) = \sum_{k=0}^n \binom{n}{k} \partial^k T^* \boxtimes \partial^{n-k} T^*\]
-
-\emph{Differential.} Encodes the Virasoro OPE structure, with:
-\[d_!(T^*) = -\frac{c}{2} \cdot (\text{quartic curvature term})\]
-
-This is a curved coalgebra, a consequence of the central extension.
+The post-Verdier algebra is
+\[
+\mathrm{Vir}_c^!=
+\mathbb D_{\operatorname{Ran}}(\mathrm{Vir}_c^{\mathrm i}),
+\]
+or the continuous finite-window dual in the affine model. The scalar
+central channel is normalized by
+\[
+\kappa(\mathrm{Vir}_c)=\frac{c}{2};
+\]
+it is a curvature component only after the curved genus package is
+turned on. The slogan identifying $\mathrm{Vir}_c^!$ with the completed
+tensor coalgebra $\widehat{T^c(T^*)}$ is therefore type-wrong: that
+coalgebra is a presentation of the bar-dual object before Verdier
+duality, not the Koszul-dual algebra itself.
 \end{example}
 
 %================================================================
@@ -6169,119 +6364,66 @@ This is a curved coalgebra, a consequence of the central extension.
 
 \begin{example}[\texorpdfstring{$W_3$}{W3} algebra: full completion]
 \label{ex:w3-completion-full}
+The $W_3$ algebra is strongly generated by $T(z)$ of weight~$2$ and
+$W(z)$ of weight~$3$. Its complete OPEs are those of
+Definition~\ref{def:w3-algebra} and Theorem~\ref{thm:w-w-ope-complete}.
+The composite field
+\[
+\Lambda={:}TT{:}-\frac{3}{10}\partial^2T
+\]
+is the quasi-primary of weight~$4$, with
+\[
+\langle\Lambda|\Lambda\rangle=\frac{c(5c+22)}{10}
+\]
+as fixed in the landscape census. The $W$-$W$ OPE contains the
+load-bearing channel
+\[
+\frac{32}{22+5c}\frac{\Lambda(w)}{(z-w)^2}
++\frac{16}{22+5c}\frac{\partial\Lambda(w)}{z-w},
+\]
+together with the central term $c/3\,(z-w)^{-6}$ and the Virasoro
+descendant terms.
 
-The $W_3$ algebra is generated by $T(z)$ (weight 2) and $W(z)$ (weight 3), with OPEs as in Definition~\ref{def:w3-algebra}; the complete $W$--$W$ expansion is given in Theorem~\ref{thm:w-w-ope-complete}. In particular, $\Lambda(w) = :T(w)T(w): - \frac{3}{10}\partial^2 T(w)$ is the quasi-primary composite field
-(the unique normal ordering prescription ensuring $T(z)\Lambda(w) \sim \frac{4\Lambda(w)}{(z-w)^2} + \frac{\partial\Lambda(w)}{z-w} + \text{reg}$, with no $(z-w)^{-3}$ term).
+The completed bar object is
+\[
+\widehat{\barB_X^\Sigma(W_3)}
+=\varprojlim_n\barB_X^\Sigma(W_3)/F^n_{\mathrm{bar}},
+\]
+and its differential is the continuous coderivation whose binary
+components are the OPE modes of $T,T$, $T,W$, and $W,W$. No pole is
+discarded by an ordinary residue test on
+$(dz-dw)/(z-w)$. The sextic central pole is one of the scalar
+components of the coderivation, while the $\Lambda$ channel supplies a
+genuine quadratic composite:
+\[
+\Delta(\Lambda^\vee)
+=\Lambda^\vee\boxtimes 1+1\boxtimes\Lambda^\vee
++T^\vee\boxtimes T^\vee
+\]
+up to the standard suspension and normal-ordering signs.
 
-\medskip
-\noindent\emph{Step 1: Bar Complex Structure}
-
-\[\bar{B}^0(W_3) = \mathbb{C}\]
-\[\bar{B}^1(W_3) = \Gamma(\overline{C}_2, T^{\boxtimes 2} \otimes \eta) \oplus \Gamma(\overline{C}_2, W^{\boxtimes 2} \otimes \eta) \oplus \Gamma(\overline{C}_2, T \boxtimes W \otimes \eta)\]
-\[\bar{B}^2(W_3) = \text{(involves 3-point functions with logarithmic 2-forms)}\]
-
-\medskip
-\noindent\emph{Step 2: The Sextic Pole Challenge}
-
-The $W \times W$ OPE has a \emph{sixth-order pole}:
-\[W(z)W(w) \sim \frac{c/3}{(z-w)^6} + \cdots\]
-
-When coupled with $\eta = \frac{dz-dw}{z-w}$, this gives:
-\[\frac{c/3}{(z-w)^6} \cdot \frac{dz-dw}{z-w} \sim \frac{c/3 \cdot dz}{(z-w)^7}\]
-
-The residue:
-\[\text{Res}_{z=w}\left[\frac{dz}{(z-w)^7}\right] = 0\]
-
-The leading pole therefore contributes nothing to the bar differential. The non-trivial contributions come entirely from descendants.
-
-\medskip
-\noindent\emph{Step 3: Descendant Tower}
-
-The $W_3$ algebra has generators:
-\begin{align*}
-&T, \partial T, \partial^2 T, \partial^3 T, \ldots \quad &&(\text{weight } 2, 3, 4, 5, \ldots) \\
-&W, \partial W, \partial^2 W, \partial^3 W, \ldots \quad &&(\text{weight } 3, 4, 5, 6, \ldots) \\
-&\Lambda = :TT:, \partial\Lambda, \partial^2\Lambda, \ldots \quad &&(\text{weight } 4, 5, 6, \ldots)
-\end{align*}
-
-The bar complex in degree 1 becomes:
-\[\bar{B}^1(W_3) = \bigoplus_{m,n,p,q \geq 0} \Gamma(\overline{C}_2, \partial^m T \otimes \partial^n T \otimes \eta) \oplus \Gamma(\overline{C}_2, \partial^p W \otimes \partial^q W \otimes \eta) \oplus \cdots\]
-
-This is infinite-dimensional.
-
-\medskip
-\noindent\emph{Step 4: I-adic Filtration}
-
-Define the \emph{augmentation ideal}:
-\[I = \ker(\epsilon: \bar{B}(W_3) \to \mathbb{C})\]
-
-The filtration:
-\begin{align*}
-I^0 &= \bar{B}(W_3) \\
-I^1 &= \text{span}\{T, W, \text{and products}\} \\
-I^2 &= \text{span}\{T \otimes T, T \otimes W, W \otimes W, \text{and higher}\} \\
-I^n &= \text{span}\{n\text{-fold products}\}
-\end{align*}
-
-\medskip
-\noindent\emph{Step 5: Completion}
-
-\[\widehat{\bar{B}(W_3)} = \varprojlim_n \bar{B}(W_3)/I^n\]
-
-\emph{Explicit structure.}
-
-In degree 0:
-\[\widehat{\bar{B}}^0 = \mathbb{C}\]
-
-In degree 1:
-\[\widehat{\bar{B}}^1 = \left\{\sum_{m,n} a_{mn} \, \partial^m T^* \boxtimes \partial^n T^* + \sum_{p,q} b_{pq} \, \partial^p W^* \boxtimes \partial^q W^* + \cdots : \text{convergent series}\right\}\]
-
-\medskip
-\noindent\emph{Step 6: The Completed Koszul Dual}
-
-\[W_3^! = \widehat{T^c(T^* \oplus W^*)}\]
-
-\emph{Generators.} $T^*$ (weight $-2$), $W^*$ (weight $-3$)
-
-\emph{Coproduct.}
-\begin{align*}
-\Delta(T^*) &= T^* \boxtimes 1 + 1 \boxtimes T^* \\
-\Delta(W^*) &= W^* \boxtimes 1 + 1 \boxtimes W^* \\
-\Delta(\Lambda^*) &= \Lambda^* \boxtimes 1 + T^* \boxtimes T^* + 1 \boxtimes \Lambda^*
-\end{align*}
-
-\emph{Differential.} (Encoding the OPE structure)
-\begin{align*}
-d_!(T^*) &= -\frac{c}{2} \cdot \text{(curvature)} \\
-d_!(W^*) &= -\sum_{\text{poles}} (\text{structure constants from } W \times W \text{ OPE}) \\
-&= -\frac{16}{22+5c}\,\Lambda^* - \frac{2}{(z-w)^4}\,T^* - \cdots \\
-& \quad\text{(only poles of order $\leq 2$ in $\eta_{12}$
-contribute; $(z{-}w)^{-6}$ gives zero residue)}
-\end{align*}
-
-\medskip
-\noindent\emph{Step 7: Convergence Verification}
-
-\emph{Claim:} The inverse limit converges.
-
-\emph{Proof.} We verify the Mittag-Leffler condition. For $W_3$:
-\begin{itemize}
-\item Finite generation: YES (2 generators $T, W$)
-\item Polynomial growth: OPE coefficients grow at most polynomially in descendant level
-\item Formal smoothness: $\dim \ChirHoch^*(W_3) < \infty$ (verified by Theorem~\ref{thm:main-koszul-hoch} polynomial concentration; the Zhu algebra $A(W_3)$ controls positive-energy module theory, not chiral Hochschild dimension directly)
-\end{itemize}
-
-Therefore, Lemma~\ref{lem:completion-convergence} applies.
-
-\medskip
-\noindent\emph{Step 8: Cohomology}
-
-\[H^*(\widehat{\bar{B}}(W_3), d_!) = \begin{cases}
-\mathbb{C} & * = 0 \\
-0 & * > 0
-\end{cases}\]
-
-Hence $\widehat{\bar{B}}(W_3)$ is a \emph{resolution} of the trivial module.
+The intrinsic bar-dual coalgebra is
+\[
+W_3^{\mathrm i}
+=H^*\!\left(\widehat{\barB_X^\Sigma(W_3)},d_{\mathrm{bar}}\right),
+\]
+or the ordered version in the $\Eone$ refinement. It is represented by a
+closed subcoalgebra of the completed cofree conilpotent coalgebra on the
+duals of
+\[
+T,\partial T,\partial^2T,\ldots,\qquad
+W,\partial W,\partial^2W,\ldots
+\]
+together with the composite coalgebra coordinates forced by the OPE,
+beginning with $\Lambda^\vee$. The Koszul-dual algebra is not this
+cofree coalgebra. It is
+\[
+W_3^!=\mathbb D_{\operatorname{Ran}}(W_3^{\mathrm i})
+\]
+when the Verdier finite-type hypotheses are satisfied. Completion
+converges only under the bidegreewise finite-dimensional and
+Mittag--Leffler hypotheses of Lemma~\ref{lem:completion-convergence};
+finite strong generation alone is not a substitute.
 \end{example}
 
 %================================================================
@@ -6290,33 +6432,62 @@ Hence $\widehat{\bar{B}}(W_3)$ is a \emph{resolution} of the trivial module.
 
 \subsection{\texorpdfstring{General $W_N$ algebras}{General W-N algebras}}
 
-\begin{construction}[$W_N$ Koszul dual]
+\begin{construction}[$W_N$ bar-dual coalgebra]
 \label{const:wn-general}
 
-For $W_N$ with generators $\{W^{(2)}, W^{(3)}, \ldots, W^{(N)}\}$ of weights $2, 3, \ldots, N$:
+For $W_N$ with strong generators
+$\{W^{(2)},W^{(3)},\ldots,W^{(N)}\}$ of weights
+$2,3,\ldots,N$, the completed bar complex is
+\[
+\widehat{\barB_X^\Sigma(W_N)}
+=\varprojlim_n \barB_X^\Sigma(W_N)/F^n_{\mathrm{bar}},
+\]
+with
+\[
+\barB^k(W_N)=
+\bigoplus_{\substack{i_1,\ldots,i_{k+1}\in\{2,\ldots,N\}\\
+m_1,\ldots,m_{k+1}\ge0}}
+\Gamma\!\left(
+\overline C_{k+1}(X),
+\partial^{m_1}W^{(i_1)}\boxtimes\cdots\boxtimes
+\partial^{m_{k+1}}W^{(i_{k+1})}\otimes\Omega^k_{\log}
+\right).
+\]
+The coderivation is the continuous extension of all OPE modes among the
+strong generators and their descendants.
 
-\medskip
-\noindent\emph{Bar Complex.}
-\[\bar{B}^k(W_N) = \bigoplus_{\substack{i_1,\ldots,i_{k+1} \in \{2,\ldots,N\} \\ m_1,\ldots,m_{k+1} \geq 0}} \Gamma\left(\overline{C}_{k+1}(X), \partial^{m_1} W^{(i_1)} \boxtimes \cdots \boxtimes \partial^{m_{k+1}} W^{(i_{k+1})} \otimes \Omega^k_{\log}\right)\]
-
-\medskip
-\noindent\emph{Completion.}
-\[\widehat{\bar{B}}(W_N) = \varprojlim_n \bar{B}(W_N)/I^n\]
-
-\medskip
-\noindent\emph{Koszul Dual.}
-\[W_N^! = \widehat{T^c\left(\bigoplus_{s=2}^N (W^{(s)})^*\right)}\]
-
-The dual has the following properties:
+The intrinsic coalgebra is
+\[
+W_N^{\mathrm i}
+=H^*\!\left(\widehat{\barB_X^\Sigma(W_N)},d_{\mathrm{bar}}\right).
+\]
+It is not the algebra $W_N^!$. In a presentation it sits inside the
+completed conilpotent coalgebra cogenerated by the duals of the strong
+generators, their $\partial$-descendants, and the normal-ordered
+composite coordinates forced by the OPE closure relations. Its structure
+has the following features.
 \begin{enumerate}
-\item Generators $(W^{(s)})^*$ have weight $-s$.
-\item Coproduct is primitive on generators.
-\item Differential encodes all OPE structure constants.
-\item Curvature $m_0 = \kappa(\Walg_N)\cdot\omega_g$ where
- $\kappa(\Walg_N) = c \cdot (H_N - 1)$,
- $H_N = \sum_{j=1}^{N} 1/j$; vanishes at $c = 0$, not at
- $c_{\mathrm{minimal}}$.
+\item The strong-generator coordinates $(W^{(s)})^\vee$ have dual
+ weight $-s$ before the suspension shift.
+\item The coproduct is primitive only on genuine cogenerators; composite
+ coordinates have reduced coproducts determined by normal ordering.
+\item The differential records all OPE structure constants, including
+ central high-pole channels and composite fields.
+\item In the curved genus package the scalar normalization is governed
+ by
+ \[
+ \kappa(\Walg_N)=c(H_N-1),\qquad
+ H_N=\sum_{j=1}^{N}\frac1j,
+ \]
+ and this vanishes at $c=0$, not at the minimal-model values in
+ general.
 \end{enumerate}
+The post-Verdier algebra is
+\[
+W_N^!=\mathbb D_{\operatorname{Ran}}(W_N^{\mathrm i})
+\]
+under the same finite-type and completion hypotheses as in
+Corollary~\ref{cor:circularity-free-koszul}.
 \end{construction}
 
 \begin{table}[ht]
@@ -6344,20 +6515,29 @@ $N$ & $N-1$ & $2N$ & $\binom{N}{2}$ \\
 \begin{example}[Affine Yangian]\label{ex:affine-yangian-kp}
 \label{ex:yangian-completion}
 
-The affine Yangian $Y_\hbar(\widehat{\mathfrak{gl}}_n)$ has generators $\{T^a_{(r)}\}$ for $a = 1, \ldots, n^2$ and $r \geq 0$.
+The affine Yangian $Y_\hbar(\widehat{\mathfrak{gl}}_n)$ belongs to the
+ordered $\Eone$ lane. Its spectral-parameter relations are read by
+$\barB_X^{\mathrm{ord}}$, not by the symmetric Ran bar before averaging.
+In a finite Drinfeld-current or RTT window the generators may be written
+schematically as $T^a_{(r)}(u)$, with $a=1,\ldots,n^2$ and $r\ge0$; the
+relations have rational coefficients in $u-v$ and $\hbar$ and are
+completed at the chosen spectral pole.
 
-\emph{OPE structure.} Involves spectral parameter $u$:
-\[T^a_{(r)}(z, u) T^b_{(s)}(w, v) = \sum_{k,m} \frac{R^{ab}_{cd}(u-v)}{(z-w)^{k+1}} T^c_{(r+s-k)}(w,u) T^d_{(m)}(w,v)\]
-
-This is \emph{highly non-quadratic} due to:
-\begin{itemize}
-\item Spectral parameter dependence
-\item Rational structure constants $R(u-v)$
-\item Infinite tower of generators
-\end{itemize}
-
-\emph{Completion.} Requires \emph{double completion}, both in $I$-adic and in spectral parameter $\hbar$:
-\[\widehat{\widehat{\bar{B}}}(Y_\hbar) = \varprojlim_n \varprojlim_m \bar{B}(Y_\hbar)/I^n \cdot \hbar^m\]
+The correct completed bar object is the finite-window inverse limit
+\[
+\widehat{\barB_X^{\mathrm{ord}}(Y_\hbar)}
+=\varprojlim_{p,q,m}
+\barB_X^{\mathrm{ord}}(Y_\hbar)/
+\bigl(F_{\mathrm{bar}}^p+\hbar^q+\mathfrak m_u^m\bigr),
+\]
+where $\mathfrak m_u$ is the spectral-parameter maximal ideal at the
+expansion point. The quotient is by the sum of the three closed
+filtration ideals, not by the product $I^p\hbar^q$. The intrinsic object
+obtained from this complex is
+$Y_\hbar(\widehat{\mathfrak{gl}}_n)^{\mathrm i}$. A statement about
+$Y_\hbar(\widehat{\mathfrak{gl}}_n)^!$ requires continuous Verdier
+duality on these finite windows and the bidegreewise
+Mittag--Leffler convergence of Lemma~\ref{lem:completion-convergence}.
 \end{example}
 
 \begin{example}[Bershadsky--Polyakov algebra]
@@ -6417,12 +6597,11 @@ $\mathcal{N}=2$ Super & 3 & I-adic (super) & Fermion signs \\
 \end{table}
 
 \begin{remark}[Feynman diagrams]\label{sec:feynman_genus_g}
-The Feynman diagram interpretation of the bar-cobar complex (the identification
-of bar chains with off-shell amplitudes and cobar chains with on-shell propagator
-templates) is developed in Chapter~\ref{ch:v1-feynman}.
+The Feynman diagram interpretation of the bar-cobar complex (the
+identification of bar chains with off-shell amplitudes and cobar chains
+with on-shell propagator kernels) is developed in
+Chapter~\ref{ch:v1-feynman}.
 \end{remark}
-
-% Feynman diagram exposition (formerly ~210 lines) moved to Chapter~\ref{ch:v1-feynman}.
 
 % ================================================================
 % SECTION: E1-CHIRAL KOSZUL DUALITY
@@ -6709,8 +6888,10 @@ was verified explicitly in
 Chapter~\ref{ch:heisenberg-frame}:
 the bar complex
 (\S\ref{sec:frame-bar-deg1}--\S\ref{sec:frame-bar-all})
-recovers $\mathrm{Sym}^{\mathrm{ch}}(V^*)$, and the cobar of
-this commutative coalgebra reconstructs $\mathcal{H}_k$.
+recovers the intrinsic bar-dual coalgebra
+$\mathcal H_k^{\mathrm i}$; finite Verdier duality identifies the
+post-Verdier algebra with $\mathrm{Sym}^{\mathrm{ch}}(V^*)$, and the
+cobar of the coalgebra reconstructs $\mathcal{H}_k$.
 The spectral discriminant is trivial ($\Delta_{\mathcal{H}_k}(x)=1$,
 rank~$1$), reflecting that no non-trivial higher operations arise.
 \end{example}
@@ -6806,7 +6987,9 @@ The objects remain distinct:
 \(\mathcal A^!\) is the finite-type Verdier/Koszul dual algebra when
 that dual exists, and
 $Z^{\mathrm{der}}_{\mathrm{ch}}(\mathcal{A})=\ChirHoch^*(\mathcal A)$
-is the Hochschild closed-string sector.
+is the cochain-level Hochschild closed-sector actor. It is not the
+physical closed-string bulk unless a separate open-closed comparison
+identifies the physical local operators with this cochain object.
 \end{remark}
 
 % ================================================================
@@ -6824,9 +7007,9 @@ chiral Koszul pair $(\cA_1,\cA_2)$
 \textup{(}derived equivalence, Ext exchange with derived Hom on the
 bar-comodule side and finite-type Tor reformulations, simple/projective
 transport, and Hochschild transport\textup{)}
-is \emph{not} proved on this general surface. The earlier bar-cobar
-machinery in Part~\ref{part:bar-complex} gives the intrinsic bar-coalgebra comparison, and
-the manuscript's proved ordinary module-level statement is the later
+is \emph{not} proved on this general surface. The bar-cobar machinery
+in Part~\ref{part:bar-complex} gives the intrinsic bar-coalgebra
+comparison, and the proved ordinary module-level statement is the
 $\Eone$ theorem
 Theorem~\ref{thm:e1-module-koszul-duality}, restricted to the
 quadratic genus-$0$ complete/conilpotent lane.
@@ -6834,6 +7017,11 @@ quadratic genus-$0$ complete/conilpotent lane.
 Any extension of that package to arbitrary chiral Koszul pairs would
 require extra hypotheses and a module-level comparison theorem beyond
 what is currently established here.
+Nor does Hochschild transport reconstruct a physical bulk
+factorization algebra: it gives the cochain-level closed-sector actor
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ only after the chiral Hochschild
+comparison is installed. A physical bulk requires a separate
+bulk-to-boundary local-operator map and a quasi-isomorphism statement.
 \end{remark}
 
 \subsection{\texorpdfstring{$\Eone$-chiral module category Koszul duality}{E1-chiral module category Koszul duality}}
@@ -6968,39 +7156,38 @@ with the Hilbert series identity $h_{\mathcal{A}}(t) \cdot
 h_{\mathcal{A}^!}(-t) = 1$.
 \end{proof}
 
-\begin{proposition}[Koszul character identity; \ClaimStatusConditional]
+\begin{proposition}[Finite quadratic Hilbert identity; \ClaimStatusConditional]
 \label{prop:koszul-character-identity}
 \index{Koszul property!character identity|textbf}
 \index{character identity!Koszul|textbf}
 
-For a chirally Koszul algebra~$\cA$ with Koszul dual~$\cA^!$,
-the vacuum module character
-$\chi_V(q) = \sum_{h \geq 0} d(h)\,q^h$
-(where $d(h)$ is the quasi-primary count at weight~$h$) satisfies
+Let $\cA$ lie on the split finite-type quadratic lane, and assume its
+bar-dual coalgebra~$\cA^{\mathrm i}$ admits the finite Verdier dual
+algebra~$\cA^!=(\cA^{\mathrm i})^\vee$. Then the Hilbert series of the
+algebra and of the post-Verdier dual satisfy the classical Koszul
+identity
 \begin{equation}\label{eq:koszul-character-identity}
- \chi_V(q) \cdot \bigl(1 - \chi_{\cA^!}(q)\bigr) \;=\; 1,
+ h_\cA(t)\,h_{\cA^!}(-t)=1.
 \end{equation}
-where $\chi_{\cA^!}(q)
-= \sum_{n \geq 0} (-1)^n \dim H^n(\barBgeom(\cA))_h \cdot q^h$
-is the alternating bar cohomology character.
+Here $h_{\cA^!}$ means the Hilbert series of
+$(\cA^{\mathrm i})^\vee$. It is not the vacuum quasi-primary character
+of~$\cA$, and equation~\eqref{eq:koszul-character-identity} is not a
+formula for quasi-primary counts outside the split finite-type
+quadratic lane.
 \end{proposition}
 
 \begin{proof}
-The Hilbert series identity
-$h_{\cA}(t) \cdot h_{\cA^!}(-t) = 1$
-(used in the proof of Theorem~\ref{thm:e1-module-koszul-duality}(iii)
-above) specializes to~\eqref{eq:koszul-character-identity}
-upon identifying $h_{\cA^!}(-t)$ with
-$1 - \chi_{\cA^!}(q)$ under the substitution $t = q$.
-Concretely: chirally Koszul means
-$H^*(\barBgeom(\cA))$ is concentrated in bar degree~$1$,
-so $h_{\cA^!}(t) = \chi_{\cA^!}(t)$ and
-$h_{\cA^!}(-t) = 1 - \chi_{\cA^!}(t)$
-(the sign flip converts bar-degree parity into the alternating sign).
-The identity then reads: the vacuum character of~$\cA$
-is the reciprocal of $1 - \chi_{\cA^!}(q)$,
-expressing the quasi-primary spectrum of~$\cA$ in terms of
-its Koszul dual generators.
+On the finite quadratic lane the Koszul resolution of the unit has
+terms $\cA\otimes(\cA^{\mathrm i})_n$. Taking the Euler characteristic
+of this exact resolution gives
+\[
+h_\cA(t)\sum_{n\ge0}(-1)^n\dim(\cA^{\mathrm i})_n\,t^n=1.
+\]
+Finite Verdier duality preserves the graded dimensions, so the signed
+series is $h_{\cA^!}(-t)$. This proves
+\eqref{eq:koszul-character-identity}. For PBW non-quadratic or
+completed families, the same expression is only a finite-window Euler
+identity after the Mittag--Leffler hypotheses have been imposed.
 \end{proof}
 
 \begin{proposition}[Bar cohomology $\neq$ quasi-primary count;
@@ -7009,8 +7196,9 @@ its Koszul dual generators.
 \index{bar cohomology!quasi-primary count distinction|textbf}
 \index{quasi-primary space!bar cohomology distinction|textbf}
 The bar cohomology dimension $\dim H^1(\barBgeom(\cA))_h$
-counts generators of the \emph{Koszul dual}~$\cA^!$ at
-weight~$h$. The quasi-primary count
+counts cogenerators of the bar-dual coalgebra~$\cA^{\mathrm i}$ at
+weight~$h$; after finite Verdier duality it counts generators of the
+post-Verdier algebra~$\cA^!$. The quasi-primary count
 $d_{\mathrm{qp}}(h) = p_{\geq 2}(h) - p_{\geq 2}(h-1)$
 counts quasi-primary fields of the \emph{original}
 algebra~$\cA$. These are different sequences for any
@@ -7038,9 +7226,10 @@ the first nontrivial weight above the generator.
 \emph{(b) Bar cohomology sees the Koszul dual, not
 the original.}
 By the Koszul property,
-$H^1(\barBgeom(\cA))_h \cong (\cA^!)_h^{\mathrm{gen}}$:
-bar cohomology in degree~$1$ counts generators of the
-\emph{dual} algebra. For Kac--Moody:
+$H^1(\barBgeom(\cA))_h \cong (\cA^{\mathrm i})_h^{\mathrm{cogen}}$:
+bar cohomology in degree~$1$ counts cogenerators of the
+\emph{bar-dual} coalgebra, and only after finite duality generators of
+the dual algebra. For Kac--Moody:
 $\dim H^1(\barBgeom(\widehat{\mathfrak{g}}))_1
 = \dim\mathfrak{g}$
 (both the currents $J^a$ and the dual generators live at
@@ -7073,17 +7262,22 @@ distribution.
 \index{Koszul duality!categorified}
 \index{Kazhdan--Lusztig conjecture!bar complex interpretation}
 The numerical complementarity $\kappa(\cA) + \kappa(\cA^!) = K$
-(Theorem~\ref{thm:quantum-complementarity-main}) admits a
-categorified lift: the bar-cobar adjunction of Theorem~A
-induces, on module categories, an equivalence
+(Theorem~\ref{thm:quantum-complementarity-main}) has a categorical
+shadow only after the finite-type Verdier and completion hypotheses
+have been fixed. The theorem proved here is the bar-comodule
+equivalence on the complete $\Eone$ lane:
 $D(\mathrm{Mod}_{\cA}^{\mathrm{compl}}) \simeq
 D(\mathrm{CoMod}_{B(\cA)}^{\mathrm{conil}})$
-(Theorem~\ref{thm:e1-module-koszul-duality}) whose
-decategorification recovers the scalar identity
+(Theorem~\ref{thm:e1-module-koszul-duality}). Its Euler
+decategorification can be compared with the scalar conductor identity
+only after identifying the bar-dual coalgebra with a finite
+post-Verdier algebra and inserting the family-specific conductor
+normalization
 $\kappa + \kappa^! = \varrho_{\cA}\,K$
 (with $\varrho_{\cA} = 0$ for Kac--Moody and free-field families,
 $\varrho_{\mathrm{Vir}} = 1/2$, $\varrho_{\cW_N} = H_N - 1$ for principal
-$\cW_N$, and $\varrho_{\BP} = 1/6$).
+$\cW_N$, and $\varrho_{\BP} = 1/6$). The module equivalence alone does
+not prove those scalar constants.
 
 This structure has three classical shadows in geometric
 representation theory.
@@ -7137,43 +7331,22 @@ representation theory.
  $\leftrightarrow$ \emph{perverse sheaves on~$\mathrm{Gr}$}.
 \end{enumerate}
 
-In each case, the essential mechanism is a
-Koszul-type formality: the relevant Ext algebra is generated
-in degree~$1$ (or, in the chiral setting, concentrated along
-the bar-cohomological diagonal), and the resulting bar
-resolution is minimal. The chiral Koszul pair
-$(\cA, \cA^!)$ of
-Definition~\ref{def:chiral-koszul-pair} axiomatises this
-mechanism at the operadic level, with the
-three geometric instances above as specialisations.
+In each case the shared mechanism is Koszul-type formality: the
+relevant Ext algebra is generated in degree~$1$ or, in the chiral
+setting, the bar cohomology is concentrated along the diagonal. The
+chiral Koszul pair
+$(\cA,\cA^!)$ of Definition~\ref{def:chiral-koszul-pair} axiomatises
+this bar-formality mechanism after the bar-dual coalgebra has been
+separated from its post-Verdier dual algebra.
 
-The point deserves emphasis. BGS formality, the
-Kazhdan--Lusztig tensor equivalence, and the BFM derived
-Satake correspondence are not three separate phenomena linked
-by analogy; they are three fibres of a single structure. What
-they share is the property that the bar complex of the relevant
-algebra is formal: its cohomology inherits no higher
-$A_\infty$ operations, so that $\mathrm{Ext}$ is generated in
-cohomological degree~$1$ and the Koszul dual is determined by
-quadratic data alone. The chiral Koszul pair
-(Definition~\ref{def:chiral-koszul-pair}) extracts exactly this
-property as an axiom, replacing the geometry specific to each
-case (flag variety, affine Grassmannian, quantum group module
-category) with the operadic datum of a twisting morphism
-$\tau \colon \barB(\cA) \to \cA^!$ whose twisted tensor product is
-acyclic. Once formality holds, the bar-cobar adjunction of
-Theorem~A delivers the derived equivalence on module categories,
-the Verdier intertwining identifies the two sides of
-complementarity, and the Kazhdan--Lusztig polynomials appear as
-graded multiplicities on the $E_2$ page of the bar spectral
-sequence; no further input from the specific geometric setting is
-required. The three classical theorems are then recovered by
-specialising the curve~$X$, the algebra~$\cA$, and the
-level~$k$: BGS is the genus-zero fibre at finite-dimensional
-$\fg$, the Kazhdan--Lusztig equivalence is the genus-zero fibre
-at affine~$\widehat{\fg}$ with integral level, and BFM is the
-geometric fibre over the affine Grassmannian where the Koszul
-dual is governed by~$\fg^\vee$.
+BGS formality, the Kazhdan--Lusztig tensor equivalence, and the BFM
+derived Satake correspondence require their own geometric hypotheses:
+flag-variety localization, integral-level affine category~$\mathcal O$,
+or affine-Grassmannian constructibility. The chiral bar-cobar
+formalism supplies the common Koszul skeleton, not a replacement for
+those inputs. When the external hypotheses are present, the bar
+spectral sequence records the same graded multiplicities; without
+them the paragraph is only a heuristic comparison.
 \end{remark}
 
 
@@ -7343,23 +7516,58 @@ equals $\kappa(\widehat{\mathfrak{g}}_{-k-2h^\vee})$.
 
 \subsection{Curved Koszul duality}
 
-\begin{theorem}[Curved Koszul pairs; \ClaimStatusProvedHere]\label{thm:curved-koszul-pairs}
+\begin{theorem}[Curved conductor compatibility; \ClaimStatusConditional]\label{thm:curved-koszul-pairs}
 \index{curved Ainfinity@curved $A_\infty$!Koszul pairs}
 \textup{[Regime: curved-central
 \textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
 
-Filtered algebras $(\cA_1, \cA_2)$ with modular curvatures
-$\kappa_1,\kappa_2$ form a curved Koszul pair if:
+Let $(\cA_1,\cA_2)$ be filtered-complete chiral algebras with modular
+curvatures $\kappa_1,\kappa_2$. Put
+\[
+\cC_i=\widehat{\barB}^{\mathrm{curv}}_X(\cA_i),\qquad
+\cA_i^{\mathrm i}=H^*(\cC_i),
+\]
+so $\cC_i$ is the completed curved bar coalgebra and
+$\cA_i^{\mathrm i}$ is the intrinsic bar-dual coalgebra. When the latter
+is finite-type Verdier dualizable, write
+$\cA_i^!=\mathbb D_{\operatorname{Ran}}\cA_i^{\mathrm i}$. The Hochschild
+object $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA_i)
+=C^\bullet_{\mathrm{ch}}(\cA_i,\cA_i)$ is not part of this pair datum.
+Assume:
 \begin{enumerate}
-\item Associated graded $(\mathrm{gr}\,\cA_1, \mathrm{gr}\,\cA_2)$ are classical Koszul dual
-\item Curvatures satisfy the family conductor identity
+\item the associated graded pair
+$(\mathrm{gr}\,\cA_1,\mathrm{gr}\,\cA_2)$ is a classical Koszul pair;
+\item the filtrations are complete, separated, and bidegreewise
+Mittag--Leffler in the sense of Lemma~\ref{lem:completion-convergence};
+\item the coalgebras $\cA_i^{\mathrm i}$ are finite-type Verdier
+dualizable on the chosen lane, and the candidate Verdier comparison maps
+\[
+\mathbb D_{\operatorname{Ran}}\cA_1^{\mathrm i}\longrightarrow \cA_2,
+\qquad
+\mathbb D_{\operatorname{Ran}}\cA_2^{\mathrm i}\longrightarrow \cA_1
+\]
+are maps of completed factorization algebras whose associated graded
+maps are the classical Koszul-duality maps from \textup{(1)};
+\item the curved twisting morphism exists in the Positselski
+completed category and its curvature scalars satisfy the family
+conductor identity
 \[
 \kappa_1+\kappa_2=K^\kappa_{\mathrm{fam}}
 \]
-under the Koszul pairing
-\item The spectral sequence associated to the filtration degenerates at $E_2$
+under these candidate pairings;
+\item the spectral sequence associated to the filtration degenerates at
+$E_2$.
 \end{enumerate}
-For the canonical families,
+Then the completed curved bar-cobar comparison identifies
+$\Omega_X^{\mathrm{curv}}\cC_i$ with~$\cA_i$, and the two maps in
+\textup{(3)} are the post-Verdier Koszul-duality comparisons
+$\cA_1^!\simeq\cA_2$ and $\cA_2^!\simeq\cA_1$ on this lane. The scalar
+identity $\kappa_1+\kappa_2=K^\kappa_{\mathrm{fam}}$ is only the
+curvature-conductor compatibility for those comparisons. It is not a
+criterion for Koszulness without \textup{(1)}--\textup{(3)} and
+\textup{(5)}.
+
+For the canonical families under their stated hypotheses,
 \[
 K^\kappa_{\mathrm{fam}}=
 0\quad\text{for Heisenberg, affine Kac--Moody, and free fields,}
@@ -7371,25 +7579,37 @@ K^\kappa_{\mathrm{fam}}=250/3\quad\text{for }\mathcal W_3,
 \[
 K^\kappa_{\mathrm{fam}}=98/3\quad\text{for Bershadsky--Polyakov},
 \qquad
-K^\kappa_{\mathrm{fam}}=8\quad\text{for the Mukai-enhanced K3 row.}
+K^\kappa_{\mathrm{fam}}=8\quad\text{for recognized finite
+Mukai-enhanced K3 Hall--Borcherds windows.}
 \]
 \end{theorem}
 
 \begin{proof}
 The filtered bar complex has associated graded
-$\mathrm{gr}\,\B(\cA_1)=\B(\mathrm{gr}\,\cA_1)$. Condition~(1) gives the
-classical Koszul comparison on the $E_1$ page. In a curved
-$A_\infty$ bar-cobar complex, the curvature term is not universally
-anti-invariant; it is shifted by the conductor of the family. The
-identity $\kappa_1+\kappa_2=K^\kappa_{\mathrm{fam}}$ is precisely the
-compatibility condition for the curved twisting morphism in the
-Positselski sense~\cite{Positselski11}. The displayed constants are the
-canonical values from the landscape census:
+$\mathrm{gr}\,\cC_i=\barB(\mathrm{gr}\,\cA_i)$. Condition~(1) gives the
+classical Koszul comparison on the $E_1$ page. Conditions~(2) and~(5)
+let this comparison pass to the completed filtered object without
+creating $\varprojlim^1$ cohomology. The result at this point is a
+statement about the coalgebras $\cC_i$ and $\cA_i^{\mathrm i}$.
+Condition~(3) is the separate step that turns $\cA_i^{\mathrm i}$ into
+the post-Verdier algebra $\cA_i^!$; without it the theorem has no
+algebra-level duality conclusion, and it says nothing about
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA_i)$.
+
+In a curved $A_\infty$ bar-cobar complex the curvature term is not
+universally anti-invariant; it is shifted by the conductor of the
+family. Condition~(4) is exactly the compatibility condition for the
+curved twisting morphism in the Positselski completed category
+\cite{Positselski11}. The displayed constants are the canonical target
+values from the landscape census:
 $\kappa(V_k(\fg))=\dim(\fg)(k+h^\vee)/(2h^\vee)$,
 $\kappa(\mathrm{Vir}_c)=c/2$, and
 $\kappa(\mathcal W_N)=c(H_N-1)$, together with the recorded
-Bershadsky--Polyakov and Mukai rows. Condition~(3) lifts the $E_1$
-comparison to the filtered curved bar-cobar equivalence by
+Bershadsky--Polyakov and conditional Mukai rows. The Mukai value is
+available only after the finite Hall--Borcherds recognition datum
+supplies the source pairing, radical quotient, differential, and
+completion. Under all five hypotheses the curved comparison is the
+filtered curved bar-cobar comparison of
 Theorem~\ref{thm:geometric-equals-operadic-bar}.
 \end{proof}
 
@@ -7399,14 +7619,24 @@ Theorem~\ref{thm:geometric-equals-operadic-bar}.
 
 \section{Derived chiral Koszul duality}
 
-\subsection{Motivation: ghost systems}
+\subsection{Derived ghost differential}
 
-The $bc$ ghost system (weights 2, $-1$) does not pair well with $\beta\gamma$ (weights 1, 0) classically, but with two fermions one obtains a derived Koszul pair.
+The $bc$ ghost system (weights $2,-1$) and the $\beta\gamma$ system
+(weights $1,0$) do not form an ordinary quadratic pair on the nose. A
+derived pairing, if it exists, must live in DG chiral algebras with a
+BRST differential and with the bar coalgebra kept separate from its
+post-Verdier dual algebra.
 
-\begin{definition}[Derived chiral algebra]
-A derived chiral algebra is a complex:
-\[\mathcal{A}^{\bullet}: \cdots \to \mathcal{A}^{-1} \xrightarrow{d} \mathcal{A}^0 \xrightarrow{d} \mathcal{A}^1 \to \cdots\]
-with differential compatible with products and factorization.
+\begin{definition}[DG chiral algebra]
+A DG chiral algebra is a cochain complex of factorization
+$\cD$-modules
+\[
+\mathcal{A}^{\bullet}: \cdots \to
+\mathcal{A}^{-1} \xrightarrow{d} \mathcal{A}^0
+\xrightarrow{d} \mathcal{A}^1 \to \cdots
+\]
+whose chiral products are chain maps; equivalently, $d$ is a derivation
+for every factorization multiplication map.
 \end{definition}
 
 \begin{conjecture}[Derived bc-\texorpdfstring{$\beta\gamma$}{beta-gamma} Koszul duality; \ClaimStatusConjectured]\label{conj:derived-bc-betagamma}
@@ -7420,13 +7650,17 @@ ghost-antighost pairing. Then:
 \item There exists a derived chiral Koszul duality framework in which
  $\mathcal{F}$ and $(\beta\gamma \oplus bc, d_{\mathrm{BRST}})$
  form a derived Koszul pair.
-\item At the level of bar complexes, this duality decomposes as:
+\item At the level of bar complexes, the conjectural comparison is a
+ coalgebra comparison
  \[
  \bar{B}^{\mathrm{ch}}_{\mathrm{derived}}(\mathcal{F})
  \;\simeq\;
- (\beta\gamma \oplus bc,\, d_{\mathrm{BRST}}),
+ (\beta\gamma \oplus bc,\, d_{\mathrm{BRST}})^{\mathrm i},
  \]
- extending the proved single-pair dualities
+ and only after finite-type Verdier duality would this produce the
+ post-Verdier algebra
+ $(\beta\gamma \oplus bc,\, d_{\mathrm{BRST}})^!$. This extends the
+ proved single-pair dualities
  $(\beta\gamma)^! \cong bc$ and $\mathcal{F}(\psi)^! \cong
  \mathrm{Sym}^{\mathrm{ch}}(\gamma)$
  (Theorem~\ref{thm:betagamma-bc-koszul},
@@ -7453,16 +7687,30 @@ Conjecture~\ref{conj:derived-bc-betagamma} is tagged
  formalism of~\cite{Zwi93}.
 \end{enumerate}
 
-\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~II
-(equivalence of homotopy categories). At H-level: a derived chiral
-Koszul duality framework extending the quadratic bar-cobar adjunction
-to DG chiral algebras, with the free fermion and $(\beta\gamma \oplus bc,
-d_{\mathrm{BRST}})$ forming a derived Koszul pair. The M-level model
-is the derived bar-cobar adjunction for DG chiral algebras. The shadow
-is the decomposition of the BRST complex into Koszul dual sectors.
-(Contributing to the derived/super extension flank adjoining
-Conjecture~\ref{conj:master-infinite-generator}, not to the standard
-$W_\infty$/Yangian packet.)
+The precise proof obligations are:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item construct a completed DG chiral bar-cobar adjunction whose
+ coalgebras are conilpotent and whose filtrations satisfy
+ Lemma~\ref{lem:completion-convergence};
+\item exhibit a BRST twisting morphism
+ \[
+ \tau_{\mathrm{BRST}}\colon
+ \bar{B}^{\mathrm{ch}}_{\mathrm{derived}}(\mathcal F)
+ \longrightarrow
+ (\beta\gamma\oplus bc,d_{\mathrm{BRST}})
+ \]
+ and prove its Maurer--Cartan equation, including the signs from the two
+ fermions;
+\item prove diagonal concentration for the DG bar spectral sequence, or
+ identify the first off-diagonal obstruction;
+\item prove finite-type Verdier dualizability of the resulting
+ coalgebra before naming the post-Verdier algebra
+ $(\beta\gamma\oplus bc,d_{\mathrm{BRST}})^!$;
+\item for the open--closed string-field interpretation, compare
+ $d_{\mathrm{BRST}}$ with the string BRST operator of~\cite{Zwi93}.
+\end{enumerate}
+Until \textup{(a)}--\textup{(e)} are supplied, the proved content is only
+the two single-pair dualities cited in the conjecture.
 \end{remark}
 
 % ================================================================
@@ -7476,21 +7724,19 @@ $W_\infty$/Yangian packet.)
 \label{subsec:virasoro-non-example}
 
 \begin{remark}[Virasoro Koszulness requires the PBW framework]
-The Virasoro algebra with central charge $c$ does \emph{not} admit a
-Koszul dual in the standard \emph{quadratic} (uncurved) sense, because
-its OPE involves a quartic pole. However, it \emph{is} chiral Koszul in
-the PBW sense of Theorem~\ref{thm:virasoro-chiral-koszul}: the PBW
-filtration yields a classical Koszul associated graded, and the
-spectral sequence degenerates at~$E_2$. A \emph{completed curved}
-same-family shadow can be constructed using the techniques of
-\S\ref{sec:i-adic-completion}; the stronger H-level infinite-generator
-dual object is delegated to the exact $W_\infty$ MC4 package of
-filtered H-level targets, residue identities, and finite detection on
-$\mathcal{I}_N$, whose first live higher-spin stages are already
-reduced on the theorem surface to the stage-$3$ fifteen-coefficient
-packet and the stage-$4$ six-coefficient packet organized as three
-local OPE blocks, with the genuinely mixed stage-$4$ remaining problem reduced
-to the single mixed $(3,4)$ triple.
+The Virasoro algebra with central charge $c$ is not controlled by an
+uncurved quadratic presentation on the single generator~$T$: the scalar
+term in the $T(z)T(w)$ OPE is a curvature term, and the normal product
+$:TT:$ enters the bar differential outside the quadratic relation space
+generated by~$T$ alone. It is nevertheless chiral Koszul in the PBW
+sense of Theorem~\ref{thm:virasoro-chiral-koszul}: the PBW filtration
+yields a classical Koszul associated graded, and the spectral sequence
+degenerates at~$E_2$. The completed curved same-family comparison must
+therefore be stated in the filtered Positselski category of
+\S\ref{sec:i-adic-completion}, with
+$\mathrm{Vir}_c$, $\barB_X(\mathrm{Vir}_c)$,
+$\mathrm{Vir}_c^{\mathrm i}$, $\mathrm{Vir}_c^!$, and
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\mathrm{Vir}_c)$ kept distinct.
 
 \emph{Why the quadratic framework fails.}
 \begin{enumerate}
@@ -7499,38 +7745,49 @@ to the single mixed $(3,4)$ triple.
 T(z)T(w) = \frac{c/2}{(z-w)^4} + \frac{2T(w)}{(z-w)^2} + \frac{\partial T(w)}{z-w} + \text{regular}
 \end{equation}
 
-\item The bar complex $\bar{B}(\mathrm{Vir}_c)$ does not equal any standard coalgebra structure.
+\item The reduced bar object is the conilpotent coalgebra
+$\barB_X(\mathrm{Vir}_c)=T^c(s^{-1}\overline{\mathrm{Vir}_c})$ with
+differential induced by the Virasoro OPE; it is not the post-Verdier
+algebra $\mathrm{Vir}_c^!$.
 
 \item The composite field
 \begin{equation}
 :TT:(z) = \lim_{w \to z} \left( T(z)T(w) - \frac{c/2}{(z-w)^4} - \frac{2T(w)}{(z-w)^2} - \frac{\partial T(w)}{z-w} \right)
 \end{equation}
-is not Koszul-compatible with the bar differential.
+contributes a bar differential term outside the uncurved quadratic
+relation space.
 
 \item The central charge $c$ enters non-linearly in higher bar degrees, preventing a quadratic Koszul resolution.
 \end{enumerate}
-One needs the PBW spectral sequence approach (Theorem~\ref{thm:pbw-koszulness-criterion}), or equivalently, curved Koszul duality (Positselski) with nilpotent completion and a filtered/completed category.
+One needs the PBW spectral sequence approach
+(Theorem~\ref{thm:pbw-koszulness-criterion}), or a curved
+Positselski comparison with nilpotent completion and the hypotheses of
+Theorem~\ref{thm:curved-koszul-pairs}. The conductor identity
+$\kappa+\kappa^!=13$ is compatible with this comparison; it does not
+replace the PBW collapse or the completion hypotheses.
 
 \emph{Contrast with Heisenberg/Kac--Moody.}
 \begin{center}
 \begin{tabular}{|l|c|c|c|}
 \hline
-\textbf{Algebra} & \textbf{Quadratic?} & \textbf{PBW Koszul?} & \textbf{Dual} \\
+\textbf{Algebra} & \textbf{Quadratic?} & \textbf{PBW Koszul?} & \textbf{Post-Verdier datum} \\
 \hline
-Heisenberg $\mathcal{H}_k$ & Yes (genus 0) & Yes & $\mathrm{Sym}^{\mathrm{ch}}(V^*)$ [curved, $m_0 = -k\omega$] \\
-Kac--Moody $\widehat{\mathfrak{g}}_k$ & Yes & Yes & $H^*(\barBgeom(\widehat{\mathfrak{g}}_k))^\vee$; $\kappa^! = \kappa(\widehat{\mathfrak{g}}_{-k-2h^\vee})$ \\
-Virasoro $\text{Vir}_c$ & No & Yes (Thm~\ref{thm:virasoro-chiral-koszul}) & Completed curved (cf.\ \S\ref{sec:i-adic-completion}) \\
-W-algebras $\mathcal{W}^k(\mathfrak{g})$ (universal) & No & Yes (Prop.~\ref{prop:pbw-universality}) & Completed curved \\
+Heisenberg $\mathcal{H}_k$ & Yes (genus 0) & Yes & $\mathbb D_{\Ran}\mathcal H_k^{\mathrm i}\simeq\mathrm{Sym}^{\mathrm{ch}}(V^*)$; curvature $m_0=-k\omega$ \\
+Kac--Moody $\widehat{\mathfrak{g}}_k$ & Yes & Yes & $\mathbb D_{\Ran}\widehat{\mathfrak{g}}_k^{\mathrm i}$; $\kappa^!=\kappa(\widehat{\mathfrak{g}}_{-k-2h^\vee})$ \\
+Virasoro $\text{Vir}_c$ & No & Yes (Thm~\ref{thm:virasoro-chiral-koszul}) & Completed curved, after Verdier duality \\
+W-algebras $\mathcal{W}^k(\mathfrak{g})$ (universal) & No & Yes (Prop.~\ref{prop:pbw-universality}) & Completed curved, after Verdier duality \\
 W-algebras $\mathcal{W}_k(\mathfrak{g})$ (simple quotient) & No & Open at admissible $k$ & Case-by-case \\
 \hline
 \end{tabular}
 \end{center}
 
-\emph{Note}: The Koszul dual
-$\widehat{\mathfrak{g}}_k^! = H^*(\barBgeom(\widehat{\mathfrak{g}}_k))^\vee$
-is the linear dual of the bar cohomology, \emph{not} the affine
-algebra $\widehat{\mathfrak{g}}_{-k-2h^\vee}$ itself. What is true
-is that $\kappa(\widehat{\mathfrak{g}}_k^!) =
+\emph{Note}: The intrinsic bar-dual coalgebra is
+$\widehat{\mathfrak{g}}_k^{\mathrm i}
+=H^*(\barBgeom(\widehat{\mathfrak{g}}_k))$. The Koszul dual algebra is
+$\widehat{\mathfrak{g}}_k^!=\mathbb D_{\Ran}
+\widehat{\mathfrak{g}}_k^{\mathrm i}$ on the finite-type Verdier lane,
+not the affine algebra $\widehat{\mathfrak{g}}_{-k-2h^\vee}$ itself.
+What is true is that $\kappa(\widehat{\mathfrak{g}}_k^!) =
 \kappa(\widehat{\mathfrak{g}}_{-k-2h^\vee})$: the two algebras share
 the same modular characteristic. For
 Heisenberg (abelian, $h^\vee = 0$):
@@ -7540,14 +7797,21 @@ commutative chiral algebra on the dual space
 $m_0 = -k\omega$ (encoding the central extension) is essential.
 \end{remark}
 
-\begin{remark}
-The Virasoro case illustrates:
+\begin{remark}[Quadratic and PBW obstructions]
+The Virasoro case isolates five facts:
 \begin{itemize}
-\item Not all vertex algebras are \emph{quadratic} Koszul, but the PBW framework (Theorem~\ref{thm:pbw-koszulness-criterion}) recovers Koszulness for a much wider class
-\item The key obstruction is not the quartic pole per se, but whether the associated graded is classically Koszul
-\item W-algebras, being deformations of Virasoro, face similar obstructions to quadratic Koszulness
+\item not every vertex algebra is quadratic Koszul in the uncurved
+sense;
+\item PBW Koszulness is controlled by the associated graded and the
+$E_2$-collapse of the bar spectral sequence;
+\item the quartic pole is an obstruction to the naive quadratic model,
+not by itself an obstruction to PBW Koszulness;
+\item $\mathcal W$-algebras carry analogous non-quadratic OPE terms;
+the universal algebras are handled by Proposition~\ref{prop:pbw-universality},
+whereas simple admissible quotients require separate null-vector
+analysis.
 \item PBW non-quadratic algebras require the completed bar-dual
-coalgebra framework of Section~\ref{sec:three-stage-construction}
+coalgebra framework of Section~\ref{sec:three-stage-construction}.
 \end{itemize}
 \end{remark}
 
@@ -7665,7 +7929,7 @@ For $n$ generators, $m$ relations, verification to degree $k$:
 % SECTION 8.9: SUMMARY AND OUTLOOK
 % ================================================================
 
-\section{Summary}
+\section{The Koszul-pair landscape}
 
 The PBW criterion (Theorem~\ref{thm:pbw-koszulness-criterion})
 reduces chiral Koszulness to a classical spectral sequence
@@ -7688,9 +7952,10 @@ adjunction to the associative chiral operad, and the module-level
 duality (Theorem~\ref{thm:e1-module-koszul-duality}) provides the
 derived equivalence on the proved complete/conilpotent lane.
 
-\begin{remark}[Theorems used by later chapters]\label{rem:ckp-dependency-digest}
+\begin{remark}[Structural consequences of the twisting theorem]\label{rem:ckp-dependency-digest}
 \index{chiral Koszul pairs!dependency map}
-This chapter provides the following results used by later chapters:
+The fundamental twisting theorem supplies the following structural
+inputs:
 \begin{itemize}
 \item $\mathrm{A}_0$: Fundamental theorem of chiral twisting morphisms
  (Theorem~\ref{thm:fundamental-twisting-morphisms}), used by
@@ -7722,72 +7987,121 @@ bar-cobar machinery extends from algebras to module bar constructions
 and bar-coalgebra comodules; on the separate quadratic genus-$0$
 $\Eone$ complete/conilpotent lane this further yields the proved
 ordinary module-category duality. Broader module-category descent is
-not part of the theorem surface proved here.
+not part of the proved statement here.
 
-\section{K3 chiral Hall--Drinfeld double as Koszul pair}
+\section{K3 chiral Hall--Drinfeld double as conditional Koszul pair}
 \label{sec:ckp-supplement}
 
-\begin{remark}[K3 chiral bialgebra as Koszul-pair datum]
+\begin{remark}[Finite Hall--Borcherds recognition datum]
 \label{rem:ckp-hall-drinfeld-pair}
-At $\cC = D^b\mathrm{Coh}(K3)$ and CY-dimension $d = 2$, the K3 chiral bialgebra of Vol~III presents as a chiral Koszul pair with abelian core + BKM vertex extension: Lie-level $\mathbf{H}_{\Delta_5}^{\mathrm{Lie}} = 24$ copies of Miki $U_{q_1, q_2}(\widehat{\widehat{\mathfrak{gl}}}_1)$ with $\widetilde{M}_{24}$-twisted permutation via the umbral cocycle (Cheng--Duncan--Harvey $2014$); vertex-level closure via Frenkel--Kac $1980$ on $\mathcal{F}_{K3} = \mathrm{Sym}(\bigoplus_{n \ge 1} H^*(K3) \otimes t^{-n})$ produces the BKM superalgebra $\mathfrak{g}_{\Delta_5}$ as non-abelian extension. The bar-dual coalgebra of this pair satisfies
-\[
- (\mathbf{H}_{\Delta_5})^{\mathrm i} \;\simeq\; V(\mathfrak{g}_{\Delta_5})^{\mathrm{coalg}}[2] \otimes \eta_{\widetilde{M}_{24}},
-\]
-with $[2]$-shift (CY-$2$) and projective Schur cocycle $\eta_{\widetilde{M}_{24}}$ of order $6$ in $H^2(M_{24},\mathrm{U}(1))\cong\mathbb{Z}/12$.
+The notation $\mathbf H_{\Delta_5}$ is used below as a recognition target,
+not as an unconditional compact Hall object.  Fix a finite downward
+saturated window $W$ in the Gritsenko--Nikulin root monoid.  A
+Hall--to--Borcherds recognition datum on $W$ consists of:
+\begin{enumerate}
+\item a compact source provenance: an oriented Hall, critical CoHA, or
+factorisation source for the $K3\times E$ sector, separate from the
+automorphic denominator;
+\item a positive-half model $Y^+_{\mathrm{Hall}}(K3\times E)_W$ with
+source multiplication, coproduct, and Hall grading, in the sense of the
+Kontsevich--Soibelman and Schiffmann--Vasserot/Rap\v{c}\'ak--Soibelman--Yang--Zhao
+CoHA constructions~\cite{KS11,SchiffmannVasserot2012,RSYZ20};
+\item parity-homogeneous simple-root representatives, real-root signs,
+and full even/odd root dimensions matching the Gritsenko--Nikulin
+Borcherds--Kac fixture on $W$~\cite{GritsenkoNikulin1998,KacBook};
+\item a non-degenerate completed Hopf pairing, its closed radical
+quotient, and the continuous Drinfeld double
+$D(Y^+_{\mathrm{Hall}}(K3\times E)_W)$;
+\item a source differential $d_{\mathrm{Hall}}$ from the compact Hall,
+BRST, or hCS complex, compatible with the coproduct, pairing, and
+completion;
+\item an independent coefficient check: the finite supercharacter of the
+source radical quotient agrees with the corresponding truncation of the
+Gritsenko--Nikulin/Borcherds product
+$64^{-1}\Delta_5(2Z)$~\cite{Bor95,GritsenkoNikulin1998}.
+\end{enumerate}
+Under such data the finite double is compared with the finite truncation
+of the denominator algebra $\mathfrak g_{\Delta_5}$, and the
+Frenkel--Kac vertex closure~\cite{FrenkelKac1980} becomes a target model
+for the BKM extension.  The denominator factor supplies root
+multiplicities, character, and Euler product.  It does not supply
+$d_{\mathrm{Hall}}$, compact primitive representatives, the Hall pairing,
+or the radical quotient.
 \end{remark}
 
-\begin{remark}[Koszul conductor $K^{\kappa_{\mathrm{ch}}}=8$ on Mukai-enhanced K3]
+\begin{remark}[Conditional conductor on the Mukai-enhanced K3 row]
 \label{rem:ckp-mukai-doubling}
-The Koszul-pair conductor of the Mukai-enhanced K3 Koszul pair evaluates to
+For a recognized finite Hall--Borcherds window, the Mukai-enhanced K3 row
+has target conductor
 \[
  K^{\kappa_{\mathrm{ch}}}(\mathcal{H}_{\mathrm{Muk}}(K3)) \;=\; \kappa_{\mathrm{ch}}(\mathcal{H}_{\mathrm{Muk}}) + \kappa_{\mathrm{ch}}(\mathcal{H}_{\mathrm{Muk}}^!) \;=\; 2\,c_+(\mathrm{Mukai}(K3)) \;=\; 8,
 \]
-with $c_+ = 4$ from the positive signature of the rank-$24$ Mukai pairing on $\Lambda_{\mathrm{Muk}} = \mathrm{II}_{4,20}$. This is the $\mathcal{B}$-family entry to the Theorem~C conductor bucket set $K^\kappa_{\mathrm{fam}}\in \{0, 8, 13, 250/3, 98/3\}$. On this row the identity $\hbar^2 \cdot K^{\kappa_{\mathrm{ch}}} = -1$ gives the Lusztig $u_\zeta$-specialisation at $\ell = 8$, matching the order of the monodromy of $\mathcal{L}^{\Delta_5}$ around the Humbert divisor $H_1 \subset \overline{\mathcal{A}_2}$ by Bruinier's Heegner Chern-class reciprocity~\cite[Proposition~5.1]{Bruinier2002}.
+with $c_+ = 4$ from the positive signature of the rank-$24$ Mukai
+pairing on $\Lambda_{\mathrm{Muk}} = \mathrm{II}_{4,20}$~\cite{Mukai1987}.
+This is the $\mathcal{B}$-family value in the Theorem~C bucket
+$K^\kappa_{\mathrm{fam}}\in \{0, 8, 13, 250/3, 98/3\}$.  The comparison
+with the $\ell=8$ Lusztig specialisation is a consequence only after the
+recognized double carries the source pairing and completion above.  Bruinier's
+Heegner Chern-class reciprocity fixes the target monodromy of
+$\mathcal{L}^{\Delta_5}$ around $H_1\subset\overline{\mathcal A_2}$
+~\cite[Proposition~5.1]{Bruinier2002}; it is not a construction of the
+compact Hall source.
 \end{remark}
 
-\section{Synthesis (continued)}
+\section{The Koszul triple for $\mathbf H_{\Delta_5}$ on
+$(\Ran(E^{\mathrm{nod,sm}}_{24}),\overline{\mathcal A}_2)$}
 \label{sec:ckp-deep}
 
 \begin{remark}[The Koszul triple $(\mathbf H_{\Delta_5}, \mathbf H^!_{\Delta_5}, B_{\mathrm{ch}}(\mathbf H_{\Delta_5}))$]
 \label{rem:ckp-deep-1}
-The Koszul triple on the bi-based Ran-space
-$(\mathrm{Ran}(E^{\mathrm{nod,sm}}_{24}),\bar{\mathcal A}_2)$ consists
-of: the chiral bialgebra $\mathbf H_{\Delta_5}$; its Verdier-Koszul
-dual $\mathbf H^!_{\Delta_5}$; and the bar coalgebra
-$B_{\mathrm{ch}}(\mathbf H_{\Delta_5}) = T^c(s^{-1}\overline{\mathbf H_{\Delta_5}})$
-in the Hall subcategory of $\mathrm{CoHA}_{K3\times E}$. The triple
-satisfies the Koszul sign rule and cyclicity from the Mukai pairing
-on $\Lambda_{\mathrm{Muk}} = \mathrm{II}_{4,20}$; this is the
-Vol.~III K3 chiral-bialgebra construction of
-Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
-\end{remark}
-
-\begin{remark}[Self-Koszulness at $\hbar^2 = -1/8$]
-\label{rem:ckp-deep-2}
-At the Lusztig specialisation $\hbar^2 = -1/\ell = -1/8$ the K3
-Koszul pair is \emph{self-dual}: there is a canonical quasi-isomorphism
-$\mathbf H^!_{\Delta_5}\simeq \mathbf H_{\Delta_5}$ in the derived Hall
-category of $K3\times E$. The obstruction to self-Koszulness away from
-$\hbar^2 = -1/8$ is controlled by the Bruinier 2002 Prop.~5.1 Heegner
-Chern-class reciprocity: on the B-family, the Chern class
-$c_1(L^{\Delta_5})\mid_{H_1}\in\mathrm{CH}^1(H_1)$ is $\mathbb Z/8$-torsion,
-and the self-Koszulness obstruction is a representative of this class.
-Bruinier~\cite{Bruinier2002} and Mukai~\cite{Mukai1987} supply the
-Heegner Chern-class and Mukai-lattice inputs.
-\end{remark}
-
-\begin{remark}[Koszul complex on the bi-based Ran-space]
-\label{rem:ckp-deep-3}
-The K3 Koszul complex on $(\mathrm{Ran}(E^{\mathrm{nod,sm}}_{24}),\bar{\mathcal A}_2)$
-is
+On a finite recognized window $W$, the Koszul triple on
+$(\mathrm{Ran}(E^{\mathrm{nod,sm}}_{24}),\bar{\mathcal A}_2)$ is
 \[
-\mathrm{Kos}_\bullet(\mathbf H_{\Delta_5})\ :\ \dotsb\to \mathrm{Sym}^k(\mathbf H_{\Delta_5}[-1])\otimes\Lambda^k(\mathbf H_{\Delta_5}^\vee)\to\dotsb
+\bigl(\mathbf H_{\Delta_5,W},\ \mathbf H^!_{\Delta_5,W},\
+B_{\mathrm{ch}}(\mathbf H_{\Delta_5,W})\bigr),
+\qquad
+B_{\mathrm{ch}}(\mathbf H_{\Delta_5,W})
+=T^c(s^{-1}\overline{\mathbf H_{\Delta_5,W}}),
 \]
-with differential supplied by the Gritsenko-Nikulin denominator factor.
-The Koszul complex computes the chiral Hochschild cohomology
-$\mathrm{ChirHoch}^\bullet(\mathbf H_{\Delta_5})$ (Vol.~I,
-\S\ref{sec:hochcoh-supplement}), concentrated in degrees $\{0,1,2\}$
-by Theorem~H, with the degree-$2$ component the $\mathbb C\cdot \Delta_5$
-line from the Etingof--Kazhdan quantum vertex-operator construction
-\cite{EtingofKazhdan2007PartV}.
+where $\mathbf H_{\Delta_5,W}$ denotes the Hall radical quotient supplied
+by Remark~\ref{rem:ckp-hall-drinfeld-pair}.  The Koszul sign rule and
+cyclicity use the source Hopf pairing and the Mukai pairing; the
+Verdier-Koszul dual is defined only after the completed pairing and the
+source differential have been installed.  This is the finite-window form
+of the Vol.~III K3 chiral-bialgebra construction of
+Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}, not an assertion that
+the automorphic denominator alone produces a chiral Koszul pair.
+\end{remark}
+
+\begin{remark}[Conditional self-Koszulness at $\hbar^2 = -1/8$]
+\label{rem:ckp-deep-2}
+At $\hbar^2=-1/\ell=-1/8$ one may assert a quasi-isomorphism
+$\mathbf H^!_{\Delta_5,W}\simeq\mathbf H_{\Delta_5,W}$ only on windows
+where the recognition datum supplies the double, the pairing, the source
+differential, and the exact completion.  The Bruinier class
+$c_1(L^{\Delta_5})\mid_{H_1}\in\mathrm{CH}^1(H_1)$ gives the target
+$\mathbb Z/8$ monodromy constraint~\cite{Bruinier2002}.  It does not, by
+itself, identify the Hall bar complex with its Verdier-Koszul dual.
+\end{remark}
+
+\begin{remark}[Koszul complex with source differential]
+\label{rem:ckp-deep-3}
+For a recognized window $W$, the K3 Koszul complex on
+$(\mathrm{Ran}(E^{\mathrm{nod,sm}}_{24}),\bar{\mathcal A}_2)$ is
+\[
+\mathrm{Kos}_\bullet(\mathbf H_{\Delta_5,W})\ :\
+\dotsb\to
+\mathrm{Sym}^k(\mathbf H_{\Delta_5,W}[-1])
+\otimes\Lambda^k(\mathbf H_{\Delta_5,W}^\vee)\to\dotsb ,
+\]
+with differential induced by $d_{\mathrm{Hall}}$, the Hall product, the
+coproduct, and the completed pairing.  The Gritsenko--Nikulin denominator
+factor is a target Euler-character and coefficient check; it is not the
+source differential.  If the finite-window Koszul comparison passes and
+the windows form an exact cofinal system, Theorem~H applies to the limit
+and computes $\mathrm{ChirHoch}^\bullet(\mathbf H_{\Delta_5})$ in degrees
+$\{0,1,2\}$.  The line $\mathbb C\cdot\Delta_5$ is then the recognized
+degree-$2$ target class of the Etingof--Kazhdan/Gritsenko--Nikulin
+comparison~\cite{EtingofKazhdan2007PartV,GritsenkoNikulin1998}, not an
+unconditional cohomology class produced by the denominator product.
 \end{remark}

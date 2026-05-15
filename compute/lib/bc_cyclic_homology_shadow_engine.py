@@ -1,59 +1,61 @@
-r"""Cyclic homology of shadow algebras and Chern character at zeta zeros.
+r"""Point-fiber cyclic homology oracles for polynomial shadow algebras.
 
 BC-127: Cyclic homology HC_n(A^sh), Hochschild homology HH_n(A^sh),
 periodic cyclic homology HP_n(A^sh), and Chern character ch: K_0 -> HP_0
-for the shadow algebra A^sh of modular Koszul chiral algebras, evaluated
-at central charges parameterized by nontrivial zeros of the Riemann
-zeta function.
+for the polynomial shadow model A^sh of modular Koszul chiral algebras.
+The finite numbers returned here are module ranks or point-fiber
+dimensions. They are not the full k-vector-space dimensions of
+HC_n(k[x_1,...,x_d]), which contain the de Rham quotient
+Omega^n/dOmega^{n-1} before specialization.
 
 MATHEMATICAL FRAMEWORK
 ======================
 
-The shadow algebra A^sh = H_*(Def_cyc^mod(A)) is a GRADED COMMUTATIVE
+The shadow algebra A^sh is modeled as a graded commutative polynomial
 ring with generators at each arity:
   - Arity 2: kappa (the modular characteristic)
   - Arity 3: alpha (cubic shadow)
   - Arity 4: S_4 (quartic shadow)
   - Higher arities: S_r for r >= 5
 
-For computation, A^sh is modeled as a graded polynomial ring or
-truncated polynomial ring depending on shadow depth:
-  - Class G (Gaussian, depth 2):   A^sh = k[kappa]/(kappa^2 - kappa^2)
-    effectively k[kappa], a polynomial in one variable
+For computation, A^sh is modeled by a graded polynomial ring or by a
+finite arity truncation of one, depending on shadow depth:
+  - Class G (Gaussian, depth 2):   A^sh = k[kappa]
   - Class L (Lie, depth 3):        A^sh = k[kappa, alpha]
   - Class C (Contact, depth 4):    A^sh = k[kappa, alpha, S_4]
   - Class M (Mixed, depth inf):    A^sh = k[kappa, alpha, S_4, S_5, ...]
 
-Since A^sh is commutative, the HKR (Hochschild-Kostant-Rosenberg)
-theorem applies:
+For the smooth polynomial model, the HKR
+(Hochschild-Kostant-Rosenberg) theorem applies:
 
     HH_n(A^sh) = Omega^n(A^sh)   (n-th exterior power of Kahler differentials)
 
 For A^sh = k[x_1, ..., x_d] (polynomial ring in d variables):
-    HH_n = Omega^n = /\_^n(A^sh dx_1 + ... + A^sh dx_d)
+    HH_n = Omega^n = exterior^n(A^sh dx_1 + ... + A^sh dx_d)
     dim HH_n = binom(d, n) as A^sh-module rank
 
-For the SBI (Connes) exact sequence:
+For the Connes SBI exact sequence:
     ... -> HH_n -B-> HC_{n-1} -S-> HC_{n-3} -I-> HH_{n-2} -> ...
 
 And periodic cyclic homology:
     HP_n = lim_{<- S} HC_{n+2k}
 
-For smooth commutative algebras:
-    HP_0 = direct product of Omega^{2k} for k >= 0
-    HP_1 = direct product of Omega^{2k+1} for k >= 0
+For smooth commutative algebras over characteristic zero, periodic
+cyclic homology is computed by algebraic de Rham cohomology. On affine
+space, only H^0_dR survives:
+    HP_0 = k,  HP_1 = 0.
 
 FIVE VERIFICATION PATHS
 =======================
 (i)   HKR: HH_n = Omega^n
 (ii)  SBI sequence: ... -> HH_n -> HC_n -> HC_{n-2} -> HH_{n-1} -> ...
 (iii) Chern character: ch: K_0(A^sh) -> HP_0(A^sh)
-(iv)  Loday-Quillen-Tsygan: HC_n = H_{n+1}(gl(A), gl(A); k) for n >= 1
+(iv)  Loday-Quillen-Tsygan: primitive stable Lie homology recovers HC
 (v)   Numerical evaluation at specific parameter values
 
 CAUTION (AP1): kappa formulas are family-specific.
 CAUTION (AP9): S_2 = kappa != c/2 in general.
-CAUTION (AP24): kappa(Vir_c) + kappa(Vir_{26-c}) = 13, NOT 0.
+CAUTION (AP24): kappa(Vir_c) + kappa(Vir_{26-c}) = 13, not 0.
 CAUTION (AP48): kappa depends on the FULL algebra, not just Virasoro sub.
 
 References:
@@ -65,19 +67,61 @@ References:
 
 from __future__ import annotations
 
-import cmath
-import math
 from dataclasses import dataclass, field
-from fractions import Fraction
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any, Dict, List, Tuple, Union
 
-import numpy as np
+Scalar = Union[float, complex]
+
+HOLOGRAPHIC_PACKAGE_ENTRIES: Tuple[str, ...] = (
+    "A",
+    "A^i",
+    "A^!",
+    "C",
+    "r(z)",
+    "Theta_A",
+    "nabla^hol",
+)
+"""Seven entries of the holographic modular Koszul package."""
+
+
+MODULAR_KOSZUL_PRIMARY_PROJECTIONS: Tuple[str, ...] = (
+    "Fact_X(L)",
+    "barB_X(L)",
+    "Theta_L",
+    "L_L",
+    "(V_br, T_br)",
+    "R4_mod(L)",
+)
+"""Six primary projections of the modular Koszul compute package."""
+
+
+KERNEL_NORMALIZATIONS: Dict[str, str] = {
+    "affine_raw_collision": "k*Omega_tr/z",
+    "affine_KZ_coefficient": "Omega/((k+h^vee)z)",
+    "heisenberg_raw_collision": "k/z",
+    "virasoro_collision": "(c/2)/z^3 + 2T/z",
+}
+"""Collision-kernel normalizations used by the firewall tests."""
+
+
+OBJECT_FIREWALL: Dict[str, str] = {
+    "A": "input chiral algebra",
+    "B(A)": "ordered bar coalgebra before cohomology",
+    "A^i": "bar cohomology coalgebra H^*(B(A))",
+    "A^!": (
+        "Verdier/continuous-linear dual branch under finite-type or "
+        "completed hypotheses"
+    ),
+    "Omega(B(A))": "bar-cobar inversion recovering A",
+    "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/derived-centre bulk object",
+}
+"""Typed firewall separating bar, Koszul-dual, and Hochschild objects."""
 
 # ---------------------------------------------------------------------------
 # Try to import mpmath for high-precision zeta zeros
 # ---------------------------------------------------------------------------
 try:
-    from mpmath import mp, mpf, mpc, zetazero, zeta, gamma as mpgamma
+    from mpmath import mp, zetazero
     HAS_MPMATH = True
 except ImportError:
     HAS_MPMATH = False
@@ -105,16 +149,16 @@ class ShadowAlgebraData:
         n_generators: number of algebraically independent generators
     """
     family: str = ""
-    param: float = 0.0
-    kappa: float = 0.0
-    alpha: float = 0.0
-    S4: float = 0.0
-    higher_S: Dict[int, float] = field(default_factory=dict)
+    param: Scalar = 0.0
+    kappa: Scalar = 0.0
+    alpha: Scalar = 0.0
+    S4: Scalar = 0.0
+    higher_S: Dict[int, Scalar] = field(default_factory=dict)
     depth_class: str = ""
     n_generators: int = 1
 
     @property
-    def generators(self) -> Dict[str, float]:
+    def generators(self) -> Dict[str, Scalar]:
         """Return the algebraically independent generators with values."""
         gens = {'kappa': self.kappa}
         if self.depth_class in ('L', 'C', 'M'):
@@ -150,6 +194,26 @@ class ShadowAlgebraData:
         return self.n_generators
 
 
+def holographic_package_entries() -> Tuple[str, ...]:
+    """Seven entries of the holographic modular Koszul package."""
+    return HOLOGRAPHIC_PACKAGE_ENTRIES
+
+
+def modular_koszul_primary_projections() -> Tuple[str, ...]:
+    """Six primary projections of the compute-side modular Koszul package."""
+    return MODULAR_KOSZUL_PRIMARY_PROJECTIONS
+
+
+def object_firewall() -> Dict[str, str]:
+    """Typed roles for A, B(A), A^i, A^!, and the derived centre."""
+    return dict(OBJECT_FIREWALL)
+
+
+def kernel_normalizations() -> Dict[str, str]:
+    """Kernel normalizations with affine raw, KZ, Heisenberg, and Virasoro slots."""
+    return dict(KERNEL_NORMALIZATIONS)
+
+
 def heisenberg_shadow_data(k: float) -> ShadowAlgebraData:
     """Shadow algebra data for Heisenberg H_k.
 
@@ -162,7 +226,7 @@ def heisenberg_shadow_data(k: float) -> ShadowAlgebraData:
     )
 
 
-def virasoro_shadow_data(c_val: float, max_arity: int = 20) -> ShadowAlgebraData:
+def virasoro_shadow_data(c_val: Scalar, max_arity: int = 20) -> ShadowAlgebraData:
     """Shadow algebra data for Virasoro Vir_c.
 
     kappa(Vir_c) = c/2 (AP1, AP9: this is the Virasoro-specific formula).
@@ -174,9 +238,9 @@ def virasoro_shadow_data(c_val: float, max_arity: int = 20) -> ShadowAlgebraData
     """
     kappa = c_val / 2.0
 
-    # Virasoro cubic shadow: alpha = kappa (standard normalization)
-    # From the manuscript: for Virasoro, alpha = S_3 = kappa
-    alpha = kappa
+    # Virasoro cubic shadow on the non-singular surface:
+    # landscape_census.tex gives S_3 = 2, independent of c.
+    alpha = 2.0
 
     # Quartic contact: Q^contact = 10 / [c * (5c + 22)]
     if abs(c_val) > 1e-30 and abs(5 * c_val + 22) > 1e-30:
@@ -203,9 +267,9 @@ def affine_sl2_shadow_data(k: float) -> ShadowAlgebraData:
     A^sh = k[kappa, alpha], two generators.
     """
     kappa = 3.0 * (k + 2.0) / 4.0
-    # For affine KM, the cubic shadow alpha is the Killing form contribution
-    # alpha = kappa (normalized; the exact value depends on the OPE)
-    alpha = kappa
+    # The rank-only homology model records one nonzero Lie cubic generator;
+    # this scalar proxy should not be read as the full cubic tensor.
+    alpha = kappa  # scalar proxy for the Lie cubic channel in this rank model
     return ShadowAlgebraData(
         family='affine_sl2', param=k, kappa=kappa,
         alpha=alpha, S4=0.0, depth_class='L', n_generators=2,
@@ -233,14 +297,16 @@ def betagamma_shadow_data(lam: float = 1.0) -> ShadowAlgebraData:
     )
 
 
-def w3_shadow_data(c_val: float, max_arity: int = 20) -> ShadowAlgebraData:
-    """Shadow algebra data for W_3 algebra at central charge c.
+def w3_shadow_data(c_val: Scalar, max_arity: int = 20) -> ShadowAlgebraData:
+    """Coarse T-line shadow data for the W_3 algebra at central charge c.
 
     kappa(W_3) = 5c/6 (AP1: sigma(sl_3) = 5/6).
-    Tower is infinite (class M).
+    The homology engine uses this only as a class-M generator-count
+    model; channel-resolved W-line constants live in the W-algebra
+    engines and manuscript tables.
     """
     kappa = 5.0 * c_val / 6.0
-    alpha = kappa  # Standard normalization
+    alpha = 2.0
     if abs(c_val) > 1e-30 and abs(5 * c_val + 22) > 1e-30:
         Q_contact = 10.0 / (c_val * (5 * c_val + 22))
     else:
@@ -255,8 +321,8 @@ def w3_shadow_data(c_val: float, max_arity: int = 20) -> ShadowAlgebraData:
 
 
 def _compute_higher_shadows(
-    kappa: float, alpha: float, S4: float, max_arity: int
-) -> Dict[int, float]:
+    kappa: Scalar, alpha: Scalar, S4: Scalar, max_arity: int
+) -> Dict[int, Scalar]:
     """Compute shadow coefficients S_r for r >= 5 via the recursive formula.
 
     Uses H(t) = t^2 * sqrt(Q_L(t)) where
@@ -273,8 +339,11 @@ def _compute_higher_shadows(
         return {}
 
     a = [0.0] * (max_n + 1)
-    a[0] = math.sqrt(abs(q0)) if q0 >= 0 else math.sqrt(abs(q0))
-    if a[0] == 0:
+    # The branch is fixed by S_2 = a_0/2 = kappa, hence a_0 = 2*kappa.
+    # This preserves the Virasoro values S_3=2 and S_5=-48/[c^2(5c+22)]
+    # for negative and complex central charge as well as for c > 0.
+    a[0] = 2.0 * kappa
+    if abs(a[0]) < 1e-30:
         return {}
 
     a[1] = q1 / (2.0 * a[0])
@@ -311,7 +380,7 @@ def hh_dimension(d: int, n: int) -> int:
     """Dimension of HH_n as a FREE MODULE over A^sh.
 
     For A^sh = k[x_1, ..., x_d] (polynomial ring):
-        HH_n(A^sh) = Omega^n(A^sh) = /\_^n(A^sh^d)
+        HH_n(A^sh) = Omega^n(A^sh) = exterior^n(A^sh^d)
         rank = C(d, n) as free A^sh-module
 
     This is the MODULE rank. The actual vector space dimension depends
@@ -376,171 +445,42 @@ def hh_graded_vector(data: ShadowAlgebraData, max_n: int = 6) -> Dict[int, int]:
 # ============================================================================
 
 def connes_b_rank(d: int, n: int) -> int:
-    """Rank of the image of Connes' B operator: B: HH_n -> HH_{n+1}.
+    """Fiber-rank oracle for the principal symbol of Connes' B operator.
 
-    For a smooth commutative algebra A = k[x_1,...,x_d]:
-        B: Omega^n -> Omega^{n+1} is the de Rham differential d.
-        rank(im B_n) = rank(d: Omega^n -> Omega^{n+1})
+    Under HKR, Connes' B is the de Rham differential. This differential
+    is not A-linear, so it has no honest A-module image rank. The finite
+    invariant exposed here is the rank of the principal symbol
 
-    For polynomial rings (contractible de Rham):
-        H^n_dR(A^d) = 0 for n >= 1, H^0_dR = k.
-        So B is surjective for n >= 1 in de Rham cohomology sense:
-        im(B) = exact forms, ker(B_{n+1})/im(B_n) = H^{n+1}_dR = 0 for n >= 0.
+        wedge xi: Lambda^n(k^d)^* -> Lambda^{n+1}(k^d)^*
 
-    Actually: for Omega^n of a polynomial ring, the de Rham complex is exact
-    (Poincare lemma). So:
-        ker(d: Omega^n -> Omega^{n+1}) = im(d: Omega^{n-1} -> Omega^n)
-    for n >= 1, and ker(d: Omega^0 -> Omega^1) = k (constants).
-
-    The rank of im(B_n) = rank(d(Omega^n)) = C(d,n) - C(d-1,n) for n >= 1
-    (the exact forms have rank C(d,n) - rank of de Rham cohomology).
-    For polynomial ring: H^n_dR = 0 for n >= 1, so
-        rank(im B_n) = C(d, n+1) for n >= 0, except im B_{d-1} can be smaller.
-
-    Actually, for the polynomial ring, B = d is the de Rham differential.
-    The image of d: Omega^n -> Omega^{n+1} has rank = C(d,n+1) - dim H^{n+1}_dR.
-    For polynomial ring over k (char 0), H^n_dR = k for n=0, 0 for n >= 1.
-    So rank(im d|_{Omega^n}) = C(d, n+1) for n >= 1,
-    and rank(im d|_{Omega^0}) = C(d, 1) - 1 = d - 1.
-
-    But these are ranks as A-modules, and the de Rham differential d is A-linear
-    only in a graded sense... Actually d is NOT A-linear: d(f*omega) = df wedge omega + f*d(omega).
-
-    For the SBI computation, what matters is the MODULE structure of
-    HC_n, which for smooth commutative algebras is given by:
-
-        HC_n(A) = Omega^n_A / d(Omega^{n-1}_A) + H^{n-2}_dR + H^{n-4}_dR + ...
-
-    For A = k[x_1,...,x_d] with H^k_dR = 0 for k >= 1:
-        HC_n = Omega^n / d(Omega^{n-1})  for n >= 1
-        HC_0 = A / k (= A modulo constants... actually HC_0 = A for smooth)
-
-    The Connes exact sequence decomposition gives (Loday Thm 3.4.12):
-        HC_n = Omega^n_A / d(Omega^{n-1}_A)  direct sum  H^{n-2}_dR  direct sum  H^{n-4}_dR ...
-
-    For polynomial ring: all H^k_dR = 0 for k >= 1, so:
-        HC_n = Omega^n / d(Omega^{n-1})  for n >= 1
-        HC_0 = k (the ground field, since A is smooth connected)
-
-    Wait -- more precisely, for smooth affine variety Spec(A):
-        HC_0(A) = A/[A,A] = A (commutative, so [A,A]=0)
-
-    Hmm, but the SBI gives HC_0 = HH_0 = A.
-    Loday Thm 3.4.12 for smooth: HC_n = Omega^n/dOmega^{n-1} + H^{n-2}_dR + ...
-
-    For n=0: HC_0 = Omega^0 = A.  Correct: HC_0 = A for comm alg.
-    For n=1: HC_1 = Omega^1/dA (Kahler diffs mod exact).
-    For n=2: HC_2 = Omega^2/dOmega^1 + H^0_dR = Omega^2/dOmega^1 + k.
-
-    For the polynomial ring, Omega^n/dOmega^{n-1} = 0 for n >= 1 by Poincare.
-    So HC_n = H^{n-2}_dR + H^{n-4}_dR + ... = k (one copy) if n is even and >= 2,
-    HC_n = 0 if n is odd and >= 1.
-    HC_0 = A, HC_1 = 0, HC_2 = k, HC_3 = 0, HC_4 = k, ...
-
-    But wait: HC_0(k[x]) = k[x], not k. And the module rank matters.
-
-    Let me be precise. For a polynomial ring A = k[x_1,...,x_d]:
-    - HH_n(A) = Omega^n_A (HKR, free A-module of rank C(d,n))
-    - HC_n(A) is computed from the SBI sequence
-    - For smooth comm alg over Q, the decomposition (Loday Cor 3.4.13) is:
-
-        HC_n(A) = Omega^n_A / d(Omega^{n-1}_A)  DIRECT SUM  bigoplus_{k>=1} H^{n-2k}_dR(A)
-
-    For polynomial ring: H^0_dR = k, H^j_dR = 0 for j >= 1.
-    So the direct sum of de Rham terms contributes floor(n/2) copies of k for n >= 2.
-
-    And Omega^n/dOmega^{n-1}: for polynomial ring, d is exact for n >= 1,
-    so Omega^n/dOmega^{n-1} = 0 for n >= 1.
-    For n=0: Omega^0/d(nothing) = A.
-
-    Therefore:
-        HC_0(A) = A
-        HC_1(A) = 0
-        HC_2(A) = k
-        HC_3(A) = 0
-        HC_4(A) = k
-        ... (alternating k and 0 for n >= 2)
-
-    Hmm, but this doesn't look right either. Let me reconsider.
-
-    The key formula (Loday, Theorem 3.4.12) for smooth comm k-alg:
-        HC_n(A) = Omega^n_A/dOmega^{n-1}_A  oplus  H^{n-2}_dR(A)  oplus  H^{n-4}_dR(A)  oplus ...
-
-    For polynomial A: the first term Omega^n/dOmega^{n-1} is NOT zero as a
-    vector space, even though de Rham cohomology vanishes. The de Rham
-    cohomology being zero means Omega^n/dOmega^{n-1} is the cokernel of d,
-    which for n=1 means Omega^1/dA = {forms modulo exact forms} = 0 since
-    every 1-form is exact for polynomial rings... no, that's wrong.
-    Omega^1(k[x,y]) = k[x,y]dx + k[x,y]dy, and dA = {f_x dx + f_y dy}.
-    Is every 1-form exact? For omega = g(x,y)dx + h(x,y)dy:
-    omega = df iff g = f_x and h = f_y, iff g_y = h_x.
-    So Omega^1/dA = H^1_dR = 0 for polynomial ring, confirmed.
-
-    So for polynomial ring in d variables over k (char 0):
-        HC_0 = A (infinite-dimensional k-vector space)
-        HC_n = k^{floor(n/2)} for n >= 1 (finite-dimensional!)
-
-    Actually: HC_n = direct sum of H^{n-2k}_dR for k >= 1 when n >= 2.
-    n=1: H^{-1}_dR = 0. So HC_1 = 0 + Omega^1/dA = 0.
-    n=2: H^0_dR = k. Plus Omega^2/dOmega^1 = 0. So HC_2 = k.
-    n=3: H^1_dR = 0. Plus Omega^3/dOmega^2 = 0. So HC_3 = 0.
-    n=4: H^2_dR + H^0_dR = 0 + k = k. Plus Omega^4/dOmega^3 = 0. So HC_4 = k.
-    n=5: H^3_dR + H^1_dR = 0 + 0 = 0. So HC_5 = 0.
-    n=2m (m >= 1): floor(n/2) = m copies of H^0, but only m-0 survive = just k.
-                   Actually H^{2m-2}_dR + H^{2m-4}_dR + ... + H^0_dR = 0 + ... + k = k.
-    n=2m+1 (m >= 0): only odd de Rham = 0.
-
-    So HC_n(k[x_1,...,x_d]) = A for n=0, 0 for n odd >= 1, k for n even >= 2.
-
-    This gives chi_HC = dim A - 0 + 1 - 0 + 1 - ... divergent as a vector space.
-    But as Euler char of the finite part: chi_HC^{fin} = sum_{n>=1} (-1)^n dim HC_n
-    = 0 - 1 + 0 - 1 + ... also diverges.
-
-    For TRUNCATED evaluation (fixing specific parameter values):
-    A^sh evaluated at specific c becomes k (ground field), so:
-        HH_n(k) = k for n=0, 0 for n >= 1
-        HC_n(k) = k for all n >= 0
-
-    The meaningful computation is the MODULE RANK version.
+    at any nonzero cotangent vector xi. That rank is C(d-1,n).
 
     Returns
     -------
-    Rank of im(B) on HH_n -> HH_{n+1} as a module map.
+    Rank of the nonzero-symbol fiber map; 0 outside 0 <= n < d.
     """
-    # B = d (de Rham differential) for smooth commutative algebras
-    # im(d: Omega^n -> Omega^{n+1}) has rank C(d, n+1) - dim H^{n+1}_dR
-    # For polynomial ring: H^j_dR = 0 for j >= 1
-    if n < 0:
+    if n < 0 or d <= 0 or n >= d:
         return 0
-    if n + 1 > d:
-        return 0
-    return binomial(d, n + 1)  # full rank: d surjects for poly ring
+    return binomial(d - 1, n)
 
 
 def hc_dimension_module(d: int, n: int) -> int:
-    """Module rank of HC_n for A^sh = k[x_1,...,x_d].
+    """Point-fiber cyclic homology dimension for the polynomial shadow model.
 
-    From the smooth commutative algebra decomposition (Loday 3.4.12):
+    The full cyclic homology of A = k[x_1,...,x_d] has the smooth
+    commutative decomposition (Loday 3.4.12):
         HC_n = Omega^n/dOmega^{n-1}  +  H^{n-2}_dR  +  H^{n-4}_dR  + ...
 
-    For polynomial ring:
-        Omega^n/dOmega^{n-1} = H^n_dR = 0 for n >= 1
-        H^0_dR = k (1-dimensional)
-        HC_0 = A (rank 1 as free A-module, but infinite-dim as k-vsp)
-        HC_n (n>=1) = number of k >= 1 with n-2k = 0 and n-2k >= 0
-                    = 1 if n even >= 2, else 0 for n odd >= 1
+    The quotient Omega^n/dOmega^{n-1} is not finite-dimensional for
+    d > 1. This function records the finite point-fiber oracle used by
+    this compute layer: after specializing the shadow parameters, the
+    positive de Rham quotient contributes no fiber dimension and only
+    H^0_dR survives in even cyclic degrees.
 
-    As MODULE rank (over A):
-        HC_0 = rank 1 (= A itself)
-        HC_n = 0 for n >= 1 (since the de Rham contributions are k, rank 0 over A)
-
-    As VECTOR SPACE dimension (evaluating A at a point):
+    Point-fiber dimensions:
         HC_0 = 1
         HC_n = 1 if n even >= 2
         HC_n = 0 if n odd >= 1
-
-    We return the vector space dimension (evaluating at a specific point),
-    which is the physically meaningful quantity.
 
     Parameters
     ----------
@@ -582,20 +522,22 @@ def hc_euler_characteristic_truncated(d: int, max_n: int = 6) -> int:
 # ============================================================================
 
 def sbi_sequence_check(d: int, max_n: int = 6) -> List[Dict[str, Any]]:
-    """Verify the SBI long exact sequence for the shadow algebra.
+    """Verify the point-fiber shadow of the SBI sequence.
 
     The Connes SBI sequence:
         ... -> HH_n -I-> HC_n -S-> HC_{n-2} -B-> HH_{n-1} -> ...
 
-    For smooth commutative A = k[x_1,...,x_d], the SBI SPLITS into
-    short exact sequences (Loday, Cor 4.6.8):
+    For the smooth polynomial model the full sequence contains the
+    de Rham quotient Omega^n/dOmega^{n-1}. After point-fiber
+    specialization, this finite oracle reduces to the split periodic
+    part:
         0 -> Omega^n/dOmega^{n-1} -> HC_n -> HC_{n-2} -> 0
 
-    For polynomial ring: Omega^n/dOmega^{n-1} = H^n_dR = 0 for n >= 1,
-    so the split SES gives S-PERIODICITY: HC_n = HC_{n-2} for n >= 2.
+    The tested condition is S-periodicity of the surviving H^0_dR
+    summand: HC_n = HC_{n-2} for n >= 2.
 
     The exact_check verifies this periodicity (not a 4-term alternating
-    sum, which is NOT a valid LES constraint).
+    sum, which is not a valid LES constraint).
 
     Returns a list of verification dicts for each position.
     """
@@ -685,7 +627,7 @@ def chern_character_rank_one(d: int) -> Dict[str, Any]:
         'generator': '[A^sh]',
         'ch_value': 1,  # ch([A^sh]) = 1 in HP_0
         'HP0_dim': 1,
-        'ch_is_iso': True,  # ch: Z -> k is injective on K_0
+        'ch_is_iso': True,  # after rationalizing K_0 and identifying HP_0 = k
         'ch_is_rational': True,  # Image in HP_0(A, Q) = Q
         'quillen_suslin': True,  # All projectives are free
         'd': d,
@@ -803,28 +745,15 @@ def shadow_data_at_zeta_zero(
     c_val = c_from_zeta_zero(n)
 
     if family == 'virasoro':
-        kappa = c_val / 2.0
-        alpha = kappa
-        c_float = c_val
-        denom = c_float * (5 * c_float + 22)
-        if abs(denom) > 1e-30:
-            Q_contact = 10.0 / denom
-        else:
-            Q_contact = 0.0
-        S4 = Q_contact
-        return ShadowAlgebraData(
-            family='virasoro', param=c_val.real, kappa=kappa.real,
-            alpha=alpha.real, S4=S4.real if isinstance(S4, complex) else S4,
-            depth_class='M', n_generators=max_arity - 1,
-        )
+        return virasoro_shadow_data(c_val, max_arity)
     elif family == 'affine_sl2':
         # k parameterized via c = 3k/(k+2) => k = 2c/(3-c)
         k_val = 2 * c_val / (3 - c_val) if abs(3 - c_val) > 1e-30 else 0
         kappa = 3 * (k_val + 2) / 4
         return ShadowAlgebraData(
-            family='affine_sl2', param=k_val.real if isinstance(k_val, complex) else k_val,
-            kappa=kappa.real if isinstance(kappa, complex) else kappa,
-            alpha=kappa.real if isinstance(kappa, complex) else kappa,
+            family='affine_sl2', param=k_val,
+            kappa=kappa,
+            alpha=kappa,
             S4=0.0, depth_class='L', n_generators=2,
         )
     else:
@@ -859,10 +788,11 @@ def hh_at_zeta_zero(
 
     hh_dims = hh_dimensions_all(d, max_deg)
     hc_dims = hc_dimensions_all(d, max_deg)
-    hp_dims = hp_dimensions(max_deg)
+    hp_dims = hp_dimensions(max_deg, d)
 
-    # Euler characteristics
-    chi_hh = sum((-1) ** k * hh_dims[k] for k in range(max_deg + 1))
+    # Euler characteristics. HH uses the full exterior range 0..d, not
+    # the displayed truncation 0..max_deg.
+    chi_hh = hh_euler_characteristic(d)
     chi_hc = sum((-1) ** k * hc_dims[k] for k in range(max_deg + 1))
 
     return {
@@ -897,19 +827,19 @@ def hc_at_zeta_zeros_batch(
 # ============================================================================
 
 def connes_periodicity_data(d: int, max_n: int = 8) -> Dict[str, Any]:
-    """Data on the Connes periodicity operator S: HC_n -> HC_{n-2}.
+    """Point-fiber data for the Connes periodicity operator S.
 
     For smooth commutative A over k:
         S: HC_n -> HC_{n-2} is the projection that drops the
         top de Rham component.
 
-    For polynomial ring:
-        HC_n = k for n even >= 2, 0 for n odd, A for n=0.
+    For the specialized polynomial shadow oracle:
+        HC_n = k for n even, 0 for n odd.
         S: HC_{2m} -> HC_{2m-2} is id: k -> k for m >= 2.
-        S: HC_2 -> HC_0 = A is the inclusion k -> A.
-        S: HC_0 = A -> HC_{-2} = 0 is zero.
+        S: HC_2 -> HC_0 is id on the surviving H^0_dR fiber.
+        S: HC_0 -> HC_{-2} is zero.
 
-    S NEVER degenerates for polynomial ring (it's the identity k -> k
+    S does not degenerate for polynomial ring (it is the identity k -> k
     for n even >= 4). This is parameter-independent.
 
     Returns dict with S maps and degeneration analysis.
@@ -946,9 +876,8 @@ def periodicity_at_zeta_zeros(
 ) -> Dict[str, Any]:
     """Test whether Connes periodicity degenerates at zeta zeros.
 
-    Since the module structure is parameter-independent for polynomial
-    shadow algebras, S does NOT degenerate at zeros. This is a mathematical
-    theorem, not a numerical coincidence.
+    Since the point-fiber structure is parameter-independent for
+    polynomial shadow algebras, S does not degenerate at zeros.
 
     Returns dict with analysis.
     """
@@ -984,16 +913,13 @@ def periodicity_at_zeta_zeros(
 def lqt_verification(d: int, max_n: int = 6) -> Dict[str, Any]:
     """Verify HC via Loday-Quillen-Tsygan theorem.
 
-    LQT (Loday 1984, Quillen 1969, Tsygan 1983):
-        HC_n(A) = H_{n+1}(gl(A), gl(A); k) for n >= 1
+    LQT identifies cyclic homology with primitive stable Lie algebra
+    homology of gl_infty(A), with the usual degree shift. This is not
+    relative homology of gl(A) with itself.
 
-    where the right side is the relative Lie algebra homology of
-    gl(A) = lim gl_N(A) relative to gl(A) itself.
-
-    For commutative A: this reduces to the de Rham/cyclic computation.
-
-    For polynomial ring: the LQT gives the same answer as the SBI:
-        HC_n = k for n even >= 2, 0 for n odd >= 1, A for n=0.
+    For the point-fiber polynomial oracle, LQT gives the same finite
+    pattern as SBI:
+        HC_n = k for n even, 0 for n odd.
 
     Verification: compare LQT prediction with SBI computation.
     """
@@ -1057,7 +983,7 @@ def hh_family_table(
         d = data.effective_dim
         hh = hh_dimensions_all(d, max_deg)
         hc = hc_dimensions_all(d, max_deg)
-        hp = hp_dimensions(max_deg)
+        hp = hp_dimensions(max_deg, d)
 
         rows.append({
             'param': p,
@@ -1097,7 +1023,7 @@ def numerical_hh_evaluated(
 
     For a polynomial ring in d variables evaluated at a point:
         - As k-algebra: A^sh(p) = k
-        - The fiber of HH_n at p: Omega^n|_p = /\_^n(k^d) = k^{C(d,n)}
+        - The fiber of HH_n at p: Omega^n|_p = exterior^n(k^d) = k^{C(d,n)}
         - Fiber dimension = C(d, n)
 
     This "fiber dimension" is the meaningful numerical invariant.
@@ -1206,7 +1132,7 @@ def full_verification(
 def kahler_differentials_basis(d: int, n: int) -> List[str]:
     """Basis elements of Omega^n for A^sh = k[x_1, ..., x_d].
 
-    Omega^n = /\^n(A^sh dx_1 + ... + A^sh dx_d)
+    Omega^n = exterior^n(A^sh dx_1 + ... + A^sh dx_d)
     Basis (as A^sh-module): {dx_{i_1} ^ ... ^ dx_{i_n} : i_1 < ... < i_n}
 
     For shadow algebra generators: x_1 = kappa, x_2 = alpha, x_3 = S_4, etc.
@@ -1250,14 +1176,25 @@ def kahler_module_data(data: ShadowAlgebraData, max_n: int = 6) -> Dict[str, Any
 # ============================================================================
 
 def negative_cyclic_dimension(d: int, n: int) -> int:
-    """Negative cyclic homology HN_n(A^sh).
+    """Point-fiber negative cyclic homology dimension.
 
-    For smooth commutative A:
-        HN_n(A) = prod_{k>=0} Omega^{n+2k} (formal product)
-                = Omega^n + Omega^{n+2} + Omega^{n+4} + ...
+    For a smooth commutative algebra over characteristic zero,
+    negative cyclic homology is computed by the completed de Rham
+    complex. For the polynomial shadow model, affine-space de Rham
+    cohomology leaves only H^0_dR. The specialized point-fiber result is
+    therefore one-dimensional in even degrees and zero in odd degrees.
+    """
+    if n < 0:
+        return 0
+    return 1 if n % 2 == 0 else 0
 
-    For polynomial ring in d variables:
-        HN_n (fiber dim at a point) = sum_{k>=0} C(d, n+2k) (finite sum since C(d,m) = 0 for m > d)
+
+def negative_cyclic_hodge_fiber_dimension(d: int, n: int) -> int:
+    """Dimension of the Hodge-fiber forms before the de Rham differential.
+
+    This is the finite pre-homology size
+        sum_{k>=0} C(d, n+2k),
+    useful as a Hodge-filtration oracle. It is not HN_n itself.
     """
     total = 0
     k = 0
@@ -1275,18 +1212,21 @@ def dennis_trace_data(d: int) -> Dict[str, Any]:
 
     For polynomial rings:
         K_0 = Z (Quillen-Suslin)
-        K_n = 0 for n >= 1 (Bass-Heller-Swan)
+        K_n(k[x_1,...,x_d]) = K_n(k) by homotopy invariance
 
     The Dennis trace K_0 = Z -> HN_0 sends 1 -> 1.
     """
     return {
         'd': d,
         'K0': 'Z',
-        'K_higher': 0,
+        'K_higher': 'K_n(k) by A1-homotopy invariance; not computed here',
+        'higher_K_computed': False,
         'HN0': negative_cyclic_dimension(d, 0),
         'HN1': negative_cyclic_dimension(d, 1),
+        'HN0_hodge_fiber_size': negative_cyclic_hodge_fiber_dimension(d, 0),
+        'HN1_hodge_fiber_size': negative_cyclic_hodge_fiber_dimension(d, 1),
         'dennis_trace_image': 1,  # tr(1) = 1 in HN_0
-        'rational_K_theory': True,  # K_0 tensor Q = Q for poly ring
+        'rational_K0': True,  # K_0 tensor Q = Q for poly ring
     }
 
 
@@ -1334,9 +1274,9 @@ def master_cyclic_homology_at_zeros(
 
         hh = hh_dimensions_all(d, max_deg)
         hc = hc_dimensions_all(d, max_deg)
-        hp = hp_dimensions(max_deg)
+        hp = hp_dimensions(max_deg, d)
 
-        chi_hh = sum((-1) ** k * hh[k] for k in range(max_deg + 1))
+        chi_hh = hh_euler_characteristic(d)
         chi_hc = sum((-1) ** k * hc[k] for k in range(max_deg + 1))
 
         results.append({
@@ -1399,7 +1339,7 @@ def deformation_hh_virasoro(c_val: complex, max_arity: int = 20) -> Dict[str, An
     becomes non-trivial.
     """
     kappa = c_val / 2.0
-    alpha = kappa
+    alpha = 2.0
 
     # Q^contact at complex c
     denom = c_val * (5 * c_val + 22)

@@ -1,36 +1,36 @@
-r"""Tests for CY-BKM: Borcherds-Kac-Moody algebra for K3 x E.
+r"""Finite sanity tests for CY-BKM computations for K3 x E.
 
-Verifies:
+Checks:
   Section 1:  Lattice infrastructure (U+U bilinear form, norms)
   Section 2:  K3 elliptic genus phi_{0,1} coefficients
-  Section 3:  c_0(D) discriminant coefficients (Borcherds exponents)
-  Section 4:  BKM root system (real, imaginary, lightlike classification)
+  Section 3:  finite c_0(D) signed exponent samples
+  Section 4:  root-coordinate predicates (real, imaginary, lightlike)
   Section 5:  Root norms and inner products
   Section 6:  BKM Cartan matrix structure
   Section 7:  Weyl group reflections (involution, norm-preserving)
   Section 8:  Weyl vector and denominator prefactor
-  Section 9:  Root multiplicities (direct from K3 EG)
-  Section 10: Root multiplicity table by norm
-  Section 11: Peterson-Kac recursion (simple roots seeding)
-  Section 12: Borcherds product expansion (leading terms)
+  Section 9:  signed superdimension and even/odd split samples
+  Section 10: representative signed-dimension table by norm
+  Section 11: finite Peterson-Kac-style seeded recursion
+  Section 12: truncated Borcherds product expansion
   Section 13: Phi_{10} known coefficients (Igusa cusp form)
-  Section 14: Denominator identity verification
+  Section 14: leading product-coefficient comparison
   Section 15: Shadow tower connection (kappa, F_g)
   Section 16: Shadow-BKM bridge
   Section 17: Positive root enumeration
-  Section 18: Cross-check battery (all paths)
+  Section 18: finite cross-check battery
   Section 19: Consistency checks across computation methods
-  Section 20: BKM algebra summary
+  Section 20: finite algebra summary
 
-Multi-path verification (AP1/AP3/AP10):
+Finite paths:
   Path A: Direct lattice computation
-  Path B: Peterson-Kac recursion
-  Path C: Denominator identity / Borcherds product
+  Path B: Peterson-Kac-style seeded recursion
+  Path C: truncated Borcherds product
   Path D: K3 elliptic genus coefficients
   Path E: Shadow tower connection
-  Path F: Known literature values
+  Path F: leading known coefficient values
 
-100+ tests total.
+These tests do not recognize a denominator algebra or a root system.
 """
 
 import math
@@ -42,22 +42,24 @@ from compute.lib.cy_bkm_algebra_engine import (
     LatticeVector, lattice_norm, lattice_inner,
     # K3 elliptic genus
     phi01_coeff, k3_eg_coeff, c0_from_k3_eg, c0_table,
-    C0_VERIFIED, borcherds_exponent,
-    # Root system
+    SIGNED_BORCHERDS_EXPONENT_SAMPLES, borcherds_exponent,
+    # Root-coordinate predicates
     BKMRoot, simple_real_roots, simple_imaginary_roots,
     bkm_cartan_matrix,
     # Weyl group
     weyl_reflection, weyl_vector, weyl_group_orbit,
     weyl_group_is_infinite,
-    # Root multiplicities
+    # Root signed superdimensions
     root_multiplicity_direct, root_multiplicity_table,
+    super_root_multiplicity,
     # Peterson-Kac
     peterson_kac_mult, build_root_multiplicities_pk,
-    # Denominator
+    # Truncated product
     borcherds_product_expansion, phi10_known_coefficients,
     denominator_identity_check_leading,
     # Shadow connection
     shadow_kappa_k3_sigma, shadow_kappa_k3xe_total,
+    k3xe_kappa_split, igusa_delta5_normalization,
     shadow_kappa_complementarity, shadow_fg_k3_relative,
     shadow_denominator_connection, lambda_fp,
     # Enumeration
@@ -227,41 +229,41 @@ class TestPhi01Coefficients(unittest.TestCase):
 
 
 class TestC0Coefficients(unittest.TestCase):
-    """Section 3: c_0(D) discriminant coefficients."""
+    """Section 3: finite c_0(D) signed exponent samples."""
 
     def test_c0_D_minus1(self):
-        """c_0(-1) = 2: from (0, +-1) polar terms."""
-        self.assertEqual(C0_VERIFIED[-1], 2)
+        """c_0(-1) = 2 from (0, +-1) polar terms."""
+        self.assertEqual(SIGNED_BORCHERDS_EXPONENT_SAMPLES[-1], 2)
 
     def test_c0_D_0(self):
-        """c_0(0) = 20: the 20 NS marginal operators."""
-        self.assertEqual(C0_VERIFIED[0], 20)
+        """c_0(0) = 20 in the finite K3 elliptic-genus sample."""
+        self.assertEqual(SIGNED_BORCHERDS_EXPONENT_SAMPLES[0], 20)
 
     def test_c0_D_3(self):
-        """c_0(3) = -128: odd (fermionic) root contribution."""
-        self.assertEqual(C0_VERIFIED[3], -128)
+        """c_0(3) = -128 as a signed product exponent."""
+        self.assertEqual(SIGNED_BORCHERDS_EXPONENT_SAMPLES[3], -128)
 
     def test_c0_D_4(self):
         """c_0(4) = 216."""
-        self.assertEqual(C0_VERIFIED[4], 216)
+        self.assertEqual(SIGNED_BORCHERDS_EXPONENT_SAMPLES[4], 216)
 
     def test_c0_D_7(self):
         """c_0(7) = -1026."""
-        self.assertEqual(C0_VERIFIED[7], -1026)
+        self.assertEqual(SIGNED_BORCHERDS_EXPONENT_SAMPLES[7], -1026)
 
     def test_c0_D_8(self):
         """c_0(8) = 1616."""
-        self.assertEqual(C0_VERIFIED[8], 1616)
+        self.assertEqual(SIGNED_BORCHERDS_EXPONENT_SAMPLES[8], 1616)
 
     def test_c0_from_k3_eg_D_minus1(self):
-        """Verify c_0(-1) = 2 from direct K3 EG computation.
+        """Compute c_0(-1) = 2 from direct K3 EG data.
 
         D = -1: (n, l) = (0, 1) gives 4*0 - 1 = -1. c_K3(0, 1) = 2.
         """
         self.assertEqual(c0_from_k3_eg(-1), 2)
 
     def test_c0_from_k3_eg_D_0(self):
-        """Verify c_0(0) = 20."""
+        """Compute c_0(0) = 20."""
         self.assertEqual(c0_from_k3_eg(0), 20)
 
     def test_c0_consistency_D4(self):
@@ -284,9 +286,17 @@ class TestC0Coefficients(unittest.TestCase):
         self.assertEqual(borcherds_exponent(1, 0), 216)
         self.assertEqual(borcherds_exponent(1, 1), -128)
 
+    def test_borcherds_exponent_triple_uses_product_index(self):
+        """Three-argument product convention uses N = n0*m0, not n0."""
+        self.assertEqual(2 * phi01_coeff(2, 0), 1616)
+        self.assertEqual(borcherds_exponent(1, 0, 2), 1616)
+        self.assertEqual(borcherds_exponent(1, 0, 2), 2 * phi01_coeff(2, 0))
+        self.assertEqual(borcherds_exponent(1, 0), 216)
+        self.assertNotEqual(borcherds_exponent(1, 0, 2), borcherds_exponent(1, 0))
+
 
 class TestBKMRootSystem(unittest.TestCase):
-    """Section 4-5: BKM root system."""
+    """Section 4-5: root-coordinate predicates."""
 
     def test_real_root_norm(self):
         """Real simple root (1, 0, 1) has norm^2 = 2."""
@@ -498,87 +508,87 @@ class TestWeylGroup(unittest.TestCase):
 
 
 class TestRootMultiplicities(unittest.TestCase):
-    """Section 9-10: Root multiplicities."""
+    """Section 9-10: signed superdimension samples."""
 
     def test_real_root_mult_1(self):
-        """Real root (norm^2 = 2) has multiplicity 1."""
+        """Real sample root has signed superdimension 1."""
         alpha = BKMRoot(1, 0, 1)
         self.assertEqual(root_multiplicity_direct(alpha), 1)
 
     def test_lightlike_mult_from_eg(self):
-        """Lightlike root (0, 0, 1): mult = c_K3(0, 0) = 20."""
+        """Lightlike sample has signed superdimension c_K3(0, 0) = 20."""
         alpha = BKMRoot(0, 0, 1)
         self.assertEqual(root_multiplicity_direct(alpha), 20)
 
     def test_imaginary_root_mult(self):
-        """Imaginary root (0, -1, 0): mult = c_K3(0, -1) = 2."""
+        """Imaginary sample has signed superdimension c_K3(0, -1) = 2."""
         alpha = BKMRoot(0, -1, 0)
         # c_K3(0, -1) = 2 * phi01(0, -1) = 2 * 1 = 2
         self.assertEqual(root_multiplicity_direct(alpha), 2)
 
     def test_root_mult_table_real(self):
-        """Root multiplicity table: norm^2 = 2 has mult 1."""
+        """Representative table: norm^2 = 2 has signed dimension 1."""
         table = root_multiplicity_table()
         self.assertEqual(table[2], 1)
 
     def test_root_mult_table_lightlike(self):
-        """Root multiplicity table: norm^2 = 0 has mult 20."""
+        """Representative table: norm^2 = 0 has signed dimension 20."""
         table = root_multiplicity_table()
         self.assertEqual(table[0], 20)
 
     def test_root_mult_table_minus1(self):
-        """Root multiplicity table: norm^2 = -1 has mult 2."""
+        """Representative table: norm^2 = -1 has signed dimension 2."""
         table = root_multiplicity_table()
         self.assertEqual(table[-1], 2)
 
     def test_negative_mult_fermionic(self):
-        """Negative c_K3 values indicate fermionic/odd roots."""
+        """Negative signed dimension is represented as odd superdimension."""
         alpha = BKMRoot(1, 1, 0)
-        # c_K3(1, 1) = 2*(-64) = -128
-        mult = root_multiplicity_direct(alpha)
-        self.assertEqual(mult, -128)
+        mult = super_root_multiplicity(alpha)
+        self.assertEqual(mult.even, 0)
+        self.assertEqual(mult.odd, 128)
+        self.assertEqual(mult.signed_dimension, -128)
+        self.assertEqual(mult.total_dimension, 128)
 
     def test_mult_zero_high_norm(self):
-        """Roots with norm^2 > 2 have zero multiplicity."""
+        """Samples with norm^2 > 2 have zero signed dimension."""
         alpha = BKMRoot(2, 0, 2)  # norm = 8
         self.assertEqual(root_multiplicity_direct(alpha), 0)
 
 
 class TestPetersonKac(unittest.TestCase):
-    """Section 11: Peterson-Kac recursion."""
+    """Section 11: finite Peterson-Kac-style recursion."""
 
     def test_pk_seeded_mults(self):
-        """Peterson-Kac builds from simple root multiplicities."""
+        """Seed table contains the real sample root."""
         mults = build_root_multiplicities_pk(max_height=2)
-        # Simple real root should be present
         self.assertEqual(mults.get((1, 0, 1)), 1)
 
     def test_pk_simple_imaginary(self):
-        """Peterson-Kac preserves simple imaginary root mults."""
+        """Seed table preserves the polar imaginary sample."""
         mults = build_root_multiplicities_pk(max_height=2)
         self.assertEqual(mults.get((0, -1, 0)), 2)
 
     def test_pk_lightlike(self):
-        """Peterson-Kac includes lightlike root."""
+        """Seed table includes the lightlike sample."""
         mults = build_root_multiplicities_pk(max_height=2)
         self.assertEqual(mults.get((0, 0, 1)), 20)
 
     def test_pk_consistency_with_direct(self):
-        """Peterson-Kac multiplicities consistent with direct formula for simple roots."""
+        """Seeded signed dimension agrees with the coefficient helper."""
         mults = build_root_multiplicities_pk(max_height=2)
         # (1, -1, 0): direct = c_K3(1, -1) = -128
         self.assertEqual(mults.get((1, -1, 0)), -128)
 
     def test_pk_nontrivial_height2(self):
-        """Peterson-Kac produces some nonzero multiplicities at height 2."""
+        """Seeded recursion produces finite nonzero height-2 samples."""
         mults = build_root_multiplicities_pk(max_height=3)
-        # There should be positive roots at height 2 with nonzero mult
         height2 = {k: v for k, v in mults.items() if k[0] + k[2] == 2 and v != 0}
         self.assertGreater(len(height2), 0)
 
 
 class TestBorcherdsProduct(unittest.TestCase):
-    """Section 12-14: Borcherds product and denominator identity."""
+    """Section 12-14: truncated product and leading coefficient checks."""
 
     def test_phi10_leading_a111(self):
         """a(1,1,1) = 1 (Weyl vector contribution)."""
@@ -613,7 +623,7 @@ class TestBorcherdsProduct(unittest.TestCase):
         self.assertGreater(len(coeffs), 0)
 
     def test_denominator_check_runs(self):
-        """Denominator identity check produces results."""
+        """Leading product-coefficient check produces results."""
         result = denominator_identity_check_leading(q_order=2)
         self.assertIsInstance(result, dict)
 
@@ -626,8 +636,27 @@ class TestShadowConnection(unittest.TestCase):
         self.assertEqual(shadow_kappa_k3_sigma(), F(2))
 
     def test_kappa_k3xe_total(self):
-        """kappa(K3 x E) = 0 (chi = 0)."""
+        """kappa_cat(K3 x E) = 0 (compact total-space lane)."""
         self.assertEqual(shadow_kappa_k3xe_total(), F(0))
+
+    def test_k3xe_kappa_split(self):
+        """K3xE keeps the categorical, chiral, BKM, and fibre lanes separate."""
+        split = k3xe_kappa_split()
+        self.assertEqual(split['kappa_cat'], F(0))
+        self.assertEqual(split['kappa_ch_heisenberg'], F(3))
+        self.assertEqual(split['kappa_bkm_delta5'], F(5))
+        self.assertEqual(split['kappa_fiber_mukai'], F(24))
+        self.assertEqual(set(split.values()), {F(0), F(3), F(5), F(24)})
+
+    def test_igusa_delta5_normalization(self):
+        """D_5, chi_10^OP, and the OP/DT scalar use the Igusa normalization."""
+        norm = igusa_delta5_normalization()
+        self.assertEqual(norm['delta5_leading_coeff'], 64)
+        self.assertEqual(norm['theta_to_monic_square_factor'], 4096)
+        self.assertEqual(norm['op_dt_scalar_factor'], -4096)
+        self.assertIn('D_5 = 64^{-1} Delta_5', norm['D5_formula'])
+        self.assertIn('4096^{-1} Delta_5^2', norm['Phi10_OP_formula'])
+        self.assertIn('-4096 Delta_5^{-2}', norm['Z_OP_DT_formula'])
 
     def test_f1_k3_relative(self):
         """F_1(K3 rel) = kappa/24 = 2/24 = 1/12."""
@@ -656,19 +685,26 @@ class TestShadowConnection(unittest.TestCase):
     def test_shadow_complementarity(self):
         """Complementarity data is consistent."""
         data = shadow_kappa_complementarity()
+        self.assertEqual(data['kappa_k3'], F(2))
+        self.assertEqual(data['kappa_k3xe_cat'], F(0))
+        self.assertEqual(data['kappa_k3xe_ch_heisenberg'], F(3))
+        self.assertEqual(data['kappa_k3xe_bkm_delta5'], F(5))
+        self.assertEqual(data['kappa_k3xe_fiber_mukai'], F(24))
+        self.assertEqual(data['kappa_k3xe'], F(0))
         self.assertEqual(data['chi_k3'], 24)
         self.assertEqual(data['chi_e'], 0)
         self.assertEqual(data['chi_product'], 0)
+        self.assertFalse(data['additivity_holds'])
 
     def test_shadow_denominator_connection(self):
         """Shadow-BKM bridge data."""
         data = shadow_denominator_connection()
         self.assertEqual(data['kappa_k3'], F(2))
         self.assertEqual(data['F_1'], F(1, 12))
-        self.assertEqual(data['eg_c0_minus1'], 2)
-        self.assertEqual(data['eg_c0_0'], 20)
-        self.assertEqual(data['bkm_real_mult'], 1)
-        self.assertEqual(data['bkm_lightlike_mult'], 20)
+        self.assertEqual(data['product_exp_c_minus1'], 2)
+        self.assertEqual(data['product_exp_c0'], 20)
+        self.assertEqual(data['sample_real_even_dim'], 1)
+        self.assertEqual(data['sample_lightlike_even_dim'], 20)
 
     def test_fg_positive(self):
         """F_g values are positive for g >= 1."""
@@ -771,7 +807,7 @@ class TestCrossChecks(unittest.TestCase):
 
 
 class TestMultiPathVerification(unittest.TestCase):
-    """Section 19: Multi-path verification of key claims."""
+    """Section 19: finite consistency checks of selected coefficients."""
 
     def test_c0_D0_path_a_direct(self):
         """Path A (direct): c_0(0) = 2*phi01(0,0) = 2*10 = 20."""
@@ -782,14 +818,14 @@ class TestMultiPathVerification(unittest.TestCase):
         self.assertEqual(k3_eg_coeff(0, 0), 20)
 
     def test_c0_D0_path_f_literature(self):
-        """Path F (literature): c_0(0) = 20 from K3 h^{1,1}=20 marginal ops.
+        """Path F sample: c_0(0) = 20 from K3 h^{1,1}=20 marginal ops.
 
         The 20 NS marginal operators: h^{1,1}(K3) = 20.
         But the c_0(0) = 20 includes 10 from c(0,0) doubled:
         phi_{0,1}(0,0) = 10 from the 10 in the theta decomposition.
         chi(K3) - 4 = 24 - 4 = 20 (subtracting the 2+2 from polar terms).
         """
-        self.assertEqual(C0_VERIFIED[0], 20)
+        self.assertEqual(SIGNED_BORCHERDS_EXPONENT_SAMPLES[0], 20)
 
     def test_kappa_k3_path_a(self):
         """Path A: kappa = chi(K3)/12 = 24/12 = 2."""
@@ -808,21 +844,20 @@ class TestMultiPathVerification(unittest.TestCase):
         self.assertEqual(shadow_fg_k3_relative(1), F(1, 12))
 
     def test_real_root_mult_path_a(self):
-        """Path A (direct): real root mult = 1."""
+        """Path A sample: real root signed dimension = 1."""
         self.assertEqual(root_multiplicity_direct(BKMRoot(1, 0, 1)), 1)
 
     def test_real_root_mult_path_b(self):
-        """Path B (PK): real root mult = 1."""
+        """Path B sample: seeded recursion keeps real signed dimension 1."""
         mults = build_root_multiplicities_pk(max_height=2)
         self.assertEqual(mults.get((1, 0, 1)), 1)
 
     def test_real_root_mult_path_f(self):
-        """Path F (literature): real roots always have mult 1 in BKM algebras."""
-        # This is a theorem of Borcherds
+        """Path F sample: the finite real-root seed is 1."""
         self.assertEqual(root_multiplicity_direct(BKMRoot(1, 0, 1)), 1)
 
     def test_lightlike_mult_path_a(self):
-        """Path A: lightlike mult = c_K3(0,0) = 20."""
+        """Path A sample: lightlike signed dimension = c_K3(0,0) = 20."""
         self.assertEqual(root_multiplicity_direct(BKMRoot(0, 0, 1)), 20)
 
     def test_lightlike_mult_path_d(self):
@@ -854,10 +889,10 @@ class TestMultiPathVerification(unittest.TestCase):
         D = 7: -1026
         D = 8: +1616
 
-        Pattern: D = 0 mod 4 -> positive, D = 3 mod 4 -> negative.
-        This reflects the bosonic/fermionic split in the BKM algebra.
+        Pattern in this finite sample: D = 0 mod 4 -> positive,
+        D = 3 mod 4 -> negative.
         """
-        for D, val in C0_VERIFIED.items():
+        for D, val in SIGNED_BORCHERDS_EXPONENT_SAMPLES.items():
             if D == -1:
                 self.assertGreater(val, 0)
             elif D % 4 == 0:
@@ -870,16 +905,12 @@ class TestAdditionalVerification(unittest.TestCase):
     """Section 20: Additional structural tests."""
 
     def test_c0_growth_rate(self):
-        """|c_0(D)| grows roughly exponentially with D.
-
-        Asymptotics: |c_0(D)| ~ C * exp(4*pi*sqrt(D/4)) / D^{3/4}
-        for large D (Rademacher). For our small D, just check growth.
-        """
-        prev = abs(C0_VERIFIED[-1])
+        """The finite c_0(D) sample contains nontrivial growth."""
+        prev = abs(SIGNED_BORCHERDS_EXPONENT_SAMPLES[-1])
         for D in [0, 3, 4, 7, 8]:
-            curr = abs(C0_VERIFIED[D])
-            # Growth is not monotonic at small D, but |c_0(8)| > |c_0(-1)|
-        self.assertGreater(abs(C0_VERIFIED[8]), abs(C0_VERIFIED[-1]))
+            curr = abs(SIGNED_BORCHERDS_EXPONENT_SAMPLES[D])
+            # Growth is not monotonic at small D, but |c_0(8)| > |c_0(-1)|.
+        self.assertGreater(abs(SIGNED_BORCHERDS_EXPONENT_SAMPLES[8]), abs(SIGNED_BORCHERDS_EXPONENT_SAMPLES[-1]))
 
     def test_weyl_orbit_size_grows(self):
         """Weyl orbit size should grow when starting from non-fixed point."""
@@ -891,8 +922,8 @@ class TestAdditionalVerification(unittest.TestCase):
         self.assertGreaterEqual(len(orbit1), 2)
 
     def test_discriminant_values_achievable(self):
-        """All D in C0_VERIFIED are achievable as 4n - l^2."""
-        for D in C0_VERIFIED:
+        """All stored sample D values are achievable as 4n - l^2."""
+        for D in SIGNED_BORCHERDS_EXPONENT_SAMPLES:
             found = False
             for n in range(10):
                 disc = 4 * n - D
@@ -965,11 +996,9 @@ class TestAdditionalVerification(unittest.TestCase):
 
 
 # =========================================================================
-# HZ-IV Gold Standard: three genuinely disjoint primary-source paths
-# verifying the K3 elliptic-genus polar coefficient
-# C(-1) = 2 (lowest-discriminant K3 coefficient used by the Phi_10
-# Borcherds product) without routing all paths through
-# compute.lib.cy_bkm_algebra_engine. Wave-13 gold-standard upgrade.
+# Three independent finite sanity paths for the K3 elliptic-genus polar
+# coefficient C(-1) = 2, without routing the computation through
+# compute.lib.cy_bkm_algebra_engine.
 #
 # AP277 discipline: numerical body, not assert True.
 # AP287 discipline: C(-1) = 2 is not primitive-by-construction; it
@@ -980,17 +1009,17 @@ class TestAdditionalVerification(unittest.TestCase):
 #   form theorem, EOT Appell-Lerch decomposition, direct K3 Hodge
 #   elliptic genus) compute C(-1) from DISJOINT q-expansion routes.
 # AP310 discipline: no single library module carries all three paths;
-#   engine root_multiplicity_direct appears as Path Z sanity only.
+#   engine coefficient helpers appear as Path Z regression sanity only.
 # =========================================================================
 
 from compute.lib.independent_verification import independent_verification as _iv
 
 
 @_iv(
-    claim="lem:bc-polar-support-phi-K3",
+    claim="sanity:k3-eg-polar-coefficient-c-minus-one",
     derived_from=[
-        "Gritsenko-Nikulin 1997 Borcherds multiplicative lift",
-        "Vol I Koszul adjoint equivalence (bar Euler = Hilbert)",
+        "K3 elliptic genus normalisation chi(K3;tau,z)=2*phi_{0,1}",
+        "finite coefficient table used by cy_bkm_algebra_engine",
     ],
     verified_against=[
         "Eichler-Zagier 1985 Theorem 9.3 weak Jacobi forms of index 1",
@@ -998,32 +1027,22 @@ from compute.lib.independent_verification import independent_verification as _iv
         "Mukai 1987 K3 Hodge diamond (h^{0,0}=h^{2,0}=1, h^{1,1}=20)",
     ],
     disjoint_rationale=(
-        "The BKM denominator for K3xE is the Igusa cusp form Phi_10 = "
-        "Phi_{10}, whose Borcherds-product Fourier coefficients are "
-        "controlled by the K3 elliptic genus 2*phi_{0,1}. Path A pulls "
+        "This is a finite coefficient sanity check only. Path A reads "
         "C(-1) = 2 from the Eichler-Zagier 1985 weak-Jacobi-form "
-        "structure theorem (phi_{0,1} has coefficient 1 at q^0 y^{-1}, "
-        "and the K3 genus is 2*phi_{0,1}). Path B derives C(-1) = 2 from "
-        "the Eguchi-Ooguri-Taormina 1989 Appell-Lerch decomposition "
-        "applied to the superconformal N=4 c=6 character at K3; the "
-        "q^0 y^{-1} coefficient is doubled by the K3 elliptic genus "
-        "normalisation. Path C computes C(-1) via the K3 Hodge-theoretic "
-        "elliptic genus chi(K3; y, q) and reads the two endpoint Hodge "
-        "pieces. Literatures disjoint: modular "
-        "forms theorem (EZ), superconformal representation theory "
-        "(EOT), algebraic geometry (Mukai). Engine roots "
-        "(compute.lib.cy_bkm_algebra_engine.root_multiplicity_direct) "
-        "appear only as Path Z regression sanity."
+        "structure theorem after doubling phi_{0,1}. Path B derives the "
+        "same coefficient from the Eguchi-Ooguri-Taormina 1989 "
+        "Appell-Lerch expression for the K3 elliptic genus. Path C reads "
+        "the two endpoint Hodge pieces in the K3 Hodge-theoretic elliptic "
+        "genus. The paths do not assert denominator-algebra recognition."
     ),
 )
-def test_gold_standard_bkm_K3xE_c0_minus_one_three_paths():
-    """Three disjoint primary-source paths all give C(-1) = 2 for
-    the BKM algebra of K3xE (Gritsenko-Nikulin 1997 fake-monster-style
-    denominator identity for Phi_10).
-    """
+def test_k3_eg_c0_minus_one_finite_sanity_three_paths():
+    """Three disjoint finite paths all give the K3 EG coefficient C(-1) = 2."""
     # -- Path A: Eichler-Zagier 1985 Thm 9.3 --
-    # phi_{0,1}(tau, z) = (theta_1(tau,z)/eta(tau))^2 has q^0 y^{-1}
-    # coefficient = 1.  The K3 elliptic genus is 2*phi_{0,1}.
+    # The standard weak Jacobi generator phi_{0,1} has q^0 y^{-1}
+    # coefficient 1.  The theta_1/eta expression belongs to the phi_{-2,1}
+    # lane, not this coefficient check.  The K3 elliptic genus is
+    # 2*phi_{0,1}.
     ez_k3_C_minus1 = 2 * 1  # Eichler-Zagier 1985 Thm 9.3
 
     # -- Path B: Eguchi-Ooguri-Taormina 1989 Appell-Lerch --
@@ -1045,12 +1064,15 @@ def test_gold_standard_bkm_K3xE_c0_minus_one_three_paths():
 
     # -- Path Z: engine regression sanity --
     eng_c0_minus1 = c0_from_k3_eg(-1)
-    eng_root_mult = root_multiplicity_direct(BKMRoot(0, 1, 0))
+    eng_product_exp = borcherds_exponent(0, 1)
+    eng_super_mult = super_root_multiplicity(BKMRoot(0, 1, 0))
     assert eng_c0_minus1 == 2, (
         f"Engine regression: c0_from_k3_eg(-1) = "
         f"{eng_c0_minus1}, expected 2"
     )
-    assert eng_root_mult == 2
+    assert eng_product_exp == 2
+    assert eng_super_mult.even == 2
+    assert eng_super_mult.odd == 0
 
 
 if __name__ == '__main__':

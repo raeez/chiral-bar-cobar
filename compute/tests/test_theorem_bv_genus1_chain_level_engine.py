@@ -1,12 +1,12 @@
-r"""Tests for BV/BRST = bar at genus 1, CHAIN LEVEL, for class L.
+r"""Tests for genus-1 BV/BRST-to-bar strict chain diagnostics.
 
 THEOREM:
-  The BV 1-loop effective action on E_tau x R equals the genus-1 bar complex
-  as a CHAIN COMPLEX for class L (affine KM) algebras.
+  The strict chain comparison at genus 1 identifies the BV differential
+  on E_tau x R with the bar coalgebra B(A) for classes G and L.
 
   The scalar-level match F_1^BV = kappa/24 is proved for all standard families.
-  The chain-level identification is proved for classes G and L, and conditional
-  for classes C and M.
+  It is not an all-genus BV/BRST=bar equivalence.  Class C is conditional on
+  harmonic decoupling, and class M is obstructed at ordinary chain level.
 
 MULTI-PATH VERIFICATION (CLAUDE.md mandate, 3+ paths per claim):
   Path 1: BV 1-loop determinant (Quillen anomaly + zeta regularization)
@@ -31,7 +31,7 @@ TEST STRUCTURE:
 
 References:
   bv_brst.tex (conj:master-bv-brst, thm:bv-bar-geometric)
-  higher_genus_modular_koszul.tex (Theorem D)
+  higher_genus_modular_koszul.tex (Theorem D scalar obs_g = kappa lambda_g)
   theorem_bv_brst_genus1_constraints_engine.py (scalar-level verification)
 """
 
@@ -43,6 +43,9 @@ from compute.lib.theorem_bv_genus1_chain_level_engine import (
     ChiralAlgebraData,
     ShadowClass,
     EpistemicStatus,
+    ComparisonAmbient,
+    ChiralObject,
+    ComparisonHypotheses,
     # Algebra constructors
     heisenberg,
     affine_sl2,
@@ -60,14 +63,111 @@ from compute.lib.theorem_bv_genus1_chain_level_engine import (
     spectral_sequence_analysis,
     q_contact_virasoro,
     q_contact_class_L,
+    virasoro_shadow_contact_witness,
     sugawara_shift,
     chain_level_comparison,
+    validate_bv_bar_hypotheses,
+    object_boundary_witness,
     # Verification
     verify_jacobi_sl2,
     verify_jacobi_sl3,
     cross_family_chain_level_summary,
     kappa_three_paths,
 )
+
+
+# =====================================================================
+# Section 0: Scope and object-boundary guards
+# =====================================================================
+
+
+class TestScopeGuards:
+    """Prevent scalar diagnostics from being read as broader equivalences."""
+
+    def test_strict_chain_rejects_scalar_to_all_genus_promotion(self):
+        """Strict chain comparison here is genus-1 only."""
+        check = validate_bv_bar_hypotheses(
+            ComparisonHypotheses(
+                genus=2,
+                ambient=ComparisonAmbient.STRICT_CHAIN,
+            )
+        )
+        assert check.valid is False
+        reason_text = ' '.join(check.failure_reasons)
+        assert 'genus-1 only' in reason_text
+        assert 'scalar kappa*lambda_g^FP' in reason_text
+
+    def test_coderived_all_genus_requires_coacyclic_cone(self):
+        """All-genus coderived BV/bar needs the coacyclic-cone surface."""
+        missing = validate_bv_bar_hypotheses(
+            ComparisonHypotheses(
+                genus=2,
+                ambient=ComparisonAmbient.CODERIVED,
+                coacyclic_cone_localization=False,
+            )
+        )
+        assert missing.valid is False
+        assert any('coacyclic-cone' in r for r in missing.failure_reasons)
+
+        supplied = validate_bv_bar_hypotheses(
+            ComparisonHypotheses(
+                genus=2,
+                ambient=ComparisonAmbient.CODERIVED,
+                coacyclic_cone_localization=True,
+            )
+        )
+        assert supplied.valid is True
+        assert 'coacyclic_cone_Verdier_localization' in supplied.required_witnesses
+
+    def test_completed_chain_requires_mittag_leffler(self):
+        """Completed chain comparison needs completion and ML witnesses."""
+        missing = validate_bv_bar_hypotheses(
+            ComparisonHypotheses(
+                genus=2,
+                ambient=ComparisonAmbient.WEIGHT_COMPLETED,
+                weight_completed=True,
+                mittag_leffler_witness=False,
+            )
+        )
+        assert missing.valid is False
+        assert any('Mittag-Leffler' in r for r in missing.failure_reasons)
+
+        supplied = validate_bv_bar_hypotheses(
+            ComparisonHypotheses(
+                genus=2,
+                ambient=ComparisonAmbient.WEIGHT_COMPLETED,
+                weight_completed=True,
+                mittag_leffler_witness=True,
+            )
+        )
+        assert supplied.valid is True
+        assert 'Mittag_Leffler_cohomology_tower' in supplied.required_witnesses
+
+    def test_wrong_target_objects_rejected(self):
+        """This engine compares with B(A), not A, A^i, A^!, or Z."""
+        wrong_targets = [
+            ChiralObject.ALGEBRA_A,
+            ChiralObject.BAR_COHOMOLOGY_COALGEBRA,
+            ChiralObject.KOSZUL_DUAL_ALGEBRA,
+            ChiralObject.DERIVED_CENTER,
+        ]
+        for target in wrong_targets:
+            check = validate_bv_bar_hypotheses(
+                ComparisonHypotheses(target=target)
+            )
+            assert check.valid is False
+            assert any('B(A)' in r for r in check.failure_reasons)
+
+    def test_object_boundary_witness_distinguishes_five_objects(self):
+        """A, B(A), A^i, A^!, and Z_ch^der(A) remain separate objects."""
+        witness = object_boundary_witness()
+        assert witness['B(A)']['is_compute_target'] is True
+        assert witness['B(A)']['equals_bar_cohomology'] is False
+        assert witness['B(A)']['equals_koszul_dual_algebra'] is False
+        assert witness['B(A)']['equals_derived_center'] is False
+        assert witness['A^!']['requires_finite_type_or_completed_koszul'] is True
+        assert witness['A^!']['available_on_supplied_surface'] is False
+        assert witness['Z_ch^der(A)']['equals_bar_coalgebra'] is False
 
 
 # =====================================================================
@@ -79,7 +179,7 @@ class TestAlgebraData:
     """Verify algebra constructors produce correct data."""
 
     def test_heisenberg_kappa_is_level(self):
-        """kappa(H_k) = k, NOT c/2 (AP48)."""
+        """kappa(H_k) = k (AP48)."""
         for k in [1, 2, 5, 10]:
             alg = heisenberg(k)
             assert alg.kappa == Fraction(k)
@@ -147,6 +247,12 @@ class TestAlgebraData:
     def test_class_M_not_cubic_only(self):
         """Class M algebras have quartic and higher vertices."""
         assert virasoro(Fraction(1)).has_cubic_only is False
+
+    def test_betagamma_not_cubic_only_for_bv_surface(self):
+        """Simple OPE pole order does not remove the class-C BV contact term."""
+        alg = betagamma()
+        assert alg.max_ope_pole_order == 1
+        assert alg.has_cubic_only is False
 
 
 # =====================================================================
@@ -237,8 +343,8 @@ class TestHodgeDecomposition:
         h = hodge_decomposition_torus(heisenberg(1))
         assert h.zero_mode_decouples is True
 
-    def test_class_M_zero_modes_do_not_decouple(self):
-        """For class M, zero modes do NOT decouple."""
+    def test_class_M_zero_modes_remain_coupled(self):
+        """For class M, zero modes remain coupled."""
         h = hodge_decomposition_torus(virasoro(Fraction(26)))
         assert h.zero_mode_decouples is False
 
@@ -322,8 +428,8 @@ class TestSpectralSequence:
         assert ss.d1_squared_zero is True
         assert ss.e2_equals_einfty is True
 
-    def test_virasoro_does_not_degenerate_E2(self):
-        """Virasoro: SS does NOT degenerate at E_2."""
+    def test_virasoro_has_obstruction_beyond_E2(self):
+        """Virasoro has a spectral-sequence obstruction beyond E_2."""
         ss = spectral_sequence_analysis(virasoro(Fraction(26)))
         assert ss.d1_squared_zero is False
         assert ss.e2_equals_einfty is False
@@ -343,10 +449,10 @@ class TestSpectralSequence:
             ss = spectral_sequence_analysis(alg)
             assert ss.chain_level_comparison == EpistemicStatus.PROVED
 
-    def test_class_M_chain_level_conditional(self):
-        """Class M: chain-level comparison is CONDITIONAL."""
+    def test_class_M_chain_level_obstructed(self):
+        """Class M: ordinary chain-level comparison is OBSTRUCTED."""
         ss = spectral_sequence_analysis(virasoro(Fraction(26)))
-        assert ss.chain_level_comparison == EpistemicStatus.CONDITIONAL
+        assert ss.chain_level_comparison == EpistemicStatus.OBSTRUCTED
 
 
 # =====================================================================
@@ -382,6 +488,22 @@ class TestQuarticContact:
         """Q^contact > 0 for all c > 0 (the obstruction never vanishes)."""
         for c in [Fraction(1, 2), Fraction(1), Fraction(13), Fraction(26)]:
             assert q_contact_virasoro(c) > 0
+
+    def test_virasoro_contact_singular_surface_rejected(self):
+        """The contact invariant is defined only when c(5c+22) != 0."""
+        for c in [Fraction(0), Fraction(-22, 5)]:
+            with pytest.raises(ValueError):
+                q_contact_virasoro(c)
+
+    def test_virasoro_contact_witness_distinguishes_S4_from_delta(self):
+        """S4 is 10/[c(5c+22)], while Delta is 8*kappa*S4."""
+        witness = virasoro_shadow_contact_witness(Fraction(26))
+        assert witness['S4'] == Fraction(5, 1976)
+        assert witness['S4'] == q_contact_virasoro(Fraction(26))
+        assert witness['Delta'] == Fraction(40, 152)
+        assert witness['Delta'] == Fraction(5, 19)
+        assert witness['S4'] != witness['Delta']
+        assert witness['S5'] == Fraction(-48, 26 * 26 * 152)
 
 
 # =====================================================================
@@ -453,13 +575,13 @@ class TestChainLevelComparison:
         cl = chain_level_comparison(affine_sl3(1))
         assert cl.chain_level_status == EpistemicStatus.PROVED
 
-    def test_virasoro_conditional(self):
-        """Virasoro: chain-level CONDITIONAL."""
+    def test_virasoro_obstructed(self):
+        """Virasoro: ordinary chain-level OBSTRUCTED."""
         cl = chain_level_comparison(virasoro(Fraction(26)))
         assert cl.scalar_match is True
         assert cl.hodge_decouples is False
         assert cl.q_int_squared_zero is False
-        assert cl.chain_level_status == EpistemicStatus.CONDITIONAL
+        assert cl.chain_level_status == EpistemicStatus.OBSTRUCTED
         assert cl.obstruction is not None
 
     def test_betagamma_conditional(self):
@@ -520,7 +642,8 @@ class TestCrossFamilySummary:
         """Summary returns well-formed data."""
         s = cross_family_chain_level_summary()
         assert s['total'] == 9
-        assert s['proved_count'] + s['conditional_count'] == s['total']
+        counted = s['proved_count'] + s['conditional_count'] + s['obstructed_count']
+        assert counted == s['total']
 
     def test_class_L_all_proved_in_summary(self):
         """All class L families are proved in the summary."""
@@ -532,12 +655,12 @@ class TestCrossFamilySummary:
         s = cross_family_chain_level_summary()
         assert s['class_G_all_proved'] is True
 
-    def test_no_class_M_proved(self):
-        """No class M families are proved at chain level."""
+    def test_class_M_obstructed(self):
+        """Class M families are obstructed at ordinary chain level."""
         s = cross_family_chain_level_summary()
         for f in s['families']:
             if f['class'] == 'M':
-                assert f['chain_level'] == 'CONDITIONAL'
+                assert f['chain_level'] == 'OBSTRUCTED'
 
 
 # =====================================================================

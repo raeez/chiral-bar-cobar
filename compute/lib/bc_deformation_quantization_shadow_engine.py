@@ -1,27 +1,32 @@
-r"""Deformation quantization of the shadow Poisson structure and star products at zeros.
+r"""Shadow bracket diagnostics and normalized scalar kernels.
 
-BC-124: The shadow algebra A^sh = H_*(Def_cyc^mod(A)) is commutative as a
-graded ring (the shadows kappa, S_3, S_4, ... commute).  The L-infinity
-structure from the MC element Theta_A induces a POISSON BRACKET on A^sh:
+The shadow algebra A^sh = H_*(Def_cyc^mod(A)) is commutative as a graded
+ring: the scalar shadows kappa, S_3, S_4, ... commute.  The L-infinity
+structure from the MC element Theta_A induces first-order antisymmetric
+operations on finite shadow windows:
 
     {f, g}_shadow = Sigma_n (1/n!) ell_n(Theta_A; f, g)
 
-At the lowest level (n=0), this is the graded Lie bracket on the shadow
-algebra inherited from the convolution bracket.  The higher terms are
-L-infinity corrections.
+At the lowest level (n=0), this is the convolution bracket projected to the
+chosen shadow window.  The projected three-generator bracket is not a Poisson
+bracket on the generic Virasoro/W surface: its Jacobi defect is computed below.
 
-Kontsevich formality (1997) provides a canonical star product:
+This module therefore computes a conditional deformation-quantization
+diagnostic, not a theorem asserting a global Kontsevich star product:
 
     f *_hbar g = Sigma_{n>=0} hbar^n B_n(f, g)
 
-where B_n are bidifferential operators built from admissible graphs on
-the upper half-plane.  B_0 = fg (product), B_1 = {f,g} (Poisson bracket).
+where the B_n are Moyal-type finite-difference bidifferential coefficients on
+the selected scalar window.  B_0 is the product and B_1 is the projected
+shadow bracket.  These coefficients define a genuine star product only on
+windows where the Jacobi defect vanishes and the missing graph-weight terms
+have been supplied.
 
 This module computes:
-  1. Shadow Poisson brackets for all standard families
-  2. Kontsevich star product through order hbar^5
-  3. Quantum corrections to shadow invariants
-  4. Star product evaluations at Riemann zeta zeros
+  1. Shadow bracket candidates for standard families
+  2. Jacobi-defect diagnostics for the three-generator window
+  3. Moyal-type finite-window coefficients through order hbar^5
+  4. Complex Virasoro evaluations at Riemann zeta-zero ordinates
 
 MATHEMATICAL FRAMEWORK:
 
@@ -31,9 +36,9 @@ The shadow ring generators are:
     S_4               (quartic contact, arity-4)
     Delta = 8*kappa*S_4  (critical discriminant)
 
-The Poisson bracket comes from the L-infinity bracket on the modular
+The bracket candidate comes from the L-infinity bracket on the modular
 convolution algebra g^mod_A.  On the shadow ring (arity grading), the
-bracket increases arity by 1:
+projected bracket increases arity by 1:
 
     {S_r, S_s} = sum over planted-forest graphs Gamma
                  of arity r+s-1 with coefficient determined by
@@ -45,14 +50,15 @@ For the SINGLE primary line L, the bracket simplifies to:
     {kappa, Delta} = 3*alpha*Delta / kappa  (follows from Delta = 8*kappa*S_4)
     {alpha, S_4} = (Delta - 9*alpha^2) / (2*kappa)  (from ell_2 arity-6)
 
-These are computed from the shadow metric Q_L(t) = (2*kappa + 3*alpha*t)^2
+These identities are read from the shadow metric Q_L(t) = (2*kappa + 3*alpha*t)^2
 + 2*Delta*t^2 via the variational derivative:
 
     {f, g} = Pi^{ij} (partial_i f)(partial_j g)
 
-where Pi^{ij} is the Poisson bivector inherited from the L-infinity structure.
+where Pi^{ij} is the antisymmetric bivector candidate inherited from the
+projected L-infinity structure.
 
-KONTSEVICH STAR PRODUCT:
+FINITE-WINDOW PRODUCT DIAGNOSTIC:
 
 On a 2D Poisson manifold with coordinates (x_1, x_2) and Poisson tensor
 Pi = Pi^{12}(partial_1 wedge partial_2), the star product is:
@@ -63,14 +69,18 @@ Pi = Pi^{12}(partial_1 wedge partial_2), the star product is:
                             + ...]
             + O(hbar^3)
 
-For the shadow Poisson structure, the coordinates are the shadow
-ring generators and Pi is determined by the convolution bracket.
-
-CAUTION (AP1): kappa formulas are family-specific.
-CAUTION (AP9): S_2 = kappa != c/2 in general.
-CAUTION (AP10): Cross-verify all numerical values by 2+ independent methods.
-CAUTION (AP24): kappa(Vir_c) + kappa(Vir_{26-c}) = 13, NOT 0.
-CAUTION (AP31): kappa = 0 does NOT imply Theta_A = 0.
+For the shadow bracket candidate, the coordinates are the shadow ring
+generators and Pi is determined by the projected convolution bracket.  The
+normalization firewalls are:
+    * kappa formulas are family-specific.
+    * S_2 = kappa equals c/2 only in the Virasoro normalization.
+    * kappa(Vir_c) + kappa(Vir_{26-c}) = 13.
+    * kappa = 0 does not imply Theta_A = 0.
+    * A, B(A), A^i, A^!, Omega(B(A)), and Z_ch^der(A) are typed apart.
+    * A^! is the Verdier/continuous-linear dual branch under finite-type or
+      completed hypotheses.
+    * Omega(B(A)) = A is bar-cobar inversion, not Koszul duality.
+    * Z_ch^der(A) = ChirHoch^*(A,A) is the Hochschild/derived-centre bulk.
 
 Manuscript references:
     def:shadow-algebra (higher_genus_modular_koszul.tex)
@@ -114,6 +124,92 @@ Del = Symbol('Delta')  # Delta = 8*kappa*S4
 
 
 # ============================================================================
+# 0. Normalization and object firewalls
+# ============================================================================
+
+HOLOGRAPHIC_PACKAGE_ENTRIES: Tuple[str, ...] = (
+    "A",
+    "A^i",
+    "A^!",
+    "C",
+    "r(z)",
+    "Theta_A",
+    "nabla^hol",
+)
+"""Seven entries of the holographic package H(A)."""
+
+
+MODULAR_KOSZUL_PRIMARY_PROJECTIONS: Tuple[str, ...] = (
+    "Fact_X(L)",
+    "barB_X(L)",
+    "Theta_L",
+    "L_L",
+    "(V_br, T_br)",
+    "R4_mod(L)",
+)
+"""Six primary projections of the compute-side modular Koszul package."""
+
+
+KERNEL_NORMALIZATIONS: Dict[str, str] = {
+    "affine_raw_collision": "k*Omega_tr/z",
+    "affine_KZ_coefficient": "Omega/((k+h^vee)z)",
+    "heisenberg_raw_collision": "k/z",
+    "virasoro_collision": "(c/2)/z^3 + 2T/z",
+}
+"""Collision-kernel normalizations used by the finite-window diagnostics."""
+
+
+OBJECT_FIREWALL: Dict[str, str] = {
+    "A": "input chiral algebra",
+    "B(A)": "ordered bar coalgebra before cohomology",
+    "A^i": "bar cohomology coalgebra H^*(B(A))",
+    "A^!": (
+        "Verdier/continuous-linear dual branch under finite-type or "
+        "completed hypotheses"
+    ),
+    "Omega(B(A))": "bar-cobar inversion recovering A",
+    "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/derived-centre bulk",
+}
+"""Typed firewall separating bar, Koszul-dual, and Hochschild objects."""
+
+
+def holographic_package_entries() -> Tuple[str, ...]:
+    """Return the seven entries of H(A), in manuscript order."""
+    return HOLOGRAPHIC_PACKAGE_ENTRIES
+
+
+def modular_koszul_primary_projections() -> Tuple[str, ...]:
+    """Return the six projections of the compute-side modular Koszul package."""
+    return MODULAR_KOSZUL_PRIMARY_PROJECTIONS
+
+
+def kernel_normalizations() -> Dict[str, str]:
+    """Return raw-collision, KZ, Heisenberg, and Virasoro kernel constants."""
+    return dict(KERNEL_NORMALIZATIONS)
+
+
+def object_firewall() -> Dict[str, str]:
+    """Return typed roles for A, B(A), A^i, A^!, Omega(B(A)), and Z_ch^der(A)."""
+    return dict(OBJECT_FIREWALL)
+
+
+def _depth_class(data: dict) -> str:
+    """Return the G/L/C/M depth class when the family determines it."""
+    if "depth_class" in data:
+        return data["depth_class"]
+    family = data.get("family", "")
+    if family == "heisenberg":
+        return "G"
+    if family.startswith("affine"):
+        return "L"
+    if family == "betagamma":
+        return "C"
+    if family in {"virasoro", "virasoro_complex", "w3"}:
+        return "M"
+    return "unknown"
+
+
+# ============================================================================
 # 1. Shadow data providers (from existing engines, reproduced for independence)
 # ============================================================================
 
@@ -122,7 +218,8 @@ def _virasoro_shadow_data(c_val):
 
     Returns dict with kappa, alpha, S4, Delta, Q_L coefficients.
 
-    CAUTION (AP1): kappa(Vir_c) = c/2. Do NOT use this for other families.
+    Family-specific normalization: kappa(Vir_c) = c/2. Do not use this
+    formula for other families.
     """
     kappa = c_val / 2
     alpha = 2.0
@@ -134,6 +231,7 @@ def _virasoro_shadow_data(c_val):
     return {
         'kappa': kappa, 'alpha': alpha, 'S4': S4, 'Delta': Delta,
         'q0': q0, 'q1': q1, 'q2': q2, 'family': 'virasoro',
+        'depth_class': 'M',
     }
 
 
@@ -146,6 +244,7 @@ def _heisenberg_shadow_data(k_val):
     return {
         'kappa': float(k_val), 'alpha': 0.0, 'S4': 0.0, 'Delta': 0.0,
         'q0': float(k_val) ** 2, 'q1': 0.0, 'q2': 0.0, 'family': 'heisenberg',
+        'depth_class': 'G',
     }
 
 
@@ -160,6 +259,7 @@ def _affine_sl2_shadow_data(k_val):
         'kappa': kappa, 'alpha': alpha, 'S4': 0.0, 'Delta': 0.0,
         'q0': kappa ** 2 * 4, 'q1': 12.0 * kappa * alpha,
         'q2': 9.0 * alpha ** 2, 'family': 'affine_sl2',
+        'depth_class': 'L',
     }
 
 
@@ -174,6 +274,7 @@ def _affine_slN_shadow_data(N_val, k_val):
         'kappa': kappa, 'alpha': alpha, 'S4': 0.0, 'Delta': 0.0,
         'q0': kappa ** 2 * 4, 'q1': 12.0 * kappa * alpha,
         'q2': 9.0 * alpha ** 2, 'family': f'affine_sl{N_val}',
+        'depth_class': 'L',
     }
 
 
@@ -200,6 +301,7 @@ def _betagamma_shadow_data(lam_val=0.5):
         'q2': (180.0 * c_val + 872.0) / (5.0 * c_val + 22.0)
         if abs(5.0 * c_val + 22.0) > 1e-15 else 36.0,
         'family': 'betagamma',
+        'depth_class': 'C',
     }
 
 
@@ -247,15 +349,69 @@ def get_shadow_data(family: str, **params) -> dict:
 
 
 # ============================================================================
-# 2. Shadow Poisson bracket
+# 2. Shadow bracket candidate
 # ============================================================================
 
+def shadow_jacobi_defect(data: dict) -> Union[float, complex]:
+    r"""Jacobi defect for the three-generator bracket candidate.
+
+    For coordinates (kappa, alpha, S_4), with
+
+        Pi^{kappa,alpha} = 9*alpha^2/(2*kappa),
+        Pi^{kappa,S4}    = 3*alpha*S4/kappa,
+        Pi^{alpha,S4}    = (Delta - 9*alpha^2)/(2*kappa),
+
+    the Jacobiator on (kappa, alpha, S_4) is
+
+        J = 9*alpha*(3*alpha^2 - Delta)/(2*kappa^2).
+
+    Class G has the zero bracket.  Class L is a finite-depth
+    two-generator quotient in this scalar engine, so the S_4 coordinate is
+    absent and the displayed three-generator defect is not applied.
+    """
+    depth = _depth_class(data)
+    kappa = data['kappa']
+    alpha = data['alpha']
+    Delta = data['Delta']
+
+    if depth in {'G', 'L'}:
+        return 0.0
+    if abs(kappa) < 1e-30:
+        return 0.0
+    return 9.0 * alpha * (3.0 * alpha ** 2 - Delta) / (2.0 * kappa ** 2)
+
+
+def shadow_bracket_status(data: dict, tolerance: float = 1e-12) -> dict:
+    """Classify the projected bracket as Poisson or only first-order data."""
+    depth = _depth_class(data)
+    defect = shadow_jacobi_defect(data)
+    defect_abs = abs(defect)
+    is_poisson = defect_abs <= tolerance
+    if depth == 'G':
+        status = 'trivial_poisson'
+    elif depth == 'L':
+        status = 'finite_depth_two_generator_poisson'
+    elif is_poisson:
+        status = 'poisson_on_vanishing_defect_locus'
+    else:
+        status = 'first_order_bracket_only'
+    return {
+        'depth_class': depth,
+        'jacobi_defect': defect,
+        'jacobi_defect_abs': defect_abs,
+        'is_poisson': is_poisson,
+        'status': status,
+        'vanishing_condition': 'alpha = 0 or Delta = 3*alpha^2, with kappa nonzero',
+    }
+
+
 def shadow_poisson_bivector(data: dict) -> dict:
-    r"""Compute the Poisson bivector Pi^{ij} on the shadow ring.
+    r"""Compute the antisymmetric bivector candidate Pi^{ij}.
 
     The shadow ring on a single primary line L is generated by the shadow
     coefficients S_r (r = 2, 3, 4, ...).  The L-infinity structure from
-    the MC element Theta_A induces brackets via the planted-forest graphs.
+    the MC element Theta_A induces projected brackets via the planted-forest
+    graphs.
 
     On the 1D primary line parametrized by t, the shadow metric is:
         Q_L(t) = (2*kappa + 3*alpha*t)^2 + 2*Delta*t^2
@@ -263,14 +419,14 @@ def shadow_poisson_bivector(data: dict) -> dict:
     The shadow generating function H(t) = t^2 * sqrt(Q_L(t)) satisfies:
         H'(t) / H(t) = 2/t + Q_L'(t) / (2*Q_L(t))
 
-    The Poisson structure comes from the variational derivative of the
-    L-infinity brackets.  On the shadow generators:
+    The bivector candidate comes from the variational derivative of the
+    projected L-infinity brackets.  On the shadow generators:
 
         {S_r, S_s} = Pi^{rs}
 
     where Pi^{rs} is determined by the convolution bracket ell_2.
 
-    For the single-line shadow metric, the natural Poisson structure is
+    For the single-line shadow metric, the candidate bivector is
     on the (kappa, Delta) plane:
 
         Pi^{kappa, Delta} = 3*alpha*Delta / kappa   (from ell_2)
@@ -278,23 +434,26 @@ def shadow_poisson_bivector(data: dict) -> dict:
     This uses the fact that the convolution bracket ell_2 is the leading
     term of the L-infinity structure (higher ell_n contribute at higher arity).
 
-    Returns dict with Poisson bivector components.
+    This dictionary is a Poisson bivector only when shadow_bracket_status()
+    reports a vanishing Jacobi defect.
+
+    Returns dict with bivector components.
     """
     kappa = data['kappa']
     alpha = data['alpha']
     S4 = data['S4']
     Delta = data['Delta']  # = 8*kappa*S4
 
-    # Poisson bivector components
+    # Antisymmetric bivector components.
     # The bracket {kappa, S_4} comes from the arity-5 planted-forest graph
     # with one trivalent vertex connecting S_2 and S_4 inputs through the
     # cubic coupling alpha.
     #
     # Derivation: The shadow metric Q_L parametrizes a 1D family.
     # The variation of kappa = S_2 and S_4 along the deformation parameter
-    # induces a Poisson bracket via:
+    # induces the displayed bracket candidate via:
     #   {S_2, S_4} = (d S_2/dt)(d S_4/dt) * Pi_t
-    # where Pi_t is the symplectic form on the moduli.
+    # where Pi_t is the scalar two-form used in this finite window.
     #
     # From the Riccati algebraicity (thm:riccati-algebraicity):
     #   The shadow metric Q_L(t) = q0 + q1*t + q2*t^2 has
@@ -304,8 +463,7 @@ def shadow_poisson_bivector(data: dict) -> dict:
     # the brackets via the quadratic relation:
     #   2*a_0*a_n = -sum_{j=1}^{n-1} a_j*a_{n-j}  for n >= 3
     #
-    # This recursion is EQUIVALENT to a Poisson bracket structure where
-    # the bracket is determined by the leading cubic coupling:
+    # This recursion supplies the leading cubic-coupling bracket candidate:
     #
     #   {kappa, S_4} = (3*alpha) * S_4 / kappa * (if alpha, kappa != 0)
     #
@@ -319,7 +477,15 @@ def shadow_poisson_bivector(data: dict) -> dict:
         'Pi_kappa_alpha': 0.0,
     }
 
-    if abs(kappa) < 1e-30:
+    depth = _depth_class(data)
+
+    if abs(kappa) < 1e-30 or depth == 'G':
+        return result
+
+    if depth == 'L':
+        # The finite-depth class-L scalar window has generators kappa and
+        # alpha.  S_4 is not a coordinate of the quotient window.
+        result['Pi_kappa_alpha'] = 9.0 * alpha ** 2 / (2.0 * kappa)
         return result
 
     # {kappa, S_4}: from ell_2 at arity 5
@@ -340,9 +506,8 @@ def shadow_poisson_bivector(data: dict) -> dict:
     #   a_2 = (q2 - a_1^2)/(2*a_0)
     # Variation gives:
     #   {alpha, S_4} = (Delta - 9*alpha^2) / (2*kappa)
-    # This vanishes for class L (Delta = 0, alpha^2 contributes) iff 9*alpha^2 = 0
-    # which fails for class L.  Actually for class L, Delta = 0 and
-    # {alpha, S_4} = -9*alpha^2 / (2*kappa)
+    # On finite-depth class L, S_4 is not part of the scalar quotient window;
+    # the branch above has already returned the two-generator bracket.
     result['Pi_alpha_S4'] = (Delta - 9.0 * alpha ** 2) / (2.0 * kappa)
 
     # {kappa, alpha}: from ell_2 at arity 4
@@ -357,10 +522,10 @@ def shadow_poisson_bivector(data: dict) -> dict:
     # On the c-line: d(kappa)/dc = 1/2, d(alpha)/dc varies by family.
     # For Virasoro: alpha = 2 (constant!), so {kappa, alpha}_Vir = 0.
     # For affine sl_2: d(kappa)/dk = 3/4, d(alpha)/dk = -4/(k+2)^2.
-    # The bracket is Pi_c * (dk/dc)(da/dc) where Pi_c is the Poisson
-    # structure on the central charge line.
+    # The bracket is Pi_c * (dk/dc)(da/dc) where Pi_c is the scalar
+    # two-form on the central-charge line.
     #
-    # At the L-infinity level, {kappa, alpha} = 9*alpha^2/(2*kappa)
+    # At the projected L-infinity level, {kappa, alpha} = 9*alpha^2/(2*kappa)
     # for the ABSTRACT shadow ring, but on the SPECIALIZED family locus,
     # it reduces to the pullback.  We report the abstract value.
     result['Pi_kappa_alpha'] = 9.0 * alpha ** 2 / (2.0 * kappa)
@@ -369,7 +534,7 @@ def shadow_poisson_bivector(data: dict) -> dict:
 
 
 def shadow_poisson_bracket(f_arity: int, g_arity: int, data: dict) -> float:
-    """Compute {S_r, S_s}_shadow for shadow generators S_r, S_s.
+    """Compute the projected bracket {S_r, S_s}_shadow.
 
     Parameters
     ----------
@@ -382,14 +547,21 @@ def shadow_poisson_bracket(f_arity: int, g_arity: int, data: dict) -> float:
 
     Returns
     -------
-    float : value of {S_r, S_s}_shadow.
+    float : value of the projected bracket.  The operation is Poisson only
+        on the loci reported by shadow_bracket_status().
     """
     kappa = data['kappa']
     alpha = data['alpha']
     S4 = data['S4']
     Delta = data['Delta']
+    depth = _depth_class(data)
 
-    if abs(kappa) < 1e-30:
+    if abs(kappa) < 1e-30 or depth == 'G':
+        return 0.0
+
+    if depth == 'L' and (f_arity > 3 or g_arity > 3):
+        # Class L has a finite-depth scalar window generated by kappa and
+        # alpha; S_4 and higher shadows are absent in this quotient.
         return 0.0
 
     # Antisymmetry: {S_r, S_s} = -{S_s, S_r}
@@ -420,13 +592,13 @@ def shadow_poisson_bracket(f_arity: int, g_arity: int, data: dict) -> float:
 
 
 def _higher_poisson_bracket(r: int, s: int, data: dict) -> float:
-    """Compute {S_r, S_s} for r, s > 4 via the convolution recursion.
+    """Compute higher projected brackets for the class-M recursion.
 
     The recursion f^2 = Q_L gives:
         S_{n+2} = a_n / (n+2)
         a_n = -(1/(2*a_0)) * sum_{j=1}^{n-1} a_j * a_{n-j}  for n >= 3
 
-    The Poisson bracket is computed from the variation of the recursion:
+    The bracket candidate is computed from the variation of the recursion:
         {S_r, S_s} = sum_{graphs} contribution
     On the 1D line, this reduces to:
         {S_r, S_s} = (r-2)*(s-2) * derivative_structure / kappa
@@ -435,8 +607,9 @@ def _higher_poisson_bracket(r: int, s: int, data: dict) -> float:
     alpha = data['alpha']
     S4 = data['S4']
     Delta = data['Delta']
+    depth = _depth_class(data)
 
-    if abs(kappa) < 1e-30:
+    if abs(kappa) < 1e-30 or depth in {'G', 'L', 'C'}:
         return 0.0
 
     # Compute shadow coefficients through arity max(r, s) + 2
@@ -520,254 +693,104 @@ def _shadow_coefficients_numerical(data: dict, max_r: int) -> Dict[int, float]:
 
 
 def poisson_center_generators(data: dict) -> dict:
-    r"""Compute generators of the Poisson center Z(A^sh, {,}).
+    r"""Report center data certified by this finite scalar window.
 
-    The Poisson center is:
-        Z(A^sh, {,}) = {f in A^sh : {f, g} = 0 for all g in A^sh}
+    The historical API name is retained, but the generic Virasoro/W and
+    beta-gamma three-generator bracket candidate has a nonzero Jacobi defect.
+    On those loci the module does not certify a Poisson center.  It reports
+    the shadow-metric discriminant
 
-    For the standard families:
+        Disc(Q_L) = q1^2 - 4*q0*q2 = -32*kappa^2*Delta
 
-    Class G (Heisenberg): The entire shadow ring is in the center
-        (trivial Poisson structure, alpha = S_4 = 0).
-
-    Class L (affine KM): Delta = 0, S_4 = 0.  The bracket {kappa, alpha}
-        is nonzero, so the center is 1-dimensional, generated by the
-        Casimir C_L = kappa^2 - (9/2)*alpha^2*log(kappa) (not polynomial).
-        On the shadow ring: the polynomial center is generated by
-        3*kappa*alpha^2 (the discriminant, which vanishes).
-
-    Class C (betagamma): Similar to class M but with finite depth.
-        Center generated by Delta (which is the squared discriminant).
-
-    Class M (Virasoro, W_N): The Poisson structure is nondegenerate on
-        the (kappa, alpha) plane (for alpha != 0).  The center is:
-        Z = {f : {f, kappa} = {f, alpha} = 0}
-        Since Pi^{kappa, alpha} = 9*alpha^2/(2*kappa) != 0 (for alpha != 0),
-        the center is generated by functions of Delta alone.
-
-    The SHADOW CASIMIR is the lowest-degree element of the center:
-        C_shadow = Delta = 8*kappa*S_4
-
-    For class M, any function of Delta and the higher Casimirs is central.
-
-    Returns
-    -------
-    dict with center generators and their properties.
+    as a scalar invariant, not as a proved central Casimir.
     """
     kappa = data['kappa']
     alpha = data['alpha']
     S4 = data['S4']
     Delta = data['Delta']
+    depth = _depth_class(data)
+    status = shadow_bracket_status(data)
+    discriminant = shadow_metric_discriminant(data)
 
-    family = data.get('family', 'unknown')
-
-    if family == 'heisenberg':
+    if depth == 'G':
         return {
             'dim_center': float('inf'),
             'generators': ['kappa'],
             'description': 'Entire shadow ring (trivial Poisson structure)',
             'casimir': kappa,
             'center_type': 'full',
+            'bracket_status': status,
+            'discriminant_Q': discriminant,
         }
 
     if abs(alpha) < 1e-15 and abs(S4) < 1e-15:
-        # Class G (no cubic, no quartic)
         return {
             'dim_center': float('inf'),
             'generators': ['kappa'],
             'description': 'Trivial Poisson structure (alpha = S_4 = 0)',
             'casimir': kappa,
             'center_type': 'full',
+            'bracket_status': status,
+            'discriminant_Q': discriminant,
         }
 
-    # Non-trivial Poisson structure
-    # The shadow Casimir is Delta = 8*kappa*S_4
-    # For the 1D shadow ring, the center is generated by functions
-    # that are annihilated by the Hamiltonian vector field
-    # X_kappa = {kappa, -} and X_alpha = {alpha, -}
-
-    # For class L (Delta = 0):
-    if abs(Delta) < 1e-15:
-        # {kappa, alpha} = 9*alpha^2/(2*kappa) != 0
-        # Center generated by the constraint Delta = 0 itself
-        # and the quadratic Casimir C_L = 2*kappa^3 / alpha^2
-        # (satisfying {C_L, kappa} = {C_L, alpha} = 0)
-        if abs(alpha) > 1e-15 and abs(kappa) > 1e-15:
-            casimir = 2.0 * kappa ** 3 / alpha ** 2
-        else:
-            casimir = kappa
+    if depth == 'L':
         return {
-            'dim_center': 1,
-            'generators': ['C_L = 2*kappa^3/alpha^2'],
-            'description': 'Class L: center generated by quadratic Casimir',
-            'casimir': casimir,
-            'center_type': 'class_L',
+            'dim_center': 0,
+            'generators': ['constants'],
+            'description': (
+                'Class L finite-depth window has the nonzero two-generator '
+                'bracket {kappa, alpha}; no nonconstant center generator is '
+                'certified by this scalar computation.'
+            ),
+            'casimir': None,
+            'center_type': 'constants_only',
+            'bracket_status': status,
+            'discriminant_Q': discriminant,
         }
-
-    # Class C or M (Delta != 0):
-    # The shadow Casimir: Delta = 8*kappa*S_4
-    # And the higher Casimirs from the convolution recursion:
-    # C_2 = Delta itself
-    # C_3 = kappa * alpha * S_4 - alpha^3 / 6  (arity-8 combination)
-    # These are central because the flow preserves the recursion.
-
-    # Verify: {Delta, kappa} = {8*kappa*S_4, kappa}
-    #   = 8 * ({kappa, kappa}*S_4 + kappa*{S_4, kappa})
-    #   = 8 * (0 - kappa * 3*alpha*S_4/kappa)
-    #   = -24*alpha*S_4
-    # This is NOT zero! So Delta is NOT in the center.
-    #
-    # The true Casimir must satisfy {C, kappa} = {C, alpha} = 0.
-    # From {kappa, alpha} = 9*alpha^2/(2*kappa):
-    #   The Hamiltonian flow of kappa is X_kappa = 9*alpha^2/(2*kappa) * d/d(alpha)
-    #   The Hamiltonian flow of alpha is X_alpha = -9*alpha^2/(2*kappa) * d/d(kappa)
-    #
-    # A Casimir C(kappa, alpha, S4, Delta, ...) satisfies:
-    #   X_kappa(C) = 0  =>  dC/d(alpha) = 0
-    #   X_alpha(C) = 0  =>  dC/d(kappa) = 0
-    # Wait, this would make C constant. The issue is that the Poisson structure
-    # on the (kappa, alpha) plane is NONDEGENERATE (rank 2), so there are no
-    # Casimirs in 2 variables.
-    #
-    # But the shadow ring has MORE generators (S_4, S_5, ...).  The Poisson
-    # structure on the FULL shadow ring has rank 2 (from the (kappa, alpha) plane),
-    # so Casimirs exist in the orthogonal complement.
-    #
-    # The Casimir is: C_shadow = (S_4 - 9*alpha^2/(8*kappa)) * kappa
-    #   This is Delta/8 - 9*alpha^2/8 = (Delta - 9*alpha^2)/8
-    # Let's verify: this is (S_4 * kappa) - 9*alpha^2/8
-    #   {C, kappa} = kappa*{S_4, kappa} + {kappa, kappa}*S_4 - 0
-    #              = -kappa * 3*alpha*S4/kappa
-    #              = -3*alpha*S4
-    # This is not zero either.  The issue is deeper.
-    #
-    # For the ABSTRACT shadow ring (kappa, alpha, S_4 as independent generators),
-    # the Casimir is determined by the kernel of the Poisson map.
-    # On the rank-2 Poisson manifold R^3 with coordinates (kappa, alpha, S_4):
-    # The Casimir is any function constant on symplectic leaves.
-    # The symplectic leaves are the level sets of the Casimir function.
-    #
-    # The Poisson matrix is:
-    #   Pi^{12} = {kappa, alpha} = 9*alpha^2 / (2*kappa)
-    #   Pi^{13} = {kappa, S_4} = 3*alpha*S_4 / kappa
-    #   Pi^{23} = {alpha, S_4} = (Delta - 9*alpha^2) / (2*kappa)
-    #
-    # The Casimir is annihilated by all Hamiltonian vector fields:
-    #   X_kappa(C) = Pi^{12} dC/dalpha + Pi^{13} dC/dS4 = 0
-    #   X_alpha(C) = -Pi^{12} dC/dkappa + Pi^{23} dC/dS4 = 0
-    #   X_S4(C) = -Pi^{13} dC/dkappa - Pi^{23} dC/dalpha = 0
-    #
-    # From the first two equations:
-    #   9*alpha^2/(2*kappa) * dC/dalpha + 3*alpha*S4/kappa * dC/dS4 = 0
-    #   -9*alpha^2/(2*kappa) * dC/dkappa + (Delta-9*alpha^2)/(2*kappa) * dC/dS4 = 0
-    #
-    # For alpha != 0, dividing:
-    #   dC/dalpha = -(2*S4/3*alpha) * dC/dS4   ... (i)
-    #   dC/dkappa = (Delta-9*alpha^2)/(9*alpha^2) * dC/dS4   ... (ii)
-    #
-    # Try C = S_4 * kappa^a * alpha^b:
-    #   dC/dkappa = a * S4 * kappa^{a-1} * alpha^b
-    #   dC/dalpha = b * S4 * kappa^a * alpha^{b-1}
-    #   dC/dS4 = kappa^a * alpha^b
-    #
-    # From (i): b*S4*kappa^a*alpha^{b-1} = -(2*S4/(3*alpha))*kappa^a*alpha^b
-    #   => b = -2/3  (not integer)
-    #
-    # So the Casimir is not a monomial.  Try the discriminant form:
-    # C_shadow = 8*kappa*S_4 - 9*alpha^2 = Delta - 9*alpha^2
-    #   dC/dkappa = 8*S_4
-    #   dC/dalpha = -18*alpha
-    #   dC/dS4 = 8*kappa
-    #
-    # Check (i): -18*alpha =? -(2*S4/(3*alpha)) * 8*kappa
-    #           = -16*kappa*S4/(3*alpha)
-    #           = -2*Delta/(3*alpha)
-    # So -18*alpha = -2*Delta/(3*alpha) => 27*alpha^2 = Delta.
-    # This holds only if Delta = 27*alpha^2, which is NOT generally true.
-    #
-    # The Casimir for a 3D Poisson manifold of rank 2 is:
-    #   C such that dC is proportional to the kernel of Pi.
-    # The kernel 1-form is: omega = Pi^{23} d(kappa) + Pi^{31} d(alpha) + Pi^{12} d(S4)
-    # i.e., omega = Pi^{23} dkappa - Pi^{13} dalpha + Pi^{12} dS4
-    #
-    # omega = [(Delta-9*alpha^2)/(2*kappa)] dkappa
-    #         - [3*alpha*S4/kappa] dalpha
-    #         + [9*alpha^2/(2*kappa)] dS4
-    #
-    # Multiply by 2*kappa:
-    #   (Delta - 9*alpha^2) dkappa - 6*alpha*S4 dalpha + 9*alpha^2 dS4
-    #
-    # We need this to be exact: omega = dC.
-    # C such that:
-    #   dC/dkappa = Delta - 9*alpha^2 = 8*kappa*S4 - 9*alpha^2
-    #   dC/dalpha = -6*alpha*S4
-    #   dC/dS4 = 9*alpha^2
-    #
-    # From dC/dS4 = 9*alpha^2: C = 9*alpha^2*S4 + phi(kappa, alpha)
-    # From dC/dalpha = -6*alpha*S4: 18*alpha*S4 + dphi/dalpha = -6*alpha*S4
-    #   => dphi/dalpha = -24*alpha*S4  ... depends on S4! Contradiction.
-    #
-    # So the kernel 1-form is NOT exact in polynomial coordinates.
-    # The Casimir exists as a TRANSCENDENTAL function.
-    # Using integrating factor: C = kappa^{-2/3} * (8*kappa*S4 - 9*alpha^2)
-    # is a common approach but let's verify.
-    #
-    # Actually for applications (star product at zeros), what matters is
-    # the Casimir ON EACH FAMILY LOCUS, where kappa, alpha, S4 are all
-    # functions of a single parameter c.  On each 1D locus, every smooth
-    # function is a Casimir.  The INTERESTING Casimir is the one that
-    # extends across families.
-    #
-    # For the computation, we report the discriminant-type invariant:
-    casimir_val = Delta - 9.0 * alpha ** 2
-    # and note it is NOT exactly central but is an approximate Casimir
-    # for the shadow ring.
-
-    # The TRUE polynomial Casimir on (kappa, alpha, S4) is:
-    # Using the Poisson matrix and its kernel:
-    # C = integral of omega along any path.
-    # For practical purposes, on each family locus parametrized by c,
-    # the Casimir function is the discriminant:
-    # Disc = q1^2 - 4*q0*q2 = (12*kappa*alpha)^2 - 4*(4*kappa^2)*(9*alpha^2+2*Delta)
-    #       = 144*kappa^2*alpha^2 - 16*kappa^2*(9*alpha^2+2*Delta)
-    #       = 144*kappa^2*alpha^2 - 144*kappa^2*alpha^2 - 32*kappa^2*Delta
-    #       = -32*kappa^2*Delta
-    # The discriminant of Q_L: Disc_Q = -32*kappa^2*Delta.
-    # This is manifestly in the center (it depends only on the Casimirs
-    # kappa^2 and Delta).
-    shadow_casimir = -32.0 * kappa ** 2 * Delta
 
     return {
-        'dim_center': 1,
-        'generators': ['Disc_Q = -32*kappa^2*Delta'],
-        'description': f'Class {"C" if abs(alpha) < 1e-10 else "M"}: center generated by discriminant of Q_L',
-        'casimir': shadow_casimir,
-        'center_type': 'discriminant',
+        'dim_center': 0,
+        'generators': [],
+        'description': (
+            'No nonconstant Poisson-center generator is certified on this '
+            'finite window.  The reported discriminant is a scalar invariant '
+            'of Q_L, not a proved central Casimir.'
+        ),
+        'casimir': None,
+        'center_type': 'not_poisson' if not status['is_poisson'] else 'not_computed',
+        'bracket_status': status,
         'Delta': Delta,
         'nine_alpha_sq': 9.0 * alpha ** 2,
-        'casimir_approx': casimir_val,
+        'discriminant_Q': discriminant,
     }
 
 
-def shadow_casimir_value(data: dict) -> float:
-    """Compute the shadow Casimir C_shadow = -32*kappa^2*Delta.
-
-    This is the discriminant of Q_L, which is a genuine Casimir
-    of the shadow Poisson structure on the abstract shadow ring.
+def shadow_metric_discriminant(data: dict) -> Union[float, complex]:
+    """Compute the shadow-metric discriminant Disc(Q_L) = -32*kappa^2*Delta.
 
     For each family:
-        Heisenberg:  C = 0 (Delta = 0)
-        Affine sl_2: C = 0 (Delta = 0)
-        Betagamma:   C = -32*kappa^2 * 40/(5c+22)
-        Virasoro:    C = -32*(c/2)^2 * 40/(5c+22) = -320*c^2/(5c+22)
+        Heisenberg:  Disc(Q_L) = 0 (Delta = 0)
+        Affine sl_2: Disc(Q_L) = 0 (Delta = 0)
+        Betagamma:   Disc(Q_L) = -32*kappa^2 * 40/(5c+22)
+        Virasoro:    Disc(Q_L) = -32*(c/2)^2 * 40/(5c+22)
     """
     kappa = data['kappa']
     Delta = data['Delta']
     return -32.0 * kappa ** 2 * Delta
 
 
+def shadow_casimir_value(data: dict) -> Union[float, complex]:
+    """Compatibility alias for shadow_metric_discriminant().
+
+    The returned scalar is the discriminant of Q_L.  It is not asserted to be
+    a central Casimir unless a separate Poisson-center proof is available.
+    """
+    return shadow_metric_discriminant(data)
+
+
 # ============================================================================
-# 3. Kontsevich star product
+# 3. Finite-window product diagnostic
 # ============================================================================
 
 def kontsevich_B0(f_val: float, g_val: float) -> float:
@@ -776,7 +799,7 @@ def kontsevich_B0(f_val: float, g_val: float) -> float:
 
 
 def kontsevich_B1(f_arity: int, g_arity: int, data: dict) -> float:
-    """B_1(f, g) = {f, g}_shadow (Poisson bracket).
+    """B_1(f, g) = {f, g}_shadow for the projected bracket.
 
     For shadow generators S_r, S_s:
         B_1(S_r, S_s) = {S_r, S_s}_shadow
@@ -788,10 +811,10 @@ def kontsevich_B2(f_arity: int, g_arity: int, data: dict) -> float:
     r"""B_2(f, g) = (1/2) * Pi^{ij} Pi^{kl} (d_i d_k f)(d_j d_l g)
                    + (1/3) * Pi^{ij} (d_j Pi^{kl}) [(d_i d_k f)(d_l g) + (d_k f)(d_i d_l g)]
 
-    For the shadow Poisson structure with generators (kappa, alpha, S_4):
+    For the shadow bracket candidate with generators (kappa, alpha, S_4):
 
     On the 1D family locus (parametrized by c), f and g are functions of c.
-    The Poisson bivector Pi^{ij} is a function of c.  The B_2 operator is:
+    The bivector candidate Pi^{ij} is a function of c.  The B_2 operator is:
 
         B_2(f, g) = (1/2) * (Pi^{12})^2 * f''*g'' + ...
 
@@ -799,7 +822,7 @@ def kontsevich_B2(f_arity: int, g_arity: int, data: dict) -> float:
 
     For shadow generators S_r on a SINGLE family locus:
         f = S_r(c), g = S_s(c) are functions of c.
-        The Kontsevich B_2 reduces to:
+        The finite-window B_2 reduces to:
         B_2(S_r, S_s) = (1/2) * {S_r, {S_s, c}}_shadow + correction terms
 
     We compute B_2 via the MOYAL FORMULA on the 2D Poisson plane:
@@ -817,7 +840,7 @@ def kontsevich_B2(f_arity: int, g_arity: int, data: dict) -> float:
         return 0.0
 
     # On the shadow ring, we model B_2 via the Moyal-type formula.
-    # For the rank-2 Poisson structure on (kappa, alpha):
+    # For the rank-2 bivector candidate on (kappa, alpha):
     # Pi^{12} = {kappa, alpha} = 9*alpha^2/(2*kappa)
     #
     # B_2(S_r, S_s) = (1/2) * (Pi^{12})^2 * (d^2 S_r / d(kappa) d(alpha))
@@ -892,9 +915,9 @@ def kontsevich_B2(f_arity: int, g_arity: int, data: dict) -> float:
 
 
 def kontsevich_Bn(n: int, f_arity: int, g_arity: int, data: dict) -> float:
-    r"""Kontsevich B_n operator for general n, computed numerically.
+    r"""Moyal-type B_n coefficient for general n, computed numerically.
 
-    For the rank-2 Poisson structure, the Moyal-type formula gives:
+    For the rank-2 bivector candidate, the Moyal-type formula gives:
 
         B_n(f, g) = (1/n!) * sum_{|alpha|=|beta|=n}
                     Pi^{i_1 j_1} ... Pi^{i_n j_n}
@@ -906,7 +929,7 @@ def kontsevich_Bn(n: int, f_arity: int, g_arity: int, data: dict) -> float:
                     (d^n f / d(kappa)^k d(alpha)^{n-k})
                     (d^n g / d(kappa)^{n-k} d(alpha)^k)
 
-    This is the Moyal formula adapted to the shadow Poisson structure.
+    This is the Moyal formula adapted to the projected shadow bracket.
     """
     if n == 0:
         coeffs = _shadow_coefficients_numerical(data, max(f_arity, g_arity) + 2)
@@ -1005,7 +1028,7 @@ def star_product_components(f_arity: int, g_arity: int, data: dict,
                             max_order: int = 5) -> Dict[int, float]:
     """Compute B_n(f, g) for n = 0, ..., max_order.
 
-    Returns dict {n: B_n(f, g)} for building the star product at any hbar.
+    Returns dict {n: B_n(f, g)} for building the finite-window product.
     """
     return {n: kontsevich_Bn(n, f_arity, g_arity, data) for n in range(max_order + 1)}
 
@@ -1013,16 +1036,16 @@ def star_product_components(f_arity: int, g_arity: int, data: dict,
 def associativity_test(f_arity: int, g_arity: int, h_arity: int,
                        data: dict, hbar_val: float,
                        max_order: int = 5) -> dict:
-    r"""Test associativity: (f * g) * h = f * (g * h) through order hbar^max_order.
+    r"""Diagnostic associativity check for the truncated finite-window product.
 
-    The star product is associative to ALL orders (Kontsevich's theorem).
-    This test verifies our numerical implementation by checking:
+    This does not prove a global star product.  It checks the numerical
+    truncated product on a chosen scalar window by comparing:
 
         |(f * g) * h - f * (g * h)| / |f * g * h| < tolerance
 
     For shadow generators S_r, the test uses the fact that:
     - B_0 is the commutative product
-    - B_1 is the Poisson bracket
+    - B_1 is the projected bracket
     - Higher B_n involve higher derivatives
 
     The error comes from:
@@ -1045,12 +1068,12 @@ def associativity_test(f_arity: int, g_arity: int, h_arity: int,
 
     # (f * g) * h
     fg_components = star_product_components(f_arity, g_arity, data, max_order)
-    # For the star product (fg) * h, we need (fg) as a function.
+    # For the product (fg) * h, we need (fg) as a function.
     # At leading order: fg = f_val * g_val (a number, not a shadow generator).
     # So (fg) * h = fg * h + hbar * {fg, h} + ...
     # where {fg, h} involves the Leibniz rule: {fg, h} = f*{g,h} + {f,h}*g
 
-    # Compute order by order using the truncated star product
+    # Compute order by order using the truncated finite-window product.
     # This is an approximation: we compute f*g at each hbar, then multiply by h
     lhs = star_product(f_arity, g_arity, data, hbar_val, max_order)
     lhs_star_h = lhs * h_val  # Leading approximation
@@ -1070,12 +1093,12 @@ def associativity_test(f_arity: int, g_arity: int, h_arity: int,
     #   i.e.: {f,g}*h + {fg, h} = f*{g,h} + {f, gh}
     #   By Leibniz: {fg,h} = f*{g,h} + g*{f,h}
     #   LHS: {f,g}*h + f*{g,h} + g*{f,h}
-    #   RHS: f*{g,h} + f*{g,h} + g*{f,h}... wait, {f,gh} = {f,g}*h + g*{f,h}
+    #   RHS: f*{g,h} + {f,g}*h + g*{f,h}
     #   RHS: f*{g,h} + {f,g}*h + g*{f,h}
     #   So LHS = RHS at order 1. Good, Jacobi identity is not needed at O(hbar^1).
 
     # For the NUMERICAL test, we use the direct computation:
-    # Compute star products with the same shadow data at specific values
+    # Compute products with the same shadow data at specific values.
     # and check numerical agreement.
 
     # Direct order-by-order check:
@@ -1106,7 +1129,7 @@ def associativity_test(f_arity: int, g_arity: int, h_arity: int,
 
 
 # ============================================================================
-# 4. Quantum corrections to shadow invariants
+# 4. Finite-window corrections to shadow invariants
 # ============================================================================
 
 def quantum_kappa(data: dict, hbar_val: float, max_order: int = 5) -> dict:
@@ -1114,10 +1137,10 @@ def quantum_kappa(data: dict, hbar_val: float, max_order: int = 5) -> dict:
 
         kappa_hbar = kappa + sum_{n>=1} hbar^n kappa_n
 
-    where kappa_n is the n-th quantum correction from the star product.
+    where kappa_n is the n-th diagnostic correction from the finite-window product.
 
-    The quantum correction arises from the noncommutativity of the
-    star product:
+    The diagnostic correction arises from the noncommutativity of the
+    finite-window product:
         kappa_1 = (1/2) * {kappa, alpha}_shadow * (d alpha / d hbar)
                 = 0 at hbar = 0 (no first-order correction for generators)
 
@@ -1125,8 +1148,8 @@ def quantum_kappa(data: dict, hbar_val: float, max_order: int = 5) -> dict:
         kappa_hbar = kappa (the generator itself is not deformed)
 
     The quantum correction to kappa as an INVARIANT is different:
-        kappa_hbar(A) = kappa(A) + sum quantum corrections
-    where the corrections come from the star product modifying the
+        kappa_hbar(A) = kappa(A) + sum finite-window corrections
+    where the corrections come from the finite-window product modifying the
     MC equation:
         D_hbar * Theta + (1/2) [Theta *_hbar Theta] = 0
 
@@ -1136,7 +1159,7 @@ def quantum_kappa(data: dict, hbar_val: float, max_order: int = 5) -> dict:
 
     For the shadow ring, this reduces to:
         kappa_1 = (1/2) * B_1(kappa, kappa) = (1/2) * {kappa, kappa} = 0
-        kappa_2 = (1/2) * B_2(kappa, kappa)   (from the Kontsevich graph sum)
+        kappa_2 = (1/2) * B_2(kappa, kappa)   (from the finite-window B_2)
         kappa_3 = (1/2) * B_3(kappa, kappa) + (1/6) * sum ternary contributions
 
     The arity-2 projection of the quantized MC equation gives:
@@ -1180,7 +1203,7 @@ def quantum_discriminant(data: dict, hbar_val: float, max_order: int = 5) -> dic
 
     Delta_n = 8 * (kappa_n * S_4 + kappa * S4_n + sum mixed terms)
 
-    where kappa_n and S4_n are the quantum corrections to kappa and S_4.
+    where kappa_n and S4_n are finite-window corrections to kappa and S_4.
 
     At lowest order:
         Delta_1 = 8 * (kappa_1 * S_4 + kappa * S4_1)
@@ -1198,7 +1221,7 @@ def quantum_discriminant(data: dict, hbar_val: float, max_order: int = 5) -> dic
     kappa_data = quantum_kappa(data, hbar_val, max_order)
     kappa_corr = kappa_data['corrections']
 
-    # S4 quantum corrections
+    # S4 finite-window corrections.
     S4_corrections = {}
     for n in range(1, max_order + 1):
         Bn_val = kontsevich_Bn(n, 4, 4, data)
@@ -1233,7 +1256,7 @@ def quantum_discriminant(data: dict, hbar_val: float, max_order: int = 5) -> dic
 
 
 # ============================================================================
-# 5. Star product at zeta zeros
+# 5. Finite-window product at zeta-zero ordinates
 # ============================================================================
 
 # First 20 nontrivial zeros of Riemann zeta (imaginary parts)
@@ -1268,7 +1291,7 @@ def virasoro_at_zero(gamma_n: float) -> dict:
         c(rho_n) = 1/2 + i*gamma_n  (complexified)
 
     This gives COMPLEX shadow data. The shadow metric Q_L becomes complex,
-    and the star product acquires complex values.
+    and the finite-window product acquires complex values.
 
     Returns dict with complex shadow data.
     """
@@ -1288,6 +1311,7 @@ def virasoro_at_zero(gamma_n: float) -> dict:
         'c': c_val,
         'gamma': gamma_n,
         'family': 'virasoro_complex',
+        'depth_class': 'M',
     }
 
 
@@ -1329,7 +1353,7 @@ def _shadow_coefficients_complex(data: dict, max_r: int) -> Dict[int, complex]:
 
 def star_product_at_zero(zero_index: int, f_arity: int = 2, g_arity: int = 4,
                          hbar_val: float = 1.0, max_order: int = 5) -> dict:
-    r"""Evaluate the Kontsevich star product at a Riemann zeta zero.
+    r"""Evaluate the finite-window product at a Riemann zeta-zero ordinate.
 
     Computes B_n(S_r, S_s) at c = 1/2 + i*gamma_n where gamma_n is the
     n-th zero of the Riemann zeta function on the critical line.
@@ -1347,7 +1371,7 @@ def star_product_at_zero(zero_index: int, f_arity: int = 2, g_arity: int = 4,
 
     Returns
     -------
-    dict with B_n values, star product, and degeneration analysis.
+    dict with B_n values, finite-window product, and degeneration analysis.
     """
     if zero_index >= len(ZETA_ZEROS_20):
         raise ValueError(f"Zero index {zero_index} exceeds available zeros ({len(ZETA_ZEROS_20)})")
@@ -1366,7 +1390,7 @@ def star_product_at_zero(zero_index: int, f_arity: int = 2, g_arity: int = 4,
     for n in range(max_order + 1):
         Bn_values[n] = _Bn_complex(n, f_arity, g_arity, zero_data)
 
-    # Star product
+    # Finite-window product.
     star = sum(
         (hbar_val ** n) * Bn_values[n]
         for n in range(max_order + 1)
@@ -1391,8 +1415,8 @@ def star_product_at_zero(zero_index: int, f_arity: int = 2, g_arity: int = 4,
         else:
             suppression_ratios[n] = float('nan')
 
-    # Quantum Casimir at the zero
-    casimir = -32.0 * kappa ** 2 * Delta
+    # Shadow-metric discriminant at the zero.
+    discriminant = -32.0 * kappa ** 2 * Delta
 
     return {
         'zero_index': zero_index,
@@ -1405,8 +1429,11 @@ def star_product_at_zero(zero_index: int, f_arity: int = 2, g_arity: int = 4,
         'Bn_magnitudes': Bn_magnitudes,
         'star_product': star,
         'star_magnitude': abs(star),
-        'casimir': casimir,
-        'casimir_magnitude': abs(casimir),
+        'discriminant_Q': discriminant,
+        'discriminant_magnitude': abs(discriminant),
+        # Historical aliases retained for callers that used the old API.
+        'casimir': discriminant,
+        'casimir_magnitude': abs(discriminant),
         'suppression_ratios': suppression_ratios,
         'Bn_off_magnitudes': Bn_off_magnitudes,
     }
@@ -1496,12 +1523,12 @@ def _Bn_complex_numerical(n: int, f_arity: int, g_arity: int, data: dict) -> com
 
 def quantum_casimir_at_zero(zero_index: int, hbar_val: float = 1.0,
                             max_order: int = 3) -> dict:
-    r"""Compute the quantum Casimir C_hbar at a zeta zero.
+    r"""Compute the diagnostic deformation of Disc(Q_L) at a zeta-zero ordinate.
 
     C_hbar = C_0 + sum_{n>=1} hbar^n C_n
 
-    where C_0 = -32*kappa^2*Delta is the classical Casimir and
-    C_n involves the quantum corrections to kappa and Delta.
+    where C_0 = -32*kappa^2*Delta is the shadow-metric discriminant and
+    C_n involves finite-window corrections to kappa and Delta.
     """
     gamma = ZETA_ZEROS_20[zero_index]
     zero_data = virasoro_at_zero(gamma)
@@ -1510,13 +1537,13 @@ def quantum_casimir_at_zero(zero_index: int, hbar_val: float = 1.0,
     Delta = zero_data['Delta']
     C0 = -32.0 * kappa ** 2 * Delta
 
-    # Quantum corrections via complex star product
+    # Diagnostic corrections via the complex finite-window product.
     # C_n = -32 * sum_{p+q+r=n} kappa_p * kappa_q * Delta_r
     # where kappa_0 = kappa, Delta_0 = Delta, and kappa_n, Delta_n
-    # are quantum corrections.
+    # are finite-window corrections.
 
     # For simplicity, compute the first few corrections directly
-    # from the star product of kappa with itself and with S_4.
+    # from the product of kappa with itself and with S_4.
     corrections = {}
     for n in range(1, max_order + 1):
         # kappa_n = (1/2) * B_n(S_2, S_2)
@@ -1537,6 +1564,11 @@ def quantum_casimir_at_zero(zero_index: int, hbar_val: float = 1.0,
     return {
         'zero_index': zero_index,
         'gamma': gamma,
+        'discriminant_0': C0,
+        'discriminant_0_magnitude': abs(C0),
+        'discriminant_hbar': C_hbar,
+        'discriminant_hbar_magnitude': abs(C_hbar),
+        # Historical aliases retained for callers that used the old API.
         'C0': C0,
         'C0_magnitude': abs(C0),
         'C_hbar': C_hbar,
@@ -1552,21 +1584,21 @@ def quantum_casimir_at_zero(zero_index: int, hbar_val: float = 1.0,
 
 def moyal_star_product(f_arity: int, g_arity: int, data: dict,
                        hbar_val: float, max_order: int = 5) -> float:
-    r"""Compute the Moyal star product for comparison with Kontsevich.
+    r"""Compute the constant-bivector Moyal product for comparison.
 
-    The Moyal formula for a constant Poisson structure Pi^{ij}:
+    The Moyal formula for a constant bivector Pi^{ij}:
 
         f *_hbar g = sum_{n>=0} (hbar/2)^n (1/n!) Pi^{i_1 j_1}...Pi^{i_n j_n}
                      (d_{i_1}...d_{i_n} f)(d_{j_1}...d_{j_n} g)
 
-    For a CONSTANT Poisson structure, Moyal = Kontsevich (all correction
-    terms vanish because Pi has no derivatives).
+    For a constant Poisson bivector, the Moyal formula is the standard
+    deformation-quantization model.
 
-    For the shadow Poisson structure, Pi is NOT constant (it depends on
-    kappa and alpha), so Moyal != Kontsevich in general.  The difference
-    measures the NON-CONSTANCY of the Poisson bivector:
+    For the shadow bracket candidate, Pi is not constant (it depends on
+    kappa and alpha), so this comparison measures non-constancy of the
+    finite-window bivector:
 
-        Kontsevich - Moyal = O(hbar^2) * (derivatives of Pi)
+        window product - constant-bivector Moyal = O(hbar^2) * (derivatives of Pi)
 
     This comparison provides verification path (iv).
     """
@@ -1614,16 +1646,16 @@ def moyal_star_product(f_arity: int, g_arity: int, data: dict,
         moyal_n *= (Pi12 / 2.0) ** n / fact_n
         result += (hbar_val ** n) * moyal_n * (2.0 ** n)  # Convert (hbar/2)^n to hbar^n
 
-    # Note: the Moyal formula uses (hbar/2)^n, but our Kontsevich uses hbar^n.
+    # Note: the Moyal formula uses (hbar/2)^n, but the window product uses hbar^n.
     # The factor of 2^n difference is absorbed into the definition of B_n.
-    # Actually for Kontsevich on a symplectic manifold:
-    #   B_n^Kontsevich = (1/n!) * (Pi)^n * ...
-    # while Moyal uses:
+    # For the common symplectic normalization:
+    #   B_n = (1/n!) * (Pi)^n * ...
+    # while the Moyal convention uses:
     #   B_n^Moyal = (1/(2^n * n!)) * (Pi)^n * ...
-    # So B_n^Kontsevich = 2^n * B_n^Moyal for constant Pi.
+    # So B_n(window convention) = 2^n * B_n(Moyal convention) for constant Pi.
     # In our implementation, B_n already includes the correct normalization.
-    # The Moyal comparison should therefore agree with Kontsevich at B_0, B_1
-    # and diverge at B_2+ due to non-constancy of Pi.
+    # The comparison should agree at B_0 and B_1 and diverge at B_2+
+    # when derivatives of Pi enter.
 
     return result
 
@@ -1631,10 +1663,10 @@ def moyal_star_product(f_arity: int, g_arity: int, data: dict,
 def kontsevich_moyal_comparison(f_arity: int, g_arity: int, data: dict,
                                 hbar_val: float = 0.1,
                                 max_order: int = 5) -> dict:
-    """Compare Kontsevich and Moyal star products.
+    """Compare the finite-window product and the constant-bivector Moyal product.
 
     Returns dict with both values and the difference.
-    The difference measures the non-constancy of the Poisson bivector.
+    The difference measures the non-constancy of the bivector candidate.
     """
     kontsevich = star_product(f_arity, g_arity, data, hbar_val, max_order)
     moyal = moyal_star_product(f_arity, g_arity, data, hbar_val, max_order)
@@ -1652,44 +1684,45 @@ def kontsevich_moyal_comparison(f_arity: int, g_arity: int, data: dict,
 
 
 # ============================================================================
-# 7. Full analysis: star product landscape
+# 7. Full analysis: finite-window product landscape
 # ============================================================================
 
 def full_star_product_analysis(family: str, max_order: int = 5, **params) -> dict:
-    """Complete star product analysis for a given family.
+    """Complete finite-window product analysis for a given family.
 
     Computes:
-    1. Shadow Poisson bracket for all generator pairs
-    2. Poisson center and Casimir
-    3. Kontsevich B_n for n = 0, ..., max_order
-    4. Star product at several hbar values
-    5. Quantum corrections kappa_n and Delta_n
-    6. Kontsevich-Moyal comparison
-    7. Associativity test
+    1. Shadow bracket candidates for generator pairs
+    2. Jacobi-defect status and certified center data
+    3. Finite-window B_n coefficients for n = 0, ..., max_order
+    4. Truncated products at several hbar values
+    5. Diagnostic corrections kappa_n and Delta_n
+    6. Moyal comparison
+    7. Associativity diagnostic
     """
     data = get_shadow_data(family, **params)
 
-    # 1. Poisson brackets
+    # 1. Projected brackets
     brackets = {}
     for (r, s) in [(2, 2), (2, 3), (2, 4), (3, 3), (3, 4), (4, 4)]:
         brackets[(r, s)] = shadow_poisson_bracket(r, s, data)
 
-    # 2. Poisson center
+    # 2. Jacobi-defect status and certified center data
+    bracket_status = shadow_bracket_status(data)
     center = poisson_center_generators(data)
 
     # 3. B_n components for (kappa, S_4)
     Bn_24 = star_product_components(2, 4, data, max_order)
 
-    # 4. Star products at several hbar values
+    # 4. Products at several hbar values.
     star_products = {}
     for h in [0.01, 0.1, 0.5, 1.0]:
         star_products[h] = star_product(2, 4, data, h, max_order)
 
-    # 5. Quantum corrections
+    # 5. Finite-window corrections.
     qk = quantum_kappa(data, 0.1, max_order)
     qd = quantum_discriminant(data, 0.1, max_order)
 
-    # 6. Kontsevich-Moyal comparison
+    # 6. Moyal comparison
     km_comp = kontsevich_moyal_comparison(2, 4, data, 0.1, max_order)
 
     # 7. Associativity test
@@ -1698,6 +1731,7 @@ def full_star_product_analysis(family: str, max_order: int = 5, **params) -> dic
     return {
         'family': family,
         'data': data,
+        'bracket_status': bracket_status,
         'brackets': brackets,
         'center': center,
         'Bn_24': Bn_24,
@@ -1710,10 +1744,10 @@ def full_star_product_analysis(family: str, max_order: int = 5, **params) -> dic
 
 
 def star_product_zero_landscape(max_zeros: int = 10, max_order: int = 3) -> dict:
-    """Compute star product data at the first max_zeros zeta zeros.
+    """Compute finite-window product data at the first max_zeros zeta zeros.
 
-    Returns a landscape of B_n values, star products, and quantum
-    Casimirs at each zero, plus trend analysis.
+    Returns a landscape of B_n values, products, and discriminant diagnostics
+    at each zero, plus trend analysis.
     """
     results = {}
     for idx in range(min(max_zeros, len(ZETA_ZEROS_20))):

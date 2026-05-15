@@ -1,10 +1,12 @@
 r"""Genus-2 chiral derived center: bulk algebra structure beyond genus 1.
 
-The chiral derived center Z^der_ch(A) = C^bullet_ch(A, A) is the UNIVERSAL
-BULK algebra (thm:thqg-swiss-cheese).  At genus 0, the Swiss-cheese operad
-enforces one-way information flow (closed -> open only).  At genus 1, the
-annulus trace Delta_ns(Tr_A) = kappa * lambda_1 provides the first open-to-
-closed map.  At genus 2, full bidirectionality emerges.
+The chiral derived center
+Z^der_ch(A) = C^bullet_ch(A, A)
+is the derived bulk algebra of the boundary chiral algebra A
+(thm:thqg-swiss-cheese).  At genus 0, the Swiss-cheese operad enforces
+one-way information flow (closed -> open only).  At genus 1, the annulus
+trace Delta_ns(Tr_A) = kappa * lambda_1 gives the first open-to-closed map.
+At genus 2, full bidirectionality emerges.
 
 This module computes the genus-2 structure of the derived center for the
 standard landscape families (Heisenberg, Virasoro, affine sl_2, W_3).
@@ -45,19 +47,25 @@ MATHEMATICAL CONTENT:
 
 CONVENTIONS:
   - Cohomological grading (|d| = +1)
-  - Bar propagator d log E(z,w) has weight 1 (AP27)
-  - kappa(H_k) = k, kappa(Vir_c) = c/2 (AP1/AP39/AP48)
+  - Bar propagator d log E(z,w) has weight 1
+  - kappa(H_k) = k, kappa(Vir_c) = c/2
   - lambda_2^{FP} = 7/5760 (Faber-Pandharipande)
   - F_2(A) = kappa(A) * lambda_2^{FP} for uniform-weight Koszul (Theorem D)
-  - The derived center is NOT the bar complex (AP34)
 
-CRITICAL PITFALLS:
-  - AP25: B(A) is coalgebra; D_Ran(B(A)) = B(A!); Omega(B(A)) = A
-  - AP34: Bar-cobar inversion != open-to-closed passage
-  - AP27: Bar propagator d log E(z,w) is weight 1, all channels use E_1
-  - AP24: kappa + kappa' = 0 for KM/free fields; = 13 for Virasoro
+OBJECT FIREWALL:
+  - B(A) = T^c(s^{-1}\bar A) is a conilpotent dg coalgebra.
+  - A^i = H^*(B(A)) is the Koszul-dual coalgebra.
+  - A^! is obtained from A^i by Verdier/linear duality under finite-type
+    or completed hypotheses.
+  - Omega(B(A)) ~= A is bar-cobar inversion, not open-to-closed passage.
+  - Z^der_ch(A) is the derived center/bulk algebra, distinct from B(A),
+    A^i, and A^!.
 
-Ground truth:
+The genus-2 open/closed map sends bar-level genus data into the derived
+center.  It does not construct A^! and does not identify the bar coalgebra
+or its cohomology with the bulk.
+
+Reference anchors:
   thm:thqg-swiss-cheese, thm:thqg-annulus-trace,
   higher_genus_modular_koszul.tex (Theorem D, shadow CohFT),
   higher_genus_foundations.tex (stable graph enumeration),
@@ -81,7 +89,7 @@ import numpy as np
 
 FAMILIES = ("Heisenberg", "Affine_sl2", "Virasoro", "W3")
 
-# Faber-Pandharipande intersection numbers (AP1: FAMILY-INDEPENDENT)
+# Faber-Pandharipande intersection numbers (family-independent).
 LAMBDA_1_FP = Fraction(1, 24)
 LAMBDA_2_FP = Fraction(7, 5760)
 LAMBDA_3_FP = Fraction(31, 967680)
@@ -113,16 +121,15 @@ SP4_DIM = 10  # dim Sp(4) = 2*2^2 + 2 = 10
 def kappa(family: str, **params) -> Fraction:
     """Modular characteristic kappa(A).
 
-    AP1 WARNING: These are FAMILY-SPECIFIC formulas. Never copy between
-    families without recomputing from first principles.
+    These are family-specific formulas.
 
     Heisenberg H_k:        kappa = k
     Affine sl_2 at level k: kappa = 3(k+2)/4
     Virasoro Vir_c:        kappa = c/2
-    W_3 at central charge c: kappa = 5c/6 (AP1: H_3-1 = 5/6, NOT c/2)
+    W_3 at central charge c: kappa = 5c/6 (H_3-1 = 5/6, not c/2)
 
-    AP39: kappa != c/2 in general. kappa = c/2 only for Virasoro.
-    AP48: kappa depends on the full algebra, not just the Virasoro subalgebra.
+    The identity kappa = c/2 holds only for Virasoro.  In general kappa
+    depends on the full algebra, not just on its Virasoro subalgebra.
     """
     if family == "Heisenberg":
         k = Fraction(params.get("k", 1))
@@ -143,8 +150,8 @@ def kappa(family: str, **params) -> Fraction:
 def kappa_dual(family: str, **params) -> Fraction:
     """Modular characteristic of the Koszul dual kappa(A!).
 
-    AP24: kappa(A) + kappa(A!) = 0 for KM/free fields.
-    For Virasoro: kappa(Vir_c) + kappa(Vir_{26-c}) = 13 (NOT zero!).
+    The complementarity constant is family-dependent: kappa(A) + kappa(A!)
+    is zero for Kac-Moody/free-field families, but equals 13 for Virasoro.
     """
     if family == "Heisenberg":
         return -kappa(family, **params)
@@ -159,7 +166,7 @@ def kappa_dual(family: str, **params) -> Fraction:
         return dual_c / Fraction(2)
     elif family == "W3":
         c = Fraction(params.get("c", 2))
-        # W_3 Koszul duality: c -> 100-c (AP24: kappa+kappa'=250/3, NOT 0)
+        # W_3 Koszul duality: c -> 100-c, so kappa+kappa'=250/3.
         dual_c = Fraction(100) - c
         return Fraction(5) * dual_c / Fraction(6)
     else:
@@ -197,7 +204,7 @@ def genus2_hochschild_dimension(family: str, degree: int) -> int:
         (top class on M-bar_2 tensor Z^0)
       HH^n_{g=2} = 0 for n > 4 or n < 0.
 
-    NOTE: These dimensions are for the TOTAL genus-2 Hochschild complex,
+    These dimensions are for the total genus-2 Hochschild complex,
     which combines the genus-0 Hochschild (degrees 0-2) with the genus-2
     modular corrections (additional classes from M-bar_2 geometry).
 
@@ -215,7 +222,7 @@ def genus2_hochschild_dimension(family: str, degree: int) -> int:
                             genus-2 obstruction is F_2 = kappa * lambda_2)
 
     This reflects the key theorem: the modular characteristic kappa controls
-    ALL genera.  The "new" genus-2 data is in the CHAIN-LEVEL structure,
+    all genera.  The new genus-2 data is in the chain-level structure,
     not in the cohomology dimensions at the scalar level.
     """
     if family not in FAMILIES:
@@ -319,8 +326,8 @@ def genus2_trace_scalar(family: str, **params) -> Fraction:
     This extends the genus-1 annulus trace:
       Tr^{(1)} = kappa(A) * lambda_1^{FP} = kappa(A) / 24
 
-    VERIFICATION: The genus-g trace map at the scalar level is always
-    Tr^{(g)} = kappa * lambda_g^{FP} (Theorem D).
+    The genus-g trace map at the scalar level is always
+    Tr^{(g)} = kappa * lambda_g^{FP} by Theorem D.
     """
     k = kappa(family, **params)
     return k * LAMBDA_2_FP
@@ -329,7 +336,7 @@ def genus2_trace_scalar(family: str, **params) -> Fraction:
 def genus2_trace_ratio(family: str, **params) -> Fraction:
     """Ratio Tr^{(2)} / Tr^{(1)} = lambda_2 / lambda_1.
 
-    This ratio is UNIVERSAL (independent of the algebra A):
+    This ratio is universal (independent of the algebra A):
       lambda_2 / lambda_1 = (7/5760) / (1/24) = 7/240
 
     This universality is a consequence of Theorem D: the genus-g trace
@@ -357,14 +364,14 @@ def genus2_open_closed_scalar(family: str, **params) -> Fraction:
 
     OC^{(2)}: B^{(2)}(A) -> Z_ch^{(2)}(A)
 
-    The image of the genus-2 bar complex element Theta^{(2)}_A under
+    The image of the genus-2 bar-coalgebra element Theta^{(2)}_A under
     the open/closed map is:
       OC^{(2)}(Theta^{(2)}_A) = F_2(A)
 
     where F_2(A) = kappa(A) * lambda_2^{FP} (Theorem D).
 
     The open/closed map at genus g is the TRACE over the genus-g
-    surface: it integrates the bar complex data (a chain on M-bar_g)
+    surface: it integrates bar-coalgebra data (a chain on M-bar_g)
     against the fundamental class of M-bar_g to produce a bulk scalar.
 
     For Heisenberg at k=1: OC^{(2)} = 7/5760
@@ -404,7 +411,7 @@ def genus2_pants_decomposition_separating(family: str, **params) -> Dict:
                 = (kappa * lambda_1)^2 / kappa
                 = kappa * lambda_1^2
 
-    This is NOT the full F_2 but only the separating boundary contribution.
+    This is not the full F_2 but only the separating boundary contribution.
     The full genus-2 amplitude also has:
       - Nonseparating node contribution (handle attachment)
       - Interior (smooth locus) contribution
@@ -647,9 +654,9 @@ def genus2_sewing_heisenberg(k: int = 1, N_terms: int = 100) -> Dict:
     At the scalar level:
       F_2(H_k) = k * lambda_2^{FP} = k * 7/5760
 
-    COMPARISON: The Hochschild computation (algebraic) gives the same
-    answer as the sewing computation (analytic).  This is a consequence
-    of the HS-sewing theorem (thm:general-hs-sewing).
+    The Hochschild computation (algebraic) gives the same answer as the
+    sewing computation (analytic), by the HS-sewing theorem
+    (thm:general-hs-sewing).
     """
     k_frac = Fraction(k)
     F2_hochschild = k_frac * LAMBDA_2_FP
@@ -811,7 +818,7 @@ def genus2_to_genus1_degeneration(family: str, **params) -> Dict:
     At the scalar level:
       F_2 = kappa * lambda_2 -> F_1 = kappa * lambda_1
 
-    The degeneration is NOT a simple limit: F_2/F_1 = lambda_2/lambda_1 = 7/240,
+    The degeneration is not a simple limit: F_2/F_1 = lambda_2/lambda_1 = 7/240,
     which is a finite ratio.  The degeneration involves taking a boundary limit
     in the moduli space M-bar_2 as the period matrix tau degenerates.
 
@@ -853,7 +860,7 @@ def genus2_complementarity(family: str, **params) -> Dict:
     For KM/free fields: kappa + kappa' = 0, so F_2(A) + F_2(A!) = 0.
     For Virasoro: kappa + kappa' = 13, so F_2(A) + F_2(A!) = 13 * lambda_2.
 
-    AP24 WARNING: The complementarity sum is NOT universally zero.
+    The complementarity sum is not universally zero.
     """
     k = kappa(family, **params)
     k_dual = kappa_dual(family, **params)
@@ -862,7 +869,7 @@ def genus2_complementarity(family: str, **params) -> Dict:
     F2_dual = k_dual * LAMBDA_2_FP
     complement_sum = F2 + F2_dual
 
-    # For KM: kappa + kappa' = 0 (AP24)
+    # For KM: kappa + kappa' = 0.
     # For Virasoro: kappa + kappa' = 13
     kappa_sum = k + k_dual
 

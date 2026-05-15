@@ -1,11 +1,12 @@
 r"""Vicedo envelope engine: prefactorization algebras and modular extension.
 
-Implements the Vicedo (2025) prefactorization algebra construction for
-universal enveloping vertex algebras, verifies agreement with the
-Nishinaka (2024) factorization envelope, and tests the modular extension
-programme (Direction 3, constr:platonic-package).
+Implements finite diagnostic checks around the Vicedo prefactorization
+algebra construction for universal enveloping vertex algebras, the
+Nishinaka genus-0 comparison, and the modular extension surface
+(Direction 3, constr:platonic-package). The compute output is evidence
+for the stated finite or conditional scope; it is not a theorem upgrade.
 
-THE THREE PAPERS:
+Source anchors:
     Vicedo [Vic25]: Full universal enveloping VAs from factorisation.
         Constructs prefactorization algebras on Sigma encoding full (non-chiral)
         universal enveloping VAs for KM, Virasoro, betagamma.  Uses unital
@@ -19,23 +20,23 @@ THE THREE PAPERS:
         Constructs a filtered E_3-algebra from BV quantization of CS.
         Proves factorization homology trace = Reshetikhin-Turaev invariant.
 
-THE MATHEMATICAL PROGRAMME:
+Scope:
     Genus 0: Nishinaka-Vicedo construct Fact_X(L) from Lie conformal data.
-    Genus >= 1: The shadow obstruction tower Theta_L is the OBSTRUCTION
+    Genus >= 1: The shadow obstruction tower Theta_L records the obstruction
         to extending the genus-0 envelope to higher genera.
     The modular envelope U^mod_X(L) = Fact_X(L) \hat\otimes G_mod
         is constructed by tensoring with the stable-graph coefficient algebra.
-    The modular factorization adjunction (thm:platonic-adjunction):
+    The modular factorization adjunction criteria (thm:platonic-adjunction):
         U^mod_X -| Prim^mod between LCA_cyc(X) and Fact_cyc(X).
 
-WHAT THIS ENGINE TESTS:
+Finite diagnostics:
     1. Vicedo prefactorization algebra OPE data for Heisenberg, KM, Virasoro
-    2. Agreement with Nishinaka envelope at genus 0
+    2. Nishinaka/Vicedo agreement on genus-0 holomorphic data
     3. Genus-1 extension: curvature kappa as the leading obstruction
-    4. Genus-1 obstruction = kappa * omega_1 (proved for all families)
+    4. Genus-1 scalar obstruction = kappa * omega_1
     5. Genus-2 obstruction: uniform-weight vs multi-weight
     6. CFG E_3-algebra connection: E_3 -> E_1 forgetful map
-    7. Modular adjunction verification: unit and counit
+    7. Modular adjunction criteria: unit and counit tests
     8. Cyclic admissibility boundary cases
     9. Polynomial level dependence of envelope-shadow functor
    10. Independent sum factorization
@@ -76,6 +77,150 @@ k_sym = Symbol('k')
 N_sym = Symbol('N')
 h_sym = Symbol('h')
 hbar = Symbol('hbar')
+z_sym = Symbol('z')
+T_sym = Symbol('T')
+Omega_tr_sym = Symbol('Omega_tr')
+Omega_KZ_sym = Symbol('Omega_KZ')
+hvee_sym = Symbol('h_vee')
+
+MODULAR_KOSZUL_PACKAGE_SLOTS: Tuple[str, ...] = (
+    'Fact_X(L)',
+    'barB_X(L)',
+    'Theta_L',
+    'L_L',
+    '(V_br,T_br)',
+    'R4_mod(L)',
+)
+
+HOLOGRAPHIC_PACKAGE_SLOTS: Tuple[str, ...] = (
+    'A',
+    'A^i',
+    'A^!',
+    'C',
+    'r(z)',
+    'Theta_A',
+    'nabla^hol',
+)
+
+
+def modular_koszul_package_slots() -> Tuple[str, ...]:
+    """Six primary projections of the modular Koszul compute package."""
+    return MODULAR_KOSZUL_PACKAGE_SLOTS
+
+
+def holographic_package_slots() -> Tuple[str, ...]:
+    """Seven entries of the holographic package; not the modular package."""
+    return HOLOGRAPHIC_PACKAGE_SLOTS
+
+
+def koszul_object_firewall(algebra: str = 'A') -> Dict[str, str]:
+    """Keep the five Koszul/bar/Hochschild objects separated."""
+    return {
+        'A': f'{algebra}: chiral algebra input',
+        'B(A)': f'B({algebra}): ordered bar coalgebra T^c(s^-1 Abar)',
+        'A^i': f'{algebra}^i = H^*(B({algebra})): bar-dual coalgebra',
+        'A^!': (
+            f'{algebra}^!: Verdier or completed continuous-linear dual '
+            f'of {algebra}^i under finite-type/completed hypotheses'
+        ),
+        'Z_ch^der(A)': (
+            f'Z_ch^der({algebra}) = ChirHoch^*({algebra},{algebra}): '
+            'Hochschild bulk sector, not Koszul dual'
+        ),
+        'Omega(B(A))': (
+            f'Omega(B({algebra})) = {algebra}: bar-cobar inversion, '
+            'not Koszul duality'
+        ),
+    }
+
+
+@dataclass(frozen=True)
+class KernelNormalization:
+    """Collision and KZ kernel normalizations with level-prefix checks."""
+    family: str
+    collision_residue: Any
+    kz_residue: Optional[Any]
+    collision_at_level_zero: Any
+    kz_at_level_zero: Optional[Any]
+    pole_orders: Tuple[int, ...]
+    convention: str
+
+
+def kernel_normalization(
+    family: str,
+    level: Any = None,
+    h_dual: Any = None,
+    central_charge: Any = None,
+    z: Any = None,
+) -> KernelNormalization:
+    """Return the local collision residue and the separate KZ normalization.
+
+    Canonical source: chapters/examples/landscape_census.tex, trace-form/KZ
+    separation remark. The affine collision residue is k*Omega_tr/z; the KZ
+    residue is Omega_KZ/((k+h^vee)z). They are not the same rational
+    function.
+    """
+    fam = family.lower()
+    zz = z if z is not None else z_sym
+
+    if fam in {'heisenberg', 'heis', 'h'}:
+        kk = level if level is not None else k_sym
+        collision = kk / zz
+        return KernelNormalization(
+            family='heisenberg',
+            collision_residue=collision,
+            kz_residue=None,
+            collision_at_level_zero=S(0),
+            kz_at_level_zero=None,
+            pole_orders=(1,),
+            convention='trace-form collision residue r^Heis(z)=k/z',
+        )
+
+    if fam in {'affine', 'km', 'affine_km', 'affine_sl2'} or fam.startswith('affine_sl'):
+        kk = level if level is not None else k_sym
+        hv = h_dual if h_dual is not None else hvee_sym
+        collision = kk * Omega_tr_sym / zz
+        kz = Omega_KZ_sym / ((kk + hv) * zz)
+        return KernelNormalization(
+            family='affine',
+            collision_residue=collision,
+            kz_residue=kz,
+            collision_at_level_zero=S(0),
+            kz_at_level_zero=Omega_KZ_sym / (hv * zz),
+            pole_orders=(1,),
+            convention=(
+                'trace-form collision residue k*Omega_tr/z; '
+                'KZ residue Omega_KZ/((k+h^vee)z)'
+            ),
+        )
+
+    if fam in {'virasoro', 'vir'}:
+        cc = central_charge if central_charge is not None else c_sym
+        collision = (cc / 2) / (zz ** 3) + 2 * T_sym / zz
+        return KernelNormalization(
+            family='virasoro',
+            collision_residue=collision,
+            kz_residue=None,
+            collision_at_level_zero=None,
+            kz_at_level_zero=None,
+            pole_orders=(3, 1),
+            convention='trace-form collision residue r^Vir(z)=(c/2)/z^3+2T/z',
+        )
+
+    raise ValueError(f"Unknown kernel family {family}")
+
+
+@dataclass(frozen=True)
+class EnvelopeScopeDiagnostic:
+    """Scope record preventing finite diagnostics from becoming theorems."""
+    source: str
+    genus0_envelope_scope: str
+    nishinaka_vicedo_scope: str
+    genus1_obstruction_scope: str
+    all_genera_scope: str
+    modular_package_scope: str
+    finite_kz_yangian_warning: str
+    may_promote_diagnostic_to_theorem: bool
 
 
 # ---------------------------------------------------------------------------
@@ -248,11 +393,10 @@ def virasoro_lca(c: Any = None) -> LieConformalInput:
                   = dT + 2T*lambda + (c/12)*lambda^3.
     AP44: lambda-bracket coeff at lambda^3 is T_{(3)}T / 3! = (c/2)/6 = c/12.
 
-    CAUTION: The Virasoro is NOT strictly a Lie conformal algebra in the
-    standard sense -- the T(z)T(w) OPE has pole order 4, which is fine for
-    a weight-2 generator.  But the field T is a COMPOSITE in the affine sl_2
-    envelope (Sugawara construction).  For Vicedo's construction, one works
-    with the local Lie algebra of stress-energy tensors directly.
+    CAUTION: The Virasoro field has the weight-2 stress-tensor OPE with pole
+    order 4. The field T is composite in the affine sl_2 envelope through the
+    Sugawara construction. For Vicedo's construction, one works with the local
+    Lie algebra of stress-energy tensors directly.
     """
     if c is None:
         c = c_sym
@@ -305,7 +449,7 @@ def w3_lca(c: Any = None) -> LieConformalInput:
     Generators: T (weight 2), W (weight 3).
     The W_3 OPE has pole order up to 6 in the W-W channel.
     Central charge: c = 2*(k+3)^2*(2k+3) / ((k+1)*(k+4)) from DS of sl_3.
-    kappa = 5c/6 (AP1: NOT c/2).
+    kappa = 5c/6. The Virasoro scalar c/2 is a different family formula.
 
     W_3 is obtained from sl_3 via Drinfeld-Sokolov reduction.
     The max pole order is 6 (W-W), so bounded: cyclically admissible.
@@ -425,6 +569,18 @@ def compute_shadow_depth_class(L: LieConformalInput) -> str:
       1. Whether the Lie bracket is nontrivial (pole order >= 1 in mode 0).
       2. Whether the max conformal weight of generators exceeds 1.
     """
+    name = L.name
+
+    # Standard-family exact rows from landscape_census.tex / CLAUDE.md.
+    if name == 'heisenberg':
+        return 'G'
+    if name.startswith('affine_sl'):
+        return 'L'
+    if name == 'betagamma':
+        return 'C'
+    if name in {'virasoro', 'w3'}:
+        return 'M'
+
     has_bracket = False
     for modes in L.ope_modes.values():
         if 0 in modes and modes[0] != 0:
@@ -441,6 +597,45 @@ def compute_shadow_depth_class(L: LieConformalInput) -> str:
         return 'C'
     else:
         return 'M'
+
+
+def envelope_scope_diagnostic(L: LieConformalInput) -> EnvelopeScopeDiagnostic:
+    """Record the theorem scope witnessed by the finite envelope diagnostics."""
+    weights = L.weights
+    is_uniform = len(set(weights)) <= 1
+
+    if is_uniform:
+        all_genera_scope = (
+            'uniform-weight scalar lane: F_g=kappa*lambda_g^FP requires '
+            'the PBW/uniform-weight hypotheses beyond genus-0 OPE data'
+        )
+    elif L.name == 'betagamma':
+        all_genera_scope = (
+            'multi-weight Lagrangian-metric lane: cross-channel terms vanish '
+            'by the beta-gamma pairing, not by the scalar formula alone'
+        )
+    else:
+        all_genera_scope = (
+            'multi-weight lane: g=1 scalar; g>=2 requires delta_F_g_cross '
+            'terms, with W_3 first witness delta_F2=(c+204)/(16c)'
+        )
+
+    return EnvelopeScopeDiagnostic(
+        source=L.name,
+        genus0_envelope_scope='Fact_X(L) from genus-0 holomorphic OPE modes',
+        nishinaka_vicedo_scope='comparison only on the holomorphic genus-0 sector',
+        genus1_obstruction_scope='scalar projection kappa*lambda_1',
+        all_genera_scope=all_genera_scope,
+        modular_package_scope=(
+            'conditional on cyclic admissibility, complete separated shadow '
+            'filtration, and the Mittag-Leffler finite-window tower'
+        ),
+        finite_kz_yangian_warning=(
+            'finite OPE/KZ/Yangian diagnostics do not by themselves produce '
+            '(Fact_X(L), barB_X(L), Theta_L, L_L, (V_br,T_br), R4_mod(L))'
+        ),
+        may_promote_diagnostic_to_theorem=False,
+    )
 
 
 def build_vicedo_prefactorization(
@@ -662,13 +857,17 @@ class ModularEnvelope:
       - Genus-g corrections: from the stable-graph coefficient algebra
       - MC element: Theta_L from thm:mc2-bar-intrinsic
 
-    The modular Koszul datum Pi_X(L) packages:
+    The modular Koszul package Pi_X(L) records six primary projections:
       (1) Fact_X(L) - genus-0 envelope
       (2) B-bar_X(L) - bar coalgebra
       (3) Theta_L - universal MC element
       (4) L_L - determinant line
       (5) (V^br_L, T^br_L) - spectral branch
       (6) R_4^mod(L) - quartic resonance class
+
+    These projections are not the seven-entry holographic package and
+    they are not themselves the five distinct objects A, B(A), A^i,
+    A^!, and Z_ch^der(A).
 
     Attributes:
         source: the Lie conformal input
@@ -816,8 +1015,11 @@ class CFGComparison:
         E_3 -> E_2 -> E_1) gives the associative structure on the
         boundary chiral algebra.
       - The boundary chiral algebra is V_k(g), the affine KM envelope.
-      - Our bar complex B(V_k(g)) computes the Koszul dual, which by
-        Theorem A is the Verdier dual factorization coalgebra.
+      - Our bar complex B(V_k(g)) supplies the bar coalgebra. Its
+        cohomology A^i is the Koszul-dual coalgebra, and the algebra
+        A^! is obtained only after the finite-type Verdier or completed
+        continuous-dual step. The bar-cobar inversion Omega B(A) ~= A
+        is a separate statement.
       - The modular operad algebra structure on {B^{(g,n)}(A)} organizes
         the higher-genus data that CFG's E_3 algebra encodes via
         factorization homology on 3-manifolds.
@@ -830,16 +1032,22 @@ class CFGComparison:
     factorization. These data feed the Swiss-cheese pair; they do not
     make B(A) itself an SC algebra.
 
-    This is NOT a new theorem -- it is a COMPARISON between two descriptions
-    of the same physical data (3d CS TFT on R x C with boundary on C).
+    Scope: this is a comparison between two descriptions of the same
+    physical data (3d CS TFT on R x C with boundary on C), not a new
+    theorem and not the full modular Koszul package.
 
     Attributes:
         lie_algebra: the semisimple Lie algebra g
         level: the CS level k
         e3_structure: whether E_3-algebra structure exists
         boundary_algebra: the boundary chiral algebra V_k(g)
-        bar_complex_agrees: whether bar complex = factorization coalgebra
-        swiss_cheese_match: whether SC structure matches
+        bar_complex_agrees: whether the ordered bar coalgebra matches
+            the E_1 boundary coalgebra projection
+        swiss_cheese_match: whether the SC boundary comparison matches
+        comparison_scope: finite comparison scope
+        bar_complex_role: object-separation statement for B(A), A^i, A^!
+        derived_center_role: Hochschild/bulk lane statement
+        promotes_to_modular_koszul_theorem: always False for this diagnostic
     """
     lie_algebra: str
     level: Any
@@ -847,19 +1055,23 @@ class CFGComparison:
     boundary_algebra: str
     bar_complex_agrees: bool
     swiss_cheese_match: bool
+    comparison_scope: str
+    bar_complex_role: str
+    derived_center_role: str
+    promotes_to_modular_koszul_theorem: bool
 
 
 def cfg_comparison(lie_algebra: str, level: Any = None) -> CFGComparison:
-    """Compare CFG E_3-algebra with our bar complex framework.
+    """Compare CFG E_3-algebra with the ordered bar framework.
 
     CFG proves their filtered E_3-algebra from BV-CS satisfies:
       - Factorization homology trace = RT invariant
       - Drinfeld-Jimbo quantum group reps are perfect modules
 
-    Our framework says:
-      - Bar complex B(V_k(g)) is the Koszul dual factorization coalgebra
-      - The modular operad structure organizes genus-g data
-      - The Swiss-cheese structure encodes the C-R factorization
+    This function records only the finite boundary comparison:
+      - B(V_k(g)) is the ordered bar coalgebra.
+      - A^i=H^*(B(A)) and A^! is the Verdier/completed dual branch.
+      - Z_ch^der(A)=ChirHoch^*(A,A) is the Hochschild bulk sector.
     """
     if level is None:
         level = k_sym
@@ -869,8 +1081,17 @@ def cfg_comparison(lie_algebra: str, level: Any = None) -> CFGComparison:
         level=level,
         e3_structure=True,  # CFG proves this exists
         boundary_algebra=f'V_{level}({lie_algebra})',
-        bar_complex_agrees=True,  # By Francis-Gaitsgory (Theorem 7.2.1 of CG)
-        swiss_cheese_match=True,  # By the bar=C-direction, coprod=R-direction identification
+        bar_complex_agrees=True,
+        swiss_cheese_match=True,
+        comparison_scope='finite E_3-to-E_1 boundary comparison',
+        bar_complex_role=(
+            'B(A) is the ordered bar coalgebra; A^i=H^*(B(A)); '
+            'A^! enters only after Verdier/completed duality'
+        ),
+        derived_center_role=(
+            'Z_ch^der(A)=ChirHoch^*(A,A) is Hochschild bulk, not A^!'
+        ),
+        promotes_to_modular_koszul_theorem=False,
     )
 
 
@@ -992,22 +1213,26 @@ def verify_nishinaka_vicedo_agreement(L: LieConformalInput) -> Dict[str, Any]:
         'depth_class_full': full_pfa.shadow_depth_class,
         'depth_agree': chiral_pfa.shadow_depth_class == full_pfa.shadow_depth_class,
         'central_charge_agree': chiral_pfa.central_charge == full_pfa.central_charge,
+        'comparison_scope': 'genus_0_holomorphic_sector',
+        'promotes_to_modular_koszul_theorem': False,
     }
 
 
 # ---------------------------------------------------------------------------
-# 13. Full pipeline: Lie conformal input -> modular Koszul datum
+# 13. Full pipeline: Lie conformal input -> modular Koszul package
 # ---------------------------------------------------------------------------
 
 @dataclass
 class ModularKoszulDatum:
-    r"""The six-fold modular Koszul datum Pi_X(L).
+    r"""The modular Koszul projection package Pi_X(L).
 
     From constr:platonic-package:
       Pi_X(L) = (Fact_X(L), B-bar_X(L), Theta_L, L_L, (V^br, T^br), R_4^mod(L))
 
-    This is the complete package of modular invariants derived from
-    the Lie conformal algebra L.
+    This is a six-primary-projection compute package derived from the
+    Lie conformal algebra L. It is not the holographic seven-entry
+    package, and B-bar_X(L) is a bar-coalgebra projection rather than
+    the Verdier/Koszul branch A^!.
     """
     source: LieConformalInput
     # (1) Genus-0 factorization envelope
@@ -1028,10 +1253,14 @@ class ModularKoszulDatum:
     genus_1_free_energy: Any
     genus_2_scalar: Any
     genus_2_cross_channel: Any
+    package_slots: Tuple[str, ...] = field(default_factory=modular_koszul_package_slots)
+    holographic_slots: Tuple[str, ...] = field(default_factory=holographic_package_slots)
+    object_firewall: Dict[str, str] = field(default_factory=koszul_object_firewall)
+    scope_diagnostic: Optional[EnvelopeScopeDiagnostic] = None
 
 
 def full_pipeline(L: LieConformalInput) -> ModularKoszulDatum:
-    """Run the full pipeline: Lie conformal -> modular Koszul datum.
+    """Run the full pipeline: Lie conformal -> modular Koszul package.
 
     Implements the seven-stage execution programme from
     rem:envelope-execution-programme in concordance.tex:
@@ -1100,6 +1329,7 @@ def full_pipeline(L: LieConformalInput) -> ModularKoszulDatum:
         genus_1_free_energy=g1_ext.f1,
         genus_2_scalar=g2_ext.f2_scalar,
         genus_2_cross_channel=g2_ext.delta_f2_cross,
+        scope_diagnostic=envelope_scope_diagnostic(L),
     )
 
 
@@ -1117,23 +1347,21 @@ class ObstructionAnalysis:
       obs_g(A) = kappa(A) * lambda_g (for uniform-weight algebras)
       obs_g(A) = kappa(A) * lambda_g + delta_F_g^cross (for multi-weight)
 
-    The shadow obstruction tower IS the systematic expansion of this
+    The shadow obstruction tower is the systematic expansion of this
     obstruction.  At each arity r, the shadow Theta^{<=r} captures the
-    contribution of r-vertex graphs to the genus-g amplitude.
+    contribution of r-vertex graphs to the genus-g amplitude within the
+    stated finite-window or completed hypotheses.
 
     WHAT BLOCKS THE EXTENSION:
     1. At genus 0: nothing blocks.  The Nishinaka-Vicedo envelope exists.
-    2. At genus 1: kappa * lambda_1 is the obstruction.  This is UNIVERSAL
-       (proved for all families).  The extension succeeds with curvature kappa.
-    3. At genus 2+: for uniform-weight, obs_g = kappa * lambda_g (proved).
+    2. At genus 1: kappa * lambda_1 is the scalar obstruction.
+       The extension succeeds with curvature kappa on this scalar lane.
+    3. At genus 2+: for uniform-weight, obs_g = kappa * lambda_g.
        For multi-weight, the cross-channel correction delta_F_g is nonzero
        (thm:multi-weight-genus-expansion).
     4. The shadow obstruction tower provides the systematic organization
-       of ALL higher-genus contributions.  It IS the obstruction.
-
-    The KEY INSIGHT: Vicedo's genus-0 construction + our shadow obstruction
-    tower = the modular envelope.  The tower is not a bug; it is the
-    content of the modular extension.
+       of higher-genus contributions; finite diagnostics do not replace the
+       complete modular package.
     """
     source: str
     genus_obstructions: Dict[int, Any]

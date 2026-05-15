@@ -7,7 +7,7 @@ Verifies:
 4. DS reduction exponents and weight multisets
 5. DS sends exact (tier 1) to finitely defective (tier 2)
 6. Li coefficients and sign patterns
-7. Defect polynomial expansion structure
+7. Finite harmonic defect expansion structure
 8. Arithmetic structure at integer points
 
 References:
@@ -32,7 +32,8 @@ from lib.euler_koszul_engine import (
     ising_sewing_lift, rational_voa_tier,
     harmonic_zeta, virasoro_defect_exact, w3_defect_exact,
     wN_defect_exact, ds_arithmetic_defect_formula,
-    defect_at_integers, sewing_coefficients, Xi_generic,
+    defect_at_integers, defect_limit_as_u_infinity,
+    sewing_coefficients, Xi_generic,
     tier_summary,
 )
 
@@ -180,20 +181,36 @@ class TestDefect:
                 formula = wN_defect_exact(N, u)
                 assert abs(float(direct - formula)) < 1e-15
 
-    def test_w_infinity_limit(self):
-        """D_{W_N}(u) approaches a limit as N -> infinity.
+    def test_wN_defect_finite_dirichlet_oracle(self):
+        """D_{W_N} from the finite Dirichlet polynomial defect.
 
-        The harmonic sum grows logarithmically, so D stays bounded.
+        The identity
+        sum_{j=1}^{N-1} H_j(u) = sum_{m=1}^{N-1} (N-m)m^{-u}
+        gives an oracle independent of the weight-loop implementation.
+        """
+        for N in [3, 5, 8]:
+            for u_val in [2, 3, 5]:
+                u = mpf(u_val)
+                finite_defect = sum((N - m) * power(m, -u) for m in range(1, N))
+                expected = 1 - finite_defect / ((N - 1) * zeta(u))
+                formula = wN_defect_exact(N, u)
+                assert abs(float(formula - expected)) < 1e-15
+
+    def test_wN_fixed_u_limit_is_zero(self):
+        """For fixed u > 1, D_{W_N}(u) decreases to 0 as N -> infinity.
+
+        The average correction
+        (N-1)^{-1} sum_{j=1}^{N-1} H_j(u) tends to zeta(u), hence the
+        normalized defect tends to 0.
         """
         u = mpf(3)
         defects = []
-        for N in [5, 10, 20, 50]:
+        for N in [5, 10, 20, 50, 200]:
             D = float(euler_koszul_defect(u, w_n_weights(N)))
             defects.append(D)
-        # Defects should decrease (more harmonic correction) and stabilize
         for i in range(len(defects) - 1):
             assert defects[i] > defects[i + 1], "Defect not monotone decreasing with N"
-        # Should remain positive
+        assert defects[-1] < 0.01, "D_{W_N}(3) should be small by N=200"
         assert defects[-1] > 0, "Defect should stay positive"
 
     def test_defect_less_than_one(self):
@@ -395,11 +412,11 @@ class TestLiCoefficients:
 
 
 # =============================================================================
-# Test 6: Defect polynomial expansion
+# Test 6: Finite harmonic defect expansion
 # =============================================================================
 
 class TestDefectPolynomial:
-    """Defect expansion in powers of 1/zeta(u)."""
+    """Finite harmonic defect expansion."""
 
     def test_heisenberg_degree_zero(self):
         """Heisenberg: defect degree 0 (exact, no correction)."""
@@ -408,26 +425,32 @@ class TestDefectPolynomial:
         assert poly["max_weight"] == 1
 
     def test_virasoro_linear(self):
-        """Virasoro: D = 1 - 1/zeta(u), degree 1 in 1/zeta."""
+        """Virasoro: one finite harmonic correction divided by zeta(u)."""
         poly = defect_polynomial_expansion(virasoro_weights())
         assert poly["defect_degree"] == 1
+        assert poly["defect_rank"] == 1
+        assert poly["euler_koszul_class"] == 1
         assert poly["max_weight"] == 2
         # At u=3: harmonic correction should be -1/zeta(3)
         expected_corr = float(-1 / zeta(3))
         assert abs(poly["harmonic_correction"][3] - expected_corr) < 1e-10
 
     def test_w3_structure(self):
-        """W_3: defect degree 1, max weight 3."""
+        """W_3: two harmonic corrections, max weight 3."""
         poly = defect_polynomial_expansion(w_n_weights(3))
         assert poly["defect_degree"] == 1
+        assert poly["defect_rank"] == 2
+        assert poly["euler_koszul_class"] == 2
         assert poly["max_weight"] == 3
         assert poly["num_generators"] == 2
 
     def test_wN_degree(self):
-        """D_{W_N} always has defect degree 1 (linear in 1/zeta)."""
+        """D_{W_N} has finite defect rank N-1."""
         for N in [3, 4, 5, 10]:
             poly = defect_polynomial_expansion(w_n_weights(N))
             assert poly["defect_degree"] == 1, f"W_{N} should have degree 1"
+            assert poly["defect_rank"] == N - 1
+            assert poly["euler_koszul_class"] == N - 1
 
     def test_betagamma_degree_zero(self):
         """Beta-gamma: exact, degree 0."""
@@ -478,18 +501,26 @@ class TestArithmeticStructure:
             expected = zeta(n) * zeta(n + 1)
             assert abs(float(S - expected)) < 1e-20
 
-    def test_defect_approaches_zero(self):
-        """D_A(u) -> 0 as u -> infinity for finitely defective families.
+    def test_standard_non_weight_one_defects_approach_zero(self):
+        """D_A(u) -> 0 as u -> infinity for Virasoro and W_N weights.
 
-        Since zeta(u) -> 1 as u -> inf, and H_{w-1}(u) -> H_{w-1}(inf) = w-1,
-        D = 1 - (sum H_{w_i-1})/(n*zeta) -> 1 - (sum(w_i-1))/n  for large u.
-        Actually D_Vir(u) = 1 - 1/zeta(u) -> 0 since zeta(u) -> 1.
+        These standard finitely defective examples have no weight-1
+        generators, so lim_{u -> infinity} D_A(u) = 0.
         """
         u = mpf(50)
         for weights in [virasoro_weights(), w_n_weights(3), w_n_weights(5)]:
+            assert defect_limit_as_u_infinity(weights) == 0
             D = float(euler_koszul_defect(u, weights))
             assert D < 0.01, \
                 f"D({u}) = {D} should approach 0 for finitely defective families"
+
+    def test_large_u_limit_counts_weight_one_generators(self):
+        """lim_{u -> infinity} D_A(u) is the fraction of weight-1 generators."""
+        weights = [1, 2, 3]
+        expected = mpf(1) / 3
+        assert defect_limit_as_u_infinity(weights) == expected
+        D = euler_koszul_defect(50, weights)
+        assert abs(float(D - expected)) < 1e-12
 
     def test_ds_defect_at_u2_g2(self):
         """D_{W(G_2)}(2) is computable and less than 1."""
@@ -746,10 +777,8 @@ class TestMonotonicity:
             assert defects[i] > defects[i + 1], \
                 f"D_Vir not monotone decreasing: D({u_vals[i]})={defects[i]} <= D({u_vals[i+1]})={defects[i+1]}"
 
-    def test_ds_defect_increases_with_rank(self):
-        """D_{W_N}(3) increases with N (more harmonic correction)."""
-        # Actually D_{W_N} DECREASES with N at fixed u
-        # because more harmonic terms are subtracted
+    def test_wN_defect_decreases_with_rank_at_fixed_u(self):
+        """D_{W_N}(3) decreases with N because the averaged harmonic correction grows."""
         u = mpf(3)
         D_values = []
         for N in [2, 3, 5, 10]:

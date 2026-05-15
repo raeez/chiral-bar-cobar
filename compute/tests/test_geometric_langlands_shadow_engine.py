@@ -28,11 +28,13 @@ Multi-path verification: every numerical claim verified by >= 2 methods.
 from __future__ import annotations
 
 import cmath
+import inspect
 import math
 from fractions import Fraction
 
 import pytest
 
+import compute.lib.geometric_langlands_shadow_engine as gl_engine
 from compute.lib.geometric_langlands_shadow_engine import (
     # Lie data
     _lie_data,
@@ -67,8 +69,22 @@ from compute.lib.geometric_langlands_shadow_engine import (
     verify_kappa_complementarity,
     verify_hitchin_base_equals_dim_g,
     verify_verlinde_sl2_genus1,
+    bar_koszul_object_firewall,
     full_langlands_dictionary,
 )
+
+
+def _strings_from(obj):
+    """Yield strings from nested engine return values."""
+    if isinstance(obj, str):
+        yield obj
+    elif isinstance(obj, dict):
+        for key, value in obj.items():
+            yield from _strings_from(key)
+            yield from _strings_from(value)
+    elif isinstance(obj, (list, tuple, set)):
+        for value in obj:
+            yield from _strings_from(value)
 
 
 # =========================================================================
@@ -637,7 +653,8 @@ class TestCrossVerification:
         required_keys = [
             'bar_complex', 'cobar', 'verdier_dual', 'koszul_dual',
             'kappa', 'shadow_tower', 'ff_center', 'mc3_dk_bridge',
-            'kz_connection', 's_duality',
+            'kz_connection', 's_duality', 'derived_center',
+            'object_firewall',
         ]
         for key in required_keys:
             assert key in d, f"Missing dictionary entry: {key}"
@@ -649,6 +666,63 @@ class TestCrossVerification:
         assert 'inversion' in cobar_entry.lower() or 'Omega(B(A)) = A' in cobar_entry
         geom = d['cobar']['geom_langlands']
         assert 'NOT the Langlands dual' in geom
+
+    def test_object_firewall_types_are_distinct(self):
+        """AP25 firewall separates bar, cobar, Koszul dual, and bulk."""
+        firewall = bar_koszul_object_firewall()
+
+        assert firewall['B_A']['notation'] == 'B_X(A)'
+        assert 'coalgebra' in firewall['B_A']['type']
+        assert 'coalgebra' in firewall['A_i']['type']
+        assert 'factorization algebra' in firewall['A_shriek_infty']['type']
+        assert 'post-Verdier' in firewall['A_shriek']['type']
+        assert 'inversion recovers A' in firewall['Omega_B_A']['role']
+        assert 'derived-center bulk' in firewall['Z_der_ch_A']['type']
+
+        notations = {entry['notation'] for entry in firewall.values()}
+        assert len(notations) == len(firewall)
+
+    def test_no_stale_verdier_bar_shorthand_in_engine_source(self):
+        """Reject the stale Verdier/bar collapse."""
+        source = inspect.getsource(gl_engine)
+        forbidden = [
+            'D_Ran(B(A)) = ' + 'B(A!)',
+            'D_Ran(B_X(A)) = ' + 'B_X(A!)',
+            'Omega(B(A)) = ' + 'A!',
+            'Omega_X(B_X(A)) = ' + 'A!',
+        ]
+        for phrase in forbidden:
+            assert phrase not in source
+
+    def test_verdier_dictionary_has_finite_type_hypotheses(self):
+        """Verdier output is A!_infty, with A! only after hypotheses."""
+        d = full_langlands_dictionary()
+        verdier = d['verdier_dual']['bar_cobar']
+        koszul = d['koszul_dual']['bar_cobar']
+        center = d['derived_center']['bar_cobar']
+
+        assert 'A!_infty = D_Ran(B_X(A))' in verdier
+        assert 'finite-type/completed formality' in verdier
+        assert 'not B_X(A!)' in verdier
+        assert 'A^i = H*(B_X(A))' in koszul
+        assert 'A! = (A^i)^vee' in koszul
+        assert 'Z_der_ch(A) = C^*_ch(A, A)' in center
+        assert 'not B_X(A), A^i, A!, or Omega_X(B_X(A))' in center
+
+    def test_gl_entries_keep_exchange_without_object_collapse(self):
+        """Raskin/AG entries retain GL exchange but keep AP25 types."""
+        raskin = raskin_local_equivalence('A', 1)
+        ag = ag_categorical_langlands('A', 1, 2)
+
+        assert 'D-mod' in raskin['automorphic_side']
+        assert 'IndCoh' in raskin['spectral_side']
+        assert ag['status'] == 'Conjecture (Arinkin-Gaitsgory 2015)'
+
+        returned_text = ' '.join(_strings_from([raskin, ag]))
+        assert 'A!_infty = D_Ran(B_X(A))' in returned_text
+        assert 'finite-type/completed' in returned_text
+        assert 'not B_X(A!)' in returned_text
+        assert 'Omega_X(B_X(A))' in returned_text
 
     def test_bd_quantization_agrees_with_shadow(self):
         """BD quantum corrections = shadow tower F_g values."""

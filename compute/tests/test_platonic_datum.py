@@ -1,7 +1,7 @@
-"""Tests for the Modular Koszul datum Pi_X(L) -- the six-fold datum.
+"""Tests for the modular Koszul package Pi_X(L).
 
 Comprehensive test suite for compute/lib/platonic_datum.py.
-Each test verifies ONE property of the modular Koszul datum construction,
+Each test verifies one property of the modular Koszul package construction,
 organized by family and by cross-family structural properties.
 
 References:
@@ -171,7 +171,7 @@ class TestCyclicAdmissibility:
 # =========================================================================
 
 class TestHeisenbergPackage:
-    """Test the Modular Koszul datum for the Heisenberg algebra H_k."""
+    """Test the modular Koszul package for the Heisenberg algebra H_k."""
 
     def test_kappa_symbolic(self):
         """Symbolic level: kappa = k (the level, NOT k/2).
@@ -256,7 +256,7 @@ class TestHeisenbergPackage:
 # =========================================================================
 
 class TestAffineSl2Package:
-    """Test the Modular Koszul datum for affine V_k(sl_2)."""
+    """Test the modular Koszul package for affine V_k(sl_2)."""
 
     def test_kappa_symbolic(self):
         """Symbolic level: kappa = 3(k+2)/4."""
@@ -336,7 +336,7 @@ class TestAffineSl2Package:
 # =========================================================================
 
 class TestAffineSl3Package:
-    """Test the Modular Koszul datum for affine V_k(sl_3)."""
+    """Test the modular Koszul package for affine V_k(sl_3)."""
 
     def test_kappa_formula(self):
         """kappa = 4(k+3)/3 at symbolic level."""
@@ -382,7 +382,7 @@ class TestAffineSl3Package:
 # =========================================================================
 
 class TestVirasoroPackage:
-    """Test the Modular Koszul datum for the Virasoro algebra Vir_c."""
+    """Test the modular Koszul package for the Virasoro algebra Vir_c."""
 
     def test_kappa_symbolic(self):
         """Symbolic central charge: kappa = c/2."""
@@ -487,7 +487,7 @@ class TestVirasoroPackage:
 # =========================================================================
 
 class TestW3Package:
-    """Test the Modular Koszul datum for the W_3 algebra."""
+    """Test the modular Koszul package for the W_3 algebra."""
 
     def test_two_channels(self):
         """W_3 has generator weights [2, 3] (T and W channels)."""
@@ -539,7 +539,7 @@ class TestW3Package:
 # =========================================================================
 
 class TestBetagammaPackage:
-    """Test the Modular Koszul datum for the beta-gamma system."""
+    """Test the modular Koszul package for the beta-gamma system."""
 
     def test_kappa_value(self):
         """kappa = -1 (at c = -2)."""
@@ -602,7 +602,7 @@ class TestBetagammaPackage:
 # =========================================================================
 
 class TestFreeFermionPackage:
-    """Test the Modular Koszul datum for the free fermion."""
+    """Test the modular Koszul package for the free fermion."""
 
     def test_kappa(self):
         """kappa = -1/2."""
@@ -638,7 +638,7 @@ class TestFreeFermionPackage:
 # =========================================================================
 
 class TestLatticePackage:
-    """Test the Modular Koszul datum for the lattice VOA."""
+    """Test the modular Koszul package for the lattice VOA."""
 
     def test_kappa_symbolic(self):
         """Symbolic rank: kappa = n (anomaly ratio rho = 1)."""

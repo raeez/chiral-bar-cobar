@@ -20,7 +20,7 @@ Tests cover:
   17. Large-N / 't Hooft limit analysis
   18. Cross-engine consistency with existing Coulomb-Higgs engine
 
-Multi-path verification (per CLAUDE.md mandate):
+Multi-path verification:
   Path 1: Direct formula computation
   Path 2: Alternative formula / identity check
   Path 3: Limiting case analysis

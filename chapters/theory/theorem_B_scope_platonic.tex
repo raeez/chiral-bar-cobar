@@ -31,13 +31,16 @@ the finite-window tower together with the continuous comparison data;
 it is not the naive quotient of the raw bar object by a high-weight
 tail.
 
-We prove and isolate three layered statements. First, at each finite
+We isolate three layered statements. First, at each finite
 weight, the chiral Positselski equivalence holds in the finite-window
 de Rham model, where the finite-stage co/contra product/sum exactness
 hypothesis is automatic
 (Theorem~\ref{thm:chiral-positselski-at-each-weight}). Second, on the
 strict completed surface the continuous comparison package
-\textup{(CP1)--(CP3)} recovers the full coderived/contraderived pair
+\textup{(CP1)--(CP3)} recovers the coderived/contraderived pair by the
+continuous adjoint functors
+$\mathbb L\Phi^{\mathrm{ch}}_{\widehat C}$ and
+$\mathbb R\Psi^{\mathrm{ch}}_{\widehat C}$
 (Theorem~\ref{thm:chiral-positselski-weight-completed}). Third, on the
 raw (non-completed) direct-sum bar coalgebra with class-M input, the
 counit $\Omega(\bar{B}(\cA)) \to \cA$ fails to be a chain-level
@@ -47,9 +50,11 @@ finite-window family, not a finite element of the direct-sum complex
 (Proposition~\ref{prop:chiral-positselski-raw-direct-sum-class-M-false}).
 The net effect is a clean trichotomy recorded in
 Corollary~\ref{cor:positselski-applicable-families}: the Positselski
-equivalence applies on the direct-sum level to classes G, L, and C;
+equivalence applies on the direct-sum level only where the raw
+finite-type and product/sum exactness hypotheses are verified
+\textup{(}classes G, L, and the finite free-field part of C\textup{)};
 on the strict Mittag--Leffler weight-completed level it applies to the
-standard G/L/C/M finite-window towers.
+standard G/L/C/M finite-window towers after \textup{(CP1)--(CP3)}.
 
 \section{Setup: the weight filtration on the chiral bar coalgebra}
 \label{sec:weight-filtration-chiral-bar}
@@ -101,8 +106,8 @@ The weight filtration satisfies:
  is finite-dimensional in each cohomological degree, with
  $\dim \mathrm{gr}^w_{n}
  = \sum_{n + \sum h_i = w} \prod_{i=1}^{n} \dim \cA_{h_i}$
- (a finite sum over the finite set of partitions of $w-n$ into
- positive integers of bounded size);
+ (a finite sum over the finite set of weak compositions of $w-n$ into
+ nonnegative integers of bounded size);
 \item the filtration is exhaustive:
  $\bigcup_{w \geq 0} F^{\leq w} = \bar{B}^{\mathrm{ch}}(\cA)$;
 \item the associated graded
@@ -272,6 +277,229 @@ morphism complexes are the derived inverse limits of finite-stage
 morphism complexes.
 \end{definition}
 
+\begin{lemma}[Strict total-weight Rees tower criterion;
+\ClaimStatusProvedHere]
+\label{lem:total-weight-rees-finite-cdg-tower}
+Let $C=\bar B^{\mathrm{ch}}(\cA)$ carry the total-weight filtration
+of Definition~\ref{def:total-bar-weight}.  A strict total-weight
+Rees tower for $C$ is the following additional datum:
+\[
+\bigl(C_{\langle N\rangle},q_{N+1,N},j_N,r_N\bigr)_{N\geq0}.
+\]
+Here $C_{\langle N\rangle}$ is a finite-window chiral
+CDG-coalgebra, $q_{N+1,N}\colon C_{\langle N+1\rangle}\twoheadrightarrow
+C_{\langle N\rangle}$ is a strict surjective CDG-coalgebra morphism,
+and
+\[
+j_N\colon F^{\leq N}C\longrightarrow C_{\langle N\rangle},
+\qquad
+r_N\colon C_{\langle N\rangle}\longrightarrow F^{\leq N}C
+\]
+are filtered comparison maps inducing inverse isomorphisms on
+$\operatorname{gr}^w_F$ for every $w\leq N$. The compatibility
+condition is
+\[
+q_{N+1,N}\circ j_{N+1}\circ \iota_{N,N+1}
+=
+j_N
+\quad\text{and}\quad
+r_N\circ q_{N+1,N}
+=
+\pi^{\mathrm{low}}_{N+1,N}\circ r_{N+1}
+\]
+on the low-weight output window, where
+$\iota_{N,N+1}\colon F^{\leq N}C\hookrightarrow F^{\leq N+1}C$ is
+inclusion and $\pi^{\mathrm{low}}_{N+1,N}$ is the comparison map
+specified by the finite-window model. Then
+\[
+\widehat C_{\mathrm{str}}
+:=\varprojlim_N C_{\langle N\rangle}
+\]
+is a strict completed chiral CDG-coalgebra whose operations recover
+the total-weight-completed operations on $C$ through the maps
+$j_N,r_N$.
+
+The datum of the maps $q_{N+1,N}$ is essential.  The projection
+\[
+\bigoplus_{0\leq w\leq N+1}\operatorname{gr}^w_F C
+\longrightarrow
+\bigoplus_{0\leq w\leq N}\operatorname{gr}^w_F C
+\]
+need not be a chain map: the chiral bar differential may lower total
+weight, so the weight-$(N+1)$ summand can contribute to the
+weight-$N$ output. Thus the strict tower is a typed finite-window
+model, not the raw direct-sum coalgebra modulo a non-stable
+high-weight tail.
+\end{lemma}
+
+\begin{proof}
+Lemma~\ref{lem:weight-filtration-basics} gives the filtered
+finite-type pieces.  The hypotheses on
+$C_{\langle N\rangle},q_{N+1,N},j_N,r_N$ assert exactly the missing
+chain-level datum: a finite model whose transition maps commute with
+the full filtered differential, curvature, coproduct, and chiral
+cooperations.  Finite-dimensionality follows from the associated
+graded comparison with $\operatorname{gr}^{\leq N}_F C$.  Strict
+surjectivity of the $q_{N+1,N}$ gives a genuine inverse system of
+CDG-coalgebras, and the inverse limit carries the unique continuous
+operations detected on all finite stages.  The final paragraph is the
+direct calculation showing why deletion of the top graded summand
+cannot replace this datum when the differential lowers weight.
+\end{proof}
+
+\begin{lemma}[Finite-window de Rham realisation for Positselski;
+\ClaimStatusProvedHere]
+\label{lem:finite-window-derham-realization-positselski}
+At every strict total-weight Rees stage $C_{\langle N\rangle}$ of
+Lemma~\ref{lem:total-weight-rees-finite-cdg-tower}, de Rham global
+sections on the fixed curve realise the chiral CDG-coalgebra,
+comodules, and contramodules in $\mathrm{Ch}(\mathrm{Vect})$ with
+finite-dimensional graded pieces in each cohomological degree. In
+this finite-window de Rham ambient, the exactness hypotheses in
+Positselski's second-kind comodule--contramodule correspondence hold:
+totalisations of short exact triples generate coacyclic objects,
+dual product-totalisations generate contraacyclic objects, and finite
+direct sums and products are exact.
+\end{lemma}
+
+\begin{proof}
+The strict Rees stage is finite-dimensional in each cohomological
+degree by its associated-graded comparison with
+$\operatorname{gr}^{\leq N}_F C$ and
+Lemma~\ref{lem:weight-filtration-basics}(2). After
+de Rham global sections on the fixed curve, chiral operations become
+ordinary operations on complexes of vector spaces, still finite in
+each fixed degree and window. In $\mathrm{Ch}(\mathrm{Vect})$ kernels,
+cokernels, sums, and products are computed degreewise, and vector
+spaces over a field are exact for both sums and products. Thus the
+finite-stage totalisations used to define the second-kind
+coacyclic and contraacyclic subcategories satisfy Positselski's
+exactness hypotheses \cite[\S\S3--4]{Positselski11}.
+\end{proof}
+
+\begin{lemma}[Hom-cone Mittag--Leffler for strict finite-window towers;
+\ClaimStatusProvedHere]
+\label{lem:hom-cone-ml-rees-towers}
+Let $\{E_N\}_N$ and $\{F_N\}_N$ be compatible towers of finite-stage
+complexes arising from the strict finite-window tower of
+Lemma~\ref{lem:total-weight-rees-finite-cdg-tower}, and let
+$f_N\colon E_N\to F_N$ be a compatible system of chain maps.  Suppose
+that for every cohomological degree $m$ the inverse systems
+$\{H^m(E_N)\}_N$, $\{H^m(F_N)\}_N$, and
+$\{H^m\operatorname{Hom}(E_N,F_N)\}_N$ are Mittag--Leffler. Then
+$\{H^m(\operatorname{Cone}(f_N))\}_N$ is Mittag--Leffler for every
+$m$, and the Hom tower has the Milnor identification
+\[
+H^m R\!\varprojlim_N\operatorname{Hom}(E_N,F_N)
+\cong
+\varprojlim_N H^m\operatorname{Hom}(E_N,F_N).
+\]
+Moreover, the cone tower has the Milnor exact sequence
+\[
+0\to
+\varprojlim\nolimits^1_N
+H^{m-1}\!\bigl(\operatorname{Cone}(f_N)\bigr)
+\to
+H^m\!\bigl(R\!\varprojlim_N\operatorname{Cone}(f_N)\bigr)
+\to
+\varprojlim_N
+H^m\!\bigl(\operatorname{Cone}(f_N)\bigr)
+\to0 .
+\]
+In particular, if each $f_N$ is a quasi-isomorphism, then
+$R\!\varprojlim_N f_N$ is a quasi-isomorphism.
+\end{lemma}
+
+\begin{proof}
+For each $N$ the cone fits into the standard distinguished triangle
+$E_N\to F_N\to\operatorname{Cone}(f_N)\to E_N[1]$.  Taking cohomology
+gives a compatible long exact sequence of inverse systems.  In the
+strict finite-window tower all cohomology groups are finite-dimensional
+vector spaces at each fixed stage and degree.  Images in an inverse
+system of finite-dimensional vector spaces stabilize exactly when the
+Mittag--Leffler condition holds; the long exact sequence then shows
+that the cone cohomology systems are Mittag--Leffler. The Hom
+identification is the Milnor sequence for the tower of Hom complexes,
+with $\varprojlim^1$ killed by the stated ML hypothesis and
+\cite[Prop.~3.5.7]{Weibel94}. The displayed cone sequence is the
+same Milnor sequence applied to the tower of cones. If all $f_N$ are
+quasi-isomorphisms, the cone cohomology systems vanish, so both the
+inverse-limit and $\varprojlim^1$ terms vanish, and the derived
+inverse-limit cone is acyclic.
+\end{proof}
+
+\begin{proposition}[$R\!\varprojlim$ commutes with the Verdier quotient under
+strict ML; \ClaimStatusProvedHere]
+\label{prop:strict-rlim-verdier-quotient}
+\label{lem:strict-rlim-verdier-quotient}
+Let $\{\mathcal T_N\}_N$ be a strict inverse tower of finite-window dg
+categories and let $\mathcal A_N\subset\mathcal T_N$ be compatible
+thick triangulated dg subcategories.  Assume that mapping complexes
+and mapping cones satisfy the Hom-cone Mittag--Leffler condition of
+Lemma~\ref{lem:hom-cone-ml-rees-towers}.  Then the canonical functor
+\[
+R\!\varprojlim_N(\mathcal T_N/\mathcal A_N)
+\longrightarrow
+\bigl(R\!\varprojlim_N\mathcal T_N\bigr)/
+\bigl(R\!\varprojlim_N\mathcal A_N\bigr)
+\]
+is an equivalence on the full subcategory of objects represented by
+strict compatible towers.  Equivalently, Verdier localization by the
+finite-stage acyclic subcategories may be performed before or after
+the strict derived inverse limit.
+\end{proposition}
+
+\begin{proof}
+Verdier localization is detected by cones: a morphism becomes an
+isomorphism in $\mathcal T_N/\mathcal A_N$ precisely when its cone
+lies in $\mathcal A_N$.  For a strict compatible tower of morphisms,
+Lemma~\ref{lem:hom-cone-ml-rees-towers} identifies the cone of the
+derived inverse-limit morphism with the derived inverse limit of the
+finite-stage cones, with no hidden $\varprojlim^1$ contribution under
+the stated Mittag--Leffler hypothesis.  Hence a morphism is inverted
+after taking $R\!\varprojlim$ exactly when it is represented by a
+tower whose finite-stage cones are inverted in the Verdier quotients.
+This gives full faithfulness on morphism complexes.  Essential
+surjectivity on strict compatible towers is tautological: an object
+of the left-hand side is represented by a compatible tower of
+finite-stage objects, and the same tower represents its image in the
+Verdier quotient of the inverse-limit category.
+\end{proof}
+
+\begin{proposition}[Second-kind acyclicity is preserved by the strict
+completion; \ClaimStatusProvedHere]
+\label{prop:completed-second-kind-generator-preservation}
+For the strict total-weight Rees tower of
+Lemma~\ref{lem:total-weight-rees-finite-cdg-tower}, the completed
+co/contra adjunction preserves the second-kind acyclic subcategories:
+finite-stage coacyclic comodules, generated by totalizations of short
+exact sequences and closed under direct sums, pass under
+$R\!\varprojlim$ to completed coacyclic comodules; finite-stage
+contraacyclic contramodules, generated dually and closed under
+products, pass under $R\!\varprojlim$ to completed contraacyclic
+contramodules.  Consequently the completed chiral co/contra
+comparison descends from the homotopy categories to the coderived and
+contraderived categories.
+\end{proposition}
+
+\begin{proof}
+At every finite Rees stage the underlying de Rham model is a category
+of complexes of vector spaces with second-kind exactness by
+Lemma~\ref{lem:finite-window-derham-realization-positselski}. The
+transition functors are
+strict and commute with the chiral coaction and contraaction, hence
+carry totalizations of short exact sequences to totalizations of short
+exact sequences.  In the completed tower, direct sums and products are
+computed as strict compatible systems of the corresponding finite-stage
+operations.  The Hom-cone Mittag--Leffler lemma kills the only possible
+Milnor obstruction to exactness after $R\!\varprojlim$.  Thus the
+generators of coacyclic and contraacyclic objects remain generators of
+the completed second-kind acyclic subcategories.  The co/contra
+adjunction preserves these generators at finite stage by the
+finite-stage Positselski correspondence and therefore preserves their
+strict completions.
+\end{proof}
+
 \begin{theorem}[Continuous chiral Positselski comparison on the
 strict completed surface; \ClaimStatusConditional]
 \label{thm:chiral-positselski-weight-completed}
@@ -336,11 +564,15 @@ comodules and contramodules, and Positselski's finite-stage
 construction is functorial in the coalgebra.
 
 \emph{Step~2: CP1.}
-The operations on $\widehat C$ are the inverse limits of the
-operations on $C_N$. Since the transition maps are strict and
-surjective, every coalgebra identity holds on $\widehat C$ if and only
-if it holds after projection to every finite stage. The differential,
-curvature, coproduct, and chiral cooperations are continuous by
+The strict tower in the hypotheses supplies the finite stages.  When
+the tower is obtained from the total-weight filtration, the typed
+comparison maps are those of
+Lemma~\ref{lem:total-weight-rees-finite-cdg-tower}. The operations on
+$\widehat C$ are the inverse limits of the operations on $C_N$. Since
+the transition maps are strict and surjective, every coalgebra identity
+holds on $\widehat C$ if and only if it holds after projection to every
+finite stage. The differential, curvature, coproduct, and chiral
+cooperations are continuous by
 Definition~\ref{def:strict-ml-completed-chiral-coalgebra}(ML3).
 Thus $\widehat C$ is a completed curved chiral coalgebra with
 finite-window comparison maps.
@@ -349,18 +581,15 @@ finite-window comparison maps.
 By definition of continuous comodules and contramodules over
 $\widehat C$, the underlying dg categories are the homotopy inverse
 limits of the finite-stage dg categories, with mapping complexes
-$R\!\varprojlim_N$ of finite-stage mapping complexes. The
-Mittag--Leffler condition (ML4) kills the Milnor
-$\varprojlim^1$ obstruction on cohomology of cones and morphism
-complexes, so the Verdier localizations by coacyclic and
-contraacyclic objects commute with the inverse limit. Coacyclic
-objects are generated by totalizations of short exact sequences and
-closed under direct sums; contraacyclic objects are generated dually
-and closed under products. In the finite-window de Rham model products
-and sums in $\mathrm{Ch}(\mathrm{Vect})$ are exact, and the strict
-transition functors preserve the generating short exact sequences.
-Hence the completed adjunction preserves the product-generated
-contraacyclic objects and the sum-generated coacyclic objects.
+$R\!\varprojlim_N$ of finite-stage mapping complexes.
+Lemma~\ref{lem:hom-cone-ml-rees-towers} supplies the Hom-cone
+Mittag--Leffler calculation, and
+Proposition~\ref{prop:strict-rlim-verdier-quotient} identifies the
+Verdier quotient before and after $R\!\varprojlim$.
+Proposition~\ref{prop:completed-second-kind-generator-preservation}
+then gives preservation of the product-generated contraacyclic
+objects and the sum-generated coacyclic objects.  These three facts
+are precisely CP2 and CP3.
 
 \emph{Step~4: pass the finite-stage equivalences through the derived
 limit.}
@@ -434,7 +663,7 @@ critical-level Kac--Moody through the infinite screening-family
 corrections. Thus the raw direct-sum surface lacks the continuous
 operations required by the proved co-contra theorem.
 
-The failure is not merely a proof artifact. The shadow-tower invariant
+The failure is intrinsic. The shadow-tower invariant
 $S_4(\mathrm{Vir}_c) = 10/[c(5c+22)]$ is nonzero at generic central
 charge (Theorem~\ref{thm:shadow-tower} and
 Remark~\ref{rem:s4-vir}), but this finite class alone is only the
@@ -506,7 +735,13 @@ on which conilpotency holds on the nose without weight completion.
  equivalence]
 \label{cor:positselski-applicable-families}
 The chiral Positselski equivalence of
-Theorem~\ref{thm:positselski-chiral-proved} applies as follows:
+Theorem~\ref{thm:positselski-chiral-proved} applies in the following
+ambients. Every raw clause includes the finite-type conilpotence and
+product/sum exactness hypotheses of
+Theorem~\ref{thm:chiral-co-contra-correspondence}; every completed
+clause includes the strict Mittag--Leffler package
+\textup{(CP1)--(CP3)} of
+Theorem~\ref{thm:chiral-positselski-weight-completed}.
 \begin{enumerate}
 \item \textup{(Class G)} Heisenberg $\mathcal{H}_\kappa$: applies at
  the raw direct-sum level (no weight completion needed).
@@ -514,53 +749,59 @@ Theorem~\ref{thm:positselski-chiral-proved} applies as follows:
  non-critical level $k \neq -h^\vee$: applies at the raw
  direct-sum level.
 \item \textup{(Class C)} $\beta\gamma$ system, $bc$ system: applies
- at the raw direct-sum level in the quadratic regime (free-field
- realization supplies conilpotency via finite-type bosonization);
- applies on the strict Mittag--Leffler weight-completed level.
+ at the raw direct-sum level only in the finite free-field quadratic
+ regime where the bosonization model gives a finite-type conilpotent
+ bar coalgebra and the co/contra product/sum exactness has been
+ checked; integer-spin or infinite free-field presentations belong to
+ the strict Mittag--Leffler weight-completed level.
 \item \textup{(Class M)} Virasoro $\mathrm{Vir}_c$, principal $W_N$,
  critical-level Kac--Moody $V_{-h^\vee}(\mathfrak{g})$: does
  \emph{not} apply at the raw direct-sum level
  \textup{(}Proposition~\textup{\ref{prop:chiral-positselski-raw-direct-sum-class-M-false}}\textup{);}
- applies on the strict Mittag--Leffler weight-completed level via
- Theorem~\ref{thm:chiral-positselski-weight-completed}.
+ applies on the strict Mittag--Leffler weight-completed level only
+ after the finite-window tower satisfies \textup{(CP1)--(CP3)}.
 \item \textup{(Yangian)} $Y_\hbar(\mathfrak{g})^{\mathrm{ch}}$: in
  the ordered $E_1$-chiral presentation on the Koszul locus, the
  bar coalgebra is conilpotent by the bar-degree filtration
  (Theorem~\ref{thm:coalgebra-via-NAP} part~(4)), so the equivalence
- applies at the raw level; at generic spectral parameter with
- infinite-dimensional evaluation modules it applies at the
- weight-completed level.
+ applies at the raw level on that finite-type Koszul surface; at
+ generic spectral parameter with infinite-dimensional evaluation
+ modules it applies only after the corresponding weight tower is a
+ strict Mittag--Leffler tower satisfying \textup{(CP1)--(CP3)}.
 \item \textup{(Feigin--Frenkel center)} At critical level
  $k = -h^\vee$, the Feigin--Frenkel center
  $\mathfrak{z}(\hat{\mathfrak{g}})$ is an infinite-polynomial
  commutative chiral algebra; applies at the weight-completed level
- by the commutative case of
- Theorem~\ref{thm:chiral-positselski-weight-completed}.
+ when its commutative finite-window tower satisfies
+ \textup{(CP1)--(CP3)}.
 \end{enumerate}
 \end{corollary}
 
 \begin{proof}
 Items~(1) and~(2) follow from
-Remark~\ref{rem:class-G-L-survive-raw}. Item~(3) is the free-field
-case where bosonization realizes $\beta\gamma$ inside a Heisenberg
-shift, reducing the conilpotency question to class G; the
-weight-completed clause follows from
-Theorem~\ref{thm:chiral-positselski-weight-completed}. Item~(4) is
+Remark~\ref{rem:class-G-L-survive-raw}. Item~(3) is the finite
+free-field case where bosonization realizes $\beta\gamma$ inside a
+Heisenberg shift, reducing the conilpotency question to class G; the
+integer-spin and infinite free-field presentations require the same
+strict ML completion data as the class-M towers. Item~(4) is
 Proposition~\ref{prop:chiral-positselski-raw-direct-sum-class-M-false}
 (the failure at raw level) combined with
 Theorem~\ref{thm:chiral-positselski-weight-completed} (recovery at
-completed level). Item~(5) uses that the Yangian bar coalgebra
+completed level after \textup{(CP1)--(CP3)}). Item~(5) uses that the
+Yangian bar coalgebra
 inherits bar-degree conilpotency from the ordered-bar presentation:
 the deconcatenation coproduct strictly lowers bar degree, and at
 finite bar degree the ordered chiral algebra $Y_\hbar(\mathfrak{g})$
 has finite-dimensional graded pieces in each bar degree by the
-Etingof--Kazhdan flatness theorem. Item~(6) uses that the
+Etingof--Kazhdan flatness theorem; the generic spectral-parameter
+module surface is a completed-tower statement, not a raw theorem.
+Item~(6) uses that the
 Feigin--Frenkel center, despite being infinite-polynomial, is a
 commutative chiral algebra with positive-energy grading by the
 conformal dimension of the Segal--Sugawara vectors
 $S_i \in \mathfrak{z}(\hat{\mathfrak{g}})$; the weight filtration
-then has finite-dimensional graded pieces, and
-Theorem~\ref{thm:chiral-positselski-weight-completed} applies.
+then has finite-dimensional graded pieces, and the completed theorem
+applies once its tower satisfies \textup{(CP1)--(CP3)}.
 \end{proof}
 
 \begin{remark}[Scope of the completed coderived statement]
@@ -573,8 +814,9 @@ scopes is:
 \item the completed coderived statement applies to a strict
  Mittag--Leffler completed tower satisfying \textup{(CP1)--(CP3)}
  \textup{(}Theorem~\textup{\ref{thm:chiral-positselski-weight-completed}}\textup{);}
-\item on the raw direct-sum bar coalgebra, the equivalence is
- unconditional for classes G, L, and C (free-field), and genuinely
+\item on the raw direct-sum bar coalgebra, the equivalence is proved
+ for classes G and L and for the finite free-field representatives of
+ class C where the finite-type hypotheses are verified; it is genuinely
  \emph{false} for class M (Proposition~%
  \ref{prop:chiral-positselski-raw-direct-sum-class-M-false});
 \item ``chain-level class G/L via explicit MacLane-splitting'' refers
@@ -622,8 +864,9 @@ The proof separates three facts:
  surface.  The strict Mittag--Leffler completed comparison is the
  separate conditional theorem
  Theorem~\ref{thm:chiral-positselski-weight-completed}.  At the
- \emph{raw direct-sum} level the theorem applies only to classes G, L,
- and C.  The class-M failure at raw level is detected first by the
+ \emph{raw direct-sum} level the theorem applies only to the verified
+ finite-type cases: classes G, L, and finite free-field class C.  The
+ class-M failure at raw level is detected first by the
  nonzero shadow-tower invariant
  $S_4(\mathrm{Vir}_c) \neq 0$ at generic $c$, and is witnessed by the
  infinite OPE-mode and harmonic correction families of
@@ -641,8 +884,8 @@ but not represented by a finite element of the raw direct-sum surface.
 \begin{remark}[Sharp replacement]
 \label{rem:thm-B-scope-confusion-type}
 The sharp statement is that the equivalence is proved on the strict
-Mittag--Leffler weight-completed side, and sharp
-(class-M false, G/L/C true) on the
+Mittag--Leffler weight-completed side under \textup{(CP1)--(CP3)}, and
+sharp (class-M false, G/L/finite-free-field C true) on the
 raw direct-sum side. This pair of statements is
 Theorems~\ref{thm:chiral-positselski-at-each-weight} and
 \ref{thm:chiral-positselski-weight-completed}, with the
@@ -904,12 +1147,14 @@ with the coderived ambient fixed in advance and the coalgebra $C$
 either uncurved-conilpotent or weight-completed.
 \end{remark}
 
-\section{Forward references}
+\section{Dependency discipline for Theorem~B}
 \label{sec:forward-references-thm-B-scope}
 
 The weight-completed Positselski equivalence
-(Theorem~\ref{thm:chiral-positselski-weight-completed}) is the
-coderived ingredient used downstream by:
+(Theorem~\ref{thm:chiral-positselski-weight-completed}) is a
+proved input only on the strict Mittag--Leffler surface
+\textup{(CP1)--(CP3)}.  It enters three comparison theorems through
+this ambient and through no raw direct-sum replacement:
 \begin{itemize}
 \item the bar-cobar inversion theorem
  (Theorem~\ref{thm:bar-cobar-inversion-qi}), which invokes the
@@ -925,9 +1170,8 @@ coderived ingredient used downstream by:
 The raw-direct-sum failure for class M
 (Proposition~\ref{prop:chiral-positselski-raw-direct-sum-class-M-false})
 is the source of the class-M exclusion in the MC5 direct-sum
-chain-level statement, and conversely supplies the falsification
-test for any would-be ``unconditional raw-level'' strengthening of
-Theorem~B.
+chain-level statement. It supplies the falsification test for every
+unconditional raw-level strengthening of Theorem~B.
 
 The coalgebra-side unit qi
 (Theorem~\ref{thm:thm-B-coalgebra-side-unit-qi}) supplies the
@@ -943,37 +1187,42 @@ $D^{\mathrm{co}}_{\mathrm{ch}}(X)$'' as the mate to the unit
 $\eta_C$ of (B2) is what makes the headline mathematically meaningful
 under the canonical convention.
 
-%================================================================
-% END CHAPTER
-%================================================================
-
-\section{Synthesis}
+\section{Arithmetic recognition surfaces}
 \label{sec:tbsp-supplement}
 
 \begin{remark}[Theorem B at K3: Positselski at $\hbar^2 = -1/8$]
 \label{rem:tbsp-1-ii}
-Theorem~B (chiral Positselski) at the K3 base point sharpens
-to the statement: the chiral Koszul bar-cobar adjunction
-$B^{\mathrm{ch}}\dashv \Omega^{\mathrm{ch}}$ restricted to $\mathbf H_{\Delta_5}$
-and its coalgebra dual is an equivalence of pretriangulated $dg$-categories
-at the Lusztig specialisation $\hbar^2 = -1/8$. The coderived model
-structure (Booth--Lazarev 2023, arXiv:2304.08409) instantiates chirally
-here via the K3 averaging morphism
+Theorem~B (chiral Positselski) at the K3 base point is a recognition
+statement, not an intrinsic construction of $\mathbf H_{\Delta_5}$. If
+the finite Hall/CoHA source, Mukai/Siegel pairing,
+PBW/no-extra-relations, radical quotient, parity fixture, completion,
+inverse-limit, and Heegner comparison gates have been supplied, then the
+chiral Koszul bar-cobar adjunction
+$\Omega^{\mathrm{ch}}\dashv \bar B^{\mathrm{ch}}$ may be evaluated on the
+recognized completed object at the Lusztig specialisation
+$\hbar^2 = -1/8$. The required categorical input is a curved
+coderived model structure compatible with the K3 averaging morphism
 $\mathrm{av} = \mathrm{Torelli}_{K3}\circ\mathrm{KugaSatake}\circ j_{\mathrm{Kod}}$,
-which pulls back the curved Quillen equivalence to the K3 chiral setting.
-Cross-ref Vol.~III Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
+in the sense of Booth--Lazarev's global Koszul-duality and comodule
+model-structure frameworks \cite{BL23,BL24}. The companion K3 chapter
+supplies the geometric recognition data; Vol~I uses it only as the
+evaluation surface for Theorem~B.
 \end{remark}
 
 \begin{remark}[Theorem B scope vs universal identity]
 \label{rem:tbsp-2-ii}
-The Theorem~B scope at the K3 base point is exactly the universal
-identity $\hbar^2 \cdot K^{\kappa_{\mathrm{ch}}} = -1$ at $\hbar^2 = -1/8$:
-away from this specialisation, the Koszul bar-cobar equivalence fails
-by Lusztig obstructions (divided-power vs truncated-power at
-root-of-unity order $\ell = 8$). The scope is the locus in
+Under the K3 recognition gates of Remark~\ref{rem:tbsp-1-ii}, the
+proposed arithmetic slice of the Theorem~B scope is the universal
+identity $\hbar^2 \cdot K^{\kappa_{\mathrm{ch}}} = -1$ at
+$\hbar^2 = -1/8$. Away from this specialisation the strict
+chain-level Koszul bar-cobar equivalence is obstructed by the
+Lusztig divided-power / truncated-power comparison at root-of-unity
+order $\ell = 8$. This is a conditional recognition locus in
 $(\mathrm{Spec}\,\mathbb Z[\hbar^2])\times\mathrm{Mukai}$
 cut out by the universal identity \cite{Lusztig1990,Positselski2011}.
-Cross-ref Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
+The K3 chiral-bialgebra chapter fixes the Hall/CoHA source and the
+Mukai lattice normalization; this chapter supplies only the
+Positselski ambient in which the recognized object is tested.
 \end{remark}
 
 \section{The Etingof--Kazhdan super-quasi-Hopf augmentation}
@@ -986,9 +1235,11 @@ of the Etingof--Kazhdan super-quasi-Hopf functor]
 \index{Etingof--Kazhdan!super-quasi-Hopf functor}
 The weight completion
 $\widehat{\bar B}^{\mathrm{ch}}(\cA)
- = \varprojlim_w \bar B^{\mathrm{ch}}(\cA)/F^{w+1}$
-that governs the unconditional Theorem~B scope
-(Theorem~\ref{thm:chiral-positselski-weight-completed}) is the
+ = \varprojlim_N C_{\langle N\rangle}$
+for a strict total-weight Rees tower in the sense of
+Lemma~\ref{lem:total-weight-rees-finite-cdg-tower} is the completed
+surface governing Theorem~B in
+Theorem~\ref{thm:chiral-positselski-weight-completed}. It is the
 chiral-side analogue of the pro-nilpotent pro-$\hbar$-filtered
 completion on which the Etingof--Kazhdan quantisation functor
 $\mathcal{Q}^{\mathrm{EK,super}}\colon \mathrm{LieBialg}^{\mathrm{super,quasi}}
@@ -1000,14 +1251,14 @@ $(\mathfrak{g}_{\Delta_5},\,
 \mathfrak{n}_+^{\mathrm{imag}}\oplus
 \mathfrak{h}^{\mathrm{imag,rk\,23}})$
 (Vol~III Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic},
-Theorem~\ref{V3-thm:k3-structural-genesis}), the two completions
-match on the nose: the bar-coalgebra-side weight filtration is the
-cyclic-bar analogue of the pro-$\hbar$-filtration on
-$\widehat{U}_\hbar(\mathfrak{g}_{\Delta_5})$, and the associated
-inverse limits commute with the bar and cobar functors. The match is
-what makes
-$\mathcal{Q}^{\mathrm{EK,super}}(\mathfrak{g}_{\Delta_5},\dots)
-\simeq \mathbf{H}_{\Delta_5}$ well-posed; any raw direct-sum version
+Theorem~\ref{V3-thm:k3-structural-genesis}), the recognition problem
+requires the two completions to match: the bar-coalgebra-side weight
+filtration must be the cyclic-bar analogue of the pro-$\hbar$-filtration
+on $\widehat{U}_\hbar(\mathfrak{g}_{\Delta_5})$, and the associated
+inverse limits must commute with the bar and cobar functors. This is
+one of the gates for comparing
+$\mathcal{Q}^{\mathrm{EK,super}}(\mathfrak{g}_{\Delta_5},\dots)$
+with $\mathbf{H}_{\Delta_5}$; any raw direct-sum version
 on either side would collapse under the Virasoro-type conilpotency
 failure
 (Example~\ref{ex:virasoro-not-conilpotent}).
@@ -1044,16 +1295,16 @@ $H^0(\overline{\mathcal{A}_2}, \omega^{\otimes 10})
 \otimes H^0(\mathcal{M}_{1,1}, \omega^{\otimes 12})^{-2}$
 \cite{EnriquezGomezGonzalezMaassarani2022,GritsenkoNikulin1998}.
 The weight-completed Positselski equivalence of
-Theorem~\ref{thm:chiral-positselski-weight-completed} is what
-guarantees the pentagon cocycle class is well-defined on the bar
-coalgebra: on the raw direct-sum bar coalgebra the three
+Theorem~\ref{thm:chiral-positselski-weight-completed}, after
+\textup{(CP1)--(CP3)}, is the ambient in which the pentagon cocycle
+class is well-defined on the bar coalgebra: on the raw direct-sum bar
+coalgebra the three
 coboundaries would not even be well-defined as $3$-cocycles
 because the Chevalley--Eilenberg complex is not well-defined without
-the completion. This is the chain-level translation of
-the Etingof~1-dimensional classification cohomology
-$H^2(\mathfrak{g}_{\Delta_5})^{\mathbb{Z}/2,\,K(1)}\cong\mathbb{C}\cdot\Delta_5$
-(Vol~III Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}
-Theorem~\ref{V3-thm:k3-classification-etingof}).
+the completion. The corresponding automorphic target is the Heegner
+line $\mathbb C\cdot[\operatorname{div}(\Delta_5)]$; it is not an
+intrinsic Vol~I construction of
+$H^2(\mathfrak{g}_{\Delta_5})$.
 \end{remark}
 
 \begin{remark}[Theorem~B and the single-$\hbar$ universal-identity
@@ -1072,10 +1323,11 @@ $\hbar = 2\pi i/\ell$~\cite{Drinfeld1990,Lusztig1990}. On the
 Lorentzian-lattice-parametric $\mathcal{B}$-family of Vol~III
 Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic} the specialisation
 produces $\hbar^2 = -1/8$, and the universal identity
-$\hbar^2 \cdot K^{\kappa_{\mathrm{ch}}} = -1$ holds exactly when
-the Koszul conductor $K$ is the torsion order of the Bruinier
-Chern-class of the bar differential on the Humbert divisor~$H_1$
-\cite{Bruinier2002}. The alternative ``twisted 11D sugra 1-loop
+$\hbar^2 \cdot K^{\kappa_{\mathrm{ch}}} = -1$ is asserted in this
+recognition lane only when the Koszul conductor $K$ is the torsion
+order of the Bruinier Chern-class of the bar differential on the
+Humbert divisor~$H_1$ \cite{Bruinier2002}. The alternative
+``twisted 11D sugra 1-loop
 coefficient'' reading (Vol~III preface
 Remark~\ref{rem:v3-preface-7-1loop-coefficient}) is the
 physical face of the same single~$\hbar$: the Costello--Gaiotto
@@ -1089,21 +1341,19 @@ class. Theorem~B's weight-completed scope is the ambient in which both
 evaluations can be read at once without conflating conventions.
 \end{remark}
 
-\section{strict versus weight-completed
+\section{Strict and weight-completed
 Positselski on the Humbert stratification}
 \label{sec:tbsp-supplement-ii}
 
-The preceding sections of this chapter separated the raw
-(direct-sum) from the weight-completed Positselski equivalence,
-with the raw statement failing on class-M targets and the
-weight-completed statement holding unconditionally across all
-four shadow classes G/L/C/M. What was left ambient-qualified was
-the \emph{global} behaviour on the K3-chiral-bialgebra target
+The preceding sections separated the raw direct-sum and
+weight-completed Positselski ambients: the raw statement fails on
+class-M targets, and the weight-completed statement holds on strict
+finite-window towers satisfying \textup{(CP1)--(CP3)}. On the
+recognized K3-chiral-bialgebra target
 $\mathbf{H}_{\Delta_5}$ over the Siegel base
-$\overline{\mathcal{A}_2}$: does strict chain-level bar-cobar hold
-everywhere on $\overline{\mathcal{A}_2}$, or only off the Humbert
-stratification? This section answers the question and
-installs the scope precisely.
+$\overline{\mathcal{A}_2}$, strict chain-level bar-cobar belongs to
+the Koszul locus, while the Humbert strata require completed,
+monodromy-refined, or $A_\infty$ ambients.
 
 \begin{remark}[Strict chain-level Theorem B on the Koszul locus
 $U = \overline{\mathcal{A}_2}\setminus(H_1\cup H_3\cup H_4)$]
@@ -1112,13 +1362,14 @@ $U = \overline{\mathcal{A}_2}\setminus(H_1\cup H_3\cup H_4)$]
 \index{Koszul locus!strict inversion on $U$}
 On the open Koszul locus
 $U := \overline{\mathcal{A}_2}\setminus(H_1\cup H_3\cup H_4)$
-of Theorem~\ref{thm:climax-W18-global-inversion}~(a), the chiral
+of Theorem~\ref{thm:climax-W18-global-inversion}~(a), and after the
+K3 Hall/CoHA source-recognition gates, the chiral
 Positselski equivalence holds \emph{strictly at the chain level}
 for the K3 chiral bialgebra $\mathbf{H}_{\Delta_5}$: the counit
 $\Omega^{\mathrm{ch}}_X(B^{\mathrm{ch}}_X(\mathbf{H}_{\Delta_5}))|_U
 \to \mathbf{H}_{\Delta_5}|_U$
-is a chain-level quasi-isomorphism, not merely a coderived
-isomorphism. The three removed Humbert walls $H_1, H_3, H_4$ are
+is a chain-level quasi-isomorphism. The three removed Humbert walls
+$H_1, H_3, H_4$ are
 the three failure loci of the Mittag--Leffler condition on the
 raw direct-sum bar complex: at $H_1$ the monodromy is
 $\mathbb{Z}/8$ (Bruinier~$2002$); at $H_3$ the three-loop
@@ -1137,16 +1388,17 @@ $\overline{\mathcal{A}_2}$]
 \index{Positselski!pro-object completion}
 Across the full base $\overline{\mathcal{A}_2}$ (including the
 Humbert walls $H_1, H_3, H_4$), Theorem~B continues to hold
-\emph{weight-completed}:
+\emph{weight-completed} only after the K3 recognition gates and the
+strict Mittag--Leffler package \textup{(CP1)--(CP3)} have been supplied:
 $\Omega^{\mathrm{ch}}$ and $B^{\mathrm{ch}}$ compose to the
 identity in the coderived category
 $D^{\mathrm{co}}_{\mathrm{ch}}(\overline{\mathcal{A}_2})$, with
 weight-completed witness the pro-limit
 $\widehat{\bar B}^{\mathrm{ch}}(\mathbf{H}_{\Delta_5})
-= \varprojlim_w \bar B^{\mathrm{ch}}(\mathbf{H}_{\Delta_5})/F^{\geq w+1}$.
+= \varprojlim_N C_{\langle N\rangle}(\mathbf{H}_{\Delta_5})$.
 This is
 Theorem~\ref{thm:chiral-positselski-weight-completed} applied to
-the K3-chiral-bialgebra target: the weight filtration
+the recognized K3-chiral-bialgebra target: the weight filtration
 (Definition~\ref{def:total-bar-weight}) restores the
 Mittag--Leffler condition on each weight-graded piece over each of
 the three walls, so the pro-limit over weight truncations is
@@ -1204,8 +1456,10 @@ on $\overline{\mathcal{A}_2}$, and $A_\infty$-corrected at $H_3$.
 Corollary~\ref{cor:positselski-applicable-families}]
 \label{cor:tbsp-trichotomy-HDelta5}
 \index{Theorem B!trichotomy on $\mathbf{H}_{\Delta_5}$}
-For the K3 chiral bialgebra $A = \mathbf{H}_{\Delta_5}$ over
-$\overline{\mathcal{A}_2}$, the chiral Positselski equivalence
+For a K3 Hall/CoHA candidate over $\overline{\mathcal{A}_2}$ that has
+passed the finite-source, pairing, PBW/no-extra-relations, radical,
+parity, completion, inverse-limit, and Heegner comparison gates, write
+$A = \mathbf{H}_{\Delta_5}$. The chiral Positselski equivalence
 $\Omega^{\mathrm{ch}}\circ B^{\mathrm{ch}} \simeq \mathrm{id}$
 holds in the following three ambient-qualified senses:
 \begin{enumerate}
@@ -1317,7 +1571,8 @@ the wall calculation and the strict Mittag--Leffler tower comparison
 named in Remark~\ref{rem:tbsp-6-ml-per-weight}. Thus
 $\mathrm{Tor}_1$ is the proved home of the obstruction only on the
 walls where that calculation is supplied; Theorem~B's
-weight-completion kills precisely those proved classes.
+weight-completion makes those proved classes coacyclic only after the
+strict Mittag--Leffler comparison has been supplied.
 \end{remark}
 
 \begin{remark}[Per-weight Mittag--Leffler check on each
@@ -1327,26 +1582,29 @@ Humbert wall]
 \index{weight filtration!ML restoration on Humbert walls}
 The weight-completed statement of
 Theorem~\ref{thm:chiral-positselski-weight-completed} relies on
-the Mittag--Leffler (ML) condition on the inverse system of
-truncations $\{\bar B^{\mathrm{ch}}(A)/F^{\geq w+1}\}_w$. The raw
-direct-sum bar complex $\bar B^{\mathrm{ch}}(A) = \bigoplus_w
-\mathrm{gr}^w \bar B^{\mathrm{ch}}(A)$ on
-$\mathbf{H}_{\Delta_5}$ has total weight multiplicities governed
-by Hardy--Ramanujan asymptotics
-$d_w \sim \exp(\pi\sqrt{2w/3})/(4w\sqrt{3})$
-\cite{HardyRamanujan1918}; the corresponding mapping cone tower
-fails ML in the naive sense (the cardinality grows
-super-polynomially and no direct transition map is eventually
-surjective). The remedy is the per-weight check: for each
-fixed $w$, the truncation $\bar B^{\mathrm{ch}}(A)/F^{\geq w+1}$
-is a bounded complex of finite-rank $\mathcal{O}_{\overline{\mathcal{A}_2}}$-modules,
-and the transition
-$\bar B^{\mathrm{ch}}(A)/F^{\geq w+2}
-\to \bar B^{\mathrm{ch}}(A)/F^{\geq w+1}$ is surjective on each
-cohomology group because the weight-$w$ component is a direct
-summand and not a subcomplex in a non-trivial extension.
-Per-weight ML therefore holds on each
-Humbert wall separately:
+the Hom-cone Mittag--Leffler condition for a strict total-weight
+Rees tower $C_{\langle N\rangle}$ equipped with comparison maps to
+the low-weight model
+$\bigoplus_{0\leq w\leq N}\operatorname{gr}^w_F
+\bar B^{\mathrm{ch}}(A)$ as in
+Lemma~\ref{lem:total-weight-rees-finite-cdg-tower}. The raw
+direct-sum bar complex
+$\bar B^{\mathrm{ch}}(A)=\bigoplus_w\operatorname{gr}^w_F
+\bar B^{\mathrm{ch}}(A)$ is not this tower with its topology
+forgotten. Its weight multiplicities may grow with
+Hardy--Ramanujan asymptotics, but growth is not the ML criterion:
+ML is the assertion that the images of the cohomology maps in the
+inverse system
+\[
+\cdots\twoheadrightarrow C_{\langle w+1\rangle}
+\twoheadrightarrow C_{\langle w\rangle}
+\twoheadrightarrow\cdots
+\]
+stabilise in each cohomological degree, equivalently that the
+relevant $\varprojlim^1$ terms vanish. The per-wall check is
+therefore a finite-window cohomology check on the Rees tower and its
+monodromy-isotypic refinements, not a statement about a quotient of
+the raw direct sum by a high-weight tail:
 \begin{enumerate}
 \item[\textup{(H\textsubscript{1})}] on
 $\widehat{\mathcal{O}}_{H_1}$, the $\mathbb{Z}/8$-eigenspace
@@ -1377,7 +1635,7 @@ $\varprojlim^1 = 0$, iff the inverse limit is exact. The
 per-weight refinement we use is the \cite[Rem.~3.6]{Positselski11}
 CDG-coalgebra criterion: for a weighted filtered CDG-coalgebra,
 ML on each weight-graded piece makes the completed pro-object
-$\varprojlim_w \bar B^{\mathrm{ch}}(A)/F^{\geq w+1}$ an exact
+$\varprojlim_w C_{\langle w\rangle}$ an exact
 continuous recovery surface. It does not identify that pro-object
 with the raw direct-sum complex after the topology is forgotten. Thus
 Theorem~B's weight-completed scope is a distinct ML-stable ambient for
@@ -1455,9 +1713,10 @@ Malgrange1983,BeilinsonDrinfeld2004}.
 Remark~\ref{rem:tbsp-1} restricted attention to the
 three specific Humbert walls $H_1, H_3, H_4$ that arise at leading
 order in the K3 chiral bialgebra $\mathbf{H}_{\Delta_5}$
-on $\overline{\mathcal{A}_2}$. The natural question is whether
-strict chain-level inversion holds on the complement of
-\emph{all} admissible Humbert walls. The answer is yes:
+on $\overline{\mathcal{A}_2}$. Strict chain-level inversion on the
+complement of \emph{all} admissible Humbert walls is a theorem only
+for the recognized K3 target and only under the finite-window
+comparison, Bruinier wall, and strict ML hypotheses below:
 \begin{theorem}[Admissible Humbert scope for strict Theorem B]
 \label{thm:tbsp-admissible-strict-scope}
 \index{Theorem B!strict scope!admissible Humbert complement}
@@ -1485,8 +1744,9 @@ each $H_n\subset\overline{\mathcal{A}_2}\setminus U^{\mathrm{adm}}$
 is controlled by the associated Bruinier Heegner--Chern torsion
 class exactly as in
 Remark~\ref{rem:tbsp-5-tor-class}.
+\ClaimStatusConditional{}
 \end{theorem}
-\begin{proof}[Proof sketch]
+\begin{proof}
 By the Borcherds singular theta-lift
 \cite{Borcherds1998,Bruinier2002LNM}, the Heegner divisors
 $H_n\subset\overline{\mathcal{A}_2}$ for which the lift has a
@@ -1498,35 +1758,32 @@ obstruction to the Mittag--Leffler condition of
 Remark~\ref{rem:tbsp-6-ml-per-weight}. Away from
 $\bigcup_n H_n$, the universal family
 $X\to \overline{\mathcal{A}_2}$ carries a trivialisable chiral
-local system, and strict inversion is the standard generic-level
-chiral Positselski statement of
-Theorem~\ref{thm:chiral-positselski-weight-completed} read at
-finite weight without completion. The per-wall obstruction class
+local system after the recognition gates. Strict inversion is the
+finite-stage bar-cobar statement on the Koszul locus, not the
+weight-completed theorem with the topology forgotten. The per-wall
+obstruction class
 $[\mathrm{obs}^{\mathrm{strict}}_{H_n}]
 \in \mathrm{Tor}_1^{\widehat{\mathcal{O}}_{H_n}}\bigl(\Omega B A, A\bigr)$
 is non-zero exactly on admissible $n$ (by
 Remark~\ref{rem:tbsp-5-tor-class} specialised), so
-strict inversion fails on each admissible $H_n$ and holds on
+strict inversion fails on each admissible $H_n$ in the raw direct-sum
+ambient and holds on
 $U^{\mathrm{adm}}$. The Positselski weight-completed statement
-continues to hold across the entire base
-$\overline{\mathcal{A}_2}$ by
+continues across $\overline{\mathcal{A}_2}$ only on the strict ML
+pro-object surface of
 Theorem~\ref{thm:climax-W18-global-inversion}~(b).
 \end{proof}
-\emph{Constitutional consequence.} The scope row for Theorem~B in
-Chapter~\ref{chap:concordance}
-(\emph{concordance.tex}) should read
+\emph{Scope.} The Theorem~B lane asserted here is:
 ``bar-cobar holds strictly on
 $\overline{\mathcal{A}_2}\setminus\bigcup_{n\ \text{admissible}} H_n$
-(Koszul locus), weight-completed on $\overline{\mathcal{A}_2}$,
+(Koszul locus), weight-completed on $\overline{\mathcal{A}_2}$ after
+\textup{(CP1)--(CP3)},
 $A_\infty$-corrected on a formal neighbourhood of~$H_3$.''
-This is the constitutional tightening: the previous
-scope (``$H_1\cup H_3\cup H_4$ excluded'') is the leading
-specialisation; the correct scope excludes all admissible
-Humbert divisors. The three-wall case $\{H_1, H_3, H_4\}$ is the
-subset that is load-bearing for the
-$\mathbf{H}_{\Delta_5}$ K3 chiral bialgebra; higher-discriminant
+The admissible-Humbert complement is the strict locus. The
+three-wall set $\{H_1,H_3,H_4\}$ is the leading locus for the
+$\mathbf{H}_{\Delta_5}$ K3 chiral bialgebra. Higher-discriminant
 admissible walls inherit their obstruction classes by the same
-Bruinier mechanism and produce no new physics at leading order
+Bruinier mechanism and do not change the leading K3 calculation
 (they are suppressed by the Gritsenko--Nikulin denominator
 vanishing order).
 \end{remark}
@@ -1690,14 +1947,15 @@ so the derived inverse limit
 $\varprojlim^1_w H^m\bigl(\mathrm{gr}^{\leq w,\chi}_{H_n}\bigr) = 0$.
 \end{proof}
 
-\begin{theorem}[Strict chain-level bar-cobar inversion on the formal
+\begin{theorem}[Monodromy-refined bar-cobar comparison on the formal
 three-wall neighbourhood]
 \label{thm:strict-chain-level-across-humbert-walls}
-\index{Theorem B!strict chain-level on $H_1\cup H_3\cup H_4$!monodromy-refined pro-ambient}
-\index{bar-cobar inversion!strict chain-level across Humbert walls}
-Let $A = \mathbf{H}_{\Delta_5}$ be the K3 chiral bialgebra of
-Remark~\ref{rem:cclimax-1}, regarded as a curved $E_\infty$-chiral
-algebra on the universal family $X\to\overline{\mathcal{A}_2}$.
+\index{Theorem B!monodromy-refined comparison on $H_1\cup H_3\cup H_4$}
+\index{bar-cobar inversion!monodromy-refined Humbert comparison}
+Assume the K3 Hall/CoHA recognition gates have produced the completed
+target $A=\mathbf{H}_{\Delta_5}$ of Remark~\ref{rem:cclimax-1},
+regarded as a curved $E_\infty$-chiral algebra on the universal
+family $X\to\overline{\mathcal{A}_2}$.
 Let $\widehat{\mathcal{O}}^{\circ}_{H_1\cup H_3\cup H_4}
  := \widehat{\mathcal{O}}_{H_1\cup H_3\cup H_4}
  \setminus \bigcup_{i\neq j}\widehat{\mathcal{O}}_{H_i\cap H_j}$
@@ -1720,9 +1978,14 @@ the bar-cobar counit
 \;\xrightarrow{\;\sim\;}\;
 A\big|_{\widehat{\mathcal{O}}^{\circ}_{H_1\cup H_3\cup H_4}}
 \]
-is a strict chain-level quasi-isomorphism in the
-$(w,\chi)$-bigraded pro-ambient, refined by the following chain-level
-data.
+has the following monodromy-refined comparison data. On the
+$H_1$ and $H_4$ components this data is a strict chain-level
+quasi-isomorphism in the $(w,\chi)$-bigraded pro-ambient. On the
+$H_3$ component it is an $A_\infty$ quasi-isomorphism after adjoining
+the three-loop correction $\phi^{(3)}$ of
+Lemma~\ref{lem:cclimax-H3-failure}; it becomes a strict chain map
+only after a separate strictification datum for that $A_\infty$
+correction is supplied.
 \begin{enumerate}
 \item[\textup{(i)}] \emph{Named generators.} At each wall $H_n$ and each
 character $\chi\in\widehat{\Gamma_n}$, the per-isotypic generating set
@@ -1736,7 +1999,7 @@ $d^{\Gamma}_{\mathrm{bar}} := d_{\mathrm{bar}}|_{F^{\leq w,\chi}_{H_n}}$,
 the restriction of the ordinary chiral bar differential to the
 bigraded piece, which is well-defined by
 Lemma~\ref{lem:bar-differential-preserves-monodromy-filtration}.
-\item[\textup{(iii)}] \emph{Named chain homotopy via Bott--Koszul
+\item[\textup{(iii)}] \emph{Named homotopy via Bott--Koszul
 equivariant splitting.} The contracting data on each non-trivial
 isotypic piece is the Bott--Koszul chain homotopy built from the
 $s^{-1}$-desuspension splitting of the bar complex. Let
@@ -1771,14 +2034,17 @@ composition is a degree-$(-1)$ endomorphism of the bar complex
 because $\sigma$ lowers bar degree by $1$ and the scalar factor acts
 in degree $0$.
 
-At $H_3$ with $\Gamma_3$ a unipotent Jordan block $J_3$: the action
-is not diagonalisable, and the Bott--Koszul formula is replaced by
-the $V$-filtration splitting \cite{Kashiwara1983,Malgrange1983}:
+At $H_3$ with $\Gamma_3$ a unipotent Jordan block $J_3$, the action
+is not diagonalisable. The strict Bott--Koszul formula is replaced by
+the $V$-filtration splitting together with the $A_\infty$ correction
+\cite{Kashiwara1983,Malgrange1983}:
 $h^{(\chi)}_{H_3}
  := (J_3 - \chi\cdot\mathrm{id})^{-1}\circ\sigma$
 where the pseudoinverse is taken on the Jordan-block successive
 quotient; explicitly $h^{(0)}_{H_3}, h^{(1)}_{H_3}, h^{(2)}_{H_3}$ are
-the three Jordan-step contractions.
+the three Jordan-step homotopies for the corrected $A_\infty$ bar
+coderivation $D^{A_\infty}_{H_3}$, whose first non-trivial higher
+component is represented by $\phi^{(3)}$.
 
 At $H_4$ with $\Gamma_4 = \mathbb{Z}/2 = \langle\gamma_4\rangle$ and
 $\gamma_4 = \sqrt{2}$-involution:
@@ -1795,13 +2061,19 @@ $p^{\Gamma}_{H_n}\colon
 is the $\Gamma_n$-invariants projector: averaging over $\Gamma_1$,
 Jordan-block-top-component projection for $\Gamma_3$, symmetrization
 for $\Gamma_4$.
-\item[\textup{(v)}] \emph{Chain homotopy identity.} The named data satisfies
+\item[\textup{(v)}] \emph{Homotopy identity.} The named data satisfies
 \begin{equation}\label{eq:chain-homotopy-identity-humbert}
 [d^{\Gamma}_{\mathrm{bar}}, h^{\Gamma}_{H_n}]
 \;=\;
 \mathrm{id} - p^{\Gamma}_{H_n}
-\qquad\text{on each formal neighbourhood }\widehat{\mathcal{O}}_{H_n}.
+\qquad(n=1,4)
 \end{equation}
+on the strict formal neighbourhoods $\widehat{\mathcal{O}}_{H_1}$ and
+$\widehat{\mathcal{O}}_{H_4}$. At $H_3$ the same identity holds with
+$d^{\Gamma}_{\mathrm{bar}}$ replaced by
+$D^{\Gamma,A_\infty}_{H_3}$, the monodromy-refined corrected
+$A_\infty$ bar coderivation whose first higher component is represented
+by $\phi^{(3)}$.
 \item[\textup{(vi)}] \emph{Mittag--Leffler index.} The inverse system
 $\bigl\{\mathrm{gr}^{\leq w,\chi}_{H_n}
 \bar{B}^{\mathrm{ch}}(A)|_{\widehat{\mathcal{O}}_{H_n}}\bigr\}_{(w,\chi)}$
@@ -1968,9 +2240,12 @@ total-weight truncation. At $H_4$ the $\mathbb{Z}/2$-involution
 splits immediately and the formula reduces to the standard
 plus/minus eigenspace projector with curvature correction.
 
-Consolidating across all three walls,
-$[d^{\Gamma}_{\mathrm{bar}}, h^{\Gamma,\mathrm{corr}}_{H_n}] = \mathrm{id} - p^{\Gamma}_{H_n}$
-on each $\widehat{\mathcal{O}}_{H_n}$ for $n\in\{1,3,4\}$.
+Consolidating across the strict walls gives
+$[d^{\Gamma}_{\mathrm{bar}}, h^{\Gamma,\mathrm{corr}}_{H_n}] =
+\mathrm{id} - p^{\Gamma}_{H_n}$ on
+$\widehat{\mathcal{O}}_{H_n}$ for $n\in\{1,4\}$. The $H_3$ formula
+is the same identity with $d^{\Gamma}_{\mathrm{bar}}$ replaced by
+$D^{\Gamma,A_\infty}_{H_3}$.
 
 \emph{Integrability of the curvature-corrected telescoping.} The
 telescoping cancellation requires
@@ -2019,7 +2294,8 @@ is a scalar in $\mathrm{End}_{\mathbb{C}}(\bar{B}^{\mathrm{ch}}|_{\widehat{\math
 commuting with $d_{\mathrm{bar}}$ (by
 Lemma~\ref{lem:bar-differential-preserves-monodromy-filtration},
 $\gamma_n$ commutes with $d_{\mathrm{bar}}$; the scalar
-$\chi(\gamma_n)^{-1}$ and identity clearly commute). Therefore
+$\chi(\gamma_n)^{-1}$ and the identity commute as scalar
+endomorphisms). Therefore
 $M^{(\chi)}_{H_n}$ commutes with $d_{\mathrm{bar}}$, and
 \[
 [d_{\mathrm{bar}}, h^{(\chi)}_{H_n}]
@@ -2082,9 +2358,11 @@ nilpotent-series inversion
 splits immediately and the formula reduces to the standard
 plus/minus eigenspace projector.
 
-Consolidating across all three walls,
+Consolidating across the strict walls gives
 $[d^{\Gamma}_{\mathrm{bar}}, h^{\Gamma}_{H_n}] = \mathrm{id} - p^{\Gamma}_{H_n}$
-on each $\widehat{\mathcal{O}}_{H_n}$ for $n\in\{1,3,4\}$.
+on $\widehat{\mathcal{O}}_{H_n}$ for $n\in\{1,4\}$. On $H_3$ the
+same calculation is performed for the corrected $A_\infty$
+coderivation $D^{\Gamma,A_\infty}_{H_3}$.
 
 \emph{Step 3: Mittag--Leffler with named index.} By
 Lemma~\ref{lem:per-isotypic-ML-Hn}, each
@@ -2103,8 +2381,7 @@ after the $s^{-1}$-desuspension), $|\chi|$ from the order of the
 isotypic index, $c_n$ from the wall-specific isotypic multiplicity.
 This finite bound gives stabilisation.
 
-\emph{Step 4: Pro-system inverse limit yields strict chain-level
-quasi-isomorphism.} By the Milnor exact sequence applied to the
+\emph{Step 4: Pro-system inverse limit.} By the Milnor exact sequence applied to the
 $(w,\chi)$-bigraded tower of cones of $\widehat{\mathrm{counit}}^\Gamma_A$,
 \[
 0 \to \varprojlim\nolimits^1_{(w,\chi)} H^{m-1}\bigl(\mathrm{Cone}^{\Gamma,(w,\chi)}_A\bigr)
@@ -2112,13 +2389,14 @@ $(w,\chi)$-bigraded tower of cones of $\widehat{\mathrm{counit}}^\Gamma_A$,
 \to \varprojlim_{(w,\chi)} H^m\bigl(\mathrm{Cone}^{\Gamma,(w,\chi)}_A\bigr) \to 0,
 \]
 both flanking terms vanish: the right term because each finite-stage
-counit is a strict chain-level quasi-isomorphism on each isotypic
-summand (Step 2 plus the generic Koszul inversion of
+counit is a strict chain-level quasi-isomorphism on each $H_1$ and
+$H_4$ isotypic summand (Step 2 plus the generic Koszul inversion of
 Theorem~\ref{thm:climax-W18-global-inversion}~(a) applied to the
-$\chi$-invariant piece); the left term by Step 3
-Mittag--Leffler. Hence $\mathrm{Cone}(\widehat{\mathrm{counit}}^\Gamma_A)$
-is acyclic and $\widehat{\mathrm{counit}}^\Gamma_A$ is a strict
-chain-level quasi-isomorphism.
+$\chi$-invariant piece), while the $H_3$ finite stages are acyclic
+for the corrected $A_\infty$ cone; the left term vanishes by Step 3
+Mittag--Leffler. Hence the strict cone is acyclic on the
+$H_1$ and $H_4$ components, and the $H_3$ cone is acyclic in the
+$A_\infty$ category defined by $D^{\Gamma,A_\infty}_{H_3}$.
 
 \emph{Step 5: Gluing across the three walls on the complement of the
 wall-of-walls.} Let
@@ -2147,13 +2425,13 @@ Mayer--Vietoris sequence reads
 |_{\widehat{\mathcal{O}}^{\circ}_{H_1\cup H_3\cup H_4}}\bigr) \to 0,
 \]
 with zero $\varprojlim^{1}$-terms from the empty overlaps. Steps 1--4
-applied fibrewise on each $\widehat{\mathcal{O}}_{H_n}$ give each
-summand vanishes; consequently the global cohomology vanishes and
-$\widehat{\mathrm{counit}}^\Gamma_A$ is a strict chain-level
-quasi-isomorphism on $\widehat{\mathcal{O}}^{\circ}_{H_1\cup H_3\cup H_4}$.
-The statement therefore holds exactly on the Humbert union with the
-pairwise wall-of-walls locus removed, which is the open formal
-neighbourhood appearing in the theorem.
+applied fibrewise on each $\widehat{\mathcal{O}}_{H_n}$ give strict
+vanishing for $n=1,4$ and corrected $A_\infty$ vanishing for $n=3$.
+Consequently the monodromy-refined comparison glues on
+$\widehat{\mathcal{O}}^{\circ}_{H_1\cup H_3\cup H_4}$ with exactly
+those ambients. The statement holds on the Humbert union with the
+pairwise wall-of-walls locus removed; it does not assert an
+uncorrected strict chain-level theorem on the $H_3$ component.
 
 \emph{Primary inputs.} Bruinier monodromy order at $H_1$:
 \cite[Prop.~5.1]{Bruinier2002LNM}. Kashiwara--Malgrange $V$-filtration
@@ -2164,35 +2442,34 @@ Mittag--Leffler criterion: \cite[Prop.~3.5.7]{Weibel94}. Arnold flat
 connection: \cite{BeilinsonDrinfeld2004}.
 \end{proof}
 
-\begin{remark}[Relation to the earlier three-statement trichotomy]
-\label{rem:relation-to-earlier-trichotomy}
+\begin{remark}[Monodromy refinement of the trichotomy]
+\label{rem:monodromy-refined-trichotomy}
 \index{Theorem B!quadrichotomy after monodromy refinement}
 Corollary~\ref{cor:tbsp-trichotomy-HDelta5} records three
 readings (strict on $U$; weight-completed on
 $\overline{\mathcal{A}_2}$; $A_\infty$-corrected at $H_3$).
-Theorem~\ref{thm:strict-chain-level-across-humbert-walls} adds a
-fourth refined reading: strict chain-level inversion across
-$H_1\cup H_3\cup H_4$ in the monodromy-refined pro-ambient. The
-quadrichotomy reads:
+Theorem~\ref{thm:strict-chain-level-across-humbert-walls} adds the
+monodromy-refined pro-ambient: strict chain-level inversion on the
+$H_1$ and $H_4$ components, and the corrected $A_\infty$ comparison
+on the $H_3$ component. The quadrichotomy reads:
 \begin{enumerate}
 \item[\textup{(i)}] strict chain-level on $U$
 (Theorem~\ref{thm:climax-W18-global-inversion}~(a));
 \item[\textup{(ii)}] weight-completed coderived across
 $\overline{\mathcal{A}_2}$ (Theorem~\ref{thm:chiral-positselski-weight-completed});
-\item[\textup{(iii)}] strict chain-level in the monodromy-refined
-pro-ambient across $H_1\cup H_3\cup H_4$
+\item[\textup{(iii)}] monodromy-refined comparison across
+$H_1\cup H_3\cup H_4$: strict on $H_1,H_4$ and $A_\infty$-corrected
+on $H_3$
 (Theorem~\ref{thm:strict-chain-level-across-humbert-walls});
 \item[\textup{(iv)}] $A_\infty$-corrected on a formal neighbourhood of
 $H_3$ (Theorem~\ref{thm:climax-W18-global-inversion}~(c)).
 \end{enumerate}
 Readings (i) and (iii) cover disjoint regions of
-$\overline{\mathcal{A}_2}$; together they give strict chain-level
-inversion on all of $\overline{\mathcal{A}_2}$ except the
-codimension-$2$ wall-of-walls locus, in the appropriate
-(fibrewise / monodromy-refined pro-) ambient. Status (ii) remains
-the coarsest and applies uniformly; reading (iv) sharpens (iii) at
-$H_3$ by absorbing the three-loop coboundary into an $A_\infty$
-homotopy rather than a strict chain homotopy.
+$\overline{\mathcal{A}_2}$. Together they give strict chain-level
+inversion away from $H_3$ and the codimension-$2$ wall-of-walls locus,
+and give the corrected $A_\infty$ comparison on the smooth
+$H_3$-component. The weight-completed coderived statement is the
+uniform ambient.
 \end{remark}
 
 \begin{theorem}[Wall-of-walls obstruction: hidden structure at
@@ -2393,7 +2670,8 @@ consistency check.
 monodromy refinement]
 \label{cor:sharpened-quadrichotomy-after-monodromy-refinement}
 \index{Theorem B!sharpened quadrichotomy after monodromy refinement}
-For $A = \mathbf{H}_{\Delta_5}$ over $\overline{\mathcal{A}_2}$, the
+Assume the K3 Hall/CoHA recognition gates have produced
+$A = \mathbf{H}_{\Delta_5}$ over $\overline{\mathcal{A}_2}$. The
 chiral Positselski equivalence
 $\Omega^{\mathrm{ch}}\circ B^{\mathrm{ch}}\simeq\mathrm{id}$ admits
 the following five ambient-qualified readings, each stating the same
@@ -2402,9 +2680,10 @@ equivalence in a strictly different ambient:
 \item[\textup{(i)}] \emph{Strict chain-level on the Koszul locus
 $U = \overline{\mathcal{A}_2}\setminus(H_1\cup H_3\cup H_4)$}
 (Theorem~\ref{thm:climax-W18-global-inversion}~(a));
-\item[\textup{(ii)}] \emph{Strict chain-level in the
-monodromy-refined pro-ambient on
-$\widehat{\mathcal{O}}^{\circ}_{H_1\cup H_3\cup H_4}$}
+\item[\textup{(ii)}] \emph{Monodromy-refined pro-ambient on
+$\widehat{\mathcal{O}}^{\circ}_{H_1\cup H_3\cup H_4}$}:
+strict chain-level on the $H_1,H_4$ components and
+$A_\infty$-corrected on the $H_3$ component
 (the wall union minus wall-of-walls:
 Theorem~\ref{thm:strict-chain-level-across-humbert-walls});
 \item[\textup{(iii)}] \emph{Weight-completed coderived across
@@ -2418,7 +2697,8 @@ $\bigcup_{i\neq j} H_i\cap H_j$} with the explicit obstruction class
 of Theorem~\ref{thm:wall-of-walls-obstruction}.
 \end{enumerate}
 The union $(i) \cup (ii)$ covers $\overline{\mathcal{A}_2}$ minus the
-wall-of-walls locus at strict chain level; reading (iii) covers the
+wall-of-walls locus with strict chain-level control away from $H_3$
+and corrected $A_\infty$ control on $H_3$; reading (iii) covers the
 full base at coderived level; readings (iv), (v) are the per-wall and
 wall-of-walls refinements. The quadrichotomy of
 Corollary~\ref{cor:tbsp-trichotomy-HDelta5} (which had three
@@ -2442,7 +2722,7 @@ general and the content of (v).
 Deligne--Malcev bi-unipotent refinement]
 \label{rem:pentachotomy-to-hexachotomy-bi-unipotent}
 \index{Theorem B!hexachotomy!Deligne--Malcev bi-unipotent refinement}%
-Status (v) of
+The wall-of-walls clause of
 Corollary~\textup{\ref{cor:sharpened-quadrichotomy-after-monodromy-refinement}}
 reads strict chain-level bar-cobar inversion as \emph{obstructed} on the
 wall-of-walls in the single-monodromy-refined pro-ambient of
@@ -2461,9 +2741,9 @@ Together with global strict chain-level inversion
 the pentachotomy is upgraded to a hexachotomy:
 \begin{enumerate}
 \item[\textup{(i$'$)}] strict chain-level on $U$;
-\item[\textup{(ii$'$)}] strict chain-level in the
-single-monodromy-refined pro-ambient on
-$\widehat{\mathcal{O}}^{\circ}_{H_1\cup H_3\cup H_4}$;
+\item[\textup{(ii$'$)}] monodromy-refined pro-ambient on
+$\widehat{\mathcal{O}}^{\circ}_{H_1\cup H_3\cup H_4}$, strict on
+$H_1,H_4$ and $A_\infty$-corrected on $H_3$;
 \item[\textup{(iii$'$)}] strict chain-level in the Deligne--Malcev
 bi-unipotent pro-ambient on
 $\bigcup_{i\neq j}\widehat{\mathcal{O}}_{H_i\cap H_j}$
@@ -2476,12 +2756,12 @@ $H_3$;
 $\mathrm{Perf}(\overline{\mathcal{A}_2})$ via Deligne nearby cycles
 along $(H_i,H_j)$.
 \end{enumerate}
-The union $(i')\cup(ii')\cup(iii')$ is an ambient-qualified strict
-coverage statement after the bi-unipotent refinement, conditional on
-the wall and wall-of-walls comparison data named above. It does not
-turn the raw direct-sum class-$\mathsf M$ surface into a strict
-chain-level theorem. The hexachotomy records the compatible ambients
-in which chiral Positselski is asserted for
+The union $(i')\cup(ii')\cup(iii')$ is an ambient-qualified comparison
+after the bi-unipotent refinement, conditional on the wall and
+wall-of-walls comparison data named above. It does not turn the raw
+direct-sum class-$\mathsf M$ surface into a strict chain-level theorem.
+The hexachotomy records the compatible ambients in which chiral
+Positselski is asserted for
 $\mathbf{H}_{\Delta_5}$ on $\overline{\mathcal{A}_2}$.
 \end{remark}
 
@@ -2489,23 +2769,24 @@ $\mathbf{H}_{\Delta_5}$ on $\overline{\mathcal{A}_2}$.
 Humbert divisor $H_n$ ($n\equiv 0,3\pmod 4$)}
 \label{sec:tbsp-chain-level-nearby-cycle-admissible-Hn}
 
-The analysis of
-\S\ref{sec:tbsp-strict-across-humbert-walls} handled the three
-leading admissible walls $H_1,H_3,H_4$. The purpose of this section is
-to establish the \emph{uniform} chain-level nearby-cycle comparison
-that carries over every admissible Humbert divisor
+The three leading admissible walls $H_1,H_3,H_4$ carry the local
+monodromy calculation of
+\S\ref{sec:tbsp-strict-across-humbert-walls}. The uniform
+nearby-cycle comparison extends the same finite-window mechanism to
+every admissible Humbert divisor
 $H_n\subset \overline{\mathcal{A}_2}$ with
 $n\equiv 0,3\pmod 4$ (discriminant condition: the lift
 $\phi_{-2,1}$ has a logarithmic branch at~$H_n$;
 \cite[\S5]{Bruinier2002LNM},
 Theorem~\ref{thm:tbsp-admissible-strict-scope}). The
-comparison consists of four strictly chain-level data
+comparison consists of four finite-window data
 (nearby-cycle $\mathcal{D}$-module, Koszul bar filtration,
 $\lim^1$-obstruction, Baily--Borel boundary compatibility) and one
 global inversion theorem with four ambient-qualified lanes.
 
-Throughout, $A=\mathbf{H}_{\Delta_5}$ denotes the K3 chiral
-bialgebra of Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic};
+Throughout, after the K3 Hall/CoHA recognition gates have been
+supplied, $A=\mathbf{H}_{\Delta_5}$ denotes the K3 chiral bialgebra of
+Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic};
 $\widehat{\mathcal{O}}_{H_n}$ denotes the formal completion of the
 structure sheaf of $\overline{\mathcal{A}_2}$ along $H_n$;
 $\widehat{U}_{H_n}=\mathrm{Spec}\,\widehat{\mathcal{O}}_{H_n}\setminus H_n$
@@ -2815,10 +3096,15 @@ $\overline{\mathcal{A}_2}$]
 \index{global inversion theorem!chiral bar-cobar!admissible Humbert
 complement}
 \index{Theorem B!global inversion!four-lane}
-Let $A=\mathbf{H}_{\Delta_5}$. The chiral bar-cobar adjunction
+Assume the K3 Hall/CoHA recognition gates have produced
+$A=\mathbf{H}_{\Delta_5}$. The chiral bar-cobar adjunction
 $(\Omega^{\mathrm{ch}}\dashv B^{\mathrm{ch}})$ on
 $\overline{\mathcal{A}_2}$ admits the following four
-ambient-qualified lanes, collectively covering the full base:
+ambient-qualified lanes, collectively covering the full base, under
+the K3 Hall/CoHA recognition gates, the finite-window comparison
+theorem, the admissible-wall calculations, and the strict
+Mittag--Leffler hypotheses of
+Theorem~\ref{thm:chiral-positselski-weight-completed}:
 \begin{enumerate}
 \item[\textup{(i)}] \emph{Strict chain-level quasi-isomorphism} on
 the Koszul locus:
@@ -2847,7 +3133,9 @@ admissible formal neighbourhood:
 via the monodromy-refined total bar weight filtration of
 Definition~\ref{def:monodromy-refined-total-bar-weight} on each
 $H_n$ and the Positselski weight-completed machinery
-(Theorem~\ref{thm:chiral-positselski-weight-completed}).
+(Theorem~\ref{thm:chiral-positselski-weight-completed}); this is a
+statement in the completed coderived ambient, not a raw direct-sum
+chain-level assertion.
 \item[\textup{(iii)}] \emph{$A_\infty$-corrected strict inversion}
 at each admissible $H_n$: on a formal neighbourhood of $H_n$, the
 strict bar-cobar inversion is $A_\infty$-corrected by the explicit
@@ -2877,14 +3165,16 @@ Chapter~\ref{chap:mc5-class-m-chain-level-platonic}) supplies the
 \v Cech cocycle
 $[\gamma_n,\gamma_m]\in H^2_{\text{\'et}}(H_n\cap H_m,\mathbb{Z}/N_{nm})$
 with canonical splitting via Schmid--Cattani--Kaplan
-commuting-$\mathfrak{sl}_2$-triples \cite{CattaniKaplanSchmid86}.
+commuting-$\mathfrak{sl}_2$-triples \cite{CattaniKaplanSchmid86},
+provided the Deligne--Malcev comparison data of
+Chapter~\ref{chap:mc5-class-m-chain-level-platonic} are in force.
 The resulting global object in
 $D^{\mathrm{co}}_{\mathrm{ch}}(\overline{\mathcal{A}_2})$ is
 ambient-neutral and recovers lane (i) on $U^{\mathrm{adm}}$ with
 the $A_\infty$-corrections of (iii) glued via (ii) at each $H_n$.
 \end{enumerate}
-Together (i)--(iv) constitute the global inversion theorem for
-chiral bar-cobar on $\overline{\mathcal{A}_2}$, stated in the
+Together (i)--(iv) constitute the conditional global inversion theorem
+for chiral bar-cobar on $\overline{\mathcal{A}_2}$, stated in the
 ambient in which each lane is strictly correct.
 \ClaimStatusConditional{}
 \end{theorem}
@@ -2897,9 +3187,13 @@ $\psi_n(A)|_{U^{\mathrm{adm}}}=A|_{U^{\mathrm{adm}}}$ with trivial
 monodromy. The $\lim^1$-obstruction of
 Theorem~\ref{thm:tbsp-lim1-is-fourier-coefficient} vanishes since
 the inverse system is Mittag--Leffler strict (constant sheaves off
-the walls). The classical chain-level Positselski theorem
-\cite[Thm.~6.4]{Positselski11} applied fibrewise delivers
-strict chain-level quasi-isomorphism.
+the walls). The strict chain-level quasi-isomorphism comes from the
+finite-window Koszul contraction on this locus: PBW concentration
+collapses the bar spectral sequence, and the normalized bar
+contraction gives the counit. Positselski's theorem
+\cite[Thm.~6.4]{Positselski11} supplies the coderived co/contra
+identification on the same finite windows; it is not the source of
+strictness.
 
 Lane (ii). By
 Lemma~\ref{lem:bar-differential-preserves-monodromy-filtration}
@@ -2965,13 +3259,14 @@ independent; their agreement is a load-bearing internal
 consistency check.
 \end{remark}
 
-\begin{remark}[Constitutional statement: the ambient-neutral
+\begin{remark}[Ambient-neutral
 Platonic form]
-\label{rem:tbsp-constitutional-ambient-neutral}
-\index{constitutional!chiral Positselski!ambient-neutral form}
+\label{rem:tbsp-ambient-neutral-form}
+\index{chiral Positselski!ambient-neutral form}
 The global inversion theorem
 (Theorem~\ref{thm:tbsp-global-inversion-all-admissible}) states
-chiral Positselski (Theorem~B) in ambient-neutral form on
+chiral Positselski (Theorem~B), under its recognition and strict-ML
+hypotheses, in ambient-neutral form on
 $\overline{\mathcal{A}_2}$: four lanes, each with a strictly
 correct ambient, glued by \v Cech descent. Each lane is necessary:
 strict chain-level alone (i) covers only $U^{\mathrm{adm}}$; (i)
@@ -2979,12 +3274,12 @@ plus weight-completed (ii) covers
 $\overline{\mathcal{A}_2}\setminus\{\text{wall-of-walls}\}$; (iii)
 is necessary to record the explicit $A_\infty$-homotopies at
 walls where strict chain-level fails; (iv) is necessary for the
-global assembly. Dropping any lane loses coverage. This is the
-ambient-neutral Platonic form of Theorem~B.
+global assembly. The four lanes are exactly the ambient-neutral
+Platonic form of Theorem~B.
 \end{remark}
 
 \section{Module-level proof of chiral Positselski:
-$C = V_{\alpha_1}$ over $\mathbf{H}_{\Delta_5}$}
+$C = V_{\alpha_1}$ over the $\mathbf{H}_{\Delta_5}$ recognition target}
 \label{sec:tbsp-module-level-proof-valpha1}
 
 The statements of the preceding sections apply chiral Positselski
@@ -2998,22 +3293,29 @@ $\mathcal{C}$ and a CDG-$\mathcal{C}$-comodule $C$, the counit
 $\Omega_X^{\mathrm{ch}}\bigl(B_X^{\mathrm{ch}}(C)\bigr)\to C$ is a
 quasi-isomorphism in the coderived category
 $D^{\mathrm{co}}_{\mathrm{ch}}(X)$. This section proves that
-module-level statement on a specific named comodule,
-$C = V_{\alpha_1}$, a fundamental fusion generator of the K3
-chiral bialgebra $A = \mathbf{H}_{\Delta_5}$ attached to the first
-real simple root of the Gritsenko--Nikulin BKM decomposition.
+module-level statement on a specific named test comodule,
+$C = V_{\alpha_1}$, conditional on a completed K3 Hall/CoHA source
+having passed the finite-source, pairing, PBW/no-extra-relations,
+radical, parity, completion, inverse-limit, and Heegner comparison
+gates. Only under that recognition hypothesis do we write the target
+chiral bialgebra as $A=\mathbf{H}_{\Delta_5}$ and attach
+$V_{\alpha_1}$ to the first real simple root of the
+Gritsenko--Nikulin BKM decomposition.
 
 \subsection{The module $V_{\alpha_1}$}
 \label{subsec:tbsp-module-valpha1}
 
-Let $\mathbf{H}_{\Delta_5}$ be the K3 chiral bialgebra over
-$\overline{\mathcal{A}_2}$ with denominator function
-$\Delta_5$, satisfying $(\Delta_5)^2=\Phi_{10}^{\mathrm{un}}$, with
-the Vol~III associator twist carried by
-$\Phi_{10}^{\mathrm{un}}/\eta^{24}$ and real simple root system
+Assume throughout this subsection that the K3 Hall/CoHA candidate has
+passed the source-recognition gates just listed. We then write the
+recognized target as $\mathbf{H}_{\Delta_5}$ over
+$\overline{\mathcal{A}_2}$, with denominator comparison target
+$\Delta_5$, $(\Delta_5)^2=\Phi_{10}^{\mathrm{un}}$, Vol~III associator
+twist carried by $\Phi_{10}^{\mathrm{un}}/\eta^{24}$, and real simple
+root system
 $\{\alpha_1,\alpha_2,\alpha_3\}\subset\mathrm{II}_{4,20}$
 (Gritsenko--Nikulin
-\cite{GritsenkoNikulin1998}).
+\cite{GritsenkoNikulin1998}). Without these gates, the following is a
+recognition test, not an intrinsic Volume-I construction.
 
 \begin{definition}[The fundamental module $V_{\alpha_1}$]
 \label{def:tbsp-valpha1}
@@ -3034,10 +3336,11 @@ $2$-dimensional $\mathfrak{sl}_2$-fundamental:
  f_{\alpha_1}\cdot v^+=v^-,\quad
  h_{\alpha_1}\cdot v^\pm=\pm v^\pm.
 \end{equation}
-The chiral $\mathbf{H}_{\Delta_5}$-comodule structure
+The required chiral $\mathbf{H}_{\Delta_5}$-comodule structure
 $\rho\colon V_{\alpha_1}\to V_{\alpha_1}\otimes
-\mathbf{H}_{\Delta_5}$ is the Heisenberg free-field realisation
-carried by the $\alpha_1$-column of the Mukai lattice:
+\mathbf{H}_{\Delta_5}$ is the Heisenberg free-field realisation that
+the recognized Hall/CoHA source must induce along the
+$\alpha_1$-column of the Mukai lattice:
 \[
  \rho(v^\pm)
  \;=\;
@@ -3055,7 +3358,7 @@ is concentrated in degree $0$: $V_{\alpha_1}^0=V_{\alpha_1}$,
 $V_{\alpha_1}^{n}=0$ for $n\neq 0$.
 \end{definition}
 
-\begin{remark}[Why $V_{\alpha_1}$ is a legitimate
+\begin{remark}[Recognition gate for the
 $\mathbf{H}_{\Delta_5}$-comodule]
 \label{rem:tbsp-valpha1-legitimate}
 The three real simple roots of the Gritsenko--Nikulin decomposition
@@ -3063,16 +3366,17 @@ determine three standard $\mathfrak{sl}_2$-triples inside
 $\mathfrak{g}_{\Delta_5}$; each carries a fundamental rep via the
 Heisenberg/Mukai embedding
 $\mathfrak{g}_{\Delta_5}\hookrightarrow\mathrm{End}(H^*(K3,\mathbb{C}))$.
-The chiral-comodule structure is induced from this embedding by
-restriction of the Heisenberg coaction; compatibility with the BKM
-denominator $\Delta_5$ follows from
+In the conditional Hall/CoHA recognition problem, the chiral-comodule
+structure must be induced from this embedding by restriction of the
+Heisenberg coaction, and its compatibility with the BKM denominator
+$\Delta_5$ is a comparison gate against
 \cite[\S6]{GritsenkoNikulin1998}. Finite-dimensionality is manifest
 from \eqref{eq:tbsp-valpha1-definition}; positive-energy grading is
-inherited from the Mukai-lattice $\mathbb{Z}$-grading. The module
+then inherited from the Mukai-lattice $\mathbb{Z}$-grading. The module
 therefore sits inside the class of finite-dimensional positive-energy
 comodules on which
 Theorem~\ref{thm:chiral-positselski-at-each-weight} is directly
-applicable.
+applicable only after those gates.
 \end{remark}
 
 \subsection{The module-level bar complex $B^{\mathrm{ch}}_X(V_{\alpha_1})$}
@@ -3802,18 +4106,17 @@ B\mathbf H_{\Delta_5},\mathbf H_{\Delta_5})\otimes_{\mathbf
 H_{\Delta_5}}\mathbf{1}=0$ (the counit is the tensor unit).
 \end{proof}
 
-\begin{remark}[Vacuum as sanity-check structural anchor]
-\label{rem:tbsp-vacuum-sanity}
-\index{sanity check!vacuum module}
+\begin{remark}[Vacuum module as base case]
+\label{rem:tbsp-vacuum-base-case}
+\index{vacuum module!Theorem B base case}
 Theorem~\ref{thm:tbsp-theorem-B-vacuum} is the structural base
 case of the named-module construction: any violation on the vacuum
 would immediately falsify the algebra-level inversion (Theorem
 \ref{thm:positselski-chiral-proved}), since the vacuum is the
-coaugmentation's image. The theorem's content is therefore
-consistency-checking rather than new; we record it explicitly
-because the proof at the subsequent imaginary-root cases
-depends on the comparison to the free bar complex of the
-underlying algebra.
+coaugmentation's image. The free bar complex of the underlying
+algebra gives the comparison object for the adjoint and
+imaginary-root modules, so the vacuum case is the base case of the
+module-level induction.
 \end{remark}
 
 \subsection{Adjoint module $\mathrm{adj}(\mathfrak{g}_{\Delta_5})$}
@@ -4053,24 +4356,24 @@ $V_{\alpha_1}$: filtered comparison and module-natural wall
 perturbations.
 \end{proof}
 
-\begin{remark}[Five-cycle coverage summary]
-\label{rem:tbsp-five-cycle-coverage}
-\index{checks!five-cycle coverage}
-The named-module construction covers the structural
-trichotomy of named comodules on $\mathbf H_{\Delta_5}$:
+\begin{remark}[Named comodules for the module-level Positselski surface]
+\label{rem:tbsp-named-comodules-module-surface}
+\index{named comodules!module-level Positselski surface}
+The named-module construction separates the structural
+trichotomy of comodules on $\mathbf H_{\Delta_5}$:
 \begin{itemize}
-\item \emph{C1--C2} (higher bar degrees on $V_{\alpha_1}$,
-\S\ref{sec:tbsp-higher-bar-degrees-valpha1}): the two-sided
+\item Higher bar degrees on $V_{\alpha_1}$
+(\S\ref{sec:tbsp-higher-bar-degrees-valpha1}): the two-sided
 identity at $n=4,5,6$, subsumed by spectral-sequence collapse
 (Corollary~\ref{cor:tbsp-homotopy-all-n-valpha1}) for all $n\ge0$,
 with transfer to $\Omega B$ conditional on $\theta_V$.
-\item \emph{C3} (vacuum, Theorem~\ref{thm:tbsp-theorem-B-vacuum}):
+\item Vacuum (Theorem~\ref{thm:tbsp-theorem-B-vacuum}):
 structural base case, no correctors.
-\item \emph{C4} (adjoint, Theorem~\ref{thm:tbsp-theorem-B-adjoint}):
+\item Adjoint (Theorem~\ref{thm:tbsp-theorem-B-adjoint}):
 finite real-root slice via affine-Kac--Moody, imaginary-root slice
 via weight completion and Mittag--Leffler.
-\item \emph{C5} (isotropic $V_\beta$,
-Theorem~\ref{thm:tbsp-theorem-B-Vbeta}): $20$-dimensional,
+\item Isotropic $V_\beta$
+(Theorem~\ref{thm:tbsp-theorem-B-Vbeta}): $20$-dimensional,
 Frenkel--Kac twist on admissible walls, with the same comparison and
 module-naturality obligations.
 \end{itemize}

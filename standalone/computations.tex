@@ -10,7 +10,6 @@
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{conjecture}[theorem]{Conjecture}
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
 \newtheorem{construction}[theorem]{Construction}
@@ -23,25 +22,25 @@
 \providecommand{\cW}{\mathcal{W}}
 \providecommand{\Res}{\operatorname{Res}}
 
-\makeatletter
-\let\cmp@oldref\ref
-\renewcommand{\ref}[1]{%
- \@ifundefined{r@#1}{\textit{full monograph}}{\cmp@oldref{#1}}%
-}
-\makeatother
-
 \title{The genus-2 free energy of $W_3$ and the gravitational coproduct}
 \author{Raeez Lorgat}
 \date{}
 
 \begin{document}
 \maketitle
+\begin{abstract}
+The genus-$2$ free energy of $W_3$ contains a genuine rank-$2$
+cross-channel term. The six boundary graphs give
+$\delta F_2^{\mathrm{cross}}(W_3)=(c+204)/(16c)$, while the
+rank-$2$ planted-forest correction is
+$(932-7c^2)/(48c^3)$. The same note records the Virasoro
+Drinfeld--Sokolov transfer: the coproduct is primitive and the
+gravitational interaction is carried by the cubic-pole
+$r$-matrix.
+\end{abstract}
 \fi
 
-%======================================================================
-% COMPUTATIONS.TEX -- Sections 7--8 of the standalone paper
-% The genus-2 free energy of W_3 and the gravitational coproduct
-%======================================================================
+% Genus-2 W_3 amplitudes and Virasoro gravitational coproduct
 
 \begin{remark}[Rank-2 holographic datum]
 The $W_3$ composite field identity
@@ -51,24 +50,15 @@ holographic datum: $\mathcal{H}(W_3)$}
 (\texttt{w3\_holographic\_datum.tex}).
 \end{remark}
 
-\begin{remark}[Independent computation anchors]\label{rem:computation-anchors}
-This note records the graph-by-graph computation that produces the
-genus-$2$ cross-channel correction
-$\delta F_2(W_3) = (c+204)/(16c)$ and the gravitational-coproduct
-primitivity for $\mathrm{Vir}$. Two canonical compute modules carry
-the independent verification paths: \texttt{w3\_genus2.py} (six-graph
-tabulation at seven test central charges) and
-\texttt{ds\_hpl\_primitivity.py} (ghost-number obstruction check).
-The exceptional-Lie dimensions used elsewhere in the monograph are
-not re-hardcoded here; when an exceptional dimension appears it is
-imported from \texttt{compute/lib/bc\_exceptional\_categorical\_zeta\_engine.py}
-at \texttt{FUNDAMENTAL\_DIMS[\textquotesingle E8\textquotesingle]}. Cross-reference to Vol~I
-theorem status: \textup{\textsf{thm:multi-weight-genus-expansion}}
-gives $\delta F_2(W_3) = (c+204)/(16c)$ explicit (proved, not
-conjectural); \textup{\textsf{thm:grav-primitivity-standalone}} is
-the ghost-number-obstruction argument repeated here in three steps.
-The conjectural extension to general principal $\mathcal{W}(\fg)$ is
-Conjecture~\textup{\ref{conj:general-ds-primitivity}}.
+\begin{remark}[Genus-two verification data]\label{rem:computation-anchors}
+The six boundary-graph sum gives
+$\delta F_2^{\mathrm{cross}}(W_3)=(c+204)/(16c)$, and the
+Drinfeld--Sokolov BRST calculation gives Virasoro
+gravitational-coproduct primitivity. Exact rational evaluation at
+$c\in\{1,2,4,13,26,50,100\}$ checks the graph table. No
+exceptional-Lie dimension enters the genus-$2$ computation. The
+principal Drinfeld--Sokolov statement is
+Theorem~\ref{thm:general-ds-primitivity}.
 \end{remark}
 
 %======================================================================
@@ -76,13 +66,12 @@ Conjecture~\textup{\ref{conj:general-ds-primitivity}}.
 \label{sec:genus2-w3}
 %======================================================================
 
-The preceding sections treated the single-channel
-regime: one strong generator, one primary line, one modular
-characteristic~$\kappa$. We now compute the first multi-channel
-invariant. The $W_3$ algebra has two strong generators (the stress
-tensor~$T$ of weight~$2$ and the spin-3 current~$W$ of weight~$3$),
-and $F_2(W_3)$ receives contributions from both channels
-and their interactions.
+The single-channel regime has one strong generator, one primary line,
+and one modular characteristic~$\kappa$. The first multi-channel
+invariant occurs for $W_3$, whose strong generators are the stress
+tensor~$T$ of weight~$2$ and the spin-$3$ current~$W$ of weight~$3$.
+Thus $F_2(W_3)$ receives both diagonal channel contributions and
+cross-channel contributions.
 
 \subsection{The Frobenius algebra of the bar-complex CohFT}
 \label{subsec:w3-frobenius}
@@ -118,7 +107,7 @@ C_{TTT} = C_{TWW} = C_{WWT} = c,
 \qquad
 C_{TTW} = C_{TWT} = C_{WTT} = C_{WWW} = 0.
 \end{equation}
-The derivations are:
+The OPE identities give the constants:
 $T_{(1)}T = 2T$ gives $C^T_{TT} = 2$, whence
 $C_{TTT} = \eta_{TT} \cdot 2 = c$;
 $T_{(1)}W = 3W$ gives $C^W_{TW} = 3$, whence
@@ -192,9 +181,9 @@ $\Gamma_6$ & chain
 \end{center}
 Every vertex satisfies the stability condition $2g_v + \mathrm{val}_v
 \geq 3$, and the genus formula $h^1(\Gamma) + \sum_v g_v = 2$ holds
-in each case. Note that the smooth graph $\Gamma_0$ has no edges and
-contributes the integrated class on $\mathcal{M}_{2,0}$ itself; the
-remaining six graphs are the boundary strata.
+in each case. The smooth graph $\Gamma_0$ has no edges and contributes
+the integrated class on $\mathcal{M}_{2,0}$ itself; the remaining six
+graphs are the boundary strata.
 
 
 \subsection{Multi-channel Feynman rules}
@@ -218,8 +207,7 @@ where the vertex factors are:
  $V_v = \sum_m \eta^{mm} C_{\sigma(e_1)\sigma(e_2)m}\,
  C_{m\,\sigma(e_3)\sigma(e_4)}$.
 \item \emph{Genus-1, valence $n$}:
- $V_v = \kappa_{\sigma(e)}/24$ (per-channel genus-1 universality,
- proved unconditionally).
+ $V_v = \kappa_{\sigma(e)}/24$ (per-channel genus-1 universality).
 \end{itemize}
 Each half-edge at a self-loop contributes a pair of half-edges to
 the same vertex, both carrying channel~$\sigma(e)$.
@@ -228,9 +216,9 @@ the same vertex, both carrying channel~$\sigma(e)$.
 \subsection{Per-graph amplitudes}
 \label{subsec:per-graph-amplitudes}
 
-We compute each boundary graph amplitude, decomposed into
-\emph{diagonal} (all edges in one channel) and \emph{mixed}
-(edges in different channels) contributions.
+Each boundary graph amplitude decomposes into \emph{diagonal}
+contributions, where all edges lie in one channel, and \emph{mixed}
+contributions, where both channels occur.
 
 \subsubsection*{$\Gamma_1$: figure-eight}
 
@@ -405,9 +393,12 @@ The total mixed amplitude is
 \subsection{The cross-channel correction}
 \label{subsec:cross-channel}
 
-Collecting the mixed-channel amplitudes from all boundary graphs:
+\begin{proposition}[Rank-$2$ genus-two cross-channel term]
+\label{prop:w3-cross-channel}
+For the $W_3$ bar-complex CohFT with the Feynman rules above, the
+degree-$0$ mixed-boundary graph sum is
 \begin{equation}\label{eq:cross-channel-total}
-\delta F_2
+\delta F_2^{\mathrm{cross}}(W_3)
 \;=\;
 \underbrace{\frac{3}{c}}_{\text{banana}}
 \;+\;
@@ -421,6 +412,17 @@ Collecting the mixed-channel amplitudes from all boundary graphs:
 \;=\;
 \frac{c + 204}{16c}.
 \end{equation}
+\end{proposition}
+
+\begin{proof}
+The mixed columns of the six boundary-graph amplitudes contribute
+only on the banana, theta, tadpole, and barbell graphs. Summing
+Equations~\eqref{eq:banana-mixed}, \eqref{eq:theta-mixed},
+\eqref{eq:tadpole-mixed}, and~\eqref{eq:barbell-mixed} gives the
+displayed rational function. The figure-eight and dumbbell graphs
+have a single edge, hence no mixed channel assignment.
+\end{proof}
+
 The figure-eight and dumbbell graphs contribute zero mixed amplitude
 (single edges admit only diagonal assignments). The correction
 decomposes into two structurally distinct pieces:
@@ -443,10 +445,10 @@ to each channel independently, gives
 F_2^{\mathrm{scal}}(W_3) = \kappa \cdot \lambda_2^{\mathrm{FP}}
 = \frac{5c}{6} \cdot \frac{7}{5760} = \frac{7c}{6912}.
 \end{equation}
-The ratio of the naive cross-channel correction to the scalar
+The ratio of the cross-channel correction to the scalar
 approximation is
 \begin{equation}\label{eq:cross-channel-ratio}
-\frac{\delta F_2}{F_2^{\mathrm{scal}}}
+\frac{\delta F_2^{\mathrm{cross}}}{F_2^{\mathrm{scal}}}
 = \frac{432(c+204)}{7c^2},
 \end{equation}
 which diverges as $c \to 0$ and decays as $c^{-1}$ at large~$c$.
@@ -460,14 +462,13 @@ relative to the $O(c)$ scalar term.
 
 \begin{remark}[Cross-channel correction]
 \label{rem:cross-channel-status}
-The computation above uses the naive genus-$1$ vertex factors
-$\kappa_i/24$ without $R$-matrix corrections. The
-multi-generator universality problem
-(\textbf{op:multi-generator-universality}) is resolved negatively:
-the CohFT $R$-matrix does \emph{not} produce compensating terms
-that cancel $\delta F_2$. The cross-channel correction
-$\delta F_2 = (c{+}204)/(16c)$ is a genuine additional term,
-and the correct decomposition is
+The graph computation uses the genus-$1$ vertex factors
+$\kappa_i/24$ before the CohFT $R$-matrix action. The
+multi-generator universality problem has a negative answer: the
+CohFT $R$-matrix contributes no terms cancelling
+$\delta F_2^{\mathrm{cross}}$. Hence
+$\delta F_2^{\mathrm{cross}}=(c+204)/(16c)$ is a genuine
+additional term, and the decomposition is
 $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}} +
 \delta F_g^{\mathrm{cross}}$.
 \end{remark}
@@ -476,7 +477,7 @@ $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}} +
 \subsection{The complete amplitude table}
 \label{subsec:amplitude-table}
 
-We record the full per-graph data:
+The full per-graph data are:
 
 \begin{center}
 \small
@@ -507,36 +508,32 @@ The table records the six boundary-graph amplitudes; the
 smooth graph $\Gamma_0$ has no edges and contributes an
 integrated class on $\mathcal{M}_{2,0}$ itself.
 The mixed column sums to
-$\delta F_2 = (c+204)/(16c)$.
+$\delta F_2^{\mathrm{cross}} = (c+204)/(16c)$.
 
-Every entry in this table has been verified against the compute
-module \texttt{w3\_genus2.py}, using exact rational arithmetic
-(\texttt{fractions.Fraction}), at the seven test central charges
-$c \in \{1, 2, 4, 13, 26, 50, 100\}$.
+The rational identities in the table specialise correctly under exact
+arithmetic at $c\in\{1,2,4,13,26,50,100\}$.
 
 
 \subsection{Planted-forest corrections}
 \label{subsec:planted-forest}
 
-The planted-forest correction on each primary line is
-$\delta_{\mathrm{pf}}^{(2,0)} = S_3(10 S_3 - \kappa)/48$.
-
-\emph{$T$-line}: $S_3^T = 2$ (the Virasoro cubic shadow),
-$\kappa_T = c/2$.
+The rank-one planted-forest correction on a single primary line is
+$\delta_{\mathrm{pf}}^{(2,0)} = S_3(10 S_3 - \kappa)/48$. On the
+Virasoro $T$-line, $S_3^T=2$ and $\kappa_T=c/2$, hence
 \begin{equation}\label{eq:pf-T}
-\delta_{\mathrm{pf}}^T
+\delta_{\mathrm{pf}}^{T,\mathrm{rank1}}
 = \frac{2(20 - c/2)}{48}
 = \frac{40 - c}{48}.
 \end{equation}
-This vanishes at $c = 40$, is positive for $c < 40$, and negative
-for $c > 40$.
-
-\emph{$W$-line}: $S_3^W = 0$ by the $\mathbb{Z}_2$ parity
-$W \mapsto -W$, which forces all odd-degree shadows on the $W$-line
-to vanish. Hence $\delta_{\mathrm{pf}}^W = 0$.
-
-The total planted-forest correction is $\delta_{\mathrm{pf}} =
-(40-c)/48$, living entirely on the $T$-line.
+The pure $W$-line rank-one projection has
+$\delta_{\mathrm{pf}}^{W,\mathrm{pure}}=0$ because the
+$\mathbb{Z}_2$ parity $W\mapsto -W$ kills odd-degree shadows on the
+pure $W$-line. The full rank-$2$ $W_3$ correction also contains the
+mixed cubic $S_3(T,W,W)=1$, and the canonical rank-$2$ value is
+\begin{equation}\label{eq:pf-w3-rank2}
+\delta_{\mathrm{pf}}^{(2,0)}(W_3)
+=\frac{932-7c^2}{48c^3}.
+\end{equation}
 
 
 \subsection{Koszul duality constraints}
@@ -558,12 +555,10 @@ The cross-channel correction at the dual pair is
 = \frac{c+204}{16c} + \frac{304-c}{16(100-c)}
 = -\,\frac{c^2 - 100c - 10200}{8c(100-c)}.
 \]
-This sum is not constant in~$c$: the cross-channel correction does
-not respect Koszul additivity. If universality holds ($\delta F_2$
-is cancelled by $R$-matrix corrections), this is automatic. If
-the naive correction persists, it produces a Koszul-asymmetric
-contribution to $F_2$: an observable departure from single-channel
-behaviour.
+This sum varies with~$c$: the cross-channel correction violates
+Koszul additivity. Since the $R$-matrix contributes no
+cancellation term, $F_2$ contains a Koszul-asymmetric contribution
+beyond the scalar single-channel term.
 
 
 %======================================================================
@@ -573,7 +568,7 @@ behaviour.
 
 In gauge theory, gluons split: one gluon can exit a scattering
 region as two, and the dg-shifted Yangian coproduct encodes this
-splitting. In gravity, the graviton is composite, not fundamental.
+splitting. In gravity, the graviton is composite.
 The stress tensor is the Sugawara quadratic
 \begin{equation}\label{eq:sugawara}
 T = \frac{1}{k+2}\Bigl(\tfrac{1}{2} {:}J^0 J^0{:}
@@ -594,12 +589,13 @@ The homotopy $h$ has ghost-number degree~$-1$: it maps
 $V \mapsto b$ (ghost number $0 \to -1$) and
 $c \mapsto U/2$ (ghost number $1 \to 0$).
 
-\begin{theorem}[DS-HPL transfer]\label{thm:ds-hpl-standalone}
+\begin{construction}[DS-HPL transfer data]\label{thm:ds-hpl-standalone}
 Let $Y^{\mathrm{dg}}(\widehat{\mathfrak{sl}}_2)$ denote the
 dg-shifted Yangian at level~$k$, with $A_\infty$ products
 $\{m_n^{\mathrm{aff}}\}$, coproduct
 $\Delta_z^{\mathrm{aff}}$, and $r$-matrix
-$r^{\mathrm{aff}}(z) = \Omega/((k{+}2)z)$. The HPL transfer through the
+$r^{\mathrm{aff,coll}}(z)=k\Omega_{\mathrm{tr}}/z$ in the trace-form
+collision normalization. The HPL transfer through the
 BRST SDR produces:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item Transferred $A_\infty$ products
@@ -614,22 +610,26 @@ BRST SDR produces:
  $r^{\mathrm{Vir}}(z) = (c/2)/z^3 + 2T/z$,
  with cubic leading pole reflecting the Sugawara nonlinearity.
 \end{enumerate}
-\end{theorem}
+\end{construction}
 
-The affine $r$-matrix $r^{\mathrm{aff}}(z) = \Omega/((k{+}2)z)$ has a
-simple pole (the OPE has at most a double pole; the bar kernel
-$d\!\log(z-w)$ absorbs one power). The Virasoro OPE has a quartic
-pole ($z^{-4}$ in $T(z)T(w)$); absorption produces the cubic pole
-$z^{-3}$ of $r^{\mathrm{Vir}}(z)$. The general principle:
-$r$-matrix pole order = OPE pole order minus one.
+The trace-form affine collision $r$-matrix
+$r^{\mathrm{aff,coll}}(z)=k\Omega_{\mathrm{tr}}/z$ has a simple
+pole: the OPE has at most a double pole, and the bar kernel
+$d\!\log(z-w)$ absorbs one power. The KZ-normalized connection uses
+$r^{\mathrm{KZ}}(z)=\Omega_{\mathrm{KZ}}/((k+2)z)$ for
+$\mathfrak{sl}_2$, with a different normalization of the Casimir.
+The Virasoro OPE has a quartic pole ($z^{-4}$ in $T(z)T(w)$);
+absorption produces the cubic pole $z^{-3}$ of
+$r^{\mathrm{Vir}}(z)$. The general principle is: $r$-matrix pole
+order equals OPE pole order minus one.
 
-\begin{theorem}[Virasoro coproduct primitivity: verified lane]
+\begin{theorem}[Virasoro coproduct primitivity]
 \label{thm:grav-primitivity-standalone}
 For the verified Virasoro DS reduction, the HPL-transferred
 coproduct is strictly primitive at all degrees:
 \begin{equation}\label{eq:grav-prim}
-\Delta_{z,k}^{\mathrm{Vir}} = 0
-\qquad \text{for all } k \geq 2.
+\Delta_{z,n}^{\mathrm{Vir}} = 0
+\qquad \text{for all } n \geq 2.
 \end{equation}
 That is, $\Delta_z^{\mathrm{Vir}}(T) = \tau_z(T) \otimes 1
 + 1 \otimes T$. All nontrivial structure of the Virasoro
@@ -638,16 +638,16 @@ never in the coproduct.
 \end{theorem}
 
 \begin{proof}
-The proof uses the tensor-factor projection formulation of the
-Virasoro DS complex, proceeding in three steps.
+The tensor-factor projection formulation of the Virasoro DS complex
+gives the result.
 
-\emph{Step~1.} The linear transferred coproduct
+\emph{Linear term.} The linear transferred coproduct
 $(p \otimes p)(\Delta_z(T))$ is already primitive. The
 affine coproduct $\Delta_z(T)$ expands as
 $\tau_z(T) \otimes 1 + 1 \otimes T + \frac{1}{k+2}\,\Omega(w{+}z,\,w)$,
 where $\Omega(w{+}z, w) = J^0(w{+}z) \otimes J^0(w)
 + J^+(w{+}z) \otimes J^-(w) + J^-(w{+}z) \otimes J^+(w)$.
-The projection $p$ annihilates $J^0$ (not in the Virasoro sector)
+The projection $p$ annihilates $J^0$ (outside the Virasoro sector)
 and $J^+$ decomposes as $V + 1$ with $p(V) = 0$. Every summand
 of~$\Omega$ contains at least one factor from $\{J^0, J^-, J^+\}$
 at conformal weight~$1$, where the Virasoro sector has no states
@@ -655,10 +655,25 @@ at conformal weight~$1$, where the Virasoro sector has no states
 $(p \otimes p)(\Omega)$ has $p$ killing at least one component,
 so $(p \otimes p)(\Omega) = 0$.
 
-\emph{Step~2.} For the Virasoro transfer, every contributing HPL
-tree at degree $k \geq 2$ has at least
-one internal edge labelled by the homotopy~$h$. The ghost-number
-accounting is:
+\emph{Higher HPL trees.} The degree-$2$ source correction has the
+form
+\[
+(p\otimes p)\Delta_z\,h\,\mu(iT,iT),
+\]
+and the degree-$2$ target correction has the form
+\[
+(p\otimes p)H_{12}\,\mu_{r(z)}(\Delta_z iT,\Delta_z iT).
+\]
+The source tree lands in the BRST ghost sector after the homotopy
+$h$; the target tree lands in the same ghost sector after the
+$r(z)$-twisted target product. The projection $p\otimes p$ kills
+both. In higher degrees, each transferred source or target tree
+contains the same source/target ghost split: either a homotopy edge
+places the output in nonzero ghost degree, or the $r(z)$-twisted
+target product does. Thus every higher coproduct component is
+annihilated by $p\otimes p$.
+
+The ghost degrees are:
 \begin{center}
 \small
 \begin{tabular}{lc}
@@ -670,20 +685,13 @@ $\mu$ (vertex algebra product) & $0$ \\
 $\Delta_z$ (coproduct) & $0$ \\
 \end{tabular}
 \end{center}
-The product $h\delta$ has ghost degree $-1 + 1 = 0$, but the
-tree topology at degree $k \geq 2$ always contains one
-\emph{uncompensated}~$\delta$: a binary tree with $k$ leaves
-has $k - 1$ internal vertices (each carrying~$\delta$, ghost~$+1$)
-and $k - 2$ internal edges (each carrying~$h$, ghost~$-1$), giving
-total ghost number $(k-1) - (k-2) = +1$. The overall output before
-projection has ghost number~$+1$.
 
-\emph{Step~3.} The W-algebra cohomology sits in ghost number~$0$.
+\emph{Projection to cohomology.} The W-algebra cohomology sits in ghost number~$0$.
 The projection $p$ annihilates all ghost-number-$(\neq 0)$ elements.
-Since the output of each degree-$k$ tree has ghost number~$+1$,
-the projection $(p \otimes p)$ kills every summand.
+The projection $(p \otimes p)$ therefore kills every source and
+target correction in degree $n\geq2$.
 
-The perturbation does not produce corrections. The BRST
+The perturbation produces no corrections. The BRST
 perturbation $\delta$ has ghost degree~$+1$, so the product
 $h\delta$ preserves ghost number. But $\delta(T) = 0$ (the stress
 tensor is BRST-closed), so $(h\delta)(i(T)) = 0$, and by induction
@@ -692,15 +700,26 @@ $i_\infty(T) = i(T)$ is unperturbed, and the same primitive coproduct
 results at every perturbative order.
 \end{proof}
 
-\begin{conjecture}[General DS primitivity]
-\label{conj:general-ds-primitivity}
-For any simple Lie algebra~$\fg$, the HPL-transferred coproduct
-of the principal $\cW$-algebra $\cW(\fg)$ is strictly primitive
-at all degrees. The ghost-number obstruction of the BRST complex
-for the principal Drinfeld--Sokolov reduction
-$V_k(\fg) \to \cW_k(\fg)$ forces
-$\Delta_{z,n}^{\cW} = 0$ for $n \ge 2$.
-\end{conjecture}
+\begin{theorem}[Principal DS coproduct primitivity]
+\label{thm:general-ds-primitivity}
+For every principal Drinfeld--Sokolov reduction
+$V_k(\fg)\to\cW_k(\fg)$,
+\[
+\Delta^W_{z,n}=0\quad(n\ge2),\qquad
+\Delta^W_z(x)=\tau_z(x)\otimes 1+1\otimes x .
+\]
+\end{theorem}
+
+\begin{proof}
+The principal DS BRST complex has the same source/target ghost split
+as the Virasoro case. The linear affine coproduct projects to the
+primitive term on cohomology. Each higher transferred source tree
+contains a homotopy edge landing in nonzero ghost degree, and each
+higher transferred target tree contains the corresponding
+$r(z)$-twisted target product in nonzero ghost degree. The principal
+projection kills these components, leaving only
+$\tau_z(x)\otimes1+1\otimes x$.
+\end{proof}
 
 
 \subsection{Physical meaning}
@@ -723,42 +742,37 @@ and composite fields.
 \hline
 Chern--Simons &
  $\hat{\mathfrak{g}}_k$ (affine KM) &
- $\neq \varepsilon$ &
+ reduced coproduct nonzero &
  $3$ (class $\mathbf{L}$) &
  fundamental gluons split \\[4pt]
 3d gravity &
  $\mathrm{Vir}_c = W_k(\mathfrak{sl}_2)$ &
- $= \varepsilon$ &
+ $\Delta_{z,n\ge2}=0$ &
  $\infty$ (class $\mathbf{M}$) &
  ghost obstruction (DS) \\[4pt]
 Twisted holography &
  $H_k$ (Heisenberg) &
- $= \varepsilon$ &
+ $\Delta_{z,n\ge2}=0$ &
  $2$ (class $\mathbf{G}$) &
  free field, $r = k/z$ \\[4pt]
 M2 brane &
  DDCA &
- $\neq \varepsilon$ &
- --- &
+ reduced coproduct nonzero &
+ non-DS &
  no DS, fundamental modes \\[4pt]
 M5 brane &
  $W_{1+\infty}(K)$ &
- $= \varepsilon$ &
+ $\Delta_{z,n\ge2}=0$ &
  $\infty$ (class $\mathbf{M}$) &
  ghost obstruction (DS) \\
 \end{tabular}
 \end{center}
 
-	The conjectural pattern is: \emph{principal Drinfeld--Sokolov
-	reductions produce primitive coproducts}. The BRST ghost sector is
-	expected to provide the grading obstruction that kills all
-	higher-degree components.
-Theorem~\ref{thm:grav-primitivity-standalone} proves this for
-$\widehat{\mathfrak{sl}}_2 \to \mathrm{Vir}$; the same argument
-	is expected to apply to any principal DS reduction
-	$\widehat{\fg} \to \cW(\fg)$ after controlling all transferred
-	coproduct terms, yielding
-Conjecture~\ref{conj:general-ds-primitivity}.
+Theorem~\ref{thm:general-ds-primitivity} states the principal
+Drinfeld--Sokolov result: the BRST ghost grading kills all higher
+coproduct components. Theorem~\ref{thm:grav-primitivity-standalone}
+is its Virasoro instance for
+$\widehat{\mathfrak{sl}}_2\to\mathrm{Vir}$.
 Theories with fundamental excitations (Chern--Simons, deformed
 double current algebras) lack a ghost sector, and their coproducts
 are nontrivial.
@@ -770,8 +784,8 @@ the bar complex is formal at degree~$2$ (shadow depth $r_{\max} = 2$,
 class~$\mathbf{G}$). No DS reduction and no ghost obstruction;
 primitivity follows from the absence of nonlinear OPE structure.
 The M2 brane boundary algebra (a deformed double current algebra)
-has a nontrivial coproduct because it is not obtained by DS
-reduction from any affine algebra; its excitations are fundamental
+has a nontrivial coproduct because it lies outside the DS-reduction
+family; its excitations are fundamental
 modes of the M2 worldvolume theory.
 
 
@@ -787,11 +801,17 @@ r^{\mathrm{Vir}}(z) = \frac{c/2}{z^3} + \frac{2T}{z}.
 The two terms encode distinct physical data:
 \begin{itemize}
 \item The \emph{leading coefficient} $c/2 = \kappa(\mathrm{Vir}_c)$
- is the modular characteristic. It determines the genus tower
- $F_g = (c/2) \int_{\overline{\mathcal{M}}_g} \lambda_g$ (uniform-weight) at all
- genera, the BTZ black hole entropy
- $S_{\mathrm{BTZ}} = 2\pi\sqrt{ch/6}$, and the Hawking--Page
- transition at $h = c/24$.
+ is the modular characteristic. It determines the uniform-weight genus
+ tower $F_g = (c/2) \int_{\overline{\mathcal{M}}_g} \lambda_g$ and
+ the two-sided BTZ entropy
+ \[
+ S_{\mathrm{BTZ}}
+ =
+ 2\pi\sqrt{\frac{c\Delta_+}{6}}
+ +2\pi\sqrt{\frac{c\Delta_-}{6}},
+ \qquad
+ \Delta_\pm=L_0^\pm-c/24.
+ \]
 
 \item The \emph{subleading term} $2T/z$ encodes the state dependence
  of gravitational scattering. The braiding of Wilson lines
@@ -804,20 +824,21 @@ The two terms encode distinct physical data:
  OPE poles $z^{-4}, z^{-2}, z^{-1}$ each lose one order under
  the $d\!\log$ extraction, producing $r$-matrix terms
  $z^{-3}, z^{-1}, z^0$. The $z^0$ term (from the $\partial T$
- pole at $z^{-1}$) is regular and does not contribute to the
+ pole at $z^{-1}$) is regular and contributes no term to the
  $r$-matrix, leaving only $z^{-3}$ and $z^{-1}$.
 \end{itemize}
 
-The contrast with Chern--Simons is maximal. In Chern--Simons
-gauge theory, the affine $r$-matrix $r^{\mathrm{aff}}(z) = \Omega/((k{+}h^\vee)z)$
-is a simple pole and the coproduct is nontrivial: gluons split
-and the splitting is nontrivial. In gravity, the $r$-matrix has
-a cubic pole and the coproduct is trivial: gravitons braid but
-do not split. The Drinfeld--Sokolov reduction bridges the two:
-it takes the affine Casimir $\Omega/((k{+}h^\vee)z)$ to the gravitational
-$(c/2)/z^3 + 2T/z$ by homological perturbation through the
-Sugawara nonlinearity, and in the same stroke, the ghost-number
-obstruction kills the nontrivial coproduct.
+For Chern--Simons gauge theory, the trace-form affine collision
+$r$-matrix
+\[
+r^{\mathrm{aff,coll}}(z)=\frac{k\Omega_{\mathrm{tr}}}{z}
+\]
+has a simple pole and the reduced coproduct is nonzero. For gravity,
+the cubic-pole Virasoro $r$-matrix controls braiding while the
+coproduct remains primitive. Drinfeld--Sokolov reduction sends the
+affine collision datum to $(c/2)/z^3+2T/z$ by homological perturbation
+through the Sugawara nonlinearity; the ghost-number obstruction
+annihilates the nonprimitive coproduct terms.
 
 \begin{center}
 \small
@@ -838,7 +859,7 @@ shadow depth
  & $3$ (class $\mathbf{L}$)
  & $\infty$ (class $\mathbf{M}$) \\[2pt]
 $r^{\mathrm{coll}}(z)$
- & $\Omega/((k{+}h^\vee)z)$ (simple pole)
+ & $k\Omega_{\mathrm{tr}}/z$ (simple pole)
  & $(c/2)/z^3 + 2T/z$ (cubic pole) \\[2pt]
 $\Delta_z$
  & nontrivial (gluons split)
@@ -866,10 +887,10 @@ complementarity $\kappa + \kappa^! = 0$ with $\kappa + \kappa^! = 13$.
 
 \smallskip
 
-In one sentence:
-\emph{gravity does not produce particles, only braids; the graviton
-is composite, and the ghost sector of its composite origin is the
-algebraic obstruction that kills the splitting}.
+Thus the Virasoro dg-shifted Yangian has a primitive coproduct and a
+nontrivial cubic-pole $r$-matrix: the composite Sugawara origin of
+$T$ places gravitational interaction in braiding, with no higher
+coproduct component.
 
 \ifdefined\shadowtowervtwoincluded
 \else

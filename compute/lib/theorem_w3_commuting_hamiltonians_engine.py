@@ -166,16 +166,15 @@ primaries gives:
   Depth 2 at z_{ij}^{-2}: first-order d/dz_j operator
   ...
 
-Let me compute this carefully in the code below.
-
 DIFFERENTIAL OPERATOR ORDER:
 For W_N with k_max = 2N-1:
   The Hamiltonian H_i is a differential operator of order k_max - 1 = 2N-2.
   For W_3: order 4 (fourth-order differential operator).
 
-This is the KEY PREDICTION: the W_3 BPZ-like equations are 5th-order ODEs
-(the null vector condition for degenerate W_3 representations), compared
-to the 2nd-order BPZ for Virasoro.
+This finite collision-depth bound is not a full scalar-ODE theorem.
+Scalar ODE order depends on the chosen degenerate W_3 representation; the
+engine records the collision packet and refuses to promote it to full
+integrability data.
 
 CROSS-FAMILY COMPARISON:
   Heisenberg: k_max = 1 (simple pole OPE), order 0 (multiplication only)
@@ -222,6 +221,24 @@ from typing import Any, Dict, List, Optional, Tuple
 
 GENERATORS = ('T', 'W')
 WEIGHTS = {'T': 2, 'W': 3}
+W3_CENTRAL_CHARGE_CONDUCTOR = 100
+W3_KAPPA_RATIO = Fraction(5, 6)
+W3_KAPPA_CONDUCTOR = Fraction(250, 3)
+W3_SELF_DUAL_CENTRAL_CHARGE = Fraction(50)
+W3_SELF_DUAL_KAPPA = Fraction(125, 3)
+
+
+def _is_zero(value) -> bool:
+    if isinstance(value, Fraction):
+        return value == 0
+    if isinstance(value, (int, float)):
+        return math.isclose(float(value), 0.0, rel_tol=0.0, abs_tol=1e-15)
+    return value == 0
+
+
+def _require_nonzero(value, label: str):
+    if _is_zero(value):
+        raise ValueError(f"{label} is singular for this W_3 computation")
 
 
 def central_charge_from_level(k):
@@ -229,6 +246,7 @@ def central_charge_from_level(k):
 
     c = 2 - 24(k+2)^2/(k+3)
     """
+    _require_nonzero(k + 3, "Fateev-Lukyanov level denominator k+3")
     if isinstance(k, Fraction):
         return Fraction(2) - Fraction(24) * (k + 2)**2 / (k + 3)
     return 2 - 24 * (k + 2)**2 / (k + 3)
@@ -250,7 +268,9 @@ def kappa_W(c):
 
 def kappa_total(c):
     """Total kappa(W_3) = kappa_T + kappa_W = 5c/6."""
-    return kappa_T(c) + kappa_W(c)
+    if isinstance(c, Fraction):
+        return W3_KAPPA_RATIO * c
+    return 5 * c / 6
 
 
 def beta_composite(c):
@@ -259,6 +279,8 @@ def beta_composite(c):
     This appears in the W-W OPE: W_{(1)}W = (3/10)d^2T + beta*Lambda
     where Lambda = :TT: - (3/10)d^2T is the quasi-primary composite.
     """
+    _require_nonzero(Fraction(22) + 5 * c if isinstance(c, Fraction) else 22 + 5 * c,
+                     "Zamolodchikov denominator 22+5c")
     if isinstance(c, Fraction):
         return Fraction(16) / (Fraction(22) + 5 * c)
     return 16 / (22 + 5 * c)
@@ -279,9 +301,77 @@ def inverse_metric(c):
 
     eta^{TT} = 2/c, eta^{WW} = 3/c, eta^{TW} = 0.
     """
+    _require_nonzero(c, "Zamolodchikov metric determinant")
     if isinstance(c, Fraction):
         return {'TT': Fraction(2) / c, 'WW': Fraction(3) / c, 'TW': Fraction(0)}
     return {'TT': 2 / c, 'WW': 3 / c, 'TW': 0.0}
+
+
+def w3_uniform_weight_reduction(c):
+    """Uniform-weight scalar reduction for principal W_3.
+
+    This is only the scalar trace lane:
+      kappa(W_3,c) = c(H_3 - 1) = 5c/6,
+      c + c^! = 100,
+      kappa + kappa^! = (5/6) * 100 = 250/3.
+
+    It does not compute the full MC element, all-weight cross terms, or
+    the derived chiral centre.
+    """
+    c_dual = W3_CENTRAL_CHARGE_CONDUCTOR - c
+    kappa = kappa_total(c)
+    kappa_dual = kappa_total(c_dual)
+
+    return {
+        'central_charge': c,
+        'dual_central_charge': c_dual,
+        'kappa_ratio': W3_KAPPA_RATIO if isinstance(c, Fraction) else 5 / 6,
+        'kappa': kappa,
+        'dual_kappa': kappa_dual,
+        'central_charge_conductor': W3_CENTRAL_CHARGE_CONDUCTOR,
+        'kappa_conductor': kappa + kappa_dual,
+        'expected_kappa_conductor': W3_KAPPA_CONDUCTOR,
+        'self_dual_central_charge': W3_SELF_DUAL_CENTRAL_CHARGE,
+        'self_dual_kappa': W3_SELF_DUAL_KAPPA,
+        'uniform_weight_lane': True,
+        'all_weight_cross_terms_computed': False,
+        'derived_center_data': False,
+        'full_mc_data': False,
+    }
+
+
+def w3_shadow_constants(c):
+    """Exact scalar-shadow constants on the nonsingular W_3 surface.
+
+    Valid only away from c = 0 and c = -22/5.  The T-line constants are
+    the Virasoro scalar lane inside W_3; the W-line quartic constant is a
+    separate channel and must not be folded into kappa.
+    """
+    _require_nonzero(c, "central charge c")
+    denom = Fraction(5) * c + Fraction(22) if isinstance(c, Fraction) else 5 * c + 22
+    _require_nonzero(denom, "Zamolodchikov denominator 5c+22")
+
+    lambda_norm = c * denom / 10
+    s4_t = 10 / (c * denom)
+    s5_t = -48 / (c * c * denom)
+    s4_w = 2560 / (c * denom**3)
+    if isinstance(c, Fraction):
+        s4_t = Fraction(10) / (c * denom)
+        s5_t = Fraction(-48) / (c * c * denom)
+        s4_w = Fraction(2560) / (c * denom**3)
+
+    return {
+        'S2_T': kappa_T(c),
+        'S3_T': Fraction(2) if isinstance(c, Fraction) else 2,
+        'S4_T': s4_t,
+        'S5_T': s5_t,
+        'S4_W': s4_w,
+        'beta': beta_composite(c),
+        'Lambda_norm': lambda_norm,
+        'T_line_S4_times_Lambda_norm': s4_t * lambda_norm,
+        'T_line_S5_over_S4': s5_t / s4_t,
+        'singular_central_charges': (Fraction(0), Fraction(-22, 5)),
+    }
 
 
 # ============================================================================
@@ -711,8 +801,8 @@ def wN_structure(N: int):
       - k_max (collision depth)
       - differential_order
       - max OPE pole order
-      - Koszul conductor K_N = N(N^2-1)(N+2)/2 (central charge at which
-        kappa + kappa' = 0 for W_N + W_N^!)
+      - central-charge conductor K_N = c + c^! = 4N^3 - 2N - 2
+      - scalar kappa conductor (H_N - 1)K_N on the uniform-weight lane
     """
     generators = {}
     generators['T'] = 2  # T is always the Virasoro generator (= W_2)
@@ -725,6 +815,7 @@ def wN_structure(N: int):
 
     # Koszul conductor for W_N = W(sl_N, f_prin): c + c' = K_N
     K_N = koszul_conductor_wN(N)
+    kappa_ratio = sum(Fraction(1, s) for s in range(2, N + 1))
 
     return {
         'N': N,
@@ -733,6 +824,8 @@ def wN_structure(N: int):
         'k_max': kmax,
         'differential_operator_order': diff_order,
         'koszul_conductor': K_N,
+        'kappa_ratio': kappa_ratio,
+        'kappa_conductor': kappa_ratio * K_N,
     }
 
 
@@ -778,7 +871,10 @@ def cross_family_comparison():
             'diff_order': 4,
             'shadow_depth': float('inf'),
             'shadow_class': 'M',
-            'connection_type': 'W_3 Casimir connection (GZ26 prediction)',
+            'connection_type': 'W_3 shadow Hamiltonian, finite collision-depth witness',
+            'finite_collision_depth': True,
+            'full_integrability_proved_by_engine': False,
+            'derived_center_data': False,
         },
         'W_4': {
             'max_ope_pole': 8,
@@ -786,14 +882,18 @@ def cross_family_comparison():
             'diff_order': 6,
             'shadow_depth': float('inf'),
             'shadow_class': 'M',
-            'connection_type': 'W_4 Casimir connection',
+            'connection_type': 'W_4 shadow Hamiltonian, finite collision-depth witness',
+            'finite_collision_depth': True,
+            'full_integrability_proved_by_engine': False,
         },
         'W_N (general)': {
             'max_ope_pole': '2N',
             'k_max': '2N-1',
             'diff_order': '2(N-1)',
             'shadow_class': 'M (for N >= 3)',
-            'connection_type': 'W_N Casimir connection',
+            'connection_type': 'W_N shadow Hamiltonian family; finite packets do not prove full integrability',
+            'finite_collision_depth': True,
+            'full_integrability_proved_by_engine': False,
         },
     }
     return families
@@ -1347,10 +1447,10 @@ def verify_commutativity_4pt_w3(c, weights, w_charges):
     The ORDER of the scalar ODE (for a degenerate representation) is
     related to the null vector level.
 
-    For W_3 with a degenerate representation at level (1,0):
-    the null vector gives a 3rd-order ODE (Zamolodchikov-Fateev).
-    For the (0,1) representation: 3rd order as well.
-    For general W_3 degenerate reps: order up to 2N-1 = 5.
+    For W_3 fundamental degenerate insertions the usual scalar equation is
+    third order.  The collision-depth bound k_max = 5 gives a fourth-order
+    differential-operator ceiling in this shadow packet; it is not, by
+    itself, a proof of a universal fifth-order scalar ODE.
 
     On the conformal block space for generic representations, the
     Hamiltonian is a FIRST-ORDER matrix ODE (in the z-variable),
@@ -1366,8 +1466,12 @@ def verify_commutativity_4pt_w3(c, weights, w_charges):
         'n_points': 4,
         'n_moduli': 1,  # After SL(2) fixing: dim M_{0,4} = 1
         'virasoro_order': 2,  # BPZ null vector at level 2 -> 2nd order ODE
-        'w3_max_order': 5,  # k_max = 5 -> up to 4th order diff op, plus null vector -> 5th order
+        'w3_k_max': 5,
+        'w3_max_diff_order': 4,
+        'w3_max_order': 4,
+        'universal_scalar_ode_order': None,
         'commutativity_automatic': True,  # 1D moduli -> automatic
+        'full_integrability_proved': False,
         'w3_ward_identities': {
             'translation': True,   # sum_i H_i = 0
             'dilation': True,      # sum_i z_i H_i = sum h_i
@@ -1375,10 +1479,9 @@ def verify_commutativity_4pt_w3(c, weights, w_charges):
             'w3_ward': True,       # sum_i z_i^2 W_i = sum w_i (W_3 Ward identity)
         },
         'note': ('4-point commutativity is automatic for 1D moduli. '
-                 'Nontrivial test requires n >= 5 (2D moduli). '
+                 'This finite check does not prove full W_3 integrability. '
                  'The W_3 Hamiltonian order on descendants is 4; '
-                 'on primaries it reduces to a first-order matrix ODE '
-                 'on the conformal block space.'),
+                 'scalar ODE order depends on the chosen degenerate module.'),
     }
 
 
@@ -1388,11 +1491,10 @@ def verify_commutativity_5pt_w3(c, weights, w_charges=None):
     For n=5: dim M_{0,5} = 2 (two independent cross-ratios).
     This is the FIRST nontrivial commutativity test for W_3.
 
-    The commutativity [H_i, H_j] = 0 requires genuine identities
-    among W_3 structure constants, going beyond the Virasoro Ward identities.
-
-    This is the content of the GZ26 prediction: the MC equation at genus 0
-    implies these identities automatically.
+    The commutativity [H_i, H_j] = 0 requires genuine W_3 structure-constant
+    identities beyond the scalar primary packet below.  This function records
+    the finite witness it actually computes and refuses to promote it to a
+    full-integrability theorem.
     """
     if w_charges is None:
         w_charges = [0] * 5
@@ -1402,15 +1504,25 @@ def verify_commutativity_5pt_w3(c, weights, w_charges=None):
     # follows from the Virasoro Ward identities.
     w_sector_active = any(w != 0 for w in w_charges)
 
+    scalar_packet_commutes = True
+
     return {
         'n_points': 5,
         'n_moduli': 2,
         'commutativity_automatic': False,  # 2D moduli -> genuine constraint
         'w_sector_active': w_sector_active,
-        'mc_implies_commutativity': True,  # Theorem thm:gz26-commuting-differentials
-        'note': ('For n=5, commutativity is a genuine constraint from the '
-                 'MC equation. The W_3 identities at 5 points are PREDICTIONS '
-                 'of thm:gz26-commuting-differentials.'),
+        'scalar_primary_packet_commutes': scalar_packet_commutes,
+        'full_commutator_evaluated': False,
+        'mc_implies_commutativity': False,
+        'full_integrability_proved': False,
+        'proof_obligation': (
+            'evaluate the derivative and descendant terms in the 5-point '
+            'W_3 Hamiltonian commutator, or cite a primary flatness theorem '
+            'with convention conversion'
+        ),
+        'note': ('For n=5, commutativity is a genuine constraint. '
+                 'The scalar multiplication packet commutes, but this engine '
+                 'does not compute the full differential-operator commutator.'),
     }
 
 
@@ -1489,9 +1601,10 @@ def ode_order_prediction(family: str, N: int = 3, degenerate_level: tuple = None
       General: order determined by the null vector level
 
     W_N general:
-      The maximal ODE order from the full collision depth is k_max = 2N-1.
-      For specific degenerate representations, the null vector condition
-      gives a finite-order ODE of order <= 2N-1.
+      The finite collision-depth ceiling is k_max = 2N-1 and the
+      differential-operator ceiling is k_max - 1.  A scalar ODE order
+      requires a specified degenerate module; it is not inferred from the
+      collision-depth ceiling alone.
     """
     kmax = k_max_family(family if family != 'wN' else 'wN', N)
     diff_order = kmax - 1  # Max differential operator order
@@ -1501,7 +1614,9 @@ def ode_order_prediction(family: str, N: int = 3, degenerate_level: tuple = None
         'N': N if family in ('w3', 'wN') else (2 if family == 'virasoro' else 1),
         'k_max': kmax,
         'max_diff_order': diff_order,
-        'max_ode_order_4pt': diff_order + 1,  # 4-point null vector ODE
+        'collision_depth_ceiling': kmax,
+        'max_ode_order_4pt': None,
+        'finite_depth_implies_full_integrability': False,
     }
 
     if degenerate_level is not None:
@@ -1509,11 +1624,10 @@ def ode_order_prediction(family: str, N: int = 3, degenerate_level: tuple = None
         if family == 'virasoro':
             result['null_vector_ode_order'] = r * s
         elif family == 'w3':
-            # For W_3, the null vector at (r,s) gives order (r+1)(s+1)-1
-            # in the simplest cases. At (1,0): order 2, at (0,1): order 2.
-            # The full W_3 ODE can be higher.
             result['degenerate_level'] = (r, s)
-            result['note'] = 'W_3 null vector ODE order depends on specific level'
+            if (r, s) in ((1, 0), (0, 1)):
+                result['null_vector_ode_order'] = 3
+            result['note'] = 'W_3 scalar ODE order depends on the specified degenerate module'
 
     return result
 
@@ -1525,62 +1639,21 @@ def ode_order_prediction(family: str, N: int = 3, degenerate_level: tuple = None
 def koszul_conductor_wN(N: int) -> int:
     """Koszul conductor K_N for W_N = W(sl_N, f_prin).
 
-    K_N = N(N^2-1)(N+2)/2
+    This is the central-charge conductor
+      K_N = c(W_N) + c(W_N^!) = 4N^3 - 2N - 2.
 
-    This is the central charge at which kappa(W_N) + kappa(W_N^!) = 0
-    (for the principal W-algebras where the complementarity is anti-symmetric).
-
-    Wait: for W-algebras the complementarity is kappa + kappa' = rho * K (AP24).
-    The Koszul conductor is c + c' = K_N, not kappa + kappa'.
+    The scalar kappa conductor is separate:
+      K_N^kappa = (H_N - 1)K_N.
 
     Values:
-      W_2 (Virasoro): K_2 = 2*3*4/2 = 12 ... no, c + c' = 26 for Virasoro.
-      Let me use the CORRECT formula.
-
-    For Virasoro: c^! = 26 - c, so K_2 = 26.
-    For W_3: c^! = 100 - c (Fateev-Lukyanov), so K_3 = 100.
-    For W_N: K_N = (N-1)(2N^2+2N+1) (Arakawa).
-    Actually K_2 = 1*(8+4+1) = 13... no.
-
-    Let me just use the known values:
-    K_2 = 26 (Virasoro: c + c' = 26)
-    K_3 = 100 (W_3: c + c' = 100, Fateev-Lukyanov)
-    K_4 = 246 (W_4: from the W_4 engine)
+      K_2 = 26 (Virasoro: c + c' = 26)
+      K_3 = 100 (W_3: c + c' = 100, Fateev-Lukyanov)
+      K_4 = 246
+      K_5 = 488
     """
     known = {2: 26, 3: 100, 4: 246}
     if N in known:
         return known[N]
-    # General formula: K_N = (N-1)(2N^2 + 2N + 1)
-    # Check: K_2 = 1*(8+4+1) = 13 ... wrong.
-    # Try: K_N = (2N^3 + 3N^2 + N - 6) ... no.
-    # K_2 = 26, K_3 = 100, K_4 = 246.
-    # Differences: 74, 146. Second differences: 72.
-    # K_N = 26 + 74*(N-2) + 36*(N-2)*(N-3) fits:
-    # K_3 = 26 + 74 = 100. K_4 = 26 + 148 + 72 = 246. Yes!
-    # K_N = 36*N^2 - 142*N + 156 for N >= 2 ... K_2 = 144-284+156=16 no.
-    # Try polynomial: K_N = a*N^3 + b*N^2 + c*N + d.
-    # K_2=26: 8a+4b+2c+d=26
-    # K_3=100: 27a+9b+3c+d=100
-    # K_4=246: 64a+16b+4c+d=246
-    # Diff K3-K2: 19a+5b+c=74
-    # Diff K4-K3: 37a+7b+c=146
-    # Diff: 18a+2b=72 => 9a+b=36.
-    # Need fourth point. K_5 for W_5: c+c' = N(N^2-1)(N+2)/2 ... hmm.
-    # N=2: 2*3*4/2=12 (not 26). N=3: 3*8*5/2=60 (not 100).
-    # That formula is wrong.
-    # From the literature: K_N = (N-1)N(N+1)(N+2)/12 * something...
-    # Actually the dual central charge for W_N is:
-    # c' = (N-1)(1 - N(N+1)/(k+N)) with k' = -(k+2N)
-    # c + c' = (N-1)(1 - N(N+1)/(k+N) + 1 - N(N+1)/(-k-N))
-    # = 2(N-1) + (N-1)N(N+1)[1/(k+N) - 1/(k+N)] -- this needs care.
-    #
-    # For now, use the polynomial fit.
-    # From 9a + b = 36, assume a = 4: b = 0, then 19*4 + 0 + c = 74 -> c = -2.
-    # 32 + 0 - 4 + d = 26 -> d = -2.
-    # Check K_3: 108 + 0 - 6 - 2 = 100. Yes!
-    # Check K_4: 256 + 0 - 8 - 2 = 246. Yes!
-    # K_N = 4N^3 - 2N - 2 = 2(2N^3 - N - 1) for N >= 2.
-    # K_5 = 4*125 - 10 - 2 = 488.
     return 2 * (2 * N**3 - N - 1)
 
 
@@ -1604,6 +1677,7 @@ def full_evaluation(c, h_j=0, w_j=0):
         'central_charge': c,
         'weights': {'T': 2, 'W': 3},
         'kappa': {'T': _kappa_T, 'W': _kappa_W, 'total': _kappa},
+        'uniform_weight_reduction': w3_uniform_weight_reduction(c),
         'beta_composite': _beta,
         'lambda_on_primary': _lambda,
         'k_max': 5,
@@ -1614,5 +1688,9 @@ def full_evaluation(c, h_j=0, w_j=0):
         'cross_family': cross_family_comparison(),
         'wN_structure': wN_structure(3),
     }
+    try:
+        result['shadow_constants'] = w3_shadow_constants(c)
+    except ValueError as exc:
+        result['shadow_constants'] = {'regular': False, 'error': str(exc)}
 
     return result

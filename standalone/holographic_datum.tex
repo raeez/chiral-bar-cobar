@@ -18,7 +18,6 @@
 \newtheorem{definition}[theorem]{Definition}
 \newtheorem{construction}[theorem]{Construction}
 \newtheorem{example}[theorem]{Example}
-\newtheorem{warning}[theorem]{Warning}
 \theoremstyle{remark}
 \newtheorem{remark}[theorem]{Remark}
 
@@ -100,31 +99,38 @@
 \date{}
 
 \begin{abstract}
-Every 3d holomorphic-topological gauge theory $T$ on
-$\bR_+ \times X$ is controlled by a six-component package
-$\cH(T) = (\cA, \cA^!, \cC, r(z), \Theta_{\cA},
-\nabla^{\hol})$: boundary chiral algebra, Koszul dual,
-line-operator category, spectral $r$-matrix, universal
-Maurer--Cartan element, and modular shadow connection. We define
-each component from the bar complex
+For the modular-Koszul boundary sector of a 3d
+holomorphic-topological gauge theory $T$ on $\bR_+ \times X$, the
+comparison data form a seven-component package
+\[
+\cH(T)=(\cA,\cA^{\mathrm{i}},\cA^!,
+\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA),r(z),\Theta_{\cA},
+\nabla^{\hol}_{\bullet,\bullet}).
+\]
+The entries are the boundary chiral algebra, bar cohomology coalgebra,
+Verdier-dual Koszul algebra, closed-string derived centre, spectral
+$r$-matrix, universal Maurer--Cartan element, and modular shadow
+connection. We define each component from the bar complex
 $\barB(\cA) = T^c(s^{-1}\bar{\cA})$ and its single
 structural identity $D_{\cA}^2 = 0$, and compute the datum in
-full for three families: Heisenberg $\cH_k$ (abelian
+three model families: Heisenberg $\cH_k$ (abelian
 Chern--Simons, class $\mathbf{G}$), affine
 $\widehat{\fsl}_2{}_k$ (non-abelian Chern--Simons, class
 $\mathbf{L}$), and Virasoro $\Vir_c$ (3d gravity, class
 $\mathbf{M}$). The bulk--boundary--line triangle is recovered
 from the datum: the bulk is the chiral derived centre
 $\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)$, the boundary is
-$\cA$ itself, and the line category is $\cA^!\text{-mod}$. The
+$\cA$ itself, and the line category is modelled by
+$\cA^!\text{-mod}$ under the compact-generator open--closed
+hypotheses. The
 $\SCchtop$ structure emerges on the pair
 $(\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA), \cA)$ of derived centre
-and boundary algebra, not on the bar complex. The central
+and boundary algebra. The central
 organising principle is the $\SCchtop$ \emph{heptagon}: seven edges
 (operadic / Koszul / factorization / BV--BRST / convolution / Drinfeld
 centre / derived-AG) identify the datum across presentations, with
 six classical faces and a seventh derived-algebraic-geometry face
-inscribed via PTVV on $\mathrm{Map}(X \times \bR_{\geq 0},
+constructed via PTVV on $\mathrm{Map}(X \times \bR_{\geq 0},
 B\,\mathrm{SC\text{-}Alg})$. We construct the
 anomaly completion: the transgression algebra $B_\Theta$ with
 secondary anomaly $u = \eta^2 = \kappa(\cA^!) \cdot \omega_g$,
@@ -133,21 +139,18 @@ Clifford/exterior bifurcation governing the genus tower.
 \end{abstract}
 
 \begin{remark}[The holographic-datum heptagon]\label{rem:holographic-heptagon}
-The holographic datum has seven load-bearing faces. Face~(6) is the Drinfeld-centre
-identification
-$Z(\mathsf{Rep}_{\mathrm{fact}}(\cA)) \simeq
-\mathsf{Rep}_{\mathrm{fact}}(\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA))^{\Etwo}$
-via categorified bar-cobar with half-braiding (cross-ref
-\textup{\textsf{thm:universal-holography-master}}, Vol~II
-\verb|chapters/theory/sc_chtop_heptagon.tex|). Face~(7) is the
-derived-algebraic-geometry edge via PTVV 1-shifted symplectic on
-$\mathrm{Map}(X \times \bR_{\geq 0}, B\,\mathrm{SC\text{-}Alg})$.
-Every face is genuinely independent (no tautological routing); the
-seven classical identifications (operadic, Koszul, factorization,
-BV--BRST, convolution, Drinfeld-centre, derived-AG) all factor through
-the chiral Hochschild cochain complex as hub. The topologisation from
-$\SCchtop$ to $\Ethree^{\mathrm{top}}$ is proved cohomologically for
-affine Kac--Moody algebras at non-critical level, where the Sugawara
+The seven presentations of the $\SCchtop$ datum are the operadic,
+Koszul, factorization, BV--BRST, convolution, Drinfeld-centre, and
+derived-geometric presentations. The Drinfeld-centre face identifies
+the factorizable representation centre with the representation theory
+of the chiral derived centre through categorified bar-cobar and
+half-braiding. The derived-geometric face carries the PTVV
+1-shifted symplectic form on
+\(\mathrm{Map}(X \times \bR_{\geq 0},B\,\mathrm{SC\text{-}Alg})\).
+All seven presentations factor through the chiral Hochschild cochain
+complex. The topologisation from $\SCchtop$ to
+\(\Ethree^{\mathrm{top}}\) is proved cohomologically for affine
+Kac--Moody algebras at non-critical level, where the Sugawara
 conformal vector is explicit. The general chain-level lift for
 conformal-vector chiral algebras is conjectural; the affine critical
 level is excluded because Sugawara topologisation is singular there.
@@ -162,9 +165,9 @@ level is excluded because Sugawara topologisation is singular there.
 \section{Introduction}\label{sec:intro}
 % ====================================================================
 
-The problem is to organise the algebraic data of a 3d
-holomorphic-topological (HT) quantum field theory into a single
-invariant from which every physical observable reconstructs. A 3d HT
+The problem is to organise the algebraic data visible from the
+modular-Koszul boundary sector of a 3d holomorphic-topological (HT)
+quantum field theory. A 3d HT
 theory on the half-space $\bR_+ \times X$, where $X$ is a smooth
 algebraic curve, produces three observation algebras: a boundary
 chiral algebra $\cA$ at $\{0\} \times X$, a bulk algebra in the
@@ -179,14 +182,19 @@ Maurer--Cartan equation $D\Theta + \frac{1}{2}[\Theta,\Theta] = 0$.
 The holographic modular Koszul datum is
 \begin{equation}\label{eq:datum-intro}
 \cH(T) \;=\;
-(\cA,\; \cA^!,\; \cC,\; r(z),\; \Theta_{\cA},\; \nabla^{\hol}).
+(\cA,\; \cA^{\mathrm{i}},\; \cA^!,\;
+\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA),\; r(z),\;
+\Theta_{\cA},\; \nabla^{\hol}_{\bullet,\bullet}).
 \end{equation}
-One six-component package, extracted from a single Maurer--Cartan
-element by a sequence of projections. The components are:
+It is extracted from a single Maurer--Cartan element by a sequence of
+projections. The components are:
 \begin{enumerate}[label=(\roman*),nosep]
 \item the boundary chiral algebra $\cA$;
+\item the bar cohomology coalgebra
+  $\cA^{\mathrm{i}} = H^*(\barB(\cA))$;
 \item the chiral Koszul dual $\cA^! = (H^*(\barB(\cA)))^\vee$;
-\item the line-operator category $\cC \simeq \cA^!\text{-mod}$;
+\item the closed-string algebra
+  $\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)$;
 \item the classical $r$-matrix
   $r(z) = \Res^{\coll}_{0,2}(\Theta_{\cA})$;
 \item the universal Maurer--Cartan element $\Theta_{\cA} := D_{\cA} - d_0$;
@@ -196,8 +204,7 @@ element by a sequence of projections. The components are:
 The bar complex $\barB(\cA) = T^c(s^{-1}\bar{\cA})$ is an $\Eone$-chiral
 coassociative coalgebra: it carries a differential (from the chiral
 product) and a deconcatenation coproduct (from the tensor coalgebra
-structure). The $\SCchtop$ structure does not live on $\barB(\cA)$;
-it emerges on the chiral derived centre
+structure). The $\SCchtop$ structure emerges on the chiral derived centre
 $\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)
 = C^\bullet_{\mathrm{ch}}(\cA,\cA)$, where the pair
 $(\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA), \cA)$ is the SC datum
@@ -209,8 +216,10 @@ Three families illustrate the full range of the datum.
 \noindent\emph{Heisenberg $\cH_k$.}\enspace
 Abelian Chern--Simons at level $k$. Shadow class $\mathbf{G}$, shadow
 depth $2$. The $r$-matrix is $r(z) = k/z$ (vanishing at $k=0$);
-the line category is $\mathsf{Vect}$; the shadow connection is
-trivial. This is the base case: all six components are scalar.
+the line category is the Fock-charge sector of the abelian theory,
+collapsing to $\mathsf{Vect}$ only after imposing the neutral
+$k=0$ quotient; the higher-genus shadow connection has scalar
+curvature \(k\,\omega_g\). This is the scalar base case.
 
 \smallskip
 \noindent\emph{Affine $\widehat{\fsl}_2{}_k$.}\enspace
@@ -231,13 +240,11 @@ is infinite; gravity does not truncate.
 
 \smallskip
 
-The bulk--boundary--line (BBL) triangle is not an ad hoc
-diagram connecting three independent objects. It is a single object
-(the bar complex with its $\Eone$-chiral coassociative structure)
-viewed from three angles. The three edges are: boundary$\to$bulk
-(the bar map followed by the trace to the ambient complex),
-bulk$\to$lines (the complementarity cofibre), and boundary$\to$lines
-(Koszul duality). Commutativity of the triangle is Theorem~A.
+The bulk--boundary--line (BBL) triangle is not an ad hoc diagram.
+The ordered bar complex is the common source for the boundary-to-bulk
+trace, the boundary-to-lines Koszul-dual passage, and the
+bulk-to-lines complementarity cofibre. Commutativity of the triangle is
+Theorem~A on the boundary-linear modular-Koszul locus.
 
 The anomaly completion adjoins to the Koszul dual $\cA^!$ a degree-$1$
 generator $\eta$ with Clifford (not exterior) relation
@@ -268,10 +275,12 @@ curve $X$.
 \begin{definition}[The holographic modular Koszul datum]
 \label{def:holographic-datum}
 The \emph{holographic modular Koszul datum} of $\cA$ is the
-six-component package
+seven-component package
 \begin{equation}\label{eq:datum}
 \cH(\cA) \;=\;
-(\cA,\; \cA^!,\; \cC,\; r(z),\; \Theta_{\cA},\; \nabla^{\hol}),
+(\cA,\; \cA^{\mathrm{i}},\; \cA^!,\;
+\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA),\; r(z),\;
+\Theta_{\cA},\; \nabla^{\hol}_{\bullet,\bullet}),
 \end{equation}
 with components defined in
 Definitions~\ref{def:boundary}--\ref{def:shadow-connection}
@@ -321,16 +330,15 @@ $\barB^{\Sigma}_n = (\barB^{\mathrm{ord}}_n)^{R\text{-}\Sigma_n}$.
 The ordered bar is the primitive object; the symmetric bar is
 its coinvariant shadow.
 
-\begin{warning}[Bar complex is not an SC-coalgebra]
-\label{warn:bar-not-sc}
+\begin{remark}[SC structure lives on the derived centre]
+\label{rem:bar-not-sc}
 The bar complex $\barB(\cA)$ is an $\Eone$-chiral coassociative
-coalgebra. It does \emph{not} carry an $\SCchtop$ structure. The
-$\SCchtop$ structure emerges on the chiral derived centre
+coalgebra. The $\SCchtop$ structure emerges on the chiral derived centre
 $\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA) =
 C^\bullet_{\mathrm{ch}}(\cA,\cA)$, computed using the bar complex
 as a resolution. The pair
 $(\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA), \cA)$ is the SC datum.
-\end{warning}
+\end{remark}
 
 
 \subsection{Koszul dual}\label{subsec:koszul-dual}
@@ -363,7 +371,8 @@ The cobar construction $\Omega(\barB(\cA)) \simeq \cA$ is
 \subsection{Line-operator category}\label{subsec:lines}
 
 \begin{definition}[Line-operator category]\label{def:lines}
-The \emph{line-operator category} is
+Under the compact-generator open--closed hypotheses, the
+\emph{line-operator category} is modelled by
 \begin{equation}\label{eq:lines}
 \cC \;\simeq\; \cA^!\text{-}\mathsf{mod}.
 \end{equation}
@@ -507,14 +516,15 @@ This is abelian Chern--Simons for $G = U(1)$ at level $k$.
 The holographic datum of $\cH_k$ is
 \begin{equation}\label{eq:heis-datum}
 \cH(\cH_k) \;=\;
-\bigl(\cH_k,\; \Sym^{\mathrm{ch}}(V^*),\;
-\mathsf{Vect},\; k/z,\; k \cdot \eta \otimes \Lambda,\;
-d\bigr).
+\bigl(\cH_k,\; H^*(\barB(\cH_k)),\; \Sym^{\mathrm{ch}}(V^*),\;
+\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cH_k),\; k/z,\;
+k \cdot \eta \otimes \Lambda,\; d-k\,\omega_g\bigr).
 \end{equation}
 \end{proposition}
 
 \begin{proof}
-We verify each component.
+The entries are computed directly from the OPE, the bar differential,
+and the shadow projection.
 
 \smallskip\noindent\emph{(i) Boundary.}\enspace
 $\cA = \cH_k$, the free boson at level $k$.
@@ -526,17 +536,12 @@ curved symmetric chiral algebra with $m_0 = -k\omega$; it is
 on both sides, but the duals differ as curved objects).
 
 \smallskip\noindent\emph{(iii) Lines.}\enspace
-$\cC = \mathsf{Vect}$. The line category is trivial: abelian
-gauge theory has no nontrivial Wilson lines.
+\(\cC\) is the Fock-charge line category of the abelian theory,
+equivalently the rank-one abelian Yangian/Fock module sector. It
+collapses to \(\mathsf{Vect}\) only at \(k=0\) after imposing the
+neutral quotient.
 
 \smallskip\noindent\emph{(iv) $r$-matrix.}\enspace
-% PE-1 r-matrix check:
-% family: Heis
-% r(z) written: k/z
-% level parameter: k
-% OPE pole order: 2
-% r-matrix pole order: 1 (d-log absorbs one pole)
-% AP126 check: r(z)|_{k=0} = 0. Match: Y.
 $r(z) = k/z$. The OPE has a double pole; $d\log$ absorbs one,
 leaving a simple pole. At $k = 0$: $r = 0$ (abelian limit).
 
@@ -548,16 +553,12 @@ satisfied because $\cH_k$ is class $\mathbf{G}$: all operations
 beyond degree $2$ vanish.
 
 \smallskip\noindent\emph{(vi) Shadow connection.}\enspace
-$\nabla^{\hol} = d$. The shadow connection is flat and trivial:
-the MC element is scalar, so $\Sh_{g,n}(\Theta_{\cH_k})$ is
-a multiple of the identity for all $(g,n)$.
+\(\nabla^{\hol}_{0,n}=d\) at genus \(0\). At positive genus the
+shadow connection has scalar curvature \(k\,\omega_g\); it becomes
+trivial only at \(k=0\) or after cancellation by the dual curvature.
 \end{proof}
 
 \begin{remark}[Modular characteristic]\label{rem:heis-kappa}
-% PE-2 kappa check:
-% family: Heis
-% kappa = k
-% at k=0: kappa=0
 The modular characteristic is $\kappa(\cH_k) = k$. This is the
 abelian prototype: $\av(r(z)) = \av(k/z) = k = \kappa$.
 The Koszul complementarity is $\kappa(\cH_k) + \kappa(\cH_k^!) = 0$
@@ -597,8 +598,9 @@ The holographic datum of $\widehat{\fsl}_2{}_k$ is
 \cH(\widehat{\fsl}_2{}_k) \;=\;
 \Bigl(
 \widehat{\fsl}_2{}_k,\;
-\widehat{\fsl}_2{}_{-k-4},\;
-\cO_q^{\mathrm{sh}},\;
+H^*(\barB(\widehat{\fsl}_2{}_k)),\;
+\mathrm{CE}^{\mathrm{ch}}(\widehat{\fsl}_2{}_{-k-4}),\;
+\cZ^{\mathrm{der}}_{\mathrm{ch}}(\widehat{\fsl}_2{}_k),\;
 \frac{k\,\Omega}{z},\;
 \Theta_k,\;
 d - \kappa_k\,\omega_g - \cdots
@@ -609,7 +611,8 @@ $\kappa_k = \dim(\fsl_2)(k+h^\vee)/(2h^\vee) = 3(k+2)/4$.
 \end{proposition}
 
 \begin{proof}
-We verify each component.
+The entries are computed directly from the OPE, the bar differential,
+and the shadow projection.
 
 \smallskip\noindent\emph{(i) Boundary.}\enspace
 $\cA = \widehat{\fsl}_2{}_k$, the affine Kac--Moody vertex
@@ -618,9 +621,11 @@ algebra at level $k$. The three generators $J^a$
 the Killing form, simple pole from the Lie bracket).
 
 \smallskip\noindent\emph{(ii) Koszul dual.}\enspace
-$\cA^! = \widehat{\fsl}_2{}_{-k-4}$. The Koszul involution acts by
-$k \mapsto -k - 2h^\vee$ with $h^\vee(\fsl_2) = 2$. The
-complementarity sum is
+\(\cA^!=\mathrm{CE}^{\mathrm{ch}}(\widehat{\fsl}_2{}_{-k-4})\)
+after the PBW rectification of the affine bar coalgebra. The level
+parameter is reflected by
+\(k\mapsto -k-2h^\vee\), with \(h^\vee(\fsl_2)=2\). The
+complementarity of scalar modular characteristics is
 $\kappa(\widehat{\fsl}_2{}_k) +
 \kappa(\widehat{\fsl}_2{}_{-k-4}) = 0$,
 verified at $k = 0$: $\kappa_0 = 3/2$ and $\kappa_{-4} = -3/2$.
@@ -635,17 +640,6 @@ conformal blocks agrees with the quantum-group $R$-matrix action
 on tensor products of evaluation modules.
 
 \smallskip\noindent\emph{(iv) $r$-matrix.}\enspace
-% PE-1 r-matrix check:
-% family: affine KM
-% r(z) written: k*Omega/z
-% level parameter: k
-% convention: trace-form
-% OPE pole order: 3 (double from Killing, simple from bracket)
-% r-matrix pole order: simple pole, k*Omega/z
-% because we take the degree-2 collision residue which picks out
-% the leading OPE structure after dlog absorption
-% AP126 check: r(z)|_{k=0} = 0. Match: Y.
-% critical level: r(z)|_{k=-2} = -2*Omega/z (finite, trace-form).
 $r(z) = k\,\Omega_{\mathrm{tr}}/z$ in trace-form convention,
 where $\Omega_{\mathrm{tr}}$ is the trace-form Casimir. At $k = 0$:
 $r = 0$ (abelian limit). In Kazhdan--Lusztig (KZ) normalisation:
@@ -693,16 +687,22 @@ reconstruction theorem: the monodromy of the genus-$0$ shadow
 connection $\nabla^{\hol}_{0,n}$ (the KZ connection) generates a
 braided tensor category that is equivalent to the representation
 category of the quantum group. The spectral parameter $z$ in
-$r(z) = k\,\Omega/z$ is the residual parameter after
-$d\log$-absorption from the OPE; on evaluation modules, it becomes
-the additive spectral parameter of the Yangian. The full quantised
+$r^{\mathrm{coll}}(z)=k\,\Omega_{\mathrm{tr}}/z$ is the trace-form
+collision parameter. The KZ conformal-block normalization uses
+\(\Omega_{\mathrm{KZ}}/((k+h^\vee)z)\). On evaluation modules, the
+same spectral variable becomes the additive spectral parameter of the
+Yangian. The full quantised
 $R$-matrix $R(z) = 1 + \hbar\,r(z) + O(\hbar^2)$ satisfies the
 quantum Yang--Baxter equation.
 \end{remark}
 
 \begin{remark}[Critical level]\label{rem:critical}
-At $k = -h^\vee = -2$: $\kappa = 0$, all monodromy is trivial,
-the degree-$2$ ordered chiral homology $H^1_{\mathrm{ord}, 2}$
+At $k = -h^\vee = -2$, the KZ normalization is singular and
+\(\kappa=0\) on the affine scalar line. The trace-form current OPE
+does not vanish. The Feigin--Frenkel centre replaces the non-critical
+Sugawara construction, and the critical Gaudin algebra is recovered
+from the centre rather than from a regular value of the KZ connection.
+The degree-$2$ ordered chiral homology $H^1_{\mathrm{ord}, 2}$
 doubles from $4$ to $8$ for $\fsl_2$ \textup{(}finite computation on
 $V \otimes V$, $\chi_{\mathrm{ord}, 2} = -4$ conserved\textup{)}, and
 Koszulness fails for the full symmetric bar, whose cohomology
@@ -740,7 +740,8 @@ The holographic datum of $\Vir_c$ is
 \begin{equation}\label{eq:vir-datum}
 \cH(\Vir_c)
 \;=\;
-\bigl(\Vir_c,\; \Vir_{26-c},\; \cC_c,\; r_c(z),\;
+\bigl(\Vir_c,\; H^*(\barB(\Vir_c)),\; \Vir_{26-c},\;
+\cZ^{\mathrm{der}}_{\mathrm{ch}}(\Vir_c),\; r_c(z),\;
 \Theta_c,\; \nabla^{\hol}_c\bigr),
 \end{equation}
 with
@@ -757,7 +758,8 @@ r_c(z) &\;=\; \frac{c/2}{z^3} + \frac{2T}{z},
 \end{proposition}
 
 \begin{proof}
-We verify each component.
+The entries are computed directly from the OPE, the bar differential,
+and the shadow projection.
 
 \smallskip\noindent\emph{(i) Boundary.}\enspace
 $\cA = \Vir_c$, the Virasoro vertex algebra.
@@ -776,13 +778,6 @@ determined by the full BPZ differential equations, not by a
 finite-dimensional quantum group.
 
 \smallskip\noindent\emph{(iv) $r$-matrix.}\enspace
-% PE-1 r-matrix check:
-% family: Vir
-% r(z) written: (c/2)/z^3 + 2T/z
-% level parameter: c
-% OPE pole order: 4
-% r-matrix pole order: 3 (d-log absorbs one)
-% Convention: the r-matrix has cubic + simple, NOT quartic
 The $r$-matrix $r_c(z) = (c/2)/z^3 + 2T/z$ has a cubic pole
 (gravitational, from the quartic OPE pole after $d\log$-absorption)
 and a simple pole (stress-tensor exchange). The quartic contact
@@ -801,11 +796,6 @@ its non-vanishing is the signature of class $\mathbf{M}$.
 $\Theta_c = \Theta_{\Vir_c}$ is the infinite-depth MC element.
 The shadow tower does not truncate: all shadow invariants
 $S_r$ ($r \geq 2$) are nonzero.
-% PE-2 kappa check:
-% family: Vir
-% kappa = c/2
-% at c=0: kappa=0
-% at c=13: kappa=13/2 (self-dual)
 The modular characteristic is
 $\kappa(\Vir_c) = S_2 = c/2$.
 
@@ -834,7 +824,7 @@ The two critical central charges play distinct roles:
   $\kappa + \kappa' = 13 \neq 0$; self-duality is a symmetry
   enhancement within the perturbative regime.
 \item $c = 26$: anomaly cancellation
-  ($\kappa(\Vir_{26-c}^!) = (26-c)/2 = 0$ at $c = 26$). The
+  ($\kappa(\Vir_{26-c}) = (26-c)/2 = 0$ at $c = 26$). The
   Clifford/exterior bifurcation
   (Section~\ref{sec:anomaly}). This is the bosonic string.
 \end{enumerate}
@@ -869,10 +859,10 @@ $\cA$ (boundary)
  & $\Vir_c$ \\[3pt]
 $\cA^!$ (Koszul dual)
  & $\Sym^{\mathrm{ch}}(V^*)$
- & $\widehat{\fsl}_2{}_{-k-4}$
+ & $\mathrm{CE}^{\mathrm{ch}}(\widehat{\fsl}_2{}_{-k-4})$
  & $\Vir_{26-c}$ \\[3pt]
 $\cC$ (lines)
- & $\mathsf{Vect}$
+ & Fock charges
  & $\Rep(U_q(\fsl_2))$
  & $\cC_c$ (BPZ) \\[3pt]
 $r(z)$
@@ -918,10 +908,10 @@ $\Theta_c$.
 % ====================================================================
 
 The bulk--boundary--line (BBL) triangle is the central diagram of 3d
-holomorphic-topological gauge theory. It is not built from three
-independent objects connected by ad hoc functors; it is a single
-object (the bar complex with its $\Eone$-chiral coassociative
-structure) viewed from three angles.
+holomorphic-topological gauge theory. The ordered bar complex is the
+common source: its trace produces the boundary-to-bulk map, its
+Verdier dual produces the boundary-to-lines map, and its
+complementarity cofibre produces the bulk-to-lines map.
 
 
 \subsection{The three vertices}\label{subsec:vertices}
@@ -943,7 +933,8 @@ Let $\cA$ be a chirally Koszul vertex algebra. The
   computed by chiral Hochschild cochains (not topological Hochschild;
   the geometry of the curve determines which
   chiral/topological/categorical Hochschild theory applies).
-\item \emph{Lines}: the category
+\item \emph{Lines}: under compact-generation and open--closed
+  hypotheses, the category
   $\cC \simeq \cA^!\text{-}\mathsf{mod}$ of modules over the
   chiral Koszul dual.
 \end{enumerate}
@@ -987,13 +978,14 @@ module category $\cA^!\text{-}\mathsf{mod}$ is the categorical
 output.
 \end{enumerate}
 
-Commutativity of the triangle is Theorem~A (the Verdier
-intertwining at the algebra level).
+Commutativity of the triangle is Theorem~A on the
+boundary-linear modular-Koszul locus.
 
 
 \subsection{Reconstruction from the datum}\label{subsec:reconstruction}
 
-The datum $\cH(\cA)$ is a complete invariant.
+The datum $\cH(\cA)$ is complete on the boundary-linear
+modular-Koszul comparison surface.
 
 \begin{proposition}[Recovery theorems]\label{prop:recovery}
 The following reconstructions hold:
@@ -1024,8 +1016,10 @@ Boundary $= \cH_k$. Bulk
 $= \cZ^{\mathrm{der}}_{\mathrm{ch}}(\cH_k)$, which is
 $3$-dimensional (the naive centre is $1$-dimensional; the derived
 centre sees $\mathrm{Ext}^1$ and $\mathrm{Ext}^2$). Lines
-$= \mathsf{Vect}$. The triangle degenerates: the bulk-to-lines edge
-is trivial, and the boundary-to-lines edge is trivial.
+are the abelian Fock-charge sector, with a neutral \(\mathsf{Vect}\)
+quotient at \(k=0\). The triangle degenerates only after this neutral
+quotient; for generic \(k\) the scalar curvature records the abelian
+monodromy.
 \end{remark}
 
 \begin{remark}[BBL for Kac--Moody]\label{rem:bbl-km}
@@ -1158,8 +1152,9 @@ splits quantum field theory into two qualitative regimes.
 The genus tower of $\cA$ bifurcates at $u = 0$:
 \begin{enumerate}[label=(\roman*),nosep]
 \item When $u \neq 0$: the Clifford algebra
-  $\mathrm{Cl}(H_1(\Sigma_g); u)$ is a matrix algebra (dimension
-  $2^g$) after inverting $u$. Genus-$g$ is Morita equivalent to
+  $\mathrm{Cl}(H_1(\Sigma_g); u)$ is a matrix algebra
+  \(M_{2^g}(\bC)\), of vector-space dimension \(2^{2g}\), after
+  inverting \(u\). Genus-$g$ is Morita equivalent to
   genus-$0$. All genus corrections are resummable from genus-$0$
   data. This is the perturbative regime.
 \item When $u = 0$: the Clifford anticommutator vanishes. The
@@ -1197,7 +1192,9 @@ the bifurcation point.
 \smallskip
 \noindent\emph{Virasoro.}\enspace
 $u = (26-c)\omega_g/2$. At $c = 26$: $u = 0$, the bosonic string
-becomes topological ($Z_{\mathrm{grav}} = 1$). At generic $c$:
+matter contribution cancels the \(bc\)-ghost anomaly in the combined
+matter-ghost system. The pure Virasoro gravity partition function
+still has its own collision tower. At generic \(c\):
 $u \neq 0$, perturbative. At $c = 13$: $u = 13\omega_g/2 \neq 0$,
 so Koszul self-duality lives within the perturbative regime.
 
@@ -1245,10 +1242,11 @@ $\Vir_c$ & $c = 26$ & bosonic string, anomaly cancellation &
 
 \noindent
 The datum $\cH(\cA)$ together with the anomaly completion
-$B_\Theta$ controls the full 3d HT correspondence: the six
-components determine the genus-$0$ physics (the datum), and the
-secondary anomaly $u$ determines the genus tower (the completion).
-The entire structure descends from a single identity: $D_{\cA}^2 = 0$.
+$B_\Theta$ controls the modular-Koszul boundary-linear sector of the
+3d HT correspondence: the seven components determine the genus-$0$
+comparison data, and the secondary anomaly \(u\) governs the genus
+tower inside this sector. The entire structure descends from a single
+identity: $D_{\cA}^2 = 0$.
 
 
 % ====================================================================
@@ -1269,9 +1267,9 @@ The holographic datum sits inside the $\En$ operadic circle:
 \;\to\;
 \Ethree^{\mathrm{top}}(\text{derived centre}).
 \end{multline*}
-Each arrow is: restriction to codimension-$2$ defect, ordered bar
-complex, categorified averaging (Drinfeld centre), higher Deligne
-(derived centre). The circle partly closes: for simple $\fg$, the
+The arrows are restriction to codimension-$2$ defect, ordered bar
+complex, categorified averaging through the Drinfeld centre, and
+higher Deligne passage to the derived centre. For simple $\fg$, the
 $\Ethree$-topological deformation space of
 $\cZ^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))$ is
 $\hbar\,H^3(\fg)[[\hbar]]$, one-dimensional; the formal disk
@@ -1301,22 +1299,25 @@ It is not $\bC[\Theta]$, and it is not the Gelfand--Fuchs cohomology
 
 \subsection{From the datum to physics}\label{subsec:physics}
 
-The derived chiral centre IS the bulk of a real 3d HT gauge theory.
-This is the content of the BBL identification: the bar construction
-on $\cA$ produces a coalgebra; the chiral Hochschild cochain complex of
-$\cA$ (computed from the bar resolution) produces the bulk
-observables; the $\SCchtop$ structure on the pair
+The derived chiral centre is the bulk algebra on the
+boundary-linear comparison surface of a 3d HT gauge theory. This is
+the content of the BBL identification: the bar construction on $\cA$
+produces a coalgebra; the chiral Hochschild cochain complex of $\cA$
+(computed from the bar resolution) produces the bulk observables; the
+$\SCchtop$ structure on the pair
 $(\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA), \cA)$ encodes the
-open/closed interaction. The datum $\cH(\cA)$ is the smallest
-package from which the full physical correspondence reconstructs.
+open/closed interaction. The datum $\cH(\cA)$ is the compact package
+for this comparison surface.
 
-The programme beyond this paper: the global BBL triangle (bulk
-determines boundary determines bulk, proved boundary-linear; full
-reconstruction open), the chain-level topologisation for class
-$\mathbf{M}$, and the closing of the $\En$ circle via the
-Drinfeld centre identification
-$Z(\mathbf{U}_{\cA}) \simeq
-\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)$.
+Three boundaries remain. The global BBL triangle is proved in the
+boundary-linear direction, while full reconstruction is open. The
+class~$\mathbf{M}$ topologisation is cohomological until a chain-level
+model is built. The $\En$ circle closes only where the Drinfeld-centre
+identification
+\[
+Z(\mathbf{U}_{\cA}) \simeq \cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)
+\]
+has been proved.
 
 
 % ====================================================================
@@ -1338,8 +1339,8 @@ Cambridge University Press, 2017--2021.
 
 \bibitem{CFG25}
 K.~Costello, D.~Francis, and D.~Gwilliam,
-An $E_3$-algebra from Chern--Simons theory,
-arXiv:2602.12412, 2025.
+\emph{Chern--Simons factorization algebras and knot polynomials},
+arXiv:2602.12412, 2026.
 
 \bibitem{CG18}
 K.~Costello and D.~Gaiotto,
@@ -1365,19 +1366,19 @@ algebras,
 197--215.
 
 \bibitem{GZ26}
-D.~Gaiotto and J.~Zeng,
-Sphere algebras,
-arXiv:2026.xxxxx, 2026.
+D.~Gaiotto and K.~Zeng,
+Interface minimal model holography and topological string theory,
+arXiv:2603.08783, 2026.
 
 \bibitem{GK94}
 V.~Ginzburg and M.~Kapranov,
 Koszul duality for operads,
 \emph{Duke Math.\ J.}\ \textbf{76}(1994), 203--272.
 
-\bibitem{KZ26}
-A.~Khan and J.~Zeng,
-The holomorphic-topological Poisson sigma model,
-arXiv:2026.xxxxx, 2026.
+\bibitem{KZ25}
+A.~Z.~Khan and K.~Zeng,
+Poisson vertex algebras and three-dimensional gauge theory,
+arXiv:2502.13227, 2025.
 
 \bibitem{KZ84}
 V.~Knizhnik and A.~Zamolodchikov,

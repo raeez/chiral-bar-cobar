@@ -5,7 +5,7 @@ Tests the ten computational modules:
 2. Modular anomaly equation (BCOV recursion)
 3. Ring of quasi-modular forms QM(SL(2,Z)): weight/depth filtration, dimensions
 4. Rankin-Cohen brackets and modularity
-5. Shadow zeta function L_A^sh(s) = -kappa * zeta(s) * zeta(s-1)
+5. Genus-1 Eisenstein series D_2(A,s) and shadow-zeta negative diagnostics
 6. Non-holomorphic completion E_2* -> E_hat_2
 7. Jacobi forms and the elliptic genus
 8. Eichler-Shimura isomorphism and bar cohomology at genus 1
@@ -32,7 +32,8 @@ AP guards:
     AP46: eta includes q^{1/24}.
 
 Manuscript references:
-    thm:shadow-eisenstein (arithmetic_shadows.tex)
+    thm:shadow-eisenstein and rem:shadow-eisenstein-correct-scope
+        (chapters/connections/arithmetic_shadows.tex)
     rem:propagator-weight-universality (higher_genus_modular_koszul.tex)
     thm:shadow-double-convergence (higher_genus_modular_koszul.tex)
 """
@@ -47,6 +48,7 @@ from compute.lib.modular_forms_shadow_engine import (
     convolve_exact,
     # Section 1: Genus-g shadow amplitudes
     shadow_amplitude_genus1,
+    genus1_log_eta_derivative_coefficients,
     shadow_amplitude_genus_g,
     dressed_amplitude_genus_g,
     genus_g_qm_weight_depth,
@@ -70,6 +72,8 @@ from compute.lib.modular_forms_shadow_engine import (
     shadow_zeta_function,
     shadow_zeta_eisenstein_prediction,
     verify_shadow_eisenstein,
+    genus1_arity2_eisenstein_coefficients,
+    genus1_arity2_dirichlet_window,
     # Section 6: Non-holomorphic completion
     e2_hat_completion,
     verify_e2_hat_modularity,
@@ -120,6 +124,23 @@ class TestGenusGShadowAmplitude:
         amp = shadow_amplitude_genus1(Fraction(1))
         assert amp['weight'] == 0
         assert amp['depth'] == 0
+
+    def test_genus1_log_eta_derivative_sign_from_product(self):
+        r"""D(-kappa log eta) = -kappa*E_2*/24, not +kappa*E_2*/24.
+
+        Direct oracle: eta = q^{1/24} prod(1-q^m), so
+        D(-kappa log eta) has q^0 coefficient -kappa/24 and q^n
+        coefficient kappa*sigma_1(n).
+        """
+        kappa = Fraction(3, 2)
+        result = genus1_log_eta_derivative_coefficients(kappa, nmax=8)
+        coeffs = result['D_minus_kappa_log_eta']
+
+        assert coeffs[0] == -kappa / 24
+        for n in range(1, 8):
+            sigma1 = sum(d for d in range(1, n + 1) if n % d == 0)
+            assert coeffs[n] == kappa * sigma1
+        assert result['matches_product_formula']
 
     def test_genus2_scalar_value(self):
         """F_2 = kappa * lambda_2^FP = kappa * 7/5760."""
@@ -327,6 +348,11 @@ class TestRankinCohenBrackets:
         result = verify_rc_bracket_modularity()
         assert result['rc1_proportional_to_delta']
 
+    def test_rc1_delta_ratio_exact(self):
+        """[E_4, E_6]_1 = -3456 Delta in this Rankin-Cohen convention."""
+        result = verify_rc_bracket_modularity()
+        assert result['rc1_delta_ratio'] == Fraction(-3456)
+
     def test_qderivative_of_constant(self):
         """D(1) = 0 (derivative of constant vanishes)."""
         f = [Fraction(1)] + [Fraction(0)] * 9
@@ -407,8 +433,27 @@ class TestShadowZeta:
             expected = 1.0 * 2.0 ** (-s)
             assert abs(val - expected) < 1e-12
 
+    def test_genus1_arity2_eisenstein_coefficients_exact(self):
+        """Correct theorem: Sh_2^{(1)} = kappa*E_2*, so a_n=-24*kappa*sigma_1(n)."""
+        kappa = Fraction(5, 3)
+        result = genus1_arity2_eisenstein_coefficients(kappa, nmax=8)
+        coeffs = result['coefficients']
+
+        assert coeffs[0] == kappa
+        for n in range(1, 8):
+            sigma1 = sum(d for d in range(1, n + 1) if n % d == 0)
+            assert coeffs[n] == -24 * kappa * sigma1
+        assert result['dirichlet_series'] == 'D_2(A,s), not L_A^sh(s)'
+
+    def test_genus1_arity2_dirichlet_window_convolution_oracle(self):
+        """Finite window: coefficients of zeta(s)zeta(s-1) are sigma_1."""
+        result = genus1_arity2_dirichlet_window(Fraction(2), s=4, nterms=12)
+        assert result['matches_dirichlet_convolution']
+        assert result['finite_window_only']
+        assert result['limit_identity'] == '-24*kappa*zeta(s)*zeta(s-1)'
+
     def test_shadow_zeta_virasoro_convergent(self):
-        """Virasoro shadow zeta converges for Re(s) sufficiently large."""
+        """A finite Virasoro shadow-zeta window computes a finite partial sum."""
         S = shadow_coefficients_virasoro(Fraction(25), max_arity=20)
         # Just check it computes without error and gives a finite value
         val = shadow_zeta_function(S, 5.0)
@@ -417,12 +462,27 @@ class TestShadowZeta:
     def test_shadow_zeta_eisenstein_heisenberg_trivial(self):
         """For Heisenberg, the shadow zeta is a single term, NOT the full Eisenstein.
         This is because the tower terminates at arity 2 (class G).
-        The Eisenstein identity holds in the limit of infinite arities."""
+        The Eisenstein identity belongs to D_2(A,s), not to L_A^sh(s)."""
         S = shadow_coefficients_heisenberg(Fraction(1))
         shadow_val = shadow_zeta_function(S, 4.0)
         eisenstein_val = shadow_zeta_eisenstein_prediction(1.0, 4.0, nterms=500)
         # These should NOT match for Heisenberg (truncated tower)
         assert abs(shadow_val - eisenstein_val) > 0.01
+
+    def test_verify_shadow_eisenstein_is_negative_finite_window_diagnostic(self):
+        """The shadow L-function comparison is marked as falsified finite-window."""
+        result = verify_shadow_eisenstein(
+            'Heisenberg', {'k': Fraction(1)}, s_values=[4.0]
+        )
+        assert result['diagnostic_type'] == 'finite-window negative diagnostic'
+        assert result['finite_window_only']
+        assert result['exact_identity_proved'] is False
+        assert result['shadow_l_equals_eisenstein'] is False
+        assert (
+            result['correct_identity']
+            == 'D_2(A,s) = -24*kappa*zeta(s)*zeta(s-1)'
+        )
+        assert result['results'][4.0]['matches_falsified_identity_within_tol'] is False
 
 
 # =========================================================================
@@ -442,6 +502,12 @@ class TestNonHolomorphicCompletion:
         # Just verify the function returns a finite value
         assert math.isfinite(e2_hat.real)
         assert math.isfinite(e2_hat.imag)
+
+    def test_e2_hat_vanishes_at_s_fixed_point_i(self):
+        """At the S-fixed point i, weight-2 modularity forces E_hat_2(i)=0."""
+        tau = complex(0, 1)
+        e2_hat = e2_hat_completion(tau, nmax=600)
+        assert abs(e2_hat) < 1e-12
 
     def test_e2_hat_modularity(self):
         """E_hat_2(-1/tau) = tau^2 * E_hat_2(tau) at tau = 0.3 + 1.5i."""
@@ -536,6 +602,14 @@ class TestEichlerShimura:
         """The genus-1 shadow is Eisenstein, not cuspidal."""
         interp = bar_cohomology_genus1_modular_interpretation(Fraction(1))
         assert interp['modular_type'] == 'Eisenstein'
+        assert (
+            interp['eisenstein_object']
+            == 'D_2(A,s) from Fourier coefficients of kappa*E_2*'
+        )
+        assert (
+            interp['not_eisenstein_object']
+            == 'L_A^sh(s) = sum S_r(A) r^{-s}'
+        )
 
     def test_dim_M_formula(self):
         """Verify dim M_k formula for small weights.
@@ -561,6 +635,8 @@ class TestModularGraphFunctions:
         assert result['edges'] == 3
         assert result['vertices'] == 2
         assert result['genus'] == 2
+        assert result['finite_window_only']
+        assert result['exact_siegel_modularity_proved'] is False
 
     def test_planted_forest_heisenberg_vanishes(self):
         """For Heisenberg (S_3 = 0), the planted-forest correction vanishes."""
@@ -592,9 +668,11 @@ class TestModularGraphFunctions:
         assert 'Eisenstein' in result['type']
 
     def test_modular_graph_types_genus2(self):
-        """Genus-2 modular graph functions are Siegel modular forms."""
+        """Genus-2 diagnostics are Siegel-ambient, not holomorphic-form proofs."""
         result = modular_graph_function_types(2)
         assert 'Siegel' in result['type']
+        assert result['finite_window_only']
+        assert result['holomorphic_siegel_modularity_proved'] is False
 
 
 # =========================================================================

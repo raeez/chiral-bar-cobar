@@ -34,9 +34,9 @@ NONDEGENERATE (the induced map T_M -> L_M[1] is a quasi-isomorphism).
 2. LAGRANGIAN INTERSECTION (THEOREM C)
 ---------------------------------------
 
-Theorem C (complementarity): Q_g(A) + Q_g(A!) = H*(M_g_bar, Z(A)).
+Theorem C (complementarity): Q_g(A) + Q_g(A^!) = H*(M_g_bar, Z(A)).
 
-The Lagrangian upgrade: Q_g(A) and Q_g(A!) are complementary Lagrangians in
+The Lagrangian upgrade: Q_g(A) and Q_g(A^!) are complementary Lagrangians in
 the (-(3g-3))-shifted symplectic space C_g(A) = R Gamma(M_g_bar, Z(A)).
 
 The Lagrangian condition for L_A: Q_g(A) -> C_g(A):
@@ -230,13 +230,21 @@ that the DS-reduced shadow connection nabla^sh_{W_k} is the Hamiltonian
 reduction of nabla^sh_{g_k}.  This is PROVED for principal reduction
 (hook-type in type A is the first non-principal corridor).
 
-CONVENTIONS (from CLAUDE.md):
+CONVENTIONS (typed Koszul/Ran object firewall):
     AP1:  kappa formulas recomputed per family
     AP8:  Virasoro self-dual at c=13, NOT c=26
     AP19: r-matrix pole orders one below OPE
     AP20: kappa(A) intrinsic to A
     AP24: kappa + kappa' = 0 for KM/free; = 13 for Vir; = rho*K for W
-    AP25: B(A) coalgebra, D_Ran(B(A)) = B(A!) algebra, Omega(B(A)) = A
+    B(A): ordered bar coalgebra T^c(s^{-1}bar A), not a dual algebra.
+    A^i: H*(B(A)), the intrinsic bar-dual coalgebra.
+    A^!: D_Ran(A^i), the post-Verdier Koszul dual algebra, formed
+         on the finite-type Koszul locus or by the completed continuous
+         Verdier dual under separatedness and Mittag-Leffler hypotheses.
+    D_Ran(B(A)): Verdier-dual factorization algebra; only on that
+         finite-type/completed branch does it compare with B(A^!).
+    Omega(B(A)) -> A: bar-cobar inversion, not construction of A^!.
+    Z_ch^der(A): Hochschild derived-centre bulk slot, not bar/cobar.
     AP29: delta_kappa != kappa_eff
     AP33: H_k^! = Sym^ch(V*) != H_{-k}
     AP39: kappa != c/2 for general VOA
@@ -276,7 +284,101 @@ from functools import lru_cache
 
 
 # ============================================================================
-# 0. EXACT ARITHMETIC UTILITIES
+# 0. TYPED KOSZUL/RAN OBJECT CONVENTIONS
+# ============================================================================
+
+TYPED_KOSZUL_OBJECTS: Tuple[str, ...] = (
+    "A",
+    "B(A)",
+    "A^i",
+    "A^!",
+    "Omega(B(A))",
+    "Z_ch^der(A)",
+)
+
+UNQUALIFIED_BAR_COBAR_INVERSION_SHORTHAND = (
+    "Omega(B(A))" + " = " + "A"
+)
+
+FORBIDDEN_KOSZUL_COLLAPSES: Tuple[str, ...] = (
+    "B(A)" + " = " + "A^!",
+    "A^i" + " = " + "A^!",
+    "Omega(B(A))" + " = " + "A^!",
+    "D_Ran(B(A))" + " = " + "B(A^!)",
+    "Z_ch^der(A)" + " = " + "B(A)",
+    "Z_ch^der(A)" + " = " + "A^!",
+)
+
+
+def koszul_object_conventions() -> Dict[str, Any]:
+    """Typed firewall for the bar, cobar, Verdier, and bulk objects.
+
+    The engine computes scalar invariants attached to A and to the
+    post-Verdier A^! branch.  It must not identify the raw bar coalgebra,
+    its cohomology coalgebra, the Verdier-dual algebra, the cobar inversion
+    object, or the Hochschild bulk slot.
+    """
+    objects = {
+        "A": {
+            "kind": "input chiral algebra",
+            "construction": "given augmented E_1-chiral algebra",
+        },
+        "B(A)": {
+            "kind": "ordered bar coalgebra",
+            "construction": "T^c(s^{-1}bar A) with the bar differential",
+        },
+        "A^i": {
+            "kind": "intrinsic bar-dual coalgebra",
+            "construction": "H*(B(A)) after imposing the bar differential",
+        },
+        "A^!": {
+            "kind": "post-Verdier Koszul dual algebra",
+            "construction": "D_Ran(A^i), not Omega(B(A))",
+            "hypotheses": (
+                "finite-type Koszul locus, or separated completed branch "
+                "with completed continuous dual and Mittag-Leffler control"
+            ),
+        },
+        "Omega(B(A))": {
+            "kind": "bar-cobar inversion object",
+            "construction": (
+                "counit Omega(B(A)) -> A, a quasi-isomorphism on the "
+                "Koszul locus"
+            ),
+        },
+        "Z_ch^der(A)": {
+            "kind": "derived-centre bulk slot",
+            "construction": "ChirHoch^*(A,A), separate from bar/cobar data",
+        },
+    }
+
+    for name, data in objects.items():
+        data["distinct_from"] = tuple(
+            other for other in TYPED_KOSZUL_OBJECTS if other != name
+        )
+
+    return {
+        "objects": objects,
+        "finite_type_completed_verdier_branch": (
+            "A^! is obtained from A^i by D_Ran on the finite-type Koszul "
+            "locus, or from the completed continuous dual under "
+            "separatedness and Mittag-Leffler hypotheses. D_Ran(B(A)) "
+            "compares with B(A^!) only after passing through that "
+            "Verdier branch; the raw bar coalgebra is not A^!."
+        ),
+        "bar_cobar_inversion": (
+            "Omega(B(A)) -> A is the bar-cobar counit/inversion map; it "
+            "does not construct A^! and it is not the derived-centre bulk."
+        ),
+        "forbidden_identifications": FORBIDDEN_KOSZUL_COLLAPSES,
+        "forbidden_unqualified_shorthand": (
+            UNQUALIFIED_BAR_COBAR_INVERSION_SHORTHAND,
+        ),
+    }
+
+
+# ============================================================================
+# 1. EXACT ARITHMETIC UTILITIES
 # ============================================================================
 
 def _frac(x) -> Fraction:
@@ -353,7 +455,7 @@ class DAGAlgebraFamily:
     """
     name: str
     kappa: Fraction             # kappa(A) (AP1: family-specific formula)
-    kappa_dual: Fraction        # kappa(A!) (AP24: family-dependent sum)
+    kappa_dual: Fraction        # kappa(A^!) on the post-Verdier branch
     central_charge: Fraction
     num_generators: int
     generator_weights: Tuple[int, ...]
@@ -367,7 +469,7 @@ class DAGAlgebraFamily:
 
     @property
     def complementarity_sum(self) -> Fraction:
-        """kappa(A) + kappa(A!) -- family-dependent (AP24)."""
+        """kappa(A) + kappa(A^!) on the post-Verdier branch."""
         return self.kappa + self.kappa_dual
 
     @property
@@ -596,10 +698,10 @@ def poisson_bracket_degree(shift: int = -1) -> int:
 
 @dataclass
 class LagrangianData:
-    """Lagrangian structure from the Koszul pair (A, A!).
+    """Lagrangian structure from the post-Verdier Koszul pair (A, A^!).
 
-    Theorem C: Q_g(A) + Q_g(A!) = H*(M_g_bar, Z(A)).
-    Upgraded: Q_g(A), Q_g(A!) are complementary Lagrangians in C_g(A).
+    Theorem C: Q_g(A) + Q_g(A^!) = H*(M_g_bar, Z(A)).
+    Upgraded: Q_g(A), Q_g(A^!) are complementary Lagrangians in C_g(A).
     """
     algebra: str
     is_lagrangian: bool
@@ -618,10 +720,10 @@ def lagrangian_from_koszul_pair(fam: DAGAlgebraFamily,
     """Compute the Lagrangian structure from Theorem C.
 
     The Lagrangian primitive at arity 2:
-        theta_2 = kappa(A) * kappa(A!)
+        theta_2 = kappa(A) * kappa(A^!)
 
     This encodes the "derived intersection product" of the complementary
-    Lagrangian subspaces Q_g(A) and Q_g(A!).
+    Lagrangian subspaces Q_g(A) and Q_g(A^!).
 
     The intersection degree at arity 2:
         deg = -(kappa + kappa')
@@ -646,7 +748,7 @@ def lagrangian_from_koszul_pair(fam: DAGAlgebraFamily,
 def lagrangian_self_dual_test(fam: DAGAlgebraFamily) -> Dict[str, Any]:
     """Test whether the Lagrangian is self-dual (kappa = kappa').
 
-    Self-duality at the Lagrangian level means L_A = L_{A!}.
+    Self-duality at the Lagrangian level means L_A = L_{A^!}.
     This happens iff kappa = kappa' iff delta_kappa = 0.
 
     For Virasoro: self-dual at c = 13 (AP8: NOT c = 26).

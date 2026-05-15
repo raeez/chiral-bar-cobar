@@ -754,7 +754,8 @@ def koszul_complementarity_vs_cg(algebra: str, **params) -> Dict[str, object]:
 
     Koszul duality A -> A^! exchanges:
       - Boundary conditions (open-string sectors)
-      - The bar coalgebra B(A) <-> Verdier dual D_Ran(B(A)) = B(A!)
+      - The bar-dual coalgebra A^i=H^*(B(A)) with the A^! branch after
+        Verdier/linear duality under finite-type or completed hypotheses
 
     In CG language:
       - Koszul duality exchanges the two boundary conditions of the
@@ -1181,7 +1182,7 @@ def semi_infinite_vs_bar(lie_type: str = "sl2", k: object = None) -> Dict[str, o
 def verify_all() -> Dict[str, bool]:
     """Run all internal consistency checks.
 
-    Multi-path verification per CLAUDE.md mandate.
+    Multi-path verification.
     """
     results = {}
 
@@ -1438,7 +1439,8 @@ def costello_li_holomorphic_twist() -> Dict[str, object]:
       Costello-Li holomorphic twist produces the SAME Swiss-cheese
       structure as our bar-cobar framework:
         T^{hol}|_{boundary} = A (chiral algebra)
-        T^{hol}|_{bulk} = A^!_infty (homotopy Koszul dual)
+        T^{hol}|_{line} is the Verdier/Koszul A^!_infty branch
+        T^{hol}|_{bulk} is the open/closed derived-centre sector
         T^{hol} = SC^{ch,top}(A) (Swiss-cheese factorization algebra)
 
     PROPAGATOR IDENTIFICATION:
@@ -1457,12 +1459,14 @@ def costello_li_holomorphic_twist() -> Dict[str, object]:
         "cl_input": "3d N=2 theory T on Sigma x R",
         "cl_output": "holomorphic twist T^{hol}: chiral on Sigma, topological on R",
         "boundary_algebra": "A(T) = boundary chiral algebra",
-        "bulk_algebra": "A^!_infty = homotopy Koszul dual (Verdier dual of bar)",
+        "line_algebra": "A^!_infty = Verdier/Koszul branch from bar-dual data",
+        "bulk_algebra": "Z^der_ch(A) = open/closed derived-centre sector",
         "swiss_cheese_match": True,
         "propagator_match": True,
         "propagator_cl": "P^{hol}(z,w) = dw/(w-z) after holomorphic twist",
         "propagator_bar": "eta(z,w) = d log(z-w) on FM boundary",
         "koszul_dual_match": True,
+        "bulk_line_firewall": "bulk is derived centre; line branch is A^!_infty",
         "status": "proved at genus 0; Swiss-cheese structure proved in Vol II",
     }
 
@@ -1574,9 +1578,9 @@ def superstring_comparison() -> Dict[str, object]:
 
     Ghost sector:
       kappa(bc at lambda=2) = -13
-      kappa(betagamma at lambda=3/2) = c/2 where c = -2(6*9/4 - 6*3/2 + 1) = 11
-        Actually: betagamma at lambda = 3/2: c = 2(6*(3/2)^2 - 6*(3/2) + 1)
-        = 2(27/2 - 9 + 1) = 2(11/2) = 11
+      kappa(betagamma at lambda=3/2) = c/2 with
+        c = 2(6*(3/2)^2 - 6*(3/2) + 1)
+          = 2(27/2 - 9 + 1) = 11
       kappa(betagamma) = 11/2
 
     Total kappa: 15 - 13 + 11/2 = 15/2

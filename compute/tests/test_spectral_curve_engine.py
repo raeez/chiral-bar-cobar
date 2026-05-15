@@ -1,16 +1,16 @@
-r"""Tests for spectral_curve_engine: algebraic/spectral curves from shadow obstruction tower data.
+r"""Tests for spectral_curve_engine: quadratic shadow curves from obstruction tower data.
 
 Verifies:
 1. Shadow ODE to algebraic curve extraction (Riccati structure)
 2. Branch point computation — symbolic and numerical
 3. Critical central charge c* ~ 6.125 (convergent/divergent transition)
-4. Monodromy = -1 (Koszul involution) via path integration
+4. Square-root monodromy = -1 via path integration
 5. Period integrals (A-cycle, B-cycle) and closed-form comparison
 6. Theta function evaluation and Jacobian torus
 7. Shadow obstruction tower reconstruction from spectral curve data
 8. Multi-channel W_3 spectral surface
-9. Integrable systems connection (Toda, KdV)
-10. Spectral invariants and Koszul duality on the curve
+9. External integrable-system comparisons (Toda, KdV)
+10. Spectral invariants and Verdier-dual scalar lane
 11. Complementarity of discriminants (constant numerator 6960)
 12. Self-dual data at c=13
 
@@ -32,6 +32,7 @@ import pytest
 from sympy import Rational, Symbol, simplify, cancel, sqrt, expand, I
 
 c = Symbol('c')
+k = Symbol('k')
 
 
 # ===========================================================================
@@ -40,6 +41,15 @@ c = Symbol('c')
 
 class TestShadowMetricConstruction:
     """Test shadow metric Q_L(t) construction and spectral curve extraction."""
+
+    def test_scope_firewall_separates_external_data(self):
+        from lib.spectral_curve_engine import shadow_curve_scope
+        scope = shadow_curve_scope()
+        assert 'shadow_spectral_curve' in scope
+        assert 'external_eo_recursion_data' in scope
+        assert 'wp_jt_sine_curve_data' in scope
+        assert 'kdv_spectral_data' in scope
+        assert 'descendant_or_isomonodromic_structure' in scope
 
     def test_virasoro_metric_q0(self):
         from lib.spectral_curve_engine import virasoro_shadow_metric
@@ -63,8 +73,7 @@ class TestShadowMetricConstruction:
     def test_virasoro_metric_discriminant(self):
         from lib.spectral_curve_engine import virasoro_shadow_metric
         metric = virasoro_shadow_metric()
-        # disc(Q) = -32 kappa^2 Delta = -32 (c/2)^2 * 40/(5c+22) = -1280 c^2/(5c+22)
-        # Actually Delta = 8 kappa S4 = 8*(c/2)*10/(c(5c+22)) = 40/(5c+22)
+        # Delta = 8 kappa S4 = 8*(c/2)*10/(c(5c+22)) = 40/(5c+22).
         # disc = -32*(c^2/4)*40/(5c+22) = -320 c^2/(5c+22)
         expected_disc = -32 * (c / 2)**2 * Rational(40) / (5 * c + 22)
         # Simplify: -32 * c^2/4 * 40/(5c+22) = -8*c^2*40/(5c+22) = -320c^2/(5c+22)
@@ -82,6 +91,16 @@ class TestShadowMetricConstruction:
         from lib.spectral_curve_engine import affine_shadow_metric
         metric = affine_shadow_metric()
         assert simplify(metric['Delta']) == 0
+
+    def test_affine_metric_uses_canonical_kappa_and_s3(self):
+        """Affine sl_2: kappa = 3(k+2)/4 and S_3 = 4/(k+2)."""
+        from lib.spectral_curve_engine import affine_shadow_metric
+        metric = affine_shadow_metric(k)
+        kappa = 3 * (k + 2) / 4
+        S3 = 4 / (k + 2)
+        assert simplify(metric['q0'] - 4 * kappa**2) == 0
+        assert simplify(metric['q1'] - 12 * kappa * S3) == 0
+        assert simplify(metric['q2'] - 9 * S3**2) == 0
 
     def test_affine_metric_perfect_square(self):
         """With Delta=0, Q_L is a perfect square."""
@@ -172,7 +191,7 @@ class TestBranchPoints:
 # ===========================================================================
 
 class TestMonodromy:
-    """Test monodromy computation: should be -1 (Koszul involution)."""
+    """Test square-root monodromy computation."""
 
     def test_monodromy_c26(self):
         """Monodromy around branch point at c=26 should be -1."""
@@ -227,7 +246,7 @@ class TestPeriods:
         omega_B = period_B_cycle(26.0, n_steps=1000)
         # On a genus-0 curve, a loop encircling the branch cut picks up
         # zero net integral (sqrt(Q) returns to itself after a full loop
-        # around the PAIR of branch points).
+        # around the pair of branch points).
         assert abs(omega_B) < 1e-6
 
     def test_period_closed_form_consistency(self):
@@ -369,16 +388,17 @@ class TestW3SpectralSurface:
 
 
 # ===========================================================================
-# 8. Integrable systems connection
+# 8. External integrable-system comparisons
 # ===========================================================================
 
-class TestIntegrableSystems:
-    """Test connection to Toda and KdV spectral curves."""
+class TestExternalIntegrableComparisons:
+    """Test finite comparisons with externally supplied Toda and KdV data."""
 
     def test_toda_genus_zero(self):
         from lib.spectral_curve_engine import toda_spectral_curve
         toda = toda_spectral_curve(1.0)
         assert toda['genus'] == 0
+        assert toda['status'] == 'external_lax_reference'
 
     def test_toda_branch_points(self):
         from lib.spectral_curve_engine import toda_spectral_curve
@@ -394,20 +414,24 @@ class TestIntegrableSystems:
         kdv = kdv_spectral_curve(26.0)
         # Delta at c=26: 40/(130+22) = 40/152 ~ 0.2632
         assert abs(float(kdv['quantum_correction'].split('=')[1]) - 40.0 / 152.0) < 0.001
+        assert kdv['status'] == 'shadow_diagnostic_only'
+        assert 'KdV Lax or Schrodinger operator' in kdv['external_data_required']
 
     def test_yangian_affine_genus_match(self):
-        """Affine sl_2: shadow genus = Toda genus = 0."""
+        """Affine sl_2: shadow and external Toda reference are both genus 0."""
         from lib.spectral_curve_engine import yangian_spectral_identification
         result = yangian_spectral_identification('affine_sl2', k_val=1.0)
         assert result['genus_match'] is True
         assert result['shadow_genus'] == 0
         assert result['yangian_genus'] == 0
+        assert result['identification_status'] == 'finite rational-genus comparison only'
 
-    def test_yangian_virasoro_rates_match(self):
-        """Virasoro: shadow growth rate = KdV growth rate."""
+    def test_virasoro_shadow_rate_is_not_full_kdv_curve(self):
+        """Virasoro rate comparison remains a shadow diagnostic."""
         from lib.spectral_curve_engine import yangian_spectral_identification
         result = yangian_spectral_identification('virasoro', c_val=26.0)
         assert result['rates_match'] is True
+        assert result['identification_status'] == 'shadow radius only; full KdV data external'
 
 
 # ===========================================================================
@@ -488,22 +512,23 @@ class TestSelfDual:
 
 
 # ===========================================================================
-# 12. Koszul duality on the curve
+# 12. Verdier-dual scalar lane
 # ===========================================================================
 
-class TestKoszulDuality:
-    """Test the Koszul duality involution on the spectral curve."""
+class TestVerdierDualScalarLane:
+    """Test the Virasoro scalar complementarity lane."""
 
-    def test_koszul_duality_c26(self):
-        from lib.spectral_curve_engine import koszul_duality_on_curve
-        result = koszul_duality_on_curve(26.0)
+    def test_verdier_dual_lane_c26(self):
+        from lib.spectral_curve_engine import verdier_dual_scalar_lane
+        result = verdier_dual_scalar_lane(26.0)
         assert result['c'] == 26.0
         assert result['c_dual'] == 0.0
         assert not result['self_dual']
+        assert result['scope'] == 'Verdier-dual scalar lane; not curve-level Koszul duality'
 
-    def test_koszul_duality_c13_self_dual(self):
-        from lib.spectral_curve_engine import koszul_duality_on_curve
-        result = koszul_duality_on_curve(13.0)
+    def test_verdier_dual_lane_c13_self_dual(self):
+        from lib.spectral_curve_engine import verdier_dual_scalar_lane
+        result = verdier_dual_scalar_lane(13.0)
         assert result['self_dual'] is True
         assert abs(result['rho'] - result['rho_dual']) < 1e-10
         assert abs(result['Delta'] - result['Delta_dual']) < 1e-10

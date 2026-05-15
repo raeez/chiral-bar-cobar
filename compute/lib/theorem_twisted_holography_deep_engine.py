@@ -2,19 +2,22 @@ r"""Deep engine: twisted holography programme vs modular Koszul duality.
 
 THEOREM MAP (5 identification axes):
 
-Axis 1 — Zeng's boundary = universal defect via Koszul duality:
+Axis 1 — Zeng's boundary and defect via Koszul comparison:
     Zeng [2302.06693] proves that KK-reducing 6d holomorphic theories produces
     3d HT theories whose boundary chiral algebra A_partial, for a transversal
     boundary condition, coincides with the universal defect chiral algebra of
     the parent theory.  The mechanism is Koszul duality.
 
     In our framework:
-      - The boundary chiral algebra A_partial IS our input algebra A.
-      - The universal defect algebra IS our Koszul dual A^! = (H*(B(A)))^v.
-      - The identification "boundary = universal defect via Koszul duality"
-        IS our Theorem A (bar-cobar adjunction + Verdier intertwining).
-      - The bulk algebra is NOT A^! and NOT A; it is our derived center
-        Z^der_ch(A) = C^*_ch(A_b, A_b) (chiral Hochschild cochains of boundary).
+      - The boundary chiral algebra A_partial is the input algebra A.
+      - The bar-dual coalgebra is A^i = H^*(B(A)).
+      - The universal defect algebra is the A^! branch obtained from A^i by
+        Verdier/finite-type duality on the Koszul locus.
+      - The comparison uses the same adjunction and Verdier lanes as
+        Theorem A. The bar-cobar counit Omega(B(A)) -> A belongs to the
+        reconstruction lane.
+      - The bulk algebra is the derived center
+        Z^der_ch(A) = C^*_ch(A_b, A_b), distinct from A and A^!.
       - This is the bulk-boundary-line triangle of Vol II, eq:global-corrected-triangle:
         A_bulk ~ Z_der(B_partial) ~ Z_der(C_line) ~ HH^*_ch(A^!_line).
 
@@ -24,14 +27,15 @@ Axis 2 — Garner-Paquette scattering with charged sources:
     as correlators of the celestial chiral algebra.
 
     In our framework:
-      - The celestial chiral algebra IS our A on the celestial sphere.
-      - The line defect is a module M in C = A^!-mod (line-operator category).
-      - Scattering with charged sources = correlators of the open/closed MC
-        element Theta^oc = Theta_A + sum mu^{M_j} (our open/closed MC element).
+      - The celestial chiral algebra is modeled by A on the celestial sphere.
+      - The line defect is a module M in C_line = A^!-mod.
+      - Scattering with charged sources is modeled by correlators of the
+        open/closed MC element Theta^oc = Theta_A + sum mu^{M_j}.
       - The genus-0 arity-n projection of Theta_A gives the n-point shadow
         amplitude Sh_{0,n}(Theta_A), which controls the celestial OPE.
-      - Our shadow obstruction tower extends GP's disk-level results to ALL genera
-        via the full modular lift.
+      - The engine below computes finite genus-0 projections and scalar
+        uniform-weight genus terms; it does not reconstruct the full
+        open/closed MC element.
 
 Axis 3 — Omega-background -> VOA:
     Costello-Gaiotto [1812.09257] show that the B-model topological string on
@@ -39,25 +43,29 @@ Axis 3 — Omega-background -> VOA:
     integral and produces vertex algebras on the boundary.
 
     In our framework:
-      - The Omega-background localization IS the BV-BRST quantization that
-        produces the boundary chiral algebra A.
-      - The bar complex B(A) encodes the FULL quantum content: its differential
-        d_B extracts ALL OPE modes via d log propagators on FM_k(C).
+      - The Omega-background localization is the boundary BV-BRST
+        quantization that produces the chiral algebra A.
+      - The bar complex B(A) is the ordered coalgebraic logarithm of the OPE:
+        its differential extracts the OPE modes that enter the bar lane via
+        d log propagators on FM_k(C).
       - Bar-cobar inversion Omega(B(A)) ~ A recovers A from its logarithm.
-      - The bar complex is NOT the bulk (AP34): Omega(B(A)) = A (reconstruction),
-        D_Ran(B(A)) = B(A!) (Koszul dual), C^*_ch(A,A) = Z_der (bulk).
+      - The bar complex records the OPE logarithm: Omega(B(A)) = A is
+        reconstruction, D_Ran(B(A)) is the Verdier surface for the A^!
+        branch, and C^*_ch(A,A) = Z_der is the bulk.
 
 Axis 4 — Reproducible computations:
     From the shadow obstruction tower, we can reproduce:
       (a) The boundary modular class W(A) for holomorphic BF on S^3 (Zeng).
-      (b) The collision residue r(z) = Omega/z for GL(N) CS (Casimir r-matrix).
+      (b) The collision residue r(z) = k Omega_tr/z for GL(N) CS
+          in trace-form normalization; KZ uses Omega/((k+h^vee)z).
       (c) The CYBE from genus-0 arity-3 MC equation (Arnold relations).
       (d) The celestial OPE from genus-0 shadow projections.
       (e) The GZ commuting differentials d_1, d_2 as arity-2 MC projections.
 
 Axis 5 — Beyond twisted holography:
     The monograph framework EXTENDS the twisted holography programme by:
-      (a) Higher-genus data: F_g = kappa * lambda_g^FP (uniform-weight lane).
+      (a) Higher-genus scalar data: F_g = kappa * lambda_g^FP
+          on the uniform-weight lane.
       (b) Shadow depth classification G/L/C/M (invisible to twisted holography).
       (c) Complementarity: Q_g(A) + Q_g(A^!) = H*(M_g, Z(A)).
       (d) Non-perturbative shadow convergence (double convergence theorem).
@@ -74,7 +82,7 @@ IMPLEMENTATION:
     4. Celestial OPE from genus-0 shadow projections.
     5. Collinear splitting function test.
     6. Zeng's boundary modular class (one-wheel sum).
-    7. Full holographic datum H(A) construction.
+    7. Seven-entry holographic package H(A) with explicit projection scope.
     8. Comparison tables: twisted holography vs our framework.
 
 ANTI-PATTERN COMPLIANCE:
@@ -100,10 +108,10 @@ LITERATURE:
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from fractions import Fraction
 from math import comb, factorial
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, Optional, Tuple
 
 # ============================================================================
 # Exact arithmetic helpers
@@ -259,7 +267,8 @@ def make_boundary_heisenberg(k: Fraction) -> BoundaryChiralAlgebra:
 
     Boundary = Heisenberg H_k.
     c = 1 (Sugawara Virasoro central charge).
-    kappa(H_k) = k (NOT c/2 = 1/2; see AP39, AP48).
+    kappa(H_k) = k. The Sugawara central charge c = 1 gives the distinct
+    Virasoro invariant c/2 = 1/2 (AP39, AP48).
     Shadow depth = 2 (class G, Gaussian).
     """
     k = _frac(k)
@@ -282,16 +291,19 @@ def make_boundary_heisenberg(k: Fraction) -> BoundaryChiralAlgebra:
 
 @dataclass(frozen=True)
 class KoszulDualAlgebra:
-    """Koszul dual A^! = (H*(B(A)))^v.
+    """Verdier/Koszul branch A^! associated to the bar-dual coalgebra A^i.
 
     For affine sl(N)_k: A^! has modular characteristic kappa^! = -kappa(A)
     (Feigin-Frenkel involution k -> -k - 2h^v, AP24: kappa + kappa' = 0 for KM).
 
     CRITICAL DISTINCTION (AP25, AP33):
-      - A^! = (H*(B(A)))^v is the strict Koszul dual (linear dual of bar cohomology).
-      - A^!_infty = D_Ran(B(A)) is the homotopy Koszul dual (Verdier dual).
-      - These coincide on the Koszul locus (Theorem A), but are categorically different.
-      - H_k^! = Sym^ch(V*) != H_{-k} as algebras (AP33).
+      - A^i = H^*(B(A)) is the bar-dual coalgebra.
+      - A^! is the strict Verdier/Koszul algebra obtained from A^i under the
+        finite-type or completed hypotheses.
+      - A^!_infty = D_Ran(B(A)) is the homotopy Verdier surface.
+      - Omega(B(A)) ~= A is bar-cobar inversion; it does not construct A^!.
+      - H_k^! = Sym^ch(V*) shares kappa with H_{-k} while remaining a
+        different chiral algebra (AP33).
     """
     name: str
     original: BoundaryChiralAlgebra
@@ -299,6 +311,9 @@ class KoszulDualAlgebra:
     kappa_sum: Fraction
     ff_dual_level: Fraction  # Feigin-Frenkel dual level -k - 2h^v
     is_anti_symmetric: bool  # kappa + kappa' = 0?
+    bar_dual_source: str
+    branch_scope: str
+    full_dual_constructed: bool
 
     @property
     def is_koszul_self_dual(self) -> bool:
@@ -307,7 +322,7 @@ class KoszulDualAlgebra:
 
 
 def compute_koszul_dual(A: BoundaryChiralAlgebra) -> KoszulDualAlgebra:
-    """Compute the Koszul dual of a boundary chiral algebra.
+    """Compute scalar Verdier/Koszul branch diagnostics for A.
 
     For affine sl(N)_k:
       FF involution: k -> -k - 2h^v
@@ -317,7 +332,8 @@ def compute_koszul_dual(A: BoundaryChiralAlgebra) -> KoszulDualAlgebra:
     For Heisenberg H_k:
       kappa^! = -k = -kappa(A)
       kappa + kappa' = 0 (anti-symmetric).
-      H_k^! = Sym^ch(V*) (AP33: NOT H_{-k} as algebras).
+      H_k^! = Sym^ch(V*) (AP33), with the same kappa as H_{-k} and a
+      different chiral-algebra structure.
     """
     kappa_A = A.kappa
 
@@ -341,6 +357,12 @@ def compute_koszul_dual(A: BoundaryChiralAlgebra) -> KoszulDualAlgebra:
         kappa_sum=kappa_sum,
         ff_dual_level=ff_dual_level,
         is_anti_symmetric=is_anti,
+        bar_dual_source=f"A^i({A.name}) = H^*(B({A.name}))",
+        branch_scope=(
+            "strict A^! branch under finite-type or completed Verdier "
+            "hypotheses; scalar kappa/level data only"
+        ),
+        full_dual_constructed=False,
     )
 
 
@@ -355,12 +377,14 @@ class CollisionResidue:
     The genus-0, arity-2 projection of the universal MC element.
 
     For affine sl(N)_k:
-      r(z) = Omega / z   (Casimir r-matrix, single pole)
-      where Omega = sum_{a} t^a tensor t^a is the Casimir tensor.
+      r^coll(z) = k Omega_tr / z   (trace-form Casimir, single pole).
+      The KZ representative is Omega_KZ / ((k+h^v) z).  These are
+      different normalizations of the same monodromy datum, not the
+      same rational function.
 
     CRITICAL (AP19): The OPE has a DOUBLE pole J^a(z)J^b(w) ~ k*delta^{ab}/(z-w)^2.
     The d log kernel absorbs one power: d log(z-w) = dz/(z-w).
-    So the collision residue has a SINGLE pole: r(z) = Omega/z.
+    So the collision residue has a SINGLE pole: r^coll(z) = k Omega_tr/z.
 
     For Heisenberg H_k:
       OPE: J(z)J(w) ~ k/(z-w)^2
@@ -370,13 +394,29 @@ class CollisionResidue:
     pole_order: int  # after d log absorption
     ope_max_pole: int  # original OPE pole order
     r_matrix_type: str  # "Casimir/z", "scalar/z", etc.
+    normalization: str
+    kernel_formula: str
+    raw_level_coefficient: Fraction
+    kz_kernel_formula: Optional[str]
+    kz_denominator: Optional[Fraction]
     satisfies_cybe: bool
-    kappa_from_r: Fraction  # kappa extracted from leading pole coefficient
+    kappa_from_r: Fraction  # scalar projection after trace/Sugawara normalization
+    projection_scope: str
 
     @property
     def ap19_verified(self) -> bool:
         """AP19: pole_order = ope_max_pole - 1."""
         return self.pole_order == self.ope_max_pole - 1
+
+    @property
+    def raw_kernel_vanishes_at_level_zero(self) -> bool:
+        """Trace-form affine and Heisenberg kernels vanish at raw level zero."""
+        return self.raw_level_coefficient == 0
+
+    @property
+    def raw_kernel_equals_kappa_projection(self) -> bool:
+        """True only when the raw collision coefficient is the kappa projection."""
+        return self.raw_level_coefficient == self.kappa_from_r
 
 
 def compute_collision_residue(A: BoundaryChiralAlgebra) -> CollisionResidue:
@@ -386,11 +426,10 @@ def compute_collision_residue(A: BoundaryChiralAlgebra) -> CollisionResidue:
       OPE: J^a(z) J^b(w) ~ k * delta^{ab} / (z-w)^2 + f^{abc} J^c / (z-w)
       Max OPE pole = 2
       d log absorption (AP19): residue pole = 2 - 1 = 1
-      r(z) = (k * Casimir + structure constant terms) / z = Omega_k / z
-      kappa from r: kappa = dim(g) * k / (2 * h^v) ... but r(z) also
-      sees the shifted level.  The standard form: r(z) = Omega / z where
-      Omega is the quadratic Casimir in A^! tensor A^!, so the kappa
-      extracted is kappa(A).
+      r^coll(z) = k Omega_tr / z.
+      KZ normalization is Omega_KZ / ((k+h^v) z).  The trace-form raw
+      coefficient is k; the scalar kappa projection uses the separate
+      Sugawara/obstruction normalization dim(g)(k+h^v)/(2h^v).
 
     For Heisenberg:
       OPE: J(z)J(w) ~ k / (z-w)^2
@@ -405,8 +444,14 @@ def compute_collision_residue(A: BoundaryChiralAlgebra) -> CollisionResidue:
             pole_order=1,
             ope_max_pole=2,
             r_matrix_type="scalar/z",
+            normalization="trace-form",
+            kernel_formula="k/z",
+            raw_level_coefficient=A.level,
+            kz_kernel_formula=None,
+            kz_denominator=None,
             satisfies_cybe=True,  # trivially (abelian)
             kappa_from_r=A.kappa,
+            projection_scope="raw scalar residue equals kappa for rank-one Heisenberg",
         )
     else:
         # Affine KM: Casimir r-matrix
@@ -414,9 +459,18 @@ def compute_collision_residue(A: BoundaryChiralAlgebra) -> CollisionResidue:
             algebra_name=A.name,
             pole_order=1,
             ope_max_pole=2,
-            r_matrix_type="Casimir/z",
+            r_matrix_type="trace-form k*Omega_tr/z",
+            normalization="trace-form",
+            kernel_formula="k*Omega_tr/z",
+            raw_level_coefficient=A.level,
+            kz_kernel_formula="Omega_KZ/((k+h^vee)z)",
+            kz_denominator=A.level + A.h_dual,
             satisfies_cybe=True,  # CYBE from Arnold relations on C_3(X)
             kappa_from_r=A.kappa,
+            projection_scope=(
+                "kappa is the scalar obstruction projection; raw collision "
+                "coefficient is the level k"
+            ),
         )
 
 
@@ -433,6 +487,9 @@ def verify_cybe_from_mc(A: BoundaryChiralAlgebra) -> Dict[str, Any]:
     For strict algebras (m_k = 0 for k >= 3), the MC equation reduces to CYBE.
     For non-strict algebras (Virasoro, W_N with m_k != 0 for k >= 3),
     the A_infty Yang-Baxter equation has higher correction terms.
+
+    This helper verifies the finite genus-0 arity-3 projection only.  It does
+    not reconstruct Theta_A or any higher-genus open/closed MC data.
     """
     r = compute_collision_residue(A)
 
@@ -447,6 +504,8 @@ def verify_cybe_from_mc(A: BoundaryChiralAlgebra) -> Dict[str, Any]:
         "satisfies_cybe": r.satisfies_cybe,
         "is_strict_at_arity_3": is_strict_at_arity_3,
         "mc_projection": "genus=0, arity=3",
+        "full_mc_reconstructed": False,
+        "projection_scope": "finite genus-0 arity-3 MC projection",
         "mechanism": "Arnold relations on FM_3(X)",
         "higher_corrections": not is_strict_at_arity_3,
     }
@@ -461,12 +520,12 @@ class DerivedCenter:
     """Z^der_ch(A) = C^*_ch(A_b, A_b) = chiral Hochschild cochains.
 
     CRITICAL DISTINCTION (AP34, AP-OC):
-      - The bulk IS the derived center, NOT the bar complex.
+      - The bulk is the derived center, not the bar complex.
       - B(A) classifies twisting morphisms (couplings between A and A!).
       - Z^der_ch(A) classifies bulk operators acting on boundary.
-      - Omega(B(A)) = A (reconstruction, NOT the bulk).
-      - D_Ran(B(A)) = B(A!) (Koszul dual, NOT the bulk).
-      - C^*_ch(A,A) = Z^der (the ACTUAL bulk).
+      - Omega(B(A)) = A is reconstruction.
+      - D_Ran(B(A)) is the Verdier surface for the A^! branch.
+      - C^*_ch(A,A) = Z^der is the bulk.
 
     For affine sl(N)_k:
       Bulk = commutative chiral algebra with shifted Poisson bracket (CDG20).
@@ -480,12 +539,12 @@ class DerivedCenter:
 
     @property
     def is_derived_center(self) -> bool:
-        """By definition, the bulk IS the derived center."""
+        """By definition, the bulk is the derived center."""
         return True
 
     @property
     def is_not_bar_complex(self) -> bool:
-        """AP34: the bulk is NOT the bar complex."""
+        """AP34: the bulk is the derived center."""
         return True
 
 
@@ -560,7 +619,7 @@ class BulkBoundaryLineTriangle:
 
 
 def construct_triangle(A: BoundaryChiralAlgebra) -> BulkBoundaryLineTriangle:
-    """Construct the full bulk-boundary-line triangle."""
+    """Construct the finite bulk-boundary-line descriptor."""
     dual = compute_koszul_dual(A)
     center = compute_derived_center(A)
     line_desc = f"C_line ~ ({dual.name})-mod"
@@ -580,15 +639,26 @@ def construct_triangle(A: BoundaryChiralAlgebra) -> BulkBoundaryLineTriangle:
 
 @dataclass(frozen=True)
 class HolographicDatum:
-    """H(A) = (A, A^!, C, r(z), Theta_A, nabla^hol).
+    """H(A) = (A, A^i, A^!, C, r(z), Theta_A, nabla^hol).
 
-    The sextuple packaging the full HT holographic system.
-    Every component is a projection of Theta_A.
+    The seven-entry package keeps the bar-dual coalgebra, the strict
+    Verdier/Koszul branch, and the chiral derived centre apart.  The scalar
+    compute surface below records projections of this package; it is not a
+    reconstruction of every chain-level slot.
     """
     boundary: BoundaryChiralAlgebra
+    bar_dual_coalgebra: str
     koszul_dual: KoszulDualAlgebra
     collision_residue: CollisionResidue
     derived_center: DerivedCenter
+    package_entries: Tuple[str, ...]
+    compute_projection_package: Tuple[str, ...]
+    object_firewall: Dict[str, str]
+    full_mc_data_reconstructed: bool
+    full_holographic_package_theorem: bool
+    connection_flatness_scope: str
+    bv_brst_hypotheses: Tuple[str, ...]
+    factorization_hypotheses: Tuple[str, ...]
     kappa: Fraction
     shadow_depth: int
     archetype_class: str  # G, L, C, M
@@ -599,12 +669,12 @@ class HolographicDatum:
 
     @property
     def shadow_connection_is_flat(self) -> bool:
-        """Flatness from MC equation: (nabla^hol)^2 = 0."""
-        return True  # Always true (proved)
+        """Flatness on the finite comparison surface recorded by the datum."""
+        return True
 
 
 def construct_holographic_datum(A: BoundaryChiralAlgebra) -> HolographicDatum:
-    """Construct the full holographic modular Koszul datum H(A)."""
+    """Construct the seven-entry holographic modular Koszul package H(A)."""
     dual = compute_koszul_dual(A)
     residue = compute_collision_residue(A)
     center = compute_derived_center(A)
@@ -621,9 +691,46 @@ def construct_holographic_datum(A: BoundaryChiralAlgebra) -> HolographicDatum:
 
     return HolographicDatum(
         boundary=A,
+        bar_dual_coalgebra=f"A^i({A.name}) = H^*(B({A.name}))",
         koszul_dual=dual,
         collision_residue=residue,
         derived_center=center,
+        package_entries=("A", "A^i", "A^!", "C", "r(z)", "Theta_A", "nabla^hol"),
+        compute_projection_package=(
+            "kappa",
+            "shadow_depth",
+            "archetype_class",
+            "collision_residue",
+            "genus0_arity3_cybe",
+            "uniform_weight_scalar_genus_terms",
+            "derived_center_descriptor",
+            "duality_scalar",
+            "connection_flatness_status",
+        ),
+        object_firewall={
+            "A": "boundary chiral algebra",
+            "B(A)": "ordered bar coalgebra",
+            "A^i": "bar-dual coalgebra H^*(B(A))",
+            "A^!": "strict Verdier/Koszul branch under finite-type or completed hypotheses",
+            "C": "chiral derived centre Z^der_ch(A), the bulk slot",
+            "Omega(B(A))": "bar-cobar inversion returning A, not Koszul duality",
+        },
+        full_mc_data_reconstructed=False,
+        full_holographic_package_theorem=False,
+        connection_flatness_scope=(
+            "finite genus-0 affine/abelian comparison surface; the full "
+            "Theta_A and open/closed MC package are manuscript data, not "
+            "reconstructed by this engine"
+        ),
+        bv_brst_hypotheses=(
+            "boundary VOA production by BV-BRST quantization",
+            "genus>=1 BV/BRST=bar requires coderived/completed hypotheses",
+            "chain-level class-M identification is not asserted here",
+        ),
+        factorization_hypotheses=(
+            "Koszul locus or completed finite-type Verdier branch for A^!",
+            "factorization descent/excision not computed by this engine",
+        ),
         kappa=A.kappa,
         shadow_depth=depth,
         archetype_class=archetype,
@@ -637,7 +744,9 @@ def construct_holographic_datum(A: BoundaryChiralAlgebra) -> HolographicDatum:
 def genus_g_partition_function(A: BoundaryChiralAlgebra, g: int) -> Fraction:
     """F_g(A) = kappa(A) * lambda_g^FP for uniform-weight algebras.
 
-    This is Theorem D (scalar lane, uniform-weight).
+    This is Theorem D on the scalar uniform-weight lane.  The function is not
+    a multi-weight genus expansion and does not include cross-channel graph
+    corrections.
     lambda_g^FP = (2^{2g-1} - 1) |B_{2g}| / (2^{2g-1} * (2g)!).
     """
     if g < 1:
@@ -667,7 +776,8 @@ class CelestialOPEData:
 
     The collinear splitting function in celestial holography is
     controlled by the COLLISION RESIDUE r(z):
-      Split(z) ~ r(z) = Omega / z   (single pole, AP19).
+      Split(z) ~ r^coll(z) = k Omega_tr / z   (single pole, AP19).
+      KZ normalization uses Omega_KZ / ((k+h^v)z) and is tracked separately.
 
     The OPE coefficient at order (z-w)^{-n} in the original OPE becomes
     order (z-w)^{-(n-1)} in the r-matrix (d log absorption, AP19).
@@ -722,8 +832,8 @@ def collinear_splitting_from_shadow(A: BoundaryChiralAlgebra) -> Dict[str, Any]:
     The collinear limit of celestial amplitudes is controlled by
     r(z) = Res^{coll}_{0,2}(Theta_A).
 
-    For gluon scattering in SU(N) gauge theory:
-      Split(z) ~ Omega/z = (sum_a t^a tensor t^a) / z
+    For gluon scattering in SU(N) gauge theory, in trace-form convention:
+      Split(z) ~ k Omega_tr/z = k(sum_a t^a tensor t_a) / z
 
     The leading behavior ~ 1/z is the collinear singularity.
     The coefficient is the quadratic Casimir of the representation.
@@ -741,6 +851,11 @@ def collinear_splitting_from_shadow(A: BoundaryChiralAlgebra) -> Dict[str, Any]:
         "ope_pole_order": residue.ope_max_pole,
         "ap19_shift": residue.ope_max_pole - residue.pole_order,
         "ap19_verified": residue.ap19_verified,
+        "normalization": residue.normalization,
+        "kernel_formula": residue.kernel_formula,
+        "raw_level_coefficient": residue.raw_level_coefficient,
+        "kz_kernel_formula": residue.kz_kernel_formula,
+        "kz_denominator": residue.kz_denominator,
     }
 
     if A.lie_type == "abelian":
@@ -748,7 +863,7 @@ def collinear_splitting_from_shadow(A: BoundaryChiralAlgebra) -> Dict[str, Any]:
         result["leading_coefficient"] = str(A.level)
     else:
         result["splitting_type"] = "Casimir"
-        result["leading_coefficient"] = f"Omega(sl_{A.rank + 1})"
+        result["leading_coefficient"] = f"{A.level}*Omega_tr(sl_{A.rank + 1})"
         result["casimir_value_fund"] = Fraction(
             (A.rank + 1) ** 2 - 1, 2 * (A.rank + 1)
         )
@@ -783,7 +898,9 @@ class BoundaryModularClass:
     lambda_1: Fraction
     obstruction_value: Fraction  # kappa * lambda_1
     vanishes: bool  # True iff kappa = 0
-    genus_1_lift_exists: bool  # True always (obstruction in image of d_pi)
+    genus_1_lift_exists: bool  # True on the implemented G/L comparison surface
+    lift_scope: str
+    full_genus_lift_asserted: bool
 
     @property
     def is_zeng_compatible(self) -> bool:
@@ -799,9 +916,8 @@ def compute_boundary_modular_class(A: BoundaryChiralAlgebra
     omega_1(pi) is the one-loop graph sum.  Its cohomology class is
     kappa(A) * lambda_1 (Theorem D).
 
-    The genus-1 lift ALWAYS exists for the standard landscape because
-    the obstruction is in the image of d_pi (the deformation complex
-    has vanishing H^2 at genus 1 for standard families).
+    On the implemented affine/abelian comparison surface the genus-1 lift is
+    recorded as available.  This is not a full all-genus BV/BRST lift claim.
     """
     lambda_1 = _lambda_fp(1)  # = 1/24
     obs = A.kappa * lambda_1
@@ -813,6 +929,8 @@ def compute_boundary_modular_class(A: BoundaryChiralAlgebra
         obstruction_value=obs,
         vanishes=(A.kappa == 0),
         genus_1_lift_exists=True,
+        lift_scope="implemented affine/abelian genus-1 scalar comparison surface",
+        full_genus_lift_asserted=False,
     )
 
 
@@ -821,81 +939,109 @@ def compute_boundary_modular_class(A: BoundaryChiralAlgebra
 # ============================================================================
 
 def twisted_holography_comparison_table() -> Dict[str, Dict[str, str]]:
-    """Complete comparison between twisted holography and our framework.
+    """Finite comparison between twisted holography and this compute surface.
 
-    Returns a dictionary mapping each concept to its manifestation
-    in both frameworks.
+    Returns a dictionary mapping each concept to its manifestation in both
+    frameworks, with the proof or computation scope stated explicitly.
     """
     return {
         "boundary_chiral_algebra": {
             "twisted_hol": "A_partial from KK reduction + boundary condition",
             "our_framework": "Input algebra A (standing hypothesis)",
-            "identification": "SAME OBJECT (Axis 1)",
+            "identification": "same boundary object under the chosen boundary condition",
+            "status": "input identification",
+            "scope": "finite boundary algebra data",
         },
         "universal_defect_algebra": {
             "twisted_hol": "Defect chiral algebra of parent 6d theory (Zeng)",
-            "our_framework": "Koszul dual A^! = (H*(B(A)))^v",
-            "identification": "SAME via Koszul duality (Theorem A)",
+            "our_framework": "A^! branch obtained from A^i=H^*(B(A)) by Verdier/Koszul duality",
+            "identification": "same comparison lane on the Koszul locus; not Omega(B(A))",
+            "status": "conditional on Koszul/completed Verdier hypotheses",
+            "scope": "A^i -> A^! branch, not bar-cobar inversion",
         },
         "bulk_algebra": {
             "twisted_hol": "Commutative chiral algebra + shifted Poisson (CDG20)",
             "our_framework": "Derived center Z^der_ch(A) = C^*_ch(A_b, A_b)",
-            "identification": "SAME (Theorem H, AP34)",
+            "identification": "same chiral derived-centre slot",
+            "status": "computed descriptor, not a bulk theorem",
+            "scope": "Hochschild/cochain closed sector",
         },
         "line_operators": {
             "twisted_hol": "Line defects in 3d HT theory (DNP25)",
             "our_framework": "C_line ~ A^!-mod (line-operator theorem)",
-            "identification": "SAME (proved on Koszul locus)",
+            "identification": "same line category on the Koszul locus; distinct from C=Z^der_ch(A)",
+            "status": "conditional on line-category/factorization hypotheses",
+            "scope": "line modules, not derived centre",
         },
         "r_matrix": {
             "twisted_hol": "Binary OPE of line operators (DNP r(z))",
-            "our_framework": "Collision residue r(z) = Res^coll_{0,2}(Theta_A)",
-            "identification": "SAME (genus-0 arity-2 projection of MC)",
+            "our_framework": "Collision residue r^coll(z) = Res^coll_{0,2}(Theta_A)",
+            "identification": "finite genus-0 arity-2 MC projection",
+            "status": "computed projection",
+            "scope": "trace-form kernel; KZ normalization tracked separately",
         },
         "cybe": {
             "twisted_hol": "Consistency of line-operator OPE",
             "our_framework": "Genus-0 arity-3 MC equation (Arnold relations)",
-            "identification": "SAME (proved)",
+            "identification": "finite arity-3 projection for class G/L examples",
+            "status": "proved on the finite comparison surface",
+            "scope": "not the full open/closed MC package",
         },
         "higher_operations": {
             "twisted_hol": "Gaiotto-Kulp-Wu m_k^GKW via Feynman diagrams",
             "our_framework": "Transferred A_infty operations m_k^{SC,tr}",
-            "identification": "SAME (Kadeishvili uniqueness, thm:gkw-shadow-bridge)",
+            "identification": "comparison requires the transferred A_infty bridge",
+            "status": "not computed by this engine",
+            "scope": "requires Kadeishvili/factorization hypotheses",
         },
         "quadratic_duality": {
             "twisted_hol": "Gui-Li-Zeng chiral quadratic duality (GLZ22)",
             "our_framework": "Bar-cobar on the quadratic locus",
-            "identification": "SAME on quadratic locus; ours extends beyond",
+            "identification": "agreement on the quadratic locus",
+            "status": "locus-restricted",
+            "scope": "not global bar-cobar equivalence",
         },
         "modular_completion": {
             "twisted_hol": "Unknown / conjectural beyond disk-level",
-            "our_framework": "Full MC lift Theta_A via bar-intrinsic construction",
-            "identification": "OUR EXTENSION (Axis 5)",
+            "our_framework": "MC lift Theta_A via bar-intrinsic construction",
+            "identification": "extension beyond disk-level in the manuscript, not reconstructed here",
+            "status": "conditional outside finite projections",
+            "scope": "engine records finite/scalar diagnostics only",
         },
         "genus_tower": {
             "twisted_hol": "Not available (disk-level only)",
-            "our_framework": "F_g = kappa * lambda_g^FP (all genera, proved)",
-            "identification": "OUR EXTENSION (Axis 5)",
+            "our_framework": "F_g = kappa * lambda_g^FP on the scalar uniform-weight lane",
+            "identification": "scalar extension with stated lane restrictions",
+            "status": "uniform-weight scalar lane",
+            "scope": "multi-weight cross-channel terms not encoded",
         },
         "shadow_depth": {
             "twisted_hol": "Not classified",
             "our_framework": "G/L/C/M classification (4 archetype classes)",
-            "identification": "OUR EXTENSION (Axis 5)",
+            "identification": "classification extension",
+            "status": "descriptor computed for implemented families",
+            "scope": "Heisenberg and affine examples in this engine",
         },
         "complementarity": {
             "twisted_hol": "Not formulated",
             "our_framework": "Q_g(A) + Q_g(A^!) = H*(M_g, Z(A))",
-            "identification": "OUR EXTENSION (Theorem C)",
+            "identification": "complementarity belongs to the manuscript theorem surface",
+            "status": "scalar duality check only in this engine",
+            "scope": "kappa(A)+kappa(A^!) for implemented families",
         },
         "entanglement": {
             "twisted_hol": "Not formulated algebraically",
             "our_framework": "Lagrangian capacity from complementarity splitting",
-            "identification": "OUR EXTENSION (G11-G16)",
+            "identification": "not computed by this engine",
+            "status": "out of compute scope",
+            "scope": "no entanglement invariant returned",
         },
         "shadow_arithmetic": {
             "twisted_hol": "Not formulated",
             "our_framework": "Shadow L-function, Eisenstein theorem, connection",
-            "identification": "OUR EXTENSION (arithmetic packet)",
+            "identification": "not computed by this engine",
+            "status": "out of compute scope",
+            "scope": "no arithmetic packet returned",
         },
     }
 
@@ -912,25 +1058,34 @@ class OmegaBackgroundBarCobar:
     (the boundary chiral algebra A).
 
     In our framework:
-      - The Omega-background localization IS the BV-BRST quantization
-        producing the boundary algebra A.
+      - The Omega-background localization is the boundary BV-BRST
+        quantization producing the boundary algebra A.
       - The bar complex B(A) is the factorization coalgebra on FM_k(C),
-        encoding the full quantum OPE data via logarithmic differential forms.
-      - The bar differential extracts ALL OPE modes via d log(z-w) propagators
-        (not just simple poles, AP41).
+        encoding the OPE data visible in the bar lane via logarithmic
+        differential forms.
+      - The bar differential extracts the OPE modes entering this lane via
+        d log(z-w) propagators, beyond the simple-pole projection.
       - Bar-cobar inversion Omega(B(A)) ~ A recovers A (Theorem B).
       - The Omega-background parameter epsilon becomes hbar in the bar complex:
         the genus filtration on g^mod_A is the hbar-adic filtration.
 
-    This is NOT the Nekrasov Omega-background on R^4_epsilon (which gives
-    4d Nekrasov partition functions via AGT). The 3d HT Omega-background
-    is the holomorphic twist, not the AGT deformation.
+    This is the 3d HT Omega-background from the holomorphic twist, distinct
+    from the Nekrasov Omega-background on R^4_epsilon that gives 4d
+    Nekrasov partition functions via AGT.
+
+    Scope: this data records boundary BV-BRST production and the bar-cobar
+    inversion lane.  It does not assert the genus>=1 chain-level
+    BV/BRST=bar comparison without the coderived/completed hypotheses and
+    factorization bridge stated in the manuscript.
     """
     algebra_name: str
     omega_parameter: str
     bar_differential_description: str
     genus_filtration_parameter: str
     is_bv_brst: bool
+    full_bv_brst_bar_identification: bool
+    bv_brst_bar_scope: str
+    factorization_hypotheses: Tuple[str, ...]
 
     @property
     def omega_is_not_nekrasov(self) -> bool:
@@ -950,6 +1105,16 @@ def omega_background_identification(A: BoundaryChiralAlgebra
         ),
         genus_filtration_parameter="hbar (genus counting parameter)",
         is_bv_brst=True,
+        full_bv_brst_bar_identification=False,
+        bv_brst_bar_scope=(
+            "boundary BV-BRST quantization only; genus>=1 BV/BRST=bar "
+            "requires coderived/completed hypotheses and the BV functor bridge"
+        ),
+        factorization_hypotheses=(
+            "factorization coalgebra on FM_k(C)",
+            "completed/coderived comparison for higher genus",
+            "no chain-level class-M identification asserted",
+        ),
     )
 
 
@@ -1015,6 +1180,9 @@ def gz_commuting_differentials(A: BoundaryChiralAlgebra) -> Dict[str, Any]:
 
     The anticommutativity d_1*d_2 + d_2*d_1 = 0 is the genus-0 arity-2
     component of the MC equation.
+
+    This helper returns the finite arity-2 projection.  It is not a proof
+    that the full open/closed MC package has been reconstructed.
     """
     return {
         "algebra": A.name,
@@ -1023,6 +1191,8 @@ def gz_commuting_differentials(A: BoundaryChiralAlgebra) -> Dict[str, Any]:
         "d2_squared_zero": True,
         "anticommutator_zero": True,
         "mc_source": "genus=0, arity=2 projection of MC equation",
+        "full_mc_reconstructed": False,
+        "projection_scope": "finite arity-2 scalar/checkable projection",
         "gz_reference": "Gaiotto-Zeng d_1, d_2",
         "our_reference": "Sh_{0,2}(Theta_A) = scalar shadow of MC",
     }
@@ -1036,11 +1206,15 @@ def verify_kappa_three_paths(A: BoundaryChiralAlgebra) -> Dict[str, Any]:
     """Verify kappa(A) via 3 independent paths.
 
     Path 1: From defining formula kappa = dim(g)*(k+h^v)/(2*h^v).
-    Path 2: From collision residue leading coefficient.
+    Path 2: From collision-residue scalar projection after normalization.
     Path 3: From genus-1 partition function F_1 = kappa/24.
+
+    The raw affine trace-form coefficient is k, not kappa; it is returned
+    separately so the trace-form/KZ firewall can be tested.
     """
     kappa_formula = A.kappa
-    kappa_residue = compute_collision_residue(A).kappa_from_r
+    residue = compute_collision_residue(A)
+    kappa_residue = residue.kappa_from_r
     kappa_from_f1 = genus_g_partition_function(A, 1) / _lambda_fp(1)
 
     return {
@@ -1048,6 +1222,10 @@ def verify_kappa_three_paths(A: BoundaryChiralAlgebra) -> Dict[str, Any]:
         "path1_formula": kappa_formula,
         "path2_residue": kappa_residue,
         "path3_genus1": kappa_from_f1,
+        "raw_trace_form_level": residue.raw_level_coefficient,
+        "raw_kernel_formula": residue.kernel_formula,
+        "kz_kernel_formula": residue.kz_kernel_formula,
+        "kz_denominator": residue.kz_denominator,
         "all_agree": (kappa_formula == kappa_residue == kappa_from_f1),
     }
 
@@ -1070,14 +1248,16 @@ def verify_duality_constraint(A: BoundaryChiralAlgebra) -> Dict[str, Any]:
 
 
 # ============================================================================
-# Section 15: Full programme comparison data
+# Section 15: Finite programme comparison data
 # ============================================================================
 
 def full_twisted_holography_analysis(N: int, k: Fraction
                                       ) -> Dict[str, Any]:
-    """Complete twisted holography analysis for SU(N) CS at level k.
+    """Twisted holography analysis for SU(N) CS at level k.
 
-    Constructs the full holographic datum and all comparison data.
+    Constructs the seven-entry holographic package and the scalar comparison
+    data implemented by this engine.  It is a finite diagnostic report, not a
+    full holographic package theorem.
     """
     A = make_boundary_sl_N(N, k)
     datum = construct_holographic_datum(A)
@@ -1095,6 +1275,12 @@ def full_twisted_holography_analysis(N: int, k: Fraction
 
     return {
         "input": {"N": N, "k": k, "algebra": A.name},
+        "scope": {
+            "finite_diagnostics_only": True,
+            "full_mc_reconstructed": False,
+            "full_holographic_package_theorem": False,
+            "implemented_surface": datum.compute_projection_package,
+        },
         "holographic_datum": datum,
         "triangle": triangle,
         "modular_class": modular_class,
@@ -1111,7 +1297,7 @@ def full_twisted_holography_analysis(N: int, k: Fraction
 
 
 def heisenberg_twisted_holography_analysis(k: Fraction) -> Dict[str, Any]:
-    """Complete analysis for Heisenberg (GL(1) CS)."""
+    """Finite scalar analysis for Heisenberg (GL(1) CS)."""
     A = make_boundary_heisenberg(k)
     datum = construct_holographic_datum(A)
     triangle = construct_triangle(A)
@@ -1124,6 +1310,12 @@ def heisenberg_twisted_holography_analysis(k: Fraction) -> Dict[str, Any]:
 
     return {
         "input": {"k": k, "algebra": A.name},
+        "scope": {
+            "finite_diagnostics_only": True,
+            "full_mc_reconstructed": False,
+            "full_holographic_package_theorem": False,
+            "implemented_surface": datum.compute_projection_package,
+        },
         "holographic_datum": datum,
         "triangle": triangle,
         "modular_class": modular_class,

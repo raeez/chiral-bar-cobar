@@ -1,40 +1,32 @@
-r"""Tests for the multi-weight generating function engine.
+r"""Tests for the W_3 finite-window generating-function engine.
 
-MULTI-PATH VERIFICATION of the generating function G(t,c) = sum delta_F_g t^{2g}.
+The certified window is g = 2, 3, 4.  These tests check exact W_3
+cross-channel constants, rational diagnostics from those three terms,
+scalar FP separation, and negative boundaries: no Pade pole is promoted
+to a convergence-radius theorem, no sampled cross/scalar comparison is
+promoted to all-c dominance, and no analytic tau-function or hierarchy
+membership is certified here.
 
-Verified structural results:
+Checked finite-window properties:
 
-(GF1) RATIO NON-CONSTANCY: R_g := delta_F_{g+1}/delta_F_g is NOT constant in g,
-      so G is NOT a geometric series. The ratio R_3/R_2 varies with c.
-
-(GF2) PADE SELF-CONSISTENCY: the [1/1] Pade approximant in u = t^2 reproduces
-      the three input coefficients exactly (3 parameters, 3 data points).
-
-(GF3) PADE POLE POSITIVITY: the Pade pole u_pole > 0 for all c > 0, giving a
-      finite radius of convergence estimate.
-
-(GF4) CROSS-CHANNEL DOMINANCE: delta_F_g >> kappa * lambda_g for all c > 0
-      and all g = 2,3,4. The multi-weight correction is NOT a small perturbation.
-
-(GF5) NUMERATOR ROOT STRUCTURE: P_2(c) has one real root c = -204.
-      P_3(c) has one real root and a complex conjugate pair.
-      P_4(c) has two complex conjugate pairs (no real roots).
-      All roots have Re(c) < 0: the correction is nonsingular for c > 0.
-
-(GF6) SHADOW METRIC INDEPENDENCE: the Pade pole u_pole is NOT proportional to
-      |t_0(Q_L)|^2 (the shadow metric zero modulus). The ratio u_pole/|t_0|^2
-      varies by 4+ orders of magnitude across c values.
-
-(GF7) RATIO LIMIT: as c -> 0, R_3/R_2 -> alpha_{4,4}*alpha_{2,2}/(alpha_{3,3})^2
-      = 5138841*51/(25124)^2 (computable from Betti data).
-
-(GF8) POSITIVITY: delta_F_g(c) > 0 for all c > 0 and g = 2,3,4.
-
-(GF9) LARGE-c ASYMPTOTICS: delta_F_2 -> 1/16 (constant), delta_F_g -> (leading/D_g)*c
-      for g >= 3 (linear growth).
-
-(GF10) DENOMINATOR STRUCTURE: D_2 = 16 = 2^4, D_3 = 138240 = 2^10*3^3*5,
-       D_4 = 17418240 = 2^11*3^5*5*7. D_g | (2g)! * 2^{...}.
+* R_2 and R_3 are not constant in g, so the three-term window is not
+  geometric.
+* The [1/1] Pade approximant in u = t^2 reconstructs the three input
+  coefficients exactly.
+* The finite-window Pade pole is positive on the sampled positive c
+  values, without any all-genus radius assertion.
+* Cross-channel terms can exceed the scalar lane in the sampled small-c
+  window, while genus 2 is not uniformly larger as c -> infinity.
+* The numerator polynomials have no positive real roots in the checked
+  window.
+* The Pade pole is independent of the canonical Virasoro T-line shadow
+  metric in the tested window.
+* As c -> 0, R_3/R_2 has the Betti limit
+  alpha_{4,4}*alpha_{2,2}/alpha_{3,3}^2 = 262080891/157803844.
+* delta_F_g(c) > 0 for c > 0 in the certified genera.
+* delta_F_2 -> 1/16 as c -> infinity; g = 3, 4 have linear leading
+  large-c terms.
+* D_2 = 16, D_3 = 138240, D_4 = 17418240, and D_g divides (4g)!.
 
 References:
     thm:multi-weight-genus-expansion (higher_genus_modular_koszul.tex)
@@ -42,21 +34,32 @@ References:
     theorem_multiweight_generating_function_engine.py
 """
 
-import pytest
 from fractions import Fraction
 
 from compute.lib.theorem_multiweight_generating_function_engine import (
+    BAR_KOSZUL_OBJECT_ROLES,
+    GENUS_WINDOW,
+    HOLOGRAPHIC_PACKAGE_ENTRIES,
+    MODULAR_KOSZUL_COMPUTE_PROJECTIONS,
+    available_genera,
     delta_Fg,
     generating_function,
+    generating_function_u,
     evaluate_generating_function,
+    evaluate_generating_function_u,
     genus_ratio,
     all_genus_ratios,
+    ratio_growth_quotient,
+    ratio_growth_exponent,
     ratio_second_difference,
     pade_11,
     pade_evaluate,
     pade_pole,
     pade_reconstruction_error,
+    virasoro_t_line_shadow_data,
+    w3_diagonal_channel_data,
     shadow_metric_Q_virasoro,
+    shadow_metric_zero_modulus_sq,
     shadow_metric_sqrt_series,
     numerator_polynomial,
     numerator_roots_float,
@@ -65,23 +68,81 @@ from compute.lib.theorem_multiweight_generating_function_engine import (
     large_c_leading,
     small_c_leading,
     kappa_w3,
+    scalar_lane_decomposition,
     scalar_Fg,
     total_Fg,
     cross_to_scalar_ratio,
+    cross_exceeds_scalar,
     denominator_factored,
     full_analysis,
 )
 
 
 # ============================================================================
-# Path 1: Cross-check delta_F_g against theorem_multiweight_structure_engine
+# Finite-window and firewall discipline
+# ============================================================================
+
+class TestFiniteWindowAndFirewalls:
+    """Guard the computation surface against package and lane conflations."""
+
+    def test_available_genera_is_exact_window(self):
+        """The engine exposes only the certified g=2,3,4 window."""
+        assert GENUS_WINDOW == (2, 3, 4)
+        assert available_genera() == (2, 3, 4)
+
+    def test_holographic_package_has_seven_entries(self):
+        """H(A) has exactly seven entries."""
+        assert HOLOGRAPHIC_PACKAGE_ENTRIES == (
+            "A",
+            "A^i",
+            "A^!",
+            "C",
+            "r(z)",
+            "Theta_A",
+            "nabla^hol",
+        )
+        assert len(HOLOGRAPHIC_PACKAGE_ENTRIES) == 7
+
+    def test_modular_koszul_compute_package_has_six_projections(self):
+        """Pi_X(L) has exactly six projections and is not H(A)."""
+        assert MODULAR_KOSZUL_COMPUTE_PROJECTIONS == (
+            "Fact_X(L)",
+            "barB_X(L)",
+            "Theta_L",
+            "L_L",
+            "(V_br,T_br)",
+            "R4_mod(L)",
+        )
+        assert len(MODULAR_KOSZUL_COMPUTE_PROJECTIONS) == 6
+        assert set(MODULAR_KOSZUL_COMPUTE_PROJECTIONS).isdisjoint(
+            HOLOGRAPHIC_PACKAGE_ENTRIES
+        )
+
+    def test_bar_koszul_objects_are_distinct(self):
+        """A, B(A), A^i, A^!, Omega(B(A)), and Z_ch^der(A) stay distinct."""
+        assert set(BAR_KOSZUL_OBJECT_ROLES) == {
+            "A",
+            "B(A)",
+            "A^i",
+            "A^!",
+            "Omega(B(A))",
+            "Z_ch^der(A)",
+        }
+        assert "inversion" in BAR_KOSZUL_OBJECT_ROLES["Omega(B(A))"]
+        assert "Verdier" in BAR_KOSZUL_OBJECT_ROLES["A^!"]
+        assert "ChirHoch" in BAR_KOSZUL_OBJECT_ROLES["Z_ch^der(A)"]
+        assert BAR_KOSZUL_OBJECT_ROLES["A^!"] != BAR_KOSZUL_OBJECT_ROLES["Omega(B(A))"]
+
+
+# ============================================================================
+# Cross-check delta_F_g against theorem_multiweight_structure_engine
 # ============================================================================
 
 class TestCrossCheckStructureEngine:
-    """Verify delta_F_g matches the structure engine (multi-path verification)."""
+    """Verify delta_F_g against the structure engine."""
 
     def test_delta_F2_matches_structure_engine(self):
-        """Path 1: delta_F_2 = (c+204)/(16c) matches structure engine."""
+        """delta_F_2 = (c+204)/(16c) matches the structure engine."""
         from compute.lib.theorem_multiweight_structure_engine import (
             delta_Fg_closed as delta_Fg_ref,
         )
@@ -92,7 +153,7 @@ class TestCrossCheckStructureEngine:
             )
 
     def test_delta_F3_matches_structure_engine(self):
-        """Path 1: delta_F_3 matches structure engine."""
+        """delta_F_3 matches the structure engine."""
         from compute.lib.theorem_multiweight_structure_engine import (
             delta_Fg_closed as delta_Fg_ref,
         )
@@ -103,7 +164,7 @@ class TestCrossCheckStructureEngine:
             )
 
     def test_delta_F4_matches_structure_engine(self):
-        """Path 1: delta_F_4 matches structure engine."""
+        """delta_F_4 matches the structure engine."""
         from compute.lib.theorem_multiweight_structure_engine import (
             delta_Fg_closed as delta_Fg_ref,
         )
@@ -114,23 +175,23 @@ class TestCrossCheckStructureEngine:
             )
 
     def test_delta_F2_explicit_value(self):
-        """Path 2: verify delta_F_2(10) = (10+204)/(16*10) = 214/160 = 107/80."""
+        """Direct value: delta_F_2(10) = (10+204)/(16*10) = 107/80."""
         assert delta_Fg(2, Fraction(10)) == Fraction(107, 80)
 
     def test_delta_F2_at_c1(self):
-        """Path 2: delta_F_2(1) = 205/16."""
+        """Direct value: delta_F_2(1) = 205/16."""
         assert delta_Fg(2, Fraction(1)) == Fraction(205, 16)
 
 
 # ============================================================================
-# Path 2: Ratio analysis (GF1, GF7)
+# Ratio analysis
 # ============================================================================
 
 class TestRatioAnalysis:
     """Test the genus ratio delta_F_{g+1}/delta_F_g."""
 
     def test_ratios_positive(self):
-        """(GF8 corollary) All ratios are positive for c > 0."""
+        """All available ratios are positive at sampled positive c."""
         for c_val in [1, 4, 10, 26, 50]:
             c = Fraction(c_val)
             ratios = all_genus_ratios(c)
@@ -138,7 +199,7 @@ class TestRatioAnalysis:
                 assert r > 0, f"Ratio R_{g} negative at c={c_val}"
 
     def test_ratio_not_constant_in_g(self):
-        """(GF1) R_2 != R_3: not a geometric series."""
+        """R_2 != R_3 in the certified window."""
         for c_val in [1, 10, 50]:
             c = Fraction(c_val)
             ratios = all_genus_ratios(c)
@@ -147,7 +208,7 @@ class TestRatioAnalysis:
             )
 
     def test_ratio_growth_exceeds_one(self):
-        """(GF1) R_3 > R_2 for c < ~300: ratios increase with genus."""
+        """R_3 > R_2 for the sampled c < 300 values."""
         for c_val in [1, 4, 10, 26, 50, 100]:
             c = Fraction(c_val)
             ratios = all_genus_ratios(c)
@@ -156,7 +217,7 @@ class TestRatioAnalysis:
             )
 
     def test_ratio_growth_varies_with_c(self):
-        """(GF1) R_3/R_2 is NOT constant across c: depends on c."""
+        """R_3/R_2 depends on c in the sampled window."""
         c1, c2 = Fraction(1), Fraction(50)
         r1 = all_genus_ratios(c1)
         r2 = all_genus_ratios(c2)
@@ -164,8 +225,20 @@ class TestRatioAnalysis:
         growth_50 = r2[3] / r2[2]
         assert growth_1 != growth_50, "R_3/R_2 is constant across c"
 
+    def test_ratio_growth_quotient_and_exponent_are_separate(self):
+        """The exact quotient is not misreported as the logarithmic exponent."""
+        c = Fraction(10)
+        ratios = all_genus_ratios(c)
+        quotient = ratios[3] / ratios[2]
+        exponent = ratio_growth_exponent(c)
+        assert ratio_growth_quotient(c) == quotient
+        assert ratio_second_difference(c) == quotient - 1
+        assert exponent is not None
+        assert exponent > 0
+        assert Fraction.from_float(exponent).limit_denominator() != quotient
+
     def test_ratio_growth_small_c_limit(self):
-        """(GF7) As c -> 0, R_3/R_2 -> alpha_{4,4}*alpha_{2,2}/(alpha_{3,3})^2.
+        """As c -> 0, R_3/R_2 has the max-Betti quotient.
 
         This is the max-Betti dominated limit.
         """
@@ -174,6 +247,7 @@ class TestRatioAnalysis:
         a33 = Fraction(6281, 4)
         a44 = Fraction(5138841, 16)
         limit_exact = (a44 * a22) / (a33 * a33)
+        assert limit_exact == Fraction(262080891, 157803844)
 
         # At c=1, should be close to this limit
         c = Fraction(1)
@@ -195,14 +269,14 @@ class TestRatioAnalysis:
 
 
 # ============================================================================
-# Path 3: Pade approximant (GF2, GF3)
+# Pade approximant
 # ============================================================================
 
 class TestPadeApproximant:
     """Test the [1/1] Pade approximant in u = t^2."""
 
     def test_pade_reconstruction_exact(self):
-        """(GF2) Pade [1/1] reproduces all 3 input coefficients exactly."""
+        """Pade [1/1] reproduces all 3 input coefficients exactly."""
         for c_val in [1, 4, 10, 26, 50]:
             c = Fraction(c_val)
             errors = pade_reconstruction_error(c)
@@ -212,14 +286,14 @@ class TestPadeApproximant:
                 )
 
     def test_pade_pole_positive(self):
-        """(GF3) Pade pole u_pole > 0 for all c > 0."""
+        """The finite-window Pade pole is positive at sampled positive c."""
         for c_val in [1, 4, 10, 26, 50, 100]:
             c = Fraction(c_val)
             pole = pade_pole(c)
             assert pole > 0, f"Pade pole non-positive at c={c_val}: {pole}"
 
-    def test_pade_pole_monotone_in_c(self):
-        """Pade pole u_pole increases with c (larger c => larger convergence radius)."""
+    def test_pade_pole_diagnostic_monotone_in_sampled_window(self):
+        """The finite-window Pade pole increases across the sampled c values."""
         poles = []
         for c_val in [1, 4, 10, 26, 50, 100]:
             c = Fraction(c_val)
@@ -235,14 +309,7 @@ class TestPadeApproximant:
         c = Fraction(10)
         u = Fraction(1, 1000)  # small u
         pade_val = pade_evaluate(c, u)
-        series_val = evaluate_generating_function(c, Fraction(1, 1000) ** Fraction(1, 2),
-                                                   max_g=4)
-        # At u = 1/1000 (t^2), both should be very small; check relative agreement
-        # Actually just check pade_evaluate at u vs series at t = sqrt(u)
-        # For exact comparison, use u directly in the series
-        series_exact = sum(
-            delta_Fg(g, c) * u ** g for g in [2, 3, 4]
-        )
+        series_exact = evaluate_generating_function_u(c, u)
         # Pade and series agree to O(u^5) since we matched 3 terms (u^2, u^3, u^4)
         # The O(u^5) remainder gives relative error ~ u^3 ~ 1e-9, but the
         # actual Pade extrapolation introduces geometric-series tails, so
@@ -255,14 +322,14 @@ class TestPadeApproximant:
 
 
 # ============================================================================
-# Path 4: Positivity and sign structure (GF5, GF8)
+# Positivity and sign structure
 # ============================================================================
 
 class TestPositivityAndRoots:
     """Test positivity and numerator root structure."""
 
     def test_delta_Fg_positive(self):
-        """(GF8) delta_F_g(c) > 0 for all c > 0 and g = 2,3,4."""
+        """delta_F_g(c) > 0 in the certified positive-c samples."""
         for g in [2, 3, 4]:
             for c_val in [1, 2, 4, 10, 26, 50, 100]:
                 c = Fraction(c_val)
@@ -270,24 +337,24 @@ class TestPositivityAndRoots:
                 assert val > 0, f"delta_F_{g}({c_val}) = {val} <= 0"
 
     def test_P2_has_root_minus_204(self):
-        """(GF5) P_2(c) = c + 204 has the unique root c = -204."""
+        """P_2(c) = c + 204 has the unique root c = -204."""
         roots = numerator_rational_roots(2)
         assert Fraction(-204) in roots, f"Root -204 not found: {roots}"
         assert len(roots) == 1, f"P_2 should have exactly 1 rational root: {roots}"
 
     def test_P3_no_positive_rational_roots(self):
-        """(GF5) P_3 has no positive rational roots (no singularity for c > 0)."""
+        """P_3 has no positive rational roots, so no positive-c zero appears."""
         roots = numerator_rational_roots(3)
         positive = [r for r in roots if r > 0]
         assert len(positive) == 0, f"P_3 has positive rational root: {positive}"
 
     def test_P4_no_rational_roots(self):
-        """(GF5) P_4 has no rational roots at all."""
+        """P_4 has no rational roots."""
         roots = numerator_rational_roots(4)
         assert len(roots) == 0, f"P_4 has rational roots: {roots}"
 
     def test_all_float_roots_negative_real_part(self):
-        """(GF5) All roots of P_g have Re(c) < 0."""
+        """All checked roots of P_g have Re(c) < 0."""
         for g in [2, 3, 4]:
             roots = numerator_roots_float(g)
             for r in roots:
@@ -304,11 +371,27 @@ class TestPositivityAndRoots:
 
 
 # ============================================================================
-# Path 5: Shadow metric independence (GF6)
+# Shadow metric independence
 # ============================================================================
 
 class TestShadowMetricConnection:
     """Test (non-)connection between G and the shadow metric Q_L."""
+
+    def test_virasoro_t_line_constants_are_canonical(self):
+        """Canonical T-line constants: S3=2, S4=10/[c(5c+22)], Delta=40/(5c+22)."""
+        c = Fraction(10)
+        data = virasoro_t_line_shadow_data(c)
+        assert data["kappa"] == Fraction(5)
+        assert data["S3"] == Fraction(2)
+        assert data["S4"] == Fraction(1, 72)
+        assert data["Delta"] == Fraction(5, 9)
+
+    def test_shadow_metric_uses_canonical_virasoro_values(self):
+        """At c=10, Q(t) = (10+6t)^2 + (10/9)t^2."""
+        c = Fraction(10)
+        for t in [Fraction(-2), Fraction(0), Fraction(3)]:
+            expected = (Fraction(10) + 6 * t) ** 2 + Fraction(10, 9) * t ** 2
+            assert shadow_metric_Q_virasoro(c, t) == expected
 
     def test_shadow_metric_positive_real_line(self):
         """Shadow metric Q_L(t) > 0 for all real t when c > 0."""
@@ -321,19 +404,14 @@ class TestShadowMetricConnection:
                 )
 
     def test_pade_pole_not_proportional_to_Q_zeros(self):
-        """(GF6) u_pole / |t_0(Q_L)|^2 varies by > 100x across c values.
+        """u_pole / |t_0(Q_L)|^2 varies by more than 100x across samples.
 
-        This proves the Pade pole is NOT simply related to the shadow metric.
+        This checks that the pole is not a scalar multiple of the metric zero.
         """
         ratios = []
         for c_val in [1, 10, 100]:
             c = Fraction(c_val)
-            kappa = c / 2  # Virasoro kappa on T-line
-            S3 = Fraction(-6) / (c * (5 * c + 22))
-            S4 = Fraction(10) / (c ** 2 * (5 * c + 22))
-            Delta = 8 * kappa * S4
-            # |t_0|^2 = 4*kappa^2 / (9*S3^2 + 2*Delta)
-            t0_sq = 4 * kappa ** 2 / (9 * S3 ** 2 + 2 * Delta)
+            t0_sq = shadow_metric_zero_modulus_sq(c)
             pole = pade_pole(c)
             if t0_sq > 0:
                 ratios.append(float(pole / t0_sq))
@@ -350,17 +428,18 @@ class TestShadowMetricConnection:
         assert sqQ[0] == 2 * kappa, (
             f"Leading sqrt(Q_L) coeff = {sqQ[0]}, expected {2*kappa}"
         )
+        assert sqQ[1] == Fraction(6)
 
 
 # ============================================================================
-# Path 6: Cross-channel dominance (GF4)
+# Cross-channel comparison
 # ============================================================================
 
-class TestCrossChannelDominance:
-    """Test that the cross-channel correction dominates the scalar part."""
+class TestCrossChannelComparison:
+    """Test scalar-lane and cross-channel separation."""
 
-    def test_cross_exceeds_scalar_at_all_c(self):
-        """(GF4) delta_F_g > kappa * lambda_g for all tested c and g."""
+    def test_cross_exceeds_scalar_in_tested_small_c_window(self):
+        """delta_F_g > kappa * lambda_g in the tested small-c window."""
         for c_val in [1, 4, 10, 26, 50]:
             c = Fraction(c_val)
             for g in [2, 3, 4]:
@@ -369,43 +448,93 @@ class TestCrossChannelDominance:
                     f"Cross/scalar ratio < 1 at c={c_val}, g={g}: {float(ratio)}"
                 )
 
-    def test_dominance_grows_with_genus(self):
-        """(GF4) Cross-to-scalar ratio increases with genus."""
+    def test_cross_scalar_ratio_grows_with_genus_in_sampled_window(self):
+        """Cross-to-scalar ratio increases with genus in sampled windows."""
         for c_val in [1, 10, 50]:
             c = Fraction(c_val)
             r2 = cross_to_scalar_ratio(2, c)
             r3 = cross_to_scalar_ratio(3, c)
             r4 = cross_to_scalar_ratio(4, c)
-            assert r3 > r2, f"Dominance not growing: g=2->{float(r2)}, g=3->{float(r3)}"
-            assert r4 > r3, f"Dominance not growing: g=3->{float(r3)}, g=4->{float(r4)}"
+            assert r3 > r2, (
+                f"Cross/scalar ratio not increasing: g=2->{float(r2)}, "
+                f"g=3->{float(r3)}"
+            )
+            assert r4 > r3, (
+                f"Cross/scalar ratio not increasing: g=3->{float(r3)}, "
+                f"g=4->{float(r4)}"
+            )
+
+    def test_genus2_cross_does_not_dominate_for_all_c(self):
+        """At genus 2, cross/scalar tends to zero as c grows."""
+        c = Fraction(300)
+        assert cross_to_scalar_ratio(2, c) < 1
+        assert not cross_exceeds_scalar(2, c)
 
     def test_kappa_w3_is_5c_over_6(self):
-        """AP39 guard: kappa(W_3) = 5c/6, NOT c/2."""
+        """kappa(W_3) = 5c/6, not the Virasoro T-line value c/2."""
         for c_val in [1, 6, 12, 30]:
             c = Fraction(c_val)
             assert kappa_w3(c) == Fraction(5) * c / Fraction(6), (
                 f"kappa(W_3) wrong at c={c_val}"
             )
 
+    def test_diagonal_channel_sum_is_scalar_lane_not_cross_channel(self):
+        """kappa_T+kappa_W gives scalar_Fg; delta_Fg is the mixed graph lane."""
+        c = Fraction(50)
+        channels = w3_diagonal_channel_data(c)
+        assert channels["T"].kappa == Fraction(25)
+        assert channels["T"].S3 == Fraction(2)
+        assert channels["W"].kappa == Fraction(50, 3)
+        assert channels["W"].S3 == Fraction(0)
+        assert channels["T"].kappa + channels["W"].kappa == kappa_w3(c)
+
+        decomp = scalar_lane_decomposition(2, c)
+        assert decomp["scalar"] == Fraction(175, 3456)
+        assert decomp["cross"] == Fraction(127, 400)
+        assert decomp["total"] == scalar_Fg(2, c) + delta_Fg(2, c)
+
 
 # ============================================================================
-# Path 7: Asymptotic behavior (GF9)
+# Bernoulli / Faber-Pandharipande normalization
+# ============================================================================
+
+class TestFaberPandharipandeNormalization:
+    """Keep scalar FP numbers separate from multi-weight graph constants."""
+
+    def test_lambda_fp_g2_g3_from_bernoulli_formula(self):
+        """lambda_g^FP = ((2^(2g-1)-1)/2^(2g-1)) * |B_2g|/(2g)!."""
+        from compute.lib.theorem_multiweight_structure_engine import lambda_fp
+
+        assert lambda_fp(2) == Fraction(7, 5760)
+        assert lambda_fp(3) == Fraction(31, 967680)
+
+    def test_scalar_lane_uses_w3_kappa_times_fp_not_delta_constants(self):
+        """For W3, scalar_Fg=(5c/6)lambda_g^FP and is not delta_Fg."""
+        c = Fraction(50)
+        assert scalar_Fg(2, c) == Fraction(5, 6) * c * Fraction(7, 5760)
+        assert scalar_Fg(2, c) == Fraction(175, 3456)
+        assert delta_Fg(2, c) == Fraction(127, 400)
+        assert scalar_Fg(2, c) != delta_Fg(2, c)
+
+
+# ============================================================================
+# Asymptotic behavior
 # ============================================================================
 
 class TestAsymptotics:
     """Test large-c and small-c leading behavior."""
 
     def test_large_c_leading_g2(self):
-        """(GF9) delta_F_2 -> 1/16 as c -> infinity."""
+        """delta_F_2 -> 1/16 as c -> infinity."""
         assert large_c_leading(2) == Fraction(1, 16)
 
     def test_large_c_leading_g3(self):
-        """(GF9) delta_F_3 leading coeff = 5/138240 = 1/27648."""
+        """delta_F_3 leading coeff = 5/138240 = 1/27648."""
         assert large_c_leading(3) == Fraction(5, 138240)
         assert large_c_leading(3) == Fraction(1, 27648)
 
     def test_large_c_leading_g4(self):
-        """(GF9) delta_F_4 leading coeff = 287/17418240."""
+        """delta_F_4 leading coeff = 287/17418240."""
         assert large_c_leading(4) == Fraction(287, 17418240)
 
     def test_large_c_convergence(self):
@@ -421,7 +550,7 @@ class TestAsymptotics:
         assert rel_err < 0.005, f"Large-c convergence fails: rel_err={rel_err}"
 
     def test_small_c_scaling(self):
-        """delta_F_g(c) ~ alpha_{g,g} * c^{1-g} for small c (max-Betti dominates)."""
+        """delta_F_g(c) ~ alpha_{g,g} * c^{1-g} for small c."""
         c = Fraction(1, 10)
         for g in [2, 3, 4]:
             val = delta_Fg(g, c)
@@ -434,7 +563,7 @@ class TestAsymptotics:
 
 
 # ============================================================================
-# Path 8: Denominator structure (GF10)
+# Denominator structure
 # ============================================================================
 
 class TestDenominatorStructure:
@@ -459,7 +588,7 @@ class TestDenominatorStructure:
         assert info['prime_factors'] == {2: 11, 3: 5, 5: 1, 7: 1}
 
     def test_denominator_divides_high_factorial(self):
-        """D_g | (2g+2)! for g = 2, 3, 4.
+        """D_g | (4g)! for g = 2, 3, 4.
 
         The denominator D_g arises from graph automorphism factors and
         vertex combinatorics. Verified: D_g divides (4g)! for g=2,3,4.
@@ -474,7 +603,7 @@ class TestDenominatorStructure:
 
 
 # ============================================================================
-# Path 9: Generating function evaluation consistency
+# Generating function evaluation consistency
 # ============================================================================
 
 class TestGeneratingFunctionConsistency:
@@ -485,11 +614,23 @@ class TestGeneratingFunctionConsistency:
         c = Fraction(10)
         gf = generating_function(c)
         assert set(gf.keys()) == {4, 6, 8}
+        assert generating_function_u(c) == {
+            2: delta_Fg(2, c),
+            3: delta_Fg(3, c),
+            4: delta_Fg(4, c),
+        }
 
     def test_evaluate_at_zero(self):
         """G(0, c) = 0 for all c."""
         for c_val in [1, 10, 50]:
             assert evaluate_generating_function(Fraction(c_val), Fraction(0)) == 0
+            assert evaluate_generating_function_u(Fraction(c_val), Fraction(0)) == 0
+
+    def test_evaluate_t_matches_u_substitution(self):
+        """G(t,c) equals G(u,c) after u=t^2 in the finite window."""
+        c = Fraction(10)
+        t = Fraction(1, 5)
+        assert evaluate_generating_function(c, t) == evaluate_generating_function_u(c, t * t)
 
     def test_total_Fg_sum(self):
         """F_g = scalar + cross: total_Fg = scalar_Fg + delta_Fg."""
@@ -505,26 +646,23 @@ class TestGeneratingFunctionConsistency:
         assert 'ratios' in result
         assert 'pade_pole' in result
         assert 'total_F' in result
+        assert 'scalar_cross_decomposition' in result
+        assert result['genus_window'] == (2, 3, 4)
         assert result['c'] == 10
 
 
 # ============================================================================
-# AP10 CROSS-CHECKS: multi-path verification of hardcoded values
+# Independent cross-checks for hardcoded values
 # ============================================================================
 
-class TestAP10CrossChecks:
-    """Multi-path verification: every hardcoded value is recomputed independently.
-
-    AP10 mandate: hardcoded expected values without independent cross-checks
-    can silently encode wrong values. Each test here verifies a hardcoded
-    assertion from above via an INDEPENDENT computation path.
-    """
+class TestIndependentCrossChecks:
+    """Every hardcoded value is checked through an independent route."""
 
     def test_delta_F2_cross_check_betti(self):
         """Cross-check delta_F_2 via Betti stratum reconstruction.
 
-        Path A: closed-form (c+204)/(16c)
-        Path B: Betti sum alpha_{2,1}*c^0 + alpha_{2,2}*c^{-1}
+        Route A: closed-form (c+204)/(16c)
+        Route B: Betti sum alpha_{2,1}*c^0 + alpha_{2,2}*c^{-1}
         """
         from compute.lib.theorem_multiweight_structure_engine import (
             delta_Fg_from_betti,
@@ -569,8 +707,8 @@ class TestAP10CrossChecks:
     def test_large_c_leading_cross_check_direct(self):
         """Cross-check large-c leading coefficients via direct limit.
 
-        Path A: large_c_leading(g) from numerator/denominator data
-        Path B: delta_F_g(c) evaluated at large c, compared to leading term.
+        Route A: large_c_leading(g) from numerator/denominator data.
+        Route B: delta_F_g(c) evaluated at large c, compared to leading term.
 
         delta_F_g = leading * c^{net_deg} + O(c^{net_deg - 1}).
         For g=2: net_deg=0, correction is 204/c.

@@ -7,7 +7,7 @@ Verifies:
   3. Open/closed quartic resonance class R^oc_4
   4. Shadow depth classification G/L/C/M
   5. Derived center dimensions (Theorem H)
-  6. Koszul duality on derived center
+  6. Degree-pairing symmetry on the derived center
   7. Cross-family consistency (additivity, complementarity)
   8. Virasoro quintic obstruction (tower forced infinite)
   9. W_3 quartic resonance divisor
@@ -79,7 +79,7 @@ def w3_c50():
 # ======================================================================
 
 class TestModularCharacteristic:
-    """AP1 guard: kappa formulas are FAMILY-SPECIFIC."""
+    """Kappa formulas are family-specific."""
 
     def test_heisenberg_kappa_k1(self, heis):
         assert modular_characteristic(heis) == Fraction(1)
@@ -95,6 +95,12 @@ class TestModularCharacteristic:
         # kappa(sl_2, k=3) = 3*(3+2)/(2*2) = 15/4
         assert modular_characteristic(aff_k3) == Fraction(15, 4)
 
+    def test_affine_sl2_kappa_k0_sugawara_shift(self):
+        # kappa(sl_2, k=0) = 3*(0+2)/(2*2) = 3/2.
+        # The quadratic formula with an extra factor of k gives 0.
+        a = affine_sl2_data(Fraction(0))
+        assert modular_characteristic(a) == Fraction(3, 2)
+
     def test_virasoro_kappa_c26(self, vir):
         assert modular_characteristic(vir) == Fraction(13)
 
@@ -106,8 +112,14 @@ class TestModularCharacteristic:
         assert modular_characteristic(vir_c13) == Fraction(13, 2)
 
     def test_w3_kappa(self, w3):
-        # kappa(W_3) = 5c/6. At c=2: 5*2/6 = 5/3 (AP1: NOT c/2 = 1)
+        # kappa(W_3) = 5c/6. At c=2: 5*2/6 = 5/3.
         assert modular_characteristic(w3) == Fraction(5, 3)
+
+    def test_w3_kappa_uses_harmonic_shift(self):
+        # kappa(W_3) = c(H_3 - 1) = 5c/6, not the Virasoro value c/2.
+        w = w3_data(Fraction(6))
+        assert modular_characteristic(w) == Fraction(5)
+        assert modular_characteristic(w) != Fraction(3)
 
     def test_kappa_positive_generic(self):
         """kappa should be positive for generic non-critical levels."""
@@ -116,7 +128,7 @@ class TestModularCharacteristic:
             assert modular_characteristic(h) > 0
 
     def test_kappa_not_copied_between_families(self):
-        """AP1: verify kappa formulas differ between families."""
+        """Verify kappa formulas differ between families."""
         h = heisenberg_data(Fraction(1))
         a = affine_sl2_data(Fraction(1))
         v = virasoro_data(Fraction(1))
@@ -309,25 +321,25 @@ class TestDerivedCenter:
 
 
 # ======================================================================
-#  6. Koszul duality on derived center
+#  6. Degree-pairing symmetry on derived center
 # ======================================================================
 
-class TestKoszulDuality:
+class TestDerivedCenterPairing:
 
-    def test_heisenberg_koszul_duality(self, heis):
+    def test_heisenberg_degree_pairing(self, heis):
         assert koszul_duality_check(heis)
 
-    def test_affine_koszul_duality(self, aff):
+    def test_affine_degree_pairing(self, aff):
         assert koszul_duality_check(aff)
 
-    def test_virasoro_koszul_duality(self, vir):
+    def test_virasoro_degree_pairing(self, vir):
         assert koszul_duality_check(vir)
 
-    def test_w3_koszul_duality(self, w3):
+    def test_w3_degree_pairing(self, w3):
         assert koszul_duality_check(w3)
 
-    def test_koszul_pairing_symmetry(self):
-        """dim Z^n(A) = dim Z^{2-n}(A) (self-duality of dimensions)."""
+    def test_derived_center_pairing_symmetry(self):
+        """dim Z^0(A) = dim Z^2(A) on the scalar Hochschild lane."""
         for factory in [heisenberg_data, affine_sl2_data, virasoro_data]:
             algebra = factory()
             dims = derived_center_dimensions(algebra)

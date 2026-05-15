@@ -1,48 +1,36 @@
-r"""Topological recursion from the shadow spectral curve.
+r"""Scalar topological-recursion checks for the shadow curve.
 
-Connects the Eynard-Orantin (EO) topological recursion on the shadow
-spectral curve y^2 = Q_L(t) to the shadow obstruction tower of a
-chirally Koszul algebra A.  The shadow metric Q_L(t) defines a genus-0
-hyperelliptic spectral curve whose EO correlators omega_{g,n} encode the
-shadow tower coefficients S_{g,n}.
+The module constructs the quadratic shadow curve
 
-TEN COMPUTATION MODULES
------------------------
-1.  Shadow spectral curve: explicit y^2 = Q_L(t) for each family
-    (Heisenberg, affine, Virasoro, W_3, beta-gamma).
-2.  Branch points and Zhukovsky parametrization.
-3.  Bergman kernel and recursion kernel.
-4.  EO recursion: omega_{g,n} for
-    (0,3), (0,4), (0,5), (1,1), (1,2), (1,3), (2,1), (2,2), (3,1).
-5.  Free energies F_g from the recursion (g = 0..4).
-6.  Comparison with shadow tower coefficients.
-7.  Symplectic invariance verification.
-8.  WKB expansion and spectral determinant.
-9.  Airy curve and Witten-Kontsevich intersection numbers.
-10. Koszul spectral curve duality: c <-> 26-c for Virasoro.
+    y^2 = Q_L(t) = q0 + q1*t + q2*t^2
 
-MULTI-PATH VERIFICATION
-------------------------
-Every result is verified by at least 3 independent paths:
-  PATH 1: EO contour-integral recursion.
-  PATH 2: Shadow tower Taylor expansion of t^2 sqrt(Q_L).
-  PATH 3: Direct formula (lambda_g^FP, intersection numbers, etc.).
+attached to the scalar shadow data (kappa, S_3, S_4), extracts the
+formal tower coefficients from the signed branch of sqrt(Q_L), and
+compares the scalar genus contribution F_g = kappa*lambda_g^FP with
+independent intersection-number and local Airy-residue oracles.
 
-Manuscript references:
-    cor:topological-recursion-mc-shadow (higher_genus_modular_koszul.tex)
-    thm:riccati-algebraicity (higher_genus_modular_koszul.tex)
-    def:shadow-metric (higher_genus_modular_koszul.tex)
-    thm:theorem-d (higher_genus_modular_koszul.tex)
-    thm:mc2-bar-intrinsic (higher_genus_modular_koszul.tex)
-    thm:shadow-connection (higher_genus_modular_koszul.tex)
-    thm:single-line-dichotomy (higher_genus_modular_koszul.tex)
+These routines certify finite scalar identities only.  The shadow curve is
+EO input after separate branch/residue data; the Airy/KW lane is a finite
+coefficient comparison; WP/JT volumes use the sine curve; and multi-weight
+all-genus statements require stable-graph data not present in this module.
+
+Scope boundaries are part of the computation.  The seven-entry
+holographic package
+
+    (A, A^i, A^!, C, r(z), Theta_A, nabla^hol)
+
+is distinct from the six-primary-projection modular Koszul compute
+package.  The object A^! is the Verdier/continuous-linear dual branch
+of A^i under finite-type/completed hypotheses; Omega(B(A)) = A is
+bar-cobar inversion; Z_ch^der(A) = ChirHoch^*(A,A) is the
+Hochschild/derived-centre bulk object.
 """
 
 from __future__ import annotations
 
 import cmath
 import math
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from fractions import Fraction
 from functools import lru_cache
 from itertools import combinations
@@ -64,12 +52,132 @@ except ImportError:
     _HAS_MPMATH = False
 
 
+HOLOGRAPHIC_PACKAGE_ENTRIES: Tuple[str, ...] = (
+    "A",
+    "A^i",
+    "A^!",
+    "C",
+    "r(z)",
+    "Theta_A",
+    "nabla^hol",
+)
+
+
+MODULAR_KOSZUL_PRIMARY_PROJECTIONS: Tuple[str, ...] = (
+    "Fact_X(L)",
+    "barB_X(L)",
+    "Theta_L",
+    "L_L",
+    "(V_L^br, T_L^br)",
+    "R_4^mod(L)",
+)
+
+
+TYPED_FIREWALL_OBJECTS: Tuple[str, ...] = (
+    "A",
+    "B(A)",
+    "A^i",
+    "A^!",
+    "Omega(B(A))",
+    "Z_ch^der(A)",
+)
+
+
+def holographic_package_entries() -> Tuple[str, ...]:
+    """Seven entries of the holographic package, in canonical order."""
+    return HOLOGRAPHIC_PACKAGE_ENTRIES
+
+
+def modular_koszul_primary_projections() -> Tuple[str, ...]:
+    """Six primary projections of the modular Koszul compute package."""
+    return MODULAR_KOSZUL_PRIMARY_PROJECTIONS
+
+
+def typed_firewall_objects() -> Tuple[str, ...]:
+    """Objects kept distinct by the bar/Koszul/Hochschild firewall."""
+    return TYPED_FIREWALL_OBJECTS
+
+
+def typed_firewall_roles() -> Dict[str, str]:
+    """Typed roles for the objects most often conflated in this lane."""
+    return {
+        "A": "boundary chiral algebra",
+        "B(A)": "bar factorization coalgebra built from A",
+        "A^i": "H^*(B(A)), the bar-dual coalgebra",
+        "A^!": (
+            "Verdier/continuous-linear dual branch of A^i under "
+            "finite-type/completed hypotheses"
+        ),
+        "Omega(B(A))": "bar-cobar inversion recovering A",
+        "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild bulk object",
+    }
+
+
+def _fraction_text(value: Fraction) -> str:
+    """Stable ASCII rendering for exact kernel constants."""
+    return str(value)
+
+
+def collision_kernel_constants(family: str, k=None, h_dual=None,
+                               c=None) -> Dict[str, Any]:
+    """Raw collision and comparison-KZ normalizations.
+
+    Affine data keep two coefficients separate: the bar collision residue
+    is k*Omega_tr/z, while the KZ comparison coefficient is
+    Omega/((k+h_dual)z).  Virasoro uses the collision residue
+    (c/2)/z^3 + 2T/z.
+    """
+    canonical = family.replace("-", "_").lower()
+
+    if canonical == "heisenberg":
+        level = Fraction(1) if k is None else Fraction(k)
+        formula = f"{_fraction_text(level)}/z"
+        return {
+            "family": "heisenberg",
+            "collision_formula": formula,
+            "raw_collision": formula,
+            "raw_coefficient": level,
+            "pole_order": 1,
+        }
+
+    if canonical in {"affine", "affine_km", "kac_moody", "km"}:
+        level = Fraction(1) if k is None else Fraction(k)
+        h_val = Fraction(2) if h_dual is None else Fraction(h_dual)
+        kz_coeff = Fraction(1, 1) / (level + h_val)
+        raw = f"{_fraction_text(level)}*Omega_tr/z"
+        kz = f"Omega/(({_fraction_text(level)}+{_fraction_text(h_val)})*z)"
+        return {
+            "family": "affine_km",
+            "collision_formula": raw,
+            "raw_collision": raw,
+            "raw_coefficient": level,
+            "kz_formula": kz,
+            "kz_coefficient": kz_coeff,
+            "raw_and_kz_distinct": True,
+            "pole_order": 1,
+        }
+
+    if canonical == "virasoro":
+        c_val = Fraction(26) if c is None else Fraction(c)
+        central = c_val / 2
+        formula = f"({_fraction_text(central)})/z^3 + 2T/z"
+        return {
+            "family": "virasoro",
+            "collision_formula": formula,
+            "raw_collision": formula,
+            "central_prefactor": central,
+            "highest_pole_order": 3,
+        }
+
+    raise ValueError(f"unknown kernel family {family!r}")
+
+
 # ============================================================================
 # 0. Faber-Pandharipande intersection numbers (standalone)
 # ============================================================================
 
 def _bernoulli_number(n: int) -> Rational:
-    """Bernoulli number B_n (sympy convention: B_1 = -1/2)."""
+    """Bernoulli number B_n in the Sympy convention."""
     return Rational(bernoulli(n))
 
 
@@ -88,21 +196,34 @@ def lambda_fp(g: int) -> Rational:
     return Rational(num, den)
 
 
-# Witten-Kontsevich intersection numbers on M-bar_{g,n}
-# <tau_{d_1} ... tau_{d_n}>_g for dim check: sum d_i = 3g - 3 + n
-# These are rational numbers computed from the Virasoro constraints.
+# Witten-Kontsevich intersection numbers on M-bar_{g,n}.
+# The cache uses the string equation, the dilaton equation, genus-zero
+# multinomial numbers, and the DVV form of the Virasoro constraints.
 
+def _odd_double_factorial(n: int) -> int:
+    """Odd double factorial, with (-1)!! = 1."""
+    if n == -1 or n == 0:
+        return 1
+    if n < -1 or n % 2 == 0:
+        raise ValueError(f"odd double factorial not defined for {n}")
+    result = 1
+    for value in range(n, 0, -2):
+        result *= value
+    return result
+
+
+@lru_cache(maxsize=None)
 def _witten_kontsevich(g: int, d_tuple: Tuple[int, ...]) -> Rational:
     r"""Witten-Kontsevich intersection number <tau_{d_1}...tau_{d_n}>_g.
 
-    Computes intersection numbers on M-bar_{g,n} using the
-    string and dilaton equations recursively.
+    Computes intersection numbers on M-bar_{g,n} from the
+    string equation, the dilaton equation, and the DVV recursion.
 
     The dimension constraint: sum(d_i) = 3g - 3 + n.
     The stability constraint: 2g - 2 + n > 0.
     """
     n = len(d_tuple)
-    d_list = list(d_tuple)
+    d_list = list(sorted(d_tuple))
     d_sum = sum(d_list)
 
     # Dimension check
@@ -125,78 +246,75 @@ def _witten_kontsevich(g: int, d_tuple: Tuple[int, ...]) -> Rational:
     if g == 1 and d_list == [1]:
         return Rational(1, 24)
 
-    # String equation: if any d_i = 0 and n >= 3 (for g=0) or n >= 2 (for g>=1)
+    if g == 0:
+        # Genus-zero closed form:
+        # <tau_{d_1}...tau_{d_n}>_0 = (n-3)! / prod_i d_i!
+        # when sum d_i = n-3.
+        num = factorial(n - 3)
+        den = Rational(1)
+        for d in d_list:
+            den *= factorial(d)
+        return Rational(num) / den
+
+    # String equation.
     if 0 in d_list:
         idx = d_list.index(0)
         remaining = d_list[:idx] + d_list[idx + 1:]
-        if len(remaining) >= 2 or (g >= 1 and len(remaining) >= 1):
-            result = Rational(0)
-            for j in range(len(remaining)):
-                new_d = list(remaining)
-                new_d[j] -= 1
-                result += _witten_kontsevich(g, tuple(sorted(new_d)))
-            return result
+        result = Rational(0)
+        for j in range(len(remaining)):
+            new_d = list(remaining)
+            new_d[j] -= 1
+            result += _witten_kontsevich(g, tuple(sorted(new_d)))
+        return result
 
-    # Dilaton equation: if any d_i = 1 and n >= 2
+    # Dilaton equation.
     if 1 in d_list and n >= 2:
         idx = d_list.index(1)
         remaining = d_list[:idx] + d_list[idx + 1:]
         return (2 * g - 2 + len(remaining)) * _witten_kontsevich(
             g, tuple(sorted(remaining)))
 
-    # General recursion (KdV/Virasoro constraints)
-    # Use the DVV recursion (Dijkgraaf-Verlinde-Verlinde)
-    if n >= 3 and d_list[0] >= 2:
-        d0 = d_list[0]
-        rest = d_list[1:]
-        result = Rational(0)
-        # Term 1: genus reduction
-        for j in range(len(rest)):
-            new_rest = list(rest)
-            new_rest[j] += d0 - 2
-            new_d = sorted(new_rest)
-            result += _witten_kontsevich(g, tuple(new_d))
+    # DVV recursion, using the largest insertion tau_d0 with d0 >= 2.
+    d0 = d_list[-1]
+    if d0 < 2:
+        return Rational(0)
 
-        return result
+    rest = d_list[:-1]
+    result = Rational(0)
 
-    # For remaining cases, use the topological recursion relation
-    # (Mirzakhani or direct computation)
-    if g == 0:
-        # genus-0 intersection numbers from multinomial
-        if all(d == 0 for d in d_list):
-            if n == 3:
-                return Rational(1)
-            return Rational(0)
-        # <tau_0^{n-1} tau_{n-3}>_0 = 1  (string equation iteration)
-        # General genus-0: <tau_{d_1}...tau_{d_n}>_0 = (n-3)! / prod(d_i!)
-        if d_sum == n - 3:
-            num = factorial(n - 3)
-            den = Rational(1)
-            for d in d_list:
-                den *= factorial(d)
-            return Rational(num) / den
+    for j, dj in enumerate(rest):
+        new_rest = rest[:j] + rest[j + 1:] + [dj + d0 - 1]
+        coeff = Rational(
+            _odd_double_factorial(2 * d0 + 2 * dj - 1),
+            _odd_double_factorial(2 * dj - 1),
+        )
+        result += coeff * _witten_kontsevich(g, tuple(sorted(new_rest)))
 
-    # Fallback for small cases
-    if g == 1:
-        if d_list == [1]:
-            return Rational(1, 24)
-        if sorted(d_list) == [0, 0, 1]:
-            # <tau_0^2 tau_1>_1 = <tau_0 tau_0 tau_1>_1
-            # By string equation from <tau_1>_1: remove tau_0, sum
-            # <tau_0 tau_1>_1 doesn't exist (unstable)
-            # Actually by dilaton: <tau_0^2 tau_1>_1 = (2*1-2+2)*<tau_0^2>_1 = ?
-            # Hmm, need to be more careful. Use the fact that
-            # <tau_0^{2} tau_1>_1 = 1/24 from the string equation applied to <tau_1>_1.
-            return Rational(1, 24)
-    if g == 2:
-        if d_list == [3]:
-            return Rational(1, 1152)
-        if d_list == [1, 1, 1]:
-            # <tau_1^3>_2 = 1/1152  (Witten-Kontsevich)
-            return Rational(1, 1152)
+    genus_split = Rational(0)
+    rest_len = len(rest)
+    for a in range(d0 - 1):
+        b = d0 - 2 - a
+        coeff = Rational(
+            _odd_double_factorial(2 * a + 1)
+            * _odd_double_factorial(2 * b + 1),
+            1,
+        )
+        genus_split += coeff * _witten_kontsevich(
+            g - 1, tuple(sorted([a, b] + rest))
+        )
 
-    # For unhandled cases return 0 with a warning
-    return Rational(0)
+        for g1 in range(g + 1):
+            g2 = g - g1
+            for mask in range(1 << rest_len):
+                left = [rest[i] for i in range(rest_len) if mask & (1 << i)]
+                right = [rest[i] for i in range(rest_len) if not mask & (1 << i)]
+                genus_split += coeff * (
+                    _witten_kontsevich(g1, tuple(sorted([a] + left)))
+                    * _witten_kontsevich(g2, tuple(sorted([b] + right)))
+                )
+
+    result += Rational(1, 2) * genus_split
+    return result / _odd_double_factorial(2 * d0 + 1)
 
 
 # ============================================================================
@@ -207,7 +325,7 @@ def _witten_kontsevich(g: int, d_tuple: Tuple[int, ...]) -> Rational:
 class ShadowCurveData:
     """Shadow data (kappa, alpha=S_3, S_4) for a chiral algebra family.
 
-    Convention (AP1/AP9, from landscape_census.tex):
+    Convention from landscape_census.tex:
         kappa = S_2 (curvature / modular characteristic)
         alpha = S_3 (cubic shadow)
         S4 = S_4 (quartic contact invariant)
@@ -300,10 +418,18 @@ def heisenberg_shadow(k: Fraction = Fraction(1)) -> ShadowCurveData:
 def betagamma_shadow() -> ShadowCurveData:
     """Beta-gamma system.
 
-    Class C (contact, depth 4). On its single primary line it looks
-    like Virasoro at c=2 (same spectral curve on the single line).
+    Class C (contact, depth 4).  On the single primary line used by this
+    scalar engine it has the same quadratic Q_L data as Virasoro at c=2,
+    but the family label and depth class remain beta-gamma data.
     """
-    return virasoro_shadow(Fraction(2))
+    vir = virasoro_shadow(Fraction(2))
+    return ShadowCurveData(
+        name="betagamma",
+        kappa=vir.kappa,
+        alpha=vir.alpha,
+        S4=vir.S4,
+        depth_class='C',
+    )
 
 
 def w3_shadow(c: Fraction) -> ShadowCurveData:
@@ -340,8 +466,8 @@ class ShadowSpectralCurve:
     Ramification at z = +1 (-> t_+) and z = -1 (-> t_-).
 
     For degenerate cases (class G: constant Q_L, or class L: perfect-square Q_L),
-    the curve has no genuine branch points and all EO correlators vanish
-    for 2g-2+n > 0.
+    the finite calculator has no simple branch-point input.  No general EO
+    vanishing theorem is inferred from that degeneration.
     """
     data: ShadowCurveData
 
@@ -402,8 +528,12 @@ class ShadowSpectralCurve:
         q2 = float(self.data.q2)
         return q0 + q1 * t + q2 * t * t
 
-    def branch_points_exact(self) -> Tuple[Fraction, Fraction]:
-        """Exact branch points of Q_L(t) = 0."""
+    def branch_points_exact(self) -> Tuple[Fraction, Fraction, Fraction, Fraction]:
+        """Exact discriminant and coefficients for Q_L(t) = 0.
+
+        The branch points themselves may lie in a quadratic extension of
+        the Fraction field.  The returned tuple is (disc, q0, q1, q2).
+        """
         q0 = self.data.q0
         q1 = self.data.q1
         q2 = self.data.q2
@@ -444,13 +574,11 @@ def shadow_tower_from_QL(data: ShadowCurveData,
 
     # Coefficient of t^m in (1 + u)^{1/2}:
     #   sum_{n = ceil(m/2)}^{m} C(1/2,n) * C(n, m-n) * a^{2n-m} * b^{m-n}
-    sqrt_q0 = sym_sqrt(Rational(data.kappa) * 2)  # sqrt(4*kappa^2) = 2*|kappa|
-    # More precisely: sqrt(q0) where q0 = 4*kappa^2
-    # For positive kappa: sqrt(q0) = 2*kappa
-    if data.kappa > 0:
+    # The formal branch is fixed by sqrt(Q_L(0)) = 2*kappa, not by the
+    # positive analytic square root of 4*kappa^2.  This keeps S_2 = kappa
+    # on negative scalar complementarity branches.
+    if data.kappa != 0:
         sqrt_q0_val = Rational(2) * Rational(data.kappa)
-    elif data.kappa < 0:
-        sqrt_q0_val = Rational(-2) * Rational(data.kappa)
     else:
         return {r: Rational(0) for r in range(2, max_arity + 1)}
 
@@ -480,6 +608,65 @@ def shadow_tower_from_QL(data: ShadowCurveData,
     return tower
 
 
+def stationary_primary_line_riccati_diagnostic(
+    data: ShadowCurveData,
+    max_arity: int = 8,
+) -> Dict[str, Any]:
+    r"""Check the finite primary-line Riccati identity from Q_L.
+
+    The formal shadow series is H(t) = sum_{r>=2} r*S_r*t^r.  On the
+    stationary primary line the quadratic construction gives
+
+        H(t)^2 = t^4 * Q_L(t).
+
+    The check is finite: using S_2,...,S_max_arity verifies coefficients
+    through degree max_arity+2.  It is not an EO recursion theorem, not a
+    convergence-radius statement, and not a multi-weight stable-graph input.
+    """
+    if max_arity < 2:
+        raise ValueError(f"max_arity must be >= 2, got {max_arity}")
+
+    tower = shadow_tower_from_QL(data, max_arity=max_arity)
+    h_coeffs = {r: r * tower[r] for r in range(2, max_arity + 1)}
+    q_coeffs = {
+        4: Rational(self_data_to_rat(data.q0)),
+        5: Rational(self_data_to_rat(data.q1)),
+        6: Rational(self_data_to_rat(data.q2)),
+    }
+
+    checked = {}
+    for degree in range(4, max_arity + 3):
+        lhs = Rational(0)
+        for r in range(2, max_arity + 1):
+            s = degree - r
+            if 2 <= s <= max_arity:
+                lhs += h_coeffs[r] * h_coeffs[s]
+        rhs = q_coeffs.get(degree, Rational(0))
+        checked[degree] = {
+            'H_squared': lhs,
+            't4_Q_L': rhs,
+            'match': simplify(lhs - rhs) == 0,
+        }
+
+    return {
+        'status': 'finite_riccati_diagnostic',
+        'identity': 'H(t)^2 = t^4 Q_L(t)',
+        'family': data.name,
+        'depth_class': data.depth_class,
+        'arity_window': (2, max_arity),
+        'degree_window': (4, max_arity + 2),
+        'tower': tower,
+        'checked_coefficients': checked,
+        'all_checked_degrees_match': all(
+            row['match'] for row in checked.values()
+        ),
+        'certifies_full_eo_recursion': False,
+        'certifies_kw_tau_theorem': False,
+        'certifies_convergence_radius': False,
+        'includes_multi_weight_stable_graph_data': False,
+    }
+
+
 def self_data_to_rat(val):
     """Convert Fraction to Rational-compatible form."""
     if isinstance(val, Fraction):
@@ -492,11 +679,13 @@ def self_data_to_rat(val):
 # ============================================================================
 
 class ShadowEORecursion:
-    """Eynard-Orantin topological recursion on the shadow spectral curve.
+    """Finite EO-style contour calculator for the shadow spectral curve.
 
-    Uses mpmath for high-precision contour integration at ramification
-    points z = +1 and z = -1.  Computes omega_{g,n} for 9 target
-    correlators plus free energies F_g.
+    Uses mpmath for contour integration at the two ramification points of
+    the quadratic curve when they are simple.  Only the implemented
+    low-genus correlators are evaluated.  This class does not certify a
+    full EO recursion theorem, a KW tau theorem, analytic convergence, or
+    multi-weight all-genus data.
 
     RECURSION:
         omega_{g,n+1}(z_0, z_S) = sum_alpha Res_{z->alpha} K(z, z_0) *
@@ -884,7 +1073,7 @@ class ShadowEORecursion:
     # ------------------------------------------------------------------
 
     def F1_shadow(self) -> Rational:
-        """F_1 = kappa/24 from Theorem D."""
+        """F_1 = kappa/24 on the uniform-weight scalar lane."""
         return Rational(self.data.kappa.numerator,
                         self.data.kappa.denominator) / 24
 
@@ -893,7 +1082,7 @@ class ShadowEORecursion:
         return float(self.data.kappa) / 24.0
 
     def Fg_shadow(self, g: int) -> Rational:
-        """F_g = kappa * lambda_g^FP from Theorem D (scalar lane)."""
+        """F_g = kappa * lambda_g^FP on the uniform-weight scalar lane."""
         kappa_rat = Rational(self.data.kappa.numerator,
                              self.data.kappa.denominator)
         return kappa_rat * lambda_fp(g)
@@ -917,11 +1106,13 @@ class ShadowEORecursion:
 # ============================================================================
 
 class AiryCurveRecursion:
-    """Topological recursion on the Airy curve y = x^2/2.
+    """Local Airy residue oracle for the curve x = z^2/2, y = z.
 
     The Airy curve is the universal local model near a simple branch point.
-    Its correlators compute Witten-Kontsevich intersection numbers:
-        omega_{g,n}^{Airy} <-> <tau_{d_1}...tau_{d_n}>_g
+    Restoring the full differential normalization gives the usual
+    Witten-Kontsevich intersection numbers.  The methods below return
+    coefficient functions in the root-variable convention used by this
+    engine, so the exact formulas are residue oracles for that convention.
 
     Spectral data: x(z) = z^2/2, y(z) = z. Involution: sigma(z) = -z.
     Branch point: z = 0.  Bergman kernel: B(z1,z2) = dz1 dz2/(z1-z2)^2.
@@ -966,17 +1157,12 @@ class AiryCurveRecursion:
             return total / (2 * mpmath.pi * 1j)
 
     def omega_11_airy(self, z0_val):
-        """omega_{1,1}^{Airy}(z0).
+        """Root-coefficient omega_{1,1}^{Airy}(z0).
 
         = Res_{z->0} K(z,z0) * B(z,-z)
         = Res_{z->0} z0/(z*(z0^2-z^2)) * 1/(2z)^2
         = Res_{z->0} z0/(4*z^3*(z0^2-z^2))
-        = z0/(4*z0^2) * [coefficient of 1/z^3 in 1/(z^3*(z0^2-z^2))]
-
-        Analytically: omega_{1,1}^{Airy}(z0) = 1/(16*z0^4) * dz0
-        (as a quadratic differential).
-
-        Since we return the coefficient, this is 1/(16*z0^4).
+        = 1/(4*z0^3).
         """
         with mpmath.workdps(self.dps):
             z0_val = mpmath.mpc(z0_val)
@@ -987,8 +1173,8 @@ class AiryCurveRecursion:
             return self._contour_residue(integrand, 0)
 
     def omega_11_airy_exact(self, z0_val):
-        """Exact: omega_{1,1}^{Airy}(z0) = 1/(16*z0^4)."""
-        return 1 / (16 * z0_val**4)
+        """Exact root-coefficient: omega_{1,1}^{Airy}(z0) = 1/(4*z0^3)."""
+        return 1 / (4 * z0_val**3)
 
     def omega_03_airy(self, z0_val, z1_val, z2_val):
         """omega_{0,3}^{Airy}(z0, z1, z2)."""
@@ -1005,11 +1191,13 @@ class AiryCurveRecursion:
             return self._contour_residue(integrand, 0)
 
     def omega_03_airy_exact(self, z0_val, z1_val, z2_val):
-        r"""Exact: omega_{0,3}^{Airy} = 1/(z0^2 * z1^2 * z2^2).
+        r"""Exact root-coefficient omega_{0,3}^{Airy}.
 
-        This is the Witten-Kontsevich result <tau_0^3>_0 = 1.
+        With the first variable as the recursion root, the residue is
+        2/(z0*z1^2*z2^2).  The full symmetric differential is recovered
+        only after restoring the differential normalization.
         """
-        return 1 / (z0_val**2 * z1_val**2 * z2_val**2)
+        return 2 / (z0_val * z1_val**2 * z2_val**2)
 
     def F1_airy(self) -> Rational:
         """F_1^{Airy} = <tau_1>_1 = 1/24."""
@@ -1025,47 +1213,25 @@ class AiryCurveRecursion:
 # ============================================================================
 
 def symplectic_check_free_energy(data: ShadowCurveData, g: int) -> Dict[str, Any]:
-    """Verify symplectic invariance of F_g under x <-> y exchange.
+    """Check the scalar free-energy normalization under the chosen branch.
 
-    For a genus-0 spectral curve, the BKMP theorem states that F_g is
-    invariant under the symplectic involution x <-> y on the phase space
-    (x, y, B).  For our curve y^2 = Q_L(t) = q0 + q1*t + q2*t^2:
-
-    ORIGINAL: x = t, y = sqrt(Q_L(t))
-    SWAPPED:  x' = y = sqrt(Q_L(t)), y' = t
-
-    Both parameterizations give the same F_g because the Euler characteristic
-    of M_g is a topological invariant.  For the shadow curve, F_g = kappa*lambda_g^FP
-    is computed from kappa and the TOPOLOGY of the spectral curve, which is
-    invariant under the symplectic swap.
-
-    The quantitative check: both the original and swapped curves have the
-    same number of branch points (2), same monodromy (-1), same genus (0).
-    The free energies match because F_g depends only on the symplectic
-    invariants of the curve (branch point structure).
+    This routine does not prove general EO symplectic invariance.  It checks
+    the scalar normalization used in this engine: the free energy is
+    F_g = kappa*lambda_g^FP, where kappa is the signed coefficient fixed by
+    sqrt(Q_L(0)) = 2*kappa.
     """
     kappa_rat = Rational(data.kappa.numerator, data.kappa.denominator)
     F_g_original = kappa_rat * lambda_fp(g)
 
-    # The swapped curve x' = sqrt(Q_L(t)) has branch points where
-    # dx'/dt = 0, i.e., Q_L'(t)/(2*sqrt(Q_L)) = 0, so at Q_L'(t) = 0.
-    # This gives a different set of branch points, but the NUMBER of
-    # simple branch points is still 2 (for generic Q_L), and the
-    # local Airy model gives the same intersection numbers.
-
-    # For the Airy curve, F_g^Airy = lambda_fp(g) is by definition
-    # the symplectically invariant free energy. The shadow curve
-    # contributes F_g = kappa * F_g^Airy, where kappa is a topological
-    # datum extracted from the curve (related to its Euler characteristic
-    # contribution = kappa/24 at g=1).
-
     return {
         'g': g,
         'F_g_original': F_g_original,
-        'F_g_invariant': F_g_original,  # Same by BKMP
+        'F_g_invariant': F_g_original,
         'kappa': kappa_rat,
         'symplectic_invariant': True,
-        'reason': 'F_g depends only on branch point structure, invariant under x<->y',
+        'full_eo_symplectic_invariance_asserted': False,
+        'scope': 'scalar signed-branch normalization',
+        'reason': 'F_g = kappa*lambda_g^FP in the scalar shadow lane',
     }
 
 
@@ -1074,11 +1240,11 @@ def symplectic_check_free_energy(data: ShadowCurveData, g: int) -> Dict[str, Any
 # ============================================================================
 
 def wkb_expansion(data: ShadowCurveData, max_order: int = 4) -> Dict[int, Rational]:
-    r"""WKB expansion coefficients S_g from the shadow spectral curve.
+    r"""Finite WKB-style scalar coefficients from the shadow spectral curve.
 
-    The wave function psi(x) = exp(sum_{g>=0} hbar^{g-1} S_g(x))
-    satisfies a Schrodinger-type equation.  The WKB coefficients are
-    related to the free energies by:
+    The usual WKB notation writes a formal expression
+    psi(x) = exp(sum_{g>=0} hbar^{g-1} S_g(x)).  This helper records only
+    the scalar coefficients used by the shadow lane:
 
         S_0(x) = integral y dx  (classical action)
         S_1(x) = -1/2 log(y dx/dz) (one-loop)
@@ -1088,9 +1254,7 @@ def wkb_expansion(data: ShadowCurveData, max_order: int = 4) -> Dict[int, Ration
         S_0 = integral sqrt(Q_L(t)) dt  (elliptic integral for generic Q_L)
         S_1 = -1/4 log Q_L(t)  (logarithmic)
 
-    The WKB series is an asymptotic expansion in hbar.  For the shadow
-    obstruction tower, hbar is the genus-counting parameter.
-
+    No analytic WKB solution or convergence statement is certified.
     Returns {g: coefficient of S_g evaluated at a reference point}.
     """
     kappa_rat = Rational(data.kappa.numerator, data.kappa.denominator)
@@ -1116,16 +1280,22 @@ def wkb_expansion(data: ShadowCurveData, max_order: int = 4) -> Dict[int, Ration
 
 
 # ============================================================================
-# 8. Koszul spectral curve duality
+# 8. Verdier-complementarity scalar partner
 # ============================================================================
 
 def koszul_dual_curve(data: ShadowCurveData) -> Optional[ShadowCurveData]:
-    """Compute the Koszul dual spectral curve.
+    """Return tabulated scalar data for the Verdier-complementarity branch.
 
-    For Virasoro: c -> 26-c flips branch points.
-    The dual shadow data: kappa' = (26-c)/2, alpha' = 2, S4' = 10/((26-c)*(5(26-c)+22)).
+    The function name is kept for compatibility with older tests.  It does
+    not construct A^!.  The object A^! is obtained from A^i by
+    Verdier/continuous-linear duality under finite-type/completed
+    hypotheses; Omega(B(A)) recovers A by inversion, and Z_ch^der(A) is the
+    Hochschild bulk object.
 
-    For affine sl_2: k -> -k-4 (Feigin-Frenkel involution for sl_2).
+    Scalar branches tabulated here:
+      * Virasoro: c -> 26-c, hence kappa + kappa' = 13.
+      * affine sl_2: k -> -k-4, hence kappa + kappa' = 0.
+      * Heisenberg: kappa -> -kappa as scalar complementarity data only.
     """
     if data.name.startswith("Vir"):
         # Extract c from kappa = c/2
@@ -1137,23 +1307,20 @@ def koszul_dual_curve(data: ShadowCurveData) -> Optional[ShadowCurveData]:
     if data.name.startswith("aff_sl2"):
         k = (data.kappa * 4 / 3) - 2
         k_dual = -k - 4  # FF involution for sl_2
-        if k_dual + 2 <= 0:
+        if k_dual + 2 == 0:
             return None
         return affine_sl2_shadow(k_dual)
     if data.name.startswith("Heis"):
         k = data.kappa
-        return heisenberg_shadow(-k)  # H_k^! has kappa = -k
+        return heisenberg_shadow(-k)
     return None
 
 
 def complementarity_check(data: ShadowCurveData, g: int) -> Dict[str, Any]:
-    """Verify complementarity relation F_g(A) + F_g(A!) for Virasoro.
+    """Verify scalar complementarity for the tabulated branch.
 
-    For Virasoro: kappa(c) + kappa(26-c) = c/2 + (26-c)/2 = 13.
-    So F_g(Vir_c) + F_g(Vir_{26-c}) = 13 * lambda_g^FP.
-
-    NOTE (AP24): This sum is NOT zero for Virasoro. It is 13*lambda_g.
-    Anti-symmetry kappa + kappa' = 0 holds for KM/free fields, not Virasoro.
+    Virasoro gives kappa(c) + kappa(26-c) = 13.  Affine sl_2 and
+    Heisenberg scalar partners give kappa + kappa' = 0.
     """
     kappa_rat = Rational(data.kappa.numerator, data.kappa.denominator)
     F_g = kappa_rat * lambda_fp(g)
@@ -1171,15 +1338,23 @@ def complementarity_check(data: ShadowCurveData, g: int) -> Dict[str, Any]:
     F_g_dual = kappa_dual * lambda_fp(g)
     total = F_g + F_g_dual
 
-    # For Virasoro: expected sum = 13 * lambda_g
-    expected = Rational(13) * lambda_fp(g)
+    expected_constant = None
+    if data.name.startswith("Vir"):
+        expected_constant = Rational(13)
+    elif data.name.startswith("aff_sl2") or data.name.startswith("Heis"):
+        expected_constant = Rational(0)
+
+    expected = (
+        expected_constant * lambda_fp(g)
+        if expected_constant is not None else None
+    )
 
     return {
         'F_g': F_g,
         'F_g_dual': F_g_dual,
         'sum': total,
-        'expected_sum': expected if data.name.startswith("Vir") else None,
-        'complementarity': (total == expected) if data.name.startswith("Vir") else None,
+        'expected_sum': expected,
+        'complementarity': (total == expected) if expected is not None else None,
         'kappa_sum': kappa_rat + kappa_dual,
     }
 
@@ -1192,23 +1367,11 @@ def extract_shadow_from_omega(eo: ShadowEORecursion,
                               g: int, n: int,
                               eval_points: Optional[List[complex]] = None,
                               ) -> complex:
-    r"""Extract the shadow tower coefficient at (g,n) from EO correlators.
+    r"""Evaluate one implemented EO-style correlator.
 
-    The shadow tower coefficient S_{g,n}(A) is related to omega_{g,n}
-    by the identification:
-
-        omega_{g,n}(z_1, ..., z_n) = S_{g,n}(A) * [standard form in z_i]
-
-    For the leading (scalar) shadow:
-        omega_{g,1}(z0) evaluated at a generic z0 encodes F_g = kappa*lambda_g.
-
-    The extraction procedure:
-    1. Evaluate omega_{g,n} at chosen test points.
-    2. Divide by the "standard form" (product of Bergman-type factors).
-    3. The result is the shadow coefficient S_{g,n}.
-
-    For (g,n) = (1,1): omega_{1,1}(z0) = S_{1,1} * phi_{1,1}(z0)
-    where phi_{1,1} depends only on the curve parametrization.
+    The function name is kept for compatibility.  No canonical division by
+    a standard form is performed here, and no theorem equating these
+    finite correlator values with the full shadow tower is certified.
     """
     if eval_points is None:
         eval_points = [2.0 + 0.5j, 3.0 - 0.3j, 1.5 + 0.8j,
@@ -1245,15 +1408,15 @@ def extract_shadow_from_omega(eo: ShadowEORecursion,
 
 
 # ============================================================================
-# 10. Cross-verification: shadow tower vs EO recursion
+# 10. Finite scalar coefficient comparison
 # ============================================================================
 
 def verify_shadow_eo_match(data: ShadowCurveData, max_genus: int = 3) -> Dict[str, Any]:
-    """Verify that the EO free energies match the shadow tower prediction.
+    """Verify scalar free energies against the formal shadow tower.
 
-    PATH 1: F_g from EO recursion (contour integration).
-    PATH 2: F_g = kappa * lambda_g^FP from Theorem D.
-    PATH 3: F_g from Taylor expansion of H(t) = t^2*sqrt(Q_L(t)).
+    This function does not perform contour integration.  It checks that the
+    scalar formula F_g = kappa*lambda_g^FP is consistent with the signed
+    formal branch used to extract the shadow tower from Q_L.
 
     Returns comparison dict for each genus.
     """
@@ -1261,22 +1424,86 @@ def verify_shadow_eo_match(data: ShadowCurveData, max_genus: int = 3) -> Dict[st
     kappa_rat = Rational(data.kappa.numerator, data.kappa.denominator)
 
     for g in range(1, max_genus + 1):
-        # PATH 2: Direct formula
         F_g_shadow = kappa_rat * lambda_fp(g)
 
-        # PATH 3: From shadow tower Taylor expansion
         tower = shadow_tower_from_QL(data, max_arity=2 * g + 2)
-        # F_g is related to the genus-g contribution of the tower
-        # For the scalar shadow: F_g = kappa * lambda_g^FP
-        F_g_taylor = F_g_shadow  # Same by construction for scalar lane
+        F_g_taylor = tower[2] * lambda_fp(g)
 
         results[g] = {
             'F_g_shadow': F_g_shadow,
             'F_g_taylor': F_g_taylor,
+            'tower_S2': tower[2],
+            'eo_contour_integral': 'not_evaluated',
+            'full_eo_recursion_theorem_asserted': False,
+            'finite_scalar_identity': True,
             'match': (F_g_shadow == F_g_taylor),
         }
 
     return results
+
+
+def kw_tau_function_log(g_max: int = 8) -> Dict[int, Rational]:
+    """Finite Airy/KW logarithmic coefficients lambda_g^FP."""
+    if g_max < 1:
+        raise ValueError(f"g_max must be >= 1, got {g_max}")
+    return {g: lambda_fp(g) for g in range(1, g_max + 1)}
+
+
+def shadow_scalar_tau_log(data: ShadowCurveData,
+                          g_max: int = 8) -> Dict[int, Rational]:
+    """Finite scalar shadow logarithmic coefficients kappa*lambda_g^FP."""
+    if g_max < 1:
+        raise ValueError(f"g_max must be >= 1, got {g_max}")
+    kappa = Rational(data.kappa.numerator, data.kappa.denominator)
+    return {g: kappa * lambda_fp(g) for g in range(1, g_max + 1)}
+
+
+def finite_scalar_kw_coefficient_identity(
+    data: ShadowCurveData,
+    g_max: int = 5,
+) -> Dict[str, Any]:
+    r"""Certify the finite scalar Airy/KW coefficient identity.
+
+    For 1 <= g <= g_max this checks
+
+        [hbar^{2g}] log(tau_shadow) =
+        kappa * [hbar^{2g}] log(tau_KW).
+
+    It does not assert an analytic tau-function equality, a convergence
+    radius, a full EO theorem, or multi-weight all-genus data.
+    """
+    if g_max < 1:
+        raise ValueError(f"g_max must be >= 1, got {g_max}")
+
+    kappa = Rational(data.kappa.numerator, data.kappa.denominator)
+    kw_log = kw_tau_function_log(g_max)
+    shadow_log = shadow_scalar_tau_log(data, g_max)
+
+    coefficients = {}
+    for g in range(1, g_max + 1):
+        coefficients[g] = {
+            'lambda_fp': kw_log[g],
+            'kw_log_coefficient': kw_log[g],
+            'shadow_log_coefficient': shadow_log[g],
+            'kappa_times_kw': kappa * kw_log[g],
+            'coefficient_identity': shadow_log[g] == kappa * kw_log[g],
+        }
+
+    return {
+        'status': 'finite_scalar_coefficient_identity',
+        'family': data.name,
+        'kappa': kappa,
+        'genus_window': (1, g_max),
+        'coefficients': coefficients,
+        'all_coefficients_match': all(
+            row['coefficient_identity'] for row in coefficients.values()
+        ),
+        'global_kw_tau_theorem_asserted': False,
+        'analytic_tau_power_asserted': False,
+        'full_eo_recursion_theorem_asserted': False,
+        'convergence_radius_asserted': False,
+        'multi_weight_all_genus_theorem_asserted': False,
+    }
 
 
 # ============================================================================
@@ -1284,7 +1511,7 @@ def verify_shadow_eo_match(data: ShadowCurveData, max_genus: int = 3) -> Dict[st
 # ============================================================================
 
 class MirrorCurveConifold:
-    """Mirror curve for the resolved conifold.
+    """Separate resolved-conifold mirror-curve input.
 
     The mirror curve: x + y + e^{-x} + Q*e^{-y} = 0
     where Q = e^{-t} is the Kahler parameter.
@@ -1294,12 +1521,9 @@ class MirrorCurveConifold:
 
     For Q = 0 (large radius): y^2 = -4*sin^2(x/2), the Catalan curve.
 
-    The Bouchard-Marino conjecture (proved by Eynard-Orantin):
-    the EO recursion on this curve computes open Gromov-Witten
-    invariants (disc amplitudes) of the resolved conifold.
-
-    We implement the Q -> 0 limit (Catalan curve) as a cross-check
-    for the Euler-characteristic structure.
+    This is not the shadow curve y^2 = Q_L(t), and it is not the WP/JT
+    sine curve.  The Q -> 0 Catalan helper below is only a separate
+    finite combinatorial check.
     """
 
     def __init__(self, Q_param: float = 0.01, dps: int = 30):
@@ -1329,21 +1553,22 @@ class MirrorCurveConifold:
 def dilaton_equation_check(eo: ShadowEORecursion,
                            g: int, n: int,
                            z_points: List[complex]) -> Dict[str, Any]:
-    """Verify the dilaton equation for omega_{g,n}.
+    """Return finite structural metadata for the dilaton equation.
 
     Dilaton equation:
         Res_{p->alpha} omega_{g,n+1}(z_S, p) = (2g-2+n) * omega_{g,n}(z_S)
 
     This is a universal constraint from the topology of M-bar_{g,n}
     (the forgetful map pi: M-bar_{g,n+1} -> M-bar_{g,n}).
-
-    We check this numerically for specific evaluation points.
     """
     chi = 2 * g - 2 + n
     if chi <= 0:
-        return {'valid': False, 'reason': 'unstable (chi <= 0)'}
+        return {
+            'valid': False,
+            'reason': 'unstable (chi <= 0)',
+            'checked_numerically': False,
+        }
 
-    # This is a structural check, not a numerical computation
     return {
         'g': g,
         'n': n,
@@ -1351,6 +1576,7 @@ def dilaton_equation_check(eo: ShadowEORecursion,
         'dilaton_factor': chi,
         'equation': f'Res omega_{{g,n+1}}(..., p) = {chi} * omega_{{g,n}}(...)',
         'valid': True,
+        'checked_numerically': False,
     }
 
 
@@ -1367,7 +1593,7 @@ def string_equation_check() -> Dict[str, Any]:
     # String equation from <tau_0 * tau_0 * tau_0>_0:
     # Remove one tau_0, sum over reducing each remaining tau_d by 1.
     # <tau_{-1} tau_0>_0 + <tau_0 tau_{-1}>_0 = 0
-    # Actually string eq: <tau_0 tau_{d_1}...>_g = sum <..tau_{d_j-1}..>_g
+    # String equation: <tau_0 tau_{d_1}...>_g = sum <..tau_{d_j-1}..>_g.
     # From <tau_0^3>_0 = 1: remove tau_0: <tau_{-1} tau_0>_0 + <tau_0 tau_{-1}>_0
     # but tau_{-1} doesn't exist. For g=0 n=3, this is the base case.
     return {
@@ -1378,18 +1604,75 @@ def string_equation_check() -> Dict[str, Any]:
 
 
 # ============================================================================
-# 13. Convenience: run all verifications for a family
+# 13. Scope firewalls and finite verification report
 # ============================================================================
 
+def wp_jt_sine_curve_input() -> Dict[str, Any]:
+    """Separate WP/JT topological-recursion input."""
+    return {
+        'shadow_curve': 'y^2 = Q_L(t)',
+        'wp_jt_curve': 'y = sin(2*pi*sqrt(x))/(4*pi)',
+        'same_spectral_curve': False,
+        'wp_jt_from_shadow_curve_certified': False,
+        'requires_separate_input': True,
+    }
+
+
+def multi_weight_stable_graph_scope() -> Dict[str, Any]:
+    """Scope of multi-weight and planted-forest data in this module."""
+    return {
+        'planted_forest_diagnostics_computed': False,
+        'multi_weight_stable_graph_data_present': False,
+        'multi_weight_cross_channel_terms_included': False,
+        'multi_weight_all_genus_theorem_asserted': False,
+        'open_obligation': (
+            'Multi-weight and planted-forest corrections require a separate '
+            'stable-graph engine; Q_L and scalar coefficients do not compute them.'
+        ),
+    }
+
+
+def claim_scope_firewall_report(
+    data: ShadowCurveData,
+    max_genus: int = 3,
+    max_arity: int = 8,
+) -> Dict[str, Any]:
+    """Assemble the finite/non-certified split for this scalar engine."""
+    return {
+        'shadow_spectral_curve': {
+            'equation': 'y^2 = Q_L(t)',
+            'q0': data.q0,
+            'q1': data.q1,
+            'q2': data.q2,
+            'is_eo_input_after_separate_residue_data': True,
+            'certifies_full_eo_recursion': False,
+        },
+        'stationary_primary_line_riccati': (
+            stationary_primary_line_riccati_diagnostic(data, max_arity)
+        ),
+        'finite_scalar_kw_coefficients': (
+            finite_scalar_kw_coefficient_identity(data, max_genus)
+        ),
+        'wp_jt_sine_curve': wp_jt_sine_curve_input(),
+        'multi_weight_stable_graphs': multi_weight_stable_graph_scope(),
+        'unsupported_claims': {
+            'full_eo_recursion_theorem': False,
+            'global_kw_tau_theorem': False,
+            'analytic_convergence_radius': False,
+            'wp_jt_from_shadow_curve': False,
+            'multi_weight_all_genus_from_scalar_curve': False,
+        },
+    }
+
+
 def full_verification_suite(data: ShadowCurveData) -> Dict[str, Any]:
-    """Run the complete verification suite for a shadow spectral curve.
+    """Run the finite scalar verification report for a shadow curve.
 
     1. Shadow tower from Q_L (Taylor expansion).
-    2. Free energies from Theorem D.
-    3. Koszul duality check.
-    4. Symplectic invariance.
+    2. Scalar free energies.
+    3. Verdier-complementarity scalar partner.
+    4. Signed-branch normalization check.
     5. WKB coefficients.
-    6. Airy cross-check.
     """
     results = {}
 
@@ -1403,7 +1686,7 @@ def full_verification_suite(data: ShadowCurveData) -> Dict[str, Any]:
         g: kappa_rat * lambda_fp(g) for g in range(1, 5)
     }
 
-    # 3. Koszul duality
+    # 3. Verdier-complementarity scalar partner
     dual = koszul_dual_curve(data)
     results['koszul_dual'] = dual
     if dual is not None:
@@ -1418,5 +1701,8 @@ def full_verification_suite(data: ShadowCurveData) -> Dict[str, Any]:
 
     # 5. WKB
     results['wkb'] = wkb_expansion(data, max_order=4)
+
+    # 6. Scope firewall
+    results['claim_scope'] = claim_scope_firewall_report(data)
 
     return results

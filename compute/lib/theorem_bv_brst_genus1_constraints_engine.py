@@ -1,10 +1,12 @@
 r"""Genus-1 constraints on conj:master-bv-brst from the KZ25 sigma model framework.
 
-THE CONJECTURE (conj:master-bv-brst):
-  The BV-BRST complex of the 3d HT theory on a genus-g surface equals
-  the bar complex B(A) at genus g.  Proved at genus 0 (thm:bv-bar-geometric,
-  CG17), proved for Heisenberg at all genera (thm:heisenberg-bv-bar-all-genera).
-  OPEN for interacting theories at genus >= 1.
+THE COMPARISON SURFACES:
+  The BV-BRST complex of the 3d HT theory and the modular bar complex
+  B(A) are compared in three different ambients.  The scalar Hodge lane
+  computes kappa(A) * lambda_g^FP.  The ordinary chain lane requires
+  explicit propagator and harmonic-decoupling control.  The completed
+  coderived lane is the Positselski ambient.  Genus-1 scalar agreement
+  must not be promoted to an all-genus ordinary-chain equivalence.
 
 KZ25 SIGMA MODEL (Khan-Zeng 2025):
   The 3d Poisson sigma model on C x R has BV action functional
@@ -21,17 +23,21 @@ GENUS-1 CONSTRAINT EXTRACTION:
     F_1^bar(A) = kappa(A) * lambda_1^FP = kappa(A) / 24.
   The comparison BV = bar at genus 1 requires:
     -alpha(A) * zeta'_dbar(0) = kappa(A) / 24.
-  By the Quillen anomaly: zeta'_dbar(0) = -1/12 * int c_1(E_1),
-  and int_{E_tau} c_1(E_1) = 1/2, giving zeta'_dbar(0) = -1/24.
-  Therefore: alpha(A) = kappa(A).
+  With the Quillen metric and Arakelov-normalized Green kernel:
+    zeta'_dbar(0) = zeta(-1)/2 = -1/24.
+  Since lambda_1^FP = 1/24, genus-1 scalar BV = bar requires
+    alpha(A) = kappa(A).
+  This is a determinant-normalized scalar statement, not an
+  all-genus ordinary-chain equivalence.
 
 WHAT THIS ENGINE COMPUTES:
   Section 1: BV 1-loop determinants for standard families on E_tau x R
   Section 2: Genus-1 bar free energy for all families
   Section 3: The BV = bar comparison at genus 1 (proved data)
-  Section 4: Genus-1 curvature identity d_bar^2 = kappa * omega_1
-  Section 5: Genus-2 obstruction from planted-forest data
-  Section 6: Epistemic status classification (proved vs conjectural)
+  Section 4: Scope, ambient, and object-role witnesses
+  Section 5: Genus-1 curvature identity d_bar^2 = kappa * omega_1
+  Section 6: Genus-2 obstruction from planted-forest data
+  Section 7: Epistemic status classification (proved vs conjectural)
 
 CONVENTIONS (from signs_and_shifts.tex, AUTHORITATIVE):
   - Cohomological grading: |d| = +1
@@ -146,6 +152,25 @@ class EpistemicStatus(str, Enum):
     PROVED = 'PROVED'
     CONDITIONAL = 'CONDITIONAL'
     CONJECTURAL = 'CONJECTURAL'
+    REFUTED = 'REFUTED'
+
+
+class ComparisonAmbient(str, Enum):
+    """Ambient in which a BV/BRST = bar comparison is being asserted."""
+
+    SCALAR_HODGE = 'SCALAR_HODGE'
+    ORDINARY_CHAIN = 'ORDINARY_CHAIN'
+    CODERIVED = 'CODERIVED'
+
+
+class ChiralObjectRole(str, Enum):
+    """The five object roles kept separate by the concordance."""
+
+    ALGEBRA_A = 'A'
+    BAR_COALGEBRA = 'B(A)'
+    KOSZUL_DUAL_COALGEBRA = 'A^i'
+    KOSZUL_DUAL_ALGEBRA = 'A^!'
+    DERIVED_CENTER = 'Z_ch^der(A)'
 
 
 @dataclass(frozen=True)
@@ -160,6 +185,8 @@ class ChiralAlgebraData:
         shadow_depth: r_max (2, 3, 4, or effectively infinity)
         dim_generators: number of generators (1 for Vir, dim(g) for KM)
         conformal_weights: tuple of conformal weights of generators
+        shadow_S3: first cubic shadow coefficient if canonically scalar
+        shadow_S4: first quartic shadow coefficient if canonically scalar
         bv_genus1_status: epistemic status of BV = bar at genus 1
     """
     name: str
@@ -169,6 +196,8 @@ class ChiralAlgebraData:
     shadow_depth: int       # use 1000 for infinity
     dim_generators: int
     conformal_weights: Tuple[int, ...]
+    shadow_S3: Optional[Fraction]
+    shadow_S4: Optional[Fraction]
     bv_genus1_status: EpistemicStatus
 
     @property
@@ -199,6 +228,8 @@ def heisenberg(k: int) -> ChiralAlgebraData:
         shadow_depth=2,
         dim_generators=1,
         conformal_weights=(1,),
+        shadow_S3=Fraction(0),
+        shadow_S4=Fraction(0),
         bv_genus1_status=EpistemicStatus.PROVED,
     )
 
@@ -222,6 +253,8 @@ def virasoro(c: Fraction) -> ChiralAlgebraData:
         shadow_depth=1000,
         dim_generators=1,
         conformal_weights=(2,),
+        shadow_S3=Fraction(2),
+        shadow_S4=_virasoro_S4(c),
         bv_genus1_status=EpistemicStatus.CONDITIONAL,
     )
 
@@ -249,6 +282,8 @@ def affine_sl2(k: int) -> ChiralAlgebraData:
         shadow_depth=3,
         dim_generators=3,
         conformal_weights=(1, 1, 1),
+        shadow_S3=None,
+        shadow_S4=Fraction(0),
         bv_genus1_status=EpistemicStatus.PROVED,
     )
 
@@ -273,6 +308,8 @@ def affine_sl3(k: int) -> ChiralAlgebraData:
         shadow_depth=3,
         dim_generators=8,
         conformal_weights=(1,) * 8,
+        shadow_S3=None,
+        shadow_S4=Fraction(0),
         bv_genus1_status=EpistemicStatus.PROVED,
     )
 
@@ -283,6 +320,7 @@ def betagamma() -> ChiralAlgebraData:
     kappa(beta-gamma) = 1 (the level for a single beta-gamma pair).
     c(beta-gamma) = 2 (two generators of weights (1, 0)).
     Class C, shadow depth 4.
+    Standard conformal-weight family: S_3 = 0, S_4 = -5/12.
 
     BV = bar at genus 1: CONDITIONAL (quartic contact term may couple
     to P_harm, but for beta-gamma Q_contact = 0 by the weight-(1,0)
@@ -296,13 +334,95 @@ def betagamma() -> ChiralAlgebraData:
         shadow_depth=4,
         dim_generators=2,
         conformal_weights=(1, 0),
+        shadow_S3=Fraction(0),
+        shadow_S4=Fraction(-5, 12),
         bv_genus1_status=EpistemicStatus.CONDITIONAL,
     )
+
+
+def _virasoro_S4(c: Fraction) -> Fraction:
+    """Canonical Virasoro quartic shadow coefficient 10/[c(5c+22)]."""
+    c = Fraction(c)
+    denominator = c * (5 * c + 22)
+    if denominator == 0:
+        raise ValueError('Virasoro shadow surface requires c(5c+22) != 0')
+    return Fraction(10, 1) / denominator
+
+
+def virasoro_shadow_constants(c: Fraction) -> Dict[str, Fraction]:
+    r"""Canonical Virasoro shadow constants on c(5c+22) != 0.
+
+    Landscape anchor:
+      S_2 = c/2,
+      S_3 = 2,
+      S_4 = 10/[c(5c+22)],
+      S_5 = -48/[c^2(5c+22)],
+      Delta = 8*kappa*S_4 = 40/(5c+22).
+    """
+    c = Fraction(c)
+    S4 = _virasoro_S4(c)
+    return {
+        'S2': c / 2,
+        'S3': Fraction(2),
+        'S4': S4,
+        'S5': Fraction(-48, 1) / (c * c * (5 * c + 22)),
+        'Delta': Fraction(40, 1) / (5 * c + 22),
+        'Lambda_norm': c * (5 * c + 22) / 10,
+    }
 
 
 # =====================================================================
 # Section 2: BV 1-loop determinant on E_tau x R
 # =====================================================================
+
+@dataclass(frozen=True)
+class QuillenArakelovWitness:
+    """Exact genus-1 determinant normalization witness.
+
+    The scalar comparison uses the Quillen metric on the determinant
+    line and the Arakelov-normalized Green kernel on the elliptic curve.
+    With these conventions:
+      lambda_1^FP = 1/24,
+      zeta(-1) = -1/12,
+      zeta'_dbar(0) = zeta(-1)/2 = -1/24,
+      -zeta'_dbar(0) = lambda_1^FP.
+    """
+    lambda1_fp: Fraction
+    eta_q_power: Fraction
+    zeta_minus_one: Fraction
+    complex_half_density: Fraction
+    zeta_prime_dbar: Fraction
+    quillen_metric: bool
+    arakelov_normalized: bool
+    determinant_matches_lambda1: bool
+
+
+def quillen_arakelov_genus1_witness(
+    *,
+    quillen_metric: bool = True,
+    arakelov_normalized: bool = True,
+) -> QuillenArakelovWitness:
+    """Return the exact determinant witness for the genus-1 scalar lane."""
+    lambda1 = lambda_fp_exact(1)
+    eta_q_power = Fraction(1, 24)
+    zeta_minus_one = Fraction(-1, 12)
+    complex_half_density = Fraction(1, 2)
+    zeta_prime = zeta_minus_one * complex_half_density
+    return QuillenArakelovWitness(
+        lambda1_fp=lambda1,
+        eta_q_power=eta_q_power,
+        zeta_minus_one=zeta_minus_one,
+        complex_half_density=complex_half_density,
+        zeta_prime_dbar=zeta_prime,
+        quillen_metric=quillen_metric,
+        arakelov_normalized=arakelov_normalized,
+        determinant_matches_lambda1=(
+            quillen_metric
+            and arakelov_normalized
+            and -zeta_prime == lambda1 == eta_q_power
+        ),
+    )
+
 
 @dataclass(frozen=True)
 class BVOneLoopResult:
@@ -312,18 +432,18 @@ class BVOneLoopResult:
       Z_1^{1-loop}(A) = det'(dbar_{E_tau})^{-alpha(A)}
     where alpha(A) is an effective exponent determined by the algebra.
 
-    Using the Quillen anomaly:
-      log det'(dbar_{E_tau}) = -log eta(tau) - log eta(-bar{tau})
-                              = -(1/12) * 2 pi i tau / 24 - sum log(1 - q^n) + c.c.
-    and the regularized version:
+    With the Quillen metric and the Arakelov-normalized Green kernel:
       zeta'_dbar(0) = -1/24
-    (from the Riemann zeta regularization: sum_{n>=1} n = zeta(-1) = -1/12,
-     and the torus has 2 real dimensions, giving -1/12 * 1/2 = -1/24).
+    because zeta(-1) = -1/12 and the complex half-density contributes
+    the factor 1/2. Equivalently, eta(q) = q^{1/24} prod(1-q^n), so
+    the determinant constant is -lambda_1^FP.
 
     The genus-1 free energy from the BV path integral:
       F_1^BV = -alpha(A) * zeta'_dbar(0) = alpha(A) / 24.
 
-    The conjecture: alpha(A) = kappa(A).
+    The scalar genus-1 comparison is alpha(A) = kappa(A) after the
+    determinant normalization above. It is not an ordinary-chain
+    all-genus statement.
     """
     algebra_name: str
     kappa: Fraction
@@ -333,6 +453,7 @@ class BVOneLoopResult:
     F1_bar: Fraction             # = kappa / 24
     match: bool                  # F1_bv == F1_bar
     status: EpistemicStatus
+    determinant_witness: QuillenArakelovWitness
 
 
 def bv_one_loop_determinant(algebra: ChiralAlgebraData) -> BVOneLoopResult:
@@ -364,7 +485,8 @@ def bv_one_loop_determinant(algebra: ChiralAlgebraData) -> BVOneLoopResult:
       alpha(betagamma) = 1 = kappa(betagamma).
       Q_contact = 0 for the weight-(1,0) pair.
     """
-    zeta_prime = Fraction(-1, 24)
+    determinant_witness = quillen_arakelov_genus1_witness()
+    zeta_prime = determinant_witness.zeta_prime_dbar
     kappa = algebra.kappa
 
     # The BV exponent: for the standard families, the 1-loop effective
@@ -377,7 +499,7 @@ def bv_one_loop_determinant(algebra: ChiralAlgebraData) -> BVOneLoopResult:
     # For beta-gamma: the bc system gives alpha = 1 = kappa.
     #
     # The key formula: -alpha * zeta'_dbar(0) = alpha / 24 = kappa / 24.
-    alpha = kappa  # The conjecture at genus 1
+    alpha = kappa  # Scalar genus-1 comparison being tested.
 
     F1_bv = alpha * Fraction(-1, 1) * zeta_prime   # = alpha / 24
     F1_bar = kappa * Fraction(1, 24)
@@ -391,6 +513,7 @@ def bv_one_loop_determinant(algebra: ChiralAlgebraData) -> BVOneLoopResult:
         F1_bar=F1_bar,
         match=(F1_bv == F1_bar),
         status=algebra.bv_genus1_status,
+        determinant_witness=determinant_witness,
     )
 
 
@@ -525,6 +648,178 @@ def genus1_bv_bar_comparison(algebra: ChiralAlgebraData) -> Genus1ComparisonResu
     )
 
 
+@dataclass(frozen=True)
+class BVBarScopeWitness:
+    """Scope witness preventing scalar genus-1 data from proving more.
+
+    The scalar Hodge lane computes kappa * lambda_g^FP. The ordinary
+    chain lane concerns a quasi-isomorphism of explicit complexes. The
+    coderived lane is the completed Positselski ambient.
+    """
+    algebra_name: str
+    genus: int
+    ambient: ComparisonAmbient
+    scalar_free_energy: Fraction
+    lambda_fp: Fraction
+    valid: bool
+    status: EpistemicStatus
+    cross_channel_required: bool
+    determinant_witness: QuillenArakelovWitness
+    hypotheses: Tuple[str, ...]
+    failures: Tuple[str, ...]
+
+
+def ordinary_chain_bv_bar_status(algebra: ChiralAlgebraData) -> EpistemicStatus:
+    """Ordinary chain-level BV/BRST = bar status by shadow class."""
+    if algebra.shadow_class in (ShadowClass.G, ShadowClass.L):
+        return EpistemicStatus.PROVED
+    if algebra.shadow_class == ShadowClass.C:
+        return EpistemicStatus.CONDITIONAL
+    if algebra.shadow_class == ShadowClass.M:
+        return EpistemicStatus.REFUTED
+    return EpistemicStatus.CONJECTURAL
+
+
+def bv_bar_scope_witness(
+    algebra: ChiralAlgebraData,
+    genus: int,
+    ambient: ComparisonAmbient = ComparisonAmbient.SCALAR_HODGE,
+    *,
+    quillen_metric: bool = True,
+    arakelov_normalized: bool = True,
+    coderived_completion: bool = False,
+) -> BVBarScopeWitness:
+    """Check the exact scope of a BV/BRST = bar assertion.
+
+    Rules encoded from the local concordance:
+      - genus 1 scalar Hodge formula is kappa * lambda_1^FP for all
+        standard families, provided the Quillen/Arakelov determinant
+        normalization is present;
+      - all-genus scalar formula is proved on the uniform-weight lane;
+        multi-weight families need delta F_g^cross at g >= 2;
+      - ordinary chain-level BV/BRST = bar is proved for classes G/L,
+        conditional for class C, and refuted for class M;
+      - coderived comparison requires the completed coderived ambient.
+    """
+    if genus < 1:
+        raise ValueError(f"genus must be >= 1, got {genus}")
+
+    determinant = quillen_arakelov_genus1_witness(
+        quillen_metric=quillen_metric,
+        arakelov_normalized=arakelov_normalized,
+    )
+    lambda_g = lambda_fp_exact(genus)
+    scalar_free_energy = algebra.kappa * lambda_g
+    hypotheses: List[str] = []
+    failures: List[str] = []
+    cross_channel_required = False
+
+    if ambient == ComparisonAmbient.SCALAR_HODGE:
+        hypotheses.extend(['Quillen metric', 'Arakelov Green normalization'])
+        if not determinant.determinant_matches_lambda1:
+            if not quillen_metric:
+                failures.append('missing Quillen determinant metric')
+            if not arakelov_normalized:
+                failures.append('missing Arakelov Green normalization')
+        if genus == 1:
+            valid = not failures
+            status = EpistemicStatus.PROVED if valid else EpistemicStatus.CONDITIONAL
+        elif algebra.is_uniform_weight:
+            valid = not failures
+            status = EpistemicStatus.PROVED if valid else EpistemicStatus.CONDITIONAL
+        else:
+            cross_channel_required = True
+            valid = False
+            status = EpistemicStatus.REFUTED
+            failures.append('multi-weight g>=2 requires delta F_g^cross')
+    elif ambient == ComparisonAmbient.CODERIVED:
+        hypotheses.append('completed coderived Positselski ambient')
+        valid = coderived_completion
+        status = EpistemicStatus.PROVED if valid else EpistemicStatus.CONDITIONAL
+        if not valid:
+            failures.append('missing coderived completion')
+    elif ambient == ComparisonAmbient.ORDINARY_CHAIN:
+        status = ordinary_chain_bv_bar_status(algebra)
+        valid = status == EpistemicStatus.PROVED
+        if status == EpistemicStatus.CONDITIONAL:
+            failures.append('harmonic decoupling not supplied')
+        elif status == EpistemicStatus.REFUTED:
+            failures.append('ordinary chain-level comparison fails in class M')
+    else:
+        raise ValueError(f"unknown comparison ambient: {ambient}")
+
+    return BVBarScopeWitness(
+        algebra_name=algebra.name,
+        genus=genus,
+        ambient=ambient,
+        scalar_free_energy=scalar_free_energy,
+        lambda_fp=lambda_g,
+        valid=valid,
+        status=status,
+        cross_channel_required=cross_channel_required,
+        determinant_witness=determinant,
+        hypotheses=tuple(hypotheses),
+        failures=tuple(failures),
+    )
+
+
+@dataclass(frozen=True)
+class ObjectRoleWitness:
+    """Witness for object-role separation among A, B(A), A^i, A^!, and Z."""
+    operation: str
+    source: ChiralObjectRole
+    target: ChiralObjectRole
+    valid: bool
+    reason: str
+
+
+def object_role_witness(
+    operation: str,
+    source: ChiralObjectRole,
+    target: ChiralObjectRole,
+) -> ObjectRoleWitness:
+    """Validate a requested object identification or functorial step."""
+    op = operation.strip().lower().replace('-', '_')
+    valid = False
+    reason = 'unrecognized object operation'
+
+    if op == 'bar_cobar_inversion':
+        valid = (
+            source == ChiralObjectRole.BAR_COALGEBRA
+            and target == ChiralObjectRole.ALGEBRA_A
+        )
+        reason = 'Omega(B(A)) recovers A; this is inversion, not Koszul duality'
+    elif op == 'bar_cohomology':
+        valid = (
+            source == ChiralObjectRole.BAR_COALGEBRA
+            and target == ChiralObjectRole.KOSZUL_DUAL_COALGEBRA
+        )
+        reason = 'H^*B(A) is A^i, the Koszul dual coalgebra'
+    elif op == 'verdier_koszul_duality':
+        valid = (
+            source == ChiralObjectRole.KOSZUL_DUAL_COALGEBRA
+            and target == ChiralObjectRole.KOSZUL_DUAL_ALGEBRA
+        )
+        reason = 'Verdier duality sends A^i to A^!'
+    elif op == 'derived_center':
+        valid = (
+            source == ChiralObjectRole.ALGEBRA_A
+            and target == ChiralObjectRole.DERIVED_CENTER
+        )
+        reason = 'Z_ch^der(A) is Hochschild cochains of A, not the bar coalgebra'
+    elif op in ('bar_equals_bulk', 'bar_bulk', 'bulk_bar'):
+        valid = False
+        reason = 'B(A) and Z_ch^der(A) are different functorial outputs'
+
+    return ObjectRoleWitness(
+        operation=op,
+        source=source,
+        target=target,
+        valid=valid,
+        reason=reason,
+    )
+
+
 # =====================================================================
 # Section 5: Genus-1 curvature identity
 # =====================================================================
@@ -597,8 +892,8 @@ class Genus2ConstraintResult:
     For class L (affine KM): S_3 != 0, delta_pf != 0.  The 2-loop
       BV computation should match.  This is the first test of
       conj:master-bv-brst at genus 2 for interacting theories.
-    For class M (Virasoro): S_3 = -2/c (from the OPE), giving
-      delta_pf = -(c - 40) / 48 for Virasoro (eq:delta-pf-genus2-virasoro).
+    For class M (Virasoro): S_3 = 2 in the canonical landscape
+      normalization, giving delta_pf = (40 - c) / 48 for Virasoro.
     """
     algebra_name: str
     kappa: Fraction
@@ -609,6 +904,14 @@ class Genus2ConstraintResult:
     F2_bar_full: Fraction       # F2_bar_scalar + delta_pf
     bv_genus2_status: EpistemicStatus
     shadow_class: ShadowClass
+
+
+def _validate_shadow_S3(algebra: ChiralAlgebraData, S3: Fraction) -> None:
+    """Reject supplied S_3 values when the family has a canonical value."""
+    if algebra.shadow_S3 is not None and S3 != algebra.shadow_S3:
+        raise ValueError(
+            f"{algebra.name} canonical S_3 is {algebra.shadow_S3}, got {S3}"
+        )
 
 
 def genus2_planted_forest_constraint(
@@ -622,6 +925,7 @@ def genus2_planted_forest_constraint(
 
     This is the EXACT formula from the MC equation projected to genus 2.
     """
+    _validate_shadow_S3(algebra, S3)
     kappa = algebra.kappa
     lambda2 = lambda_fp_exact(2)  # = 7/5760
     F2_scalar = kappa * lambda2
@@ -636,7 +940,7 @@ def genus2_planted_forest_constraint(
         F2_bar_scalar=F2_scalar,
         delta_pf=delta_pf,
         F2_bar_full=F2_full,
-        bv_genus2_status=EpistemicStatus.CONJECTURAL,
+        bv_genus2_status=ordinary_chain_bv_bar_status(algebra),
         shadow_class=algebra.shadow_class,
     )
 
@@ -780,15 +1084,17 @@ def kz25_genus2_constraint(
     S3: Fraction,
 ) -> KZ25Constraint:
     """At genus 2: 2-loop BV should match planted-forest correction."""
+    _validate_shadow_S3(algebra, S3)
     delta_pf = S3 * (10 * S3 - algebra.kappa) / Fraction(48)
+    status = ordinary_chain_bv_bar_status(algebra)
     return KZ25Constraint(
         name='two_loop_planted_forest',
         genus=2,
         bv_side='2-loop Feynman diagrams on M-bar_{2,0} (7 stable graphs)',
         bar_side=f'delta_pf^(2,0) = S_3*(10*S_3 - kappa)/48 = {delta_pf}',
-        match=True,  # The conjecture; not independently verified from BV side
-        status=EpistemicStatus.CONJECTURAL,
-        reference='conj:master-bv-brst at g=2, pixton_shadow_bridge.py',
+        match=(status == EpistemicStatus.PROVED),
+        status=status,
+        reference='chain-level scope from concordance; planted-forest scalar formula',
     )
 
 
@@ -813,9 +1119,13 @@ class EpistemicStatusReport:
 
 def full_epistemic_report(
     algebra: ChiralAlgebraData,
-    S3: Fraction = Fraction(0),
+    S3: Optional[Fraction] = None,
 ) -> EpistemicStatusReport:
     """Generate the full epistemic status report for BV = bar."""
+    S3_value = algebra.shadow_S3 if S3 is None and algebra.shadow_S3 is not None else S3
+    if S3_value is None:
+        S3_value = Fraction(0)
+
     # Genus-1 comparison
     g1_result = genus1_bv_bar_comparison(algebra)
 
@@ -825,12 +1135,15 @@ def full_epistemic_report(
     # Curvature identity
     curv = genus1_curvature_identity(algebra)
 
+    # Genus-2 chain-level status with canonical S_3 validation.
+    g2_result = genus2_planted_forest_constraint(algebra, S3_value)
+
     # KZ25 constraints
     kz_constraints = [
         kz25_genus0_constraint(),
         kz25_genus1_constraint(algebra),
         kz25_genus1_curvature_constraint(algebra),
-        kz25_genus2_constraint(algebra, S3),
+        kz25_genus2_constraint(algebra, S3_value),
     ]
     satisfied = sum(1 for c in kz_constraints if c.match)
     total = len(kz_constraints)
@@ -862,7 +1175,7 @@ def full_epistemic_report(
         genus1_scalar_match=g1_result.scalar_match,
         genus1_curvature_match=curv.match,
         genus1_chain_level_status=algebra.bv_genus1_status,
-        genus2_scalar_status=EpistemicStatus.CONJECTURAL,
+        genus2_scalar_status=g2_result.bv_genus2_status,
         three_path_F1_agreement=three_path['all_agree'],
         bv_alpha_equals_kappa=g1_result.alpha_equals_kappa,
         kz25_constraints_satisfied=satisfied,
@@ -943,8 +1256,8 @@ def full_constraint_summary() -> Dict[str, Any]:
         (heisenberg(2), Fraction(0)),
         (affine_sl2(1), Fraction(1, 3)),    # S3 for sl_2 at k=1
         (affine_sl2(4), Fraction(1, 3)),    # same structure constant
-        (virasoro(Fraction(1, 2)), Fraction(-4)),  # S3 = -2/c = -4
-        (virasoro(Fraction(26)), Fraction(Fraction(-1, 13))),  # S3 = -2/26
+        (virasoro(Fraction(1, 2)), Fraction(2)),
+        (virasoro(Fraction(26)), Fraction(2)),
         (betagamma(), Fraction(0)),          # S3 = 0 for beta-gamma
     ]
 
@@ -974,5 +1287,5 @@ def full_constraint_summary() -> Dict[str, Any]:
         'total': len(results),
         'genus1_scalar_universally_proved': True,  # F_1 = kappa/24 for ALL families
         'genus1_chain_level_status': 'MIXED',  # G+L proved, C+M conditional
-        'genus2_status': 'CONJECTURAL for all interacting theories',
+        'genus2_status': 'MIXED_BY_AMBIENT',
     }

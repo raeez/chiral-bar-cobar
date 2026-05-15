@@ -21,7 +21,6 @@
 
 \theoremstyle{remark}
 \newtheorem{remark}[theorem]{Remark}
-\newtheorem{warning}[theorem]{Warning}
 
 %%% Macros
 \newcommand{\fg}{\mathfrak{g}}
@@ -70,10 +69,10 @@ verified Koszul-dual dimension sequence is $\dim H^n=2n+1$; more
 generally, polynomial growth is governed by the Weyl group of~$\fg$.
 This diagonal PBW control is equivalent to chiral Koszulness of~$V_k(\fg)$
 via the PBW spectral sequence. The Koszul dual is the chiral
-Chevalley--Eilenberg algebra at the Feigin--Frenkel dual level
+Chevalley--Eilenberg algebra at the Verdier-reflected level
 $k' = -k - 2h^\vee$, with modular characteristic
 $\kappa(\ghat_k) = \dim(\fg)(k{+}h^\vee)/(2h^\vee)$ satisfying the
-Feigin--Frenkel complementarity on the affine Kac--Moody line:
+Verdier complementarity on the affine Kac--Moody line:
 $\kappa(\ghat_k)+\kappa(\ghat_{-k-2h^\vee})=0$. This scalar
 complementarity is distinct from the central-charge conductor
 $K_c(V_k(\fg))=2\dim\fg$. The shadow obstruction tower is class~$L$
@@ -81,29 +80,28 @@ with depth $r_{\max} = 3$: a nonzero cubic shadow from the Lie
 bracket, killed at the quartic level by the Jacobi identity.
 \end{abstract}
 
-\begin{remark}[Admissible-KL and Positselski inputs]\label{rem:gl-inputs}
-This paper uses two downstream inputs rather than re-proving them:
-(i) the periodic-CDG admissible-KL bar-cobar adjunction
-$\Omega^{\mathrm{ch}} \dashv B^{\mathrm{ch}}$
-(\textup{\textsf{thm:periodic-cdg-is-koszul-compatible}},
-\textup{\textsf{thm:admissible-kl-bar-cobar-adjunction}}, Vol~I
-\verb|chapters/theory/periodic_cdg_admissible.tex|), which descends
-the chiral bar-cobar adjunction unconditionally to
-$KL_k^{\mathrm{adm}} \rightleftarrows (KL_{k^!}^{\mathrm{adm}})^{\mathrm{op}}$
-at $k + h^\vee = p/q$ via Arakawa $C_2$-cofiniteness + finite length;
-and (ii) the chiral Positselski weight-completed equivalence and
-the chiral co-contra correspondence
-(\textup{\textsf{thm:chiral-positselski-weight-completed}} at
-\verb|chapters/theory/theorem_B_scope_platonic.tex|,
-\textup{\textsf{thm:chiral-co-contra-correspondence}} at
-\verb|chapters/theory/bar_cobar_adjunction_inversion.tex|), which
-give respectively the conilpotent counit isomorphism on the
-weight-completed bar coalgebra and the co-contra correspondence
-$D^{\mathrm{co}}_{\mathrm{chi}} \simeq D^{\mathrm{ctr}}_{\mathrm{chi}}$.
-The Garland--Lepowsky concentration is the generic-level witness of a
-structure that now extends to the admissible locus; at the critical
-level $k=-h^\vee$, Koszulness fails and the Feigin--Frenkel centre
-appears (Warning~\ref{warn:bar-vs-ce} + \S\ref{sec:critical}).
+\begin{remark}[Bar--cobar inputs at admissible level]\label{rem:gl-inputs}
+Two structural results from~\cite{Lor-MKD} are used. First, the
+periodic-CDG admissible-KL bar--cobar adjunction
+\[
+\Omega^{\mathrm{ch}} \dashv B^{\mathrm{ch}}\colon
+KL_k^{\mathrm{adm}} \rightleftarrows
+(KL_{k^!}^{\mathrm{adm}})^{\mathrm{op}}
+\]
+holds for the universal admissible non-critical PBW ambient at
+\(k+h^\vee=p/q\), using Arakawa \(C_2\)-cofiniteness and finite
+length. Simple quotients require the separate admissible quotient
+analysis. Second, the
+weight-completed chiral Positselski theorem gives the conilpotent
+counit isomorphism on the completed bar coalgebra and the co-contra
+equivalence
+\[
+D^{\mathrm{co}}_{\mathrm{ch}}\simeq D^{\mathrm{ctr}}_{\mathrm{ch}}.
+\]
+Thus Garland--Lepowsky concentration controls the generic level and
+extends, through these structural inputs, to the admissible
+non-critical locus. At \(k=-h^\vee\) the Feigin--Frenkel centre
+changes the bar complex; see \S\ref{sec:critical}.
 \end{remark}
 
 % ================================================================
@@ -138,18 +136,11 @@ additional structure: the full singular OPE, not merely
 the Lie bracket. A priori, there is no reason for the
 classical concentration to survive in the chiral setting.
 
-The present paper proves that it does survive. The
-chiral bar complex $\barB(V_k(\fg))$ at non-critical
-level $k \neq -h^\vee$ has bar cohomology concentrated in
-bar degree~$1$ at each conformal weight. This is the
-content of chiral Koszulness of~$V_k(\fg)$, one of the
-twelve equivalent characterizations proved in the
-monograph~\cite{Lor-MKD}. The mechanism is the PBW
-spectral sequence: the $E_1$ page is the
-Chevalley--Eilenberg complex of the negative loop
-algebra with trivial coefficients, and the classical
-Garland--Lepowsky concentration forces collapse
-at~$E_2$.
+At non-critical level \(k\neq -h^\vee\), the chiral bar complex
+\(\barB(V_k(\fg))\) has bar cohomology on the PBW Koszul diagonal. The
+PBW spectral sequence has \(E_1\)-page the Chevalley--Eilenberg complex
+of the negative loop algebra with trivial coefficients, and the
+Garland--Lepowsky concentration forces \(E_2=E_\infty\).
 
 % ================================================================
 % 2. THE CLASSICAL GARLAND--LEPOWSKY THEOREM
@@ -240,13 +231,11 @@ convention.
 \end{theorem}
 
 \begin{remark}\label{rem:GL-mechanism}
-Garland--Lepowsky is an imported affine nilradical homology
-calculation, not a consequence of the finite-dimensional Whitehead
-lemma. The PBW filtration in the chiral bar complex identifies the
-associated graded with the Chevalley--Eilenberg complex of
-$\mathfrak u^-$; Garland--Lepowsky then supplies the homology
-decomposition. The remaining local work is the PBW comparison between
-the chiral bar differential and this affine nilradical complex.
+Garland--Lepowsky computes affine nilradical homology independently of
+Whitehead's finite-dimensional lemma. Under the PBW filtration, the
+associated graded chiral bar complex is the Chevalley--Eilenberg
+complex of \(\mathfrak u^-\). The PBW comparison identifies the
+\(E_2\)-page with the Garland--Lepowsky homology decomposition.
 \end{remark}
 
 % ================================================================
@@ -321,24 +310,23 @@ d_B(J^a \boxtimes J^b \cdot \eta_{12})
 \;+\; f^{ab}{}_{c}\, J^c.
 \end{equation}
 The first term arises from the double pole in~\eqref{eq:km-ope}
-\textup{(}the $d\log$ kernel absorbs one power of
-$(z{-}w)$, converting a double pole to a residue\textup{)};
-the second from the simple pole.
+\textup{(}the vertex product \(J^a_{(1)}J^b\)\textup{)}; the second
+from the simple pole \textup{(}the product \(J^a_{(0)}J^b\)\textup{)}.
 \end{proposition}
 
 \begin{proof}
-The residue extraction
-$\Res_{z_1 = z_2}[J^a(z_1) J^b(z_2) \cdot d\log(z_1{-}z_2)]$
-applies $d\log(z_1{-}z_2) = dz_1/(z_1{-}z_2)$ to the OPE
+The residue extraction is governed by the vertex products in the OPE
 \[
 J^a(z_1) J^b(z_2)
 \;=\; \frac{k\,(J^a, J^b)}{(z_1{-}z_2)^2}
 + \frac{f^{ab}{}_c\, J^c(z_2)}{z_1{-}z_2}
 + \text{regular}.
 \]
-The $d\log$ absorption converts the double pole to a simple
-pole with residue $k\,(J^a, J^b)$, and the simple pole
-to a constant with value $f^{ab}{}_c\, J^c(z_2)$.
+The product \(J^a_{(1)}J^b=k(J^a,J^b)\mathbf 1\) contributes the
+curvature term, while \(J^a_{(0)}J^b=f^{ab}{}_cJ^c\) contributes the
+collision bracket. The logarithmic form records the collision
+divisor; it does not identify the curvature channel with the bracket
+channel.
 \end{proof}
 
 \subsection{Curvature of the bar complex}
@@ -435,38 +423,24 @@ $V_k(\fg)$ is chirally Koszul.
 \end{theorem}
 
 \begin{proof}
-The proof has two steps: PBW spectral sequence collapse
-and free strong generation.
+The PBW filtration on \(V_k(\fg)\) gives a bar spectral sequence whose
+\(E_1\)-page is the Chevalley--Eilenberg complex
+\[
+  C^*_{\CE}(\fn_-^{\mathrm{loop}};\mathbb C).
+\]
+Garland--Lepowsky compute the \(E_2\)-page by affine Weyl
+representatives. Their calculation supplies the diagonal bidegree
+support needed for collapse; no finite-dimensional Whitehead-lemma
+substitute proves this affine nilradical statement.
 
-\emph{Step~1: PBW spectral sequence collapse.}
-By Proposition~\ref{prop:pbw-e1}, the $E_1$ page of the
-PBW spectral sequence is the Chevalley--Eilenberg complex
-$C^*_{\CE}(\fn_-^{\mathrm{loop}}; \mathbb{C})$.
-The $E_2$ page is therefore
-$H^*_{\CE}(\fn_-^{\mathrm{loop}}; \mathbb{C})$,
-which is computed by the Garland--Lepowsky theorem
-(Theorem~\ref{thm:garland-lepowsky}).
-
-The affine Weyl decomposition in
-Theorem~\ref{thm:garland-lepowsky} gives the bidegree support of
-$H^*_{\CE}(\fn_-^{\mathrm{loop}};\mathbb C)$. The PBW comparison
-identifies this $E_2$ page with the associated graded bar cohomology;
-no Whitehead-lemma substitute proves the Garland--Lepowsky
-calculation.
-
-\emph{Step~2: Free strong generation.}
-The universal affine vertex algebra $V_k(\fg)$ at any
-level $k$ is freely strongly generated by the currents
-$\{J^a\}_{a=1}^{\dim\fg}$: the normally ordered monomials
-form a PBW basis with no relations
-(the vacuum Verma module has no null vectors at generic level).
-By the PBW universality criterion
-(Proposition~5.3.1 of~\cite{Lor-MKD}):
-any freely strongly generated chiral algebra whose
-associated graded is classically Koszul is chirally
-Koszul. Since $\gr_F(V_k(\fg)) \cong \Sym^{\mathrm{ch}}(\fg_k)$,
-and the symmetric algebra is Koszul by Priddy's
-theorem~\cite{Priddy70}, the result follows.
+The same conclusion is recovered from PBW generation. The universal
+affine vertex algebra is freely strongly generated by the currents
+\(\{J^a\}_{a=1}^{\dim\fg}\), and its associated graded chiral algebra
+is \(\Sym^{\mathrm{ch}}(\fg_k)\). The symmetric algebra is Koszul by
+Priddy~\cite{Priddy70}; the PBW universality criterion
+(Proposition~5.3.1 of~\cite{Lor-MKD}) therefore identifies the
+filtered chiral bar complex with its Koszul associated graded and
+gives chiral Koszulness.
 \end{proof}
 
 \begin{remark}\label{rem:two-proofs}
@@ -479,7 +453,7 @@ graded. That both proofs yield the same conclusion is a
 consistency check.
 \end{remark}
 
-\begin{warning}[Chiral bar cohomology vs.\ Chevalley--Eilenberg
+\begin{remark}[Chiral bar cohomology vs.\ Chevalley--Eilenberg
  cohomology]\label{warn:bar-vs-ce}
 The PBW spectral sequence identifies the $E_1$ page with
 the Chevalley--Eilenberg complex
@@ -503,14 +477,13 @@ $\dim H^2(\barB) = 36$ while
 $\dim H^2_{\CE} = 20$. The Koszulness conclusion
 (concentration in bar degree~$1$) is unaffected; what
 changes is the precise dimension count.
-\end{warning}
+\end{remark}
 
 \subsection{The affine nilradical mechanism in detail}
 
-The spectral sequence collapse in Step~1 of the proof of
-Theorem~\ref{thm:chiral-koszul-km} deserves a closer
-analysis, since it is the mechanism by which the classical
-Garland--Lepowsky theorem enters the chiral world.
+The PBW spectral sequence collapse in the proof of
+Theorem~\ref{thm:chiral-koszul-km} is the mechanism by which the
+classical Garland--Lepowsky theorem enters the chiral bar complex.
 
 The negative loop algebra
 $\fn_-^{\mathrm{loop}} = \fg \otimes t^{-1}\mathbb{C}[t^{-1}]$
@@ -606,8 +579,7 @@ requires semisimplicity.
 
 \subsection{Bar cohomology dimensions}
 
-% Simply-laced ADE case, per Garland-Lepowsky 1976.
-\begin{theorem}[Concentration and Hilbert series, simply-laced case]
+\begin{theorem}[Garland--Lepowsky nilradical concentration]
 \label{thm:bar-hilbert-ADE}
 Let $\widehat{\fg}_k$ be the affine Kac--Moody algebra
 associated to a simply-laced simple Lie algebra $\fg$ of type
@@ -615,31 +587,26 @@ ADE and rank $r = \rk(\fg)$, at generic (non-critical) level
 $k \neq -h^\vee$. Then the Lie-algebra cohomology
 $H^*(\widehat{\fg}_k^-;\,\mathbb{C})$ of the negative part
 $\widehat{\fg}_k^- = \fn_-^{\mathrm{loop}}$ is concentrated in
-a single cohomological degree at each conformal weight, and
-the total graded Hilbert series of the $\fg$-invariant
-$E_\infty$-page equals
-\begin{equation}\label{eq:bar-hilbert-ADE}
-\sum_{n \geq 0}\dim H^n\bigl(\widehat{\fg}_k^-;\,\mathbb{C}\bigr)\,
-q^{\mathrm{wt}}
-\;=\; \eta(q)^{-\rk(\fg)}
-\end{equation}
-up to the universal prefactor $q^{-\rk(\fg)/24}$.
+a single cohomological degree at each conformal weight. The affine
+Weyl decomposition of Theorem~\ref{thm:garland-lepowsky} gives the
+\(E_2\)-page of the PBW spectral sequence for the chiral bar complex.
+It does not by itself give a closed Hilbert series for the full chiral
+bar cohomology in every rank.
 \end{theorem}
 
 \begin{proof}
 Garland--Lepowsky~\cite{GL76} compute the affine nilradical homology
-by affine Weyl representatives. For simply-laced $\fg$
-the invariant ring of the adjoint representation on each
-negative mode $t^{-m}$ is a polynomial ring on the $r$
-fundamental Casimirs at degrees equal to the exponents
-$d_1,\ldots,d_r$ of $\fg$; summing over $m \geq 1$ and
-passing to the $\fg$-invariant Hilbert series gives
-$\prod_{m \geq 1}(1-q^m)^{-r} = \eta(q)^{-r} \cdot q^{-r/24}$.
+by affine Weyl representatives. Under Proposition~\ref{prop:pbw-e1}
+this cohomology is the \(E_2\)-page of the PBW spectral sequence. The
+diagonal support is the concentration input needed for Koszulness; any
+rank-by-rank Hilbert series for the chiral bar cohomology requires the
+additional Orlik--Solomon form factor and is recorded only where
+explicitly computed.
 \end{proof}
 
 \begin{corollary}[$\fsl_2$ specialization]\label{cor:bar-dim-formula}
-For $\fg = \fsl_2$ ($r = 1$), Theorem~\ref{thm:bar-hilbert-ADE}
-specializes to
+For $\fg = \fsl_2$ ($r = 1$), the verified chiral bar cohomology
+dimensions are
 \begin{equation}\label{eq:sl2-bar-dim}
 \dim H^n(\barB(V_k(\fsl_2))) \;=\; 2n + 1
 \qquad \text{for all } n \geq 1,
@@ -699,12 +666,12 @@ For any simple $\fg$ of rank~$r$:
 Part~(i) is immediate: the degree-$0$ bar complex is
 $\mathbb{C}$, with $d_B|_{\barB^0} = 0$.
 
-Part~(ii): at bar degree~$1$, the bar complex is
-$s^{-1}\overline{V}_k(\fg)$ in weight~$1$, which is
-$s^{-1}\fg$. The bar differential maps $s^{-1}J^a$ to
-the vacuum via the augmentation, with trivial kernel
-at weight~$1$. The surviving cohomology is $\fg$ itself
-(the generators of the Koszul dual).
+Part~(ii): at bar degree~$1$, the reduced bar complex is
+\(s^{-1}\overline{V}_k(\fg)\). Its weight-\(1\) subspace is
+\(s^{-1}\fg\). The reduced bar differential has no unary term on
+these indecomposable current generators, and no bar-degree-\(2\)
+boundary has weight \(1\). Hence the surviving cohomology is
+\(\fg\), the generator space of the Koszul dual.
 
 Part~(iii): at bar degree~$2$, the chain group is
 $B^2 = \fg^{\otimes 2} \otimes \Omega^1_{\log}$
@@ -718,7 +685,7 @@ giving $\dim H^2 = 9 - 3 - 1 = 5$
 $\fsl_2$-action, $\dim V_2 = 5$).
 For $\fsl_3$: $\dim B^2 = 64$, and the full computation
 gives $\dim H^2 = 36$ (see~\cite{Lor-MKD},
-Computation~7.2.1 and Warning~\ref{warn:bar-vs-ce}).
+Computation~7.2.1 and Remark~\ref{warn:bar-vs-ce}).
 \end{proof}
 
 \begin{remark}\label{rem:linear-growth}
@@ -750,16 +717,12 @@ $\widehat{\fsl}_3$ & (conjectural) & exponential ($8^n$) \\
 \bottomrule
 \end{tabular}
 \end{center}
-Here $p(n)$ is the partition function and $M(n)$ denotes
-Motzkin numbers. The exponential growth rate for
-$\widehat{\fg}$ at rank $r \geq 2$ is $(\dim\fg)^n$:
-the number of bar generators grows with the dimension
-of the Lie algebra. This is consistent with the
-sub-exponential characterization of free fields
-\textup{(}the Heisenberg and free fermion are the
-only Koszul algebras with sub-exponential bar
-cohomology, along with the special case of
-$\widehat{\fsl}_2$ with its linear growth\textup{)}.
+Here \(p(n)\) is the partition function and \(M(n)\) denotes Motzkin
+numbers. The \(\widehat{\fsl}_3\) row records the expected exponential
+rate beyond the computed low-degree terms. The proved statement here is
+the class-\(L\) shadow-depth classification; the precise asymptotic
+growth for every rank \(r\ge2\) remains a separate bar-cohomology
+computation.
 \end{remark}
 
 % ================================================================
@@ -950,8 +913,9 @@ Concretely:
 \item The degree-$4$ quartic obstruction class vanishes:
  $o_4(\ghat_k) = 0$. The vanishing is a consequence
  of the Jacobi identity for~$\fg$.
-\item All higher obstruction classes vanish:
- $o_r(\ghat_k) = 0$ for $r \geq 4$.
+\item The higher obstruction classes vanish in the strict
+ class-\(\mathsf L\) representative supplied by the quadrichotomy
+ theorem.
 \end{enumerate}
 \end{theorem}
 
@@ -984,27 +948,27 @@ $\sum_{e} f^{ab}{}_e\, f^{cd}{}_e$
 satisfies the crossing symmetry
 imposed by the Jacobi identity, and the resulting
 cohomology class is trivially zero.
-Since the quartic obstruction vanishes, all higher
-obstructions vanish by induction: the master equation
-$D\Theta + \tfrac{1}{2}[\Theta, \Theta] = 0$ at
-degrees $r \geq 5$ reduces to $Do_r = 0$ with the
-coboundary condition automatically satisfied.
+The vanishing of the remaining obstruction tower is the class-\(L\)
+strict-representative statement: after the quadrichotomy theorem has
+put the affine Kac--Moody MC element into Lie/tree normal form, no
+new independent higher shadow remains beyond the cubic Lie tensor.
 \end{proof}
 
 \begin{remark}[The collision residue]\label{rem:r-matrix}
-The collision residue (binary genus-$0$ shadow)
-of $V_k(\fg)$ is the Casimir $r$-matrix:
+The trace-form collision residue (binary genus-$0$ shadow)
+of \(V_k(\fg)\) is
 \begin{equation}\label{eq:km-rmatrix}
-r(z) \;=\; \frac{\Omega}{(k + h^\vee)\, z},
-\qquad
-\Omega \;=\; \sum_a J^a \otimes J_a.
+r^{\mathrm{coll}}(z) \;=\; k\,\Omega_{\mathrm{tr}}/z.
 \end{equation}
-The single pole reflects the fact that
-the OPE~\eqref{eq:km-ope} has a double pole and the
-$d\log$ kernel absorbs one power of $(z{-}w)$,
-lowering the pole order by one.
-This $r$-matrix satisfies the classical Yang--Baxter
-equation.
+The KZ conformal-block connection uses the separate Sugawara-normalised
+kernel
+\[
+r^{\mathrm{KZ}}(z)=\Omega_{\mathrm{KZ}}/((k+h^\vee)z).
+\]
+At critical level the KZ coefficient is undefined, while the
+trace-form collision residue remains finite. The comparison between
+these two kernels is a normalization bridge, not equality as rational
+functions of \(k\).
 \end{remark}
 
 \begin{remark}[The critical discriminant]
@@ -1041,14 +1005,15 @@ $\dim\fg = 3$, $h^\vee = 2$, $\rk = 1$, $|\Delta_+| = 1$.
  $c(\widehat{\fsl}_{2,k}) = 3k/(k+2)$.
 \item \emph{Complementarity}:
  $\kappa + \kappa' = 3(k{+}2)/4 + 3(-k{-}4{+}2)/4
- = 3(k{+}2)/4 + 3(-k{-}2)/4 = 0$. \checkmark
+ = 3(k{+}2)/4 + 3(-k{-}2)/4 = 0$.
 \item \emph{Bar cohomology}:
  $\dim H^n = 2n + 1$ for $n \geq 1$
  (Corollary~\ref{cor:bar-dim-formula}).
  Generating function $x(3{-}x)/(1{-}x)^2$.
 \item \emph{$r$-matrix}:
- $r(z) = \Omega/((k{+}2)z)$, where
- $\Omega = e \otimes f + f \otimes e + h \otimes h/2$.
+ the trace-form collision residue is
+ \(r^{\mathrm{coll}}(z)=k\,\Omega_{\mathrm{tr}}/z\). The KZ kernel is
+ \(r^{\mathrm{KZ}}(z)=\Omega_{\mathrm{KZ}}/((k+2)z)\).
 \item \emph{Shadow class}: $L$, $r_{\max} = 3$.
  Cubic shadow $\mathfrak{C}(x,y,z)
  = (x,[y,z])$ (the Killing form of $x$ with
@@ -1101,19 +1066,18 @@ features relative to $\fsl_2$.
  Orlik--Solomon form factor, which is absent from
  the exterior algebra
  $\Lambda^*(\fn_-^{\mathrm{loop}})^*$.
- The generating function is conjectured to be
+ The computed initial segment of the generating function is
  \begin{equation}\label{eq:sl3-gf}
  P_{\widehat{\fsl}_3}(x)
- \;=\; 8x + 36 x^2 + \cdots.
+ \;=\; 8x + 36 x^2 + O(x^3).
  \end{equation}
+ A closed form and the full asymptotic remain conjectural.
 \item \emph{Shadow class}: $L$, $r_{\max} = 3$.
- The cubic shadow $\mathfrak{C}_{\fsl_3}$ receives
- contributions from both the structure constants
- $f^{abc}$ and the symmetric tensor $d^{abc}$.
+ The cubic Lie/tree shadow is \(\mathfrak C(x,y,z)=(x,[y,z])\);
+ it is governed by the structure constants \(f^{abc}\).
 \item \emph{$r$-matrix}:
- $r(z) = \Omega_{\fsl_3}/((k{+}3)z)$, where
- $\Omega_{\fsl_3} = \sum_{a=1}^{8} T^a \otimes T_a$
- is the Casimir tensor in the Gell-Mann basis.
+ \(r^{\mathrm{coll}}(z)=k\,\Omega_{\mathrm{tr}}/z\). The KZ kernel is
+ \(r^{\mathrm{KZ}}(z)=\Omega_{\mathrm{KZ}}/((k+3)z)\).
 \item \emph{Koszul conductor}: $K = 2 \cdot 8 = 16$.
 \end{enumerate}
 \end{computation}
@@ -1232,12 +1196,14 @@ At the critical level $k = -h^\vee$:
  \textup{(}\cite{FF92}\textup{)},
  which is isomorphic to the algebra of functions on
  the space of $\fg^\vee$-opers on the formal disc.
-\item The bar cohomology $H^*(\barB(V_{-h^\vee}(\fg)))$
- is related to the de Rham complex of the oper space:
- $H^n \cong \Omega^n(\mathrm{Op}_{\fg^\vee}(D))$
- for all $n \geq 0$
- \textup{(}via the fundamental local equivalence of
- Raskin~\cite{Raskin20}\textup{)}.
+\item Under the local completed bar--Ext comparison, the critical
+ completed bar--Ext groups identify with de Rham forms on the local
+ oper space:
+ \[
+ H^n_{\mathrm{bExt}}\;\cong\;
+ \Omega^n(\mathrm{Op}_{\fg^\vee}(D)).
+ \]
+ This is not a statement about raw bar cohomology.
 \end{enumerate}
 \end{proposition}
 
@@ -1247,21 +1213,20 @@ Proposition~\ref{prop:bar-curvature} and
 equation~\eqref{eq:kappa-km} at $k = -h^\vee$.
 Item~(iii) is classical~\cite{FF92}.
 Item~(iv) is the Feigin--Frenkel theorem~\cite{FF92}.
-Item~(v) follows from the bar-Ext identification
-$H^n(\barB(V_k(\fg))) \cong
-\Ext^n_{V_k(\fg)}(\mathbb{C}, \mathbb{C})$
-combined with the fundamental local equivalence at
-the critical level, which identifies
-$\widehat{\fg}_{-h^\vee}$-modules with the Whittaker
-category on $\mathrm{Op}_{\fg^\vee}(D)$.
+Item~(v) is the completed bar--Ext comparison combined with the
+fundamental local equivalence at the critical level, which identifies
+the relevant completed critical category with the Whittaker category
+over \(\mathrm{Op}_{\fg^\vee}(D)\).
 \end{proof}
 
-\begin{remark}[Critical level as self-dual point]
+\begin{remark}[Critical level and level reflection]
 \label{rem:critical-self-dual}
 The critical level is the unique self-dual point of
-the Feigin--Frenkel involution:
+the Verdier level reflection:
 $(-h^\vee)' = -(-h^\vee) - 2h^\vee = -h^\vee$.
-The Koszul dual of the critical-level algebra is itself.
+Full Koszulness fails at this point; self-duality is only the scalar
+level reflection, not an identification of the raw critical vertex
+algebra with its strict Koszul dual.
 The vanishing of $\kappa$ at the critical level is
 consistent with the self-duality:
 $\kappa + \kappa' = 2\kappa = 0$.
@@ -1280,34 +1245,42 @@ persists.
 
 \begin{remark}[The geometric Langlands connection]
 \label{rem:langlands}
-The critical-level bar complex connects to the
-geometric Langlands programme. The Feigin--Frenkel
-center $\mathfrak{z}(\ghat) \cong
-\mathrm{Fun}(\mathrm{Op}_{\fg^\vee}(D))$ is a
-central ingredient of the geometric Langlands
-proof~\cite{GLC24}.
-The bar-Ext identification at the critical level
-gives $H^n(\barB(V_{-h^\vee}(\fg)))
-\cong \Omega^n(\mathrm{Op}_{\fg^\vee}(D))$,
-so the bar cohomology of the critical-level vertex
-algebra computes the algebraic de Rham cohomology
-of the oper space. The local-to-global passage
-(from the formal disc to a global curve~$X$)
-transforms the bar complex into the factorization
-algebra on $\mathrm{Ran}(X)$ whose global sections
-recover the geometric Langlands kernel.
+The critical-level completed bar--Ext complex lies on the oper side of
+local geometric Langlands. Feigin--Frenkel identifies
+\[
+\mathfrak z(\widehat{\fg})\cong \mathrm{Fun}(\mathrm{Op}_{\fg^\vee}(D)).
+\]
+Together with the completed bar--Ext comparison and Raskin's local
+equivalence, this identifies critical-level completed bar--Ext groups
+with de Rham forms on the local oper space. The global curve \(X\)
+replaces the formal disc by the Ran-space factorisation algebra; this
+is the local input, not by itself the global Langlands kernel.
 \end{remark}
 
 % ================================================================
 % 9. RELATION TO THE MONOGRAPH
 % ================================================================
 
-\section{Relation to the modular Koszul duality programme}
+\section{The affine Kac--Moody point in the Koszul landscape}
 \label{sec:programme}
 
-The results of this paper are proved as part of the
-monograph~\cite{Lor-MKD}, where they appear in the
-following form.
+The affine Kac--Moody calculation occupies the class-\(L\) vertex of
+the modular Koszul landscape. The PBW universality criterion identifies
+\(V_k(\fg)\) as chirally Koszul because it is freely strongly generated
+and its associated graded is classically Koszul. Verdier duality gives
+the Koszul dual
+\[
+(V_k(\fg))^! \simeq \CE^{\mathrm{ch}}(V_{-k-2h^\vee}(\fg)).
+\]
+The genus-one obstruction coefficient is
+\[
+\kappa(\widehat{\fg}_k)=\frac{\dim\fg\,(k+h^\vee)}{2h^\vee},
+\qquad
+\kappa(\widehat{\fg}_k)+\kappa(\widehat{\fg}_{-k-2h^\vee})=0.
+\]
+The cubic shadow is the invariant form \((x,[y,z])\), and Jacobi
+annihilates the quartic obstruction; hence the shadow depth is
+\(r_{\max}=3\).
 
 \begin{enumerate}[(1)]
 \item Chiral Koszulness of $V_k(\fg)$
@@ -1346,14 +1319,18 @@ following form.
  classifies complexity within the Koszul world,
  not Koszulness itself.
 
-\item The collision residue $r(z) = \Omega/((k{+}h^\vee)z)$
+\item The trace-form collision residue \(r^{\mathrm{coll}}(z)
+ = k\Omega_{\mathrm{tr}}/z\)
  (Remark~\ref{rem:r-matrix}) is the binary genus-$0$
  projection of the universal Maurer--Cartan element
- $\Theta_{\ghat_k}$. Under the averaging map
- $\mathrm{av}\colon \fg^{E_1} \to \fg^{\mathrm{mod}}$,
- the affine modular characteristic is recovered with the
- Sugawara shift:
- $\mathrm{av}(r(z)) + \dim(\fg)/2 = \kappa(\ghat_k)$.
+ \(\Theta_{\ghat_k}\). The KZ coefficient
+ \(\Omega_{\mathrm{KZ}}/((k+h^\vee)z)\) belongs to the
+ conformal-block normalization. The affine modular characteristic is
+ recovered from the double-pole channel together with the Sugawara
+ shift:
+ \[
+ \kappa_{\mathrm{dp}}+\dim(\fg)/2=\kappa(\ghat_k).
+ \]
 \end{enumerate}
 
 % ================================================================

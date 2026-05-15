@@ -31,12 +31,10 @@ IMPACT ON THE MONOGRAPH
    implies proper CY on B(A).  Proper CY on B(A) gives exactness in the
    coderived category and a perfect pairing on B(A)-bicomodules.
 
-   FINDING F1: HR24 does NOT directly remove the perfectness hypothesis in
-   lem:perfectness-criterion.  The perfectness there is for the RELATIVE bar
-   family R pi_{g*} B^{(g)}(A) over M_g_bar, not for B(A) as an abstract
-   coalgebra.  HR24 gives proper CY on B(A) fiber-by-fiber, but the FAMILY
-   perfectness requires base change + uniform bounds (Steps 1-3 of the proof
-   of lem:perfectness-criterion), which HR24 does not address.
+   FINDING F1: HR24 gives fiber-level proper CY data for B(A). The
+   perfectness hypothesis in lem:perfectness-criterion concerns the relative
+   bar family R pi_{g*} B^{(g)}(A) over M_g_bar, so it additionally requires
+   base change and uniform bounds from Steps 1-3 of that proof.
 
    FINDING F2: HR24 CONFIRMS that the (P2) hypothesis (nondegenerate invariant
    form) of prop:lagrangian-perfectness is the CORRECT input: it is exactly the
@@ -55,21 +53,24 @@ IMPACT ON THE MONOGRAPH
    B(A!).  The fiber-level perfectness of the cyclic pairing follows from
    the proper CY structure.
 
-   FINDING F3: (P3) is NOT redundant.  HR24 says smooth CY on A implies
-   proper CY on B(A), but K11 needs perfectness of the AMBIENT complex
-   L_A + K_A + L_{A!}, which involves BOTH B(A) and B(A!).  The (P3)
-   hypothesis ensures the dual side also has proper CY.
+   FINDING F3: (P3) is independent in general.  HR24 says smooth CY on A
+   implies proper CY on B(A), but K11 needs perfectness of the ambient
+   complex L_A + K_A + L_{A!}, which involves both B(A) and B(A!).  The
+   (P3) hypothesis ensures the dual side also has proper CY.
 
    FINDING F4: For self-dual algebras (A ~ A!, e.g. Virasoro at c=13),
-   (P3) follows from (P1)-(P2) automatically.  HR24 + Verdier intertwining
-   (Thm A: D_Ran(B(A)) ~ B(A!)) could potentially eliminate (P3) for
-   Koszul pairs where the Verdier duality preserves properness.
+   (P3) follows from (P1)-(P2) automatically.  Outside these witnesses,
+   P3 is independent.  HR24 gives proper CY on the bar coalgebra B(A)
+   from smooth CY on A; Theorem A gives a post-Verdier branch
+   A!_infty from D_Ran B_X(A), and only finite-type/completed hypotheses
+   identify that branch with the strict algebra A!.  The bar coalgebra
+   B(A!) is a separate bar construction on the dual algebra.
 
 3. CALAQUE-SAFRONOV [CS24, arXiv:2407.08622]:
 
    CS24 develops deformation to the normal cone for shifted Lagrangian
    morphisms.  This provides MACHINERY for proving Lagrangian properties
-   but does NOT directly remove perfectness hypotheses.
+   and leaves the perfectness hypotheses in force.
 
    FINDING F5: CS24's deformation to the normal cone could provide an
    alternative proof route for the Lagrangian property of M_A inside
@@ -87,7 +88,7 @@ IMPACT ON THE MONOGRAPH
      (sec:shifted-symplectic-complementarity) for the deformation to
      normal cone construction
 
-5. NO CLAIMS BECOME FALSE:
+5. CLAIM-STATUS STABILITY:
 
    FINDING F7: Every claim in the monograph remains correct under HR24.
    The conditional status of (C2) and K11 is CONSISTENT with HR24:
@@ -140,6 +141,200 @@ We verify the key implications:
 from fractions import Fraction
 from functools import lru_cache
 from itertools import product as iter_product
+
+
+HOLOGRAPHIC_PACKAGE_ENTRIES = (
+    "A",
+    "A^i",
+    "A^!",
+    "C",
+    "r(z)",
+    "Theta_A",
+    "nabla^hol",
+)
+"""Seven entries of the holographic package H(A)."""
+
+
+MODULAR_KOSZUL_COMPUTE_PROJECTIONS = (
+    "Fact_X(L)",
+    "barB_X(L)",
+    "Theta_L",
+    "L_L",
+    "(V_br,T_br)",
+    "R4_mod(L)",
+)
+"""Six projections of the distinct modular Koszul compute package."""
+
+
+KERNEL_NORMALIZATION_CONSTANTS = {
+    "affine_raw_trace_form": "k*Omega_tr/z",
+    "affine_KZ_normalization": "Omega/((k+h^vee)z)",
+    "heisenberg": "k/z",
+    "virasoro": "(c/2)/z^3 + 2T/z",
+}
+"""Canonical kernel constants from the landscape census."""
+
+
+# ============================================================
+# AP25 object firewall: bar, Verdier, cobar, centre
+# ============================================================
+
+def koszul_object_firewall():
+    r"""Return the typed separation of the five bar/Koszul objects.
+
+    Sources:
+    - prop:bar-cobar-object-firewall-bci
+    - conv:bar-coalgebra-identity
+    - rem:hr24-cy-interchange
+
+    The compute engine uses this firewall whenever HR24 and Theorem A
+    are mentioned in the same calculation.  It prevents the stale
+    shorthand that identifies the Ran Verdier dual of the bar coalgebra
+    with the bar coalgebra of the dual algebra.
+    """
+    return {
+        'A': {
+            'kind': 'input augmented chiral algebra',
+            'construction': 'given algebra with augmentation ideal A_bar',
+            'not': ('B_X(A)', 'A^i', 'A!', 'Omega_X(B_X(A))',
+                    'Z_der_ch(A)'),
+        },
+        'B_X(A)': {
+            'kind': 'conilpotent or pro-conilpotent bar coalgebra',
+            'construction': 'T^c(s^{-1} A_bar) with chiral bar differential',
+            'not': ('A^i', 'A!', 'Omega_X(B_X(A))', 'Z_der_ch(A)'),
+        },
+        'A^i': {
+            'kind': 'Koszul-dual coalgebra',
+            'construction': 'H^*(B_X(A)) on the strict square-zero Koszul lane',
+            'not': ('A!', 'Omega_X(B_X(A))', 'Z_der_ch(A)'),
+        },
+        'A!': {
+            'kind': 'post-Verdier Koszul-dual algebra',
+            'construction': (
+                '(A^i)^vee under finite-type duality, or the completed '
+                'Verdier/cobar branch under strict ML convergence'
+            ),
+            'not': ('B_X(A)', 'B_X(A!)', 'Omega_X(B_X(A))',
+                    'Z_der_ch(A)'),
+        },
+        'Omega_X(B_X(A))': {
+            'kind': 'bar-cobar inversion of the input algebra',
+            'construction': 'counit Omega_X B_X(A) -> A',
+            'not': ('A!', 'B_X(A!)', 'Z_der_ch(A)'),
+        },
+        'Z_der_ch(A)': {
+            'kind': 'derived chiral centre / Hochschild bulk object',
+            'construction': 'Hochschild cochains C^bullet_ch(A, A)',
+            'not': ('B_X(A)', 'A^i', 'A!', 'Omega_X(B_X(A))'),
+        },
+    }
+
+
+def typed_verdier_branch_report():
+    r"""Report the finite-type/completed Verdier branch used in Theorem C.
+
+    The branch has two steps:
+    1. Apply Ran Verdier duality to the bar coalgebra.
+    2. Promote the post-Verdier branch to a strict algebra only under
+       finite-type or completed convergence hypotheses.
+
+    The bar coalgebra of the dual algebra is not produced by step (1);
+    it is obtained by applying the bar functor separately to A!, and
+    HR24 applies to that object only after the independent P3 smooth-CY
+    check on A!.
+    """
+    return {
+        'source': 'B_X(A) as bar coalgebra',
+        'verdier_operation': 'D_Ran(B_X(A))',
+        'first_output': 'A!_infty, a post-Verdier factorization algebra/pro-object',
+        'finite_type_branch': (
+            'if A^i = H^*(B_X(A)) is finite type and dualizable, '
+            'A! = (A^i)^vee'
+        ),
+        'completed_branch': (
+            'if the strict ML/completed cobar convergence hypotheses hold, '
+            'A!_infty is represented by the completed post-Verdier algebra'
+        ),
+        'not_outputs': (
+            'B_X(A!)',
+            'Omega_X(B_X(A))',
+            'Z_der_ch(A)',
+        ),
+        'bar_of_dual_requires': (
+            'B_X(A!) is a separate bar construction after A! has been '
+            'constructed; its proper CY structure requires the independent '
+            'smooth-CY check on A! (P3)'
+        ),
+    }
+
+
+def package_firewall_report():
+    r"""Return package-level separation data for Theorem C computations.
+
+    The holographic package and the modular Koszul compute package have
+    different arities and different typed entries.  A scalar
+    complementarity computation may compare their shadows; it does not
+    identify the packages.
+    """
+    return {
+        'holographic_package_entries': HOLOGRAPHIC_PACKAGE_ENTRIES,
+        'modular_koszul_compute_projections': MODULAR_KOSZUL_COMPUTE_PROJECTIONS,
+        'packages_are_distinct': (
+            set(HOLOGRAPHIC_PACKAGE_ENTRIES)
+            != set(MODULAR_KOSZUL_COMPUTE_PROJECTIONS)
+        ),
+        'holographic_not_compute_projections': (
+            'Fact_X(L)',
+            'barB_X(L)',
+            'R4_mod(L)',
+        ),
+        'compute_not_holographic_entries': (
+            'A',
+            'A^i',
+            'A^!',
+            'C',
+            'nabla^hol',
+        ),
+    }
+
+
+def kernel_normalization_report(k=1, h_v=2, c=26):
+    r"""Return collision/KZ kernel normalizations with coefficients.
+
+    Sources: ``landscape_census.tex`` standard-family constants and
+    ``deformation_quantization.tex`` parameter-separation convention.
+    The affine trace-form collision residue and the KZ coefficient are
+    distinct.  At the critical level ``k = -h^vee`` the KZ coefficient
+    is undefined, while the raw trace-form collision residue is still a
+    formal level-multiplied residue.
+    """
+    k = Fraction(k)
+    h_v = Fraction(h_v)
+    c = Fraction(c)
+    if k + h_v == 0:
+        raise ValueError("affine KZ coefficient is undefined at k = -h^vee")
+    return {
+        'constants': KERNEL_NORMALIZATION_CONSTANTS,
+        'affine_raw_trace_form': {
+            'formula': KERNEL_NORMALIZATION_CONSTANTS['affine_raw_trace_form'],
+            'level_prefix': k,
+        },
+        'affine_KZ_normalization': {
+            'formula': KERNEL_NORMALIZATION_CONSTANTS['affine_KZ_normalization'],
+            'coefficient': Fraction(1, 1) / (k + h_v),
+        },
+        'heisenberg': {
+            'formula': KERNEL_NORMALIZATION_CONSTANTS['heisenberg'],
+            'level_prefix': k,
+        },
+        'virasoro': {
+            'formula': KERNEL_NORMALIZATION_CONSTANTS['virasoro'],
+            'central_coefficient': c / 2,
+            'stress_coefficient': Fraction(2),
+        },
+        'raw_equals_kz': False,
+    }
 
 
 # ============================================================
@@ -211,7 +406,7 @@ def smooth_cy_exists_affine_km(g_type, rank, k):
     undefined, but the invariant form is still nondegenerate.
     The smooth CY exists for ALL k != 0.
 
-    Note: k = -h^v is NOT excluded from having a smooth CY.
+    The critical level k = -h^v may still have a smooth CY structure.
     The Sugawara being undefined is a separate issue from the invariant
     form being nondegenerate.
     """
@@ -268,7 +463,7 @@ def smooth_cy_exists_virasoro(c):
 
     Degenerate values: c = c_{p,q} for p,q >= 1 with the specific
     parametrization c = 1 - 6(p-q)^2/(pq).  These form a discrete
-    (actually countable) set.
+    countable set.
     """
     c = Fraction(c)
     # The Virasoro vacuum Shapovalov form is nondegenerate for generic c.
@@ -359,7 +554,13 @@ def proper_cy_on_bar(family, params):
     return {
         'has_proper_cy': has_proper_cy,
         'smooth_cy_source': smooth,
-        'hr24_applies': True,
+        'hr24_applies': has_proper_cy,
+        'hr24_scope': 'fiber-level bar CY only',
+        'does_not_prove': (
+            'family-level perfectness over M_g_bar',
+            'Theorem C complementarity',
+            'full Hochschild/bulk data',
+        ),
         'reason': 'HR24 Thm 1.1(b): smooth CY on A => proper CY on B(A)'
         if has_proper_cy else
         'No smooth CY on A, so HR24 does not give proper CY on B(A)'
@@ -587,8 +788,10 @@ def verify_hr24_interchange(family, params):
     2. Conclude proper CY on B(A) (by HR24)
     3. Check smooth CY on A! (= (P3))
     4. Conclude proper CY on B(A!) (by HR24)
-    5. Verdier intertwining: D_Ran(B(A)) ~ B(A!), so proper CY on B(A!)
-       is CONSISTENT with Verdier duality of proper CY on B(A)
+    5. Report the typed Theorem A branch: D_Ran(B_X(A)) produces the
+       post-Verdier A!_infty branch.  B(A!) is a separate bar
+       construction after A! exists, so its proper CY structure is
+       checked through P3, not imported from B(A).
 
     Returns a verification report.
     """
@@ -619,9 +822,14 @@ def verify_hr24_interchange(family, params):
     else:
         return {'valid': False, 'reason': f'Unknown family {family}'}
 
-    # Step 5: Verdier consistency
-    verdier_consistent = (proper_A['has_proper_cy'] ==
-                          proper_A_dual['has_proper_cy'])
+    # Step 5: typed Verdier consistency.
+    # The consistency check is deliberately not a comparison
+    # B(A) <-> B(A!).  It checks that the independently computed dual
+    # bar CY status agrees with the P3 smooth-CY hypothesis on A!.
+    k11 = verify_k11_hypotheses(family, params)
+    verdier_branch = typed_verdier_branch_report()
+    verdier_consistent = (proper_A_dual['has_proper_cy'] ==
+                          k11['P3']['holds'])
 
     return {
         'family': family,
@@ -630,6 +838,7 @@ def verify_hr24_interchange(family, params):
         'BA_proper_cy': proper_A['has_proper_cy'],
         'A_dual_smooth_cy': proper_A_dual['smooth_cy_source']['has_smooth_cy'],
         'BA_dual_proper_cy': proper_A_dual['has_proper_cy'],
+        'verdier_branch': verdier_branch,
         'verdier_consistent': verdier_consistent,
         'all_verified': (proper_A['has_proper_cy'] and
                          proper_A_dual['has_proper_cy'] and
@@ -722,12 +931,44 @@ def kappa_complementarity_sum(family, params):
         'kappa_A_dual': kappa_dual,
         'sum': kappa_A + kappa_dual,
         'family': family,
+        'projection_scope': 'Verdier scalar conductor lane',
+        'scalar_projection_only': True,
+        'not_full_bulk_data': (
+            'Z_ch^der(A)',
+            'ChirHoch^*(A,A)',
+            'holographic package H(A)',
+        ),
     }
 
 
 # ============================================================
 # Theorem C verification: complementarity dimensions
 # ============================================================
+
+def _theorem_c_projection_scope(family, params, complementarity_holds):
+    r"""Scope guard for scalar Theorem C dimension computations.
+
+    The dimension routines below compute finite scalar projections of the
+    Verdier conductor lane.  Promotion to the shifted-symplectic
+    Lagrangian statement requires K11: finite weight spaces,
+    nondegenerate invariant form on A, and the same conditions on A!.
+    """
+    k11 = verify_k11_hypotheses(family, params)
+    blockers = []
+    for key in ('P1', 'P2', 'P3'):
+        if not k11[key]['holds']:
+            blockers.append(f"{key}: {k11[key]['reason']}")
+    if not complementarity_holds:
+        blockers.append('scalar dimension complementarity failed')
+    return {
+        'projection_scope': 'scalar uniform-weight Verdier lane',
+        'k11_valid': k11['valid'],
+        'theorem_c_promoted': k11['valid'] and complementarity_holds,
+        'full_hochschild_bulk_data': False,
+        'derived_centre_role': 'Z_ch^der(A)=ChirHoch^*(A,A), not kappa(A)+kappa(A!)',
+        'promotion_blockers': tuple(blockers),
+    }
+
 
 def complementarity_dimensions_genus1(family, params):
     r"""Compute dim Q_1(A) and dim Q_1(A!) at genus 1.
@@ -749,15 +990,18 @@ def complementarity_dimensions_genus1(family, params):
     dim_Q1_A = 1
     dim_Q1_A_dual = 1
     dim_H_g1 = 2
+    complementarity_holds = dim_Q1_A + dim_Q1_A_dual == dim_H_g1
+    scope = _theorem_c_projection_scope(family, params, complementarity_holds)
 
     return {
         'genus': 1,
         'dim_Q_A': dim_Q1_A,
         'dim_Q_A_dual': dim_Q1_A_dual,
         'dim_H_total': dim_H_g1,
-        'complementarity_holds': dim_Q1_A + dim_Q1_A_dual == dim_H_g1,
+        'complementarity_holds': complementarity_holds,
         'kappa': kappa,
-        'lagrangian': True,  # always Lagrangian at genus 1 (dim check)
+        'lagrangian': scope['theorem_c_promoted'],
+        **scope,
     }
 
 
@@ -767,7 +1011,7 @@ def complementarity_dimensions_genus2(family, params):
     H*(M_2_bar) has dim 4 (Mumford relations):
       H^0 = C, H^2 = C*lambda_1 + C*delta_irr + C*delta_1, H^4 = ...
 
-    Actually: dim H*(M_2_bar, Q) = 4:
+    The rational cohomology dimension is dim H*(M_2_bar, Q) = 4:
       H^0 = 1, H^2 = 2 (lambda_1 and delta), H^4 = 1
     But with the center local system Z(A), dimensions depend on A.
 
@@ -785,15 +1029,18 @@ def complementarity_dimensions_genus2(family, params):
     dim_H_g2 = 4  # for rank-1 center local system
     dim_Q2_A = 2
     dim_Q2_A_dual = 2
+    complementarity_holds = dim_Q2_A + dim_Q2_A_dual == dim_H_g2
+    scope = _theorem_c_projection_scope(family, params, complementarity_holds)
 
     return {
         'genus': 2,
         'dim_Q_A': dim_Q2_A,
         'dim_Q_A_dual': dim_Q2_A_dual,
         'dim_H_total': dim_H_g2,
-        'complementarity_holds': dim_Q2_A + dim_Q2_A_dual == dim_H_g2,
+        'complementarity_holds': complementarity_holds,
         'kappa': kappa,
-        'lagrangian': True,  # half-rank => Lagrangian
+        'lagrangian': scope['theorem_c_promoted'],
+        **scope,
     }
 
 
@@ -807,37 +1054,19 @@ def p3_redundancy_analysis(family, params):
     The question: does smooth CY on A (i.e. (P2)) AUTOMATICALLY give
     smooth CY on A! (i.e. (P3))?
 
-    Verdier intertwining (Theorem A): D_Ran(B(A)) ~ B(A!).
-    HR24: smooth CY on A => proper CY on B(A).
-    Question: does proper CY on B(A) + Verdier => proper CY on B(A!)?
-
-    Answer: NOT AUTOMATICALLY.  Verdier duality D_Ran exchanges B(A) with
-    B(A!), but proper CY is NOT preserved by Verdier duality in general.
-    Verdier duality exchanges smooth and proper CY structures (this is
-    a separate theorem from HR24).
-
-    Actually: D_Ran(B(A)) ~ B(A!) means that B(A!) is the Verdier dual of
-    B(A).  If B(A) has proper CY, then D_Ran(B(A)) = B(A!) has SMOOTH CY
-    (Verdier duality exchanges proper and smooth on the coalgebra side).
-    Then by HR24 CONVERSE: smooth CY on B(A!) = smooth CY on the coalgebra
-    => proper CY on Omega(B(A!)) ~ A! (by bar-cobar inversion on the Koszul
-    locus).
-
-    Wait: this needs care.  HR24 says:
+    HR24 says:
     - smooth CY on A (algebra) <=> proper CY on B(A) (coalgebra)
     - proper CY on C (coalgebra) <=> smooth CY on Omega(C) (algebra)
 
-    Verdier duality: D(B(A)) ~ B(A!) as factorization algebras.
-    But B(A) is a coalgebra and B(A!) is also a coalgebra.
-    D exchanges coalgebra with algebra structure.
+    Theorem A says, on the finite-type or completed Verdier branch, that
+    D_Ran(B_X(A)) produces the post-Verdier A!_infty branch, which may
+    be identified with strict A! only after the branch hypotheses hold.
+    This is not the bar coalgebra B_X(A!).  To apply HR24 to B(A!) one
+    must first know smooth CY on A!, exactly hypothesis (P3).
 
-    So: proper CY on B(A) (coalgebra)
-    => under D: some CY structure on D(B(A)) ~ B(A!) viewed as algebra
-    => this is NOT the same as proper CY on B(A!) as a coalgebra
-
-    CONCLUSION: (P3) is NOT redundant.  The HR24 + Verdier chain does not
-    close because Verdier duality changes the categorical role (coalgebra
-    vs algebra), and the CY interchange applies to specific roles.
+    CONCLUSION: (P3) is independent in general.  It becomes automatic
+    only for explicit self-dual or free dual-pair witnesses where the
+    dual algebra is already known to carry a smooth CY structure.
     """
     # Check if (P3) happens to follow from (P2) for specific families
     k11 = verify_k11_hypotheses(family, params)
@@ -845,7 +1074,10 @@ def p3_redundancy_analysis(family, params):
     p2_holds = k11['P2']['holds']
     p3_holds = k11['P3']['holds']
     p3_follows_from_p2 = False
-    reason = 'P3 is NOT redundant in general (HR24 + Verdier chain does not close)'
+    reason = (
+        'P3 is independent in general: HR24 gives proper CY on B(A), '
+        'while B(A!) requires the separate smooth-CY check on A!.'
+    )
 
     # Special case: self-dual families
     if family == 'virasoro':
@@ -907,9 +1139,9 @@ FINDING_REGISTER = {
     'F1': {
         'severity': 'MODERATE',
         'class': 'A',
-        'finding': 'HR24 does NOT directly remove perfectness hypothesis in '
-                   'lem:perfectness-criterion. Fiber-level perfectness != '
-                   'family-level perfectness over M_g_bar.',
+        'finding': 'HR24 gives fiber-level perfectness data, while '
+                   'lem:perfectness-criterion requires family-level '
+                   'perfectness over M_g_bar.',
         'status': 'CONFIRMED',
         'action': 'No change needed. Manuscript correctly distinguishes fiber '
                   'and family perfectness.',
@@ -926,8 +1158,9 @@ FINDING_REGISTER = {
     'F3': {
         'severity': 'MODERATE',
         'class': 'A',
-        'finding': '(P3) is NOT redundant under HR24. The Verdier + HR24 chain '
-                   'does not close because Verdier changes coalgebra/algebra roles.',
+        'finding': '(P3) is independent under HR24. The typed Verdier branch '
+                   'D_Ran B_X(A) produces A!_infty, distinct from the bar '
+                   'coalgebra B_X(A!).',
         'status': 'CONFIRMED',
         'action': 'No change needed. (P3) remains a necessary hypothesis.',
     },
@@ -942,9 +1175,9 @@ FINDING_REGISTER = {
     'F5': {
         'severity': 'MINOR',
         'class': 'A',
-        'finding': 'Calaque-Safronov deformation to normal cone does NOT remove '
-                   'perfectness hypothesis (requires shifted-symplectic structure '
-                   'to already exist).',
+        'finding': 'Calaque-Safronov deformation to normal cone preserves the '
+                   'perfectness hypothesis because it requires the '
+                   'shifted-symplectic structure first.',
         'status': 'CONFIRMED',
         'action': 'No change needed. Cite CS24 for future reference.',
     },
@@ -959,7 +1192,7 @@ FINDING_REGISTER = {
     'F7': {
         'severity': 'CRITICAL',
         'class': 'A',
-        'finding': 'NO claims in the monograph become FALSE under HR24. All '
+        'finding': 'No monograph claim becomes false under HR24. All '
                    'conditional statuses are correctly stated.',
         'status': 'CONFIRMED',
         'action': 'No changes needed to claim statuses.',

@@ -11,12 +11,13 @@ Verifies:
 """
 
 import pytest
-from sympy import Rational, Symbol, simplify
+from sympy import Pow, Rational, Symbol, oo, simplify
 
 from compute.lib.w4_stage4_coefficients import (
     w4_central_charge,
     w4_dual_level,
     w4_complementarity_sum,
+    stage4_scope_certificate,
     seed_set,
     seed_set_size,
     virasoro_subset,
@@ -41,7 +42,10 @@ from compute.lib.w4_stage4_coefficients import (
     stage3_nonzero_count,
     stage3_vanishing_count,
     stage4_residual_decomposition,
+    stage4_exact_identity_packet_labels,
     stage4_exact_identity_packet,
+    stage4_principal_higher_spin_squared_couplings,
+    stage4_coefficient_field_policy,
     stage4_live_targets,
     stage4_residual_higher_spin_channels,
     stage4_virasoro_target_channels,
@@ -54,12 +58,15 @@ from compute.lib.w4_stage4_coefficients import (
     w4_curvature,
     w4_kappa_total,
     w3w3_ope_w4_algebra,
+    w4w4_leading_ope,
+    w3w4_leading_ope,
     verify_universal_t_coupling_pattern,
     analyze_stage4_packet,
     top_pole_packet,
     parity_compressed_packet,
     ope_block_decomposition,
     mixed_self_split,
+    stage4_exact_packet_split,
     frontier_package,
     verify_full_reduction_chain,
 )
@@ -103,6 +110,51 @@ class TestCentralCharge:
         c1 = w4_central_charge(1)
         c2 = w4_central_charge(w4_dual_level(1))
         assert c1 + c2 == 246
+
+
+# ===== Scope and firewalls =====
+
+class TestScopeFirewalls:
+    def test_finite_scope_certificate(self):
+        """The engine certifies only the finite stage-4 scalar packet."""
+        scope = stage4_scope_certificate()
+        assert scope["certified_stage"] == 4
+        assert scope["finite_statement"] == "stage-4 primary top-pole scalar packet on I_4"
+        for key in [
+            "not_full_ope",
+            "not_all_genus",
+            "not_full_multiweight",
+            "not_full_mc_data",
+            "not_koszul_duality",
+            "not_derived_center_or_bulk",
+        ]:
+            assert scope["negative_claims"][key]
+
+    def test_package_firewalls_are_disjoint(self):
+        """Holographic entries and modular-Koszul projections are not merged."""
+        scope = stage4_scope_certificate()
+        assert scope["holographic_package_entries"] == (
+            "A", "A^i", "A^!", "C", "r(z)", "Theta_A", "nabla^hol",
+        )
+        assert scope["modular_koszul_compute_package_projections"] == (
+            "Fact_X(L)", "barB_X(L)", "Theta_L", "L_L",
+            "(V_br,T_br)", "R4_mod(L)",
+        )
+
+    def test_object_firewall_text(self):
+        """Bar-cobar inversion, Verdier duality, and bulk remain distinct."""
+        fw = stage4_scope_certificate()["object_firewall"]
+        assert "bar-cobar inversion, not Koszul duality" in fw["bar_cobar_inversion"]
+        assert "Verdier/continuous-linear dual branch" in fw["verdier_branch"]
+        assert "Hochschild/bulk, not Koszul dual" in fw["derived_center"]
+
+    def test_kernel_constants(self):
+        """Kernel constants retain the level and trace-form conventions."""
+        kernels = stage4_scope_certificate()["kernel_constants"]
+        assert kernels["affine_raw"] == "k*Omega_tr/z"
+        assert kernels["kz"] == "Omega/((k+h^vee)z)"
+        assert kernels["heisenberg"] == "k/z"
+        assert kernels["virasoro"] == "(c/2)/z^3 + 2T/z"
 
 
 # ===== Seed sets =====
@@ -270,11 +322,11 @@ class TestOPEWeights:
         assert primary_target_at_pole(3, 4, 4) == 3  # W3 at pole 4
 
 
-# ===== Curvature =====
+# ===== Channel-refined kappa =====
 
-class TestCurvature:
-    def test_curvature_channels(self):
-        """m_0 values for W_4 generators."""
+class TestChannelKappa:
+    def test_channel_kappa_entries(self):
+        """Leading same-spin vacuum OPE coefficients for W_4 generators."""
         curv = w4_curvature()
         c = Symbol('c')
         assert curv["T"] == c / 2
@@ -282,13 +334,13 @@ class TestCurvature:
         assert curv["W4"] == c / 4
 
     def test_kappa_total(self):
-        """kappa = c/2 + c/3 + c/4 = 13c/12."""
+        """Scalar kappa is the trace c/2 + c/3 + c/4 = 13c/12."""
         c = Symbol('c')
         kappa = w4_kappa_total()
         assert simplify(kappa - 13 * c / 12) == 0
 
     def test_curvature_sum_equals_kappa(self):
-        """Sum of curvature channels equals kappa."""
+        """Sum of channel entries equals scalar kappa."""
         c = Symbol('c')
         curv = w4_curvature()
         total = sum(curv.values())
@@ -324,28 +376,64 @@ class TestPredictions:
         assert len(preds) == 2
 
     def test_distinguished_values(self):
-        """Their theorematic values are 2 and 0."""
+        """Their principal DS values are 2 and 0."""
         preds = stage4_virasoro_target_identity_data()
-        values = sorted(p["theorematic_value"] for p in preds.values())
+        values = sorted(p["principal_value"] for p in preds.values())
         assert values == [0, 2]
 
+    def test_distinguished_value_scope(self):
+        """The distinguished values are not derived-centre or bulk data."""
+        preds = stage4_virasoro_target_identity_data()
+        for payload in preds.values():
+            assert payload["value_scope"] == (
+                "principal DS; residue side fixed on the Ward-normalized locus"
+            )
+            assert payload["certified_side"] == "principal DS"
+            assert not payload["residue_certified"]
+            assert "normalized residue two-point/Ward" in payload["residue_certification"]
+            assert payload["not_derived_center_or_bulk"]
+            assert payload["not_full_mc_data"]
+            assert payload["not_full_multiweight_data"]
+
     def test_universal_t_coupling(self):
-        """C_{s,s;2;0,2s-2} = 2 pattern holds for s=2,3."""
+        """C_{s,s;2;0,2s-2} = 2 pattern holds through s=4."""
         pattern = verify_universal_t_coupling_pattern()
         assert pattern["s=2_equals_2"]
         assert pattern["s=3_equals_2"]
+        assert pattern["s=4_equals_2"]
 
 
 # ===== Exact stage-4 packet =====
 
-class TestLiveTargets:
+class TestExactIdentityPacket:
     def test_six_packet_labels(self):
         """The exact stage-4 packet has six labels."""
-        assert len(stage4_live_targets()) == 6
+        expected = [
+            "C_{3,3;4;0,2}",
+            "C_{4,4;4;0,4}",
+            "C_{3,4;3;0,4}",
+            "C_{3,4;4;0,3}",
+            "C_{4,4;2;0,6}",
+            "C_{3,4;2;0,5}",
+        ]
+        assert stage4_exact_identity_packet_labels() == expected
+        assert stage4_live_targets() == expected
 
     def test_exact_packet_channels(self):
         """The exact stage-4 packet on I_4 has six channels."""
         assert len(stage4_exact_identity_packet()) == 6
+
+    def test_exact_packet_is_six_not_top_pole_seven(self):
+        """The W_4 stage-4 packet is J_4^par, not the seven-entry top packet."""
+        removed_by_parity = {(4, 4, 3, 5)}
+        exact = set(stage4_exact_identity_packet())
+        top = set(top_pole_packet())
+        par = set(parity_compressed_packet())
+
+        assert exact == par
+        assert exact == top - removed_by_parity
+        assert len(top) == len(exact) + 1
+        assert removed_by_parity.isdisjoint(exact)
 
     def test_full_analysis(self):
         """Full analysis matches manuscript."""
@@ -357,6 +445,48 @@ class TestLiveTargets:
         assert len(analysis["exact_identity_packet"]) == 6
         assert len(analysis["higher_spin_channels"]) == 4
         assert len(analysis["virasoro_target_channels"]) == 2
+
+
+# ===== Higher-spin squared coupling formulas =====
+
+class TestHigherSpinSquaredCouplings:
+    def test_squared_couplings_match_manuscript_formulas(self):
+        """Four higher-spin entries are squared rational functions over Q(c)."""
+        c = Symbol('c')
+        values = stage4_principal_higher_spin_squared_couplings(c)
+        c334_sq = (
+            42 * c**2 * (5 * c + 22)
+            / ((c + 24) * (7 * c + 68) * (3 * c + 46))
+        )
+        c444_sq = (
+            112 * c**2 * (2 * c - 1) * (3 * c + 46)
+            / ((c + 24) * (7 * c + 68) * (10 * c + 197) * (5 * c + 3))
+        )
+        assert simplify(values[(3, 3, 4, 2)] - c334_sq) == 0
+        assert simplify(values[(4, 4, 4, 4)] - c444_sq) == 0
+        assert simplify(values[(3, 4, 3, 4)] - Rational(9, 16) * c334_sq) == 0
+        assert simplify(values[(3, 4, 4, 3)] - Rational(5, 7) * c334_sq) == 0
+
+    def test_squared_couplings_do_not_choose_sqrt_branches(self):
+        """The scaffold stores squares only, so no square-root branch is chosen."""
+        values = stage4_principal_higher_spin_squared_couplings()
+        for expr in values.values():
+            assert "sqrt" not in str(expr)
+            assert all(power.exp != Rational(1, 2) for power in expr.atoms(Pow))
+
+        policy = stage4_coefficient_field_policy()
+        assert policy["base_field"] == "Q(c)"
+        assert not policy["branch_certified"]
+        assert policy["generic_extension_generators"] == (
+            "sqrt(c_334^2)", "sqrt(c_444^2)",
+        )
+
+    def test_classical_limits(self):
+        """Classical limits agree with the W_4 bootstrap normalization."""
+        c = Symbol('c')
+        values = stage4_principal_higher_spin_squared_couplings(c)
+        assert simplify(values[(3, 3, 4, 2)].limit(c, oo) - 10) == 0
+        assert simplify(values[(4, 4, 4, 4)].limit(c, oo) - Rational(48, 25)) == 0
 
 
 # ===== W_3 x W_3 OPE in W_4 =====
@@ -378,6 +508,28 @@ class TestW3W3OPE:
         ope = w3w3_ope_w4_algebra()
         c334 = Symbol('c_334')
         assert ope[2]["W4"] == c334
+
+
+class TestStage4LeadingOPEs:
+    def test_w4w4_primary_leading_terms(self):
+        """W_4 x W_4 records the vacuum, T, and W_4 primary channels."""
+        ope = w4w4_leading_ope()
+        c = Symbol('c')
+        c444 = Symbol('c_444')
+        assert ope[8]["vac"] == c / 4
+        assert ope[6]["T"] == 2
+        assert ope[4]["W4"] == c444
+        assert 5 not in ope
+
+    def test_w3w4_mixed_leading_terms(self):
+        """W_3 x W_4 has no pole-6 primary and has T-channel value 0."""
+        ope = w3w4_leading_ope()
+        c343 = Symbol('c_343')
+        c344 = Symbol('c_344')
+        assert 6 not in ope
+        assert ope[5]["T"] == 0
+        assert ope[4]["W3"] == c343
+        assert ope[3]["W4"] == c344
 
 
 # ===== Full reduction chain: 29 -> 7 -> 6 -> 4+2 =====
@@ -493,27 +645,44 @@ class TestMixedSelfSplit:
             assert s != t
 
 
-class TestFrontierPackage:
+class TestExactPacketSplit:
+    def test_frontier_package_is_compatibility_alias(self):
+        """The canonical split is the exact packet split; frontier_package is an alias."""
+        assert frontier_package() == stage4_exact_packet_split()
+
+    def test_split_scope_is_finite_scalar_packet(self):
+        """The split is not a full-OPE, all-genus, multiweight, or MC certificate."""
+        front = stage4_exact_packet_split()
+        assert front["coefficient_scope"] == "finite primary top-pole scalar packet on I_4"
+        assert front["certified_stage"] == 4
+        assert front["not_full_ope"]
+        assert front["not_all_genus"]
+        assert front["not_full_multiweight"]
+        assert front["not_full_mc_data"]
+        assert set(front["higher_spin_squared_couplings"]) == set(
+            front["higher_spin_channels"]
+        )
+
     def test_four_higher_spin_channels(self):
         """Four residual higher-spin channels remain inside the six-entry packet."""
-        front = frontier_package()
+        front = stage4_exact_packet_split()
         assert front["n_higher_spin"] == 4
 
     def test_two_virasoro_target_channels(self):
-        """Two theorematic Virasoro-target channels complement the packet."""
-        front = frontier_package()
+        """Two Virasoro-target channels complement the packet."""
+        front = stage4_exact_packet_split()
         assert front["n_virasoro_target"] == 2
 
     def test_higher_spin_channels(self):
         """Higher-spin channels are the four residual non-Virasoro entries."""
         expected = [(3, 3, 4, 2), (3, 4, 3, 4), (3, 4, 4, 3), (4, 4, 4, 4)]
-        front = frontier_package()
+        front = stage4_exact_packet_split()
         assert sorted(front["higher_spin_channels"]) == sorted(expected)
         assert sorted(stage4_residual_higher_spin_channels()) == sorted(expected)
 
     def test_virasoro_target_values(self):
         """Virasoro-target identities are c_442 = 2 and c_342 = 0."""
-        front = frontier_package()
+        front = stage4_exact_packet_split()
         assert front["virasoro_target_values"][(4, 4, 2, 6)] == 2
         assert front["virasoro_target_values"][(3, 4, 2, 5)] == 0
         assert stage4_virasoro_target_identities()[(4, 4, 2, 6)] == 2
@@ -521,14 +690,14 @@ class TestFrontierPackage:
 
     def test_total_equals_six(self):
         """4 higher-spin channels + 2 Virasoro-target channels = 6."""
-        front = frontier_package()
+        front = stage4_exact_packet_split()
         assert front["n_packet"] == len(parity_compressed_packet())
         assert front["n_higher_spin"] + front["n_virasoro_target"] == len(parity_compressed_packet())
 
     def test_virasoro_target_channels(self):
         """The Virasoro-target channels are exactly the two distinguished entries."""
         expected = [(3, 4, 2, 5), (4, 4, 2, 6)]
-        front = frontier_package()
+        front = stage4_exact_packet_split()
         assert sorted(front["virasoro_target_channels"]) == sorted(expected)
         assert sorted(stage4_virasoro_target_channels()) == sorted(expected)
 
@@ -673,6 +842,14 @@ class TestStage5IncrementalPacket:
         assert values[(3, 5, 2, 6)] == 0
         assert values[(4, 5, 2, 7)] == 0
         assert values[(5, 5, 2, 8)] == 2
+
+    def test_stage5_virasoro_values_are_diagnostic(self):
+        """Stage-5 values are formal diagnostics, not W_4 stage-4 certificates."""
+        analysis = analyze_incremental_packet(5)
+        assert not analysis["virasoro_target_values_certified_for_stage"]
+        assert "formal normalized-pairing diagnostic" in analysis[
+            "virasoro_target_value_scope"
+        ]
 
     def test_stage5_analysis_reports_higher_spin_blocks(self):
         """The packet summary records the higher-spin block decomposition."""

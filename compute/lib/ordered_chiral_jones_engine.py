@@ -66,12 +66,12 @@ Path 5: Kauffman bracket state sum (independent combinatorial path)
 
 CONVENTIONS
 ===========
-q = Jones variable.  t = q^2 in some references (Kassel).
-V_K(q) for the Jones polynomial (NOT t = q^2: we use direct q throughout).
+q_J = Jones variable.  t = q_J in the polynomial formulas below.
 kappa = k + h^v where h^v = 2 for sl_2.
 Level k >= 1 for integrable representations.
-q_quant = exp(pi i / kappa) for the quantum group parameter (Drinfeld-Kohno).
-check_R eigenvalues: q_quant (on Sym^2 V), -q_quant^{-1} (on Lambda^2 V).
+q_QG = exp(pi i / kappa) for the quantum group parameter (Drinfeld-Kohno).
+q_J = q_QG^2 = exp(2*pi i / kappa) for Jones polynomial evaluation.
+check_R eigenvalues: q_QG (on Sym^2 V), -q_QG^{-1} (on Lambda^2 V).
 Trefoil: closure of sigma_1^3 on 2 strands, writhe w = 3.
 kappa(V_k(sl_2)) = dim(sl_2)*(k+h^v)/(2*h^v) = 3(k+2)/4  (AP1, AP39).
 Bar propagator d log E(z,w) weight 1 (AP27).
@@ -135,6 +135,20 @@ from compute.lib.kz_conformal_blocks import (
 
 PI = math.pi
 I = 1j
+
+
+def q_quantum_group_from_level(k: int, h_vee: int = 2) -> complex:
+    """Drinfeld-Kohno quantum-group parameter q_QG = exp(pi*i/(k+hvee))."""
+    kappa = k + h_vee
+    if kappa == 0:
+        raise ValueError("KZ/DK quantum parameter is undefined at critical level k=-hvee")
+    return cmath.exp(1j * PI / kappa)
+
+
+def q_jones_from_level(k: int, h_vee: int = 2) -> complex:
+    """Jones variable q_J = q_QG^2 = exp(2*pi*i/(k+hvee))."""
+    q_qg = q_quantum_group_from_level(k, h_vee)
+    return q_qg ** 2
 
 
 def sl2_casimir_on_tensor(positions: Tuple[int, int],
@@ -411,10 +425,10 @@ def kz_monodromy_exact_2pt(k: int) -> np.ndarray:
       M|_{Sym^2} = exp(2*pi*i * (1/2) / kappa) = exp(pi*i/kappa) = q
       M|_{Lambda^2} = exp(2*pi*i * (-3/2) / kappa) = exp(-3*pi*i/kappa) = q^{-3}
 
-    where q = exp(pi*i/kappa).
+    where q_QG = exp(pi*i/kappa).
 
     The check_R matrix (= permutation * R_universal) has eigenvalues:
-      q on Sym^2(V)  and  -q^{-1} on Lambda^2(V)
+      q_QG on Sym^2(V)  and  -q_QG^{-1} on Lambda^2(V)
 
     The relation: the KZ monodromy M and the quantum check_R are related by
       M = q^{Omega_{12}} (diagonal on isotypic components)
@@ -447,19 +461,19 @@ def drinfeld_kohno_eigenvalue_comparison(k: int) -> Dict[str, Any]:
         exp(2*pi*i * (-3/2)/kappa) on Lambda^2 (Omega eigenvalue -3/2)
 
       Quantum check_R on V^{tensor 2}:
-        q_quant  on Sym^2
-        -q_quant^{-1}  on Lambda^2
+        q_QG  on Sym^2
+        -q_QG^{-1}  on Lambda^2
 
-      where q_quant = exp(pi*i/kappa).
+      where q_QG = exp(pi*i/kappa).
 
     The KZ eigenvalue on Sym^2 is:
-      exp(pi*i/kappa) = q_quant  (MATCHES check_R)
+      exp(pi*i/kappa) = q_QG  (MATCHES check_R)
 
     The KZ eigenvalue on Lambda^2 is:
       exp(-3*pi*i/kappa)
 
     The check_R eigenvalue on Lambda^2 is:
-      -q_quant^{-1} = -exp(-pi*i/kappa) = exp(pi*i) * exp(-pi*i/kappa)
+      -q_QG^{-1} = -exp(-pi*i/kappa) = exp(pi*i) * exp(-pi*i/kappa)
                     = exp(pi*i * (1 - 1/kappa))
                     = exp(pi*i * (kappa - 1)/kappa)
 
@@ -479,15 +493,16 @@ def drinfeld_kohno_eigenvalue_comparison(k: int) -> Dict[str, Any]:
     normalization (framing correction = writhe factor q^{-2w}).
     """
     kappa = k + 2
-    q_quant = cmath.exp(1j * PI / kappa)
+    q_qg = q_quantum_group_from_level(k)
+    q_jones = q_qg ** 2
 
     # KZ monodromy eigenvalues
-    kz_sym = cmath.exp(2j * PI * 0.5 / kappa)   # = exp(pi i / kappa) = q_quant
+    kz_sym = cmath.exp(2j * PI * 0.5 / kappa)   # = exp(pi i / kappa) = q_QG
     kz_anti = cmath.exp(2j * PI * (-1.5) / kappa)  # = exp(-3 pi i / kappa)
 
     # Quantum check_R eigenvalues
-    qr_sym = q_quant
-    qr_anti = -1.0 / q_quant
+    qr_sym = q_qg
+    qr_anti = -1.0 / q_qg
 
     # Verify sym eigenvalue match
     sym_match = abs(kz_sym - qr_sym)
@@ -502,7 +517,9 @@ def drinfeld_kohno_eigenvalue_comparison(k: int) -> Dict[str, Any]:
     return {
         'k': k,
         'kappa': kappa,
-        'q_quant': q_quant,
+        'q_QG': q_qg,
+        'q_J': q_jones,
+        'q_quant': q_qg,
         'kz_eigenvalues': {'sym': kz_sym, 'anti': kz_anti},
         'qr_eigenvalues': {'sym': qr_sym, 'anti': qr_anti},
         'sym_eigenvalue_match': sym_match,
@@ -584,7 +601,7 @@ def jones_trefoil_from_kz_monodromy(k: int) -> complex:
     The R-matrix is DERIVED from KZ monodromy by Drinfeld-Kohno.
     """
     kappa = k + 2
-    q_qg = cmath.exp(1j * PI / kappa)
+    q_qg = q_quantum_group_from_level(k)
     # Jones variable = q_qg^2
     q_jones = q_qg ** 2
     return jones_trefoil_from_rmatrix(q_jones)
@@ -805,10 +822,11 @@ def ordered_chiral_holonomy_degree3(k: int) -> Dict[str, Any]:
       (d) The Drinfeld associator content at degree 3
     """
     kappa = k + 2
-    q_quant = cmath.exp(1j * PI / kappa)
+    q_qg = q_quantum_group_from_level(k)
+    q_jones = q_qg ** 2
 
     # (a) Quantum R-matrix on V^{tensor 3}
-    R_check = slN_check_r_matrix(q_quant, 2)
+    R_check = slN_check_r_matrix(q_qg, 2)
 
     # Braid generators on V^{tensor 3} (dim 8):
     I_2 = np.eye(2, dtype=complex)
@@ -821,8 +839,8 @@ def ordered_chiral_holonomy_degree3(k: int) -> Dict[str, Any]:
     ybe_residual = float(la.norm(ybe_lhs - ybe_rhs))
 
     # (c) Jones polynomial of trefoil from degree-2 restriction
-    jones_value = jones_trefoil_from_rmatrix(q_quant)
-    jones_exact = jones_trefoil_exact_polynomial(q_quant)
+    jones_value = jones_trefoil_from_rmatrix(q_jones)
+    jones_exact = jones_trefoil_exact_polynomial(q_jones)
     jones_match = abs(jones_value - jones_exact)
 
     # (d) Associator content: the KZ monodromy on V^{tensor 3}
@@ -840,7 +858,9 @@ def ordered_chiral_holonomy_degree3(k: int) -> Dict[str, Any]:
     return {
         'k': k,
         'kappa': kappa,
-        'q_quant': q_quant,
+        'q_QG': q_qg,
+        'q_J': q_jones,
+        'q_quant': q_qg,
         'chain_space_dim': 8,
         'ybe_residual': ybe_residual,
         'ybe_satisfied': ybe_residual < 1e-10,
@@ -946,7 +966,8 @@ def ordered_chiral_to_jones_complete(k: int,
     The verification uses five independent paths (multi-path mandate).
     """
     kappa = k + 2
-    q_quant = cmath.exp(1j * PI / kappa)
+    q_qg = q_quantum_group_from_level(k)
+    q_jones = q_qg ** 2
 
     # Step 1: Chain complex data
     chain_data = degree_3_chain_complex_data(k)
@@ -957,8 +978,8 @@ def ordered_chiral_to_jones_complete(k: int,
     # Step 3: Drinfeld-Kohno bridge
     dk_data = drinfeld_kohno_eigenvalue_comparison(k)
 
-    # Step 4-5: Jones polynomial verification at q = q_quant
-    jones_data = verify_trefoil_five_paths(q_quant, tol)
+    # Step 4-5: Jones polynomial verification at q_J = q_QG^2
+    jones_data = verify_trefoil_five_paths(q_jones, tol)
 
     # Step 6: Yang-Baxter at degree 3
     holonomy_data = ordered_chiral_holonomy_degree3(k)
@@ -969,7 +990,9 @@ def ordered_chiral_to_jones_complete(k: int,
     return {
         'k': k,
         'kappa': kappa,
-        'q_quant': q_quant,
+        'q_QG': q_qg,
+        'q_J': q_jones,
+        'q_quant': q_qg,
         'chain_data': chain_data,
         'kz_connection_pairs': len(kz_matrices),
         'dk_sym_match': dk_data['sym_eigenvalue_match'],
@@ -1006,7 +1029,7 @@ def jones_mirror_verification(q: complex,
     v_mirror_exact = jones_trefoil_exact_polynomial(1.0 / q)
 
     # From braid representation: mirror trefoil = sigma_1^{-3}
-    v_mirror_braid = jones_from_braid([-1, -1, -1], 2, q)
+    v_mirror_braid = jones_from_braid([-1, -1, -1], 2, q ** 0.5)
 
     # Check: V_{mirror}(q) = V(q^{-1})
     mirror_match = abs(v_mirror_braid - v_mirror_exact)
@@ -1072,8 +1095,9 @@ class OrderedChiralJonesData:
         k: level of the affine sl_2 algebra
         kappa: k + h^v = k + 2
         kappa_km: modular characteristic 3(k+2)/4
-        q_quant: quantum parameter exp(pi*i/kappa)
-        jones_polynomial: V_{3_1}(q) as Laurent polynomial
+        q_quant: legacy alias for q_QG = exp(pi*i/kappa)
+        q_J: Jones variable q_QG^2
+        jones_polynomial: V_{3_1}(q_J) as Laurent polynomial
         chain_space_dim: dim V^{tensor 3} = 8
         ybe_residual: ||R_1 R_2 R_1 - R_2 R_1 R_2||
         jones_five_path_max_disc: max discrepancy across 5 paths
@@ -1084,6 +1108,7 @@ class OrderedChiralJonesData:
     kappa: int = 7
     kappa_km: float = 5.25
     q_quant: complex = 0j
+    q_J: complex = 0j
     jones_polynomial: str = "-q^{-4} + q^{-3} + q^{-1}"
     chain_space_dim: int = 8
     ybe_residual: float = 0.0
@@ -1095,7 +1120,8 @@ class OrderedChiralJonesData:
         """Fill in all computed fields."""
         self.kappa = self.k + 2
         self.kappa_km = 3.0 * (self.k + 2) / 4.0
-        self.q_quant = cmath.exp(1j * PI / self.kappa)
+        self.q_quant = q_quantum_group_from_level(self.k)
+        self.q_J = self.q_quant ** 2
 
         result = ordered_chiral_to_jones_complete(self.k)
         self.ybe_residual = result['ybe_residual']

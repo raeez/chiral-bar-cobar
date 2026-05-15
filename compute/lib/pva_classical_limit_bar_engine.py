@@ -82,10 +82,10 @@ WHAT THIS ENGINE COMPUTES
    VA bar).  For classically Koszul algebras the leak is 0; for
    non-classically-Koszul it is the quantum correction d_1 contribution.
 
-6. Koszul dual PVAs: for the free Heisenberg PVA, the dual PVA has the
-   OPPOSITE sign Poisson bracket (kappa ! = -k).  For Chevalley-Eilenberg
-   on a Lie algebra, the Koszul dual at the PVA level is C^*_CE(g) with
-   reversed grading.
+6. Dual-branch scalar shadows: the finite PVA window records how the
+   kappa parameter transforms along the Verdier/continuous dual branch.
+   It does not construct A^! itself and does not identify Omega(B(A))
+   with Koszul duality.
 
 7. Associated variety X_A = Spec(R_A^{red}):
    - Heisenberg: X = A^1 (affine line, smooth).
@@ -114,10 +114,10 @@ AP-DEFENCES:
     - AP27: the bar propagator d log E(z,w) has weight 1 uniformly, so
             the classical limit uses E_1 at every edge regardless of the
             conformal weight of the generator.
-    - AP33: Koszul duality at the PVA level sends k to -k for Heisenberg,
-            the same symbol coincidence as for the full VA.  This does
-            NOT mean the classical-limit dual equals the negative-level
-            PVA as VA-Koszul duals.
+    - AP33: the finite dual-branch scalar shadow sends k to -k for
+            Heisenberg, the same numerical coincidence as the negative
+            level parameter.  This does NOT construct A^! or identify
+            the classical-limit window with a negative-level VA.
 
 References:
     Li (2004) — vertex algebra filtration
@@ -142,12 +142,91 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from fractions import Fraction
 from itertools import combinations
-from typing import Any, Callable, Dict, FrozenSet, List, Optional, Sequence, Tuple
+from typing import Any, Dict, List, Sequence, Tuple
+
+
+HOLOGRAPHIC_PACKAGE_ENTRIES = (
+    "A",
+    "A^i",
+    "A^!",
+    "C",
+    "r(z)",
+    "Theta_A",
+    "nabla^hol",
+)
+
+MODULAR_KOSZUL_PROJECTIONS = (
+    "Fact_X(L)",
+    "barB_X(L)",
+    "Theta_L",
+    "L_L",
+    "(V_br,T_br)",
+    "R4_mod(L)",
+)
+
+OBJECT_FIREWALLS = {
+    "A": "input chiral algebra",
+    "B(A)": "bar coalgebra",
+    "A^i": "H^*(B(A)), dual coalgebra branch",
+    "A^!": "Verdier/continuous dual branch under finite-type completion",
+    "Z_ch^der(A)": "ChirHoch^*(A,A), Hochschild/bulk centre",
+    "Omega(B(A))": "bar-cobar inversion back to A, not Koszul duality",
+}
 
 
 # =========================================================================
 # 1. PVA lambda-bracket skeleton (rational, classical-limit specialization)
 # =========================================================================
+
+@dataclass
+class LambdaCoefficient:
+    r"""A divided-power lambda-bracket coefficient.
+
+    It represents the coefficient c_n in
+
+        {a_lambda b} = sum_n c_n lambda^n,
+
+    with the AP44 convention c_n = a_(n)b / n!.  The C_2 zero-mode
+    Poisson bracket uses only the linear part of c_0 after killing
+    derivatives.  Higher scalar coefficients record OPE/kernel data;
+    they are not scalar terms in the C_2 Poisson bracket.
+    """
+
+    linear: Dict[str, Fraction] = field(default_factory=dict)
+    derivative: Dict[str, Fraction] = field(default_factory=dict)
+    scalar: Fraction = Fraction(0)
+
+    def __post_init__(self) -> None:
+        self.linear = {
+            k: Fraction(v) for k, v in self.linear.items() if Fraction(v) != 0
+        }
+        self.derivative = {
+            k: Fraction(v)
+            for k, v in self.derivative.items()
+            if Fraction(v) != 0
+        }
+        self.scalar = Fraction(self.scalar)
+
+    def scaled(self, factor: Fraction) -> "LambdaCoefficient":
+        factor = Fraction(factor)
+        return LambdaCoefficient(
+            linear={k: factor * v for k, v in self.linear.items()},
+            derivative={k: factor * v for k, v in self.derivative.items()},
+            scalar=factor * self.scalar,
+        )
+
+    def is_zero(self) -> bool:
+        return not self.linear and not self.derivative and self.scalar == 0
+
+
+def _factorial(n: int) -> Fraction:
+    if n < 0:
+        raise ValueError(f"factorial undefined for negative n={n}")
+    out = Fraction(1)
+    for i in range(2, n + 1):
+        out *= i
+    return out
+
 
 @dataclass
 class ClassicalPVA:
@@ -164,9 +243,11 @@ class ClassicalPVA:
         poisson: dict (i,j) -> dict of target generators -> Fraction coefficient
                  encoding {x_i, x_j}_P = sum_k coeff_k * x_k.
                  Anti-symmetric: (j,i) not stored, inferred.
-        central_terms: dict (i,j) -> Fraction for scalar (central) Poisson terms
-                       (e.g. the c/2 in Virasoro's delta''' corresponds to a
-                       central scalar; represented as a Fraction).
+        central_terms: legacy scalar lambda-mode representatives used for
+                       kappa extraction.  These are not C_2 zero-mode
+                       Poisson-bracket scalars; exact lambda data live in
+                       lambda_brackets.
+        lambda_brackets: divided-power lambda coefficients c_n=a_(n)b/n!.
         c_or_k: central parameter (kappa value for the family)
     """
     name: str
@@ -174,29 +255,64 @@ class ClassicalPVA:
     weights: Dict[str, int]
     poisson: Dict[Tuple[str, str], Dict[str, Fraction]] = field(default_factory=dict)
     central_terms: Dict[Tuple[str, str], Fraction] = field(default_factory=dict)
+    lambda_brackets: Dict[Tuple[str, str], Dict[int, LambdaCoefficient]] = field(
+        default_factory=dict
+    )
     c_or_k: Fraction = Fraction(0)
 
     def gen_index(self, name: str) -> int:
         return self.generators.index(name)
 
     def poisson_bracket(self, a: str, b: str) -> Tuple[Dict[str, Fraction], Fraction]:
-        r"""Return ({x_a, x_b}_P, central_part).
+        r"""Return the C_2 zero-mode Poisson bracket.
 
-        The Poisson bracket is ANTI-SYMMETRIC: {b, a} = -{a, b}.
+        The bracket is ANTI-SYMMETRIC: {b, a} = -{a, b}.  Higher
+        lambda-mode scalar terms, such as the Heisenberg level k or
+        Virasoro c/12 coefficient, are deliberately not returned here.
+        They feed the OPE and collision kernels, not the zero-mode
+        bracket on R_A.
 
         Returns:
             (linear_part, central_scalar)
             linear_part: dict target -> coefficient
-            central_scalar: the constant term (from the highest derivative
-                            of delta in the lambda-bracket)
+            central_scalar: scalar part of the zero-mode bracket.  It is
+                            zero for the standard families in this engine.
         """
         if (a, b) in self.poisson:
-            return dict(self.poisson[(a, b)]), self.central_terms.get((a, b), Fraction(0))
+            return dict(self.poisson[(a, b)]), Fraction(0)
         if (b, a) in self.poisson:
             lin = {k: -v for k, v in self.poisson[(b, a)].items()}
-            cs = -self.central_terms.get((b, a), Fraction(0))
-            return lin, cs
+            return lin, Fraction(0)
         return {}, Fraction(0)
+
+    def set_lambda_coefficient(
+        self,
+        a: str,
+        b: str,
+        n: int,
+        *,
+        linear: Dict[str, Fraction] | None = None,
+        derivative: Dict[str, Fraction] | None = None,
+        scalar: Fraction = Fraction(0),
+    ) -> None:
+        if n < 0:
+            raise ValueError(f"lambda degree must be non-negative, got {n}")
+        coeff = LambdaCoefficient(
+            linear={} if linear is None else linear,
+            derivative={} if derivative is None else derivative,
+            scalar=scalar,
+        )
+        if coeff.is_zero():
+            return
+        self.lambda_brackets.setdefault((a, b), {})[n] = coeff
+
+    def lambda_coefficient(self, a: str, b: str, n: int) -> LambdaCoefficient:
+        r"""Return c_n = a_(n)b/n! in {a_lambda b}."""
+        return self.lambda_brackets.get((a, b), {}).get(n, LambdaCoefficient())
+
+    def lambda_ope_mode(self, a: str, b: str, n: int) -> LambdaCoefficient:
+        r"""Return the OPE mode a_(n)b = n! c_n."""
+        return self.lambda_coefficient(a, b, n).scaled(_factorial(n))
 
 
 # =========================================================================
@@ -213,9 +329,9 @@ def heisenberg_classical_pva(k: Fraction = Fraction(1)) -> ClassicalPVA:
 
         {phi, phi}_P = 0
 
-    but the CENTRAL term at order 1 (lambda^1 piece) contributes to the
-    scalar-valued Poisson bracket as a DELTA' coefficient.  In the
-    zero-mode truncation this is a CENTRAL element, not a linear one.
+    The order-1 lambda coefficient is the DELTA' coefficient.  It is
+    recorded for OPE/kernel extraction and kappa, but it is not part of
+    the C_2 zero-mode Poisson bracket.
 
     kappa(H_k) = k.
     """
@@ -227,9 +343,40 @@ def heisenberg_classical_pva(k: Fraction = Fraction(1)) -> ClassicalPVA:
     )
     # Zero-mode bracket: {phi, phi}_P = 0 (no linear part)
     pva.poisson[("phi", "phi")] = {}
-    # Central term at the lambda^1 level (c_1 = k):
+    # Lambda coefficient c_1 = J_(1)J = k.  It is not a C_2 zero-mode
+    # Poisson scalar; after d-log absorption it gives k/z.
+    pva.set_lambda_coefficient("phi", "phi", 1, scalar=Fraction(k))
+    # Legacy representative used by pva_scalar_kappa.
     pva.central_terms[("phi", "phi")] = Fraction(k)
     return pva
+
+
+def _populate_affine_sl2_data(pva: ClassicalPVA, k: Fraction) -> None:
+    """Fill zero-mode and lambda-mode data for affine sl_2."""
+    # Lie-Poisson brackets (zero-mode part)
+    pva.poisson[("e", "f")] = {"h": Fraction(1)}
+    pva.poisson[("h", "e")] = {"e": Fraction(2)}
+    pva.poisson[("h", "f")] = {"f": Fraction(-2)}
+    pva.poisson[("e", "e")] = {}
+    pva.poisson[("f", "f")] = {}
+    pva.poisson[("h", "h")] = {}
+
+    # Divided-power lambda coefficients.  The reversed (f,e) level
+    # coefficient is +k, not -k; skewsymmetry acts on lambda, not by
+    # ordinary antisymmetry of the scalar lambda^1 coefficient.
+    pva.set_lambda_coefficient("e", "f", 0, linear={"h": Fraction(1)})
+    pva.set_lambda_coefficient("e", "f", 1, scalar=Fraction(k))
+    pva.set_lambda_coefficient("f", "e", 0, linear={"h": Fraction(-1)})
+    pva.set_lambda_coefficient("f", "e", 1, scalar=Fraction(k))
+    pva.set_lambda_coefficient("h", "e", 0, linear={"e": Fraction(2)})
+    pva.set_lambda_coefficient("e", "h", 0, linear={"e": Fraction(-2)})
+    pva.set_lambda_coefficient("h", "f", 0, linear={"f": Fraction(-2)})
+    pva.set_lambda_coefficient("f", "h", 0, linear={"f": Fraction(2)})
+    pva.set_lambda_coefficient("h", "h", 1, scalar=Fraction(2) * k)
+
+    # Legacy scalar representatives.
+    pva.central_terms[("e", "f")] = Fraction(k)
+    pva.central_terms[("h", "h")] = Fraction(2) * k
 
 
 def affine_sl2_classical_pva(k: Fraction = Fraction(1)) -> ClassicalPVA:
@@ -250,7 +397,7 @@ def affine_sl2_classical_pva(k: Fraction = Fraction(1)) -> ClassicalPVA:
         {e, e}_P = {f, f}_P = 0
         {h, h}_P = 0
 
-    The lambda^1 terms become CENTRAL scalars in the classical limit:
+    The lambda^1 terms are scalar OPE modes in the classical limit:
         c_central(e, f) = k
         c_central(h, h) = 2k
 
@@ -266,17 +413,7 @@ def affine_sl2_classical_pva(k: Fraction = Fraction(1)) -> ClassicalPVA:
         weights={"e": 1, "f": 1, "h": 1},
         c_or_k=Fraction(kappa),
     )
-    # Lie-Poisson brackets (zero-mode part)
-    pva.poisson[("e", "f")] = {"h": Fraction(1)}
-    pva.poisson[("h", "e")] = {"e": Fraction(2)}
-    pva.poisson[("h", "f")] = {"f": Fraction(-2)}
-    pva.poisson[("e", "e")] = {}
-    pva.poisson[("f", "f")] = {}
-    pva.poisson[("h", "h")] = {}
-
-    # Central (level) terms
-    pva.central_terms[("e", "f")] = Fraction(k)
-    pva.central_terms[("h", "h")] = Fraction(2) * k
+    _populate_affine_sl2_data(pva, Fraction(k))
     return pva
 
 
@@ -304,6 +441,9 @@ def virasoro_classical_pva(c: Fraction = Fraction(1)) -> ClassicalPVA:
         c_or_k=Fraction(c) / Fraction(2),
     )
     pva.poisson[("T", "T")] = {}  # in C_2 algebra, partial T becomes 0
+    pva.set_lambda_coefficient("T", "T", 0, derivative={"T": Fraction(1)})
+    pva.set_lambda_coefficient("T", "T", 1, linear={"T": Fraction(2)})
+    pva.set_lambda_coefficient("T", "T", 3, scalar=Fraction(c) / Fraction(12))
     pva.central_terms[("T", "T")] = Fraction(c) / Fraction(12)
     return pva
 
@@ -343,9 +483,9 @@ def ce_differential_matrix(pva: ClassicalPVA, arity: int) -> List[List[Fraction]
     where R_+ is the span of the PVA generators (treated as a linear
     subspace of the C_2 algebra).
 
-    Only the LINEAR part of the Poisson bracket contributes at this
-    truncation: central terms contribute to R_0 = C (augmentation), not
-    to R_+, so they are dropped here.
+    Only the LINEAR part of the C_2 zero-mode Poisson bracket contributes
+    at this truncation.  Higher lambda scalar modes contribute to the
+    OPE/collision kernel, not to this CE differential on R_+.
 
     Returns:
         matrix: d[i][j] with i indexing the target (arity-1) basis and
@@ -550,19 +690,19 @@ def check_sl2_matches_closed_form(k: Fraction = Fraction(1)) -> Dict[str, Any]:
 
 
 # =========================================================================
-# 7. Koszul dual PVA: Heisenberg has opposite-sign Poisson structure
+# 7. Dual-branch scalar shadows
 # =========================================================================
 
 def pva_koszul_dual_heisenberg(k: Fraction) -> ClassicalPVA:
-    r"""Koszul dual of the Heisenberg PVA at level k.
+    r"""Finite PVA shadow of the Heisenberg dual branch at level k.
 
-    For Heisenberg, the KOSZUL DUAL PVA is another Heisenberg PVA with
-    OPPOSITE central term -k.  This gives:
+    This records the scalar transformation k -> -k on the PVA window:
 
         kappa(H_k^!)_PVA = -k   (at the PVA level)
 
-    which MATCHES kappa(H_{-k}) AS A NUMBER (AP33) but the dual PVA is
-    still a different object from H_{-k} in full conditions.
+    It is only a finite diagnostic for the Verdier/continuous dual
+    branch A^!.  It is not a construction of A^!, and it is not the
+    bar-cobar inversion Omega(B(A))=A.
 
     Complementarity at the classical level:
         kappa(H_k) + kappa(H_k^!)_PVA = k + (-k) = 0.
@@ -575,23 +715,23 @@ def pva_koszul_dual_heisenberg(k: Fraction) -> ClassicalPVA:
 
 
 def pva_koszul_dual_virasoro(c: Fraction) -> ClassicalPVA:
-    r"""Koszul dual of the Virasoro PVA at central charge c.
+    r"""Finite PVA shadow of the Virasoro dual branch at central charge c.
 
-    For Virasoro, the Koszul dual VA is Vir_{26-c}.  At the PVA (classical)
-    level, the complementarity sum is
+    At this finite classical diagnostic level, the complementarity sum is
         kappa(Vir_c) + kappa(Vir_{26-c}) = c/2 + (26-c)/2 = 13
     (NOT zero; AP24 is the record of this overclaim).
 
-    We return the Virasoro PVA at c' = 26 - c as the PVA-level dual.
+    We return the Virasoro PVA at c' = 26 - c as a scalar shadow of the
+    dual branch, not as a construction of A^!.
     """
     return virasoro_classical_pva(c=Fraction(26) - Fraction(c))
 
 
 def pva_koszul_dual_sl2(k: Fraction) -> ClassicalPVA:
-    r"""Koszul dual PVA for affine sl_2 at level k.
+    r"""Finite PVA shadow of the affine sl_2 dual branch at level k.
 
     Feigin-Frenkel: k ↦ -k - 2h^v = -k - 4 for sl_2.  At the PVA (classical)
-    level the dual is the affine sl_2 PVA at the dual level.  Complementarity:
+    diagnostic level the scalar shadow uses that dual level.  Complementarity:
         kappa(sl_2, k) + kappa(sl_2, -k-4)
             = 3(k+2)/4 + 3(-k-4+2)/4
             = 3(k+2)/4 + 3(-k-2)/4
@@ -608,22 +748,18 @@ def pva_koszul_dual_sl2(k: Fraction) -> ClassicalPVA:
             weights={"e": 1, "f": 1, "h": 1},
             c_or_k=Fraction(0),
         )
-        pva.poisson[("e", "f")] = {"h": Fraction(1)}
-        pva.poisson[("h", "e")] = {"e": Fraction(2)}
-        pva.poisson[("h", "f")] = {"f": Fraction(-2)}
-        pva.poisson[("e", "e")] = {}
-        pva.poisson[("f", "f")] = {}
-        pva.poisson[("h", "h")] = {}
-        pva.central_terms[("e", "f")] = Fraction(dual_level)
-        pva.central_terms[("h", "h")] = Fraction(2) * dual_level
+        _populate_affine_sl2_data(pva, Fraction(dual_level))
         return pva
     return affine_sl2_classical_pva(k=dual_level)
 
 
 def pva_complementarity_sum(a_name: str, k_or_c: Fraction) -> Fraction:
-    r"""Compute kappa(A) + kappa(A^!)_PVA for A in {Heisenberg, sl_2, Virasoro}.
+    r"""Compute the finite dual-branch kappa complementarity sum.
 
-    This is the PVA-level complementarity sum.  Expected:
+    This is only the scalar shadow in the PVA window.  It does not
+    construct A^!, Z_ch^der(A), or Omega(B(A)).
+
+    Expected:
         Heis      : 0
         sl_2, k   : 0
         Virasoro  : 13
@@ -637,6 +773,126 @@ def pva_complementarity_sum(a_name: str, k_or_c: Fraction) -> Fraction:
         c = Fraction(k_or_c)
         return c / Fraction(2) + (Fraction(26) - c) / Fraction(2)
     raise ValueError(f"unknown family: {a_name}")
+
+
+# =========================================================================
+# 7b. Collision kernels from divided-power lambda data
+# =========================================================================
+
+@dataclass
+class CollisionKernelTerm:
+    r"""One pole of the collision-residue kernel after d-log absorption."""
+
+    pole_order: int
+    linear: Dict[str, Fraction] = field(default_factory=dict)
+    derivative: Dict[str, Fraction] = field(default_factory=dict)
+    scalar: Fraction = Fraction(0)
+
+    def __post_init__(self) -> None:
+        self.linear = {
+            k: Fraction(v) for k, v in self.linear.items() if Fraction(v) != 0
+        }
+        self.derivative = {
+            k: Fraction(v)
+            for k, v in self.derivative.items()
+            if Fraction(v) != 0
+        }
+        self.scalar = Fraction(self.scalar)
+
+    def is_zero(self) -> bool:
+        return not self.linear and not self.derivative and self.scalar == 0
+
+
+def collision_kernel_terms(
+    pva: ClassicalPVA, a: str, b: str
+) -> Dict[int, CollisionKernelTerm]:
+    r"""Compute the finite collision-residue kernel for one generator pair.
+
+    If c_n is the divided-power lambda coefficient, the OPE mode is
+    n! c_n and has pole order n+1.  The bar d-log residue lowers the
+    pole by one, so the collision pole has order n.  The n=0 term is
+    regular after this shift and is omitted.
+
+    This is a finite-window diagnostic: it is exact for the stored
+    generator modes, but it is not a full PVA closure under all
+    derivatives and normally ordered composites.
+    """
+    out: Dict[int, CollisionKernelTerm] = {}
+    for n, coeff in pva.lambda_brackets.get((a, b), {}).items():
+        if n == 0:
+            continue
+        mode = coeff.scaled(_factorial(n))
+        if mode.is_zero():
+            continue
+        existing = out.get(n)
+        if existing is None:
+            out[n] = CollisionKernelTerm(
+                pole_order=n,
+                linear=dict(mode.linear),
+                derivative=dict(mode.derivative),
+                scalar=mode.scalar,
+            )
+            continue
+        merged_linear = dict(existing.linear)
+        for key, value in mode.linear.items():
+            merged_linear[key] = merged_linear.get(key, Fraction(0)) + value
+        merged_derivative = dict(existing.derivative)
+        for key, value in mode.derivative.items():
+            merged_derivative[key] = merged_derivative.get(key, Fraction(0)) + value
+        out[n] = CollisionKernelTerm(
+            pole_order=n,
+            linear=merged_linear,
+            derivative=merged_derivative,
+            scalar=existing.scalar + mode.scalar,
+        )
+    return {pole: term for pole, term in out.items() if not term.is_zero()}
+
+
+@dataclass
+class FiniteWindowDiagnostics:
+    """Scope report for the finite symbolic model in this module."""
+
+    pva_name: str
+    exact_c2_zero_mode_bar: bool
+    exact_stored_lambda_modes: bool
+    translation_closed: bool
+    omitted_derivative_generators: Tuple[str, ...]
+    constructed_objects: Tuple[str, ...]
+    excluded_objects: Tuple[str, ...]
+    holographic_package_entries: Tuple[str, ...]
+    modular_koszul_projections: Tuple[str, ...]
+    object_firewalls: Dict[str, str]
+
+
+def finite_window_diagnostics(pva: ClassicalPVA) -> FiniteWindowDiagnostics:
+    """Make explicit what this finite engine does and does not construct."""
+    omitted = set()
+    for bracket in pva.lambda_brackets.values():
+        for coeff in bracket.values():
+            omitted.update(f"partial {name}" for name in coeff.derivative)
+
+    return FiniteWindowDiagnostics(
+        pva_name=pva.name,
+        exact_c2_zero_mode_bar=True,
+        exact_stored_lambda_modes=True,
+        translation_closed=not omitted,
+        omitted_derivative_generators=tuple(sorted(omitted)),
+        constructed_objects=(
+            "C_2 zero-mode Poisson bracket on R_A",
+            "CE bar differential on the finite generator window",
+            "stored divided-power lambda coefficients",
+            "finite collision-residue kernel from stored modes",
+        ),
+        excluded_objects=(
+            "Omega(B(A))=A bar-cobar inversion",
+            "A^! Verdier/continuous dual branch",
+            "Z_ch^der(A)=ChirHoch^*(A,A) Hochschild bulk centre",
+            "assembled holographic package",
+        ),
+        holographic_package_entries=HOLOGRAPHIC_PACKAGE_ENTRIES,
+        modular_koszul_projections=MODULAR_KOSZUL_PROJECTIONS,
+        object_firewalls=dict(OBJECT_FIREWALLS),
+    )
 
 
 # =========================================================================
@@ -693,7 +949,11 @@ def sl2_integrable_associated_variety(k_int: int) -> AssociatedVariety:
 
 
 def virasoro_associated_variety(c: Fraction) -> AssociatedVariety:
-    """X_{Vir_c}: generically a point (Vir has one generator, partial T is in C_2)."""
+    """Universal Virasoro C_2 snapshot: one T-generator, hence A^1.
+
+    C_2-cofinite simple quotients can have point associated variety; this
+    finite-window universal row does not assert that quotient collapse.
+    """
     return AssociatedVariety(
         pva_name=f"Vir_c={c}",
         krull_dimension=1,  # single generator T modulo partial T
@@ -762,25 +1022,24 @@ def li_bar_E1_page(pva: ClassicalPVA, max_arity: int = 3) -> LiBarE1:
 
 
 # =========================================================================
-# 11. Quantum correction: scalar kappa trace from central Poisson terms
+# 11. Quantum correction: scalar kappa trace from lambda modes
 # =========================================================================
 
 def pva_scalar_kappa(pva: ClassicalPVA) -> Fraction:
-    r"""Extract the scalar kappa from the PVA central term table.
+    r"""Extract scalar kappa from the divided-power lambda data.
 
-    For Heisenberg: kappa = central_term(phi, phi) = k.
-    For sl_2: kappa = (3/4)(k + 2), where central_term(e, f) = k.
-    For Virasoro: kappa = c/2, where central_term(T, T) = c/12.
+    For Heisenberg: kappa = c_1(phi, phi) = k.
+    For sl_2: kappa = (3/4)(k + 2), where c_1(e, f) = k.
+    For Virasoro: kappa = c/2, where c_3(T, T) = c/12.
     """
     if pva.name.startswith("Heis"):
-        return pva.central_terms.get(("phi", "phi"), Fraction(0))
+        return pva.lambda_coefficient("phi", "phi", 1).scalar
     if pva.name.startswith("sl2") or pva.name.startswith("Affine sl_2"):
-        k = pva.central_terms.get(("e", "f"), Fraction(0))
+        k = pva.lambda_coefficient("e", "f", 1).scalar
         return Fraction(3, 4) * (k + Fraction(2))
     if pva.name.startswith("Vir"):
-        c12 = pva.central_terms.get(("T", "T"), Fraction(0))
-        c = Fraction(12) * c12
-        return c / Fraction(2)
+        c3 = pva.lambda_coefficient("T", "T", 3).scalar
+        return Fraction(6) * c3
     return Fraction(0)
 
 
@@ -890,28 +1149,65 @@ def verify_jacobi_identity(pva: ClassicalPVA) -> Dict[str, Any]:
     }
 
 
+def verify_ce_differential_squared_zero(
+    pva: ClassicalPVA, max_arity: int = 3
+) -> Dict[str, Any]:
+    r"""Verify d_CE^2=0 on the finite exterior window.
+
+    This is the bar-complex counterpart of the Jacobi identity for the
+    zero-mode Lie-Poisson bracket.  It is exact for the arities present
+    in the finite generator span.
+    """
+    failures: List[Tuple[int, List[List[Fraction]]]] = []
+    for arity in range(2, max_arity + 1):
+        d_upper = ce_differential_matrix(pva, arity)
+        d_lower = ce_differential_matrix(pva, arity - 1)
+        if not d_upper or not d_lower:
+            continue
+        rows = len(d_lower)
+        mid = len(d_upper)
+        cols = len(d_upper[0]) if d_upper else 0
+        comp = [
+            [
+                sum(d_lower[i][m] * d_upper[m][j] for m in range(mid))
+                for j in range(cols)
+            ]
+            for i in range(rows)
+        ]
+        if any(entry != 0 for row in comp for entry in row):
+            failures.append((arity, comp))
+    return {
+        'pva_name': pva.name,
+        'ok': not failures,
+        'failure_count': len(failures),
+        'failures': failures[:5],
+    }
+
+
 # =========================================================================
 # 14. Anti-symmetry of Poisson bracket verification
 # =========================================================================
 
 def verify_antisymmetry(pva: ClassicalPVA) -> Dict[str, Any]:
-    """For every ordered pair (x, y) with x != y, verify {y, x} = -{x, y}."""
+    """Verify C_2 zero-mode antisymmetry, including {x,x}=0."""
     gens = pva.generators
-    failures: List[Tuple[str, str]] = []
+    failures: List[Tuple[str, str, str]] = []
     for x in gens:
         for y in gens:
-            if x == y:
-                continue
             lin_xy, _ = pva.poisson_bracket(x, y)
             lin_yx, _ = pva.poisson_bracket(y, x)
+            if x == y and lin_xy:
+                failures.append((x, y, "self bracket nonzero"))
+                continue
             neg_xy = {k: -v for k, v in lin_xy.items()}
             # Normalize zero entries
             neg_xy = {k: v for k, v in neg_xy.items() if v != 0}
             lin_yx_clean = {k: v for k, v in lin_yx.items() if v != 0}
             if neg_xy != lin_yx_clean:
-                failures.append((x, y))
+                failures.append((x, y, "reversed bracket mismatch"))
     return {
         'pva_name': pva.name,
         'ok': not failures,
         'failure_count': len(failures),
+        'failures': failures[:5],
     }

@@ -79,6 +79,14 @@ quasi-isomorphism.
 
 \begin{theorem}[PBW--Slodowy collapse; \ClaimStatusProvedHere]
 \label{thm:pbw-slodowy-collapse}
+\textup{[}Type signature:
+$(\mathrm{quadrant}=\mathrm{Open}\cap\mathrm{Chain},
+\mathrm{presentation}=\mathrm{chain\text{-}level},
+\mathrm{level}=1\leftrightarrow 2,
+\mathrm{hypothesis\ package}=
+\mathrm{exhaustive\ separated\ multiplicative\ filtration};
+\mathrm{finite\text{-}dimensional\ weight\ slices};
+\mathrm{Slodowy\text{-}slice\ free\ differential\ polynomial\ }\operatorname{gr}_F A)$\textup{]}
 Let $A$ be a filtered chiral algebra such that:
 \begin{enumerate}[label=(\roman*)]
 \item the filtration is exhaustive, separated, and multiplicative;
@@ -138,6 +146,13 @@ cobar reconstruction. This is exactly completed Koszulity.
 
 \begin{corollary}[Principal affine \texorpdfstring{$W$}{W}-algebras are completed Koszul; \ClaimStatusProvedHere]
 \label{cor:principal-w-completed-koszul}
+\textup{[}Type signature:
+$(\mathrm{Open}\cap\mathrm{Chain},\mathrm{chain\text{-}level},
+\mathrm{level}=1\leftrightarrow 2,
+\mathrm{hypothesis\ package}=\mathrm{simple\ }\fg;
+f_{\mathrm{prin}}\mathrm{\ principal\ nilpotent};
+k\ne -h^\vee;
+\mathrm{Arakawa\ Kazhdan\text{-}filtration\ theorem\ for\ principal\ DS})$\textup{]}
 Let $\mathfrak g$ be simple and let $f_{\mathrm{prin}}$ be principal. Assume
 $k\neq -h^\vee$. Then the universal affine $W$-algebra
 $\mathcal W^k(\mathfrak g,f_{\mathrm{prin}})$ is completed Koszul.
@@ -207,7 +222,7 @@ The non-principal duality problem splits into two axes:
 \;+\;
 \text{identification of dual orbit/level}.
 \]
-The first axis is now substantially theorematic in type~$A$ via
+The first axis is now proved on a substantial type~$A$ corridor via
 the hook-type corridor; the second remains the true frontier.
 \end{principle}
 
@@ -228,6 +243,16 @@ of all vertices reachable from $S$ by paths in $\Gamma_N$.
 \begin{theorem}[Hook-type transport corridor under DS--bar compatibility; \ClaimStatusConditional]
 \label{thm:hook-transport-corridor}
 \index{W-algebra@$\mathcal{W}$-algebra!hook transport corridor}
+\textup{[}Type signature:
+$(\mathrm{Open}\cap\mathrm{Cat},\mathrm{factorisation},
+\mathrm{level}=1\leftrightarrow 2,
+\mathrm{hypothesis\ package}=\mathrm{generic\ level\ }k;
+\mathrm{Fehily\ inverse\text{-}Hamiltonian\ reduction\ for\ hooks};
+\mathrm{Creutzig\text{--}Linshaw\text{--}Nakatsuka\text{--}Sato\ \textup{(}CLNS\textup{)} hook\ duality\ at\ generic\ }k;
+\mathrm{Genra\ reduction\ by\ stages\ at\ admissible\ }k;
+\mathrm{Butson\text{--}Nair\ geometric\ inverse\ Hamiltonian\ reduction};
+\mathrm{KSDual\ sublocus\ when\ }\eta=\eta^t;
+\mathrm{Vol\ III\ }(\Sigma_{d-1},C)\text{-specialisation\ for\ stage\text{-}2\ shadow\ at\ }d=3,\ C\ \mathrm{the\ Koszul\ comparison\ curve})$\textup{]}
 Assume that, at generic level, bar--cobar/Koszul duality intertwines
 with the reduction and inverse-reduction functors along the hook
 network in type~$A$. Then for every hook partition
@@ -237,6 +262,12 @@ $\eta = (N-r, 1^r)$ in $\mathfrak{sl}_N$:
 \;\simeq\;
 \mathcal{W}^{-k-2N}(\mathfrak{sl}_N, f_{\eta^t}).
 \]
+The self-transpose hook partitions ($\eta=\eta^t$, e.g.\ $(2,1)$ in
+$\mathfrak{sl}_3$) lie in the KSDual sublocus
+\textup{(}Convention~\textup{\ref{conv:master-type-signature}};
+$\mathbb{Z}/2$-fixed locus of $\cA\mapsto\cA^!$\textup{)}, where
+the displayed equivalence is a strict involution rather than an
+adjunction with comparison map.
 \end{theorem}
 
 \begin{proof}
@@ -532,14 +563,34 @@ resolution, $\mathfrak D(A)$ is a strict dg model whose transferred
 $A_\infty$-minimal model computes the completed dual of $A$.
 \end{conjecture}
 
-\begin{remark}[Evidence]
-Apply the completed reduced bar construction to the screening resolution of
-$A$ inside $B\otimes \mathcal F$. Dualization turns the screening differential
-into the displayed dg differential on
-$B^!\widehat\otimes \mathcal F^! \widehat\otimes \Lambda(\eta_1,\dots,\eta_r)$.
-The free-field factor is strict, so the only higher operations arise from the
-screening transfer itself. Standard homological perturbation then identifies the
-minimal transferred model with the completed dual of $A$.
+\begin{remark}[Screening transfer criterion]
+The conjecture is equivalent to the following chain-level packet.
+First, the screening resolution
+\[
+A\longrightarrow (B\otimes\mathcal F,d_{\mathrm{scr}})
+\]
+must be exact in the completed category used for the reduced bar
+construction. Second, the completed bar construction must commute with
+the screening fibre, so that the bar-dual coalgebra of~$A$ is the
+homology of the completed fibre of
+\[
+\barB(B\otimes\mathcal F)
+\xrightarrow{\;\barB(S_1,\ldots,S_r)\;}
+\bigoplus_i\barB(B\otimes\mathcal F).
+\]
+Third, continuous Verdier duality must send this fibre to the displayed
+dg algebra
+\[
+B^!\widehat\otimes \mathcal F^!
+\widehat\otimes \Lambda(\eta_1,\ldots,\eta_r),
+\qquad
+d=d_{B^!}+d_{\mathcal F^!}+\sum_i\eta_iS_i^\vee.
+\]
+Under these three hypotheses, homological perturbation transfers this
+strict dg algebra to a minimal $A_\infty$ model for the completed
+dual. The higher multiplications are then precisely the Massey
+products created by the screening differential; the free-field factor
+contributes no additional higher operations.
 \end{remark}
 
 This construction is the homological content of inverse reduction: higher
@@ -886,12 +937,24 @@ All remaining OPEs are linear or quadratic in the generators.
 
 \begin{theorem}[Bershadsky--Polyakov is strict in canonical normal form; \ClaimStatusProvedHere]
 \label{thm:bp-strict}
+\textup{[}Type signature:
+$(\mathrm{Open}\cap\mathrm{Chain},\mathrm{chain\text{-}level},
+\mathrm{level}=1\leftrightarrow 2,
+\mathrm{hypothesis\ package}=k\ne -3;
+\mathrm{Feigin\text{--}Semikhatov\ realisation};
+\mathrm{canonical\ normal\ form\ at\ generators\ }J,G^\pm,T)$\textup{]}
 For every $k\neq -3$, the canonical normalized completed dual of the
 Bershadsky--Polyakov algebra $\mathcal W_3^{(2)}(k)$ has
 \[
 d_r=0 \qquad (r\geq 3).
 \]
-Equivalently, its canonical homotopy degree is $2$.
+Equivalently, its canonical homotopy degree is $2$. The canonical
+$d=2$ statement is at the chosen normal form; the minimal-model
+transferred dual is conjectured to inherit the same maximal nonzero
+degree under
+Conjecture~\textup{\ref{conj:hook-canonical-minimal}}, but
+``quadratic generator OPE'' alone does not entail equivalence with
+any all-loop quantum HT theory.
 \end{theorem}
 
 \begin{proof}
@@ -1003,14 +1066,24 @@ for all non-trivial nilpotents.
 \index{Bershadsky--Polyakov!Koszul self-duality|textbf}
 \index{non-principal W-algebra!self-dual}
 \index{hook-type duality!self-transpose}
+\textup{[}Type signature:
+$(\mathrm{Open}\cap\mathrm{Cat},\mathrm{factorisation},
+\mathrm{level}=1\leftrightarrow 2,
+\mathrm{hypothesis\ package}=k\ne -3;
+\mathrm{subregular\ DS/bar\ transport};
+\mathrm{KSDual\ sublocus\ since\ }(2,1)=(2,1)^t;
+\mathrm{Prochazka\text{--}closed\ OPE\ for\ }\mathrm{BP};
+\mathrm{Yamada\ analytic\ continuation\ at\ generic\ }k;
+\mathrm{modularity\ here\ refers\ to\ the\ open\text{-}category\ trace\ +\ clutching\ on\ }(X,D,\tau),\ \mathrm{not\ a\ closed\text{-}algebra\ property\ of\ }\mathrm{BP};
+\mathrm{Vol\ III\ }(\Sigma_2,C)\text{-specialisation\ at\ }d=3)$\textup{]}
 For $k \neq -3$ \textup{(}away from the critical level\textup{)}, assume the subregular DS/bar transport statement. Then the Bershadsky--Polyakov algebra
 $\mathcal W_k(\mathfrak{sl}_3, f_{\mathrm{sub}})$, the subregular
 non-principal $\mathcal W$-algebra of $\mathfrak{sl}_3$, has
 same-family Koszul companion under the hook-type transport duality.
 The hook partition
-$(2,1)$ is self-transpose, $(2,1)^t = (2,1)$, so its Koszul dual is
-again Bershadsky--Polyakov at the Feigin--Frenkel dual level
-$k^\vee = -k - 6$. In the
+$(2,1)$ is self-transpose, $(2,1)^t = (2,1)$, so $\mathrm{BP}$ lies in
+the KSDual sublocus and its Koszul dual is again Bershadsky--Polyakov
+at the Feigin--Frenkel dual level $k^\vee = -k - 6$. In the
 Kac--Roan--Wakimoto quadratic-numerator normalization the resulting
 invariants are
 \[
@@ -1081,7 +1154,10 @@ is cross-checked against the independent engines
 \subsection{\texorpdfstring{$\mathcal W_4^{(2)}$}{W4(2)} and the first cubic obstruction}
 
 For $n=4$, Feigin--Semikhatov write
-\cite[(A.4.2)]{FeiginSemikhatov}
+\cite[(A.4.2)]{FeiginSemikhatov} (the cubic $H^3$ term below is genuine
+in the canonical normal form; minimal-model survival of canonical
+degree~$3$ is conditional on the Prochazka--Rapcak finite-spin
+$W_n^{(2)}$ closure and the Yamada finite presentation).
 \begin{align}
 E(z)F(w)
 &=
@@ -1110,12 +1186,26 @@ The simple pole contains an explicit cubic term in $H$.
 
 \begin{theorem}[\texorpdfstring{$\mathcal W_4^{(2)}$}{W4(2)} has canonical degree $3$; \ClaimStatusProvedHere]
 \label{thm:w4-cubic}
+\textup{[}Type signature:
+$(\mathrm{Open}\cap\mathrm{Chain},\mathrm{chain\text{-}level},
+\mathrm{level}=1\leftrightarrow 2,
+\mathrm{hypothesis\ package}=(k+2)(11k+32)\ne 0;
+\mathrm{Feigin\text{--}Semikhatov\ canonical\ normal\ form};
+\mathrm{Yamada\ generic\text{-}level\ finite\ presentation};
+\mathrm{Penkava\text{--}Vanhaecke\ PVA\text{-}to\text{-}quantum\ bridge\ for\ minimal\text{-}model\ passage};
+\mathrm{statement\ records\ a\ canonical\text{-}normal\text{-}form\ degree\text{-}3\ obstruction,\ not\ the\ full\ }A_\infty\text{-}\mathrm{minimal\ degree})$\textup{]}
 For every $k$ with $(k+2)(11k+32)\neq 0$, the canonical normalized completed
 dual of $\mathcal W_4^{(2)}(k)$ has
 \[
 d_3\neq 0.
 \]
 In particular, its canonical homotopy degree is at least $3$.
+The canonical-degree statement is at the chosen Feigin--Semikhatov
+normal form; promotion to a minimal-model statement
+\textup{(}Conjecture~\textup{\ref{conj:hook-canonical-minimal}}\textup{)}
+requires the named PBW endpoint package
+\textup{(}Yamada finite presentation;
+Penkava--Vanhaecke PVA-to-quantum bridge\textup{)}.
 \end{theorem}
 
 \begin{proof}
@@ -1241,13 +1331,23 @@ C_{6,5}
 
 \begin{theorem}[Unbounded canonical degree in the subregular line; \ClaimStatusProvedHere]
 \label{thm:unbounded-canonical-degree}
+\textup{[}Type signature:
+$(\mathrm{Open}\cap\mathrm{Chain},\mathrm{chain\text{-}level},
+\mathrm{level}=1\leftrightarrow 2,
+\mathrm{hypothesis\ package}=\mathrm{generic\ level\ }k;
+\mathrm{Feigin\text{--}Semikhatov\ centered\ Appell\ normal\ form};
+\mathrm{Bell\text{-}recursion\ for\ raw\ singular\ coefficients};
+\mathrm{Prochazka\text{--}Rapcak\ }W_n^{(2)}\mathrm{\ closure\ for\ minimal\text{-}model\ passage};
+\mathrm{KZ\ analytic\ SDR\ for\ classical\text{-}to\text{-}quantum\ continuation})$\textup{]}
 For generic level $k$ and every $n\geq 3$, the canonical normalized completed
 dual of $\mathcal W_n^{(2)}(k)$ has nonzero Taylor coefficients in all degrees
 \[
 2\leq r\leq n-1.
 \]
 Equivalently, the canonical homotopy degree of the subregular family is
-unbounded as $n\to\infty$.
+unbounded as $n\to\infty$. The unboundedness statement is at the
+canonical-normal-form level; passage to the minimal-model transferred
+dual is conjectural \textup{(}Conjecture~\textup{\ref{conj:minimal-degree-subregular}}\textup{)}.
 \end{theorem}
 
 \begin{proof}
@@ -1438,7 +1538,7 @@ again with uniquely determined rational functions $\beta_b(n,k)$.
 \begin{remark}[Explicit expansion versus exact determination]
 The complete rational expressions for the coefficients
 $\alpha_b(n,k)$ and $\beta_b(n,k)$ are lengthy. For repository purposes the
-theorematic datum is the exact Bell recursion together with the triangular
+proved datum is the exact Bell recursion together with the triangular
 projection mechanism. This is stronger than a page-filling coefficient dump:
 it is a first-principles construction of the full coefficient packets.
 \end{remark}
@@ -1487,7 +1587,7 @@ normal ordering.
 
 \section{Outlook}
 
-There are three obvious next steps.
+Three concrete problems remain.
 
 \begin{enumerate}[label=(\roman*)]
 \item Carry the triangular projection of
@@ -1522,6 +1622,15 @@ partitions?
 \label{prop:nilpotent-transport-typeA}
 \index{nilpotent transport!type A}
 \index{reduction graph!transport closure}
+\textup{[}Type signature:
+$(\mathrm{Open}\cap\mathrm{Cat},\mathrm{factorisation},
+\mathrm{level}=1,
+\mathrm{hypothesis\ package}=\mathfrak{sl}_N\mathrm{\ for\ }2\le N\le 8;
+\mathrm{generic\ level};
+\mathrm{Fehily\ \textup{(}hook\textup{)} +\ Creutzig\text{--}Linshaw\text{--}Nakatsuka\text{--}Sato\ \textup{(CLNS)}\ +\ }
+\mathrm{Creutzig\text{--}Fasquel\text{--}Linshaw\text{--}Nakatsuka\ \textup{(CFLN)}};
+\mathrm{Genra\text{--}Juillard\ stages};
+\mathrm{Butson\text{--}Nair\ inverse\ Hamiltonian\ reduction})$\textup{]}
 For $\mathfrak{sl}_N$ with $N = 2, \ldots, 8$, the transport-closure of
 the hook-type partitions $(N{-}r, 1^r)$, $0 \leq r \leq N{-}1$,
 equals all of $\operatorname{Par}(N)$ inside the reduction

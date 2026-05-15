@@ -1,90 +1,39 @@
-r"""Complete resurgence analysis of the shadow partition function.
+r"""Scalar genus diagnostics for the shadow partition function.
 
-Extends the existing resurgence engines (resurgence_frontier_engine.py,
-resurgence_stokes_engine.py) with the GENUS-DIRECTION resurgence of the
-shadow partition function Z^sh(A, hbar) = sum_{g>=1} F_g(A) hbar^{2g}.
+This module works only in the scalar Faber--Pandharipande lane
 
-The existing engines analyze the ARITY-DIRECTION resurgence of the shadow
-tower G(t) = sum_{r>=2} S_r t^r.  This module analyzes the complementary
-direction: the genus expansion viewed as a formal power series in hbar.
+    Z^sh_A(hbar) = sum_{g>=1} F_g(A) hbar^{2g},
+    F_g(A) = kappa(A) lambda_g^FP.
 
-MATHEMATICAL FRAMEWORK
-======================
+Certified exact facts:
 
-1. BOREL TRANSFORM (genus direction):
+* ``lambda_g^FP`` is the Faber--Pandharipande number
+  ``((2**(2*g-1)-1)/2**(2*g-1))*abs(B_{2*g})/(2*g)!``.
+* The scalar generating function is
+  ``kappa*((hbar/2)/sin(hbar/2) - 1)``.
+* The scalar meromorphic continuation has simple poles at
+  ``hbar = 2*pi*n`` with residue ``kappa*(-1)**n*2*pi*n``.
+* The scalar power series has radius ``2*pi`` in ``hbar`` and
+  ``(2*pi)**2`` in ``u = hbar**2``.
 
-   The shadow partition function at the scalar level is
+Certified negative fact:
 
-       Z^sh(hbar) = sum_{g>=1} F_g hbar^{2g}
+* The factorial-divided Borel transforms implemented here are entire.
+  The A-hat poles are singularities of the scalar closed form, not
+  singularities detected from these Borel transforms.
 
-   where F_g = kappa * lambda_g^FP.  The Borel transform in the variable
-   u = hbar^2 is:
+Consequently, Stokes constants, median summation, trans-series sectors,
+Peacock tables, and non-perturbative completions returned by this file
+are diagnostics or analytic-resurgence hypotheses.  They are not
+certificates of Borel summability, unique analytic continuation,
+BTZ/JT recovery, all-genus Virasoro partition theorems, or
+multiweight partition theorems.
 
-       B[Z](xi) = sum_{g>=1} F_g xi^{g-1} / Gamma(g)
-
-   Equivalently, in the variable zeta = hbar (as specified in the task):
-
-       B[F](zeta) = sum_{g>=1} F_g zeta^{2g-1} / Gamma(2g)
-
-   For Heisenberg (F_g = kappa * B_{2g} / (2g(2g-2)!)):
-
-       B_{2g} ~ (-1)^{g+1} 2(2g)! / (2pi)^{2g}
-
-   so F_g ~ 2 kappa / (2pi)^{2g} and
-
-       B[F](zeta) ~ kappa * sum 2/(2pi)^{2g} * zeta^{2g-1} / Gamma(2g)
-
-   The Borel series has FINITE radius of convergence 2*pi in zeta,
-   with singularities at zeta = +/- 2*pi*i*n (n = 1, 2, 3, ...).
-
-2. BOREL SINGULARITIES:
-
-   The closed form Z^sh = kappa * ((hbar/2)/sin(hbar/2) - 1) has poles
-   at hbar = 2*pi*n.  The Borel transform B[Z](xi) in u = hbar^2 has
-   singularities corresponding to these poles.  In the zeta = hbar plane,
-   the singularities are at zeta = +/- 2*pi*n*i.
-
-   Instanton actions: A_n = 2*pi*n  (for n = 1, 2, 3, ...).
-
-3. STOKES AUTOMORPHISM:
-
-   As arg(hbar) crosses a Stokes ray, the lateral Borel sums jump.
-   The Stokes multiplier S_{2*pi*n} at the n-th singularity encodes
-   the jump.  From the residue of (hbar/2)/sin(hbar/2) at hbar = 2*pi*n:
-
-       Res = (-1)^n * 2*pi*n
-
-   The Stokes multiplier is S_1 = 2*pi*i * Res = -4*pi^2*i (for n=1).
-
-4. TRANS-SERIES:
-
-   F^full(hbar) = sum_{n>=0} sigma^n exp(-n*A/hbar^2) * sum_g F_g^{(n)} hbar^{2g}
-
-   where A = (2*pi)^2 is the instanton action (squared, since the series
-   is in hbar^2).
-
-5. MEDIAN SUMMATION:
-
-   F^med(hbar) = (1/2)(S_+ + S_-) where S_+/- are lateral Borel sums.
-
-6. LARGE-ORDER RELATIONS:
-
-   F_g ~ sum_omega S_omega/(2*pi*i) * A_omega^{-2g} * Gamma(2g) * (1 + ...)
-
-   For Heisenberg: Bernoulli asymptotics should match.
-
-7. PEACOCK PATTERN (Aniceto-Schiappa-Vonk):
-
-   Multi-instanton Stokes constants S_{n,m}.
-
-8. NON-PERTURBATIVE FREE ENERGY from Koszul complementarity:
-
-   F^np(hbar) = F^pert(A, hbar) + exp(-A_inst/hbar^2) * F^pert(A!, hbar') + ...
-
-Manuscript references:
-    prop:genus-expansion-convergence (genus_expansions.tex)
-    thm:shadow-double-convergence (higher_genus_modular_koszul.tex)
-    thm:mc2-bar-intrinsic (higher_genus_modular_koszul.tex)
+Local sources:
+    chapters/connections/concordance.tex:6473-6683
+    chapters/connections/concordance.tex:10065-10074
+    chapters/examples/landscape_census.tex:142-185, 834-881
+    compute/lib/shadow_pf_convergence.py
 """
 
 from __future__ import annotations
@@ -92,6 +41,7 @@ from __future__ import annotations
 import cmath
 import math
 from dataclasses import dataclass, field
+from functools import lru_cache
 from fractions import Fraction
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
@@ -112,6 +62,29 @@ TWO_PI = 2.0 * PI
 TWO_PI_SQ = TWO_PI ** 2
 FOUR_PI_SQ = (2.0 * PI) ** 2
 
+CERTIFIED_EXACT = 'certified_exact'
+FINITE_WINDOW_DIAGNOSTIC = 'finite_window_diagnostic'
+ASYMPTOTIC_ESTIMATE = 'asymptotic_estimate'
+BOREL_TRANSFORM_DIAGNOSTIC = 'borel_transform_entire_diagnostic'
+ANALYTIC_RESURGENCE_HYPOTHESIS = 'analytic_resurgence_hypothesis'
+
+KERNEL_NORMALIZATIONS = {
+    # Local sources: CLAUDE.md:280-291; landscape_census.tex:180-185, 834-881.
+    'affine_raw_collision': 'k*Omega_tr/z',
+    'affine_KZ': 'Omega/((k+h_vee)z)',
+    'heisenberg': 'k/z',
+    'virasoro': '(c/2)/z^3 + 2T/z',
+}
+
+OBJECT_FIREWALLS = {
+    'A': 'chiral algebra',
+    'B(A)': 'bar coalgebra T^c(s^{-1}Abar)',
+    'A^i': 'bar cohomology dual coalgebra H^*B(A)',
+    'A^!': 'Verdier/continuous-linear dual algebra branch',
+    'Z_ch^der(A)': 'derived centre/bulk Hochschild branch',
+    'bar_cobar': 'Omega(B(A))=A is inversion, not Koszul duality',
+}
+
 
 # =====================================================================
 # Section 0: Algebra data
@@ -125,7 +98,7 @@ class AlgebraData:
     name: human-readable identifier
     c: central charge (if applicable)
     family: 'Heisenberg', 'Virasoro', 'Affine', 'W3', etc.
-    kappa_dual: kappa(A!) for Koszul dual
+    kappa_dual: scalar kappa on the Verdier/continuous-linear dual branch A!
     """
     name: str
     kappa: float
@@ -141,8 +114,7 @@ def heisenberg_algebra(rank: int = 1, level: float = 1.0) -> AlgebraData:
     For rank-n at level k: kappa = n * k (additive over rank,
     linear in level).  Central charge c = n (rank-independent of level).
 
-    Koszul dual: H_k^! has kappa = -n*k (kappa + kappa' = 0 for
-    Heisenberg, AP24 safe).
+    The scalar Verdier-dual branch has kappa = -n*k.
     """
     kappa = float(rank) * float(level)
     return AlgebraData(
@@ -158,7 +130,8 @@ def virasoro_algebra(c_val: float) -> AlgebraData:
     """Virasoro at central charge c.
 
     kappa(Vir_c) = c/2.
-    Koszul dual: Vir_{26-c}, so kappa' = (26-c)/2.
+    The scalar Verdier-dual branch has central charge 26-c, so
+    kappa' = (26-c)/2.
     """
     kappa = c_val / 2.0
     kappa_dual = (26.0 - c_val) / 2.0
@@ -175,7 +148,8 @@ def affine_sl2_algebra(k: float) -> AlgebraData:
     """Affine sl_2 at level k.
 
     kappa = dim(g) * (k + h^v) / (2 h^v) = 3*(k+2)/4 for sl_2.
-    Koszul dual: k' = -k - 2h^v = -k - 4, kappa' = 3*(-k-4+2)/4 = 3*(-k-2)/4 = -kappa.
+    The scalar dual-level branch uses k' = -k - 2h^v = -k - 4, hence
+    kappa' = 3*(-k-4+2)/4 = -kappa.
     """
     kappa = 3.0 * (k + 2.0) / 4.0
     kappa_dual = -kappa
@@ -204,27 +178,38 @@ def _bernoulli_number(n: int) -> float:
         return float(sym_bernoulli(n))
 
 
+@lru_cache(maxsize=None)
+def bernoulli_number_exact(n: int) -> Fraction:
+    """Exact Bernoulli number B_n with B_1 = -1/2."""
+    if n < 0:
+        raise ValueError("Bernoulli index must be nonnegative")
+    values = [Fraction(1)]
+    for m in range(1, n + 1):
+        total = sum(Fraction(math.comb(m + 1, k)) * values[k]
+                    for k in range(m))
+        values.append(-total / Fraction(m + 1))
+    return values[n]
+
+
+@lru_cache(maxsize=None)
+def lambda_fp_exact(g: int) -> Fraction:
+    """Exact Faber--Pandharipande number lambda_g^FP."""
+    if g < 1:
+        return Fraction(0)
+    prefac = Fraction(2 ** (2 * g - 1) - 1, 2 ** (2 * g - 1))
+    return prefac * abs(bernoulli_number_exact(2 * g)) / math.factorial(2 * g)
+
+
 def lambda_fp(g: int) -> float:
     """Faber-Pandharipande intersection number lambda_g^FP.
 
     lambda_g = (2^{2g-1} - 1) / 2^{2g-1} * |B_{2g}| / (2g)!
 
     Generating function: sum_{g>=1} lambda_g x^{2g} = (x/2)/sin(x/2) - 1.
-
-    Uses mpmath for large g to avoid float overflow in (2g)!.
     """
     if g < 1:
         return 0.0
-    try:
-        import mpmath
-        B2g = abs(mpmath.bernoulli(2 * g))
-        prefac = (mpmath.mpf(2) ** (2 * g - 1) - 1) / mpmath.mpf(2) ** (2 * g - 1)
-        return float(prefac * B2g / mpmath.factorial(2 * g))
-    except ImportError:
-        # Fallback: may overflow for large g
-        B2g = abs(_bernoulli_number(2 * g))
-        prefac = (2 ** (2 * g - 1) - 1) / (2 ** (2 * g - 1))
-        return prefac * B2g / math.factorial(2 * g)
+    return float(lambda_fp_exact(g))
 
 
 def F_g_scalar(kappa: float, g: int) -> float:
@@ -243,14 +228,15 @@ def F_g_array(kappa: float, g_max: int) -> List[float]:
 
 def borel_transform_genus(kappa: float, zeta: complex,
                           g_max: int = 100) -> complex:
-    r"""Borel transform of the shadow partition function (genus series).
+    r"""Factorial-divided diagnostic transform in the hbar variable.
 
     B[F](zeta) = sum_{g>=1} F_g * zeta^{2g-1} / Gamma(2g)
 
     where F_g = kappa * lambda_g^FP.
 
-    The Gamma(2g) = (2g-1)! denominates the factorial growth of B_{2g},
-    giving the Borel transform finite radius of convergence.
+    Since lambda_g^FP has geometric, not factorial, growth, the
+    additional Gamma(2g) divisor makes this transform entire.  It does
+    not certify Borel singularities or Stokes jumps.
 
     Parameters
     ----------
@@ -294,12 +280,13 @@ def borel_coefficients_genus(kappa: float, g_max: int = 50
 
 def borel_transform_u_plane(kappa: float, xi: complex,
                             g_max: int = 100) -> complex:
-    r"""Borel transform in the u = hbar^2 variable.
+    r"""Factorial-divided diagnostic transform in u = hbar^2.
 
     B_u[Z](xi) = sum_{g>=1} F_g * xi^{g-1} / Gamma(g)
 
-    This is the natural Borel transform for a series in u = hbar^2.
-    Singularities at xi = (2*pi*n)^2 = 4*pi^2*n^2.
+    This entire transform is useful as a numerical diagnostic.  The
+    poles at xi = (2*pi*n)^2 belong to the scalar closed form in the
+    u-plane, not to this factorial-divided transform.
     """
     xi = complex(xi)
     result = 0.0 + 0.0j
@@ -314,20 +301,27 @@ def borel_transform_u_plane(kappa: float, xi: complex,
 
 
 # =====================================================================
-# Section 3: Borel singularity analysis
+# Section 3: Scalar poles and Borel diagnostics
 # =====================================================================
 
+def scalar_genus_radius_hbar() -> float:
+    r"""Exact radius of the scalar genus series in hbar."""
+    return TWO_PI
+
+
+def scalar_genus_radius_u() -> float:
+    r"""Exact radius of the scalar genus series in u = hbar^2."""
+    return FOUR_PI_SQ
+
 def borel_singularities_genus(n_max: int = 5) -> List[Dict[str, Any]]:
-    r"""Singularities of the Borel transform (genus direction).
+    r"""Poles of the scalar A-hat closed form.
 
     The closed form Z^sh = kappa * ((hbar/2)/sin(hbar/2) - 1) has
     poles at hbar = 2*pi*n (n = +/-1, +/-2, ...).
 
-    In the Borel zeta-plane, these correspond to singularities at
-    zeta = 2*pi*n (on the real axis), since the Borel transform
-    inherits the pole structure of the resummed function.
-
-    In the u-plane (u = hbar^2), singularities at u = (2*pi*n)^2.
+    This compatibility function keeps the historical name, but the
+    returned points are scalar meromorphic singularities.  The
+    factorial-divided Borel transforms in this module are entire.
 
     Returns list of singularity data.
     """
@@ -342,25 +336,26 @@ def borel_singularities_genus(n_max: int = 5) -> List[Dict[str, Any]]:
             'instanton_action_u': A_n ** 2,
             'type': 'simple_pole',
             'residue_of_ahat': (-1) ** n * TWO_PI * n,
+            'object': 'scalar_ahat_closed_form',
+            'certification': CERTIFIED_EXACT,
+            'borel_transform_singularity': False,
         })
     return sings
 
 
 def borel_radius_genus() -> float:
-    r"""Radius of convergence of the Borel transform (genus direction).
+    r"""Radius of the factorial-divided Borel transform.
 
-    The Borel transform B[F](zeta) has singularities at zeta = 2*pi*n.
-    The radius of convergence is the distance to the nearest singularity:
-    R_Borel = 2*pi.
-
-    In the u-plane: R_Borel = (2*pi)^2 = 4*pi^2.
+    The transform is entire, so the radius is infinite.  Use
+    scalar_genus_radius_hbar() for the exact 2*pi radius of the scalar
+    A-hat power series.
     """
-    return TWO_PI
+    return math.inf
 
 
 def verify_borel_radius_from_coefficients(kappa: float, g_max: int = 50
                                           ) -> Dict[str, Any]:
-    r"""Verify the convergence radius of the ORIGINAL genus series in u = hbar^2.
+    r"""Finite-window estimate for the scalar genus radius in u = hbar^2.
 
     The series Z(u) = sum_{g>=1} F_g u^g has coefficients F_g ~ 2*kappa / (4*pi^2)^g.
     The ratio |F_{g+1}/F_g| -> 1/(4*pi^2) as g -> infinity, confirming
@@ -370,8 +365,8 @@ def verify_borel_radius_from_coefficients(kappa: float, g_max: int = 50
 
     The BOREL transform coefficients b_g = F_g / (g-1)! decay as
     2*kappa / ((4*pi^2)^g * (g-1)!), which makes the Borel transform
-    entire.  But the singularities of the Borel-resummed function
-    still occur at xi = (2*pi*n)^2 in the u-plane.
+    entire.  The scalar closed form still has poles at
+    xi = (2*pi*n)^2 in the u-plane.
     """
     # Original series coefficients F_g
     Fg_values = []
@@ -384,15 +379,18 @@ def verify_borel_radius_from_coefficients(kappa: float, g_max: int = 50
         if Fg_values[i - 1] > 1e-100:
             ratios.append(Fg_values[i] / Fg_values[i - 1])
 
-    # The ratio should converge to 1/(4*pi^2)
+    # The ratio converges to 1/(4*pi^2) for nonzero kappa.
     predicted_ratio = 1.0 / FOUR_PI_SQ
 
     return {
         'predicted_u_radius': FOUR_PI_SQ,
+        'predicted_hbar_radius': TWO_PI,
+        'borel_transform_radius': math.inf,
         'predicted_ratio': predicted_ratio,
         'actual_ratios_last_5': ratios[-5:] if len(ratios) >= 5 else ratios,
         'converged': (len(ratios) >= 3 and
                       abs(ratios[-1] - predicted_ratio) / predicted_ratio < 0.05),
+        'certification': FINITE_WINDOW_DIAGNOSTIC,
     }
 
 
@@ -428,7 +426,7 @@ def heisenberg_borel_coefficients(kappa: float, g_max: int = 30
 
 
 def heisenberg_borel_singularity_structure(kappa: float) -> Dict[str, Any]:
-    r"""Singularity structure of the Heisenberg genus Borel transform.
+    r"""Scalar A-hat pole structure for the Heisenberg genus series.
 
     Singularities at zeta = 2*pi*n (n = 1, 2, 3, ...) on the real axis.
 
@@ -436,8 +434,8 @@ def heisenberg_borel_singularity_structure(kappa: float) -> Dict[str, Any]:
     The function (hbar/2)/sin(hbar/2) has simple poles at hbar = 2*pi*n
     with residues (-1)^n * 2*pi*n.
 
-    In the Borel plane, these appear as singularities of the Borel
-    transform at zeta = 2*pi*n.
+    The factorial-divided Borel transform is entire; these are not
+    certified Borel singularities.
     """
     sings = []
     for n in range(1, 6):
@@ -446,12 +444,15 @@ def heisenberg_borel_singularity_structure(kappa: float) -> Dict[str, Any]:
             'location': 2.0 * PI * n,
             'residue': kappa * (-1) ** n * 2.0 * PI * n,
             'type': 'simple_pole',
+            'object': 'scalar_ahat_closed_form',
         })
     return {
         'kappa': kappa,
-        'borel_radius': TWO_PI,
+        'borel_radius': math.inf,
+        'scalar_hbar_radius': TWO_PI,
         'singularities': sings,
         'n_singularities': 'infinite (one per integer n >= 1)',
+        'certification': CERTIFIED_EXACT,
     }
 
 
@@ -478,8 +479,8 @@ def virasoro_borel_scan(c_values: Optional[List[float]] = None,
 
     Computes B[F](zeta) for each (c, zeta) pair and records:
     - The value B[F](zeta)
-    - Distance to nearest singularity
-    - Whether convergent (|zeta| < 2*pi)
+    - Whether the point lies inside the scalar A-hat disk
+    - The transform's entire-function certification
     """
     if c_values is None:
         c_values = [0.5, 1.0, 6.0, 13.0, 25.0, 26.0]
@@ -500,41 +501,44 @@ def virasoro_borel_scan(c_values: Optional[List[float]] = None,
                 'modulus_zeta': abs(z),
                 'borel_value': val,
                 'modulus_borel': abs(val),
-                'within_radius': abs(z) < TWO_PI,
-                'dist_to_singularity': dist_to_nearest,
+                'within_radius': True,
+                'within_scalar_genus_radius': abs(z) < TWO_PI,
+                'dist_to_scalar_pole_radius': dist_to_nearest,
+                'borel_certification': BOREL_TRANSFORM_DIAGNOSTIC,
             })
     return results
 
 
 # =====================================================================
-# Section 6: Stokes automorphism (genus direction)
+# Section 6: Formal residue multipliers (not Borel-certified Stokes data)
 # =====================================================================
 
 def stokes_multiplier_genus_n(kappa: float, n: int) -> complex:
-    r"""Stokes multiplier at the n-th singularity (genus direction).
+    r"""Formal residue multiplier at the n-th scalar A-hat pole.
 
     Working in the u = hbar^2 plane, the function
     Z(u) = kappa * ((sqrt(u)/2)/sin(sqrt(u)/2) - 1) has simple poles
     at u_n = (2*pi*n)^2 with residues R_n = (-1)^n * 8*pi^2*n^2*kappa.
 
-    The Stokes multiplier (in the u-plane Borel) is:
+    The formal multiplier obtained from the u-plane residue is:
 
         S_n = 2*pi*i * R_n = 2*pi*i * (-1)^n * 8*pi^2*n^2 * kappa
             = (-1)^n * 16*pi^3*n^2 * kappa * i
 
-    For the Borel transform in the hbar variable (with singularities at
-    hbar = 2*pi*n), the Stokes multiplier is:
+    For the hbar-plane scalar pole residue this gives:
 
         S_n^{hbar} = 2*pi*i * Res_{hbar} = 2*pi*i * kappa * (-1)^n * 2*pi*n
                    = (-1)^n * 4*pi^2*n * kappa * i
 
-    We use the hbar-plane convention.
+    We return the hbar-plane residue convention.  This is not promoted
+    to a certified Stokes constant because the factorial-divided Borel
+    transforms implemented here are entire.
     """
     return kappa * (-1) ** n * FOUR_PI_SQ * n * 1.0j
 
 
 def stokes_multiplier_genus_leading(kappa: float) -> complex:
-    """Leading Stokes multiplier S_1 at zeta = 2*pi."""
+    """Leading formal residue multiplier at hbar = 2*pi."""
     return stokes_multiplier_genus_n(kappa, 1)
 
 
@@ -543,7 +547,7 @@ def lateral_borel_sum_genus(kappa: float, hbar: complex,
                             g_max: int = 80,
                             n_quad: int = 2000,
                             xi_max: float = 50.0) -> complex:
-    r"""Lateral Borel sum of the genus series.
+    r"""Numerical ray integral of the entire u-plane diagnostic transform.
 
     S_epsilon[Z](hbar) = int_0^{inf * e^{i*epsilon}} B[F](zeta) e^{-zeta/hbar} dzeta / hbar
 
@@ -551,7 +555,9 @@ def lateral_borel_sum_genus(kappa: float, hbar: complex,
 
     S_epsilon[Z](u) = int_0^{inf * e^{i*epsilon}} B_u[Z](xi) e^{-xi/u} dxi / u
 
-    We use the u-plane formulation for numerical stability.
+    We use the u-plane formulation for numerical stability.  Since
+    B_u is entire in this scalar lane, this integral is a diagnostic
+    and does not by itself certify Stokes jumps or Borel summability.
     """
     u = complex(hbar) ** 2
     if abs(u) < 1e-15:
@@ -576,9 +582,10 @@ def stokes_jump_genus(kappa: float, hbar: complex,
                       g_max: int = 80,
                       n_quad: int = 2000,
                       xi_max: float = 50.0) -> Dict[str, Any]:
-    r"""Compute the Stokes jump S_+ - S_- for the genus series.
+    r"""Compute the numerical ray-integral difference S_+ - S_-.
 
-    Returns both lateral sums and their difference.
+    Returns both ray integrals and their difference.  This is a finite
+    numerical diagnostic, not a proof of a Stokes automorphism.
     """
     S_plus = lateral_borel_sum_genus(kappa, hbar, +epsilon, g_max, n_quad, xi_max)
     S_minus = lateral_borel_sum_genus(kappa, hbar, -epsilon, g_max, n_quad, xi_max)
@@ -591,6 +598,7 @@ def stokes_jump_genus(kappa: float, hbar: complex,
         'S_minus': S_minus,
         'stokes_jump': jump,
         'epsilon': epsilon,
+        'certification': BOREL_TRANSFORM_DIAGNOSTIC,
     }
 
 
@@ -600,11 +608,13 @@ def stokes_jump_genus(kappa: float, hbar: complex,
 
 @dataclass
 class GenusTransseries:
-    """Trans-series data for the genus expansion.
+    """Diagnostic trans-series data for the scalar genus expansion.
 
     Z^full(hbar) = sum_{n>=0} sigma^n exp(-n * A / hbar^2) * Z^{(n)}(hbar)
 
-    where A = (2*pi)^2 is the instanton action in the u = hbar^2 plane.
+    where A = (2*pi)^2 is the nearest scalar pole location in the
+    u = hbar^2 plane.  These sectors are hypotheses, not certified
+    non-perturbative completions.
     """
     kappa: float
     instanton_action: float  # A = (2*pi)^2
@@ -613,30 +623,28 @@ class GenusTransseries:
     two_instanton: List[float]  # F_g^{(2)}
     three_instanton: List[float]  # F_g^{(3)}
     sigma: complex  # trans-series parameter
+    certification: str = ANALYTIC_RESURGENCE_HYPOTHESIS
 
 
 def build_genus_transseries(kappa: float, g_max: int = 30) -> GenusTransseries:
-    r"""Build the trans-series for the genus expansion.
+    r"""Build a diagnostic trans-series model for the genus expansion.
 
     The perturbative sector is Z^{(0)}(hbar) = sum_{g>=1} F_g hbar^{2g}.
 
-    The one-instanton sector F_g^{(1)} is determined by the large-order
-    relation:
-
-        F_g ~ S_1/(2*pi*i) * A^{-2g} * Gamma(2g) * (1 + c_1/(2g) + ...)
-
-    where A = (2*pi)^2, and S_1 is the leading Stokes multiplier.
-    Inverting: F_g^{(1)} ~ constant (from the residue structure).
+    The one-instanton sector F_g^{(1)} is estimated from the nearest
+    scalar pole at A = (2*pi)^2 in the u-plane.
 
     For the (hbar/2)/sin(hbar/2) closed form:
         Res at hbar = 2*pi gives F_g^{(1)} proportional to 1/(2*pi)^{2g}.
-        The one-instanton fluctuation sector is:
-        F_g^{(1)} = kappa * (-1) * 2*pi / ((2*pi)^{2g} * (2g-1)!)
+        The model one-instanton fluctuation sector is proportional to
+        (2*pi)^{-2g}.
 
     More precisely, expanding around the pole hbar = 2*pi:
         (hbar/2)/sin(hbar/2) = -2*pi/(hbar - 2*pi) + regular
 
-    The one-instanton sector captures the contribution from this pole.
+    The one-instanton sector is a model for the contribution from this
+    pole.  The scalar data alone do not certify an analytic
+    non-perturbative completion.
     """
     # Perturbative sector
     pert = F_g_array(kappa, g_max)
@@ -652,23 +660,21 @@ def build_genus_transseries(kappa: float, g_max: int = 30) -> GenusTransseries:
     # But more carefully: the residue contribution to F_g is
     # -Res * A^{-(2g)} where A = (2*pi)^2 (the u-plane instanton action).
     # So F_g^{(1)} = (-1) * (-2*pi*kappa) * ((2*pi)^2)^{-g} / ... (normalization)
-    # Let me compute from the large-order relation directly.
-
-    # From the large-order relation for the u = hbar^2 series:
+    # From the formal large-order relation for the u = hbar^2 series:
     #   F_g ~ S_1/(2*pi*i) * A^{-g} * Gamma(g) * (1 + corrections)
     # where A = (2*pi)^2.  This gives the ONE-INSTANTON sector as
     #   F_g^{(1)} = 1 (constant, up to normalization).
     # The sigma parameter is S_1 = -4*pi^2*i * kappa.
 
-    # For computational purposes, use the exact structure:
+    # For diagnostics, use the exact scalar pole locations:
     # Z(u) = kappa * (sqrt(u)/2)/sin(sqrt(u)/2) - kappa
     # Poles at u = (2*pi*n)^2.
     # Near u = (2*pi)^2: Z ~ -2*pi*kappa / (u - (2*pi)^2)^{1/2} * ...
     # Actually the pole of (hbar/2)/sin(hbar/2) at hbar = 2*pi is a SIMPLE pole,
     # so in u = hbar^2 it becomes a BRANCH POINT at u = (2*pi)^2.
 
-    # For the trans-series in hbar, the instanton sector is simpler:
-    # F_g^{(1)} captures the correction from the first pole.
+    # For the trans-series model in hbar, F_g^{(1)} records the first
+    # scalar pole contribution.
     # At leading order: F_g^{(1)} = (-1)^{g+1} * 2 * kappa / (2*pi)^{2g}
     # (from the Bernoulli large-order relation, matching the leading asymptotic).
 
@@ -701,12 +707,13 @@ def build_genus_transseries(kappa: float, g_max: int = 30) -> GenusTransseries:
         two_instanton=inst2,
         three_instanton=inst3,
         sigma=sigma,
+        certification=ANALYTIC_RESURGENCE_HYPOTHESIS,
     )
 
 
 def transseries_evaluate_genus(ts: GenusTransseries, hbar: complex,
                                n_inst: int = 1) -> complex:
-    r"""Evaluate the genus trans-series at hbar.
+    r"""Evaluate the diagnostic genus trans-series at hbar.
 
     Z^full(hbar) = Z^{(0)}(hbar) + sigma * exp(-A/hbar^2) * Z^{(1)}(hbar) + ...
 
@@ -755,7 +762,7 @@ def ahat_at_imaginary(hbar: float) -> float:
 
 
 def genus_series_closed_form(kappa: float, hbar: float) -> float:
-    r"""Exact closed form: Z^sh = kappa * ((hbar/2)/sin(hbar/2) - 1)."""
+    r"""Exact scalar closed form inside the disk |hbar| < 2*pi."""
     return kappa * (ahat_at_imaginary(hbar) - 1.0)
 
 
@@ -774,14 +781,15 @@ def median_borel_sum_genus(kappa: float, hbar: float,
                            g_max: int = 80,
                            n_quad: int = 2000,
                            xi_max: float = 50.0) -> Dict[str, Any]:
-    r"""Median Borel sum of the genus series.
+    r"""Median of two numerical ray integrals.
 
     F^med(hbar) = (1/2)(S_+(hbar) + S_-(hbar))
 
     where S_+/- are lateral Borel sums above/below the positive real axis.
 
-    For real hbar > 0 within the convergence radius, this gives the
-    physical value.
+    For real hbar > 0 inside the scalar convergence disk, the exact
+    scalar value is supplied separately by the closed form.  The median
+    below is a numerical diagnostic, not a physical-value certificate.
 
     Compare with:
     a. Pade approximants of the series
@@ -818,6 +826,7 @@ def median_borel_sum_genus(kappa: float, hbar: float,
         'median_vs_exact': abs(median.real - exact) if exact is not None else None,
         'partial_vs_exact': abs(partial - exact) if exact is not None else None,
         'pade_vs_exact': abs(pade_val - exact) if exact is not None else None,
+        'certification': BOREL_TRANSFORM_DIAGNOSTIC,
     }
 
 
@@ -878,59 +887,37 @@ def pade_genus_series(kappa: float, hbar: float, g_max: int = 30) -> float:
 
 
 # =====================================================================
-# Section 9: Large-order resurgent relations
+# Section 9: Scalar pole coefficient asymptotics
 # =====================================================================
 
 def large_order_prediction(kappa: float, g: int, n_inst: int = 3) -> float:
-    r"""Resurgent large-order prediction for F_g.
+    r"""Finite-pole asymptotic prediction for F_g.
 
-    F_g ~ sum_{n=1}^{n_inst} S_n/(2*pi*i) * A_n^{-2g} * Gamma(2g) * (1 + ...)
-
-    where A_n = (2*pi*n)^2 (instanton actions in the u-plane)
-    and S_n is the Stokes multiplier at the n-th singularity.
-
-    The leading term (n=1):
-        F_g ~ S_1/(2*pi*i) * A_1^{-g} * Gamma(g)
-
-    in the u-plane, where A_1 = (2*pi)^2, S_1 = -4*pi^2*i*kappa.
-
-    So F_g ~ (-4*pi^2*i*kappa)/(2*pi*i) * ((2*pi)^2)^{-g} * (g-1)!
-           = 2*kappa / (2*pi)^{2g} * (g-1)!/(g-1)!
-           Hmm, let me be more careful.
+    This computes the contribution of the first ``n_inst`` scalar A-hat
+    poles to the coefficient of u^g in the meromorphic closed form.
+    It is an asymptotic estimate, not a certified resurgence
+    large-order theorem.
 
     The series in u = hbar^2 is Z(u) = sum_{g>=1} F_g u^g.
-    The Borel transform in u is B(xi) = sum F_g xi^{g-1}/(g-1)!.
-    Singularity of B at xi_1 = (2*pi)^2 with residue related to Res_{hbar=2*pi}.
-
-    Large-order from the u-plane Borel:
-        F_g / (g-1)! ~ R_1 / xi_1^g  as g -> infty
-    where R_1 is the residue of B at xi_1.
-
-    So F_g ~ R_1 * (g-1)! / xi_1^g.
-
-    Now R_1 = lim_{xi->xi_1} (xi-xi_1) * B(xi).
     From Z(u) = kappa * (sqrt(u)/2)/sin(sqrt(u)/2) - kappa, near u = xi_1 = (2*pi)^2:
         sqrt(u) ~ 2*pi + (u - xi_1)/(4*pi), so
         sin(sqrt(u)/2) ~ sin(pi + (u-xi_1)/(8*pi)) ~ -(u-xi_1)/(8*pi).
         (sqrt(u)/2)/sin(sqrt(u)/2) ~ pi / (-(u-xi_1)/(8*pi)) = -8*pi^2 / (u-xi_1).
     So Z(u) ~ -8*pi^2*kappa / (u - xi_1).
-    This gives R_1 (residue of B) = -8*pi^2*kappa / ((g-1)! contribution is already factored out)...
 
-    Actually more carefully: if Z(u) has a simple pole at u = xi_1 with residue R,
-    then Z(u) ~ R / (u - xi_1), and the Taylor coefficients are
+    If Z(u) has a simple pole at u = xi_1 with residue R, then
+    Z(u) ~ R / (u - xi_1), and the Taylor coefficients are
     F_g = -R / xi_1^{g+1} (from geometric series 1/(xi_1 - u) = sum u^g / xi_1^{g+1}).
-    Wait: Z(u) = sum F_g u^g, and near the pole,
+    Since Z(u) = sum F_g u^g, near the pole
     Z(u) ~ R/(u - xi_1) = -R/(xi_1 * (1 - u/xi_1)) = -(R/xi_1) * sum (u/xi_1)^g.
     So F_g ~ -R / xi_1^{g+1}.
 
     With R = -8*pi^2*kappa (from the computation above):
     F_g ~ 8*pi^2*kappa / xi_1^{g+1} = 8*pi^2*kappa / ((2*pi)^2)^{g+1}
-        = 8*pi^2*kappa / (4*pi^2)^{g+1} = 2*kappa / (4*pi^2)^g / (4*pi^2)
-        Wait, (4*pi^2)^{g+1} = (4*pi^2)^g * 4*pi^2, so
         F_g ~ 8*pi^2*kappa / ((4*pi^2)^g * 4*pi^2) = 2*kappa / (4*pi^2)^g
             = 2*kappa / (2*pi)^{2g}.
 
-    This matches the Bernoulli asymptotics! (As it must.)
+    This matches the Bernoulli asymptotics.
 
     Including subleading poles at u = (2*pi*n)^2:
     F_g ~ sum_{n>=1} 2*kappa / (2*pi*n)^{2g}  (approximately, at large g)
@@ -941,7 +928,7 @@ def large_order_prediction(kappa: float, g: int, n_inst: int = 3) -> float:
     where zeta(2g) -> 1 as g -> infinity. At finite g:
     zeta(2) = pi^2/6, zeta(4) = pi^4/90, ...
     """
-    # Large-order prediction including multiple instanton contributions.
+    # Asymptotic coefficient prediction including multiple scalar poles.
     #
     # Z(u) = kappa * ((sqrt(u)/2)/sin(sqrt(u)/2) - 1) has simple poles
     # at u_n = (2*pi*n)^2 for n = 1, 2, 3, ...
@@ -970,10 +957,10 @@ def large_order_prediction(kappa: float, g: int, n_inst: int = 3) -> float:
 
 def large_order_verification(kappa: float, g_max: int = 20,
                              n_inst: int = 3) -> Dict[str, Any]:
-    r"""Verify the resurgent large-order relation for F_g.
+    r"""Compare exact coefficients with the finite-pole asymptotic estimate.
 
-    Compare exact F_g with the large-order prediction from the instanton
-    data. For Heisenberg, the Bernoulli asymptotics should match perfectly.
+    This is finite-window evidence for the Bernoulli/A-hat pole
+    asymptotics, not a proof of a Stokes structure.
     """
     results = []
     for g in range(1, g_max + 1):
@@ -999,38 +986,30 @@ def large_order_verification(kappa: float, g_max: int = 20,
         'last_5_errors': last_errors,
         'errors_decreasing': improving,
         'error_at_gmax': results[-1]['relative_error'] if results else None,
+        'certification': FINITE_WINDOW_DIAGNOSTIC,
     }
 
 
 # =====================================================================
-# Section 10: Peacock pattern (multi-instanton Stokes constants)
+# Section 10: Formal Peacock-table diagnostics
 # =====================================================================
 
 def peacock_stokes_constant(kappa: float, n: int, m: int) -> complex:
-    r"""Peacock pattern Stokes constant S_{n,m}.
+    r"""Formal Peacock-table entry S_{n,m}.
 
-    In the Aniceto-Schiappa-Vonk framework, the Stokes constants organize
-    into a "peacock" pattern. For the shadow partition function with
-    singularities at integer multiples of 2*pi:
-
-    S_{n,m} encodes the Stokes phenomenon between the n-th and m-th
-    instanton sectors (m = 0 is perturbative).
-
-    For the genus series with simple-pole singularities:
-        S_{n,0} = S_n (standard Stokes multiplier at n-th singularity)
-        S_{n,m} = S_{n-m} * (binomial correction)  for the resurgence triangle
-
-    The exact structure for the A-hat generating function:
-    Since (hbar/2)/sin(hbar/2) has only SIMPLE poles, the resurgence
-    structure is "simple" in the sense that all multi-instanton Stokes
-    constants factorize:
+    For the A-hat generating function, the scalar closed form has only
+    simple poles.  The factorized table below records the formal residue
+    pattern one would use under an analytic-resurgence hypothesis:
 
         S_{n,m} = kappa * (-1)^{n-m} * 4*pi^2*(n-m) * i * C(n,m)
 
     where C(n,m) is a combinatorial prefactor.
 
-    For the simplest case (simple-pole asymptotics):
+    For the simple-pole residue model:
         S_{n,0} = S_n = kappa * (-1)^n * 4*pi^2*n * i
+
+    The scalar coefficient data do not certify the Aniceto--Schiappa--
+    Vonk Peacock structure.
     """
     if n <= m:
         return 0.0 + 0.0j  # only n > m transitions
@@ -1041,7 +1020,7 @@ def peacock_stokes_constant(kappa: float, n: int, m: int) -> complex:
 
 def peacock_pattern_table(kappa: float, n_max: int = 5
                           ) -> Dict[Tuple[int, int], complex]:
-    r"""Compute the peacock pattern table of Stokes constants.
+    r"""Compute the formal Peacock residue table.
 
     Returns dict mapping (n, m) -> S_{n,m} for 0 <= m < n <= n_max.
     """
@@ -1054,11 +1033,11 @@ def peacock_pattern_table(kappa: float, n_max: int = 5
 
 def peacock_resurgence_triangle(kappa: float, n_max: int = 4
                                 ) -> List[List[complex]]:
-    r"""Resurgence triangle: rows n = 1, 2, ..., n_max.
+    r"""Formal residue triangle: rows n = 1, 2, ..., n_max.
 
     Row n has entries S_{n,0}, S_{n,1}, ..., S_{n,n-1}.
-    This is the shadow partition function's analogue of the
-    Aniceto-Schiappa-Vonk peacock pattern.
+    This is a diagnostic analogue of the Aniceto--Schiappa--Vonk
+    Peacock pattern, not a certified resurgence theorem.
     """
     triangle = []
     for n in range(1, n_max + 1):
@@ -1070,25 +1049,27 @@ def peacock_resurgence_triangle(kappa: float, n_max: int = 4
 
 
 # =====================================================================
-# Section 11: Koszul complementarity and non-perturbative structure
+# Section 11: Verdier-branch complementarity diagnostics
 # =====================================================================
 
 def koszul_nonperturbative_genus(algebra: AlgebraData, hbar: float,
                                  g_max: int = 30) -> Dict[str, Any]:
-    r"""Non-perturbative free energy from Koszul complementarity.
+    r"""Diagnostic non-perturbative ansatz using the A! scalar branch.
 
-    The non-perturbative completion should involve the Koszul dual A!:
+    A possible analytic-resurgence ansatz may involve the Verdier/
+    continuous-linear dual branch A!:
 
     F^np(hbar) = F^pert(A, hbar) + exp(-A_inst/hbar^2) * F^pert(A!, hbar') + ...
 
-    where A_inst = (2*pi)^2 and the Koszul dual contribution uses
+    where A_inst = (2*pi)^2 and the dual-branch contribution uses
     kappa' = kappa(A!).
 
-    For Virasoro at c = 13 (self-dual: A! = A, kappa' = kappa):
-    the instanton is its own dual, giving enhanced symmetry.
+    This function does not identify A!, B(A), A^i, or the Hochschild
+    bulk Z_ch^der(A).  It does not certify a non-perturbative
+    completion.
 
-    For general Virasoro: kappa' = (26-c)/2, so the non-perturbative
-    sector uses the dual central charge.
+    For general Virasoro, the scalar dual branch has
+    kappa' = (26-c)/2.
     """
     kappa = algebra.kappa
     kappa_dual = algebra.kappa_dual
@@ -1096,11 +1077,11 @@ def koszul_nonperturbative_genus(algebra: AlgebraData, hbar: float,
     # Perturbative sector
     Fpert = genus_series_partial_sum(kappa, hbar, g_max) if abs(hbar) < TWO_PI else float('nan')
 
-    # One-instanton sector (using the Koszul dual)
+    # One-instanton diagnostic sector using the Verdier dual branch.
     A_inst = FOUR_PI_SQ
     Fpert_dual = genus_series_partial_sum(kappa_dual, hbar, g_max) if abs(hbar) < TWO_PI else float('nan')
 
-    # Full non-perturbative (leading order)
+    # Leading non-perturbative diagnostic ansatz.
     u = hbar ** 2
     exp_factor = math.exp(-A_inst / u) if abs(u) > 1e-15 and A_inst / u < 500 else 0.0
 
@@ -1122,25 +1103,31 @@ def koszul_nonperturbative_genus(algebra: AlgebraData, hbar: float,
         'instanton_action': A_inst,
         'exp_suppression': exp_factor,
         'F_nonperturbative': F_np,
+        'F_nonperturbative_diagnostic': F_np,
         'exact': exact,
         'is_self_dual': is_self_dual,
+        'dual_branch': 'A^! Verdier/continuous-linear dual branch',
+        'certification': ANALYTIC_RESURGENCE_HYPOTHESIS,
+        'object_firewall': OBJECT_FIREWALLS,
     }
 
 
 def koszul_self_dual_check(c_val: float = 13.0, hbar: float = 1.0,
                            g_max: int = 30) -> Dict[str, Any]:
-    r"""Verify enhanced symmetry at the self-dual point c = 13.
+    r"""Check the scalar Verdier-branch fixed point c = 13.
 
-    At c = 13: kappa = kappa' = 13/2, so the perturbative and dual
-    sectors are identical. The trans-series has Z_2 symmetry:
-    the n-th instanton sector equals the (-n)-th sector.
+    At c = 13: kappa = kappa' = 13/2, so the two scalar branches have
+    identical perturbative coefficients.  This does not prove a
+    trans-series symmetry.
     """
     alg = virasoro_algebra(c_val)
     result = koszul_nonperturbative_genus(alg, hbar, g_max)
 
     # Self-duality check
     result['kappa_equals_kappa_dual'] = abs(alg.kappa - alg.kappa_dual) < 1e-10
-    result['symmetry'] = 'Z_2 enhanced' if result['kappa_equals_kappa_dual'] else 'broken'
+    result['symmetry'] = ('scalar branch fixed point'
+                          if result['kappa_equals_kappa_dual']
+                          else 'scalar branches distinct')
 
     return result
 
@@ -1150,13 +1137,15 @@ def koszul_self_dual_check(c_val: float = 13.0, hbar: float = 1.0,
 # =====================================================================
 
 def optimal_truncation_genus(kappa: float, hbar: float) -> Dict[str, Any]:
-    r"""Optimal truncation of the genus series.
+    r"""Finite-window truncation diagnostic for the convergent genus series.
 
-    The optimal number of terms is N* = floor(A / hbar^2) where
-    A = (2*pi)^2 is the nearest instanton action in the u-plane.
+    The scalar genus series is convergent for |hbar| < 2*pi.  Thus the
+    asymptotic formula N* = floor(A / hbar^2), A=(2*pi)^2, is only a
+    diagnostic scale inherited from the nearest scalar pole; it is not
+    an optimal truncation theorem.
 
-    At optimal truncation, the remainder is of order exp(-A/hbar^2),
-    which is the leading non-perturbative contribution.
+    The returned minimum is computed only in the displayed finite
+    window.
     """
     A = FOUR_PI_SQ
     u = hbar ** 2
@@ -1173,7 +1162,7 @@ def optimal_truncation_genus(kappa: float, hbar: float) -> Dict[str, Any]:
         err = abs(partial - exact) if exact is not None else None
         sums[N] = {'partial_sum': partial, 'error': err}
 
-    # The minimum error should be near N_eval
+    # Search for the minimum error in the displayed finite window.
     min_err_N = None
     min_err = float('inf')
     for N, data in sums.items():
@@ -1186,11 +1175,13 @@ def optimal_truncation_genus(kappa: float, hbar: float) -> Dict[str, Any]:
         'hbar': hbar,
         'instanton_action': A,
         'N_star_predicted': N_star,
+        'N_star_asymptotic_diagnostic': N_star,
         'N_star_actual': min_err_N,
         'min_error': min_err,
         'np_suppression': math.exp(-A / u) if u > 1e-15 else 0.0,
         'exact': exact,
         'sums': sums,
+        'certification': FINITE_WINDOW_DIAGNOSTIC,
     }
 
 
@@ -1198,19 +1189,40 @@ def optimal_truncation_genus(kappa: float, hbar: float) -> Dict[str, Any]:
 # Section 13: Full pipeline analysis
 # =====================================================================
 
+def claim_certification_summary() -> Dict[str, str]:
+    """Certification map for the scalar genus diagnostics in this file."""
+    return {
+        'scalar_ahat_closed_form': CERTIFIED_EXACT,
+        'lambda_fp_bernoulli_coefficients': CERTIFIED_EXACT,
+        'scalar_hbar_radius_2pi': CERTIFIED_EXACT,
+        'scalar_u_radius_4pi2': CERTIFIED_EXACT,
+        'borel_transform_entire': CERTIFIED_EXACT,
+        'coefficient_ratio_radius': FINITE_WINDOW_DIAGNOSTIC,
+        'finite_pole_asymptotics': ASYMPTOTIC_ESTIMATE,
+        'formal_stokes_multipliers': ANALYTIC_RESURGENCE_HYPOTHESIS,
+        'median_borel_summation': BOREL_TRANSFORM_DIAGNOSTIC,
+        'transseries_sectors': ANALYTIC_RESURGENCE_HYPOTHESIS,
+        'peacock_pattern': ANALYTIC_RESURGENCE_HYPOTHESIS,
+        'nonperturbative_completion': ANALYTIC_RESURGENCE_HYPOTHESIS,
+        'arity_radius': 'not_computed_here',
+        'BTZ_JT_recovery': 'not_certified_here',
+        'all_genus_multiweight_partition_theorem': 'not_certified_here',
+    }
+
+
 def full_resurgence_analysis(kappa: float, g_max: int = 30,
                              hbar_values: Optional[List[float]] = None
                              ) -> Dict[str, Any]:
-    r"""Complete resurgence analysis of the genus series.
+    r"""Scalar genus diagnostic bundle.
 
     Combines all components:
-    1. Borel transform and singularity structure
-    2. Stokes multipliers
-    3. Large-order verification
-    4. Optimal truncation
-    5. Median summation
-    6. Trans-series
-    7. Peacock pattern
+    1. Entire Borel-transform diagnostic and scalar pole structure
+    2. Formal residue multipliers
+    3. Finite-pole coefficient asymptotics
+    4. Truncation diagnostics
+    5. Median ray-integral diagnostics
+    6. Hypothetical trans-series sectors
+    7. Formal Peacock table
     """
     if hbar_values is None:
         hbar_values = [0.5, 1.0, 2.0, 3.0]
@@ -1218,8 +1230,11 @@ def full_resurgence_analysis(kappa: float, g_max: int = 30,
     # 1. Borel structure
     borel_data = {
         'radius': borel_radius_genus(),
+        'scalar_hbar_radius': scalar_genus_radius_hbar(),
+        'scalar_u_radius': scalar_genus_radius_u(),
         'singularities': borel_singularities_genus(5),
         'ratio_test': verify_borel_radius_from_coefficients(kappa, g_max),
+        'certification': BOREL_TRANSFORM_DIAGNOSTIC,
     }
 
     # 2. Stokes multipliers
@@ -1227,6 +1242,7 @@ def full_resurgence_analysis(kappa: float, g_max: int = 30,
         'S_1': stokes_multiplier_genus_leading(kappa),
         'S_2': stokes_multiplier_genus_n(kappa, 2),
         'S_3': stokes_multiplier_genus_n(kappa, 3),
+        'certification': ANALYTIC_RESURGENCE_HYPOTHESIS,
     }
 
     # 3. Large-order
@@ -1250,8 +1266,12 @@ def full_resurgence_analysis(kappa: float, g_max: int = 30,
         'transseries': {
             'instanton_action': ts.instanton_action,
             'sigma': ts.sigma,
+            'certification': ts.certification,
         },
         'peacock_triangle': [[complex(s) for s in row] for row in peacock],
+        'certification_summary': claim_certification_summary(),
+        'object_firewall': OBJECT_FIREWALLS,
+        'kernel_normalizations': KERNEL_NORMALIZATIONS,
     }
 
 
@@ -1260,11 +1280,11 @@ def full_resurgence_analysis(kappa: float, g_max: int = 30,
 # =====================================================================
 
 def family_comparison(g_max: int = 20) -> Dict[str, Dict[str, Any]]:
-    r"""Compare resurgence properties across algebra families.
+    r"""Compare scalar A-hat/Bernoulli diagnostics across families.
 
-    All families share the SAME genus-direction resurgence structure
-    (singularities at (2*pi*n)^2 in the u-plane) because the
-    Bernoulli/A-hat generating function is universal. Only kappa changes.
+    In this scalar lane, the Faber--Pandharipande factor is universal
+    and only kappa changes.  This is not an operator-level all-genus
+    Virasoro theorem and not a multiweight partition theorem.
     """
     families = {
         'Heisenberg_rank1': {'kappa': 1.0, 'c': 1.0},
@@ -1286,8 +1306,16 @@ def family_comparison(g_max: int = 20) -> Dict[str, Dict[str, Any]]:
             'instanton_action': FOUR_PI_SQ,
             'S_1': stokes_multiplier_genus_leading(kappa),
             'borel_radius': borel_radius_genus(),
+            'scalar_hbar_radius': scalar_genus_radius_hbar(),
+            'scalar_u_radius': scalar_genus_radius_u(),
             'F_1': F_g_scalar(kappa, 1),
             'large_order_error_g20': lo['error_at_gmax'],
+            'certification': FINITE_WINDOW_DIAGNOSTIC,
+            'not_certified': [
+                'all-genus Virasoro partition theorem',
+                'multiweight partition theorem',
+                'BTZ/JT recovery',
+            ],
         }
 
     return results

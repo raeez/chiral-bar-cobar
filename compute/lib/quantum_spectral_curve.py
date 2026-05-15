@@ -13,8 +13,11 @@ equation (shadow_painleve.py, Section 1):
 where V(t) = 8*kappa^2*Delta / Q_L(t)^2 is the Schwarzian potential
 and hbar is a formal deformation parameter.
 
-The CLASSICAL SPECTRAL CURVE is y^2 = V(t), which is the genus-0
-hyperelliptic curve inherited from the shadow metric Q_L(t).
+The WKB CLASSICAL CURVE is y^2 = V(t).  Since
+V(t)=C/Q_L(t)^2, this curve is rational: y=sqrt(C)/Q_L(t).  The zeros
+of Q_L are double poles of V and regular singular points of the scalar
+ODE.  They are branch points for the separate shadow-metric curve
+y^2=Q_L(t), not for the WKB curve y^2=V(t).
 
 The QUANTUM SPECTRAL CURVE is the hbar-deformation obtained by the
 exact WKB method (Voros 1983, Delabaere-Dillinger-Pham 1993,
@@ -45,9 +48,9 @@ SOLUTIONS:
 
 KEY SUBTLETY: V(t) = C / Q_L(t)^2 where C = 8*kappa^2*Delta.  The square
 root sqrt(V) = sqrt(C) / Q_L(t).  Since Q_L is quadratic, sqrt(V) is a
-RATIONAL function (no branch cuts from V itself; the branch cuts come from
-the sign choice +/-).  The integral S_0 = integral sqrt(C)/Q_L(t) dt is
-elementary (partial fractions over the zeros of Q_L).
+RATIONAL function; the sign choice is global on this rational WKB curve.
+The integral S_0 = integral sqrt(C)/Q_L(t) dt is elementary (partial
+fractions over the zeros of Q_L).
 
 VOROS COEFFICIENTS:
 
@@ -71,7 +74,9 @@ where omega_n are Stokes multipliers and T_n are the alien derivatives.
 
 For the shadow Schrodinger equation with 3 regular singular points on P^1,
 the monodromy representation is in SL(2, C), and the Stokes phenomenon is
-encoded by the monodromy matrices around the branch points of Q_L.
+encoded by the monodromy matrices around the zeros of Q_L.  These zeros
+are branch points for the shadow-metric curve y^2=Q_L and regular
+singular points for the WKB operator.
 
 PAINLEVE CONNECTION:
 
@@ -80,8 +85,10 @@ singular points on P^1 (the two zeros of Q_L and infinity).  This is a
 Gauss hypergeometric equation -- RIGID, with no accessory parameter and
 no Painleve.
 
-For the multi-channel case (e.g., W_3 with T and W channels), the coupled
-2x2 system has 4+ singular points, giving Painleve VI.
+For the multi-channel case (e.g., W_3 with T and W channels), four
+static singular points give a Painleve-VI candidate.  An exact PVI
+claim requires a coupled isomonodromic system, not only this scalar
+finite singularity count.
 
 Dependencies:
     shadow_connection.py -- shadow metric Q_L(t), connection forms
@@ -128,7 +135,7 @@ Delta_sym = Symbol('Delta')
 
 
 # =========================================================================
-# Section 1: Classical spectral curve from the shadow metric
+# Section 1: WKB classical curve from the shadow metric
 # =========================================================================
 
 def shadow_metric_poly(kappa, alpha, Delta):
@@ -165,7 +172,7 @@ def schwarzian_potential(kappa, alpha, Delta):
 
 
 def classical_spectral_curve(kappa, alpha, Delta):
-    """The classical spectral curve y^2 = V(t).
+    """The WKB classical curve y^2 = V(t).
 
     V(t) = 8*kappa^2*Delta / Q_L(t)^2, so
     y = sqrt(8*kappa^2*Delta) / Q_L(t)  (rational in t).
@@ -177,7 +184,9 @@ def classical_spectral_curve(kappa, alpha, Delta):
         'V': the potential V(t)
         'Q': the shadow metric Q_L(t)
         'C': the constant 8*kappa^2*Delta
-        'branch_points': zeros of Q_L (where V has poles)
+        'singular_points': zeros of Q_L (double poles of V)
+        'wkb_branch_points': empty; y^2=V has no finite branch points
+        'shadow_metric_branch_points': zeros of Q_L for the curve y^2=Q_L
         'genus': 0
     """
     Q = shadow_metric_poly(kappa, alpha, Delta)
@@ -189,21 +198,30 @@ def classical_spectral_curve(kappa, alpha, Delta):
     if q2 != 0:
         t_plus = simplify((-q1 + sqrt(disc)) / (2*q2))
         t_minus = simplify((-q1 - sqrt(disc)) / (2*q2))
-        branch_points = [t_plus, t_minus]
+        singular_points = [t_plus, t_minus]
     else:
-        branch_points = []
+        singular_points = []
 
     return {
         'V': V,
         'Q': Q,
         'C': C,
-        'branch_points': branch_points,
+        'singular_points': singular_points,
+        'poles': singular_points,
+        'wkb_branch_points': [],
+        'shadow_metric_branch_points': singular_points,
+        # Backward-compatible alias: these are not branch points of y^2=V.
+        'branch_points': singular_points,
+        'branch_point_warning': (
+            'Zeros of Q_L are poles/regular singular points for y^2=V; '
+            'they are branch points only for the shadow-metric curve y^2=Q_L.'
+        ),
         'genus': 0,
     }
 
 
 def virasoro_classical_curve():
-    """Classical spectral curve for the Virasoro algebra.
+    """WKB classical curve for the Virasoro algebra.
 
     kappa = c/2, alpha = 2, S_4 = 10/(c(5c+22)), Delta = 40/(5c+22).
     """
@@ -329,6 +347,70 @@ def wkb_recursive_coefficients(kappa, alpha, Delta, max_order=4):
     return Sp
 
 
+def wkb_closed_form_coefficients(kappa, alpha, Delta, max_order=4):
+    r"""Closed-form WKB coefficients for the quadratic shadow metric.
+
+    For Q=Q_L and C=8*kappa^2*Delta, the Riccati equation
+
+        p^2 + hbar p' = C/Q^2
+
+    is solved formally by
+
+        p(t,hbar) = sqrt(C)*sqrt(1-hbar^2)/Q + hbar*Q'/(2Q).
+
+    The cancellation follows from the quadratic identity
+
+        Q*Q''/2 - (Q')^2/4 = C.
+
+    Hence:
+        S_0' = sqrt(C)/Q,
+        S_1' = Q'/(2Q),
+        S_{2m}' = binomial(1/2,m)(-1)^m sqrt(C)/Q for m >= 1,
+        S_{2m+1}' = 0 for m >= 1.
+
+    This is an independent oracle for the recursive transport equations.
+    """
+    Q = shadow_metric_poly(kappa, alpha, Delta)
+    C = 8 * kappa**2 * Delta
+    sqC_over_Q = sqrt(C) / Q
+    Qp = diff(Q, t_sym)
+
+    Sp = {}
+    for n in range(max_order + 1):
+        if n == 0:
+            Sp[n] = sqC_over_Q
+        elif n == 1:
+            Sp[n] = cancel(Qp / (2 * Q))
+        elif n % 2 == 0:
+            m = n // 2
+            Sp[n] = cancel(binomial(Rational(1, 2), m) * (-1)**m * sqC_over_Q)
+        else:
+            Sp[n] = S.Zero
+    return Sp
+
+
+def verify_wkb_riccati_symbolic(kappa, alpha, Delta, max_order=4):
+    """Verify the WKB recursion against the Riccati equation symbolically."""
+    Sp = wkb_recursive_coefficients(kappa, alpha, Delta, max_order)
+    V = schwarzian_potential(kappa, alpha, Delta)
+
+    residuals = {}
+    for n in range(max_order + 1):
+        coeff = S.Zero
+        for j in range(n + 1):
+            coeff += Sp[j] * Sp[n - j]
+        if n >= 1:
+            coeff += diff(Sp[n - 1], t_sym)
+        if n == 0:
+            coeff -= V
+        residuals[n] = simplify(cancel(coeff))
+
+    return {
+        'residuals': residuals,
+        'all_zero': all(residual == 0 for residual in residuals.values()),
+    }
+
+
 def wkb_expansion_virasoro(max_order=4):
     """WKB expansion for the Virasoro algebra.
 
@@ -379,29 +461,40 @@ def voros_period_classical(kappa, alpha, Delta):
     (the function sqrt(C)/Q_L has residues that sum to zero by Cauchy).
 
     This reflects: the classical Voros period around a COMPACT cycle
-    encircling both zeros vanishes.  The nontrivial period is around
-    a NON-COMPACT cycle (from one zero to the other, on a different sheet).
+    encircling both zeros vanishes.
+
+    The elementary action equal to pi is not a finite integral from one
+    pole to the other.  It is the real-line action when Q_L is positive
+    on the real contour:
+
+        integral_{-infinity}^{infinity} sqrt(C)/Q_L(t) dt = pi.
+
+    A path ending at the finite poles has logarithmic divergence unless
+    a separate regularization prescription is supplied.
     """
     q0, q1, q2 = shadow_metric_coefficients(kappa, alpha, Delta)
     C = 8 * kappa**2 * Delta
     disc_Q = q1**2 - 4*q0*q2  # = -32*kappa^2*Delta
 
-    # The NON-COMPACT period (half-period from t_- to t_+):
-    # v_0 = integral_{t_-}^{t_+} sqrt(C)/Q_L(t) dt
-    # This equals: sqrt(C) * pi / (q_2 * sqrt(-disc_Q/(4*q_2^2)))
-    #            = sqrt(C) * pi / sqrt(q_0*q_2 - q_1^2/4)
+    # The real-line action:
+    # v_0 = integral_{-oo}^{oo} sqrt(C)/Q_L(t) dt
+    # This equals sqrt(C) * pi / sqrt(q_0*q_2 - q_1^2/4)
     # where q_0*q_2 - q_1^2/4 = -(disc_Q)/4 = 8*kappa^2*Delta.
     #
     # So v_0 = sqrt(8*kappa^2*Delta) * pi / sqrt(8*kappa^2*Delta) = pi.
     #
-    # UNIVERSAL RESULT: the classical half-period is always pi,
-    # independent of the algebra.
+    # Universal result for this contour: the real-line action is pi.
 
     return {
         'compact_period': S.Zero,     # oint around both zeros = 0
-        'half_period': pi,            # integral from t_- to t_+ = pi
+        'real_line_action': pi,       # integral over the real line
+        'half_period': pi,            # backward-compatible name
         'full_noncompact_period': 2*pi,
-        'universality': 'The classical period pi is universal (algebra-independent).',
+        'finite_pole_to_pole_defined': False,
+        'universality': (
+            'The real-line action pi is universal for nondegenerate '
+            'quadratic shadow metrics with the chosen contour.'
+        ),
     }
 
 
@@ -655,8 +748,9 @@ def stokes_lines_virasoro(c_val):
     t_plus = (-q1 + sqrt_disc) / (2*q2)
     t_minus = (-q1 - sqrt_disc) / (2*q2)
 
-    # The Stokes lines emanate from the branch points t_+, t_-.
-    # The direction is determined by arg(S_0'(t)) near the branch point.
+    # The diagnostic directions below are attached to the finite zeros of
+    # Q_L.  They are not WKB turning-point Stokes rays for y^2=V; V has
+    # double poles there and the scalar equation is Fuchsian.
     #
     # At a simple zero t_0 of Q_L, S_0' = sqrt(C)/Q_L(t) has a simple pole.
     # S_0' ~ sqrt(C)/(Q_L'(t_0)*(t-t_0)).  The Stokes line direction from
@@ -680,12 +774,7 @@ def stokes_lines_virasoro(c_val):
     else:
         direction_minus = 0.0
 
-    # Three Stokes lines from each branch point (separated by pi/3 for
-    # a simple zero of V; but V has a DOUBLE pole at the zero of Q_L,
-    # so the Stokes geometry has 3 lines from each pole, separated by
-    # 2*pi/3).
-    #
-    # For a double pole: the Stokes lines from t_0 have directions
+    # For a double pole: the diagnostic directions from t_0 have
     # phi_k = direction + k*pi for k = 0, 1 (2 anti-Stokes directions)
     # since the residue at a double pole of the potential gives
     # S_0 ~ A*log(t-t_0) near t_0, and Re(A*log(r*e^{i*phi}))
@@ -822,7 +911,15 @@ def connection_matrices_monodromy(kappa_val, alpha_val, Delta_val):
 def wkb_free_energy_genus_expansion(kappa_val, g_max=10):
     r"""Free energy F_g from the shadow obstruction tower at genus g.
 
-    F_g = kappa * lambda_g^{FP} where lambda_g^{FP} = |B_{2g}| / (2g*(2g-2)!).
+    F_g = kappa * lambda_g^{FP}, where the local census normalizes the
+    Faber-Pandharipande scalar by the coefficients of
+
+        (x/2)/sin(x/2) - 1.
+
+    Equivalently,
+
+        lambda_g^{FP} =
+        |B_{2g}| * (2^{2g} - 2) / (2^{2g} * (2g)!).
 
     The WKB expansion encodes these as: the genus-g contribution to the
     Voros symbol is related to F_g by:
@@ -831,14 +928,18 @@ def wkb_free_energy_genus_expansion(kappa_val, g_max=10):
 
     where v_{2g} is the (2g)-th Voros coefficient.
 
-    For the shadow Schrodinger equation, the exact relation is:
+    The scalar dictionary used here records:
         v_0 = pi (classical)
         v_1 = pi*i (one-loop = Koszul sign)
         v_{2g} = B_{2g} * f(kappa, Delta) for g >= 1
 
+    This routine returns the shadow obstruction coefficients F_g; it
+    does not derive exact higher Borel/Voros data from a finite WKB
+    truncation.
+
     Returns dict {g: F_g} for g = 1, ..., g_max.
     """
-    from sympy import bernoulli as bern, factorial as fact
+    from sympy import bernoulli as bern
     result = {}
     for g in range(1, g_max + 1):
         B_2g = float(bern(2*g))
@@ -892,15 +993,17 @@ def wkb_free_energy_from_voros(voros_data, kappa_val):
 # =========================================================================
 
 def painleve_from_w3(c_val):
-    """Painleve VI connection from the W_3 2-channel shadow system.
+    """Painleve VI candidate from the W_3 2-channel shadow system.
 
     The W_3 algebra has two primary channels (T-line and W-line).
-    The coupled 2x2 shadow Schrodinger system has 4 regular singular
-    points on P^1 (2 from Q_T and 2 from Q_W), giving a Heun equation
-    whose isomonodromic deformation is Painleve VI.
+    This scalar routine computes the four static singular points
+    (2 from Q_T and 2 from Q_W) and their cross-ratio.  A genuine
+    Painleve VI statement requires an isomonodromic Lax system or a
+    coupled Heun equation; that data is not constructed here.
 
-    The Painleve VI parameters (alpha, beta, gamma, delta) are determined
-    by the indicial exponents at the 4 singular points.
+    The displayed PVI parameters are therefore a formal exponent-difference
+    candidate, not an exact theorem extracted from this finite scalar
+    computation.
 
     Returns the Heun/Painleve data.
     """
@@ -967,15 +1070,21 @@ def painleve_from_w3(c_val):
         'singularities': singularities,
         'cross_ratio': cross_ratio,
         'cross_ratio_modulus': abs(cross_ratio),
-        'painleve_type': 'PVI',
+        'painleve_type': 'PVI_candidate',
+        'painleve_status': (
+            'candidate_from_four_static_singularities; no isomonodromic '
+            'Lax pair or coupled Heun operator is constructed in this engine'
+        ),
         'PVI_parameters': {
             'alpha': 0.5,
             'beta': 0.0,
             'gamma': 0.0,
             'delta': 0.5,
         },
-        'note': ('Painleve VI with alpha=delta=1/2, beta=gamma=0 '
-                 'is the Picard-Hitchin system (self-dual).'),
+        'PVI_parameters_status': 'formal_exponent_difference_candidate',
+        'note': ('The cross-ratio is exact for the two scalar shadow metrics. '
+                 'The PVI label is a candidate pending a coupled '
+                 'isomonodromic system.'),
         'T_zeros': (t_T_plus, t_T_minus),
         'W_zeros': (t_W_plus, t_W_minus),
     }
@@ -1003,19 +1112,20 @@ def painleve_crossratio_landscape(c_values=None):
 
 
 # =========================================================================
-# Section 8: Topological recursion on the spectral curve
+# Section 8: Scalar topological-recursion input data
 # =========================================================================
 
 def topological_recursion_omega_01(kappa_val, alpha_val, Delta_val):
-    r"""Leading correlator omega_{0,1}(t) = S_0'(t) dt from topological recursion.
+    r"""Leading scalar differential omega_{0,1}(t) = S_0'(t) dt.
 
-    For the spectral curve y^2 = V(t), the Eynard-Orantin topological
-    recursion starts with:
+    For the WKB curve y^2 = V(t), the natural input differential is
 
         omega_{0,1}(t) = y(t) dt = sqrt(V(t)) dt = sqrt(C)/Q_L(t) dt
 
-    This is the classical WKB momentum.  The Bergman kernel B(t1, t2)
-    on the genus-0 curve y^2 = V(t) gives the recursion kernel.
+    This is the classical WKB momentum.  Since y^2=V has no finite
+    ramification points, this routine supplies scalar input data only;
+    a full Eynard-Orantin recursion requires a separate ramification
+    prescription, usually on the shadow-metric curve y^2=Q_L.
 
     Returns the leading correlator as a function value at t.
     """
@@ -1084,6 +1194,7 @@ def topological_recursion_F1(kappa_val, alpha_val, Delta_val):
         'disc_Q': disc,
         'log_disc': cmath.log(-disc) if disc < 0 else cmath.log(complex(disc)),
         'F1_TR': -cmath.log(-disc).real / 24.0 if disc < 0 else None,
+        'identification_status': 'normalization_dependent_not_identical_to_shadow_F1',
     }
 
 
@@ -1092,39 +1203,34 @@ def topological_recursion_F1(kappa_val, alpha_val, Delta_val):
 # =========================================================================
 
 def borel_singularities_from_wkb(kappa_val, alpha_val, Delta_val):
-    r"""Borel singularities predicted by the WKB analysis.
+    r"""Formal Borel singularity candidates predicted by the WKB analysis.
 
     The divergent WKB series has Borel singularities at the instanton
     actions A_n = n * A_1 where A_1 is the action of the fundamental
     instanton.
 
-    The fundamental action is:
-        A_1 = integral_{t_-}^{t_+} sqrt(V(t)) dt = pi * sqrt(C) / q_2
-
-    where the integral is along a path connecting the two branch points.
-
-    Actually, since V(t) = C/Q(t)^2 and S_0' = sqrt(C)/Q(t), the
-    fundamental action is:
-
-        A_1 = integral_{t_-}^{t_+} sqrt(C)/Q(t) dt
-
-    For the quadratic Q with complex zeros, this integral can be evaluated
-    using partial fractions and gives A_1 = pi (see voros_period_classical).
-
-    CRITICAL: A_1 = pi for ALL algebras (universal). The Borel singularities
-    are at xi = n*pi for all positive integers n.
+    Since V(t) = C/Q(t)^2 and S_0' = sqrt(C)/Q(t), the real-line
+    action of the quadratic shadow metric is pi (see
+    voros_period_classical).  This engine records the corresponding
+    formal candidates xi=n*pi.  It does not prove from finite WKB
+    truncations that the exact Borel plane has no additional
+    singularities.
     """
     C_sch = 8 * kappa_val**2 * Delta_val
 
-    # The fundamental instanton action
-    A_1 = math.pi  # UNIVERSAL
+    # Formal action candidate from the real-line quadratic integral.
+    A_1 = math.pi
 
     return {
         'A_1': A_1,
         'A_n': lambda n: n * A_1,
         'borel_singularities': [n * A_1 for n in range(1, 6)],
         'C_schwarzian': C_sch,
-        'universality': 'A_1 = pi for all shadow Schrodinger equations.',
+        'status': 'formal_candidate_from_real_line_action',
+        'universality': (
+            'A_1 = pi for the chosen quadratic real-line shadow action; '
+            'finite truncations do not exclude other exact Borel singularities.'
+        ),
     }
 
 
@@ -1180,16 +1286,18 @@ def virasoro_shadow_ode_type(c_val):
 
 
 def w3_shadow_ode_type(c_val):
-    """Classify the ODE type for W_3 at central charge c.
+    """Classify the scalar W_3 shadow singularity package.
 
-    The 2-channel system gives a rank-2 Fuchsian system with 4+ singular
-    points, yielding Painleve VI.
+    This routine returns the static four-singularity candidate.  It does
+    not construct the coupled rank-2 Fuchsian system needed for an exact
+    Painleve VI theorem.
     """
     pvi = painleve_from_w3(c_val)
     return {
-        'fuchsian_type': 'heun',
+        'fuchsian_type': 'heun_candidate',
         'n_singular_points': 4,
-        'painleve_type': 'PVI',
+        'painleve_type': pvi['painleve_type'],
+        'painleve_status': pvi['painleve_status'],
         'cross_ratio': pvi['cross_ratio'],
         'PVI_parameters': pvi['PVI_parameters'],
     }
@@ -1205,7 +1313,7 @@ def wkb_coefficients_numerical(c_val, max_order=10, n_grid=200):
     Uses the recursive WKB transport equations with numerical differentiation.
 
     Returns arrays of S_n'(t) evaluated at real t values in a neighborhood
-    of t = 0 (away from the branch points).
+    of t = 0 (away from the finite zeros of Q_L).
     """
     kappa = c_val / 2.0
     alpha = 2.0
@@ -1216,13 +1324,15 @@ def wkb_coefficients_numerical(c_val, max_order=10, n_grid=200):
     q1 = 12*kappa*alpha
     q2 = 9*alpha**2 + 2*Delta
     C_sch = 8*kappa**2*Delta
-    sqC = math.sqrt(abs(C_sch))
 
-    # Determine safe grid: stay well inside the branch point radius
+    # Determine safe grid: stay well inside the nearest finite singular point.
     disc = q1**2 - 4*q0*q2
     sqrt_disc = cmath.sqrt(disc)
     t_plus = (-q1 + sqrt_disc) / (2*q2)
-    R = abs(t_plus) * 0.5  # use half the branch point distance
+    R = abs(t_plus) * 0.5
+
+    if n_grid < 3:
+        raise ValueError('n_grid must be at least 3 for finite differences')
 
     t_grid = np.linspace(-R, R, n_grid)
     dt = t_grid[1] - t_grid[0]
@@ -1241,12 +1351,12 @@ def wkb_coefficients_numerical(c_val, max_order=10, n_grid=200):
     Sp[1] = np.array([Qp_eval(tv) / (2*Q_eval(tv)) for tv in t_grid])
 
     for n in range(2, max_order + 1):
-        # S_{n-1}'' via central differences
+        # S_{n-1}'' = d(S_{n-1}')/dt via central differences.
         Snm1 = Sp[n-1]
-        Snm1_pp = np.zeros_like(Snm1)
-        Snm1_pp[1:-1] = (Snm1[2:] - 2*Snm1[1:-1] + Snm1[:-2]) / dt**2
-        Snm1_pp[0] = Snm1_pp[1]  # boundary
-        Snm1_pp[-1] = Snm1_pp[-2]
+        Snm1_pp = np.zeros_like(Snm1, dtype=complex)
+        Snm1_pp[1:-1] = (Snm1[2:] - Snm1[:-2]) / (2 * dt)
+        Snm1_pp[0] = (-3*Snm1[0] + 4*Snm1[1] - Snm1[2]) / (2 * dt)
+        Snm1_pp[-1] = (3*Snm1[-1] - 4*Snm1[-2] + Snm1[-3]) / (2 * dt)
 
         # Convolution sum
         conv = np.zeros(n_grid, dtype=complex)
@@ -1372,46 +1482,49 @@ def verify_indicial_exponents_universal(c_val):
 # =========================================================================
 
 def virasoro_c25_spectral_curve():
-    """Spectral curve at c = 25 (Liouville partner of c = 1).
+    """Virasoro scalar WKB curve at c = 25 (Liouville partner of c = 1).
 
     At c = 25, kappa = 25/2, Delta = 40/(5*25+22) = 40/147.
 
-    The spectral curve does NOT degenerate at c = 25.  The Koszul dual
-    central charge is 26 - 25 = 1, so c = 25 is dual to c = 1.
+    The scalar curve does not degenerate at c = 25.  The Virasoro-sector
+    central-charge involution sends c = 25 to c = 1.
 
     The Liouville theory connection: Liouville CFT at c = 25+1 = 26 has
     kappa(Vir_26) = 13.  The "partner" c = 25 has kappa = 25/2 = 12.5.
-    The spectral curve at c = 25 carries nontrivial shadow data related
-    to the c = 1 Koszul dual.
+    The scalar curve at c = 25 carries nontrivial shadow data related
+    to the c = 1 Verdier-dual Virasoro-sector lane; it is not itself
+    the object A^!.
     """
     c_val = 25.0
     return virasoro_wkb_data(c_val, max_order=4)
 
 
 def virasoro_c26_spectral_curve():
-    """Spectral curve at c = 26 (critical string).
+    """Virasoro scalar WKB curve at c = 26 (critical string).
 
-    At c = 26: kappa = 13, Vir_{26}^! = Vir_0 with kappa(Vir_0) = 0.
+    At c = 26: kappa = 13.  The Virasoro-sector Verdier-dual branch
+    lands at c = 0 with kappa(Vir_0) = 0.
     Delta = 40/(5*26+22) = 40/152 = 5/19.
 
-    The Koszul dual Vir_0 has kappa = 0, so its shadow obstruction tower is uncurved
-    (m_0 = 0) at arity 2 but may have higher-arity contributions (AP31).
+    The c = 0 scalar branch has kappa = 0, so its arity-2 shadow
+    obstruction vanishes; this does not identify the WKB curve with a
+    Koszul-dual object.
 
-    The spectral curve at c = 26 is well-defined and non-degenerate.
+    The scalar curve at c = 26 is well-defined and non-degenerate.
     """
     c_val = 26.0
     return virasoro_wkb_data(c_val, max_order=4)
 
 
 def virasoro_c13_self_dual():
-    """Spectral curve at c = 13 (self-dual point).
+    """Virasoro scalar WKB curve at c = 13 (self-dual central charge).
 
-    At c = 13: kappa = 13/2, Vir_{13}^! = Vir_{13} (self-dual).
+    At c = 13: kappa = 13/2 and the Virasoro-sector central-charge
+    involution c -> 26-c fixes c.
     Delta = 40/(5*13+22) = 40/87.
 
-    The spectral curve has enhanced Z_2 symmetry from Koszul self-duality.
-    The Voros coefficients should exhibit the self-duality:
-        v_n(c=13) has special structure.
+    This is scalar-lane self-duality, not an identification of the
+    spectral curve with A^!.
     """
     c_val = 13.0
     return virasoro_wkb_data(c_val, max_order=4)

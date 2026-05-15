@@ -23,8 +23,10 @@ import pytest
 
 from compute.lib.symmetric_orbifold_shadow_engine import (
     FREE_BOSON,
+    HOLOGRAPHIC_PACKAGE_ENTRIES,
     K3_SIGMA,
     LEECH_VOA,
+    MODULAR_KOSZUL_COMPUTE_PROJECTIONS,
     T4_SIGMA,
     HolographicDatum,
     SeedTheory,
@@ -390,7 +392,7 @@ class TestLargeN:
 
 
 # =========================================================================
-# Section 7: Holographic datum tests (6 tests)
+# Section 7: Holographic datum tests
 # =========================================================================
 
 class TestHolographicDatum:
@@ -419,6 +421,156 @@ class TestHolographicDatum:
         """Both T^4 and K3 symmetric orbifolds are class G."""
         assert holographic_datum_ads3_t4(5).shadow_class == "G"
         assert holographic_datum_ads3_k3(5).shadow_class == "G"
+
+    def test_holographic_package_is_exactly_seven_entries(self):
+        """H(A) has seven entries and does not absorb the bar object."""
+        expected = (
+            "A",
+            "A^i",
+            "A^!",
+            "C",
+            "r(z)",
+            "Theta_A",
+            "nabla^hol",
+        )
+        assert HOLOGRAPHIC_PACKAGE_ENTRIES == expected
+        for datum in [
+            holographic_datum_ads3_t4(3),
+            holographic_datum_ads3_k3(3),
+        ]:
+            assert datum.holographic_package_entries == expected
+            assert len(datum.holographic_package_entries) == 7
+            assert "B(A)" not in datum.holographic_package_entries
+            assert "Z_ch^der(A)" not in datum.holographic_package_entries
+
+    def test_modular_koszul_package_is_separate_six_projection_surface(self):
+        """Pi_X(L) is a separate six-projection compute surface."""
+        expected = (
+            "Fact_X(L)",
+            "Bbar_X(L)",
+            "Theta_L",
+            "L_L",
+            "(V^br,T^br)",
+            "R_4^mod(L)",
+        )
+        datum = holographic_datum_ads3_t4(3)
+        assert MODULAR_KOSZUL_COMPUTE_PROJECTIONS == expected
+        assert datum.modular_koszul_compute_projections == expected
+        assert len(datum.modular_koszul_compute_projections) == 6
+        assert set(expected).isdisjoint(HOLOGRAPHIC_PACKAGE_ENTRIES)
+        assert datum.modular_koszul_compute_projections != (
+            datum.holographic_package_entries
+        )
+
+    def test_holographic_package_dict_preserves_c_bulk_slot(self):
+        """The returned H(A) dictionary keeps C as the bulk slot."""
+        result = costello_paquette_comparison(10)
+        package = result["holographic_package"]
+        assert tuple(package.keys()) == HOLOGRAPHIC_PACKAGE_ENTRIES
+        assert len(package) == 7
+        assert "C" in package
+        assert "Z_ch^der" in package["C"]
+        assert "B(A)" not in package
+        assert "Z_ch^der(A)" not in package
+
+    def test_costello_paquette_comparison_lives_in_bulk_slot_not_a_dual(self):
+        """CP comparison is routed through C/Z_ch^der(A), not A^!."""
+        result = costello_paquette_comparison(10)
+        package = result["holographic_package"]
+        cp_match = result["costello_paquette_match"]
+
+        assert "Kodaira-Spencer" in package["C"]
+        assert "bulk-observable" in package["C"]
+        assert "Kodaira-Spencer" not in package["A^!"]
+        assert "bulk" not in package["A^!"].lower()
+        assert "C / Z_ch^der(A)" in cp_match["bulk_slot"]
+        assert "not to A^i or A^!" in cp_match["bulk_slot"]
+        assert "not identified with the CP bulk" in cp_match["koszul_dual"]
+
+    def test_holographic_descriptor_slots_separate_five_objects(self):
+        """A, B(A), A^i, A^!, and Z_ch^der(A) stay distinct."""
+        for datum in [
+            holographic_datum_ads3_t4(4),
+            holographic_datum_ads3_k3(4),
+        ]:
+            slots = {
+                "A": datum.boundary_algebra,
+                "B(A)": datum.bar_complex,
+                "A^i": datum.koszul_dual_coalgebra,
+                "A^!": datum.koszul_dual_algebra,
+                "Z_ch^der(A)": datum.bulk_slot,
+            }
+            assert len(set(slots.values())) == len(slots)
+            assert slots["A"].startswith("Sym^")
+            assert "B(" not in slots["A"]
+            assert "Z_ch" not in slots["A"]
+            assert slots["B(A)"].startswith("B(")
+            assert "T^c" in slots["B(A)"]
+            assert "Z_ch" not in slots["B(A)"]
+            assert slots["A^i"].startswith("A^i")
+            assert "H^bullet B(A)" in slots["A^i"]
+            assert "vee" not in slots["A^i"]
+            assert slots["A^!"].startswith("A^!")
+            assert "(A^i)^vee" in slots["A^!"]
+            assert "bulk" not in slots["A^!"].lower()
+            assert slots["Z_ch^der(A)"].startswith("C / Z_ch^der")
+            assert "bulk-observable" in slots["Z_ch^der(A)"]
+            assert "A^!" not in slots["Z_ch^der(A)"]
+
+    def test_object_separation_dictionary_names_inversion_and_bulk(self):
+        """The CP comparison exposes the object firewall explicitly."""
+        result = costello_paquette_comparison(10)
+        separation = result["object_separation"]
+        assert tuple(separation.keys()) == (
+            "A",
+            "B(A)",
+            "A^i",
+            "A^!",
+            "Z_ch^der(A)",
+            "Omega(B(A))",
+        )
+        assert "bar coalgebra" in separation["B(A)"]
+        assert "Koszul dual coalgebra" in separation["A^i"]
+        assert "Verdier dual algebra" in separation["A^!"]
+        assert "bulk" not in separation["A^!"].lower()
+        assert "derived-centre" in separation["Z_ch^der(A)"]
+        assert "not A^i or A^!" in separation["Z_ch^der(A)"]
+        assert "bar-cobar inversion" in separation["Omega(B(A))"]
+        assert "not Koszul duality" in separation["Omega(B(A))"]
+
+    def test_holographic_datum_records_scalars_and_descriptors_only(self):
+        """The direct datum records scalar projections and string descriptors."""
+        datum = holographic_datum_ads3_t4(6)
+        assert isinstance(datum.central_charge, Fraction)
+        assert isinstance(datum.kappa, Fraction)
+        assert isinstance(datum.kappa_dual, Fraction)
+        assert isinstance(datum.shadow_depth, int)
+        assert isinstance(datum.shadow_class, str)
+
+        descriptor_fields = (
+            "boundary_algebra",
+            "bar_complex",
+            "koszul_dual_coalgebra",
+            "koszul_dual_algebra",
+            "bulk_slot",
+            "r_matrix",
+            "theta",
+            "holomorphic_connection",
+        )
+        for field in descriptor_fields:
+            value = getattr(datum, field)
+            assert isinstance(value, str)
+            assert value
+        assert all(
+            isinstance(entry, str)
+            for entry in datum.holographic_package_entries
+        )
+        assert all(
+            isinstance(entry, str)
+            for entry in datum.modular_koszul_compute_projections
+        )
+        package = costello_paquette_comparison(6)["holographic_package"]
+        assert isinstance(package["A"], str)
 
     def test_costello_paquette_comparison_structure(self):
         """The CP comparison returns sensible data."""

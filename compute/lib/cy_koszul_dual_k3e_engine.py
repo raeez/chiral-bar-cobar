@@ -9,7 +9,9 @@ The chiral algebra A_{K3xE} of the K3 x E sigma model is the tensor
 product A_{K3} tensor A_E, where A_E is the c=1 chiral algebra of
 the elliptic curve (a single free boson at level 1).
 
-This engine computes the Koszul dual A^! = (H*(B(A)))^v and the
+This engine records the bar-dual coalgebra A^i = H*(B(A)) and the
+Verdier/linear-dual Koszul algebra A^! obtained from A^i under the
+finite-type or completed duality hypotheses.  It also records the
 homotopy Koszul dual A^!_infty = D_Ran(B(A)) for these algebras,
 verifying the complementarity pairing (Theorem C) and connecting
 to the boundary-to-bulk passage in holographic modular Koszul duality.
@@ -22,14 +24,17 @@ KEY DISTINCTIONS (from CLAUDE.md anti-patterns):
         For Virasoro: kappa + kappa' = 13 (NOT zero). For N=4 SCA at c=6:
         the complementarity sum depends on the FULL algebra, not just the
         Virasoro subalgebra.
-  AP25: B(A) is a coalgebra; D_Ran(B(A)) = A^!_infty is an algebra;
-        Omega(B(A)) = A is bar-cobar inversion. Three distinct functors.
+  AP25: B(A) is the bar coalgebra; A^i = H*(B(A)) is the bar-dual
+        coalgebra; A^! is obtained from A^i only after Verdier or
+        continuous linear duality hypotheses; Omega(B(A)) = A is
+        bar-cobar inversion.  These objects are distinct.
   AP27: Bar propagator d log E(z,w) has weight 1 regardless of field weight.
   AP33: Koszul duality != Feigin-Frenkel duality != negative-level substitution.
   AP48: kappa depends on the FULL algebra, NOT just the Virasoro subalgebra.
         kappa(A_{K3}) = 2 != 3 = kappa(Vir_6).
   AP50: A^!_infty != A^! in general; their compatibility is Theorem A.
-        On the Koszul locus (which includes the N=4 SCA), they agree.
+        On the Koszul locus, and under the required duality hypotheses,
+        they agree.
 
 KOSZUL DUAL IDENTIFICATION
 ===========================
@@ -73,13 +78,16 @@ For A = A_{K3} (N=4 SCA at c=6, k_R=1):
 BOUNDARY-TO-BULK PASSAGE
 ==========================
 
-  AP25/AP34 distinguish three functors:
+  AP25/AP34 distinguish five objects:
+    (0) Bar construction: B(A), a coalgebra chain object
+    (i) Bar-dual coalgebra: A^i = H*(B(A)), still a coalgebra
     (1) Bar-cobar inversion: Omega(B(A)) = A (recovers original algebra)
-    (2) Koszul duality: D_Ran(B(A)) = A^!_infty (Verdier dual = homotopy dual)
+    (2) Koszul duality: A^! from A^i after Verdier/linear duality
+        hypotheses; homotopy dual A^!_infty = D_Ran(B(A))
     (3) Derived center: Z^ch_der(A) = HH*(A) (universal bulk)
 
   The boundary-to-bulk passage is functor (3), NOT functor (2).
-  The Koszul dual A^! is the DUAL BOUNDARY CONDITION.
+  The Verdier/linear-dual A^! is the DUAL BOUNDARY CONDITION.
   The derived center Z^ch_der(A) is the BULK ALGEBRA.
 
   For Koszul algebras (including the N=4 SCA):
@@ -174,8 +182,11 @@ K3E_COMPLEX_DIM = K3_COMPLEX_DIM + E_COMPLEX_DIM  # = 3
 class KoszulDualData:
     """Complete Koszul dual data for a chiral algebra.
 
-    Contains both A^! (strict) and A^!_infty (homotopy) information,
-    complementarity pairing, and boundary-to-bulk passage data.
+    Contains the Verdier/linear-dual Koszul algebra A^!, the homotopy
+    dual A^!_infty, complementarity pairing, and boundary-to-bulk
+    passage data.  The intrinsic bar-dual coalgebra is A^i = H*(B(A));
+    A^! is not identified with A^i until the finite-type or completed
+    duality hypotheses are in force.
     """
     # Original algebra A
     algebra_name: str
@@ -185,7 +196,7 @@ class KoszulDualData:
     generator_weights: List[Fraction]
     depth_class: str  # G, L, C, or M
 
-    # Koszul dual A^!
+    # Verdier/linear-dual Koszul algebra A^!
     dual_name: str
     dual_central_charge: Fraction
     dual_kappa: Fraction
@@ -199,7 +210,7 @@ class KoszulDualData:
 
     # Homotopy Koszul dual A^!_infty
     on_koszul_locus: bool  # whether A is Koszul
-    homotopy_dual_agrees: bool  # whether A^!_infty = A^! (true on Koszul locus)
+    homotopy_dual_agrees: bool  # whether A^!_infty agrees with A^! under hypotheses
 
     # Boundary-to-bulk (derived center)
     hh_polynomial: bool  # whether HH*(A) is polynomial in {0,1,2}
@@ -233,7 +244,8 @@ class KoszulDualData:
             f"  Complementarity: kappa + kappa' = {self.complementarity_sum} "
             f"({self.complementarity_type})",
             f"  On Koszul locus: {self.on_koszul_locus}",
-            f"  A^!_infty = A^!: {self.homotopy_dual_agrees}",
+            f"  A^!_infty agrees with A^! under hypotheses: "
+            f"{self.homotopy_dual_agrees}",
             "",
             f"  HH* polynomial: {self.hh_polynomial}",
             f"  Max OPE pole: {self.max_ope_pole}, "
@@ -886,21 +898,41 @@ def ff_dual_level_su2_of_n4() -> Dict[str, Any]:
 def homotopy_vs_strict_koszul_dual_k3() -> Dict[str, Any]:
     """Compare A^!_infty and A^! for the K3 sigma model.
 
-    AP50: A^!_infty = D_Ran(B(A)) is the homotopy Koszul dual (Verdier duality).
-    A^! = (H*(B(A)))^v is the strict Koszul dual (linear duality of bar cohomology).
+    AP25/AP50: B(A), A^i, A^!, and A^!_infty are not the same object.
+    B(A) is the bar coalgebra.  A^i = H*(B(A)) is the intrinsic
+    bar-dual coalgebra.  A^! is the Verdier or continuous linear dual
+    algebra obtained from A^i only under finite-type/completed duality
+    hypotheses.  A^!_infty = D_Ran(B(A)) is the homotopy Koszul dual.
 
-    For Koszul algebras: A^!_infty and A^! agree up to quasi-isomorphism
-    (this is the content of Theorem A).
+    For Koszul algebras satisfying those duality hypotheses, A^!_infty
+    and A^! agree up to quasi-isomorphism (this is the content of
+    Theorem A).
 
     The N=4 SCA at c=6 IS Koszul (PBW degeneration collapses, bar cohomology
     concentrated in bar degree 1, all characterization-programme equivalences hold).
-    So A^!_infty = A^! for the K3 sigma model.
+    Thus A^!_infty agrees with A^! for the K3 sigma model after the
+    Verdier/linear duality hypotheses have been imposed.
     """
     return {
         'algebra': 'N=4 SCA at c=6',
+        'bar_construction': 'B(A), bar coalgebra chain object',
+        'bar_dual_coalgebra': 'A^i = H*(B(A)), coalgebra',
+        'strict_dual_construction': (
+            'A^! = Verdier/continuous-linear dual of A^i under '
+            'finite-type or completed duality hypotheses'
+        ),
+        'homotopy_dual_construction': 'A^!_infty = D_Ran(B(A))',
+        'duality_hypotheses': (
+            'Koszul locus; finite-type or completed bar cohomology; '
+            'Verdier or continuous linear duality defined'
+        ),
+        'objects_kept_distinct': True,
         'is_koszul': True,
         'homotopy_dual_agrees_with_strict': True,
-        'reason': 'Theorem A: on Koszul locus, A^!_infty = A^!',
+        'reason': (
+            'Theorem A: on the Koszul locus and under Verdier/linear '
+            'duality hypotheses, A^!_infty agrees with A^!'
+        ),
         'higher_operations_vanish': True,  # m_k = 0 for k >= 3
         'a_infinity_formal': True,  # formality of bar cohomology
     }
@@ -913,37 +945,54 @@ def homotopy_vs_strict_koszul_dual_k3() -> Dict[str, Any]:
 def boundary_bulk_passage_k3() -> Dict[str, Any]:
     """The boundary-to-bulk passage for the K3 sigma model.
 
-    AP25/AP34: THREE distinct functors on B(A):
+    AP25/AP34: five objects must stay separated:
+      (0) Bar construction: B(A), a coalgebra chain object
+      (i) Bar-dual coalgebra: A^i = H*(B(A)), still a coalgebra
       (1) Bar-cobar inversion: Omega(B(A)) = A (recovers original algebra)
-      (2) Koszul duality: D_Ran(B(A)) = A^!_infty (dual boundary)
+      (2) Koszul duality: A^! from A^i after Verdier/linear duality
+          hypotheses; homotopy version A^!_infty = D_Ran(B(A))
       (3) Derived center: Z^ch_der(A) = HH*(A) (universal bulk)
 
     The boundary-to-bulk passage is functor (3), NOT functor (2).
     A_{K3} = boundary chiral algebra (open string on K3).
-    A_{K3}^! = dual boundary condition.
+    A_{K3}^! = Verdier/linear-dual boundary condition.
     Z^ch_der(A_{K3}) = universal bulk algebra = closed string observables.
 
-    The three objects are DISTINCT and serve different physical roles.
+    The five objects are DISTINCT and serve different physical roles.
     """
     return {
+        'bar_construction': {
+            'object': 'B(A)',
+            'type': 'coalgebra chain object',
+            'role': 'input to bar cohomology and bar-cobar inversion',
+        },
+        'bar_dual_coalgebra': {
+            'object': 'A^i = H*(B(A))',
+            'type': 'coalgebra',
+            'role': 'intrinsic bar-dual coalgebra before dualization',
+        },
         'bar_cobar_inversion': {
             'functor': 'Omega(B(A))',
             'result': 'A (original algebra)',
             'role': 'round-trip, not a duality',
         },
         'koszul_duality': {
-            'functor': 'D_Ran(B(A))',
-            'result': 'A^!_infty (dual boundary)',
+            'functor': 'Verdier/continuous-linear duality applied to A^i',
+            'homotopy_functor': 'D_Ran(B(A))',
+            'result': 'A^! under hypotheses; A^!_infty homotopically',
             'role': 'dual boundary condition (S-duality)',
+            'hypotheses': 'finite-type or completed Verdier/linear duality',
         },
         'derived_center': {
             'functor': 'HH*(A) = C^*_ch(A,A)',
             'result': 'Z^ch_der(A) (universal bulk)',
             'role': 'closed-string / bulk observables',
         },
+        'objects_kept_distinct': True,
         'warning': ('Bar-cobar inversion does NOT produce the bulk. '
                     'The bulk is the derived center. '
-                    'The dual boundary is A^!.'),
+                    'The dual boundary is A^! only after the '
+                    'Verdier/linear duality hypotheses.'),
     }
 
 

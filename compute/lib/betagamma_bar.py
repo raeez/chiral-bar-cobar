@@ -9,12 +9,24 @@ OPE (beta_gamma.tex):
   beta(z)beta(w) = regular               [no pole]
   gamma(z)gamma(w) = regular             [no pole]
 
+Collision/contact convention:
+  r^{coll}_{beta gamma}(z) = 0 and r^{coll}_{bc}(z) = 0.
+  The simple OPE residue beta_{(0)}gamma = 1 is bar/contact data,
+  not a pole-valued closed collision residue and not A^!_ch.
+  The genus-0 closed curvature m_0 is therefore 0.
+
 Bar differential (beta_gamma.tex, Theorem "Complete bar complex"):
-  D(beta otimes gamma) = 1   (maps to vacuum)
-  D(gamma otimes beta) = -1  (maps to vacuum, opposite sign)
+  D(beta otimes gamma) = 1   (simple OPE residue, maps to vacuum)
+  D(gamma otimes beta) = -1  (simple OPE residue, opposite sign)
   D(beta otimes beta) = 0    (no pole)
   D(gamma otimes gamma) = 0  (no pole)
   D(d_beta) = 0, D(d_gamma) = 0
+
+Class-C shadow convention:
+  The standard beta-gamma/bc conformal-weight family has depth 4,
+  S_3 = 0, S_4 = -5/12, and S_r = 0 for r >= 5.
+  This nonzero rational coefficient is a quartic contact/shadow datum,
+  not closed collision residue.
 
 Degree 3:
   D(beta_1 otimes beta_2 otimes gamma_3) = beta_1 otimes 1 - 1 otimes beta_2
@@ -26,7 +38,11 @@ Koszul dual (thm:betagamma-fermion-koszul):
   Operadic: Sym^! = Lambda (Com^! = Lie)
 
 Bar cohomology (thm:betagamma-bar-cohomology):
-  H^n(B-bar(betagamma)) = C for n=0, 0 for n>=1  (Koszul acyclic)
+  H^*(B-bar_geom(betagamma_lambda)) = (betagamma_lambda)^i.
+  It is the Koszul-dual coalgebra and is not concentrated in degree 0.
+  Acyclicity belongs to the twisted Koszul resolution
+  betagamma_lambda tensor_tau B-bar(betagamma_lambda), whose cohomology
+  is C in degree 0 and 0 in positive degrees.
 
 CONVENTIONS:
 - Cohomological grading, |d| = +1
@@ -40,6 +56,16 @@ from typing import Dict, Tuple
 from sympy import Rational
 
 
+BETAGAMMA_CLOSED_COLLISION_RESIDUE = Rational(0)
+BC_CLOSED_COLLISION_RESIDUE = Rational(0)
+BETAGAMMA_SIMPLE_OPE_RESIDUE = Rational(1)
+BC_SIMPLE_OPE_RESIDUE = Rational(1)
+
+CLASS_C_SHADOW_DEPTH = 4
+CLASS_C_STANDARD_FAMILY_S3 = Rational(0)
+CLASS_C_STANDARD_FAMILY_S4 = Rational(-5, 12)
+
+
 # ---------------------------------------------------------------------------
 # OPE n-th products
 # ---------------------------------------------------------------------------
@@ -49,21 +75,69 @@ def betagamma_nth_product(a: str, b: str, n: int) -> Dict[str, object]:
 
     Ground truth: beta_gamma.tex OPE.
     beta_{(0)}gamma = 1 (simple pole, vacuum)
+    This is a simple OPE/bar-contact residue, not the closed
+    pole-valued collision residue.
     All other: 0
     """
     if n == 0 and a == "beta" and b == "gamma":
-        return {"vac": Rational(1)}
+        return {"vac": BETAGAMMA_SIMPLE_OPE_RESIDUE}
     return {}
 
 
 def betagamma_all_products() -> Dict[Tuple[str, str], Dict[int, Dict[str, object]]]:
     """All singular n-th products for beta-gamma generators."""
     return {
-        ("beta", "gamma"): {0: {"vac": Rational(1)}},
-        ("gamma", "beta"): {},   # no singular terms (skew-symmetry gives -1 but
-                                  # gamma_{(0)}beta = -beta_{(0)}gamma + d(...) = -1 at vacuum level)
+        ("beta", "gamma"): {0: {"vac": BETAGAMMA_SIMPLE_OPE_RESIDUE}},
+        # The stored nth-product presentation is beta-before-gamma.
+        # The opposite sign in the bar differential below is the
+        # oriented residue convention, not a second closed residue.
+        ("gamma", "beta"): {},
         ("beta", "beta"): {},    # regular
         ("gamma", "gamma"): {},  # regular
+    }
+
+
+def betagamma_closed_collision_residue() -> Dict[str, object]:
+    """Pole-valued closed collision residue for beta-gamma.
+
+    The beta-gamma OPE has only a simple pole. In the closed collision
+    channel the dlog extraction removes that pole, so the pole-valued
+    residue and genus-0 curvature both vanish. The nonzero coefficient
+    beta_{(0)}gamma = 1 is returned by betagamma_nth_product and by
+    the bar differential; it is not r^{coll} and not A^!_ch.
+    """
+    return {
+        "r_coll": BETAGAMMA_CLOSED_COLLISION_RESIDUE,
+        "m0": BETAGAMMA_CLOSED_COLLISION_RESIDUE,
+    }
+
+
+def bc_closed_collision_residue() -> Dict[str, object]:
+    """Pole-valued closed collision residue for the bc ghost system.
+
+    The same distinction holds for bc: b_{(0)}c = 1 is the simple
+    OPE/bar-contact residue, while the closed collision residue is 0.
+    """
+    return {
+        "r_coll": BC_CLOSED_COLLISION_RESIDUE,
+        "m0": BC_CLOSED_COLLISION_RESIDUE,
+    }
+
+
+def betagamma_class_c_shadow_data() -> Dict[str, object]:
+    """Class-C finite-depth shadow data for beta-gamma/bc.
+
+    These are standard conformal-weight family constants. They are not
+    closed collision residues and do not identify A, B(A), A^i, A^!,
+    or Z_ch^der(A).
+    """
+    return {
+        "shadow_class": "C",
+        "depth": CLASS_C_SHADOW_DEPTH,
+        "S3": CLASS_C_STANDARD_FAMILY_S3,
+        "S4": CLASS_C_STANDARD_FAMILY_S4,
+        "tail_from_5": Rational(0),
+        "closed_collision_residue": BETAGAMMA_CLOSED_COLLISION_RESIDUE,
     }
 
 
@@ -74,7 +148,8 @@ def betagamma_all_products() -> Dict[Tuple[str, str], Dict[int, Dict[str, object
 def betagamma_bar_diff_deg2(a: str, b: str) -> Tuple[Dict[str, object], Dict[str, object]]:
     """Bar differential D([a|b] otimes eta_{12}).
 
-    Ground truth: beta_gamma.tex degree-2 differential.
+    Ground truth: beta_gamma.tex degree-2 differential. This extracts
+    the simple OPE/bar-contact residue, not a closed collision residue.
     D(beta otimes gamma) = 1 (vacuum)
     D(gamma otimes beta) = -1 (vacuum, opposite sign)
     D(beta otimes beta) = 0
@@ -86,9 +161,9 @@ def betagamma_bar_diff_deg2(a: str, b: str) -> Tuple[Dict[str, object], Dict[str
     bar1 = {}
 
     if a == "beta" and b == "gamma":
-        vac["vac"] = Rational(1)
+        vac["vac"] = BETAGAMMA_SIMPLE_OPE_RESIDUE
     elif a == "gamma" and b == "beta":
-        vac["vac"] = Rational(-1)
+        vac["vac"] = -BETAGAMMA_SIMPLE_OPE_RESIDUE
     # beta-beta and gamma-gamma: zero (no pole)
 
     return vac, bar1
@@ -147,10 +222,14 @@ BETAGAMMA_BAR_COHOMOLOGY = {
 
 
 def betagamma_bar_cohomology_dim(weight: int) -> int:
-    """Bar cohomology at given conformal weight.
+    """Koszul-dual coalgebra dimension at a conformal-weight truncation.
 
     Ground truth: KNOWN_BAR_DIMS["beta_gamma"] from Master Table.
     GF: sqrt((1+x)/(1-3x)).
+
+    This is the bare geometric bar cohomology
+    H^*(B-bar_geom(betagamma_lambda)) = (betagamma_lambda)^i, not the
+    acyclic twisted Koszul resolution.
     """
     return BETAGAMMA_BAR_COHOMOLOGY.get(weight, 0)
 
@@ -167,13 +246,34 @@ def betagamma_koszul_dual() -> str:
     return "bc_ghosts"
 
 
-def betagamma_is_koszul_acyclic() -> bool:
-    """Bar cohomology is acyclic above degree 0.
+def betagamma_bare_bar_is_acyclic() -> bool:
+    """The bare beta-gamma bar coalgebra is not acyclic.
 
-    Ground truth: thm:betagamma-bar-cohomology.
-    H^n(B-bar) = C for n=0, 0 for n>=1.
+    Ground truth: thm:betagamma-bar-cohomology and
+    prop:betagamma-bar-acyclicity. The positive cohomology of
+    B-bar_geom(betagamma_lambda) is the Koszul-dual coalgebra
+    (betagamma_lambda)^i.
+    """
+    return False
+
+
+def betagamma_twisted_koszul_resolution_is_acyclic() -> bool:
+    """The twisted Koszul resolution is acyclic off the vacuum.
+
+    Ground truth: prop:betagamma-bar-acyclicity.
+    K(tau) = betagamma_lambda tensor_tau B-bar(betagamma_lambda) has
+    H^0 = C and H^n = 0 for n >= 1.
     """
     return True
+
+
+def betagamma_is_koszul_acyclic() -> bool:
+    """Compatibility name for twisted Koszul resolution acyclicity.
+
+    This function does not assert acyclicity of the bare bar coalgebra.
+    Use betagamma_bare_bar_is_acyclic() for that question.
+    """
+    return betagamma_twisted_koszul_resolution_is_acyclic()
 
 
 # ---------------------------------------------------------------------------
@@ -181,14 +281,22 @@ def betagamma_is_koszul_acyclic() -> bool:
 # ---------------------------------------------------------------------------
 
 def betagamma_curvature() -> Dict[str, object]:
-    """Curvature for beta-gamma bar complex.
+    """Compatibility wrapper for beta-gamma residue data.
 
-    The curvature comes from the simple pole: beta_{(0)}gamma = 1.
-    Since this is a simple pole (not double), the curvature is in the
-    mixed channel only.
-    m_0 = 1 (from the simple pole beta_{(0)}gamma).
+    Closed genus-0 curvature is m_0 = 0: the beta-gamma OPE has no
+    double pole, and its simple pole is absorbed in the closed dlog
+    collision channel. The legacy ``"beta_gamma"`` key is preserved as
+    the simple OPE/bar-contact residue beta_{(0)}gamma = 1 for callers
+    that used this function before the closed/contact distinction was
+    made explicit.
     """
-    return {"beta_gamma": Rational(1)}
+    return {
+        "m0": BETAGAMMA_CLOSED_COLLISION_RESIDUE,
+        "closed_collision_residue": BETAGAMMA_CLOSED_COLLISION_RESIDUE,
+        "simple_ope_residue": BETAGAMMA_SIMPLE_OPE_RESIDUE,
+        "bar_contact_residue": BETAGAMMA_SIMPLE_OPE_RESIDUE,
+        "beta_gamma": BETAGAMMA_SIMPLE_OPE_RESIDUE,
+    }
 
 
 # ---------------------------------------------------------------------------
@@ -197,6 +305,9 @@ def betagamma_curvature() -> Dict[str, object]:
 
 def bc_bar_diff_deg2(a: str, b: str) -> Tuple[Dict[str, object], Dict[str, object]]:
     """Bar differential for bc ghost system at degree 2.
+
+    This is simple OPE/bar-contact data. The pole-valued closed
+    collision residue for bc is zero.
 
     Ground truth: prop:bar-bc-system (beta_gamma.tex).
     D(b otimes c) = 1 (vacuum)
@@ -208,9 +319,9 @@ def bc_bar_diff_deg2(a: str, b: str) -> Tuple[Dict[str, object], Dict[str, objec
     bar1 = {}
 
     if a == "b" and b == "c":
-        vac["vac"] = Rational(1)
+        vac["vac"] = BC_SIMPLE_OPE_RESIDUE
     elif a == "c" and b == "b":
-        vac["vac"] = Rational(-1)
+        vac["vac"] = -BC_SIMPLE_OPE_RESIDUE
 
     return vac, bar1
 
@@ -305,8 +416,34 @@ def verify_koszul_duality():
     results = {}
     results["bg^! = bc"] = betagamma_koszul_dual() == "bc_ghosts"
     results["bc^! = bg"] = bc_koszul_dual() == "beta_gamma"
-    results["bg is Koszul acyclic"] = betagamma_is_koszul_acyclic()
+    results["bare bg bar is dual coalgebra, not acyclic"] = (
+        not betagamma_bare_bar_is_acyclic()
+        and betagamma_bar_cohomology_dim(1) == 2
+        and betagamma_bar_cohomology_dim(2) == 4
+    )
+    results["twisted bg Koszul resolution is acyclic"] = (
+        betagamma_is_koszul_acyclic()
+    )
     return results
+
+
+def verify_closed_collision_vs_contact():
+    """Verify closed collision zero is not conflated with contact data."""
+    bg_closed = betagamma_closed_collision_residue()
+    bc_closed = bc_closed_collision_residue()
+    class_c = betagamma_class_c_shadow_data()
+    curv = betagamma_curvature()
+
+    return {
+        "bg r_coll = 0": bg_closed["r_coll"] == 0,
+        "bg m0 = 0": bg_closed["m0"] == 0,
+        "bc r_coll = 0": bc_closed["r_coll"] == 0,
+        "simple OPE residue = 1": curv["simple_ope_residue"] == 1,
+        "legacy beta_gamma key is contact": curv["beta_gamma"] == 1,
+        "S4 = -5/12": class_c["S4"] == Rational(-5, 12),
+        "class C depth = 4": class_c["depth"] == 4,
+        "class C tail vanishes from 5": class_c["tail_from_5"] == 0,
+    }
 
 
 if __name__ == "__main__":
@@ -319,6 +456,7 @@ if __name__ == "__main__":
         ("bc Ghost Bar Differential", verify_bc_bar_diff),
         ("Chain Type Counts", verify_chain_type_counts),
         ("Koszul Duality", verify_koszul_duality),
+        ("Closed Collision vs Contact", verify_closed_collision_vs_contact),
     ]:
         print(f"\n--- {section} ---")
         for name, ok in fn().items():

@@ -1,8 +1,8 @@
-r"""Tests for the Selberg-type zeta function from the shadow connection flow.
+r"""Tests for the scalar Selberg-type shadow-flow diagnostics.
 
 Multi-path verification:
     Path 1: Direct product computation of Z^{Sel}
-    Path 2: Trace formula: log Z = orbit sum
+    Path 2: Logarithmic q-product expansion
     Path 3: Class G/L exact computation (empty product = 1)
     Path 4: Consistency with shadow spectral dimension d^{sh}(A)
 
@@ -19,15 +19,18 @@ Multi-path verification:
     - Class M (Virasoro): nontrivial, full landscape
     - Cross-family consistency
     - Multi-channel generalization
+    - Scope diagnostics: no Selberg-class, functional-equation, or full-MC
+      certification from this scalar surface
 
 Tolerance: 1e-10 for exact comparisons, 1e-6 for numerical products.
 """
 
 import math
 import cmath
-import pytest
 
 from compute.lib.bc_selberg_shadow_flow_engine import (
+    # Scope firewalls
+    selberg_scope_diagnostic,
     # Shadow metric and branch points
     shadow_metric_Q,
     shadow_metric_coefficients,
@@ -92,6 +95,7 @@ from compute.lib.bc_selberg_shadow_flow_engine import (
     _virasoro_shadow_coefficients,
     _heisenberg_shadow_coefficients,
     _affine_shadow_coefficients,
+    _betagamma_shadow_coefficients,
 )
 
 
@@ -154,6 +158,11 @@ class TestBranchPointGeometry:
         t_plus, t_minus = branch_points(kappa, alpha, S4)
         # Both roots should be at the same point (double root)
         assert abs(t_plus - t_minus) < 1e-8
+
+    def test_affine_sl2_double_root_has_no_nontrivial_orbits(self):
+        """A double root has residue 1, monodromy +1, and no primitive orbit."""
+        kappa, alpha, S4, _ = affine_sl2_shadow_data(1.0)
+        assert compute_orbits(kappa, alpha, S4) == []
 
     def test_virasoro_growth_rate_positive(self):
         """Growth rate rho is positive for all c > 0."""
@@ -291,7 +300,7 @@ class TestSelbergZeta:
             assert abs(Z_orbits - Z_geometric) < 1e-8 * max(abs(Z_orbits), 1e-30)
 
     def test_selberg_via_trace_matches_direct(self):
-        """Path 2: Trace formula matches direct product."""
+        """Path 2: logarithmic q-product expansion matches direct product."""
         kappa, alpha, S4, _ = virasoro_shadow_data(13.0)
         orbits = compute_orbits(kappa, alpha, S4)
         s = complex(3.0, 0.5)
@@ -424,14 +433,13 @@ class TestSelbergRuelleRelation:
 # ============================================================================
 
 class TestFunctionalEquation:
-    """Test the functional equation of the shadow Selberg zeta."""
+    """Test finite functional-equation diagnostics, not theorem status."""
 
     def test_no_exact_functional_equation(self):
-        """The shadow Selberg zeta does NOT satisfy Z(s) = Z(1-s) exactly.
+        """The sampled ratio is not 1 at this point.
 
-        This is expected: the shadow connection lives on a meromorphic
-        connection, not a compact Riemann surface, so the classical
-        Selberg functional equation does not apply.
+        This is only a diagnostic sample; theorem-level functional
+        equations require analytic input outside this scalar q-product.
         """
         rho = virasoro_growth_rate(13.0)
         s = complex(2.0, 1.0)
@@ -449,12 +457,11 @@ class TestFunctionalEquation:
             assert math.isfinite(abs(Zs))
 
     def test_ratio_not_involving_riemann_zeta(self):
-        """The correction factor Z(s)/Z(1-s) does NOT involve zeta(2s)/zeta(2s-1).
+        """The sampled ratios do not certify a Riemann-zeta correction.
 
-        This is because the shadow Selberg zeta is built from a logarithmic
-        connection with finitely many singular points, not from a hyperbolic
-        surface. There is no Laplacian, no Weyl law, and no Patterson-Perry
-        scattering matrix to produce Riemann zeta factors.
+        The scalar product is built from branch-monodromy data of a
+        logarithmic connection. A finite ratio scan is not a proof of
+        any functional equation or of its absence.
         """
         rho = virasoro_growth_rate(13.0)
         # Evaluate the correction ratio at several points
@@ -560,7 +567,7 @@ class TestSelbergZeros:
 # ============================================================================
 
 class TestRiemannComparison:
-    """Test comparison with Riemann zeta zeros."""
+    """Test finite Riemann-zero comparison diagnostics."""
 
     def test_riemann_zeros_table_correct(self):
         """Verify the Riemann zero table against known values."""
@@ -570,10 +577,9 @@ class TestRiemannComparison:
         assert abs(RIEMANN_ZERO_IMAG_PARTS[1] - 21.022040) < 1e-4
 
     def test_no_systematic_alignment(self):
-        """Shadow Selberg zeros do NOT systematically align with Riemann zeros.
+        """Finite shadow-zero samples do not show suspicious alignment.
 
-        This is expected (AP42): the shadow connection and the Riemann zeta
-        encode fundamentally different mathematical structures.
+        This is a numerical diagnostic, not an independence theorem.
         """
         for c_val in [1.0, 13.0, 25.0]:
             rho = virasoro_growth_rate(c_val)
@@ -705,11 +711,25 @@ class TestLandscape:
         """Compute the full standard landscape."""
         landscape = compute_full_selberg_landscape()
         assert 'Heis_k=1' in landscape
+        assert 'aff_sl2_k=1' in landscape
         assert 'Vir_c=13' in landscape
         # Heisenberg has no orbits
         assert landscape['Heis_k=1'].N_bp == 0
+        # Affine sl_2 has a double root with trivial monodromy
+        assert landscape['aff_sl2_k=1'].N_bp == 0
+        assert landscape['aff_sl2_k=1'].rho == 0.0
         # Virasoro has 2 orbits
         assert landscape['Vir_c=13'].N_bp == 2
+
+    def test_class_c_landscape_data_is_empty_product(self):
+        """Class C is finite depth and is not promoted to Class M orbit data.
+
+        Source: higher_genus_modular_koszul.tex:40341-40343.
+        """
+        data = compute_selberg_data('betagamma_lambda=1/2', 'C', -0.5, 0.0, -5.0 / 12.0)
+        assert data.N_bp == 0
+        assert data.rho == 0.0
+        assert data.selberg_zeta(complex(3.0, 0.0)) == 1.0 + 0.0j
 
     def test_selberg_data_zeta_method(self):
         """SelbergShadowData.selberg_zeta method works."""
@@ -732,6 +752,18 @@ class TestLandscape:
 
 class TestHybridProduct:
     """Test the hybrid shadow-Selberg product zeta."""
+
+    def test_betagamma_coefficients_are_class_c_canonical(self):
+        """Beta-gamma uses the Class C coefficients, not Virasoro S4.
+
+        Source: higher_genus_modular_koszul.tex:40341-40343.
+        """
+        coeffs = _betagamma_shadow_coefficients(0.5, max_r=8)
+        assert coeffs[2] == -0.5
+        assert coeffs[3] == 0.0
+        assert abs(coeffs[4] - (-5.0 / 12.0)) < 1e-12
+        for r in range(5, 9):
+            assert coeffs[r] == 0.0
 
     def test_heisenberg_hybrid(self):
         """Heisenberg hybrid product: prod_{k>=0} (1 - k * 2^{-(s+k)})."""
@@ -795,11 +827,16 @@ class TestMultiChannel:
 
 
 # ============================================================================
-# Section 14: Koszul duality relations
+# Section 14: Verdier-dual scalar projection relations
 # ============================================================================
 
-class TestKoszulDuality:
-    """Test Koszul duality properties of the Selberg zeta."""
+class TestVerdierDualProjection:
+    """Test reflected Virasoro scalar projections.
+
+    These tests concern the Verdier/Koszul dual branch A^! on the
+    scalar Virasoro lane. They are not bar-cobar inversion tests and
+    not derived-centre tests.
+    """
 
     def test_virasoro_dual_rho(self):
         """rho(Vir_c) and rho(Vir_{26-c}) are related but NOT equal.
@@ -820,14 +857,14 @@ class TestKoszulDuality:
         assert abs(rho - rho_dual) < 1e-12
 
     def test_selberg_at_self_dual(self):
-        """At c=13, Z^Sel_A(s) = Z^Sel_{A!}(s)."""
+        """At c=13, the reflected scalar product is self-dual."""
         s = complex(3.0, 1.0)
         Z = selberg_zeta_virasoro(13.0, s)
-        Z_dual = selberg_zeta_virasoro(13.0, s)  # Same algebra at self-dual
+        Z_dual = selberg_zeta_virasoro(13.0, s)
         assert abs(Z - Z_dual) < 1e-12
 
-    def test_koszul_duality_exchanges_branch_points(self):
-        """Koszul duality c -> 26-c transforms Q_L(t,c) to Q_L(t,26-c).
+    def test_reflected_branch_exchanges_branch_points(self):
+        """The reflection c -> 26-c transforms Q_L(t,c) to Q_L(t,26-c).
 
         The branch points are different for A and A!.
         """
@@ -876,3 +913,31 @@ class TestEdgeCases:
         rho = virasoro_growth_rate(13.0)
         Z = selberg_zeta_geometric(rho, 2, complex(2.0, 50.0), max_k=80)
         assert math.isfinite(abs(Z))
+
+
+# ============================================================================
+# Section 16: Scope diagnostics
+# ============================================================================
+
+class TestScopeDiagnostics:
+    """The compute surface stays scalar and non-certifying."""
+
+    def test_scope_flags_are_non_certifying(self):
+        diag = selberg_scope_diagnostic()
+        assert diag.scalar_projection_only is True
+        assert diag.certifies_selberg_class is False
+        assert diag.certifies_prime_euler_product is False
+        assert diag.certifies_analytic_continuation is False
+        assert diag.certifies_functional_equation is False
+        assert diag.certifies_full_mc_data is False
+        assert diag.certifies_holographic_package is False
+
+    def test_package_firewalls_are_preserved(self):
+        diag = selberg_scope_diagnostic()
+        assert diag.holographic_package == (
+            "A", "A^i", "A^!", "C", "r(z)", "Theta_A", "nabla^hol",
+        )
+        assert diag.modular_koszul_compute_package == (
+            "Fact_X(L)", "barB_X(L)", "Theta_L", "L_L",
+            "(V_br,T_br)", "R4_mod(L)",
+        )

@@ -1,33 +1,25 @@
-r"""Tests for kappa_painleve_engine.py -- kappa-deformed Painleve I.
+r"""Tests for kappa_painleve_engine.py.
 
-Covers the seven tasks:
-  1. Numerical solution of kappa-P_I at kappa = 1, 13, 24
-  2. Tritronquee asymptotics
-  3. Stokes multipliers (Kapaev)
-  4. Dispersionless limit
-  5. Fredholm / kernel structure (benchmarks vs. Airy)
-  6. Isomonodromic deformation
-  7. Random matrix / beta-ensemble identification
-
-Plus:
-  - Rescaling theorem (the load-bearing identity): cross-verification via two
-    independent integration paths.
-  - Multi-path verification of all published constants.
-  - Anti-pattern guards (AP24, AP39, AP48 for kappa values).
-
-Total: 50+ tests.
+The file separates finite scalar identities, KdV/Hirota residuals,
+stationary primary-line diagnostics, and conditional Painleve-I rescaling.
 """
 
 import math
-import cmath
+from fractions import Fraction
+
 import pytest
 import numpy as np
 
 from compute.lib.kappa_painleve_engine import (
+    LOCAL_FORMULA_SOURCES, OBJECT_FIREWALLS, KERNEL_NORMALIZATIONS,
     # Family kappa values
     kappa_virasoro, kappa_heisenberg, kappa_lattice, kappa_moonshine,
-    kappa_virasoro_self_dual, kappa_AP24_sum,
-    # Rescaling theorem
+    kappa_virasoro_self_dual, kappa_virasoro_complementarity_sum,
+    # Scalar and residual diagnostics
+    finite_scalar_coefficient_identity, direct_kdv_residual,
+    direct_hirota_residual, stationary_primary_line_diagnostics,
+    painleve_certification_firewall,
+    # Conditional rescaling
     rescale_x_to_X, rescale_X_to_x, rescale_Y_to_y, rescale_y_to_Y,
     verify_rescaling_at,
     # Numerical solver
@@ -62,37 +54,38 @@ from compute.lib.kappa_painleve_engine import (
 
 
 # ============================================================================
-# Section 1: Family kappa values (AP1, AP24, AP39, AP48 guards)
+# Section 1: Family kappa values
 # ============================================================================
 
 class TestFamilyKappaValues:
     def test_virasoro_kappa_equals_half_c(self):
-        """AP39: kappa(Vir_c) = c/2, Virasoro-specific."""
-        assert kappa_virasoro(2.0).kappa == 1.0
-        assert kappa_virasoro(26.0).kappa == 13.0
-        assert kappa_virasoro(13.0).kappa == 6.5
+        """Virasoro: kappa(Vir_c) = c/2."""
+        assert kappa_virasoro(2.0).kappa == Fraction(1)
+        assert kappa_virasoro(26.0).kappa == Fraction(13)
+        assert kappa_virasoro(13.0).kappa == Fraction(13, 2)
 
     def test_heisenberg_kappa_equals_k(self):
-        """AP1, AP48: Heisenberg kappa = k (level), NOT c/2."""
-        assert kappa_heisenberg(1.0).kappa == 1.0
-        assert kappa_heisenberg(2.0).kappa == 2.0
+        """Heisenberg kappa is the level k."""
+        assert kappa_heisenberg(1.0).kappa == Fraction(1)
+        assert kappa_heisenberg(2.0).kappa == Fraction(2)
 
     def test_lattice_kappa_equals_rank(self):
-        """AP48: lattice VOA has kappa = rank, NOT c/2."""
-        assert kappa_lattice(24).kappa == 24.0
-        assert kappa_lattice(8).kappa == 8.0
+        """Lattice VOA kappa is the lattice rank."""
+        assert kappa_lattice(24).kappa == Fraction(24)
+        assert kappa_lattice(8).kappa == Fraction(8)
 
-    def test_moonshine_uses_niemeier_convention(self):
-        """User asked about kappa = 24; moonshine Niemeier convention returns 24."""
-        assert kappa_moonshine().kappa == 24.0
+    def test_moonshine_is_distinct_from_leech_lattice(self):
+        """V^natural has kappa 12; the Leech lattice VOA has kappa 24."""
+        assert kappa_moonshine().kappa == Fraction(12)
+        assert kappa_lattice(24).kappa == Fraction(24)
 
     def test_virasoro_self_dual_c13_has_kappa_13_over_2(self):
-        """AP24: at c=13, kappa = 13/2 = 6.5, NOT 13.  The 13 is the SUM."""
-        assert kappa_virasoro_self_dual().kappa == 6.5
+        """At c=13, the individual Virasoro kappa is 13/2."""
+        assert kappa_virasoro_self_dual().kappa == Fraction(13, 2)
 
-    def test_AP24_sum_kappa_is_literal_13(self):
-        """The literal kappa=13 the user asked about: it's the AP24 sum."""
-        assert kappa_AP24_sum().kappa == 13.0
+    def test_virasoro_complementarity_sum_is_13(self):
+        """The Verdier complementarity sum is 13."""
+        assert kappa_virasoro_complementarity_sum().kappa == Fraction(13)
 
     def test_kappa_values_have_provenance(self):
         """Every kappa carries audit trail."""
@@ -102,8 +95,66 @@ class TestFamilyKappaValues:
             assert len(f.source) > 0
 
 
+class TestScalarAndResidualDiagnostics:
+    def test_local_sources_record_kernel_normalizations(self):
+        assert LOCAL_FORMULA_SOURCES['kernel_normalizations'].endswith(':180')
+        assert KERNEL_NORMALIZATIONS['affine_raw_trace_form'] == 'k*Omega_tr/z'
+        assert KERNEL_NORMALIZATIONS['affine_KZ'] == 'Omega/((k+h^vee)*z)'
+        assert KERNEL_NORMALIZATIONS['Heisenberg'] == 'k/z'
+        assert KERNEL_NORMALIZATIONS['Virasoro'] == '(c/2)/z^3 + 2*T/z'
+
+    def test_object_firewall_distinguishes_bar_cobar_and_dual(self):
+        assert 'not Koszul duality' in OBJECT_FIREWALLS['Omega(B(A))']
+        assert 'Verdier' in OBJECT_FIREWALLS['A^!']
+        assert 'Hochschild' in OBJECT_FIREWALLS['Z_ch^der(A)']
+
+    def test_finite_scalar_identity_is_exact_and_non_certifying(self):
+        result = finite_scalar_coefficient_identity(Fraction(13), g_max=2)
+        assert result['coefficients'][1]['F_g_shadow_scalar'] == Fraction(13, 24)
+        assert result['coefficients'][2]['F_g_shadow_scalar'] == Fraction(91, 5760)
+        assert result['analytic_tau_power_certified'] is False
+        assert result['hierarchy_membership_certified'] is False
+        assert result['painleve_from_scalar_tau_certified'] is False
+
+    def test_direct_kdv_residual_is_quadratic(self):
+        result = direct_kdv_residual(Fraction(13))
+        assert result['obstruction_value'] == Fraction(-156)
+        assert result['standard_kdv_residual_factor'] == Fraction(156)
+        assert result['standard_kdv_residual_coefficient'] == Fraction(936)
+        assert result['certifies_kappa_deformed_kdv'] is False
+
+    def test_direct_kdv_residual_vanishes_at_standard_point(self):
+        result = direct_kdv_residual(Fraction(1))
+        assert result['vanishes'] is True
+        assert result['standard_kdv_residual_coefficient'] == 0
+
+    def test_hirota_residual_is_non_certifying(self):
+        result = direct_hirota_residual(Fraction(13))
+        assert result['hirota_quadratic_residual_factor'] == Fraction(156)
+        assert result['constructs_hirota_hierarchy'] is False
+        assert result['certifies_analytic_tau_membership'] is False
+
+    def test_stationary_primary_line_diagnostic_is_exact(self):
+        result = stationary_primary_line_diagnostics(
+            Fraction(3), alpha=Fraction(2), S4=Fraction(1, 5)
+        )
+        q = result['Q_L']
+        assert q['constant'] == Fraction(36)
+        assert q['linear'] == Fraction(72)
+        assert q['quadratic'] == Fraction(228, 5)
+        assert q['Delta'] == Fraction(24, 5)
+        assert result['certifies_descendant_hierarchy'] is False
+        assert result['certifies_painleve_equation'] is False
+
+    def test_painleve_firewall_blocks_scalar_tau_promotion(self):
+        result = painleve_certification_firewall(Fraction(13))
+        assert result['conditional_painleve_ode_rescaling'] is True
+        assert result['painleve_from_scalar_tau_certified'] is False
+        assert result['isomonodromic_structure_assumed_separately'] is True
+
+
 # ============================================================================
-# Section 2: Rescaling theorem (the load-bearing identity)
+# Section 2: Conditional rescaling identity
 # ============================================================================
 
 class TestRescalingTheorem:
@@ -225,7 +276,7 @@ class TestTritronqueeConstants:
 
 
 # ============================================================================
-# Section 4: kappa-Tritronquee (Task 1 + Task 2)
+# Section 4: Conditional kappa-tritronquee
 # ============================================================================
 
 class TestKappaTritronquee:
@@ -322,13 +373,13 @@ class TestCrossVerificationRescaling:
         assert res['relative_error'] < 1e-6
 
     def test_kappa_half_direct_vs_rescaled_at_x_neg_half(self):
-        """Non-standard kappa to exclude hardcoded-value bugs (AP10)."""
+        """Non-standard kappa excludes hardcoded values."""
         res = cross_verify_kappa_pi_via_rescaling(0.5, x_eval=-0.5)
         assert res['relative_error'] < 1e-6
 
 
 # ============================================================================
-# Section 6: Stokes multipliers (Task 3)
+# Section 6: Stokes multipliers
 # ============================================================================
 
 class TestStokesMultipliers:
@@ -395,7 +446,7 @@ class TestWKBAction:
 
 
 # ============================================================================
-# Section 7: Dispersionless limit (Task 4)
+# Section 7: Dispersionless diagnostic
 # ============================================================================
 
 class TestDispersionlessLimit:
@@ -449,7 +500,7 @@ class TestDispersionlessLimit:
 
 
 # ============================================================================
-# Section 8: Fredholm / Tracy-Widom relation (Task 5)
+# Section 8: Fredholm and Tracy-Widom boundary
 # ============================================================================
 
 class TestFredholmKernel:
@@ -466,18 +517,21 @@ class TestFredholmKernel:
         assert abs(airy_kernel(x, x, 0.0) - expected) < 1e-10
 
     def test_kernel_structure_reports_pi_not_tracy_widom(self):
-        """P_I does NOT have Tracy-Widom Fredholm form (AP42)."""
+        """P_I does not have the Tracy-Widom Fredholm form."""
         info = pi_kernel_structure()
         assert info['painleve_type'] == 'P_I'
-        assert 'NOT' in info['fredholm_status']
+        assert 'No closed Tracy-Widom-style Fredholm determinant' in info['fredholm_status']
         assert 'P_II' in info['tracy_widom_relation']
 
-    def test_tau_pi_log_det_relation_kappa_power(self):
-        """log tau_kappa = kappa * log tau_std: matches shadow-KW identity."""
+    def test_tau_pi_log_det_relation_is_conditional(self):
+        """Painleve tau rescaling is not a shadow-KW certification."""
         for kappa in [1.0, 13.0, 24.0]:
             rel = tau_pi_minus_log_det_relation(-1.0, kappa)
             assert rel['kappa_power'] == kappa
-            assert rel['matches_shadow_KW'] is True
+            assert rel['painleve_tau_rescaling_certified'] is True
+            assert rel['matches_shadow_KW'] is False
+            assert rel['analytic_tau_power_certified'] is False
+            assert rel['requires_isomonodromic_input'] is True
 
     def test_tau_pi_kappa_1_reduces_to_standard(self):
         rel = tau_pi_minus_log_det_relation(-1.0, 1.0)
@@ -486,21 +540,28 @@ class TestFredholmKernel:
 
 
 # ============================================================================
-# Section 9: Isomonodromic check (Task 6)
+# Section 9: Isomonodromic scope
 # ============================================================================
 
 class TestIsomonodromic:
-    def test_standard_pi_is_isomonodromic(self):
-        assert isomonodromic_check_kappa(1.0)['isomonodromic']
-
-    def test_kappa_13_is_isomonodromic(self):
-        info = isomonodromic_check_kappa(13.0)
+    def test_standard_pi_ode_scope_is_isomonodromic(self):
+        info = isomonodromic_check_kappa(1.0)
         assert info['isomonodromic']
+        assert info['ode_isomonodromic_if_standard_pi_supplied'] is True
+        assert info['tau_shadow_isomonodromic_certified'] is False
+
+    def test_kappa_13_requires_external_jmu_system(self):
+        info = isomonodromic_check_kappa(13.0)
+        assert info['ode_isomonodromic_if_standard_pi_supplied'] is True
+        assert info['requires_external_jmu_system'] is True
+        assert info['tau_shadow_isomonodromic_certified'] is False
         assert info['stokes_data_kappa_dependent'] is False
 
-    def test_kappa_24_is_isomonodromic(self):
+    def test_kappa_24_requires_external_jmu_system(self):
         info = isomonodromic_check_kappa(24.0)
-        assert info['isomonodromic']
+        assert info['ode_isomonodromic_if_standard_pi_supplied'] is True
+        assert info['requires_external_jmu_system'] is True
+        assert info['tau_shadow_isomonodromic_certified'] is False
         assert info['stokes_data_kappa_dependent'] is False
 
     def test_wkb_action_is_kappa_dependent(self):
@@ -513,7 +574,7 @@ class TestIsomonodromic:
 
 
 # ============================================================================
-# Section 10: Random matrix / beta-ensemble identification (Task 7)
+# Section 10: Random matrix and beta-ensemble boundary
 # ============================================================================
 
 class TestBetaEnsembleIdentification:
@@ -562,7 +623,8 @@ class TestLandscapeSummary:
     def test_summary_kappa_1(self):
         s = kappa_pi_summary_for_kappa(1.0)
         assert s['kappa'] == 1.0
-        assert s['isomonodromic']
+        assert s['ode_isomonodromic_if_standard_pi_supplied']
+        assert s['tau_shadow_isomonodromic_certified'] is False
         assert abs(s['first_pole_positive_real'] - X_TRITRONQUEE_FIRST_POLE_POS_REAL) < 1e-10
 
     def test_summary_kappa_13(self):
@@ -571,6 +633,8 @@ class TestLandscapeSummary:
         assert s['first_pole_positive_real'] > 0  # positive real axis
         # Stokes data are kappa-independent
         assert s['stokes_multipliers'] == KAPAEV_TRITRONQUEE_STOKES
+        assert s['finite_scalar_identity']['painleve_from_scalar_tau_certified'] is False
+        assert s['kdv_residual']['certifies_kappa_deformed_kdv'] is False
 
     def test_summary_kappa_24(self):
         s = kappa_pi_summary_for_kappa(24.0)
@@ -580,8 +644,9 @@ class TestLandscapeSummary:
     def test_landscape_summary_keys(self):
         summary = landscape_summary()
         assert 'kappa_1_standard_PI' in summary
-        assert 'kappa_13_AP24_sum' in summary
-        assert 'kappa_24_Niemeier_Monster' in summary
+        assert 'kappa_12_moonshine' in summary
+        assert 'kappa_13_virasoro_complementarity_sum' in summary
+        assert 'kappa_24_leech_lattice' in summary
 
 
 # ============================================================================

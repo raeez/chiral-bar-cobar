@@ -119,12 +119,14 @@ EIGHT COMPUTATIONAL SECTORS:
    algebra (Chan-Paton factor).
 
    For gl_N Chan-Paton: A = gl_N as an associative algebra (concentrated
-   in degree 0).  The bar complex B(gl_N) = T^c(s^{-1} gl_N).
-   The bar differential comes from the matrix product.
-   The bar cohomology H*(B(gl_N)) recovers the Koszul dual coalgebra.
-   For gl_N: the Koszul dual is the exterior coalgebra Wedge^c(gl_N*[-1])
-   (since Sym^! = Wedge in the ungraded case, but gl_N is not commutative,
-   so Ass^!(gl_N) needs the full bar resolution).
+   in degree 0).  The toy computation below uses the tensor coalgebra
+   T^c(s^{-1} gl_N), the matrix-product bar differential, and the
+   deconcatenation coproduct.  It does NOT identify a Koszul dual algebra.
+   Under augmented Koszul hypotheses, and only in a strict finite-type or
+   completed dualizable setting, H*(B(A)) is the bar-dual coalgebra A^i;
+   the algebra A^! is obtained only after the Verdier/linear dual passage.
+   The cobar Omega(B(A)) is reconstruction of A, not Koszul duality, and
+   Z^der_ch(A) is the Hochschild/derived-center bulk object.
 
 8. COMPARISON TABLE:
    ==========================================
@@ -143,7 +145,7 @@ EIGHT COMPUTATIONAL SECTORS:
 
 Anti-patterns guarded against:
     AP19: bar propagator d log(z-w) absorbs one pole order from OPE
-    AP25: B(A) != Omega(B(A)) != D_Ran(B(A)) -- three functors
+    AP25: keep B(A), A^i, A^!, Omega(B(A)), and Z^der_ch(A) typed apart
     AP34: bar-cobar inversion recovers A, NOT the bulk
     AP45: desuspension s^{-1} LOWERS degree by 1
     AP-OC (Vol II): bar classifies twisting morphisms, NOT bulk observables
@@ -520,7 +522,9 @@ def dual_numbers_mult_table() -> Dict[Tuple[str, str], Dict[str, int]]:
     Bar complex: B(k[eps]/(eps^2)) = T^c(s^{-1}eps) = span{[eps], [eps|eps], ...}
     Bar differential: d([eps|...|eps]) = 0 (since eps*eps = 0).
     So H*(B) = B itself (no differential kills anything).
-    The Koszul dual is k[x] (polynomial algebra).
+    In the finite-type quadratic Koszul convention, A^! is k[x]
+    (polynomial algebra), obtained from A^i by the dual passage rather
+    than by Omega(B(A)).
     """
     return {
         ("1", "1"): {"1": 1},
@@ -687,6 +691,82 @@ def ocha_dictionary() -> Dict[str, Dict[str, str]]:
             "vol2": "Theta^{oc} = Theta_A + sum mu^{M_j} (open/closed MC element)",
             "novelty": "genus >= 1 requires curved Swiss-cheese (Vol I contribution)",
         },
+    }
+
+
+def bar_koszul_object_firewall() -> Dict[str, Any]:
+    """Typed AP25 firewall for bar, cobar, Koszul, and bulk objects.
+
+    The output is deliberately textual: this engine computes tensor-coalgebra
+    and low-arity bar data, while the object firewall records what those data
+    are allowed to mean.  The strict point is that no entry below is obtained
+    by silently collapsing another entry.
+    """
+    return {
+        "objects": {
+            "A": {
+                "symbol": "A",
+                "type": "augmented A-infinity or chiral algebra",
+                "construction": "input algebra with multiplication/OPE operations",
+                "role": "boundary/open algebra whose bar construction is computed",
+            },
+            "B_A": {
+                "symbol": "B(A)",
+                "type": "cofree conilpotent dg coalgebra",
+                "construction": "T^c(s^{-1} A_+) with bar differential and deconcatenation",
+                "completion": "use completed arity product for infinite-type chiral examples",
+                "not_output": "not A, not A^i, not A^!, and not the derived center",
+            },
+            "Omega_B_A": {
+                "symbol": "Omega(B(A))",
+                "type": "cobar dg algebra",
+                "construction": "free algebra on the suspended reduced coalgebra, with cobar differential",
+                "output": "bar-cobar reconstruction of A under the usual cofibrancy/conilpotence hypotheses",
+                "not_output": "not the Koszul dual algebra and not the Hochschild bulk",
+            },
+            "A_i": {
+                "symbol": "A^i",
+                "type": "bar-dual coalgebra",
+                "construction": "H^*(B(A)) only when the augmented Koszul hypotheses hold",
+                "hypotheses": "finite-type or completed dualizable complex so homology and duals are controlled",
+                "not_output": "not A^! before the Verdier/linear dual passage",
+            },
+            "A_shriek": {
+                "symbol": "A^!",
+                "type": "Verdier/linear-dual Koszul dual algebra",
+                "construction": "D(A^i) after strict finite-type or completed dualizable passage",
+                "hypotheses": "requires the Koszul locus plus the finite-type/completed duality hypotheses",
+                "not_output": "not B(A), not Omega(B(A)), and not Z^der_ch(A)",
+            },
+            "D_Ran_B_A": {
+                "symbol": "D_Ran(B(A))",
+                "type": "Verdier/factorization dual of the bar coalgebra",
+                "safe_statement": (
+                    "bar-side Verdier comparison toward the A^! branch under "
+                    "finite-type or completed dualizable hypotheses"
+                ),
+                "not_output": "not an unconditional identification with the bar of A^!",
+            },
+            "Z_der_ch_A": {
+                "symbol": "Z^der_ch(A)",
+                "type": "derived chiral center / Hochschild cochains",
+                "construction": "C^*_ch(A, A), often computed using B(A) as a resolution",
+                "role": "bulk/closed observable object",
+                "not_output": "not the bar coalgebra and not the Koszul dual algebra",
+            },
+        },
+        "hypotheses": [
+            "A is augmented or replaced by a reduced augmented model.",
+            "B(A) is conilpotent, with completed arity products in infinite-type chiral settings.",
+            "The passage from A^i to A^! uses strict finite-type or completed dualizable hypotheses.",
+            "The derived center is Hochschild data C^*_ch(A,A), not a Verdier dual of the bar coalgebra.",
+        ],
+        "forbidden_collapses": [
+            "Omega(B(A)) is reconstruction of A, not construction of A^!.",
+            "A^i is a coalgebra; A^! is obtained only after the Verdier/linear dual passage.",
+            "D_Ran(B(A)) is a hypothesis-qualified bar-side comparison, not an unconditional equality.",
+            "Z^der_ch(A) is the Hochschild bulk object, not B(A) and not A^!.",
+        ],
     }
 
 
@@ -935,6 +1015,7 @@ def full_comparison_summary() -> Dict[str, Any]:
         "e1_vs_einfty": e1_vs_einfty_on_bar(),
         "ocha": ocha_dictionary(),
         "dictionary": sft_chiral_bar_dictionary(),
+        "object_firewall": bar_koszul_object_firewall(),
         "key_distinctions": {
             "bar_not_bulk": (
                 "AP34/AP-OC: The bar complex classifies TWISTING MORPHISMS. "
@@ -943,12 +1024,16 @@ def full_comparison_summary() -> Dict[str, Any]:
                 "the closed-string observables are a SEPARATE object."
             ),
             "three_functors": (
-                "AP25: Three functors on B(A): "
-                "(1) Omega(B(A)) = A (reconstruction/inversion), "
-                "(2) D_Ran(B(A)) = B(A!) (Verdier = Koszul dual), "
-                "(3) C^bullet_ch(A,A) = derived center (universal bulk). "
-                "In SFT: (1) = open string reconstruction, "
-                "(2) = D-brane duality, (3) = closed string extraction."
+                "AP25: typed objects must not collapse. "
+                "B(A) is the cofree conilpotent dg coalgebra; "
+                "Omega(B(A)) is bar-cobar reconstruction of A; "
+                "A^i is H^*(B(A)) only under augmented Koszul hypotheses; "
+                "A^! is the Verdier/linear dual of A^i only after strict "
+                "finite-type or completed dualizable passage; "
+                "Z^der_ch(A)=C^bullet_ch(A,A) is the Hochschild bulk. "
+                "D_Ran(B(A)) names the hypothesis-qualified Verdier bar-side "
+                "comparison toward the A^! branch, not an unconditional "
+                "bar-of-dual equality."
             ),
             "genus_curvature": (
                 "At genus g >= 1: the bar differential squares to curvature "

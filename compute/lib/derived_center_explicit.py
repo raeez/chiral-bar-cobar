@@ -42,7 +42,9 @@ MATHEMATICAL CONTENT:
 7. HOCHSCHILD-KOSTANT-ROSENBERG for chiral algebras
 
 CRITICAL PITFALLS (from CLAUDE.md):
-  - B(A) is a coalgebra, D_Ran(B(A)) = B(A!), Omega(B(A)) = A (AP25/AP34)
+  - B(A) is a coalgebra, A^i=H^*(B(A)), and A^! is obtained from A^i
+    by Verdier/linear duality under finite-type or completed hypotheses
+  - Omega(B(A)) = A is bar-cobar inversion (AP25/AP34)
   - The derived center Z^der_ch(A) is NOT the bar complex (AP34)
   - Bar/cobar = twisting morphisms; derived center = bulk operators
   - kappa(H_k) = k, kappa(Vir_c) = c/2, kappa(KM) = dim(g)(k+h^v)/(2h^v)
@@ -920,16 +922,9 @@ class DeformationQuantization:
     def weyl_algebra_dimension(self, weight: int) -> int:
         """Dimension of the weight-w component of the Weyl algebra.
 
-        For Heisenberg: the Weyl algebra W_1 has dim(W_1, weight w) = 1
-        for all w >= 0 (one monomial x^a p^b with a+b = w at each weight,
-        modulo the relation [x,p] = hbar).
-
-        Actually, the Weyl algebra is infinite-dimensional at each weight:
-        monomials x^a p^b with a, b >= 0 and a+b = w give w+1 monomials,
-        but they are not all independent due to the commutation relation.
-
-        In the PBW basis of the Weyl algebra, dim at weight w = w+1
-        (the normal-ordered monomials :x^a p^{w-a}: for 0 <= a <= w).
+        For Heisenberg, the PBW basis of the Weyl algebra has one
+        normal-ordered monomial :x^a p^{w-a}: for each 0 <= a <= w.
+        Hence dim(W_1)_w = w+1.
         """
         if self.family != "Heisenberg":
             raise NotImplementedError("Weyl algebra dimension only for Heisenberg")

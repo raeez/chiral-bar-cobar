@@ -7,16 +7,17 @@ Test structure:
     2. W_3 genus-2: 5-way verification against closed form
     3. W_3 genus-3: verification against closed form from multi_weight_genus_tower
     4. W_4 genus-2 gravitational: closed-form extraction
-    5. W_4 genus-2 full OPE: comparison with w4_genus2_cross_channel.py
-    6. W_5 genus-2 gravitational: first computation, closed form
+    5. W_4 genus-2 signed diagnostic: comparison with legacy branch
+    6. W_5 genus-2 gravitational finite window, closed form
     7. Universal N-formula: B(N) = (N-2)(N+3)/96 and A(N) polynomial
-    8. Uniform-weight vanishing: delta_F_g = 0 for same-weight generators
+    8. Uniform-weight quotient and label-mixed artifact
     9. Positivity: delta_F_2 > 0 for all c > 0
    10. Koszul duality: behavior under c <-> K_N - c
    11. Large-c asymptotics
-   12. OPE dependence: gravitational vs full for W_4
+   12. OPE dependence: gravitational vs signed W_4 diagnostic
    13. N-scaling analysis
    14. Genus-3 cross-channel corrections
+   15. Finite-window genus-4 graph compatibility and firewalls
 
 Manuscript references:
     thm:theorem-d, op:multi-generator-universality,
@@ -39,24 +40,38 @@ from multi_weight_cross_channel_engine import (
     _bernoulli,
     _half_edge_channels,
     comparison_table,
+    BAR_OBJECT_FIREWALL,
     cross_channel_genus2,
     cross_channel_genus3,
+    cross_channel_genus4,
+    finite_window_free_energy,
     delta_F2_W3_closed,
     delta_F3_W3_closed,
     extract_closed_form,
     full_decomposition,
     genus2_graphs_complete,
     genus3_graphs,
+    genus4_graphs,
+    genus2_gravitational_closed,
+    genus2_gravitational_coefficients,
     graph_amplitude,
     graph_amplitude_decomposed,
     harmonic_minus_one,
+    HOLOGRAPHIC_PACKAGE_FIELDS,
     koszul_conductor,
     koszul_duality_check,
     lambda_fp,
     large_c_asymptotics,
+    MODULAR_KOSZUL_PROJECTIONS,
     N_dependence_grav,
     N_scaling_analysis,
+    package_firewall_certificate,
     positivity_scan,
+    scalar_lane_free_energy,
+    stable_graph_census,
+    uniform_weight_label_mixed_sum,
+    uniform_weight_vanishing_test,
+    w4_cross_channel_genus2_branch_window,
     w4_cross_channel_genus2_float,
 )
 
@@ -76,6 +91,13 @@ class TestFaberPandharipande(unittest.TestCase):
 
     def test_lambda3(self):
         self.assertEqual(lambda_fp(3), Fraction(31, 967680))
+
+    def test_lambda4(self):
+        """lambda_4^FP = (127/128) * (1/30) / 8!."""
+        self.assertEqual(lambda_fp(4), Fraction(127, 154828800))
+
+    def test_bernoulli_B8(self):
+        self.assertEqual(_bernoulli(8), Fraction(-1, 30))
 
     def test_lambda_positive(self):
         """lambda_g^FP > 0 for all g >= 1."""
@@ -118,7 +140,7 @@ class TestKoszulConductor(unittest.TestCase):
 
 
 # ============================================================================
-# 2. W_3 genus-2: 5-way verification
+# 2. W_3 genus-2: independent finite-window verification
 # ============================================================================
 
 class TestW3Genus2(unittest.TestCase):
@@ -168,6 +190,25 @@ class TestW3Genus2(unittest.TestCase):
     def test_graph_count(self):
         """7 genus-2 stable graphs (6 standard + barbell)."""
         self.assertEqual(len(genus2_graphs_complete()), 7)
+
+    def test_scalar_lane_is_not_cross_channel(self):
+        """kappa*lambda_2 is separate from the mixed boundary correction."""
+        c = Fraction(26)
+        scalar = scalar_lane_free_energy(self.w3, 2, c)
+        cross = cross_channel_genus2(self.w3, c)
+        total = finite_window_free_energy(self.w3, 2, c)
+        self.assertEqual(scalar, Fraction(91, 3456))
+        self.assertEqual(cross, Fraction(115, 208))
+        self.assertEqual(total['scalar_lane'], scalar)
+        self.assertEqual(total['cross_channel'], cross)
+        self.assertEqual(total['total'], scalar + cross)
+
+    def test_label_diagonal_is_not_scalar_lane(self):
+        """The graph label-diagonal sum is not the scalar FP lane."""
+        decomp = full_decomposition(self.w3, 2, Fraction(1))
+        self.assertEqual(decomp['scalar_lane'], Fraction(7, 6912))
+        self.assertEqual(decomp['diagonal'], Fraction(34565, 6912))
+        self.assertNotEqual(decomp['diagonal'], decomp['scalar_lane'])
 
     def test_cross_against_multi_weight_genus_tower(self):
         """Cross-check against the existing multi_weight_genus_tower module."""
@@ -281,30 +322,31 @@ class TestW4Genus2Gravitational(unittest.TestCase):
 
 
 # ============================================================================
-# 5. W_4 genus-2 full OPE
+# 5. W_4 genus-2 signed OPE diagnostic
 # ============================================================================
 
-class TestW4Genus2FullOPE(unittest.TestCase):
-    """Verify W_4 genus-2 with full OPE structure constants."""
+class TestW4Genus2SignedOPE(unittest.TestCase):
+    """Audit the signed W_4 genus-2 higher-spin diagnostic."""
 
-    def test_full_ope_positive(self):
-        """delta_F2(W_4, full) > 0 for unitary c."""
+    def test_signed_branches_positive_on_sample_window(self):
+        """All four signed branches stay positive on this finite window."""
         for cv in [1, 2, 4, 10, 26, 50, 100]:
-            r = w4_cross_channel_genus2_float(float(cv))
-            self.assertGreater(r['delta_F2'], 0,
+            window = w4_cross_channel_genus2_branch_window(float(cv))
+            self.assertGreater(window['min_delta_F2'], 0,
                                f"Not positive at c={cv}")
 
-    def test_full_exceeds_gravitational(self):
-        """Full OPE correction >= gravitational (higher-spin adds positive)."""
+    def test_signed_branch_straddles_gravitational(self):
+        """Higher-spin signed branches are not a uniform positive correction."""
         w4_grav = WNFrobeniusAlgebra(4)
-        for cv in [4, 10, 26, 50, 100]:
-            grav = float(cross_channel_genus2(w4_grav, Fraction(cv)))
-            full = w4_cross_channel_genus2_float(float(cv))['delta_F2']
-            self.assertGreaterEqual(full, grav * 0.99,
-                                    f"Full < grav at c={cv}")
+        cv = 26
+        grav = float(cross_channel_genus2(w4_grav, Fraction(cv)))
+        window = w4_cross_channel_genus2_branch_window(float(cv))
+        self.assertLess(window['min_delta_F2'], grav)
+        self.assertGreater(window['max_delta_F2'], grav)
+        self.assertGreater(window['spread'], 0)
 
     def test_cross_check_existing_engine(self):
-        """Cross-check against w4_genus2_cross_channel.py."""
+        """The default positive branch matches the legacy float engine."""
         try:
             from w4_genus2_cross_channel import evaluate_at
             for cv in [2, 4, 10, 26, 50]:
@@ -331,11 +373,11 @@ class TestW4Genus2FullOPE(unittest.TestCase):
 
 
 # ============================================================================
-# 6. W_5 genus-2 gravitational: FIRST COMPUTATION
+# 6. W_5 genus-2 gravitational finite window
 # ============================================================================
 
 class TestW5Genus2Gravitational(unittest.TestCase):
-    """First computation of delta_F_2(W_5) gravitational-only."""
+    """Exact delta_F_2(W_5) in the gravitational-only lane."""
 
     def setUp(self):
         self.w5 = W5Frobenius()
@@ -440,18 +482,22 @@ class TestUniversalNFormula(unittest.TestCase):
         }
         for N, B_exp in expected.items():
             self.assertEqual(self._B(N), B_exp, f"B({N}) wrong")
+            self.assertEqual(genus2_gravitational_coefficients(N)[1], B_exp)
 
     def test_A_formula_N3(self):
         """A(3) = 1*306/24 = 51/4."""
         self.assertEqual(self._A(3), Fraction(51, 4))
+        self.assertEqual(genus2_gravitational_coefficients(3)[0], Fraction(51, 4))
 
     def test_A_formula_N4(self):
         """A(4) = 2*537/24 = 179/4."""
         self.assertEqual(self._A(4), Fraction(179, 4))
+        self.assertEqual(genus2_gravitational_coefficients(4)[0], Fraction(179, 4))
 
     def test_A_formula_N5(self):
         """A(5) = 3*868/24 = 217/2."""
         self.assertEqual(self._A(5), Fraction(217, 2))
+        self.assertEqual(genus2_gravitational_coefficients(5)[0], Fraction(217, 2))
 
     def test_full_formula_matches_graph_sum(self):
         """The closed-form formula matches the graph sum for N=3..11, c=1..10."""
@@ -460,7 +506,7 @@ class TestUniversalNFormula(unittest.TestCase):
             for cv in [1, 2, 3, 5, 10]:
                 c = Fraction(cv)
                 graph_sum = cross_channel_genus2(alg, c)
-                formula = self._formula(N, c)
+                formula = genus2_gravitational_closed(N, c)
                 self.assertEqual(
                     graph_sum, formula,
                     f"Mismatch at N={N}, c={cv}: "
@@ -491,11 +537,11 @@ class TestUniversalNFormula(unittest.TestCase):
 
 
 # ============================================================================
-# 8. Uniform-weight vanishing
+# 8. Uniform-weight quotient and label-mixed artifact
 # ============================================================================
 
 class TestUniformWeightVanishing(unittest.TestCase):
-    """delta_F_g^cross = 0 for uniform-weight algebras (PROVED)."""
+    """Separate physical uniform quotient from artificial label mixing."""
 
     def test_single_channel(self):
         """A 1-channel algebra has no cross-channel contribution."""
@@ -513,60 +559,20 @@ class TestUniformWeightVanishing(unittest.TestCase):
             d = cross_channel_genus2(alg, Fraction(cv))
             self.assertEqual(d, 0)
 
-    def test_two_channels_same_weight_genus2(self):
-        """Two channels with identical weight: no mixed contribution."""
-        class TwoSameWeight(WNFrobeniusAlgebra):
-            def __init__(self):
-                self.N = 3
-                self.channels = ('A', 'B')
-                self.weights = {'A': 2, 'B': 2}
-
-            def C3(self, i, j, k, c):
-                return c
-
-        alg = TwoSameWeight()
-        d = cross_channel_genus2(alg, Fraction(10))
-        # With identical weights and identical C3, the "mixed" label is
-        # meaningless (channels are interchangeable). But the sum over
-        # sigma still separates by label. The mixed amplitudes should be
-        # identical to diagonal up to channel labeling.
-        # Actually, with identical weights, propagators are the same,
-        # vertex factors are the same, so every channel assignment gives
-        # the same amplitude. The "mixed" vs "diagonal" distinction is
-        # purely label-based, NOT physical.
-        # The physical cross-channel correction vanishes because all
-        # channels contribute equally.
-        #
-        # For this test, we verify that the formula gives the right
-        # total: F_g = kappa * lambda_g (no correction needed).
-        decomp = full_decomposition(alg, 2, Fraction(10))
-        # With uniform weights, the scalar universality holds
-        # Total should equal kappa * lambda_g
-        # kappa = 2 * (c/2) = c for two weight-2 generators... actually
-        # kappa = c * (H_3 - 1) = 5c/6 by the harmonic formula, but
-        # with identical weights, kappa_channel = c/2 for both, so
-        # kappa_total = c. The uniform-weight formula gives F_g = kappa * lambda_g.
-        # The "correction" is zero because all channels are identical.
-        pass  # The structural test is sufficient
+    def test_two_channels_same_weight_label_artifact(self):
+        """Two identical labels have a nonzero pre-quotient mixed sum."""
+        label_sum = uniform_weight_label_mixed_sum(2, Fraction(10), g=2)
+        physical = uniform_weight_vanishing_test(2, Fraction(10), g=2)
+        self.assertEqual(label_sum, Fraction(89, 60))
+        self.assertEqual(physical, 0)
+        self.assertNotEqual(label_sum, physical)
 
     def test_three_channels_same_weight(self):
-        """Three channels with identical weight 2: effectively uniform."""
-        class ThreeSameWeight(WNFrobeniusAlgebra):
-            def __init__(self):
-                self.N = 4
-                self.channels = ('A', 'B', 'C')
-                self.weights = {'A': 2, 'B': 2, 'C': 2}
-
-            def C3(self, i, j, k, c):
-                return c
-
-        alg = ThreeSameWeight()
-        decomp = full_decomposition(alg, 2, Fraction(10))
-        # With identical weights, diagonal and mixed should be related
-        # by combinatorial factors. The physical content is identical.
-        total = decomp['diagonal'] + decomp['mixed']
-        # This tests structural consistency, not vanishing
-        self.assertIsNotNone(total)
+        """Three identical labels are still one physical channel."""
+        label_sum = uniform_weight_label_mixed_sum(
+            2, Fraction(10), g=2, num_labels=3)
+        self.assertGreater(label_sum, 0)
+        self.assertEqual(uniform_weight_vanishing_test(2, Fraction(10), g=2), 0)
 
 
 # ============================================================================
@@ -602,8 +608,8 @@ class TestPositivity(unittest.TestCase):
             self.assertGreater(A, 0, f"A({N}) not positive")
             self.assertGreater(B, 0, f"B({N}) not positive")
 
-    def test_w4_full_ope_positivity(self):
-        """Full OPE W_4 correction is positive for unitary c."""
+    def test_w4_signed_branch_positivity(self):
+        """Default signed W_4 branch is positive on this finite window."""
         for cv in [1, 2, 4, 10, 26, 50]:
             r = w4_cross_channel_genus2_float(float(cv))
             self.assertGreater(r['delta_F2'], 0)
@@ -675,18 +681,14 @@ class TestLargeCAsymptotics(unittest.TestCase):
 
 
 # ============================================================================
-# 12. OPE dependence: gravitational vs full
+# 12. OPE dependence: gravitational vs signed higher-spin diagnostic
 # ============================================================================
 
 class TestOPEDependence(unittest.TestCase):
-    """Test whether delta_F_2 depends on the full OPE or just weights + c."""
+    """Test whether higher-spin signed data changes the gravitational lane."""
 
-    def test_w4_grav_vs_full_differ(self):
-        """Gravitational and full OPE give DIFFERENT results for W_4.
-
-        This proves that delta_F_2 depends on the OPE structure constants,
-        not just on the conformal weights and central charge.
-        """
+    def test_w4_grav_vs_signed_branch_differ(self):
+        """The default W_4 signed branch differs from the gravitational lane."""
         w4_grav = WNFrobeniusAlgebra(4)
         for cv in [10, 26, 50]:
             grav = float(cross_channel_genus2(w4_grav, Fraction(cv)))
@@ -710,17 +712,24 @@ class TestOPEDependence(unittest.TestCase):
             self.assertEqual(grav, full,
                              f"W_3 grav != full at c={cv}")
 
-    def test_higher_spin_correction_positive(self):
-        """The higher-spin OPE correction to W_4 is POSITIVE.
+    def test_virasoro_single_channel_no_leakage(self):
+        """The Virasoro T lane has no mixed-channel correction."""
+        vir = WNFrobeniusAlgebra(2)
+        for cv in [1, 26, 50]:
+            c = Fraction(cv)
+            self.assertEqual(cross_channel_genus2(vir, c), 0)
+            self.assertEqual(cross_channel_genus3(vir, c), 0)
 
-        full = grav + higher_spin, with higher_spin > 0.
-        """
+    def test_higher_spin_signed_branches_not_ordered(self):
+        """The signed diagnostic does not prove a positive correction theorem."""
         w4_grav = WNFrobeniusAlgebra(4)
-        for cv in [10, 26, 50, 100]:
-            grav = float(cross_channel_genus2(w4_grav, Fraction(cv)))
-            full = w4_cross_channel_genus2_float(float(cv))['delta_F2']
-            self.assertGreater(full, grav,
-                               f"Higher-spin not positive at c={cv}")
+        cv = 26
+        grav = float(cross_channel_genus2(w4_grav, Fraction(cv)))
+        window = w4_cross_channel_genus2_branch_window(float(cv))
+        below = [d for d in window['deltas'].values() if d < grav]
+        above = [d for d in window['deltas'].values() if d > grav]
+        self.assertTrue(below)
+        self.assertTrue(above)
 
 
 # ============================================================================
@@ -800,7 +809,53 @@ class TestGenus3CrossChannel(unittest.TestCase):
 
 
 # ============================================================================
-# 15. Parity constraint correctness
+# 15. Genus-4 finite-window graph census and package firewalls
+# ============================================================================
+
+class TestFiniteWindowCensus(unittest.TestCase):
+    """Exact stable-graph compatibility through genus 4."""
+
+    def test_genus2_automorphism_census(self):
+        census = stable_graph_census(2)
+        self.assertEqual(census['count'], 7)
+        self.assertEqual(census['automorphism_spectrum'],
+                         {1: 1, 2: 3, 8: 2, 12: 1})
+        self.assertEqual(census['inverse_automorphism_sum'], Fraction(17, 6))
+
+    def test_genus3_automorphism_census(self):
+        census = stable_graph_census(3)
+        self.assertEqual(census['count'], 42)
+        self.assertEqual(census['by_loop_number'], {0: 4, 1: 9, 2: 14, 3: 15})
+        self.assertEqual(census['inverse_automorphism_sum'], Fraction(121, 12))
+
+    def test_genus4_structural_census(self):
+        census = stable_graph_census(4)
+        self.assertEqual(len(genus4_graphs()), 379)
+        self.assertEqual(census['count'], 379)
+        self.assertEqual(census['by_loop_number'],
+                         {0: 11, 1: 36, 2: 93, 3: 128, 4: 111})
+        self.assertEqual(census['by_edge_count'],
+                         {0: 1, 1: 3, 2: 7, 3: 21, 4: 43,
+                          5: 75, 6: 89, 7: 81, 8: 42, 9: 17})
+        self.assertEqual(census['inverse_automorphism_sum'], Fraction(15521, 240))
+        self.assertEqual(max(census['automorphism_spectrum']), 384)
+
+    def test_package_firewall_counts(self):
+        cert = package_firewall_certificate()
+        self.assertEqual(cert['holographic_package_size'], 7)
+        self.assertEqual(cert['modular_koszul_projection_size'], 6)
+        self.assertEqual(len(HOLOGRAPHIC_PACKAGE_FIELDS), 7)
+        self.assertEqual(len(MODULAR_KOSZUL_PROJECTIONS), 6)
+        self.assertEqual(len(BAR_OBJECT_FIREWALL), 6)
+        self.assertTrue(cert['all_bar_objects_distinct'])
+        self.assertEqual(cert['bar_object_relations']['Omega(B(A))'],
+                         'bar-cobar inversion to A')
+        self.assertEqual(cert['bar_object_relations']['Z_ch^der(A)'],
+                         'ChirHoch^*(A,A), the Hochschild bulk')
+
+
+# ============================================================================
+# 16. Parity constraint correctness
 # ============================================================================
 
 class TestParityConstraint(unittest.TestCase):
@@ -851,7 +906,7 @@ class TestParityConstraint(unittest.TestCase):
 
 
 # ============================================================================
-# 16. Comparison table and full decomposition
+# 17. Comparison table and full decomposition
 # ============================================================================
 
 class TestComparisonAndDecomposition(unittest.TestCase):
@@ -882,7 +937,7 @@ class TestComparisonAndDecomposition(unittest.TestCase):
 
 
 # ============================================================================
-# 17. Multi-path verification of key results
+# 18. Multi-path verification of key results
 # ============================================================================
 
 class TestMultiPathVerification(unittest.TestCase):
@@ -936,7 +991,7 @@ class TestMultiPathVerification(unittest.TestCase):
 
 
 # ============================================================================
-# 18. Edge cases and boundary behavior
+# 19. Edge cases and boundary behavior
 # ============================================================================
 
 class TestEdgeCases(unittest.TestCase):

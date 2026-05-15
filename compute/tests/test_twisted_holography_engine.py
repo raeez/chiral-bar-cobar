@@ -1,7 +1,7 @@
 """Tests for twisted_holography_engine: Costello-Li programme via modular Koszul duality.
 
 Organization:
-  1. GL(1) Chern-Simons: full holographic datum
+  1. GL(1) Chern-Simons: seven-entry scalar datum
   2. GL(N) Chern-Simons: Gaberdiel-Gopakumar at N=2,3,4,5
   3. Anomaly cancellation (c=26, all affine families)
   4. Holographic shadow connection properties
@@ -22,6 +22,7 @@ from fractions import Fraction
 import pytest
 
 from compute.lib.twisted_holography_engine import (
+    HOLOGRAPHIC_SLOT_ORDER,
     # Constructors
     make_heisenberg,
     make_affine_gl_N,
@@ -73,6 +74,7 @@ from compute.lib.twisted_holography_engine import (
     complementarity_at_genus,
     # Koszul pair
     verify_koszul_pair,
+    holographic_object_firewall,
     collision_residue,
     # Sweeps
     full_holographic_sweep,
@@ -85,7 +87,7 @@ from compute.lib.twisted_holography_engine import (
 
 
 # ===========================================================================
-# 1. GL(1) Chern-Simons: full holographic datum
+# 1. GL(1) Chern-Simons: seven-entry scalar datum
 # ===========================================================================
 
 class TestGL1ChernSimons:
@@ -110,9 +112,37 @@ class TestGL1ChernSimons:
         assert datum.A.name == "H_1"
         assert datum.A.kappa == Fraction(1)
         assert datum.A_dual.kappa == Fraction(-1)
+        assert datum.A_shriek is datum.A_dual
+        assert "A^i = H^*(B^ch(H_1))" in datum.A_i
+        assert "C = Z_ch^der(H_1)" in datum.C
         assert datum.kappa_sum == Fraction(0)
         assert datum.complementarity_type == "anti-symmetric"
         assert datum.connection_is_flat is True
+
+    def test_gl1_datum_has_seven_ordered_slots(self):
+        datum = gl1_holographic_datum(Fraction(1))
+        package = datum.seven_entry_package()
+        assert tuple(package) == HOLOGRAPHIC_SLOT_ORDER
+        assert package["A"] is datum.A
+        assert package["A^i"] == datum.A_i
+        assert package["A^!"] is datum.A_dual
+        assert package["C"] == datum.C
+        assert package["r(z)"] == "scalar/z"
+        assert package["Theta_A"] == Fraction(1)
+        assert package["nabla^hol"] is True
+
+    def test_gl1_firewall_separates_bar_dual_cobar_and_center(self):
+        datum = gl1_holographic_datum(Fraction(1))
+        firewall = datum.object_firewall()
+        assert "bar coalgebra complex" in firewall["B(A)"]
+        assert "bar-dual coalgebra" in firewall["A^i"]
+        assert "Verdier/Koszul companion" in firewall["A^!"]
+        assert "Omega(B(A)) recovers H_1" in firewall["Omega(B(A))"]
+        assert "C = Z_ch^der(H_1)" in firewall["Z_ch^der(A)"]
+        forbidden = firewall["forbidden_identifications"]
+        assert "A^i != A^!" in forbidden
+        assert "Omega(B(A)) != A^!" in forbidden
+        assert "Z_ch^der(A) != Omega(B(A))" in forbidden
 
     def test_gl1_datum_at_level_k(self):
         for k in [1, 2, 5]:
@@ -549,6 +579,37 @@ class TestKoszulPairs:
         assert pair["kappa_sum"] == Fraction(0)
         assert pair["shadow_class"] == "G"
         assert pair["datum_complete"] is True
+
+    def test_koszul_pair_report_records_seven_entry_package(self):
+        A = make_affine_sl_N(2, Fraction(1))
+        pair = verify_koszul_pair(A)
+        assert pair["holographic_slots"] == HOLOGRAPHIC_SLOT_ORDER
+        assert "A^i = H^*(B^ch(sl(2)_1))" in pair["A_i"]
+        assert pair["seven_entry_package"]["A"] is A
+        assert pair["seven_entry_package"]["A^i"] == pair["A_i"]
+        assert pair["seven_entry_package"]["A^!"].name == pair["A_shriek"]
+        assert "C = Z_ch^der(sl(2)_1)" in pair["C"]
+        assert "Omega(B(A)) recovers sl(2)_1" in pair["bar_cobar_scope"]
+        assert "seven-entry scalar/typed-summary package" in pair["completion_status"]
+
+    def test_object_firewall_direct_function(self):
+        A = make_affine_sl_N(3, Fraction(2))
+        firewall = holographic_object_firewall(A)
+        assert set(firewall) == {
+            "A",
+            "B(A)",
+            "A^i",
+            "A^!",
+            "Omega(B(A))",
+            "Z_ch^der(A)",
+            "forbidden_identifications",
+        }
+        assert "B^ch(sl(3)_2)" in firewall["B(A)"]
+        assert "H^*(B^ch(sl(3)_2))" in firewall["A^i"]
+        assert "not Omega(B(A))" in firewall["A^!"]
+        assert "bar-cobar inversion" in firewall["Omega(B(A))"]
+        assert "derived-centre bulk slot" in firewall["Z_ch^der(A)"]
+        assert "Z_ch^der(A) != A^!" in firewall["forbidden_identifications"]
 
     def test_koszul_pair_affine_sl2(self):
         A = make_affine_sl_N(2, Fraction(1))

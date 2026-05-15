@@ -8,7 +8,7 @@ Path 2: Closed-form formula (Newton-interpolated rational function)
 Path 3: Limiting cases (c -> large, c = 50 self-dual)
 Path 4: Koszul duality (c <-> 100-c symmetry)
 Path 5: Z_2 parity (odd-W channels vanish)
-Path 6: Per-channel universality (diagonal sum = kappa_i * lambda_g)
+Path 6: Scalar-lane firewall (diagonal boundary != kappa_i * lambda_g)
 Path 7: Positivity and monotonicity
 
 References:
@@ -21,8 +21,16 @@ from fractions import Fraction
 
 from compute.lib.multi_weight_genus_tower import (
     cross_channel_correction,
+    delta_Fg_closed_form,
     full_amplitude_decomposition,
+    finite_window_theorem,
+    four_point_pairing_audit,
+    genus2_mixed_graph_contributions,
     graph_amplitude_decomposed,
+    holographic_package_entries,
+    interpolate_scaled_numerator,
+    modular_koszul_primary_projections,
+    object_firewall,
     stable_graphs_complete,
     boundary_graphs,
     delta_F2_closed_form,
@@ -37,9 +45,16 @@ from compute.lib.multi_weight_genus_tower import (
     propagator,
     C3,
     V0_factorize,
+    V0_four_point_by_pairing,
     Vg_n,
     CHANNELS,
+    CERTIFIED_W3_GENUS_WINDOW,
+    CLOSED_FORM_NUMERATOR_COEFFS,
+    EXPECTED_BOUNDARY_COUNTS,
+    EXPECTED_GRAPH_COUNTS,
     r_matrix_independence_note,
+    scaled_numerator_from_graph_sum,
+    uniform_weight_cross_channel_correction,
 )
 
 
@@ -100,11 +115,19 @@ class TestVertexFactors:
     def test_V0_3pt_vanishing(self):
         assert V0_factorize(('T', 'T', 'W'), Fraction(26)) == 0
 
-    def test_V0_4pt_universality(self):
+    def test_V0_4pt_canonical_pairing(self):
         c = Fraction(26)
         for i in CHANNELS:
             for j in CHANNELS:
                 assert V0_factorize((i, i, j, j), c) == 2 * c
+
+    def test_V0_4pt_pairing_not_scalar_associative(self):
+        c = Fraction(10)
+        assert V0_four_point_by_pairing(('T', 'T', 'W', 'W'), c, '01|23') == 2 * c
+        assert V0_four_point_by_pairing(('T', 'T', 'W', 'W'), c, '02|13') == 3 * c
+        assert V0_four_point_by_pairing(('T', 'T', 'W', 'W'), c, '03|12') == 3 * c
+        audit = four_point_pairing_audit(('T', 'T', 'W', 'W'), c)
+        assert not audit['pairing_independent']
 
     def test_V1_1_per_channel(self):
         c = Fraction(26)
@@ -151,6 +174,12 @@ class TestGraphEnumeration:
         assert barbell.is_connected
         assert barbell.automorphism_order() == 8
 
+    def test_certified_window_graph_counts(self):
+        assert CERTIFIED_W3_GENUS_WINDOW == (2, 3, 4)
+        for g in CERTIFIED_W3_GENUS_WINDOW:
+            assert len(stable_graphs_complete(g)) == EXPECTED_GRAPH_COUNTS[g]
+            assert len(boundary_graphs(g)) == EXPECTED_BOUNDARY_COUNTS[g]
+
 
 # ============================================================================
 # Section 4: Genus-2 cross-channel (delta = (c+204)/(16c))
@@ -185,6 +214,16 @@ class TestGenus2:
         barbell = stable_graphs_complete(2)[-1]
         r = graph_amplitude_decomposed(barbell, c)
         assert r['mixed'] == Fraction(21, 4 * 26)
+
+    def test_graphwise_contributions(self):
+        c = Fraction(10)
+        r = genus2_mixed_graph_contributions(c)
+        assert r['irreducible_self_node'] == 0
+        assert r['banana_double_self_loop'] == Fraction(3, c)
+        assert r['separating_genus1_bridge'] == 0
+        assert r['theta_three_bridge'] == Fraction(9, 2 * c)
+        assert r['lollipop_self_loop_bridge'] == Fraction(1, 16)
+        assert r['barbell_two_self_loops_bridge'] == Fraction(21, 4 * c)
 
     def test_formula_symbolic(self):
         for cv in [1, 2, 3, 5, 7, 10, 13, 26, 50]:
@@ -291,6 +330,27 @@ class TestPattern:
             val = float(c**2 * delta_F3_closed_form(c))
             assert val > 0
 
+    def test_closed_form_dispatch(self):
+        for g, closed in [(2, delta_F2_closed_form),
+                          (3, delta_F3_closed_form),
+                          (4, delta_F4_closed_form)]:
+            for cv in [1, 5, 26]:
+                c = Fraction(cv)
+                assert delta_Fg_closed_form(g, c) == closed(c)
+
+    def test_scaled_numerator_from_graph_sum(self):
+        for g in [2, 3]:
+            c = Fraction(3)
+            expected = Fraction(0)
+            for coeff in CLOSED_FORM_NUMERATOR_COEFFS[g]:
+                expected = expected * c + coeff
+            assert scaled_numerator_from_graph_sum(g, c) == expected
+
+    def test_interpolation_recovers_constants(self):
+        for g in [2, 3]:
+            assert interpolate_scaled_numerator(g) == tuple(
+                Fraction(x) for x in CLOSED_FORM_NUMERATOR_COEFFS[g])
+
 
 # ============================================================================
 # Section 8: Koszul duality (c <-> 100-c)
@@ -312,7 +372,49 @@ class TestKoszulDuality:
 
 
 # ============================================================================
-# Section 9: R-matrix independence
+# Section 9: Finite-window theorem and firewalls
+# ============================================================================
+
+class TestFiniteWindowTheorem:
+
+    def test_certificate_genus2(self):
+        c = Fraction(26)
+        r = finite_window_theorem(2, c)
+        assert r['graphs_total_match']
+        assert r['graphs_boundary_match']
+        assert r['chi_orb_match']
+        assert r['graph_matches_closed']
+        assert r['cross_channel'] == Fraction(115, 208)
+        assert not r['diagonal_boundary_is_scalar_lane']
+        assert r['full_free_energy'] == r['scalar_fp_lane'] + r['cross_channel']
+
+    def test_per_channel_boundary_not_scalar_lane(self):
+        r = finite_window_theorem(2, Fraction(10))['per_channel']
+        assert r['boundary_T'] == Fraction(1921, 5760)
+        assert r['expected_T'] == Fraction(7, 1152)
+        assert r['boundary_W'] == Fraction(2149, 8640)
+        assert r['expected_W'] == Fraction(7, 1728)
+        assert not r['match_T']
+        assert not r['match_W']
+
+    def test_uniform_weight_lane_has_no_cross_channels(self):
+        for g in CERTIFIED_W3_GENUS_WINDOW:
+            assert uniform_weight_cross_channel_correction(g, Fraction(26)) == 0
+
+    def test_package_cardinality_firewalls(self):
+        assert holographic_package_entries() == (
+            "A", "A^i", "A^!", "C", "r(z)", "Theta_A", "nabla^hol")
+        assert modular_koszul_primary_projections() == (
+            "Fact_X(L)", "barB_X(L)", "Theta_L", "L_L",
+            "(V_br,T_br)", "R4_mod(L)")
+        firewall = object_firewall()
+        assert firewall["Omega(B(A))"] == "bar-cobar inversion recovering A"
+        assert "Hochschild" in firewall["Z_ch^der(A)"]
+        assert firewall["A^!"] != firewall["A^i"]
+
+
+# ============================================================================
+# Section 10: R-matrix independence
 # ============================================================================
 
 class TestRMatrixIndependence:
@@ -327,7 +429,7 @@ class TestRMatrixIndependence:
 
 
 # ============================================================================
-# Section 10: Lambda_fp numbers
+# Section 11: Lambda_fp numbers
 # ============================================================================
 
 class TestLambdaFP:
@@ -354,7 +456,7 @@ class TestLambdaFP:
 
 
 # ============================================================================
-# Section 11: Specific numerical values
+# Section 12: Specific numerical values
 # ============================================================================
 
 class TestNumericalValues:
@@ -376,7 +478,7 @@ class TestNumericalValues:
 
 
 # ============================================================================
-# Section 12: Edge cases
+# Section 13: Edge cases
 # ============================================================================
 
 class TestEdgeCases:
@@ -395,9 +497,15 @@ class TestEdgeCases:
         # (c+204)/(16c) = 1/16 + 204/(16c) -> 1/16 + 204/160000 ~ 0.06375
         assert abs(float(delta_F2_closed_form(c)) - 1.0 / 16) < 0.002
 
+    def test_zero_c_rejected(self):
+        with pytest.raises(ValueError):
+            cross_channel_correction(2, Fraction(0))
+        with pytest.raises(ValueError):
+            delta_F2_closed_form(Fraction(0))
+
 
 # ============================================================================
-# Section 13: Acceleration pattern analysis
+# Section 14: Acceleration pattern analysis
 # ============================================================================
 
 class TestAccelerationPattern:

@@ -6,8 +6,16 @@ MATHEMATICAL FRAMEWORK
 This module is the comprehensive computational atlas for the Calabi-Yau
 threefold K3 x E (K3 surface times an elliptic curve).  It synthesizes
 invariants computed across 21 prior CY engines into a single, internally
-cross-checked data structure, and assembles the holographic modular Koszul
-datum H(K3 x E) = (A, A^!, C, r(z), Theta_A, nabla^hol).
+cross-checked data structure.  It keeps two surfaces separate:
+
+  (1) the seven-entry holographic package
+      H(K3 x E) = (A, A^i, A^!, C, r(z), Theta_A, nabla^hol);
+  (2) six-projection modular-Koszul compute packages, which record scalar
+      projections such as kappa, shadow depth, and BPS/DT checks.
+
+Here A^i = H^*(B(A)) is the bar-dual coalgebra, A^! is the Verdier/Koszul
+branch, and C = Z^{der}_ch(A) is the chiral derived centre.  These are not
+interchangeable objects.
 
 MASTER DATA TABLE
 =================
@@ -15,10 +23,10 @@ MASTER DATA TABLE
   dim_C(K3 x E) = 3
   chi(K3 x E) = 0                (Kunneth: chi(K3)*chi(E) = 24*0 = 0)
   h^{p,q}: full 4x4 Hodge diamond (computed from Kunneth product)
-  K_0(K3 x E) = Z^48              (Mukai(K3) tensor K_0(E) = Z^24 x Z^2)
-  kappa_sigma = 3                  (complex dimension, from CDR/sigma model)
-  kappa_Gepner = 3                 (additivity: 4 * 3/4 from (2)^4 tensor)
-  kappa_Kummer = 2 (K3 alone)     (complex dim of K3; not K3 x E)
+  K_0(K3 x E) = Z^48              (K3 Mukai rank tensor K_0(E): 24 x 2)
+  kappa_sigma = 3                  (CDR/sigma-model package: dim_C)
+  kappa_Gepner_K3_orbifolded = 2   (K3 after GSO/orbifold)
+  kappa_T4_free_boson = 4          (free-field lattice package, not K3 sigma)
   Shadow depth: class M (infinite) (from N=4 SCA with c=6 analysis)
   F_1 = kappa/24 = 1/8            (genus-1 obstruction)
   F_2 = kappa * 7/5760 = 7/1920   (genus-2 scalar shadow, from Faber-Pandharipande)
@@ -33,12 +41,12 @@ CROSS-CONSISTENCY CHECKS
   1. chi = 0 from Hodge diamond: sum (-1)^{p+q} h^{p,q} = 0   CHECK
   2. DT_0 = M(-q)^0 = 1, consistent with chi = 0               CHECK
   3. kappa additivity: kappa(K3xE) = kappa(K3) + kappa(E) = 2+1 = 3 CHECK
-  4. kappa(Gepner) = 3 = kappa(sigma), NO discrepancy             CHECK
-     (The "kappa_Kummer = 4" apparent discrepancy is a CATEGORY ERROR:
-      kappa(V_{Kummer lattice}) = rank = 4 counts FREE BOSON generators,
-      while kappa(K3 sigma model) = 2 counts the CY dimension.  AP48:
-      kappa depends on the FULL algebra, not just the Virasoro subalgebra.
-      For K3 x E, kappa = dim_C = 3 universally across all moduli points.)
+  4. kappa(K3 Gepner after GSO/orbifold) = 2, and kappa(K3 x E) = 2+1 = 3.
+     The unorbifolded (2)^4 tensor sum is also 3, but that is a different
+     algebraic input.  The "kappa_T4 = 4" comparison is a CATEGORY ERROR:
+      kappa(V_{T^4}) = rank = 4 counts free bosons,
+      while kappa(K3 sigma model) = 2 is the CY/CDR value in this package.
+      AP48: kappa depends on the full algebra, not just a Virasoro line.
   5. F_1 = 1/8 from shadow tower = F_1 from BCOV: -chi/12 = 0 + ...
      (BCOV F_1 = -(1/12)*chi(X)*log(mu^2) + ... vanishes at leading order
       because chi = 0.  The NONZERO F_1 = 1/8 comes from the non-perturbative
@@ -53,31 +61,41 @@ CROSS-CONSISTENCY CHECKS
 CHIRAL ALGEBRA CONSTRUCTION
 ============================
 
-  A_{K3xE} = A_{K3} tensor A_E (tensor product of VOAs)
+  A_{K3xE} = A_{K3} tensor A_E (sigma/CDR compute package)
   A_{K3} = N=4 SCA at c=6 (small N=4 structure from K3 sigma model)
   A_E = Heisenberg at level 1 (free boson on E) = H_1
   c(A_{K3xE}) = 6 + 1 = 7 (for chiral sector; physical has (c, cbar) = (9,9))
+
+  This is not the Costello-Li K3xE boundary free-field package, where the K3
+  cohomology produces 24 free bosons on E.  That boundary package has its own
+  kappa convention and is intentionally kept separate from the K3 sigma model.
 
   For the CDR (chiral de Rham):
     c(CDR(K3xE)) = 0 (CDR always has c = 0 globally)
     kappa(CDR(K3xE)) = 3 (complex dimension, independent of c)
 
-HOLOGRAPHIC MODULAR KOSZUL DATUM
+HOLOGRAPHIC PACKAGE AND MODULAR-KOSZUL PROJECTIONS
 =================================
 
-  H(K3xE) = (A, A^!, C, r(z), Theta_A, nabla^hol) where:
-  - A = N=4 SCA at c=6 tensor H_1
-  - A^! = Koszul dual (Verdier intertwining: D_Ran(B(A)) ~ B(A^!))
-  - C = chiral derived center Z^{der}_ch(A) (universal bulk)
+  H(K3xE) = (A, A^i, A^!, C, r(z), Theta_A, nabla^hol) where:
+  - A = N=4 SCA at c=6 tensor H_1, in the sigma/CDR compute package
+  - A^i = H^*(B(A)), the bar-dual coalgebra
+  - A^! = Verdier/Koszul branch; not Omega(B(A))
+  - C = chiral derived centre Z^{der}_ch(A) (universal bulk)
   - r(z) = binary genus-0 collision r-matrix from the N=4 OPE
   - Theta_A = universal MC element (bar-intrinsic construction)
   - nabla^hol = shadow connection from Q_L
+
+  The six-projection modular-Koszul package consists of computed projections
+  of this surface: geometry/K-theory, kappa, shadow tower, BPS-DT data,
+  Hochschild-HKR data, and the chiral/bar record.  It is not a replacement
+  for the seven-entry holographic package.
 
 CONVENTIONS
 ===========
   - kappa = modular characteristic (AP20, AP48: NOT c/2 in general)
   - kappa(K3 sigma model) = 2 = dim_C(K3) (NOT rank of any sublattice)
-  - kappa(K3 x E) = 3 = dim_C(K3 x E) (additivity of kappa)
+  - kappa(K3 x E) = 3 for the sigma/CDR package (additivity of kappa)
   - kappa(lattice VOA V_Lambda) = rank(Lambda) (different object from sigma model!)
   - eta(q) = q^{1/24} prod(1-q^n) (AP46: q^{1/24} is NOT optional)
   - Bar r-matrix poles ONE LESS than OPE (AP19)
@@ -369,7 +387,8 @@ def quintic_hodge() -> HodgeDiamond:
 # Section 3: K-theory and lattice data
 # =========================================================================
 
-# K3 Mukai lattice
+# K3 Mukai lattice.  This is the K-theory/cohomology lattice anchor for K3,
+# not a Leech/Niemeier lattice row and not the K3 sigma-model chiral algebra.
 MUKAI_RANK_K3 = 24  # H^*(K3, Z) = U^4 + (-E_8)^2 has rank 24
 MUKAI_SIGNATURE_K3 = (4, 20)
 
@@ -381,18 +400,23 @@ K0_RANK_K3XE = MUKAI_RANK_K3 * K0_RANK_E  # = 48
 
 
 def k0_rank_k3xe() -> int:
-    """K_0(K3 x E) = K_0(K3) otimes K_0(E) = Z^24 x Z^2 = Z^48."""
+    """K_0(K3 x E) has rank rk K_0(K3) * rk K_0(E) = 24 * 2 = 48."""
     return K0_RANK_K3XE
 
 
 def mukai_lattice_k3() -> Dict[str, Any]:
-    """Mukai lattice of K3: H^*(K3,Z) = U^4 + (-E_8)^2."""
+    """Mukai lattice of K3: H^*(K3,Z) = U^4 + (-E_8)^2.
+
+    This is the K3 Mukai/K-theory lattice.  It is not the Leech lattice,
+    not a Niemeier lattice, and not the K3 sigma-model VOA.
+    """
     return {
         "rank": MUKAI_RANK_K3,
         "signature": MUKAI_SIGNATURE_K3,
         "decomposition": "U^4 + (-E_8)^2",
         "discriminant": 1,  # Unimodular
         "type": "even_unimodular",
+        "scope": "K3 Mukai/K-theory lattice; not Leech, Niemeier, or sigma-model VOA",
     }
 
 
@@ -427,8 +451,9 @@ def kappa_k3_sigma() -> int:
     """kappa(K3 sigma model) = dim_C(K3) = 2.
 
     This is the modular characteristic of the N=(4,4) SCVA at c=6.
-    It equals the complex dimension because for CY manifolds, the genus-1
-    obstruction class reduces to chi(X)/12 = 24/12 = 2 via index theory.
+    It equals the complex dimension in the sigma/CDR convention.  For K3,
+    the index-theory value chi(K3)/12 also equals 2; that coincidence should
+    not be promoted to a universal chi-formula for CY products.
     AP48: this is NOT c/2 = 3; kappa depends on the full algebra.
     """
     return 2
@@ -443,30 +468,25 @@ def kappa_k3xe() -> int:
     """kappa(K3 x E) = kappa(K3) + kappa(E) = 2 + 1 = 3.
 
     Additivity of kappa for tensor products (prop:independent-sum-factorization).
-    This equals dim_C(K3 x E) = 3 for CY manifolds.
+    This is the sigma/CDR compute-package value and equals dim_C(K3 x E) = 3.
+    It is separate from the K3xE twisted-holography boundary free-field package.
     """
     return kappa_k3_sigma() + kappa_e_sigma()
 
 
 def kappa_gepner_k3() -> F:
-    """kappa from the Gepner model (2)^4 for K3.
+    """kappa from the K3 Gepner model after GSO/orbifold.
 
     Each N=2 minimal model at level k=2 has c = 3/2.
-    kappa_i = c_i/2 = 3/4 (each factor is a Virasoro-type algebra).
-    kappa_total = 4 * 3/4 = 3 for the TENSOR PRODUCT including all N=2 structure.
+    The Virasoro-lineage scalar projection gives kappa_i = c_i/2 = 3/4.
+    The unorbifolded tensor product has kappa = 4 * 3/4 = 3.
 
-    BUT: The Gepner model with GSO projection and Z_4 orbifold gives the K3
-    sigma model, which has kappa = 2 (not 3).  The discrepancy: the naive
-    sum kappa = 4 * 3/4 = 3 counts the UNORBIFOLDED tensor product; the
-    orbifold/GSO projection CHANGES the bar complex structure and reduces kappa.
-
-    More precisely: before orbifold, kappa(tensor) = 3.  After orbifold to
-    the K3 sigma model, kappa = 2.  The difference accounts for the 16 blow-up
-    modes of the orbifold singularities absorbing into the bar complex.
+    After GSO/orbifold to the K3 sigma model, this engine records the
+    sigma/CDR value kappa = 2.  The unorbifolded tensor sum is retained only
+    as a convention check; it is not the same algebraic input.
 
     For K3 x E, adding E (kappa=1) gives: kappa(K3 x E) = 2 + 1 = 3.
-    So kappa(K3 x E) = 3 coincides with the UNORBIFOLDED Gepner sum, but
-    this is a coincidence of the particular CY3 structure.
+    The equality with the unorbifolded K3 tensor sum is numerical only.
     """
     # Gepner model before orbifold
     kappa_unorbifolded = 4 * F(3, 4)  # = 3
@@ -476,19 +496,16 @@ def kappa_gepner_k3() -> F:
 
 
 def kappa_kummer_lattice() -> int:
-    """kappa for the Kummer lattice VOA at the Kummer point K3 = T^4/Z_2.
+    """kappa for the T^4 free-boson lattice package at the Kummer point.
 
     AP48: kappa(V_Lambda) = rank(Lambda) for lattice VOAs.
-    The Kummer lattice has rank 16 (the 16 exceptional divisors of the
-    minimal resolution of T^4/Z_2).
+    This compatibility function returns the rank-4 free-boson value for
+    V_{T^4}, the simplest Kummer free-field input.
 
-    CRITICAL: This is the kappa of the LATTICE VOA V_{Kummer}, NOT
-    the kappa of the K3 sigma model at the Kummer point.
-    kappa(K3 sigma model) = 2 at ALL points in moduli space.
-    kappa(V_{Kummer lattice}) = 16 is a DIFFERENT object.
-
-    For the free boson part alone (T^4 before orbifold): kappa = 4 = rank.
-    This is kappa(Heisenberg^4), NOT kappa(K3 sigma model).
+    It is NOT the kappa of the K3 sigma model at the Kummer point.
+    This engine records kappa(K3 sigma model) = 2 on the sigma/CDR surface.
+    It is also not an assertion that the rank-16 exceptional lattice,
+    the rank-24 Mukai lattice, or a Leech/Niemeier row is the K3 sigma VOA.
     """
     return 4  # Free boson count for T^4 (the simplest Kummer interpretation)
 
@@ -497,11 +514,12 @@ def kappa_discrepancy_explanation() -> Dict[str, Any]:
     """Explain the apparent discrepancy between kappa values.
 
     There is NO actual discrepancy.  Different values arise from different algebras:
-      kappa(K3 sigma model) = 2   (the physical VOA, at ALL moduli points)
+      kappa(K3 sigma model) = 2   (sigma/CDR package convention)
       kappa(Gepner unorbifolded) = 3  (the tensor product before GSO/orbifold)
       kappa(V_{T^4}) = 4    (free boson lattice VOA, rank = 4)
       kappa(V_{E_8^2}) = 16   (lattice VOA of negative-definite sublattice)
-      kappa(V_{Mukai}) = 24   (full Mukai lattice VOA, rank = 24)
+      rank(Mukai(K3)) = 24   (K-theory lattice anchor; not K3 sigma VOA)
+      kappa(K3 boundary free fields) = 24 in the Costello-Li reduction package
 
     AP48: kappa depends on the FULL algebra structure, not just c.
     AP39: kappa != c/2 for non-Virasoro algebras.
@@ -512,13 +530,17 @@ def kappa_discrepancy_explanation() -> Dict[str, Any]:
         "free_boson_T4": 4,
         "lattice_E8_sq": 16,
         "mukai_lattice": 24,
+        "boundary_free_field_K3": 24,
         "explanation": (
             "These are kappas of DIFFERENT algebras at different categorical "
-            "levels.  The K3 sigma model VOA has kappa = dim_C = 2 universally.  "
-            "Lattice VOAs have kappa = rank.  The Gepner tensor product before "
-            "orbifold has kappa = sum of individual kappas.  AP48 applies: "
+            "levels.  The K3 sigma model VOA has kappa = dim_C = 2 in this "
+            "sigma/CDR package.  Lattice VOAs have kappa = rank.  The Gepner "
+            "tensor product before orbifold has kappa = sum of individual "
+            "kappas.  The Mukai rank and any Leech/Niemeier row are lattice "
+            "anchors, not identifications of the K3 sigma model.  AP48 applies: "
             "kappa depends on the full algebra, not just c or a subalgebra."
         ),
+        "scope": "sigma/CDR K3xE package; boundary free-field K3 data is separate",
         "k3xe_value": 3,  # The physical modular characteristic
     }
 
@@ -922,6 +944,10 @@ def chiral_algebra_k3xe() -> Dict[str, Any]:
       A_{K3} = small N=4 SCA at c=6 (K3 sigma model VOA)
       A_E = Heisenberg at level 1 (free boson on E)
 
+    This is the sigma/CDR compute-package algebra.  It is not the
+    Costello-Li boundary free-field algebra on E obtained by reducing along
+    K3, where K3 cohomology gives 24 free bosons and kappa = 24.
+
     Generators of A_{K3} (8 primary generators for small N=4):
       T (weight 2, bosonic) - energy-momentum tensor
       G^+, G^-, Gtilde^+, Gtilde^- (weight 3/2, fermionic) - 4 supercharges
@@ -953,10 +979,12 @@ def chiral_algebra_k3xe() -> Dict[str, Any]:
         "kappa": kappa_k3xe(),
         "shadow_class": "M",
         "koszul_expected": True,
+        "scope": "sigma/CDR K3xE algebra; boundary free-field K3 data is separate",
         "reason_koszul": (
             "N=4 SCA is freely strongly generated (no null relations "
-            "at generic c=6 for k_R=1), so PBW spectral sequence collapses "
-            "=> chirally Koszul (cor:universal-koszul)"
+            "at generic c=6 for k_R=1); PBW collapse would give chiral "
+            "Koszulity on this surface, with tensor-product preservation "
+            "recorded as an explicit check"
         ),
     }
 
@@ -1016,11 +1044,12 @@ def n4_ope_structure() -> Dict[str, Any]:
 
 
 def koszul_dual_k3xe() -> Dict[str, Any]:
-    """Koszul dual A^!_{K3xE}.
+    """Scalar Verdier/Koszul-branch record for A^!_{K3xE}.
 
-    A^! is obtained by Verdier intertwining: D_Ran(B(A)) ~ B(A^!).
-    AP50: A^!_infty (homotopy) and A^! (strict) are different objects;
-    their identification requires Theorem A.
+    A^i = H^*(B(A)) is the bar-dual coalgebra.  A^! is the Verdier/Koszul
+    branch obtained after the finite-type Verdier comparison.  The bar-cobar
+    inversion Omega(B(A)) ~= A is separate and is not the definition of A^!.
+    AP50: A^!_infty (homotopy) and A^! (strict) are different objects.
 
     For A_{K3} = N=4 SCA at c=6: the Koszul dual A^!_{K3} is the
     N=4 SCA at c = 26 - 6 = 20 ... NO!  This is WRONG.
@@ -1031,58 +1060,64 @@ def koszul_dual_k3xe() -> Dict[str, Any]:
     For the free boson part: A_E = H_1, so A^!_E = Sym^ch(V*) with
     kappa(A^!_E) = -1 (AP33: H_k^! != H_{-k}, but kappa(H_k^!) = -k).
 
-    kappa(A^!_{K3xE}) = -kappa(A_{K3xE}) = -3 (for the product,
-    assuming the tensor product duality works at the kappa level:
-    kappa + kappa' = 0 for the free-field sectors).
+    This function preserves the historical scalar compute value
+    kappa(A^!_{K3xE}) = -3.  That is a kappa-projection convention for this
+    package, not an identification of the full dual VOA and not a statement
+    that Theta_A^! = -Theta_A.
 
     WARNING: For the N=4 SCA the complementarity may not be kappa + kappa' = 0
     (cf. AP24: kappa + kappa' can be nonzero for W-algebras).
-    For the sigma model at c=6: kappa(A) + kappa(A^!) should follow the
-    CY pattern. For CY d-folds: kappa(A) = d, kappa(A^!) = -d is expected
-    from the duality sigma_model(X) <-> sigma_model(X^vee) where X^vee is
-    the mirror.  For K3: X^vee = K3 (K3 is self-mirror), so the duality
-    acts within the K3 family, not as a simple sign flip.
 
     STATUS: The exact identification of A^!_{K3xE} is OPEN at the level of
-    full VOA structure.  What is known: kappa(A^!) = -3 (from complementarity
-    at the kappa level, which is proved for freely generated algebras).
+    full VOA structure.  This engine records only the scalar kappa projection.
     """
     return {
         "kappa_dual": -kappa_k3xe(),
-        "dual_algebra": "N=4 SCA at c=6 Koszul dual (not simply c -> 26-c)",
+        "dual_algebra": "A^! Verdier/Koszul branch for A_{K3xE}; full VOA not identified",
+        "A_i": "H^*(B(A_{K3xE})), bar-dual coalgebra distinct from A^!",
         "e_dual": "Sym^ch(V*) with kappa = -1",
-        "complementarity": "kappa + kappa' = 0 (proved for free-field sectors)",
-        "status": "Exact VOA identification OPEN; kappa level PROVED",
-        "warning": "AP24: W-algebra complementarity can differ; AP33: H_k^! != H_{-k}",
+        "bar_cobar_inversion": "Omega(B(A)) recovers A; this is not the construction of A^!",
+        "complementarity": "scalar kappa projection only; full Theta complementarity is not negation",
+        "status": "Exact VOA identification OPEN; scalar kappa value recorded for this compute package",
+        "warning": "AP24: complementarity can differ beyond free-field/KM scalar projections; AP33: H_k^! != H_{-k}",
+        "scope": "sigma/CDR K3xE package; not the K3 boundary free-field package",
     }
 
 
 # =========================================================================
-# Section 13: Holographic modular Koszul datum
+# Section 13: Holographic package and modular-Koszul projections
 # =========================================================================
 
 def holographic_datum_k3xe() -> Dict[str, Any]:
-    """The holographic modular Koszul datum H(K3xE).
+    """The seven-entry holographic package H(K3xE).
 
-    H(T) = (A, A^!, C, r(z), Theta_A, nabla^hol) where:
-    - A = boundary algebra
-    - A^! = Koszul dual (Verdier intertwining)
-    - C = derived center (universal bulk)
+    H(T) = (A, A^i, A^!, C, r(z), Theta_A, nabla^hol) where:
+    - A = sigma/CDR chiral algebra chart for K3 x E
+    - A^i = H^*(B(A)), the bar-dual coalgebra
+    - A^! = Verdier/Koszul branch, distinct from A^i and from Omega(B(A))
+    - C = derived chiral centre Z^{der}_ch(A), the chain-level bulk
     - r(z) = collision r-matrix = Res^{coll}_{0,2}(Theta_A)
     - Theta_A = universal MC element
     - nabla^hol = holographic shadow connection
 
-    Each component assembles data from specific CY engines.
+    Six-projection modular-Koszul compute packages extract scalar and finite
+    records from this surface.  They do not replace the seven-entry package.
     """
     return {
         "A": chiral_algebra_k3xe(),
+        "A_i": {
+            "object": "H^*(B^ch(A_{K3xE}))",
+            "type": "bar_dual_coalgebra",
+            "distinct_from": ["A", "A^!", "Z^{der}_ch(A)"],
+            "bar_cobar_inversion": "Omega(B(A)) ~= A; inversion, not Koszul-dual identification",
+        },
         "A_dual": koszul_dual_k3xe(),
         "C": {
             "object": "Z^{der}_ch(A_{K3xE})",
-            "definition": "chiral derived center = universal bulk",
+            "definition": "chiral derived centre = universal bulk",
             "hh_dimensions": hh_dimensions_k3xe(),
             "hh_total": hh_total_dim_k3xe(),
-            "note": "AP34: derived center != bar complex; C classifies bulk operators",
+            "note": "AP34: derived centre != bar complex, A^i, or A^!; C classifies bulk operators",
         },
         "r_matrix": n4_ope_structure(),
         "Theta_A": {
@@ -1131,25 +1166,25 @@ def cross_check_euler() -> Dict[str, Any]:
 
 
 def cross_check_kappa() -> Dict[str, Any]:
-    """Verify kappa(K3 x E) = 3 by 4 independent paths.
+    """Verify kappa(K3 x E) = 3 by 3 independent accepted paths.
 
     Path A: CY dimension: dim_C(K3 x E) = 3.
     Path B: Additivity: kappa(K3) + kappa(E) = 2 + 1 = 3.
-    Path C: chi(X)/12 for the CY d-fold: kappa = chi/(2d) gives
-            kappa = 0/(6) = 0 -- NO, this is WRONG.
-            Actually kappa = dim_C for CY from index theory.
-    Path D: F_1 = kappa/24 and F_1 = 1/8 from independent computation,
+    Rejected hazard: chi(X)/(2d) would give 0 and is not the programme
+            kappa convention for the CY sigma/CDR package.
+    Path C: F_1 = kappa/24 and F_1 = 1/8 from independent computation,
             so kappa = 24 * F_1 = 24 * 1/8 = 3.
     """
     path_a = 3  # CY dimension
     path_b = kappa_k3_sigma() + kappa_e_sigma()  # = 2 + 1 = 3
-    path_d = 24 * shadow_F_g(1)  # = 24 * 1/8 = 3
+    path_c = 24 * shadow_F_g(1)  # = 24 * 1/8 = 3
 
     return {
         "path_a_cy_dim": path_a,
         "path_b_additivity": path_b,
-        "path_d_from_F1": int(path_d),
-        "consistent": path_a == path_b == int(path_d) == 3,
+        "path_c_from_F1": int(path_c),
+        "path_d_from_F1": int(path_c),  # Backward-compatible alias.
+        "consistent": path_a == path_b == int(path_c) == 3,
     }
 
 
@@ -1394,15 +1429,16 @@ def open_problems() -> List[Dict[str, str]]:
             "id": "OP2",
             "title": "Is A_{K3xE} chirally Koszul?",
             "computed": (
-                "Expected YES. The N=4 SCA at c=6 is freely strongly generated "
-                "(8 generators, no null relations at c=6 k_R=1), so the PBW "
-                "spectral sequence collapses by cor:universal-koszul."
+                "Expected YES on the sigma/CDR compute surface. The N=4 SCA "
+                "at c=6 is freely strongly generated (8 generators, no null "
+                "relations at c=6 k_R=1), so the PBW spectral sequence is "
+                "expected to collapse by cor:universal-koszul."
             ),
             "remains": (
                 "Verify that the tensor product with H_1 preserves Koszulness. "
-                "Since H_1 is Koszul (class G) and Koszulness is expected to be "
-                "preserved under tensor products of freely generated algebras, "
-                "this should hold."
+                "H_1 is Koszul (class G), but the tensor-product preservation "
+                "hypothesis should be invoked explicitly rather than absorbed "
+                "into the word Koszul."
             ),
             "tools": "prop:pbw-universality, cor:universal-koszul, prop:independent-sum-factorization.",
         },
@@ -1460,16 +1496,18 @@ def open_problems() -> List[Dict[str, str]]:
             "id": "OP6",
             "title": "Does B(A_{K3xE}) recover D^b(K3xE)?",
             "computed": (
-                "The bar complex B(A) is a factorization coalgebra encoding "
-                "the Koszul duality data. For the K3 sigma model, the bar "
-                "complex at low arities has been computed."
+                "The bar complex B(A) is a factorization coalgebra whose "
+                "cohomology gives A^i. The Verdier/Koszul branch A^! and the "
+                "bar-cobar inversion Omega(B(A)) ~= A are separate surfaces. "
+                "For the K3 sigma model, the bar complex at low arities has "
+                "been computed."
             ),
             "remains": (
                 "A functor from B(A_{K3xE})-comodules to D^b(K3xE). This "
-                "would be the CY3 version of the bar-cobar inversion theorem "
-                "(Theorem B). The geometric content: the derived category of "
-                "the CY3 is recovered from the homological algebra of its "
-                "chiral algebra's bar complex."
+                "would be a CY3 comparison with the bar-cobar inversion "
+                "surface (Theorem B), not a definition of A^!. The geometric "
+                "content would be recovery of the derived category from the "
+                "homological algebra of the chiral bar complex."
             ),
             "tools": "thm:bar-cobar-inversion (Theorem B), cy_sod_k3e_engine.",
         },
@@ -1477,13 +1515,14 @@ def open_problems() -> List[Dict[str, str]]:
             "id": "OP7",
             "title": "N=4 complementarity theorem?",
             "computed": (
-                "Theorem C (complementarity) states Q_g(A) + Q_g(A!) = H*(M_g, Z(A)). "
-                "For K3 x E: kappa + kappa' = 3 + (-3) = 0 at the scalar level."
+                "For K3 x E this engine records the scalar projection "
+                "kappa(A) + kappa(A^!) = 3 + (-3) = 0. This is not a "
+                "full-level identity Theta_A + Theta_A^! = 0."
             ),
             "remains": (
                 "An N=4 SUPERSYMMETRIC version of complementarity that "
                 "incorporates the SU(2)_R structure. The complementarity "
-                "equation at higher arity (cubic, quartic) for N=4 algebras."
+                "relations at higher arity (cubic, quartic) for N=4 algebras."
             ),
             "tools": "Theorem C, N=4 representation theory, shadow obstruction tower.",
         },

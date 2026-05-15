@@ -57,6 +57,9 @@ from compute.lib.bc_isomonodromic_shadow_engine import (
     verify_branch_point_formula, verify_fricke_relation,
     verify_tau_three_paths, verify_rh_index_constant,
     verify_fredholm_det_is_one,
+    holographic_package_entries, modular_koszul_primary_projections,
+    typed_firewall_objects, bar_koszul_firewall_summary,
+    kernel_normalization_constants, virasoro_singular_parameter_locus,
     # Full analysis
     full_isomonodromic_analysis, landscape_analysis,
     # Constants
@@ -135,6 +138,47 @@ class TestShadowFamilyData:
         kappa, alpha, Delta = 3.0, 2.0, 0.5
         Q0 = shadow_metric_eval(kappa, alpha, Delta, 0)
         assert abs(Q0 - 4 * kappa ** 2) < 1e-12
+
+
+class TestFirewallsAndKernelNormalizations:
+    """Verify package separation and collision-kernel conventions."""
+
+    def test_holographic_package_has_seven_entries(self):
+        entries = holographic_package_entries()
+        assert entries == (
+            "A", "A^i", "A^!", "C", "r(z)", "Theta_A", "nabla^hol",
+        )
+        assert len(entries) == 7
+
+    def test_modular_koszul_package_has_six_primary_projections(self):
+        projections = modular_koszul_primary_projections()
+        assert projections == (
+            "Fact_X(L)", "barB_X(L)", "Theta_L", "L_L",
+            "(V_L^br, T_L^br)", "R_4^mod(L)",
+        )
+        assert len(projections) == 6
+        assert projections != holographic_package_entries()
+
+    def test_bar_koszul_derived_center_firewall(self):
+        objects = typed_firewall_objects()
+        summary = bar_koszul_firewall_summary()
+        assert objects == (
+            "A", "B(A)", "A^i", "A^!", "Omega(B(A))", "Z_ch^der(A)",
+        )
+        assert "H^*(B(A))" in summary["A^i"]
+        assert "Verdier/continuous-linear dual" in summary["A^!"]
+        assert "inversion" in summary["Omega(B(A))"]
+        assert "Hochschild" in summary["Z_ch^der(A)"]
+
+    def test_kernel_normalization_constants(self):
+        constants = kernel_normalization_constants(c=26, k=3, h_vee=2)
+        assert constants["affine_raw_collision"]["formula"] == "k*Omega_tr/z"
+        assert constants["affine_raw_collision"]["coefficient"] == 3
+        assert constants["affine_kz_coefficient"]["formula"] == "Omega/((k+h^vee)z)"
+        assert abs(constants["affine_kz_coefficient"]["coefficient"] - 1 / 5) < 1e-12
+        assert constants["virasoro_collision"]["formula"] == "(c/2)/z^3 + 2T/z"
+        assert constants["virasoro_collision"]["central_coefficient"] == 13
+        assert constants["virasoro_collision"]["stress_coefficient"] == 2
 
 
 # ===========================================================================
@@ -247,6 +291,21 @@ class TestBranchPoints:
         collisions = collision_locus_virasoro()
         assert len(collisions) == 1
         assert abs(collisions[0]) < 1e-10
+
+    def test_c_zero_removable_delta_collision(self):
+        """At c=0, Delta has the removable value 40/22 and Q_L has a double zero."""
+        data = virasoro_shadow_data(0.0)
+        assert abs(data.Delta - 40 / 22) < 1e-12
+        tp, tm = branch_points(data.kappa, data.alpha, data.Delta)
+        assert abs(tp) < 1e-12
+        assert abs(tm) < 1e-12
+
+    def test_coefficient_pole_not_branch_collision(self):
+        """c=-22/5 is a coefficient pole, not a finite branch collision."""
+        locus = virasoro_singular_parameter_locus()
+        assert locus["branch_collisions"] == [0.0 + 0j]
+        assert locus["coefficient_poles"] == [-22.0 / 5.0 + 0j]
+        assert locus["coefficient_poles"][0] not in locus["branch_collisions"]
 
 
 # ===========================================================================
@@ -420,6 +479,15 @@ class TestRiemannHilbert:
             for zeta in [0.1, 0.5, 1.0, 2.0]:
                 det = rh_det_Y(data.kappa, data.alpha, data.Delta, zeta)
                 assert abs(det - 1) < 1e-8
+
+    def test_rh_det_matches_returned_matrix(self):
+        """The Wronskian identity is checked on the matrix returned by rh_solution_shadow."""
+        data = virasoro_shadow_data(5.0)
+        for zeta in [0.3, 0.3 + 0.1j, 1.0 + 0.5j]:
+            Y = rh_solution_shadow(data.kappa, data.alpha, data.Delta, zeta)
+            det_direct = Y[0][0] * Y[1][1] - Y[0][1] * Y[1][0]
+            assert abs(det_direct - 1) < 1e-8
+            assert abs(rh_det_Y(data.kappa, data.alpha, data.Delta, zeta) - det_direct) < 1e-12
 
     def test_rh_det_Y_at_zeta_zero(self):
         """det Y = 1 at zeta zero parameters."""
@@ -712,12 +780,10 @@ class TestIsomonodromicDeformation:
         assert abs(D_13 - D_13_dual) < 1e-10
 
     def test_deformation_symmetry_c_to_26_minus_c(self):
-        """Koszul duality: c -> 26-c swaps branch points in a computable way."""
+        """The Virasoro complement c -> 26-c gives finite branch data."""
         for c_val in [1.0, 5.0, 10.0]:
             sep_c = abs(branch_points_virasoro(c_val)[0] - branch_points_virasoro(c_val)[1])
             sep_dual = abs(branch_points_virasoro(26 - c_val)[0] - branch_points_virasoro(26 - c_val)[1])
-            # The separations at c and 26-c are generally different
-            # (they are related by the Koszul duality map, not equal)
             assert sep_c > 0
             assert sep_dual > 0
 

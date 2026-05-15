@@ -31,6 +31,7 @@ if str(_REPO_ROOT) not in sys.path:
 from compute.lib.independent_verification import independent_verification
 from compute.lib.shadow_tower_extended_families import (
     bp_c_arakawa,
+    bp_j_level_feigin_semikhatov,
     denominator_pattern_bp_tline,
     denominator_pattern_w3_wline,
     s3_bp_jline,
@@ -169,6 +170,12 @@ class TestBPTLineRationalK:
     def test_s3_bp_jline_vanishes(self):
         k = sp.Symbol("k")
         assert s3_bp_jline(k) == sp.Integer(0)
+
+    def test_bp_j_level_feigin_semikhatov(self):
+        """J_(1)J = (2k+3)/3 in Feigin-Semikhatov normal form."""
+        k = sp.Symbol("k")
+        expected = (2 * k + 3) / 3
+        assert sp.simplify(bp_j_level_feigin_semikhatov(k) - expected) == 0
 
     def test_s4_bp_jline_vanishes(self):
         k = sp.Symbol("k")

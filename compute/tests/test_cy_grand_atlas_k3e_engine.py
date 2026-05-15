@@ -1,17 +1,8 @@
 r"""Tests for cy_grand_atlas_k3e_engine.py -- Grand Unified Atlas for K3 x E.
 
-Multi-path verification:
-    Path A: Direct computation from defining formulas
-    Path B: Alternative formula / independent algorithm
-    Path C: Limiting/special cases (chi=0, c=6, d=3)
-    Path D: Symmetry/duality (Hodge symmetry, Serre duality, complementarity)
-    Path E: Cross-family consistency (additivity, Kunneth)
-    Path F: Literature comparison (Yau-Zaslow, DVV, Eichler-Zagier)
-    Path G: Dimensional/degree analysis
-    Path H: Numerical evaluation at specific parameter values
-
-Target: >= 120 tests covering all 17 sections of the engine,
-including synthesis tests that cross-check between engines.
+The test surface uses direct formulas, independent algorithms, limiting
+cases, dualities, cross-family checks, literature normalizations, degree
+analysis, and numerical evaluations.
 """
 
 import math
@@ -103,6 +94,16 @@ from compute.lib.cy_grand_atlas_k3e_engine import (
 )
 
 F = Fraction
+
+EXPECTED_HOLOGRAPHIC_KEYS = (
+    "A",
+    "A_i",
+    "A_dual",
+    "C",
+    "r_matrix",
+    "Theta_A",
+    "nabla_hol",
+)
 
 
 # ============================================================================
@@ -391,7 +392,7 @@ class TestKappa:
         assert kappa_kummer_lattice() == 4
 
     def test_kappa_sigma_ne_lattice(self):
-        """kappa(K3 sigma) != kappa(V_{T^4}): different algebras, AP48."""
+        """kappa(K3 sigma) != kappa(V_{T^4}): different chiral algebras."""
         assert kappa_k3_sigma() != kappa_kummer_lattice()
 
     def test_kappa_from_F1(self):
@@ -701,7 +702,7 @@ class TestChiralAlgebra:
         assert 4 in ope["TT"]["ope_poles"]
 
     def test_rmatrix_pole_shift(self):
-        """AP19: r-matrix poles one less than OPE poles."""
+        """Bar r-matrix poles are one less than OPE poles."""
         ope = n4_ope_structure()
         for channel, data in ope.items():
             max_ope = max(data["ope_poles"])
@@ -716,16 +717,21 @@ class TestChiralAlgebra:
 # ============================================================================
 
 class TestKoszulDual:
-    """Tests for Koszul dual of K3 x E chiral algebra."""
+    """Tests for the scalar A^! record of the K3 x E chiral algebra."""
 
     def test_kappa_dual_complementarity(self):
-        """kappa(A^!) = -kappa(A) = -3 (complementarity)."""
+        """The recorded scalar kappa(A^!) projection is -3."""
         kd = koszul_dual_k3xe()
         assert kd["kappa_dual"] == -3
 
-    def test_kappa_sum_zero(self):
-        """kappa + kappa' = 0 (for free-field sectors)."""
-        assert kappa_k3xe() + koszul_dual_k3xe()["kappa_dual"] == 0
+    def test_scalar_kappa_sum_zero(self):
+        """Only the scalar kappa projection is asserted to sum to zero."""
+        kd = koszul_dual_k3xe()
+        assert kappa_k3xe() + kd["kappa_dual"] == 0
+        assert "full VOA not identified" in kd["dual_algebra"]
+        assert "OPEN" in kd["status"]
+        assert "not the construction of A^!" in kd["bar_cobar_inversion"]
+        assert "full Theta complementarity is not negation" in kd["complementarity"]
 
 
 # ============================================================================
@@ -735,15 +741,52 @@ class TestKoszulDual:
 class TestHolographicDatum:
     """Tests for the holographic modular Koszul datum assembly."""
 
-    def test_datum_has_six_components(self):
-        """H(K3xE) has components A, A^!, C, r(z), Theta_A, nabla^hol."""
+    def test_datum_has_exact_seven_entries(self):
+        """H(K3xE) = (A, A_i, A^!, C, r(z), Theta_A, nabla_hol)."""
         hd = holographic_datum_k3xe()
-        assert "A" in hd
-        assert "A_dual" in hd
-        assert "C" in hd
-        assert "r_matrix" in hd
-        assert "Theta_A" in hd
-        assert "nabla_hol" in hd
+        assert tuple(hd) == EXPECTED_HOLOGRAPHIC_KEYS
+        assert len(hd) == 7
+
+    def test_bar_dual_coalgebra_is_separate_entry(self):
+        """A_i is H^*(B(A)), not A, A^!, or the derived centre."""
+        hd = holographic_datum_k3xe()
+        a_i = hd["A_i"]
+
+        assert a_i["object"] == "H^*(B^ch(A_{K3xE}))"
+        assert a_i["type"] == "bar_dual_coalgebra"
+        assert set(a_i["distinct_from"]) == {"A", "A^!", "Z^{der}_ch(A)"}
+        assert "Omega(B(A))" in a_i["bar_cobar_inversion"]
+        assert "inversion, not Koszul-dual identification" in a_i["bar_cobar_inversion"]
+
+    def test_verdier_dual_is_not_bar_cobar_inversion(self):
+        """A^! records the Verdier branch; Omega(B(A)) recovers A."""
+        hd = holographic_datum_k3xe()
+        a_dual = hd["A_dual"]
+
+        assert a_dual["kappa_dual"] == -3
+        assert "full VOA not identified" in a_dual["dual_algebra"]
+        assert "OPEN" in a_dual["status"]
+        assert "Omega(B(A)) recovers A" in a_dual["bar_cobar_inversion"]
+        assert "not the construction of A^!" in a_dual["bar_cobar_inversion"]
+        assert "full Theta complementarity is not negation" in a_dual["complementarity"]
+
+    def test_derived_centre_is_bulk_surface(self):
+        """C is Z_ch^der(A), with Hochschild dimensions from HKR."""
+        hd = holographic_datum_k3xe()
+        centre = hd["C"]
+
+        assert centre["object"] == "Z^{der}_ch(A_{K3xE})"
+        assert centre["definition"] == "chiral derived centre = universal bulk"
+        assert centre["hh_dimensions"] == hh_dimensions_k3xe()
+        assert centre["hh_total"] == hh_total_dim_k3xe()
+        assert centre["hh_total"] == sum(centre["hh_dimensions"].values())
+
+    def test_package_projections_match_sources(self):
+        """The r-matrix and holomorphic connection use their source records."""
+        hd = holographic_datum_k3xe()
+        assert hd["A"] == chiral_algebra_k3xe()
+        assert hd["r_matrix"] == n4_ope_structure()
+        assert hd["nabla_hol"] == shadow_connection_k3xe()
 
     def test_derived_center_dimensions(self):
         """Derived center HH^* has correct dimensions."""
@@ -754,7 +797,11 @@ class TestHolographicDatum:
     def test_theta_kappa(self):
         """Theta_A arity-2 projection = kappa = 3."""
         hd = holographic_datum_k3xe()
-        assert hd["Theta_A"]["arity_2"] == f"kappa = {kappa_k3xe()}"
+        theta = hd["Theta_A"]
+        assert theta["construction"].startswith("bar-intrinsic:")
+        assert theta["mc_equation"] == "D*Theta + (1/2)[Theta,Theta] = 0"
+        assert theta["arity_2"] == f"kappa = {kappa_k3xe()}"
+        assert theta["higher"] == "class M: all higher arities nonzero"
 
 
 # ============================================================================
@@ -986,7 +1033,7 @@ class TestSynthesis:
         assert ca["bar_degree_1_dim"] == ca["total_generators"]
 
     def test_complementarity_kappa(self):
-        """kappa(A) + kappa(A^!) = 0."""
+        """The scalar kappa projections of A and A^! sum to zero."""
         assert kappa_k3xe() + koszul_dual_k3xe()["kappa_dual"] == 0
 
     def test_no_exceptional_from_chi(self):
@@ -1001,9 +1048,11 @@ class TestSynthesis:
         assert gs["k0_rank_expected"] == gs["k0_rank_glued"] == 48
 
     def test_holographic_datum_complete(self):
-        """Holographic datum has all 6 components with consistent data."""
+        """The seven-entry holographic datum has consistent projections."""
         hd = holographic_datum_k3xe()
+        assert tuple(hd) == EXPECTED_HOLOGRAPHIC_KEYS
         assert hd["A"]["kappa"] == 3
+        assert hd["A_i"]["type"] == "bar_dual_coalgebra"
         assert hd["A_dual"]["kappa_dual"] == -3
         assert hd["nabla_hol"]["monodromy"] == -1
         assert hd["C"]["hh_dimensions"][2] == 23

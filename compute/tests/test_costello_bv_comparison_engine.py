@@ -8,7 +8,7 @@ Six comparison axes tested:
   Axis 5: Renormalization (CG counterterms vs bar UV finiteness)
   Axis 6: Effective action at scale L vs shadow at arity r
 
-Multi-path verification mandate (CLAUDE.md): every numerical claim
+Multi-path verification: every numerical claim
 verified by at least 3 independent paths.
 
 Ground truth: bv_brst.tex, feynman_connection.tex,
@@ -982,11 +982,13 @@ class TestCostelloLiHolomorphicTwist:
         assert result["propagator_match"] is True
         assert "d log" in result["propagator_bar"]
 
-    def test_koszul_dual_is_bulk(self):
-        """Bulk = homotopy Koszul dual A^!_infty."""
+    def test_line_branch_is_koszul_dual_and_bulk_is_derived_center(self):
+        """Line branch is A^!_infty; bulk is the derived-centre sector."""
         result = costello_li_holomorphic_twist()
         assert result["koszul_dual_match"] is True
-        assert "Koszul dual" in result["bulk_algebra"]
+        assert "Koszul" in result["line_algebra"]
+        assert "derived-centre" in result["bulk_algebra"]
+        assert "bulk is derived centre" in result["bulk_line_firewall"]
 
 
 # =========================================================================

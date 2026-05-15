@@ -12,7 +12,7 @@ Tests cover:
   9. Cross-family consistency checks
   10. Genus-1 and genus-2 obstructions
 
-Multi-path verification (per CLAUDE.md mandate):
+Multi-path verification:
   Path 1: Direct formula computation
   Path 2: Dimension/2 estimate for free-field cases
   Path 3: Mirror symmetry cross-check

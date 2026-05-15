@@ -1,11 +1,11 @@
 r"""Vol II Part I rectification engine: ordered bar is the E_1
-coalgebraic engine; SC lives on the derived-center pair.
+coalgebraic engine; SC lives on the typed open/closed pair.
 
 CORE CLAIMS VERIFIED:
 1. Bar differential = C-direction (holomorphic) factorization
 2. Bar coproduct = R-direction (topological) factorization
 3. Together = ordered E_1 coalgebra on FM_k(C) x Conf_k(R);
-   the SC datum appears on (C^bullet_ch(A,A), A)
+   the SC datum appears on (Z^der_ch(A_b), A_b), not on B(A)
 4. d_fib^2 = kappa * omega_g at genus g >= 1
 5. Arnold relation ensures d^2 = 0 at genus 0
 6. Arnold DEFECT at genus g produces curvature kappa * omega_g
@@ -13,10 +13,11 @@ CORE CLAIMS VERIFIED:
 8. AP44 convention: lambda-bracket coeff = a_{(n)}b / n!
 9. AP19: bar kernel d log absorbs one pole order
 10. Three models: flat (d^2=0), corrected holomorphic (D_g^2=0), curved (d_fib^2 = kappa*omega_g)
-11. CDG bulk algebra = commutative with shifted Poisson bracket
-12. Swiss-cheese directionality: no open-to-closed maps
+11. CDG bulk algebra = H*(Z^der_ch(A_b)) with shifted Poisson bracket
+12. Swiss-cheese directionality: no operadic open-to-closed maps
 13. Moriwaki absolute convergence compatible with our sewing
-14. Koszul duality decomposes along C x R: chiral KD x E_1 KD
+14. The product rectification surface decomposes into typed chiral,
+    E_1, and Verdier/completed lanes; it is not SC self-duality
 
 CROSS-VOLUME CHECKS (AP49):
 - Vol I OPE modes vs Vol II lambda-brackets (AP44 conversion)
@@ -37,6 +38,35 @@ from fractions import Fraction
 from math import factorial, pi, comb, log, exp, sqrt
 from functools import reduce
 import operator
+
+
+HOLOGRAPHIC_PACKAGE_ENTRIES = (
+    "A",
+    "A^i",
+    "A^!",
+    "C",
+    "r(z)",
+    "Theta_A",
+    "nabla^hol",
+)
+
+
+MODULAR_KOSZUL_COMPUTE_PROJECTIONS = (
+    "Fact_X(L)",
+    "barB_X(L)",
+    "Theta_L",
+    "L_L",
+    "(V_br,T_br)",
+    "R4_mod(L)",
+)
+
+
+KERNEL_NORMALIZATIONS = {
+    "affine_raw_collision": "k*Omega_tr/z",
+    "affine_kz_connection": "Omega/((k+h^vee)z)",
+    "heisenberg_collision": "k/z",
+    "virasoro_collision": "(c/2)/z^3 + 2T/z",
+}
 
 
 # ============================================================================
@@ -68,6 +98,127 @@ def kappa_wn(c, N):
 
 
 # ============================================================================
+# Section 1b: Object/package firewalls and projection scope
+# ============================================================================
+
+def verify_package_firewalls():
+    """Keep the holographic package distinct from the compute projections.
+
+    Vol I and Vol II use two adjacent but non-identical lists:
+    - H(A) = (A, A^i, A^!, C, r(z), Theta_A, nabla^hol)
+    - Pi_X(L) = (Fact_X(L), barB_X(L), Theta_L, L_L,
+      (V_br,T_br), R4_mod(L)).
+
+    The first is a seven-entry holographic package.  The second is a
+    six-projection modular Koszul compute package.  Neither list is an
+    alternative spelling of the other.
+    """
+    holographic_roles = {
+        "A": "boundary chiral algebra",
+        "A^i": "bar-dual coalgebra H*(B(A))",
+        "A^!": "Verdier/continuous-linear dual branch of A^i",
+        "C": "derived-centre/Hochschild bulk slot",
+        "r(z)": "binary genus-0 collision residue of Theta_A",
+        "Theta_A": "full universal Maurer-Cartan element",
+        "nabla^hol": "holomorphic connection assembled from Theta_A projections",
+    }
+    compute_roles = {
+        "Fact_X(L)": "factorization envelope of the input line/boundary datum",
+        "barB_X(L)": "bar coalgebra projection",
+        "Theta_L": "line/boundary MC projection",
+        "L_L": "determinant or line-bundle projection",
+        "(V_br,T_br)": "branch-family monodromy projection",
+        "R4_mod(L)": "quartic modular resonance projection",
+    }
+    return {
+        "holographic_package": HOLOGRAPHIC_PACKAGE_ENTRIES,
+        "modular_koszul_compute_package": MODULAR_KOSZUL_COMPUTE_PROJECTIONS,
+        "holographic_roles": holographic_roles,
+        "compute_roles": compute_roles,
+        "package_lengths": {
+            "holographic": len(HOLOGRAPHIC_PACKAGE_ENTRIES),
+            "compute": len(MODULAR_KOSZUL_COMPUTE_PROJECTIONS),
+        },
+        "packages_are_distinct": (
+            set(HOLOGRAPHIC_PACKAGE_ENTRIES)
+            != set(MODULAR_KOSZUL_COMPUTE_PROJECTIONS)
+        ),
+        "bar_projection_not_verdier_dual": True,
+        "bulk_slot_not_compute_projection": True,
+    }
+
+
+def verify_kernel_normalization_firewall(k=1, h_dual=2, c=26):
+    """Separate collision kernels from KZ comparison normalizations.
+
+    Canonical Vol I census conventions:
+    affine raw collision residue = k*Omega_tr/z;
+    affine KZ connection = Omega/((k+h^vee)z);
+    Heisenberg collision residue = k/z;
+    Virasoro collision residue = (c/2)/z^3 + 2T/z.
+    """
+    k_frac = Fraction(k)
+    h_frac = Fraction(h_dual)
+    c_frac = Fraction(c)
+    if k_frac + h_frac == 0:
+        kz_coefficient = None
+        kz_defined = False
+    else:
+        kz_coefficient = Fraction(1, 1) / (k_frac + h_frac)
+        kz_defined = True
+
+    raw_affine_coefficient = k_frac
+    virasoro_cubic_coefficient = Fraction(c_frac, 2)
+
+    return {
+        "formulas": KERNEL_NORMALIZATIONS,
+        "affine_raw_coefficient": raw_affine_coefficient,
+        "affine_kz_coefficient": kz_coefficient,
+        "affine_kz_defined": kz_defined,
+        "heisenberg_coefficient": k_frac,
+        "virasoro_cubic_coefficient": virasoro_cubic_coefficient,
+        "virasoro_linear_term": "2T/z",
+        "raw_and_kz_not_equal_as_rational_functions": (
+            (not kz_defined) or raw_affine_coefficient != kz_coefficient
+        ),
+        "level_zero_separates_raw_from_kz": (
+            k_frac == 0 and kz_defined and raw_affine_coefficient == 0
+            and kz_coefficient == Fraction(1, 1) / h_frac
+        ),
+        "critical_level_kz_undefined": (k_frac + h_frac == 0),
+    }
+
+
+def verify_projection_promotion_firewall():
+    """Prevent finite projections from being promoted to full Vol II equivalences."""
+    return {
+        "r_matrix_projection": {
+            "source": "Res^{coll}_{0,2}(Theta_A)",
+            "scope": "binary genus-0 collision residue",
+            "not_full_mc_element": True,
+            "does_not_determine_all_arities": True,
+        },
+        "kappa_projection": {
+            "source": "degree-2 scalar shadow of Theta_A",
+            "scope": "uniform-weight scalar obstruction coefficient",
+            "not_full_mc_element": True,
+            "kappa_zero_does_not_imply_theta_zero": True,
+        },
+        "open_closed_equivalence": {
+            "proved_surface": "finite/completed bar-cobar windows and typed SC action",
+            "requires_boundary_condition": True,
+            "requires_cumulant_recognition_for_full_equivalence": True,
+            "full_vol2_equivalence_promoted": False,
+        },
+        "annulus_trace": {
+            "scope": "genus-1 open-sector categorical trace",
+            "not_operadic_open_to_closed": True,
+            "not_bar_cobar_inversion": True,
+        },
+    }
+
+
+# ============================================================================
 # Section 2: Arnold relation verification (genus 0, d^2 = 0)
 # ============================================================================
 
@@ -92,11 +243,9 @@ def arnold_relation_genus0(coefficients=None):
     # eta_31 = -eta_13
     # So: eta_12 ^ eta_23 + eta_23 ^ (-eta_13) + (-eta_13) ^ eta_12
     #   = eta_12 ^ eta_23 - eta_23 ^ eta_13 - eta_13 ^ eta_12
-    # Now use the identity: on Conf_3(C), there is a relation in H^1 given by
-    # eta_12 + eta_23 + eta_31 = 0 (mod exact forms) -- this is NOT right.
-    # The correct statement: eta_12, eta_13 form a basis of H^1(Conf_3(C)),
+    # eta_12, eta_13 form a basis of H^1(Conf_3(C)),
     # and eta_23 = eta_13 - eta_12 + exact (from the differential of log((z1-z3)/(z1-z2)(z2-z3))).
-    # Actually the Arnold relation is proved by direct computation:
+    # Direct computation proves the Arnold relation:
     # d log(z1-z2) ^ d log(z2-z3) = dz1^dz2/((z1-z2)(z2-z3))
     # etc. and the three terms sum to zero by partial fractions:
     # 1/((z1-z2)(z2-z3)) + 1/((z2-z3)(z3-z1)) + 1/((z3-z1)(z1-z2)) = 0
@@ -182,9 +331,9 @@ def verify_heisenberg_curvature_genus1(k):
     # Path 1: Residue computation
     # Res_{u=0}[eta^(1)(u) * k/u] = k * Res_{u=0}[1/u * 1/u + correction/u]
     # The holomorphic part 1/u * k/u gives k/u^2 -- this is the DOUBLE pole
-    # But wait: the propagator is eta^(1) = d log (partial_z log theta_1)
-    # and the OPE is k/(z-w). The product is k * eta^(1)/(z-w).
-    # Actually: d_fib acts by integrating eta^(1) against the OPE.
+    # The propagator is eta^(1) = d log(partial_z log theta_1), and the
+    # OPE is k/(z-w). The product is k * eta^(1)/(z-w).
+    # d_fib acts by integrating eta^(1) against the OPE.
     # d_fib^2 involves composing two such operations.
     # The cross-term h*R gives kappa * omega_Ar.
     path1_curvature = kappa  # coefficient of omega_1
@@ -274,11 +423,10 @@ def ope_to_lambda_bracket(ope_coefficients):
     The lambda-bracket is:
         {a_lambda b} = sum_{n>=0} a_{(n)}b * lambda^n / n!
 
-    So the lambda-bracket coefficient at order lambda^n is a_{(n)}b / n!,
-    NOT a_{(n)}b.
+    So the lambda-bracket coefficient at order lambda^n is a_{(n)}b / n!.
 
     AP44: T_{(3)}T = c/2 becomes {T_lambda T} coefficient at lambda^3
-    equal to (c/2)/3! = c/12, NOT c/2.
+    equal to (c/2)/3! = c/12.
 
     Args:
         ope_coefficients: dict mapping n -> a_{(n)}b value
@@ -404,14 +552,14 @@ def verify_ap19_affine():
     OPE: J^a(z)J^b(w) ~ k*kappa^{ab}/(z-w)^2 + f^{ab}_c J^c/(z-w)
     Pole orders: 2, 1
 
-    After d log absorption: r(z) = k*kappa^{ab}/z + ...
-    Wait -- the simple pole term contributes as Res of (d log * f^{ab}_c J^c/(z-w))
-    = Res of (1/(z-w) * f^{ab}_c J^c/(z-w)) = f^{ab}_c J^c * Res(1/(z-w)^2)
-    But the d log is already 1/(z-w), so the total integrand for the simple pole
-    OPE term is (1/(z-w)) * (f/(z-w)) = f/(z-w)^2. The residue of this is
-    the derivative of f, which is zero for constant structure constants.
+    After d log absorption: r(z) = k*kappa^{ab}/z plus the regular
+    Lie-bracket channel.
+    The simple pole term contributes as
+    Res(dlog(z-w) * f^{ab}_c J^c/(z-w)); because dlog already carries
+    one power of (z-w)^{-1}, this is a derivative residue and gives no
+    additional pole for constant structure coefficients.
 
-    Actually, the collision residue r(z) = Res^{coll}_{0,2}(Theta_A) extracts:
+    The collision residue r(z) = Res^{coll}_{0,2}(Theta_A) extracts:
     From pole order 2: coefficient * 1/z (absorbed one power)
     From pole order 1: coefficient * 1 (constant, the Lie bracket)
 
@@ -439,27 +587,33 @@ def verify_ap19_affine():
 def verify_swiss_cheese_directionality():
     """Verify the strict directionality of SC^{ch,top}.
 
-    The Swiss-cheese operad has two colors: closed (holomorphic, C) and open (topological, R).
-    Directionality: closed-to-open exists (bulk acts on boundary).
-    Open-to-closed is EMPTY (no boundary-to-bulk maps).
+    The Swiss-cheese operad has two colors: closed/bulk (holomorphic, C)
+    and open/boundary (topological, R).  Directionality:
+    closed-to-open exists (bulk acts on boundary).  Operadic
+    open-to-closed is empty.
 
     Mathematical reason (Vol II factorization_swiss_cheese.tex lines 751-770):
     The !-tensor product iota_!(F_op) otimes^! F_cl = 0 by support considerations:
     the boundary Sigma_g x {0} has codimension 1 in Sigma_g x R, and the
     !-extension carries no sections transverse to the boundary.
 
-    Physical interpretation: at genus 0, information flows one-way (bulk -> boundary).
-    At genus >= 1, the annulus trace provides the first open-to-closed map,
-    but this is trace + clutching, not an operadic operation.
+    Physical interpretation: at genus 0, information flows one-way
+    (bulk -> boundary).  At genus >= 1, the annulus trace contributes
+    a modular open-sector trace into the closed projection, but this is
+    trace + clutching, not an SC operadic operation and not the inverse
+    of the bulk-to-boundary action.
 
     Returns: dict with verification.
     """
     return {
         "closed_to_open_exists": True,
         "open_to_closed_empty": True,
+        "open_to_closed_operadic_empty": True,
         "codimension_argument": "boundary has codim 1 in half-space",
         "genus_0_strict_directionality": True,
-        "genus_1_annulus_trace": "open-to-closed via trace, not operadic",
+        "genus_1_annulus_trace": "modular open-sector trace, not SC operadic",
+        "bulk_boundary_direction": "Z^der_ch(A_b) acts on the boundary chart A_b",
+        "annulus_trace_is_not_bar_cobar": True,
     }
 
 
@@ -563,7 +717,9 @@ def verify_cdg_compatibility():
     The boundary algebra is a module for the bulk.
 
     Our Vol II claims:
-    (a) The bulk is the chiral derived center Z^der_ch(A) = C^bullet_ch(A_b, A_b).
+    (a) After choosing a boundary condition b, the Morita chart is
+        A_b = End_Cop(b).  The intrinsic bulk is the chiral derived
+        center Z^der_ch(A_b) = C^bullet_ch(A_b, A_b), not B(A_b).
         On cohomology, this is a Gerstenhaber algebra (= shifted Poisson).
         CDG's "shifted Poisson" IS our Gerstenhaber structure.
 
@@ -575,7 +731,7 @@ def verify_cdg_compatibility():
         Our setup: the SC^{ch,top} operation spaces are modeled on
         FM_k(C) x Conf_k(R), while the ordered bar complex supplies
         the E_1 coalgebraic engine and the SC datum lives on the
-        derived-center pair.
+        typed open/closed pair (Z^der_ch(A_b), A_b).
         The operation spaces match.
 
     Returns: dict with compatibility verification.
@@ -583,13 +739,14 @@ def verify_cdg_compatibility():
     return {
         "bulk_algebra": {
             "CDG": "commutative with shifted Poisson bracket",
-            "Vol_II": "Gerstenhaber algebra = derived center cohomology",
+            "Vol_II": "H*(Z^der_ch(A_b)) = H*(C^bullet_ch(A_b, A_b))",
             "compatible": True,
             "shift_matches": True,  # CDG's shifted Poisson = our (-1)-shifted
+            "not_bar_complex": True,
         },
         "boundary_module": {
             "CDG": "boundary algebra is module for bulk",
-            "Vol_II": "F_op is module for F_cl via F_mix",
+            "Vol_II": "A_b is a Morita chart for C_op and is a module for Z^der_ch(A_b)",
             "compatible": True,
         },
         "directionality": {
@@ -601,6 +758,12 @@ def verify_cdg_compatibility():
             "CDG": "C x R (holomorphic x topological)",
             "Vol_II": "FM_k(C) x Conf_k(R)",
             "compatible": True,
+        },
+        "object_boundary": {
+            "open_sector": "C_op on the tangential log boundary",
+            "boundary_chart": "A_b = End_Cop(b)",
+            "bulk": "Z^der_ch(A_b)",
+            "bar_engine": "B(A_b) supplies the ordered E_1 coalgebraic engine only",
         },
     }
 
@@ -627,8 +790,10 @@ def verify_moriwaki_compatibility():
 
     (b) The Swiss-cheese operad action on module categories is compatible
         with our factorization category framework: Moriwaki works at the
-        module-category level while we work at the algebra level, but
-        the Swiss-cheese structure is the same.
+        module-category level while we work with Morita charts of the
+        open sector and their derived centers.  The common datum is the
+        typed bulk-to-boundary SC directionality, not an identification
+        of bar, boundary, and bulk objects.
 
     (c) Moriwaki's C_1-cofiniteness condition corresponds to our
         "locally C_1-cofinite" hypothesis in the sewing programme.
@@ -645,9 +810,10 @@ def verify_moriwaki_compatibility():
         },
         "swiss_cheese_action": {
             "Moriwaki": "SC operad acts on C_1-cofinite module categories",
-            "Vol_II": "SC^{ch,top} structure on the derived-center pair (C^bullet_ch(A,A), A)",
+            "Vol_II": "SC^{ch,top} structure on (Z^der_ch(A_b), A_b)",
             "compatible": True,
             "level_difference": "module categories vs algebras",
+            "typed_bulk_boundary": True,
         },
         "c1_cofiniteness": {
             "Moriwaki": "locally C_1-cofinite condition",
@@ -658,40 +824,62 @@ def verify_moriwaki_compatibility():
 
 
 # ============================================================================
-# Section 11: Koszul duality decomposition along C x R
+# Section 11: Typed product decomposition along C x R
 # ============================================================================
 
 def verify_koszul_decomposition():
-    """Verify that Koszul duality decomposes along the product C x R.
+    """Verify the typed product decomposition along the product C x R.
 
     Vol II factorization_swiss_cheese.tex, Remark rem:CG-koszul (line 1611):
-    - R-direction: E_1 Koszul duality (bar-cobar for associative algebras)
-    - Sigma_g-direction: chiral Koszul duality (Vol I Theorem A)
-    - Combined: Swiss-cheese Koszul duality
+    - R-direction: E_1 bar-cobar/Koszul lane for associative boundary data
+    - Sigma_g-direction: chiral bar-cobar lane (Vol I Theorem A)
+    - Verdier lane: A^i -> A^! only under finite-type or completed hypotheses
+    - Combined: two-colored SC^{ch,top} open/closed rectification surface
 
-    This decomposition is the content of the Ayala-Francis framework [AF15]
-    applied to the product FM_k(C) x Conf_k(R).
+    This decomposition uses the Ayala-Francis framework [AF15] applied to
+    the product FM_k(C) x Conf_k(R).  It is not the assertion that the
+    Swiss-cheese operad is self-dual, and it does not identify the bar
+    complex with the open/closed bulk.
 
     Returns: dict with verification.
     """
     return {
         "R_direction": {
-            "type": "E_1 Koszul duality",
+            "type": "E_1 bar-cobar/Koszul lane",
             "source": "Ayala-Francis, Lurie HA Thm 5.4.5.9",
             "content": "bar-cobar for associative algebras",
+            "open_object": "boundary Morita chart A_b",
         },
         "C_direction": {
-            "type": "chiral Koszul duality",
+            "type": "chiral bar-cobar lane",
             "source": "Vol I Theorem A",
             "content": "bar-cobar for chiral/factorization algebras",
+            "bar_object": "B(A_b) = T^c(s^{-1}bar A_b)",
+        },
+        "Verdier_direction": {
+            "type": "finite-type/completed Verdier lane",
+            "coalgebra": "A^i = H*(B(A_b))",
+            "algebra": "A^! = D(A^i)",
+            "finite_type_required": True,
+            "completed_strict_ml_allowed": True,
+            "content": "Verdier duality turns the Koszul-dual coalgebra into the Koszul-dual algebra",
         },
         "combined": {
-            "type": "Swiss-cheese Koszul duality",
-            "content": "two-colored adjunction",
+            "type": "SC^{ch,top} open/closed rectification surface",
+            "content": "two-colored bulk-to-boundary structure on (Z^der_ch(A_b), A_b)",
+            "not_swiss_cheese_self_duality": True,
+            "not_bar_equals_bulk": True,
         },
         "kunneth": "C_*(FM_k(X) x E_1(m)) ~ C_*(FM_k(X)) otimes C_*(E_1(m))",
         "kunneth_holds": True,
         "reason": "FM_k(X) compact mfld with corners, E_1(m) finite cells, char 0",
+        "object_firewall": {
+            "B(A_b)": "conilpotent dg coalgebra and ordered E_1 engine",
+            "Omega(B(A_b))": "bar-cobar reconstruction of A_b",
+            "A^i": "Koszul-dual coalgebra H*(B(A_b))",
+            "A^!": "Verdier/linear dual algebra of A^i under finite-type or completed hypotheses",
+            "Z^der_ch(A_b)": "bulk, the chiral Hochschild cochain object acting on A_b",
+        },
     }
 
 
@@ -884,17 +1072,25 @@ def verify_heisenberg_genus1_partition_function(k):
 
 
 # ============================================================================
-# Section 16: Bulk = derived center, NOT bar complex (AP-OC, AP25, AP34)
+# Section 16: Bulk = derived center (AP-OC, AP25, AP34)
 # ============================================================================
 
 def verify_bulk_identification():
     """Verify the correct identification of the bulk algebra.
 
-    AP-OC: The bulk is Z^der_ch(A) = C^bullet_ch(A_b, A_b), NOT B(A).
-    AP25: Three functors on B(A) give three different things:
-        (1) Omega(B(A)) = A (reconstruction)
-        (2) D_Ran(B(A)) = B(A!) (Verdier dual = Koszul dual bar)
-        (3) C^bullet_ch(A,A) = RHom(Omega(B(A)), A) (derived center = bulk)
+    AP-OC: the bulk is Z^der_ch(A_b) = C^bullet_ch(A_b, A_b),
+    not B(A_b).  Here A_b is a Morita chart of the open-sector
+    factorization dg-category C_op.
+
+    AP25: the five objects are typed separately:
+        (1) B(A_b) = T^c(s^{-1}bar A_b), a conilpotent dg coalgebra
+        (2) Omega(B(A_b)) -> A_b, bar-cobar reconstruction
+        (3) A^i = H*(B(A_b)), the Koszul-dual coalgebra
+        (4) A^! = D(A^i), the Verdier/linear-dual algebra only on the
+            finite-type Verdier surface, or after the completed strict
+            Mittag-Leffler replacement in class M
+        (5) Z^der_ch(A_b) = RHom^ch_{A_b-A_b}(A_b, A_b), the bulk
+
     AP34: Bar-cobar inversion ≠ open-to-closed passage.
 
     Vol II foundations.tex:
@@ -903,16 +1099,67 @@ def verify_bulk_identification():
 
     Returns: dict with verification.
     """
+    typed_objects = {
+        "B(A_b)": {
+            "type": "conilpotent dg coalgebra",
+            "construction": "T^c(s^{-1}bar A_b) with bar differential",
+            "role": "ordered E_1 coalgebraic engine and twisting-morphism classifier",
+        },
+        "Omega(B(A_b))": {
+            "type": "dg algebra",
+            "construction": "cobar of the bar coalgebra",
+            "role": "reconstructs the original boundary algebra A_b",
+        },
+        "A^i": {
+            "type": "Koszul-dual coalgebra",
+            "construction": "H*(B(A_b)) on the Koszul locus",
+            "role": "coalgebraic dual object before Verdier/linear dualization",
+        },
+        "A^!": {
+            "type": "Koszul-dual algebra",
+            "construction": "D(A^i) on finite-type Verdier surface or completed strict ML surface",
+            "role": "line/boundary dual algebra, not the cobar reconstruction",
+        },
+        "Z^der_ch(A_b)": {
+            "type": "chiral Hochschild cochain object",
+            "construction": "RHom^ch_{A_b-A_b}(A_b, A_b)",
+            "role": "intrinsic bulk acting on the boundary chart",
+        },
+    }
+
     return {
-        "bar_complex_classifies": "twisting morphisms (universal couplings A <-> A!)",
-        "bulk_algebra": "chiral derived center Z^der_ch(A) = C^bullet_ch(A_b, A_b)",
-        "bar_cobar_inversion": "Omega(B(A)) = A (recovers ORIGINAL algebra)",
-        "verdier_dual": "D_Ran(B(A)) = B(A!) (Koszul dual)",
+        "bar_complex_classifies": "twisting morphisms (universal couplings A_b <-> A_b^!)",
+        "bulk_algebra": "chiral derived center Z^der_ch(A_b) = C^bullet_ch(A_b, A_b)",
+        "bar_cobar_inversion": "Omega(B(A_b)) -> A_b (recovers the original boundary algebra)",
+        "koszul_dual_coalgebra": "A^i = H*(B(A_b))",
+        "verdier_dual": "A^! = D(A^i) under finite-type or completed strict ML hypotheses",
         "AP_OC_verified": True,
         "AP25_verified": True,
         "AP34_verified": True,
         "bulk_is_morita_invariant": True,
         "bulk_on_cohomology": "Gerstenhaber algebra (= CDG shifted Poisson)",
+        "typed_objects": typed_objects,
+        "pairwise_distinct_roles": len({item["role"] for item in typed_objects.values()}) == len(typed_objects),
+        "finite_type_completed_verdier_hypotheses": {
+            "finite_type_verdier_surface": True,
+            "completed_strict_mittag_leffler_surface": True,
+            "naive_uncompleted_infinite_dual_forbidden": True,
+        },
+        "open_closed_boundary": {
+            "open_sector": "C_op on the tangential log boundary",
+            "boundary_chart": "A_b = End_Cop(b)",
+            "bulk": "Z^der_ch(A_b)",
+            "bulk_to_boundary_action": True,
+            "open_to_closed_operadic_map": False,
+            "annulus_trace": "modular trace/clutching in the open sector, not bar-cobar inversion",
+        },
+        "no_object_collapse": {
+            "bulk_not_bar": True,
+            "cobar_not_koszul_dual": True,
+            "koszul_dual_coalgebra_not_algebra": True,
+            "verdier_hypothesis_named": True,
+            "bulk_boundary_named": True,
+        },
     }
 
 
@@ -928,6 +1175,9 @@ def run_all_verifications():
     results["kappa_heisenberg_1"] = kappa_heisenberg(1)
     results["kappa_virasoro_26"] = kappa_virasoro(26)
     results["kappa_sl2_1"] = kappa_affine(3, 1, 2)
+    results["package_firewalls"] = verify_package_firewalls()
+    results["kernel_normalizations"] = verify_kernel_normalization_firewall()
+    results["projection_firewalls"] = verify_projection_promotion_firewall()
 
     # Section 2: Arnold relation
     results["arnold"] = arnold_relation_genus0()

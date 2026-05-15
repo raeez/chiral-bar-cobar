@@ -1,72 +1,78 @@
-r"""BTZ 7-loop quantum gravity engine: beyond-literature black hole corrections.
+r"""BTZ 7-loop finite shadow diagnostics.
 
-MATHEMATICAL FRAMEWORK
-======================
+CERTIFIED SURFACE
+=================
 
-This module extends the BTZ quantum gravity engine (btz_quantum_gravity_engine.py)
-to 7-loop order (genus 7), providing the first explicit computation of F_6 and F_7
-for the BTZ black hole partition function.  All previous literature stops at genus 5
-or below.
+This module extends the finite BTZ shadow diagnostic to genus 7.  The
+certified lane is the scalar Bernoulli/A-hat component
 
-GENUS FREE ENERGIES (scalar lane)
-==================================
+    F_g^{scalar}(A) = kappa(A) * lambda_g^FP,
 
-F_g(Vir_c) = kappa(Vir_c) * lambda_g^FP = (c/2) * lambda_g^FP
+with lambda_g^FP the Faber-Pandharipande integral.  For Virasoro, the
+implemented full free-energy window is still only genus 2 and genus 3:
+those are the local planted-forest corrections recorded in the base
+engine.  The genus 6 and genus 7 Virasoro routines below return scalar
+components, not certified full Virasoro planted-forest amplitudes.
 
-where lambda_g^FP = (2^{2g-1}-1)/(2^{2g-1}) * |B_{2g}|/(2g)! are the
-Faber-Pandharipande intersection numbers on M_g.
+The BTZ/Cardy wrappers use external 3d-gravity input.  Finite scalar
+coefficients do not certify an exact BTZ partition function, an exact
+full-Virasoro convergence radius, Borel summability, all-genus planted
+forests, or analytic tau-dependence.
 
-Exact values through genus 7:
+SCALAR VALUES
+=============
+
+The exact scalar formula is
+
+    lambda_g^FP =
+    ((2^{2g-1}-1)/2^{2g-1}) * |B_{2g}| / (2g)!.
+
+Through genus 7:
   lambda_1 = 1/24
   lambda_2 = 7/5760
   lambda_3 = 31/967680
   lambda_4 = 127/154828800
   lambda_5 = 73/3503554560
-  lambda_6 = 1414477/2678117105664000    [FIRST COMPUTATION]
-  lambda_7 = 8191/612141052723200        [FIRST COMPUTATION]
+  lambda_6 = 1414477/2678117105664000
+  lambda_7 = 8191/612141052723200
 
-CONVERGENCE
-===========
+The scalar A-hat generating function is
 
-The scalar genus sum sum_{g>=1} F_g hbar^{2g} = kappa*((hbar/2)/sin(hbar/2) - 1)
-converges for |hbar| < 2*pi (the A-hat convergence radius).  The shadow series
-is CONVERGENT, unlike the string free energy which diverges as (2g)!.
+    sum_{g>=1} lambda_g^FP x^{2g} = (x/2)/sin(x/2) - 1.
 
-Decay ratios: lambda_{g+1}/lambda_g -> 1/(2*pi)^2 ~ 0.02533 as g -> infinity.
-At 7 loops: lambda_7/lambda_6 = 0.02534, confirming Bernoulli asymptotics.
+This gives the scalar Taylor radius 2*pi.  It is not a radius theorem for
+the full Virasoro planted-forest tower or for the full BTZ partition
+function.
 
-BOREL ANALYSIS
-==============
+LOCAL CONSTANTS
+===============
 
-Borel transform B(zeta) = sum F_g zeta^{2g-1}/(2g-1)! has singularities at
-zeta = 2*pi*n (n = 1, 2, ...).  First instanton action A_1 = 2*pi.  Stokes
-constant S_1 = -4*pi^2*kappa*i.
+The constants are sourced from the local landscape census:
 
-At 7 loops the Borel coefficients decrease by a factor ~10^{-4} per loop,
-confirming the Borel transform is entire.
+  kappa(Vir_c) = c/2
+  kappa(H_k) = k
+  kappa(V_k(g)) = dim(g)(k+h^vee)/(2h^vee)
+  S_3(Vir_c) = 2
+  S_4(Vir_c) = 10/[c(5c+22)]
+  S_5(Vir_c) = -48/[c^2(5c+22)]
+  r_H(z) = k/z
+  r_KM^{coll}(z) = k Omega_tr/z
+  r_KZ(z) = Omega/((k+h^vee)z)
+  r_Vir(z) = (c/2)/z^3 + 2T/z
 
-MALONEY-WITTEN COMPARISON
-==========================
+OBJECT FIREWALLS
+================
 
-Maloney-Witten (0712.0155) sum over geometries: Z^MW = sum_gamma Z(gamma.tau).
-This sum DIVERGES (each Farey term contributes 1 to the asymptotic density).
-Our shadow tower Z^sh = exp(sum F_g hbar^{2g}) CONVERGES.  The discrepancy
-is quantified at 7 loops: the shadow tower gives a FINITE, well-defined
-partition function while MW requires Poincare summation regularization.
-
-BTZ ENTROPY CORRECTIONS
-========================
-
-The genus-g correction to BTZ entropy:
-  S_g = F_g * (2*pi/S_BH)^{2g-2}    [g >= 2]
-  S_1 = -(3/2)*log(S_BH/(2*pi))      [one-loop logarithmic]
-
-At 7 loops for c=26, M=10:
-  S_7/S_BH ~ 10^{-25}  (negligible for any macroscopic black hole)
+A, B(A), A^i, A^!, and Z_ch^der(A) are distinct objects.  Omega(B(A)) = A
+is bar-cobar inversion, not Koszul duality.  A^! is the Verdier/continuous
+linear-dual branch.  Hochschild cochains describe the bulk/derived centre,
+not the Koszul dual.
 
 References:
   BTZ 1992: hep-th/9204099
   Maloney-Witten 2010: 0712.0155
+  chapters/examples/landscape_census.tex
+  chapters/connections/concordance.tex
   thm:shadow-cohft (higher_genus_modular_koszul.tex)
   thm:theorem-d (higher_genus_modular_koszul.tex)
 """
@@ -81,6 +87,10 @@ from typing import Any, Dict, List, Optional, Tuple
 
 # Import base engine (do NOT duplicate)
 from compute.lib.btz_quantum_gravity_engine import (
+    SCALAR_BERNOULLI_LANE,
+    VIRASORO_FINITE_WINDOW_LANE,
+    EXTERNAL_BTZ_INPUT,
+    VIRASORO_PLANTED_FOREST_CERTIFIED_MAX_GENUS,
     lambda_fp,
     _bernoulli_2g,
     _factorial_fraction,
@@ -100,11 +110,60 @@ from compute.lib.btz_quantum_gravity_engine import (
     shadow_convergence_radius,
     ahat_closed_form,
     scalar_free_energy_sum,
+    free_energy_certification,
+    borel_summability_status,
 )
 
 PI = math.pi
 TWO_PI = 2.0 * PI
 TWO_PI_SQ = TWO_PI ** 2
+BTZ_7LOOP_SCALAR_MAX_GENUS = 7
+
+
+def object_firewall_status() -> Dict[str, Any]:
+    """Object-separation firewall for this diagnostic layer."""
+    return {
+        'distinct_objects': ['A', 'B(A)', 'A^i', 'A^!', 'Z_ch^der(A)'],
+        'bar_cobar_inversion': 'Omega(B(A)) = A',
+        'koszul_dual_branch': 'A^! is Verdier/continuous-linear dual data',
+        'bulk_branch': 'Z_ch^der(A) is Hochschild/derived-centre data',
+        'btz_scalar_lane_uses_only': ['kappa(A)', 'lambda_g^FP'],
+    }
+
+
+def seven_loop_certification(algebra: str = 'virasoro',
+                             g_max: int = BTZ_7LOOP_SCALAR_MAX_GENUS) -> Dict[str, Any]:
+    """Certification split for the finite genus-7 diagnostic."""
+    per_genus = {
+        g: free_energy_certification(algebra, g)
+        for g in range(1, g_max + 1)
+    }
+
+    if algebra == 'heisenberg':
+        full_certified_through = g_max
+    elif algebra == 'virasoro':
+        full_certified_through = min(
+            g_max, VIRASORO_PLANTED_FOREST_CERTIFIED_MAX_GENUS
+        )
+    else:
+        full_certified_through = 0
+
+    return {
+        'scalar_coefficients_certified_through_genus': g_max,
+        'finite_window_lane': VIRASORO_FINITE_WINDOW_LANE,
+        'full_free_energy_certified_through_genus': full_certified_through,
+        'per_genus': per_genus,
+        'scalar_convergence_radius': shadow_convergence_radius(SCALAR_BERNOULLI_LANE),
+        'full_virasoro_convergence_radius': shadow_convergence_radius('virasoro_full'),
+        'borel_status': borel_summability_status(
+            'virasoro_full' if algebra == 'virasoro' else algebra
+        ),
+        'btz_input_status': EXTERNAL_BTZ_INPUT,
+        'closed_form_btz_partition_certified': False,
+        'analytic_tau_dependence_certified': False,
+        'all_genus_planted_forest_certified': algebra == 'heisenberg',
+        'object_firewall': object_firewall_status(),
+    }
 
 
 def _dirichlet_eta_even(g: int) -> float:
@@ -274,8 +333,6 @@ def verify_lambda_from_generating_function(g_target: int, g_max: int = 10) -> Di
 def F_6_scalar(kappa) -> Fraction:
     """F_6^{sc} = kappa * lambda_6^FP.
 
-    FIRST COMPUTATION BEYOND EXISTING LITERATURE.
-
     For Virasoro: F_6(Vir_c) = (c/2) * 1414477/2678117105664000.
     """
     return Fraction(kappa) * LAMBDA_FP_6
@@ -284,37 +341,36 @@ def F_6_scalar(kappa) -> Fraction:
 def F_7_scalar(kappa) -> Fraction:
     """F_7^{sc} = kappa * lambda_7^FP.
 
-    FIRST COMPUTATION BEYOND EXISTING LITERATURE.
-
     For Virasoro: F_7(Vir_c) = (c/2) * 8191/612141052723200.
     """
     return Fraction(kappa) * LAMBDA_FP_7
 
 
 def virasoro_F6(c) -> Fraction:
-    """Full F_6 for Virasoro.
+    """Scalar genus-6 component for Virasoro.
 
-    At genus 6: scalar only (planted-forest beyond genus 3 not available).
-    F_6 = (c/2) * lambda_6^FP.
+    The full planted-forest genus-6 Virasoro amplitude is not certified in
+    this module.
     """
     return F_6_scalar(kappa_virasoro(c))
 
 
 def virasoro_F7(c) -> Fraction:
-    """Full F_7 for Virasoro.
+    """Scalar genus-7 component for Virasoro.
 
-    At genus 7: scalar only.
-    F_7 = (c/2) * lambda_7^FP.
+    The full planted-forest genus-7 Virasoro amplitude is not certified in
+    this module.
     """
     return F_7_scalar(kappa_virasoro(c))
 
 
 def extended_free_energy_table(c, g_max: int = 7,
                                 algebra: str = 'virasoro') -> Dict[int, Fraction]:
-    """Free energy table through genus g_max (up to 7).
+    """Finite free-energy table through genus g_max.
 
-    Uses virasoro_free_energy for g <= 5 (includes planted-forest at g=2,3)
-    and scalar-only for g=6,7.
+    Virasoro uses the base-engine certified planted-forest terms at genus 2
+    and genus 3.  Genus 4 and above are scalar Bernoulli components unless
+    another algebra lane certifies more.
     """
     table = {}
     for g in range(1, g_max + 1):
@@ -344,9 +400,12 @@ def extended_free_energy_table(c, g_max: int = 7,
 
 def shadow_partition_7loop(c, hbar: float = 1.0,
                             algebra: str = 'virasoro') -> float:
-    r"""Z^{sh}(c, hbar) = exp(sum_{g=1}^7 hbar^{2g} F_g).
+    r"""Finite 7-loop shadow diagnostic.
 
-    The full 7-loop shadow partition function.  Convergent for |hbar| < 2*pi.
+    Z_7^{sh}(c, hbar) = exp(sum_{g=1}^7 hbar^{2g} F_g).
+    This finite exponential is always a polynomial-exponential diagnostic.
+    The scalar all-genus A-hat lane has Taylor radius 2*pi; this function
+    does not certify the full Virasoro or BTZ radius.
     """
     table = extended_free_energy_table(c, g_max=7, algebra=algebra)
     exponent = sum(hbar ** (2 * g) * float(table[g]) for g in range(1, 8))
@@ -365,9 +424,7 @@ def shadow_free_energy_7loop(c, hbar: float = 1.0,
 # =========================================================================
 
 def explicit_6loop_correction(c, M) -> Dict[str, Any]:
-    r"""Explicit 6-loop (genus-6) correction to BTZ entropy.
-
-    FIRST COMPUTATION IN THE LITERATURE.
+    r"""Scalar genus-6 correction in the BTZ saddle expansion.
 
     F_6 = (c/2) * lambda_6^FP = (c/2) * 1414477/2678117105664000
     S_6 = F_6 * (2*pi/S_BH)^{10}
@@ -386,14 +443,14 @@ def explicit_6loop_correction(c, M) -> Dict[str, Any]:
         'S_6': F6_sc * epsilon ** 10 if S_BH > 0 else 0.0,
         'epsilon': epsilon,
         'epsilon_10': epsilon ** 10 if S_BH > 0 else 0.0,
-        'note': 'first computation of 6-loop BTZ correction',
+        'certification': free_energy_certification('virasoro', 6),
+        'btz_input_status': EXTERNAL_BTZ_INPUT,
+        'note': 'scalar genus-6 BTZ saddle diagnostic',
     }
 
 
 def explicit_7loop_correction(c, M) -> Dict[str, Any]:
-    r"""Explicit 7-loop (genus-7) correction to BTZ entropy.
-
-    FIRST COMPUTATION IN THE LITERATURE.
+    r"""Scalar genus-7 correction in the BTZ saddle expansion.
 
     F_7 = (c/2) * lambda_7^FP = (c/2) * 8191/612141052723200
     S_7 = F_7 * (2*pi/S_BH)^{12}
@@ -412,7 +469,9 @@ def explicit_7loop_correction(c, M) -> Dict[str, Any]:
         'S_7': F7_sc * epsilon ** 12 if S_BH > 0 else 0.0,
         'epsilon': epsilon,
         'epsilon_12': epsilon ** 12 if S_BH > 0 else 0.0,
-        'note': 'first computation of 7-loop BTZ correction',
+        'certification': free_energy_certification('virasoro', 7),
+        'btz_input_status': EXTERNAL_BTZ_INPUT,
+        'note': 'scalar genus-7 BTZ saddle diagnostic',
     }
 
 
@@ -441,16 +500,17 @@ def entropy_correction_7loop(c, M, g: int,
 
 
 # =========================================================================
-# Section 5: Full 7-loop entropy expansion
+# Section 5: 7-loop entropy diagnostic
 # =========================================================================
 
 def entropy_7loop_full(c, M, algebra: str = 'virasoro') -> Dict[str, Any]:
-    r"""Full BTZ entropy expansion through 7 loops.
+    r"""BTZ entropy diagnostic through 7 loops.
 
     S(M) = S_BH + sum_{g=1}^7 S_g
 
-    Returns comprehensive data including all corrections, expansion parameter,
-    convergence check, and the first-ever 6 and 7 loop corrections.
+    The Cardy/Bekenstein-Hawking input is external.  For Virasoro, the
+    genus-6 and genus-7 terms are scalar Bernoulli components, not certified
+    full planted-forest corrections.
     """
     S_BH = bekenstein_hawking_entropy(c, M)
     if S_BH <= 0:
@@ -468,6 +528,12 @@ def entropy_7loop_full(c, M, algebra: str = 'virasoro') -> Dict[str, Any]:
         'epsilon': epsilon,
         'F_table': {g: float(f) for g, f in F_table.items()},
         'F_table_exact': {g: f for g, f in F_table.items()},
+        'btz_input_status': EXTERNAL_BTZ_INPUT,
+        'certification': {
+            g: free_energy_certification(algebra, g)
+            for g in range(1, 8)
+        },
+        'seven_loop_certification': seven_loop_certification(algebra, 7),
     }
 
     total = S_BH
@@ -479,8 +545,13 @@ def entropy_7loop_full(c, M, algebra: str = 'virasoro') -> Dict[str, Any]:
     result['S_total'] = total
     result['relative_correction'] = (total - S_BH) / S_BH if S_BH > 0 else 0.0
 
-    # Convergence diagnostics
+    # Scalar Bernoulli/A-hat convergence diagnostic.
     result['convergent'] = abs(epsilon) < TWO_PI
+    result['scalar_bernoulli_convergent'] = result['convergent']
+    result['convergence_certification'] = SCALAR_BERNOULLI_LANE
+    result['full_virasoro_convergence_certified'] = False if algebra == 'virasoro' else None
+    result['closed_form_btz_partition_certified'] = False
+    result['analytic_tau_dependence_certified'] = False
     result['epsilon_over_2pi'] = epsilon / TWO_PI
 
     # Decay ratios
@@ -500,14 +571,11 @@ def entropy_7loop_full(c, M, algebra: str = 'virasoro') -> Dict[str, Any]:
 # =========================================================================
 
 def convergence_analysis_7loop(c, M, algebra: str = 'virasoro') -> Dict[str, Any]:
-    r"""Comprehensive convergence analysis of the genus expansion at 7 loops.
+    r"""Finite-loop scalar convergence diagnostics at 7 loops.
 
-    Verifies:
-    1. The expansion parameter epsilon < 2*pi (convergence condition)
-    2. The F_g decay matches Bernoulli prediction 1/(2*pi)^2
-    3. The partial sums converge to the A-hat closed form
-    4. The entropy corrections decrease monotonically for g >= 2
-    5. The 7-loop truncation error is bounded
+    The A-hat closed form and radius are certified only on the scalar
+    Bernoulli lane.  For Virasoro, planted-forest data beyond genus 3 is not
+    certified, so these fields are diagnostics, not a full convergence proof.
     """
     S_BH = bekenstein_hawking_entropy(c, M)
     if S_BH <= 0:
@@ -517,10 +585,10 @@ def convergence_analysis_7loop(c, M, algebra: str = 'virasoro') -> Dict[str, Any
     kappa = float(Fraction(c) / 2) if algebra == 'virasoro' else float(c)
     F_table = extended_free_energy_table(c, g_max=7, algebra=algebra)
 
-    # 1. Convergence condition
+    # Scalar A-hat radius condition.
     convergent = abs(epsilon) < TWO_PI
 
-    # 2. Decay ratios vs Bernoulli prediction
+    # Decay ratios vs Bernoulli prediction.
     predicted_ratio = 1.0 / TWO_PI_SQ  # ~0.02533
     actual_ratios = []
     for g in range(2, 8):
@@ -532,7 +600,7 @@ def convergence_analysis_7loop(c, M, algebra: str = 'virasoro') -> Dict[str, Any
             'error': abs(r - predicted_ratio) / predicted_ratio,
         })
 
-    # 3. Partial sums vs closed form
+    # Partial sums vs scalar closed form.
     closed_form = ahat_closed_form(c, epsilon) if convergent else None
     partial_sums = []
     running = 0.0
@@ -545,7 +613,7 @@ def convergence_analysis_7loop(c, M, algebra: str = 'virasoro') -> Dict[str, Any
             'term': Fg * epsilon ** (2 * g),
         })
 
-    # 4. Entropy correction magnitudes
+    # Entropy correction magnitudes.
     corrections = []
     for g in range(1, 8):
         Sg = entropy_correction_7loop(c, M, g, algebra)
@@ -556,9 +624,8 @@ def convergence_analysis_7loop(c, M, algebra: str = 'virasoro') -> Dict[str, Any
             'S_g_over_S_BH': Sg / S_BH,
         })
 
-    # 5. Truncation error bound
-    # The tail sum_{g>=8} F_g hbar^{2g} is bounded by the geometric series
-    # |F_8| * epsilon^16 / (1 - r) where r = lambda_8/lambda_7 ~ 1/(2pi)^2
+    # Tail estimate from the scalar asymptotic ratio.  This is not a
+    # certified bound for full Virasoro planted-forest corrections.
     if convergent:
         r_asymp = 1.0 / TWO_PI_SQ
         # Estimate F_8 from asymptotic: F_8 ~ F_7 * r_asymp
@@ -575,23 +642,30 @@ def convergence_analysis_7loop(c, M, algebra: str = 'virasoro') -> Dict[str, Any
         'epsilon': epsilon,
         'epsilon_over_2pi': epsilon / TWO_PI,
         'convergent': convergent,
+        'scalar_bernoulli_convergent': convergent,
+        'convergence_certification': SCALAR_BERNOULLI_LANE,
+        'full_virasoro_convergence_certified': False if algebra == 'virasoro' else None,
         'predicted_ratio': predicted_ratio,
         'actual_ratios': actual_ratios,
         'closed_form': closed_form,
+        'closed_form_lane': SCALAR_BERNOULLI_LANE,
+        'closed_form_btz_partition_certified': False,
         'partial_sums': partial_sums,
         'corrections': corrections,
         'tail_bound': tail_bound,
+        'tail_bound_certified': False,
         'tail_relative': tail_bound / S_BH if S_BH > 0 else 0.0,
     }
 
 
 def shadow_growth_verification(g_max: int = 7) -> Dict[str, Any]:
-    r"""Verify the shadow growth rate |F_{g+1}/F_g| -> 1/(2*pi)^2.
+    r"""Check finite scalar ratios against the Bernoulli asymptotic.
 
     The Bernoulli asymptotic gives:
     |B_{2g+2}| / |B_{2g}| * (2g)! / (2g+2)! -> 1/(2*pi)^2
 
-    At 7 loops we are deep enough to see the asymptotic regime.
+    The finite g <= 7 window is evidence for the scalar lane; it does not
+    certify full Virasoro planted-forest asymptotics.
     """
     predicted = 1.0 / TWO_PI_SQ
     ratios = []
@@ -611,6 +685,8 @@ def shadow_growth_verification(g_max: int = 7) -> Dict[str, Any]:
         'predicted_ratio': predicted,
         'ratios': ratios,
         'converging': all(r['relative_error'] < 0.01 for r in ratios[-3:]),
+        'lane': SCALAR_BERNOULLI_LANE,
+        'finite_loop_diagnostic_only': True,
     }
 
 
@@ -619,14 +695,12 @@ def shadow_growth_verification(g_max: int = 7) -> Dict[str, Any]:
 # =========================================================================
 
 def borel_coefficients_7loop(c, algebra: str = 'virasoro') -> Dict[int, float]:
-    r"""Borel transform coefficients through 7 loops.
+    r"""Truncated Borel-transform coefficients through 7 loops.
 
     The Borel transform in the hbar-plane:
       B(zeta) = sum_{g>=1} F_g * zeta^{2g-1} / (2g-1)!
 
     Coefficients b_g = F_g / (2g-1)!.
-
-    Singularities at zeta = 2*pi*n (n = 1, 2, ...).
     """
     F_table = extended_free_energy_table(c, g_max=7, algebra=algebra)
     coeffs = {}
@@ -652,7 +726,7 @@ def borel_transform_evaluate(c, zeta: float,
 
 
 def borel_singularity_analysis(c, algebra: str = 'virasoro') -> Dict[str, Any]:
-    r"""Analyse the singularity structure of the Borel transform.
+    r"""Scalar meromorphic pole diagnostics from finite data.
 
     The poles of the resummed function (x/2)/sin(x/2) - 1 in the x-plane
     are at x = 2*pi*n.  In the Borel plane (u = hbar^2):
@@ -665,11 +739,8 @@ def borel_singularity_analysis(c, algebra: str = 'virasoro') -> Dict[str, Any]:
           = (-1)^n * 2*pi^2*n^2 / ((-1)^n/2)
           = 4*pi^2*n^2
 
-    Stokes constants: S_n = 2*pi*i * kappa * R_n / u_n^? depending on convention.
-
-    The PRACTICAL question at 7 loops: can we SEE the first Borel pole?
-    Yes: the ratio F_g * (2*pi)^{2g} / (2*kappa) -> 1 as g -> infinity
-    (this is the residue extraction of the first pole).
+    The finite table can test scalar large-order ratios.  It does not prove
+    Borel summability for the full Virasoro or BTZ expansion.
     """
     kappa = float(Fraction(c) / 2) if algebra == 'virasoro' else float(c)
     F_table = extended_free_energy_table(c, g_max=7, algebra=algebra)
@@ -689,8 +760,7 @@ def borel_singularity_analysis(c, algebra: str = 'virasoro') -> Dict[str, Any]:
             'deviation_from_1': abs(ratio - 1.0),
         })
 
-    # Stokes constants
-    # S_1 = -4*pi^2*kappa (in hbar-plane)
+    # Scalar Stokes normalization in the hbar-plane.
     stokes_1 = -4.0 * PI ** 2 * kappa
 
     # Second pole contribution ratio: F_g * (4*pi)^{2g} / (2*kappa) -> 1
@@ -717,6 +787,12 @@ def borel_singularity_analysis(c, algebra: str = 'virasoro') -> Dict[str, Any]:
         'first_pole_u': u_1,
         'first_pole_hbar': TWO_PI,
         'stokes_1': stokes_1,
+        'stokes_1_status': 'scalar_meromorphic_normalization_only',
+        'borel_status': borel_summability_status(
+            'virasoro_full' if algebra == 'virasoro' else algebra
+        ),
+        'borel_summability_certified': False,
+        'full_virasoro_borel_singularities_certified': False if algebra == 'virasoro' else None,
         'pole_residue_ratios': pole_residue_ratios,
         'eta_ratios': eta_ratios,
     }
@@ -724,7 +800,7 @@ def borel_singularity_analysis(c, algebra: str = 'virasoro') -> Dict[str, Any]:
 
 def large_order_relation_check(c, g_max: int = 7,
                                  algebra: str = 'virasoro') -> Dict[str, Any]:
-    r"""Check the Dingle-Berry large-order relation at 7 loops.
+    r"""Check scalar large-order ratios at finite genus.
 
     The large-order prediction (leading instanton):
       F_g ~ 2*kappa / (2*pi)^{2g}  [leading term]
@@ -733,8 +809,8 @@ def large_order_relation_check(c, g_max: int = 7,
       F_g ~ 2*kappa / (2*pi)^{2g} * [1 - 1/2^{2g} + 1/3^{2g} - ...]
           = 2*kappa / (2*pi)^{2g} * eta(2g)
 
-    At g=7: eta(14) = 1 - 1/2^14 + 1/3^14 - ... = 0.9999389...
-    So the subleading correction is < 0.01%.
+    At g=7, eta(14) is already close to 1.  This is a scalar Bernoulli
+    diagnostic, not a proof of full Virasoro resurgence.
     """
     kappa = float(Fraction(c) / 2) if algebra == 'virasoro' else float(c)
     F_table = extended_free_energy_table(c, g_max=g_max, algebra=algebra)
@@ -763,6 +839,8 @@ def large_order_relation_check(c, g_max: int = 7,
         'kappa': kappa,
         'c': c,
         'results': results,
+        'lane': SCALAR_BERNOULLI_LANE,
+        'full_virasoro_resurgence_certified': False if algebra == 'virasoro' else None,
     }
 
 
@@ -771,27 +849,18 @@ def large_order_relation_check(c, g_max: int = 7,
 # =========================================================================
 
 def maloney_witten_comparison(c, M, g_max: int = 7) -> Dict[str, Any]:
-    r"""Compare shadow tower with Maloney-Witten partition function.
+    r"""Compare the finite shadow diagnostic with external MW input.
 
     MW (0712.0155) sum over SL(2,Z) images:
       Z^MW(tau) = sum_{gamma in SL(2,Z)/Gamma_inf} Z_0(gamma.tau)
 
-    This sum DIVERGES: each Farey image contributes, and the sum
-    grows faster than the exponential suppression decays.
-
-    Our shadow tower:
+    The finite shadow diagnostic is
       Z^sh = exp(sum_{g=1}^7 hbar^{2g} F_g)
 
-    is CONVERGENT for hbar < 2*pi.
-
-    The key discrepancy: MW's sum over geometries is a DIFFERENT quantity
-    from the shadow tower.  MW sums over ALL classical saddles (Farey images).
-    The shadow tower is the perturbative expansion around a SINGLE saddle (BTZ).
-
-    At 7 loops, the shadow tower gives a correction of order 10^{-10} to
-    the partition function (for typical parameters), while MW's non-perturbative
-    effects are exponentially suppressed (~exp(-2*pi*S_BH)) but contribute
-    to the EXACT partition function.
+    It is a perturbative single-saddle object.  It does not recover the
+    exact Maloney-Witten partition function or certify the analytic status of
+    the Poincare/Farey sum.  The MW divergence flag below records external
+    analytic input, not a conclusion from seven finite coefficients.
     """
     S_BH = bekenstein_hawking_entropy(c, M)
     if S_BH <= 0:
@@ -800,7 +869,7 @@ def maloney_witten_comparison(c, M, g_max: int = 7) -> Dict[str, Any]:
     epsilon = TWO_PI / S_BH
     kappa = float(Fraction(c) / 2)
 
-    # Shadow tower contribution (perturbative, convergent)
+    # Finite single-saddle shadow contribution.
     F_table = extended_free_energy_table(c, g_max=g_max)
     shadow_sum = sum(float(F_table[g]) * epsilon ** (2 * g) for g in range(1, g_max + 1))
     Z_shadow = math.exp(shadow_sum)
@@ -835,11 +904,16 @@ def maloney_witten_comparison(c, M, g_max: int = 7) -> Dict[str, Any]:
         # MW comparison
         'mw_np_suppression': np_suppression,
         'mw_perturbative_vs_np': abs(shadow_sum) / np_suppression if np_suppression > 1e-300 else float('inf'),
+        'mw_divergence_source': 'external_maloney_witten_input',
+        'mw_divergence_certified_by_engine': False,
+        'closed_form_btz_partition_recovered': False,
         # Error budget
         'truncation_error': tail_first,
         'truncation_relative': tail_first / abs(shadow_sum) if abs(shadow_sum) > 0 else 0.0,
         'shadow_converges': abs(epsilon) < TWO_PI,
-        'mw_diverges': True,  # Always true for the full MW sum
+        'shadow_convergence_certification': SCALAR_BERNOULLI_LANE,
+        'full_virasoro_convergence_certified': False,
+        'mw_diverges': True,
     }
 
 
@@ -857,11 +931,10 @@ def btz_c1_7loop(M: float = 10.0) -> Dict[str, Any]:
 
 
 def btz_c13_7loop(M: float = 10.0) -> Dict[str, Any]:
-    """BTZ at c=13 (self-dual Virasoro: Vir_13^! = Vir_13) through 7 loops.
+    """BTZ diagnostic at the c=13 Virasoro scalar fixed point.
 
-    kappa = 13/2.  The self-dual point: complementarity is exact.
-    F_g(Vir_13) = F_g(Vir_13) by self-duality (trivially).
-    The shadow growth rate rho ~ 0.467 (convergent tower).
+    kappa = 13/2.  This does not assert A = A^! or identify the
+    Hochschild/derived-centre branch.
     """
     return entropy_7loop_full(13, M, algebra='virasoro')
 
@@ -869,8 +942,8 @@ def btz_c13_7loop(M: float = 10.0) -> Dict[str, Any]:
 def btz_c24_7loop(M: float = 10.0) -> Dict[str, Any]:
     """BTZ at c=24 (pure 3D gravity / monster) through 7 loops.
 
-    kappa = 12.  The monster module V^natural (AP48: kappa(V^natural) may differ
-    from kappa(Vir_24) = 12; we use the Virasoro value here).
+    kappa(Vir_24) = 12.  Identifying this with a full extremal CFT or
+    one-loop determinant is external input.
     """
     return entropy_7loop_full(24, M, algebra='virasoro')
 
@@ -879,7 +952,8 @@ def btz_c26_7loop(M: float = 10.0) -> Dict[str, Any]:
     """BTZ at c=26 (critical bosonic string) through 7 loops.
 
     kappa = 13.  Dual algebra Vir_0 has kappa = 0 (uncurved).
-    The string theory value: this is the critical dimension for bosonic strings.
+    This scalar complementarity does not identify A^!, B(A), or the
+    Hochschild bulk.
     """
     return entropy_7loop_full(26, M, algebra='virasoro')
 
@@ -899,9 +973,9 @@ def special_charges_comparison_7loop(M: float = 10.0) -> Dict[str, Dict[str, Any
 # =========================================================================
 
 def complementarity_7loop(c, M: float = 10.0) -> Dict[str, Any]:
-    r"""Complementarity check: F_g(Vir_c) + F_g(Vir_{26-c}) at 7 loops.
+    r"""Scalar complementarity check through genus 7.
 
-    From kappa(Vir_c) + kappa(Vir_{26-c}) = c/2 + (26-c)/2 = 13 (AP24),
+    From kappa(Vir_c) + kappa(Vir_{26-c}) = c/2 + (26-c)/2 = 13,
     the scalar free energies satisfy:
 
         F_g^{sc}(c) + F_g^{sc}(26-c) = 13 * lambda_g^FP
@@ -992,25 +1066,20 @@ def area_corrections_7loop(c, M) -> Dict[str, Any]:
 # =========================================================================
 
 def resurgence_from_7loop(c, algebra: str = 'virasoro') -> Dict[str, Any]:
-    r"""Extract resurgence data from 7-loop computation.
+    r"""Extract scalar large-order diagnostics from seven coefficients.
 
     The key observables:
-    1. First instanton action: A_1 = (2*pi)^2 from the first Borel pole
-    2. Stokes constant: S_1 = -4*pi^2*kappa (in hbar-plane)
-    3. Large-order growth: F_g ~ 2*kappa/(2*pi)^{2g}
-    4. Borel summability: the Borel transform is entire (singularities are
-       on the REAL POSITIVE axis in the u-plane, so lateral Borel resummation
-       in the upper/lower half-planes gives the same result = median resummation)
+    1. Scalar pole scale: A_1 = (2*pi)^2
+    2. Convention-dependent scalar Stokes normalization: -4*pi^2*kappa
+    3. Scalar large-order growth: F_g ~ 2*kappa/(2*pi)^{2g}
 
-    At 7 loops we can verify:
-    - The approach to the asymptotic formula
-    - The Borel coefficients decay super-exponentially
-    - The instanton action A = (2*pi)^2 is reproduced by ratio tests
+    This routine does not certify Borel summability or median resummation
+    for the full Virasoro/BTZ expansion.
     """
     kappa = float(Fraction(c) / 2) if algebra == 'virasoro' else float(c)
     F_table = extended_free_energy_table(c, g_max=7, algebra=algebra)
 
-    # Instanton action from ratio test: A ~ F_g/F_{g+1}
+    # Scalar pole scale from the ratio test: A ~ F_g/F_{g+1}.
     action_estimates = []
     for g in range(1, 7):
         Fg = float(F_table[g])
@@ -1028,20 +1097,25 @@ def resurgence_from_7loop(c, algebra: str = 'virasoro') -> Dict[str, Any]:
                 'A_predicted': TWO_PI_SQ,
             })
 
-    # Stokes constant
+    # Scalar Stokes normalization.
     stokes_1 = -4.0 * PI ** 2 * kappa
 
-    # Borel summability: all poles on real positive axis
-    # So B(zeta) has no singularities on (0, 2*pi)
-    borel_summable = True
+    borel_status = borel_summability_status(
+        'virasoro_full' if algebra == 'virasoro' else algebra
+    )
 
     return {
         'kappa': kappa,
         'instanton_action_1': TWO_PI_SQ,
         'stokes_constant_1': stokes_1,
-        'borel_summable': borel_summable,
+        'stokes_constant_1_status': 'scalar_meromorphic_normalization_only',
+        'borel_summable': False,
+        'borel_summability_certified': False,
+        'borel_status': borel_status,
         'action_estimates': action_estimates,
-        'median_resummation': True,  # lateral resummations agree
+        'median_resummation': False,
+        'median_resummation_certified': False,
+        'full_virasoro_resurgence_certified': False if algebra == 'virasoro' else None,
     }
 
 
@@ -1084,13 +1158,13 @@ def precision_diagnostics(c) -> Dict[str, Any]:
 
 
 def full_7loop_report(c, M, algebra: str = 'virasoro') -> Dict[str, Any]:
-    r"""Comprehensive 7-loop BTZ quantum gravity report.
+    r"""Finite 7-loop BTZ shadow diagnostic report.
 
     Combines:
-    1. Full entropy expansion through 7 loops
-    2. Convergence analysis
-    3. Borel singularity analysis
-    4. Maloney-Witten comparison
+    1. Entropy diagnostic through 7 loops
+    2. Scalar convergence diagnostics
+    3. Scalar Borel-pole diagnostics
+    4. Maloney-Witten external comparison
     5. Complementarity check
     6. Area corrections
     7. Resurgence data

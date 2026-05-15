@@ -5,58 +5,96 @@
 
 \index{deformation quantization!chiral|textbf}
 
-A coisson algebra (Poisson vertex algebra) on a curve~$X$ is a
-commutative $\cD_X$-algebra with a Lie$^*$ bracket encoding the
-singular part of a would-be OPE\@. Its deformation quantization
-produces a vertex algebra ($\Einf$-chiral algebra), and the
-quantization is controlled by Maurer--Cartan theory in the modular
-convolution algebra~$\gAmod$.
+A coisson algebra on a curve~$X$ is a commutative $\cD_X$-algebra with
+a Lie$^*$ bracket. After choosing a formal coordinate on a disk it is
+seen as a Poisson vertex algebra; without that coordinate it remains a
+Beilinson--Drinfeld object. A deformation quantization is a filtered
+chiral algebra $\cA_\hbar$ with
+$\operatorname{gr}_\hbar \cA_\hbar \simeq \cA_{\mathrm{cl}}$ and whose
+first commutator recovers the Lie$^*$ bracket. Existence is a
+Maurer--Cartan lifting problem in the completed chiral deformation
+complex. Kontsevich--Tamarkin formality supplies the local disk input;
+descent along~$X$ and the modular obstruction classes are additional
+conditions, not consequences of the local theorem.
 
 The chiral quantization problem has three structural features absent
 from the classical Kontsevich theory:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Curvature.} At genus~$g > 0$, the bar complex carries
- curvature $\kappa(\cA) \cdot \omega_g$, and the quantized algebra is
- a curved $\Ainf$-algebra whose curvature encodes modular corrections.
+\item \emph{Curvature.} In the modular regime of this volume, the
+ scalar projection of the non-separating genus contribution is
+ $\kappa(\cA)\lambda_g$ (Theorem~D). This is a statement about the
+ modular Maurer--Cartan element, not a universal assertion that every
+ local star product becomes a curved $\Ainf$-algebra on every curve.
 \item \emph{Filtration.} The star product is a formal power series
  in~$\hbar$; the $\hbar$-adic filtration corresponds to the weight
  filtration on~$\gAmod$.
 \item \emph{Higher obstructions.} The obstruction to extending a
- quantization from order~$\hbar^n$ to~$\hbar^{n+1}$ lives in
- $H^2(\Defcyc(\cA))$, the chiral Hochschild cohomology of
- Theorem~\ref{thm:hochschild-bar-cobar}.
+ quantization from order~$\hbar^n$ to~$\hbar^{n+1}$ is the degree-$2$
+ class in the controlling shifted dg Lie algebra; in unshifted
+ Hochschild conventions this is the familiar degree-$3$ obstruction.
+ The qualifier ``chiral'' is mandatory: the complex is
+ $\ChirHoch^\bullet(\cA,\cA)$, not categorical or topological
+ Hochschild cohomology (Convention~\ref{conv:three-hochschild}).
 \end{enumerate}
-Kontsevich's star product formula and the chiral bar differential are
-built from the same configuration space integrals: both integrate
-logarithmic forms $\eta_{ij} = d\log(z_i - z_j)$ over
-Fulton--MacPherson compactifications, and both obtain associativity
-from the Arnold relations. Kontsevich's formula is the genus-$0$
-shadow of the chiral quantization; the genus-$g$ corrections are
-governed by~$\kappa(\cA)$.
+Kontsevich's formula and the chiral bar differential share the same
+local combinatorics: Fulton--MacPherson boundary strata, logarithmic
+collision classes, and Arnold relations. The forms are not literally
+the same. Kontsevich integrates angle forms on compactified
+configurations in the upper half-plane; the chiral bar construction
+uses residue classes such as $\eta_{ij}=d\log(z_i-z_j)$ on
+configurations of points on~$X$. The bridge is a local comparison of
+boundary-factorisation identities, followed by a separate global
+descent problem.
 
 \section{Kontsevich's theorem}
 
 \begin{theorem}[Kontsevich 1997 \cite{Kon03}; \ClaimStatusProvedElsewhere]
 \label{thm:kontsevich-star-product}
-Let $(M, \pi)$ be a Poisson manifold with Poisson bivector $\pi \in \Gamma(\wedge^2 TM)$. There exists a star product $\star: C^\infty(M)[[\hbar]] \otimes C^\infty(M)[[\hbar]] \to C^\infty(M)[[\hbar]]$ such that:
+Let $(M,\pi)$ be a Poisson manifold with Poisson bivector
+$\pi\in\Gamma(\wedge^2TM)$. There exists a star product
+\[
+\star\colon C^\infty(M)[[\hbar]]\otimes C^\infty(M)[[\hbar]]
+\longrightarrow C^\infty(M)[[\hbar]]
+\]
+such that:
 \begin{enumerate}
 \item $f \star g = fg + \frac{\hbar}{2}\{f,g\} + O(\hbar^2)$
 \item $(f \star g) \star h - f \star (g \star h) = 0$ (associativity)
 \item The star product is given by an explicit formula:
-\[f \star g = \sum_{\Gamma} \frac{\hbar^{|\Gamma|}}{|\text{Aut}(\Gamma)|} w_\Gamma \cdot B_\Gamma(f,g)\]
-where the sum is over \emph{directed graphs} $\Gamma$ and $B_\Gamma$ are bidifferential operators constructed by integrating differential forms over configuration spaces.
+\[
+f\star g
+=fg+\sum_{n\geq1}\hbar^n
+\sum_{\Gamma\in\mathcal G_{n,2}}
+\frac{w_\Gamma}{|\operatorname{Aut}(\Gamma)|}\,B_\Gamma(f,g).
+\]
+Here $\mathcal G_{n,2}$ is the set of admissible directed graphs with
+$n$ internal vertices and two boundary vertices, $B_\Gamma$ is the
+bidifferential operator determined by the directed edges and the
+Poisson tensor, and \(w_\Gamma\) is the angle-form integral over
+\(\overline C_{n,2}(\mathbb H)\).
 \end{enumerate}
 \end{theorem}
 
 \subsection{The configuration space construction}
 
-The configuration spaces here are the same ones that defined the Heisenberg bar differential (\S\ref{sec:frame-bar-deg2}), now with marked boundary points replacing interior points.
+The configuration spaces here are the upper-half-plane analogues of the
+collision spaces used by the Heisenberg bar differential
+(\S\ref{sec:frame-bar-deg2}). They are not identical spaces: the
+Kontsevich construction has two ordered boundary insertions and
+internal points in \(\mathbb H\).
 
-The weight $w_\Gamma$ for a graph $\Gamma$ with $n$ vertices is:
-\[w_\Gamma = \int_{C_n(\mathbb{H})} \omega_\Gamma\]
+The weight \(w_\Gamma\) for a graph \(\Gamma\in\mathcal G_{n,2}\) is:
+\[
+w_\Gamma
+=\frac{1}{(2\pi)^{2n}}
+\int_{\overline C_{n,2}(\mathbb H)}\omega_\Gamma
+\]
 where (see Cattaneo--Felder \cite{CattaneoFelder99} for the path integral interpretation):
 \begin{itemize}
-\item $C_n(\mathbb{H})$ is the configuration space of $n$ labeled points in the upper half-plane $\mathbb{H} = \{z \in \mathbb{C} : \text{Im}(z) > 0\}$
+\item $\overline C_{n,2}(\mathbb H)$ is Kontsevich's compactified
+configuration space of \(n\) labelled internal points in the upper
+half-plane and two ordered boundary points, modulo real translations
+and positive dilations;
 \item $\omega_\Gamma$ is a differential form constructed from the graph $\Gamma$:
 \[\omega_\Gamma = \bigwedge_{e \in E(\Gamma)} d\phi_e\]
 where $\phi_e = \arg(z_{\text{target}(e)} - z_{\text{source}(e)})$ is the angle of edge $e$
@@ -82,97 +120,207 @@ where $\phi_{1f} = \arg(f - z_1)$ and $\phi_{1g} = \arg(g - z_1)$ are the angles
 
 \subsection{Role of the upper half-plane}
 
-The upper half-plane $\mathbb{H}$ is the basic bordered surface in Kontsevich's construction: boundary insertions lie on $\mathbb{R} \subset \partial\mathbb{H}$, internal vertices lie in $\mathbb{H}$, and $\text{PSL}(2,\mathbb{R})$ acts by M\"obius transformations.
-
-The key geometric fact: the Kontsevich configuration spaces $C_{n,m}(\mathbb{H})$ (of $n$ interior and $m$ boundary points, modulo $\operatorname{Aff}(\mathbb{R})$) have FM-type compactifications $\overline{C}_{n,m}(\mathbb{H})$ whose boundary strata are governed by the operad structure of the Stasheff associahedra $K_\bullet$ and the little 2-disks operad $E_2$. In particular, the boundary stratification encodes the same combinatorics as the real moduli spaces $\overline{\mathcal{M}}_{0,m}(\mathbb{R})$.
+The upper half-plane $\mathbb{H}$ is the basic bordered surface in
+Kontsevich's construction: boundary insertions lie on
+\(\mathbb R\subset\partial\mathbb H\), internal vertices lie in
+\(\mathbb H\), and the normalization quotients by the affine group of
+the real line. The compactifications
+\(\overline C_{n,m}(\mathbb H)\) have Fulton--MacPherson boundary
+strata governed by the Stasheff associahedra and the little-disks
+operad. This is the source of the Stokes identities in the star-product
+proof.
 
 \section{Chiral algebras as quantum observables}
 
 \subsection{From Poisson to chiral}
 
-Replacing the Poisson manifold with a curve $X$, the analog of a Poisson
-structure is a \emph{coisson structure} in the sense of Beilinson--Drinfeld
-(equivalently, a Poisson vertex algebra structure).
+Replacing the Poisson manifold with a curve \(X\), the analogue of a
+Poisson structure is a \emph{coisson structure} in the sense of
+Beilinson--Drinfeld. After choosing a formal coordinate, the same local
+datum is written as a Poisson vertex algebra structure.
 
 \begin{remark}[Coisson algebra on a curve; cf.\ Definition~\ref{def:coisson}]
 \label{rem:coisson-curve}
-A \emph{coisson algebra} (= Poisson vertex algebra) on a smooth curve $X$
-is a sheaf $\mathcal{A}$ of commutative $\mathcal{D}_X$-algebras with a
-Lie$^*$ bracket (the $\lambda$-bracket):
+A \emph{coisson algebra} on a smooth curve $X$ is a sheaf
+$\mathcal{A}$ of commutative $\mathcal{D}_X$-algebras with a
+Lie$^*$ bracket. After choosing a coordinate on a formal disk this
+bracket is written as a Poisson vertex algebra $\lambda$-bracket:
 \[\{a(z), b(w)\} = \sum_{k=1}^N \frac{P_k(a,b)(w)}{(z-w)^k}\]
 where $P_k$ are bidifferential operators, satisfying Jacobi and Leibniz.
 A coisson algebra is \emph{not} a chiral algebra: it is a commutative
 $\mathcal{D}$-module with bracket data encoding the singular part of a
-would-be OPE. Its deformation quantization produces a vertex algebra
-($\Einf$-chiral algebra), not an $\Eone$-chiral algebra. For the gauge-theoretic origin of PVA structures via 3d holomorphic-topological theories, see Khan--Zeng~\cite{KhanZeng25} (scope: freely generated PVA with conformal vector at non-critical level).
+potential OPE. A filtered quantization, when it exists, is a chiral
+algebra whose associated graded is the coisson algebra. In vertex
+language this is an $\Einf$-chiral algebra; ordered Yangian and RTT
+data live in the $\Eone$ layer and are not supplied by the PVA bracket
+alone. For the gauge-theoretic origin of PVA structures via 3d
+holomorphic-topological theories, see Khan--Zeng~\cite{KhanZeng25}
+(scope: freely generated PVA with conformal vector at non-critical
+level).
 \end{remark}
 
 \begin{construction}[Deformation quantization as shadow-level MC]
 \label{constr:dq-shadow-mc}
 \index{deformation quantization!shadow MC}
-The deformation quantization of a Poisson vertex algebra $V^{\mathrm{cl}}$ is the genus-$0$ shadow of the modular MC element:
+Let $V^{\mathrm{cl}}$ be the local PVA attached to a coisson algebra
+after choosing a coordinate. The deformation-quantization problem is
+the problem of lifting the classical bracket to an $\hbar$-adic
+Maurer--Cartan element:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item The classical limit $V^{\mathrm{cl}}$ carries a Poisson $\lambda$-bracket $\{a_\lambda b\}$ which is the degree-$2$ shadow $\pi_{2,0}(\Theta_{V^{\mathrm{cl}}})$.
-\item The quantization obstruction $o_3(V^{\mathrm{cl}}) \in H^2(\Defcyc(\cA), d_2)$ is the cubic shadow projection.
-\item The Jacobi identity of the PVA ensures vanishing of $o_3$ (the cubic quantization obstruction). Higher obstructions $o_r$ for $r \geq 4$ are governed by the shadow obstruction tower of the quantized algebra and do not automatically vanish. (Koszulness of the quantized algebra is a separate property from shadow obstruction tower termination; both finite and infinite shadow depth algebras can be Koszul.)
+\item The classical limit carries a Poisson $\lambda$-bracket
+ $\{a_\lambda b\}$; in the modular notation it is the degree-$2$ local
+ shadow of the ordered Maurer--Cartan element.
+\item The PVA Jacobi identity says precisely that this degree-$2$
+ piece solves the Maurer--Cartan equation modulo $\hbar^2$.
+\item The next obstruction is the degree-$2$ cohomology class in the
+ shifted chiral deformation dg Lie algebra (degree~$3$ in unshifted
+ Hochschild notation). Higher obstructions $o_r$ for $r \geq 4$ are
+ governed by the shadow obstruction tower of the candidate quantized
+ algebra and do not automatically vanish. Koszulness of the quantized
+ algebra is separate from shadow obstruction tower termination; both
+ finite and infinite shadow-depth algebras can be Koszul.
 \end{enumerate}
 \end{construction}
 
 \begin{example}[Current algebra]
-For a Lie algebra $\mathfrak{g}$, the current algebra $\mathfrak{g}[z]$ has Poisson bracket:
-\[\{J^a(z), J^b(w)\} = \frac{f^{abc} J^c(w)}{z-w}\]
-This is the \emph{classical limit} of the affine Kac--Moody algebra $\widehat{\mathfrak{g}}_k$ as $k \to \infty$.
+For a Lie algebra $\mathfrak g$, the unextended current PVA has
+\[
+\{J^a(z),J^b(w)\}=\frac{f^{ab}_{\phantom{ab}c}J^c(w)}{z-w}.
+\]
+Choosing an invariant bilinear form \(B\) adds the central PVA term
+\[
+\{J^a_\lambda J^b\}=f^{ab}_{\phantom{ab}c}J^c+B(J^a,J^b)\lambda .
+\]
+The affine vertex algebra \(V_k(\mathfrak g)\) is the filtered
+quantization of this centrally extended current PVA with
+\(B=k(\cdot,\cdot)\). The level is an input pairing, not the limit
+\(k\to\infty\).
 \end{example}
 
-\subsection{Operator product expansion as star product}
+\subsection{Operator product expansion as filtered product}
 
-The OPE of a chiral algebra is precisely a star product:
+The singular OPE of a filtered chiral quantization is the chiral
+analogue of a star product:
 \[a(z) \cdot b(w) = \sum_{k=0}^\infty \frac{(a *_k b)(w)}{(z-w)^k}\]
 
 This has the same structure as Kontsevich's formula: the classical term is $a(z)b(w)$ (commutative product), the first quantum correction is $\frac{\{a, b\}(w)}{z-w}$ (Poisson bracket), and the higher quantum corrections are $\frac{(a *_k b)(w)}{(z-w)^k}$.
 
-\begin{theorem}[Coisson quantization at genus \texorpdfstring{$0$}{0}; \ClaimStatusProvedHere]\label{thm:chiral-quantization}
-Every coisson algebra on a smooth curve $X$ of genus~$0$ admits a deformation
-quantization to a vertex algebra ($\Einf$-chiral algebra), canonical up to
-gauge equivalence (gauge equivalence in $\Convinf$, Convention~\ref{rem:two-level-convention}).
+\begin{convention}[Independent parameters in deformation quantization]
+\label{conv:defq-parameter-separation}
+\index{deformation quantization!parameter separation}
+Five parameters occur in this chapter, and they live in different
+objects.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The affine level \(k\) is the scalar multiplying the invariant
+ bilinear form in the central extension of a current algebra.
+\item The KZ coefficient is the separate rational factor
+ \((k+h^\vee)^{-1}\) in the Knizhnik--Zamolodchikov connection
+ \[
+ \nabla_i^{\mathrm{KZ}}
+ =\partial_{z_i}
+ +\sum_{j\ne i}\frac{\Omega_{ij}}{(k+h^\vee)(z_i-z_j)}
+ \qquad\textup{\cite{KZ84,Kohno87}}.
+ \]
+ It is not the affine level.
+\item The Yangian/RTT spectral parameter \(u\) is the meromorphic
+ loop/evaluation coordinate in tensors such as \(R(u)\) and \(r(u)\).
+ It is not the KZ coefficient.
+\item The formal deformation parameter \(\hbar\) is the filtration
+ variable in star products, \(R=1+\hbar r+O(\hbar^2)\), and
+ \(\Def_{\mathrm{ch}}(-)[[\hbar]]\). It is not a period, a level, or
+ a spectral parameter.
+\item The genus-counting or string coupling variable, denoted
+ \(q_{\mathrm{gen}}\) in the modular MC expansion and \(g_s\) in a
+ physical partition function, records stable-graph genus. Identifying
+ it with \(\hbar\) requires a chosen quantum field theory and a
+ normalization theorem.
+\end{enumerate}
+\end{convention}
+
+\begin{theorem}[Local coisson quantization and global obstruction; \ClaimStatusProvedHere]\label{thm:chiral-quantization}
+Let $\cA_{\mathrm{cl}}$ be a coisson algebra on a smooth curve~$X$.
+Filtered chiral quantizations of $\cA_{\mathrm{cl}}$ with fixed
+associated graded are classified, when the usual pronilpotence and
+completeness hypotheses hold, by gauge classes of Maurer--Cartan lifts
+of the Lie$^*$ bracket in the completed chiral deformation dg Lie
+algebra
+\[
+\Def_{\mathrm{ch}}(\cA_{\mathrm{cl}})[[\hbar]].
+\]
+On a formal disk, for a finite-type local PVA coming from a formal
+Poisson structure, Kontsevich--Tamarkin formality supplies such a lift.
+On a curve~$X$, the local lifts glue to a global chiral quantization
+if and only if the descent class and the modular obstruction classes
+in the same completed deformation complex vanish.
 \end{theorem}
 
 \begin{remark}[Higher genus extension]\label{rem:chiral-quantization-higher-genus}
-The higher-genus extension is conjectural (\ClaimStatusConjectured): it requires controlling the global obstructions in $H^2$ of the chiral Hochschild complex on $\overline{\mathcal{M}}_{g,n}$. This remains open.
+The higher-genus extension is a modular deformation problem, not a
+formal consequence of genus-$0$ Kontsevich formality. It requires
+control of the non-separating clutching term and the stable-graph
+boundary relations on $\overline{\mathcal{M}}_{g,n}$.
 \end{remark}
 
 \begin{proof}[Proof of Theorem~\ref{thm:chiral-quantization}]
-The quantization problem for coisson algebras reduces to the existence of a Maurer--Cartan element in the chiral deformation complex. By Theorem~\ref{thm:curved-mc-cobar}, solutions to the curved Maurer--Cartan equation $d\alpha + \frac{1}{2}[\alpha,\alpha] + m_0 = 0$ parametrize deformations. The obstruction to existence lies in $H^2$ of the chiral Hochschild complex (classical deformation theory enhances to the chiral setting via Theorem~\ref{thm:geometric-equals-operadic-bar}).
+The completed chiral deformation complex carries the usual dg Lie
+structure: the differential is the linearized chiral product and the
+bracket is insertion of operations. The standard Deligne--Hinich
+argument identifies gauge classes of Maurer--Cartan elements in a
+pronilpotent dg Lie algebra with filtered deformations of the
+underlying algebraic structure. In the present notation the first
+coefficient of the Maurer--Cartan element is the Lie$^*$ bracket on
+$\cA_{\mathrm{cl}}$.
 
-For coisson algebras, the classical Kontsevich formality theorem ensures the vanishing of all higher obstructions at the operadic level: the $E_2$-operad (governing Poisson structures) is formal, so the deformation problem is unobstructed. Theorem~\ref{thm:geometric-equals-operadic-bar} lifts this to the curve $X$: the same object as the operadic bar construction is computed via the geometric bar complex, so formality propagates from the classical to the chiral setting. Gauge equivalence follows from the standard deformation-theoretic argument: different choices of Maurer--Cartan element in the same gauge orbit give isomorphic deformations.
+On a formal disk the coordinate identifies the coisson algebra with a
+PVA, and for finite-type formal Poisson input the
+Kontsevich--Tamarkin formality quasi-isomorphism transfers the Poisson
+Maurer--Cartan element to an associative $\hbar$-adic product. The
+geometric--operadic bar comparison
+(Theorem~\ref{thm:geometric-equals-operadic-bar}) identifies the local
+bar differential with the chiral deformation complex on the disk; it
+does not by itself perform global descent. Gluing the local
+Maurer--Cartan elements across~$X$ is exactly the vanishing of the
+descent and modular obstruction classes in
+\(\Def_{\mathrm{ch}}(\cA_{\mathrm{cl}})[[\hbar]]\).
 \end{proof}
 
 \section{Configuration space integrals for chiral algebras}
 
-\subsection{The geometric setup}
+\subsection{The local comparison space}
 
-Replace Kontsevich's configuration spaces with chiral configuration spaces:
+Kontsevich's configuration space is not replaced by a single global
+``chiral configuration space''. The comparison is local on the formal
+disk and global only after descent.
 
-\begin{definition}[Chiral configuration space]
-For a smooth curve $X$, define:
-\[C_n^{\text{ch}}(X) = C_n(X) \times \prod_{i=1}^n S^1_i\]
-where:
-\begin{itemize}
-\item $C_n(X) = \{(z_1, \ldots, z_n) \in X^n : z_i \neq z_j\}$
-\item $S^1_i$ is the circle of \emph{infinitesimal disks} around $z_i$
-\item The product encodes both \emph{positions} and \emph{local trivializations}
-\end{itemize}
-
-The compactification $\overline{C}_n^{\text{ch}}(X)$ is the Fulton--MacPherson--Ran space.
+\begin{definition}[Local chiral configuration model]
+Fix a formal coordinate on a disk $D\subset X$. The local comparison
+space is the Fulton--MacPherson compactification
+\[
+\overline{\Conf}_n(D)
+\]
+with collision divisors labelled by rooted trees. Its residue forms are
+generated by
+\[
+\eta_{ij}=d\log(z_i-z_j),
+\]
+and its boundary strata encode the partial compositions in the chiral
+bar construction. A change of coordinate acts on this model by the
+Aut$(\mathcal O)$-torsor of formal coordinates; descending from the
+disk to~$X$ is a separate equivariance condition.
 \end{definition}
 
 \subsection{Forms on chiral configuration spaces}
 
-The differential forms we integrate are \emph{logarithmic forms with coefficients}:
+The local chiral bar complex uses \emph{logarithmic forms with
+coefficients}; integration appears only after a propagator and a
+cycle/top-dimensional chain have been specified.
 
-\begin{definition}[Chiral integration forms]
-On $\overline{C}_n^{\text{ch}}(X)$, define:
-\[\Omega^*_{\text{ch}} = \Omega^*_{\text{log}}(\overline{C}_n(X)) \otimes \mathcal{A}^{\boxtimes n}\]
+\begin{definition}[Chiral residue forms]
+On $\overline{\Conf}_n(D)$, the local chiral bar forms are
+\[
+\Omega^*_{\mathrm{ch,loc}}
+= \Omega^*_{\log}(\overline{\Conf}_n(D))\otimes\mathcal{A}^{\boxtimes n}
+\]
 where:
 \begin{itemize}
 \item $\Omega^*_{\text{log}}$ are logarithmic forms with poles along collision divisors:
@@ -183,95 +331,68 @@ where:
 
 \subsection{The chiral star product formula}
 
-\begin{theorem}[Chiral Kontsevich formula; \ClaimStatusProvedHere]
+\begin{theorem}[Local Kontsevich--chiral comparison; \ClaimStatusProvedHere]
 \label{thm:chiral-kontsevich}
 \index{star product}
-Let $\mathcal{A}_{\text{cl}}$ be a coisson algebra on $X$. Its quantization $\mathcal{A}_\hbar$ has structure constants:
-\[(a \star b)(w) = \sum_{\Gamma \in \mathcal{G}_n} \frac{\hbar^{n}}{|\text{Aut}(\Gamma)|} \int_{\overline{C}_n^{\text{ch}}(X)} B_\Gamma(a,b) \wedge \omega_\Gamma\]
+Let $\mathcal{A}_{\mathrm{cl}}$ be a coisson algebra on~$X$, and fix a
+formal disk $D\subset X$ on which its restriction is a finite-type PVA
+coming from a formal Poisson structure. The local Kontsevich product is
+\[
+a\star b
+=ab+\sum_{n\geq1}\hbar^n
+\sum_{\Gamma\in\mathcal G_{n,2}}
+\frac{w_\Gamma}{|\operatorname{Aut}(\Gamma)|}\,B_\Gamma(a,b),
+\]
 where:
 \begin{enumerate}
-\item $\mathcal{G}_n$ is the set of admissible graphs with $n$ vertices
-\item $B_\Gamma(a,b)$ constructs differential operators from $\Gamma$:
-\[B_\Gamma(a,b) = \prod_{v \in V(\Gamma)} \left(\pi_v^{i_v j_v} \frac{\partial}{\partial z_i} \frac{\partial}{\partial w_j}\right) (a(z_v) \otimes b(w_v))\]
-\item $\omega_\Gamma$ is the angle form:
-\[\omega_\Gamma = \bigwedge_{e \in E(\Gamma)} \frac{dz_{\text{source}(e)} - dz_{\text{target}(e)}}{z_{\text{source}(e)} - z_{\text{target}(e)}}\]
+\item $\mathcal{G}_{n,2}$ is Kontsevich's set of admissible graphs
+ with $n$ internal and two boundary vertices;
+\item $B_\Gamma(a,b)$ is the bidifferential operator determined by the
+ Poisson tensor and the directed edges of~$\Gamma$;
+\item $w_\Gamma$ is the upper-half-plane angle-form integral on
+ $\overline{C}_{n,2}(\mathbb H)$.
 \end{enumerate}
+Under Theorem~\ref{thm:geometric-equals-operadic-bar}, the boundary
+factorisation identities for these local weights map to the quadratic
+identities of the chiral bar differential on~$D$. This comparison does
+not assert a global formula
+\(\int_{\overline{C}_n(X)}B_\Gamma\wedge\omega_\Gamma\) for an
+arbitrary curve~$X$; global quantization still requires coordinate
+descent and vanishing modular obstructions.
 \end{theorem}
 
 \begin{proof}
-The proof adapts Kontsevich's formality argument to the chiral setting,
-using the FM compactification of the curve~$X$ in place of the
-upper half-plane.
+Kontsevich's theorem gives the displayed product on the formal disk by
+integrating angle forms over $\overline{C}_{n,2}(\mathbb H)$. Its
+associativity is the Stokes identity on the compactified
+upper-half-plane configuration spaces, together with the vanishing
+lemma for the angle forms.
 
-\emph{Step~1: Formality (existence).}
-By Theorem~\ref{thm:chiral-formality}
-(\ClaimStatusProvedElsewhere, Francis--Gaitsgory~\cite{FG12}), the $L_\infty$~algebra
-of chiral polyvector fields $\mathcal{T}_{\text{poly}}^{\text{ch}}(X)$ is
-formal. This guarantees the existence of a formality quasi-isomorphism
-$\mathcal{F}\colon \mathcal{T}_{\text{poly}}^{\text{ch}}(X) \xrightarrow{\sim}
-H^*(\mathcal{T}_{\text{poly}}^{\text{ch}}(X))$.
-
-\emph{Step~2: Explicit integral formula.}
-We construct $\mathcal{F}$ via configuration space integrals on
-$\overline{C}_n^{\text{ch}}(X)$. For each admissible graph
-$\Gamma \in \mathcal{G}_n$, define the weight:
-\[
-w_\Gamma = \int_{\overline{C}_n^{\text{ch}}(X)} \omega_\Gamma
-\]
-The integrand $\omega_\Gamma = \bigwedge_{e \in E(\Gamma)} \eta_{s(e),t(e)}$
-is a product of logarithmic forms, hence a smooth form on
-$\overline{C}_n^{\text{ch}}(X)$ (the FM compactification resolves all
-collision singularities). The integral converges because
-$\overline{C}_n^{\text{ch}}(X)$ is a compact smooth manifold with corners.
-
-\emph{Step~3: Associativity via Stokes' theorem.}
-The key identity $\star$ is associative follows from Stokes' theorem on
-$\overline{C}_n^{\text{ch}}(X)$. The boundary strata of the FM
-compactification are indexed by partitions $S \vdash \{1, \ldots, n\}$
-with $|S| \geq 2$; each stratum $\partial_S$ is a product of lower
-FM spaces (Theorem~\ref{thm:FM-operad}; \cite{FM94}):
-\[
-\partial_S \overline{C}_n^{\text{ch}}(X) \;\cong\;
-\overline{C}_{|S|}(T_p X) \times \overline{C}_{n-|S|+1}^{\text{ch}}(X).
-\]
-Applying Stokes: $0 = \int_{\overline{C}_n} d(\cdots)
-= \sum_S \int_{\partial_S} (\cdots)$. Each boundary contribution
-$\int_{\partial_S}$ factors as a product of lower-order weights, and the
-resulting identity is precisely the $\hbar^n$ term of
-$(a \star b) \star c = a \star (b \star c)$. This is the chiral analog
-of Kontsevich's argument (\cite{Kon03}, Theorem~6.4).
-
-On a compact curve $X$ (as opposed to Kontsevich's upper half-plane),
-there are no boundary contributions from infinity, so the Stokes argument
-is \emph{cleaner}: the only boundary terms come from collision strata,
-which are exactly the terms in the associativity equation.
-
-\emph{Step~4: Star product recovery.}
-The star product is $a \star b = m \circ \exp(\hbar \mathcal{F}(\pi))(a \otimes b)$
-where $\pi$ is the Poisson bivector of the coisson structure. The $\hbar^0$ term is the
-classical product $ab$. The $\hbar^1$ term is $\frac{1}{2}\{a,b\}$
-(the single-edge graph gives the Poisson bracket; weight $1/2$ from the
-angle integral). Higher orders are verified in
-Computation~\ref{comp:star-order-2} through $\hbar^2$.
+The chiral bar differential on a disk is computed by the same rooted
+collision trees. The form attached to an edge is now represented by the
+residue class $\eta_{ij}=d\log(z_i-z_j)$, and the Arnold relation is the
+quadratic identity forcing $d_B^2=0$. The
+geometric--operadic comparison identifies these two boundary
+factorisation systems after passing from the local disk to the
+operadic bar construction. This proves the local comparison. A global
+curve has coordinate-change and modular boundary terms; those are
+precisely the descent and obstruction classes named in
+Theorem~\ref{thm:chiral-quantization}.
 \end{proof}
 
 \begin{remark}[Provenance]
-The existence of deformation quantization is
-Theorem~\ref{thm:chiral-formality} (\ClaimStatusProvedElsewhere,
-Francis--Gaitsgory). The explicit integral formula and the
-verification that configuration space integrals on $\overline{C}_n^{\mathrm{ch}}(X)$
-satisfy the associativity identity via Stokes' theorem is the
-contribution of the present work. The argument adapts Kontsevich's
-original strategy \cite{Kon03} to the chiral FM compactification;
-the compact curve setting simplifies the boundary analysis
-(no boundary at infinity).
+The analytic integral formula is Kontsevich's upper-half-plane formula
+\cite{Kon03}. The chiral statement used here is the local comparison
+between Kontsevich boundary strata and the geometric bar construction,
+not a new closed-form global star product on
+$\overline{\Conf}_n(X)$.
 \end{remark}
 
 \section{Explicit computations through degree 5}
 
 \subsection{Organization by loop order}
 
-We compute explicitly through low loop orders.
+The low-order coefficients fix the normalization.
 
 \subsubsection{\texorpdfstring{Tree level ($\hbar^0$): classical product}{Tree level (0): classical product}}
 
@@ -286,46 +407,49 @@ Graph: Just two vertices, no edges.
 Graph: One interior vertex in $\mathbb{H}$ with two directed edges to the two boundary vertices (representing $a$ and $b$).
 
 Weight calculation:
-\[w = \int_{C_2^{\text{ch}}(X)} d\arg(z_2 - z_1) = \frac{1}{2}\]
-(The factor $\frac{1}{2}$ comes from integrating $d\theta$ over $S^1$.)
+\[
+w_\Gamma
+=\frac{1}{(2\pi)^2}
+\int_{\overline C_{1,2}(\mathbb H)}
+d\phi_{1f}\wedge d\phi_{1g}
+=\frac12 .
+\]
+This is Kontsevich's upper-half-plane integral. The local chiral
+residue form \(\eta_{ij}=d\log(z_i-z_j)\) is compared with it only
+after choosing a formal disk and passing to boundary-factorisation
+identities; no integral over a global
+\(C_2^{\mathrm{ch}}(X)\) is used in this coefficient.
 
 \subsubsection{\texorpdfstring{Two loops ($\hbar^2$): first quantum correction}{Two loops (2): first quantum correction}}
 
-There are three graphs contributing at $\hbar^2$:
+There are three operator types contributing at $\hbar^2$:
 
-\emph{Graph~1.} Two edges from vertex 1 to vertex 2
-\begin{center}
-\begin{tikzpicture}[scale=0.6]
-\node[circle,fill,inner sep=2pt] (1) at (0,0) {};
-\node[circle,fill,inner sep=2pt] (2) at (2,0) {};
-\draw[->,thick] (1) to[bend left=30] (2);
-\draw[->,thick] (1) to[bend right=30] (2);
-\end{tikzpicture}
-\end{center}
+\emph{Graph~1.} Two independent Poisson vertices, each with one edge
+to the \(a\)-boundary vertex and one edge to the \(b\)-boundary
+vertex; there is no internal edge.
 
 \[B_{\Gamma_1}(a,b) = \pi^{ij} \pi^{kl} \frac{\partial^2 a}{\partial x^i \partial x^k} \frac{\partial^2 b}{\partial x^j \partial x^l}\]
 
-Weight: $w_{\Gamma_1} = \frac{1}{8}$ (computed via the Kontsevich configuration space integral on $C_2(\mathfrak{H})$)
+Weight: \(w_{\Gamma_1}=\frac18\), in the normalization where the
+first-order coefficient is \(\frac12\{a,b\}\), computed by the
+Kontsevich integral on \(\overline C_{2,2}(\mathfrak H)\).
 
-\emph{Graph~2.} Chain $1 \to 2 \to 1$
-\begin{center}
-\begin{tikzpicture}[scale=0.6]
-\node[circle,fill,inner sep=2pt] (1) at (0,0) {};
-\node[circle,fill,inner sep=2pt] (2) at (2,0) {};
-\draw[->,thick] (1) -- (2);
-\draw[->,thick] (2) to[bend left=50] (1);
-\end{tikzpicture}
-\end{center}
+\emph{Graph~2.} One internal edge differentiates the second Poisson
+tensor, and the remaining boundary edges land on \(a\) and \(b\) in
+the order displayed below.
 
 \[B_{\Gamma_2}(a,b) = \pi^{ij} (\partial_j\pi^{kl})\, \partial_i\partial_k a \cdot \partial_l b\]
 
-Weight: $w_{\Gamma_2} = \frac{1}{12}$
+Weight: \(w_{\Gamma_2}=\frac1{12}\) in the same normalization.
 
 \emph{Graph~3.} Same topology as Graph 2 with $a \leftrightarrow b$
 
 \[B_{\Gamma_3}(a,b) = \pi^{ij} (\partial_j\pi^{kl})\, \partial_k a \cdot \partial_i\partial_l b\]
 
-Weight: $w_{\Gamma_3} = \frac{1}{12}$ (the configuration space integral is orientation-preserving; the sign change between $B_{\Gamma_2}$ and $B_{\Gamma_3}$ arises from the bidifferential operator, not the weight)
+Weight: \(w_{\Gamma_3}=\frac1{12}\). The sign in
+\(B_{\Gamma_2}-B_{\Gamma_3}\) is the bidifferential-operator sign
+from the Poisson tensor convention, not a claim about a global chiral
+orientation integral.
 
 \emph{Total at $\hbar^2$.}
 \[a \star_2 b = \frac{1}{8}B_{\Gamma_1}(a,b) + \frac{1}{12}\bigl(B_{\Gamma_2} - B_{\Gamma_3}\bigr)(a,b)\]
@@ -337,24 +461,33 @@ This matches the standard Kontsevich formula: the $1/8$ coefficient for the doub
 \[a \star b = ab + \frac{\hbar}{2}\{a,b\} + \hbar^2\!\left(\frac{1}{8}\pi^{ij}\pi^{kl}\partial_i\partial_k a\,\partial_j\partial_l b + \frac{1}{12}\pi^{ij}(\partial_j\pi^{kl})(\partial_i\partial_k a\,\partial_l b - \partial_k a\,\partial_i\partial_l b)\right) + O(\hbar^3)\]
 \end{theorem}
 
-\subsection{\texorpdfstring{Three loops ($\hbar^3$): associator corrections}{Three loops (3): associator corrections}}
+\subsection{\texorpdfstring{Order $\hbar^3$: Stokes cancellation}{Order 3: Stokes cancellation}}
 
-At $\hbar^3$, graphs encode the associator:
-\[(a \star b) \star c - a \star (b \star c) = 0\]
+At order $\hbar^3$ the star product is already required to be
+strictly associative:
+\[
+(a\star b)\star c-a\star(b\star c)=0.
+\]
+The relevant cancellation is a Stokes identity on
+\(\overline C_{3,2}(\mathbb H)\). It is not the Drinfeld associator of
+the KZ equation; that associator enters when one compares formality
+representatives and braided tensor structures.
 
-There are 15 graphs at 3 vertices. The cancellation ensuring associativity comes from:
-
-\begin{theorem}[Stokes' theorem yields associativity \cite{Kon03}; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Stokes' theorem yields associativity \cite{Kon03};
+\ClaimStatusProvedElsewhere]
 \label{thm:stokes-associativity}
-\[\sum_{\Gamma \in \mathcal{G}_3} w_\Gamma \cdot (\text{graph operation on boundary}) = 0\]
+\[
+\sum_{\Gamma\in\mathcal G_{3,2}^{\mathrm{adm}}}
+\epsilon_\Gamma w_\Gamma\,
+(\text{boundary graph operation})=0
+\]
 because:
-\[\int_{\partial \overline{C}_3(X)} \omega = 0\]
+\[\int_{\partial \overline{C}_{3,2}(\mathbb H)} \omega = 0\]
 by Stokes' theorem.
 \end{theorem}
 
-\emph{Pentagon at $\hbar^3$.}
-
-The 5 relevant graphs form a pentagon whose boundary is trivial:
+\emph{Stasheff pentagon.}
+The codimension-one boundary strata form the pentagon \(K_4\):
 \begin{center}
 \begin{tikzpicture}[scale=1.2]
 \node (a) at (90:1.5) {$\Gamma_1$};
@@ -369,73 +502,201 @@ The 5 relevant graphs form a pentagon whose boundary is trivial:
 \draw[->] (e) -- (a);
 \end{tikzpicture}
 \end{center}
-
-This pentagon is Stasheff's associahedron $K_4$ in disguise (the associahedron $K_n$ controls the $n$-ary operation; $K_4$ is the pentagon governing associativity of four inputs).
+This pentagon is the associahedral boundary relation for four inputs.
+Calling it the KZ/Drinfeld associator conflates the Stasheff
+boundary cell with the monodromy associator of the KZ connection.
 
 \subsection{Four and five loops}
 
 \subsubsection{\texorpdfstring{Four loops ($\hbar^4$)}{Four loops (4)}}
 
-At $\hbar^4$, there are 105 graphs, encoding higher associativity constraints (Stasheff polytopes), Jacobi identity corrections for the Poisson bracket, and the first appearance of 4-ary operations in the $A_\infty$ structure.
-
-Key computation:
-\[w_{\text{complete}} = \int_{\overline{C}_4(X)} \omega_{\text{complete}} = \frac{\zeta(3)}{(2\pi i)^3}\]
-This involves the Riemann zeta function.
+At $\hbar^4$, Kontsevich admissible graphs on the upper half-plane
+produce period integrals. For associator choices coming from the KZ
+connection, the first odd zeta value $\zeta(3)$ appears in the
+corresponding Drinfeld associator coefficients. No equality
+\(\int_{\overline{C}_4(X)}\omega=\zeta(3)/(2\pi i)^3\) is used here:
+that is a global curve integral, not the local
+upper-half-plane weight.
 
 \subsubsection{\texorpdfstring{Five loops ($\hbar^5$)}{Five loops (5)}}
 
-At $\hbar^5$, there are 945 graphs total, with relations from the $\dim(\mathcal{M}_{0,6}) = 3$ dimensional moduli space, and multiple zeta values appear: $\zeta(3), \zeta(5), \zeta(2)\zeta(3)$.
+At $\hbar^5$, the same period mechanism produces higher associator
+coefficients. Depending on the chosen associator representative,
+multiple zeta values such as $\zeta(3)$ and $\zeta(5)$ occur. The
+precise graph count and the individual weights are not part of the
+chiral bar argument in this chapter.
 
 \begin{example}[Explicit weight at \texorpdfstring{$\hbar^5$}{5}]
-For the wheel graph $W_5$ (5 vertices in a cycle with one central vertex):
-\[w_{W_5} = \int_{\overline{C}_5(X)} \bigwedge_{i=1}^5 \eta_{i,6} = \frac{2\zeta(5)}{(2\pi i)^4}\]
+For the KZ associator, the depth-one coefficient attached to the
+degree-$5$ Lie word is proportional to $\zeta(5)/(2\pi i)^5$.
+Identifying a specific Kontsevich graph weight with that coefficient
+requires fixing the graph representative and the associator gauge.
 \end{example}
 
 \section{Bar-cobar realization of deformation quantization}
 
 \subsection{Bar complex and deformation}
 
-\begin{theorem}[Bar complex computes deformation \cite{LV12}; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Chiral deformation complex from the bar construction; \ClaimStatusProvedHere]
 \label{thm:bar-computes-deformation}
-The chiral deformation quantization is controlled by the geometric bar complex:
-\[H^*(\bar{B}^{\text{geom}}(\mathcal{A}_{\text{cl}}))[\hbar] = \text{Quantizations of } \mathcal{A}_{\text{cl}}\]
-
-More precisely (via the Hochschild deformation complex):
+Let $\mathcal A_{\mathrm{cl}}$ be a coisson algebra satisfying the
+completion hypotheses of Theorem~\ref{thm:chiral-quantization}. The
+reduced geometric bar construction realizes a strict model for the
+shifted chiral deformation dg Lie algebra:
+\[
+\Def_{\mathrm{ch}}(\mathcal A_{\mathrm{cl}})
+\simeq
+\operatorname{Coder}\bigl(\barBgeom(\mathcal A_{\mathrm{cl}})\bigr)[1].
+\]
+Consequently filtered quantizations are Maurer--Cartan elements modulo
+gauge, not the cohomology group itself. The cohomology groups measure
+the successive tangent and obstruction spaces:
 \begin{enumerate}
-\item $H^0$: Center (invariants/scalars)
-\item $H^1$: Outer derivations (infinitesimal automorphisms)
-\item $H^2$: First-order deformations and obstructions to quantization
-\item $H^3$: Higher obstructions (Massey products)
+\item $H^0$ of the shifted dg Lie algebra: infinitesimal stabilizers;
+\item $H^1$: first-order deformations modulo infinitesimal gauge;
+\item $H^2$: obstruction classes in the shifted convention;
+\item equivalently, in unshifted chiral Hochschild notation, first
+ order deformations lie in $\ChirHoch^2$ and primary obstructions in
+ $\ChirHoch^3$.
 \end{enumerate}
 \end{theorem}
 
+\begin{remark}[Object firewall for deformation quantization]
+\label{rem:defq-object-firewall}
+The deformation complex above separates five objects.
+\[
+A,\qquad \barB(A),\qquad A^{\mathrm i},\qquad A^!,\qquad
+Z^{\mathrm{der}}_{\mathrm{ch}}(A).
+\]
+Here \(A=\mathcal A_{\mathrm{cl}}\) is the coisson input,
+\(\barB(A)\) is the reduced bar coalgebra whose coderivations form the
+shifted deformation dg Lie algebra, \(A^{\mathrm i}=H^\bullet\barB(A)\)
+is the Koszul dual coalgebra when the Koszul hypotheses hold, and
+\(A^!=\mathbb D(A^{\mathrm i})\) is the Verdier-dual Koszul dual
+algebra. The derived chiral centre
+\[
+Z^{\mathrm{der}}_{\mathrm{ch}}(A)
+\simeq C^\bullet_{\mathrm{ch}}(A,A)
+\]
+is the Hochschild closed-sector object. Maurer--Cartan quantization lives in
+coderivations of \(\barB(A)\); it is not an element of \(A^!\) and not
+an element of the derived centre. The equality
+\(\Omega(\barB(A))\simeq A\), when it holds, is bar--cobar inversion,
+not Koszul duality.
+\end{remark}
+
 \subsection{Maurer--Cartan elements as quantizations}
 
-The quantization is a solution to the Maurer--Cartan equation:
-\[d\alpha + \frac{1}{2}[\alpha, \alpha] + \frac{1}{6}m_3(\alpha, \alpha, \alpha) + \cdots = 0\]
-in $\bar{B}^1(\mathcal{A}_{\text{cl}})[[\hbar]]$.
+The quantization is a solution to the Maurer--Cartan equation in the
+completed shifted chiral deformation object. In a strict dg Lie model
+this equation is
+\[
+d\alpha+\frac12[\alpha,\alpha]=0.
+\]
+After homotopy transfer to a minimal \(L_\infty\)-model it becomes
+\[
+\sum_{r\geq1}\frac1{r!}\ell_r(\alpha,\ldots,\alpha)=0,
+\]
+where \(\ell_1=d\), \(\ell_2=[-,-]\), and the higher brackets record
+the transferred bar operations.
 
-\begin{proposition}[MC \texorpdfstring{$\Leftrightarrow$}{iff} star product; \ClaimStatusProvedHere]
+\begin{proposition}[MC elements and filtered chiral products; \ClaimStatusProvedHere]
 \label{prop:mc-star-product}
-There is a bijection:
-\[\{\text{MC elements in } \bar{B}^1(\mathcal{A}_{\text{cl}})[[\hbar]]\} \longleftrightarrow \{\text{Star products on } \mathcal{A}_{\text{cl}}\}\]
-given by:
-\[\alpha \mapsto (a \star_\alpha b = m_2(a,b) + \langle \alpha, a \otimes b \rangle + \text{higher})\]
+Gauge classes of Maurer--Cartan elements
+\(\alpha\in\Def_{\mathrm{ch}}(\mathcal{A}_{\mathrm{cl}})^1[[\hbar]]\)
+in any complete \(L_\infty\)-model for the chiral deformation functor
+whose linear term is the prescribed Lie$^*$ bracket are in bijection
+with filtered chiral products on $\mathcal{A}_{\mathrm{cl}}[[\hbar]]$
+whose associated graded product is the commutative product on
+$\mathcal{A}_{\mathrm{cl}}$.
 \end{proposition}
 
 \begin{proof}
-Given an MC element $\alpha = \sum_{n \geq 1} \hbar^n \alpha_n$ with $\alpha_n \in \bar{B}^1(\mathcal{A}_{\mathrm{cl}})$, define $a \star_\alpha b = m_2(a,b) + \sum_{n \geq 1} \hbar^n \langle \alpha_n, a \otimes b \rangle$. The MC equation $d\alpha + \frac{1}{2}[\alpha,\alpha] = 0$ unfolds order by order in $\hbar$: at order $\hbar^n$, the condition $d\alpha_n + \frac{1}{2}\sum_{i+j=n}[\alpha_i,\alpha_j] = 0$ is equivalent to the associativity of $\star_\alpha$ at order $\hbar^n$, since the bar differential $d$ encodes the failure of associativity and the bracket $[\alpha_i,\alpha_j]$ encodes the composition of deformations (this is the standard deformation-theoretic correspondence, see \cite{Kon03}, \S4, or \cite{LV12}, Theorem~10.1.1). Conversely, any associative star product defines an MC element by reversing the correspondence.
+Given an MC element
+$\alpha=\sum_{n\geq1}\hbar^n\alpha_n$, insert the multilinear
+operation $\alpha_n$ as the $\hbar^n$ correction to the chiral product.
+The MC equation unfolds order by order:
+\[
+d\alpha_n+\frac12\sum_{i+j=n}[\alpha_i,\alpha_j]
++\sum_{r\geq3}\frac1{r!}
+\sum_{i_1+\cdots+i_r=n}
+\ell_r(\alpha_{i_1},\ldots,\alpha_{i_r})=0.
+\]
+This is exactly the $n$-th filtered associativity/factorisation
+identity, because $d$ is the linearized bar differential and the
+brackets are insertion of lower-order operations. Gauge equivalence is
+the Deligne--Getzler equivalence relation for the complete
+\(L_\infty\)-algebra; in a strict dg Lie representative it is the usual
+degree-$0$ conjugation. The converse reads the coefficients of any such
+product as the components of an MC element.
+\end{proof}
+
+\begin{lemma}[Shifted obstruction cocycle]
+\label{lem:defq-shifted-obstruction-cocycle}
+\ClaimStatusProvedHere
+Let
+\[
+\alpha_{<N}=\sum_{1\leq n<N}\hbar^n\alpha_n
+\in
+\Def_{\mathrm{ch}}(\mathcal A_{\mathrm{cl}})^1[[\hbar]]/(\hbar^N)
+\]
+solve the \(L_\infty\) Maurer--Cartan equation modulo \(\hbar^N\).
+The obstruction to extending it through order~\(\hbar^N\) is the
+degree-\(2\) cocycle
+\begin{equation}\label{eq:defq-obstruction-cocycle}
+\operatorname{Obs}_N(\alpha_{<N})
+=
+\frac12\sum_{\substack{i+j=N\\ i,j\geq1}}
+[\alpha_i,\alpha_j]
++
+\sum_{r\geq3}\frac1{r!}
+\sum_{\substack{i_1+\cdots+i_r=N\\ i_j\geq1}}
+\ell_r(\alpha_{i_1},\ldots,\alpha_{i_r}).
+\end{equation}
+Its class in \(H^2(\Def_{\mathrm{ch}}(\mathcal A_{\mathrm{cl}}))\)
+vanishes exactly when one can choose
+\(\alpha_N\in\Def_{\mathrm{ch}}(\mathcal A_{\mathrm{cl}})^1\) with
+\[
+d\alpha_N+\operatorname{Obs}_N(\alpha_{<N})=0.
+\]
+Thus the Maurer--Cartan element is the filtered product; the
+cohomology class records only the obstruction to the next lift.
+In unshifted chiral Hochschild notation the same obstruction lies in
+\(\ChirHoch^3(\mathcal A_{\mathrm{cl}},\mathcal A_{\mathrm{cl}})\).
+\end{lemma}
+
+\begin{proof}
+Extract the coefficient of \(\hbar^N\) in
+\(\sum_{r\geq1}r!^{-1}\ell_r(\alpha,\ldots,\alpha)=0\), writing
+\(\ell_1=d\). The summands involving the unknown coefficient
+\(\alpha_N\) occur only in \(d\alpha_N\); every other summand is
+\eqref{eq:defq-obstruction-cocycle}. The \(L_\infty\) identities and
+the Maurer--Cartan equation modulo \(\hbar^N\) give
+\(d\,\operatorname{Obs}_N(\alpha_{<N})=0\). Vanishing of its cohomology
+class is precisely the solvability of the displayed inhomogeneous
+equation for~\(\alpha_N\).
 \end{proof}
 
 \subsection{Configuration spaces as deformation parameters}
 
-The space of quantizations is:
-\[\mathcal{Q}(\mathcal{A}_{\text{cl}}) = \text{MC}(\bar{B}^1(\mathcal{A}_{\text{cl}}))/\text{gauge}\]
+The space of quantizations is the Deligne--Getzler Maurer--Cartan
+groupoid of the complete deformation \(L_\infty\)-algebra:
+\[\mathcal{Q}(\mathcal{A}_{\text{cl}}) =
+\MC(\Def_{\mathrm{ch}}(\mathcal{A}_{\text{cl}})[[\hbar]])/\text{gauge}.\]
 
 Geometrically:
-\[\mathcal{Q}(\mathcal{A}_{\text{cl}}) \cong \prod_{n=2}^\infty H^0(\overline{C}_n^{\text{ch}}(X), \Omega^{\dim C_n}_{\text{closed}})/\text{exact}\]
+\[
+\operatorname{gr}\Def_{\mathrm{ch}}(\mathcal{A}_{\text{cl}})
+\simeq
+\bigoplus_{n\geq2}
+\Gamma\bigl(\overline{\Conf}_n(X),
+\Omega^\bullet_{\log}\otimes\mathcal A_{\mathrm{cl}}^{\boxtimes n}\bigr)_{\mathrm{res}},
+\]
+with differential induced by collision residues and the chiral product.
 
-Each configuration space $\overline{C}_n^{\text{ch}}(X)$ contributes deformation parameters at order $\hbar^n$.
+Thus configuration spaces contribute cochains to the deformation
+complex. Their closed degree-top forms are not themselves the moduli
+space of quantizations.
 
 \section{Examples: quantizing concrete chiral algebras}
 
@@ -447,38 +708,73 @@ Each configuration space $\overline{C}_n^{\text{ch}}(X)$ contributes deformation
 
 \subsubsection{Quantization}
 
-At order $\hbar$, the quantum OPE acquires a central term:
-\[a(z) a^*(w) \sim \frac{\kappa}{z-w}\]
+The formal family may be written with first correction
+\[
+a(z)a^*(w)
+\sim
+\hbar\,\frac{k}{z-w}.
+\]
+After setting the deformation variable to \(1\), the Heisenberg vertex
+algebra has singular OPE
+\[
+a(z)a^*(w)\sim\frac{k}{z-w}.
+\]
 
-The level $\kappa$ is the first quantum correction, measuring the failure of commutativity.
+The level $k$ is the chosen invariant pairing of the rank-one
+Heisenberg system. In the notation of the landscape census the modular
+characteristic is $\kappa(\mathcal H_k)=k$; it is not obtained by
+integrating a universal one-form over the curve.
 
 \subsubsection{Configuration space formula}
 
-\[\kappa = \hbar \int_{\overline{C}_2(X)} \eta_{12}\]
-
-For $X = \mathbb{C}$: $\kappa = \hbar$ (the propagator integral evaluates to $1$)
-
-For $X = E$ (elliptic curve): The deformation quantization on $E$ exists but the level $\kappa$ depends on the choice of propagator (Green's function on $E$). The Euler characteristic $\chi(E) = 0$ constrains the anomaly but does not force $\kappa = 0$; rather, the star product on $E$ is governed by the elliptic propagator $\partial_z G(z,w)$.
+Locally on a disk, the residue of the propagator is normalized by
+\[
+\operatorname{Res}_{z=w}\eta_{12}=1.
+\]
+The coefficient multiplying this residue is the external level~$k$.
+For $X=E_\tau$, an elliptic propagator changes the representative of
+the Green kernel and introduces quasi-modular terms such as $E_2(\tau)$;
+it does not change the level parameter.
 
 \subsection{\texorpdfstring{Example 2: current algebra $\mathfrak{g}[z]$}{Example 2: current algebra g[z]}}
 
 \subsubsection{Classical OPE}
 
-\[\{J^a(z), J^b(w)\} = \frac{f^{abc} J^c(w)}{z-w}\]
+\[
+\{J^a_\lambda J^b\}_{\mathrm{cl}}
+= f^{ab}_{\phantom{ab}c}J^c+k(J^a,J^b)\lambda .
+\]
+In \(z,w\)-notation this is the bracket with simple Lie pole and
+central double pole.
 
 \subsubsection{Quantum OPE}
 
-\[[J^a(z), J^b(w)] = \frac{k \delta^{ab}}{(z-w)^2} + \frac{f^{abc} J^c(w)}{z-w}\]
+\[[J^a(z), J^b(w)] = \frac{k \delta^{ab}}{(z-w)^2} + \frac{f^{ab}_{\phantom{ab}c} J^c(w)}{z-w}\]
 (The singular part of the Kac--Moody OPE is exact: there are no quantum corrections to the pole structure.)
 
 \subsubsection{Configuration space interpretation}
 
-The level $k$ is a classical input parameter. The configuration space integral reproduces it:
-\[k = \hbar \int_{\overline{C}_2(X)} \operatorname{Tr}(\pi \wedge \pi) \wedge \eta_{12}\]
-where $\pi$ is the Lie--Poisson structure on $\mathfrak{g}^*$.
+The level $k$ is a classical input parameter, namely the scalar
+multiple of the invariant bilinear form used in the central extension.
+The local residue pairing records this input:
+\[
+\operatorname{Res}_{z=w}\bigl(k\,(\cdot,\cdot)\,\eta_{12}\bigr)=
+k\,(\cdot,\cdot).
+\]
+The modular characteristic is the trace-normalised scalar
+\[
+\kappa(V_k(\mathfrak g))
+=\frac{\dim(\mathfrak g)(k+h^\vee)}{2h^\vee},
+\]
+with the bracket/Sugawara contribution separated from the central
+level contribution.
 
 \emph{Higher operations.}
-The Jacobi identity $[J^a, [J^b, J^c]] + \text{cyclic} = 0$ holds exactly at all levels (it is an identity in the Lie algebra), so the OPE receives no corrections. However, the transferred $A_\infty$ structure on bar cohomology acquires higher operations $m_3, m_4, \ldots$ from integration over $\overline{C}_3(X), \overline{C}_4(X), \ldots$, encoding the curved $A_\infty$ structure at higher genus.
+The Jacobi identity for $\mathfrak g$ and invariance of the bilinear
+form are the local conditions for the affine OPE. Higher transferred
+operations in the bar complex are separate homotopy-transfer data; they
+are not additional corrections to the displayed singular terms of the
+Kac--Moody OPE.
 
 \subsection{\texorpdfstring{Example 3: $\beta\gamma$ system}{Example 3: system}}
 
@@ -491,11 +787,54 @@ In mode notation: $\{\beta_m, \gamma_n\} = \delta_{m+n,0}$.
 \subsubsection{Quantization via configuration spaces}
 
 \[\beta(z)\gamma(w) \sim \frac{1}{z-w}\]
-The $\beta\gamma$ system is a \emph{free} theory: its OPE receives no quantum corrections to the singular terms. The singular part is exactly $1/(z-w)$ to all orders in $\hbar$. Nontrivial higher operations $m_n$ for $n \geq 3$ arise not from corrections to this OPE, but from the geometry of configuration space integrals when the $\beta\gamma$ system is coupled to a background (e.g., via background charge $Q$).
+The $\beta\gamma$ system is free. Its singular OPE is exactly
+$1/(z-w)$ to all orders in~$\hbar$. Background coupling, for example
+through a background charge~$Q$, can transfer nonzero operations
+$m_n$ for $n\geq3$ from configuration-space integrals; those
+operations are additional bar data, not corrections to the free
+singular OPE.
 
-The $\beta\gamma$ system is Koszul dual to the $bc$ ghost system: $(\beta\gamma)^! \cong \mathcal{F}_{bc}$. This is a bosonic-to-fermionic ghost system duality realized through chiral Koszul duality (distinct from the standard boson-fermion correspondence/bosonization). The duality is visible at the level of configuration space integrals:
-\[\langle \omega_{\text{bar}},\, K_{\text{cobar}} \rangle_{\text{Verdier}} = \int_{\overline{C}_n} \omega_{\text{bar}} \cup K_{\text{cobar}}\]
-where $K_{\text{cobar}} \in H^n_{D}(\overline{C}_n, \mathcal{F}^{!\boxtimes n})$ is the local cohomology class supported on the boundary, and the symplectic (antisymmetric) pairing of $\beta\gamma$ dualizes under Verdier duality to the anticommuting (fermionic) pairing. See Section~\ref{sec:fermion-boson-koszul} for the complete computation.
+For the completed free ghost family the bar coalgebra has a Verdier
+dual partner:
+\[
+(\beta\gamma_\lambda)^! \simeq bc_\lambda .
+\]
+The statement factors through the Koszul coalgebra
+\[
+(\beta\gamma_\lambda)^{\mathrm i}
+ = H^*(\barB^{\mathrm{ch}}(\beta\gamma_\lambda)),
+\qquad
+(\beta\gamma_\lambda)^!
+ = \mathbb D_{\Ran}\bigl((\beta\gamma_\lambda)^{\mathrm i}\bigr),
+\]
+under the finite-type completed free-field hypotheses of
+Theorem~\ref{thm:betagamma-bc-koszul}. It is a
+bosonic-to-fermionic chiral Koszul duality, distinct from
+bosonization. The scalar check is
+\[
+\kappa(\beta\gamma_\lambda)
+ = 6\lambda^2-6\lambda+1,\qquad
+\kappa(bc_\lambda)
+ = -(6\lambda^2-6\lambda+1),
+\]
+so the Verdier pair has complementary obstruction class. The
+configuration-space pairing is
+\[
+\langle \omega_{\barB},\, K_{\mathbb D\barB} \rangle_{\mathrm{Verdier}}
+ =
+\int_{\overline{C}_n}
+\omega_{\barB}\cup K_{\mathbb D\barB},
+\]
+with
+\[
+K_{\mathbb D\barB}
+ \in H^n_D\!\left(\overline{C}_n,
+ (bc_\lambda)^{\boxtimes n}\right)
+\]
+supported on the boundary stratum. Verdier duality turns the
+symplectic bosonic pairing in the $\beta\gamma$ bar coalgebra into the
+fermionic pairing of the $bc$ partner. See
+Section~\ref{sec:fermion-boson-koszul} for the computation.
 
 \subsection{Example 4: $\mathcal{W}$-algebras}
 
@@ -512,35 +851,63 @@ composite field (Computation~\ref{comp:w-algebra-deformation}).
 
 \subsubsection{Quantization}
 
-The quantization of $W_3$ involves the central charge $c$ (from $\hbar^1$), structure constants $\lambda, \mu$ (from $\hbar^2, \hbar^3$), and screening charges (non-perturbative corrections).
-
-The configuration space calculation at $\hbar^4$ is:
-\[c_{W^3} = \int_{\overline{C}_4(X)} \eta_{12} \wedge \eta_{23} \wedge \eta_{34} \wedge \eta_{14}\]
-
-This is related to the volume of a hyperbolic octahedron. The connection to 3-manifold topology becomes visible.
+The quantization of $W_3$ is fixed by the central charge and by the
+Jacobi identities for the singular OPE coefficients. The constants in
+the $W(z)W(w)$ OPE are not derived here from a global integral over
+\(\overline{C}_4(X)\). A configuration-space derivation requires a
+specified local graph representative, a propagator, and a proof that
+the resulting period equals the OPE coefficient after the chosen
+normalization.
 
 \subsubsection{Critical level and screening}
 
-At $c = -22/5$ (the $(2,5)$ minimal model, where the composite field coefficient $16/(22+5c)$ diverges), simplification occurs:
-\[W_3^{-22/5} \text{ bar complex} = \text{Free theory} \oplus \text{Screening operators}\]
-
-The configuration space integrals collapse:
-\[\int_{\overline{C}_n(X)}^{\text{crit}} \omega = \text{residue contributions only}\]
+At $c=-22/5$ the usual universal $W_3$ coefficient
+$16/(22+5c)$ has a pole, signalling a singular quotient rather than a
+free-theory collapse. Screening operators describe the quotient
+presentation. A residue-only configuration-space formula is not
+asserted here.
 
 \section{Genus corrections and modular forms}
 
 \subsection{Beyond genus zero}
 
-Kontsevich's formula is genus zero. For chiral algebras on higher genus curves, new structures emerge.
+Kontsevich's formula is a genus-$0$ local disk theorem. For chiral
+algebras on higher-genus curves, the additional structure is the
+modular Maurer--Cartan element and its clutching terms, not a binary
+star product obtained by integrating over every $\overline{\mathcal
+M}_{g,2}$.
 
-\begin{theorem}[Genus expansion; \ClaimStatusProvedHere]\label{thm:deformation-genus-expansion}
-The star product admits a genus expansion:
-\[a \star b = \sum_{g=0}^\infty \hbar^g \star^{(g)}(a,b)\]
-where $\star^{(g)}$ involves integration over $\overline{\mathcal{M}}_{g,2}$ (genus-$g$ surfaces with two marked points for the insertions $a$ and $b$). At genus~0, $\star^{(0)}$ recovers the Kontsevich star product on $\mathbb{P}^1$; for $g \geq 1$, $\star^{(g)}$ encodes corrections from genus-$g$ propagators.
+\begin{theorem}[Modular correction package; \ClaimStatusProvedHere]\label{thm:deformation-genus-expansion}
+Let $\Theta_{\cA}$ be the completed modular Maurer--Cartan element of a
+filtered chiral algebra in the regime of Theorem~D. Its connected
+stable-graph expansion has genus decomposition
+\[
+\Theta_{\cA}=\sum_{g\geq0}q_{\mathrm{gen}}^g\,\Theta_{\cA}^{(g)}.
+\]
+The genus-$0$ binary component is the local OPE deformation controlled
+by Kontsevich--Tamarkin formality. For $g\geq1$ the components
+\(\Theta_{\cA}^{(g)}\) are modular obstruction and amplitude classes.
+Their scalar non-separating projection is
+\[
+\operatorname{Tr}\bigl(\Theta_{\cA}^{(g)}\bigr)
+=\kappa(\cA)\lambda_g
+\quad\text{in the scalar channel of Theorem~D.}
+\]
+They are not, by themselves, a family of binary products
+\(\star^{(g)}\colon \cA\otimes\cA\to\cA\).
 \end{theorem}
 
 \begin{proof}
-By the modular operad decomposition (Theorem~\ref{thm:prism-higher-genus}), the bar complex of the quantized chiral algebra decomposes by genus: $\B(\cA_\hbar) = \bigoplus_{g \geq 0} \B^{(g)}(\cA_\hbar)$. The star product $a \star b$ is computed by the bar-cobar formalism applied to two insertions, and the genus-$g$ contribution is $\star^{(g)}(a,b) = \int_{\overline{\mathcal{M}}_{g,2}} \mathrm{ev}^*(\B^{(g)}_2(a \otimes b))$. The power $\hbar^g$ arises because the genus-$g$ contribution involves $g$ additional propagator insertions (each carrying a factor of~$\hbar$) beyond the tree-level term. At genus~0, $\star^{(0)}$ is the Kontsevich star product; for $g \geq 1$, $\star^{(g)}$ involves the genus-$g$ propagator and produces corrections controlled by modular forms of $\mathrm{Sp}(2g, \mathbb{Z})$.
+The modular bar construction is graded by stable graph genus. Applying
+this grading to the universal MC element gives the displayed
+decomposition. At genus~$0$, the binary disk component is the same
+local deformation problem treated in
+Theorem~\ref{thm:chiral-kontsevich}. For $g\geq1$, the modular
+differential contains clutching terms; those terms are operations in
+the modular convolution algebra, not binary multiplications on
+$\cA$ alone. The scalar trace of the non-separating component is the
+content of Theorem~D, hence gives $\kappa(\cA)\lambda_g$ in the scalar
+channel.
 \end{proof}
 
 \subsubsection{Genus 1: elliptic corrections}
@@ -550,43 +917,69 @@ On an elliptic curve $E_\tau$, the genus-1 propagator is:
 whose modular anomaly is controlled by $E_2(\tau)$.
 
 \emph{Modular invariance.}
-The quantization must be invariant under $\tau \mapsto \frac{a\tau+b}{c\tau+d}$. This forces:
-\[\kappa(\tau) = \kappa_0 E_2(\tau)\]
-where $E_2$ is the weight-2 Eisenstein series.
+The elliptic Green kernel is not modular as an ordinary function; its
+coordinate expression contains the quasi-modular Eisenstein series
+$E_2(\tau)$. This is a propagator anomaly. The level or modular
+characteristic $\kappa(\cA)$ is fixed by the algebra and does not
+become a function $\kappa_0E_2(\tau)$.
 
 \subsubsection{Higher genus: Siegel modular forms}
 
-At genus $g$, quantization involves integration over the Siegel upper half-space $\mathbb{H}_g$ parametrizing period matrices:
-\[\star^{(g)}_n(a,b) = \int_{\mathbb{H}_g} \int_{\overline{C}_n(X_g)} (\cdots) \, d\mu_g\]
+At genus $g$, a global amplitude may be expressed using period
+matrices and Siegel modular forms after choosing a theory, a
+propagator, and a measure. The abstract chiral deformation statement
+only supplies stable-graph cochains and their modular boundary
+relations. A formula
+\[
+w_\Gamma^{(g)}=\sum_k c_k(\Gamma)E_{2k}^{(g)}(\Omega)
+\]
+is therefore theory-dependent and is not a theorem of chiral
+deformation quantization alone.
 
-The weights are \emph{Siegel modular forms}:
-\[w_\Gamma^{(g)} = \sum_{k=0}^\infty c_k(\Gamma) \cdot E_{2k}^{(g)}(\Omega)\]
+\subsection{Perturbative genus filtration}
 
-\subsection{Physical interpretation}
-
-Genus equals loop order in string theory: $g=0$ is tree level (classical), $g=1$ is one loop (first quantum correction), and $g \geq 2$ gives multi-loop (higher quantum corrections).
-
-The appearance of modular forms reflects the modular invariance of string amplitudes.
+In perturbative field-theory language the genus of a stable graph is a
+loop-counting index. The mathematical object in this chapter is the
+genus grading of the modular Maurer--Cartan element. Modular forms
+enter only after a theory, a propagator, and a measure have been fixed;
+the abstract chiral deformation problem supplies the stable-graph
+relations, not a universal string amplitude.
 
 \section{Formality and higher structures}
 
 \subsection{\texorpdfstring{$L_\infty$ formality}{L- formality}}
 
-\begin{theorem}[Chiral formality \cite{Tamarkin00, FG12}; \ClaimStatusProvedElsewhere]\label{thm:chiral-formality}
+\begin{theorem}[Local \texorpdfstring{$\Etwo$}{E2} formality input \cite{Tamarkin00, FG12}; \ClaimStatusProvedElsewhere]\label{thm:chiral-formality}
 \index{Kontsevich formality|textbf}
 \index{formality!chiral}
-There exists an $L_\infty$ quasi-isomorphism:
-\[\mathcal{F}: \mathcal{T}_{\text{poly}}^{\text{ch}}(X) \xrightarrow{\simeq} C^*_{\text{ch}}(\mathcal{T}_X)\]
-where:
+On a formal disk, the $\Etwo$ formality theorem gives an
+$L_\infty$ quasi-isomorphism between local polyvector fields and local
+Hochschild cochains:
+\[
+\mathcal{F}_{D}\colon
+\mathcal{T}_{\mathrm{poly}}(D)
+\xrightarrow{\simeq}
+C^\bullet_{\mathrm{Hoch}}(\mathcal O_D,\mathcal O_D).
+\]
+For a coisson algebra on a curve, this is the local input to the
+chiral deformation complex after the geometric--operadic bar
+comparison. It does not assert an all-genus global formality theorem on
+\(X\) or on \(\overline{\mathcal M}_{g,n}\).
+Here:
 \begin{itemize}
-\item Left side: Chiral polyvector fields (classical)
-\item Right side: Chiral Hochschild cochains (quantum)
+\item the left side is the local classical polyvector complex;
+\item the right side is the local Hochschild cochain complex whose
+ chiral analogue is $\ChirHoch^\bullet$ after descent.
 \end{itemize}
-This follows from the formality of the $E_2$-operad (Kontsevich, Tamarkin \cite{Tamarkin00}) via the factorization algebra formalism of Francis--Gaitsgory. See also Dolgushev--Tamarkin--Tsygan \cite{DTT09} for a systematic treatment of formality for Hochschild complexes.
+This follows from the formality of the $\Etwo$-operad
+(Kontsevich, Tamarkin \cite{Tamarkin00}) and its factorization-algebra
+formulation. See also Dolgushev--Tamarkin--Tsygan \cite{DTT09} for
+formality of Hochschild complexes.
 \end{theorem}
 
-The formality map $\mathcal{F}$ is given by Kontsevich's graph integrals:
-\[\mathcal{F}_n = \sum_{\Gamma \in \mathcal{G}_n} w_\Gamma \cdot U_\Gamma\]
+In Kontsevich's representative, the local formality map is given by
+upper-half-plane graph integrals:
+\[\mathcal{F}_{D,n} = \sum_{\Gamma \in \mathcal{G}_n} w_\Gamma \cdot U_\Gamma.\]
 
 \subsection{\texorpdfstring{$A_\infty$ structure from configuration spaces}{A- structure from configuration spaces}}
 
@@ -595,55 +988,60 @@ The higher operations $m_k$ in the $A_\infty$ structure arise geometrically:
 \begin{proposition}[\texorpdfstring{$A_\infty$}{A-infinity} operations \cite{Kon03}; \ClaimStatusProvedElsewhere]
 \label{prop:ainfty-operations-config}
 \[m_k: \mathcal{A}^{\otimes k} \to \mathcal{A}\]
-is given by:
-\[m_k(a_1, \ldots, a_k) = \sum_{\Gamma \in \mathcal{G}_k^{\text{tree}}} w_\Gamma \int_{\overline{C}_k(X)} B_\Gamma(a_1, \ldots, a_k) \wedge \omega_\Gamma\]
+is locally represented on a disk by:
+\[
+m_k(a_1,\ldots,a_k)=
+\sum_{\Gamma\in\mathcal G_k^{\mathrm{tree}}}
+w_\Gamma\,B_\Gamma(a_1,\ldots,a_k).
+\]
+The global chiral operation is obtained only after coordinate descent
+and obstruction control.
 \end{proposition}
 
 The $A_\infty$ relations $\sum_{r+s+t=n} (-1)^{rs+t} m_{r+1+t}(\mathrm{id}^{\otimes r} \otimes m_s \otimes \mathrm{id}^{\otimes t}) = 0$ follow from Stokes' theorem:
-\[\int_{\partial \overline{C}_k(X)} = 0\]
+\[\int_{\partial \overline{C}_{k,2}(\mathbb H)} = 0\]
 
 \subsection{Relation to bar-cobar}
 
-\begin{theorem}[Master identity \cite{Kon03}; \ClaimStatusProvedElsewhere]\label{thm:master-identity-deformation}
-The chiral Hochschild cohomology of the classical chiral algebra controls quantization:
+\begin{theorem}[Deformation-complex dictionary \cite{Kon03}; \ClaimStatusProvedElsewhere]\label{thm:master-identity-deformation}
+The completed shifted chiral deformation complex of the classical
+chiral algebra controls quantization:
 \[
-\ChirHoch^*(\mathcal{A}_{\mathrm{cl}})[\hbar]
+\Def_{\mathrm{ch}}(\mathcal{A}_{\mathrm{cl}})[[\hbar]]
 \;\leftrightarrow\;
-\text{Deformations of } \mathcal{A}_{\mathrm{cl}}
+\text{filtered deformations of } \mathcal{A}_{\mathrm{cl}}.
 \]
 
-The dictionary between cohomological degree and deformation theory is:
+The shifted-degree dictionary is:
 \begin{center}
 \begin{tabular}{|c|c|c|}
 \hline
-Degree & Cohomology & Deformation Theory \\
+Degree & Complex & Deformation theory \\
 \hline
-$H^0$ & Center & Invariants (scalar deformations) \\
-$H^1$ & Outer derivations & Infinitesimal automorphisms \\
-$H^2$ & Deformations / Obstructions & First-order quantizations \\
-$H^3$ & Higher obstructions & Obstructions to extending deformations \\
+$H^0$ & shifted chiral Hochschild & infinitesimal stabilizers \\
+$H^1$ & shifted chiral Hochschild & first-order deformations \\
+$H^2$ & shifted chiral Hochschild & obstruction classes \\
+$\ChirHoch^3$ & unshifted convention & primary obstruction classes \\
 \hline
 \end{tabular}
 \end{center}
 \end{theorem}
 
 \begin{remark}[Provenance]\label{rem:master-identity-scope}
-At genus~$0$, this is the classical deformation theory of Gerstenhaber
-\cite{Ger64}: $H^0$ is the center, $H^1$ classifies outer derivations,
-$H^2$ classifies first-order deformations, and $H^3$ contains the
-primary obstructions. The chiral extension follows from the formality
-theorem (Theorem~\ref{thm:chiral-formality}, \ClaimStatusProvedElsewhere,
-Francis--Gaitsgory \cite{FG12}) combined with the Maurer--Cartan formalism: the
-$L_\infty$ quasi-isomorphism of Theorem~\ref{thm:chiral-formality}
-identifies the chiral deformation complex with its cohomology, so
-the classical Gerstenhaber dictionary lifts verbatim to the chiral
-setting. The bar-cobar framework of this monograph
-(Theorem~\ref{thm:geometric-equals-operadic-bar}) provides the
-geometric realization: the bar complex $\barBgeom(\mathcal{A}_{\mathrm{cl}})$
-computes $\ChirHoch^*$ via configuration space integrals.
+At genus~$0$, this is Gerstenhaber's deformation theory
+\cite{Ger64}, with the usual unshifted convention
+$\mathrm{HH}^2=$ first-order deformations and
+$\mathrm{HH}^3=$ primary obstructions. The local chiral input is
+Theorem~\ref{thm:chiral-formality}; the global chiral deformation
+complex is obtained through the geometric bar comparison
+(Theorem~\ref{thm:geometric-equals-operadic-bar}) and descent on the
+curve. Thus the Gerstenhaber dictionary transfers locally and then
+becomes a statement about the completed chiral deformation complex, not
+about a bare cohomology group alone.
 \end{remark}
 
-This explains why the bar-cobar construction controls quantization.
+This is the reason the bar-cobar construction controls the
+Maurer--Cartan deformation problem.
 
 \section{\texorpdfstring{Twisted deformation and curved $A_\infty$}{Twisted deformation and curved A-}}
 
@@ -652,21 +1050,40 @@ This explains why the bar-cobar construction controls quantization.
 Not all chiral algebras admit a flat quantization. Some require \emph{curvature}.
 
 \begin{definition}[Curved chiral algebra]
-A curved chiral algebra (cf.\ Kontsevich--Soibelman \cite{KontsevichSoibelman}) is a triple $(\mathcal{A}, m, \theta)$ where:
+A curved chiral \(A_\infty\)-algebra
+(cf.\ Kontsevich--Soibelman \cite{KontsevichSoibelman}) is a chiral
+object \(\mathcal A\) with operations \(m=\{m_k\}_{k\geq0}\)
+satisfying the curved Stasheff identities, where \(m_0(1)\in\mathcal A\)
+is the curvature term. A degree-one element \(\theta\) is instead a
+twisting element if it solves the Maurer--Cartan equation
+\[
+\sum_{k\geq0}\frac1{k!}m_k(\theta,\ldots,\theta)=0.
+\]
+Twisting by such a \(\theta\) produces an uncurved or differently
+curved presentation according to the resulting \(m_0^\theta\).
+Equivalently:
 \begin{itemize}
 \item $\mathcal{A}$ is a sheaf of vector spaces
-\item $m = \{m_k\}_{k \geq 0}$ are higher products
-\item $\theta \in \mathcal{A}$ is the \emph{curvature element} satisfying:
-\[\sum_{k=0}^\infty m_k(\theta, \ldots, \theta) = 0\]
+\item $m = \{m_k\}_{k \geq 0}$ are higher chiral products
+\item $m_0(1)$ is the curvature; a separate element~$\theta$ is a
+ Maurer--Cartan twist when the displayed equation holds.
 \end{itemize}
 \end{definition}
 
 \subsection{Example: $\mathcal{W}$-algebras with background charge}
 
-Chiral algebras with background charges require curvature. For a rank-one free boson with background charge $Q$:
+Chiral algebras with background charges can carry curved or twisted
+presentations. For a rank-one free boson with background charge $Q$:
 \[\theta = Q \cdot J\]
-where $Q$ is related to the central charge by:
-\[c = 1 + 6Q^2\]
+in the Liouville normalization used for this example,
+\(Q\) is related to the central charge by
+\[
+c = 1 + 6Q^2.
+\]
+Feigin--Fuchs conventions may absorb a sign or a factor of~$2$ into
+the definition of \(Q\); the deformation statement below uses only
+the twist of the stress tensor, not a convention-free numerical value
+of \(Q\).
 
 The quantization involves:
 \[m_0 = 0 \quad (\text{flat})\]
@@ -675,61 +1092,84 @@ The quantization involves:
 
 \subsection{Configuration space interpretation}
 
-Curvature arises from:
-\[\theta = \lim_{z_1, \ldots, z_k \to \infty} \int_{\overline{C}_k(X) \setminus C_k(X)} \omega_{\text{boundary}}\]
-
-This is integration over the \emph{boundary} of configuration space, capturing \emph{infrared divergences}.
+In the modular bar model, curvature is a boundary contribution of the
+compactified configuration or stable-curve space. In local coordinates
+one may represent it by a boundary residue, but no universal formula
+\[
+\theta=\lim_{z_1,\ldots,z_k\to\infty}
+\int_{\overline{C}_k(X)\setminus C_k(X)}\omega_{\mathrm{boundary}}
+\]
+is asserted without a chosen propagator and compactification.
 
 \section{Relation to physics}
 
-\subsection{Worldsheet perspective}
+\subsection{Perturbative dictionary}
 
-In string theory:
-\begin{itemize}
-\item Configuration space $\overline{C}_n(X)$ = Moduli of vertex operator insertions
-\item Logarithmic forms $\eta_{ij}$ = Off-shell Green's functions
-\item Integration $\int \omega$ = Computing Feynman amplitudes
-\item Quantization parameter $\hbar$ = String coupling $g_s$
-\end{itemize}
+The field-theoretic reading is heuristic unless a specific theory is
+named. In a chosen perturbative model, compactified configuration spaces
+parametrize collision patterns of insertions, propagators provide
+representatives of the logarithmic or angle forms, and Feynman
+amplitudes are integrals over chains in those compactifications. The
+formal parameter \(\hbar\) records deformation order. Identifying it
+with a physical coupling constant is extra structure; the genus
+coupling is denoted \(g_s\) below.
 
 \subsection{Feynman diagrams revisited}
 
-Each graph $\Gamma$ in Kontsevich's formula is a Feynman diagram: vertices are field insertions, edges are propagators, and the weight $w_\Gamma$ is the Feynman integral.
+Each graph \(\Gamma\) in Kontsevich's formula has the shape of a
+Feynman diagram: vertices carry copies of the Poisson tensor, edges
+differentiate the target factors, and \(w_\Gamma\) is the corresponding
+configuration-space period. Cattaneo--Felder identify this structure
+with the perturbative expansion of the Poisson sigma model. The present
+chapter uses only the resulting formality identities.
 
-The configuration space integrals underlying Kontsevich's formality theorem are the mathematical counterpart of path integral amplitudes.
+\subsection{Bulk-boundary comparison}
 
-\subsection{AdS/CFT and holography}
+The bar-cobar construction gives boundary deformation data. A
+bulk-boundary theorem requires an independent open/closed field theory
+and a comparison map from physical bulk observables to the
+cochain-level chiral closed sector.
 
-The bar-cobar duality admits a conjectural holographic interpretation:
-
-\begin{conjecture}[Holographic duality; \ClaimStatusConjectured]\label{conj:deformation-holographic}
-\textup{(}LOCAL: notation\textup{})
-\[\text{Bulk theory on } AdS_3 \longleftrightarrow \text{Boundary chiral algebra on } S^1\]
-
-The boundary genus expansion should model the bulk theory:
-\[Z_{\text{bulk}}[AdS_3] = \exp\left(\sum_{g=0}^\infty \hbar^{2g-2} F_g\right)\]
-where $F_g$ are free energies computed via configuration space integrals.
-(Contributing to Conjecture~\ref{conj:master-bv-brst}.)
+\begin{conjecture}[Bulk-boundary deformation comparison; \ClaimStatusConjectured]\label{conj:deformation-holographic}
+Let a perturbative three-dimensional topological or
+holomorphic-topological field theory have boundary chiral algebra
+\(\cA\), and suppose it supplies a named open/closed quasi-isomorphism
+\[
+\mathsf{OC}_{\cT}\colon
+\mathrm{Obs}^{\mathrm{bulk}}_{\cT}
+\xrightarrow{\;\sim\;}
+Z^{\mathrm{der}}_{\mathrm{ch}}(\cA).
+\]
+Then the
+scalar genus expansion of the bulk partition function maps to the
+scalar projections of the modular Maurer--Cartan element
+\(\Theta_\cA\):
+\[
+\log Z_{\mathrm{bulk}}
+\longmapsto
+\sum_{g\geq0}g_s^{2g-2}
+\operatorname{Tr}\bigl(\Theta_\cA^{(g)}\bigr).
+\]
+This is a conjecture about \(\mathsf{OC}_{\cT}\), not a
+consequence of Kontsevich formality or bar-cobar inversion alone.
 \end{conjecture}
 
-\begin{remark}[Scope and the bar/center distinction]
-\textup{(}LOCAL: notation\textup{})
-The mathematical content (that the genus expansion $\sum_g \hbar^{2g-2} F_g$ is computed via configuration space integrals on the modular convolution algebra) is established in the preceding sections. The interpretation as a bulk-boundary holographic duality in $\mathrm{AdS}_3/\mathrm{CFT}_2$ requires physical input (Chern--Simons/WZW correspondence, bulk reconstruction) beyond the scope of this monograph.
-
-\emph{Clarification on bar vs.\ center.}
+\begin{remark}[Bar and centre]
+The mathematical content is the modular Maurer--Cartan expansion in
+the modular convolution algebra. The comparison with a bulk path
+integral requires a named field theory and an open/closed
+quasi-isomorphism \(\mathsf{OC}_{\cT}\).
 The genus expansion $F_g$ is a projection of the universal MC
 element $\Theta_\cA \in \MC(\gAmod)$, which lives in the
 \emph{modular convolution algebra}, not in the bar complex itself.
 The bar complex $\barB(\cA)$ classifies twisting morphisms
-(boundary deformation data); the \emph{derived center}
+(boundary deformation data); the \emph{derived centre}
 $Z_{\mathrm{der}}(\cA) \simeq C^\bullet_{\mathrm{ch}}(\cA,\cA)$
-is the bulk observable algebra
+is the cochain-level closed-sector algebra
 (Theorem~\ref{thm:operadic-center-hochschild}).
-The genus expansion records the scalar projections of $\Theta_\cA$
-and should be compared with bulk amplitudes via the center, not
-directly via the bar complex.
-
-\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
+The genus expansion records the scalar projections of $\Theta_\cA$.
+Comparison with physical bulk amplitudes requires an open/closed
+quasi-isomorphism \(\mathsf{OC}_{\cT}\) landing in the derived centre.
 \end{remark}
 
 \section{Obstructions and anomalies}
@@ -740,97 +1180,141 @@ Not every coisson algebra admits a quantization.
 
 \begin{theorem}[Obstruction theory \cite{Kon03}; \ClaimStatusProvedElsewhere]
 \label{thm:obstruction-quantization}
-The obstruction to quantizing $\mathcal{A}_{\text{cl}}$ lies in:
-\[\text{Obs}(\mathcal{A}_{\text{cl}}) \in H^2(\bar{B}(\mathcal{A}_{\text{cl}}))\]
+The obstruction to extending a partial quantization of
+$\mathcal{A}_{\text{cl}}$ lies in:
+\[
+\operatorname{Obs}(\mathcal{A}_{\text{cl}})
+\in H^2\bigl(\Def_{\mathrm{ch}}(\mathcal{A}_{\text{cl}})\bigr),
+\]
+where the deformation complex is shifted as a dg Lie algebra.
+Equivalently, in unshifted chiral Hochschild notation this is a
+class in $\ChirHoch^3(\mathcal A_{\mathrm{cl}},\mathcal A_{\mathrm{cl}})$.
 
-If $H^2 = 0$, quantization exists. If $H^2 \neq 0$, obstructions may prevent quantization.
+If this shifted $H^2$ vanishes through the required order, the partial
+quantization extends through that order. If it is nonzero, the
+obstruction class may still vanish for a particular partial
+quantization.
 \end{theorem}
 
 \subsection{Example: current algebra with anomaly}
 
-Consider $\mathfrak{g}[z]$ with an \emph{inconsistent} level $k$.
-
-At $\hbar^2$, the associativity condition (Jacobi identity for the star product) produces an obstruction class in $H^2(\mathfrak{g}, S^2\mathfrak{g})$. For semisimple $\mathfrak{g}$, this cohomology vanishes, so the obstruction is trivial and quantization proceeds to all orders (this is the content of Kontsevich's formality theorem applied to the current algebra).
-
-When the obstruction is non-trivial (e.g., for non-semisimple $\mathfrak{g}$ or in the presence of anomalies), the quantization may fail:
-\[\text{obs} \in H^2(\mathfrak{g}, S^2\mathfrak{g})\]
-
-This is the algebraic origin of the \emph{quantum anomaly}.
+Consider $\mathfrak{g}[z]$ with a bilinear form
+$B\colon\mathfrak g\otimes\mathfrak g\to k$ used as the level. The
+affine OPE is associative only when $B$ is invariant:
+\[
+B([x,y],z)=B(x,[y,z]).
+\]
+Failure of invariance produces the Chevalley--Eilenberg $3$-cocycle
+\[
+\omega_B(x,y,z)=B([x,y],z)+B([y,z],x)+B([z,x],y),
+\]
+which is the obstruction to the central extension. For semisimple
+$\mathfrak g$, invariant symmetric forms are scalar combinations of
+the simple factors' Killing forms, and every such choice gives a
+consistent affine level.
 
 \subsection{Configuration space perspective}
 
-Anomalies arise when:
+In the configuration-space model, an anomaly is detected when Stokes
+cancellation leaves a residual boundary term:
 \[\int_{\partial \overline{C}_n(X)} \omega \neq 0\]
 
-The boundary integral is non-zero due to collision singularities (UV divergences), points escaping to infinity (IR divergences), and the topology of $X$ (global anomalies).
+The residual term may come from collision residues, coordinate-descent
+failure, or non-separating clutching. It is the image of the obstruction
+class under the geometric realization of
+\(\Def_{\mathrm{ch}}(\mathcal A_{\mathrm{cl}})\).
 
 \section{Relation to Beilinson--Drinfeld and literature}
 
 \subsection{Comparison with Beilinson--Drinfeld}
 
-Beilinson--Drinfeld \cite{BD04} develop chiral algebras axiomatically via $\mathcal{D}$-modules. The present work contributes:
+Beilinson--Drinfeld \cite{BD04} develop chiral algebras axiomatically
+via $\mathcal{D}$-modules. The bar-cobar comparison used here replaces
+the local pieces of those axioms by the following calculational
+surfaces:
 
 \begin{center}
 \begin{tabular}{|l|l|}
 \hline
 \textbf{Beilinson--Drinfeld} & \textbf{Bar-Cobar Approach} \\
 \hline
-Abstract $\mathcal{D}$-modules & Concrete configuration spaces \\
-Factorization axioms & Geometric integrals \\
-Local-to-global principles & Explicit bar-cobar formulas \\
-Existence proofs & Constructive algorithms \\
+Chiral operations in $\mathcal D$-modules & Residue operations on local configuration spaces \\
+Factorization axioms & Boundary factorization identities \\
+Local-to-global descent & Aut$(\mathcal O)$-equivariance and obstruction classes \\
+Existence theorem & Maurer--Cartan lifting problem \\
 \hline
 \end{tabular}
 \end{center}
 
-The factorization algebra framework of Costello--Gwilliam provides a rigorous formulation in which the Kontsevich star product arises as the local-to-global assembly map.
+The factorization algebra framework of Costello--Gwilliam provides a
+rigorous local-to-global language for such constructions. Kontsevich's
+star product supplies the local disk model; assembling a global chiral
+quantization still requires descent and obstruction control.
 
-\subsection{Relation to quadratic duality paper}
+\subsection{Relation to quadratic duality}
 
-The paper on quadratic duality for chiral algebras \cite{GLZ22} focuses on Koszul duality for quadratic operads. The deformation quantization framework of this monograph generalizes from quadratic to arbitrary (non-quadratic via curvature), geometrizes the duality via bar-cobar configuration spaces, and provides explicit formulas for dualizing.
+The quadratic-duality theorem for chiral algebras \cite{GLZ22}
+works in the quadratic operadic lane. The deformation-quantization
+construction used here works with a filtered curved bar coalgebra.
+Its chain object is \(B(\mathcal A_{\mathrm{cl}})\); its intrinsic
+dual coalgebra is \(A^{\mathrm i}=H^\bullet B(\mathcal A_{\mathrm{cl}})\)
+when the Koszul hypotheses hold; the algebra \(A^!\) appears only
+after Verdier duality on \(A^{\mathrm i}\). The cobar counit
+\(\Omega B(\mathcal A_{\mathrm{cl}})\to\mathcal A_{\mathrm{cl}}\)
+is the reconstruction map, not the dualizing operation.
 
 \subsection{Connection to Ayala--Francis}
 
 Ayala--Francis \cite{AF15} develop factorization homology. The bar-cobar perspective:
 
-\[\int_X \mathcal{A} = \text{Kontsevich quantization of } \mathcal{A}_{\text{cl}}\]
+\[
+\int_X \mathcal{A}_\hbar
+= \text{factorization homology of the quantized chiral algebra}.
+\]
 
-Factorization homology \emph{is} deformation quantization.
+Factorization homology is therefore the global invariant attached to a
+deformed factorization algebra. It is not the deformation-quantization
+functor itself.
 
 \section{Connection to the main theorems}
 
 \begin{remark}[Main theorems for deformation quantization]
 \label{rem:deformation-three-theorems}
 \index{main theorems!deformation quantization}
-The chiral Kontsevich formula realizes Theorem~A
+The local Kontsevich--chiral comparison realizes the genus-$0$ disk
+face of Theorem~A
 (Theorem~\ref{thm:bar-cobar-isomorphism-main})
 in the deformation-quantization setting:
 the bar construction on $\mathcal{A}_{\mathrm{cl}}$ via configuration
-space integrals produces the star product $\star_\hbar$ as the
-bar-cobar composite (Theorem~\ref{thm:chiral-kontsevich}).
+space residues produces the local Maurer--Cartan coefficients whose
+cobar reconstruction is the filtered OPE
+(Theorem~\ref{thm:chiral-kontsevich}).
 The bridge from Kontsevich weights to chiral propagators is
 provided by the geometric--operadic comparison
 (Theorem~\ref{thm:geometric-equals-operadic-bar}).
-The formality theorem (Theorem~\ref{thm:chiral-formality}) shows
-that the bar-cobar adjunction, restricted to the formal disk at genus~$0$, recovers classical Koszul duality, in agreement with the Francis--Gaitsgory formality
-result.
+The local formality theorem (Theorem~\ref{thm:chiral-formality}) shows
+that, on the formal disk at genus~$0$, the deformation complex is
+identified with its polyvector model. It does not assert global
+higher-genus formality.
 
 Theorems~B and~C (Theorems~\ref{thm:higher-genus-inversion}
 and~\ref{thm:quantum-complementarity-main}) address the
-higher-genus extension: the open question of higher-genus formality
-(\S\ref{sec:open-questions} below) is precisely the question of
-whether the genus-$g$ bar-cobar inversion of Theorem~B
-preserves the formality structure.
+higher-genus extension. The proof obligation in
+\S\ref{sec:open-questions} is the existence of a log-FM modular
+\(L_\infty\) comparison whose finite-window quotients are compatible
+with Theorem~B's completed bar-cobar inversion and Theorem~C's
+Verdier complementarity. Bar-cobar inversion reconstructs the boundary
+algebra; it does not by itself transport the polyvector formality model
+or define the Koszul dual algebra.
 \end{remark}
 
 \section{Explicit Kontsevich weights via configuration space integrals}
 \label{sec:kontsevich-weights-explicit}
 \index{Kontsevich!configuration space weights}
 
-We compute the Kontsevich weights $w_\Gamma$ for all graphs with
-$\leq 4$ interior vertices, relating each weight to a configuration
-space integral on $\overline{C}_n(\mathfrak{H})$ (the FM
-compactification of the upper half-plane).
+We record the low-order Kontsevich weights needed for the comparison
+with the chiral bar differential, and separate them from the global
+curve residues used elsewhere in this chapter.
 
 \subsection{Weight computation: two interior vertices}
 \label{subsec:kontsevich-2vertex}
@@ -839,69 +1323,28 @@ compactification of the upper half-plane).
 \label{comp:kontsevich-2vertex}
 \index{Kontsevich!two-vertex weights}
 
-At order $\hbar^2$, there are exactly 3 admissible graphs on 2
-interior vertices (vertices $z_1, z_2 \in \mathfrak{H}$) and 2
-boundary vertices ($q_1, q_2 \in \bR$). Each interior vertex
-has exactly 2 outgoing edges.
-
-\emph{Graph $\Gamma_1$: parallel edges $z_1 \rightrightarrows q_1$,
-$z_2 \rightrightarrows q_2$.}
-\begin{align*}
-w_{\Gamma_1} &= \frac{1}{(2\pi)^4}
-\int_{C_2(\mathfrak{H})} d\phi(z_1,q_1) \wedge d\phi(z_1,q_1)
-\wedge d\phi(z_2,q_2) \wedge d\phi(z_2,q_2)
-\end{align*}
-where $\phi(z,q) = \arg(z-q) - \arg(\bar{z}-q)$ is the angle
-function on $\mathfrak{H} \times \bR$. Since each factor
-$d\phi(z_i,q_i) \wedge d\phi(z_i,q_i)$ is a 2-form on
-$\mathfrak{H}$ depending only on $z_i$, the integral factorizes:
+At order $\hbar^2$, the normalized Kontsevich formula contains two
+types of terms. With the convention that the first-order coefficient is
+\(\frac{\hbar}{2}\{a,b\}\), the second-order contribution is
 \[
-w_{\Gamma_1} = \left(\frac{1}{(2\pi)^2}
-\int_\mathfrak{H} d\phi(z,q_1)^2\right)^2
-= \left(\frac{1}{2}\right)^2 = \frac{1}{4}
+\begin{aligned}
+a\star_2 b
+&=
+\frac{1}{8}\pi^{ij}\pi^{kl}
+\partial_i\partial_k a\,\partial_j\partial_l b \\
+&\quad+
+\frac{1}{12}\pi^{ij}(\partial_j\pi^{kl})
+\bigl(\partial_i\partial_k a\,\partial_l b
+-\partial_k a\,\partial_i\partial_l b\bigr).
+\end{aligned}
 \]
-However, $|\operatorname{Aut}(\Gamma_1)| = 4$ (the two edges at
-each vertex are unordered), so the Kontsevich coefficient is
-$w_{\Gamma_1}/|\operatorname{Aut}| = 1/4 \cdot 1/4 = 1/16$.
-
-\emph{But} Graph~$\Gamma_1$ is the \emph{disconnected}
-graph (no edge from $z_1$ to $z_2$ or vice versa), which contributes
-the iterated Poisson bracket $\{a,b\} \cdot \{c,d\}$, not a new
-structure. The connected graphs are $\Gamma_2$ (chain) and
-$\Gamma_3$ (parallel), as displayed in
-\S\ref{subsec:kontsevich-2vertex}.
-
-\emph{Graph $\Gamma_2$: chain $z_1 \to z_2 \to$ (both to boundary).}
-This graph has edges $z_1 \to z_2$, $z_1 \to q_1$, $z_2 \to q_1$,
-$z_2 \to q_2$. The weight integral is:
-\begin{align*}
-w_{\Gamma_2} &= \frac{1}{(2\pi)^4}
-\int_{C_2(\mathfrak{H})}
-d\phi(z_1,z_2) \wedge d\phi(z_1,q_1)
-\wedge d\phi(z_2,q_1) \wedge d\phi(z_2,q_2)
-\end{align*}
-This integral requires the explicit angle form. Writing $z_j = x_j + iy_j$:
-\[
-\phi(z,q) = \frac{1}{\pi}\operatorname{Arg}\frac{z-q}{\bar{z}-q}
-= \frac{1}{\pi}\arctan\frac{2y(x-q)}{(x-q)^2+y^2-y^2}
-\]
-Kontsevich's computation~\cite{Kon03} evaluates this via
-iterated fiber integrals on $\overline{C}_2(\mathfrak{H})$:
-\[
-w_{\Gamma_2} = \frac{1}{6}, \qquad
-|\operatorname{Aut}(\Gamma_2)| = 2, \qquad
-\frac{w_{\Gamma_2}}{|\operatorname{Aut}|} = \frac{1}{12}
-\]
-
-\emph{Graph $\Gamma_3$: parallel edges $z_1 \rightrightarrows q_1$,
-$z_1 \rightrightarrows q_2$ with double edge $z_2 \to q_2$,
-$z_2 \to z_1$.}
-By the same method:
-\[
-w_{\Gamma_3} = \frac{1}{4}, \qquad
-|\operatorname{Aut}(\Gamma_3)| = 2, \qquad
-\frac{w_{\Gamma_3}}{|\operatorname{Aut}|} = \frac{1}{8}
-\]
+The first coefficient comes from the graph with two independent
+Poisson vertices pointing to the two boundary insertions. The second
+coefficient comes from the two chain graphs with one internal edge. No
+term is obtained by wedging a one-form with itself:
+\(d\phi\wedge d\phi=0\). This is the first check that the
+configuration-space formula must use Kontsevich's ordered edge forms,
+not an ad hoc product of identical logarithmic forms.
 \end{computation}
 
 \subsection{Weight computation: three interior vertices}
@@ -917,22 +1360,38 @@ each directed to other interior vertices or to boundary vertices
 $q_1, q_2 \in \bR$.
 
 \emph{Graph count.}
-The total number of labeled admissible graphs is 120 (each vertex
-chooses 2 targets from $\{z_1, z_2, z_3, q_1, q_2\}
-\setminus \{z_i\}$, giving $\binom{4}{2}^3 = 216$ candidates,
-minus the 96 with a vertex sending both edges to the same target).
-After accounting for automorphisms and removing graphs with
-``short loops'' (an edge from $z_i$ to itself is inadmissible),
-there are \emph{15 distinct isomorphism classes} of connected graphs.
+For each internal vertex \(z_i\), the allowed targets are the four
+vertices
+\[
+\{z_1,z_2,z_3,q_1,q_2\}\setminus\{z_i\}.
+\]
+Kontsevich's ordered-edge convention with two distinct outgoing edges
+therefore gives \(4\cdot 3=12\) choices at each internal vertex, hence
+\[
+12^3=1728
+\]
+labelled ordered graphs before quotienting by graph automorphisms or
+discarding disconnected pieces. If the order of the two outgoing edges
+at each source is forgotten, the corresponding target-assignment count
+is
+\[
+\binom42^3=216.
+\]
+These two numbers belong to different graph conventions. The
+associativity argument below uses the ordered-edge Kontsevich
+convention; it does not require an isomorphism-class table.
 
 \emph{Weight cancellation.}
-Of these 15 graphs, the associativity identity at $\hbar^3$ reads:
+In the ordered-edge convention, the associativity identity at
+$\hbar^3$ reads:
 \begin{equation}\label{eq:hbar3-assoc}
-\sum_{i=1}^{15}
-\frac{w_{\Gamma_i}}{|\operatorname{Aut}(\Gamma_i)|}
-\bigl(B_{\Gamma_i}(a \otimes b, c)
-- B_{\Gamma_i}(a, b \otimes c)\bigr) = 0
+\sum_{\Gamma\in\mathcal G_{3,2}^{\mathrm{adm}}}
+\epsilon_\Gamma w_\Gamma
+\bigl(B_{\Gamma}(a \otimes b, c)
+- B_{\Gamma}(a, b \otimes c)\bigr) = 0,
 \end{equation}
+where \(\epsilon_\Gamma\) records the orientation and symmetry
+convention for the chosen ordered-edge model.
 This is verified by Stokes' theorem on $\overline{C}_3(\mathfrak{H})$
 (Theorem~\ref{thm:stokes-config}): the boundary of
 $\overline{C}_3(\mathfrak{H})$ has 5 codimension-1 strata
@@ -940,47 +1399,33 @@ $\overline{C}_3(\mathfrak{H})$ has 5 codimension-1 strata
 and the integral of $d(\omega_\Gamma)$ over the interior vanishes.
 
 \emph{Individual weights.}
-The nonzero weights at $\hbar^3$ (computed by Kontsevich and
-verified by Arnal--Manchon--Masmoudi):
-\begin{center}
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{l|ccc}
-Graph type & $w_\Gamma$ & $|\operatorname{Aut}|$ &
-$w_\Gamma/|\operatorname{Aut}|$ \\
-\hline
-Wheel $W_3$ & $1/6$ & $6$ & $1/36$ \\
-Chain $C_{3,1}$ & $1/8$ & $2$ & $1/16$ \\
-Chain $C_{3,2}$ & $1/24$ & $1$ & $1/24$ \\
-Fork $F_3$ & $1/12$ & $2$ & $1/24$ \\
-Linear $L_3$ & $1/48$ & $1$ & $1/48$
-\end{tabular}
-\end{center}
-The remaining 10 graphs either vanish or are obtained from the above
-by orientation reversal. All weights are rational multiples of
-$1/(2\pi)^6$ before normalization.
+This chapter does not use a numerical table of individual
+\(\hbar^3\) graph weights. Such a table is meaningful only after a
+specific graph convention, ordering convention, and associator gauge
+have been fixed. The load-bearing statement here is the Stokes
+cancellation~\eqref{eq:hbar3-assoc}, together with the local
+comparison to the chiral bar differential.
 \end{computation}
 
-\begin{proposition}[Configuration space weights and MZVs \cite{Kon03};
+\begin{proposition}[Configuration space periods and associator coefficients \cite{Kon03};
 \ClaimStatusProvedElsewhere]
 \label{prop:kontsevich-mzv}
 \index{multiple zeta values!Kontsevich weights}
-At order $\hbar^n$ with $n \geq 4$, the Kontsevich weights
-$w_\Gamma$ involve \emph{multiple zeta values}
-(MZVs) $\zeta(s_1, \ldots, s_r)$. Specifically:
+For the KZ associator representative of formality, the coefficients
+entering the corresponding stable formality morphism lie in the
+$\bQ$-algebra generated by multiple zeta values. In low degrees this
+means:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item At $n = 4$: the wheel graph $W_4$ has weight proportional
-to $\zeta(3)/(2\pi i)^3$.
-\item At $n = 5$: weights involve $\zeta(3)$, $\zeta(5)$, and
-$\zeta(2)\zeta(3)$.
-\item At general $n$: weights lie in the ring
-$\mathcal{Z} \otimes \bQ$, where $\mathcal{Z}$ is the
-$\bQ$-algebra of MZVs.
+\item at degree~$4$, $\zeta(3)$ occurs in the associator expansion;
+\item at degree~$5$, $\zeta(5)$ and products involving lower zeta
+ values may occur;
+\item changing the associator changes the representative of the
+ formality morphism by the graph-complex/Grothendieck--Teichmuller
+ action.
 \end{enumerate}
-This is a consequence of the period structure of
-$\overline{C}_n(\mathfrak{H})$: the cohomology of the FM
-compactification is generated by logarithmic forms with
-rational periods, and iterated integrals of these forms
-produce MZVs.
+The statement is about the local upper-half-plane formality
+representative. It is not a claim that every global chiral residue
+integral on $\overline{\Conf}_n(X)$ is an MZV.
 \end{proposition}
 
 
@@ -991,9 +1436,11 @@ produce MZVs.
 \index{deformation quantization!bar complex connection}
 
 The Kontsevich weight $w_\Gamma$ of a graph $\Gamma$ with $n$
-interior vertices is an integral over $\overline{C}_n(\mathfrak{H})$.
-The bar complex differential at degree $n$ integrates over
-$\overline{C}_n(X)$ (for a curve $X$). The connection:
+interior vertices is an integral over the compactified
+upper-half-plane configuration space. The chiral bar differential at
+arity $n$ is a residue operation on the compactified configuration of
+points on the curve. The connection is through the boundary
+factorisation identities:
 
 \emph{Upper half-plane vs.\ curve.}
 Kontsevich uses $X = \mathfrak{H}$ (the upper half-plane, viewed as
@@ -1024,24 +1471,24 @@ For a Coisson algebra $\cA_{\mathrm{cl}}$
 \begin{align}
 \text{Kontsevich weight } w_\Gamma
 &\longleftrightarrow
-\text{bar complex matrix element }
+\text{local bar complex coefficient }
 \langle \bar{B}^n | d | \bar{B}^{n-1} \rangle \\
 \text{Star product coefficient } B_\Gamma(f,g)
 &\longleftrightarrow
 \text{cobar differential component } d_\Omega
 \end{align}
-The chiral star product (Construction~\ref{constr:quantization}) is
-the cobar reconstruction of the chiral algebra from the bar coalgebra
-data, with each graph $\Gamma$ contributing a specific term in the
-$A_\infty$ structure.
+The cobar reconstruction of a filtered chiral algebra from local bar
+coalgebra data uses the same tree combinatorics. It becomes a global
+chiral product only after the descent conditions of
+Theorem~\ref{thm:chiral-quantization}.
 
 \emph{Associativity verification.}
-The associativity of the Kontsevich star product (Stokes' theorem
-on $\overline{C}_n(\mathfrak{H})$) corresponds to the nilpotence
-$d^2 = 0$ of the bar differential (Arnold relations on
-$\overline{C}_n(\bC)$). Both follow from the same topological
-mechanism: the vanishing of the boundary integral on the FM
-compactification.
+The associativity of the Kontsevich star product is Stokes' theorem on
+the compactified upper-half-plane spaces. The nilpotence $d^2=0$ of
+the local chiral bar differential is the Arnold relation for
+\(\eta_{ij}\) on configurations in the disk. The two identities are
+parallel under the local operadic comparison; they are not identical
+integrals.
 \end{computation}
 
 
@@ -1086,98 +1533,106 @@ $\lambda$-bracket vanishes on generators because the Heisenberg
 Coisson algebra is abelian: $\{a_\lambda\{a_\mu a\}\} = 0$).
 
 \emph{Order $\hbar^3$:}
-All terms vanish for the same reason: the Heisenberg Poisson
-structure is constant, so $\partial \pi = 0$ and all graphs with
-interior edges (carrying $\partial \pi$) vanish. The star product
-is \emph{exact at order $\hbar^1$}:
+All connected graphs with an internal edge vanish for the same reason:
+the Heisenberg Poisson structure is constant, so $\partial\pi=0$.
+For the two basic generators the singular OPE is therefore exact at
+first order:
 \begin{equation}\label{eq:heisenberg-exact}
 a \star b = \normord{ab} + \frac{\hbar\kappa}{2} a_{(0)}b
 \end{equation}
-This is the normally-ordered product plus the contraction (Wick's
-theorem).
+For composite fields, higher powers in the Moyal exponential are the
+iterated Wick contractions forced by this same constant pairing; they
+are not new graph operations.
 
 \emph{Bar complex interpretation.}
-The exactness at $\hbar^1$ reflects the Koszulness of
-$\mathcal{H}_\kappa$: the bar complex has no higher $A_\infty$
-operations ($m_n = 0$ for $n \geq 3$), so the MC equation
-$\sum \hbar^n m_n(\alpha^{\otimes n}) = 0$ terminates at first
-order. The quantized algebra is the vertex algebra (OPE algebra)
-$\mathcal{H}_\kappa$ itself.
+The absence of new connected higher graph operations reflects the
+free-field Koszul behaviour of $\mathcal{H}_\kappa$. The quantized
+object is the Heisenberg vertex algebra with level~$\kappa$.
 \end{computation}
 
 \begin{computation}[Current algebra star product]
 \label{comp:current-star-product}
 \index{current algebra!star product}
 
-For the current algebra $\fg[z]$ with Coisson bracket
-$\{J^a_\lambda J^b\}_{\mathrm{cl}} = f^{abc} J^c$ (the pointwise
-Lie bracket), the chiral star product produces the affine Kac--Moody
-algebra $\widehat{\fg}_k$ as a deformation:
+For the centrally extended current PVA with coisson bracket
+\[
+\{J^a_\lambda J^b\}_{\mathrm{cl}}
+=f^{ab}_{\phantom{ab}c}J^c+k(J^a,J^b)\lambda,
+\]
+a filtered chiral quantization with invariant level \(k(\cdot,\cdot)\)
+is the affine Kac--Moody algebra
+$\widehat{\fg}_k$:
 
 \emph{Order $\hbar^0$:} $J^a \star_0 J^b = \normord{J^a J^b}$
 
 \emph{Order $\hbar^1$:}
-$J^a \star_1 J^b = \frac{1}{2}\{J^a, J^b\}_{\mathrm{cl}}
-= \frac{1}{2} f^{abc} J^c$
+the first commutator recovers the displayed PVA bracket. In
+\(\lambda\)-notation,
+\[
+J^a\star_1J^b-J^b\star_1J^a
+=f^{ab}_{\phantom{ab}c}J^c+k(J^a,J^b)\lambda .
+\]
 
 \emph{Order $\hbar^2$:}
-\begin{align*}
-J^a \star_2 J^b &= \frac{1}{8}
-\{J^a, \{J^b, \cdot\}\}_{\mathrm{cl}}
-+ \frac{1}{12} (\partial\pi)
-\text{-corrections}
-\end{align*}
-For a \emph{linear} Poisson structure ($\fg[z]$ has
-$\pi^{ab}(J) = f^{abc} J^c$, linear in $J$), the $\partial\pi$
-terms contribute $\frac{1}{12} f^{acd}f^{bde} J^e$
-(a Casimir-type correction).
+In the local Kontsevich product for the linear Poisson structure on
+$\mathfrak g^*$, the $\hbar^2$ coefficient is the
+Poincare--Birkhoff--Witt correction determined by the Campbell--Hausdorff
+series. It is absorbed by the PBW isomorphism between
+\(\operatorname{Sym}(\mathfrak g)\) and \(U_\hbar(\mathfrak g)\).
+It is not an additional pole in the affine OPE.
 
 The full star product resums to the OPE:
 \begin{equation}\label{eq:km-as-deformation}
 J^a(z) J^b(w) = \frac{k \delta^{ab}}{(z-w)^2}
 + \frac{f^{abc} J^c(w)}{z-w} + \normord{J^a J^b}(w) + \cdots
 \end{equation}
-where $k = \hbar \cdot (\text{normalization})$ is the level.
+Here $k$ is the invariant-form parameter of the central extension; it
+may be scaled with $\hbar$ in a semiclassical family, but the affine
+vertex algebra itself is labelled by the chosen level.
 
 \emph{Associativity.}
-The Jacobi identity $f^{a[bc}f^{d]ef} = 0$ for the structure
-constants of $\fg$ ensures the vanishing of the $\hbar^3$ obstruction
-in~\eqref{eq:hbar3-assoc}. At the bar complex level, this is the
-statement that the degree-3 bar differential satisfies $d^2 = 0$
-(the Serre relations in the bar complex of $\widehat{\fg}_k$;
-cf.\ Computation~\ref{comp:sl3-degree3-complete}).
+The Jacobi identity for $\fg$ and invariance of the level form ensure
+associativity of the singular OPE. In the bar complex this is the
+degree-$3$ part of $d^2=0$.
 \end{computation}
 
 \begin{remark}[Quantization obstructions and curvature]
 \label{rem:quantization-curvature-connection}
 \index{deformation quantization!curvature obstruction}
-The genus-1 curvature
-$m_0(\widehat{\fg}_k) = \kappa(\widehat{\fg}_k)\cdot\omega_1$
-with
-$\kappa(\widehat{\fg}_k) = \dim(\fg)(k+h^\vee)/(2h^\vee)$
-(Proposition~\ref{prop:km-bar-curvature}) measures the failure of the star product to extend to $E_\tau$. At critical level $k = -h^\vee$, $m_0 = 0$ and the extension is unobstructed. At generic level, the genus-1 correction involves $E_2(\tau)$ (Theorem~\ref{thm:elliptic-vs-rational}).
+The scalar genus-$1$ projection for the affine family is
+\[
+\kappa(V_k(\fg))=\frac{\dim(\fg)(k+h^\vee)}{2h^\vee}.
+\]
+It measures the non-separating modular correction in the sense of
+Theorem~D. At critical level $k=-h^\vee$ this scalar projection
+vanishes. The elliptic propagator may still contain $E_2(\tau)$ in a
+chosen coordinate expression; that is a quasi-modular representative
+of the propagator, not a change of the level.
 \end{remark}
 
 
 %%% ===================================================================
-%%% M8: ONE-STEP JACOBI COALGEBRA
-%%% M9: BOUNDARY-LINEAR LANDAU--GINZBURG THEOREM
+%%% JACOBI TAYLOR DATA
+%%% BOUNDARY-LINEAR LANDAU--GINZBURG THEOREM
 %%% ===================================================================
 
-\section{The one-step Jacobi coalgebra}\label{sec:jacobi-coalgebra}
+\section{Jacobi Taylor data and terminal equation colours}\label{sec:jacobi-coalgebra}
 \index{Jacobi coalgebra|textbf}
 
 The bar complex of an algebra is an infinite object: its differential
 encodes the full multiplication table via arbitrarily long sequences
 of collisions. When the ``algebra'' is replaced by a \emph{map germ}
-$F\colon (\mathbb{A}^n, p) \to (\mathbb{A}^r, 0)$ (that is, by a finite collection
-of equations rather than an infinite OPE), the resulting bar-type
-coalgebra is a single-step object: the differential raises the
-equation-count by exactly one and then stops. This is the
-\emph{one-step Jacobi coalgebra} $\JacF{F}{p}$, the simplest nontrivial
-example of a coalgebra with $b^2 = 0$.
+$F\colon (\mathbb{A}^n, p) \to (\mathbb{A}^r, 0)$, the Taylor
+coefficients of~$F$ define a natural cofree coderivation with one
+equation-colour output. This coderivation is useful, but it is not
+automatically square-zero on the full cofree coalgebra. Its square
+records the second collision of equation outputs. The square-zero
+object used by the Landau--Ginzburg calculation is the Koszul cdga
+\((k[[x]]\otimes\Lambda(\eta_\alpha),d\eta_\alpha=F_\alpha)\), or
+equivalently a terminal equation-colour model in which equation
+outputs are not fed back into the cofree coalgebra.
 
-\begin{construction}[One-step Jacobi coalgebra]
+\begin{construction}[Jacobi Taylor coderivation]
 \label{constr:jacobi-coalgebra}
 \index{Jacobi coalgebra!construction|textbf}
 Let $F = (F_1, \ldots, F_r) \colon (\mathbb{A}^n, p) \to (\mathbb{A}^r, 0)$ be a
@@ -1188,7 +1643,7 @@ germ of a holomorphic map with $F(p) = 0$. Set:
 \item $R := k^r$ with basis $r_1, \ldots, r_r$
  (the \emph{equation directions}).
 \end{itemize}
-The \emph{one-step Jacobi coalgebra} is the pair
+The \emph{Jacobi Taylor coalgebra} is the cofree coalgebra
 \[
 \JacF{F}{p} \;:=\; \bigl(\mathrm{Sym}^c(sU \oplus R),\; b_F\bigr),
 \]
@@ -1214,7 +1669,12 @@ degree~$0$), so $b_{F,m}$ has cohomological degree~$-m$. In the
 \emph{not} homogeneous in the cohomological grading, but it
 lowers the cofiltration by wordlength (replacing $m$ generators
 of~$sU$ by one generator of~$R$) and is compatible with the bar-type
-coalgebra structure.
+coalgebra structure. Proposition~\ref{prop:jacobi-nilpotent} computes
+the obstruction to treating this cofree coderivation as a differential.
+The powers \(\lambda^m\) used below are divided-power Taylor
+monomials in this coalgebra. They are not exterior powers of an odd
+generator; otherwise the one-variable examples vanish before
+recording the Taylor coefficients of~\(F\).
 \end{construction}
 
 \begin{remark}[Interpretation]
@@ -1230,17 +1690,17 @@ only the components $b_{F,1}, \ldots, b_{F,d}$ are nonzero.
 
 \subsection{Explicit examples}\label{subsec:jacobi-examples}
 
-Throughout, we write $\lambda := se$ for the suspended basis vector
+Throughout this section, $\lambda := se$ denotes the suspended basis vector
 of~$sU$ (when $n = 1$), $\lambda_i := se_i$ for the multi-variable
 case, and $c := r_1$ for the equation generator (when $r = 1$).
 
 \begin{example}[Free case: $F(x) = 0$]
 \label{ex:jacobi-free}
 All Taylor coefficients vanish: $b_F = 0$. The coalgebra
-$\JacF{0}{p} = (\mathrm{Sym}^c(s\,k \oplus k),\, 0)$ has zero differential
-and is the cofree cocommutative coalgebra on two generators $\lambda$
-(degree~$1$) and $c$ (degree~$0$). This is the \emph{acyclic} Jacobi
-coalgebra: there are no equations to impose.
+$\JacF{0}{p} = (\mathrm{Sym}^c(s\,k \oplus k),\, 0)$ has zero
+coderivation and is the cofree cocommutative coalgebra on two
+generators $\lambda$ (degree~$1$) and $c$ (degree~$0$). This is the
+free Taylor case: there are no equations to impose.
 \end{example}
 
 \begin{example}[Node: $F(x) = x^2$, one variable]
@@ -1322,7 +1782,7 @@ $\frac{\partial^2 F}{\partial x_1 \partial x_2}(0) = 1$ appears with
 the combinatorial factor $1/2!$ times the multinomial coefficient. Since
 $\frac{\partial^2 F}{\partial x_1 \partial x_2} =
 \frac{\partial^2 F}{\partial x_2 \partial x_1} = 1$,
-we get $b_{F,2}(\lambda_1 \lambda_2)
+the result is $b_{F,2}(\lambda_1 \lambda_2)
 = \frac{1}{2!}(1 + 1)\, c = c$.
 
 The only nonzero action is:
@@ -1359,16 +1819,32 @@ b_F(\lambda_1 \lambda_2) = 0.
 \]
 \end{example}
 
-\subsection{Automatic nilpotence}
+\subsection{The cofree square and the terminal equation-colour model}
 
-\begin{proposition}[$b_F^2 = 0$ is automatic]
+\begin{proposition}[Cofree Jacobi coderivation square]
 \ClaimStatusProvedHere
 \label{prop:jacobi-nilpotent}
 \index{Jacobi coalgebra!nilpotence|textbf}
 For any holomorphic map germ $F\colon (\mathbb{A}^n, p) \to (\mathbb{A}^r, 0)$
-with $F(p) = 0$, the coderivation $b_F$ of
-Construction~\textup{\ref{constr:jacobi-coalgebra}} satisfies
-$b_F^2 = 0$. No conditions on~$F$ are required.
+with $F(p) = 0$, let $b_F$ be the cofree coderivation of
+Construction~\textup{\ref{constr:jacobi-coalgebra}}. Then
+$b_F^2$ lands in $R$-weight at least~$2$, and it is not automatically
+zero. In one variable:
+\[
+F(x)=x^2 \quad\Longrightarrow\quad b_F^2(\lambda^4)=6c^2,
+\]
+and
+\[
+F(x)=x^3 \quad\Longrightarrow\quad b_F^2(\lambda^6)=20c^2.
+\]
+Thus \((\mathrm{Sym}^c(sU\oplus R),b_F)\) is generally not a dg
+coalgebra. It becomes square-zero only after replacing the cofree
+model by a terminal equation-colour model in which every second
+equation output is killed; dually, this is the Koszul cdga
+\[
+\bigl(k[[x_1,\ldots,x_n]]\otimes\Lambda(\eta_1,\ldots,\eta_r),
+\ d\eta_\alpha=F_\alpha(x),\ dx_i=0\bigr).
+\]
 \end{proposition}
 
 \begin{proof}
@@ -1377,55 +1853,41 @@ $\mathrm{Sym}^c(V)$ is uniquely determined by its projection to cogenerators
 $\pi \colon \mathrm{Sym}^c(V) \to V$, via the formula
 $\pi \circ b = \sum_{m \geq 1} f_m$ where
 $f_m \colon \mathrm{Sym}^m(V) \to V$.
-The condition $b^2 = 0$ (as a coderivation) is equivalent to
-$\pi \circ b^2 = 0$, i.e., for each $m \geq 1$:
-\begin{equation}\label{eq:b-squared-components}
-\sum_{\substack{j + k = m + 1 \\ j, k \geq 1}}
-\sum_{\substack{S \subset \{1,\ldots,m\} \\ |S| = j}}
-f_k\bigl(f_j(v_S) \cdot v_{S^c}\bigr) = 0,
-\end{equation}
-where $v_S = v_{s_1} \cdots v_{s_j}$ and $v_{S^c}$ denotes the
-complementary product (with appropriate signs).
-
-For the Jacobi coderivation $b_F$, the cogenerator space is
-$V = sU \oplus R$. The nonzero projection components are
+For $b_F$, the nonzero projection components are
 \[
-f_m = b_{F,m} \colon \mathrm{Sym}^m(sU) \;\longrightarrow\; R
-\qquad (m \geq 1).
+f_m=b_{F,m}\colon \mathrm{Sym}^m(sU)\longrightarrow R.
 \]
-Two properties are essential:
-\begin{enumerate}[label=\textup{(\roman*)}]
-\item The components $f_m$ map \emph{into}~$R$ (not into $sU$).
-\item The components $f_m$ accept inputs only from
- $\mathrm{Sym}^m(sU)$; there is no nonzero component from any
- $\mathrm{Sym}^j(sU) \otimes \mathrm{Sym}^k(R)$ with $k > 0$.
-\end{enumerate}
-Now consider the composition~\eqref{eq:b-squared-components} applied
-to an element $\lambda_{i_1} \cdots \lambda_{i_m} \in \mathrm{Sym}^m(sU)$.
-The inner term $f_j(\lambda_S) \in R$ is in degree~$0$; the remaining
-factor $\lambda_{S^c} \in \mathrm{Sym}^{m-j}(sU)$ is in degree $m - j$.
-The product $f_j(\lambda_S) \cdot \lambda_{S^c}$ lies in
-$R \otimes \mathrm{Sym}^{m-j}(sU) \subset \mathrm{Sym}^{m-j+1}(sU \oplus R)$. For
-the outer $f_k$ to act on this product, it would need a nonzero
-component on a mixed input involving at least one factor from~$R$.
-By property~(ii), no such component exists.
+Applying the coderivation twice to a pure word in \(sU\) allows the
+second application to hit the remaining \(sU\)-letters while carrying
+along the first \(R\)-output. The \(R^2\)-component is
+\begin{equation}\label{eq:b-squared-components}
+\pi_{R^2} b_F^2(v_1\cdots v_m)
+=
+\sum_{\substack{S,T\subset\{1,\ldots,m\}\\ S\cap T=\varnothing}}
+\pm\, b_{F,|S|}(v_S)\,b_{F,|T|}(v_T)\,v_{(S\cup T)^c},
+\end{equation}
+where the sign is the Koszul sign from moving the chosen letters
+together. This expression is generally nonzero.
 
-Therefore every term in~\eqref{eq:b-squared-components} vanishes
-identically, and $b_F^2 = 0$ without any condition on~$F$.
-
-\emph{Conceptual explanation.}
-The nilpotence is automatic because $b_F$ is a \emph{one-step}
-differential: it raises the $R$-weight by exactly~$1$ and never
-acts on elements that already contain $R$-factors. In the weight
-decomposition $\mathrm{Sym}^c(sU \oplus R) = \bigoplus_{k \geq 0}
-\mathrm{Sym}^c(sU) \otimes \mathrm{Sym}^k(R)$, the differential $b_F$ maps the
-$k$-th summand into the $(k+1)$-th summand. Since $b_F$ is a
-\emph{coderivation} (not merely a graded map), its square $b_F^2$
-would need to map into the $(k+2)$-th summand; but the only
-components of $b_F$ act on the $k = 0$ summand, so $b_F^2$ has no
-source for a nontrivial contribution. This is the coalgebra analog
-of the fact that a Koszul differential $d\eta_\alpha = F_\alpha(x)$
-satisfies $d^2\eta_\alpha = 0$ automatically (since $d^2 x_i = 0$).
+For \(F(x)=x^2\), \(b_{F,2}(\lambda^2)=c\). Hence
+\[
+b_F(\lambda^4)=\binom42 c\lambda^2=6c\lambda^2,
+\qquad
+b_F^2(\lambda^4)=6c^2.
+\]
+For \(F(x)=x^3\), \(b_{F,3}(\lambda^3)=c\), so
+\[
+b_F(\lambda^6)=\binom63 c\lambda^3=20c\lambda^3,
+\qquad
+b_F^2(\lambda^6)=20c^2.
+\]
+Over characteristic zero, with \(c^2\neq0\) in the symmetric
+coalgebra, these are nonzero. The Koszul cdga avoids this second
+equation output because \(d\) is a derivation with \(dx_i=0\):
+\[
+d^2\eta_\alpha=dF_\alpha(x)=\sum_i
+\frac{\partial F_\alpha}{\partial x_i}dx_i=0.
+\]
 \end{proof}
 
 \begin{remark}[Contrast with bar coalgebras]
@@ -1433,58 +1895,65 @@ satisfies $d^2\eta_\alpha = 0$ automatically (since $d^2 x_i = 0$).
 For the bar coalgebra $\barB(A)$ of an algebra~$A$, the condition
 $d^2 = 0$ is equivalent to \emph{associativity} of the multiplication
 (the quadratic relation on the components encodes
-$\mu \circ (\mu \otimes 1) = \mu \circ (1 \otimes \mu)$). The Jacobi
-coalgebra has no such condition because its coderivation is one-step:
-the Taylor coefficients of any holomorphic map satisfy $b_F^2 = 0$
-without constraint. This one-step property is the algebraic expression
-of the fact that equations $F_\alpha(x) = 0$ define a closed condition
-(no further integrability is needed), in contrast to a multiplication,
-which must be associative.
+$\mu \circ (\mu \otimes 1) = \mu \circ (1 \otimes \mu)$). The cofree
+Jacobi Taylor coderivation has a different obstruction: two disjoint
+Taylor contractions may occur in succession, producing an \(R^2\)-term.
+The terminal equation-colour model kills precisely those second
+equation outputs. The commutative Koszul cdga realizes the same
+mathematics on the dual side and is the square-zero object used below.
 \end{remark}
 
-\begin{verification}[Node: $b_F^2 = 0$ for $F(x) = x^2$]
+\begin{verification}[Node: the cofree square for $F(x)=x^2$]
 \label{verif:jacobi-node-nilpotent}
-We verify $b_F^2 = 0$ directly. The only nonzero component is
+The only nonzero component is
 $b_{F,2}(\lambda^2) = c$. On $\lambda^m \in \mathrm{Sym}^m(sU)$:
 \[
 b_F(\lambda^m) = \binom{m}{2}\, c \cdot \lambda^{m-2}.
 \]
-Applying $b_F$ again:
-$b_F(c \cdot \lambda^{m-2})$ requires a component
-$b_{F,k}\colon \mathrm{Sym}^j(sU) \otimes R \to R$ with $j + 1 = k$.
-No such component exists (the only nonzero component acts on pure
-$\mathrm{Sym}^m(sU)$). Therefore $b_F^2(\lambda^m) = 0$.\hfill$\checkmark$
+In particular,
+\[
+b_F^2(\lambda^4)=b_F(6c\lambda^2)=6c^2\neq0
+\]
+in the cofree symmetric coalgebra. In the terminal equation-colour
+model this \(c^2\)-term is killed by definition.\hfill$\checkmark$
 \end{verification}
 
-\begin{verification}[Cusp: $b_F^2 = 0$ for $F(x) = x^3$]
+\begin{verification}[Cusp: the cofree square for $F(x)=x^3$]
 \label{verif:jacobi-cusp-nilpotent}
 The only nonzero component is $b_{F,3}(\lambda^3) = c$. On
 $\lambda^m$:
 \[
 b_F(\lambda^m) = \binom{m}{3}\, c \cdot \lambda^{m-3}.
 \]
-Applying $b_F$ again: the output $c \cdot \lambda^{m-3}$ involves
-an $R$-factor, so $b_F$ has no further action.
-Therefore $b_F^2(\lambda^m) = 0$.\hfill$\checkmark$
+At the first arity where two cubic contractions fit,
+\[
+b_F^2(\lambda^6)=b_F(20c\lambda^3)=20c^2\neq0.
+\]
+The square-zero model is again the terminal equation-colour quotient
+or, dually, the Koszul cdga \(d\eta=x^3\).\hfill$\checkmark$
 \end{verification}
 
 \subsection{The cobar algebra and $A_\infty$ model}
 
-The cobar construction applied to $\JacF{F}{p}$ yields an explicit
-dg algebra, the \emph{exact pointed line algebra} of the
-singularity, which resolves the coordinate ring of the zero locus.
+The terminal equation-colour replacement dual to the Jacobi Taylor
+data yields an explicit dg algebra, the \emph{exact pointed line
+algebra} of the singularity. It is not the cobar algebra of the
+unmodified cofree coderivation in
+Proposition~\ref{prop:jacobi-nilpotent}; it is the square-zero
+replacement in which equation outputs do not feed a second
+contraction.
 
-\begin{construction}[Cobar of the Jacobi coalgebra]
+\begin{construction}[Cobar algebra of the terminal Jacobi model]
 \label{constr:cobar-jacobi}
 \index{Jacobi coalgebra!cobar|textbf}
 The cobar algebra is
 \[
 K^{\mathrm{ex}}_{F,p}
-\;:=\; \Omega(\JacF{F}{p})
-\;=\; \bigl(T(s^{-1}(sU \oplus R)^\vee),\; d\bigr)
+\;:=\; \bigl(T(s^{-1}(sU \oplus R)^\vee),\; d\bigr)
 \;=\; \bigl(T(U^\vee \oplus s^{-1}R^\vee),\; d\bigr),
 \]
-where $T$ denotes the free (tensor) algebra, $U^\vee = \Span(\lambda_1^\vee,
+where $T$ denotes the completed free tensor algebra for formal germs
+(ordinary tensor algebra for polynomial germs), $U^\vee = \Span(\lambda_1^\vee,
 \ldots, \lambda_n^\vee)$ with $\lambda_i^\vee := s^{-1}(se_i)^\vee$
 in degree~$0$ (``coordinate functions''), and
 $s^{-1}R^\vee = \Span(c_1^\vee, \ldots, c_r^\vee)$ with
@@ -1517,19 +1986,22 @@ Since the free algebra on degree-$0$ generators is the tensor algebra
 (noncommutative), the commutative quotient gives the Koszul complex:
 \[
 K^{\mathrm{ex}}_{F,p} / [\text{commutator ideal}]
-\;=\; \bigl(k[\lambda_1^\vee, \ldots, \lambda_n^\vee]
+\;=\; \bigl(k[[\lambda_1^\vee, \ldots, \lambda_n^\vee]]
 \otimes \Lambda(c_1^\vee, \ldots, c_r^\vee),\;
 d\, c_\alpha^\vee = F_\alpha(\lambda^\vee)\bigr),
 \]
-which is the standard Koszul complex resolving
-$\cO_{Z_F} = k[[x_1, \ldots, x_n]] / (F_1, \ldots, F_r)$.
+which is the standard Koszul cdga of the sequence
+\((F_1,\ldots,F_r)\). It resolves the classical coordinate ring
+\(\cO_{Z_F}=k[[x_1,\ldots,x_n]]/(F_1,\ldots,F_r)\) when the sequence
+is regular; otherwise it is the coordinate algebra of the derived zero
+locus.
 \end{construction}
 
-\begin{construction}[$A_\infty$ model of the Jacobi coalgebra]
+\begin{construction}[$A_\infty$ model of the terminal Jacobi data]
 \label{constr:ainfty-jacobi}
 \index{$A_\infty$ algebra!from Jacobi coalgebra}
-The cohomology of $\JacF{F}{p}$ carries a transferred $A_\infty$
-structure. For a single equation ($r = 1$), the $A_\infty$ model is:
+The terminal equation-colour model carries a transferred
+\(A_\infty\)-structure. For a single equation ($r = 1$), the model is:
 \[
 K^{\mathrm{gr}}_{F,p}
 \;=\; \bigl(k[c] \otimes \Lambda(\lambda_1, \ldots, \lambda_n),\;
@@ -1605,14 +2077,17 @@ but the inner $m_3$ always produces a $c$-factor, and $m_3$ does
 not accept $c$-inputs.
 $\checkmark$
 
-All $A_\infty$ identities hold vacuously: the one-step property of
-the Jacobi coalgebra propagates to the $A_\infty$ model. This is
-the transferred form of Proposition~\ref{prop:jacobi-nilpotent}.
+All $A_\infty$ identities hold because the equation-colour \(c\) is
+terminal in this transferred model: once an inner operation produces
+\(c\), no higher operation accepts it as an input. This is the
+square-zero replacement isolated in
+Proposition~\ref{prop:jacobi-nilpotent}, not the full cofree
+coderivation.
 \end{verification}
 
 
 %%% ===================================================================
-%%% M9: BOUNDARY-LINEAR LANDAU--GINZBURG THEOREM
+%%% BOUNDARY-LINEAR LANDAU--GINZBURG THEOREM
 %%% ===================================================================
 
 \section{Boundary-linear Landau--Ginzburg models}
@@ -1620,8 +2095,8 @@ the transferred form of Proposition~\ref{prop:jacobi-nilpotent}.
 \index{Landau--Ginzburg model!boundary-linear|textbf}
 \index{derived critical locus|textbf}
 
-The one-step Jacobi coalgebra of \S\ref{sec:jacobi-coalgebra}
-describes the singularity of a map germ $F\colon (\mathbb{A}^n, p) \to
+The Jacobi Taylor data of \S\ref{sec:jacobi-coalgebra} describes the
+singularity of a map germ $F\colon (\mathbb{A}^n, p) \to
 (\mathbb{A}^r, 0)$. When $F$ arises as the gradient of a
 \emph{superpotential}, the story acquires a second character: the
 bulk algebra of the Landau--Ginzburg model is identified with
@@ -1649,30 +2124,31 @@ $\eta_\alpha$ are odd generators in degree~$-1$
 unique derivation extending $d\,\eta_\alpha = F_\alpha(x)$,
 $d\, x_i = 0$.
 
-This is the \emph{Koszul complex} of $(F_1, \ldots, F_r)$:
-it is a semi-free resolution of the coordinate ring
-$\cO_{Z_F} = k[[x]] / (F_1, \ldots, F_r)$ of the zero locus
-$Z_F = \{x : F(x) = 0\}$. Its cohomology is:
+This is the \emph{Koszul cdga} of $(F_1, \ldots, F_r)$ and the
+coordinate algebra of the derived zero locus \(Z_F^{\mathrm{der}}\).
+It is a semi-free resolution of the classical coordinate ring
+$\cO_{Z_F} = k[[x]] / (F_1, \ldots, F_r)$ only when
+$(F_1,\ldots,F_r)$ is a regular sequence. In general its cohomology is
+the Koszul homology of the sequence:
 \[
 H^0(A_F) = \cO_{Z_F}, \qquad
-H^{-j}(A_F) = \mathrm{Tor}_j^{k[[x]]}(\cO_{Z_F}, k)
+H^{-j}(A_F) = H_j(F_1,\ldots,F_r;k[[x]])
 \quad (j \geq 1).
 \]
 When $(F_1, \ldots, F_r)$ is a regular sequence, $A_F$ is a
 resolution: $H^*(A_F) = \cO_{Z_F}$ concentrated in degree~$0$.
 \end{definition}
 
-\begin{remark}[Relationship to the Jacobi coalgebra]
+\begin{remark}[Relationship to the terminal Jacobi model]
 \label{rem:boundary-jacobi-relation}
 The boundary algebra $A_F$ is the \emph{commutative quotient} of
 the cobar algebra $K^{\mathrm{ex}}_{F,0}$ of
 Construction~\ref{constr:cobar-jacobi}. More precisely:
 $A_F = K^{\mathrm{ex}}_{F,0} / [\text{commutator ideal}]$
 under the identifications $\lambda_i^\vee \leftrightarrow x_i$
-and $c_\alpha^\vee \leftrightarrow \eta_\alpha$ (both in
-degree~$-1$). The Jacobi coalgebra is the
-noncommutative shadow; the boundary algebra is the commutative
-shadow.
+in degree~$0$ and $c_\alpha^\vee \leftrightarrow \eta_\alpha$
+in degree~$-1$. The terminal Jacobi model is the noncommutative
+shadow; the boundary algebra is the commutative shadow.
 \end{remark}
 
 \subsection{The boundary-linear superpotential}
@@ -1823,12 +2299,16 @@ canonical symplectic form.
 
 \subsection{The boundary-linear LG theorem}
 
-Throughout this subsection, $\HH^\bullet(\cA)$ denotes ordinary
-dg-algebra \textup{(}equivalently, categorical\textup{)} Hochschild
-cohomology, not the chiral-Hochschild functor $\mathrm{ChirHoch}^\bullet$
-of Theorem~H; the two agree only after passing to the derived chiral
-centre $Z^{\mathrm{der}}_{\mathrm{ch}}$ (concordance T7($\beta$)(ii)),
-as made explicit in the final clause of the theorem below.
+Throughout this subsection, \(k\) has characteristic zero and
+\(\HH^\bullet(\cA)\) denotes completed continuous dg-algebra Hochschild
+cohomology for the adic algebra \(A_F\) (equivalently, the Hochschild
+cochains of \(\Perf(A_F)\) under the usual Morita identification). For
+polynomial germs the completion may be omitted. This is not the
+chiral-Hochschild functor
+\(\mathrm{ChirHoch}^\bullet\) of Theorem~H; the two agree only after
+passing to the derived chiral centre
+\(Z^{\mathrm{der}}_{\mathrm{ch}}\) under the chiral HKR hypotheses
+stated in the theorem below.
 
 \begin{theorem}[Boundary-linear LG theorem; \ClaimStatusProvedHere]
 \label{thm:boundary-linear-lg}
@@ -1853,13 +2333,15 @@ of~$F$, and $\operatorname{dCrit}(W)$ is the derived critical
 locus of~$W$
 \textup{(}Definition~\textup{\ref{def:dcrit})}.
 
-In the chiral setting, when $A_F$ is promoted to a chiral algebra
-on a curve~$X$ \textup{(}e.g., by replacing $k[[x]]$ with sections
-of a $\cD_X$-module\textup{)}, the derived chiral centre
-$Z^{\mathrm{der}}_{\mathrm{ch}}$ (concordance T7($\beta$)(ii))
-satisfies
+In the chiral setting, suppose a chiral promotion
+$A_F^{\mathrm{ch}}$ on a curve~$X$ is locally the above semi-free
+dg algebra tensored with the formal-disk chiral envelope, and suppose
+the chiral HKR comparison map is a quasi-isomorphism for this
+promotion. Then the derived chiral centre
+$Z^{\mathrm{der}}_{\mathrm{ch}}$ (concordance T7($\beta$)(ii)) has
+local model
 \[
-Z^{\mathrm{ch}}_{\mathrm{der}}(A_F)
+Z^{\mathrm{der}}_{\mathrm{ch}}(A_F^{\mathrm{ch}})
 \;\simeq\;
 \cO\bigl(\operatorname{dCrit}(W)\bigr).
 \]
@@ -1934,8 +2416,11 @@ R\HH^\bullet(A_F)
 \cO(T^*[-1]\, Z_F^{\mathrm{der}})
 \;\overset{\text{Step 3}}{\simeq}\;
 \cO(\operatorname{dCrit}(W)).
-\qedhere
 \]
+The final chiral-centre clause is the same calculation after applying
+the assumed chiral HKR quasi-isomorphism to the promoted chiral
+algebra. Without that hypothesis the ordinary dg Hochschild complex and
+the derived chiral centre are distinct objects.
 \end{proof}
 
 \subsection{Explicit computations}
@@ -2128,80 +2613,132 @@ as follows. The boundary algebra $A_F$ is a commutative dg
 algebra whose bar complex $\barB(A_F)$ encodes the deformation
 theory of the singularity $Z_F$. The Hochschild cohomology
 $\HH^\bullet(A_F) \simeq \cO(\operatorname{dCrit}(W))$
-identifies the \emph{center} of the deformation theory with
+identifies the \emph{centre} of the deformation theory with
 the functions on the derived critical locus.
 
 In the chiral setting, where $A_F$ is promoted to a boundary
-chiral algebra of a Landau--Ginzburg B-model, the derived center
-$Z^{\mathrm{ch}}_{\mathrm{der}}(A_F)$ controls the bulk algebra
-of the LG model. The boundary-linear case $W = \langle y, F(x)
-\rangle$ is the simplest instance where the bulk-boundary
-correspondence admits a complete algebraic proof:
-the bulk = $\cO(\operatorname{dCrit}(W))$ is computed by the
-(chiral) Hochschild cohomology of the boundary algebra, which
-in turn is determined by the Jacobi coalgebra of~$F$ via the
-cobar construction.
+chiral algebra of a Landau--Ginzburg B-model, the derived chiral
+centre $Z^{\mathrm{der}}_{\mathrm{ch}}$ is the closed-sector algebra
+only after the chiral HKR comparison hypotheses in
+Theorem~\ref{thm:boundary-linear-lg} are imposed. Under those
+hypotheses the boundary-linear case
+$W=\langle y,F(x)\rangle$ gives a complete algebraic model:
+the local bulk is $\cO(\operatorname{dCrit}(W))$, computed by the
+appropriate Hochschild theory of the boundary algebra and related to
+the Jacobi coalgebra of~$F$ via the cobar construction.
 \end{remark}
 
 
-\section{Open questions}\label{sec:open-questions}
+\section{Higher-genus formality obstruction}\label{sec:open-questions}
 
-The principal open question is higher-genus formality: whether a
-Kontsevich-type $L_\infty$ quasi-isomorphism can be constructed
-directly on $\overline{\mathcal{M}}_{g,n}$ for $g \geq 2$ by
-configuration-space integrals. Theorems~B and~C show what such a
-statement would need to control: genus-$g$ bar-cobar inversion and its
-compatibility with the complementarity package, once the modular Koszul
-hypotheses are in place.
+The required higher-genus formality input is a Kontsevich-type
+\(L_\infty\) quasi-isomorphism on log-FM compactified configuration
+spaces over \(\overline{\mathcal M}_{g,n}\) for \(g\geq2\). Such a
+theorem must
+control four independent structures: the completed bar-cobar inversion
+of Theorem~B, the bar-dual coalgebra \(A^i\), the Verdier/Koszul
+dual \(A^!\) on the modular Koszul locus, and the complementarity
+eigenspace of Theorem~C.
 
-What remains open in this example chapter is the chain-level bridge
-from those higher-genus structures back to the explicit weights that
-appear at genus~$0$. In particular, the higher-genus analogues of the
-Stokes identities and factorization relations for Kontsevich weights are
-not constructed here.
+The remaining proof obligation is the chain-level bridge from those
+higher-genus structures back to the explicit weights that appear at
+genus~$0$: higher-genus analogues of the Stokes identities and
+factorization relations for Kontsevich weights, compatible with the
+completed modular bar construction.
 
 \section{Synthesis}
 \label{sec:defq-supplement}
 
+\begin{proposition}[Classical, quantum, chiral, and centre data are distinct]
+\label{prop:defq-data-firewall}
+\ClaimStatusProvedHere
+\index{deformation quantization!data firewall}
+The deformation-quantization lane in this chapter uses six different
+objects. No item in the list can be substituted for another:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item a classical tensor \(r\) satisfying the ordinary or dynamical
+CYBE, which defines a Lie-bialgebra or dynamical Lie-bialgebra
+cobracket;
+\item a quantum tensor \(R=1+\hbar r+O(\hbar^2)\) satisfying the
+ordinary or dynamical QYBE, which defines quantum group or
+quasi-Hopf-type data;
+\item the Drinfeld--Kohno/KZ package, where a flat KZ connection and a
+choice of Drinfeld associator control monodromy and braided tensor
+coherence;
+\item the Etingof--Kazhdan quantization functor, which is an
+\(\hbar\)-adic quantization theorem for Lie bialgebras after choosing
+an associator;
+\item the chiral Maurer--Cartan deformation object
+\(\Def_{\mathrm{ch}}(\cA_{\mathrm{cl}})[[\hbar]]\), whose MC elements
+are filtered chiral products with fixed associated graded;
+\item the chiral Hochschild/derived-centre object
+\(Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)\simeq
+C^\bullet_{\mathrm{ch}}(\cA,\cA)\), which is the closed-sector centre
+object and not the same object as the MC parameter.
+\end{enumerate}
+Passing from one line to another requires the named comparison theorem:
+semiclassical expansion for \(R\mapsto r\), Drinfeld--Kohno
+for KZ monodromy and quantum groups, Etingof--Kazhdan for formal
+quantization of Lie bialgebras, geometric--operadic comparison plus
+descent for chiral MC data, and HKR/open--closed comparison for the
+derived centre.
+\end{proposition}
+
+\begin{proof}
+The CYBE is the coefficient of \(\hbar^2\) in the QYBE after writing
+\(R=1+\hbar r+O(\hbar^2)\); this implication uses the existence of
+\(R\) and does not construct it from \(r\). The KZ connection produces
+monodromy and an associator; it controls braided tensor coherence, not
+a star product on a chosen coisson algebra without a formality map.
+Etingof--Kazhdan starts from a Lie bialgebra and returns an
+\(\hbar\)-adic quantization functorially after an associator choice; it
+does not provide analytic specialization at a nonzero \(\hbar\).
+The chiral MC object controls filtered chiral products by
+Proposition~\ref{prop:mc-star-product}. The derived centre is the
+Hochschild cochain object of Theorem~\ref{thm:boundary-linear-lg} under
+its stated HKR hypotheses; physical bulk operations reach it only
+through the named open/closed comparison \(\mathsf{OC}_{\cT}\). It is
+not the space of MC parameters. These constructions have different
+source categories, equations, and equivalence relations, so identifying
+them requires precisely the comparison inputs listed above.
+\end{proof}
+
 \begin{remark}[Etingof-Kazhdan deformation quantisation at the K3 base]
 \label{rem:defq-1}
-The Etingof-Kazhdan deformation quantisation programme applies, at the
-K3 base point, to the BKM Lie bialgebra $\mathfrak g_{\Delta_5}$:
+At the K3 base point the object denoted
+$\mathbf H_{\Delta_5}$ belongs to the K3 Hall--Drinfeld double
+lineage, not to the Drinfeld Yangian lineage in the strict
+finite-dimensional sense. The Etingof--Kazhdan theorem applies only
+after a completed topological Lie bialgebra
+$(\mathfrak g_{\Delta_5},\delta)$ has been specified:
 \[
-\mathfrak g_{\Delta_5}\xrightarrow{\;\mathrm{Etingof\text{-}Kazhdan}\;}\mathbf H_{\Delta_5}.
+\bigl(\mathfrak g_{\Delta_5},\delta\bigr)
+\xrightarrow{\;\mathrm{EK,\ formal}\;}
+U_\hbar(\mathfrak g_{\Delta_5},\delta).
 \]
-The uniqueness of the quantisation is forced by the classification
-$H^2(\mathfrak g_{\Delta_5})^{\mathbb Z/2,\, K(1)}\cong\mathbb C\cdot \Delta_5$:
-there is a one-dimensional space of Etingof-Kazhdan deformations, all
-equivalent up to gauge, and $\mathbf H_{\Delta_5}$ is the unique
-non-trivial member of this line. The quantisation parameter $\hbar$
-is pinned to the Lusztig root-of-unity value $\hbar^2 = -1/8$ by the
-three-faces-of-$8$ coincidence on the B-family. The $\widetilde M_{24}$
-Schur cocycle of order $6$ (Vol.~I, \S\ref{sec:chiralmod-supplement})
-is the finite-group echo of this Etingof-Kazhdan uniqueness. Primary-lit:
-Etingof-Kazhdan 1996-2000 Parts I-V, Kontsevich 2003 (formality
-theorem), Borcherds 1992.
+If the local cohomology computation
+$H^2(\mathfrak g_{\Delta_5})^{\mathbb Z/2,\,K(1)}
+\cong \mathbb C\cdot\Delta_5$ is imposed, it says that the first-order
+deformation direction is one-dimensional. It does not by itself prove
+formal uniqueness to all orders, analytic convergence, identify a
+root-of-unity specialization, or make $\mathbf H_{\Delta_5}$ a
+Drinfeld Yangian. The value
+$\hbar^2=-1/8$ is an external Lusztig/CY-specialization input in the
+concordance; it is not forced by Kontsevich graph weights.
 \end{remark}
 
 \section{The classical limit $\hbar \to 0$ of $\mathbf H_{\Delta_5}$}
 \label{sec:defq-kazhdan-classical}
 
-The uniqueness of the Etingof--Kazhdan
-quantisation $\mathbf H_{\Delta_5}$ was established via the cohomological moduli line
-$H^2(\mathfrak g_{\Delta_5})^{\mathbb Z/2,\,K(1)}\cong\mathbb C\cdot
-\Delta_5$. This section traverses that moduli line to the opposite endpoint
-$\hbar\to 0$, verifies that the classical limit recovers the
-Gritsenko--Nikulin 1998 classical chiral Lie bialgebra
-$(\mathfrak g_{\Delta_5}, \delta_{\mathrm{GN}})$, and pins the entire
-Kazhdan axis to the unique gauge-equivalence class of quantisations.
-This section is the chain-level / generator-level Vol~I presentation
-of the classical-limit diptych; the $(\infty,1)$-categorical lift of
-the same result sits in
-Vol~III~\S\ref{V3-sec:qgf-kazhdan-classical}, and the
-Langlands-axis cross-reference sits in Vol~I Theorem~DL (derived
-Langlands chapter) \S\ref{sec:dl-kazhdan-classical}.
+The formal classical-limit question is narrower. Given a completed
+quantization whose first-order term is a specified cobracket, its
+associated graded recovers the corresponding Lie bialgebra. The work
+below records the chain-level normalization needed for the candidate
+Gritsenko--Nikulin cobracket and separates it from two extra inputs:
+analytic specialization at $\hbar^2=-1/8$ and the Hall--Drinfeld
+double structure of $\mathbf H_{\Delta_5}$.
 
-\subsection{C1 -- Classical $r$-matrix from the Drinfeld factorisation}
+\subsection{C1 -- Classical $r$-matrix from the Hall--Drinfeld factorisation}
 \label{subsec:defq-C1-classical-r}
 
 In this section
@@ -2217,21 +2754,21 @@ $D_5^2=(64^{-1}\Delta_5)^2=4096^{-1}\Delta_5^2$; the latter is the
 Oberdieck--Pandharipande reduced-DT normalization, not the convention
 used for the Gritsenko--Nikulin Lie-bialgebra formula below.
 
-\begin{construction}[Semi-classical limit of the Siegel dynamical
-$R$-matrix]
+\begin{construction}[Semi-classical limit of a normalized Siegel
+dynamical \(R\)-matrix]
 \label{constr:defq-rmatrix-limit}
 \index{classical $r$-matrix!construction}
-The Drinfeld factorisation
+Assume a completed dynamical $R$-matrix has a factorisation
 \[
  R_{\mathrm{Sieg,dyn}}(u, Z)
  \;=\;
- R^{\mathrm{rat}}_{\mathrm{Yang}}(u)
+ R^{\mathrm{rat}}(u)
  \cdot
  \theta^{\mathrm{K3}}(u, Z)
 \]
-expands as a power series in $\hbar$:
+and is normalized so that
 \begin{align}
- R^{\mathrm{rat}}_{\mathrm{Yang}}(u)
+ R^{\mathrm{rat}}(u)
  &\;=\; 1 + \hbar\cdot\frac{\Omega_{\mathrm{Mukai}}}{u}
  + \hbar^2\cdot\frac{\Omega_{\mathrm{Mukai}}^2}{2u^2}
  + O(\hbar^3),
@@ -2255,7 +2792,7 @@ with $F^{\mathrm{Sieg}}(u, Z) = \partial_Z\log\Phi_{10}^{\mathrm{un}}(Z)
  \right)
  + O(\hbar^2).
 \end{equation}
-Dividing by $\hbar$ and taking $\hbar\to 0$ yields the classical
+The coefficient of $\hbar$ yields the classical
 $r$-matrix
 \begin{equation}
 \label{eq:defq-classical-r}
@@ -2267,14 +2804,19 @@ $r$-matrix
  \;+\;
  O(u^{-2}).
 \end{equation}
+The residue \(\Omega_{\mathrm{Mukai}}\) is tied to this normalization
+of the Mukai pairing. Replacing the trace form, changing the level, or
+using the Hall--Drinfeld double normalization rescales this term; the
+factor \(1/u\) alone does not determine the coefficient.
 \end{construction}
 
-\begin{proposition}[C1 -- existence and pole structure]
+\begin{proposition}[C1 -- formal pole structure under the \(R\)-matrix hypothesis]
 \label{prop:defq-C1-existence}
 \ClaimStatusProvedHere
 \index{$r(u, Z)$!pole structure}
-$r(u, Z)$ of Construction~\ref{constr:defq-rmatrix-limit} is
-well-defined in
+$r(u, Z)$ of Construction~\ref{constr:defq-rmatrix-limit}, under the
+normalization hypotheses stated there, is a well-defined formal
+meromorphic tensor in
 $\mathfrak g_{\Delta_5}\widehat\otimes\mathfrak g_{\Delta_5}$
 on $\mathbb H_2\setminus\{\text{Humbert divisors}\}$, with simple pole
 at $u = 0$ of residue $\Omega_{\mathrm{Mukai}}$ and $Z$-dependence
@@ -2282,86 +2824,51 @@ logarithmic through $\partial_Z\log\Phi_{10}^{\mathrm{un}}$.
 \end{proposition}
 
 \begin{proof}
-Convergence of $R^{\mathrm{rat}}_{\mathrm{Yang}}$ is standard
-(Drinfeld 1985 \emph{Sov.\ Math.\ Dokl.}~32 Prop.~3;
-Chari--Pressley~\cite{ChariPressley1994Guide} Prop.~12.1.5). The
-dynamical factor $\theta^{\mathrm{K3}}(u, Z)$ is entire in~$u$ with
-Fourier coefficients $c_{\mathrm{K3}}(4nm-\ell^2)$ controlled by
-Borcherds 1992 Thm.~10.1; convergence on
-$\mathbb H_2\setminus\{\text{Humbert divisors}\}$ is
-Pasol--Zagier 2013 \emph{J.\ Number Theory}~133 Prop.~4.1. The $\log$
-expansion is term-by-term convergent in the Baker--Campbell--Hausdorff
-sense on the associated graded.
+The statement is formal in $\hbar$ and meromorphic in the spectral
+parameter. The rational factor contributes the simple pole
+\(\Omega_{\mathrm{Mukai}}/u\). The Borcherds product has logarithmic
+singularities exactly on the Humbert divisors, so
+\(\partial_Z\log\Phi_{10}^{\mathrm{un}}\) is defined away from them.
+The completed tensor product is needed because the BKM root spaces are
+not finite in the ordinary Yangian sense.
 \end{proof}
 
 \subsection{C2 -- Classical Yang--Baxter equation}
 \label{subsec:defq-C2-CYBE}
 
-\begin{theorem}[CYBE verification for $r(u, Z)$ -- chain-level]
+\begin{theorem}[Dynamical CYBE for \texorpdfstring{$r(u,Z)$}{r(u,Z)} -- chain-level]
 \label{thm:defq-C2-CYBE}
 \ClaimStatusProvedHere
 \index{classical Yang--Baxter equation!chain-level}
 \index{CYBE!Siegel dynamical!chain-level}
-The semi-classical $r$-matrix~\eqref{eq:defq-classical-r}
-satisfies, at $\hbar^0$-level on
-$\mathfrak g_{\Delta_5}^{\otimes 3}$,
+If the normalized \(R_{\mathrm{Sieg,dyn}}\) of
+Construction~\ref{constr:defq-rmatrix-limit} satisfies the quantum
+dynamical Yang--Baxter equation, then its first semiclassical term
+\(r(u,Z)\) satisfies the classical dynamical Yang--Baxter equation
 \begin{equation}
 \label{eq:defq-CYBE-statement}
  [r_{12}(u_1, u_2, Z), r_{13}(u_1, u_3, Z)]
  + [r_{12}(u_1, u_2, Z), r_{23}(u_2, u_3, Z)]
  + [r_{13}(u_1, u_3, Z), r_{23}(u_2, u_3, Z)]
+ + \operatorname{Alt}(d_Z r)
  \;=\;
  0.
 \end{equation}
+When the $Z$-dependence is frozen or the dynamical derivative term
+vanishes in the chosen representation, this reduces to the ordinary
+CYBE.
 \end{theorem}
 
 \begin{proof}
-Write $r(u, Z) = r^{\mathrm{rat}}(u) + r^{\mathrm{dyn}}(u, Z)$ with
-$r^{\mathrm{rat}}(u) = \Omega_{\mathrm{Mukai}}/u$ and
-$r^{\mathrm{dyn}}(u, Z) = \partial_Z\log\Phi_{10}^{\mathrm{un}}(Z)\cdot\Omega_{\mathrm{K3}}
-+ O(u^{-2})$.
-
-\emph{Rational-factor CYBE.} The term
-$[r^{\mathrm{rat}}_{12}, r^{\mathrm{rat}}_{13}]
-+ [r^{\mathrm{rat}}_{12}, r^{\mathrm{rat}}_{23}]
-+ [r^{\mathrm{rat}}_{13}, r^{\mathrm{rat}}_{23}]$ reduces, after
-clearing denominators, to the infinitesimal-braid identity
-$[\Omega_{12}, \Omega_{13}] + [\Omega_{12}, \Omega_{23}]
-+ [\Omega_{13}, \Omega_{23}] = 0$. This holds because
-$\Omega_{\mathrm{Mukai}} = \sum_a e_a\otimes e^a$ is the Mukai-pairing
-Casimir: the Jacobi identity
-$[e_a, [e_b, -]] - [e_b, [e_a, -]] - [[e_a, e_b], -] = 0$ applied to
-pairs of basis elements at positions $12, 13, 23$ gives the vanishing
-(Drinfeld 1983 \emph{Sov.\ Math.\ Dokl.}~27 Thm.~1, rational CYBE;
-Belavin--Drinfeld 1984 \emph{Funct.\ Anal.\ Appl.}~17 Prop.~1).
-
-\emph{Cross-terms.} The cross-terms
-$[r^{\mathrm{rat}}_{12}, r^{\mathrm{dyn}}_{13}]$ and cyclic
-permutations expand to
-$\partial_Z\log\Phi_{10}^{\mathrm{un}}(Z)\cdot
-[\Omega_{\mathrm{Mukai},12}, \Omega_{\mathrm{K3},13}]/u_{12}$.
-Because $\Omega_{\mathrm{K3}}$ is $W_{\mathrm{para}}$-invariant and
-$\Omega_{\mathrm{Mukai}}$ is the real-root Casimir, the sum of six
-cyclic cross-terms vanishes by the Jacobi-identity manipulation
-applied to the mixed bracket
-$[\Omega_{\mathrm{Mukai}}, \Omega_{\mathrm{K3}}]$ summed over its
-three cyclic positions (Gritsenko--Nikulin 1998 \S3 Thm.~3.2 gives
-the $W_{\mathrm{para}}$-invariance used here).
-
-\emph{Dynamical-factor self-term.} The term
-$[r^{\mathrm{dyn}}_{12}, r^{\mathrm{dyn}}_{13}] + \text{cyclic}$
-factors as $(\partial_Z\log\Phi_{10}^{\mathrm{un}})^2\cdot
-[\Omega_{\mathrm{K3},12}, \Omega_{\mathrm{K3},13}]$ plus permutations;
-the Casimir property
-$[\Omega_{\mathrm{K3},12}, \Omega_{\mathrm{K3},13}]
-= [\Omega_{\mathrm{K3},13}, \Omega_{\mathrm{K3},23}]$ gives cyclic
-vanishing (Felder 1995 \emph{ICM Z\"urich Proc.}~\S3 Thm.~3.1
-dynamical-CYBE closure).
-
-Summing rational, cross, and dynamical contributions
-gives~\eqref{eq:defq-CYBE-statement} at $\hbar^0$-level.
-At $\hbar^1$-level the dynamical $\partial_Z$-correction appears;
-this is the Siegel--Borcherds associator.
+Expand the quantum dynamical Yang--Baxter equation for
+\(R=1+\hbar r+O(\hbar^2)\). The coefficient of \(\hbar^2\) is exactly
+the bracket sum in~\eqref{eq:defq-CYBE-statement} together with the
+dynamical derivative term \(\operatorname{Alt}(d_Zr)\). The rational
+piece \(\Omega_{\mathrm{Mukai}}/u\) satisfies the ordinary rational
+CYBE by the infinitesimal-braid identity for the invariant Mukai
+Casimir. The logarithmic \(Z\)-dependent term contributes to
+\(\operatorname{Alt}(d_Zr)\); omitting that term incorrectly turns a
+dynamical equation into an ordinary CYBE.
 \end{proof}
 
 \subsection{C3 -- Classical Lie bialgebra on $\mathfrak g_{\Delta_5}$}
@@ -2370,10 +2877,10 @@ this is the Siegel--Borcherds associator.
 \begin{computation}[Cobracket on a distinguished generating set]
 \label{comp:defq-cobracket-generators}
 \index{cobracket!generator-level}
-On the two real simple generators $h_1, h_2$ of $\mathfrak g_{\Delta_5}$
+On the three real simple generators $h_1,h_2,h_3$ of $\mathfrak g_{\Delta_5}$
 (Gritsenko--Hulek 1998 \S3, paramodular simple roots of $\Phi_{10}^{\mathrm{un}}$),
 the cobracket $\delta_{\mathrm{GN}}(x) = [r(u, Z), x\otimes 1
-+ 1\otimes x]$ computes as follows. Since $h_1, h_2$ are real
++ 1\otimes x]$ computes as follows. Since $h_1,h_2,h_3$ are real
 ($\mathrm{mult}(h_i) = 1$) and orthogonal to
 $\Omega_{\mathrm{K3}}$'s imaginary-root support,
 $[r^{\mathrm{dyn}}(u, Z), h_i\otimes 1 + 1\otimes h_i] = 0$.
@@ -2404,28 +2911,29 @@ matches the Gritsenko--Nikulin 1998 \S5 Thm.~5.3 cobracket pointwise.
 \begin{theorem}[C3 -- Lie bialgebra]
 \label{thm:defq-C3-lie-bialgebra}
 \ClaimStatusProvedHere
-The pair $(\mathfrak g_{\Delta_5}, \delta_{\mathrm{GN}})$ with cobracket
-from Computation~\ref{comp:defq-cobracket-generators} is a
-super-Lie bialgebra and coincides pointwise with the
-Gritsenko--Nikulin 1998 \S5 Thm.~5.3 classical Lie bialgebra.
+For each fixed \(Z\) away from the Humbert divisors, if the dynamical
+derivative term in Theorem~\ref{thm:defq-C2-CYBE} vanishes after
+specialization to the chosen fibre, the cobracket
+\[
+\delta_Z(x)=[r(u,Z),x\otimes1+1\otimes x]
+\]
+defines a super-Lie bialgebra on the completed fibre of
+\(\mathfrak g_{\Delta_5}\). Without this frozen-fibre hypothesis the
+structure is the corresponding dynamical Lie bialgebra. Under the
+Gritsenko--Nikulin normalization, its generator-level formula is the
+one displayed in Computation~\ref{comp:defq-cobracket-generators}.
 \end{theorem}
 
 \begin{proof}
-The cocycle condition
-$\delta([x, y]) = [\delta(x), y\otimes 1 + 1\otimes y]
-+ [x\otimes 1 + 1\otimes x, \delta(y)]$ reduces to CYBE
-(Drinfeld 1983 \S2 Thm.~2), which holds by
-Theorem~\ref{thm:defq-C2-CYBE}. The pointwise coincidence with
-Gritsenko--Nikulin 1998 Thm.~5.3 is
-Computation~\ref{comp:defq-cobracket-generators}.
-
-\emph{Multi-path verification}:
-(i) Drinfeld 1983 Thm.~2 universal construction;
-(ii) Etingof--Schiffmann~\cite{EtingofSchiffmann1998Lectures} \S2.2
- Thm.~2.2.1 Lie-bialgebra-from-$r$-matrix;
-(iii) Gritsenko--Nikulin 1998 \S5 Prop.~5.1;
-(iv) Scheithauer 2000 \emph{J.\ Reine Angew.\ Math.}~525 Thm.~5.1
- paramodular-lattice BKM cobracket (independent check).
+For a fixed fibre on which the dynamical derivative vanishes, the
+ordinary CYBE is the specialization of
+Theorem~\ref{thm:defq-C2-CYBE}. Drinfeld's coboundary construction
+then gives the Lie-bialgebra cocycle identity for
+\(\delta_Z=[r,-]\). If the derivative term does not vanish, the same
+expansion gives the dynamical Lie-bialgebra identity with base
+derivatives. The displayed generator calculation identifies the
+normalization with the Gritsenko--Nikulin formula wherever that formula
+is used as input.
 \end{proof}
 
 \subsection{C4 -- Gritsenko--Nikulin 1998 consistency}
@@ -2440,13 +2948,14 @@ $\delta_{\mathrm{GN}}^{\mathrm{GN1998}}(x_\beta) =
 \sum_{\beta_1+\beta_2 = \beta}\mathrm{mult}(\beta_1)\mathrm{mult}(\beta_2)
 [x_{\beta_1}\wedge x_{\beta_2}]\cdot
 \partial_Z\log\Phi_{10}^{\mathrm{un}}(Z)|_{\beta_1, \beta_2}$.
-Computation~\ref{comp:defq-cobracket-generators} gives exactly
-this sum after identifying $\Omega_{\mathrm{K3}} =
+Computation~\ref{comp:defq-cobracket-generators} gives the same formal
+shape under
+the normalization hypotheses of Construction~\ref{constr:defq-rmatrix-limit}
+after identifying $\Omega_{\mathrm{K3}} =
 \sum_\beta\mathrm{mult}(\beta) x_\beta\otimes x_{-\beta}$ and applying
-Koszul self-duality $x_\beta^\vee = x_{-\beta}$. Every imaginary root
-$\beta\in\Phi^{\mathrm{imag}}_{\Delta_5}$ is reached; every
-Borcherds multiplicity $\mathrm{mult}(\beta) = c_{\mathrm{K3}}(|\beta|^2/2)$
-is correctly weighted; every $\partial_Z$-term is correctly placed.
+the dual-root pairing $x_\beta^\vee = x_{-\beta}$. The remaining
+verification is a root-by-root comparison of the BKM multiplicity
+normalization with the Gritsenko--Nikulin convention.
 Primary: Gritsenko--Nikulin 1998 Thm.~5.3 and \S5 Prop.~5.1;
 Borcherds 1992 Thm.~10.1; Scheithauer 2000 Thm.~5.1.
 \end{remark}
@@ -2454,15 +2963,14 @@ Borcherds 1992 Thm.~10.1; Scheithauer 2000 Thm.~5.1.
 \subsection{C5 -- The Kazhdan classical-limit theorem}
 \label{subsec:defq-C5-theorem}
 
-\begin{theorem}[Kazhdan classical-limit theorem, Vol~I form]
+\begin{theorem}[Formal classical-limit criterion, Vol~I form]
 \label{thm:defq-kazhdan-classical-limit}
 \ClaimStatusProvedHere
 \index{Kazhdan classical-limit theorem!Vol I|textbf}
-The $\hbar\to 0$ classical limit of the super-Etingof--Kazhdan
-quantisation $\mathbf H_{\Delta_5}$ is the Gritsenko--Nikulin 1998
-classical chiral Lie bialgebra
-$(\mathfrak g_{\Delta_5}, \delta_{\mathrm{GN}})$ with semi-classical
-$r$-matrix
+Let \(\mathbf H_{\Delta_5}\) be an \(\hbar\)-adically complete
+Hall--Drinfeld quantization whose associated graded algebra is
+the completed BKM algebra \(\mathfrak g_{\Delta_5}\), and assume its
+first-order commutator/cocommutator is the normalized tensor
 \begin{equation}
 \label{eq:defq-classical-limit}
  r(u, Z)
@@ -2473,38 +2981,40 @@ $r$-matrix
  \;+\;
  O(u^{-2}).
 \end{equation}
-$\mathbf H_{\Delta_5}$ is the unique super-quantisation of
-$(\mathfrak g_{\Delta_5}, \delta_{\mathrm{GN}})$ up to gauge, at the
-Lusztig specialisation $\hbar^2 = -1/8$.
+Then the formal classical limit \(\hbar\to0\) is the corresponding
+Gritsenko--Nikulin-type dynamical Lie bialgebra
+\((\mathfrak g_{\Delta_5},\delta_{\mathrm{GN}})\). If, in addition,
+the deformation functor is formally rigid over the line
+\(H^2(\mathfrak g_{\Delta_5})^{\Z/2,K(1)}\cong\bC\cdot\Delta_5\),
+then any two such \(\hbar\)-adic quantizations with the same
+first-order class are gauge equivalent as formal quantizations. The
+one-dimensionality of the first-order line alone is not a rigidity
+theorem.
 \end{theorem}
 
 \begin{proof}
-\emph{Step 1.} Existence and pole structure of $r(u, Z)$:
+\emph{Step 1.} Normalized pole structure of $r(u, Z)$:
 Proposition~\ref{prop:defq-C1-existence}.
-\emph{Step 2.} CYBE: Theorem~\ref{thm:defq-C2-CYBE}.
-\emph{Step 3.} Lie-bialgebra structure:
+\emph{Step 2.} Dynamical CYBE:
+Theorem~\ref{thm:defq-C2-CYBE}.
+\emph{Step 3.} Frozen-fibre or dynamical Lie-bialgebra structure:
 Theorem~\ref{thm:defq-C3-lie-bialgebra}.
-\emph{Step 4.} Gritsenko--Nikulin 1998 \S5 Thm.~5.3 consistency:
+\emph{Step 4.} Gritsenko--Nikulin normalization:
 Remark~\ref{rem:defq-gn-consistency}.
-\emph{Step 5.} Uniqueness of quantisation up to gauge:
-Etingof--Kazhdan 1996 \emph{Selecta Math.}~2 Thm.~1;
-Etingof--Kazhdan 1998 \emph{Selecta Math.}~4 Thm.~2.1;
-Etingof--Kazhdan 2000 \emph{Selecta Math.}~6 (super-graded);
-Kontsevich 2003 \emph{Lett.\ Math.\ Phys.}~66 (formality).
-Cohomological classification
+\emph{Step 5.} Formal uniqueness, when rigidity of the local
+deformation functor is assumed:
 $H^2(\mathfrak g_{\Delta_5})^{\Z/2,\,K(1)}\cong\bC\cdot\Delta_5$
-(Remark~\ref{rem:defq-1}) gives a one-dimensional quantisation
-moduli line; the Lusztig root-of-unity point $\hbar^2 = -1/8$ is the
-distinguished point where the chiral bialgebra $\mathbf H_{\Delta_5}$
-is the CY-to-chiral image of the K3 base point.
+(Remark~\ref{rem:defq-1}) names the first-order line. The added
+rigidity hypothesis kills the higher torsor ambiguity, so equal
+first-order classes determine the same formal gauge class. No analytic
+specialization at \(\hbar^2=-1/8\) is used in this formal limit.
 \end{proof}
 
 \begin{remark}[The classical/quantum diptych for $\mathbf H_{\Delta_5}$]
 \label{rem:defq-synthesis}
 \index{classical/quantum diptych!$\mathbf H_{\Delta_5}$|textbf}
-Together with the quantum structure at $\hbar^2 = -1/8$ established in
-Remark~\ref{rem:defq-1}, the classical-limit theorem closes the Kazhdan axis on
-$\mathbf H_{\Delta_5}$:
+The formal classical limit and the Lusztig/CY specialization are two
+different structures on the same notation:
 \begin{itemize}
  \item \emph{Classical end} ($\hbar \to 0$): Lie bialgebra
  $(\mathfrak g_{\Delta_5}, \delta_{\mathrm{GN}})$ with $r$-matrix
@@ -2512,74 +3022,54 @@ $\mathbf H_{\Delta_5}$:
  \cdot\Omega_{\mathrm{K3}} + O(u^{-2})$ on
  $\Lambda_{\mathrm{Muk}}\otimes\bC$ with
  $\Lambda_{\mathrm{Muk}} = \mathrm{II}_{4,20}$.
- \item \emph{Quantum end} ($\hbar^2 = -1/8$): chiral bialgebra
- $\mathbf H_{\Delta_5}$ with $R_{\mathrm{Sieg,dyn}}(u, Z) =
- R^{\mathrm{rat}}_{\mathrm{Yang}}(u)\cdot\theta^{\mathrm{K3}}(u, Z)$,
+ \item \emph{Quantum specialization} ($\hbar^2 = -1/8$): a
+ Hall--Drinfeld/K3 chiral bialgebra structure on
+ $\mathbf H_{\Delta_5}$, when supplied by its independent integral-form
+ construction, with
+ $R_{\mathrm{Sieg,dyn}}(u, Z)=R^{\mathrm{rat}}(u)\cdot\theta^{\mathrm{K3}}(u, Z)$,
  small Lusztig form
  $\mathfrak u_{\zeta_8}(\widehat{\mathfrak m}_{\Delta_5})$,
  MTC $\mathcal{MTC}_{\zeta_8}(\Delta_5)$.
 \end{itemize}
-Etingof--Kazhdan 1996--2000 and Kontsevich 2003 connect these
-endpoints by the unique gauge-equivalence class of quantisations, and
-$H^2(\mathfrak g_{\Delta_5})^{\Z/2,\,K(1)}\cong\bC\cdot\Delta_5$
-(Remark~\ref{rem:defq-1}) shows the full $\hbar$-line is
-one-parameter. The Lusztig specialisation is the distinguished
-root-of-unity point where the chiral bialgebra is modular and the MTC
-structure exists; the $\hbar\to 0$ limit is the distinguished
-classical point where the Lie-bialgebra cocycle $\delta_{\mathrm{GN}}$
-is defined. No other quantum-group structure on $\mathbf H_{\Delta_5}$
-is consistent with the one-dimensional cocycle moduli.
+The formal EK/Kontsevich comparison concerns the \(\hbar\)-adic
+neighbourhood of \(0\). The root-of-unity point requires an integral
+form or a separate convergence theorem. The one-dimensional cocycle
+line constrains first-order deformations; it does not classify every
+possible quantum-group enhancement of the K3 object.
 \end{remark}
 
-\section{The Kontsevich formality bridge: $\mathbf H_{\Delta_5}$ as super-Kontsevich deformation quantisation}
+\section{The Kontsevich formality bridge for the \texorpdfstring{$\Delta_5$}{Delta5} formal axis}
 \label{sec:defq-kontsevich-formality-bridge}
 
-The classical-limit theorem pins one end of the
-$\hbar$-interpolation: as $\hbar\to 0$, $\mathbf H_{\Delta_5}$
-degenerates to the Gritsenko--Nikulin classical chiral Lie bialgebra
-$(\mathfrak g_{\Delta_5},\delta_{\mathrm{GN}})$ with $r$-matrix
-$r(u, Z) = \Omega_{\mathrm{Mukai}}/u + \partial_Z\log\Phi_{10}^{\mathrm{un}}\cdot
-\Omega_{\mathrm{K3}} + O(u^{-2})$. The existence statement of
-$\mathbf H_{\Delta_5}$ at $\hbar^2 = -1/8$ is Etingof--Kazhdan
-super-quantisation. The structural identification is that the
-Etingof--Kazhdan super-quantisation of
-$(\mathfrak g_{\Delta_5},\delta_{\mathrm{GN}})$ coincides, up to the
-unique gauge equivalence class, with the Kontsevich
-deformation-quantisation star product extended to the super-graded
-Poisson structure induced by $r(u, Z)$, and the $\hbar$-specialisation
-$\hbar^2 = -1/8$ converts the formal star product into the convergent
-chiral bialgebra structure. This is not a second proof of existence;
-it is a \emph{lens change}: the same $\mathbf H_{\Delta_5}$, viewed
-through the Kontsevich integral-over-graphs machinery rather than the
-Etingof--Kazhdan Drinfeld-associator machinery, reveals the motivic
-origin of its coefficients.
+The formal comparison has three layers. Kontsevich formality gives
+formal star products on finite-dimensional formal supermanifolds.
+Etingof--Kazhdan gives an \(\hbar\)-adic quantization of a completed
+Lie bialgebra. The root-of-unity point \(\hbar^2=-1/8\) is a separate
+integral-form or convergence problem. The statements below keep these
+layers separate.
 
 \subsection{Super-Kontsevich formality for $\mathfrak g_{\Delta_5}$}
 \label{subsec:defq-super-kontsevich-formality}
 
-\begin{theorem}[Super-Kontsevich formality for the
-$\Delta_5$-classical structure; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Finite-truncation super-Kontsevich formality;
+\ClaimStatusProvedElsewhere]
 \label{thm:defq-super-kontsevich-formality}
 \index{super-Kontsevich formality!for $\mathfrak g_{\Delta_5}$|textbf}
-Let $(\mathfrak g_{\Delta_5},\delta_{\mathrm{GN}})$ denote the
-Gritsenko--Nikulin super-chiral Lie bialgebra on the Mukai lattice
-$\Lambda_{\mathrm{Muk}} = \mathrm{II}_{4,20}$. There exists an
-$L_\infty$-quasi-isomorphism of super-graded differential graded Lie
-algebras
+Let \(V_N\subset \mathfrak g_{\Delta_5}^{\mathrm{super}}\) be a
+finite-dimensional super-vector-space truncation closed under the
+Poisson brackets used to order \(N\). On the formal supermanifold
+\(V_N^*\), Kontsevich--Shoikhet formality gives an
+\(L_\infty\)-quasi-isomorphism
 \begin{equation}
 \label{eq:defq-super-kontsevich-qis}
- \cU^{\mathrm{super}} \;\colon\;
- \mathrm{Hoch}^\bullet(\mathfrak g_{\Delta_5}^{\mathrm{super}})
+ \cU^{\mathrm{super}}_N \;\colon\;
+ \mathrm{PVec}^\bullet(V_N^*)
  \;\xrightarrow{\;\sim\;}\;
- \mathrm{PVec}^\bullet(\mathfrak g_{\Delta_5}^{\mathrm{super}}),
+ C^\bullet_{\mathrm{Hoch}}(\mathcal O(V_N^*),\mathcal O(V_N^*)).
 \end{equation}
-from the super-graded Hochschild cochain complex on the universal
-enveloping algebra of $\mathfrak g_{\Delta_5}^{\mathrm{super}}$ to the
-super-graded polyvector field complex on the dual
-$\mathfrak g_{\Delta_5}^{\mathrm{super},*}$. The formality morphism is
-constructed from Kontsevich admissible-graph weights extended to the
-super-graded setting via Shoikhet's odd-configuration signs
-(Shoikhet 2003 \emph{Adv.\ Math.}~179 \S2.4).
+The morphism is built from Kontsevich admissible-graph weights with
+the super sign rule. Passing from the truncations \(V_N\) to the full
+completed BKM object requires an inverse-limit compatibility theorem.
 \end{theorem}
 
 \begin{proof}
@@ -2588,30 +3078,22 @@ formality quasi-isomorphism in the ungraded setting on $\bR^d$;
 Tamarkin 1998 (arXiv:math/9803025) gives the operadic interpretation
 through a choice of Drinfeld associator. Shoikhet 2003 extends the
 admissible-graph weight construction to graded Lie algebras with odd
-signs, adapting the Cattaneo--Felder 2001 \emph{Comm.\ Math.\
-Phys.}~228 path-integral interpretation. The super-graded
-$\mathfrak g_{\Delta_5}^{\mathrm{super}}$ has odd-root subspace
-$\mathfrak g_{\Delta_5}^{\bar 1}$ spanned by the BKM imaginary simple
-roots attached to the Siegel boundary $\{\Delta_5 = 0\}$ (see
-Theorem~\ref{thm:defq-C3-lie-bialgebra} and the Mukai
-decomposition there). Applying Shoikhet's super-Kontsevich formality
-to the algebra of functions on
-$\mathfrak g_{\Delta_5}^{\mathrm{super},*}$ regarded as a super-Poisson
-manifold with Poisson bivector $\pi = r(u, Z)$ produces the required
-$L_\infty$-quasi-isomorphism.
+signs, adapting the Cattaneo--Felder path-integral interpretation. Each
+finite truncation \(V_N^*\) is an ordinary finite-dimensional formal
+supermanifold, so Shoikhet's theorem applies. The infinite BKM
+completion is not finite-dimensional; it is therefore named as the
+inverse-limit obligation rather than silently included in the theorem.
 \end{proof}
 
 \subsection{Star product and $\hbar^2 = -1/8$ specialisation}
 \label{subsec:defq-star-product-specialisation}
 
-\begin{construction}[Super-Kontsevich star product for $\pi = r(u, Z)$]
+\begin{construction}[Formal super-Kontsevich star product on a finite truncation]
 \label{constr:defq-super-kontsevich-star}
-Given the super-Kontsevich formality of
-Theorem~\ref{thm:defq-super-kontsevich-formality} and the super-graded
-Poisson bivector $\pi = r(u, Z)$ of
-Theorem~\ref{thm:defq-kazhdan-classical-limit}, the associated
-star product on
-$C^\infty(\mathfrak g_{\Delta_5}^{\mathrm{super},*})[[\hbar]]$ is
+Given \(V_N\) and a Poisson bivector
+\(\pi_N=r(u,Z)|_{V_N}\) satisfying the Jacobi identity to order \(N\),
+Theorem~\ref{thm:defq-super-kontsevich-formality} gives a formal star
+product on \(\mathcal O(V_N^*)[[\hbar]]\):
 \begin{equation}
 \label{eq:defq-super-kontsevich-star-product}
  f \star g
@@ -2620,134 +3102,94 @@ $C^\infty(\mathfrak g_{\Delta_5}^{\mathrm{super},*})[[\hbar]]$ is
  \;+\; \hbar^3\, B_3(f, g) \;+\; \cdots,
 \end{equation}
 where $\{-,-\}_\pi$ is the super-Poisson bracket induced by $r(u, Z)$
-and each $B_n(f, g) = \sum_{\Gamma}
-w_\Gamma^{\mathrm{super}}\,\hat B_\Gamma(f, g)$ is a sum over
-Kontsevich admissible graphs $\Gamma$ with $n$ internal vertices,
-weighted by the super-graph integrals
-$w_\Gamma^{\mathrm{super}} = \int_{C_n(\mathbb H)}
-\omega_\Gamma^{\mathrm{super}}$ of Shoikhet 2003. Associativity
-$(f \star g)\star h = f \star (g \star h)$ holds by
-Theorem~\ref{thm:defq-super-kontsevich-formality}.
+on the truncation, and each \(B_n\) is a finite sum of
+Kontsevich--Shoikhet graph operators. Associativity is an
+\(\hbar\)-adic statement. It gives no evaluation at a nonzero
+\(\hbar\) without an additional convergence or nilpotence argument.
 \end{construction}
 
-\begin{theorem}[$\hbar^2 = -1/8$ specialisation converges and recovers
-$\mathbf H_{\Delta_5}$; \ClaimStatusProvedHere]
+\begin{theorem}[Root-of-unity specialization criterion;
+\ClaimStatusProvedHere]
 \label{thm:defq-star-product-specialisation}
 \index{star product!at $\hbar^2 = -1/8$}
-Specialise the formal parameter $\hbar$ in
-Construction~\ref{constr:defq-super-kontsevich-star} to the Lusztig
-root-of-unity value $\hbar^2 = -1/8$. Then:
+The formal star product of
+Construction~\ref{constr:defq-super-kontsevich-star} may be evaluated
+at the Lusztig value \(\hbar^2=-1/8\) only under one of the following
+additional hypotheses:
 \begin{enumerate}[label=\textup{(\roman*)}]
- \item\emph{Convergence.} The formal series
- \eqref{eq:defq-super-kontsevich-star-product} specialised at
- $\hbar^2 = -1/8$ converges in the Frechet topology on
- $C^\infty(\mathfrak g_{\Delta_5}^{\mathrm{super},*})$
- restricted to the finite-type subspace of polynomials on
- $\Lambda_{\mathrm{Muk}}\otimes\bC$. The convergence bound
- uses the Kontsevich graph-weight estimate
- $|w_\Gamma^{\mathrm{super}}| \le C^{|V(\Gamma)|}$ with
- $C < 8^{1/2}$, which ensures absolute convergence of the
- $\hbar^2 = -1/8$ series once the Cartan subalgebra is
- finite-rank.
- \item\emph{Agreement with EK super-quantisation.} The resulting
- associative product on the completed enveloping algebra of
- $\mathfrak g_{\Delta_5}^{\mathrm{super}}$ coincides, up to
- the unique gauge-equivalence class fixed by
- $H^2(\mathfrak g_{\Delta_5})^{\bZ/2, K(1)}\cong\bC\cdot\Delta_5$
- (Remark~\ref{rem:defq-1}), with the Etingof--Kazhdan
- super-quantisation $\mathbf H_{\Delta_5}$.
+\item the chosen finite truncation is nilpotent on the functions under
+ consideration, so only finitely many \(B_n\) act nontrivially;
+\item an analytic estimate for the completed graph series is supplied
+ in a specified topology;
+\item an integral form of the EK/Hall--Drinfeld quantization is given
+ and then specialized independently of the Kontsevich series.
 \end{enumerate}
+If such a specialization exists and its first-order class is
+\(\delta_{\mathrm{GN}}\), then it has the same first-order direction as
+the corresponding formal EK quantization. Identifying the full formal
+gauge class still requires the rigidity hypothesis stated in
+Theorem~\ref{thm:defq-kazhdan-classical-limit}. The theorem does not
+assert convergence of the full BKM Kontsevich series.
 \end{theorem}
 
 \begin{proof}
-\emph{Convergence.} The Kontsevich graph-weight bound is
-$|w_\Gamma| \le 1/(2n)!$ for admissible graphs with $n$ internal
-vertices (Kontsevich 2003 Proposition~5.3.1); the super-graded
-extension of Shoikhet 2003 retains the same bound. Substituting
-$|\hbar^2| = 1/8$ yields absolute convergence on the polynomial
-subalgebra.
-
-\emph{Agreement with EK super-quantisation.} By Etingof--Kazhdan
-1996 \emph{Selecta Math.}~2 Theorem~1 and its super-graded extension
-(Etingof--Kazhdan 2000 \emph{Selecta Math.}~6), the moduli of
-quantisations of $(\mathfrak g_{\Delta_5}^{\mathrm{super}},
-\delta_{\mathrm{GN}})$ is one-dimensional, parametrised by
-$H^2(\mathfrak g_{\Delta_5})^{\bZ/2, K(1)} \cong \bC\cdot\Delta_5$.
-Both the Kontsevich star product of
-Construction~\ref{constr:defq-super-kontsevich-star} and the EK
-super-quantisation $\mathbf H_{\Delta_5}$ produce associative
-super-quantisations of the same classical Lie bialgebra with the
-\emph{same} first-order cocycle (both equal $\delta_{\mathrm{GN}}$
-by construction), and by uniqueness they lie in the same gauge class.
-At $\hbar^2 = -1/8$ the Kontsevich star product is the explicit
-Frechet-convergent representative of that class.
+A formal power series can be evaluated at a nonzero scalar only after
+termination or convergence has been proved. Conditions (i)--(iii) are
+the standard mechanisms. The final assertion is only a first-order
+comparison unless the separate formal-rigidity hypothesis is imposed.
+It does not supply the missing analytic or integral-form input.
 \end{proof}
 
-\subsection{Motivic weights: $w_\Gamma$ = MZV = Drinfeld pentagon coefficient}
+\subsection{Motivic weights and associator coefficients}
 \label{subsec:defq-motivic-unified}
 
-\begin{theorem}[Unified motivic origin: Kontsevich weights, MZVs,
-Drinfeld pentagon coefficients;
+\begin{theorem}[Associator coefficients and MZV periods;
 \ClaimStatusProvedElsewhere]
 \label{thm:defq-unified-motivic-origin}
 \index{motivic Galois!unified origin}
-Under the super-Kontsevich formality
-$\cU^{\mathrm{super}}$ of
-Theorem~\ref{thm:defq-super-kontsevich-formality}, the following
-three collections of transcendental coefficients are identified as
-one indexed family inside the motivic $\bQ$-algebra of multiple zeta
-values $\cZ \subset \bR$:
+For the KZ-associator representative of the finite-truncation
+formality morphism, the coefficients of the associator lie in the
+\(\bQ\)-algebra of multiple zeta values. The relevant comparison is:
 \begin{enumerate}[label=\textup{(\roman*)}]
- \item the super-Kontsevich graph weights $w_\Gamma^{\mathrm{super}}$
- (configuration-space integrals on $C_n(\mathbb H)$);
- \item the multiple zeta values
- $\zeta(s_1,\ldots,s_r)$ with $s_1, \ldots, s_r\in\bZ_{\ge 1}$,
- $s_1\ge 2$;
- \item the Drinfeld associator coefficients $\phi^{(n)}$ in the KZ
- associator $\Phi_{\mathrm{KZ}}(X, Y) = 1 + \sum_n \phi^{(n)}
- \cdot (\mathrm{iterated~bracket})$ as they enter the
- pentagon identity.
+ \item Kontsevich graph weights are periods of compactified
+ configuration spaces;
+ \item the KZ associator coefficients are iterated integrals of the
+ KZ connection and are MZV combinations;
+ \item a choice of stable formality morphism identifies the
+ corresponding homotopy class of coefficients with a Drinfeld
+ associator.
 \end{enumerate}
-The identification (i) $=$ (ii) is the Furusho--Brown MZV-weight
-theorem (Furusho 2010 \emph{Publ.\ RIMS}~46; Brown 2012 \emph{Ann.\
-Math.}~175); (ii) $=$ (iii) is Drinfeld's associator expansion
-(Drinfeld 1991 \emph{Leningrad Math.\ J.}~2, connecting
-$\Phi_{\mathrm{KZ}}$ to the $\bQ$-span of MZVs via the KZ monodromy).
+This is a statement about a chosen representative and its homotopy
+class, not an equality between every individual graph weight and a
+single indexed list of MZVs.
 \end{theorem}
 
 \begin{proof}
-Furusho 2010 proves every Kontsevich weight
-$w_\Gamma \in \cZ\otimes(2\pi i)^{-\bZ}$ via iterated integration of
-logarithmic forms on moduli of boundary-marked configuration spaces;
-Brown 2012 establishes that every admissible-graph weight lies in the
-$\bQ$-span of MZVs (no unknown-transcendence gap). Drinfeld's
-pentagon identity for $\Phi_{\mathrm{KZ}}$ (Drinfeld 1991, equation
-(2.13) and the Stasheff pentagon (2.15)) expresses $\phi^{(n)}$ as
-iterated integrals of KZ connection forms along paths on
-$\Conf_n(\bC)$, which coincide with the Kontsevich graph integrals
-under the Grothendieck period correspondence. The super-graded
-extension adds Shoikhet odd-signs that do not affect the rational
-linear combinations of MZVs entering each weight.
+Kontsevich's graph weights are periods of boundary-marked
+configuration spaces. The coefficients \(\phi^{(n)}\) in Drinfeld's
+KZ associator
+\[
+\Phi_{\mathrm{KZ}}(X,Y)
+=1+\sum_n\phi^{(n)}\cdot(\mathrm{iterated~bracket})
+\]
+are iterated integrals of KZ forms, hence MZV combinations for the
+KZ choice. Tamarkin--Willwacher
+identify choices of formality morphism with associator/graph-complex
+data up to homotopy. The super sign rule changes Koszul signs in the
+operators; it does not create new periods.
 \end{proof}
 
-\begin{theorem}[$\mathrm{GRT}_1$-equivariance of the super-Kontsevich
-formality; \ClaimStatusProvedElsewhere]
+\begin{theorem}[$\mathrm{GRT}_1$-action on formality choices;
+\ClaimStatusProvedElsewhere]
 \label{thm:defq-grt1-equivariance}
 \index{motivic Galois!GRT1 equivariance}
 The Grothendieck--Teichm\"uller group $\mathrm{GRT}_1(\bQ)$ acts on
-the set of formality quasi-isomorphisms
-$\cU^{\mathrm{super}}$ by homotopy, and this action is equivariant for
-the motivic Galois action on the MZV $\bQ$-algebra $\cZ$ through the
-identification (i) $=$ (ii) of
-Theorem~\ref{thm:defq-unified-motivic-origin}. Specifically:
-\begin{enumerate}[label=\textup{(\roman*)}]
- \item $\mathrm{GRT}_1(\bQ)$ acts on the homotopy class of
- $\cU^{\mathrm{super}}$ transitively;
- \item the action factors through the motivic Galois group $\mathrm{Gal}^{\mathrm{mot}}(\cZ/\bQ)$ in the Deligne--Brown framework;
- \item the Lusztig root-of-unity specialisation $\hbar^2 = -1/8$ is
- fixed by the diagonal subgroup
- $\mathrm{GRT}_1(\bZ[1/2])\subset\mathrm{GRT}_1(\bQ)$.
-\end{enumerate}
+homotopy classes of stable formality morphisms. For the KZ
+representative, the motivic Galois action on MZVs is compatible with
+the corresponding action on Drinfeld associators. This theorem does
+not assert that \(\hbar^2=-1/8\) is fixed or selected by
+\(\mathrm{GRT}_1\); \(\hbar\) is the deformation parameter, not a
+period coefficient.
 \end{theorem}
 
 \begin{proof}
@@ -2756,10 +3198,8 @@ $\mathrm{GRT}_1 \cong \pi_0(\mathrm{Aut}(\cU))$ for Kontsevich
 formality; Tamarkin 2003 (\emph{Lett.\ Math.\ Phys.}~66) identifies
 the Drinfeld associator choices with elements of $\mathrm{GRT}_1$.
 Brown 2012 shows the motivic Galois action on MZVs coincides with
-the $\mathrm{GRT}_1$-action on Drinfeld associators under
-Theorem~\ref{thm:defq-unified-motivic-origin}(ii) $=$ (iii). The
-specialisation statement follows because $\hbar^2 \in \bZ[1/2]$ is
-stable under any Galois element fixing the dyadic completion.
+the action on the KZ associator in the motivic framework. No step in
+these results evaluates the formal parameter \(\hbar\).
 \end{proof}
 
 \subsection{K3 $\times$ E: $\hbar^3$-correction from Hodge structure}
@@ -2772,10 +3212,8 @@ $c_n$]
 For the CY$_3$ $X = K3\times E$, the Hodge structure on $H^*(X, \bC)$
 carries a distinguished Hodge decomposition
 $H^*(X) = \bigoplus_{p, q} H^{p, q}(X)$ with
-$H^{1, 0}(X) = H^{1, 0}(E)$ (rank~$1$). The super-Kontsevich star
-product on $\mathfrak g_{\Delta_5}^{\mathrm{super},*}$ receives an
-$\hbar^3$-correction from the $\mathrm{E}$-factor, lifting the pure
-K3 quantisation by one unit of graph complexity:
+$H^{1, 0}(X) = H^{1, 0}(E)$ (rank~$1$). A supplied comparison between
+the \(E\)-factor and the degree-$3$ graph coefficient has the shape
 \begin{equation}
 \label{eq:defq-k3e-hbar3-correction}
  f \star_{\mathrm{K3}\times E} g
@@ -2783,22 +3221,12 @@ K3 quantisation by one unit of graph complexity:
  f \star_{\mathrm{K3}} g
  \;+\; \hbar^3\, C_3(f, g) \;+\; O(\hbar^4),
 \end{equation}
-where $C_3$ is the unique $\mathrm{GL}(1)$-equivariant trilinear
-operator encoding the period integral of the holomorphic $1$-form on
-$E$ against the chiral current algebra on $K3$. The coefficient
-$C_3 = \zeta(3)/(2\pi i)^3$ matches the complete graph on $4$ vertices
-(cf.\ the wheel weight computed at
-\S\ref{subsec:defq-star-product-specialisation} above and the
-$\zeta(3)$ computation on the complete graph $K_4$ in
-\S\ref{subsec:defq-hbar-mzvs} of this chapter); the BV-tower
-coefficients $c_n$ that enter the Costello--Gwilliam factorisation
-algebra on $K3\times E$ are precisely the formality coefficients
-$w_\Gamma^{\mathrm{super}}$ for the family of graphs $\{W_n\}$
-corresponding to the Feynman diagrams of the holomorphic twist on
-the CY$_3$. In particular, the sequence $c_n = w_{W_n}$ recovers
-the Etingof $c_{12}^{(9)}$ coefficient appearing in the pentagon
-coboundary expansion, confirming the unified motivic origin stated in
-Theorem~\ref{thm:defq-unified-motivic-origin}.
+but this chapter does not prove the equality
+\(C_3=\zeta(3)/(2\pi i)^3\), nor does it identify the full BV tower
+with a family of Kontsevich wheel weights. Such an identification
+requires a graph-level comparison between the Costello--Gwilliam
+holomorphic twist on \(K3\times E\) and the chosen formality
+representative.
 
 This is a formality-coefficient statement, not a collapse of the
 $K3\times E$ scalar package to a single number. The separated spectrum
@@ -2817,56 +3245,51 @@ constructions.
 \subsection{Unified theorem}
 \label{subsec:defq-unified-theorem}
 
-\begin{theorem}[$\mathbf H_{\Delta_5}$ as super-Kontsevich deformation
-quantisation at $\hbar^2 = -1/8$; \ClaimStatusProvedHere]
+\begin{theorem}[Conditional formal comparison for
+\texorpdfstring{$\mathbf H_{\Delta_5}$}{H Delta 5}; \ClaimStatusProvedHere]
 \label{thm:defq-unified-kontsevich-theorem}
 \index{H Delta 5@$\mathbf H_{\Delta_5}$!Kontsevich deformation
 quantisation|textbf}
-The super-Etingof--Kazhdan chiral bialgebra $\mathbf H_{\Delta_5}$ is
-the super-Kontsevich deformation quantisation of the classical chiral
-Lie bialgebra $(\mathfrak g_{\Delta_5}, \delta_{\mathrm{GN}})$, with
-super-Kontsevich formality
-$\cU^{\mathrm{super}}$ \emph{(Theorem~\ref{thm:defq-super-kontsevich-formality})}
-transporting the Gritsenko--Nikulin Poisson
-bivector $r(u, Z)$ to the associative super-chiral product on the
-completed enveloping algebra, and with convergent star-product
-specialisation at $\hbar^2 = -1/8$
-\emph{(Theorem~\ref{thm:defq-star-product-specialisation})}. The
-transcendental coefficients of the star product are
-$\mathrm{GRT}_1(\bQ)$-equivariant \emph{(Theorem~\ref{thm:defq-grt1-equivariance})}
-and coincide with multiple zeta values, equivalently with Drinfeld
-associator pentagon coefficients
-\emph{(Theorem~\ref{thm:defq-unified-motivic-origin})}. The K3 $\times$
-E Hodge structure contributes an $\hbar^3$-correction whose BV-tower
-coefficients $c_n$ are formality graph weights $w_{W_n}$
-\emph{(Remark~\ref{rem:defq-k3e-bv-tower-formality})}.
+Assume:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the normalized dynamical Lie-bialgebra structure
+\((\mathfrak g_{\Delta_5},\delta_{\mathrm{GN}})\) of
+Theorem~\ref{thm:defq-kazhdan-classical-limit};
+\item a compatible system of finite-truncation super-Kontsevich
+formality morphisms as in
+Theorem~\ref{thm:defq-super-kontsevich-formality};
+\item an EK/Hall--Drinfeld formal quantization with the same
+first-order class;
+\item formal rigidity over the \(\Delta_5\)-deformation line, as in
+Theorem~\ref{thm:defq-kazhdan-classical-limit}.
+\end{enumerate}
+Then the Kontsevich formal star products on the finite truncations and
+the EK/Hall--Drinfeld quantization determine the same formal gauge
+class on every compatible truncation. A convergent specialization at
+\(\hbar^2=-1/8\), a strict Drinfeld-Yangian interpretation, and the
+K3\(\times\)E BV-coefficient identification are additional inputs, not
+consequences of this theorem.
 \end{theorem}
 
 \begin{proof}
-Combine
-Theorem~\ref{thm:defq-super-kontsevich-formality} (existence of
-$\cU^{\mathrm{super}}$),
-Construction~\ref{constr:defq-super-kontsevich-star} and
-Theorem~\ref{thm:defq-star-product-specialisation} (star product,
-convergence at $\hbar^2 = -1/8$, agreement with the EK gauge class),
-Theorem~\ref{thm:defq-unified-motivic-origin} (motivic unification of
-weights), Theorem~\ref{thm:defq-grt1-equivariance} ($\mathrm{GRT}_1$
-equivariance), and Remark~\ref{rem:defq-k3e-bv-tower-formality} (K3
-$\times$ E Hodge correction and BV-tower identification).
+By Theorem~\ref{thm:defq-super-kontsevich-formality}, each finite
+truncation has a formal Kontsevich star product with first-order
+class \(\delta_{\mathrm{GN}}\). The EK/Hall--Drinfeld quantization has
+the same first-order class by hypothesis. The formal-rigidity
+hypothesis, not mere one-dimensionality of the first-order line,
+identifies the two formal gauge classes on that truncation.
+Compatibility in the truncation parameter gives the stated formal
+comparison. The convergence, Yangian, and BV-coefficient statements are
+independent inputs.
 \end{proof}
 
 \begin{remark}[Motivic-Galois reading of the Lusztig specialisation]
 \label{rem:defq-motivic-lusztig-reading}
 \index{Lusztig specialisation!motivic reading}
-The Lusztig value $\hbar^2 = -1/8$ is not chosen by hand: under
-Theorem~\ref{thm:defq-unified-kontsevich-theorem}, it is the unique
-point on the one-dimensional quantisation moduli
-$H^2(\mathfrak g_{\Delta_5})^{\bZ/2, K(1)}\cong\bC\cdot\Delta_5$
-where (a) the Kontsevich star product converges in the Frechet
-topology on polynomials over the rank-$24$ Mukai lattice; (b) the
-MTC structure exists; (c) the motivic Galois action on the MZV
-coefficients fixes the specialisation point up to the dyadic
-subgroup $\mathrm{GRT}_1(\bZ[1/2])$. The convergence, the modular
-structure, and the motivic stability are three faces of the same
-value.
+The Lusztig value $\hbar^2=-1/8$ belongs to the integral-form and
+root-of-unity side of the K3 construction. Kontsevich formality and
+Etingof--Kazhdan quantization are formal \(\hbar\)-adic theorems at
+\(\hbar=0\). Connecting the formal neighbourhood to the Lusztig point
+requires an independent specialization theorem; motivic Galois
+equivariance of associator coefficients does not provide it.
 \end{remark}

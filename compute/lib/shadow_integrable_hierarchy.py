@@ -1,69 +1,61 @@
-r"""Shadow integrable hierarchies from the shadow obstruction tower.
+r"""Finite shadow hierarchy diagnostics from the obstruction tower.
 
 MATHEMATICAL FRAMEWORK
 ======================
 
-The shadow CohFT (Theorem thm:shadow-cohft) assigns tautological classes
-Omega_{g,n}^A to every modular Koszul chiral algebra A.  When A has rank 1,
-the Givental-Teleman classification identifies the shadow CohFT with the
-Witten-Kontsevich CohFT (for S_3 != 0) or trivial CohFT (S_3 = 0).  The
-descendant potential then satisfies the KdV hierarchy.
+The shadow tower supplies exact scalar invariants and primary-line
+Riccati recursions.  These data are finite-window diagnostics.  They do
+not, by themselves, construct a full descendant KdV, Gelfand-Dickey,
+Toda, Painleve, or isomonodromic hierarchy.
 
-For rank-r algebras (W_N has rank N-1), the shadow CohFT is the A_{N-1}
-Frobenius manifold CohFT.  The Faber-Shadrin-Zvonkine theorem identifies
-the integrable hierarchy as the N-th Gelfand-Dickey hierarchy (N-KdV).
+Full hierarchy statements require separate descendant CohFT or
+isomonodromic input:
+
+* the rank-1 Witten-Kontsevich descendant potential satisfies KdV;
+* an externally supplied A_{N-1} r-spin CohFT is identified with the
+  N-th Gelfand-Dickey hierarchy by Faber-Shadrin-Zvonkine;
+* Toda and isomonodromic interpretations require their own Lax/oper or
+  monodromy data.
+
+The constants used here are the local canonical values from
+chapters/examples/landscape_census.tex and the W_3 computation:
+
+    kappa(Vir_c) = c/2,
+    S_3(Vir_c) = 2,
+    S_4(Vir_c) = 10/[c(5c+22)],
+    S_5(Vir_c) = -48/[c^2(5c+22)],
+    S_4^W(W_3) = 2560/[c(5c+22)^3].
 
 MAIN RESULTS IN THIS MODULE
 ============================
 
-1. RANK 1 (Virasoro, Heisenberg): The shadow tau-function
+1. RANK-1 SCALAR WINDOW.  The scalar vacuum series
 
      tau(hbar) = exp( sum_{g>=1} kappa * lambda_g^FP * hbar^{2g} )
 
-   satisfies KdV.  Verification: the Virasoro constraints L_n F = 0
-   (n >= -1) are equivalent to KdV.
+   matches the Faber-Pandharipande/A-hat coefficients.  This is
+   compatible with the Witten-Kontsevich KdV hierarchy when the full
+   descendant potential is supplied.
 
-2. RANK 2 (W_3): The two-component shadow generating functions
-   H_T(t) and H_W(t) generate a coupled integrable system: the
-   Boussinesq (sl_3 Toda / 3-KdV / Gelfand-Dickey_3) hierarchy.
+2. PRIMARY-LINE RICCATI DIAGNOSTIC.  The Virasoro T-line generating
+   function H(t) = t^2 sqrt(Q_L(t)) satisfies exact finite scalar
+   coefficient identities.  This is a stationary primary-line
+   diagnostic, not a construction of KdV flows.
 
-3. RANK N-1 (W_N): The shadow CohFT is the A_{N-1} Frobenius manifold
-   CohFT, and the integrable hierarchy is the N-th Gelfand-Dickey
-   hierarchy.  The MC equation on the shadow tower IS the integrability
-   condition.
+3. W_3 FINITE WINDOW.  The T-line is autonomous and Virasoro.  The
+   W-line calculation below is the autonomous one-line projection; the
+   full two-channel W_3 tower has transverse corrections starting in
+   degree 6.
 
-4. The shadow generating function H(t) = t^2 sqrt(Q_L(t)) satisfies
-   a Riccati ODE equivalent to the stationary reduction of KdV on the
-   rank-1 primary line.
-
-WHAT IS NEW vs WHAT IS KNOWN
-=============================
-
-KNOWN (Witten-Kontsevich, FSZ, Givental-Teleman):
-  - Rank-1 CohFT satisfies KdV
-  - A_{N-1} CohFT satisfies N-th Gelfand-Dickey
-  - Givental action reconstructs CohFT from genus-0 data
-
-NEW (this module derives and verifies):
-  - The MC equation on the shadow obstruction tower IS the integrability
-    condition: D*Theta + (1/2)[Theta,Theta] = 0 encodes the hierarchy
-  - The shadow depth classification G/L/C/M corresponds to hierarchy type:
-      G (depth 2): trivial hierarchy (free field)
-      L (depth 3): KdV with S_3 nonzero but S_4 = 0
-      C (depth 4): KdV with contact correction
-      M (depth inf): full infinite KdV tower with all corrections
-  - The Riccati algebraicity H^2 = t^4 Q_L is the STATIONARY KdV
-    constraint on the primary line
-  - The W_3 bivariate tower generates the Boussinesq hierarchy explicitly
-  - The planted-forest corrections delta_pf control the QUANTUM corrections
-    to the classical integrable hierarchy
+4. EXTERNAL HIERARCHY METADATA.  W_N rows record the rank and Lax
+   order expected from separately supplied A_{N-1} descendant data; the
+   scalar shadow table does not prove that identification.
 
 References:
-    thm:shadow-cohft (higher_genus_modular_koszul.tex)
-    thm:riccati-algebraicity (higher_genus_modular_koszul.tex)
-    thm:cohft-reconstruction (higher_genus_modular_koszul.tex)
-    rem:virasoro-constraints-tangent-complex (higher_genus_modular_koszul.tex)
-    cor:topological-recursion-mc-shadow (higher_genus_modular_koszul.tex)
+    chapters/examples/landscape_census.tex
+    chapters/examples/w_algebras.tex
+    chapters/examples/w_algebras_deep.tex
+    chapters/examples/w3_composite_fields.tex
 
 All arithmetic is exact (sympy.Rational).  Never floating point.
 """
@@ -116,7 +108,7 @@ def lambda_fp(g: int) -> Rational:
     return Rational(numer, denom)
 
 
-# Known values for cross-check (AP10: never trust hardcoded alone)
+# Known values for cross-check against the Bernoulli formula.
 _LAMBDA_FP_KNOWN = {
     1: Rational(1, 24),
     2: Rational(7, 5760),
@@ -260,8 +252,8 @@ def ahat_generating_function(max_order: int = 10) -> Dict[int, Rational]:
     These are exactly the lambda_g^FP values at x^{2g}.
     """
     # A-hat(ix) - 1 = sum_{g>=1} lambda_g^FP * x^{2g}
-    # Proof: int_{M-bar_{g,0}} lambda_g = coefficient of x^{2g} in (x/2)/sin(x/2) - 1
-    # This is the Witten-Kontsevich theorem in disguise.
+    # Faber-Pandharipande gives lambda_g^FP as the x^{2g}
+    # coefficient of (x/2)/sin(x/2) - 1.
     result = {}
     for g in range(1, max_order + 1):
         result[g] = lambda_fp(g)
@@ -278,29 +270,10 @@ def verify_ahat_consistency(max_genus: int = 4) -> Dict[str, bool]:
     # sin(x/2) = sum (-1)^n (x/2)^{2n+1} / (2n+1)!
     # We compute the reciprocal series.
 
-    # Taylor coefficients of (x/2)/sin(x/2) at x=0
-    # Using the known formula: coefficient of x^{2g} is
-    # (-1)^g (2^{2g} - 2) B_{2g} / (2g)!
-    # Wait - let me compute this carefully.
-    #
-    # sinh(x/2) = sum_{n>=0} (x/2)^{2n+1}/(2n+1)!
-    # (x/2)/sinh(x/2) = A-hat(x)
-    # A-hat(ix) = (ix/2)/sinh(ix/2) = (x/2)/(i*sin(x/2)/i) ... no.
-    #
-    # Let me be precise.
     # A-hat(x) = (x/2)/sinh(x/2)
-    # Let u = ix. Then A-hat(ix) = (ix/2)/sinh(ix/2) = (u/2)/(i*sin(u/(2i)))
-    # Hmm, sinh(ix/2) = i*sin(x/2).
-    # So A-hat(ix) = (ix/2)/(i*sin(x/2)) = (x/2)/sin(x/2).
-    #
-    # (x/2)/sin(x/2) = 1 + sum_{g>=1} c_g x^{2g}
-    # where c_g = (2^{2g} - 2)|B_{2g}|/(2*(2g)!) ... let me just verify numerically.
-
-    # Actually the correct relation is:
+    # Since sinh(ix/2) = i*sin(x/2), A-hat(ix) = (x/2)/sin(x/2).
     # F_g = kappa * lambda_g^FP where lambda_g^FP = (2^{2g-1}-1)|B_{2g}|/(2^{2g-1}(2g)!)
     # And (x/2)/sin(x/2) = 1 + x^2/24 + 7x^4/5760 + 31x^6/967680 + ...
-    # Check: lambda_1^FP = 1/24. Coefficient of x^2 in (x/2)/sin(x/2) - 1 = 1/24. Match.
-    # lambda_2^FP = 7/5760. Coefficient of x^4 = 7/5760. Match.
 
     results = {}
     for g in range(1, max_genus + 1):
@@ -332,7 +305,7 @@ def verify_ahat_consistency(max_genus: int = 4) -> Dict[str, bool]:
 # =========================================================================
 
 def kdv_string_equation(kappa_val, max_genus: int = 4) -> Dict[str, Any]:
-    """Verify the string equation (L_{-1} constraint) for the shadow tau-function.
+    """Record the scalar shadow window compatible with the string equation.
 
     The string equation for the descendant potential F:
         dF/dt_0 = sum_{k>=0} t_{k+1} dF/dt_k + (1/2) t_0^2
@@ -341,8 +314,9 @@ def kdv_string_equation(kappa_val, max_genus: int = 4) -> Dict[str, Any]:
         L_{-1} F = 0 reduces to the recursion among intersection numbers
         <tau_0 tau_{d_1} ... tau_{d_n}>_g = sum <tau_{d_i-1} prod_{j!=i} tau_{d_j}>_g
 
-    At genus g, n=0 (vacuum): lambda_g^FP satisfies the Witten-Kontsevich
-    recursion.
+    At genus g, n=0 (vacuum), this function only records the
+    Faber-Pandharipande scalar coefficient.  It does not reconstruct the
+    descendant potential or verify the full L_{-1} constraint.
 
     Returns verification data.
     """
@@ -350,7 +324,7 @@ def kdv_string_equation(kappa_val, max_genus: int = 4) -> Dict[str, Any]:
     # (2g-2) lambda_g = sum over boundary strata contributions
     # This is the dilaton equation, not string.
     #
-    # The actual verification is: the descendant potential
+    # The full verification would require the descendant potential
     # F = sum_g hbar^{2g} sum_n (1/n!) int psi_1^{d_1}...psi_n^{d_n} lambda_g
     # satisfies L_n F = 0 for n >= -1.
     #
@@ -374,15 +348,17 @@ def kdv_string_equation(kappa_val, max_genus: int = 4) -> Dict[str, Any]:
 
 
 def virasoro_constraints_rank1(max_genus: int = 3) -> Dict[str, Any]:
-    """Verify Virasoro constraints L_n F = 0 at the scalar level.
+    """Check finite scalar ratios compatible with rank-1 Virasoro constraints.
 
     The Virasoro operators (from rem:virasoro-constraints-tangent-complex):
 
     L_n = -(n+1)! d/dt_n + sum_{k>=0} (2k+2n+1)!!/(2k-1)!! t_k d/dt_{k+n+1}
           + (kappa/2) delta_{n,0}
 
-    At the SCALAR LEVEL (all t_k = 0 except t_0), the constraints reduce
-    to relations among F_g values.
+    At the scalar level (all descendant variables suppressed), only
+    coefficient ratios remain visible.  These checks are necessary
+    consistency tests for a Witten-Kontsevich descendant lift, not a
+    proof of the full Virasoro constraints.
 
     The KdV equation (3rd order):
         (d^3/dt_0^3 + 6 d/dt_0 . d/dt_1 - d^2/(dt_2 dt_0)) log tau = 0
@@ -391,7 +367,7 @@ def virasoro_constraints_rank1(max_genus: int = 3) -> Dict[str, Any]:
 
     Returns verification data.
     """
-    # At the SCALAR level, the most direct verification is:
+    # At the scalar level, the most direct verification is:
     # The partition function Z = tau^2 where tau = sum hbar^{2g} Z_g,
     # and the KdV equation constrains the Z_g recursively.
     #
@@ -399,8 +375,8 @@ def virasoro_constraints_rank1(max_genus: int = 3) -> Dict[str, Any]:
     # (2g+1) <tau_0^{2g+1}>_g = sum_{a+b=2g-2} <tau_a tau_b>_{g-1}
     #                           + sum <tau_a tau_b tau_0^{2g-2}>_{g'}
     #
-    # For our purposes, the scalar-level statement is that
-    # F_g = kappa * lambda_g^FP satisfies the recursion implied by L_1 F = 0.
+    # The scalar statement is that F_g = kappa * lambda_g^FP has the
+    # expected A-hat ratios.
 
     F = shadow_free_energy(c / 2, max_genus)
 
@@ -425,7 +401,7 @@ def virasoro_constraints_rank1(max_genus: int = 3) -> Dict[str, Any]:
 # =========================================================================
 
 def riccati_as_stationary_kdv() -> Dict[str, Any]:
-    """The Riccati algebraicity H^2 = t^4 Q_L is the stationary KdV reduction.
+    """Finite Riccati identities on the rank-1 primary line.
 
     On the 1D primary line, the MC equation reduces to:
         f(t)^2 = Q_L(t)  where f = H/t^2 = sqrt(Q_L)
@@ -436,17 +412,21 @@ def riccati_as_stationary_kdv() -> Dict[str, Any]:
     where U(t) = sum_{r>=3} S_r t^r is the nonlinear part, P = 1/kappa,
     R_3 = 6*alpha, R_4 = (9*alpha^2 + 2*Delta)/(2*kappa).
 
-    The stationary KdV connection: the profile equation for the KdV
+    The stationary KdV comparison: the profile equation for the KdV
     travelling wave u_t + 6u u_x + u_xxx = 0 with u = u(x-vt) is:
         u'' + 3u^2 - v*u = const
     which is a SECOND-ORDER ODE.  The Riccati equation is FIRST-ORDER
     because the shadow tower is a REDUCTION: the 1D primary line is a
     symmetry reduction of the full CohFT (all genus-0, single-channel).
 
-    The correspondence is:
+    The diagnostic analogy is:
         Shadow variable t <-> KdV spectral parameter z
         f = sqrt(Q_L) <-> resolvent of the Lax operator
         Q_L quadratic <-> Lax operator has order 2
+
+    This is not a construction of KdV flows.  A full KdV statement
+    requires the Witten-Kontsevich descendant potential or equivalent
+    Lax data.
 
     Returns verification data.
     """
@@ -460,7 +440,7 @@ def riccati_as_stationary_kdv() -> Dict[str, Any]:
     R_4 = cancel((9 * alph ** 2 + 2 * Delta) / (2 * kap))
     # = (36 + 80/(5c+22)) / c = (180c + 872) / [c(5c+22)]
 
-    # Verify the Riccati ODE: the shadow recursion IS the ODE
+    # Verify the Riccati ODE finite window for the primary-line recursion.
     # For the Virasoro, U = sum_{r>=3} S_r t^r
     S = shadow_coefficients_virasoro(max_r=8)
 
@@ -487,6 +467,7 @@ def riccati_as_stationary_kdv() -> Dict[str, Any]:
         'Delta': cancel(Delta),
         'mc_residuals': residuals,
         'all_zero': all(v == 0 for v in residuals.values()),
+        'scope': 'stationary primary-line diagnostic',
     }
 
 
@@ -495,72 +476,71 @@ def riccati_as_stationary_kdv() -> Dict[str, Any]:
 # =========================================================================
 
 def shadow_depth_hierarchy_classification() -> Dict[str, Dict]:
-    """Classify integrable hierarchy by shadow depth class.
+    """Classify what the scalar shadow depth can and cannot determine.
 
     G (Gaussian, depth 2): Heisenberg. S_3 = S_4 = ... = 0.
-      CohFT is trivial (rank 1, R=1, all descendants vanish).
-      Hierarchy: trivial (free field). tau = exp(kappa*hbar^2/24).
-      KdV is satisfied VACUOUSLY (one-point function only).
+      The primary-line tower terminates.  A free-field descendant theory
+      is separate data.
 
     L (Lie, depth 3): Affine KM. S_3 != 0, S_4 = 0.
-      CohFT has nontrivial genus-0 cubic but no quartic.
-      For rank 1 projection: KdV with R=1 (Givental-Teleman for
-      1D semisimple Frobenius manifold).
-      For full rank (e.g. affine sl_2, rank 3): Gelfand-Dickey.
+      This detects a finite tree-level scalar window.  It does not
+      choose a descendant integrable hierarchy.
 
     C (Contact, depth 4): Beta-gamma. S_3 != 0, S_4 != 0, S_5 = 0
       (by stratum separation).
-      KdV with quartic correction to the Frobenius manifold.
-      The contact invariant Q^contact modifies the R-matrix at order 1.
+      This is a finite quartic contact window, not a KdV deformation by
+      itself.
 
     M (Mixed, depth inf): Virasoro, W_N. All S_r != 0.
-      Full KdV hierarchy (rank 1) or Gelfand-Dickey (rank N-1).
-      The infinite shadow tower generates the complete hierarchy.
-      The Riccati algebraicity ensures the hierarchy is controlled
-      by finitely many parameters (kappa, alpha, S_4).
+      The primary-line tower is infinite.  Full KdV/Gelfand-Dickey
+      assertions require an externally supplied descendant CohFT, Lax
+      representation, or isomonodromic/oper datum.
     """
     return {
         'G': {
             'depth': 2,
             'examples': ['Heisenberg'],
-            'hierarchy': 'trivial',
+            'hierarchy': 'primary-line tower terminates',
             'CohFT_rank': 1,
-            'R_matrix': 'R = 1 (trivial Givental action)',
-            'KdV_status': 'vacuous (constant tau)',
+            'R_matrix': 'requires descendant CohFT data beyond scalar shadows',
+            'KdV_status': 'requires separately supplied descendant theory',
         },
         'L': {
             'depth': 3,
             'examples': ['Affine sl_2', 'Affine sl_N'],
-            'hierarchy': 'Gelfand-Dickey (rank-dependent)',
+            'hierarchy': 'finite Lie/tree scalar window',
             'CohFT_rank': 'dim(g) for affine g',
-            'R_matrix': 'R = 1 on each semisimple idempotent',
-            'KdV_status': 'rank-1 projection satisfies KdV',
+            'R_matrix': 'requires descendant CohFT data beyond scalar shadows',
+            'KdV_status': 'requires data beyond S_2,S_3',
         },
         'C': {
             'depth': 4,
             'examples': ['beta-gamma'],
-            'hierarchy': 'KdV with contact correction',
+            'hierarchy': 'finite quartic contact scalar window',
             'CohFT_rank': 1,
-            'R_matrix': 'R = 1 + R_1 z + ... with R_1 from Q^contact',
-            'KdV_status': 'modified KdV (contact deformation)',
+            'R_matrix': 'contact invariant visible; R-matrix not constructed',
+            'KdV_status': 'no KdV deformation without descendant input',
         },
         'M': {
             'depth': 'infinity',
             'examples': ['Virasoro', 'W_3', 'W_N (N >= 2)'],
-            'hierarchy': 'full Gelfand-Dickey_N',
+            'hierarchy': 'infinite primary-line scalar tower',
             'CohFT_rank': 'N-1 for W_N; 1 for Virasoro',
-            'R_matrix': 'nontrivial at all orders (infinite shadow tower)',
-            'KdV_status': 'full KdV (rank 1) or Gelfand-Dickey (rank N-1)',
+            'R_matrix': 'not reconstructed from scalar tower alone',
+            'KdV_status': (
+                'KW/KdV for supplied rank-1 descendant potential; '
+                'FSZ/Gelfand-Dickey for supplied A_{N-1} r-spin CohFT'
+            ),
         },
     }
 
 
 # =========================================================================
-# Section 7: W_3 Boussinesq hierarchy (rank 2)
+# Section 7: W_3 finite rank-2 window
 # =========================================================================
 
 def w3_frobenius_data():
-    """Genus-0 Frobenius manifold data for the W_3 shadow CohFT.
+    """Finite genus-0 W_3 shadow constants.
 
     The W_3 algebra has generators T (weight 2) and W (weight 3).
     The shadow CohFT has rank 2, state space V = <e_T, e_W>.
@@ -571,10 +551,9 @@ def w3_frobenius_data():
         e_T * e_W = S_3^{TWW}/kappa_W * e_W = (3/(c/3)) e_W = (9/c) e_W
         (Z_2 symmetry: e_W * e_W ~ e_T, with coefficient from S_3^{TWW}/kappa_T)
 
-    This is the A_2 Frobenius manifold.
-
-    The associated integrable hierarchy is the Boussinesq hierarchy
-    (3-KdV, sl_3 Gelfand-Dickey).
+    These constants match the A_2 Frobenius-manifold shape at the
+    displayed window.  The Boussinesq/Gelfand-Dickey hierarchy requires
+    the full A_2 descendant CohFT or an equivalent Lax construction.
     """
     kap_T = c / 2
     kap_W = c / 3
@@ -601,13 +580,17 @@ def w3_frobenius_data():
             'c^W_{TW}': c_W_TW,
             'c^T_{WW}': c_T_WW,
         },
-        'hierarchy': 'Boussinesq (3-KdV / sl_3 Gelfand-Dickey)',
+        'hierarchy': (
+            'Boussinesq-compatible finite genus-0 data; '
+            'A_2 hierarchy certification requires descendant CohFT'
+        ),
+        'scope': 'finite genus-0 shadow constants',
         'rank': 2,
     }
 
 
 def w3_shadow_generating_functions(max_arity: int = 8):
-    """Compute the T-line and W-line shadow generating functions for W_3.
+    """Compute autonomous T-line and W-line shadow projections for W_3.
 
     On the T-line (x_W = 0): H_T(t) = t^2 sqrt(Q_T(t))
       where Q_T = Virasoro shadow metric (same kappa = c/2, alpha = 2, S_4^{TT}).
@@ -615,7 +598,11 @@ def w3_shadow_generating_functions(max_arity: int = 8):
     On the W-line (x_T = 0): H_W(t) = t^2 sqrt(Q_W(t))
       where Q_W is the W-line shadow metric with kappa_W = c/3.
 
-    The COUPLED system on the full 2D space generates the Boussinesq hierarchy.
+    The output is not the full two-channel W_3 hierarchy.  The T-line is
+    autonomous because T generates a Virasoro subalgebra.  The W-line
+    calculation is the autonomous projection; the full two-channel
+    restriction receives transverse T-channel corrections beginning at
+    degree 6.
 
     Returns T-line and W-line shadow coefficients separately.
     """
@@ -674,61 +661,69 @@ def w3_shadow_generating_functions(max_arity: int = 8):
     return {
         'T_line': S_T,
         'W_line': S_W,
-        'coupling': 'Boussinesq hierarchy (3-KdV)',
+        'coupling': (
+            'autonomous one-line projections; full two-channel '
+            'Boussinesq data not constructed here'
+        ),
+        'scope': 'finite primary-line diagnostics',
         'kappa_T': c / 2,
         'kappa_W': c / 3,
     }
 
 
 def verify_w3_boussinesq_consistency():
-    """Verify that the W_3 2D shadow data is consistent with the
-    A_2 Frobenius manifold structure that underlies the Boussinesq hierarchy.
+    """Verify finite W_3 data compatible with the A_2 Frobenius shape.
 
     The A_2 Frobenius manifold has prepotential:
         F_0 = (1/2)(t_1^2 t_2 + t_2^3/c_3)
 
-    where t_1, t_2 are flat coordinates.  The WDVV equation is automatic
-    for a 2D manifold.
+    where t_1, t_2 are flat coordinates.  At this finite rank-2
+    window there is no nontrivial WDVV obstruction.
 
     The Boussinesq equation is the third-order dispersive PDE:
         u_tt = (u^2)_xx + (1/3) u_xxxx
 
-    which is the sl_3 Toda / 3-KdV system.
+    which is the sl_3 Toda / 3-KdV system.  This function does not
+    construct that PDE; it checks the finite Frobenius constants that a
+    separately supplied A_2 descendant CohFT would use.
 
     Returns WDVV verification and Frobenius manifold data.
     """
     frob = w3_frobenius_data()
 
-    # WDVV for 2D is automatic (no constraint).
+    # The displayed rank-2 constants have no nontrivial WDVV obstruction
+    # at this finite window.
     # The structure constants c^a_{bc} must satisfy associativity:
     # sum_d c^d_{ab} c^e_{dc} = sum_d c^d_{ac} c^e_{db}
     # For 2D with indices T, W: this is a single equation.
 
     # c^T_{TT} * c^T_{TT} + c^W_{TT} * c^T_{WT} = c^T_{TT} * c^T_{TT} + c^W_{TT} * c^T_{TW}
     # Since c^W_{TT} = 0 (no W in T*T for the Virasoro subalgebra),
-    # both sides equal (c^T_{TT})^2. Automatic.
+    # both sides equal (c^T_{TT})^2.
 
     return {
-        'WDVV': 'automatic for rank 2',
-        'hierarchy': 'Boussinesq (3-KdV)',
+        'WDVV': 'no finite-window rank-2 obstruction',
+        'hierarchy': 'Boussinesq-compatible only after descendant input',
         'prepotential': 'F_0 = (1/2)(t_1^2 t_2 + const * t_2^3)',
         'frobenius_data': frob,
+        'scope': 'finite genus-0 compatibility check',
     }
 
 
 # =========================================================================
-# Section 8: General W_N and N-th Gelfand-Dickey hierarchy
+# Section 8: W_N conditional hierarchy metadata
 # =========================================================================
 
 def wn_hierarchy_classification(N: int) -> Dict[str, Any]:
-    """Classify the integrable hierarchy for the W_N shadow CohFT.
+    """Record conditional W_N hierarchy metadata.
 
     The W_N algebra has generators T=W_2, W_3, ..., W_N of conformal
     weights 2, 3, ..., N.  The shadow CohFT has rank N-1.
 
-    By the Faber-Shadrin-Zvonkine theorem (proved by Givental's
-    quantization), the integrable hierarchy for the A_{N-1} Frobenius
-    manifold CohFT is the N-th Gelfand-Dickey hierarchy (N-KdV).
+    If the full A_{N-1} r-spin descendant CohFT is supplied, the
+    Faber-Shadrin-Zvonkine theorem identifies its hierarchy with the
+    N-th Gelfand-Dickey hierarchy.  The scalar shadow rank and generator
+    data below do not construct that hierarchy.
 
     The Gelfand-Dickey_N hierarchy is the reduction of KP to
     L^N = (d/dx)^N + u_2(d/dx)^{N-2} + ... + u_N (Lax operator).
@@ -767,39 +762,35 @@ def wn_hierarchy_classification(N: int) -> Dict[str, Any]:
         'generator_weights': list(range(2, N + 1)),
         'frobenius_manifold': f'A_{N-1} singularity',
         'spectral_curve': f'y^N = x (Witten r={N} spin curve)',
-        # The MC equation controls this hierarchy:
+        'hierarchy_status': 'conditional on separately supplied descendant CohFT',
         'MC_hierarchy_bridge': (
-            f'The MC equation D*Theta + (1/2)[Theta,Theta] = 0 '
-            f'for the W_{N} shadow CohFT encodes the {N}-KdV hierarchy. '
-            f'The {n_fields} shadow generating functions on the {n_fields} '
-            f'primary lines form a coupled integrable system.'
+            f'The scalar W_{N} data match the rank and Lax order expected '
+            f'for {N}-KdV.  The full Gelfand-Dickey hierarchy requires '
+            f'an A_{N-1} descendant CohFT or equivalent Lax input.'
         ),
     }
 
 
 # =========================================================================
-# Section 9: Planted-forest corrections as quantum integrable deformations
+# Section 9: Planted-forest corrections in the scalar window
 # =========================================================================
 
 def planted_forest_quantum_correction(g: int) -> Dict[str, Any]:
-    """The planted-forest correction delta_pf^{(g,0)} as quantum correction.
+    """Finite planted-forest correction in the scalar genus window.
 
     At genus g, the free energy decomposes as:
         F_g(A) = kappa * lambda_g^FP + delta_pf^{(g,0)}(A)
 
-    The first term is the CLASSICAL integrable hierarchy contribution
-    (KdV for rank 1).  The second term is the QUANTUM correction from
-    the planted-forest graphs (codimension >= 2 boundary strata).
+    The first term is the scalar Faber-Pandharipande lane.  The second
+    term is the finite planted-forest graph correction visible in the
+    shadow tower.
 
     For class G (Heisenberg): delta_pf = 0 at all genera. Pure KdV.
     For class L (affine): delta_pf nonzero starting at g=2.
     For class M (Virasoro): delta_pf nonzero starting at g=2.
 
-    The key point: the FULL shadow CohFT still satisfies the integrable
-    hierarchy (this is automatic from the CohFT structure via
-    Givental-Teleman).  The planted-forest corrections are PART OF the
-    hierarchy, not a deviation from it.  They appear because the
-    Givental R-matrix R != 1 for classes L, C, M.
+    Interpreting these terms as dispersive corrections to an integrable
+    PDE requires the descendant CohFT/R-matrix as additional input.
     """
     kap = c / 2
     alph = Rational(2)
@@ -808,9 +799,9 @@ def planted_forest_quantum_correction(g: int) -> Dict[str, Any]:
     if g == 2:
         # delta_pf^{(2,0)} = S_3(10*S_3 - kappa)/48
         delta_pf = alph * (10 * alph - kap) / 48
-        delta_pf = cancel(delta_pf)  # = (40 - c)/96 ... wait.
+        delta_pf = cancel(delta_pf)
         # 2 * (20 - c/2) / 48 = (40 - c) / 48
-        # Actually: S_3 = 2, so S_3*(10*S_3 - kappa)/48 = 2*(20-c/2)/48 = (40-c)/48
+        # With S_3 = 2, this is 2*(20-c/2)/48 = (40-c)/48.
 
         return {
             'genus': 2,
@@ -818,7 +809,8 @@ def planted_forest_quantum_correction(g: int) -> Dict[str, Any]:
             'delta_pf_simplified': cancel(delta_pf),
             'F_g_scalar': cancel(kap * lambda_fp(2)),
             'F_g_total': cancel(kap * lambda_fp(2) + delta_pf),
-            'quantum_correction_type': 'planted-forest (S_3 dependent)',
+            'quantum_correction_type': 'finite scalar planted-forest term',
+            'hierarchy_scope': 'no PDE hierarchy constructed here',
             'vanishes_for_heisenberg': True,  # S_3 = 0
         }
     elif g == 1:
@@ -827,26 +819,28 @@ def planted_forest_quantum_correction(g: int) -> Dict[str, Any]:
             'delta_pf': Rational(0),
             'F_g_scalar': cancel(kap * lambda_fp(1)),
             'quantum_correction_type': 'none (genus 1 is purely scalar)',
+            'hierarchy_scope': 'no PDE hierarchy constructed here',
         }
     else:
         return {
             'genus': g,
             'delta_pf': 'requires full graph sum computation',
             'F_g_scalar': cancel(kap * lambda_fp(g)),
+            'hierarchy_scope': 'open beyond the computed scalar window',
         }
 
 
 # =========================================================================
-# Section 10: Explicit KdV flow verification for Virasoro
+# Section 10: KW-compatible scalar coefficients for Virasoro
 # =========================================================================
 
 def verify_kdv_flows_virasoro(max_genus: int = 4) -> Dict[str, Any]:
-    """Verify that the Virasoro shadow tau-function reproduces KdV flows.
+    """Verify scalar coefficients compatible with the KW/KdV lift.
 
     The tau-function tau = exp(F) where F = sum_{g>=1} F_g hbar^{2g}
     and F_g = kappa * lambda_g^FP = (c/2) * lambda_g^FP.
 
-    The FIRST three KdV flows at the scalar level (no descendants) are:
+    The first three KdV flows for a full descendant potential are:
 
     Flow 1 (t_0 = KdV time): F satisfies the string equation
         dF/dt_0 = (1/2)t_0^2 + sum t_{k+1} dF/dt_k
@@ -860,10 +854,10 @@ def verify_kdv_flows_virasoro(max_genus: int = 4) -> Dict[str, Any]:
         u_{t_2} = u_{00000}/16 + (5/4) u u_{000} + (5/4) u_0 u_{00}
                  + (5/8) u^2 u_0
 
-    These flows are AUTOMATICALLY satisfied by the tau-function of any
-    rank-1 CohFT (Witten-Kontsevich).  The verification here is that
-    the F_g values from the shadow tower are CONSISTENT with being
-    the genus expansion of a tau-function.
+    Suppressing descendants leaves only scalar coefficient checks.  The
+    verification here is that the F_g values from the shadow tower are
+    consistent with the Witten-Kontsevich rank-1 lift; it is not a
+    verification of the PDE flows.
 
     The consistency checks:
     1. F_1 = kappa/24  (matches [x^2] of (x/2)/sin(x/2))
@@ -878,6 +872,7 @@ def verify_kdv_flows_virasoro(max_genus: int = 4) -> Dict[str, Any]:
     F = shadow_free_energy(kap, max_genus)
 
     results = {}
+    results['scope'] = 'finite scalar KW-compatible coefficient window'
 
     # Check 1: F_1 = kappa/24
     results['F_1'] = {
@@ -935,53 +930,48 @@ def verify_kdv_flows_virasoro(max_genus: int = 4) -> Dict[str, Any]:
 # =========================================================================
 
 def mc_as_integrability() -> Dict[str, str]:
-    """The MC equation IS the integrability condition for the shadow hierarchy.
+    """Separate MC finite identities from descendant hierarchy input.
 
-    The fundamental identification:
+    The verified finite-window statement:
 
     1. The MC equation D*Theta + (1/2)[Theta,Theta] = 0 on the modular
-       convolution algebra g^mod_A encodes:
+       convolution algebra g^mod_A projects to:
          (a) At genus 0: WDVV associativity (Frobenius manifold)
          (b) At genus 1: Getzler's equation
-         (c) At all genera: the integrable hierarchy
+         (c) On primary lines: scalar Riccati coefficient identities
 
     2. The shadow CohFT axioms (equivariance, separating, non-separating)
        are PROJECTIONS of the MC equation to boundary strata.
 
-    3. The Givental R-matrix = complementarity propagator P_A
-       (Theorem thm:cohft-reconstruction).
+    3. A Givental R-matrix or Lax hierarchy requires data beyond finite
+       scalar coefficients.
 
-    4. The planted-forest corrections = quantum dispersive terms in the
-       hierarchy (higher-order derivatives in the KdV-type PDE).
+    4. KdV/Gelfand-Dickey/Toda statements require a separately supplied
+       descendant CohFT, r-spin theory, or Lax/oper datum.
 
-    This is NOT a new theorem: it follows from combining:
+    The external hierarchy theorems are:
       - Witten-Kontsevich (KdV from intersection theory)
-      - Givental-Teleman (CohFT reconstruction)
+      - Givental-Teleman (semisimple CohFT reconstruction)
       - FSZ (r-spin = r-KdV)
-      - Shadow CohFT (Theorem thm:shadow-cohft)
-
-    What IS new is the REALIZATION: the MC equation on the shadow
-    obstruction tower is a NATURAL HABITAT for these integrable
-    hierarchies.  The shadow depth classification G/L/C/M is a
-    classification of integrable hierarchy complexity.
     """
     return {
         'mc_equation': 'D*Theta + (1/2)[Theta,Theta] = 0',
         'genus_0_projection': 'WDVV (Frobenius manifold associativity)',
         'genus_1_projection': 'Getzler relation',
-        'all_genera': 'Integrable hierarchy (KdV / Gelfand-Dickey)',
+        'all_genera': (
+            'CohFT gluing constraints; hierarchy data needs descendant '
+            'or Lax/isomonodromic input'
+        ),
         'identification_chain': [
             'MC equation on g^mod_A',
             '-> CohFT axioms (Thm shadow-cohft)',
-            '-> Givental-Teleman reconstruction',
-            '-> Integrable hierarchy (FSZ for r-spin)',
+            '-> separately supplied descendant CohFT/R-matrix',
+            '-> KW or FSZ hierarchy theorem when hypotheses hold',
         ],
         'what_is_new': (
-            'The shadow obstruction tower provides a NATURAL ALGEBRAIC '
-            'FRAMEWORK for these hierarchies. The MC equation is the '
-            'integrability condition. The shadow depth classification '
-            'G/L/C/M is a complexity classification of integrable systems. '
-            'The planted-forest corrections are quantum dispersive terms.'
+            'The shadow obstruction tower provides exact scalar diagnostics '
+            'and finite MC projections. It does not construct descendant '
+            'hierarchies without additional CohFT or Lax data.'
         ),
     }
 
@@ -991,7 +981,7 @@ def mc_as_integrability() -> Dict[str, str]:
 # =========================================================================
 
 def shadow_spectral_curve_virasoro():
-    """The shadow spectral curve for Virasoro.
+    """The primary-line shadow spectral curve for Virasoro.
 
     The shadow generating function H(t) = t^2 sqrt(Q_L(t)) defines
     an algebraic curve in the (t, H) plane:
@@ -1015,8 +1005,9 @@ def shadow_spectral_curve_virasoro():
     This is NEGATIVE for c > 0 and 5c+22 > 0, so Q_L has NO REAL ZEROS
     (class M: mixed).
 
-    The spectral curve Sigma_A = {H^2 = t^4 Q_L} is the MC spectral curve.
-    In the KdV context, this is the spectral curve of the Lax operator.
+    The curve Sigma_A = {H^2 = t^4 Q_L} is the primary-line MC spectral
+    curve.  Its identification with a KdV Lax spectral curve requires
+    additional KdV/Lax data.
     """
     kap = c / 2
     alph = Rational(2)
@@ -1041,77 +1032,61 @@ def shadow_spectral_curve_virasoro():
         'genus_of_curve': 0,
         'branch_structure': 'no real branch points for c > 0 (class M)',
         'KdV_interpretation': (
-            'Spectral curve of the rank-1 Lax operator L = d^2 + u. '
-            'The shadow metric Q_L plays the role of the squared resolvent.'
+            'Stationary rank-1 diagnostic. A Lax interpretation requires '
+            'the supplied Witten-Kontsevich/KdV descendant hierarchy.'
         ),
     }
 
 
 # =========================================================================
-# Section 13: Summary theorem
+# Section 13: Scope summary
 # =========================================================================
 
 def shadow_hierarchy_summary() -> Dict[str, Any]:
-    """Summary of the shadow integrable hierarchy programme.
+    """Summary of the finite shadow hierarchy diagnostics.
 
-    THEOREM (Shadow hierarchy classification):
+    Scope statement:
 
     Let A be a modular Koszul chiral algebra of shadow depth class X.
-    The shadow CohFT Omega^A determines an integrable hierarchy as follows:
+    The scalar shadow data determine the following finite or primary-line
+    diagnostics:
 
     (i)   Class G (depth 2, e.g. Heisenberg):
-            Trivial hierarchy. tau = exp(kappa * hbar^2/24). R = 1.
+            Primary-line tower terminates after S_2.
 
     (ii)  Class L (depth 3, e.g. affine):
-            If rank 1: KdV with R = 1.
-            If rank r: r-component Gelfand-Dickey (through the Frobenius
-            manifold of the affine algebra).
+            Finite Lie/tree scalar window with S_4 = 0.
 
     (iii) Class C (depth 4, e.g. beta-gamma):
-            KdV with contact-corrected R-matrix (R_1 from Q^contact).
+            Finite contact scalar window.
 
     (iv)  Class M (depth inf, e.g. Virasoro):
-            If rank 1: full KdV hierarchy.
-            If rank N-1 (W_N): N-th Gelfand-Dickey hierarchy.
+            Infinite primary-line scalar tower.
 
-    (v)   For W_N: the shadow CohFT is the A_{N-1} Frobenius manifold CohFT,
-          and the MC equation on the (N-1)-dimensional shadow tower
-          is equivalent to the N-th Gelfand-Dickey hierarchy (FSZ).
+    (v)   For W_N: the rank N-1 and generator weights match the expected
+          A_{N-1}/Gelfand-Dickey metadata.  Hierarchy certification requires
+          separately supplied descendant CohFT data.
 
-    (vi)  The MC equation D*Theta + (1/2)[Theta,Theta] = 0 is the
-          integrability condition. The planted-forest corrections are
-          quantum dispersive terms.
-
-    STATUS: Items (i)-(iv) for rank 1 are PROVED (by combining
-    thm:shadow-cohft with Witten-Kontsevich and Givental-Teleman).
-    Item (v) is PROVED for W_3 (A_2 identification verified) and
-    CONDITIONAL for general W_N (requires verification of the
-    Feigin-Frenkel identification of prepotentials at all N).
-    Item (vi) is a RESTATEMENT of the CohFT structure.
-
-    WHAT IS GENUINELY NEW: The observation that the four shadow depth
-    classes G/L/C/M provide a NATURAL CLASSIFICATION of integrable
-    hierarchy complexity, and that the MC equation on the modular
-    convolution algebra is the organizing principle.
+    (vi)  The MC equation gives finite algebraic identities and CohFT
+          gluing constraints.  It is not, alone, a descendant hierarchy
+          construction.
     """
     return {
         'classification': shadow_depth_hierarchy_classification(),
         'rank_1': {
-            'hierarchy': 'KdV',
+            'hierarchy': 'KW/KdV only after descendant potential is supplied',
             'tau_function': 'exp(sum kappa * lambda_g^FP * hbar^{2g})',
             'spectral_curve': 'H^2 = t^4 Q_L(t)',
-            'status': 'PROVED',
+            'scope': 'finite scalar coefficient window verified',
         },
         'rank_N_minus_1': {
-            'hierarchy': 'N-th Gelfand-Dickey',
+            'hierarchy': 'N-th Gelfand-Dickey only with A_{N-1} descendant CohFT',
             'W_N_identification': 'A_{N-1} Frobenius manifold',
-            'status': 'PROVED for N=2,3; CONDITIONAL for general N',
+            'scope': 'rank and generator metadata; hierarchy conditional',
         },
         'novelty': (
-            'The shadow depth classification G/L/C/M is a natural '
-            'complexity classification of integrable hierarchies. '
-            'The MC equation on the modular convolution algebra '
-            'unifies KdV, Boussinesq, and all Gelfand-Dickey '
-            'hierarchies within a single algebraic framework.'
+            'The shadow depth classification G/L/C/M organizes finite '
+            'scalar diagnostics. Full integrable hierarchies require '
+            'the usual descendant CohFT, Lax, or isomonodromic input.'
         ),
     }

@@ -1,108 +1,140 @@
-r"""Shadow resurgence engine: Borel singularities, Stokes constants,
-optimal truncation, and Borel reconstruction for the shadow obstruction tower.
+r"""Scalar shadow arity diagnostics.
 
-This is the THIRD adversarial method for computing shadow obstruction towers, competing
-with the sqrt(Q_L) algebraic method (A) and OPE recursion method (B).
+The exact input is the one-variable shadow datum
+``(kappa, S_3, S_4)`` on a specified lane.  For class M lanes the
+ordinary arity generating function is algebraic and its finite
+branch points give a convergence-radius diagnostic.  The true Borel
+transform
 
-MATHEMATICAL FRAMEWORK
-======================
+    B(s) = sum_{r >= 2} S_r s^r / r!
 
-The shadow generating function H(t) = t^2 sqrt(Q_L(t)) is algebraic of
-degree 2. Its Taylor coefficients S_r have asymptotic behavior
+is entire for geometrically bounded arity coefficients.  Finite
+Pade poles, reciprocal branch points, Darboux amplitudes, and fitted
+``Stokes`` numbers below are diagnostics, not certified alien
+derivatives, Stokes automorphisms, median sums, analytic
+continuations, or nonperturbative completions.
 
-    S_r ~ A * rho^r * r^{-5/2} * cos(r*theta + phi)
+The scalar A-hat/Bernoulli genus sector is a different exact surface:
+``kappa*((x/2)/sin(x/2) - 1)`` has ordinary poles at ``x = 2*pi*n``.
+Those poles are not Borel singularities of this arity transform.
 
-where rho is the shadow growth rate (reciprocal of the convergence radius).
-This asymptotic expansion is resurgent: the Borel transform
+Canonical constants are read from ``chapters/examples/landscape_census.tex``
+and companion compute modules:
 
-    B(s) = sum_{r>=2} S_r * s^r / Gamma(r+1)
-
-has singularities whose locations, types, and residues encode the full
-non-perturbative content of the shadow obstruction tower.
-
-BOREL SINGULARITY STRUCTURE
-===========================
-
-For the shadow metric Q_L(t) = q0 + q1*t + q2*t^2 with zeros at t_pm,
-the ordinary generating function G(t) = sum S_r t^r has branch points
-at t_pm. The Borel transform B(s) = sum S_r s^r / r! is an ENTIRE
-function (since |S_r| grows at most geometrically, and r! kills this).
-However, the Borel-Laplace integral
-
-    S[G](t) = int_0^infty B(s) e^{-s/t} ds/t
-
-encounters Stokes phenomena when the integration contour passes through
-directions where arg(s) = arg(1/t_pm). The instanton actions are
-
-    A_pm = 1 / t_pm
-
-and the Stokes constants at these singularities measure the discontinuity
-of the lateral Borel sums.
-
-STOKES CONSTANTS
-================
-
-For the algebraic function sqrt(Q_L), the monodromy around each branch
-point t_pm is -1 (square root branch). The Stokes constant at the
-corresponding Borel singularity encodes this monodromy:
-
-    S_1(A) = 2 * pi * i * alpha(A)
-
-where alpha(A) is the CONNECTION COEFFICIENT relating the perturbative
-expansion around t=0 to the expansion around t=t_pm. For the shadow
-generating function:
-
-    alpha(A) = lim_{r->infty} S_r / (rho^r * r^{-5/2} * cos(r*theta+phi))
-
-computed from the exact asymptotic amplitude C in S_r ~ C*rho^r*r^{-5/2}*...
-
-The genuine Stokes constant (not just the leading 2*pi*i) depends on:
-- The prefactor C (Darboux coefficient from the branch point singularity)
-- The argument theta of the branch point
-- The higher-order corrections from the quadratic structure of Q_L
-
-OPTIMAL TRUNCATION
-==================
-
-For a divergent asymptotic series with factorial/geometric growth, the
-optimal truncation order N* minimizes the remainder. For |S_r| ~ C*rho^r/r^{5/2}:
-
-    N*(t) = |A_1| / |t| = 1 / (rho * |t|)
-
-where A_1 is the nearest instanton action. At t=1 (unit coupling):
-
-    N*(A) = floor(1/rho(A))
-
-FAMILIES
-========
-
-15 algebras covering all four depth classes:
-  G: Heisenberg (ranks 1,2,3,8,24)
-  L: Affine sl_2 (k=1,2,10), Affine sl_3 (k=1)
-  C: Beta-gamma (c=-2)
-  M: Virasoro (c=1/2,1,4,13,25,26), W_3 T-line (c=2), W_3 W-line (c=2)
-
-Manuscript references:
-    thm:shadow-radius (higher_genus_modular_koszul.tex)
-    thm:riccati-algebraicity (higher_genus_modular_koszul.tex)
-    thm:mc2-bar-intrinsic (higher_genus_modular_koszul.tex)
-    thm:single-line-dichotomy (higher_genus_modular_koszul.tex)
-    def:shadow-metric (higher_genus_modular_koszul.tex)
-    thm:shadow-connection (higher_genus_modular_koszul.tex)
-
-Dependencies:
-    shadow_radius.py -- shadow growth rate, branch points
-    shadow_tower_recursive.py -- exact shadow coefficients (method A)
-    resurgence_frontier_engine.py -- Borel transform infrastructure
+* ``kappa(H_k)=k``; rank-d level-one Heisenberg has ``kappa=d``.
+* ``kappa(V_k(g))=dim(g)(k+h^vee)/(2h^vee)``.
+* ``kappa(Vir_c)=c/2`` and ``S_4(Vir_c)=10/[c(5c+22)]``.
+* Class-C beta-gamma/bc witness: ``S_3=0``, ``S_4=-5/12``, tail zero
+  from arity 5.
+* ``W_3`` W-line: ``kappa=c/3``, ``S_3=0``,
+  ``S_4=2560/[c(5c+22)^3]``.
 """
 
 from __future__ import annotations
 
 import cmath
 import math
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from fractions import Fraction
 from typing import Any, Dict, List, Optional, Tuple
+
+
+CERTIFIED_EXACT = 'certified_exact'
+CERTIFIED_BOREL_ENTIRE = 'certified_borel_entire'
+FINITE_TOWER_EXACT = 'finite_tower_exact'
+ARITY_RADIUS_DIAGNOSTIC = 'arity_radius_diagnostic'
+ASYMPTOTIC_DIAGNOSTIC = 'asymptotic_diagnostic'
+PADE_DIAGNOSTIC = 'pade_diagnostic'
+ANALYTIC_HYPOTHESIS = 'analytic_resurgence_hypothesis'
+NOT_CERTIFIED = 'not_certified_here'
+
+
+def object_and_kernel_firewalls() -> Dict[str, Any]:
+    """Canonical object and kernel separations for this diagnostic surface."""
+    return {
+        'objects_distinct': {
+            'A': 'chiral algebra',
+            'B(A)': 'bar coalgebra T^c(s^{-1} Abar)',
+            'A^i': 'bar cohomology / Koszul coalgebra branch',
+            'A^!': 'Verdier or continuous-linear dual algebra branch',
+            'Z_ch^der(A)': 'derived chiral centre / Hochschild bulk branch',
+        },
+        'bar_cobar_inversion': 'Omega(B(A)) = A',
+        'bar_cobar_inversion_is_koszul_duality': False,
+        'koszul_dual_branch': 'A^! is Verdier/continuous-linear dual, not Omega(B(A))',
+        'bulk_branch': 'Z_ch^der(A) is Hochschild bulk, not Koszul duality',
+        'kernel_constants': {
+            'affine_collision_trace_form': 'r^{KM}(z) = k*Omega_tr/z',
+            'affine_kz_normalization': 'r_KZ(z) = Omega/((k+h^vee)z)',
+            'heisenberg_collision': 'r^{Heis}(z) = k/z',
+            'virasoro_collision': 'r^{Vir}(z) = (c/2)/z^3 + 2T/z',
+        },
+    }
+
+
+def analytic_certification_firewall() -> Dict[str, Any]:
+    """Certified facts and non-certified analytic claims for this module."""
+    return {
+        'scalar_ahat_bernoulli': {
+            'status': CERTIFIED_EXACT,
+            'ordinary_generating_function': 'kappa*((x/2)/sin(x/2) - 1)',
+            'ordinary_poles': 'x = 2*pi*n, n != 0',
+            'are_true_borel_singularities': False,
+        },
+        'arity_metric_branch_points': {
+            'status': ARITY_RADIUS_DIAGNOSTIC,
+            'input': 'one-variable Q_L(t)=q0+q1*t+q2*t^2',
+            'certifies_full_shadow_tower': False,
+            'certifies_borel_summability': False,
+            'certifies_analytic_continuation': False,
+        },
+        'true_borel_transform': {
+            'status': CERTIFIED_BOREL_ENTIRE,
+            'formula': 'B(s)=sum S_r*s^r/r!',
+            'finite_plane_singularities_certified': False,
+        },
+        'finite_windows': {
+            'status': 'finite_window_evidence',
+            'certifies_borel_summability': False,
+            'certifies_nonperturbative_completion': False,
+        },
+        'pade_and_asymptotic_fits': {
+            'status': PADE_DIAGNOSTIC,
+            'certifies_alien_derivatives': False,
+            'certifies_stokes_automorphisms': False,
+        },
+        'stokes_or_median_resummation': {'status': NOT_CERTIFIED},
+        'nonperturbative_completion': {'status': NOT_CERTIFIED},
+        'btz_jt_recovery': {'status': NOT_CERTIFIED},
+        'all_genus_virasoro_or_multiweight_partition_theorem': {
+            'status': NOT_CERTIFIED,
+        },
+        'analytic_resurgence': {
+            'status': ANALYTIC_HYPOTHESIS,
+            'requires': 'extra analytic continuation and lateral-summation data',
+        },
+        'object_firewalls': object_and_kernel_firewalls(),
+    }
+
+
+def certification_profile(data: 'ShadowData') -> Dict[str, Any]:
+    """Certification status for one scalar lane."""
+    finite = data.depth_class in ('G', 'L', 'C')
+    return {
+        'algebra': data.name,
+        'depth_class': data.depth_class,
+        'finite_tower_exact': finite,
+        'coefficient_status': FINITE_TOWER_EXACT if finite else CERTIFIED_EXACT,
+        'arity_radius_status': FINITE_TOWER_EXACT if finite else ARITY_RADIUS_DIAGNOSTIC,
+        'borel_transform_status': CERTIFIED_BOREL_ENTIRE,
+        'pade_status': PADE_DIAGNOSTIC,
+        'stokes_certified': False,
+        'analytic_continuation_certified': False,
+        'borel_summability_certified': False,
+        'nonperturbative_completion_certified': False,
+        'btz_jt_recovery_certified': False,
+        'multiweight_partition_theorem_certified': False,
+    }
 
 
 # =====================================================================
@@ -111,14 +143,14 @@ from typing import Any, Dict, List, Optional, Tuple
 
 @dataclass
 class ShadowData:
-    """Shadow data (kappa, alpha, S4) for a chiral algebra.
+    """One-lane scalar shadow data for a chiral algebra.
 
-    Sufficient to determine the shadow metric Q_L, branch points,
-    growth rate, and the full resurgence structure.
+    The tuple determines the quadratic arity metric used here.  It does
+    not determine full analytic resurgence data.
 
     Attributes:
         name: human-readable identifier
-        kappa: S_2 (curvature / modular characteristic)
+        kappa: signed modular characteristic
         alpha: S_3 (cubic shadow coefficient)
         S4: S_4 (quartic contact invariant)
         depth_class: one of 'G', 'L', 'C', 'M'
@@ -160,7 +192,13 @@ class ShadowData:
 
     @property
     def rho(self) -> float:
-        """Shadow growth rate = 1 / |nearest branch point|."""
+        """Certified coefficient-growth rate for the one-lane arity series.
+
+        Finite-depth classes have growth rate 0 even when the auxiliary
+        quadratic metric has a formal double root.
+        """
+        if self.depth_class in ('G', 'L', 'C'):
+            return 0.0
         t_p, t_m = self.branch_points
         if t_p == complex('inf'):
             return 0.0
@@ -169,7 +207,9 @@ class ShadowData:
 
     @property
     def theta(self) -> float:
-        """Argument of the nearest branch point."""
+        """Argument of the nearest class-M ordinary branch point."""
+        if self.depth_class in ('G', 'L', 'C'):
+            return 0.0
         t_p, _ = self.branch_points
         if t_p == complex('inf'):
             return 0.0
@@ -177,7 +217,13 @@ class ShadowData:
 
     @property
     def instanton_actions(self) -> Tuple[complex, complex]:
-        """Borel singularity locations A_pm = 1/t_pm."""
+        """Legacy reciprocal branch-point diagnostics.
+
+        These values are not certified Borel singularities or instanton
+        actions without additional analytic resurgence hypotheses.
+        """
+        if self.depth_class in ('G', 'L', 'C'):
+            return (complex('inf'), complex('inf'))
         t_p, t_m = self.branch_points
         A_p = 1.0 / t_p if abs(t_p) > 1e-30 else complex('inf')
         A_m = 1.0 / t_m if abs(t_m) > 1e-30 else complex('inf')
@@ -187,10 +233,10 @@ class ShadowData:
 # --- Standard landscape: 15 algebras ---
 
 def heisenberg_data(rank: int = 1) -> ShadowData:
-    """Heisenberg H_rank: class G, depth 2. kappa = rank/2."""
+    """Rank-d level-one Heisenberg: class G, depth 2, kappa = d."""
     return ShadowData(
         name=f'Heis_n={rank}',
-        kappa=rank / 2.0,
+        kappa=float(rank),
         alpha=0.0,
         S4=0.0,
         depth_class='G',
@@ -232,13 +278,13 @@ def affine_sl3_data(k: float) -> ShadowData:
 def betagamma_data() -> ShadowData:
     """Beta-gamma system at c=-2: class C, depth 4.
 
-    kappa = -1, alpha = nonzero (contact), S4 = -5/12.
-    The quartic contact invariant lives on a charged stratum.
+    The class-C contact-family convention has kappa = -1,
+    S_3 = 0, S_4 = -5/12, and S_r = 0 for r >= 5.
     """
     return ShadowData(
         name='betagamma_c=-2',
         kappa=-1.0,
-        alpha=1.0,  # nonzero contact cubic
+        alpha=0.0,
         S4=-5.0 / 12.0,
         depth_class='C',
     )
@@ -285,7 +331,7 @@ def w3_W_data(c_val: float) -> ShadowData:
 
 
 def standard_landscape() -> List[ShadowData]:
-    """All 15 standard algebras for the resurgence atlas."""
+    """Standard one-lane data for the diagnostic atlas."""
     algebras = []
     # Class G: Heisenberg
     for n in [1, 2, 3, 8, 24]:
@@ -312,6 +358,10 @@ def standard_landscape() -> List[ShadowData]:
 def shadow_coefficients(data: ShadowData, max_r: int = 30) -> Dict[int, float]:
     r"""Compute shadow coefficients S_2, ..., S_{max_r} via sqrt(Q_L) expansion.
 
+    For finite-depth classes G/L/C the exact truncation is used directly:
+    class G has only S_2, class L has S_2 and S_3, and class C has
+    S_2, S_3=0, S_4 with zero tail from arity 5.
+
     Uses the convolution recursion f^2 = Q_L:
         a_0 = sqrt(q0) = 2|kappa|
         a_1 = q1/(2*a_0)
@@ -319,6 +369,16 @@ def shadow_coefficients(data: ShadowData, max_r: int = 30) -> Dict[int, float]:
     where c_0=q0, c_1=q1, c_2=q2, c_n=0 for n>=3.
     Then S_r = a_{r-2}/r.
     """
+    if data.depth_class in ('G', 'L', 'C'):
+        coeffs = {r: 0.0 for r in range(2, max_r + 1)}
+        if max_r >= 2:
+            coeffs[2] = data.kappa
+        if data.depth_class in ('L', 'C') and max_r >= 3:
+            coeffs[3] = data.alpha
+        if data.depth_class == 'C' and max_r >= 4:
+            coeffs[4] = data.S4
+        return coeffs
+
     q0, q1, q2 = data.q0, data.q1, data.q2
     max_n = max_r - 2
     if max_n < 0 or q0 <= 0:
@@ -380,8 +440,9 @@ def shadow_coefficients_fraction(kappa_num: int, kappa_den: int,
 def borel_coefficients(coeffs: Dict[int, float]) -> Dict[int, float]:
     r"""Borel transform coefficients: b_r = S_r / Gamma(r+1) = S_r / r!.
 
-    B(s) = sum_{r>=2} b_r s^r is an ENTIRE function for algebraic GF
-    (the factorial kills the geometric growth).
+    For the geometrically bounded arity series considered here,
+    B(s) = sum_{r>=2} b_r s^r is entire.  This function does not place
+    finite Borel singularities at the ordinary branch points of G(t).
     """
     return {r: sr / math.gamma(r + 1) for r, sr in coeffs.items()}
 
@@ -412,7 +473,7 @@ def borel_evaluate_high_precision(coeffs_frac: Dict[int, Fraction],
 
 
 # =====================================================================
-# Section 3: Darboux coefficient and exact Stokes constant
+# Section 3: Darboux coefficient and Stokes diagnostics
 # =====================================================================
 
 def darboux_coefficient(data: ShadowData) -> complex:
@@ -437,10 +498,10 @@ def darboux_coefficient(data: ShadowData) -> complex:
 
     where t_0' is the other zero of Q_L and q2 is the leading coefficient.
     The Darboux coefficient for the SHADOW coefficients S_r = [t^r] G(t)
-    (where G(t) = sum S_r t^r, NOT the weighted GF) involves an additional
+    (where G(t) = sum S_r t^r, the ordinary generating function) involves an additional
     1/r factor, pushing the exponent from r^{-3/2} to r^{-5/2}.
 
-    Actually, recall S_r = a_{r-2}/r where a_n = [t^n] sqrt(Q_L). So:
+    Since S_r = a_{r-2}/r where a_n = [t^n] sqrt(Q_L):
         S_r = (1/r) * [t^{r-2}] sqrt(Q_L(t))
 
     The transfer theorem for sqrt(Q_L) gives:
@@ -464,8 +525,8 @@ def darboux_coefficient(data: ShadowData) -> complex:
 
     Returns the complex Darboux coefficient C.
     """
-    if data.depth_class in ('G', 'L'):
-        # Tower terminates; Darboux coefficient is 0 (no branch point singularity)
+    if data.depth_class in ('G', 'L', 'C'):
+        # Finite tower: no Darboux tail.
         return 0.0 + 0.0j
 
     t_p, t_m = data.branch_points
@@ -473,11 +534,6 @@ def darboux_coefficient(data: ShadowData) -> complex:
 
     if abs(q2) < 1e-30 or abs(t_p) < 1e-30:
         return 0.0 + 0.0j
-
-    # Q_L'(t_0) = q1 + 2*q2*t_0 = q2*(2*t_0 - (-q1/q2)) = q2*(2*t_0 + (t_p+t_m))
-    # Since t_p + t_m = -q1/q2, Q_L'(t_p) = q2*(2*t_p + t_p + t_m) = q2*(t_p - t_m) ... wait.
-    # Q_L(t) = q2*(t - t_p)*(t - t_m), so Q_L'(t_p) = q2*(t_p - t_m).
-    deriv_at_tp = q2 * (t_p - t_m)
 
     # C_a = coefficient in a_n ~ C_a * t_p^{-n} * n^{-3/2}
     # From the Darboux transfer: [t^n] sqrt(Q_L(t)) where sqrt(Q_L) has
@@ -487,12 +543,7 @@ def darboux_coefficient(data: ShadowData) -> complex:
     #   [z^n] f(z) ~ A * t_0^{-n} * n^{-alpha-1} / Gamma(-alpha)
     #
     # Here alpha = 1/2, Gamma(-1/2) = -2*sqrt(pi).
-    # sqrt(Q_L(t)) ~ sqrt(q2*(t_p-t_m)) * (-t_p)^{1/2} * (1-t/t_p)^{1/2}
-    # ... actually:
-    # sqrt(Q_L(t)) = sqrt(q2) * sqrt((t-t_p)*(t-t_m))
-    #              = sqrt(q2) * sqrt(t_m - t_p) * sqrt(1-t/t_p) * sqrt(... something involving t_m)
-    #
-    # Let me be more careful. Write Q_L(t) = q2*(t-t_p)*(t-t_m).
+    # Write Q_L(t) = q2*(t-t_p)*(t-t_m).
     # sqrt(Q_L) = sqrt(q2) * sqrt(t-t_p) * sqrt(t-t_m).
     # Near t = t_p: sqrt(t-t_m) ~ sqrt(t_p - t_m) (analytic at t_p).
     # So sqrt(Q_L) ~ sqrt(q2) * sqrt(t_p - t_m) * sqrt(t - t_p).
@@ -538,82 +589,17 @@ def darboux_amplitude_phase(data: ShadowData) -> Tuple[float, float]:
     return amplitude, phase
 
 
-def stokes_constant_exact(data: ShadowData) -> complex:
-    r"""Exact Stokes constant S_1 for the shadow obstruction tower.
+def stokes_constant_diagnostic(data: ShadowData) -> complex:
+    r"""Return a Darboux-normalized monodromy diagnostic.
 
-    The Stokes constant at the dominant Borel singularity A_1 = 1/t_p
-    is related to the connection coefficient between the perturbative
-    expansion and the one-instanton sector.
-
-    For the algebraic function sqrt(Q_L) with a square-root branch point:
-
-        S_1 = 2*pi*i * C_connection
-
-    where C_connection is the ratio of the analytic continuation of
-    sqrt(Q_L) across the cut to the perturbative expansion.
-
-    For Q_L(t) = q2*(t-t_p)*(t-t_m), the monodromy of sqrt(Q_L) around
-    t_p is -1 (square root). In the Borel plane, this translates to:
-
-        S_1 = 2*pi*i * R_{t_p}
-
-    where R_{t_p} is the Borel residue, computed from the Darboux analysis.
-
-    Specifically, the Borel transform B(s) of the shadow generating function
-    has a branch point at s = A_1 = 1/t_p. Near this point:
-
-        B(s) ~ R_0 * (s - A_1)^{-1/2} + regular
-
-    where R_0 encodes the Darboux coefficient. The Stokes automorphism
-    (discontinuity of lateral Borel sums) gives:
-
-        S_1 = -R_0 * sqrt(pi) / Gamma(1/2) = -R_0
-
-    ... actually for the standard normalization, the Stokes constant of a
-    Borel singularity of type (s-A)^{alpha} is:
-
-        S_1 = e^{i*pi*alpha} * sin(pi*alpha) * R_0 * (some Gamma factors)
-
-    For alpha = -1/2 (square root branch in the Borel plane, coming from
-    the r^{-3/2} algebraic singularity in coefficient space):
-
-    The precise formula: the shadow generating function G(t) = sum S_r t^r
-    has Borel transform B(s) = sum S_r s^r/r!. If S_r ~ C*rho^r*r^{-5/2},
-    then B(s) near s = 1/rho*e^{-i*theta} has a singularity of the form:
-
-        B(s) ~ C * Gamma(-3/2)^{-1} * (1 - rho*e^{i*theta}*s)^{3/2} + analytic
-
-    Wait - let me be more precise about the Borel plane singularity type.
-
-    For a_r ~ C * w^{-r} * r^{beta} (where w = t_p, beta = -5/2):
-    The Borel transform b_r = a_r/r! has:
-        sum b_r s^r = sum C*w^{-r}*r^{beta}*s^r/r!
-
-    This is convergent for all s (entire function). The singularities appear
-    when we try to Borel-Laplace resum. The key object is the analytic
-    continuation of B(s) beyond its disk of convergence, which involves
-    the analytic continuation of the original algebraic function.
-
-    For our algebraic shadow obstruction tower: G(t) = sum S_r t^r has algebraic
-    branch points. The Stokes constant is determined by the monodromy
-    of G around the branch point. Since G^2 = t^4 * Q_L(t) (locally),
-    the monodromy is -1, giving:
-
-        S_1 = 2*pi*i * (analytic continuation coefficient)
-
-    The analytic continuation coefficient is:
-        C_ac = t_p^2 * sqrt(q2*(t_p - t_m)) * sqrt(-t_p)
-    evaluated with the correct branch of the square root.
-
-    The EXACT Stokes constant is then:
-
-        S_1 = 2*pi*i * C_ac / (normalization from Borel transform)
-
-    For the direct shadow obstruction tower (OGF, not weighted GF):
-
-        S_1 = i * sqrt(pi) * t_p^{3/2} * sqrt(q2 * (t_p - t_m))
+    This number is computed from the ordinary branch point of the
+    algebraic class-M arity generating function.  It is not certified as
+    an Ecalle Stokes constant, alien derivative, Stokes automorphism, or
+    lateral Borel discontinuity.  The true Borel transform used here is
+    entire; analytic resurgence requires continuation and summation data
+    not supplied by ``(kappa, S_3, S_4)``.
     """
-    if data.depth_class in ('G', 'L'):
+    if data.depth_class in ('G', 'L', 'C'):
         return 0.0 + 0.0j
 
     t_p, t_m = data.branch_points
@@ -622,22 +608,17 @@ def stokes_constant_exact(data: ShadowData) -> complex:
     if abs(q2) < 1e-30 or abs(t_p) < 1e-30:
         return 0.0 + 0.0j
 
-    # The Stokes constant encodes the monodromy of sqrt(Q_L) at t_p.
+    # This diagnostic encodes the monodromy of sqrt(Q_L) at t_p.
     # sqrt(Q_L) = sqrt(q2) * sqrt(t-t_p) * sqrt(t-t_m).
     # Monodromy of sqrt(t-t_p) around t_p: factor of -1.
     # The discontinuity across the cut from t_p is:
     #   disc = 2 * sqrt(q2) * sqrt(t_p - t_m) * i*sqrt(|t - t_p|)  (on the cut)
     #
-    # In the Borel plane, the Stokes constant relating the perturbative
-    # expansion sum S_r t^r to its Borel-Laplace resummation is:
-    #
-    # S_1 = 2*pi*i * lim_{r->inf} [S_r * t_p^r * r^{5/2}] / (normalization)
-    #
     # From the Darboux analysis:
     #   S_r ~ 2*Re[C * t_p^{-r}] * r^{-5/2}
     # where C = sqrt(q2)*sqrt(t_p-t_m)*sqrt(-t_p)*t_p^2 / (-2*sqrt(pi))
     #
-    # The Stokes constant relates to C via:
+    # The diagnostic normalization inherited from the old code is:
     #   S_1 = -2*pi*i * C / t_p^2
     #       = -2*pi*i * sqrt(q2)*sqrt(t_p-t_m)*sqrt(-t_p) / (-2*sqrt(pi))
     #       = i * sqrt(pi) * sqrt(q2) * sqrt(t_p-t_m) * sqrt(-t_p)
@@ -646,8 +627,16 @@ def stokes_constant_exact(data: ShadowData) -> complex:
     return stokes
 
 
-def stokes_constant_numerical(data: ShadowData, max_r: int = 200) -> complex:
-    r"""Numerically extract the Stokes constant from high-order shadow coefficients.
+def stokes_constant_exact(data: ShadowData) -> complex:
+    """Exact Stokes constants are not certified by this scalar module."""
+    raise NotImplementedError(
+        "Exact Stokes constants require analytic continuation and "
+        "lateral-summation data beyond scalar shadow coefficients."
+    )
+
+
+def stokes_constant_fit_diagnostic(data: ShadowData, max_r: int = 200) -> complex:
+    r"""Fit the Darboux-normalized diagnostic from high-order coefficients.
 
     Uses Richardson extrapolation on the sequence:
         s_r = S_r * t_p^r * r^{5/2}
@@ -656,9 +645,10 @@ def stokes_constant_numerical(data: ShadowData, max_r: int = 200) -> complex:
         s_r -> 2*Re(C) * cos(arg(t_p^{-r})) + 2*Im(C) * sin(arg(t_p^{-r}))
 
     We extract C by fitting to cos/sin at the known frequency theta = arg(t_p).
-    Then S_1 = -2*pi*i * C / t_p^2.
+    Then the diagnostic normalization is ``-2*pi*i*C/t_p^2``.  This is
+    not a certified Stokes constant.
     """
-    if data.depth_class in ('G', 'L'):
+    if data.depth_class in ('G', 'L', 'C'):
         return 0.0 + 0.0j
 
     t_p, t_m = data.branch_points
@@ -709,7 +699,7 @@ def stokes_constant_numerical(data: ShadowData, max_r: int = 200) -> complex:
     # so the oscillation comes from Re(C * (t_p / |t_p|)^{-r}).
     # Thus A + iB ~ 2*C * (direction), and we need to undo the direction.
 
-    # Actually, the asymptotic formula is:
+    # The asymptotic formula is:
     #   S_r ~ 2*Re[C * t_p^{-r}] * r^{-5/2}
     # where C = |C| exp(i*phi).
     # s_r = S_r * |t_p|^r * r^{5/2} ~ 2*Re[C * (t_p/|t_p|)^{-r}]
@@ -729,12 +719,17 @@ def stokes_constant_numerical(data: ShadowData, max_r: int = 200) -> complex:
     return S_1
 
 
+def stokes_constant_numerical(data: ShadowData, max_r: int = 200) -> complex:
+    """Compatibility wrapper for the fitted Stokes-like diagnostic."""
+    return stokes_constant_fit_diagnostic(data, max_r=max_r)
+
+
 # =====================================================================
 # Section 4: Optimal truncation
 # =====================================================================
 
 def optimal_truncation_order(data: ShadowData, t_val: float = 1.0) -> int:
-    r"""Optimal truncation order N*(A, t) for the shadow series at coupling t.
+    r"""Term-minimizing arity-window diagnostic at coupling t.
 
     For a divergent series with |S_r| ~ |C|*rho^r*r^{-5/2}, the terms
     |S_r t^r| are minimized when:
@@ -750,8 +745,9 @@ def optimal_truncation_order(data: ShadowData, t_val: float = 1.0) -> int:
 
     where R = 1/rho is the convergence radius.
 
-    For class G/L algebras (rho=0): N* = infinity (series terminates).
-    For class C: N* depends on the charged-stratum analysis (not covered here).
+    For finite-depth classes G/L/C (rho=0): the tower terminates, so the
+    returned sentinel is effectively infinite.  This is not a median
+    resummation or Borel-summability certificate.
     """
     rho = data.rho
     if rho < 1e-30:
@@ -800,41 +796,33 @@ def optimal_truncation_error(data: ShadowData, t_val: float = 1.0,
 
 
 # =====================================================================
-# Section 5: Borel reconstruction (method C)
+# Section 5: Darboux asymptotic approximation
 # =====================================================================
 
 def borel_reconstruct(data: ShadowData, max_r: int = 30) -> Dict[int, float]:
-    r"""Reconstruct shadow coefficients from resurgent Borel analysis.
-
-    This is METHOD C: reconstruct S_r from the Borel singularity data
-    and the asymptotic formula, then compare with the exact values from
-    the convolution recursion (method A).
+    r"""Approximate shadow coefficients from Darboux branch-point data.
 
     The asymptotic formula (Darboux):
         S_r = 2*Re[C * t_p^{-r}] * r^{-5/2}   (for large r)
 
-    where C is the complex Darboux coefficient and t_p is the branch point.
+    where C is the complex Darboux coefficient and t_p is the ordinary
+    branch point of the class-M arity generating function.
 
-    For small r: the asymptotic formula has corrections. The EXACT
-    resurgent reconstruction would require computing ALL orders of the
-    transseries. We instead use:
+    For small r the leading asymptotic formula has corrections.  This
+    function is an asymptotic diagnostic, not a Borel reconstruction or
+    a nonperturbative completion.
 
     For class G: S_2 = kappa, S_r = 0 for r >= 3.
     For class L: S_2 = kappa, S_3 = alpha, S_r = 0 for r >= 4.
+    For class C: S_2 = kappa, S_3 = 0, S_4 is exact, S_r = 0 for r >= 5.
     For class M: use the asymptotic formula for r >= 5, and exact values
                  for r = 2, 3, 4 (the asymptotic formula is not accurate
                  at low arity).
 
-    Returns dict r -> S_r^{Borel} (the Borel-reconstructed value).
+    Returns dict r -> diagnostic approximation.
     """
-    if data.depth_class == 'G':
-        return {r: (data.kappa if r == 2 else 0.0) for r in range(2, max_r + 1)}
-
-    if data.depth_class == 'L':
-        result = {r: 0.0 for r in range(2, max_r + 1)}
-        result[2] = data.kappa
-        result[3] = data.alpha
-        return result
+    if data.depth_class in ('G', 'L', 'C'):
+        return shadow_coefficients(data, max_r)
 
     # Class C or M: use Darboux asymptotics
     C = darboux_coefficient(data)
@@ -862,10 +850,6 @@ def borel_reconstruct(data: ShadowData, max_r: int = 30) -> Dict[int, float]:
             # But C already includes the Gamma factor from darboux_coefficient.
             # The asymptotic formula is:
             #   S_r = a_{r-2}/r ~ C * t_p^{-(r-2)} * (r-2)^{-3/2} / r
-            # Wait, I already computed C = C_a * t_p^2 in darboux_coefficient,
-            # where C_a includes the 1/(-2*sqrt(pi)) Gamma factor.
-            # So: S_r ~ C * t_p^{-r} * (r-2)^{-3/2} / r  (from C = C_a * t_p^2)
-
             # For both branch points:
             val_p = C * t_p**(-r) * (r - 2)**(-1.5) / r
             val_m = C.conjugate() * t_m**(-r) * (r - 2)**(-1.5) / r
@@ -875,11 +859,11 @@ def borel_reconstruct(data: ShadowData, max_r: int = 30) -> Dict[int, float]:
 
 
 # =====================================================================
-# Section 6: Cross-validation (method A vs method C)
+# Section 6: Exact coefficients vs asymptotic diagnostics
 # =====================================================================
 
 def cross_validate(data: ShadowData, max_r: int = 30) -> Dict[str, Any]:
-    """Compare exact (method A) vs Borel-reconstructed (method C) coefficients.
+    """Compare exact recursion against the Darboux asymptotic diagnostic.
 
     Returns comparison metrics: relative errors, convergence of the
     asymptotic approximation, and the arity at which the asymptotic
@@ -912,7 +896,8 @@ def cross_validate(data: ShadowData, max_r: int = 30) -> Dict[str, Any]:
         'depth_class': data.depth_class,
         'rho': data.rho,
         'darboux_C': darboux_coefficient(data),
-        'stokes_S1': stokes_constant_exact(data),
+        'stokes_diagnostic': stokes_constant_diagnostic(data),
+        'stokes_certified': False,
         'N_star': optimal_truncation_order(data),
         'relative_errors': errors,
         'convergence_thresholds': thresholds,
@@ -922,27 +907,28 @@ def cross_validate(data: ShadowData, max_r: int = 30) -> Dict[str, Any]:
 
 
 # =====================================================================
-# Section 7: Full resurgence atlas for the standard landscape
+# Section 7: Diagnostic atlas for the standard landscape
 # =====================================================================
 
 @dataclass
 class ResurgenceEntry:
-    """Complete resurgence data for one algebra."""
+    """Diagnostic arity data for one algebra."""
     data: ShadowData
     coefficients: Dict[int, float]
     borel_coefficients: Dict[int, float]
     darboux_C: complex
-    stokes_S1: complex
+    stokes_diagnostic: complex
+    stokes_certified: bool
     N_star: int
     branch_points: Tuple[complex, complex]
-    instanton_actions: Tuple[complex, complex]
-    borel_singularity_modulus: float
-    borel_singularity_argument: float
+    reciprocal_branch_points: Tuple[complex, complex]
+    branch_point_modulus: float
+    branch_point_argument: float
     cross_validation_error: float
 
 
 def build_resurgence_atlas(max_r: int = 30) -> Dict[str, ResurgenceEntry]:
-    """Build the complete resurgence atlas for all 15 standard algebras."""
+    """Build the diagnostic atlas for the standard one-lane data."""
     landscape = standard_landscape()
     atlas = {}
 
@@ -950,12 +936,12 @@ def build_resurgence_atlas(max_r: int = 30) -> Dict[str, ResurgenceEntry]:
         coeffs = shadow_coefficients(data, max_r)
         b_coeffs = borel_coefficients(coeffs)
         C = darboux_coefficient(data)
-        S1 = stokes_constant_exact(data)
+        S1 = stokes_constant_diagnostic(data)
         N_star = optimal_truncation_order(data)
         bp = data.branch_points
         A = data.instanton_actions
 
-        # Borel singularity metrics
+        # Ordinary branch-point metrics; not Borel singularity certificates.
         bp_mod = abs(bp[0]) if bp[0] != complex('inf') else float('inf')
         bp_arg = cmath.phase(bp[0]) if bp[0] != complex('inf') else 0.0
 
@@ -968,12 +954,13 @@ def build_resurgence_atlas(max_r: int = 30) -> Dict[str, ResurgenceEntry]:
             coefficients=coeffs,
             borel_coefficients=b_coeffs,
             darboux_C=C,
-            stokes_S1=S1,
+            stokes_diagnostic=S1,
+            stokes_certified=False,
             N_star=N_star,
             branch_points=bp,
-            instanton_actions=A,
-            borel_singularity_modulus=bp_mod,
-            borel_singularity_argument=bp_arg,
+            reciprocal_branch_points=A,
+            branch_point_modulus=bp_mod,
+            branch_point_argument=bp_arg,
             cross_validation_error=cv_err,
         )
 
@@ -985,19 +972,20 @@ def build_resurgence_atlas(max_r: int = 30) -> Dict[str, ResurgenceEntry]:
 # =====================================================================
 
 def stokes_constant_virasoro(c_val: float) -> Dict[str, Any]:
-    """Compute the exact Stokes constant S_1(Vir, c) and related data."""
+    """Compute Virasoro Darboux/Stokes-like diagnostics."""
     data = virasoro_data(c_val)
-    S1_exact = stokes_constant_exact(data)
-    S1_numerical = stokes_constant_numerical(data, max_r=200)
+    S1_diagnostic = stokes_constant_diagnostic(data)
+    S1_fit = stokes_constant_fit_diagnostic(data, max_r=200)
     C = darboux_coefficient(data)
     amp, phase = darboux_amplitude_phase(data)
 
     return {
         'c': c_val,
-        'S1_exact': S1_exact,
-        'S1_numerical': S1_numerical,
-        'S1_modulus': abs(S1_exact),
-        'S1_argument': cmath.phase(S1_exact),
+        'stokes_diagnostic': S1_diagnostic,
+        'stokes_fit_diagnostic': S1_fit,
+        'stokes_certified': False,
+        'stokes_modulus': abs(S1_diagnostic),
+        'stokes_argument': cmath.phase(S1_diagnostic),
         'darboux_C': C,
         'darboux_amplitude': amp,
         'darboux_phase': phase,
@@ -1009,8 +997,8 @@ def stokes_constant_virasoro(c_val: float) -> Dict[str, Any]:
     }
 
 
-def w3_borel_singularities(c_val: float) -> Dict[str, Any]:
-    """Borel singularity locations for W_3 on both T-line and W-line."""
+def w3_branch_point_diagnostics(c_val: float) -> Dict[str, Any]:
+    """Ordinary branch-point diagnostics for W_3 T-line and W-line."""
     T_data = w3_T_data(c_val)
     W_data = w3_W_data(c_val)
 
@@ -1018,25 +1006,33 @@ def w3_borel_singularities(c_val: float) -> Dict[str, Any]:
         'c': c_val,
         'T_line': {
             'branch_points': T_data.branch_points,
-            'instanton_actions': T_data.instanton_actions,
+            'reciprocal_branch_points': T_data.instanton_actions,
             'rho': T_data.rho,
             'theta': T_data.theta,
-            'stokes_S1': stokes_constant_exact(T_data),
+            'stokes_diagnostic': stokes_constant_diagnostic(T_data),
+            'stokes_certified': False,
             'N_star': optimal_truncation_order(T_data),
         },
         'W_line': {
             'branch_points': W_data.branch_points,
-            'instanton_actions': W_data.instanton_actions,
+            'reciprocal_branch_points': W_data.instanton_actions,
             'rho': W_data.rho,
             'theta': W_data.theta,
-            'stokes_S1': stokes_constant_exact(W_data),
+            'stokes_diagnostic': stokes_constant_diagnostic(W_data),
+            'stokes_certified': False,
             'N_star': optimal_truncation_order(W_data),
         },
+        'borel_singularities_certified': False,
     }
 
 
+def w3_borel_singularities(c_val: float) -> Dict[str, Any]:
+    """Compatibility wrapper; returns non-certified branch-point diagnostics."""
+    return w3_branch_point_diagnostics(c_val)
+
+
 # =====================================================================
-# Section 9: Borel-Pade singularity detection
+# Section 9: Pade pole diagnostics
 # =====================================================================
 
 def pade_approximant(coeffs_list: List[float], m: int, n: int
@@ -1079,13 +1075,14 @@ def pade_approximant(coeffs_list: List[float], m: int, n: int
     return P_c, Q_c
 
 
-def borel_pade_singularities(data: ShadowData, max_r: int = 30,
-                               pade_order: Optional[int] = None
-                               ) -> Dict[str, Any]:
-    """Detect Borel singularities via Pade approximation of B(s).
+def borel_pade_pole_diagnostics(data: ShadowData, max_r: int = 30,
+                                pade_order: Optional[int] = None
+                                ) -> Dict[str, Any]:
+    """Compute Pade poles of a finite Borel-transform window.
 
     Computes the diagonal Pade [N/N] of the Borel transform inner series
-    and finds its poles (approximations to Borel singularities).
+    and finds its poles.  These are finite-window diagnostics; they are
+    not certified Borel singularities.
     """
     import numpy as np
 
@@ -1119,21 +1116,30 @@ def borel_pade_singularities(data: ShadowData, max_r: int = 30,
 
     nearest = finite_poles[0] if finite_poles else None
 
-    # Compare with predicted singularities
+    # Compare with reciprocal branch-point diagnostics.
     predicted = data.instanton_actions
 
     return {
         'algebra': data.name,
+        'status': PADE_DIAGNOSTIC,
+        'pade_poles_certified_singularities': False,
         'pade_order': pade_order,
         'n_poles': len(finite_poles),
         'nearest_pole': nearest,
         'nearest_modulus': abs(nearest) if nearest else None,
         'nearest_arg': cmath.phase(nearest) if nearest else None,
-        'predicted_A_plus': predicted[0],
-        'predicted_A_minus': predicted[1],
+        'predicted_reciprocal_branch_plus': predicted[0],
+        'predicted_reciprocal_branch_minus': predicted[1],
         'predicted_modulus': abs(predicted[0]) if predicted[0] != complex('inf') else None,
         'all_poles': finite_poles,
     }
+
+
+def borel_pade_singularities(data: ShadowData, max_r: int = 30,
+                             pade_order: Optional[int] = None
+                             ) -> Dict[str, Any]:
+    """Compatibility wrapper for non-certified Pade pole diagnostics."""
+    return borel_pade_pole_diagnostics(data, max_r=max_r, pade_order=pade_order)
 
 
 # =====================================================================
@@ -1192,9 +1198,9 @@ def ratio_rho_extraction(data: ShadowData, max_r: int = 60) -> Dict[str, Any]:
 # =====================================================================
 
 def resurgence_summary(data: ShadowData, max_r: int = 30) -> str:
-    """Human-readable summary of the resurgence analysis for one algebra."""
+    """Human-readable summary of the arity diagnostics for one algebra."""
     lines = [
-        f"=== Resurgence Analysis: {data.name} ===",
+        f"=== Shadow Arity Diagnostics: {data.name} ===",
         f"  Depth class: {data.depth_class}",
         f"  kappa = {data.kappa:.6f}",
         f"  alpha = {data.alpha:.6f}",
@@ -1203,8 +1209,13 @@ def resurgence_summary(data: ShadowData, max_r: int = 30) -> str:
     ]
 
     if data.depth_class in ('G', 'L'):
-        lines.append(f"  Tower terminates: rho = 0, no Borel singularities")
-        lines.append(f"  Stokes constant: S_1 = 0 (trivially)")
+        lines.append("  Tower terminates: rho = 0")
+        lines.append("  Stokes diagnostic: 0 (finite tower; no certification needed)")
+        return "\n".join(lines)
+
+    if data.depth_class == 'C':
+        lines.append("  Tower terminates at arity 4: rho = 0")
+        lines.append("  Stokes diagnostic: 0 (finite tower; no certification needed)")
         return "\n".join(lines)
 
     lines.extend([
@@ -1212,20 +1223,20 @@ def resurgence_summary(data: ShadowData, max_r: int = 30) -> str:
         f"  theta = {data.theta:.6f} (= {data.theta/math.pi:.4f} pi)",
         f"  Branch points: t_+ = {data.branch_points[0]:.6f}",
         f"                 t_- = {data.branch_points[1]:.6f}",
-        f"  Instanton actions: A_+ = {data.instanton_actions[0]:.6f}",
-        f"                     A_- = {data.instanton_actions[1]:.6f}",
+        f"  Reciprocal branch diagnostics: A_+ = {data.instanton_actions[0]:.6f}",
+        f"                                 A_- = {data.instanton_actions[1]:.6f}",
     ])
 
     C = darboux_coefficient(data)
-    S1 = stokes_constant_exact(data)
+    S1 = stokes_constant_diagnostic(data)
     N_star = optimal_truncation_order(data)
 
     lines.extend([
         f"  Darboux coefficient: C = {C:.6f}",
         f"    |C| = {abs(C):.6e}, arg(C) = {cmath.phase(C):.6f}",
-        f"  Stokes constant: S_1 = {S1:.6f}",
+        f"  Stokes diagnostic (not certified): {S1:.6f}",
         f"    |S_1| = {abs(S1):.6e}, arg(S_1) = {cmath.phase(S1):.6f}",
-        f"  Optimal truncation: N* = {N_star} (at t=1)",
+        f"  Term-minimizing arity window: N* = {N_star} (at t=1)",
     ])
 
     # Cross-validation
@@ -1234,7 +1245,7 @@ def resurgence_summary(data: ShadowData, max_r: int = 30) -> str:
         max_err = max(cv['relative_errors'].values())
         tail_err = cv['relative_errors'].get(max_r, 0.0)
         lines.extend([
-            f"  Cross-validation (method A vs C):",
+            f"  Exact recursion vs Darboux diagnostic:",
             f"    Max relative error: {max_err:.2e}",
             f"    Tail error (r={max_r}): {tail_err:.2e}",
         ])
@@ -1246,25 +1257,26 @@ def resurgence_summary(data: ShadowData, max_r: int = 30) -> str:
 
 if __name__ == '__main__':
     print("=" * 70)
-    print("SHADOW RESURGENCE ATLAS")
+    print("SHADOW ARITY DIAGNOSTIC ATLAS")
     print("=" * 70)
 
     # Specific targets
     for c_val in [0.5, 13.0]:
         result = stokes_constant_virasoro(c_val)
         print(f"\nVirasoro c={c_val}:")
-        print(f"  S_1 = {result['S1_exact']:.8f}")
-        print(f"  |S_1| = {result['S1_modulus']:.8e}")
+        print(f"  Stokes diagnostic = {result['stokes_diagnostic']:.8f}")
+        print(f"  certified = {result['stokes_certified']}")
+        print(f"  |diagnostic| = {result['stokes_modulus']:.8e}")
         print(f"  N* = {result['N_star']}")
 
-    print("\nW_3 Borel singularities at c=2:")
-    w3 = w3_borel_singularities(2.0)
+    print("\nW_3 branch-point diagnostics at c=2:")
+    w3 = w3_branch_point_diagnostics(2.0)
     for line_name in ['T_line', 'W_line']:
         ld = w3[line_name]
         print(f"  {line_name}:")
         print(f"    Branch points: {ld['branch_points']}")
         print(f"    rho = {ld['rho']:.8f}")
-        print(f"    S_1 = {ld['stokes_S1']:.8f}")
+        print(f"    Stokes diagnostic = {ld['stokes_diagnostic']:.8f}")
 
     # Full atlas summary
     print("\n" + "=" * 70)

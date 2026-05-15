@@ -1,29 +1,28 @@
-r"""Universal chiral algebra engine: Cliff universality and quasi-conformal structure.
+r"""Universal chiral algebra engine: Cliff universality and quasi-conformal data.
 
-Tests and verifies universality properties of chiral algebras in the sense of
-Emily Cliff [Cliff19] and quasi-conformal structure in the sense of
-Frenkel-Ben-Zvi [FBZ04].
+Finite witness registry for the standard chiral algebra families in the
+landscape.  The engine records the extra coordinate-change data that promotes a
+fixed-curve chiral algebra to a compatible family in the sense of Cliff
+[Cliff19] and Frenkel--Ben-Zvi [FBZ04].
 
 MATHEMATICAL BACKGROUND
 =======================
 
 Three notions of "coordinate-independence" for vertex/chiral algebras:
 
-(1) QUASI-CONFORMAL VERTEX ALGEBRA (Frenkel-Ben-Zvi, Chapter 6):
-    A vertex algebra V equipped with an action of the group Aut(O) of
-    coordinate changes on the formal disk O = k[[t]], such that:
-      - L_{-1} = -d/dt acts as the translation operator
-      - L_0 = -t d/dt acts semisimply with integral eigenvalues
-      - Der_+(O) = {t^n d/dt : n >= 2} acts locally nilpotently
-    Equivalently: V is a module over the Harish-Chandra pair (Der(O), Aut_+(O)).
+(1) QUASI-CONFORMAL VERTEX ALGEBRA (Frenkel--Ben-Zvi, Chapter 6):
+    A vertex algebra V equipped with an action of the coordinate-change
+    Harish-Chandra pair attached to the formal disk O = k[[t]]:
+      - L_{-1} is the translation operator.
+      - L_0 gives the weight grading on the standard positive-energy sectors.
+      - the positive vector fields act locally nilpotently on each vector.
     The Aut(O) action defines a V-bundle V_X on any smooth curve X via the
     Aut(O)-torsor of formal coordinates.  The vertex operations then descend
-    to give a CHIRAL ALGEBRA on X.
+    to a chiral algebra on X.
 
-    CONFORMAL = quasi-conformal + the full Virasoro action (L_n for all n).
-    Quasi-conformal is WEAKER: only needs L_{-1}, L_0, and local nilpotency
-    of Der_+(O).  Every conformal VA is quasi-conformal.  Some non-conformal
-    VAs (e.g. certain lattice VAs without Virasoro) are still quasi-conformal.
+    A conformal vector is one source of this action.  It is not the only
+    source: affine vacuum modules have coordinate-change actions even at the
+    critical level, where the Sugawara conformal vector is unavailable.
 
 (2) UNIVERSAL CHIRAL ALGEBRA (Beilinson-Drinfeld [BD04], 2.9.9):
     A compatible family {B_X} of chiral algebras, one for each smooth curve X,
@@ -39,34 +38,35 @@ Three notions of "coordinate-independence" for vertex/chiral algebras:
     for each fibrewise etale morphism phi: X/S -> X'/S', compatible with
     composition.
 
-KEY THEOREM (Cliff [Cliff19], Proposition 8.1 + Theorem stated in Introduction):
+KEY THEOREM (Cliff [Cliff19], Proposition 8.1 + Introduction):
     Let phi: X -> Y be etale, {A_{Y^I}} a factorization algebra over Y, and
     (B_Y, mu_Y) the corresponding chiral algebra on Y.  Then the chiral algebra
     (B'_X, mu'_X) associated to the pullback factorization algebra is
     canonically isomorphic to the chiral algebra B_X := phi^*_{ch} B_Y.
 
-    COROLLARY: The category of universal chiral algebras of dimension d is
-    equivalent to the category of universal factorization algebras of dimension d.
-    In dimension 1, universal factorization algebras = quasi-conformal VAs.
+    CONSEQUENCE: Universal chiral algebras of dimension d and universal
+    factorization algebras of dimension d define equivalent categories.  In
+    dimension 1 this category is equivalent to quasi-conformal vertex algebras.
 
 RELEVANCE TO THE MONOGRAPH
 ==========================
 
-Our chiral algebras already carry D-module structure on Ran(X) (this is PART
+Our chiral algebras already carry D-module structure on Ran(X) (this is part
 of the BD definition, Definition 2.4 = Definition 5.1 in [Cliff19]).  The
-question is whether this D-module structure is SUFFICIENT for universality,
+question is whether this D-module structure is sufficient for universality,
 or whether additional data (the Aut(O) action / etale descent) is needed.
 
 ANSWER: D-module structure on Ran(X) for a FIXED curve X does NOT by itself
 give universality.  Universality requires the FAMILY structure: a compatible
-system of factorization algebras over ALL curves simultaneously, with
-pullback isomorphisms along ALL etale morphisms.
+system of factorization algebras over all curves simultaneously, with
+pullback isomorphisms along etale morphisms.
 
-However, for our standard families, universality is AUTOMATIC because:
+For the standard registered families, universality is witnessed because:
   (a) The OPE coefficients are defined on the formal disk (curve-independent).
   (b) The factorization structure uses only the diagonal stratification of X^I,
       which is etale-local.
-  (c) The Aut(O) action exists and is explicit for all standard families.
+  (c) The Aut(O)/Der(O) action is explicitly supplied by a conformal vector,
+      an affine coordinate-change action, or a free-field construction.
 
 The Aut(O) action is the BRIDGE:
   quasi-conformal VA <==> universal chiral algebra <==> universal fact. algebra
@@ -81,11 +81,10 @@ For a vertex algebra V with conformal vector omega (Virasoro element):
   - The action is determined by L_{-1} (translation), L_0 (dilation/grading),
     and the locally nilpotent action of L_n for n >= 1
 
-For a QUASI-CONFORMAL (not conformal) VA:
-  - Only need L_{-1} and L_0 from a Virasoro subalgebra
-  - Plus local nilpotency of Der_+(O) action (not from a full Virasoro)
-  - Example: lattice VA V_Lambda has quasi-conformal structure from the
-    Heisenberg subalgebra's Virasoro, even when Lambda is not unimodular
+For a quasi-conformal non-conformal VA:
+  - the coordinate-change action is part of the structure;
+  - it need not come from a conformal vector;
+  - critical-level affine vacuum modules are the standard boundary case.
 
 WHAT THE MONOGRAPH'S AXIOMS PROVIDE
 ====================================
@@ -97,19 +96,13 @@ Our "modular Koszul algebra" axioms (MK1-MK5 in concordance.tex) include:
   (MK4) Completion (bar-cobar convergence)
   (MK5) Sewing (analytic continuation to higher genus)
 
-The D-module structure in (MK1) gives us the Ran-space factorization algebra
-on a SINGLE curve X.  Universality (= etale descent for the family) follows
-from:
-  - The OPE is defined on the formal disk (implicit in the D-module structure)
-  - The factorization isomorphisms use only the diagonal stratification
-  - The Aut(O) action is encoded in the conformal vector (for conformal VAs)
-    or in the L_{-1}, L_0 action (for quasi-conformal VAs)
-
-CONCLUSION: For all standard families in our landscape, universality holds
-automatically.  The Aut(O) action is the minimal extra structure that makes
-this work, and it is present for every VA with a conformal vector (which
-includes all our families).  The passage from "chiral algebra on one curve"
-to "universal chiral algebra" requires ONLY the quasi-conformal structure.
+The D-module structure in (MK1) gives the Ran-space factorization algebra on a
+fixed curve X.  Universality additionally requires a family-level descent
+witness: an Aut(O)/Der(O) action on the formal-disk vertex algebra compatible
+with the factorization pullbacks.  The engine therefore treats
+quasi-conformality as a necessary coordinate-change certificate and the
+registered descent witness as the family datum.  It never infers universality
+from a fixed-X D-module alone.
 
 References:
     [Cliff19] E. Cliff, "Universal factorization spaces and algebras",
@@ -124,9 +117,6 @@ References:
     [BD04]    A. Beilinson and V. Drinfeld, "Chiral Algebras", AMS (2004).
     [FG12]    J. Francis and D. Gaitsgory, "Chiral Koszul duality",
               Selecta Math. (N.S.) 18 (2012), no. 1, 27-87.
-    [Naf25]   E. Nafcha, "Nodal degeneration of chiral algebras",
-              arXiv:2603.30037 (2025).
-
     prop:genus0-curve-independence (higher_genus_modular_koszul.tex)
     thm:shadow-homotopy-invariance (higher_genus_modular_koszul.tex)
     etale_descent_engine.py (existing engine for etale descent verification)
@@ -135,10 +125,9 @@ References:
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from fractions import Fraction
-from typing import Dict, List, Optional, Tuple, Set
+from typing import Dict, List, Optional, Tuple
 
-from sympy import Rational, Symbol, simplify, factorial, binomial, oo
+from sympy import Rational, oo
 
 
 # =============================================================================
@@ -156,18 +145,17 @@ class AutOAction:
     The action is specified by:
       - L_{-1}: translation operator (= T, the infinitesimal translation)
       - L_0: grading operator (= conformal weight)
-      - nilpotency_order: for each generator v, the smallest N such that
-        L_n(v) = 0 for all n >= N.  This controls local nilpotency of Der_+(O).
+      - nilpotency_order: for each generator v, a finite bound N such that
+        L_n(v) = 0 for all n >= N in the positive-energy certificate used by
+        this engine.
 
     For a CONFORMAL vertex algebra with conformal vector omega:
       L_n = omega_{(n+1)} (the (n+1)-st mode of omega)
-    and the nilpotency order of a primary field of weight h is h+1
-    (since L_n kills a weight-h primary for n > 0, and more generally
-    L_n acts on the weight-h subspace, lowering weight by n).
+    and L_n lowers conformal weight by n.
 
     For a QUASI-CONFORMAL vertex algebra without full Virasoro:
-      Only L_{-1} and L_0 come from the algebra structure.
-      The Der_+(O) action may come from a different source.
+      The Der(O)/Aut(O) action is supplied separately and must be checked as
+      part of the witness.
     """
     # Whether the full Virasoro L_n (n >= -1) acts
     is_conformal: bool = True
@@ -185,35 +173,28 @@ class AutOAction:
     # Source of the Aut(O) action
     # "virasoro" = from conformal vector
     # "heisenberg" = from Heisenberg subalgebra (lattice VAs)
-    # "affine" = from affine Sugawara construction
+    # "affine_coordinate_change" = from the affine formal-loop action
     # "external" = from external data (non-standard)
     source: str = "virasoro"
 
 
-def nilpotency_order_primary(weight: Rational) -> int:
-    """Nilpotency order of Der_+(O) on a primary field of conformal weight h.
+def der_plus_local_nilpotency_bound(weight: Rational) -> int:
+    """Positive-energy bound for the Der_+(O) action on a homogeneous generator.
 
-    For a primary field v of weight h:
-      L_n(v) = 0  for n >= 1  (primary condition)
-    But L_n acts on DESCENDANTS, lowering weight by n.
-    The nilpotency order on the full Verma module generated by v is:
-      N = h + 1 (since the lowest weight in the module is 0 for h integer,
-      and L_n with n > h would take us below weight 0).
-
-    More precisely: on the jet space J_infty(V), the nilpotency order is
-    determined by the pole order of the OPE with the stress tensor.
-    For a primary of weight h: T(z)v(w) ~ h*v/(z-w)^2 + dv/(z-w),
-    so the maximal pole is 2, and L_n(v) = 0 for n >= 2.
-    But L_1(v) can be nonzero (it gives the descendant d_v).
-    Actually for a PRIMARY: L_n(v) = 0 for n >= 1 by definition.
-    The nilpotency on the full module is controlled by the conformal weight.
+    The registry uses the standard positive-energy certificate: L_n lowers
+    conformal weight by n, and the represented families have no negative weight
+    spaces.  Thus L_n(v) vanishes for every integer n > wt(v).  The returned
+    integer N means L_n(v) = 0 for all n >= N.  The bound is intentionally not a
+    primary-field formula; a primary vector usually has the sharper bound N=1.
     """
-    # For a primary: L_n(v) = 0 for all n >= 1
-    # For descendants (d/dz)^k v of weight h+k: L_n kills it for n >= 1
-    # The local nilpotency of Der_+(O) = {t^2 d/dt, t^3 d/dt, ...}
-    # on the jet module J(v) is automatic for finite-weight primaries.
-    # The nilpotency order is the conformal weight + 1.
-    return int(weight) + 1
+    if weight < 0:
+        raise ValueError("positive-energy witness requires non-negative weight")
+    return max(int(weight) + 1, 1)
+
+
+def nilpotency_order_primary(weight: Rational) -> int:
+    """Compatibility wrapper for the homogeneous positive-energy bound."""
+    return der_plus_local_nilpotency_bound(weight)
 
 
 # =============================================================================
@@ -224,15 +205,16 @@ def nilpotency_order_primary(weight: Rational) -> int:
 class UniversalityData:
     """Data determining whether a chiral algebra is universal.
 
-    A chiral algebra is universal (in Cliff's sense) if and only if it
-    arises from a quasi-conformal vertex algebra (in dimension 1).
+    In dimension 1, Cliff's universal factorization algebras are equivalent to
+    quasi-conformal vertex algebras.  For a concrete fixed-curve object this
+    engine still requires an explicit family-level descent witness.
 
     The key properties are:
       (a) OPE locality: OPE coefficients defined on formal disk
       (b) Aut(O) equivariance: vertex operations commute with coordinate changes
       (c) Etale descent: factorization structure descends along etale covers
 
-    For our standard families, all three hold automatically.
+    For the standard registered families, all three are recorded explicitly.
     """
     name: str
 
@@ -279,6 +261,10 @@ class ChiralAlgebraFamily:
     aut_o_source: str = "virasoro"  # or "sugawara", "heisenberg", "external"
     aut_o_action: Optional[AutOAction] = None
 
+    # Family-level etale descent certificate.  A fixed-X D-module without this
+    # witness is not treated as universal by this engine.
+    descent_witness: str = ""
+
     # Shadow depth class: G, L, C, or M
     shadow_class: str = "G"
 
@@ -297,7 +283,7 @@ def _make_aut_o(generators: List[Tuple[str, Rational]],
     """Construct AutOAction from generator data."""
     gen_data = []
     for name, weight in generators:
-        N = nilpotency_order_primary(weight)
+        N = der_plus_local_nilpotency_bound(weight)
         gen_data.append((name, weight, N))
     return AutOAction(
         is_conformal=is_conformal,
@@ -315,12 +301,11 @@ def _make_aut_o(generators: List[Tuple[str, Rational]],
 def heisenberg_family(k: Rational = Rational(1), d: int = 1) -> ChiralAlgebraFamily:
     """Heisenberg algebra H_k of rank d.
 
-    Universality: CONFORMAL via Sugawara construction.
+    Universality witness: conformal via the free-boson Sugawara vector.
     c = d (for k=1).  Aut(O) action from L_n = (1/2k) sum :alpha_i alpha_i:_{(n+1)}.
-    Quasi-conformal even without the Sugawara (from translation invariance).
     """
     c = Rational(d)
-    kappa = k * d   # kappa(H_k) = k for rank 1 (AP39, AP48)
+    kappa = k * d   # rank-d Heisenberg contribution
     gens = [(f"alpha_{i}", Rational(1)) for i in range(d)]
     return ChiralAlgebraFamily(
         name=f"Heisenberg(k={k},d={d})",
@@ -333,6 +318,7 @@ def heisenberg_family(k: Rational = Rational(1), d: int = 1) -> ChiralAlgebraFam
         is_universal=True,
         aut_o_source="sugawara",
         aut_o_action=_make_aut_o(gens, c, True, "sugawara"),
+        descent_witness="free-boson formal-disk OPE plus Sugawara Aut(O) action",
         shadow_class="G",
         koszul_dual=f"Heisenberg(k={-k},d={d})",
         level=k,
@@ -342,9 +328,9 @@ def heisenberg_family(k: Rational = Rational(1), d: int = 1) -> ChiralAlgebraFam
 def virasoro_family(c: Rational = Rational(26)) -> ChiralAlgebraFamily:
     """Virasoro algebra Vir_c.
 
-    Universality: CONFORMAL (the conformal vector IS the generator).
+    Universality witness: conformal; the conformal vector is the generator.
     The Aut(O) action is from the Virasoro itself: L_n = T_{(n+1)}.
-    Self-dual at c=13 (AP8).  Koszul dual is Vir_{26-c}.
+    Self-dual at c=13.  The standard-family dual representative is Vir_{26-c}.
     """
     kappa = c / 2
     gens = [("T", Rational(2))]
@@ -359,6 +345,7 @@ def virasoro_family(c: Rational = Rational(26)) -> ChiralAlgebraFamily:
         is_universal=True,
         aut_o_source="virasoro",
         aut_o_action=_make_aut_o(gens, c, True, "virasoro"),
+        descent_witness="Virasoro conformal vector and scalar central OPE",
         shadow_class="M",
         koszul_dual=f"Virasoro(c={26 - c})",
     )
@@ -368,11 +355,14 @@ def affine_km_family(type_: str, rank: int,
                      k: Rational = Rational(1)) -> ChiralAlgebraFamily:
     """Affine Kac-Moody algebra at level k.
 
-    Universality: CONFORMAL via Sugawara construction (for k != -h^v).
-    At the critical level k = -h^v, the Sugawara construction is undefined,
-    and the algebra is only QUASI-CONFORMAL (not conformal).
+    Universality witness: the affine loop algebra central extension is
+    compatible with formal coordinate changes.  Away from k = -h^v this witness
+    is upgraded to a conformal one by the Sugawara vector.
 
-    kappa = dim(g) * (k + h^v) / (2 * h^v)  (AP1, AP39).
+    At the critical level k = -h^v, the Sugawara construction is undefined,
+    and the algebra is quasi-conformal but not conformal.
+
+    kappa = dim(g) * (k + h^v) / (2 * h^v).
     """
     LIE_DATA = {
         ("A", 1): (3, 2, "sl_2"),
@@ -389,12 +379,16 @@ def affine_km_family(type_: str, rank: int,
         ("E", 8): (248, 30, "E_8"),
     }
     dim_g, h_dual, name = LIE_DATA[(type_, rank)]
-    c = Rational(k * dim_g, k + h_dual)
-    kappa = Rational(dim_g) * (k + h_dual) / (2 * h_dual)
-
-    # Critical level check
     is_critical = (k == -h_dual)
+    c = Rational(0) if is_critical else Rational(k * dim_g, k + h_dual)
+    kappa = Rational(dim_g) * (k + h_dual) / (2 * h_dual)
     is_conformal = not is_critical
+    source = "sugawara" if is_conformal else "affine_coordinate_change"
+    witness = (
+        "affine formal-loop coordinate-change action plus Sugawara conformal vector"
+        if is_conformal
+        else "affine formal-loop coordinate-change action at critical level"
+    )
 
     gens = [(f"J^a_{i}", Rational(1)) for i in range(dim_g)]
     return ChiralAlgebraFamily(
@@ -403,12 +397,12 @@ def affine_km_family(type_: str, rank: int,
         kappa=kappa,
         generators=gens,
         has_conformal_vector=is_conformal,
-        is_quasi_conformal=True,  # always quasi-conformal: L_{-1} from current algebra
+        is_quasi_conformal=True,
         is_conformal=is_conformal,
-        is_universal=True,  # universal even at critical level (L_{-1}, L_0 suffice)
-        aut_o_source="sugawara" if is_conformal else "translation",
-        aut_o_action=_make_aut_o(gens, c, is_conformal,
-                                "sugawara" if is_conformal else "translation"),
+        is_universal=True,
+        aut_o_source=source,
+        aut_o_action=_make_aut_o(gens, c, is_conformal, source),
+        descent_witness=witness,
         shadow_class="L",
         koszul_dual=f"Affine_{name}(k={-k - 2*h_dual})",
         level=k,
@@ -419,13 +413,11 @@ def affine_km_family(type_: str, rank: int,
 def w_algebra_family(N: int, c: Rational = Rational(2)) -> ChiralAlgebraFamily:
     """W_N algebra.
 
-    Universality: CONFORMAL (the W_N algebra always contains a Virasoro
-    subalgebra generated by T = W_2).
+    Universality witness: conformal; W_2 = T is the Virasoro field.
     Generators: W_2 = T (weight 2), W_3 (weight 3), ..., W_N (weight N).
-    Multi-weight for N >= 3.
     """
     gens = [(f"W_{j}", Rational(j)) for j in range(2, N + 1)]
-    # AP1/AP136: kappa(W_N) = c * (H_N - 1), H_N = sum_{j=1}^{N} 1/j.
+    # kappa(W_N) = c * (H_N - 1), H_N = sum_{j=1}^{N} 1/j.
     # Boundary check: N=2 gives c/2, recovering Virasoro.
     harmonic_shift = sum(Rational(1, j) for j in range(2, N + 1))
     kappa = c * harmonic_shift
@@ -440,6 +432,7 @@ def w_algebra_family(N: int, c: Rational = Rational(2)) -> ChiralAlgebraFamily:
         is_universal=True,
         aut_o_source="virasoro",  # from the W_2 = T subalgebra
         aut_o_action=_make_aut_o(gens, c, True, "virasoro"),
+        descent_witness="W_2 Virasoro field and formal W_N OPE coefficients",
         shadow_class="M",
         koszul_dual=None,  # W_N duality is more complex
     )
@@ -448,11 +441,9 @@ def w_algebra_family(N: int, c: Rational = Rational(2)) -> ChiralAlgebraFamily:
 def beta_gamma_family() -> ChiralAlgebraFamily:
     """Beta-gamma system.
 
-    Universality: CONFORMAL via the Sugawara-like construction from the
-    U(1) current J = :beta*gamma:.
+    Universality witness: free-field conformal structure from the beta-gamma
+    stress tensor.
     Generators: beta (weight 1), gamma (weight 0).
-    NOTE: gamma has weight 0, which means it is NOT killed by L_0.
-    This is fine for quasi-conformal structure but requires care.
     """
     c = Rational(-1)
     kappa = c / 2  # = -1/2
@@ -468,6 +459,7 @@ def beta_gamma_family() -> ChiralAlgebraFamily:
         is_universal=True,
         aut_o_source="sugawara",
         aut_o_action=_make_aut_o(gens, c, True, "sugawara"),
+        descent_witness="free beta-gamma formal-disk OPE and stress tensor",
         shadow_class="C",
     )
 
@@ -475,7 +467,7 @@ def beta_gamma_family() -> ChiralAlgebraFamily:
 def free_fermion_family(d: int = 1) -> ChiralAlgebraFamily:
     """Free fermion system (bc ghosts).
 
-    Universality: CONFORMAL.
+    Universality witness: free-field conformal structure.
     Generators: psi_i of weight 1/2 (d copies).
     Central charge c = d/2.
     """
@@ -493,6 +485,7 @@ def free_fermion_family(d: int = 1) -> ChiralAlgebraFamily:
         is_universal=True,
         aut_o_source="sugawara",
         aut_o_action=_make_aut_o(gens, c, True, "sugawara"),
+        descent_witness="free-fermion formal-disk OPE and stress tensor",
         shadow_class="G",
     )
 
@@ -501,19 +494,15 @@ def lattice_voa_family(rank: int = 1,
                        is_unimodular: bool = True) -> ChiralAlgebraFamily:
     """Lattice vertex operator algebra V_Lambda.
 
-    Universality: QUASI-CONFORMAL.
-    A lattice VOA is always quasi-conformal (the Heisenberg subalgebra
-    provides L_{-1} and L_0).  It is conformal if the lattice is
-    even and positive-definite (which gives a conformal vector via
-    the Sugawara construction on the Heisenberg).
+    Universality witness: for the even positive-definite lattice VOAs
+    represented by this constructor, the Heisenberg stress tensor supplies the
+    conformal vector and hence the Aut(O) action.  Unimodularity controls
+    self-duality/holomorphicity, not the existence of a conformal vector.
 
-    For unimodular even lattices (e.g. E_8, Leech): conformal.
-    For non-unimodular lattices: quasi-conformal but may lack full Virasoro.
-
-    kappa = rank (not c/2 in general!  See AP48).
+    kappa = rank, not c/2 in general.
     """
     c = Rational(rank)
-    kappa = Rational(rank)  # AP48: kappa(V_Lambda) = rank(Lambda), NOT c/2
+    kappa = Rational(rank)  # kappa(V_Lambda) = rank(Lambda), not c/2
     gens = [(f"h_{i}", Rational(1)) for i in range(rank)]
     # Add vertex operators for lattice vectors
     gens.append(("e_alpha", Rational(1)))  # representative lattice vertex op
@@ -523,12 +512,16 @@ def lattice_voa_family(rank: int = 1,
         central_charge=c,
         kappa=kappa,
         generators=gens,
-        has_conformal_vector=is_unimodular,
-        is_quasi_conformal=True,  # always quasi-conformal
-        is_conformal=is_unimodular,  # conformal only if unimodular even
-        is_universal=True,  # quasi-conformal => universal (in dim 1)
+        has_conformal_vector=True,
+        is_quasi_conformal=True,
+        is_conformal=True,
+        is_universal=True,
         aut_o_source="heisenberg",
-        aut_o_action=_make_aut_o(gens, c, is_unimodular, "heisenberg"),
+        aut_o_action=_make_aut_o(gens, c, True, "heisenberg"),
+        descent_witness=(
+            "even positive-definite lattice VOA: Heisenberg stress tensor, "
+            "lattice vertex operators, and formal-disk OPE"
+        ),
         shadow_class="G" if rank == 1 else "L",
     )
 
@@ -536,10 +529,9 @@ def lattice_voa_family(rank: int = 1,
 def critical_level_family(type_: str, rank: int) -> ChiralAlgebraFamily:
     """Affine algebra at the critical level k = -h^v.
 
-    This is the BOUNDARY CASE: no Sugawara construction, so no conformal
-    vector.  The algebra is QUASI-CONFORMAL but NOT conformal.
-    Still universal: L_{-1} exists (from the current algebra derivation)
-    and L_0 exists (from the grading).
+    Boundary case: no Sugawara construction, so no conformal vector.  The
+    affine vacuum module still carries the formal coordinate-change action from
+    the loop algebra central extension; this is the quasi-conformal witness.
 
     The center at critical level is the Feigin-Frenkel center z(hat{g}),
     which is a commutative chiral algebra isomorphic to functions on
@@ -562,9 +554,10 @@ def critical_level_family(type_: str, rank: int) -> ChiralAlgebraFamily:
         has_conformal_vector=False,
         is_quasi_conformal=True,
         is_conformal=False,  # no Sugawara at critical level
-        is_universal=True,   # still universal via L_{-1} + L_0
-        aut_o_source="translation",
-        aut_o_action=_make_aut_o(gens, Rational(0), False, "translation"),
+        is_universal=True,
+        aut_o_source="affine_coordinate_change",
+        aut_o_action=_make_aut_o(gens, Rational(0), False, "affine_coordinate_change"),
+        descent_witness="affine formal-loop coordinate-change action at critical level",
         shadow_class="L",
         koszul_dual=f"Affine_{name}(k=critical)",  # self-dual at critical level
         level=k,
@@ -621,20 +614,34 @@ def verify_quasi_conformal(family: ChiralAlgebraFamily) -> Tuple[bool, str]:
     """Verify that a family has quasi-conformal structure.
 
     Quasi-conformal requires:
-      (1) L_{-1} action (translation operator T)
-      (2) L_0 action (grading by conformal weight, semisimple with integral eigenvalues)
-      (3) Local nilpotency of Der_+(O) on every generator
+      (1) registered coordinate-change action,
+      (2) L_{-1} action (translation operator T),
+      (3) L_0 action on the represented positive-energy sectors,
+      (4) local nilpotency of Der_+(O) on every generator.
 
     Returns (is_quasi_conformal, reason).
     """
     reasons = []
 
-    # Check L_{-1}: every chiral algebra has translation
-    has_translation = True  # always true for our families
+    if not family.is_quasi_conformal:
+        return False, "family is not registered as quasi-conformal"
+
+    if family.aut_o_action is None:
+        return False, "missing Aut(O)/Der(O) action witness"
+
+    if not family.aut_o_action.is_quasi_conformal:
+        return False, "Aut(O)/Der(O) witness is not quasi-conformal"
+
+    reasons.append(f"coordinate-change action: {family.aut_o_source}")
     reasons.append("L_{-1} (translation): present")
 
-    # Check L_0: need integral or half-integral conformal weights
     weights = [w for _, w in family.generators]
+    all_finite_weight = all(w < oo for w in weights)
+    if not all_finite_weight:
+        reasons.append("Der_+(O) nilpotency: FAILED (infinite weight generator)")
+        return False, "; ".join(reasons)
+
+    # The finite registry includes the half-integral free-fermion sector.
     all_half_integral = all(2 * w == int(2 * w) for w in weights)
     if all_half_integral:
         reasons.append(f"L_0 (grading): semisimple, weights {[float(w) for w in weights]}")
@@ -642,15 +649,12 @@ def verify_quasi_conformal(family: ChiralAlgebraFamily) -> Tuple[bool, str]:
         reasons.append(f"L_0 (grading): FAILED, non-half-integral weights")
         return False, "; ".join(reasons)
 
-    # Check Der_+(O) local nilpotency
-    # For generators of finite weight, this is automatic
-    all_finite_weight = all(w < oo for w in weights)
-    if all_finite_weight:
-        nilp_orders = [nilpotency_order_primary(w) for w in weights]
-        reasons.append(f"Der_+(O) nilpotency: automatic (orders {nilp_orders})")
-    else:
-        reasons.append("Der_+(O) nilpotency: FAILED (infinite weight generator)")
+    try:
+        nilp_orders = [der_plus_local_nilpotency_bound(w) for w in weights]
+    except ValueError as exc:
+        reasons.append(f"Der_+(O) nilpotency: FAILED ({exc})")
         return False, "; ".join(reasons)
+    reasons.append(f"Der_+(O) local nilpotency: positive-energy bounds {nilp_orders}")
 
     return True, "; ".join(reasons)
 
@@ -665,28 +669,44 @@ def verify_conformal(family: ChiralAlgebraFamily) -> Tuple[bool, str]:
 
     Returns (is_conformal, reason).
     """
-    if not family.has_conformal_vector:
+    if not family.has_conformal_vector or not family.is_conformal:
         return False, "No conformal vector (e.g. critical level affine)"
 
-    # If there is a conformal vector, the Virasoro action is automatic
+    if family.aut_o_action is None:
+        return False, "missing Aut(O)/Der(O) action witness"
+
+    if family.aut_o_action is not None and not family.aut_o_action.is_conformal:
+        return False, "Aut(O) witness is quasi-conformal but not conformal"
+
     return True, f"Conformal vector present, c = {family.central_charge}, source = {family.aut_o_source}"
 
 
 def verify_universal(family: ChiralAlgebraFamily) -> Tuple[bool, str]:
     """Verify that a family is universal in Cliff's sense.
 
-    By [Cliff19, Introduction]:
-      In dimension 1, universal factorization algebras = quasi-conformal VAs.
-
-    So universality in dim 1 is EQUIVALENT to quasi-conformal structure.
+    Cliff identifies universal factorization algebras in dimension 1 with
+    quasi-conformal vertex algebras.  This function verifies the registered
+    standard-family witness: quasi-conformal coordinate-change data plus
+    compatible etale descent for the family.  A fixed-X D-module alone fails.
 
     Returns (is_universal, reason).
     """
     is_qc, qc_reason = verify_quasi_conformal(family)
-    if is_qc:
-        return True, f"Universal: quasi-conformal => universal (Cliff19). {qc_reason}"
-    else:
+    if not is_qc:
         return False, f"NOT universal: fails quasi-conformal. {qc_reason}"
+
+    if not family.is_universal:
+        return False, "NOT universal: no registered compatible family over curves"
+
+    etale, etale_reason = verify_etale_descent(family)
+    if not etale:
+        return False, f"NOT universal: etale descent witness missing. {etale_reason}"
+
+    return (
+        True,
+        "Universal for the registered dimension-1 family: "
+        f"{qc_reason}; descent witness: {family.descent_witness}; {etale_reason}",
+    )
 
 
 def verify_etale_descent(family: ChiralAlgebraFamily) -> Tuple[bool, str]:
@@ -697,7 +717,7 @@ def verify_etale_descent(family: ChiralAlgebraFamily) -> Tuple[bool, str]:
       (2) The factorization structure uses only diagonal stratification
       (3) For any etale phi: X -> Y, phi^* F_Y = F_X canonically
 
-    For all standard families, this holds because:
+    For the registered standard families, this holds because:
       - OPE coefficients are constants (structure constants of the Lie algebra,
         or rational functions of the central charge/level)
       - Factorization isomorphisms use only the complement of diagonals in X^I,
@@ -706,6 +726,13 @@ def verify_etale_descent(family: ChiralAlgebraFamily) -> Tuple[bool, str]:
 
     Returns (has_descent, reason).
     """
+    if not family.descent_witness:
+        return (
+            False,
+            "No family-level descent witness registered; fixed-curve D-module "
+            "and OPE data do not by themselves define a universal family",
+        )
+
     reasons = []
 
     # OPE locality
@@ -717,6 +744,7 @@ def verify_etale_descent(family: ChiralAlgebraFamily) -> Tuple[bool, str]:
     # Cliff's criterion: V_phi(I) = {x^I : phi(x_i) = phi(x_j) => x_i = x_j}
     # is open and contains the diagonal
     reasons.append("Cliff V_phi(I) open and contains diagonal: YES")
+    reasons.append(f"registered witness: {family.descent_witness}")
 
     return True, "; ".join(reasons)
 
@@ -746,14 +774,15 @@ def cliff_weak_equivalence_check(family: ChiralAlgebraFamily) -> Tuple[bool, str
 def universality_hierarchy(family: ChiralAlgebraFamily) -> Dict[str, bool]:
     """Compute the full hierarchy of universality properties.
 
-    The hierarchy (in dimension 1) is:
+    The registered hierarchy in dimension 1 is:
 
-      conformal VA  =>  quasi-conformal VA  <=>  universal chiral algebra
-                                             <=>  universal factorization algebra
+      conformal VA  =>  quasi-conformal VA
+      quasi-conformal VA + compatible family descent witness
+        => universal chiral algebra <=> universal factorization algebra
 
-    The last two equivalences are:
-      - quasi-conformal <=> universal chiral: Frenkel-Ben-Zvi [FBZ04], Chapter 6
-      - universal chiral <=> universal fact.: Cliff [Cliff19], Proposition 8.1
+    The categorical equivalences are FBZ Chapter 6 and Cliff Proposition 8.1;
+    this engine keeps the family witness explicit to avoid treating fixed-X
+    D-module data as universal.
 
     Note: the implication conformal => quasi-conformal is STRICT.
     Example: affine KM at critical level is quasi-conformal but NOT conformal.
@@ -766,7 +795,7 @@ def universality_hierarchy(family: ChiralAlgebraFamily) -> Dict[str, bool]:
     return {
         "conformal": is_conf,
         "quasi_conformal": is_qc,
-        "universal_chiral": is_univ,    # = quasi-conformal in dim 1
+        "universal_chiral": is_univ,
         "universal_factorization": is_univ,  # = universal chiral by Cliff
         "etale_descent": etale,
         "d_module_on_ran": True,  # always true for chiral algebras (BD definition)
@@ -780,12 +809,13 @@ def minimal_universality_structure(family: ChiralAlgebraFamily) -> Dict[str, str
       - A D-module B_X on X
       - A Lie bracket mu: B_{Ran X} tensor^ch B_{Ran X} -> B_{Ran X}
 
-    The ADDITIONAL structure needed for universality is:
+    The additional structure needed for universality is:
       - An Aut(O) action on the "stalk" V = B_x (the vertex algebra at a point)
       - Compatibility of this action with the chiral bracket mu
+      - A coherent family-level descent witness for etale pullback
 
     For CONFORMAL algebras: the Aut(O) action comes from the conformal vector.
-    For QUASI-CONFORMAL: it comes from L_{-1} + L_0 + local nilpotency.
+    For QUASI-CONFORMAL non-conformal algebras: it is supplied separately.
 
     The D-module structure on Ran(X) for a FIXED X does NOT by itself give
     universality.  The missing ingredient is the FAMILY structure: how the
@@ -795,13 +825,14 @@ def minimal_universality_structure(family: ChiralAlgebraFamily) -> Dict[str, str
 
     result["bd_chiral_on_fixed_X"] = (
         "D-module B_X on X + Lie bracket on B_{Ran X}. "
-        "This is the STARTING POINT, not sufficient for universality."
+        "This is the fixed-curve input, not sufficient for universality."
     )
 
     result["additional_for_universality"] = (
         "Aut(O) action on the vertex algebra V = B_x at a point, "
-        "compatible with vertex operations. This gives the FAMILY structure: "
-        "a coherent system of factorization algebras over ALL curves."
+        "compatible with vertex operations, plus the family-level etale "
+        "pullback witness. This gives a coherent system of factorization "
+        "algebras over curves."
     )
 
     if family.has_conformal_vector:
@@ -812,17 +843,17 @@ def minimal_universality_structure(family: ChiralAlgebraFamily) -> Dict[str, str
         )
     else:
         result["source_of_aut_o"] = (
-            "L_{-1} from translation + L_0 from grading. "
-            "Der_+(O) acts locally nilpotently by finite weight. "
-            "No conformal vector (e.g. critical level). "
+            "Coordinate-change action supplied independently of a conformal "
+            "vector; Der_+(O) acts locally nilpotently by positive-energy "
+            "bounds. No Sugawara conformal vector in this family. "
             f"Source: {family.aut_o_source}."
         )
 
     result["cliff_bridge"] = (
-        "Cliff's theorem: quasi-conformal VA <=> universal chiral algebra "
-        "<=> universal factorization algebra (in dimension 1). "
-        "The weak factorization algebra intermediate category bridges "
-        "the ordinary and universal notions."
+        "FBZ and Cliff identify quasi-conformal vertex algebras, universal "
+        "chiral algebras, and universal factorization algebras in dimension 1. "
+        "The fixed-curve chiral algebra becomes universal only after the "
+        "coordinate-change and etale-descent data are supplied."
     )
 
     return result
@@ -869,7 +900,7 @@ def check_hilbert_scheme_universality() -> Tuple[bool, str]:
 
     Cliff [Cliff19], Example 7.7:
     For any smooth variety Y, the Hilbert scheme Hilb(Y) gives rise to a
-    factorization space over Y that is universal in ANY dimension d.
+    factorization space over Y that is universal in any dimension d.
     This is the first construction of a non-trivial universal factorization
     space in dimension > 1.
     """
@@ -884,18 +915,18 @@ def check_hilbert_scheme_universality() -> Tuple[bool, str]:
 def monograph_universality_status() -> Dict[str, Dict]:
     """Determine universality status for every family in the monograph.
 
-    KEY FINDING: All standard families in the monograph are universal.
+    Finding: all standard registered families in the monograph are universal.
     The D-module structure on Ran(X) (axiom MK1) gives the factorization
-    algebra on a fixed curve.  Universality follows because:
+    algebra on a fixed curve.  Universality is recorded only when the registry
+    supplies the family-level descent witness:
 
-    (1) All our families have quasi-conformal structure (at minimum).
-    (2) Most have full conformal structure.
-    (3) The OPE is curve-independent (etale_descent_engine.py).
-    (4) The factorization structure is etale-local.
+    (1) the family has quasi-conformal structure;
+    (2) most families have full conformal structure;
+    (3) the OPE is curve-independent (etale_descent_engine.py);
+    (4) the factorization structure is etale-local.
 
-    The ONE family that is quasi-conformal but NOT conformal:
+    The standard registered family that is quasi-conformal but not conformal:
       - Affine KM at critical level k = -h^v.
-    This family is STILL universal (quasi-conformal suffices in dim 1).
     """
     landscape = standard_landscape()
     result = {}
@@ -943,8 +974,9 @@ def dimension_analysis() -> Dict[str, str]:
     """
     return {
         "dim_1_equivalence": (
-            "quasi-conformal VA <=> universal chiral <=> universal factorization. "
-            "This chain: FBZ Chapter 6 + BD 2.9.9 + Cliff Prop 8.1."
+            "quasi-conformal VA <=> universal chiral <=> universal factorization "
+            "as categories. This chain uses FBZ Chapter 6, BD 2.9.9, and "
+            "Cliff Proposition 8.1."
         ),
         "dim_1_special": (
             "Aut(O) = Aut(k[[t]]) is a pro-algebraic group. "
@@ -958,10 +990,10 @@ def dimension_analysis() -> Dict[str, str]:
             "correct higher-dimensional generalization."
         ),
         "monograph_context": (
-            "Our monograph works in dimension 1 (curves). All our chiral algebras "
-            "are universal. The Cliff framework is relevant for: "
-            "(a) confirming universality of our constructions, "
-            "(b) the higher-dimensional frontier (E_n algebras, 3d HT QFT)."
+            "The monograph works in dimension 1 (curves). The standard "
+            "registered families are universal because they carry explicit "
+            "coordinate-change and etale-descent witnesses. Cliff's framework "
+            "also supplies the higher-dimensional factorization-algebra lane."
         ),
     }
 
@@ -983,9 +1015,10 @@ def weak_factorization_data(family: ChiralAlgebraFamily) -> Dict[str, str]:
       - The bar complex B(A) uses the factorization near diagonals
       - The shadow obstruction tower theta_A is determined by local data
 
-    This is essentially why our bar complex computations (which use formal
-    neighborhoods of diagonals via the propagator eta^(0) = d log(z-w))
-    capture the full factorization structure.
+    This is why the bar complex computations use formal neighborhoods of
+    diagonals via the propagator eta^(0) = d log(z-w).  The computation is
+    promoted from local data to a global factorization statement only through
+    the registered descent witness.
     """
     return {
         "name": family.name,
@@ -997,16 +1030,16 @@ def weak_factorization_data(family: ChiralAlgebraFamily) -> Dict[str, str]:
         "bar_complex_connection": (
             "The bar differential d_bar uses the propagator eta^(0) = d log(z_i - z_j), "
             "which is defined on the formal neighborhood of the diagonal. "
-            "This is EXACTLY Cliff's weak factorization data."
+            "This is Cliff weak-factorization data."
         ),
         "shadow_tower_connection": (
             "The shadow obstruction tower theta_A = sum theta_A^{<=r} is computed "
-            "from OPE data alone (formal disk data). By Cliff's theorem, this "
-            "weak factorization data determines the full factorization algebra."
+            "from formal OPE data. With the registered descent witness, Cliff's "
+            "weak-factorization theorem determines the full factorization algebra."
         ),
         "computational_consequence": (
             "Our bar complex computations on the formal neighborhood of diagonals "
-            "capture the full factorization algebra structure. "
-            "This is a computational incarnation of Cliff's Theorem 4.4/5.7."
+            "capture the weak factorization structure. Cliff's Theorem 4.4/5.7 "
+            "then extends this weak structure to the full factorization algebra."
         ),
     }

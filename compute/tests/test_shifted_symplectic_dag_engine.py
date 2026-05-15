@@ -25,10 +25,15 @@ from fractions import Fraction
 import pytest
 import sys
 import os
+from pathlib import Path
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'lib'))
 
+import shifted_symplectic_dag_engine as dag_engine
 from shifted_symplectic_dag_engine import (
+    # Typed object conventions
+    TYPED_KOSZUL_OBJECTS, FORBIDDEN_KOSZUL_COLLAPSES,
+    koszul_object_conventions,
     # Utilities
     _frac, _harmonic, _bernoulli_fraction, lambda_fp,
     # Family constructors
@@ -66,6 +71,74 @@ from shifted_symplectic_dag_engine import (
     verify_aksz_action_consistency,
     verify_bv_bar_shifts,
 )
+
+
+# ============================================================================
+# SECTION 0: TYPED KOSZUL/RAN OBJECT CONVENTIONS
+# ============================================================================
+
+class TestTypedKoszulObjectConventions:
+    """Verify that DAG conventions keep the Koszul objects typed."""
+
+    def test_firewall_lists_six_distinct_objects(self):
+        """A, B(A), A^i, A^!, Omega(B(A)), and Z_ch^der(A) stay separate."""
+        conv = koszul_object_conventions()
+        assert tuple(conv["objects"].keys()) == TYPED_KOSZUL_OBJECTS
+
+        for name, data in conv["objects"].items():
+            assert name not in data["distinct_from"]
+            assert set(data["distinct_from"]) == (
+                set(TYPED_KOSZUL_OBJECTS) - {name}
+            )
+
+    def test_bar_and_bar_cohomology_are_coalgebraic(self):
+        """B(A) is the chain coalgebra; A^i is H*(B(A))."""
+        objects = koszul_object_conventions()["objects"]
+        assert objects["B(A)"]["kind"] == "ordered bar coalgebra"
+        assert "T^c(s^{-1}bar A)" in objects["B(A)"]["construction"]
+        assert objects["A^i"]["kind"] == "intrinsic bar-dual coalgebra"
+        assert objects["A^i"]["construction"].startswith("H*(B(A))")
+
+    def test_a_shriek_requires_verdier_branch(self):
+        """A^! is post-Verdier, with finite-type/completed hypotheses."""
+        conv = koszul_object_conventions()
+        a_shriek = conv["objects"]["A^!"]
+        assert a_shriek["kind"] == "post-Verdier Koszul dual algebra"
+        assert "D_Ran(A^i)" in a_shriek["construction"]
+        assert "not Omega(B(A))" in a_shriek["construction"]
+        assert "finite-type" in a_shriek["hypotheses"]
+        assert "completed continuous dual" in a_shriek["hypotheses"]
+        assert "Mittag-Leffler" in a_shriek["hypotheses"]
+
+        branch = conv["finite_type_completed_verdier_branch"]
+        assert "D_Ran(B(A))" in branch
+        assert "B(A^!)" in branch
+        assert "finite-type" in branch
+        assert "completed continuous dual" in branch
+
+    def test_cobar_inversion_and_bulk_are_not_dual_branch(self):
+        """Omega(B(A)) recovers A; Z_ch^der(A) is Hochschild bulk."""
+        conv = koszul_object_conventions()
+        objects = conv["objects"]
+        assert objects["Omega(B(A))"]["kind"] == "bar-cobar inversion object"
+        assert "counit Omega(B(A)) -> A" in (
+            objects["Omega(B(A))"]["construction"]
+        )
+        assert "does not construct A^!" in conv["bar_cobar_inversion"]
+        assert objects["Z_ch^der(A)"]["kind"] == "derived-centre bulk slot"
+        assert "ChirHoch^*(A,A)" in objects["Z_ch^der(A)"]["construction"]
+
+    def test_source_has_no_stale_object_equalities(self):
+        """The module source does not carry unqualified object shorthand."""
+        source = Path(dag_engine.__file__).read_text()
+        stale_dran = "D_Ran(B(A))" + " = " + "B(A" + "!)"
+        stale_label = "AP" + "25:"
+        stale_omega = "Omega(B(A))" + " = " + "A"
+        assert stale_label not in source
+        assert stale_dran not in source
+        assert stale_omega not in source
+        for collapse in FORBIDDEN_KOSZUL_COLLAPSES:
+            assert collapse not in source
 
 
 # ============================================================================

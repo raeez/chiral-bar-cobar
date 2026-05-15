@@ -1,9 +1,9 @@
-r"""Tests for Gaiotto-Witten boundary VOAs and their Koszul duals.
+r"""Tests for Gaiotto-Witten boundary VOAs and their duality companions.
 
-Tests the central finding:
-    S-DUALITY != KOSZUL DUALITY (generically)
-    S-duality = Koszul duality iff Psi^2 = -1 (self-dual coupling)
-    S_3 triality = < S-duality, Koszul duality >
+Tests the central findings:
+    physical S-duality != FF/Verdier companion at finite generic coupling
+    Neumann(Psi) -> Dirichlet(1/Psi) preserves the affine level Psi-N
+    S_3 triality = < physical S-duality sigma, tau >
 
 Multi-path verification:
     Path 1: Direct kappa computation from defining formula
@@ -39,6 +39,10 @@ from compute.lib.boundary_voa_koszul_engine import (
     shadow_class_bc,
     shadow_class_w_algebra,
     shadow_depth_from_class,
+    # Scope firewalls
+    boundary_compute_firewall,
+    finite_boundary_diagnostic_scope,
+    kernel_constants,
     # Boundary VOA constructors
     neumann_boundary_voa,
     dirichlet_boundary_voa,
@@ -52,17 +56,61 @@ from compute.lib.boundary_voa_koszul_engine import (
     corner_voa_data,
     verify_triality,
     # Comparison and verification
-    s_duality_koszul_comparison,
+    s_duality_companion_comparison,
     boundary_voa_landscape,
     verify_complementarity_affine_gl,
     verify_complementarity_affine_sl,
     verify_complementarity_wn,
-    diagnose_s_duality_koszul_relation,
+    diagnose_s_duality_companion_relation,
     # BLLPRR
     bllprr_schur_voa,
 )
 
 F = Fraction
+
+
+# =========================================================================
+# 0. Scope firewalls
+# =========================================================================
+
+class TestScopeFirewalls:
+    """Prevent finite boundary diagnostics from becoming package theorems."""
+
+    def test_holographic_and_modular_package_entries_are_separate(self):
+        firewall = boundary_compute_firewall()
+        assert firewall["holographic_package_entries"] == (
+            "A", "A^i", "A^!", "C", "r(z)", "Theta_A", "nabla^hol")
+        assert firewall["modular_koszul_projection_entries"] == (
+            "Fact_X(L)", "barB_X(L)", "Theta_L", "L_L",
+            "(V_br,T_br)", "R4_mod(L)")
+
+    def test_object_roles_do_not_conflate_duality_branches(self):
+        roles = boundary_compute_firewall()["object_separation"]
+        assert roles["Omega(B(A))"] == (
+            "bar-cobar inversion recovering A, not Koszul duality")
+        assert "Verdier/continuous-linear dual branch" in roles["A^!"]
+        assert roles["Z_ch^der(A)"] == (
+            "ChirHoch^*(A,A), the Hochschild bulk, not Koszul dual")
+        assert "not full Theta_A" in roles["r(z)"]
+
+    def test_kernel_constants_are_exact_firewalls(self):
+        constants = kernel_constants()
+        assert constants["affine_raw"] == "k*Omega_tr/z"
+        assert constants["affine_kz"] == "Omega/((k+h^vee)z)"
+        assert constants["heisenberg"] == "k/z"
+        assert constants["virasoro"] == "(c/2)/z^3 + 2T/z"
+
+    def test_finite_boundary_scope_does_not_construct_holography(self):
+        data = neumann_boundary_voa(2, 3)
+        scope = finite_boundary_diagnostic_scope(data)
+        assert scope["claim_status"] == "computed finite boundary VOA diagnostic"
+        assert scope["constructs_full_holographic_package"] is False
+        assert scope["constructs_open_closed_package"] is False
+        assert scope["constructs_full_theta_A"] is False
+        assert scope["constructs_nabla_hol"] is False
+        assert scope["available_maps"]["companion"] == "verdier_feigin_frenkel"
+        assert scope["available_maps"]["s_duality"] == "physical_s_duality"
+        assert scope["available_maps"]["koszul"] is None
 
 
 # =========================================================================
@@ -334,12 +382,25 @@ class TestNeumannBoundary:
             assert d.complementarity_sum == F(-2 * N)
 
     def test_neumann_s_dual_is_dirichlet(self):
-        """S-dual of Neumann(Psi) has same kappa as Dirichlet(1/Psi)."""
+        """S-dual of Neumann(Psi) is Dirichlet(1/Psi) at level Psi-N."""
         for N in [1, 2, 3]:
             for psi in [F(3), F(2), F(5, 2)]:
                 n_data = neumann_boundary_voa(N, psi)
                 d_data = dirichlet_boundary_voa(N, F(1) / psi)
                 assert n_data.kappa == d_data.kappa
+                assert n_data.s_dual_kappa == d_data.kappa
+                assert n_data.s_duality_map.target.boundary_type == 'dirichlet'
+                assert n_data.s_duality_map.target.coupling == F(1) / psi
+                assert n_data.s_duality_map.target.level == psi - N
+
+    def test_neumann_s_dual_not_same_family_inverted_level(self):
+        """Neumann S-duality must not use the same-family level 1/Psi-N."""
+        d = neumann_boundary_voa(2, 3)
+        same_family_inverted = kappa_affine_gl(2, F(1, 3) - 2)
+        assert d.s_dual_kappa == d.kappa
+        assert d.s_dual_kappa != same_family_inverted
+        assert d.companion_map.target.level == F(-5)
+        assert d.companion_map.target.level != d.s_duality_map.target.level
 
 
 # =========================================================================
@@ -368,6 +429,9 @@ class TestDirichletBoundary:
                 d_data = dirichlet_boundary_voa(N, psi)
                 n_data = neumann_boundary_voa(N, F(1) / psi)
                 assert d_data.kappa == n_data.kappa
+                assert d_data.s_dual_kappa == n_data.kappa
+                assert d_data.s_duality_map.target.boundary_type == 'neumann'
+                assert d_data.s_duality_map.target.level == F(1) / psi - N
 
     def test_dirichlet_psi_zero_raises(self):
         with pytest.raises(ValueError):
@@ -400,9 +464,10 @@ class TestNahmPrincipalBoundary:
         assert d.complementarity_sum == F(250, 3)
 
     def test_nahm_s_dual_not_koszul(self):
-        """S-dual != Koszul dual for Nahm pole at generic Psi."""
+        """Same-boundary coupling inversion differs from the FF companion."""
         d = nahm_principal_boundary_voa(2, 3)
-        assert d.koszul_equals_s_duality is False
+        assert d.companion_equals_s_duality is False
+        assert d.koszul_map is None
 
     def test_nahm_level_independent_complementarity(self):
         """Complementarity sum is level-independent for W-algebras."""
@@ -444,16 +509,22 @@ class TestFreefieldLimits:
         assert d.kappa == F(2)
 
     def test_symplectic_boson_koszul_is_s_dual(self):
-        """In the free-field limit, Koszul dual = S-dual."""
+        """In the explicit free-field model, Koszul dual = S-dual target."""
         for N in [1, 2, 3]:
             d = symplectic_boson_boundary_voa(N)
-            assert d.koszul_equals_s_duality is True
+            assert d.companion_equals_s_duality is True
+            assert d.companion_map.kind == 'free_field_koszul'
+            assert d.s_duality_map.kind == 'physical_s_duality_limit'
+            assert d.koszul_map.kind == 'free_field_koszul'
 
     def test_free_fermion_koszul_is_s_dual(self):
-        """In the free-field limit, Koszul dual = S-dual."""
+        """In the explicit free-field model, Koszul dual = S-dual target."""
         for N in [1, 2, 3]:
             d = free_fermion_boundary_voa(N)
-            assert d.koszul_equals_s_duality is True
+            assert d.companion_equals_s_duality is True
+            assert d.companion_map.kind == 'free_field_koszul'
+            assert d.s_duality_map.kind == 'physical_s_duality_limit'
+            assert d.koszul_map.kind == 'free_field_koszul'
 
     def test_bg_bc_dual_pair(self):
         """Symplectic boson dual is free fermion and vice versa."""
@@ -465,53 +536,68 @@ class TestFreefieldLimits:
 
 
 # =========================================================================
-# 9. S-duality vs Koszul duality: THE CENTRAL THEOREM
+# 9. Physical S-duality vs FF/Verdier companion
 # =========================================================================
 
-class TestSDualityVsKoszul:
-    """Test the central finding: S-duality != Koszul duality generically.
+class TestSDualityVsCompanion:
+    """Test the central finding: S-duality != FF/Verdier companion generically.
 
     The key result:
-        S-duality (Psi -> 1/Psi) and Koszul duality (k -> -k-2N)
-        coincide iff Psi^2 = -1.
+        physical S-duality changes the boundary slot;
+        the FF/Verdier companion reflects the shifted level.
         At generic real Psi, they are DISTINCT operations.
-        Together they generate the S_3 triality group.
     """
 
-    def test_s_neq_koszul_neumann(self):
-        """S-dual kappa != Koszul dual kappa for Neumann at generic Psi."""
+    def test_s_neq_companion_neumann(self):
+        """S-dual kappa != FF/Verdier companion kappa for Neumann."""
         for N in [1, 2, 3]:
             for psi in [F(3), F(2), F(5, 2)]:
                 d = neumann_boundary_voa(N, psi)
-                assert d.koszul_equals_s_duality is False
+                assert d.companion_equals_s_duality is False
 
-    def test_s_neq_koszul_dirichlet(self):
-        """S-dual kappa != Koszul dual kappa for Dirichlet at generic Psi."""
+    def test_s_neq_companion_dirichlet(self):
+        """S-dual kappa != FF/Verdier companion kappa for Dirichlet."""
         for N in [1, 2, 3]:
             for psi in [F(3), F(2), F(5, 2)]:
                 d = dirichlet_boundary_voa(N, psi)
-                assert d.koszul_equals_s_duality is False
+                assert d.companion_equals_s_duality is False
 
-    def test_s_neq_koszul_nahm(self):
-        """S-dual kappa != Koszul dual kappa for Nahm at generic Psi."""
+    def test_s_neq_companion_nahm(self):
+        """Coupling-inverted W-family kappa differs from FF companion kappa."""
         for N in [2, 3]:
             for psi in [F(3), F(5)]:
                 d = nahm_principal_boundary_voa(N, psi)
-                assert d.koszul_equals_s_duality is False
+                assert d.companion_equals_s_duality is False
+
+    def test_affine_ff_companion_is_not_promoted_to_koszul_map(self):
+        """Finite affine FF diagnostics stay in the companion slot."""
+        for factory in [neumann_boundary_voa, dirichlet_boundary_voa]:
+            d = factory(2, 3)
+            assert d.companion_map.kind == 'verdier_feigin_frenkel'
+            assert d.koszul_map is None
+
+    def test_comparison_output_carries_non_promotion_scope(self):
+        """Comparison dictionaries carry finite-scope firewalls."""
+        comp = s_duality_companion_comparison(2, F(3), 'neumann')
+        assert comp['claim_status'] == "computed finite boundary VOA diagnostic"
+        assert comp['koszul_kind'] is None
+        assert comp['scope_firewall']['constructs_full_theta_A'] is False
+        assert comp['scope_firewall']['constructs_open_closed_package'] is False
+        assert comp['kernel_constants']['affine_raw'] == "k*Omega_tr/z"
 
     def test_discrepancy_formula_affine(self):
-        """The kappa discrepancy kappa(FF) - kappa(S) is controlled by Psi + 1/Psi.
+        """The Neumann discrepancy is fixed by the affine kappa formula.
 
-        For gl_N: kappa_FF - kappa_S = -[(N^2+2N-1)/(2N)] * (Psi + 1/Psi)
-        This vanishes iff Psi + 1/Psi = 0, i.e. Psi^2 = -1.
+        For Neumann gl_N:
+            kappa_FF - kappa_S = -[(N^2+2N-1)/N] * Psi.
         """
         for N in [1, 2, 3]:
             for psi_num, psi_den in [(3, 1), (2, 1), (5, 2)]:
                 psi = F(psi_num, psi_den)
-                comp = s_duality_koszul_comparison(N, psi, 'neumann')
+                comp = s_duality_companion_comparison(N, psi, 'neumann')
                 disc = comp['kappa_discrepancy']
-                # The discrepancy should be nonzero for real Psi > 0
-                assert disc != 0, f"Unexpected zero discrepancy for N={N}, Psi={psi}"
+                expected = -F(N * N + 2 * N - 1, N) * psi
+                assert disc == expected
 
     def test_s_duality_neumann_dirichlet_swap(self):
         """S-duality correctly swaps Neumann and Dirichlet."""
@@ -524,8 +610,11 @@ class TestSDualityVsKoszul:
 
     def test_diagnosis_output(self):
         """Diagnose function runs and produces expected structure."""
-        diag = diagnose_s_duality_koszul_relation()
-        assert diag['main_finding'] == 'S-duality != Koszul duality (generically)'
+        diag = diagnose_s_duality_companion_relation()
+        assert diag['main_finding'] == (
+            'physical S-duality != FF/Verdier companion (generically)')
+        assert diag['structure'] == (
+            'S_3 triality = <S-duality sigma, tau>; FF/Verdier is separate')
         assert diag['match_count'] == 0
         assert diag['total_count'] > 0
 
@@ -533,11 +622,11 @@ class TestSDualityVsKoszul:
         """Landscape survey produces results for N=1..3."""
         results = boundary_voa_landscape(N_max=3)
         assert len(results) > 0
-        # All should have kappa_koszul_eq_s == False for affine
+        # All should have companion_equals_s_duality == False for affine
         neumann_results = [r for r in results if r['boundary_type'] == 'neumann']
         assert len(neumann_results) > 0
         for r in neumann_results:
-            assert r['kappa_koszul_eq_s'] is False
+            assert r['companion_equals_s_duality'] is False
 
 
 # =========================================================================
@@ -582,7 +671,7 @@ class TestCornerVOA:
     def test_Y_001_heisenberg(self):
         """Y_{0,0,1}[Psi] = W_Psi(gl_1) = Heisenberg.
         c(W^{Psi-1}(sl_1)) + 1 = 0 + 1 = 1.
-        Wait: W_1(sl_1) = trivial. c = 0 + 1 = 1.
+        Since sl_1 is zero, W_1(sl_1) is trivial and the u(1) sector gives c = 1.
         """
         c_val = corner_voa_central_charge(0, 0, 1, 3)
         # W^{Psi-1}(sl_1) = trivial (sl_1 = 0), c = 0. Plus u(1): +1.
@@ -621,6 +710,16 @@ class TestCornerVOA:
         assert d.boundary_type == 'corner'
         assert d.shadow_class == 'M'
         assert d.coupling == F(3)
+        assert d.level == F(1)
+        assert d.companion_map.kind == 'feigin_frenkel_companion'
+        assert d.s_duality_map.kind == 'physical_s_duality'
+        assert d.koszul_map is None
+
+    def test_corner_Y_N00_level_uses_inverted_coupling(self):
+        """Y_{N,0,0}[Psi] has level 1/Psi-N, not Psi-N."""
+        d = corner_voa_data(2, 0, 0, 3)
+        assert d.level == F(1, 3) - 2
+        assert d.level != F(1)
 
 
 # =========================================================================
@@ -642,21 +741,11 @@ class TestTriality:
         assert len(tri['orbit']) == 6
 
     def test_s_duality_is_12_permutation(self):
-        """S-duality is the (12) permutation in S_3.
-
-        (12): (N1,N2,N3,Psi) -> (N2,N1,N3,1/Psi)
-        So c(Y_{N1,N2,N3}[Psi]) should equal c(Y_{N2,N1,N3}[1/Psi]).
-        """
-        for N1, N2, N3 in [(0, 0, 2), (0, 2, 0), (1, 0, 2)]:
-            for psi in [F(3), F(5, 2)]:
-                c_orig = corner_voa_central_charge(N1, N2, N3, psi)
-                c_sdual = corner_voa_central_charge(N2, N1, N3, F(1) / psi)
-                # This tests whether our formula is S-duality covariant
-                # For single-index specializations, this should hold exactly
-                if N1 == 0 and N2 == 0:
-                    # Y_{0,0,N}[Psi] vs Y_{0,0,N}[1/Psi]: different!
-                    # Because S exchanges N1<->N2, not the W-algebra index N3
-                    pass  # This is expected to differ
+        """S-duality is the (12) parameter permutation in S_3."""
+        tri = verify_triality(1, 2, 3, F(5, 2))
+        label, n1, n2, n3, psi = tri['parameter_orbit'][1]
+        assert label == '(12)'
+        assert (n1, n2, n3, psi) == (2, 1, 3, F(2, 5))
 
 
 # =========================================================================
@@ -788,54 +877,58 @@ class TestCrossVerification:
 
 
 # =========================================================================
-# 14. Algebraic structure: S_3 = <S, FF>
+# 14. Algebraic structure: S_3 = <sigma, tau>
 # =========================================================================
 
 class TestS3Structure:
-    """Test that S-duality and Koszul duality generate S_3."""
+    """Test the Gaiotto-Rapcak S_3 action separately from FF."""
 
     def test_s_squared_is_identity(self):
-        """S-duality squared returns to original: S^2(Psi) = Psi."""
+        """S-duality sigma squared returns to original: sigma^2(Psi) = Psi."""
         for psi in [F(3), F(2), F(5, 2)]:
             psi_s = F(1) / psi
             psi_ss = F(1) / psi_s
             assert psi_ss == psi
 
-    def test_ff_squared_is_identity(self):
-        """FF squared: (-(-Psi)) = Psi."""
+    def test_tau_squared_is_identity(self):
+        """Triality tau squared returns to original: tau^2(Psi) = Psi."""
         for psi in [F(3), F(2), F(5, 2)]:
-            psi_ff = -psi
-            psi_ffff = -psi_ff
-            assert psi_ffff == psi
+            psi_tau = 1 - psi
+            psi_tautau = 1 - psi_tau
+            assert psi_tautau == psi
 
-    def test_s_ff_gives_third_generator(self):
-        """S composed with FF: Psi -> 1/Psi -> -1/Psi.
-        This is the third S_3 generator: Psi -> -1/Psi.
-        """
-        for psi in [F(3), F(2), F(5, 2)]:
-            psi_s = F(1) / psi
-            psi_s_ff = -psi_s  # = -1/Psi
-            assert psi_s_ff == -F(1) / psi
+    def test_ff_is_not_triality_permutation(self):
+        """FF keeps corner indices fixed; S-duality permutes them."""
+        d = corner_voa_data(0, 2, 0, 3)
+        assert d.companion_map.target.indices == (0, 2, 0)
+        assert d.companion_map.target.coupling == F(-3)
+        assert d.s_duality_map.target.indices == (2, 0, 0)
+        assert d.s_duality_map.target.coupling == F(1, 3)
 
     def test_s3_orbit_has_six_elements(self):
         """The S_3 orbit of a generic Psi has 6 distinct elements."""
         psi = F(3)
-        orbit = {
-            psi,                   # id
-            F(1) / psi,            # S: 1/Psi = 1/3
-            -psi,                  # FF: -Psi = -3
-            -F(1) / psi,           # S.FF: -1/Psi = -1/3
-            psi / (psi - 1),       # (13): Psi/(Psi-1) = 3/2
-            (psi - 1) / psi,       # (132): (Psi-1)/Psi = 2/3
+        tri = verify_triality(1, 2, 3, psi)
+        orbit = {p for _, _, _, _, p in tri['parameter_orbit'] if p is not None}
+        assert orbit == {
+            psi,
+            F(1) / psi,
+            1 - psi,
+            psi / (psi - 1),
+            F(1) / (1 - psi),
+            (psi - 1) / psi,
         }
-        assert len(orbit) == 6, f"Expected 6 elements, got {len(orbit)}: {orbit}"
 
     def test_s3_orbit_gl1_kappas(self):
         """All 6 S_3 images give different kappas for gl_1."""
         psi = F(3)
         orbit_psis = [
-            psi, F(1) / psi, -psi, -F(1) / psi,
-            psi / (psi - 1), (psi - 1) / psi,
+            psi,
+            F(1) / psi,
+            1 - psi,
+            psi / (psi - 1),
+            F(1) / (1 - psi),
+            (psi - 1) / psi,
         ]
         kappas = set()
         for p in orbit_psis:
@@ -845,8 +938,7 @@ class TestS3Structure:
                 kappas.add(kap)
             except (ValueError, ZeroDivisionError):
                 pass
-        # At least 5 distinct kappas (some may coincide for gl_1)
-        assert len(kappas) >= 4
+        assert len(kappas) == 6
 
 
 # =========================================================================

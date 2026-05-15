@@ -1,6 +1,7 @@
-"""W_4 stage-4 packet analysis for the standard MC4 W_infinity frontier.
+"""Exact W_4 stage-4 identity packet analysis.
 
-Ground truth from the manuscript (bar_cobar_construction.tex, concordance.tex):
+Ground truth from the manuscript
+(bar_cobar_adjunction_curved.tex, editorial_constitution.tex):
   rem:mc4-winfty-computation-target: isolate the exact six-entry stage-4
   identity packet on I_4, make the principal DS targets explicit, and compare
   the bar-side coefficients with those values.
@@ -11,13 +12,13 @@ Ground truth from the manuscript (bar_cobar_construction.tex, concordance.tex):
     C^DS_{3,3;2;0,4}(3) = 2   (W x W -> T at pole 4)
     All other C in I_3 = 0.
 
-  Stage-4 exact identity packet (prop:winfty-mc4-frontier-package):
+  Stage-4 exact identity packet:
     Six channels on I_4:
       C_{3,3;4;0,2}, C_{4,4;4;0,4}, C_{3,4;3;0,4}, C_{3,4;4;0,3},
       C_{4,4;2;0,6}, C_{3,4;2;0,5}.
     Packet split:
       - four residual higher-spin channels;
-      - two theorematic Virasoro-target identities with values 2 and 0.
+      - two Virasoro-target identities with principal values 2 and 0.
 
   Stage-4 residual packet (prop:winfty-ds-stage4-residual-packet):
     J_4 has 29 elements decomposed into (3,3) tail + J_4^{3,4} + J_4^{4,4}.
@@ -32,14 +33,16 @@ CONVENTIONS (following manuscript):
   - C^DS_{s,t;u;m,n}(N) = primary OPE coefficient at stage N
     s, t = source spins; u = target spin; m = derivative order; n = pole order
   - W^{(s)} = generator of spin s (primary under T)
-  - Pole order in W_s(z)W_t(w) OPE: at most s + t - 1
+  - The top primary W^{(u)} channel occurs at pole order n = s + t - u
+  - The vacuum leading pole is 2s for a same-spin self-OPE and vanishes
+    for mixed different-weight primaries
   - Central charge relation: c_DS(k) + c_DS(k') = sigma (complementarity sum)
 """
 
 from __future__ import annotations
 
 from typing import Dict, List, Tuple, Optional
-from sympy import Rational, Symbol, simplify, factorial
+from sympy import Rational, Symbol, simplify
 
 
 # ---------------------------------------------------------------------------
@@ -75,6 +78,58 @@ def w4_complementarity_sum(k=None):
     k_dual = w4_dual_level(k)
     c2 = w4_central_charge(k_dual)
     return simplify(c1 + c2)
+
+
+# ---------------------------------------------------------------------------
+# Scope and firewall surface
+# ---------------------------------------------------------------------------
+
+def stage4_scope_certificate() -> Dict[str, object]:
+    """Machine-readable scope certificate for this finite W_4 surface.
+
+    The engine records the finite primary top-pole packet at stage 4. It
+    does not certify a full OPE, an all-genus shadow tower, a full
+    multiweight package, or a Maurer-Cartan solution.
+    """
+    return {
+        "object": "principal W_4 stage-4 coefficient surface",
+        "finite_statement": "stage-4 primary top-pole scalar packet on I_4",
+        "certified_stage": 4,
+        "negative_claims": {
+            "not_full_ope": True,
+            "not_all_genus": True,
+            "not_full_multiweight": True,
+            "not_full_mc_data": True,
+            "not_koszul_duality": True,
+            "not_derived_center_or_bulk": True,
+        },
+        "holographic_package_entries": (
+            "A", "A^i", "A^!", "C", "r(z)", "Theta_A", "nabla^hol",
+        ),
+        "modular_koszul_compute_package_projections": (
+            "Fact_X(L)", "barB_X(L)", "Theta_L", "L_L",
+            "(V_br,T_br)", "R4_mod(L)",
+        ),
+        "object_firewall": {
+            "bar_cobar_inversion": (
+                "Omega(B(A))=A is bar-cobar inversion, not Koszul duality"
+            ),
+            "verdier_branch": (
+                "A^! is the Verdier/continuous-linear dual branch under "
+                "finite-type/completed hypotheses"
+            ),
+            "derived_center": (
+                "Z_ch^der(A)=ChirHoch^*(A,A) is Hochschild/bulk, "
+                "not Koszul dual"
+            ),
+        },
+        "kernel_constants": {
+            "affine_raw": "k*Omega_tr/z",
+            "kz": "Omega/((k+h^vee)z)",
+            "heisenberg": "k/z",
+            "virasoro": "(c/2)/z^3 + 2T/z",
+        },
+    }
 
 
 # ---------------------------------------------------------------------------
@@ -271,7 +326,11 @@ def incremental_virasoro_target_identities(stage: int) -> Dict[Tuple[int, int, i
 
 
 def analyze_incremental_packet(stage: int) -> Dict[str, object]:
-    """Summary of J_stage, J_stage^{top}, and J_stage^{red}."""
+    """Summary of J_stage, J_stage^{top}, and J_stage^{red}.
+
+    For stages beyond 4, Virasoro-target values are formal diagnostics
+    from the normalized-pairing pattern, not certified DS coefficients.
+    """
     J = incremental_interacting_packet(stage)
     top = incremental_top_pole_packet(stage)
     red = incremental_reduced_packet(stage)
@@ -289,6 +348,11 @@ def analyze_incremental_packet(stage: int) -> Dict[str, object]:
         "higher_spin_nonsingleton_targets": incremental_higher_spin_nonsingleton_target_decomposition(stage),
         "virasoro_target_channels": incremental_virasoro_target_channels(stage),
         "virasoro_target_values": incremental_virasoro_target_identities(stage),
+        "virasoro_target_value_scope": (
+            "formal normalized-pairing diagnostic; stage 4 is the W_4 "
+            "principal DS finite packet checked by this module"
+        ),
+        "virasoro_target_values_certified_for_stage": stage == 4,
     }
 
 
@@ -343,7 +407,7 @@ def stage4_exact_identity_packet_labels() -> List[str]:
 
 
 def stage4_live_targets() -> List[str]:
-    """Backward-compatible labels for the exact six-entry stage-4 packet."""
+    """Compatibility alias for the exact six-entry stage-4 packet labels."""
     return stage4_exact_identity_packet_labels()
 
 
@@ -375,6 +439,62 @@ def stage4_exact_identity_packet() -> List[Tuple[int, int, int, int]]:
     return parity_compressed_packet()
 
 
+def stage4_principal_higher_spin_squared_couplings(c=None) -> Dict[
+    Tuple[int, int, int, int], object
+]:
+    r"""Squared principal DS higher-spin couplings in the stage-4 packet.
+
+    These are the four higher-spin entries of the finite stage-4 packet,
+    in the Zamolodchikov normalization
+    ``<W^(s)(z) W^(s)(0)> = (c/s) z^(-2s)``.  The function deliberately
+    returns squared rational functions in ``Q(c)``. It does not choose a
+    square-root branch for the OPE coefficients themselves.
+
+    Manuscript anchors:
+      eq:c334-explicit,
+      eq:c444-explicit,
+      eq:c343-explicit,
+      eq:c344-explicit.
+    """
+    if c is None:
+        c = Symbol('c')
+
+    c334_sq = (
+        Rational(42) * c**2 * (5 * c + 22)
+        / ((c + 24) * (7 * c + 68) * (3 * c + 46))
+    )
+    c444_sq = (
+        Rational(112) * c**2 * (2 * c - 1) * (3 * c + 46)
+        / ((c + 24) * (7 * c + 68) * (10 * c + 197) * (5 * c + 3))
+    )
+    return {
+        (3, 3, 4, 2): simplify(c334_sq),
+        (4, 4, 4, 4): simplify(c444_sq),
+        (3, 4, 3, 4): simplify(Rational(9, 16) * c334_sq),
+        (3, 4, 4, 3): simplify(Rational(5, 7) * c334_sq),
+    }
+
+
+def stage4_coefficient_field_policy() -> Dict[str, object]:
+    """Field-extension policy for the stage-4 higher-spin coefficients."""
+    return {
+        "base_field": "Q(c)",
+        "stored_values": "squared principal DS rational functions",
+        "branch_certified": False,
+        "branch_policy": (
+            "this scaffold records squared values only; square-root signs "
+            "and field embeddings are not chosen here"
+        ),
+        "generic_extension_generators": (
+            "sqrt(c_334^2)", "sqrt(c_444^2)",
+        ),
+        "mixed_square_relations": {
+            "C_{3,4;3;0,4}^2": "(9/16)*c_334^2",
+            "C_{3,4;4;0,3}^2": "(5/7)*c_334^2",
+        },
+    }
+
+
 def stage4_residual_higher_spin_channels() -> List[Tuple[int, int, int, int]]:
     """Residual higher-spin channels inside the exact stage-4 packet."""
     return [
@@ -386,7 +506,7 @@ def stage4_residual_higher_spin_channels() -> List[Tuple[int, int, int, int]]:
 
 
 def stage4_virasoro_target_channels() -> List[Tuple[int, int, int, int]]:
-    """Theorematic Virasoro-target channels inside the exact stage-4 packet."""
+    """Virasoro-target channels inside the exact stage-4 packet."""
     return [
         (3, 4, 2, 5),
         (4, 4, 2, 6),
@@ -394,7 +514,7 @@ def stage4_virasoro_target_channels() -> List[Tuple[int, int, int, int]]:
 
 
 def stage4_virasoro_target_identities() -> Dict[Tuple[int, int, int, int], int]:
-    """Principal Virasoro-target values fixed on the DS side at stage 4."""
+    """Principal DS values for the Virasoro-target channels at stage 4."""
     return {
         (4, 4, 2, 6): 2,
         (3, 4, 2, 5): 0,
@@ -408,16 +528,10 @@ def stage4_virasoro_target_identities() -> Dict[Tuple[int, int, int, int], int]:
 def ope_max_pole_order(s: int, t: int) -> int:
     """Maximum pole order in W_s(z) W_t(w) OPE.
 
-    For s = t: max pole = 2s - 1 (includes vacuum at pole 2s-1).
-    Actually: a_{(n)}b singular for 0 <= n < s+t-1, so pole orders
-    1, 2, ..., s+t-1. But the LEADING singularity for same-spin
-    is (z-w)^{-(2s)} (from the 2-point function), pole order 2s-1
-    in the (n-1)-th product convention.
-
-    For W_3 x W_3: sixth-order pole => pole order 6 = 2*3.
-    For W_4 x W_4: eighth-order pole => pole order 8 = 2*4.
-    For T x T: quartic pole => pole order 4 = 2*2.
-    So max pole = s + t for s = t, and s + t - 1 for s != t.
+    Same-spin self-OPEs have the vacuum two-point leading pole 2s:
+    T x T has pole 4, W_3 x W_3 has pole 6, and W_4 x W_4 has pole 8.
+    Mixed different-weight primaries have no vacuum pairing, so their
+    first possible singular order is s + t - 1.
     """
     if s == t:
         return 2 * s
@@ -437,8 +551,8 @@ def ope_target_weight(s: int, t: int, n: int) -> int:
 def primary_target_at_pole(s: int, t: int, n: int) -> Optional[int]:
     """Spin of the primary target at pole order n in W_s x W_t, if it exists.
 
-    Target weight = s + t - n - 1. This is a primary generator if the
-    weight matches a generator spin (2, 3, or 4 for W_4).
+    Target weight = s + t - n. This is a primary generator if the weight
+    matches a generator spin (2, 3, or 4 for W_4).
     Returns None if no primary generator has this weight.
     """
     w = ope_target_weight(s, t, n)
@@ -478,7 +592,12 @@ def w4_stress_tensor_ope() -> Dict[Tuple[str, str], Dict[int, Dict[str, object]]
 
 
 def w4_curvature():
-    """Curvature elements for the W_4 bar complex.
+    """Channel-refined kappa entries for the W_4 scalar shadow lane.
+
+    These are the leading same-spin vacuum OPE coefficients c/s in the
+    principal-DS strong-generator normalization. They are scalar
+    bar-complex inputs, not a Hochschild derived-centre computation and
+    not a physical-bulk reconstruction.
 
     m_0^(T) = c/2   (from quartic pole T_{(3)}T)
     m_0^(W_3) = c/3  (from sixth-order pole W_3_{(5)}W_3)
@@ -491,7 +610,7 @@ def w4_curvature():
 
 
 def w4_kappa_total():
-    """Total kappa for W_4: sum of curvature channels.
+    """Total scalar kappa for W_4: trace of the channel-refined entries.
 
     kappa = c/2 + c/3 + c/4 = 13c/12.
     """
@@ -550,19 +669,21 @@ def w4w4_leading_ope():
     Pole 7: weight 1, must vanish (no weight-1 field in vacuum module).
     Pole 6: weight 2 = T channel.
       C^res_{4,4;2;0,6} = coefficient of T at pole 6.
-      Predicted = 2 (universal pattern).
+      Principal DS / Ward-normalized value = 2.
     Pole 5: weight 3 = W_3 channel (or dT descendant).
     Pole 4: weight 4 = W_4 channel (plus composites).
       The W_4 primary coefficient is c_444.
     """
     c = Symbol('c')
+    c444 = Symbol('c_444')
 
     return {
         # Pole 8 (n-th product index 7): vacuum
         8: {"vac": c / 4},
-        # Pole 6: T channel. Predicted: coefficient = 2.
+        # Pole 6: T channel; principal DS / Ward-normalized value.
         6: {"T": Rational(2)},
-        # Lower poles involve composites and c_444
+        # Pole 4: W_4 primary channel, modulo Virasoro composites.
+        4: {"W4": c444},
     }
 
 
@@ -574,29 +695,31 @@ def w3w4_leading_ope():
     """Leading poles of W_3(z) W_4(w) OPE.
 
     Maximum pole order: s + t - 1 = 6.
-    Pole 6: target weight s+t-7 = 0 => vacuum. But W_3 x W_4 -> vac
-      requires s = t (W_3 != W_4), so this vanishes by orthogonality.
+    Pole 6: target weight s+t-6 = 1. There is no weight-1 generator
+      in the vacuum module, so no primary seed is recorded there.
     Pole 5: target weight 2 => T channel.
       C^res_{3,4;2;0,5} = coefficient of T.
 
-    From conformal weight analysis, T appears at pole 5 if and only if
-    the W_3 x W_4 OPE has a nonzero coupling to the vacuum module at
-    this pole order. For the principal W_4 algebra, this coupling
-    is expected to vanish (since W_3 and W_4 have different spins,
-    the T-channel coupling requires a nontrivial structure constant).
+    The principal W_4 value of this mixed T-channel is zero: the Ward
+    identity reduces the three-point function <T W_3 W_4> to the
+    two-point function <W_3 W_4>, which vanishes by conformal-weight
+    orthogonality.
 
     Pole 4: target weight 3 => W_3 channel.
       C_{3,4;3;0,4} = coupling constant.
     Pole 3: target weight 4 => W_4 channel.
       C_{3,4;4;0,3} = coupling constant.
     """
-    c = Symbol('c')
+    c343 = Symbol('c_343')
+    c344 = Symbol('c_344')
 
     return {
-        # Pole 6: no vacuum contribution (orthogonality of W_3, W_4)
-        # Pole 5: T channel. Expected: coefficient from C^res_{3,4;2;0,5}
-        # Pole 4: W_3 channel. C_{3,4;3;0,4}
-        # Pole 3: W_4 channel. C_{3,4;4;0,3}
+        # Pole 5: T channel, fixed by mixed-source orthogonality.
+        5: {"T": Rational(0)},
+        # Pole 4: W_3 primary channel.
+        4: {"W3": c343},
+        # Pole 3: W_4 primary channel.
+        3: {"W4": c344},
     }
 
 
@@ -614,16 +737,36 @@ def stage4_virasoro_target_identity_data() -> Dict[str, object]:
     """
     return {
         "C_{4,4;2;0,6}": {
-            "theorematic_value": 2,
+            "principal_value": 2,
             "verified_value": 2,
+            "theorematic_value": 2,  # Compatibility alias.
+            "value_scope": "principal DS; residue side fixed on the Ward-normalized locus",
+            "certified_side": "principal DS",
+            "residue_certified": False,
+            "residue_certification": (
+                "requires the normalized residue two-point/Ward package"
+            ),
+            "not_derived_center_or_bulk": True,
+            "not_full_mc_data": True,
+            "not_full_multiweight_data": True,
             "source_pair": (4, 4),
             "target_spin": 2,
             "pole_order": 6,
             "mechanism": "Universal T-coupling: C_{s,s;2;0,2s-2} = 2",
         },
         "C_{3,4;2;0,5}": {
-            "theorematic_value": 0,
+            "principal_value": 0,
             "verified_value": 0,
+            "theorematic_value": 0,  # Compatibility alias.
+            "value_scope": "principal DS; residue side fixed on the Ward-normalized locus",
+            "certified_side": "principal DS",
+            "residue_certified": False,
+            "residue_certification": (
+                "requires the normalized residue two-point/Ward package"
+            ),
+            "not_derived_center_or_bulk": True,
+            "not_full_mc_data": True,
+            "not_full_multiweight_data": True,
             "source_pair": (3, 4),
             "target_spin": 2,
             "pole_order": 5,
@@ -636,22 +779,22 @@ def stage4_virasoro_target_identity_data() -> Dict[str, object]:
 def verify_universal_t_coupling_pattern() -> Dict[str, bool]:
     """Check the universal pattern C_{s,s;2;0,2s-2} = 2.
 
-    Known values:
+    Values:
       s=2: C_{2,2;2;0,2} = 2  (Virasoro OPE)
       s=3: C_{3,3;2;0,4} = 2  (W_3 OPE)
-    Theorematic continuation:
-      s=4: C_{4,4;2;0,6} = 2  (W_4 OPE)
+      s=4: C_{4,4;2;0,6} = 2  (W_4 Ward identity)
     """
     stage3 = stage3_ds_coefficients()
+    stage4 = stage4_virasoro_target_identities()
     return {
         "s=2_equals_2": stage3[(2, 2, 2, 2)] == 2,
         "s=3_equals_2": stage3[(3, 3, 2, 4)] == 2,
-        "s=4_equals_2": True,
+        "s=4_equals_2": stage4[(4, 4, 2, 6)] == 2,
     }
 
 
 # ---------------------------------------------------------------------------
-# Full reduction chain: J_4 (29) -> J_4^top (7) -> J_4^par (6) -> frontier (4+2)
+# Full reduction chain: J_4 (29) -> J_4^top (7) -> J_4^par (6) -> exact split (4+2)
 # ---------------------------------------------------------------------------
 
 def top_pole_packet() -> List[Tuple[int, int, int, int]]:
@@ -671,16 +814,16 @@ def top_pole_packet() -> List[Tuple[int, int, int, int]]:
 def parity_compressed_packet() -> List[Tuple[int, int, int, int]]:
     """J_4^par: remove odd-spin self-OPE entries from J_4^top.
 
-    For s=t (self-OPE) with even generator spin, odd target spin u
-    vanishes by skew-symmetry (prop:winfty-ds-self-ope-parity).
+    For s=t (self-OPE), odd top-pole order n = 2s-u vanishes by
+    skew-symmetry (prop:winfty-ds-self-ope-parity).
     Removes (4,4,3,5) from J_4^top.
     cor:winfty-ds-stage4-parity-packet: |J_4^par| = 6.
     """
     top = top_pole_packet()
     par = []
     for s, t, u, n in top:
-        if s == t and u % 2 == 1:
-            # Even-spin self-OPE: odd target spin vanishes
+        if s == t and n % 2 == 1:
+            # Self-OPE: odd top-pole channel vanishes.
             continue
         par.append((s, t, u, n))
     return sorted(par)
@@ -716,15 +859,14 @@ def mixed_self_split() -> Dict[str, List[Tuple[int, int, int, int]]]:
     return {"self_coupling": self_coupling, "mixed": mixed}
 
 
-def frontier_package() -> Dict[str, object]:
-    """Stage-4 exact packet split for the standard W_infty MC4 frontier.
+def stage4_exact_packet_split() -> Dict[str, object]:
+    """Split the exact six-entry W_4 stage-4 packet as 4 + 2.
 
     The exact stage-4 identity packet on I_4 has six entries:
       - four residual higher-spin channels;
-      - two theorematic Virasoro-target channels with fixed principal values.
+      - two Virasoro-target channels with fixed principal DS values.
 
-    For compatibility with older compute surfaces, the historical
-    free/check naming is still returned alongside the theorem-aligned keys.
+    Legacy free/check aliases are returned for downstream compute callers.
     """
     exact_packet = stage4_exact_identity_packet()
     higher_spin = stage4_residual_higher_spin_channels()
@@ -732,8 +874,16 @@ def frontier_package() -> Dict[str, object]:
     virasoro_values = stage4_virasoro_target_identities()
 
     return {
+        "coefficient_scope": "finite primary top-pole scalar packet on I_4",
+        "certified_stage": 4,
+        "not_full_ope": True,
+        "not_all_genus": True,
+        "not_full_multiweight": True,
+        "not_full_mc_data": True,
         "exact_identity_packet": exact_packet,
         "higher_spin_channels": higher_spin,
+        "higher_spin_squared_couplings": stage4_principal_higher_spin_squared_couplings(),
+        "coefficient_field_policy": stage4_coefficient_field_policy(),
         "virasoro_target_channels": virasoro_targets,
         "virasoro_target_values": virasoro_values,
         "n_packet": len(exact_packet),
@@ -748,6 +898,11 @@ def frontier_package() -> Dict[str, object]:
     }
 
 
+def frontier_package() -> Dict[str, object]:
+    """Compatibility alias for stage4_exact_packet_split()."""
+    return stage4_exact_packet_split()
+
+
 def verify_full_reduction_chain() -> Dict[str, object]:
     """Verify every step of the stage-4 reduction chain.
 
@@ -760,7 +915,7 @@ def verify_full_reduction_chain() -> Dict[str, object]:
     par = parity_compressed_packet()
     blocks = ope_block_decomposition()
     ms = mixed_self_split()
-    front = frontier_package()
+    front = stage4_exact_packet_split()
 
     # Expected elements from the manuscript
     expected_top = [
@@ -776,19 +931,42 @@ def verify_full_reduction_chain() -> Dict[str, object]:
         (3, 3, 4, 2), (3, 4, 3, 4), (3, 4, 4, 3), (4, 4, 4, 4),
     ]
     expected_virasoro_targets = [(3, 4, 2, 5), (4, 4, 2, 6)]
+    top_matches = sorted(top) == sorted(expected_top)
+    par_matches = sorted(par) == sorted(expected_par)
+    parity_eliminated = sorted(
+        [x for x in top if x not in par]
+    ) == sorted(expected_removed_by_parity)
+    higher_spin_matches = (
+        sorted(front["higher_spin_channels"]) == sorted(expected_higher_spin)
+    )
+    virasoro_target_matches = (
+        sorted(front["virasoro_target_channels"]) == sorted(expected_virasoro_targets)
+    )
+    virasoro_target_values_correct = (
+        front["virasoro_target_values"].get((4, 4, 2, 6)) == 2
+        and front["virasoro_target_values"].get((3, 4, 2, 5)) == 0
+    )
+    free_matches = (
+        sorted(front["free_coefficients"]) == sorted(expected_higher_spin)
+    )
+    checks_match = (
+        sorted(front["residue_checks"]) == sorted(expected_virasoro_targets)
+    )
+    check_values_correct = (
+        front["check_values"].get((4, 4, 2, 6)) == 2
+        and front["check_values"].get((3, 4, 2, 5)) == 0
+    )
 
     return {
         # Step 1: J_4 -> J_4^top (primaryity)
         "J4_size": len(J4),
         "J4_top_size": len(top),
-        "J4_top_matches": sorted(top) == sorted(expected_top),
+        "J4_top_matches": top_matches,
         "primaryity_eliminated": len(J4) - len(top),
         # Step 2: J_4^top -> J_4^par (parity)
         "J4_par_size": len(par),
-        "J4_par_matches": sorted(par) == sorted(expected_par),
-        "parity_eliminated": sorted(
-            [x for x in top if x not in par]
-        ) == sorted(expected_removed_by_parity),
+        "J4_par_matches": par_matches,
+        "parity_eliminated": parity_eliminated,
         # Step 3: OPE block organization
         "block_33_size": len(blocks["block_33"]),
         "block_34_size": len(blocks["block_34"]),
@@ -801,33 +979,23 @@ def verify_full_reduction_chain() -> Dict[str, object]:
         "n_packet": front["n_packet"],
         "n_higher_spin": front["n_higher_spin"],
         "n_virasoro_target": front["n_virasoro_target"],
-        "higher_spin_matches": (
-            sorted(front["higher_spin_channels"]) == sorted(expected_higher_spin)
-        ),
-        "virasoro_target_matches": (
-            sorted(front["virasoro_target_channels"]) == sorted(expected_virasoro_targets)
-        ),
-        "virasoro_target_values_correct": (
-            front["virasoro_target_values"].get((4, 4, 2, 6)) == 2
-            and front["virasoro_target_values"].get((3, 4, 2, 5)) == 0
-        ),
+        "higher_spin_matches": higher_spin_matches,
+        "virasoro_target_matches": virasoro_target_matches,
+        "virasoro_target_values_correct": virasoro_target_values_correct,
         # Backward-compatible aliases.
         "n_free": front["n_free"],
         "n_checks": front["n_checks"],
-        "free_matches": (
-            sorted(front["free_coefficients"]) == sorted(expected_higher_spin)
-        ),
-        "checks_match": (
-            sorted(front["residue_checks"]) == sorted(expected_virasoro_targets)
-        ),
-        "check_values_correct": (
-            front["check_values"].get((4, 4, 2, 6)) == 2
-            and front["check_values"].get((3, 4, 2, 5)) == 0
-        ),
+        "free_matches": free_matches,
+        "checks_match": checks_match,
+        "check_values_correct": check_values_correct,
         # Summary
         "chain_valid": (
             len(J4) == 29 and len(top) == 7 and len(par) == 6
             and front["n_higher_spin"] == 4 and front["n_virasoro_target"] == 2
+            and top_matches and par_matches and parity_eliminated
+            and higher_spin_matches and virasoro_target_matches
+            and virasoro_target_values_correct and free_matches
+            and checks_match and check_values_correct
         ),
     }
 
@@ -843,7 +1011,7 @@ def analyze_stage4_packet() -> Dict[str, object]:
     I4_w3 = w3_subset(4)
     J4 = residual_packet(4)
     decomp = stage4_residual_decomposition()
-    front = frontier_package()
+    front = stage4_exact_packet_split()
 
     return {
         "I4_size": len(I4),
@@ -862,6 +1030,10 @@ def analyze_stage4_packet() -> Dict[str, object]:
         "virasoro_target_channels": front["virasoro_target_channels"],
         "virasoro_target_values": front["virasoro_target_values"],
         "virasoro_target_identity_data": stage4_virasoro_target_identity_data(),
+        "higher_spin_squared_couplings": front["higher_spin_squared_couplings"],
+        "coefficient_field_policy": front["coefficient_field_policy"],
+        "scope_certificate": stage4_scope_certificate(),
+        "exact_identity_packet_labels": stage4_exact_identity_packet_labels(),
         "live_targets": stage4_live_targets(),
     }
 
@@ -916,5 +1088,5 @@ if __name__ == "__main__":
     preds = stage4_virasoro_target_identity_data()
     print(f"\nStage-4 Virasoro-target identities:")
     for name, data in preds.items():
-        print(f"  {name} = {data['theorematic_value']}")
+        print(f"  {name} = {data['principal_value']}")
         print(f"    ({data['mechanism']})")

@@ -1,8 +1,11 @@
-r"""Definitive cross-verification of Faber-Pandharipande numbers.
+r"""Finite-window cross-verification of Faber-Pandharipande numbers.
 
-The genus-g free energy in modular Koszul duality is:
+The scalar diagonal/uniform-weight genus-g free energy lane is:
 
     F_g(A) = kappa(A) * lambda_g^FP
+
+For multi-weight algebras the full free energy has separate cross-channel
+terms. This module verifies only the scalar Faber-Pandharipande coefficient.
 
 where lambda_g^FP are the Faber-Pandharipande intersection numbers:
 
@@ -15,11 +18,13 @@ The CLOSED FORM is:
 
     lambda_g^FP = (2^{2g-1} - 1) / (2^{2g-1}) * |B_{2g}| / (2g)!
 
-This module verifies lambda_g^FP for g=1,...,10 via SIX independent methods.
+This module checks lambda_g^FP on explicit finite windows, with default
+diagnostics for g=1,...,10. It is not a construction of the all-genus
+modular package.
 
 METHOD 1: Direct Bernoulli formula (recursive Bernoulli computation)
 METHOD 2: A-hat genus (series expansion of (x/2)/sin(x/2))
-METHOD 3: Zeta function (B_{2g} via Riemann zeta values)
+METHOD 3: Zeta function (exact zeta(2g)/pi^(2g) values)
 METHOD 4: Sympy Bernoulli (independent library implementation)
 METHOD 5: Euler-Maclaurin / generating function of x/(e^x - 1)
 METHOD 6: Recursive Bernoulli via Akiyama-Tanigawa algorithm
@@ -40,19 +45,30 @@ References:
     [Fab99] Faber, Algorithms for computing intersection numbers on
             moduli spaces, in New Trends in Algebraic Geometry (1999).
 
-Ground truth: concordance.tex (Theorem D), utils.py, CLAUDE.md.
+Local source anchors:
+    chapters/theory/higher_genus_foundations.tex, thm:mumford-formula
+    chapters/examples/landscape_census.tex, prop:fp-coefficients
+    chapters/theory/higher_genus_modular_koszul.tex, thm:multi-weight-genus-expansion
+    compute/lib/utils.py, lambda_fp
 """
 
 from __future__ import annotations
 
-from fractions import Fraction
 from typing import Dict, List, Tuple
 
 from sympy import (
     Rational, bernoulli as sympy_bernoulli, factorial, pi,
-    sin, sinh, series, Symbol, simplify, Abs, zeta, oo,
-    Integer, S,
+    sin, sinh, series, Symbol, simplify, Abs, zeta,
 )
+
+
+DEFAULT_VERIFICATION_GENUS_MAX = 10
+
+
+def _require_positive_genus(g: int) -> None:
+    """Reject missing or unstable genus-0 conventions at runtime."""
+    if g < 1:
+        raise ValueError(f"lambda_g^FP requires g >= 1, got {g}")
 
 
 # =====================================================================
@@ -90,7 +106,7 @@ def method1_bernoulli_recurrence(g: int) -> Rational:
 
     B_{2g} computed from the defining recurrence, no library calls.
     """
-    assert g >= 1
+    _require_positive_genus(g)
     B_list = _bernoulli_binomial_recurrence(2 * g)
     B_2g = B_list[2 * g]
     abs_B_2g = Abs(B_2g)
@@ -120,8 +136,13 @@ def method2_ahat_series(g: int, precision: int = None) -> Rational:
 
     IMPORTANT (AP22): the t-power is t^{2g}, NOT t^{2g-2}.
     """
+    _require_positive_genus(g)
     if precision is None:
         precision = 2 * g + 2
+    if precision <= 2 * g:
+        raise ValueError(
+            f"series precision must exceed 2*g={2 * g} to read lambda_{g}^FP"
+        )
     t = Symbol('t')
     # Expand (t/2)/sin(t/2) as a series in t around 0
     f = t / 2 / sin(t / 2)
@@ -138,79 +159,24 @@ def method2_ahat_series(g: int, precision: int = None) -> Rational:
 def method3_zeta_values(g: int) -> Rational:
     r"""lambda_g^FP via the Bernoulli-zeta identity.
 
-    The identity: B_{2g} = (-1)^{g+1} * 2 * (2g)! / (2*pi)^{2g} * zeta(2g)
+    Since zeta(2g) > 0,
 
-    So |B_{2g}| = 2 * (2g)! / (2*pi)^{2g} * zeta(2g)   [since zeta(2g) > 0]
+        |B_{2g}|/(2g)! = 2*zeta(2g)/(2*pi)^{2g}.
 
-    Therefore:
-        lambda_g^FP = (2^{2g-1}-1)/(2^{2g-1}) * |B_{2g}|/(2g)!
-                    = (2^{2g-1}-1)/(2^{2g-1}) * 2/(2*pi)^{2g} * zeta(2g)
+    Therefore
 
-    But zeta(2g) = (-1)^{g+1} * B_{2g} * (2*pi)^{2g} / (2*(2g)!) is circular.
+        lambda_g^FP =
+          ((2^{2g-1}-1)/2^{2g-1}) * 2*zeta(2g)/(2*pi)^{2g}.
 
-    Instead, use KNOWN exact values of zeta(2g):
-        zeta(2) = pi^2/6
-        zeta(4) = pi^4/90
-        zeta(6) = pi^6/945
-        zeta(8) = pi^8/9450
-        ...
-
-    and substitute to recover |B_{2g}|.
-
-    The formula zeta(2g) = (-1)^{g+1} * (2*pi)^{2g} / (2*(2g)!) * B_{2g}
-    can be inverted: B_{2g} = (-1)^{g+1} * 2*(2g)!/(2*pi)^{2g} * zeta(2g).
-
-    For a truly independent path, we compute zeta(2g) from the
-    PRODUCT FORMULA zeta(2g)/zeta(2)^g, which is a known rational number
-    times pi^{2g}/pi^{2g} = rational. But this is still the same information.
-
-    The genuinely independent approach: use the EXPLICIT rational values
-    of zeta(2g)/pi^{2g}, which are:
-        zeta(2g)/pi^{2g} = (-1)^{g+1} * B_{2g} / (2*(2g)!)
-
-    This IS the Bernoulli identity, so Method 3 is really a REFORMULATION
-    that tests the Bernoulli-zeta correspondence, not a fully independent path.
-
-    We implement it via: compute zeta(2g)/pi^{2g} as a rational number
-    (using the Euler product or closed-form denominators), then extract B_{2g}.
+    This is a finite-window exact symbolic check through Sympy's zeta
+    special-value evaluator. It does not prove Euler's formula anew.
     """
-    # Known exact values: zeta(2n)/pi^{2n} as rational numbers
-    # These come from: zeta(2n) = (-1)^{n+1} B_{2n} (2pi)^{2n} / (2(2n)!)
-    # => zeta(2n)/pi^{2n} = (-1)^{n+1} B_{2n} * 2^{2n} / (2(2n)!)
-    #                      = (-1)^{n+1} B_{2n} * 2^{2n-1} / (2n)!
-    #
-    # We compute B_{2g} via sympy's Bernoulli (this is Method 4's route),
-    # but here we go through zeta to verify the Bernoulli-zeta identity ITSELF.
-
-    # Step 1: Compute zeta(2g) symbolically via sympy
-    # sympy.zeta(2g) returns the exact value involving pi^{2g}
-    n = g  # alias for clarity
-    B_2n = sympy_bernoulli(2 * n)
-
-    # Step 2: Verify the Bernoulli-zeta identity
-    # zeta(2n) = (-1)^{n+1} * B_{2n} * (2*pi)^{2n} / (2*(2n)!)
-    # => B_{2n} = (-1)^{n+1} * 2*(2n)! * zeta(2n) / (2*pi)^{2n}
-    #
-    # The rational part of zeta(2n)/pi^{2n}:
-    zeta_over_pi = (-1) ** (n + 1) * B_2n * Rational(2 ** (2 * n - 1), factorial(2 * n))
-
-    # So zeta(2n) = zeta_over_pi * pi^{2n}.
-    # Now recover B_{2n} from zeta_over_pi:
-    # B_{2n} = (-1)^{n+1} * 2 * (2n)! / (2*pi)^{2n} * zeta(2n)
-    #        = (-1)^{n+1} * 2 * (2n)! / (2^{2n} * pi^{2n}) * zeta_over_pi * pi^{2n}
-    #        = (-1)^{n+1} * 2 * (2n)! / 2^{2n} * zeta_over_pi
-    B_recovered = (-1) ** (n + 1) * 2 * factorial(2 * n) / (2 ** (2 * n)) * zeta_over_pi
-
-    # Verify round-trip
-    assert simplify(B_recovered - B_2n) == 0, (
-        f"Bernoulli-zeta round-trip failed at n={n}: "
-        f"B_recovered={B_recovered}, B_{2*n}={B_2n}"
-    )
-
-    # Step 3: Compute lambda_g^FP from the zeta-derived B_{2g}
-    abs_B = Abs(B_recovered)
+    _require_positive_genus(g)
     power = 2 ** (2 * g - 1)
-    return Rational(power - 1, power) * abs_B / factorial(2 * g)
+    zeta_even_ratio = simplify(2 * zeta(2 * g) / (2 * pi) ** (2 * g))
+    if not zeta_even_ratio.is_Rational:
+        raise ValueError(f"zeta(2*{g}) did not reduce to an exact rational")
+    return Rational(power - 1, power) * Rational(zeta_even_ratio)
 
 
 # =====================================================================
@@ -223,7 +189,7 @@ def method4_sympy_bernoulli(g: int) -> Rational:
     This is the standard implementation from utils.py, using sympy.bernoulli.
     It serves as a cross-check against Method 1 (hand-coded recurrence).
     """
-    assert g >= 1
+    _require_positive_genus(g)
     B_2g = sympy_bernoulli(2 * g)
     abs_B_2g = Abs(B_2g)
     power = 2 ** (2 * g - 1)
@@ -246,8 +212,13 @@ def method5_exponential_generating_function(g: int, precision: int = None) -> Ra
     This is independent of Methods 1 and 4 because it uses the ANALYTIC
     definition (generating function) rather than the recursive definition.
     """
+    _require_positive_genus(g)
     if precision is None:
         precision = 2 * g + 2
+    if precision <= 2 * g:
+        raise ValueError(
+            f"series precision must exceed 2*g={2 * g} to read lambda_{g}^FP"
+        )
     x = Symbol('x')
     from sympy import exp
     # Series expansion of x/(e^x - 1)
@@ -306,7 +277,7 @@ def method6_akiyama_tanigawa(g: int) -> Rational:
     Uses a completely different algorithm than Method 1 (binomial recurrence)
     to compute the same Bernoulli numbers, providing independent verification.
     """
-    assert g >= 1
+    _require_positive_genus(g)
     B_list = _bernoulli_akiyama_tanigawa(2 * g)
     B_2g = B_list[2 * g]
     abs_B_2g = Abs(B_2g)
@@ -342,10 +313,25 @@ def verify_all_methods_agree(g: int) -> Tuple[bool, Rational, Dict[str, Rational
     return all_agree, consensus, results
 
 
-def definitive_table(g_max: int = 10) -> Dict[int, Rational]:
-    """Produce the definitive table of lambda_g^FP for g=1,...,g_max.
+def scalar_diagonal_free_energy(kappa, g: int):
+    r"""Scalar diagonal contribution kappa*lambda_g^FP.
+
+    This is the uniform-weight/scalar diagonal lane. For multi-weight
+    algebras in genus g >= 2 the full free energy is
+
+        kappa*lambda_g^FP + delta F_g^cross.
+
+    The cross-channel term is not constructed in this module.
+    """
+    return kappa * method4_sympy_bernoulli(g)
+
+
+def definitive_table(g_max: int = DEFAULT_VERIFICATION_GENUS_MAX) -> Dict[int, Rational]:
+    """Produce a finite-window table of lambda_g^FP for g=1,...,g_max.
 
     All six methods must agree for each genus. Raises AssertionError if not.
+    Agreement is an exact rational diagnostic on the chosen window, not an
+    all-genus proof.
     """
     table = {}
     for g in range(1, g_max + 1):
@@ -363,7 +349,7 @@ def definitive_table(g_max: int = 10) -> Dict[int, Rational]:
 # BERNOULLI NUMBER TABLE (exact, for cross-reference)
 # =====================================================================
 
-def bernoulli_table(n_max: int = 20) -> Dict[int, Rational]:
+def bernoulli_table(n_max: int = 2 * DEFAULT_VERIFICATION_GENUS_MAX) -> Dict[int, Rational]:
     """Exact Bernoulli number table B_0, B_2, B_4, ..., B_{n_max}.
 
     Only even indices (B_{2k} for k>=0). Odd Bernoulli numbers vanish
@@ -377,7 +363,7 @@ def bernoulli_table(n_max: int = 20) -> Dict[int, Rational]:
 # GENERATING FUNCTION VERIFICATION
 # =====================================================================
 
-def verify_generating_function(g_max: int = 10) -> Dict[str, object]:
+def verify_generating_function(g_max: int = DEFAULT_VERIFICATION_GENUS_MAX) -> Dict[str, object]:
     r"""Verify the generating function identity:
 
         sum_{g>=1} lambda_g^FP * t^{2g} = (t/2)/sin(t/2) - 1
@@ -412,6 +398,7 @@ def verify_generating_function(g_max: int = 10) -> Dict[str, object]:
         'constant_term': Rational(s.coeff(t, 0)),  # should be 1
         'by_genus': {},
         'all_match': True,
+        'scope': f'finite exact rational window 1 <= g <= {g_max}',
     }
 
     # Verify constant term is 1
@@ -436,7 +423,7 @@ def verify_generating_function(g_max: int = 10) -> Dict[str, object]:
     return results
 
 
-def verify_ahat_relationship(g_max: int = 10) -> Dict[str, object]:
+def verify_ahat_relationship(g_max: int = DEFAULT_VERIFICATION_GENUS_MAX) -> Dict[str, object]:
     r"""Verify Ahat(x) = (x/2)/sinh(x/2) = sum (-1)^g lambda_g^FP x^{2g}.
 
     The A-hat genus uses sinh, not sin. The two are related by:
@@ -455,7 +442,11 @@ def verify_ahat_relationship(g_max: int = 10) -> Dict[str, object]:
     s = series(ahat, x, 0, precision)
 
     table = definitive_table(g_max)
-    results = {'by_genus': {}, 'all_match': True}
+    results = {
+        'by_genus': {},
+        'all_match': True,
+        'scope': f'finite exact rational window 1 <= g <= {g_max}',
+    }
 
     for g in range(1, g_max + 1):
         ahat_coeff = Rational(s.coeff(x, 2 * g))
@@ -589,12 +580,13 @@ def verify_bernoulli_kummer_congruence(g1: int, g2: int, p: int) -> bool:
 # PRETTY PRINTING
 # =====================================================================
 
-def print_definitive_table(g_max: int = 10) -> str:
-    """Format the definitive table as a string."""
+def print_definitive_table(g_max: int = DEFAULT_VERIFICATION_GENUS_MAX) -> str:
+    """Format the finite-window table as a string."""
     table = definitive_table(g_max)
     lines = [
-        "Definitive Faber-Pandharipande Numbers",
+        "Finite-window Faber-Pandharipande Numbers",
         "=" * 60,
+        f"scope: exact rational diagnostics for 1 <= g <= {g_max}",
         f"{'g':>3} | {'lambda_g^FP':>40} | {'float':>18}",
         "-" * 60 + "-" * 5,
     ]

@@ -62,9 +62,15 @@ $\kappa$ through the self-contraction trace, matched with the class
 $\lambda_1 = \tfrac{1}{12}\delta_{\mathrm{irr}}$ on the moduli side.
 At higher genus the same mechanism repeats through the Feynman
 transform, summing over stable graphs weighted by handles. The
-passage from trees to stable graphs is the passage from operads to
-modular operads, and the obstruction tower $\Theta_\cA^{\leq r}$
-records the higher-degree modular data that no tree could ever see.
+boundary is not a single divisor with a single scalar residue:
+separating clutching pulls the Hodge bundle back as a direct sum, while
+the non-separating clutching map pulls $\lambda_g$ back to zero for
+$g\ge2$ (Proposition~\ref{prop:lambda-g-clutching}). Thus the
+genus-$1$ identity $\lambda_1=\delta_{\mathrm{irr}}/12$ is the
+first calculation, not the boundary law in higher genus. The passage
+from trees to stable graphs is the passage from operads to modular
+operads, and the obstruction tower $\Theta_\cA^{\leq r}$ records the
+higher-degree modular data that no tree could ever see.
 
 The handle-pinching degenerations take two forms: a separating node
 splits the surface into two components of lower genus; a
@@ -85,8 +91,8 @@ square is the curvature term above.
 
 The passage from trees to stable graphs corresponds to the passage from
 operads to \emph{modular operads}: algebraic structures whose
-operations are indexed by all stable graphs, not just trees, and
-whose composition laws are the clutching maps of
+operations are indexed by arbitrary stable graphs, with trees forming
+the genus-$0$ subcase, and whose composition laws are the clutching maps of
 $\overline{\cM}_{g,n}$. The Feynman transform
 (Definition~\ref{def:feynman-transform}) sums over all stable
 graphs weighted by $\hbar^{g(\Gamma)}$; its genus-$0$ truncation
@@ -193,10 +199,14 @@ Arnold algebra.
 
 As $[\Sigma_g]$ varies over $\overline{\mathcal{M}}_g$, the bar
 complex forms a family of curved cochain complexes. The fiberwise
-curvature is governed in degree~$2$ by the Hodge class
-$\omega_g = c_1(\det\mathbb{E})$, where $\mathbb{E}$ is the Hodge
-bundle. Theorem~\ref{thm:genus-universality} upgrades this
-fiberwise statement to the genus-$g$ free-energy package
+curvature is the Arakelov form
+$\omega_g^{\mathrm{Ar}}$ on the fiber; the degree-$2$ Hodge class on
+the base is $\lambda_1=c_1(\det\mathbb{E})$. The scalar
+genus-$g$ obstruction uses the Euler polynomial of the full
+rank-$g$ Hodge bundle, hence the top class
+$\lambda_g=c_g(\mathbb{E})$, not the fiber form itself.
+Theorem~\ref{thm:genus-universality} upgrades this fiberwise
+statement to the genus-$g$ free-energy package
 \[
 F_g(\cA)
 \;=\;
@@ -266,7 +276,10 @@ Obstruction class $\mathrm{obs}_g$ & One-loop determinant on $\Sigma_g$ \\
 Complementarity $Q_g + Q_g' = H^*$ & Matter--ghost pairing
 \end{tabular}
 \end{center}
-These are theorems (Theorem~\ref{thm:brst-bar-genus0}), not analogies.
+The BRST flatness row is theorem-level on the cited genus-$0$ BRST
+lane. The determinant and matter--ghost entries are physics readings
+of the scalar obstruction package unless a cited theorem in the
+corresponding chapter supplies the stated comparison.
 \end{remark}
 
 \begin{convention}[Higher-genus differentials]\label{conv:higher-genus-differentials}
@@ -290,23 +303,39 @@ used throughout the manuscript.
  At chain level, this equation is an operator identity on
  $\barB^{(g)}(\cA)|_{[\Sigma_g]}$: the endomorphism $\dfib^{\,2}$
  acts as $\kappa(\cA)$ times the Arakelov $(1,1)$-form $\omega_g$
- (a specific smooth chain on~$\Sigma_g$, not merely a cohomology class).
+ (a specific smooth chain on~$\Sigma_g$ carrying chain-level data).
  On the uniform-weight scalar lane, the cohomological curvature
  element
- $\mcurv{g} = \kappa(\cA)\cdot\lambda_g \in H^{2g}(\overline{\cM}_g)$ is the Chern--Weil image of this chain-level operator
- under integration over the fibers of
- $\pi\colon\overline{\cC}_g\to\overline{\cM}_g$
+ $\mcurv{g} = \kappa(\cA)\cdot\lambda_g
+ \in H^{2g}(\overline{\cM}_g)$ is obtained by taking the
+ zero-mode determinant of the rank-$g$ Hodge bundle and applying the
+ Chern--Weil Euler polynomial. It is not the class of
+ $\omega_g^{\mathrm{Ar}}$ itself and not a single fiber integral;
+ the fiberwise form supplies the curvature representative whose
+ Hodge determinant is $c_g(\mathbb{E})$
  (Proposition~\ref{prop:chain-level-curvature-operator}).
 
 \item[\textup{(ii)}] \textbf{Total corrected differential} $\Dg{g}$.
- The full differential on $\bar{B}^{(g)}(\cA)$, incorporating all
- quantum corrections from period integrals over cycles of~$\Sigma_g$:
+ The full differential on $\bar{B}^{(g)}(\cA)$, incorporating the
+ prime-form period correction and the Gauss--Manin variation of the
+ Hodge bundle:
  \[
- \Dg{g} = \dzero + \sum_{k=1}^{g} t_k\, d_k,
+ \Dg{g}
+ =
+ \dfib + d_{\mathrm{per}}^{(g)} + \nabla_{\mathrm{KS}}^{\mathrm{GM}},
  \]
- where $t_k = \oint_{A_k}\omega_k$ are $A$-period parameters from
- $H^1(\Sigma_g,\C)$ \textup{(}not $H^1(\mathcal{M}_g)$, which
- vanishes for $g\ge 2$ by Harer\textup{)}. This differential is
+ where $d_{\mathrm{per}}^{(g)}$ is the operator induced by the
+ Arakelov period term in the prime-form propagator, and
+ $\nabla_{\mathrm{KS}}^{\mathrm{GM}}$ is the Gauss--Manin connection
+ applied along Kodaira--Spencer tangent directions. The normalized
+ $A$-periods satisfy
+ $\oint_{A_l}\omega_k=\delta_{kl}$ and are therefore a gauge choice,
+ not deformation parameters. The actual period data are the period
+ matrix entries $\Omega_{\alpha\beta}$ and the Abel--Jacobi integrals
+ appearing in Definition~\ref{def:higher-genus-log-forms}; they live
+ in the variation of $H^1(\Sigma_g,\C)$, not in
+ $H^1(\mathcal{M}_g,\C)$, which vanishes for $g\ge2$ by Harer.
+ This differential is
  \emph{strict}:
  \[
  \Dg{g}^{\,2} = 0
@@ -341,10 +370,13 @@ derived package while the curved model is its coderived counterpart.
 
 \noindent
 \textbf{Relation.}
-The fiberwise differential $\dfib$ is curved; the quantum
-corrections $\sum t_k d_k$ cancel the curvature via the
-Lagrangian property of the $A$-cycle subspace, producing the
-strict differential $\Dg{g} = \dzero + \sum t_k d_k$.
+The fiberwise differential $\dfib$ is curved; the prime-form
+period operator and the Gauss--Manin/Kodaira--Spencer term cancel
+the curvature via the Riemann bilinear relation and the Lagrangian
+normalization of the $A$-cycle subspace, producing the strict
+differential
+$\Dg{g}=\dfib+d_{\mathrm{per}}^{(g)}
++\nabla_{\mathrm{KS}}^{\mathrm{GM}}$.
 The passage $\dfib \leadsto \Dg{g}$ is the chiral analogue of
 passing from a curved connection to a flat one. The full
 genus-stratified total differential is
@@ -397,32 +429,44 @@ by the Gauss--Manin connection on the Hodge bundle.
  The local system
  $\mathcal{R}^q = R^q\pi_*(\cA^{\boxtimes n}
  \otimes \Omega^*_{\log})$
- over $\overline{\cM}_g$ carries the Gauss--Manin connection
+ over the smooth locus of $\overline{\cM}_g$ carries the
+ Gauss--Manin connection
  \begin{equation}\label{eq:gauss-manin-chain}
  \nabla^{\mathrm{GM}}
  \;=\;
  d_{\overline{\cM}_g}
- + \sum_{k=1}^{g} \omega_k^{\mathrm{hol}} \otimes \partial_{t_k},
+ + \Theta_{\mathrm{KS}},
  \end{equation}
- where $\omega_k^{\mathrm{hol}} = \omega_k$ are the
- normalized holomorphic differentials of~$\Sigma_g$, and
- $\partial_{t_k}$ differentiates with respect to the
- $A$-cycle period parameters $t_k = \oint_{A_k}\omega_k$.
+ where $\Theta_{\mathrm{KS}}$ is the connection one-form obtained by
+ composing the Kodaira--Spencer map
+ $T_{\overline{\cM}_g}\to R^1\pi_*T_{\Sigma_g}$ with cup product on
+ the variation of Hodge structure. In a local Torelli chart this
+ connection is written in the coordinates
+ $\Omega_{\alpha\beta}$ of the period matrix. The normalized
+ holomorphic differentials $\omega_k$ are a moving frame of the
+ Hodge bundle, not one-forms on the base, and the normalized
+ $A$-periods are fixed by
+ $\oint_{A_l}\omega_k=\delta_{kl}$.
  This connection is \emph{flat}:
  $(\nabla^{\mathrm{GM}})^2 = 0$,
  by Griffiths transversality applied to the variation of
  Hodge structure on~$H^1(\Sigma_g, \C)$.
 
 \item \emph{Chain-level uncurving identity.}\;
- The total corrected differential
- $\Dg{g} = \dfib + \nabla^{\mathrm{GM}}$
+ The total corrected differential on the relative de~Rham bar complex
+ \[
+ \Dg{g}=\dfib+d_{\mathrm{per}}^{(g)}
+ +\nabla_{\mathrm{KS}}^{\mathrm{GM}}
+ \]
  satisfies $\Dg{g}^{\,2} = 0$ as a chain-level identity:
  \begin{equation}\label{eq:chain-uncurving}
  \Dg{g}^{\,2}
  \;=\;
  \dfib^{\,2}
- + \{\dfib, \nabla^{\mathrm{GM}}\}
- + (\nabla^{\mathrm{GM}})^2
+ + \{\dfib, d_{\mathrm{per}}^{(g)}
+      +\nabla_{\mathrm{KS}}^{\mathrm{GM}}\}
+ + (d_{\mathrm{per}}^{(g)}
+      +\nabla_{\mathrm{KS}}^{\mathrm{GM}})^2
  \;=\; 0,
  \end{equation}
  where each summand is an explicit endomorphism of the total bar
@@ -430,18 +474,23 @@ by the Gauss--Manin connection on the Hodge bundle.
  $\overline{\cM}_g$. The three terms cancel:
  $\dfib^{\,2} = \kappa(\cA) \cdot \omega_g^{\mathrm{Ar}}$
  \textup{(}fiberwise curvature\textup{)},
- $\{\dfib, \nabla^{\mathrm{GM}}\}
+ $\{\dfib, d_{\mathrm{per}}^{(g)}
+      +\nabla_{\mathrm{KS}}^{\mathrm{GM}}\}
  = -\kappa(\cA) \cdot \omega_g^{\mathrm{Ar}}$
- \textup{(}the Lagrangian property of the $A$-cycle subspace
- cancels the Arakelov form against the period correction\textup{)},
- and $(\nabla^{\mathrm{GM}})^2 = 0$ \textup{(}flatness\textup{)}.
+ \textup{(}the Riemann bilinear relation and the Lagrangian
+ normalization of the $A$-cycle subspace cancel the Arakelov form
+ against the period correction\textup{)}, and
+ $(d_{\mathrm{per}}^{(g)}+\nabla_{\mathrm{KS}}^{\mathrm{GM}})^2=0$
+ \textup{(}flatness of the corrected relative de~Rham connection\textup{)}.
 
 \item \emph{The uncurving is not a gauge equivalence.}\;
  The passage $\dfib \leadsto \Dg{g}$ is \emph{not} a gauge
  transformation of the curved bar complex: there is no element
  $\alpha$ with $\Dg{g} = e^{\alpha}\,\dfib\,e^{-\alpha}$.
- Rather, $\nabla^{\mathrm{GM}}$ is an independent geometric datum
- (the connection on the base $\overline{\cM}_g$), and the
+ Rather, $d_{\mathrm{per}}^{(g)}
+ +\nabla_{\mathrm{KS}}^{\mathrm{GM}}$ is independent geometric datum
+ (the period correction on the fiber together with the connection on
+ the base $\overline{\cM}_g$), and the
  uncurving identity~\eqref{eq:chain-uncurving} expresses the
  interplay between fiber curvature and base flatness.
  The resulting flat complex $(\barB^{(g)}(\cA), \Dg{g})$ lives in
@@ -458,16 +507,19 @@ by the Gauss--Manin connection on the Hodge bundle.
 (i)~The Gauss--Manin connection on the cohomology local system
 $R^q\pi_*\C$ is constructed from the Leray filtration of
 $\Omega^*_{\overline{\cC}_g/\overline{\cM}_g}$.
-The identification of the connection 1-forms with the
-holomorphic differentials $\omega_k$ follows from the
-normalization $\oint_{A_l}\omega_k = \delta_{kl}$: the
-$A$-cycle periods are flat coordinates for $\nabla^{\mathrm{GM}}$.
-Flatness $(\nabla^{\mathrm{GM}})^2 = 0$ is the Gauss--Manin
-theorem (Griffiths~\cite{Griffiths68}).
+The connection is computed in a local Torelli chart by
+differentiating the period matrix and projecting the variation of the
+normalized basis $\omega_k$ back to the Hodge filtration. The
+normalization $\oint_{A_l}\omega_k=\delta_{kl}$ fixes the symplectic
+gauge; it is not a system of flat deformation coordinates. Flatness
+$(\nabla^{\mathrm{GM}})^2 = 0$ is the Gauss--Manin theorem
+(Griffiths~\cite{Griffiths68}).
 
-(ii)~The anticommutator $\{\dfib, \nabla^{\mathrm{GM}}\}$
+(ii)~The anticommutator
+$\{\dfib, d_{\mathrm{per}}^{(g)}
+ +\nabla_{\mathrm{KS}}^{\mathrm{GM}}\}$
 computes the obstruction to commutativity of the fiberwise bar
-differential with the base connection. The computation
+differential with the period-corrected base connection. The computation
 reduces to the identity
 $\bar\partial \circ \partial\!\log E
 + \partial \circ \bar\partial\!\log E
@@ -476,10 +528,12 @@ $\bar\partial \circ \partial\!\log E
 The Lagrangian property states that the $A$-cycle subspace
 $\mathrm{span}(A_1, \ldots, A_g) \subset H_1(\Sigma_g, \Z)$
 is Lagrangian for the intersection form; this ensures the
-period correction $\sum t_k d_k$ compensates exactly the
-non-holomorphic part of the propagator that produces the
-Arnold defect. The chain-level cancellation
-$\dfib^{\,2} + \{\dfib, \nabla^{\mathrm{GM}}\} = 0$
+period correction $d_{\mathrm{per}}^{(g)}$ compensates exactly the
+non-holomorphic part of the propagator that produces the Arnold
+defect, while $\nabla_{\mathrm{KS}}^{\mathrm{GM}}$ transports the
+zero modes along the base. The chain-level cancellation
+$\dfib^{\,2} + \{\dfib, d_{\mathrm{per}}^{(g)}
+ +\nabla_{\mathrm{KS}}^{\mathrm{GM}}\} = 0$
 is therefore equivalent to the Fay trisecant identity applied
 to the holomorphic propagator $\partial_z\!\log E$
 (Theorem~\ref{thm:quantum-diff-squares-zero}).
@@ -550,9 +604,10 @@ R\Gamma(\overline{\mathcal{M}}_g, \mathcal{Z}_{\cA})
 \;\xrightarrow{\;\mathrm{tr}\;}
 R\Gamma(\overline{\mathcal{M}}_g, \mathbb{Q}).
 \]
-Fiber-period parameters live in $H^1(\Sigma_g,\C)$, not on moduli
+Fiber period data live in the variation of $H^1(\Sigma_g,\C)$, not
+as cohomology classes on moduli
 ($H^1(\mathcal{M}_g,\mathbb{Q})=0$ for $g\geq 2$ by Harer).
-They become moduli classes via the Kodaira--Spencer map
+They enter moduli through the Kodaira--Spencer map
 (Theorem~\ref{thm:kodaira-spencer-chiral-complete}).
 \end{remark}
 
@@ -607,15 +662,16 @@ not $K^{+1/2}$\textup{)}.
  \[
  \Dg{g}
  \;=\;
- \dzero
- + \sum_{k=1}^{g} t_k\,d_k,
- \qquad
- t_k \;=\; \oint_{A_k}\omega_k,
+ \dfib+d_{\mathrm{per}}^{(g)}
+ +\nabla_{\mathrm{KS}}^{\mathrm{GM}}
  \]
  satisfies $\Dg{g}^{\,2} = 0$
  \textup{(}Theorem~\textup{\ref{thm:quantum-diff-squares-zero})}.
- The correction terms $t_k d_k$ cancel the curvature
- via the Lagrangian property of the
+ The period operator $d_{\mathrm{per}}^{(g)}$ is built from the
+ Abel--Jacobi and period-matrix terms in the Arakelov-normalized
+ propagator, and the Gauss--Manin term transports the Hodge zero
+ modes. Together they cancel the curvature via the Riemann bilinear
+ relation and the Lagrangian normalization of the
  $A$-cycle subspace in $H_1(\Sigma_g,\mathbb{Z})$.
 
 \item \emph{Hodge bundle structure.}\;
@@ -753,7 +809,7 @@ $\Sigma_g$ of genus~$g \geq 1$.
  \det\!\Bigl(\frac{i}{2\pi}\Theta_{\mathbb{E}}\Bigr)
  \;=\;
  \kappa(\cA)\,\lambda_g
- \qquad \textup{(}UNIFORM-WEIGHT\textup{}),
+ \qquad \textup{(}UNIFORM-WEIGHT, SCALAR-DIAGONAL\textup{}),
  \]
  and at genus~$1$ the same formula is unconditional for all families.
  The chain-level datum $\omega_g^{\mathrm{Ar}}$ determines
@@ -827,8 +883,8 @@ the Euler-form polynomial to the geometric factor:
 \[
 \mathrm{obs}_g(\cA)
 \;=\;
-\kappa(\cA)\,\lambda_g
-\qquad \textup{(}UNIFORM-WEIGHT\textup{}).
+ \kappa(\cA)\,\lambda_g
+ \qquad \textup{(}UNIFORM-WEIGHT, SCALAR-DIAGONAL\textup{}).
 \]
 At genus~$1$ the same formula is unconditional for all families.
 
@@ -861,11 +917,17 @@ D^{(g)}_\cA \;\Theta_\cA^{(g)}
 \tfrac{1}{2}[\Theta_\cA^{(g_1)}, \Theta_\cA^{(g_2)}]
 \;=\; 0,
 \]
-where $D^{(g)}_\cA := d_0 + \kappa(\cA)\,\omega_g$ is the corrected
-curved fiber component incorporating the genus-$g$ curvature. At
-$g = 0$, this is the tree-level MC equation. At $g = 1$, the class
-$\kappa\,\omega_1$ is the elliptic Arakelov defect; the strict
-square-zero differential is the total period-corrected
+where $D^{(g)}_\cA$ is the genus-$g$ fiber covariant component. Its
+scalar curvature is the degree-$2$ endomorphism
+\[
+\bigl(D^{(g)}_\cA\bigr)^2_{\mathrm{scalar}}
+=\kappa(\cA)\,\omega_g^{\mathrm{Ar}}\cdot\mathrm{id};
+\]
+this curvature form is not an added degree-$1$ summand of the
+differential. At $g = 0$, the curvature term vanishes and one recovers
+the tree-level MC equation. At $g = 1$, the class
+$\kappa\,\omega_1^{\mathrm{Ar}}$ is the elliptic Arakelov defect; the
+strict square-zero differential is the total period-corrected
 $\Dg{g}$ of Convention~\ref{conv:higher-genus-differentials}.
 \end{proposition}
 
@@ -890,8 +952,12 @@ through the corrected differential $D^{(g)}_\cA$
 \index{modular functor!genus extension level}
 The genus extension of the bar complex admits a five-level
 hierarchy of successively stronger structural conditions.
-Each level is strictly contained in the next, and the standard
-landscape satisfies all five.
+The first four levels form the algebraic-to-analytic spine; the
+fifth is a modular-functor condition and is not comparable with the
+Koszul level by containment. Universal standard families satisfy the
+finite-window hypotheses through the analytic sewing level, while
+only their $C_2$-cofinite simple quotients or rational specialisations
+reach the modular-functor level.
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Algebraic \textup{(}bar $D^2=0$ in each genus\textup{)}.}\;
  For \emph{any} chiral algebra $\cA$, the bar differential satisfies
@@ -935,7 +1001,7 @@ landscape satisfies all five.
  \textup{(}Theorem~\textup{\ref{thm:higher-genus-inversion})}.
  On the Koszul locus, the bar and cobar functors are
  inverse equivalences: the genus-$g$ bar complex is a
- resolution of~$\cA$, not merely a coderived model.
+ chain-level resolution of~$\cA$ in the ordinary derived category.
 
 \item \emph{Analytic \textup{(}convergent partition
  functions\textup{)}.}\;
@@ -1149,7 +1215,7 @@ bundle multiplied by the scalar coefficient:
 \kappa(\cA)\,c_g(\mathbb{E})
 \;=\;
 \kappa(\cA)\,\lambda_g
-\qquad \textup{(}UNIFORM-WEIGHT\textup{}).
+\qquad \textup{(}UNIFORM-WEIGHT, SCALAR-DIAGONAL\textup{}).
 \]
 No clutching-uniqueness step is needed: the geometric factor is
 the Euler form of $\mathbb{E}$ itself
@@ -1551,13 +1617,33 @@ Each corresponds to a codimension $(n-2)$ stratum of $\overline{C}_n(X)$. The re
 The geometric cobar construction is factorization homology with reversed orientation:
 \[\Omega^{\text{geom}}(\mathcal{C}) = \int_{-C_*(X)} \mathcal{C}\]
 where $-C_*(X)$ denotes configuration spaces with opposite orientation.
-Concretely, the bar complex uses logarithmic forms $\eta_{ij} = d\log(z_i - z_j)$, while the cobar complex uses distributions $\delta(z_i - z_j)$; these are Verdier duals, so orientation reversal realizes NAP duality $\int_M \mathbb{D}(A) \simeq \mathbb{D}(\int_{-M} A)$.
+Concretely, the bar complex is represented by logarithmic
+de~Rham forms on the Fulton--MacPherson compactification, while the
+cobar complex is represented after Verdier duality by currents with
+controlled singular support along the collision strata. The slogan
+``logarithmic form versus delta distribution'' means the normalized
+residue-current pairing on a boundary divisor; it is not an
+unshifted equality of complexes of smooth forms. Orientation reversal
+realizes non-abelian Poincar\'e duality in the form
+$\int_M \mathbb{D}(A) \simeq \mathbb{D}(\int_{-M} A)$ after the
+Verdier shift and dualizing complex have been included.
 \end{definition}
 
 \begin{theorem}[Verdier duality = NAP duality {\cite{AF15,KS90}}; \ClaimStatusProvedElsewhere]\label{thm:verdier-NAP}
-On configuration spaces $\overline{C}_n(X)$, Verdier duality:
-\[\mathbb{D}: \Omega^*_{\log}(\overline{C}_n(X)) \xrightarrow{\sim} \Omega^{d-*}_{\text{dist}}(C_n(X))\]
-is precisely the non-abelian Poincaré duality isomorphism.
+Let $j\colon C_n(X)\hookrightarrow \overline C_n(X)$ be the open
+ordered configuration locus inside the Fulton--MacPherson
+compactification, and let $D=\overline C_n(X)\setminus C_n(X)$ be
+the normal-crossings boundary. Verdier duality gives
+\[
+\mathbb{D}_{\overline C_n(X)}(j_!\mathbb{C}_{C_n(X)})
+\;\simeq\;
+Rj_*\omega_{C_n(X)}[2\dim_\C C_n(X)] .
+\]
+Under the de~Rham realization, logarithmic forms representing
+$Rj_*\mathbb C_{C_n(X)}$ pair with relative currents representing
+$\mathbb{D}(j_!\mathbb C_{C_n(X)})$ by the normalized residue
+functional along the strata of~$D$. This Verdier pairing is the
+configuration-space incarnation of non-abelian Poincar\'e duality.
 
 The exchange between logarithmic forms (bar) and distributions (cobar) is the geometric implementation of:
 \[\int_X \mathcal{A} \xleftrightarrow{\mathbb{D}} \int_{-X} \mathcal{A}^!\]
@@ -1565,31 +1651,70 @@ The exchange between logarithmic forms (bar) and distributions (cobar) is the ge
 
 \begin{proof}
 By Verdier duality for constructible sheaves on $\overline{C}_n(X)$ (see~\cite{KS90}):
-\[\mathbb{D}(\mathcal{F}) = \mathcal{RHom}(\mathcal{F}, \omega_{\overline{C}_n(X)}[d])\]
-Applied to the sheaf $j_!\mathbb{C}_{C_n(X)}$ where $j: C_n(X) \hookrightarrow \overline{C}_n(X)$ is the open inclusion, this exchanges $j_!$ and $Rj_*$ (Theorem~\ref{thm:verdier-config}), identifying logarithmic forms on the compactification with distributional forms on the open configuration space. The perfect pairing $\langle \eta_{ij}, \delta(z_i - z_j) \rangle = 1$ realizes the NAP isomorphism at the level of differential forms, since residues (bar operations) and delta functions (cobar operations) are Verdier duals.
+\[\mathbb{D}(\mathcal{F}) =
+\mathcal{RHom}(\mathcal{F}, \omega_{\overline{C}_n(X)}
+[2\dim_\C \overline C_n(X)]) .\]
+Applied to $j_!\mathbb{C}_{C_n(X)}$, this exchanges extension by
+zero with the direct image of the dualizing complex on the open
+configuration space (Theorem~\ref{thm:verdier-config}). The
+logarithmic de~Rham complex on the compactification resolves
+$Rj_*\mathbb C_{C_n(X)}$, while the dual object is represented by
+currents with prescribed boundary singularities. For a collision
+divisor $D_{ij}$ and a small positively oriented normal circle
+$\gamma_{ij}$, the normalization is
+\[
+\left\langle d\log(z_i-z_j), [D_{ij}]\right\rangle_{\mathrm{Verdier}}
+\;:=\;
+\frac{1}{2\pi i}\int_{\gamma_{ij}}d\log(z_i-z_j)
+\;=\;1 .
+\]
+Thus residue extraction and current insertion are adjoint after the
+Verdier shift. Factorization homology over the oppositely oriented
+configuration chains is the non-abelian Poincar\'e-dual form of this
+adjunction.
 \end{proof}
 
 \subsubsection{Distributions vs. differential forms: the dual picture}
 
-While the bar complex uses differential forms on compactified configuration spaces, the cobar complex uses distributions on open configuration spaces. This duality is the distributional manifestation of the intrinsic Verdier-dual definition (Definition~\ref{def:geom-cobar-intrinsic}); see Theorem~\ref{thm:cobar-distributional-model} for the precise identification.
+While the bar complex uses logarithmic differential forms on
+compactified configuration spaces, the cobar complex is modeled by
+Verdier-dual currents on the open configuration space with boundary
+singular support prescribed by the collision strata. This
+distributional model is a de~Rham representative of the intrinsic
+Verdier-dual definition (Definition~\ref{def:geom-cobar-intrinsic});
+see Theorem~\ref{thm:cobar-distributional-model} for the precise
+identification.
 
 \begin{definition}[Geometric cobar complex]\label{def:geom-cobar-precise}
 For a conilpotent chiral coalgebra $\mathcal{C}$ (valued in holonomic $\mathcal{D}$-modules), the distributional model of the geometric cobar complex is:
 \[\Omega^{\text{ch}}_{p,q}(\mathcal{C}) = \text{Hom}_{\mathcal{D}}\left(\mathcal{C}^{\otimes(p+1)}, \mathcal{D}_{C_{p+1}(X)} \otimes \Omega^q_{\text{dist}}\right)\]
-where $C_{p+1}(X)$ is the open configuration space, $\Omega^q_{\text{dist}}$ are distributional $q$-forms with singularities along diagonals, and the differential inserts delta functions rather than extracting residues.
+where $C_{p+1}(X)$ is the open configuration space and
+$\Omega^q_{\text{dist}}$ denotes distributional $q$-forms whose
+Verdier singular support is controlled by the collision diagonals.
+The differential inserts the boundary current dual to a collision
+divisor rather than extracting its residue.
 \end{definition}
 
-\begin{example}[Delta function vs.\ residue]
+\begin{example}[Boundary current vs.\ residue]
 \emph{Bar operation.} Extract residue when points collide
 \[m_2^{\text{bar}}(a \otimes b) = \text{Res}_{z_1=z_2}\left[\frac{a(z_1)b(z_2)}{z_1-z_2}dz_1\right]\]
 
-\emph{Cobar operation.} Insert delta function to force collision
-\[n_2^{\text{cobar}}(K) = K(z_1,z_2) \cdot \delta(z_1-z_2)\]
+\emph{Cobar operation.} Insert the Verdier-dual boundary current,
+which in a local coordinate is represented by the delta-current
+along the diagonal:
+\[n_2^{\text{cobar}}(K) = K(z_1,z_2) \cdot [D_{12}].\]
 
-The pairing:
-\[\langle \eta_{12}, \delta(z_1-z_2) \rangle = \int \frac{dz_1-dz_2}{z_1-z_2} \cdot \delta(z_1-z_2) = 1\]
+The normalized residue-current pairing:
+\[
+\langle \eta_{12}, [D_{12}] \rangle_{\mathrm{Verdier}}
+=
+\frac{1}{2\pi i}
+\int_{\gamma_{12}}\frac{d(z_1-z_2)}{z_1-z_2}
+=1 .
+\]
 
-This is Verdier duality: residues and delta functions are perfect duals.
+This is Verdier duality in de~Rham coordinates: residues and boundary
+currents are perfect duals after the dualizing shift.
 \end{example}
 
 \subsubsection{\texorpdfstring{Complete $A_\infty$ structure on cobar}{Complete A-infinity structure on cobar}}
@@ -1601,7 +1726,7 @@ The cobar complex carries a dual $A_\infty$ structure with operations:
 \begin{enumerate}
 \item \emph{Operations:}
 \begin{align}
-n_1 &= d_{\mathrm{cobar}} \quad \text{(inserting delta functions)} \\
+n_1 &= d_{\mathrm{cobar}} \quad \text{(inserting boundary currents)} \\
 n_2(K_1 \otimes K_2) &= K_1 * K_2 \quad \text{(convolution product)} \\
 n_3(K_1 \otimes K_2 \otimes K_3) &= \text{triple propagator insertion}
 \end{align}
@@ -1630,7 +1755,12 @@ The cobar differential $d_\Omega = n_1$ is determined by the coproduct~$\Delta$ 
 \[
 n_1(s^{-1}c) = -\sum (-1)^{|c'|}\, s^{-1}c' \otimes s^{-1}c''
 \]
-where $\bar{\Delta}(c) = \sum c' \otimes c''$ is the reduced coproduct. Geometrically, this inserts a delta function at the collision diagonal, splitting one configuration into two sub-configurations.
+where $\bar{\Delta}(c) = \sum c' \otimes c''$ is the reduced
+coproduct. Geometrically, this inserts the Verdier-dual current of
+the collision divisor, splitting one configuration into two
+sub-configurations. In local analytic coordinates this current is
+written as a delta-current, but the invariant object is the
+Verdier-dual current of the divisor.
 
 \emph{Verification of $n_2$.}
 The binary operation $n_2(K_1 \otimes K_2) = K_1 * K_2$ is the convolution product:
@@ -1645,8 +1775,8 @@ The higher operations arise from the non-coassociativity of~$\mathcal{C}$ (when 
 n_k(K_1, \ldots, K_k) = \int_{\partial \overline{C}_k(X)} K_1(z_1) \cdots K_k(z_k) \cdot P_k(z_1, \ldots, z_k)
 \]
 where $P_k$ is the $k$-point propagator obtained by iterating the basic
-two-point propagator $P_2(z_1, z_2) = \delta(z_1 - z_2)$ over all
-tree-level Feynman graphs with $k$ external legs.
+two-point propagator $P_2(z_1, z_2) = [D_{12}]$ over all tree-level
+Feynman graphs with $k$ external legs.
 
 \emph{$A_\infty$ relations.}
 Define the total codifferential $D = \sum_{k \geq 1} n_k$ as a
@@ -1668,7 +1798,7 @@ realization, this corresponds to Stokes' theorem on the boundary
 strata of $\overline{C}_n(X)$.
 
 \emph{Duality with bar.}
-The Verdier pairing $\langle m_k^{\mathrm{bar}}, n_k^{\mathrm{cobar}} \rangle$ evaluates to~$1$ by construction: the bar operations~$m_k$ (residue extraction of logarithmic forms) and the cobar operations~$n_k$ (delta-function insertion) are dual under the residue-distribution pairing on $\overline{C}_k(X)$, as established in Theorem~\ref{thm:verdier-duality-operations}.
+The Verdier pairing $\langle m_k^{\mathrm{bar}}, n_k^{\mathrm{cobar}} \rangle$ evaluates to~$1$ by construction after residue normalization: the bar operations~$m_k$ (residue extraction of logarithmic forms) and the cobar operations~$n_k$ (current insertion) are dual under the Verdier residue pairing on $\overline{C}_k(X)$, as established in Theorem~\ref{thm:verdier-duality-operations}.
 \end{proof}
 
 \begin{example}[Linear coalgebra]
@@ -1856,8 +1986,8 @@ The bar and cobar operations are related by perfect duality:
 \hline
 \textbf{Bar Side} & \textbf{Cobar Side} & \textbf{Pairing} \\
 \hline
-Logarithmic form $\eta_{ij}$ & Delta function $\delta_{ij}$ & $\langle \eta_{ij}, \delta_{ij} \rangle = 1$ \\
-Residue extraction & Distribution insertion & Residue-distribution duality \\
+Logarithmic form $\eta_{ij}$ & Boundary current $[D_{ij}]$ & normalized residue $=1$ \\
+Residue extraction & Current insertion & Verdier adjunction \\
 Compactification $\overline{C}_n$ & Open space $C_n$ & Boundary-bulk correspondence \\
 Product $m_2$ & Coproduct $\Delta_2$ & $\langle m_2, \Delta_2 \rangle = \mathrm{id}$ \\
 Associator $m_3$ & Coassociator $\Delta_3$ & $\langle m_3, \Delta_3 \rangle = \Phi$ \\
@@ -1869,24 +1999,36 @@ Associator $m_3$ & Coassociator $\Delta_3$ & $\langle m_3, \Delta_3 \rangle = \P
 \begin{proof}
 The duality is a consequence of Verdier duality on the Fulton--MacPherson compactification $\overline{C}_n(X)$.
 
-\emph{Row 1: $\eta_{ij} \leftrightarrow \delta_{ij}$.}
-The logarithmic form $\eta_{ij} = d\log(z_i - z_j)$ is a section of $\Omega^1_{\log}(\overline{C}_n(X))$ with a simple pole along the collision divisor $D_{ij} = \{z_i = z_j\}$. The delta function $\delta_{ij} = \delta(z_i - z_j)$ is the distributional current dual to~$D_{ij}$. The Verdier pairing is:
+\emph{Row 1: $\eta_{ij} \leftrightarrow [D_{ij}]$.}
+The logarithmic form $\eta_{ij} = d\log(z_i - z_j)$ is a section of $\Omega^1_{\log}(\overline{C}_n(X))$ with a simple pole along the collision divisor $D_{ij} = \{z_i = z_j\}$. The Verdier-dual object is the relative current carried by~$D_{ij}$, with the dualizing shift already included. The Verdier pairing is the normalized residue:
 \[
-\langle \eta_{ij}, \delta_{ij} \rangle = \int_{\overline{C}_n(X)} \eta_{ij} \wedge \delta_{ij} = \mathrm{Res}_{z_i = z_j}\!\left[\frac{dz_i}{z_i - z_j}\right] = 1.
+\langle \eta_{ij}, [D_{ij}] \rangle_{\mathrm{Verdier}}
+=
+\frac{1}{2\pi i}
+\int_{\gamma_{ij}}\frac{d(z_i-z_j)}{z_i-z_j}
+=1 .
 \]
 
-\emph{Row 2: Residue $\leftrightarrow$ distribution.}
-More generally, the bar differential $d_{\bar{B}} = \sum_{i<j} \mathrm{Res}_{z_i = z_j}$ extracts residues at collision divisors, while the cobar differential $d_\Omega$ inserts delta-function distributions at coincident points. These are dual operations: for $\omega \in \bar{B}^k$ and $K \in \Omega^k$,
+\emph{Row 2: Residue $\leftrightarrow$ current insertion.}
+More generally, the bar differential $d_{\bar{B}} = \sum_{i<j} \mathrm{Res}_{z_i = z_j}$ extracts residues at collision divisors, while the cobar differential $d_\Omega$ inserts the corresponding Verdier-dual boundary currents. These are dual operations: for $\omega \in \bar{B}^k$ and $K \in \Omega^k$,
 \[
 \langle d_{\bar{B}}(\omega), K \rangle = \langle \omega, d_\Omega(K) \rangle
 \]
-by the adjointness of residue and distribution (integration by parts on~$\overline{C}_n(X)$).
+by the adjointness of residue and relative current insertion
+(Stokes' formula on~$\overline{C}_n(X)$ with logarithmic boundary).
 
 \emph{Row 3: $\overline{C}_n \leftrightarrow C_n$.}
-The bar complex lives on the compactification~$\overline{C}_n(X)$ (logarithmic forms extend to the boundary), while its Verdier dual lives on the open configuration space~$C_n(X)$ (distributions are supported away from diagonals). Verdier duality exchanges sheaves on~$\overline{C}_n$ with cosheaves on~$C_n$: the boundary strata of~$\overline{C}_n$ (where points collide) encode the bar differential, while the bulk of~$C_n$ (where points are separated) carries the dual algebra structure of~$\cA^!_\infty$.
+The bar complex lives on the compactification~$\overline{C}_n(X)$
+(logarithmic forms extend to the boundary), while its Verdier dual is
+computed from the open inclusion
+$j\colon C_n(X)\hookrightarrow\overline C_n(X)$ by
+$\mathbb D(j_!\mathbb C_{C_n})\simeq Rj_*\omega_{C_n}[2n]$.
+The boundary strata of~$\overline{C}_n$ encode the bar differential;
+the Verdier-dual currents encode the coalgebra structure of
+$\cA^!_\infty$.
 
 \emph{Row 4: $m_2 \leftrightarrow \Delta_2$.}
-The binary product $m_2(a \otimes b) = \mathrm{Res}_{z_1=z_2}[a(z_1) b(z_2) \cdot \eta_{12}]$ is dual to the binary coproduct $\Delta_2(c) = c(z_1) \cdot \delta(z_1 - z_2)$ via:
+The binary product $m_2(a \otimes b) = \mathrm{Res}_{z_1=z_2}[a(z_1) b(z_2) \cdot \eta_{12}]$ is dual to the binary coproduct $\Delta_2(c) = c(z_1) \cdot [D_{12}]$ via:
 \[
 \langle m_2(a \otimes b), c \rangle = \mathrm{Res}_{z_1=z_2}\!\left[\frac{a(z_1) b(z_2) c(z_1)}{z_1 - z_2}\right] = \langle a \otimes b, \Delta_2(c) \rangle.
 \]
@@ -1902,11 +2044,15 @@ For the product/coproduct duality:
 \emph{Bar side.} Product via residue
 \[m_2(a \otimes b) = \text{Res}_{z_1=z_2}\left[\frac{a(z_1)b(z_2)}{z_1-z_2}dz_1\right]\]
 
-\emph{Cobar side.} Coproduct via delta function
-\[\Delta_2(c) = \int c(w) \delta(z_1-w)\delta(z_2-w) dw = c(z_1)\delta(z_1-z_2)\]
+\emph{Cobar side.} Coproduct via the diagonal current
+\[\Delta_2(c) = \int c(w) [z_1=w]\,[z_2=w]\,dw = c(z_1)[D_{12}]\]
 
 \emph{Pairing.}
-\[\langle m_2(a \otimes b), \Delta_2(c) \rangle = \text{Res}_{z_1=z_2}\left[\frac{a(z_1)b(z_2)c(z_1)}{z_1-z_2}\delta(z_1-z_2)\right] = (abc)(0)\]
+\[\langle m_2(a \otimes b), \Delta_2(c) \rangle
+=
+\frac{1}{2\pi i}\int_{\gamma_{12}}
+\frac{a(z_1)b(z_2)c(z_1)}{z_1-z_2}\,d(z_1-z_2)
+=(abc)(0).\]
 
 This recovers the structure constants of the chiral algebra.
 \end{example}
@@ -2019,16 +2165,19 @@ homotopy chiral algebra} structure: a curved
 $\mathrm{Ch}_\infty$-algebra in the sense of
 Malikov--Schechtman~\textup{\cite{MS24}}, with:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item Curvature element $m_0^{(g)} = \kappa(\cA) \cdot \omega_g$,
- where $\omega_g$ is the canonical $(1,1)$-class on the genus-$g$
- surface.
+\item Curvature element
+ $m_0^{(g)} = \kappa(\cA) \cdot
+ \omega_g^{\mathrm{Ar}}\cdot\mathbf{1}$,
+ where $\omega_g^{\mathrm{Ar}}$ is the Arakelov $(1,1)$-form on the
+ fixed genus-$g$ surface.
 \item The failure of strict nilpotence:
  $m_1^{(g)} \circ m_1^{(g)} = [m_0^{(g)}, -]$, i.e.,
- $\dfib^{\,2} = \kappa(\cA) \cdot \omega_g$
+ $\dfib^{\,2} = \kappa(\cA) \cdot \omega_g^{\mathrm{Ar}}$
  \textup{(}Theorem~\textup{\ref{thm:arnold-quantum})}.
 \item The Eilenberg--Zilber homotopies $F_n^{(g)}$ acquire curvature
  corrections: $d F_n^{(g)} + F_n^{(g)} d = \text{boundary term}
- + \kappa(\cA) \cdot \omega_g \cdot (\text{lower-degree terms})$.
+ + \kappa(\cA) \cdot \omega_g^{\mathrm{Ar}}
+ \cdot (\text{lower-degree terms})$.
 \item At genus~$0$, the curvature vanishes and the structure reduces to
  the uncurved $\mathrm{Ch}_\infty$-algebra of
  Theorem~\textup{\ref{thm:cech-hca}}.
@@ -2038,7 +2187,8 @@ $A_\infty$-structure of Definition~\textup{\ref{def:curved-ainfty-hg}}.
 \end{theorem}
 
 \begin{proof}
-The curvature $\dfib^{\,2} = \kappa(\cA)\cdot\omega_g$ is proved
+The curvature
+$\dfib^{\,2} = \kappa(\cA)\cdot\omega_g^{\mathrm{Ar}}$ is proved
 in Theorem~\ref{thm:arnold-quantum} via the genus-$g$ Arnold defect.
 The $\mathrm{Ch}_\infty$ structure follows by applying the
 Malikov--Schechtman construction~\cite[Theorem~3.1]{MS24} to the
@@ -2087,20 +2237,22 @@ A filtered chiral algebra has:
 with $\mu(F_i \otimes F_j) \subset F_{i+j}$ (compatibility), $\mathcal{A} = \bigcup_i F_i\mathcal{A}$ (exhaustive), and $\bigcap_i F_i\mathcal{A} = 0$ (separated).
 \end{definition}
 
-\begin{theorem}[Convergence for filtered algebras; \ClaimStatusConditional]
+\begin{theorem}[Convergence for completed filtered algebras; \ClaimStatusConditional]
 \label{thm:convergence-filtered}
 Let $\mathcal{A}$ be a complete filtered chiral algebra (i.e.,
 $\mathcal{A} = \varprojlim \mathcal{A}/F_k\mathcal{A}$) whose associated
 graded $\mathrm{gr}\,\mathcal{A}$ is a Koszul chiral algebra in the sense of
 Theorem~\ref{thm:chiral-koszul-duality}. Then:
 \begin{enumerate}
-\item The bar complex $\bar{B}(\mathcal{A})$ converges without completion:
-each $\bar{B}^n(\mathcal{A})$ is complete in the induced filtration
-\item Each cohomology class in $H^*(\bar{B}(\mathcal{A}))$ has a canonical
+\item The bar complex is formed with completed tensor products:
+each $\widehat{\bar{B}}^n(\mathcal{A})$ is complete in the induced
+filtration, and no completion beyond the given separated filtration is
+introduced.
+\item Each cohomology class in $H^*(\widehat{\bar{B}}(\mathcal{A}))$ has a canonical
 representative given by the unique closed element in the $\mathrm{gr}$-harmonic
 complement
-\item The cobar-bar adjunction
-$\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A})) \xrightarrow{\sim}
+\item The continuous cobar-bar adjunction
+$\Omega^{\mathrm{ch}}_{\mathrm{cont}}(\widehat{\bar{B}}^{\mathrm{ch}}(\mathcal{A})) \xrightarrow{\sim}
 \mathcal{A}$ is a filtered quasi-isomorphism
 \item Koszul duality extends: the Koszul dual $\mathcal{A}^!$ inherits a
 complete filtration with $\mathrm{gr}\,\mathcal{A}^! \cong
@@ -2117,10 +2269,12 @@ The filtration $F_\bullet \mathcal{A}$ induces a filtration on the bar complex:
 \textstyle\sum_{i_0 + \cdots + i_n \geq p}
 F_{i_0}\mathcal{A} \boxtimes \cdots \boxtimes F_{i_n}\mathcal{A}
 \otimes \Omega^n_{\log}\bigr)\]
-Since $\mathcal{A}$ is complete and separated, and the tensor product of
-complete filtered spaces is complete (by Proposition A.5 of Positselski
-\cite{Positselski11}), each $\bar{B}^n(\mathcal{A})$ is complete.
-This proves (1).
+Since $\mathcal{A}$ is complete and separated, and the completed
+tensor product of complete filtered spaces is complete (by
+Proposition A.5 of Positselski~\cite{Positselski11}), each
+$\widehat{\bar{B}}^n(\mathcal{A})$ is complete. This proves (1):
+convergence means completeness of the filtered inverse limit, not
+convergence of an ordinary infinite direct sum.
 
 \emph{Step 2: Associated graded comparison.}
 By naturality of the bar construction with respect to filtrations:
@@ -2149,29 +2303,31 @@ requires completeness ($\cA = \varprojlim \cA/F_k$, $\bigcap F_k = 0$)
 and exhaustiveness ($\bigcup F_k = \cA$), both of which hold by
 hypothesis. The convergence of the $\mathrm{gr}$ spectral sequence
 therefore implies convergence of the filtered one, and the cobar-bar
-map $\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\cA)) \to \cA$ is a
-filtered quasi-isomorphism. This proves (2) and (3).
+map
+$\Omega^{\mathrm{ch}}_{\mathrm{cont}}
+(\widehat{\bar{B}}^{\mathrm{ch}}(\cA)) \to \cA$
+is a filtered quasi-isomorphism. This proves (2) and (3).
 
 \emph{Step 5: Filtered Koszul dual.}
-The bar coalgebra $\bar{B}(\cA)$ carries a filtration-compatible
+The completed bar coalgebra $\widehat{\bar{B}}(\cA)$ carries a filtration-compatible
 coassociative coproduct $\Delta$ (from Step~1: the tensor-product
 filtration is compatible with the deconcatenation coproduct). The
 Koszul dual algebra is the continuous linear dual
-$\cA^! := \bar{B}(\cA)^\vee$ with the dual filtration
-$F_p(\cA^!) = (F_p\bar{B}(\cA))^\perp$; the chiral algebra structure
+$\cA^! := \widehat{\bar{B}}(\cA)^\vee_{\mathrm{cont}}$ with the dual filtration
+$F_p(\cA^!) = (F_p\widehat{\bar{B}}(\cA))^\perp$; the chiral algebra structure
 on~$\cA^!$ is the dual of the coalgebra structure: the product
 $\mu^! = \Delta^\vee$ and the higher operations
 $(m_k^!)^\vee = \Delta_k$ are obtained by dualizing the
 bar coproduct and its iterated versions. This is a chiral algebra
-(not merely a graded vector space) because the coalgebra axioms
+because the coalgebra axioms
 dualize: coassociativity of~$\Delta$ gives associativity of~$\mu^!$,
-and $d^2 = 0$ on $\bar{B}(\cA)$ gives $d^2 = 0$
+and $d^2 = 0$ on $\widehat{\bar{B}}(\cA)$ gives $d^2 = 0$
 on~$\cA^!$. By Step~2,
-$\mathrm{gr}\,\cA^! = \mathrm{gr}\,\bar{B}(\cA)^\vee
+$\mathrm{gr}\,\cA^! = \mathrm{gr}\,\widehat{\bar{B}}(\cA)^\vee_{\mathrm{cont}}
 = \bar{B}(\mathrm{gr}\,\cA)^\vee
 = (\mathrm{gr}\,\cA)^!$.
 Completeness of $\cA^!$ follows from completeness of
-$\bar{B}(\cA)$ (Positselski~\cite[\S A.1]{Positselski11}).
+$\widehat{\bar{B}}(\cA)$ (Positselski~\cite[\S A.1]{Positselski11}).
 This proves (4).
 \end{proof}
 
@@ -2697,20 +2853,51 @@ The genus-$2$ bar-cobar complex realizes the formality theorem: the induced $\st
 \end{remark}
 
 \begin{remark}[Higher genera]
-At genus $g \geq 3$, modular forms of weight $\leq g(g+1)/2$ appear, with relations from gluing equations along boundary strata of $\overline{\mathcal{M}}_g$. All structures are determined by genus-$0$ data and modular invariance (Witten; see Remark~\ref{rem:parameter-source} for the precise reformulation in terms of the parameter-source chain).
+At genus $g \geq 3$, modular forms of weight $\leq g(g+1)/2$ appear,
+with relations from gluing equations along boundary strata of
+$\overline{\mathcal{M}}_g$. Genus-$0$ OPE data and modular covariance
+determine the scalar sewing constraints, but the stable-graph residues,
+period correction, and shadow obstruction tower are additional
+positive-genus data. See Remark~\ref{rem:parameter-source} for the
+precise reformulation in terms of the parameter-source chain.
 \end{remark}
 
-\begin{remark}[Separating-node factorisation of the Igusa cusp form]
+\begin{remark}[Separating-node scalar factorisation of the Igusa cusp form]
 \label{rem:hgf-siegel-sepnode}
-The genus-$2$ cocycle $c_2$ above is integrated against the Weil--Petersson measure on $\mathcal{M}_2$, and its modular content is controlled by the unscaled Igusa cusp form $\Phi_{10}^{\mathrm{un}}(Z)$ of weight~$10$ on $\mathbb{H}_2$. At a \emph{separating} node, where $\Sigma_2$ degenerates to $\Sigma_1 \cup \Sigma_1$ and the period matrix degenerates as $Z \to \mathrm{diag}(\tau, \rho)$, the cusp form factorises explicitly:
+The genus-$2$ cocycle $c_2$ above is integrated against the Weil--Petersson measure on $\mathcal{M}_2$, and its scalar modular target is the unscaled Igusa cusp form $\Phi_{10}^{\mathrm{un}}(Z)$ of weight~$10$ on $\mathbb{H}_2$. At a \emph{separating} node write
 \[
-\frac{1}{\Phi_{10}^{\mathrm{un}}(\mathrm{diag}(\tau, \rho))}
-\;=\;
-\frac{1}{\eta^{24}(\tau)} \cdot \frac{1}{\phi_{10,1}(\rho, 0)}
-\;+\;
-\text{Jacobi-form corrections},
+Z=\begin{pmatrix}\tau&z\\z&\rho\end{pmatrix},\qquad z\to0 .
 \]
-with $\eta^{24}$ the genus-$1$ modular discriminant and $\phi_{10,1}$ the Jacobi cusp form of weight $10$ and index $1$. This is the bi-based Ran-space datum $\mathrm{Ran}(E^{\mathrm{nod,sm}}_{24}) \rightrightarrows A_2$-bar at genus~$2$: the separating-degeneration term in the cocycle condition $d^{(2)} c_2 = 0$ (third bullet above) inherits a concrete modular factorisation from the Igusa form's behaviour at the boundary $\mathcal{M}_{1,1} \times \mathcal{M}_{1,1} \subset \partial \overline{\mathcal{M}}_2$. The averaging map $\mathrm{av} = \mathrm{Torelli}_{K3} \circ \mathrm{KugaSatake} \circ j_{\mathrm{Kodaira}}$ lifts this boundary factorisation to the K3 side, where it becomes the product decomposition of $1/\Phi_{10}^{\mathrm{un}}$ over $K3$-elliptic fibrations with $24$ nodal Kodaira fibres. See Part~\ref{part:physics-bridges} for the physics/K3 side.
+The scalar theorem is the leading boundary expansion
+\[
+\Phi_{10}^{\mathrm{un}}(Z)
+\;=\;
+C_{\mathrm{sep}}\,(2\pi i z)^2\,
+\eta^{24}(\tau)\eta^{24}(\rho)
+\;+\;
+O(z^4),
+\qquad C_{\mathrm{sep}}\in\mathbb C^\times,
+\]
+where the nonzero scalar $C_{\mathrm{sep}}$ is fixed by the chosen
+normalisation of $\Phi_{10}^{\mathrm{un}}$. Equivalently,
+\[
+\frac{1}{\Phi_{10}^{\mathrm{un}}(Z)}
+\;=\;
+\frac{C_{\mathrm{sep}}^{-1}}{(2\pi i z)^2\eta^{24}(\tau)\eta^{24}(\rho)}
+\;+\;
+\text{terms regular at }z=0.
+\]
+The Jacobi cusp form $\phi_{10,1}$ belongs to the Fourier--Jacobi
+expansion at a non-separating cusp; it is not a chain-level source at
+the diagonal $z=0$. Thus the separating-degeneration term in
+$d^{(2)}c_2=0$ inherits a scalar automorphic boundary factorisation
+from the Igusa form. A lift of this scalar boundary identity to a
+K3 Hall or CoHA source requires the finite Hall--Borcherds
+source-recognition datum of Definition~\ref{def:hgf-finite-hall-borcherds-source}.
+Without that datum the displayed expansion is a target identity on
+$\mathbb H_2$, not a product decomposition of a compact
+$K3$-elliptic Hall object with $24$ nodal Kodaira fibres. See
+Part~\ref{part:modular-tower-physics} for the physics/K3 side.
 \end{remark}
 
 \section{The fundamental theorem: genus-zero base case}
@@ -2796,7 +2983,7 @@ and this equivalence is functorial in families over
 $\overline{\mathcal{M}}_{g,n}$
 \textup{(}Theorem~\textup{\ref{thm:verdier-bar-cobar})}.
 The Fulton--MacPherson forms and residue operations of
-Parts~\ref{part:bar-complex}--\ref{part:physics-bridges} are one concrete chart on this Ran-space\slash Verdier phenomenon.
+Parts~\ref{part:foundations-beilinson-tower}--\ref{part:modular-tower-physics} are one concrete chart on this Ran-space\slash Verdier phenomenon.
 \end{theorem}
 
 \begin{proof}
@@ -3979,15 +4166,30 @@ independent of genus (Fay~\cite{Fay73}).
 \begin{definition}[Genus-stratified bar complex]
 \label{def:genus-stratified-bar}
 \label{def:geometric-bar-genus-stratified}
-For a chiral algebra $\mathcal{A}$ on a family of curves, the bar complex decomposes:
+For a chiral algebra $\mathcal{A}$ on a family of curves, the full
+all-genus bar object is the completion of the finite-window genus
+sum:
 \begin{equation}
-\bar{B}^{\text{full}}(\mathcal{A}) = \bigoplus_{g=0}^\infty \hbar^{2g-2+n} \bar{B}^{(g)}_n(\mathcal{A})
+\widehat{\bar{B}}^{\mathrm{full}}(\mathcal{A})
+\;=\;
+\prod_{g,n}^{\wedge}
+\hbar^{2g-2+n}\bar{B}^{(g)}_n(\mathcal{A})
+\;:=\;
+\varprojlim_N
+\bigoplus_{2g-2+n<N}
+\hbar^{2g-2+n}\bar{B}^{(g)}_n(\mathcal{A})
 \end{equation}
 where:
 \begin{itemize}
 \item $\bar{B}^{(g)}_n(\mathcal{A})$ is the genus-$g$ contribution with $n$ insertions
 \item $\hbar$ is the string coupling (genus expansion parameter)
 \item The factor $\hbar^{2g-2+n}$ is the topological weighting (Euler characteristic)
+\item The completion is the genus/window completion
+ $F^N=\prod_{2g-2+n\ge N}
+ \hbar^{2g-2+n}\bar{B}^{(g)}_n(\mathcal A)$.
+ The ordinary direct sum is the finite-support subobject; the
+ completed Maurer--Cartan element and inverse-limit bar-cobar
+ comparison live in $\widehat{\bar{B}}^{\mathrm{full}}(\mathcal A)$.
 \end{itemize}
 \end{definition}
 
@@ -4008,24 +4210,44 @@ $A = \sum_{g=0}^\infty g_s^{2g-2} A^{(g)}$, with each $A^{(g)}$ an integral over
 
 \subsection{The differential}
 
-\begin{theorem}[Genus-dependent differential; \ClaimStatusProvedHere]
+\begin{theorem}[Leray decomposition of the corrected differential; \ClaimStatusProvedHere]
 \label{thm:genus-differential}
 On a fixed genus-$g$ bar complex, the total corrected differential
-decomposes as:
-\begin{equation}
-\Dg{g} = d^{(0)} + d^{(1)} + d^{(2)} + \cdots
+is the Leray-filtered operator
+\begin{equation}\label{eq:leray-corrected-differential}
+\Dg{g}
+\;=\;
+\dfib+d_{\mathrm{per}}^{(g)}
++\nabla_{\mathrm{KS}}^{\mathrm{GM}}
++\sum_{r\geq 1}d_{\partial,r}^{(g)} .
 \end{equation}
-where, for a \emph{fixed} genus~$g$, the component $d^{(k)}$ shifts the Leray filtration
-on $\bar{B}^{(g)}(\mathcal{A})$ by $k$ base degrees
-(see Remark~\ref{rem:differential-notation} below).
-
-The strict nilpotence condition $\Dg{g}^{\,2} = 0$ decomposes into:
+Here $\dfib$ is the curved collision-residue operator on the
+fixed smooth fiber, $d_{\mathrm{per}}^{(g)}$ is the prime-form
+period correction, $\nabla_{\mathrm{KS}}^{\mathrm{GM}}$ is the
+Gauss--Manin/Kodaira--Spencer term on the base, and
+$d_{\partial,r}^{(g)}$ is the codimension-$r$ stable-boundary
+operator on the relative compactification. The strict nilpotence
+condition $\Dg{g}^{\,2}=0$ begins with the identities
 \begin{align}
-(d^{(0)})^2 &= 0 \quad \text{(genus 0 exactness)}\\
-\{d^{(0)}, d^{(1)}\} &= 0 \quad \text{(genus 1 compatibility)}\\
-\{d^{(0)}, d^{(2)}\} + (d^{(1)})^2 &= 0 \quad \text{(genus 2 relation)}\\
+\dfib^{\,2}
+&=\kappa(\cA)\,\omega_g^{\mathrm{Ar}}\cdot\mathrm{id},
+\label{eq:leray-fiber-curvature}\\
+\{\dfib,d_{\mathrm{per}}^{(g)}
++\nabla_{\mathrm{KS}}^{\mathrm{GM}}\}
+&=-\kappa(\cA)\,\omega_g^{\mathrm{Ar}}\cdot\mathrm{id},
+\label{eq:leray-period-cancels}\\
+(d_{\mathrm{per}}^{(g)}
++\nabla_{\mathrm{KS}}^{\mathrm{GM}})^2
++\{\dfib,\sum_{r\geq1}d_{\partial,r}^{(g)}\}
++\cdots
+&=0 ,
+\label{eq:leray-boundary-cancels}\\
 &\vdots
 \end{align}
+The equation $(d^{(0)})^2=0$ is reserved for the genus-$0$
+tangent-screen collision differential $\dzero$; it is not the
+positive-genus fiberwise statement, where the square is the
+curvature in~\eqref{eq:leray-fiber-curvature}.
 \end{theorem}
 
 \begin{proof}[Leray spectral sequence]
@@ -4041,20 +4263,43 @@ locus its fiber at $[\Sigma_g]$ is the fixed-curve compactification
 $\overline{C}_n(\Sigma_g)$; over the boundary it also carries the
 stable-curve degeneration faces.
 
-\emph{Step 1: Fiberwise differential.} On each fiber $\overline{C}_n(\Sigma_g)$, the differential $d^{(0)}$ is the genus-zero bar differential using residues at collision divisors. By Theorem~\ref{thm:bar-nilpotency-complete}, $(d^{(0)})^2 = 0$.
+\emph{Step 1: Fiberwise differential.} On a smooth fiber
+$\overline C_n(\Sigma_g)$, the collision-residue operator is
+$\dfib$. For $g=0$ it agrees with $\dzero$ and squares to zero by
+the Arnold relation. For $g\geq1$ the prime-form propagator has
+period defect, and Theorem~\ref{thm:quantum-arnold-relations}
+gives~\eqref{eq:leray-fiber-curvature}.
 
-\emph{Step 2: Base contributions.} The differential $d^{(1)}$ arises from the Gauss--Manin connection on the local system $R^q\pi_*(\mathcal{A}^{\boxtimes n} \otimes \Omega^*_{\log})$ over $\overline{\mathcal{M}}_g$. The compatibility $\{d^{(0)}, d^{(1)}\} = 0$ follows from flatness of the Gauss--Manin connection (Stokes' theorem applied fiberwise).
+\emph{Step 2: Period and base contributions.}
+The Arakelov period term in the propagator gives
+$d_{\mathrm{per}}^{(g)}$, while variation of the Hodge bundle over
+the base gives $\nabla_{\mathrm{KS}}^{\mathrm{GM}}$. The Riemann
+bilinear relation and Gauss--Manin flatness give
+\eqref{eq:leray-period-cancels}; this is the chain-level uncurving
+identity of Proposition~\ref{prop:gauss-manin-uncurving-chain}.
 
-\emph{Step 3: Higher corrections.} Terms $d^{(k)}$ for $k \geq 2$ arise from the Leray filtration: $d^{(k)}$ maps $F^p \to F^{p+k}$ in the filtration by base degree. The relations ensuring $\Dg{g}^{\,2} = 0$ (e.g., $\{d^{(0)}, d^{(2)}\} + (d^{(1)})^2 = 0$) follow from the associativity of the Leray filtration and the exactness of the total complex.
+\emph{Step 3: Stable-boundary contributions.}
+The operators $d_{\partial,r}^{(g)}$ are the components produced by
+codimension-$r$ stable-curve boundary faces in the relative
+Fulton--MacPherson compactification. Separating faces use the tensor
+product of the lower-genus bar complexes; non-separating faces use
+the trace over the sewn pair of half-edges. The oriented stable-graph
+boundary satisfies $\partial_{\mathcal G}^{\,2}=0$
+(Lemma~\ref{lem:stable-graph-d-squared}), and the Leray filtration
+records this as the remaining equations in
+\eqref{eq:leray-boundary-cancels}.
 \end{proof}
 
 \begin{remark}[Leray decomposition and Convention~\ref{conv:higher-genus-differentials}]
 \label{rem:differential-notation}
 \index{bar differential!notation}
-The superscript~$(k)$ in $\Dg{g}=d^{(0)}+d^{(1)}+\cdots$ denotes
-Leray filtration degree, not genus: $d^{(0)}=\dzero$ (fiberwise
-collisions), $d^{(1)}$ (Gauss--Manin), $d^{(k\geq 2)}$ (higher
-corrections). The total $\Dg{g}^{\,2}=0$
+The superscript notation $d^{(k)}$ denotes Leray filtration degree,
+not genus. In this chapter the safer notation is
+\eqref{eq:leray-corrected-differential}: $\dfib$ is the curved
+fiberwise collision operator, $d_{\mathrm{per}}^{(g)}$ and
+$\nabla_{\mathrm{KS}}^{\mathrm{GM}}$ are the period/base uncurving
+terms, and $d_{\partial,r}^{(g)}$ are stable-boundary operators.
+The total $\Dg{g}^{\,2}=0$
 (Theorem~\ref{thm:quantum-diff-squares-zero}), while the fiberwise
 $\dfib$ is curved: $\dfib^{\,2}=\kappa(\cA)\cdot\omega_g$.
 \end{remark}
@@ -4081,51 +4326,92 @@ For $\alpha \in \bar{B}^{(g)}_n(\mathcal{A})$ represented by:
 \alpha = \int_{\overline{C}_n(\Sigma_g)} \phi_1(p_1) \cdots \phi_n(p_n) \cdot f(p_1, \ldots, p_n; \Omega) \cdot \prod_{i<j} \eta_{ij}^{(g)}
 \end{equation}
 
-The total corrected differential decomposes by Leray degree
-\textup{(}Remark~\textup{\ref{rem:differential-notation})}:
+The total corrected differential decomposes as in
+Theorem~\ref{thm:genus-differential}:
 \[
-\Dg{g} = d^{(0)} + d^{(1)} + \cdots
+\Dg{g}
+=
+\dfib+d_{\mathrm{per}}^{(g)}
++\nabla_{\mathrm{KS}}^{\mathrm{GM}}
++\sum_{r\geq1}d_{\partial,r}^{(g)}
 \]
-and acts by:
+and its visible pieces act by:
 \begin{align}
-d^{(0)}\alpha &= \sum_{i<j} \mathrm{Res}_{D_{ij}} [\mu_{ij}(\phi_i \otimes \phi_j) \otimes \mathrm{remaining}]\\
-d^{(1)}\alpha &= \sum_{\gamma \in H_1(\Sigma_g)} \oint_\gamma \omega_\gamma \cdot \delta_{\gamma^*}[\alpha]\\
-d^{(k)}\alpha &= \sum_{\mathrm{strata}\; \Delta} \int_\Delta \mathrm{(boundary\; contribution)}, \qquad k \ge 2
+\dfib\alpha
+&= \sum_{i<j}
+\mathrm{Res}_{D_{ij}}
+\bigl[\mu_{ij}(\phi_i\otimes\phi_j)\otimes
+\mathrm{remaining}\bigr],\\
+d_{\mathrm{per}}^{(g)}\alpha
+&=
+\sum_{i<j}
+\Bigl(\pi\sum_{\alpha,\beta}
+\omega_\alpha(p_i)(\operatorname{Im}\Omega)^{-1}_{\alpha\beta}
+\operatorname{Im}\!\int_{p_0}^{p_j}\omega_\beta\Bigr)
+\cdot \iota_{ij}(\alpha),\\
+\nabla_{\mathrm{KS}}^{\mathrm{GM}}\alpha
+&=
+\Theta_{\mathrm{KS}}\cdot\alpha,\\
+d_{\partial,r}^{(g)}\alpha
+&=
+\sum_{\substack{\Delta\subset
+\partial\overline{\mathcal M}_{g,n}\\
+\operatorname{codim}\Delta=r}}
+\operatorname{Res}_{\Delta}(\alpha),
+\qquad r\geq1 .
 \end{align}
 where:
 \begin{itemize}
 \item $\mu_{ij}$ is the chiral product of $\phi_i, \phi_j$
-\item $\omega_\gamma$ are 1-forms dual to cycles $\gamma$
-\item $\delta_{\gamma^*}$ inserts a puncture along the dual cycle
+\item $\iota_{ij}$ denotes insertion of the period-correction
+coefficient attached to the ordered pair $(i,j)$
+\item $\Theta_{\mathrm{KS}}$ is the Gauss--Manin connection
+one-form induced by the Kodaira--Spencer map
+\item $\operatorname{Res}_{\Delta}$ is the stable-boundary residue:
+separating $\Delta$ gives tensor product gluing, and
+non-separating $\Delta$ gives trace over the sewn half-edges
 \end{itemize}
 \end{theorem}
 
 \begin{proof}
 The decomposition follows from the stratification of $\overline{C}_n(\Sigma_g)$ by boundary type.
 
-\emph{Component $d^{(0)}$: Collision residues (genus-preserving).}
+\emph{Component $\dfib$: collision residues.}
 The collision divisors $D_{ij} = \{p_i = p_j\} \subset \overline{C}_n(\Sigma_g)$ are present at every genus. The residue at $D_{ij}$ extracts the singular part of the OPE $\phi_i(p_i) \phi_j(p_j)$, which is the chiral product $\mu_{ij}(\phi_i \otimes \phi_j)$. This component preserves the genus of the underlying curve and reduces the number of points by one (replacing $p_i, p_j$ by a single merged point). The formula is:
 \[
-d^{(0)}\alpha = \sum_{i<j} \mathrm{Res}_{p_i = p_j}\!\left[\phi_i(p_i) \phi_j(p_j) \cdot \eta_{ij}^{(g)}\right] \otimes \left(\bigotimes_{k \neq i,j} \phi_k(p_k)\right) \otimes \eta_{\mathrm{remaining}}
+\dfib\alpha = \sum_{i<j} \mathrm{Res}_{p_i = p_j}\!\left[\phi_i(p_i) \phi_j(p_j) \cdot \eta_{ij}^{(g)}\right] \otimes \left(\bigotimes_{k \neq i,j} \phi_k(p_k)\right) \otimes \eta_{\mathrm{remaining}}
 \]
-This is the direct genus-$g$ analog of the genus-0 bar differential.
+At $g\geq1$ this operator is curved; its square is
+$\kappa(\cA)\omega_g^{\mathrm{Ar}}$, not zero.
 
-\emph{Component $d^{(1)}$: Cycle insertions (Leray degree $1$).}
-On $\Sigma_g$, the non-trivial 1-cycles $\gamma \in H_1(\Sigma_g, \mathbb{Z})$ contribute to the differential via the quantum-corrected Arnold relation. At genus~$g$, the logarithmic form $\eta_{ij}^{(g)}$ is not closed: $d_{\mathrm{dR}}\eta_{ij}^{(g)}$ picks up contributions from the periods of $\Sigma_g$ (cf.\ Example~\ref{ex:heisenberg-genus-1}, where $d_{\mathrm{dR}}\eta_{12}^{(1)} = 2\pi i\, \omega_\tau$ at genus~1). The operator $\delta_{\gamma^*}$ inserts a ``virtual puncture'' along the dual cycle $\gamma^*$, which geometrically corresponds to a degeneration of the curve~$\Sigma_g$ in which a separating cycle collapses.
+\emph{Components $d_{\mathrm{per}}^{(g)}$ and
+$\nabla_{\mathrm{KS}}^{\mathrm{GM}}$: period and base transport.}
+The normalized $A$-periods are fixed by
+$\oint_{A_l}\omega_k=\delta_{lk}$ and are not deformation
+parameters. The moving data are the period matrix entries
+$\Omega_{\alpha\beta}$ and Abel--Jacobi integrals in the prime-form
+correction. Differentiating these data along the base gives the
+Gauss--Manin/Kodaira--Spencer term; the Riemann bilinear relation
+cancels the curvature of $\dfib$ against the period correction.
 
-\emph{Component $d^{(k)}$ ($k \ge 2$): Boundary-strata contributions.}
-Higher-genus corrections arise from the boundary strata $\Delta$ of the Deligne--Mumford compactification $\overline{\mathcal{M}}_{g,n}$. Each boundary stratum $\Delta$ corresponds to either:
+\emph{Components $d_{\partial,r}^{(g)}$: stable-boundary residues.}
+Higher-genus corrections arise from boundary strata $\Delta$ of
+$\overline{\mathcal{M}}_{g,n}$. Each codimension-$1$ boundary
+stratum corresponds to either:
 \begin{itemize}
 \item \emph{Separating degeneration}: $\Sigma_g \rightsquigarrow \Sigma_{g_1} \cup \Sigma_{g_2}$ with $g_1 + g_2 = g$, contributing a term involving the tensor product of lower-genus bar complexes.
 \item \emph{Non-separating degeneration}: $\Sigma_g \rightsquigarrow \Sigma_{g-1}$ with a self-sewing node, contributing a term with a trace over the node.
 \end{itemize}
-The integral $\int_\Delta$ extracts the residue at the boundary divisor, and the sum is over all strata~$\Delta$ of $\partial\overline{\mathcal{M}}_{g,n}$.
+The residue $\operatorname{Res}_\Delta$ extracts the logarithmic
+boundary contribution. Iterated intersections of such divisors give
+the higher $d_{\partial,r}^{(g)}$.
 
-\emph{Exhaustiveness.} The components $d^{(0)}, d^{(1)}, \ldots$ exhaust the full differential because the boundary of $\overline{C}_n(\Sigma_g) \subset \overline{\mathcal{M}}_{g,n}$ is the union of collision divisors (giving $d^{(0)}$) and moduli boundary strata (contributing to $d^{(k)}$ for $k \ge 1$). The identity $\Dg{g}^{\,2} = 0$ decomposes into relations
-\[
-\sum_{a+b=r} d^{(a)} \circ d^{(b)} = 0
-\]
-for each Leray degree $r$, encoding consistency across the correction tower.
+\emph{Exhaustiveness.} The relative compactification has exactly
+collision faces over the smooth locus, period variation over the
+base, and stable-curve boundary faces. These produce the four
+families of terms in~\eqref{eq:leray-corrected-differential};
+their square-zero relations are the Leray components of
+$\Dg{g}^{\,2}=0$.
 \end{proof}
 
 \subsection{Explicit genus 1 example: central extensions}
@@ -4416,16 +4702,24 @@ For a chiral algebra $\mathcal{A}$ on $E_\tau$:
 \mathcal{A}^{\boxtimes (p+1)} \otimes \Omega^p_{\log}\right) \otimes \mathbb{C}[\tau, \bar{\tau}]
 \end{equation}
 
-The differential has three components:
+The differential is the period-corrected total operator
 \begin{equation}
-\Dg{1} = d_{\text{residue}} + d_{\text{elliptic}} + d_{\text{modular}}
+\Dg{1}
+=
+\dfib+d_{\mathrm{per}}^{(1)}
++\nabla_{\mathrm{KS}}^{\mathrm{GM}}.
 \end{equation}
-
-where:
+In the elliptic coordinate chart this total operator has the visible
+local pieces:
 \begin{itemize}
-\item $d_{\text{residue}}$: Standard residues at collision divisors (genus-0 part)
-\item $d_{\text{elliptic}}$: Elliptic corrections from $\vartheta_1$ and $\wp$
-\item $d_{\text{modular}}$: Modular corrections from $E_2(\tau)$
+\item $\dfib$: residues at collision divisors, including the elliptic
+ prime-form part of the propagator;
+\item $d_{\mathrm{per}}^{(1)}$: the Arakelov period correction, equivalently
+ the non-holomorphic term that makes the propagator single-valued on
+ $E_\tau$;
+\item $\nabla_{\mathrm{KS}}^{\mathrm{GM}}$: Gauss--Manin transport along
+ the Kodaira--Spencer tangent direction on the elliptic moduli line,
+ represented in this chart by the $E_2$ anomaly term.
 \end{itemize}
 \end{definition}
 
@@ -4443,47 +4737,59 @@ The total corrected differential is nevertheless strict:
 with the curvature appearing as a central correction in $\dfib$, not as a failure
 of nilpotence of $\Dg{1}$.
 
-The genus-1 differential satisfies:
-\begin{equation}
-\Dg{1}^{\,2} = 0
-\end{equation}
-
-This requires careful cancellation between:
-\begin{enumerate}
-\item Genus-0 Arnold relations (exact)
-\item Genus-1 corrections (from $E_2$)
-\item Holomorphic anomaly compensation
-\end{enumerate}
+Equivalently, the residue, period, and modular-anomaly pieces are not
+separately square-zero operators; only their sum is square-zero. The
+smooth volume-class defect in $\dfib^{\,2}$ is cancelled by the
+period-corrected Gauss--Manin term.
 \end{theorem}
 
 \begin{proof}
-Write $\Dg{1} = d_r + d_e + d_m$ for the residue, elliptic, and modular components. Expanding $\Dg{1}^{\,2} = (d_r + d_e + d_m)^2$ yields six terms: three diagonal ($d_r^2, d_e^2, d_m^2$) and three anticommutators ($\{d_r, d_e\}, \{d_r, d_m\}, \{d_e, d_m\}$).
+Let $P_\tau(z,w)$ be the Arakelov-normalized logarithmic propagator
+on $E_\tau$. In local coordinates it is obtained from
+$\partial_z\log\vartheta_1(z-w\mid\tau)$ by adding the standard
+non-holomorphic period term. This correction is forced by
+single-valuedness on the elliptic curve; it is not a gauge choice.
+The distributional identity for the normalized Green kernel is
+\[
+\bar\partial_z P_\tau(z,w)
+\;=\;
+2\pi i\bigl(\delta_{z=w}-\omega_1\bigr),
+\qquad
+\omega_1=\frac{i}{2\operatorname{Im}\tau}\,dz\wedge d\bar z .
+\]
+The $\delta_{z=w}$ part gives the usual collision residue. Its square
+is killed by the Borcherds identity and the logarithmic residue exact
+sequence, exactly as in the genus-$0$ bar complex. The smooth term
+$-\omega_1$ is the positive-genus Arnold defect. After contraction
+with the Heisenberg OPE coefficient it gives
+\[
+\dfib^{\,2}=k\,\omega_1\cdot\mathrm{id}.
+\]
 
-\emph{Term 1: $d_r^2 = 0$.}
-The residue differential $d_r$ at genus~1 extracts residues at the collision divisors of $\overline{C}_{p+1}(E_\tau)$, exactly as at genus~0. The proof of Theorem~\ref{thm:bar-nilpotency-complete} applies verbatim: disjoint pairs anticommute, overlapping pairs cancel by the Borcherds identity (which is a property of the chiral algebra, not of the curve), and repeated pairs give $\operatorname{Res}_{D_{ij}}^2 = 0$.
-
-\emph{Term 2: $d_e^2 = 0$.}
-The elliptic differential $d_e$ acts via the Weierstrass $\zeta$-function $\zeta(z|\tau) = \vartheta_1'(z|\tau)/\vartheta_1(z|\tau)$, which is the genus-1 propagator. The operator $d_e$ is a $\mathcal{D}$-module endomorphism: it multiplies by $\zeta(z_i - z_j|\tau)\,dz_i$ and sums over pairs. Since $d_e$ acts by multiplication by a 1-form on configuration space, $d_e^2$ involves the wedge product $\zeta(z_i - z_j)\,dz_i \wedge \zeta(z_k - z_\ell)\,dz_k$. For $i \neq k$, these anticommute and cancel in the ordered sum. For $i = k$, we get $dz_i \wedge dz_i = 0$. Hence $d_e^2 = 0$.
-
-\emph{Term 3: $d_m^2 = 0$.}
-The modular differential $d_m$ is proportional to $\bar{\partial}_\tau = \partial/\partial\bar{\tau}$, acting on the $\mathbb{C}[\tau, \bar{\tau}]$ factor. The non-holomorphic completion
-\begin{equation}
-\widehat{E}_2(\tau) := E_2(\tau) - \frac{3}{\pi \operatorname{Im}(\tau)}
-\end{equation}
-transforms as a modular form of weight~2. The modular differential has the form $d_m = f(\tau,\bar{\tau})\,\bar{\partial}_\tau$ for a smooth function~$f$. Since $\bar{\partial}_\tau$ is a flat connection on the trivial bundle over~$\mathbb{H}$, $d_m^2 = f\,\bar{\partial}_\tau(f)\,\bar{\partial}_\tau + f^2\,\bar{\partial}_\tau^2$. But $\bar{\partial}_\tau^2 = 0$ (it is a $(0,1)$-operator in one complex dimension), and $\bar{\partial}_\tau(f) = 0$ because the coefficient function~$f$ arises from the anomaly equation $\bar{\partial}_\tau E_2 = -3/(2\pi i\,\operatorname{Im}(\tau)^2)$, which is itself $\bar{\partial}$-closed. Hence $d_m^2 = 0$.
-
-\emph{Term 4: $\{d_r, d_e\} = 0$.}
-Both $d_r$ and $d_e$ act on the spatial variables $(z_1, \ldots, z_{p+1})$ and are $\mathcal{D}_{E_\tau}$-module maps. The anticommutator $d_r \circ d_e + d_e \circ d_r$ extracts residues of the elliptic propagator at collision divisors. Concretely, $\operatorname{Res}_{z_i = z_j}[\zeta(z_i - z_k|\tau)\,dz_i] = \delta_{jk}$ (a constant), so $d_r \circ d_e$ replaces the propagator by its residue. The anticommutator vanishes by the same mechanism as $\{d_{\text{res}}, d_{\text{dR}}\} = 0$ at genus~0: the residue map is compatible with the logarithmic de Rham differential via the residue exact sequence $0 \to \Omega^k \to \Omega^k(\log D) \xrightarrow{\operatorname{Res}} \bigoplus_{D_{ij}} \Omega^{k-1}_{D_{ij}}(\log D') \to 0$.
-
-\emph{Term 5: $\{d_r, d_m\} = 0$.}
-The operators $d_r$ and $d_m$ act on different variables: $d_r$ on the spatial coordinates $z_i$ and $d_m$ on the modular parameter~$\bar{\tau}$. Since $d_r$ extracts residues at $z_i = z_j$ (a spatial operation) and $d_m$ differentiates in~$\bar{\tau}$, they commute: $d_r \circ d_m = d_m \circ d_r$. With the sign conventions of the bar complex (both operators have odd total degree), the anticommutator vanishes.
-
-\emph{Term 6: $\{d_e, d_m\} = 0$.}
-This is the key genus-1 cancellation. The elliptic propagator $\zeta(z|\tau)$ depends on~$\tau$, so $d_m$ and $d_e$ do not act on independent variables. The anticommutator is:
-\[\{d_e, d_m\} = d_m \circ (\zeta \cdot) + (\zeta \cdot) \circ d_m = (\bar{\partial}_\tau \zeta) \cdot\]
-We compute $\bar{\partial}_\tau \zeta(z|\tau)$ using the heat equation $\partial_\tau \vartheta_1 = \frac{1}{4\pi i}\partial_z^2 \vartheta_1$. Since $\zeta(z|\tau)$ is holomorphic in~$\tau$ (the non-holomorphic completion enters only through $\widehat{E}_2$, which is part of $d_m$'s definition, not $d_e$'s), we have $\bar{\partial}_\tau \zeta(z|\tau) = 0$. Hence $\{d_e, d_m\} = 0$.
-
-All six terms vanish, so $\Dg{1}^{\,2} = 0$.
+Now add the period correction and Gauss--Manin transport:
+\[
+\Dg{1}
+=
+\dfib+d_{\mathrm{per}}^{(1)}
++\nabla_{\mathrm{KS}}^{\mathrm{GM}}.
+\]
+The heat equation for $\vartheta_1$ and the anomalous transformation
+law of $E_2$ say precisely that the Kodaira--Spencer variation of the
+prime-form propagator has central curvature $-k\,\omega_1$ in the
+Heisenberg channel. Equivalently,
+\[
+\{\dfib,d_{\mathrm{per}}^{(1)}
++\nabla_{\mathrm{KS}}^{\mathrm{GM}}\}
++
+\bigl(d_{\mathrm{per}}^{(1)}
++\nabla_{\mathrm{KS}}^{\mathrm{GM}}\bigr)^2
+=
+-\,k\,\omega_1\cdot\mathrm{id}.
+\]
+Adding this identity to $\dfib^{\,2}=k\,\omega_1\cdot\mathrm{id}$
+gives $\Dg{1}^{\,2}=0$. Thus nilpotence is a cancellation in the
+period-corrected total differential, not a termwise vanishing of the
+residue, elliptic, and modular pieces.
 \end{proof}
 
 \begin{theorem}[Universal genus-1 curvature via the modular characteristic; \ClaimStatusConditional]
@@ -4554,31 +4860,118 @@ Genus~$2$ is the first case with period matrices, spin structures
 problem. For $g\geq 3$, the full Teichm\"uller theory is needed.
 \end{remark}
 
-\begin{remark}[Siegel classification of the weight-five obstruction]
+\begin{remark}[Siegel classification of the weight-five scalar target]
 \label{rem:hgf-H2-classification}
-The cohomological locus where the genus-$2$ bar differential's $\Delta_5$
-obstruction lives admits a sharp classification: on the Koszul locus of the
-chiral family, the second graph cohomology of $\overline{\mathcal{M}}_{2}$
-relevant to the bar-curvature class decomposes as
+The scalar target for the genus-$2$ weight-five obstruction is sharp.
+On the Siegel side the relevant metaplectic line is
 \[
-H^{2}\bigl(\overline{\mathcal{M}}_2; \mathcal{O}(\kappa)\bigr)_{\mathrm{bar}}
-\;\cong\;
+M_5^{\mathrm{cusp}}(\mathrm{Sp}_4(\mathbb Z),\mathrm{ch})
+\;=\;
 \mathbb{C} \cdot \Delta_5,
 \]
-a one-dimensional space spanned by the weight-$5$ class $\Delta_5$. The
-weight-$10$ Siegel scalar attached to this class is the unnormalised
-Igusa square $\Phi_{10}^{\mathrm{un}}=\Delta_5^2$: under the Torelli
-embedding $\mathcal{M}_2 \hookrightarrow \mathcal{A}_2$, the pullback
-$\Delta_5$ lifts to a section of the metaplectic line with character,
-and its square has the $\Phi_{10}^{\mathrm{un}}$ transformation law under
-the Siegel modular group.
-This is the genus-$2$ analogue of the genus-$1$ statement that the
-elliptic bar curvature is controlled by $\eta^{24}$; at genus~$2$ the
-weight doubles from $12$ to a $2+3$-type decomposition (weight
-$5 = 2 + 3$), matching the Jacobi-form structure of
-Remark~\ref{rem:hgf-siegel-sepnode}. See Part~\ref{part:seven-faces}
+with character $\mathrm{ch}$. The weight-$10$ scalar attached to this
+line is the unnormalised Igusa square
+$\Phi_{10}^{\mathrm{un}}=\Delta_5^2$: under the Torelli embedding
+$\mathcal{M}_2 \hookrightarrow \mathcal{A}_2$, $\Delta_5$ is a
+section of the metaplectic line with character, and its square has the
+$\Phi_{10}^{\mathrm{un}}$ transformation law under the Siegel modular
+group.
+
+The chain-level statement is separate. If a genus-$2$ bar-curvature
+comparison map
+\[
+\Theta_{\mathrm{bar}\to\Delta_5}\colon
+H^{2}\bigl(\overline{\mathcal{M}}_2;\mathcal O(\kappa)\bigr)_{\mathrm{bar}}
+\longrightarrow
+\mathbb C\cdot\Delta_5
+\]
+is supplied and is compatible with the finite Hall--Borcherds
+source-recognition datum of
+Definition~\ref{def:hgf-finite-hall-borcherds-source}, then the
+bar-curvature class may be read as a $\Delta_5$-valued source
+recognition class. Without those data the displayed one-dimensional
+space is the scalar automorphic receptacle, not a theorem identifying
+second graph cohomology, compact Hall primitives, or CoHA operations.
+This is the genus-$2$ analogue of the genus-$1$ scalar statement that
+the elliptic curvature lands in the $\eta^{24}$ line; at genus~$2$ the
+weight is the $\Delta_5$ weight $5$. See Part~\ref{part:seven-faces}
 for the modular-face interpretation.
 \end{remark}
+
+\begin{definition}[Finite Hall--Borcherds source-recognition datum]
+\label{def:hgf-finite-hall-borcherds-source}
+\index{Hall--Borcherds recognition!finite source datum}
+\index{Igusa cusp form!scalar target versus source recognition}
+A finite Hall--Borcherds source-recognition datum for the
+$K3\times E$ Igusa branch consists, for each downward-saturated finite
+window $W$ in the positive Borcherds cone, of the following data.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item An oriented finite critical Hall or CoHA stage
+$\mathcal H^{\mathrm{or}}_R(K3\times E)$ with finite support,
+protected integration, product and coproduct correspondences, and
+transition maps in $R$.
+\item A parity fixture
+\[
+P_{R,\beta}=P_{R,\beta,\bar0}\oplus P_{R,\beta,\bar1}
+\]
+on every retained degree $\beta\in W\cup(-W)\cup\{0\}$, with
+superdimension equal, after radical quotient, to the
+Gritsenko--Nikulin/Borcherds target multiplicity
+$c(4nm-\ell^2)$ in the corresponding root degree
+$\beta=(n,\ell,m)$.
+\item Compact source matrices: Vol~III constructs the canonical
+compact-provenance packet from the finite compact Hall--Drinfeld
+double; its entries include product matrices $M_{\alpha,\beta}$,
+coproduct matrices $D^{\mu,\nu}_{\rho}$, positive-negative pairing
+matrices $G_{\beta,\bar p}$, bracket matrices
+$B_{\alpha,\beta}=M_{\alpha,\beta}
+-(-1)^{|x||y|}M_{\beta,\alpha}\mathsf{sw}$, radical kernels
+$K_{\beta,\bar p}$, quotient matrices $Q_{\beta,\bar p}$, and
+transition matrices. Their rows and columns are compact-source
+classes, not target root labels.
+\item Parity-preserving comparison maps
+\[
+A_{\beta,\bar p}\colon
+P_{R,\beta,\bar p}/K_{\beta,\bar p}
+\xrightarrow{\ \sim\ }
+\mathfrak g_{\Delta_5,\beta,\bar p}
+\]
+intertwining source bracket, coproduct, pairing, Cartan action,
+boundary specialisation, and Fourier--Jacobi comparison with the
+Gritsenko--Nikulin/Kac target matrices.
+\item Finite relation rows: Chevalley, real-Serre, orthogonality,
+super-Jacobi, real-string, Hopf-radical ideal/coideal, and transition
+compatibility on $W$.
+\item A no-extra-relations theorem in the finite window,
+\[
+\ker\pi_W=
+\bigl(J_{\mathrm{BK}}+\operatorname{Rad}_{\mathrm{GN}}\bigr)_{\le W},
+\]
+for the finite presentation map from the Borcherds--Kac free
+presentation to the radical quotient of the compact source.
+\item Completed PBW compatibility: the associated-graded PBW map
+\[
+\operatorname{gr}_{\mathrm{PBW}}U(P^{\mathrm{red}}_R)_{\le W}
+\xrightarrow{\ \sim\ }
+\operatorname{gr}_{\mathrm{PBW}}U(\mathfrak g_{\Delta_5})_{\le W}
+\]
+is an isomorphism, and the inverse system is strict enough that
+kernels, radicals, parity pieces, and PBW associated gradeds commute
+with the limit.
+\item Source-matrix faithfulness of the Vol~III recognition envelope:
+compact-provenance matrices proving the finite rows force the
+defect-killing quotient
+\(\mathcal E^{\le W}_{\Delta_5}(K3\times E)\) coincides with the
+unquotiented compact Hall--Drinfeld double, equivalently the envelope
+ideal has zero intersection with the compact source double in every
+finite window.
+\end{enumerate}
+Only after these clauses and the comparison maps have been supplied
+does the notation $\mathbf H_{\Delta_5}$ denote a chain-level Hall or
+CoHA source. The scalar identities
+$\Phi_{10}^{\mathrm{un}}=\Delta_5^2$, the Borcherds product, and the
+Fourier coefficients $c(nm,\ell)$ are target data before this gate.
+\end{definition}
 
 \subsection{\texorpdfstring{The moduli space $\mathcal{M}_2$}{The moduli space M-2}}
 
@@ -4671,27 +5064,38 @@ The prime form has the following properties:
 Computing $E(z,w)$ requires normalizing holomorphic differentials, computing the period matrix, evaluating theta functions (convergent for $\text{Im}(\Omega) \gg 0$), and taking gradients. The procedure is intensive but algorithmic.
 \end{remark}
 
-\begin{remark}[Weight-five obstruction as one-loop SUGRA output]
+\begin{remark}[Weight-five scalar as one-loop SUGRA output]
 \label{rem:hgf-sugra-delta5}
-The weight-$5$ class $\Delta_5$ controlling the genus-$2$ bar curvature
-(Remark~\ref{rem:hgf-H2-classification}) arises as a one-loop-forced
-output on the physics side: twisted $11$D supergravity compactified on
-$K3 \times T^2$ with $24$ M$5$-branes wrapped on $I_1$ Kodaira fibres
-produces, at one loop, a modular integrand whose coefficient is exactly
-$\Delta_5$. The weight decomposes as $5 = 2 + 3$: weight $2$ from the
-$T^2$ factor (elliptic $\tau$-direction) and weight $3$ from the $K3$
-factor (the anti-symmetric direction transverse to the nodal fibre).
-Four duality frames assemble this output:
+The weight-$5$ class $\Delta_5$ in
+Remark~\ref{rem:hgf-H2-classification} is the scalar one-loop target
+in the $K3\times T^2$ physics frame. Twisted $11$D supergravity
+compactified on $K3 \times T^2$ with $24$ M$5$-branes wrapped on
+$I_1$ Kodaira fibres gives, after the usual one-loop modular
+regularisation, a Siegel modular integrand whose weight-five scalar
+component is the $\Delta_5$ line. This is a target statement. It does
+not identify the compact Hall product, CoHA coproduct, source
+primitive parity, or a chain-level bar-curvature class.
+
+The mnemonic weight split is $5=2+3$: weight $2$ from the $T^2$
+elliptic direction and weight $3$ from the $K3$ transverse
+anti-symmetric direction. Four duality frames organise this scalar
+output:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item M-theory on $K3 \times T^2$ with $24$ M$5$ on $I_1$;
 \item Type IIA on $K3 \times S^1$;
 \item Heterotic on $T^3$;
 \item F-theory on $(K3 \times T^2)/\mathbb{Z}_2$.
 \end{enumerate}
-Each frame exhibits $\Delta_5$ as the obstruction to flat holomorphic
-factorisation across the separating node. This is the physics manifestation
-of the bar-curvature weight $5$ at genus~$2$; see
-Part~\ref{part:physics-bridges} for the detailed duality-frame analysis.
+Each frame exhibits the same scalar obstruction to flat holomorphic
+factorisation across the separating node. The stronger source claim
+that this scalar is realised by $\mathbf H_{\Delta_5}$ is conditional
+on the finite Hall--Borcherds datum of
+Definition~\ref{def:hgf-finite-hall-borcherds-source}, including the
+parity fixture, the five source-row equalities for the compact source
+matrices, comparison maps, no-extra-relations theorem, PBW
+compatibility, and source-matrix faithfulness of the finite recognition
+envelope. See
+Part~\ref{part:modular-tower-physics} for the detailed duality-frame analysis.
 \end{remark}
 
 \section{Genus 3: beyond hyperelliptic}
@@ -4727,14 +5131,18 @@ $\ell$ controlling the $B$-family Lusztig cell in the affine
 Weyl group of type $B_2$ equals $8$.
 \end{enumerate}
 The coincidence of these three numbers is the integer shadow of
-the universal identity
+the scalar identity
 $\hbar^2 \, K^{\kappa_{\mathrm{ch}}} = -1$
 on the $B$-family, with $\hbar^2$ the quantum parameter of the
-chiral deformation. The negative sign is what forces the
-weight-$5$ curvature class $\Delta_5$ of
-Remark~\ref{rem:hgf-H2-classification} to appear rather
-than cancel. See Part~\ref{part:standard-landscape} for the
-B-family definition and verification.
+chiral deformation. The negative sign selects the weight-$5$
+automorphic target $\Delta_5$ of
+Remark~\ref{rem:hgf-H2-classification}; it does not supply the
+Hall--Borcherds source-recognition datum of
+Definition~\ref{def:hgf-finite-hall-borcherds-source}; the Vol~III
+recognition envelope is only the universal quotient until that
+source-row recognition datum is supplied. See
+Part~\ref{part:standard-landscape} for the B-family definition and
+verification.
 \end{remark}
 
 \subsection{\texorpdfstring{The moduli space $\mathcal{M}_3$}{The moduli space M-3}}
@@ -4774,12 +5182,12 @@ Consider the smooth quartic curve:
 \Sigma_3: \quad x^3 y + y^3 z + z^3 x = 0 \quad \text{in } \mathbb{P}^2
 \end{equation}
 
-This is the \emph{Klein quartic}, which is NOT hyperelliptic.
+This is the \emph{Klein quartic}, a non-hyperelliptic genus-$3$ curve.
 
 The Klein quartic has the following properties:
 \begin{itemize}
-\item Automorphism group: $PSL_2(\mathbb{F}_7)$ (168 elements) - largest for genus 3
-\item Canonical embedding: $\Sigma_3 \hookrightarrow \mathbb{P}^2$ (not $\mathbb{P}^1 \times \mathbb{P}^1$)
+\item Automorphism group: $PSL_2(\mathbb{F}_7)$ (168 elements), maximal for genus~$3$.
+\item Canonical embedding: $\Sigma_3 \hookrightarrow \mathbb{P}^2$ as a smooth plane quartic.
 \item Holomorphic differentials: Generated by $\frac{x dy - y dx}{F_z}$, etc.
 \end{itemize}
 \end{example}
@@ -4788,42 +5196,55 @@ The Klein quartic has the following properties:
 \label{sec:genus-spectral-complete}
 \index{spectral sequence!genus|textbf}
 
-The genus-by-genus bar complexes assemble into a single spectral sequence whose
-$E_1$~page is the genus-stratified bar cohomology, whose
-differentials are the clutching maps along boundary divisors of
-$\overline{\mathcal{M}}_g$, and whose $E_\infty$~page computes
-the full chiral homology. The collapse page depends on the
-family: $E_1$ for Kac--Moody (by CE acyclicity of the
-associated graded); $E_2$ for Virasoro and $\mathcal{W}$-algebras
-(the DS reduction of the $E_1$-collapsed KM spectral sequence
-introduces one additional differential from the BRST operator
-$Q_{\mathrm{DS}}$, shifting the collapse by one page;
-see Theorem~\ref{thm:ds-koszul-intertwine}).
+The genus-by-genus bar complexes assemble into a completed filtered
+object. Its spectral sequence has fixed-genus relative
+Fulton--MacPherson cohomology on the first page; its differentials are
+Gauss--Manin, period, and stable-clutching operators. The
+$E_\infty$ page computes the associated graded of the completed
+all-genus chiral homology. Collapse is not a bare consequence of
+Koszulness: finite-depth scalar families have finite collapse bounds,
+while class-$M$ inputs such as Virasoro require the completed
+Mittag--Leffler tower and need not collapse at $E_1$.
 
 \subsection{Spectral sequence = genus expansion}
 
 \begin{remark}[Spectral sequence as loop expansion]
 \label{rem:ss-genus}
-The spectral sequence $E_r^{p,q} \Rightarrow H^{p+q}(\bar{B}(\mathcal{A}))$ organizes contributions by genus: $E_1$ is tree-level (genus~$0$), $E_2$ is one-loop (genus~$1$), and $E_r$ is $(r{-}1)$-loop.
+The spectral sequence
+$E_r^{p,q}\Rightarrow H^{p+q}(\widehat{\bar B}^{\mathrm{full}}(\cA))$
+organizes contributions by genus and loop order. The slogan
+``$E_1$ is tree level'' is valid only after taking the associated
+graded for the genus/loop filtration; it is not an assertion that
+all one-loop or class-$M$ corrections vanish on the first page.
 \end{remark}
 
 \begin{definition}[Filtration by genus]
 \label{def:genus-filtration-complete}
 \index{genus filtration|textbf}
-Filter the bar complex by genus contribution:
+Filter the completed bar complex by genus contribution:
 \begin{equation}
-F^k \bar{B}(\mathcal{A}) = \bigoplus_{g \geq k} \bar{B}^{(g)}(\mathcal{A})
+F^k\widehat{\bar{B}}^{\mathrm{full}}(\mathcal{A})
+=
+\prod_{g \geq k}^{\wedge}\bar{B}^{(g)}(\mathcal{A})
 \end{equation}
 
 This gives:
 \begin{equation}
-\bar{B}(\mathcal{A}) = F^0 \supset F^1 \supset F^2 \supset \cdots
+\widehat{\bar{B}}^{\mathrm{full}}(\mathcal{A})
+=F^0\supset F^1\supset F^2\supset\cdots
 \end{equation}
 
 The associated graded:
 \begin{equation}
-\text{Gr}^k_F \bar{B}(\mathcal{A}) = F^k / F^{k+1} = \bar{B}^{(k)}(\mathcal{A})
+\mathrm{Gr}^k_F
+\widehat{\bar{B}}^{\mathrm{full}}(\mathcal{A})
+=F^k/F^{k+1}
+\cong
+\bar{B}^{(k)}(\mathcal{A})
 \end{equation}
+provided the finite-window tower is strict Mittag--Leffler. Without
+that completeness hypothesis the direct sum is only the finite-support
+subobject and does not carry the all-genus Maurer--Cartan element.
 \end{definition}
 
 \begin{remark}[Genus filtration as fundamental parameter]
@@ -4852,7 +5273,9 @@ E_1^{*,*,2} &= H^*(\overline{C}_*(\Sigma_2), \mathcal{A}^{\boxtimes *}) \otimes 
 \end{theorem}
 
 \begin{proof}
-By Definition~\ref{def:genus-filtration-complete}, the genus filtration $F^k\bar{B}(\mathcal{A}) = \bigoplus_{g \geq k} \bar{B}^{(g)}(\mathcal{A})$ is a descending filtration of cochain complexes. The associated spectral sequence has:
+By Definition~\ref{def:genus-filtration-complete}, the completed
+genus filtration is a descending complete filtration of cochain
+complexes. The associated spectral sequence has:
 \[
 E_0^{p,q,g} = \bar{B}^{p,q}(\Sigma_g, \mathcal{A}) = \Gamma\bigl(\overline{C}_{p+1}(\Sigma_g),\, \mathcal{A}^{\boxtimes(p+1)} \otimes \Omega^q_{\log}\bigr)
 \]
@@ -4866,7 +5289,17 @@ For genus~0: $\Sigma_0 = \mathbb{P}^1$ has no moduli, so $E_1^{*,*,0} = H^*(\ove
 
 For genus~1: $\Sigma_1 = E_\tau$ is an elliptic curve parameterized by $\tau \in \mathbb{H}$. The internal cohomology depends on $\tau$ through the elliptic propagator $\eta_{12}^{(1)} = d\log\theta_1(z_{12}|\tau)$, so $E_1^{*,*,1}$ carries a $\mathbb{C}[\tau,\bar{\tau}]$-module structure.
 
-For genus~2: $\Sigma_2$ is parameterized by the period matrix $\Omega = (\Omega_{ij})_{1 \leq i,j \leq 2} \in \mathbb{H}_2$ (the Siegel upper half-space of symmetric $2 \times 2$ matrices with positive-definite imaginary part), a $3$-complex-dimensional space. The genus-2 propagator $\eta_{12}^{(2)} = d\log E(z_1, z_2 | \Omega)$ (where $E$ is the prime form on $\Sigma_2$) depends on $\Omega$ through the theta function, so $E_1^{*,*,2}$ carries a $\mathbb{C}[\Omega_{ij}, \bar{\Omega}_{ij}]$-module structure. The computation is otherwise parallel to genus~1: internal cohomology is computed on a fixed $\Sigma_2$ using the genus-2 Arnold--Orlik--Solomon relations (which hold with the same combinatorial structure but with genus-2 propagators), and the moduli dependence enters through the propagator's dependence on~$\Omega$.
+For genus~2: $\Sigma_2$ is parameterized on the Torelli chart by
+the period matrix
+$\Omega=(\Omega_{ij})_{1\leq i,j\leq2}\in\mathbb H_2$, a
+$3$-complex-dimensional Siegel parameter. The propagator depends on
+$\Omega$ through the prime form and theta functions, so the page
+carries functions of $\Omega$ and $\bar\Omega$ in that chart. The
+internal cohomology is not governed by a genus-$2$
+Arnold--Orlik--Solomon presentation: the positive-genus rational
+configuration-space model is the
+Totaro--K\v{r}\'{\i}\v{z}--Bezrukavnikov diagonal CDGA
+(Theorem~\ref{thm:quantum-arnold-relations}(c)).
 \end{proof}
 
 \begin{theorem}[\texorpdfstring{$E_2$}{E2} page structure; \ClaimStatusProvedHere]
@@ -5167,7 +5600,7 @@ By genus universality
 \textup{(}Theorem~\textup{\ref{thm:genus-universality})},
 the scalar specialization is
 $\mathrm{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g$
-\textup{(}UNIFORM-WEIGHT\textup{)}; at genus~$1$ the same scalar formula is
+\textup{(}UNIFORM-WEIGHT, SCALAR-DIAGONAL\textup{)}; at genus~$1$ the same scalar formula is
 \textup{(g=1 only; all-weight at g=1 is unconditional)}.
 
 \emph{Analytic interpretation.}
@@ -5240,7 +5673,7 @@ For the Heisenberg vertex algebra $\mathcal{H}_\kappa$ at level $\kappa$, the
 genus-$g$ obstruction is :
 \begin{equation}
 \text{obs}_g^{\mathcal{H}} = \kappa \cdot \lambda_g \in H^{2g}(\overline{\mathcal{M}}_g, \mathbb{C})
-\qquad \textup{(}UNIFORM-WEIGHT\textup{)} \end{equation}
+\qquad \textup{(}UNIFORM-WEIGHT, SCALAR-DIAGONAL\textup{)} \end{equation}
 where $\lambda_g = c_g(\mathbb{E})$ is the top Chern class of the Hodge bundle.
 
 Explicitly:
@@ -5283,10 +5716,12 @@ the Kronecker delta forces $k_2 = -k_1$, so
 $a_{m - k_1 - k_2} = a_m$. The remaining sum
 $\sum_{k} k$ over mode indices is evaluated geometrically:
 in the D-module formulation, the mode sum computes the
-fiberwise Arakelov curvature form $\omega_g^{\mathrm{Ar}}$; its
-pushforward along the universal curve produces the Hodge class
-$c_1(\mathbb{E})$ via the Quillen determinant anomaly
-formula~\cite{Quillen85}. The fiberwise result is:
+fiberwise Arakelov curvature form $\omega_g^{\mathrm{Ar}}$.
+The base class is obtained from the zero-mode determinant of the
+Hodge bundle: at $g=1$ this is the Quillen determinant anomaly
+$c_1(\mathbb{E})$~\cite{Quillen85}, while for general~$g$ the
+splitting-principle/Chern--Weil Euler polynomial gives the top class
+$c_g(\mathbb{E})$. The fiberwise result is:
 \begin{equation}
 \dfib^{\,2}(a_m) = \kappa \cdot a_m \otimes \omega_g^{\mathrm{Ar}}
 \end{equation}
@@ -5297,13 +5732,13 @@ fixed curve~$\Sigma_g$.
 
 At genus~$1$: the moduli space $\overline{\mathcal{M}}_1$ has complex dimension~$1$, so $\lambda_1 = c_1(\mathbb{E})$ is a top-degree class, and the integral $\int_{\overline{\mathcal{M}}_1} \lambda_1 = 1/24$ (the degree of the Hodge bundle).
 
-At genus~$g \geq 2$: $\lambda_g = c_g(\mathbb{E})$ has degree~$g < 3g{-}3 = \dim_{\mathbb{C}}\overline{\mathcal{M}}_g$, so the obstruction class $\mathrm{obs}_g = \kappa \cdot \lambda_g$ \textup{(}UNIFORM-WEIGHT\textup{)} is a non-trivial class in $H^{2g}(\overline{\mathcal{M}}_g)$ but is \emph{not} a top-degree class. Its numerical evaluation requires pairing with a complementary tautological class of degree~$2g{-}3$; the relevant intersection numbers are computable from the Faber conjectures (proved by Faber--Pandharipande) involving Bernoulli numbers.
+At genus~$g \geq 2$: $\lambda_g = c_g(\mathbb{E})$ has degree~$g < 3g{-}3 = \dim_{\mathbb{C}}\overline{\mathcal{M}}_g$, so the obstruction class $\mathrm{obs}_g = \kappa \cdot \lambda_g$ \textup{(}UNIFORM-WEIGHT, SCALAR-DIAGONAL\textup{)} is a non-trivial class in $H^{2g}(\overline{\mathcal{M}}_g)$ but is \emph{not} a top-degree class. Its numerical evaluation requires pairing with a complementary tautological class of degree~$2g{-}3$; the relevant intersection numbers are computable from the Faber--Pandharipande formula involving Bernoulli numbers.
 
 \emph{Step 6: Obstruction class.}
 
 Therefore:
 \[\text{obs}_g^{\mathcal{H}} = \kappa \cdot \lambda_g
-\qquad \textup{(}UNIFORM-WEIGHT\textup{)}\]
+\qquad \textup{(}UNIFORM-WEIGHT, SCALAR-DIAGONAL\textup{)}\]
 
 This is a central element (proportional to $c$), confirming the consistency.
 \end{proof}
@@ -5316,22 +5751,36 @@ The obstruction class $\text{obs}_g$ is the conformal anomaly at genus $g$. The 
 \label{subsec:kac-moody-obstruction}
 
 \begin{theorem}[Kac--Moody obstruction at genus \texorpdfstring{$g$}{g}; \ClaimStatusConditional]\label{thm:kac-moody-obs}
-For the affine Kac--Moody vertex algebra $\widehat{\mathfrak{g}}_k$ at level $k \neq -h^\vee$,
-the genus-$g$ obstruction is :
+For the affine Kac--Moody vertex algebra $\widehat{\mathfrak{g}}_k$
+at level $k \neq -h^\vee$, the scalar-diagonal uniform-weight
+genus-$g$ obstruction is:
 \begin{equation}
 \text{obs}_g^{\widehat{\mathfrak{g}}} = \frac{(k + h^\vee) \cdot
-\text{dim}(\mathfrak{g})}{2h^\vee} \cdot \lambda_g \qquad \textup{(}UNIFORM-WEIGHT\textup{})
+\text{dim}(\mathfrak{g})}{2h^\vee} \cdot \lambda_g
+\qquad \textup{(}UNIFORM-WEIGHT, SCALAR-DIAGONAL\textup{})
 \end{equation}
 where $h^\vee$ is the dual Coxeter number of $\mathfrak{g}$ and $\lambda_g = c_g(\mathbb{E})$
-\textup{(}UNIFORM-WEIGHT\textup{)}
 is the top Chern class of the Hodge bundle on $\overline{\mathcal{M}}_g$.
+At genus~$1$ the scalar formula is unconditional; for non-abelian
+generic level at $g\ge2$ the scalar-diagonal hypothesis is the stated
+scope condition.
 
 For specific Lie algebras :
 \begin{align}
-\mathfrak{g} = \mathfrak{sl}_2: \quad \text{obs}_g &= \frac{3(k+2)}{4} \lambda_g \textup{(}UNIFORM-WEIGHT\textup{)} \\
-\mathfrak{g} = \mathfrak{sl}_3: \quad \text{obs}_g &= \frac{4(k+3)}{3} \lambda_g \textup{(}UNIFORM-WEIGHT\textup{)} \\
-\mathfrak{g} = E_8: \quad \text{obs}_g &= \frac{62(k+30)}{15} \lambda_g \textup{(}UNIFORM-WEIGHT\textup{})
+\mathfrak{g} = \mathfrak{sl}_2: \quad \text{obs}_g &= \frac{3(k+2)}{4} \lambda_g \textup{(}UNIFORM-WEIGHT, SCALAR-DIAGONAL\textup{)} \\
+\mathfrak{g} = \mathfrak{sl}_3: \quad \text{obs}_g &= \frac{4(k+3)}{3} \lambda_g \textup{(}UNIFORM-WEIGHT, SCALAR-DIAGONAL\textup{)} \\
+\mathfrak{g} = E_8: \quad \text{obs}_g &= \frac{62(k+30)}{15} \lambda_g \textup{(}UNIFORM-WEIGHT, SCALAR-DIAGONAL\textup{})
 \qquad \end{align}
+
+The collision residue convention is the trace-form convention
+\[
+r^{\mathrm{coll}}_{V_k(\fg)}(z)=\frac{k\,\Omega_{\mathrm{tr}}}{z}.
+\]
+The shifted scalar
+$\kappa(V_k(\fg))=\dim(\fg)(k+h^\vee)/(2h^\vee)$ comes from the
+level double-pole channel plus the simple-pole Lie bracket channel.
+It is not obtained by replacing the collision residue by the KZ
+normalization $\Omega/((k+h^\vee)z)$.
 
 At the critical level $k = -h^\vee$, the obstruction vanishes for all $g$, consistent with
 $d^2 = 0$ on the bar complex (Proposition~\ref{prop:km-bar-curvature}(i)).
@@ -5344,9 +5793,9 @@ $d^2 = 0$ on the bar complex (Proposition~\ref{prop:km-bar-curvature}(i)).
 By Proposition~\ref{prop:km-bar-curvature}, the bar complex
 of $\widehat{\mathfrak{g}}_k$ has curvature:
 \begin{equation}\label{eq:km-curvature-recall}
-m_0 = \frac{k + h^\vee}{2h^\vee} \cdot \kappa
+m_0 = \frac{k + h^\vee}{2h^\vee} \cdot \Omega_{\mathrm{tr}}
 \end{equation}
-where $\kappa = \sum_a J^a \otimes J_a$ is the Casimir element. This curvature arises
+where $\Omega_{\mathrm{tr}} = \sum_a J^a \otimes J_a$ is the trace-form Casimir element. This curvature arises
 because squaring the bar differential on degree-2 elements produces:
 \[d^2(J^a \boxtimes J^b \cdot \eta_{12}) = (k + h^\vee) \cdot
 \bigl(\text{adjoint Casimir contribution}\bigr)\]
@@ -5361,13 +5810,17 @@ By the general obstruction formula (Theorem~\ref{thm:obstruction-general}), the 
 obstruction is:
 \[\text{obs}_g^{\mathrm{fib}} = \omega_g^{\mathrm{Ar}} \otimes m_0\]
 For $\widehat{\mathfrak{g}}_k$, the curvature element $m_0$ from Step~1 acts on each of the $\dim(\mathfrak{g})$ current generators.
-Pushing this fiberwise form forward along the universal curve produces the Hodge class $\lambda_g$
-by the same mechanism as in the Heisenberg case (Theorem~\ref{thm:heisenberg-obs}, Step~5).
+The passage from this fiberwise form to the base obstruction is the
+same zero-mode determinant calculation as in the Heisenberg case
+(Theorem~\ref{thm:heisenberg-obs}, Step~5): the algebraic trace gives
+the scalar coefficient, and the Chern--Weil Euler polynomial of the
+Hodge bundle gives $\lambda_g=c_g(\mathbb{E})$.
 
 \emph{Step 3: Assembling the formula.}
 
 Each generator $J^a$ contributes a copy of the curvature $m_0$. Summing over
-$a = 1, \ldots, \dim(\mathfrak{g})$ and noting that $\kappa$ evaluated on the trace gives
+$a = 1, \ldots, \dim(\mathfrak{g})$ and noting that
+$\Omega_{\mathrm{tr}}$ evaluated on the trace gives
 $\sum_a (J^a, J_a) = \dim(\mathfrak{g})$, one obtains :
 \begin{align}
 \text{obs}_g &= \dim(\mathfrak{g}) \cdot m_0 \cdot \lambda_g \\
@@ -5401,7 +5854,7 @@ sees as the negative obstruction, confirming deformation-obstruction complementa
 For $\mathfrak{sl}_2$: $\dim(\mathfrak{sl}_2) = 3$, $h^\vee = 2$,
 $c_{\mathfrak{sl}_2, k} = 3k/(k+2)$.
 
-The obstruction is \textup{(}UNIFORM-WEIGHT\textup{)}:
+The scalar obstruction on the scalar-diagonal lane is:
 \[\text{obs}_g = \frac{(k+2) \cdot 3}{2 \cdot 2} \lambda_g = \frac{3(k+2)}{4} \lambda_g\]
 
 At genus 1 with $k=1$ \textup{(g=1 only; all-weight at g=1 is unconditional)}:
@@ -5496,9 +5949,7 @@ class in $H^*(\overline{\mathcal{M}}_g)$ appears at genus~$g$.
 The bar construction does \emph{not} produce $\lambda_g$ at $g \geq 2$
 for multi-weight algebras: the free energy receives a nonvanishing
 cross-channel correction
-(Theorem~\textup{\ref{thm:multi-weight-genus-expansion}},
-Open Problem~\textup{\ref{op:multi-generator-universality}} resolved
-negatively).
+ (Theorem~\textup{\ref{thm:multi-weight-genus-expansion}}).
 \end{enumerate}
 \end{theorem}
 
@@ -5528,12 +5979,7 @@ identification $\Omega = \sum \lambda_g$
 fails for multi-weight
 algebras: the bar construction at genus~$g \geq 2$ produces a
 class that deviates from~$\lambda_g$ by a cross-channel correction
-(Theorem~\ref{thm:multi-weight-genus-expansion},
-Open Problem~\ref{op:multi-generator-universality} resolved
-negatively).
-% NOTE: The identification $\Omega_g = \lambda_g$ does not follow from
-% $\dim H^2_{\mathrm{cyc}} = 1$ alone; it requires
-% Open Problem~\ref{op:multi-generator-universality}.
+ (Theorem~\ref{thm:multi-weight-genus-expansion}).
 \end{proof}
 
 \begin{computation}[Explicit genus-$1$ value of the $W_3$ obstruction; \ClaimStatusConditional]\label{comp:w3-obs-explicit}
@@ -5683,9 +6129,11 @@ $\mathrm{obs}_1 = \kappa \cdot \lambda_1$
 (Proposition~\ref{prop:multi-generator-obstruction}\textup{(a)}),
 so $(\mathrm{obs}_1)^2 = \kappa^2 \cdot \lambda_1^2 = 0$
 by Mumford's relation $\lambda_g^2 = 0$.
-For uniform-weight algebras, the same nilpotence holds in every genus;
-for multi-weight algebras at $g \geq 2$, nilpotence follows from
-Theorem~\ref{thm:multi-generator-universality}.
+For scalar-diagonal uniform-weight algebras, the same nilpotence
+holds in every genus because $\mathrm{obs}_g=\kappa\lambda_g$.
+For multi-weight algebras at $g\geq2$, the full obstruction class
+contains cross-channel terms; nilpotence must be checked for that
+class and is not a formal consequence of the scalar formula.
 \end{remark}
 
 \begin{corollary}[Mumford multiplicative relations for obstruction classes; \ClaimStatusConditional]
@@ -5694,37 +6142,50 @@ Theorem~\ref{thm:multi-generator-universality}.
 \index{obstruction class!multiplicative relations}
 \index{lambda class@$\lambda$-class!product identities}
 Let $\mathcal{A}$ be a Koszul chiral algebra with a single strong generator.
-The obstruction classes
-$\operatorname{obs}_g = \kappa(\mathcal{A}) \cdot \lambda_g$
-\textup{(}UNIFORM-WEIGHT\textup{}) satisfy the
-following \emph{multiplicative relations}, inherited from
-Mumford's relation~\eqref{eq:mumford-relation}:
+On the scalar-diagonal lane write, on the fixed space
+$\overline{\mathcal M}_g$,
+\[
+\Lambda_i(\cA):=\kappa(\cA)\lambda_i
+\qquad (0\leq i\leq g),\qquad \Lambda_0(\cA):=\kappa(\cA).
+\]
+The top member $\Lambda_g(\cA)$ is the genus-$g$ scalar obstruction.
+The normalized classes $\lambda_i=\kappa^{-1}\Lambda_i$ for
+$\kappa\neq0$ satisfy Mumford's relation; equivalently the
+unnormalized $\Lambda_i$ satisfy the following relations.
 \begin{enumerate}[label=\textup{(\alph*)}]
 \item \textbf{Nilpotence} (Theorem~\ref{thm:obstruction-nilpotent-all-genera}):
-$(\operatorname{obs}_g)^2 = 0$ for all $g \geq 1$.
+$(\Lambda_g)^2 = 0$ for all $g \geq 1$.
 \item \textbf{Degree-$k$ Mumford relations}: For each
 $k = 1, \ldots, 2g$,
 \begin{equation}\label{eq:mumford-degree-k}
 \sum_{\substack{i + j = k \\ 0 \leq i,j \leq g}}
-(-1)^j \operatorname{obs}_i \cdot \operatorname{obs}_j = 0
-\qquad \text{in } \mathrm{CH}^k(\overline{\mathcal{M}}_g) \otimes Z(\mathcal{A})^{\otimes 2}.
+(-1)^j \Lambda_i \cdot \Lambda_j = 0
+\qquad \text{in }
+\mathrm{CH}^k(\overline{\mathcal{M}}_g)
+\otimes Z(\mathcal{A})^{\otimes 2}.
 \end{equation}
 \item \textbf{Recursive structure}: Setting $k = 2$ in~\eqref{eq:mumford-degree-k}
-gives $(\operatorname{obs}_1)^2 = 2 \operatorname{obs}_2$. More generally, for $g \geq 3$,
-setting $k = 2g - 2$ gives the recurrence:
+gives $\Lambda_1^2 = 2\Lambda_0\Lambda_2$, i.e.
+$(\kappa\lambda_1)^2=2\kappa(\kappa\lambda_2)$.
+More generally, for $g \geq 3$, setting $k = 2g - 2$ gives the
+Hodge recurrence
 \begin{equation}\label{eq:lambda-recurrence}
 \lambda_{g-1}^2 = 2\lambda_g \cdot \lambda_{g-2}
 \qquad \text{in } \mathrm{CH}^{2g-2}(\overline{\mathcal{M}}_g).
 \end{equation}
+Equivalently,
+\[
+\Lambda_{g-1}^2=2\Lambda_g\Lambda_{g-2}.
+\]
 \end{enumerate}
 \end{corollary}
 
 \begin{proof}
-Since $\operatorname{obs}_g = \kappa \cdot \lambda_g$ by
-Theorem~\ref{thm:genus-universality}, part~(b) follows from extracting
-the degree-$k$ component of Mumford's relation
-$c(\mathbb{E}) \cdot c(\mathbb{E}^\vee) = 1$, then scaling by
-$\kappa^2$. Part~(a) is the case $k = 2g$.
+Part~(b) follows from extracting the degree-$k$ component of
+Mumford's relation
+$c(\mathbb{E}) \cdot c(\mathbb{E}^\vee) = 1$, then multiplying
+each term by the common factor $\kappa^2$. Part~(a) is the case
+$k = 2g$.
 
 For part~(c), the degree-$2$ relation reads
 $\lambda_2 - \lambda_1^2 + \lambda_2 = 0$, i.e.,
@@ -5759,7 +6220,8 @@ giving the full multiplicative structure of the obstruction ring.
 
 \begin{example}[Heisenberg case]\label{ex:heisenberg-obs-squares}
 For the Heisenberg algebra with
-$\operatorname{obs}_g = \kappa \cdot \lambda_g$ \textup{(}UNIFORM-WEIGHT\textup{)}, Theorem~\ref{thm:obstruction-nilpotent-all-genera} gives
+$\operatorname{obs}_g = \kappa \cdot \lambda_g$
+\textup{(}UNIFORM-WEIGHT, SCALAR-DIAGONAL\textup{)}, Theorem~\ref{thm:obstruction-nilpotent-all-genera} gives
 $(\operatorname{obs}_g)^2 = \kappa^2 \cdot \lambda_g^2 = 0$
 for \emph{all} $g \geq 1$, by Mumford's relation.
 \end{example}
@@ -6241,30 +6703,18 @@ differential-geometric \emph{presentation} of the class
 established by the scalar-lane $K$-class, not an independent
 derivation.
 
-\emph{Scope qualifier (Faber's $\lambda_g$-conjecture).}
-At $g \in \{1, 2\}$, the identification
-$\mathrm{obs}_g(\cA) = \kappa(\cA)\cdot\lambda_g$ is
-unconditional on the nose: at $g=1$, $H^2(\overline{\cM}_{1,1})
-= \Q\cdot\lambda_1$ is one-dimensional and the scalar channel
-forces the coefficient to be~$\kappa(\cA)$; at $g=2$, the
-tautological ring $R^*(\overline{\cM}_2)$ is known completely
-(Mumford~\cite{Mumford83}) and the degree-$4$ piece is spanned
-by~$\lambda_2$, so the $K$-theoretic identification of
-Lemma~\ref{lem:k-theoretic-globalization-bar} and Mumford's
-$c_g(\mathbb{E}) = \lambda_g$ suffice.
-At $g \geq 3$, the identification continues to hold in the
-tautological ring $R^{2g}(\overline{\cM}_g)$ \emph{modulo}
-classes numerically equivalent to zero. Faber's
-$\lambda_g$-conjecture~\cite{FP00} (proved for
-$\overline{\cM}_g$ in the socle degree~$g-2$ but still open
-in higher Chow degree for $g \geq 3$) predicts that the
-kernel~$\mathcal{N}^{g}$ of the numerical-equivalence map on
-$R^{2g}(\overline{\cM}_g)$ vanishes, which would upgrade the
-identification to an equality on the nose. Until that
-conjecture is settled, the $g \geq 3$ statement is
-\emph{unconditional at the level of numerical classes} and
-conditional on Faber's conjecture as a statement of
-cohomological equality.
+\emph{Scope of Faber's $\lambda_g$ conjecture.}
+No Faber conjecture is used in the direct scalar-diagonal argument.
+Lemma~\ref{lem:k-theoretic-globalization-bar} identifies the
+scalar virtual class in $K^0(\overline{\cM}_g)\otimes\Q$, and the
+Chern character gives the degree-$2g$ class
+$\kappa(\cA)\lambda_g$ in rational cohomology for every
+$g\geq1$. Faber's $\lambda_g$ conjecture enters only the
+\emph{independent clutching-only route}: boundary restrictions
+determine the class on the socle quotient
+$R^g/\cN^g$, and the conjectural vanishing of the numerical kernel
+$\cN^g$ would upgrade that boundary-only proof to equality in the
+full tautological ring for $g\geq3$.
 
 \textbf{The bridge from fiber curvature to
 base class.}
@@ -6331,7 +6781,7 @@ of $\lambda_g$ on the base~$\overline{\cM}_g$. Therefore
 \mathrm{obs}_g(\cA)
 \;=\;
 \kappa(\cA) \cdot \lambda_g
-\qquad \textup{(}UNIFORM-WEIGHT\textup{)}
+\qquad \textup{(}UNIFORM-WEIGHT, SCALAR-DIAGONAL\textup{)}
 \qquad
 \text{for all } g \geq 1.
 \]
@@ -6557,7 +7007,7 @@ ring. The direct Arakelov--Faltings--BGS--GRR route already proves
 \mathrm{obs}_g(\cA)
 \;=\;
 \kappa(\cA)\cdot\lambda_g
-\qquad \textup{(}UNIFORM-WEIGHT\textup{})
+\qquad \textup{(}UNIFORM-WEIGHT, SCALAR-DIAGONAL\textup{})
 \]
 in cohomology, and the scalar Faber--Pandharipande pairing gives
 \[
@@ -6793,9 +7243,12 @@ statement of Proposition~\ref{prop:clutching-uniqueness}.
  $\fg$ non-abelian conditional on
  Definition~\textup{\ref{def:scalar-diagonal-hypothesis}}\textup{)},
  $\mathrm{obs}_g = \kappa \cdot \lambda_g$
- \textup{(}UNIFORM-WEIGHT, SCALAR-DIAGONAL\textup{)} holds unconditionally in every genus for
- $g \in \{1, 2\}$ and on the socle quotient $R^g/\cN^g$ for $g \geq 3$
- \textup{(}on the nose conditional on the $\lambda_g$-conjecture\textup{)}.
+ \textup{(}UNIFORM-WEIGHT, SCALAR-DIAGONAL\textup{)} holds on the
+ nose in every genus by the Arakelov--BGS/Chern--Weil route of
+ Proposition~\textup{\ref{prop:scalar-obstruction-hodge-euler}}.
+ The independent clutching/PTVV route proves the same class on the
+ socle quotient $R^g/\cN^g$ for $g \geq 3$ and on the nose in the
+ low genera where $\cN^g=0$.
  For multi-weight families \textup{(}$W_3$\textup{)}, the scalar formula is unconditional at $g = 1$;
  at $g = 2$ a cross-channel correction
  $\delta F_2^{\mathrm{cross}}(W_3) = (c+204)/(16c)$
@@ -6811,7 +7264,7 @@ statement of Proposition~\ref{prop:clutching-uniqueness}.
 \label{tab:obstruction-summary}
 \begin{tabular}{|l|c|c|}
 \hline
-\textbf{Chiral Algebra} & \textbf{Obstruction $\text{obs}_g$} & \textbf{Physical Meaning} \\
+\textbf{Chiral Algebra} & \textbf{Scalar lane / all-weight qualification} & \textbf{Physical Meaning} \\
 \hline
 Heisenberg $\mathcal{H}_\kappa$ & $\kappa \cdot \lambda_g$ & Level shift / central charge \\
 \hline
@@ -6821,11 +7274,11 @@ $\widehat{\mathfrak{sl}}_3(k)$ & $\frac{4(k+3)}{3} \lambda_g$ & Affine level shi
 \hline
 $\widehat{E_8}(k)$ & $\frac{62(k+30)}{15} \lambda_g$ & Affine level shift \\
 \hline
-$W_3(c)$ & $\frac{5c}{6} \lambda_g$\rlap{${}^*$} & Conformal anomaly \\
+$W_3(c)$ & $\frac{5c}{6}\lambda_g$ scalar projection\rlap{${}^*$} & Conformal anomaly plus mixed channels \\
 \hline
 Virasoro $(c)$ & $\frac{c}{2} \lambda_g$ & Conformal anomaly \\
 \hline
-\multicolumn{3}{|l|}{\small ${}^*$Unconditional at $g=1$; $g \geq 2$ receives cross-channel correction.}\\
+\multicolumn{3}{|l|}{\small ${}^*$Unconditional at $g=1$; for $g \geq 2$ the all-weight free energy includes $\delta F_g^{\mathrm{cross}}$.}\\
 \hline
 \end{tabular}
 \end{table}
@@ -6856,15 +7309,16 @@ $\lambda_g^{\mathrm{FP}}
 = \int_{\overline{\mathcal{M}}_{g,1}}\psi_1^{2g-2}\lambda_g$.
 The correction satisfies
 $\delta F_1^{\mathrm{cross}}(\cA)=0$ in the stated all-weight genus-$1$ setting.
-If $h_1=\cdots=h_r$ \textup{(}the uniform-weight scalar lane of
-Definition~\textup{\ref{def:scalar-lane}}\textup{)}, then
+If $h_1=\cdots=h_r$ and $\cA$ satisfies the scalar-diagonal
+hypothesis \textup{(}Definition~\textup{\ref{def:scalar-diagonal-hypothesis}}\textup{)}
+\textup{(}the proved uniform-weight scalar lane\textup{)}, then
 $\delta F_g^{\mathrm{cross}}(\cA)=0$ for every $g \geq 1$, and the
 cohomological obstruction class satisfies
 \[
 \mathrm{obs}_g(\cA)
 \;=\;
 \kappa(\cA)\cdot\lambda_g
-\qquad \textup{(}UNIFORM-WEIGHT\textup{})
+\qquad \textup{(}UNIFORM-WEIGHT, SCALAR-DIAGONAL\textup{})
 \qquad \text{in } H^{2g}(\overline{\mathcal{M}}_g).
 \]
 In particular,
@@ -6932,9 +7386,11 @@ unfolded, and is the only statement with universal scope.
 \emph{Abelian case.}
 The Heisenberg algebra $\mathcal{H}_\kappa$ is the abelian Kac--Moody algebra
 ($\mathfrak{g}$ abelian, $h^\vee = 0$). The general formula
-$\kappa = (k + h^\vee)\dim\mathfrak{g}/(2h^\vee)$ has a removable singularity
-at $h^\vee = 0$; one defines $\kappa(\mathcal{H}_\kappa) = \kappa$ directly
-from the genus-$1$ curvature (Theorem~\ref{thm:heisenberg-obs}).
+$\kappa = (k + h^\vee)\dim\mathfrak{g}/(2h^\vee)$ is a semisimple
+affine formula and has no meaning at $h^\vee = 0$; the abelian case
+is defined directly by
+$\kappa(\mathcal{H}_\kappa) = \kappa$ from the genus-$1$ curvature
+(Theorem~\ref{thm:heisenberg-obs}).
 The Heisenberg dual has opposite curvature:
 $\kappa(\mathcal{H}_\kappa^!) = -\kappa$,
 consistent with the Koszul dual $\mathrm{Sym}^{\mathrm{ch}}(V^*)$ being curved with
@@ -6980,7 +7436,7 @@ Proposition~\ref{prop:scalar-obstruction-hodge-euler} gives
 \mathrm{obs}_g(\cA)
 \;=\;
 \kappa(\cA)\,\lambda_g
-\qquad \textup{(}UNIFORM-WEIGHT\textup{)}
+\qquad \textup{(}UNIFORM-WEIGHT, SCALAR-DIAGONAL\textup{)}
 \]
 for all $g \geq 1$ in the scalar-diagonal regime. For a general
 modular Koszul algebra, Theorem~\ref{thm:multi-weight-genus-expansion}
@@ -7083,7 +7539,7 @@ stronger genus-extension theorems.
  higher genus on the open stratum. The shadow invariants
  $\kappa$, $S_r$, and the modular characteristic
  $\mathrm{obs}_g = \kappa \cdot \lambda_g$ for
- uniform-weight algebras in every genus, and
+ scalar-diagonal uniform-weight algebras in every genus, and
  $\mathrm{obs}_1 = \kappa \cdot \lambda_1$
  \textup{(g=1 only; all-weight at g=1 is unconditional)}
  unconditionally
@@ -7142,15 +7598,14 @@ the standard Hodge bundle $\mathbb{E} = R^0\pi_*\omega$, because
 the propagator $\partial_z\log E(z,w)$ is weight~$1$
 (Remark~\ref{rem:propagator-weight-universality},
 Proposition~\ref{prop:multi-generator-obstruction}(b)).
-The full identity $\mathrm{obs}_g = \kappa \cdot \lambda_g$
-\textup{(}ALL-WEIGHT + $\delta F_g^{\mathrm{cross}}$\textup{)}
+The all-weight numerical identity
+$F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$
 \emph{fails} at $g \geq 2$ for multi-weight algebras
 ($\mathcal{W}_N$, $N \geq 3$): the free energy receives a
 nonvanishing cross-channel correction
 $\delta F_g^{\mathrm{cross}} \neq 0$
 \textup{(all-weight, with cross-channel correction $\delta F_g^{\mathrm{cross}}$)}
-(Open Problem~\ref{op:multi-generator-universality}, resolved
-negatively; Theorem~\ref{thm:multi-weight-genus-expansion}).
+(Theorem~\ref{thm:multi-weight-genus-expansion}).
 Algebraic-family rigidity kills primitive cyclic directions
 but the tautological-purity identification
 $\Gamma_\cA = \kappa(\cA)\Lambda$ fails for multi-weight algebras.
@@ -7159,18 +7614,50 @@ The Hodge-type bundles $\mathbb{E}_h = R^0\pi_*\omega^{\otimes h}$
 (Mumford--Chiodo), but do not appear in the bar complex.
 \end{remark}
 
-\begin{openproblem}[Multi-generator universality at higher genus
-(resolved)]%
+\begin{remark}[Higher-Hodge genus-$2$ diagnostic]
+\label{rem:higher-hodge-genus2-diagnostic}
+The exclusion of the higher Hodge bundles is visible already at
+genus~$2$. If one inserts a weight-$j$ Hodge bundle
+\(\mathbb E_j=R^0\pi_*\omega^{\otimes j}\) into the compactified
+calculation, the resulting diagnostic has the form
+\[
+ I_2(j;P)
+ =
+ \frac{e(j)^2}{480}
+ - B_3(j)P
+ - \frac{j-\tfrac12}{576},
+ \qquad
+ e(j)=6j^2-6j+1,\quad
+ B_3(j)=j^3-\frac32j^2+\frac12j .
+\]
+Here \(P=\int_{\overline{\mathcal M}_2}\kappa_1 c_3\) denotes the
+compactified boundary pairing supplied by the full
+Mumford--Chiodo GRR calculation. The polynomial has \(j^4\)
+coefficient \(3/40\) for every value of~\(P\), so it is a genuine
+higher-Hodge diagnostic. It is not the bar-complex scalar lane:
+the bar propagator uses the standard weight-$1$ Hodge bundle. The
+collision value
+\[
+ P=\frac{1003}{8640}
+\]
+gives \(I_2(1;P)=I_2(2;P)=7/5760\), the
+Faber--Pandharipande scalar coefficient. Thus genus-$2$ numerical
+coincidence between weights cannot identify a higher-Hodge formula
+with the compactified bar obstruction. The theorem uses only
+\(\lambda_2^{\mathrm{FP}}=7/5760\) on the scalar lane and the
+mixed-channel graph correction \(\delta F_2^{\mathrm{cross}}\) on
+the multi-weight lane.
+\end{remark}
+
+\begin{proposition}[Multi-weight failure of scalar genus universality;
+\ClaimStatusProvedHere]%
 \label{op:multi-generator-universality}%
 \index{multi-generator obstruction!resolution|textbf}%
 \index{cross-channel correction!resolution of universality|textbf}%
-\textbf{Resolved negatively at genus~$\boldsymbol{2}$.}
 For multi-weight families such as\/ $\mathcal{W}_N^k$ with
-$N \geq 3$, the scalar formula
-$\mathrm{obs}_g = \kappa \cdot \lambda_g$
-\textup{(all-weight, with cross-channel correction $\delta F_g^{\mathrm{cross}}$)}
-receives a nonvanishing
-\emph{cross-channel correction} at $g \geq 2$.
+$N \geq 3$, the scalar free-energy formula
+$F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$ is not the full
+all-weight answer at $g \geq 2$.
 The genus-$g$ free energy decomposes as
 \textup{(all-weight, with cross-channel correction $\delta F_g^{\mathrm{cross}}$)}
 \begin{equation}\label{eq:multi-weight-decomposition-op}
@@ -7234,7 +7721,7 @@ amplitudes. The $c$-independent lollipop piece $1/16$ arises
 because the OPE structure constant $C_{TWW} = c$ cancels the
 propagator $\eta^{TT} = 2/c$, leaving a topological residue that
 persists in the semiclassical limit $c \to \infty$.
-\end{openproblem}
+\end{proposition}
 
 \begin{remark}[Multi-generator free energy: structural diagnosis]%
 \label{rem:multigen-structural-diagnosis}%
@@ -7257,11 +7744,12 @@ $\eta = \mathrm{diag}(\kappa_{h_1}, \ldots, \kappa_{h_r})$
 (orthogonality of distinct conformal weights on the sphere)
 and per-channel propagators $P_i = 1/\kappa_{h_i}$.
 If the per-channel Givental $R$-matrix is universal
-(independent of~$h_i$), the CohFT factorises and
+(independent of~$h_i$) and the scalar-diagonal factorization
+hypothesis holds, the CohFT factorises and
 $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$
-\textup{(}UNIFORM-WEIGHT\textup{)}.
+\textup{(}SCALAR-DIAGONAL FACTORIZATION\textup{)}.
 
-\textup{(c)} \textbf{Resolved negatively.}
+\textup{(c)} \emph{Failure mechanism.}
 The bar propagator $d\log E(z,w)$ is weight-$1$
 (Remark~\ref{rem:propagator-weight-universality}),
 which controls the \emph{edges} of the graph sum.
@@ -7317,8 +7805,7 @@ $\overline{\mathcal{M}}_g$~class appears at genus~$g$, since
 the Kuranishi map vanishes by parity.
 Indeed, the scalar formula \emph{fails}: the free energy receives
 a cross-channel correction
-(Open Problem~\ref{op:multi-generator-universality}, resolved
-negatively; Theorem~\ref{thm:multi-weight-genus-expansion}).
+(Theorem~\ref{thm:multi-weight-genus-expansion}).
 \end{enumerate}
 \end{remark}
 
@@ -7339,14 +7826,11 @@ Hodge bundle $\mathbb{E} = R^0\pi_*\omega$
 to~$\eta$, but the Kuranishi map vanishes by parity, so the
 MC equation does not determine which class in
 $H^*(\overline{\mathcal{M}}_g)$ appears at genus~$g$.
-The identity $\mathrm{obs}_g = \kappa \cdot \lambda_g$
-\textup{(}ALL-WEIGHT + $\delta F_g^{\mathrm{cross}}$\textup{)}
-\emph{fails}
-at $g \geq 2$ for multi-weight algebras: the free energy receives
-a cross-channel correction $\delta F_g^{\mathrm{cross}} \neq 0$
-(Open Problem~\textup{\ref{op:multi-generator-universality}},
-resolved negatively;
-Theorem~\textup{\ref{thm:multi-weight-genus-expansion}}).
+ The all-weight numerical identity
+ $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$ \emph{fails}
+ at $g \geq 2$ for multi-weight algebras: the free energy receives
+ a cross-channel correction $\delta F_g^{\mathrm{cross}} \neq 0$
+ (Theorem~\textup{\ref{thm:multi-weight-genus-expansion}}).
 \end{enumerate}
 \end{proposition}
 
@@ -7363,11 +7847,11 @@ Part~(c): scalar saturation gives
 $\Theta^{\min} = \eta\otimes\Omega$ for some
 $\Omega \in \widehat{\Gmod}$; the Kuranishi map vanishes by
 parity (Proposition~\ref{prop:saturation-equivalence}), so the
-MC equation does not constrain~$\Omega$. The identification
-$\Omega_g = \lambda_g$
-\textup{(all-weight, with cross-channel correction $\delta F_g^{\mathrm{cross}}$)}
-requires the bar construction to produce
-$\lambda_g$ at genus~$g$ for multi-weight algebras.
+MC equation does not constrain~$\Omega$. The scalar-diagonal
+identification would force the integrated coefficient to be
+$\kappa(\cA)\lambda_g^{\mathrm{FP}}$; the multi-weight graph sum has
+additional mixed-channel terms, so scalar saturation alone does not
+determine the genus-$g$ tautological coefficient.
 \end{proof}
 
 \begin{proposition}[Genus-$2$ quartic dependence; \ClaimStatusProvedHere]%
@@ -7420,13 +7904,12 @@ the $T$-multiplication) suggests a Givental--Teleman
 decomposition into channels, but does \emph{not} by itself
 force cancellation of the $R$-matrix dressing and cross-channel
 vertex terms in the summed free energy.
-This has been resolved negatively:
+The graph sum gives
 $F_g \neq \kappa \cdot \lambda_g^{\mathrm{FP}}$
 \textup{(all-weight, with cross-channel correction $\delta F_g^{\mathrm{cross}}$)}
 at $g \ge 2$
 for multi-weight families
-(Open Problem~\ref{op:multi-generator-universality}, resolved
-negatively; Theorem~\ref{thm:multi-weight-genus-expansion}).
+(Theorem~\ref{thm:multi-weight-genus-expansion}).
 The scalar graph sum is a \emph{projection} of the
 multi-channel computation that conflates the channel structure.
 \end{remark}
@@ -7450,7 +7933,20 @@ From Theorem~\ref{thm:genus-universality}(ii): $\kappa = c \cdot \varrho(\mathfr
 \begin{corollary}[\texorpdfstring{$\kappa$}{kappa}-periodicity under level shift; \ClaimStatusProvedHere]
 \label{cor:kappa-periodicity}
 \index{obstruction coefficient!periodicity}
-For affine Kac--Moody $\widehat{\mathfrak{g}}_k$, the obstruction coefficient is periodic under level shift: $\kappa(\widehat{\mathfrak{g}}_{k+n}) = \kappa(\widehat{\mathfrak{g}}_k) + n \cdot d/(2h^\vee)$ for $n \in \mathbb{Z}$. In particular, the free energy $F_g$ is a linear function of $k$ with slope $\lambda_g^{FP} \cdot d/(2h^\vee)$ \textup{(}UNIFORM-WEIGHT\textup{}). For $\mathcal{W}$-algebras, $\kappa$ is a rational function of $k$ (through its dependence on the DS central charge), and the periodicity statement becomes: $\kappa(\mathcal{W}^{k+n}(\mathfrak{g})) - \kappa(\mathcal{W}^k(\mathfrak{g}))$ is a rational function of $k$ with poles only at $k = -h^\vee$.
+For affine Kac--Moody $\widehat{\mathfrak{g}}_k$, the obstruction
+coefficient is periodic under level shift:
+$\kappa(\widehat{\mathfrak{g}}_{k+n})
+= \kappa(\widehat{\mathfrak{g}}_k) + n \cdot d/(2h^\vee)$ for
+$n \in \mathbb{Z}$. On the scalar-diagonal lane, the scalar free
+energy $F_g$ is therefore a linear function of $k$ with slope
+$\lambda_g^{\mathrm{FP}} \cdot d/(2h^\vee)$
+\textup{(}UNIFORM-WEIGHT, SCALAR-DIAGONAL\textup{}).
+For $\mathcal{W}$-algebras, $\kappa$ is a rational function of $k$
+\textup{(}through its dependence on the DS central charge\textup{)},
+and the periodicity statement becomes:
+$\kappa(\mathcal{W}^{k+n}(\mathfrak{g}))
+- \kappa(\mathcal{W}^k(\mathfrak{g}))$ is a rational function of $k$
+with poles only at $k = -h^\vee$.
 \end{corollary}
 
 \begin{proof}
@@ -7458,11 +7954,18 @@ For KM: $\kappa = (k+h^\vee)d/(2h^\vee)$, which is linear in $k$ with slope $d/(
 \end{proof}
 
 \begin{remark}[Universality principle]\label{rem:lambda-universality}
-For algebras with generators of the same conformal weight
-(Heisenberg, Virasoro, Kac--Moody), the factorization
-$\mathrm{obs}_g = \kappa \cdot \lambda_g$ \textup{(}UNIFORM-WEIGHT\textup{)} and the free-energy
-formula $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$ \textup{(}UNIFORM-WEIGHT\textup{)} hold unconditionally in every genus. For multi-generator
-algebras ($\mathcal{W}_N$, $N \geq 3$),
+For algebras with generators of the same conformal weight, the
+factorization
+$\mathrm{obs}_g = \kappa \cdot \lambda_g$
+\textup{(}UNIFORM-WEIGHT, SCALAR-DIAGONAL\textup{)} and the
+free-energy formula
+$F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$
+\textup{(}UNIFORM-WEIGHT, SCALAR-DIAGONAL\textup{)} hold on the proved
+scalar-diagonal lane. This is unconditional for Heisenberg, Virasoro,
+and rank-$1$ free fields; for non-abelian affine Kac--Moody it is
+proved on the positive-integral lattice/coset realizations and is
+conditional on scalar-diagonality at generic level. For multi-generator
+multi-weight algebras ($\mathcal{W}_N$, $N \geq 3$),
 the genus-$1$ identity $F_1 = \kappa/24$
 \textup{(g=1 only; all-weight at g=1 is unconditional)} is unconditional,
 and the edge-level universality
@@ -7471,22 +7974,47 @@ constrains the higher-genus structure;
 the full higher-genus factorization \emph{fails}: the free energy
 receives a cross-channel correction $\delta F_g^{\mathrm{cross}} \neq 0$
 \textup{(}ALL-WEIGHT + $\delta F_g^{\mathrm{cross}}$\textup{)}
-(Open Problem~\ref{op:multi-generator-universality}, resolved
-negatively; Theorem~\ref{thm:multi-weight-genus-expansion}).
+(Theorem~\ref{thm:multi-weight-genus-expansion}).
 \end{remark}
 
-\begin{corollary}[Additivity of the obstruction coefficient; \ClaimStatusConditional]\label{cor:kappa-additivity}
+\begin{corollary}[Additivity of the obstruction coefficient; scalar-lane scope;
+\ClaimStatusConditional]\label{cor:kappa-additivity}
 \index{obstruction coefficient!additivity}
-For Koszul chiral algebras $\mathcal{A}$, $\mathcal{B}$ such that $\mathcal{A} \otimes \mathcal{B}$ is Koszul:
+For Koszul chiral algebras $\mathcal{A}$, $\mathcal{B}$ such that
+$\mathcal{A} \otimes \mathcal{B}$ is Koszul:
 \begin{equation}\label{eq:kappa-additivity}
 \kappa(\mathcal{A} \otimes \mathcal{B}) = \kappa(\mathcal{A}) + \kappa(\mathcal{B}).
 \end{equation}
-In particular, on the proved scalar lane,
-$\mathrm{obs}_g(\mathcal{A} \otimes \mathcal{B}) = \mathrm{obs}_g(\mathcal{A}) + \mathrm{obs}_g(\mathcal{B})$ for all $g \geq 1$.
+If $\mathcal{A}$, $\mathcal{B}$, and
+$\mathcal{A}\otimes\mathcal{B}$ lie on the proved
+scalar-diagonal lane, then
+\[
+\mathrm{obs}_g(\mathcal{A} \otimes \mathcal{B})
+= \mathrm{obs}_g(\mathcal{A}) + \mathrm{obs}_g(\mathcal{B})
+\qquad (g\ge1).
+\]
+For general all-weight tensor products this statement controls only
+the additive scalar prefactor; mixed-channel corrections are separate
+stable-graph data.
 \end{corollary}
 
 \begin{proof}
-The singular part of the OPE of $\mathcal{A} \otimes \mathcal{B}$ is the sum of the singular parts of $\mathcal{A}$ and $\mathcal{B}$ (the tensor product acts on disjoint sets of fields). The genus-$1$ curvature, which determines $\kappa$ by Theorem~\ref{thm:genus-universality}, is therefore additive. Since the Faber--Pandharipande integral $\lambda_g^{\mathrm{FP}}$ is linear in $\kappa$, the factorization~\eqref{eq:genus-universality} gives $\mathrm{obs}_g(\mathcal{A} \otimes \mathcal{B}) = (\kappa(\mathcal{A}) + \kappa(\mathcal{B})) \cdot \lambda_g = \mathrm{obs}_g(\mathcal{A}) + \mathrm{obs}_g(\mathcal{B})$ \end{proof}
+The singular part of the OPE of
+$\mathcal{A} \otimes \mathcal{B}$ is the sum of the singular parts of
+$\mathcal{A}$ and $\mathcal{B}$, since the tensor product acts on
+disjoint sets of fields. The genus-$1$ curvature, which determines
+$\kappa$ by Theorem~\ref{thm:genus-universality}, is therefore
+additive. On the scalar-diagonal lane,
+$\mathrm{obs}_g=\kappa\lambda_g$, so
+\[
+\mathrm{obs}_g(\mathcal{A}\otimes\mathcal{B})
+= (\kappa(\mathcal{A})+\kappa(\mathcal{B}))\lambda_g
+= \mathrm{obs}_g(\mathcal{A})+\mathrm{obs}_g(\mathcal{B}).
+\]
+For all-weight tensor products, the same argument proves only the
+additivity of the scalar coefficient; it does not identify or cancel
+the cross-channel summands.
+\end{proof}
 
 \begin{example}
 For a rank-$d$ lattice vertex algebra $V_\Lambda = \mathcal{H}_1^{\otimes d}$, additivity gives $\kappa(V_\Lambda) = d \cdot \kappa(\mathcal{H}_1) = d$, confirming the Master Table entry (Table~\ref{tab:master-invariants}). For the $bc$--$\beta\gamma$ system, $\kappa(bc \otimes \beta\gamma) = c/2 + (-c/2) = 0$ (since $\kappa(\beta\gamma) = -\kappa(bc)$ by Theorem~\ref{thm:fermion-all-genera}).
@@ -7532,7 +8060,7 @@ higher-degree shadow obstruction tower or the full Maurer--Cartan element
 $\Theta_\mathcal{A}$. In algebra families with a named critical
 parameter, these conditions pick out the scalar critical point. When
 $m_1^2 = 0$, $H^0(\bar{B}^{\mathrm{ch}}(\mathcal{A}))$ is a genuine
-associative chiral algebra \textup{(}not merely $A_\infty$\textup{)}.
+associative chiral algebra.
 \end{corollary}
 
 \begin{proof}
@@ -7563,7 +8091,7 @@ distinguished genus-$1$ tautological class
 On the proved scalar lane, one also has
 \[
 \mathrm{obs}_g(\mathcal{A}) = \kappa(\mathcal{A}) \cdot \lambda_g
-\qquad \textup{(}UNIFORM-WEIGHT\textup{)}
+\qquad \textup{(}UNIFORM-WEIGHT, SCALAR-DIAGONAL\textup{)}
 \qquad \;\in\; R^g(\overline{\mathcal{M}}_g)
 \qquad (g \geq 1).
 \]
@@ -7627,7 +8155,7 @@ the scalar level to point
 The master table records the scalar level
 $\Theta_\cA^{\leq 2} = \kappa(\cA)$ of the shadow obstruction tower.
 The cubic, quartic, and higher shadows, computed for each family
-in the example chapters of Part~\ref{part:characteristic-datum}, extend this table into a
+in the example chapters of Part~\ref{part:standard-landscape}, extend this table into a
 multi-column shadow census: Heisenberg terminates at degree~$2$
 (Corollary~\ref{cor:heisenberg-postnikov-termination}),
 affine at degree~$3$
@@ -7647,7 +8175,7 @@ $R^1(\overline{\mathcal{M}}_1)$, since every universal genus-$1$
 scalar obstruction class is proportional to~$\lambda_1$
 (Theorem~\ref{thm:genus-universality}). On the proved scalar lane,
 the same rank-$1$ statement holds in each genus~$g$ with
-$\kappa(\mathcal{A}) \cdot \lambda_g$ The image of the group
+$\kappa(\mathcal{A}) \cdot \lambda_g$. The image of the group
 homomorphism $K_0(\mathrm{KCA}) \to \mathbb{Q}$
 \textup{(}Corollary~\ref{cor:tautological-class-map}\textup{)} is
 $\mathbb{Q}$ itself: the Heisenberg algebra $\mathcal{H}_\kappa$
@@ -7656,17 +8184,16 @@ achieves any rational $\kappa$, and additivity
 range to all of~$\mathbb{Q}$.
 
 A natural question is whether the \emph{full} bar complex
-$\bar{B}^{\mathrm{ch}}(\mathcal{A})$, not just its genus-$g$
-cohomology class, provides higher tautological classes beyond
-$\lambda_g$. The bar spectral sequence
+$\bar{B}^{\mathrm{ch}}(\mathcal{A})$ carries tautological data beyond
+the genus-$g$ cohomology class $\lambda_g$. The bar spectral sequence
 $E_r^{p,q} \Rightarrow H^{p+q}(\bar{B}^{(g)})$ has $E_2$ page
 involving products of $\psi$-classes and $\lambda$-classes on
 $\overline{\mathcal{M}}_{g,n}$, which a priori lie in a larger part of
-$R^*(\overline{\mathcal{M}}_g)$. On the proved scalar lane, collapse
-at $E_2$ (Theorem~\ref{thm:spectral-sequence-collapse}) reduces the
-scalar contribution to the single class $\kappa \cdot \lambda_g$ so
-no additional scalar tautological classes emerge from the bar complex
-at the level of cohomology.
+$R^*(\overline{\mathcal{M}}_g)$. On the proved scalar lane, the
+scalar projection of this spectral sequence is already the Hodge
+Euler class $\kappa\cdot\lambda_g$; higher differentials may produce
+non-scalar tautological classes, but they do not create another
+rank-$1$ scalar class at the cohomological obstruction level.
 \end{remark}
 
 \begin{proposition}[Bar spectral sequence and tautological filtration;
@@ -7736,7 +8263,8 @@ The bar complex can produce tautological classes beyond $\lambda_g$
 via two mechanisms: (1)~non-collapsing spectral sequences (no
 current example among Master Table algebras); (2)~module insertions,
 where $\mathrm{obs}_{g,n}=\kappa\cdot\lambda_g\cdot
-\prod_i\psi_i^{h_i}$ \textup{(}UNIFORM-WEIGHT\textup{)} gives products in
+\prod_i\psi_i^{h_i}$
+\textup{(}UNIFORM-WEIGHT, SCALAR-DIAGONAL\textup{)} gives products in
 $R^*(\overline{\mathcal{M}}_{g,n})$.
 The second is implicit in the Verlinde formula.
 \end{remark}
@@ -7856,7 +8384,9 @@ $\text{obs}_g$ with $\text{def}_g$:
 \begin{remark}[Hodge filtration compatibility]\label{rem:hodge-filtration}
 \index{Hodge filtration!bar complex}
 On the proved scalar lane, the factorization
-$\mathrm{obs}_g = \kappa \cdot \lambda_g$ \textup{(}UNIFORM-WEIGHT\textup{)} by Theorem~\ref{thm:genus-universality} and is
+$\mathrm{obs}_g = \kappa \cdot \lambda_g$
+\textup{(}UNIFORM-WEIGHT, SCALAR-DIAGONAL\textup{)}
+by Theorem~\ref{thm:genus-universality} is
 compatible with the Hodge filtration on
 $H^*(\overline{\mathcal{M}}_g)$. Since
 $\lambda_g = c_g(\mathbb{E})$ is a Hodge class of type $(g,g)$ in
@@ -7892,7 +8422,7 @@ valid. This does not identify the full higher-degree tower.
 \begin{proof}
 On the proved scalar lane, Theorem~\ref{thm:genus-universality} gives
 $\mathrm{obs}_g = \kappa \cdot \lambda_g$
-\textup{(}UNIFORM-WEIGHT; proved scalar lane, see
+\textup{(}UNIFORM-WEIGHT, SCALAR-DIAGONAL; proved scalar lane, see
 Theorem~\ref{thm:genus-universality}\textup{)}
 with $\lambda_g \neq 0$ for all $g \geq 1$.
 Thus $\mathrm{obs}_g = 0$ for some $g$ iff $\kappa = 0$ iff
@@ -7916,14 +8446,16 @@ Maurer--Cartan element $\Theta_{\cA}$ or the higher-degree shadow obstruction to
 to vanish.
 \end{remark}
 
-\begin{remark}[\texorpdfstring{$\kappa$}{kappa} as Chern--Simons level]\label{rem:kappa-chern-simons}
-\index{obstruction coefficient!Chern--Simons interpretation}
-\index{Chern--Simons theory!obstruction coefficient}
+\begin{remark}[Chern--Simons benchmark for \texorpdfstring{$\kappa$}{kappa};
+heuristic scope]\label{rem:kappa-chern-simons}
+\index{obstruction coefficient!Chern--Simons benchmark}
+\index{Chern--Simons theory!heuristic benchmark}
 For affine Kac--Moody $\widehat{\mathfrak{g}}_k$, the obstruction
 coefficient $\kappa = (k+h^\vee)d/(2h^\vee)$ is proportional to the
 shifted level $t = k + h^\vee$ that appears on the associated
 Chern--Simons benchmark lane. The genus-$g$ free energy
-$F_g = \kappa \cdot \lambda_g^{FP}$ \textup{(}UNIFORM-WEIGHT\textup{)} is therefore a tautological
+$F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$
+\textup{(}UNIFORM-WEIGHT, SCALAR-DIAGONAL\textup{)} is therefore a tautological
 integral series whose scalar coefficient is linear in that shifted
 level. This supports a heuristic comparison between the scalar
 bar-complex obstruction series and Chern--Simons/WRT asymptotics,
@@ -7936,7 +8468,7 @@ $\Theta_{\widehat{\mathfrak{g}}_k}^{\min} =
 $t = k + h^\vee$: on the same heuristic benchmark surface, the
 bar-complex curvature may be viewed as an algebraic shadow of
 Chern--Simons level dependence. At critical level the scalar
-coefficient vanishes, but no theorematic identification with a
+coefficient vanishes, but no theorem identifying it with a
 topological Chern--Simons phase is proved here.
 \end{remark}
 
@@ -7994,7 +8526,7 @@ uniform-weight scalar lane one has
 \mathrm{obs}_g(\cA)
 \;=\;
 \kappa(\cA)\lambda_g
-\qquad \textup{(}UNIFORM-WEIGHT\textup{}).
+\qquad \textup{(}UNIFORM-WEIGHT, SCALAR-DIAGONAL\textup{}).
 \]
 By definition of the scalar free energy, $F_g(\cA)$ is the pairing of
 this class with $\psi_1^{2g-2}$ on $\overline{\mathcal{M}}_{g,1}$,
@@ -8073,9 +8605,19 @@ F_2(\cW_3)
 \;=\;
 \frac{7\,\kappa(\cW_3)}{5760}
 \;+\;
-\frac{c+204}{16c},
+\frac{c+204}{16c}
+\;=\;
+\frac{7\,c^{2}+432\,c+88128}{6912\,c},
 \]
-so the cross-channel correction is genuinely additional data.
+so the cross-channel correction is genuinely additional data. The
+common-denominator closed form has discriminant $432^{2}-4\cdot 7\cdot
+88128 = -2{,}280{,}960<0$, so $F_2(\cW_3)$ has no real zero in $c$
+\textup{(}only the pole at $c=0$ where the algebra degenerates\textup{);}
+the cross-channel correction $\delta F_2^{\mathrm{cross}}$ alone
+\emph{does} have a real zero at $c=-204$, but this is cancelled in
+$F_2$ by the scalar part $7\,\kappa(\cW_3)/5760$. At the KSDual fixed
+charge $c=50$, $F_2(\cW_3)=31807/86400$; at the c-dual $c=100$
+\textup{(}where $c'=0$\textup{),} $F_2(\cW_3)=12583/43200$.
 \end{example}
 
 \begin{remark}[Family index theorem]\label{rem:towards-family-index}
@@ -8396,9 +8938,11 @@ explicit identifications:
  \det(E(\Gamma)),
  \end{equation}
  the ``pure loop'' contribution computed entirely from genus-$0$
- data. For Koszul $\cA$, $H^*(\barB^{(0)}(\cA)) \cong \cA^!$
- is concentrated in degree~$0$, so the maximal-loop-order page
- reduces to the graph complex with coefficients in~$\cA^!$.
+ data. For Koszul $\cA$, the intrinsic genus-zero bar dual
+ $\cA^i_{(0)} := H^*(\barB^{(0)}(\cA))$ is concentrated in
+ degree~$0$, so the maximal-loop-order page reduces to the graph
+ complex with coefficients in~$\cA^i_{(0)}$. In a finite Verdier
+ window $\cA^i_{(0)} \cong (\cA^!)^\vee$.
 \end{enumerate}
 \end{proposition}
 
@@ -8412,9 +8956,11 @@ tree-level composition of the vertex cohomologies.
 (b)~For $\ell = g$, the constraint $\sum_v g_v = g - \ell = 0$
 forces $g_v = 0$ for all~$v$. The vertex factors are
 $\cA(0, \mathrm{val}(v))$, i.e., the genus-$0$ operations.
-The $d_0$-cohomology replaces these with
-$H^*(\barB^{(0)}(\cA)) \cong (\cA^!)^{\mathrm{val}(v)}$ for
-Koszul~$\cA$ (by bar-cobar inversion at genus~$0$).
+The $d_0$-cohomology replaces these with the intrinsic genus-zero
+bar dual $H^*(\barB^{(0)}(\cA)) = \cA^i_{(0)}$ at each vertex. For
+Koszul~$\cA$ this is concentrated in degree~$0$; after finite Verdier
+duality one may write $\cA^i_{(0)} \cong (\cA^!)^\vee$. This is
+genus-zero bar cohomology, not bar-cobar inversion.
 \end{proof}
 
 \begin{remark}[Physical interpretation: perturbative expansion]%
@@ -8558,7 +9104,7 @@ of the curvature endomorphism, i.e., $\mathrm{Tr}_\cA$.
  $TT$ OPE, weighted by the period integral\textup{)}.
 \end{enumerate}
 These coincide with the values $\kappa(\cA)$ computed by direct
-propagator analysis in Part~\ref{part:characteristic-datum}.
+propagator analysis in Part~\ref{part:bar-cobar-engine}.
 \end{corollary}
 
 \begin{proof}
@@ -8601,77 +9147,83 @@ Their agreement is the content of genus universality
 (Theorem~\ref{thm:genus-universality}).
 \end{remark}
 
-\subsection{Collapse on the Koszul locus}
+\subsection{Finite-depth convergence on the Koszul locus}
 \label{subsec:loop-order-collapse}
 \index{spectral sequence!loop order collapse}
 
-\begin{theorem}[Loop order collapse;
+\begin{theorem}[Loop-order convergence and finite-depth collapse bound;
 \ClaimStatusProvedHere]\label{thm:loop-order-collapse}
 Let $\cA$ be a modular Koszul chiral algebra
-\textup{(}Definition~\textup{\ref{def:modular-koszul-chiral})}.
+\textup{(}Definition~\textup{\ref{def:modular-koszul-chiral})}
+whose finite-window bar tower is strict Mittag--Leffler.
 The loop order spectral sequence
 \textup{(}Theorem~\textup{\ref{thm:loop-order-spectral-sequence})}
-collapses at $E_1$:
-\begin{equation}\label{eq:loop-collapse}
-E_1^{\ell,q} \;=\; E_\infty^{\ell,q}
-\qquad\text{for all } \ell, q.
+is strongly convergent to the associated graded of
+$H^*(\widehat{\barB}^{(g)}(\cA))$ for every fixed genus~$g$.
+If the shadow tower of~$\cA$ has finite depth $r_{\max}$, so that no
+loop-contraction component lowers the loop filtration by more than
+$r_{\max}$, then
+\begin{equation}\label{eq:loop-collapse-bound}
+E_{r_{\max}+1}^{\ell,q}=E_\infty^{\ell,q}.
 \end{equation}
+In the exceptional case where the induced loop-contraction
+differential vanishes on $E_1$, this bound sharpens to
+$E_1=E_\infty$. For class-$M$ inputs, where
+$r_{\max}=\infty$, the theorem asserts completed convergence, not
+finite-page collapse.
 \end{theorem}
 
 \begin{proof}
-By the PBW filterability hypothesis (axiom~MK1 of
-Definition~\ref{def:modular-koszul-chiral}), the bar complex
-$\barB^{(g)}(\cA)$ admits an exhaustive filtration $F_\bullet$
-whose associated graded sees only the genus-$0$ collision
-differential and is Koszul-acyclic. The Koszul acyclicity
-at genus~$0$ ensures that at each vertex, the bar complex
-contributes only in degree~$0$; hence the vertex-tensor-product
-structure of each loop-order stratum is already cohomologically
-concentrated. The $d_1 = [d_{\mathrm{loop}}]$ differential
-on the $E_1$ page maps between summands where, after tree-edge
-contraction, the remaining graphs differ only by loop topology.
-The centrality of the curvature
-(Remark~\ref{rem:voa-central-curvature}) ensures that
-$d_{\mathrm{loop}}$ acts by a scalar (the curvature
-$\kappa(\cA)$) times the inner product contraction; this scalar
-action does not produce non-trivial cohomology on the $E_1$ page
-beyond the $E_0$ level. Hence all higher differentials $d_r$
-($r \geq 1$) vanish, and the spectral sequence collapses.
+For fixed~$g$, the loop filtration is bounded:
+$0\leq b_1(\Gamma)\leq g$. Hence the ordinary loop-order spectral
+sequence of Theorem~\ref{thm:loop-order-spectral-sequence}
+converges for each finite window. Strict Mittag--Leffler control
+commutes cohomology with the inverse limit over windows, so the
+completed spectral sequence converges strongly to the associated
+graded of $H^*(\widehat{\barB}^{(g)}(\cA))$.
+
+The component of the differential that lowers loop order by~$r$ is
+the $r$-th shadow operation in the obstruction tower. If the tower has
+finite depth $r_{\max}$, all such components vanish for
+$r>r_{\max}$. A filtered-complex spectral sequence has no
+differential $d_r$ without a filtration-drop-$r$ component in the
+underlying differential, giving the collapse bound
+\eqref{eq:loop-collapse-bound}. If the loop component already acts
+trivially on $E_1$, every later differential is forced to vanish and
+$E_1=E_\infty$. For class-$M$ algebras no finite $r_{\max}$ is
+available; the Mittag--Leffler completion gives convergence but no
+finite-page collapse statement.
 \end{proof}
 
-\begin{corollary}[Loop order decomposition of bar cohomology;
+\begin{corollary}[Associated graded by loop order;
 \ClaimStatusProvedHere]\label{cor:loop-decomposition-bar}
 \index{bar cohomology!loop order decomposition}
-For a modular Koszul chiral algebra~$\cA$, the bar cohomology
-at genus~$g$ decomposes by loop order:
+For a modular Koszul chiral algebra~$\cA$ satisfying the
+finite-window Mittag--Leffler hypothesis, the loop filtration on
+genus-$g$ bar cohomology has associated graded
 \begin{equation}\label{eq:loop-decomposition}
-H^*\!\bigl(\barB^{(g)}(\cA)\bigr)
+\operatorname{gr}^{\ell}_{F}
+H^*\!\bigl(\widehat{\barB}^{(g)}(\cA)\bigr)
 \;\cong\;
-\bigoplus_{\ell=0}^{g}
-E_1^{\ell,*}
-\;\cong\;
-\bigoplus_{\ell=0}^{g}
-H^*\!\bigl(
-\mathsf{SG}_{g}^{(\ell)}(\cA),\, d_{\mathrm{tree}}
-\bigr),
+E_\infty^{\ell,*}.
 \end{equation}
-where $\mathsf{SG}_{g}^{(\ell)}(\cA)$ is the chain complex
-of stable graphs of loop order~$\ell$ with vertex factors
-in~$\cA$.
+If, in addition, the spectral sequence collapses at $E_1$, then
+$E_\infty^{\ell,*}=H^*(\mathsf{SG}_{g}^{(\ell)}(\cA),
+d_{\mathrm{tree}})$ and the displayed associated graded is computed
+by the loop-$\ell$ stable-graph complex. Without an $E_1$ collapse
+hypothesis, the statement is an associated-graded identification, not
+a direct-sum decomposition of cohomology.
 \end{corollary}
 
 \begin{proof}
-The theorem immediately above shows that the loop-order spectral
-sequence collapses at $E_1$, so
-$E_1^{\ell,q}=E_\infty^{\ell,q}$ for every bidegree.
-Because the loop filtration is exhaustive and complete, the bar
-cohomology is the direct sum of its associated graded pieces
-$E_\infty^{\ell,*}$.
-By definition of the $E_1$ page, those pieces are exactly the
-cohomologies of the loop-$\ell$ stable-graph complexes
-$H^*(\mathsf{SG}_g^{(\ell)}(\cA),d_{\mathrm{tree}})$.
-Putting these identifications together gives the displayed
-decomposition of $H^*(\barB^{(g)}(\cA))$ by loop order.
+This is the standard output of a strongly convergent filtered
+spectral sequence: $E_\infty^{\ell,*}$ is the associated graded of
+the cohomology for the loop filtration. The $E_1$ page is the
+cohomology of the fixed-loop stable-graph complex with respect to
+$d_{\mathrm{tree}}$ by
+Theorem~\ref{thm:loop-order-spectral-sequence}. Identifying
+$E_\infty$ with that $E_1$ page requires the extra collapse
+hypothesis stated in the corollary.
 \end{proof}
 
 \subsection{The Getzler--Kapranov involution}
@@ -8718,14 +9270,17 @@ for the modular operad of Deligne--Mumford spaces.
 \begin{proof}
 The Prism Principle
 (Theorem~\ref{thm:prism-higher-genus}) identifies
-$\barB^{\mathrm{full}}(\cA) \simeq \mathrm{FT}(\cA)$.
+$\widehat{\barB}^{\mathrm{full}}(\cA) \simeq
+\widehat{\mathrm{FT}}(\cA)$ in the genus/window completed category.
 Applying the Feynman transform again:
 $\mathrm{FT}(\mathrm{FT}(\cA)) \simeq \cA$ by
 Theorem~\ref{thm:feynman-involution}. On the other hand,
 the Feynman transform of a conilpotent coalgebra (which
-$\barB(\cA)$ is) produces the cobar construction
-$\Omega(\barB(\cA))$, and Theorem~\ref{thm:higher-genus-inversion}
-gives $\Omega(\barB(\cA)) \simeq \cA$ on the Koszul locus.
+$\widehat{\barB}(\cA)$ is after completion) produces the continuous
+cobar construction $\Omega_{\mathrm{cont}}(\widehat{\barB}(\cA))$,
+and Theorem~\ref{thm:higher-genus-inversion}
+gives $\Omega_{\mathrm{cont}}(\widehat{\barB}(\cA)) \simeq \cA$ on
+the Koszul locus.
 Thus the bar-cobar resolution is a special case of~$F^2 \simeq
 \mathrm{id}$.
 \end{proof}
@@ -8839,7 +9394,7 @@ form, there is a weight system map
 w_\cA \colon \mathsf{GC}_2
 \;\longrightarrow\;
 \mathrm{End}\!\bigl(
-H^*(\barB^{\mathrm{full}}(\cA))
+H^*(\widehat{\barB}^{\mathrm{full}}(\cA))
 \bigr),
 \end{equation}
 defined by decorating vertices of Kontsevich graphs with
@@ -8852,7 +9407,8 @@ on the all-genus bar cohomology of~$\cA$.
 
 \begin{proof}
 The Feynman transform identification
-$\barB^{\mathrm{full}}(\cA) \simeq \mathrm{FT}(\cA)$ expresses
+$\widehat{\barB}^{\mathrm{full}}(\cA) \simeq
+\widehat{\mathrm{FT}}(\cA)$ expresses
 the bar complex as a sum over stable graphs with vertex factors
 in~$\cA$. A Kontsevich graph $\gamma \in \mathsf{GC}_2$ acts on
 a stable graph $\Gamma$ by ``inserting'' $\gamma$ at a vertex of
@@ -8911,7 +9467,9 @@ The constructions above rest on five structural pillars:
 \item \emph{Loop order decomposition}
  (Theorem~\ref{thm:loop-order-spectral-sequence}):
  the genus-$g$ bar complex decomposes by the graph Betti number
- into a spectral sequence that collapses on the Koszul locus.
+ into a completed spectral sequence; finite-depth shadow towers give
+ a finite-page collapse bound, while class-M towers require the
+ completed inverse-limit statement.
 \item \emph{Feynman involution $F^2 \simeq \mathrm{id}$}
  (Theorem~\ref{thm:feynman-involution},
  Corollary~\ref{cor:feynman-duality-qch}):
@@ -8933,7 +9491,7 @@ these pillars form the complete structural theory of quantum chiral
 homology in every genus.
 \end{remark}
 
-\begin{remark}[Universal $\Phi$-trace identity binding Vol~I higher-genus to Vol~III]
+\begin{remark}[Conditional $\Phi$-trace comparison binding Vol~I higher-genus to Vol~III]
 \label{rem:hgf-phi-trace-identity}
 The five pillars above admit a single cross-volume synthesis via the
 CY-to-chiral two-stage factorisation
@@ -8952,10 +9510,21 @@ all-genus data $\{\lambda_g\}_{g \geq 1}$ against the family $\kappa$-class:
 \in
 H^{\bullet}(\overline{\mathcal{M}}_{g,n}).
 \]
-On the Vol~III side, for the $K3$-fibre specialisation of the
-canonical $E_3$-holomorphic factorisation algebra
-$\PhiFA_3(\cC_{K3 \times E})$, the Borcherds pushforward of the
-BKM $\kappa$-invariant over $K3 \times E$ gives
+On the Vol~III side the proved scalar target is the Borcherds/Igusa
+coordinate
+\[
+\Phi_{10}^{\mathrm{un}}=\Delta_5^2,\qquad
+\kappa_{\mathrm{BKM}}(\mathfrak g_{\Delta_5})=5.
+\]
+For the $K3$-fibre specialisation of the canonical
+$E_3$-holomorphic factorisation algebra
+$\PhiFA_3(\cC_{K3 \times E})$, a chain-level Borcherds pushforward is
+an additional comparison datum. If the finite Hall--Borcherds
+source-recognition datum of
+Definition~\ref{def:hgf-finite-hall-borcherds-source} is supplied,
+and if the CY-to-chiral comparison maps commute with the bar
+supertrace and the Hall--Borcherds target maps on every finite window,
+then the conditional comparison reads
 \[
 \mathrm{push}_{K3 \times E}^{\mathrm{Borcherds}}\!\bigl(\kappa_{\mathrm{BKM}}\bigr)
 \;=\;
@@ -8963,16 +9532,14 @@ BKM $\kappa$-invariant over $K3 \times E$ gives
 \qquad
 \bigl(\mathcal{A} = \SpCh_{\Sigma_2, C}(\PhiFA_3(\cC_{K3 \times E}))\bigr),
 \]
-a single numerical-class identity that binds the higher-genus
-modular-Koszul trace (this chapter) to the BKM side of Vol~III via
-the stage-$2$ shadow of $\PhiFA_3$.
-This is the universal $\Phi$-trace identity: it states that the
-all-genus obstruction-tower aggregate on the chiral side is computed by
-the Borcherds pushforward on the CY side, with the unnormalised Igusa
-square $\Phi_{10}^{\mathrm{un}}=\Delta_5^2$ and the weight-$5$ class $\Delta_5$ of
-Remark~\ref{rem:hgf-H2-classification} both appearing as concrete
-low-genus witnesses of the identity. See Part~\ref{part:physics-bridges}
-for the $\Phi$-functor construction and the Vol~III $K3 \times E$ side.
+a numerical-class identity binding the higher-genus modular-Koszul
+trace to the BKM side of Vol~III through the stage-$2$ shadow of
+$\PhiFA_3$. Without the finite source matrices, parity fixture,
+comparison maps, no-extra-relations theorem, and PBW compatibility,
+the Borcherds pushforward phrase denotes only this scalar target
+coordinate; it does not construct a Hall source, a compact CoHA, or a
+chain-level recognition map. See Part~\ref{part:modular-tower-physics} for
+the $\Phi$-functor construction and the Vol~III $K3 \times E$ side.
 \end{remark}
 
 \subsection{Logarithmic clutching kernels}
@@ -9115,26 +9682,34 @@ divisors.
 \section{Synthesis}
 \label{sec:hgfnd-supplement}
 
-\begin{remark}[Gritsenko additive lift of $\Delta_5$ and higher-genus modular Koszul duality]
+\begin{remark}[Gritsenko additive lift of $\Delta_5$ and the source gate]
 \label{rem:hgfnd-1}
 The higher-genus foundations assembled in this chapter meet the K3
-chiral bialgebra structure at the Gritsenko 1995 additive lift. Starting from the Jacobi
-cusp form of weight $5$, index $1$ on $\Gamma^J_0(1)$, the Gritsenko
-additive lift produces
+automorphic target at the Gritsenko additive lift. Starting from the
+Jacobi cusp form of weight $5$, index $1$ on $\Gamma^J_0(1)$, the
+Gritsenko additive lift produces
 \[
 \Delta_5 \;\in\; M_5^{\mathrm{cusp}}(\mathrm{Sp}_4(\mathbb Z),\mathrm{ch})
 \]
 as a Siegel modular form of weight~$5$ on $\bar{\mathcal A}_2$ with a
 specific character $\mathrm{ch}$, such that
 $\Phi_{10}^{\mathrm{un}}=\Delta_5^2$ is the unnormalised Igusa
-weight-$10$ cusp form. The higher-genus modular Koszul
-duality for the K3 chiral bialgebra $\mathbf H_{\Delta_5}$ emerges as
-the pullback of Bruinier 2002 Prop.~5.1 Heegner Chern-class reciprocity
-along the Kuga--Satake morphism $K3\hookrightarrow\bar{\mathcal A}_2$.
-In particular, the $g=2$ modular Koszul pair refines the $g=1$ pair
-$(B_{\mathrm{ch}}(A),\Omega_X)$ through an explicit Humbert-divisor
-resolution that carries the $\mathbb Z/8$-monodromy class established
-in Vol.~III, Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
+weight-$10$ cusp form. Bruinier 2002 Prop.~5.1 supplies the
+Heegner Chern-class reciprocity line after pullback along the
+Kuga--Satake morphism $K3\hookrightarrow\bar{\mathcal A}_2$.
+
+The phrase ``K3 chiral bialgebra $\mathbf H_{\Delta_5}$'' is a
+conditional source phrase in this chapter. It denotes a chain-level
+Hall or CoHA object only after the finite Hall--Borcherds
+source-recognition datum of
+Definition~\ref{def:hgf-finite-hall-borcherds-source} has been
+constructed and compared with the Gritsenko--Nikulin target. Under
+that extra hypothesis, the $g=2$ modular Koszul pair refines the
+$g=1$ pair $(B_{\mathrm{ch}}(A),\Omega_X)$ through a
+Humbert-divisor resolution carrying the $\mathbb Z/8$ monodromy
+class recorded in Vol.~III, Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
+Absent that hypothesis, the paragraph asserts only the scalar
+automorphic lift and the Heegner Chern-class target.
 Primary-lit: Gritsenko 1995, Gritsenko--Nikulin 1996--98, Bruinier 2002
 (arXiv:math/0108079), Kuga--Satake 1967.
 \end{remark}
@@ -9147,21 +9722,30 @@ carries a stratification
 \bar{\mathcal A}_2^{\mathrm{BB}} \;=\; \mathcal A_2 \;\sqcup\; \mathcal A_1^\sharp \;\sqcup\; \mathrm{pt},
 \]
 where $\mathcal A_1^\sharp$ is a modular curve of cusps and the final
-point is the Borel cusp. The higher-genus foundations of
-$\mathbf H_{\Delta_5}$ descend through this stratification:
+point is the Borel cusp. If the finite Hall--Borcherds
+source-recognition datum of
+Definition~\ref{def:hgf-finite-hall-borcherds-source} has been
+supplied, the higher-genus foundations of $\mathbf H_{\Delta_5}$
+descend through this stratification:
 $\mathbf H_{\Delta_5}|_{\mathcal A_2}$ is the generic-locus chiral
 bialgebra, $\mathbf H_{\Delta_5}|_{\mathcal A_1^\sharp}$ is the
 semi-classical limit after the Humbert-divisor blow-down, and
 $\mathbf H_{\Delta_5}|_{\mathrm{pt}}$ is the fully abelianised
-Heisenberg-type limit on $\mathcal F_{K3}$. The Gritsenko--Nikulin
-1997--98 denominator identity
+Heisenberg-type limit on $\mathcal F_{K3}$. Without that datum this is
+only a stratification of the scalar automorphic target.
+
+The Gritsenko--Nikulin 1997--98 denominator identity
 \[
 \Phi_{10}^{\mathrm{un}}(Z) \;=\; \prod_{(n,l,m)>0} (1 - q^n \zeta^l p^m)^{c(nm,l)}
 \]
-is the higher-genus trace of the bar--cobar adjunction on
-$\mathbf H_{\Delta_5}$: each factor on the right corresponds to a
-physical state labelled by a positive root of the associated BKM
-algebra, and the exponents $c(nm,l)$ are the elliptic-genus Fourier
-coefficients of $K3$. See Vol.~III, Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic},
+is an unconditional target identity: the exponents $c(nm,l)$ are the
+elliptic-genus Fourier coefficients of $K3$ and the target
+Borcherds root multiplicities. Reading each factor as a compact Hall
+primitive, or reading the product as the higher-genus trace of the
+bar--cobar adjunction on $\mathbf H_{\Delta_5}$, requires the parity
+fixture, compact source matrices, comparison maps, no-extra-relations
+theorem, and PBW compatibility in
+Definition~\ref{def:hgf-finite-hall-borcherds-source}. See Vol.~III,
+Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic},
 \S\ref{sec:baily-borel-24-cusps}.
 \end{remark}

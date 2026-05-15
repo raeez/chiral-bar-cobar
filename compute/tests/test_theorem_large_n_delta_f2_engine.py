@@ -34,10 +34,12 @@ from theorem_large_n_delta_f2_engine import (
     B_leading,
     abjm_cross_channel_status,
     abjm_genus_g_free_energy,
+    c_thooft_polynomial_coefficients,
     c_thooft_large_N,
     c_wn_thooft,
     cross_verify_BN_AN,
     cross_verify_with_graph_sum,
+    delta_F2_grav_scope,
     delta_F2_grav_closed,
     delta_F2_thooft,
     delta_F2_winfty_scaling,
@@ -45,18 +47,24 @@ from theorem_large_n_delta_f2_engine import (
     effective_matrix_size,
     frobenius_eigenvalues,
     frobenius_manifold_dimension,
+    harmonic_minus_one,
     hypothetical_m2_scaling,
+    kappa_complementarity_WN,
     kappa_abjm,
+    koszul_conductor_WN,
     large_N_table,
     normalized_delta_F2,
     ratio_A_over_B,
     ratio_large_N_expansion,
+    self_dual_c_WN,
+    self_dual_kappa_WN,
     spectral_curve_branch_points,
     thooft_limit_A_over_c,
     thooft_table,
     verify_A_expansion,
     verify_B_expansion,
     verify_long_division,
+    w4_full_ope_large_c_witness,
 )
 
 
@@ -189,7 +197,7 @@ class TestW3Consistency(unittest.TestCase):
 
     def test_204_equals_4_times_51(self):
         """The 204 in (c+204)/(16c) equals 4*A(3) = 4*51/4*4/1 = 16*51/4.
-        Actually: 16*B + 16*A/c = c + 16*A. 16*51/4 = 204. Confirmed."""
+        Since 16*B + 16*A/c = c + 16*A, one has 16*51/4 = 204."""
         self.assertEqual(16 * A_exact(3), Fraction(204))
 
 
@@ -245,6 +253,13 @@ class TestExpansions(unittest.TestCase):
 
 class TestRatioAOverB(unittest.TestCase):
     """Verify A(N)/B(N) and its large-N expansion."""
+
+    def test_ratio_N2_is_singular(self):
+        """A(2)/B(2) is 0/0, not a zero crossover diagnostic."""
+        with self.assertRaises(ValueError):
+            ratio_A_over_B(2)
+        with self.assertRaises(ValueError):
+            ratio_large_N_expansion(2)
 
     def test_long_division_identity(self):
         """3N^3+14N^2+22N+33 = (N+3)(3N^2+5N+7) + 12 for N=2..100."""
@@ -367,6 +382,29 @@ class TestTHooftLimit(unittest.TestCase):
         for lam in [Fraction(1, 4), Fraction(1, 3), Fraction(1, 2)]:
             limit = thooft_limit_A_over_c(lam)
             self.assertEqual(limit, -lam / 8)
+
+    def test_thooft_lambda_zero_is_singular(self):
+        """lambda=0 is k=infinity and not a finite parameter value."""
+        with self.assertRaises(ValueError):
+            thooft_limit_A_over_c(Fraction(0))
+
+    def test_c_thooft_polynomial_coefficients(self):
+        """c(N,lambda) has leading term -N^4/lambda, not -(1-lambda)^2N^4/lambda."""
+        lam = Fraction(3, 4)
+        coeffs = c_thooft_polynomial_coefficients(lam)
+        self.assertEqual(coeffs['N^4'], Fraction(-4, 3))
+        self.assertEqual(coeffs['N^3'], Fraction(2))
+        self.assertEqual(coeffs['N^2'], Fraction(7, 12))
+        self.assertEqual(coeffs['N^1'], Fraction(-1))
+        self.assertEqual(coeffs['N^0'], Fraction(-1, 4))
+
+    def test_c_thooft_polynomial_matches_exact(self):
+        """The exact polynomial reconstruction matches c_wn_thooft."""
+        for lam in [Fraction(1, 4), Fraction(1, 3), Fraction(3, 4)]:
+            for N in [2, 3, 5, 10]:
+                data = c_thooft_large_N(N, lam)
+                self.assertEqual(data['polynomial'], data['exact'])
+                self.assertEqual(data['leading_N4'], -Fraction(N**4, 1) / lam)
 
     def test_thooft_A_over_c_convergence(self):
         """A(N)/c(N,lambda) converges to -lambda/8 as N grows."""
@@ -582,11 +620,11 @@ class TestPositivity(unittest.TestCase):
 
 
 # ============================================================================
-# 14. Koszul duality constraints
+# 14. Conductor substitution constraints
 # ============================================================================
 
-class TestKoszulDuality(unittest.TestCase):
-    """Verify Koszul duality properties of delta_F_2."""
+class TestConductorSubstitution(unittest.TestCase):
+    """Verify algebraic substitution under c -> K_N-c, without theorem claims."""
 
     def test_koszul_conductor(self):
         """K_N = 2(N-1) + 4N(N^2-1). K_2=26, K_3=100, K_4=246."""
@@ -596,16 +634,16 @@ class TestKoszulDuality(unittest.TestCase):
         self.assertEqual(K(3), 100)
         self.assertEqual(K(4), 246)
 
-    def test_delta_F2_at_dual_c(self):
-        """delta_F_2(W_N, c) + delta_F_2(W_N, K_N - c) should have structure.
+    def test_delta_F2_at_conductor_partner_c(self):
+        """delta_F_2(W_N,c)+delta_F_2(W_N,K_N-c) is an algebraic identity.
 
-        Under Koszul duality c -> K_N - c, delta_F_2 transforms as:
+        Under the conductor substitution c -> K_N - c, delta_F_2 transforms as:
           B(N) + A(N)/c  ->  B(N) + A(N)/(K_N - c)
 
         The sum: 2*B(N) + A(N)*(1/c + 1/(K_N-c)) = 2*B + A*K_N/(c*(K_N-c)).
         """
         for N in [3, 4, 5]:
-            K_N = 2 * (N - 1) + 4 * N * (N**2 - 1)
+            K_N = koszul_conductor_WN(N)
             c = Fraction(10)
             c_dual = Fraction(K_N) - c
             d1 = delta_F2_grav_closed(N, c)
@@ -613,12 +651,12 @@ class TestKoszulDuality(unittest.TestCase):
             # Sum should be 2*B + A*K_N/(c*(K_N-c))
             expected = 2 * B_exact(N) + A_exact(N) * K_N / (c * c_dual)
             self.assertEqual(d1 + d2, expected,
-                             f"Koszul sum failed at N={N}")
+                             f"Conductor substitution sum failed at N={N}")
 
     def test_self_dual_point(self):
         """At c = K_N/2 (self-dual point), delta_F_2 = B(N) + 2*A(N)/K_N."""
         for N in [3, 4, 5]:
-            K_N = Fraction(2 * (N - 1) + 4 * N * (N**2 - 1))
+            K_N = Fraction(koszul_conductor_WN(N))
             c_sd = K_N / 2
             dF2 = delta_F2_grav_closed(N, c_sd)
             expected = B_exact(N) + 2 * A_exact(N) / K_N
@@ -627,7 +665,66 @@ class TestKoszulDuality(unittest.TestCase):
 
 
 # ============================================================================
-# 15. Large-N table and numerical checks
+# 15. W_N conductor, kappa complementarity, and scope guards
+# ============================================================================
+
+class TestWNConductorAndScope(unittest.TestCase):
+    """Verify exact W_N conductors and guard diagnostic scope."""
+
+    def test_koszul_conductor_closed_form(self):
+        """K_N = 2(N-1)+4N(N^2-1) = 4N^3-2N-2."""
+        expected = {
+            2: 26,
+            3: 100,
+            4: 246,
+            5: 488,
+        }
+        for N, value in expected.items():
+            self.assertEqual(koszul_conductor_WN(N), value)
+            self.assertEqual(koszul_conductor_WN(N), 4 * N**3 - 2 * N - 2)
+
+    def test_harmonic_anomaly_ratio(self):
+        """H_N-1 gives 1/2, 5/6, 13/12, 77/60 for N=2..5."""
+        self.assertEqual(harmonic_minus_one(2), Fraction(1, 2))
+        self.assertEqual(harmonic_minus_one(3), Fraction(5, 6))
+        self.assertEqual(harmonic_minus_one(4), Fraction(13, 12))
+        self.assertEqual(harmonic_minus_one(5), Fraction(77, 60))
+
+    def test_kappa_complementarity_not_constant_W3_extrapolation(self):
+        """K_N*(H_N-1) gives 13, 250/3, 533/2, 9394/15."""
+        self.assertEqual(kappa_complementarity_WN(2), Fraction(13))
+        self.assertEqual(kappa_complementarity_WN(3), Fraction(250, 3))
+        self.assertEqual(kappa_complementarity_WN(4), Fraction(533, 2))
+        self.assertEqual(kappa_complementarity_WN(5), Fraction(9394, 15))
+        self.assertNotEqual(kappa_complementarity_WN(4), Fraction(250, 3))
+
+    def test_self_dual_values_are_halves(self):
+        """Self-dual c and kappa are exactly half of the conductor sums."""
+        for N in [2, 3, 4, 5]:
+            self.assertEqual(self_dual_c_WN(N), Fraction(koszul_conductor_WN(N), 2))
+            self.assertEqual(self_dual_kappa_WN(N), kappa_complementarity_WN(N) / 2)
+
+    def test_gravitational_scope_flags(self):
+        """The finite genus-2 diagnostic is not theorem or derived-centre data."""
+        for N in [2, 3, 4, 5]:
+            scope = delta_F2_grav_scope(N)
+            self.assertFalse(scope['proves_full_modular_koszul_theorem'])
+            self.assertFalse(scope['determines_derived_center'])
+            self.assertFalse(scope['determines_koszul_complementarity'])
+        self.assertTrue(delta_F2_grav_scope(3)['equals_full_cross_channel'])
+        self.assertTrue(delta_F2_grav_scope(4)['is_lower_bound_for_full_ope'])
+
+    def test_w4_full_ope_limit_exceeds_gravitational_limit(self):
+        """W_4 full-OPE large-c limit is not B(4)=7/48."""
+        witness = w4_full_ope_large_c_witness()
+        self.assertEqual(witness['gravitational_limit'], Fraction(7, 48))
+        self.assertEqual(witness['full_limit_expression'], '(3*sqrt(10)+28)/192')
+        self.assertTrue(witness['strictly_larger_than_gravitational'])
+        self.assertGreater(witness['full_limit_float'], float(Fraction(7, 48)))
+
+
+# ============================================================================
+# 16. Large-N table and numerical checks
 # ============================================================================
 
 class TestLargeNTable(unittest.TestCase):
@@ -637,6 +734,11 @@ class TestLargeNTable(unittest.TestCase):
         """Table generates without errors."""
         table = large_N_table(N_values=[3, 5, 10])
         self.assertEqual(len(table), 3)
+
+    def test_table_records_singular_ratio_at_N2(self):
+        """The Virasoro row records A/B as undefined."""
+        row = large_N_table(N_values=[2], c_value=100)[0]
+        self.assertIsNone(row['A/B'])
 
     def test_table_values_consistent(self):
         """Table values match direct computation."""
@@ -654,7 +756,7 @@ class TestLargeNTable(unittest.TestCase):
 
 
 # ============================================================================
-# 16. Normalized quantities
+# 17. Normalized quantities
 # ============================================================================
 
 class TestNormalized(unittest.TestCase):
@@ -679,7 +781,7 @@ class TestNormalized(unittest.TestCase):
 
 
 # ============================================================================
-# 17. Leading-term approximations
+# 18. Leading-term approximations
 # ============================================================================
 
 class TestLeadingTerms(unittest.TestCase):
@@ -705,7 +807,7 @@ class TestLeadingTerms(unittest.TestCase):
 
 
 # ============================================================================
-# 18. Additivity / factoring properties of B and A
+# 19. Additivity / factoring properties of B and A
 # ============================================================================
 
 class TestAlgebraicProperties(unittest.TestCase):
@@ -745,7 +847,7 @@ class TestAlgebraicProperties(unittest.TestCase):
 
 
 # ============================================================================
-# 19. Consistency between c_wn_thooft and wn_central_charge_canonical
+# 20. Consistency between c_wn_thooft and wn_central_charge_canonical
 # ============================================================================
 
 class TestTHooftCentralCharge(unittest.TestCase):
@@ -793,7 +895,7 @@ class TestTHooftCentralCharge(unittest.TestCase):
 
 
 # ============================================================================
-# 20. Edge cases and error handling
+# 21. Edge cases and error handling
 # ============================================================================
 
 class TestEdgeCases(unittest.TestCase):
@@ -834,7 +936,7 @@ class TestEdgeCases(unittest.TestCase):
 
 
 # ============================================================================
-# 21. Multi-path verification: 3 independent paths per key claim
+# 22. Multi-path verification: 3 independent paths per key claim
 # ============================================================================
 
 class TestMultiPathVerification(unittest.TestCase):

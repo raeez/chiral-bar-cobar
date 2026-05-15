@@ -1,13 +1,15 @@
-r"""Costello form factor bridge engine: shadow obstruction tower meets QCD amplitudes.
+r"""Costello/form-factor bridge diagnostics for finite scalar shadows.
 
-BRIDGE THEOREM: The shadow obstruction tower of the celestial chiral algebra
-reproduces Costello's QCD form factor computations via the identification
+This engine stores exact arithmetic for the finite scalar shadow surface
+touching Costello's celestial-QCD form-factor work.  The verified compute
+claim is deliberately narrower than a QFT theorem:
 
-    Form factor of SDYM at L loops, n points
-        = genus-L, arity-n shadow projection Sh_{L,n}(Theta_A)
+    scalar genus-L coefficient for SDYM at level k=0
+        F_L^{scalar}(V_0(sl_N)) = kappa(V_0(sl_N)) * lambda_L^FP
 
-where A = V_k(g) is the affine current algebra at level k encoding the
-holomorphic collinear singularities of the self-dual gauge theory.
+with optional finite planted-forest diagnostics at genus 2.  The code does
+not prove equality with full color-ordered form factors, BV/BRST complexes,
+factorization algebras, analytic continuations, or all-genus amplitudes.
 
 THREE KEY PAPERS:
 
@@ -22,9 +24,8 @@ THREE KEY PAPERS:
    OPE matching with collinear splitting up to one-loop.
 
 3. Fernandez-Paquette, "Associativity is enough" (arXiv:2412.17168):
-   All-orders quantum OPE from symmetry + associativity alone.
-   Closed-form expressions for the extended celestial chiral algebra OPE
-   to arbitrary loop order.
+   quantum OPE constraints from symmetry + associativity.  This engine only
+   records finite truncations up to the requested max_loop.
 
 THE DICTIONARY:
 
@@ -36,20 +37,21 @@ THE DICTIONARY:
     Level k != 0 (MHV)             Bar coalgebra B(A) at level k
     Splitting function              r-matrix r(z) = Res^coll_{0,2}(Theta_A)
     L-loop splitting                genus-L correction to r(z)
-    n-point form factor             arity-n shadow Sh_{0,n}(Theta_A)
-    All-plus amplitude at L loops   sum over genus-L stable graphs on FM_n
-    Bootstrap via associativity     MC equation D*Theta + (1/2)[Theta,Theta] = 0
-    CY5 twisted holography          Bar-cobar adjunction (Theorem A)
+    n-point form factor             finite scalar shadow diagnostic
+    All-plus amplitude at L loops   scalar genus-L coefficient F_L
+    Bootstrap via associativity     MC residual test, not a QFT proof
+    CY5 twisted holography          Typed Verdier branch through A^i, not
+                                    the bar-cobar reconstruction branch
 
 WHAT THIS ENGINE COMPUTES:
 
-1. Self-dual YM chiral algebra OPE for SU(N) at level k (tree + quantum)
-2. Shadow tower projections Sh_{g,n} for the SDYM collinear algebra
+1. Self-dual YM current-algebra OPE data for SU(N) at level k
+2. Scalar shadow tower projections for the SDYM collinear algebra
 3. One-loop all-plus amplitude via genus-1 shadow (kappa contribution)
-4. Two-loop all-plus amplitude via genus-2 shadow (kappa^2 * lambda_2)
-5. MC equation verification: associativity = MC at each arity and genus
-6. Costello's closed formula comparison for single-trace amplitudes
-7. Quantum OPE corrections: loop-level deformation of the classical OPE
+4. Two-loop scalar diagnostic via genus-2 shadow (kappa * lambda_2)
+5. Genus-0 MC residual tests for the class-L scalar tower
+6. Conditional Costello comparison data for single-trace amplitudes
+7. Finite quantum-OPE scalar proxies up to max_loop
 8. Soft theorem tower from shadow projections
 
 MATHEMATICAL CONTENT:
@@ -60,8 +62,9 @@ At level k=0, the OPE has only a simple pole:
 
     J^a(z) J^b(w) ~ f^{abc} J^c(w) / (z - w)
 
-This is a Koszul algebra (class L): bar cohomology concentrated in degree 1,
-shadow depth 3.  The tree-level form factor at arity n >= 4 vanishes.
+This is a class-L current-algebra scalar tower: the stored scalar shadow
+data terminate at depth 3.  This does not assert that every full form factor
+or every BV/BRST object terminates at the same arity.
 
 The QUANTUM CORRECTIONS (loop level) modify the OPE by adding higher poles.
 At one loop, the effective level becomes k_eff = h^v (the dual Coxeter number),
@@ -69,42 +72,43 @@ contributing a double-pole term:
 
     J^a(z) J^b(w)|_{1-loop} ~ h^v * delta^{ab} / (z-w)^2 + ...
 
-This is the genus-1 shadow projection: the one-loop form factor is controlled
-by kappa(V_{h^v}(g)) - kappa(V_0(g)).
+The effective-level shift, the scalar F_L coefficient, and the binary
+collision residue live in different slots.  The one-loop OPE double-pole
+coefficient is h^v=N, while the scalar genus-1 coefficient is
+kappa(V_0(sl_N))*lambda_1^FP=(N^2-1)/48.
 
-For the ALL-PLUS AMPLITUDE at L loops:
-    A_n^{all+}(L) = Sh_{L,n}(Theta_A)
+The finite bridge statement used here is:
 
-where Sh_{L,n} is the genus-L, arity-n shadow.  Costello's bootstrap
-computes these via 2d CFT associativity, which is EXACTLY our MC equation
-projected to (g=L, n=n).
+    F_L^{scalar}(V_0(sl_N)) = kappa(V_0(sl_N)) * lambda_L^FP
 
-THE BRIDGE THEOREM:
-
-    Costello's chiral algebra bootstrap
-        = MC equation D*Theta + (1/2)[Theta,Theta] = 0
-        projected to genus-g and arity-n
-
-Proof sketch: The chiral algebra correlators on CP^1 ARE the factorization
-homology values FH_{CP^1}(A), which equal the bar complex cohomology.
-The bootstrap (OPE associativity) is the cocycle condition d^2 = 0 on the
-bar complex, which is the MC equation for Theta_A.  Loop corrections
-correspond to genus contributions in the bar-graph expansion.  QED.
+for the requested finite L.  It is a scalar shadow diagnostic, not a proof
+that the full n-point all-plus amplitude equals Sh_{L,n}(Theta_A).
 
 CONVENTIONS:
     - COHOMOLOGICAL grading (|d| = +1).  Bar uses DESUSPENSION (AP45).
     - r-matrix pole order = OPE pole order - 1 (AP19).
     - kappa(V_k(sl_N)) = (N^2-1)(k+N)/(2N) (AP1: recomputed).
-    - Loop level L = genus g in the shadow tower.
+    - Loop level L is compared to genus g only at the stored scalar level.
     - The bar propagator d log E(z,w) is weight 1 (AP27).
     - All shadow coefficients are exact (Fraction arithmetic).
     - Color-ordered amplitudes use Tr(T^{a_1}...T^{a_n}) basis.
+    - Kernel constants:
+        affine raw trace form: r^KM(z) = k*Omega_tr/z
+        affine KZ form:        r^KZ(z) = Omega/((k+h^vee)z)
+        Heisenberg:            r^Heis(z) = k/z
+        Virasoro:              r^Vir(z) = (c/2)/z^3 + 2T/z
 
-CAUTION (AP1): kappa formulas are family-specific. Do NOT copy.
+CAUTION (AP1): kappa formulas are family-specific; use the formula verified
+               for the chosen family.
 CAUTION (AP9): kappa(V_k(g)) != c(V_k(g))/2 for dim(g) > 1.
 CAUTION (AP19): Bar extracts via d log, reducing pole orders by 1.
 CAUTION (AP24): kappa(A) + kappa(A!) = 0 for KM families (verified).
+CAUTION (AP25): B(A), A^i, A^!, Omega(B(A)), and Z_ch^der(A) are
+                five typed objects.  Omega(B(A)) reconstructs A; A^!
+                is obtained from A^i by Verdier/continuous duality.
 CAUTION (AP27): Bar propagator is weight 1; all channels use E_1.
+CAUTION: no BV/BRST, factorization-algebra, analytic-continuation, or
+         all-genus conclusion is emitted by this compute layer.
 
 References:
     Costello (2023): arXiv:2302.00770 (bootstrapping two-loop QCD).
@@ -124,6 +128,81 @@ from fractions import Fraction
 from functools import lru_cache
 from math import factorial, comb
 from typing import Any, Dict, List, Optional, Tuple
+
+
+HOLOGRAPHIC_PACKAGE_ENTRIES: Tuple[str, ...] = (
+    "A",
+    "A^i",
+    "A^!",
+    "C",
+    "r(z)",
+    "Theta_A",
+    "nabla^hol",
+)
+
+MODULAR_KOSZUL_COMPUTE_PACKAGE_PROJECTIONS: Tuple[str, ...] = (
+    "Fact_X(L)",
+    "barB_X(L)",
+    "Theta_L",
+    "L_L",
+    "(V_br,T_br)",
+    "R4_mod(L)",
+)
+
+KERNEL_CONSTANTS: Dict[str, str] = {
+    "affine_raw_trace_form": "r^KM(z) = k*Omega_tr/z",
+    "affine_KZ": "r^KZ(z) = Omega/((k+h^vee)z)",
+    "heisenberg": "r^Heis(z) = k/z",
+    "virasoro": "r^Vir(z) = (c/2)/z^3 + 2T/z",
+}
+
+
+@dataclass(frozen=True)
+class BridgeScopeCertificate:
+    """Scope certificate preventing scalar diagnostics from becoming theorems."""
+    status: str
+    finite_scalar_statement: str
+    scalar_formula: str
+    proof_obligations: Tuple[str, ...]
+    holographic_package_entries: Tuple[str, ...]
+    modular_koszul_compute_package_projections: Tuple[str, ...]
+    kernel_constants: Dict[str, str]
+    promotes_full_qft_theorem: bool
+    promotes_bv_brst_equivalence: bool
+    promotes_factorization_equivalence: bool
+    promotes_analytic_continuation: bool
+    promotes_all_genus: bool
+
+
+def bridge_scope_certificate(max_genus: int) -> BridgeScopeCertificate:
+    """Return the finite scope certificate for this diagnostic surface."""
+    if max_genus < 1:
+        raise ValueError("max_genus must be >= 1")
+
+    return BridgeScopeCertificate(
+        status="finite_scalar_shadow_diagnostic",
+        finite_scalar_statement=(
+            f"for 1 <= L <= {max_genus}, store only "
+            "F_L^scalar(V_0(sl_N)) = kappa(V_0(sl_N))*lambda_L^FP"
+        ),
+        scalar_formula="F_L^scalar = kappa * lambda_L^FP",
+        proof_obligations=(
+            "full n-point color-ordered form-factor equality",
+            "BV/BRST or factorization-algebra equivalence",
+            "analytic continuation in k, N, or loop order",
+            "all-genus convergence or resummation",
+        ),
+        holographic_package_entries=HOLOGRAPHIC_PACKAGE_ENTRIES,
+        modular_koszul_compute_package_projections=(
+            MODULAR_KOSZUL_COMPUTE_PACKAGE_PROJECTIONS
+        ),
+        kernel_constants=KERNEL_CONSTANTS.copy(),
+        promotes_full_qft_theorem=False,
+        promotes_bv_brst_equivalence=False,
+        promotes_factorization_equivalence=False,
+        promotes_analytic_continuation=False,
+        promotes_all_genus=False,
+    )
 
 
 # ============================================================================
@@ -269,7 +348,7 @@ class SDYMChiralAlgebra:
     (Bittleston-Costello-Zeng, 2412.02680).
 
     The OPE is deformed at each loop order.  Fernandez-Paquette (2412.17168)
-    determine the all-orders OPE from symmetry + associativity alone.
+    studies quantum OPE constraints from symmetry and associativity.
     """
     N: int
     level: Fraction  # classical level k
@@ -309,29 +388,26 @@ def make_sdym_algebra(N: int, k: int = 0) -> SDYMChiralAlgebra:
 
 @dataclass(frozen=True)
 class QuantumOPECorrection:
-    """Loop-level correction to the SDYM chiral algebra OPE.
+    """Finite scalar proxy for a loop-level SDYM OPE correction.
 
     At L loops, the OPE receives a correction:
         J^a(z)J^b(w)|_{L-loop} = sum_p C^{ab}_{(p),L} / (z-w)^p
 
-    The key physics: the L-loop correction is proportional to the genus-L
-    shadow projection.  The double pole at L=1 is controlled by kappa.
-
-    Costello's result (2302.00770): the quantum OPE is determined by
-    the celestial chiral algebra bootstrap = our MC equation.
-
-    Fernandez-Paquette's result (2412.17168): the all-orders OPE is
-    determined by symmetry + associativity = our MC equation + Koszulness.
+    The stored coefficient is a finite scalar diagnostic.  It is not a
+    proof that the complete quantum OPE, BV/BRST complex, or factorization
+    algebra has been reconstructed from the shadow tower.
     """
     loop_order: int
     pole_order: int
     coefficient: Fraction
     color_structure: str  # "delta^{ab}", "f^{abc}", "d^{abc}", etc.
     is_single_trace: bool
+    scope: str = "finite_scalar_proxy"
+    full_ope_claim: bool = False
 
 
 def one_loop_ope_correction_sdym(N: int) -> List[QuantumOPECorrection]:
-    """One-loop correction to the SDYM OPE for SU(N).
+    """One-loop finite OPE proxy for SU(N).
 
     At one loop, the self-dual sector acquires an effective level:
         k_eff^{(1)} = h^v = N   (dual Coxeter number)
@@ -339,23 +415,14 @@ def one_loop_ope_correction_sdym(N: int) -> List[QuantumOPECorrection]:
     This generates a double-pole correction:
         J^a(z)J^b(w)|_{1-loop} ~ N * delta^{ab} / (z-w)^2
 
-    In our framework, this is the genus-1 shadow at arity 2:
-        Sh_{1,2}(Theta_A) = kappa(V_N(g)) - kappa(V_0(g))
-                           = (N^2-1)(2N)/(2N) - (N^2-1)/2
-                           = (N^2-1)/2
-
-    Wait -- let us be more careful.  The one-loop all-plus amplitude
-    receives a correction controlled by:
-        F_1 = kappa(V_0(g)) / 24 = (N^2-1) / 48
+    The one-loop scalar free-energy diagnostic is a separate number:
+        F_1^scalar = kappa(V_0(sl_N)) / 24 = (N^2-1) / 48
 
     The effective level shift at one loop is:
         delta_k = h^v = N   (from the one-loop graph)
 
-    The one-loop OPE COEFFICIENT at the double pole is:
+    The finite OPE proxy stored here is the double-pole coefficient:
         C^{ab}_{(2),1} = N * delta^{ab}
-
-    This is a known result: the one-loop collinear splitting function
-    for same-helicity gluons acquires a term proportional to h^v.
     """
     h_v = N
     corrections = []
@@ -373,22 +440,15 @@ def one_loop_ope_correction_sdym(N: int) -> List[QuantumOPECorrection]:
 
 
 def two_loop_ope_correction_sdym(N: int) -> List[QuantumOPECorrection]:
-    """Two-loop correction to the SDYM OPE for SU(N).
-
-    From Costello (2302.00770): the two-loop all-plus amplitude for SU(N)
-    is computed via the chiral algebra bootstrap.
-
-    In our framework, the two-loop correction = genus-2 shadow:
-        A_n^{all+}(2-loop) ~ Sh_{2,n}(Theta_A)
+    """Two-loop finite scalar proxy for the SDYM OPE for SU(N).
 
     The genus-2 contribution to F_g:
         F_2 = kappa * lambda_2^FP = kappa * 7/5760
 
     where kappa = (N^2-1)/2 at level k=0 (self-dual).
 
-    The two-loop effective level receives a second-order correction.
-    The key result from Costello is that the CLOSED FORMULA exists
-    for all single-trace amplitudes.
+    The coefficient below is a normalized scalar proxy derived from F_2.
+    It is not a closed formula for the full two-loop single-trace amplitude.
     """
     kap = kappa_affine_slN(N, Fraction(0))  # self-dual level k=0
     lam_2 = _lambda_fp_exact(2)  # = 7/5760
@@ -409,17 +469,11 @@ def two_loop_ope_correction_sdym(N: int) -> List[QuantumOPECorrection]:
 
 
 def quantum_ope_all_orders(N: int, max_loop: int = 4) -> Dict[int, List[QuantumOPECorrection]]:
-    """Quantum OPE corrections at all loop orders up to max_loop.
-
-    The all-orders result of Fernandez-Paquette (2412.17168):
-    the quantum OPE is determined by associativity alone.
-
-    In our framework: the MC equation D*Theta + (1/2)[Theta,Theta] = 0
-    determines Theta_A to all orders (thm:mc2-bar-intrinsic).
-    The loop-L correction is the genus-L projection.
+    """Finite quantum-OPE scalar proxies for 1 <= L <= max_loop.
 
     The genus-L free energy F_L = kappa * lambda_L^FP gives the
-    leading (single-trace) contribution at L loops.
+    stored scalar coefficient.  No analytic continuation, all-genus
+    convergence, or full-OPE reconstruction is asserted.
     """
     kap = kappa_affine_slN(N, Fraction(0))
     result: Dict[int, List[QuantumOPECorrection]] = {}
@@ -541,23 +595,14 @@ def shadow_tower_sdgr_tline(c: Fraction,
 
 @dataclass
 class AllPlusAmplitude:
-    """All-plus amplitude A_n^{all+} at L loops from shadow projections.
-
-    The L-loop, n-point all-plus amplitude in SDYM/QCD is:
-        A_n^{all+}(L) = Sh_{L,n}(Theta_A)
+    """Finite scalar all-plus diagnostic at L loops.
 
     At tree level (L=0): the amplitude vanishes for all-plus (helicity selection).
-    At one loop (L=1): controlled by kappa (genus-1 shadow).
-    At two loops (L=2): controlled by kappa * lambda_2 (genus-2 shadow).
-    At L loops: F_L = kappa * lambda_L^FP.
+    At the stored scalar level:
+        F_L^scalar = kappa * lambda_L^FP.
 
-    The n-point structure comes from the arity-n projection at each genus.
-    For a Koszul algebra (class L), the arity-n shadow vanishes for n > r_max.
-    But the QUANTUM-CORRECTED algebra (effective level shifted) has modified
-    shadow data at each loop order.
-
-    Costello's closed formula (2302.00770) computes the single-trace
-    A_n^{all+} at two loops for all n.
+    The n_points and color_structure fields record the comparison target.
+    They do not upgrade the scalar coefficient to a full n-point amplitude.
     """
     n_points: int
     loop_order: int
@@ -567,26 +612,23 @@ class AllPlusAmplitude:
     free_energy_contribution: Fraction
     color_structure: str
     is_single_trace: bool
+    bridge_scope: str = "finite_scalar_shadow"
+    full_amplitude_claim: bool = False
+    analytic_continuation_claim: bool = False
+    bv_brst_equivalence_claim: bool = False
+    factorization_equivalence_claim: bool = False
 
 
 def all_plus_amplitude_1loop(n: int, N: int) -> AllPlusAmplitude:
-    """One-loop all-plus amplitude for n gluons in SU(N) SDYM.
-
-    At one loop, the all-plus amplitude is:
-        A_n^{all+}(1) ~ kappa * [integration over M_{1,n}]
+    """One-loop scalar all-plus diagnostic for n gluons in SU(N) SDYM.
 
     The genus-1 free energy F_1 = kappa/24 gives the overall normalization.
-    For the n-point color-ordered single-trace amplitude, the integrand
-    involves the genus-1 propagator (E_2* function) on M_{1,n}.
-
-    At the SCALAR level (arity 2, the Hodge class contribution):
-        A_n^{all+}(1)|_scalar = kappa * lambda_1 * [n-point kinematic factor]
+    At the scalar level:
+        F_1^scalar = kappa * lambda_1.
 
     For pure YM with gauge group SU(N) at one loop, the effective level
-    shifts to k_eff = N (the dual Coxeter number h^v).
-
-    The result is well-known: the one-loop all-plus amplitude is
-    proportional to the Parke-Taylor denominator times a rational function.
+    shifts to k_eff = N (the dual Coxeter number h^v).  That OPE proxy is
+    recorded separately from F_1^scalar.
     """
     kap = kappa_affine_slN(N, Fraction(0))  # k=0 for self-dual
     lam_1 = _lambda_fp_exact(1)  # = 1/24
@@ -605,22 +647,16 @@ def all_plus_amplitude_1loop(n: int, N: int) -> AllPlusAmplitude:
 
 
 def all_plus_amplitude_2loop(n: int, N: int) -> AllPlusAmplitude:
-    """Two-loop all-plus amplitude for n gluons in SU(N) SDYM.
-
-    At two loops, the all-plus amplitude is:
-        A_n^{all+}(2) ~ kappa * lambda_2 * [n-point kinematic factor]
-                       + [planted-forest corrections]
+    """Two-loop scalar all-plus diagnostic for n gluons in SU(N) SDYM.
 
     The genus-2 free energy F_2 = kappa * lambda_2^FP = kappa * 7/5760.
-
-    Costello (2302.00770) gives a CLOSED FORMULA for all single-trace
-    amplitudes.  In our framework, this is the genus-2 shadow projection
-    with the planted-forest correction delta_pf^{(2,0)}.
+    Costello's full two-loop single-trace formula is a comparison target,
+    not something proved by this scalar coefficient.
 
     For affine sl_N at k=0 (class L), the planted-forest correction is:
         delta_pf^{(2,0)} = S_3 * (10*S_3 - kappa) / 48
 
-    This is the FIRST CORRECTION beyond the scalar (kappa-only) level.
+    This stores the first finite correction beyond the kappa-only scalar.
     """
     kap = kappa_affine_slN(N, Fraction(0))
     lam_2 = _lambda_fp_exact(2)  # = 7/5760
@@ -644,10 +680,10 @@ def all_plus_amplitude_2loop(n: int, N: int) -> AllPlusAmplitude:
 
 
 def all_plus_amplitude_L_loops(n: int, N: int, L: int) -> AllPlusAmplitude:
-    """L-loop all-plus amplitude from the genus-L shadow projection.
+    """L-loop scalar diagnostic from the genus-L shadow coefficient.
 
     At L loops: F_L = kappa * lambda_L^FP.
-    The full amplitude involves all shadow components through genus L.
+    This does not assert the full amplitude through genus L.
     """
     if L < 1:
         raise ValueError("Loop order must be >= 1 for all-plus amplitudes")
@@ -674,30 +710,28 @@ def all_plus_amplitude_L_loops(n: int, N: int, L: int) -> AllPlusAmplitude:
 
 @dataclass
 class MCBootstrapEquivalence:
-    """Verification that MC equation = bootstrap associativity.
+    """Finite MC residual diagnostic for bootstrap-style associativity.
 
-    Fernandez-Paquette (2412.17168) show that the all-orders quantum OPE
-    is determined by symmetry + associativity of the chiral algebra.
+    Fernandez-Paquette (2412.17168) study quantum-OPE constraints from
+    symmetry and associativity of the chiral algebra.
 
     In our framework:
     - "Symmetry" = the chiral algebra structure (bar complex B(A))
-    - "Associativity" = d^2 = 0 on the bar complex = MC equation
+    - "Associativity" is tested here as the finite scalar MC residual
 
     The MC equation D*Theta + (1/2)[Theta,Theta] = 0 at genus g, arity n:
     - g=0, n=3: Jacobi identity for structure constants (= CYBE for r-matrix)
     - g=0, n=4: quartic identity (= crossing symmetry at tree level)
-    - g=0, n=arbitrary: CSW/BCFW recursion
-    - g=1, n=2: one-loop collinear splitting correction
-    - g=1, n=arbitrary: one-loop amplitude recursion
-    - g=arbitrary, n=arbitrary: all-loop all-multiplicity recursion
 
-    The equivalence: bootstrap at loop L, n-point = MC at genus L, arity n.
+    No unrestricted loop or multiplicity recursion is certified here.
     """
     genus: int
     arity: int
     mc_residual: Fraction
     physical_interpretation: str
     verified: bool
+    scope: str = "finite_genus0_scalar_mc_residual"
+    full_qft_bootstrap_claim: bool = False
 
 
 def verify_mc_bootstrap_genus0(N: int,
@@ -1022,19 +1056,19 @@ def form_factor_genus_expansion_sdgr(c: Fraction,
 
 @dataclass
 class CostelloTwoLoopComparison:
-    """Comparison of Costello's two-loop result with shadow tower.
+    """Conditional comparison of Costello's two-loop target with shadows.
 
     Costello (2302.00770) computes the two-loop all-plus amplitude
     via the celestial chiral algebra bootstrap.
 
-    The shadow tower prediction for the two-loop free energy:
+    The scalar shadow coefficient recorded here is:
         F_2 = kappa * lambda_2 = kappa * 7/5760
 
     For SU(N) at k=0: kappa = (N^2-1)/2, so
         F_2 = 7(N^2-1)/11520
 
-    The two-loop amplitude receives BOTH the scalar contribution (F_2)
-    and the planted-forest correction.
+    Matching this scalar package against Costello's complete n-point formula
+    remains a proof obligation outside this engine.
     """
     N: int
     kappa: Fraction
@@ -1042,19 +1076,26 @@ class CostelloTwoLoopComparison:
     delta_pf_2: Fraction
     total_genus_2: Fraction
     costello_matches_shadow: bool
+    scalar_shadow_verified: bool = False
+    full_form_factor_theorem: bool = False
+    comparison_scope: str = "scalar_free_energy_and_planted_forest_only"
+    proof_obligation: str = (
+        "compare the full two-loop single-trace n-point formula, including "
+        "kinematics and color ordering, against the shadow graph expansion"
+    )
 
 
 def compare_costello_two_loop(N: int) -> CostelloTwoLoopComparison:
-    """Compare Costello's two-loop result with our shadow prediction.
+    """Compute the finite scalar data relevant to Costello's two-loop target.
 
     Costello's closed formula for the n-point two-loop all-plus single-trace
     amplitude expresses the answer in terms of the chiral algebra OPE data.
 
-    Our prediction: the genus-2 shadow projection gives:
+    The finite scalar shadow package gives:
         F_2 = kappa * 7/5760 + delta_pf^{(2)}
 
-    The comparison verifies that the shadow tower reproduces Costello's
-    result through the genus/loop identification.
+    The boolean costello_matches_shadow is false by design: the full
+    amplitude comparison is not proved by the scalar package.
     """
     kap = kappa_affine_slN(N, Fraction(0))
     lam_2 = _lambda_fp_exact(2)
@@ -1066,18 +1107,14 @@ def compare_costello_two_loop(N: int) -> CostelloTwoLoopComparison:
 
     total = F_2 + delta_pf
 
-    # The comparison: Costello's result is expressed via the chiral algebra
-    # bootstrap, which IS our MC equation.  The match is by construction
-    # (both frameworks solve the same constraint system).
-    matches = True  # by the bridge theorem
-
     return CostelloTwoLoopComparison(
         N=N,
         kappa=kap,
         F_2_shadow=F_2,
         delta_pf_2=delta_pf,
         total_genus_2=total,
-        costello_matches_shadow=matches,
+        costello_matches_shadow=False,
+        scalar_shadow_verified=True,
     )
 
 
@@ -1087,28 +1124,34 @@ def compare_costello_two_loop(N: int) -> CostelloTwoLoopComparison:
 
 @dataclass
 class TwistedHolographyBridge:
-    """Bridge between twisted holography and the bar-cobar adjunction.
+    """Typed twisted-holography comparison with AP25 firewalls.
 
     Bittleston-Costello-Zeng (2412.02680) derive the celestial chiral
     algebra from twisted holography for the type I topological string.
 
-    The bridge:
+    The comparison target:
         CY5 fibered over twistor space
         -> holomorphic twist
         -> boundary chiral algebra on defect
         = celestial chiral algebra
         = collinear algebra V_k(g) in our framework
 
-    In our language:
-        The bar-cobar adjunction (Theorem A) gives:
-            B(A) <-> D_Ran(B(A)) = B(A!)
-        The Koszul dual A! = the boundary condition on the other end.
+    In our language, Theorem A has two separate branches:
+        reconstruction branch:
+            B(A) -> Omega(B(A)) -> A
+        Verdier/Koszul branch:
+            B(A) -> A^i = H^*(B(A)) -> A^! by Verdier/continuous duality
+
+    The Koszul dual A^! is the boundary condition on the other end.  It is
+    not the cobar reconstruction Omega(B(A)), and the derived-centre bulk
+    Z_ch^der(A) is a separate Hochschild/cochain slot.
 
     For the D3 brane in type I:
-        A = V_1(gl_N) (boundary chiral algebra at level 1)
-        A! = V_{-1-2N}(gl_N) (Koszul dual at Feigin-Frenkel level)
-        kappa(A) = N  (at level 1, AP1 recomputed)
-        kappa(A!) = -N  (AP24: kappa + kappa' = 0 for KM)
+        A = V_1(gl_N) in the physics source.
+        This compute layer records only the sl_N summand:
+        kappa(V_1(sl_N)) = (N^2-1)(N+1)/(2N),
+        kappa(V_{-1-2N}(sl_N)) = -(N^2-1)(N+1)/(2N).
+        The gl_N/u(1) normalization is not computed here.
     """
     bulk_theory: str
     boundary_algebra: str
@@ -1118,6 +1161,34 @@ class TwistedHolographyBridge:
     koszul_dual_level: Fraction
     kappa_dual: Fraction
     anomaly_cancellation: bool  # kappa + kappa' = 0
+    bar_complex: str
+    koszul_dual_coalgebra: str
+    verdier_dual_branch: str
+    reconstruction_branch: str
+    derived_center_slot: str
+    object_firewall: Dict[str, str]
+
+
+def costello_bridge_object_firewall(algebra_name: str = "A",
+                                    dual_name: str = "A^!") -> Dict[str, str]:
+    """Typed AP25 firewall for the Costello/form-factor bridge surface."""
+    return {
+        "A": f"{algebra_name}: boundary/celestial chiral algebra",
+        "B(A)": f"B({algebra_name}): ordered bar coalgebra",
+        "A^i": f"{algebra_name}^i = H^*(B({algebra_name})): Koszul-dual coalgebra",
+        "A^!": (
+            f"{dual_name}: Verdier/continuous linear dual of {algebra_name}^i "
+            "under finite-type or completed hypotheses"
+        ),
+        "Omega(B(A))": (
+            f"Omega(B({algebra_name})) -> {algebra_name}: "
+            "bar-cobar reconstruction branch"
+        ),
+        "Z_ch^der(A)": (
+            f"Z_ch^der({algebra_name}): chiral Hochschild derived-centre bulk, "
+            "not a bar, cobar, or Verdier-dual output"
+        ),
+    }
 
 
 def twisted_holography_d3(N: int) -> TwistedHolographyBridge:
@@ -1134,16 +1205,33 @@ def twisted_holography_d3(N: int) -> TwistedHolographyBridge:
     kap = kappa_affine_slN(N, k)
     k_dual = -k - 2 * N  # Feigin-Frenkel: k' = -k - 2h^v
     kap_dual = kappa_affine_slN(N, k_dual)
+    boundary = f"V_1(sl_{N})"
+    dual = f"V_{k_dual}(sl_{N})"
 
     return TwistedHolographyBridge(
         bulk_theory=f"Type I topological string / N D3 branes",
-        boundary_algebra=f"V_1(sl_{N})",
+        boundary_algebra=boundary,
         N=N,
         level=k,
         kappa=kap,
         koszul_dual_level=k_dual,
         kappa_dual=kap_dual,
         anomaly_cancellation=(kap + kap_dual == 0),
+        bar_complex=f"B({boundary}): ordered bar coalgebra",
+        koszul_dual_coalgebra=f"{boundary}^i = H^*(B({boundary}))",
+        verdier_dual_branch=(
+            f"{dual}: A^! branch obtained from {boundary}^i by "
+            "Verdier/continuous linear duality"
+        ),
+        reconstruction_branch=(
+            f"Omega(B({boundary})) -> {boundary}: bar-cobar inversion, "
+            "not Koszul duality"
+        ),
+        derived_center_slot=(
+            f"Z_ch^der({boundary}) = ChirHoch^bullet({boundary},{boundary}); "
+            "bulk slot distinct from B(A), A^i, and A^!"
+        ),
+        object_firewall=costello_bridge_object_firewall(boundary, dual),
     )
 
 
@@ -1153,22 +1241,12 @@ def twisted_holography_d3(N: int) -> TwistedHolographyBridge:
 
 @dataclass
 class CelestialOPEShadowIdentification:
-    """Identification: celestial OPE = genus-0 projection of Theta_A.
+    """Finite binary-collision comparison with the genus-0 shadow.
 
     The celestial chiral algebra OPE is the collinear limit of 4d amplitudes.
-    In our framework, the collinear limit is encoded in the genus-0 part
-    of the universal MC element Theta_A:
-
-        Theta_A^{(0)} = sum_n Sh_{0,n}(Theta_A)
-
     The binary collision residue r(z) = Res^coll_{0,2}(Theta_A^{(0)})
-    gives the classical r-matrix = tree-level collinear splitting.
-
-    At each loop order L, the OPE receives quantum corrections from
-    the genus-L part:
-        OPE at L loops = Sh_{L,2}(Theta_A)
-
-    The full quantum OPE = sum_L hbar^L * Sh_{L,2}(Theta_A).
+    gives the stored tree-level collision datum.  This dataclass does not
+    assert a full quantum-OPE equivalence.
     """
     algebra_type: str
     genus: int
@@ -1177,12 +1255,15 @@ class CelestialOPEShadowIdentification:
     ope_pole_order: int
     ope_coefficient: Fraction
     identification_verified: bool
+    verified_scope: str = "binary_collision_residue_only"
+    full_ope_equivalence_claim: bool = False
+    analytic_continuation_claim: bool = False
 
 
 def celestial_ope_from_shadow_g0(N: int, k: int = 0) -> CelestialOPEShadowIdentification:
-    """Identify the tree-level celestial OPE with the genus-0 shadow.
+    """Compare the tree-level binary collision datum with the genus-0 shadow.
 
-    At genus 0, arity 2: Sh_{0,2}(Theta_A) = S_2 = kappa.
+    At genus 0, arity 2, the scalar shadow value is S_2 = kappa.
     The celestial OPE double-pole coefficient = k (the level).
     At k=0 (self-dual): the double pole vanishes; only simple pole remains.
 
@@ -1209,18 +1290,19 @@ def celestial_ope_from_shadow_g0(N: int, k: int = 0) -> CelestialOPEShadowIdenti
 
 def full_bridge_analysis(N: int, max_genus: int = 3,
                          max_arity: int = 8) -> Dict[str, Any]:
-    """Complete analysis bridging Costello's form factors with shadow tower.
+    """Finite scalar analysis for the Costello/form-factor bridge surface.
 
     Returns a comprehensive dictionary containing:
     1. SDYM algebra data (kappa, central charge, shadow class)
     2. Shadow tower (all arities up to max_arity)
-    3. All-plus amplitudes (all loop orders up to max_genus)
-    4. MC equation verification (associativity = bootstrap)
+    3. Scalar all-plus diagnostics up to max_genus
+    4. Finite MC residual tests
     5. Soft theorem tower
     6. Genus expansion of form factors
     7. Costello two-loop comparison
     8. Twisted holography bridge
     9. Celestial OPE identification
+    10. Scope certificate
     """
     algebra = make_sdym_algebra(N, k=0)
     tower = shadow_tower_sdym(N, k=0, max_arity=max_arity)
@@ -1253,6 +1335,9 @@ def full_bridge_analysis(N: int, max_genus: int = 3,
     # Celestial OPE
     cel_ope = celestial_ope_from_shadow_g0(N, k=0)
 
+    # Scope certificate
+    scope = bridge_scope_certificate(max_genus)
+
     return {
         "algebra": {
             "type": "SDYM",
@@ -1271,6 +1356,7 @@ def full_bridge_analysis(N: int, max_genus: int = 3,
         "costello_comparison": costello,
         "twisted_holography": tw_hol,
         "celestial_ope": cel_ope,
+        "scope_certificate": scope,
     }
 
 
@@ -1283,17 +1369,20 @@ COSTELLO_SHADOW_DICTIONARY = {
     "collinear_OPE": "chiral algebra OPE = bar differential",
     "level_k=0_self_dual": "bar coalgebra B(A) at k=0",
     "splitting_function": "r-matrix r(z) = Res^coll_{0,2}(Theta_A)",
-    "L_loop_splitting": "genus-L correction to r(z)",
-    "n_point_form_factor": "arity-n shadow Sh_{0,n}(Theta_A)",
-    "all_plus_at_L_loops": "genus-L shadow projection",
-    "bootstrap_associativity": "MC equation D*Theta + (1/2)[Theta,Theta] = 0",
-    "CY5_twisted_holography": "bar-cobar adjunction (Theorem A)",
+    "L_loop_splitting": "finite genus-L scalar correction to r(z)",
+    "n_point_form_factor": "comparison target; scalar package only here",
+    "all_plus_at_L_loops": "finite scalar genus-L coefficient",
+    "bootstrap_associativity": "finite MC residual diagnostic",
+    "CY5_twisted_holography": (
+        "typed Verdier/Koszul branch B(A) -> A^i=H^*(B(A)) -> A^!, "
+        "separate from Omega(B(A)) -> A"
+    ),
     "single_trace": "cyclic invariant in bar complex",
     "double_trace": "non-cyclic contributions",
     "Parke_Taylor_denominator": "genus-0 stable graph propagator product",
     "CSW_vertex": "arity-3 shadow S_3",
-    "BCFW_recursion": "MC recursion at genus 0",
-    "quantum_OPE_correction": "genus-L shadow at arity 2",
+    "BCFW_recursion": "comparison target; not certified by this scalar engine",
+    "quantum_OPE_correction": "finite scalar proxy at arity 2",
     "effective_level_shift": "shadow propagation from genus L to OPE",
 }
 
@@ -1345,12 +1434,12 @@ def verify_mc_equation_all_arities(N: int, max_arity: int = 15) -> bool:
 
 
 def verify_loop_genus_identification(N: int, L: int) -> Dict[str, Any]:
-    """Verify the loop-genus identification at L loops.
+    """Verify the finite scalar loop/genus coefficient at L loops.
 
-    The L-loop free energy = genus-L shadow projection:
+    The stored scalar free energy is:
         F_L = kappa * lambda_L^FP
 
-    This is the BRIDGE THEOREM: loop level L = genus L in the shadow tower.
+    This does not certify the full L-loop n-point form factor.
     """
     kap = kappa_affine_slN(N, Fraction(0))
     lam_L = _lambda_fp_exact(L)
@@ -1364,5 +1453,11 @@ def verify_loop_genus_identification(N: int, L: int) -> Dict[str, Any]:
         "lambda_fp": lam_L,
         "F_L": F_L,
         "positive": F_L > 0,
-        "bridge_identification": f"F_{L}(SDYM) = kappa * lambda_{L}^FP = {F_L}",
+        "bridge_identification": (
+            f"F_{L}^scalar(SDYM) = kappa * lambda_{L}^FP = {F_L}"
+        ),
+        "scope": "finite_scalar_shadow",
+        "full_form_factor_theorem": False,
+        "analytic_continuation_claim": False,
+        "all_genus_claim": False,
     }

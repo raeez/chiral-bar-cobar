@@ -116,10 +116,10 @@ class TestHodgeIntegral:
         assert I == Fraction(1)
 
     def test_bridge_loop_genus2(self):
-        """Bridge+loop at genus 2: I = -1/24."""
+        """Bridge+loop at genus 2: I = 1/24 under canonical lower-index bridge sign."""
         g = StableGraph(vertex_genera=(0, 1), edges=((0, 0), (0, 1)), legs=())
         I = hodge_integral(g)
-        assert I == Fraction(-1, 24)
+        assert I == Fraction(1, 24)
 
     def test_figure8_bridge_genus2(self):
         """Figure-8 bridge (two genus-0, bridge + 2 self-loops): I = 1."""
@@ -136,13 +136,13 @@ class TestHodgeIntegral:
         assert hodge_integral(g) == Fraction(1)
 
     def test_hodge_sign_convention(self):
-        """Verify sign convention: bridge sign from higher-index vertex."""
+        """Verify sign convention: bridge sign from lower-index endpoint."""
         # Bridge between genus-0 (val 3) and genus-1 (val 1)
         g = StableGraph(vertex_genera=(0, 1), edges=((0, 0), (0, 1)), legs=())
         # v0 = genus 0, val 3, dim = 0. v1 = genus 1, val 1, dim = 1.
-        # v1's half-edge (bridge minus end) has d = 1. Sign: (-1)^1 = -1.
+        # v0's half-edge is the bridge minus end and has d = 0. Sign: 1.
         I = hodge_integral(g)
-        assert I == Fraction(-1, 24)
+        assert I == Fraction(1, 24)
 
     def test_genus3_irr_node(self):
         """Genus-3 with 1 self-loop: verify I computation."""
@@ -480,15 +480,15 @@ class TestPFPolynomial:
         assert monomials.get('kappa^4 * S_4', 0) == Rational(1, 1990656)
 
     def test_kappa4_S3_squared_term(self):
-        """The kappa^4*S_3^2 term has coefficient 5/15925248."""
+        """The kappa^4*S_3^2 term has coefficient 1/1769472."""
         result = genus4_pf_polynomial()
         monomials = result['monomials']
-        assert monomials.get('kappa^4 * S_3^2', 0) == Rational(5, 15925248)
+        assert monomials.get('kappa^4 * S_3^2', 0) == Rational(1, 1769472)
 
     def test_nonzero_pf_graphs(self):
-        """319 planted-forest graphs have nonzero Hodge integral."""
+        """296 planted-forest graphs have nonzero Hodge integral."""
         census = genus4_amplitude_census()
-        assert census['nonzero_pf'] == 319
+        assert census['nonzero_pf'] == 296
 
 
 # ============================================================================
@@ -689,9 +689,9 @@ class TestCrossGenus:
         assert simplify(total - expected) == 0
 
     def test_graph_count_sequence(self):
-        """Graph counts: 2, 6, 42, 379."""
+        """Graph counts: 2, 7, 42, 379."""
         counts = [len(enumerate_stable_graphs(g, 0)) for g in range(1, 5)]
-        assert counts == [2, 6, 42, 379]
+        assert counts == [2, 7, 42, 379]
 
     def test_lambda_fp_sequence(self):
         """lambda_g^FP: 1/24, 7/5760, 31/967680, 127/154828800."""
@@ -742,6 +742,6 @@ class TestCrossGenus:
         assert simplify(ell_genus1(2, shadow) - expected) == 0
 
     def test_vanishing_hodge_count(self):
-        """41 graphs have vanishing Hodge integral."""
+        """64 graphs have vanishing Hodge integral under canonical bridge sign."""
         census = genus4_amplitude_census()
-        assert census['vanishing_hodge'] == 41
+        assert census['vanishing_hodge'] == 64

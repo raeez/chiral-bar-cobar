@@ -50,6 +50,7 @@ from compute.lib.cy_twisted_holography_k3e_engine import (
     derived_center_k3e,
     # Section 7: Holographic datum
     holographic_datum_k3e,
+    ap25_object_firewall_k3e,
     # Section 8: CY3 comparison
     cy3_comparison_table,
     # Section 9: HKR
@@ -364,15 +365,15 @@ class TestBoundaryOPE:
 # ============================================================
 
 class TestKoszulDuality:
-    """Tests for Koszul duality of the boundary algebra."""
+    """Tests for the Verdier/Koszul branch of the boundary algebra."""
 
     def test_kappa_boundary(self):
         """kappa(A_E) = 24."""
         assert koszul_dual_k3e().kappa_boundary == F(24)
 
-    def test_kappa_bulk(self):
+    def test_kappa_verdier_koszul(self):
         """kappa(A_E^!) = -24."""
-        assert koszul_dual_k3e().kappa_bulk == F(-24)
+        assert koszul_dual_k3e().kappa_verdier_koszul == F(-24)
 
     def test_kappa_sum_zero_ap24(self):
         """AP24: kappa + kappa' = 0 for free fields."""
@@ -383,7 +384,7 @@ class TestKoszulDuality:
         assert koszul_dual_k3e().complementarity_sum_genus1 == F(0)
 
     def test_dual_generators(self):
-        """Koszul dual also has 24 generators."""
+        """Verdier/Koszul branch also has 24 generators."""
         assert koszul_dual_k3e().dual_generators == 24
 
     def test_dual_shadow_class(self):
@@ -394,10 +395,10 @@ class TestKoszulDuality:
         """c(A_E) = 24."""
         assert koszul_dual_k3e().c_boundary == 24
 
-    def test_c_bulk_equals_boundary(self):
-        """c(A^!) = c(A) = 24 (Koszul dual of free has same c, opposite kappa)."""
+    def test_c_verdier_koszul_equals_boundary(self):
+        """c(A^!) = c(A) = 24 while kappa changes sign."""
         kd = koszul_dual_k3e()
-        assert kd.c_bulk == kd.c_boundary
+        assert kd.c_verdier_koszul == kd.c_boundary
 
 
 # ============================================================
@@ -491,6 +492,18 @@ class TestRMatrix:
         """r-matrix lives in 24-dim space."""
         assert r_matrix_k3e().r_matrix_dim == 24
 
+    def test_kernel_normalization(self):
+        """Unit-level currents give kernel Omega/z with coefficient 1."""
+        assert r_matrix_k3e().kernel_normalization == F(1)
+
+    def test_r_matrix_uses_ope_level_not_mukai_lattice(self):
+        """The collision kernel uses delta^{ab}, not the Mukai form."""
+        r = r_matrix_k3e()
+        assert r.level_matrix_signature == boundary_ope_k3e().pairing_signature
+        assert r.level_matrix_signature == (24, 0)
+        assert r.lattice_signature == mukai_pairing_k3().signature == (4, 20)
+        assert "OPE level" in r.pairing_source
+
     def test_yang_baxter(self):
         """CYBE satisfied (trivially for abelian)."""
         assert r_matrix_k3e().yang_baxter is True
@@ -539,19 +552,26 @@ class TestDerivedCenter:
 
 
 # ============================================================
-# Section 7: Holographic datum tests
+# Section 7: Holographic package tests
 # ============================================================
 
-class TestHolographicDatum:
-    """Tests for the holographic modular Koszul datum."""
+class TestHolographicPackage:
+    """Tests for the holographic modular Koszul package."""
+
+    def test_seven_entry_package(self):
+        """The package has exactly the seven structural entries."""
+        assert holographic_datum_k3e().package_entries == (
+            "A", "A^i", "A^!", "C=Z_ch^der(A)", "r(z)", "Theta_A", "nabla^hol",
+        )
 
     def test_boundary_kappa(self):
         """kappa(A) = 24."""
         assert holographic_datum_k3e().boundary_kappa == F(24)
 
-    def test_bulk_kappa(self):
-        """kappa(A^!) = -24."""
-        assert holographic_datum_k3e().bulk_kappa == F(-24)
+    def test_verdier_koszul_kappa(self):
+        """kappa(A^!) = -24; A^! is not the derived-centre bulk."""
+        hd = holographic_datum_k3e()
+        assert hd.verdier_koszul_kappa == F(-24)
 
     def test_kappa_sum(self):
         """kappa + kappa' = 0."""
@@ -560,6 +580,20 @@ class TestHolographicDatum:
     def test_boundary_generators(self):
         """24 boundary generators."""
         assert holographic_datum_k3e().boundary_generators == 24
+
+    def test_bar_dual_slot(self):
+        """The package records A^i separately from A^!."""
+        hd = holographic_datum_k3e()
+        assert "B(A_E)" in hd.bar_complex_description
+        assert hd.bar_dual_generators == 24
+        assert "B^ch" in hd.bar_dual_description
+        assert "Omega(B(A_E))" in hd.cobar_inversion_result
+
+    def test_derived_center_bulk_slot(self):
+        """The bulk slot is C = Z_ch^der(A), not A^!."""
+        hd = holographic_datum_k3e()
+        assert hd.derived_center_description.startswith("C = Z_ch^der")
+        assert "bulk" in hd.derived_center_description
 
     def test_boundary_c(self):
         """c = 24."""
@@ -688,7 +722,8 @@ class TestHKR:
         """Hochschild Euler characteristic = topological Euler characteristic.
 
         chi_HH = sum (-1)^n dim HH^n = chi_top for smooth projective.
-        Actually for CY: chi_HH = sum (-1)^n dim HH^n = sum (-1)^{p+q} h^{p,q} = chi_top.
+        For a Calabi-Yau, chi_HH = sum (-1)^n dim HH^n
+        = sum (-1)^{p+q} h^{p,q} = chi_top.
         """
         decomp = hkr_decomposition_k3e()
         hd = k3_times_e_hodge()
@@ -741,6 +776,13 @@ class TestMukaiPairing:
         """Rank 24 = 2 + 22."""
         m = mukai_pairing_k3()
         assert m.h0_h4_rank + m.h2_rank == m.rank
+
+    def test_mukai_lattice_not_heisenberg_ope_level(self):
+        """Mukai signature is a lattice charge pairing, not the OPE level."""
+        m = mukai_pairing_k3()
+        assert m.determines_heisenberg_ope_level is False
+        assert m.heisenberg_ope_signature == boundary_ope_k3e().pairing_signature
+        assert m.heisenberg_ope_signature == (24, 0)
 
 
 # ============================================================
@@ -918,13 +960,33 @@ class TestAntiPatternGuards:
     def test_ap33_koszul_dual_not_negative_level(self):
         """AP33: H_k^! != H_{-k}. Same kappa, different algebras.
 
-        We verify the statement is correctly handled: the Koszul dual
+        We verify the statement is correctly handled: the Verdier/Koszul branch
         has kappa = -24, and we do NOT assert A^! = A_{-k}.
         """
         kd = koszul_dual_k3e()
         # We only assert kappa values, not algebra identity
         assert kd.kappa_boundary == F(24)
-        assert kd.kappa_bulk == F(-24)
+        assert kd.kappa_verdier_koszul == F(-24)
+
+    def test_ap25_objects_typed_apart(self):
+        """AP25: B(A), A^i, A^!, Omega(B(A)), and Z_ch^der(A) stay separate."""
+        fw = ap25_object_firewall_k3e()
+        objects = fw["objects"]
+        required = {"B_A", "A_i", "A_shriek", "Omega_B_A", "Z_der_ch_A"}
+        assert required <= set(objects)
+        assert fw["objects_kept_distinct"] is True
+        assert objects["B_A"].object_type == "bar factorization coalgebra"
+        assert objects["A_i"].object_type == "bar-dual coalgebra"
+        assert objects["Omega_B_A"].role.startswith("bar-cobar inversion")
+        assert objects["A_shriek"].role.startswith("dual boundary")
+        assert objects["Z_der_ch_A"].role.startswith("bulk slot")
+
+    def test_ap25_no_line_bulk_conflation(self):
+        """AP25: A^! is the dual boundary/line slot; C is the bulk."""
+        fw = ap25_object_firewall_k3e()
+        assert "not the bulk" in fw["objects"]["A_shriek"].not_output
+        assert fw["objects"]["Z_der_ch_A"].symbol == "Z_ch^der(A_E)"
+        assert "bulk" in fw["objects"]["Z_der_ch_A"].role
 
     def test_ap10_no_hardcoded_values(self):
         """AP10: kappa = 24 derived from rank computation, not hardcoded.
@@ -1022,8 +1084,8 @@ class TestCrossEngineConsistency:
         assert mukai_pairing_k3().rank == boundary_chiral_algebra_k3e().total_generators
 
     def test_holographic_datum_internal(self):
-        """All kappa values in the holographic datum are consistent."""
+        """All kappa values in the holographic package are consistent."""
         hd = holographic_datum_k3e()
         assert hd.boundary_kappa == hd.theta_kappa
-        assert hd.boundary_kappa + hd.bulk_kappa == F(0)
+        assert hd.boundary_kappa + hd.verdier_koszul_kappa == F(0)
         assert hd.r_matrix_dim == hd.boundary_generators

@@ -117,10 +117,9 @@ class TestLieDataAndKappa:
             kap = kappa_affine("A", 1, k)
             assert abs(kap - 3.0 * (k + 2) / 4.0) < 1e-12
 
-    def test_kappa_critical_level_raises(self):
-        """kappa undefined at critical level k = -h^v."""
-        with pytest.raises(ValueError):
-            kappa_affine("A", 1, -2)
+    def test_kappa_critical_level_vanishes(self):
+        """kappa vanishes at k=-h^v; Sugawara central charge is undefined."""
+        assert abs(kappa_affine("A", 1, -2)) < 1e-12
 
     def test_central_charge_su2(self):
         """c(sl_2, k) = 3k/(k+2)."""

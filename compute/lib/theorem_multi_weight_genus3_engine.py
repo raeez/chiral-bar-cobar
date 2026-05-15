@@ -1,49 +1,59 @@
-r"""Multi-weight genus expansion engine: delta_F_g^cross beyond genus 2.
+r"""Finite-window multi-weight genus expansion engine.
 
 THEOREM (multi-weight genus expansion, thm:multi-weight-genus-expansion):
 
     F_g(A) = kappa(A) * lambda_g^FP + delta_F_g^cross(A)
 
-For uniform-weight algebras, delta_F_g^cross = 0 at all genera (PROVED).
-For multi-weight algebras, delta_F_g^cross is generically NONZERO.
+This module certifies the W_3 two-channel finite window g = 2, 3, 4
+and the W_N gravitational genus-2/genus-3 closed formulas.  It does not
+claim a closed genus-5 W_3 theorem.
 
-RESULTS (NEW)
-=============
+For the one-channel scalar lane, delta_F_g^cross = 0.  For W_3, the
+multi-weight mixed-channel correction is nonzero already at genus 2.
+
+CERTIFIED RESULTS
+=================
 
 1. GENUS-3 FULL OPE vs GRAVITATIONAL (W_3):
-   The W_3 Frobenius algebra is non-associative: (TW)W = 6T != T(WW) = 4T.
-   This produces a correction to the gravitational approximation:
+   The W_3 Frobenius algebra is non-associative:
+       V_0(T,T,W,W) = 2c,   V_0(T,W,T,W) = 3c.
 
-       delta_F_3^{full}(W_3) = delta_F_3^{grav}(W_3) - 5/(16c)
+   With the same half-edge factorization convention in both engines
+   (self-loop half-edges paired before bridge half-edges), the W_3 full
+   OPE and the W_N gravitational specialization at N = 3 agree exactly
+   in the certified window:
 
-   The correction -5/(16c) arises from genus-0 vertices of valence >= 4
-   where the non-associativity of the multiplication changes the
-   factorization. It is EXACT (proved by exhaustive computation at
-   12+ c values and rational interpolation).
+       delta_F_g^{full}(W_3) = delta_F_g^{grav}(W_3),  g = 2, 3, 4.
 
-   At genus 2: full = grav (no non-associativity correction).
-   At genus 4: full = grav (correction vanishes).
-   The genus-3 correction is the FIRST non-gravitational effect.
+   Thus the apparent -5/(16c) genus-3 discrepancy is not a theorem of
+   this engine; it is rejected by the exact graph sum.
 
-2. GENUS-5 CROSS-CHANNEL CORRECTION (W_3):
-   delta_F_5^cross(W_3) = P_5(c) / (D_5 * c^4)
-   where P_5 is a degree-5 polynomial with positive leading coefficient.
-   Computed here for the first time via the 4555-graph sum over M_bar_{5,0}.
+2. W_3 CLOSED FORMS:
+   delta_F_2^cross(W_3) = (c + 204)/(16c)
 
-3. RATIONALITY STRUCTURE:
-   For W_3 (2 channels, no higher-spin exchange beyond gravitational):
-       delta_F_g^cross(W_3, c) is a RATIONAL FUNCTION of c
-       of the form P_g(c) / (D_g * c^{g-1})
-   where P_g(c) is a polynomial of degree d_g with all positive coefficients.
+   delta_F_3^cross(W_3)
+       = (5c^3 + 3792c^2 + 1149120c + 217071360)/(138240c^2)
 
-   Degree pattern: d_2 = 1, d_3 = 3, d_4 = 4, d_5 = ? (computed below).
-   Net degree d_g - (g-1): 0, 1, 1, 1 for g = 2, 3, 4, 5.
-   Large-c asymptotics: delta_F_g ~ const * c for g >= 3.
+   delta_F_4^cross(W_3)
+       = (287c^4 + 268881c^3 + 115455816c^2
+          + 29725133760c + 5594347866240)/(17418240c^3)
 
-4. UNIFORM-WEIGHT VANISHING:
-   For any uniform-weight algebra (e.g., Virasoro), delta_F_g^cross = 0.
-   This is proved by the diagonal metric principle: all channel assignments
-   that contribute to the amplitude are single-channel.
+3. RATIONALITY STRUCTURE IN THE CERTIFIED WINDOW:
+   For W_3:
+       delta_F_g^cross(W_3, c) = P_g(c)/(D_g * c^{g-1}),  g = 2,3,4.
+
+   Degree pattern: d_2 = 1, d_3 = 3, d_4 = 4.
+   Net degree d_g - (g-1): 0, 1, 1 for g = 2, 3, 4.
+   Large-c asymptotics in the window: genus 2 is bounded; genera 3 and 4
+   grow linearly in c.
+
+4. SCALAR-LANE SEPARATION:
+   The scalar Faber-Pandharipande lane is kappa(W_3) * lambda_g^FP.
+   The diagonal boundary graph diagnostic is not substituted for that lane.
+   The finite-window free energy represented here is:
+
+       F_g(W_3) = kappa(W_3) * lambda_g^FP + delta_F_g^cross(W_3),
+       g = 2, 3, 4.
 
 5. PROPAGATOR VARIANCE CONNECTION:
    The genus-2 cross-channel correction decomposes as:
@@ -88,6 +98,55 @@ from compute.lib.stable_graph_enumeration import (
     enumerate_stable_graphs,
     genus2_stable_graphs_n0,
 )
+
+
+CERTIFIED_W3_GENUS_WINDOW: Tuple[int, ...] = (2, 3, 4)
+
+HOLOGRAPHIC_PACKAGE_ENTRIES: Tuple[str, ...] = (
+    "A",
+    "A^i",
+    "A^!",
+    "C",
+    "r(z)",
+    "Theta_A",
+    "nabla^hol",
+)
+
+MODULAR_KOSZUL_PRIMARY_PROJECTIONS: Tuple[str, ...] = (
+    "Fact_X(L)",
+    "barB_X(L)",
+    "Theta_L",
+    "L_L",
+    "(V_br,T_br)",
+    "R4_mod(L)",
+)
+
+OBJECT_FIREWALL: Dict[str, str] = {
+    "A": "input chiral algebra",
+    "B(A)": "ordered bar coalgebra before cohomology",
+    "A^i": "bar cohomology coalgebra H^*(B(A))",
+    "A^!": (
+        "Verdier/continuous-linear dual branch under finite-type or "
+        "completed hypotheses"
+    ),
+    "Omega(B(A))": "bar-cobar inversion recovering A",
+    "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/derived-centre bulk",
+}
+
+
+def holographic_package_entries() -> Tuple[str, ...]:
+    """Seven entries of the holographic package H(A)."""
+    return HOLOGRAPHIC_PACKAGE_ENTRIES
+
+
+def modular_koszul_primary_projections() -> Tuple[str, ...]:
+    """Six projections of the compute-side modular Koszul package."""
+    return MODULAR_KOSZUL_PRIMARY_PROJECTIONS
+
+
+def object_firewall() -> Dict[str, str]:
+    """Typed roles for bar, Verdier, inversion, and bulk objects."""
+    return dict(OBJECT_FIREWALL)
 
 
 # ============================================================================
@@ -140,6 +199,11 @@ def w3_kappa_channel(ch: str, c: Fraction) -> Fraction:
 def w3_kappa_total(c: Fraction) -> Fraction:
     """Total kappa(W_3) = 5c/6."""
     return Fraction(5) * c / 6
+
+
+def w3_scalar_fp_lane(g: int, c: Fraction) -> Fraction:
+    """Scalar Faber-Pandharipande lane kappa(W_3) * lambda_g^FP."""
+    return w3_kappa_total(c) * lambda_fp(g)
 
 
 def w3_propagator(ch: str, c: Fraction) -> Fraction:
@@ -348,7 +412,11 @@ def w3_graph_amplitude(graph: StableGraph, sigma: Tuple[str, ...],
 
 
 def w3_graph_decomposed(graph: StableGraph, c: Fraction) -> Dict[str, Fraction]:
-    """Decompose graph amplitude into diagonal and mixed, divided by |Aut|."""
+    """Decompose a boundary graph into diagonal and mixed channel sums.
+
+    The returned diagonal term is a boundary diagnostic.  It is not the
+    scalar Faber-Pandharipande lane kappa(W_3) * lambda_g^FP.
+    """
     ne = graph.num_edges
     if ne == 0:
         return {'diagonal': Fraction(0), 'mixed': Fraction(0), 'total': Fraction(0)}
@@ -498,6 +566,20 @@ def w3_delta_F4_closed(c: Fraction) -> Fraction:
             + 29725133760 * c + 5594347866240) / (17418240 * c**3)
 
 
+def w3_delta_Fg_closed(g: int, c: Fraction) -> Fraction:
+    """Certified W_3 closed form for g = 2, 3, 4."""
+    if g == 2:
+        return w3_delta_F2_closed(c)
+    if g == 3:
+        return w3_delta_F3_closed(c)
+    if g == 4:
+        return w3_delta_F4_closed(c)
+    raise ValueError(
+        f"W_3 closed form is certified only for g in {CERTIFIED_W3_GENUS_WINDOW}; "
+        f"got g={g}"
+    )
+
+
 # ============================================================================
 # Non-gravitational correction formula (PROVED)
 # ============================================================================
@@ -643,7 +725,12 @@ def rational_function_degree(g: int, n_points: int = 20,
 # ============================================================================
 
 def w3_full_decomposition(g: int, c: Fraction) -> Dict[str, object]:
-    """Full diagnostic decomposition of F_g(W_3)."""
+    """Full diagnostic decomposition of F_g(W_3).
+
+    The diagonal boundary sum is reported for attack-heal diagnostics.
+    The scalar lane used in F_g_total is kappa(W_3) * lambda_g^FP, not the
+    diagonal boundary sum.
+    """
     bnd = boundary_graphs(g)
     diag_sum = Fraction(0)
     mixed_sum = Fraction(0)
@@ -663,7 +750,7 @@ def w3_full_decomposition(g: int, c: Fraction) -> Dict[str, object]:
             'mixed': r['mixed'],
         })
 
-    kl = w3_kappa_total(c) * lambda_fp(g)
+    kl = w3_scalar_fp_lane(g, c)
 
     return {
         'genus': g,
@@ -675,6 +762,36 @@ def w3_full_decomposition(g: int, c: Fraction) -> Dict[str, object]:
         'kappa_lambda': kl,
         'F_g_total': kl + mixed_sum,
         'per_graph': per_graph,
+    }
+
+
+def w3_finite_window_theorem(g: int, c: Fraction) -> Dict[str, object]:
+    """Exact certificate for the W_3 finite window g = 2, 3, 4."""
+    c = Fraction(c)
+    closed = w3_delta_Fg_closed(g, c)
+    graph = w3_delta_Fg_cross(g, c)
+    grav = w3_delta_Fg_grav(g, c)
+    decomp = w3_full_decomposition(g, c)
+    scalar_lane = w3_scalar_fp_lane(g, c)
+    diagonal_boundary = decomp["diagonal_sum"]
+    return {
+        "genus": g,
+        "c": c,
+        "certified_genus_window": CERTIFIED_W3_GENUS_WINDOW,
+        "lambda_fp": lambda_fp(g),
+        "scalar_fp_lane": scalar_lane,
+        "cross_channel": graph,
+        "cross_channel_closed": closed,
+        "graph_matches_closed": graph == closed,
+        "gravitational_cross_channel": grav,
+        "full_equals_grav": graph == grav,
+        "nongrav_correction": graph - grav,
+        "diagonal_boundary_diagnostic": diagonal_boundary,
+        "diagonal_boundary_is_scalar_lane": diagonal_boundary == scalar_lane,
+        "full_free_energy": scalar_lane + graph,
+        "holographic_package_entries": holographic_package_entries(),
+        "modular_koszul_primary_projections": modular_koszul_primary_projections(),
+        "object_firewall": object_firewall(),
     }
 
 
@@ -700,22 +817,10 @@ def w3_delta_by_loop_number(g: int, c: Fraction) -> Dict[int, Fraction]:
 # ============================================================================
 
 def uniform_weight_delta(g: int, c: Fraction, weight: int = 2) -> Fraction:
-    """Compute delta_F_g^cross for a uniform-weight algebra with one channel.
+    """Compute delta_F_g^cross for the one-channel scalar lane.
 
     Should return exactly 0 (all channel assignments are single-channel).
     """
-    total = Fraction(0)
-    for gr in boundary_graphs(g):
-        ne = gr.num_edges
-        if ne == 0:
-            continue
-        aut = gr.automorphism_order()
-        # Only one channel, so all assignments are diagonal
-        sigma = ('T',) * ne
-        amp = w3_graph_amplitude(gr, sigma, c)
-        # This is the ONLY assignment, so mixed = 0 trivially
-        # But let me verify by running the full decomposition
-    # For uniform weight, there's only 1 channel, so mixed is always 0
     return Fraction(0)
 
 
@@ -762,10 +867,11 @@ def w3_large_c_ratio(g: int, c: Fraction) -> Fraction:
 # ============================================================================
 
 def w3_per_channel_check(g: int, c: Fraction) -> Dict[str, object]:
-    """Verify per-channel universality: diagonal sum = sum kappa_i * lambda_g.
+    """Compare diagonal boundary diagnostics with scalar FP channel lanes.
 
-    For each channel i, the all-i diagonal amplitude summed over all graphs
-    should equal kappa_i * lambda_g^FP.
+    The all-i boundary sum is not asserted to equal kappa_i * lambda_g^FP.
+    The equality flags are returned explicitly so tests can block accidental
+    collapse of the boundary diagnostic onto the scalar lane.
     """
     fpg = lambda_fp(g)
     diag_T = Fraction(0)

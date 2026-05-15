@@ -1,42 +1,33 @@
-r"""Resurgence arithmetic of the shadow obstruction tower.
+"""Exact scalar shadow arithmetic and frontier diagnostics.
 
-This module implements the full arity-direction resurgence arithmetic
-pipeline for chiral algebras, combining:
+This module computes the one-dimensional scalar projection of the
+shadow obstruction tower determined by the shadow metric
 
-1. BOREL TRANSFORM of the shadow tower:
-   B[H_A](zeta) = sum_{r>=2} S_r(A) * zeta^{r-1} / Gamma(r)
+    Q_L(t) = 4*kappa^2 + 12*kappa*alpha*t
+             + (9*alpha^2 + 16*kappa*S4)*t^2.
 
-   Singularities at the reciprocals of Q_L branch points encode
-   non-perturbative data via Ecalle's resurgence theory.
+The exact content is finite scalar arithmetic: coefficients of
+sqrt(Q_L), reciprocal branch-point growth markers, rational reductions,
+and p-adic norms.  These computations do not certify full Ecalle
+resurgence, alien calculus, analytic continuation, Borel summability,
+zeta-zero statements, or the full Maurer-Cartan datum Theta_A.
 
-2. STOKES CONSTANTS and their arithmetic:
-   The Stokes constant S_1 at the leading singularity controls
-   the non-perturbative correction.  For the shadow tower with
-   algebraic generating function H(t) = t^2 * sqrt(Q_L(t)),
-   the monodromy of sqrt around a simple zero gives S_1 = +/- 2*pi*i
-   (from thm:shadow-connection, residue 1/2).
+Historical function names containing "Borel", "Stokes", or "alien" are
+kept for compatibility with older compute surfaces.  Their outputs are
+diagnostic unless explicitly marked as an exact scalar projection.
 
-3. ALIEN DERIVATIVES of the shadow Borel transform:
-   Delta_{omega_k} B[H_A] = S_k * B[H_A^{(k)}]
-   For class M: infinitely many nonzero alien derivatives.
-   For class L: finitely many (tower terminates).
-
-4. TRANSSERIES structure:
-   H_A(t, sigma) = sum_{n>=0} sigma^n * H_A^{(n)}(t)
-   The n-instanton sector H^{(n)} is computed from the
-   n-th sheet of the Riemann surface sqrt(Q_L).
-
-5. MEDIAN RESUMMATION:
-   H_A^{med}(t) = (S_+ + S_-)/2 * B[H_A]
-   Gives a well-defined analytic function for real positive t.
-
-6. p-ADIC BOREL TRANSFORM:
-   Over Q_p, the Borel transform may have different analytic structure.
-   Compares archimedean vs p-adic singularities.
-
-7. PEACOCK PATTERN (Garoufalidis-Zagier):
-   Shadow coefficients reduced mod p form structured patterns
-   whose period is related to the multiplicative order of rho mod p.
+Firewalls:
+    - Holographic package fields are
+      (A, A^i, A^!, C, r(z), Theta_A, nabla^hol).
+    - Modular Koszul projections are
+      (Fact_X(L), barB_X(L), Theta_L, L_L, (V_br,T_br), R4_mod(L)).
+    - Omega(B(A)) = A is bar-cobar inversion, not Koszul duality.
+    - A^! is the Verdier/continuous-linear dual branch under
+      finite-type/completed hypotheses.
+    - Z_ch^der(A) = ChirHoch^*(A,A) is Hochschild bulk, not Koszul dual.
+    - Kernel constants use the trace/KZ distinction:
+      affine raw k*Omega_tr/z; KZ Omega/((k+h^vee)z);
+      Heisenberg k/z; Virasoro (c/2)/z^3 + 2T/z.
 
 BEILINSON WARNINGS
 ==================
@@ -100,6 +91,109 @@ PI = math.pi
 TWO_PI = 2.0 * PI
 FOUR_PI_SQ = TWO_PI ** 2
 
+EXACT_SCALAR_PROJECTION = "exact_scalar_projection"
+EXACT_TERMINATING_SCALAR_PROJECTION = "exact_terminating_scalar_projection"
+DIAGNOSTIC_NON_CERTIFYING = "diagnostic_non_certifying"
+
+HOLOGRAPHIC_PACKAGE_FIELDS = (
+    "A",
+    "A^i",
+    "A^!",
+    "C",
+    "r(z)",
+    "Theta_A",
+    "nabla^hol",
+)
+
+MODULAR_KOSZUL_PROJECTION_FIELDS = (
+    "Fact_X(L)",
+    "barB_X(L)",
+    "Theta_L",
+    "L_L",
+    "(V_br,T_br)",
+    "R4_mod(L)",
+)
+
+KERNEL_NORMALIZATION_FORMULAS = {
+    "affine_raw_trace": "k*Omega_tr/z",
+    "affine_kz": "Omega/((k+h^vee)z)",
+    "heisenberg": "k/z",
+    "virasoro": "(c/2)/z^3 + 2T/z",
+}
+
+OBJECT_SEPARATION_FIREWALLS = {
+    "bar_cobar_inversion": "Omega(B(A))=A is inversion, not Koszul duality",
+    "verdier_dual_branch": (
+        "A^! is the Verdier/continuous-linear dual branch under "
+        "finite-type/completed hypotheses"
+    ),
+    "hochschild_bulk": "Z_ch^der(A)=ChirHoch^*(A,A) is Hochschild bulk",
+    "scalar_projection": (
+        "This engine computes scalar shadow projections, not full "
+        "Maurer-Cartan data"
+    ),
+}
+
+
+def _as_fraction(value: Any, max_denominator: int = 10 ** 12) -> Fraction:
+    """Convert a rational input to a stable Fraction."""
+    if isinstance(value, Fraction):
+        return value
+    return Fraction(value).limit_denominator(max_denominator)
+
+
+@dataclass(frozen=True)
+class ScalarShadowMetricExact:
+    """Exact scalar shadow metric data for rational parameters."""
+
+    kappa: Fraction
+    alpha: Fraction
+    S4: Fraction
+    q0: Fraction
+    q1: Fraction
+    q2: Fraction
+    Delta: Fraction
+    discriminant: Fraction
+    rho_squared: Optional[Fraction]
+    certification: str = EXACT_SCALAR_PROJECTION
+
+
+def scalar_shadow_metric_exact(kappa: Any, alpha: Any, S4: Any
+                               ) -> ScalarShadowMetricExact:
+    """Compute exact scalar data from (kappa, alpha, S4)."""
+    kappa_f = _as_fraction(kappa)
+    alpha_f = _as_fraction(alpha)
+    S4_f = _as_fraction(S4)
+    q0 = 4 * kappa_f ** 2
+    q1 = 12 * kappa_f * alpha_f
+    q2 = 9 * alpha_f ** 2 + 16 * kappa_f * S4_f
+    Delta = 8 * kappa_f * S4_f
+    discriminant = q1 ** 2 - 4 * q0 * q2
+    rho_squared = q2 / q0 if q0 != 0 else None
+    return ScalarShadowMetricExact(
+        kappa=kappa_f,
+        alpha=alpha_f,
+        S4=S4_f,
+        q0=q0,
+        q1=q1,
+        q2=q2,
+        Delta=Delta,
+        discriminant=discriminant,
+        rho_squared=rho_squared,
+    )
+
+
+def virasoro_shadow_metric_exact(c_val: Any) -> ScalarShadowMetricExact:
+    """Exact Virasoro scalar metric on c(5c+22) != 0."""
+    c = _as_fraction(c_val)
+    if c == 0 or 5 * c + 22 == 0:
+        raise ValueError("Virasoro metric requires c*(5c+22) != 0")
+    return scalar_shadow_metric_exact(
+        kappa=c / 2,
+        alpha=Fraction(2),
+        S4=Fraction(10, 1) / (c * (5 * c + 22)),
+    )
+
 
 # =====================================================================
 # Section 0: Algebra shadow data
@@ -111,7 +205,10 @@ class ShadowAlgebraData:
 
     Encodes kappa, alpha = S_3, S_4, and derived quantities
     (Delta, rho, theta, branch points) sufficient to determine the
-    full shadow obstruction tower and its resurgence structure.
+    scalar shadow obstruction tower on a one-dimensional primary line.
+    This is a projection of Theta_A, not the full Maurer-Cartan datum.
+    The field kappa_dual records only the scalar Verdier-complement
+    value used in the landscape tables; it is not the object A^!.
 
     The shadow metric is Q_L(t) = q0 + q1*t + q2*t^2 where
         q0 = 4*kappa^2
@@ -158,7 +255,7 @@ class ShadowAlgebraData:
 
     @property
     def instanton_actions(self) -> Tuple[complex, complex]:
-        """Arity-direction Borel singularities = 1/branch_points."""
+        """Compatibility alias: reciprocal branch-point growth markers."""
         if abs(self.branch_plus) > 1e-30:
             A_p = 1.0 / self.branch_plus
         else:
@@ -299,9 +396,11 @@ def borel_transform_coefficients(shadow_coeffs: Dict[int, float]
     B[H_A](zeta) = sum_{r>=2} S_r * zeta^{r-1} / Gamma(r)
 
     This is the Borel transform normalized for the shadow tower
-    H(t) = sum S_r t^r treated as an asymptotic series.
-    The division by Gamma(r) = (r-1)! compensates the factorial
-    growth of S_r for class M algebras.
+    H(t) = sum S_r t^r treated as a diagnostic series.  The exact
+    class-M shadow coefficients coming from sqrt(Q_L) have algebraic
+    Darboux growth, not factorial growth.  Thus this ordinary factorial
+    Borel transform is entire by the ratio test at the scalar level; it
+    does not certify Ecalle singularities.
     """
     result = {}
     for r, sr in shadow_coeffs.items():
@@ -353,12 +452,13 @@ def borel_transform_evaluate_mpmath(shadow_coeffs_mp: Dict[int, Any],
 
 def borel_singularity_locations(data: ShadowAlgebraData
                                  ) -> Tuple[complex, complex]:
-    r"""Predicted Borel singularity locations from shadow metric.
+    r"""Reciprocal branch-point growth markers from the shadow metric.
 
     The shadow generating function H(t) = t^2 sqrt(Q_L(t)) has
-    branch points at zeros of Q_L(t).  The Borel transform of the
-    Taylor series has singularities at zeta_k = 1/t_k (reciprocals
-    of branch points).
+    branch points at zeros of Q_L(t).  This compatibility function
+    returns zeta_k = 1/t_k, the reciprocal markers controlling
+    coefficient growth.  For the ordinary factorial Borel transform
+    in this module these are not certified Borel-plane singularities.
 
     Returns (zeta_plus, zeta_minus).
     """
@@ -377,17 +477,13 @@ def borel_singularity_locations(data: ShadowAlgebraData
 
 def locate_all_borel_singularities(data: ShadowAlgebraData
                                     ) -> List[Dict[str, Any]]:
-    """Locate all Borel singularities and classify them.
+    """Return scalar branch markers with explicit non-certification.
 
-    For the shadow tower, the Borel transform B[H_A](zeta)
-    is an algebraic function of zeta (since H(t) is algebraic of degree 2).
-    Its singularities are:
-      - Branch points at zeta = 1/t_pm (from zeros of Q_L)
-      - Their integer multiples (from higher sheets via continuation)
-
-    For class G: no singularities (entire Borel transform).
-    For class L: removable singularities (Borel transform polynomial).
-    For class M: infinite sequence of singularities at n/t_pm.
+    For class G/L the scalar tower terminates.  For class M this returns
+    the two reciprocal Q_L branch-point markers.  They are useful
+    diagnostics for coefficient growth and Pade tests on the original
+    algebraic series.  They are not certified singularities of the
+    ordinary factorial Borel transform.
 
     Returns list of dicts with position, type, order.
     """
@@ -406,36 +502,52 @@ def locate_all_borel_singularities(data: ShadowAlgebraData
         'position': zeta_p,
         'modulus': abs(zeta_p),
         'argument': cmath.phase(zeta_p),
-        'type': 'branch_point',
+        'type': 'reciprocal_branch_marker',
         'order': 0.5,  # square root type
         'label': 'zeta_+',
+        'certified_borel_singularity': False,
+        'certification': DIAGNOSTIC_NON_CERTIFYING,
     })
     singularities.append({
         'position': zeta_m,
         'modulus': abs(zeta_m),
         'argument': cmath.phase(zeta_m),
-        'type': 'branch_point',
+        'type': 'reciprocal_branch_marker',
         'order': 0.5,
         'label': 'zeta_-',
+        'certified_borel_singularity': False,
+        'certification': DIAGNOSTIC_NON_CERTIFYING,
     })
-
-    # Higher-order singularities at integer multiples
-    # (from analytic continuation around branch cuts)
-    for n in range(2, 6):
-        for base, label in [(zeta_p, '+'), (zeta_m, '-')]:
-            pos = n * base
-            singularities.append({
-                'position': pos,
-                'modulus': abs(pos),
-                'argument': cmath.phase(pos),
-                'type': 'higher_sheet',
-                'order': 0.5,
-                'label': f'{n}*zeta_{label}',
-            })
 
     # Sort by modulus (distance from origin)
     singularities.sort(key=lambda s: s['modulus'])
     return singularities
+
+
+def frontier_diagnostic_status(data: ShadowAlgebraData) -> Dict[str, Any]:
+    """Certification split for the arithmetic/resurgence frontier surface."""
+    terminating = data.depth_class in ('G', 'L')
+    return {
+        'scalar_projection': EXACT_SCALAR_PROJECTION,
+        'terminating_tower': terminating,
+        'ordinary_borel_transform_entire': True,
+        'certifies_borel_singularities': False,
+        'certifies_borel_summability': False,
+        'certifies_ecalle_stokes': False,
+        'certifies_alien_calculus': False,
+        'certifies_zeta_zero_theorem': False,
+        'certifies_analytic_continuation': False,
+        'certifies_full_mc_data': False,
+        'object_firewalls': OBJECT_SEPARATION_FIREWALLS,
+        'holographic_package_fields': HOLOGRAPHIC_PACKAGE_FIELDS,
+        'modular_koszul_projection_fields': MODULAR_KOSZUL_PROJECTION_FIELDS,
+        'kernel_normalization_formulas': KERNEL_NORMALIZATION_FORMULAS,
+        'branch_markers_are_growth_diagnostics': not terminating,
+        'certification': (
+            EXACT_TERMINATING_SCALAR_PROJECTION
+            if terminating else DIAGNOSTIC_NON_CERTIFYING
+        ),
+    }
 
 
 # =====================================================================
@@ -490,7 +602,7 @@ def pade_poles(Q_coeffs: np.ndarray) -> np.ndarray:
 
 def borel_pade_singularities(data: ShadowAlgebraData,
                               max_r: int = 60) -> Dict[str, Any]:
-    """Detect branch points of the shadow tower via Pade of the ORIGINAL series.
+    """Detect branch points of the shadow tower via Pade of the original series.
 
     The shadow generating function G(t) = sum_{r>=2} S_r t^r is algebraic
     (Gevrey-0), so its Borel transform B[G](xi) = sum S_r xi^r/r! is ENTIRE.
@@ -500,9 +612,10 @@ def borel_pade_singularities(data: ShadowAlgebraData,
     We form g(t) = G(t)/t^2 = sum_{k>=0} S_{k+2} t^k
     and compute the diagonal Pade [N/N] of g.  The poles of the Pade
     approximant converge to the branch points of G (zeros of Q_L),
-    which are also the instanton actions (up to inversion).
+    whose reciprocals are the historical action diagnostics.
 
-    The Borel singularities (instanton actions) are A_pm = 1/t_pm.
+    The reciprocal markers A_pm = 1/t_pm are growth diagnostics, not
+    certified Ecalle action data.
 
     Returns dict with branch points detected via Pade vs predicted.
     """
@@ -529,7 +642,7 @@ def borel_pade_singularities(data: ShadowAlgebraData,
     # The Pade poles approximate the branch points t_pm
     # The predicted branch points from the shadow metric:
     predicted_branch = (data.branch_plus, data.branch_minus)
-    # The corresponding Borel singularities (instanton actions):
+    # Reciprocal branch markers, historically called action diagnostics:
     predicted_borel = borel_singularity_locations(data)
 
     # Find closest detected pole to each predicted branch point
@@ -549,7 +662,10 @@ def borel_pade_singularities(data: ShadowAlgebraData,
     return {
         'detected_poles': poles,
         'predicted_branch_points': predicted_branch,
+        'reciprocal_branch_markers': predicted_borel,
         'predicted_borel_singularities': predicted_borel,
+        'certified_borel_singularities': False,
+        'certification': DIAGNOSTIC_NON_CERTIFYING,
         'pole_match': pole_match,
         'n_coeffs': n_c,
         'pade_order': (m, n),
@@ -557,18 +673,19 @@ def borel_pade_singularities(data: ShadowAlgebraData,
 
 
 # =====================================================================
-# Section 4: Stokes constants and arithmetic recognition
+# Section 4: Monodromy diagnostics and arithmetic recognition
 # =====================================================================
 
 def stokes_constant_from_monodromy(data: ShadowAlgebraData) -> complex:
-    r"""Leading Stokes constant S_1 from monodromy of sqrt(Q_L).
+    r"""Diagnostic monodromy jump normalization from sqrt(Q_L).
 
     The shadow connection nabla^sh = d - Q'_L/(2Q_L) dt has
     residue 1/2 at each simple zero of Q_L.  The monodromy
     around a simple zero is exp(2*pi*i * 1/2) = -1.
 
-    This gives Stokes constant S_1 = +/- 2*pi*i at leading order,
-    where the sign depends on orientation.
+    Returning +/- 2*pi*i is a normalization of this scalar monodromy
+    jump.  It is not a certificate of an Ecalle Stokes constant for
+    the full chiral Maurer-Cartan problem.
     """
     if data.depth_class in ('G', 'L'):
         return 0.0 + 0.0j  # No Stokes phenomenon for terminating towers
@@ -577,7 +694,7 @@ def stokes_constant_from_monodromy(data: ShadowAlgebraData) -> complex:
 
 def stokes_constant_numerical(data: ShadowAlgebraData, max_r: int = 80
                                ) -> Dict[str, Any]:
-    r"""Numerically verify the Stokes constant from shadow coefficient asymptotics.
+    r"""Numerically check scalar growth behind the monodromy diagnostic.
 
     For the shadow tower G(t) = t^2 * sqrt(Q_L(t)) with branch points
     at t_pm = zeros of Q_L, the asymptotic behavior is:
@@ -586,7 +703,7 @@ def stokes_constant_numerical(data: ShadowAlgebraData, max_r: int = 80
 
     where t_0 = |t_0| * e^{i*theta} is the nearest branch point.
 
-    The Stokes constant S_1 = 2*pi*i arises from the monodromy of
+    The diagnostic value 2*pi*i arises from the monodromy of
     sqrt(Q_L) around the branch point (residue 1/2 of the shadow
     connection, thm:shadow-connection).
 
@@ -594,10 +711,11 @@ def stokes_constant_numerical(data: ShadowAlgebraData, max_r: int = 80
     S_{r+1}/S_r converge to rho * e^{-i*theta} (the inverse branch point),
     confirming the asymptotic behavior that underlies the monodromy argument.
 
-    The Stokes constant S_1 = 2*pi*i is EXACT (from monodromy), not extracted
-    from large-order behavior, because the shadow tower is Gevrey-0 (algebraic),
-    not Gevrey-1.  For Gevrey-0, the large-order relation S_r ~ S_1*A^{-r}*Gamma(r)
-    does NOT hold; instead S_r ~ C * rho^r * r^{-3/2}.
+    The scalar monodromy is exact.  The Ecalle Stokes interpretation is
+    not certified here because the shadow tower is Gevrey-0
+    (algebraic), not Gevrey-1.  For Gevrey-0, the large-order relation
+    S_r ~ S_1*A^{-r}*Gamma(r) does not hold; instead
+    S_r ~ C * rho^r * r^{-3/2}.
     """
     if data.depth_class in ('G', 'L'):
         return {
@@ -605,13 +723,17 @@ def stokes_constant_numerical(data: ShadowAlgebraData, max_r: int = 80
             'S_1_theoretical': 0.0,
             'depth_class': data.depth_class,
             'converged': True,
+            'certification': EXACT_TERMINATING_SCALAR_PROJECTION,
+            'certifies_ecalle_stokes': False,
         }
 
     coeffs = shadow_coefficients(data, max_r)
     rho = data.rho
     if rho < 1e-30:
         return {'S_1': complex('nan'), 'S_1_theoretical': 2j * PI,
-                'converged': False}
+                'converged': False,
+                'certification': DIAGNOSTIC_NON_CERTIFYING,
+                'certifies_ecalle_stokes': False}
 
     theta = data.theta
 
@@ -628,14 +750,16 @@ def stokes_constant_numerical(data: ShadowAlgebraData, max_r: int = 80
 
     if not ratios:
         return {'S_1': complex('nan'), 'S_1_theoretical': 2j * PI,
-                'converged': False}
+                'converged': False,
+                'certification': DIAGNOSTIC_NON_CERTIFYING,
+                'certifies_ecalle_stokes': False}
 
     # Check that ratio moduli converge to rho
     n_avg = min(10, len(ratios))
     avg_mod = sum(entry['modulus'] for entry in ratios[-n_avg:]) / n_avg
     rho_match = abs(avg_mod - rho) / max(rho, 1e-10) < 0.1
 
-    # The Stokes constant is determined by monodromy (exact)
+    # The monodromy-jump normalization is determined by the scalar connection.
     S_1_exact = 2j * PI
 
     return {
@@ -646,24 +770,35 @@ def stokes_constant_numerical(data: ShadowAlgebraData, max_r: int = 80
         'rho': rho,
         'rho_from_ratios': avg_mod,
         'theta': theta,
+        'certification': DIAGNOSTIC_NON_CERTIFYING,
+        'certifies_ecalle_stokes': False,
+        'checked_identity': 'Darboux growth of the scalar algebraic tower',
     }
 
 
 def stokes_constant_pslq(data: ShadowAlgebraData, max_r: int = 80,
                            dps: int = 50) -> Dict[str, Any]:
-    r"""Verify the Stokes constant using PSLQ on the asymptotic ratios.
+    r"""Recognize scalar growth data using high precision and PSLQ.
 
-    For the shadow tower (Gevrey-0), S_1 = 2*pi*i is EXACT from monodromy.
-    This function verifies the shadow growth rate rho to high precision
+    For the shadow tower (Gevrey-0), 2*pi*i is only the monodromy-jump
+    normalization used by this diagnostic.  This function verifies the
+    shadow growth rate rho to high precision
     using mpmath, then uses PSLQ to identify rho^2 as an algebraic number.
 
     For Virasoro: rho^2 = (180c + 872) / ((5c+22)*c^2), which is rational
     for rational c.  PSLQ should recover the exact rational value.
     """
     if not HAS_MPMATH:
-        return {'recognized': False, 'reason': 'mpmath not available'}
+        return {'recognized': False, 'reason': 'mpmath not available',
+                'certifies_ecalle_stokes': False}
     if data.depth_class in ('G', 'L'):
-        return {'recognized': True, 'S_1': 0, 'relation': 'S_1 = 0 (terminating tower)'}
+        return {
+            'recognized': True,
+            'S_1': 0,
+            'relation': 'S_1 = 0 (terminating tower)',
+            'certification': EXACT_TERMINATING_SCALAR_PROJECTION,
+            'certifies_ecalle_stokes': False,
+        }
 
     with mpmath.workdps(dps):
         coeffs_mp = shadow_coefficients_mpmath(data, max_r, dps)
@@ -678,12 +813,17 @@ def stokes_constant_pslq(data: ShadowAlgebraData, max_r: int = 80,
                 ratios.append(abs(sr_next / sr))
 
         if not ratios:
-            return {'recognized': False, 'reason': 'no valid ratios'}
+            return {
+                'recognized': False,
+                'reason': 'no valid ratios',
+                'certification': DIAGNOSTIC_NON_CERTIFYING,
+                'certifies_ecalle_stokes': False,
+            }
 
         n_avg = min(5, len(ratios))
         rho_numerical = sum(ratios[-n_avg:]) / n_avg
 
-        # The Stokes constant is S_1 = 2*pi*i (exact from monodromy)
+        # Diagnostic monodromy-jump normalization.
         S_1_exact = 2j * PI
 
         result = {
@@ -694,6 +834,8 @@ def stokes_constant_pslq(data: ShadowAlgebraData, max_r: int = 80,
             'rho_numerical': float(rho_numerical),
             'rho_predicted': float(rho_mp),
             'rho_match': abs(float(rho_numerical - rho_mp)) < 0.01 * float(rho_mp),
+            'certification': DIAGNOSTIC_NON_CERTIFYING,
+            'certifies_ecalle_stokes': False,
         }
 
         # PSLQ: try to identify rho^2 as rational
@@ -715,35 +857,32 @@ def stokes_constant_pslq(data: ShadowAlgebraData, max_r: int = 80,
 
 def alien_derivative_structure(data: ShadowAlgebraData, max_r: int = 60,
                                 max_k: int = 5) -> List[Dict[str, Any]]:
-    r"""Compute alien derivative structure of the Borel-transformed shadow tower.
+    r"""Compute non-certifying alien-calculus diagnostics.
 
-    The alien derivative Delta_{omega_k} acts on the Borel transform:
-        Delta_{omega_k}(B[H_A])(zeta) = S_k * (singular part at omega_k)
-
-    For the shadow tower with algebraic generating function:
+    For the scalar algebraic shadow tower:
     - omega_k = k * omega_1 where omega_1 = 1/t_branch_nearest
-    - S_k = Stokes constant at the k-th singularity
-    - For class M: all S_k nonzero (infinite alien derivative tower)
-    - For class G/L: all S_k = 0 (tower terminates, no alien derivatives)
+    - S_k is a diagnostic monodromy-jump amplitude
+    - For class G/L: all diagnostics vanish because the tower terminates
 
-    The bridge equation from D^2=0 on the bar complex constrains:
-        [Delta_{omega}, d/dt + V(t)] = 0
-
-    where V(t) = -Q'_L / (2*Q_L) is the shadow connection potential.
+    This function does not construct Ecalle alien derivatives of the
+    full chiral Maurer-Cartan problem.  It records the scalar branch
+    geometry a genuine alien-calculus construction would have to refine.
 
     Parameters
     ----------
     data : ShadowAlgebraData
     max_r : maximum arity for coefficient computation
-    max_k : number of alien derivatives to compute
+    max_k : number of candidate diagnostic markers to compute
 
     Returns
     -------
-    List of dicts, one per alien derivative Delta_{omega_k}.
+    List of dicts, one per candidate marker omega_k.
     """
     if data.depth_class in ('G', 'L'):
         return [{'k': k, 'omega_k': 0.0, 'S_k': 0.0,
-                 'type': 'zero (terminating tower)'}
+                 'type': 'zero (terminating tower)',
+                 'certification': EXACT_TERMINATING_SCALAR_PROJECTION,
+                 'certifies_alien_calculus': False}
                 for k in range(1, max_k + 1)]
 
     zeta_p, zeta_m = borel_singularity_locations(data)
@@ -757,30 +896,25 @@ def alien_derivative_structure(data: ShadowAlgebraData, max_r: int = 60,
     for k in range(1, max_k + 1):
         omega_k = k * omega_1
 
-        # The Stokes constant at the k-th singularity:
-        # For square-root branch point, the k-th sheet contribution
-        # involves the k-th power of the monodromy.
-        # Monodromy = -1 (from residue 1/2), so:
-        # S_k = (-1)^{k+1} * S_1 / k (logarithmic decay)
+        # Diagnostic amplitude from the scalar square-root monodromy.
         S_k = (-1) ** (k + 1) * S_1 / k
 
-        # Alien derivative action on leading-order coefficients
-        # Delta_{omega_k}(S_r) = S_k * [correction coefficient]
-        # At leading order: the correction is the same S_r shifted
+        # Candidate leading correction coefficients.  These do not define
+        # an alien derivative on the full chiral object.
         alien_coefficients = {}
         for r in sorted(coeffs.keys()):
             if r < 2:
                 continue
-            # Leading-order alien derivative: proportional to S_r itself
-            # with a ratio determined by the branch point structure
             alien_coefficients[r] = S_k * coeffs[r] * (abs(omega_1) ** (-r))
 
         results.append({
             'k': k,
             'omega_k': omega_k,
             'S_k': S_k,
-            'type': 'branch_point' if k == 1 else 'higher_sheet',
+            'type': 'candidate_branch_marker' if k == 1 else 'candidate_multiple_marker',
             'alien_coefficients': alien_coefficients,
+            'certification': DIAGNOSTIC_NON_CERTIFYING,
+            'certifies_alien_calculus': False,
         })
 
     return results
@@ -788,27 +922,22 @@ def alien_derivative_structure(data: ShadowAlgebraData, max_r: int = 60,
 
 def bridge_equation_check(data: ShadowAlgebraData, max_r: int = 40
                            ) -> Dict[str, Any]:
-    r"""Verify the bridge equation: MC constraint -> alien derivative relation.
+    r"""Verify the scalar convolution identity behind the shadow metric.
 
-    The MC equation D*Theta + (1/2)[Theta,Theta] = 0 constrains
-    the transseries structure.  Projected to the shadow obstruction tower,
-    it becomes:
-
-        d S_r / d(log t) = - sum_{j=2}^{r-2} C_{j,r-j} S_j S_{r-j}
-
-    where C_{j,k} are the structure constants of the convolution bracket.
-
-    The bridge equation relates this to the alien derivative:
-        Delta_{omega}(S_r) = S_1 * (S_r^{(1)})
-
-    Consistency requires that S_1 extracted from each arity agrees.
-    This is guaranteed by D^2 = 0 (thm:convolution-d-squared-zero).
+    The checked identity is f(t)^2 = Q_L(t), equivalently the scalar
+    coefficient recursion for sqrt(Q_L).  This is a projection of the
+    bar-intrinsic Maurer-Cartan equation, not a proof of full MC data
+    and not an alien bridge equation.
     """
     if data.depth_class in ('G', 'L'):
         return {
             'bridge_satisfied': True,
             'reason': 'Tower terminates: bridge equation trivially satisfied',
             'depth_class': data.depth_class,
+            'checked_identity': 'terminating scalar shadow recursion',
+            'certification': EXACT_TERMINATING_SCALAR_PROJECTION,
+            'certifies_full_mc_data': False,
+            'certifies_alien_calculus': False,
         }
 
     coeffs = shadow_coefficients(data, max_r)
@@ -849,11 +978,15 @@ def bridge_equation_check(data: ShadowAlgebraData, max_r: int = 40
         'max_residual': max_residual,
         'residuals': residuals,
         'n_checked': len(residuals),
+        'checked_identity': 'f(t)^2 = Q_L(t) coefficient recursion',
+        'certification': EXACT_SCALAR_PROJECTION,
+        'certifies_full_mc_data': False,
+        'certifies_alien_calculus': False,
     }
 
 
 # =====================================================================
-# Section 6: Transseries and instanton sectors
+# Section 6: Transseries diagnostics and candidate sectors
 # =====================================================================
 
 def transseries_perturbative(data: ShadowAlgebraData, t: complex,
@@ -870,24 +1003,16 @@ def transseries_perturbative(data: ShadowAlgebraData, t: complex,
 def transseries_one_instanton_coefficients(data: ShadowAlgebraData,
                                             max_r: int = 60
                                             ) -> Dict[int, float]:
-    r"""Compute the 1-instanton sector coefficients S_r^{(1)}.
+    r"""Compute a non-certifying one-instanton diagnostic.
 
-    The 1-instanton sector H^{(1)}(t) = exp(-A_1/t) * sum S_r^{(1)} t^r
-    where A_1 = 1/rho is the leading instanton action.
+    The scalar algebraic tower supplies branch cuts of sqrt(Q_L), hence
+    candidate exponential scales for a transseries ansatz.  This helper
+    returns a toy leading-sector diagnostic only.  It is not a proof of
+    analytic continuation, resurgence, or full instanton calculus.
 
-    For the algebraic shadow tower, the 1-instanton coefficients
-    come from the discontinuity of sqrt(Q_L) across the branch cut.
-    The discontinuity of sqrt(Q_L(t)) at the branch point t_0 gives:
-
-        S_r^{(1)} = (1/(2*pi*i)) * oint sqrt(Q_L(t)) / t^{r+1} dt
-
-    evaluated on the second Riemann sheet.
-
-    At leading order (large r), the contribution from the nearest
-    branch point dominates:
-        S_r^{(1)} ~ C * t_0^{-r} * r^{-3/2}
-
-    where C depends on the branch point geometry.
+    At large arity the nearest Q_L branch point controls the scalar
+    Darboux growth, S_r ~ C*t_0^{-r}*r^{-3/2}.  The coefficients below
+    are only a regression diagnostic based on that branch geometry.
     """
     if data.depth_class in ('G', 'L'):
         return {}
@@ -896,44 +1021,27 @@ def transseries_one_instanton_coefficients(data: ShadowAlgebraData,
     t_p = data.branch_plus
     t_m = data.branch_minus
 
-    # The 1-instanton sector comes from the second Riemann sheet of sqrt(Q_L).
-    # After continuation around the branch point, sqrt -> -sqrt,
-    # so the discontinuity is 2*sqrt(Q_L) on the second sheet.
-    # The Taylor coefficients of the second-sheet function
-    # at t=0 give S_r^{(1)}.
-
-    # For the convolution recursion on the second sheet:
-    # f_{II}^2 = Q_L but f_{II} = -f_I (opposite branch).
-    # So S_r^{(1)} = -S_r^{(0)} (same magnitude, opposite sign).
-    # This is the leading-order relation.
-
-    # More precisely: the 1-instanton sector involves the Laplace
-    # transform of the discontinuity across the branch cut:
-    # S_r^{(1)} = (1/Gamma(r)) int_0^infty disc(B[H])(omega_1 + s) * s^{r-1} ds
-
-    # At leading order, this gives S_r^{(1)} proportional to S_r
-    # with a phase factor from the branch cut orientation.
+    # Candidate second-sheet diagnostic: sqrt(Q_L) changes sign after
+    # looping around a simple branch point.
     phase = cmath.exp(1j * cmath.phase(t_p))
     inst_coeffs = {}
     for r in sorted(coeffs.keys()):
-        # The leading-order 1-instanton coefficient
-        # is the S_r coefficient times the branch point ratio
+        # Branch-geometry diagnostic; the scale factor prevents this toy
+        # term from being mistaken for a certified sector.
         ratio = (-1.0) * (abs(t_p)) ** (-r + 2) * phase ** (-r)
         inst_coeffs[r] = coeffs[r] * float(abs(ratio)) * 1e-2
-        # Scale down: the instanton is exponentially suppressed
-        # relative to perturbative at small t
 
     return inst_coeffs
 
 
 def transseries_evaluate(data: ShadowAlgebraData, t: complex,
                           sigma: float = 1.0, max_r: int = 60
-                          ) -> Dict[str, complex]:
-    r"""Evaluate the full transseries at a given point.
+                          ) -> Dict[str, Any]:
+    r"""Evaluate the perturbative sum plus a diagnostic transseries term.
 
     H_A(t, sigma) = H^{(0)}(t) + sigma * exp(-A_1/t) * H^{(1)}(t) + ...
 
-    Returns dict with perturbative, 1-instanton, and total.
+    Returns dict with perturbative, diagnostic 1-instanton, and total.
     """
     t = complex(t)
     H_0 = transseries_perturbative(data, t, max_r)
@@ -943,9 +1051,11 @@ def transseries_evaluate(data: ShadowAlgebraData, t: complex,
     if data.depth_class in ('G', 'L'):
         result['one_instanton'] = 0.0 + 0.0j
         result['total'] = H_0
+        result['certification'] = EXACT_TERMINATING_SCALAR_PROJECTION
+        result['certifies_resurgence'] = False
         return result
 
-    # 1-instanton contribution
+    # Candidate one-sector contribution.
     inst_coeffs = transseries_one_instanton_coefficients(data, max_r)
     A_1 = data.instanton_actions[0]
 
@@ -958,6 +1068,8 @@ def transseries_evaluate(data: ShadowAlgebraData, t: complex,
 
     result['one_instanton'] = one_inst
     result['total'] = H_0 + one_inst
+    result['certification'] = DIAGNOSTIC_NON_CERTIFYING
+    result['certifies_resurgence'] = False
     return result
 
 
@@ -968,7 +1080,7 @@ def transseries_evaluate(data: ShadowAlgebraData, t: complex,
 def lateral_borel_sum(shadow_coeffs: Dict[int, float], t: complex,
                        epsilon: float = 0.02, xi_max: float = 100.0,
                        n_quad: int = 3000) -> complex:
-    r"""Lateral Borel sum S_epsilon[H](t) via deformed contour.
+    r"""Numerical Laplace-Borel diagnostic via a deformed contour.
 
     S_eps[H](t) = int_0^{infty*e^{i*eps}} B[H](zeta) e^{-zeta/t} dzeta/t
 
@@ -997,11 +1109,11 @@ def median_borel_sum(data: ShadowAlgebraData, t: complex,
                       max_r: int = 60, epsilon: float = 0.02,
                       xi_max: float = 80.0, n_quad: int = 3000
                       ) -> Dict[str, complex]:
-    r"""Median Borel sum: H^{med}(t) = (S_+ + S_-)/2.
+    r"""Median of two numerical Laplace-Borel diagnostics.
 
-    The median resummation averages the lateral sums above and below
-    the Stokes line.  For real positive t on the Stokes ray, this
-    gives a real, well-defined value.
+    This averages lateral numerical integrals.  It is useful for
+    regression tests, but it does not certify Borel summability or a
+    canonical median resummation theorem for the chiral problem.
 
     Returns dict with S_+, S_-, median, and Stokes jump.
     """
@@ -1020,6 +1132,8 @@ def median_borel_sum(data: ShadowAlgebraData, t: complex,
         't': t,
         'max_r': max_r,
         'epsilon': epsilon,
+        'certification': DIAGNOSTIC_NON_CERTIFYING,
+        'certifies_borel_summability': False,
     }
 
 
@@ -1230,7 +1344,7 @@ def p_adic_convergence_radius(data: ShadowAlgebraData, p: int,
 def p_adic_singularity_comparison(data: ShadowAlgebraData,
                                    primes: List[int] = None,
                                    max_r: int = 40) -> Dict[int, Dict]:
-    """Compare archimedean and p-adic Borel singularity structure.
+    """Compare archimedean and p-adic scalar radius estimates.
 
     For each prime p, compute the p-adic convergence radius R_p
     and compare with the archimedean radius R_arch = 1/rho.
@@ -1240,7 +1354,10 @@ def p_adic_singularity_comparison(data: ShadowAlgebraData,
 
     R_arch = 1.0 / data.rho if data.rho > 1e-30 else float('inf')
 
-    result = {'archimedean_radius': R_arch}
+    result = {
+        'archimedean_radius': R_arch,
+        'certifies_p_adic_singularities': False,
+    }
     for p in primes:
         R_p = p_adic_convergence_radius(data, p, max_r)
         result[p] = {
@@ -1254,22 +1371,18 @@ def p_adic_singularity_comparison(data: ShadowAlgebraData,
 
 def p_adic_stokes_phenomenon(data: ShadowAlgebraData, p: int,
                               max_r: int = 40) -> Dict[str, Any]:
-    """Analyze the p-adic analogue of the Stokes phenomenon.
+    """Analyze p-adic radius discrepancy as a diagnostic.
 
     Over Q_p, the Borel transform may converge everywhere (p-adic
-    Borel summability) or have p-adic singularities at different
-    locations than the archimedean ones.
-
-    The p-adic Stokes phenomenon occurs when the p-adic Borel
-    radius differs from the archimedean radius, indicating that
-    the analytic structure depends on the place.
+    Borel summability) or have a radius estimate different from the
+    archimedean scalar estimate.  A radius discrepancy is not by itself
+    a certified p-adic Stokes phenomenon.
     """
     norms = p_adic_borel_norms(data, p, max_r)
     R_p = p_adic_convergence_radius(data, p, max_r)
     R_arch = 1.0 / data.rho if data.rho > 1e-30 else float('inf')
 
-    # Check if there is a p-adic Stokes phenomenon:
-    # this occurs when R_p != R_arch
+    # Check if there is a radius discrepancy.  This is diagnostic only.
     if R_arch < 1e15 and R_p < 1e15:
         has_p_stokes = abs(R_p - R_arch) / max(R_p, R_arch) > 0.01
     else:
@@ -1280,12 +1393,15 @@ def p_adic_stokes_phenomenon(data: ShadowAlgebraData, p: int,
         'R_p': R_p,
         'R_arch': R_arch,
         'has_p_adic_stokes': has_p_stokes,
+        'radius_discrepancy': has_p_stokes,
+        'certifies_p_adic_stokes': False,
+        'certification': DIAGNOSTIC_NON_CERTIFYING,
         'norm_sequence': norms,
     }
 
 
 # =====================================================================
-# Section 10: Peacock pattern (Garoufalidis-Zagier)
+# Section 10: Mod-p coefficient diagnostics
 # =====================================================================
 
 def shadow_coefficients_mod_p(data: ShadowAlgebraData, p: int,
@@ -1340,13 +1456,12 @@ def shadow_coefficients_mod_p(data: ShadowAlgebraData, p: int,
 
 def peacock_pattern(data: ShadowAlgebraData, p: int,
                      max_r: int = 100) -> Dict[str, Any]:
-    r"""Compute the peacock pattern: (r, S_r mod p) for the shadow tower.
+    r"""Compute a mod-p coefficient pattern for the shadow tower.
 
-    The peacock pattern (Garoufalidis-Zagier 2021) reveals hidden
-    structure in the mod-p reduction of coefficients of resurgent series.
-    For class M algebras with growth rate rho, the pattern should show
-    quasi-periodic structure with period related to the multiplicative
-    order of rho mod p.
+    This is an exact reduction of the scalar coefficients modulo p.
+    Any comparison with Garoufalidis-Zagier peacock phenomena is a
+    diagnostic analogy unless a separate theorem identifies the required
+    resurgent series and hypotheses.
 
     Returns dict with the pattern data and detected periodicity.
     """
@@ -1384,6 +1499,8 @@ def peacock_pattern(data: ShadowAlgebraData, p: int,
         'detected_period': detected_period,
         'residue_distribution': residue_counts,
         'depth_class': data.depth_class,
+        'certification': EXACT_SCALAR_PROJECTION,
+        'certifies_garoufalidis_zagier_peacock': False,
     }
 
 
@@ -1403,7 +1520,7 @@ def peacock_pattern_multi_prime(data: ShadowAlgebraData,
 def verify_borel_singularities_multipath(data: ShadowAlgebraData,
                                           max_r: int = 60
                                           ) -> Dict[str, Any]:
-    r"""Multi-path verification of Borel singularity positions.
+    r"""Multi-path check of reciprocal branch-point growth markers.
 
     Path 1: Predicted from shadow metric branch points (1/t_pm)
     Path 2: Detected via Pade approximant
@@ -1451,16 +1568,18 @@ def verify_borel_singularities_multipath(data: ShadowAlgebraData,
         'pade_agrees_with_prediction': pade_agrees,
         'rho': data.rho,
         'depth_class': data.depth_class,
+        'certified_borel_singularities': False,
+        'certification': DIAGNOSTIC_NON_CERTIFYING,
     }
 
 
 def verify_stokes_multipath(data: ShadowAlgebraData,
                               max_r: int = 60) -> Dict[str, Any]:
-    r"""Multi-path verification of Stokes constants.
+    r"""Multi-path check of scalar monodromy diagnostics.
 
-    Path 1: Monodromy prediction (S_1 = 2*pi*i)
-    Path 2: Large-order extraction
-    Path 3: PSLQ recognition (if mpmath available)
+    Path 1: monodromy-jump normalization (2*pi*i)
+    Path 2: scalar large-order growth check
+    Path 3: PSLQ recognition of rho^2 (if mpmath available)
     """
     # Path 1: Monodromy
     S_1_mono = stokes_constant_from_monodromy(data)
@@ -1476,6 +1595,8 @@ def verify_stokes_multipath(data: ShadowAlgebraData,
         'path_2_numerical': numerical.get('S_1', complex('nan')),
         'path_3_pslq': pslq,
         'depth_class': data.depth_class,
+        'certifies_ecalle_stokes': False,
+        'certification': DIAGNOSTIC_NON_CERTIFYING,
     }
 
 
@@ -1485,7 +1606,7 @@ def verify_stokes_multipath(data: ShadowAlgebraData,
 
 def resurgence_summary(data: ShadowAlgebraData, max_r: int = 60
                         ) -> Dict[str, Any]:
-    """Complete resurgence summary for a given algebra."""
+    """Arithmetic summary plus explicit frontier non-certification."""
     result = {
         'name': data.name,
         'depth_class': data.depth_class,
@@ -1494,16 +1615,19 @@ def resurgence_summary(data: ShadowAlgebraData, max_r: int = 60
         'theta': data.theta,
     }
 
-    # Borel singularities
+    # Reciprocal branch markers.
     sings = locate_all_borel_singularities(data)
     result['n_singularities'] = len(sings)
+    result['n_branch_markers'] = len(sings)
+    result['n_certified_borel_singularities'] = 0
     result['leading_singularity'] = sings[0] if sings else None
 
-    # Stokes constant
+    # Monodromy-jump diagnostic.
     result['S_1'] = stokes_constant_from_monodromy(data)
 
     # Bridge equation
     result['bridge'] = bridge_equation_check(data, min(max_r, 20))
+    result['diagnostic_status'] = frontier_diagnostic_status(data)
 
     return result
 

@@ -1,20 +1,20 @@
 r"""Tests for theorem_kl_lagrangian_engine.py.
 
-Verification strategy (multi-path, per CLAUDE.md mandate):
+Verification strategy:
   1. Symplectic form properties (antisymmetry, nondegeneracy)
   2. Verdier involution properties (involution, anti-commutativity)
   3. Lagrangian isotropy (code, error, cross-pairing)
-  4. Path 1: Verdier anti-involution proof
-  5. Path 2: Lagrangian geometry proof
-  6. Path 3: Shadow depth = redundancy channels
-  7. Path 4: Bar-cobar adjunction = QEC recovery
-  8. Four-path synthesis and consistency
+  4. Path 1: Verdier anti-involution scope
+  5. Path 2: Lagrangian geometry scope and counterexample
+  6. Path 3: Shadow depth = formal MC slots
+  7. Path 4: Bar-cobar adjunction = boundary recovery
+  8. Four-path finite-scope synthesis and consistency
   9. Explicit numerical KL verification (1D and multi-D)
   10. Off-diagonal KL condition
   11. Cross-family census
   12. Complementarity kappa constraint
   13. SymPy exact verification
-  14. Genus tower and entanglement wedge
+  14. Genus tower and entanglement-wedge boundary
   15. Cross-engine consistency checks
 """
 
@@ -30,11 +30,16 @@ from compute.lib.theorem_kl_lagrangian_engine import (
     verify_anti_commutativity,
     lagrangian_subspaces,
     verify_isotropy,
+    holographic_package_entries,
+    modular_koszul_compute_projections,
+    kernel_normalization_firewall,
+    kl_scope_firewall,
     # Path 1
     path1_verdier_proof,
     # Path 2
     shifted_symplectic_degree,
     lagrangian_dimension_check,
+    lagrangian_projection_not_kl_counterexample,
     path2_lagrangian_proof,
     # Path 3
     mc_redundancy_at_arity,
@@ -60,6 +65,8 @@ from compute.lib.theorem_kl_lagrangian_engine import (
     # Genus
     genus_dependent_code_dimension,
     genus_tower_kl_status,
+    # AP25 metadata
+    AP25_OBJECT_CHAIN,
 )
 
 from compute.lib.entanglement_shadow_engine import (
@@ -70,6 +77,46 @@ from compute.lib.entanglement_shadow_engine import (
     shadow_depth_class,
     STANDARD_KAPPAS,
 )
+
+
+# ===================================================================
+# 0. STRUCTURAL FIREWALLS
+# ===================================================================
+
+class TestStructuralFirewalls:
+    """Typed packages, kernels, and KL scope boundaries stay separated."""
+
+    def test_holographic_package_entries(self):
+        assert holographic_package_entries() == (
+            'A', 'A^i', 'A^!', 'C', 'r(z)', 'Theta_A', 'nabla^hol',
+        )
+
+    def test_modular_koszul_compute_package_is_distinct(self):
+        projections = modular_koszul_compute_projections()
+        assert projections == (
+            'Fact_X(L)',
+            'barB_X(L)',
+            'Theta_L',
+            'L_L',
+            '(V_br,T_br)',
+            'R4_mod(L)',
+        )
+        assert set(projections) != set(holographic_package_entries())
+
+    def test_kernel_normalizations(self):
+        kernels = kernel_normalization_firewall()
+        assert kernels['affine_raw_collision'] == 'k*Omega_tr/z'
+        assert kernels['affine_kz'] == 'Omega/((k+h^vee)z)'
+        assert kernels['heisenberg'] == 'k/z'
+        assert kernels['virasoro'] == '(c/2)/z^3 + 2T/z'
+        assert kernels['affine_raw_collision'] != kernels['affine_kz']
+
+    def test_kl_scope_firewall(self):
+        scope = kl_scope_firewall()
+        assert 'not the Hilbert-space KL equation' in scope['verdier_isotropy']
+        assert 'one-dimensional compression' in scope['scalar_line']
+        assert 'not a Hilbert-space code distance' in scope['shadow_depth']
+        assert 'not physical bulk equivalence' in scope['bar_cobar']
 
 
 # ===================================================================
@@ -201,13 +248,16 @@ class TestLagrangianIsotropy:
 # ===================================================================
 
 class TestPath1Verdier:
-    """Path 1: Knill-Laflamme from Verdier anti-involution."""
+    """Path 1: Verdier isotropy plus scalar-line KL scope."""
 
     def test_verdier_proof_n1(self):
         result = path1_verdier_proof(1)
         assert result['anti_commutativity']
         assert result['isotropy_proved']
         assert result['kl_genus_1']
+        assert result['automatic_kl_scope'] == 'one-dimensional scalar conformal-block line'
+        assert not result['full_hilbert_kl_proved']
+        assert not result['isotropy_is_hilbert_kl']
 
     def test_verdier_proof_n5(self):
         result = path1_verdier_proof(5)
@@ -224,6 +274,7 @@ class TestPath1Verdier:
     def test_verdier_mechanism(self):
         result = path1_verdier_proof(3)
         assert 'sigma^T J sigma = -J' in result['mechanism']
+        assert 'Hermitian inner product' in result['requires_physical_data']
 
 
 # ===================================================================
@@ -231,7 +282,7 @@ class TestPath1Verdier:
 # ===================================================================
 
 class TestPath2Lagrangian:
-    """Path 2: Knill-Laflamme from Lagrangian geometry."""
+    """Path 2: Lagrangian geometry is a prerequisite, not full KL."""
 
     def test_shifted_degree_g1(self):
         assert shifted_symplectic_degree(1) == 0
@@ -256,14 +307,30 @@ class TestPath2Lagrangian:
     def test_lagrangian_proof_g1(self):
         result = path2_lagrangian_proof(3, g=1)
         assert result['lagrangian_verified']
-        assert result['kl_from_isotropy']
+        assert result['lagrangian_prerequisite']
+        assert not result['kl_from_isotropy']
+        assert not result['full_hilbert_kl_proved']
+        assert result['counterexample_available']
         assert result['code_rate'] == Fraction(1, 2)
         assert result['shifted_symplectic_degree'] == 0
 
     def test_lagrangian_proof_g2(self):
         result = path2_lagrangian_proof(5, g=2)
         assert result['lagrangian_verified']
+        assert result['lagrangian_prerequisite']
+        assert not result['kl_from_isotropy']
         assert result['shifted_symplectic_degree'] == -3
+
+    def test_lagrangian_projection_not_kl_counterexample(self):
+        result = lagrangian_projection_not_kl_counterexample()
+        assert result['verdier_isotropy']
+        assert result['preserves_code_summand']
+        assert result['symplectic_projection_removes_leakage']
+        assert result['compression_diagonal'] == (1.0, 4.0)
+        assert result['best_scalar'] == 2.5
+        assert not result['is_scalar_on_code']
+        assert not result['kl_satisfied']
+        assert 'non-scalar' in result['failure_mode']
 
 
 # ===================================================================
@@ -271,22 +338,22 @@ class TestPath2Lagrangian:
 # ===================================================================
 
 class TestPath3ShadowDepth:
-    """Path 3: Shadow depth = redundancy channels."""
+    """Path 3: Shadow depth gives formal MC slots."""
 
-    def test_mc_redundancy_arity2(self):
+    def test_mc_slot_arity2(self):
         assert mc_redundancy_at_arity(2) == 0
 
-    def test_mc_redundancy_arity3(self):
+    def test_mc_slot_arity3(self):
         assert mc_redundancy_at_arity(3) == 1
 
-    def test_mc_redundancy_arity4(self):
+    def test_mc_slot_arity4(self):
         assert mc_redundancy_at_arity(4) == 2
 
-    def test_mc_redundancy_general(self):
+    def test_mc_slot_general(self):
         for r in range(2, 20):
             assert mc_redundancy_at_arity(r) == r - 2
 
-    def test_mc_redundancy_low(self):
+    def test_mc_slot_low(self):
         assert mc_redundancy_at_arity(0) == 0
         assert mc_redundancy_at_arity(1) == 0
 
@@ -294,25 +361,32 @@ class TestPath3ShadowDepth:
         result = path3_shadow_depth_proof('heisenberg')
         assert result['shadow_class'] == 'G'
         assert result['redundancy_channels'] == 0
+        assert result['formal_shadow_slots'] == 0
         assert result['arity_distance'] == 2
         assert result['channels_consistent']
+        assert not result['hilbert_code_distance_determined']
+        assert result['requires_physical_error_model']
 
     def test_affine_class_L(self):
         result = path3_shadow_depth_proof('affine')
         assert result['shadow_class'] == 'L'
         assert result['redundancy_channels'] == 1
+        assert result['formal_shadow_slots'] == 1
         assert result['channels_consistent']
 
     def test_betagamma_class_C(self):
         result = path3_shadow_depth_proof('betagamma')
         assert result['shadow_class'] == 'C'
         assert result['redundancy_channels'] == 2
+        assert result['formal_shadow_slots'] == 2
         assert result['channels_consistent']
 
     def test_virasoro_class_M(self):
         result = path3_shadow_depth_proof('virasoro')
         assert result['shadow_class'] == 'M'
         assert result['redundancy_channels'] == -1  # infinite
+        assert result['formal_shadow_slots'] == -1
+        assert not result['hilbert_code_distance_determined']
 
     def test_arity_distance_universal(self):
         """Arity filtration distance is 2 for ALL families."""
@@ -326,12 +400,16 @@ class TestPath3ShadowDepth:
 # ===================================================================
 
 class TestPath4BarCobar:
-    """Path 4: Bar-cobar adjunction as QEC recovery."""
+    """Path 4: Bar-cobar adjunction as boundary-algebra recovery."""
 
     def test_barcobar_heisenberg(self):
         result = path4_barcobar_proof('heisenberg')
         assert result['exact_recovery']
+        assert result['exact_boundary_recovery']
+        assert not result['physical_qec_recovery_proved']
+        assert not result['physical_bulk_equivalence_proved']
         assert result['koszulness_iff_recovery']
+        assert result['koszulness_iff_boundary_recovery']
 
     def test_barcobar_virasoro(self):
         result = path4_barcobar_proof('virasoro')
@@ -349,13 +427,46 @@ class TestPath4BarCobar:
         result = bar_cobar_recovery_structure('heisenberg')
         assert result['is_koszul']
         assert result['exact_recovery']
+        assert result['exact_boundary_recovery']
+        assert result['recovery_scope'] == 'boundary algebra quasi-isomorphism'
+        assert result['requires_brst_derived_centre_comparison']
+        assert not result['physical_qec_recovery_proved']
+        assert not result['physical_bulk_equivalence_proved']
         assert result['koszulness_characterizations'] == 12
 
-    def test_ap25_note(self):
-        """Verify AP25 is respected: Omega(B(A)) = A, not A!."""
+    def test_ap25_object_chain_metadata(self):
+        """Verify AP25 is exposed as the typed five-object chain."""
         result = bar_cobar_recovery_structure('heisenberg')
-        assert 'Omega(B(A)) = A' in result['note_ap25']
-        assert 'D_Ran(B(A)) = B(A!)' in result['note_ap25']
+        chain = result['ap25_object_chain']
+
+        assert chain == AP25_OBJECT_CHAIN
+        assert result['bar_object'] == chain['bar_object']
+        assert result['bar_cohomology_object'] == chain['bar_cohomology']
+        assert result['koszul_dual_source'] == chain['koszul_dual']
+        assert result['derived_centre_object'] == chain['derived_centre']
+
+        assert 'B(A) is the bar coalgebra' in chain['bar_object']
+        assert 'A^i = H^*(B(A))' in chain['bar_cohomology']
+        assert 'A^! is obtained from A^i by Verdier/linear duality' in chain['koszul_dual']
+        assert 'finite-type or completed hypotheses' in chain['koszul_dual']
+        assert 'Omega(B(A)) = A is bar-cobar inversion' in chain['inversion']
+        assert 'Z_ch^der(A) is the bulk/derived centre' in chain['derived_centre']
+
+    def test_ap25_note_firewalls_removed_shorthand(self):
+        """Omega(B(A)) = A is inversion; A^! is obtained from A^i."""
+        result = bar_cobar_recovery_structure('heisenberg')
+        note = result['note_ap25']
+
+        assert 'B(A) is a coalgebra' in note
+        assert 'A^i = H^*(B(A))' in note
+        assert 'A^! is obtained from A^i by Verdier/linear duality' in note
+        assert 'Omega(B(A)) = A is inversion' in note
+        assert 'Z_ch^der(A) is the bulk/derived centre' in note
+
+        verdier_collapse = 'D_Ran(B(A)) = ' + 'B(A!)'
+        assert verdier_collapse not in note
+        assert 'Omega(B(A)) = A^!' not in note
+        assert result['round_trip'] == 'Omega(B(A)) ~ A (quasi-isomorphism)'
 
 
 # ===================================================================
@@ -368,6 +479,9 @@ class TestFourPathSynthesis:
     def test_heisenberg_four_paths(self):
         result = verify_kl_four_paths('heisenberg', n=3, g=1)
         assert result['all_paths_agree']
+        assert result['finite_scope_consistent']
+        assert not result['full_hilbert_kl_proved']
+        assert 'physical data' in result['conclusion']
         assert result['num_paths'] == 4
 
     def test_affine_four_paths(self):
@@ -386,6 +500,8 @@ class TestFourPathSynthesis:
         for n in [1, 2, 5, 10]:
             result = verify_kl_four_paths('heisenberg', n=n, g=1)
             assert result['all_paths_agree']
+            assert result['finite_scope_consistent']
+            assert not result['full_hilbert_kl_proved']
 
 
 # ===================================================================
@@ -444,7 +560,9 @@ class TestCrossFamilyCensus:
     def test_census_all_agree(self):
         census = kl_family_census()
         for fam, data in census.items():
-            assert data['all_paths_agree'], f"KL failed for {fam}"
+            assert data['all_paths_agree'], f"Finite-scope check failed for {fam}"
+            assert data['finite_scope_consistent'], f"Finite scope failed for {fam}"
+            assert not data['full_hilbert_kl_proved']
 
     def test_census_code_rate(self):
         """All families have code rate 1/2 (Lagrangian)."""
@@ -471,7 +589,7 @@ class TestCrossFamilyCensus:
             assert data['shadow_class'] == expected[fam], \
                 f"Class mismatch for {fam}: {data['shadow_class']} != {expected[fam]}"
 
-    def test_census_redundancy_channels(self):
+    def test_census_formal_shadow_slots(self):
         expected = {
             'heisenberg': 0,
             'affine': 1,
@@ -481,6 +599,8 @@ class TestCrossFamilyCensus:
         census = kl_family_census()
         for fam, data in census.items():
             assert data['redundancy_channels'] == expected[fam]
+            assert data['formal_shadow_slots'] == expected[fam]
+            assert not data['hilbert_code_distance_determined']
 
 
 # ===================================================================
@@ -488,7 +608,7 @@ class TestCrossFamilyCensus:
 # ===================================================================
 
 class TestComplementarityConstraint:
-    """Complementarity constraints on the QEC code."""
+    """Complementarity constraints on the scalar/Lagrangian surface."""
 
     def test_kappa_sum_13(self):
         """kappa + kappa' = 13 for Virasoro (AP24)."""
@@ -500,6 +620,8 @@ class TestComplementarityConstraint:
         result = complementarity_kl_constraint(Rational(13))
         assert result['self_dual']
         assert result['code_fraction'] == Rational(1, 2)
+        assert result['scalar_fraction'] == Rational(1, 2)
+        assert not result['full_hilbert_kl_proved']
 
     def test_code_fraction_c1(self):
         result = complementarity_kl_constraint(Rational(1))
@@ -556,11 +678,12 @@ class TestSympyExact:
 # ===================================================================
 
 class TestEntanglementWedge:
-    """Entanglement wedge from bar-cobar."""
+    """Scalar entropy coefficient without promoting to physical wedge theorem."""
 
     def test_rt_virasoro_c26(self):
         result = entanglement_wedge_from_bar('virasoro', Rational(26))
         assert result['rt_coefficient'] == Rational(26, 3)
+        assert result['scalar_entropy_coefficient'] == Rational(26, 3)
 
     def test_rt_virasoro_c1(self):
         result = entanglement_wedge_from_bar('virasoro', Rational(1))
@@ -571,11 +694,14 @@ class TestEntanglementWedge:
         result = entanglement_wedge_from_bar('virasoro', Rational(13))
         assert result['rt_coefficient'] == Rational(13, 3)
 
-    def test_maximal_wedge(self):
+    def test_bar_cobar_not_maximal_physical_wedge(self):
         for fam in ['heisenberg', 'virasoro', 'affine', 'betagamma']:
             result = entanglement_wedge_from_bar(fam)
-            assert result['wedge_maximal']
-            assert result['exact_reconstruction']
+            assert result['bar_cobar_boundary_recovery']
+            assert result['requires_brst_derived_centre_comparison']
+            assert not result['wedge_maximal']
+            assert not result['exact_reconstruction']
+            assert not result['physical_entanglement_wedge_proved']
 
 
 # ===================================================================
@@ -589,6 +715,8 @@ class TestGenusTower:
         result = genus_dependent_code_dimension(1)
         assert result['dim_code_scalar'] == 1
         assert result['kl_automatic_at_scalar']
+        assert not result['full_complex_dimension_computed']
+        assert not result['full_hilbert_kl_proved']
         assert result['code_rate'] == Fraction(1, 2)
 
     def test_genus_2_shifted_degree(self):
@@ -598,9 +726,10 @@ class TestGenusTower:
     def test_genus_tower_structure(self):
         tower = genus_tower_kl_status()
         assert len(tower) == 5
-        assert tower[0]['kl_status'] == 'automatic'
+        assert tower[0]['kl_status'] == 'automatic on scalar line'
         for entry in tower[1:]:
-            assert entry['kl_status'] == 'Lagrangian-preserving errors'
+            assert entry['kl_status'] == 'requires physical error model'
+            assert not entry['full_hilbert_kl_proved']
 
     def test_genus_tower_code_rate(self):
         """Code rate is 1/2 at every genus."""
@@ -677,12 +806,15 @@ class TestMultiPathIndependence:
         """Path 2 depends on Lagrangian geometry."""
         result = path2_lagrangian_proof(3, g=1)
         assert 'Lagrangian' in result['mechanism']
+        assert result['lagrangian_prerequisite']
+        assert not result['kl_from_isotropy']
         assert result['shifted_symplectic_degree'] == 0
 
     def test_path3_uses_mc_equation(self):
         """Path 3 depends on the MC equation."""
         result = path3_shadow_depth_proof('heisenberg')
         assert 'MC equation' in result['mechanism']
+        assert not result['hilbert_code_distance_determined']
 
     def test_path4_uses_theorems_ab(self):
         """Path 4 depends on Theorems A and B."""
@@ -695,3 +827,5 @@ class TestMultiPathIndependence:
             result = verify_kl_four_paths(fam, n=3, g=1)
             assert result['all_paths_agree'], \
                 f"Paths disagree for {fam}"
+            assert result['finite_scope_consistent']
+            assert not result['full_hilbert_kl_proved']

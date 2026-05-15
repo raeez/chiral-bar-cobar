@@ -1,19 +1,19 @@
-r"""Tests for BC-124: deformation quantization of shadow Poisson structure.
+r"""Tests for finite-window shadow bracket and product diagnostics.
 
 Verification paths:
-  (i)   Kontsevich formula: B_n computed from graph sum / Moyal-type formula
-  (ii)  Associativity: (f*g)*h = f*(g*h) through order hbar^5
-  (iii) Poisson limit: lim_{hbar->0} (f*g - g*f)/hbar = {f,g}
-  (iv)  Moyal comparison: constant-Pi Moyal vs full Kontsevich
+  (i)   finite-window B_n from a Moyal-type formula
+  (ii)  associativity diagnostics for the truncated product
+  (iii) first-order commutator: (f*g - g*f)/hbar = 2{f,g} at order 1
+  (iv)  Moyal comparison: constant-bivector model vs variable window
   (v)   Numerical evaluation: cross-family consistency, dimension checks
 
-Anti-patterns guarded:
-    AP1:  kappa formulas are family-specific (never copy between families)
-    AP9:  S_2 = kappa != c/2 in general (only for Virasoro)
-    AP10: Expected values derived independently, not hardcoded from single source
-    AP24: kappa(Vir_c) + kappa(Vir_{26-c}) = 13, NOT 0
-    AP31: kappa = 0 does NOT imply Theta_A = 0
-    AP39: kappa != c/2 for non-Virasoro families
+Formula safeguards:
+    kappa formulas are family-specific.
+    S_2 = kappa equals c/2 only for Virasoro.
+    Expected values are derived independently of engine output.
+    kappa(Vir_c) + kappa(Vir_{26-c}) = 13.
+    kappa = 0 does not imply Theta_A = 0.
+    kappa != c/2 for non-Virasoro families.
 """
 
 import sys
@@ -59,7 +59,7 @@ class TestShadowDataProviders:
         assert abs(data['Delta'] - 40.0 / 27.0) < 1e-12
 
     def test_virasoro_c13_self_dual(self):
-        """At c=13, Virasoro is self-dual: Vir_c^! = Vir_{26-c}."""
+        """At c=13, the Virasoro scalar complementarity involution is fixed."""
         from lib.bc_deformation_quantization_shadow_engine import get_shadow_data
         data = get_shadow_data('virasoro', c_val=13.0)
         assert abs(data['kappa'] - 6.5) < 1e-12
@@ -67,13 +67,13 @@ class TestShadowDataProviders:
         assert abs(data['Delta'] - 40.0 / 87.0) < 1e-12
 
     def test_virasoro_complementarity_kappa(self):
-        """AP24: kappa(Vir_c) + kappa(Vir_{26-c}) = 13."""
+        """Virasoro scalar complementarity: kappa(Vir_c) + kappa(Vir_{26-c}) = 13."""
         from lib.bc_deformation_quantization_shadow_engine import get_shadow_data
         for c_val in [1.0, 5.0, 10.0, 13.0, 20.0]:
             d1 = get_shadow_data('virasoro', c_val=c_val)
             d2 = get_shadow_data('virasoro', c_val=26.0 - c_val)
             assert abs(d1['kappa'] + d2['kappa'] - 13.0) < 1e-12, \
-                f"AP24 violation at c={c_val}: {d1['kappa']} + {d2['kappa']} != 13"
+                f"complementarity failed at c={c_val}: {d1['kappa']} + {d2['kappa']} != 13"
 
     def test_affine_sl2_data(self):
         from lib.bc_deformation_quantization_shadow_engine import get_shadow_data
@@ -86,7 +86,7 @@ class TestShadowDataProviders:
         assert data['Delta'] == 0.0
 
     def test_affine_sl2_kappa_not_c_over_2(self):
-        """AP39: kappa != c/2 for affine sl_2.
+        """kappa != c/2 for affine sl_2.
 
         c(sl_2, k=1) = 3*1/(1+2) = 1.  kappa = 9/4 = 2.25 != 0.5 = c/2.
         """
@@ -94,7 +94,7 @@ class TestShadowDataProviders:
         data = get_shadow_data('affine_sl2', k=1)
         c_val = 3.0 * 1.0 / (1.0 + 2.0)  # c = 1 for sl_2 at k=1
         assert abs(data['kappa'] - c_val / 2) > 1.0, \
-            f"AP39: kappa={data['kappa']} should differ significantly from c/2={c_val/2}"
+            f"kappa={data['kappa']} should differ significantly from c/2={c_val/2}"
 
     def test_affine_slN_data(self):
         from lib.bc_deformation_quantization_shadow_engine import get_shadow_data
@@ -120,12 +120,75 @@ class TestShadowDataProviders:
         assert abs(data['alpha'] - 2.0) < 1e-12
 
 
+class TestNormalizationFirewalls:
+    """Verify package, object, and kernel normalization firewalls."""
+
+    def test_holographic_package_has_seven_entries(self):
+        from lib.bc_deformation_quantization_shadow_engine import holographic_package_entries
+        assert holographic_package_entries() == (
+            "A",
+            "A^i",
+            "A^!",
+            "C",
+            "r(z)",
+            "Theta_A",
+            "nabla^hol",
+        )
+        assert len(holographic_package_entries()) == 7
+
+    def test_modular_koszul_package_has_six_primary_projections(self):
+        from lib.bc_deformation_quantization_shadow_engine import (
+            holographic_package_entries, modular_koszul_primary_projections,
+        )
+        projections = modular_koszul_primary_projections()
+        assert projections == (
+            "Fact_X(L)",
+            "barB_X(L)",
+            "Theta_L",
+            "L_L",
+            "(V_br, T_br)",
+            "R4_mod(L)",
+        )
+        assert len(projections) == 6
+        assert projections != holographic_package_entries()
+        assert "A^!" not in projections
+        assert "Z_ch^der(A)" not in projections
+
+    def test_object_firewall_separates_bar_dual_and_bulk(self):
+        from lib.bc_deformation_quantization_shadow_engine import object_firewall
+        firewall = object_firewall()
+        assert set(firewall) == {
+            "A",
+            "B(A)",
+            "A^i",
+            "A^!",
+            "Omega(B(A))",
+            "Z_ch^der(A)",
+        }
+        assert "H^*(B(A))" in firewall["A^i"]
+        assert "Verdier/continuous-linear dual" in firewall["A^!"]
+        assert "bar-cobar inversion recovering A" in firewall["Omega(B(A))"]
+        assert "ChirHoch^*(A,A)" in firewall["Z_ch^der(A)"]
+        assert firewall["A^i"] != firewall["A^!"]
+        assert firewall["Omega(B(A))"] != firewall["A^!"]
+        assert firewall["Z_ch^der(A)"] != firewall["A^!"]
+
+    def test_kernel_normalization_constants(self):
+        from lib.bc_deformation_quantization_shadow_engine import kernel_normalizations
+        kernels = kernel_normalizations()
+        assert kernels["affine_raw_collision"] == "k*Omega_tr/z"
+        assert kernels["affine_KZ_coefficient"] == "Omega/((k+h^vee)z)"
+        assert kernels["heisenberg_raw_collision"] == "k/z"
+        assert kernels["virasoro_collision"] == "(c/2)/z^3 + 2T/z"
+        assert kernels["affine_raw_collision"] != kernels["affine_KZ_coefficient"]
+
+
 # ===========================================================================
-# 2. Shadow Poisson bracket tests
+# 2. Shadow bracket tests
 # ===========================================================================
 
 class TestShadowPoissonBracket:
-    """Test the shadow Poisson bracket {S_r, S_s}."""
+    """Test the projected shadow bracket {S_r, S_s}."""
 
     def test_antisymmetry_kappa_alpha(self):
         """Antisymmetry: {kappa, alpha} = -{alpha, kappa}."""
@@ -165,7 +228,7 @@ class TestShadowPoissonBracket:
             assert shadow_poisson_bracket(r, r, data) == 0.0
 
     def test_heisenberg_trivial_poisson(self):
-        """Heisenberg has trivial Poisson structure (class G)."""
+        """Heisenberg has the zero bracket (class G)."""
         from lib.bc_deformation_quantization_shadow_engine import (
             shadow_poisson_bracket, get_shadow_data,
         )
@@ -231,7 +294,7 @@ class TestShadowPoissonBracket:
     def test_virasoro_bracket_c_sweep(self):
         """Cross-check brackets at multiple c values."""
         from lib.bc_deformation_quantization_shadow_engine import (
-            shadow_poisson_bracket, get_shadow_data,
+            shadow_poisson_bracket, shadow_poisson_bivector, get_shadow_data,
         )
         for c_val in [2.0, 5.0, 10.0, 13.0, 20.0]:
             data = get_shadow_data('virasoro', c_val=c_val)
@@ -244,21 +307,73 @@ class TestShadowPoissonBracket:
             # Verify {kappa, S_4}
             b24 = shadow_poisson_bracket(2, 4, data)
             assert abs(b24 - 3.0 * alp * s4 / kap) < 1e-12
-            # Verify {kappa, Delta} via chain rule
-            b_k_delta = shadow_poisson_bracket(2, 4, data) * 8.0 * kap + \
-                        8.0 * data['kappa'] * shadow_poisson_bracket(2, 4, data)
-            # Actually {kappa, Delta} = 3*alpha*Delta/kappa
+            # Verify {kappa, Delta} via Delta = 8*kappa*S_4 and {kappa,kappa}=0.
+            b_k_delta = shadow_poisson_bivector(data)['Pi_kappa_Delta']
             expected_kd = 3.0 * alp * delt / kap
-            # These should be consistent
-            assert abs(expected_kd) > 0 or c_val == 0
+            assert abs(b_k_delta - expected_kd) < 1e-12
+
+
+class TestShadowBracketStatus:
+    """Test Jacobi-defect diagnostics for the finite shadow window."""
+
+    def test_heisenberg_bracket_status_trivial(self):
+        from lib.bc_deformation_quantization_shadow_engine import (
+            get_shadow_data, shadow_bracket_status, shadow_jacobi_defect,
+        )
+        data = get_shadow_data('heisenberg', k=3)
+        assert shadow_jacobi_defect(data) == 0.0
+        status = shadow_bracket_status(data)
+        assert status['is_poisson'] is True
+        assert status['status'] == 'trivial_poisson'
+
+    def test_affine_class_L_uses_two_generator_window(self):
+        from lib.bc_deformation_quantization_shadow_engine import (
+            get_shadow_data, shadow_bracket_status, shadow_poisson_bracket,
+        )
+        data = get_shadow_data('affine_sl2', k=1)
+        status = shadow_bracket_status(data)
+        assert status['status'] == 'finite_depth_two_generator_poisson'
+        assert status['is_poisson'] is True
+        assert shadow_poisson_bracket(3, 4, data) == 0.0
+
+    def test_virasoro_three_generator_jacobi_defect(self):
+        from lib.bc_deformation_quantization_shadow_engine import (
+            get_shadow_data, shadow_bracket_status, shadow_jacobi_defect,
+        )
+        data = get_shadow_data('virasoro', c_val=5.0)
+        expected = (
+            9.0 * data['alpha'] * (3.0 * data['alpha'] ** 2 - data['Delta'])
+            / (2.0 * data['kappa'] ** 2)
+        )
+        defect = shadow_jacobi_defect(data)
+        assert abs(defect - expected) < 1e-12
+        assert abs(defect) > 1e-12
+        status = shadow_bracket_status(data)
+        assert status['is_poisson'] is False
+        assert status['status'] == 'first_order_bracket_only'
+
+    def test_vanishing_defect_locus(self):
+        from lib.bc_deformation_quantization_shadow_engine import shadow_bracket_status
+        data = {
+            'kappa': 2.0,
+            'alpha': 1.0,
+            'S4': 3.0 / 16.0,
+            'Delta': 3.0,
+            'family': 'synthetic',
+            'depth_class': 'unknown',
+        }
+        status = shadow_bracket_status(data)
+        assert status['jacobi_defect_abs'] < 1e-12
+        assert status['is_poisson'] is True
+        assert status['status'] == 'poisson_on_vanishing_defect_locus'
 
 
 # ===========================================================================
-# 3. Poisson bivector tests
+# 3. Bivector candidate tests
 # ===========================================================================
 
-class TestPoissonBivector:
-    """Test the Poisson bivector components."""
+class TestBivectorCandidate:
+    """Test the bivector candidate components."""
 
     def test_bivector_virasoro(self):
         from lib.bc_deformation_quantization_shadow_engine import (
@@ -295,11 +410,11 @@ class TestPoissonBivector:
 
 
 # ===========================================================================
-# 4. Poisson center and Casimir tests
+# 4. Center certification and discriminant tests
 # ===========================================================================
 
-class TestPoissonCenter:
-    """Test the Poisson center computation."""
+class TestCenterCertification:
+    """Test center certification and shadow-metric discriminants."""
 
     def test_heisenberg_full_center(self):
         from lib.bc_deformation_quantization_shadow_engine import (
@@ -310,25 +425,29 @@ class TestPoissonCenter:
         assert center['center_type'] == 'full'
         assert center['dim_center'] == float('inf')
 
-    def test_virasoro_discriminant_center(self):
+    def test_virasoro_center_not_certified_when_jacobi_defect_nonzero(self):
         from lib.bc_deformation_quantization_shadow_engine import (
             poisson_center_generators, get_shadow_data,
         )
         data = get_shadow_data('virasoro', c_val=5.0)
         center = poisson_center_generators(data)
-        assert center['center_type'] == 'discriminant'
-        assert center['dim_center'] == 1
+        assert center['center_type'] == 'not_poisson'
+        assert center['dim_center'] == 0
+        assert center['generators'] == []
+        assert center['bracket_status']['is_poisson'] is False
+        assert center['discriminant_Q'] == -32.0 * data['kappa'] ** 2 * data['Delta']
 
-    def test_affine_sl2_class_L_center(self):
+    def test_affine_sl2_class_L_center_constants_only(self):
         from lib.bc_deformation_quantization_shadow_engine import (
             poisson_center_generators, get_shadow_data,
         )
         data = get_shadow_data('affine_sl2', k=1)
         center = poisson_center_generators(data)
-        assert center['center_type'] == 'class_L'
+        assert center['center_type'] == 'constants_only'
+        assert center['generators'] == ['constants']
 
     def test_casimir_value_virasoro(self):
-        """Shadow Casimir C = -32*kappa^2*Delta for Virasoro."""
+        """Shadow-metric discriminant Disc(Q_L) = -32*kappa^2*Delta."""
         from lib.bc_deformation_quantization_shadow_engine import (
             shadow_casimir_value, get_shadow_data,
         )
@@ -338,7 +457,7 @@ class TestPoissonCenter:
         assert abs(C - expected) < 1e-12
 
     def test_casimir_vanishes_class_G(self):
-        """Heisenberg: C = 0 (Delta = 0)."""
+        """Heisenberg: Disc(Q_L) = 0 (Delta = 0)."""
         from lib.bc_deformation_quantization_shadow_engine import (
             shadow_casimir_value, get_shadow_data,
         )
@@ -346,7 +465,7 @@ class TestPoissonCenter:
         assert shadow_casimir_value(data) == 0.0
 
     def test_casimir_vanishes_class_L(self):
-        """Affine sl_2: C = 0 (Delta = 0)."""
+        """Affine sl_2: Disc(Q_L) = 0 (Delta = 0)."""
         from lib.bc_deformation_quantization_shadow_engine import (
             shadow_casimir_value, get_shadow_data,
         )
@@ -354,7 +473,7 @@ class TestPoissonCenter:
         assert shadow_casimir_value(data) == 0.0
 
     def test_casimir_nonzero_class_M(self):
-        """Virasoro: C != 0 (Delta != 0)."""
+        """Virasoro: Disc(Q_L) != 0 (Delta != 0)."""
         from lib.bc_deformation_quantization_shadow_engine import (
             shadow_casimir_value, get_shadow_data,
         )
@@ -362,28 +481,28 @@ class TestPoissonCenter:
         assert abs(shadow_casimir_value(data)) > 1e-10
 
     def test_casimir_c_sweep(self):
-        """Casimir varies with c for Virasoro."""
+        """The shadow-metric discriminant varies with c for Virasoro."""
         from lib.bc_deformation_quantization_shadow_engine import (
             shadow_casimir_value, get_shadow_data,
         )
-        casimirs = []
+        discriminants = []
         for c_val in [1.0, 5.0, 10.0, 13.0, 20.0]:
             data = get_shadow_data('virasoro', c_val=c_val)
-            casimirs.append(shadow_casimir_value(data))
+            discriminants.append(shadow_casimir_value(data))
         # All should be different and nonzero
-        assert all(abs(c) > 1e-10 for c in casimirs)
+        assert all(abs(c) > 1e-10 for c in discriminants)
         # Should be distinct
-        for i in range(len(casimirs)):
-            for j in range(i + 1, len(casimirs)):
-                assert abs(casimirs[i] - casimirs[j]) > 1e-10
+        for i in range(len(discriminants)):
+            for j in range(i + 1, len(discriminants)):
+                assert abs(discriminants[i] - discriminants[j]) > 1e-10
 
 
 # ===========================================================================
-# 5. Kontsevich star product tests
+# 5. Finite-window product tests
 # ===========================================================================
 
-class TestKontsevichStarProduct:
-    """Test the Kontsevich star product B_n operators."""
+class TestFiniteWindowProduct:
+    """Test the finite-window B_n operators."""
 
     def test_B0_is_product(self):
         """B_0(f, g) = f * g (pointwise product)."""
@@ -397,7 +516,7 @@ class TestKontsevichStarProduct:
         assert abs(B0 - expected) < 1e-12
 
     def test_B1_is_bracket(self):
-        """B_1(f, g) = {f, g}_shadow (Poisson bracket)."""
+        """B_1(f, g) = {f, g}_shadow for the projected bracket."""
         from lib.bc_deformation_quantization_shadow_engine import (
             kontsevich_Bn, shadow_poisson_bracket, get_shadow_data,
         )
@@ -416,7 +535,7 @@ class TestKontsevichStarProduct:
         assert abs(B0) < 1e-12
 
     def test_star_product_hbar_zero(self):
-        """At hbar = 0, star product = pointwise product."""
+        """At hbar = 0, the finite-window product is pointwise product."""
         from lib.bc_deformation_quantization_shadow_engine import (
             star_product, get_shadow_data,
         )
@@ -446,7 +565,7 @@ class TestKontsevichStarProduct:
         assert math.isfinite(B2)
 
     def test_B2_heisenberg_zero(self):
-        """B_2 = 0 for Heisenberg (trivial Poisson structure)."""
+        """B_2 = 0 for Heisenberg (zero bracket)."""
         from lib.bc_deformation_quantization_shadow_engine import (
             kontsevich_B2, get_shadow_data,
         )
@@ -482,7 +601,7 @@ class TestKontsevichStarProduct:
         assert math.isfinite(B5)
 
     def test_star_product_continuity_in_hbar(self):
-        """Star product varies continuously with hbar at low truncation order.
+        """The finite-window product varies continuously with hbar at low order.
 
         At higher truncation orders, the B_n grow factorially from numerical
         differentiation, so we restrict to order 2 for the continuity test.
@@ -499,20 +618,18 @@ class TestKontsevichStarProduct:
 
 
 # ===========================================================================
-# 6. Poisson limit test (verification path iii)
+# 6. First-order commutator test (verification path iii)
 # ===========================================================================
 
 class TestPoissonLimit:
-    """Verify lim_{hbar->0} (f*g - g*f)/hbar = {f,g}."""
+    """Verify the order-1 commutator recovers twice the projected bracket."""
 
     def test_poisson_limit_kappa_S4(self):
-        """(kappa * S_4 - S_4 * kappa) / hbar -> {kappa, S_4} as hbar -> 0.
+        """(kappa*S_4 - S_4*kappa) / hbar equals 2{kappa,S_4} at order 1.
 
-        Use truncation order 1 so that the star product is exactly
+        Use truncation order 1 so that the finite-window product is exactly
         B_0 + hbar * B_1.  Then (fg - gf)/hbar = B_1(f,g) - B_1(g,f) = 2*B_1(f,g)
         since B_0 is symmetric and B_1 is antisymmetric.
-        Actually: f*g = fg + hbar*{f,g}, g*f = gf + hbar*{g,f} = fg - hbar*{f,g},
-        so (f*g - g*f)/hbar = 2*{f,g}.  We verify this exactly at order 1.
         """
         from lib.bc_deformation_quantization_shadow_engine import (
             star_product, shadow_poisson_bracket, get_shadow_data,
@@ -560,7 +677,7 @@ class TestPoissonLimit:
 # ===========================================================================
 
 class TestAssociativity:
-    """Test associativity of the star product."""
+    """Test associativity diagnostics of the finite-window product."""
 
     def test_associativity_virasoro(self):
         from lib.bc_deformation_quantization_shadow_engine import (
@@ -572,13 +689,13 @@ class TestAssociativity:
         assert result['relative_error'] < 1.0  # loose bound for truncated series
 
     def test_associativity_heisenberg_exact(self):
-        """Heisenberg: star product = pointwise product, associativity exact."""
+        """Heisenberg: product = pointwise product, associativity exact."""
         from lib.bc_deformation_quantization_shadow_engine import (
             associativity_test, get_shadow_data,
         )
         data = get_shadow_data('heisenberg', k=1)
         result = associativity_test(2, 3, 4, data, 0.1, 5)
-        # Should be exactly associative (trivial star product)
+        # Should be exactly associative (trivial product).
         assert result['difference'] < 1e-10
 
     def test_associativity_order_errors_decreasing(self):
@@ -594,11 +711,11 @@ class TestAssociativity:
 
 
 # ===========================================================================
-# 8. Quantum corrections tests
+# 8. Finite-window correction tests
 # ===========================================================================
 
-class TestQuantumCorrections:
-    """Test quantum corrections to shadow invariants."""
+class TestFiniteWindowCorrections:
+    """Test finite-window corrections to shadow invariants."""
 
     def test_kappa_1_vanishes(self):
         """First quantum correction kappa_1 = (1/2)*B_1(kappa,kappa) = 0."""
@@ -629,7 +746,7 @@ class TestQuantumCorrections:
         assert abs(qd['corrections'][1]) < 1e-10
 
     def test_heisenberg_no_corrections(self):
-        """Heisenberg: all quantum corrections vanish."""
+        """Heisenberg: all finite-window corrections vanish."""
         from lib.bc_deformation_quantization_shadow_engine import (
             quantum_kappa, quantum_discriminant, get_shadow_data,
         )
@@ -653,11 +770,11 @@ class TestQuantumCorrections:
 
 
 # ===========================================================================
-# 9. Star product at zeta zeros
+# 9. Finite-window product at zeta-zero ordinates
 # ===========================================================================
 
 class TestStarProductAtZeros:
-    """Test star product evaluations at Riemann zeta zeros."""
+    """Test finite-window product evaluations at Riemann zeta-zero ordinates."""
 
     def test_zero_data_complex(self):
         """Shadow data at zeta zero should be complex."""
@@ -685,7 +802,7 @@ class TestStarProductAtZeros:
         assert isinstance(result['Bn_values'][0], complex)
 
     def test_star_product_at_zero_finite(self):
-        """Star product at each zero should be finite."""
+        """The product at each zero ordinate should be finite."""
         from lib.bc_deformation_quantization_shadow_engine import star_product_at_zero
         for idx in range(5):
             result = star_product_at_zero(idx, 2, 4, 0.1, 3)
@@ -723,29 +840,29 @@ class TestStarProductAtZeros:
         ratio_0 = result['suppression_ratios'][0]
         assert math.isfinite(ratio_0) and ratio_0 > 0
 
-    def test_quantum_casimir_at_zero(self):
-        """Quantum Casimir at a zero should be finite and complex."""
+    def test_deformed_discriminant_at_zero(self):
+        """Deformed discriminant at a zero ordinate should be finite and complex."""
         from lib.bc_deformation_quantization_shadow_engine import quantum_casimir_at_zero
         result = quantum_casimir_at_zero(0, 0.1, 2)
-        assert math.isfinite(result['C0_magnitude'])
-        assert math.isfinite(result['C_hbar_magnitude'])
+        assert math.isfinite(result['discriminant_0_magnitude'])
+        assert math.isfinite(result['discriminant_hbar_magnitude'])
 
-    def test_quantum_casimir_at_multiple_zeros(self):
-        """Quantum Casimirs at first 10 zeros."""
+    def test_deformed_discriminant_at_multiple_zeros(self):
+        """Deformed discriminants at the first ten zero ordinates."""
         from lib.bc_deformation_quantization_shadow_engine import quantum_casimir_at_zero
         for idx in range(10):
             result = quantum_casimir_at_zero(idx, 0.1, 2)
-            assert math.isfinite(result['C0_magnitude'])
+            assert math.isfinite(result['discriminant_0_magnitude'])
 
-    def test_casimir_magnitude_positive(self):
-        """Casimir magnitude should be strictly positive at zeros."""
+    def test_discriminant_magnitude_positive(self):
+        """Discriminant magnitude should be strictly positive at zero ordinates."""
         from lib.bc_deformation_quantization_shadow_engine import quantum_casimir_at_zero
         for idx in range(5):
             result = quantum_casimir_at_zero(idx, 0.0, 1)
-            assert result['C0_magnitude'] > 1e-15
+            assert result['discriminant_0_magnitude'] > 1e-15
 
     def test_zero_landscape(self):
-        """Star product zero landscape computation."""
+        """Finite-window zero-ordinate landscape computation."""
         from lib.bc_deformation_quantization_shadow_engine import star_product_zero_landscape
         landscape = star_product_zero_landscape(5, 2)
         assert landscape['num_zeros'] == 5
@@ -759,10 +876,10 @@ class TestStarProductAtZeros:
 # ===========================================================================
 
 class TestMoyalComparison:
-    """Compare Kontsevich and Moyal star products."""
+    """Compare finite-window and constant-bivector Moyal products."""
 
     def test_moyal_B0_matches(self):
-        """At order 0, Moyal = Kontsevich = pointwise product."""
+        """At order 0, both products reduce to the pointwise product."""
         from lib.bc_deformation_quantization_shadow_engine import (
             star_product, moyal_star_product, get_shadow_data,
         )
@@ -772,7 +889,7 @@ class TestMoyalComparison:
         assert abs(k - m) < 1e-10
 
     def test_moyal_heisenberg_agrees(self):
-        """For Heisenberg (trivial Poisson), Moyal = Kontsevich exactly."""
+        """For Heisenberg (zero bracket), both products agree exactly."""
         from lib.bc_deformation_quantization_shadow_engine import (
             star_product, moyal_star_product, get_shadow_data,
         )
@@ -794,7 +911,7 @@ class TestMoyalComparison:
         assert math.isfinite(result['moyal'])
 
     def test_moyal_at_small_hbar(self):
-        """At small hbar, Moyal and Kontsevich should be close."""
+        """At small hbar, the two finite-window products are close."""
         from lib.bc_deformation_quantization_shadow_engine import (
             kontsevich_moyal_comparison, get_shadow_data,
         )
@@ -864,6 +981,7 @@ class TestFullAnalysis:
     def test_full_analysis_virasoro(self):
         from lib.bc_deformation_quantization_shadow_engine import full_star_product_analysis
         result = full_star_product_analysis('virasoro', max_order=3, c_val=5.0)
+        assert result['bracket_status']['status'] == 'first_order_bracket_only'
         assert 'brackets' in result
         assert 'center' in result
         assert 'Bn_24' in result
@@ -879,7 +997,8 @@ class TestFullAnalysis:
     def test_full_analysis_affine(self):
         from lib.bc_deformation_quantization_shadow_engine import full_star_product_analysis
         result = full_star_product_analysis('affine_sl2', max_order=3, k=1)
-        assert result['center']['center_type'] == 'class_L'
+        assert result['bracket_status']['status'] == 'finite_depth_two_generator_poisson'
+        assert result['center']['center_type'] == 'constants_only'
 
 
 # ===========================================================================
@@ -923,8 +1042,7 @@ class TestNumericalEvaluation:
         coeffs = _shadow_coefficients_numerical(data, 6)
         # S_2 = kappa = 9/4
         assert abs(coeffs[2] - 2.25) < 1e-10
-        # S_3 = alpha/3 ... wait, S_3 = a_1/3 where a_1 = 3*alpha
-        # So S_3 = alpha
+        # S_3 = a_1/3 where a_1 = 3*alpha, hence S_3 = alpha.
         assert abs(coeffs[3] - 4.0 / 3.0) < 1e-8
 
     def test_complex_shadow_coefficients(self):
@@ -939,7 +1057,7 @@ class TestNumericalEvaluation:
             assert cmath.isfinite(coeffs[r])
 
     def test_star_product_real_for_real_data(self):
-        """Star product should be real for real shadow data."""
+        """The finite-window product should be real for real shadow data."""
         from lib.bc_deformation_quantization_shadow_engine import (
             star_product, get_shadow_data,
         )
@@ -948,7 +1066,7 @@ class TestNumericalEvaluation:
         assert isinstance(sp, float)
 
     def test_star_product_small_hbar_expansion(self):
-        """Star product at small hbar should be B_0 + hbar*B_1 + O(hbar^2).
+        """The product at small hbar should be B_0 + hbar*B_1 + O(hbar^2).
 
         We use truncation order 2 so the residual is exactly hbar^2 * B_2.
         At higher truncation orders, the numerically computed B_n grow
@@ -1001,8 +1119,8 @@ class TestDimensionalAnalysis:
         # B_0 = S_2 * S_4 = kappa * S_4 (arity 6)
         assert abs(B0 - data['kappa'] * data['S4']) < 1e-12
 
-    def test_casimir_negative_for_virasoro(self):
-        """Shadow Casimir C = -32*kappa^2*Delta < 0 for Virasoro (Delta > 0)."""
+    def test_discriminant_negative_for_virasoro(self):
+        """Disc(Q_L) = -32*kappa^2*Delta < 0 for Virasoro (Delta > 0)."""
         from lib.bc_deformation_quantization_shadow_engine import (
             shadow_casimir_value, get_shadow_data,
         )
@@ -1012,18 +1130,18 @@ class TestDimensionalAnalysis:
             # Delta = 40/(5c+22) > 0 for c > 0
             # kappa = c/2 > 0 for c > 0
             # So C = -32*kappa^2*Delta < 0
-            assert C < 0, f"Casimir should be negative for Virasoro at c={c_val}"
+            assert C < 0, f"Disc(Q_L) should be negative for Virasoro at c={c_val}"
 
 
 # ===========================================================================
-# 15. Complementarity tests
+# 15. Virasoro scalar complementarity diagnostics
 # ===========================================================================
 
 class TestComplementarity:
-    """Test Koszul complementarity at the star product level."""
+    """Test the scalar c -> 26-c complementarity diagnostics."""
 
     def test_complementary_brackets_virasoro(self):
-        """At c and 26-c, brackets should be related by Koszul duality."""
+        """At c and 26-c, bracket diagnostics are finite and generally distinct."""
         from lib.bc_deformation_quantization_shadow_engine import (
             shadow_poisson_bracket, get_shadow_data,
         )
@@ -1037,8 +1155,8 @@ class TestComplementarity:
         assert abs(b2) > 1e-10
         assert abs(b1 - b2) > 1e-10
 
-    def test_casimir_complementarity(self):
-        """Casimirs at c and 26-c for Virasoro."""
+    def test_discriminant_complementarity(self):
+        """Discriminants at c and 26-c for Virasoro."""
         from lib.bc_deformation_quantization_shadow_engine import (
             shadow_casimir_value, get_shadow_data,
         )
@@ -1047,20 +1165,20 @@ class TestComplementarity:
             d2 = get_shadow_data('virasoro', c_val=26.0 - c_val)
             C1 = shadow_casimir_value(d1)
             C2 = shadow_casimir_value(d2)
-            # At c=13 (self-dual): C1 = C2
+            # At c=13, the scalar involution c -> 26-c is fixed.
             if abs(c_val - 13.0) < 1e-10:
                 assert abs(C1 - C2) < 1e-10
             else:
                 assert abs(C1 - C2) > 1e-10
 
     def test_self_dual_star_product(self):
-        """At c=13, f*g should have enhanced symmetry."""
+        """At c=13, the finite-window product remains real and finite."""
         from lib.bc_deformation_quantization_shadow_engine import (
             star_product, get_shadow_data,
         )
         data = get_shadow_data('virasoro', c_val=13.0)
         sp = star_product(2, 4, data, 0.1, 3)
-        # The star product at the self-dual point should be real and finite
+        # The product at the scalar fixed point should be real and finite.
         assert math.isfinite(sp)
 
 
@@ -1186,13 +1304,13 @@ class TestZeroTrends:
         # Check that the trend is generally decreasing
         assert mags[0] > mags[4] * 0.5  # loose check
 
-    def test_casimir_at_zeros_nonvanishing(self):
-        """Casimir should not vanish at any zeta zero."""
+    def test_discriminant_at_zeros_nonvanishing(self):
+        """The discriminant should not vanish at any tested zeta-zero ordinate."""
         from lib.bc_deformation_quantization_shadow_engine import quantum_casimir_at_zero
         for idx in range(10):
             result = quantum_casimir_at_zero(idx, 0.0, 1)
-            assert result['C0_magnitude'] > 1e-15, \
-                f"Casimir vanishes at zero {idx}"
+            assert result['discriminant_0_magnitude'] > 1e-15, \
+                f"Disc(Q_L) vanishes at zero ordinate {idx}"
 
     def test_zero_landscape_structure(self):
         from lib.bc_deformation_quantization_shadow_engine import star_product_zero_landscape
@@ -1203,11 +1321,11 @@ class TestZeroTrends:
 
 
 # ===========================================================================
-# 19. Kontsevich graph weight tests
+# 19. B_n symmetry tests
 # ===========================================================================
 
-class TestKontsevichGraphs:
-    """Test properties of the Kontsevich graph weights."""
+class TestBnSymmetry:
+    """Test symmetry properties of the finite-window B_n coefficients."""
 
     def test_B1_antisymmetry(self):
         """B_1(f, g) = -B_1(g, f) (from Poisson antisymmetry)."""
@@ -1237,7 +1355,7 @@ class TestKontsevichGraphs:
         data = get_shadow_data('virasoro', c_val=5.0)
         B2_24 = kontsevich_B2(2, 4, data)
         B2_42 = kontsevich_B2(4, 2, data)
-        # B_2 should be symmetric (even order in the Kontsevich expansion)
+        # B_2 should be symmetric to the tolerance of the finite-difference model.
         assert abs(B2_24 - B2_42) < abs(B2_24) * 0.1 + 1e-6
 
 
@@ -1246,13 +1364,13 @@ class TestKontsevichGraphs:
 # ===========================================================================
 
 class TestDegenerationAtZeros:
-    """Test whether the star product degenerates at zeta zeros."""
+    """Test whether the finite-window product degenerates at zeta-zero ordinates."""
 
     def test_no_complete_degeneration(self):
-        """The star product does NOT completely degenerate at zeros.
+        """The finite-window product does not completely degenerate at zero ordinates.
 
-        B_n do not all vanish at zeta zeros; the Poisson structure
-        remains nondegenerate at complex c = 1/2 + i*gamma.
+        B_n do not all vanish at zeta-zero ordinates; the finite-window
+        Virasoro data remain nonzero at complex c = 1/2 + i*gamma.
         """
         from lib.bc_deformation_quantization_shadow_engine import star_product_at_zero
         result = star_product_at_zero(0, 2, 4, 0.1, 2)
@@ -1271,7 +1389,7 @@ class TestDegenerationAtZeros:
                     assert ratio < 1e10, f"Extreme amplification at zero {idx}, order {n}"
 
     def test_star_product_at_zeros_10_through_20(self):
-        """Star product at zeros 10-19."""
+        """Finite-window product at zero ordinates 10-19."""
         from lib.bc_deformation_quantization_shadow_engine import star_product_at_zero
         for idx in range(10, 20):
             result = star_product_at_zero(idx, 2, 4, 0.1, 2)

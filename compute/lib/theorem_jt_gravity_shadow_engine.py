@@ -1,154 +1,59 @@
-r"""Theorem engine: JT gravity genus expansion vs shadow obstruction tower.
+r"""JT gravity data versus the scalar shadow obstruction lane.
 
-CENTRAL QUESTION
-================
+This engine keeps four lanes separate.
 
-The shadow obstruction tower gives a genus expansion
+Scalar Bernoulli/A-hat lane.  The compute-certified scalar formula is
 
     F_g^{shadow}(Vir_c) = kappa(Vir_c) * lambda_g^{FP}
-                         = (c/2) * lambda_g^{FP}
+                         = (c/2) * lambda_g^{FP},
 
-where lambda_g^{FP} = (2^{2g-1}-1)|B_{2g}| / (2^{2g-1} (2g)!).
+where
 
-JT gravity (Saad-Shenker-Stanford 2019) gives a DIFFERENT genus expansion
-via Weil-Petersson volumes:
+    lambda_g^{FP}
+      = (2^{2g-1} - 1) |B_{2g}| / (2^{2g-1} (2g)!).
 
-    F_g^{JT} = V_{g,0}    (Weil-Petersson volume of M_{g})
+The scalar generating function is
+``kappa * ((hbar/2)/sin(hbar/2) - 1)``.  Its radius ``2*pi`` is a
+scalar A-hat statement.  JT gravity and the three-dimensional
+gravitational path integral require separate Borel-summability input.
 
-where V_{g,0} = integral_{M_g} exp(2*pi^2 * kappa_1) involves kappa-class
-intersections, NOT lambda-class intersections.
+Finite Virasoro window.  On the non-singular Virasoro surface
+``c(5c+22) != 0``,
 
-This engine computes:
-(a) The ratio R_g = F_g^{JT} / F_g^{shadow} at each genus
-(b) Whether R_g is constant (NEGATIVE: it is NOT)
-(c) The spectral curve comparison at c=26
-(d) The density of states comparison
-(e) The trumpet partition function analogue
-(f) The CORRECT dictionary: the large-c (Schwarzian) limit
+    kappa(Vir_c) = c/2,
+    S_3 = 2,
+    S_4 = 10/(c(5c+22)),
+    Delta = 8*kappa*S_4 = 40/(5c+22),
 
-THE MATHEMATICAL TRUTH
-======================
+and
 
-The ratio R_g = F_g^{JT} / F_g^{shadow} is NOT constant in g.
-The reason is fundamental:
+    Q_Vir(t) = (c + 6t)^2 + 2*Delta*t^2
+             = (c + 6t)^2 + 80*t^2/(5c+22).
 
-(1) F_g^{shadow} involves LAMBDA classes:
-    F_g = kappa * int_{M_{g,1}} psi^{2g-2} lambda_g
-    These are controlled by the A-hat generating function.
+This finite scalar window supplies no JT sine curve, Eynard-Orantin
+recursion package, or all-genus gravity partition function.
 
-(2) F_g^{JT} involves KAPPA classes:
-    F_g^{JT} = V_{g,0} = integral_{M_g} exp(2 pi^2 kappa_1)
-             = sum_{d=0}^{3g-3} (2 pi^2)^d / d! * <kappa_1^d>_g
-    These are controlled by Weil-Petersson volumes.
+WP/JT lane.  The JT formulas used here are externally supplied analytic
+gravity data: the sine spectral curve, the trumpet and disk amplitudes,
+and a finite table of Weil-Petersson volumes in Mirzakhani convention.
+The finite table is a comparison window, not an all-genus theorem.
 
-(3) The Mumford relations connect lambda and kappa classes:
-    ch_k(E) = B_{2k}/(2k)! * kappa_{2k-1} + (lower terms)
-    At genus 1: lambda_1 = kappa_1/12, so there is a simple proportionality.
-    At genus >= 2: the classes lambda_g and kappa_1^{3g-3}/(3g-3)! are
-    DIFFERENT tautological classes with different integrals.
+Analytic firewall.  The module certifies algebraic non-identification
+and low-genus ratio non-constancy.  Borel summability, BTZ closed-form
+recovery from shadows, a full JT partition function, and an all-genus
+three-dimensional gravity theorem require external analytic input.
 
-(4) The CORRECT CONNECTION goes through the Schwarzian limit:
-    As c -> infinity with beta_JT = beta/c (Schwarzian scaling),
-    the Virasoro shadow with kappa = c/2 gives, at EACH genus g:
+Manuscript anchors:
+    chapters/examples/landscape_census.tex
+    chapters/examples/genus_expansions.tex
+    chapters/connections/genus_complete.tex
+    chapters/connections/entanglement_modular_koszul.tex
 
-        F_g^{shadow}(Vir_c) = (c/2) * lambda_g^{FP}
-                             ~ (c/2) * 2 / (2 pi)^{2g}    (Stirling)
-
-    while the JT partition function at genus g involves V_{g,1}(b)
-    and the Laplace kernel. The matching occurs in the BOUNDARY
-    (one-holed) sector via b ~ sqrt(c) scaling, not in the closed
-    (no-boundary) sector.
-
-THE SPECTRAL CURVE DICTIONARY
-==============================
-
-Shadow spectral curve:
-    y^2 = Q_L(t) = (2*kappa + 3*S_3*t)^2 + 2*Delta*t^2
-
-    For Virasoro at c: Q_Vir(t) = (c + 6t)^2 + 160*kappa*S_4*t^2
-    with S_4 = 10/(c(5c+22)), so Delta = 80/(5c+22).
-
-JT spectral curve:
-    y^2 = sin^2(2 pi sqrt(x)) / (16 pi^2)
-
-    The JT curve is TRANSCENDENTAL (involves sin), while the shadow
-    curve is ALGEBRAIC (polynomial of degree 2 in t).
-
-    The connection: in the large-c limit, the shadow curve
-    approximates a LINEARIZATION of the JT curve near x = 0.
-    More precisely: set t = x / c, then
-
-        Q_Vir(x/c) ~ c^2 * (1 + (6/c)*x/c)^2 ~ c^2 + 12*x + ...
-
-    The JT curve near x ~ 0:
-        sin^2(2 pi sqrt(x)) / (16 pi^2) ~ (2 pi sqrt(x))^2 / (16 pi^2) = x/4
-
-    These are NOT the same curve. The shadow curve is POLYNOMIAL,
-    the JT curve is TRIGONOMETRIC. They cannot be identified globally.
-
-    The local match: both are MATRIX MODELS. The shadow matrix model
-    has potential V(M) = sum S_r/r M^r (polynomial). The JT matrix model
-    has potential from the double-scaled limit (sin kernel). The shadow
-    is a FINITE-order matrix model; JT is an INFINITE-order double-scaled limit.
-
-TRUMPET AND DENSITY OF STATES
-===============================
-
-JT density of states: rho_JT(E) = sinh(2 pi sqrt(E)) / (4 pi^2)
-JT trumpet: Z_trumpet(beta, b) = exp(-b^2/(4 beta)) / sqrt(4 pi beta)
-
-Shadow analogues: the shadow "density of states" is the spectral density
-of the shadow matrix model, which for the Gaussian (class G) case is
-the Wigner semicircle, and for class M (Virasoro) is a deformed semicircle.
-
-The shadow trumpet analogue is the boundary amplitude:
-    Z^{sh}_trumpet(hbar, t) = sqrt(Q_L(t)) * hbar * A-hat(i*hbar)
-
-where the A-hat generating function resums the lambda_g^FP into a
-closed form: (x/2)/sin(x/2).
-
-CONVENTIONS (AP1, AP9, AP22, AP24, AP27, AP38, AP39, AP48)
-===========================================================
-- kappa(Vir_c) = c/2  [AP1, AP39, AP48]
-- lambda_g^FP = (2^{2g-1}-1)|B_{2g}| / (2^{2g-1} (2g)!)  [AP38]
-- F_g values POSITIVE  [AP22]
-- Q_L(t) = (2*kappa + 3*S_3*t)^2 + 2*Delta*t^2, Delta = 8*kappa*S_4
-- S_3(Vir) = 2, S_4(Vir) = 10/(c(5c+22))
-- Bar propagator weight 1  [AP27]
-- WP volumes in Mirzakhani convention  [AP38]
-- V_{g,1}(0) = (2g-2)*V_{g,0} (dilaton equation)
-
-MULTI-PATH VERIFICATION (>= 3 per claim)
-==========================================
-
-Ratio non-constancy:
-  Path 1: Explicit computation at g = 1, 2, 3
-  Path 2: Generating function comparison (A-hat vs WP)
-  Path 3: Degree analysis (lambda_g = degree-g class, kappa_1^d = degree-d class)
-  Path 4: Large-g asymptotics (Bernoulli vs Kaufmann-Manin-Zagier)
-
-Spectral curve non-identification:
-  Path 1: Algebraic degree (polynomial vs transcendental)
-  Path 2: Singularity structure (finite vs infinitely many zeros)
-  Path 3: Small-x expansion comparison
-
-Schwarzian limit:
-  Path 1: c -> infinity with fixed t/c scaling
-  Path 2: Matrix model large-N identification
-  Path 3: Partition function comparison at leading order
-
-Manuscript references:
-    thm:theorem-d (higher_genus_modular_koszul.tex)
-    def:shadow-metric (higher_genus_modular_koszul.tex)
-    thm:shadow-connection (higher_genus_modular_koszul.tex)
-    thm:riccati-algebraicity (higher_genus_modular_koszul.tex)
-    cor:topological-recursion-mc-shadow (higher_genus_modular_koszul.tex)
-
-External references:
-    [SSS19] Saad-Shenker-Stanford, JT gravity as a matrix integral, arXiv:1903.11115
-    [Mir07] Mirzakhani, WP volumes and intersection numbers, Inventiones 2007
-    [EO07]  Eynard-Orantin, Invariants of algebraic curves, arXiv:math-ph/0702045
-    [SW20]  Stanford-Witten, JT gravity and the ensembles, arXiv:1907.03363
+External anchors:
+    [SSS19] Saad-Shenker-Stanford, JT gravity as a matrix integral.
+    [Mir07] Mirzakhani, WP volumes and intersection numbers.
+    [EO07]  Eynard-Orantin, Invariants of algebraic curves.
+    [SW20]  Stanford-Witten, JT gravity and the ensembles.
 """
 
 from __future__ import annotations
@@ -181,6 +86,90 @@ t_sym = Symbol('t')
 x_sym = Symbol('x')
 hbar_sym = Symbol('hbar')
 
+CERTIFIED = "certified"
+CONDITIONAL = "conditional"
+EXTERNAL_INPUT = "external_input"
+FINITE_WINDOW = "finite_window"
+NON_CERTIFIED = "non_certified"
+
+
+def object_kernel_firewall() -> Dict[str, Any]:
+    r"""Object and kernel firewalls used by this compute surface.
+
+    The entries are source strings, not new computations.
+    """
+    return {
+        'objects': ('A', 'B(A)', 'A^i', 'A^!', 'Z_ch^der(A)'),
+        'bar_cobar_inversion': 'Omega(B(A)) = A',
+        'bar_cobar_inversion_is_koszul_duality': False,
+        'koszul_dual_branch': 'A^! is the Verdier/continuous-linear dual branch',
+        'bulk_branch': 'Z_ch^der(A) is Hochschild/bulk data, not Koszul dual data',
+        'kernels': {
+            'affine_raw_trace_form': 'k*Omega_tr/z',
+            'kz_connection': 'Omega/((k+h^vee)z)',
+            'heisenberg': 'k/z',
+            'virasoro': '(c/2)/z^3 + 2T/z',
+        },
+        'source': 'CLAUDE.md; chapters/examples/landscape_census.tex',
+    }
+
+
+def gravity_claim_certification() -> Dict[str, Any]:
+    r"""Certification map for the JT/shadow comparison.
+
+    A scalar shadow identity may be certified here without certifying the
+    analytic gravity claim that usually sits next to it.
+    """
+    return {
+        'scalar_bernoulli_ahat_lane': CERTIFIED,
+        'virasoro_shadow_constants': CERTIFIED,
+        'wp_jt_sine_curve_data': EXTERNAL_INPUT,
+        'wp_jt_finite_window': {
+            'status': FINITE_WINDOW,
+            'certified_genera': (1, 2, 3),
+        },
+        'eo_recursion_from_shadow_curve': CONDITIONAL,
+        'exact_scalar_radius_2pi': CERTIFIED,
+        'jt_borel_summability': NON_CERTIFIED,
+        'btz_closed_form_recovery_from_shadow': NON_CERTIFIED,
+        'full_jt_partition_function_from_shadow': NON_CERTIFIED,
+        'all_genus_3d_gravity_partition_theorem': NON_CERTIFIED,
+    }
+
+
+def _require_regular_virasoro_surface(c_val: float) -> None:
+    """Reject Virasoro central charges where the canonical formula is singular."""
+    if abs(c_val) < 1e-15 or abs(5.0 * c_val + 22.0) < 1e-15:
+        raise ValueError(
+            "Virasoro shadow constants are canonical only on c(5c+22) != 0; "
+            "singular quotients require a separate renormalized calculation."
+        )
+
+
+def virasoro_shadow_constants(c_val: float) -> Dict[str, float]:
+    r"""Canonical Virasoro shadow constants on ``c(5c+22) != 0``.
+
+    Source: ``chapters/examples/landscape_census.tex``.
+    """
+    c_float = float(c_val)
+    _require_regular_virasoro_surface(c_float)
+    kappa = c_float / 2.0
+    S3 = 2.0
+    S4 = 10.0 / (c_float * (5.0 * c_float + 22.0))
+    S5 = -48.0 / (c_float * c_float * (5.0 * c_float + 22.0))
+    Delta = 8.0 * kappa * S4
+    return {
+        'c': c_float,
+        'kappa': kappa,
+        'S2': kappa,
+        'S3': S3,
+        'S4': S4,
+        'S5': S5,
+        'Delta': Delta,
+        'Q_t2_extra_coefficient': 2.0 * Delta,
+        'status': CERTIFIED,
+    }
+
 
 # ============================================================================
 # Section 1: Bernoulli numbers (exact, standalone -- no circular imports)
@@ -211,8 +200,9 @@ def lambda_fp_exact(g: int) -> Fraction:
 
     lambda_g^FP = (2^{2g-1} - 1) / 2^{2g-1} * |B_{2g}| / (2g)!
 
-    Generating function: sum_{g >= 1} lambda_g x^{2g} = (x/2)/sin(x/2) - 1.
-    All values POSITIVE (AP22).
+    Scalar generating function:
+    sum_{g >= 1} lambda_g x^{2g} = (x/2)/sin(x/2) - 1.
+    All values are positive.
     """
     if g < 1:
         raise ValueError(f"lambda_fp requires g >= 1, got {g}")
@@ -224,7 +214,7 @@ def lambda_fp_exact(g: int) -> Fraction:
 def F_g_shadow(kappa, g: int):
     """Shadow free energy F_g(A) = kappa(A) * lambda_g^FP.
 
-    Valid for ALL uniform-weight modular Koszul algebras (Theorem D, AP32).
+    This is the scalar uniform-weight lane once kappa(A) is supplied.
     """
     lfp = lambda_fp_exact(g)
     if isinstance(kappa, Rational):
@@ -248,7 +238,7 @@ def F_g_shadow_virasoro(c_val, g: int):
 # The JT genus-g free energy for CLOSED surfaces is the WP volume:
 #   F_g^{JT} = V_{g,0} = integral_{M_g} exp(2 pi^2 kappa_1)
 #
-# These are KNOWN exactly as rational multiples of pi^{2(3g-3)}.
+# These finite-window values are rational multiples of powers of pi.
 #
 # We store them as float (including pi factors) from Zograf's tables.
 #
@@ -256,7 +246,7 @@ def F_g_shadow_virasoro(c_val, g: int):
 # Cross-checked: dilaton equation V_{g,1}(0) = (2g-2) * V_{g,0}.
 
 def _wp_closed_volume_table() -> Dict[int, float]:
-    r"""Exact WP closed volumes V_{g,0} for g >= 2.
+    r"""Finite WP comparison table for g = 1, 2, 3.
 
     V_{g,0} = integral_{M_g} exp(omega_{WP})
 
@@ -271,15 +261,15 @@ def _wp_closed_volume_table() -> Dict[int, float]:
       V_{2,1}(0) = 29 * pi^8 / 276480
       V_{2,0}    = 29 * pi^8 / 552960
 
-    For g = 1: V_{1,0} is not well-defined (M_{1,0} is NOT stable:
+    For g = 1: V_{1,0} is not well-defined (M_{1,0} is not stable:
     2*1-2+0 = 0, which is the stability boundary. The Euler characteristic
     chi(M_{1,1}) = -1/12 gives the orbifold volume. We use
     F_1^{JT} = pi^2/12 (from V_{1,1}(0) which plays the role of F_1).
 
-    IMPORTANT: The JT genus expansion starts from the ONE-BOUNDARY sector.
-    The "free energy" F_g^{JT} in the SSS sense is NOT V_{g,0} but rather
-    a Laplace transform of V_{g,1}(b). For the COMPARISON with the shadow
-    tower, we compare the TAUTOLOGICAL INTEGRALS directly.
+    The JT genus expansion starts from the one-boundary sector.
+    The "free energy" F_g^{JT} in the SSS sense is not V_{g,0} but rather
+    a Laplace transform of V_{g,1}(b). For comparison with the shadow
+    tower, we compare the tautological integrals directly.
     """
     p = PI2
     return {
@@ -294,23 +284,22 @@ def _wp_closed_volume_table() -> Dict[int, float]:
         # V_{3,1}(0) = 176557*pi^{14}/490497638400 (Mirzakhani convention).
         # Dilaton: V_{3,1}(0) = 4*V_{3,0}.
         3: 176557.0 * p**7 / 1961990553600.0,
-        # g=4: OMITTED. The V_{4,1}(0) value requires careful convention
-        # tracking (AP38: Mirzakhani vs Zograf vs Stanford-Witten normalizations).
-        # The g=1..3 values are verified via dilaton equation cross-checks.
-        # Adding g=4 without independent verification risks AP38 violation.
+        # g=4 is omitted: it needs an independent convention check between
+        # Mirzakhani, Zograf, and Stanford-Witten normalizations.
     }
 
 
 def F_g_JT(g: int) -> float:
-    r"""JT gravity genus-g free energy (tautological integral).
+    r"""Finite-window JT/WP tautological integral.
 
     For g = 1: F_1^{JT} = V_{1,1}(0) = pi^2/12.
     For g >= 2: F_g^{JT} = V_{g,0} = integral_{M_g} exp(omega_{WP}).
 
-    These are the CLOSED surface contributions to the JT genus expansion.
+    These values are a low-genus comparison window.  They are not an
+    all-genus JT partition theorem.
 
-    WARNING: these involve KAPPA-CLASS intersections (exp(2 pi^2 kappa_1)),
-    NOT LAMBDA-CLASS intersections. They are structurally different from
+    These involve kappa-class intersections (exp(2 pi^2 kappa_1)),
+    not lambda-class intersections. They are structurally different from
     the shadow free energies F_g^{shadow} = kappa * lambda_g^{FP}.
     """
     table = _wp_closed_volume_table()
@@ -328,13 +317,13 @@ def ratio_JT_shadow(c_val: float, g: int) -> float:
 
     R_g = V_{g,0} / ((c/2) * lambda_g^{FP})
 
-    This ratio is NOT constant in g. The reason:
+    This ratio is not constant in g. The reason:
     - F_g^{JT} involves kappa-class intersections (WP volumes)
     - F_g^{shadow} involves lambda-class intersections (FP numbers)
-    - These are DIFFERENT tautological classes on M_{g,n}
+    - These are different tautological classes on M_{g,n}
 
     At genus 1: lambda_1 = kappa_1/12, so V_{1,1}(0) = 2 pi^2 * <kappa_1>_{1,1}
-    and lambda_1^{FP} = 1/24. The ratio R_1 = (pi^2/12) / ((c/2)/24) = 2 pi^2 / c.
+    and lambda_1^{FP} = 1/24. The ratio R_1 = (pi^2/12) / ((c/2)/24) = 4 pi^2 / c.
 
     At genus 2: V_{2,0} involves <kappa_1^3>_2 and lower terms from exp(2 pi^2 kappa_1),
     while lambda_2^{FP} = 7/5760. The ratio R_2 differs from R_1.
@@ -382,11 +371,11 @@ def is_ratio_constant() -> Tuple[bool, Dict[int, float]]:
 
 
 # ============================================================================
-# Section 4: Genus-1 match (the ONLY genus with a simple dictionary)
+# Section 4: Genus-1 match (the only genus with a simple dictionary)
 # ============================================================================
 
 def genus_1_dictionary(c_val: float) -> Dict[str, Any]:
-    r"""The genus-1 dictionary between JT and shadow.
+    r"""Genus-1 scalar comparison between JT/WP and the shadow lane.
 
     At genus 1, the Mumford relation lambda_1 = kappa_1/12 gives:
 
@@ -398,20 +387,19 @@ def genus_1_dictionary(c_val: float) -> Dict[str, Any]:
 
     Setting R_1 = 1 (identifying the two): c_match = 4 pi^2 ~ 39.478
 
-    INTERPRETATION: The shadow genus-1 free energy at c = 4 pi^2 equals
-    the JT genus-1 contribution. But this identification BREAKS at higher genus
-    because R_g is NOT constant.
+    This is a scalar normalization statement only.  In the usual JT genus
+    expansion the genus-1 term carries weight e^{S_0(2-2g)} = 1, so this
+    comparison does not determine the physical JT coupling S_0.
 
-    The JT genus expansion has its OWN coupling e^{S_0}. The matching condition
-    at genus 1 is: (c/2) * lambda_1^{FP} = e^{S_0} * V_{1,1}(0), giving
-    e^{S_0} = c / (4 pi^2) = kappa / (2 pi^2).
+    The quantity c/(4*pi^2) below is therefore recorded as a scalar
+    normalization ratio, not as a certified value of e^{S_0}.
     """
     kappa = c_val / 2.0
     f1_shadow = kappa * float(lambda_fp_exact(1))
     f1_jt = F_g_JT(1)
     ratio = f1_jt / f1_shadow if abs(f1_shadow) > 1e-300 else float('inf')
     c_match = 4.0 * PI2  # value of c where F_1^shadow = F_1^JT
-    e_S0_from_matching = c_val / (4.0 * PI2)
+    scalar_normalization = c_val / (4.0 * PI2)
     return {
         'c': c_val,
         'kappa': kappa,
@@ -419,9 +407,10 @@ def genus_1_dictionary(c_val: float) -> Dict[str, Any]:
         'F_1_JT': f1_jt,
         'ratio_R1': ratio,
         'c_match_genus_1': c_match,
-        'e_S0_genus_1': e_S0_from_matching,
-        # At c=26: e^{S_0} = 26/(4 pi^2) ~ 0.6580
-        # At c=4 pi^2: e^{S_0} = 1
+        'scalar_normalization_to_JT_g1': scalar_normalization,
+        'e_S0_genus_1': None,
+        'e_S0_genus_1_status': NON_CERTIFIED,
+        'jt_genus_weight_determines_S0': False,
     }
 
 
@@ -438,13 +427,11 @@ def shadow_spectral_curve(c_val: float, t_val: float) -> float:
 
     Q_Vir(t) = (c + 6t)^2 + 80*t^2/(5c+22)
     """
-    if c_val == 0:
-        return 36.0 * t_val ** 2  # degenerate: Q = (6t)^2
-    kappa = c_val / 2.0
-    S3 = 2.0
-    S4 = 10.0 / (c_val * (5.0 * c_val + 22.0))
-    Delta = 8.0 * kappa * S4
-    return (2.0 * kappa + 3.0 * S3 * t_val) ** 2 + 2.0 * Delta * t_val ** 2
+    const = virasoro_shadow_constants(c_val)
+    return (
+        (2.0 * const['kappa'] + 3.0 * const['S3'] * t_val) ** 2
+        + 2.0 * const['Delta'] * t_val ** 2
+    )
 
 
 def jt_spectral_curve(x_val: float) -> float:
@@ -463,17 +450,17 @@ def jt_spectral_curve(x_val: float) -> float:
 def spectral_curve_comparison(c_val: float, x_val: float) -> Dict[str, float]:
     r"""Compare shadow and JT spectral curves at a point.
 
-    The shadow curve is in t-variable; we need the parametrization.
-    For comparison, set t = x and compare shapes.
+    The shadow curve is in the t-variable; JT is in the x-variable.  Setting
+    t = x is only a diagnostic coordinate choice, not a canonical map.
 
-    The shadow curve Q_Vir is a POLYNOMIAL (degree 2 in t).
-    The JT curve is TRANSCENDENTAL (sin^2).
+    The shadow curve Q_Vir is a polynomial (degree 2 in t).
+    The JT curve is transcendental (sin^2).
 
-    For small x: both are approximately linear.
-    JT: y^2 ~ x/4 (from sin^2(u)/u^2 ~ 1 for small u)
+    For small x:
+    JT: y^2 ~ x/4.
     Shadow: Q_Vir(0) = c^2 (constant, nonzero)
 
-    The curves live in DIFFERENT spaces with DIFFERENT parametrizations.
+    The curves live in different spaces with different parametrizations.
     The comparison is structural, not pointwise.
     """
     q_shadow = shadow_spectral_curve(c_val, x_val)
@@ -487,6 +474,8 @@ def spectral_curve_comparison(c_val: float, x_val: float) -> Dict[str, float]:
         'JT_at_0': 0.0,  # sin^2(0) = 0
         'shadow_degree': 2,  # polynomial degree in t
         'JT_degree': 'transcendental',
+        'same_curve_certified': False,
+        'comparison_status': NON_CERTIFIED,
     }
 
 
@@ -504,13 +493,12 @@ def shadow_curve_zeros(c_val: float) -> List[float]:
     For c > 0: Q_Vir(t) > 0 for all real t. The shadow curve has
     NO REAL ZEROS. The spectral curve is positive definite.
 
-    For c = 0: Q_Vir(t) = 36*t^2, zero at t = 0 only.
-
     CONTRAST with JT: sin^2(2 pi sqrt(x)) = 0 at x = n^2/4.
     JT has INFINITELY MANY zeros. Shadow has NONE (for c > 0).
     """
-    if c_val == 0:
-        return [0.0]
+    virasoro_shadow_constants(c_val)
+    if c_val <= 0 or 5.0 * c_val + 22.0 <= 0:
+        raise ValueError("real-zero certification is implemented only for c > 0")
     # Check: Q_Vir(t) = (c + 6t)^2 + 80*t^2/(5c+22) > 0 for all real t when c > 0
     kappa = c_val / 2.0
     S4 = 10.0 / (c_val * (5.0 * c_val + 22.0))
@@ -625,8 +613,8 @@ def shadow_trumpet_analogue(c_val: float, hbar: float, t: float) -> float:
 
     where ahat_gf(hbar) = (hbar/2)/sin(hbar/2) is the A-hat generating function.
 
-    This represents the shadow partition function on a genus-expansion
-    cylinder, with the shadow metric providing the "boundary length" data.
+    This is a scalar shadow amplitude.  It is not the JT trumpet and does
+    not certify a gravitational boundary path integral.
     """
     Q = shadow_spectral_curve(c_val, t)
     if Q < 0:
@@ -667,13 +655,11 @@ def c26_analysis() -> Dict[str, Any]:
         Z^{sh}(Vir_26, hbar) = 13 * ((hbar/2)/sin(hbar/2) - 1)
                               = 13 * (Ahat(i*hbar) - 1)
 
-    This is NOT the JT partition function at any coupling.
+    This is not the JT partition function at any coupling.
     """
     c = 26.0
-    kappa = 13.0
-    S3 = 2.0
-    S4 = 10.0 / (c * (5.0 * c + 22.0))
-    Delta = 8.0 * kappa * S4
+    constants = virasoro_shadow_constants(c)
+    kappa = constants['kappa']
 
     shadow_energies = {}
     jt_energies = {}
@@ -693,9 +679,10 @@ def c26_analysis() -> Dict[str, Any]:
     return {
         'c': c,
         'kappa': kappa,
-        'S3': S3,
-        'S4': S4,
-        'Delta': Delta,
+        'S3': constants['S3'],
+        'S4': constants['S4'],
+        'Delta': constants['Delta'],
+        'constants_status': constants['status'],
         'shadow_energies': shadow_energies,
         'jt_energies': jt_energies,
         'ratios': ratios,
@@ -712,23 +699,19 @@ def c26_analysis() -> Dict[str, Any]:
 # ============================================================================
 
 def schwarzian_limit_ratio(c_val: float, g: int) -> Dict[str, float]:
-    r"""The Schwarzian limit: large c with JT scaling.
+    r"""Conditional large-c diagnostic with an externally supplied JT scaling.
 
     In the Schwarzian limit c -> infinity:
         F_g^{shadow} = (c/2) * lambda_g^{FP}
 
     grows linearly in c, while F_g^{JT} is c-independent.
 
-    The matching: the JT genus expansion includes an explicit coupling
+    The JT genus expansion includes an explicit coupling
     e^{S_0} at each genus:
         Z_JT = sum_g e^{S_0 (2-2g)} * Z_g(beta)
 
-    Setting e^{S_0} = c / (4 pi^2) gives, at genus 1:
-        e^{S_0 * 0} * Z_1 = Z_1 = pi^2/12
-        F_1^{shadow} = c/48
-
-    The matching: c/48 = e^{S_0*0} * pi^2/12 gives NO constraint at genus 1
-    (the weighting is e^{S_0*(2-2*1)} = e^0 = 1).
+    The choice e^{S_0} = c/(4*pi^2) is not derived by this engine.
+    It is a diagnostic scaling used to compare c-dependence.
 
     At genus 2: e^{S_0*(2-4)} = e^{-2*S_0} multiplies Z_2.
     Setting e^{S_0} = c/(4 pi^2):
@@ -738,15 +721,15 @@ def schwarzian_limit_ratio(c_val: float, g: int) -> Dict[str, float]:
         F_2^{shadow} = (c/2) * 7/5760 = 7c/11520
         e^{-2*S_0} * V_{2,0} = (4 pi^2/c)^2 * 29*pi^8/552960
 
-    These scale DIFFERENTLY with c: F_2^{shadow} ~ c, while the
+    These scale differently with c: F_2^{shadow} ~ c, while the
     JT genus-2 with matching scales as ~ 1/c^2. They cannot agree
     at large c.
 
-    CONCLUSION: the shadow and JT genus expansions are STRUCTURALLY DIFFERENT.
-    They involve different tautological integrals and different c-dependence.
-    The shadow is a POLYNOMIAL (degree 1) in c at each genus.
-    The JT expansion is an ASYMPTOTIC SERIES in e^{-S_0} with c-independent
-    coefficients.
+    The shadow and JT genus expansions involve different tautological
+    integrals and different c-dependence.
+    The shadow is a polynomial (degree 1) in c at each genus.
+    The JT expansion is an asymptotic series in e^{-S_0} with c-independent
+    coefficients, supplied by external WP/JT analysis.
     """
     f_sh = float(F_g_shadow_virasoro(c_val, g))
     try:
@@ -766,6 +749,8 @@ def schwarzian_limit_ratio(c_val: float, g: int) -> Dict[str, float]:
         'e_S0': e_S0,
         'F_JT_weighted': jt_weighted,
         'ratio': f_sh / jt_weighted if abs(jt_weighted) > 1e-300 else float('inf'),
+        'scaling_status': CONDITIONAL,
+        'jt_data_status': EXTERNAL_INPUT,
     }
 
 
@@ -778,7 +763,8 @@ def shadow_generating_function(kappa_val: float, hbar: float) -> float:
 
     Closed form: kappa * ((hbar/2)/sin(hbar/2) - 1).
 
-    Convergent for |hbar| < 2*pi. Poles at hbar = 2*pi*n.
+    Scalar-lane convergence holds for |hbar| < 2*pi.  Poles occur at
+    hbar = 2*pi*n.  JT Borel summability is a separate analytic input.
     """
     if abs(hbar) < 1e-14:
         return 0.0
@@ -795,20 +781,18 @@ def shadow_gf_virasoro(c_val: float, hbar: float) -> float:
 
 
 def jt_partition_function_leading(beta: float, S0: float, g_max: int = 3) -> float:
-    r"""Leading terms of the JT partition function.
+    r"""Finite-window WP diagnostic with JT genus weights.
 
     Z_JT(beta) = sum_{g >= 0} e^{S_0*(2-2g)} * Z_g(beta)
 
     where Z_g(beta) involves the Laplace transform of V_{g,1}(b).
 
-    We compute the first few terms. For g = 0: Z_0 = e^{2*pi^2/beta} / ...
-    (disk contribution, non-perturbative in S_0).
-
-    For simplicity, return the V_{g,1}(0) values (beta -> inf limit).
+    This function does not compute the full beta-dependent JT partition
+    function.  It returns the finite V_{g,0} comparison table with the usual
+    genus weights, so it is useful only as a scaling diagnostic.
     Available for g = 1..3 (verified WP volumes in Mirzakhani convention).
     """
     # The full computation requires the Laplace transforms.
-    # For structural comparison, return the V_{g,1}(0) values (beta -> inf limit).
     result = 0.0
     for g in range(1, min(g_max, 3) + 1):
         try:
@@ -833,11 +817,12 @@ def matrix_size_from_kappa(kappa_val: float) -> Dict[str, float]:
 
     For Virasoro at c = 26: kappa = 13, so N^2 = 13, N = sqrt(13) ~ 3.606.
 
-    This is NOT a physical matrix size (not an integer). The matrix model
+    This is not a physical matrix size (not an integer). The matrix model
     is the TOPOLOGICAL (formal) matrix model, where N is a continuous parameter.
 
-    In the DOUBLE-SCALED limit (relevant for JT), N -> infinity with
-    specific scaling. The shadow at finite c is the PRE-double-scaled model.
+    In the double-scaled limit (relevant for JT), N -> infinity with
+    specific scaling. A finite-c shadow model needs separate analytic input
+    to produce a double-scaled JT limit.
     """
     N_squared = kappa_val
     N = math.sqrt(kappa_val) if kappa_val >= 0 else float('nan')
@@ -849,6 +834,7 @@ def matrix_size_from_kappa(kappa_val: float) -> Dict[str, float]:
         # For JT: N -> infinity (double-scaled limit)
         'JT_regime': 'N -> infinity (double-scaled)',
         'shadow_regime': f'N = {N:.6f} (finite)',
+        'double_scaled_JT_limit_certified': False,
     }
 
 
@@ -865,28 +851,27 @@ def shadow_large_g_asymptotic(kappa_val: float, g: int) -> float:
     The Bernoulli asymptotic: |B_{2g}| ~ 2 * (2g)! / (2*pi)^{2g}
     gives lambda_g^{FP} ~ 2 / (2*pi)^{2g} * (1 - 2^{1-2g}).
 
-    The shadow free energy DECAYS exponentially: F_g ~ C * (2*pi)^{-2g}.
+    The shadow free energy decays exponentially: F_g ~ C * (2*pi)^{-2g}.
     """
     return kappa_val * 2.0 / TWO_PI ** (2 * g)
 
 
 def jt_large_g_asymptotic(g: int) -> float:
-    r"""Large-g asymptotic of the JT free energy V_{g,0}.
+    r"""Logarithmic large-g diagnostic for JT/WP growth.
 
     From Zograf (2008): V_{g,0} ~ C * (2*pi^2)^{2g} * (2g)!^{-alpha}
 
-    The WP volumes grow FACTORIALLY in g (roughly like (2g)!),
-    in sharp contrast with the shadow free energies which DECAY exponentially.
+    The WP volumes grow factorially in g (roughly like (2g)!),
+    in sharp contrast with the shadow free energies which decay exponentially.
 
-    More precisely: V_{g,0} / (2*pi^2)^{3g-3} ~ const * g^{-alpha} for large g,
-    where alpha > 0 (Zograf's asymptotic).
+    This returns a log-scale diagnostic, not an exact volume and not a
+    Borel-summability certificate.
     """
     # Rough asymptotic: V_{g,0} ~ C * (3g-3)! * (2*pi^2)^{3g-3} * (3g-3)^{-5/2}
-    # This is FAR from exact but captures the factorial growth.
     d = 3 * g - 3  # complex dimension of M_g
     if d < 0:
         return 0.0
-    # Use Zograf's asymptotic formula:
+    # Use a Zograf-type asymptotic scale:
     # V_{g,0} ~ C * Gamma(3g - 3/2) * (4*pi^2)^{2g-2} / (4*pi * (3g-3))
     # For large g: this grows as (3g)^{3g} roughly.
     # Numerical estimate:
@@ -896,13 +881,13 @@ def jt_large_g_asymptotic(g: int) -> float:
 def asymptotic_ratio(kappa_val: float, g: int) -> Dict[str, float]:
     r"""Ratio of JT to shadow free energies in the large-g regime.
 
-    The CRITICAL difference:
-    - Shadow: F_g^{shadow} ~ (2*pi)^{-2g}  (EXPONENTIAL DECAY)
-    - JT:     F_g^{JT} ~ (2g)!-type growth (FACTORIAL GROWTH)
+    The difference:
+    - Shadow: F_g^{shadow} ~ (2*pi)^{-2g}  (exponential decay)
+    - JT:     F_g^{JT} ~ (2g)!-type growth (factorial growth)
 
-    The ratio R_g = F_g^{JT} / F_g^{shadow} DIVERGES as g -> infinity.
-    This is the fundamental incompatibility: the shadow genus expansion
-    CONVERGES (radius 2*pi), while the JT expansion DIVERGES (asymptotic).
+    The divergence statement uses external WP asymptotics.  The engine can
+    certify scalar Bernoulli decay and finite-window mismatches; it records
+    the large-g JT comparison as an external diagnostic.
     """
     f_sh = float(F_g_shadow(kappa_val, g))
     f_sh_asymp = shadow_large_g_asymptotic(kappa_val, g)
@@ -914,6 +899,7 @@ def asymptotic_ratio(kappa_val: float, g: int) -> Dict[str, float]:
             'F_shadow_asymp': f_sh_asymp,
             'F_JT': f_jt,
             'ratio': f_jt / f_sh if abs(f_sh) > 1e-300 else float('inf'),
+            'jt_asymptotic_status': EXTERNAL_INPUT,
         }
     except ValueError:
         return {
@@ -922,6 +908,7 @@ def asymptotic_ratio(kappa_val: float, g: int) -> Dict[str, float]:
             'F_shadow_asymp': f_sh_asymp,
             'F_JT': None,
             'ratio': None,
+            'jt_asymptotic_status': EXTERNAL_INPUT,
         }
 
 
@@ -932,9 +919,11 @@ def asymptotic_ratio(kappa_val: float, g: int) -> Dict[str, float]:
 def full_structural_comparison(c_val: float = 26.0) -> Dict[str, Any]:
     r"""Complete structural comparison between shadow and JT at given c.
 
-    Returns a dictionary with all computed quantities and structural conclusions.
+    Returns computed quantities together with certification status for each
+    analytic claim.
     """
     kappa = c_val / 2.0
+    certification = gravity_claim_certification()
 
     # Free energies at each genus
     genus_data = {}
@@ -971,9 +960,17 @@ def full_structural_comparison(c_val: float = 26.0) -> Dict[str, Any]:
         'genus_data': genus_data,
         'ratio_constant': ratio_constant,
         'ratio_values': ratios,
-        # Structural conclusions
-        'shadow_convergent': True,   # convergence radius 2*pi
-        'jt_asymptotic': True,       # factorial divergence
+        'certification': certification,
+        # Structural conclusions with explicit scope.
+        'scalar_shadow_convergent': True,
+        'scalar_shadow_convergence_status': CERTIFIED,
+        'shadow_convergent': True,
+        'shadow_convergent_scope': 'scalar Bernoulli/A-hat lane only',
+        'scalar_convergence_radius': '2*pi',
+        'exact_scalar_radius_status': CERTIFIED,
+        'jt_asymptotic': None,
+        'jt_asymptotic_status': EXTERNAL_INPUT,
+        'borel_summability_status': NON_CERTIFIED,
         'shadow_curve_algebraic': True,
         'jt_curve_transcendental': True,
         'shadow_curve_has_zeros': len(shadow_zeros) > 0,
@@ -981,13 +978,17 @@ def full_structural_comparison(c_val: float = 26.0) -> Dict[str, Any]:
         'jt_zeros_count': 'infinite',
         'shadow_zeros_count': len(shadow_zeros),
         'matrix_model': mm,
-        # The key negative result:
+        'eo_recursion_from_shadow_curve_status': CONDITIONAL,
+        'full_EO_recursion_certified_from_Q_L': False,
+        'btz_closed_form_recovery_status': NON_CERTIFIED,
+        'all_genus_3d_partition_theorem_status': NON_CERTIFIED,
         'shadow_equals_JT': False,
+        'full_jt_partition_from_shadow': False,
         'reason': ('Shadow involves lambda-class intersections (A-hat GF, convergent). '
                    'JT involves kappa-class intersections (WP volumes, factorial). '
                    'The ratio R_g is not constant in g. '
                    'The spectral curves are algebraic vs transcendental. '
-                   'The genus expansions have opposite convergence behavior.'),
+                   'Analytic JT and 3D gravity claims need external input.'),
     }
 
 
@@ -996,34 +997,31 @@ def full_structural_comparison(c_val: float = 26.0) -> Dict[str, Any]:
 # ============================================================================
 
 def connection_via_topological_recursion(c_val: float) -> Dict[str, Any]:
-    r"""The CORRECT connection between shadow and JT via topological recursion.
+    r"""Status of the topological-recursion comparison.
 
-    Both the shadow and JT genus expansions arise from topological recursion
-    on spectral curves, but on DIFFERENT curves:
+    The shadow and JT lanes use different spectral data:
 
     - Shadow: y^2 = Q_L(t) (polynomial, finite-order matrix model)
     - JT: y^2 = sin^2(2 pi sqrt(x))/(16 pi^2) (transcendental, double-scaled)
 
-    The connection is through the HIERARCHY of matrix models:
+    An EO recursion for a shadow theory requires the spectral curve,
+    Bergman kernel, local involution, loop equations, and recursion kernel.
+    The quadratic shadow metric alone supplies only the first item.
 
-    1. The shadow at finite c is a POLYNOMIAL matrix model (degree = shadow depth).
+    1. The shadow at finite c is a polynomial/algebraic matrix-model lane.
        For class G: Gaussian. For class M: infinite polynomial.
 
-    2. JT is the DOUBLE-SCALED limit of a Hermitian matrix model.
+    2. JT is the double-scaled limit of a Hermitian matrix model.
 
-    3. The double-scaling limit of the shadow matrix model at c -> infinity
-       should reproduce a SECTOR of JT, but NOT the full JT.
+    3. Any double-scaling identification between shadow data and a JT sector
+       is external analytic input, not certified here.
 
     4. The genus-1 match is exact because lambda_1 = kappa_1/12 (Mumford).
-       Higher genus matches require the full Mumford relations, which do NOT
+       Higher genus matches require the full Mumford relations, which do not
        give a simple proportionality.
 
-    5. The PHYSICAL connection: both the shadow and JT describe quantum gravity,
-       but at different levels:
-       - JT = pure 2d dilaton gravity (Schwarzian boundary theory)
-       - Shadow = modular deformation of chiral algebra (Koszul duality)
-       They share the MODULI SPACE M_{g,n} as common geometric substrate,
-       but weight it differently (lambda vs kappa classes).
+    They share the moduli-space substrate M_{g,n}, weighted differently
+    (lambda classes versus kappa/WP classes).
     """
     kappa = c_val / 2.0
     return {
@@ -1031,11 +1029,16 @@ def connection_via_topological_recursion(c_val: float) -> Dict[str, Any]:
         'kappa': kappa,
         # Genus-1 exact match (Mumford relation lambda_1 = kappa_1/12)
         'genus_1_match': True,
-        'genus_1_proportionality': 2.0 * PI2 / c_val,  # R_1 = 2*pi^2/c
+        'genus_1_match_status': CERTIFIED,
+        'genus_1_proportionality': 4.0 * PI2 / c_val,  # R_1 = 4*pi^2/c
         # Higher genus: no simple proportionality
         'higher_genus_match': False,
-        # Both arise from topological recursion
-        'both_from_top_rec': True,
+        # Topological recursion status.
+        'both_from_top_rec': None,
+        'shadow_EO_status': CONDITIONAL,
+        'jt_sine_curve_status': EXTERNAL_INPUT,
+        'full_EO_recursion_from_shadow_curve': False,
+        'double_scaled_JT_sector_certified': False,
         # On different spectral curves
         'same_spectral_curve': False,
         'shadow_curve_type': 'polynomial (algebraic)',
@@ -1045,8 +1048,9 @@ def connection_via_topological_recursion(c_val: float) -> Dict[str, Any]:
         'shadow_integrand': 'lambda_g * psi^{2g-2} (A-hat class)',
         'jt_integrand': 'exp(2*pi^2*kappa_1) (WP form)',
         # The operational distinction
-        'shadow_convergence': 'convergent (radius 2*pi)',
-        'jt_convergence': 'asymptotic (factorial divergence)',
+        'shadow_convergence': 'scalar A-hat lane convergent with radius 2*pi',
+        'jt_convergence': 'external WP/JT asymptotic input; Borel summability not certified here',
+        'borel_summability_status': NON_CERTIFIED,
     }
 
 
@@ -1080,7 +1084,7 @@ def verify_jt_genus1() -> Dict[str, float]:
     Path 2: From V_{1,1}(b) = (b^2 + 4*pi^2)/48, set b = 0.
     Path 3: From the WP symplectic form: V_{1,1}(0) = int_{M_{1,1}} exp(omega_WP)
             where M_{1,1} has dim_C = 1, so V_{1,1}(0) = 2*pi^2 * <kappa_1>_{1,1}
-            = 2*pi^2 * (1/24) = pi^2/12. CONFIRMED.
+            = 2*pi^2 * (1/24) = pi^2/12.
     """
     direct = PI2 / 12.0
     from_polynomial = (0.0 + 4.0 * PI2) / 48.0
@@ -1094,13 +1098,12 @@ def verify_jt_genus1() -> Dict[str, float]:
 
 
 def verify_ratio_g1(c_val: float) -> Dict[str, float]:
-    r"""Verify the genus-1 ratio R_1 = 2*pi^2/c.
+    r"""Verify the genus-1 ratio R_1 = 4*pi^2/c.
 
     F_1^{JT} = pi^2/12.
     F_1^{shadow} = (c/2) * (1/24) = c/48.
     R_1 = (pi^2/12) / (c/48) = 4*pi^2/c.
 
-    Wait, let me recompute:
     R_1 = F_1^JT / F_1^shadow = (pi^2/12) / (c/48)
          = (pi^2/12) * (48/c) = 4*pi^2/c.
     """

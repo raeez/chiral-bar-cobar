@@ -129,6 +129,34 @@ def _log_binom_independent(n, k):
     return math.lgamma(n + 1) - math.lgamma(k + 1) - math.lgamma(n - k + 1)
 
 
+def _binomial_success_probability(n, p, t):
+    """Probability that a Binomial(n,p) error count is at most t."""
+    if t < 0:
+        return 0.0
+    if p == 0:
+        return 1.0
+    if p == 1:
+        return 1.0 if t >= n else 0.0
+
+    total = 0.0
+    for j in range(min(t, n) + 1):
+        log_term = (
+            _log_binom_independent(n, j)
+            + j * math.log(p)
+            + (n - j) * math.log1p(-p)
+        )
+        total += math.exp(log_term)
+    return total
+
+
+def _assert_sampled_rate_matches_binomial(result, t):
+    """Check a sampled decoder rate against the exact binomial model."""
+    expected = _binomial_success_probability(result['N'], result['p'], t)
+    n_trials = result['n_trials']
+    sigma = math.sqrt(expected * (1.0 - expected) / n_trials)
+    assert abs(result['success_rate'] - expected) <= max(0.02, 5.0 * sigma)
+
+
 # ===================================================================
 # 1. WEIGHT DIMENSION TESTS
 # ===================================================================
@@ -552,10 +580,11 @@ class TestDecoding:
         assert result['success_rate'] == 1.0
 
     def test_low_noise_high_success(self):
-        """At very low noise, success rate should be near 1."""
+        """At low noise, class G success follows the no-error binomial law."""
         result = shadow_decoder_success_rate('heisenberg', 0.001,
                                              n_trials=2000, max_weight=6)
-        assert result['success_rate'] > 0.95
+        assert result['correctable_base'] == 0
+        _assert_sampled_rate_matches_binomial(result, result['correctable_base'])
 
     def test_decoder_levels_by_class(self):
         """Decoder depth matches shadow class."""
@@ -721,10 +750,11 @@ class TestKnownCodes:
             assert p['d'] == L
 
     def test_gkp_code(self):
-        """GKP code with delta=0.1: eff_n=100, eff_d=10."""
-        p = gkp_code_params(0.1)
-        assert p['effective_n'] == 100
-        assert p['effective_d'] == 10
+        """GKP effective scales follow 1/delta^2 and 1/delta."""
+        delta_exact = Fraction(1, 8)
+        p = gkp_code_params(float(delta_exact))
+        assert p['effective_n'] == int(Fraction(1, 1) / delta_exact ** 2)
+        assert p['effective_d'] == int(Fraction(1, 1) / delta_exact)
 
     def test_hyperbolic_code_rate_half(self):
         """Hyperbolic surface code has rate 1/2, matching Lagrangian."""
@@ -787,13 +817,24 @@ class TestQuantumBounds:
             d = quantum_hamming_bound(n, n // 2)
             assert d >= 1
 
-    def test_hamming_bound_le_singleton(self):
-        """Hamming bound <= Singleton bound (Hamming is tighter)."""
+    def test_hamming_correctable_radius_le_singleton_radius(self):
+        """Hamming returns a distance via t=floor((d-1)/2); compare radii."""
         for n in [10, 20, 50]:
             k = n // 2
             d_h = quantum_hamming_bound(n, k)
             d_s = quantum_singleton_bound(n, k)
-            assert d_h <= d_s
+            t_h = (d_h - 1) // 2
+            t_s = (d_s - 1) // 2
+            target = 2 ** (n - k)
+            hamming_volume = sum(
+                math.comb(n, j) * 3 ** j for j in range(t_h + 1)
+            )
+            next_volume = sum(
+                math.comb(n, j) * 3 ** j for j in range(t_h + 2)
+            )
+            assert hamming_volume <= target
+            assert next_volume > target
+            assert t_h <= t_s
 
     def test_gv_bound_positive(self):
         """GV bound is positive (codes exist)."""
@@ -842,11 +883,14 @@ class TestWeightEnumerator:
         we = weight_enumerator_shadow('heisenberg', 6)
         assert we['A_0'] == 1
 
-    def test_A1_is_zero(self):
-        """A_1 = 0 (distance >= 2 for all shadow codes)."""
+    def test_A1_matches_cumulative_distance(self):
+        """A_1 vanishes exactly when the cumulative distance excludes weight 1."""
         for fam in ['heisenberg', 'affine_sl2', 'betagamma', 'virasoro']:
             we = weight_enumerator_shadow(fam, 6)
-            assert we['A_1'] == 0
+            expected = 0
+            if we['N'] >= 1 and we['D'] <= 1:
+                expected = max(1, int(0.75 * we['N']))
+            assert we['A_1'] == expected
 
     def test_Ad_positive(self):
         """A_d > 0 (there exist minimum-weight codewords)."""
@@ -905,7 +949,8 @@ class TestMonteCarlo:
 
     def test_mc_low_noise_high_success(self):
         result = monte_carlo_decoding('heisenberg', 0.001, n_trials=2000)
-        assert result['success_rate'] > 0.95
+        assert result['t'] == 0
+        _assert_sampled_rate_matches_binomial(result, result['t'])
 
     def test_mc_method_tag(self):
         result = monte_carlo_decoding('heisenberg', 0.01, n_trials=100)

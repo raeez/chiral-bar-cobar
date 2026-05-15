@@ -1,16 +1,18 @@
-r"""Explicit presentations of Koszul dual algebras A! from bar cohomology.
+r"""Explicit presentations of Koszul dual algebras from bar-dual data.
 
-For a chiral Koszul algebra A, the Koszul dual is A! = (H*(B(A)))^v, the
-graded linear dual of the bar cohomology.  By the Koszulness criterion
-(thm:koszul-equivalences-meta), H*(B(A)) is concentrated in bar degree 1:
-    dim H^1_n(B(A)) = dim(A!)_n   (generators of A! at conformal weight n)
-    H^k_n(B(A)) = 0   for k >= 2  (no relations: A! is freely generated)
+For a chiral Koszul algebra A, the ordered bar complex first gives the
+bar-dual coalgebra A^i=H^*(B(A)).  Under finite-type or completed
+continuous-duality hypotheses, Verdier/linear duality carries A^i to the
+Koszul dual algebra A!.  By the Koszulness criterion
+(thm:koszul-equivalences-meta), H^*(B(A)) is concentrated in bar degree 1:
+    dim H^1_n(B(A)) = dim(A^i)_n   (bar-dual generators at weight n)
+    H^k_n(B(A)) = 0   for k >= 2   (no higher bar obstruction)
 
 This module computes:
-    1. Generators of A! at each weight (from H^1(B(A))^v)
-    2. Relations of A! (from H^2(B(A))^v --- should vanish for Koszul algebras)
-    3. Explicit identification of the dual algebra
-    4. The bar-dual pairing H^1(B(A)) x (A!)_n -> k
+    1. Generators of A^i at each weight from H^1(B(A))
+    2. Relations obstructing the Verdier-dual algebra A!
+    3. Explicit identification of the dual algebra after Verdier duality
+    4. The pairing H^1(B(A)) x (A!)_n -> k
     5. Complementarity kappa(A) + kappa(A!) from the explicit generators
 
 ALGEBRAS COVERED:
@@ -24,7 +26,11 @@ CRITICAL DISTINCTIONS (AP19, AP25, AP33):
     - The bar construction extracts residues along d log(z-w), which ABSORBS
       one pole order: the r-matrix has poles ONE LESS than the OPE.
     - H_k^! = Sym^ch(V*) != H_{-k} (AP33): same kappa, different algebras.
-    - B(A) is a coalgebra; A! = (H*(B(A)))^v is its LINEAR dual.
+    - B(A) is a coalgebra; A^i=H^*(B(A)) is the bar-dual coalgebra.
+    - A! is obtained from A^i by Verdier/continuous linear duality under
+      finite-type or completed hypotheses.
+    - Omega(B(A))=A is inversion, not construction of A!.
+    - Z_ch^der(A) is the derived-centre bulk sector, not A^i or A!.
 
 References:
     cor:bar-cohomology-koszul-dual, thm:koszul-equivalences-meta,
@@ -64,9 +70,14 @@ class KoszulDualPresentation:
         bar_cohomology_by_degree: Dict[(weight, bar_degree) -> dim].
         is_koszul: True if H^k = 0 for all k >= 2 at checked weights.
         max_weight_checked: Maximum conformal weight verified.
+        bar_dual_name: Name of the bar-dual coalgebra A^i.
+        duality_branch: Typed branch from B(A) to A^i to A!.
+        verdier_hypotheses: Hypotheses under which A^i determines A!.
+        object_firewall: Typed separation of B(A), A^i, A!, inversion, and bulk.
     """
     algebra_name: str = ""
     dual_name: str = ""
+    bar_dual_name: str = ""
     generators: Dict[int, List[str]] = field(default_factory=dict)
     generator_dims: Dict[int, int] = field(default_factory=dict)
     relation_dims: Dict[int, int] = field(default_factory=dict)
@@ -77,6 +88,9 @@ class KoszulDualPresentation:
     bar_cohomology_by_degree: Dict[Tuple[int, int], int] = field(default_factory=dict)
     is_koszul: bool = True
     max_weight_checked: int = 0
+    duality_branch: str = ""
+    verdier_hypotheses: str = ""
+    object_firewall: Dict[str, str] = field(default_factory=dict)
 
     def total_generator_dim(self, max_weight: int) -> int:
         """Total number of generators up to given weight."""
@@ -85,6 +99,39 @@ class KoszulDualPresentation:
     def poincare_series_coefficients(self, max_weight: int) -> Dict[int, int]:
         """Poincare series P(t) = sum dim(A!)_n * t^n."""
         return {w: d for w, d in self.generator_dims.items() if w <= max_weight}
+
+
+def bar_koszul_object_firewall(algebra_name: str = "A",
+                               dual_name: str = "A!") -> Dict[str, str]:
+    """Typed AP25 firewall for the bar-dual presentation surface."""
+    return {
+        "input_algebra": f"{algebra_name}: chiral algebra input",
+        "bar_complex": f"B({algebra_name}): ordered bar coalgebra",
+        "bar_dual_coalgebra": f"{algebra_name}^i = H^*(B({algebra_name}))",
+        "koszul_dual_algebra": (
+            f"{dual_name}: Verdier/continuous linear dual of {algebra_name}^i "
+            "under finite-type or completed hypotheses"
+        ),
+        "bar_cobar_inversion": f"Omega(B({algebra_name})) = {algebra_name}",
+        "derived_center": f"Z_ch^der({algebra_name}): bulk sector",
+    }
+
+
+def _finalize_presentation(pres: KoszulDualPresentation) -> KoszulDualPresentation:
+    """Attach the typed bar-dual branch to a computed presentation."""
+    algebra = pres.algebra_name or "A"
+    dual = pres.dual_name or "A!"
+    pres.bar_dual_name = f"{algebra}^i = H^*(B({algebra}))"
+    pres.duality_branch = (
+        f"B({algebra}) -> {algebra}^i=H^*(B({algebra})) -> {dual} "
+        "by Verdier/continuous linear duality"
+    )
+    pres.verdier_hypotheses = (
+        "finite-type or completed continuous-duality hypotheses; "
+        "Omega(B(A))=A remains bar-cobar inversion"
+    )
+    pres.object_firewall = bar_koszul_object_firewall(algebra, dual)
+    return pres
 
 
 # =========================================================================
@@ -319,7 +366,7 @@ def identify_heisenberg_generators(k: Rational,
     # Single generator: pairing is [1] (or [k] depending on normalization)
     pres.pairing_matrices[1] = [[Rational(1)]]
 
-    return pres
+    return _finalize_presentation(pres)
 
 
 def identify_sl2_generators(k: Rational,
@@ -371,7 +418,7 @@ def identify_sl2_generators(k: Rational,
         [Rational(0), Rational(0), Rational(1)],
     ]
 
-    return pres
+    return _finalize_presentation(pres)
 
 
 def identify_virasoro_generators(c: Rational,
@@ -432,7 +479,7 @@ def identify_virasoro_generators(c: Rational,
     # Pairing at weight 2: 1x1 identity
     pres.pairing_matrices[2] = [[Rational(1)]]
 
-    return pres
+    return _finalize_presentation(pres)
 
 
 def identify_w3_generators(c: Rational,
@@ -481,7 +528,7 @@ def identify_w3_generators(c: Rational,
     # Pairing at weight 3: 1x1 identity (W component)
     pres.pairing_matrices[3] = [[Rational(1)]]
 
-    return pres
+    return _finalize_presentation(pres)
 
 
 def identify_betagamma_generators(max_weight: int = 8

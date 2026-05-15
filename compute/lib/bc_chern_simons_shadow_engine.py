@@ -128,10 +128,10 @@ def kappa_affine(type_: str, rank: int, level: float) -> float:
 
     AP1: distinct formula per family.  For SU(N) at level k:
     kappa = (N^2-1)*(k+N)/(2*N).
+    At the critical level k = -h^v, kappa is zero. The Sugawara
+    central charge is undefined there.
     """
     dim_g, h_dual = lie_data(type_, rank)
-    if abs(level + h_dual) < 1e-15:
-        raise ValueError(f"Critical level k = -{h_dual}: kappa undefined")
     return dim_g * (level + h_dual) / (2.0 * h_dual)
 
 

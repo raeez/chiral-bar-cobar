@@ -11,42 +11,50 @@ cohomology is no longer concentrated in bar degree 1.  Instead:
 This engine investigates FIVE STRUCTURAL QUESTIONS:
 
 Q1. SHADOW OBSTRUCTION TOWER AT CRITICAL LEVEL (AP31 analysis):
-    kappa = 0 does not by itself imply Theta_A = 0.  But at critical level,
-    the OPE structure constants of the Feigin-Frenkel center are
-    COMMUTATIVE (the center is a commutative chiral algebra), so all
-    higher shadow data (cubic C, quartic Q, ...) also vanish.
-    Theta_{V_crit} = 0 is the correct statement.
-    Concordance: "for the commutative critical-level algebra the full MC
-    element Theta_A = 0 (the OPE structure constants vanish)."
+    kappa = 0 does not by itself imply Theta_A = 0.  At critical level
+    there are three distinct lanes:
+    - the scalar curvature lane is uncurved because kappa = 0;
+    - the Feigin-Frenkel center is commutative, so the center-restricted
+      MC element has no higher commutator part;
+    - the full affine current sector is still noncommutative:
+      J^a(z)J^b(w) has the simple-pole bracket term and the level
+      double pole k(a,b)/(z-w)^2 with k = -h^v.
+    Therefore Theta_{V_crit} = 0 holds only on the center-restricted scalar
+    shadow. The full affine VOA retains the current-sector datum.
 
 Q2. BAR COMPLEX AND THE FEIGIN-FRENKEL CENTER:
     H^0(B(V_{-h^v}(g))) = Fun(Op_{g^v}(D)) = z(g_hat) (FF center).
-    The FULL bar cohomology H^*(B) = Omega^*(Op) is the de Rham complex
-    of the oper space.  This is NOT the center itself but its derived
-    enhancement.
+    The FULL bar cohomology H^*(B) = Omega^*(Op) is the oper
+    differential-form package.  It is not the center itself, not the
+    derived structure sheaf, and not the chiral derived center.
 
 Q3. KOSZULNESS AT CRITICAL LEVEL (which K1-K12 survive):
     Classical Koszulness (bar cohomology concentrated in bar degree 1) FAILS.
     The bar cohomology is the full de Rham algebra Omega^*(Op), spread
-    across all degrees 0, 1, ..., dim(g)-rank(g).
+    across form degrees 0, 1, ..., rank(g).
     BUT: the PBW spectral sequence still degenerates (Whitehead),
     and many characterizations have critical-level analogues.
     Status of each K_i at critical level analyzed below.
 
 Q4. FLE AS CATEGORICAL LIFT:
-    Our thm:oper-bar-dl is a COHOMOLOGICAL identification.
+    The label thm:oper-bar-dl is a COHOMOLOGICAL identification.
     The FLE (Gaitsgory-Raskin 2405.03648) is a CATEGORICAL equivalence:
         KL(V_{crit}(g)) ~ IndCoh(Op_{G^L})
-    The FLE implies our result (take Ext of vacuum module) but not conversely.
+    The FLE implies the cohomological result after taking vacuum Ext,
+    but the cohomological result does not imply the categorical equivalence.
     The bar complex is a chain-level model for the localization functor Delta.
 
 Q5. BICOMPLEX DEFORMATION (d_k = d_crit + (k+h^v) delta):
-    The bar differential decomposes into simple-pole (d_crit) and
-    double-pole (delta) parts.  This bicomplex structure controls the
-    deformation from critical (k = -h^v) to generic (k != -h^v) level,
-    and is the algebraic mechanism behind the FLE-to-Koszul interpolation.
+    The bar differential decomposes as d_k = d_crit + (k+h^v) delta.
+    The full bar object is a curved bicomplex:
+        d_crit^2 = 0, delta^2 = 0,
+        d_crit delta + delta d_crit = [C_g/(2h^v), -].
+    It becomes an ordinary bicomplex only on the curvature-flat comparison
+    surface.  The critical differential still contains the level
+    -h^v double-pole term; only the shifted perturbing coefficient
+    k+h^v vanishes at critical level.
 
-PROVED RESULTS (from the monograph):
+Recorded theorem labels:
 - thm:langlands-bar-bridge: H^n(B(V_{crit}(g))) = Omega^n(Op(D))
 - thm:oper-bar-dl: Full oper differential-form identification
 - thm:km-bar-bicomplex: d_k = d_crit + (k+h^v) delta bicomplex
@@ -66,15 +74,16 @@ Conventions
 - Cohomological grading (|d| = +1), bar uses desuspension (AP45).
 - kappa(g, k) = dim(g)(k + h^v)/(2 h^v) (AP1, AP39).
 - Sugawara UNDEFINED at critical level (not "c diverges").
-- H_k^! = V_{-k-2h^v}(g), NOT H_{-k} (AP33).
+- H_k^! = V_{-k-2h^v}(g), by Feigin-Frenkel dual level (AP33).
 
 Beilinson warnings
 ------------------
 AP1:  kappa is family-specific; recompute for each g.
 AP9:  kappa != c/2 for affine KM.
 AP14: Koszulness != formality.  At critical level both fail in different ways.
-AP31: kappa = 0 does NOT by itself imply Theta_A = 0.  At critical level,
-      the full MC element vanishes because the algebra is commutative.
+AP31: kappa = 0 leaves Theta_A independent. At critical level,
+      only the Feigin-Frenkel center is commutative; the full current
+      sector remains noncommutative.
 AP33: Koszul dual != negative-level substitution.
 AP39: kappa != S_2 for rank > 1.
 """
@@ -86,6 +95,28 @@ from dataclasses import dataclass, field
 from fractions import Fraction
 from functools import lru_cache
 from typing import Any, Dict, List, Optional, Tuple, Union
+
+
+Number = Union[int, float, Fraction]
+
+
+def _as_fraction(k: Number) -> Optional[Fraction]:
+    """Return an exact rational level when the input supplies one."""
+    if isinstance(k, Fraction):
+        return k
+    if isinstance(k, int):
+        return Fraction(k)
+    return None
+
+
+def _format_level(k: Number) -> str:
+    """Stable display for exact levels in diagnostic strings."""
+    frac = _as_fraction(k)
+    if frac is None:
+        return repr(k)
+    if frac.denominator == 1:
+        return str(frac.numerator)
+    return f"{frac.numerator}/{frac.denominator}"
 
 
 # =========================================================================
@@ -173,22 +204,19 @@ def lie_data(lie_type: str, rank: int) -> SimpleLieData:
 # Section 1: Critical level basic invariants
 # =========================================================================
 
-def kappa_affine(g: SimpleLieData, k: Union[int, float, Fraction]
-                 ) -> Union[float, Fraction]:
+def kappa_affine(g: SimpleLieData, k: Number) -> Union[float, Fraction]:
     """Modular characteristic kappa = dim(g)(k + h^v)/(2 h^v)."""
     if isinstance(k, Fraction):
         return Fraction(g.dim) * (k + g.h_vee) / (2 * g.h_vee)
     return g.dim * (k + g.h_vee) / (2.0 * g.h_vee)
 
 
-def koszul_dual_level(g: SimpleLieData, k: Union[int, float, Fraction]
-                      ) -> Union[float, Fraction]:
+def koszul_dual_level(g: SimpleLieData, k: Number) -> Union[float, Fraction]:
     """Feigin-Frenkel involution: k' = -k - 2h^v."""
     return -k - 2 * g.h_vee
 
 
-def is_critical(g: SimpleLieData, k: Union[int, float, Fraction],
-                tol: float = 1e-12) -> bool:
+def is_critical(g: SimpleLieData, k: Number, tol: float = 1e-12) -> bool:
     """Check if k = -h^v (critical level)."""
     if isinstance(k, Fraction):
         return k == Fraction(-g.h_vee)
@@ -202,29 +230,25 @@ def is_critical(g: SimpleLieData, k: Union[int, float, Fraction],
 def shadow_tower_at_critical_level(g: SimpleLieData) -> Dict[str, Any]:
     """Analyze the shadow obstruction tower at k = -h^v.
 
-    AP31 WARNING: kappa = 0 does NOT by itself imply Theta_A = 0.
+    AP31: kappa = 0 leaves Theta_A independent.
     Higher-arity components (cubic C, quartic Q, ...) are independent of kappa.
 
-    HOWEVER: at critical level, V_{-h^v}(g) has a COMMUTATIVE chiral algebra
-    structure (the Feigin-Frenkel center is commutative).  This means:
-    - All OPE structure constants between center elements vanish.
-    - The MC element Theta_A in Def_cyc^mod(A) is zero.
-    - All shadow projections (kappa, C, Q, ...) vanish.
-    - The shadow depth is r_max = 0 (trivial tower).
+    At critical level the Feigin-Frenkel center is commutative.  That is
+    a statement about z(V_{-h^v}(g)) = Fun(Op_{g^L}), not about the full
+    affine VOA.  The current OPE still contains the level double pole and
+    the Lie bracket simple pole.
 
-    The key distinction: kappa = 0 alone does NOT force Theta = 0 (AP31).
-    What DOES force Theta = 0 is the commutativity of the critical-level
-    chiral algebra structure.  The two facts are:
-    (1) kappa = 0 => m_0 = 0 => uncurved (no curvature obstruction).
-    (2) Commutativity => all higher operations m_n (n >= 2) between center
-        elements are zero => Theta = 0.
+    The correct split is:
+    (1) kappa = 0 => m_0 = 0 => the bar complex is uncurved.
+    (2) Center commutativity => the center-restricted MC element vanishes.
+    (3) Full current-sector noncommutativity => Theta_A for V_{crit}(g)
+        is not zero as a full affine-current datum.
 
-    For the FULL algebra V_{-h^v}(g) (not just the center):
+    For the full algebra V_{-h^v}(g), beyond the center:
     - The bar complex is uncurved but nontrivial.
     - H^*(B) = Omega^*(Op), which is a rich graded algebra.
-    - The shadow obstruction tower is trivial because the bar-intrinsic
-      MC element Theta_A := D_A - d_0 vanishes when kappa = 0 AND the
-      algebra has no higher obstructions.
+    - The scalar shadow is trivial, but the ordered current-sector datum
+      is not killed by kappa = 0.
     """
     k_crit = Fraction(-g.h_vee)
     kap = kappa_affine(g, k_crit)
@@ -234,25 +258,52 @@ def shadow_tower_at_critical_level(g: SimpleLieData) -> Dict[str, Any]:
         'critical_level': int(k_crit),
         'kappa': float(kap),
         'kappa_is_zero': kap == 0,
-        # Shadow tower data
+        # Scalar shadow and center-restricted tower data
         'shadow_kappa': 0,
+        'center_shadow_cubic_C': 0,
+        'center_shadow_quartic_Q': 0,
+        'center_shadow_depth_r_max': 0,
+        'scalar_shadow_class': 'critical-split',
+        'center_theta_vanishes': True,
+        'reason_center_theta_vanishes': (
+            'The Feigin-Frenkel center is a commutative chiral algebra; '
+            'this is a center-only statement, not a full affine-VOA statement.'
+        ),
+        # Backward-compatible aliases, now explicitly center/scalar only.
         'shadow_cubic_C': 0,
         'shadow_quartic_Q': 0,
         'shadow_depth_r_max': 0,
-        'shadow_class': 'degenerate',  # Not G/L/C/M -- trivial
-        'theta_A_vanishes': True,
+        'shadow_class': 'critical-split',
+        'shadow_aliases_scope': 'center/scalar only',
+        # Full current-sector data
+        'theta_A_vanishes': False,
+        'theta_A_vanishes_scope': 'full affine current sector',
+        'full_current_theta_vanishes': False,
         'reason_theta_vanishes': (
-            'Commutativity of critical-level chiral algebra structure, '
-            'NOT merely kappa = 0 (AP31).'
+            'False for the full affine current sector; only the '
+            'Feigin-Frenkel-center restriction has vanishing MC part.'
         ),
-        # Bar complex is nontrivial even though Theta = 0
+        'scalar_projection_is_full_mc_data': False,
+        'full_current_sector_noncommutative': True,
+        'current_ope_simple_pole_present': True,
+        'current_ope_double_pole_coefficient': int(k_crit),
+        'current_ope_double_pole_vanishes': False,
+        'trace_form_current_residue': f"{int(k_crit)} * Omega/z",
+        'kz_parameter_defined': False,
+        'kz_parameter_has_critical_pole': True,
+        'sugawara_defined': False,
+        'critical_split': (
+            'kappa=0 makes the bar complex uncurved; the FF center is '
+            'commutative; the affine current sector remains noncommutative.'
+        ),
+        # Bar complex is nontrivial even though the scalar curvature vanishes.
         'bar_complex_nontrivial': True,
         'bar_uncurved': True,
         'bar_cohomology_nontrivial': True,
         # Discriminant and shadow metric
         'discriminant_Delta': 0,  # 8 * kappa * S_4 = 0
         'shadow_metric_Q': '(3 alpha t)^2',  # degenerates when kappa = 0
-        'ap31_violated': False,  # We are NOT deducing Theta = 0 from kappa = 0 alone
+        'ap31_violated': False,  # We do not deduce full Theta = 0 from kappa = 0.
     }
 
 
@@ -367,7 +418,39 @@ def bar_cohomology_is_oper_forms(g: SimpleLieData, max_weight: int = 10,
         'vanishing_above_rank': vanishing_correct,
         'h0_equals_fun_op': h0_polynomial,
         'vacuum_unique': vacuum_unique,
+        'h0_is_feigin_frenkel_center': True,
+        'full_bar_cohomology_is_ff_center': False,
+        'full_bar_cohomology_is_oper_forms': True,
+        'oper_forms_are_derived_structure_sheaf': False,
+        'ordinary_derived_center_identification': False,
+        'derived_center_is_chiral_hochschild': (
+            'Z_ch^der(A) = ChirHoch^*(A,A), not Fun(Op) and not A^!'
+        ),
         'dims': dims,
+    }
+
+
+def center_object_firewall(g: SimpleLieData) -> Dict[str, Any]:
+    """Separate the critical FF center from bar forms and derived center.
+
+    The local critical package has three different objects:
+    H^0 of the critical bar complex, the full oper differential-form
+    algebra H^*(B), and the chiral derived center.  This diagnostic keeps
+    the engine from identifying any of them with the Koszul dual branch.
+    """
+    return {
+        'lie_algebra': f"{g.type}_{g.rank}",
+        'ff_center': 'H^0(B(V_crit)) = Fun(Op_{g^vee}(D))',
+        'full_bar_cohomology': 'H^*(B(V_crit)) = Omega^*(Op_{g^vee}(D))',
+        'derived_center': 'Z_ch^der(A) = ChirHoch^*(A,A)',
+        'ff_center_is_h0_only': True,
+        'full_bar_cohomology_is_ff_center': False,
+        'ff_center_is_ordinary_derived_center': False,
+        'ff_center_is_chiral_derived_center': False,
+        'ff_center_is_koszul_dual': False,
+        'oper_forms_are_derived_structure_sheaf': False,
+        'omega_ba_equals_a_is_inversion_not_koszul_duality': True,
+        'a_shriek_is_verdier_continuous_linear_dual': True,
     }
 
 
@@ -381,7 +464,7 @@ class KoszulnessAtCriticalLevel:
 
     At critical level k = -h^v:
     - The bar complex is uncurved (d^2 = 0), so cohomology is well-defined.
-    - Bar cohomology is NOT concentrated in bar degree 1; it is spread across
+    - Bar cohomology is spread across bar degrees
       degrees 0, 1, ..., rank(g) (the full de Rham algebra of Op).
     - Classical Koszulness FAILS.
 
@@ -420,7 +503,7 @@ def koszulness_at_critical_level(g: SimpleLieData) -> KoszulnessAtCriticalLevel:
     """Analyze which Koszulness characterizations survive at critical level.
 
     The fundamental fact: at k = -h^v, the bar cohomology is
-    H^*(B) = Omega^*(Op), which is NOT concentrated in degree 1.
+    H^*(B) = Omega^*(Op), spread across several form degrees.
     So classical chiral Koszulness FAILS.
 
     Each K_i is analyzed for its critical-level status.
@@ -442,11 +525,10 @@ def koszulness_at_critical_level(g: SimpleLieData) -> KoszulnessAtCriticalLevel:
     )
 
     # K2: A-infinity formality
-    # At critical level, the algebra is commutative (center = Fun(Op)).
-    # A-infinity operations from HTT are trivial: all m_n = 0 for n >= 1
-    # on the center elements.  But this is STRONGER than formality; it is
-    # commutativity.  Formality in the Koszul sense fails because the bar
-    # complex carries nontrivial higher cohomology.
+    # At critical level, the FF center is commutative (center = Fun(Op)).
+    # The full affine current algebra is not commutative; formality in the
+    # Koszul sense fails because the bar complex carries nontrivial higher
+    # cohomology.
     result.k2_ainfty = (
         "INAPPLICABLE: the bar complex is uncurved, so the question of "
         "A-infinity formality of bar cohomology changes character. "
@@ -456,7 +538,7 @@ def koszulness_at_critical_level(g: SimpleLieData) -> KoszulnessAtCriticalLevel:
 
     # K3: Ext diagonal vanishing
     # Ext^n(V_crit, V_crit) = Omega^n(Op) (Frenkel-Teleman).
-    # This is NOT diagonally concentrated: Omega^n(Op) has conformal weight
+    # This has off-diagonal support: Omega^n(Op) has conformal weight
     # contributions from all weights >= n * min(d_i + 1).
     result.k3_ext = (
         "FAILS: Ext^n(V_crit, V_crit) = Omega^n(Op) is not diagonally "
@@ -493,10 +575,10 @@ def koszulness_at_critical_level(g: SimpleLieData) -> KoszulnessAtCriticalLevel:
     )
 
     # K7: ChirHoch bounded amplitude [0,2] per Theorem H.
-    # FT-5 ANALYSIS: Theorem H does NOT apply at critical level.
+    # Theorem H is a generic-Koszul-locus result.
     # Chiral Koszulness (diagonal Ext concentration) FAILS: Ext^{p,q} != 0
     # for p != q (Fun(Op) contributes at bar degree 0, all even weights).
-    # PBW degeneration holds but does NOT imply diagonal concentration
+    # PBW degeneration holds without forcing diagonal concentration
     # when kappa = 0 (no curvature to force diagonality).
     # The BD comparison identifies ChirHoch with continuous Lie cohomology,
     # which is UNBOUNDED.
@@ -504,7 +586,7 @@ def koszulness_at_critical_level(g: SimpleLieData) -> KoszulnessAtCriticalLevel:
         "FAILS: Theorem H requires chiral Koszulness (diagonal Ext "
         "concentration, chiral_koszul_pairs.tex:1286), which fails at "
         "critical level. PBW degeneration holds (cor:universal-koszul) "
-        "but does NOT imply diagonal concentration when kappa = 0 "
+        "but leaves diagonal concentration open when kappa = 0 "
         "(curvature forces diagonality at generic level; at critical level "
         "off-diagonal Ext survives). The BD comparison theorem (BD04 "
         "Thm 4.5.2) identifies ChirHoch with continuous Lie cohomology: "
@@ -588,7 +670,7 @@ def fle_categorical_hierarchy(g: SimpleLieData) -> Dict[str, Any]:
         D(V_{-h^v}(g)-mod)  ->  D(QCoh(Op))
         (localization functor Delta)
 
-    Level 3 (Cohomological -- our thm:oper-bar-dl):
+    Level 3 (Cohomological -- thm:oper-bar-dl):
         H^n(B(V_{-h^v}(g)))  ~  Omega^n(Op_{g^v}(D))
         (bar-Ext + Frenkel-Teleman)
 
@@ -596,10 +678,10 @@ def fle_categorical_hierarchy(g: SimpleLieData) -> Dict[str, Any]:
     Level 1 => Level 2 (take derived categories)
     Level 2 => Level 3 (take Ext of vacuum module)
 
-    The converses do NOT hold:
-    Level 3 does NOT imply Level 2 (cohomological data does not determine
+    The converses fail:
+    Level 3 leaves Level 2 undetermined: cohomological data does not determine
     the functor).
-    Level 2 does NOT imply Level 1 in full generality (the localization
+    Level 2 leaves Level 1 undetermined in full generality: the localization
     functor is only an equivalence on a subcategory).
     """
     return {
@@ -621,7 +703,7 @@ def fle_categorical_hierarchy(g: SimpleLieData) -> Dict[str, Any]:
         'level_3_bar_oper': {
             'statement': f"H^n(B(V_{{-{g.h_vee}}}({g.type}_{g.rank}))) "
                          f"~ Omega^n(Op(D))",
-            'source': 'thm:oper-bar-dl (this monograph)',
+            'source': 'thm:oper-bar-dl',
             'status': 'ProvedHere',
             'objects': 'graded algebras',
         },
@@ -643,16 +725,78 @@ def fle_categorical_hierarchy(g: SimpleLieData) -> Dict[str, Any]:
 # Section 6: Q5 -- Bicomplex deformation d_k = d_crit + (k+h^v) delta
 # =========================================================================
 
-def bicomplex_structure(g: SimpleLieData, k: Union[int, float, Fraction]
-                        ) -> Dict[str, Any]:
+def kernel_normalization_diagnostics(g: SimpleLieData, k: Number) -> Dict[str, Any]:
+    """Convention-separated affine kernel diagnostics.
+
+    Canonical local formulas:
+    - affine trace-form collision residue: k*Omega_tr/z;
+    - KZ normalization: Omega_KZ/((k+h^vee)z);
+    - Heisenberg: k/z;
+    - Virasoro: (c/2)/z^3 + 2T/z.
+
+    The trace-form and KZ expressions are not interchangeable rational
+    functions of the level.  At k=0 the trace-form residue vanishes while
+    the KZ residue is nonzero; at k=-h^vee the KZ coefficient has a pole
+    while the trace-form double-pole coefficient is -h^vee.
+    """
+    frac = _as_fraction(k)
+    h = Fraction(g.h_vee)
+    if frac is None:
+        shifted = k + g.h_vee
+        shifted_zero = abs(shifted) < 1e-12
+        k_zero = abs(k) < 1e-12
+    else:
+        shifted = frac + h
+        shifted_zero = shifted == 0
+        k_zero = frac == 0
+
+    k_dual = koszul_dual_level(g, k)
+    kz_defined = not shifted_zero
+    return {
+        'lie_algebra': f"{g.type}_{g.rank}",
+        'level': _format_level(k),
+        'h_vee': g.h_vee,
+        'shifted_level_k_plus_h_vee': _format_level(shifted),
+        'trace_form_collision_residue': (
+            f"{_format_level(k)}*Omega_tr/z"
+        ),
+        'kz_residue': (
+            None if not kz_defined
+            else f"Omega_KZ/(({_format_level(shifted)})*z)"
+        ),
+        'kz_parameter_defined': kz_defined,
+        'kz_parameter_has_critical_pole': shifted_zero,
+        'trace_form_and_kz_are_same_rational_function': False,
+        'normalizations_interchangeable': False,
+        'trace_form_vanishes_at_k0': k_zero,
+        'kz_nonzero_at_k0_for_nonabelian_g': k_zero and kz_defined,
+        'critical_trace_double_pole_present': shifted_zero and not k_zero,
+        'critical_trace_double_pole_coefficient': (
+            _format_level(k) if shifted_zero else None
+        ),
+        'ff_dual_level': _format_level(k_dual),
+        'ff_fixed_point': k_dual == k,
+        'heisenberg_kernel': 'k/z',
+        'virasoro_kernel': '(c/2)/z^3 + 2T/z',
+    }
+
+
+def bicomplex_structure(g: SimpleLieData, k: Number) -> Dict[str, Any]:
     """The bicomplex structure of the KM bar differential.
 
     thm:km-bar-bicomplex: d_k = d_crit + (k + h^v) * delta, where:
-    - d_crit extracts simple-pole residues (structure constants f^{ab}_c)
-    - delta extracts double-pole residues (level k bilinear form)
-    - d_crit^2 = 0, delta^2 = 0, {d_crit, delta} = 0
+    - d_crit = d_sp - h^v d_dp is the critical differential
+    - delta extracts the trace-form double-pole coefficient
+    - d_crit^2 = 0, delta^2 = 0,
+      {d_crit, delta} = [C_g/(2h^v), -] on the full bar object
 
-    At critical level (k = -h^v): d_k = d_crit (pure simple-pole).
+    The triple is an ordinary bicomplex only on the curvature-flat
+    subquotient on which the Casimir bracket vanishes.  At critical level
+    d_k = d_crit, but d_crit still includes the level -h^v double-pole
+    residue; the shifted perturbation (k+h^v) delta is what disappears.
+
+    At critical level (k = -h^v): d_k = d_crit; the shifted perturbation
+    vanishes but the critical double-pole coefficient is -h^v.
     At generic level: d_k = d_crit + lambda * delta with lambda = k + h^v.
 
     The critical-first spectral sequence:
@@ -673,10 +817,20 @@ def bicomplex_structure(g: SimpleLieData, k: Union[int, float, Fraction]
         # Bicomplex components
         'd_crit_squared_zero': True,  # Always
         'delta_squared_zero': True,   # Always
-        'anticommutator_zero': True,  # Always
+        'anticommutator_zero': False,  # False on the full bar object.
+        'anticommutator': f"[C_{g.type}_{g.rank}/(2*{g.h_vee}), -]",
+        'ordinary_bicomplex_on_curvature_flat_subquotient': True,
+        'curved_bicomplex_on_full_bar_object': True,
         # At critical level
         'd_k_equals_d_crit': is_crit,
         'delta_contribution_zero': is_crit,
+        'shifted_delta_contribution_zero': is_crit,
+        'critical_double_pole_present': is_crit,
+        'critical_double_pole_coefficient': -g.h_vee if is_crit else None,
+        'critical_double_pole_note': (
+            'At k=-h^vee the shifted perturbation vanishes, but the '
+            'trace-form OPE double pole has coefficient -h^vee.'
+        ) if is_crit else None,
         # Spectral sequence
         'critical_first_e1': 'Omega^*(Op)' if is_crit else 'Omega^*(Op)',
         'critical_first_d1_zero': is_crit,  # d_1 = lambda * delta = 0 at crit
@@ -684,7 +838,11 @@ def bicomplex_structure(g: SimpleLieData, k: Union[int, float, Fraction]
         # Curvature
         'm_0': f"{float(lam)}/(2*{g.h_vee}) * Casimir"
                if not is_crit else '0',
+        'curved_square': f"[(k+h^vee)/(2*{g.h_vee}) * Casimir, -]",
         'bar_uncurved': is_crit,
+        'ordinary_generic_cohomology_requires_curvature_flat_surface': (
+            not is_crit
+        ),
     }
 
 
@@ -764,23 +922,21 @@ def oper_space_analysis(g: SimpleLieData) -> Dict[str, Any]:
 def hochschild_periodicity(g: SimpleLieData) -> Dict[str, Any]:
     """Critical-level ChirHoch: BD comparison identifies with Lie cohomology.
 
-    FT-5 ANALYSIS (2026-04-12):
-
     At critical level k = -h^v, chiral Koszulness FAILS in the precise
     sense of the manuscript (chiral_koszul_pairs.tex:1286-1287): the
-    Ext algebra Ext^{p,q}(omega_X, omega_X) is NOT diagonally concentrated
+    Ext algebra Ext^{p,q}(omega_X, omega_X) has off-diagonal support
     (p != q contributions from Fun(Op) at weight q > 0, bar degree p = 0).
 
     DETAIL: PBW degeneration (E_2-collapse) holds at all levels
-    (cor:universal-koszul), but at critical level the E_2 page is NOT
+    (cor:universal-koszul), but at critical level the E_2 page is not
     diagonally concentrated. PBW degeneration + diagonal E_2 = Koszulness.
-    PBW degeneration alone does NOT imply Koszulness when the E_2 page
+    PBW degeneration alone leaves Koszulness unproved when the E_2 page
     has off-diagonal contributions.  At generic level, curvature forces
     diagonal concentration. At critical level, kappa = 0, no curvature,
     off-diagonal contributions survive.
 
-    CONSEQUENCE: Theorem H (thm:hochschild-polynomial-growth) does NOT
-    apply at critical level, because its hypothesis "chirally Koszul"
+    CONSEQUENCE: Theorem H (thm:hochschild-polynomial-growth) is outside the
+    critical-level surface, because its hypothesis "chirally Koszul"
     fails.  The Beilinson-Drinfeld comparison theorem (BD04, Thm 4.5.2)
     identifies ChirHoch with continuous Lie algebra cohomology:
 
@@ -789,9 +945,9 @@ def hochschild_periodicity(g: SimpleLieData) -> Dict[str, Any]:
 
     This is UNBOUNDED with polynomial growth O(n^{r-1}).
 
-    MANUSCRIPT REFERENCE: hochschild_cohomology.tex:158-191
+    Anchor: hochschild_cohomology.tex, rem:critical-level-lie-vs-chirhoch.
     (rem:critical-level-lie-vs-chirhoch): "At critical level, chiral
-    Koszulness fails ... Theorem H does not apply. Instead, the BD
+    Koszulness fails ... Theorem H is outside this surface. Instead, the BD
     comparison theorem identifies ChirHoch with continuous Lie algebra
     cohomology."
 
@@ -801,12 +957,8 @@ def hochschild_periodicity(g: SimpleLieData) -> Dict[str, Any]:
     - At CRITICAL level: BD comparison IDENTIFIES them. ChirHoch IS
       the Lie cohomology. Both unbounded.
 
-    NOTE ON cor:universal-koszul: This corollary says V_k(g) is
-    "chirally Koszul" at all k. This should be understood as "PBW
-    degenerate" (a necessary condition for Koszulness, not sufficient
-    at critical level). The corollary needs a clarifying remark that
-    PBW degeneration at critical level does not yield diagonal Ext
-    concentration. This is flagged as a manuscript tension (FT-5).
+    Scope note: PBW degeneration is necessary for Koszulness, but at
+    critical level it does not yield diagonal Ext concentration.
     """
     odd_generators = g.lie_cohomology_degrees
     even_generators = tuple(2 * (d + 1) for d in g.exponents)
@@ -821,7 +973,10 @@ def hochschild_periodicity(g: SimpleLieData) -> Dict[str, Any]:
         'even_generator_degrees': even_generators,
         'amplitude': 'unbounded',
         'total_dim_bound': None,
-        'bounded_by_theorem_h': False,  # Theorem H does NOT apply
+        'bounded_by_theorem_h': False,  # Theorem H is generic-locus only
+        'theorem_h_scope': 'generic Koszul locus only',
+        'critical_promoted_to_theorem_h': False,
+        'is_generic_level_result': False,
         'koszulness_fails_at_critical': True,
         'pbw_degeneration_holds': True,  # PBW E_2-collapse still holds
         'diagonal_ext_fails': True,  # Ext^{p,q} != 0 for p != q
@@ -837,12 +992,16 @@ def hochschild_periodicity(g: SimpleLieData) -> Dict[str, Any]:
         ),
         'sl2_period_4': is_periodic and period == 4,
         'lie_cohomology_unbounded': True,
+        'chiral_derived_center_is_hochschild': True,
+        'feigin_frenkel_center_is_h0_only': True,
+        'ff_center_is_ordinary_derived_center': False,
+        'ff_center_is_koszul_dual': False,
         'correction_note': (
             'Chiral Koszulness (diagonal Ext concentration) FAILS at '
             'critical level even though PBW degeneration holds. The BD '
             'comparison theorem identifies ChirHoch with continuous Lie '
             'cohomology at critical level. Theorem H does not apply. '
-            'cor:universal-koszul needs a clarifying remark (FT-5 finding).'
+            'PBW degeneration alone is not diagonal Ext concentration.'
         ),
     }
 
@@ -890,6 +1049,10 @@ def critical_deformation_data(g: SimpleLieData,
         'bar_uncurved_at_critical': True,
         'bar_curved_at_deformed': float(kap_def) != 0,
         'koszul_at_generic': True,
+        'koszul_at_generic_scope': 'curvature-flat/twisted/coderived comparison surface',
+        'ordinary_generic_cohomology_requires_curvature_flat_surface': True,
+        'theorem_h_applies_at_deformed_generic_level': True,
+        'ff_center_package_at_deformed_generic_level': False,
         'oper_identification_at_critical': True,
         'oper_identification_at_generic': False,
         'transition_mechanism': 'bicomplex spectral sequence',
@@ -924,6 +1087,9 @@ class FLECriticalLevelAnalysis:
     oper_analysis: Dict[str, Any] = field(default_factory=dict)
     # Hochschild
     hochschild: Dict[str, Any] = field(default_factory=dict)
+    # Object-scope firewalls
+    center_firewall: Dict[str, Any] = field(default_factory=dict)
+    kernel_normalization: Dict[str, Any] = field(default_factory=dict)
     # Deformation
     deformation: Dict[str, Any] = field(default_factory=dict)
 
@@ -947,6 +1113,10 @@ def full_fle_critical_analysis(lie_type: str, rank: int,
         bicomplex=bicomplex_structure(g, Fraction(-g.h_vee)),
         oper_analysis=oper_space_analysis(g),
         hochschild=hochschild_periodicity(g),
+        center_firewall=center_object_firewall(g),
+        kernel_normalization=kernel_normalization_diagnostics(
+            g, Fraction(-g.h_vee)
+        ),
         deformation=critical_deformation_data(g),
     )
 

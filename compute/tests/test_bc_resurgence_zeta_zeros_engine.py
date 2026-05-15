@@ -1,17 +1,17 @@
-r"""Tests for the Benjamin-Chang resurgent structure near Riemann zeta zeros.
+r"""Tests for Benjamin-Chang scattering-pole and shadow diagnostics.
 
-VERIFICATION PATHS (Multi-Path Verification Mandate):
+Evidence paths:
 
 Path 1: Direct computation — evaluate Borel singularities, Stokes constants,
-         alien derivatives from their defining formulas.
+         and residue proxies from their defining formulas.
 Path 2: Richardson extrapolation — independent acceleration of partial sums.
-Path 3: Bridge equation consistency — Stokes constants satisfy the MC constraint.
+Path 3: Algebraic sheet consistency — second sheet equals minus first sheet.
 Path 4: Heisenberg exactness — class G has no Stokes phenomena (exact polynomial).
 
-CROSS-CHECKS:
+Cross-checks:
 - Borel singularity locations vs branch points of Q_L
 - Stokes constants vs universal residue factor A_c(rho)
-- Complementarity: A_c(rho) vs A_{26-c}(rho) at c=13 (self-dual)
+- Verdier scalar partner: A_c(rho) vs A_{26-c}(rho) at c=13
 - Heisenberg: Borel-Laplace exactly recovers kappa*t^2
 
 References:
@@ -60,6 +60,7 @@ class TestVirasoroShadowInvariants:
         for c_val in [1.0, 5.0, 13.0, 25.0]:
             inv = virasoro_shadow_invariants(c_val)
             assert abs(inv['kappa'] - c_val / 2.0) < 1e-14
+            assert inv['certification_status'] == 'exact_scalar_fact'
 
     def test_alpha_is_two(self):
         from lib.bc_resurgence_zeta_zeros_engine import virasoro_shadow_invariants
@@ -150,7 +151,7 @@ class TestShadowCoefficients:
 # =====================================================================
 
 class TestBorelSingularityLocations:
-    """Test Borel singularity map from zeta zeros."""
+    """Test the Borel-coordinate map from zeta zeros."""
 
     @SKIP_NO_MPMATH
     def test_first_zero_position(self):
@@ -172,12 +173,12 @@ class TestBorelSingularityLocations:
 
     @SKIP_NO_MPMATH
     def test_borel_singularities_decrease_in_modulus(self):
-        """Singularities get closer to origin as gamma_n increases."""
+        """Singularity coordinates get closer to origin as gamma_n increases."""
         from lib.bc_resurgence_zeta_zeros_engine import borel_singularity_map
         sings = borel_singularity_map(5)
         # Since gamma_n increases, |omega_n| = 2/|s_n| decreases
         moduli = [s['borel_singularity_modulus'] for s in sings]
-        # They should be sorted (we sort by modulus in the function)
+        # The function sorts by modulus.
         for i in range(len(moduli) - 1):
             assert moduli[i] <= moduli[i + 1] + 1e-14
 
@@ -222,7 +223,7 @@ class TestStokesLines:
         for n in [1, 5, 10]:
             data = stokes_line_direction(n)
             dirs.append(data.stokes_direction)
-        # Later zeros should be closer to pi/2
+        # Later sampled zeros are closer to pi/2.
         assert abs(dirs[-1] - math.pi / 2) < abs(dirs[0] - math.pi / 2)
 
     @SKIP_NO_MPMATH
@@ -248,11 +249,11 @@ class TestStokesLines:
 # =====================================================================
 
 class TestStokesConstants:
-    """Test Stokes constant computation at zeta zero poles."""
+    """Test residue computation at zeta-zero poles."""
 
     @SKIP_NO_MPMATH
     def test_stokes_constant_nonzero(self):
-        """Stokes constants should be nonzero at zeta zeros."""
+        """Residue factors are nonzero at the sampled zeta zeros."""
         from lib.bc_resurgence_zeta_zeros_engine import stokes_constant_at_zero
         for c_val in [1.0, 13.0, 25.0]:
             data = stokes_constant_at_zero(1, c_val)
@@ -279,13 +280,13 @@ class TestStokesConstants:
         sc_1 = stokes_constant_at_zero(1, 1.0)
         sc_13 = stokes_constant_at_zero(1, 13.0)
         sc_25 = stokes_constant_at_zero(1, 25.0)
-        # Different c should give different Stokes constants
+        # Different c values give different residue factors.
         assert abs(sc_1['stokes_modulus'] - sc_13['stokes_modulus']) > 1e-10
         assert abs(sc_13['stokes_modulus'] - sc_25['stokes_modulus']) > 1e-10
 
     @SKIP_NO_MPMATH
     def test_stokes_decay_with_gamma(self):
-        """Stokes constants should have bounded growth with increasing gamma_n.
+        """Residue factors have bounded finite-window growth.
 
         The moduli |A_c(rho_n)| are not strictly monotone because
         |zeta'(rho_n)| in the denominator fluctuates.  However, the
@@ -296,12 +297,11 @@ class TestStokesConstants:
         from lib.bc_resurgence_zeta_zeros_engine import stokes_constant_decay_rate
         data = stokes_constant_decay_rate(13.0, n_zeros=5)
         moduli = [d['stokes_modulus'] for d in data]
-        # All moduli should be finite and positive
+        # All moduli are finite and positive in the sampled window.
         for m in moduli:
             assert math.isfinite(m)
             assert m > 0
-        # The average of later moduli should be smaller than the first
-        # (weak trend check — allows individual fluctuations)
+        # Weak finite-window trend check; individual fluctuations remain.
         avg_later = sum(moduli[2:]) / len(moduli[2:]) if len(moduli) > 2 else moduli[-1]
         avg_early = sum(moduli[:2]) / 2.0
         # At c=13, the Gamma decay ~ gamma^{-6} is strong enough
@@ -309,7 +309,7 @@ class TestStokesConstants:
 
     @SKIP_NO_MPMATH
     def test_stokes_constants_spectrum_sorted(self):
-        """Spectrum should be sorted by decreasing modulus."""
+        """Spectrum is sorted by decreasing modulus."""
         from lib.bc_resurgence_zeta_zeros_engine import stokes_constants_spectrum
         spectrum = stokes_constants_spectrum(13.0, n_zeros=5)
         moduli = [s['stokes_modulus'] for s in spectrum]
@@ -322,7 +322,7 @@ class TestStokesConstants:
 # =====================================================================
 
 class TestAlienDerivatives:
-    """Test alien derivative computation at zeta-zero singularities."""
+    """Test residue proxies at zeta-zero singularities."""
 
     @SKIP_NO_MPMATH
     def test_alien_derivative_nonzero(self):
@@ -332,7 +332,7 @@ class TestAlienDerivatives:
 
     @SKIP_NO_MPMATH
     def test_alien_derivative_equals_stokes(self):
-        """The alien derivative coefficient equals the Stokes constant."""
+        """The proxy coefficient equals the residue factor."""
         from lib.bc_resurgence_zeta_zeros_engine import (
             alien_derivative_at_zeta_zero, stokes_constant_at_zero,
         )
@@ -350,7 +350,7 @@ class TestAlienDerivatives:
 
     @SKIP_NO_MPMATH
     def test_alien_omega_equals_borel_singularity(self):
-        """omega_n in alien derivative matches borel singularity."""
+        """omega_n in the residue proxy matches the Borel-coordinate location."""
         from lib.bc_resurgence_zeta_zeros_engine import (
             alien_derivative_at_zeta_zero, borel_singularity_from_zeta_zero,
         )
@@ -361,11 +361,11 @@ class TestAlienDerivatives:
 
 
 # =====================================================================
-# Section 7: Resurgent bridge
+# Section 7: Finite scale comparison
 # =====================================================================
 
 class TestResurgentBridge:
-    """Test the bridge between shadow tower and zeta zeros."""
+    """Test finite comparison data for shadow and zeta-zero scales."""
 
     @SKIP_NO_MPMATH
     def test_bridge_construction(self):
@@ -385,7 +385,7 @@ class TestResurgentBridge:
 
     @SKIP_NO_MPMATH
     def test_bridge_scales(self):
-        """Shadow and zeta scales should be finite and distinct."""
+        """Shadow and zeta scales are finite and distinct in this window."""
         from lib.bc_resurgence_zeta_zeros_engine import resurgent_bridge_scales
         data = resurgent_bridge_scales(13.0, n_zeros=3)
         assert data['shadow_action_modulus'] > 0
@@ -407,7 +407,7 @@ class TestResurgentBridge:
 # =====================================================================
 
 class TestLateralBorelSums:
-    """Test lateral Borel resummation of the shadow tower."""
+    """Test lateral Borel diagnostics of the shadow tower."""
 
     def test_borel_transform_at_zero(self):
         """B[G](0) = 0 (the series starts at r=2)."""
@@ -427,17 +427,17 @@ class TestLateralBorelSums:
 
     def test_lateral_sums_conjugate_for_real_t(self):
         """For real t and the shadow tower (real coefficients),
-        S_+(t) and S_-(t) should be complex conjugates."""
+        S_+(t) and S_-(t) are complex conjugates up to quadrature error."""
         from lib.bc_resurgence_zeta_zeros_engine import lateral_borel_sums_shadow
         data = lateral_borel_sums_shadow(13.0, 0.1, epsilon=0.05, r_max=30,
                                           n_quad=500, xi_max=30.0)
         S_plus = data['S_plus']
         S_minus = data['S_minus']
-        # They should be approximately conjugate
+        # Approximate conjugacy follows from real coefficients and symmetric rays.
         assert abs(S_plus - S_minus.conjugate()) < 1e-3 * max(abs(S_plus), 1e-10)
 
     def test_median_sum_is_real_for_real_t(self):
-        """For real t and real shadow coefficients, median sum should be approximately real."""
+        """For real t and real shadow coefficients, median is nearly real."""
         from lib.bc_resurgence_zeta_zeros_engine import lateral_borel_sums_shadow
         data = lateral_borel_sums_shadow(13.0, 0.1, epsilon=0.05, r_max=30,
                                           n_quad=500, xi_max=30.0)
@@ -446,11 +446,11 @@ class TestLateralBorelSums:
 
 
 # =====================================================================
-# Section 9: Trans-series at c = 13
+# Section 9: Finite ansatz at c = 13
 # =====================================================================
 
 class TestTransSeriesC13:
-    """Test the trans-series expansion at the self-dual point c=13."""
+    """Test the finite ansatz at the scalar self-dual point c=13."""
 
     @SKIP_NO_MPMATH
     def test_c13_self_dual(self):
@@ -506,17 +506,17 @@ class TestTransSeriesC13:
         good_angle = math.atan2(-A_plus.imag, A_plus.real)
         s_good = 5.0 * cmath.exp(1j * good_angle)
         data = trans_series_evaluate_c13(s_good, sigma=1.0, n_instanton=1)
-        # The exponential e^{-A*s} should be suppressed
+        # The exponential e^{-A*s} is suppressed in this direction.
         exp_factor = abs(cmath.exp(-A_plus * s_good))
         assert exp_factor < 1.0  # exponentially suppressed in this direction
 
 
 # =====================================================================
-# Section 10: Median resummation
+# Section 10: Median Borel diagnostic
 # =====================================================================
 
 class TestMedianResummation:
-    """Test median Borel resummation."""
+    """Test the median Borel diagnostic."""
 
     def test_median_agrees_inside_convergence(self):
         """Inside the convergence radius, median ~ partial sum."""
@@ -529,24 +529,93 @@ class TestMedianResummation:
         # Choose t well inside the convergence radius
         t_val = 0.1 / rho if rho > 0 else 0.1
         data = median_resummation(c_val, t_val, r_max=30, n_quad=500, xi_max=30.0)
-        # Agreement should be reasonable
+        # Finite-window agreement is numerically small in this regime.
         if abs(data['partial_sum']) > 1e-10:
             assert data['agreement_error'] / abs(data['partial_sum']) < 0.1
 
     def test_median_is_real_for_real_t(self):
-        """Median sum should be approximately real for real t."""
+        """Median sum is approximately real for real t."""
         from lib.bc_resurgence_zeta_zeros_engine import median_resummation
         data = median_resummation(13.0, 0.1, r_max=30, n_quad=500, xi_max=30.0)
         assert abs(data['median_sum'].imag) < 1e-3 * max(abs(data['median_sum'].real), 1e-10)
 
 
 # =====================================================================
-# Section 11: Heisenberg — no Stokes phenomena (verification path 4)
+# Section 11: Certification firewalls
+# =====================================================================
+
+class TestCertificationFirewalls:
+    """Prevent finite diagnostics from becoming analytic theorems."""
+
+    def test_scope_separates_exact_and_conditional_data(self):
+        from lib.bc_resurgence_zeta_zeros_engine import (
+            STATUS_CONDITIONAL_ANALYTIC,
+            STATUS_EXACT_SCALAR,
+            diagnostic_scope,
+        )
+        scope = diagnostic_scope()
+        assert scope['exact_scalar_facts']['virasoro_kappa'] == 'kappa(Vir_c)=c/2'
+        assert 'Bernoulli/A-hat scalar genus coefficients' in (
+            scope['exact_genus_facts_not_computed_here']
+        )
+        assert scope['prohibited_promotions']
+        assert STATUS_EXACT_SCALAR == 'exact_scalar_fact'
+        assert STATUS_CONDITIONAL_ANALYTIC == 'conditional_analytic_hypothesis'
+
+    def test_object_and_kernel_firewalls_are_declared(self):
+        from lib.bc_resurgence_zeta_zeros_engine import diagnostic_scope
+        scope = diagnostic_scope()
+        assert scope['object_firewalls']['distinct_objects'] == (
+            'A', 'B(A)', 'A^i', 'A^!', 'Z_ch^der(A)'
+        )
+        assert 'bar-cobar inversion' in scope['object_firewalls']['bar_cobar']
+        assert scope['kernel_constants']['affine_raw_collision'] == 'k*Omega_tr/z'
+        assert scope['kernel_constants']['affine_KZ'] == 'Omega/((k+h^vee)z)'
+        assert scope['kernel_constants']['heisenberg'] == 'k/z'
+        assert scope['kernel_constants']['virasoro'] == '(c/2)/z^3 + 2T/z'
+
+    def test_median_output_has_completion_boundary(self):
+        from lib.bc_resurgence_zeta_zeros_engine import (
+            STATUS_BOREL_DIAGNOSTIC,
+            median_resummation,
+        )
+        data = median_resummation(13.0, 0.1, r_max=20, n_quad=200, xi_max=20.0)
+        assert data['diagnostic_status'] == STATUS_BOREL_DIAGNOSTIC
+        assert data['certifies_nonperturbative_completion'] is False
+        assert data['analytic_continuation_certified'] is False
+
+    @SKIP_NO_MPMATH
+    def test_bridge_output_is_not_zero_reconstruction(self):
+        from lib.bc_resurgence_zeta_zeros_engine import build_resurgent_bridge
+        bridge = build_resurgent_bridge(13.0, n_zeros=2)
+        assert bridge.certifies_zeta_zero_reconstruction is False
+        assert bridge.certifies_all_genus_partition_theorem is False
+        assert bridge.conditional_hypotheses
+
+    @SKIP_NO_MPMATH
+    def test_complementarity_output_is_scalar_verdier_only(self):
+        from lib.bc_resurgence_zeta_zeros_engine import complementarity_stokes_at_zero
+        data = complementarity_stokes_at_zero(1, 13.0)
+        assert data['duality_status'] == 'verdier_scalar_partner_diagnostic'
+        assert data['certifies_koszul_duality'] is False
+        assert data['certifies_bulk_identification'] is False
+
+    @SKIP_NO_MPMATH
+    def test_full_analysis_cannot_promote_diagnostics(self):
+        from lib.bc_resurgence_zeta_zeros_engine import full_bc_resurgence_analysis
+        data = full_bc_resurgence_analysis(13.0, n_zeros=1, r_max=12)
+        assert data['certifies_nonperturbative_completion'] is False
+        assert data['certifies_zeta_zero_reconstruction'] is False
+        assert data['certifies_all_genus_partition_theorem'] is False
+
+
+# =====================================================================
+# Section 12: Heisenberg exact lane
 # =====================================================================
 
 class TestHeisenbergNoStokes:
     """Heisenberg is class G: no Stokes phenomena, exact polynomial.
-    This is the cleanest verification of the entire framework."""
+    This is an exact scalar-lane check."""
 
     def test_heisenberg_tower_terminates(self):
         from lib.bc_resurgence_zeta_zeros_engine import heisenberg_no_stokes
@@ -584,11 +653,11 @@ class TestHeisenbergNoStokes:
 
 
 # =====================================================================
-# Section 12: Bridge equation verification
+# Section 13: Algebraic sheet comparison
 # =====================================================================
 
 class TestBridgeEquation:
-    """Test the bridge equation relating Stokes constants to MC structure."""
+    """Test algebraic sheet data beside zeta residue data."""
 
     @SKIP_NO_MPMATH
     def test_bridge_algebraic_structure(self):
@@ -617,11 +686,11 @@ class TestBridgeEquation:
 
 
 # =====================================================================
-# Section 13: Complementarity at zeta zeros
+# Section 14: Complementarity at zeta zeros
 # =====================================================================
 
 class TestComplementarityAtZetaZeros:
-    """Test Koszul complementarity c -> 26-c at zeta zero poles."""
+    """Test Verdier scalar partner comparison at zeta-zero poles."""
 
     @SKIP_NO_MPMATH
     def test_self_dual_agreement(self):
@@ -633,7 +702,7 @@ class TestComplementarityAtZetaZeros:
 
     @SKIP_NO_MPMATH
     def test_non_self_dual_distinct(self):
-        """For c != 13, A_c and A_{26-c} should differ."""
+        """For c != 13, A_c and A_{26-c} differ in the sampled window."""
         from lib.bc_resurgence_zeta_zeros_engine import complementarity_stokes_at_zero
         data = complementarity_stokes_at_zero(1, 1.0)
         assert abs(data['A_c'] - data['A_c_dual']) > 1e-10
@@ -655,14 +724,14 @@ class TestComplementarityAtZetaZeros:
 
 
 # =====================================================================
-# Section 14: Richardson extrapolation
+# Section 15: Richardson extrapolation
 # =====================================================================
 
 class TestRichardsonExtrapolation:
     """Test Richardson extrapolation of partial sums."""
 
     def test_geometric_series(self):
-        """Richardson should accelerate a geometric series."""
+        """Richardson accelerates this geometric series sample."""
         from lib.bc_resurgence_zeta_zeros_engine import richardson_extrapolation
         # Partial sums of 1/(1-x) = 1 + x + x^2 + ... for x = 0.9
         # At x=0.9, convergence is slow enough for Richardson to help
@@ -673,7 +742,7 @@ class TestRichardsonExtrapolation:
         assert abs(rich - exact) < abs(partial[-1] - exact)
 
     def test_power_law_convergence(self):
-        """Richardson should accelerate a sequence with power-law convergence.
+        """Richardson accelerates this power-law convergence sample.
 
         For a_N = L + c_1/N + c_2/N^2 + ..., Richardson of order k
         eliminates the first k correction terms.
@@ -684,7 +753,7 @@ class TestRichardsonExtrapolation:
         exact = math.pi ** 2 / 6.0
         partial = [sum(1.0 / n ** 2 for n in range(1, N + 1)) for N in range(1, 21)]
         rich = richardson_extrapolation(partial, order=2)
-        # Richardson should be closer than the last partial sum
+        # Richardson is closer than the last partial sum in this sample.
         assert abs(rich - exact) < abs(partial[-1] - exact)
 
     def test_partial_sum_sequence_length(self):
@@ -703,7 +772,7 @@ class TestRichardsonExtrapolation:
 
 
 # =====================================================================
-# Section 15: Borel-Pade approximant
+# Section 16: Borel-Pade approximant
 # =====================================================================
 
 class TestBorelPade:
@@ -722,7 +791,7 @@ class TestBorelPade:
 
 
 # =====================================================================
-# Section 16: Cross-consistency with existing engines
+# Section 17: Cross-consistency with existing engines
 # =====================================================================
 
 class TestCrossConsistency:
@@ -785,7 +854,7 @@ class TestCrossConsistency:
 
 
 # =====================================================================
-# Section 17: Scattering factor F_c properties
+# Section 18: Scattering factor F_c properties
 # =====================================================================
 
 class TestScatteringFactor:
@@ -793,14 +862,14 @@ class TestScatteringFactor:
 
     @SKIP_NO_MPMATH
     def test_Fc_finite_away_from_poles(self):
-        """F_c(s) should be finite away from the poles."""
+        """F_c(s) is finite away from the sampled poles."""
         from lib.bc_resurgence_zeta_zeros_engine import scattering_factor_Fc
         val = scattering_factor_Fc(2.0 + 1.0j, 13.0)
         assert math.isfinite(abs(val))
 
     @SKIP_NO_MPMATH
     def test_Fc_singular_at_zeta_zero_pole(self):
-        """F_c(s) should be large near a pole s_n = (1+rho_n)/2."""
+        """F_c(s) is large near a sampled pole s_n = (1+rho_n)/2."""
         from lib.bc_resurgence_zeta_zeros_engine import scattering_factor_Fc
         import mpmath
         rho_1 = complex(mpmath.zetazero(1))
@@ -808,12 +877,12 @@ class TestScatteringFactor:
         # Evaluate slightly away from the pole
         val_near = scattering_factor_Fc(s_1 + 0.01, 13.0)
         val_far = scattering_factor_Fc(2.0 + 1.0j, 13.0)
-        # Should be significantly larger near the pole
+        # The uncompleted factor is significantly larger near the pole.
         assert abs(val_near) > abs(val_far)
 
 
 # =====================================================================
-# Section 18: Full analysis
+# Section 19: Full analysis
 # =====================================================================
 
 class TestFullAnalysis:
@@ -838,11 +907,11 @@ class TestFullAnalysis:
 
 
 # =====================================================================
-# Section 19: Numerical sanity checks
+# Section 20: Numerical checks
 # =====================================================================
 
 class TestNumericalSanity:
-    """Numerical sanity checks for the entire framework."""
+    """Numerical checks for sampled constants."""
 
     def test_virasoro_rho_at_c13(self):
         """rho(Vir_13) ~ 0.467 (known from shadow radius programme)."""
@@ -865,7 +934,7 @@ class TestNumericalSanity:
         assert abs(data['gamma_n'] - 21.022) < 0.01
 
     def test_shadow_coefficients_finite(self):
-        """All shadow coefficients should be finite."""
+        """All sampled shadow coefficients are finite."""
         from lib.bc_resurgence_zeta_zeros_engine import virasoro_shadow_coefficients
         for c_val in [1.0, 13.0, 25.0]:
             coeffs = virasoro_shadow_coefficients(c_val, 30)
@@ -873,7 +942,7 @@ class TestNumericalSanity:
                 assert math.isfinite(s_r)
 
     def test_borel_transform_entire(self):
-        """Borel transform should be finite for all finite xi (entire function)."""
+        """The finite Borel transform is finite for sampled finite xi."""
         from lib.bc_resurgence_zeta_zeros_engine import shadow_borel_transform
         for xi in [1.0, 5.0, 10.0, 50.0]:
             val = shadow_borel_transform(13.0, xi, r_max=30)
@@ -881,7 +950,7 @@ class TestNumericalSanity:
 
 
 # =====================================================================
-# Section 20: Asymptotic and limiting cases
+# Section 21: Asymptotic and limiting cases
 # =====================================================================
 
 class TestAsymptoticLimits:
@@ -930,7 +999,7 @@ class TestAsymptoticLimits:
 
     @SKIP_NO_MPMATH
     def test_stokes_direction_all_positive(self):
-        """All Stokes directions should be positive (upper half s-plane)."""
+        """All sampled Stokes directions are positive in the upper half-plane."""
         from lib.bc_resurgence_zeta_zeros_engine import stokes_line_map
         data = stokes_line_map(5)
         for sd in data:

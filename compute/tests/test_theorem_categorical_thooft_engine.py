@@ -1,8 +1,9 @@
 r"""Tests for the categorical 't Hooft expansion engine.
 
-Verifies the match between Gaiotto's categorical 't Hooft expansion
-[2411.00760, 2511.19776, 2603.08783] and the monograph's holographic
-modular Koszul datum H(A) = (A, A!, C, r(z), Theta_A, nabla^hol).
+Checks the scalar/descriptor comparison surface between Gaiotto's
+categorical 't Hooft expansion [2411.00760, 2511.19776, 2603.08783]
+and the monograph's holographic modular Koszul datum
+H(A) = (A, A^i, A^!, C, r(z), Theta_A, nabla^hol).
 
 Organization:
   1. Central charge formulas (affine sl_N, W_N, W_N minimal models)
@@ -29,9 +30,14 @@ from math import factorial, gcd
 import pytest
 
 from compute.lib.theorem_categorical_thooft_engine import (
+    BAR_COBAR_OBJECT_FIREWALL,
     BRSTAnomalyMatch,
+    CATEGORICAL_COMPARISON_SCOPE,
     CategoricalThooftData,
     DBraneCategoryData,
+    HOLOGRAPHIC_PACKAGE_ENTRIES,
+    MODULAR_KOSZUL_PRIMARY_PROJECTIONS,
+    OBJECT_BRANCH_STATUS,
     PlanarLimitData,
     ShadowThooftComparison,
     WNMinimalModelShadow,
@@ -52,8 +58,10 @@ from compute.lib.theorem_categorical_thooft_engine import (
     feigin_frenkel_dual_kappa,
     feigin_frenkel_dual_level,
     full_categorical_thooft_verification,
+    heisenberg_kernel_normalization,
     holographic_datum_comparison,
     interface_cs_level,
+    kernel_normalizations_affine,
     planar_limit_affine,
     shadow_thooft_comparison,
     shadow_thooft_comparison_wn,
@@ -63,6 +71,7 @@ from compute.lib.theorem_categorical_thooft_engine import (
     topological_string_genus_g,
     verify_large_n_scaling,
     virasoro_minimal_model_check,
+    virasoro_r_matrix_components,
     wn_central_charge,
     wn_kappa,
     wn_minimal_central_charge,
@@ -101,11 +110,9 @@ class TestCentralChargeFormulas:
             affine_sl_N_central_charge(3, Fraction(-3))
 
     def test_wn_virasoro_from_ds(self):
-        """W_2 = Virasoro: c = 1 - 6/(k+2) at k=1 gives c = -2."""
+        """W_2 DS specialization: c = 1 - 6(k+1)^2/(k+2)."""
         c = wn_central_charge(2, Fraction(1))
-        # c = (2-1) - 2(4-1)(1+2-1)^2/(1+2) = 1 - 6*4/3 = 1 - 8 = -7
-        # Wait: c = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
-        # N=2, k=1: c = 1 - 2*3*(1+2-1)^2/(1+2) = 1 - 6*4/3 = 1 - 8 = -7
+        # N=2, k=1: 1 - 2*3*(1+2-1)^2/(1+2) = 1 - 8 = -7.
         assert c == Fraction(-7)
 
     def test_wn_virasoro_standard(self):
@@ -115,9 +122,9 @@ class TestCentralChargeFormulas:
         assert c == Fraction(7, 10)
 
     def test_wn_w3_central_charge(self):
-        """W_3 at k=1: c = 2 - 3*8*1^2/4 = 2 - 6 = -4."""
+        """W_3 at k=1: c = 2 - 3*8*(1+3-1)^2/(1+3)."""
         c = wn_central_charge(3, Fraction(1))
-        # c = (3-1) - 3*(9-1)*(1+3-1)^2/(1+3) = 2 - 24*9/4 = 2 - 54 = -52
+        # c = 2 - 24*9/4 = 2 - 54 = -52.
         assert c == Fraction(-52)
 
     def test_wn_minimal_coprime_check(self):
@@ -214,18 +221,31 @@ class TestBRSTAnomalyMatching:
     def test_brst_match_wn_virasoro(self):
         """For Virasoro (W_2): kappa + kappa_dual = 13, NOT 0 (AP24)."""
         result = brst_anomaly_match_wn(2, Fraction(10))
-        # Virasoro: kappa(c) + kappa(26-c) = 13
-        # The kappa_anti_symmetric flag should reflect the actual computation
-        # For W_2 at generic k, we need to check the actual sum
+        # Virasoro: kappa(c) + kappa(26-c) = 13.
         c = wn_central_charge(2, Fraction(10))
         k_dual = feigin_frenkel_dual_level(Fraction(10), 2)
         c_dual = wn_central_charge(2, k_dual)
         kap = c / 2
         kap_dual = c_dual / 2
-        # Check whether they sum to 0 for this specific level
-        # (Not necessarily 13 -- that's for the standard parametrization)
         actual_sum = kap + kap_dual
-        assert result.kappa_anti_symmetric == (actual_sum == 0)
+        assert actual_sum == Fraction(13)
+        assert result.kappa_complement == Fraction(13)
+        assert result.kappa_anti_symmetric is False
+        assert result.brst_matches_koszul is False
+        assert result.dual_relation == "constant_complementarity"
+
+    def test_brst_match_wn_w3_is_constant_complement_not_zero(self):
+        """For W_3, the Verdier scalar sum is 250/3, not 0."""
+        result = brst_anomaly_match_wn(3, Fraction(5))
+        h3_minus_1 = Fraction(1, 2) + Fraction(1, 3)
+        central_sum = 2 * (3 - 1) + 4 * 3 * (3 * 3 - 1)
+        expected = h3_minus_1 * central_sum
+
+        assert expected == Fraction(250, 3)
+        assert result.kappa_complement == expected
+        assert result.kappa_anti_symmetric is False
+        assert result.brst_matches_koszul is False
+        assert result.comparison_scope.endswith("not BRST/Koszul anti-symmetry")
 
     def test_brst_anomaly_sweep_affine(self):
         """BRST anomaly vanishes for V_k(sl_N) at all tested (N,k)."""
@@ -578,12 +598,43 @@ class TestInterfaceConstruction:
         """Sphere amplitude match for V_1(sl_3)."""
         data = sphere_amplitude_match(3, Fraction(1))
         assert data["sphere_amplitude_match"] is True
-        assert data["collision_residue_type"] == "Casimir/z"
+        assert data["collision_residue_type"] == "k*Omega_tr/z"
+        assert data["kernel_normalizations"]["trace_form_coefficient"] == 1
+        assert data["kernel_normalizations"]["kz_connection_coefficient"] == Fraction(1, 4)
 
     def test_cs_gauge_group(self):
         """Gauge group is SU(N)."""
         data = interface_cs_level(4, 6, 5)
         assert data["cs_gauge_group"] == "SU(4)"
+
+    def test_affine_kernel_normalizations_are_not_identified(self):
+        """Trace-form residue k*Omega_tr/z is not the KZ kernel."""
+        data = kernel_normalizations_affine(3, Fraction(2))
+
+        assert data["trace_form_formula"] == "k*Omega_tr/z"
+        assert data["trace_form_coefficient"] == Fraction(2)
+        assert data["kz_formula"] == "Omega/((k+h^vee)z)"
+        assert data["kz_connection_coefficient"] == Fraction(1, 5)
+        assert data["dual_coxeter"] == Fraction(3)
+        assert data["same_normalization"] is False
+
+    def test_affine_kz_kernel_undefined_at_critical_level(self):
+        """At k=-h^vee, KZ has a pole but trace-form residue is k."""
+        data = kernel_normalizations_affine(3, Fraction(-3))
+
+        assert data["trace_form_coefficient"] == Fraction(-3)
+        assert data["kz_connection_coefficient"] is None
+        assert data["same_normalization"] is False
+
+    def test_heisenberg_and_virasoro_kernel_constants(self):
+        """The scalar kernels keep their family-specific pole data."""
+        heis = heisenberg_kernel_normalization(Fraction(7, 3))
+        vir = virasoro_r_matrix_components(Fraction(26))
+
+        assert heis["formula"] == "k/z"
+        assert heis["level_coefficient"] == Fraction(7, 3)
+        assert vir["z^-3_scalar"] == Fraction(13)
+        assert vir["z^-1_T"] == Fraction(2)
 
 
 # ============================================================================
@@ -591,7 +642,7 @@ class TestInterfaceConstruction:
 # ============================================================================
 
 class TestHolographicDatum:
-    """Verify all six components of H(A) match Gaiotto's data."""
+    """Verify the seven-entry package and six-projection compatibility surface."""
 
     def test_full_datum_sl2(self):
         """Full holographic datum for V_1(sl_2)."""
@@ -618,6 +669,116 @@ class TestHolographicDatum:
         """nabla^hol is flat (from MC equation)."""
         result = holographic_datum_comparison(4, Fraction(3))
         assert result["connection_flat"] is True
+
+    def test_holographic_package_has_exactly_seven_entries(self):
+        """H(A) has seven entries; the six-count belongs to projections."""
+        result = holographic_datum_comparison(3, Fraction(2))
+        expected_entries = (
+            "A",
+            "A^i",
+            "A^!",
+            "C",
+            "r(z)",
+            "Theta_A",
+            "nabla^hol",
+        )
+
+        assert HOLOGRAPHIC_PACKAGE_ENTRIES == expected_entries
+        assert result["holographic_package_entries"] == expected_entries
+        assert result["holographic_package_entry_count"] == 7
+        assert result["all_seven_descriptors_present"] is True
+        assert result["holographic_package_entry_count"] != 6
+        assert len(set(result["holographic_package_entries"])) == 7
+        assert "A!" not in result["holographic_package_entries"]
+        assert "B(A)" not in result["holographic_package_entries"]
+
+    def test_six_projection_alias_is_not_six_entry_drift(self):
+        """Legacy all_six_match aliases six projections, not H(A)'s arity."""
+        result = holographic_datum_comparison(5, Fraction(3))
+        expected_projections = (
+            "Fact_X(L)",
+            "barB_X(L)",
+            "Theta_L",
+            "L_L",
+            "(V_br, T_br)",
+            "R4_mod(L)",
+        )
+
+        assert MODULAR_KOSZUL_PRIMARY_PROJECTIONS == expected_projections
+        assert result["modular_koszul_primary_projections"] == expected_projections
+        assert result["modular_koszul_primary_projection_count"] == 6
+        assert result["all_six_match"] == result["all_six_primary_projections_match"]
+        assert result["all_six_match"] is True
+        assert result["holographic_package_entry_count"] != (
+            result["modular_koszul_primary_projection_count"]
+        )
+
+    def test_object_firewall_separates_bar_inversion_from_koszul_duality(self):
+        """A, B(A), A^i, A^!, and the derived center stay distinct."""
+        result = holographic_datum_comparison(3, Fraction(2))
+        firewall = result["object_firewall"]
+
+        assert firewall == BAR_COBAR_OBJECT_FIREWALL
+        for object_name in ("A", "B(A)", "A^i", "A^!", "Z_ch^der(A)"):
+            assert object_name in firewall
+        assert "distinct" in firewall
+        assert "Omega(B(A)) = A is inversion, not Koszul duality" in firewall
+        assert result["bar_cobar_inversion"] == "Omega(B(A)) = A"
+        assert "B(A)" not in result["holographic_package_entries"]
+
+    def test_comparison_scope_is_scalar_descriptor_only(self):
+        """The engine exposes scalar/descriptors, not chain reconstruction."""
+        result = holographic_datum_comparison(4, Fraction(3))
+
+        assert result["comparison_scope"] == CATEGORICAL_COMPARISON_SCOPE
+        assert result["categorical_equivalence_claimed"] is False
+        assert result["chain_level_reconstruction"] is False
+        assert result["koszul_dual_coalgebra"].endswith("(descriptor only)")
+        assert isinstance(result["theta_kappa"], Fraction)
+        assert result["collision_residue"] == "k*Omega_tr/z (trace form)"
+        assert result["kernel_normalizations"]["trace_form_formula"] == "k*Omega_tr/z"
+
+    def test_full_verification_retains_holographic_datum_alias(self):
+        """Compatibility aliases remain retained for downstream callers."""
+        result = full_categorical_thooft_verification(3, Fraction(2))
+
+        assert result["holographic_package_match"] is True
+        assert result["holographic_datum_match"] == result["holographic_package_match"]
+
+    def test_holographic_status_does_not_promote_to_equivalence(self):
+        """Positive scalar diagnostics do not assert categorical equivalence."""
+        result = holographic_datum_comparison(3, Fraction(2))
+
+        assert result["all_six_match"] is True
+        assert result["all_six_match_scope"] == "six modular Koszul primary projections only"
+        assert result["strict_ht_assembly_status"] == "conditional"
+        assert result["global_triangle_equivalence"] == "not checked by this compute engine"
+        assert result["line_category_match"] is True
+        assert result["line_category_match_scope"].endswith(
+            "not categorical equivalence"
+        )
+
+    def test_object_branch_status_blocks_dual_bulk_conflation(self):
+        """A^!, A^i, bar-cobar inversion, and Hochschild bulk stay typed."""
+        result = holographic_datum_comparison(3, Fraction(2))
+
+        assert result["object_branch_status"] == OBJECT_BRANCH_STATUS
+        assert "Verdier/continuous-linear dual" in result["koszul_dual_branch"]
+        assert result["derived_center_status"] == (
+            "ChirHoch^*(A,A), the Hochschild bulk object, not A^!"
+        )
+        assert result["object_branch_status"]["Omega(B(A))"] == (
+            "bar-cobar inversion recovering A, not Koszul duality"
+        )
+
+    def test_full_verification_pass_scope_is_not_theorem_status(self):
+        """all_pass means the finite compute checks passed."""
+        result = full_categorical_thooft_verification(3, Fraction(2))
+
+        assert result["all_pass"] is True
+        assert result["all_pass_scope"] == CATEGORICAL_COMPARISON_SCOPE
+        assert result["categorical_equivalence_claimed"] is False
+        assert result["chain_level_reconstruction"] is False
 
 
 # ============================================================================
@@ -653,12 +814,12 @@ class TestComprehensiveSweeps:
     """Full verification sweeps across families."""
 
     def test_full_verification_sl2(self):
-        """Full categorical 't Hooft verification for sl_2."""
+        """Scalar/descriptor 't Hooft verification for sl_2."""
         result = full_categorical_thooft_verification(2, Fraction(1))
         assert result["all_pass"] is True
 
     def test_full_verification_sl3(self):
-        """Full categorical 't Hooft verification for sl_3."""
+        """Scalar/descriptor 't Hooft verification for sl_3."""
         result = full_categorical_thooft_verification(3, Fraction(2))
         assert result["all_pass"] is True
 

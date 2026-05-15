@@ -98,7 +98,7 @@ the passage from the quantum group to its classical shadow.
 Replacing the commutative modular operad $\cM_{\Com}$ by the ribbon
 modular operad $\cM_{\Ass}$ and its Feynman transform $F\!\Ass$
 recovers this ordered structure. The $E_1$ modular Koszul theory is
-not a variant of the commutative theory but its refinement: every
+the ordered refinement of the commutative theory: every
 commutative invariant sits at the bottom of an $E_1$ invariant, and
 the five main theorems A--H admit ordered counterparts
 $\mathrm{A}^{E_1}$--$\mathrm{H}^{E_1}$ whose native objects are the
@@ -186,16 +186,15 @@ deconcatenation coproduct is built on the ordered
 configuration spaces of the curve, and the KZ associator
 $\Phi_{\mathrm{KZ}}$ at degree~$3$ is the monodromy of a
 flat connection on $C_3^{\mathrm{ord}}(\mathbb{P}^1
-\setminus \{0,1,\infty\})$. The passage from the ordered
-bar complex to the symmetric bar complex
-$\BarSig(\cA) = \Barord(\cA)_{\Sigma_n}$ via
-the averaging map $\mathrm{av}$ is a $\Sigma_n$-coinvariant
-projection that discards the braid-group data and retains
-only the scalar shadows. This projection is genuinely lossy
+\setminus \{0,1,\infty\})$. The passage from the ordered bar complex
+to the symmetric bar complex requires a strong-unitary $R$-twisted
+descent datum; in the pole-free case it is the ordinary quotient
+$\BarSig(\cA)=\Barord(\cA)_{\Sigma_n}$. This descent discards the
+braid-group data and retains only the scalar shadows. Where
+$\mathrm{av}_R$ is defined, the projection is genuinely lossy
 \textup{(}Proposition~\textup{\ref{prop:e1-nonsplitting-obstruction})}:
-$\ker(\mathrm{av})$ is controlled by $\mathrm{GRT}_1$ at
-genus~$0$ and by the quasi-modular anomaly $E_2^*$ at
-genus~$1$.
+$\ker(\mathrm{av}_R)$ is controlled by $\mathrm{GRT}_1$ at genus~$0$
+and by the quasi-modular anomaly $E_2^*$ at genus~$1$.
 \end{remark}
 
 \begin{definition}[Feynman transform of the associative modular operad]
@@ -342,7 +341,9 @@ $\operatorname{av}_R$ is then a surjective dg~Lie morphism because the
 target is the descended quotient and the $R$-twisted action commutes
 with $D_{F\!\Ass}$ and ribbon composition. Without the strong-unitary
 descent datum there is only the ordered dg~Lie algebra
-${\gAmod}^{E_1}$; no morphism to $\gAmod$ is asserted.
+${\gAmod}^{E_1}$; no morphism to $\gAmod$ is asserted. Once the
+descent datum is fixed, the subscript is often suppressed and
+$\operatorname{av}$ means $\operatorname{av}_R$.
 \end{definition}
 
 \begin{theorem}[$E_1$ Maurer--Cartan element; \ClaimStatusConditional]
@@ -425,22 +426,27 @@ introduction) is proved in full by the results of this section:
  $\operatorname{av}_R(\Theta^{E_1}) = \Theta$)
  is Theorem~\textup{\ref{thm:e1-mc-element}}, equation
  \eqref{eq:e1-to-einfty-mc}.
-\item Part~(iv) (non-splitting, GRT$_1$-torsor) is
+\item Part~(iv) (MC-compatible lift choices and the
+ GRT$_1$ torsor) is
  Proposition~\textup{\ref{prop:e1-nonsplitting-obstruction}}: the
  linearized Drinfeld associator $[t_{12}, t_{23}]$ lies in
- $\ker(\operatorname{av})$ at degree~$3$ (antisymmetric under
+ $\ker(\operatorname{av}_R)$ at degree~$3$ (antisymmetric under
  $(1 \leftrightarrow 3)$, hence $\Sigma_3$-average zero), and the
  cross-degree differential leaks from $\ker$ to $\operatorname{im}$,
- preventing a sub-dg-Lie splitting.
+ so the canonical degreewise Reynolds splitting is not a chain
+ splitting.
 \end{itemize}
 \end{remark}
 
-\begin{proposition}[$E_1$ non-splitting obstruction; \ClaimStatusProvedHere]
+\begin{proposition}[$E_1$ canonical section obstruction; \ClaimStatusProvedHere]
 \label{prop:e1-nonsplitting-obstruction}
 \index{E1 algebra@$E_1$-algebra!non-splitting obstruction|textbf}
 \index{Grothendieck--Teichmuller group@Grothendieck--Teichm\"uller group!and non-splitting}
 \index{Drinfeld associator!non-splitting obstruction}
-The short exact sequence of dg~Lie algebras
+Assume the strong-unitary $R$-twisted descent datum of
+Definition~\textup{\ref{def:e1-modular-convolution}}, and write
+$\operatorname{av}$ for $\operatorname{av}_R$.  The resulting
+sequence of graded Lie algebras
 \begin{equation}
 \label{eq:e1-nonsplitting-ses}
 0
@@ -453,7 +459,8 @@ The short exact sequence of dg~Lie algebras
 \;\longrightarrow\;
 0
 \end{equation}
-does \emph{not} split as dg~Lie algebras.
+has the following canonical obstruction to being split by the
+degreewise Reynolds section as a dg~Lie sequence.
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Fixed-degree triviality.}
  At each fixed degree~$n$, the inclusion section
@@ -471,8 +478,8 @@ does \emph{not} split as dg~Lie algebras.
  from $\Sigma_n$ to $\Sigma_{n-2}$, leaking from
  $\ker(\operatorname{av}_n)$ into
  $\operatorname{im}(\operatorname{av}_{n-1})$.
- No Lie-algebra section can simultaneously respect
- the fixed-degree splitting and intertwine with~$D$.
+ The canonical Reynolds section therefore cannot simultaneously
+ respect the fixed-degree Lie splitting and intertwine with~$D$.
 \item \emph{Associator representative.}
  At degree~$3$, the linearised Drinfeld associator
  $[\Omega_{12}, \Omega_{23}] \in \operatorname{End}(V^{\otimes 3})$
@@ -483,14 +490,12 @@ does \emph{not} split as dg~Lie algebras.
  receives contributions only from the symmetric products
  $\Omega_{12}\Omega_{23} + \Omega_{23}\Omega_{12}$
  in the full KZ associator.
-\item \emph{$\mathrm{GRT}_1$~torsor.}
- The space of dg~Lie sections of~$\operatorname{av}$
- satisfying the MC equation up to gauge is a torsor for
- $\mathrm{GRT}_1$, the pro-unipotent Grothendieck--Teichm\"uller
- group of Drinfeld. This is the algebraic shadow of
- Etingof--Kazhdan non-uniqueness of quantisation: a splitting
- would canonically reconstruct the quantum group from the
- modular shadow~$\kappa$ alone.
+\item \emph{$\mathrm{GRT}_1$~torsor of MC-compatible lifts.}
+ At degree~$3$, an MC-compatible lift of the symmetric cubic shadow
+ requires a choice of Drinfeld associator.  The set of such
+ associator choices is a $\mathrm{GRT}_1$-torsor.  Thus the kernel
+ contains real ordered data invisible to the scalar modular shadow:
+ a lift cannot be reconstructed from $\kappa$ alone.
 \end{enumerate}
 For Heisenberg \textup{(}$\dim V = 1$\textup{)}:
 $\ker(\operatorname{av}) = 0$ at every degree, the extension
@@ -510,8 +515,8 @@ satisfies
 $D_{ij} \circ \sigma = \sigma|_{\{1,\ldots,n\}\setminus\{j\}}
 \circ D_{ij}$
 only for permutations $\sigma$ fixing both~$i$ and~$j$,
-i.e.\ $\Sigma_{n-2} \subset \Sigma_n$. A
-$\Sigma_n$-invariant endomorphism in $\ker(\operatorname{av}_n)$
+i.e.\ $\Sigma_{n-2} \subset \Sigma_n$. An
+ordered endomorphism in $\ker(\operatorname{av}_n)$
 can map under~$D$ to an endomorphism with nonzero
 $\operatorname{av}_{n-1}$ component. The engine
 \texttt{e1\_non\-split\-ting\_ob\-struc\-tion\_engine.py}
@@ -527,30 +532,29 @@ infinitesimal braid relation
 $[\Omega_{12}, \Omega_{13} + \Omega_{23}] = 0$ ensures that the
 commutator is not an artifact of the representation.
 
-Part~(iv) follows from Drinfeld's theorem on the
-$\mathrm{GRT}_1$-torsor structure of associators:
-the space of Drinfeld associators is a $\mathrm{GRT}_1$-torsor
-(Drinfeld~\cite{Drinfeld90}), and each associator determines a
-splitting of the MC equation at degree~$3$ up to gauge equivalence.
-The Etingof--Kazhdan quantisation theorem~\cite{EK96} guarantees
-that the space of quantisations of any Lie bialgebra is a
-$\mathrm{GRT}_1$-torsor, which through the $E_1$ primacy lens
-is exactly the fibre of liftings of $\kappa$ to a full $E_1$
-MC element.
+Part~(iv) is Drinfeld's theorem that the set of associators is a
+$\mathrm{GRT}_1$-torsor \cite{Drinfeld90}.  The degree-$3$ KZ
+component of $\Theta^{E_1}_\cA$ is controlled by such an associator;
+changing the associator changes the ordered MC lift while leaving the
+symmetric scalar shadow fixed.  Etingof--Kazhdan quantisation
+\cite{EK96} gives the same torsor for quantisation choices of a fixed
+Lie bialgebra, which is the representation-theoretic form of the
+same ordered lift ambiguity.
 \end{proof}
 
 
-\begin{proposition}[$E_1$ non-splitting at genus~$1$: quasi-modular obstruction; \ClaimStatusProvedHere]
+\begin{proposition}[$E_1$ genus-one modular-section obstruction; \ClaimStatusProvedHere]
 \label{prop:e1-nonsplitting-genus1}
 \index{E1 algebra@$E_1$-algebra!non-splitting obstruction!genus 1}
 \index{quasi-modular forms!non-splitting obstruction}
 \index{Eisenstein series!$E_2$ and non-splitting}
-The short exact sequence~\eqref{eq:e1-nonsplitting-ses} restricted to
-genus~$1$ does not split as dg~Lie algebras. The three genus-$0$
+In the holomorphic ordered elliptic model, the genus-$1$ scalar
+modular descent has no holomorphic section compatible with the
+standard modular transformation law.  The three genus-$0$ ordered
 obstructions of
-Proposition~\textup{\ref{prop:e1-nonsplitting-obstruction}}
-persist, and a fourth obstruction arises from the quasi-modular
-anomaly of the Eisenstein series~$E_2$.
+Proposition~\textup{\ref{prop:e1-nonsplitting-obstruction}} persist,
+and the elliptic fibre contributes an independent obstruction: the
+quasi-modular anomaly of~$E_2$.
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Persistence of genus-$0$ obstructions.}
  The cross-degree obstruction (part~\textup{(ii)} of
@@ -570,9 +574,8 @@ anomaly of the Eisenstein series~$E_2$.
  The self-energy regularisation produces the Eisenstein
  series~$E_2(\tau)$
  (Theorem~\textup{\ref{thm:eta-properties-genus1}}).
- The averaging map
- $\operatorname{av}\colon {\gAmod}^{E_1}(1,1) \to \gAmod(1,1)$
- performs the non-holomorphic completion
+ Modular descent of the scalar genus-$1$ amplitude replaces the
+ holomorphic quasi-modular form by its almost-holomorphic completion
  \[
  E_2(\tau)
  \;\longmapsto\;
@@ -581,13 +584,14 @@ anomaly of the Eisenstein series~$E_2$.
  E_2(\tau) - \frac{3}{\pi\,\operatorname{Im}(\tau)},
  \]
  the unique almost-holomorphic modular form of weight~$2$ and
- depth~$1$ on $\operatorname{SL}_2(\mathbb{Z})$. A section
- $s\colon \gAmod(1,1) \to {\gAmod}^{E_1}(1,1)$ of
- $\operatorname{av}$ would lift $\widehat{E}_2$ back to a
- holomorphic object on the $E_1$ side; the non-holomorphic
- correction $-3/(\pi\,\operatorname{Im}(\tau))$ has no preimage
- in the holomorphic $E_1$ convolution Lie algebra, so no such
- section exists.
+ depth~$1$ on $\operatorname{SL}_2(\mathbb{Z})$.  Since
+ $\Sigma_1$ is trivial, ordinary degree-one averaging is the
+ identity; the completion is imposed by modularity in~$\tau$, not by
+ the coinvariant quotient.  A holomorphic section of the modular
+ scalar theory would lift $\widehat{E}_2$ back to a holomorphic
+ object on the ordered side, but the term
+ $-3/(\pi\,\operatorname{Im}(\tau))$ has no preimage in the
+ holomorphic $E_1$ convolution algebra.
 \item \emph{Independence from the genus-$0$ obstructions.}
  The quasi-modular obstruction is visible already at degree~$1$
  (genus~$1$, one marked point), where the genus-$0$ obstructions
@@ -625,9 +629,10 @@ arises from the $\tau$-periodicity defect of
 $\vartheta_1'/\vartheta_1$ (the shift
 $(\vartheta_1'/\vartheta_1)(z + \tau) =
 (\vartheta_1'/\vartheta_1)(z) - 2\pi i$, cf.\
-Theorem~\ref{thm:eta-properties-genus1}): averaging over the
-fundamental domain of $\operatorname{SL}_2(\mathbb{Z})$ absorbs this
-defect into the $\operatorname{Im}(\tau)$-dependent correction.
+Theorem~\ref{thm:eta-properties-genus1}): imposing
+$\operatorname{SL}_2(\mathbb{Z})$ covariance on the scalar genus-$1$
+amplitude absorbs this defect into the
+$\operatorname{Im}(\tau)$-dependent correction.
 Since $1/\operatorname{Im}(\tau)$ is not holomorphic in~$\tau$, it
 cannot lie in the image of any holomorphic section.
 
@@ -671,15 +676,15 @@ $\eta'(\tau)/\eta(\tau) = (\pi i/12)\,E_2(\tau)$
  \;=\;
  -\frac{\pi i\,\kappa}{6}\,E_2(\tau).
 \]
-The genus-$1$ amplitude is therefore controlled by the
-quasi-modular Eisenstein series~$E_2$, the unique holomorphic
-modular form of weight~$2$ on
-$\operatorname{SL}_2(\mathbb{Z})$; except that it is not
-modular. This failure of modularity is the genus-$1$ instance
+The genus-$1$ amplitude is therefore controlled by the holomorphic
+quasi-modular Eisenstein series~$E_2$.  There is no non-zero
+holomorphic modular form of weight~$2$ on
+$\operatorname{SL}_2(\mathbb{Z})$.  The modular completion of the
+genus-$1$ amplitude is almost holomorphic, and its
+$\bar{\tau}$-derivative is proportional to
+$\kappa/(\operatorname{Im}\tau)^2$.  This is the genus-$1$ instance
 of the Bershadsky--Cecotti--Ooguri--Vafa holomorphic anomaly
-equation~\cite{BCOV93}: the genus-$1$ HAE reads
-$\partial_{\bar{\tau}} F_1 \neq 0$, with the anomaly
-proportional to $\kappa/(\operatorname{Im}\tau)^2$.
+equation~\cite{BCOV93}.
 The BCOV equation at higher genus
 \textup{(}Proposition~\ref{prop:bcov-mc-projection}\textup{)}
 is the MC projection of $D\Theta + \frac{1}{2}[\Theta,\Theta] = 0$;
@@ -695,9 +700,7 @@ is built from the meromorphic propagator
 $\vartheta_1'/\vartheta_1$ and the holomorphic modular forms
 $E_4, E_6, \ldots$; the series $E_2(\tau)$ enters through the
 self-energy regularisation of the genus-$1$ propagator.
-The averaging map
-$\operatorname{av}\colon {\gAmod}^{E_1}(1,n) \to \gAmod(1,n)$
-replaces $E_2$ by
+Scalar modular descent replaces $E_2$ by
 \[
  \widehat{E}_2(\tau)
  \;=\;
@@ -712,8 +715,9 @@ the fundamental domain converts this shift into the
 $\operatorname{Im}(\tau)$-dependent term. Since
 $1/\operatorname{Im}(\tau)$ is not holomorphic in~$\tau$,
 $\widehat{E}_2$ has no preimage in the holomorphic $E_1$
-convolution algebra, and no section of $\operatorname{av}$
-exists.
+convolution algebra.  Hence the scalar genus-$1$ modular theory has
+no holomorphic section.  This is independent of the degreewise
+$\Sigma_n$-coinvariant map, which is the identity at $n=1$.
 
 \emph{(c) Information loss and degree-$1$ independence.}
 The passage $E_2 \mapsto \widehat{E}_2$ destroys information.
@@ -725,10 +729,9 @@ is defined. In physical terms, the modular shadow retains the
 almost-holomorphic completion $\widehat{E}_2$ but loses the
 holomorphic anomaly that distinguishes $E_2$ from a true
 modular form. The lost datum is precisely the obstruction to
-splitting: the non-holomorphic correction generated by
-$\operatorname{av}$ has no preimage on the $E_1$ side, so
-the modular shadow cannot detect the mechanism that prevents
-the section from existing.
+holomorphic modular section: the non-holomorphic correction imposed
+by modular descent has no preimage on the $E_1$ side, so the modular
+shadow cannot detect the mechanism that prevents such a section.
 
 This information loss is visible already at degree~$1$.
 At $(g,n) = (1,1)$, the symmetric group $\Sigma_1$ is trivial:
@@ -742,37 +745,39 @@ not in the degree direction
 \textup{(}dependence on~$n$\textup{)}.
 Degree~$1$ is therefore the cleanest possible witness to the
 independence of the genus-$1$ obstruction from the genus-$0$
-obstructions: every genus-$0$ mechanism is invisible, yet
-the non-splitting survives. The physical content is that the
-conformal anomaly \textup{(}controlled by~$\kappa$\textup{)} is
-a genuinely genus-$1$ phenomenon, not a shadow of any
-combinatorial structure at genus~$0$.
+obstructions: every genus-$0$ mechanism is invisible, yet the
+modular-section obstruction survives. The physical content is that
+the conformal anomaly \textup{(}controlled by~$\kappa$\textup{)} is a
+genuinely genus-$1$ phenomenon, not a shadow of any combinatorial
+structure at genus~$0$.
 
-The strength of the obstruction is proportional to~$\kappa$:
+The strength of the quasi-modular obstruction is proportional to~$\kappa$:
 at $\kappa = 0$ \textup{(}the uncurved case\textup{)}, $F_1 = 0$
-and both the genus-$0$ and genus-$1$ obstructions survive through
-the $\mathrm{GRT}_1$-torsor, but the quasi-modular channel closes.
+and the quasi-modular channel closes, while the genus-$0$
+associator and cross-degree obstructions may still survive through
+the $\mathrm{GRT}_1$ torsor.
 For Heisenberg $\cH_\kappa$ at $\kappa \neq 0$
 \textup{(}$\kappa(\cH_\kappa) = \kappa$, landscape
-census~\textup{(}Chapter~\textup{\ref{ch:landscape-census}}\textup{)}\textup{)}, all four
-obstructions are simultaneously active.
+census~\textup{(}Chapter~\textup{\ref{ch:landscape-census}}\textup{)}\textup{)}, the genus-$1$
+quasi-modular obstruction is active, while the genus-$0$ associator
+obstruction is absent because the Heisenberg binary residue is scalar.
 \end{remark}
 
-\begin{conjecture}[$E_1$ non-splitting at genus~$2$: seven stable-graph
+\begin{conjecture}[$E_1$ genus-two modular-section obstruction: seven stable-graph
 obstruction classes; \ClaimStatusConjectured]
 \label{conj:e1-nonsplitting-genus2}
 \index{E1 algebra@$E_1$-algebra!non-splitting obstruction!genus 2}
 \index{stable graphs!genus-2 non-splitting obstruction}
-The short exact sequence~\eqref{eq:e1-nonsplitting-ses} restricted to
-genus~$2$ does not split as dg~Lie algebras. The four genus-$1$
-obstructions of
+In the holomorphic ordered genus-$2$ model, a scalar Siegel-modular
+descent section should be obstructed by seven stable-graph classes.
+The genus-$0$ and genus-$1$ obstruction mechanisms of
 Proposition~\textup{\ref{prop:e1-nonsplitting-genus1}}
 persist, and the seven stable graphs
 $\Gamma_\mathrm{A}, \ldots, \Gamma_\mathrm{G}$ of
 $\overline{\mathcal{M}}_{2,0}$
 \textup{(}Figure~\textup{\ref{fig:genus2-stable-graphs}};
 Computation~\textup{\ref{comp:genus2-multichannel-catalogue}}\textup{)}
-produce seven new obstruction classes
+are expected to produce seven new obstruction classes
 $[\omega_\Gamma] \in \operatorname{Ext}^1_{\mathrm{dg\,Lie}}$,
 one per graph, organized as follows.
 \begin{enumerate}[label=\textup{(\roman*)}]
@@ -1140,12 +1145,12 @@ with~(ii): $\operatorname{av}_{R,\cA}(\Theta^{E_1}_\cA) =
 f^*_{\mathrm{mod}}(\operatorname{av}_{R,\cB}(\Theta^{E_1}_\cB)) =
 f^*_{\mathrm{mod}}(\Theta_\cB) = \Theta_\cA$, recovering
 Theorem~\textup{\ref{thm:e1-mc-element}} naturally in $f$.
-\emph{(iv).} For a hypothetical
+\emph{(iv).} Suppose a functor
 $\mathrm{Av}\colon \ChirAlg^{\Eone,\mathrm{cyc},R}_X \to
-\ChirAlg^{\Einf,\mathrm{cyc}}_X$ to realise $\operatorname{av}_{R,\cA}$
+\ChirAlg^{\Einf,\mathrm{cyc}}_X$ realises $\operatorname{av}_{R,\cA}$
 on convolution algebras as
-$\fg^{E_1}_\cA \to \fg^{\mathrm{mod}}_{\mathrm{Av}(\cA)}$, we
-would need $\fg^{\mathrm{mod}}_{\mathrm{Av}(\cA)} =
+$\fg^{E_1}_\cA \to \fg^{\mathrm{mod}}_{\mathrm{Av}(\cA)}$. Then
+$\fg^{\mathrm{mod}}_{\mathrm{Av}(\cA)} =
 \fg^{\mathrm{mod}}_\cA$ as dg~Lie algebras, hence
 $\operatorname{End}_{\mathrm{Av}(\cA)}(n) =
 \operatorname{End}_\cA(n)$ as $\Sigma_n$-equivariant
@@ -1256,14 +1261,14 @@ functoriality]
 \index{averaging map!cross-volume functoriality}
 \index{cross-volume bridge!averaging functoriality}
 \index{averaging map!cross-volume functoriality scope}
-The on-the-nose square of
+The chain-level square of
 Theorem~\textup{\ref{thm:av-functoriality}}~\textup{(ii)} is the
-Vol~I shadow of two cross-volume compatibilities.
+Vol~I form of two cross-volume compatibilities.
 \emph{(a) Vol~II bulk-to-boundary commutation
 \textup{(}Vol~II Remark~\textup{\ref*{V2-rem:bulk-bdry-vol1-averaging}}
 of \texttt{sc\_chtop\_heptagon.tex}\textup{)}\textup{:}}
 the boundary restriction $\iota^*\colon \HTQFT_{X\times\R_{\geq 0}}
-\to \mathrm{ChirAlg}_X$ commutes with $\operatorname{av}$ on
+\to \mathrm{ChirAlg}_X$ commutes with $\operatorname{av}_R$ on
 the four-class fingerprint $\{\mathbf{G},\mathbf{L},\mathbf{C},
 \mathbf{M}\}$. Theorem~\textup{\ref{thm:av-functoriality}}~%
 \textup{(ii)} provides the Vol~I-internal naturality witness
@@ -1287,13 +1292,12 @@ homology over a closed $(d-1)$-cycle $\Sigma_{d-1}$ followed by
 restriction to a reference curve $C \subset \CY_d$, producing an
 $E_1$-chiral algebra on the curve at $d \geq 3$. The composite
 $\Phi_d\colon \mathrm{CY}_d \to \ChirAlg^{\Eone}_C$ is an
-object-level construction \textup{(}Pattern~$273$, not
-established as functorial in CY morphisms beyond the named
-defect-bimodule cases\textup{)}; under the Vol~III hypothesis
+object-level construction, not yet functorial in CY morphisms beyond
+the named defect-bimodule cases; under the Vol~III hypothesis
 that $\Phi_d$ does extend to a functor on a sub-$2$-category of
 shifted-Lagrangian correspondences, Theorem~\textup{\ref{thm:av-functoriality}}
 guarantees that the CY-internal averaging
-$\operatorname{av}_{\Phi_d(X)}$ is natural in those
+$\operatorname{av}_{R,\Phi_d(X)}$ is natural in those
 correspondences. The Vol~III claim therefore reduces to the
 established Vol~I 2-naturality plus the Vol~III object-level
 two-stage data $(\PhiFA_d, \SpCh_{\Sigma_{d-1}, C})$, with no
@@ -1301,12 +1305,12 @@ further functoriality input required. A single CY$_d$ category
 produces a family of chiral shadows indexed by $(\Sigma_{d-1}, C)$;
 the 2-naturality discipline applies separately on each member of
 the family.
-\emph{(c) Pattern~$292$ cross-volume scope honoured.}
+\emph{(c) Cross-volume scope.}
 The non-existence of a global functor
-$\mathrm{Av}\colon \ChirAlg^{\Eone,\mathrm{cyc}}_X \to
+$\mathrm{Av}\colon \ChirAlg^{\Eone,\mathrm{cyc},R}_X \to
 \ChirAlg^{\Einf,\mathrm{cyc}}_X$ \textup{(}part~\textup{(iv)} of
 Theorem~\textup{\ref{thm:av-functoriality}}\textup{)} forbids
-any cross-volume reading of $\operatorname{av}$ as a symmetrisation
+any cross-volume reading of $\operatorname{av}_R$ as a symmetrisation
 of chiral algebras. The correct cross-volume reading is the
 2-natural transformation between two convolution-algebra
 2-functors fixed at each algebra, plus the bulk-to-boundary
@@ -2652,15 +2656,17 @@ they differ in pole orders, target spaces, and normalisation.
 \item \emph{Collision residue}
  $r^{\mathrm{coll}}_\cA(z)
  = \operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)
- \in \cA^!\,\widehat\otimes\,\cA^!$:
+ \in \cA^i\,\widehat\otimes\,\cA^i$:
  the bar-theoretic $r$-matrix, extracted by residue along the
  collision divisor using the $d\log(z_1-z_2)$ measure.
  Because $d\log$ absorbs one power of $(z_1-z_2)$, every pole order
  drops by one relative to the Laplace kernel.
  For bosonic algebras, only odd-order poles survive
  (even-order OPE poles descend to odd-order residues).
- The target space is $\cA^!\otimes\cA^!$: passage to
- the Koszul dual is part of the construction.
+ The target space is the bar-dual coalgebra tensor square
+ $\cA^i\otimes\cA^i$; passage to
+ $\cA^!:=D_{\Ran}(\cA^i)$ is a later Verdier operation and is not part
+ of this collision-residue extraction.
  \begin{center}
  \renewcommand{\arraystretch}{1.1}
  \begin{tabular}{ll}
@@ -2683,7 +2689,7 @@ they differ in pole orders, target spaces, and normalisation.
 \item \emph{Pre-dualisation form}
  $r^{\mathrm{pre}}_\cA(z) \in \cA\otimes\cA$:
  the collision residue computed in $\cA\otimes\cA$, before
- applying the Koszul pairing to pass one or both factors to~$\cA^!$.
+ applying the bar pairing to pass one or both factors to~$\cA^i$.
  Pole orders are identical to~\textup{(b)};
  the target space and normalisation differ
  \textup{(}the Koszul pairing absorbs a scalar factor\textup{)}.
@@ -2715,7 +2721,8 @@ The three are connected by two operations.
  $r^{\mathrm{pre}}(z) \;\xmapsto{\;\mathrm{id}\otimes\kappa\;}
  r^{\mathrm{coll}}(z)$.
  Same pole structure, different target space
- ($\cA\otimes\cA \to \cA^!\otimes\cA^!$).
+ ($\cA\otimes\cA \to \cA^i\otimes\cA^i$); Verdier duality sends
+ $\cA^i$ to $\cA^!$ only after the Ran finite-type hypotheses hold.
 \end{itemize}
 The archetype table
 \textup{(}Example~\textup{\ref{ex:e1-shadow-archetypes})} lists the
@@ -2878,6 +2885,9 @@ ordered Maurer--Cartan element.
 A cyclic $E_1$-chiral algebra $\cA$ belongs to the
 \emph{strict ordered Mittag--Leffler modular tower} if:
 \begin{enumerate}[label=\textup{(O\arabic*)}]
+\item each finite ordered genus stage is a coaugmented conilpotent
+ $F\!\Ass$-coalgebra, and the inverse system is complete for the
+ coaugmentation/finite-window topology;
 \item the $F\!\Ass$ graph differential and the vertex bar
 differential assemble to a square-zero total differential on every
 finite ordered genus stage;
@@ -2900,8 +2910,8 @@ Mittag--Leffler modular tower. The genus-$g$ ordered
 bar complex ${\Barch}^{\mathrm{ord}}(\cA)(g,n)$ is an
 $F\!\Ass$-coalgebra
 \textup{(}Definition~\textup{\ref{def:feynman-transform-ass}})
-with differential satisfying $D^2 = 0$.
-The bar and cobar functors at genus~$g$ form an adjunction
+with continuous differential satisfying $D^2 = 0$.
+The completed bar and cobar functors at genus~$g$ form an adjunction
 \[
 \Cobar^{(g)}
 \;\dashv\;
@@ -2918,10 +2928,12 @@ its genus-$g$ coefficient records the ordered degree-$2$ correction on
 this bar-level surface. Interpreting this series as a genuine
 higher-genus line-side modular $R$-matrix requires extra Yangian input
 not proved here.
-The coinvariant projection
-$F\!\Ass/\Sigma_n \xrightarrow{\sim} F\!\Com$
-\textup{(}Theorem~\textup{\ref{thm:fcom-coinvariant-fass}}\textup{)}
-recovers Theorem~A from Theorem~$\mathrm{A}^{E_1}$.
+The symmetric Theorem~A is recovered from Theorem~$\mathrm{A}^{E_1}$
+only after a compatible strong-unitary $R$-twisted descent datum
+identifies the ordered coinvariant quotient with the symmetric bar
+coalgebra. Without that descent datum the theorem remains an ordered
+$F\!\Ass$ adjunction and makes no assertion in the symmetric modular
+convolution algebra.
 \end{theorem}
 
 \begin{proof}
@@ -2935,9 +2947,11 @@ $\cM_\Ass$. The adjunction follows by the same argument as in
 the $E_\infty$ case
 (Theorem~\ref{thm:bar-cobar-adjunction}),
 replacing the commutative modular operad by $\cM_\Ass$:
-the cobar construction $\Cobar^{(g)}$ is defined as the tensor
-algebra over $F\!\Ass$ with differential dual to the coalgebra
-structure.
+the cobar construction $\Cobar^{(g)}$ is defined as the completed
+tensor algebra over $F\!\Ass$ with differential dual to the coalgebra
+structure. Conilpotence at finite stage and continuity in the
+inverse-limit topology are exactly the convergence hypotheses in
+Definition~\ref{def:strict-ordered-ml-modular-tower}.
 
 The formal ordered degree-$2$ shadow package: at each genus~$g$, the
 opposite-duality identification
@@ -2945,8 +2959,8 @@ ${\Barch}^{\mathrm{ord}}(\cA^{\op}) \cong
 {\Barch}^{\mathrm{ord}}(\cA)^{\cop}$
 is encoded at the degree-$2$ shadow level by
 $R^{E_1,\mathrm{bin}}(z;\hbar)$ restricted to genus
-$\leq g$. This is the $E_1$ analogue of Verdier intertwining on the
-ordered bar surface.
+$\leq g$. This is opposite-coalgebra duality on the ordered surface,
+not Verdier duality on $\Ran(X)$.
 \end{proof}
 
 \begin{theorem}[Theorem~$\mathrm{B}^{E_1}$ at all genera: ordered bar--cobar inversion; \ClaimStatusConditional]
@@ -2958,20 +2972,29 @@ On the strict ordered $E_1$ Koszul locus, the counit
 \;\xrightarrow{\;\sim\;}\;
 \cA
 \]
-is a quasi-isomorphism at every genus~$g$, and the
-$E_1$ Koszul dual $\cA^{!,E_1}$ is an $E_1$-chiral algebra
-at all genera.
+is a quasi-isomorphism at every genus~$g$ in the completed
+inverse-limit topology. This is bar--cobar inversion: it recovers
+$\cA$ from its own ordered bar coalgebra. The ordered line-side dual
+is obtained by the completed linear/cobar dual of
+${\Barch}^{\mathrm{ord}}(\cA)$; it becomes the Verdier--Koszul dual
+$\cA^!$ only after passage to the unordered Ran-space bar and Verdier
+duality.
 \end{theorem}
 
 \begin{proof}
-PBW-completeness transfers from genus~$0$ to genus~$g$ via the
-MC perturbation lemma: the genus-$g$ differential is a perturbation
-of the genus-$0$ differential by curvature $\kappa(\cA) \cdot \omega_g$,
-and this perturbation preserves the PBW filtration (the curvature is
-in the center of the algebra). The inversion theorem for perturbed
-complexes (the filtered quasi-isomorphism criterion of
-Theorem~\ref{thm:bar-cobar-inversion-qi}) then gives the
-result at each genus.
+At every finite stage the ordered bar coalgebra is conilpotent by
+Definition~\ref{def:strict-ordered-ml-modular-tower}; hence the
+algebraic cobar sums terminate on each finite word. The genus
+perturbation is filtration-continuous and the cones form a
+Mittag--Leffler tower, so
+Proposition~\ref{prop:inverse-limit-differential-continuity} gives a
+well-defined completed cobar differential. On the associated graded
+for the finite-window filtration the counit is the genus-$0$ PBW
+Koszul counit, hence a quasi-isomorphism by
+Theorem~\ref{thm:bar-cobar-inversion-qi}. The filtered
+quasi-isomorphism criterion lifts this to each finite stage, and the
+Mittag--Leffler condition passes the quasi-isomorphism to the inverse
+limit. Verdier duality is not used in this inversion.
 \end{proof}
 
 \begin{theorem}[Theorem~$\mathrm{C}^{E_1}$ at all genera: ordered complementarity; \ClaimStatusConditional]
@@ -2993,12 +3016,14 @@ is the genus-$g$, degree-$n$ ordered partition function and
 $Z^{E_1}(\cA)$ is the $E_1$ center \textup{(}the space of
 $R$-matrix-equivariant elements\textup{)}.
 
-The scalar complementarity identity
-$\kappa(\cA) + \kappa(\cA^!) = 0$ for KM/free fields
-\textup{(}$\kappa(\cA) + \kappa(\cA^!) = \varrho \cdot K$ for $W$-algebras,
-Theorem~\textup{\ref{thm:modular-characteristic})} is
-unchanged; the ordered refinement enriches it with
-$R$-matrix-equivariance on the ambient cohomology.
+The scalar complementarity identity is the family-dependent
+Theorem~C shadow obtained after symmetric descent and Verdier duality,
+not a universal vanishing statement: on the classical
+$\mathsf{G}/\mathsf{L}/\mathsf{C}/\mathsf{M}$ rows the constants are
+$0,13,250/3,98/3$, with the Mukai-enhanced K3 row contributing the
+separate value~$8$. The ordered refinement keeps the
+$R$-matrix-equivariant cohomology class whose scalar image gives that
+number.
 \end{theorem}
 
 \begin{proof}
@@ -3101,23 +3126,32 @@ C, \KK_\cA^{\mathrm{bi}}(M)
 \bigr),
 \]
 where $C = {\Barch}^{\mathrm{ord}}(\cA)$ and the genus-$g$ twisted
-differential uses the curvature $\kappa(\cA) \cdot \omega_g$.
-The $\Sigma_n$-coinvariant of the ordered chiral Hochschild complex
-recovers the symmetric chiral Hochschild complex of Theorem~H\@.
+differential is the continuous ordered genus perturbation supplied by
+the strict tower. If a compatible strong-unitary $R$-twisted descent
+datum is fixed, the $R$-twisted $\Sigma_n$-coinvariant of the ordered
+chiral Hochschild complex recovers the symmetric chiral Hochschild
+complex of Theorem~H\@.
 \end{theorem}
 
 \begin{proof}
-The genus-$g$ extension of the chiral Hochschild--coHochschild dictionary
-(the genus-$0$ ordered chiral Hochschild theorem) follows by the same modular
-perturbation argument as
-Theorem~\ref{thm:e1-theorem-B-modular}: the genus-$g$
-perturbation preserves the bimodule-bicomodule equivalence.
+The genus-$0$ ordered Hochschild/coHochschild comparison is
+Theorem~\ref{thm:ordered-HH-coHH-homology}. The strict ordered tower
+makes the genus-$g$ differential a continuous finite-window
+perturbation of that comparison; the same associated-graded argument
+used in Theorem~\ref{thm:e1-theorem-B-modular} preserves the
+bimodule/bicomodule equivalence at every finite stage and then passes
+to the Mittag--Leffler inverse limit. Under strong-unitary
+$R$-descent, finite-group coinvariants are exact in characteristic~$0$,
+so the descended complex is the symmetric chiral Hochschild complex.
+The concentration in degrees $\{0,1,2\}$ is the ordered
+Orlik--Solomon theorem
+\textup{(}Theorem~\ref{thm:hochschild-concentration-E1}\textup{)}
+followed by this exact descent.
 \end{proof}
 
-\begin{remark}[Resolution of the ordered associative modular
-Maurer--Cartan theorem]
-\label{rem:conj-modular-resolved}
-\index{conj:modular!resolved}
+\begin{remark}[Associative modular Maurer--Cartan surface]
+\label{rem:associative-modular-mc-surface}
+\index{associative modular Maurer--Cartan surface}
 Theorems~\textup{\ref{thm:e1-theorem-A-modular}}--\textup{%
 \ref{thm:e1-theorem-H-modular}} establish the associative modular
 MC theory asked for by
@@ -3125,18 +3159,18 @@ Theorem~\textup{\ref{thm:ordered-associative-modular-mc}}: the $E_1$ deformation
 is ${\gAmod}^{E_1}$
 \textup{(}Definition~\textup{\ref{def:e1-modular-convolution}}),
 and the canonical MC element is $\Theta_\cA^{E_1} := D_\cA^{E_1}
-- \dzero$. The ``ordered cyclic compactification'' sought in the
-proof-obligations remark is exactly the Feynman transform $F\!\Ass$
-of the ribbon modular operad
+- \dzero$. The ordered cyclic compactification is the Feynman
+transform $F\!\Ass$ of the ribbon modular operad
 \textup{(}Definition~\textup{\ref{def:feynman-transform-ass}}).
 \end{remark}
 
 \begin{remark}[Symmetric--ordered comparison table]
 \label{rem:symmetric-ordered-comparison}
 \index{five main theorems!symmetric-ordered comparison|textbf}
-The following table summarises the five theorems and their ordered
-counterparts. Each symmetric theorem is the
-$\Sigma_n$-coinvariant of the corresponding ordered theorem.
+The five symmetric theorems and their ordered counterparts have the
+following surfaces. A symmetric theorem is the $R$-twisted
+$\Sigma_n$-coinvariant of the corresponding ordered theorem only after
+the required descent datum has been fixed.
 
 \medskip
 \begin{center}
@@ -3638,19 +3672,13 @@ $\Theta_\cA^{E_1} \in {\gAmod}^{E_1}$ of
 Theorem~\ref{thm:e1-mc-element} is the bar-side input that the
 Vol~II universal-holography theorem
 \textup{(}Vol~II \texttt{thm:uch-main}\textup{)} consumes after
-$\Sigma_n$-coinvariant projection. The bridge is recorded here
-so that downstream Vol~II uses are traceable to the present
-chapter's Theorem~\ref{thm:e1-mc-element} and
-Proposition~\ref{prop:e1-nonsplitting-obstruction}, and to fix
-the // conformance of the cross-volume reading.
+$R$-twisted $\Sigma_n$-coinvariant projection. Its Vol~II use factors
+through Theorem~\ref{thm:e1-mc-element} and
+Proposition~\ref{prop:e1-nonsplitting-obstruction}.
 
-\begin{remark}[Three-step bridge]
+\begin{remark}[Ordered-to-holographic bridge]
 \label{rem:e1-bridge-three-step}
 \index{cross-volume bridge!three steps}
-The cross-volume passage proceeds in three steps, each of
-which is a theorem (not a definition) inside its host volume.
-
-\emph{Step 1 \textup{(}Vol~I, this chapter\textup{)}.}
 Theorem~\ref{thm:e1-mc-element} produces the ordered MC
 element $\Theta_\cA^{E_1}$ on the modular $\Eone$ convolution
 algebra ${\gAmod}^{E_1}$ built from the associative Feynman
@@ -3658,14 +3686,13 @@ transform $F\!\Ass$
 (Definition~\ref{def:feynman-transform-ass}).
 Proposition~\ref{prop:e1-nonsplitting-obstruction} pins down
 the precise content lost by the symmetric image
-$\operatorname{av}(\Theta_\cA^{E_1}) = \Theta_\cA$:
+$\operatorname{av}_R(\Theta_\cA^{E_1}) = \Theta_\cA$:
 the $\mathrm{GRT}_1$-torsor structure at genus~$0$, the
 quasi-modular anomaly $E_2 \mapsto \widehat{E}_2$ at
 genus~$1$ (Proposition~\ref{prop:e1-nonsplitting-genus1}),
 and seven Siegel/clutching obstruction classes at genus~$2$
 (Conjecture~\ref{conj:e1-nonsplitting-genus2}).
 
-\emph{Step 2 \textup{(}Vol~I, structural anchors\textup{)}.}
 The ordered bar-cobar adjunction is upgraded to an
 $(\infty,2)$-equivalence at properad level by the
 Koszul Reflection Theorem
@@ -3680,9 +3707,8 @@ rational Yangians and generic-$q$ trigonometric
 $U_q(\widehat{\fg})$, vacuous for $R(z)=\tau$) relates the ordered
 bar $\Barord(\cA)$ to its symmetric image $\BarSig(\cA)$ at
 properad level; on chains, this descent is the present
-chapter's averaging map $\operatorname{av}$.
+chapter's averaging map $\operatorname{av}_R$.
 
-\emph{Step 3 \textup{(}Vol~II\textup{)}.}
 The universal-holography theorem
 \textup{(}Vol~II \texttt{thm:uch-main}\textup{)} promotes the
 SC$^{\mathrm{ch,top}}$-pair structure on
@@ -3690,7 +3716,7 @@ $(\cA^{\mathrm{cel}},
 Z^{\mathrm{der}}_{\mathrm{ch}}(\cA^{\mathrm{cel}}))$
 to a chain-level statement of celestial holography for the
 non-logarithmic standard landscape: the symmetric MC element
-$\Theta_\cA = \operatorname{av}(\Theta_\cA^{E_1})$ supplies
+$\Theta_\cA = \operatorname{av}_R(\Theta_\cA^{E_1})$ supplies
 the genus tower of soft-factor coefficients (uniform-weight
 lane), with multi-weight cross-channel correction
 $\delta F_g^{\mathrm{cross}}$ visible only in the multi-weight
@@ -3701,16 +3727,15 @@ $g\ge 1$ for class $\mathbf{M}$ remains
 weight-completed statement is unconditional.
 \end{remark}
 
-\begin{remark}[// conformance of the bridge]
-\label{rem:e1-bridge-ap-conformance}
+\begin{remark}[Bridge conventions]
+\label{rem:e1-bridge-conventions}
 \index{bridge conventions!$E_1$ notion, ambient, ordering}
 \index{bridge conventions!$E_1$ notion, ambient, ordering}
 \index{bridge conventions!$E_1$ notion, ambient, ordering}
-The bridge reads correctly only after pinning three
-conventions.
+The bridge uses three fixed conventions.
 
 \begin{enumerate}[label=\textup{(\Alph*)}]
-\item \emph{ (which $\Eone$-chiral notion).}
+\item \emph{$\Eone$-chiral notion.}
  The ordered MC element $\Theta_\cA^{E_1}$ is constructed from
  notions \textup{(A)}/\textup{(B)} of
  Warning~\ref{warn:multiple-e1-chiral}: strict
@@ -3719,8 +3744,7 @@ conventions.
  determines the same MC element on the Koszul locus via
  Theorem~\ref{thm:chiral-qg-equiv}, and the universal-holography
  reading of Vol~II is on this Koszul locus.
-\item \emph{ ($\mathsf{SC}^{\mathrm{ch,top}}$ is bicoloured;
- Dunn additivity fails).}
+\item \emph{$\mathsf{SC}^{\mathrm{ch,top}}$ is bicoloured.}
  The Vol~II universal-holography statement uses the chiral
  Swiss-cheese operad $\mathsf{SC}^{\mathrm{ch,top}}$, not
  $\Ethree$. The two are related by topologization
@@ -3729,7 +3753,7 @@ conventions.
  weight-completed category) but not by Dunn additivity:
  the Swiss-cheese operad is two-coloured with directionality,
  Dunn does not apply.
-\item \emph{ (topologization scope).}
+\item \emph{Topologization scope.}
  Topologization is \textup{Proved chain-level on the
  original complex} for class $\mathbf{L}$ at non-critical
  level (Theorem~\ref{thm:chain-level-E3-top-class-L}); for
@@ -3737,7 +3761,7 @@ conventions.
  topologization is open, the weight-completed statement is
  \textup{Proved} via the iterated-Sugawara tower of
  Vol~II \texttt{thm:e-infinity-topologization-ladder}.
- Cross-volume reading \emph{must} carry the scope qualifier.
+ Cross-volume statements carry this scope qualifier.
 \end{enumerate}
 \end{remark}
 
@@ -3767,34 +3791,87 @@ quasi-modular data carried by the ordered $E_1$ object.
 \section{$E_1$ modular Koszul duality on $\mathbf H_{\Delta_5}$}
 \label{sec:e1mkd-supplement}
 
-\begin{remark}[$E_1$ modular Koszul duality on $\mathbf H_{\Delta_5}$]
-\label{rem:e1mkd-1}
-The $E_1$ modular Koszul duality programme closes its loop at the
-K3 bialgebra $\mathbf H_{\Delta_5}$: the Koszul-duality pair
-$(B^{E_1}_{\mathrm{ch}}(\mathbf H_{\Delta_5}),\, \Omega^{E_1}_X)$
-on the bi-based Ran-space $(\mathrm{Ran}(E^{\mathrm{nod,sm}}_{24}), \bar{\mathcal A}_2)$
-delivers the inversion equivalence
+\begin{theorem}[Conditional $\Delta_5$ bar--cobar inversion target;
+\ClaimStatusConditional]
+\label{thm:e1mkd-delta5-conditional-inversion}
+\index{$\Delta_5$!conditional $E_1$ bar-cobar inversion}
+Let $\mathbf H_{\Delta_5}$ be a filtered $E_1$-chiral Hall
+bialgebra at the Lusztig specialisation $\hbar^2=-1/8$ on the
+bi-based Ran surface
+$(\mathrm{Ran}(E^{\mathrm{nod,sm}}_{24}),\bar{\mathcal A}_2)$.
+Assume the following finite-window data.
+\begin{enumerate}[label=\textup{(D\arabic*)}]
+\item \emph{Compact Hall source and finite Hall--Borcherds
+recognition.} In every height, charge, and conformal-weight window
+the Hall object is represented by a compact finite Hall source whose
+associated graded Hall algebra is identified with the corresponding
+finite Borcherds truncation of $\mathfrak g_{\Delta_5}$, with root
+multiplicities and Euler form fixed by the Borcherds product
+for~$\Delta_5$.
+\item \emph{Source datum.} The Hall object is built from a named
+K3 source, with augmentation, coproduct, completion, and the
+$\hbar^2=-1/8$ specialisation compatible with the finite truncations.
+\item \emph{Parity and root fixtures.} The real-root set, imaginary
+simple-root multiplicities, Weyl vector, and super-parity signs are
+fixed once and transported unchanged through the Hall, BKM, and
+ordered bar constructions.
+\item \emph{PBW and no-extra condition.} The ordered PBW spectral
+sequence degenerates in each finite window, and no additional root
+spaces, central summands, hidden extensions, or torsion classes appear
+beyond the Borcherds datum in \textup{(D1)}.
+\item \emph{Completion and comparison maps.} The completion is the
+Mittag--Leffler inverse limit of these compact finite windows, and
+there are filtration-preserving maps from
+$B^{E_1}_{\mathrm{ch}}(\mathbf H_{\Delta_5})$ and its cobar object to
+the finite Hall--Borcherds truncations, compatible with the product,
+coproduct, differential, augmentation, inverse-system maps, and the
+ordered-to-symmetric averaging map.
+\end{enumerate}
+Then the finite-window counits are quasi-isomorphisms and pass to the
+completed inverse limit, giving the conditional inversion equivalence
 \[
 \Omega^{E_1}_X\bigl(B^{E_1}_{\mathrm{ch}}(\mathbf H_{\Delta_5})\bigr)
 \;\xrightarrow{\;\sim\;}\;
 \mathbf H_{\Delta_5}
 \]
-at the Lusztig specialisation $\hbar^2 = -1/8$. The $E_1$-ordered
-convention matters: the averaging map
+at $\hbar^2=-1/8$. Without \textup{(D1)--(D5)} the displayed arrow is
+a target: it is not an unconditional theorem about
+$\mathbf H_{\Delta_5}$.
+\end{theorem}
+
+\begin{proof}
+Hypotheses \textup{(D1)--(D4)} put each finite Hall--Borcherds window
+in the strict ordered $E_1$ Koszul locus of
+Theorem~\ref{thm:e1-theorem-B-modular}; the finite-window
+bar--cobar counit is therefore a quasi-isomorphism. Hypothesis
+\textup{(D5)} identifies these counits with the Hall--Borcherds
+comparison system and makes the transition maps compatible with the
+completed inverse limit. The Mittag--Leffler passage in
+Theorem~\ref{thm:e1-theorem-B-modular} gives the displayed
+equivalence.
+\end{proof}
+
+\begin{remark}[$E_1$ ordering at the $\Delta_5$ point]
+\label{rem:e1mkd-1}
+Assume the D1--D5 recognition datum of
+Theorem~\ref{thm:e1mkd-HDelta5-conditional}. Under that datum the
+$E_1$-ordered convention matters. The averaging map
 $\mathrm{av} = \mathrm{Torelli}_{K3}\circ\mathrm{KugaSatake}\circ j_{\mathrm{Kod}}$
 from $\mathfrak g^{E_1}_{\Delta_5}$ to $\mathfrak g^{\mathrm{mod}}_{\Delta_5}$
-is \emph{not} an isomorphism -- it is a genuine chiral averaging that
-collapses the Hall-theoretic non-commutativity of $\mathbf H_{\Delta_5}$
-onto the Mukai-doubled symmetric chiral homology. The class-M
-dichotomy position ($r_{\max} = \infty$, Virasoro-type) reflects that
-$\mathfrak g^{E_1}_{\Delta_5}$ is the BKM Lie algebra with infinite
-positive-root family. Cross-ref Vol.~III,
+is a chiral averaging map, not an inverse to the bar--cobar counit.
+It collapses the Hall-theoretic ordered commutators of
+\(\mathbf H_{\Delta_5}\), after the compact Hall source and comparison maps
+have been supplied, onto the Mukai-doubled symmetric chiral
+homology. The class-M dichotomy position ($r_{\max}=\infty$,
+Virasoro-type) reflects the infinite positive-root family of the BKM
+Lie algebra. Cross-ref Vol.~III,
 Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}, Theorems~A and~D.
 \end{remark}
 
 \begin{remark}[Siegel-modular $E_1$ associator at the K3 base point]
 \label{rem:e1mkd-2}
-The $E_1$ associator on $\mathbf H_{\Delta_5}$ is the Siegel-modular
+Under the same D1--D5 recognition datum, the candidate \(E_1\) associator
+on \(\mathbf H_{\Delta_5}\) is the Siegel-modular
 upgrade of the Drinfeld 1990 rational associator
 $\Phi^{\mathrm{Drinfeld}}_{\mathrm{rat}}(z_1,z_2,z_3) \in \mathbb C\langle\!\langle X,Y\rangle\!\rangle$:
 \[
@@ -3804,7 +3881,9 @@ $\Phi^{\mathrm{Drinfeld}}_{\mathrm{rat}}(z_1,z_2,z_3) \in \mathbb C\langle\!\lan
 with $Z_i \in \mathfrak H_2$, and satisfies the $E_1$ modular pentagon
 axiom at order $\hbar^{\le 3}$ with the explicit coboundary
 $\phi^{(3)} = \zeta(3)\, c_{\mathrm{symm}} + \tfrac{25}{3}\, c_{\mathrm{timelike}} + (\Phi_{10}/\eta^{24})\, c_{\Phi_{10}}$.
-This is the $E_1$-ordered Siegel-modular analogue of the Kontsevich--Kohno--Drinfeld
+Without D1--D5 this display is scalar associator target data, not an
+associator on the compact Hall realization. With D1--D5 it is the
+\(E_1\)-ordered Siegel-modular analogue of the Kontsevich--Kohno--Drinfeld
 rational associator, with the Igusa cusp form $\Phi_{10}$ entering as
 the dilogarithm-type cocycle at order $\hbar^2$ and the $\zeta(3)$-piece
 at order $\hbar^3$ as in the classical case. Primary-lit: Drinfeld 1990,
@@ -3826,10 +3905,14 @@ $\Ran(E^{\mathrm{nod,sm}}_{24}) \times_{\bar{\mathcal A}_2}
 \widehat{\mathcal O}_{H_i\cap H_j}$, as opposed to living only as an
 $\infty$-operadic object in the Francis--Gaitsgory factorisation
 $\infty$-category framework \cite{FrancisGaitsgory11,Gaitsgory15}. The
-content of the next theorem is that the two pictures coincide: the
-bi-unipotent filtration is pulled back from the modular base, the
-monodromies $N_i,N_j$ act as base derivations, and the BD disjoint-union
-factorisation product commutes with bi-filtered pullback on the nose.
+content of the next theorem is formal on the finite Hall--Borcherds
+comparison locus: once the compact source, source datum,
+parity/root fixture, PBW/no-extra condition, completion, and comparison
+maps of Theorem~\textup{\ref{thm:e1mkd-delta5-conditional-inversion}}
+are supplied, the two pictures coincide. The bi-unipotent filtration is
+pulled back from the modular base, the monodromies $N_i,N_j$ act as
+base derivations, and the BD disjoint-union factorisation product
+commutes with bi-filtered pullback on the nose.
 
 \begin{definition}[Factorisation-compatible bi-filtration]
 \label{def:factorisation-compatible-bifiltration}
@@ -3866,12 +3949,18 @@ N_j\otimes\mathrm{id}+\mathrm{id}\otimes N_j.
 \]
 \end{definition}
 
-\begin{theorem}[Factorisation compatibility of the bi-unipotent pro-ambient]
+\begin{theorem}[Conditional factorisation compatibility at the $\Delta_5$ point;
+\ClaimStatusConditional]
 \label{thm:bd-factorisation-bi-unipotent-compatibility}
 \index{factorisation!bi-unipotent compatibility!theorem}%
 \index{BD factorisation space!Deligne--Malcev}%
 \index{Humbert wall-of-walls!factorisation gluing}%
-Let $\cA=\mathbf H_{\Delta_5}$ and let
+Let $\cA$ be the filtered $E_1$-chiral Hall bialgebra denoted
+$\mathbf H_{\Delta_5}$ only after the finite Hall--Borcherds
+recognition hypotheses \textup{(D1)--(D5)} of
+Theorem~\textup{\ref{thm:e1mkd-delta5-conditional-inversion}} have
+been supplied: compact Hall source, source datum, parity/root fixture,
+PBW/no-extra, completion, and comparison maps. Let
 $\bar B^{E_1}_{\mathrm{ch}}(\cA)$ denote the ordered bar factorisation
 $\cD$-module of
 Definition~\textup{\ref{def:ordered-fact-dmod}}, with chiral base
@@ -3909,17 +3998,22 @@ $\Ran(E^{\mathrm{nod,sm}}_{24}) \times_{\bar{\mathcal A}_2}
 opens $U_1,U_2\subset\Ran(E^{\mathrm{nod,sm}}_{24})$. Consequently the
 bar--cobar counit
 $\widehat{\mathrm{counit}}^{\Gamma\otimes\Gamma}_\cA$ of
-Theorem~\textup{\ref{thm:mc5-wall-of-walls-strict-chain-level}} is a
-quasi-isomorphism of BD factorisation $\cD$-modules on
+Theorem~\textup{\ref{thm:mc5-wall-of-walls-strict-chain-level}} is,
+under the same hypotheses, a quasi-isomorphism of BD factorisation
+$\cD$-modules on
 $\Ran(E^{\mathrm{nod,sm}}_{24}) \times_{\bar{\mathcal A}_2}
-\widehat{\mathcal O}_{H_i\cap H_j}$, not merely an equivalence in the
-bounded derived category of pro-objects.
-\ClaimStatusProvedHere{}
+\widehat{\mathcal O}_{H_i\cap H_j}$. This is a chain-level statement
+stronger than an equivalence in the bounded derived category of
+pro-objects. No unconditional
+$\mathbf H_{\Delta_5}$ statement is asserted without
+\textup{(D1)--(D5)}.
 \end{theorem}
 
 \begin{proof}
-The proof proceeds along three independent routes, consistent with the
-programme's multi-path verification standard.
+Under \textup{(D1)--(D5)}, three computations meet on the same
+compatibility square. Without these hypotheses, the following argument
+is only the formal BD compatibility statement for a supplied finite
+Hall--Borcherds comparison system.
 
 \emph{Route (i): disjoint-union pullback commutes with bi-unipotent
 extension.} The monodromy operators $(\gamma_i,\gamma_j)$ are generators
@@ -4009,16 +4103,20 @@ upgrades the wall-of-walls chain-homotopy identity
 \eqref{eq:wall-of-walls-chain-homotopy-identity} to a statement of BD
 factorisation $\cD$-modules: the counit intertwines the factorisation
 products on both sides of
-$\widehat{\mathrm{counit}}^{\Gamma\otimes\Gamma}_\cA$, giving the
-asserted quasi-isomorphism of factorisation $\cD$-modules.
+$\widehat{\mathrm{counit}}^{\Gamma\otimes\Gamma}_\cA$. Hypotheses
+\textup{(D1)--(D5)} are exactly the input that identifies this formal
+counit with the Hall object $\mathbf H_{\Delta_5}$ and lets the
+finite-window quasi-isomorphisms pass to the completed inverse limit.
 \end{proof}
 
-\begin{corollary}[Strict chain-level bar--cobar inversion preserves BD factorisation]
+\begin{corollary}[Conditional strict chain-level bar--cobar inversion preserves BD factorisation;
+\ClaimStatusConditional]
 \label{cor:bd-factorisation-bar-cobar-preservation}
 \index{bar-cobar inversion!BD factorisation preservation}%
 Under the hypotheses of
-Theorem~\textup{\ref{thm:bd-factorisation-bi-unipotent-compatibility}}, the
-bar--cobar quasi-isomorphism of
+Theorems~\textup{\ref{thm:e1mkd-delta5-conditional-inversion}} and
+\textup{\ref{thm:bd-factorisation-bi-unipotent-compatibility}}, the
+conditional bar--cobar quasi-isomorphism of
 Theorem~\textup{\ref{thm:mc5-wall-of-walls-strict-chain-level}} is an
 equivalence of BD factorisation $\cD$-modules on
 $\Ran(E^{\mathrm{nod,sm}}_{24})\times_{\bar{\mathcal A}_2}
@@ -4031,8 +4129,10 @@ Francis--Gaitsgory chiral-homology sheaves
 \int^{\mathrm{ord},\mathrm{ch}}_{E^{\mathrm{nod,sm}}_{24}}\cA
 \]
 on each wall-of-walls formal neighbourhood, with the arrow respecting
-the disjoint-union factorisation coproduct on both sides.
-\ClaimStatusProvedHere{}
+the disjoint-union factorisation coproduct on both sides. For
+$\cA=\mathbf H_{\Delta_5}$ this is conditional on the compact Hall
+source, source datum, parity/root fixture, PBW/no-extra condition,
+completion, and comparison maps in \textup{(D1)--(D5)}.
 \end{corollary}
 
 \begin{remark}[Super-quasi-Hopf sign and the Koszul sign of the bar differential]
@@ -4085,6 +4185,7 @@ formality on $\mathcal U_{\mathrm{Humb}}^{\mathrm{c}}$]
 \label{rem:w213-feeds-chiral-kontsevich-formality}
 \index{Kontsevich formality!chiral!input from W21.3}%
 \index{W21.3!factorisation compatibility feeds formality}%
+The conditional
 Theorem~\ref{thm:bd-factorisation-bi-unipotent-compatibility} above
 is the BD factorisation-compatibility input to the chiral
 Kontsevich formality theorem of
@@ -4098,14 +4199,16 @@ pro-ambient of
 Definition~\textup{\ref{def:deligne-malcev-bi-unipotent-ambient}}
 reduces to the trivially-filtered monodromy-refined ambient, and
 the Costello--Gwilliam factorisation $\infty$-operad on
-$\Ran(E^{\mathrm{nod,sm}}_{24})$ is formal. Formality of the
-operad induces formality of the factorisation-algebra cochain
-complex $\ChirHoch^\bullet(\mathbf H_{\Delta_5})$ by Francis 2013
+$\Ran(E^{\mathrm{nod,sm}}_{24})$ is formal. Formality of the operad
+induces formality of the factorisation-algebra cochain complex
+$\ChirHoch^\bullet(\cA)$ by Francis 2013
 (\textit{Adv.\ Math.}\ 239 Thm.~1.1), supplying Path~(ii) of the
-three-path proof of chiral Kontsevich formality. The
-Costello--Gwilliam $1$-loop BV counterterm class computed in
-Route~(ii) of
-Theorem~\ref{thm:bd-factorisation-bi-unipotent-compatibility}, with
+three-path proof of chiral Kontsevich formality. For
+$\cA=\mathbf H_{\Delta_5}$ this passage uses the same compact Hall
+source, source datum, parity/root fixture, PBW/no-extra condition,
+completion, and comparison maps \textup{(D1)--(D5)}. The
+Costello--Gwilliam $1$-loop BV counterterm class computed in Route~(ii)
+of Theorem~\ref{thm:bd-factorisation-bi-unipotent-compatibility}, with
 value $c_ic_j\in\{4,6,9,16,24,64\}$ on wall-of-walls
 $H_i\cap H_j$, matches the Bruinier Heegner Chern class of
 Bruinier 2002 \textsc{LNM} 1780 Prop.~5.1 and the

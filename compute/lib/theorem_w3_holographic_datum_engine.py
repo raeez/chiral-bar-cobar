@@ -1,47 +1,62 @@
-r"""Complete holographic modular Koszul datum H(T) for the W_3 algebra.
+r"""Finite W_3 holographic datum compute surface.
 
 MATHEMATICAL CONTENT
 ====================
 
-The holographic modular Koszul datum is the six-fold package:
+The holographic modular Koszul package has seven structural entries:
 
-    H(T) = (A, A!, C, r(z), Theta_A, nabla^hol)
+    H(T) = (A, A^i, A!, C, r(z), Theta_A, nabla^hol)
+
+This module records a finite W_3 projection of those entries.  It is not
+a construction of the full holographic package theorem: the full MC element,
+the full rank-2 holomorphic connection, the derived-centre comparison, and
+the finite-type/completed Verdier hypotheses remain external proof data.
 
 For W_3 at central charge c (generic, non-critical):
 
 1. A = W_3(c) with generators T (weight 2) and W (weight 3).
    kappa(W_3) = 5c/6 from the harmonic sum formula kappa = c*(H_3 - 1).
 
-2. A! = W_3(100 - c): the Koszul dual under c -> 100 - c (Feigin-Frenkel).
+2. A^i = H^*(B^ch(A)): the bar-dual coalgebra projection. The chain
+   complex B^ch(A), its cohomology A^i, the cobar inversion
+   Omega^ch(B^ch(A)), and the Verdier branch A! are four different
+   objects.
+
+3. A! = W_3(100 - c): the Verdier/Koszul branch under c -> 100 - c
+   on the finite-type rectified surface.
    kappa(A!) = 5(100 - c)/6.
 
-3. C = line-operator category on the evaluation sector: Rep_q(sl_3).
+4. C = line/evaluation comparison category recorded here as Rep_q(sl_3).
+   This compute model does not identify it with Z_ch^der(A) without the
+   separate derived-centre comparison.
 
-4. r(z) = Res^coll_{0,2}(Theta_{W_3}): the spectral r-matrix.
+5. r(z) = Res^coll_{0,2}(Theta_{W_3}): the binary collision residue.
    Has contributions from TT, TW, and WW channels.
    TT channel: (c/2)/z^3 + 2T/z (Virasoro subsector, poles {3,1}).
    TW channel: 3W/z (pole {1} only).
    WW channel: (c/3)/z^5 + 2T/z^3 + dT/z^2 + ... (poles {5,3,2,1}).
 
-5. Theta_A: the full MC element (proved by thm:mc2-bar-intrinsic).
-   genus 1: obs_1 = kappa * lambda_1 = 5c/144 (PROVED unconditionally).
+6. Theta_A: finite scalar projections governed by thm:mc2-bar-intrinsic.
+   genus 1: obs_1 = kappa * lambda_1 = 5c/144.
    genus 2: F_2 = kappa * lambda_2^FP + delta_F2^cross
             where delta_F2(W_3) = (c + 204)/(16c)  (NONZERO for all c > 0).
+   This does not construct the full multiweight MC datum.
 
-6. nabla^hol: the shadow connection.
+7. nabla^hol: the recorded T-line and W-line scalar restrictions.
    T-line: identical to Virasoro (autonomous).
    W-line: even in t (Z_2 parity), purely imaginary branch points.
+   This is not the full rank-2 holomorphic connection matrix.
 
-KEY INVARIANTS (verified by 3+ independent paths each):
+FINITE INVARIANTS PROTECTED HERE:
     kappa(W_3) = 5c/6
     anomaly ratio rho(W_3) = 5/6
-    c + c' = 100  (central charge complementarity)
+    c + c' = 100  (central charge complementarity from the W_N formula)
     kappa + kappa' = 250/3  (AP24: nonzero for W-algebras)
     self-dual point c* = 50  (where kappa = kappa')
     critical string point c_crit = 100  (where kappa_eff = 0; AP29: c* != c_crit)
     shadow depth: class M (infinite) for both T-line and W-line
     Q^contact_{Vir} = 10/[c(5c+22)]  (T-line quartic contact)
-    delta_F2(W_3) = (c + 204)/(16c)  (genus-2 cross-channel correction)
+    delta_F2(W_3) = (c + 204)/(16c)  (finite genus-2 cross-channel correction)
     mixing polynomial P(W_3) = 25c^2 + 100c - 428
 
 MANUSCRIPT REFERENCES:
@@ -58,7 +73,7 @@ MANUSCRIPT REFERENCES:
     tab:propagator-variance-census (landscape_census.tex)
 
 ANTI-PATTERN AWARENESS:
-    AP1:  kappa(W_3) = 5c/6, NOT c/2. Recompute, never copy.
+    AP1:  kappa(W_3) = 5c/6. Recompute from the W_N formula.
     AP19: r-matrix poles one below OPE poles.  WW OPE {6,4,3,2,1} -> r {5,3,2,1}.
     AP24: kappa + kappa' = 250/3 != 0.  Not zero for W-algebras.
     AP26: BPZ inner product, not Fock, for weight >= 4 decomposition.
@@ -67,6 +82,8 @@ ANTI-PATTERN AWARENESS:
     AP32: genus-1 universal, genus-2 FAILS for multi-weight.
     AP39: kappa != c/2 for W_3. kappa = 5c/6.
     AP44: OPE mode / n! for lambda-bracket conversion.
+    AP25: line/evaluation C is not the Hochschild bulk Z_ch^der(A).
+    AP-KERNEL: affine raw k*Omega_tr/z is not KZ Omega_KZ/((k+h^vee)z).
 """
 
 from __future__ import annotations
@@ -177,8 +194,90 @@ def anomaly_ratio_from_exponents(exponents: List[int]) -> Fraction:
     return sum(Fraction(1, m + 1) for m in exponents)
 
 
+def principal_wn_central_charge_complementarity(N: int) -> Fraction:
+    """Feigin-Frenkel central-charge sum for principal W_N.
+
+    The local manuscript gives
+        c(k) + c(k') = 2(N-1)(2N^2 + 2N + 1)
+    under k' = -k - 2N.  Hence N=2 gives 26 and N=3 gives 100.
+    """
+    if N < 2:
+        raise ValueError(f"principal W_N complementarity requires N >= 2, got {N}")
+    return Fraction(2 * (N - 1) * (2 * N**2 + 2 * N + 1))
+
+
 # ============================================================================
-# 4. Component (A!): the Koszul dual W_3(100 - c)
+# 4. Component (A^i): bar-dual coalgebra projection
+# ============================================================================
+
+def bar_dual_coalgebra_description() -> Dict[str, Any]:
+    """Bar-dual coalgebra projection A^i = H^*(B^ch(W_3)).
+
+    This entry records the coalgebra supplied by the chiral bar construction.
+    It is separate from the Verdier/Koszul branch A!, and the bar-cobar
+    inversion Omega B(A) ~= A is not used here as a duality statement.
+    """
+    return {
+        'name': 'H^*(B^ch(W_3))',
+        'object': 'A_i',
+        'symbol': 'A^i',
+        'source': 'chiral_bar_cohomology',
+        'bar_complex': 'B^ch(W_3)',
+        'cohomology_of': 'B^ch(W_3)',
+        'cobar_inversion': 'Omega^ch(B^ch(W_3)) ~= W_3',
+        'generators_inherited': ['T', 'W'],
+        'not_A_dual': True,
+        'not_cobar_inversion': True,
+        'not_derived_center': True,
+    }
+
+
+def typed_apart_objects() -> Dict[str, Dict[str, Any]]:
+    """Structural separation table for the five nearby objects.
+
+    The table is intentionally syntactic: tests use it to keep the compute API
+    from collapsing bar duality, cobar inversion, Verdier duality, and the
+    Hochschild bulk centre into a single overloaded "dual" object.
+    """
+    return {
+        'B_A': {
+            'symbol': 'B^ch(W_3)',
+            'kind': 'chiral_bar_complex',
+            'role': 'coalgebra complex before taking bar cohomology',
+            'not_equal_to': ['A_i', 'A_dual', 'Omega_B_A', 'Z_ch_der_A'],
+        },
+        'A_i': {
+            'symbol': 'A^i',
+            'kind': 'bar_dual_coalgebra',
+            'role': 'H^*(B^ch(W_3))',
+            'not_equal_to': ['B_A', 'A_dual', 'Omega_B_A', 'Z_ch_der_A'],
+        },
+        'A_dual': {
+            'symbol': 'A^!',
+            'kind': 'Verdier_Koszul_branch',
+            'role': 'W_3(100 - c) on the rectified finite-type surface',
+            'not_equal_to': ['B_A', 'A_i', 'Omega_B_A', 'Z_ch_der_A'],
+        },
+        'Omega_B_A': {
+            'symbol': 'Omega^ch(B^ch(W_3))',
+            'kind': 'bar_cobar_inversion',
+            'role': 'inverts the bar construction back to W_3',
+            'identifies_with': 'A',
+            'not_duality': True,
+            'not_equal_to': ['B_A', 'A_i', 'A_dual', 'Z_ch_der_A'],
+        },
+        'Z_ch_der_A': {
+            'symbol': 'Z_ch^der(W_3)',
+            'kind': 'derived_Hochschild_bulk_center',
+            'role': 'bulk Hochschild object, not the line/evaluation category C',
+            'not_line_category': True,
+            'not_equal_to': ['B_A', 'A_i', 'A_dual', 'Omega_B_A'],
+        },
+    }
+
+
+# ============================================================================
+# 5. Component (A!): the Verdier/Koszul branch W_3(100 - c)
 # ============================================================================
 
 def w3_dual_central_charge(c: Fraction) -> Fraction:
@@ -191,7 +290,7 @@ def w3_dual_central_charge(c: Fraction) -> Fraction:
 
 
 def kappa_w3_dual(c: Fraction) -> Fraction:
-    """kappa(W_3!) = 5(100 - c)/6."""
+    """kappa(W_3!) = 5(100 - c)/6 on the rectified finite-type surface."""
     return kappa_w3(w3_dual_central_charge(c))
 
 
@@ -207,7 +306,7 @@ def complementarity_sum(c: Fraction) -> Fraction:
 def self_dual_point() -> Fraction:
     """Self-dual central charge c* = 50 where kappa(A) = kappa(A!).
 
-    AP29: c* = 50 is NOT the critical string point c_crit = 100.
+    AP29: c* = 50 differs from the critical string point c_crit = 100.
     """
     return Fraction(50)
 
@@ -226,17 +325,14 @@ def critical_string_point() -> Fraction:
 def w3_central_charge_complementarity() -> Fraction:
     """The central charge sum c + c' = 100 for W_3.
 
-    General formula for W_N: c + c' = 2(N-1)(2N^2 + 2N + 1)/(N+1)
-    Wait, the actual formula from the manuscript (w_algebras.tex line 1210):
-    c(k) + c(k') = 100 (verified by direct computation with k' = -k-6).
-    For general W_N: c + c' = (N-1)(2N^2+2N+1) ... but let me just use
-    the authoritative value 100 for N=3.
+    This is the N=3 instance of
+    c(k) + c(k') = 2(N-1)(2N^2 + 2N + 1).
     """
-    return Fraction(100)
+    return principal_wn_central_charge_complementarity(3)
 
 
 # ============================================================================
-# 5. Component (C): line-operator category
+# 6. Component (C): line-operator category
 # ============================================================================
 
 def line_category_description() -> Dict[str, Any]:
@@ -244,19 +340,25 @@ def line_category_description() -> Dict[str, Any]:
 
     On the evaluation sector: Rep_q(sl_3) at q = exp(pi*i/(k+3)).
     The categorical structure is controlled by MC3 (proved for all types).
+    This is not the Hochschild bulk object Z_ch^der(W_3).
     """
     return {
         'type': 'Rep_q(sl_3)',
+        'sector': 'line/evaluation',
         'quantum_parameter': 'q = exp(pi*i/(k+3))',
         'mc3_status': 'PROVED (all simple types, cor:mc3-all-types)',
         'thick_generation': 'evaluation modules generate (cor:dk2-thick-generation-all-types)',
         'rank': 2,
         'simple_type': 'A_2',
+        'not_bulk_category': True,
+        'not_derived_center': True,
+        'bulk_object': 'Z_ch^der(W_3)',
+        'comparison_status': 'line category C is compared with, not identified as, the derived centre',
     }
 
 
 # ============================================================================
-# 6. Component (r(z)): the spectral r-matrix
+# 7. Component (r(z)): the spectral r-matrix
 # ============================================================================
 
 def r_matrix_channels() -> Dict[str, Dict[str, Any]]:
@@ -294,9 +396,28 @@ def r_matrix_channels() -> Dict[str, Dict[str, Any]]:
             'formula': '(c/3)/z^5 + 2T/z^3 + dT/z^2 + ...',
             'parity': 'mixed (has even pole z^{-2})',
             'note': ('Even pole at z^{-2} from dT/(z-w)^3 in WW OPE '
-                     '(rem:ww-even-poles-census). Bosonic parity constraint '
-                     'does NOT apply because WW OPE has odd-order pole z^{-3}.'),
+                     '(rem:ww-even-poles-census). The WW OPE also has the '
+                     'odd-order pole z^{-3}, so the bosonic parity constraint '
+                     'has no force here.'),
         },
+    }
+
+
+def reference_kernel_formulas() -> Dict[str, str]:
+    """Canonical collision kernels used to guard KZ/Virasoro normalization.
+
+    The affine raw trace-form residue keeps the level prefix k. The KZ
+    connection uses the separate normalization Omega_KZ/((k+h^vee)z).
+    The Virasoro kernel is the collision residue after d log absorption.
+    """
+    return {
+        'affine_raw_trace_form': 'k*Omega_tr/z',
+        'affine_KZ': 'Omega_KZ/((k+h^vee)z)',
+        'heisenberg': 'k/z',
+        'virasoro': '(c/2)/z^3 + 2T/z',
+        'W3_TT': r_matrix_channels()['TT']['formula'],
+        'W3_TW': r_matrix_channels()['TW']['formula'],
+        'W3_WW': r_matrix_channels()['WW']['formula'],
     }
 
 
@@ -354,13 +475,13 @@ def max_pole_from_weight(h: int) -> int:
 
 
 # ============================================================================
-# 7. Component (Theta_A): the MC element and genus expansion
+# 8. Component (Theta_A): the MC element and genus expansion
 # ============================================================================
 
 def obs_genus1(c: Fraction) -> Fraction:
     """Genus-1 obstruction: obs_1 = kappa * lambda_1 = 5c/6 * 1/24 = 5c/144.
 
-    PROVED unconditionally for ALL families (thm:genus-universality).
+    This is the W_3 scalar genus-1 projection of thm:genus-universality.
     """
     return kappa_w3(c) * lambda_fp(1)
 
@@ -383,10 +504,10 @@ def delta_F2_cross(c: Fraction) -> Fraction:
 
     delta_F2(W_3) = (c + 204) / (16c).
 
-    NONZERO for all c > 0. This proves op:multi-generator-universality
-    is resolved NEGATIVELY: F_2(W_3) != kappa * lambda_2^FP.
+    NONZERO for all c > 0. On this finite genus-2 surface,
+    F_2(W_3) != kappa * lambda_2^FP.
 
-    Five verification paths:
+    Local support paths:
       Path 1: Direct genus-2 graph sum (mg_w3_genus2_graph_engine.py)
       Path 2: Analytic formula from propagator variance
       Path 3: Large-c limit: delta -> 1/16 (confirmed)
@@ -429,8 +550,38 @@ def delta_F2_complementarity(c: Fraction) -> Fraction:
     return delta_F2_cross(c) + delta_F2_cross(c_dual)
 
 
+def finite_holographic_scope() -> Dict[str, Any]:
+    """Scope firewall for the W_3 compute surface.
+
+    The seven package labels are present, but each non-scalar entry is only
+    represented by the finite datum listed here. Tests assert this contract so
+    a finite scalar or line computation cannot be promoted to a full package
+    theorem by changing a docstring or output label.
+    """
+    return {
+        'entries': ('A', 'A_i', 'A_dual', 'C', 'r', 'Theta', 'nabla'),
+        'claim_status': 'finite_compute_projection',
+        'not_full_holographic_package_theorem': True,
+        'theta_scope': (
+            'genus-1 scalar obstruction and genus-2 scalar/cross-channel '
+            'free-energy projection only'
+        ),
+        'nabla_scope': (
+            'T-line and W-line scalar restrictions plus propagator variance; '
+            'not the full rank-2 holomorphic connection'
+        ),
+        'r_scope': 'binary collision residue channels TT, TW, WT, WW',
+        'external_obligations': [
+            'full multiweight MC element',
+            'full rank-2 holomorphic connection matrix',
+            'derived-centre comparison C -> Z_ch^der(A)',
+            'finite-type/completed hypotheses for the Verdier branch A!',
+        ],
+    }
+
+
 # ============================================================================
-# 8. Component (nabla^hol): the shadow connection
+# 9. Component (nabla^hol): the shadow connection
 # ============================================================================
 
 def shadow_metric_T_line(c: Fraction, t: Fraction) -> Fraction:
@@ -505,7 +656,7 @@ def shadow_depth() -> str:
 
 
 # ============================================================================
-# 9. Propagator variance (multi-channel non-autonomy)
+# 10. Propagator variance (multi-channel non-autonomy)
 # ============================================================================
 
 def mixing_polynomial(c: Fraction) -> Fraction:
@@ -534,7 +685,7 @@ def propagator_variance(c: Fraction) -> Fraction:
 
 
 # ============================================================================
-# 10. W_3 OPE data (from w3_bar.py, independently coded)
+# 11. W_3 OPE data (from w3_bar.py, independently coded)
 # ============================================================================
 
 def w3_ope_modes(c: Fraction) -> Dict[Tuple[str, str], Dict[int, Dict[str, Fraction]]]:
@@ -596,7 +747,7 @@ def two_point_normalization(s: int, c: Fraction) -> Fraction:
 
 
 # ============================================================================
-# 11. Structure constants (Frobenius algebra data)
+# 12. Structure constants (Frobenius algebra data)
 # ============================================================================
 
 def structure_constant_upper(i: str, j: str, k: str) -> Fraction:
@@ -634,13 +785,13 @@ def structure_constant_lower(i: str, j: str, k: str, c: Fraction) -> Fraction:
 
 
 # ============================================================================
-# 12. Full holographic datum assembly
+# 13. Holographic package assembly
 # ============================================================================
 
 def holographic_datum(c: Fraction) -> Dict[str, Any]:
-    """Assemble the complete six-fold holographic modular Koszul datum H(T).
+    """Assemble finite projections of the seven holographic entries.
 
-    H(T) = (A, A!, C, r(z), Theta_A, nabla^hol)
+    H(T) = (A, A^i, A!, C, r(z), Theta_A, nabla^hol).
     """
     c_dual = w3_dual_central_charge(c)
     k_A = kappa_w3(c)
@@ -657,7 +808,9 @@ def holographic_datum(c: Fraction) -> Dict[str, Any]:
             'shadow_class': shadow_depth(),
             'F_1': F_genus1(c),
         },
-        # Component (A!): the Koszul dual
+        # Component (A^i): bar-dual coalgebra
+        'A_i': bar_dual_coalgebra_description(),
+        # Component (A!): the Verdier/Koszul branch
         'A_dual': {
             'name': 'W_3_dual',
             'central_charge': c_dual,
@@ -665,32 +818,49 @@ def holographic_datum(c: Fraction) -> Dict[str, Any]:
             'complementarity_cc': c + c_dual,
             'complementarity_kappa': k_A + k_A_dual,
             'self_dual_point': self_dual_point(),
+            'branch': 'Verdier/continuous-linear dual under finite-type completion',
+            'not_bar_cobar_inversion': True,
+            'not_derived_center': True,
         },
         # Component (C): the line-operator category
         'C': line_category_description(),
         # Component (r(z)): the spectral r-matrix
         'r': {
+            'scope': 'binary collision residue, not the full MC element',
+            'not_full_mc_element': True,
             'channels': r_matrix_channels(),
             'total_pole_count': r_matrix_total_pole_count(),
             'max_pole_order': max_r_matrix_pole_order(),
         },
         # Component (Theta_A): the MC element
         'Theta': {
-            'mc_status': 'PROVED (thm:mc2-bar-intrinsic)',
+            'scope': 'finite scalar projections of Theta_A',
+            'mc_anchor': 'thm:mc2-bar-intrinsic',
+            'not_full_mc_element': True,
+            'missing_full_mc_data': [
+                'all higher arities',
+                'all multiweight brackets',
+                'complete signs and homotopies',
+                'all higher-genus graph corrections',
+            ],
             'genus_1': {
                 'obs_1': obs_genus1(c),
                 'formula': 'kappa * lambda_1 = 5c/144',
-                'status': 'PROVED unconditionally',
+                'status': 'finite scalar genus-1 projection',
             },
             'genus_2': {
                 'F_2_per_channel': F_genus2_per_channel(c),
                 'delta_F2_cross': delta_F2_cross(c),
                 'F_2_total': F_genus2_total(c),
-                'universality_status': 'FAILS (delta_F2 != 0 for multi-weight)',
+                'universality_status': 'scalar formula fails for W_3 at genus 2',
+                'not_full_genus_tower': True,
             },
         },
         # Component (nabla^hol): the shadow connection
         'nabla': {
+            'scope': 'T-line and W-line scalar restrictions',
+            'not_full_multiweight_connection': True,
+            'recorded_lines': ['T', 'W'],
             'T_line_Delta': critical_discriminant_T(c),
             'W_line_Delta': critical_discriminant_W(c),
             'T_line_autonomous': True,
@@ -702,7 +872,7 @@ def holographic_datum(c: Fraction) -> Dict[str, Any]:
 
 
 # ============================================================================
-# 13. Cross-family comparison (multi-path verification helpers)
+# 14. Cross-family comparison (multi-path verification helpers)
 # ============================================================================
 
 def virasoro_kappa(c: Fraction) -> Fraction:
@@ -723,14 +893,11 @@ def sl2_hat_complementarity_sum() -> Fraction:
 def general_wn_cc_sum(N: int) -> Dict[str, Any]:
     """Central charge complementarity sum c + c' for general W_N.
 
-    From the manuscript: c(k) + c(k') = (known constant for each N).
+    From the manuscript: c(k) + c(k') = 2(N-1)(2N^2 + 2N + 1).
     For N=2 (Virasoro): 26
     For N=3 (W_3): 100
     """
-    known_sums = {2: Fraction(26), 3: Fraction(100)}
-    if N in known_sums:
-        return {'N': N, 'cc_sum': known_sums[N]}
-    return {'N': N, 'cc_sum': None}
+    return {'N': N, 'cc_sum': principal_wn_central_charge_complementarity(N)}
 
 
 def general_wn_kappa_sum(N: int) -> Dict[str, Any]:
@@ -750,7 +917,7 @@ def general_wn_kappa_sum(N: int) -> Dict[str, Any]:
 
 
 # ============================================================================
-# 14. Numerical evaluation for cross-checks
+# 15. Numerical evaluation for cross-checks
 # ============================================================================
 
 def evaluate_datum_numerically(c_val: float) -> Dict[str, float]:

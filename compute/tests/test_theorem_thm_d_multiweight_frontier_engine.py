@@ -1,16 +1,17 @@
 r"""Tests for the Theorem D multi-weight frontier engine.
 
 Verifies:
-1. delta_F_3^cross(W_3) via 7 independent paths
+1. delta_F_3^cross(W_3) via independent direct, closed, analytical, and
+   universal formulas
 2. delta_F_2^cross(W_N) universal gravitational formula
-3. Barbell contribution at genus 2 (the previously-missing graph)
+3. Barbell contribution at genus 2
 4. Structural analysis: degree patterns, propagator variance
-5. Koszul duality checks
+5. Verdier central-charge reflection checks
 6. Large-c asymptotic ratios
 7. Growth rate analysis
 8. Fang PVA classical limit
 
-Multi-path verification mandate: every numerical result confirmed by 3+ paths.
+Multi-path verification: numerical results are confirmed by independent paths.
 """
 
 import unittest
@@ -24,21 +25,41 @@ from compute.lib.theorem_thm_d_multiweight_frontier_engine import (
     kappa_total,
     kappa_channel,
     koszul_conductor,
+    evaluate_laurent_polynomial,
+    holographic_package_entries,
+    modular_koszul_primary_projections,
+    typed_object_firewall,
+    kernel_normalization_constants,
+    structural_firewall_summary,
+    gravitational_truncation_scope,
+    genus3_gravitational_formula_scope,
+    propagator_diagnostic_scope,
     grav_C3,
     grav_propagator,
     grav_V0_factorize,
     grav_vertex_factor,
     delta_Fg_grav_direct,
     delta_Fg_grav_analytical,
+    rational_reconstruction,
+    sewing_recursion_genus3_from_genus2,
+    genus2_grav_laurent_coefficients,
     genus2_grav_formula,
+    genus3_grav_laurent_coefficients,
     genus3_grav_formula,
+    w3_cross_laurent_coefficients,
     w3_genus2_cross,
     w3_genus3_cross,
     w3_genus4_cross,
+    w3_scalar_laurent_coefficients,
+    w3_large_c_limit_cross_over_scalar,
+    w3_scalar_collapse_diagnostic,
+    theorem_d_multiweight_frontier_scope,
+    w3_finite_window_certificate,
     large_c_ratio,
     propagator_variance_analog,
     propagator_variance_controls_cross,
-    koszul_duality_check,
+    principal_w_verdier_reflection,
+    verdier_central_charge_reflection_check,
     w3_genus3_multipath_verification,
     growth_rate_table,
     fang_pva_classical_cross_channel,
@@ -48,7 +69,78 @@ from compute.lib.theorem_thm_d_multiweight_frontier_engine import (
 
 
 # ============================================================================
-# 1. Bernoulli numbers and lambda_FP
+# 1. Structural firewalls
+# ============================================================================
+
+class TestStructuralFirewalls(unittest.TestCase):
+    """Package, object, and kernel normalizations remain typed apart."""
+
+    def test_holographic_package_has_seven_entries(self):
+        self.assertEqual(
+            holographic_package_entries(),
+            ("A", "A^i", "A^!", "C", "r(z)", "Theta_A", "nabla^hol"),
+        )
+        self.assertEqual(len(holographic_package_entries()), 7)
+
+    def test_modular_koszul_package_has_six_primary_projections(self):
+        projections = modular_koszul_primary_projections()
+        self.assertEqual(
+            projections,
+            (
+                "Fact_X(L)",
+                "barB_X(L)",
+                "Theta_L",
+                "L_L",
+                "(V_br,T_br)",
+                "R4_mod(L)",
+            ),
+        )
+        self.assertEqual(len(projections), 6)
+        self.assertNotEqual(set(projections), set(holographic_package_entries()))
+
+    def test_bar_verdier_cobar_bulk_firewall(self):
+        roles = typed_object_firewall()
+        self.assertEqual(roles["A^i"], "bar cohomology coalgebra H^*(B(A))")
+        self.assertIn("Verdier/continuous-linear dual branch", roles["A^!"])
+        self.assertIn("finite-type or completed hypotheses", roles["A^!"])
+        self.assertEqual(roles["Omega(B(A))"], "bar-cobar inversion recovering A")
+        self.assertIn("ChirHoch^*(A,A)", roles["Z_ch^der(A)"])
+        self.assertIn("Hochschild/derived-centre bulk", roles["Z_ch^der(A)"])
+
+    def test_kernel_normalization_constants(self):
+        kernels = kernel_normalization_constants(c=Fraction(24), k=Fraction(5), h_vee=Fraction(3))
+        self.assertEqual(kernels["affine_raw_collision"]["formula"], "k*Omega_tr/z")
+        self.assertEqual(kernels["affine_raw_collision"]["coefficient"], Fraction(5))
+        self.assertEqual(kernels["affine_kz_coefficient"]["formula"], "Omega/((k+h_vee)z)")
+        self.assertEqual(kernels["affine_kz_coefficient"]["coefficient"], Fraction(1, 8))
+        self.assertEqual(kernels["virasoro_collision"]["formula"], "(c/2)/z^3 + 2T/z")
+        self.assertEqual(kernels["virasoro_collision"]["central_coefficient"], Fraction(12))
+        self.assertEqual(kernels["virasoro_collision"]["stress_coefficient"], Fraction(2))
+
+    def test_kz_coefficient_rejects_critical_level(self):
+        with self.assertRaises(ValueError):
+            kernel_normalization_constants(k=Fraction(-2), h_vee=Fraction(2))
+
+    def test_structural_summary_keeps_packages_distinct(self):
+        summary = structural_firewall_summary()
+        self.assertTrue(summary["packages_are_distinct"])
+        self.assertEqual(len(summary["holographic_package_entries"]), 7)
+        self.assertEqual(len(summary["modular_koszul_primary_projections"]), 6)
+        self.assertEqual(
+            summary["object_roles"]["Z_ch^der(A)"],
+            "ChirHoch^*(A,A), the Hochschild/derived-centre bulk",
+        )
+
+    def test_gravitational_truncation_does_not_zero_full_ope(self):
+        scope = gravitational_truncation_scope()
+        self.assertFalse(scope["dropped_couplings_set_to_zero_in_full_ope"])
+        self.assertFalse(scope["full_ope_reconstruction_for_generic_WN"])
+        self.assertFalse(scope["generic_WN_channel_data_degenerate"])
+        self.assertTrue(scope["genus2_lower_bound_for_N_ge_4"])
+
+
+# ============================================================================
+# 2. Bernoulli numbers and lambda_FP
 # ============================================================================
 
 class TestBernoulli(unittest.TestCase):
@@ -92,7 +184,7 @@ class TestBernoulli(unittest.TestCase):
 
 
 # ============================================================================
-# 2. Kappa and harmonic numbers
+# 3. Kappa and harmonic numbers
 # ============================================================================
 
 class TestKappa(unittest.TestCase):
@@ -121,7 +213,7 @@ class TestKappa(unittest.TestCase):
 
 
 # ============================================================================
-# 3. Gravitational Frobenius algebra
+# 4. Gravitational Frobenius algebra
 # ============================================================================
 
 class TestGravFrobenius(unittest.TestCase):
@@ -145,6 +237,13 @@ class TestGravFrobenius(unittest.TestCase):
         c = Fraction(10)
         self.assertEqual(grav_C3(2, 2, 4, c), Fraction(0))  # C_{TTW4} = 0
 
+    def test_nonstress_triples_zero_only_in_gravitational_truncation(self):
+        c = Fraction(10)
+        self.assertEqual(grav_C3(3, 3, 4, c), Fraction(0))
+        self.assertFalse(
+            gravitational_truncation_scope()["dropped_couplings_set_to_zero_in_full_ope"]
+        )
+
     def test_propagator_values(self):
         c = Fraction(100)
         self.assertEqual(grav_propagator(2, c), Fraction(1, 50))
@@ -153,11 +252,11 @@ class TestGravFrobenius(unittest.TestCase):
 
 
 # ============================================================================
-# 4. Stable graph enumeration fix (barbell at genus 2)
+# 5. Stable graph enumeration (barbell at genus 2)
 # ============================================================================
 
-class TestBarbellFix(unittest.TestCase):
-    """Verify the barbell graph is now included in genus-2 enumeration."""
+class TestBarbellGraph(unittest.TestCase):
+    """Verify the barbell graph in genus-2 enumeration."""
 
     def test_genus2_graph_count(self):
         from compute.lib.stable_graph_enumeration import enumerate_stable_graphs
@@ -185,6 +284,14 @@ class TestBarbellFix(unittest.TestCase):
         self.assertEqual(barbell.automorphism_order(), 8)
         self.assertEqual(barbell.first_betti, 2)
 
+    def test_genus2_automorphism_orders_are_exact(self):
+        from compute.lib.stable_graph_enumeration import enumerate_stable_graphs
+        gs = enumerate_stable_graphs(2, 0)
+        self.assertEqual(
+            [g.automorphism_order() for g in gs],
+            [1, 2, 8, 2, 12, 2, 8],
+        )
+
     def test_barbell_cross_channel_w3(self):
         """The barbell contributes 21/(4c) to the W_3 cross-channel at genus 2."""
         c = Fraction(10)
@@ -207,11 +314,20 @@ class TestBarbellFix(unittest.TestCase):
 
 
 # ============================================================================
-# 5. W_3 genus-2 cross-channel: 5-path verification
+# 6. W_3 genus-2 cross-channel: 5-path verification
 # ============================================================================
 
 class TestW3Genus2(unittest.TestCase):
     """delta_F_2(W_3) = (c + 204)/(16c), verified 5 ways."""
+
+    def test_exact_laurent_coefficients(self):
+        expected = {0: Fraction(1, 16), -1: Fraction(51, 4)}
+        self.assertEqual(genus2_grav_laurent_coefficients(3), expected)
+        self.assertEqual(w3_cross_laurent_coefficients(2), expected)
+        self.assertEqual(
+            evaluate_laurent_polynomial(expected, Fraction(10)),
+            w3_genus2_cross(Fraction(10)),
+        )
 
     def test_path1_direct_graph_sum(self):
         """Path 1: Direct graph sum over 7 genus-2 stable graphs."""
@@ -250,16 +366,30 @@ class TestW3Genus2(unittest.TestCase):
             c = Fraction(cv)
             self.assertGreater(w3_genus2_cross(c), 0)
 
+    def test_zero_c_rejected(self):
+        with self.assertRaises(ValueError):
+            w3_genus2_cross(Fraction(0))
+
 
 # ============================================================================
-# 6. W_3 genus-3 cross-channel: 7-path verification
+# 7. W_3 genus-3 cross-channel: multi-path verification
 # ============================================================================
 
 class TestW3Genus3(unittest.TestCase):
     """delta_F_3(W_3) = (5c^3 + 3792c^2 + 1149120c + 217071360)/(138240c^2)."""
 
+    def test_exact_laurent_coefficients(self):
+        expected = {
+            1: Fraction(1, 27648),
+            0: Fraction(79, 2880),
+            -1: Fraction(133, 16),
+            -2: Fraction(6281, 4),
+        }
+        self.assertEqual(genus3_grav_laurent_coefficients(3), expected)
+        self.assertEqual(w3_cross_laurent_coefficients(3), expected)
+
     def test_multipath_all_agree(self):
-        """All 7 paths agree at c=10."""
+        """All equality paths agree at c=10."""
         result = w3_genus3_multipath_verification(Fraction(10))
         self.assertTrue(result['all_agree'])
 
@@ -307,27 +437,53 @@ class TestW3Genus3(unittest.TestCase):
         self.assertEqual(ratio, Fraction(42, 31))
         self.assertGreater(ratio, 1)
 
+    def test_rational_reconstruction_uses_degree_g_not_2g_minus_2(self):
+        coeffs = rational_reconstruction(3, 3)
+        self.assertEqual(
+            coeffs,
+            [Fraction(6281, 4), Fraction(133, 16),
+             Fraction(79, 2880), Fraction(1, 27648)],
+        )
+
 
 # ============================================================================
-# 7. W_3 genus-4 cross-channel
+# 8. W_3 genus-4 cross-channel
 # ============================================================================
 
 class TestW3Genus4(unittest.TestCase):
     """delta_F_4(W_3): verify the formula."""
 
+    def test_exact_laurent_coefficients(self):
+        expected = {
+            1: Fraction(41, 2488320),
+            0: Fraction(89627, 5806080),
+            -1: Fraction(229079, 34560),
+            -2: Fraction(163829, 96),
+            -3: Fraction(5138841, 16),
+        }
+        self.assertEqual(w3_cross_laurent_coefficients(4), expected)
+
     def test_positivity(self):
         for cv in [1, 10, 100]:
             self.assertGreater(w3_genus4_cross(Fraction(cv)), 0)
 
+    def test_matches_delta_f4_certificate(self):
+        from compute.lib.delta_f4_universal_engine import delta_F4_exact
+        for cv in [1, 7, 24]:
+            c = Fraction(cv)
+            self.assertEqual(w3_genus4_cross(c), delta_F4_exact(3, c))
+
     def test_large_c_ratio_grows(self):
         """Genus-4 ratio >> genus-3 ratio (factorial growth)."""
-        r3 = large_c_ratio(3, 3)
-        # For genus 4, we'd need to compute it; just check genus 3 is > 1.
-        self.assertGreater(r3, 1)
+        r3 = w3_large_c_limit_cross_over_scalar(3)
+        r4 = w3_large_c_limit_cross_over_scalar(4)
+        self.assertEqual(r3, Fraction(42, 31))
+        self.assertEqual(r4, Fraction(9184, 381))
+        self.assertGreater(r4, r3)
 
 
 # ============================================================================
-# 8. Universal gravitational formula: genus 2
+# 9. Universal gravitational formula: genus 2
 # ============================================================================
 
 class TestUniversalGenus2(unittest.TestCase):
@@ -375,11 +531,11 @@ class TestUniversalGenus2(unittest.TestCase):
 
 
 # ============================================================================
-# 9. Universal gravitational formula: genus 3
+# 10. Universal gravitational formula: genus 3
 # ============================================================================
 
 class TestUniversalGenus3(unittest.TestCase):
-    """Universal formula delta_F_3^grav(W_N)."""
+    """Genus-3 reconstructed gravitational N-polynomial."""
 
     def test_vanishing_at_N2(self):
         for cv in [1, 10, 100]:
@@ -398,13 +554,20 @@ class TestUniversalGenus3(unittest.TestCase):
             self.assertEqual(direct, formula, f"W_{N} c=1")
 
     def test_analytical_matches_formula(self):
-        """Analytical method matches universal formula."""
+        """Analytical method matches reconstructed formula on the checked N-window."""
         for N in [3, 4, 5]:
             coeffs = delta_Fg_grav_analytical(3, N)
             c = Fraction(10)
             val = coeffs[0] * c + coeffs[1] + coeffs[2] / c + coeffs[3] / c**2
             formula = genus3_grav_formula(N, c)
             self.assertEqual(val, formula, f"W_{N} c=10 analytical vs formula")
+
+    def test_genus3_scope_is_not_all_N_theorem_d(self):
+        scope = genus3_gravitational_formula_scope()
+        self.assertEqual(scope["direct_graph_checked_N"], (3, 4, 5))
+        self.assertFalse(scope["proved_all_N"])
+        self.assertFalse(scope["cohomological_theorem_d_statement"])
+        self.assertFalse(scope["class_valued_mc_lift_proved"])
 
     def test_c_power_structure(self):
         """delta_F_3 = D*c + C + B/c + A/c^2 with 4 terms (loop numbers 0..3)."""
@@ -421,11 +584,11 @@ class TestUniversalGenus3(unittest.TestCase):
 
 
 # ============================================================================
-# 10. Propagator variance analysis
+# 11. Propagator variance analysis
 # ============================================================================
 
 class TestPropagatorVariance(unittest.TestCase):
-    """Propagator variance does NOT control cross-channel at all N."""
+    """Propagator variance fails to control cross-channel at all N."""
 
     def test_vanishing_at_N2(self):
         self.assertEqual(propagator_variance_analog(2), Fraction(0))
@@ -434,7 +597,7 @@ class TestPropagatorVariance(unittest.TestCase):
         self.assertGreater(propagator_variance_analog(3), 0)
 
     def test_not_proportional(self):
-        """B(N)/delta_analog is NOT constant for N >= 5."""
+        """B(N)/delta_analog varies for N >= 5."""
         ratios = propagator_variance_controls_cross(8)
         self.assertGreater(len(set(ratios.values())), 1,
                            "Ratios should not all be equal")
@@ -447,16 +610,23 @@ class TestPropagatorVariance(unittest.TestCase):
         # But N=5 differs
         self.assertNotEqual(ratios[5], Fraction(9, 2))
 
+    def test_variance_scope_is_diagnostic_not_exact_theorem(self):
+        scope = propagator_diagnostic_scope()
+        self.assertTrue(scope["uses_weight_spread_analog_only"])
+        self.assertFalse(scope["uses_full_arity4_propagator_variance"])
+        self.assertFalse(scope["exact_cross_channel_theorem"])
+        self.assertFalse(scope["constant_ratio_for_all_N"])
+
 
 # ============================================================================
-# 11. Koszul duality check
+# 12. Verdier central-charge reflection check
 # ============================================================================
 
-class TestKoszulDuality(unittest.TestCase):
-    """Koszul duality: W_N at c <-> W_N at K_N - c."""
+class TestVerdierCentralChargeReflection(unittest.TestCase):
+    """Principal W_N Verdier reflection: c^! = K_N - c."""
 
     def test_w3_not_symmetric(self):
-        """delta_F_2^grav is NOT invariant under c -> K_3 - c (in general)."""
+        """delta_F_2^grav varies under c -> K_3 - c in general."""
         c = Fraction(30)
         K = koszul_conductor(3)  # = 100
         c_dual = K - c  # = 70
@@ -464,8 +634,16 @@ class TestKoszulDuality(unittest.TestCase):
         d2 = genus2_grav_formula(3, c_dual)
         self.assertNotEqual(d1, d2)
 
+    def test_reflection_check_records_scope(self):
+        """The scalar reflection check records non-invariance and the conductor."""
+        result = verdier_central_charge_reflection_check(2, 3, Fraction(30))
+        self.assertEqual(result["conductor"], Fraction(100))
+        self.assertEqual(result["c_dual"], Fraction(70))
+        self.assertEqual(result["self_dual_c"], Fraction(50))
+        self.assertNotEqual(result["difference"], Fraction(0))
+
     def test_w3_self_dual_point(self):
-        """At c = K_3/2 = 50, the algebra is self-dual."""
+        """At c = K_3/2 = 50, the scalar reflection is fixed."""
         c = Fraction(50)
         K = koszul_conductor(3)
         self.assertEqual(c, K / 2)  # self-dual point
@@ -473,9 +651,13 @@ class TestKoszulDuality(unittest.TestCase):
         d2 = genus2_grav_formula(3, K - c)
         self.assertEqual(d1, d2)
 
+    def test_principal_w_reflection_formula(self):
+        self.assertEqual(principal_w_verdier_reflection(3, Fraction(30)), Fraction(70))
+        self.assertEqual(principal_w_verdier_reflection(4, Fraction(123)), Fraction(123))
+
 
 # ============================================================================
-# 12. Large-c ratio (growth analysis)
+# 13. Large-c ratio (growth analysis)
 # ============================================================================
 
 class TestGrowthRate(unittest.TestCase):
@@ -499,7 +681,59 @@ class TestGrowthRate(unittest.TestCase):
 
 
 # ============================================================================
-# 13. Fang PVA classical limit
+# 14. Finite-window scope and scalar non-collapse
+# ============================================================================
+
+class TestFiniteWindowScope(unittest.TestCase):
+    """Finite theorem window does not collapse to scalar FP or analytic tau claims."""
+
+    def test_scope_records_negative_tau_and_boundary_claims(self):
+        scope = theorem_d_multiweight_frontier_scope()
+        self.assertFalse(scope["analytic_tau_identity_proved"])
+        self.assertFalse(scope["kw_hierarchy_membership_proved"])
+        self.assertFalse(scope["global_modular_boundary_pairing_proved"])
+        self.assertFalse(scope["scalar_fp_lane_sufficient_for_multiweight"])
+        self.assertFalse(scope["finite_window_implies_all_genus"])
+        self.assertFalse(scope["cohomological_theorem_d_universality_proved_here"])
+        self.assertFalse(scope["class_valued_cross_channel_lift_proved"])
+        self.assertFalse(scope["planted_forest_evidence_promoted_to_full_mc_data"])
+        self.assertIn("|Aut(Gamma)|", scope["automorphism_weighting"])
+
+    def test_w3_scalar_lane_noncollapse_g2_g3_g4(self):
+        for g in [2, 3, 4]:
+            diagnostic = w3_scalar_collapse_diagnostic(g)
+            self.assertFalse(diagnostic["collapses_to_scalar_fp_lane"])
+            self.assertTrue(diagnostic["requires_multiweight_cross_correction"])
+            self.assertTrue(diagnostic["has_non_scalar_laurent_powers"])
+
+    def test_w3_finite_window_certificate_exact(self):
+        cert = w3_finite_window_certificate(Fraction(24))
+        self.assertEqual(cert["kappa"], Fraction(20))
+        self.assertTrue(cert["rows"][1]["scalar_equals_full"])
+        for g in [2, 3, 4]:
+            self.assertFalse(cert["rows"][g]["scalar_equals_full"])
+            self.assertEqual(
+                cert["rows"][g]["full"],
+                cert["rows"][g]["scalar_diagonal"] + cert["rows"][g]["delta_cross"],
+            )
+
+    def test_scalar_coefficients_are_fp_lane_only(self):
+        self.assertEqual(
+            w3_scalar_laurent_coefficients(3),
+            {1: Fraction(5, 6) * Fraction(31, 967680)},
+        )
+        self.assertEqual(w3_large_c_limit_cross_over_scalar(2), Fraction(0))
+        self.assertEqual(w3_large_c_limit_cross_over_scalar(3), Fraction(42, 31))
+        self.assertEqual(w3_large_c_limit_cross_over_scalar(4), Fraction(9184, 381))
+
+    def test_single_bridge_sewing_is_diagonal_not_cross_channel(self):
+        diag = sewing_recursion_genus3_from_genus2(3, Fraction(10))
+        self.assertGreater(diag, 0)
+        self.assertEqual(delta_Fg_grav_direct(3, 2, Fraction(10)), 0)
+
+
+# ============================================================================
+# 15. Fang PVA classical limit
 # ============================================================================
 
 class TestFangPVA(unittest.TestCase):
@@ -533,7 +767,7 @@ class TestFangPVA(unittest.TestCase):
 
 
 # ============================================================================
-# 14. Frontier summary
+# 16. Frontier summary
 # ============================================================================
 
 class TestFrontierSummary(unittest.TestCase):
@@ -559,7 +793,7 @@ class TestFrontierSummary(unittest.TestCase):
 
 
 # ============================================================================
-# 15. Cross-volume consistency: degree pattern
+# 17. Cross-volume consistency: degree pattern
 # ============================================================================
 
 class TestDegreePattern(unittest.TestCase):
@@ -572,7 +806,7 @@ class TestDegreePattern(unittest.TestCase):
             # genus 2: loop numbers 0, 1, 2; but h^1=0 trees at genus 2
             # contribute only to diagonal (all genus-0 vertices with bridges
             # and genus-1 vertices force same channel).
-            # Actually at genus 2, the c-expansion has 2 non-trivial powers:
+            # At genus 2, the c-expansion has 2 non-trivial powers:
             # c^0 and c^{-1}.
             # coeffs indexed by h^1 = 0, 1, 2
             self.assertEqual(len(coeffs), 3)
@@ -591,7 +825,7 @@ class TestDegreePattern(unittest.TestCase):
 
 
 # ============================================================================
-# 16. Orbifold Euler characteristic with 7 graphs
+# 18. Orbifold Euler characteristic with 7 graphs
 # ============================================================================
 
 class TestEulerCharacteristic(unittest.TestCase):

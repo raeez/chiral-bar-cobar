@@ -1,30 +1,10 @@
-r"""Tests for the theorem: BCOV modular anomaly equation = MC (g,0) projection.
+r"""Focused tests for finite scalar modular-anomaly / MC witnesses.
 
-THEOREM (thm:modular-anomaly-mc-projection):
-    The BCOV holomorphic anomaly equation
-        dF_g/dE_2* = (1/24) sum_{h=1}^{g-1} F_h F_{g-h}
-    is PRECISELY the genus-g, arity-0 projection of the MC equation
-        D(Theta_A) + (1/2)[Theta,Theta] = 0.
-
-VERIFICATION PATHS (Multi-Path Verification Mandate):
-    Path 1: MC projection — D term and [Theta,Theta] term match anomaly
-    Path 2: Generating function — Ahat product identity
-    Path 3: Heat equation — D^2=0 gives integrability
-    Path 4: Non-holomorphic completion — modular invariance
-    Path 5: Cross-family consistency — kappa^2 scaling
-    Path 6: BCOV comparison — matches original BCOV formulation
-    Path 7: Recursion reconstruction — anomaly recursion reproduces Ahat
-    Path 8: Depth tower — iterated anomaly gives multi-fold convolution
-
-ANTI-PATTERN GUARDS:
-    AP10: All expected values independently computed, never hardcoded.
-    AP15: E_2* is quasi-modular (not holomorphic modular).
-    AP20: kappa is an invariant of A, not of a system.
-    AP22: GF index is hbar^{2g}, not hbar^{2g-2}.
-    AP38: All numerical values carry independent verification.
+The owned compute surface verifies exact arity-zero scalar coefficients.
+It must not promote those finite checks to full MC reconstruction,
+generic moduli proofs, derived-center data, or unrelated kappa slots.
 """
 
-import math
 import pytest
 from fractions import Fraction
 
@@ -32,19 +12,20 @@ F = Fraction
 
 from compute.lib.theorem_modular_anomaly_mc_engine import (
     # Core invariants
+    projection_scope,
+    finite_mc_reconstruction_witness,
+    genus_moduli_scope_witness,
+    anomaly_datum_separation,
+    k3xe_kappa_polysemy,
     _bernoulli_exact,
-    _binom_exact,
-    _factorial,
     lambda_fp_independent,
     _ahat_coefficients,
     # MC projection
     mc_projection_genus_g,
     mc_projection_all_genera,
-    MCProjectionData,
     # Anomaly coefficients
     anomaly_coefficient_direct,
     anomaly_coefficient_gf,
-    anomaly_coefficient_genus_raising,
     # Heat equation
     heat_equation_check,
     heat_equation_dressed_check,
@@ -67,7 +48,9 @@ from compute.lib.theorem_modular_anomaly_mc_engine import (
     anomaly_generating_function_coeffs,
     # Multi-weight
     multi_weight_anomaly_correction,
+    w3_cross_channel_corrections,
     # Numerical
+    e2_quasimodular_qexp,
     numerical_anomaly_check,
     # BCOV comparison
     bcov_original_comparison,
@@ -77,7 +60,60 @@ from compute.lib.theorem_modular_anomaly_mc_engine import (
 
 
 # =========================================================================
-# Section 1: Core invariant verification (AP10: independent computation)
+# Section 0: Scope and conflation guards
+# =========================================================================
+
+class TestScopeAndConflationGuards:
+    """Finite scalar checks must advertise their missing axes."""
+
+    def test_projection_scope_is_scalar_only(self):
+        scope = projection_scope(3, arity=0, finite_depth=1)
+        assert scope.stable_range is True
+        assert scope.scalar_projection_only is True
+        assert scope.can_reconstruct_full_mc is False
+        assert "higher arity operations" in scope.missing_axes
+        assert "derived-center comparison data" in scope.missing_axes
+
+    def test_finite_checks_do_not_reconstruct_full_mc(self):
+        witness = finite_mc_reconstruction_witness(max_genus=6, max_depth=2)
+        assert witness["can_reconstruct_full_mc"] is False
+        assert witness["claim_status"] == "finite scalar witness only"
+        assert "moduli-dependent propagator kernels" in witness["missing_axes"]
+
+    def test_genus_2_generic_moduli_check_is_not_a_proof(self):
+        generic = genus_moduli_scope_witness(2, "generic")
+        assert generic["stable_closed_arity_zero_range"] is True
+        assert generic["generic_period_finite_check_is_proof"] is False
+        assert generic["topological_degree_is_dynamic_witness"] is False
+
+    def test_genus_2_diagonal_degenerates_to_genus_1_theorem(self):
+        diagonal = genus_moduli_scope_witness(2, "diagonal")
+        assert diagonal["diagonal_genus2_degenerates_to_genus1_theorem"] is True
+        assert diagonal["generic_period_finite_check_is_proof"] is False
+
+    def test_curvature_and_center_data_are_separate(self):
+        data = anomaly_datum_separation(1, F(3))
+        assert data["bar_scalar_trace"].value == F(1, 8)
+        assert data["quillen_heisenberg_check"].value == F(1, 8)
+        assert data["bar_differential_curvature"].value == F(3)
+        assert data["arakelov_hodge_curvature"].value is None
+        assert data["derived_center_bulk"].value is None
+        assert data["derived_center_bulk"].feeds_scalar_anomaly is False
+
+    def test_k3xe_kappa_polysemy_excludes_delta5_from_chiral_slot(self):
+        data = k3xe_kappa_polysemy()
+        assert data["kappa_ch_heisenberg_K3xE"] == F(3)
+        assert data["kappa_bkm_Delta5"] == F(5)
+        assert data["kappa_cat_K3xE"] == F(0)
+        assert data["bkm_multiplier_is_chiral_modular_anomaly_kappa"] is False
+
+    def test_anomaly_coefficient_requires_stable_genus(self):
+        with pytest.raises(ValueError):
+            anomaly_coefficient_direct(1, F(1))
+
+
+# =========================================================================
+# Section 1: Core invariant verification
 # =========================================================================
 
 class TestCoreInvariants:
@@ -131,6 +167,10 @@ class TestCoreInvariants:
         """
         assert lambda_fp_independent(3) == F(31, 967680)
 
+    def test_lambda5_equals_73_over_3503554560(self):
+        r"""lambda_5 = 73/3503554560 from the Bernoulli formula."""
+        assert lambda_fp_independent(5) == F(73, 3503554560)
+
     def test_ahat_coefficients_match_lambda(self):
         """Ahat coefficients equal lambda_g (two independent methods)."""
         ahat = _ahat_coefficients(6)
@@ -155,6 +195,7 @@ class TestPath1MCProjection:
         data = mc_projection_genus_g(2, F(1))
         assert data.mc_residual == F(0)
         assert data.is_consistent is True
+        assert data.finite_check_reconstructs_full_mc is False
 
     def test_mc_residual_vanishes_g3(self):
         """MC equation: D + bracket = 0 at genus 3."""
@@ -199,6 +240,13 @@ class TestPath1MCProjection:
             data = mc_projection_genus_g(3, kappa)
             data_unit = mc_projection_genus_g(3, F(1))
             assert data.bracket_term == kappa ** 2 * data_unit.bracket_term
+
+    def test_mc_bracket_half_normalizes_to_anomaly_by_factor_12(self):
+        """(1/2)[Theta,Theta] is 12 times the normalized anomaly coefficient."""
+        data = mc_projection_genus_g(4, F(1))
+        assert data.mc_to_anomaly_factor == F(12)
+        assert data.bracket_term == F(12) * data.anomaly_rhs
+        assert data.scope.can_reconstruct_full_mc is False
 
 
 # =========================================================================
@@ -254,6 +302,7 @@ class TestPath2GFConvolution:
         l1 = lambda_fp_independent(1)
         l2 = lambda_fp_independent(2)
         expected = F(2) * l1 * l2 / F(24)
+        assert expected == F(7, 1658880)
         direct = anomaly_coefficient_direct(3, F(1))
         assert direct == expected
 
@@ -276,12 +325,14 @@ class TestPath2GFConvolution:
 # =========================================================================
 
 class TestPath3HeatEquation:
-    """Verify integrability of the anomaly recursion (D^2 = 0)."""
+    """Verify finite Leibniz consistency of the anomaly recursion."""
 
     def test_heat_consistent_g2(self):
         """Heat equation consistent at genus 2."""
         h = heat_equation_check(2, F(1))
         assert h.is_consistent is True
+        assert h.scalar_level_is_trivial is True
+        assert h.proves_full_d_squared_zero is False
 
     def test_heat_consistent_all_genera(self):
         """Heat equation consistent at all genera."""
@@ -293,6 +344,8 @@ class TestPath3HeatEquation:
         """Dressed heat equation (depth-2 integrability) at genus 3."""
         dh = heat_equation_dressed_check(3, F(1))
         assert dh['integrability_holds'] is True
+        assert dh['proves_full_d_squared_zero'] is False
+        assert dh['scope'].can_reconstruct_full_mc is False
 
     def test_dressed_heat_g4(self):
         """Dressed heat equation at genus 4."""
@@ -323,18 +376,21 @@ class TestPath3HeatEquation:
 # =========================================================================
 
 class TestPath4NonHolomorphic:
-    """Verify non-holomorphic completion is modular invariant."""
+    """Verify the finite non-holomorphic coefficient without overclaiming."""
 
     def test_nh_modular_invariant_g2(self):
-        """Non-holomorphic completion is modular at genus 2."""
+        """The depth-1 coefficient is formal, not a proof of modularity."""
         nh = non_holomorphic_completion(2, F(1))
-        assert nh.is_modular_invariant is True
+        assert nh.completion_is_formal is True
+        assert nh.is_modular_invariant is False
+        assert nh.finite_coefficient_proves_modularity is False
 
     def test_nh_modular_invariant_all_genera(self):
-        """Non-holomorphic completion is modular at all genera."""
+        """No finite coefficient is promoted to full modular invariance."""
         for g in range(2, 9):
             nh = non_holomorphic_completion(g, F(1))
-            assert nh.is_modular_invariant is True
+            assert nh.is_modular_invariant is False
+            assert nh.finite_coefficient_proves_modularity is False
 
     def test_nh_correction_proportional_to_anomaly(self):
         """The nh correction is -3 times the holomorphic anomaly coefficient."""
@@ -384,6 +440,8 @@ class TestPath5CrossFamily:
         """All cross-family kappa^2 ratios are correct."""
         result = cross_family_anomaly_check()
         assert result['all_ratios_correct'] is True
+        assert result['families']['K3xE_chiral_heisenberg_shadow']['kappa'] == F(3)
+        assert result['excluded_non_chiral_kappas']['Delta5_BKM_multiplier'] == F(5)
 
     def test_anomaly_quadratic_in_kappa(self):
         """c_g(2*kappa) = 4*c_g(kappa) for all g."""
@@ -406,6 +464,12 @@ class TestPath5CrossFamily:
         expected = F(13, 2) ** 2 * lambda_fp_independent(1) ** 2 / F(24)
         assert c_2 == expected
 
+    def test_delta5_multiplier_not_used_as_k3xe_chiral_anomaly(self):
+        """The BKM multiplier 5 is not the K3 x E chiral anomaly kappa."""
+        result = cross_family_anomaly_check()
+        assert 'K3xE' not in result['families']
+        assert result['families']['K3xE_chiral_heisenberg_shadow']['kappa'] == F(3)
+
 
 # =========================================================================
 # Section 8: BCOV comparison tests (Path 6)
@@ -418,6 +482,7 @@ class TestPath6BCOVComparison:
         """Our anomaly matches BCOV at genus 2."""
         result = bcov_original_comparison(2, F(1))
         assert result['match'] is True
+        assert result['full_bcov_reconstruction'] is False
 
     def test_bcov_match_g3(self):
         """Our anomaly matches BCOV at genus 3."""
@@ -448,6 +513,7 @@ class TestDepthTower:
         for g in range(1, 7):
             tower = anomaly_depth_tower(g, F(1))
             assert tower['depth_coefficients'][0] == lambda_fp_independent(g)
+            assert tower['finite_check_reconstructs_full_mc'] is False
 
     def test_depth1_is_anomaly(self):
         """Depth 1 = anomaly coefficient."""
@@ -491,7 +557,7 @@ class TestDepthTower:
 # =========================================================================
 
 class TestFullTheorem:
-    """Integration tests for the full 4-path theorem verification."""
+    """Integration tests for the finite scalar verification surface."""
 
     def test_all_paths_kappa_1(self):
         """All 4 paths agree for kappa = 1."""
@@ -501,6 +567,8 @@ class TestFullTheorem:
         assert result.path3_heat_integrability is True
         assert result.path4_nh_completion is True
         assert result.all_paths_agree is True
+        assert result.full_mc_reconstructed is False
+        assert result.details['full_mc_reconstruction']['can_reconstruct_full_mc'] is False
 
     def test_all_paths_kappa_half(self):
         """All 4 paths agree for kappa = 1/2 (Virasoro c=1)."""
@@ -508,9 +576,10 @@ class TestFullTheorem:
         assert result.all_paths_agree is True
 
     def test_all_paths_kappa_5(self):
-        """All 4 paths agree for kappa = 5 (K3 x E)."""
+        """All finite scalar paths agree for kappa = 5 as a formal input."""
         result = verify_theorem_all_paths(F(5), max_genus=6)
         assert result.all_paths_agree is True
+        assert result.full_mc_reconstructed is False
 
     def test_all_paths_kappa_13(self):
         """All 4 paths agree for kappa = 13 (Virasoro c=26, critical)."""
@@ -518,7 +587,7 @@ class TestFullTheorem:
         assert result.all_paths_agree is True
 
     def test_recursion_from_anomaly(self):
-        """Anomaly recursion reproduces Ahat coefficients."""
+        """The independent sine recursion reproduces Ahat coefficients."""
         result = verify_theorem_all_paths(F(1), max_genus=8)
         assert result.details['recursion_from_anomaly'] is True
 
@@ -528,12 +597,16 @@ class TestFullTheorem:
 # =========================================================================
 
 class TestMultiWeight:
-    """Verify multi-weight correction does not break the MC equation."""
+    """Verify multi-weight corrections are not erased by scalar formulas."""
 
     def test_mc_holds_with_correction(self):
-        """MC equation holds regardless of cross-channel correction."""
-        result = multi_weight_anomaly_correction(2, F(1))
-        assert result['mc_still_holds'] is True
+        """A nonzero correction changes the arity-zero anomaly coefficient."""
+        corrections = {2: F(5)}
+        result = multi_weight_anomaly_correction(3, F(1), cross_corrections=corrections)
+        assert result['cross_channel_correction'] != F(0)
+        assert result['total_anomaly'] != result['scalar_anomaly']
+        assert result['mc_still_holds'] == 'not certified by scalar coefficient check'
+        assert result['full_mc_reconstruction'] is False
 
     def test_scalar_anomaly_matches(self):
         """Scalar anomaly matches the direct computation."""
@@ -541,6 +614,29 @@ class TestMultiWeight:
             result = multi_weight_anomaly_correction(g, F(1))
             direct = anomaly_coefficient_direct(g, F(1))
             assert result['scalar_anomaly'] == direct
+            assert result['total_anomaly'] == direct
+            assert result['scalar_formula_complete'] is True
+
+    def test_w3_cross_channel_corrections_are_exact(self):
+        """The W_3 delta F_2 and delta F_3 formulas are exact rationals."""
+        corrections = w3_cross_channel_corrections(F(6))
+        assert corrections[2] == F(35, 16)
+        expected_delta3 = (
+            F(5) * F(6) ** 3
+            + F(3792) * F(6) ** 2
+            + F(1149120) * F(6)
+            + F(217071360)
+        ) / (F(138240) * F(6) ** 2)
+        assert corrections[3] == expected_delta3
+
+    def test_w3_delta_f2_changes_genus3_anomaly(self):
+        """delta F_2 contributes first to the genus-3 anomaly."""
+        corrections = w3_cross_channel_corrections(F(6))
+        result = multi_weight_anomaly_correction(
+            3, F(5), cross_corrections={2: corrections[2]}
+        )
+        expected_extra = F(2) * (F(5) * lambda_fp_independent(1)) * corrections[2] / F(24)
+        assert result['cross_channel_correction'] == expected_extra
 
 
 # =========================================================================
@@ -563,10 +659,16 @@ class TestNumericalCrossCheck:
         assert abs(result['anomaly_coefficient'] - expected) < 1e-15
 
     def test_numerical_kappa_5(self):
-        """Numerical anomaly for K3 x E (kappa = 5)."""
+        """Numerical anomaly for the formal scalar input kappa = 5."""
         result = numerical_anomaly_check(5.0, 2)
         expected = float(anomaly_coefficient_direct(2, F(5)))
         assert abs(result['anomaly_coefficient'] - expected) < 1e-12
+        assert result['finite_check_reconstructs_full_mc'] is False
+
+    def test_e2_qexp_uses_complex_q_powers(self):
+        """E_2* at tau=1/4+i has a nonzero imaginary q-expansion part."""
+        value = e2_quasimodular_qexp(0.25 + 1.0j, terms=4)
+        assert abs(value.imag) > 0
 
 
 # =========================================================================
@@ -611,6 +713,7 @@ class TestConvolutionBracket:
             data = convolution_bracket_genus_g(g, F(1))
             anomaly = anomaly_coefficient_direct(g, F(1))
             assert data['mc_bracket_half'] == F(12) * anomaly
+            assert data['finite_check_reconstructs_full_mc'] is False
 
 
 # =========================================================================
@@ -624,6 +727,11 @@ class TestExplicitTable:
         """Genus 2 anomaly = 1/13824."""
         table = explicit_anomaly_table(2)
         assert table[2]['anomaly_coefficient'] == F(1, 13824)
+
+    def test_table_g3(self):
+        """Genus 3 anomaly = 7/1658880."""
+        table = explicit_anomaly_table(3)
+        assert table[3]['anomaly_coefficient'] == F(7, 1658880)
 
     def test_table_g2_single_term(self):
         """Genus 2 has one distinct term."""

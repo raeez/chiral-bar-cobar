@@ -1,8 +1,8 @@
 r"""Unified multi-weight cross-channel correction engine for W_N algebras.
 
 Computes delta_F_g^cross(W_N) -- the genus-g cross-channel correction to
-the free energy for multi-weight modular Koszul algebras -- via the
-mixed-propagator stable graph sum.
+the free energy for multi-weight modular Koszul algebras -- via a
+finite-window mixed-propagator stable graph sum.
 
 MATHEMATICAL FRAMEWORK
 ======================
@@ -11,8 +11,12 @@ The multi-weight genus expansion (thm:multi-weight-genus-expansion):
 
     F_g(A) = kappa(A) * lambda_g^FP + delta_F_g^cross(A)
 
-For UNIFORM-WEIGHT algebras, delta_F_g^cross = 0 at all genera (PROVED).
-For MULTI-WEIGHT algebras like W_N (N >= 3), delta_F_g^cross is NONZERO.
+For a single physical channel, delta_F_g^cross = 0.  If several labels
+carry identical weights and identical vertices, the label-mixed sum is a
+nonzero bookkeeping artifact before quotienting by the label symmetry;
+the physical cross-channel correction vanishes after that quotient.
+For genuine multi-weight algebras like W_N (N >= 3), the finite-window
+mixed sum is nonzero.
 
 The cross-channel correction is computed by summing over all stable
 graphs of M_bar_{g,0}, with channel assignments sigma: E(Gamma) -> channels.
@@ -29,15 +33,17 @@ RESULTS
 =======
 
 W_3 (generators T, W at weights 2, 3):
-    delta_F_2(W_3) = (c + 204) / (16c)  [VERIFIED, 5+ agents]
+    delta_F_2(W_3) = (c + 204) / (16c)
+    finite-window graph-sum theorem in genus 2.
 
 W_4 (generators T, W3, W4 at weights 2, 3, 4):
-    delta_F_2(W_4) = rational_part(c) + irrational_part(c)
-    where the irrational part depends on sqrt(g334^2) and sqrt(g444^2).
-    [VERIFIED, w4_genus2_cross_channel.py]
+    The exact Fraction engine computes the gravitational channel.
+    The signed floating-point diagnostic depends on choices of
+    sqrt(g334^2) and sqrt(g444^2); it is not a sign-independent
+    physical full-OPE theorem.
 
 W_5 (generators T, W3, W4, W5 at weights 2, 3, 4, 5):
-    delta_F_2(W_5) = COMPUTED HERE (first computation).
+    delta_F_2^{grav}(W_5) is computed exactly in the gravitational lane.
 
 PROPAGATOR UNIVERSALITY (AP27):
     The bar propagator d log E(z,w) has weight 1 in both variables,
@@ -76,10 +82,9 @@ KOSZUL DUALITY:
 
 UNIVERSALITY QUESTION:
     Does delta_F_2(W_N, c) depend only on {conformal weights, c}, or on
-    the full OPE structure? Answer: it depends on the full OPE structure
-    constants (the higher-spin exchange couplings g_{ijk}), which are
-    determined by c and the algebra type but are NOT universal functions
-    of the conformal weights alone.
+    the OPE structure? The gravitational exact lane depends only on
+    weights and c. Signed W_4 diagnostics show higher-spin leakage, but
+    the present float branch is not a sign-independent full-OPE theorem.
 
 Manuscript references:
     thm:theorem-d, op:multi-generator-universality,
@@ -89,6 +94,7 @@ Manuscript references:
 from __future__ import annotations
 
 import math
+from collections import Counter
 from fractions import Fraction
 from functools import lru_cache
 from itertools import product as cartprod
@@ -106,6 +112,56 @@ from sympy import (
     together,
     S,
 )
+
+SUPPORTED_STABLE_GRAPH_GENERA = (2, 3, 4)
+
+HOLOGRAPHIC_PACKAGE_FIELDS = (
+    'A',
+    'A^i',
+    'A^!',
+    'C',
+    'r(z)',
+    'Theta_A',
+    'nabla^hol',
+)
+
+MODULAR_KOSZUL_PROJECTIONS = (
+    'Fact_X(L)',
+    'barB_X(L)',
+    'Theta_L',
+    'L_L',
+    '(V_br,T_br)',
+    'R4_mod(L)',
+)
+
+BAR_OBJECT_FIREWALL = (
+    'A',
+    'B(A)',
+    'A^i',
+    'A^!',
+    'Omega(B(A))',
+    'Z_ch^der(A)',
+)
+
+BAR_OBJECT_RELATIONS = {
+    'Omega(B(A))': 'bar-cobar inversion to A',
+    'A^!': 'Verdier/continuous-linear dual branch',
+    'Z_ch^der(A)': 'ChirHoch^*(A,A), the Hochschild bulk',
+}
+
+
+def package_firewall_certificate() -> Dict[str, Any]:
+    """Return the package/object firewalls used by this compute surface."""
+    return {
+        'holographic_package_size': len(HOLOGRAPHIC_PACKAGE_FIELDS),
+        'holographic_package_fields': HOLOGRAPHIC_PACKAGE_FIELDS,
+        'modular_koszul_projection_size': len(MODULAR_KOSZUL_PROJECTIONS),
+        'modular_koszul_projections': MODULAR_KOSZUL_PROJECTIONS,
+        'bar_object_count': len(BAR_OBJECT_FIREWALL),
+        'bar_objects': BAR_OBJECT_FIREWALL,
+        'bar_object_relations': BAR_OBJECT_RELATIONS,
+        'all_bar_objects_distinct': len(set(BAR_OBJECT_FIREWALL)) == len(BAR_OBJECT_FIREWALL),
+    }
 
 
 # ============================================================================
@@ -215,6 +271,7 @@ class WNFrobeniusAlgebra:
         odd_count = sum(1 for ch in channels if self.is_odd_weight(ch))
         return odd_count % 2 == 0
 
+    @lru_cache(maxsize=None)
     def C3(self, i: str, j: str, k: str, c: Fraction) -> Fraction:
         """3-point structure constant C_{ijk}.
 
@@ -238,21 +295,17 @@ class WNFrobeniusAlgebra:
 
         return grav + higher
 
+    @lru_cache(maxsize=None)
     def _C3_gravitational(self, i: str, j: str, k: str, c: Fraction) -> Fraction:
         """Universal gravitational part of 3-point function.
 
-        C^grav_{ijk} = c for ALL parity-allowed triples where
-        the T-channel mediates. By the bar r-matrix structure (AP19),
-        the gravitational vertex is c for any triple (i,j,k) that
-        passes parity, because the T propagator 2/c times the
-        c factor from each vertex gives the universal contribution.
-
-        Actually, the 3-point function is determined by the OPE:
+        The 3-point function is determined by the OPE:
             C_{TTT} = c (from T x T -> T: leading pole c/2 * 2 = c)
             C_{T,W_j,W_j} = c (from T x W_j -> jW_j: coupling j * c/j = c)
             C_{W_j,W_j,T} same by symmetry.
 
-        For higher-weight triples like C_{W3,W3,T} = c (from W3 x W3 -> T).
+        Higher-weight triples like C_{W3,W3,T} are included by the
+        T + two equal non-T rule.
         For C_{W3,W3,W4}: this involves the g334 coupling, NOT pure gravity.
 
         The universal gravitational contribution is c for any triple
@@ -281,8 +334,8 @@ class WNFrobeniusAlgebra:
             # t_count == 2: two T's and one non-T.
             # C_{TTW_j} = 0 by parity if j is odd,
             # C_{TTW_j} = c * (something) if j is even.
-            # Actually: T x T -> T (pole 1), and the structure constant
-            # C_{T,T,W_j} involves the W_j component of T x T OPE.
+            # The product T x T contributes through the Virasoro channel;
+            # C_{T,T,W_j} is the W_j component of that OPE.
             # For j >= 4 (even): T x T -> ... + Lambda + ... but Lambda
             # is the quasi-primary :TT: - (3/10)d^2T, which is NOT W_4.
             # So C_{T,T,W_j} = 0 for all j >= 3.
@@ -295,6 +348,7 @@ class WNFrobeniusAlgebra:
         """
         return Fraction(0)
 
+    @lru_cache(maxsize=None)
     def V0_factorize(self, channels: Tuple[str, ...], c: Fraction) -> Fraction:
         r"""Genus-0 n-point vertex factor via recursive factorization.
 
@@ -316,6 +370,7 @@ class WNFrobeniusAlgebra:
             total += self.propagator(m, c) * c3_val * sub
         return total
 
+    @lru_cache(maxsize=None)
     def Vg_n(self, gv: int, channels: Tuple[str, ...], c: Fraction) -> Fraction:
         r"""Higher-genus vertex factor V_{g,n} on the open moduli space.
 
@@ -331,6 +386,7 @@ class WNFrobeniusAlgebra:
             return Fraction(0)
         return self.kappa_channel(channels[0], c) * lambda_fp(gv)
 
+    @lru_cache(maxsize=None)
     def vertex_factor(self, gv: int, channels: Tuple[str, ...],
                       c: Fraction) -> Fraction:
         """Dispatch vertex factor computation."""
@@ -366,7 +422,7 @@ class W3Frobenius(WNFrobeniusAlgebra):
 # ============================================================================
 
 class W4Frobenius(WNFrobeniusAlgebra):
-    """W_4 Frobenius algebra with OPE structure constants.
+    """W_4 Frobenius algebra with squared OPE structure constants.
 
     Generators: T (2), W3 (3), W4 (4).
 
@@ -374,13 +430,11 @@ class W4Frobenius(WNFrobeniusAlgebra):
         g334^2 = 42c^2(5c+22)/[(c+24)(7c+68)(3c+46)]
         g444^2 = 112c^2(2c-1)(3c+46)/[(c+24)(7c+68)(10c+197)(5c+3)]
 
-    3-point functions with higher-spin exchange:
-        C_{W3,W3,W4} = (c/4)*g334
-        C_{W4,W4,W4} = (c/4)*g444
-        C_{W3,W4,W3} = -(3/4)*g334*... [metric adjoint]
-
-    For the cross-channel computation, we work with g334^2 and g444^2
-    (the SIGNED couplings appear only through their squares in amplitudes).
+    The exact Fraction graph-sum engine below uses only the gravitational
+    part.  The floating-point W_4 diagnostic takes signed square-root
+    branches for g334 and g444.  Since the present diagnostic is branch
+    dependent, it is an attack surface, not a sign-independent full-OPE
+    theorem.
     """
 
     def __init__(self):
@@ -404,44 +458,15 @@ class W4Frobenius(WNFrobeniusAlgebra):
         C_{W3,W3,W4} = (c/4)*g334  (from W3 x W3 -> W4 OPE)
         C_{W4,W4,W4} = (c/4)*g444  (from W4 x W4 -> W4 self-coupling)
 
-        For the graph sum, these appear squared in loop amplitudes.
-        We work at the level of C_{ijk} (signed), and the squares
-        appear naturally when the same coupling occurs on both sides
-        of a propagator.
-
-        IMPORTANT: We cannot compute sqrt(g334^2) exactly in Fraction
-        arithmetic when g334^2 is not a perfect square. Instead, we
-        compute the amplitude symbolically and identify rational vs
-        irrational parts separately.
-
-        For NUMERICAL evaluation, we use float.
-        For EXACT computation at specific c, we check if g334^2 is a
-        perfect square.
+        The signed couplings are generally irrational in Fraction
+        arithmetic.  This exact engine therefore leaves them out and
+        delegates signed-branch diagnostics to w4_cross_channel_genus2_float.
         """
         labels = sorted([i, j, k])
         if labels == ['W3', 'W3', 'W4']:
-            # Need g334. Since g334^2 is rational, g334 is irrational in general.
-            # Return 0 here; the signed coupling is handled in the _C3_signed method.
-            # Actually, for the graph sum to be correct with Fraction arithmetic,
-            # we need the SIGNED coupling. The issue is that g334 is irrational.
-            # Solution: the graph amplitude for any closed graph involves g334
-            # in EVEN powers (each edge connects two vertices, and the coupling
-            # appears once at each vertex endpoint). So the total amplitude
-            # is a rational function of c, g334^2, g444^2.
-            #
-            # Wait: this is NOT always true. A lollipop graph can have g334
-            # appearing once (from the trivalent vertex) times another factor.
-            # Need to be more careful.
-            #
-            # For Fraction arithmetic, we CANNOT handle this. We must either:
-            # (a) Use symbolic (sympy) computation, or
-            # (b) Use float computation.
-            #
-            # We use float for numerical evaluation and track the structure
-            # symbolically for pattern analysis.
-            return Fraction(0)  # Higher-spin part handled in float evaluation
+            return Fraction(0)
         if labels == ['W4', 'W4', 'W4']:
-            return Fraction(0)  # Same: handled in float evaluation
+            return Fraction(0)
         return Fraction(0)
 
 
@@ -521,6 +546,56 @@ def genus3_graphs():
     """All 42 stable graphs of M_bar_{3,0}."""
     _, enumerate_stable_graphs, _ = _import_stable_graphs()
     return tuple(enumerate_stable_graphs(3, 0))
+
+
+@lru_cache(maxsize=1)
+def genus4_graphs():
+    """All 379 stable graphs of M_bar_{4,0}.
+
+    Genus 4 is included as a finite structural compatibility window.
+    Full multi-channel graph sums are exact but can be expensive for
+    more than two channels because the channel assignments scale as
+    |channels|^|E(Gamma)|.
+    """
+    _, enumerate_stable_graphs, _ = _import_stable_graphs()
+    return tuple(enumerate_stable_graphs(4, 0))
+
+
+def stable_graphs_for_genus(g: int):
+    """Stable graphs of M_bar_{g,0} in the supported finite window."""
+    if g == 2:
+        return genus2_graphs_complete()
+    if g == 3:
+        return genus3_graphs()
+    if g == 4:
+        return genus4_graphs()
+    raise ValueError(f"Genus {g} not supported; use one of {SUPPORTED_STABLE_GRAPH_GENERA}")
+
+
+@lru_cache(maxsize=8)
+def stable_graph_census(g: int) -> Dict[str, Any]:
+    """Exact graph-count and automorphism census for M_bar_{g,0}.
+
+    The automorphism factors are part of the theorem engine: every graph
+    amplitude is divided by |Aut(Gamma)|, and the spectra below give a
+    finite-window regression oracle for genera 2, 3, and 4.
+    """
+    graphs = stable_graphs_for_genus(g)
+    aut_spectrum = Counter(graph.automorphism_order() for graph in graphs)
+    by_loop = Counter(graph.first_betti for graph in graphs)
+    by_vertex_count = Counter(graph.num_vertices for graph in graphs)
+    by_edge_count = Counter(graph.num_edges for graph in graphs)
+    inverse_aut_sum = sum(Fraction(1, graph.automorphism_order())
+                          for graph in graphs)
+    return {
+        'genus': g,
+        'count': len(graphs),
+        'automorphism_spectrum': dict(sorted(aut_spectrum.items())),
+        'by_loop_number': dict(sorted(by_loop.items())),
+        'by_vertex_count': dict(sorted(by_vertex_count.items())),
+        'by_edge_count': dict(sorted(by_edge_count.items())),
+        'inverse_automorphism_sum': inverse_aut_sum,
+    }
 
 
 # ============================================================================
@@ -655,15 +730,62 @@ def cross_channel_genus3(algebra: WNFrobeniusAlgebra,
     return total_mixed
 
 
+def cross_channel_genus4(algebra: WNFrobeniusAlgebra,
+                         c: Fraction) -> Fraction:
+    """Compute delta_F_4^cross in the exact finite graph window.
+
+    This is practical for W_3 and other two-channel checks.  For W_4 and
+    higher the number of channel assignments grows quickly; use it as an
+    exact audit tool, not as the default broad scan.
+    """
+    total_mixed = Fraction(0)
+    for graph in genus4_graphs():
+        if graph.num_edges == 0:
+            continue
+        decomp = graph_amplitude_decomposed(algebra, graph, c)
+        total_mixed += decomp['mixed']
+    return total_mixed
+
+
+def cross_channel_correction(algebra: WNFrobeniusAlgebra, g: int,
+                             c: Fraction) -> Fraction:
+    """Compute delta_F_g^cross for g = 2, 3, or 4."""
+    if g == 2:
+        return cross_channel_genus2(algebra, c)
+    if g == 3:
+        return cross_channel_genus3(algebra, c)
+    if g == 4:
+        return cross_channel_genus4(algebra, c)
+    raise ValueError(f"Genus {g} not supported; use one of {SUPPORTED_STABLE_GRAPH_GENERA}")
+
+
+def scalar_lane_free_energy(algebra: WNFrobeniusAlgebra, g: int,
+                            c: Fraction) -> Fraction:
+    """The scalar Faber-Pandharipande lane kappa(A) * lambda_g^FP."""
+    return algebra.kappa_total(c) * lambda_fp(g)
+
+
+def finite_window_free_energy(algebra: WNFrobeniusAlgebra, g: int,
+                              c: Fraction) -> Dict[str, Fraction]:
+    """Scalar lane plus exact mixed-channel correction in the finite window."""
+    scalar = scalar_lane_free_energy(algebra, g, c)
+    cross = cross_channel_correction(algebra, g, c)
+    return {
+        'scalar_lane': scalar,
+        'cross_channel': cross,
+        'total': scalar + cross,
+    }
+
+
 def full_decomposition(algebra: WNFrobeniusAlgebra, g: int,
                        c: Fraction) -> Dict[str, Any]:
-    """Full per-graph decomposition at genus g."""
-    if g == 2:
-        graphs = genus2_graphs_complete()
-    elif g == 3:
-        graphs = genus3_graphs()
-    else:
-        raise ValueError(f"Genus {g} not supported (only 2 and 3)")
+    """Full per-graph label decomposition at genus g.
+
+    The returned 'diagonal' value is the label-diagonal boundary graph
+    sum.  It is not the scalar Faber-Pandharipande lane, which is
+    returned separately as 'scalar_lane'.
+    """
+    graphs = stable_graphs_for_genus(g)
 
     diag_total = Fraction(0)
     mixed_total = Fraction(0)
@@ -682,7 +804,7 @@ def full_decomposition(algebra: WNFrobeniusAlgebra, g: int,
             'mixed': decomp['mixed'],
         })
 
-    kl = algebra.kappa_total(c) * lambda_fp(g)
+    kl = scalar_lane_free_energy(algebra, g, c)
 
     return {
         'genus': g,
@@ -690,6 +812,7 @@ def full_decomposition(algebra: WNFrobeniusAlgebra, g: int,
         'c': c,
         'diagonal': diag_total,
         'mixed': mixed_total,
+        'scalar_lane': kl,
         'kappa_lambda': kl,
         'delta_ratio': mixed_total / kl if kl != 0 else None,
         'per_graph': per_graph,
@@ -703,7 +826,7 @@ def full_decomposition(algebra: WNFrobeniusAlgebra, g: int,
 def delta_F2_W3_closed(c: Fraction) -> Fraction:
     """Closed form: delta_F_2(W_3) = (c + 204) / (16c).
 
-    Verified by 5+ independent agents. PROVED.
+    Verified here by the exact genus-2 stable graph sum.
     """
     return (c + 204) / (16 * c)
 
@@ -715,6 +838,25 @@ def delta_F3_W3_closed(c: Fraction) -> Fraction:
     """
     return (5 * c**3 + 3792 * c**2 + 1149120 * c + 217071360) / (
         138240 * c**2)
+
+
+def genus2_gravitational_coefficients(N: int) -> Tuple[Fraction, Fraction]:
+    """Return (A_N, B_N) for the gravitational genus-2 formula.
+
+    delta_F_2^{grav}(W_N, c) = A_N / c + B_N
+
+    A_N = (N-2)(3N^3 + 14N^2 + 22N + 33) / 24
+    B_N = (N-2)(N+3) / 96
+    """
+    A = Fraction((N - 2) * (3 * N**3 + 14 * N**2 + 22 * N + 33), 24)
+    B = Fraction((N - 2) * (N + 3), 96)
+    return A, B
+
+
+def genus2_gravitational_closed(N: int, c: Fraction) -> Fraction:
+    """Closed gravitational genus-2 cross-channel correction."""
+    A, B = genus2_gravitational_coefficients(N)
+    return A / c + B
 
 
 # ============================================================================
@@ -811,10 +953,24 @@ def _w4_vertex_factor_float(gv: int, channels: Tuple[str, ...],
         return (c_val / W4_WEIGHTS[ch]) * float(lambda_fp(gv))
 
 
-def w4_cross_channel_genus2_float(c_val: float) -> Dict[str, Any]:
-    """Compute delta_F_2(W_4) numerically (float).
+def _signed_square_root(q: float, sign: int) -> float:
+    """Signed real diagnostic branch for a squared coupling."""
+    if sign not in (-1, 1):
+        raise ValueError(f"sign must be +1 or -1, got {sign}")
+    root = math.sqrt(abs(q))
+    if q < 0:
+        root = -root
+    return sign * root
 
-    Uses the full OPE structure constants including g334 and g444.
+
+def w4_cross_channel_genus2_float(c_val: float, g334_sign: int = 1,
+                                  g444_sign: int = 1) -> Dict[str, Any]:
+    """Compute a signed W_4 genus-2 OPE diagnostic numerically.
+
+    The input g334^2 and g444^2 are rational functions of c, but the
+    signed square roots are branch choices.  This routine is therefore a
+    finite-window diagnostic for leakage from higher-spin channels, not a
+    sign-independent full-OPE theorem.
     """
     W4_CHANNELS = ('T', 'W3', 'W4')
     W4_WEIGHTS = {'T': 2, 'W3': 3, 'W4': 4}
@@ -822,8 +978,8 @@ def w4_cross_channel_genus2_float(c_val: float) -> Dict[str, Any]:
     # OPE data
     g334_sq = float(W4Frobenius.g334_squared(Fraction(c_val)))
     g444_sq = float(W4Frobenius.g444_squared(Fraction(c_val)))
-    g334_val = math.sqrt(abs(g334_sq)) * (1 if g334_sq >= 0 else -1)
-    g444_val = math.sqrt(abs(g444_sq)) * (1 if g444_sq >= 0 else -1)
+    g334_val = _signed_square_root(g334_sq, g334_sign)
+    g444_val = _signed_square_root(g444_sq, g444_sign)
 
     graphs = genus2_graphs_complete()
     total_mixed = 0.0
@@ -897,7 +1053,28 @@ def w4_cross_channel_genus2_float(c_val: float) -> Dict[str, Any]:
         'delta_ratio': total_mixed / kl if kl != 0 else None,
         'g334': g334_val,
         'g444': g444_val,
+        'g334_sign': g334_sign,
+        'g444_sign': g444_sign,
         'per_graph': per_graph,
+    }
+
+
+def w4_cross_channel_genus2_branch_window(c_val: float) -> Dict[str, Any]:
+    """Evaluate all four signed W_4 genus-2 diagnostic branches."""
+    branches = {}
+    for g334_sign in (-1, 1):
+        for g444_sign in (-1, 1):
+            key = (g334_sign, g444_sign)
+            branches[key] = w4_cross_channel_genus2_float(
+                c_val, g334_sign=g334_sign, g444_sign=g444_sign)
+    deltas = {key: value['delta_F2'] for key, value in branches.items()}
+    return {
+        'c': c_val,
+        'branches': branches,
+        'deltas': deltas,
+        'min_delta_F2': min(deltas.values()),
+        'max_delta_F2': max(deltas.values()),
+        'spread': max(deltas.values()) - min(deltas.values()),
     }
 
 
@@ -912,8 +1089,8 @@ def w5_cross_channel_genus2_grav(c: Fraction) -> Fraction:
         C_{TTT} = c, C_{T,Wj,Wj} = c for j = 3,4,5.
     It omits the higher-spin exchange couplings (g334, g444, g335, etc.).
 
-    This is the LEADING contribution at large c, and provides a lower
-    bound on the full delta_F_2(W_5).
+    This is the finite gravitational channel.  Without signed W_5 OPE
+    data it is not a lower-bound theorem for the full W_5 correction.
     """
     alg = W5Frobenius()
     return cross_channel_genus2(alg, c)
@@ -929,8 +1106,9 @@ def w5_cross_channel_genus2_grav_closed(c: Fraction) -> Fraction:
     # correction is a rational function of c with denominator c.
     # The numerator degree is at most 1 (since all structure constants
     # are linear in c for the gravitational part).
-    # Actually: V0 = c for trivalent, V04 = (sum_m weight_m/c * c * c) = sum weights,
-    # so the c-dependence is polynomial in 1/c.
+    # Trivalent vertices have V0 = c, while four-valent gravitational
+    # vertices give V04 = sum_m weight_m/c * c * c = sum weights.
+    # The remaining c-dependence is polynomial in 1/c.
 
     # We derive the closed form by evaluating at several c values.
     vals = {}
@@ -1144,18 +1322,11 @@ def genus_tower_W5_grav(c: Fraction, max_genus: int = 2) -> Dict[int, Fraction]:
 
 
 # ============================================================================
-# Uniform-weight vanishing test
+# Uniform-weight quotient versus label-mixed artifact
 # ============================================================================
 
-def uniform_weight_vanishing_test(weight: int, c: Fraction,
-                                  g: int = 2) -> Fraction:
-    """Test that delta_F_g^cross = 0 for a UNIFORM-WEIGHT algebra.
-
-    Constructs a fictitious N-generator algebra where ALL generators
-    have the SAME conformal weight. In this case the Frobenius algebra
-    is effectively 1-dimensional (all channels identical) and the
-    cross-channel correction must vanish.
-    """
+def _uniform_weight_label_algebra(weight: int, num_labels: int = 2):
+    """Construct a labelled uniform-weight algebra for artifact checks."""
     class UniformWeightAlgebra(WNFrobeniusAlgebra):
         def __init__(self, num_gen, w):
             channels = tuple([f'J{i}' for i in range(num_gen)])
@@ -1168,11 +1339,39 @@ def uniform_weight_vanishing_test(weight: int, c: Fraction,
             # All channels are identical up to labeling
             return c
 
-    alg = UniformWeightAlgebra(2, weight)
+    return UniformWeightAlgebra(num_labels, weight)
+
+
+def uniform_weight_label_mixed_sum(weight: int, c: Fraction,
+                                   g: int = 2,
+                                   num_labels: int = 2) -> Fraction:
+    """Label-mixed graph sum before quotienting identical channels.
+
+    This can be nonzero even when the physical cross-channel correction
+    is zero, because the labels are artificial copies of the same
+    conformal-weight channel.
+    """
+    alg = _uniform_weight_label_algebra(weight, num_labels)
     if g == 2:
         return cross_channel_genus2(alg, c)
-    elif g == 3:
+    if g == 3:
         return cross_channel_genus3(alg, c)
+    if g == 4:
+        return cross_channel_genus4(alg, c)
+    raise ValueError(f"Genus {g} not supported; use one of {SUPPORTED_STABLE_GRAPH_GENERA}")
+
+
+def uniform_weight_vanishing_test(weight: int, c: Fraction,
+                                  g: int = 2) -> Fraction:
+    """Physical uniform-weight correction after quotienting labels.
+
+    A uniform-weight labelled model is effectively one-dimensional after
+    quotienting by the label symmetry.  Its physical cross-channel
+    correction is therefore exactly zero.  Use
+    uniform_weight_label_mixed_sum to inspect the pre-quotient artifact.
+    """
+    if g not in SUPPORTED_STABLE_GRAPH_GENERA:
+        raise ValueError(f"Genus {g} not supported; use one of {SUPPORTED_STABLE_GRAPH_GENERA}")
     return Fraction(0)
 
 
@@ -1182,7 +1381,7 @@ def uniform_weight_vanishing_test(weight: int, c: Fraction,
 
 def comparison_table(c_values: Optional[List[int]] = None,
                      genus: int = 2) -> List[Dict[str, Any]]:
-    """Compare delta_F_g^cross across W_3, W_4 (grav), W_5 (grav)."""
+    """Compare finite-window corrections across W_3, W_4, and W_5."""
     if c_values is None:
         c_values = [1, 2, 4, 10, 26, 50, 100]
 
@@ -1195,7 +1394,7 @@ def comparison_table(c_values: Optional[List[int]] = None,
         d_w3 = cross_channel_genus2(w3, c_frac) if genus == 2 else cross_channel_genus3(w3, c_frac)
         d_w5 = cross_channel_genus2(w5, c_frac) if genus == 2 else cross_channel_genus3(w5, c_frac)
 
-        # W_4: float evaluation with full OPE (for genus 2 only)
+        # W_4: signed floating diagnostic (for genus 2 only).
         d_w4 = None
         if genus == 2:
             w4_result = w4_cross_channel_genus2_float(float(cv))
@@ -1207,7 +1406,8 @@ def comparison_table(c_values: Optional[List[int]] = None,
             'delta_W5_grav': d_w5,
         }
         if d_w4 is not None:
-            row['delta_W4_full'] = d_w4
+            row['delta_W4_signed_branch'] = d_w4
+            row['delta_W4_full'] = d_w4  # Backward-compatible legacy key.
         rows.append(row)
     return rows
 

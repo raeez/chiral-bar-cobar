@@ -798,6 +798,48 @@ class TestConjectureFormulation:
         deps = stmt['dependencies']
         assert any('Deligne' in d for d in deps)
 
+    def test_statement_records_seven_entry_projection_surface(self):
+        """The statement exposes the repaired seven-entry holographic surface."""
+        stmt = HolographicPurityConjecture.statement()
+        expected_keys = {
+            'holographic_package',
+            'holographic_package_entries',
+            'projection_scope',
+            'object_separation',
+            'bar_cobar_scope',
+        }
+        assert expected_keys <= set(stmt)
+        assert stmt['holographic_package'] == (
+            '(A, A^i, A^!, C, r(z), Theta_A, nabla^hol)'
+        )
+        assert stmt['holographic_package_entries'] == (
+            'A',
+            'A^i',
+            'A^!',
+            'C',
+            'r(z)',
+            'Theta_A',
+            'nabla^hol',
+        )
+
+        scope = stmt['projection_scope']
+        assert 'D-module-purity/regularity projection' in scope
+        assert 'seven-entry holographic package' in scope
+
+        objects = stmt['object_separation']
+        assert objects['A'] == 'boundary chiral algebra'
+        assert 'Omega(B(A)) recovers A' in objects['B(A)']
+        assert 'bar-dual coalgebra' in objects['A^i']
+        assert 'Verdier/linear Koszul branch' in objects['A^!']
+        assert 'bulk/line channel' in objects['C']
+
+        bar_cobar_scope = stmt['bar_cobar_scope']
+        assert 'Omega(B(A)) recovers A by inversion' in bar_cobar_scope
+        assert 'A^i = H^*(B(A))' in bar_cobar_scope
+        assert 'A^! is obtained from A^i by Verdier/linear duality' in (
+            bar_cobar_scope
+        )
+
 
 # =========================================================================
 # IX. Integration Tests

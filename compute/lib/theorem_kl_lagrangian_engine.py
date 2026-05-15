@@ -1,4 +1,4 @@
-r"""Knill-Laflamme conditions from Lagrangian isotropy: four independent proofs.
+r"""Knill-Laflamme scope diagnostics for the Lagrangian compute surface.
 
 MATHEMATICAL FRAMEWORK
 ======================
@@ -16,47 +16,61 @@ depending only on the errors, not on the code states.  Equivalently:
 
 for any orthonormal basis {|psi_i>} of C.
 
-This engine proves (*) from the bar-cobar framework via FOUR independent
-paths, each grounded in a different theorem from the monograph:
+This engine checks the finite algebraic surfaces around (*) via four
+independent diagnostics grounded in the monograph.  It does not promote
+Verdier isotropy, finite scalar examples, shadow-slot counts, or
+bar-cobar inversion to a full Hilbert-space quantum error-correcting
+theorem.
 
 PATH 1 (VERDIER ANTI-INVOLUTION):
-  Theorem C provides Q_g(A) + Q_g(A!) = H*(M_g_bar, Z(A)).
+  Theorem C provides Q_g(A) + Q_g(A^!) =
+  H*(M_g_bar, Z_ch^der(A)), where Z_ch^der(A) is the bulk/derived
+  centre.
   The Verdier duality sigma satisfies <sigma(v), sigma(w)>_D = -<v,w>_D.
-  The eigenspaces V+ = Q_g(A), V- = Q_g(A!) are isotropic:
+  The eigenspaces V+ = Q_g(A), V- = Q_g(A^!) are isotropic:
   <v,w>_D = 0 for v,w in V+ (or both in V-).
-  Isotropy of the code subspace C = V+ is the structural prerequisite
-  for QEC: code states are invisible under the Verdier pairing.
-  At genus 1 (dim C = 1), KL is automatic (any operator on a 1D space
-  is scalar).
+  Isotropy of the code subspace C = V+ is the algebraic prerequisite
+  for a symplectic code comparison.  It is not the Hilbert-space KL
+  equation, because no Hermitian adjoint or physical error algebra has
+  been supplied.
+  On the genus-1 scalar conformal-block line, KL compression is
+  automatic (any operator on a 1D space is scalar).  This does not make
+  the whole genus-1 complementarity complex one-dimensional.
 
 PATH 2 (LAGRANGIAN GEOMETRY):
   Q_g(A) is Lagrangian in the (-(3g-3))-shifted symplectic space C_g(A)
   with respect to the shifted symplectic form omega_{-(3g-3)}.
   Lagrangian = maximally isotropic + half-dimensional.
-  The KL condition omega(v,w) = 0 for v,w in Q_g(A) follows from
-  the Lagrangian condition.  The code rate k/n = 1/2 is the maximum
-  achievable by a Lagrangian code.
+  The Verdier-isotropic condition omega(v,w) = 0 for v,w in Q_g(A)
+  follows from the Lagrangian condition.  This is the algebraic
+  prerequisite named in Proposition prop:hc-knill-laflamme, not the
+  physical KL compression identity.
 
-PATH 3 (SHADOW DEPTH = REDUNDANCY):
-  The shadow obstruction tower Theta_A^{<=r} provides r-2 independent
-  redundancy channels.  The MC equation determines higher-arity shadows
-  from lower-arity data, and each such determination is an independent
-  error-correction channel.  The distance in the arity filtration is 2
-  (the minimum arity of a non-trivial shadow component).
+PATH 3 (SHADOW DEPTH = FORMAL SLOTS):
+  The shadow obstruction tower Theta_A^{<=r} provides r-2 formal
+  non-scalar MC slots in finite G/L/C windows.  These are not
+  Hilbert-space redundancy channels or code-distance data until a
+  physical error model and recovery maps are supplied.
 
 PATH 4 (ENTANGLEMENT WEDGE / BAR-COBAR ADJUNCTION):
   The bar-cobar adjunction B -| Omega (Theorem A) provides encoding
-  (bar) and decoding (cobar).  Koszulness (Theorem B: Omega(B(A)) ~ A)
-  ensures exact reconstruction: the cobar perfectly inverts the bar.
-  This IS the QEC recovery condition: encoding followed by decoding
-  gives back the original data (up to quasi-isomorphism).
+  into the bar coalgebra B(A) and decoding by cobar.  Koszulness
+  (Theorem B: Omega(B(A)) ~ A) ensures exact reconstruction: the
+  cobar inverts the bar and recovers A itself.  The intermediate
+  algebra A^i is H^*(B(A)); the Koszul dual A^! is obtained from
+  A^i by Verdier/linear duality under finite-type or completed
+  hypotheses.
+  This is exact algebraic boundary recovery.  It is not construction of
+  a physical bulk theory and not a KL recovery theorem by itself.
 
 CONVENTIONS (from CLAUDE.md anti-patterns):
   AP19: r-matrix has poles one order below the OPE
   AP20: kappa(A) is intrinsic to A, not the physical system
-  AP24: kappa + kappa' = 13 for Virasoro, NOT 0
-  AP25: Omega(B(A)) = A (inversion), D_Ran(B(A)) = B(A!) (intertwining)
-  AP31: kappa = 0 does NOT imply Theta = 0
+  AP24: kappa + kappa' = 13 for Virasoro
+  AP25: B(A) is a coalgebra; A^i = H^*(B(A)); A^! comes from A^i by
+        Verdier/linear duality under finite-type/completed hypotheses;
+        Omega(B(A)) = A is inversion; Z_ch^der(A) is bulk/derived centre
+  AP31: kappa = 0 leaves Theta as separate data
   AP45: desuspension LOWERS degree: |s^{-1}v| = |v| - 1
 
 References:
@@ -102,6 +116,80 @@ from compute.lib.entanglement_shadow_engine import (
 c_sym = Symbol('c')
 g_sym = Symbol('g', positive=True, integer=True)
 
+AP25_OBJECT_CHAIN = {
+    'bar_object': 'B(A) is the bar coalgebra.',
+    'bar_cohomology': 'A^i = H^*(B(A)).',
+    'koszul_dual': (
+        'A^! is obtained from A^i by Verdier/linear duality under '
+        'finite-type or completed hypotheses.'
+    ),
+    'inversion': 'Omega(B(A)) = A is bar-cobar inversion.',
+    'derived_centre': 'Z_ch^der(A) is the bulk/derived centre.',
+}
+
+HOLOGRAPHIC_PACKAGE_ENTRIES = (
+    'A',
+    'A^i',
+    'A^!',
+    'C',
+    'r(z)',
+    'Theta_A',
+    'nabla^hol',
+)
+
+MODULAR_KOSZUL_COMPUTE_PROJECTIONS = (
+    'Fact_X(L)',
+    'barB_X(L)',
+    'Theta_L',
+    'L_L',
+    '(V_br,T_br)',
+    'R4_mod(L)',
+)
+
+KERNEL_NORMALIZATIONS = {
+    'affine_raw_collision': 'k*Omega_tr/z',
+    'affine_kz': 'Omega/((k+h^vee)z)',
+    'heisenberg': 'k/z',
+    'virasoro': '(c/2)/z^3 + 2T/z',
+}
+
+KL_SCOPE_FIREWALL = {
+    'verdier_isotropy': (
+        'algebraic symplectic prerequisite; not the Hilbert-space KL equation'
+    ),
+    'scalar_line': 'one-dimensional compression; KL automatic',
+    'lagrangian_projection': (
+        'removes the complementary Lagrangian component; does not correct '
+        'logical action inside the code'
+    ),
+    'shadow_depth': (
+        'formal MC slot count; not a Hilbert-space code distance'
+    ),
+    'bar_cobar': (
+        'boundary algebra quasi-isomorphism; not physical bulk equivalence'
+    ),
+}
+
+
+def holographic_package_entries() -> Tuple[str, ...]:
+    """Canonical seven entries of the holographic package H(A)."""
+    return HOLOGRAPHIC_PACKAGE_ENTRIES
+
+
+def modular_koszul_compute_projections() -> Tuple[str, ...]:
+    """Canonical six projections of the modular Koszul compute package."""
+    return MODULAR_KOSZUL_COMPUTE_PROJECTIONS
+
+
+def kernel_normalization_firewall() -> Dict[str, str]:
+    """Return kernel normalizations whose coefficients must not be conflated."""
+    return dict(KERNEL_NORMALIZATIONS)
+
+
+def kl_scope_firewall() -> Dict[str, str]:
+    """Return the scope boundaries enforced by this compute surface."""
+    return dict(KL_SCOPE_FIREWALL)
+
 
 # ===========================================================================
 # 1. SYMPLECTIC FORM AND VERDIER INVOLUTION (algebraic foundations)
@@ -135,7 +223,7 @@ def verdier_involution(n: int) -> np.ndarray:
     sigma = [[I_n, 0], [0, -I_n]]
 
     This is the involution whose +1 eigenspace is Q_g(A) (the code
-    subspace) and whose -1 eigenspace is Q_g(A!) (the error space).
+    subspace) and whose -1 eigenspace is Q_g(A^!) (the error space).
 
     The key property: <sigma(v), sigma(w)>_D = -<v,w>_D
     (anti-commutativity with respect to the symplectic form).
@@ -179,7 +267,7 @@ def lagrangian_subspaces(n: int) -> Tuple[np.ndarray, np.ndarray]:
     r"""The two complementary Lagrangian subspaces.
 
     V+ = span of first n standard basis vectors (code subspace, Q_g(A))
-    V- = span of last n standard basis vectors (error space, Q_g(A!))
+    V- = span of last n standard basis vectors (error space, Q_g(A^!))
 
     Both are isotropic under J, and each is n-dimensional in C^{2n},
     so both are Lagrangian (maximally isotropic).
@@ -239,7 +327,7 @@ def verify_isotropy(n: int) -> Dict:
 # ===========================================================================
 
 def path1_verdier_proof(n: int) -> Dict:
-    r"""KL from Verdier anti-involution (Proposition prop:hc-knill-laflamme).
+    r"""Verdier isotropy plus scalar-line KL scope.
 
     The proof proceeds in three steps:
 
@@ -251,14 +339,14 @@ def path1_verdier_proof(n: int) -> Dict:
       => <v,w>_D = 0.  (Isotropy of V+.)
       Same argument for V-.
 
-    Step 3: At genus 1, dim Q_1(A) = 1 (the scalar shadow kappa lives
-      on a 1D line).  For a 1D code subspace C, the KL condition
-      P_C E^dag E P_C = c(E) P_C is automatic: any operator restricted
-      to a 1D space is a scalar.
+    Step 3: On the one-dimensional scalar conformal-block line (the
+      kappa projection), the KL condition P_C E^dag E P_C = c(E) P_C
+      is automatic: any operator restricted to a 1D space is a scalar.
 
-    For genus g >= 2, dim Q_g(A) >= 1, and the full KL condition
-    requires the physical inner product from the state-operator
-    correspondence (Tomita-Takesaki structure for unitary theories).
+    For the full complementarity complex, and in particular for
+    higher-dimensional conformal-block spaces, the full KL condition
+    requires the physical inner product, code projector, and error
+    *-algebra.  Verdier isotropy does not supply those data.
 
     Multi-path verification: we test the algebraic identity
     sigma^T J sigma = -J for multiple dimensions, and verify KL
@@ -308,10 +396,18 @@ def path1_verdier_proof(n: int) -> Dict:
         'kl_genus_1': kl_g1,
         'kl_genus_1_tests': n_tests,
         'kl_genus_1_violations': kl_violations,
+        'automatic_kl_scope': 'one-dimensional scalar conformal-block line',
+        'full_hilbert_kl_proved': False,
+        'isotropy_is_hilbert_kl': False,
+        'requires_physical_data': (
+            'Hermitian inner product, code projector, and physical error *-algebra'
+        ),
         'mechanism': (
             'sigma^T J sigma = -J => eigenspaces isotropic. '
-            'At genus 1: dim C = 1 => KL automatic. '
-            'At genus >= 2: requires unitary structure (Tomita-Takesaki).'
+            'On a genus-1 scalar conformal-block line: dim C = 1 '
+            '=> KL automatic. '
+            'For the full or higher-dimensional complex: physical KL '
+            'requires a Hermitian inner product and error *-algebra.'
         ),
     }
 
@@ -385,24 +481,89 @@ def lagrangian_dimension_check(n: int) -> Dict:
     }
 
 
+def lagrangian_projection_not_kl_counterexample() -> Dict:
+    r"""Finite countermodel: symplectic projection is not KL recovery.
+
+    This is the finite-dimensional model in
+    Proposition prop:hc-projection-not-kl.  Let
+
+      V = C e_1 + C e_2 + C f_1 + C f_2,
+      C = <e_1, e_2>,  E = <f_1, f_2>,
+
+    with the standard Verdier symplectic form pairing e_i with f_i and
+    vanishing on C x C and E x E.  The operator
+
+      T(e_1) = e_1,  T(e_2) = 2 e_2,  T(f_i) = 0
+
+    preserves the code summand and has no leakage into E.  The
+    symplectic projection along E therefore recovers the code component.
+    But for the standard Hermitian form,
+
+      P_C T^dag T P_C = diag(1, 4)
+
+    on C, not a scalar multiple of P_C.  Thus Lagrangian projection and
+    Verdier isotropy do not imply the Hilbert-space KL condition.
+
+    >>> result = lagrangian_projection_not_kl_counterexample()
+    >>> result['preserves_code_summand']
+    True
+    >>> result['kl_satisfied']
+    False
+    """
+    n = 2
+    J = verdier_symplectic_form(n)
+    Vp, _ = lagrangian_subspaces(n)
+
+    P_C = np.zeros((2 * n, 2 * n), dtype=float)
+    P_C[:n, :n] = np.eye(n)
+
+    error = np.diag([1.0, 2.0, 0.0, 0.0])
+    compression = P_C @ error.T @ error @ P_C
+    code_block = compression[:n, :n]
+
+    scalar = np.trace(code_block) / n
+    scalar_residual = np.max(np.abs(code_block - scalar * np.eye(n)))
+    leakage_block = error[n:, :n]
+
+    return {
+        'reference': 'prop:hc-projection-not-kl (holographic_codes_koszul.tex)',
+        'dim_ambient': 2 * n,
+        'dim_code': n,
+        'verdier_isotropy': bool(np.max(np.abs(Vp.T @ J @ Vp)) < 1e-14),
+        'preserves_code_summand': bool(np.max(np.abs(leakage_block)) < 1e-14),
+        'symplectic_projection_removes_leakage': True,
+        'compression_diagonal': tuple(float(x) for x in np.diag(code_block)),
+        'best_scalar': float(scalar),
+        'scalar_residual': float(scalar_residual),
+        'is_scalar_on_code': bool(scalar_residual < 1e-14),
+        'kl_satisfied': bool(scalar_residual < 1e-14),
+        'failure_mode': (
+            'Logical action inside the code is non-scalar even though the '
+            'operator preserves the Lagrangian summand.'
+        ),
+    }
+
+
 def path2_lagrangian_proof(n: int, g: int = 1) -> Dict:
-    r"""KL from Lagrangian geometry in the shifted symplectic space.
+    r"""Lagrangian prerequisite in the shifted symplectic space.
 
     The proof:
 
-    1. C_g(A) = R Gamma(M_g_bar, Z(A)) carries a (-(3g-3))-shifted
-       symplectic form omega.
+    1. C_g(A) = R Gamma(M_g_bar, Z_ch^der(A)) carries a
+       (-(3g-3))-shifted symplectic form omega, where Z_ch^der(A) is
+       the bulk/derived centre.
 
     2. Q_g(A) is Lagrangian in (C_g(A), omega):
        (a) omega|_{Q_g(A)} = 0 (isotropy)
        (b) dim Q_g(A) = (1/2) dim C_g(A) (half-dimensional)
 
     3. The KL condition <psi_i|E^dag E|psi_j> = C_{ab} delta_{ij}
-       follows from isotropy (a): for v,w in Q_g(A),
-       omega(v, w) = 0 means the code states are mutually invisible
-       under the symplectic pairing.
+       does not follow from isotropy alone.  Isotropy says
+       omega(v, w) = 0 for v,w in Q_g(A); KL is a Hermitian
+       compression identity for a specified physical error algebra.
 
-    4. The code rate k/n = 1/2 is the maximum for a Lagrangian code.
+    4. The finite-window Lagrangian rate k/n = 1/2 is the maximum
+       isotropic rate in this symplectic model.
 
     5. At genus 1, the shifted symplectic degree is 0 (ordinary
        symplectic geometry).  The Lagrangian condition reduces to
@@ -411,8 +572,10 @@ def path2_lagrangian_proof(n: int, g: int = 1) -> Dict:
     >>> result = path2_lagrangian_proof(3, g=1)
     >>> result['lagrangian_verified']
     True
-    >>> result['kl_from_isotropy']
+    >>> result['lagrangian_prerequisite']
     True
+    >>> result['kl_from_isotropy']
+    False
     >>> result['code_rate']
     Fraction(1, 2)
     """
@@ -429,18 +592,26 @@ def path2_lagrangian_proof(n: int, g: int = 1) -> Dict:
         'isotropy_verified': iso['code_isotropic'] and iso['error_isotropic'],
         'half_dimensional': lag['rate'] == Fraction(1, 2),
         'cross_pairing': iso['cross_pairing_nondegenerate'],
-        'kl_from_isotropy': lag['isotropic'],
+        'lagrangian_prerequisite': lag['isotropic'],
+        'kl_from_isotropy': False,
+        'full_hilbert_kl_proved': False,
+        'counterexample_available': True,
+        'requires_physical_data': (
+            'Hermitian inner product, code projector, and physical error *-algebra'
+        ),
         'code_rate': lag['rate'],
         'mechanism': (
             f'Q_g(A) is Lagrangian in the {shift}-shifted symplectic space C_g(A). '
-            'Lagrangian isotropy omega(v,w) = 0 for v,w in Q_g(A) gives KL. '
-            f'Code rate = 1/2 (maximal for Lagrangian codes).'
+            'Lagrangian isotropy omega(v,w) = 0 is the Verdier-isotropic '
+            'prerequisite. It does not imply the Hilbert-space KL '
+            'compression identity. Code rate = 1/2 on finite '
+            'Lagrangian windows.'
         ),
     }
 
 
 # ===========================================================================
-# 4. PATH 3: SHADOW DEPTH = REDUNDANCY CHANNELS
+# 4. PATH 3: SHADOW DEPTH = FORMAL MC SLOTS
 # ===========================================================================
 
 SHADOW_DEPTH_TABLE = {
@@ -453,16 +624,16 @@ SHADOW_DEPTH_TABLE = {
 
 
 def mc_redundancy_at_arity(r: int) -> int:
-    r"""Number of redundancy channels at arity r.
+    r"""Number of formal non-scalar MC slots at arity r.
 
     The MC equation D Theta + (1/2)[Theta, Theta] = 0 at arity r
     expresses Theta_r in terms of lower-arity data Theta_{<r}:
 
       d_2(Theta_r) = - (1/2) sum_{i+j=r} [Theta_i, Theta_j] - ...
 
-    Each such relation is one redundancy channel: the arity-r shadow
-    is DETERMINED by the lower-arity data.  An error that corrupts
-    Theta_r but not Theta_{<r} can be detected and corrected.
+    Each such relation is one formal slot: the arity-r shadow is
+    controlled by lower-arity data up to obstruction and gauge classes.
+    A Hilbert-space correction channel requires a physical error model.
 
     Channels = r - 2  (arity 2 = kappa is the first non-trivial component).
 
@@ -481,23 +652,24 @@ def mc_redundancy_at_arity(r: int) -> int:
 
 
 def path3_shadow_depth_proof(family: str) -> Dict:
-    r"""KL from shadow depth = redundancy channels.
+    r"""Formal shadow-slot count from the MC obstruction tower.
 
     The shadow obstruction tower Theta_A^{<=r} satisfies the MC equation
     at each arity.  The MC equation at arity r determines Theta_r from
-    lower-arity data, providing one redundancy channel per arity
+    lower-arity data, providing one formal non-scalar slot per arity
+    after a gauge convention or contraction is fixed
     (thm:hc-shadow-redundancy).
 
-    Class G (r_max=2): 0 redundancy (kappa is the entire code datum)
-    Class L (r_max=3): 1 channel (cubic determined from kappa)
-    Class C (r_max=4): 2 channels (cubic + quartic from kappa)
-    Class M (r_max=inf): infinite channels, convergent for rho < 1
+    Class G (r_max=2): 0 non-scalar slots
+    Class L (r_max=3): 1 non-scalar slot
+    Class C (r_max=4): 2 non-scalar slots
+    Class M (r_max=inf): countably many slots, convergent for rho < 1
 
-    The arity filtration distance is ALWAYS 2: kappa at arity 2 is
-    the minimum essential datum that cannot be recovered from lower arities.
+    The scalar tower begins at arity 2.  No Hilbert-space code-distance
+    formula follows from this datum alone.
 
     Multi-path verification: compare shadow depth from the family
-    classification with the MC redundancy count.
+    classification with the formal MC slot count.
 
     >>> result = path3_shadow_depth_proof('heisenberg')
     >>> result['redundancy_channels']
@@ -532,47 +704,58 @@ def path3_shadow_depth_proof(family: str) -> Dict:
         consistency = True  # infinite case
 
     return {
-        'path': 'Shadow depth = redundancy channels',
+        'path': 'Shadow depth = formal MC slots',
         'reference': 'thm:hc-shadow-redundancy (holographic_codes_koszul.tex)',
         'family': family,
         'shadow_class': cls,
         'r_max': r_max,
         'redundancy_channels': channels,
+        'formal_shadow_slots': channels,
         'arity_distance': arity_distance,
         'channels_consistent': consistency,
+        'hilbert_code_distance_determined': False,
+        'requires_physical_error_model': True,
         'mechanism': (
-            f'MC equation at arity r determines Theta_r from Theta_{{<r}}. '
-            f'Class {cls}: {channels} redundancy channel(s). '
-            f'Arity filtration distance = {arity_distance} (kappa is essential).'
+            f'MC equation at arity r controls Theta_r from Theta_{{<r}} '
+            'up to obstruction and gauge classes. '
+            f'Class {cls}: {channels} formal non-scalar slot(s). '
+            f'The scalar tower starts at arity {arity_distance}; code '
+            'distance needs a physical error model.'
         ),
     }
 
 
 # ===========================================================================
-# 5. PATH 4: BAR-COBAR ADJUNCTION = QEC RECOVERY
+# 5. PATH 4: BAR-COBAR ADJUNCTION = BOUNDARY RECOVERY
 # ===========================================================================
 
 def bar_cobar_recovery_structure(family: str, h_max: int = 6) -> Dict:
-    r"""Bar-cobar adjunction as QEC encoding/decoding.
+    r"""Bar-cobar adjunction as exact boundary-algebra recovery.
 
-    Encoding: B: A -> B(A)  (bar construction, the encoding map)
+    Encoding: B: A -> B(A)  (bar construction into the bar coalgebra)
     Decoding: Omega: B(A) -> A  (cobar construction, the recovery map)
 
     Theorem B (bar-cobar inversion on Koszul locus):
       Omega(B(A)) ~ A  (quasi-isomorphism)
 
-    This IS the QEC recovery condition:
+    This is exact algebraic boundary recovery:
       - Encoding: maps algebra A into the bar coalgebra B(A)
       - Decoding: recovers A from B(A) via the cobar functor
       - Exactness: the round-trip is a quasi-isomorphism (= exact
         recovery up to homotopy)
 
-    IMPORTANT (AP25): Omega(B(A)) = A (recovers the ORIGINAL algebra).
-    The Koszul dual A! is obtained by VERDIER duality:
-      D_Ran(B(A)) = B(A!) (intertwining, NOT inversion).
+    It is not, by itself, a Hilbert-space QEC recovery theorem or a
+    physical bulk reconstruction theorem.  Those require the physical
+    BRST/derived-centre comparison and a Hilbert-space error model.
 
-    The 12 Koszulness characterizations (K1-K12) are 12 equivalent
-    conditions for the recovery to be exact.
+    IMPORTANT (AP25): B(A) is a coalgebra, not an algebra-level dual.
+    Its bar cohomology is A^i = H^*(B(A)).  The Koszul dual A^! is
+    obtained from A^i by Verdier/linear duality under finite-type or
+    completed hypotheses.  Omega(B(A)) = A is inversion: it recovers
+    the original algebra A, not A^!.
+
+    The 12 Koszulness characterizations (K1-K12) are algebraic
+    criteria for boundary recovery to be exact.
 
     >>> result = bar_cobar_recovery_structure('heisenberg')
     >>> result['exact_recovery']
@@ -584,49 +767,67 @@ def bar_cobar_recovery_structure(family: str, h_max: int = 6) -> Dict:
     is_koszul = True
 
     return {
-        'path': 'Bar-cobar adjunction = QEC recovery',
+        'path': 'Bar-cobar adjunction = boundary recovery',
         'reference': 'Theorem B (bar_cobar_adjunction_inversion.tex)',
         'family': family,
         'encoding_functor': 'B (bar construction)',
         'decoding_functor': 'Omega (cobar construction)',
         'round_trip': 'Omega(B(A)) ~ A (quasi-isomorphism)',
+        'bar_object': AP25_OBJECT_CHAIN['bar_object'],
+        'bar_cohomology_object': AP25_OBJECT_CHAIN['bar_cohomology'],
+        'koszul_dual_source': AP25_OBJECT_CHAIN['koszul_dual'],
+        'derived_centre_object': AP25_OBJECT_CHAIN['derived_centre'],
+        'derived_center_object': AP25_OBJECT_CHAIN['derived_centre'],
+        'ap25_object_chain': dict(AP25_OBJECT_CHAIN),
         'is_koszul': is_koszul,
         'exact_recovery': is_koszul,
+        'exact_boundary_recovery': is_koszul,
+        'physical_qec_recovery_proved': False,
+        'physical_bulk_equivalence_proved': False,
+        'requires_brst_derived_centre_comparison': True,
+        'recovery_scope': 'boundary algebra quasi-isomorphism',
         'koszulness_characterizations': 12,
         'note_ap25': (
-            'Omega(B(A)) = A (inversion, recovers A itself). '
-            'D_Ran(B(A)) = B(A!) (intertwining, gives Koszul dual).'
+            'B(A) is a coalgebra; A^i = H^*(B(A)); A^! is obtained '
+            'from A^i by Verdier/linear duality under finite-type or '
+            'completed hypotheses. Omega(B(A)) = A is inversion, '
+            'recovering A itself. Z_ch^der(A) is the bulk/derived centre.'
         ),
         'mechanism': (
-            'Bar = encoding. Cobar = decoding. '
-            'Koszulness (Thm B) => Omega(B(A)) ~ A (exact recovery). '
-            '12 Koszulness characterizations = 12 equivalent QEC conditions.'
+            'Bar coalgebra = encoding. Cobar = decoding. '
+            'Koszulness (Thm B) => Omega(B(A)) ~ A (exact boundary '
+            'recovery). 12 Koszulness characterizations are algebraic '
+            'bar-cobar criteria, not 12 physical KL equations.'
         ),
     }
 
 
 def path4_barcobar_proof(family: str) -> Dict:
-    r"""KL from the bar-cobar adjunction (Theorem A + Theorem B).
+    r"""Boundary recovery from the bar-cobar adjunction (Theorems A + B).
 
     The proof:
 
     1. Theorem A: B -| Omega is an adjunction.
-       The bar functor B: A -> B(A) maps the algebra to a coalgebra.
+       The bar functor B: A -> B(A) maps the algebra to the bar
+       coalgebra.
        The cobar functor Omega: C -> Omega(C) maps a coalgebra back.
-       The unit eta: A -> Omega(B(A)) is the QEC encoding-decoding.
+       The unit eta: A -> Omega(B(A)) is the algebraic
+       encoding-decoding map for boundary recovery.
 
     2. Theorem B: On the Koszul locus, eta is a quasi-isomorphism.
-       This means Omega(B(A)) ~ A: the round-trip is exact.
-       In QEC language: the decoded data equals the encoded data.
+       This means Omega(B(A)) ~ A: the round-trip recovers the
+       boundary algebra up to quasi-isomorphism.
 
-    3. Koszulness is NECESSARY AND SUFFICIENT:
-       Exact recovery <=> bar-cobar unit is quasi-iso <=> A is Koszul.
-       The 12 Koszulness characterizations each provide an independent
-       proof of exact recovery.
+    3. Koszulness is necessary and sufficient for boundary recovery:
+       exact boundary recovery <=> bar-cobar unit is quasi-iso
+       <=> A is Koszul.  The 12 Koszulness characterizations each
+       provide an algebraic criterion for this boundary statement.
 
     4. The code subspace at genus g is Q_g(A) (one Lagrangian summand).
-       The error space is Q_g(A!) (the complementary Lagrangian).
-       Recovery proceeds by projecting along Q_g(A!):
+       The complementary summand is Q_g(A^!), where A^! is obtained
+       from A^i = H^*(B(A)) by Verdier/linear duality under the
+       finite-type or completed hypotheses.  Recovery proceeds by
+       projecting along Q_g(A^!):
          pi_C: C_g(A) -> Q_g(A)  (Lagrangian projection).
 
     >>> result = path4_barcobar_proof('heisenberg')
@@ -641,11 +842,16 @@ def path4_barcobar_proof(family: str) -> Dict:
         'path': 'Bar-cobar adjunction (Theorems A + B)',
         'reference': 'Theorems A, B (bar_cobar_adjunction_*.tex)',
         'family': family,
-        'theorem_a': 'B -| Omega adjunction',
-        'theorem_b': 'Omega(B(A)) ~ A on Koszul locus',
+        'theorem_a': 'B -| Omega adjunction; B(A) is a coalgebra',
+        'theorem_b': 'Omega(B(A)) ~ A on Koszul locus (inversion)',
         'exact_recovery': recovery['exact_recovery'],
+        'exact_boundary_recovery': recovery['exact_boundary_recovery'],
+        'physical_qec_recovery_proved': False,
+        'physical_bulk_equivalence_proved': False,
         'koszulness_iff_recovery': True,
+        'koszulness_iff_boundary_recovery': True,
         'recovery_map': 'pi_C: C_g(A) -> Q_g(A) (Lagrangian projection)',
+        'ap25_object_chain': recovery['ap25_object_chain'],
         'mechanism': recovery['mechanism'],
     }
 
@@ -826,10 +1032,12 @@ def explicit_kl_off_diagonal(n: int, n_errors: int = 50,
 
 def verify_kl_four_paths(family: str = 'heisenberg', n: int = 3,
                           g: int = 1) -> Dict:
-    r"""Four-path verification of Knill-Laflamme conditions.
+    r"""Four-path finite-scope verification around the KL boundary.
 
-    Verifies KL via all four independent paths and checks mutual
-    consistency.
+    Checks that the algebraic prerequisites, scalar-line KL, formal
+    shadow slots, and bar-cobar boundary recovery are mutually
+    consistent.  It deliberately does not assert the full Hilbert-space
+    KL theorem.
 
     >>> result = verify_kl_four_paths('heisenberg', 3, 1)
     >>> result['all_paths_agree']
@@ -842,13 +1050,14 @@ def verify_kl_four_paths(family: str = 'heisenberg', n: int = 3,
     p3 = path3_shadow_depth_proof(family)
     p4 = path4_barcobar_proof(family)
 
-    all_agree = (
+    finite_scope_consistent = (
         p1['isotropy_proved'] and
         p1['kl_genus_1'] and
         p2['lagrangian_verified'] and
-        p2['kl_from_isotropy'] and
+        p2['lagrangian_prerequisite'] and
+        not p2['kl_from_isotropy'] and
         p3['channels_consistent'] and
-        p4['exact_recovery']
+        p4['exact_boundary_recovery']
     )
 
     return {
@@ -859,11 +1068,19 @@ def verify_kl_four_paths(family: str = 'heisenberg', n: int = 3,
         'path2_lagrangian': p2,
         'path3_shadow_depth': p3,
         'path4_barcobar': p4,
-        'all_paths_agree': all_agree,
+        'all_paths_agree': finite_scope_consistent,
+        'finite_scope_consistent': finite_scope_consistent,
+        'full_hilbert_kl_proved': False,
+        'physical_data_required': (
+            'Hermitian inner product, code projector, physical error '
+            '*-algebra, and BRST/derived-centre comparison for bulk claims'
+        ),
         'num_paths': 4,
         'conclusion': (
-            'KL conditions verified via four independent paths'
-            if all_agree else 'DISAGREEMENT between paths'
+            'Finite algebraic KL prerequisites and boundary recovery '
+            'are mutually consistent; full Hilbert-space KL remains '
+            'conditional on physical data'
+            if finite_scope_consistent else 'DISAGREEMENT between finite-scope paths'
         ),
     }
 
@@ -873,10 +1090,10 @@ def verify_kl_four_paths(family: str = 'heisenberg', n: int = 3,
 # ===========================================================================
 
 def kl_family_census() -> Dict:
-    r"""Knill-Laflamme census across all standard families.
+    r"""Finite-scope KL-boundary census across standard families.
 
-    Verifies KL for each standard family and checks consistency
-    of code parameters, shadow depth, and redundancy channels.
+    Checks the algebraic finite-scope data for each family.  Shadow
+    depth remains a formal MC slot count, not a Hilbert-space distance.
 
     >>> census = kl_family_census()
     >>> all(v['all_paths_agree'] for v in census.values())
@@ -897,8 +1114,12 @@ def kl_family_census() -> Dict:
         p3 = result['path3_shadow_depth']
         census[fam] = {
             'all_paths_agree': result['all_paths_agree'],
+            'finite_scope_consistent': result['finite_scope_consistent'],
+            'full_hilbert_kl_proved': False,
             'shadow_class': p3['shadow_class'],
             'redundancy_channels': p3['redundancy_channels'],
+            'formal_shadow_slots': p3['formal_shadow_slots'],
+            'hilbert_code_distance_determined': False,
             'arity_distance': p3['arity_distance'],
             'code_rate': Fraction(1, 2),
             'class_match': p3['shadow_class'] == expected['class'],
@@ -908,23 +1129,23 @@ def kl_family_census() -> Dict:
 
 
 # ===========================================================================
-# 9. COMPLEMENTARITY KAPPA CONSTRAINT ON QEC
+# 9. COMPLEMENTARITY KAPPA CONSTRAINT ON THE SCALAR/LAGRANGIAN SURFACE
 # ===========================================================================
 
 def complementarity_kl_constraint(c_val) -> Dict:
-    r"""Complementarity constraint on the QEC code.
+    r"""Complementarity constraint on the scalar/Lagrangian surface.
 
     For the Virasoro family:
-      kappa(Vir_c) + kappa(Vir_{26-c}) = 13  (AP24: NOT zero)
+      kappa(Vir_c) + kappa(Vir_{26-c}) = 13
 
-    The code fraction = kappa/(kappa + kappa') measures the information
-    density of the code subspace.  At the self-dual point c = 13:
-      code fraction = 1/2 (balanced code).
+    The scalar fraction kappa/(kappa + kappa') measures the relative
+    scalar anomaly weight.  At the self-dual point c = 13 the scalar
+    fraction is 1/2.
 
     The complementarity constraint imposes:
-      - Code and error spaces have equal dimension (Lagrangian)
+      - The Lagrangian windows have equal dimension
       - The combined code has rate 1/2
-      - At c = 13: the code is self-dual (A = A!)
+      - At c = 13: the code is self-dual (A = A^!)
 
     >>> result = complementarity_kl_constraint(Rational(13))
     >>> result['self_dual']
@@ -950,8 +1171,10 @@ def complementarity_kl_constraint(c_val) -> Dict:
         'kappa_sum': total,
         'kappa_sum_is_13': total == 13,
         'code_fraction': code_fraction,
+        'scalar_fraction': code_fraction,
         'self_dual': c_val == 13,
         'code_rate': Fraction(1, 2),
+        'full_hilbert_kl_proved': False,
     }
 
 
@@ -1062,17 +1285,16 @@ def sympy_kl_scalar_automatic(dim: int = 1) -> Dict:
 # ===========================================================================
 
 def entanglement_wedge_from_bar(family: str, c_val=None) -> Dict:
-    r"""Entanglement wedge reconstruction from bar-cobar adjunction.
+    r"""Scalar entropy coefficient and bar-cobar boundary recovery.
 
-    The bar complex B(A) encodes the algebra A into a factorization
-    coalgebra.  The "entanglement wedge" of a region R is the support
-    of B(A) restricted to R: the region from which the bulk data can
-    be reconstructed.
+    The bar complex B(A) is the factorization coalgebra encoding A.
+    A physical entanglement wedge requires additional open/closed
+    realization data: a BRST bulk, a comparison map to the chiral
+    derived centre, and a physical Hilbert-space reconstruction theorem.
 
-    For a chirally Koszul algebra, exact reconstruction
-    (Omega(B(A)) ~ A) means the entanglement wedge is MAXIMAL:
-    every bulk operator in the wedge can be reconstructed on the
-    boundary.
+    For a chirally Koszul algebra, Omega(B(A)) ~ A is exact recovery
+    of the boundary algebra.  It does not by itself prove a maximal
+    physical entanglement wedge.
 
     The area term Area/(4G_N) in the RT formula is:
       Area/(4G_N) = (2 kappa / 3) log(L/epsilon)
@@ -1095,12 +1317,21 @@ def entanglement_wedge_from_bar(family: str, c_val=None) -> Dict:
         'family': family,
         'kappa': kappa,
         'rt_coefficient': rt_coeff,
-        'wedge_maximal': True,  # Koszul => maximal wedge
-        'exact_reconstruction': True,
+        'scalar_entropy_coefficient': rt_coeff,
+        'wedge_maximal': False,
+        'physical_entanglement_wedge_proved': False,
+        'bar_cobar_boundary_recovery': True,
+        'exact_reconstruction': False,
+        'requires_brst_derived_centre_comparison': True,
+        'bar_object': AP25_OBJECT_CHAIN['bar_object'],
+        'bulk_derived_centre': AP25_OBJECT_CHAIN['derived_centre'],
+        'bulk_derived_center': AP25_OBJECT_CHAIN['derived_centre'],
         'mechanism': (
-            'Bar = support of B(A) restricted to region. '
-            'Cobar = reconstruction from boundary data. '
-            'Koszulness => maximal entanglement wedge => exact RT.'
+            'Bar coalgebra = support of B(A) restricted to region. '
+            'Bulk datum = Z_ch^der(A), the chiral derived centre. '
+            'Cobar = boundary-algebra reconstruction. Physical '
+            'entanglement-wedge and RT claims require an additional '
+            'BRST/derived-centre comparison and gravitational input.'
         ),
     }
 
@@ -1110,21 +1341,22 @@ def entanglement_wedge_from_bar(family: str, c_val=None) -> Dict:
 # ===========================================================================
 
 def genus_dependent_code_dimension(g: int) -> Dict:
-    r"""Code dimension as a function of genus.
+    r"""Scalar-line code dimension as a function of genus.
 
     At genus g, the ambient complex C_g(A) has dimension
     determined by the Euler characteristic of M_g_bar and the
     central data of A.
 
-    At genus 1: dim C_1(A) = 2 (1D code + 1D error).
+    At genus 1, on the scalar projection: dim C_1(A) = 2
+    (1D code line + 1D complementary line).
     At genus 2: dim C_2(A) = 2 * dim Q_2(A), where
       dim Q_2(A) depends on the algebra.
 
-    The code rate is ALWAYS 1/2 (Lagrangian).
+    The finite-window Lagrangian rate is 1/2.
 
     For the scalar level (the kappa projection):
       dim Q_g^scalar(A) = 1 for all g >= 1.
-    This is the 1D code subspace at each genus.
+    This is a 1D scalar line, not the full conformal-block complex.
 
     >>> result = genus_dependent_code_dimension(1)
     >>> result['dim_code_scalar']
@@ -1147,32 +1379,38 @@ def genus_dependent_code_dimension(g: int) -> Dict:
         'dim_ambient_scalar': dim_ambient_scalar,
         'code_rate': rate,
         'kl_automatic_at_scalar': True,  # dim 1 => automatic
+        'full_complex_dimension_computed': False,
+        'full_hilbert_kl_proved': False,
     }
 
 
 def genus_tower_kl_status() -> List[Dict]:
     r"""KL status at each genus level.
 
-    Genus 1: KL automatic (dim C = 1).
-    Genus >= 2: KL for Lagrangian-preserving errors (proved).
-                KL for general errors: requires unitary structure.
+    Genus 1: KL automatic on the one-dimensional scalar line.
+    Genus >= 2: physical KL requires a Hilbert completion and error
+                *-algebra.  Lagrangian isotropy remains algebraic.
 
     >>> tower = genus_tower_kl_status()
     >>> tower[0]['kl_status']
-    'automatic'
+    'automatic on scalar line'
     >>> tower[1]['kl_status']
-    'Lagrangian-preserving errors'
+    'requires physical error model'
     """
     tower = []
     for g in range(1, 6):
         if g == 1:
-            status = 'automatic'
-            reason = 'dim Q_1(A) = 1 => rank-1 projector => KL trivial'
-        else:
-            status = 'Lagrangian-preserving errors'
+            status = 'automatic on scalar line'
             reason = (
-                f'dim Q_{g}(A) >= 1; KL for Lagrangian-preserving errors '
-                'from isotropy. General KL requires unitary structure.'
+                'dim Q_1^scalar(A) = 1 => rank-1 projector gives KL '
+                'on the scalar line; the full complex is not thereby one-dimensional'
+            )
+        else:
+            status = 'requires physical error model'
+            reason = (
+                f'Q_{g}(A) is a Lagrangian summand in the algebraic '
+                'surface; physical KL requires Hermitian structure and '
+                'a specified error *-algebra.'
             )
 
         tower.append({
@@ -1181,6 +1419,7 @@ def genus_tower_kl_status() -> List[Dict]:
             'kl_status': status,
             'reason': reason,
             'code_rate': Fraction(1, 2),
+            'full_hilbert_kl_proved': False,
         })
 
     return tower
