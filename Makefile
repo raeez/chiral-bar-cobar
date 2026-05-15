@@ -66,6 +66,10 @@ OUT_DIR   := out
 PDF       := $(OUT_DIR)/main.pdf
 ICLOUD_MAIN_PREREQ := $(if $(wildcard $(PDF)),,$(PDF))
 
+# Mathematics publish dir — release binary copied here under canonical name
+MATHEMATICS_DIR := $(HOME)/mathematics
+PUBLISHED_PDF   := Chiral_Bar_Cobar_Duality__Geometric_Realization.pdf
+
 # Working notes
 WN_TEX    := working_notes.tex
 
@@ -87,7 +91,7 @@ AUX_EXTS  := aux log out toc synctex.gz fdb_latexmk fls bbl blg \
 
 .DEFAULT_GOAL := all
 
-.PHONY: all fast watch clean veryclean clean-builds count check draft integrity phase0-index metadata verify census test editorial standalone dist release help working-notes icloud verify-independence verify-independence-verbose
+.PHONY: all fast watch clean veryclean clean-builds count check draft integrity phase0-index metadata verify census test editorial standalone dist release help working-notes icloud verify-independence verify-independence-verbose mathematics-publish
 
 ## icloud: Copy latest PDFs to iCloud Drive, organised by subject
 icloud: $(ICLOUD_MAIN_PREREQ) standalone
@@ -196,13 +200,26 @@ release:
 	@echo "  [2/3] Working notes"
 	@$(MAKE) --no-print-directory working-notes
 	@echo ""
-	@echo "  [3/3] Standalone papers and iCloud"
+	@echo "  [3/4] Standalone papers and iCloud"
 	@$(MAKE) --no-print-directory icloud
+	@echo ""
+	@echo "  [4/4] Publish to ~/mathematics"
+	@$(MAKE) --no-print-directory mathematics-publish
 	@echo ""
 	@echo "  ══════════════════════════════════════════"
 	@echo "  Release complete. All output in out/:"
 	@ls -1 $(OUT_DIR)/*.pdf 2>/dev/null | sed 's/^/    /'
 	@echo "  ══════════════════════════════════════════"
+
+## mathematics-publish: Copy the release binary to ~/mathematics under its canonical name
+mathematics-publish:
+	@mkdir -p "$(MATHEMATICS_DIR)"
+	@if [ -f "$(PDF)" ]; then \
+		cp "$(PDF)" "$(MATHEMATICS_DIR)/$(PUBLISHED_PDF)"; \
+		echo "    ✓  $(MATHEMATICS_DIR)/$(PUBLISHED_PDF)"; \
+	else \
+		echo "    ✗  $(PDF) missing — skipping ~/mathematics publish"; \
+	fi
 
 ## watch: Continuous rebuild on save (requires latexmk).
 watch:
