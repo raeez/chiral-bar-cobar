@@ -191,29 +191,26 @@ release:
 	@echo "  ── RELEASE BUILD ──"
 	@echo "  ══════════════════════════════════════════"
 	@echo ""
-	@echo "  [1/3] Manuscript"
+	@echo "  [1/6] Manuscript"
 	@$(BUILD_SCRIPT) $(FAST_PASSES)
-	@if [ -f $(PDF) ]; then \
-		echo "  ✓  $(PDF)"; \
-	else \
-		echo "  ✗  Build failed."; \
-	fi
+	@if [ ! -f $(PDF) ]; then echo "  ✗  Manuscript build failed: $(PDF) not produced."; exit 1; fi
+	@echo "  ✓  $(PDF)"
 	@echo ""
-	@echo "  [2/3] Working notes"
+	@echo "  [2/6] Working notes"
 	@$(MAKE) --no-print-directory working-notes
 	@echo ""
-	@echo "  [3/6] Standalone papers and iCloud"
-	@$(MAKE) --no-print-directory icloud
-	@echo ""
-	@echo "  [4/6] Publish to repo root (canonical PDF name)"
+	@echo "  [3/6] Publish to repo root (canonical PDF name)"
 	@$(MAKE) --no-print-directory root-publish
 	@echo ""
-	@echo "  [5/6] Publish to ~/mathematics + per-volume architecture"
+	@echo "  [4/6] Publish to ~/mathematics + per-volume architecture"
 	@$(MAKE) --no-print-directory mathematics-publish
 	@$(MAKE) --no-print-directory architecture
 	@echo ""
-	@echo "  [6/6] Cross-volume architecture aggregation"
+	@echo "  [5/6] Cross-volume architecture aggregation"
 	@$(MAKE) --no-print-directory unified-architecture
+	@echo ""
+	@echo "  [6/6] Standalone papers and iCloud (non-fatal)"
+	@$(MAKE) --no-print-directory icloud || echo "  ⚠  some standalones / iCloud copies failed — manuscript + architecture artifacts already current"
 	@echo ""
 	@echo "  ══════════════════════════════════════════"
 	@echo "  Release complete. All output in out/:"
