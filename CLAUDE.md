@@ -181,10 +181,15 @@ package.
 
 **Type-signature discipline.** Every theorem carries
 (*quadrant, presentation, level, hypothesis package*). Every cross-level
-equality invokes a named reconstruction theorem with hypothesis
-package. Suppress no hypothesis.
+equality additionally carries a six-field anatomy header
+(*Status / Ambient / Source / Target / Map / Residuals*) — status
+(proved / conditional / heuristic), ambient (raw chain / weight-completed
+/ pro / coderived / contraderived / Banach / Tate), source object, target
+object, named comparison morphism, explicit residual obstructions — and
+invokes a named reconstruction theorem with hypothesis package. Suppress
+no hypothesis.
 
-**Master patterns to detect (MA-1 … MA-13).** When any forbidden form
+**Master patterns to detect (MA-1 … MA-15).** When any forbidden form
 appears, halt the inscription and either replace or quarantine:
 
 | # | Forbidden | Required |
@@ -192,7 +197,7 @@ appears, halt the inscription and either replace or quarantine:
 | 1 | shadow = object (meta) | every cross-level equality names a reconstruction theorem |
 | 2 | $A$ as primitive open object | $A_b = \mathrm{End}_\mathcal{C}(b)$ at chosen vacuum on factorisation dg-cat $\mathcal{C}^{\mathrm{op}}$ |
 | 3 | modularity = closed-algebra property | trace + clutching on open category; closed shadow has modular consequences |
-| 4 | $\mathrm{Bar}(A) = $ bulk | bar = twisting coalgebra; $Z^{\mathrm{der}}_{\mathrm{ch}}(A) = $ bulk |
+| 4 | $\mathrm{Bar}(A) = $ bulk | bar = twisting coalgebra; $Z^{\mathrm{der}}_{\mathrm{ch}}(A) = $ universal closed sector; physical bulk requires OCA: $\mathcal{O}^{\mathrm{phys}}_{\mathrm{bulk}}(A) \xrightarrow{\sim} Z^{\mathrm{der}}_{\mathrm{ch}}(A)$ |
 | 5 | $E_1$-bar direction explains 2d→3d HT | chiral Deligne–Tamarkin / Swiss-cheese; bar = computational model |
 | 6 | five $\kappa$ are one invariant | five $\kappa$-measurements per family; collapse pattern is the classification axis |
 | 7 | one-stage $\Phi_d$ | $\Phi_d^{(\Sigma_{d-1}, C)} = \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1}, C} \circ \Phi_d^{\mathrm{FA}}$ |
@@ -202,9 +207,11 @@ appears, halt the inscription and either replace or quarantine:
 | 11 | scalar shadow = operator algebra | $\Delta_5$ = Borcherds denominator; operator-level Pfaffian missing problem |
 | 12 | finite-spin / quadratic / classical = full theorem | endpoint hypotheses (Prochazka, CKL, PRS, Yamada, KZ analytic SDR) explicit |
 | 13 | ordinary = completed ambient | Class M chain-level requires completed / pro / $J$-adic ambient |
+| 14 | scalar $\chi$ determines chain-level $\mathsf{SC}^{\mathrm{ch,top}}$ object | $\chi$ is non-faithful (lemma: add acyclic $K$ with $\chi(K) = 0$); chain-level at level $5{\to}4$ needs the four-part datum $(\beta, \delta, \varepsilon, \tau)$ |
+| 15 | $T = [Q, G]$ from a conformal vector alone | raw chain topologisation requires T1–T5 obstructions explicit (construct $G$; $[Q,G]=T$; filtration; finite propagation; SDR-independent $E_3$-ops; anomaly cancellation) |
 
 **Forbidden slogans** (a sample; full list with replacements in
-`notes/antipatterns_catalogue.md` under MA-1 … MA-13):
+`notes/antipatterns_catalogue.md` under MA-1 … MA-15):
 *$\mathrm{Bar}(A)$ is the bulk*; *$A$ is the primitive open sector*;
 *$\Phi_d: \mathrm{CY}_d\text{-Cat} \to \mathrm{ChirAlg}$ is direct*;
 *$\kappa_{\mathrm{BKM}} = \kappa_{\mathrm{ch}} + \chi(\mathcal{O}_{\mathrm{fiber}})$*;
@@ -215,6 +222,38 @@ $= Y^+(\mathfrak{gl}_1)$);
 *formal local Hamiltonian BF $\Rightarrow$ compact twisted M-theory background*;
 *$W_\infty[\lambda] \Rightarrow E_\infty$ unconditional*;
 *PVA Jacobi $\Rightarrow$ all-loop quantum HT theory*.
+
+**Named residuals** (the obstructions whose explicit construction earns
+the forbidden slogans; use these names when stating what is missing):
+
+- **OCA** — Open–Closed Algebra comparison
+  $\mathcal{O}^{\mathrm{phys}}_{\mathrm{bulk}}(A)
+   \xrightarrow{\sim} Z^{\mathrm{der}}_{\mathrm{ch}}(A)$.
+  Without it, the derived chiral centre is the *universal closed sector*
+  internal to the boundary theory, not the physical bulk of a realised
+  HT QFT.
+- **$(\beta, \delta, \varepsilon, \tau)$** — four-part Hall–Borcherds
+  chain datum at level $5{\to}4$: $E_1$-chiral bialgebra morphism;
+  completed Drinfeld-double extension; current-envelope morphism along
+  the elliptic fibre; derived-centre trace identity
+  $\mathrm{Tr}_{Z^{\mathrm{der}}_{\mathrm{ch}}}(\varepsilon)
+   = (\Phi_{10}^{\mathrm{un}})^{-1} = \Delta_5^{-2}$. Each finite window
+  $W = (\text{height}, \text{charge}, \text{weight})$ requires eight
+  checks: Hall source, root multiplicities, PBW, parity, Hall
+  non-degeneracy, current locality on $E$, $\mathsf{SC}^{\mathrm{ch,top}}$ commutation, Mittag–Leffler control.
+- **T1–T5** — topologisation obstructions for raw chain $T = [Q, G]$:
+  (T1) construct $G$ with $[Q, G] = T$; (T2) filtration / completion
+  compatibility; (T3) finite propagation (or stay completed); (T4)
+  SDR-independent transferred $E_3$-operations; (T5) anomaly cancellation
+  in $H^1 / H^2$ of the convolution complex.
+- **Scalar non-faithfulness lemma** — $\chi$ is not faithful.
+  $\chi(C) = \chi(C')$ does *not* determine quasi-iso, $\mathsf{SC}^{\mathrm{ch,top}}$-morphism, Hall product, Drinfeld pairing, current locality,
+  or derived-centre trace. Proof: add filtered acyclic summand $K$ with
+  $\chi(K) = 0$; or change a filtered differential preserving
+  associated-graded $\chi$.
+
+Every promotion from scalar shadow to chain-level theorem names which
+residual is being discharged.
 
 ---
 
