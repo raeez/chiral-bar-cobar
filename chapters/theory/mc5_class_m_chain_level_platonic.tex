@@ -759,16 +759,19 @@ was the textual source of earlier confusion.
 \label{lem:curve-H20-vanishing}
 \index{Hodge dimension!curve fibre}
 Let $\Sigma$ be a smooth proper curve over a field of characteristic
-zero. Then $H^{p,q}(\Sigma) = 0$ whenever $p + q > 1$; in particular
-$H^{2,0}(\Sigma) = 0$ by dimension.
+zero. Then $H^{p,q}(\Sigma) = 0$ whenever $p > 1$ or $q > 1$; in
+particular $H^{2,0}(\Sigma) = 0$ by dimension.
 \ClaimStatusProvedElsewhere{}
 \end{lemma}
 
 \begin{proof}
 A smooth proper curve has complex dimension $1$, so its Hodge
-decomposition has only $(0,0), (1,0), (0,1), (1,1)$ pieces. Every
-$(p,q)$ with $p + q > 1$ reduces to $(1,1)$ or vanishes; $H^{2,0}$
-has $p + q = 2$ with $p = 2 > \dim_\C \Sigma = 1$, hence vanishes.
+decomposition has only the four pieces $(0,0), (1,0), (0,1), (1,1)$.
+Any $H^{p,q}$ with $p > 1$ or $q > 1$ lies outside this range and
+vanishes; in particular $H^{2,0}$, with $p = 2 > \dim_\C \Sigma = 1$,
+is zero. \textup{(}The fundamental class $H^{1,1}(\Sigma) = \C$ is
+nonzero but has $p = q = 1$, so it is not excluded; only the
+$(2,0)$ candidate is needed below.\textup{)}
 \end{proof}
 
 \begin{remark}[Sub-argument (a): what the Hodge input kills]
@@ -1494,7 +1497,8 @@ $n\in\{7,8,11,12,15,16,19,20,\ldots\}$. The named homotopy does not
 transport verbatim: at $n=7$ the Bruinier Heegner--Chern torsion order
 is $14$ and the bi-semisimple inversion factor
 $M^{(\chi_i,\chi_j)}_{H_i\cap H_j}$ acquires a new character
-$\chi_7\in\widehat{\mathbb Z/14}$ coprime to $8\cdot 3\cdot 2=48$; the
+$\chi_7\in\widehat{\mathbb Z/14}$ whose order introduces the prime
+$7\nmid 48=8\cdot 3\cdot 2$; the
 pro-ambient index $(w,\chi_1,\chi_3,\chi_4,k_1,k_3,k_4)$ of
 Definition~\textup{\ref{def:deligne-malcev-bi-unipotent-ambient}} is
 therefore incomplete on the deep boundary of the Baily--Borel
@@ -2681,7 +2685,8 @@ $\Perf(\AbarTwo)$ iff $\sigma\in\bigcap_{k\ge 2}
 \emph{full $(\infty,1)$-coherence locus}. This locus contains the
 Gepner point of $\StabOp(D^b\mathrm{Coh}(K3))$
 \cite[Prop.~5.1]{BridgelandMacri2011}, and contains the
-wall-of-walls Humbert locus $H_1\cap H_3\cap H_4\subset\AbarTwo$
+codim-$2$ wall-of-walls Humbert locus
+$\bigcup_{i\neq j\in\{1,3,4\}}(H_i\cap H_j)\subset\AbarTwo$
 pulled to $\StabOp(K3\times E)$ through the Oberdieck--Pixton DT/PT
 correspondence \cite{OberdieckPixton2019InventMath}.
 \end{enumerate}
@@ -3432,11 +3437,13 @@ property of $\Om\dashv\Bch$ requires the $(\infty,2)$-categorical lane.
 At the K3 base point, the MC5 class-$\mathcal M$ chain-level construction
 realises the Virasoro face of the shadow-tower quadrichotomy:
 the Mathieu group $M_{24}$ acts on the chain-level $L_\infty$ algebra
-via the $\widetilde M_{24}$ Schur cocycle of order $6$ in
-$H^2(M_{24}, U(1)) = \mathbb Z/12$, and the K3 elliptic genus lifts to
+via the anomaly cocycle of order $6$ in
+$H^3(M_{24}, U(1)) \supseteq \mathbb Z/12$ (generalised-Mathieu-moonshine
+'t~Hooft anomaly, Gaberdiel--Persson--Ronellenfitsch--Volpato 2013),
+and the K3 elliptic genus lifts to
 the twined character
 $\chi_\sigma(\tau) = \mathrm{Tr}_{\mathbf H_{\Delta_5}}\sigma\,q^{L_0-c/24}$.
-The frame-shape identity (twined bar Euler) at all $25$ $M_{24}$-conjugacy
+The frame-shape identity (twined bar Euler) at all $26$ $M_{24}$-conjugacy
 classes is the $M_{24}$ fingerprint of Mathieu moonshine
 \cite{EguchiOoguriTachikawa2010,ChengDuncanHarvey2014}.
 Cross-ref Vol.~III Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
@@ -3478,8 +3485,10 @@ $-312$ is unavailable:
  Theorem~3.10; Grojnowski 1996 \textup{arXiv:alg-geom/9506020}),
  through the G\"ottsche generating function
  $\sum_{n\ge 0}\chi(\mathrm{Hilb}^n(K3))\,q^n =
- \prod_{m\ge 1}(1-q^m)^{-24} = 1/\eta(\tau)^{24}$ (G\"ottsche 1990
- \textup{Math.~Ann.}~286, Theorem~0.1). The $24 = \chi_{\mathrm{top}}(K3)$
+ \prod_{m\ge 1}(1-q^m)^{-24} = q/\eta(\tau)^{24}$ (G\"ottsche 1990
+ \textup{Math.~Ann.}~286, Theorem~0.1; the factor $q$ is the
+ $q^{1/24}$-normalisation of $\eta$, since
+ $\eta(\tau)^{24}=q\prod_{m\ge1}(1-q^m)^{24}$). The $24 = \chi_{\mathrm{top}}(K3)$
  Mukai-lattice count is unchanged under the $-312 \to -214$
  retraction; what changes is how the $24$-factor enters the
  central-charge arithmetic.
@@ -3553,7 +3562,9 @@ $\sigma_{\mathrm{Duflo}}\colon A_\hbar \to A_{-\hbar}^{\mathrm{op}}$
 \textup{arXiv:math/9803025}, Theorem~4.1), which exchanges the
 quantisation with its opposite. The Duflo-self-dual condition
 $\sigma_{\mathrm{Duflo}}^2 = \mathrm{id}$ forces $\hbar^2$ to lie in
-the torsion locus of $H^2(M_{24},\mathrm{U}(1))/(\text{Duflo}) = \mathbb{Z}/8$,
+the torsion locus of the Duflo-quotient of the generalised-Mathieu-moonshine
+'t~Hooft anomaly group $H^3(M_{24},\mathrm{U}(1))/(\text{Duflo})$, the
+relevant cyclic component of which has order $\mathbb{Z}/8$,
 whence $\hbar^2 \in \{\pm 1/8\}$; the negative sign is fixed by the
 Lorentzian signature of the Mukai pairing. This is the chain-level
 KST reading of the $(R_1)$--$(R_7)$ classification datum: the Igusa
