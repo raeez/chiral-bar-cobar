@@ -1108,7 +1108,7 @@ def print_spectral_sequence_table(page: SpectralSequencePage,
     header = f"E_{page.page} page for {page.family}"
     print(header)
     print("=" * len(header))
-    print(f"{'p\\h':>6}", end="")
+    print(f"{'p/h':>6}", end="")
     for h in range(0, max_weight + 1):
         print(f"{h:>5}", end="")
     print()

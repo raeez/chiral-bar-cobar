@@ -11,21 +11,21 @@ are Humbert-Heegner rejected.
 Scope cascade (higher admissible triple):
 
   weight 37: depth-9 stratum D_{37, 9} = 2023; depth-11 stratum
-             D_{37, 11} = 378; Padovan count d_{37} = 10252.
+             D_{37, 11} = 378; Padovan count d_{37} = 13581.
              Triple-conditional at depth 9 and depth 11:
              Zagier-Hoffman + BK empirical + Brown 2017 Conj 5.3.
 
   weight 43: first admissible weight with populated depth-13 stratum
              D_{43, 13} = 924 (depth-13 first appears at n = 39 by BK
              parity; n = 39 not admissible, so n = 43 is first
-             admissible carrier); Padovan count d_{43} = 55405.
+             admissible carrier); Padovan count d_{43} = 73396.
              Quadruple-conditional at depth 13: triple +
              Broadhurst-Bailey 2010 numerical stability.
 
   weight 45: simultaneous depth-13 and depth-15 onsets on the
              admissible sequence: D_{45, 13} = 3076, D_{45, 15} = 69
              (depth-15 first appears at n = 45, admissible);
-             Padovan count d_{45} = 97229.
+             Padovan count d_{45} = 128801.
              Quintuple-conditional at depth 15: quadruple + Brown 2017
              higher-depth grt_1 generation at d >= 15 outside
              Broadhurst-Bailey 2010 symbolic extractor.
@@ -37,11 +37,12 @@ of grt_1.
 Verification paths (six):
 
   V_1 Padovan recurrence: d_n = d_{n-2} + d_{n-3} iterated from the
-      admissible-27-29-35-seed (d_{32}, d_{33}, d_{34}) = (2513, 3329, 4410)
+      Brown seed (d_{32}, d_{33}, d_{34}) = (3329, 4410, 5842)
       to reach the higher triple (d_{37}, d_{43}, d_{45}) =
-      (10252, 55405, 97229).
+      (13581, 73396, 128801).
 
-  V_2 BK two-step row-sum: sum_d D_{n, d} = d_{n-2} at admissible n.
+  V_2 BK row-sum lag: sum_d D_{n, d} = d_{n-3} at admissible n;
+      this is an extractor diagnostic, not the Brown dimension d_n.
 
   V_3 BK symbolic extraction: BK(x, y) = 1/(1 - O(x) y + S(x)(y^2 - y^4))
       truncated at x^{50} y^{16}; odd-n kills even-d by parity.
@@ -115,17 +116,17 @@ def admissibility_filter_check_tower() -> bool:
 # ---------------------------------------------------------------------------
 
 def padovan_dim(n_max: int = 60) -> Dict[int, int]:
-    """Return {n: d_n} via d_n = d_{n-2} + d_{n-3}, seed (1, 0, 1, 1)."""
-    d: Dict[int, int] = {1: 1, 2: 0, 3: 1, 4: 1}
-    for n in range(5, n_max + 1):
+    """Return {n: d_n} via d_0=1, d_1=0, d_2=1 and d_n=d_{n-2}+d_{n-3}."""
+    d: Dict[int, int] = {0: 1, 1: 0, 2: 1}
+    for n in range(3, n_max + 1):
         d[n] = d[n - 2] + d[n - 3]
     return d
 
 
 def padovan_count_check_tower() -> bool:
-    """Assert d_{37}, d_{43}, d_{45} = (10252, 55405, 97229)."""
+    """Assert d_{37}, d_{43}, d_{45} = (13581, 73396, 128801)."""
     d = padovan_dim(60)
-    expected = {37: 10252, 43: 55405, 45: 97229}
+    expected = {37: 13581, 43: 73396, 45: 128801}
     for n, v in expected.items():
         assert d[n] == v, f"Padovan d_{n} = {d[n]} != expected {v}"
     return True
@@ -204,7 +205,7 @@ def bk_depth_check_tower() -> bool:
                                      = (1, 136, 2310, 11874, 22453, 15486,
                                         3076, 69)
 
-    Row sums: 5842 = d_{35}, 31572 = d_{41}, 55405 = d_{43}.
+    Row sums: 5842 = d_{34}, 31572 = d_{40}, 55405 = d_{42}.
     """
     D = bk_depth_extract(60, 16)
     expected = {
@@ -272,13 +273,13 @@ def depth_13_15_admissible_onset_check() -> bool:
 
 
 def bk_padovan_twostep_consistency_check_tower() -> bool:
-    """Assert sum_d D_{n, d} = d_{n - 2} at admissible n in {37, 43, 45}."""
+    """Assert the BK row-sum lag diagnostic sum_d D_{n, d} = d_{n - 3}."""
     D = bk_depth_extract(60, 16)
     d = padovan_dim(60)
     for n in ADMISSIBLE_HIGHER_TRIPLE:
         row_sum = sum(D.get((n, k), 0) for k in range(1, 17))
-        assert row_sum == d[n - 2], (
-            f"n = {n}: sum_d D_{{n, d}} = {row_sum} != d_{{{n - 2}}} = {d[n - 2]}"
+        assert row_sum == d[n - 3], (
+            f"n = {n}: sum_d D_{{n, d}} = {row_sum} != d_{{{n - 3}}} = {d[n - 3]}"
         )
     return True
 
@@ -467,9 +468,9 @@ def hardy_ramanujan_exact_check_tower() -> bool:
     """Assert Borcherds/MZV ratios at higher admissible triple."""
     r = borcherds_mzv_ratio_tower()
     expected = {
-        37: 69228721526400 / 10252,
-        43: 1971466420726656 / 55405,
-        45: 5776331152550400 / 97229,
+        37: 69228721526400 / 13581,
+        43: 1971466420726656 / 73396,
+        45: 5776331152550400 / 128801,
     }
     for n, v in expected.items():
         assert abs(r[n] - v) / v < 1e-12, (
@@ -551,9 +552,9 @@ def plastic_number() -> float:
 
 
 def padovan_asymptotic(n: int) -> float:
-    """Plastic-number asymptotic d_n ~ A rho^n, seed (1, 0, 1, 1)."""
+    """Plastic-number asymptotic d_n ~ A rho^n for Brown seed d_0,d_1,d_2."""
     rho = plastic_number()
-    A = rho ** 2 / (2 * rho + 3)
+    A = rho ** 3 / (2 * rho + 3)
     return A * (rho ** n)
 
 
@@ -574,15 +575,15 @@ def plastic_asymptotic_precision_check_tower() -> bool:
 # Multi-path Padovan dimension verifications
 # ---------------------------------------------------------------------------
 
-def padovan_dim_via_bk_rowsum(
+def bk_rowsum_lag_diagnostic(
     n: int, D: Dict[Tuple[int, int], int]
 ) -> int:
-    """Recover d_n from BK two-step row-sum identity sum_d D_{n+2, d} = d_n."""
-    return sum(D.get((n + 2, k), 0) for k in range(1, 17))
+    """Return sum_d D_{n, d}; for the BK series this equals d_{n-3}."""
+    return sum(D.get((n, k), 0) for k in range(1, 17))
 
 
 def padovan_dim_via_generating_function(n_max: int = 60) -> Dict[int, int]:
-    """Recover d_n from F(x) = x / (1 - x^2 - x^3)."""
+    """Recover d_n from F(x) = 1 / (1 - x^2 - x^3)."""
     c = [0] * (n_max + 1)
     c[0] = 1
     c[1] = 0
@@ -592,7 +593,7 @@ def padovan_dim_via_generating_function(n_max: int = 60) -> Dict[int, int]:
             c[n] += c[n - 2]
         if n >= 3:
             c[n] += c[n - 3]
-    return {n: c[n - 1] for n in range(1, n_max + 1)}
+    return {n: c[n] for n in range(0, n_max + 1)}
 
 
 def padovan_dim_via_plastic_rounded(n_max: int = 60) -> Dict[int, int]:
@@ -604,16 +605,18 @@ def padovan_multipath_check_tower() -> bool:
     """Four independent computations of d_n agree at higher admissible triple."""
     d_P1 = padovan_dim(60)
     D = bk_depth_extract(60, 16)
-    d_P3 = padovan_dim_via_generating_function(60)
-    d_P4 = padovan_dim_via_plastic_rounded(60)
+    d_P2 = padovan_dim_via_generating_function(60)
+    d_P3 = padovan_dim_via_plastic_rounded(60)
     for n in ADMISSIBLE_HIGHER_TRIPLE:
         p1 = d_P1[n]
-        p2 = padovan_dim_via_bk_rowsum(n, D)
+        p2 = d_P2[n]
         p3 = d_P3[n]
-        p4 = d_P4[n]
-        assert p1 == p2, f"n = {n}: P1 {p1} != P2 (BK-rowsum) {p2}"
-        assert p1 == p3, f"n = {n}: P1 {p1} != P3 (genfun) {p3}"
-        assert p1 == p4, f"n = {n}: P1 {p1} != P4 (plastic) {p4}"
+        row = bk_rowsum_lag_diagnostic(n, D)
+        assert p1 == p2, f"n = {n}: P1 {p1} != P2 (genfun) {p2}"
+        assert p1 == p3, f"n = {n}: P1 {p1} != P3 (plastic) {p3}"
+        assert row == d_P1[n - 3], (
+            f"n = {n}: BK row sum {row} != d_{{{n - 3}}} = {d_P1[n - 3]}"
+        )
     return True
 
 
@@ -629,7 +632,7 @@ def verifier_tower_37_43_45() -> Dict[str, bool]:
         "padovan_multipath_tower": padovan_multipath_check_tower(),
         "bk_depth_tower": bk_depth_check_tower(),
         "bk_depth_multipath_tower": bk_depth_multipath_check_tower(),
-        "bk_padovan_twostep_tower": bk_padovan_twostep_consistency_check_tower(),
+        "bk_rowsum_lag_tower": bk_padovan_twostep_consistency_check_tower(),
         "bk_parity_split_tower": bk_parity_split_check_tower(),
         "first_depth_13_at_39": first_depth_thirteen_at_39_check(),
         "depth_13_15_admissible_onsets": depth_13_15_admissible_onset_check(),
@@ -665,7 +668,7 @@ if __name__ == "__main__":
         s = sum(row)
         print(
             f"  D_{{{n}, d}} for d in [1, 16] = {row}, "
-            f"sum = {s} = d_{{{n-2}}} = {d[n-2]}"
+            f"sum = {s} = d_{{{n-3}}} = {d[n-3]}"
         )
 
     print()

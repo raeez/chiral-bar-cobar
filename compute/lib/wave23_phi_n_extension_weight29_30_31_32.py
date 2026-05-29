@@ -44,8 +44,9 @@ Above weight 24 the scope is QUADRUPLE-CONDITIONAL at depth 10:
 
 This module computes and verifies:
 
-1. PADOVAN DIMENSIONS d_n through d_n = d_{n-2} + d_{n-3}:
-       d_{29} = 1081, d_{30} = 1432, d_{31} = 1897, d_{32} = 2513.
+1. PADOVAN DIMENSIONS d_n through d_n = d_{n-2} + d_{n-3}
+   with Brown seed (d_0, d_1, d_2) = (1, 0, 1):
+       d_{29} = 1432, d_{30} = 1897, d_{31} = 2513, d_{32} = 3329.
 
 2. BROADHURST-KREIMER DEPTH STRATIFICATION D_{n, d} via symbolic
    expansion of BK(x, y) through x^{36} y^{12}:
@@ -54,22 +55,24 @@ This module computes and verifies:
        D_{31, .} = (1, 0, 58, 0, 360, 0, 512, 0, 150, 0)
        D_{32, .} = (0, 12, 0, 198, 0, 641, 0, 517, 0, 64)
 
-3. TWO-STEP ROW-SUM IDENTITY sum_d D_{n, d} = d_{n-2}:
-       sum D_{29, d} = 616  = d_{27}
-       sum D_{30, d} = 816  = d_{28}
-       sum D_{31, d} = 1081 = d_{29}
-       sum D_{32, d} = 1432 = d_{30}
+3. BK ROW-SUM LAG DIAGNOSTIC:
+       sum D_{29, d} = 616  = d_{26}
+       sum D_{30, d} = 816  = d_{27}
+       sum D_{31, d} = 1081 = d_{28}
+       sum D_{32, d} = 1432 = d_{29}.
+   These row sums test the BK extractor; they are not the Brown
+   dimensions at weights 29--32.
 
 4. NUMERICAL phi^(n) VALUES in d_n / n! approximation:
-       phi^(29) ~ 1.223e-28, phi^(30) ~ 5.399e-30,
-       phi^(31) ~ 2.307e-31, phi^(32) ~ 9.550e-33.
+       phi^(29) ~ 1.620e-28, phi^(30) ~ 7.152e-30,
+       phi^(31) ~ 3.056e-31, phi^(32) ~ 1.265e-32.
 
 5. HARDY-RAMANUJAN EXACT p_24(k) AND BORCHERDS/MZV RATIO:
        p_24(15) = 563,116,739,584    (OEIS A006922[15])
        p_24(16) = 1,956,790,259,235  (OEIS A006922[16])
        Ratios:
-           n = 29: 5.209e+08, n = 30: 3.932e+08,
-           n = 31: 1.032e+09, n = 32: 7.787e+08.
+           n = 29: 3.932e+08, n = 30: 2.968e+08,
+           n = 31: 7.787e+08, n = 32: 5.878e+08.
 
 6. DMVV/GOETTSCHE GENERIC COINCIDENCE AT n = 32:
        chi(Hilb^16(K3)) = p_24(16) = 1,956,790,259,235
@@ -155,17 +158,17 @@ from typing import Dict, Tuple
 # ---------------------------------------------------------------------------
 
 def padovan_dim(n_max: int = 36) -> Dict[int, int]:
-    """Return {n: d_n} via d_n = d_{n-2} + d_{n-3}, seed (1, 0, 1, 1)."""
-    d: Dict[int, int] = {1: 1, 2: 0, 3: 1, 4: 1}
-    for n in range(5, n_max + 1):
+    """Return {n: d_n} via d_0=1, d_1=0, d_2=1 and d_n = d_{n-2} + d_{n-3}."""
+    d: Dict[int, int] = {0: 1, 1: 0, 2: 1}
+    for n in range(3, n_max + 1):
         d[n] = d[n - 2] + d[n - 3]
     return d
 
 
 def padovan_count_check_29_32() -> bool:
-    """Assert d_{29}..d_{32} = (1081, 1432, 1897, 2513)."""
+    """Assert d_{29}..d_{32} = (1432, 1897, 2513, 3329)."""
     d = padovan_dim(36)
-    expected = {29: 1081, 30: 1432, 31: 1897, 32: 2513}
+    expected = {29: 1432, 30: 1897, 31: 2513, 32: 3329}
     for n, v in expected.items():
         assert d[n] == v, f"Padovan d_{n} = {d[n]} != expected {v}"
     return True
@@ -272,13 +275,13 @@ def first_depth_ten_check() -> bool:
 
 
 def bk_padovan_twostep_consistency_check_29_32() -> bool:
-    """Assert sum_d D_{n, d} = d_{n - 2} for n in {29, 30, 31, 32}."""
+    """Assert the BK row-sum lag diagnostic sum_d D_{n, d} = d_{n - 3}."""
     D = bk_depth_extract(36, 12)
     d = padovan_dim(36)
     for n in range(29, 33):
         row_sum = sum(D.get((n, k), 0) for k in range(1, 13))
-        assert row_sum == d[n - 2], (
-            f"n = {n}: sum_d D_{{n, d}} = {row_sum} != d_{{{n - 2}}} = {d[n - 2]}"
+        assert row_sum == d[n - 3], (
+            f"n = {n}: sum_d D_{{n, d}} = {row_sum} != d_{{{n - 3}}} = {d[n - 3]}"
         )
     return True
 
@@ -387,10 +390,10 @@ def hardy_ramanujan_exact_check_29_32() -> bool:
 
     r = hardy_ramanujan_ratio_exact_29_32()
     expected = {
-        29: 563116739584 / 1081,
-        30: 563116739584 / 1432,
-        31: 1956790259235 / 1897,
-        32: 1956790259235 / 2513,
+        29: 563116739584 / 1432,
+        30: 563116739584 / 1897,
+        31: 1956790259235 / 2513,
+        32: 1956790259235 / 3329,
     }
     for n, v in expected.items():
         assert abs(r[n] - v) / v < 1e-12, f"ratio at n = {n}: {r[n]} != {v}"
@@ -551,9 +554,9 @@ def plastic_number() -> float:
 
 
 def padovan_asymptotic(n: int) -> float:
-    """Plastic-number asymptotic d_n ~ A rho^n for seed (1, 0, 1, 1)."""
+    """Plastic-number asymptotic d_n ~ A rho^n for Brown seed d_0,d_1,d_2."""
     rho = plastic_number()
-    A = rho ** 2 / (2 * rho + 3)
+    A = rho ** 3 / (2 * rho + 3)
     return A * (rho ** n)
 
 
@@ -588,7 +591,7 @@ def wave23_verifier_29_32() -> Dict[str, bool]:
         "padovan_count_29_32": padovan_count_check_29_32(),
         "bk_depth_29_32": bk_depth_check_29_32(),
         "first_depth_ten_at_30": first_depth_ten_check(),
-        "bk_padovan_twostep_29_32": bk_padovan_twostep_consistency_check_29_32(),
+        "bk_rowsum_lag_29_32": bk_padovan_twostep_consistency_check_29_32(),
         "bk_parity_split_29_32": bk_parity_split_check_29_32(),
         "phi_n_leading_29_32": phi_n_leading_check_29_32(),
         "hardy_ramanujan_exact_29_32": hardy_ramanujan_exact_check_29_32(),
@@ -614,7 +617,7 @@ if __name__ == "__main__":
     for n in range(29, 33):
         row = [D.get((n, d_), 0) for d_ in range(1, 11)]
         s = sum(row)
-        print(f"  D_{{{n}, d}} for d in [1, 10] = {row}, sum = {s} = d_{{{n-2}}} = {d[n-2]}")
+        print(f"  D_{{{n}, d}} for d in [1, 10] = {row}, sum = {s} = d_{{{n-3}}} = {d[n-3]}")
 
     print()
     print("Depth onsets:")

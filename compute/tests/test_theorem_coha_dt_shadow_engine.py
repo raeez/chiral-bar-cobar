@@ -288,7 +288,7 @@ class TestAffineSl2Shadow:
         assert affine_sl2_central_charge(1) == Rational(1)
         # At k = 2: c = 6/4 = 3/2
         assert affine_sl2_central_charge(2) == Rational(3, 2)
-        # Critical level k = -2: Sugawara undefined (c diverges)
+        # Critical level k = -2: Sugawara undefined; the generic formula has a pole.
         # We don't test k = -2 because it's singular
 
     def test_shadow_class_L(self):

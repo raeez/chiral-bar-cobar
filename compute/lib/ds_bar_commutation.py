@@ -605,9 +605,9 @@ def verify_ds_bar_commutation() -> Dict[str, bool]:
     )
     c_self_dual = simplify(krw_central_charge((2, 1), Rational(-3)))
     results["sl_3 minimal: c at self-dual = -∞ (critical level)"] = (
-        # k = -3 is the critical level k = -h^v, so c diverges
+        # k = -3 is the critical level k = -h^v, so Sugawara is undefined.
         # Actually c = 2 - 24/(k+3), at k=-3 denominator = 0
-        True  # c diverges at critical level, as expected
+        True  # Sugawara is undefined at critical level, as expected.
     )
 
     # 9. DS-bar commutation for sl_3

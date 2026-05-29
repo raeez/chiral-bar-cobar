@@ -29,7 +29,8 @@ GENUS-2 SHELL STRUCTURE:
     F_2^{tree} = 0 (no tree correction at genus 2)
     F_2^{1-loop} = 0 (no loop correction at genus 2 for abelian)
     F_2^{shell} = kappa * lambda_2^FP = kappa * 7/5760
-    => Pure shell contribution. The genus-2 shell IS the full amplitude.
+    => Pure shell contribution. The genus-2 shell equals the full scalar
+       amplitude on this Gaussian lane.
 
   For Lie/tree depth (r_max = 3, e.g. affine):
     F_2^{tree} = cubic shadow correction (involves C_3(A))
@@ -268,7 +269,8 @@ def F2_heisenberg(kappa_val=None) -> Dict[str, object]:
     F_2(H_k) = kappa * lambda_2^FP = k * 7/5760.
 
     Shadow depth: r_max = 2 (Gaussian). The genus-2 shell is PURE:
-    no tree or loop corrections. The scalar amplitude IS the full answer.
+    no tree or loop corrections. The scalar amplitude equals the value
+    of this lane.
 
     Hodge-theoretic meaning: The genus-2 amplitude is
       int_{M-bar_{2,1}} kappa * lambda_2 * psi^2 = k * 7/5760

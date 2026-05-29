@@ -521,7 +521,7 @@ def bridge_koszulness_nonrenorm() -> Dict[str, str]:
 
     MK: The bar spectral sequence collapses at E_2 (Koszulness), so the
         A_infty structure is determined by the quadratic (R-matrix) data.
-        (prop:yangian-koszul, using PBW basis from Molev)
+        (prop:yangian-koszul, under the PBW-Koszul criterion)
 
     This is the SAME phenomenon:
       - "1-loop exact" (DNP, physics) = "E_2-collapse" (MK, mathematics)

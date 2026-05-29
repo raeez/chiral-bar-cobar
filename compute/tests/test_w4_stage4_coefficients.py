@@ -87,7 +87,7 @@ class TestCentralCharge:
         assert w4_central_charge(0) == -132
 
     def test_w4_critical_level(self):
-        """Critical level k = -h^vee = -4: c diverges (denominator = 0)."""
+        """Critical level k = -h^vee = -4: Sugawara undefined."""
         k = Symbol('k')
         c = w4_central_charge(k)
         # At k = -4, denominator k+4 = 0

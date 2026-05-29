@@ -349,7 +349,7 @@ def replica_log_partition_full(kappa_val, n, log_ratio, max_genus=5):
     kappa_val = Rational(kappa_val)
     n = Rational(n)
 
-    # Genus-0 (leading): this IS the full scalar log Z_n
+    # Genus-0 (leading): this is the full scalar log Z_n in this lane.
     log_z_scalar = -(kappa_val / 3) * (n - 1 / n) * log_ratio
 
     # Higher genus corrections via Faber-Pandharipande

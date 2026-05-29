@@ -64,7 +64,7 @@ MATHEMATICAL FRAMEWORK
 
 6. IWASAWA-THEORETIC INTERPRETATION (SPECULATIVE).
 
-   The scalar shadow partition function Z^sh(hbar, kappa) = kappa * (A-hat(ihbar) - 1)
+   The scalar shadow generating function Z^sh(hbar, kappa) = kappa * (A-hat(ihbar) - 1)
    is an ANALYTIC FUNCTION on the p-adic disc |hbar|_p < R_p = p^{1/(p-1)}.
 
    For kappa = c/2 with c in Z_p, this defines a p-adic family of shadow

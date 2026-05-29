@@ -204,7 +204,7 @@ class TestCurvature:
         assert simplify(c_k + c_dual - 26) == 0
 
     def test_ds_critical_level(self):
-        """At k = -2 (critical level), c diverges."""
+        """At k = -2 (critical level), Sugawara is undefined."""
         c_val = virasoro_ds_central_charge(k)
         assert abs(limit(c_val, k, -2)) == oo
 

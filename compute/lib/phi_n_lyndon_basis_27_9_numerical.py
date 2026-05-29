@@ -78,8 +78,8 @@ def bk_coefficient(n: int, d: int, N: int = 32, K: int = 12) -> int:
 
 def padovan_count_check_25_28() -> Tuple[int, int, int, int]:
     """Verify Padovan recurrence d_n = d_{n-2} + d_{n-3} at n=25..28."""
-    d = {20: 74, 21: 114, 22: 151, 23: 200, 24: 265}
-    for n in range(25, 29):
+    d = {0: 1, 1: 0, 2: 1}
+    for n in range(3, 29):
         d[n] = d[n - 2] + d[n - 3]
     return d[25], d[26], d[27], d[28]
 
@@ -231,12 +231,14 @@ def bk_depth_extract_25_28() -> dict:
 
 
 def bk_padovan_twostep_consistency_check_25_28() -> bool:
-    """Row-sum identity sum_d D_{n,d} = d_{n-2}."""
-    d = {20: 74, 21: 114, 22: 151, 23: 200, 24: 265, 25: 351, 26: 465}
+    """BK row-sum lag diagnostic sum_d D_{n,d} = d_{n-3}."""
+    d = {0: 1, 1: 0, 2: 1}
+    for k in range(3, 29):
+        d[k] = d[k - 2] + d[k - 3]
     rows = bk_depth_extract_25_28()
     for n in (25, 26, 27, 28):
         s = sum(rows[n])
-        if s != d[n - 2]:
+        if s != d[n - 3]:
             return False
     return True
 
@@ -244,7 +246,7 @@ def bk_padovan_twostep_consistency_check_25_28() -> bool:
 def phi_n_leading_check_25_28() -> dict:
     """phi^{(n)}_{MZV, lead} = d_n / n! at n in {25, 26, 27, 28}."""
     mpmath.mp.dps = 30
-    d = {25: 351, 26: 465, 27: 616, 28: 816}
+    d = {25: 465, 26: 616, 27: 816, 28: 1081}
     vals = {n: mpmath.mpf(d[n]) / mpmath.factorial(n) for n in (25, 26, 27, 28)}
     return vals
 
@@ -255,7 +257,7 @@ if __name__ == "__main__":
     print("BK rows n=25..28:")
     for n, row in bk_depth_extract_25_28().items():
         print(f"  n={n}: {row}")
-    print("Row-sum Padovan check:", bk_padovan_twostep_consistency_check_25_28())
+    print("BK row-sum lag check:", bk_padovan_twostep_consistency_check_25_28())
 
     L1 = mzv_depth9_weight27_via_borwein_bradley(N=800, dps=40)
     print(f"\nLambda_1 = zeta({{3}}^9) (N=800, 40dp) = {L1}")

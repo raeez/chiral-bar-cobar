@@ -57,7 +57,7 @@ class TestCentralCharge:
         assert e8_central_charge(1) == Rational(248, 31)
 
     def test_critical_level(self):
-        """c diverges at k = -h^vee = -30 (critical level)."""
+        """Sugawara is undefined at k = -h^vee = -30 (critical level)."""
         # We just check the formula gives 248*(-30)/0 which is undefined
         pass  # sympy will give zoo
 

@@ -15,9 +15,10 @@ generating-function extractor to $K = 20$, $N = 50$):
     D_{33,11}  = 19
 
 so $n = 33$ carries the first depth-$11$ MZV irreducibles in the
-Broadhurst--Kreimer tower.  The Zagier-seed Padovan dimensions are
-$(d_{29}, d_{31}, d_{33}) = (1081, 1897, 3329)$ with the row-sum
-identity $\\sum_d D_{n,d} = d_{n-2}$, verified across $n\\in\\{29,31,33\\}$.
+Broadhurst--Kreimer tower.  The Brown Padovan dimensions are
+$(d_{29}, d_{31}, d_{33}) = (1432, 2513, 4410)$.  The BK row sum is a
+lag diagnostic: $\\sum_d D_{n,d} = d_{n-3}$ across
+$n\\in\\{29,31,33\\}$.
 
 Admissibility via the mod-$8$ Humbert--Heegner filter
 (Theorem~\\ref{thm:phi-n-humbert-heegner-admissibility}, item (a)):
@@ -47,19 +48,18 @@ from compute.lib.phi_n_lyndon_basis_27_9_numerical import (
 
 
 # ---------------------------------------------------------------------------
-# Padovan dimensions extended through n = 33 (Zagier seed)
+# Padovan dimensions extended through n = 33 (Brown seed)
 # ---------------------------------------------------------------------------
 def padovan_dimensions_29_33() -> Dict[int, int]:
-    """Zagier Padovan d_n = d_{n-2} + d_{n-3} with seed (d_1, d_2, d_3, d_4)
-    = (1, 0, 1, 1); returned values for n in {25, ..., 33}."""
-    d = {1: 1, 2: 0, 3: 1, 4: 1}
-    for n in range(5, 34):
+    """Brown Padovan d_n = d_{n-2} + d_{n-3} with seed d_0=1,d_1=0,d_2=1."""
+    d = {0: 1, 1: 0, 2: 1}
+    for n in range(3, 34):
         d[n] = d[n - 2] + d[n - 3]
     return {n: d[n] for n in range(25, 34)}
 
 
 def verify_padovan_29_31_33() -> Tuple[int, int, int]:
-    """Return (d_29, d_31, d_33) = (1081, 1897, 3329)."""
+    """Return (d_29, d_31, d_33) = (1432, 2513, 4410)."""
     d = padovan_dimensions_29_33()
     return d[29], d[31], d[33]
 
@@ -89,11 +89,11 @@ def bk_depth_extract_29_33(N: int = 50, K: int = 20) -> Dict[int, Tuple[int, ...
 
 
 def bk_padovan_rowsum_check_29_33(N: int = 50, K: int = 20) -> bool:
-    """Row-sum identity $\\sum_d D_{n, d} = d_{n - 2}$ at n in {29, 31, 33}."""
+    """BK row-sum lag diagnostic $\\sum_d D_{n, d} = d_{n - 3}$."""
     d_pad = padovan_dimensions_29_33()
     rows = bk_depth_extract_29_33(N=N, K=K)
     for n in (29, 31, 33):
-        if sum(rows[n]) != d_pad[n - 2]:
+        if sum(rows[n]) != d_pad[n - 3]:
             return False
     return True
 
@@ -357,7 +357,7 @@ def verify_primitives_four_voice(dps: int = 30) -> dict:
     V3: tail bound $N^{-2} (\\log N)^{d-1} / (d-1)!$ at matching depth.
     V4: parity $D_{n, d} = 0$ unless $n - d$ is even; check the
         forbidden bi-degrees $(29, 8)$, $(31, 10)$, $(33, 10)$.
-    V5: BK row-sum Padovan identity $\\sum_d D_{n, d} = d_{n - 2}$
+    V5: BK row-sum lag diagnostic $\\sum_d D_{n, d} = d_{n - 3}$
         verified at $n \\in \\{29, 31, 33\\}$.
     V6: BK truncation invariance $D_{n, d}$ stable under $K \\to 2K$.
     V7: zeta(3,3) closed-form cross-check at convention level.
@@ -406,12 +406,12 @@ def verify_primitives_four_voice(dps: int = 30) -> dict:
         "D_33_10": bk_coefficient(33, 10, N=50, K=20),  # should vanish
     }
 
-    # V5: BK row-sum Padovan identity at n in {29, 31, 33}
+    # V5: BK row-sum lag diagnostic at n in {29, 31, 33}
     d_pad = padovan_dimensions_29_33()
     out["V5_rowsum"] = {
         n: {
             "row_sum": sum(bk_coefficient(n, d, N=50, K=20) for d in range(1, 12)),
-            "padovan_d_n_minus_2": d_pad[n - 2],
+            "padovan_d_n_minus_3": d_pad[n - 3],
         }
         for n in (29, 31, 33)
     }
@@ -466,7 +466,7 @@ if __name__ == "__main__":
     verify_bigradings_33_11()
 
     print("=" * 70)
-    print("Padovan dimensions (Zagier seed):")
+    print("Padovan dimensions (Brown seed):")
     d29, d31, d33 = verify_padovan_29_31_33()
     print(f"  d_29 = {d29}, d_31 = {d31}, d_33 = {d33}")
 
@@ -476,7 +476,7 @@ if __name__ == "__main__":
         nz = {d + 1: v for d, v in enumerate(row) if v != 0}
         print(f"  n={n}: {nz}  (row sum = {sum(row)})")
 
-    print(f"\nBK row-sum Padovan check (should be True): "
+    print(f"\nBK row-sum lag check (should be True): "
           f"{bk_padovan_rowsum_check_29_33()}")
 
     print("\nAdmissibility (mod-8) continuation n in [27, 50]:")

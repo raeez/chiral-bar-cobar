@@ -82,7 +82,7 @@ Conventions
 -----------
 - Cohomological grading (|d| = +1), bar uses desuspension (AP45).
 - kappa(g, k) = dim(g)(k + h^v)/(2 h^v) (AP1, AP39).
-- Sugawara UNDEFINED at critical level (not "c diverges").
+- Sugawara undefined at critical level.
 - FF involution: k <-> -k - 2h^v.
 - H_k^! = V_{-k-2h^v}(g), NOT H_{-k} (AP33).
 - Bar propagator d log E(z,w) is weight 1 (AP27).
@@ -253,15 +253,13 @@ def central_charge_affine(g: SimpleLieData, k: Union[int, float, Fraction]
         denom = k + g.h_vee
         if denom == 0:
             raise ValueError(
-                f"Sugawara UNDEFINED at critical level k = -{g.h_vee} "
-                f"(AP: not 'c diverges')"
+                f"Sugawara undefined at critical level k = -{g.h_vee}"
             )
         return Fraction(g.dim) * k / denom
     denom = k + g.h_vee
     if abs(denom) < 1e-15:
         raise ValueError(
-            f"Sugawara UNDEFINED at critical level k = -{g.h_vee} "
-            f"(AP: not 'c diverges')"
+            f"Sugawara undefined at critical level k = -{g.h_vee}"
         )
     return g.dim * k / denom
 

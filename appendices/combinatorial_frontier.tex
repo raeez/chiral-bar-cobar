@@ -160,7 +160,7 @@ The partition function~$p(k)$ appears in a second, independent role
 as the weight multiplicity of the Yangian negative prefundamental
 module: $\dim(L^-_a)_{-2k} = p(k)$. This creates a direct bridge
 between the combinatorial data of the bar complex (Frame~A) and the
-MC3 thick generation programme (Frame~B):
+MC3 thick generation problem (Frame~B):
 \begin{enumerate}[label=\textup{(\roman*)},nosep]
 \item The kernel $K := \operatorname{ch}(L^-) - \operatorname{ch}(M(0))$
  has coefficient $p(m) - 1$ at weight~$-2m$, which equals the
@@ -772,9 +772,9 @@ For a positive-definite even lattice~$\Lambda$, the theta series $\Theta_\Lambda
 \section{Open problems and the computational frontier}
 \label{sec:open-problems}
 
-We organize the remaining computational challenges by estimated difficulty.
+We organize the remaining computational challenges by obstruction type.
 
-\subsection{Near-term targets (single new bar cohomology value)}
+\subsection{Open computation: first unknown bar-cohomology value}
 
 \begin{enumerate}[label=\textbf{NF-\arabic*.}, leftmargin=3em]
 \item\label{nf:sl3-h4}
@@ -783,7 +783,7 @@ This is the single most informative computation on the frontier. The value $1352
 
 \emph{Obstruction}: the computation requires the rank of a $24576 \times 786432$ matrix over $\mathbb{Q}$ (or a suitable finite field $\mathbb{F}_p$). This is a $\sim 20$\,GB dense matrix, beyond naive methods but within reach of sparse or modular arithmetic.
 
-\emph{Progress} (Computation~\ref{comp:sl3-casimir-decomp}):
+\emph{Known computation} (Computation~\ref{comp:sl3-casimir-decomp}):
 the Casimir eigenspace decomposition of $\mathfrak{sl}_3^{\otimes 4}$ has been
 computed, giving $9$ eigenspaces with multiplicities
 $(8, 256, 400, 891, 1050, 768, 112, 486, 125)$
@@ -796,7 +796,7 @@ remains a candidate path to $H^4$ without the full matrix rank,
 though the convergence target requires care
 (Remark~\ref{rem:pbw-convergence-target}).
 
-Additional progress:
+Additional computed data:
 \begin{itemize}
 \item
 The Koszul dual dimensions from series inversion are
@@ -870,8 +870,8 @@ We record the results of systematic computational verification of the bar
 cohomology data. The computations use two independent methods: direct rank
 computation of the chiral bracket differential (with Orlik--Solomon forms),
 and algebraic generating function fitting (rational and holonomic recurrence
-detection). All computations are implemented in the \texttt{compute/} module
-and validated by an automated test suite.
+detection). The verification data are the rank computations and fitted
+generating functions recorded below.
 
 \subsection{Chiral bracket rank verification for $\widehat{\mathfrak{sl}}_3$}
 \label{subsec:chiral-bracket-verification}
@@ -1123,8 +1123,8 @@ $W$ (weight~$3$), with the composite field $\Lambda = {:}TT{:} -
 The degree-$5$ chain group is smaller than for $\mathfrak{sl}_3$
 (only $2$ generators vs.~$8$), but the sixth-order pole in the
 $W \times W$ OPE introduces non-trivial complications.
-A full rank computation requires extending the \texttt{w3\_bar.py}
-module to degree~$5$.
+A full rank computation requires the degree-$5$ chiral bar differential
+for the $\mathcal W_3$ composite-field OPE.
 
 \item \emph{Alternative approach: PBW spectral sequence at degree~$4$.}
 Rather than computing the full chiral bar differential, one can
@@ -1305,7 +1305,7 @@ Seven independent consistency checks support this value:
 \end{enumerate}
 
 \noindent
-All seven checks pass ($\mathtt{w3\_h5\_verification.py}$, 22 tests).
+All seven independent checks give the same value.
 The conjectured value $H^5 = 171$ is strongly supported.
 The principal obstruction to direct chain-level verification is the
 degree-5 bar complex, where the $(n+1)$-fold tensor products of the

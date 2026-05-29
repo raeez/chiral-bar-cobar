@@ -1036,7 +1036,7 @@ class TestLieAlgebraData:
         assert sugawara_c("A", 2, 1) == Rational(2)
 
     def test_sugawara_undefined_at_critical_level(self):
-        """Sugawara is UNDEFINED at critical level k = -h* (not 'c diverges')."""
+        """Sugawara is undefined at critical level k = -h*."""
         from compute.lib.lie_algebra import sugawara_c
         with pytest.raises(ValueError, match="critical"):
             sugawara_c("A", 1, -2)  # sl_2, h* = 2

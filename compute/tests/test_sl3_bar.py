@@ -180,7 +180,7 @@ class TestSugawara:
         assert limit(c_val, k, oo) == 8
 
     def test_critical_level(self):
-        """c diverges at k = -h^vee = -3."""
+        """Sugawara is undefined at k = -h^vee = -3."""
         from sympy import limit, oo
         c_val = sl3_sugawara_c()
         assert abs(limit(c_val, k, -3)) == oo

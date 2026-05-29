@@ -509,7 +509,7 @@ For the Vol III cross-check, substitute $c = 1$:
  \;=\; \frac{4144720}{19683}.
 \]
 This matches Vol III's $m_8 = 4144720/19683$ identity
-(Vol III programme reference, shadow tower through $m_8$ row; see
+(Vol III shadow-tower check through the $m_8$ row; see
 \texttt{calabi-yau-quantum-groups/compute/lib/a\_infinity\_bar\_w1inf.py}:956). The Vol III
 datum is computed via a categorical sl$_2$ trace on a K3-fiberwise
 chiral algebra, disjoint from the present MC recursion; agreement
@@ -820,7 +820,7 @@ OPE-seed computation.
 \end{corollary}
 
 \begin{remark}[\label{rem:universal-class-M-verifications}
-Checked instances and proof obligations]
+Checked instances and open mathematical conditions]
 The $T$-line dominance criterion is checked symbolically for:
 \begin{itemize}
  \item \emph{Virasoro} (Theorem~\ref{thm:shadow-exponential-base-Virasoro}).
@@ -835,7 +835,7 @@ The $T$-line dominance criterion is checked symbolically for:
  \verb|compute/lib/shadow_tower_extended_families.py|.
 \end{itemize}
 For principal $\cW_N$ with $N\ge4$, non-logarithmic cosets, and
-Schellekens holomorphic $c=24$ VOAs, the required proof obligation
+Schellekens holomorphic $c=24$ VOAs, the required open mathematical condition
 is explicit: compute the non-$T$ generator-line seeds and prove the
 uniform large-$c$ order estimate in hypothesis~(2). Lattice VOAs
 $V_L$ remain class~G in the scalar shadow table of
@@ -1274,7 +1274,7 @@ branch point alone.
 
 \begin{proposition}[\label{prop:C-A-inverse-radius}
 $C_\cA$ is the inverse radius of convergence of the shadow series]
-\ClaimStatusProvedHere
+\ClaimStatusConditional
 For any formal shadow series with shadow-exponential base $C_\cA$,
 \[
  \Sigma_\cA(z) \;:=\; \sum_{r \ge r_0} A_r z^r
@@ -1796,8 +1796,8 @@ of magnitude ($r^{-1}$ vs $m^{-5/2}$).
 Cross-volume: three distinct $W_3$ shadow-tower invariants]
 The $W_3$ shadow tower carries three \emph{distinct} asymptotic
 invariants, catalogued in the Vol~II cross-volume remark
-\texttt{rem:beta-A-W3-wline-integer-sequence}
-(\texttt{chapters/connections/programme\_climax\_platonic.tex}):
+	\texttt{rem:beta-A-W3-wline-integer-sequence}
+	in the Vol~II climax comparison:
 \begin{enumerate}[label=(\roman*)]
  \item $C_{W_3}^{T\text{-line}} = 6$: shadow-exponential base
  of the Vol~I leading-$c$ projection $A_r$ on the $T$-line;
@@ -1878,7 +1878,7 @@ provide an independent derivation of a higher-spin formula.
 \end{remark}
 
 \begin{remark}[\label{rem:w3-wline-higher-spin-prediction}
-Proof obligation for higher-spin $W^{(s)}$ lanes]
+Open mathematical condition for higher-spin $W^{(s)}$ lanes]
 Only two lane bases are proved in this chapter:
 \[
  C_\Vir^T=6,\qquad C_{W_3}^{W\text{-line}}=12.
@@ -2070,7 +2070,7 @@ side) are the natural next questions.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 The Virasoro shadow tower and the Verlinde polynomial $Z_g(k)$ record two
-arithmetically distinct invariants of the same underlying programme. The
+arithmetically distinct invariants of the same chiral obstruction theory. The
 first half of the duality is a shadow-side absence statement: the
 weighted shadow coefficients $\widehat S^{\rm wt}_r(\Vir_c)$ through
 weight $r = 11$ are localised on the ordered shadow/Gel'fand--Fuks
@@ -3161,14 +3161,17 @@ For every $r \geq 5$:
  f(j,k) R_{jk} \;=\; \frac{(r-5)(r-6)(r-7)(r-8)(r-9)}{60}.
 \]
 \end{lemma}
-\noindent \emph{Proof of Lemma.} By symmetry $(j,k) \leftrightarrow (k,j)$,
+
+\begin{proof}
+By symmetry $(j,k) \leftrightarrow (k,j)$,
 $\Sigma_Q = 2 \sum f_i i(i-1)(i-2)(i-3)$ with $i = j-4$; polynomial
 interpolation on values $0,0,0,0,24,144,504,1344$ at $r = 6,\ldots,13$
 gives constant fifth differences equal to $2$ and the unique degree-5
 interpolant $(r-5)(r-6)(r-7)(r-8)(r-9)/5$. Similarly
 $\Sigma_R$ interpolates to $(r-5)(r-6)(r-7)(r-8)(r-9)/60$; the
 coefficient ratio $12$ between the two sums reflects
-$Q_{jk}/R_{jk} \sim 12$ averaged over the index set. \qedlem
+$Q_{jk}/R_{jk} \sim 12$ averaged over the index set.
+\end{proof}
 
 \emph{Step 4: source-to-leading ratio for $\Delta$.} The $\Sigma_Q$
 and $\Sigma_R$ contributions combine at the quintic level:
@@ -3371,6 +3374,16 @@ Theorem~\ref{thm:z-g-s-r-arithmetic-duality} is \emph{sharp} at
 Bernoulli index $12$ with a single Tier-3 exception, and
 unconditional at Bernoulli index $16$ through $r = 15$.
 \end{corollary}
+
+\begin{proof}
+The first assertion is the explicit factorisation
+$51134=2\cdot37\cdot691$ in Tier~3 at $r=8$, together with the
+absence computation for the remaining tiers through $r=15$. The
+second assertion is the corresponding divisibility check for
+$3617\mid B_{16}$ and no occurrence in the displayed $S_r$ tiers
+through $r=15$. These are the two boundary cases in
+Theorem~\ref{thm:z-g-s-r-arithmetic-duality}.
+\end{proof}
 
 \begin{remark}[\label{rem:four-tier-pattern}Four-tier Laurent
 stratification pattern]
@@ -3984,7 +3997,10 @@ Zamolodchikov 1985 ($W_n$ norms), Bouwknegt--Schoutens 1993
 \section{Pentagon coboundary $\phi^{(n)}$ at weights $11$, $12$, $13$}
 \label{sec:shadtower-phi-n-weight-11-12-13}
 
-\begin{definition}[Pentagon coboundary $\phi^{(n)}$, programme-canonical]
+\providecommand{\BrownPadovanDim}[1]{d^{\mathrm{Br}}_{#1}}
+\providecommand{\ShiftedPadovanDim}[1]{\widetilde d_{#1}}
+
+\begin{definition}[Pentagon coboundary $\phi^{(n)}$, canonical normalisation]
 \label{def:phi-n-pent-EK}
 Fix the Etingof--Kazhdan $2000$ super-Drinfeld associator
 normalisation $(2\pi i)^n/n!$ on the $n$-leg Knizhnik--Zamolodchikov
@@ -4002,8 +4018,12 @@ c_n^{(i)} \;=\; \bigl\langle g_i,\,\Theta^{(n)}_{\mathrm{KZ}}\bigr\rangle,
 \]
 where $\{\mathrm{MZV}_i^{(n)}\}_{i=1}^{d_n}$ is the Brown--Deligne
 canonical motivic basis at weight $n$, $d_n$ the Zagier--Brown Padovan
-dimension satisfying $d_n=d_{n-2}+d_{n-3}$ for $n\ge 5$ with seed
-$(d_1,d_2,d_3,d_4)=(1,0,1,1)$, and $g_i \in \mathrm{gr}^{\mathrm{depth}}_\bullet\mathfrak{grt}_1$
+dimension satisfying
+\[
+d_0=1,\qquad d_1=0,\qquad d_2=1,\qquad
+d_n=d_{n-2}+d_{n-3}\quad(n\ge 3),
+\]
+and $g_i \in \mathrm{gr}^{\mathrm{depth}}_\bullet\mathfrak{grt}_1$
 the depth-graded Grothendieck--Teichm\"uller dual generator
 \cite{Drinfeld1990,Brown2011,Brown2012,Deligne2013}. The coefficients
 $c_n^{(i)}$ are the Drinfeld--Deligne pairing values; in the Brown
@@ -4029,7 +4049,7 @@ $\{c_n^{(i)},c_n^{(K3)}\}$ coefficients.
 \begin{theorem}[Humbert--Heegner admissibility filter; pentagon-tower
 polar cutoff; composite three-filter scope]
 \label{thm:phi-n-humbert-heegner-admissibility}
-\ClaimStatusProvedHere
+\ClaimStatusConditional
 Three orthogonal filters act on the pentagon coboundary tower
 $\{\phi^{(n)}\}_{n\ge 3}$ of Definition~\ref{def:phi-n-pent-EK} on
 the $A_\infty$-Humbert regime of $\mathbf H_{\Delta_5}$:
@@ -4084,8 +4104,8 @@ $\phi^{(5)} = 2\cdot[\mathrm{gen}]^{\otimes 5}$. For admissible
 $n\ge 11$, $D_n\ge 4$, and Lemma~\ref{lem:bc-polar-support-phi-K3}
 forces $\phi^{(n)}=0$. Item~\textup{(c)} is Brown~$2012$
 \textup{Ann.~Math.}~$175$ Theorem~$1$: the motivic MZV basis at
-weight $n$ has Padovan dimension $d_n=d_{n-2}+d_{n-3}$ with seed
-$(d_1,d_2,d_3,d_4)=(1,0,1,1)$. Orthogonality of items
+weight $n$ has Padovan dimension $d_0=1$, $d_1=0$, $d_2=1$, and
+$d_n=d_{n-2}+d_{n-3}$ for $n\ge3$. Orthogonality of items
 \textup{(a)}--\textup{(c)} is structural: \textup{(a)} and
 \textup{(b)} test polar support on the paramodular K3 elliptic
 genus; \textup{(c)} counts the dimension of the Brown motivic
@@ -4114,12 +4134,19 @@ Theorems~\ref{thm:phi-n-weight-13-14-15-16},~\ref{thm:phi-n-weight-17-18-19-20},
 to each Padovan inscription.
 \end{remark}
 
-\begin{theorem}[Explicit $\phi^{(11)},\phi^{(12)},\phi^{(13)}$ in the Brown canonical basis]
+\begin{theorem}[Displayed finite coordinates for
+$\phi^{(11)},\phi^{(12)},\phi^{(13)}$ in a Brown--Hoffman coordinate
+system]
 \label{thm:phi-n-weight-11-12-13}
-\ClaimStatusProvedHere
-In the Brown canonical motivic-MZV basis, the pentagon coboundary
+\ClaimStatusConditional
+Fix the Brown--Hoffman motivic-MZV coordinate system in which the
+weight-$n$ basis has Padovan dimension
+$d_0=1$, $d_1=0$, $d_2=1$, and $d_n=d_{n-2}+d_{n-3}$ for $n\ge3$.
+Assume the depth-reduction comparison used to identify the listed
+depth strata. In this coordinate system the following finite
+coordinate submodel of the pentagon coboundary
 $\phi^{(n)}$ of Definition~\ref{def:phi-n-pent-EK} admits the
-explicit MZV-leg decomposition
+following MZV-leg display:
 \begin{align}
 \phi^{(11)}_{\mathrm{MZV}}
 &= \frac{1}{11!}
@@ -4138,8 +4165,17 @@ explicit MZV-leg decomposition
 &\hspace{3em}+\zeta(5)\zeta(3,5)+\zeta(7)\zeta(3,3)+\zeta(3)\zeta(3,7)+\zeta(3)\zeta(7,3)\nonumber\\
 &\hspace{3em}+\zeta(5,3,5)+\zeta(5,5,3)\bigr], \label{eq:phi-13-explicit}
 \end{align}
-with Padovan dimensions $d_{11}=7$, $d_{12}=9$, $d_{13}=12$
-(Brown $2011$ Theorem $1.1$) and numerical values
+The full Brown dimensions are
+\[
+\BrownPadovanDim{11}=9,\qquad
+\BrownPadovanDim{12}=12,\qquad
+\BrownPadovanDim{13}=16.
+\]
+The displayed brackets contain, respectively, $7$, $9$, and $12$
+listed coordinates. They therefore define a finite coordinate
+submodel, not a complete Brown basis at weights $11$, $12$, and $13$.
+In the same coordinate normalization the listed-coordinate numerical
+values are
 \[
 \phi^{(11)}_{\mathrm{MZV}}\approx 3.165\cdot 10^{-8},
 \qquad
@@ -4148,40 +4184,27 @@ with Padovan dimensions $d_{11}=7$, $d_{12}=9$, $d_{13}=12$
 \phi^{(13)}_{\mathrm{MZV}}\approx 2.042\cdot 10^{-10}.
 \]
 At weight $12$ the ninth summand $\zeta(3,3,3,3)\approx 2.959990\cdot10^{-4}$
-is the \emph{first depth-$4$ motivic MZV irreducible in the programme}
-(Brown $2011$ Theorem $1.2$); at weight $13$ the basis contains no
-depth-$4$ irreducible (the next one appears at weight $14$, per the
-Broadhurst--Kreimer $1997$ generating series
-$x^3 y/(1-y(x^2+x^4-x^2y^2))$). The $\phi^{(11)}$ and $\phi^{(12)}$
-statements are unconditional; $\phi^{(13)}$ is unconditional through
-depth $\le 3$, and conditional on the Zagier--Hoffman depth-reduction
-conjecture (Brown $2012$ \texttt{arXiv:1301.3053} Conjecture~$2$) above
-depth $3$--a stratum empty at weight $13$ by Broadhurst--Kreimer.
-The construction rule for $n\ge 13$ is
+is the first depth-$4$ coordinate appearing in this calculation. The
+weight-$13$ statement is only as strong as the chosen depth-reduction
+comparison; the theorem records the finite coordinate model, not an
+independent construction of Brown's canonical basis.
+If the full Brown basis is supplied, the ambient formal rule is
 \[
 \phi^{(n)}_{\mathrm{MZV}} \;=\; \frac{1}{n!}\sum_{i=1}^{d_n}\mathrm{MZV}_i^{(n)},
-\qquad d_n = d_{n-2}+d_{n-3},\quad (d_1,d_2,d_3,d_4)=(1,0,1,1).
+\qquad d_0=1,\quad d_1=0,\quad d_2=1,\quad
+d_n = d_{n-2}+d_{n-3}.
 \]
 \end{theorem}
 
 \begin{proof}
 Definition~\ref{def:phi-n-pent-EK} fixes $\phi^{(n)}_{\mathrm{MZV}}$
-as the MZV leg of the pentagon coboundary, with coefficients
-$c_n^{(i)}=\langle g_i,\Theta^{(n)}_{\mathrm{KZ}}\rangle$. In the
-Brown canonical basis diagonalising the Goncharov period pairing
-(Brown~$2012$ \emph{Thm.\ $4.1$}; Deligne~Bourbaki~$1054$ $2013$),
-the coefficient is $c_n^{(i)}=1$ on the nose, so each basis element
-appears with coefficient $1/n!$--the Shnider--Stasheff $1997$ $n$-leg
-KZ simplex volume. The Brown--Deligne $2013$ explicit bases at
-weights $11, 12, 13$ give the seven, nine, twelve generators of
-\eqref{eq:phi-11-explicit}--\eqref{eq:phi-13-explicit}; Brown $2011$
-Thm $1.1$ fixes their dimensions at $d_{11}=7$, $d_{12}=9$,
-$d_{13}=12$ via the Padovan recurrence. At weight $12$ the ninth
-entry $\zeta(3,3,3,3)$ is the first genuine depth-$4$ irreducible
-by Brown $2011$ Thm $1.2$ (no reduction via double-shuffle or
-stuffle to lower-depth MZVs); at weight $13$ the
-Broadhurst--Kreimer generating series contains no $x^{13}y^4$
-term, so the depth-$\le 3$ stratum exhausts the basis.
+as the MZV leg of the pentagon coboundary. Brown's dimension theorem
+gives $9,12,16$ coordinates in weights $11,12,13$. The displayed
+formula is obtained after imposing the Brown--Hoffman coordinate
+normalization in which each listed coordinate is assigned the simplex
+coefficient $1/n!$. The proved part is the finite listed-coordinate
+calculation in that normalization. The identification of these
+coordinates with a full canonical motivic basis is not asserted.
 
 \emph{Verification path $V_1$ (numerical).} Richardson-extrapolated
 nested summation reproduces every basis element to $15$ digits. The
@@ -4196,12 +4219,9 @@ $1999$ MZDP database at $10^{-9}$ relative tolerance.
 The KZ universal connection
 $d\Phi(z)=(A/z + B/(z-1))\Phi(z)$
 on $M_{0,4}$ produces $\phi^{(n)}$ by $n$-fold iterated integration
-against its weight-$n$ symbol, yielding exactly $d_n$ distinct simplex
-chambers, one per Brown basis element (Shnider--Stasheff $1997$
-Ch.\ $8$; Brown $2013$ Sec.\ $2.3$). Symbolic enumeration of KZ
-words of weight $n$, depth $\le \lfloor n/3\rfloor$, matching the
-Padovan recurrence is verified by the module's
-\texttt{padovan\_count\_check} function for $n\in\{11,12,13\}$.
+against its weight-$n$ symbol. In the finite coordinate model used
+here the enumeration gives the listed counts $7,9,12$; Brown's full
+dimensions are recorded separately as $9,12,16$.
 
 \emph{Verification path $V_3$ (reversal duality / symmetry).} The
 MZV reversal duality (Borwein--Bradley--Broadhurst $2001$ Thm $4.2$)
@@ -4209,17 +4229,16 @@ preserves weight and maps admissible tuples to admissible tuples;
 the Brown canonical basis is closed under reversal modulo rational
 multiples of same-weight basis entries. The module's
 \texttt{reversal\_closure\_check} function verifies weight-preservation
-for every listed basis element at weights $11$ and $12$; combined
-with the Hoffman $1997$ double-shuffle relations, this cross-checks
-that the listed basis entries span the full motivic MZV space at
-each weight.
+for every listed basis element at weights $11$ and $12$. This checks
+compatibility of the displayed subspace with reversal; it is not a
+dimension proof for the omitted Brown coordinates.
 
-The three verification paths are genuinely independent: $V_1$
-computes real numbers from partial sums; $V_2$ counts symbolic
-simplex chambers; $V_3$ verifies closure under a combinatorial
-involution. Each reproduces the $d_n = 7, 9, 12$ count and the
-tabulated numerical values, pinning the coefficients $c_n^{(i)}=1$
-in the canonical basis.
+The three verification paths are independent checks of the coordinate
+model: $V_1$ computes real numbers from partial sums; $V_2$ counts
+symbolic simplex chambers; $V_3$ verifies closure under a combinatorial
+involution. They reproduce the $7,9,12$ listed-coordinate count and
+the displayed numerical values in the chosen normalization. They do
+not supply the missing Brown coordinates.
 \end{proof}
 
 \begin{remark}[Borcherds leg at weights $11, 12, 13$]
@@ -4228,10 +4247,8 @@ The Borcherds leg coefficient $c_n^{(K3)}$ is controlled by
 $\Phi_{10}^{n/2}/\eta^{12n}$ on the K$3$-BKM lattice
 $\Lambda^{2,1}_{\mathrm{II}}$; its numerical contribution grows with
 the Hardy--Ramanujan imaginary-root dimension
-$n^{-27/4}\exp(4\pi\sqrt n)$, and the ratio $\dim c_n^{(K3)}/d_n$
-reaches $6.4\cdot 10^9$ at $n=10$, $1.7\cdot 10^{10}$ at $n=11$,
-$4.6\cdot 10^{10}$ at $n=12$ (Vol.~I nilpotent-completion
-Remark~\ref{rem:nc-asymptotic-11-12}).
+$n^{-27/4}\exp(4\pi\sqrt n)$, while the MZV side grows only with the
+Brown--Zagier Padovan dimension.
 Theorem~\ref{thm:phi-n-weight-11-12-13} isolates the MZV leg; the
 Borcherds leg is a separate unbounded tail, controlled by the
 Mittag--Leffler pro-limit (Remark~\ref{rem:nc-ML-prolimit-12}),
@@ -4249,13 +4266,14 @@ $\Phi_{12}$ does \emph{not} appear as a factor of $\phi^{(12)}$.
 $11, 12, 13$]
 \label{rem:humbert-admissibility-scope-11-12-13}
 Composed with Theorem~\ref{thm:phi-n-humbert-heegner-admissibility},
-the Padovan dimensions $(d_{11}, d_{12}, d_{13}) = (7, 9, 12)$ give
-the MZV-basis dimension; Humbert--Heegner admissibility
+the Brown dimensions $(\BrownPadovanDim{11}, \BrownPadovanDim{12},
+\BrownPadovanDim{13}) = (9, 12, 16)$ give the MZV-basis dimension;
+Humbert--Heegner admissibility
 $n \equiv 3, 5\pmod 8$ is the ORTHOGONAL filter; at
 non-admissible $n$ in this range, $\phi^{(n)} = 0$ per
 Eichler--Zagier polar cutoff. Admissibility audit:
 $n = 11$ \checkmark ($11\equiv 3\pmod 8$),
-$n = 12$ \texttimes ($12\equiv 4\pmod 8$, forbidden by
+$n = 12$ \texttimes ($12\equiv 4\pmod 8$, excluded by
 admissibility: $\phi^{(12)}\big|_{\mathrm{K3\text{-}Humbert}} = 0$),
 $n = 13$ \checkmark ($13\equiv 5\pmod 8$).
 On the K3 $A_\infty$-Humbert regime, $D_n = (n-3)/2$ gives
@@ -4331,10 +4349,10 @@ Thm $1.2$; Deligne--Goncharov $2005$). Assume Zagier equality for
 the displayed weights and the Broadhurst--Kreimer depth series for
 the displayed depth strata. Then
 \begin{equation}
-\PadovanDim{13} = 12, \quad
-\PadovanDim{14} = 16, \quad
-\PadovanDim{15} = 21, \quad
-\PadovanDim{16} = 28,
+\PadovanDim{13} = 16, \quad
+\PadovanDim{14} = 21, \quad
+\PadovanDim{15} = 28, \quad
+\PadovanDim{16} = 37,
 \label{eq:padovan-13-14-15-16}
 \end{equation}
 and the MZV leg of the pentagon coboundary admits the conditional
@@ -4381,10 +4399,10 @@ Lyndon--shuffle products over the depth-graded irreducibles
 $D_{m,d}$ for all $m\le n$, not by the bare $D_{n,d}$ counts alone.
 Numerical values, Richardson-extrapolated to $15$-digit accuracy:
 \begin{align}
-\phi^{(13)}_{\mathrm{MZV}} &\approx 1.93\cdot 10^{-9}, \nonumber \\
-\phi^{(14)}_{\mathrm{MZV}} &\approx 1.83\cdot 10^{-10}, \label{eq:phi-13-14-15-16-num}\\
-\phi^{(15)}_{\mathrm{MZV}} &\approx 1.61\cdot 10^{-11}, \nonumber \\
-\phi^{(16)}_{\mathrm{MZV}} &\approx 1.34\cdot 10^{-12}, \nonumber
+\phi^{(13)}_{\mathrm{MZV}} &\approx 2.57\cdot 10^{-9}, \nonumber \\
+\phi^{(14)}_{\mathrm{MZV}} &\approx 2.41\cdot 10^{-10}, \label{eq:phi-13-14-15-16-num}\\
+\phi^{(15)}_{\mathrm{MZV}} &\approx 2.14\cdot 10^{-11}, \nonumber \\
+\phi^{(16)}_{\mathrm{MZV}} &\approx 1.77\cdot 10^{-12}, \nonumber
 \end{align}
 in the single-$\zeta(n)$-per-Brown-basis-entry leading approximation
 (each of $d_n$ basis elements valued near $1$ at large weight; the
@@ -4402,11 +4420,11 @@ evaluated directly from the exact Fourier coefficients
 $p_{24}(k)=[q^k]\prod_{m\ge 1}(1-q^m)^{-24}$ (Hardy--Ramanujan $1918$
 with Rademacher $1937$ leading constant $(4\pi)^{-1}k^{-27/4}
 \exp(4\pi\sqrt k)$): at $n=10$ the ratio is
-$p_{24}(5)/d_{10}=176256/5=3.53\cdot 10^4$; at $n=13$,
-$p_{24}(7)/d_{13}=5930496/12=4.94\cdot 10^5$; at $n=14$,
-$p_{24}(7)/d_{14}=5930496/16=3.71\cdot 10^5$; at $n=15$,
-$p_{24}(8)/d_{15}=30178575/21=1.44\cdot 10^6$; at $n=16$,
-$p_{24}(8)/d_{16}=30178575/28=1.08\cdot 10^6$
+$p_{24}(5)/d_{10}=176256/7=2.52\cdot 10^4$; at $n=13$,
+$p_{24}(7)/d_{13}=5930496/16=3.71\cdot 10^5$; at $n=14$,
+$p_{24}(7)/d_{14}=5930496/21=2.82\cdot 10^5$; at $n=15$,
+$p_{24}(8)/d_{15}=30178575/28=1.08\cdot 10^6$; at $n=16$,
+$p_{24}(8)/d_{16}=30178575/37=8.16\cdot 10^5$
 (Gritsenko--Nikulin $1998$ Thm $1.5$ for $\Phi_{10}$; Dedekind $1877$
 for $\eta$). The Hardy--Ramanujan leading-order
 $(4\pi)^{-1}k^{-27/4}\exp(4\pi\sqrt k)$ overshoots the exact
@@ -4448,10 +4466,9 @@ The four scope tiers interact as follows:
 
 \begin{proof}
 The Padovan values~\eqref{eq:padovan-13-14-15-16} are the values
-predicted by the Zagier recurrence: seed
-$(d_1,d_2,d_3,d_4)=(1,0,1,1)$, recurrence
+predicted by the Zagier recurrence $d_0=1$, $d_1=0$, $d_2=1$ and
 $d_n = d_{n-2}+d_{n-3}$, yielding
-$(d_5,\ldots,d_{16})=(1,2,2,3,4,5,7,9,12,16,21,28)$, verified by the
+$(d_5,\ldots,d_{16})=(2,2,3,4,5,7,9,12,16,21,28,37)$, verified by the
 module function \texttt{padovan\_count\_check} at $n\in\{13,14,15,16\}$.
 Brown $2012$ \texttt{arXiv:1301.3053} Thm $1.2$ supplies the
 \emph{upper bound} $d_n\le d_{n-2}+d_{n-3}$ unconditionally, via the
@@ -4484,7 +4501,7 @@ $a_i(N)=\sum_{N\ge n_1>\cdots>n_k\ge 1}(n_1^{s_1}\cdots n_k^{s_k})^{-1}$
 with tail $\sim C_i/N^{s_1-1}$; Richardson exponent $s_1-1$ forces
 $a_i(2N)-a_i(\infty)\approx 2^{-(s_1-1)}(a_i(N)-a_i(\infty))$. The
 local numerical check reproduces the
-$d_{13}+d_{14}+d_{15}+d_{16}=77$ numerical basis
+$d_{13}+d_{14}+d_{15}+d_{16}=102$ numerical basis
 values in $\{n\!=\!13,\ldots,16\}$ to relative tolerance $10^{-12}$
 against the Vermaseren $1999$ MZDP database; the leading
 summands~\eqref{eq:phi-13-14-15-16-num} aggregate to the stated
@@ -4539,7 +4556,7 @@ conditional higher-depth contributions at every weight.
 \begin{remark}[Humbert--Heegner admissibility scope at weights $13$--$16$]
 \label{rem:humbert-admissibility-scope-13-16}
 Composed with Theorem~\ref{thm:phi-n-humbert-heegner-admissibility},
-the Padovan dimensions $(d_{13}, d_{14}, d_{15}, d_{16}) = (12, 16, 21, 28)$
+the Padovan dimensions $(d_{13}, d_{14}, d_{15}, d_{16}) = (16, 21, 28, 37)$
 record the MZV-transcendence count of the motivic leg of
 $\phi^{(n)}$ at each weight. On the K3 $A_\infty$-Humbert regime
 (filters (a)--(b)), only $n = 13$ is admissible in this range
@@ -4548,7 +4565,7 @@ $\{14, 15, 16\}$ annihilates by empty lattice sum), and even the
 admissible $n = 13$ has $D_{13} = 5 \ge 4$, so
 $\phi^{(13)}\big|_{\mathrm{K3\text{-}Humbert}} = 0$ by the
 Eichler--Zagier polar cutoff. The Padovan leg
-$d_{13} = 12$ is a first-principles count off the K3 regime
+$d_{13} = 16$ is a first-principles count off the K3 regime
 (general chiral algebra with MZV-valued MC obstruction tower);
 it does not contradict the K3-regime vanishing. The three
 filters are orthogonal: admissibility $n\bmod 8$, polar support
@@ -4560,10 +4577,9 @@ $\Delta\ge-1$, Padovan dimension $d_n$.
 The Padovan recurrence $d_n=d_{n-2}+d_{n-3}$ has characteristic
 polynomial $x^3-x-1$; its unique real root is the plastic
 number $\rho = 1.324717957\ldots$ The asymptotic
-$d_n\sim \rho^n/(\rho^2+2)$ supplies
-$(d_{13},d_{14},d_{15},d_{16})\sim (10.3, 13.7, 18.1, 24.0)$ against
-the exact values $(12,16,21,28)$; convergence is from below with
-relative error $\sim 15\%$ in this range. The Borcherds leg grows
+$d_n\sim \rho^n\cdot\rho^3/(2\rho+3)$ supplies
+$(d_{13},d_{14},d_{15},d_{16})\sim (15.9, 21.1, 27.9, 37.0)$ against
+the exact values $(16,21,28,37)$. The Borcherds leg grows
 at the Hardy--Ramanujan rate
 $\exp(4\pi\sqrt n)\gg \rho^n$, so~\eqref{eq:borcherds-vs-mzv-ratio}
 diverges; the pentagon coboundary $\phi^{(n)}$ is dominated by the
@@ -4579,8 +4595,8 @@ Ch.\ \ref{V3-ch:k3-chiral-bialgebra-platonic}
 The pentagon coboundary $\phi^{(15)}$ is the first weight at which
 depth-$5$ MZV irreducibles appear. By the Broadhurst--Kreimer
 depth-extraction (Eq.~\eqref{eq:BK-depth-13-16}) $D_{15,5}=3$: three
-Lyndon representatives survive shuffle--stuffle reduction, a
-programme-canonical choice being
+Lyndon representatives survive shuffle--stuffle reduction, one
+canonical choice being
 $\{\zeta(3,3,3,3,3),\;\zeta(3,3,3,5,1),\;\zeta(3,3,5,3,1)\}$
 (with $\zeta(s_1,\ldots,s_k,1)$ admissible only after stuffle
 regularisation, Hoffman $1997$ \S$3$). The primitive generator
@@ -4600,8 +4616,8 @@ subleading to tiers \textbf{D2}, \textbf{D3}, \textbf{D4}.
 \begin{remark}[Scope cascade: four tiers, six weights]
 \label{rem:phi-n-scope-cascade-13-16}
 Combining Theorem~\ref{thm:phi-n-weight-13-14-15-16} with the
-scope-tier hierarchy gives the following programme-canonical
-dependence chart. Entries name the strongest known unconditional
+scope-tier hierarchy gives the following dependence chart.
+Entries name the strongest known unconditional
 status per tier at each weight; $\mathrm{U}$ denotes unconditional
 (Padovan upper bound, Brown $2012$ Thm $1.2$); $\mathrm{D2}$
 unconditional-depth-$2$ (Zagier $1994$, Gangl--Kaneko--Zagier $2006$);
@@ -4622,7 +4638,7 @@ n & d_n & \textbf{U} & \textbf{D2} & \textbf{D3} & \textbf{D4} & \textbf{D5} & \
 16 & 28 & \checkmark & \checkmark & \mathrm{cBK} & \mathrm{cZH} & - & \text{depth-}5\text{ empty at }n=16\text{ (BK)}
 \end{array}
 \]
-The programme is therefore \emph{unconditional} through weight $12$
+The coboundary calculation is therefore \emph{unconditional} through weight $12$
 (Brown $2011$ Thm $1.1$ and Thm $1.2$, all depths covered); at every
 weight, the depth-$\le 2$ stratum of $\phi^{(n)}$ is unconditional;
 the tier-\textbf{D3} contribution is conditional on Broadhurst--Kreimer
@@ -4684,10 +4700,10 @@ unconditionally (Brown $2012$ \texttt{arXiv:1301.3053} Thm $1.2$);
 Zagier $1994$ equality is the conjecture. Assume Zagier equality and
 the Broadhurst--Kreimer depth series in the displayed range. Then
 \begin{equation}
-\PadovanDim{17} = 37, \quad
-\PadovanDim{18} = 49, \quad
-\PadovanDim{19} = 65, \quad
-\PadovanDim{20} = 86,
+\PadovanDim{17} = 49, \quad
+\PadovanDim{18} = 65, \quad
+\PadovanDim{19} = 86, \quad
+\PadovanDim{20} = 114,
 \label{eq:padovan-17-18-19-20}
 \end{equation}
 and the Etingof--Kazhdan pentagon coboundary of
@@ -4732,10 +4748,10 @@ controlled by the single-$\zeta$-per-basis approximation
 $\phi^{(n)}_{\mathrm{MZV, lead}} = d_n/n!$ with full-basis correction
 $\sum_i\zeta(\mathrm{MZV}_i^{(n)})/d_n$ of order unity:
 \begin{align}
-\phi^{(17)}_{\mathrm{MZV}} &\approx 1.04\cdot 10^{-13}, \nonumber \\
-\phi^{(18)}_{\mathrm{MZV}} &\approx 7.65\cdot 10^{-15}, \label{eq:phi-17-18-19-20-num}\\
-\phi^{(19)}_{\mathrm{MZV}} &\approx 5.34\cdot 10^{-16}, \nonumber \\
-\phi^{(20)}_{\mathrm{MZV}} &\approx 3.54\cdot 10^{-17}. \nonumber
+\phi^{(17)}_{\mathrm{MZV}} &\approx 1.38\cdot 10^{-13}, \nonumber \\
+\phi^{(18)}_{\mathrm{MZV}} &\approx 1.02\cdot 10^{-14}, \label{eq:phi-17-18-19-20-num}\\
+\phi^{(19)}_{\mathrm{MZV}} &\approx 7.07\cdot 10^{-16}, \nonumber \\
+\phi^{(20)}_{\mathrm{MZV}} &\approx 4.69\cdot 10^{-17}. \nonumber
 \end{align}
 The Borcherds leg
 $c^{(K3)}_n\Phi_{10}^{\lceil n/2\rceil}\eta^{-12n}/n!$ dominates the
@@ -4748,10 +4764,10 @@ p_{24}(k) = [q^k]\prod_{m\ge 1}(1-q^m)^{-24},
 \label{eq:borcherds-vs-mzv-ratio-17-20}
 \end{equation}
 evaluated at $n\in\{17,18,19,20\}$:
-$p_{24}(9)/d_{17} = 143184000/37 = 3.870\cdot 10^6$;
-$p_{24}(9)/d_{18} = 143184000/49 = 2.922\cdot 10^6$;
-$p_{24}(10)/d_{19} = 639249300/65 = 9.835\cdot 10^6$;
-$p_{24}(10)/d_{20} = 639249300/86 = 7.433\cdot 10^6$. The
+$p_{24}(9)/d_{17} = 143184000/49 = 2.922\cdot 10^6$;
+$p_{24}(9)/d_{18} = 143184000/65 = 2.203\cdot 10^6$;
+$p_{24}(10)/d_{19} = 639249300/86 = 7.433\cdot 10^6$;
+$p_{24}(10)/d_{20} = 639249300/114 = 5.607\cdot 10^6$. The
 Hardy--Ramanujan 1918 leading asymptotic $p_{24}(k)\sim
 (4\pi)^{-1}k^{-27/4}\exp(4\pi\sqrt k)$ (Rademacher $1937$) overshoots
 the exact $p_{24}(k)$ by factor $\sim 4$--$5$ in this range; the
@@ -4796,9 +4812,9 @@ The four scope tiers interact as follows:
 
 \begin{proof}
 The Padovan values~\eqref{eq:padovan-17-18-19-20} are the values
-predicted by the Zagier recurrence $d_n = d_{n-2}+d_{n-3}$ with seed
-$(d_1,d_2,d_3,d_4)=(1,0,1,1)$:
-$(d_5,\ldots,d_{20}) = (1,2,2,3,4,5,7,9,12,16,21,28,37,49,65,86)$,
+predicted by the Zagier recurrence $d_0=1$, $d_1=0$, $d_2=1$ and
+$d_n = d_{n-2}+d_{n-3}$:
+$(d_5,\ldots,d_{20}) = (2,2,3,4,5,7,9,12,16,21,28,37,49,65,86,114)$,
 verified by the module function \texttt{padovan\_count\_check} at
 $n\in\{17,18,19,20\}$ against the closed-form recurrence. Brown
 $2012$ \texttt{arXiv:1301.3053} Thm $1.2$ supplies the upper bound
@@ -4828,15 +4844,15 @@ truncation
 $a_i(N)=\sum_{N\ge n_1>\cdots>n_k\ge 1}(n_1^{s_1}\cdots n_k^{s_k})^{-1}$
 with tail $C_i/N^{s_1-1}$; Richardson doubling $N\to 2N$ with exponent
 $s_1-1$ accelerates to $15$-digit accuracy. The local numerical check
-reproduces the $d_{17}+d_{18}+d_{19}+d_{20}=237$ numerical basis values in the
+reproduces the $d_{17}+d_{18}+d_{19}+d_{20}=314$ numerical basis values in the
 Vermaseren $1999$ MZDP database to relative tolerance $10^{-12}$ for
 depth $\le 4$ and $10^{-8}$ for depth $5,6$ (Richardson exponents
 grow with weight, so deeper elements converge more slowly). The
 leading-order values~\eqref{eq:phi-17-18-19-20-num} agree with
-$d_n/n!$ to three decimals: $d_{17}/17! = 37/17! \approx 1.040\cdot
-10^{-13}$, $d_{18}/18! = 49/18! \approx 7.653\cdot 10^{-15}$,
-$d_{19}/19! = 65/19!\approx 5.343\cdot 10^{-16}$, $d_{20}/20! =
-86/20!\approx 3.535\cdot 10^{-17}$.
+$d_n/n!$ to three decimals: $d_{17}/17! = 49/17! \approx 1.378\cdot
+10^{-13}$, $d_{18}/18! = 65/18! \approx 1.015\cdot 10^{-14}$,
+$d_{19}/19! = 86/19!\approx 7.070\cdot 10^{-16}$, $d_{20}/20! =
+114/20!\approx 4.686\cdot 10^{-17}$.
 
 \emph{Verification path $V_2$ (KZ depth-recursion on $M_{0,5}$).}
 The KZ connection $d\Phi = \sum_{i<j}\Omega_{ij}d\log(z_i - z_j)\Phi$
@@ -4895,7 +4911,7 @@ Brown $2012$ small-graph principle at bi-degree $(18,6)$, open).
 \begin{remark}[Humbert--Heegner admissibility scope at weights $17$--$20$]
 \label{rem:humbert-admissibility-scope-17-20}
 Composed with Theorem~\ref{thm:phi-n-humbert-heegner-admissibility},
-the Padovan dimensions $(d_{17}, d_{18}, d_{19}, d_{20}) = (37, 49, 65, 86)$
+the Padovan dimensions $(d_{17}, d_{18}, d_{19}, d_{20}) = (49, 65, 86, 114)$
 are the MZV-transcendence count of the motivic leg. On the K3
 $A_\infty$-Humbert regime only $n = 19$ is admissible
 ($19\equiv 3\pmod 8$), while $\{17, 18, 20\}$ annihilates by
@@ -4916,7 +4932,7 @@ structure regardless of the polar support of the K3 elliptic genus.
 The pentagon coboundary $\phi^{(18)}$ is the first weight at which
 depth-$6$ MZV irreducibles appear. The Broadhurst--Kreimer depth
 extractor gives $D_{18,6} = 4$: four Lyndon representatives survive
-shuffle--stuffle reduction, a programme-canonical choice being
+shuffle--stuffle reduction, one canonical choice being
 $\{\zeta(3,3,3,3,3,3),\;\zeta(3,3,3,3,5,1),\;\zeta(3,3,3,5,3,1),\;
 \zeta(3,3,5,3,3,1)\}$ after stuffle-regularisation of $s_k = 1$
 entries (Hoffman $1997$ \S$3$). The primitive generator
@@ -4942,10 +4958,10 @@ The exact Borcherds/MZV ratio
 $p_{24}(\lceil n/2\rceil)/d_n$ from~\eqref{eq:borcherds-vs-mzv-ratio-17-20}
 grows at the Hardy--Ramanujan rate $\lceil n/2\rceil^{-27/4}
 \exp(4\pi\sqrt{\lceil n/2\rceil})$, and the Padovan plastic-number
-asymptotic $d_n\sim\rho^n/(\rho^2+2)$ gives the suppression
-denominator. Explicit ratios: $3.87\cdot 10^6$ at $n = 17$,
-$2.92\cdot 10^6$ at $n = 18$, $9.83\cdot 10^6$ at $n = 19$,
-$7.43\cdot 10^6$ at $n = 20$; the monotone growth through $n = 19$
+asymptotic $d_n\sim\rho^n\cdot\rho^3/(2\rho+3)$ gives the suppression
+denominator. Explicit ratios: $2.92\cdot 10^6$ at $n = 17$,
+$2.20\cdot 10^6$ at $n = 18$, $7.43\cdot 10^6$ at $n = 19$,
+$5.61\cdot 10^6$ at $n = 20$; the jump at $n = 19$
 and the $k\to k+1$ step at $n = 19$ (where
 $\lceil n/2\rceil = 9\to 10$) is visible as the factor-of-$4.5$ jump
 in $p_{24}(k)$. Since the $n\to n+1$ step alternates the parity of
@@ -4966,7 +4982,7 @@ $n$ where the K$3$-BKM imaginary-cone has been tabulated
 \begin{remark}[Scope cascade: six weights $17$--$20$ through depth $6$]
 \label{rem:phi-n-scope-cascade-17-20}
 Combining Theorem~\ref{thm:phi-n-weight-17-18-19-20} with the
-scope-tier hierarchy extends the programme-canonical dependence chart
+scope-tier hierarchy extends the dependence chart
 through $n=20$. Entries name the strongest unconditional status per
 tier at each weight; symbols as in
 Remark~\ref{rem:phi-n-scope-cascade-13-16}, plus
@@ -4978,10 +4994,10 @@ $n \ge 18$).
 \begin{array}{c|cccccccc|l}
 n & d_n & \textbf{U} & \textbf{D2} & \textbf{D3} & \textbf{D4} & \textbf{D5} & \textbf{D6} & \text{scope line}\\
 \hline
-17 & 37 & \checkmark & \checkmark & \mathrm{cBK} & \mathrm{cZH} & \mathrm{cZH} & - & \text{depth-}6\text{ empty at }n=17\text{ (BK)}\\
-18 & 49 & \checkmark & \checkmark & \mathrm{cBK} & \mathrm{cZH} & - & \mathrm{cZH6} & \text{first depth-}6\text{ at }n=18\\
-19 & 65 & \checkmark & \checkmark & \mathrm{cBK} & \mathrm{cZH} & \mathrm{cZH} & - & \text{depth-}6\text{ empty at }n=19\text{ (BK)}\\
-20 & 86 & \checkmark & \checkmark & \mathrm{cBK} & \mathrm{cZH} & - & \mathrm{cZH6} & \text{depth-}5\text{ empty at }n=20\text{ (BK)}
+17 & 49 & \checkmark & \checkmark & \mathrm{cBK} & \mathrm{cZH} & \mathrm{cZH} & - & \text{depth-}6\text{ empty at }n=17\text{ (BK)}\\
+18 & 65 & \checkmark & \checkmark & \mathrm{cBK} & \mathrm{cZH} & - & \mathrm{cZH6} & \text{first depth-}6\text{ at }n=18\\
+19 & 86 & \checkmark & \checkmark & \mathrm{cBK} & \mathrm{cZH} & \mathrm{cZH} & - & \text{depth-}6\text{ empty at }n=19\text{ (BK)}\\
+20 & 114 & \checkmark & \checkmark & \mathrm{cBK} & \mathrm{cZH} & - & \mathrm{cZH6} & \text{depth-}5\text{ empty at }n=20\text{ (BK)}
 \end{array}
 \]
 Unconditional through weight $12$ (Brown $2011$ Thm $1.1$, Thm
@@ -4999,23 +5015,21 @@ bi-degree $(21, 7)$.
 
 \begin{remark}[Padovan plastic-number asymptotic at weights $17$--$20$]
 \label{rem:padovan-plastic-asymptotic-17-20}
-The Padovan recurrence $d_n = d_{n-2} + d_{n-3}$ with seed
-$(d_1, d_2, d_3, d_4) = (1, 0, 1, 1)$ has generating function
-$F(x) = x/(1 - x^2 - x^3)$; the pole at $x = 1/\rho$ with
-$\rho = 1.324717957\ldots$ the plastic number controls the
-asymptotic. Factoring $1 - x^2 - x^3 = -(x - 1/\rho)(x^2 + (1+1/\rho)x + \rho)$
-and extracting the residue gives $Q(1/\rho) = 2/\rho^2 + 1/\rho + \rho
-= (2\rho + 3)/\rho^2$ (using $\rho^3 = \rho + 1$), so
+The Brown--Zagier recurrence $d_0=1$, $d_1=0$, $d_2=1$ and
+$d_n = d_{n-2} + d_{n-3}$ has generating function
+$F(x) = 1/(1 - x^2 - x^3)$. The pole at $x = 1/\rho$, with
+$\rho = 1.324717957\ldots$ the plastic number, controls the
+asymptotic; the residue of $1/(1-x^2-x^3)$ at $x=1/\rho$ gives
 \begin{equation}
 d_n \;\sim\; A\,\rho^n, \qquad
-A \;=\; \frac{\rho^2}{2\rho + 3} \;=\; 0.31062883\ldots,
+A \;=\; \frac{\rho^3}{2\rho + 3} \;=\; 0.41149558\ldots,
 \label{eq:padovan-plastic-A}
 \end{equation}
 with oscillating corrections of order $\rho^{-n/2}$ from the complex
 conjugate roots of $x^3 - x - 1$ (modulus $\rho^{-1/2} = 0.8688\ldots$).
 Numerically $A\rho^n$ at $n \in \{17, 18, 19, 20\}$ gives
-$(35.3, 46.8, 62.0, 82.1)$ against exact $(37, 49, 65, 86)$; relative
-error $\sim 4.5\%$, converging from below. The Hardy--Ramanujan
+$(49.0, 65.0, 86.0, 114.0)$ against exact $(49, 65, 86, 114)$.
+The Hardy--Ramanujan
 growth $\exp(4\pi\sqrt{n/2})$ on the Borcherds leg dominates $\rho^n$
 on the MZV leg: at $n = 20$, $\exp(4\pi\sqrt{10}) \approx 5.26\cdot
 10^{17}$ vs.\ $\rho^{20} \approx 1.13\cdot 10^{2}$, a ratio of $\sim
@@ -5036,7 +5050,7 @@ Gritsenko--Nikulin product formula.
 
 At weights $21$--$24$ the Padovan recurrence, the
 Broadhurst--Kreimer depth filtration, and the exact eta-coefficients
-separate cleanly. The recurrence predicts $(114, 151, 200, 265)$ at
+separate cleanly. The recurrence predicts $(151, 200, 265, 351)$ at
 $n \in \{21, 22, 23, 24\}$, while Brown's theorem supplies only the
 corresponding upper bound unconditionally. The Broadhurst--Kreimer
 $1997$ depth generating series
@@ -5046,8 +5060,8 @@ with $D_{21,7} = 5$ Lyndon representatives surviving shuffle--stuffle
 reduction; a second scope threshold enters at weight $n = 24$, where
 depth-$8$ first appears with $D_{24,8} = 7$. The Hardy--Ramanujan
 $1918$ eta-$-24$ Fourier coefficient $p_{24}(12) = 10\,914\,317\,934$
-dominates the Padovan denominator $d_{24} = 265$ by a factor of
-$4.1\cdot 10^{7}$. The weight $n = 24$ is not arithmetically neutral:
+dominates the Padovan denominator $d_{24} = 351$ by a factor of
+$3.1\cdot 10^{7}$. The weight $n = 24$ is not arithmetically neutral:
 it equals $\chi(K3)$, the $24$ cusps of $X(1)$, the rank of the
 Leech lattice, and the Niemeier $A_{2}^{12}$ genus that organises
 umbral moonshine.
@@ -5063,10 +5077,10 @@ unconditionally (Brown $2012$ \texttt{arXiv:1301.3053} Thm $1.2$);
 Zagier $1994$ equality is the conjecture. Assume Zagier equality and
 the Broadhurst--Kreimer depth series in the displayed range. Then
 \begin{equation}
-\PadovanDim{21} = 114, \quad
-\PadovanDim{22} = 151, \quad
-\PadovanDim{23} = 200, \quad
-\PadovanDim{24} = 265,
+\PadovanDim{21} = 151, \quad
+\PadovanDim{22} = 200, \quad
+\PadovanDim{23} = 265, \quad
+\PadovanDim{24} = 351,
 \label{eq:padovan-21-22-23-24}
 \end{equation}
 and the Etingof--Kazhdan pentagon coboundary of
@@ -5117,10 +5131,10 @@ single-$\zeta$-per-basis approximation
 $\phi^{(n)}_{\mathrm{MZV, lead}} = d_n/n!$ with full-basis correction
 $\sum_i\zeta(\mathrm{MZV}_i^{(n)})/d_n$ of order unity:
 \begin{align}
-\phi^{(21)}_{\mathrm{MZV}} &\approx 2.23\cdot 10^{-18}, \nonumber \\
-\phi^{(22)}_{\mathrm{MZV}} &\approx 1.34\cdot 10^{-19}, \label{eq:phi-21-22-23-24-num}\\
-\phi^{(23)}_{\mathrm{MZV}} &\approx 7.74\cdot 10^{-21}, \nonumber \\
-\phi^{(24)}_{\mathrm{MZV}} &\approx 4.27\cdot 10^{-22}. \nonumber
+\phi^{(21)}_{\mathrm{MZV}} &\approx 2.96\cdot 10^{-18}, \nonumber \\
+\phi^{(22)}_{\mathrm{MZV}} &\approx 1.78\cdot 10^{-19}, \label{eq:phi-21-22-23-24-num}\\
+\phi^{(23)}_{\mathrm{MZV}} &\approx 1.03\cdot 10^{-20}, \nonumber \\
+\phi^{(24)}_{\mathrm{MZV}} &\approx 5.66\cdot 10^{-22}. \nonumber
 \end{align}
 The Borcherds leg
 $c^{(K3)}_n\Phi_{10}^{\lceil n/2\rceil}\eta^{-12n}/n!$ dominates the
@@ -5135,10 +5149,10 @@ p_{24}(k) = [q^k]\prod_{m\ge 1}(1-q^m)^{-24},
 evaluated at $n\in\{21,22,23,24\}$ with exact
 $p_{24}(11) = 2\,705\,114\,880$ and
 $p_{24}(12) = 10\,914\,317\,934$:
-$p_{24}(11)/d_{21} = 2.373\cdot 10^{7}$;
-$p_{24}(11)/d_{22} = 1.791\cdot 10^{7}$;
-$p_{24}(12)/d_{23} = 5.457\cdot 10^{7}$;
-$p_{24}(12)/d_{24} = 4.119\cdot 10^{7}$. The Hardy--Ramanujan $1918$
+$p_{24}(11)/d_{21} = 1.791\cdot 10^{7}$;
+$p_{24}(11)/d_{22} = 1.353\cdot 10^{7}$;
+$p_{24}(12)/d_{23} = 4.119\cdot 10^{7}$;
+$p_{24}(12)/d_{24} = 3.109\cdot 10^{7}$. The Hardy--Ramanujan $1918$
 leading asymptotic $p_{24}(k)\sim (4\pi)^{-1}k^{-27/4}\exp(4\pi\sqrt k)$
 (Rademacher $1937$) overshoots the exact $p_{24}(k)$ by factor
 $\sim 3$--$4$ in this range ($p_{24}(11)/\mathrm{asym} = 0.289$,
@@ -5198,13 +5212,13 @@ weight $22$, but not derived from motivic first principles).
 
 \begin{proof}
 The Padovan values~\eqref{eq:padovan-21-22-23-24} are the values
-predicted by the Zagier recurrence $d_n = d_{n-2}+d_{n-3}$ with seed
-$(d_1,d_2,d_3,d_4)=(1,0,1,1)$ iterated from
-$(d_{17},d_{18},d_{19},d_{20})=(37,49,65,86)$:
-$d_{21} = d_{19}+d_{18} = 65+49 = 114$,
-$d_{22} = d_{20}+d_{19} = 86+65 = 151$,
-$d_{23} = d_{21}+d_{20} = 114+86 = 200$,
-$d_{24} = d_{22}+d_{21} = 151+114 = 265$, verified by the module
+predicted by the Zagier recurrence $d_0=1$, $d_1=0$, $d_2=1$ and
+$d_n = d_{n-2}+d_{n-3}$ iterated from
+$(d_{17},d_{18},d_{19},d_{20})=(49,65,86,114)$:
+$d_{21} = d_{19}+d_{18} = 86+65 = 151$,
+$d_{22} = d_{20}+d_{19} = 114+86 = 200$,
+$d_{23} = d_{21}+d_{20} = 151+114 = 265$,
+$d_{24} = d_{22}+d_{21} = 200+151 = 351$, verified by the module
 function \texttt{padovan\_count\_check\_21\_24} at
 $n\in\{21,22,23,24\}$. Brown $2012$ \texttt{arXiv:1301.3053}
 Thm $1.2$ supplies the upper bound $d_n\le d_{n-2}+d_{n-3}$
@@ -5242,14 +5256,14 @@ $a_i(N)=\sum_{N\ge n_1>\cdots>n_k\ge 1}(n_1^{s_1}\cdots n_k^{s_k})^{-1}$
 with tail $C_i/N^{s_1-1}$; Richardson doubling $N\to 2N$ with exponent
 $s_1-1$ accelerates to $15$-digit accuracy at depths $\le 5$ and
 $10$-digit accuracy at depths $6,7,8$. The local numerical check
-reproduces $d_{21}+d_{22}+d_{23}+d_{24}=730$ numerical basis values in the
+reproduces $d_{21}+d_{22}+d_{23}+d_{24}=967$ numerical basis values in the
 Vermaseren $1999$ MZDP database to relative tolerance $10^{-10}$ for
 depth $\le 5$ and $10^{-7}$ for depth $6,7,8$. The leading-order
 values~\eqref{eq:phi-21-22-23-24-num} agree with $d_n/n!$ to three
-decimals: $d_{21}/21! = 114/21!\approx 2.231\cdot 10^{-18}$,
-$d_{22}/22! = 151/22!\approx 1.343\cdot 10^{-19}$,
-$d_{23}/23! = 200/23!\approx 7.736\cdot 10^{-21}$,
-$d_{24}/24! = 265/24!\approx 4.271\cdot 10^{-22}$.
+decimals: $d_{21}/21! = 151/21!\approx 2.956\cdot 10^{-18}$,
+$d_{22}/22! = 200/22!\approx 1.779\cdot 10^{-19}$,
+$d_{23}/23! = 265/23!\approx 1.025\cdot 10^{-20}$,
+$d_{24}/24! = 351/24!\approx 5.657\cdot 10^{-22}$.
 
 \emph{Verification path $V_2$ (KZ depth-recursion on $M_{0,5}$).}
 The KZ connection $d\Phi = \sum_{i<j}\Omega_{ij}d\log(z_i - z_j)\Phi$
@@ -5317,14 +5331,14 @@ symbolic extraction).
 \begin{remark}[Humbert--Heegner admissibility scope at weights $21$--$24$]
 \label{rem:humbert-admissibility-scope-21-24}
 Composed with Theorem~\ref{thm:phi-n-humbert-heegner-admissibility},
-the Padovan dimensions $(d_{21}, d_{22}, d_{23}, d_{24}) = (114, 151, 200, 265)$
+the Padovan dimensions $(d_{21}, d_{22}, d_{23}, d_{24}) = (151, 200, 265, 351)$
 record the MZV-transcendence count. Admissibility $n\equiv 3,5\pmod 8$
 selects $\{21\}$ from this range ($21 \equiv 5\pmod 8$; the
 remainder $\{22, 23, 24\}$ annihilates by empty lattice sum). At
 $n = 21$: $D_{21} = 9 \ge 4$, so
 $\phi^{(21)}\big|_{\mathrm{K3\text{-}Humbert}} = 0$ by
 Eichler--Zagier polar cutoff. The arithmetic coincidence
-$d_{24} = 265$ and the Niemeier $A_2^{12}$ resonance at $n = 24$
+$d_{24} = 351$ and the Niemeier $A_2^{12}$ resonance at $n = 24$
 are phenomena on the off-K3-regime Padovan leg; they do not
 resurrect $\phi^{(24)}\big|_{\mathrm{K3\text{-}Humbert}}$,
 which vanishes by filter (a) since $24\not\equiv 3,5\pmod 8$.
@@ -5370,12 +5384,12 @@ $p_{24}(\lceil n/2\rceil)/d_n$
 from~\eqref{eq:borcherds-vs-mzv-ratio-21-24} grows at the
 Hardy--Ramanujan rate $\lceil n/2\rceil^{-27/4}
 \exp(4\pi\sqrt{\lceil n/2\rceil})$, with Padovan plastic-number
-suppression $d_n\sim \rho^n\cdot\rho^2/(2\rho+3)$. Explicit ratios:
-$2.37\cdot 10^{7}$ at $n = 21$, $1.79\cdot 10^{7}$ at $n = 22$,
-$5.46\cdot 10^{7}$ at $n = 23$, $4.12\cdot 10^{7}$ at $n = 24$;
+suppression $d_n\sim \rho^n\cdot\rho^3/(2\rho+3)$. Explicit ratios:
+$1.79\cdot 10^{7}$ at $n = 21$, $1.35\cdot 10^{7}$ at $n = 22$,
+$4.12\cdot 10^{7}$ at $n = 23$, $3.11\cdot 10^{7}$ at $n = 24$;
 the $k\to k+1$ step at $n = 23$ (where $\lceil n/2\rceil = 11\to 12$)
 is visible as the factor-of-$4.03$ jump in $p_{24}(k)$. The ratios
-exceed $10^{7}$ by $n = 21$ and cross $5\cdot 10^{7}$ by $n = 23$;
+exceed $10^{7}$ by $n = 21$ and cross $4\cdot 10^{7}$ by $n = 23$;
 the Borcherds leg dominates the MZV leg by more than seven orders of
 magnitude at every weight $n\ge 21$. At $n = 24$ the Fourier
 coefficient $p_{24}(12) = 10\,914\,317\,934$ coincides with the
@@ -5398,7 +5412,7 @@ $n = 20$.
 \begin{remark}[Scope cascade: eight weights $21$--$24$ through depth $8$; double-conditional regime]
 \label{rem:phi-n-scope-cascade-21-24}
 Combining Theorem~\ref{thm:phi-n-weight-21-24} with the scope-tier
-hierarchy extends the programme-canonical dependence chart through
+hierarchy extends the dependence chart through
 $n=24$. Entries name the strongest unconditional status per tier at
 each weight; symbols as in Remark~\ref{rem:phi-n-scope-cascade-17-20},
 plus $\mathrm{cZH7}$ conditional on Zagier--Hoffman at depth $7$ and
@@ -5435,19 +5449,20 @@ $[O(x)]^{3}\cdot[S(x)]^{3}$ at bi-degree $(27,9)$).
 
 \begin{remark}[Padovan plastic-number asymptotic at weights $21$--$24$]
 \label{rem:padovan-plastic-asymptotic-21-24}
-The Padovan recurrence $d_n = d_{n-2} + d_{n-3}$ has generating
-function $F(x) = x/(1 - x^2 - x^3)$; the plastic number
+The Padovan recurrence $d_0=1$, $d_1=0$, $d_2=1$,
+$d_n = d_{n-2} + d_{n-3}$ has generating function
+$F(x) = 1/(1 - x^2 - x^3)$; the plastic number
 $\rho = 1.32471\,79572\,44746\ldots$ (unique real root of
 $x^3 - x - 1$) controls the asymptotic via
 \begin{equation}
 d_n \;\sim\; A\,\rho^n, \qquad
-A \;=\; \frac{\rho^2}{2\rho + 3} \;=\; 0.31062883\ldots,
+A \;=\; \frac{\rho^3}{2\rho + 3} \;=\; 0.41149558\ldots,
 \label{eq:padovan-plastic-A-21-24}
 \end{equation}
 with oscillating corrections of order $\rho^{-n/2}$ from the complex
 conjugate roots of $x^3 - x - 1$. Numerically $A\rho^n$ at $n \in
-\{21, 22, 23, 24\}$ gives $(113.98, 150.99, 200.02, 264.97)$ against
-exact $(114, 151, 200, 265)$; relative error drops to $\sim 10^{-4}$
+\{21, 22, 23, 24\}$ gives $(151.0, 200.0, 265.0, 351.0)$ against
+exact $(151, 200, 265, 351)$; relative error remains small
 by $n = 22$, two orders of magnitude better than at weights
 $17$--$20$ where it was $\sim 4.5\%$. The plastic--Padovan
 generating series converges to $A\rho^n$ exponentially fast via the
@@ -5480,9 +5495,9 @@ Gritsenko--Nikulin product formula.
 \section{$\phi^{(n)}$ at weights $n\in\{25,26,27,28\}$: depth-$9$ onset at $n=27$; triple-conditional regime}
 \label{sec:shadtower-phi-n-weight-25-26-27-28}
 
-Past weight $24$ the programme crosses the third conditional threshold.
+Past weight $24$ the coboundary calculation crosses the third conditional threshold.
 The Padovan recurrence $d_n = d_{n-2}+d_{n-3}$ delivers
-$(351, 465, 616, 816)$ at $n\in\{25, 26, 27, 28\}$; the
+$(465, 616, 816, 1081)$ at $n\in\{25, 26, 27, 28\}$; the
 Broadhurst--Kreimer series opens depth $9$ at $n = 27$ with
 $D_{27,9} = 10$, parity-empty at $n\in\{25, 26, 28\}$. The $24$-fold
 arithmetic of $n = 24$ does not extend to $n = 26$: the Leech lattice
@@ -5505,7 +5520,7 @@ higher-depth Galois-motivic conjecture
 depth-$9$ onset at $n=27$, triple-conditional scope, no Conway--Leech
 umbral resonance at $n=26$]
 \label{thm:phi-n-weight-25-28}
-\ClaimStatusConjectured
+\ClaimStatusConditional
 Let $d_n = \dim_{\mathbb Q}\mathcal Z_n/(\zeta(2)\mathcal Z_{n-2})$ be
 the Zagier--Brown Padovan dimension of irreducible motivic MZVs at
 weight $n$. The upper bound $d_n\le d_{n-2}+d_{n-3}$ is unconditional
@@ -5513,10 +5528,10 @@ weight $n$. The upper bound $d_n\le d_{n-2}+d_{n-3}$ is unconditional
 equality is the motivic-Galois-freeness conjecture, open beyond
 $n = 12$ where Brown $2011$ Thm $1.2$ proves it unconditionally. Then
 \begin{equation}
-\PadovanDim{25} = 351, \quad
-\PadovanDim{26} = 465, \quad
-\PadovanDim{27} = 616, \quad
-\PadovanDim{28} = 816,
+\PadovanDim{25} = 465, \quad
+\PadovanDim{26} = 616, \quad
+\PadovanDim{27} = 816, \quad
+\PadovanDim{28} = 1081,
 \label{eq:padovan-25-26-27-28}
 \end{equation}
 and the Etingof--Kazhdan pentagon coboundary of
@@ -5556,26 +5571,19 @@ after Cauchy convolution.
 D_{27,9} = 10;\qquad
 \text{depth-}9\text{ empty at }n<27.\;}
 \]
-The row-sum identity $\sum_{d\ge 1}D_{n,d} = d_{n-2}$ for every
-$n\ge 4$ (visible in~\eqref{eq:BK-depth-25-28}:
-$200 = d_{23}$, $265 = d_{24}$, $351 = d_{25}$, $465 = d_{26}$) is the
-arithmetic footprint of the two-step Padovan lag between the
-$\mathbb{Q}$-dimension of $\mathcal Z_n/\zeta(2)\mathcal Z_{n-2}$ and
-the $\mathbb{Q}$-dimension of the depth-graded Lie algebra
-$\mathfrak{grt}_1^{(n)}$: the BK series enumerates generators of
-$\mathfrak{grt}_1^{(n)}$, the total count
-$\dim_{\mathbb Q}\mathfrak{grt}_1^{(n)} = d_{n-2}$ following from the
-recurrence $d_n = d_{n-2} + d_{n-3}$ applied at the generating-series
-level $F(x) = x^2 F_{\mathfrak{grt}_1}(x)/(1 - x^2 - x^3)$.
+The displayed row sums are $(200,265,351,465)$. They are extractor
+diagnostics for the BK generator table, not Brown dimensions of
+$\mathcal Z_n/\zeta(2)\mathcal Z_{n-2}$. The Brown dimensions in this
+weight range are the four numbers in~\eqref{eq:padovan-25-26-27-28}.
 
 The leading-order numerical values, controlled by the single-$\zeta$
 approximation $\phi^{(n)}_{\mathrm{MZV, lead}} = d_n/n!$:
 \begin{align}
-\phi^{(25)}_{\mathrm{MZV}} &\approx 2.263\cdot 10^{-23}, \nonumber\\
-\phi^{(26)}_{\mathrm{MZV}} &\approx 1.153\cdot 10^{-24},
+\phi^{(25)}_{\mathrm{MZV}} &\approx 2.998\cdot 10^{-23}, \nonumber\\
+\phi^{(26)}_{\mathrm{MZV}} &\approx 1.527\cdot 10^{-24},
 \label{eq:phi-25-26-27-28-num}\\
-\phi^{(27)}_{\mathrm{MZV}} &\approx 5.657\cdot 10^{-26}, \nonumber\\
-\phi^{(28)}_{\mathrm{MZV}} &\approx 2.676\cdot 10^{-27}. \nonumber
+\phi^{(27)}_{\mathrm{MZV}} &\approx 7.494\cdot 10^{-26}, \nonumber\\
+\phi^{(28)}_{\mathrm{MZV}} &\approx 3.546\cdot 10^{-27}. \nonumber
 \end{align}
 The Borcherds leg scales by the Fourier-coefficient ratio
 \begin{equation}
@@ -5585,10 +5593,10 @@ The Borcherds leg scales by the Fourier-coefficient ratio
 \end{equation}
 with exact $p_{24}(13) = 42\,189\,811\,200$ and
 $p_{24}(14) = 156\,883\,829\,400$ (OEIS~A006922):
-$p_{24}(13)/d_{25} = 1.202\cdot 10^{8}$;
-$p_{24}(13)/d_{26} = 9.073\cdot 10^{7}$;
-$p_{24}(14)/d_{27} = 2.547\cdot 10^{8}$;
-$p_{24}(14)/d_{28} = 1.923\cdot 10^{8}$.
+$p_{24}(13)/d_{25} = 9.073\cdot 10^{7}$;
+$p_{24}(13)/d_{26} = 6.849\cdot 10^{7}$;
+$p_{24}(14)/d_{27} = 1.923\cdot 10^{8}$;
+$p_{24}(14)/d_{28} = 1.451\cdot 10^{8}$.
 
 \emph{No Conway--Leech umbral resonance at $n = 26$.} The Leech
 lattice has rank $24$; the rank-$26$ lattice $\mathrm{II}_{25,1}$ of
@@ -5616,11 +5624,11 @@ $n \in \{25, 26, 27, 28\}$.
 \begin{proof}
 The Padovan identity~\eqref{eq:padovan-25-26-27-28} follows from the
 recurrence $d_n = d_{n-2} + d_{n-3}$ iterated from
-$(d_{21}, d_{22}, d_{23}, d_{24}) = (114, 151, 200, 265)$:
-$d_{25} = d_{23} + d_{22} = 200 + 151 = 351$;
-$d_{26} = d_{24} + d_{23} = 265 + 200 = 465$;
-$d_{27} = d_{25} + d_{24} = 351 + 265 = 616$;
-$d_{28} = d_{26} + d_{25} = 465 + 351 = 816$; verified by the module
+$(d_{21}, d_{22}, d_{23}, d_{24}) = (151, 200, 265, 351)$:
+$d_{25} = d_{23} + d_{22} = 265 + 200 = 465$;
+$d_{26} = d_{24} + d_{23} = 351 + 265 = 616$;
+$d_{27} = d_{25} + d_{24} = 465 + 351 = 816$;
+$d_{28} = d_{26} + d_{25} = 616 + 465 = 1081$; verified by the module
 function \texttt{padovan\_count\_check\_25\_28} at
 $n\in\{25, 26, 27, 28\}$. Brown $2012$ Thm $1.2$ supplies the upper
 bound unconditionally via the motivic Galois action on
@@ -5640,12 +5648,9 @@ $x^{27}$; after Cauchy-convolution accumulation $D_{27,9} = 10$.
 The parity argument suppresses depth-$9$ at $n\in\{25, 26, 28\}$:
 BK is invariant under $(x, y)\to (-x, -y)$ so $(n, d)$ with $n + d$
 odd has $D_{n, d} = 0$; $n + d$ odd at $(25, 9), (26, 9), (28, 9)$
-forces vanishing. The row-sum identity
-$\sum_d D_{n, d} = d_{n-2}$ is verified by the module's
-\texttt{bk\_padovan\_twostep\_consistency\_check\_25\_28} at each
-$n\in\{25, 26, 27, 28\}$: sums $(200, 265, 351, 465) =
-(d_{23}, d_{24}, d_{25}, d_{26})$ match the two-step Padovan
-shift.
+forces vanishing. The BK row sums in~\eqref{eq:BK-depth-25-28} are
+retained only as extractor checks; they are not used as Brown
+Padovan dimensions.
 
 \emph{Verification path $V_1$ (Richardson-extrapolated MZDP
 numerical).} Each basis $\mathrm{MZV}_i^{(n)}$ is summed by nested
@@ -5720,7 +5725,7 @@ our range.
 \begin{remark}[Humbert--Heegner admissibility scope at weights $25$--$28$]
 \label{rem:humbert-admissibility-scope-25-28}
 Composed with Theorem~\ref{thm:phi-n-humbert-heegner-admissibility},
-the Padovan dimensions $(d_{25}, d_{26}, d_{27}, d_{28}) = (351, 465, 616, 816)$
+the Padovan dimensions $(d_{25}, d_{26}, d_{27}, d_{28}) = (465, 616, 816, 1081)$
 count the MZV-transcendence basis. Admissibility $n\equiv 3,5\pmod 8$
 selects $\{27\}$ from this range ($27\equiv 3\pmod 8$), while
 $\{25, 26, 28\}$ annihilates by empty lattice sum. At $n = 27$:
@@ -5774,11 +5779,11 @@ The exact Borcherds/MZV ratio $p_{24}(\lceil n/2\rceil)/d_n$
 from~\eqref{eq:borcherds-vs-mzv-ratio-25-28} grows at the
 Hardy--Ramanujan rate $\lceil n/2\rceil^{-27/4}
 \exp(4\pi\sqrt{\lceil n/2\rceil})$, with Padovan suppression
-$d_n\sim\rho^n\cdot\rho^2/(2\rho+3)$. Explicit ratios:
-$1.20\cdot 10^{8}$ at $n = 25$,
-$9.07\cdot 10^{7}$ at $n = 26$,
-$2.55\cdot 10^{8}$ at $n = 27$,
-$1.92\cdot 10^{8}$ at $n = 28$; the $k\to k+1$ step at $n = 27$
+$d_n\sim\rho^n\cdot\rho^3/(2\rho+3)$. Explicit ratios:
+$9.07\cdot 10^{7}$ at $n = 25$,
+$6.85\cdot 10^{7}$ at $n = 26$,
+$1.92\cdot 10^{8}$ at $n = 27$,
+$1.45\cdot 10^{8}$ at $n = 28$; the $k\to k+1$ step at $n = 27$
 ($\lceil n/2\rceil = 13\to 14$) gives a factor-of-$3.72$ jump in
 $p_{24}(k)$. The Borcherds leg dominates by more than $10^{8}$ at
 every $n\ge 25$.
@@ -5826,7 +5831,7 @@ n & d_n & \textbf{U} & \textbf{D2} & \textbf{D3} & \textbf{D4} & \textbf{D5} & \
 \hline
 25 & 351 & \checkmark & \checkmark & \mathrm{cBK} & - & \mathrm{cZH} & - & \mathrm{cZH7} & - & -\\
 26 & 465 & \checkmark & \checkmark & - & \mathrm{cZH} & - & \mathrm{cZH6} & - & \mathrm{cZH8} & -\\
-27 & 616 & \checkmark & \checkmark & \mathrm{cBK} & - & \mathrm{cZH} & - & \mathrm{cZH7} & - & \mathrm{cB17}\\
+27 & 816 & \checkmark & \checkmark & \mathrm{cBK} & - & \mathrm{cZH} & - & \mathrm{cZH7} & - & \mathrm{cB17}\\
 28 & 816 & \checkmark & \checkmark & - & \mathrm{cZH} & - & \mathrm{cZH6} & - & \mathrm{cZH8} & -
 \end{array}
 \]
@@ -6000,8 +6005,8 @@ Hoffman1997,ZagierValues,IharaTakao2013,EnriquezFurusho2020}.
 precision below $10^{-4}$]
 \label{rem:padovan-plastic-asymptotic-25-28}
 The plastic-number asymptotic $d_n \sim A\rho^n$ with
-$A = \rho^2/(2\rho + 3) = 0.31062883\ldots$ produces
-$(351.02, 464.998, 615.99, 816.01)$ at $n\in\{25, 26, 27, 28\}$,
+$A = \rho^3/(2\rho + 3) = 0.41149558\ldots$ produces
+$(465.00, 616.00, 816.01, 1080.99)$ at $n\in\{25, 26, 27, 28\}$,
 relative error below $5\cdot 10^{-5}$ at every weight, two orders of
 magnitude tighter than at weights $17$--$20$. The Hardy--Ramanujan
 asymptotic $p_{24}(k)\sim (4\pi)^{-1}k^{-27/4}\exp(4\pi\sqrt k)$ at
@@ -6020,9 +6025,9 @@ coincidence of $n = 24$ does not reappear.
 \section{$\phi^{(n)}$ at weights $n\in\{29,30,31,32\}$: depth-$10$ onset at $n=30$; quadruple-conditional regime; DMVV generic coincidence at $n = 32$}
 \label{sec:shadtower-phi-n-weight-29-30-31-32}
 
-Past weight $28$ the programme crosses the fourth conditional threshold.
+Past weight $28$ the coboundary calculation crosses the fourth conditional threshold.
 The Padovan recurrence $d_n = d_{n-2}+d_{n-3}$ delivers
-$(1081, 1432, 1897, 2513)$ at $n\in\{29, 30, 31, 32\}$; the
+$(1432, 1897, 2513, 3329)$ at $n\in\{29, 30, 31, 32\}$; the
 Broadhurst--Kreimer series opens depth $10$ at $n = 30$ with
 $D_{30, 10} = 14$, parity-empty at $n\in\{29, 31\}$ and continuing to
 $D_{32, 10} = 64$. The Göttsche $1990$/Dijkgraaf--Moore--Verlinde--Verlinde
@@ -6050,7 +6055,7 @@ symbolic extractor.
 depth-$10$ onset at $n=30$, quadruple-conditional scope, DMVV
 coincidence at $n = 32$, no extremal-lattice umbral resonance]
 \label{thm:phi-n-weight-29-32}
-\ClaimStatusConjectured
+\ClaimStatusConditional
 Let $d_n = \dim_{\mathbb Q}\mathcal Z_n/(\zeta(2)\mathcal Z_{n-2})$ be
 the Zagier--Brown Padovan dimension of irreducible motivic MZVs at
 weight $n$. The upper bound $d_n\le d_{n-2}+d_{n-3}$ is unconditional
@@ -6058,10 +6063,10 @@ weight $n$. The upper bound $d_n\le d_{n-2}+d_{n-3}$ is unconditional
 equality is the motivic-Galois-freeness conjecture, open beyond
 $n = 12$ where Brown $2011$ Thm $1.2$ proves it unconditionally. Then
 \begin{equation}
-\PadovanDim{29} = 1081, \quad
-\PadovanDim{30} = 1432, \quad
-\PadovanDim{31} = 1897, \quad
-\PadovanDim{32} = 2513,
+\PadovanDim{29} = 1432, \quad
+\PadovanDim{30} = 1897, \quad
+\PadovanDim{31} = 2513, \quad
+\PadovanDim{32} = 3329,
 \label{eq:padovan-29-30-31-32}
 \end{equation}
 and the Etingof--Kazhdan pentagon coboundary of
@@ -6091,8 +6096,9 @@ $O(x) = x^3/(1 - x^2)$, $S(x) = x^{12}/((1 - x^4)(1 - x^6))$, read
 with parity split $\mathrm{BK}(-x, y) = \mathrm{BK}(x, -y)$:
 odd depths vanish at even weight and conversely. Weight $n = 30$
 opens the depth-$10$ stratum with $D_{30,10} = 14$; depth-$10$ is empty
-at every $n < 30$. The row-sum identity $\sum_d D_{n, d} = d_{n-2}$:
-$1081 = d_{27}$, $1432 = d_{28}$, $1897 = d_{29}$, $2513 = d_{30}$.
+at every $n < 30$. The row sums of the displayed BK table are
+extractor diagnostics. They are not the Brown dimensions in
+\eqref{eq:padovan-29-30-31-32}.
 \[
 \boxed{\;\text{First depth-}10\text{ irreducible at }n=30\colon
 D_{30,10} = 14;\qquad
@@ -6101,11 +6107,11 @@ D_{30,10} = 14;\qquad
 The leading-order numerical values, controlled by the single-$\zeta$
 approximation $\phi^{(n)}_{\mathrm{MZV, lead}} = d_n/n!$:
 \begin{align}
-\phi^{(29)}_{\mathrm{MZV}} &\approx 1.223\cdot 10^{-28}, \nonumber\\
-\phi^{(30)}_{\mathrm{MZV}} &\approx 5.399\cdot 10^{-30},
+\phi^{(29)}_{\mathrm{MZV}} &\approx 1.620\cdot 10^{-28}, \nonumber\\
+\phi^{(30)}_{\mathrm{MZV}} &\approx 7.152\cdot 10^{-30},
 \label{eq:phi-29-30-31-32-num}\\
-\phi^{(31)}_{\mathrm{MZV}} &\approx 2.307\cdot 10^{-31}, \nonumber\\
-\phi^{(32)}_{\mathrm{MZV}} &\approx 9.550\cdot 10^{-33}. \nonumber
+\phi^{(31)}_{\mathrm{MZV}} &\approx 3.056\cdot 10^{-31}, \nonumber\\
+\phi^{(32)}_{\mathrm{MZV}} &\approx 1.265\cdot 10^{-32}. \nonumber
 \end{align}
 The Borcherds leg scales by the Fourier-coefficient ratio
 \begin{equation}
@@ -6115,11 +6121,11 @@ The Borcherds leg scales by the Fourier-coefficient ratio
 \end{equation}
 with exact $p_{24}(15) = 563\,116\,739\,584$ and
 $p_{24}(16) = 1\,956\,790\,259\,235$ (OEIS~A006922):
-$p_{24}(15)/d_{29} = 5.209\cdot 10^{8}$;
-$p_{24}(15)/d_{30} = 3.932\cdot 10^{8}$;
-$p_{24}(16)/d_{31} = 1.032\cdot 10^{9}$;
-$p_{24}(16)/d_{32} = 7.787\cdot 10^{8}$. The Borcherds leg first
-crosses $10^9$ at $n = 31$.
+$p_{24}(15)/d_{29} = 3.932\cdot 10^{8}$;
+$p_{24}(15)/d_{30} = 2.968\cdot 10^{8}$;
+$p_{24}(16)/d_{31} = 7.787\cdot 10^{8}$;
+$p_{24}(16)/d_{32} = 5.878\cdot 10^{8}$. The Borcherds leg stays
+below $10^9$ in this corrected range.
 
 \emph{DMVV generic coincidence at $n = 32$.} The Göttsche $1990$ formula
 $\sum_{k\ge 0}\chi(\mathrm{Hilb}^k(K3))q^k = \prod_{m\ge 1}(1 - q^m)^{-24}$
@@ -6153,11 +6159,11 @@ a fourfold Niemeier resonance.
 
 \begin{proof}
 The Padovan identity~\eqref{eq:padovan-29-30-31-32} follows from the
-recurrence iterated from $(d_{25}, d_{26}, d_{27}, d_{28}) = (351, 465, 616, 816)$:
-$d_{29} = d_{27} + d_{26} = 616 + 465 = 1081$;
-$d_{30} = d_{28} + d_{27} = 816 + 616 = 1432$;
-$d_{31} = d_{29} + d_{28} = 1081 + 816 = 1897$;
-$d_{32} = d_{30} + d_{29} = 1432 + 1081 = 2513$; verified by the module
+recurrence iterated from $(d_{25}, d_{26}, d_{27}, d_{28}) = (465, 616, 816, 1081)$:
+$d_{29} = d_{27} + d_{26} = 816 + 616 = 1432$;
+$d_{30} = d_{28} + d_{27} = 1081 + 816 = 1897$;
+$d_{31} = d_{29} + d_{28} = 1432 + 1081 = 2513$;
+$d_{32} = d_{30} + d_{29} = 1897 + 1432 = 3329$; verified by the module
 function \texttt{padovan\_count\_check\_29\_32} at
 $n\in\{29, 30, 31, 32\}$. Brown $2012$ Thm $1.2$ supplies the upper
 bound unconditionally; equality is Zagier $1994$.
@@ -6171,10 +6177,9 @@ $[O(x)y]^2 [S(x)y^2]^4$ with $y^{2+8} = y^{10}$ and
 $x^{6+48} = x^{54}$, reduced to $x^{30}$ by denominator corrections
 $(1 - x^2)^{-2}(1 - x^4)^{-4}(1 - x^6)^{-4}$; Cauchy convolution gives
 $D_{30,10} = 14$. Parity suppresses depth-$10$ at odd $n$: $n + d$
-odd at $(29, 10), (31, 10)$ forces vanishing. Row-sum identity
-$\sum_d D_{n, d} = d_{n - 2}$ verified at
-$n\in\{29, 30, 31, 32\}$: $1081, 1432, 1897, 2513 =
-d_{27}, d_{28}, d_{29}, d_{30}$.
+odd at $(29, 10), (31, 10)$ forces vanishing. The BK row sums in
+\eqref{eq:BK-depth-29-32} are retained only as extractor checks; they
+are not used to compute the Brown Padovan dimensions.
 
 \emph{Verification path $V_1$ (Richardson-extrapolated MZDP numerical).}
 Each basis $\mathrm{MZV}_i^{(n)}$ is summed by nested truncation with
@@ -6248,7 +6253,7 @@ generic DMVV/Göttsche identity remains.
 \begin{remark}[Humbert--Heegner admissibility scope at weights $29$--$32$]
 \label{rem:humbert-admissibility-scope-29-32}
 Composed with Theorem~\ref{thm:phi-n-humbert-heegner-admissibility},
-the Padovan dimensions $(d_{29}, d_{30}, d_{31}, d_{32}) = (1081, 1432, 1897, 2513)$
+the Padovan dimensions $(d_{29}, d_{30}, d_{31}, d_{32}) = (1432, 1897, 2513, 3329)$
 are the MZV-transcendence count. Admissibility $n\equiv 3,5\pmod 8$
 selects $\{29\}$ from this range ($29\equiv 5\pmod 8$), while
 $\{30, 31, 32\}$ annihilates by empty lattice sum. At $n = 29$:
@@ -6340,11 +6345,11 @@ The exact Borcherds/MZV ratio $p_{24}(\lceil n/2\rceil)/d_n$
 from~\eqref{eq:borcherds-vs-mzv-ratio-29-32} grows at the
 Hardy--Ramanujan rate $\lceil n/2\rceil^{-27/4}
 \exp(4\pi\sqrt{\lceil n/2\rceil})$ with Padovan plastic suppression
-$d_n\sim\rho^n\cdot\rho^2/(2\rho+3)$. Explicit ratios:
-$5.21\cdot 10^{8}$ at $n = 29$,
-$3.93\cdot 10^{8}$ at $n = 30$,
-$1.03\cdot 10^{9}$ at $n = 31$ (first crossing of $10^{9}$),
-$7.79\cdot 10^{8}$ at $n = 32$; the $k\to k+1$ step at $n = 31$
+$d_n\sim\rho^n\cdot\rho^3/(2\rho+3)$. Explicit ratios:
+$3.93\cdot 10^{8}$ at $n = 29$,
+$2.97\cdot 10^{8}$ at $n = 30$,
+$7.79\cdot 10^{8}$ at $n = 31$,
+$5.88\cdot 10^{8}$ at $n = 32$; the $k\to k+1$ step at $n = 31$
 ($\lceil n/2\rceil = 15\to 16$) gives a factor-of-$3.48$ jump in
 $p_{24}(k)$. The Borcherds leg dominates by more than $10^{8}$ at
 every $n\ge 29$.
@@ -6384,7 +6389,7 @@ stability at $(d, n) = (10, 30)$ (open).
 \begin{array}{c|ccccccccccc|l}
 n & d_n & \textbf{U} & \textbf{D2} & \textbf{D4} & \textbf{D5} & \textbf{D6} & \textbf{D7} & \textbf{D8} & \textbf{D9} & \textbf{D10}\\
 \hline
-29 & 1081 & \checkmark & \checkmark & - & \mathrm{cZH} & - & \mathrm{cZH7} & - & \mathrm{cB17} & -\\
+29 & 1432 & \checkmark & \checkmark & - & \mathrm{cZH} & - & \mathrm{cZH7} & - & \mathrm{cB17} & -\\
 30 & 1432 & \checkmark & \checkmark & \mathrm{cZH} & - & \mathrm{cZH6} & - & \mathrm{cZH8} & - & \mathrm{cZH10}{+}\mathrm{cBB10}\\
 31 & 1897 & \checkmark & \checkmark & - & \mathrm{cZH} & - & \mathrm{cZH7} & - & \mathrm{cB17} & -\\
 32 & 2513 & \checkmark & \checkmark & \mathrm{cZH} & - & \mathrm{cZH6} & - & \mathrm{cZH8} & - & \mathrm{cZH10}{+}\mathrm{cBB10}
@@ -6402,8 +6407,8 @@ will enter at $n = 33$ by the three-step parity rule.
 precision below $10^{-5}$ and the DMVV coefficient]
 \label{rem:padovan-plastic-asymptotic-29-32}
 The plastic-number asymptotic $d_n \sim A\rho^n$ with
-$A = \rho^2/(2\rho + 3) = 0.31062883\ldots$ produces
-$(1080.99, 1432.00, 1897.00, 2512.99)$ at $n\in\{29, 30, 31, 32\}$,
+$A = \rho^3/(2\rho + 3) = 0.41149558\ldots$ produces
+$(1432.00, 1897.00, 2512.99, 3329.00)$ at $n\in\{29, 30, 31, 32\}$,
 relative error below $10^{-5}$ at every weight, three orders of
 magnitude tighter than at weights $17$--$20$ and one order tighter
 than at $25$--$28$. Four components meet at $n = 32$: Padovan
@@ -6425,7 +6430,7 @@ is at $n = 48$ via $P_{48p}$.
 
 \providecommand{\PadovanDim}[1]{d_{#1}}
 
-Past weight $32$ the programme crosses the fifth conditional threshold
+Past weight $32$ the coboundary calculation crosses the fifth conditional threshold
 and a sixth arithmetic condition enters: the Humbert--Heegner admissibility
 filter $n \equiv 3, 5 \pmod 8$, the discriminant reciprocity
 classifying Heegner divisors on the orthogonal Shimura variety
@@ -6441,9 +6446,9 @@ arithmetic stratification.
 
 The Padovan recurrence delivers
 $(\PadovanDim{33}, \PadovanDim{34}, \PadovanDim{35}, \PadovanDim{36})
-= (3329, 4410, 5842, 7739)$ from the seed
-$(\PadovanDim{30}, \PadovanDim{31}, \PadovanDim{32}) = (1432, 1897,
-2513)$. The Broadhurst--Kreimer series opens depth $11$ at $n = 33$
+= (4410, 5842, 7739, 10252)$ from the seed
+$(\PadovanDim{30}, \PadovanDim{31}, \PadovanDim{32}) = (1897, 2513,
+3329)$. The Broadhurst--Kreimer series opens depth $11$ at $n = 33$
 with $D_{33, 11} = 19$ (first-principles extraction from the series
 truncation at $x^{40} y^{12}$), parity-empty at $n \in \{34, 36\}$.
 At $n = 36 = 24 + 12$ the Göttsche $1990$/Dijkgraaf--Moore--Verlinde
@@ -6465,7 +6470,7 @@ dimensions, depth-$11$ onset at $n=33$, Humbert--Heegner admissibility
 filter, quintuple-conditional scope, generic DMVV coincidence at
 $n = 36$, no isolated Niemeier resonance]
 \label{thm:phi-n-weight-33-36}
-\ClaimStatusConjectured
+\ClaimStatusConditional
 Let $d_n = \dim_{\mathbb Q}\mathcal Z_n/(\zeta(2)\mathcal Z_{n-2})$ be
 the Zagier--Brown Padovan dimension of irreducible motivic MZVs at
 weight $n$. The upper bound $d_n\le d_{n-2}+d_{n-3}$ is unconditional
@@ -6473,12 +6478,12 @@ weight $n$. The upper bound $d_n\le d_{n-2}+d_{n-3}$ is unconditional
 equality is the motivic-Galois-freeness conjecture, open beyond
 $n = 12$ where Brown $2011$ Thm $1.2$ proves it unconditionally.
 From the seed $(\PadovanDim{30}, \PadovanDim{31}, \PadovanDim{32}) =
-(1432, 1897, 2513)$:
+(1897, 2513, 3329)$:
 \begin{equation}
-\PadovanDim{33} = 3329, \quad
-\PadovanDim{34} = 4410, \quad
-\PadovanDim{35} = 5842, \quad
-\PadovanDim{36} = 7739,
+\PadovanDim{33} = 4410, \quad
+\PadovanDim{34} = 5842, \quad
+\PadovanDim{35} = 7739, \quad
+\PadovanDim{36} = 10252,
 \label{eq:padovan-33-34-35-36}
 \end{equation}
 and the Etingof--Kazhdan pentagon coboundary of
@@ -6522,10 +6527,10 @@ independent paths (direct product of $(1 - q^m)^{-24}$ factors;
 $24$-fold Cauchy convolution of the Euler partition series):
 \begin{equation}
 \begin{aligned}
-\frac{p_{24}(17)}{d_{33}} &\approx 1.983\cdot 10^{9}, \quad
-\frac{p_{24}(17)}{d_{34}} \approx 1.496\cdot 10^{9},\\[2pt]
-\frac{p_{24}(18)}{d_{35}} &\approx 3.706\cdot 10^{9}, \quad
-\frac{p_{24}(18)}{d_{36}} \approx 2.798\cdot 10^{9}.
+\frac{p_{24}(17)}{d_{33}} &\approx 1.497\cdot 10^{9}, \quad
+\frac{p_{24}(17)}{d_{34}} \approx 1.130\cdot 10^{9},\\[2pt]
+\frac{p_{24}(18)}{d_{35}} &\approx 2.798\cdot 10^{9}, \quad
+\frac{p_{24}(18)}{d_{36}} \approx 2.112\cdot 10^{9}.
 \end{aligned}
 \label{eq:borcherds-mzv-ratio-33-36}
 \end{equation}
@@ -6567,10 +6572,10 @@ component remains; there is no fourfold resonance as at $n = 24$.
 \begin{proof}
 The Padovan identity~\eqref{eq:padovan-33-34-35-36} iterates the
 recurrence $d_n = d_{n-2} + d_{n-3}$ from the stated seed:
-$d_{33} = d_{31} + d_{30} = 1897 + 1432 = 3329$;
-$d_{34} = d_{32} + d_{31} = 2513 + 1897 = 4410$;
-$d_{35} = d_{33} + d_{32} = 3329 + 2513 = 5842$;
-$d_{36} = d_{34} + d_{33} = 4410 + 3329 = 7739$. Verified by the
+$d_{33} = d_{31} + d_{30} = 2513 + 1897 = 4410$;
+$d_{34} = d_{32} + d_{31} = 3329 + 2513 = 5842$;
+$d_{35} = d_{33} + d_{32} = 4410 + 3329 = 7739$;
+$d_{36} = d_{34} + d_{33} = 5842 + 4410 = 10252$. Verified by the
 module \texttt{phi\_n\_pentagon\_weight\_33\_36.py} function
 \texttt{padovan\_count\_check\_33\_36}, returning \texttt{True} at
 each $n\in\{33, 34, 35, 36\}$. Brown $2012$ supplies the upper
@@ -6609,8 +6614,8 @@ $k\to\infty$ by Rademacher $1937$.
 \emph{Verification path $V_2$ (plastic-number asymptotic).} The
 Padovan asymptotic $d_n \sim A\rho^n$ with $\rho^3 = \rho + 1$
 (plastic number $\rho = 1.3247\ldots$) and
-$A = \rho^2/(2\rho + 3) = 0.31062883\ldots$ reproduces
-$(3329.00, 4410.00, 5842.00, 7739.00)$ at $n\in\{33, 34, 35, 36\}$,
+$A = \rho^3/(2\rho + 3) = 0.41149558\ldots$ reproduces
+$(4410.00, 5842.00, 7739.00, 10252.00)$ at $n\in\{33, 34, 35, 36\}$,
 relative error below $10^{-4}$ at every weight. The ratio test
 $d_{n + 1}/d_n = \rho$ is satisfied to $10^{-5}$ at every
 consecutive pair in this range.
@@ -6619,9 +6624,8 @@ consecutive pair in this range.
 parity rule $\mathrm{BK}(-x, y) = \mathrm{BK}(x, -y)$, equivalent to
 $O(-x) = -O(x)$ and $S(-x) = S(x)$, forces $D_{n, d} = 0$ at odd
 $n + d$ at every extracted bi-degree. Truncation-tail effects
-beyond $x^{40}$ carry into the row-sum identity
-$\sum_d D_{n, d} = d_{n-2}^{\mathrm{ZB}}$ at the $\sim 10\%$
-level; the scope-level claim (depth-$11$ empty below $n = 33$;
+beyond $x^{40}$ affect row-sum diagnostics; the scope-level claim
+(depth-$11$ empty below $n = 33$;
 nonzero at $n = 33$ and $n = 35$) is truncation-faithful.
 
 The three paths are genuinely independent: $V_1$ verifies the
@@ -6652,7 +6656,7 @@ even K$3$-BKM lattice $\mathrm{II}_{2, n}$ of signature $(2, n)$
 (Gritsenko--Hulek--Sankaran $2007$): Heegner divisors are
 parametrised by discriminants $D > 0$ with $D \equiv
 \mathrm{sig}(\mathrm{II}_{2, n}) \pmod 8$; for the canonical
-programme stratum $D \equiv 3, 5\pmod 8$, giving
+Humbert stratum $D \equiv 3, 5\pmod 8$, giving
 $n \equiv 3, 5\pmod 8$ after Looijenga $2003$ Humbert reciprocity.
 In the range $n \in [3, 36]$ the HH-admissible weights are
 $\{3, 5, 11, 13, 19, 21, 27, 29, 35\}$. Of the recent inscriptions,
@@ -6750,8 +6754,8 @@ from~\eqref{eq:borcherds-mzv-ratio-33-36} crosses $10^9$ uniformly
 on $n\in\{33, 34, 35, 36\}$, confirming Borcherds leg dominance by
 factor $\ge 10^{9}$. The $k = 17\to 18$ jump at $n = 35$
 contributes a factor-of-$3.28$ increase in $p_{24}(k)$, with the
-Padovan scale $d_{35} = 5842$ producing the largest ratio in the
-range, $p_{24}(18)/d_{35} \approx 3.71\cdot 10^{9}$.
+Padovan scale $d_{35} = 7739$ producing the largest ratio in the
+range, $p_{24}(18)/d_{35} \approx 2.80\cdot 10^{9}$.
 
 At $n = 36 = 24 + 12$ the Göttsche/DMVV formula supplies the
 single component $\chi(\mathrm{Hilb}^{18}(K3)) = p_{24}(18)$, generic
@@ -6797,7 +6801,7 @@ n & d_n & \mathrm{HH} & \textbf{U} & \textbf{D2} & \textbf{D5} & \textbf{D6} & \
 \hline
 33 & 3329 & - & \checkmark & \checkmark & \mathrm{cZH} & - & \mathrm{cZH7} & - & \mathrm{cB17} & - & \mathrm{cZH11}{+}\mathrm{cBB11}\\
 34 & 4410 & - & \checkmark & \checkmark & - & \mathrm{cZH6} & - & \mathrm{cZH8} & - & \mathrm{cZH10} & -\\
-35 & 5842 & \checkmark & \checkmark & \checkmark & \mathrm{cZH} & - & \mathrm{cZH7} & - & \mathrm{cB17} & - & \mathrm{cZH11}{+}\mathrm{cBB11}\\
+35 & 7739 & \checkmark & \checkmark & \checkmark & \mathrm{cZH} & - & \mathrm{cZH7} & - & \mathrm{cB17} & - & \mathrm{cZH11}{+}\mathrm{cBB11}\\
 36 & 7739 & - & \checkmark & \checkmark & - & \mathrm{cZH6} & - & \mathrm{cZH8} & - & \mathrm{cZH10} & -
 \end{array}
 \]
@@ -6817,8 +6821,8 @@ at $x^{42} y^{12}$ or larger, outside the current extractor.
 precision below $10^{-4}$ and Humbert--Heegner]
 \label{rem:padovan-plastic-asymptotic-33-36}
 The plastic-number asymptotic $d_n \sim A\rho^n$ with
-$A = \rho^2/(2\rho + 3) = 0.31062883\ldots$ produces
-$(3329.00, 4410.00, 5842.00, 7739.00)$ at $n \in \{33, 34, 35, 36\}$,
+$A = \rho^3/(2\rho + 3) = 0.41149558\ldots$ produces
+$(4410.00, 5842.00, 7739.00, 10252.00)$ at $n \in \{33, 34, 35, 36\}$,
 relative error below $10^{-4}$ at every weight. Consecutive
 ratios $d_{n+1}/d_n$ match $\rho = 1.32472\ldots$ to $10^{-5}$ on
 $n\in\{30, \ldots, 36\}$. The active arithmetic components are:
@@ -6852,9 +6856,8 @@ $\sum_{i=1}^{11} s_i = 33$ with $s_i = 3$) fails to be a Lyndon word by
 $11$-periodicity, so the nineteen generators at $\mathrm{gr}^{11}_{\mathcal D}
 \mathfrak{grt}_1^{(33)}$ are forced through the period-polynomial correction
 $S(x)(y^2 - y^4)$ in the BK denominator, mirroring the $n = 27$
-depth-$9$ mechanism. The row-sum Padovan identity $\sum_d D_{n, d} = d_{n-2}$
-holds at $n \in \{29, 31, 33\}$ with Zagier-seed values
-$(d_{27}, d_{29}, d_{31}) = (616, 1081, 1897)$, verified by the module
+depth-$9$ mechanism. The Brown dimensions in the same weights are
+$(d_{27}, d_{29}, d_{31}) = (816, 1432, 2513)$, verified by the module
 \texttt{phi\_n\_lyndon\_basis\_29\_31\_33\_numerical.py}.
 
 The mod-$8$ admissibility filter of
@@ -6958,9 +6961,10 @@ $(V_2)$ direct BK generating-series extraction at
 $\mathrm{BK}(x, y) = 1/(1 - O(x) y + S(x)(y^2 - y^4))$, truncation
 $(N = 50, K = 20)$; $(V_3)$ tail bound
 $N^{-2} (\log N)^{d-1}/(d-1)!$ at matching depth; $(V_4)$ parity
-$D_{n, d} = 0$ at $n + d$ odd, checked at the forbidden bi-degrees
-$(29, 8)$, $(31, 10)$, $(33, 10)$; $(V_5)$ row-sum Padovan identity
-$\sum_d D_{n, d} = d_{n - 2}$ at $n \in \{29, 31, 33\}$;
+$D_{n, d} = 0$ at $n + d$ odd, checked at the excluded bi-degrees
+$(29, 8)$, $(31, 10)$, $(33, 10)$; $(V_5)$ separation of the BK
+row-sum diagnostic from the Brown Padovan dimension at
+$n \in \{29, 31, 33\}$;
 $(V_6)$ BK truncation invariance under $K \to 2K$; $(V_7)$ Euler
 cross-check $\zeta(3, 3) = (\zeta(3)^2 - \zeta(6))/2$ at the convention
 level. Thirty-four automated tests in
@@ -7007,20 +7011,20 @@ nonetheless records the MZV-transcendence basis count at every
 weight off the regime.
 
 \begin{theorem}[$\phi^{(n)}$ on the Humbert--Heegner admissible triple
-$\{27, 29, 35\}$: Padovan dimensions $(616, 1081, 5842)$,
+$\{27, 29, 35\}$: Padovan dimensions $(816, 1432, 7739)$,
 depth-$9$ onset at $n=27$, depth-$11$ admissible entry at $n=35$,
 triple- to quadruple-conditional scope cascade]
 \label{thm:phi-n-humbert-heegner-triple-27-29-35}
-\ClaimStatusConjectured
+\ClaimStatusConditional
 Let $d_n = \dim_{\mathbb Q}\mathcal Z_n/(\zeta(2)\mathcal Z_{n-2})$ be
 the Zagier--Brown Padovan dimension. The three admissible weights
 in the range $25\le n\le 35$ under the Humbert--Heegner filter
 $n\equiv 3,5\pmod 8$ are
 $n\in\{27, 29, 35\}$, with
 \begin{equation}
-\PadovanDim{27} = 616, \quad
-\PadovanDim{29} = 1081, \quad
-\PadovanDim{35} = 5842,
+\PadovanDim{27} = 816, \quad
+\PadovanDim{29} = 1432, \quad
+\PadovanDim{35} = 7739,
 \label{eq:padovan-admissible-triple}
 \end{equation}
 and the pentagon coboundary of
@@ -7049,9 +7053,9 @@ Depth-$9$ opens at $n=27$ with $D_{27,9}=10$, continues at $n=29$
 with $D_{29,9}=42$, and at $n=35$ the depth-$11$ stratum is
 populated with $D_{35,11}=97$ (first depth-$11$ onset at $n=33$
 with $D_{33,11}=19$; at the admissible weight $n=35$ the stratum
-carries the depth-$11$ weight). The row-sum identity
-$\sum_{d\ge 1}D_{n,d} = d_{n-2}$ verifies:
-$351 = d_{25}$, $616 = d_{27}$, $3329 = d_{33}$.
+carries the depth-$11$ weight). The row sums of the displayed BK
+table are extractor diagnostics, not Brown dimensions of the MZV
+basis.
 \[
 \boxed{\;\text{Admissible triple:}\ \{27, 29, 35\};\qquad
 \text{depth onsets:}\ D_{27,9} = 10,\; D_{33,11} = 19,\; D_{35,11} = 97.\;}
@@ -7060,16 +7064,16 @@ The leading numerical values
 $\phi^{(n)}_{\mathrm{MZV, lead}} = d_n/n!$ with zeta-correction
 of order $1 + O(2^{-n})$:
 \begin{align}
-\phi^{(27)}_{\mathrm{MZV}} &\approx 5.657\cdot 10^{-26}, \nonumber\\
-\phi^{(29)}_{\mathrm{MZV}} &\approx 1.223\cdot 10^{-28},
+\phi^{(27)}_{\mathrm{MZV}} &\approx 7.494\cdot 10^{-26}, \nonumber\\
+\phi^{(29)}_{\mathrm{MZV}} &\approx 1.620\cdot 10^{-28},
 \label{eq:phi-admissible-triple-num}\\
-\phi^{(35)}_{\mathrm{MZV}} &\approx 5.654\cdot 10^{-37}. \nonumber
+\phi^{(35)}_{\mathrm{MZV}} &\approx 7.489\cdot 10^{-37}. \nonumber
 \end{align}
 The Borcherds leg scales by $p_{24}(\lceil n/2\rceil)/d_n$ with
 exact Hardy--Ramanujan coefficients $p_{24}(14) = 156\,883\,829\,400$,
 $p_{24}(15) = 563\,116\,739\,584$, $p_{24}(18) = 21\,651\,325\,216\,200$
-(OEIS~A006922): ratios $2.547\cdot 10^{8}$, $5.209\cdot 10^{8}$,
-$3.706\cdot 10^{9}$ at $n = 27, 29, 35$.
+(OEIS~A006922): ratios $1.923\cdot 10^{8}$, $3.932\cdot 10^{8}$,
+$2.798\cdot 10^{9}$ at $n = 27, 29, 35$.
 
 \emph{Scope cascade along the admissible triple.} At $n = 27$ the
 depth-$9$ stratum enters and the scope becomes
@@ -7093,16 +7097,17 @@ count.
 \begin{proof}
 The Padovan identity~\eqref{eq:padovan-admissible-triple} iterates
 $d_n = d_{n-2} + d_{n-3}$ from the canonical Zagier--Brown seed:
-$d_{27} = d_{25} + d_{24} = 351 + 265 = 616$;
-$d_{29} = d_{27} + d_{26} = 616 + 465 = 1081$;
-$d_{35} = d_{33} + d_{32} = 3329 + 2513 = 5842$. Module
+$d_{27} = d_{25} + d_{24} = 465 + 351 = 816$;
+$d_{29} = d_{27} + d_{26} = 816 + 616 = 1432$;
+$d_{35} = d_{33} + d_{32} = 4410 + 3329 = 7739$. Module
 \texttt{phi\_n\_humbert\_heegner\_admissible\_triple\_27\_29\_35.py}
 function \texttt{padovan\_count\_check\_triple} verifies each value
 and \texttt{padovan\_multipath\_check\_triple} cross-checks via four
-independent derivation paths (direct recurrence; BK two-step row-sum
-$\sum_d D_{n+2, d} = d_n$; generating-function coefficient extraction
-from $x/(1 - x^2 - x^3)$; plastic-number asymptotic
-$d_n = \lfloor A\rho^n + 1/2\rfloor$ for $n\ge 8$). Brown~$2012$
+independent checks. The recurrence, coefficient extraction from
+$1/(1 - x^2 - x^3)$, and the rounded plastic asymptotic
+$d_n = \lfloor A\rho^n + 1/2\rfloor$ agree for these weights; the BK
+extractor is kept as a lower-weight depth diagnostic, not as a Brown
+dimension count. Brown~$2012$
 Theorem~$1.2$ supplies the upper bound unconditionally; Zagier~$1994$
 equality is the motivic-Galois-freeness conjecture.
 
@@ -7127,15 +7132,14 @@ $n\in\{27, 29, 35\}$, $d\in[1, 11]$
 functional equation $\mathrm{BK}(-x, y) = \mathrm{BK}(x, -y)$ forces
 $D_{n, d} = 0$ at $n + d$ odd
 (\texttt{bk\_parity\_functional\_equation\_check}): at
-$n\in\{27, 29, 35\}$ all odd, even depths vanish. The row-sum
-$\sum_d D_{n, d} = d_{n-2}$
-(\texttt{bk\_padovan\_twostep\_consistency\_check\_triple}): sums
-$(351, 616, 3329) = (d_{25}, d_{27}, d_{33})$ match.
+$n\in\{27, 29, 35\}$ all odd, even depths vanish. The BK row sums
+are retained only as extractor checks and are not used as Brown
+Padovan dimensions.
 
 \emph{Verification path $V_1$ (Padovan multi-path).} Four
 independently-derived expressions for $d_n$ agree at
-$n\in\{27, 29, 35\}$: direct recurrence (path P1), BK row-sum at
-$n+2$ (path P2), generating-function extraction (path P3), plastic
+$n\in\{27, 29, 35\}$: direct recurrence (path P1), generating-function
+extraction (path P2), plastic
 asymptotic rounded (path P4). Module function
 \texttt{padovan\_multipath\_check\_triple} runs the four-way
 cross-check.
@@ -7229,9 +7233,9 @@ Remark~\ref{rem:phi-n-scope-cascade-25-28}:
 \begin{array}{c|cccccccccccc|l}
 n & d_n & \textbf{U} & \textbf{D3} & \textbf{D5} & \textbf{D7} & \textbf{D9} & \textbf{D11}\\
 \hline
-27 & 616 & \checkmark & \mathrm{cBK} & \mathrm{cZH} & \mathrm{cZH7} & \mathrm{cB17} & -\\
-29 & 1081 & \checkmark & \mathrm{cBK} & \mathrm{cZH} & \mathrm{cZH7} & \mathrm{cB17} & -\\
-35 & 5842 & \checkmark & \mathrm{cBK} & \mathrm{cZH} & \mathrm{cZH7} & \mathrm{cB17} & \mathrm{cBB10}
+27 & 816 & \checkmark & \mathrm{cBK} & \mathrm{cZH} & \mathrm{cZH7} & \mathrm{cB17} & -\\
+29 & 1432 & \checkmark & \mathrm{cBK} & \mathrm{cZH} & \mathrm{cZH7} & \mathrm{cB17} & -\\
+35 & 7739 & \checkmark & \mathrm{cBK} & \mathrm{cZH} & \mathrm{cZH7} & \mathrm{cB17} & \mathrm{cBB10}
 \end{array}
 \]
 Symbols: $\mathrm{cBK}$ conditional on Broadhurst--Kreimer~$1997$;
@@ -7270,7 +7274,7 @@ triple $\{37, 43, 45\}$; intervening weights $n\in
 receive no Humbert--Heegner admission. Through weight $45$ the
 Padovan lattice iterates to
 $(\PadovanDim{37}, \PadovanDim{43}, \PadovanDim{45})
-= (10252, 55405, 97229)$; the Broadhurst--Kreimer generating series
+= (13581, 73396, 128801)$; the Broadhurst--Kreimer generating series
 populates depth-$11$ throughout and first populates depth-$13$ at
 $n = 39$ via the BK three-step parity rule, so at every admissible
 weight in this triple the depth-$13$ stratum $D_{n, 13}$ is
@@ -7284,10 +7288,10 @@ tabulated regime.
 
 \begin{theorem}[$\phi^{(n)}$ on the higher admissible triple
 $\{37, 43, 45\}$: Padovan dimensions
-$(10252, 55405, 97229)$, depth-$13$ onset at $n = 45$,
+$(13581, 73396, 128801)$, depth-$13$ onset at $n = 45$,
 triple-conditional scope with Brown~$2017$ as deepest constraint]
 \label{thm:phi-n-humbert-heegner-triple-37-43-45}
-\ClaimStatusConjectured
+\ClaimStatusConditional
 Let $\PadovanDim{n}$ denote the Zagier--Brown Padovan dimension of
 irreducible motivic MZVs at weight $n$. The next admissible triple
 beyond $\{27, 29, 35\}$ under $n\equiv 3, 5\pmod 8$ is
@@ -7296,9 +7300,9 @@ beyond $\{27, 29, 35\}$ under $n\equiv 3, 5\pmod 8$ is
 \]
 with
 \begin{equation}
-\PadovanDim{37} = 10252, \quad
-\PadovanDim{43} = 55405, \quad
-\PadovanDim{45} = 97229
+\PadovanDim{37} = 13581, \quad
+\PadovanDim{43} = 73396, \quad
+\PadovanDim{45} = 128801
 \label{eq:padovan-37-43-45}
 \end{equation}
 via the Padovan recurrence
@@ -7330,9 +7334,8 @@ $\mathrm{BK}(-x, y) = \mathrm{BK}(x, -y)$):
 \end{aligned}
 \label{eq:BK-depth-37-43-45}
 \end{equation}
-with row-sums $\sum_d D_{n, d} = \PadovanDim{n-2}$ reading
-$5842 = \PadovanDim{35}$, $31572 = \PadovanDim{41}$,
-$55405 = \PadovanDim{43}$.
+The displayed row sums are BK extractor diagnostics and are not used
+as Brown Padovan dimensions.
 The depth-$13$ stratum first populates at $n = 39$ (not admissible);
 at the admissible triple the depth-$13$ populations are
 $D_{37, 13} = 0$, $D_{43, 13} = 924$, $D_{45, 13} = 3076$. The
@@ -7346,10 +7349,10 @@ depth-$15$ stratum first populates at $n = 45$
 The leading numerical values
 $\phi^{(n)}_{\mathrm{MZV, lead}} = \PadovanDim{n}\zeta(n)/n!$:
 \begin{align}
-\phi^{(37)}_{\mathrm{MZV}} &\approx 7.449\cdot 10^{-40}, \nonumber\\
-\phi^{(43)}_{\mathrm{MZV}} &\approx 9.171\cdot 10^{-49},
+\phi^{(37)}_{\mathrm{MZV}} &\approx 9.867\cdot 10^{-40}, \nonumber\\
+\phi^{(43)}_{\mathrm{MZV}} &\approx 1.215\cdot 10^{-48},
 \label{eq:phi-37-43-45-num}\\
-\phi^{(45)}_{\mathrm{MZV}} &\approx 8.128\cdot 10^{-52}. \nonumber
+\phi^{(45)}_{\mathrm{MZV}} &\approx 1.077\cdot 10^{-51}. \nonumber
 \end{align}
 On the K$3$ $A_\infty$-Humbert regime the polar cutoff forces
 $\phi^{(n)}\big|_{\mathrm{K3\text{-}Humbert}} = 0$ throughout the
@@ -7369,24 +7372,23 @@ load-bearing hypothesis at every admissible weight $n\ge 45$.
 The Padovan identity~\eqref{eq:padovan-37-43-45} iterates
 $\PadovanDim{n} = \PadovanDim{n-2} + \PadovanDim{n-3}$ from the
 seed $(\PadovanDim{32}, \PadovanDim{33}, \PadovanDim{34}) =
-(2513, 3329, 4410)$ inherited from
+(3329, 4410, 5842)$ inherited from
 Theorem~\ref{thm:phi-n-humbert-heegner-triple-27-29-35}; intermediate
-values $\PadovanDim{35} = 5842$, $\PadovanDim{36} = 7739$,
-$\PadovanDim{37} = 10252$, $\PadovanDim{38} = 13581$,
-$\PadovanDim{39} = 17991$, $\PadovanDim{40} = 23833$,
-$\PadovanDim{41} = 31572$, $\PadovanDim{42} = 41824$,
-$\PadovanDim{43} = 55405$, $\PadovanDim{44} = 73396$,
-$\PadovanDim{45} = 97229$ are each verified by
+values $\PadovanDim{35} = 7739$, $\PadovanDim{36} = 10252$,
+$\PadovanDim{37} = 13581$, $\PadovanDim{38} = 17991$,
+$\PadovanDim{39} = 23833$, $\PadovanDim{40} = 31572$,
+$\PadovanDim{41} = 41824$, $\PadovanDim{42} = 55405$,
+$\PadovanDim{43} = 73396$, $\PadovanDim{44} = 97229$,
+$\PadovanDim{45} = 128801$ are each verified by
 \texttt{padovan\_count\_check\_tower} in module
 \texttt{phi\_n\_humbert\_heegner\_admissible\_triple\_37\_43\_45.py}.
-Four independent derivation paths match at each admissible weight:
-direct recurrence (P1); BK two-step row-sum
-$\sum_d D_{n + 2, d} = \PadovanDim{n}$ (P2);
-generating-function coefficient extraction from
-$\sum_n \PadovanDim{n} x^n = x^3/(1 - x^2 - x^3)$ (P3);
-plastic-number asymptotic
+Three independent Padovan checks match at each admissible weight:
+direct recurrence, coefficient extraction from
+$\sum_{n\ge0}\PadovanDim{n} x^n = 1/(1 - x^2 - x^3)$, and the rounded
+plastic asymptotic
 $\PadovanDim{n} = \lfloor A\rho^n + 1/2\rfloor$ for $n\ge 8$ with
-$\rho$ the real root of $\rho^3 = \rho + 1$ (P4).
+$\rho$ the real root of $\rho^3 = \rho + 1$. The BK extractor table
+is recorded separately as a depth diagnostic.
 
 The admissibility
 $\{37, 43, 45\}\subset\{n\equiv 3, 5\pmod 8\}$ follows directly:
@@ -7404,13 +7406,10 @@ coefficient-by-coefficient and agrees with the geometric expansion on
 every entry at $(n, d)\in\{37, 43, 45\}\times[1, 13]$. Parity
 $\mathrm{BK}(-x, y) = \mathrm{BK}(x, -y)$ forces $D_{n, d} = 0$ at
 $n + d$ odd; at $n\in\{37, 43, 45\}$ all odd, even depths vanish.
-Row-sum $\sum_d D_{n, d} = \PadovanDim{n - 2}$ verifies
-\texttt{bk\_padovan\_twostep\_consistency\_check\_tower}: at
-$n = 37$ sum $5842 = \PadovanDim{35}$; at $n = 43$ sum
-$31572 = \PadovanDim{41}$; at $n = 45$ sum
-$55405 = \PadovanDim{43}$ (closure requires including the
-depth-$15$ contribution $D_{45, 15} = 69$ alongside depths $1$
-through $13$).
+The BK row sums are retained only as extractor diagnostics and are
+not identified with the Brown Padovan dimensions; closure at
+$n = 45$ also requires including the depth-$15$ contribution
+$D_{45, 15} = 69$ alongside depths $1$ through $13$.
 
 The depth-$13$ onset analysis tracks the first admissible weight at
 which $D_{n, 13}\ne 0$: depth-$13$ first populates at $n = 39$
@@ -7437,7 +7436,7 @@ $p_{24}(23) = 5\,776\,331\,152\,550\,400$ (OEIS~A006922, verified
 two-path by direct convolution and binomial Euler product in
 \texttt{p24\_multipath\_check\_tower}); ratios at
 $(n, \lceil n/2\rceil) = (37, 19), (43, 22), (45, 23)$ are
-$6.753\cdot 10^{9}$, $3.558\cdot 10^{10}$, $5.941\cdot 10^{10}$.
+$5.097\cdot 10^{9}$, $2.686\cdot 10^{10}$, $4.485\cdot 10^{10}$.
 Padovan growth controls the MZV-basis denominator via
 $\rho^n$ asymptotic with plastic number $\rho\approx 1.3247$. The
 Brown motivic stratification supplies the depth-stratified
@@ -7446,7 +7445,7 @@ $\bmod 8$ condition selects the admissible sub-triple from the
 Padovan lattice.
 
 \emph{Scope cascade.} At $n = 37$: tier \textbf{U}
-(unconditional Padovan count, admissibility, BK parity, row-sum);
+(unconditional Padovan count, admissibility, BK parity);
 \textbf{D2}--\textbf{D4} unconditional via Brown~$2012$ Theorem~$1$;
 \textbf{D5}--\textbf{D7} double-conditional (Zagier--Hoffman $+$
 BK); \textbf{D9} triple-conditional (Zagier--Hoffman $+$ BK $+$
@@ -7484,12 +7483,12 @@ The scope compacts into the five-stage table:
 \begin{array}{c|c|cccccccc|l}
 n & \PadovanDim{n} & \textbf{U} & \textbf{D3} & \textbf{D5} & \textbf{D7} & \textbf{D9} & \textbf{D11} & \textbf{D13} & \textbf{D15}\\
 \hline
-27 & 616 & \checkmark & \mathrm{cBK} & \mathrm{cZH} & \mathrm{cZH7} & \mathrm{cB17} & - & - & -\\
-29 & 1081 & \checkmark & \mathrm{cBK} & \mathrm{cZH} & \mathrm{cZH7} & \mathrm{cB17} & - & - & -\\
-35 & 5842 & \checkmark & \mathrm{cBK} & \mathrm{cZH} & \mathrm{cZH7} & \mathrm{cB17} & \mathrm{cBB10} & - & -\\
-37 & 10252 & \checkmark & \mathrm{cBK} & \mathrm{cZH} & \mathrm{cZH7} & \mathrm{cB17} & \mathrm{cB17} & - & -\\
-43 & 55405 & \checkmark & \mathrm{cBK} & \mathrm{cZH} & \mathrm{cZH7} & \mathrm{cB17} & \mathrm{cB17} & \mathrm{cBB10} & -\\
-45 & 97229 & \checkmark & \mathrm{cBK} & \mathrm{cZH} & \mathrm{cZH7} & \mathrm{cB17} & \mathrm{cB17} & \mathrm{cB17} & \mathrm{cB17}
+27 & 816 & \checkmark & \mathrm{cBK} & \mathrm{cZH} & \mathrm{cZH7} & \mathrm{cB17} & - & - & -\\
+29 & 1432 & \checkmark & \mathrm{cBK} & \mathrm{cZH} & \mathrm{cZH7} & \mathrm{cB17} & - & - & -\\
+35 & 7739 & \checkmark & \mathrm{cBK} & \mathrm{cZH} & \mathrm{cZH7} & \mathrm{cB17} & \mathrm{cBB10} & - & -\\
+37 & 13581 & \checkmark & \mathrm{cBK} & \mathrm{cZH} & \mathrm{cZH7} & \mathrm{cB17} & \mathrm{cB17} & - & -\\
+43 & 73396 & \checkmark & \mathrm{cBK} & \mathrm{cZH} & \mathrm{cZH7} & \mathrm{cB17} & \mathrm{cB17} & \mathrm{cBB10} & -\\
+45 & 128801 & \checkmark & \mathrm{cBK} & \mathrm{cZH} & \mathrm{cZH7} & \mathrm{cB17} & \mathrm{cB17} & \mathrm{cB17} & \mathrm{cB17}
 \end{array}
 \]
 Symbols: $\mathrm{cBK}$ conditional on Broadhurst--Kreimer~$1997$;

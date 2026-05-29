@@ -268,7 +268,7 @@ class HeisenbergArithmeticComparison:
     def frontier_defect(self, s: complex, terms: int = 300) -> complex:
         """Frontier defect Omega_H(s) = d log Lambda_Eis - d log phi.
 
-        Path 3: For Heisenberg, the Eisenstein L-packet IS the full L-packet,
+        Path 3: For Heisenberg, the Eisenstein L-packet is the full L-packet,
         and the scattering matrix phi relates Lambda*(1-s)/Lambda*(s).
         Since the Heisenberg has no cusp forms, Omega_H should vanish
         (the Eisenstein and scattering descriptions agree).

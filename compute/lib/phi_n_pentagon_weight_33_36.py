@@ -9,10 +9,10 @@ the fifth conditional tier (quintuple-conditional scope) at depth $11$.
 
 Four arithmetic voices are verified at these weights:
 
-(i)  Padovan recurrence $d_n = d_{n-2}+d_{n-3}$ with seed
-     $(d_{29},d_{30},d_{31},d_{32}) = (1081, 1432, 1897, 2513)$,
+(i)  Padovan recurrence $d_n = d_{n-2}+d_{n-3}$ with Brown seed
+     $(d_{29},d_{30},d_{31},d_{32}) = (1432, 1897, 2513, 3329)$,
      delivering
-     $(d_{33},d_{34},d_{35},d_{36}) = (3329, 4410, 5842, 7739)$.
+     $(d_{33},d_{34},d_{35},d_{36}) = (4410, 5842, 7739, 10252)$.
 
 (ii) Broadhurst-Kreimer depth stratification
      $\mathrm{BK}(x,y) = 1/(1 - O(x)y + S(x)(y^2 - y^4))$
@@ -71,36 +71,34 @@ Vol I prior: Theorem `thm:phi-n-weight-29-32` at depth 10.
 NUMERICAL VALUES
 ================
 Padovan dimensions:
-    d_{33} = 3329    d_{34} = 4410
-    d_{35} = 5842    d_{36} = 7739
+    d_{33} = 4410    d_{34} = 5842
+    d_{35} = 7739    d_{36} = 10252
 
-BK depth-graded counts D_{n,d} (parity rule: n+d even at each entry;
-first-principles computed from the BK series truncation at x^{40} y^{12}):
-    D_{33,.} = (1, 0,  67, 0,  498, 0,  914, 0,  398, 0,  19)
-    D_{34,.} = (0, 13, 0, 247, 0,  977, 0, 1037, 0,  239, 0)
-    D_{35,.} = (1, 0,  77, 0,  673, 0, 1532, 0,  949, 0,  97)
-    D_{36,.} = (0, 13, 0, 306, 0, 1431, 0, 1955, 0,  679, 0)
+BK depth-graded counts D_{n,d} for d=1,\ldots,12 (parity rule:
+n+d even at each entry; first-principles computed from the BK series
+truncation at x^{40} y^{12}):
+    D_{33,.} = (1, 0,  67, 0,  498, 0,  914, 0,  398, 0,  19, 0)
+    D_{34,.} = (0, 13, 0, 247, 0,  977, 0, 1037, 0,  239, 0, 0)
+    D_{35,.} = (1, 0,  77, 0,  673, 0, 1532, 0,  949, 0,  97, 0)
+    D_{36,.} = (0, 13, 0, 306, 0, 1431, 0, 1955, 0,  679, 0, 26)
 
 Parity-forced zeros: D_{n,d} = 0 when n + d is odd. Depth-11 enters
 first at n = 33 with D_{33,11} = 19; empty at every n < 33 (absent
 from Broadhurst-Kreimer expansion at x^{31} y^{11} onwards by parity
-and depth-x^3 support in O(x)).  The row-sum identity
-sum_d D_{n,d} = d_{n-2}^{ZB} = _PADOVAN_ZB[n-2] holds on the
-Zagier-Brown scale; in the sprint's shifted labelling the row-sum
-is d_{n-2}^{ZB} = _PADOVAN_ZB[n-2] = (616, 816, 1081, 1432) at
-n = (33, 34, 35, 36) respectively.  Truncation-tail contributions
-beyond x^{40} carry into row-sums at the ~10% level; the
-first-principles truncation is scope-level-faithful but not exact.
+and depth-x^3 support in O(x)).  Setting y=1 in the BK extractor gives
+x^3/(1-x^2-x^3); hence the row sum at weight n is the lower Brown
+dimension d_{n-3}.  These row sums are depth diagnostics, not the
+Brown dimensions at the same weights.
 
 p_{24}(k) at k in {17, 18} (first-principles computed):
     p_{24}(17) =  6,599,620,022,400
     p_{24}(18) = 21,651,325,216,200
 
 Borcherds leg / MZV leg ratio p_{24}(ceil(n/2)) / d_n:
-    n = 33: p_{24}(17) / d_{33} = 6599620022400 / 3329 ~ 1.983 * 10^9
-    n = 34: p_{24}(17) / d_{34} = 6599620022400 / 4410 ~ 1.496 * 10^9
-    n = 35: p_{24}(18) / d_{35} = 21651325216200 / 5842 ~ 3.706 * 10^9
-    n = 36: p_{24}(18) / d_{36} = 21651325216200 / 7739 ~ 2.798 * 10^9
+    n = 33: p_{24}(17) / d_{33} = 6599620022400 / 4410 ~ 1.497 * 10^9
+    n = 34: p_{24}(17) / d_{34} = 6599620022400 / 5842 ~ 1.130 * 10^9
+    n = 35: p_{24}(18) / d_{35} = 21651325216200 / 7739 ~ 2.798 * 10^9
+    n = 36: p_{24}(18) / d_{36} = 21651325216200 / 10252 ~ 2.112 * 10^9
 
 HUMBERT-HEEGNER ADMISSIBILITY
 =============================
@@ -123,7 +121,7 @@ GENERIC GOTTSCHE COINCIDENCE AT n = 36
     Gottsche-DMVV: chi(Hilb^{18}(K3)) = p_{24}(18) = 21,651,325,216,200.
     This is GENERIC (holds for every k >= 0 by Gottsche's universal
     formula), NOT an umbral resonance.  Four-voice comparison:
-      - Padovan: d_{36} = 7739 (sprint labelling)
+      - Padovan: d_{36} = 10252
       - BK: D_{36,10} = 679 (first-principles BK truncation at x^{40})
       - Hardy-Ramanujan: p_{24}(18) ~ 2.17 * 10^{13}
       - Gottsche: chi(Hilb^{18}(K3)) = p_{24}(18)
@@ -145,125 +143,32 @@ from typing import Dict, Iterable, List, Sequence, Tuple
 # 1. Padovan recurrence d_n = d_{n-2} + d_{n-3}
 # ---------------------------------------------------------------------------
 
-# Canonical Zagier-Brown Padovan seed, published (Zagier 1994 +
-# Broadhurst-Kreimer 1997 Tab 1 + Brown 2012); extended through n = 32.
-_PADOVAN_SEED: Dict[int, int] = {
-    3: 1,  4: 0,  5: 1,  6: 1,  7: 1,  8: 1,  9: 2,  10: 2,
-    11: 3, 12: 4, 13: 5, 14: 7, 15: 9, 16: 12,
-    17: 16, 18: 21, 19: 28, 20: 37,
-    21: 49, 22: 65, 23: 86, 24: 114,
-    25: 151, 26: 200, 27: 265, 28: 351,
-    29: 465, 30: 616, 31: 816, 32: 1081,
-    33: 1432, 34: 1897, 35: 2513, 36: 3329,
-}
+# Brown--Zagier Padovan seed.
+_PADOVAN_SEED: Dict[int, int] = {0: 1, 1: 0, 2: 1}
 
 
 def padovan(n: int) -> int:
     r"""Return d_n via the recurrence $d_n = d_{n-2} + d_{n-3}$.
 
-    Seed from Zagier 1994 / Brown 2012 Tab 1 at $n \le 12$, extended to
-    $n \le 36$ by recurrence.  For $n \ge 3$ the recurrence and seed
-    agree; lower $n$ returns Brown-motivic small values.
+    The sequence is defined by d_0=1, d_1=0, d_2=1 and
+    d_n=d_{n-2}+d_{n-3}. It is the Brown upper-bound sequence.
     """
-    if n < 3:
-        raise ValueError(f"padovan(n) defined for n >= 3; got n = {n}")
+    if n < 0:
+        raise ValueError(f"padovan(n) defined for n >= 0; got n = {n}")
     if n in _PADOVAN_SEED:
         return _PADOVAN_SEED[n]
-    a, b, c = _PADOVAN_SEED[3], _PADOVAN_SEED[4], _PADOVAN_SEED[5]
-    idx = 5
-    while idx < n:
-        a, b, c = b, c, b + a
-        idx += 1
-    return c
-
-
-# Zagier-Brown Padovan dimensions at weights 33-36.
-# CAUTION: these are the values stated in the text; the recurrence
-# $d_n = d_{n-2} + d_{n-3}$ delivers slightly different numbers
-# starting from the classical seed, and the programme fixes the
-# Zagier-Brown table (Zagier 1994 Tab 1; cross-ref A078678 with
-# Padovan offset convention) as canonical.  See padovan_zb() below.
-
-# Zagier-Brown table values (canonical for the programme; matches the
-# inscribed text d_{33}=3329, d_{34}=4410, d_{35}=5842, d_{36}=7739
-# via the seed $(d_{29}, d_{30}, d_{31}, d_{32}) = (1081, 1432, 1897, 2513)$
-# used in Theorem thm:phi-n-weight-29-32).  This seed corresponds to
-# $d_n := \dim_Q Z_n / (\zeta(2) Z_{n-2})$ with Brown 2012 convention.
-_PADOVAN_ZB: Dict[int, int] = {
-    3: 0, 4: 0, 5: 1, 6: 0, 7: 1, 8: 1, 9: 1, 10: 2,
-    11: 2, 12: 3, 13: 4, 14: 5, 15: 7, 16: 9, 17: 12,
-    18: 16, 19: 21, 20: 28, 21: 37, 22: 49, 23: 65,
-    24: 86, 25: 114, 26: 151, 27: 200, 28: 265,
-    29: 351, 30: 465, 31: 616, 32: 816, 33: 1081,
-    34: 1432, 35: 1897, 36: 2513,
-}
-
-
-def padovan_zb(n: int) -> int:
-    r"""Zagier-Brown Padovan sequence (programme-canonical seed).
-
-    This is the irreducible motivic MZV dimension count used in
-    Theorem `thm:phi-n-weight-29-32` and its predecessors; the
-    recurrence $d_n = d_{n-2} + d_{n-3}$ is satisfied with the
-    programme-canonical seed.
-
-    Values for n in [29, 36]: 351, 465, 616, 816, 1081, 1432, 1897, 2513.
-
-    WARNING.  These are the standard Zagier-Brown values, shifted by
-    two weights relative to the `padovan()` function above.  The
-    "Padovan dimensions" quoted in the sprint target
-    $(d_{33},d_{34},d_{35},d_{36}) = (3329, 4410, 5842, 7739)$
-    are obtained from a separate unshifted Padovan sequence
-    (see `padovan_sprint()`).  This is an accounting ambiguity in the
-    target specification; both sequences are valid, and the
-    tests below verify BOTH.
-    """
-    if n not in _PADOVAN_ZB:
-        raise ValueError(
-            f"padovan_zb only tabulated for n in [3, 36]; got n = {n}"
-        )
-    return _PADOVAN_ZB[n]
-
-
-def padovan_sprint(n: int) -> int:
-    r"""Sprint-target Padovan sequence: $(d_{33}, d_{34}, d_{35}, d_{36})
-    = (3329, 4410, 5842, 7739)$.
-
-    Derivation (from the recurrence $d_n = d_{n-2} + d_{n-3}$ at sprint
-    labels):
-        d_{33} = d_{31} + d_{30} = 1897 + 1432 = 3329
-        d_{34} = d_{32} + d_{31} = 2513 + 1897 = 4410
-        d_{35} = d_{33} + d_{32} = 3329 + 2513 = 5842
-        d_{36} = d_{34} + d_{33} = 4410 + 3329 = 7739
-
-    The sprint labels are related to the Zagier-Brown tabulation
-    `_PADOVAN_ZB` by a shift of +4: sprint d_n = _PADOVAN_ZB[n + 4]
-    in the overlap range, continued by the same recurrence.  Both
-    sequences obey the identical Padovan recurrence; the
-    `padovan_sprint` values are the canonical programme targets.
-    """
-    if n not in (33, 34, 35, 36):
-        raise ValueError(
-            f"padovan_sprint tabulated for n in {{33, 34, 35, 36}}; got n = {n}"
-        )
-    return {33: 3329, 34: 4410, 35: 5842, 36: 7739}[n]
+    for m in range(3, n + 1):
+        if m not in _PADOVAN_SEED:
+            _PADOVAN_SEED[m] = _PADOVAN_SEED[m - 2] + _PADOVAN_SEED[m - 3]
+    return _PADOVAN_SEED[n]
 
 
 def padovan_count_check_33_36() -> Dict[int, bool]:
     r"""Verify Padovan recurrence at n in {33, 34, 35, 36} against the
-    sprint-target spec $(3329, 4410, 5842, 7739)$.
+    Brown target $(4410, 5842, 7739, 10252)$.
     """
-    vals = {33: 3329, 34: 4410, 35: 5842, 36: 7739}
-    # extended seed consistent with d_{31}=1897, d_{30}=1432, d_{32}=2513
-    seed = {30: 1432, 31: 1897, 32: 2513}
-    out: Dict[int, bool] = {}
-    prev = dict(seed)
-    for n in (33, 34, 35, 36):
-        want = vals[n]
-        got = prev[n - 2] + prev[n - 3]
-        out[n] = (got == want)
-        prev[n] = want
-    return out
+    vals = {33: 4410, 34: 5842, 35: 7739, 36: 10252}
+    return {n: padovan(n) == vals[n] for n in (33, 34, 35, 36)}
 
 
 # ---------------------------------------------------------------------------
@@ -325,7 +230,7 @@ def bk_depth_extract_33_36(
     truncated at x^{xmax} y^{ymax}.
 
     Returns dict n -> dict d -> D_{n, d} for n in {33, 34, 35, 36}
-    and d in {1, ..., 11}.
+    and d in {1, ..., ymax}.
 
     Parity rule BK(-x, y) = BK(x, -y) forces D_{n, d} = 0 when n + d
     is odd.
@@ -363,22 +268,21 @@ def bk_depth_extract_33_36(
             for j in range(ymax + 1):
                 BK[i][j] += term[i][j]
 
-    # Extract D_{n, d} for n in {33, 34, 35, 36}, d in {1, ..., 11}.
+    # Extract D_{n, d} for n in {33, 34, 35, 36}, d in {1, ..., ymax}.
     out: Dict[int, Dict[int, int]] = {}
     for n in (33, 34, 35, 36):
-        out[n] = {d: BK[n][d] for d in range(1, min(12, ymax + 1))}
+        out[n] = {d: BK[n][d] for d in range(1, ymax + 1)}
     return out
 
 
 def bk_row_sum_check_33_36() -> Dict[int, Tuple[int, int, bool]]:
-    r"""Verify the row-sum identity sum_d D_{n, d} = d_{n-2}^{ZB} at
-    n in {33, 34, 35, 36}, with d_{n-2}^{ZB} = _PADOVAN_ZB[n - 2].
+    r"""Verify the BK row-sum lag diagnostic sum_d D_{n, d} = d_{n-3}.
     """
     D = bk_depth_extract_33_36()
     out: Dict[int, Tuple[int, int, bool]] = {}
     for n in (33, 34, 35, 36):
         s = sum(D[n].values())
-        want = _PADOVAN_ZB[n - 2]
+        want = padovan(n - 3)
         out[n] = (s, want, s == want)
     return out
 
@@ -472,15 +376,15 @@ def p24_exact(k: int) -> int:
 
 def borcherds_over_mzv_ratio_33_36() -> Dict[int, Fraction]:
     r"""Ratio $|leg^{K3}_n| / |leg^{MZV}_n| = p_{24}(\lceil n/2\rceil) / d_n$
-    at n in {33, 34, 35, 36} using the SPRINT Padovan labelling.
+    at n in {33, 34, 35, 36} using the Brown Padovan dimensions.
 
     Expected values (ratios, first-principles p24 values):
-        n = 33: p_{24}(17) / 3329 ~ 1.98 * 10^9
-        n = 34: p_{24}(17) / 4410 ~ 1.50 * 10^9
-        n = 35: p_{24}(18) / 5842 ~ 3.71 * 10^9
-        n = 36: p_{24}(18) / 7739 ~ 2.80 * 10^9
+        n = 33: p_{24}(17) / 4410 ~ 1.50 * 10^9
+        n = 34: p_{24}(17) / 5842 ~ 1.13 * 10^9
+        n = 35: p_{24}(18) / 7739 ~ 2.80 * 10^9
+        n = 36: p_{24}(18) / 10252 ~ 2.11 * 10^9
     """
-    vals = {33: 3329, 34: 4410, 35: 5842, 36: 7739}
+    vals = {33: 4410, 34: 5842, 35: 7739, 36: 10252}
     out: Dict[int, Fraction] = {}
     for n in (33, 34, 35, 36):
         k = (n + 1) // 2  # ceil(n / 2)
@@ -564,7 +468,7 @@ def humbert_heegner_prior_range_check() -> Dict[int, bool]:
 
 def sprint_record_33_36() -> Dict[int, Dict[str, object]]:
     r"""Bundle all four arithmetic voices at n in {33, 34, 35, 36}."""
-    vals = {33: 3329, 34: 4410, 35: 5842, 36: 7739}
+    vals = {33: 4410, 34: 5842, 35: 7739, 36: 10252}
     D = bk_depth_extract_33_36()
     out: Dict[int, Dict[str, object]] = {}
     for n in (33, 34, 35, 36):

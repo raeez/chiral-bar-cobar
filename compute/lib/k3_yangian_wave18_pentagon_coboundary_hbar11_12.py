@@ -8,9 +8,11 @@ Extend the Wave-17 tower  phi^(8), phi^(9), phi^(10)
 from the Vol I / Vol II / Vol III remark set cross-ref'd below) to the
 next two orders.
 
-At  hbar^11  the Deligne motivic MZV basis has Padovan dimension
-  d_11  =  d_9 + d_8  =  4 + 3  =  7
-(Brown 2011, Ann. Math. 175, Thm 1.1), realised by the irreducibles
+At hbar^11 the displayed Deligne coordinate list has seven entries.
+The full Brown--Zagier Padovan dimension is
+  d_11  =  d_9 + d_8  =  5 + 4  =  9
+(Brown 2011, Ann. Math. 175, Thm 1.1); the seven coordinates used
+here are
 
     zeta(11),
     zeta(3)*zeta(3,5),  zeta(3)*zeta(5,3),  zeta(5)*zeta(3,3),
@@ -22,9 +24,10 @@ the Wave-17 depth-3 opening is  zeta(3,3,5) -- the first weight-11
 depth-3 MZV in the Deligne basis, distinct from the weight-9 depth-3
 generator  zeta(3,3,3).
 
-At  hbar^12  the motivic MZV basis has Padovan dimension
-  d_12  =  d_10 + d_9  =  5 + 4  =  9
-with the NINTH entry being
+At hbar^12 the displayed coordinate list has nine entries.  The full
+Brown--Zagier Padovan dimension is
+  d_12  =  d_10 + d_9  =  7 + 5  =  12;
+the ninth displayed coordinate is
 
     zeta(3, 3, 3, 3)
 
@@ -79,8 +82,8 @@ The Wave-17 obstruction tower
    obs_g  =  sum_{n <= g+1}  phi^(n) * c_{g, n}
 is extended to:
 
-   obs_10  reaches  phi^(11)   (seven motivic legs + half-integral Borcherds leg);
-   obs_11  reaches  phi^(12)   (nine motivic legs + integer-exponent Borcherds leg).
+   obs_10  reaches  phi^(11)   (seven displayed motivic legs + half-integral Borcherds leg);
+   obs_11  reaches  phi^(12)   (nine displayed motivic legs + integer-exponent Borcherds leg).
 
 The coefficient  c_{11, 12}^(9)  multiplying  zeta(3,3,3,3)  inside
 obs_11  is a NEW MOTIVIC INVARIANT of the genus-11 K3-BKM obstruction,
@@ -140,7 +143,7 @@ Vol. III chapters/theory/cyclic_ainf.tex
 
 Tests
 =====
-- Padovan recurrence  d_n = d_{n-2} + d_{n-3}  with base  d_3 = d_4 = d_5 = 1.
+- Padovan recurrence  d_n = d_{n-2} + d_{n-3} with base d_0=1,d_1=0,d_2=1.
 - depth-4 irreducible first appears at weight 12 (not earlier).
 - Borcherds leg carries raw weight  -n  and in-tower weight  5 n.
 - Phi_12 (Fake-Monster) is NOT the K3-BKM Borcherds leg at any weight.
@@ -165,13 +168,10 @@ from typing import Dict, List, Tuple
 #   d_2 = 1 (zeta(2))
 #   d_3 = 1 (zeta(3))
 #   d_4 = 1 (zeta(2)^2 = (5/2) zeta(4))
-#   d_5 = 1 (zeta(5))
-# Brown 2011 recurrence d_n = d_{n-2} + d_{n-3}  kicks in for n >= 3,
-# and produces 2, 2, 3, 4, 5, 7, 9, ... for n = 6, 7, 8, 9, 10, 11, 12.
+# Brown 2011 recurrence d_n = d_{n-2} + d_{n-3} produces
+# 2, 2, 3, 4, 5, 7, 9, 12, ... for n = 5, 6, 7, 8, 9, 10, 11, 12.
 
-_PADOVAN_CACHE: Dict[int, int] = {
-    0: 1, 1: 0, 2: 1, 3: 1, 4: 1, 5: 1,
-}
+_PADOVAN_CACHE: Dict[int, int] = {0: 1, 1: 0, 2: 1}
 
 
 def padovan_dim(n: int) -> int:
@@ -179,20 +179,19 @@ def padovan_dim(n: int) -> int:
 
     Implements Brown 2011 Ann. Math. 175 Thm 1.1 recurrence
         d_n = d_{n-2} + d_{n-3}
-    for n >= 3 with initial data d_0 = d_2 = d_3 = d_4 = d_5 = 1,
-    d_1 = 0.
+    for n >= 3 with initial data d_0=1, d_1=0, d_2=1.
 
-    Tabulated canonical values (the published Padovan sequence shifted):
+    Tabulated canonical values:
         n   0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
-        d_n 1 0 1 1 1 1 2 2 3 4 5  7  9  12 16 21
+        d_n 1 0 1 1 1 2 2 3 4 5 7  9  12 16 21 28
     """
     if n < 0:
         raise ValueError("weight must be non-negative")
     if n in _PADOVAN_CACHE:
         return _PADOVAN_CACHE[n]
-    # Fill upward
-    for m in range(6, n + 1):
-        _PADOVAN_CACHE[m] = _PADOVAN_CACHE[m - 2] + _PADOVAN_CACHE[m - 3]
+    for m in range(3, n + 1):
+        if m not in _PADOVAN_CACHE:
+            _PADOVAN_CACHE[m] = _PADOVAN_CACHE[m - 2] + _PADOVAN_CACHE[m - 3]
     return _PADOVAN_CACHE[n]
 
 
@@ -201,11 +200,10 @@ def padovan_dim(n: int) -> int:
 # =============================================================================
 
 def mzv_basis_weight_11() -> List[str]:
-    """Seven irreducible MZVs in the Deligne 2013 basis at weight 11.
+    """Seven displayed Deligne coordinates at weight 11.
 
-    Brown 2011 Thm 1.1 gives d_11 = d_9 + d_8 = 4 + 3 = 7.
-    Deligne 2013 Bourbaki 1054 and Brown's table pick the following
-    basis representatives (all of depth <= 3, only one depth-3 entry).
+    Brown 2011 Thm 1.1 gives the full dimension d_11 = 9.  This list is
+    the seven-coordinate K3-BKM display used by the Wave-18 formula.
     """
     return [
         "zeta(11)",
@@ -219,10 +217,10 @@ def mzv_basis_weight_11() -> List[str]:
 
 
 def mzv_basis_weight_12() -> List[str]:
-    """Nine irreducible MZVs in the Deligne 2013 basis at weight 12.
+    """Nine displayed Deligne coordinates at weight 12.
 
-    Brown 2011 Thm 1.1 gives d_12 = d_10 + d_9 = 5 + 4 = 9.  The NINTH
-    entry zeta(3, 3, 3, 3) is the FIRST DEPTH-4 IRREDUCIBLE in the
+    Brown 2011 Thm 1.1 gives the full dimension d_12 = 12.  The ninth
+    displayed entry zeta(3, 3, 3, 3) is the FIRST DEPTH-4 IRREDUCIBLE in the
     entire motivic MZV tower (Brown 2011 Thm 1.2: depth-reduction on
     the nose through weight 12).
     """
@@ -331,7 +329,7 @@ def phi_11_symbolic() -> Dict[str, object]:
     """phi^(11) = sum_{i=1}^{7} (MZV_i^{(11)} / 11!) c_11^{(i)}
                 + (Phi_10^{11/2} / eta^132 / 11!) c_11^{(K3)}.
 
-    Seven motivic MZV legs (all depth <= 3; the unique depth-3 leg is
+    Seven displayed motivic MZV legs (all depth <= 3; the unique depth-3 leg is
     zeta(3, 3, 5)) plus one Borcherds leg on the Sp_4(Z) double cover
     (n = 11 odd  =>  half-integer exponent).
     """
@@ -341,8 +339,9 @@ def phi_11_symbolic() -> Dict[str, object]:
     return {
         "weight": n,
         "kz_denominator": kz,                          # 11! = 39,916,800
-        "padovan_dim": padovan_dim(n),                 # 7
-        "mzv_basis": basis,                            # 7 irreducibles
+        "brown_padovan_dim": padovan_dim(n),           # 9
+        "displayed_coordinate_count": len(basis),      # 7
+        "mzv_basis": basis,                            # 7 displayed coordinates
         "depth_max_in_basis": 3,                       # depth-3 is zeta(3,3,5)
         "depth_3_entries": ["zeta(3, 3, 5)"],
         "borcherds_leg": {
@@ -370,7 +369,7 @@ def phi_12_symbolic() -> Dict[str, object]:
     """phi^(12) = sum_{i=1}^{9} (MZV_i^{(12)} / 12!) c_12^{(i)}
                 + (Phi_10^6 / eta^144 / 12!) c_12^{(K3)}.
 
-    Nine motivic MZV legs.  The ninth entry  zeta(3, 3, 3, 3)  is the
+    Nine displayed motivic MZV legs.  The ninth entry  zeta(3, 3, 3, 3)  is the
     FIRST DEPTH-4 IRREDUCIBLE  (Brown 2011 Thm 1.2).  Its coefficient
     c_12^(9) is a NEW MOTIVIC INVARIANT of the K3-BKM quantum group,
     inaccessible from any weight <= 11 datum.
@@ -386,8 +385,9 @@ def phi_12_symbolic() -> Dict[str, object]:
     return {
         "weight": n,
         "kz_denominator": kz,                          # 12! = 479,001,600
-        "padovan_dim": padovan_dim(n),                 # 9
-        "mzv_basis": basis,                            # 9 irreducibles
+        "brown_padovan_dim": padovan_dim(n),           # 12
+        "displayed_coordinate_count": len(basis),      # 9
+        "mzv_basis": basis,                            # 9 displayed coordinates
         "depth_max_in_basis": 4,                       # depth-4 enters here
         "depth_4_entries": ["zeta(3, 3, 3, 3)"],
         "motivic_novelty": (
@@ -490,14 +490,14 @@ def _test_padovan_recurrence() -> None:
             f"d_{n} = {actual}  !=  d_{{n-2}} + d_{{n-3}} = {predicted}"
         )
     # Explicit canonical anchors
-    assert padovan_dim(8) == 3
-    assert padovan_dim(9) == 4
-    assert padovan_dim(10) == 5
-    assert padovan_dim(11) == 7
-    assert padovan_dim(12) == 9
-    assert padovan_dim(13) == 12
-    assert padovan_dim(14) == 16
-    assert padovan_dim(15) == 21
+    assert padovan_dim(8) == 4
+    assert padovan_dim(9) == 5
+    assert padovan_dim(10) == 7
+    assert padovan_dim(11) == 9
+    assert padovan_dim(12) == 12
+    assert padovan_dim(13) == 16
+    assert padovan_dim(14) == 21
+    assert padovan_dim(15) == 28
 
 
 def _test_depth_4_first_appearance() -> None:
@@ -535,14 +535,16 @@ def _test_fake_monster_non_interference() -> None:
 def _test_decomposition_shape() -> None:
     phi11 = phi_11_symbolic()
     assert phi11["weight"] == 11
-    assert phi11["padovan_dim"] == 7
+    assert phi11["brown_padovan_dim"] == 9
+    assert phi11["displayed_coordinate_count"] == 7
     assert len(phi11["mzv_basis"]) == 7
     assert phi11["kz_denominator"] == factorial(11)    # 39,916,800
     assert phi11["borcherds_leg"]["lives_on_double_cover"] is True
 
     phi12 = phi_12_symbolic()
     assert phi12["weight"] == 12
-    assert phi12["padovan_dim"] == 9
+    assert phi12["brown_padovan_dim"] == 12
+    assert phi12["displayed_coordinate_count"] == 9
     assert len(phi12["mzv_basis"]) == 9
     assert phi12["kz_denominator"] == factorial(12)    # 479,001,600
     assert phi12["depth_max_in_basis"] == 4

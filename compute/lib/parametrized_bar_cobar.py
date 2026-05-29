@@ -59,7 +59,7 @@ def affine_sl2_central_charge(k):
     """
     Central charge c = k * dim(g) / (k + h^v) = 3k/(k+2) for sl_2.
 
-    Poles at k = -2 (critical level: Sugawara UNDEFINED, not "c diverges").
+    Poles at k = -2 in the generic formula; Sugawara is undefined at critical level.
     c -> 3 as k -> infinity (classical limit).
     c = 1 at k = 1 (level-1 = free boson on circle).
     """

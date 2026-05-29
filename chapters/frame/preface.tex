@@ -213,7 +213,8 @@ structure -- the $r$-matrix, the Yangian, and the spectral braiding --
 is developed in Volume~I; Volume~II adds the open/closed
 holomorphic-topological lift through $\SCchtop$; Volume~III supplies
 the two-stage Calabi--Yau-to-chiral source
-$\Phi_d=\mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1},C}\circ\Phi^{\mathrm{FA}}_d$
+$\Phi_d^{(\Sigma_{d-1},C)}
+=\mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1},C}\circ\Phi^{\mathrm{FA}}_d$
 on its stated factorisation-homology surfaces.
 The Khan--Zeng bridge in Volume~II has the same order of precision:
 finite-type nonlinear PVAs have a constructed classical half-space BV
@@ -548,8 +549,8 @@ bipartitions of an unordered set: coassociative and cocommutative,
 an $E_\infty$-coalgebra, the factorization coalgebra of Beilinson
 and Drinfeld on~$\operatorname{Ran}(X)$.
 
-The ordered bar is the primitive chain object. The symmetric bar
-is its $\Sigma_n$-coinvariant shadow: the lossy projection that
+The ordered bar is the level-$2$ chain object before symmetrisation.
+The symmetric bar is its $\Sigma_n$-coinvariant shadow: the lossy projection that
 discards the $R$-matrix, the KZ associator, and the full quantum
 group deformation. Theorems~A--D and~H are stated at the symmetric
 level because they concern precisely the invariants that survive
@@ -1157,13 +1158,15 @@ $\mathrm{Rep}(U_\hbar(\fg))$: never on the boundary algebra $\cA$
 itself when $\cA$ is $E_1$.
 
 \emph{$E_3$} requires topologisation: the algebraic-geometric
-theorem that $\SCchtop + \text{inner conformal vector} \simeq
+theorem that $\SCchtop + \text{inner conformal-vector datum} \simeq
 E_3^{\mathrm{top}}$
 (Theorem~\ref{thm:topologization}). The Sugawara element at
-non-critical level makes holomorphic translations $Q$-exact in
+non-critical level, together with its antighost contraction, makes
+holomorphic translations $Q$-exact in
 the topological direction, collapsing the two colours of
 $\SCchtop$ and producing a single-colour $E_3$-topological
-algebra. Without conformal vector: stuck at $\SCchtop$. At
+algebra. Without such a BRST primitive, the structure remains
+$\SCchtop$. At
 critical level $k = -h^\vee$: Sugawara undefined, topologisation
 fails.
 
@@ -1881,7 +1884,8 @@ reconstructed in Volume~II on the stated open/closed comparison lanes;
 the fingerprint theorem (G) classifies the standard landscape. Volume~II
 adds the $\SCchtop$ lift and topologized bulk; Volume~III supplies
 Calabi--Yau-to-chiral inputs through the two-stage functor
-$\Phi_d=\mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1},C}\circ\Phi^{\mathrm{FA}}_d$.
+$\Phi_d^{(\Sigma_{d-1},C)}
+=\mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1},C}\circ\Phi^{\mathrm{FA}}_d$.
 On the non-degenerate locus
 $\{\kappa\ne 0,\ \text{non-critical level},\ \text{Koszul locus}\}$
 each of Theorems~A, B, D, and~H carries, for the specific family
@@ -1895,7 +1899,7 @@ unbounded Feigin--Frenkel centre, the Creutzig--Kanade--Linshaw
 logarithmic admissible lane requires its logarithmic boundary
 hypotheses, the super-Yangian cluster is a conjectural comparison
 surface, and the Calabi--Yau functor at $d\ge 4$ requires the
-specified $E_d$-formality and framing inputs. The proof surfaces and
+specified $E_d$-formality and framing inputs. The proofs and
 cross-volume attributions for A, B, C, D, H, F, G occupy
 Parts~\ref{part:bar-complex}--\ref{part:v1-frontier} of the body.
 The common source is the universal Maurer--Cartan element
@@ -2048,7 +2052,7 @@ The first line is the chiral Hochschild cochain complex; the
 second is the deformation complex of Ginzburg--Kapranov;
 the third, acting on the ordered bar with no $\Sigma_n$-quotient,
 is the $E_1$-modular convolution algebra
-$\mathfrak{g}^{E_1}_\cA$: the primitive object, carrying the
+$\mathfrak{g}^{E_1}_\cA$: the level-$2$ ordered object, carrying the
 $R$-matrix and the Yangian. The fourth is its
 $\Sigma_n$-coinvariant shadow
 $\mathfrak{g}^{\mathrm{mod}}_\cA$, retaining only
@@ -3905,13 +3909,13 @@ the Polyakov path-integral correspondence.
 
 \subsection*{8.2.\enspace The Polyakov correspondence}
 
-Polyakov's programme computes the string partition function
+Polyakov's conformal-gauge construction computes the string partition function
 $Z=\sum_g g_s^{2g-2}\int_{\cM_g}[\mathrm{det}'_\zeta\Delta]
 ^{-d/2}\,d\mu_{\mathrm{WP}}$
 by gauge-fixing the worldsheet metric to conformal gauge, paying
 the price of a conformal anomaly
 $\langle T^a{}_a\rangle=(c/12)\,R$ and a ghost system with
-$c_{\mathrm{ghost}}=-26$. Every element of this programme has a
+$c_{\mathrm{ghost}}=-26$. Every term in this construction has a
 bar-cobar counterpart:
 \begin{itemize}[nosep]
 \item The conformal anomaly is $\kappa(\cA)$: both measure the
@@ -3985,24 +3989,29 @@ forms.
 \noindent\textbf{Chenevier determinant $D^{\mathrm{Chen}}$ and the
 Galois bridge.}\enspace
 The paramodular Hecke algebra $\mathbb T^{\mathrm{par}}_1$ acting on
-the cusp form $\Delta_5\in S_5(K(1))$ carries a four-dimensional
+the Igusa square $\Delta_{10}=\Delta_5^2\in S_{10}(\mathrm{Sp}_4(\mathbb Z))$
+carries a four-dimensional
 Chenevier determinant (Chenevier 2014 arXiv:1301.0635 \S1.2,
 structurally refining the older Taylor 1991 / Wiles 1988
 pseudo-character) $D^{\mathrm{Chen}}\colon
 \mathbb T^{\mathrm{par}}_1\to\mathbb C$ with linear-component
-$D^{\mathrm{Chen}}_1(T_p)=\lambda_p=a_p(f_{16})+p^8+p^9$ and top
+$D^{\mathrm{Chen}}_1(T_p)=\lambda_p=a_p(f_{18})+p^8+p^9$ and top
 symmetric polarisation
-$D^{\mathrm{Chen}}_4(T_p,T_p,T_p,T_p)=p^{32}$
+$D^{\mathrm{Chen}}_4(T_p,T_p,T_p,T_p)=p^{34}$
 (verified on the twenty-two primes $p\le 79$). Under the
 Saito--Kurokawa lift
-$f_{16}\mapsto\mathrm{SK}(f_{16})=\Delta_5$,
-$D^{\mathrm{Chen}}$ is the chiral-bialgebra trace on
-$\mathrm{ChirHoch}^2(\mathbf H_{\Delta_5})$; on the Galois side
-it is the characteristic polynomial of Frobenius for the
-$4$-dimensional $\mathrm{GSp}_4$-representation attached to~$\Delta_5$.
-The bridge $D^{\mathrm{Chen}}\leftrightarrow\rho_{\Delta_5}$ links the
+$f_{18}=E_6\Delta\mapsto\mathrm{SK}(f_{18})=\Delta_{10}$,
+$D^{\mathrm{Chen}}$ is the Frobenius characteristic polynomial of the
+$4$-dimensional $\mathrm{GSp}_4$ representation attached to~$\Delta_{10}$.
+The primitive denominator $\Delta_5$ enters through the spin
+square-root and the completed Satake--chiralisation carrier, not as
+the source of a Chenevier determinant on the non-commutative
+chiral bialgebra.
+The bridge $D^{\mathrm{Chen}}\leftrightarrow\rho_{\Delta_{10}}$ links the
 Theorem-C crown value $\kappa+\kappa^!=8$ to the Euler system of
-Hecke eigenvalues on the paramodular locus. The class $\chi_3$ belongs
+Hecke eigenvalues on the paramodular locus; transport to
+$\mathbf H_{\Delta_5}$ is the separate spin-cover chiralisation
+problem. The class $\chi_3$ belongs
 to the Calabi--Yau threefold companion surface of Vol.~III; it is not
 part of the curve-level Theorem~H concentration in degrees
 $\{0,1,2\}$.
@@ -4048,7 +4057,7 @@ Broadhurst--Kreimer empirical depth-distribution.
 
 
 % ====================================================================
-\section*{9.\quad The Koszulness programme}
+\section*{9.\quad The Koszulness Locus}
 % ====================================================================
 
 \medskip
@@ -4287,7 +4296,7 @@ Weil homomorphism of the Chern--Weil dictionary.
 Everything above descends from the ordered bar
 $\barB^{\mathrm{ord}}(\cA)$ via the averaging map to the symmetric
 bar $\barB^\Sigma(\cA)$ and its modular convolution algebra. The
-ordered bar carries the primitive structure: its deconcatenation
+ordered bar carries the level-$2$ ordered structure: its deconcatenation
 coproduct, its $R$-matrix, and the Yangian it builds are all
 invisible to $\Sigma_n$-coinvariants and therefore absent from the
 symmetric shadow. The natural habitat for both structures
@@ -4459,8 +4468,7 @@ Notion~(B) structure unless explicitly qualified.
 
 \subsection*{10.4.\enspace Three Hochschild theories}
 
-Three a priori distinct Hochschild-type constructions
-appear in the programme:
+Three a priori distinct Hochschild-type constructions occur here:
 \begin{enumerate}[label=\textup{(\roman*)},nosep]
 \item \emph{Chiral Hochschild cohomology}
  $\mathrm{ChirHoch}^*(\cA)$: the subject of Theorem~H,
@@ -4518,6 +4526,7 @@ coproduct, and KZ associator data live.
 \subsection*{10.6.\enspace The closing conjecture}
 
 \begin{conjecture}\label{conj:v1-drinfeld-center-equals-bulk}
+\ClaimStatusConjectured
 Let $\cA$ be an $E_1$-chiral algebra (Notion~B) and
 $U_\cA=\cA\bowtie\cA^!$ the Drinfeld double. Assume the
 topologization hypotheses of Section~10.2, so that the bulk and the
@@ -4557,7 +4566,7 @@ Chern--Simons $E_3^{\mathrm{top}}$-algebra
 to $P_3$ deformations; the one-dimensionality of $H^3(\fg)$ for simple
 $\fg$ forces order-by-order uniqueness.
 
-The chiral quantum group programme now covers the
+The chiral quantum group construction now covers the
 full $\mathfrak{gl}_N$ tower: for every $N\ge 1$, the principal
 $\cW$-algebra $\cW_N$ carries a chiral quantum group datum with Yang
 $R$-matrix $R(u) = u\,I + \Psi\,P$, Drinfeld coproduct
@@ -4752,7 +4761,7 @@ proved) $\Rightarrow$
 $(X,D,\tau)$; proved locally) $\Rightarrow$
 \emph{Stage~4} (modularization: trace plus clutching producing
 $\Theta^{\mathrm{oc}}$; annulus trace proved, full chain-level clutching
-is programme).
+is conjectural).
 The genus expansion of $\Theta^{\mathrm{oc}}_\cA$ yields the
 perturbative free energies~$F_g$; the shadow archetypes
 $\mathsf{G}/\mathsf{L}/\mathsf{C}/\mathsf{M}$ classify the nonlinear
@@ -4780,7 +4789,7 @@ Five negative principles constrain the architecture:
  Thick generation (MC3) is proved for all simple types on the
  evaluation-generated core. Extension beyond evaluation modules
  (DK-4/5) and the full holographic datum for non-standard families
- are programme, not theorem.
+ remain conjectural, not theorem.
 \end{enumerate}
 
 \bigskip
@@ -4853,7 +4862,7 @@ At genus~$0$ this is the curved $A_\infty$ MC equation with
 $m_0=S$. At genus~$1$: vanishing of the curved odd Laplacian.
 At genus~$g$: the QME itself, with each genus-$g$ component
 determined by lower genera via the graph-sum recursion. The
-quantisation pipeline:
+quantisation diagram:
 \[
 \underbrace{(\mu,\{-_\lambda-\})}_{\text{classical PVA
 (genus $0$, tree-level)}}
@@ -5160,8 +5169,8 @@ nilpotent Hasse diagram in type~$A$.
 
 \bigskip
 
-\noindent\textbf{The boxed machine.}
-The entire construction can be stated in a single pipeline:
+\noindent\textbf{The boxed implication.}
+The entire construction is the single implication
 \[
 \boxed{
 \text{homotopy chiral input }\cA
@@ -5392,8 +5401,8 @@ undefined, replaced by BCOV / G\"ottsche substitutes together with
 shadow depth conditional on CY-A. The decomposition
 $\kBKM=\kch+\chi(\cO_{\mathrm{fiber}})$ is the $N=1$ K3$\times E$
 numerical coincidence; it fails at $N\ge 2$. The three-factor trace
-identity is conjectural at programme level, with the Borcherds scalar
-lane verified on the families above.
+identity is conjectural outside the Borcherds scalar lane verified on
+the families above.
 Seen from Volume~I, the K3 crown of Volume~III first enters through
 Theorem~C. The Mukai pairing on $H^*(K3)$ contributes a
 Lorentzian-lattice-parametric $\mathcal{B}$-family lattice invariant
@@ -5430,7 +5439,8 @@ original-complex endpoint remains separated from its weight-completed
 model.
 Volume~III constructs the geometric source: the two-stage
 Calabi--Yau-to-chiral functor
-$\Phi_d=\mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1},C}\circ\Phi^{\mathrm{FA}}_d$
+$\Phi_d^{(\Sigma_{d-1},C)}
+=\mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1},C}\circ\Phi^{\mathrm{FA}}_d$
 (Stage~1 outputs a canonical $E_d$-holomorphic factorisation algebra
 on the CY-$d$ target via Kontsevich--Tamarkin $E_d$-formality and
 Costello--Gwilliam--Li locality; Stage~2 specialises via factorisation
@@ -5633,11 +5643,11 @@ signature $(2,3)$): integer weight rides $\mathrm{Sp}_4(\bZ)$;
 half-integer weight rides $\mathrm{Mp}_4(\bZ)$; quarter-integer
 weight rides the spin double cover
 $\widetilde{\mathrm{Mp}}_4$ (Scheithauer 2015 Duke); the
-weight-zero form is the degenerate terminal fibre. The
-``additive'' decomposition
-$\kappa_{\mathrm{BKM}}=\kappa_{\mathrm{ch}}+\chi(\cO_{\mathrm{fiber}})$
-fails at every $N$: at $N=1$, $\kappa_{\mathrm{ch}}(K3\times E)=0$ by
-Serre duality at $d=3$, while $\kappa_{\mathrm{BKM}}=5$, so
+weight-zero form is the degenerate terminal fibre. The additive
+decomposition of the BKM weight into a chiral scalar plus a fibre
+Euler term fails at every $N$: at $N=1$,
+$\kappa_{\mathrm{ch}}(K3\times E)=0$ by Serre duality at $d=3$,
+while $\kappa_{\mathrm{BKM}}=5$, so
 $0+\chi(\cO_{K3})=0+2=2\ne 5$; the surviving universal form is
 $\kappa_{\mathrm{BKM}}=c_N(0)/2$.
 
@@ -5666,7 +5676,7 @@ field theory realising $A$ as its boundary algebra.
 On the Koszul-self-dual subcategory admitting both a BRST resolution,
 a Calabi--Yau target supporting a Borcherds product, and the comparison
 maps between the three trace constructions, the expected trace
-comparison has the form
+comparison in a fixed chiral-half denominator normalization has the form
 \[
 \mathrm{tr}^{\zeta}_{\mathrm{ghost}}(Q_{\mathrm{BRST}}^2)
 \;=\; \mathrm{tr}_{\mathrm{Pentagon}}
@@ -5677,22 +5687,26 @@ The nilpotency $Q_{\mathrm{BRST}}^2=0$ makes the na\"ive trace
 vanishing; $\zeta$-regularisation via Dabholkar--Harvey BPS counting
 (IIA on $K3\times T^2$, $\cN=4$, $D=4$ BPS supermultiplicity)
 gives a finite supertrace landing in the Euler class of the
-$\Sigma_{d-1}$-cycle of the Volume~III two-stage factorisation. The
-Borcherds side supplies fixed numerical targets:
+$\Sigma_{d-1}$-cycle of the Volume~III two-stage factorisation only
+after the same automorphic denominator has been chosen. The Borcherds
+side supplies fixed chiral-half denominator targets:
 $2\kappa_{\mathrm{BKM}}(\Phi_1)=10$ for $\Delta_5$ in the
 Gritsenko normalisation and
-$2\kappa_{\mathrm{BKM}}(\Phi_2)=8$ for the CHL-$\bZ_2$ denominator.
-The Volume~I contribution to the second target is the
-$\mathsf B$-row scalar $K^\kappa=8$.
+$2\kappa_{\mathrm{BKM}}(\Phi_2)=8$ for the $\bZ_2$ denominator lane.
+These numbers are not the physical CHL dyonic weights
+$k_N^{\mathrm{dyon}}=24/(N+1)-2$; the two normalizations meet only at
+$N=1$, where $\Phi_{10}^{\mathrm{un}}=\Delta_5^2$. The Volume~I
+contribution to the second target is the $\mathsf B$-row scalar
+$K^\kappa=8$.
 
 \smallskip
 
 \noindent
-\emph{Factorization structure of the CY-to-chiral functor.}\enspace
-The Volume~III functor $\Phi_d$ factors through holomorphic
+\emph{Factorization structure of the CY-to-chiral specialization.}\enspace
+The Volume~III specialization $\Phi_d^{(\Sigma_{d-1},C)}$ factors through holomorphic
 factorisation algebras in two stages:
 \[
-\Phi_d \;=\; \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1},\,C}\circ\Phi^{\mathrm{FA}}_d,
+\Phi_d^{(\Sigma_{d-1},C)} \;=\; \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1},\,C}\circ\Phi^{\mathrm{FA}}_d,
 \]
 with Stage~1 producing a canonical $E_d$-holomorphic factorisation
 algebra on the Calabi--Yau target (pinned by Kontsevich--Tamarkin
@@ -5715,7 +5729,7 @@ $(\Sigma_{d-1},C)$; on $K3\times E$ the six construction routes
 McKay quiver, Maulik--Okounkov instanton lift, $6d$ hCS over
 $\Sigma_2=K3$ with $C=E$, Costello $5d$ hCS equivariant uplift)
 are six coordinate charts on the same expected object, not six
-applications of $\Phi_3$. Vol~III constructs the resolved-conifold hCS
+applications of a single $\Phi_3^{(\Sigma_2,C)}$. Vol~III constructs the resolved-conifold hCS
 $E_3$ descent, its anomaly-free perturbative quantum lift, and the
 finite positive-half hCS--Rees-Hall chart maps; the compact
 $K3\times E$ Hall, quasi-NCCR, and Hall-double identifications remain
@@ -5730,7 +5744,7 @@ $h^{1,1}(X)\le h^{1,1}(\text{fibre})+2h^{0,2}(\text{fibre})\le 22 < 24$.
 \noindent
 \emph{Three-tier topologisation.}\enspace
 The topologisation theorem
-$\SCchtop + \text{Sugawara} = E_3^{\mathrm{top}}$ of the Volume~II
+$\SCchtop \xrightarrow{\,T_{\mathrm{Sug}}=[Q,G]\,} E_3^{\mathrm{top}}$ of the Volume~II
 climax resolves into three tiers. Tier~I (cohomological): the
 $E_3$-structure on
 $H^\star(\mathrm{Obs}_{\mathrm{hCS}}^{\mathrm{BV}})$ is unconditional.
@@ -5878,7 +5892,7 @@ shadow quadrichotomy). Volume~II asks how it composes (chiral factorisation
 homology; the Chiral Hochschild Trinity universal-centre supertrace
 $K(\mathcal{A}) = \mathrm{tr}_{\mathfrak{Z}(\mathcal{A})}(\mathfrak{K})$).
 Volume~III asks where it comes from (the CY-to-chiral two-stage
-factorisation $\Phi_d = \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1}, C}
+factorisation $\Phi_d^{(\Sigma_{d-1},C)} = \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1}, C}
 \circ \Phi^{\mathrm{FA}}_d$: stage~$1$ produces a canonical
 $E_d$-holomorphic factorisation algebra on the CY$_d$ variety via
 Kontsevich--Tamarkin $E_d$-formality and Costello--Gwilliam--Li
@@ -5910,7 +5924,7 @@ $\kappa$-spectrum of this crown is read.
 
 \begin{remark}[$\mathbf H_{\Delta_5}$ at the K3 base point]
 \label{rem:v1-preface-1}
-The bar-cobar-Koszul programme meets the K3 chiral-bialgebra target
+The bar-cobar-Koszul adjunction meets the K3 chiral-bialgebra target
 $\mathbf H_{\Delta_5}$ as a CY/Borcherds comparison object adjacent to
 the rational and elliptic quantum-group lanes, not as a fourth member
 of the Etingof--Kazhdan trichotomy. Its local positive-half Rees charts

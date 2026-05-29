@@ -73,7 +73,7 @@ Conventions
 -----------
 - Cohomological grading (|d| = +1), bar uses desuspension (AP45).
 - kappa(g, k) = dim(g)(k + h^v)/(2 h^v) (AP1, AP39).
-- Sugawara UNDEFINED at critical level (not "c diverges").
+- Sugawara undefined at critical level.
 - H_k^! = V_{-k-2h^v}(g), by Feigin-Frenkel dual level (AP33).
 
 Beilinson warnings

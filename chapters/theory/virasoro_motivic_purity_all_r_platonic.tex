@@ -14,20 +14,17 @@
 %% algebraicity of a generating function; the present route proves
 %% rationality inductively via the bare recurrence.
 %%
-%% This chapter also extends motivic purity from Virasoro to the full
-%% class of chirally Koszul algebras with Q-rational OPE structure
-%% constants (thm:class-m-motivic-purity-q-rational-ope). Virasoro is
-%% a special case; lattice VOAs at rational lattices, principal W-
-%% algebras restricted to their Virasoro sub-algebras, and free-field
-%% realisations all fall in this broader scope.
+%% This chapter also records the finite-recurrence extension: if a
+%% shadow tower is governed by an F-rational algebraic recursion with
+%% F-rational base and no period-valued comparison term, then its
+%% motivic lift has weight zero. This is a condition on the coefficient
+%% extraction, not a theorem for every class-M algebra.
 %%
-%% The closing theorem isolates the STRUCTURAL REASON for purity: the
-%% shadow tower's Maurer-Cartan coefficients are associator-free. The
-%% Drinfeld associator Phi_KZ is the unique carrier of MZV content in
-%% the chiral coproduct (the E_1-chiral bialgebra structure on Z^{der}_ch),
-%% and the shadow tower factors through the BAR side of the Koszul
-%% programme, where the associator never enters. MZV content can appear
-%% only via the coproduct; the shadow tower is blind to the coproduct.
+%% The closing theorem isolates the precise structural reason for
+%% purity on this lane: associator-free is not the same as period-free.
+%% The Drinfeld associator is one source of MZV content in the chiral
+%% coproduct, while iterated configuration-space integrals are another
+%% possible source. The finite F-rational recurrence excludes both.
 %%
 %% Macros are \providecommand-guarded.
 %% No bare kappa: kappa_{ch}(Vir_c) = c/2 used throughout for
@@ -58,9 +55,10 @@ Strengthening}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 The companion chapter (\ref{ch:virasoro-motivic-purity}) established
-Virasoro motivic purity as a consequence of the Riccati algebraicity
-theorem: the generating function
-$H_{\Vir}(t) = \sum_{r \geq 2} r\, S_r(\Vir_c)\, t^r$ equals
+weighted Virasoro motivic purity as a consequence of the Riccati
+algebraicity theorem: the generating function
+$H^{\rm wt}_{\Vir}(t) = \sum_{r \geq 2} r\,
+\widehat S^{\rm wt}_r(\Vir_c)\, t^r$ equals
 $t^2\,\sqrt{Q(t)}$ for a quadratic $Q(t) \in \mathbb{Q}(c)[t]$, and
 binomial expansion produces rational Taylor coefficients.
 
@@ -82,34 +80,26 @@ binomial series. The two proofs share only the base triple
 $(\kapch(\Vir_c), S_3, S_4)$, which itself is disjoint-verifiable
 (OPE residues, Shapovalov norm, BPZ three-point Ward identity).
 
-The chapter then extends the purity theorem from Virasoro to the full
-class of chirally Koszul algebras with $\mathbb{Q}$-rational OPE. The
-extension is structural: every step of the shadow-tower recurrence
-preserves $\mathbb{Q}$-rationality provided the input structure
-constants lie in $\mathbb{Q}$ (or in a $\mathbb{Q}$-rational parameter
-field such as $\mathbb{Q}(c)$, $\mathbb{Q}(k)$, or $\mathbb{Q}(\Psi)$).
-The algebras covered include: Virasoro $\Vir_c$ at generic $c$; the
-Virasoro sub-algebra of any principal $\Walg_N$; lattice VOAs
-$V_L$ at positive-definite even lattices $L$; free-boson and free-
-fermion realisations.
+The chapter then records a conditional extension. If the shadow
+coefficient of a chirally Koszul algebra is governed by a finite
+$F$-rational recurrence with $F$-rational base values and with no
+period-valued comparison term, then rationality is preserved. The
+hypothesis is part of the theorem. It is not a consequence of
+$\mathbb{Q}$-rational OPE data alone.
 
-The closing structural theorem isolates the \emph{absence} of MZV
-content as a property of the SHADOW side of the Koszul programme. The
-Drinfeld associator $\Phi_{\KZ}$ is the unique carrier of motivic
-multiple zeta values in the chiral-coproduct data on $Z^{\mathrm{der}}_
-{\mathrm{ch}}(A)$. The shadow tower is defined via the Maurer--Cartan
-element $\Theta_A$ on the BAR side, whose construction does not invoke
-the associator. Consequently motivic content can enter the programme
-\emph{only} through the coproduct, and the shadow tower is MZV-blind
-by architectural design. This is the deepest reason Virasoro motivic
-purity holds: not because Virasoro is special, but because the shadow
-tower is by construction disjoint from the associator-mediated MZV
-injection.
+The closing structural theorem separates two statements. The
+associator $\Phi_{\KZ}$ is a source of motivic multiple zeta values in
+coproduct data. Its absence from a bar-side formula removes that
+source, but it does not by itself remove periods coming from iterated
+configuration-space integrals or comparison maps. Virasoro motivic
+purity follows from the explicit rational recurrence; the general
+bar-side statement holds only on the same finite-recurrence lane.
 
 The chapter closes with Corollary
-\ref{cor:item-19-closed} stating that the frontier item ``motivic
-purity for all $r \geq 2$'' is closed: the purity is a proved
-structural theorem, not an empirical extrapolation.
+\ref{cor:item-19-closed} stating that the Virasoro frontier item
+``motivic purity for all $r \geq 2$'' is closed on the stated
+recurrence. The class-M analogue remains conditional on the
+finite-recurrence hypothesis.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Setup: motivic MZV ring, motivic coaction, period map}
@@ -303,28 +293,28 @@ $\mathbb{Q}(c)$-rationality of the three base values, and elementary
 ring-closure of $\mathbb{Q}(c)$. No Riccati algebraicity, no generating
 function, no binomial series, no square-root extraction. The companion
 chapter's proof (Theorem~\ref{thm:virasoro-motivic-purity}) routes
-through the Riccati theorem; the present proof supplies a disjoint
-second path, verifying the conclusion via a structurally different
-argument and eliminating any dependence on the Riccati black box. The
+through the weighted Riccati theorem; the present proof supplies the
+manuscript-coefficient path, verifying the conclusion via a
+structurally different argument and eliminating any dependence on the
+Riccati black box. The
 two proofs share only the three base values $(c/2, 2, 10/[c(5c+22)])$,
 which are themselves multi-path verified (BPZ OPE residues,
 Shapovalov-norm computation, three-point Ward identity).
 \end{remark}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Extension to class-M algebras with $\mathbb{Q}$-rational OPE}
+\section{Finite-recurrence extension}
 \label{sec:vmpar-class-m}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{theorem}[\label{thm:class-M-motivic-purity-algebras-with-Q-rational-OPE}
-Motivic purity for class-M chirally Koszul algebras with
-$\mathbb{Q}$-rational OPE]
+Motivic purity on an $F$-rational finite-recurrence lane]
 \ClaimStatusProvedHere
 Let $\cA$ be a chirally Koszul vertex algebra in the standard
 landscape, with $\mathbb{Q}$-rational OPE data over a parameter field
 $F \subseteq \mathbb{C}$ in the sense of Definition
-\ref{def:vmpar-q-rational-ope}, and suppose the shadow-tower
-master-equation recursion for $\cA$ has the structural form
+\ref{def:vmpar-q-rational-ope}. Fix a scalar shadow lane and suppose
+the shadow-tower recursion on that lane has the structural form
 \[
  S_r(\cA) \;=\; -\,\frac{1}{r\, \kapch(\cA)}
  \sum_{\substack{j + k = r + 2 \\ 3 \leq j \leq k < r}}
@@ -332,8 +322,9 @@ master-equation recursion for $\cA$ has the structural form
  \;+\; R_r(\cA),
 \]
 where $R_r(\cA) \in F$ is a finite $\mathbb{Q}$-linear combination of
-OPE structure constants of $\cA$ (the ``remainder'' from higher-order
-OPE poles; $R_r(\Vir_c) = 0$).
+OPE structure constants of $\cA$ and of already fixed lane data. No
+iterated configuration-space period and no associator-dependent
+comparison term is allowed in $R_r(\cA)$.
 Assume the base values $\kapch(\cA), S_3(\cA), S_4(\cA) \in F$. Then
 for every $r \geq 2$,
 \[
@@ -341,8 +332,7 @@ for every $r \geq 2$,
  S_r^{\mot}(\cA) \;=\; S_r(\cA) \otimes 1 \;\in\; \MZV^{\mot}_0
  \otimes F \;=\; F.
 \]
-In particular, no motivic multiple zeta value enters any
-$S_r^{\mot}(\cA)$.
+In particular, no motivic multiple zeta value enters this lane.
 \end{theorem}
 
 \begin{proof}
@@ -362,8 +352,7 @@ lie in $F$:
 \item $j k \in \mathbb{Z} \subset F$.
 \item $S_j(\cA) \cdot S_k(\cA) \in F$ by closure under multiplication
 in $F$.
-\item $R_r(\cA) \in F$ by assumption (it is a $\mathbb{Q}$-linear
-combination of $\mathbb{Q}$-rational OPE structure constants).
+\item $R_r(\cA) \in F$ by assumption.
 \end{itemize}
 Therefore $S_r(\cA) \in F$. The motivic step follows
 $S_r(\cA) \otimes 1 \in \MZV^{\mot}_0 \otimes F$ as in the Virasoro
@@ -371,10 +360,13 @@ case.
 \end{proof}
 
 \begin{corollary}[\label{cor:vmpar-concrete-Q-rational-families}
-Concrete families with all-$r$ motivic purity]
-\ClaimStatusProvedHere
-The following chirally Koszul algebras from the standard landscape
-satisfy $S_r^{\mot}(\cA) \in \MZV^{\mot}_0 \otimes F = F$ for all
+Concrete finite-recurrence lanes]
+\ClaimStatusConditional
+For each of the following standard-landscape lanes, once the displayed
+scalar shadow coefficient is known to satisfy the finite
+$F$-rational recurrence of
+Theorem~\ref{thm:class-M-motivic-purity-algebras-with-Q-rational-OPE},
+one has $S_r^{\mot}(\cA) \in \MZV^{\mot}_0 \otimes F = F$ for all
 $r \geq 2$:
 \begin{enumerate}[(i)]
 \item $\cA = \Vir_c$ at generic $c \in C^{\mathrm{gen}}$,
@@ -383,10 +375,11 @@ $F = \mathbb{Q}(c)$;
 \setminus \{0\}$), $F = \mathbb{Q}(k)$, with shadow tower truncated at
 depth $r = 2$ (all higher $S_r$ vanish; purity is automatic);
 \item $\cA = V_k(\mathfrak{g})$ at non-critical generic level $k \neq
--h^\vee$, $\mathfrak{g}$ simple, $F = \mathbb{Q}(k)$, on the scalar
-projection;
+-h^\vee$, $\mathfrak{g}$ simple, $F = \mathbb{Q}(k)$, on a fixed scalar
+projection satisfying the recurrence;
 \item $\cA = V_L$ at a positive-definite even lattice $L$ with
-rational Gram matrix, $F = \mathbb{Q}$;
+rational Gram matrix, $F = \mathbb{Q}$, on a fixed finite
+residue-recursion lane;
 \item $\cA =$ Virasoro sub-algebra of principal $\Walg_N(sl_N)$,
 $F = \mathbb{Q}(c)$ with $c = c(\Walg_N)$.
 \end{enumerate}
@@ -394,19 +387,12 @@ $F = \mathbb{Q}(c)$ with $c = c(\Walg_N)$.
 
 \begin{proof}
 Each family has $\mathbb{Q}$-rational OPE data (Example
-\ref{ex:vmpar-q-rational-families}). The master-equation recursion
-for each family has the structural form of
+\ref{ex:vmpar-q-rational-families}). This is necessary and not
+sufficient. The conclusion follows only after the scalar lane has been
+identified with the finite recurrence of
 Theorem~\ref{thm:class-M-motivic-purity-algebras-with-Q-rational-OPE}
-(the Heisenberg and lattice cases have trivial $R_r$ and truncated
-recursion; affine and W-algebra cases reduce to Virasoro via the
-scalar projection onto the stress-tensor channel, with
-$F$-rational coefficient from the level-shift formula $c(V_k(
-\mathfrak{g})) = k\, \dim(\mathfrak{g})/(k + h^\vee)$ or the DS-shift
-formula for $\Walg_N$). The base values
-$\kapch(\cA), S_3(\cA), S_4(\cA)$ are $F$-rational by
-landscape\_census.tex. Theorem
-\ref{thm:class-M-motivic-purity-algebras-with-Q-rational-OPE}
-closes the induction.
+and the base values $\kapch(\cA), S_3(\cA), S_4(\cA)$ have been placed
+in $F$.
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -459,46 +445,43 @@ $\zet^{\mot}(3)^2$ in $S_6^{\mot}(\Walg_3)$).
 \end{remark}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{The structural reason: the shadow tower is associator-free}
+\section{The structural reason on the finite-recurrence lane}
 \label{sec:vmpar-structural-reason}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{theorem}[\label{thm:structural-reason-for-purity}The shadow
-tower is associator-free; motivic content can enter only through the
-chiral coproduct]
+\begin{theorem}[\label{thm:structural-reason-for-purity}Associator-free
+finite recurrence gives motivic weight zero]
 \ClaimStatusConditional
 Let $\cA$ be a chirally Koszul vertex algebra in the standard
-landscape. The shadow-tower Maurer--Cartan coefficients
-$S_r(\cA)_{r \geq 2}$ are constructed from the bar-complex
+landscape and let a scalar shadow lane satisfy the hypotheses of
+Theorem~\ref{thm:class-M-motivic-purity-algebras-with-Q-rational-OPE}.
+The bar-complex formula
 $B(\cA) = T^c(s^{-1}\bar{\cA})$ and its Maurer--Cartan element
-$\Theta_\cA$ (chapter \ref{ch:characteristic-datum}). This construction
-does not invoke the Drinfeld associator $\Phi_{\KZ}$: the bar
-differential, the deconcatenation coproduct, and the Maurer--Cartan
-equation $D \Theta + \frac{1}{2}[\Theta, \Theta] = 0$ are all defined
-entirely from the $\cA$-linear OPE data, with no appeal to a
-universal associator.
+$\Theta_\cA$ (chapter \ref{ch:characteristic-datum}) do not invoke the
+Drinfeld associator $\Phi_{\KZ}$. If, in addition, the coefficient is
+extracted by the finite $F$-rational recurrence of that theorem, then
+the motivic lift of the coefficient has weight zero.
 
 By contrast, the chiral coproduct
 $\Delta^{\mathrm{ch}} \colon \cA \to \cA \otimes^{\mathrm{ch}} \cA$
 on the derived chiral centre $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$
-carries a dependency on the Drinfeld associator through the Etingof--
-Kazhdan quantisation (chapter \ref{ch:chiral-quantum-group-equivalence},
-): two different choices of associator $\Phi, \Phi' \in
+carries a dependency on the Drinfeld associator through the
+Etingof--Kazhdan quantisation of chapter
+\ref{ch:chiral-quantum-group-equivalence}: two different choices of
+associator $\Phi, \Phi' \in
 \GRT(\mathbb{Q})$-orbit produce isomorphic (but not equal) chiral
 coproducts, with the isomorphism
-$\Phi'(\Phi)^{-1}$-twist carrying motivic multiple zeta values.
-
-Consequently: if $\cA$ has $\mathbb{Q}$-rational OPE data
-(Definition \ref{def:vmpar-q-rational-ope}), then the shadow tower
-$(S_r(\cA))_{r \geq 2}$ is $\mathbb{Q}$-rational in the same parameter
-field $F$, and no motivic zeta value can appear in $S_r^{\mot}(\cA)$
-at any weight.
+$\Phi'(\Phi)^{-1}$-twist carrying motivic multiple zeta values. This
+explains one source of positive motivic weight. It does not exclude
+periods produced by iterated configuration-space integrals or by
+comparison maps. Those sources are excluded here by the finite
+recurrence hypothesis.
 \end{theorem}
 
 \begin{proof}
 We show the two assertions separately.
 
-\emph{Assertion 1: the shadow tower is associator-free.} The
+\emph{Assertion 1: the finite bar formula is associator-free.} The
 construction of $\Theta_\cA$ (chapter
 \ref{ch:characteristic-datum}) proceeds in two stages:
 \begin{enumerate}[(i)]
@@ -524,12 +507,14 @@ $D_\cA \Theta + \frac{1}{2}[\Theta, \Theta] = 0$ is intrinsic to the
 convolution Lie algebra; no associator is needed to formulate or
 solve it.
 \end{enumerate}
-The shadow coefficients $S_r(\cA)$ are extracted from $\Theta_\cA$ by
-the scalar projection on the rank-$1$ primary slice (chapter
-\ref{ch:shadow-tower}). Every step of this chain is associator-free.
+On the finite-recurrence lane the shadow coefficients $S_r(\cA)$ are
+extracted from $\Theta_\cA$ by an $F$-rational algebraic operation on
+the scalar primary slice (chapter \ref{ch:shadow-tower}). Every step of
+this restricted chain is associator-free and period-free by
+hypothesis.
 
-\emph{Assertion 2: the chiral coproduct is associator-dependent; MZV
-content enters only there.} On the derived chiral centre
+\emph{Assertion 2: the chiral coproduct is associator-dependent.} On
+the derived chiral centre
 $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$, the Etingof--Kazhdan
 quantisation (see ``Quantization of Lie bialgebras'' I, Selecta
 Mathematica 4 (1998)) produces the chiral coproduct $\Delta^{\mathrm{ch}}$
@@ -541,88 +526,81 @@ associator $\Phi'$ in the $\GRT(\mathbb{Q})$-orbit produces an
 isomorphic coproduct $\Delta^{\mathrm{ch}}{}'$ related by the twist
 $\Phi'\Phi^{-1}$, whose coefficients are also $\MZV^{\mot}$-valued.
 
-Therefore the motivic content of the chiral programme is carried
-entirely by the associator $\Phi_{\KZ}$ in the chiral-coproduct
-construction. Any object in the programme that is defined without
-invoking $\Phi_{\KZ}$ has no motivic content; the shadow tower is
-such an object by Assertion 1.
+Therefore the chiral-coproduct construction carries an associator
+source of motivic content. This does not prove that every
+associator-free construction is period-free. It proves only that the
+associator source is absent from the finite bar formula.
 
-\emph{Combination.} If $\cA$ has $\mathbb{Q}$-rational OPE data, then
-the OPE residues in the bar differential $d_B$ are in the rational
-parameter field $F$. The shadow-tower recursion is a
-$\mathbb{Q}$-linear combination of products of these residues (via
-Theorem~\ref{thm:class-M-motivic-purity-algebras-with-Q-rational-OPE}),
-and the convolution Lie algebra is $F$-linear. Every step of the
-Maurer--Cartan extraction produces an element of $F$. The motivic
-lift is the canonical inclusion $F \hookrightarrow \MZV^{\mot}_0
-\otimes F$, which is weight-$0$ concentrated and has no motivic
-content.
+\emph{Combination.} Under the finite-recurrence hypothesis, the
+shadow-tower recursion is a $\mathbb{Q}$-linear combination of
+products of elements of $F$ and the remainder terms also lie in $F$.
+Theorem~\ref{thm:class-M-motivic-purity-algebras-with-Q-rational-OPE}
+therefore gives $S_r(\cA) \in F$. The motivic lift is the canonical
+inclusion $F \hookrightarrow \MZV^{\mot}_0 \otimes F$, which is
+weight-$0$ concentrated.
 \end{proof}
 
-\begin{remark}[\label{rem:vmpar-associator-vs-bar}Associator enters
-coproduct, not bar]
-The cleanest formulation: the BAR side of the Koszul programme
-(coalgebra $B(\cA) = T^c(s^{-1}\bar{\cA})$, deconcatenation coproduct,
-convolution Lie algebra, Maurer--Cartan equation, shadow tower) is
-associator-free. The CENTRE side (derived chiral centre, chiral
-coproduct, Etingof--Kazhdan quantisation, Drinfeld--Jimbo quantum
-group) is associator-dependent. Motivic content is an artefact of the
-centre side, not the bar side. Virasoro motivic purity is a special
-case of a broader observation: the shadow tower is MZV-blind by
-architectural design.
+\begin{remark}[\label{rem:vmpar-associator-vs-bar}Associator and
+periods]
+The clean formulation is this. The finite bar formula has no Drinfeld
+associator. The centre-side coproduct may have one. Positive motivic
+weight can also enter through period-valued integration or comparison
+data. Thus the rationality theorem is a theorem about the finite
+$F$-rational residue lane, not a slogan about the whole bar side.
 \end{remark}
 
 \begin{remark}[\label{rem:vmpar-grt-trivial-on-shadow}$\GRT$ acts
-trivially on the shadow tower]
+trivially on the finite lane]
 Theorem~\ref{thm:structural-reason-for-purity} implies the
 $\GRT(\mathbb{Q})$-torsor of Drinfeld associators acts trivially on
-the shadow tower of any chirally Koszul algebra: two associators
-produce two chiral coproducts, but the same shadow tower. This is
-consistent with (associator-dependence of the chiral coproduct)
-and Remark~\ref{rem:vmp-grt-action-trivial-on-vir}.
+the finite recurrence lane: two associators produce two chiral
+coproducts, but they do not change a coefficient computed without the
+associator. No assertion is made for coefficients whose definition
+uses a comparison map depending on the coproduct.
 \end{remark}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Closure of frontier item 19}
+\section{Closure of the Virasoro part of frontier item 19}
 \label{sec:vmpar-closure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{corollary}[\label{cor:item-19-closed}Item 19 of the platonic-
-reconstitution frontier list is closed]
+\begin{corollary}[\label{cor:item-19-closed}The Virasoro part of item
+19 is closed]
 \ClaimStatusConditional
 The frontier item ``Virasoro shadow tower: motivic purity holds
 empirically through $r \leq 11$; prove it for all $r \geq 2$'' is
-closed. Motivic purity is a PROVED structural theorem for every
-$r \geq 2$, with three distinct proof paths:
+closed for the manuscript Virasoro tower. Motivic purity holds for
+every $r \geq 2$, with the following evidence and proof paths:
 \begin{enumerate}[(i)]
-\item via the Riccati algebraicity theorem (Theorem
-\ref{thm:virasoro-motivic-purity}): $H_{\Vir}(t) = t^2 \sqrt{Q(t)}$
-algebraic of degree $2$ over $\mathbb{Q}(c)[t]$;
 \item via the master-equation recursion (Theorem
 \ref{thm:virasoro-s-r-motivic-purity-all-r}): direct strong induction
 from the $\mathbb{Q}(c)$-rational base $(\kapch, S_3, S_4)$;
-\item via the structural theorem
-(Theorem~\ref{thm:structural-reason-for-purity}): the shadow tower
-is associator-free, so MZV content cannot enter.
+\item via the finite-lane structural theorem
+(Theorem~\ref{thm:structural-reason-for-purity}): the Virasoro
+coefficient is computed without associator or period-valued comparison.
+\item in the weighted Riccati normalization, via
+Theorem~\ref{thm:virasoro-motivic-purity}: $H^{\rm wt}_{\Vir}(t)
+=t^2\sqrt{Q(t)}$ is algebraic of degree~$2$ over~$\mathbb{Q}(c)[t]$.
 \end{enumerate}
-In particular, the purity extends to the full class of chirally
-Koszul algebras with $\mathbb{Q}$-rational OPE data
-(Theorem~\ref{thm:class-M-motivic-purity-algebras-with-Q-rational-OPE}).
+The extension beyond Virasoro is conditional on the finite
+$F$-rational recurrence of
+Theorem~\ref{thm:class-M-motivic-purity-algebras-with-Q-rational-OPE}.
 No Virasoro shadow coefficient contains any motivic multiple zeta
 value $\zet^{\mot}(n_1, \ldots, n_k)$ at any weight $w \geq 2$.
 \end{corollary}
 
 \begin{proof}
 Each of the three paths has been established:
-(i) in chapter~\ref{ch:virasoro-motivic-purity};
-(ii) in Theorem~\ref{thm:virasoro-s-r-motivic-purity-all-r} above;
-(iii) in Theorem~\ref{thm:structural-reason-for-purity} above.
-The extension to class-M $\mathbb{Q}$-rational-OPE algebras is
+the manuscript assertion is proved by Theorem~\ref{thm:virasoro-s-r-motivic-purity-all-r}
+and Theorem~\ref{thm:structural-reason-for-purity} above. The
+weighted assertion is the companion result of
+chapter~\ref{ch:virasoro-motivic-purity}.
+The extension to class-M $\mathbb{Q}$-rational-OPE algebras is the
+conditional finite-recurrence statement of
 Theorem~\ref{thm:class-M-motivic-purity-algebras-with-Q-rational-OPE}
-and Corollary~\ref{cor:vmpar-concrete-Q-rational-families}. All four
-results are \ClaimStatusProvedHere. Hence the frontier item is no
-longer an open problem: it is a theorem with three independent proof
-paths and one broader structural generalisation.
+and Corollary~\ref{cor:vmpar-concrete-Q-rational-families}. Hence the
+Virasoro assertion is closed, while the general class-M assertion is a
+named residue-lane obligation.
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -630,7 +608,8 @@ paths and one broader structural generalisation.
 \label{sec:vmpar-epilogue}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Three observations on the closed frontier item.
+Three observations on the Virasoro result and its conditional
+extension.
 
 First, the induction-based proof (Theorem
 \ref{thm:virasoro-s-r-motivic-purity-all-r}) is elementary in its
@@ -640,27 +619,23 @@ function field $\mathbb{Q}(c)$ under finite arithmetic is the generic
 reason. The Riccati algebraicity and the structural-reason theorem
 supply complementary framings; together they close the proof web.
 
-Second, the extension to class-M Q-rational-OPE algebras
-(Theorem~\ref{thm:class-M-motivic-purity-algebras-with-Q-rational-OPE})
-is uniform across the standard landscape: Heisenberg, lattice, affine
-KM scalar projection, W-algebra Virasoro sub-algebra, and
-$\beta\gamma/bc$ systems. The non-Q-rational cases (elliptic VOAs at
-transcendental $\tau$, orbifolds by transcendental cocycles) fall
-outside the theorem and are natural candidates for motivic content
-injection; their analysis lies in the frontier.
+Second, the extension to class-M $\mathbb{Q}$-rational-OPE algebras is
+not automatic. The finite-recurrence theorem applies to Heisenberg,
+lattice, affine KM scalar projection, W-algebra Virasoro sub-algebra,
+and $\beta\gamma/bc$ systems only after the chosen scalar lane has been
+identified with an $F$-rational recurrence. Non-$\mathbb{Q}$-rational
+cases and lanes containing period-valued comparison maps remain in the
+frontier.
 
 Third, the structural-reason theorem
 (Theorem~\ref{thm:structural-reason-for-purity}) explains why the
-motivic purity is not a miracle: the shadow tower is, by design, blind
-to the Drinfeld associator and therefore to MZV content. Motivic
-periods enter the chiral programme only through the
-Etingof--Kazhdan quantisation of the chiral coproduct, which lives on
-the derived chiral centre $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$. The
-shadow tower, living on the bar side, is associator-free. In the
-three-structure triple (r-matrix, A-infinity, chiral coproduct) of the
-chiral bialgebra equivalence, the shadow tower extracts
-only the r-matrix-visible scalar data, and the r-matrix is
-$\mathbb{Q}$-rational when the OPE is $\mathbb{Q}$-rational.
+finite lane is pure: it uses neither the Drinfeld associator nor an
+iterated period integral. Motivic periods may still enter the chiral
+programme through Etingof--Kazhdan quantisation of the chiral coproduct
+or through comparison maps. In the three-structure triple
+(r-matrix, A-infinity, chiral coproduct) of the chiral bialgebra
+equivalence, the finite scalar lane extracts only the
+r-matrix-visible rational data.
 
 The frontier beyond item 19: motivic \emph{non-}purity of the chiral
 coproduct for the same families. The $W_3$ case

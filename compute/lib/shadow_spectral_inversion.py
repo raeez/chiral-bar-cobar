@@ -446,7 +446,7 @@ def affine_sl2_spectral(k_val: float) -> Dict[str, Any]:
     Spectral polynomial: P(z) = 1 + (k/2) z^2 + C_3 z^3.
     """
     if abs(k_val + 2.0) < 1e-12:
-        raise ValueError("k = -2 (critical level): Sugawara undefined, C_3 diverges")
+        raise ValueError("k = -2 (critical level): Sugawara undefined; generic C_3 formula has a pole")
 
     C_3 = 2.0 * k_val / (k_val + 2.0)
 

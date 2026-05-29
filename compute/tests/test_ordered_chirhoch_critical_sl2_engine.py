@@ -113,7 +113,7 @@ class TestCentralChargeCritical:
     """Central charge c = 3k/(k+2) at and near critical level."""
 
     def test_c_undefined_at_critical(self):
-        """c diverges (Sugawara undefined) at k = -2."""
+        """Sugawara is undefined at k = -2."""
         c = central_charge_sl2(Fraction(-2))
         assert c is None
 

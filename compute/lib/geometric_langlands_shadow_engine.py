@@ -115,7 +115,7 @@ AP39: S_2 = c/2 != kappa for non-Virasoro.
 AP48: kappa depends on the FULL algebra, not the Virasoro subalgebra.
 
 The Sugawara construction is UNDEFINED at critical level k = -h^v.
-Do NOT write "c diverges" -- the correct statement is "Sugawara undefined."
+Critical level means the Sugawara construction is undefined.
 
 References:
   Feigin-Frenkel (1992): center at critical level
@@ -285,15 +285,14 @@ def bar_curvature_at_level(lie_type: str, rank: int, k: float) -> Dict[str, Any]
 def sugawara_central_charge(lie_type: str, rank: int, k: float) -> float:
     r"""Sugawara central charge c = k*dim(g)/(k+h^v).
 
-    UNDEFINED at critical level k = -h^v (AP: Sugawara UNDEFINED,
-    not "c diverges").
+    Undefined at critical level k = -h^v.
     """
     data = _lie_data(lie_type, rank)
     shifted = k + data['h_dual']
     if abs(shifted) < 1e-14:
         raise ValueError(
-            f"Sugawara UNDEFINED at critical level k = {k} = -h^v "
-            f"for {data['type']}. (Not 'c diverges' -- it is undefined.)"
+            f"Sugawara undefined at critical level k = {k} = -h^v "
+            f"for {data['type']}."
         )
     return k * data['dim'] / shifted
 

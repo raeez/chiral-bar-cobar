@@ -18,7 +18,7 @@ References:
   - Feigin-Frenkel, "Affine Kac-Moody algebras at the critical level..."
   - bar_cobar_adjunction_curved.tex: thm:bar-modular-operad
   - kac_moody.tex: critical level OPE structure
-  - CLAUDE.md: Sugawara UNDEFINED at critical level (not "c diverges")
+  - Sugawara undefined at critical level
 """
 
 from __future__ import annotations

@@ -899,8 +899,8 @@ def r_matrix_analysis(alg: W3FrobeniusAlgebra) -> Dict[str, Any]:
     The R-action mixes the smooth and boundary contributions.
     The graph-sum formula ALREADY INCLUDES the R-action.
 
-    So: the graph sum F_2 = Σ_Γ (1/|Aut|) A_Γ IS the full F_2
-    INCLUDING the smooth part (which is the genus-2 vertex Γ_0).
+    Thus the graph sum F_2 = Σ_Γ (1/|Aut|) A_Γ equals the complete
+    genus-2 scalar F_2 in this model, including the smooth vertex Γ_0.
     The smooth vertex amplitude F_2^{smooth} = ∫_{M̄_{2,0}} Ω_{2,0}
     is SEPARATE from the boundary graph contributions and depends on
     the full R-matrix.

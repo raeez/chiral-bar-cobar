@@ -10,18 +10,18 @@ continue the admissible sequence beyond this module's inscribed target.
 Scope cascade (admissible triple only):
 
   weight 27: first depth-9 irreducible zeta(3,3,3,3,3,3,3,3,3) enters;
-             Padovan count d_{27} = 616; D_{27,9} = 10.
+             Padovan count d_{27} = 816; D_{27,9} = 10.
              Triple-conditional at depth 9: Zagier-Hoffman + BK empirical
              + Brown 2017 Conj 5.3.
 
   weight 29: depth-9 expansion D_{29,9} = 42 (factor 4.2 over n = 27);
-             Padovan count d_{29} = 1081.
+             Padovan count d_{29} = 1432.
              Triple-conditional at depth 9, same three conjectures.
 
   weight 35: depth-11 irreducible count D_{35,11} = 97 (first depth-11
              enters at n = 33 by BK series; n = 35 is admissible under
              Humbert-Heegner);
-             Padovan count d_{35} = 5842.
+             Padovan count d_{35} = 7739.
              Quadruple-conditional: Zagier-Hoffman + BK empirical +
              Brown 2017 + Broadhurst-Bailey 2010 numerical-extrapolation
              stability at depth 11.
@@ -39,8 +39,8 @@ Verification paths:
       canonical Zagier-Brown seed; admissibility n mod 8 in {3, 5}.
   V_2 (Broadhurst-Kreimer extraction):  symbolic expansion of
       BK(x, y) = 1 / (1 - O(x) y + S(x) (y^2 - y^4)) through
-      x^{40} y^{12}; row-sum identity sum_d D_{n, d} = d_{n - 2} at
-      each admissible n.
+      x^{40} y^{12}; the row-sum lag sum_d D_{n, d} = d_{n - 3}
+      is a BK extractor diagnostic, not the Brown dimension d_n.
   V_3 (Hardy-Ramanujan exact p_24 Borcherds-leg control):
       p_24(14), p_24(15), p_24(18) via eta^{-24} Fourier expansion
       (OEIS A006922); Borcherds/MZV ratio computed exactly.
@@ -117,17 +117,17 @@ def admissibility_filter_check() -> bool:
 # ---------------------------------------------------------------------------
 
 def padovan_dim(n_max: int = 46) -> Dict[int, int]:
-    """Return {n: d_n} via d_n = d_{n-2} + d_{n-3}, seed (1, 0, 1, 1)."""
-    d: Dict[int, int] = {1: 1, 2: 0, 3: 1, 4: 1}
-    for n in range(5, n_max + 1):
+    """Return {n: d_n} via d_0=1, d_1=0, d_2=1 and d_n=d_{n-2}+d_{n-3}."""
+    d: Dict[int, int] = {0: 1, 1: 0, 2: 1}
+    for n in range(3, n_max + 1):
         d[n] = d[n - 2] + d[n - 3]
     return d
 
 
 def padovan_count_check_triple() -> bool:
-    """Assert d_{27}, d_{29}, d_{35} = (616, 1081, 5842)."""
+    """Assert d_{27}, d_{29}, d_{35} = (816, 1432, 7739)."""
     d = padovan_dim(46)
-    expected = {27: 616, 29: 1081, 35: 5842}
+    expected = {27: 816, 29: 1432, 35: 7739}
     for n, v in expected.items():
         assert d[n] == v, f"Padovan d_{n} = {d[n]} != expected {v}"
     return True
@@ -259,13 +259,13 @@ def first_depth_eleven_at_33_check() -> bool:
 
 
 def bk_padovan_twostep_consistency_check_triple() -> bool:
-    """Assert sum_d D_{n, d} = d_{n - 2} at admissible n in {27, 29, 35}."""
+    """Assert the BK row-sum lag diagnostic sum_d D_{n, d} = d_{n - 3}."""
     D = bk_depth_extract(40, 12)
     d = padovan_dim(46)
     for n in ADMISSIBLE_TRIPLE:
         row_sum = sum(D.get((n, k), 0) for k in range(1, 13))
-        assert row_sum == d[n - 2], (
-            f"n = {n}: sum_d D_{{n, d}} = {row_sum} != d_{{{n - 2}}} = {d[n - 2]}"
+        assert row_sum == d[n - 3], (
+            f"n = {n}: sum_d D_{{n, d}} = {row_sum} != d_{{{n - 3}}} = {d[n - 3]}"
         )
     return True
 
@@ -372,9 +372,9 @@ def hardy_ramanujan_exact_check_triple() -> bool:
     )
     r = borcherds_mzv_ratio_triple()
     expected = {
-        27: 156883829400 / 616,
-        29: 563116739584 / 1081,
-        35: 21651325216200 / 5842,
+        27: 156883829400 / 816,
+        29: 563116739584 / 1432,
+        35: 21651325216200 / 7739,
     }
     for n, v in expected.items():
         assert abs(r[n] - v) / v < 1e-12, f"ratio at n = {n}: {r[n]} != {v}"
@@ -483,9 +483,9 @@ def plastic_number() -> float:
 
 
 def padovan_asymptotic(n: int) -> float:
-    """Plastic-number asymptotic d_n ~ A rho^n for seed (1, 0, 1, 1)."""
+    """Plastic-number asymptotic d_n ~ A rho^n for Brown seed d_0,d_1,d_2."""
     rho = plastic_number()
-    A = rho ** 2 / (2 * rho + 3)
+    A = rho ** 3 / (2 * rho + 3)
     return A * (rho ** n)
 
 
@@ -516,33 +516,27 @@ def plastic_asymptotic_precision_check_triple() -> bool:
 #
 # Three genuinely independent derivation paths for d_n:
 #   P_1: direct Padovan recurrence d_n = d_{n-2} + d_{n-3}.
-#   P_2: BK row-sum identity sum_d D_{n+2, d} = d_n (two-step shifted
-#        from the BK-generator count).
+#   P_2: generating-function coefficient extraction from
+#        F(x) = 1/(1 - x^2 - x^3).
 #   P_3: plastic-number asymptotic A rho^n rounded to nearest integer.
-#   P_4: generating-function coefficient extraction from
-#        F(x) = x + x^3 + x^4 + ... = x / (1 - x^2 - x^3) via polynomial
-#        series manipulation.
+#   P_4: BK row-sum lag diagnostic sum_d D_{n,d} = d_{n-3}, kept
+#        separate from the Brown dimension d_n.
 
 
-def padovan_dim_via_bk_rowsum(n: int, D: Dict[Tuple[int, int], int]) -> int:
-    """Recover d_n from the BK two-step row-sum identity sum_d D_{n+2, d} = d_n."""
-    return sum(D.get((n + 2, k), 0) for k in range(1, 13))
+def bk_rowsum_lag_diagnostic(n: int, D: Dict[Tuple[int, int], int]) -> int:
+    """Return sum_d D_{n, d}; for the BK series this equals d_{n-3}."""
+    return sum(D.get((n, k), 0) for k in range(1, 13))
 
 
 def padovan_dim_via_generating_function(n_max: int = 46) -> Dict[int, int]:
-    """Recover d_n from the generating function F(x) = x / (1 - x^2 - x^3).
+    """Recover d_n from the generating function F(x) = 1 / (1 - x^2 - x^3).
 
-    The Padovan numbers with seed (d_1, d_2, d_3, d_4) = (1, 0, 1, 1)
-    satisfy F(x) = sum_{n>=1} d_n x^n = x / (1 - x^2 - x^3).  Direct
-    series expansion extracts d_n as the coefficient of x^n.
+    The Brown sequence has d_0=1, d_1=0, d_2=1. Direct series expansion
+    extracts d_n as the coefficient of x^n.
 
     Note: equivalent to the recurrence but via an independent computation
     (coefficient extraction from (1 - x^2 - x^3)^{-1} times x).
     """
-    coefs = [0] * (n_max + 1)
-    coefs[0] = 1
-    # Multiply by (1 - x^2 - x^3)^{-1}: apply the recurrence
-    # c_n = c_{n-2} + c_{n-3} with c_0 = 1, c_1 = 0
     c = [0] * (n_max + 1)
     c[0] = 1
     c[1] = 0
@@ -552,14 +546,13 @@ def padovan_dim_via_generating_function(n_max: int = 46) -> Dict[int, int]:
             c[n] += c[n - 2]
         if n >= 3:
             c[n] += c[n - 3]
-    # d_n is coefficient of x^n in x * (1 - x^2 - x^3)^{-1}, i.e. d_n = c_{n-1}
-    return {n: c[n - 1] for n in range(1, n_max + 1)}
+    return {n: c[n] for n in range(0, n_max + 1)}
 
 
 def padovan_dim_via_plastic_rounded(n_max: int = 46) -> Dict[int, int]:
     """Recover d_n by rounding A rho^n to the nearest integer.
 
-    The plastic-number asymptotic d_n ~ A rho^n with A = rho^2 / (2 rho + 3)
+    The plastic-number asymptotic d_n ~ A rho^n with A = rho^3 / (2 rho + 3)
     satisfies |d_n - A rho^n| < 0.5 for n >= 8 (subleading complex-root
     contributions decay as |rho_{complex}|^n with |rho_{complex}| < 1).
     """
@@ -567,27 +560,29 @@ def padovan_dim_via_plastic_rounded(n_max: int = 46) -> Dict[int, int]:
 
 
 def padovan_multipath_check_triple() -> bool:
-    """Assert four independent computations of d_n agree at admissible triple.
+    """Assert independent Padovan computations agree at admissible triple.
 
     P_1: direct recurrence (padovan_dim).
-    P_2: BK row-sum two-step identity (padovan_dim_via_bk_rowsum).
-    P_3: generating function coefficient extraction
+    P_2: generating function coefficient extraction
          (padovan_dim_via_generating_function).
-    P_4: plastic-number asymptotic rounded to nearest integer
+    P_3: plastic-number asymptotic rounded to nearest integer
          (padovan_dim_via_plastic_rounded).
+    P_4: BK row-sum lag diagnostic equals d_{n-3}.
     """
     d_P1 = padovan_dim(46)
     D = bk_depth_extract(40, 12)
-    d_P3 = padovan_dim_via_generating_function(46)
-    d_P4 = padovan_dim_via_plastic_rounded(46)
+    d_P2 = padovan_dim_via_generating_function(46)
+    d_P3 = padovan_dim_via_plastic_rounded(46)
     for n in ADMISSIBLE_TRIPLE:
         p1 = d_P1[n]
-        p2 = padovan_dim_via_bk_rowsum(n, D)
+        p2 = d_P2[n]
         p3 = d_P3[n]
-        p4 = d_P4[n]
-        assert p1 == p2, f"n = {n}: P_1 recurrence {p1} != P_2 BK row-sum {p2}"
-        assert p1 == p3, f"n = {n}: P_1 recurrence {p1} != P_3 genfun {p3}"
-        assert p1 == p4, f"n = {n}: P_1 recurrence {p1} != P_4 plastic {p4}"
+        row = bk_rowsum_lag_diagnostic(n, D)
+        assert p1 == p2, f"n = {n}: P_1 recurrence {p1} != P_2 genfun {p2}"
+        assert p1 == p3, f"n = {n}: P_1 recurrence {p1} != P_3 plastic {p3}"
+        assert row == d_P1[n - 3], (
+            f"n = {n}: BK row sum {row} != d_{{{n - 3}}} = {d_P1[n - 3]}"
+        )
     return True
 
 
@@ -773,7 +768,7 @@ def verifier_triple_27_29_35() -> Dict[str, bool]:
         "bk_parity_functional_equation": bk_parity_functional_equation_check(),
         "first_depth_nine_at_27": first_depth_nine_at_27_check(),
         "first_depth_eleven_at_33": first_depth_eleven_at_33_check(),
-        "bk_padovan_twostep_triple": bk_padovan_twostep_consistency_check_triple(),
+        "bk_rowsum_lag_triple": bk_padovan_twostep_consistency_check_triple(),
         "bk_parity_split_triple": bk_parity_split_check_triple(),
         "phi_n_leading_triple": phi_n_leading_check_triple(),
         "hardy_ramanujan_exact_triple": hardy_ramanujan_exact_check_triple(),
@@ -801,7 +796,7 @@ if __name__ == "__main__":
     for n in ADMISSIBLE_TRIPLE:
         row = [D.get((n, dd), 0) for dd in range(1, 12)]
         s = sum(row)
-        print(f"  D_{{{n}, d}} for d in [1, 11] = {row}, sum = {s} = d_{{{n-2}}} = {d[n-2]}")
+        print(f"  D_{{{n}, d}} for d in [1, 11] = {row}, sum = {s} = d_{{{n-3}}} = {d[n-3]}")
 
     print()
     print("Depth onsets:")

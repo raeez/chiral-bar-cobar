@@ -12,7 +12,7 @@ Ground truth:
 
 References:
   - Feigin-Frenkel, "Affine Kac-Moody algebras at the critical level..."
-  - CLAUDE.md: Sugawara UNDEFINED at k = -h^v (not "c diverges")
+  - Sugawara undefined at k = -h^v
   - bar_cobar_adjunction_curved.tex, kac_moody.tex
 """
 

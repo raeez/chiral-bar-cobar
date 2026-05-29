@@ -90,7 +90,7 @@ CONVENTIONS:
   - kappa(sl_N^(1)_k) = dim(sl_N) * (k + h^v) / (2 h^v)  (AP1).
   - kappa(Vir_c) = c/2 (AP39: this is kappa, not S_2 in general).
   - The bar propagator d log E(z,w) is weight 1 (AP27).
-  - Sugawara UNDEFINED at critical level k = -h^v (AP: not "c diverges").
+  - Sugawara undefined at critical level k = -h^v.
 
 BEILINSON WARNINGS:
   AP1:  kappa formula family-specific, never copy between families.

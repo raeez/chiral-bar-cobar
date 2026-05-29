@@ -86,7 +86,7 @@ Computation C: sl_2 at integral k = 1
 Conventions
 -----------
 - kappa(g, k) = dim(g)(k + h^v)/(2 h^v) (AP1, AP39).
-- Sugawara UNDEFINED at critical level (not "c diverges").
+- Sugawara undefined at critical level.
 - FF involution: k <-> -k - 2h^v.
 - H_k^! = V_{-k-2h^v}(g), NOT H_{-k} (AP33).
 """

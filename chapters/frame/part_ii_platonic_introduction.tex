@@ -369,7 +369,7 @@ projection, one canonical stratification.
 The shadow coefficients $S_r$ lift to motivic periods.
 
 \begin{theorem}[Motivic purity of $S_r(\Vir_c)$ through $r \le 8$;
- \ClaimStatusProvedHere]
+ \ClaimStatusConditional]
 \label{thm:part-ii-motivic-purity-virasoro-r-le-8}
 Let $\Vir_c$ be the Virasoro chiral algebra at central charge
 $c$ in the generic regime. For each $r \in \{2, 3, 4, 5, 6, 7,
@@ -378,7 +378,9 @@ $c$ in the generic regime. For each $r \in \{2, 3, 4, 5, 6, 7,
  S_r^{\mot}(\Vir_c) \;\in\; \mathrm{MZV}^{\mot}_{r-2}
  \otimes \mathbb{Q}(c),
 \end{equation}
-with Brown period map specialization $\mathrm{per}(S_r^{\mot}) =
+assuming the motivic shadow-lift construction of
+Theorem~\textup{\ref{thm:shadow-tower-motivic-lift}}, with Brown
+period map specialization $\mathrm{per}(S_r^{\mot}) =
 S_r \in \mathbb{Q}(c)$. The first two rungs are
 $S_2=c/2$ and $S_3=2$. For $r\in\{4,5,6,7,8\}$, the denominator of
 $S_r(\Vir_c)$ as a rational function of $c$ divides
@@ -507,27 +509,29 @@ The moonshine correspondence $V^\natural \leftrightarrow
 \mathrm{Monster}$ lifts to a fingerprint-twining correspondence.
 
 \begin{theorem}[Moonshine via fingerprint twining;
- \ClaimStatusProvedHere]
+ \ClaimStatusConditional]
 \label{thm:part-ii-moonshine-via-fingerprint}
 Let $V^\natural$ be the Monster vertex operator algebra
 \textup{(}Frenkel--Lepowsky--Meurman\textup{)}, realized as the
-$\mathbb{Z}/2$-orbifold $V_{\Lambda_{\mathrm{Leech}}}^+$ of the
-Leech lattice VOA \textup{(}Borcherds construction\textup{)}.
+FLM $\mathbb{Z}/2$-orbifold extension
+$V_{\Lambda_{\mathrm{Leech}}}^+\oplus
+V_{\Lambda_{\mathrm{Leech}}}^{T,+}$ of the Leech lattice VOA.
 The fingerprint $\varphi(V^\natural)$ is
 \begin{equation}
  \varphi(V^\natural) \;=\;
- \bigl(\,4,\; \infty,\; \chi_{\VOA}(V^\natural),\; 1,\;
+ \bigl(\,4,\; \infty,\; \chi_{\VOA}(V^\natural),\;
+ n_{\mathrm{Griess}}(V^\natural),\;
  \mathrm{coset}_{V^\natural}\,\bigr),
 \end{equation}
 recording $p_{\max}(V^\natural) = 4$ from the stress-tensor OPE,
 $r_{\max}(V^\natural) = \infty$ from the Virasoro sub-VOA at
 $c = 24$ \textup{(}placing $V^\natural$ in class $\mathrm{M}$, with
 $\kappa(V^\natural) = 12$\textup{)}, and
-$n_{\mathrm{strong}}(V^\natural) = 1$ from the single strong
-generator $T$ of weight $2$ \textup{(}$\dim V^\natural_1 = 0$, so
-the Virasoro sub-VOA determines $\kappa$; see the landscape
-census\textup{)},
-with coset slot
+$n_{\mathrm{Griess}}(V^\natural)$ from the PBW-compatible
+weight-$2$ Griess generators. The condition
+$\dim V^\natural_1=0$ removes affine currents; it does not make
+the Virasoro vector a strong generator of $V^\natural$.
+The coset slot is
 \begin{equation}
  \mathrm{coset}_{V^\natural} \;=\;
  \bigl(\,V_{\Lambda_{\mathrm{Leech}}},\; \mathbb{Z}/2,\;
@@ -540,9 +544,12 @@ For each $g \in \mathrm{Monster}$, the McKay--Thompson series
  1}\bigr)
 \end{equation}
 lifts to a twining fingerprint $\varphi_g(V^\natural)$, with
-twining coset slot
-$\mathrm{coset}_{V^\natural, g} = (V_{\Lambda_{\mathrm{Leech}}}^g,
-\mathbb{Z}/|g|, V^\natural_{\mathrm{tw}, g})$. The assignment
+twining coset slot $\mathrm{OrbSec}_g(V^\natural)$, the
+$g$-twisted orbifold-sector datum of the moonshine module. For
+elements lying in the Leech-lattice subgroup this specializes to the
+corresponding lattice fixed-sector notation; for a general Monster
+element it is not a sub-VOA $V_{\Lambda_{\mathrm{Leech}}}^g$.
+The assignment
 $g \mapsto \varphi_g(V^\natural)$ is constant on Monster
 conjugacy classes, yielding $194$ fingerprints indexed by
 $\mathrm{Conj}(\mathrm{Monster})$; the frame shapes of these
@@ -564,16 +571,19 @@ $\chi_{\VOA}(V^\natural)$ is the Hodge-filtered chiral Euler
 character, explicitly the $J$-function $J(\tau) = q^{-1} +
 \textup{196884}\,q + \cdots$ \textup{(}normalized so that the
 constant term vanishes\textup{)};
-$n_{\mathrm{strong}}(V^\natural) = 1$ records the single strong
-generator $T$ of weight $2$ \textup{(}$V^\natural_1 = 0$ by
-Frenkel--Lepowsky--Meurman, so the strong-generating set reduces to
-the stress tensor inherited from the Virasoro sub-VOA\textup{)}; and
+$n_{\mathrm{Griess}}(V^\natural)$ records the minimal
+PBW-compatible strong generators in the weight-$2$ Griess algebra.
+$V^\natural_1=0$ by Frenkel--Lepowsky--Meurman, so no affine
+weight-one current is present; the Virasoro vector nevertheless
+generates only the Virasoro sub-VOA. The integer in the fourth slot
+is therefore a Griess-algebra invariant, not the number~$1$; and
 $\mathrm{coset}_{V^\natural}$ encodes the Leech-lattice orbifold via
 the triple $(V_\Lambda, \mathbb{Z}/2, V^\natural_{\mathrm{tw}})$.
 The integer $196884$, the dimension of the weight-$2$ Griess
 primary component modulo $\mathbb{C}\omega$ and equivalently the
 coefficient of $q^1$ in $J(\tau)$, enters the fingerprint through
-$\chi_{\VOA}$, not through $n_{\mathrm{strong}}$.
+$\chi_{\VOA}$ and the Griess slot, not through a one-generator
+Virasoro reduction.
 
 Twining lift: for $g \in \mathrm{Monster}$, the $g$-twined bar
 Euler character is
@@ -583,10 +593,11 @@ Euler character is
 \end{equation}
 by Theorem~\ref{thm:moonshine-bar-euler-master}
 \textup{(}chiral-moonshine bar-Euler master identity\textup{)}; the
-twining coset slot replaces the $\mathbb{Z}/2$ orbifold datum with
-its $g$-conjugate under the Leech-lattice action. The other four
-slots are $g$-invariant because the bar complex of $V^\natural$ is
-Monster-equivariant.
+twining coset slot is the $g$-twisted orbifold-sector datum of
+$V^\natural$. It reduces to a Leech-lattice fixed-sector notation
+only for elements represented on the lattice carrier. The structural
+slots $p_{\max}$, $r_{\max}$, and the Griess count are
+$g$-independent; the Euler slot is the class function $T_g$.
 
 Class-function property: the twining fingerprint depends on $g$
 only through its Monster conjugacy class because $L_0$ commutes

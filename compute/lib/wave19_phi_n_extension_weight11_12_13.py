@@ -15,14 +15,15 @@ With the Etingof-Kazhdan 2000 (Selecta 6) super-Drinfeld associator
 normalisation  (2 pi i)^n / n!  for the n-leg KZ iterated integral, the
 pentagon coboundary at hbar^n decomposes as
 
-    phi^(n)  =  (1/n!) * sum_{i=1}^{d_n}  c_n^(i)  MZV_i^(n)
+    phi^(n)  =  (1/n!) * sum_{i=1}^{m_n}  c_n^(i)  MZV_i^(n)
               +  (1/n!)  Phi_10^{n/2} eta^{-12n}  c_n^(K3)
 
 where
 
-  (i)  MZV_i^(n)  are the Brown 2011 / Deligne 2013 depth-graded motivic
-       basis elements at weight n  (d_n entries, Padovan recurrence
-       d_n = d_{n-2} + d_{n-3});
+  (i)  MZV_i^(n)  are the displayed Brown-Deligne coordinate entries
+       used by this finite model.  The full Brown dimensions are
+       d_11=9, d_12=12, d_13=16; the displayed counts are
+       m_11=7, m_12=9, m_13=12.
 
   (ii) c_n^(i)  are the Drinfeld-Deligne pairing coefficients
        c_n^(i) = < g_i,  Theta_KZ^(n) >  between the Brown dual basis
@@ -37,13 +38,12 @@ where
        is half-integral for odd n (Sp_4(Z) double cover) and integer
        for even n (full paramodular quotient).
 
-In the Brown canonical basis, therefore,
+For this finite displayed coordinate projection,
 
-    phi^(n)_MZV  =  (1/n!)  sum_{i=1}^{d_n}  MZV_i^(n)
+    phi^(n)_MZV,disp  =  (1/n!)  sum_{i=1}^{m_n}  MZV_i^(n)
 
-on the nose.  This is the programme's phi^(n) restricted to its MZV leg,
-which is what makes the coefficients explicit.  (The Borcherds leg
-carries K3-specific Hardy-Ramanujan dimension data handled separately.)
+on the nose in the displayed subspace.  This module does not claim that
+the displayed lists exhaust the full Brown bases.
 
 Result (weights 11, 12, 13)
 ===========================
@@ -96,9 +96,8 @@ Three verification paths
 (V2) Differential-equation / KZ recursion: the KZ connection
      d/dz Phi(z) = (A/z + B/(z-1)) Phi(z)  produces  phi^(n)  by n-fold
      iterated integration against its weight-n symbol.  The iterated
-     integral is a sum of d_n distinct simplex chambers, one per
-     Brown basis element.  Symbolic verification of the simplex-count
-     against Padovan d_n.
+     integral is checked against the displayed coordinate count m_n;
+     the full Padovan d_n is reported separately.
 (V3) Symmetry / duality:  the MZV reversal duality  zeta(s_1,..,s_k) =
      zeta_dual  (Borwein-Bradley-Broadhurst 2001, Thm 4.2) relates the
      Brown depth-d basis entries at weight n to depth-<=d entries at
@@ -304,42 +303,27 @@ def mzv_richardson(
 # =============================================================================
 
 def padovan_d_n(n: int) -> int:
-    """Zagier motivic MZV basis dimension  d_n  (Brown 2011 Thm 1.1).
+    """Brown--Zagier motivic MZV basis dimension d_n.
 
-    Programme convention (CLAUDE.md anchors):
-        d_1 = 1,  d_2 = 0,  d_3 = 1,  d_4 = 1,
-    and the recurrence
-        d_n = d_{n-2} + d_{n-3}   for n >= 5.
-    This gives the sequence
-        d_1, d_2, ..., d_{13} =
-          1, 0, 1, 1, 1, 2, 2, 3, 4, 5, 7, 9, 12,
-    matching Brown 2011 Table 1 (Ann. Math. 175 p. 952).  The d_1 = 1
-    seed reflects the  Q zeta(1)-reg  register used to carry the
-    regularised stuffle anchor; d_2 = 0 reflects the convention that
-    zeta(2) is absorbed into Q(2 pi i) and does not span an independent
-    motivic class in the Brown basis.  The recurrence stabilises from
-    weight 5 onward; d_3 = d_4 = 1 are seeded boundary values.
+    The standard generating function is 1/(1-x^2-x^3), equivalently
+    d_0=1, d_1=0, d_2=1 and d_n=d_{n-2}+d_{n-3}.
     """
     if n < 0:
         raise ValueError("n must be nonneg")
-    # Seed values (CLAUDE.md / Brown 2011 Table 1)
-    seeds = {1: 1, 2: 0, 3: 1, 4: 1}
+    seeds = {0: 1, 1: 0, 2: 1}
     if n in seeds:
         return seeds[n]
-    if n == 0:
-        return 1
-    # Build up from the seeds
-    dp = {1: 1, 2: 0, 3: 1, 4: 1}
-    for k in range(5, n + 1):
+    dp = dict(seeds)
+    for k in range(3, n + 1):
         dp[k] = dp[k - 2] + dp[k - 3]
     return dp[n]
 
 
 def deligne_basis_weight_11() -> List[Tuple[str, Tuple[int, ...]]]:
-    """Brown-Deligne basis at weight 11  (d_11 = 7).
+    """Displayed Brown-Deligne coordinates at weight 11.
 
-    Brown 2011 Table 1 / Deligne 2013 Bourbaki 1054.  All depth <= 3;
-    the new irreducible at depth 3 is  zeta(3, 3, 5).
+    The full Brown dimension is d_11=9.  The displayed K3-BKM list has
+    seven entries; the new displayed depth-3 coordinate is zeta(3,3,5).
     """
     return [
         ("zeta(11)", (11,)),
@@ -353,10 +337,10 @@ def deligne_basis_weight_11() -> List[Tuple[str, Tuple[int, ...]]]:
 
 
 def deligne_basis_weight_12_depth_le_3() -> List[Tuple[str, Tuple[int, ...]]]:
-    """Brown-Deligne basis at weight 12, depth <= 3  (8 of 9 entries).
+    """Displayed coordinates at weight 12, depth <= 3.
 
-    The 9th entry  zeta(3, 3, 3, 3)  is the depth-4 irreducible
-    (Brown 2011 Thm 1.2).
+    The full Brown dimension is d_12=12.  This module displays eight
+    depth-<=3 coordinates and one depth-4 coordinate.
     """
     return [
         ("zeta(3)^4", (3, 3, 3, 3)),      # placeholder label; product
@@ -376,12 +360,10 @@ def deligne_basis_weight_12_depth_4() -> Tuple[str, Tuple[int, ...]]:
 
 
 def deligne_basis_weight_13_depth_le_3() -> List[Tuple[str, Tuple[int, ...]]]:
-    """Brown-Deligne basis at weight 13, depth <= 3  (all 12 entries).
+    """Displayed coordinates at weight 13, depth <= 3.
 
-    Unconditional (Brown 2017 arXiv:1709.02856 depth-2 through weight 12;
-    Brown 2012 arXiv:1301.3053 depth-3 Conj. 2 verified through weight 13
-    by direct-linear-relation exhaustion on MZDP).  Depth-4 irreducibles
-    first re-enter at weight 14 (Broadhurst-Kreimer series).
+    The full Brown dimension is d_13=16.  This module records the
+    twelve displayed depth-<=3 coordinates used in the finite formula.
     """
     return [
         ("zeta(13)", (13,)),
@@ -432,7 +414,7 @@ def simplex_volume_denominator(n: int) -> int:
 
 
 def padovan_count_check(n: int) -> Dict[str, int]:
-    """Cross-check: number of Brown basis elements at weight n matches d_n."""
+    """Return full Brown dimension and displayed coordinate count."""
     if n == 11:
         count = len(deligne_basis_weight_11())
     elif n == 12:
@@ -443,9 +425,9 @@ def padovan_count_check(n: int) -> Dict[str, int]:
         raise ValueError(f"padovan_count_check: n = {n} not supported")
     return {
         "n": n,
-        "d_n": padovan_d_n(n),
-        "basis_count": count,
-        "match": padovan_d_n(n) == count,
+        "brown_d_n": padovan_d_n(n),
+        "displayed_count": count,
+        "is_full_brown_basis": padovan_d_n(n) == count,
     }
 
 
@@ -498,14 +480,8 @@ def reversal_closure_check(basis: List[Tuple[str, Tuple[int, ...]]]) -> Dict:
 def phi_n_mzv(n: int) -> Dict[str, object]:
     """Explicit pentagon-coboundary MZV leg  phi^(n)_MZV  at weight n.
 
-    Under the Brown canonical basis (Deligne-Goncharov diagonalisation
-    of the motivic-Galois pairing), the coefficient of each basis
-    element in  phi^(n)_MZV  equals  1 / n!  (Drinfeld-Deligne duality,
-    Brown 2012 arXiv:1301.3053 Thm 4.1).
-
-    Returns an explicit summary with the basis, the denominator n!,
-    the numerical value (sum of basis-element floats / n!), and the
-    verification-path anchors.
+    The output is the displayed finite coordinate projection.  It reports
+    the full Brown dimension separately from the displayed count.
     """
     if n == 11:
         basis = deligne_basis_weight_11()
@@ -553,16 +529,16 @@ def phi_n_mzv(n: int) -> Dict[str, object]:
     return {
         "wave": 19,
         "weight": n,
-        "phi_name": f"phi^({n})_MZV_Brown",
-        "basis_dim_d_n": padovan_d_n(n),
-        "basis_count_in_module": len(basis),
+        "phi_name": f"phi^({n})_MZV_displayed",
+        "brown_dim_d_n": padovan_d_n(n),
+        "displayed_coordinate_count": len(basis),
         "padovan_check": padovan_count_check(n),
         "basis": basis_entries,
         "denominator_factorial": denom,
         "formula_symbolic": (
             f"phi^({n})_MZV  =  (1 / {n}!) * "
-            f"sum_{{i=1}}^{{{padovan_d_n(n)}}}  MZV_i^({n})  "
-            f"(Brown canonical basis; Brown 2012 Thm 4.1)"
+            f"sum_{{i=1}}^{{{len(basis)}}}  MZV_i^({n})  "
+            f"(displayed finite coordinate projection)"
         ),
         "numerical_value_approx": total / denom,
         "scope": scope,
@@ -572,9 +548,9 @@ def phi_n_mzv(n: int) -> Dict[str, object]:
                 "anchors verified against Vermaseren 1999 MZDP database."
             ),
             "V2_kz_symbolic": (
-                "KZ iterated-integral symbol count matches d_n Padovan "
-                "recurrence; simplex volume 1/n! from Shnider-Stasheff "
-                "1997."
+                "KZ iterated-integral symbol count matches the displayed "
+                "coordinate count; simplex volume 1/n! from "
+                "Shnider-Stasheff 1997."
             ),
             "V3_symmetry": (
                 "Reversal duality (Borwein-Bradley-Broadhurst 2001 "
@@ -590,26 +566,22 @@ def phi_n_mzv(n: int) -> Dict[str, object]:
 # =============================================================================
 
 def _test_padovan_dimensions():
-    assert padovan_d_n(11) == 7
-    assert padovan_d_n(12) == 9
-    # d_13 = d_11 + d_10 = 7 + 5 = 12
-    assert padovan_d_n(13) == 12
-    # spot-checks from CLAUDE.md: d_3=1, d_4=1, d_5=1, d_6=2, d_7=2, d_8=3,
-    # d_9=4, d_10=5
+    assert padovan_d_n(11) == 9
+    assert padovan_d_n(12) == 12
+    assert padovan_d_n(13) == 16
     assert padovan_d_n(3) == 1
-    assert padovan_d_n(8) == 3
-    assert padovan_d_n(9) == 4
-    assert padovan_d_n(10) == 5
+    assert padovan_d_n(8) == 4
+    assert padovan_d_n(9) == 5
+    assert padovan_d_n(10) == 7
 
 
-def _test_basis_counts_match_padovan():
-    assert len(deligne_basis_weight_11()) == padovan_d_n(11)
-    # weight 12 has 8 depth-<=3 + 1 depth-4
-    assert (
-        len(deligne_basis_weight_12_depth_le_3()) + 1
-        == padovan_d_n(12)
-    )
-    assert len(deligne_basis_weight_13_depth_le_3()) == padovan_d_n(13)
+def _test_basis_counts_are_displayed_projection():
+    assert len(deligne_basis_weight_11()) == 7
+    assert len(deligne_basis_weight_12_depth_le_3()) + 1 == 9
+    assert len(deligne_basis_weight_13_depth_le_3()) == 12
+    assert padovan_d_n(11) == 9
+    assert padovan_d_n(12) == 12
+    assert padovan_d_n(13) == 16
 
 
 def _test_kz_words():
@@ -651,8 +623,9 @@ def _test_phi_11_structure():
     ph = phi_n_mzv(11)
     assert ph["weight"] == 11
     assert ph["denominator_factorial"] == 39_916_800
-    assert ph["basis_dim_d_n"] == 7
-    assert ph["padovan_check"]["match"] is True
+    assert ph["brown_dim_d_n"] == 9
+    assert ph["displayed_coordinate_count"] == 7
+    assert ph["padovan_check"]["is_full_brown_basis"] is False
     # Order of magnitude: approx 2.58 / 11! ~ 6.5e-8
     nv = ph["numerical_value_approx"]
     assert nv is not None
@@ -663,16 +636,18 @@ def _test_phi_12_structure():
     ph = phi_n_mzv(12)
     assert ph["weight"] == 12
     assert ph["denominator_factorial"] == 479_001_600
-    assert ph["basis_dim_d_n"] == 9
-    assert ph["padovan_check"]["match"] is True
+    assert ph["brown_dim_d_n"] == 12
+    assert ph["displayed_coordinate_count"] == 9
+    assert ph["padovan_check"]["is_full_brown_basis"] is False
 
 
 def _test_phi_13_structure():
     ph = phi_n_mzv(13)
     assert ph["weight"] == 13
     assert ph["denominator_factorial"] == 6_227_020_800
-    assert ph["basis_dim_d_n"] == 12
-    assert ph["padovan_check"]["match"] is True
+    assert ph["brown_dim_d_n"] == 16
+    assert ph["displayed_coordinate_count"] == 12
+    assert ph["padovan_check"]["is_full_brown_basis"] is False
 
 
 def _test_reversal_preserves_weight():
@@ -706,14 +681,13 @@ def _test_richardson_zeta_3333():
 # --- Multi-path cross-checks (AP10 fix) ---
 
 def _cross_check_padovan_anchors_vs_claude_md():
-    """V2 cross-check path: explicitly verify padovan_d_n against the
-    CLAUDE.md anchors (d_1..d_12) and Brown 2011 Table 1."""
-    claude_md = {1: 1, 2: 0, 3: 1, 4: 1, 5: 1, 6: 2, 7: 2,
-                 8: 3, 9: 4, 10: 5, 11: 7, 12: 9}
-    for n, d in claude_md.items():
+    """V2 cross-check path: explicitly verify standard Brown dimensions."""
+    brown = {0: 1, 1: 0, 2: 1, 3: 1, 4: 1, 5: 2, 6: 2, 7: 3,
+             8: 4, 9: 5, 10: 7, 11: 9, 12: 12, 13: 16}
+    for n, d in brown.items():
         computed = padovan_d_n(n)
         assert computed == d, (
-            f"padovan_d_n({n}) = {computed} but CLAUDE.md anchor = {d}"
+            f"padovan_d_n({n}) = {computed} but Brown anchor = {d}"
         )
 
 
@@ -858,7 +832,7 @@ def _cross_check_kz_word_weight_depth_consistency():
 
 def run_tests():
     _test_padovan_dimensions()
-    _test_basis_counts_match_padovan()
+    _test_basis_counts_are_displayed_projection()
     _test_kz_words()
     _test_zeta_3333_numerical_anchor()
     _test_zeta_11_numerical_anchor()
@@ -888,7 +862,8 @@ if __name__ == "__main__":
         ph = phi_n_mzv(n)
         print(f"--- phi^({n})_MZV ---")
         print(f"  weight        = {ph['weight']}")
-        print(f"  d_n (Padovan) = {ph['basis_dim_d_n']}")
+        print(f"  d_n (Brown)   = {ph['brown_dim_d_n']}")
+        print(f"  displayed     = {ph['displayed_coordinate_count']}")
         print(f"  1 / n!        = 1 / {ph['denominator_factorial']}")
         print(f"  scope         = {ph['scope']}")
         print(f"  approx. value = {ph['numerical_value_approx']:.6e}")

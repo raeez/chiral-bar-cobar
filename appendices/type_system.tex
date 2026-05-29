@@ -34,7 +34,7 @@
 \chapter[Type system]{Type system: the grammar of theorem statements}
 \label{app:type-system}
 
-The Open quadrant of the four-quadrant programme organises chiral
+The Open quadrant of the four-quadrant theory organises chiral
 algebra on $(X,D,\tau)$ as a five-step Beilinson tower with a
 reconstruction theorem at each interface. Every theorem in this
 volume carries a four-tuple
@@ -45,7 +45,7 @@ volume carries a four-tuple
 the \emph{type signature}: quadrant, presentation, level, hypothesis
 package. Every cross-level equality invokes a named reconstruction
 theorem with explicit hypothesis package; suppressing the package
-collapses the quadrant grid (master pattern MA-1) and turns a
+collapses the quadrant grid (shadow-object distinction) and turns a
 forgetful image into a false equivalence.
 
 This appendix fixes the grammar. Section~\ref{sec:type-levels} fixes
@@ -129,7 +129,7 @@ The four-quadrant grid
  \in\bigl\{\Open,\ \mathrm{CY}\bigr\}
  \times\bigl\{\Catl,\ \Chnl\bigr\}
 \]
-factors the programme: $\Open$ is Vol~I (algebraic-curve
+factors the theory: $\Open$ is Vol~I (algebraic-curve
 factorisation), $\mathrm{CY}$ is Vol~III (Calabi--Yau-category two-stage
 $\Phi_d^{(\Sigma_{d-1},C)}=\mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1},C}\circ\Phi_d^{\mathrm{FA}}$).
 The presentation factor $\{\Catl,\Chnl\}$ is treated in
@@ -184,7 +184,7 @@ elements, OPE poles.
 \end{itemize}
 Both presentations are load-bearing. A theorem inscribed in $\Catl$
 is not the shadow of its $\Chnl$ avatar, and conversely; both are the
-theorem viewed through different lenses (master pattern MA-1
+theorem viewed through different lenses (shadow-object distinction
 disallows demoting either to the other).
 \end{definition}
 
@@ -268,7 +268,7 @@ class-$\mathsf M$ phenomenon: bar--cobar inversion in the raw
 $\Ch(\Vect)$ ambient is genuinely false; passage to $\HypCoder$,
 $\HypWtComp$, $\Pro$, or $\HypJad$ restores the equivalence. The
 inscription cost rises with the refinement; using the weakest ambient
-that closes the proof is the discipline (master pattern MA-13).
+that closes the proof is the discipline (shadow-object distinction3).
 
 \section{Composition along reconstruction theorems}
 \label{sec:type-composition}
@@ -303,6 +303,7 @@ package $\Hyp_{\Recon}$. The Vol~I primary list is
 
 \begin{proposition}[Composition rule]
 \label{prop:type-composition}
+\ClaimStatusProvedHere
 If $\TypeSig_1=(\Quad_1,\Pres_1,\BeilLevel\to\BeilLevel',\Hyp_1)$
 and $\TypeSig_2=(\Quad_2,\Pres_2,\BeilLevel'\to\BeilLevel'',\Hyp_2)$
 are two reconstruction theorems whose target / source levels match,
@@ -316,7 +317,7 @@ where $\joinp$ is the join in the package partial order
 presentation tags is the intersection (refinement) of grid cells.
 The hypothesis package of a composite reconstruction is the join of
 the constituent packages; suppressing a conjunct of $\Hyp_1\joinp\Hyp_2$
-in the inscription instantiates master pattern MA-1.
+in the inscription instantiates shadow-object distinction.
 \end{proposition}
 
 \begin{proof}
@@ -333,6 +334,7 @@ no composition is defined.
 
 \begin{proposition}[Meet and join of packages]
 \label{prop:type-meetjoin}
+\ClaimStatusProvedHere
 The package partial order
 $\bigl(\{\Hyp\},\leq\bigr)$ admits binary meets and joins:
 \[
@@ -422,33 +424,41 @@ that $\Recon'$ is composable after $\Recon$.
  {$+\HypMod$} (modr.north);
 
 \end{tikzpicture}
-\caption{Hypothesis-package lattice on the Open Beilinson-tower
-reconstruction theorems. Nodes carry the level interface and the
+\caption{Finite subdiagram of the hypothesis-package lattice on the
+Open Beilinson-tower reconstruction theorems. Nodes carry the level interface and the
 package; arrows record package containment under
 Definition~\ref{def:type-containment}, labelled by the primitives
 added along the edge. Composition along a directed path takes the
-join of the edge increments
-(Proposition~\ref{prop:type-composition}).}
+join of the edge increments; reconstruction composition also requires
+matching level interfaces
+(Propositions~\ref{prop:type-composition}
+and~\ref{prop:type-lattice-wellformed}).}
 \label{fig:type-lattice}
 \end{figure}
 
-\begin{proposition}[Lattice well-formedness]
+\begin{proposition}[Package-lattice well-formedness]
 \label{prop:type-lattice-wellformed}
-The diagram in Figure~\ref{fig:type-lattice} is a Hasse diagram for a
-finite bounded lattice. Every directed path from
-$\mathrm{Morita}$ to $\mathrm{Modular\ reconstruction}$ realises a
-well-defined composite type signature
-$\TypeSig=(\Open,\meet_i\Pres_i,1\!\to\!4,\joinp_i\Hyp_i)$.
+\ClaimStatusProvedHere
+The diagram in Figure~\ref{fig:type-lattice} is a finite subdiagram
+of the bounded hypothesis-package lattice. Along every directed path
+the package contribution is the join of the displayed edge
+increments. A directed path in this package diagram gives a composite
+reconstruction theorem only after the level interfaces are separately
+composable in the sense of Proposition~\ref{prop:type-composition}.
+Package containment alone is not a functor between Beilinson levels.
 \end{proposition}
 
 \begin{proof}
-Each edge realises a strict refinement of packages, so the diagram is
-acyclic; finiteness of the alphabet bounds the lattice. By
-Proposition~\ref{prop:type-meetjoin} every pair of nodes admits meet
-and join in the package lattice, and the level-interface composition
-is associative on the linearly ordered level set
-$\{0,1,2,3,4,5\}$. Hence every directed path produces a well-formed
-type signature.
+Each edge realises a strict refinement of hypothesis packages, so
+the displayed diagram is acyclic. Finiteness of the primitive
+alphabet gives a bounded lattice by Proposition~\ref{prop:type-meetjoin}.
+The join of edge increments is therefore independent of parentheses.
+The level interface is an additional datum: a theorem of type
+$i\to j$ can be composed with one of type $j\to k$, and no package
+containment relation can replace this equality of the middle level.
+Thus the displayed graph controls hypotheses, while
+Proposition~\ref{prop:type-composition} controls reconstruction
+composition.
 \end{proof}
 
 The type system fixes the inscription contract for the Master

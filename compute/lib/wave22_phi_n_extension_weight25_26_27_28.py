@@ -35,8 +35,9 @@ Galois-motivic generation of grt_1).
 
 This module computes and verifies:
 
-1. PADOVAN DIMENSIONS d_n through d_n = d_{n-2} + d_{n-3}:
-       d_{25} = 351, d_{26} = 465, d_{27} = 616, d_{28} = 816.
+1. PADOVAN DIMENSIONS d_n through d_n = d_{n-2} + d_{n-3}
+   with Brown seed (d_0, d_1, d_2) = (1, 0, 1):
+       d_{25} = 465, d_{26} = 616, d_{27} = 816, d_{28} = 1081.
 
 2. BROADHURST-KREIMER DEPTH STRATIFICATION D_{n, d} via symbolic
    expansion of BK(x, y) through x^{32} y^{10}:
@@ -45,22 +46,24 @@ This module computes and verifies:
        D_{27, .} = (1, 0, 41, 0, 171, 0, 128, 0, 10)  -- first depth-9
        D_{28, .} = (0, 10, 0, 121, 0, 241, 0, 93, 0)
 
-3. TWO-STEP ROW-SUM IDENTITY sum_d D_{n, d} = d_{n-2}:
-       sum D_{25, d} = 200 = d_{23}
-       sum D_{26, d} = 265 = d_{24}
-       sum D_{27, d} = 351 = d_{25}
-       sum D_{28, d} = 465 = d_{26}
+3. BK ROW-SUM LAG DIAGNOSTIC:
+       sum D_{25, d} = 200 = d_{22}
+       sum D_{26, d} = 265 = d_{23}
+       sum D_{27, d} = 351 = d_{24}
+       sum D_{28, d} = 465 = d_{25}.
+   These row sums test the BK extractor; they are not the Brown
+   dimensions at weights 25--28.
 
 4. NUMERICAL phi^(n) VALUES in d_n / n! approximation:
-       phi^(25) ~ 2.263e-23, phi^(26) ~ 1.153e-24,
-       phi^(27) ~ 5.657e-26, phi^(28) ~ 2.676e-27.
+       phi^(25) ~ 2.998e-23, phi^(26) ~ 1.527e-24,
+       phi^(27) ~ 7.494e-26, phi^(28) ~ 3.546e-27.
 
 5. HARDY-RAMANUJAN EXACT p_24(k) AND BORCHERDS/MZV RATIO:
        p_24(13) = 42,189,811,200   (OEIS A006922[13])
        p_24(14) = 156,883,829,400  (OEIS A006922[14])
        Ratios:
-           n = 25: 1.202e+08, n = 26: 9.073e+07,
-           n = 27: 2.547e+08, n = 28: 1.923e+08.
+           n = 25: 9.073e+07, n = 26: 6.849e+07,
+           n = 27: 1.923e+08, n = 28: 1.451e+08.
 
 6. NO CONWAY-LEECH UMBRAL RESONANCE AT n = 26:
        Leech lattice has rank 24; no Niemeier lattice has root rank
@@ -131,17 +134,17 @@ from typing import Dict, Tuple
 # ---------------------------------------------------------------------------
 
 def padovan_dim(n_max: int = 30) -> Dict[int, int]:
-    """Return {n: d_n} via d_n = d_{n-2} + d_{n-3}, seed (1, 0, 1, 1)."""
-    d: Dict[int, int] = {1: 1, 2: 0, 3: 1, 4: 1}
-    for n in range(5, n_max + 1):
+    """Return {n: d_n} via d_0=1, d_1=0, d_2=1 and d_n = d_{n-2} + d_{n-3}."""
+    d: Dict[int, int] = {0: 1, 1: 0, 2: 1}
+    for n in range(3, n_max + 1):
         d[n] = d[n - 2] + d[n - 3]
     return d
 
 
 def padovan_count_check_25_28() -> bool:
-    """Assert d_{25}..d_{28} = (351, 465, 616, 816)."""
+    """Assert d_{25}..d_{28} = (465, 616, 816, 1081)."""
     d = padovan_dim(30)
-    expected = {25: 351, 26: 465, 27: 616, 28: 816}
+    expected = {25: 465, 26: 616, 27: 816, 28: 1081}
     for n, v in expected.items():
         assert d[n] == v, f"Padovan d_{n} = {d[n]} != expected {v}"
     return True
@@ -244,21 +247,18 @@ def first_depth_nine_check() -> bool:
 
 
 def bk_padovan_twostep_consistency_check_25_28() -> bool:
-    """Assert sum_d D_{n, d} = d_{n - 2} for n in {25, 26, 27, 28}.
+    """Assert the BK row-sum lag diagnostic sum_d D_{n, d} = d_{n - 3}.
 
-    This is the two-step Padovan lag identity: the BK series enumerates
-    the generators of grt_1^{(n)} (depth-graded), whose total Q-dimension
-    equals d_{n - 2} -- the Brown canonical basis of Z_n lifts two
-    steps via the Padovan recurrence d_n = d_{n-2} + d_{n-3} and
-    the identity count
-    sum_d dim gr^d grt_1^{(n)} = dim grt_1^{(n)} = d_{n - 2}.
+    Setting y = 1 in the BK extractor gives x^3/(1 - x^2 - x^3);
+    the row sum at weight n is therefore the Brown Padovan coefficient
+    at weight n - 3.  It is not the Brown dimension d_n.
     """
     D = bk_depth_extract(32, 10)
     d = padovan_dim(30)
     for n in range(25, 29):
         row_sum = sum(D.get((n, k), 0) for k in range(1, 11))
-        assert row_sum == d[n - 2], (
-            f"n = {n}: sum_d D_{{n, d}} = {row_sum} != d_{{{n - 2}}} = {d[n - 2]}"
+        assert row_sum == d[n - 3], (
+            f"n = {n}: sum_d D_{{n, d}} = {row_sum} != d_{{{n - 3}}} = {d[n - 3]}"
         )
     return True
 
@@ -366,10 +366,10 @@ def hardy_ramanujan_exact_check_25_28() -> bool:
 
     r = hardy_ramanujan_ratio_exact_25_28()
     expected = {
-        25: 42189811200 / 351,
-        26: 42189811200 / 465,
-        27: 156883829400 / 616,
-        28: 156883829400 / 816,
+        25: 42189811200 / 465,
+        26: 42189811200 / 616,
+        27: 156883829400 / 816,
+        28: 156883829400 / 1081,
     }
     for n, v in expected.items():
         assert abs(r[n] - v) / v < 1e-12, f"ratio at n = {n}: {r[n]} != {v}"
@@ -433,9 +433,9 @@ def plastic_number() -> float:
 
 
 def padovan_asymptotic(n: int) -> float:
-    """Plastic-number asymptotic d_n ~ A rho^n for seed (1, 0, 1, 1)."""
+    """Plastic-number asymptotic d_n ~ A rho^n for Brown seed d_0,d_1,d_2."""
     rho = plastic_number()
-    A = rho ** 2 / (2 * rho + 3)
+    A = rho ** 3 / (2 * rho + 3)
     return A * (rho ** n)
 
 
@@ -470,7 +470,7 @@ def wave22_verifier_25_28() -> Dict[str, bool]:
         "padovan_count_25_28": padovan_count_check_25_28(),
         "bk_depth_25_28": bk_depth_check_25_28(),
         "first_depth_nine_at_27": first_depth_nine_check(),
-        "bk_padovan_twostep_25_28": bk_padovan_twostep_consistency_check_25_28(),
+        "bk_rowsum_lag_25_28": bk_padovan_twostep_consistency_check_25_28(),
         "bk_parity_split_25_28": bk_parity_split_check_25_28(),
         "phi_n_leading_25_28": phi_n_leading_check_25_28(),
         "hardy_ramanujan_exact_25_28": hardy_ramanujan_exact_check_25_28(),
@@ -495,7 +495,7 @@ if __name__ == "__main__":
     for n in range(25, 29):
         row = [D.get((n, d_), 0) for d_ in range(1, 10)]
         s = sum(row)
-        print(f"  D_{{{n}, d}} for d in [1, 9] = {row}, sum = {s} = d_{{{n-2}}} = {d[n-2]}")
+        print(f"  D_{{{n}, d}} for d in [1, 9] = {row}, sum = {s} = d_{{{n-3}}} = {d[n-3]}")
 
     print()
     print("Depth onsets:")

@@ -64,7 +64,8 @@ open object;
 \item the chart algebra $A_b=\End_\cC(b)$, level~$1$;
 \item the derived chiral centre
 $Z^{\mathrm{der}}_{\mathrm{ch}}(A_b) \simeq
-\mathcal{C}^\bullet_{\mathrm{ch}}(A_b,A_b)$, level~$3$, the bulk;
+\mathcal{C}^\bullet_{\mathrm{ch}}(A_b,A_b)$, level~$3$, the universal
+closed sector;
 \item the universal Maurer--Cartan twisting datum
 $\Theta_{A_b}=D_{A_b}-d_0$, producing the bar coalgebra
 $B(A_b)=T^c(s^{-1}\bar A_b)$ at level~$2$;
@@ -73,7 +74,9 @@ the open category, producing the level-$5$ scalar shadow.
 \end{enumerate}
 The chart algebra $A_b$ is not the primitive open object;
 $\cC^{\mathrm{op}}$ on $(X,D,\tau)$ is. The bar coalgebra $B(A_b)$
-is not the bulk; $Z^{\mathrm{der}}_{\mathrm{ch}}(A_b)$ is. Throughout
+is not the bulk; $Z^{\mathrm{der}}_{\mathrm{ch}}(A_b)$ is the universal
+closed sector, and a physical bulk interpretation requires the
+open--closed comparison datum. Throughout
 this chapter, when a generic chart algebra is denoted~$\cA$, the
 type signature is $\cA = A_b$ at a chosen vacuum
 $b\in\cC^{\mathrm{op}}$ on $(X,D,\tau)$; the symbol is shorthand for
@@ -670,7 +673,7 @@ chiral algebra (with the divided-power conversion ). The
 the higher coefficients $a_{(n)}b$ for $n \geq 1$ are encoded in the
 $\lambda$-dependence.
 
-\begin{theorem}[Face~3: Khan--Zeng PVA \textup{(}genus~$0$ only\textup{)}; \ClaimStatusProvedHere]
+\begin{theorem}[Face~3: Khan--Zeng PVA \textup{(}genus~$0$ only\textup{)}; \ClaimStatusConditional]
 \label{thm:hdm-face-3}
 \emph{Type signature.} Quadrant: Open $\times$ Chain. Presentation:
 classical / Poisson-vertex (Li-filtered associated graded). Level:
@@ -1126,8 +1129,9 @@ infinitesimal braid relation
 limit $k \to -h^\vee$ is the Feigin--Frenkel--Reshetikhin recovery
 of the Gaudin model from the affine Sugawara construction; in the
 present framework, the critical level is the locus where the
-Sugawara normalization $1/(k+h^\vee)$ diverges and the Gaudin Hamiltonians
-become the singular limit of the modular shadow connection.
+Sugawara vector leaves the affine vacuum module and the Gaudin
+Hamiltonians become the Feigin--Frenkel singular limit of the modular
+shadow connection.
 \end{proof}
 
 Face~7 is the integrable-system face: the Gaudin Hamiltonians are
@@ -1486,8 +1490,8 @@ projection annihilates in
 Proposition~\ref{prop:symmetric-descent}(ii) lives at
 degree $n \geq 3$, where it is the higher Virasoro shadow
 $S_3, S_4, S_5, \dots$
-(Theorem~\ref{thm:virasoro-shadow-generating-function}, Vol~I,
-Chapter~\texttt{w\_algebras})
+(Theorem~\ref{thm:shadow-tower-asymptotics}, Vol~I, together with the
+weighted comparison in Chapter~\texttt{w\_algebras})
 and not the binary $r$.
 \end{proof}
 
@@ -2146,7 +2150,7 @@ closed-sector-slot upgrade only.
 \end{proof}
 
 \begin{proposition}[Recovery of $\mathcal{H}(T)$ from $U_\cA$;
- \ClaimStatusConjectured]
+ \ClaimStatusConditional]
 \label{prop:hdm-u-a-recoverability}
 \index{Drinfeld double!matched-pair recoverability|textbf}
 \index{holographic modular Koszul datum!recovery from $U_\cA$|textbf}
@@ -2243,9 +2247,9 @@ every~$\cA$, but the line-side presentation and the closed-sector/line
  lanes; off those lanes the global triangle fails first at the same
  strict edge and, on nonlinear class~$\mathsf{M}$, at the quartic
  contact class. The overall recoverability statement is therefore
- tagged \ClaimStatusConjectured: the slots are pinned and partially
- linked, but the global assembly into a single invariant of~$U_\cA$
- remains conjectural beyond the named comparison surfaces.
+ conditional: the slots are pinned and partially linked, but the
+ global assembly into a single invariant of~$U_\cA$ requires the named
+ comparison surfaces.
 \end{remark}
 
 \subsection{Universal property of $U_\cA$}
@@ -2628,10 +2632,14 @@ and matched against
 Proposition~\ref{prop:hdm-u-a-recoverability}:
 \begin{enumerate}[label=\textup{(H\arabic*)}]
 \item Boundary factor: $\cA = \cH_k$.
-\item Dual factor: $\cA^! = \cH_{-k}$
- (Koszul self-duality of Heisenberg, with the sign on the level
- coming from the central-charge complementarity for free-field
- algebras, Theorem~\ref{thm:central-charge-complementarity}).
+\item Dual factor:
+ $\cA^! = \mathrm{Sym}^{\mathrm{ch}}(V^*)$ with curvature
+ $m_0=-k\omega$ \textup{(}equivalently
+ $\mathrm{CE}^{\mathrm{ch}}(\mathfrak h_{-k})$ on the abelian
+ presentation\textup{)}.  The sign on the scalar lane is the
+ central-charge complementarity for free-field algebras
+ \textup{(}Theorem~\ref{thm:central-charge-complementarity}\textup{)};
+ it is not Heisenberg algebra self-duality.
 \item Closed-sector/line slot:
  $\cC = \mathcal{C}^{\bullet}_{\mathrm{ch}}(\cH_k,\cH_k)
  \simeq \cZ^{\mathrm{der}}_{\mathrm{ch}}(\cH_k)$ on the open/closed
@@ -2827,16 +2835,17 @@ which is exactly Upgrade~(U2).
 \begin{conjecture}[Strict off-locus Drinfeld-centre identification]
 \label{conj:hdm-u-a-drinfeld-center-strict-off-locus}
 \index{Drinfeld $\infty$-centre!strict off-locus conjecture}
-For every curved $A_\infty$-chiral algebra $\cA$ outside the modular
-Koszul locus, the natural comparison
+\ClaimStatusConjectured
+For every curved $A_\infty$-chiral algebra $\cA$, the natural comparison
 $P_\cC(U_\cA) \to
-\mathcal Z_{(\infty,1)}\bigl(\mathrm{Rep}^{E_1}(\cA)\bigr)$ fails to
-be a strict $E_2$-equivalence before $\mathrm{Pro}$-completion, with
-obstruction measured by
-$\mathrm{coker}(\cA^{!}_\infty\to\cA^!)$ as in
-equation~\eqref{eq:hdm-u-a-drinfeld-fibre}. Strict equivalence is
-equivalent to Upgrade~\textup{(U2)} and is therefore as open as
-Upgrade~(U2) itself.
+\mathcal Z_{(\infty,1)}\bigl(\mathrm{Rep}^{E_1}(\cA)\bigr)$ is a
+strict $E_2$-equivalence before $\mathrm{Pro}$-completion if and only
+if the strict Verdier edge $\cA^{!}_\infty\to\cA^!$ is a
+quasi-isomorphism. Equivalently, the fibre object of
+equation~\eqref{eq:hdm-u-a-drinfeld-fibre} vanishes. On the complement
+of this rectifiable locus the comparison exists only in the completed
+ambient category, and the obstruction is the same class that obstructs
+Upgrade~\textup{(U2)}.
 \end{conjecture}
 
 \begin{proposition}[Counter-scope: the binary residue does not
@@ -5346,8 +5355,9 @@ The canonical five-element bucket
  \{0,\; 8,\; 13,\; 250/3,\; 98/3\}
 \]
 adjoins the Vol~III $\mathsf B$-row witness. The value~$0$ is the
-free-field abelian locus
-(Heisenberg, class~$\mathsf G$, self-dual under $k \mapsto -k$). The
+free-field abelian scalar locus
+(Heisenberg, class~$\mathsf G$, with $k\mapsto -k$ on the scalar lane
+and $\cH_k^!\simeq\mathrm{Sym}^{\mathrm{ch}}(V^*)$ on the algebra lane). The
 values $13$ (Virasoro, bosonic string), $250/3$ (principal
 $\mathcal{W}_N$ universal family), and $98/3$ (matter + ghost
 balanced families) are the Theorem~C generic-$\mathsf M$ outputs
@@ -5478,7 +5488,7 @@ Theorem~\textup{\ref{thm:bar-cobar-inversion-qi}}, so that the
  brackets agree with the Fulton--MacPherson bar residues, as in the
  anomaly-free genus-$0$ BRST/bar locus of
  Theorem~\textup{\ref{thm:brst-bar-genus0}}. Beyond that locus this
- item is a proof obligation, not a consequence of
+ item is a open mathematical condition, not a consequence of
  \textup{\ref{H4-triangle}} or \textup{\ref{H5-triangle}}.
 \end{enumerate}
 Then on the full subcategory

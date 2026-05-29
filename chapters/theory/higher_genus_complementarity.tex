@@ -66,7 +66,7 @@ $K_N=2(N-1)(2N^2+2N+1)$. These are scalar identities. They do
 not identify the bar coalgebra with the Koszul dual, do not identify
 the center local system with the chiral derived center, and do not
 construct the bar-side BV pairing. Those are separate objects and
-separate proof obligations.
+separate open mathematical conditions.
 
 Theorem~C (Theorem~\ref{thm:quantum-complementarity-main})
 therefore has three layers with distinct hypotheses.
@@ -141,7 +141,7 @@ representative; the H-level Lagrangian upgrade~(C2) is the
 geometric content of the nonlinear theory.
 
 \begin{proposition}[Hodge curvature and scalar projection;
-\ClaimStatusProvedHere]
+\ClaimStatusConditional]
 \label{prop:hodge-curvature-scalar-projection}
 \index{Hodge bundle!curvature and scalar projection}
 \index{cross-channel correction!scalar projection}
@@ -694,7 +694,8 @@ Write $\mathbf{C}_g(\cA)$, $\mathbf{Q}_g(\cA)$, $\mathbf{Q}_g(\cA^!)$
 for the ambient complex and homotopy eigenspaces of
 Definition~\textup{\ref{def:complementarity-complexes}}.
 Fix a genus $g\geq0$ for which the ordinary flat representative of
-\textup{(C0)} is available and the Verdier--Koszul involution
+\textup{(C0)} is available, the center-comparison datum
+$\iota_Z$ is fixed, and the Verdier--Koszul involution
 $\sigma$ is represented by a cochain involution on
 $\mathbf{C}_g(\cA)$.
 
@@ -1490,7 +1491,8 @@ Q_g(\mathcal{A}) \cong Q_g(\mathcal{A}^!)^\vee
 \textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
 
 Let $(\mathcal{A}, \mathcal{A}^!)$ be a chiral Koszul pair with
-$g \geq 1$, and let $\pi: \mathcal{C}_g
+$g \geq 1$ carrying the center-comparison datum of
+Lemma~\textup{\ref{lem:center-isomorphism}}, and let $\pi: \mathcal{C}_g
 \to \overline{\mathcal{M}}_g$ be the universal curve. There is a natural action:
 \begin{equation}
 \rho: Z(\mathcal{A}) \to \mathrm{End}\bigl(H^*(\overline{\mathcal{M}}_g, Z(\mathcal{A}))\bigr)
@@ -1503,7 +1505,8 @@ H^*(\barB^{(g)}_{\mathrm{flat}}(\mathcal{A}^!))^\vee$ be the Verdier
 isomorphism of Corollary~\ref{cor:quantum-dual-complete}.
 Then for every $z \in Z(\mathcal{A})$ and $v \in T_{[\Sigma_g]}\overline{\mathcal{M}}_g$:
 \begin{equation}\label{eq:verdier-ks-anticommute}
-\mathbb{D} \circ \nabla_{\kappa(v)}^z = -\nabla_{\kappa(v)}^z \circ \mathbb{D}
+\mathbb{D} \circ \nabla_{\kappa(v)}^z =
+-\nabla_{\kappa(v)}^{\iota_Z(z)} \circ \mathbb{D}
 \end{equation}
 where $\kappa(v)$ is the Kodaira--Spencer class associated to $v$ and $\nabla^z$
 denotes the action of $z$ via the Gauss--Manin connection.
@@ -1571,8 +1574,8 @@ H^*(\overline{\mathcal{M}}_g, Z(\mathcal{A}))
 \end{equation}
 
 \emph{Stage 3: Anti-commutativity with Verdier duality.}
-We prove the anti-commutativity~\eqref{eq:verdier-ks-anticommute} in full generality
-for arbitrary Koszul pairs, using three independent ingredients.
+We prove the anti-commutativity~\eqref{eq:verdier-ks-anticommute} under the
+center-comparison and perfectness hypotheses, using three independent ingredients.
 
 \emph{Ingredient 1: Lie derivative anti-commutes with Verdier duality.}
 The Verdier duality $\mathbb{D}$ on the FM compactification $\overline{C}_n(X)$
@@ -1595,36 +1598,28 @@ $\rho^\vee = -\rho^t$, which reverses signs):
 Concretely, $\mathbb{D}$ reverses the orientation of the fibers of the FM
 compactification, and the Lie derivative reverses sign under orientation reversal.
 
-\emph{Ingredient 2: Verdier duality intertwines center actions via the Koszul pairing.}
+\emph{Ingredient 2: Verdier duality intertwines center actions through the supplied comparison.}
 For $z \in Z(\mathcal{A})$, the action $\rho(z)$ on the bar complex
 $\bar{B}^{(g)}(\mathcal{A})$ is a $\mathcal{D}$-module endomorphism (since $z$ is
-central). The Koszul pairing $\mathcal{A} \otimes \mathcal{A}^! \to \omega_X$ restricts
-to a perfect pairing on centers $Z(\mathcal{A}) \otimes Z(\mathcal{A}^!) \to \mathbb{C}$:
-the module Koszul duality equivalence $\Phi$ of
-Sublemma~\ref{lem:center-isomorphism} identifies
-$Z(\mathcal{A}) = \mathrm{End}_{\mathrm{Mod}_{\mathcal{A}}}(\mathcal{A})$ with
-$Z(\mathcal{A}^!) = \mathrm{End}_{\mathrm{Mod}_{\mathcal{A}^!}}(\mathcal{A}^!)$,
-and $\Phi$ intertwines the Koszul pairing
-(Corollary~\ref{cor:duality-bar-complexes-complete}) with the
-self-pairing on $\mathcal{A}^!$; since the full pairing is perfect
-and $\Phi|_Z$ is an isomorphism, the restricted pairing is also perfect. This pairing defines a transpose
-map $\kappa_Z: Z(\mathcal{A}) \to Z(\mathcal{A}^!)$ such that:
+central). The datum $\iota_Z$ identifies the center local systems in a way
+compatible with the Verdier--Koszul pairing. Hence the transpose of the
+$Z(\mathcal{A})$-action is the $Z(\mathcal{A}^!)$-action of $\iota_Z(z)$:
 
 \begin{equation}\label{eq:verdier-center-intertwine}
-\mathbb{D} \circ \rho(z) = \rho(\kappa_Z(z)) \circ \mathbb{D}
+\mathbb{D} \circ \rho(z) = \rho(\iota_Z(z)) \circ \mathbb{D}
 \quad \text{for all } z \in Z(\mathcal{A})
 \end{equation}
 
 For $\omega \in \bar{B}^{(g)}(\mathcal{A})$ and $\omega' \in \bar{B}^{(g)}(\mathcal{A}^!)$:
-$\langle \rho(z)\omega, \omega' \rangle_{\mathrm{Verdier}} = \langle \omega, \rho(\kappa_Z(z))\omega' \rangle_{\mathrm{Verdier}}$
-by the $Z(\mathcal{A})$-linearity of the Koszul pairing.
+$\langle \rho(z)\omega, \omega' \rangle_{\mathrm{Verdier}} =
+\langle \omega, \rho(\iota_Z(z))\omega' \rangle_{\mathrm{Verdier}}$
+by compatibility of $\iota_Z$ with the Koszul pairing.
 
 \emph{Ingredient 3: The involution absorbs the transpose.}
 Let $\sigma = \mathbb{D} \circ ((-)^!)^{-1}$ be the Verdier--Koszul involution
-(Lemma~\ref{lem:verdier-involution-moduli}). The Koszul identification
-$(\mathcal{A}^!)^! \simeq \mathcal{A}$ sends $\kappa_Z(z) \in Z(\mathcal{A}^!)$ back to
-$z \in Z(\mathcal{A})$ (since $\kappa_Z$ composed with $\kappa_Z'$ is the identity by
-Koszul involutivity). Therefore:
+(Lemma~\ref{lem:verdier-involution-moduli}). The inverse comparison
+$\iota_Z^{-1}$ sends $\iota_Z(z) \in Z(\mathcal{A}^!)$ back to
+$z \in Z(\mathcal{A})$. Therefore:
 \begin{equation}
 \sigma \circ \rho(z) = \rho(z) \circ \sigma
 \quad \text{for all } z \in Z(\mathcal{A})
@@ -1636,25 +1631,25 @@ Koszul involutivity). Therefore:
 \mathbb{D} \circ \nabla_{\kappa(v)}^z
 &= \mathbb{D} \circ \rho(z) \circ \mathcal{L}_{\tilde{v}}
 && \text{(definition)} \\
-&= \rho(\kappa_Z(z)) \circ \mathbb{D} \circ \mathcal{L}_{\tilde{v}}
+&= \rho(\iota_Z(z)) \circ \mathbb{D} \circ \mathcal{L}_{\tilde{v}}
 && \text{(by~\eqref{eq:verdier-center-intertwine})} \\
-&= -\rho(\kappa_Z(z)) \circ \mathcal{L}_{\tilde{v}} \circ \mathbb{D}
+&= -\rho(\iota_Z(z)) \circ \mathcal{L}_{\tilde{v}} \circ \mathbb{D}
 && \text{(by~\eqref{eq:verdier-lie-anticommute})} \\
-&= -\nabla_{\kappa(v)}^{\kappa_Z(z)} \circ \mathbb{D}
+&= -\nabla_{\kappa(v)}^{\iota_Z(z)} \circ \mathbb{D}
 && \text{(definition)}
 \end{align}
-Composing with the Koszul identification (which sends $\kappa_Z(z)$ back to $z$), the
+Composing with the center comparison (which sends $\iota_Z(z)$ back to $z$), the
 involution $\sigma$ satisfies:
 \begin{equation}
 \sigma \circ \nabla_{\kappa(v)}^z = -\nabla_{\kappa(v)}^z \circ \sigma
 \end{equation}
 which is the anti-commutativity~\eqref{eq:verdier-ks-anticommute} with $\mathbb{D}$
-replaced by the full involution $\sigma$. This holds for \emph{all} Koszul chiral
-pairs, not just those with one-dimensional center.
+replaced by the full involution $\sigma$. This is a theorem for Koszul chiral
+pairs carrying the stated comparison datum, not for a bare forgetful shadow.
 
 \emph{Verification for Heisenberg.} For $\mathcal{H}_\kappa$ with center
 $Z(\mathcal{H}_\kappa) = \mathbb{C} \cdot \mathbf{1} \oplus \mathbb{C} \cdot \kappa$,
-the transpose $\kappa_Z$ is the identity on $\mathbb{C} \cdot \kappa$ (the level is
+the comparison $\iota_Z$ is the identity on $\mathbb{C} \cdot \kappa$ (the level is
 self-dual under the Koszul pairing), so the general argument specialises to the
 scalar commutation $[\mathbb{D}, \rho(\kappa)] = 0$. The action of $\kappa$ on
 $H^*(\overline{\mathcal{M}}_{1,1})$ is:
@@ -1706,48 +1701,56 @@ duality on compact smooth varieties, see Theorem~\ref{thm:verdier-duality-config
 Now, the $E_2$ page of the Leray spectral sequence
 (Theorem~\ref{thm:ss-quantum}) identifies both $Q_g(\mathcal{A})$ and
 $Q_g(\mathcal{A}^!)$ as subquotients of $H^*(\overline{\mathcal{M}}_g,
-Z(\mathcal{A}))$, using the following canonical identification of centers.
+Z(\mathcal{A}))$, provided the following center-comparison datum is supplied.
 
-\begin{lemma}[Center isomorphism via module Koszul duality; \ClaimStatusConditional]
+\begin{lemma}[Center comparison datum; \ClaimStatusConditional]
 \label{lem:center-isomorphism}
-For a Koszul chiral pair $(\mathcal{A}, \mathcal{A}^!)$, there is a canonical
-isomorphism $Z(\mathcal{A}) \cong Z(\mathcal{A}^!)$.
+Let $(\mathcal{A},\mathcal{A}^!)$ be a Koszul chiral pair. Suppose the strict
+flat Koszul package contains an isomorphism of center local systems
+\[
+  \iota_Z \colon Z(\mathcal{A}) \xrightarrow{\sim} Z(\mathcal{A}^!)
+\]
+compatible with the Verdier--Koszul pairing. Then the two Leray $E_2$ pages for
+$\mathcal{A}$ and $\mathcal{A}^!$ may be read with coefficients in the same
+local system.
 \end{lemma}
 
 \begin{proof}[Proof of Sublemma]
-Since every $E_\infty$-chiral algebra is in particular an $E_1$-chiral algebra, and the Koszul property at the $E_\infty$ level implies Koszulity at the $E_1$ level (the forgetful functor is exact on bar complexes), we may apply the module Koszul duality equivalence
-(Theorem~\ref{thm:e1-module-koszul-duality}), which gives:
+This is a datum, not a consequence of module Koszul duality alone. The
+$E_1$ module Koszul equivalence
+(Theorem~\ref{thm:e1-module-koszul-duality}) gives, under its stated
+hypotheses,
 \begin{equation}
 \Phi: D^b(\mathrm{Mod}^{\Eone}_{\mathcal{A}}) \xrightarrow{\;\sim\;}
 D^b(\mathrm{Mod}^{\Eone}_{\mathcal{A}^!})
 \end{equation}
-Under~$\Phi$, the unit module $\mathcal{A}$ (viewed as a module over itself)
-maps to the canonical $\mathcal{A}^!$-module; the bar object
-$\bar{B}^{\mathrm{ch}}(\mathcal{A})$ is the coalgebra-side resolution used to
-compute this image, not the image itself. Since equivalences of categories preserve
-endomorphism algebras:
+and therefore identifies endomorphism algebras of corresponding modules,
 \begin{equation}
-Z(\mathcal{A}) = \mathrm{End}_{D(\mathrm{Mod}_{\mathcal{A}})}(\mathcal{A})
+\mathrm{End}_{D(\mathrm{Mod}_{\mathcal{A}})}(M)
 \;\xrightarrow[\Phi]{\;\sim\;}\;
-\mathrm{End}_{D(\mathrm{Mod}_{\mathcal{A}^!})}(\mathcal{A}^!)
-= Z(\mathcal{A}^!)
+\mathrm{End}_{D(\mathrm{Mod}_{\mathcal{A}^!})}(\Phi M).
 \end{equation}
-This isomorphism is canonical (determined by the bar-cobar equivalence) and
-compatible with the Koszul pairing.
+For $M=\mathcal{A}$ this is the endomorphism algebra of the regular module.
+It is not, without further centrality and flatness data, the center local
+system used in Theorem~C. The forgetful passage from commutative to associative
+structure therefore gives no center isomorphism by itself. Once $\iota_Z$ is
+part of the strict flat package, it transports the coefficients of the
+$\mathcal{A}^!$ Leray sequence to the coefficient system for $\mathcal{A}$,
+which is the assertion.
 \end{proof}
 
 The Verdier isomorphism
 $\mathbb{D}$ then exchanges these subquotients, inducing the involution
 $\sigma$ on the total space. Explicitly, $\sigma$ acts on the $E_2$ page by:
 \begin{equation}
-\sigma: E_2^{p,q}(\mathcal{A}) \to E_2^{p,d-q}(\mathcal{A}^!) \cong
+\sigma: E_2^{p,q}(\mathcal{A}) \to E_2^{p,d-q}(\mathcal{A}^!) \xrightarrow{\iota_Z}
 E_2^{p,d-q}(\mathcal{A})
 \end{equation}
-(the last isomorphism via the Koszul identification). This descends to $E_\infty$:
+(the last isomorphism via the supplied center comparison). This descends to $E_\infty$:
 Verdier duality is an exact functor on the derived category of constructible sheaves,
 and the Leray spectral sequence is functorial with respect to exact functors.
 Therefore $\sigma$, being induced by the composition of Verdier duality with the
-Koszul identification, commutes with the spectral sequence differentials $d_r$
+center comparison, commutes with the spectral sequence differentials $d_r$
 at each page (with sign absorbed by the Koszul sign convention, cf.\
 Lemma~\ref{lem:ss-duality-complete}).
 
@@ -1967,8 +1970,9 @@ data. For balanced Koszul self-dual algebras (e.g.,
 $\mathrm{Vir}_{13}$ after the anti-equivariant representative
 hypothesis of Corollary~\ref{cor:virasoro-quantum-dim}),
 Theorem~\ref{thm:self-dual-halving} gives
-$\dim V^+ = \dim V^- = 4$. For all Koszul chiral algebras
-$\cA$ with trivial center, $\dim Q_2(\cA) + \dim Q_2(\cA^!) = 8$.
+$\dim V^+ = \dim V^- = 4$. For every Koszul chiral algebra
+$\cA$ with trivial center satisfying the hypotheses above,
+$\dim Q_2(\cA) + \dim Q_2(\cA^!) = 8$.
 Detailed genus-$2$ complementarity dimensions are verified in
 Part~\ref{part:characteristic-datum} (\S\ref{subsec:genus2-complementarity-verification}).
 \end{proof}
@@ -1976,7 +1980,8 @@ Part~\ref{part:characteristic-datum} (\S\ref{subsec:genus2-complementarity-verif
 The Kodaira--Spencer and Verdier package gives:
 \begin{enumerate}
 \item a Kodaira--Spencer map via Gauss--Manin connection, with anti-commutativity
-$\mathbb{D} \circ \nabla_{\kappa(v)}^z = -\nabla_{\kappa(v)}^z \circ \mathbb{D}$
+$\mathbb{D} \circ \nabla_{\kappa(v)}^z =
+-\nabla_{\kappa(v)}^{\iota_Z(z)} \circ \mathbb{D}$
 \item a Verdier involution $\sigma$ with $\sigma^2 = \mathrm{id}$
 \item Direct sum: $Q_g(\mathcal{A}) \cap Q_g(\mathcal{A}^!) = 0$ as eigenspaces of
 $\sigma$
@@ -2005,9 +2010,10 @@ involution~$\sigma$ is a
 $\mathbf{C}_g(\cA) = R\Gamma(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA))$:
 it is induced by the composition of Verdier duality~$\mathbb{D}$
 (an exact functor on $D^b_{\mathrm{hol}}(\mathcal{D})$) with the
-Koszul identification
+supplied center comparison
 $\mathcal{Z}(\cA) \cong \mathcal{Z}(\cA^!)$
-(Theorem~\ref{thm:kodaira-spencer-chiral-complete}).
+(Lemma~\ref{lem:center-isomorphism} and
+Theorem~\ref{thm:kodaira-spencer-chiral-complete}).
 Since~$\sigma$ is induced by exact functors, it commutes with
 differentials at every page of the spectral sequence
 (Lemma~\ref{lem:verdier-involution-moduli}).
@@ -2364,7 +2370,7 @@ graphs as the correction term.
 \end{remark}
 
 \begin{lemma}[Finite-window complementarity and completed limit;
-\ClaimStatusProvedHere]
+\ClaimStatusConditional]
 \label{lem:finite-window-complementarity}
 \index{finite-window completion!complementarity}
 \index{completion!Verdier eigenspaces}
@@ -4666,7 +4672,7 @@ With Verdier duality and Ayala--Francis compatibility established, the bar-cobar
 \section{Bar-cobar quasi-isomorphism at higher genus}
 \label{sec:bar-cobar-qi-higher-genus}
 
-\begin{lemma}[Open-stratum quasi-isomorphism; \ClaimStatusProvedHere]\label{lem:higher-genus-open-stratum-qi}
+\begin{lemma}[Open-stratum quasi-isomorphism; \ClaimStatusConditional]\label{lem:higher-genus-open-stratum-qi}
 Let $U_g \subset \overline{\mathcal{M}}_g$ be the open stratum of smooth genus-$g$
 curves. The restriction
 \[j_g^*\psi_g: j_g^*\Omega_g(\bar{B}_g(\mathcal{A})) \longrightarrow j_g^*\mathcal{A}_g\]
@@ -5089,7 +5095,7 @@ the off-Koszul regime has no chain-level analogue.
 \end{remark}
 
 \begin{proposition}[\texorpdfstring{$E_2$}{E2}-collapse as formality;
-\ClaimStatusProvedHere]
+\ClaimStatusConditional]
 \label{prop:e2-collapse-formality}
 \index{formality!spectral sequence collapse}
 On the Koszul locus, the following conditions on a chiral algebra
@@ -6043,7 +6049,7 @@ Koszul chiral algebra on~$X$. The \emph{protected dual transform} is
 \begin{equation}\label{eq:holo-comp-protected-transform}
 \mathbb{H}_X(\cA)
 :=
-\Omega_X \, \mathbb{D}_{\operatorname{Ran}} \, \barB_X(\cA)
+\mathbb{D}_{\operatorname{Ran}} \, \barB_X(\cA)
 \in D^{\mathrm{co}}\!\bigl(\operatorname{Fact}(X)\bigr).
 \end{equation}
 For each $g \geq 0$, the \emph{dual cofiber} is
@@ -6085,9 +6091,7 @@ inversion (Theorem~\ref{thm:higher-genus-inversion}),
 \[
 \mathbb{H}_X(\cA)
 =
-\Omega_X \, \mathbb{D}_{\operatorname{Ran}} \, \barB_X(\cA)
-\simeq
-\Omega_X \, \barB_X(\cA^!)
+\mathbb{D}_{\operatorname{Ran}} \, \barB_X(\cA)
 \simeq
 \cA^!.
 \]

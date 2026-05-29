@@ -1086,7 +1086,7 @@ Theorem B row in CLAUDE.md moves from "PROVED modulo chiral Positselski 7.2" to 
 | 237 | "Ten unconditional + four scoped" split of the fourteen Koszulness characterisations is an intrinsic property of chiral Koszul theory | FM83 / FM198 pattern: ten of the fourteen classical Koszulness characterisations are unconditional; the other four carry scope restrictions (perfectness for Lagrangian; affine-KM-only for Hodge-Betti; genus-zero for twisted Kuenneth; metric-families for SC-formality) | The ten-plus-four split is a KZ-coordinate artefact. Every published version silently fixes Phi = Phi_KZ as the reading frame and then ascribes to the chiral algebra what is in fact a shadow cast by that coordinate choice: perfectness is tied to KZ tangent complex, affine KM is the family where the KZ singular-vector argument applies, twisted Kuenneth needs a genus-1 associator, and SC-formality reaches class M only through a Kontsevich-integral frame | Construct M_Kosz(A) as a GRT_1(Q)-torsor of Koszulness characterisations: C-points are pairs (Phi, c_Phi) with c_Phi a Phi-dependent Koszulness predicate. On its home Phi_j-chart, each of the fourteen characterisations is bijectively equivalent to chiral Koszulness. Phi_KZ carries U_1..U_10 (core ten); Phi_AT carries U_11 (perfectness absorbed into Duflo-Kontsevich tangent complex); Phi_dRB carries U_12 (purity via BGG-Kac, not KZ); Phi_ell carries U_13 (Fay trisecant, not pentagon); Phi_Kon carries U_14 (chord-diagram tautology). Tamarkin transfer between charts is GRT_1-equivariant. Previously-scoped becomes unconditional on home chart. Closes FM83 and FM198 | coordinate artefact / scope shadow |
 | 238 | "Virasoro Koszulness at generic c is proved" as if unconditional | FM197 / AP147: classical proof of Vir_c Koszulness uses bar-cobar inversion at its final step while relying on Koszulness (which entails bar-cobar inversion) to justify the step earlier. Logical arrow forms a loop through the bar complex | The Hodge-Betti chart U_12 breaks the loop: Feigin-Fuchs BGG + Kac determinant + Saito stability produce bar-complex purity as a CONSUMER of BGG-Kac data, never as a producer. The bar-complex side is output, not input, of the non-circular proof | Work entirely at Phi_dRB. Step 1: Feigin-Fuchs BGG resolution of vacuum irreducible by Verma modules at generic c. Step 2: Kac determinant det G_h != 0 off the minimal-model lattice makes BGG differentials injective. Step 3: iterated Verma -> iterated pure MHM by Saito stability. Step 4: purity of Bar_n(Vir_c) of weight n forces H*(Vir_c, Vir_c)_{weight r+1} = 0 for r >= 2. No bar-cobar inversion invoked. Closes FM197 and discharges AP147 on the Virasoro branch | circular-proof routing via chart change |
 | 239 | "Associative Yangian Koszulness does not imply chiral Yangian Koszulness" | FM161: gap between associative Y_h(g) Koszulness (Polishchuk-Positselski PBW) and chiral Koszulness of Y(g)^ch | The correct formulation is an open embedding of moduli atlases, not a failure of implication | M_Kosz^assoc(Y_h) open-embeds into M_Kosz^chiral(Y_h) as a GRT_1-equivariant open subscheme. Openness: associative chart U_1^assoc is the complement of the zero locus of the Shapovalov determinant; preimage in the chiral atlas is the complement of the same zero locus. The honest open question is chart-surjectivity (whether every chiral chart lifts an associative one); for sl_2 the embedding is an isomorphism, for higher rank it is genuinely open. Closes FM161 | implication gap vs open subscheme embedding |
-| 240 | "Exceptional-type Yangian Koszulness covered by Molev 2007 PBW" | Molev covers classical types A, B, C, D; exceptional types E_6, E_7, E_8, F_4, G_2 are not in Molev | FM162: missing citation to Guay-Regelskis-Wendlandt 2018 (arXiv:1811.06475), which provides PBW bases for exceptional-type Yangians | Cite GRW18 explicitly as source of exceptional PBW; Yangian chart inclusion theorem then applies to "any simple g" unconditionally. Closes FM162 | missing citation / scope extension |
+| 240 | "Exceptional-type Yangian Koszulness covered by Molev 2007 PBW" | Molev covers classical types A, B, C, D; exceptional types E_6, E_7, E_8, F_4, G_2 are not in Molev | FM162: missing citation to Guay-Regelskis-Wendlandt 2018 (arXiv:1811.06475), which provides PBW bases for exceptional-type Yangians | Cite GRW18 explicitly as source of exceptional PBW; the Yangian chart-inclusion theorem still requires the finite-PBW E1-chiral avatar and open-locus hypotheses. Closes the PBW part of FM162, not the whole chiral chart comparison. | missing citation / scope extension |
 | 241 | "Koszulness moduli scheme is a narrative analogy for the list of equivalences" | M_Kosz(A) is a genuine moduli scheme with explicit functor of points | AP-CY57: construction-vs-narration confusion. Moduli schemes are not structural metaphors; they are functors of points | Define M_Kosz(A): CAlg_Q -> Set explicitly as R |-> { (Phi, c_Phi) : Phi in Assoc(R), c_Phi in Chart_Phi(A; R) }, with Chart_Phi defined as triples (Pi_Phi, wit_Phi, gamma_Phi) satisfying Tamarkin compatibility. Construction (not narration) is mandatory. The chapter names the functor of points in Definition v1-def:kms-moduli-scheme and discharges AP-CY57 | construction vs narration |
 | 242 | "The 14 characterisations are derived from each other via associator transfer, so they collapse to the core ten" | Atlas has 14 charts, GRT_1 acts transitively on ASSOCIATORS; hence charts with the same home associator (the 10 KZ charts) are related by non-associator data | The 10 KZ-home charts are NOT related by associator transfer to each other; they are distinguished by the chart coordinate data (PBW SS, A_inf-formality, BBL monadicity, etc.), which is finer than associator choice. The four non-KZ charts are related to KZ charts by associator transfer | Two orthogonal decompositions of the atlas: (a) by home associator (Phi_KZ has 10 charts; Phi_AT, Phi_dRB, Phi_ell, Phi_Kon each have 1); (b) by mathematical origin (homological algebra / deformation theory / factorisation geometry / tropical geometry). GRT_1 acts on (a); mathematical origin is a fibre structure orthogonal to (a). Counting charts by (a) gives 10+1+1+1+1=14; counting by (b) gives the 4+5+5+1 split of the paper. Do not collapse (a) under GRT_1 action; the KZ charts are distinct characterisations at the same coordinate, not gauge equivalents | atlas dimensionality / axis confusion |
 | 237 | "F1 <-> F4 is an isomorphism of r(z) with the full Drinfeld associator data" | r(z) injects into the associator, recovering only binary-degree information | FM100: Drinfeld associator carries MZV tower at weights w >= 3; r(z) is homogeneous at bar-degree 2 and sees only the quadratic part of Phi. The action on r(z) factors through GRT_1(Q) / GRT_1^{(>=3)}, i.e. kills all weight-3 and higher generators | The map mu: GRT -> C^{!} tensor C^{!}[[z^{-1}]], Phi |-> Phi * r(z), factors through the binary-degree quotient. Phi_KZ and Phi_rat agree on r(z) because they differ only at weights w >= 3; the MZV tail is invisible to r(z). Inject, not isomorphise: r(z) is a single bar-degree slice of the associator, not the whole thing | associator vs binary-degree projection |
@@ -5242,19 +5242,35 @@ The BKM crown $\mathbf B = \mathbf H_{\Delta_5}$ sits at $\kappa + \kappa^! = 8$
 
 ---
 
-## Pattern 267 (W20.4): Pseudo-character primary form is $f_{16} = E_4\cdot\Delta$ (weight 16), not Ramanujan $\Delta$ (weight 12)
+## Pattern 267 (W20.4): Chenevier determinant primary form is $f_{18} = E_6\cdot\Delta$ (weight 18), not Ramanujan $\Delta$ (weight 12) nor $E_4\Delta$
 
 **Session**: 2026-04-20 (Wave 20 — Hecke primary form correction).
 
 **Type**: Hecke eigenform-mislabelling at the SK-lift input.
 
-**Confusion**: writing the pseudo-character identity $S^{\mathrm{ps}}_1(T_p) = a_p + p^8 + p^9$ with $a_p = \tau(p)$ (Ramanujan's weight-12 $\Delta$ eigenvalues).
+**Confusion**: writing the determinant identity $D^{\mathrm{Chen}}_1(T_p) = a_p + p^8 + p^9$ with $a_p = \tau(p)$, or with the coefficients of $E_4\Delta$.
 
-**Correct statement**: the primary form is $f_{16} = E_4 \cdot \Delta \in S_{16}(\mathrm{SL}_2(\mathbb Z))$ (unique normalised Hecke eigenform of weight 16, since $\dim S_{16}(\mathrm{SL}_2(\mathbb Z)) = 1$), NOT $\Delta$ (weight 12). First Hecke eigenvalues: $a_2(f_{16}) = 216, a_3(f_{16}) = -3348, a_5(f_{16}) = 52110, a_7(f_{16}) = 2822456$. Saito-Kurokawa / Ikeda lift structure for $\mathrm{Sp}_4$ uses paramodular weight $k$; at $k = 10$ (i.e., $\Delta_{10}$) the elliptic input has weight $2k-2 = 18$ (Maass 1979), and the Gritsenko-Nikulin 1998 multiplicative lift of $\phi_{0,1}$ produces $\Delta_5$ at weight 5. The SK-squared identity $\Delta_5^2 = C\cdot\Phi_{10} = C\cdot\Delta_{10}$ links the two lifts.
+**Correct statement**: the primary elliptic form for the scalar weight-ten Saito--Kurokawa packet is
+$f_{18}=E_6\Delta\in S_{18}(\mathrm{SL}_2(\mathbb Z))$, with first
+coefficients
+$a_2(f_{18})=-528$, $a_3(f_{18})=-4284$,
+$a_5(f_{18})=-1025850$, $a_7(f_{18})=3225992$.
+For the Siegel form $\Delta_{10}$ the elliptic input has weight
+$2k-2=18$; hence the elliptic Satake product is $p^{17}$ and the
+spinor determinant has top coefficient $p^{34}$.  The form
+$E_4\Delta$ has weight $16$ and Satake product $p^{15}$, so it belongs
+to a different packet.  The Gritsenko--Nikulin multiplicative lift of
+$\phi_{0,1}$ produces $\Delta_5$ at weight $5$, and the square
+$\Delta_5^2$ is the scalar weight-ten form $\Delta_{10}$.
 
-**Consequence**: using $\Delta$ (weight 12) as primary form corrupts the Satake parameters — they scale differently for $\Delta$ vs $f_{16}$ — and the deduced SK-lift target shifts from $\Delta_{10}$ to no valid target. The Euler product $L(s, \chi_3)$ of Pattern 264 then fails to match the Rankin-Selberg factorisation.
+**Consequence**: using $\Delta$ or $E_4\Delta$ as the source corrupts
+the Satake parameters.  The determinant trace becomes
+$D^{\mathrm{Chen}}_1(T_p)=a_p(f_{18})+p^8+p^9$, and the reciprocal
+spinor factor has determinant coefficient $D^{\mathrm{Chen}}_4(T_p)=p^{34}$.
 
-**Regex trigger**: flag `S\^{\\mathrm\{ps\}}\s*_1` near `\\tau\\(p\\)` or `a_p\\(\\Delta\\)` without the weight-16 $f_{16}$ qualifier.
+**Regex trigger**: flag `S\^{\\mathrm\{ps\}}\s*_1` or
+`D\^{\\mathrm\{Chen\}}_1` near `\\tau\\(p\\)`, `a_p\\(\\Delta\\)`,
+or `f_{16}` when the target is $\Delta_{10}$.
 
 **Primary**: Ikeda 2001 Ann Math 154 Thm 5.1; Maass 1979 Invent Math 52; Andrianov 1979 Russian Math Surv 34; Gritsenko 1994 Leningrad Math J 5; Gritsenko-Nikulin 1998 AJM 119; Poor-Yuen 2015 Math Comp 84; Ibukiyama-Poor-Yuen 2019 IJNT 9; Chenevier-Lannes 2019 \emph{Automorphic Forms and Even Unimodular Lattices} Table 22.1.
 
@@ -5270,23 +5286,28 @@ The BKM crown $\mathbf B = \mathbf H_{\Delta_5}$ sits at $\kappa + \kappa^! = 8$
 
 **Type**: positive pattern — empirical extension.
 
-W19 `thm:dl-wave19-pseudocharacter-delta10` verified the identity $S^{\mathrm{ps}}_1(T_p) = a_p(f_{16}) + p^8 + p^9$ at 22 primes $p \le 79$ via the \texttt{DELTA\_E6\_AP\_W17} Hecke table. Wave 20 extends to 46 primes $p \le 199$ via updated \texttt{DELTA\_E6\_AP\_W20}, adding the 24 primes:
-$$\{83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199\}.$$
+The determinant identity
+$D^{\mathrm{Chen}}_1(T_p)=a_p(f_{18})+p^8+p^9$ is now checked for
+the 56 primes $p\le 263$ by the $E_6\Delta$ convolution.  The same
+range verifies the top coefficient $D^{\mathrm{Chen}}_4(T_p)=p^{34}$.
+Deligne saturation is measured by
+$\rho_\mathrm{Del}(p):=|a_p(f_{18})|/(2p^{17/2})$; in the small-prime
+window the maximum occurs at
+$p=31$, where $\rho_\mathrm{Del}(31)=0.9318$.
 
-$S^{\mathrm{ps}}_4(T_p^4) = p^{32}$ verified at the same 46 primes. Each new prime is an independent empirical check beyond W19. Deligne-bound saturation $\rho_\mathrm{Del}(p) := |a_p(f_{16})|/(2p^{15/2})$ peaks:
-- $\rho_\mathrm{Del}(37) = 0.895$ (W19)
-- $\rho_\mathrm{Del}(89) = 0.8575$ (W18)
-- $\rho_\mathrm{Del}(181) = 0.7932$ (W20)
+The 56-prime verification strengthens the Chenevier-determinant
+normalisation with empirical checks across the same primes used by
+the Vol III whole-object verifier.
 
-The 46-prime verification strengthens the structural claim (Taylor 1991 / Weissauer 2005 Galois representation) with empirical confidence across a broader prime range.
-
-**Regex trigger** (hook): flag `22 primes` near `pseudo.character` — should be updated to `46 primes` via W20 extension.
+**Regex trigger** (hook): flag `22 primes` or `46 primes` near
+`pseudo.character`, `determinant`, or `Delta10` in this packet; the
+current checked range is 56 primes through $263$.
 
 **Primary**: Chenevier 2014 arXiv:1301.0635 Prop 1.9; Taylor 1991 Duke 63 Thm 2.1; Weissauer 2005 LNM 1868 \S 4; Deligne-Serre 1974 ASENS 7 \S 8; Andrianov 1979 RMS 34.
 
 **Location**: Vol I chapters/theory/derived\_langlands.tex Remark rem:pseudocharacter-hecke-46-prime-w20. Verification module: compute/lib/k3\_yangian\_wave20\_pseudocharacter\_46\_primes.py.
 
-**Related**: W19-chenevier-pseudocharacter-source-algebra (initial 22-prime claim) ⟂ retracted per canonical preamble: see Chenevier determinant (Pattern 295 / W25); Pattern 255 ($p=2$ ramified); Pattern 267 (primary form $f_{16}$).
+**Related**: W19-chenevier-pseudocharacter-source-algebra (initial 22-prime claim) ⟂ retracted per canonical preamble: see Chenevier determinant (Pattern 295 / W25); Pattern 255 ($p=2$ ramified); Pattern 267 (primary form $f_{18}$).
 
 ---
 
@@ -5316,7 +5337,7 @@ with $\chi_f$ the quadratic-twist character of the Jacobi input, $\mathrm{Sh}(f)
 
 **Location**: Vol I chapters/theory/derived\_langlands.tex Thm thm:shimura-waldspurger-delta5-bridge; cross-ref arithmetic\_shadows.tex Rem rem:delta5-borch-grit-bridge.
 
-**Related**: W13-TOP-1 (Ikeda vs Gritsenko); Pattern 253 (Humbert convention); Pattern 267 ($f_{16}$ primary form).
+**Related**: W13-TOP-1 (Ikeda vs Gritsenko); Pattern 253 (Humbert convention); Pattern 267 ($f_{18}$ primary form).
 
 ---
 
@@ -5326,7 +5347,7 @@ with $\chi_f$ the quadratic-twist character of the Jacobi input, $\mathrm{Sh}(f)
 
 **Type**: LDP regime-bifurcation at Sato-Tate boundary.
 
-The Fricke-phase clustering for $f_{16}$ at nodes $\theta^*_k = k\pi/8$, $k \in \{0, 1, \ldots, 8\}$ splits into two LDP regimes according to whether the Sato-Tate density $\rho(\theta) = (2/\pi)\sin^2\theta$ vanishes:
+The Fricke-phase clustering for $f_{18}$ at nodes $\theta^*_k = k\pi/8$, $k \in \{0, 1, \ldots, 8\}$ splits into two LDP regimes according to whether the Sato-Tate density $\rho(\theta) = (2/\pi)\sin^2\theta$ vanishes:
 
 **Interior ($k \in \{1, \ldots, 7\}$, $\rho > 0$)**: Gaussian LDP rate $I_k(\theta^*_k + \delta) = \delta^2/(2\sigma_k^2) + O(\delta^3)$ with inverse-density variance
 $$\sigma_k^2 = \frac{\pi}{2\sin^2\theta^*_k}$$
@@ -5355,15 +5376,15 @@ $$I^{\mathrm{Poi}}_k(t) = t\log(t/\mu_k) - t + \mu_k, \quad \mu_k(\delta) = \fra
 
 **Type**: positive pattern — conditional hypothesis removed, scope upgraded.
 
-The Fricke LDP for $f_{16}$ at 9 nodes (Pattern 270) used to be CONDITIONAL on the Barnet-Lamb-Geraghty-Harris-Taylor 2011 Publ IHÉS 108 Thm B Sym$^n$ automorphy hypothesis. Newton-Thorne 2021 Publ IHÉS 134 Thm A establishes Sym$^n$ automorphy for ALL $n \ge 1$ on non-CM cuspidal GL$_2/\mathbb Q$ eigenforms (including $f_{16}$), making the LDP UNCONDITIONAL.
+The Fricke LDP for $f_{18}$ at 9 nodes (Pattern 270) used to be CONDITIONAL on the Barnet-Lamb-Geraghty-Harris-Taylor 2011 Publ IHÉS 108 Thm B Sym$^n$ automorphy hypothesis. Newton-Thorne 2021 Publ IHÉS 134 Thm A establishes Sym$^n$ automorphy for ALL $n \ge 1$ on non-CM cuspidal GL$_2/\mathbb Q$ eigenforms (including $f_{18}$), making the LDP UNCONDITIONAL.
 
-**Upgrade**: every previously "conditional on BLGT 2011" statement about $f_{16}$ Fricke LDP (effective rate $\delta = 1/4 - \varepsilon$; Gaussian variance $\sigma_k^2$ at interior nodes; Poisson intensity $\mu_k(\delta) = (2/(3\pi))\delta^3$ at boundary nodes) is UNCONDITIONAL post-Newton-Thorne.
+**Upgrade**: every previously "conditional on BLGT 2011" statement about $f_{18}$ Fricke LDP (effective rate $\delta = 1/4 - \varepsilon$; Gaussian variance $\sigma_k^2$ at interior nodes; Poisson intensity $\mu_k(\delta) = (2/(3\pi))\delta^3$ at boundary nodes) is UNCONDITIONAL post-Newton-Thorne.
 
-**Cross-volume propagation**: every Vol I / Vol III / Vol II statement invoking "conditional on BLGT 2011" for $f_{16}$-related computations must be promoted to "unconditional via Newton-Thorne 2021" (AP5 discipline per AP289 — inscribe strongest honest form).
+**Cross-volume propagation**: every Vol I / Vol III / Vol II statement invoking "conditional on BLGT 2011" for $f_{18}$-related computations must be promoted to "unconditional via Newton-Thorne 2021" (AP5 discipline per AP289 — inscribe strongest honest form).
 
 **Three verification paths**: (V1) direct construction via Newton-Thorne 2021 Thm A Sym$^n$ representation construction from finite-order Frobenius conjugacy classes; (V2) LDP at 9 nodes applied with full Sym$^n$ moments (no finite-$n$ truncation needed); (V3) effective Sato-Tate rate $\delta = 1/4 - \varepsilon$ via Lamzouri 2019 moment estimates under unconditional Sym$^n$.
 
-**Regex trigger**: flag `conditional.*BLGT.*2011` near $f_{16}$ / $f_{\mathrm{non-CM}}$ / Sato-Tate — upgrade to Newton-Thorne 2021 unconditional.
+**Regex trigger**: flag `conditional.*BLGT.*2011` near $f_{18}$ / $f_{\mathrm{non-CM}}$ / Sato-Tate — upgrade to Newton-Thorne 2021 unconditional.
 
 **Primary**: Newton-Thorne 2021 Publ IHÉS 134 Thm A; Barnet-Lamb-Geraghty-Harris-Taylor 2011 Publ IHÉS 108 Thm B (superseded); Taylor 2008 Publ IHÉS 108; Lamzouri 2019 J Reine Angew Math 744.
 
@@ -5590,7 +5611,7 @@ Related.
 
 **(b) What the older Taylor--Wiles pseudo-character is**: Taylor 1991 \emph{Duke} 63 / Wiles 1988 framework axiomatises a sequence of symmetric $n$-linear maps $\Sps_n\colon R^{\otimes n}\to A$ (trace, determinant, and higher symmetric functions) satisfying symmetry, multiplicativity on commuting elements, and the dimension-$d$ truncation $\Sps_{d+1}\circ\mathrm{Alt}_{d+1}\equiv 0$. Chenevier 2014 Thm.~2.12 proves the two frameworks are equivalent on \emph{reduced} $A$-algebras (the polarisations of $D^{\mathrm{Chen}}$ recover $(\Sps_1,\dots,\Sps_d)$; Cayley--Hamilton on $D^{\mathrm{Chen}}$ recovers the dimension axiom). On non-reduced rings (char $p$, Deligne--Serre reduction mod $\ell$, nilpotent thickenings) the Chenevier polynomial-law formalism is strictly stronger.
 
-**(c) Why the rename is substantive, not cosmetic**: the axiom system shifts from a triple of symmetric-function-tuples to a single polynomial law; multiplicativity is promoted from a commuting-elements constraint to an unrestricted identity $D(xy)=D(x)D(y)$; the dimension axiom is absorbed into Cayley--Hamilton of degree $d$. For the paramodular target $\Tpar_1$ (commutative integral domain) the two frameworks agree, so empirical verification loci (46 primes $p\le 199$; $\Sps_1(T_p)=a_p(f_{16})+p^8+p^9$; $\Sps_4(T_p^{\otimes 4})=p^{32}$) persist unchanged; the rename sharpens the axiomatic register for consistency with the Chenevier 2014 canonical source.
+**(c) Why the rename is substantive, not cosmetic**: the axiom system shifts from a triple of symmetric-function-tuples to a single polynomial law; multiplicativity is promoted from a commuting-elements constraint to an unrestricted identity $D(xy)=D(x)D(y)$; the dimension axiom is absorbed into Cayley--Hamilton of degree $d$. For the paramodular target $\Tpar_1$ (commutative integral domain) the two frameworks agree, so the corrected empirical verification locus (56 primes $p\le 263$; $\Sps_1(T_p)=a_p(f_{18})+p^8+p^9$; $\Sps_4(T_p^{\otimes 4})=p^{34}$) persists through the axiom-framework shift; the rename sharpens the axiomatic register for consistency with the Chenevier 2014 canonical source.
 
 **Correction across the programme**: Vol I `chapters/theory/derived_langlands.tex` \S\ref{sec:dl-gelfand-pseudocharacter} retitled; Def.~\ref{def:dl-chenevier-pseudocharacter} rewritten as polynomial-law definition; Thm.~\ref{thm:dl-pseudocharacter-delta10} retitled (label preserved via aliasing `\label{thm:dl-determinant-delta10}` for cross-ref stability); Rem.~\ref{rem:dl-chenevier-determinant-vs-pseudocharacter} added with axiom comparison; Rem.~\ref{rem:dl-chenevier-axiom-comparison} added with Chenevier 2014 Thm.~2.12 reduced-ring equivalence. Vol I `chapters/theory/introduction.tex`, `chapters/theory/chiral_climax_platonic.tex`, `chapters/frame/preface.tex`, `main.tex` propagated. Source-algebra scope (paramodular Hecke $\Tpar_1$, NOT $\mathbf H_{\Delta_5}$) preserved unchanged — that part of W19 was correct.
 
@@ -5600,13 +5621,13 @@ Related.
 
 **Regex trigger**: flag `pseudo.?character` in manuscript prose (`.tex` under `chapters/`, `frame/`, `examples/`, `theory/`, `connections/`, `bibliography/`) when the target is Chenevier 2014 (paramodular $\Tpar_1$, Galois side, SK-lift Hecke eigenvalue identity); do NOT flag when the target is Creutzig--Ridout 2013 (logarithmic VOA, non-semisimple MTC).
 
-**Three verification paths**: (V1) Chenevier 2014 arXiv:1301.0635 Thm.~2.12 reduced-ring equivalence with Taylor--Wiles; (V2) Cayley--Hamilton of the 4-dim spinor representation of $\mathrm{GSp}_4$ on $\Tpar_1$ confirms $\Sps_5\circ\mathrm{Alt}_5\equiv 0$; (V3) the 46-prime empirical verification ($p\le 199$, $\Sps_1(T_p)=a_p(f_{16})+p^8+p^9$, $\Sps_4(T_p^{\otimes 4})=p^{32}$) is invariant under the axiom-framework shift.
+**Three verification paths**: (V1) Chenevier 2014 arXiv:1301.0635 Thm.~2.12 reduced-ring equivalence with Taylor--Wiles; (V2) Cayley--Hamilton of the 4-dim spinor representation of $\mathrm{GSp}_4$ on $\Tpar_1$ confirms $\Sps_5\circ\mathrm{Alt}_5\equiv 0$; (V3) the 56-prime empirical verification ($p\le 263$, $\Sps_1(T_p)=a_p(f_{18})+p^8+p^9$, $\Sps_4(T_p^{\otimes 4})=p^{34}$) is invariant under the axiom-framework shift.
 
 **Primary**: Chenevier 2014 arXiv:1301.0635 \emph{Automorphic Forms and Galois Representations}~I \S1.2 Def.~1.5 Prop.~1.9 Thm.~2.12; Taylor 1991 \emph{Duke Math.\ J.}~63 Thm.~2.1; Wiles 1988 \emph{Invent.\ Math.}~94; Weissauer 2005 LNM 1868 \S4; Laumon 2005 \emph{Publ.\ IHES}~102 Thm.~I.10.
 
 **Location**: Vol I chapters/theory/derived\_langlands.tex \S sec:dl-gelfand-pseudocharacter; Rem rem:dl-chenevier-determinant-vs-pseudocharacter; Rem rem:dl-chenevier-axiom-comparison. Cross-ref preserved via aliasing label thm:dl-determinant-delta10 on Theorem thm:dl-pseudocharacter-delta10.
 
-**Related**: W19-chenevier-pseudocharacter-source-algebra (retracted earlier version); Pattern 264 ($L(s,\chi_3)$ spinor Euler product); Pattern 267 (primary form $f_{16}$); Pattern 268 (46-prime empirical grounding).
+**Related**: W19-chenevier-pseudocharacter-source-algebra (retracted earlier version); Pattern 264 ($L(s,\chi_3)$ spinor Euler product); Pattern 267 (primary form $f_{18}$); Pattern 268 (56-prime empirical grounding).
 
 ### Pattern 414 (T1#2 chi_3; formerly 295bis, renumbered 2026-04-21): path-independence vs path-subsumption
 

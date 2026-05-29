@@ -1708,9 +1708,9 @@ Corollaries~\ref{cor:enveloping}, \ref{cor:unit}, and \ref{cor:infdual}, and
 Theorem~\ref{thm:CY}.
 \end{proof}
 
-\begin{remark}[Master theorem versus quadratic candidate-dual: MA-12]
+\begin{remark}[Master theorem versus quadratic candidate-dual]
 \label{rem:master-vs-quadratic-glz}
-\index{MA-12 (finite-spin / quadratic / classical = full theorem)}
+\index{quadratic candidate versus full theorem}
 The master theorem is a bar--cobar inversion theorem
 on the strongly-admissible locus, with the full hypothesis package
 named in the type signature. It is \emph{not} a quadratic-only
@@ -1726,8 +1726,8 @@ comparison map (cf.\
 Theorem~\textup{\ref{thm:glz-quadratic-duality-scope}} in
 Appendix~\textup{\ref{app:dual-methodology}}); this is one ingredient
 of the full bar--cobar inversion. Bare promotion of the
-quadratic-only candidate to the master-theorem statement is the
-master pattern MA-12. The endpoint hypothesis package required is
+quadratic-only candidate to the master-theorem statement omits the
+endpoint hypothesis package. The required package is
 the strongly-admissible regime of \S\ref{sec:setup} together with
 $E_2$-degeneration of the PBW spectral sequence; without these,
 the master theorem fails and only the quadratic-candidate identity
@@ -2702,14 +2702,15 @@ regular contact class is nilpotent (class~C).
 \end{remark}
 
 \begin{theorem}[Wakimoto bar complex descent;
-\ClaimStatusProvedHere]
+\ClaimStatusConditional]
 \label{thm:wakimoto-ordered-bar}
 For $\fg$ simple of rank~$r$ and $k \neq -h^\vee$, the
 Wakimoto module
 $\mathcal{M}_{\mathrm{Wak}}
 = \bigotimes_{\alpha\in\Delta_+}(\beta\gamma)_\alpha
 \otimes \cH_{\mathfrak{h}}$
-satisfies
+satisfies, under the exactness, PBW-preservation, and BRST-lift
+hypotheses of Theorem~\ref{thm:ordered-associative-ds-principal},
 \begin{equation}\label{eq:wakimoto-ordered-bar-descent}
 H^\bullet\bigl(
  \Barchord(\mathcal{M}_{\mathrm{Wak}}),\;
@@ -2726,11 +2727,12 @@ $Y^{\mathrm{dg}}_\hbar(\fg)
 \end{theorem}
 
 \begin{proof}
-$Q_{\mathrm{DS}}$ commutes with $d_{\Barch}$, so a spectral
-sequence with $E_1 = H^\bullet(\Barchord(\mathcal{M}_{\mathrm{Wak}}),
-d_{\Barch})$ and $d_1 = Q_{\mathrm{DS}}$ converges to
-$\Barchord(\widehat{\fg}_k)$ (Volume~I,
-Theorem~\ref*{thm:wakimoto-bar}).
+Under the stated hypotheses, $Q_{\mathrm{DS}}$ lifts to the ordered bar
+coalgebra and is compatible with the PBW filtration. The resulting
+spectral sequence has
+$E_1=H^\bullet(\Barchord(\mathcal{M}_{\mathrm{Wak}}),d_{\Barch})$ and
+$d_1=Q_{\mathrm{DS}}$. Its convergence is part of the hypothesis
+package, and its abutment is the reduced ordered bar model.
 Theorem~\ref{thm:ordered-associative-ds-principal}
 ensures Koszul duality and DS commute.
 \end{proof}
@@ -3458,16 +3460,19 @@ The bar differential still carries higher homotopy.
 
 \subsubsection*{The infinite Stasheff tower}
 
-Despite the Lie-algebraic triviality, the bar complex is infinitely
-non-formal. The triple pole forces non-vanishing $\Ainf$ operations
-at every degree, through a cascade that cannot terminate.
+Despite the Lie-algebraic collapse, the $T$-line remembers higher
+homotopy. The cubic Stasheff operation is computed directly; the
+all-order assertion is a statement about survival of the transferred
+shadow classes.
 
-\begin{theorem}[Virasoro non-formality; \ClaimStatusProvedHere]
+\begin{theorem}[Virasoro non-formality; \ClaimStatusConditional]
 \label{thm:vir-non-formality}
-For generic central charge~$c$, the $\Ainf$ operation $m_k$ of the
-ordered bar complex $\Barchord(\mathrm{Vir}_c)$ is nonzero for all
-$k \ge 3$. The Virasoro algebra is class~$\mathbf{M}$
-\textup{(}infinite shadow depth\textup{)}.
+For the universal Virasoro family over $\bQ(c)$, the $T$-line
+transferred shadow operations are nonzero in all degrees
+$k\ge3$. For a fixed central charge~$c_0$, the same conclusion holds
+only after the specialisations of those rational obstruction classes
+remain nonzero for all~$k$. In every specialization with
+$m_3\neq0$, the ordered bar complex is not formal.
 \end{theorem}
 
 \begin{proof}
@@ -3484,22 +3489,22 @@ A_3(T,T,T;\,\lambda_{12},\lambda_{23})
 \]
 The scalar contact term $\frac{c}{12}\lambda_{23}^3(2\lambda_{12}
 + \lambda_{23})$ is nonzero for $c \neq 0$, and the $T$-dependent
-terms (from the double-pole coefficient $2T$) are nonzero for
-\emph{all}~$c$ including $c = 0$. Hence $m_3 \neq 0$.
-
-The Stasheff cascade is now forced. At degree $k+1$, the identity
-$\sum_{i+j = k+1} m_i \circ m_j = 0$ produces a nonzero obstruction
-from compositions of lower-degree operations; the unique solution is
-$m_{k+1} \neq 0$. The triple pole ensures this cascade never
-stabilises: the pole depth~$3$ exceeds the formality threshold
-(pole depth~$1$), and each degree draws on the full pole structure
-to generate new non-associativity.
+terms coming from $T_{(1)}T=2T$ are nonzero in the universal Virasoro
+OPE. Hence $m_3$ is nonzero outside the corresponding specialization
+locus. The all-order statement is not a formal consequence of this
+single self-loop. It is the universal non-cancellation statement proved
+on the $T$-line by Theorem~\ref{thm:shadow-tower-asymptotics}: each
+higher shadow coefficient has a nonzero leading Laurent term over
+$\bQ(c)$. Specialising $c$ may kill individual rational classes; a
+fixed central charge therefore needs the stated non-cancellation check.
 \end{proof}
 
 \begin{remark}[What non-formality is not]
 \label{rem:non-formality-not-E1}
-Non-formality ($m_k \neq 0$ for all $k$) is a property of the
-\emph{bar complex}, not of the algebra's operadic type.
+Non-formality is a property of the \emph{bar complex}, not of the
+algebra's operadic type. The universal $T$-line has nonzero transferred
+operations in all degrees; a fixed central charge must be checked after
+specialization.
 $\mathrm{Vir}_c$ is and remains $E_\infty$-chiral: local, with
 $\Sigma_n$-equivariant factorization. The ordered bar complex
 applies the $E_1$-Koszul duality \emph{functor} to the $E_\infty$
@@ -3542,7 +3547,7 @@ $\kappa(Y^{\mathrm{dg}}(\mathrm{Vir}_c))
 
 The three beats assemble into a single structural dichotomy.
 
-\begin{corollary}[Gauge-gravity complexity dichotomy; \ClaimStatusProvedHere]
+\begin{corollary}[Gauge-gravity complexity dichotomy; \ClaimStatusConditional]
 \label{cor:gauge-gravity-dichotomy-ordered}
 The two standard HT families occupy opposite corners of the
 $(\Ainf,\,\Delta)$-complexity plane:
@@ -3554,8 +3559,8 @@ $(\Ainf,\,\Delta)$-complexity plane:
 \textup{Gauge \textup{(}KM, class~$\mathbf{L}$\textup{)}}
  & m_k = 0\;\textup{(formal)}
  & \textup{nontrivial Yangian } \Delta_z \\[3pt]
-\textup{Gravity \textup{(}Vir, class~$\mathbf{M}$\textup{)}}
- & m_k \neq 0\;\forall\, k\;\textup{(non-formal)}
+\textup{Gravity \textup{(}Vir, conditional class~$\mathbf{M}$\textup{)}}
+ & m_3\neq0,\;m_k\neq0\ \textup{universally on the }T\textup{-line}
  & \textup{strictly primitive } \Delta_z
 \end{array}
 \]
@@ -3565,7 +3570,8 @@ The dichotomy is controlled by two inputs:
 Double OPE pole $\Rightarrow$ simple collision residue
 $\Rightarrow$ class~$\mathbf{L}$ $\Rightarrow$ formal.
 Quartic OPE pole $\Rightarrow$ triple collision residue
-$\Rightarrow$ class~$\mathbf{M}$ $\Rightarrow$ non-formal.
+$\Rightarrow$ conditional class~$\mathbf{M}$ $\Rightarrow$
+non-formal after $T$-line non-cancellation.
 
 \item \emph{Generator count.}\enspace
 $\dim\mathfrak{g}$ generators of spin~$1$
@@ -3577,17 +3583,18 @@ $\Rightarrow$ collapse
 $\Rightarrow$ primitive coproduct.
 \end{enumerate}
 Drinfeld--Sokolov reduction transports class~$\mathbf{L}$ to
-class~$\mathbf{M}$: the Sugawara construction manufactures the quartic
-pole from the affine double pole, and the resolvent tree formula
-$m_k^{\mathcal{W}} = \sum_{\mathrm{Catalan}}
-(m_2^{\mathrm{aff}} \circ h_{\mathrm{DS}})$
-generates the infinite $\Ainf$ tower from the single binary product.
+the conditional class~$\mathbf{M}$ corridor: the Sugawara construction
+manufactures the quartic pole from the affine double pole, and the
+resolvent tree formula supplies the candidate higher operations. Their
+all-order survival is precisely the $T$-line non-cancellation
+hypothesis.
 \end{corollary}
 
 \begin{proof}
-The $\Ainf$ column: class~$\mathbf{L}$ formal by pole-order
-classification; class~$\mathbf{M}$ non-formal by
-Theorem~\ref{thm:vir-non-formality}. The coproduct column: the
+The $\Ainf$ column: class~$\mathbf{L}$ is formal by pole-order
+classification, and the gravity line is non-formal on the universal
+$T$-line by Theorem~\ref{thm:vir-non-formality}. The coproduct column:
+the
 Yangian coproduct is non-primitive for gauge theory and strictly
 primitive for gravity, where the ghost-number obstruction
 ($|h_{\mathrm{DS}}| = -1$) kills all non-primitive terms in
@@ -3819,8 +3826,8 @@ Write $\hbar = 1/(k+h^\vee)$ for the deformation parameter
 \]
 for the quadratic Casimir tensor.
 
-\begin{theorem}[Universal Kac--Moody Yangian theorem;
-\ClaimStatusProvedHere]
+\begin{theorem}[Conditional universal Kac--Moody Yangian criterion;
+\ClaimStatusConditional]
 \label{thm:km-yangian}
 \emph{Type signature:} (Open quadrant; ordered associative
 chiral duality; Beilinson level $1\!\leftrightarrow\!2$; HP =
@@ -3830,6 +3837,10 @@ $E_2$-degeneration + root-space one-dimensionality
 spectral Drinfeld class $[\delta] = 0$
 [\textup{cf.}~Theorem~\textup{\ref{thm:complete-strictification-v1}}]
 + Drinfeld classification endpoint~\cite{Drinfeld88}).
+Assume the root-sector strictification package of
+Theorem~\textup{\ref{thm:complete-strictification-v1}} and the
+$R$-twisted descent package of
+Proposition~\textup{\ref{prop:r-matrix-descent-vol1}}.
 For every simple Lie algebra~$\mathfrak{g}$ and non-critical
 level $k\neq -h^\vee$, the open-colour Koszul dual of the
 affine vertex algebra $\widehat{\mathfrak{g}}_k$ is the
@@ -4086,8 +4097,9 @@ via Sugawara.
 
 \begin{remark}[The Kac--Moody frontier]
 \label{rem:km-frontier}
-Theorem~\ref{thm:km-yangian} covers all simple Lie
-algebras. The genuine frontier is Kac--Moody algebras
+Theorem~\ref{thm:km-yangian} covers the finite-dimensional simple
+case only under its strictification and descent hypotheses. The
+genuine frontier is Kac--Moody algebras
 $\widehat{\mathfrak{g}}_k$ for~$\mathfrak{g}$ a
 \emph{Kac--Moody} Lie algebra (not finite-dimensional
 simple): for affine or indefinite Kac--Moody algebras,
@@ -4356,11 +4368,15 @@ content that the bar-cobar adjunction computes in the chiral setting.
 
 \subsection{Complete strictification}
 
-\begin{theorem}[Complete strictification for all simple Lie algebras;
-\ClaimStatusProvedHere]
+\begin{theorem}[Root-sector strictification criterion for simple Lie algebras;
+\ClaimStatusConditional]
 \label{thm:complete-strictification-v1}
-Let $\fg$ be a simple Lie algebra of any type. The spectral Drinfeld
-class vanishes at every filtration:
+Let $\fg$ be a simple Lie algebra of any type. Assume that the
+spectral Drinfeld class localizes root-sector by root-sector, and
+that in each nonzero root sector the product coefficient and coproduct
+coefficient are identified by the Dynkin idempotent and the coproduct
+rigidity equation. Then the spectral Drinfeld class vanishes at every
+filtration:
 \[
 \mathfrak{D}_{\mathrm{spec}}(A,\Omega)\big|_{F^p}=0
 \qquad\text{for all }p\ge 2.
@@ -4418,22 +4434,23 @@ realization.
 \end{proof}
 
 \begin{remark}[The role of root multiplicity one]
-The theorem has the form of a
+The criterion has the form of a
 \emph{root-multiplicity-one rigidity principle}: the spectral
 Drinfeld obstruction to strictifying a dg-shifted Yangian vanishes
-because every root-sector multilinear space is one-dimensional.
+after the spectral class has been localized to one-dimensional root
+sectors.
 
 The bar complex $\barB^{\mathrm{ord}}(\cA)$ is an $E_1$ coassociative
 coalgebra; the $\SCchtop$ datum emerges at the level of the chiral
 derived center, as the pair $(C^\bullet_{\mathrm{ch}}(\cA,\cA),\cA)$
-(Theorem~\ref{thm:master}). The complete strictification
-theorem says that, once the spectral quasi-factorization package has
-been constructed, the passage from quasi to strict is not an additional
-datum but an automatic consequence of the root structure. Just as the
+(Theorem~\ref{thm:master}). The root-sector strictification criterion
+says that, once the spectral quasi-factorization package and the
+coefficient comparison have been constructed, the passage from quasi
+to strict is forced inside each simple root sector. Just as the
 Decomposition Theorem (purity of IC complexes) makes the Hecke algebra
 arise inevitably from the geometry of $G/B$, root multiplicity one
-makes the strictification step arise inevitably from the Lie theory
-of~$\fg$.
+makes the strictification step a Lie-theoretic calculation rather
+than a scalar shadow identity.
 \end{remark}
 
 \begin{remark}[What fails for Kac--Moody algebras with root multiplicities $>1$]
@@ -4453,8 +4470,8 @@ simple Lie algebras, real roots of affine Lie algebras), and the
 remaining sectors are exactly those with higher multiplicity.
 
 For untwisted affine Lie algebras $\widehat\fg$, the real roots
-$\alpha+n\delta$ have multiplicity~$1$ (so the theorem applies
-verbatim), while the imaginary roots $n\delta$ have
+$\alpha+n\delta$ have multiplicity~$1$ (so the root-sector criterion
+applies after the same localization hypotheses), while the imaginary roots $n\delta$ have
 multiplicity $\ell=\operatorname{rank}(\fg)$. The imaginary sectors
 are abelian (elements within a single $\fg_{n\delta}$ commute), and
 a Cartan gauge-twist argument should absorb the defect. The mixed
@@ -4467,7 +4484,9 @@ the detailed imaginary-sector computation.
 \section{Worked example: \texorpdfstring{$\mathfrak{sl}_3$}{affine sl(3)} at level \texorpdfstring{$k$}{k}}
 \label{sec:sl3-ordered-bar}
 
-Theorem~\ref{thm:km-yangian} applies to every simple Lie algebra.
+The conditional criterion of Theorem~\ref{thm:km-yangian}
+specializes to every simple Lie algebra once its hypotheses are
+verified.
 For $\mathfrak{g}=\mathfrak{sl}_3$ in
 explicit matrix-unit coordinates, the rank-$2$ phenomena
 invisible in the rank-$1$ ($\mathfrak{sl}_2$) case:
@@ -4723,7 +4742,7 @@ commutator to vanish, giving the Yangian Serre relation.
 \subsection{The RTT presentation and the \texorpdfstring{$9\times 9$}{9x9} R-matrix}
 
 \begin{theorem}[RTT presentation for $Y_\hbar(\mathfrak{sl}_3)$
-from the ordered bar complex; \ClaimStatusProvedHere]
+from the ordered bar complex; \ClaimStatusConditional]
 \label{thm:sl3-rtt}
 Let $V=\bC^3$ be the defining representation of
 $\mathfrak{sl}_3$ and define the transfer matrix
@@ -4796,7 +4815,7 @@ off-diagonal ($\alpha_1+\alpha_2$) block of this $R$-matrix.
 \subsection{Strictification for \texorpdfstring{$\mathfrak{sl}_3$}{sl(3)}}
 
 \begin{theorem}[Vanishing of the spectral Drinfeld class for $\mathfrak{sl}_3$;
-\ClaimStatusProvedHere]
+\ClaimStatusConditional]
 \label{thm:sl3-strictification}
 The spectral Drinfeld class $[\delta]\in H^2(\mathfrak{sl}_3,\,
 \operatorname{End}(\mathfrak{sl}_3\otimes\mathfrak{sl}_3))$
@@ -4955,7 +4974,7 @@ root data, $R$-matrices in the fundamental representation, Serre
 relations, and strictification.
 
 \begin{theorem}[Ordered bar complexes and Yangian $R$-matrices for
-rank-$2$ non-$A$ types; \ClaimStatusProvedHere]
+rank-$2$ non-$A$ types; \ClaimStatusConditional]
 \label{thm:B2-ordered-bar}
 \label{thm:C2-ordered-bar}
 \label{thm:G2-ordered-bar}
@@ -5393,8 +5412,10 @@ The identification of the KZ/KZB monodromy with the quantum group
 action is the content of the Drinfeld--Kohno theorem and its
 generalisations.
 
-\begin{theorem}[Drinfeld--Kohno; \ClaimStatusProvedHere{} for the affine lineage]
-\label{thm:drinfeld-kohno}
+\begin{theorem}[Drinfeld--Kohno;
+\ClaimStatusProvedElsewhere{} for monodromy,
+\ClaimStatusProvedHere{} for the affine lineage]
+\label{thm:drinfeld-kohno-appendix}
 \index{Drinfeld--Kohno theorem|textbf}
 \index{monodromy!Drinfeld--Kohno identification}
 Let $\mathfrak{g}$ be a simple Lie algebra, $k \in \mathbb{C}
@@ -5407,7 +5428,7 @@ connection~\eqref{eq:kz} on $\mathrm{Conf}_n(\mathbb{C})$
 is isomorphic to the braid group representation obtained from the
 braided monoidal structure of $\mathrm{Rep}_q(\mathfrak{g})$
 via the universal $R$-matrix of $U_q(\mathfrak{g})$:
-\begin{equation}\label{eq:dk}
+\begin{equation}\label{eq:dk-appendix}
 \rho_n^{\mathrm{KZ}}
 \;\simeq\;
 \rho_n^{U_q(\mathfrak{g})}.
@@ -5532,7 +5553,7 @@ $\mathrm{Conf}_n(\mathbb{R})$ encodes associative composition; the
 line algebra is the Yangian of the holographic dictionary
 \textup{(}Volume~II, Corollary~\ref*{cor:holographic-dictionary}\textup{)}.
 At genus~$1$, Theorem~\ref{thm:b-cycle-quantum-group} and
-Drinfeld--Kohno \textup{(}Theorem~\ref{thm:drinfeld-kohno}(ii)\textup{)}
+Drinfeld--Kohno \textup{(}Theorem~\ref{thm:drinfeld-kohno-appendix}(ii)\textup{)}
 identify the full KZB monodromy with $U_q(\mathfrak{g})$.
 The degeneration $\wp_1(z,\tau)\to 1/z+O(z)$ as
 $\tau\to i\infty$ sends KZB to KZ and turns the full-cycle factor
@@ -5599,7 +5620,7 @@ $\beta \in B_n$. Then:
  on tensor powers of the fundamental representation~$V$.
 
 \item By the Drinfeld--Kohno theorem
- \textup{(}Theorem~\textup{\ref{thm:drinfeld-kohno}}\textup{)},
+ \textup{(}Theorem~\textup{\ref{thm:drinfeld-kohno-appendix}}\textup{)},
  this representation factors through
  $U_q(\mathfrak{sl}_2)$ at $q = e^{\pi i/(k+2)}$.
 
@@ -5630,7 +5651,7 @@ $\beta \in B_n$. Then:
 \begin{proof}
 Parts (i)--(ii) combine the Volume~II affine monodromy identification
 theorem (the bar-complex monodromy equals the KZ monodromy for the affine
-lineage) with Theorem~\ref{thm:drinfeld-kohno}(i) (the KZ monodromy
+lineage) with Theorem~\ref{thm:drinfeld-kohno-appendix}(i) (the KZ monodromy
 equals the quantum group braid representation).
 
 Part~(iii) is the Reshetikhin--Turaev construction: $\mathrm{Rep}_q(\mathfrak{sl}_2)$
@@ -6521,29 +6542,32 @@ $\kappa(\mathcal{W}_3^k) + \kappa(\mathcal{W}_3^{k'})
 is $k$-independent.
 \end{proof}
 
-\begin{theorem}[Class~M persistence under DS transport; \ClaimStatusProvedHere]
+\begin{theorem}[Class~M persistence under DS transport; \ClaimStatusConditional]
 \label{thm:class-m-ds-transport}
 \index{class M!DS transport}
 Let $\mathcal{W}_N = \mathcal{W}^k(\mathfrak{sl}_N, f_{\mathrm{prin}})$ be a
 principal $\mathcal{W}$-algebra at non-critical level. Then:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item The ordered bar complex
-$\Barch_{\mathrm{ord}}(\mathcal{W}_N)$ is class~$\mathrm{M}$:
-the A$_\infty$ tower $\{m_k\}$ is infinite, with
-$m_k \neq 0$ for all $k \geq 3$ \textup{(}on the $T$-line\textup{)}.
+$\Barch_{\mathrm{ord}}(\mathcal{W}_N)$ contains the Virasoro $T$-line
+obstruction package. It is class~$\mathrm{M}$ after the $T$-line
+non-cancellation hypothesis of Theorem~\ref{thm:vir-non-formality} is
+imposed.
 
 \item The non-formality is forced by the Virasoro sub-sector:
 the stress tensor $T$ generates an autonomous Virasoro subalgebra
 $\operatorname{Vir}_{c(k)} \hookrightarrow \mathcal{W}_N^k$, and
-the quartic pole $T_{(3)}T = c/2$ forces $m_3 \neq 0$. The
-higher operations cascade by the resolvent tree formula.
+the quartic pole $T_{(3)}T = c/2$ gives the first obstruction away from
+the corresponding specialization locus. The higher operations are the
+specialized Virasoro $T$-line classes.
 
 \item DS reduction preserves Koszulness but destroys formality:
 $V_k(\mathfrak{sl}_N)$ is class~$\mathrm{L}$ \textup{(}double-pole
 OPE, formal SC structure\textup{)}, while
-$\mathcal{W}_N^k$ is class~$\mathrm{M}$
-\textup{(}quartic-and-higher poles, genuinely infinite A$_\infty$
-tower\textup{)}. The Sugawara construction escalates the pole depth:
+$\mathcal{W}_N^k$ is the conditional class~$\mathrm{M}$ candidate
+\textup{(}quartic-and-higher poles, with all-order non-formality
+conditional on the $T$-line specialization\textup{)}. The Sugawara
+construction escalates the pole depth:
 the affine double-pole OPE $J^a(z)J^b(w) \sim k\delta^{ab}/(z{-}w)^2
 + f^{ab}_c J^c(w)/(z{-}w)$ produces, upon taking normal-ordered
 products in the DS construction, the Virasoro quartic-pole OPE and
@@ -6751,7 +6775,7 @@ The unshifted specialisation recovers the Yangian:
 Q_0^0(\mathfrak{g})\;\simeq\; Y_\hbar(\mathfrak{g}).
 \end{equation}
 
-\begin{theorem}[Unshifted identification; \ClaimStatusProvedHere]
+\begin{theorem}[Unshifted identification; \ClaimStatusConditional]
 \label{thm:unshifted-identification}
 On the chirally Koszul locus, the line-side algebra $A^!_{\mathrm{line}}$
 produced by ordered associative chiral Koszul duality of $\widehat{\mathfrak{g}}_k$
@@ -6794,10 +6818,12 @@ Latyntsev constructs factorisation quantum groups as factorisation
 algebras on the formal spectral curve $\widehat{\mathbb{A}}{}^1_u$,
 working at the derived/$\infty$-categorical level throughout.
 
-\begin{theorem}[Factorisation identification on the Koszul locus;
-\ClaimStatusProvedHere]
+\begin{theorem}[Factorisation identification under strictification;
+\ClaimStatusConditional]
 \label{thm:factorisation-identification}
 On the chirally Koszul locus for a simple Lie algebra $\mathfrak{g}$,
+assume a bar-horizontal strictification satisfying the root-sector
+package of Theorem~\textup{\ref{thm:complete-strictification-v1}}.
 the dg-shifted Yangian $Y^{\mathrm{dg}}_\hbar(\mathfrak{g})$ produced
 by ordered chiral Koszul duality, after bar-horizontal strictification,
 yields a strict spectral factorisation quantum group.
@@ -6809,10 +6835,9 @@ Theorem~\texttt{thm:quasi-factorisation})
 shows that every residue-bounded complete dg-shifted Yangian with a
 bar-horizontal strictification produces a spectral quasi-factorisation
 quantum group. The spectral Drinfeld obstruction class controls the
-passage from quasi to strict. For simple $\mathfrak{g}$, root multiplicity
-one forces this class to vanish at every filtration level (Volume~II,
-Theorem~\texttt{thm:complete-strictification}), yielding a strict
-strict factorisation quantum group.
+passage from quasi to strict. Under the root-sector scalar
+strictification criterion, this class vanishes filtration by
+filtration, yielding a strict factorisation quantum group.
 \end{proof}
 
 \begin{remark}[What the factorisation framework adds]
@@ -6824,8 +6849,9 @@ framework gives a \emph{definition} of factorisation quantum group that does
 not require choosing a strictification: the factorisation isomorphisms are
 part of the defining data. Our contribution is to show that the
 $\Eone$-chiral bar complex $\barB^{\mathrm{ord}}(\cA)$
-produces the same object once strictification is carried out, and that
-for simple Lie algebras the strictification is always possible. The
+produces the same object once strictification is carried out; for
+simple Lie algebras this is a theorem only under the root-sector
+strictification package. The
 Kac--Moody frontier (root multiplicities $>1$) is the regime where the
 strictification mechanism fails and Latyntsev's a~priori construction
 must be used as the primary definition.
@@ -6883,7 +6909,7 @@ matter representation $N$:
 
 \begin{remark}[Affine case and extension]
 Parts~(a) and~(b) of Conjecture~\ref{conj:three-language-equivalence}
-are proved for the standard affine case
+are conditional in the standard affine case
 $A = \widehat{\mathfrak{g}}_k$ with $\mathfrak{g}$ simple
 (Theorems~\ref{thm:unshifted-identification}
 and~\ref{thm:factorisation-identification}). Part~(c)

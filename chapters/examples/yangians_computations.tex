@@ -70,17 +70,19 @@ The product is defined via the Hecke correspondence:
 as $a \star b = q_* p^*(a \boxtimes b)$.
 \end{definition}
 
-\begin{conjecture}[CoHA as \texorpdfstring{$\Eone$}{E1}-chiral; \ClaimStatusConjectured]\label{conj:coha-e1}
-The CoHA $\mathcal{H}_Q$ carries an $\Eone$-chiral algebra structure.
-The expected structure has three necessary features:
+\begin{conjecture}[CoHA chiralisation through a comparison functor; \ClaimStatusConjectured]\label{conj:coha-e1}
+The CoHA $\mathcal{H}_Q$ is an associative Hall algebra. A chiral
+algebra appears only after a comparison functor from the Hall product
+to vertex operators on a target factorisation space is specified.
+The expected comparison has three necessary features:
 \begin{enumerate}[label=(\roman*)]
 \item The Hecke product is associative but not commutative.
 \item The factorization structure comes from stratifying by dimension vectors.
 \item The chiral enhancement uses configuration spaces of points on curves
-parameterizing deformation directions.
+parameterising deformation directions.
 \end{enumerate}
-A rigorous construction requires specifying the vertex operators and verifying
-weak associativity (the Borcherds identity).
+A rigorous construction requires specifying the vertex operators, the
+target factorisation algebra, and the Borcherds identity on that target.
 \end{conjecture}
 
 \begin{remark}[Scope]
@@ -182,9 +184,9 @@ $A_{-\hbar} = \bC\langle x', y'\rangle / (x'y' = z^n - n\hbar z^{n-1}
 + \cdots)$, the same singularity with reversed quantization parameter.
 \end{example}
 
-\subsection{\texorpdfstring{Cohomological Hall algebras as $\Eone$-chiral algebras}{Cohomological Hall algebras as E1-chiral algebras}}
+\subsection{\texorpdfstring{Cohomological Hall algebras as ordered Hall inputs}{Cohomological Hall algebras as ordered Hall inputs}}
 \label{sec:coha-structure}
-\index{CoHA!$\Eone$-chiral structure}
+\index{CoHA!ordered Hall structure}
 \index{CoHA!factorization structure}
 
 The CoHA product (Definition~\ref{def:coha}) is defined via Hecke
@@ -1767,26 +1769,22 @@ hypothesis needed for
 Proposition~\ref{prop:yangian-dk3-generated-core} \textup{(}DK-3\textup{)}.
 \end{remark}
 
-\begin{corollary}[Thick generation for all simple types;
-\ClaimStatusProvedHere]
+\begin{corollary}[Conditional thick generation criterion for all simple types;
+\ClaimStatusConditional]
 \label{cor:dk2-thick-generation-all-types}%
 \index{thick generation!all simple types|textbf}%
-For every simple Lie algebra~$\mathfrak{g}$, the evaluation
-modules $\{V_{\omega_i}(a)\}$ thickly generate\/
+Let $\mathfrak g$ be simple. Assume that every finite-dimensional
+irreducible $Y_\hbar(\mathfrak g)$-module is a subquotient of an
+ordered tensor product of the chosen fundamental spectral modules
+$V_{\omega_i}(a)$ inside the completed finite-dimensional
+representation category. Then these modules thickly generate\/
 $D^b(\mathrm{Rep}_{\mathrm{fd}}(Y_\hbar(\mathfrak{g})))$.
 \end{corollary}
 
 \begin{proof}
-The three-step argument of
-Proposition~\ref{prop:dk2-thick-generation-typeA} is
-type-independent. Step~1 uses the Drinfeld classification
-\textup{(}valid for all simple~$\mathfrak{g}$\textup{)}: every
-finite-dimensional irreducible $Y_\hbar(\mathfrak{g})$-module is
-the unique irreducible quotient of an ordered tensor product of
-fundamental evaluation modules $V_{\omega_{i_1}}(a_1) \otimes
-\cdots \otimes V_{\omega_{i_k}}(a_k)$, hence is a subquotient of
-this tensor product.
-Steps~2 and~3 are purely categorical
+The hypothesis supplies Step~1 of
+Proposition~\ref{prop:dk2-thick-generation-typeA}. The remaining
+steps are purely categorical
 \textup{(}Lemma~\ref{lem:composition-thick-generation}
 and closure of thick subcategories under bounded complexes\textup{)}
 and carry over unchanged.
@@ -1930,17 +1928,18 @@ setting. The conclusion is not a statement about ordinary Yangian
 category~$\mathcal O$.
 \end{proof}
 
-\begin{theorem}[Finite-dimensional evaluation core from Drinfeld
+\begin{theorem}[Conditional finite-dimensional spectral core from Drinfeld
 polynomials;
-\ClaimStatusProvedHere]
+\ClaimStatusConditional]
 \label{thm:mc3-universal-multiplicity-free}
 \index{Bethe subalgebra!joint spectrum}
 \index{multiplicity-free!Chari--Moura}
-For $\fg$ simple of any type and any
-finite-dimensional irreducible $Y_\hbar(\fg)$-module~$L(\psi)$,
-$L(\psi)$ is a subquotient of an ordered tensor product of fundamental
-evaluation modules determined by its Drinfeld polynomials. Hence the
-fundamental evaluation modules thickly generate
+For $\fg$ simple of any type, assume that the Drinfeld-polynomial
+classification is realized by the chosen fundamental spectral modules:
+every finite-dimensional irreducible
+$Y_\hbar(\fg)$-module~$L(\psi)$ is a subquotient of an ordered tensor
+product of those modules with parameters determined by its Drinfeld
+polynomials. Then the fundamental spectral modules thickly generate
 $D^b(\operatorname{Rep}_{\mathrm{fd}}(Y_\hbar(\fg)))$.
 Generic Bethe-algebra diagonalisation and multiplicity-free
 $q$-character results control generic finite-dimensional blocks; they
@@ -1949,12 +1948,8 @@ completed prefundamental category.
 \end{theorem}
 
 \begin{proof}
-The Drinfeld classification writes the highest $\ell$-weight of
-$L(\psi)$ by Drinfeld polynomials. The roots of those polynomials
-choose fundamental evaluation factors, and the ordered tensor product
-has $L(\psi)$ as its irreducible quotient after the usual generic
-ordering and limiting argument. Thus every simple finite-dimensional
-module lies in the thick closure of the fundamental evaluation seed.
+The hypothesis places every simple finite-dimensional module in the
+thick closure of the fundamental spectral seed.
 Lemma~\ref{lem:composition-thick-generation} gives the bounded
 derived finite-dimensional category. The Bethe subalgebra is not used
 as a substitute for this classification, and its simple-spectrum
@@ -2409,10 +2404,10 @@ This explains the role of the polynomial subcategory as a
 (Remark~\ref{rem:catO-thick-generation-verification}).
 \end{remark}
 
-\subsubsection*{Strategies for the category~$\mathcal{O}$
+\subsubsection*{Four constructions for the category~$\mathcal{O}$
 generation problem}
-\label{sec:cat-O-strategies}
-\index{Category O@Category $\mathcal{O}$!generation strategies}
+\label{sec:cat-O-generation-constructions}
+\index{Category O@Category $\mathcal{O}$!generation constructions}
 
 Corollary~\ref{cor:dk-partial-conj} reduces the full
 Conjecture~\ref{conj:full-derived-dk} to a single problem: whether
@@ -2427,7 +2422,7 @@ We develop four approaches, in decreasing
 order of structural ambition. Each reduces the generation problem to
 a different (but related) input. See
 Remark~\ref{rem:cat-o-generation-obstruction} in the concordance
-for the summary assessment.
+for the summary.
 
 \medskip
 
@@ -3044,13 +3039,13 @@ and localizing closure is closed under filtered colimits, the result
 follows.
 \end{proof}
 
-\begin{remark}[Assessment and interaction of the four strategies]
-\label{rem:cat-O-strategies-assessment}
-\index{thick generation!strategy comparison}
+\begin{remark}[Interaction of the four constructions]
+\label{rem:category-O-generation-obstruction}
+\index{thick generation!construction comparison}
 \begin{center}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{lll}
-\textbf{Strategy} & \textbf{Reduces to} & \textbf{Scope} \\
+\textbf{Construction} & \textbf{Reduces to} & \textbf{Scope} \\
 \hline
 IV (sectorwise) & Current algebra $E_1$ computation
  & All types \\
@@ -5165,17 +5160,20 @@ block just named; it is not a statement about the ordinary Yangian
 category~\(\mathcal O\).
 \end{proof}
 
-\begin{theorem}[Finite-dimensional evaluation core from Drinfeld polynomials;
- \ClaimStatusProvedHere]
+\begin{theorem}[Conditional finite-dimensional spectral core from Drinfeld polynomials;
+ \ClaimStatusConditional]
 \label{thm:mc3-universal-multiplicity-free-five-family}
 \index{MC3!universal thick generation|textbf}
 \index{thick generation!multiplicity-free $\ell$-weights}
 Let~$\mathfrak{g}$ be any simple Lie algebra and $Y_\hbar(\mathfrak{g})$
-its Yangian. The thick subcategory of
+its Yangian. Assume that every finite-dimensional irreducible is a
+subquotient of an ordered tensor product of the chosen fundamental
+spectral modules with parameters prescribed by its Drinfeld
+polynomials. Then the thick subcategory of
 \[
 D^b(\operatorname{Rep}_{\mathrm{fd}}(Y_\hbar(\mathfrak{g})))
 \]
-generated by fundamental evaluation modules is the whole bounded
+generated by those modules is the whole bounded
 derived category of finite-dimensional modules.
 Multiplicity-free $\ell$-weights and the Bethe subalgebra give
 generic diagonalization on finite-dimensional evaluation modules, but they do
@@ -5184,12 +5182,9 @@ completed prefundamental category.
 \end{theorem}
 
 \begin{proof}
-By the Drinfeld classification of finite-dimensional Yangian modules,
-every simple finite-dimensional \(Y_\hbar(\mathfrak g)\)-module is
-the irreducible quotient of an ordered tensor product of fundamental
-evaluation modules with prescribed Drinfeld polynomials. Hence every
-simple object of \(\operatorname{Rep}_{\mathrm{fd}}\) lies in the
-thick closure of the evaluation seed. Lemma~\ref{lem:composition-thick-generation}
+The hypothesis puts every simple object of
+\(\operatorname{Rep}_{\mathrm{fd}}\) in the thick closure of the
+fundamental spectral seed. Lemma~\ref{lem:composition-thick-generation}
 then gives the whole bounded derived category. The
 multiplicity-free \(q\)-character results
 \cite{Nakajima04,FrenkelMukhin01,ChariMoura06} refine the generic

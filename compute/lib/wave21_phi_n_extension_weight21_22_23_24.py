@@ -33,8 +33,8 @@ additionally on Broadhurst-Kreimer 1997 empirical depth-distribution
 This module computes and verifies:
 
 1. PADOVAN DIMENSIONS d_n through the recurrence d_n = d_{n-2} + d_{n-3}
-   with seed (d_1, d_2, d_3, d_4) = (1, 0, 1, 1):
-       d_{21} = 114, d_{22} = 151, d_{23} = 200, d_{24} = 265.
+   with Brown seed (d_0, d_1, d_2) = (1, 0, 1):
+       d_{21} = 151, d_{22} = 200, d_{23} = 265, d_{24} = 351.
 
 2. BROADHURST-KREIMER DEPTH STRATIFICATION D_{n, d} via symbolic
    expansion of BK(x, y) through order x^{28} y^8:
@@ -45,10 +45,10 @@ This module computes and verifies:
 
 3. NUMERICAL phi^(n) VALUES in the single-zeta-per-basis leading
    approximation phi^(n)_{MZV, lead} = d_n / n!:
-       phi^(21) ~ 2.231e-18,
-       phi^(22) ~ 1.343e-19,
-       phi^(23) ~ 7.736e-21,
-       phi^(24) ~ 4.271e-22.
+       phi^(21) ~ 2.955e-18,
+       phi^(22) ~ 1.782e-19,
+       phi^(23) ~ 1.029e-20,
+       phi^(24) ~ 5.663e-22.
 
 4. HARDY-RAMANUJAN EXACT p_24(k) AND RATIO for the Borcherds leg:
        |leg_K3_n| / |leg_MZV_n| = p_24(ceil(n/2)) / d_n,
@@ -56,10 +56,10 @@ This module computes and verifies:
        p_24(11) = 2,705,114,880   (OEIS A006922[11])
        p_24(12) = 10,914,317,934  (OEIS A006922[12])
    Ratios:
-       n = 21: 2.373e+07, n = 22: 1.791e+07,
-       n = 23: 5.457e+07, n = 24: 4.119e+07.
+       n = 21: 1.791e+07, n = 22: 1.353e+07,
+       n = 23: 4.119e+07, n = 24: 3.109e+07.
 
-5. PLASTIC-NUMBER ASYMPTOTIC d_n ~ A rho^n, A = rho^2/(2 rho + 3).
+5. PLASTIC-NUMBER ASYMPTOTIC d_n ~ A rho^n, A = rho^3/(2 rho + 3).
 
 VERIFICATION PATHS
 ==================
@@ -118,17 +118,17 @@ from typing import Dict, Tuple
 # ---------------------------------------------------------------------------
 
 def padovan_dim(n_max: int = 28) -> Dict[int, int]:
-    """Return {n: d_n} via d_n = d_{n-2} + d_{n-3}, seed (1, 0, 1, 1)."""
-    d: Dict[int, int] = {1: 1, 2: 0, 3: 1, 4: 1}
-    for n in range(5, n_max + 1):
+    """Return {n: d_n} via d_0=1, d_1=0, d_2=1 and d_n = d_{n-2} + d_{n-3}."""
+    d: Dict[int, int] = {0: 1, 1: 0, 2: 1}
+    for n in range(3, n_max + 1):
         d[n] = d[n - 2] + d[n - 3]
     return d
 
 
 def padovan_count_check_21_24() -> bool:
-    """Assert d_{21}..d_{24} = (114, 151, 200, 265)."""
+    """Assert d_{21}..d_{24} = (151, 200, 265, 351)."""
     d = padovan_dim(28)
-    expected = {21: 114, 22: 151, 23: 200, 24: 265}
+    expected = {21: 151, 22: 200, 23: 265, 24: 351}
     for n, v in expected.items():
         assert d[n] == v, f"Padovan d_{n} = {d[n]} != expected {v}"
     return True
@@ -335,10 +335,10 @@ def hardy_ramanujan_exact_check_21_24() -> bool:
 
     r = hardy_ramanujan_ratio_exact_21_24()
     expected = {
-        21: 2705114880 / 114,
-        22: 2705114880 / 151,
-        23: 10914317934 / 200,
-        24: 10914317934 / 265,
+        21: 2705114880 / 151,
+        22: 2705114880 / 200,
+        23: 10914317934 / 265,
+        24: 10914317934 / 351,
     }
     for n, v in expected.items():
         assert abs(r[n] - v) / v < 1e-12, f"ratio at n = {n}: {r[n]} != {v}"
@@ -377,15 +377,13 @@ def plastic_number() -> float:
 
 
 def padovan_asymptotic(n: int) -> float:
-    """Return the plastic-number asymptotic d_n ~ A rho^n for seed (1, 0, 1, 1).
+    """Return the Brown-seed main term d_n ~ A rho^n.
 
-    Closed form A = rho^2 / (2 rho + 3) = 0.31062883..., derived via
-    residue extraction at the pole x = 1/rho of the generating function
-    F(x) = x / (1 - x^2 - x^3).  Complex-conjugate roots of x^3 - x - 1
-    contribute oscillating corrections of order rho^{-n/2}.
+    For sum d_n x^n = 1/(1 - x^2 - x^3), residue extraction at
+    x = 1/rho gives A = rho^3/(2 rho + 3).
     """
     rho = plastic_number()
-    A = rho ** 2 / (2 * rho + 3)
+    A = rho ** 3 / (2 * rho + 3)
     return A * (rho ** n)
 
 

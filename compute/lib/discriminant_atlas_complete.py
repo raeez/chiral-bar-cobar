@@ -426,7 +426,7 @@ def shadow_data_W_T_line(type_: str, rank: int, k: Fraction) -> Dict[str, Any]:
         Delta_T = 40/(5c+22)
         class M (infinite tower)
 
-    For rank-1 W-algebras (W_2 = Virasoro), this IS the full data.
+    For rank-1 W-algebras (W_2 = Virasoro), this is the complete data.
     For rank >= 2, the full W-algebra has additional primary lines
     (W-line, etc.) with their own shadow data.
     """

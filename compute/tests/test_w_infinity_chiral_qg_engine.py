@@ -920,7 +920,7 @@ class TestWIQGSpin2Sugawara:
         assert sug["ope_TT_quartic_pole"] == Rational(1, 2)  # c/2 = 1/2
 
     def test_sugawara_undefined_at_psi_zero(self):
-        """Sugawara diverges at Psi=0 (critical level analogue)."""
+        """Sugawara is undefined at Psi=0; the generic formula has a pole."""
         qg = WInfinityChiralQG(Psi=Rational(0), spin_max=2)
         sug = qg.sugawara_T()
         assert sug["c"] is None

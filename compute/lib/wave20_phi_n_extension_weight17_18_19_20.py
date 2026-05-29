@@ -28,8 +28,8 @@ conditionally; depth 6 is genuinely open.
 This module computes and verifies:
 
 1. PADOVAN DIMENSIONS d_n through the recurrence d_n = d_{n-2} + d_{n-3}
-   with seed (d_1, d_2, d_3, d_4) = (1, 0, 1, 1):
-       d_{17} = 37, d_{18} = 49, d_{19} = 65, d_{20} = 86.
+   with Brown seed (d_0, d_1, d_2) = (1, 0, 1):
+       d_{17} = 49, d_{18} = 65, d_{19} = 86, d_{20} = 114.
 
 2. BROADHURST-KREIMER DEPTH STRATIFICATION D_{n, d} via symbolic
    expansion of BK(x, y) through order x^{21} y^7:
@@ -40,20 +40,20 @@ This module computes and verifies:
 
 3. NUMERICAL phi^(n) VALUES in the single-zeta-per-basis leading
    approximation phi^(n)_{MZV, lead} = d_n / n!:
-       phi^(17) ~ 1.040e-13,
-       phi^(18) ~ 7.653e-15,
-       phi^(19) ~ 5.343e-16,
-       phi^(20) ~ 3.535e-17.
+       phi^(17) ~ 1.381e-13,
+       phi^(18) ~ 1.018e-14,
+       phi^(19) ~ 7.070e-16,
+       phi^(20) ~ 4.686e-17.
 
 4. HARDY-RAMANUJAN RATIO for the Borcherds leg:
        |leg_K3_n| / |leg_MZV_n| = p_24(ceil(n/2)) / d_n,
    exact Fourier coefficients:
        p_24(9) = 143184000, p_24(10) = 639249300.
    Ratios:
-       n = 17: 3.870e+06, n = 18: 2.922e+06,
-       n = 19: 9.835e+06, n = 20: 7.433e+06.
+       n = 17: 2.922e+06, n = 18: 2.203e+06,
+       n = 19: 7.433e+06, n = 20: 5.607e+06.
 
-5. PLASTIC-NUMBER ASYMPTOTIC d_n ~ rho^n / (rho^2 + 2).
+5. PLASTIC-NUMBER ASYMPTOTIC d_n ~ A rho^n, A = rho^3/(2 rho + 3).
 
 VERIFICATION PATHS
 ==================
@@ -106,17 +106,17 @@ from typing import Dict, Tuple
 # ---------------------------------------------------------------------------
 
 def padovan_dim(n_max: int = 22) -> Dict[int, int]:
-    """Return {n: d_n} via d_n = d_{n-2} + d_{n-3}, seed (1, 0, 1, 1)."""
-    d: Dict[int, int] = {1: 1, 2: 0, 3: 1, 4: 1}
-    for n in range(5, n_max + 1):
+    """Return {n: d_n} via d_0=1, d_1=0, d_2=1 and d_n = d_{n-2} + d_{n-3}."""
+    d: Dict[int, int] = {0: 1, 1: 0, 2: 1}
+    for n in range(3, n_max + 1):
         d[n] = d[n - 2] + d[n - 3]
     return d
 
 
 def padovan_count_check_17_20() -> bool:
-    """Assert d_{17}..d_{20} = (37, 49, 65, 86)."""
+    """Assert d_{17}..d_{20} = (49, 65, 86, 114)."""
     d = padovan_dim(22)
-    expected = {17: 37, 18: 49, 19: 65, 20: 86}
+    expected = {17: 49, 18: 65, 19: 86, 20: 114}
     for n, v in expected.items():
         assert d[n] == v, f"Padovan d_{n} = {d[n]} != expected {v}"
     return True
@@ -297,10 +297,10 @@ def hardy_ramanujan_exact_check_17_20() -> bool:
     """Assert exact Borcherds/MZV ratios at n in {17, 18, 19, 20}."""
     r = hardy_ramanujan_ratio_exact_17_20()
     expected = {
-        17: 143184000 / 37,
-        18: 143184000 / 49,
-        19: 639249300 / 65,
-        20: 639249300 / 86,
+        17: 143184000 / 49,
+        18: 143184000 / 65,
+        19: 639249300 / 86,
+        20: 639249300 / 114,
     }
     for n, v in expected.items():
         assert abs(r[n] - v) < 1e-6, f"ratio at n = {n}: {r[n]} != {v}"
@@ -318,22 +318,18 @@ def plastic_number() -> float:
 
 
 def padovan_asymptotic(n: int) -> float:
-    """Return the plastic-number asymptotic d_n ~ A rho^n for seed (1, 0, 1, 1).
+    """Return the Brown-seed main term d_n ~ A rho^n.
 
-    Closed form A = rho^2 / (2 rho + 3) = 0.31062883..., derived via
-    residue extraction at the pole x = 1/rho of the generating function
-    F(x) = x / (1 - x^2 - x^3).  The quadratic factor of 1 - x^2 - x^3
-    at x = 1/rho evaluates to Q(1/rho) = (2 rho + 3)/rho^2, giving
-    A = 1/Q(1/rho) = rho^2/(2 rho + 3).  Complex-conjugate roots of
-    x^3 - x - 1 contribute oscillating corrections of order rho^{-n/2}.
+    For sum d_n x^n = 1/(1 - x^2 - x^3), residue extraction at
+    x = 1/rho gives A = rho^3/(2 rho + 3).
     """
     rho = plastic_number()
-    A = rho ** 2 / (2 * rho + 3)
+    A = rho ** 3 / (2 * rho + 3)
     return A * (rho ** n)
 
 
 def plastic_asymptotic_check_17_20() -> Dict[int, Tuple[int, float, float]]:
-    """Return {n: (d_n, rho^n/(rho^2+2), relative error)} for n in {17, ..., 20}."""
+    """Return {n: (d_n, A rho^n, relative error)} for n in {17, ..., 20}."""
     d = padovan_dim(22)
     out: Dict[int, Tuple[int, float, float]] = {}
     for n in range(17, 21):
@@ -398,4 +394,4 @@ if __name__ == "__main__":
     print()
     print("Plastic-number asymptotic vs exact d_n at n in [17, 20]:")
     for n, (dn, asy, err) in sorted(plastic_asymptotic_check_17_20().items()):
-        print(f"  n = {n}: d_n = {dn:3d}, rho^n/(rho^2+2) ~ {asy:7.3f}, rel err = {err:+.1%}")
+        print(f"  n = {n}: d_n = {dn:3d}, A rho^n ~ {asy:7.3f}, rel err = {err:+.1%}")

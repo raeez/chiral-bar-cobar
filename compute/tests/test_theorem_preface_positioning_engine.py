@@ -408,7 +408,7 @@ class TestC26Sugawara:
         k = -2 for sl_2: c = (-2)*3/(-2+2) = -6/0.
         With sympy Rational this gives zoo (complex infinity).
         The Sugawara construction is UNDEFINED at critical level,
-        not 'c diverges' (a common error).
+        not a value of the generic formula.
         """
         from sympy import zoo, oo
         val = central_charge_sugawara("A", 1, -2)

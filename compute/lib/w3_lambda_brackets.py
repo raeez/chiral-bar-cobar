@@ -1098,7 +1098,7 @@ def verify_WW_bracket_conformal_block():
     it includes the T conformal block (with coefficient C_{WWT}) and possibly the
     identity block (if h_1 + h_2 - 0 = 6 > 4, identity only contributes at (z-w)^{-6}).
 
-    Actually, 2T IS the full (z-w)^{-4} coefficient (the identity block contributes
+    In this normalization, 2T is the full (z-w)^{-4} coefficient (the identity block contributes
     only at (z-w)^{-6} and lower through scalar descendants). So C_{WWT} = 2 and the
     conformal block has C = 2 with a_0 = 1. But then a_1/1! * C gives 2*dT at (z-w)^{-3},
     not dT.

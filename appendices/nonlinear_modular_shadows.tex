@@ -337,7 +337,7 @@ analysis takes place within this genus-$0$ curve geometry,
 not over a point.
 \end{remark}
 
-\begin{proposition}[Five-component decomposition; \ClaimStatusProvedHere]
+\begin{proposition}[Five-component decomposition; \ClaimStatusConditional]
 \label{prop:nms-five-component}%
 \index{five-component decomposition}%
 Expanding $\Theta_{\cA}$ by genus and boundary type yields
@@ -451,6 +451,14 @@ construct $\cA$; once that algebra object is fixed, the shadow
 formulas are projections of the same universal class.
 \end{corollary}
 
+\begin{proof}
+Theorem~\ref{thm:nms-shadow-tower-mc} identifies each named
+shadow as the value of $\Theta_\cA$ on its boundary stratum. The
+example chapters compute the same evaluations after substituting the
+corresponding OPE or RTT presentation of~$\cA$. Evaluation of a
+Maurer--Cartan element on a fixed cycle commutes with this substitution.
+\end{proof}
+
 \begin{remark}[One equation]
 \label{rem:nms-chriss-ginzburg}%
 The modular convolution dg~Lie algebra~$\gAmod$ is the organizing
@@ -558,7 +566,7 @@ For the one-sided tangent complex $T_{\cA}$, the pullback of the ambient pairing
 If the cyclic pairing is perfect and bar--cobar duality identifies the normal complex of one side with the shifted dual tangent complex of the other, maximal isotropicity follows: the two sides are opposite polarizations of a single symplectic deformation problem.\qedhere
 \end{proof}
 
-\begin{theorem}[Ambient complementarity as a shifted symplectic formal moduli problem; \ClaimStatusProvedElsewhere{} {\normalfont (see Theorem~\ref{thm:ambient-complementarity-fmp})}]
+\begin{theorem}[Ambient complementarity as a shifted symplectic formal moduli problem; \ClaimStatusConditional{} {\normalfont (see Theorem~\ref{thm:ambient-complementarity-fmp})}]
 \label{thm:nms-ambient-complementarity-fmp}
 Assume the tangent complex $T_{\mathrm{comp}}(\cA)$ integrates to a filtered complete cyclic $L_\infty$-algebra presenting a formal moduli problem
 \[
@@ -991,6 +999,14 @@ For the Heisenberg family the separating boundary recursion is purely Gaussian:
 \xi^*\mathfrak Q_{\mathcal H}=0.
 \]
 \end{corollary}
+
+\begin{proof}
+Theorem~\ref{thm:nms-heisenberg-exact-linearity} gives
+$\mathfrak C_{\mathcal H}=\mathfrak Q_{\mathcal H}=0$. The separating
+boundary map is multiplicative for the binary Gaussian class, hence
+the only surviving boundary term is the convolution square of
+$H_{\mathcal H}$.
+\end{proof}
 
 \begin{remark}[Class~$G$ is not ``classical Koszul duality over a point'']
 \label{rem:nms-class-g-not-over-a-point}
@@ -1566,7 +1582,7 @@ Let
 be the quasi-primary square of the spin-$3$ generator. The \emph{primary quartic resonance divisor} of $\mathcal W_3$ is the vanishing locus of the rank-one Gram pairing of $\Xi_W$.
 \end{definition}
 
-\begin{proposition}[Visible quartic resonance factor for \texorpdfstring{$\mathcal W_3$}{W3}]
+\begin{proposition}[Visible quartic resonance factor for \texorpdfstring{$\mathcal W_3$}{W3}; \ClaimStatusProvedHere]
 \label{prop:nms-w3-visible-resonance-factor}
 The rank-one visible norm of
 $\Xi_W=\Pi_{\mathrm{qp}}(:W^2:)$ is
@@ -1581,6 +1597,22 @@ at $c=1/2$. Hence the visible rank-one $\Xi_W$ norm does not detect
 the factor $2c-1$; that factor belongs to the full weight-$6$
 contact block in Theorem~\ref{thm:nms-w3-full-quartic-gram}.
 \end{proposition}
+
+\begin{proof}
+The displayed norm is the rank-one Gram entry of the quasi-primary
+projection $\Pi_{\mathrm{qp}}(:W^2:)$. Let
+\[
+p(c)=875c^3+110975c^2+112880c-1931508 .
+\]
+The polynomial is primitive over $\mathbb Z$. Modulo~$17$ it becomes
+\[
+p(c)\equiv 8c^3+16c^2+15\pmod {17},
+\]
+and this cubic has no root in $\mathbb F_{17}$; hence $p$ is
+irreducible over $\mathbb Q$. Finally
+$p(1/2)=-14777719/8\neq0$, so the visible rank-one norm does not
+contain the factor $2c-1$.
+\end{proof}
 
 \begin{remark}[Visible versus full quartic resonance]
 \label{rem:nms-visible-vs-full-resonance}
@@ -2291,10 +2323,11 @@ weight-changing line is a stricter rank-one degeneration with
 $\mathrm{Sh}_r|_{L_{\mathrm{wc}}}=0$ for all $r\ge2$.
 \end{enumerate}
 In contrast, Virasoro has $\mathrm{Sh}_5\neq 0$
-(Theorem~\ref{thm:nms-virasoro-quintic-forced}); equivalently the
-Virasoro shadow metric is the non-polynomial square root
-$t^2\sqrt{Q_{\mathrm{Vir}}(t)}$, so its scalar tower is generically
-infinite.
+(Theorem~\ref{thm:nms-virasoro-quintic-forced}); over~$\bQ(c)$ the
+leading Laurent coefficient of each $S_r$ is nonzero
+(Theorem~\ref{thm:shadow-tower-asymptotics}), so the universal scalar
+tower is infinite. A fixed value of~$c$ imposes the corresponding
+specialization non-cancellation.
 \end{theorem}
 
 \begin{proof}
@@ -2309,10 +2342,10 @@ internal weight-changing line Theorem~\ref{thm:nms-rank-one-rigidity}
 gives the stronger vanishing of every shadow.
 
 For Virasoro, Theorem~\ref{thm:nms-virasoro-quintic-forced} gives
-$\mathrm{Sh}_5\neq 0$, and the closed Virasoro square-root metric
-(Theorem~\ref{thm:virasoro-shadow-generating-function}) is not a
-polynomial for generic~$c$. Hence no finite truncation can contain the
-full scalar shadow tower.\qedhere
+$\mathrm{Sh}_5\neq 0$, and
+Theorem~\ref{thm:shadow-tower-asymptotics} gives a nonzero leading
+Laurent coefficient for every higher $S_r$. Hence no finite
+truncation contains the universal scalar shadow tower over~$\bQ(c)$.\qedhere
 \end{proof}
 
 \begin{remark}[The Virasoro shadow obstruction tower is the first infinite one]
@@ -2322,7 +2355,8 @@ Gaussian terminates at degree~$2$, Lie/tree at degree~$3$, and the
 standard $\beta\gamma_\lambda$ contact lane at degree~$4$. The
 weight-changing $\beta\gamma$ line is a lower-dimensional degeneration
 of the contact lane, not the class-C witness. Virasoro, the first mixed
-family, has a non-polynomial complementarity potential. This is the
+family, has a non-polynomial complementarity potential over the
+function field. This is the
 mechanism by which the Virasoro modular package carries strictly more
 information than the $\hat{A}$-genus.
 \end{remark}
@@ -2435,7 +2469,7 @@ $\xi_{\mathrm{ns}}^*\Theta_{\cA}^{(g)}
 Expanding both sides in the degree filtration: the degree-$r$ component of the left side is $\mathrm{Sh}_r^{(g)}$, while the degree-$r$ component of $\Lambda_P(\Theta^{(g-1)})$ is $\Lambda_P(\mathrm{Sh}_{r+2}^{(g-1)})$ since $\Lambda_P$ lowers degree by~$2$.\qedhere
 \end{proof}
 
-\begin{corollary}[Genus-$1$ Hessian correction from genus-$0$ quartic shadow; \ClaimStatusProvedHere]
+\begin{corollary}[Genus-$1$ Hessian correction from genus-$0$ quartic shadow; \ClaimStatusConditional]
 \label{cor:nms-genus-one-hessian-correction}
 In the one-vertex sector, the genus-$1$ correction to the Hessian is
 \begin{equation}
@@ -2607,7 +2641,7 @@ H_{\cA}\star \mathfrak Q_{\cA}
 \]
 and whose clutching correction is the cubic tree divisor $\mathfrak T_{3,\xi}(\cA)$;
 \item since the full universal class $\Theta_{\cA}$ exists (Theorem~\ref{thm:mc2-bar-intrinsic}), this clutching correction is the first nonlinear modular shadow of its universal clutching identity;
-\item the shadow obstruction tower extends to all degrees: the all-degree master equation $\nabla_{H_{\cA}}\mathrm{Sh}_r+\mathfrak o^{(r)}=0$ governs $\mathrm{Sh}_r$ for every $r\ge 3$, with the primitive archetypes terminating (Gaussian at $2$, Lie/tree at $3$, contact at $4$) while Virasoro is the first genuinely infinite tower;
+\item the shadow obstruction tower extends to all degrees: the all-degree master equation $\nabla_{H_{\cA}}\mathrm{Sh}_r+\mathfrak o^{(r)}=0$ governs $\mathrm{Sh}_r$ for every $r\ge 3$, with the primitive archetypes terminating (Gaussian at $2$, Lie/tree at $3$, contact at $4$) while the Virasoro tower is infinite over~$\bQ(c)$ by the leading Laurent calculation;
 \item the genus loop operator $\Lambda_P:\operatorname{Sym}^r\to\operatorname{Sym}^{r-2}$ implements non-separating clutching on the shadow obstruction tower, and the genus-$1$ Hessian correction $\delta H^{(1)}_{\cA}=\Lambda_P(\mathfrak Q_{\cA}^{(0)})$ is the first tensorial modular invariant beyond the $\hat{A}$-genus;
 \item for the Virasoro, $\delta H^{(1)}_{\mathrm{Vir}}=120/[c^2(5c+22)]\cdot x^2$, and the loop ratio $\rho^{(1)}_{\mathrm{Vir}}=240/[c^3(5c+22)]$ distinguishes algebras invisible to~$\kappa$.
 \end{enumerate}
@@ -2631,7 +2665,7 @@ characteristic detecting nonlinear complementarity.
 \end{remark}
 
 \section{The graph-completed Feynman transform}
-\label{sec:nms-feynman-transform-programme}
+\label{sec:nms-feynman-transform-theory}
 
 The finite-order shadow calculus of the preceding sections captures the degree-$\le 4$ face of the universal Maurer--Cartan class $\Theta_\cA$, which exists by the bar-intrinsic construction (Theorem~\ref{thm:mc2-bar-intrinsic}). The next question is not \emph{existence} (that is settled) but \emph{refinement}: can one upgrade the abstract MC element to a \emph{graph-completed Hamiltonian modular master action} that organizes the vertex-by-vertex computational content? This section constructs the natural carrier object for such a refinement, states the resulting conjecture, and introduces three new geometric avatars.
 
@@ -2943,7 +2977,7 @@ namely: a graph-completed Hamiltonian master element, its Legendrian geometric a
 \end{remark}
 
 \section{Polarized resonance scattering}
-\label{sec:nms-polarized-scattering-programme}
+\label{sec:nms-polarized-scattering-theory}
 
 The Feynman transform carries one-color vertex labels. The next structural upgrade replaces the one-color Maurer--Cartan problem by a \emph{polarized bipartite machine} in which complementarity becomes a graph-theoretic selection rule.
 
@@ -3084,9 +3118,9 @@ classification of polarized modular states by catastrophe type.
 \end{remark}
 
 \section{Bipartite nonlinear tower}
-\label{sec:nms-theorem-programme}
+\label{sec:nms-theorem-hierarchy}
 
-The constructions of \S\ref{sec:nms-feynman-transform-programme}--\S\ref{sec:nms-polarized-scattering-programme} yield a bipartite hierarchy of theorems and conjectures, ordered by structural depth.
+The constructions of \S\ref{sec:nms-feynman-transform-theory}--\S\ref{sec:nms-polarized-scattering-theory} yield a bipartite hierarchy of theorems and conjectures, ordered by structural depth.
 
 \begin{theorem}[Bipartite vanishing theorem; \ClaimStatusProvedHere]
 \label{thm:nms-bipartite-vanishing}
@@ -3167,7 +3201,7 @@ support is the complementarity Legendrian front.
 \label{rem:nms-implementation-path}
 The finite graph model has five required components:
 \begin{enumerate}[label=\textup{(\arabic*)}]
-\item a finite-dimensional cyclic $L_\infty$ scaffold with two
+\item a finite-dimensional cyclic $L_\infty$ model with two
 polarizations,
 \item the mixed propagator $P^{+-}$ and the vanishing blocks
 $P^{++}=P^{--}=0$,
@@ -3252,7 +3286,7 @@ where $C_A \ast_{P^{+-}} C_A$ denotes the cubic shadow contracted through the mi
 \index{Bridge Theorem!shadow data consumption}
 \index{nonlinear shadow tower!bridge consumption}
 The Bridge Theorem
-(Remark~\ref{rem:bridge-theorem-programme};
+(Remark~\ref{rem:bridge-theorem-comparison};
 Theorem~\ref{thm:bridge-criterion})
 consumes shadow data at exactly two projections of the
 universal MC element
@@ -3323,7 +3357,7 @@ Every earlier level is a shadow of every later level. The graph-completed master
 \end{remark}
 
 \begin{remark}[Factorization envelope and the shadow obstruction tower]
-\label{rem:nms-factorization-envelope-programme}
+\label{rem:nms-factorization-envelope}
 \index{factorization envelope!shadow tower}
 \index{platonic package!shadow tower connection}
 The 2025--2026 factorization envelope technology
@@ -4516,10 +4550,10 @@ $\partial^2 S/\partial x^2|_{x=0} = \kappa$
 $a = -\sum_k 1/x_k(c)$ by the standard Hadamard normalization.
 \end{proof}
 
-\begin{corollary}[MC solution counting;
- \ClaimStatusProvedHere]
+\begin{corollary}[MC solution counting]
 \label{cor:nms-mc-solution-counting}%
 \index{MC moduli curve!solution counting}%
+\ClaimStatusConditional
 The number $N(R;\,c)$ of nontrivial MC solutions with
 $|x_k(c)| \leq R$ satisfies the Jensen estimate
 \[
@@ -4533,6 +4567,15 @@ for fixed $c \notin K$: the MC solutions have at most linear
 density. They accumulate only at $x = \infty$, not at any
 finite point.
 \end{corollary}
+
+\begin{proof}
+Apply Jensen's formula to the entire function
+$\partial S/\partial x$ on the disk of radius $2R$. The zero at the
+origin is removed by the factor $(\kappa/2)x$, and the order-one
+Hadamard factorisation of Theorem~\ref{thm:nms-hadamard-mc-potential}
+gives linear growth of the Jensen integral. Thus the zero-counting
+function is $O(R)$.
+\end{proof}
 
 \begin{remark}[Trivial isomonodromy at rank~$1$]
 \label{rem:nms-trivial-isomonodromy}%

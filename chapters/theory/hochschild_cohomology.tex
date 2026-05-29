@@ -103,11 +103,9 @@ and periodic cyclic homology $\mathrm{HP}_*$ are as follows. In particular:
  sequence (Theorem~\ref{thm:connes-exact-sequence},
  Corollary~\ref{cor:connes-SBI}),
 \end{itemize}
-are all defined here and should be cited from here throughout the text.
-Other chapters that use chiral Hochschild, topological Hochschild
-homology, or cyclic invariants
-\textup{(}the deformation theory and Poincar\'e duality chapters\textup{)}
-reference these definitions rather than re-establishing them.
+are all defined here. These definitions govern the chiral Hochschild,
+topological Hochschild, and cyclic-invariant conventions used by the
+deformation theory and Poincar\'e duality chapters.
 \end{remark}
 
 \begin{remark}[Chiral Kontsevich formality: $\ChirHoch^\bullet$ and
@@ -1115,7 +1113,7 @@ consistent with the Verdier anti-commutativity of the Kodaira--Spencer
 class (Theorem~\ref{thm:kodaira-spencer-chiral-complete}). The partner
 $\mathrm{Vir}_{26-c}$ is the same-family Koszul dual
 (Theorem~\ref{thm:modular-characteristic}); the infinite-generator
-realization via the $W_\infty$ completion programme is treated in
+realization via the $W_\infty$ completion theorem is treated in
 Chapter~\ref{chap:concordance}.
 \end{remark}
 
@@ -1287,7 +1285,7 @@ equivalently perfect $A^e$-modules for
 $A^e=A\otimes A^{\mathrm{op}}$.
 \end{proposition}
 
-\begin{proof}[Proof sketch]
+\begin{proof}
 The dg Eilenberg--Watts theorem says that a colimit-preserving
 functor $F\colon \mathrm{Mod}_A\to\mathrm{Mod}_A$ is represented by
 the bimodule $M_F:=F(A)$, where the right action comes from the free
@@ -1302,6 +1300,7 @@ the $\infty$-categorical statement.
 
 \begin{corollary}[Identity functor $=$ diagonal bimodule]
 \label{cor:identity-diagonal}
+\ClaimStatusProvedHere
 Under the compact-preserving restriction of the equivalence of
 Proposition~\textup{\ref{prop:endofunctor-bimodule}}, the identity
 functor $\mathrm{Id}\colon \mathrm{Perf}(A) \to \mathrm{Perf}(A)$
@@ -2062,16 +2061,16 @@ identifications require separate calculations in the K3 Hall model and
 cannot be imported from CoHA or DT data.
 
 The CY-$3$ extension is an \emph{orthogonal scope}, not a weakening
-of Theorem~H. Under the Vol~III functor
-$\Phi_3 : D^b\mathrm{Coh}(\mathrm{K3}\times E)\to\mathrm{ChirAlg}_X^{\SCchtop}$
+of Theorem~H. Under the Vol~III two-stage specialization
+$\Phi_3^{(\Sigma_2,C)}=\SpCh_{\Sigma_2,C}\circ\PhiFA_3$
 the transverse CY-$3$ fibre $\mathrm{K3}\times E$ carries an additional
 cohomological degree~$3$ class beyond the curve-ambient $\{0,1,2\}$:
 the CY-$3$ volume class $[\omega_{\mathrm{K3}\times E}]\in
-H^6(\mathrm{K3}\times E)$, transported by $\Phi_3$ to
+H^6(\mathrm{K3}\times E)$, transported by $\Phi_3^{(\Sigma_2,C)}$ to
 \[
  [\chi_3]\;\in\;\ChirHoch^3_{\mathrm{CY\text{-}3}}(\mathbf H_{\Delta_5}),
  \qquad
- \chi_3 = \Phi_3\bigl(K_3^{\mathrm{K3}\times E}\bigr),
+ \chi_3 = \Phi_3^{(\Sigma_2,C)}\bigl(K_3^{\mathrm{K3}\times E}\bigr),
 \]
 with $K_3^{\mathrm{K3}\times E}$ the Schiffmann--Vasserot degree-$3$
 CoHA generator of the chiral Hall algebra attached to
@@ -2158,21 +2157,20 @@ and Vol~III, Rem.~\ref{V3-rem:hochcalc-theoremH-CY3-scope}.
 \providecommand{\PhiFA}{\Phi^{\mathrm{FA}}}
 
 \begin{theorem}[Explicit non-vanishing product-ambient
-$\ChirHoch^3$-cocycle on $\mathbf H_{\Delta_5}$, Siegel chamber]
+$\ChirHoch^3$-cocycle on $\mathbf H_{\Delta_5}$, Siegel comparison chamber]
 \label{thm:chirhoch3-Delta5-chain-level}
 \ClaimStatusConditional
 Let $X$ be a smooth projective curve, $\mathcal U$ a formal disc
 $\mathcal U\subset X$, and let
 \[
  \mathbf H_{\Delta_5}
- \;=\;\Phi_3\bigl(D^b\mathrm{Coh}(\mathrm{K3}\times E)\bigr)
+ \;=\;\Phi_3^{(\Sigma_2,C)}\bigl(D^b\mathrm{Coh}(\mathrm{K3}\times E)\bigr)
+ \;=\;\SpCh_{\Sigma_2,C}\!\bigl(\PhiFA_3(D^b\mathrm{Coh}(\mathrm{K3}\times E))\bigr)
 \]
 denote the K3$\times E$ chiral bialgebra of
 Vol~III~Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}, viewed as a
-factorisation algebra on~$X$ through the Davison--Meinhardt--CY-3
-functor
-$\Phi_3: D^b\mathrm{Coh}(\mathrm{K3}\times E)\to
-\mathrm{ChirAlg}_X^{\SCchtop}$. Assume the product-ambient mixed
+factorisation algebra on~$X$ through the Vol~III composite
+$\Phi_3^{(\Sigma_2,C)}=\SpCh_{\Sigma_2,C}\circ\PhiFA_3$. Assume the product-ambient mixed
 complex for $X\times(\mathrm{K3}\times E)$ converges and satisfies
 the top-entry vanishing condition
 $E_\infty^{p,q}=0$ for $p+q>3$ of
@@ -2223,11 +2221,13 @@ Then:
  $\ChirHoch^\bullet_{\mathrm{CY\text{-}3}}$ on the ambient
  $X\times(\mathrm{K3}\times E)$. Under the top-entry vanishing
  hypothesis its support is bounded by $\{0,1,2,3\}$, matching the
- Siegel chamber value
- $\kappa_{\mathrm{ch}}(\mathbf H_{\Delta_5})
- +\kappa^!_{\mathrm{ch}}(\mathbf H_{\Delta_5})=250/3$ of
- Theorem~C on $\mathcal A_2
- \subset\overline{\mathcal A}_2^{\mathrm{BB}}$. On the
+ K3 Hall--Drinfeld row: the Mukai conductor is
+ $K^{\kappa_{\mathrm{ch}}}(\mathbf H_{\Delta_5})=8$, while the
+ Borcherds denominator weight is
+ $\kappa_{\mathrm{BKM}}(\Delta_5)=5$. The principal
+ $\mathcal W_3$ value $250/3$ belongs to the class-$\mathsf M$
+ Siegel chamber and is not a scalar of
+ $\mathbf H_{\Delta_5}$. On the
  ambient-curve-only complex
  $\ChirHoch^\bullet(\mathbf H_{\Delta_5})$ of Theorem~H
  (curve~$X$ alone), $[\chi_3]$ projects to $0$; concentration
@@ -2282,7 +2282,7 @@ rational value).} The computation returns the
 explicit rational value
 \begin{equation}
 \label{eq:chi3-rational-value}
- \langle[\chi_3],[e_3^{\mathrm{K3}\times E}]\rangle_{\Phi_3}
+ \langle[\chi_3],[e_3^{\mathrm{K3}\times E}]\rangle_{\Phi_3^{(\Sigma_2,C)}}
  \;=\;\chi(\mathcal O_{\mathrm{K3}})\cdot\mathrm{Vol}(E)\cdot(2\pi\mathrm{i})^3
  \;=\;2\,\mathrm{Vol}(E)\cdot(2\pi\mathrm{i})^3
 \;\in\;\mathbb Q\cdot\mathrm{Vol}(E)\cdot(2\pi\mathrm{i})^3,
@@ -2296,8 +2296,9 @@ Casimir.} Let $\alpha$ be a real simple root of
 $\mathfrak g_{\Delta_5}$ with Tits--Vinberg norm
 $(\alpha,\alpha)=2$ and let $(e_\alpha,f_\alpha,h_\alpha)$ be the
 $\mathfrak{sl}_2$-triple realising the root string, pushed to the
-CoHA via the Davison--Meinhardt $\Phi_3$-functor and to the
-chiral side via the Kapranov--Vasserot~$2018$~arXiv:1802.07988~Thm.~$1.1$
+CoHA via the Davison--Meinhardt factorisation-algebra construction and to the
+chiral side via $\Phi_3^{(\Sigma_2,C)}$ and
+Kapranov--Vasserot~$2018$~arXiv:1802.07988~Thm.~$1.1$
 transport. Schiffmann--Vasserot~$2013$~Publ.~IHES~$118$~Thm.~$6.1$
 and the Okounkov~$2017$~arXiv:1512.07363~\S~6
 Chern-character formula for the CoHA$_{\mathrm{K3}\times E}$ compute
@@ -2397,7 +2398,7 @@ $y=e^{2\pi\mathrm{i}z}$, the triple $(\beta_h,d,k)$ indexing a
 K3-curve class of Beauville--Bogomolov norm $\beta_h^2=2h-2$, an
 $E$-degree $d$, and a fibre-twist exponent $k$. The Kapranov--Vasserot
 CoHA/chiral-Hochschild compatibility transports
-$\langle[\chi_3],[e_3^{\mathrm{K3}\times E}]\rangle_{\Phi_3}$ to
+$\langle[\chi_3],[e_3^{\mathrm{K3}\times E}]\rangle_{\Phi_3^{(\Sigma_2,C)}}$ to
 the polar-leading $(\beta_0,0,0)=(h=0,d=0,k=0)$ coefficient of the
 reciprocal OP-normalized Igusa product in the positive Weyl chamber
 $|y|<1$ of
@@ -2418,7 +2419,7 @@ $2\phi_{0,1}$: the polar prefactor $pqy^{-1}(1-y)^2$ inverts in
 $|y|<1$ to $p^{-1}q^{-1}y\sum_{j\ge 0}(j+1)y^j$, whose $y^0$
 coefficient under the Gritsenko--Nikulin Weyl-chamber prescription
 evaluates to $1$. The elliptic-genus coefficient table
-$c(-1)=2,c(0)=20,c(3)=216,\ldots$
+$c(-1)=2,c(0)=20,c(3)=-128,c(4)=216,\ldots$
 (Eguchi--Ooguri--Taormina--Yang~$1989$~Nuclear Phys.~B~$315$;
 verified to $n\le 2$ in \texttt{cy\_dt\_k3e\_engine.py}~\S~1
 via the $\phi_{0,1}$-Fourier table entries
@@ -2519,13 +2520,13 @@ with the elliptic one-form,
 \]
 with $[\mathrm{d}z_E]\in H^{1,0}(E)$ the elliptic differential.
 Transport along the HPD equivalence of~\eqref{eq:hpd-fibration-pair}
-and then along~$\Phi_3$ gives the composition
+and then along~$\Phi_3^{(\Sigma_2,C)}$ gives the composition
 \begin{equation}
 \label{eq:chi3-hpd-transport}
  \mathrm{HH}^3_{\mathrm{cat}}(\mathrm{Ku}(\widetilde Y^\vee/E))
  \;\xrightarrow[\text{HPD}]{\;\sim\;}\;
  \mathrm{HH}^3_{\mathrm{cat}}(D^b\mathrm{Coh}(\mathrm{K3}\times E))
- \;\xrightarrow{\;\Phi_3\;}\;
+ \;\xrightarrow{\;\Phi_3^{(\Sigma_2,C)}\;}\;
  \ChirHoch^3_{\mathrm{CY\text{-}3}}(\mathbf H_{\Delta_5}),
 \end{equation}
 and Kuznetsov~$2018$~Thm.~$5.5$ (HPD preserves the Calabi--Yau
@@ -2572,31 +2573,25 @@ Theorem~\ref{thm:chirhoch-above-degree-d-vanishes}. If the
 $H^1(\mathcal O_X)$ row or the $q=2$ top row survives, the
 product-ambient complex is not concentrated in $\{0,1,2,3\}$.
 Under the top-entry hypothesis, Caldararu~$2005$ \S~4 identifies the
-CY-$3$ volume class with the degree-$3$ fibre slot. The
-Siegel chamber complementarity value for $\mathbf H_{\Delta_5}$,
+CY-$3$ volume class with the degree-$3$ fibre slot. The generic
+Siegel chamber carries the principal $\mathcal W_3$ class-$\mathsf M$
+scalar $250/3$, but that scalar is not an invariant of
+$\mathbf H_{\Delta_5}$. The K3 Hall--Drinfeld object contributes the
+separated values
 \[
- \bigl(\kappa_{\mathrm{ch}}+\kappa^!_{\mathrm{ch}}\bigr)
- \bigl(\mathbf H_{\Delta_5}\bigr)\Bigm|_{\mathcal A_2}
- \;=\;250/3,
+K^{\kappa_{\mathrm{ch}}}(\mathbf H_{\Delta_5})=8,
+\qquad
+\kappa_{\mathrm{BKM}}(\Delta_5)=5.
 \]
-chamber-assigned in Rem.~\ref{rem:cct-1}
-(\texttt{chiral\_center\_theorem.tex}) via the classical four-archetype
-$\mathsf{G}/\mathsf{L}/\mathsf{C}/\mathsf{M}$ landmark ceiling
-$\kappa+\kappa^!\in\{0,13,250/3,98/3\}$ of Theorem~C (the canonical
-five-element bucket $\{0,8,13,250/3,98/3\}$ of
-Convention~\ref{conv:theorem-c-bucket} adjoins the $\mathsf{B}$-row
-Mukai-doubling witness at $K^\kappa=8$ on the CY-$2$ Lorentzian-lattice
-side; this is
-the class-M Virasoro chamber value on the Siegel stratum $\mathcal A_2$,
-not the Virasoro scalar $13$, which applies to a single Virasoro
-factor rather than to the K3 bialgebra on $\mathcal A_2$), is the
-chamber in which the CY-$3$ product-ambient twist is active and,
-under the top-entry hypothesis, $[\chi_3]\neq 0$.
+Thus the product-ambient twist is a chamber comparison with the
+principal $\mathcal W_3$ lane, while the K3 bialgebra keeps its
+Mukai and Borcherds scalars. Under the top-entry hypothesis this
+comparison is the chamber in which $[\chi_3]\neq 0$.
 Along the Humbert divisor
-$H_1\cup H_4\subset\overline{\mathcal A}_2$, the chamber value
-drops to $98/3$ (class-$C$ $\beta\gamma$) or $0$ (class-$G$
-Heisenberg), and~$[\chi_3]$ becomes $\partial$-exact on the
-respective chamber restriction (Vol~III
+$H_1\cup H_4\subset\overline{\mathcal A}_2$, the comparison chamber
+changes to the Bershadsky--Polyakov value $98/3$ or to the Heisenberg
+value $0$, and~$[\chi_3]$ becomes $\partial$-exact on the respective
+chamber restriction (Vol~III
 Rem.~\ref{V3-rem:chi-3-Koszul-locus-scope}), consistent with
 Theorem~H's ambient-curve concentration on those sub-chambers.
 \end{proof}
@@ -2609,9 +2604,10 @@ conditional relative-HPD replacement over~$E$]
 \ClaimStatusConditional
 Let $Y=\mathrm{K3}\times E$ with $\omega_Y\cong\mathcal O_Y$ the
 trivial canonical bundle of the CY-$3$ target, and let
-$\Phi_3:D^b\mathrm{Coh}(Y)\to\mathrm{ChirAlg}_X^{\SCchtop}$ be the
-Vol~III universal functor delivering
-$\mathbf H_{\Delta_5}=\Phi_3(D^b\mathrm{Coh}(Y))$. For the relative
+$\Phi_3^{(\Sigma_2,C)}=\SpCh_{\Sigma_2,C}\circ\PhiFA_3$ be the
+Vol~III two-stage specialization delivering
+$\mathbf H_{\Delta_5}=\Phi_3^{(\Sigma_2,C)}(D^b\mathrm{Coh}(Y))$.
+For the relative
 replacement statements, assume the K3 factor is degree~$14$ and choose
 a smooth cubic fourfold $Y_4$ with
 $\Kuz(Y_4)\simeq D^b\mathrm{Coh}(\mathrm{K3})$; equivalently work on
@@ -2651,13 +2647,13 @@ realisation is available.
  [\chi_3^{\mathrm{cat}}]
  \;\xrightarrow[\text{relative HPD}]{\;\sim\;}\;
  [\chi_3^{\mathrm{cat}}]\big|_{\Kuz(\widetilde Y/E)}
- \;\xrightarrow{\;\Phi_3\;}\;
+ \;\xrightarrow{\;\Phi_3^{(\Sigma_2,C)}\;}\;
  [\chi_3]
  \;\in\;\ChirHoch^3_{\mathrm{CY\text{-}3}}(\mathbf H_{\Delta_5})
  \end{equation}
  is the value-level transport of the top categorical class and
  preserves the explicit value
- $\langle[\chi_3],[e_3^{Y}]\rangle_{\Phi_3}
+ $\langle[\chi_3],[e_3^{Y}]\rangle_{\Phi_3^{(\Sigma_2,C)}}
  =2\,\mathrm{Vol}(E)\cdot(2\pi\mathrm i)^3$ of
  \eqref{eq:chi3-triangle-value-corrected}. Relative HPD therefore
  supplies a categorical compatibility check under the degree-$14$
@@ -2721,19 +2717,19 @@ and its $(d-2)$-shifted Poisson structure
 sends the top-degree CY-$3$ volume class of the dual side to the
 top-degree class of the primal side (Kuznetsov~$2018$~Thm.~$5.5$,
 HPD preserves CY-dimension and top-Hochschild-slot). Applying
-$\Phi_3$ and then the HKR--Caldararu identification
+$\Phi_3^{(\Sigma_2,C)}$ and then the HKR--Caldararu identification
 $\mathrm{HH}^3_{\mathrm{cat}}(D^b\mathrm{Coh}(Y))\cong
 H^0(Y,\wedge^3 T_Y)\oplus H^1(Y,\wedge^2 T_Y)\oplus
 H^2(Y,T_Y)\oplus H^3(Y,\mathcal O_Y)$ (Caldararu~$2005$~Thm.~$4.5$)
 retrieves the same one-dimensional top slot
 $H^3(Y,\mathcal O_Y)\cong k$ carrying
 $[\omega_{\mathrm{K3}}]\wedge[\mathrm dz_E]$, whose value under
-$\Phi_3$ and the chiral-side Mukai normalisation is
+$\Phi_3^{(\Sigma_2,C)}$ and the chiral-side Mukai normalisation is
 $2\,\mathrm{Vol}(E)\cdot(2\pi\mathrm i)^3$. This matches
 \eqref{eq:chi3-triangle-value-corrected}.
 \end{proof}
 
-\begin{remark}[Absolute versus relative HPD: scope discipline]
+\begin{remark}[Absolute versus relative HPD]
 \label{rem:hpd-abs-rel-scope}
 Absolute HPD applies to Fano $Y$ only; the Fano requirement is the
 precise condition for the existence of a non-trivial Lefschetz twist
@@ -2770,7 +2766,9 @@ cyclic cohomology on the Koszul locus]
 \label{thm:chirhoch3-Delta5-feigin-tsygan}
 \ClaimStatusConditional
 Let $X$ be a smooth projective curve, $\mathcal U\subset X$ a formal
-disc, $\mathbf H_{\Delta_5}=\Phi_3(D^b\mathrm{Coh}(\mathrm{K3}\times E))$
+disc,
+$\mathbf H_{\Delta_5}=
+\Phi_3^{(\Sigma_2,C)}(D^b\mathrm{Coh}(\mathrm{K3}\times E))$
 the K3$\times E$ chiral bialgebra of
 Vol~III~Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}, and
 $\Uadm\subset\overline{\mathcal A}_2$ the admissible Koszul locus
@@ -2862,7 +2860,7 @@ decomposition when $A$ is commutative up to homotopy
 \textup{(}\cite{Loday98} Ch.~$10$~Thm.~$10.2.4$\textup{)}.
 $\mathbf H_{\Delta_5}$ is neither associative nor commutative as a
 chiral bialgebra on~$X$: it is an $E_1$-chiral algebra with
-super-quasi-Hopf structure inherited from $\Phi_3$
+super-quasi-Hopf structure inherited from $\Phi_3^{(\Sigma_2,C)}$
 \textup{(}Rem.~\ref{rem:super-quasi-hopf-koszul-sign} of
 \texttt{e1\_modular\_koszul.tex}\textup{)}. \emph{Resolution:}
 the target is replaced by the factorisation Lie algebra
@@ -2995,10 +2993,10 @@ coefficient by
 $\chi(\mathcal O_{\mathrm{K3}})\mathrm{Vol}(E)(2\pi\mathrm i)^3$.
 \end{proof}
 
-\begin{remark}[Cyclic input and scope]
+\begin{remark}[Cyclic input and domain]
 \label{rem:chirhoch3-five-paths}
 Thm.~\ref{thm:chirhoch3-Delta5-feigin-tsygan}~(iii) is independent by
-primary input from the earlier value computations and comparison lanes of
+primary input from the earlier value computations and comparison paths of
 Thm.~\ref{thm:chirhoch3-Delta5-chain-level}~(ii) and
 Thm.~\ref{thm:hpd-obstruction-k3e-relative-replacement}~(iii): it
 computes the value through Connes--Tsygan cyclic cohomology and
@@ -3008,7 +3006,7 @@ independently of \textup{(A)} the Schiffmann--Vasserot CoHA triangle
 cycle, \textup{(B)} Oberdieck's Igusa cusp-form generating series,
 \textup{(C)} the elliptic-volume CY-$2$ boundary check, and
 \textup{(D)} relative HPD over~$E$ under the degree-$14$ realisation
-hypothesis. The five lanes are: \textup{(A)} algebraic CoHA
+hypothesis. The five paths are: \textup{(A)} algebraic CoHA
 Casimir; \textup{(B)} OP-normalized automorphic Igusa
 $(\Phi_{10}^{\mathrm{OP}})^{-1}$;
 \textup{(C)} elliptic-volume boundary compatibility; \textup{(D)}
@@ -3017,16 +3015,16 @@ universal normalisation $\chi(\mathcal O_{\mathrm{K3}})=2$ against
 the CY-$3$ volume $\mathrm{Vol}(E)\cdot(2\pi\mathrm i)^3$; the CoHA,
 OP-normalized DT, and cyclic Feigin--Tsygan computations fix the
 explicit value $2\,\mathrm{Vol}(E)\cdot(2\pi\mathrm i)^3$, while the
-elliptic-volume and relative-HPD lanes check compatibility. The
+elliptic-volume and relative-HPD paths check compatibility. The
 Siegel--Eisenstein period identity
 of Thm.~\ref{thm:chi3-siegel-eisenstein-period} is an orthogonal
 re-derivation of the same numerical value through Siegel--Weil +
 Kohnen + Maass--Borcherds on the paramodular $\Kone$-locus, which
 does not introduce a new primary input: it is an internal
-triangulation within the automorphic lane~(B).
+triangulation within the automorphic component~(B).
 \end{remark}
 
-\begin{remark}[Chiral vs ordinary cyclic homology: scope discipline]
+\begin{remark}[Chiral vs ordinary cyclic homology]
 \label{rem:cft-chiral-vs-ordinary}
 The chiral Feigin--Tsygan identification of
 Thm.~\ref{thm:chirhoch3-Delta5-feigin-tsygan} is not the ordinary
@@ -3063,7 +3061,7 @@ own target.
 \providecommand{\Bocherer}{\mathrm{B\ddot ocherer}}
 
 \begin{theorem}[\texorpdfstring{Siegel--Eisenstein period identity for
-\(\langle\lbrack\chi_3\rbrack,\lbrack e_3^{\mathrm{K3}\times E}\rbrack\rangle_{\Phi_3}\)}{Siegel--Eisenstein period identity};
+\(\langle\lbrack\chi_3\rbrack,\lbrack e_3^{\mathrm{K3}\times E}\rbrack\rangle_{\Phi_3^{(\Sigma_2,C)}}\)}{Siegel--Eisenstein period identity};
 paramodular $\Kone\subset\SpFour$ locus]
 \label{thm:chi3-siegel-eisenstein-period}
 \ClaimStatusConditional
@@ -3539,15 +3537,16 @@ top-entry criterion]
 Let $X$ be a smooth projective curve, let $\mathcal F\in
 D^b\mathrm{Coh}(\CY_d)$ for $\CY_d$ a smooth projective
 Calabi--Yau $d$-fold, and let
-$\cA_\mathcal F=\Phi_d(\mathcal F)
+$\cA_\mathcal F=\Phi_d^{(\Sigma_{d-1},X)}(\mathcal F)
 = \SpCh_{\Sigma_{d-1}, X}\!\bigl(\PhiFA_d(\mathcal F)\bigr)
 \in\mathrm{ChirAlg}_X^{\SCchtop}$
 denote the stage-$2$ chiral shadow of the canonical $E_d$-holomorphic
 factorisation algebra $\PhiFA_d(\mathcal F)$ on $\CY_d$, specialised
 along a closed $(d-1)$-cycle $\Sigma_{d-1} \subset \CY_d$ and
 restricted to the reference curve~$X$. The two-stage factorisation
-$\Phi_d = \SpCh_{\Sigma_{d-1}, X} \circ \PhiFA_d$ is the Vol~III
-universal CY-to-chiral functor of
+$\Phi_d^{(\Sigma_{d-1},X)}
+= \SpCh_{\Sigma_{d-1}, X} \circ \PhiFA_d$ is the Vol~III
+CY-to-chiral specialization of
 Chapter~\textup{\ref{ch:phi-universal-trace}} of Vol~III
 (Theorem~\textup{phi-two-stage-factorisation} of
 \textit{cy\_to\_chiral.tex}; Definition~\textup{phi-fa-and-sp}). Then the
@@ -3566,7 +3565,7 @@ reference curve~$X$.
  \Longrightarrow
  \ChirHoch^{p+q}_{\CY\text{-}d}(\cA_\mathcal F),
 \]
-whose $\Phi_d$-transported chart has the form
+whose $\Phi_d^{(\Sigma_{d-1},X)}$-transported chart has the form
 \[
  E_2^{p,q}
  =H^q(\mathrm{Conf}_p(X))\otimes
@@ -3605,7 +3604,7 @@ Vol.~III companion class only under the same hypotheses, together with
 survival of the $E_\infty^{d,0}$ entry. For $d=3$ this says that any
 statement about
 $[\chi_3]\in\ChirHoch^3_{\mathrm{CY\text{-}3}}(\mathbf H_{\Delta_5})$ is
-conditional on the $\Phi_3$ product ambient, convergence, top-entry
+conditional on the $\Phi_3^{(\Sigma_2,C)}$ product ambient, convergence, top-entry
 vanishing above total degree~$3$, and survival of the CY-$3$ top
 entry. It is not Theorem~H.
 \end{enumerate}
@@ -3680,7 +3679,7 @@ $H^1(\mathcal O_X)$ or top-row classes.
 For $d=3$, the class
 $[\chi_3]\in\ChirHoch^3_{\mathrm{CY\text{-}3}}(\mathbf H_{\Delta_5})$ of
 Theorem~\ref{thm:chirhoch3-Delta5-chain-level} is a Vol.~III
-companion class on the $\Phi_3$ product ambient. Its non-vanishing,
+companion class on the $\Phi_3^{(\Sigma_2,C)}$ product ambient. Its non-vanishing,
 when asserted here, includes the product-ambient hypotheses and the
 top-entry vanishing above total degree~$3$. On the curve-only complex
 of Vol.~I Theorem~H, degree~$3$ is absent.
@@ -3899,12 +3898,13 @@ Dijkgraaf--Moore--Verlinde--Verlinde~$1997$~CMP~$185$~Thm.~$2$;
 Eguchi--Ooguri--Taormina--Yang~$1989$~NPB~$315$~\S~$4$.
 \end{remark}
 
-\begin{theorem}[CoHA $\to \Yplus \to $ VOA dictionary at degree $3$; Polyakov $:T\partial T:$ as the $\Phi_3$-image of $h_3\in\Yplus$]
+\begin{theorem}[CoHA $\to \Yplus \to $ VOA dictionary at degree $3$; Polyakov $:T\partial T:$ as the $\Phi_3^{(\Sigma_2,C)}$-image of $h_3\in\Yplus$]
 \label{thm:coha-yplus-voa-degree-3-dictionary}
 \ClaimStatusConditional
-Let $\mathbf H_{\Delta_5}$, $\Phi_3$,
+Let $\mathbf H_{\Delta_5}$,
+$\Phi_3^{(\Sigma_2,C)}=\SpCh_{\Sigma_2,C}\circ\PhiFA_3$,
 $K_3^{\mathrm{K3}\times E} = \mu_3^{\CoHA}(-,-,\Omega_{\mathrm{K3}\times E})$, and
-$\chi_3 = \Phi_3(K_3^{\mathrm{K3}\times E})$ be as in
+$\chi_3 = \Phi_3^{(\Sigma_2,C)}(K_3^{\mathrm{K3}\times E})$ be as in
 Theorem~\ref{thm:chirhoch3-Delta5-chain-level}.
 The CoHA generator $K_3^{\mathrm{K3}\times E}$ is \emph{not} a vertex operator: the
 Schiffmann--Vasserot CoHA is associative, not chiral
@@ -4114,7 +4114,7 @@ operator. Theorem~\ref{thm:coha-yplus-voa-degree-3-dictionary}
 refuses the shortcut and establishes the full arrow
 $\CoHA\xrightarrow{\stEnv^{\MO}}\Yplus\xrightarrow{\Phi_3^{\mathrm{chiral}}}\mathrm{Vert}$,
 with each link a specific theorem (Maulik--Okounkov,
-Schiffmann--Vasserot, Feigin--Frenkel, Vol~III~$\Phi_3$).
+Schiffmann--Vasserot, Feigin--Frenkel, Vol~III~$\Phi_3^{(\Sigma_2,C)}$).
 The Polyakov spin-$3$ primary
 ${:}T\partial T:{-}\tfrac14\partial^3 T + \hbar\cdot\qt(J^{(3)})$
 is the \emph{chiralised image} of $h_3\in\Yplus$, not the
@@ -4247,7 +4247,7 @@ Nekrasov~$2020$~arXiv:$1712.08128$~\S$4$). Top non-vanishing
 \eqref{eq:chirhoch-CY4-top-nonvanish} follows from
 $\chi(\mathcal O_{\CY_4})\ne 0$ feeding the CoHA Mukai-pairing at
 $n=d=4$, exactly as the $d=3$ non-vanishing
-$\langle[\chi_3],[e_3^{\mathrm{K3}\times E}]\rangle_{\Phi_3}=
+$\langle[\chi_3],[e_3^{\mathrm{K3}\times E}]\rangle_{\Phi_3^{(\Sigma_2,C)}}=
 2\,\mathrm{Vol}(E)(2\pi\mathrm{i})^3$ of
 Thm.~\textup{\ref{thm:chirhoch3-Delta5-chain-level}} traced the CY-$3$
 top-form to a non-zero Siegel--Eisenstein residue.
@@ -4279,7 +4279,7 @@ terminates at $d=3$:
 \begin{enumerate}[label=\textup{(\alph*)}]
 \item \emph{Kapustin--Rozansky--Saulina 3d--4d dichotomy.}
  The $3$d topological-boundary input consumed by
- $\Phi_3$ (Kapustin--Rozansky--Saulina~$2009$~J.\ Topol.\ $2$ Thm.\ $1.1$;
+ $\Phi_3^{(\Sigma_2,C)}$ (Kapustin--Rozansky--Saulina~$2009$~J.\ Topol.\ $2$ Thm.\ $1.1$;
  Costello--Gaiotto~$2020$~arXiv:$1812.00046$~\S~$5$) has no
  $4$d structural counterpart that covers a smooth projective curve:
  the $4$d TQFT is Donaldson--Witten, whose boundary theory is
@@ -4291,7 +4291,7 @@ terminates at $d=3$:
  H_{2\cdot\mathrm{vd}}(\mathrm{Hilb}(\CY_4))$; integrating against
  insertions gives Cao--Kool--Monavari numerical invariants, but no
  chiral algebra on~$X$.
-\item \emph{Nekrasov $8$d $\Omega$-deformation suggests, does not
+\item \emph{Nekrasov $8$d $\Omega$-deformation is a candidate, not a
  construct.} Nekrasov~$2020$~arXiv:$1712.08128$~\S~$4$ defines an $8$d
  gauge partition function $Z^{\mathrm{Nek}}_{\CY_4}(\varepsilon_1,
  \ldots,\varepsilon_4)$ on $\mathbb R^8\cong\mathbb C^4$; cohomological
@@ -4336,13 +4336,14 @@ conditional computations under $\mathbf H_{\PhiFour}$:
  this Poincar\'e-series leading coefficient.
 \end{enumerate}
 Cross-reference to Vol~III
-Conj.~\textup{\ref{conj:phi-d-termination-CY3}} ($\Phi_d$ terminates at
-$d=3$ without an $8$d-chiral boundary input). Upgrade path: any
-construction of $\PhiFour$ from Oh--Thomas virtual DT-$4$ +
+Conj.~\textup{\ref{conj:phi-d-termination-CY3}}
+\textup{(}$\Phi_3^{(\Sigma_2,C)}$ terminates without an
+$8$d-chiral boundary input\textup{)}. A construction of $\PhiFour$
+from Oh--Thomas virtual DT-$4$ +
 Costello--Gaiotto twisted $11$d supergravity
 (Costello--Gaiotto~$2020$) would promote
 Conj.~\textup{\ref{thm:chirhoch-CY4-conditional}} to a theorem with
-the three Paths supplying the proof.
+the three constructions supplying the proof.
 \end{remark}
 
 \providecommand{\HKCY}{\mathrm{HK}\text{-}\mathrm{CY}_4}
@@ -4383,7 +4384,7 @@ Restrict $\PhiFour$ to the hyperk\"ahler locus
 The twistor-$\Stwist$ reduction $\CY_4\leadsto\CY_4/\Stwist$ lands in
 the category of $3$d $\mathcal N=4$ sigma models that
 Kapustin--Rozansky--Saulina~$2009$~J.\ Topol.~$2$ Thm.~$1.1$ feeds to
-$\Phi_3$. Composing with the Costello--Gaiotto
+$\Phi_3^{(\Sigma_2,C)}$. Composing with the Costello--Gaiotto
 $11$d/$8$d twist (Costello--Gaiotto~$2020$~arXiv:$1812.00046$~\S~$5$)
 that integrates along the transverse $\mathbb C$ restores the missing
 $4$d direction, producing a Costello--Gwilliam factorisation functor
@@ -4556,7 +4557,7 @@ $\ChirHoch^\bullet$ in degrees $\{0,1,2\}$ on each row of the
 ambient-curve scope; the degree-$3$ content is visible only
 after enlarging the ambient to the CY-$3$ product
 $X\times\CY_3$ through the stage-$2$ shadow
-$\Phi_3 = \SpCh_{\Sigma_2, X} \circ \PhiFA_3$ of the Vol~III
+$\Phi_3^{(\Sigma_2,X)} = \SpCh_{\Sigma_2, X} \circ \PhiFA_3$ of the Vol~III
 canonical $E_3$-holomorphic factorisation algebra
 $\PhiFA_3(\cC)$ on $\CY_3$. The
 portrait below names which row supports a conditional non-trivial
@@ -4584,24 +4585,21 @@ $\partial\beta_2^{\mathrm{ghost}}$ \\
 $\bM$ & $\mathrm{Vir}_c$, $c\notin\{c_{p,q}\}$ & $13$ &
 $0$ on $\ChirHoch^3_{\mathrm{curve}}$ &
 $\partial\beta_2^{\mathrm{Vir}}$ \\
-$\bB$ & $\mathbf H_{\Delta_5}$ & $250/3$ &
+$\bB$ & $\mathbf H_{\Delta_5}$ & $8$ &
 $\mathbb C\cdot[\chi_3^{\bB}]$ &
-$\chi_3^{\bB} = {:}T\,\partial T{:}-\tfrac14\,\partial^3 T
-+ \hbar\cdot\qt(J^{(3)})$
+$\chi_3^{\bB}\text{ in the K3 Hall--Drinfeld product ambient}$
 \end{tabular}
 \end{center}
 Rows $\bG,\bL,\bCc,\bM$ are stated on the ambient-curve scope; row
 $\bB$ is stated on the CY-$3$-enlarged ambient
-$X\times(\mathrm{K3}\times E)$. The value $250/3$ is the
-Siegel-chamber value for $\mathbf H_{\Delta_5}$ recorded in
-Remark~\ref{rem:cct-1}; the separate $\mathsf B$-row ceiling
-$K^\kappa=8$ belongs to the CY-$2$ Mukai-doubling witness and is not
-the scalar in this CY-$3$ product-ambient row. The Zamolodchikov
-$W_3$ expression is a shadow/Gel'fand--Fuks or extension
-representative, not a non-zero class in the ambient-curve chiral
-Hochschild group. The B-row Polyakov cocycle is the only non-zero
-$\ChirHoch^3$ class displayed here, and only in the CY-$3$-enlarged
-scope.
+$X\times(\mathrm{K3}\times E)$. Its scalar is the K3 Mukai conductor
+$K^{\kappa_{\mathrm{ch}}}=8$; its Borcherds denominator weight is
+$\kappa_{\mathrm{BKM}}(\Delta_5)=5$. The value $250/3$ and the
+Zamolodchikov $W_3$ expression belong to the principal
+$\mathcal W_3$ class-$\mathsf M$ chamber, not to
+$\mathbf H_{\Delta_5}$. The B-row product-ambient cocycle is the only
+non-zero $\ChirHoch^3$ class displayed here, and only in the
+CY-$3$-enlarged scope.
 \end{theorem}
 
 \begin{proof}
@@ -4686,7 +4684,7 @@ under the charge involution (\texttt{beta\_gamma.tex}~Thm.~$5.2$).
 \item \emph{Free-field amplitude.} Off $\lambda=1/2$, the
  free-field Hochschild cohomology sits in amplitude
  $\{0,1,2\}$; a degree-$3$ class would create a non-trivial
- self-extension forbidden by
+ self-extension excluded by
  Theorem~\ref{thm:hochschild-polynomial-growth}.
 \end{enumerate}
 The primitive $\beta_2^{\mathrm{ghost}}$ is the ghost-number
@@ -4706,7 +4704,7 @@ not a non-zero class in the ambient-curve chiral Hochschild group.
  weight-$5$ quasi-primaries are $\partial^3 T$ and
  $\partial\,{:}TT{:}$ (total derivatives). The combination
  ${:}T\,\partial T{:}-(1/4)\,\partial^3 T$ is the Zamolodchikov
- W3 generator; non-exactness in the extension/GF lane is equivalent to
+ W3 generator; non-exactness in the extension/GF ambient is equivalent to
  $[W_3,W_3]\ne 0$ in the Virasoro OPE
  (Bouwknegt--Schoutens~$1993$~\emph{Phys.\ Rep.}~$223$~\S~$3.2$),
  non-degenerate at generic $c$. Its projection to the
@@ -4717,7 +4715,7 @@ not a non-zero class in the ambient-curve chiral Hochschild group.
  by the polynomial cocycle
  $\psi_3(L_{n_1},L_{n_2},L_{n_3})$; the correspondence
  $\mathrm{Vir}_c=\mathrm U(\mathfrak{vect}(S^1))\otimes\mathbb C_c$
- lifts this to $W_3^{\mathrm{Zam}}$ in the GF/shadow lane, not to a
+ lifts this to $W_3^{\mathrm{Zam}}$ in the GF/shadow ambient, not to a
  non-zero ambient-curve chiral Hochschild class.
 \item \emph{Shadow-tower pinning.} $r_{\max}=\infty$ with
  $S_2=c/2$, $S_3=2$
@@ -4751,7 +4749,7 @@ Theorem~\ref{thm:hpd-obstruction-k3e-relative-replacement}. The
 pinned value is
 \[
  \bigl\langle[\chi_3^{\bB}],[e_3^{\mathrm{K3}\times E}]
- \bigr\rangle_{\Phi_3}
+ \bigr\rangle_{\Phi_3^{(\Sigma_2,C)}}
  \;=\;2\,\mathrm{Vol}(E)\cdot(2\pi\mathrm i)^3
  \;=\;\chi(\mathcal O_{\mathrm{K3}})\cdot
  \mathrm{Res}_{s=1/2}\bigl[E_5^{(2)}(Z,s)\bigr]\bigm|_{K(1)}.
@@ -4764,7 +4762,7 @@ K3$\to$point,
  \;=\;[W_3^{\mathrm{Zam}}]_{\mathrm{GF/shadow}}.
 \]
 The weight-$5$ quasi-primary skeleton is common to rows
-$\bM$ and $\bB$ in the GF/shadow lane; the ambient-curve
+$\bM$ and $\bB$ in the GF/shadow ambient; the ambient-curve
 $\ChirHoch^3_{\mathrm{curve}}(\mathrm{Vir}_c)$ class is zero. The
 Yangian tail
 $\hbar\cdot\qt(J^{(3)})$ is the BKM-specific Planck-order
@@ -4796,7 +4794,7 @@ cocycle acquires when promoted to the BKM Mukai pairing on
 $\mathrm{K3}\times E$.
 \end{remark}
 
-\begin{corollary}[Scoped degree-three formula across the
+\begin{corollary}[Degree-three formula across the
  landscape]
 \label{cor:chirhoch3-unified-formula}
 \ClaimStatusConditional
@@ -4808,10 +4806,10 @@ the single expression
  \begin{cases}
  0 & \cA\in\{\bG,\bL,\bCc,\bM\}\text{-row on the ambient curve}, \\
  [W_3^{\mathrm{Zam}}]_{\mathrm{GF/shadow}} &
- \cA\in\bM\text{-row in the GF/shadow or extension lane}, \\
+ \cA\in\bM\text{-row in the GF/shadow or extension ambient}, \\
  \mathbb C\cdot
  \bigl[W_3^{\mathrm{Zam}}+\hbar\cdot\qt(J^{(3)})\bigr] &
- \cA\in\bB\text{-row in the CY-$3$-enlarged }\Phi_3(\CY_3)\text{ scope}.
+ \cA\in\bB\text{-row in the CY-$3$-enlarged }\Phi_3^{(\Sigma_2,C)}(\CY_3)\text{ ambient}.
  \end{cases}
 \end{equation}
 The weight-$5$ quasi-primary
@@ -4849,7 +4847,7 @@ reciprocal Igusa product $(\Phi_{10}^{\mathrm{OP}})^{-1}$ after
 Mukai-volume normalization, and cyclic Feigin--Tsygan on
 $\glinf(\mathbf H_{\Delta_5})$. The elliptic-volume degeneration and
 relative Homological Projective Duality over~$E$ are compatibility
-lanes under their stated hypotheses. The value computations return
+paths under their stated hypotheses. The value computations return
 $2\,\mathrm{Vol}(E)\cdot(2\pi\mathrm i)^3$. Classical
 Hochschild theory equates a degree-$n$ cocycle on an associative
 algebra $A$ with an infinitesimal deformation of $A$ parametrised by
@@ -4875,7 +4873,9 @@ value through the Lurie formal-moduli classifying morphism.
 \label{thm:chirhoch3-Delta5-derived-deformation}
 \ClaimStatusConditional
 Let $X$ be a smooth projective curve, $\mathcal U\subset X$ a formal
-disc, $\mathbf H_{\Delta_5}=\Phi_3(D^b\mathrm{Coh}(\mathrm{K3}\times E))$
+disc,
+$\mathbf H_{\Delta_5}=
+\Phi_3^{(\Sigma_2,C)}(D^b\mathrm{Coh}(\mathrm{K3}\times E))$
 the K3$\times E$ chiral bialgebra on the Koszul locus
 $\Uadm\subset\overline{\mathcal A}_2$ of
 Lemma~\textup{\ref{lem:uadm-is-koszul-locus-bar-cobar}}. Let
@@ -4927,7 +4927,8 @@ $\Uadm$:
  \ChirHoch^3_{\mathrm{CY\text{-}3}}(\mathbf H_{\Delta_5})|_{\Uadm}$
  classifies the one-parameter derived deformation
  $\widetilde\Phi^{\mathrm{Sieg\text{-}Bor}}_\hbar$ of the
- super-quasi-Hopf datum $(\mathbf H_{\Delta_5},\Phi_3,\Theta_{\Delta_5})$
+ super-quasi-Hopf datum
+ $(\mathbf H_{\Delta_5},\Phi_{\Delta_5}^{\mathrm{Dr}},\Theta_{\Delta_5})$
  supplied by the Gritsenko--Nikulin Borcherds twist
  \textup{(}Gritsenko--Nikulin~$1998$~\emph{Amer.\ J.\ Math.}~$119$
  \S~$4$; \cite{Bor98}~Inv.\ Math.~$132$~Thm.~$10.1$\textup{)}
@@ -4967,7 +4968,7 @@ $\Uadm$:
  \begin{equation}
  \label{eq:chi3-derived-deformation-value}
  \bigl\langle[\mathrm{class}(\widetilde\Phi^{\mathrm{Sieg\text{-}Bor}}_\hbar)],
- [e_3^{\mathrm{K3}\times E}]\bigr\rangle_{\Phi_3}
+ [e_3^{\mathrm{K3}\times E}]\bigr\rangle_{\Phi_3^{(\Sigma_2,C)}}
  \;=\;2\,\mathrm{Vol}(E)\cdot(2\pi\mathrm i)^3,
  \end{equation}
  coinciding with
@@ -4999,7 +5000,7 @@ Gritsenko--Nikulin Borcherds twist
 	$\widetilde\Phi^{\mathrm{Sieg\text{-}Bor}}_\hbar
 	[\Phi_{10}^{\mathrm{un}}/\eta^{24}]$
 of a super-quasi-Hopf algebra is a $3$-cocycle twist of the
-associator $\Phi_3$ in Drinfeld's sense~\cite{Dri89}~\S~$6$:
+associator $\Phi_{\Delta_5}^{\mathrm{Dr}}$ in Drinfeld's sense~\cite{Dri89}~\S~$6$:
 the defining compatibility
 $(\Phi\otimes 1)\cdot(1\otimes\Delta)(\Phi)
 =(1\otimes\Phi)\cdot(\Delta\otimes 1)(\Phi)$ is relaxed by a
@@ -5142,7 +5143,7 @@ value through the Lurie formal-moduli representability
 \textup{(}\cite{LurieDAGX}~Thm.~$5.2.14$\textup{)} and the
 $L_\infty$ Maurer--Cartan functor on the shifted Hochschild dg-Lie,
 using the derived-deformation-theoretic content of Hochschild
-cohomology rather than a cocycle-level representative. The six lanes
+cohomology rather than a cocycle-level representative. The six paths
 are:~\textup{(A)} algebraic CoHA Casimir,~\textup{(B)}
 OP-normalized automorphic Igusa $(\Phi_{10}^{\mathrm{OP}})^{-1}$,
 ~\textup{(C)} elliptic-volume boundary compatibility,
@@ -5150,21 +5151,20 @@ OP-normalized automorphic Igusa $(\Phi_{10}^{\mathrm{OP}})^{-1}$,
 Feigin--Tsygan,~\textup{(F)} Lurie formal-moduli / $L_\infty$
 Maurer--Cartan. Each reads the universal normalisation
 $\chi(\mathcal O_{\mathrm{K3}})=2$ against the CY-$3$ volume
-$\mathrm{Vol}(E)\cdot(2\pi\mathrm i)^3$. The computing lanes fix the
+$\mathrm{Vol}(E)\cdot(2\pi\mathrm i)^3$. The computing paths fix the
 explicit value $2\,\mathrm{Vol}(E)\cdot(2\pi\mathrm i)^3$; the
-elliptic-volume and relative-HPD lanes check compatibility under their
+elliptic-volume and relative-HPD paths check compatibility under their
 extra hypotheses. The formal-moduli construction also
 separates the three candidate derived deformations of the
 super-quasi-Hopf datum
-$(\mathbf H_{\Delta_5},\Phi_3)$: only the Gritsenko--Nikulin
+$(\mathbf H_{\Delta_5},\Phi_{\Delta_5}^{\mathrm{Dr}})$: only the Gritsenko--Nikulin
 Borcherds twist $\widetilde\Phi^{\mathrm{Sieg\text{-}Bor}}_\hbar
 [\Phi_{10}^{\mathrm{un}}/\eta^{24}]$ sits at genuine degree~$3$; the
 Etingof--Kazhdan super-quantisation at $\hbar^2=-1/8$ lives at
 degree~$2$ and the Drinfeld-centre deformation at degree~$4$.
 \end{remark}
 
-\begin{remark}[Chiral derived deformation vs classical deformation:
-scope discipline]
+\begin{remark}[Chiral derived deformation vs classical deformation]
 \label{rem:chirhoch3-derived-vs-classical}
 The chiral derived-deformation classification of
 Theorem~\ref{thm:chirhoch3-Delta5-derived-deformation} is not the
@@ -5181,7 +5181,7 @@ associator / $A_\infty$-structure data. The chiral version used here
 replaces classical Hochschild by the CY-$3$ product-ambient chiral
 Hochschild complex and $A$ by the factorisation chiral bialgebra
 $\mathbf H_{\Delta_5}$; the role of infinitesimal deformation is
-played by a derived deformation of the super-quasi-Hopf $\Phi_3$
+played by a derived deformation of the super-quasi-Hopf $\Phi_{\Delta_5}^{\mathrm{Dr}}$
 datum in the Francis--Gaitsgory $\infty$-operadic ambient.
 Conflating any two of these theories (classical Gerstenhaber, Lurie
 derived, curve-level chiral, CY-$3$ product-ambient chiral) is a
@@ -5195,7 +5195,7 @@ formula]
 The six constructions (A)--(F) above agree on
 \begin{equation}
 \label{eq:chirhoch3-six-fold-value}
- \bigl\langle[\chi_3],[e_3^{\mathrm{K3}\times E}]\bigr\rangle_{\Phi_3}
+ \bigl\langle[\chi_3],[e_3^{\mathrm{K3}\times E}]\bigr\rangle_{\Phi_3^{(\Sigma_2,C)}}
  \;=\;2\,\mathrm{Vol}(E)\cdot(2\pi\mathrm i)^3
  \;\in\;\mathbb C,
 \end{equation}
@@ -5215,7 +5215,7 @@ Theorem~\ref{thm:chirhoch3-Delta5-chain-level}~(ii),
 Theorem~\ref{thm:hpd-obstruction-k3e-relative-replacement}~(iii),
 Theorem~\ref{thm:chirhoch3-Delta5-feigin-tsygan}~(iii),
 Theorem~\ref{thm:chirhoch3-Delta5-derived-deformation}~(iii),
-and the Siegel--Eisenstein internal triangulation within lane~(B)
+and the Siegel--Eisenstein internal triangulation within component~(B)
 of Theorem~\ref{thm:chi3-siegel-eisenstein-period}. Each construction
 returns the same numerical value from its own primary input; the
 Polyakov representative is pinned by the
@@ -5253,7 +5253,7 @@ dualisable; the chiral de~Rham differential $\ConnesB^{\mathrm{ch}}$
 extends Connes' operator through OPE residues on Fulton--MacPherson
 compactifications $\overline C_n(X)$, not through cyclic shuffles;
 the CY-$3$ volume class $\Omega_{\mathrm{K3}\times E}$ enters only
-after $\Phi_3$-enlargement, so the Mukai pairing lives on the
+after $\Phi_3^{(\Sigma_2,C)}$-enlargement, so the Mukai pairing lives on the
 enlarged ambient rather than on~$X$. The correct chiral analogue
 isolates the Koszul locus
 $\KoszLoc\subset\overline{\mathcal A_2}$ (complement of the Humbert
@@ -5535,14 +5535,15 @@ $\mathrm{HH}^\bullet_{\mathrm{cat}}$
 (Remark~\ref{rem:hh-three-theories-discipline}). On $\KoszLoc$ the
 Mukai--Hochschild pairing agrees on the overlap with Caldararu's
 CY-$3$ categorical Mukai pairing through the
-$\Phi_3$-correspondence (object-level scope). In Vol~II,
+the $\Phi_3^{(\Sigma_2,C)}$-correspondence (object-level scope). In Vol~II,
 the $\SCchtop$-chiral Hochschild refinement of
 Costello--Gwilliam~$2017$~\S~$3.4$ carries the pairing through
 topologisation on the CY-$3$-enlarged ambient (conformal-vector
 hypothesis: Sugawara at non-critical level). In Vol~III,
-$\Phi_3\colon\mathrm{CY}_3\text{-categories}\to\mathrm{ChirAlg}_X$
+$\Phi_3^{(\Sigma_2,C)}=\SpCh_{\Sigma_2,C}\circ\PhiFA_3$
 maps Caldararu's CY-$3$ Mukai pairing to the chiral
-Mukai--Hochschild pairing on $\Phi_3(D^b\Coh(\mathrm{K3}\times E))=
+Mukai--Hochschild pairing on
+$\Phi_3^{(\Sigma_2,C)}(D^b\Coh(\mathrm{K3}\times E))=
 \mathbf H_{\Delta_5}$; the Siegel--Eisenstein period of
 Theorem~\ref{thm:chi3-siegel-eisenstein-period} unifies the three
 volumes through the genus-$2$ residue
@@ -5561,7 +5562,7 @@ $\PeriodRes_{s=1/2}E_5^{(2)}|_{K(1)}$.
 \providecommand{\PathG}{\mathrm{G}}
 \providecommand{\uval}{2\,\mathrm{Vol}(E)\cdot(2\pi\mathrm i)^3}
 
-The value computations and comparison lanes $\PathA$--$\PathF$
+The value computations and comparison paths $\PathA$--$\PathF$
 established in
 Theorem~\ref{thm:chirhoch3-Delta5-chain-level},
 Theorem~\ref{thm:hpd-obstruction-k3e-relative-replacement},
@@ -5578,12 +5579,13 @@ six constructions. The comparison is asserted only on the common
 one-dimensional value receptacle; it is not an identification of the
 full chiral, categorical, cyclic, and topological Hochschild theories.
 
-\begin{theorem}[\texorpdfstring{Seven value lanes for \(\lbrack\chi_3\rbrack\)}{Seven value lanes for chi3}]
+\begin{theorem}[\texorpdfstring{Seven value paths for \(\lbrack\chi_3\rbrack\)}{Seven value paths for chi3}]
 \label{thm:chirhoch3-seven-path-comparison}
 \ClaimStatusConditional
 On the Koszul locus $\Uadm\subset\overline{\mathcal A}_2$ for
-$\mathbf H_{\Delta_5}=\Phi_3(D^b\mathrm{Coh}(\mathrm{K3}\times E))$,
-the seven value lanes
+$\mathbf H_{\Delta_5}=
+\Phi_3^{(\Sigma_2,C)}(D^b\mathrm{Coh}(\mathrm{K3}\times E))$,
+the seven value paths
 \begin{equation}
 \label{eq:seven-path-list}
 \begin{array}{rl}
@@ -5618,13 +5620,13 @@ $\Psi_{\PathX\to\PathY}$ is the specific value-level comparison
 recorded in the proof. Consequently
 \begin{equation}
 \label{eq:seven-path-common-value}
-\bigl\langle[\chi_3],[e_3^{\mathrm{K3}\times E}]\bigr\rangle_{\Phi_3}
+\bigl\langle[\chi_3],[e_3^{\mathrm{K3}\times E}]\bigr\rangle_{\Phi_3^{(\Sigma_2,C)}}
 \;=\;\uval
 \;\in\;\mathbb Q\cdot\mathrm{Vol}(E)\cdot(2\pi\mathrm i)^3,
 \end{equation}
-is the common value on the lanes that compute the pairing, while the
-CY-$2$ boundary and relative-HPD lanes check compatibility under their
-stated hypotheses. No assertion is made that the seven lanes identify
+is the common value on the paths that compute the pairing, while the
+CY-$2$ boundary and relative-HPD paths check compatibility under their
+stated hypotheses. No assertion is made that the seven paths identify
 their full cochain complexes.
 \end{theorem}
 
@@ -5697,14 +5699,14 @@ $\mathrm{Vol}(E)\to 0$ degeneration recovers the CY-$2$ formality
 scaling of~\eqref{eq:chi3-triangle-value-corrected}: the Fourier
 coefficient $[p^{-1}q^{-1}y^0](-(\Phi_{10}^{\mathrm{OP}})^{-1})$ scales linearly
 in $\mathrm{Vol}(E)$ to leading order, and the Kontsevich--DGMS
-formality input of lane~$\PathC$ matches this scaling with the
+formality input of path~$\PathC$ matches this scaling with the
 $\mathrm{Vol}(E)$-dependence of the chain-level cocycle
 $\chi_3^{\mathrm{chain}}$.
 
 $\Psi_{\PathC\to\PathD}$: the CY-$2$ boundary check of
-lane~$\PathC$ records what remains after the elliptic factor is
+path~$\PathC$ records what remains after the elliptic factor is
 removed from $[\omega_{\mathrm{K3}}]\wedge[\omega_E]$. Relative HPD
-over~$E$ (lane~$\PathD$), when the degree-$14$ cubic-fourfold
+over~$E$ (path~$\PathD$), when the degree-$14$ cubic-fourfold
 realisation hypotheses of
 Theorem~\ref{thm:hpd-obstruction-k3e-relative-replacement} hold,
 reintroduces the elliptic factor through
@@ -5717,7 +5719,7 @@ $\Psi_{\PathD\to\PathE}$: the relative-HPD Kuznetsov component
 $\Kuz(\widetilde Y/E)$ has categorical Hochschild cohomology
 $\mathrm{HH}^\bullet_{\mathrm{cat}}(\Kuz(\widetilde Y/E))$ carrying
 the categorical CY-$3$ Mukai class. After applying the
-$\Phi_3$-correspondence and restricting to the Koszul locus, this
+$\Phi_3^{(\Sigma_2,C)}$-correspondence and restricting to the Koszul locus, this
 categorical class maps to the chiral factorisation trace of
 $\mathbf H_{\Delta_5}$. Only at that stage does the
 Feigin--Tsygan~$1987$~Thm.~$3.1$ identification
@@ -5753,7 +5755,7 @@ $\TangCplx_{\mathbf H_{\Delta_5}}^{\mathrm{ch}}[1]$ of
 Theorem~\ref{thm:chirhoch3-Delta5-derived-deformation} is the
 shifted chiral Hochschild complex. Kaledin~$2017$~Thm.~$5.4$ applies
 to the smooth proper dg-category model before chiralisation; after
-the $\Phi_3$ trace comparison and restriction to the Koszul locus, it
+the $\Phi_3^{(\Sigma_2,C)}$ trace comparison and restriction to the Koszul locus, it
 identifies the corresponding value pairing with the $E_1$-page of the
 chiral NC Hodge-to-de-Rham spectral sequence, degenerating onto the
 non-commutative Hodge filtration of
@@ -5762,7 +5764,7 @@ Kaledin~$2017$~Cor.~$5.5$ and Shklyarov~$2012$~Thm.~$1.4$ then
 identify the classifying-cocycle pairing of Path~$\PathF$ with the
 Mukai--Hochschild Serre-duality pairing of Path~$\PathG$:
 $\langle[\mathrm{class}(\widetilde\Phi^{\mathrm{Sieg\text{-}Bor}}_\hbar)],
-[e_3^{\mathrm{K3}\times E}]\rangle_{\Phi_3}
+[e_3^{\mathrm{K3}\times E}]\rangle_{\Phi_3^{(\Sigma_2,C)}}
 =\langle[\chi_3],[\chi_3^\vee]\rangle^{\mathrm{ch}}_{\Muk}$ on
 $\Uadm$, both evaluating to $\uval$.
 
@@ -5819,12 +5821,12 @@ construction of the same scalar value.
 
 \begin{remark}[Seven primary inputs]
 \label{rem:chirhoch3-seven-voice-cadence}
-The seven value lanes use seven primary input packages:
+The seven value paths use seven primary input packages:
 Schiffmann--Vasserot (algebraic CoHA), Oberdieck (automorphic DT),
 Kontsevich (formality / elliptic-volume boundary), Kuznetsov
 (categorical HPD), Feigin--Tsygan (cyclic Lie cohomology), Lurie
 (formal moduli / derived deformation), and Kaledin (non-commutative
-Hodge theory). The computing lanes and conditional comparison lanes
+Hodge theory). The computing paths and conditional comparison paths
 determine the same scalar on the common value receptacle by different
 inputs: the algebraic Casimir, the cusp-form Fourier coefficient, the
 formality boundary, the HPD-categorical top slot, the
@@ -5834,10 +5836,10 @@ receptacle is
 $\mathbb Q\cdot\mathrm{Vol}(E)\cdot(2\pi\mathrm i)^3$.
 \end{remark}
 
-\begin{corollary}[Seven value lanes for the unified formula]
+\begin{corollary}[Seven value paths for the unified formula]
 \label{cor:chirhoch3-seven-fold-confirmation}
 \ClaimStatusConditional
-The seven value lanes
+The seven value paths
 $\PathA,\PathB,\PathC,\PathD,\PathE,\PathF,\PathG$
 of~\eqref{eq:seven-path-list} agree on the universal rational
 value~\eqref{eq:seven-path-common-value}, and the seven value
@@ -5847,7 +5849,7 @@ Polyakov representative
 $\chi_3^{\bB}={:}T\,\partial T{:}-(1/4)\,\partial^3 T
 +\hbar\cdot\qt(J^{(3)})$ of
 Theorem~\ref{thm:chirhoch3-five-archetype-portrait} row~$\bB$
-represents the common value in the chiral lane. The comparison maps
+represents the common value in the chiral path. The comparison maps
 identify its value with the Gritsenko--Nikulin Borcherds twist value
 (via $\Psi_{\PathE\to\PathF}$), the Kaledin NC Hodge--Mukai value
 (via $\Psi_{\PathF\to\PathG}$), and the Schiffmann--Vasserot CoHA

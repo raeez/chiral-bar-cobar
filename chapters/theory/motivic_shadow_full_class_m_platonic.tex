@@ -1,23 +1,21 @@
-%% Motivic Shadow Tower Extension to the Full Class M -- Platonic Chapter.
+%% Motivic Shadow Tower on the Class-M Depth-1 Lane -- Platonic Chapter.
 %%
 %% Companion chapter to chapters/theory/motivic_shadow_tower.tex, which
 %% established motivic rationality of the Virasoro shadow tower
-%% (thm:virasoro-motivic-rationality-all-r). This file extends
-%% the motivic MZV-freeness to the complete class M:
+%% (thm:virasoro-motivic-rationality-all-r). This file records the
+%% conditional class-M extension on the depth-1 residue lane:
 %%
-%% (1) W_N principal for all N >= 2 at generic central charge c
-%% (all r >= 2, every generator line W_j for 2 <= j <= N;
-%% each line's Riccati sub-tower reduces to the Virasoro case
-%% by the depth-1 theorem plus Fateev-Lukyanov OPE rationality);
-%% (2) Bershadsky-Polyakov in Arakawa convention (all r >= 2);
-%% (3) W_infinity at generic Psi (all r >= 2, T-line);
+%% (1) W_N principal on the conditional depth-1 generator-line lane;
+%% (2) Bershadsky-Polyakov T-line in Arakawa convention;
+%% (3) W_infinity at generic Psi on the conditional T-line lane;
 %% (4) Tempered Virasoro (remark: not independently realized);
 %%
-%% and proves the STRUCTURAL reason: shadow-tower residues on Conf_n(D)
-%% extract depth-1 Arnold data only, hence Q(c)-rational outputs. The
-%% E_2-topological Drinfeld associator, by contrast, carries depth-2 MZV
-%% via iterated Arnold integrals; this is the sharp E_1-chiral vs
-%% E_2-topological distinction (thm:e1-vs-e2-mzv-depth-distinction).
+%% and isolates the structural reason on this lane: shadow-tower
+%% residues on Conf_n(D) extract depth-1 Arnold data, hence rational
+%% outputs. The E_2-topological Drinfeld associator, by contrast,
+%% carries depth-2 MZV via iterated Arnold integrals; this is the sharp
+%% E_1-chiral vs E_2-topological distinction after the coefficient's
+%% depth has been fixed.
 %%
 %% ARCHITECTURE. Six self-contained inscriptions:
 %%
@@ -25,18 +23,18 @@
 %% (thm:shadow-tower-depth-1-rationality,
 %% thm:e1-vs-e2-mzv-depth-distinction)
 %%
-%% Section 2. W_N principal rationality for all r, all lines.
+%% Section 2. Conditional W_N principal rationality.
 %% (thm:w-n-motivic-rationality-all-r,
 %% prop:w3-w-line-motivic-rationality)
 %%
-%% Section 3. Bershadsky-Polyakov rationality (Arakawa convention).
+%% Section 3. Bershadsky-Polyakov T-line rationality.
 %% (thm:bp-motivic-rationality-arakawa,
 %% prop:bp-fl-convention-caveat)
 %%
-%% Section 4. W_infinity rationality at generic Psi.
+%% Section 4. Conditional W_infinity rationality at generic Psi.
 %% (thm:w-infty-motivic-rationality-all-r)
 %%
-%% Section 5. Full class M summary theorem.
+%% Section 5. Conditional class-M depth-1 theorem.
 %% (thm:class-m-motivic-rationality-full)
 %%
 %% Section 6. Tempered Virasoro remark and frontier.
@@ -45,24 +43,21 @@
 \providecommand{\PhiFA}{\Phi^{\mathrm{FA}}}
 \providecommand{\SpCh}{\mathrm{Sp}^{\mathrm{ch}}}
 
-\chapter{Motivic rationality of the full class-M shadow tower}
+\chapter{Motivic rationality on the class-M depth-1 lane}
 \label{ch:motivic-class-m-full}
 
 \begin{overture}
 The Virasoro shadow tower is motivic-rational
 (Theorem~\ref{thm:virasoro-motivic-rationality-all-r}); no
-$\zet^{\mot}$ enters at any weight. This is surprising only if one
-expects the $\MZV^{\mot}$-content of the Kontsevich--Drinfeld
-formality (which populates the Drinfeld associator $\Phi_{\KZ}$) to
-propagate into the shadow tower via the $E_2$-structure on the
-derived centre. It does not propagate, and the obstruction is
-structural: the shadow tower lives on the $E_1$-chiral bar side, not
-on the $E_2$-coproduct side. We prove this obstruction is
-\emph{depth-1 pure} for every chirally Koszul algebra
-(Theorem~\ref{thm:shadow-tower-depth-1-rationality}), and extract the
-consequence: rationality lifts from Virasoro to the full class M:
-principal $\cW_N$ for all $N \geq 2$, Bershadsky--Polyakov, and
-$\cW_{\infty}$ at generic Miura parameter $\Psi$.
+$\zet^{\mot}$ enters at any weight. This does not imply that every
+class-M shadow coefficient is rational. The obstruction is local:
+when the coefficient is represented by a finite OPE-residue polynomial
+on the $E_1$-chiral bar side, the computation sees depth-$1$ Arnold
+data. When the coefficient uses an $E_2$ comparison or an iterated
+configuration-space integral, the Drinfeld associator may enter. The
+chapter records the proved Virasoro and BP T-line cases and the
+conditional principal $\cW_N$, $\cW_{\infty}$, and class-M extensions
+on this depth-$1$ lane.
 \end{overture}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -72,27 +67,30 @@ $\cW_{\infty}$ at generic Miura parameter $\Psi$.
 
 The shadow coefficient $S_r(\cA)$ is extracted from the universal
 Maurer--Cartan element $\Theta_{\cA}$ on the bar complex
-$B^{\ord}(\cA) = T^c(s^{-1} \bar{\cA})$ on $\mathrm{Conf}_n(D)$. It is
-a functional of OPE residues (depth-$1$ Arnold data), not of iterated
-Arnold integrals (depth-$\geq 2$ MZV data). We prove this depth-$1$
-restriction, then derive its arithmetic consequence.
+$B^{\ord}(\cA) = T^c(s^{-1} \bar{\cA})$ on $\mathrm{Conf}_n(D)$.
+When this extraction is represented by a finite residue polynomial in
+OPE coefficients, it sees depth-$1$ Arnold data and not iterated
+Arnold periods. Without this hypothesis, higher configuration-space
+periods can enter.
 
 \begin{theorem}[\label{thm:shadow-tower-depth-1-rationality}Shadow
-residues are depth-$1$ Arnold data]
-\ClaimStatusProvedHere
+residue rationality, depth-$1$ lane]
+\ClaimStatusConditional
 Let $\cA$ be a chirally Koszul algebra on the formal disk $D$ with
-$\mathbb{Q}$-rational OPE structure constants. For every $r \geq 2$,
-the shadow coefficient $S_r(\cA)$ is a $\mathbb{Q}$-rational function
-of the family parameter: $S_r(\cA) \in \mathbb{Q}(\mathrm{param})$,
-and its motivic lift is primitive,
+$\mathbb{Q}$-rational OPE structure constants. Fix $r \geq 2$ and
+assume that $S_r(\cA)$ is computed by a finite residue expression in
+the OPE coefficients, with no iterated Arnold integral and no
+associator-dependent comparison term. Then $S_r(\cA)$ is a
+$\mathbb{Q}$-rational function of the family parameter and its motivic
+lift has weight zero:
 \[
- \Delta^{\mot}\bigl(S_r^{\mot}(\cA)\bigr)
- \;=\; 1 \otimes S_r^{\mot}(\cA) \;+\; S_r^{\mot}(\cA) \otimes 1,
+ S_r^{\mot}(\cA) \in
+ \MZV^{\mot}_0 \otimes \mathbb{Q}(\mathrm{param})
+ =
+ \mathbb{Q}(\mathrm{param}),
 \]
-with no $\zet^{\mot}(n)$ or $(2\pi i)^{\mot, 2n}$ contribution at any
-weight. The image of $S_r^{\mot}(\cA)$ under the motivic coaction of
-Theorem~\ref{thm:grt-motivic-coaction} lies in $\MZV^{\mot}_0 \otimes
-\mathbb{Q}(\mathrm{param}) = \mathbb{Q}(\mathrm{param})$.
+so no positive-weight $\zet^{\mot}(n)$ or $(2\pi i)^{\mot,2n}$
+appears on this lane.
 \end{theorem}
 
 \begin{proof}
@@ -125,14 +123,11 @@ $(z_i \to z_j)$ OPE coefficient, not $\int \omega_{ij}$. Accordingly
 no iterated-integral weight enters the extraction: the output is
 depth-$1$ pure.
 
-\emph{Motivic conclusion.} The depth-$1$ residue output lies in
+\emph{Motivic conclusion.} Under the stated depth-$1$ hypothesis, the
+residue output lies in
 $\MZV^{\mot}_0 \otimes \mathbb{Q}(\mathrm{param})$ by Brown 2012
-Thm.\ 1.1 ($\MZV^{\mot}_0 = \mathbb{Q}$). Under the motivic coaction
-$\Delta^{\mot}$, weight-$0$ elements are primitive
-($\Delta^{\mot}(x) = 1 \otimes x + x \otimes 1$), so
-$S_r^{\mot}(\cA)$ is $\grt$-primitive. This is exactly
-Theorem~\ref{thm:grt-motivic-coaction} restricted to the shadow
-tower's weight-$0$ image.
+Thm.\ 1.1 ($\MZV^{\mot}_0 = \mathbb{Q}$). This proves the asserted
+weight-zero statement.
 
 \emph{Compatibility with the induction of
 Theorem~\ref{thm:virasoro-motivic-rationality-all-r}.} The
@@ -146,12 +141,12 @@ the recurrence inherits rationality from the depth-$1$ residue
 structure.
 \end{proof}
 
-The structural obstruction to $\MZV^{\mot}$-content in the shadow
-tower is now sharpened into the $E_1$-versus-$E_2$ depth distinction.
+The structural obstruction to $\MZV^{\mot}$-content on the residue
+lane is the $E_1$-versus-$E_2$ depth distinction.
 
 \begin{theorem}[\label{thm:e1-vs-e2-mzv-depth-distinction}
 $E_1$-chiral residue vs $E_2$-topological iterated integral]
-\ClaimStatusProvedHere
+\ClaimStatusConditional
 Let $\cA$ be a chirally Koszul algebra on $D$. Let
 $Z^{\der}_{\ch}(\cA)$ denote its derived centre, an $E_2$-chiral
 algebra after Deligne--Tamarkin (cf.\ the five $E_1$-chiral notions,
@@ -169,10 +164,11 @@ $\Phi_{\KZ}^{\mot}$; specifically, the coefficient of the
 Lyndon-basis word $[x, y] [y, x, y]$ in $\Phi_{\KZ}^{\mot}$ is the
 motivic period $\zet^{\mot}(3)$.
 \item[(iii)] The comparison arrow $B^{\ord}(\cA) \to Z^{\der}_{\ch}
-(\cA)$ (bar to derived centre, $E_1 \to E_2$) is associator-dependent
-at the cochain level but associator-free at the cohomology level;
-the shadow tower factors through the cohomology, hence inherits
-rationality.
+(\cA)$ \textup{(}bar to derived centre, $E_1 \to E_2$\textup{)} is
+associator-dependent at the cochain level. A shadow coefficient
+inherits rationality from the bar side only when it factors through
+the depth-$1$ residue lane of
+Theorem~\ref{thm:shadow-tower-depth-1-rationality}.
 \end{enumerate}
 \end{theorem}
 
@@ -187,13 +183,12 @@ motivic periods. The wheel graph of depth $2$ contributes
 $\zet^{\mot}(3)$ at the coefficient of $[x, y] [y, x, y]$; higher
 wheels populate $\MZV^{\mot}_{\geq 3}$.
 
-(iii) is : the chiral quantum-group equivalence on the Koszul
-locus is associator-free on cohomology ($\mathfrak{sl}_2$ proved), associator-
-dependent on chains. The shadow tower, being a cohomological
-invariant of $\Theta_{\cA}$, is extracted from the cohomology of the
-$E_1$-chiral bar; no associator enters. Hence the
-$\MZV^{\mot}$-content of $\Phi_{\KZ}^{\mot}$ does \emph{not}
-propagate through the bar-to-center arrow into the shadow tower.
+(iii) is the scope condition. A chiral quantum-group equivalence on
+the Koszul locus may be associator-dependent on chains. Therefore a
+bar-to-centre comparison cannot by itself kill positive motivic
+weights. It kills them only after the coefficient is known to be
+represented by the depth-$1$ residue expression of
+Theorem~\ref{thm:shadow-tower-depth-1-rationality}.
 \end{proof}
 
 \begin{remark}[\label{rem:coproduct-carries-mzv-bar-does-not}
@@ -218,28 +213,29 @@ weight signatures.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 For the principal $\cW_N$ algebra, the shadow tower decomposes
-into generator lines. Each generator $W_j$ of conformal weight $j$
-($2 \leq j \leq N$) contributes a line in the
+formally into generator lines. Each generator $W_j$ of conformal
+weight $j$ ($2 \leq j \leq N$) contributes a line in the
 $(N-1)$-dimensional deformation space, with curvature
-$\kappa_j(\cW_N) = c/j$; see \texttt{higher\_w\_shadows.py}.
-Rationality on each line is a specialisation of
-Theorem~\ref{thm:shadow-tower-depth-1-rationality} to the
-appropriate line.
+$\kappa_j(\cW_N) = c/j$ in the compute normalisation of
+\texttt{higher\_w\_shadows.py}. Rationality on a line follows only
+after that line has been placed on the depth-$1$ residue lane of
+Theorem~\ref{thm:shadow-tower-depth-1-rationality}.
 
 \begin{theorem}[\label{thm:w-n-motivic-rationality-all-r}Principal
-$\cW_N$ motivic rationality in all weights]
-\ClaimStatusProvedHere
-For every $N \geq 2$ and every $r \geq 2$, the shadow coefficients of
-the principal $\cW_N$ algebra on every generator line lie in
+$\cW_N$ depth-$1$ motivic rationality]
+\ClaimStatusConditional
+For every $N \geq 2$ and every $r \geq 2$, assume that the principal
+$\cW_N$ shadow coefficient on each generator line is represented by
+the depth-$1$ residue lane and that the between-line mixing terms are
+rational functions of the Fateev--Lukyanov OPE constants. Then the
+generator-line coefficients lie in
 $\mathbb{Q}(c)$:
 \[
  S_r^{\cW_N, T}(c), \; S_r^{\cW_N, W_3}(c), \; \ldots, \;
  S_r^{\cW_N, W_N}(c) \;\in\; \mathbb{Q}(c),
 \]
-with motivic lifts primitive under $\Delta^{\mot}$. The denominator
-of each coefficient factors only through $c$ and a finite family of
-line-specific irreducible polynomials; no $\zet^{\mot}$ or $(2\pi
-i)^{\mot}$ content appears at any weight.
+On this conditional lane no $\zet^{\mot}$ or $(2\pi i)^{\mot}$
+content appears.
 \end{theorem}
 
 \begin{proof}
@@ -250,22 +246,23 @@ by the Fateev--Lukyanov $\cW_N$ OPE: structure constants are rational
 in $c$ (Fateev--Lukyanov 1988, Appendix A). The shadow recurrence on
 a single line reduces to the Riccati master equation at the line's
 effective kappa $\kappa_j = c/j$, with base data in $\mathbb{Q}(c)$.
-By Theorem~\ref{thm:shadow-tower-depth-1-rationality} the output
-$S_r^{\cW_N, W_j}(c)$ lies in $\mathbb{Q}(c)$; under
-Theorem~\ref{thm:virasoro-motivic-rationality-all-r}'s induction on
-the master equation (here applied line-by-line), no MZV enters.
+Under the stated depth-$1$ hypothesis,
+Theorem~\ref{thm:shadow-tower-depth-1-rationality} gives
+$S_r^{\cW_N, W_j}(c) \in \mathbb{Q}(c)$ and kills positive motivic
+weight on that line. The Virasoro induction on the Riccati master
+equation supplies the model calculation; it becomes a proof for
+$W_j$ only after the $W_j$ residue has been identified with the same
+depth-$1$ expression.
 
 \emph{Between-line mixing.} Off-line shadow data involves the
-propagator variance $\delta_{\mathrm{mix}}$; by
-Cauchy--Schwarz this is non-negative and
-$\mathbb{Q}(c)$-rational (as the data are). Hence the multi-line
-shadow coefficients stay rational.
+propagator variance $\delta_{\mathrm{mix}}$. Rationality of this term
+is part of the stated depth-$1$ mixing hypothesis; it is not a formal
+consequence of Cauchy--Schwarz.
 
-\emph{Depth-$1$ structural guarantee.} The residue extraction on
-$\mathrm{Conf}_n(D)$ is depth-$1$ pure regardless of which generator
-line contributes. Theorem~\ref{thm:shadow-tower-depth-1-rationality}
-thus applies uniformly, giving $\mathbb{Q}(c)$-rationality on every
-line.
+\emph{Depth-$1$ structural guarantee.} Under the stated hypothesis,
+the residue extraction on $\mathrm{Conf}_n(D)$ is depth-$1$ pure for
+the chosen generator line. Theorem~\ref{thm:shadow-tower-depth-1-rationality}
+then gives $\mathbb{Q}(c)$-rationality on that line.
 \end{proof}
 
 \begin{proposition}[\label{prop:w3-w-line-motivic-rationality}
@@ -317,8 +314,8 @@ is level-independent
 (\texttt{bp\_self\_duality.tex} Thm.\
 \texttt{thm:bp-koszul-conductor-polynomial}).
 
-\begin{theorem}[\label{thm:bp-motivic-rationality-arakawa}BP motivic
-rationality in Arakawa convention]
+\begin{theorem}[\label{thm:bp-motivic-rationality-arakawa}BP T-line
+motivic rationality in Arakawa convention]
 \ClaimStatusProvedHere
 For every $r \geq 2$, the BP shadow coefficient on the T-line
 (Virasoro restriction) lies in $\mathbb{Q}(k)$:
@@ -328,8 +325,8 @@ For every $r \geq 2$, the BP shadow coefficient on the T-line
  \;\in\;
  \mathbb{Q}(k),
 \]
-with motivic lift primitive under $\Delta^{\mot}$ and no $\zet^{\mot}$
-content at any weight. The denominator factors only through
+with motivic lift of weight zero and no $\zet^{\mot}$ content at any
+weight. The denominator factors only through
 $(k+3)$ and a finite family of rational expressions in
 $c_{\mathrm{BP}}(k)$.
 \end{theorem}
@@ -350,20 +347,9 @@ $\mathbb{Q}(c) \to \mathbb{Q}(k)$ via the substitution $c \mapsto
 c_{\mathrm{BP}}(k)$; Brown's weight-grading is parameter-field
 independent.
 
-\emph{J-line rationality.} The J-line shadow is governed by the
-Heisenberg sub-algebra at residual level $k_{\mathrm{res}} = k +
-1/2$; kappa on this line is $k_{\mathrm{res}}$, and the class
-G (Heisenberg) shadow tower terminates at $r = 2$. Accordingly
-$S_r^{\mathrm{BP}, J}(k) = 0$ for $r \geq 3$, trivially rational.
-
-\emph{G-line rationality.} The half-integer-weight $G^{\pm}$
-generators give class-C shadow behaviour; their line towers
-terminate at $r = 4$ by the class-C depth bound.
-Accordingly $S_r^{\mathrm{BP}, G^{\pm}}(k)$ is $\mathbb{Q}(k)$-rational
-for $r \leq 4$ and zero for $r \geq 5$.
-
-All four generator lines give $\mathbb{Q}(k)$-rational shadow
-coefficients; the theorem follows.
+The theorem concerns only the T-line. The $J$ and $G^\pm$ lines require
+their own residue-lane identifications before a class-M rationality
+statement can be made for them.
 \end{proof}
 
 \begin{proposition}[\label{prop:bp-fl-convention-caveat}FL-convention
@@ -433,25 +419,28 @@ $\Delta_z(T) = T \otimes 1 + 1 \otimes T + ((\Psi - 1)/\Psi) \cdot J
 \texttt{thm:miura-cross-universality}).
 
 \begin{theorem}[\label{thm:w-infty-motivic-rationality-all-r}
-$\cW_{\infty}$ motivic rationality]
-\ClaimStatusProvedHere
-For every $r \geq 2$ and at generic Miura parameter $\Psi$, the
+$\cW_{\infty}$ depth-$1$ motivic rationality]
+\ClaimStatusConditional
+For every $r \geq 2$ and at generic Miura parameter $\Psi$, assume
+that the large-$N$ limit of the principal $\cW_N$ depth-$1$ residue
+lane exists coefficientwise and that Miura cross-terms remain rational
+in $(c,\Psi)$. Then the
 $\cW_{\infty}$ shadow coefficient on the T-line satisfies
 \[
  S_r^{\cW_{\infty}, T}(c, \Psi) \;\in\; \mathbb{Q}(c, \Psi),
 \]
-with motivic lift primitive under $\Delta^{\mot}$ and no
-$\zet^{\mot}$ content. The Miura parameter $\Psi$ enters only through
+with no $\zet^{\mot}$ content on this lane. The Miura parameter
+$\Psi$ enters only through
 the rational prefactor $(\Psi - 1)/\Psi$ of the cross-arity
 Stasheff identity, not through any MZV-weighted period.
 \end{theorem}
 
 \begin{proof}
-The $\cW_{\infty}$ shadow coefficient on the T-line is the large-$N$
-limit of the $\cW_N$ T-line coefficient (\texttt{w\_infinity\_shadow\_
-limit.py}), which by
-Theorem~\ref{thm:w-n-motivic-rationality-all-r} lies in
-$\mathbb{Q}(c)$. The Miura cross-universality of
+Under the stated hypothesis, the $\cW_{\infty}$ shadow coefficient on
+the T-line is the coefficientwise large-$N$ limit of the $\cW_N$
+T-line coefficient (\texttt{w\_infinity\_shadow\_limit.py}); the
+conditional Theorem~\ref{thm:w-n-motivic-rationality-all-r} then
+places the limit in $\mathbb{Q}(c)$. The Miura cross-universality of
 \texttt{thm:miura-cross-universality} adds the rational prefactor
 $(\Psi - 1)/\Psi$ at every spin and cross-arity; this is a
 $\mathbb{Q}(\Psi)$-rational function of $\Psi$ with no
@@ -465,14 +454,16 @@ the free-boson point gives the OPE-obstruction-vanishing free-field
 realisation. At these special values the shadow tower trivialises
 ($S_r^{\cW_{\infty}, T}(c, 0) = 0$ for $r \geq 3$; at $\Psi = 1$, the
 shadow becomes the Heisenberg class G tower). At generic $\Psi$
-(neither $0$ nor $1$) the tower is class M and inherits the
-$\cW_N$ rationality by $N \to \infty$ limit.
+(neither $0$ nor $1$) the tower is class M and inherits rationality
+only on the coefficientwise depth-$1$ large-$N$ lane.
 
 \emph{Depth-$1$ structure.} The Miura screening intersection
 produces $\cW_{\infty}$ as a sub-algebra of the rank-$\infty$
-Heisenberg; all OPE data are rational in $(c, \Psi)$, and
-Theorem~\ref{thm:shadow-tower-depth-1-rationality} applies
-line-by-line.
+Heisenberg; the OPE data on the Miura presentation are rational in
+$(c, \Psi)$. This rationality is not by itself the theorem. The
+remaining hypothesis is precisely that the coefficient under
+discussion is computed by the depth-$1$ residue expression of
+Theorem~\ref{thm:shadow-tower-depth-1-rationality}.
 \end{proof}
 
 \begin{remark}[\label{rem:w-infty-psi-specializations}Special-$\Psi$
@@ -481,52 +472,39 @@ At $\Psi = 2$ (free-fermion point) the $\cW_{\infty}$ shadow reduces
 to a symplectic-fermion tower, class C, terminating at $r = 4$. At
 $\Psi$ equal to an integer $\geq 3$ with $(\Psi, c)$ in the
 admissible locus of Arakawa, the shadow reduces to the admissible
-finite-length KL block; the motivic rationality persists. These
-specialisations all lie within the $\mathbb{Q}(c, \Psi)$-rational
-locus of Theorem~\ref{thm:w-infty-motivic-rationality-all-r}.
+finite-length KL block. Motivic rationality persists only for those
+specialised coefficients which remain on the depth-$1$ residue lane.
+These specialisations lie within the $\mathbb{Q}(c,\Psi)$-rational
+locus of Theorem~\ref{thm:w-infty-motivic-rationality-all-r} after
+that lane condition is checked.
 \end{remark}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Full class-M motivic rationality}
+\section{Conditional class-M depth-$1$ rationality}
 \label{sec:class-m-motivic-rationality-full}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The four family theorems combine into a single class-M result.
+The family statements combine only after the residue-lane hypothesis is
+kept in the statement.
 
 \begin{theorem}[\label{thm:class-m-motivic-rationality-full}
-Class M motivic rationality]
-\ClaimStatusProvedHere
-For every chirally Koszul algebra $\cA$ in class M with
-$\mathbb{Q}$-rational OPE structure constants, and for every
-$r \geq 2$, the shadow coefficient $S_r(\cA)$ lies in
-$\mathbb{Q}(\mathrm{param})$ and its motivic lift is primitive under
-$\Delta^{\mot}$:
-\[
- \Delta^{\mot}\bigl(S_r^{\mot}(\cA)\bigr)
- \;=\; 1 \otimes S_r^{\mot}(\cA) \;+\; S_r^{\mot}(\cA) \otimes 1.
-\]
-Class M covers: Virasoro $\Vir_c$; principal $\cW_N$ for all $N \geq
-2$; Bershadsky--Polyakov $\mathrm{BP}_k$ in Arakawa convention;
-$\cW_{\infty}$ at generic Miura $\Psi$; lattice VOAs $V_L$ at
-$\mathbb{Q}$-rational lattice parameters; and every chirally Koszul
-algebra with finite-dimensional OPE structure constants in
-$\mathbb{Q}$.
+Class M depth-$1$ motivic rationality]
+\ClaimStatusConditional
+Let $\cA$ be a chirally Koszul algebra in class M with
+$\mathbb{Q}$-rational OPE structure constants. Fix $r \geq 2$ and
+assume that $S_r(\cA)$ is represented on the depth-$1$ residue lane of
+Theorem~\ref{thm:shadow-tower-depth-1-rationality}. Then
+$S_r(\cA)$ lies in $\mathbb{Q}(\mathrm{param})$ and its motivic lift
+has no positive-weight MZV component.
 \end{theorem}
 
 \begin{proof}
-Combine
-Theorems~\ref{thm:virasoro-motivic-rationality-all-r},
-\ref{thm:w-n-motivic-rationality-all-r},
-\ref{thm:bp-motivic-rationality-arakawa},
-\ref{thm:w-infty-motivic-rationality-all-r}, and
-\ref{thm:shadow-tower-depth-1-rationality}. The structural depth-$1$
-theorem covers the general case; the four family theorems
-instantiate it on the explicit standard landscape. Lattice VOAs
-reduce to Heisenberg tower at finite rank (class G), terminating at
-$r = 2$. Free-field realisations inherit Heisenberg / free-fermion
-rationality (class G / C). The class-M list is exactly the standard
-landscape of Vol~I (the standard-landscape part), enumerated by the
-Vol~I census \texttt{chapters/examples/landscape\_census.tex}.
+This is Theorem~\ref{thm:shadow-tower-depth-1-rationality} applied
+with the stated hypothesis. The Virasoro and BP T-line cases give
+proved examples of such a residue lane; the principal $\cW_N$ and
+$\cW_\infty$ statements above record the conditional extension to the
+generator-line and Miura-limit surfaces. No assertion is made that
+every class-M coefficient is depth-$1$.
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -549,8 +527,8 @@ inherit motivic rationality automatically; no new theorem is needed.
 
 \begin{remark}[\label{rem:motivic-frontier-class-m}Motivic frontier]
 The structural Theorem~\ref{thm:shadow-tower-depth-1-rationality}
-applies to any chirally Koszul algebra with $\mathbb{Q}$-rational
-OPE. Two classes escape this hypothesis:
+applies to coefficients already known to lie on the depth-$1$ residue
+lane. Two classes escape the easy rationality mechanism:
 \begin{enumerate}
 \item[(a)] \emph{Transcendentally-parameterised algebras.} If the
 OPE structure constants involve $\pi$, $\zet(3)$, or other
@@ -578,8 +556,9 @@ coefficients: algebraic but still depth-$1$ pure.
 \label{sec:cross-volume-coherence}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The motivic class-M theorem interacts with Vol~II's gravitational
-climax and Vol~III's BPS landscape at the following junctions.
+The conditional class-M depth-$1$ theorem interacts with Vol~II's
+gravitational climax and Vol~III's BPS landscape at the following
+junctions.
 
 \begin{enumerate}
 \item[(i)] \emph{Vol~II gravitational climax.} The 3d HT topological
@@ -587,36 +566,42 @@ theory carries motivic periods of the Chern--Simons partition
 function at integer level; these are computed from the $E_2$
 topological side (Kontsevich formality on the boundary
 $\cW_{\infty}$-algebra), and populate $\MZV^{\mot}_{\geq 2}$. The
-shadow-tower component, by Theorem~\ref{thm:class-m-motivic-rationality-
-full}, stays $\mathbb{Q}$-rational. The division of motivic labour
-is: bar-tower is $\mathbb{Q}$, coproduct-tower is $\MZV^{\mot}$.
+shadow-tower component stays $\mathbb{Q}$-rational only on the
+depth-$1$ lane of
+Theorem~\ref{thm:class-m-motivic-rationality-full}. The division of
+motivic labour is conditional: residue-bar coefficients are rational,
+while coproduct and higher-period coefficients may carry
+$\MZV^{\mot}$.
 \item[(ii)] \emph{Vol~III BPS landscape.} CY$_3$ BPS algebra
 shadow on the Koszul locus matches Vol~I's shadow tower via the
 Vol~III two-stage factorisation
-$\Phi_d = \SpCh_{\Sigma_{d-1}, C} \circ \PhiFA_d$
+$\Phi_d^{(\Sigma_{d-1},C)} = \SpCh_{\Sigma_{d-1}, C} \circ \PhiFA_d$
 (Stage~1 canonical $E_d$-holomorphic factorisation algebra on the
 CY$_d$ variety, Stage~2 specialisation to a reference curve~$C$
 via factorisation homology over a $(d{-}1)$-cycle); the Vol~III
 $\kappa_{\ch}$
 is the Vol~I $\kappa$ under this identification, and motivic
-rationality propagates. BKM lattice shadow coefficients carry
+rationality propagates only for the matched depth-$1$ residue
+coefficients. BKM lattice shadow coefficients carry
 $(2\pi i)^{\mot, 2}$ weights via Borcherds's theta-lift, but these
 are coproduct-tower contributions (category-level $\kappa_{\mathrm{cat}}$),
 not bar-tower contributions.
 \end{enumerate}
 
-\begin{remark}[\label{rem:resolves-item-19-full-class-m}Resolution of
-item 19 for the full class M]
-Item 19 of the programme's frontier list (motivic MZV-freeness of
-the shadow tower) is now closed at the full class-M level:
+\begin{remark}[\label{rem:resolves-item-19-full-class-m}Conditional
+resolution of item 19 on the depth-$1$ lane]
+The motivic frontier asks for MZV-freeness
+of the shadow tower. It is closed only on the depth-$1$ residue lane:
 Theorems~\ref{thm:virasoro-motivic-rationality-all-r},
 \ref{thm:w-n-motivic-rationality-all-r},
 \ref{thm:bp-motivic-rationality-arakawa},
 \ref{thm:w-infty-motivic-rationality-all-r}, and
-\ref{thm:class-m-motivic-rationality-full} cover the full landscape,
-and Theorem~\ref{thm:shadow-tower-depth-1-rationality} supplies the
-structural mechanism. The $E_1$-vs-$E_2$ distinction of
+\ref{thm:class-m-motivic-rationality-full} cover the stated residue
+surfaces, and Theorem~\ref{thm:shadow-tower-depth-1-rationality}
+supplies the structural mechanism. The $E_1$-vs-$E_2$ distinction of
 Theorem~\ref{thm:e1-vs-e2-mzv-depth-distinction} explains the
-paradox: motivic richness lives on the coproduct side, not the bar
-side, and the shadow tower is a bar-side invariant.
+paradox only after the depth of the coefficient has been fixed:
+motivic richness can live on the coproduct side or on higher
+configuration-space periods, while the proved rationality concerns
+the residue-bar lane.
 \end{remark}

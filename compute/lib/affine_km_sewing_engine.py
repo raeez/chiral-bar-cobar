@@ -854,11 +854,11 @@ def sugawara_factorization(type_: str, rank: int, level: float,
     and the coset Virasoro has:
       c_coset = c_total - c_Sug
 
-    For the affine algebra ITSELF (not a tensor product), the Sugawara
-    IS the full Virasoro, so c_coset = 0 and the factorization is trivial
+    For the affine algebra itself (not a tensor product), the Sugawara
+    tensor gives the Virasoro element, so c_coset = 0 and the factorization is trivial
     at the vacuum module level.
 
-    However, the useful factorization is into SCALAR and INTERNAL parts:
+    However, the useful factorization is into scalar and internal parts:
     the scalar part (from L_0 eigenvalues alone) gives the character,
     while the internal part captures the Lie algebra structure.
 

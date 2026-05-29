@@ -208,14 +208,14 @@ class TestYangianKoszulDual:
 # =========================================================================
 # 2. prop:yangian-koszul (yangians_foundations.tex, 5 downstream deps)
 #
-# RTT Yangian Y(g) is Koszul (bar cohomology concentrated on diagonal).
-# Proof: PBW basis (Molev) + Polishchuk-Positselski criterion.
+# RTT Yangian PBW-Koszul criterion: diagonal bar cohomology follows
+# from the stated PBW and quadratic-special-fibre hypotheses.
 # =========================================================================
 
 class TestYangianKoszul:
-    """Verify prop:yangian-koszul: RTT Yangian is Koszul.
+    """Verify the finite checks behind prop:yangian-koszul.
 
-    Key ingredients: PBW basis, local finiteness, diagonal Ext.
+    Key ingredients: PBW input, local finiteness, diagonal Ext.
     """
 
     def test_pbw_local_finiteness(self):
@@ -461,8 +461,8 @@ class TestHLevelFactorizationKD:
     """
 
     def test_h1_koszulness_yangian(self):
-        """(H1) Y(g) is Koszul (prop:yangian-koszul)."""
-        # Verified via PBW + Polishchuk-Positselski
+        """(H1) Yangian Koszulness under the PBW-Koszul criterion."""
+        # Conditional on PBW + Polishchuk-Positselski hypotheses.
         # The bar-cobar counit is a quasi-iso on the Koszul locus
         for g in ["sl2", "sl3"]:
             data = YANGIAN_DATA[g]

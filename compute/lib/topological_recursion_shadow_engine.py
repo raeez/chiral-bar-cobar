@@ -1162,7 +1162,7 @@ def planted_forest_correction(data: ShadowFamilyData, g: int) -> Rational:
     codimension >= 2 strata of M-bar_{g,0}.
 
     For class G (Heisenberg): delta_pf = F_g (the curve is degenerate,
-        so CEO gives 0, and delta_pf IS the full shadow free energy).
+        so CEO gives 0, and delta_pf equals the scalar shadow free energy).
     For class L (affine): delta_pf = F_g (same reason, degenerate curve).
     For class M (Virasoro): delta_pf is the difference between the shadow
         free energy and the CEO free energy on the shadow curve.

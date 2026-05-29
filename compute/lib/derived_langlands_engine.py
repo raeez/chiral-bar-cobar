@@ -30,7 +30,7 @@ References:
   - Frenkel-Ben-Zvi, "Vertex Algebras and Algebraic Curves" (2004)
   - Kac-Kazhdan, "Structure of representations with highest weight..." (1979)
   - chapters/theory/derived_langlands.tex: thm:oper-bar-h0-dl
-  - CLAUDE.md: Sugawara UNDEFINED at critical level (not "c diverges")
+  - Sugawara undefined at critical level
 """
 
 from __future__ import annotations

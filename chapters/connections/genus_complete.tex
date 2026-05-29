@@ -11,8 +11,9 @@ Every theorem in this chapter carries the type signature
 $(X,D,\tau)$}, \emph{level $\bullet$}, \emph{hypothesis package}). The
 genus tower lives across two Beilinson levels: the chain-level
 modular functor and the curved $A_\infty$ structure are
-\emph{level-$3$} statements (derived chiral centre as the bulk
-acting on the chiral category and its boundary modules); the scalar
+\emph{level-$3$} statements (derived chiral centre as the
+universal closed-sector cochain algebra acting on the chiral category
+and its boundary modules); the scalar
 genus class $F_g^{\mathrm{diag}}=\kappa(\cA)\lambda_g^{\mathrm{FP}}$
 and the Hodge-class shadow on $\overline{\cM}_{g,n}$ are
 \emph{level-$5$} statements obtained by trace + clutching on the
@@ -53,8 +54,8 @@ F_g(\cA)=\kappa(\cA)\lambda_g^{\mathrm{FP}}
 with $\delta F_g^{\mathrm{cross}}$ supplied by mixed boundary graphs
 (Theorem~\ref{thm:multi-weight-genus-expansion}). The higher
 Chern--Weil projections carry the cubic, quartic, and all-degree
-shadow obstruction tower; the all-degree MC element exists by
-Theorem~\ref{thm:mc2-bar-intrinsic}.
+shadow obstruction tower; the all-degree MC element exists under the
+hypotheses of Theorem~\ref{thm:mc2-bar-intrinsic}.
 
 The moduli spaces $\overline{\mathcal{M}}_{g,n}$ form a modular
 operad (Getzler--Kapranov~\cite{GeK98}): surfaces glue along
@@ -649,7 +650,7 @@ $\kappa(\cA) \cdot \lambda_g$ on the diagonal scalar projection, while the
 \emph{full Chern character}
 $\mathrm{ch}(\mathcal{V}_{g,0})$ recovers the spectral
 discriminant~$\Delta_{\cA}$
-(Remark~\ref{rem:spectral-characteristic-programme}).
+(Remark~\ref{rem:spectral-characteristic}).
 Computing the flat connection (beyond its characteristic
 classes) constitutes the passage from Level~$0$ to Level~$2$ of the
 modular invariant hierarchy
@@ -1911,7 +1912,8 @@ Theorem~\ref{thm:gram-positivity}.
 \index{Bergman space!sewing operator}%
 \textbf{Type signature.} (Open quadrant; level~$5$ analytic
 specialisation of the trace + clutching reconstruction to class~G;
-hypothesis package: free Heisenberg core $\cH_k$, Bergman space
+hypothesis package: rank-$r$ free Heisenberg core $\cH_{V,\kappa}$,
+Bergman space
 $A^2(D)$ on the disk, collar length $t = -\log q$ with
 $0 < q < 1$.)
 The Heisenberg pair-of-pants amplitude is the second
@@ -1923,16 +1925,21 @@ The sewing operator $T_q$ on the reduced Bergman space
 $A^2_0(\partial D)$ (constant mode removed) has
 eigenvalues~$q^n$ ($n \geq 1$) and is trace class:
 $\|T_q\|_1 = q/(1-q)$.
-The genus-$g$ partition function is the Fredholm determinant
+The holomorphic oscillator part of the genus-$g$ chiral partition
+function is the Fredholm determinant
 \begin{equation}\label{eq:heisenberg-fredholm}
-Z_g(\mathcal{H}_k;\,\Omega)
+Z_{g,\mathrm{osc}}^{\mathrm{ch}}(\mathcal{H}_{V,\kappa};\,\Omega)
 \;=\;
-(\det\operatorname{Im}\Omega)^{-k/2}
-\cdot (\det{}'_\zeta\Delta_{\Sigma_g})^{-k/2}.
+\det\nolimits_F(1-K_g)^{-r}.
 \end{equation}
 At genus~$1$:
-$Z_1 = (\operatorname{Im}\tau)^{-k/2}\,|\eta(\tau)|^{-2k}$,
-with $\prod_{n=1}^\infty(1-q^n)^{-1} = q^{1/24}/\eta(q)$.
+$
+Z_{1,\mathrm{osc}}^{\mathrm{ch}}=\eta(\tau)^{-r}.
+$
+The doubled non-chiral scalar determinant
+$(\operatorname{Im}\tau)^{-r/2}|\eta(\tau)|^{-2r}$ is a different
+object: it is obtained only after pairing the chiral determinant with
+its anti-holomorphic conjugate and inserting the zero-mode measure.
 \end{theorem}
 
 \begin{proof}
@@ -1942,15 +1949,18 @@ $R_{n,m} = \frac{k}{2\pi i}\oint\oint z^{-n-1}w^{-m-1}
 G_{\mathrm{pants}}(z,w)\,dz\,dw$
 satisfies $|R_{n,m}| \leq Cq^{(n+m)/2}$ from the collar length
 $t = -\log q$. Hence $R$ is Hilbert--Schmidt and $\Gamma(R)$
-is trace class with $\|\Gamma(R)\|_1 = \det(1+|R|)^k < \infty$.
-The Polyakov formula identifies
-$\det(1-K_g)^{-k} = (\det\operatorname{Im}\Omega)^{-k/2}
-(\det{}'_\zeta\Delta_{\Sigma_g})^{-k/2}$
-where $K_g$ is the genus-$g$ sewing kernel
-(Belavin--Knizhnik~\cite{BK86} for the holomorphic factorization
-of the string measure; see also~\cite{costello-renormalization}
-for the zeta-regularized determinant and its role in the
-genus-$g$ factorization).
+is bounded on the weighted Fock completion. For the actual sewing
+trace one uses $T_q$, whose eigenvalues are $q^n$. Thus $T_q$ is trace
+class, $\|T_q\|<1$, and bosonic second quantisation gives
+\[
+\operatorname{Tr}_{\operatorname{Sym}(A^2_0\otimes V)}\Gamma(T_q)
+=\det\nolimits_F(1-T_q)^{-r}
+=\prod_{n\ge1}(1-q^n)^{-r}.
+\]
+Multiplication by the vacuum-energy factor $q^{-r/24}$ gives
+$\eta(\tau)^{-r}$. The Belavin--Knizhnik and Polyakov determinant
+formula belongs to the doubled scalar measure; it is compatible with
+the chiral determinant, but it is not identical to it.
 \end{proof}
 
 \begin{remark}[Fredholm--Epstein connection]\label{rem:heisenberg-bc-connection}
@@ -2715,17 +2725,17 @@ Neither alone implies the other.
 \index{Gram matrix!sewing|textbf}%
 \index{moment matrix!surface|textbf}
 
-\begin{definition}[Sewing inner product]%
+\begin{definition}[Sewing moment pairing]%
 \label{def:sewing-inner-product}%
 \index{sewing inner product|textbf}%
 \index{Dirichlet polynomial}%
-On the space of Dirichlet polynomials
-$f = \sum_{N} c_N\,N^{-u}$, define
+On finite linear combinations of power functions on $\mathbb Z_{>0}$,
+define
 \begin{equation}\label{eq:sewing-inner-product}
 \langle f, g \rangle_\cA
 \;:=\;
 \sum_{N=1}^\infty
-a_\cA(N)\,f(N)\,\overline{g(N)},
+a_\cA(N)\,f_N\,\overline{g_N},
 \end{equation}
 where $a_\cA(N)$ are the connected sewing amplitudes
 (Definition~\ref{def:connected-genus1-free-energy}).
@@ -2744,9 +2754,9 @@ For $\alpha \geq 2$, the \emph{surface moment matrix}
 \;=\;
 \langle N^{-\alpha/2-i},\, N^{-\alpha/2-j}\rangle_\cA
 \end{equation}
-is the Gram matrix of the Dirichlet monomials
+is the Gram matrix of the power functions
 $\{N^{-\alpha/2-j}\}_{j \geq 0}$
-in the sewing inner product~\eqref{eq:sewing-inner-product}.
+in the sewing moment pairing~\eqref{eq:sewing-inner-product}.
 Write $\mu_k(\cA;\alpha) :=
 \det\bigl(\mathscr{M}_\cA(\alpha)|_{[0,k)^2}\bigr)$.
 \end{definition}
@@ -2758,7 +2768,8 @@ Write $\mu_k(\cA;\alpha) :=
 \index{Gram matrix!positivity}%
 $\mathscr{M}_\cA(\alpha) \succ 0$
 for every $\alpha \geq 2$ and every chiral algebra~$\cA$
-whose sewing coefficients satisfy $a_\cA(N) \geq 0$.
+whose sewing coefficients satisfy $a_\cA(N) \geq 0$ and have infinite
+support.
 In particular, $\mu_k(\cA;\alpha) > 0$ for all $k \geq 1$.
 \end{theorem}
 
@@ -2767,11 +2778,10 @@ $\mathscr{M}_{ij} = \sum_N a_\cA(N)\,(N^{-\alpha/2-i})(N^{-\alpha/2-j})
 = V^T\!DV$,
 where $D = \operatorname{diag}(a_\cA(N))_{N \geq 1} \succeq 0$
 and $V_{Nj} = N^{-\alpha/2-j}$.
-The vectors $\{(N^{-\alpha/2}, N^{-\alpha/2-1}, \ldots)\}_{N \geq 1}$
-are linearly independent (Vandermonde with distinct bases
-$N^{-1}$), and $a_\cA(N) > 0$ for infinitely many~$N$
-(indeed $a_\cA(N) \geq N^{-1} > 0$ whenever $N$ has a
-generator weight~$w_i$ with $w_i \leq N$).
+Every finite principal minor is a weighted Vandermonde Gram matrix on
+the distinct bases $N^{-1}$. Since the support of $a_\cA$ is infinite,
+one may choose at least $k$ positive-weight bases for the $k$-th minor,
+and the corresponding Vandermonde determinant is nonzero.
 \end{proof}
 
 \begin{corollary}[Virasoro sewing deficit; \ClaimStatusProvedHere]%
@@ -2889,7 +2899,7 @@ At $R = 4$: $b_4$ carries the quartic resonance class
 $\mathfrak{Q}(\cA)$.
 \end{construction}
 
-\begin{proposition}[Collapse permanence; \ClaimStatusProvedHere]%
+\begin{proposition}[Collapse permanence; \ClaimStatusConditional]%
 \label{prop:collapse-permanence}%
 \index{sewing--Hecke reciprocity!collapse permanence}%
 \index{interacting sewing kernel!factorisation}%
@@ -3103,7 +3113,8 @@ suffices.
 \end{enumerate}
 \end{definition}
 
-\begin{theorem}[\ClaimStatusProvedHere]%
+\begin{theorem}[Euler--Koszul tier placement for standard examples;
+\ClaimStatusConditional]%
 \label{thm:euler-koszul-tier-classification}%
 \index{Euler--Koszul!tier classification}%
 \begin{enumerate}[label=\textup{(\roman*)}]
@@ -3115,9 +3126,10 @@ $\mathrm{Vir}_c$ and principal $\cW_N$ are finitely defective
 Euler--Koszul: the defect
 $1 - D_\cA(u)$ is a finite harmonic subtraction.
 \item
-Epstein zeta functions of lattices with class number
-$h(D) \geq 2$ are non-Euler--Koszul: they decompose as
-linear combinations of inequivalent Hecke $L$-functions.
+Positive binary quadratic Epstein zeta functions of discriminant
+$D$ with class number $h(D) \geq 2$ are non-Euler--Koszul: their
+genus decomposes into linear combinations of inequivalent Hecke
+$L$-functions.
 \end{enumerate}
 \end{theorem}
 
@@ -3126,7 +3138,8 @@ linear combinations of inequivalent Hecke $L$-functions.
 (ii)~For $\cW_N$: $D_{\cW_N}(u) = 1 -
 \sum_{j=1}^{N-1}H_j(u)/((N{-}1)\zeta(u))$, and
 each $H_j$ is a finite sum.
-(iii)~For $h(D) \geq 2$, the Epstein zeta function
+(iii)~For a positive binary quadratic form with $h(D) \geq 2$, the
+Epstein zeta function
 $\varepsilon^c_s$
 decomposes into a linear combination of Hecke
 $L$-functions attached to distinct Gr\"o\ss encharacters;
@@ -3186,7 +3199,7 @@ $T \to \infty$.
 
 \begin{theorem}[Diagonal Sewing--Hecke reciprocity]%
 \label{thm:sewing-hecke-reciprocity}%
-\ClaimStatusProvedHere%
+\ClaimStatusConditional%
 \index{sewing--Hecke reciprocity!theorem|textbf}%
 Assume the connected genus-$1$ sewing free energy is the diagonal
 weight-multiset series of
@@ -3207,8 +3220,8 @@ In particular\textup:
 \item
 \textup{(}Sewing--Selberg recovery.\textup{)}
 $L_\cA(s,0) = \Gamma(s{-}1)\,(2\pi)^{-(s-1)}\,S_\cA(s{-}1)$.
-For Heisenberg, this recovers the
-Sewing--Selberg formula
+For Heisenberg, this recovers the regularized
+sewing--Selberg formula
 \textup{(}Theorem~\textup{\ref{thm:sewing-selberg-formula}}\textup{)}.
 \item
 \textup{(}Dirichlet recovery.\textup{)}
@@ -3276,7 +3289,7 @@ in the Fock basis). The zero-side variable~$s$
 (Rankin--Selberg) and the prime-side variable~$u$
 (Dirichlet--sewing) are \emph{locked together} by the
 Mellin transform.
-The Sewing--Selberg formula
+The regularized sewing--Selberg formula
 (Theorem~\ref{thm:sewing-selberg-formula}) and the
 Dirichlet--sewing lift
 (Theorem~\ref{thm:dirichlet-weight-formula}) are two
@@ -3299,7 +3312,7 @@ and $\beta\gamma$ all sit on $\Delta_\cA(x) = (1{-}3x)(1{+}x)$,
 yet $S_{\beta\gamma} = 2\zeta(v)\zeta(v{+}1)$,
 $S_{\mathrm{Vir}} = \zeta(v{+}1)(\zeta(v){-}1)$,
 $S_{\widehat{\mathfrak{sl}}_2} = 3\zeta(v)\zeta(v{+}1)$.
-The Sewing--Selberg formula and the Higgs field of
+The regularized sewing--Selberg formula and the Higgs field of
 Theorem~\ref{thm:shadow-higgs-field}
 are related: the sewing operator $K_q$ is the analytic avatar of the
 Higgs field $\Phi_\cA$ on the shadow triple, and the

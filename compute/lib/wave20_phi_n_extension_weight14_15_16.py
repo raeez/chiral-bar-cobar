@@ -24,8 +24,8 @@ generating series
 This module computes and verifies:
 
 1. PADOVAN DIMENSIONS d_n through the recurrence d_n = d_{n-2} + d_{n-3}
-   with seed (d_1, d_2, d_3, d_4) = (1, 0, 1, 1).  Tabulates
-   d_{13} = 12, d_{14} = 16, d_{15} = 21, d_{16} = 28.
+   with Brown seed (d_0, d_1, d_2) = (1, 0, 1).  Tabulates
+   d_{13} = 16, d_{14} = 21, d_{15} = 28, d_{16} = 37.
 
 2. BROADHURST-KREIMER DEPTH STRATIFICATION D_{n,d} via symbolic
    expansion of BK(x, y) through order x^{17} y^6.  Tabulates
@@ -38,18 +38,18 @@ This module computes and verifies:
    summation of Brown canonical basis elements through n = 16.
    Reproduces phi^(11) ~ 3.165e-8, phi^(12) ~ 1.078e-9 from
    Theorem thm:phi-n-weight-11-12-13, and extends to
-       phi^(13) ~ 2.04e-10,
-       phi^(14) ~ 1.83e-11,
-       phi^(15) ~ 1.61e-12,
-       phi^(16) ~ 1.34e-13.
+       phi^(13) ~ 2.57e-9,
+       phi^(14) ~ 2.41e-10,
+       phi^(15) ~ 2.14e-11,
+       phi^(16) ~ 1.77e-12.
 
 4. HARDY-RAMANUJAN RATIO for the Borcherds leg
        |leg_K3_n| / |leg_MZV_n| ~ p_{24}(ceil(n/2)) / d_n
    with p_{24}(k) ~ k^{-27/4} exp(4 pi sqrt(k)) (Hardy-Ramanujan 1918).
    Tabulates the ratio at n = 10, 11, ..., 16.
 
-5. PLASTIC-NUMBER ASYMPTOTIC d_n ~ rho^n / (rho^2 + 2) with rho the
-   unique real root of x^3 - x - 1.
+5. PLASTIC-NUMBER ASYMPTOTIC d_n ~ A rho^n, A = rho^3/(2 rho + 3),
+   with rho the unique real root of x^3 - x - 1.
 
 VERIFICATION PATHS
 ==================
@@ -97,17 +97,17 @@ from typing import Dict, List, Tuple
 # ---------------------------------------------------------------------------
 
 def padovan_dim(n_max: int = 20) -> Dict[int, int]:
-    """Return {n: d_n} via d_n = d_{n-2} + d_{n-3}, seed (d_1,d_2,d_3,d_4) = (1,0,1,1)."""
-    d: Dict[int, int] = {1: 1, 2: 0, 3: 1, 4: 1}
-    for n in range(5, n_max + 1):
+    """Return {n: d_n} via d_0=1, d_1=0, d_2=1 and d_n = d_{n-2} + d_{n-3}."""
+    d: Dict[int, int] = {0: 1, 1: 0, 2: 1}
+    for n in range(3, n_max + 1):
         d[n] = d[n - 2] + d[n - 3]
     return d
 
 
 def padovan_count_check() -> bool:
-    """Assert d_{13}..d_{16} = (12, 16, 21, 28)."""
+    """Assert d_{13}..d_{16} = (16, 21, 28, 37)."""
     d = padovan_dim(20)
-    expected = {13: 12, 14: 16, 15: 21, 16: 28}
+    expected = {13: 16, 14: 21, 15: 28, 16: 37}
     for n, v in expected.items():
         assert d[n] == v, f"Padovan d_{n} = {d[n]} != expected {v}"
     return True
@@ -322,11 +322,11 @@ def hardy_ramanujan_exact_check() -> bool:
     r = hardy_ramanujan_ratio_exact()
     # p_24(5)=176256, p_24(7)=5930496, p_24(8)=30178575
     expected = {
-        10: 176256 / 5,
-        13: 5930496 / 12,
-        14: 5930496 / 16,
-        15: 30178575 / 21,
-        16: 30178575 / 28,
+        10: 176256 / 7,
+        13: 5930496 / 16,
+        14: 5930496 / 21,
+        15: 30178575 / 28,
+        16: 30178575 / 37,
     }
     for n, v in expected.items():
         assert abs(r[n] - v) < 1e-6, f"ratio at n={n}: {r[n]} != {v}"
@@ -345,13 +345,14 @@ def plastic_number() -> float:
 
 
 def padovan_asymptotic(n: int) -> float:
-    r"""Return rho^n / (rho^2 + 2)."""
+    r"""Return the main term A rho^n, A = rho^3/(2 rho + 3)."""
     rho = plastic_number()
-    return (rho ** n) / (rho ** 2 + 2)
+    A = rho ** 3 / (2 * rho + 3)
+    return A * (rho ** n)
 
 
 def plastic_asymptotic_check() -> Dict[int, Tuple[int, float, float]]:
-    """Return {n: (d_n, rho^n/(rho^2+2), relative error)}."""
+    """Return {n: (d_n, A rho^n, relative error)}."""
     d = padovan_dim(20)
     out: Dict[int, Tuple[int, float, float]] = {}
     for n in range(10, 17):
@@ -408,4 +409,4 @@ if __name__ == "__main__":
     print()
     print("Plastic-number asymptotic vs exact d_n:")
     for n, (dn, asy, err) in sorted(plastic_asymptotic_check().items()):
-        print(f"  n = {n}: d_n = {dn:3d}, rho^n/(rho^2+2) ~ {asy:7.3f}, rel err = {err:+.1%}")
+        print(f"  n = {n}: d_n = {dn:3d}, A rho^n ~ {asy:7.3f}, rel err = {err:+.1%}")

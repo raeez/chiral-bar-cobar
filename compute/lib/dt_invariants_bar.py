@@ -694,11 +694,9 @@ def pt_partition_function_conifold(N: int, d_max: int) -> Dict[int, List[int]]:
     Since the M(-q)^2 factor only contributes to the Q^0 sector:
         Z_PT|_{Q^d} = Z_DT|_{Q^d} for d >= 1.
 
-    Wait, that's also wrong. M(-q)^2 has Q^0 only, so when we
-    divide Z_DT by M(-q)^2, the Q^d coefficients (d >= 1) get
-    divided by M(-q)^2, which IS the full Q^0 series.
-
-    Let me just compute this correctly.
+    Since M(-q)^2 has Q^0 only, dividing Z_DT by M(-q)^2 sends each
+    Q^d coefficient for d >= 1 through multiplication by the inverse
+    Q^0 series.
 
     For the resolved conifold, the reduced (d >= 1) DT partition function:
         Z'_DT(q, Q) = prod_{k>=1} prod_{d>=1} (1 - (-q)^k Q^d)^k  [wrong]

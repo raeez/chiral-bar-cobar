@@ -561,7 +561,7 @@ def special_level_analysis() -> Dict[str, Any]:
     return {
         "generic_result": {"H0": 1, "H1": 2, "H2": 1, "total": 4},
         "critical_level": -3,
-        "critical_note": "c diverges; BP degenerates",
+        "critical_note": "Sugawara undefined; BP degenerates",
         "level_0": {
             "c": simplify(cc(0)),
             "kappa": simplify(kap(0)),

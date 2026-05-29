@@ -66,8 +66,8 @@ $\Theta_\cA \in \gAmod$ satisfies the Maurer--Cartan equation
 \[
  d_0 \Theta_\cA + \tfrac{1}{2}[\Theta_\cA, \Theta_\cA] = 0
 \]
-unconditionally (Theorem~\ref{thm:mc2-bar-intrinsic}).
-Existence of the MC element follows from the bar construction. The
+under the hypotheses of Theorem~\ref{thm:mc2-bar-intrinsic}.
+Existence of the MC element follows from the completed bar differential. The
 mathematical problem is to determine the structure carried by
 $\Theta_\cA$.
 
@@ -132,8 +132,8 @@ only the next one resolves.
  The master equation constrains the obstructions but does not
  kill them. The resolution is
  Theorem~\ref{thm:recursive-existence}:
- $\Theta_\cA$ exists unconditionally by the bar-intrinsic
- construction, and $\Theta_\cA^{\leq r}$ are its degree
+ under the bar-intrinsic hypotheses, $\Theta_\cA$ exists in the
+ completed convolution algebra, and $\Theta_\cA^{\leq r}$ are its degree
  projections. Obstructions measure truncation failure,
  not existence failure.
 \end{enumerate}
@@ -332,6 +332,7 @@ $\mathcal{A}_{\mathrm{complete}}/\hbar^{G+1}
 \begin{lemma}[Finite-window Mittag--Leffler passage]
 \label{lem:genus-window-ml-passage}
 \index{Mittag--Leffler!genus windows}
+\ClaimStatusProvedHere
 Let $\{C_{\leq G}\}_{G\geq0}$ be a tower of genus-window cochain
 complexes with surjective truncation maps
 $C_{\leq G+1}\to C_{\leq G}$. Assume that, for every cohomological
@@ -917,7 +918,6 @@ Inversion and complementarity follow as consequences.
 
 \begin{theorem}[PBW concentration at all genera for principal finite-type \texorpdfstring{$\mathcal{W}$}{W}-algebras; \ClaimStatusProvedHere]
 \label{thm:pbw-allgenera-principal-w}
-% backward-compatible label removed (was conj:pbw-higher-genus-degeneration)
 \index{PBW spectral sequence!higher genus concentration}
 \textup{[Regime: filtered-complete and curved-central
 \textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
@@ -3028,8 +3028,8 @@ the Verdier intertwining axiom~\textup{\ref{MK:verdier-htpy}}, realized
 on the dg model by
 Theorem~\ref{thm:bar-cobar-isomorphism-main}. Part~\textup{(iii)} is
 Theorem~\ref{thm:higher-genus-inversion}. Part~\textup{(iv)} is
-Theorem~\ref{thm:universal-theta}, with unconditional existence supplied
-by Theorem~\ref{thm:mc2-bar-intrinsic}; its clauses
+Theorem~\ref{thm:universal-theta}, with existence supplied under the
+bar-intrinsic hypotheses by Theorem~\ref{thm:mc2-bar-intrinsic}; its clauses
 \textup{(i)}--\textup{(iii)} are exactly the stated trace, clutching,
 and Verdier properties.
 \end{proof}
@@ -3394,26 +3394,27 @@ Only the last column is $X$-invariant; it is a Satake-boundary term.
 \index{bar--cobar parity Hodge bundle!genus-$g$ lift}%
 \index{Siegel--Baily--Borel cusp stratum!Euler characteristic}%
 \index{Mumford $\lambda_g\lambda_g = 0$ relation}%
+\ClaimStatusConditional
 Let $\pi\colon\overline{\cC}_g\to\overline M_g$ be the universal curve,
 $\mathbb E = R^0\pi_*\omega_\pi$ the Hodge bundle of rank $g$, and
 $\mathbb B_g^{(\alpha,\beta)} := \mathbb E \oplus \mathbb E^\vee$ the
-\emph{genus-$g$ parity Hodge package}. This is the Hodge-theoretic
+\emph{genus-$g$ parity Hodge bundle}. This is the Hodge-theoretic
 lift of the Satake-boundary correction of
 Remark~\ref{thm:three-faces-plus-two-euler-class}, not a lift of an
 unstable $\overline M_{0,2}$ Euler class. The all-genus three-faces
-reconciliation reads
+reconciliation in the orbifold Satake normalisation reads
 \begin{equation}\label{eq:higher-genus-three-faces}
  \kappa_{\mathrm{BKM},g}^{(3\text{-faces})}(X)
  \;=\; 2\,\kappa_{\mathrm{BKM},g}^{(\mathrm{Borch})}(X)
  \;+\;\chi(\cO_X)\cdot\lambda_g
- \;+\;f(g),
+ \;+\;f^{\mathrm{orb}}(g),
 \end{equation}
 with universal $X$-independent correction term, for $g\ge1$,
 \begin{equation}\label{eq:f-g-universal-euler}
- f(g) \;=\;
+ f^{\mathrm{orb}}(g) \;=\;
  \int_{\overline M_g} c_{2g}\!\bigl(\mathbb B_g^{(\alpha,\beta)}\bigr)
  \;+\;
- \chi\!\bigl(\partial\mathcal A_{g+1}^{\mathrm{Sat}}\bigr),
+ \chi^{\mathrm{orb}}\!\bigl(\partial\mathcal A_{g+1}^{\mathrm{Sat}}\bigr),
 \end{equation}
 where $\partial\mathcal A_{g+1}^{\mathrm{Sat}} = \bigsqcup_{k=0}^{g}\mathcal A_k$
 is the Baily--Borel cusp stratum of the Satake compactification of
@@ -3437,24 +3438,30 @@ Geer 2008~\cite{vanderGeer08}\textup{)}. The correction factors:
 \item \emph{Boundary survival.}
  The full Euler contribution localises on the Siegel cusp stratum:
  \[
- f(g) \;=\; \chi\!\bigl(\partial\mathcal A_{g+1}^{\mathrm{Sat}}\bigr)
- \;=\; \sum_{k=0}^{g}\chi(\mathcal A_k),
+ f^{\mathrm{orb}}(g) \;=\;
+ \chi^{\mathrm{orb}}\!\bigl(\partial\mathcal A_{g+1}^{\mathrm{Sat}}\bigr)
+ \;=\; \sum_{k=0}^{g}\chi^{\mathrm{orb}}(\mathcal A_k),
  \]
- with base case $\chi(\mathcal A_0) = 1$ \textup{(}the one-point
+ with base case $\chi^{\mathrm{orb}}(\mathcal A_0) = 1$ \textup{(}the one-point
  moduli of the trivial abelian variety\textup{)} and
- $\chi(\mathcal A_1) = 1$ \textup{(}the orbifold Euler
- characteristic of the $j$-line;
+ $\chi^{\mathrm{orb}}(\mathcal A_1) = \zeta(-1)=-1/12$
+ \textup{(}Harder's orbifold Euler characteristic;
  Harder~\cite{Harder71}\textup{)}.
 \end{enumerate}
-	The Satake-boundary term of
-	Remark~\ref{thm:three-faces-plus-two-euler-class} is the first case,
-	$f(1)=\chi(\mathcal A_1)+\chi(\mathcal A_0)=2$; the next value is
+	The coarse Satake-boundary term of
+	Remark~\ref{thm:three-faces-plus-two-euler-class} is
+	$\chi(\mathbb A^1_j)+\chi(\mathrm{pt})=2$ and is not the
+	Harder orbifold value. In the orbifold normalisation the first cases are
 	\[
-	 f(2) \;=\; \chi(\mathcal A_2) + \chi(\mathcal A_1) + \chi(\mathcal A_0)
-	 \;=\; -\tfrac{1}{1440} + 1 + 1 \;=\; \tfrac{2879}{1440},
+	 f^{\mathrm{orb}}(1)=1-\tfrac{1}{12}=\tfrac{11}{12},
+	 \qquad
+	 f^{\mathrm{orb}}(2)
+	 \;=\; 1-\tfrac{1}{12}-\tfrac{1}{1440}
+	 \;=\; \tfrac{1319}{1440},
 	\]
 where the genus-$2$ value uses the Harder--Zagier--Tsushima formula
-$\chi(\mathcal A_2) = \zeta(-1)\zeta(-3) = (-1/12)(1/120) = -1/1440$
+$\chi^{\mathrm{orb}}(\mathcal A_2) = \zeta(-1)\zeta(-3)
+= (-1/12)(1/120) = -1/1440$
 \textup{(}Harder--Zagier~\cite{HarderZagier76};
 Tsushima~\cite{Tsushima80}; van der Geer 1998~\cite{vanderGeer98},
 Thm.~2.1\textup{)}.
@@ -3464,12 +3471,12 @@ Thm.~2.1\textup{)}.
 The identity~\eqref{eq:higher-genus-three-faces} is the genus-$g$
 lift of Proposition~\ref{prop:kappa-bkm-cross-volume-reconciliation},
 established by Grothendieck--Riemann--Roch on the universal curve
-along the uniform-weight lane
+on the uniform-weight scalar locus
 \textup{(}Remark~\ref{rem:theorem-d-alt-grr}\textup{)} together
 with the scalar Hodge coupling $\chi(\cO_X)\lambda_g$ inherited from
 the BCOV anomaly \textup{(}Remark~\ref{rem:kappa-polysemy}(ii);
 BCOV~\cite{BCOV94}, eq.~5.14\textup{)}. The universal correction
-$f(g)$ is defined by this identity modulo the two named $X$-dependent
+$f^{\mathrm{orb}}(g)$ is defined by this identity modulo the two named $X$-dependent
 terms.
 
 \emph{Bulk vanishing \textup{(}clause (i)\textup{)}.}
@@ -3486,8 +3493,8 @@ for all $g \ge 1$
 \textup{(}Mumford 1983~\cite{Mumford83}, proof of GRR on
 $\overline M_g$; the relation is a consequence of the
 $\lambda_g$-conjecture, now theorem~\cite{FaberPandharipande00}\textup{)}.
-There is no genus-$0$ interior Hodge package in this theorem. The
-$+2$ base term is the $g=1$ Satake boundary
+There is no genus-$0$ interior Hodge bundle in this theorem. The
+$+2$ base term is the coarse $g=1$ Satake boundary
 $\chi(\mathcal A_1)+\chi(\mathcal A_0)$.
 
 \emph{Boundary survival \textup{(}clause (ii)\textup{)}.}
@@ -3503,20 +3510,17 @@ is supported on $\partial\mathcal A_{g+1}^{\mathrm{Sat}} =
 \mathcal A_g\sqcup\mathcal A_{g-1}\sqcup\cdots\sqcup\mathcal A_0$,
 and its Euler characteristic decomposes by stratum:
 \[
- f(g) \;=\; \chi\!\bigl(\partial\mathcal A_{g+1}^{\mathrm{Sat}}\bigr)
- \;=\; \sum_{k=0}^{g}\chi(\mathcal A_k).
+ f^{\mathrm{orb}}(g) \;=\;
+ \chi^{\mathrm{orb}}\!\bigl(\partial\mathcal A_{g+1}^{\mathrm{Sat}}\bigr)
+ \;=\; \sum_{k=0}^{g}\chi^{\mathrm{orb}}(\mathcal A_k).
 \]
-The orbifold Euler characteristics are $\chi(\mathcal A_0) = 1$
+The orbifold Euler characteristics are
+$\chi^{\mathrm{orb}}(\mathcal A_0) = 1$
 \textup{(}rational point, trivial stabiliser\textup{)} and
-$\chi(\mathcal A_1) = 1$
-\textup{(}Harder~\cite{Harder71}:
-$\chi_{\mathrm{orb}}(\mathcal A_1) = -1/12$ as an orbifold,
-upgraded to~$1$ for the Baily--Borel stratum after accounting for the
-$\mathrm{SL}_2(\bZ)$ stabiliser and the compactification cusp;
-equivalently, $\mathcal A_1 \cong\mathbb A^1_j$ has Euler
-characteristic~$1$ as a variety\textup{)}.
-At $g=1$ the sum $\chi(\mathcal A_1)+\chi(\mathcal A_0)=2$ reproduces
-the Satake-boundary base case.
+$\chi^{\mathrm{orb}}(\mathcal A_1) = \zeta(-1)=-1/12$
+\textup{(}Harder~\cite{Harder71}\textup{)}. The coarse equality
+$\chi(\mathbb A^1_j)+\chi(\mathrm{pt})=2$ is a different
+normalisation and does not enter the Harder product.
 
 \emph{Three derivations.}
 \textup{(V1, Chow-level Hodge integral.)}
@@ -3525,47 +3529,52 @@ of~\eqref{eq:f-g-universal-euler} at $g=1$:
 $c_2(\mathbb E_1\oplus\mathbb E_1^\vee) =
 \lambda_1^2 + \lambda_1(-\lambda_1) + (-\lambda_1)\lambda_1 + \lambda_1^2 = 0$
 as a formal Chern sum, independently reconfirming interior vanishing.
-The boundary contribution $\chi(\mathcal A_2^{\mathrm{Sat}}\setminus\mathcal A_2)
-= \chi(\mathcal A_1) + \chi(\mathcal A_0) = 2$ matches~$f(1) = 2$.
+The coarse boundary contribution
+$\chi(\mathcal A_2^{\mathrm{Sat}}\setminus\mathcal A_2)
+= \chi(\mathbb A^1_j)+\chi(\mathrm{pt})=2$ is the coarse base term;
+the orbifold value is $f^{\mathrm{orb}}(1)=11/12$.
 \textup{(V2, Faber--Pandharipande.)} At $g=2$, the
 tautological relation $\lambda_2^2 = 0$
 \textup{(}Mumford 1983, van der Geer 1998\textup{)} gives the
 interior vanishing, and the push-forward to the cusp stratum of
 $\mathcal A_3^{\mathrm{Sat}}$ is
-$\chi(\mathcal A_2)+\chi(\mathcal A_1)+\chi(\mathcal A_0) = -1/1440 + 1 + 1
-= 2879/1440$.
+$\chi^{\mathrm{orb}}(\mathcal A_2)+\chi^{\mathrm{orb}}(\mathcal A_1)+
+\chi^{\mathrm{orb}}(\mathcal A_0) = -1/1440-1/12+1
+= 1319/1440$.
 \textup{(V3, automorphic-Harder.)} The Siegel cusp stratum
 Euler characteristic is
-$\chi\bigl(\partial\mathcal A_{g+1}^{\mathrm{Sat}}\bigr)=\sum_{k=0}^g \chi(\mathcal A_k)$
+$\chi^{\mathrm{orb}}\bigl(\partial\mathcal A_{g+1}^{\mathrm{Sat}}\bigr)
+=\sum_{k=0}^g \chi^{\mathrm{orb}}(\mathcal A_k)$
 by the Baily--Borel decomposition \textup{(}\cite{BailyBorel66},
-Main Theorem\textup{)}, with $\chi(\mathcal A_k)$ given by the
+Main Theorem\textup{)}, with $\chi^{\mathrm{orb}}(\mathcal A_k)$ given by the
 Harder--Zagier formula
-$\chi(\mathcal A_k) = \prod_{j=1}^{k}\zeta(1-2j)$
+$\chi^{\mathrm{orb}}(\mathcal A_k) = \prod_{j=1}^{k}\zeta(1-2j)$
 \textup{(}Harder--Zagier 1976~\cite{HarderZagier76}, Thm.~2;
 $\zeta(-1) = -1/12$, $\zeta(-3) = 1/120$, $\zeta(-5) = -1/252$\textup{)}.
 The three paths (tautological Chow, Faber--Pandharipande Hodge
 integrals, Harder--Zagier special-value zeta arithmetic) converge
-on the same universal class $[f(g)]\in K_0(\mathrm{Var}/\bQ)$.
+on the same universal orbifold Euler class $[f^{\mathrm{orb}}(g)]$.
 \end{proof}
 
 \begin{remark}[Values at $g=1,2$]%
 \label{rem:higher-genus-euler-verification}%
 \index{three-faces crown!all-genus value table}%
-The all-genus formula $f(g) = \sum_{k=0}^{g}\chi(\mathcal A_k)$ takes
+The all-genus orbifold formula
+$f^{\mathrm{orb}}(g)=\sum_{k=0}^{g}\chi^{\mathrm{orb}}(\mathcal A_k)$ takes
 the following first values:
 \begin{center}
 \begin{tabular}{cccc}
 \toprule
 $g$ & $\int_{\overline M_g}c_{2g}(\mathbb B_g^{(\alpha,\beta)})$
- & $\chi(\partial\mathcal A_{g+1}^{\mathrm{Sat}})$
- & $f(g)$ \\
+ & $\chi^{\mathrm{orb}}(\partial\mathcal A_{g+1}^{\mathrm{Sat}})$
+ & $f^{\mathrm{orb}}(g)$ \\
 \midrule
 $1$ & $0$ \textup{(}$\lambda_1^2 = 0$ by degree\textup{)}
- & $\chi(\mathcal A_1) + \chi(\mathcal A_0) = 2$
- & $2$ \\
+ & $-1/12+1=11/12$
+ & $11/12$ \\
 $2$ & $0$ \textup{(}Mumford $\lambda_2^2 = 0$\textup{)}
- & $\chi(\mathcal A_2) + \chi(\mathcal A_1) + \chi(\mathcal A_0) = 2879/1440$
- & $2879/1440$ \\
+ & $-1/1440-1/12+1=1319/1440$
+ & $1319/1440$ \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -3577,18 +3586,17 @@ correction lives on the Siegel cusp stratum.
 \begin{remark}[The $+2$ as Satake-boundary base term]%
 \label{rem:higher-genus-plus-two-orbit-stability}%
 \index{Satake boundary!base term}%
-The value $f(1)=2$ is the first Satake-boundary contribution:
+The coarse value $2$ is the first Satake-boundary contribution:
 $\partial\mathcal A_2^{\mathrm{Sat}}=\mathcal A_1\sqcup\mathcal A_0$
 and both strata have Euler characteristic~$1$. No genus-$0$
 $\overline M_{0,2}$ Chern--Simons or parity-bundle computation is
-used. At $g \ge 2$ the Harder--Zagier arithmetic injects
-$\zeta$-special-values into $f(g)$, so $f(2) = 2879/1440$ is
-irrational-looking (rational but non-integer), and $f(g)$ grows
+used. In the orbifold normalisation the Harder--Zagier arithmetic injects
+$\zeta$-special-values into $f^{\mathrm{orb}}(g)$, so
+$f^{\mathrm{orb}}(2)=1319/1440$ is non-integral, and
+$f^{\mathrm{orb}}(g)$ grows
 like $\prod_{j=1}^g\zeta(1-2j)$ asymptotically, with sign
 governed by the von Staudt--Clausen parity of the denominators.
-The passage from the universal integer~$2$ to the universal
-zeta-rational $f(g)$ is the Siegel-to-moduli lift of the
-one-loop partition function.
+The two normalisations must not be added in the same formula.
 \end{remark}
 
 \begin{theorem}[Higher-genus Euler correction: Kuga--Satake push-forward
@@ -3597,27 +3605,29 @@ as Borcherds singular-theta lift]%
 \index{higher-genus Euler correction!Borcherds theta-lift identification}%
 \index{Kuga--Satake map!higher-genus push-forward}%
 \index{singular theta lift!regularised Chow class}%
+\ClaimStatusConditional
 For every $g \ge 0$ the universal higher-genus Euler correction
-$f(g)$ of Theorem~\ref{thm:higher-genus-euler-correction} admits the
+$f^{\mathrm{orb}}(g)$ of Theorem~\ref{thm:higher-genus-euler-correction} admits the
 closed form
 \begin{equation}
  \label{eq:f-g-closed-form}
- f(g) \;=\; 1 + \sum_{k=1}^{g}\prod_{j=1}^{k}\zeta(1-2j),
+ f^{\mathrm{orb}}(g) \;=\; 1 + \sum_{k=1}^{g}\prod_{j=1}^{k}\zeta(1-2j),
 \end{equation}
-in $K_0(\mathrm{Var}/\bQ)\otimes\bQ$, where $\chi(\mathcal A_0)=1$,
-$\chi(\mathcal A_1)=1$ \textup{(}the affine $j$-line\textup{)}, and
-$\chi(\mathcal A_k)=\prod_{j=1}^{k}\zeta(1-2j)$ for $k\ge 2$ is the
+for the orbifold Euler characteristic, where
+$\chi^{\mathrm{orb}}(\mathcal A_0)=1$ and
+$\chi^{\mathrm{orb}}(\mathcal A_k)=\prod_{j=1}^{k}\zeta(1-2j)$ for
+$k\ge 1$ is the
 Harder--Zagier--Tsushima orbifold Euler characteristic
 \textup{(}Harder--Zagier 1976~\cite{HarderZagier76},
 Thm.~2; Tsushima 1980~\cite{Tsushima80}\textup{)}.
 Consequently the explicit values at genus $3,4,5$ are
 \begin{equation}
  \label{eq:f-g-345}
- f(3) \;=\; \tfrac{725509}{362880},
+ f^{\mathrm{orb}}(3) \;=\; \tfrac{332389}{362880},
  \qquad
- f(4) \;=\; \tfrac{174122161}{87091200},
+ f^{\mathrm{orb}}(4) \;=\; \tfrac{79773361}{87091200},
  \qquad
- f(5) \;=\; \tfrac{22984125251}{11496038400},
+ f^{\mathrm{orb}}(5) \;=\; \tfrac{10530083651}{11496038400},
 \end{equation}
 obtained from $\chi(\mathcal A_3)=\zeta(-1)\zeta(-3)\zeta(-5)
 = (-1/12)(1/120)(-1/252) = 1/362880$,
@@ -3628,7 +3638,7 @@ The Chow class of this correction is realised as the
 Kuga--Satake push-forward of a Borcherds singular-theta lift:
 \begin{equation}
  \label{eq:f-g-borcherds-class}
- [f(g)] \;=\; \Bigl[\,\operatorname{KS}_*\!\!\int_{\partial\mathcal A_{g+1}^{\mathrm{Sat}}}
+ [f^{\mathrm{orb}}(g)] \;=\; \Bigl[\,\operatorname{KS}_*\!\!\int_{\partial\mathcal A_{g+1}^{\mathrm{Sat}}}
  \mathrm{Borch}\!\bigl(\Phi_{N(g)}^{(g)}\bigr)\,\Bigr]
  \;\in\; K_0\!\bigl(\partial\mathcal A_{g+1}^{\mathrm{Sat}}\bigr),
 \end{equation}
@@ -3649,7 +3659,7 @@ generator
 $\bigl(\Phi_{10}^{\mathrm{un}}\bigr)^{-1}\!\cdot\!(E_4 E_6/\Delta)$
 \textup{(}Gritsenko--Nikulin 1995~\cite{GritsenkoNikulin95},
 eq.~2.14\textup{)}, whose constant term reproduces
-$\chi(\mathcal A_2) = -1/1440$ and whose Fourier coefficients
+$\chi^{\mathrm{orb}}(\mathcal A_2) = -1/1440$ and whose Fourier coefficients
 encode the full Kuga--Satake cusp stratum of $\mathcal A_3^{\mathrm{Sat}}$.
 \end{theorem}
 
@@ -3660,8 +3670,8 @@ of the Baily--Borel Satake boundary
 $\partial\mathcal A_{g+1}^{\mathrm{Sat}}
 = \bigsqcup_{k=0}^{g}\mathcal A_k$
 \textup{(}\cite{BailyBorel66}, Main Theorem\textup{)} with
-$\chi(\mathcal A_0) = \chi(\mathcal A_1) = 1$ and
-Harder--Zagier--Tsushima on $\mathcal A_k$ for $k\ge 2$. Direct
+$\chi^{\mathrm{orb}}(\mathcal A_0) = 1$ and
+Harder--Zagier--Tsushima on $\mathcal A_k$ for $k\ge 1$. Direct
 evaluation at $g=3,4,5$ with
 $\zeta(-1)=-1/12,\;\zeta(-3)=1/120,\;\zeta(-5)=-1/252,\;\zeta(-7)=1/240,\;
 \zeta(-9)=-1/132$ gives~\eqref{eq:f-g-345}; the common denominators
@@ -3700,43 +3710,38 @@ $-g-1/2 = -5/2$ on a half-integral cover
 = q^{-1}+\cdots$ factor supplies the weakly-holomorphic
 pole at the cusp\textup{)}; evaluation of the constant Fourier
 coefficient of the input is $-1/1440$ by standard Eisenstein-series
-computation, reproducing $\chi(\mathcal A_2)$. The higher-genus
-ladder $\Phi_{12},\Phi_{24},\ldots$ \textup{(}Gritsenko--Nikulin
+computation, reproducing $\chi^{\mathrm{orb}}(\mathcal A_2)$. The higher-genus
+sequence $\Phi_{12},\Phi_{24},\ldots$ \textup{(}Gritsenko--Nikulin
 1995, Table~1\textup{)} supplies the corresponding inputs at
 $g\ge 3$; the weights track the signature shifts as
 $\mathrm{wt}(\Phi_N^{(g)}) = -g-1/2$ on the half-integral cover.
 
-\emph{Three derivations at $g=3$.}
-\textup{(P1, direct arithmetic.)}
-$\chi(\mathcal A_3)=(-1/12)(1/120)(-1/252)=1/362880$;
-$f(3)=2879/1440+1/362880=725509/362880$ by common denominator.
-\textup{(P2, Borcherds residue.)} The constant Fourier coefficient
+\emph{The genus-three calculation.}
+Direct arithmetic gives
+$\chi^{\mathrm{orb}}(\mathcal A_3)=(-1/12)(1/120)(-1/252)=1/362880$,
+and hence
+$f^{\mathrm{orb}}(3)=1319/1440+1/362880=332389/362880$.
+The same number is seen in the Borcherds residue. The constant Fourier coefficient
 of the weakly-holomorphic input
 $\Phi_{12}^{-1}(E_4 E_6/\Delta)^2$ on the signature-$(2,6)$ lattice
 $L_3$ is
 $\prod_{j=1}^{3}\zeta(1-2j)=1/362880$ by Kudla--Millson's
 arithmetic Siegel--Weil formula~\cite{KudlaMillson90}, Thm.~5.1.
-\textup{(P3, Harder--Zagier--van der Geer.)}
-The Hirzebruch--Mumford proportionality gives
-$\chi(\mathcal A_g) = 2^{-g}\prod_{j=1}^{g}\zeta(1-2j)\cdot
+Hirzebruch--Mumford proportionality gives
+$\chi^{\mathrm{orb}}(\mathcal A_g) = 2^{-g}\prod_{j=1}^{g}\zeta(1-2j)\cdot
 \chi(\overline{\mathcal A_g^{\mathrm{tor}}}/\mathcal A_g)$
 \textup{(}van der Geer 1998~\cite{vanderGeer98}, Thm.~2.1\textup{)};
 the boundary correction exactly cancels the $2^{-g}$, recovering
-the Harder--Zagier product. The three paths converge on
-$[f(3)] = 725509/362880$.
+the Harder--Zagier product. Thus
+$[f^{\mathrm{orb}}(3)] = 332389/362880$.
 
-\emph{Convergence of the tail.} The series
-$\sum_{k\ge 2}\prod_{j=1}^{k}\zeta(1-2j)$ converges rapidly
-\textup{(}the ratio $|\zeta(1-2(k+1))/\zeta(1-2k)|\sim (2k)/\pi^2$
-from the functional equation is offset by factorial denominators;
-numerical truncation at $k=6$ gives the partial sum
-$-23681158721/34237292544000 \approx -6.917\times 10^{-4}$\textup{)},
-so $\lim_{g\to\infty} f(g) = 2 + \sum_{k\ge 2}\prod_{j=1}^{k}\zeta(1-2j)
-= 1.99930832\ldots$. The orbit-stable value $f=2$ of
-Remark~\ref{rem:higher-genus-plus-two-orbit-stability} is the
-leading integer; the convergent $\zeta$-tail is the Borcherds lift
-of the Harder--Zagier Eisenstein tail on the universal
-period domain.
+\emph{No infinite-genus scalar is produced by this formula.}
+The identity is a finite-genus identity. The Bernoulli formula
+$\zeta(1-2j)=-B_{2j}/(2j)$ and the asymptotic growth of $B_{2j}$
+show that the formal tail
+$\sum_{k\ge 1}\prod_{j=1}^{k}\zeta(1-2j)$ is not a convergent
+ordinary series. An infinite-genus limit would require a separate
+regularisation datum, and no such datum enters the theorem.
 \end{proof}
 
 \begin{remark}[Values at $g=3,4,5$]%
@@ -3748,26 +3753,28 @@ explicit tabulation:
 \renewcommand{\arraystretch}{1.3}%
 \begin{tabular}{cccc}
 \toprule
-$g$ & $\chi(\mathcal A_g)$ & $f(g) - f(g-1)$ & $f(g)$ \\
+$g$ & $\chi^{\mathrm{orb}}(\mathcal A_g)$
+ & $f^{\mathrm{orb}}(g) - f^{\mathrm{orb}}(g-1)$
+ & $f^{\mathrm{orb}}(g)$ \\
 \midrule
 $3$ & $\tfrac{1}{362880}$
  & $\tfrac{1}{362880}$
- & $\tfrac{725509}{362880}$ \\
+ & $\tfrac{332389}{362880}$ \\
 $4$ & $\tfrac{1}{87091200}$
  & $\tfrac{1}{87091200}$
- & $\tfrac{174122161}{87091200}$ \\
+ & $\tfrac{79773361}{87091200}$ \\
 $5$ & $-\tfrac{1}{11496038400}$
  & $-\tfrac{1}{11496038400}$
- & $\tfrac{22984125251}{11496038400}$ \\
+ & $\tfrac{10530083651}{11496038400}$ \\
 \bottomrule
 \end{tabular}
 \end{center}
-The numerators $725509,\;174122161,\;22984125251$ are the
+The numerators $332389,\;79773361,\;10530083651$ are the
 Harder--Zagier--Tsushima numerators of the partial zeta-product
 sums, and satisfy
-$725509 = 2879\cdot 252 + 1$,
-$174122161 = 725509\cdot 240 + 1$,
-$22984125251 = 174122161\cdot 132 - 1$,
+$332389 = 1319\cdot 252 + 1$,
+$79773361 = 332389\cdot 240 + 1$,
+$10530083651 = 79773361\cdot 132 - 1$,
 each recursion carrying the trivial-zero factor of
 $\zeta(1-2g)$ at the next genus. The denominator growth
 $1440 \to 362880 \to 87091200 \to 11496038400$ tracks the
@@ -3898,9 +3905,9 @@ lines 1730--1733: the table records ``$\kappa = 0$ iff
 $k = -h^\vee$'' for affine and ``$\kappa = 0$ iff $c = 0$'' for
 Virasoro as separate lane-internal entries, never as a universal
 biconditional). Volume~III's CY-to-chiral two-stage factorisation
-$\Phi_d = \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1}, C} \circ
+$\Phi_d^{(\Sigma_{d-1},C)} = \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1}, C} \circ
 \Phi^{\mathrm{FA}}_d$ preserves the lane structure: a CY threefold
-with vanishing chiral characteristic $\kappa(\Phi_d(X)) = 0$ on
+with vanishing chiral characteristic $\kappa(\Phi_3^{(\Sigma_2,C)}(X)) = 0$ on
 the stage-$2$ shadow $\mathrm{Sp}^{\mathrm{ch}}_{\Sigma_2, C}(\Phi^{\mathrm{FA}}_3(X))$
 corresponds to the analogous degeneration on the image lane, not to a uniform
 ``critical-level'' phenomenon. In the Vol~III Kodaira--Spencer
@@ -3932,7 +3939,7 @@ gives $k{+}1$ conformal blocks at genus~$1$
 (Remark~\ref{rem:chain-vs-classical-mf}). The full Chern
 character recovers the spectral
 discriminant~$\Delta_{\cA}$
-(Remark~\ref{rem:spectral-characteristic-programme});
+(Remark~\ref{rem:spectral-characteristic});
 the flat connection furnishes the bar-side comparison surface for
 the KZ/Hitchin package on that
 integrable affine lane; the factorization structure recovers the modular
@@ -4087,7 +4094,7 @@ $F_1(\mathrm{Vir}_c)=c/48$ and $\kappa(\mathrm{Vir}_c)=c/2$.
 The second route therefore agrees with the first.
 
 \emph{Route \textup{(iii)}: Hilbert series and GRR.}
-Remark~\ref{rem:theorem-d-alt-grr} gives a second proof architecture
+Remark~\ref{rem:theorem-d-alt-grr} gives a second proof
 for the scalar lane:
 the graded ranks of the fiber bar complex are determined by the
 Hilbert series of~$\cA$, and GRR identifies the corresponding family
@@ -4367,7 +4374,7 @@ $\cA \otimes \cA^!$-bimodule of Dimofte--Niu--Py.
 \end{enumerate}
 \end{conjecture}
 
-\begin{remark}[Normalization and proof obligation]
+\begin{remark}[Normalization and open mathematical condition]
 Theorem~\ref{thm:modular-characteristic} and
 Corollary~\ref{cor:free-energy-ahat-genus} determine the boundary
 normalization used in Conjecture~\ref{conj:kappa-holographic-central-charge}.
@@ -4430,7 +4437,7 @@ $V_k(\fg)$ at level~$k$,
 \kappa(V_k(\fg)) \;=\; \frac{\dim(\fg)\,(k + h^\vee)}{2\,h^\vee},
 \end{equation*}
 where $h^\vee$ is the dual Coxeter number. This number is the
-programme's shifted bar-curvature scalar. It is \emph{not} the WZW
+shifted bar-curvature scalar. It is \emph{not} the WZW
 Sugawara central charge
 \[
 c_{\mathrm{WZW}}(k)=\frac{k\,\dim\fg}{k+h^\vee}
@@ -4556,16 +4563,21 @@ The Vol~I holographic central charge is the first; the BKM
 value is the Vol~III refinement.
 \end{remark}
 
-\begin{remark}[Universal $\Phi$-trace identity: canonical ghost scalar
-and BKM conductor on $K3 \times E$]
+\begin{remark}[Conditional $\Phi$-trace comparison: canonical ghost scalar
+and Borcherds weight characteristic on $K3 \times E$]
 \label{rem:hgmk-universal-phi-trace}
-\index{universal Phi-trace identity@universal $\Phi$-trace identity|textbf}%
+\index{Phi-trace comparison@$\Phi$-trace comparison|textbf}%
 \index{canonical ghost scalar!BRST identity}%
-\index{Phi functor@$\Phi$ functor!trace intertwiner}%
+\index{Phi comparison@$\Phi$ comparison!trace}%
 \index{Borcherds singular theta!push-forward}%
 The two characteristics of Remark~\ref{rem:kappa-holo-k3e} are
-intertwined by a \emph{universal $\Phi$-trace identity}, the content of the
-Vol~I $\leftrightarrow$ Vol~III bridge at the K3 comparison.
+related only after the two-stage Vol~III passage
+\[
+\Phi_d^{(\Sigma_{d-1},C)}
+=
+\mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1},C}\circ\Phi_d^{\mathrm{FA}}
+\]
+and the BRST/Borcherds trace comparison maps have been fixed.
 On the chiral side, the canonical BRST presentation of a chiral
 algebra $\cA$ carries the ghost scalar identity
 \begin{equation}\label{eq:universal-phi-trace-chiral}
@@ -4585,10 +4597,11 @@ Feigin--Frenkel (concordance T7($\beta$)(i)). On the Vol~III side,
 the Borcherds
 singular-theta push-forward
 \textup{(}Borcherds 1998~\cite{Borcherds98}, Theorem~13.3\textup{)}
-identifies the BKM conductor as the central value of the
+identifies the Borcherds weight characteristic of the primitive
+denominator as the central value of the
 Borcherds lift
 \begin{equation}\label{eq:universal-phi-trace-bkm}
-\kappa_{\mathrm{BKM}}(K3 \times E)
+\kappa_{\mathrm{BKM}}(\Delta_5)
 \;=\;
 \tfrac{1}{2}\,c_\Lambda(0)
 \;=\;
@@ -4599,34 +4612,30 @@ Borcherds lift
 where $c_\Lambda(0)$ is the zero-th Fourier coefficient of the
 weakly-holomorphic input form~$\Lambda$ at the Reye congruence
 (equivalently, the weight of the Igusa form $\Phi_{10}$;
-cf.~\cite{GrittsenkoNikulin98}). The
-Vol~I-to-Vol~III intertwiner is the functor $\Phi$ of
-Remark~\ref{rem:platonic-chain-theory}, and its action on the
-holographic datum is
+cf.~\cite{GrittsenkoNikulin98}). The comparison is not a direct
+functor from the chiral datum to the BKM algebra; it is the composite
+of the two-stage CY-to-chiral construction with the chosen trace
+comparison. In that conditional comparison diagram one obtains
 \begin{equation}\label{eq:universal-phi-trace-intertwine}
-\Phi\colon
-\bigl(\cA = \Omega^{\mathrm{ch}}(K3 \times E),\;
+\bigl(\cA=\Omega^{\mathrm{ch}}(K3\times E),
 K_{\mathrm{ghost}}^{\mathrm{leg}}(\cA)\bigr)
-\;\longmapsto\;
-\bigl(\cA_{\mathrm{BKM}} = \Pi_4,\;
-\kappa_{\mathrm{BKM}} = 5\bigr),
+\;\rightsquigarrow\;
+\bigl(\mathfrak g_{\Delta_5},
+\kappa_{\mathrm{BKM}}(\Delta_5)=5\bigr),
 \qquad
-K_{\mathrm{ghost}}^{\mathrm{leg}}(\cA) \;\xrightarrow{\;\Phi\;}\;
-2\,\kappa_{\mathrm{BKM}}(K3 \times E)
+K_{\mathrm{ghost}}^{\mathrm{leg}}(\cA)
+\;\rightsquigarrow\;
+2\,\kappa_{\mathrm{BKM}}(\Delta_5)
 \;=\;
 c_\Lambda(0),
 \end{equation}
-so the canonical chiral ghost scalar on the left and the BKM conductor
-on the right are equal up to the BKM-normalisation factor of~$2$. This is
-the substantive content of the universal $\Phi$-trace identity: the
-ghost central charge of the BRST system on the chiral side, the
-trace of the derived-centre operator $K_\cA^{\mathrm{ch}}$, the Borcherds
-singular-theta push-forward, and the BKM denominator-product
-conductor all compute a \emph{single} integer invariant, of which
-the value~$10$ on $K3 \times E$ is the canonical witness. The
-Fake-Monster BKM algebra $\Pi_4$ of~\cite{Borcherds90Monstrous} is
-the shadow-tower realisation on the right-hand side; see
-Vol~III Chapter on the CY-to-chiral functor for the full derivation.
+so the canonical chiral ghost scalar on the left and the Borcherds
+weight characteristic on the right agree only after the
+BKM-normalisation factor~$2$ and only on this comparison datum. The
+right-hand BKM object is
+$\mathfrak g_{\Delta_5}$. The Fake-Monster algebra $\Pi_4$ belongs to
+the separate $\Phi_{12}$ row and must not be placed on the
+$K3\times E$ denominator lane.
 \end{remark}
 
 \begin{remark}[Trace-form level shift and the Sugawara denominator]
@@ -4644,7 +4653,7 @@ identity
 \;=\;
 \frac{\dim(\fg)\,(k + h^\vee)}{2\,h^\vee}
 \end{equation}
-splits the programme scalar $\kappa$ into two pieces with distinct
+splits the bar-curvature scalar $\kappa$ into two pieces with distinct
 origins. The first summand
 $\operatorname{av}(r(z)) = \dim(\fg)\,k/(2 h^\vee)$ is the
 \emph{level-prefixed} residue seen directly by the trace-form
@@ -4808,7 +4817,7 @@ it is not determined by $\kappa(\cA)$ alone.
 This is Theorem~\ref{thm:ds-bar-gf-discriminant}.
 \end{proof}
 
-\begin{remark}[\texorpdfstring{$K$}{K}-theoretic hierarchy]\label{rem:spectral-characteristic-programme}
+\begin{remark}[\texorpdfstring{$K$}{K}-theoretic hierarchy]\label{rem:spectral-characteristic}
 \index{spectral discriminant!K-theoretic hierarchy}
 Setting $\mathcal{V}=[R\pi_{g*}\bar{B}^{(g)}(\cA)]\in
 K_0(\overline{\mathcal{M}}_g)$: $c_1(\det\mathcal{V})$
@@ -5025,7 +5034,7 @@ forgetting all but finitely many degrees.
 \label{thm:mc2-bar-intrinsic}
 \index{universal Maurer--Cartan class!bar-intrinsic construction}
 \index{MC2!bar-intrinsic proof}
-\index{MC2!full generality}
+\index{MC2!bar-intrinsic existence}
 Let $\cA$ be a modular Koszul chiral algebra on a smooth
 projective curve~$X$ with non-degenerate invariant form.
 Write
@@ -7557,7 +7566,7 @@ Then Proposition~\ref{prop:one-channel-minimal-seed-packet-criterion}
 holds.
 
 In particular, once the cohomological one-channel Verdier plane has
-been isolated, the low-bar-length criterion is the construction of
+been isolated, the bar length at most three criterion is the construction of
 three finite pieces: the simple-pole bracket sector, the normalized
 double-pole pairing matrix, and the Killing $l_3^\eta$ sector.
 \end{proposition}
@@ -9218,7 +9227,7 @@ $K = 0$ for Kac--Moody).
 \begin{theorem}[MC2 comparison completion on the proved scalar lane;
 \ClaimStatusConditional]
 \label{thm:mc2-full-resolution}
-\index{MC2!full resolution}
+\index{MC2!proved scalar lane}
 For any Koszul chiral algebra $\cA$ on a smooth projective
 curve~$X$ with non-degenerate invariant form and simple Lie
 symmetry~$\mathfrak{g}$ on the proved uniform-weight lane, all
@@ -9264,7 +9273,7 @@ Theorem~\ref{thm:tautological-line-support}.
 With all three inputs supplied,
 Theorem~\ref{thm:mc2-conditional-completion} yields the
 universal MC element $\Theta_{\cA}$ on the proved scalar lane.
-The genus-$1$ fallback for arbitrary families is the universal part
+For arbitrary families the genus-$1$ comparison is the universal part
 of Theorem~\ref{thm:tautological-line-support}.
 \end{proof}
 
@@ -9296,8 +9305,8 @@ $\Defcyc(\cA)\widehat{\otimes}\Gmod$ and furnishes the
 modular-operadic clutching identities. Theorem~\ref{thm:universal-theta}
 constructs the realized class~$\Theta_{\cA}$ with the stated trace,
 clutching, and Verdier properties, while
-Theorem~\ref{thm:mc2-bar-intrinsic} supplies its unconditional
-bar-intrinsic existence. This is exactly MK6 and MK7.
+Theorem~\ref{thm:mc2-bar-intrinsic} supplies its bar-intrinsic
+existence under the stated hypotheses. This is exactly MK6 and MK7.
 \end{proof}
 
 \begin{remark}[Relation to the universal class]
@@ -9714,12 +9723,12 @@ Theorem~\ref{thm:master-commutative-square}).
 \end{enumerate}
 \end{remark}
 
-\begin{remark}[Package functoriality: remaining proof obligations]
+\begin{remark}[Package functoriality: remaining open mathematical conditions]
 \label{rem:ds-functoriality-open}
 \index{modular characteristic package!open functoriality}
 Proposition~\ref{prop:ds-package-functoriality} settles $\kappa$
 and $\Delta$ under DS reduction, and gives one-channel
-minimal-line control for~$\Theta$. The remaining proof obligations are
+minimal-line control for~$\Theta$. The remaining open mathematical conditions are
 the full scalar
 identification
 $\Gamma_{\mathcal{W}^k}=\kappa(\mathcal{W}^k)\Lambda$
@@ -10957,9 +10966,8 @@ Write $\pi\colon
 \to\mathscr{M}_{\mathrm{ChirConf}}$
 for the projection, $\omega_{\overline{\mathcal{M}}/\mathscr{M}}$
 for the relative dualizing sheaf of the modular factor, and
-$\Theta_{\cA}$ for the genus-tower section of the bar modular
-operad as in
-Theorem~\textup{\ref{thm:curvature-scalarness}}.
+$\Theta_{\cA}$ for the scalar genus-tower section of the bar modular
+operad on the curvature-scalar locus.
 The \emph{universal Arakelov anomaly class} is
 \begin{equation}\label{eq:universal-kappa-class}
 \kappa_{\mathrm{univ}}
@@ -10983,7 +10991,7 @@ the rigidity of scalar saturation
 \begin{theorem}[Universal $\kappa$ class: existence, uniqueness,
 specialization]
 \label{thm:kappa-universal-class}
-\ClaimStatusProvedHere
+\ClaimStatusConditional
 The class $\kappa_{\mathrm{univ}}$ of
 Definition~\textup{\ref{def:universal-kappa-arakelov-class}}
 satisfies:
@@ -11025,12 +11033,12 @@ satisfies:
 \end{theorem}
 
 \begin{proof}
-(i) Existence is immediate from the construction: the relative
+(i) Existence follows from the construction under the
+curvature-scalarness hypothesis. The relative
 dualizing sheaf $\omega_{\overline{\mathcal{M}}/\mathscr{M}}$ is
 the pullback of the Mumford bundle along the modular factor,
 $c_1(\omega)^{\otimes 2}$ is a degree-two class, and the genus-tower
-section $\Theta_{\cA}$ is a flat family-section by
-Theorem~\textup{\ref{thm:curvature-scalarness}}; the Gysin
+section $\Theta_{\cA}$ is then a flat family-section; the Gysin
 pushforward along a proper smooth map preserves $\mathbb{Q}$-coefficients.
 Metric-independence of the Arakelov normalization follows from
 Deligne's pairing \cite{Mumford83} together with the
@@ -11049,14 +11057,14 @@ hence globally up to $\lambda$-normalization.
 (iii) Specialization: on stratum $\ell$, the projection $\pi$ becomes
 $\overline{\mathcal{M}}_{g,n}\times\{\ell\}\to\{\ell\}$, and
 $\Theta_{\cA_\ell}=\kappa(\cA_\ell)\cdot\omega_g$
-by Theorem~\textup{\ref{thm:curvature-scalarness}}. Gysin pushforward
+by scalar saturation. Gysin pushforward
 gives
 $\iota_\ell^{*}\kappa_{\mathrm{univ}}
 =\kappa(\cA_\ell)\cdot\pi_*c_1(\omega)^{\otimes 2}
 =\kappa(\cA_\ell)\cdot\lambda$, matching each entry of
 \eqref{eq:kappa-pullback-table} by the established per-family formulas
-(Virasoro:; Heisenberg:; affine KM: /;
-$\mathcal{W}_N$:).
+for the Virasoro, Heisenberg, affine Kac--Moody, and
+$\mathcal W_N$ strata.
 \end{proof}
 
 \begin{remark}[Protocol for universal-$\kappa$ invocations]
@@ -11252,7 +11260,7 @@ At present this remains a route, not a completed independent proof,
 for arbitrary multi-weight families.
 \end{remark}
 
-\begin{corollary}[MC2 comparison gauntlet collapses on the proved
+\begin{corollary}[MC2 comparison on the proved
 scalar lane; \ClaimStatusConditional]
 \label{cor:mc2-single-hypothesis}
 \index{MC2!single-hypothesis reduction}
@@ -11288,7 +11296,7 @@ quotients obstruct MK1;
 \textup{(}iii\textup{)} logarithmic algebras
 \textup{(}$\mathcal{W}(p)$, non-semisimple\textup{)}.
 The coderived category (Positselski~\cite{Positselski11}) is the
-correct setting; see \S\ref{sec:modular-koszul-programme}.
+correct setting; see \S\ref{sec:modular-koszul-theory}.
 \end{remark}
 
 The four main theorems are proved.
@@ -13620,7 +13628,7 @@ $\Theta_{\cA} \in \varprojlim_N \mathcal{E}_{\cA}(N)$.
 
 \begin{definition}[Shadow obstruction tower]
 \label{def:shadow-postnikov-tower}
-\ClaimStatusProvedHere
+\ClaimStatusConditional
 \index{shadow obstruction tower|textbf}
 \index{modular characteristic!shadow obstruction tower}
 The \emph{shadow obstruction tower} of $\cA$
@@ -15513,10 +15521,10 @@ six threads of the theory:
  BV action $S_\cA^{\mathrm{br}}$ is the finite-rank reduction of the
  primitive pre-Lie equation, and the spectral cover
  $\Sigma \to X$ is the characteristic variety of the branch packet.
- The cubic resolvent tower should be recoverable from the genus-$3$
+ The cubic resolvent tower is conjecturally recoverable from the genus-$3$
  shell equation projected to the branch quotient.
 \item \emph{Completion kinematics}
- \textup{(}\S\textup{\ref{subsec:completion-kinematics-programme})}:
+ \textup{(}\S\textup{\ref{subsec:completion-kinematics-theory})}:
  the primitive cumulant quotient $Q(\cA)$ is the genus-$0$ truncation
  of $\mathfrak{K}_\cA$:
  $Q(\cA) = \mathfrak{K}_\cA\big|_{g=0,\,\operatorname{Rig}=\varnothing}
@@ -16425,11 +16433,11 @@ In both cases the recursion terminates at each finite weight.
 Convergence of the full tower is guaranteed by the bar-intrinsic
 element \textup{(}Theorem~\textup{\ref{thm:recursive-existence})}.
 
-MC2 is therefore \emph{proved in full generality} at the level of
-existence by the bar-intrinsic construction. What remains open is
-the stronger scalar-lane universality problem: for arbitrary
-multi-weight one-channel families, must
-$\Gamma_\cA = \kappa(\cA)\Lambda$?
+Thus the existence part of MC2 is proved by the bar-intrinsic
+construction in the completed convolution algebra. The scalar
+universality question is sharper: for arbitrary multi-weight
+one-channel families, one must still decide whether
+$\Gamma_\cA = \kappa(\cA)\Lambda$.
 \end{remark}
 
 \begin{construction}[Tower construction: obstruction recursion]
@@ -18078,8 +18086,8 @@ algebras whose theta functions involve cusp forms
 (Chapter~\ref{chap:arithmetic-shadows},
 \S\ref{sec:higher-depths}): depth~$d$ requires a lattice
 of rank~$r$ with $\dim S_{r/2}(\Gamma) \geq d-3$, and
-each independent cusp form contributes one critical line
-of the constrained Epstein zeta. Even unimodular lattices
+each independent cusp form contributes one Hecke constituent centre
+in the constrained Epstein decomposition. Even unimodular lattices
 of ranks $48, 72, 96, \dotsc$ achieve depths
 $5, 6, 7,\dotsc$\,, with the depth growing as the
 number of cusp forms in $M_{r/2}$ grows. The four classes
@@ -18600,7 +18608,7 @@ invariant of the Koszul duality orbit.
 \end{corollary}
 
 \begin{proof}
-By Theorem~\ref{thm:modular-koszul-duality-main}(iv),
+On the modular Koszul duality locus,
 $\mathbb{D}(\Theta_\cA) = \Theta_{\cA^!}$, where
 $\mathbb{D}$ is the Verdier involution. Since $\mathbb{D}$
 is an automorphism of~$\gAmod$ respecting the weight
@@ -18852,7 +18860,7 @@ non-trivial DS reduction escalates the shadow depth
 from finite to infinite.
 \end{conjecture}
 
-\begin{remark}[Known cases and proof obligation]
+\begin{remark}[Known cases and open mathematical condition]
 \label{rem:ds-monotonicity-scope}
 \index{shadow depth!monotonicity scope}%
 Conjecture~\textup{\ref{conj:ds-shadow-depth-monotonicity}} has
@@ -18867,9 +18875,8 @@ escalates the OPE pole order from~$2$ \textup{(}affine\textup{)} to~$4$
 $S_4 \neq 0$ and hence $\Delta \neq 0$.
 
 \emph{(b)~Non-principal reductions in type~$A$.}
-The finite nilpotent-orbit table checks the conjecture for all
-nilpotent orbits of
-$\mathfrak{sl}_N$ ($N = 3, 4, 5$) at multiple levels:
+The finite root-string nilpotent-orbit table checks the displayed
+boundary orbits in type~$A$ at multiple levels:
 \begin{center}
 \small
 \renewcommand{\arraystretch}{1.1}
@@ -18888,8 +18895,9 @@ $\mathfrak{sl}_4$ & $(4)$ & principal & $\mathbf{M}$ \\
 \bottomrule
 \end{tabular}
 \end{center}
-The pattern is level-independent: checked at
-$k = -1, 1, 3, 5, 10$ for each orbit.
+The pattern is level-independent for the displayed rows: checked at
+$k = -1, 1, 3, 5, 10$ for each listed orbit. The first non-hook
+$\mathfrak{sl}_5$ orbit requires a separate computation.
 
 \emph{(c)~Mechanism.}
 Every non-trivial nilpotent~$f$ produces, via the BRST
@@ -18939,7 +18947,7 @@ $S_2 =: \kappa$, and cubic coefficient
 $S_3 =: \alpha$. Define the \emph{weighted initial data}
 $a_0 := 2\kappa$, $a_1 := 3\alpha$, $a_2 := 4S_4$.
 The \emph{shadow quadratic form on~$L$} (or \emph{shadow metric},
-by analogy with its role in controlling the tower geometry; not a
+because it controls the tower geometry on the line; not a
 Riemannian metric) is the quadratic polynomial
 \begin{equation}\label{eq:shadow-metric}
  Q_L(t)
@@ -19079,6 +19087,7 @@ reproducing the MC recursion~\eqref{eq:single-line-inversion}.
 \index{shadow metric!Gaussian decomposition}
 \index{shadow tower!algebraic degree}
 \index{shadow depth!vs algebraic complexity}
+\ClaimStatusProvedHere
 The shadow metric decomposes as
 \begin{equation}\label{eq:gaussian-decomposition}
  Q_L(t)
@@ -19210,7 +19219,7 @@ falls in neither class.
 \label{prop:depth-gap-trichotomy}
 \ClaimStatusConditional
 \index{algebraic depth!gap theorem|textbf}
-\index{shadow depth!forbidden values}
+\index{shadow depth!excluded values}
 \index{depth classification!algebraic depth gap}
 Let $\cA$ be a chirally Koszul algebra in the standard landscape.
 Then the algebraic depth satisfies
@@ -19828,7 +19837,7 @@ in Chapter~\textup{\ref{chap:arithmetic-shadows}}.
 
 % ====================================================================
 \subsection{Clutching closure}
-\label{subsec:clutching-closure-programme}
+\label{subsec:clutching-closure-theory}
 \index{clutching closure|textbf}
 \index{residue kernel!clutching closure}
 \index{quartic contact invariant!clutching closure}
@@ -19894,7 +19903,7 @@ contamination from the quartic shadow datum.
 \end{remark}
 
 \begin{remark}[The clutching law]%
-\label{rem:clutching-law-programme}%
+\label{rem:clutching-law}%
 \index{clutching law!modular operad}%
 At each boundary divisor $\xi\colon
 \overline{\cM}_{g_1,n_1+1} \times
@@ -19940,7 +19949,7 @@ measures the failure of a candidate zero to satisfy the
 MC-derived clutching law.
 
 The decisive advantage over scalar compatibility ratios
-(Section~\ref{sec:closure-programme}
+(Section~\ref{sec:clutching-closure-theory}
 of Chapter~\ref{chap:arithmetic-shadows}):
 the clutching defect uses the full nonlinear modular
 structure (the clutching law itself, proved from Mok's
@@ -20142,12 +20151,13 @@ the factorization $S_r = \Delta \cdot R_r$ for $r \geq 4$
 follows, with $R_r$ a rational function of $\alpha$,
 $\kappa$, $S_4$.
 
-Even-degree cascade ($\alpha = 0$):
+If $\alpha = 0$, then
 $Q_L = 4\kappa^2 + 16\kappa S_4\,t^2$ is even in~$t$,
 so $\sqrt{Q_L}$ is even, and $H(t)$ has only even powers,
 giving $S_{2n+1} = 0$.
 
-Full pump: $R_5 = -3\alpha/(20\kappa^2) \neq 0$;
+If $\alpha \neq 0$, then
+$R_5 = -3\alpha/(20\kappa^2) \neq 0$;
 for $r \geq 5$, the vanishing loci $\{R_r = 0\}$ are
 hypersurfaces of distinct degrees in
 $\mathbb{A}^2_{\alpha,S_4}$,
@@ -20158,6 +20168,7 @@ generic parameters avoid all.
 \begin{corollary}[Spectral curve]
 \label{cor:spectral-curve}
 \index{spectral curve!shadow tower}
+\ClaimStatusConditional
 The algebraic relation~\eqref{eq:riccati-algebraic-relation}
 defines, for each primary line~$L$, a spectral curve
 $\Sigma_L := \{H^2 = t^4 Q_L(t)\} \subset \mathbb{A}^2_{t,H}$.
@@ -20168,6 +20179,15 @@ in the parameter space $\operatorname{Spec}\,k(c)$ are
 controlled by the critical discriminant: $\Sigma_L$ acquires a
 node precisely when $\Delta = 0$.
 \end{corollary}
+
+\begin{proof}
+The equation is quadratic in $H$ and has right-hand side
+$t^4Q_L(t)$ with $Q_L$ quadratic. After removing the double factor at
+$t=0$, the normalization is the double cover of the affine line
+branched at the two zeros of $Q_L$, hence rational. The two branch
+points collide exactly when the discriminant of $Q_L$ is zero, which
+is the condition $\Delta=0$.
+\end{proof}
 
 \begin{remark}[The shadow connection as a Hitchin-type system]
 \label{rem:hitchin-interpretation}
@@ -20310,7 +20330,7 @@ primary line~$L$.
 \end{proof}
 
 \begin{theorem}[Finite scalar shadow tau;
-\ClaimStatusProvedHere]
+\ClaimStatusConditional]
 \label{thm:shadow-tau-kw}
 \index{tau function!shadow tau|textbf}
 \index{Kontsevich--Witten tau function!scalar coefficient lane}
@@ -20835,7 +20855,7 @@ The shadow depth carries two independent types of information
 The \emph{arithmetic component} $d_{\mathrm{arith}}$ counts the
 Hecke eigenforms in the partition function's spectral decomposition
 on~$\cM_{1,1}$; each eigenform contributes one $L$-function and one
-critical line of the constrained Epstein zeta~$\varepsilon^c_s$
+functional-equation centre of the constrained Epstein zeta constituent
 (Chapter~\ref{chap:arithmetic-shadows}).
 The \emph{homotopy-theoretic component} $d_{\mathrm{alg}}$ measures
 the formal non-formality depth of the $A_\infty$-structure on bar
@@ -23579,7 +23599,7 @@ every finite order.
 % ========================================================
 
 \subsubsection{The Chriss--Ginzburg tautological principle}
-\label{subsubsec:chriss-ginzburg-tautological-programme}
+\label{subsubsec:chriss-ginzburg-tautological-comparison}
 \index{Chriss--Ginzburg principle!tautological form|textbf}
 \index{tautological ring!Chriss--Ginzburg form|textbf}
 \index{cohomological field theory!shadow CohFT|textbf}
@@ -24184,7 +24204,7 @@ new invariant.
 \end{remark}
 
 \begin{remark}[Removing the uniform-weight hypothesis from Theorem~D and C2]
-\label{rem:theorem-d-c2-multiweight-programme}
+\label{rem:theorem-d-c2-multiweight}
 \index{uniform-weight hypothesis!removal problem}
 \index{cross-channel correction!research problem}
 The uniform-weight hypothesis separates three mathematical objects:
@@ -24316,7 +24336,7 @@ cohomology classes.
  or equivalently the full shadow obstruction tower, not a
  renormalized scalar.
 
-\item \emph{Proof obligation for the mixed-channel lift.}
+\item \emph{Open mathematical condition for the mixed-channel lift.}
 To weaken the uniform-weight hypothesis one must construct classes
 $\delta o_g^{\mathrm{cross}}(\cA)$ satisfying four conditions:
 \[
@@ -24517,7 +24537,7 @@ obtained by integrating the weight-$1$ bar propagator
 $d\log E(z,w)$ along the edges, together with genus-$0$ and genus-$1$
 vertex amplitudes, over the corresponding boundary stratum of
 $\overline{\cM}_{2,n(\Gamma)}$. This places the genus-$2$ kernel on
-the Siegel side. The motivic proof obligation is to show that these
+the Siegel side. The motivic open mathematical condition is to show that these
 seven amplitudes lie in a common degree-$2$ Siegel quasi-modular
 period ring with holomorphic generators
 $E_4^{(2)}, E_6^{(2)}, \chi_{10}, \chi_{12}$. The appearance of the
@@ -24963,7 +24983,7 @@ $m_k^{\mathrm{SC}}(\cA)$ vanish for all $k \geq 3$, no mixed
 genus-$0$ vertex survives.
 \end{conjecture}
 
-\begin{remark}[Computed loci and proof obligation]
+\begin{remark}[Computed loci and open mathematical condition]
 The following loci satisfy the criterion in the directions already
 proved in this chapter.
 
@@ -25659,7 +25679,7 @@ Again the genus-$2$ computation starts from the seven stable graphs of
 \textup{(}Computation~\textup{\ref{comp:genus2-multichannel-catalogue}}\textup{)};
 the smooth graph has no edges, so the boundary graph sum reduces to the
 remaining six.
-Parity eliminates the forbidden odd channels listed in the statement,
+Parity eliminates the excluded odd channels listed in the statement,
 and the figure-eight and dumbbell graphs remain zero by single-edge
 channel purity.
 Substituting the BEHHH couplings
@@ -26044,8 +26064,8 @@ arbitrarily inadequate
 The shifted moment decomposition $A_2(N) = T_1(T_1+4)/2 + T_2/4$
 expresses the $1/c$ coefficient as a polynomial in the moments of
 the discrete measure supported at the conformal weights
-$\{2, 3, \ldots, N\}$. This suggests a matrix model interpretation:
-the cross-channel correction should be the genus-$2$ free energy
+$\{2, 3, \ldots, N\}$. This gives a conjectural matrix-model
+interpretation: the cross-channel correction is the genus-$2$ free energy
 of a matrix model whose eigenvalues sit at the $\cW_N$ generator
 weights. The natural candidate is the deformed Penner potential
 \begin{equation}\label{eq:deformed-penner}
@@ -28119,7 +28139,7 @@ all semisimple shadow CohFTs; the non-semisimple frontier remains open.
 \textup{(3)}~For class-$\mathsf{M}$ algebras, does the
 infinite tower of MC-descended relations
 recover all known tautological relations? The systematic check is
-Remark~\textup{\ref{rem:programme-vi-verification}}.
+Remark~\textup{\ref{rem:master-reconstruction-verification}}.
 \end{remark}
 
 \begin{remark}[Shadow partition function and the KP hierarchy]
@@ -28848,7 +28868,7 @@ determines its complete analytic structure.
 \ClaimStatusConditional]
 \label{prop:shadow-genus-closed-form}
 \index{A-hat genus@$\hat{A}$-genus!shadow generating function}
-The scalar shadow partition function
+The scalar shadow generating function
 \begin{equation}\label{eq:shadow-genus-closed}
  Z^{\mathrm{sh}}_{\mathrm{scal}}(\cA, \hbar)
  \;:=\;
@@ -29507,8 +29527,8 @@ in isolation. Under this reading:
  by the odd-function argument on the checked range.
 \item The all-degree extension
  $\mathrm{RTF}(f) = 0$ for every test function~$f$ is a
- \emph{conjecture}, expected to follow from self-duality of the
- Drinfeld double $D(\operatorname{Vir}_{13})$ at all degrees.
+ \emph{conjecture}; all-degree self-duality of the
+ Drinfeld double $D(\operatorname{Vir}_{13})$ is the proposed mechanism.
  The conjecture is recorded in
  Conjecture~\ref{conj:c13-full-rtf-vanishing} and is open beyond
  the checked degree range.
@@ -29654,37 +29674,46 @@ Liouville substitution.
 \ClaimStatusProvedHere]
 \label{prop:shadow-schwarzian}
 \index{Schr\"odinger potential!shadow spectral|textbf}
-The spectral curve $\Sigma_L \colon y^2 = Q_L(t)$
-\textup{(}Corollary~\textup{\ref{cor:spectral-curve}}\textup{)}
-defines a Schr\"odinger equation on~$L$ with potential
+The quadratic shadow metric determines the double cover
+$\Sigma_L \colon y^2 = Q_L(t)$ and a scalar
+Schr\"odinger equation on~$L$ with potential
 \begin{equation}\label{eq:shadow-schrodinger}
- \hbar^2\,u''(t) \;=\; V(t)\,u(t),
+ \hbar^2\,u''(t) \;=\; V_\hbar(t)\,u(t),
  \qquad
- V(t)
+ V_\hbar(t)
  \;:=\;
- \frac{C}{Q_L(t)^2},
+ \hbar^2\frac{C}{Q_L(t)^2},
  \qquad
  C \;:=\; 8\kappa^2\Delta,
 \end{equation}
 where $\operatorname{disc}(Q_L) = q_1^2 - 4q_0 q_2
 = -32\kappa^2\Delta$ and $C = -\operatorname{disc}(Q_L)/4$.
-The potential~$V$ is the square of the rational function
-$\sqrt{C}/Q_L$, so the classical WKB solution is rational
-in~$t$.
+The WKB momentum $\sqrt{V_\hbar}/\hbar = \sqrt{C}/Q_L$ is
+rational in~$t$; the distinguished solution $u=\sqrt{Q_L}$ is
+algebraic and is rational exactly on the square locus of~$Q_L$.
 \end{proposition}
 
 \begin{proof}
-The spectral curve $y^2 = Q_L(t)$ in $(t,y)$-coordinates
-parametrizes the Hitchin data of the shadow connection
-(Remark~\ref{rem:hitchin-interpretation}). The
-substitution $p = y/Q_L = 1/\sqrt{Q_L}$ converts the
-spectral data into a Schr\"odinger potential via the
-standard relation $V = p^2 = C/Q_L^2$ (with the
-normalization $C = 8\kappa^2\Delta$ determined by the
-discriminant of~$Q_L$). Explicitly:
-$\operatorname{disc}(Q_L) = (12\kappa\alpha)^2 -
-4\cdot 4\kappa^2\cdot(9\alpha^2 + 2\Delta)
-= -32\kappa^2\Delta$, giving $C = 8\kappa^2\Delta$.
+Write $Q_L(t)=q_0+q_1t+q_2t^2$ and set
+$u(t)=\sqrt{Q_L(t)}$. Then
+\[
+ \frac{u''}{u}
+ =
+ \frac{Q_L''}{2Q_L}
+ -
+ \frac{(Q_L')^2}{4Q_L^2}
+ =
+ \frac{q_2Q_L-(q_1+2q_2t)^2/4}{Q_L^2}
+ =
+ -\,\frac{\operatorname{disc}(Q_L)}{4Q_L^2}.
+\]
+By~\eqref{eq:shadow-metric-discriminant},
+$\operatorname{disc}(Q_L)=-32\kappa^2\Delta$; hence
+$u''=(8\kappa^2\Delta/Q_L^2)u$. Multiplication by~$\hbar^2$
+gives~\eqref{eq:shadow-schrodinger}. The last assertion is the
+definition of the WKB momentum together with the elementary fact
+that $\sqrt{Q_L}$ is rational over $k(c)(t)$ precisely when
+$Q_L$ is a square.
 \end{proof}
 
 \begin{corollary}[Singularity classification;
@@ -29891,16 +29920,18 @@ free energies in the intersection-theoretic normalization:
  \;=\;
  \lambda_g^{\mathrm{FP}}.
 \end{equation}
-More generally, for any chirally Koszul algebra~$\cA$,
-the scalar shadow partition function is the
-genus expansion of a Gaussian matrix model with
-effective coupling $\kappa(\cA)$:
+More generally, on the uniform-weight scalar lane for a chirally Koszul
+algebra~$\cA$ with cross-channel corrections absent, the scalar shadow
+generating function is the genus expansion of the Gaussian matrix model
+with effective coupling $\kappa(\cA)$:
 \[
- Z^{\mathrm{sh}}_{\mathrm{scal}}(\cA,\hbar)
- \;=\;
- \kappa(\cA)\,
- Z^{\mathrm{GUE}}_{\mathrm{int}}(\hbar).
+Z^{\mathrm{sh}}_{\mathrm{scal}}(\cA,\hbar)
+\;=\;
+\kappa(\cA)\,
+Z^{\mathrm{GUE}}_{\mathrm{int}}(\hbar).
 \]
+This is a scalar generating-function comparison. A physical partition
+function requires a separate path-integral or operator comparison.
 \end{proposition}
 
 \begin{proof}
@@ -30197,7 +30228,7 @@ in a central-extension parameter), and Gaussian collapse
 (abelian input produces the Heisenberg fixed point).
 
 \begin{proposition}[Finite-jet rigidity; \ClaimStatusProvedHere]
-\label{prop:finite-jet-rigidity}
+\label{prop:hgmk-finite-jet-rigidity}
 \index{finite-jet rigidity|textbf}
 \index{shadow obstruction tower!finite-jet rigidity}
 The degree-$r$ envelope-shadow $\Thetaenv_{\leq r}(R)$
@@ -30220,7 +30251,7 @@ only at degree $\geq r{+}1$.
 \end{proof}
 
 \begin{proposition}[Polynomial level dependence; \ClaimStatusProvedHere]
-\label{prop:polynomial-level-dependence}
+\label{prop:hgmk-polynomial-level-dependence}
 \index{shadow obstruction tower!polynomial level dependence|textbf}
 \index{central extension!polynomial dependence}
 Let $R_t$ be a one-parameter family of Lie conformal algebras
@@ -30228,7 +30259,7 @@ with central-extension parameter~$t$ \textup{(}e.g., $t = k$
 for affine Kac--Moody, $t = c$ for Virasoro\textup{)}.
 Then $\Thetaenv_{\leq r}(R_t)$ is polynomial in~$t$ of
 degree at most~$r{-}1$:
-\begin{equation}\label{eq:polynomial-level}
+\begin{equation}\label{eq:hgmk-polynomial-level}
 \Thetaenv_{\leq r}(R_t)
 \;=\;
 \sum_{j=0}^{r-1} \theta_j^{(r)} \, t^j.
@@ -30256,7 +30287,7 @@ at degree~$r$.
 \end{proof}
 
 \begin{proposition}[Gaussian collapse for abelian input; \ClaimStatusConditional]
-\label{prop:gaussian-collapse-abelian}
+\label{prop:hgmk-gaussian-collapse-abelian}
 \index{Gaussian collapse|textbf}
 \index{Heisenberg!Gaussian fixed point}
 \index{envelope-shadow functor!abelian collapse}
@@ -30788,7 +30819,7 @@ Three classes escape this resolution:
  \textup{(}$X_{L_k} \neq \{0\}$\textup{)}, the module
  category is non-semisimple. The manuscript does not
  promote an unconditional Koszul verdict there; instead the
- coderived/curved ambient is the natural fallback once the
+ coderived/curved ambient is the natural target once the
  ordinary semisimple route has broken down.
 \item \emph{Coset and orbifold algebras.}
  $\operatorname{Com}(V_k(\mathfrak{h}), V_l(\fg))$ and
@@ -31050,12 +31081,12 @@ formal-disk vertex algebra attached to the genus-$0$ envelope
 is $V_k(\mathfrak{sl}_2)$.
 \end{proof}
 
-\begin{proposition}[Construction strategies for the modular envelope]
-\label{prop:envelope-construction-strategies}
+\begin{proposition}[Constructions of the modular envelope]
+\label{prop:envelope-constructions}
 \ClaimStatusConditional
-\index{modular envelope!construction strategies}
-\index{factorization envelope!construction strategies}
-Three construction strategies for $U^{\mathrm{mod}}_X(L)$ have
+\index{modular envelope!constructions}
+\index{factorization envelope!constructions}
+Three constructions of $U^{\mathrm{mod}}_X(L)$ have
 distinct scope:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Bar-cobar resolution}: defines
@@ -31458,7 +31489,7 @@ full tensor specialization of the bar complex across the node.
 %================================================================
 
 \subsection{Polyakov theory and the functional-integral origin}
-\label{subsec:polyakov-programme}
+\label{subsec:polyakov-conformal-gauge}
 \index{Polyakov theory|textbf}
 \index{functional integral!shadow tower origin}
 \index{conformal anomaly!shadow tower identification}
@@ -31807,7 +31838,7 @@ $\det(\overline{\partial})^{-13}$ on~$\cM_g$.
 
 \begin{remark}[Dictionary: Polyakov theory $\leftrightarrow$
  shadow obstruction tower]
-\label{rem:polyakov-programme-summary}
+\label{rem:polyakov-conformal-gauge-summary}
 \index{Polyakov theory!shadow tower dictionary|textbf}
 \index{shadow obstruction tower!Polyakov dictionary}
 \begin{center}
@@ -31967,7 +31998,7 @@ recursion at genus~$g{-}1$.
 \index{Yukawa coupling!cubic shadow}
 \index{holomorphic ambiguity!gauge freedom}
 The complete identification extends the Polyakov dictionary
-\textup{(}Remark~\textup{\ref{rem:polyakov-programme-summary})}
+\textup{(}Remark~\textup{\ref{rem:polyakov-conformal-gauge-summary})}
 to the BCOV setting:
 \begin{center}
 \small
@@ -33432,7 +33463,7 @@ $\partial^2 = 0$ on the chain complex of any topological space.
 \end{proof}
 
 \begin{theorem}[Square-zero: ambient level; \ClaimStatusConditional]
-\label{thm:differential-square-zero}% Retains label for backward compatibility; ambient theorem is conditional on the relative log-FM package.
+\label{thm:differential-square-zero}
 \label{thm:ambient-d-squared-zero}
 \index{differential!ambient square-zero|textbf}
 On the ambient complementarity algebra
@@ -34455,7 +34486,7 @@ blocks (Tsuchiya--Ueno--Yamada~\cite{TUY89}).
 \begin{proposition}[Verlinde formula from ordered chiral
 homology]
 \label{prop:verlinde-from-ordered}
-\ClaimStatusProvedElsewhere
+\ClaimStatusConditional
 Let $k \geq 1$ be a positive integer, and let
 $S_{jl} = \sqrt{2/(k+2)}\,\sin\!\bigl(\pi(j+1)(l+1)/(k+2)\bigr)$
 be the modular $S$-matrix for $\widehat{\mathfrak{sl}}_2$ at
@@ -34631,8 +34662,9 @@ Verlinde bundle over $\cM_G(\Sigma_g)$.
 elsewhere, what is conditional]
 \label{rem:verlinde-from-ordered-scope}
 \index{Verlinde formula!scope of Vol~I inscription}
-The proposition is tagged $\ClaimStatusProvedElsewhere$ to
-record that its load-bearing content is classical: the
+The proposition is tagged $\ClaimStatusConditional$ because its
+Verlinde content is classical while its modular-family ordered-bar
+identification uses extra sewing hypotheses: the
 $S$-matrix sum formula $Z_g(k) = \sum_j S_{0j}^{2-2g}$
 is Verlinde~\cite{Verlinde88}; the identification of the
 ordered chiral chain complex coinvariants with the space
@@ -36513,17 +36545,14 @@ $R$-matrices (rational $\to$ elliptic $\to$ doubly-dynamical
 $\to$ Siegel-doubly-dynamical) and is the algebraic backbone of
 the genus-$g$ chiral quantum-group construction; its full derivation
 from the ordered bar complex on $\Sigma_g$ is the content of the
-standalone paper on chiral quantum groups \textup{(}
-Part~\ref{part:programme-architecture}, companion document\textup{)}.
+standalone paper on chiral quantum groups.
 \end{remark}
 
 
-% ================================================================
-% MOVED FROM between ``Examples'' and ``Chiral quantum groups''; now after elliptic curves
 \section{Comparison with related work}
 \label{sec:comparison}
 
-The ordered chiral homology calculation above should be read as the
+The ordered chiral homology calculation above is the
 genus-$2$ continuation of the genus-$0$ KZ and genus-$1$ KZB stories.
 The new datum is the off-diagonal period $\Omega_{12}$: it couples the
 two dynamical variables, produces the mixed heat equation, and records
@@ -36773,25 +36802,30 @@ cubic $S_3$ regime, the even Kummer line and selector torsor are
 invisible to the odd resolvent cover.
 \end{proof}
 
-\begin{corollary}[The frontier is cubic; \ClaimStatusProvedHere]
+\begin{corollary}[First cubic obstruction; \ClaimStatusProvedHere]
 \label{cor:frontier-is-cubic}
-The quadratic tensor calculus is complete. Any genuinely new
-phenomenon in the next rank must be cubic or higher. In the first
-cubic case
-\textup{(}the $\widehat{\mathfrak{sl}}_3 / \mathcal{W}_3$
-orbit\textup{)}, the problem is to extract and compare the even
-Kummer line and the selector torsor together with the visible odd
-sheet.
+In the calculus of this section no further quadratic datum is
+present. For one quadratic sheet the lifted coordinate is
+$a+bu$, and for two quadratic sheets the tensor compositum is
+$F(u_1,u_2)$ together with its sheet-loss and ramification
+defects. The first datum outside this list is the $S_3$-cubic
+packet: after the odd resolvent field one must still record the
+even Kummer line and the selector torsor. Thus the
+$\widehat{\mathfrak{sl}}_3/\mathcal{W}_3$ orbit is not a
+continuation of the quadratic discriminant calculus, but the
+first place where the lifted presentation carries cubic data.
 \end{corollary}
 
 \begin{proof}
-The preceding theorem shows that the rank-$1$ spectral cover
-hierarchy is complete: the visible shadow, lifted coordinates,
-tensor transport, DS reduction, and level--rank duality are all
-determined by the quadratic discriminant calculus. Since no
-additional quadratic invariants remain unaccounted for, any new
-structural phenomenon must arise at cubic or higher order in the
-spectral cover.
+The common-sheet law gives the complete multiplication formula on
+$F(u)$. For distinct quadratic sheets the tensor field is
+$F(u_1,u_2)$, and the preceding theorem records exactly the two
+defects seen by this compositum. In an $S_3$-cubic cover the
+quadratic resolvent is only the fixed field of $A_3$; the Cardano
+root gives a class in $K^\times/(K^\times)^3$ and a residual
+choice among three conjugate roots. These two data are not
+functions of the quadratic resolvent, hence they are the first
+non-quadratic obstruction in the hierarchy.
 \end{proof}
 
 \begin{remark}[Position in the shadow obstruction tower]
@@ -36799,7 +36833,7 @@ spectral cover.
 \index{shadow tower!spectral level}
 The lifted spectral cover sits at the $L_2$ level of the
 characteristic hierarchy
-(cf.~\S\ref{subsec:completion-kinematics-programme}): $L_1$ is the scalar
+(cf.~\S\ref{subsec:completion-kinematics-theory}): $L_1$ is the scalar
 modular characteristic~$\kappa(\cA)$, while $L_2$ is the
 spectral discriminant~$\Delta_\cA$ together with its module
 structure. The defect calculus developed here provides the
@@ -36941,7 +36975,7 @@ rank-$r$ bar GFs should satisfy a holonomic
 recurrence of order $r + 1$, and for $r \geq 2$ the
 solution space of a third-order (or higher) Fuchsian ODE
 generically contains only rational functions.
-The remaining proof obligation is to derive rationality from the
+The remaining open mathematical condition is to derive rationality from the
 rank-$2$ bar differential rather than from the shared discriminant
 factor alone.
 \end{remark}
@@ -37134,10 +37168,10 @@ $\bigl(\kappa(\Theta),[\mathfrak{C}(\Theta)],
 Construction~\ref{constr:shadow-extraction-explicit} already gives
 the characteristic coordinates entering the proposed period vector,
 and Proposition~\ref{prop:modular-homotopy-type-structure} gives the
-formal moduli space on which the period map should live.
+formal moduli space on which the conjectural period map lives.
 Construction~\ref{constr:primitive-flat-connection} and
 Proposition~\ref{prop:saddle-point-mc} supply the twisted
-differential that suggests the one-step shadow transport of
+differential entering the conjectural one-step shadow transport of
 Conjecture~\ref{conj:theta-griffiths-transversality}. The topology of
 the four classes is already visible in
 Theorem~\ref{thm:single-line-dichotomy},
@@ -37347,10 +37381,11 @@ intersection.
 \begin{theorem}[Genus-$3$ bar--cobar scope and the hexachotomy
 $\to$ hexa-unipotent extension]
 \label{thm:hgmk-abar3-bar-cobar-scope}
-\ClaimStatusProvedElsewhere
+\ClaimStatusConditional
 \index{bar--cobar!genus-$3$ scope}%
 \index{hexa-unipotent Malcev ladder!$\AbarThree$}%
-Let $A$ be a chiral algebra of class $\mathcal M$ on $\AbarThree$
+Under the codimension-$3$ Heegner transversality package, let $A$ be a
+chiral algebra of class $\mathcal M$ on $\AbarThree$
 with Verdier--Koszul dual $A^!$. The bar--cobar counit
 $\counit_A\colon\Omega^{\mathrm{ch}}B^{\mathrm{ch}}(A)\to A$ is a
 strict chain-level quasi-isomorphism on the open complement
@@ -37545,7 +37580,8 @@ $\lambda_{\AbarThree}^{\otimes 12}$ and its cusp expansion through
 Siegel modular forms of weight $12$ for $\mathrm{Sp}_6(\mathbb Z)$.
 
 \textup{(V3)} \emph{CY-$3$ averaging through the Vol~III two-stage
-factorisation $\Phi_3 = \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_2, C} \circ
+factorisation $\Phi_3^{(\Sigma_2,C)}
+= \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_2, C} \circ
 \Phi^{\mathrm{FA}}_3$.} Under the stage-$2$ shadow of the canonical
 $E_3$-holomorphic factorisation algebra $\Phi^{\mathrm{FA}}_3$
 specialised along a closed $2$-cycle $\Sigma_2 \subset X_3$ and
@@ -37710,7 +37746,7 @@ bi-unipotent ambient on the codim-$2$ stratum.
 \begin{theorem}[Genus-$4$ bar--cobar scope: Schottky stratum as a
 new stratum class; deca-unipotent Malcev closure]
 \label{thm:hgmk-abar4-bar-cobar-scope}
-\ClaimStatusProvedHere
+\ClaimStatusConditional
 \index{bar--cobar!genus-$4$ scope}%
 \index{deca-unipotent Malcev ladder!$\AbarFour$}%
 \index{Schottky--Jung quartic!stratification of $\overline{\mathcal A_4}$}%
@@ -37872,7 +37908,7 @@ quartic identity \cite{vanGeemen1984} supplies the transverse closure.
 ambient tower on $\AbarFour$]
 \label{cor:hgmk-abar4-twenty-stratum}
 \index{octachotomy!genus-$4$ twenty-stratum extension}%
-\ClaimStatusProvedHere
+\ClaimStatusConditional
 The chain-level ambient tower on $\AbarFour$ has exactly twenty
 strata, enumerated as follows:
 \begin{enumerate}[label=\textup{(\arabic*)}]
@@ -38086,7 +38122,7 @@ Theorem~\textup{\ref{thm:hgmk-abar3-bar-cobar-scope}}.
 Jacobian locus meets the tri-unipotent NL-intersection;
 pentadeca-unipotent Malcev closure]
 \label{thm:hgmk-abar5-bar-cobar-scope}
-\ClaimStatusProvedHere
+\ClaimStatusConditional
 \index{bar--cobar!genus-$5$ scope}%
 \index{pentadeca-unipotent Malcev ladder!$\AbarFive$}%
 \index{Andreotti--Mayer locus!$\overline{\mathcal A_5}$}%
@@ -38286,6 +38322,16 @@ $\AMlocFive\cap\bigcup S^{(k)}_5$ as one mixed-tower block. The
 Baily--Borel block at $g=5$ has rank-$0,1,2,3,4$ cusps of dimensions
 $0,1,3,6,10$ (Faltings--Chai \cite[Ch.~II Thm.~5.2]{FaltingsChai1990}).
 \end{corollary}
+
+\begin{proof}
+The table is the disjoint stratification by the Koszul open stratum,
+the Noether--Lefschetz unipotent strata, the Andreotti--Mayer block,
+the admissible union, the Satake cusp ranks, and the two completed
+ambient correction strata. For $g=5$ the summands are
+$1+15+4+1+5+2=28$. The descriptions following the table identify the
+four Andreotti--Mayer strata and the five Satake ranks, so no further
+stratum is counted.
+\end{proof}
 
 \begin{remark}[Three derivations for
 Theorem~\textup{\ref{thm:hgmk-abar5-bar-cobar-scope}}]
@@ -38592,13 +38638,14 @@ $\mathrm{codim}\,\mathcal J_8\geq 8$ (conjecturally exact under
 Andreotti--Mayer \cite{AndreottiMayer1967}). The Siegel unipotent
 radical of $\mathrm{Sp}_{2g}/\mathbb{Z}$ has dimension
 $g(g+1)/2$, matching $k_{\max}(g)$. The question is whether the
-genus-five scope theorem extends to $\AbarSix,\AbarSeven,\AbarEight$
+genus-five bar--cobar comparison extends to $\AbarSix,\AbarSeven,\AbarEight$
 and under which arithmetic hypothesis.
 
 \begin{lemma}[Arithmetic saturation and completed bar--cobar extension]
 \label{lem:hgmk-arithmetic-saturation-finite-window}
-\index{Noether--Lefschetz saturation!finite-window scope}%
+\index{Noether--Lefschetz saturation!finite-window criterion}%
 \index{bar--cobar!finite-window extension criterion}%
+\ClaimStatusConditional
 Fix $g\geq2$ and a finite conformal-weight window $N$. Let
 $K_{\leq N,g}(A)$ be the cone of the genus-$g$ bar--cobar counit
 \[
@@ -38606,7 +38653,7 @@ $K_{\leq N,g}(A)$ be the cone of the genus-$g$ bar--cobar counit
 \longrightarrow A_{\leq N}
 \]
 on a finite stratification of $\AbarG$ by the admissible open,
-Noether--Lefschetz rungs, and Andreotti--Mayer rungs. A CM point at
+Noether--Lefschetz strata, and Andreotti--Mayer strata. A CM point at
 which $k_{\max}(g)=g(g+1)/2$ admissible Heegner classes are
 independent proves only the saturation of the Krull-depth bound and
 the non-emptiness of the top finite-window test locus. It does not by
@@ -40513,7 +40560,7 @@ the Malcev-ladder saturation at $\AbarG$?
 
 \begin{theorem}[AM tightness
 $\Rightarrow$ saturation of the mixed ladder at every $g\geq 6$;
-\ClaimStatusProvedHere]
+\ClaimStatusConditional]
 \label{thm:hgmk-am-tightness-ladder-saturation}
 \index{Andreotti--Mayer tightness!ladder saturation}%
 \index{Farkas--Grushevsky divisor!codim $g-1$}%
@@ -40608,7 +40655,7 @@ forces equality at the chosen component, i.e.\ $\AMtightG$.
 
 \begin{corollary}[AM tightness
 $\Leftrightarrow k_{\max}(g)$-ladder saturation at every $k\leq 2g-1$;
-\ClaimStatusProvedHere]
+\ClaimStatusConditional]
 \label{cor:hgmk-am-tight-iff-ladder-sat-2g-1}
 \index{Andreotti--Mayer tightness!biconditional saturation}%
 $\AMtightG$ holds at genus $g\geq 6$ if and only if, for every Humbert
@@ -40694,7 +40741,7 @@ $\delta(g)\leq g-2$.
 
 \begin{theorem}[Beauville--Voisin for $\mathrm{Hilb}^{g-1}(K3)$
 $\Rightarrow \AMtightG$ via Ciliberto--van~der~Geer;
-\ClaimStatusProvedHere]
+\ClaimStatusConditional]
 \label{thm:hgmk-bv-implies-am-tightness}
 \index{Beauville--Voisin conjecture!AM tightness implication}%
 \index{Ciliberto--van der Geer construction!BV-conditional bridge}%
@@ -40851,7 +40898,7 @@ control.
 
 \begin{theorem}[Andreotti--Mayer tightness at $g=9$ from
 Beauville--Voisin at $S^{[8]}$ and the theta-gradient construction;
-\ClaimStatusProvedHere]
+\ClaimStatusConditional]
 \label{thm:hgmk-am-tightness-g9-conditional}
 \index{Andreotti--Mayer tightness!genus $9$}%
 \index{theta-gradient construction!Farkas--Grushevsky generalised}%

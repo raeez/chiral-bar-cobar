@@ -450,7 +450,7 @@ def cross_validate_with_spectral_sequence(
 def print_e1_summary(max_pbw: int = 5, max_weight: int = 15) -> None:
     """Print summary of E₁ page dimensions."""
     print(f"\nE₁^{{p,0}}_H dimensions for sl₃-hat PBW spectral sequence")
-    print(f"{'p\\H':>6}", end="")
+    print(f"{'p/H':>6}", end="")
     for H in range(1, max_weight + 1):
         print(f"{H:>5}", end="")
     print("  | total")

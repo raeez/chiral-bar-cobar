@@ -945,7 +945,7 @@ def fh_critical_level_check(lie_type: str) -> Dict[str, object]:
     of the conformal-blocks functor, not of the bar complex.
 
     The Sugawara construction is UNDEFINED at the critical level (not
-    "c diverges" but genuinely undefined: division by k + h^v = 0).
+    the Sugawara construction is genuinely undefined: division by k + h^v = 0).
     """
     LIE_DATA = {
         "sl2": {"h_dual": 2, "dim": 3, "rank": 1},

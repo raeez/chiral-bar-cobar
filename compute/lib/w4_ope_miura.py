@@ -1563,8 +1563,8 @@ class W4MiuraOPE:
         # d^2T appears from the T at pole 4: at pole 2, we get (1/2!)*(d^2)(C_4)
         # where C_4 = 2*T.
         # Actually this is handled by the OPE expansion already -- the Wick
-        # contraction gives the FULL content at each pole, including all
-        # contributions from contractions. So C_2 already IS the full expression,
+        # contraction gives the complete content at each pole, including all
+        # contributions from contractions. Thus C_2 is the complete expression,
         # and we just need to decompose it.
 
         # Decompose in the basis {d^2T, Lambda, W_4}

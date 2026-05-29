@@ -1395,12 +1395,13 @@ along Niemeier roots. Author: Raeez Lorgat.
   (commutative). Assigning a Chenevier determinant to a non-commutative
   chiral bialgebra is a structural error.
 
-- **AP354 -- Hecke primary form $E_4 \Delta$ weight 16 (High).**
-  The correct primary form for the Hecke input is $f_{16} = E_4 \Delta$
-  of weight 16, NOT $\Delta$ of weight 12. Witness (Chenevier 2014
+- **AP354 -- Hecke primary form $E_6 \Delta$ weight 18 (High).**
+  The correct elliptic form for the scalar weight-ten Saito--Kurokawa
+  packet is $f_{18}=E_6\Delta$ of weight 18, not $\Delta$ of weight 12
+  and not $E_4\Delta$ of weight 16. Witness (Chenevier 2014
   polynomial-law axiomatisation; ⟂ retracted symbol $S^{\mathrm{ps}}$
-  per Pattern 295 / W25): $D^{\mathrm{Chen}}_1(T_p) = a_p(f_{16}) + p^8 + p^9$;
-  46 primes verified $p \le 199$.
+  per Pattern 295 / W25): $D^{\mathrm{Chen}}_1(T_p)=a_p(f_{18})+p^8+p^9$
+  and $D^{\mathrm{Chen}}_4(T_p)=p^{34}$; 56 primes verified $p\le263$.
 
 - **AP355 -- Shimura-Waldspurger bridge constant (High).**
   $C_k = 2^{2 \epsilon(k) - 6} \cdot L(1, \chi_f) / L(1/2, \mathrm{Sh}(f))$;

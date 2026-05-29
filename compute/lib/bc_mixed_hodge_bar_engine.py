@@ -465,7 +465,7 @@ def hodge_diamond_display(hodge: Dict[Tuple[int, int], int],
     """
     lines = []
     lines.append(f"{'':>6}" + "".join(f"{q:>8}" for q in range(max_pq + 1)))
-    lines.append(f"{'p\\q':>6}" + "".join(f"{'---':>8}" for _ in range(max_pq + 1)))
+    lines.append(f"{'p/q':>6}" + "".join(f"{'---':>8}" for _ in range(max_pq + 1)))
     for p in range(max_pq + 1):
         vals = []
         for q in range(max_pq + 1):

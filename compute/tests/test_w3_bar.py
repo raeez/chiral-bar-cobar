@@ -220,7 +220,7 @@ class TestCurvature:
         assert simplify(c_k + c_dual - 100) == 0
 
     def test_ds_at_k_minus3(self):
-        """Critical level k=-3: c diverges (Sugawara undefined)."""
+        """Critical level k=-3: Sugawara undefined."""
         # c = 2 - 24(k+2)^2/(k+3), at k=-3: denominator = 0
         c_val = w3_central_charge(k)
         # Check that k+3 appears in denominator
