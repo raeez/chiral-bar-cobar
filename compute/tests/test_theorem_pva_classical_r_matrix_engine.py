@@ -534,7 +534,7 @@ class TestSkewSymmetryParity:
     """Verify skew-symmetry and bosonic parity of r-matrices."""
 
     def test_heisenberg_skew_symmetry(self):
-        """Heisenberg r(z) = k/z: odd function, skew-symmetric."""
+        """Heisenberg r(z) = k*Omega_H/z (rank-one coeff k/z): odd function, skew-symmetric."""
         pva = heisenberg_pva(k=Fraction(3))
         result = verify_skew_symmetry_scalar(pva, "J", "J")
         assert result['skew_symmetric'] is True

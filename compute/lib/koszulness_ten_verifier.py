@@ -1,22 +1,27 @@
-"""Computational verification of all 10 unconditional Koszulness equivalences.
+"""Computational verification of the Koszulness criteria.
 
 The meta-theorem (thm:koszul-equivalences-meta) in chiral_koszul_pairs.tex
-proves that 10 conditions on a chiral algebra A are equivalent.  This module
-verifies ALL 10 criteria computationally for the four archetype families:
+records twelve tests and consequences around a chiral algebra A:
+seven independent bidirectional equivalences, one listed
+Barr-Beck-Lurie consequence, one conditional factorization-homology
+comparison, one one-way ChirHoch consequence, one conditional
+Lagrangian criterion, and one one-directional D-module purity
+implication. This legacy module verifies the computational core for
+the four generic archetype families:
 
     Heisenberg H_k     (G class, shadow depth 2)
     Affine sl_2 at k    (L class, shadow depth 3)
     Beta-gamma           (C class, shadow depth 4)
     Virasoro Vir_c       (M class, shadow depth infinity)
 
-The 10 criteria (items (i)-(x) in the meta-theorem):
+The criteria checked here:
     (i)   PBW degeneration at all genera
     (ii)  A-infinity formality of bar cohomology
     (iii) Ext diagonal vanishing
     (iv)  Bar-cobar counit is quasi-isomorphism
     (v)   Barr-Beck-Lurie comparison is equivalence
     (vi)  FH concentrated in degree 0
-    (vii) ChirHoch vanishes outside {0,1,2}
+    (vii) Theorem-H-conditional ChirHoch vanishes outside {0,1,2}
     (viii) Kac-Shapovalov determinant nonzero in bar-relevant range
     (ix)  FM boundary acyclicity
     (x)   Shadow-formality at arities 2,3,4
@@ -71,14 +76,14 @@ c_sym = Symbol('c')
 
 
 # ============================================================================
-# Family data: each family specifies the OPE data needed for all 10 criteria
+# Family data: each family specifies the OPE data needed for all criteria
 # ============================================================================
 
 @dataclass
 class ChiralAlgebraData:
-    """Complete data for a chiral algebra needed to verify all 10 criteria.
+    """Complete data for a chiral algebra needed to verify all criteria.
 
-    This is the input to the 10-criterion verification machine.
+    This is the input to the criterion verification machine.
     """
     name: str
     # Generator data
@@ -536,8 +541,8 @@ def verify_ainfty_formality(data: ChiralAlgebraData, max_arity: int = 4) -> Dict
         # thm:pbw-koszulness-criterion).  The transferred A-infinity structure
         # is formal by the Koszulness of the associated graded.
         #
-        # Key: the Virasoro bar cohomology algebra A^! is quadratic
-        # (generated in degree 1 with quadratic relations).
+        # Key: the Verdier/linear dual branch of Virasoro bar cohomology,
+        # A^!, is quadratic (generated in degree 1 with quadratic relations).
         # The A-infinity formality follows from quadraticity of the dual.
         results['m3_virasoro'] = {
             'value': 0,
@@ -670,8 +675,10 @@ def verify_bar_cobar_counit(data: ChiralAlgebraData) -> Dict:
     d = data.dim_g
 
     # The bar-cobar counit Omega(B(A)) -> A is a quasi-iso iff
-    # the bar construction B(A) is a Koszul resolution of A^!.
-    # This means H^*(B(A)) = A^! (concentrated in bar degree).
+    # B(A) is the Koszul bar coalgebra resolving A.  Its cohomology is
+    # the Koszul-dual coalgebra A^i = H^*(B(A)); the algebra A^! is
+    # produced only by the separate Verdier/continuous-linear dual
+    # branch under the firewall hypotheses.
 
     # For the counit at weight level w:
     # dim H^0(Omega(B(A)))_w should equal dim A_w.
@@ -867,21 +874,25 @@ def verify_fh_concentration(data: ChiralAlgebraData) -> Dict:
 
 
 # ============================================================================
-# Criterion (vii): ChirHoch vanishes outside {0,1,2}
+# Criterion (vii): Theorem-H-conditional ChirHoch range
 # ============================================================================
 
 def verify_chirhoch_range(data: ChiralAlgebraData) -> Dict:
     """Verify ChirHoch^n(A) = 0 for n not in {0, 1, 2}.
 
-    This is the content of Theorem H (polynomial growth).
-    For quadratic Koszul algebras on a curve X of dimension 1:
+    This is the content of Theorem H on its PBW chiral Koszul,
+    finite-type/perfect, generic, E_infty-completed, strict-ML surface.
+    For quadratic Koszul algebras on a curve X of dimension 1 in that
+    package:
         ChirHoch^n(A) = 0 for n < 0 and n > 2.
         P_A(t) = dim Z(A) + dim ChirHoch^1(A) * t + dim Z(A!) * t^2.
 
-    For W-algebras: ChirHoch^* is ALSO bounded in {0,1,2} with dim <= 4
-    per Theorem H (AP94, AP95).  The Gelfand-Fuchs polynomial-ring
-    model is a different functor (continuous Lie cohomology of Witt)
-    and does NOT describe chiral Hochschild.
+    Off that package the Hochschild Koszul-defect complex KD_H^bullet(A)
+    controls the high-degree tail. For generic W-algebras in this model,
+    ChirHoch^* is also bounded in {0,1,2} per Theorem H. The
+    Gelfand-Fuchs polynomial-ring model is a different functor
+    (continuous Lie cohomology of Witt) and does not describe chiral
+    Hochschild.
     """
     results = {}
 
@@ -1217,7 +1228,7 @@ def verify_shadow_formality(data: ChiralAlgebraData, max_arity: int = 6) -> Dict
 
 
 # ============================================================================
-# Master verification: run all 10 criteria on a single algebra
+# Master verification: run all registered criteria on a single algebra
 # ============================================================================
 
 @dataclass
@@ -1232,7 +1243,7 @@ class CriterionResult:
 
 
 def verify_all_criteria(data: ChiralAlgebraData, verbose: bool = False) -> List[CriterionResult]:
-    """Run all 10 Koszulness criteria on a single algebra.
+    """Run all registered Koszulness criteria on a single algebra.
 
     Returns a list of CriterionResult, one per criterion.
     """

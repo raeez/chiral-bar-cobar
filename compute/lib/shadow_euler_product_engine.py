@@ -187,24 +187,19 @@ def betagamma_shadow_coefficients(lam: Union[Rational, int, Fraction] = 1,
                                     max_r: int = 30) -> Dict[int, Rational]:
     r"""Beta-gamma shadow coefficients: class C, terminates at arity 4.
 
-    kappa(betagamma) = -1 (from c = -2, kappa = c/2...
-    CAUTION (AP48): kappa != c/2 for betagamma in general.
-    For the bc/betagamma system with lambda = 1:
-      c = -2, kappa = -1.  S_3 = 0 (no cubic OPE on the primary line).
-      S_4 = quartic contact (nonzero).
+    For the bosonic beta-gamma system,
+      kappa_bg(lambda) = 6*lambda^2 - 6*lambda + 1,
+      c_bg(lambda) = 2*kappa_bg(lambda).
+    The fermionic bc partner has the opposite kappa.  For lambda = 1,
+      c_bg = 2, kappa_bg = 1.  S_3 = 0 on the primary line.
+      S_4 = -5/12 in the charged class-C normalization.
       S_r = 0 for r >= 5 by stratum separation.
-
-    For general lambda, c = 1 - 3(2*lambda - 1)^2.
-    kappa = c/2 for betagamma (single generator, Virasoro-like formula holds).
     """
     lv = Rational(lam)
-    cv = 1 - 3 * (2 * lv - 1) ** 2
-    kappa = cv / 2
+    kappa = 6 * lv ** 2 - 6 * lv + 1
     # betagamma has S_3 = 0 on primary line (no cubic vertex)
-    # S_4 = quartic contact, nonzero
-    # For lambda = 1: c = -2, kappa = -1, S_4 = 10/(c(5c+22)) = 10/(-2*12) = -5/12
-    # (same as Virasoro formula evaluated at c = -2, but this is the INTRINSIC value)
-    S4 = Rational(10) / (cv * (5 * cv + 22)) if cv != 0 and (5 * cv + 22) != 0 else Rational(0)
+    # S_4 = quartic contact in the charged class-C normalization.
+    S4 = Rational(-5, 12)
     result = {2: kappa, 3: Rational(0), 4: S4}
     for r in range(5, max_r + 1):
         result[r] = Rational(0)

@@ -4,11 +4,11 @@ homotopy surface.
 
 The live theorem surface separates four claims:
 
-1. thm:chiral-positselski-at-each-weight is proved in the finite-window
-   de Rham chiral model. Its finite object is F^{<=w}C, not a quotient
-   using the low-weight piece in the denominator.
-2. thm:chiral-positselski-weight-completed proves CP1--CP3 for strict
-   Mittag-Leffler completed chiral coalgebra towers.
+1. thm:chiral-positselski-at-each-weight is conditional on the
+   finite-window de Rham chiral model. Its finite object is F^{<=w}C,
+   not a quotient using the low-weight piece in the denominator.
+2. thm:chiral-positselski-weight-completed is conditional on CP1--CP3
+   for strict Mittag-Leffler completed chiral coalgebra towers.
 3. prop:chiral-positselski-raw-direct-sum-class-M-false is a raw
    direct-sum obstruction: S4 is only the first nonzero term; the
    obstruction is the nonterminating harmonic family.
@@ -27,6 +27,9 @@ from compute.lib.independent_verification import independent_verification
 ROOT = Path(__file__).resolve().parents[2]
 THEOREM_B_TEX = ROOT / "chapters/theory/theorem_B_scope_platonic.tex"
 CODERIVED_TEX = ROOT / "chapters/theory/coderived_models.tex"
+BAR_COBAR_INVERSION_TEX = (
+    ROOT / "chapters/theory/bar_cobar_adjunction_inversion.tex"
+)
 
 
 def _window_around(text: str, label: str, radius: int = 700) -> str:
@@ -112,12 +115,13 @@ def test_curved_chain_homotopy_trichotomy_surface_is_strict_complete_filtered():
         "second-kind condition."
     ),
 )
-def test_finite_weight_surface_uses_low_weight_subcoalgebra_and_is_proved():
+def test_finite_weight_surface_uses_low_weight_subcoalgebra_and_is_conditional():
     tex = THEOREM_B_TEX.read_text()
     window = _env_block(tex, "\\label{thm:chiral-positselski-at-each-weight}")
-    assert "\\ClaimStatusProvedHere" in window
+    assert "\\ClaimStatusConditional" in window
     assert "finite low-weight subobject" in window
     assert "F^{\\leq w}C" in window
+    assert "finite-window de Rham chiral model" in window
     assert "product/sum exactness" in window
     assert ("C/F^" + "{<=w}") not in tex
     assert ("C/F^" + "{>w}") not in tex
@@ -142,15 +146,53 @@ def test_finite_weight_surface_uses_low_weight_subcoalgebra_and_is_proved():
         "proves the chiral completed co/contra Rlim theorem."
     ),
 )
-def test_weight_completed_positselski_proves_cp_on_strict_ml_surface():
+def test_weight_completed_positselski_is_conditional_on_strict_ml_surface():
     tex = THEOREM_B_TEX.read_text()
     window = _env_block(tex, "\\label{thm:chiral-positselski-weight-completed}")
     assert "Continuous chiral Positselski comparison" in window
-    assert "\\ClaimStatusProvedHere" in window
+    assert "\\ClaimStatusConditional" in window
     for token in ("(CP1)", "(CP2)", "(CP3)"):
         assert token in window
     assert "strict Mittag" in window
     assert "not a consequence of quotienting the raw" in tex
+
+
+def test_off_koszul_ran_uses_named_chiral_positselski_72_package():
+    tex = CODERIVED_TEX.read_text()
+    theorem = _env_block(tex, "\\label{thm:chiral-bar-cobar-positselski-7-2}")
+    assert "\\ClaimStatusConditional" in theorem
+    assert "\\mathsf{Pos}^{\\mathrm{ch}}_{7.2}" in theorem
+    assert "de Rham realization" in theorem
+    assert "second-kind acyclic generators" in theorem
+    assert "\\tau_{\\geq 0}C_S" in theorem
+
+    off_koszul_window = _forward_window_from(
+        tex, "\\label{thm:off-koszul-ran-inversion}", 5000
+    )
+    assert "thm:chiral-bar-cobar-positselski-7-2" in off_koszul_window
+    assert "chiral adaptation of" not in off_koszul_window
+    assert "via the chiral adaptation" not in tex
+
+
+def test_theorem_b_genus_zero_clause_is_ftm_equivalence_not_definition():
+    tex = BAR_COBAR_INVERSION_TEX.read_text()
+    theorem = _env_block(tex, "\\label{thm:bar-cobar-inversion-qi}")
+    assert "Strict genus-\\(0\\) FTM surface" in theorem
+    assert "the following four conditions are equivalent" in theorem
+    for token in (
+        "chiral Koszul morphism",
+        "\\psi_0",
+        "\\eta_0",
+        "twisted tensor products",
+    ):
+        assert token in theorem
+    assert "non-tautological FTM package" in theorem
+
+    proof_window = _forward_window_from(
+        tex, "\\begin{proof}[Dependency-closed proof]", 2200
+    )
+    assert "not proved by reusing" in proof_window
+    assert "FTM equivalence package" in proof_window
 
 
 @independent_verification(

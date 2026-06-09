@@ -39,6 +39,7 @@ STANDALONE_DIR = ROOT / "standalone"
 CLAIM_ENVS = {
     "theorem", "lemma", "proposition", "corollary", "conjecture",
     "computation", "calculation", "maintheorem", "verification", "remark",
+    "definition", "construction", "convention",
 }
 
 # All theorem-like environments (for label indexing, broader than CLAIM_ENVS)
@@ -50,7 +51,7 @@ THEOREM_LIKE_ENVS = CLAIM_ENVS | {
 
 # Claim status patterns
 STATUS_RE = re.compile(
-    r"\\ClaimStatus(ProvedHere|ProvedElsewhere|Conjectured|Conditional|Open|Heuristic)"
+    r"\\ClaimStatus(ProvedHere|ProvedElsewhere|Conjectured|Conditional|Open|Heuristic|Definitional)"
 )
 
 # Label patterns
@@ -92,7 +93,7 @@ class Claim:
     """A single tagged mathematical claim."""
     label: str
     env_type: str  # theorem, lemma, proposition, etc.
-    status: str    # ProvedHere, ProvedElsewhere, Conjectured, Heuristic, Open
+    status: str    # ProvedHere, ProvedElsewhere, Conjectured, Heuristic, Open, Definitional
     file: str      # relative path
     line: int      # 1-indexed line number
     title: str     # optional title from [...] argument
@@ -433,6 +434,7 @@ def break_index_scan_terms(text: str) -> str:
     text = re.sub("Conditional", break_after(4), text, flags=re.IGNORECASE)
     text = re.sub("Open", break_after(2), text, flags=re.IGNORECASE)
     text = re.sub("Heuristic", break_after(4), text, flags=re.IGNORECASE)
+    text = re.sub("Definitional", break_after(4), text, flags=re.IGNORECASE)
     text = re.sub("status", break_status, text, flags=re.IGNORECASE)
     text = re.sub("ledger", break_ledger, text, flags=re.IGNORECASE)
     text = re.sub("theorem-level", break_theorem_level, text, flags=re.IGNORECASE)
@@ -515,6 +517,7 @@ def write_census_json(claims: list[Claim], all_files: list[Path]) -> None:
             "Heuristic": status_counts.get("Heuristic", 0),
             "Conditional": status_counts.get("Conditional", 0),
             "Open": status_counts.get("Open", 0),
+            "Definitional": status_counts.get("Definitional", 0),
             "total_claims": len(claims),
         },
         "raw_grep_counts": {
@@ -525,6 +528,7 @@ def write_census_json(claims: list[Claim], all_files: list[Path]) -> None:
             "Heuristic": grep_counts.get("Heuristic", 0),
             "Conditional": grep_counts.get("Conditional", 0),
             "Open": grep_counts.get("Open", 0),
+            "Definitional": grep_counts.get("Definitional", 0),
             "total_occurrences": sum(grep_counts.values()),
         },
         "lines": {
@@ -544,6 +548,7 @@ def write_census_json(claims: list[Claim], all_files: list[Path]) -> None:
           f"H={census['totals']['Heuristic']} "
           f"CD={census['totals']['Conditional']} "
           f"O={census['totals']['Open']} "
+          f"DF={census['totals']['Definitional']} "
           f"total={census['totals']['total_claims']}")
 
 
@@ -571,6 +576,7 @@ def write_dependency_graph(claims: list[Claim], all_labels: list[LabelEntry]) ->
             "Heuristic": "#ffccbc",        # orange
             "Conditional": "#e1bee7",      # purple
             "Open": "#ef9a9a",             # red
+            "Definitional": "#eeeeee",      # grey
         }
 
         # Color nodes by part
@@ -716,7 +722,7 @@ def write_theorem_registry(
     lines.append("")
     lines.append("| Status | Count |")
     lines.append("|---|---:|")
-    for status in ["ProvedHere", "ProvedElsewhere", "Conjectured", "Conditional", "Heuristic", "Open"]:
+    for status in ["ProvedHere", "ProvedElsewhere", "Conjectured", "Conditional", "Heuristic", "Open", "Definitional"]:
         lines.append(f"| `{status}` | {status_counts.get(status, 0)} |")
     lines.append("")
     lines.append("## Proved Surface By Environment")

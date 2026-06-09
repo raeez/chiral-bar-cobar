@@ -290,14 +290,14 @@ class CSFTAction:
         return self.kappa * lambda_fp_local(g)
 
     def free_energy_term(self, g: int) -> Rational:
-        r"""Genus-g free energy F_g = kappa * lambda_g^FP.
+        r"""Genus-g scalar free-energy trace F_g^sc = kappa * lambda_g^FP.
 
         This is the vacuum amplitude V_{g,0} = Tr(Theta_A^{(g)}).
-        On the uniform-weight (scalar) lane, F_g = kappa * lambda_g^FP
+        On the uniform-weight (scalar) lane, F_g^sc = kappa * lambda_g^FP
         at all genera (Theorem D + thm:mc2-bar-intrinsic).
 
-        For multi-weight algebras at g >= 2, the scalar formula receives
-        a cross-channel correction delta_F_g^cross (AP32).
+        For multi-weight algebras at g >= 2, the full coefficient is
+        F_g = F_g^sc + delta_F_g^cross (AP32).
         """
         if g < 1:
             raise ValueError(f"Genus must be >= 1, got {g}")

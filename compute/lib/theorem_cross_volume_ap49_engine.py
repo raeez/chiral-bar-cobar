@@ -936,7 +936,7 @@ def verify_superconformal_kappa() -> Dict[str, object]:
     N=0 (Virasoro): kappa = c/2, self-dual at c=13.
     N=1 (SVir): kappa = (3c-2)/4.
     N=2 (SCA): kappa = (6-c)/(2(3-c)) (NOT c/2; AP49 discrepancy).
-    N=4 (small N=4): kappa = c/2.
+    N=4 (small N=4): kappa = c/3.
 
     Vol I (w_algebras_deep.tex lines 3293-3355, 4910-4984).
     Vol II (examples-worked.tex lines 4037-4213).
@@ -996,20 +996,22 @@ def verify_superconformal_kappa() -> Dict[str, object]:
     }
 
     # N=4: small N=4 SCA
-    # AP49 DISCREPANCY: Vol I (line 3328-3342) says kappa+kappa'=0 (KM-type),
-    # Koszul involution c -> 12-c, self-dual at c=6, kappa(c=6)=2.
-    # Vol II (line 4213) says kappa = c/2, Koszul c -> -c-24, self-dual c=-12.
-    # These use DIFFERENT parametrizations of the same algebra.
-    # Vol I uses c = 6k/(k+2) (bounded central charge);
-    # Vol II uses c = 6k (unbounded central charge from a different convention).
-    # Flag as cross-volume convention discrepancy requiring reconciliation.
+    # Correct AP49 convention: kappa = c/3 = 2k, c = 6k.
+    # The su(2) R-symmetry FF involution is k -> -k-4, hence
+    # c -> -c-24, self-dual c=-12, and kappa+kappa'=-8.
+    # The zero complementarity k -> -k belongs to the CY/K3 sigma-model
+    # Verdier duality and is not the FF involution on the abstract SCA.
+    c = Fraction(6)
+    c_dual = -c - 24
     results['N4_small_AP49'] = {
-        'vol1_complementarity_sum': Fraction(0),
-        'vol1_self_dual_c': 6,
-        'vol2_claims_kappa': 'c/2',
-        'vol2_self_dual_c': -12,
-        'convention_mismatch': True,
-        'match': True,  # Flag exists; discrepancy documented
+        'kappa': c / 3,
+        'c_dual': c_dual,
+        'kappa_dual': c_dual / 3,
+        'complementarity_sum': c / 3 + c_dual / 3,
+        'expected_sum': Fraction(-8),
+        'self_dual_c': -12,
+        'convention_mismatch': False,
+        'match': c / 3 + c_dual / 3 == Fraction(-8),
     }
 
     # Complementarity sums

@@ -55,11 +55,11 @@ class TestE1ChiralKoszulDuality:
 
 
 class TestBarComputesKoszulDualComplete:
-    """thm:bar-computes-koszul-dual-complete (9 deps): H*(B(A)) = A^!
-    as chiral algebras. The bar cohomology computes the Koszul dual."""
+    """thm:bar-computes-koszul-dual-complete (9 deps): H*(B(A)) = A^i.
+    The finite/completed dual branch identifies dimensions with A^!."""
 
     def test_heisenberg_bar_gives_partition_dims(self):
-        """H^n(B(H)) = p(n-2): bar cohomology gives Koszul dual dims."""
+        """H^n(B(H)) = p(n-2): bar cohomology gives A^i/A^! dims."""
         from compute.lib.bar_complex import bar_dim_heisenberg, partition_number
         for n in range(2, 8):
             assert bar_dim_heisenberg(n) == partition_number(n - 2)
@@ -397,11 +397,11 @@ class TestCriticalLevelUniversality:
     behavior is universal."""
 
     def test_kappa_vanishes_at_critical_sl2(self):
-        """kappa(sl_2) at k=-h^v=-2 should raise or be degenerate."""
+        """scalar kappa(sl_2) vanishes at k=-h^v=-2; structures degenerate."""
         from compute.lib.theorem_c_complementarity import kappa
-        # At critical level k = -h^v = -2, kappa should raise
-        with pytest.raises(ValueError):
-            kappa("affine", lie_type="A", rank=1, k=-2)
+        # At critical level k = -h^v = -2, scalar kappa is zero; the
+        # Sugawara/KZ/DS packages carry the undefined critical-level data.
+        assert kappa("affine", lie_type="A", rank=1, k=-2) == 0
 
     def test_kappa_near_critical_is_small(self):
         """kappa(sl_2) near critical level is small."""

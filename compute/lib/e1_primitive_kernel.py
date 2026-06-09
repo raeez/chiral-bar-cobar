@@ -1,12 +1,14 @@
 """E₁ primitive kernel profiles and coinvariant projection.
 
 Implements the E₁ (ordered/ribbon) refinement of the primitive
-modular master-kernel.  The key structural fact:
+modular master-kernel.  The key structural fact on the standard
+R-twisted descent package:
 
     av(K^{E₁}_A) = K_A
 
 The coinvariant projection of the E₁ primitive kernel recovers
-the E_∞ primitive kernel.  At low arity:
+the E_∞ primitive kernel only after the descent datum commutes with
+the bar differential and convolution bracket.  At low arity:
 
     K^{E₁}_{0,2} = r(z)          →  av = κ(A)
     K^{E₁}_{0,3} = Φ_KZ(A)       →  av = C(A)
@@ -21,10 +23,51 @@ References:
 """
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from fractions import Fraction
 from math import factorial
 from typing import Dict, Optional, Tuple
+
+
+@dataclass(frozen=True)
+class AveragingDescentHypotheses:
+    """Hypotheses for promoting ordered averaging to a chain map.
+
+    Profile-level scalar projection is weaker: it only records where an
+    ordered component lands after quotienting by labels.  A theorem that
+    averaging commutes with the bar differential or the convolution bracket
+    also needs the R-twisted descent data below.
+    """
+
+    r_twisted_sigma_descent: bool = False
+    differential_equivariance: bool = False
+    bracket_equivariance: bool = False
+    continuous_reynolds: bool = False
+    completed_arity_windows: bool = False
+
+    def missing(self) -> Tuple[str, ...]:
+        return tuple(
+            name for name, value in (
+                ("r_twisted_sigma_descent", self.r_twisted_sigma_descent),
+                ("differential_equivariance", self.differential_equivariance),
+                ("bracket_equivariance", self.bracket_equivariance),
+                ("continuous_reynolds", self.continuous_reynolds),
+                ("completed_arity_windows", self.completed_arity_windows),
+            )
+            if not value
+        )
+
+    def satisfied(self) -> bool:
+        return len(self.missing()) == 0
+
+
+STANDARD_DESCENT_HYPOTHESES = AveragingDescentHypotheses(
+    r_twisted_sigma_descent=True,
+    differential_equivariance=True,
+    bracket_equivariance=True,
+    continuous_reynolds=True,
+    completed_arity_windows=True,
+)
 
 
 @dataclass(frozen=True)
@@ -33,7 +76,9 @@ class E1PrimitiveKernelProfile:
 
     Each component K^{E₁}_{g,n} lives in End(V^⊗n) ⊗ Ω^{n-2}(FM^ord_n).
     The coinvariant projection av: K^{E₁}_{g,n} → K_{g,n} sends the
-    ordered kernel to its Σ_n-averaged (E_∞) counterpart.
+    ordered kernel to its Σ_n-averaged (E_∞) counterpart at the
+    component level; it is a chain map only under the R-twisted
+    descent hypotheses.
 
     Fields:
         name: family name
@@ -71,8 +116,10 @@ class E1PrimitiveKernelProfile:
     def coinvariant_projection(self) -> Dict[str, str]:
         """Map from E₁ kernel components to E_∞ kernel components.
 
-        Implements av(K^{E₁}) = K: each E₁ component maps to its
-        Σ_n-averaged counterpart.
+        Implements the component-level part of av(K^{E₁}) = K: each
+        E₁ component maps to its Σ_n-averaged counterpart.  Differential
+        and bracket compatibility are checked by
+        coinvariant_projection_audit().
         """
         proj = {}
         proj["K02_r(z)"] = "K02"
@@ -153,7 +200,7 @@ class E1PrimitiveKernelProfile:
 # Standard family E₁ profiles
 # =====================================================================
 
-# Heisenberg: r(z) = k/z (scalar), no associator, no quartic
+# Heisenberg: r(z) = k*Omega_H/z (rank-one coeff k/z) (rank-one abelian), no associator, no quartic
 # Shadow depth = 2 (Gaussian class G)
 HEISENBERG_E1 = E1PrimitiveKernelProfile(
     name="Heisenberg",
@@ -266,23 +313,51 @@ def get_e1_profile(name: str) -> E1PrimitiveKernelProfile:
 def verify_coinvariant_projection(
     e1_name: str,
     einfty_kernel: Tuple[str, ...],
+    hypotheses: Optional[AveragingDescentHypotheses] = None,
 ) -> bool:
     """Verify that av(K^{E₁}_A) = K_A at the profile level.
 
     Checks that the coinvariant projection of the E₁ kernel components
-    matches the E_∞ kernel components exactly.
+    matches the E_∞ kernel components exactly.  The default is the
+    standard-landscape descent package.  Passing incomplete hypotheses
+    rejects the stronger chain-map reading.
     """
+    return coinvariant_projection_audit(
+        e1_name, einfty_kernel, hypotheses
+    )["projection_valid"]
+
+
+def coinvariant_projection_audit(
+    e1_name: str,
+    einfty_kernel: Tuple[str, ...],
+    hypotheses: Optional[AveragingDescentHypotheses] = None,
+) -> Dict[str, object]:
+    """Audit ordered-to-symmetric averaging with explicit hypotheses."""
+    if hypotheses is None:
+        hypotheses = STANDARD_DESCENT_HYPOTHESES
     e1 = E1_PROFILES[e1_name]
     proj = e1.coinvariant_projection()
     projected = tuple(proj.values())
+    component_projection_valid = True
     # The projected components should be a subset of einfty_kernel
     # (the E_∞ kernel may have additional planted-forest terms
     # Rpf2, Rpf3 that come from the genus spectral sequence,
     # not from the genus-0 E₁ projection)
     for comp in projected:
         if comp not in einfty_kernel:
-            return False
-    return True
+            component_projection_valid = False
+            break
+    descent_valid = hypotheses.satisfied()
+    return {
+        "family": e1_name,
+        "component_projection_valid": component_projection_valid,
+        "descent_hypotheses": hypotheses,
+        "missing_hypotheses": hypotheses.missing(),
+        "averaging_commutes_with_bar_differential": descent_valid,
+        "averaging_preserves_convolution_bracket": descent_valid,
+        "projection_valid": component_projection_valid and descent_valid,
+        "profile_level_only": component_projection_valid and not descent_valid,
+    }
 
 
 def coinvariant_kappa_check(e1_name: str) -> bool:

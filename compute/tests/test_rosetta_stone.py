@@ -350,7 +350,7 @@ class TestHeisenbergSwissCheese:
         [thm:rosetta-swiss-cheese Step 3, eq:rosetta-compatibility]
         """
         # Degree 2: Delta([J|J]) = [] tensor [J|J] + [J] tensor [J] + [J|J] tensor []
-        # d([J|J]) = k (scalar)
+        # d([J|J]) = k (rank-one abelian)
         # LHS: Delta(d([J|J])) = Delta(k) = k tensor [] + [] tensor k
         #
         # RHS: (d tensor id + id tensor d) applied to each summand:
@@ -1382,12 +1382,12 @@ class TestLandauGinzburgM3:
 # ===================================================================
 
 def cs_lambda_bracket(a_label, b_label):
-    """Abelian CS lambda-bracket: {J_lambda J} = k (constant in lambda).
+    """Abelian CS collision kernel after dlog absorption: k.
 
-    The abelian Chern--Simons boundary algebra on C x R+ has a single
-    current J with OPE J(z)J(w) ~ k/(z-w).  This is a SIMPLE pole
-    (not double), so the lambda-bracket is constant: {J_lambda J} = k.
-    Contrast Heisenberg where {J_lambda J} = k*lambda (double pole).
+    The boundary current is the Heisenberg current: its vertex/PVA OPE is
+    J(z)J(w) ~ k/(z-w)^2 and {J_lambda J} = k*lambda.  The simple pole
+    k/(z-w) appears only after the bar dlog kernel absorbs one pole order;
+    this helper records that collision/r-matrix kernel, not the OPE.
     """
     if a_label == 'J' and b_label == 'J':
         return k
@@ -1413,9 +1413,10 @@ def cs_r_matrix_coefficient(n):
 class TestAbelianCSRMatrix:
     """Abelian Chern--Simons R-matrix from the bar complex.
 
-    The boundary current algebra of abelian CS on C x R+ has
-    OPE J(z)J(w) ~ k/(z-w), giving lambda-bracket {J_lambda J} = k.
-    The spectral R-matrix is the Laplace transform:
+    The boundary current algebra of abelian CS on C x R+ is Heisenberg:
+    J(z)J(w) ~ k/(z-w)^2 and {J_lambda J} = k*lambda.  After the bar
+    dlog kernel absorbs one pole order, the collision kernel is k/(z-w).
+    The spectral R-matrix is the corresponding transform:
     R(z) = exp(k/z) (formal exponential in End(V tensor V)).
 
     References:
@@ -1424,16 +1425,13 @@ class TestAbelianCSRMatrix:
     """
 
     def test_cs_lambda_bracket(self):
-        """Verify {J_lambda J} = k for abelian CS (simple pole, not double).
+        """Verify the dlog-absorbed abelian CS collision kernel.
 
-        The abelian CS boundary algebra has OPE J(z)J(w) ~ k/(z-w).
-        This is a simple pole (order 1), giving a CONSTANT lambda-bracket
-        {J_lambda J} = k.  Compare Heisenberg: double pole gives
-        {J_lambda J} = k*lambda (linear in lambda).
+        The underlying boundary OPE is Heisenberg:
+        J(z)J(w) ~ k/(z-w)^2, giving {J_lambda J} = k*lambda.
+        The constant k below is the dlog-absorbed collision kernel.
 
-        The simple pole means the bar differential has d_bracket nonzero
-        (unlike Heisenberg where d_bracket = 0) and d_curvature = 0
-        at genus 0 (unlike Heisenberg where d_curvature is nonzero).
+        Thus this helper must not be read as a simple-pole OPE statement.
         [subsec:rosetta-cs]
         """
         bracket = cs_lambda_bracket('J', 'J')
@@ -1448,10 +1446,10 @@ class TestAbelianCSRMatrix:
             "Heisenberg bracket should be k*lambda"
         )
 
-        # The CS bracket has NO lambda dependence (simple pole)
-        # The Heisenberg bracket is LINEAR in lambda (double pole)
+        # The absorbed collision kernel has no lambda dependence.
+        # The Heisenberg vertex/PVA bracket is linear in lambda.
         assert bracket.diff(lam) == 0, (
-            "CS bracket should be independent of lambda (simple pole)"
+            "CS collision kernel should be independent of lambda"
         )
         assert heisenberg_bracket.diff(lam) == k, (
             "Heisenberg bracket should be linear in lambda (double pole)"
@@ -1544,20 +1542,20 @@ class TestAbelianCSRMatrix:
         )
 
     def test_cs_classical_limit(self):
-        """Verify classical r-matrix r(z) = k/z satisfies CYBE.
+        """Verify classical r-matrix r(z) = k*Omega_H/z (rank-one coeff k/z) satisfies CYBE.
 
         The CYBE is:
           [r_{12}(u), r_{13}(u+v)] + [r_{12}(u), r_{23}(v)]
           + [r_{13}(u+v), r_{23}(v)] = 0.
 
-        For the 1-dimensional abelian case, r(z) = k/z is a scalar.
+        For the 1-dimensional abelian case, r(z) = k*Omega_H/z (rank-one coeff k/z) has scalar coefficient after rank-one evaluation.
         All commutators [scalar, scalar] = 0, so the CYBE is
         trivially satisfied: 0 + 0 + 0 = 0.
         [prop:field-theory-r, subsec:rosetta-cs]
         """
         u, v = symbols('u v', nonzero=True)
 
-        # r(z) = k/z (classical limit of R(z) = exp(k/z))
+        # r(z) = k*Omega_H/z (rank-one coeff k/z) (classical limit of R(z) = exp(k/z))
         r12 = k / u
         r13 = k / (u + v)
         r23 = k / v

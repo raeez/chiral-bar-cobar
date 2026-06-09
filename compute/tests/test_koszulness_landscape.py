@@ -417,10 +417,17 @@ class TestSymplecticFermion:
         assert data.bar_concentrated is True
 
     def test_kappa(self):
-        """c = -1, kappa = -1/2 for symplectic fermion at lambda=1/2."""
+        """c = -2, kappa = -1 for symplectic fermion / bc_1."""
         data = symplectic_fermion()
-        assert data.kappa == Rational(-1, 2)
-        assert data.central_charge == Rational(-1)
+        assert data.kappa == Rational(-1)
+        assert data.central_charge == Rational(-2)
+
+    def test_not_betagamma_half_parent(self):
+        """The c=-2 parent is not beta-gamma at lambda=1/2."""
+        data = symplectic_fermion()
+        assert "beta-gamma_{lambda=1/2}" in data.notes
+        assert "c = -1" in data.notes
+        assert "betagamma at lambda=1/2" not in data.name
 
     def test_proof_mechanism(self):
         data = symplectic_fermion()
@@ -449,6 +456,11 @@ class TestTripletW2:
     def test_central_charge(self):
         data = triplet_w2()
         assert data.central_charge == Rational(-2)
+
+    def test_parent_is_symplectic_fermion_not_betagamma(self):
+        data = triplet_w2()
+        assert "SF^{Z_2}" in data.notes
+        assert "(betagamma)^{Z_2}" not in data.notes
 
 
 class TestAdmissibleSl2:

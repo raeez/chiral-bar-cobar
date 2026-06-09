@@ -47,6 +47,89 @@ The active proof cites \ref{lem:live}.
     assert claims[0].refs_in_block == ["lem:live"]
 
 
+def test_definitional_claim_environments_are_extracted(tmp_path, monkeypatch):
+    gm = load_generator()
+    monkeypatch.setattr(gm, "ROOT", tmp_path)
+
+    tex = tmp_path / "sample.tex"
+    tex.write_text(
+        r"""
+\begin{definition}[Hecke defect class; \ClaimStatusDefinitional]
+\label{def:hecke-defect-class}
+The class is represented by \ref{rem:prime-locality-obstruction}.
+\end{definition}
+""",
+        encoding="utf-8",
+    )
+
+    claims = gm.extract_claims(tex)
+    labels = gm.extract_all_labels(tex)
+
+    assert [claim.label for claim in claims] == ["def:hecke-defect-class"]
+    assert claims[0].env_type == "definition"
+    assert claims[0].status == "Definitional"
+    assert claims[0].title == "Hecke defect class"
+    assert claims[0].refs_in_block == ["rem:prime-locality-obstruction"]
+    assert labels[0].env_type == "definition"
+
+
+def test_construction_claim_environments_are_extracted(tmp_path, monkeypatch):
+    gm = load_generator()
+    monkeypatch.setattr(gm, "ROOT", tmp_path)
+
+    tex = tmp_path / "sample.tex"
+    tex.write_text(
+        r"""
+\begin{construction}[Complexified integral; \ClaimStatusDefinitional]
+\label{constr:complex-integral}
+\begin{equation}\label{eq:complex-integral}
+Z = \int_{\mathcal C} e^{-S}\,D\sigma .
+\end{equation}
+The normalization cites \ref{eq:reference-normalization}.
+\end{construction}
+""",
+        encoding="utf-8",
+    )
+
+    claims = gm.extract_claims(tex)
+
+    assert [claim.label for claim in claims] == ["constr:complex-integral"]
+    assert claims[0].env_type == "construction"
+    assert claims[0].status == "Definitional"
+    assert claims[0].title == "Complexified integral"
+    assert claims[0].aliases == [
+        "constr:complex-integral",
+        "eq:complex-integral",
+    ]
+    assert claims[0].refs_in_block == ["eq:reference-normalization"]
+
+
+def test_convention_claim_environments_are_extracted(tmp_path, monkeypatch):
+    gm = load_generator()
+    monkeypatch.setattr(gm, "ROOT", tmp_path)
+
+    tex = tmp_path / "sample.tex"
+    tex.write_text(
+        r"""
+\begin{convention}[Semantic levels; \ClaimStatusDefinitional]
+\label{conv:semantic-levels}
+The H-level cites \ref{prop:model-independence}.
+\end{convention}
+""",
+        encoding="utf-8",
+    )
+
+    claims = gm.extract_claims(tex)
+    labels = gm.extract_all_labels(tex)
+
+    assert [claim.label for claim in claims] == ["conv:semantic-levels"]
+    assert claims[0].env_type == "convention"
+    assert claims[0].status == "Definitional"
+    assert claims[0].title == "Semantic levels"
+    assert claims[0].refs_in_block == ["prop:model-independence"]
+    assert labels[0].env_type == "convention"
+
+
 def test_commented_labels_refs_and_statuses_are_ignored(tmp_path, monkeypatch):
     gm = load_generator()
     monkeypatch.setattr(gm, "ROOT", tmp_path)
@@ -87,7 +170,7 @@ def test_theorem_index_has_no_status_surface(tmp_path, monkeypatch):
             line=12,
             title=(
                 "Conditional Open Heuristic ProvedHere ProvedElsewhere "
-                "Conjectured status ledger theorem-level record"
+                "Conjectured Definitional status ledger theorem-level record"
             ),
         )
     ]
@@ -108,6 +191,7 @@ def test_theorem_index_has_no_status_surface(tmp_path, monkeypatch):
     assert "Heuristic" not in index_text
     assert "ProvedElsewhere" not in index_text
     assert "Conjectured" not in index_text
+    assert "Definitional" not in index_text
 
 
 def test_duplicate_labels_are_aliases_not_node_keys(tmp_path, monkeypatch):

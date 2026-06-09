@@ -38,7 +38,8 @@ The single organizing structure is the MC element Theta_A in the modular
 convolution algebra g^mod_A.  All three frontier problems are different
 projections of this single object:
 
-  (1) CLIFF/GENUS: Theta_A exists at ALL genera (bar D^2=0 is unconditional).
+  (1) CLIFF/GENUS: Theta_A exists at ALL genera on the fixed
+      smooth-curve convolution carrier (bar D^2=0 there is unconditional).
       The hierarchy of conditions controls what we can EXTRACT from Theta_A:
         - Algebraic: Theta_A exists (no conditions)
         - Homotopical: Theta_A^{<=r} has finite-order projections (finite-dim wt spaces)
@@ -384,7 +385,10 @@ class MCEquationAgreement:
 def verify_genus0_mc_agreement(algebra: str) -> MCEquationAgreement:
     """Verify three independent expressions of the same equation at genus 0.
 
-    Bar: D^2 = 0 on M-bar_{g,n} (unconditional, from d^2=0 on M-bar).
+    Bar: D^2 = 0 on the fixed M-bar_{g,n} convolution carrier
+    (unconditional, from d^2=0 on M-bar).  The relative ambient
+    log-FM six-component D_mod^log requires the LF signed
+    residue-pushforward package.
     CG: {S,S} + hbar*Delta(S) = 0 (QME at tree level: {S,S} = 0).
     GKW: sum m_i(...m_j(...)...) = 0 (Stasheff A-infinity relations).
 

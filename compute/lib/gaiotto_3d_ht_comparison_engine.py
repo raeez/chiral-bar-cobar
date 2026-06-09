@@ -130,6 +130,51 @@ lam = Symbol('lambda')         # spectral/lambda-bracket parameter
 Psi = Symbol('Psi')            # Omega-deformation parameter
 
 
+CS_HT_AFFINE_GATES: Tuple[Tuple[str, str], ...] = (
+    ('affine_km_boundary_algebra_defined', 'affine Kac-Moody boundary algebra defined'),
+    ('chern_simons_action_defined', 'Chern-Simons comparison/action defined'),
+    ('cs_to_current_map_defined', 'Chern-Simons-to-current map defined'),
+    ('abelian_cs_heisenberg_center_proved', 'abelian CS -> Heisenberg centre proved'),
+    ('nonabelian_ht_cs_affine_currents_proved', 'nonabelian HT CS -> affine currents proved'),
+    ('perturbative_finiteness_hypotheses_stated', 'perturbative finiteness hypotheses stated'),
+    ('cg_factorization_algebra_defined', 'Costello-Gwilliam factorization algebra defined'),
+    ('theory_level_declared', 'classical/quantum theory level declared'),
+    ('three_d_ht_bulk_factorization_algebra_defined', '3d HT bulk factorization algebra defined'),
+    ('curve_level_boundary_chiral_algebra_defined', 'curve-level boundary chiral algebra defined'),
+)
+
+
+SLAB_W3_REDUCTION_GATES: Tuple[Tuple[str, str], ...] = (
+    ('slab_geometry_defined', 'slab geometry defined'),
+    ('slab_boundary_conditions_defined', 'slab boundary conditions defined'),
+    ('slab_pushforward_to_curve_defined', 'slab pushforward to the curve defined'),
+    ('w3_pva_defined', 'W3 PVA defined'),
+    ('ds_or_brst_reduction_map_defined', 'DS/BRST reduction map defined'),
+    ('w3_lambda_bracket_match_proved', 'W3 lambda-bracket match proved'),
+    ('slab_anomaly_controlled', 'slab anomaly controlled'),
+)
+
+
+POISSON_SIGMA_HT_GATES: Tuple[Tuple[str, str], ...] = (
+    ('psm_fields_defined', 'Poisson sigma model fields defined'),
+    ('psm_target_poisson_defined', 'target Poisson structure defined'),
+    ('psm_aksz_bv_action_defined', 'AKSZ/BV action defined'),
+    ('psm_boundary_conditions_defined', 'PSM boundary conditions defined'),
+    ('psm_ht_enhancement_defined', 'HT enhancement defined'),
+    ('psm_factorization_algebra_defined', 'PSM factorization algebra defined'),
+    ('psm_ht_enhancement_proved', 'HT enhancement proved'),
+)
+
+
+AGT_COMPARISON_GATES: Tuple[Tuple[str, str], ...] = (
+    ('agt_parameter_dictionary_defined', 'AGT parameter dictionary defined'),
+    ('nekrasov_partition_side_defined', 'Nekrasov partition side defined'),
+    ('conformal_block_side_defined', 'conformal-block side defined'),
+    ('operator_algebra_map_defined', 'operator-algebra map defined'),
+    ('agt_equality_or_equivalence_proved', 'AGT equality/equivalence proved'),
+)
+
+
 # ============================================================================
 # 1. SHADOW DEPTH CLASSIFICATION (our framework)
 # ============================================================================
@@ -560,6 +605,263 @@ def cdg_bulk_comparison_lg() -> BulkComparison:
     )
 
 
+def _gate_report(
+    gates: Tuple[Tuple[str, str], ...],
+    supplied: Dict[str, bool],
+) -> Dict[str, Tuple[str, ...]]:
+    """Return supplied and missing gate labels for a comparison scope."""
+    return {
+        'provided_gates': tuple(label for key, label in gates if supplied[key]),
+        'missing_gates': tuple(label for key, label in gates if not supplied[key]),
+    }
+
+
+def chern_simons_ht_affine_scope(
+    affine_km_boundary_algebra_defined: bool = False,
+    chern_simons_action_defined: bool = False,
+    cs_to_current_map_defined: bool = False,
+    abelian_cs_heisenberg_center_proved: bool = False,
+    nonabelian_ht_cs_affine_currents_proved: bool = False,
+    perturbative_finiteness_hypotheses_stated: bool = False,
+    cg_factorization_algebra_defined: bool = False,
+    theory_level: str = 'undeclared',
+    three_d_ht_bulk_factorization_algebra_defined: bool = False,
+    curve_level_boundary_chiral_algebra_defined: bool = False,
+) -> Dict[str, Any]:
+    """Gate the affine Chern-Simons / 3d HT comparison.
+
+    The comparison is not just the slogan "Chern-Simons gives affine
+    currents".  It needs the action, boundary algebra, current map,
+    abelian and nonabelian proofs, perturbative finiteness hypotheses,
+    a Costello-Gwilliam factorization algebra, and an explicit
+    classical/quantum level.  The 3d HT bulk is also kept separate from
+    the curve-level boundary chiral algebra.
+    """
+    allowed_levels = {'undeclared', 'classical', 'perturbative_quantum'}
+    if theory_level not in allowed_levels:
+        raise ValueError(f"unknown theory_level {theory_level!r}")
+
+    supplied = {
+        'affine_km_boundary_algebra_defined': affine_km_boundary_algebra_defined,
+        'chern_simons_action_defined': chern_simons_action_defined,
+        'cs_to_current_map_defined': cs_to_current_map_defined,
+        'abelian_cs_heisenberg_center_proved': abelian_cs_heisenberg_center_proved,
+        'nonabelian_ht_cs_affine_currents_proved': nonabelian_ht_cs_affine_currents_proved,
+        'perturbative_finiteness_hypotheses_stated': perturbative_finiteness_hypotheses_stated,
+        'cg_factorization_algebra_defined': cg_factorization_algebra_defined,
+        'theory_level_declared': theory_level != 'undeclared',
+        'three_d_ht_bulk_factorization_algebra_defined': (
+            three_d_ht_bulk_factorization_algebra_defined
+        ),
+        'curve_level_boundary_chiral_algebra_defined': (
+            curve_level_boundary_chiral_algebra_defined
+        ),
+    }
+    cs_comparison_defined = (
+        affine_km_boundary_algebra_defined
+        and chern_simons_action_defined
+        and cs_to_current_map_defined
+    )
+    perturbative_package_stated = (
+        perturbative_finiteness_hypotheses_stated
+        and cg_factorization_algebra_defined
+        and theory_level != 'undeclared'
+    )
+    bulk_boundary_separated = (
+        three_d_ht_bulk_factorization_algebra_defined
+        and curve_level_boundary_chiral_algebra_defined
+    )
+    all_claims_certified = all(supplied.values())
+    report = _gate_report(CS_HT_AFFINE_GATES, supplied)
+    return {
+        'scope': 'cs_ht_affine_comparison_813_819',
+        'cs_comparison_defined': cs_comparison_defined,
+        'abelian_heisenberg_center_proved': (
+            cs_comparison_defined and abelian_cs_heisenberg_center_proved
+        ),
+        'nonabelian_affine_currents_proved': (
+            cs_comparison_defined and nonabelian_ht_cs_affine_currents_proved
+        ),
+        'perturbative_finiteness_package_stated': perturbative_package_stated,
+        'cg_factorization_algebra_defined': cg_factorization_algebra_defined,
+        'theory_level': theory_level,
+        'theory_level_declared': theory_level != 'undeclared',
+        'bulk_boundary_separated': bulk_boundary_separated,
+        'three_d_ht_bulk_is_curve_level_chiral_algebra': False,
+        'curve_level_chiral_algebra_role': 'boundary algebra / boundary shadow',
+        'three_d_ht_bulk_role': 'physical HT factorization algebra',
+        'all_cs_ht_claims_certified': all_claims_certified,
+        'proof_obligations': (813, 814, 815, 816, 817, 818, 819),
+        **report,
+    }
+
+
+def w3_pva_slab_reduction_scope(
+    slab_geometry_defined: bool = False,
+    slab_boundary_conditions_defined: bool = False,
+    slab_pushforward_to_curve_defined: bool = False,
+    w3_pva_defined: bool = False,
+    ds_or_brst_reduction_map_defined: bool = False,
+    w3_lambda_bracket_match_proved: bool = False,
+    slab_anomaly_controlled: bool = False,
+) -> Dict[str, Any]:
+    """Gate a W3 PVA slab reduction theorem."""
+    supplied = {
+        'slab_geometry_defined': slab_geometry_defined,
+        'slab_boundary_conditions_defined': slab_boundary_conditions_defined,
+        'slab_pushforward_to_curve_defined': slab_pushforward_to_curve_defined,
+        'w3_pva_defined': w3_pva_defined,
+        'ds_or_brst_reduction_map_defined': ds_or_brst_reduction_map_defined,
+        'w3_lambda_bracket_match_proved': w3_lambda_bracket_match_proved,
+        'slab_anomaly_controlled': slab_anomaly_controlled,
+    }
+    slab_reduction_defined = (
+        slab_geometry_defined
+        and slab_boundary_conditions_defined
+        and slab_pushforward_to_curve_defined
+    )
+    w3_slab_reduction_proved = all(supplied.values())
+    report = _gate_report(SLAB_W3_REDUCTION_GATES, supplied)
+    return {
+        'scope': 'w3_pva_slab_reduction_820_821',
+        'slab_reduction_defined': slab_reduction_defined,
+        'w3_pva_slab_reduction_proved': w3_slab_reduction_proved,
+        'w3_pva_status': (
+            'SLAB_REDUCTION_PROVED'
+            if w3_slab_reduction_proved
+            else 'CONDITIONAL_PENDING_SLAB_REDUCTION_PROOF'
+        ),
+        'proof_obligations': (820, 821),
+        **report,
+    }
+
+
+def poisson_sigma_ht_enhancement_scope(
+    psm_fields_defined: bool = False,
+    psm_target_poisson_defined: bool = False,
+    psm_aksz_bv_action_defined: bool = False,
+    psm_boundary_conditions_defined: bool = False,
+    psm_ht_enhancement_defined: bool = False,
+    psm_factorization_algebra_defined: bool = False,
+    psm_ht_enhancement_proved: bool = False,
+) -> Dict[str, Any]:
+    """Gate Poisson sigma model definition and HT enhancement."""
+    supplied = {
+        'psm_fields_defined': psm_fields_defined,
+        'psm_target_poisson_defined': psm_target_poisson_defined,
+        'psm_aksz_bv_action_defined': psm_aksz_bv_action_defined,
+        'psm_boundary_conditions_defined': psm_boundary_conditions_defined,
+        'psm_ht_enhancement_defined': psm_ht_enhancement_defined,
+        'psm_factorization_algebra_defined': psm_factorization_algebra_defined,
+        'psm_ht_enhancement_proved': psm_ht_enhancement_proved,
+    }
+    psm_defined = (
+        psm_fields_defined
+        and psm_target_poisson_defined
+        and psm_aksz_bv_action_defined
+        and psm_boundary_conditions_defined
+    )
+    ht_enhancement_proved = (
+        psm_defined
+        and psm_ht_enhancement_defined
+        and psm_factorization_algebra_defined
+        and psm_ht_enhancement_proved
+    )
+    report = _gate_report(POISSON_SIGMA_HT_GATES, supplied)
+    return {
+        'scope': 'poisson_sigma_ht_enhancement_822_823',
+        'poisson_sigma_model_defined': psm_defined,
+        'ht_enhancement_proved': ht_enhancement_proved,
+        'ht_enhancement_status': (
+            'HT_ENHANCEMENT_PROVED'
+            if ht_enhancement_proved
+            else 'CONDITIONAL_PENDING_HT_ENHANCEMENT_PROOF'
+        ),
+        'proof_obligations': (822, 823),
+        **report,
+    }
+
+
+def agt_comparison_scope(
+    agt_parameter_dictionary_defined: bool = False,
+    nekrasov_partition_side_defined: bool = False,
+    conformal_block_side_defined: bool = False,
+    operator_algebra_map_defined: bool = False,
+    agt_equality_or_equivalence_proved: bool = False,
+) -> Dict[str, Any]:
+    """Gate AGT language: external motivation unless theorem data is present."""
+    supplied = {
+        'agt_parameter_dictionary_defined': agt_parameter_dictionary_defined,
+        'nekrasov_partition_side_defined': nekrasov_partition_side_defined,
+        'conformal_block_side_defined': conformal_block_side_defined,
+        'operator_algebra_map_defined': operator_algebra_map_defined,
+        'agt_equality_or_equivalence_proved': agt_equality_or_equivalence_proved,
+    }
+    theorem_allowed = all(supplied.values())
+    report = _gate_report(AGT_COMPARISON_GATES, supplied)
+    return {
+        'scope': 'agt_comparison_824',
+        'agt_theorem_allowed': theorem_allowed,
+        'agt_status': (
+            'THEOREM_ALLOWED'
+            if theorem_allowed
+            else 'EXTERNAL_MOTIVATION_ONLY'
+        ),
+        'agt_used_as_motivation_only': not theorem_allowed,
+        'proof_obligations': (824,),
+        **report,
+    }
+
+
+def cs_ht_agt_obligation_scope(**kwargs: bool) -> Dict[str, Any]:
+    """Aggregate the PDF 813--824 CS/HT/slab/PSM/AGT gates."""
+    cs_kwargs = {
+        key: bool(kwargs.get(key, False))
+        for key, _ in CS_HT_AFFINE_GATES
+        if key != 'theory_level_declared'
+    }
+    cs_kwargs['theory_level'] = (
+        'perturbative_quantum'
+        if kwargs.get('theory_level_declared', False)
+        else 'undeclared'
+    )
+    slab_kwargs = {
+        key: bool(kwargs.get(key, False)) for key, _ in SLAB_W3_REDUCTION_GATES
+    }
+    psm_kwargs = {
+        key: bool(kwargs.get(key, False)) for key, _ in POISSON_SIGMA_HT_GATES
+    }
+    agt_kwargs = {
+        key: bool(kwargs.get(key, False)) for key, _ in AGT_COMPARISON_GATES
+    }
+    cs_scope = chern_simons_ht_affine_scope(**cs_kwargs)
+    slab_scope = w3_pva_slab_reduction_scope(**slab_kwargs)
+    psm_scope = poisson_sigma_ht_enhancement_scope(**psm_kwargs)
+    agt_scope = agt_comparison_scope(**agt_kwargs)
+    return {
+        'scope': 'cs_ht_agt_obligations_813_824',
+        'cs_ht_affine': cs_scope,
+        'w3_slab': slab_scope,
+        'poisson_sigma_ht': psm_scope,
+        'agt': agt_scope,
+        'all_obligations_813_824_certified': (
+            cs_scope['all_cs_ht_claims_certified']
+            and slab_scope['w3_pva_slab_reduction_proved']
+            and psm_scope['ht_enhancement_proved']
+            and agt_scope['agt_theorem_allowed']
+        ),
+        'unresolved_obligation_blocks': tuple(
+            name for name, scope in (
+                ('cs_ht_affine', cs_scope),
+                ('w3_slab', slab_scope),
+                ('poisson_sigma_ht', psm_scope),
+                ('agt', agt_scope),
+            )
+            if scope['missing_gates']
+        ),
+    }
+
+
 # ============================================================================
 # 5. DNP LINE OPERATORS vs OUR KOSZUL DUAL
 # ============================================================================
@@ -625,8 +927,9 @@ def shadow_depth_vs_gkw_complexity(algebra_name: str) -> Dict[str, Any]:
       M: m_k != 0 for all k >= 3 (maximally non-formal)
 
     The G class shows that EVEN at d'=1, some theories are formal.
-    This is because the Heisenberg OPE has only a simple pole,
-    which produces trivial bar cohomology.
+    This is because the Heisenberg OPE has only a double pole and no
+    simple-pole bracket; the double-pole curvature contributes to the
+    pairing rather than to higher non-formal bar operations.
     """
     data = standard_shadow_data()
     if algebra_name not in data:

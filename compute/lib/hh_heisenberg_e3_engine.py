@@ -602,12 +602,13 @@ def kappa_heisenberg(k: Any = 1) -> Any:
 def averaging_map_check(k: Any = 1) -> bool:
     """Verify av(r(z)) = kappa at arity 2 (CLAUDE.md C13).
 
-    For abelian Heisenberg: av(k/z) = k = kappa(H_k).
-    The averaging map extracts the coefficient of 1/z, which is k.
+    For abelian Heisenberg, the tensor kernel is k*Omega_H/z and
+    av extracts the rank-one 1/z coefficient k = kappa(H_k).
     """
     kap = kappa_heisenberg(k)
-    # For Heisenberg (abelian), av(r) = coefficient of 1/z in r = k
-    av_r = k  # r(z) = k/z, so residue at z=0 is k
+    # For Heisenberg (abelian), av(r) is the coefficient of 1/z in
+    # the tensor kernel k*Omega_H/z.
+    av_r = k
     return av_r == kap
 
 

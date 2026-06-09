@@ -371,9 +371,10 @@ def verify_ce_d_squared(power: int) -> float:
 def koszul_dual_dims_from_bar_cohomology(
     bar_dims: List[int],
 ) -> List[int]:
-    """Compute (A^!)_n from bar cohomology dims via H_A(t)·H_{A!}(-t) = 1.
+    """Compute dual-branch dims from bar-dual dims via H_A(t)·H_{A!}(-t) = 1.
 
-    Given H^n = bar_dims[n], computes b_n = dim(A^!)_n.
+    Given H^n = bar_dims[n] interpreted as dim(A^i)_n, computes
+    b_n = dim(A^!)_n after finite-dimensional duality.
     bar_dims[0] should be 1 (= H⁰).
     """
     N = len(bar_dims)

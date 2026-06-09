@@ -178,7 +178,7 @@ def finite_bootstrap_certification(family: str = "virasoro") -> Dict[str, Any]:
         )
     elif normalized in {"heisenberg", "heis"}:
         checked_arities = (2,)
-        checked_formulas = ("kappa=k", "r(z)=k/z")
+        checked_formulas = ("kappa=k", "r(z)=k*Omega_H/z (rank-one coeff k/z)")
     elif normalized in {"kac_moody", "km", "affine"}:
         checked_arities = (2, 3)
         checked_formulas = (

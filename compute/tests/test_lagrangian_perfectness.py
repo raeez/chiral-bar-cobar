@@ -3,7 +3,7 @@ Tests for Lagrangian perfectness verification.
 
 Ground truth: bar_cobar_adjunction_inversion.tex
   - Proposition prop:lagrangian-perfectness
-  - Corollary cor:lagrangian-unconditional
+  - Corollary cor:lagrangian-conditional-standard-landscape
   - Remark rem:lagrangian-degeneration-locus
 
 Verifies hypotheses (P1)-(P3) for the standard landscape:

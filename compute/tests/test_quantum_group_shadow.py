@@ -118,7 +118,7 @@ class TestClassicalRMatrix:
     """Tests for classical r-matrix construction from shadow obstruction tower."""
 
     def test_heisenberg_r_matrix_structure(self):
-        """Heisenberg r(z) = k/z: first-order pole, dim 1."""
+        """Heisenberg r(z) = k*Omega_H/z (rank-one coeff k/z): first-order pole, dim 1."""
         r = heisenberg_r_matrix()
         assert r.family == "Heisenberg"
         # AP19: pole_r = pole_OPE - 1 via d-log absorption

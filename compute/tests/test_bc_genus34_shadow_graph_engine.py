@@ -25,6 +25,7 @@ References:
 """
 
 import pytest
+from pathlib import Path
 from fractions import Fraction
 from math import factorial, pi
 import cmath
@@ -90,6 +91,11 @@ from compute.lib.bc_genus34_shadow_graph_engine import (
     full_summary,
 )
 from compute.lib.stable_graph_enumeration import _bernoulli_exact, _lambda_fp_exact
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+BC_ENGINE_SOURCE = REPO_ROOT / "compute/lib/bc_genus34_shadow_graph_engine.py"
+HEISENBERG_BV_SOURCE = REPO_ROOT / "compute/lib/heisenberg_bv_bar_proof.py"
+HEISENBERG_FRAME_SOURCE = REPO_ROOT / "chapters/frame/heisenberg_frame.tex"
 
 
 # ============================================================================
@@ -511,6 +517,23 @@ class TestAhatFunction:
         result = ahat_series_check(5)
         assert result['all_match']
 
+    def test_fp_series_is_wick_rotated_sin_not_real_sinh(self):
+        """The positive FP scalar series uses sin; real A-hat alternates."""
+        coeffs = ahat_coefficients(5)
+        for g in range(1, 6):
+            assert (-1) ** g * coeffs[g] == lambda_fp(g)
+            assert lambda_fp(g) > 0
+
+        sources = "\n".join(
+            path.read_text()
+            for path in (BC_ENGINE_SOURCE, HEISENBERG_BV_SOURCE, HEISENBERG_FRAME_SOURCE)
+        )
+        assert "(x/2)/sin(x/2) - 1" in sources
+        assert "Wick rotation" in sources
+        assert "alternating signs" in sources
+        assert "sum_{g>=1} lambda_g^{FP} x^{2g} = (x/2)/sinh(x/2) - 1" not in sources
+        assert "kappa * [(x/2)/sinh(x/2) - 1] / x^2" not in sources
+
     def test_shadow_pf_coeffs_match_lambda(self):
         """Shadow partition function coefficients = lambda_g^FP."""
         coeffs = shadow_partition_function_coefficients(5)
@@ -740,6 +763,7 @@ class TestModularForms:
         result = quasi_modular_structure()
         assert 'F_1' in result
         assert 'generating_function' in result
+        assert result['generating_function'] == 'kappa * [A-hat(i*hbar) - 1]'
 
     def test_quasi_modular_ahat_present(self):
         """A-hat formula appears in quasi-modular structure."""

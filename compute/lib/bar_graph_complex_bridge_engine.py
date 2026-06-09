@@ -24,7 +24,8 @@ THEORETICAL FRAMEWORK
                     tensor det(E_int(Gamma))
    - Full differential D = d_int + d_coll + d_sew + d_pf + hbar*Delta
      (ref: eq:dmod-five-log, eq:ambient-differential)
-   - D^2 = 0 from Mok's log-FM normal crossings (thm:ambient-d-squared-zero)
+   - D^2 = 0 conditionally from Mok's log-FM normal crossings plus the
+     signed residue-pushforward package (thm:ambient-d-squared-zero)
 
 3. THE BRIDGE:
    The graph-sum formula for Theta_A (eq:theta-graph-sum-logfm):

@@ -606,8 +606,9 @@ class PVAClassicalRMatrix:
 def verify_cybe_heisenberg(k: Fraction = Fraction(1)) -> Dict[str, Any]:
     r"""Verify CYBE for Heisenberg: trivially satisfied (abelian).
 
-    The Heisenberg has a single generator J, so the classical r-matrix
-    r(z) = k/z^2 (or k/z after d-log) is scalar-valued.  The CYBE
+    The Heisenberg has a single generator J, so the pre-dlog coefficient is
+    k/z^2 and the post-dlog tensor kernel is k*Omega_H/z, with rank-one
+    coefficient k/z.  The CYBE
     [r_{12}, r_{13}] + [r_{12}, r_{23}] + [r_{13}, r_{23}] = 0
     is trivially satisfied because all commutators vanish for a
     one-dimensional (abelian) algebra.

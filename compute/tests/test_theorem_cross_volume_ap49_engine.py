@@ -555,9 +555,12 @@ class TestSuperconformal:
             "Vol I and Vol II should DISAGREE on N=2 SCA kappa"
 
     def test_n4_small_ap49(self):
-        """N=4 small: cross-volume parametrization mismatch flagged."""
+        """N=4 small: AP49 convention is reconciled."""
         r = verify_superconformal_kappa()
-        assert r['N4_small_AP49']['convention_mismatch']
+        assert not r['N4_small_AP49']['convention_mismatch']
+        assert r['N4_small_AP49']['match']
+        assert r['N4_small_AP49']['complementarity_sum'] == Fraction(-8)
+        assert r['N4_small_AP49']['self_dual_c'] == -12
 
 
 class TestW3Specific:

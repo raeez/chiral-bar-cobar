@@ -138,7 +138,7 @@ class TestNumericalSpotChecks:
         assert abs(v34_4 / v334 - 5/7) < 1e-12
 
     def test_specific_c26(self):
-        """Verify at c=26 (Virasoro self-dual point, no special meaning for W_4)."""
+        """Verify at c=26 (critical string charge; not the Virasoro self-dual point)."""
         c = Symbol('c')
         v334 = float(c334_squared().subs(c, 26))
         v34_4 = float(C34_4_squared().subs(c, 26))

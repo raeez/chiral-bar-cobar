@@ -87,7 +87,8 @@ import math
 # The four conditions from def:cyclically-admissible:
 # (i)   conformal weight grading L = oplus_{h>=0} L_h, dim L_h < infty
 # (ii)  descending filtration F^m L complete
-# (iii) bounded pole order in OPE
+# (iii) bounded Lie-conformal/lambda pole order.  This is one less than
+#       the corresponding vertex-OPE pole order.
 # (iv)  invariant residue pairing <-,-> : L otimes L -> omega_X
 
 class CyclicAdmissibilityData:
@@ -210,8 +211,8 @@ def standard_families_admissibility() -> Dict[str, CyclicAdmissibilityData]:
             has_invariant_pairing=True,
             pairing_nondegenerate=True,  # c != 0
             notes="Pairing <L_m, L_n> = (c/12)(m^3-m) delta_{m+n,0}. "
-                  "Shadow class M (infinite tower). Pole order 3 in "
-                  "lambda-bracket. Degenerate at c=0.",
+                  "Shadow class M (infinite tower). OPE pole order 4, "
+                  "lambda-bracket/collision order 3. Degenerate at c=0.",
         ),
         'W_3': CyclicAdmissibilityData(
             name='W_3 algebra',
@@ -232,12 +233,13 @@ def standard_families_admissibility() -> Dict[str, CyclicAdmissibilityData]:
             finite_dim_graded_pieces=True,
             filtration_complete=True,
             bounded_pole_order=True,
-            max_pole_order=None,  # grows with N: max pole = 2N-1
+            max_pole_order=None,  # grows with N: lambda/collision order = 2N-1
             has_invariant_pairing=True,
             pairing_nondegenerate=True,  # generic c
             notes="W_N has generators of spins 2, 3, ..., N. "
-                  "Max pole order = 2N-1 (from W^N . W^N OPE). "
-                  "Bounded for each fixed N, but GROWS with N. "
+                  "OPE pole order = 2N for W^N . W^N; "
+                  "lambda-bracket/collision order = 2N-1. "
+                  "Bounded for each fixed N, but grows with N. "
                   "This is fine: condition (iii) is for fixed L.",
         ),
         'W_{1+infty}': CyclicAdmissibilityData(
@@ -285,15 +287,20 @@ def standard_families_admissibility() -> Dict[str, CyclicAdmissibilityData]:
 
 
 def w_N_max_pole_order(N: int) -> int:
-    """Maximum pole order in W_N OPE.
+    """Maximum lambda-bracket/collision order for W_N.
 
     The W_N algebra has generators W^2, W^3, ..., W^N.
-    The OPE W^a(z) W^b(w) has pole of order at most a+b-1
-    (from the leading singular term).
-    The maximum is W^N . W^N => pole order 2N-1.
-    In lambda-bracket language, this is order 2N-2.
+    The vertex-OPE W^a(z) W^b(w) has pole order at most a+b.
+    The maximum is W^N . W^N => OPE pole order 2N.
+    In lambda-bracket language, and after dlog/collision absorption,
+    this becomes order 2N-1.
     """
     return 2 * N - 1
+
+
+def w_N_ope_pole_order(N: int) -> int:
+    """Maximum vertex-OPE pole order for W_N."""
+    return 2 * N
 
 
 def count_w_N_generators(N: int) -> int:

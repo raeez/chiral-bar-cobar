@@ -22,8 +22,10 @@ FINDINGS:
      The standalone uses kappa_T = c/2 (T-line projection) throughout,
      so rho = 17/12 is dead code, but the formula is wrong.
 
-  F3 (OK): w_algebras_deep.tex uses rescaled c = (k-15)/(k+3), giving
-     K_BP = 2 and comp sum = 1/3.  Internally consistent in that convention.
+  F3 (CLOSED): w_algebras_deep.tex now uses the canonical FKR BP
+     convention, giving K_BP = 196 and comp sum = 98/3.  The old
+     rescaled c = (k-15)/(k+3) convention is not used for the BP
+     conductor/complementarity lane.
 
   F4-F7 (OK): N=2 SCA fix verified in Vol II, N=4 fix verified,
      N=1 SVir consistent across all locations, N=2 superstring (c->9-c)

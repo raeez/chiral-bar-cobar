@@ -1,9 +1,10 @@
-"""Explicit chiral derived center computations: universal bulk algebra
+"""Explicit chiral derived center computations: algebraic closed sector
 and open/closed MC element.
 
 The chiral derived center Z^der_ch(A) = H*(C^bullet_ch(A,A), delta) is
-the universal bulk algebra (thm:thqg-swiss-cheese).  It computes
-closed-string (bulk) observables from open-string (boundary) data via
+the algebraic closed-sector vertex of the boundary chart
+(thm:thqg-swiss-cheese).  Its physical bulk interpretation requires
+the open/closed HT comparison data; the cochain model is chiral
 Hochschild cochains.
 
 This module provides EXPLICIT chain-level computations for the standard
@@ -46,7 +47,7 @@ CRITICAL PITFALLS (from CLAUDE.md):
     by Verdier/linear duality under finite-type or completed hypotheses
   - Omega(B(A)) = A is bar-cobar inversion (AP25/AP34)
   - The derived center Z^der_ch(A) is NOT the bar complex (AP34)
-  - Bar/cobar = twisting morphisms; derived center = bulk operators
+  - Bar/cobar = twisting morphisms; derived center = closed-sector operators
   - kappa(H_k) = k, kappa(Vir_c) = c/2, kappa(KM) = dim(g)(k+h^v)/(2h^v)
   - H_k^! = Sym^ch(V*), NOT H_{-k} (AP33)
   - r-matrix pole orders are one LESS than OPE (AP19)
@@ -801,11 +802,12 @@ class OpenClosedMCElement:
 
         if g >= 2:
             if n == 0:
-                # Higher genus vacuum: F_g = kappa * F_g^{FP}
-                # where F_g^{FP} = Faber-Pandharipande constant.
-                # F_2 = kappa * 1/1152 (the genus-2 F-P number for lambda_2)
+                # Higher genus vacuum: F_g = kappa * lambda_g^{FP}.
+                # At genus 2 the FP/A-hat scalar is lambda_2^{FP}=7/5760.
+                # The adjacent 1/1152 number is <tau_4>_2 or a separating
+                # graph contribution, not the FP scalar coefficient.
                 if g == 2:
-                    return self._kappa / Fraction(1152)
+                    return self._kappa * Fraction(7, 5760)
                 # General: F_g = kappa * (B_{2g}/(2g*(2g-2))) from A-hat genus
                 # B_2 = 1/6 -> F_1 = kappa * 1/24 (check)
                 # B_4 = -1/30 -> F_2 = kappa * (-1/30)/(4*2) = kappa*(-1/240)

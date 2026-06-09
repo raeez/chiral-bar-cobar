@@ -106,10 +106,12 @@ def virasoro_pva():
     """W_2 = Virasoro PVA.
 
     Single generator T (spin 2).
-    {T_lambda T} = c/2 * lambda^3 + 2T*lambda + dT
+    {T_lambda T} = (c/12) * lambda^3 + 2T*lambda + dT
+    in ordinary lambda powers, equivalently
+    T_(3)T = c/2, T_(1)T = 2T, T_(0)T = dT.
 
-    The lambda-bracket coefficients:
-      lambda^3 coefficient: c/2 (vacuum, gen-degree 0)
+    The n-th-product coefficients:
+      T_(3)T: c/2 (vacuum, gen-degree 0)
       lambda^1 coefficient: 2T (gen-degree 1)
       lambda^0 coefficient: dT (gen-degree 1)
 
@@ -121,8 +123,8 @@ def virasoro_pva():
     c = Symbol('c')
     generators = [PVAGenerator("T", 2)]
 
-    # Lambda-bracket coefficients organized by pole order (n-th product)
-    # {T_lambda T} = (c/2) lambda^3 + 2T lambda + dT
+    # Lambda-bracket data organized by pole order (n-th product).
+    # Ordinary polynomial form: {T_lambda T} = (c/12)lambda^3 + 2T lambda + dT.
     # T_{(3)}T = c/2 (vacuum)
     # T_{(1)}T = 2T
     # T_{(0)}T = dT

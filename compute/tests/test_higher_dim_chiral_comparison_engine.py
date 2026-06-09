@@ -458,14 +458,17 @@ class TestFourDCS:
         data = four_d_cs_operadic_structure()
         assert 'R-matrix' in data['r_matrix_origin']
 
-    def test_e2_vs_e1_bar_recovery(self):
-        """E_1 bar complex recovers E_2 braiding via Swiss-cheese."""
+    def test_e2_vs_e1_bar_scope(self):
+        """The ordered bar records the classical residue, not full E_2."""
         result = e2_braiding_vs_e1_bar()
         assert result['e2_contains_e1'] is True
-        assert result['e1_bar_recovers_e2'] is True
+        assert result['e1_bar_recovers_e2'] is False
+        assert result['bar_records_classical_shadow'] is True
+        assert 'Deligne--Tamarkin' in result['mechanism']
+        assert 'derived chiral center' in result['full_e2_location']
 
     def test_r_matrix_from_bar(self):
-        """r(z) = Res^{coll}_{0,2}(Theta_A) recovers the R-matrix."""
+        """r(z) = Res^{coll}_{0,2}(Theta_A) records the classical residue."""
         result = e2_braiding_vs_e1_bar()
         assert 'Res^{coll}_{0,2}(Theta_A)' in result['r_matrix_from_bar']
 

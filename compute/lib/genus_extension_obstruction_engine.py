@@ -667,9 +667,10 @@ def _get_kappa(family: str, **kwargs):
 def curvature_is_exact(family: str, **kwargs) -> bool:
     r"""Check whether the curvature (obstruction class) is exact.
 
-    For ALL standard modular Koszul families, the curvature obs_g = kappa * lambda_g
-    is exact in H^2(Def_cyc^mod(A)).  This means the genus extension exists
-    even though the curvature is nonzero.
+    For standard modular Koszul families on the scalar lane, the curvature
+    obs_g^sc = kappa * lambda_g is exact in H^2(Def_cyc^mod(A)).  This means
+    the scalar genus extension exists even though the scalar curvature is
+    nonzero.  Full multi-weight families can retain cross-channel summands.
 
     The exactness is a consequence of:
       (1) PBW concentration (MC1): the bar spectral sequence collapses

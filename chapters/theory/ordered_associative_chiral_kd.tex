@@ -62,10 +62,10 @@ $\End^{\mathrm{ch}}_A$); the strict-vs-homotopy passage is
 controlled by the homotopy transfer of
 Hypothesis~\ref{hyp:inputs}. The Etingof--Kazhdan
 quantum-vertex notion \textup{(C)} produces the same Koszul-dual
-on the Koszul locus through the chiral quantum-group equivalence
-\textup{(}cf.\ Theorem~\ref{thm:chiral-qg-equiv}, witnessed for
-$\fsl_2$ Yangian at the level of Drinfeld second
-presentation\textup{)}; the ordered associative comparison does \emph{not}
+on the ordered Koszul locus through the chiral quantum-group equivalence
+\textup{(}cf.\ Theorem~\ref{thm:chiral-qg-equiv}, with concrete
+completed $\cW_{1+\infty}[\Psi]$ and $\cW_N[\Psi]$ theorem surfaces
+inscribed below\textup{)}; the ordered associative comparison does \emph{not}
 appeal to notions \textup{(D)}, \textup{(E)}.
 \end{remark}
 
@@ -505,8 +505,10 @@ r_{ij}(z_i-z_j)\,d(z_i-z_j).
 Here $r_{ij}$ acts in the $(i,j)$ tensor slots of~$\bar A^{\otimes n}$
 and $r_{ij}(z_{ij})\,dz_{ij}$ is the connection $1$-form
 on $\mathrm{Conf}_n^{\mathrm{ord}}(\mathbb{C})$.
-For instance, when $r^{\mathrm{coll}}(z)=k/z$ (Heisenberg),
-this gives $k\,dz/z$. For affine Kac--Moody the collision residue
+For instance, when
+$r^{\mathrm{coll}}(z)=k\Omega_{\cH}/z$ with
+$\Omega_{\cH}=J\otimes J$ on the Heisenberg current line, its
+rank-one coefficient gives $k\,dz/z$. For affine Kac--Moody the collision residue
 in trace-form normalization is
 $r^{\mathrm{coll}}(z)=k\Omega_{\mathrm{tr}}/z$; the
 KZ/Yangian form $\Omega/((k+h^\vee)z)$ is the rescaled
@@ -639,7 +641,9 @@ Define the \emph{$R$-twisted action} on generators by
 \end{equation}
 
 \emph{Step~2: well-definedness via YBE and strong unitarity.}
-The formula~\eqref{eq:r-twisted-action} defines a representation
+The assignment
+\(\sigma_i\mapsto\tau_{i,i+1}\circ R_{i,i+1}(z_i-z_{i+1})\)
+defines a representation
 $\rho_R\colon B_n\to\operatorname{GL}(\bar A^{\otimes n})$
 of the braid group, provided the braid relation holds, as proved below.
 To factor $\rho_R$ through $\Sigma_n=B_n/\langle\sigma_i^2\rangle$,
@@ -754,8 +758,10 @@ Proposition~\ref{lem:R-twisted-descent}.
 If the OPE has no poles, every collision residue vanishes identically,
 so the connection form in~\eqref{eq:kohno-connection} is zero and the
 monodromy~\eqref{eq:r-matrix-monodromy-vol1} is the identity.
-The $R$-twisted $\Sigma_n$-action~\eqref{eq:r-twisted-action}
-reduces to the plain permutation $\tau_{i,i+1}$, and the
+Since
+\(\rho_R(\sigma_i)=\tau_{i,i+1}\circ R_{i,i+1}(z_i-z_{i+1})\),
+the $R$-twisted $\Sigma_n$-action reduces to the plain permutation
+$\tau_{i,i+1}$, and the
 $R$-twisted invariants identify with the ordinary
 $\Sigma_n$-coinvariants by the Reynolds idempotent, since
 \(\operatorname{char} k=0\).
@@ -2459,23 +2465,26 @@ Let $z=z_1-z_2$ denote the relative coordinate on
 $\Conf_2^{<}(\bC)$. The collision residue of the Heisenberg
 double-pole OPE is
 \begin{equation}\label{eq:heisenberg-collision-residue}
-r^{\mathrm{coll}}(z)
+r^{\mathrm{coll}}_{\cH}(z)
 \;=\;
-\frac{k}{z},
+\frac{k\,\Omega_{\cH}}{z},
+\qquad
+\Omega_{\cH}:=J\otimes J,
 \end{equation}
-a \emph{simple} pole obtained from the OPE double pole
+a tensor-valued \emph{simple} pole obtained from the OPE double pole
 $k/(z_1-z_2)^2$ by one step of $d\log$ absorption ($d\log$ lowers every OPE pole
-order by one).
+order by one). The scalar $k/z$ is only the $J,J$ matrix coefficient of
+\eqref{eq:heisenberg-collision-residue}.
 
-The flat connection on the trivial bundle over
+The unit-charge coefficient of the flat connection on the trivial bundle over
 $\Conf_2^{<}(\bC)$ determined by the bar propagator is
 \begin{equation}\label{eq:heisenberg-connection}
-\nabla \;=\; d \;-\; r^{\mathrm{coll}}(z)\,dz
+\nabla_{\mathrm{unit}} \;=\; d \;-\; (r^{\mathrm{coll}}_{\cH}(z))_{J,J}\,dz
 \;=\; d \;-\; (k/z)\,dz,
 \end{equation}
 and its monodromy around the origin is
 \begin{equation}\label{eq:heisenberg-monodromy}
-\operatorname{Mon}_0(\nabla) \;=\; e^{-2\pi ik}
+\operatorname{Mon}_0(\nabla_{\mathrm{unit}}) \;=\; e^{-2\pi ik}
 \end{equation}
 (treating $k\in\bC$ as a generic continuous parameter).
 
@@ -2486,9 +2495,10 @@ R(z) \;=\; e^{k\hbar/z}
 \end{equation}
 Since $\cH_k$ is $\Einf$-chiral, this $R$-matrix is
 \emph{derived} from the local OPE via the monodromy of
-$\nabla$, not independent input. The Yang--Baxter equation
-is satisfied trivially because $R(z)$ is scalar
-\textup{(}$\cH_k$ has rank~$1$\textup{)}.
+$\nabla_{\mathrm{unit}}$, not independent input. The Yang--Baxter
+equation is satisfied by the tensor residue $\Omega_{\cH}$ because the
+Heisenberg current Lie algebra is abelian; after evaluating on Fock
+charges the resulting $R(z)$ is scalar.
 \end{theorem}
 
 \begin{proof}
@@ -2499,11 +2509,12 @@ double-pole coefficient. Pairing the OPE density
 $k\,(z-w)^{-2}\,dz$ against the bar kernel $d\log(z-w)$ on
 $\FM_2(\bC)$ and using $d\log(z-w)=-dw/(z-w)$ absorbs one
 power of $(z-w)^{-1}$, producing the simple-pole residue
-kernel $k/(z-w)\,dz$ on the ordered configuration space.
+kernel $k\Omega_{\cH}(z-w)^{-1}dz$ on the ordered configuration space.
 Writing $z=z_1-z_2$ for the relative coordinate,
-$r^{\mathrm{coll}}(z)=k/z$ as claimed.
+$r^{\mathrm{coll}}_{\cH}(z)=k\Omega_{\cH}/z$ as claimed.
 
-The connection $\nabla = d - (k/z)\,dz$ on the trivial
+The unit-charge coefficient connection
+$\nabla_{\mathrm{unit}} = d - (k/z)\,dz$ on the trivial
 line bundle over $\bC^\times$ has flat sections
 $f(z) = z^{k}$; the associated parallel transport around
 $\gamma\colon z\mapsto e^{2\pi it}z$ multiplies flat
@@ -2515,10 +2526,10 @@ exponentiation of the connection. On Fock modules
 $\cF_\mu\otimes\cF_\nu$ the Casimir collapses to the scalar
 $\mu\nu\,k$, and the path-ordered exponential reduces to
 the ordinary exponential
-$R(z)=\exp\bigl(\oint\,r^{\mathrm{coll}}(z)\,dz\bigr)
+$R(z)=\exp\bigl(\oint\,r^{\mathrm{coll}}_{\cH}(z)\,dz\bigr)
 =e^{k\hbar/z}$ in the spectral variable, where
 $\hbar=\mu\nu$. The computation is scalar throughout
-because $\cH_k$ is rank one.
+after this rank-one evaluation.
 \end{proof}
 
 \begin{remark}[Non-triviality]
@@ -2527,8 +2538,9 @@ The Heisenberg R-matrix $R(z)=e^{k\hbar/z}$ is \emph{not}
 the trivial permutation $R=\tau$. For a generic level
 $k$ and generic Fock charges, $R(z)$ is a non-identity
 scalar exponential series in $1/z$. The collision residue
-$k/z$ is derived from the OPE double pole ($d\log$
-absorption); attempting to read the R-matrix off the raw OPE
+is the tensor $k\Omega_{\cH}/z$, whose rank-one coefficient is derived
+from the OPE double pole ($d\log$ absorption); attempting to read the
+R-matrix off the raw OPE
 without applying the step gives the incorrect answer
 $k/z^2$ and hence a wrong pole structure.
 \end{remark}
@@ -2609,8 +2621,8 @@ on cohomology inherits the trivial differential and the
 deconcatenation coproduct, with all higher operations vanishing.
 The vanishing of $m_{k\ge 3}$ is equivalent to saying that the
 OPE has a single pole order (the double pole),
-and the collision residue $r^{\mathrm{coll}} = k/z$ has a
-simple pole, which falls in class~G.
+and the collision residue $r^{\mathrm{coll}}_{\cH}=k\Omega_{\cH}/z$
+has a simple pole, which falls in class~G.
 \end{proof}
 
 \begin{remark}[Contrast with the chiral \textup{(}symmetric\textup{)}
@@ -2663,9 +2675,9 @@ aspect of the structure, while preserving the others.
 
 \item \emph{Affine $\widehat{\mathfrak{g}}_k$
  $(\S\ref{subsec:km-ordered-bar})$:}
- The scalar collision residue $k/z$ becomes the matrix-valued
+ The rank-one tensor residue $k\Omega_{\cH}/z$ becomes the
  trace-form Casimir kernel
- $k\Omega_{\mathrm{tr}}/z \in \End(\mathfrak{g}\otimes\mathfrak{g})$.
+ $k\Omega_{\mathrm{tr}}/z \in \mathfrak{g}\otimes\mathfrak{g}(z^{-1})$.
  The scalar $R$-matrix $e^{k\hbar/z}$ becomes the Yang $R$-matrix
  $1+\Omega/((k+h^\vee)z)+O((k+h^\vee)^{-2})$ after KZ rescaling. The abelian Yangian
  $Y(\mathfrak{u}(1))$ becomes $Y_\hbar(\mathfrak{g})$. The bar
@@ -2674,7 +2686,7 @@ aspect of the structure, while preserving the others.
 
 \item \emph{Virasoro $(\S\ref{subsec:virasoro-ordered-bar})$:}
  The double OPE pole becomes quartic: $T(z)T(w) \sim (c/2)/(z-w)^4
- + \cdots$. The simple collision residue $k/z$ becomes the
+ + \cdots$. The simple current residue $k\Omega_{\cH}/z$ becomes the
  triple-pole residue $(c/2)/z^3 + 2T/z$. Formality breaks: $m_k \neq 0$ for all $k\ge 3$, so the
  $\Ainf$-structure is genuinely infinite. Shadow depth is
  $r_{\max} = \infty$ (class~M). The nontrivial Yangian structure
@@ -4160,7 +4172,7 @@ A &= [[X_2,[X_1,X_c]],X_3]
  \qquad(\text{since }[X_1,X_2]=0).
 \end{align*}
 The identical computation with $2\leftrightarrow 3$ gives
-$B=[X_1,[X_3,[X_c,X_2]]]$. By~\eqref{eq:jacobi-star-v1},
+$B=[X_1,[X_3,[X_c,X_2]]]$. The displayed Jacobi consequence gives
 $[X_2,[X_c,X_3]]=[X_3,[X_c,X_2]]$, hence $A=B$.
 \end{proof}
 
@@ -4627,7 +4639,7 @@ Remark~\textup{\ref{rem:climax-k3-face}}\textup{)}, so
 \]
 The specialisation $\hbar^{2} = -1/8$ is not a free parameter: it is
 the unique value at which the ordered bar--cobar composite closes
-strictly on the Koszul locus
+strictly on the ordered Koszul locus
 $\overline{\mathcal{A}_2}\setminus H_1$ of
 Remark~\textup{\ref{rem:k3-koszul-structure-precise}}.
 
@@ -6456,10 +6468,12 @@ $\beta \in B_n$. Then:
  \mathrm{Conf}_n(\mathbb{R})$: the $\mathrm{FM}_n(\mathbb{C})$
  factor carries the bar differential encoding the chiral OPE, and the
  $\mathrm{Conf}_n(\mathbb{R})$ factor carries the $E_1$ coproduct
- implementing the topological interval-cutting. The Jones polynomial
- is a holomorphic-topological invariant: the holomorphic direction
- produces the braiding, and the topological direction produces the
- monoidal structure.
+ implementing the topological interval-cutting. This ordered
+ holomorphic-topological domain supplies the monodromy input; the
+ topological link invariant is obtained only after the external
+ Reshetikhin--Turaev ribbon trace, equivalently the
+ $E_\infty$ factorization-homology/CFG topological trace package, is
+ applied.
 \end{enumerate}
 \end{theorem}
 
@@ -6478,11 +6492,13 @@ framed link invariant. Since $\rho_n^{\mathrm{HT}} = \rho_n^{\mathrm{KZ}}
 \simeq \rho_n^{U_q}$, the quantum trace applied to the bar-complex
 monodromy equals the Jones polynomial.
 
-Part~(iv) is a restatement of the $E_1$-chiral factorisation
-structure: the bar complex lives on the product of holomorphic and
-topological configuration spaces, and the Jones polynomial is the
-output of applying the Reshetikhin--Turaev functor to the monodromy of
-the connection defined on this product.
+Part~(iv) is a scope statement, not a derivation of the
+Reshetikhin--Turaev invariant from the raw $E_1$-ordered bar. The bar
+complex lives on the product of holomorphic and topological
+configuration spaces and supplies the monodromy input. The passage from
+that monodromy to a topological link invariant uses the external
+Reshetikhin--Turaev ribbon trace, equivalently the
+$E_\infty$ factorization-homology/CFG topological trace package.
 \end{proof}
 
 \begin{remark}[The three levels of the construction]
@@ -6806,10 +6822,11 @@ $d = \max(p'-1,0)$ satisfies $d \leq r - 1$.
 
 For the Virasoro algebra, the depth-$3$ component
 (from the quartic pole, i.e.\ the central charge~$c$) is the
-generator of the obstruction cascade. The
-Stasheff identity at degree~$4$ propagates the depth-$3$
-contribution to $m_4$; at degree~$5$ it forces $m_5$;
-and so on in perpetuity. The gap at depth~$2$ in the Virasoro
+first non-formal input in the transferred HPL model. The
+Stasheff identities organise the compatible higher operations, but
+the all-arity Virasoro tower uses the wheel-residue survival
+hypothesis; it is not a formal induction from the first ternary
+operation alone. The gap at depth~$2$ in the Virasoro
 spectrum (Theorem~\ref{thm:ordered-depth-spectrum}) is the
 geometric expression of the absence of a cubic pole,
 equivalently the vanishing of the $L_n$-eigenvalue at the wrong
@@ -7173,11 +7190,9 @@ Weierstrass functions with periods $(1,\tau)$. The first two
 explicit terms are $c_0\,\zeta+c_1\,\wp$; the next is
 $-\tfrac{1}{2}c_2\,\wp'$. The coefficient $c_0=a_{(0)}b$ is
 the Coisson bracket \textup{(}zeroth product\textup{)} and
-$c_1=a_{(1)}b$ is the conformal pairing. The convention is
-the raw $\lambda$-bracket convention of
-Remark~\ref{rem:lambda-bracket-convention-dichotomy}
-\textup{(}shifted by one from the $d\log$-absorbed
-collision-residue convention \textup{)}.
+$c_1=a_{(1)}b$ is the conformal pairing. We use the raw
+$\lambda$-bracket convention here; it is shifted by one pole index
+from the $d\log$-absorbed collision-residue convention.
 
 The $B$-cycle monodromy is
 \begin{equation}\label{eq:b-cycle-monodromy-sharp}
@@ -7646,9 +7661,8 @@ OPE. This is tier~(iii) of the three-tier picture.
 \end{theorem}
 
 \begin{proof}
-The differential follows from the
-lattice OPE~\eqref{eq:lattice-ope-ordered} and the ordered bar
-construction: adjacent collisions in the ordered bar complex use the
+The differential follows from the ordered lattice OPE and the ordered
+bar construction: adjacent collisions in the ordered bar complex use the
 $d\log$ kernel, selecting simple poles
 ($\langle\alpha_i,\alpha_{i+1}\rangle = -1$) with coefficient
 $\varepsilon(\alpha_i, \alpha_{i+1})$ at the specific ordered pair.
@@ -7793,6 +7807,7 @@ $U(\mathfrak{g})$.
 
 \begin{definition}[Evaluation module]
 \label{def:evaluation-module}
+\ClaimStatusDefinitional
 Let $(\rho,V)$ be a finite-dimensional
 $\mathfrak{g}$-representation and $a\in\mathbb{C}$.
 The \emph{evaluation module} $V_a$ is the
@@ -7874,8 +7889,13 @@ With the chosen matrices,
 =\tfrac34\,\id_{\mathbb C^2},
 \]
 which is the stated fundamental Casimir value.
-Substituting this into the general transfer-matrix formula
-\eqref{eq:eval-transfer-matrix} yields
+Substituting this into the general transfer-matrix action
+\[
+T^a(u)\cdot v
+=
+v+\frac{\hbar}{u-a}\sum_\alpha \rho(J^\alpha)v\otimes J_\alpha
+\]
+yields
 \eqref{eq:sl2-transfer-fundamental}.
 \end{proof}
 
@@ -8481,7 +8501,8 @@ algebra from the standard landscape. The ordered bar complex\/
 $\Barchord(A)$ has the following invariants, where\/ $r^{\mathrm{coll}}(z)$
 denotes the collision residue
 \textup{(}the OPE kernel after the $d\log$ bar propagator
-absorbs one pole order\textup{)},
+absorbs one pole order\textup{)}, $\Omega_{\cH}=J\otimes J$ on the
+rank-one Heisenberg current window,
 $R(z)$ is the spectral $R$-matrix on
 $\mathrm{Conf}_2^{\mathrm{ord}}(\mathbb{C})$,
 $r_{\max}$ is the shadow depth,
@@ -8505,7 +8526,7 @@ $m_k$ vanish on cohomology for all $k$ above the shadow depth:
 \midrule
 $\mathcal{H}_k$
  & $\mathbf{G}$ & $2$
- & $k/z$
+ & $k\Omega_{\cH}/z$
  & $e^{k\hbar/z}$
  & $2$
  & $Y(\mathfrak{u}(1))$\rlap{\textsuperscript{$\dagger$}}
@@ -8614,7 +8635,9 @@ The $d\log$ bar kernel absorbs one pole order
 (the $d\log$ absorption principle; see Section~\ref{def:bar-differential-complete}):
 the collision residue $r^{\mathrm{coll}}(z)$ from an OPE pole of
 order~$d$ has pole of order~$d{-}1$. For Heisenberg:
-double-pole $k/(z{-}w)^2$ gives $r^{\mathrm{coll}} = k/z$.
+double-pole $k/(z{-}w)^2$ gives
+$r^{\mathrm{coll}}_{\cH}=k\Omega_{\cH}/z$, whose rank-one coefficient
+is $k/z$.
 For affine $\widehat{\mathfrak{g}}_k$: the trace-form Casimir
 $\Omega_{\mathrm{tr}} = \sum_a t^a \otimes t_a$ produces
 $r^{\mathrm{coll}} = k\Omega_{\mathrm{tr}}/z$; the KZ/Yangian
@@ -8920,7 +8943,7 @@ a proof that all ordered kernels are nonzero in every degree.
 % CHIRAL BIALGEBRA EQUIVALENCE
 % ================================================================
 
-\section{The chiral bialgebra equivalence on the Koszul locus}
+\section{The chiral bialgebra equivalence on the ordered Koszul locus}
 \label{sec:chiral-quantum-group-equiv}
 \index{chiral bialgebra!equivalence theorem|textbf}
 \index{chiral quantum group!informal shorthand for chiral bialgebra}
@@ -8979,12 +9002,48 @@ The associated vertex $R$-matrix is recovered from the coproduct by
 equation~\eqref{eq:r-from-coprod-proof}.
 \end{definition}
 
-\begin{theorem}[Chiral bialgebra equivalence on the Koszul locus]
+\begin{definition}[Ordered Koszul locus; \ClaimStatusDefinitional]
+\label{def:ordered-koszul-locus}
+\index{Koszul locus!ordered $\Eone$-chiral|textbf}
+\index{ordered bar-cobar counit|textbf}
+Let \(\operatorname{ChirAlg}^{\Eone,\mathrm{ft,aug}}_X\)
+denote the chosen finite-type augmented presentation of
+\(\Eone\)-chiral algebras on~\(X\). The \emph{ordered Koszul
+locus}
+\[
+\operatorname{Kosz}^{\mathrm{ord}}_{\Eone}(X)
+\;\subset\;
+\operatorname{ChirAlg}^{\Eone,\mathrm{ft,aug}}_X
+\]
+is the full subcategory of those \(\cA\) for which the ordered
+bar-cobar counit
+\[
+\epsilon^{\mathrm{ord}}_{\cA}\colon
+\Omega(\barB^{\mathrm{ord}}(\cA))
+\longrightarrow
+\cA
+\]
+is a quasi-isomorphism in the chosen complete \(\Eone\)-chiral
+category. This is the ordered condition used in this section.
+It is not the symmetric Koszul locus
+\(\operatorname{Kosz}(X)\) of
+Definition~\textup{\ref{def:koszul-locus}}, whose bar object is the
+\(\Sigma_\bullet\)-equivariant Ran bar. If an \(\Einf\)-chiral algebra
+lies in \(\operatorname{Kosz}(X)\) and the ordered forgetful
+presentation preserves the bar-cobar counit, then its ordered
+underlying \(\Eone\)-chiral algebra lies in
+\(\operatorname{Kosz}^{\mathrm{ord}}_{\Eone}(X)\); genuinely
+\(\Eone\)-chiral inputs must satisfy the ordered counit condition
+directly.
+\end{definition}
+
+\begin{theorem}[Chiral bialgebra equivalence on the ordered Koszul locus]
 \label{thm:chiral-qg-equiv}
 \ClaimStatusConditional
 \index{chiral bialgebra!three equivalent descriptions}
 Let $\cA$ be a finite-type strongly admissible $\Eone$-chiral
-algebra on the Koszul locus. Fix a Drinfeld associator
+algebra on the ordered Koszul locus
+\(\operatorname{Kosz}^{\mathrm{ord}}_{\Eone}(X)\). Fix a Drinfeld associator
 $\Phi \in \exp(\hat{\mathfrak{t}}_3)$ and a strong-unitary
 $R$-twisted descent datum as in
 Proposition~\textup{\ref{lem:R-twisted-descent}}. Then the following
@@ -9025,8 +9084,8 @@ coproduct on $\barB^{\mathrm{ord}}(\cA)$, and
 $\gamma$ extracts the $R$-matrix as
 $S(z) = \sigma \circ \Delta^{\mathrm{ch}}
 \circ (\Delta^{\mathrm{ch},\mathrm{op}})^{-1}$
-\textup{(}the chiral Drinfeld formula\textup{)}. The statement is a
-Koszul-locus statement: the bar--cobar counit
+\textup{(}the chiral Drinfeld formula\textup{)}. The statement is an
+ordered Koszul-locus statement: the ordered bar--cobar counit
 $\Omega(\barB^{\mathrm{ord}}(\cA))\to\cA$ and the chosen
 associator/descent gauges are part of the data.
 \end{theorem}
@@ -9062,7 +9121,8 @@ $T^c(s^{-1}\bar\cA)$ is a dg coalgebra map; applying the
 cobar functor $\Omega$ to $\Delta$ produces the chiral
 coproduct $\Delta^{\mathrm{ch}}$ on $\cA$ via
 $\cA \simeq \Omega(\barB^{\mathrm{ord}}(\cA))$
-(Theorem~\ref{thm:bar-cobar-isomorphism-main} on the Koszul locus).
+(the ordered Koszul-locus condition of
+Definition~\ref{def:ordered-koszul-locus}).
 Strict coassociativity of deconcatenation becomes
 coassociativity-up-to-$\Phi$ after passage through the
 formality quasi-isomorphism underlying~$\Omega$.
@@ -9392,8 +9452,8 @@ trivially). The ordered and symmetric data coincide.
 group]
 \label{thm:w-infty-chiral-qg}
 \ClaimStatusConditional
-The algebra $\cW_{1+\infty}[\Psi]$ carries a chiral quantum
-group datum in the sense of
+In its completed positive-energy/Yangian presentation, the algebra
+$\cW_{1+\infty}[\Psi]$ carries a chiral quantum group datum in the sense of
 Theorem~\textup{\ref{thm:chiral-qg-equiv}}: an $R$-matrix,
 a chiral coproduct, and an $\Ainf$ structure, all explicit
 and obtained from the Jordan-quiver CoHA only after the positive-half
@@ -9405,7 +9465,8 @@ D(\cH_{\mathrm{Jor}})\cong Y(\widehat{\mathfrak{gl}}_1)
 \longrightarrow U(\cW_{1+\infty}[\Psi]).
 \]
 The CoHA itself is the positive half, not
-\(\cW_{1+\infty}\). The precise content is as follows.
+\(\cW_{1+\infty}\). The raw direct-sum class~$\mathsf M$
+bar complex is not the ambient of this theorem. The precise content is as follows.
 \begin{enumerate}[label=\textup{(\Roman*)}]
 \item \textup{($R$-matrix.)}
  The Maulik--Okounkov $R$-matrix~\cite{MO19} of quantum
@@ -9459,11 +9520,11 @@ The CoHA itself is the positive half, not
 \end{enumerate}
 With this $R$-matrix and the fixed associator/descent gauge,
 Theorem~\textup{\ref{thm:chiral-qg-equiv}} identifies the three
-structures as the same Koszul-locus ordered-bar datum. The OPE
+structures as the same ordered-bar datum on the ordered Koszul locus. The OPE
 compatibility axiom~\eqref{eq:ope-compat} is satisfied at
-all spins simultaneously by two independent arguments:
-the coderivation property on the Koszul-locus bar complex,
-and the JKL vertex bialgebra theorem on the positive-half CoHA.
+all spins simultaneously by the coderivation property on the
+completed ordered Koszul-locus bar complex and, on the positive-half CoHA
+comparison surface, by the JKL vertex bialgebra theorem.
 \end{theorem}
 
 \begin{proof}
@@ -9646,10 +9707,10 @@ proofs that this holds at all spins simultaneously.
 
 \smallskip
 \noindent\emph{Argument~A \textup{(}coderivation on the
-Koszul locus\textup{)}.}
+ordered Koszul locus\textup{)}.}
 The algebra $\cW_{1+\infty}[\Psi]$ at generic~$\Psi$ lies
-on the Koszul locus
-\textup{(}Definition~\textup{\ref{def:koszul-locus}}:
+on the ordered Koszul locus
+\textup{(}Definition~\textup{\ref{def:ordered-koszul-locus}}:
 the bar-cobar adjunction
 $\Omega(\Barord(\cW_{1+\infty}[\Psi]))
 \xrightarrow{\;\sim\;} \cW_{1+\infty}[\Psi]$ is an
@@ -9686,7 +9747,7 @@ is determined by the vertex algebra structure of
 $\cW_{1+\infty}[\Psi]$; the Drinfeld coproduct is
 determined by the generating-series
 formula~\eqref{eq:gl1-drinfeld-coprod}. Both satisfy
-coassociativity and the counit axiom. On the Koszul locus,
+coassociativity and the counit axiom. On the ordered Koszul locus,
 the coproduct compatible with a given vertex $R$-matrix is
 unique (Theorem~\ref{thm:chiral-qg-equiv}: the functors
 $\alpha$, $\beta$, $\gamma$ form an equivalence triangle).
@@ -9835,8 +9896,8 @@ $(\Psi - 1)/\Psi$ (not $1/\Psi$), as derived in step~4.
 \begin{remark}[Independent proof via the cohomological Hall algebra]
 \label{rem:independent-proof-coha}
 The equivalence $\textup{(I)} \leftrightarrow \textup{(II)}
-\leftrightarrow \textup{(III)}$ admits a second, independent
-proof for algebras arising as critical CoHAs of quivers with
+\leftrightarrow \textup{(III)}$ has a second comparison
+surface for algebras arising as critical CoHAs of quivers with
 potential, using the framework of
 Kontsevich--Soibelman~\cite{KS11},
 Schiffmann--Vasserot~\cite{SV13},
@@ -9844,9 +9905,10 @@ Yang--Zhao~\cite{YZ18a}, and
 Jindal--Kaubrys--Latyntsev~\cite{JKL26}. The logic is
 orthogonal to the bar-cobar adjunction above: rather than
 constructing the triangle abstractly from the ordered bar
-complex, one exhibits all three structures simultaneously on a
-single geometric object and verifies that they determine each
-other.
+complex, one exhibits the CoHA-side $R$-matrix and vertex
+coproduct on a single geometric object and then asks which
+double, completion, and vertex-algebra evaluation identify that
+object with the required full Yangian or $\cW$-algebra target.
 
 \smallskip
 \noindent\textbf{Step~1: simultaneous existence of (I) and (III)
@@ -9882,12 +9944,13 @@ QYBE and unitarity by the stable envelope formalism
 \cite{MO19}; the quasi-coassociativity of
 $\Delta_{\mathrm{CoHA}}$ follows from the
 associativity of the Hall product on the Drinfeld
-double~\cite{YZ18a}. This establishes the equivalence
-$\textup{(I)} \leftrightarrow \textup{(III)}$ by
-construction: the $R$-matrix and the coproduct coexist on
-$\cH_{Q,W}$ and satisfy the quasi-triangularity relation
+double~\cite{YZ18a}. This establishes the CoHA-side
+instance of $\textup{(I)}$ and $\textup{(III)}$: the
+$R$-matrix and the coproduct coexist on $\cH_{Q,W}$ and
+satisfy the quasi-triangularity relation
 $R(z)\, \Delta^{\mathrm{ch}} = \Delta^{\mathrm{ch},\op}\,
-R(z)$.
+R(z)$. It is not, by itself, an identification with a full
+Yangian or finite $\cW_N$ vertex algebra.
 
 \smallskip
 \noindent\textbf{Step~2: extraction of (II) from the CoHA
@@ -9914,11 +9977,14 @@ structure of the Stasheff associahedra and not on the CoHA
 origin.
 
 \smallskip
-\noindent\textbf{Step~3: the triangle closes.}
+\noindent\textbf{Step~3: the comparison triangle on the CoHA surface.}
 By the JKL vertex bialgebra theorem, the CoHA
-simultaneously carries (I), (II), and (III). To verify that
-these three structures \emph{determine} each other, one checks
-the uniqueness directions. On the Koszul
+simultaneously carries the CoHA analogues of (I), (II), and
+(III). To identify this with the triangle of
+Theorem~\ref{thm:chiral-qg-equiv}, one must add the
+Drinfeld-double, completion, and vertex-algebra evaluation maps
+that carry the positive-half Hall object to the chosen target.
+On the Koszul
 locus:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{(I) determines (III):} given an $R$-matrix
@@ -9927,7 +9993,8 @@ locus:
  Drinfeld reconstruction~\cite{Drinfeld90}
  (spectral parameter version:
  Etingof--Kazhdan~\cite{EK96}). The JKL coproduct on the
- CoHA is the unique one compatible with the MO $R$-matrix.
+ CoHA is the unique one compatible with the MO $R$-matrix
+ when the Drinfeld reconstruction hypotheses are imposed.
 \item \emph{(III) determines (I):} the Drinfeld
  formula~\eqref{eq:r-from-coprod-proof} recovers $S(z)$
  from $\Delta^{\mathrm{ch}}$, independently of the CoHA
@@ -9939,24 +10006,25 @@ locus:
  $\alpha^{-1}$). Neither direction uses the CoHA.
 \end{enumerate}
 The triangle coherence
-$\alpha \circ \gamma \circ \beta = \id$ then follows from
-the uniqueness of each vertex.
+$\alpha \circ \gamma \circ \beta = \id$ then follows on the
+target surface from the uniqueness of each vertex, not from the
+positive-half CoHA statement alone.
 
 \smallskip
 \noindent\textbf{Independence from the bar-cobar proof.}
 The argument above differs from the proof of
 Theorem~\ref{thm:chiral-qg-equiv} in two respects.
 First, the equivalence $\textup{(I)} \leftrightarrow
-\textup{(III)}$ is established by the geometric CoHA
+\textup{(III)}$ is checked on the geometric CoHA
 construction (stable envelopes for the $R$-matrix,
 Levi restriction for the coproduct, JKL for the vertex
-bialgebra axiom), bypassing the ordered bar complex
+bialgebra axiom), before any passage through the ordered bar complex
 $\Barord(\cA) = T^c(s^{-1}\bar{\cA})$ and the
 cobar dualization~\eqref{eq:coprod-from-bar}. Second, the
 uniqueness of the coproduct given the $R$-matrix is
 deduced from the Drinfeld reconstruction theorem for
 quasi-triangular vertex bialgebras, rather than from the
-bar-cobar adjunction on the Koszul locus. The functor
+bar-cobar adjunction on the ordered Koszul locus. The functor
 $\alpha$ (extraction of $\Ainf$ operations from the
 $R$-matrix via associahedron integrals) is shared between
 the two proofs, but it enters as an a~posteriori observation
@@ -9977,11 +10045,15 @@ Drinfeld double and Miura/vacuum evaluation
 For quivers of type $\widehat{A}_{N-1}$, the CoHA
 is $Y^+(\widehat{\mathfrak{sl}}_N)$, and the JKL
 coproduct recovers the Drinfeld coproduct on the affine
-Yangian~\cite{JKL26}. Beyond quiver-origin algebras, the
-CoHA argument does not directly apply; the bar-cobar proof
-of Theorem~\ref{thm:chiral-qg-equiv} remains the primary
-route for general $\Eone$-chiral algebras on the Koszul
-locus.
+Yangian~\cite{JKL26} on that positive-half comparison
+surface. This is a quiver-origin statement; it is not the
+rank-$N$ Jordan-quiver substitute for the
+$\mathfrak{gl}_N$ positive half. Beyond quiver-origin
+algebras, and before the double/completion/evaluation arrows
+are supplied, the CoHA argument does not directly apply; the
+bar-cobar proof of Theorem~\ref{thm:chiral-qg-equiv} remains
+the primary route for general $\Eone$-chiral algebras on the
+ordered Koszul locus.
 \end{remark}
 
 \begin{remark}[Effective central charge and intertwining
@@ -10106,14 +10178,16 @@ compatibility by a coderivation argument on the ordered bar side.
 
 \smallskip
 \noindent\emph{(3) Independent CoHA route.}
-For quiver-origin algebras there is a second independent proof.
+For quiver-origin algebras there is a second comparison route.
 Jindal--Kaubrys--Latyntsev construct a vertex coproduct on
 critical CoHAs and recover the deformed Drinfeld coproduct for
 ADE Yangians after restriction to the Yangian generators
 \cite{JKL26}. This matches
 Remark~\ref{rem:independent-proof-coha}: the CoHA vertex
-coproduct gives the same ordered $\Eone$-chiral coproduct that
-the bar-cobar argument produces abstractly.
+coproduct is the positive-half comparison surface. Identifying it
+with the ordered $\Eone$-chiral coproduct on a full Yangian or
+finite $\cW_N$ target still requires the Drinfeld double,
+completion, and Miura/Drinfeld--Sokolov evaluation hypotheses.
 
 \smallskip
 \noindent\emph{Convention check.}
@@ -10122,6 +10196,22 @@ parameter. The OPE coordinate enters only after the
 factorization-envelope or ordered-bar reconstruction, and the
 braided $\Etwo$ structure appears later at the derived-center
 stage, not on the primitive bar coalgebra.
+
+\smallskip
+\noindent\emph{Spectral-parameter firewall.}
+\ClaimStatusProvedElsewhere{}
+This convention does not license erasure of spectral parameters
+from associative Yangians or from topological Drinfeld-centre
+language. The associative Yangian $Y(\mathfrak g)$ has evaluation modules
+$V(u)$, and the universal $R$-matrix on
+$V(u)\otimes W(v)$ gives the rational matrix $R_{V,W}(u-v)$
+\cite[Ch.~12]{ChariPressley94}. What is independent of the
+collision coordinate is the primitive topological bar
+deconcatenation coproduct before the evaluation-module shift is
+chosen. The chiral bar differential is different: it is
+meromorphic in the Ran collision coordinate, and this
+meromorphic dependence is the datum carried by the ordered
+factorisation reconstruction.
 \end{remark}
 
 \begin{remark}[RTT, CoHA, and coproduct compatibility]
@@ -10140,24 +10230,28 @@ $n < 0$). For $\mathfrak{gl}_1$ the RTT relation is
 trivially satisfied because the $R$-matrix is scalar; this
 confirms associative-algebra compatibility but does not, by
 itself, establish the full vertex-algebra compatibility.
-The two independent arguments of step~6 (the
-coderivation property on the Koszul-locus bar complex, and
-the JKL vertex bialgebra theorem on the CoHA) close this
-gap.
+The construction in step~6 closes this gap by the coderivation
+property on the ordered Koszul-locus bar complex; the JKL vertex
+bialgebra theorem gives the matching comparison on the positive-half
+CoHA surface.
 
 \smallskip
 \noindent\emph{(2) Truncation to $\cW_N$.}
-Theorem~\ref{thm:glN-chiral-qg} resolves this question:
-for the truncations $\cW_N$ at finite $N \geq 2$, the
+Theorem~\ref{thm:glN-chiral-qg} resolves this question as a
+conditional Koszul-locus statement: for the truncations
+$\cW_N$ at finite $N \geq 2$, the
 $R$-matrix of $Y(\widehat{\mathfrak{gl}}_N)$ is Yang's
 rational $R$-matrix $R(u) = u\, I + \Psi\, P$ (no longer
 scalar), and the OPE compatibility at each truncation level
-is established by the same two arguments.
-The coderivation argument (argument~A) applies to
-$\cW_N$ at generic level by the same Koszul-locus reasoning.
-The JKL argument (argument~B) applies to
-$Y(\widehat{\mathfrak{gl}}_N)$ by their Theorem~C for
-general quivers.
+is constructed by the coderivation argument
+(argument~A). The CoHA route (argument~B) gives an independent
+comparison only after a quiver-origin positive-half CoHA has
+been identified with the required $Y^+$, then transported
+through the Drinfeld double, completion, and
+Miura/Drinfeld--Sokolov evaluation. JKL's general-quiver vertex
+bialgebra theorem does not by itself produce a rank-$N$
+Jordan-quiver identification with
+$Y^+(\widehat{\mathfrak{gl}}_N)$.
 
 \smallskip
 \noindent\emph{(3) Antipode and Drinfeld double.}
@@ -10479,6 +10573,95 @@ arises as $1$ (from $\psi_1 \otimes \psi_2$)
 minus $1/\Psi$ (from $\Delta_z({:}JT{:})$).
 \end{proof}
 
+\begin{lemma}[Miura triangularity under the Drinfeld coproduct]
+\label{lem:miura-triangularity-under-Delta}
+\ClaimStatusProvedHere
+Work in the Open quadrant, in the ordered associative
+chiral/Yangian presentation, in the Beilinson level
+$4 \to 5$ operator-to-coproduct lane.  Assume the generic
+$\Psi$ package consisting of the
+Proch\'azka--Rap\v{c}\'ak triangular Miura basis
+\[
+ \psi_n
+ \;=\;
+ W_n + P_n(J,W_2,\ldots,W_{n-1})
+ \qquad (P_n \in F^{W}_{\leq n-1})
+\]
+and the Drinfeld spectral coproduct
+$\Delta_z(T(u)) = T(u)\otimes T(u-z)$.  Let
+$F^{W}_{\leq p}$ be the normally ordered filtration by
+largest primary $W$-spin appearing in a monomial, with
+$J=W_1$ and the unit in $F^{W}_{\leq0}$.  Then
+\[
+ \Delta_z(F^{W}_{\leq p})
+ \;\subset\;
+ F^{W}_{\leq p}\,\widehat{\otimes}\,F^{W}_{\leq p}.
+\]
+Consequently, for $s\geq3$, every lower Miura monomial of
+$W$-spin $\leq s-2$ in the inversion of $\psi_s$ has
+spectral coproduct with no component in
+$J\otimes W_{s-1}$ or $W_{s-1}\otimes J$.
+\end{lemma}
+
+\begin{proof}
+The triangular Miura theorem gives the associated-graded
+identity $\operatorname{gr}^{W}\psi_n=W_n$.  Its inverse is
+therefore also triangular:
+$W_n=\psi_n+Q_n(\psi_1,\ldots,\psi_{n-1})$, with
+$Q_n$ of $W$-spin at most $n-1$.  The Drinfeld formula
+for the $u^{-n}$ coefficient,
+\[
+ \Delta_z(\psi_n)
+ =
+ \psi_n\otimes1
+ + \sum_{k=0}^{n-1}\sum_{m=1}^{n-k}
+   \binom{n-k-1}{m-1}z^{\,n-k-m}\,
+   \psi_k\otimes\psi_m,
+\]
+has tensor indices $k,m\leq n$.  After triangular expansion
+from the $\psi$-basis to the primary basis, each tensor factor
+has $W$-spin at most $n$.  Hence
+$\Delta_z(\psi_n)\in
+F^{W}_{\leq n}\widehat{\otimes}F^{W}_{\leq n}$, and the
+same statement for $W_n$ follows from the triangular inverse
+and multiplicativity of~$\Delta_z$.
+
+The filtration is defined by the largest primary spin in a
+normal monomial.  Multiplication by powers of
+$J=W_1$ does not increase that largest spin, and normal-ordering
+contractions with $J$ produce derivatives or lower composites,
+not a new primary $W_r$ with larger $r$.  Thus, for a
+representative lower sector
+$M_{s,k}={:}J^kW_{s-k}{:}$ with $k\geq2$,
+\[
+ \Delta_z(M_{s,k})
+ \in
+ \sum_{a=0}^{k}
+ {:}J^a F^{W}_{\leq s-k}{:}
+ \widehat{\otimes}
+ {:}J^{k-a}F^{W}_{\leq s-k}{:},
+\]
+up to derivative and lower normal-ordering terms in the same
+filtration.  Since $s-k\leq s-2$, no tensor factor can contain
+the target primary $W_{s-1}$.
+
+The first nontrivial displayed case is spin~$3$.  The composite
+term in Proposition~\ref{prop:spin3-miura-coprod} is
+\[
+ \frac{1-\Psi}{2\Psi^2}
+ \bigl(J\otimes{:}J^2{:}+{:}J^2{:}\otimes J\bigr),
+\]
+which has $W$-spin $1$ on both sides and therefore cannot
+contribute to the $J\otimes T$ or $T\otimes J$ channel.
+At spin~$4$, the lower representatives
+${:}J^2T{:}$ and ${:}TT{:}$ remain in
+$F^{W}_{\leq2}$ after applying~$\Delta_z$, so they cannot
+produce $J\otimes W_3$.  At spins~$5$ and~$6$, the maximal
+lower primary spins are respectively $3$ and~$4$, below the
+targets $W_4$ and $W_5$.  This proves the required
+non-contribution of all lower sectors.
+\end{proof}
+
 \begin{theorem}[Miura cross-term universality]
 \label{thm:miura-cross-universality-monograph}
 \ClaimStatusConditional
@@ -10499,7 +10682,8 @@ is independent of the spin~$s$.
 \end{theorem}
 
 \begin{proof}
-The argument has three steps.
+The case $s=2$ is Lemma~\ref{lem:coprod-T-miura}.  For
+$s\geq3$ the spin-uniform argument has three steps.
 
 \emph{Step~1: the Miura coefficient of
 ${:}J \cdot W_{s-1}{:}$ in $\psi_s$ is $1/\Psi$
@@ -10577,19 +10761,17 @@ $J \otimes W_{s-1}$:
  $-1/\Psi$.
 \item From the Miura sectors with $k \geq 2$
  $J$-insertions: their $W$-spin is $\leq s - 2$.
- The coproduct $\Delta_z$ does not raise $W$-spin in
- either tensor factor
- \textup{(}triangularity of the Miura transform\textup{)},
- so the tensor support
- of these sectors is contained in $W$-spin $\leq s - 2$
- on each side, and they contribute zero to the
+ By Lemma~\ref{lem:miura-triangularity-under-Delta},
+ the tensor support of these sectors is contained in
+ $W$-spin $\leq s - 2$ on each side after applying
+ $\Delta_z$.  They therefore contribute zero to the
  $J \otimes W_{s-1}$ channel.
 \end{enumerate}
 The total coefficient is $1 - 1/\Psi = (\Psi - 1)/\Psi$.
 The argument for $W_{s-1} \otimes J$ is symmetric.
 The three ingredients are each spin-independent: the
 Drinfeld binomial coefficient $\binom{s-2}{s-2} = 1$
-is tautological, the Miura coefficient $1/\Psi$ is
+is tautological, the single-slot Miura factor $1/\Psi$ is
 structural \textup{(}one $J/\Psi$ slot\textup{)},
 and the non-contribution of higher $J$-sectors follows
 from $W$-spin filtration.
@@ -10636,7 +10818,12 @@ at the level of the filtered isomorphism
 $Y(\widehat{\mathfrak{gl}}_1) \cong U(\cW_{1+\infty}[\Psi])$.
 The triangular structure is explicit through $\psi_3$ in this
 volume; the general-$s$ statement is cited from~\cite{PR19}
-rather than independently derived here.
+rather than independently derived here.  Lemma~
+\ref{lem:miura-triangularity-under-Delta} separates this imported
+triangular basis from the filtration consequence used in the
+coproduct proof: once the triangular basis and Drinfeld coproduct
+are assumed, preservation of $W$-spin under~$\Delta_z$ is proved in
+this volume.
 \end{remark}
 
 \begin{remark}[The conformal anomaly forces the spectral
@@ -11020,12 +11207,18 @@ defined inside a parent whose chiral coproduct is trivial,
 and the non-trivial cross-term coefficient
 $(\Psi-1)/\Psi$ on $\mathcal{W}_N$ is the obstruction to
 descent. Constructing the chiral coproduct on $\mathcal{W}_N$
-therefore requires an external input: the
-Jindal--Kaubrys--Latyntsev vertex bialgebra
-theorem~\textup{\cite{JKL26}} on the CoHA of the Jordan quiver
-\textup{(}$N\geq 3$\textup{)} supplies this input through the
-Schiffmann--Vasserot identification
-$\cH_{\mathrm{Jor},N} \cong Y^+(\widehat{\mathfrak{gl}}_N)$.
+therefore requires either the Koszul-locus bar-cobar
+construction of Argument~$A$ or an external positive-half CoHA
+comparison. Jindal--Kaubrys--Latyntsev supply the vertex
+bialgebra axiom on critical CoHAs~\textup{\cite{JKL26}}; it
+becomes input for $\mathcal{W}_N$ only after a type-$A$
+positive-half CoHA is identified with the appropriate
+$Y^+(\widehat{\mathfrak{gl}}_N)$ and then transported through
+Drinfeld doubling, completion, and
+Miura/Drinfeld--Sokolov evaluation. The
+Schiffmann--Vasserot Jordan-quiver identification gives
+$\cH_{\mathrm{Jor}}\cong Y^+(\widehat{\mathfrak{gl}}_1)$; it
+is not a rank-$N$ substitute.
 The conformal structure and the $\Ainf$-structure on
 $\mathcal{W}_N$ \emph{are} inherited from the parent
 \textup{(}since the stress tensor and the bar differential are
@@ -11116,7 +11309,7 @@ both arithmetic consequences of the same input, the simple-root
 length $\alpha_i^2 = 2/\Psi$: the Miura slot $J_i/\Psi$ in
 $\Lambda_i = \sigma_i + J_i/\Psi$ is the semiclassical shadow
 of the quantum screening $e^{\alpha_i \cdot \varphi}$, and the
-coefficient $1/\Psi$ appearing in both places is the same datum
+single-slot factor $1/\Psi$ appearing in both places is the same datum
 read along two complementary coordinates.
 \end{proof}
 
@@ -11151,32 +11344,39 @@ Theorem~\ref{thm:miura-cross-universality-monograph}.
 \end{remark}
 
 \begin{theorem}[$Y(\widehat{\mathfrak{gl}}_N)$ chiral
-quantum group for $N \geq 2$: unconditional at $N=2$,
-conditional on~\cite{JKL26} at $N \geq 3$]
+bialgebra for $N \geq 2$: bar-cobar construction and
+conditional CoHA comparison]
 \label{thm:glN-chiral-qg}
 \ClaimStatusConditional
-For each $N \geq 2$ and generic $\Psi$, the truncation
+For each $N \geq 2$ and generic $\Psi$, subject to the
+Koszul-locus and fixed-gauge hypotheses of
+Theorem~\textup{\ref{thm:chiral-qg-equiv}}, the truncation
 $\cW_N[\Psi]$ carries a chiral \emph{bialgebra} datum in
 the sense of
 Theorem~\textup{\ref{thm:chiral-qg-equiv}}: an $N \times N$
 matrix transfer matrix, Yang's rational $R$-matrix with
 level prefix~$\Psi$, and a chiral coproduct with all
 OPE compatibility.
-At $N = 2$ the datum is constructed unconditionally
-from the $\mathfrak{sl}_2$ Yangian presentation and the
-Schiffmann--Vasserot identification of the Jordan-quiver
-CoHA \textup{\cite{SV13}}. At $N \geq 3$ the Drinfeld
+At $N = 2$ the rank-two Yangian, RTT, quantum determinant, and
+Virasoro restriction are computed explicitly in
+Example~\ref{ex:gl2-chiral-qg}. At $N \geq 3$ the Drinfeld
 coproduct does not descend from a trivial Heisenberg parent
 via Feigin--Frenkel screening: the descent obstruction is
 the explicit non-exact chiral $1$-cocycle of
 Proposition~\ref{prop:ff-screening-coproduct-obstruction}
 with coefficient $(\Psi - 1)/\Psi$, which matches the
 universal cross-term coefficient of
-Theorem~\ref{thm:miura-cross-universality-monograph}. At $N \geq 3$
-the coproduct construction therefore relies on the
-Jindal--Kaubrys--Latyntsev vertex bialgebra theorem
-\textup{\cite{JKL26}} on the Jordan-quiver CoHA as an
-external input. The Hopf-antipode lift is a proved negative
+Theorem~\ref{thm:miura-cross-universality-monograph}. The
+construction used below is the ordered bar-cobar construction
+on the ordered Koszul locus. The CoHA route gives a second comparison
+only under an additional positive-half package: a type-$A$
+critical CoHA with the Jindal--Kaubrys--Latyntsev vertex
+coproduct~\textup{\cite{JKL26}}, an identification with the
+required $Y^+$, Drinfeld double and completion, and
+Miura/Drinfeld--Sokolov evaluation to $\cW_N$. The
+Schiffmann--Vasserot Jordan-quiver theorem supplies the
+$\mathfrak{gl}_1$ positive half~\textup{\cite{SV13}}, not a
+rank-$N$ Jordan-quiver proof. The Hopf-antipode lift is a proved negative
 \textup{(}Remark~\ref{rem:chiral-bialgebra-not-hopf}\textup{)};
 the datum is chiral-bialgebra, not chiral-Hopf.
 The precise content is as follows.
@@ -11310,15 +11510,15 @@ $\Ainf$\textup{)} are the three gauge-fixed readouts of the
 ordered-bar datum in
 Theorem~\textup{\ref{thm:chiral-qg-equiv}}.
 The OPE compatibility axiom~\eqref{eq:ope-compat}
-is satisfied at all spins $1, \ldots, N$ simultaneously
-by the same two independent arguments as in
-Theorem~\textup{\ref{thm:w-infty-chiral-qg}}:
+is constructed at all spins $1, \ldots, N$ by the
+Koszul-locus bar-cobar argument, with the CoHA route serving
+as a conditional comparison surface:
 \begin{enumerate}[label=\textup{(\alph*)}]
 \item \emph{Argument~$A$ \textup{(}coderivation on the
- Koszul locus\textup{)}.}
+ ordered Koszul locus\textup{)}.}
  At generic~$\Psi$, the algebra $\cW_N[\Psi]$ lies on the
- Koszul locus
- \textup{(}Definition~\textup{\ref{def:koszul-locus}}\textup{)}.
+ ordered Koszul locus
+ \textup{(}Definition~\textup{\ref{def:ordered-koszul-locus}}\textup{)}.
 The bar-cobar adjunction
 $\Omega(\Barord(\cW_N[\Psi]))
 \xrightarrow{\;\sim\;} \cW_N[\Psi]$
@@ -11331,23 +11531,20 @@ compatibility~\eqref{eq:ope-compat} at all spins
  simultaneously
  \textup{(}Theorem~\textup{\ref{thm:chiral-qg-equiv}},
  direction $\textup{(II)} \to \textup{(III)}$\textup{)}.
- Uniqueness on the Koszul locus identifies this bar-cobar
+ Uniqueness on the ordered Koszul locus identifies this bar-cobar
  coproduct with the Drinfeld
  coproduct~\eqref{eq:glN-drinfeld-coprod}.
-\item \emph{Argument~$B$ \textup{(}JKL vertex bialgebra
- on the CoHA; external dependency at $N \geq 3$\textup{)}.}
-The positive-half critical CoHA of the Jordan quiver at dimension
-vector $n \cdot \delta$ ($\delta$ the minimal imaginary
-root of $\widehat{\mathfrak{gl}}_N$) satisfies the vertex
- bialgebra axiom~\eqref{eq:ope-compat} by
- Jindal--Kaubrys--Latyntsev~\textup{\cite{JKL26}},
- Theorem~C for general quivers. The
- Schiffmann--Vasserot identification
-$\cH_{\mathrm{Jor},N} \cong Y^+(\widehat{\mathfrak{gl}}_N)$
-transports this to the positive half; the Drinfeld double supplies
-the full Yangian coproduct used on the \(\cW_N\) side. This gives a
-second proof at all spins simultaneously. This argument supplies the
-non-Heisenberg input at $N \geq 3$: a Feigin--Frenkel
+\item \emph{Argument~$B$ \textup{(}conditional CoHA comparison\textup{)}.}
+Suppose a type-$A$ positive-half critical CoHA has been
+identified with the required
+$Y^+(\widehat{\mathfrak{gl}}_N)$ and that the Drinfeld double,
+completion, and Miura/Drinfeld--Sokolov evaluation maps are fixed.
+On that comparison surface, the vertex bialgebra axiom of
+Jindal--Kaubrys--Latyntsev~\textup{\cite{JKL26}} transports to the
+positive half and is compatible with the Drinfeld coproduct on the
+full Yangian. This is a conditional comparison, not an unconditional
+rank-$N$ Jordan-quiver proof. It explains the non-Heisenberg input
+at $N \geq 3$: a Feigin--Frenkel
 screening alternative (realising $\cW_N$ as an intersection
  $\bigcap_{i=1}^{N-1}\ker Q_{\alpha_i}$ inside a rank-$(N-1)$
  Heisenberg parent) would only descend a coproduct to the
@@ -11362,13 +11559,12 @@ screening alternative (realising $\cW_N$ as an intersection
  cocycle of
  Proposition~\ref{prop:ff-screening-coproduct-obstruction},
  and a non-trivial construction is required on the
- intersection, which is precisely what
- Jindal--Kaubrys--Latyntsev supply via the CoHA route. The
+ intersection. The CoHA route supplies such a construction only
+ after the positive-half identification and double/evaluation
+ package has been supplied. The
  Feigin--Frenkel screening presentation preserves the conformal
  structure and the $\Ainf$ structure transported by Argument~$A$,
- but not the coproduct; at $N \geq 3$ the coproduct construction
- is \emph{external} to the Heisenberg parent and currently relies
- on~\textup{\cite{JKL26}}.
+ but not the coproduct.
 \end{enumerate}
 \end{theorem}
 
@@ -11380,16 +11576,21 @@ $R$-matrix replaced by Yang's matrix $R$-matrix.
 \medskip
 \noindent
 \textbf{Step~1}
-(positive-half CoHA identification; Schiffmann--Vasserot~\cite{SV13}).
-The critical CoHA of the framed Jordan quiver at
-rank~$N$ satisfies
-$\cH_{\mathrm{Jor},N} \cong Y^+(\widehat{\mathfrak{gl}}_N)$.
-This is a positive-half statement; the full Yangian and the
-\(\cW_N\)-vertex algebra enter only after the Drinfeld double and
-Miura/DS evaluation. The $N = 1$ case is
-Schiffmann--Vasserot~\cite{SV13}; the general case
-uses the Drinfeld--Sokolov hierarchy for
-$\widehat{\mathfrak{gl}}_N$.
+(positive-half comparison package).
+The only Jordan-quiver CoHA identification used without an
+extra package is
+$\cH_{\mathrm{Jor}}\cong
+Y^+(\widehat{\mathfrak{gl}}_1)$
+of Schiffmann--Vasserot~\cite{SV13}. For $N \geq 2$ the proof
+does not assume a rank-$N$ Jordan-quiver isomorphism. The CoHA
+comparison is the following conditional package: a type-$A$
+positive-half critical CoHA equipped with the JKL vertex
+coproduct~\cite{JKL26}; an identification of that positive half
+with the required $Y^+(\widehat{\mathfrak{gl}}_N)$; the
+Drinfeld double and completion; and the Miura/DS evaluation to
+\(\cW_N[\Psi]\). The construction of the chiral coproduct below
+uses Argument~$A$; this package is used only for the comparison
+route of Argument~$B$.
 
 \medskip
 \noindent
@@ -11480,9 +11681,9 @@ $N = 1$: commutator $= 0$).
 \medskip
 \noindent
 \textbf{Step~6}
-(OPE compatibility at all spins: two arguments).
-The two independent proofs of OPE compatibility extend
-from $\cW_{1+\infty}$ to $\cW_N$:
+(OPE compatibility at all spins: construction and comparison).
+The bar-cobar construction extends from $\cW_{1+\infty}$ to
+$\cW_N$, while the CoHA route is a conditional comparison surface:
 
 \smallskip
 \noindent\emph{Argument~A.}
@@ -11493,21 +11694,21 @@ on the bar complex $\Barord(\cW_N[\Psi])
 = T^c(s^{-1}\overline{\cW}_N[\Psi])$
 is a structural property of the cofree tensor coalgebra,
 valid at each truncation $N$. At generic~$\Psi$,
-$\cW_N[\Psi]$ lies on the Koszul locus, and the
+$\cW_N[\Psi]$ lies on the ordered Koszul locus, and the
 bar-cobar adjunction identifies the bar-cobar coproduct
 with the Drinfeld coproduct by uniqueness
 (Theorem~\ref{thm:chiral-qg-equiv}).
 
 \smallskip
 \noindent\emph{Argument~B.}
-The JKL vertex bialgebra theorem~\cite{JKL26} applies to
-the CoHA of the Jordan quiver at arbitrary rank~$N$
-(their Theorem~C holds for general quivers with
-potential). The vertex coproduct on
-$\cH_{\mathrm{Jor},N}
-\cong Y^+(\widehat{\mathfrak{gl}}_N)$
-satisfies~\eqref{eq:ope-compat} and identifies with
-the Drinfeld coproduct.
+Assume the positive-half package of Step~1. The JKL vertex
+bialgebra theorem~\cite{JKL26} gives
+\eqref{eq:ope-compat} on the relevant critical CoHA. After the
+positive-half identification with $Y^+$ and passage through the
+Drinfeld double, completion, and Miura/DS evaluation, this
+compares with the Drinfeld coproduct on the \(\cW_N\) target.
+This is not a second unconditional proof for all $N$; it is the
+quiver-origin comparison surface.
 
 \medskip
 \noindent
@@ -11520,7 +11721,9 @@ computed numerically as proportional to
 $I_N$ in the evaluation representation at $N = 2, 3$.
 The coproduct satisfies coassociativity, the counit axiom,
 and OPE compatibility at all spins $1, \ldots, N$ by
-step~6. Together with
+Argument~$A$ of step~6, with Argument~$B$ giving the
+conditional CoHA comparison when its positive-half package is
+available. Together with
 the Yang $R$-matrix and the $\Ainf$ structure from the bar
 complex, this gives the complete chiral bialgebra
 datum for $\cW_N[\Psi]$.
@@ -11661,13 +11864,14 @@ structural features.
 \item The quantum determinant $\mathrm{qdet}\, T(u)$ is a
  genuinely new central element for $N \geq 2$ (at
  $N = 1$ it reduces to $T(u)$ itself).
-\item Both arguments for OPE compatibility (coderivation on
- the Koszul locus, JKL on the CoHA) apply uniformly for
- all~$N$: argument~A uses only the structural properties
+\item The OPE-compatibility construction is uniform in~$N$:
+ argument~A uses only the structural properties
  of the cofree tensor coalgebra
  $T^c(s^{-1}\overline{\cW}_N)$ and the Koszul-locus
- equivalence; argument~B uses JKL for the Jordan quiver
- at rank~$N$.
+ equivalence. Argument~B is a comparison surface only after
+ the relevant type-$A$ positive-half CoHA has been identified
+ with $Y^+$ and transported through the Drinfeld double,
+ completion, and Miura/DS evaluation.
 \end{enumerate}
 \end{remark}
 
@@ -11923,20 +12127,25 @@ principal and hook-type regimes.
 \label{subsec:coderived-chiral-coproduct}
 
 The chiral bialgebra equivalence
-(Theorem~\ref{thm:chiral-qg-equiv}) is restricted to the Koszul
+(Theorem~\ref{thm:chiral-qg-equiv}) is restricted to the ordered Koszul
 locus: the arrow $\beta$ from $A_\infty$-maps to the chiral
 coproduct applies the cobar functor $\Omega$ to the deconcatenation
 coproduct $\Delta$ on~$\barB^{\mathrm{ord}}(\cA)$, and the
 identification $\cA \simeq \Omega(\barB^{\mathrm{ord}}(\cA))$
-is a quasi-isomorphism only on the Koszul locus. For
-class~$\mathsf{M}$ algebras (Virasoro, $\cW_N$, $\cW_{1+\infty}$),
-the bar-cobar counit is \emph{not} a chain-level quasi-isomorphism
-but \emph{is} an isomorphism in the coderived category
-$D^{\mathrm{co}}$ (Theorem~\ref{thm:off-koszul-ran-inversion}).
+is a quasi-isomorphism only on the ordered Koszul locus. For raw
+direct-sum class~$\mathsf{M}$ bar complexes, without a strict
+completed/Yangian comparison package, the bar-cobar counit is
+\emph{not} a chain-level quasi-isomorphism but \emph{is} an
+isomorphism in the coderived category $D^{\mathrm{co}}$
+(Theorem~\ref{thm:off-koszul-ran-inversion}). This does not
+contradict the completed positive-energy/Yangian surfaces of
+Theorems~\ref{thm:w-infty-chiral-qg} and
+\ref{thm:glN-chiral-qg}: those theorems work in a completed
+strict presentation, not in the raw direct-sum bar ambient.
 The deconcatenation coproduct, being a purely combinatorial
-structure on the cofree tensor coalgebra, survives intact. This
-gives the following conjectural coderived extension of the chiral quantum group
-equivalence.
+structure on the cofree tensor coalgebra, survives intact and
+has a coderived image. This gives the following conjectural
+coderived extension of the chiral quantum group equivalence.
 
 \begin{conjecture}[Coderived chiral coproduct; \ClaimStatusConjectured]
 \label{conj:coderived-chiral-coproduct}%
@@ -11988,10 +12197,13 @@ shadow class.
  $\Delta^{\mathrm{ch,co}}$ agrees with the chain-level chiral
  coproduct $\Delta^{\mathrm{ch}}$ of
  Theorem~\textup{\ref{thm:chiral-qg-equiv}}.
- For class~$\mathsf{M}$, $\Delta^{\mathrm{ch,co}}$ is the
- \emph{only} chiral coproduct available, and it equips
- class~$\mathsf{M}$ algebras with a coderived chiral quantum
- group structure.
+ For raw direct-sum class~$\mathsf{M}$ inputs with no strict
+ completed/Yangian comparison package, $\Delta^{\mathrm{ch,co}}$
+ is the canonical coproduct produced by deconcatenation and equips
+ the input with a coderived chiral quantum group structure. When
+ a weight-completed or Yangian positive-energy package supplies a
+ strict completed coproduct, its image in $D^{\mathrm{co}}$ agrees
+ with $\Delta^{\mathrm{ch,co}}$.
 \end{enumerate}
 \end{conjecture}
 
@@ -11999,6 +12211,15 @@ shadow class.
 \label{rem:coderived-chiral-coproduct-structure}%
 \index{coderived category!chiral coproduct!mechanism}%
 The conjecture combines three proved inputs with two unproved ones.
+It separates three ambients. The raw direct-sum class~$\mathsf M$
+bar complex has no ordinary chain-level bar-cobar inverse in
+$\Ch(\Vect)$. Completed positive-energy/Yangian presentations can
+carry strict completed coproducts, as in
+Theorems~\ref{thm:w-infty-chiral-qg} and
+\ref{thm:glN-chiral-qg}. The coderived coproduct is the universal
+off-locus construction and is required to be the image of those
+strict completed coproducts whenever such a completed presentation
+exists.
 
 The three proved inputs are:
 \begin{enumerate}[label=\textup{(\alph*)}]
@@ -12132,8 +12353,12 @@ On the Koszul locus \textup{(}classes~$\mathsf{G}$, $\mathsf{L}$,
 $\mathsf{C}$\textup{)}, the coderived structure reduces to
 a strict DG-bialgebra \textup{(}$d_{\barB}^2 = 0$
 at chain level\textup{)}.
-For class~$\mathsf{M}$, the coderived category is essential:
-$d_{\barB}^2 \neq 0$ at chains, but $d_{\barB}^2$ is coacyclic.
+For raw direct-sum class~$\mathsf{M}$ bar complexes without a
+strict completed/Yangian comparison package, the coderived category
+is essential: $d_{\barB}^2 \neq 0$ at chains, but $d_{\barB}^2$ is
+coacyclic. In a completed/Yangian package this proposition records
+the coderived shadow of the stricter completed chain-level structure,
+not a denial of that structure.
 \end{proposition}
 
 \begin{proof}
@@ -12775,27 +13000,31 @@ and the chiral bialgebra equivalence
 \index{E3 algebra@$\Ethree$-algebra!identification}
 Let $\fg$ be a simple finite-dimensional Lie algebra and
 $V_k(\fg)$ the affine Kac--Moody vertex algebra at level~$k$.
-The derived chiral centre
+Fix a formality rigidification~$\Phi$ and the corresponding
+cofibrant chain operad model $C_*^\Phi(\Ethree)$.  Writing
+$\lambda = k + h^\vee$, the formal-disk global sections of the
+chiral $\Ethree$ model for the derived chiral centre
 $Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))$ and the
 Costello--Francis--Gwilliam perturbative Chern--Simons
-$\Ethree$-algebra $\cA^\lambda$ are isomorphic as formal
-deformation families of $\Ethree$-algebras over
-$\hbar H^3(\fg)[[\hbar]]$ \textup{(}$\hbar = k + h^\vee$\textup{)}.
+$\Ethree$-algebra $\cA^\lambda$ determine the same MC class in the
+filtered deformation groupoid of cofibrant
+$C_*^\Phi(\Ethree)$-algebra models over
+$\lambda H^3(\fg)[[\lambda]]$.
 \end{theorem}
 
 \begin{proof}
 The deformation spaces agree (both one-dimensional at each order
-in~$\hbar$ for simple~$\fg$), the associated graded algebras match
+in~$\lambda$ for simple~$\fg$), the associated graded algebras match
 (both $C^*(\fg)$), and the formal disk global sections match at the
 level of $\mathsf{P}_3$-brackets
-(\S\ref{subsec:chiral-e3-cfg-comparison}).
+(Theorem~\ref{thm:chiral-e3-cfg}\textup{(ii)}).
 For simple~$\fg$, $H^3(\fg) \cong \CC$ is one-dimensional, so at
-each order $p \geq 1$ in $\hbar$ the space of
+each order $p \geq 1$ in $\lambda$ the space of
 $\Ethree$-deformations extending the lower orders is
 one-dimensional. The matching of $\mathsf{P}_3$-brackets on the
 formal disk fixes the scalar at each order, forcing the two
-deformation families to be isomorphic. The isomorphism is
-constructed order by order and passes to the $\hbar$-adic limit.
+MC classes to agree. The gauge equivalence is constructed order by
+order and passes to the $\lambda$-adic limit.
 \end{proof}
 
 \begin{remark}[Universal $\Phi$-trace identity]
@@ -13038,29 +13267,99 @@ is central at $\Psi = 1, 0.5, 2$
 \textup{(}$53$ compute tests\textup{)}.
 \end{remark}
 
+\begin{computation}[Finite DS--Miura coproduct window at
+$\cW_3$; \ClaimStatusProvedHere]
+\label{comp:ds-w3-degree2-rtt-miura-witness}
+Work in the Open quadrant, in the ordered associative
+chiral/Yangian presentation, in the Beilinson level
+$4 \to 5$ operator-to-coproduct lane.  The hypothesis package is:
+generic $\Psi$, the principal Drinfeld--Sokolov projection
+$\pi_3$ for $\mathfrak{sl}_3$, the RTT coproduct on matrix
+generators, and the two-boson Miura stress tensor
+\[
+ x=\psi_1,\qquad y=\psi_2,\qquad
+ e_1=x+y,\qquad e_2={:}xy{:},\qquad
+ T_{\mathrm{M}}=e_2-\frac{e_1^2}{2\Psi}.
+\]
+In the $z^0$, degree-$2$ Cartan/Sugawara window,
+\begin{align}
+\label{eq:ds-w3-degree2-rtt-miura-window}
+ &(\pi_3\otimes\pi_3)\Delta^{\mathrm{RTT}}_{z,0}(T_{\mathrm{M}})
+ -T_{\mathrm{M}}\otimes1-1\otimes T_{\mathrm{M}} \\
+ &\qquad =
+ \frac{\Psi-1}{\Psi}\,(x\otimes y+y\otimes x)
+ -\frac{1}{\Psi}\,(x\otimes x+y\otimes y).
+ \notag
+\end{align}
+The same tensor is obtained by applying the primitive two-boson
+Miura coproduct to \(T_{\mathrm{M}}\).
+\end{computation}
+
+\begin{proof}
+On the RTT side, the component coproduct for the degree-$1$
+matrix entries has diagonal contributions
+$t_{ii}^{(1)}\otimes1+1\otimes t_{ii}^{(1)}$ and off-diagonal
+terms of the form \(t_{ij}^{(1)}\otimes t_{ji}^{(1)}\).
+The principal DS projection sends the two diagonal Gauss/Cartan
+entries to \(x,y\) and kills the six root terms
+\[
+ t_{12}^{(1)}\otimes t_{21}^{(1)},\quad
+ t_{21}^{(1)}\otimes t_{12}^{(1)},\quad
+ t_{13}^{(1)}\otimes t_{31}^{(1)},\quad
+ t_{31}^{(1)}\otimes t_{13}^{(1)},\quad
+ t_{23}^{(1)}\otimes t_{32}^{(1)},\quad
+ t_{32}^{(1)}\otimes t_{23}^{(1)} .
+\]
+Thus the projected RTT computation gives
+\[
+ \Delta(e_2)-e_2\otimes1-1\otimes e_2
+ =x\otimes y+y\otimes x
+\]
+and
+\[
+ \Delta(e_1^2)-e_1^2\otimes1-1\otimes e_1^2
+ =2(x\otimes x+x\otimes y+y\otimes x+y\otimes y).
+\]
+Substituting \(T_{\mathrm{M}}=e_2-e_1^2/(2\Psi)\) gives
+\eqref{eq:ds-w3-degree2-rtt-miura-window}.
+
+The Miura side is independent: \(x\) and \(y\) are primitive
+free-field currents, so multiplicativity gives the two displayed
+formulae for \(e_2\) and \(e_1^2\) directly.  The two routes
+therefore agree term by term in the \(\{x,y\}\)-tensor basis.
+The computation is implemented by
+\texttt{ds\_w3\_degree2\_rtt\_miura\_witness} in
+\texttt{ds\_coproduct\_intertwining\_engine.py}; the decorated
+test \texttt{test\_ds\_w3\_degree2\_rtt\_miura\_hz\_iv}
+checks the RTT source terms, the killed off-diagonal list, and
+the primitive Miura expansion without calling the shared
+\(\Delta_z(\psi_n)\) formula.
+\end{proof}
+
 \begin{remark}[DS coproduct intertwining at $\cW_3$: degree-$1$ vs.\ degree-$\geq 2$]
 \label{rem:ds-intertwining-w3}
-The Drinfeld--Sokolov reduction
-$\pi_3 \colon V_k(\mathfrak{sl}_3) \twoheadrightarrow
-\cW_3$ intertwines the spectral coproducts:
-$(\pi_3 \otimes \pi_3) \circ \Delta_z^{\mathfrak{sl}_3}
-= \Delta_z^{\cW_3} \circ \pi_3$.
-At degree~$1$ the intertwining is \emph{tautological} on the
-Cartan sector: both sides compute the same Drinfeld primitive
-formula on $\Delta_z(J)$ and $\Delta_z(\psi_n)$, so the $57$
-compute tests at degree~$1$ verify a self-consistent
-specialisation rather than an independent identity. At degree
-$\geq 2$ the intertwining is non-tautological: it is equivalent
-to the matching of the independent $\mathfrak{sl}_3$ RTT
-commutators $[t_{ij}^{(1)}, t_{kl}^{(1)}] = \Psi(\delta_{il}
-t_{kj}^{(1)} - \delta_{kj} t_{il}^{(1)})$ with the
-$\cW_3$ OPE after $\pi_3$-reduction; the independent computation agrees
-on the $81$ RTT components at $\mathfrak{gl}_3$
-\textup{(}Remark~\ref{rem:gl3-explicit}\textup{)}. The
-spin-$3$ sector with its gravitational $\mathrm{HPL}_3$
-contributions is the genuinely chiral content and remains the
-sharpest non-tautological witness of DS intertwining. The
-spectral coassociativity uses \emph{shifted} parameters:
+The full chain-level identity
+\[
+(\pi_3 \otimes \pi_3)\circ\Delta_z^{\mathfrak{sl}_3}
+=\Delta_z^{\cW_3}\circ\pi_3
+\]
+is the expected Drinfeld--Sokolov coproduct compatibility, but
+it is not proved by the degree-$1$ Cartan tests.  At degree~$1$
+the comparison is \emph{tautological}: both sides use the same
+Drinfeld primitive formula for \(\Delta_z(J)\) and the same
+universal \(\Delta_z(\psi_n)\) expansion.  Those tests verify
+convention consistency only.
+
+The first non-tautological window proved here is
+Computation~\ref{comp:ds-w3-degree2-rtt-miura-witness}: the
+projected $\mathfrak{sl}_3$ RTT computation and the primitive
+two-boson Miura computation agree term by term on the
+$z^0$, degree-$2$ Cartan/Sugawara sector.  This does not yet
+prove the full spin-$3$ DS-HPL coproduct identity.  The spin-$3$
+sector, where the cubic primary and gravitational
+\(\mathrm{HPL}_3\) corrections enter, remains the load-bearing
+non-tautological obligation for the full compatibility theorem.
+The spectral coassociativity tests use \emph{shifted} parameters:
 $(\Delta_{z_1} \otimes \id) \circ \Delta_{z_1 + z_2}
 = (\id \otimes \Delta_{z_2}) \circ \Delta_{z_1}$,
 reflecting $T(u) \cdot T(u - z_1) \cdot T(u - z_1 - z_2)$.
@@ -13317,7 +13616,7 @@ Lemma~\ref{lem:Kbi-dg}).
 \item Non-redundancy of the two colours
 (Corollary~\ref{cor:two-colours-non-redundant}).
 \item Heisenberg ordered bar complex: trivial differential, deconcatenation
-coproduct, collision residue $r^{\mathrm{coll}}(z) = k/z$,
+coproduct, collision residue $r^{\mathrm{coll}}_{\cH}(z) = k\Omega_{\cH}/z$,
 $R$-matrix $R(z) = e^{k\hbar/z}$
 (Theorems~\ref{thm:heisenberg-ordered-bar}
 and \ref{thm:heisenberg-rmatrix}).

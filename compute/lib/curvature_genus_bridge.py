@@ -197,7 +197,7 @@ def multi_generator_obstruction():
     """Multi-generator obstruction analysis.
 
     For single-generator algebras (Heisenberg, KM, Virasoro):
-      obs_g = kappa * lambda_g  (Hodge class)
+      obs_g^sc = kappa * lambda_g  (scalar Hodge class)
       (obs_g)^2 = 0  by Mumford's relation (PROVED)
 
     For multi-generator algebras (W_3, W_N):

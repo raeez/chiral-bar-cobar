@@ -690,7 +690,12 @@ def jimbo_r_matrix_slN(q: complex, N: int) -> np.ndarray:
       + sum_{i != j} E_{ii} tensor E_{jj}
       + (q - q^{-1}) sum_{i > j} E_{ij} tensor E_{ji}
 
-    This satisfies the quantum Yang-Baxter equation (no spectral parameter).
+    This is the constant Drinfeld-Jimbo braid-form R-matrix on fixed
+    fundamental tensor factors: it has no additive evaluation parameter.
+    That does not say that associative Yangians or Drinfeld-centre
+    half-braidings have no spectral parameters.  In the Yangian
+    degeneration, evaluation modules V(u), W(v) carry the representation-
+    theoretic parameter u - v and the rational matrix R(u-v).
     """
     d = N * N
     R = np.zeros((d, d), dtype=complex)
@@ -1363,6 +1368,8 @@ def yangian_from_quantum_group(N: int, hbar: complex) -> Dict[str, Any]:
       of the T-matrix T(u) around u = infinity
     - The collision residue Res^{coll}(Theta_A) gives r(z) = Omega/z
     - The Yangian R-matrix R(u) = uI + P quantizes this
+    - The additive parameter u is the Yangian evaluation-module shift,
+      not something manufactured by the topological bar coproduct
 
     We verify the degeneration numerically.
     """

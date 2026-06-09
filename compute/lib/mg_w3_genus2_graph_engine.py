@@ -7,7 +7,7 @@ The W_3 algebra has two strong generators:
     T (conformal weight 2, Virasoro stress tensor)
     W (conformal weight 3, spin-3 current)
 
-The monograph proves obs_g = kappa * lambda_g for UNIFORM-WEIGHT algebras at
+The monograph proves obs_g^sc = kappa * lambda_g for UNIFORM-WEIGHT algebras at
 all genera. For MULTI-WEIGHT algebras like W_3, the genus-1 identity
 obs_1 = kappa * lambda_1 is proved unconditionally, but the genus-2 formula
 is OPEN (op:multi-generator-universality).

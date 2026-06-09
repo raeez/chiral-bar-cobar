@@ -23,8 +23,25 @@ import pytest
 from fractions import Fraction
 
 from compute.lib.theorem_concordance_rectification_engine import (
+    TITLE_ENVIRONMENT_GATES, THEOREM_SIGNATURE_GATES,
+    PROOF_OPENING_GATES, PROOF_HYPOTHESIS_GATES,
+    ADVANCED_PROOF_METHOD_GATES, TABLE_STATUS_GATES,
+    STRUCTURE_PLACEMENT_GATES, VERIFICATION_ORDER_GATES,
+    DEPENDENCY_LANGUAGE_GATES, MORITA_LEVEL_QUADRANT_GATES,
+    NOTATION_DISCIPLINE_GATES, HYPOTHESIS_REFERENCE_GATES,
+    ABSTRACT_FRONT_BACK_GATES,
+    theorem_title_environment_scope, theorem_signature_scope,
+    proof_opening_scope, proof_hypothesis_scope,
+    theorem_surface_obligation_scope,
+    advanced_proof_method_scope, table_status_scope,
+    proof_table_obligation_scope,
+    structure_placement_scope, verification_order_scope,
+    dependency_language_scope, morita_level_quadrant_scope,
+    manuscript_structure_obligation_scope,
+    notation_discipline_scope, hypothesis_reference_scope,
+    abstract_front_back_scope, notation_hypothesis_abstract_obligation_scope,
     # Status registries
-    MC_STATUS, MAIN_THEOREMS, KOSZULNESS_META_THEOREM,
+    MC_STATUS, MC5_AMBIENT_STATUS, MAIN_THEOREMS, KOSZULNESS_META_THEOREM,
     THREE_PILLAR_IDENTIFICATIONS, PREPRINT_DEPENDENCIES,
     SHADOW_DEPTH_CLASSES, ENVELOPE_SHADOW_COMPLEXITY,
     E1_FIVE_THEOREMS, HOLOGRAPHIC_TARGETS, ENTANGLEMENT_TARGETS,
@@ -54,7 +71,837 @@ from compute.lib.theorem_concordance_rectification_engine import (
 
 
 # ============================================================
-# SECTION 1: MC STATUS (all five proved)
+# SECTION 0: THEOREM/PROOF SURFACE GATES (PDF obligations 901--932)
+# ============================================================
+
+class TestTheoremProofSurfaceGates:
+    """Executable gates for theorem titles, signatures, and proof prerequisites."""
+
+    def test_gate_families_cover_obligation_block(self):
+        """The theorem-surface lane has four independent gate families."""
+        assert len(TITLE_ENVIRONMENT_GATES) == 5
+        assert len(THEOREM_SIGNATURE_GATES) == 12
+        assert len(PROOF_OPENING_GATES) == 4
+        assert len(PROOF_HYPOTHESIS_GATES) == 11
+
+    def test_platonic_theorem_title_is_blocked(self):
+        """'Platonic' is not allowed in theorem titles."""
+        scope = theorem_title_environment_scope(
+            theorem_title_contains_platonic=True,
+            platonic_only_in_informal_remarks=False,
+            conjectures_numbered_environment=True,
+            conditional_theorem_hypotheses_first=True,
+        )
+        assert scope['platonic_theorem_title_allowed'] is False
+        assert scope['title_environment_surface_allowed'] is False
+        assert 'theorem_title_no_platonic' in scope['missing']
+        assert 'platonic_only_in_informal_remarks' in scope['missing']
+
+    def test_conditional_title_requires_complete_hypotheses(self):
+        """A conditional theorem title is blocked if the hypotheses are incomplete."""
+        scope = theorem_title_environment_scope(
+            theorem_title_contains_platonic=False,
+            platonic_only_in_informal_remarks=True,
+            conjectures_numbered_environment=True,
+            conditional_theorem_hypotheses_first=True,
+            theorem_title_contains_conditional=True,
+            conditional_title_hypotheses_complete=False,
+        )
+        assert scope['conditional_title_allowed'] is False
+        assert 'conditional_title_has_complete_hypotheses' in scope['missing']
+
+    def test_title_environment_all_gates_positive(self):
+        """Title/environment scope unlocks only after all gates pass."""
+        scope = theorem_title_environment_scope(
+            theorem_title_contains_platonic=False,
+            platonic_only_in_informal_remarks=True,
+            conjectures_numbered_environment=True,
+            conditional_theorem_hypotheses_first=True,
+            theorem_title_contains_conditional=True,
+            conditional_title_hypotheses_complete=True,
+        )
+        assert scope['all_gates_satisfied'] is True
+        assert scope['title_environment_surface_allowed'] is True
+
+    def test_theorem_signature_missing_completion_and_holonomicity(self):
+        """Theorem signatures must include completion and holonomicity data."""
+        scope = theorem_signature_scope(
+            raw_finite_completed_scope_stated=True,
+            ordered_symmetric_scope_stated=True,
+            chain_derived_coderived_scope_stated=True,
+            operadic_level_stated=True,
+            curve_genus_scope_stated=True,
+            critical_level_exclusions_stated=True,
+            genericity_exclusions_stated=True,
+            finite_type_hypotheses_stated=True,
+            completion_hypotheses_stated=False,
+            dualizability_hypotheses_stated=True,
+            holonomicity_hypotheses_stated=False,
+            base_change_hypotheses_stated=True,
+        )
+        assert scope['theorem_statement_signature_complete'] is False
+        assert 'completion_hypotheses_stated' in scope['missing']
+        assert 'holonomicity_hypotheses_stated' in scope['missing']
+
+    def test_theorem_signature_all_gates_positive(self):
+        """A theorem statement passes only with the full type signature."""
+        scope = theorem_signature_scope(
+            raw_finite_completed_scope_stated=True,
+            ordered_symmetric_scope_stated=True,
+            chain_derived_coderived_scope_stated=True,
+            operadic_level_stated=True,
+            curve_genus_scope_stated=True,
+            critical_level_exclusions_stated=True,
+            genericity_exclusions_stated=True,
+            finite_type_hypotheses_stated=True,
+            completion_hypotheses_stated=True,
+            dualizability_hypotheses_stated=True,
+            holonomicity_hypotheses_stated=True,
+            base_change_hypotheses_stated=True,
+        )
+        assert scope['all_gates_satisfied'] is True
+        assert scope['theorem_statement_signature_complete'] is True
+
+    def test_proof_opening_blocks_unidentified_spectral_sequence(self):
+        """A proof using a spectral sequence must identify it."""
+        scope = proof_opening_scope(
+            ambient_category_named=True,
+            differential_identified=True,
+            filtration_identified=True,
+            spectral_sequence_used=True,
+            spectral_sequence_identified=False,
+        )
+        assert scope['spectral_sequence_claim_allowed'] is False
+        assert 'spectral_sequence_identified' in scope['missing']
+
+    def test_proof_opening_all_gates_positive(self):
+        """The proof opening passes with ambient, differential, filtration, and sequence."""
+        scope = proof_opening_scope(
+            ambient_category_named=True,
+            differential_identified=True,
+            filtration_identified=True,
+            spectral_sequence_used=True,
+            spectral_sequence_identified=True,
+        )
+        assert scope['all_gates_satisfied'] is True
+        assert scope['proof_opening_complete'] is True
+
+    def test_proof_hypotheses_block_unchecked_methods(self):
+        """Method-specific proof obligations are required when the method is used."""
+        scope = proof_hypothesis_scope(
+            convergence_used=True,
+            convergence_theorem_cited=False,
+            inverse_limits_used=True,
+            lim1_killed=False,
+            verdier_duality_used=True,
+            verdier_holonomicity_checked=False,
+            gysin_maps_used=True,
+            gysin_orientation_checked=False,
+            one_over_n_factor_used=True,
+            characteristic_zero_stated=False,
+            pbw_used=True,
+            pbw_associated_graded_stated=False,
+            koszulness_used=True,
+            koszulness_diagonal_concentration_stated=False,
+        )
+        assert scope['proof_method_obligations_complete'] is False
+        assert scope['pbw_claim_allowed'] is False
+        assert scope['koszulness_claim_allowed'] is False
+        assert 'convergence_theorem_cited_when_used' in scope['missing']
+        assert 'lim1_killed_when_inverse_limits_used' in scope['missing']
+        assert 'verdier_holonomicity_checked_when_used' in scope['missing']
+        assert 'gysin_orientation_checked_when_used' in scope['missing']
+        assert 'one_over_n_factor_char_zero_stated_when_used' in scope['missing']
+        assert 'pbw_associated_graded_stated_when_used' in scope['missing']
+        assert 'koszulness_diagonal_concentration_stated_when_used' in scope['missing']
+
+    def test_proof_hypotheses_all_gates_positive(self):
+        """All method-specific proof obligations can be discharged."""
+        scope = proof_hypothesis_scope(
+            convergence_used=True,
+            convergence_theorem_cited=True,
+            inverse_limits_used=True,
+            lim1_killed=True,
+            duality_used=True,
+            finite_continuous_duality_checked=True,
+            verdier_duality_used=True,
+            verdier_holonomicity_checked=True,
+            gysin_maps_used=True,
+            gysin_orientation_checked=True,
+            pushforward_used=True,
+            pushforward_properness_checked=True,
+            symmetric_quotient_used=True,
+            symmetric_quotient_equivariance_checked=True,
+            one_over_n_factor_used=True,
+            characteristic_zero_stated=True,
+            r_matrix_descent_used=True,
+            r_twisted_equivariance_stated=True,
+            pbw_used=True,
+            pbw_associated_graded_stated=True,
+            koszulness_used=True,
+            koszulness_diagonal_concentration_stated=True,
+        )
+        assert scope['all_gates_satisfied'] is True
+        assert scope['proof_method_obligations_complete'] is True
+        assert scope['pbw_claim_allowed'] is True
+        assert scope['koszulness_claim_allowed'] is True
+
+    def test_aggregate_surface_defaults_block_everything(self):
+        """The aggregate theorem-surface gate starts blocked by default."""
+        scope = theorem_surface_obligation_scope()
+        assert scope['all_gates_satisfied'] is False
+        assert set(scope['blocked_components']) == {
+            'title_environment',
+            'theorem_signature',
+            'proof_opening',
+        }
+        assert 'proof_hypotheses' not in scope['blocked_components']
+
+    def test_aggregate_surface_all_gates_positive(self):
+        """All theorem/proof surface gate families must pass together."""
+        scope = theorem_surface_obligation_scope(
+            title={
+                'theorem_title_contains_platonic': False,
+                'platonic_only_in_informal_remarks': True,
+                'conjectures_numbered_environment': True,
+                'conditional_theorem_hypotheses_first': True,
+                'theorem_title_contains_conditional': True,
+                'conditional_title_hypotheses_complete': True,
+            },
+            signature={
+                'raw_finite_completed_scope_stated': True,
+                'ordered_symmetric_scope_stated': True,
+                'chain_derived_coderived_scope_stated': True,
+                'operadic_level_stated': True,
+                'curve_genus_scope_stated': True,
+                'critical_level_exclusions_stated': True,
+                'genericity_exclusions_stated': True,
+                'finite_type_hypotheses_stated': True,
+                'completion_hypotheses_stated': True,
+                'dualizability_hypotheses_stated': True,
+                'holonomicity_hypotheses_stated': True,
+                'base_change_hypotheses_stated': True,
+            },
+            proof_opening={
+                'ambient_category_named': True,
+                'differential_identified': True,
+                'filtration_identified': True,
+                'spectral_sequence_used': True,
+                'spectral_sequence_identified': True,
+            },
+            proof_hypotheses={
+                'convergence_used': True,
+                'convergence_theorem_cited': True,
+                'inverse_limits_used': True,
+                'lim1_killed': True,
+                'duality_used': True,
+                'finite_continuous_duality_checked': True,
+                'verdier_duality_used': True,
+                'verdier_holonomicity_checked': True,
+                'gysin_maps_used': True,
+                'gysin_orientation_checked': True,
+                'pushforward_used': True,
+                'pushforward_properness_checked': True,
+                'symmetric_quotient_used': True,
+                'symmetric_quotient_equivariance_checked': True,
+                'one_over_n_factor_used': True,
+                'characteristic_zero_stated': True,
+                'r_matrix_descent_used': True,
+                'r_twisted_equivariance_stated': True,
+                'pbw_used': True,
+                'pbw_associated_graded_stated': True,
+                'koszulness_used': True,
+                'koszulness_diagonal_concentration_stated': True,
+            },
+        )
+        assert scope['all_gates_satisfied'] is True
+        assert scope['blocked_components'] == []
+
+
+class TestAdvancedProofAndTableStatusGates:
+    """Executable gates for proof methods and table-status evidence."""
+
+    def test_gate_families_cover_obligation_block(self):
+        """The 933--949 lane has proof-method and table-status gate families."""
+        assert len(ADVANCED_PROOF_METHOD_GATES) == 11
+        assert len(TABLE_STATUS_GATES) == 6
+
+    def test_formality_and_transfer_require_model_obstructions_sdr(self):
+        """Formality and A-infinity transfer require their local data."""
+        scope = advanced_proof_method_scope(
+            formality_used=True,
+            formality_model_stated=True,
+            formality_obstruction_groups_stated=False,
+            ainfty_transfer_used=True,
+            sdr_data_stated=False,
+        )
+        assert scope['formality_claim_allowed'] is False
+        assert scope['ainfty_transfer_claim_allowed'] is False
+        assert 'formality_model_and_obstruction_groups_stated_when_used' in scope['missing']
+        assert 'ainfty_transfer_sdr_data_stated_when_used' in scope['missing']
+
+    def test_graph_sign_ghost_conventions_are_required_when_used(self):
+        """Graph, sign, and ghost methods each have explicit convention gates."""
+        scope = advanced_proof_method_scope(
+            modular_operad_used=True,
+            graph_convention_stated=False,
+            stable_graphs_used=True,
+            legs_edges_genus_defined=False,
+            signs_used=True,
+            determinant_line_convention_cited=False,
+            ghosts_used=True,
+            brst_complex_defined=False,
+        )
+        assert scope['all_gates_satisfied'] is False
+        assert 'modular_operad_graph_convention_stated_when_used' in scope['missing']
+        assert 'stable_graph_legs_edges_genus_defined_when_used' in scope['missing']
+        assert 'determinant_line_sign_convention_cited_when_used' in scope['missing']
+        assert 'brst_complex_defined_when_ghosts_used' in scope['missing']
+
+    def test_scalar_conventions_and_k_invariants_are_required_when_used(self):
+        """Central charge, kappa, K^kappa, K^c, and K^ghost have separate gates."""
+        scope = advanced_proof_method_scope(
+            central_charge_used=True,
+            central_charge_convention_defined=False,
+            kappa_used=True,
+            trace_map_defined=False,
+            kkappa_used=True,
+            a_dual_exists_proved=False,
+            kc_used=True,
+            central_charge_a_dual_proved=False,
+            kghost_used=True,
+            kghost_presentation_dependence_stated=False,
+        )
+        assert scope['kkappa_claim_allowed'] is False
+        assert scope['kc_claim_allowed'] is False
+        assert scope['kghost_claim_allowed'] is False
+        assert 'central_charge_convention_defined_when_used' in scope['missing']
+        assert 'trace_map_defined_when_kappa_used' in scope['missing']
+        assert 'a_dual_exists_proved_when_kkappa_used' in scope['missing']
+        assert 'central_charge_a_dual_proved_when_kc_used' in scope['missing']
+        assert 'kghost_presentation_dependence_stated_when_used' in scope['missing']
+
+    def test_advanced_proof_methods_all_gates_positive(self):
+        """All advanced proof-method obligations can be discharged."""
+        scope = advanced_proof_method_scope(
+            formality_used=True,
+            formality_model_stated=True,
+            formality_obstruction_groups_stated=True,
+            ainfty_transfer_used=True,
+            sdr_data_stated=True,
+            modular_operad_used=True,
+            graph_convention_stated=True,
+            stable_graphs_used=True,
+            legs_edges_genus_defined=True,
+            signs_used=True,
+            determinant_line_convention_cited=True,
+            ghosts_used=True,
+            brst_complex_defined=True,
+            central_charge_used=True,
+            central_charge_convention_defined=True,
+            kappa_used=True,
+            trace_map_defined=True,
+            kkappa_used=True,
+            a_dual_exists_proved=True,
+            kc_used=True,
+            central_charge_a_dual_proved=True,
+            kghost_used=True,
+            kghost_presentation_dependence_stated=True,
+        )
+        assert scope['all_gates_satisfied'] is True
+        assert scope['formality_claim_allowed'] is True
+        assert scope['kkappa_claim_allowed'] is True
+        assert scope['kc_claim_allowed'] is True
+        assert scope['kghost_claim_allowed'] is True
+
+    def test_table_status_blocks_missing_coefficients_and_citations(self):
+        """OPE/table claims need full coefficients, normalization, and citations."""
+        scope = table_status_scope(
+            ope_tables_used=True,
+            ope_tables_full_coefficients=False,
+            ope_coefficients_match_normalization_appendix=False,
+            table_entries_cite_theorem_or_proposition=False,
+        )
+        assert scope['ope_table_claim_allowed'] is False
+        assert 'ope_tables_full_coefficients_when_used' in scope['missing']
+        assert 'ope_coefficients_match_normalization_appendix' in scope['missing']
+        assert 'table_entries_cite_theorem_or_proposition' in scope['missing']
+
+    def test_table_status_blocks_missing_status_evidence(self):
+        """Proved, conditional, and open table statuses each need evidence."""
+        scope = table_status_scope(
+            table_entries_cite_theorem_or_proposition=True,
+            proved_table_status_used=True,
+            proved_table_status_has_manuscript_proof=False,
+            conditional_table_status_used=True,
+            conditional_table_status_lists_exact_conditions=False,
+            open_table_status_used=True,
+            open_table_status_names_obstruction_complex=False,
+        )
+        assert scope['proved_status_claim_allowed'] is False
+        assert scope['conditional_status_claim_allowed'] is False
+        assert scope['open_status_claim_allowed'] is False
+        assert 'proved_table_status_has_manuscript_proof' in scope['missing']
+        assert 'conditional_table_status_lists_exact_conditions' in scope['missing']
+        assert 'open_table_status_names_obstruction_complex' in scope['missing']
+
+    def test_table_status_all_gates_positive(self):
+        """OPE/table status claims unlock only after all evidence gates pass."""
+        scope = table_status_scope(
+            ope_tables_used=True,
+            ope_tables_full_coefficients=True,
+            ope_coefficients_match_normalization_appendix=True,
+            table_entries_cite_theorem_or_proposition=True,
+            proved_table_status_used=True,
+            proved_table_status_has_manuscript_proof=True,
+            conditional_table_status_used=True,
+            conditional_table_status_lists_exact_conditions=True,
+            open_table_status_used=True,
+            open_table_status_names_obstruction_complex=True,
+        )
+        assert scope['all_gates_satisfied'] is True
+        assert scope['ope_table_claim_allowed'] is True
+        assert scope['proved_status_claim_allowed'] is True
+        assert scope['conditional_status_claim_allowed'] is True
+        assert scope['open_status_claim_allowed'] is True
+
+    def test_aggregate_proof_table_defaults_block_table_status(self):
+        """The aggregate 933--949 scope starts blocked without supplied evidence."""
+        scope = proof_table_obligation_scope()
+        assert scope['all_gates_satisfied'] is False
+        assert scope['blocked_components'] == ['table_status']
+
+    def test_aggregate_proof_table_all_gates_positive(self):
+        """Both proof-method and table-status families must pass together."""
+        scope = proof_table_obligation_scope(
+            proof_methods={
+                'formality_used': True,
+                'formality_model_stated': True,
+                'formality_obstruction_groups_stated': True,
+                'ainfty_transfer_used': True,
+                'sdr_data_stated': True,
+                'modular_operad_used': True,
+                'graph_convention_stated': True,
+                'stable_graphs_used': True,
+                'legs_edges_genus_defined': True,
+                'signs_used': True,
+                'determinant_line_convention_cited': True,
+                'ghosts_used': True,
+                'brst_complex_defined': True,
+                'central_charge_used': True,
+                'central_charge_convention_defined': True,
+                'kappa_used': True,
+                'trace_map_defined': True,
+                'kkappa_used': True,
+                'a_dual_exists_proved': True,
+                'kc_used': True,
+                'central_charge_a_dual_proved': True,
+                'kghost_used': True,
+                'kghost_presentation_dependence_stated': True,
+            },
+            tables={
+                'ope_tables_used': True,
+                'ope_tables_full_coefficients': True,
+                'ope_coefficients_match_normalization_appendix': True,
+                'table_entries_cite_theorem_or_proposition': True,
+                'proved_table_status_used': True,
+                'proved_table_status_has_manuscript_proof': True,
+                'conditional_table_status_used': True,
+                'conditional_table_status_lists_exact_conditions': True,
+                'open_table_status_used': True,
+                'open_table_status_names_obstruction_complex': True,
+            },
+        )
+        assert scope['all_gates_satisfied'] is True
+        assert scope['blocked_components'] == []
+
+
+class TestManuscriptStructureAndComparisonGates:
+    """Executable gates for manuscript structure, dependency language, and quadrants."""
+
+    def test_gate_families_cover_obligation_block(self):
+        """The 950--980 lane has four independent structure families."""
+        assert len(STRUCTURE_PLACEMENT_GATES) == 8
+        assert len(VERIFICATION_ORDER_GATES) == 5
+        assert len(DEPENDENCY_LANGUAGE_GATES) == 5
+        assert len(MORITA_LEVEL_QUADRANT_GATES) == 11
+
+    def test_structure_blocks_unmerged_firewall_and_unproved_placement(self):
+        """The five-object firewall must be early and cross-referenced."""
+        scope = structure_placement_scope(
+            duplicate_theorem_statements_merged=True,
+            sign_appendices_merged_into_one_sign_theorem=True,
+            five_object_firewall_merged_early=True,
+            five_object_firewall_cross_referenced=False,
+            motivational_physics_after_theorem_proof=False,
+            unproved_cross_volume_claims_in_comparison_conjectures=False,
+            k3_recognition_targets_in_conditional_chapter=False,
+            arithmetic_consequences_after_algebraic_core=False,
+            examples_after_main_theorem=False,
+        )
+        assert scope['five_object_firewall_surface_allowed'] is False
+        assert 'five_object_firewall_merged_early_and_cross_referenced' in scope['missing']
+        assert 'motivational_physics_after_theorem_proof' in scope['missing']
+        assert 'unproved_cross_volume_claims_in_comparison_conjectures' in scope['missing']
+
+    def test_structure_all_gates_positive(self):
+        """Structure placement unlocks only after all placement gates pass."""
+        scope = structure_placement_scope(
+            duplicate_theorem_statements_merged=True,
+            sign_appendices_merged_into_one_sign_theorem=True,
+            five_object_firewall_merged_early=True,
+            five_object_firewall_cross_referenced=True,
+            motivational_physics_after_theorem_proof=True,
+            unproved_cross_volume_claims_in_comparison_conjectures=True,
+            k3_recognition_targets_in_conditional_chapter=True,
+            arithmetic_consequences_after_algebraic_core=True,
+            examples_after_main_theorem=True,
+        )
+        assert scope['all_gates_satisfied'] is True
+        assert scope['structure_placement_complete'] is True
+
+    def test_verification_order_blocks_early_h_delta(self):
+        """H_Delta is not allowed before the class-M completion test."""
+        scope = verification_order_scope(
+            heisenberg_first_verification=True,
+            affine_km_second_verification=True,
+            betagamma_third_verification=True,
+            class_m_completion_test_for_virasoro_w3=False,
+            h_delta_after_class_m_completion=False,
+        )
+        assert scope['h_delta_early_allowed'] is False
+        assert 'class_m_completion_test_for_virasoro_w3' in scope['missing']
+        assert 'h_delta_after_class_m_completion' in scope['missing']
+
+    def test_verification_order_all_gates_positive(self):
+        """The example theorem order can be fully discharged."""
+        scope = verification_order_scope(
+            heisenberg_first_verification=True,
+            affine_km_second_verification=True,
+            betagamma_third_verification=True,
+            class_m_completion_test_for_virasoro_w3=True,
+            h_delta_after_class_m_completion=True,
+        )
+        assert scope['all_gates_satisfied'] is True
+        assert scope['verification_order_complete'] is True
+
+    def test_dependency_language_blocks_conjectural_arrows_and_loose_words(self):
+        """Dependency arrows, comparison therefore, universal, and canonical are gated."""
+        scope = dependency_language_scope(
+            dependency_graph_arrows_only_proved_implications=False,
+            conjectural_arrows_removed=False,
+            comparison_theorem_used=True,
+            comparison_therefore_replaced_by_under_hypotheses=False,
+            universal_used=True,
+            universal_property_proved=False,
+            canonical_used=True,
+            canonical_uniqueness_proved=False,
+            canonical_contractibility_of_choices_proved=False,
+        )
+        assert scope['conjectural_dependency_arrow_allowed'] is False
+        assert scope['comparison_therefore_allowed'] is False
+        assert scope['universal_language_allowed'] is False
+        assert scope['canonical_language_allowed'] is False
+        assert 'dependency_graph_arrows_only_proved_implications' in scope['missing']
+        assert 'conjectural_arrows_removed' in scope['missing']
+        assert 'comparison_therefore_replaced_by_under_hypotheses' in scope['missing']
+        assert 'universal_property_proved_when_universal_used' in scope['missing']
+        assert 'canonical_uniqueness_or_contractibility_proved' in scope['missing']
+
+    def test_dependency_language_all_gates_positive(self):
+        """Dependency/comparison language unlocks only after proof gates pass."""
+        scope = dependency_language_scope(
+            dependency_graph_arrows_only_proved_implications=True,
+            conjectural_arrows_removed=True,
+            comparison_theorem_used=True,
+            comparison_therefore_replaced_by_under_hypotheses=True,
+            universal_used=True,
+            universal_property_proved=True,
+            canonical_used=True,
+            canonical_contractibility_of_choices_proved=True,
+        )
+        assert scope['all_gates_satisfied'] is True
+        assert scope['universal_language_allowed'] is True
+        assert scope['canonical_language_allowed'] is True
+
+    def test_morita_level_quadrant_blocks_unproved_transfers(self):
+        """Vacuum, Morita, level, and quadrant transfers have separate gates."""
+        scope = morita_level_quadrant_scope(
+            chosen_vacuum_data_defined=False,
+            vacuum_independence_claimed=True,
+            vacuum_independence_proved=False,
+            open_factorization_category_level0_defined=False,
+            morita_equivalence_to_module_category_used=True,
+            morita_equivalence_to_module_category_proved=False,
+            morita_equivalence_separated_from_algebra_isomorphism=False,
+            level_alphabet_defined_once=False,
+            level_signatures_exhaustive_only_open_quadrant=False,
+            level_signatures_do_not_transfer_cy_claims=False,
+            quadrant_grid_defined=False,
+            cross_quadrant_structure_preservation_claimed=True,
+            cross_quadrant_maps_preserve_structures_proved=False,
+            conjectural_cross_quadrant_maps_marked=False,
+        )
+        assert scope['vacuum_independence_claim_allowed'] is False
+        assert scope['morita_equivalence_claim_allowed'] is False
+        assert scope['morita_as_algebra_isomorphism_allowed'] is False
+        assert scope['cy_transfer_by_level_signature_allowed'] is False
+        assert scope['cross_quadrant_structure_preservation_claim_allowed'] is False
+        assert 'chosen_vacuum_data_defined' in scope['missing']
+        assert 'open_factorization_category_level0_defined' in scope['missing']
+        assert 'conjectural_cross_quadrant_maps_marked' in scope['missing']
+
+    def test_morita_level_quadrant_all_gates_positive(self):
+        """Level-0/Morita/quadrant scope unlocks only after all gates pass."""
+        scope = morita_level_quadrant_scope(
+            chosen_vacuum_data_defined=True,
+            vacuum_independence_claimed=True,
+            vacuum_independence_proved=True,
+            open_factorization_category_level0_defined=True,
+            morita_equivalence_to_module_category_used=True,
+            morita_equivalence_to_module_category_proved=True,
+            morita_equivalence_separated_from_algebra_isomorphism=True,
+            level_alphabet_defined_once=True,
+            level_signatures_exhaustive_only_open_quadrant=True,
+            level_signatures_do_not_transfer_cy_claims=True,
+            quadrant_grid_defined=True,
+            cross_quadrant_structure_preservation_claimed=True,
+            cross_quadrant_maps_preserve_structures_proved=True,
+            conjectural_cross_quadrant_maps_marked=True,
+        )
+        assert scope['all_gates_satisfied'] is True
+        assert scope['vacuum_independence_claim_allowed'] is True
+        assert scope['morita_equivalence_claim_allowed'] is True
+        assert scope['cross_quadrant_structure_preservation_claim_allowed'] is True
+
+    def test_aggregate_manuscript_structure_defaults_block_everything(self):
+        """The aggregate 950--980 scope starts blocked without supplied evidence."""
+        scope = manuscript_structure_obligation_scope()
+        assert scope['all_gates_satisfied'] is False
+        assert set(scope['blocked_components']) == {
+            'structure_placement',
+            'verification_order',
+            'dependency_language',
+            'morita_level_quadrant',
+        }
+
+    def test_aggregate_manuscript_structure_all_gates_positive(self):
+        """All structure/comparison gate families must pass together."""
+        scope = manuscript_structure_obligation_scope(
+            structure={
+                'duplicate_theorem_statements_merged': True,
+                'sign_appendices_merged_into_one_sign_theorem': True,
+                'five_object_firewall_merged_early': True,
+                'five_object_firewall_cross_referenced': True,
+                'motivational_physics_after_theorem_proof': True,
+                'unproved_cross_volume_claims_in_comparison_conjectures': True,
+                'k3_recognition_targets_in_conditional_chapter': True,
+                'arithmetic_consequences_after_algebraic_core': True,
+                'examples_after_main_theorem': True,
+            },
+            order={
+                'heisenberg_first_verification': True,
+                'affine_km_second_verification': True,
+                'betagamma_third_verification': True,
+                'class_m_completion_test_for_virasoro_w3': True,
+                'h_delta_after_class_m_completion': True,
+            },
+            dependency={
+                'dependency_graph_arrows_only_proved_implications': True,
+                'conjectural_arrows_removed': True,
+                'comparison_theorem_used': True,
+                'comparison_therefore_replaced_by_under_hypotheses': True,
+                'universal_used': True,
+                'universal_property_proved': True,
+                'canonical_used': True,
+                'canonical_uniqueness_proved': True,
+            },
+            morita_level_quadrant={
+                'chosen_vacuum_data_defined': True,
+                'vacuum_independence_claimed': True,
+                'vacuum_independence_proved': True,
+                'open_factorization_category_level0_defined': True,
+                'morita_equivalence_to_module_category_used': True,
+                'morita_equivalence_to_module_category_proved': True,
+                'morita_equivalence_separated_from_algebra_isomorphism': True,
+                'level_alphabet_defined_once': True,
+                'level_signatures_exhaustive_only_open_quadrant': True,
+                'level_signatures_do_not_transfer_cy_claims': True,
+                'quadrant_grid_defined': True,
+                'cross_quadrant_structure_preservation_claimed': True,
+                'cross_quadrant_maps_preserve_structures_proved': True,
+                'conjectural_cross_quadrant_maps_marked': True,
+            },
+        )
+        assert scope['all_gates_satisfied'] is True
+        assert scope['blocked_components'] == []
+
+
+class TestNotationHypothesisAbstractGates:
+    """Executable gates for notation, hypothesis references, and paper endpoints."""
+
+    def test_gate_families_cover_obligation_block(self):
+        """The 981--1000 lane has notation, hypothesis, and endpoint gates."""
+        assert len(NOTATION_DISCIPLINE_GATES) == 11
+        assert len(HYPOTHESIS_REFERENCE_GATES) == 5
+        assert len(ABSTRACT_FRONT_BACK_GATES) == 4
+
+    def test_notation_blocks_symbol_reuse_and_z_conflation(self):
+        """C/D reuse, Delta conflation, and Z conflation are blocked."""
+        scope = notation_discipline_scope(
+            notation_table_before_main_theorem=True,
+            unused_symbols_removed_after_definition=True,
+            C_reused_for_curve_coalgebra_category_same_proof=True,
+            D_reused_for_divisor_differential_duality_same_proof=True,
+            D_reserved_for_verdier_duality=False,
+            d_reserved_for_differentials=True,
+            delta_subscripts_distinguish_diagonal_coproduct_discriminant=False,
+            fm_notation_consistent=True,
+            bar_notation_consistent=True,
+            ch_hh_thh_notation_consistent=True,
+            z_notation_distinct=False,
+        )
+        assert scope['C_reuse_allowed'] is False
+        assert scope['D_reuse_allowed'] is False
+        assert scope['D_for_non_verdier_allowed'] is False
+        assert scope['z_notation_conflation_allowed'] is False
+        assert 'C_not_reused_for_curve_coalgebra_category_same_proof' in scope['missing']
+        assert 'D_not_reused_for_divisor_differential_duality_same_proof' in scope['missing']
+        assert 'D_reserved_for_verdier_duality' in scope['missing']
+        assert 'delta_subscripts_distinguish_diagonal_coproduct_discriminant' in scope['missing']
+        assert 'z_notation_distinct' in scope['missing']
+
+    def test_notation_all_gates_positive(self):
+        """Notation discipline passes only with all symbol gates satisfied."""
+        scope = notation_discipline_scope(
+            notation_table_before_main_theorem=True,
+            unused_symbols_removed_after_definition=True,
+            C_reused_for_curve_coalgebra_category_same_proof=False,
+            D_reused_for_divisor_differential_duality_same_proof=False,
+            D_reserved_for_verdier_duality=True,
+            d_reserved_for_differentials=True,
+            delta_subscripts_distinguish_diagonal_coproduct_discriminant=True,
+            fm_notation_consistent=True,
+            bar_notation_consistent=True,
+            ch_hh_thh_notation_consistent=True,
+            z_notation_distinct=True,
+        )
+        assert scope['all_gates_satisfied'] is True
+        assert scope['notation_discipline_complete'] is True
+
+    def test_hypothesis_reference_blocks_early_refs_and_classification(self):
+        """Hypothesis packages, missing refs, and landscape classification are gated."""
+        scope = hypothesis_reference_scope(
+            hypothesis_index_added=False,
+            hypothesis_package_referenced_before_definition=True,
+            missing_section_refs_present=True,
+            standard_landscape_defined_finite_list=False,
+            landscape_coverage_proved=False,
+            landscape_called_atlas_when_coverage_not_proved=False,
+        )
+        assert scope['hypothesis_reference_before_definition_allowed'] is False
+        assert scope['missing_section_reference_allowed'] is False
+        assert scope['standard_landscape_reference_allowed'] is False
+        assert scope['landscape_classification_allowed'] is False
+        assert 'hypothesis_index_added' in scope['missing']
+        assert 'no_hypothesis_package_before_definition' in scope['missing']
+        assert 'no_missing_section_refs' in scope['missing']
+        assert 'standard_landscape_defined_finite_list' in scope['missing']
+        assert 'landscape_coverage_proved_or_atlas_language_used' in scope['missing']
+
+    def test_hypothesis_reference_allows_atlas_when_coverage_unproved(self):
+        """Unproved landscape coverage can pass only as atlas language."""
+        scope = hypothesis_reference_scope(
+            hypothesis_index_added=True,
+            hypothesis_package_referenced_before_definition=False,
+            missing_section_refs_present=False,
+            standard_landscape_defined_finite_list=True,
+            landscape_coverage_proved=False,
+            landscape_called_atlas_when_coverage_not_proved=True,
+        )
+        assert scope['all_gates_satisfied'] is True
+        assert scope['hypothesis_reference_complete'] is True
+        assert scope['landscape_classification_allowed'] is False
+        assert scope['landscape_atlas_language_required'] is True
+
+    def test_abstract_front_back_blocks_nonspine_unlabelled_claims(self):
+        """Abstract claims outside the theorem spine and unlabelled conjectures are blocked."""
+        scope = abstract_front_back_scope(
+            arxiv_abstract_from_theorem_spine_only=False,
+            conjectural_physics_arithmetic_in_abstract=True,
+            conjectural_physics_arithmetic_final_abstract_labelled=False,
+            first_20_pages_type_correct_definitions=False,
+            last_theorem_surviving_invariants_commutative_diagram=False,
+        )
+        assert scope['abstract_claims_from_nonspine_allowed'] is False
+        assert scope['conjectural_physics_arithmetic_abstract_allowed'] is False
+        assert scope['core_type_correctness_front_loaded'] is False
+        assert scope['final_surviving_invariants_diagram_complete'] is False
+        assert 'arxiv_abstract_from_theorem_spine_only' in scope['missing']
+        assert 'conjectural_physics_arithmetic_final_abstract_labelled' in scope['missing']
+        assert 'first_20_pages_type_correct_definitions' in scope['missing']
+        assert 'last_theorem_surviving_invariants_commutative_diagram' in scope['missing']
+
+    def test_abstract_front_back_all_gates_positive(self):
+        """The abstract/front-back surface unlocks after all endpoint gates pass."""
+        scope = abstract_front_back_scope(
+            arxiv_abstract_from_theorem_spine_only=True,
+            conjectural_physics_arithmetic_in_abstract=True,
+            conjectural_physics_arithmetic_final_abstract_labelled=True,
+            first_20_pages_type_correct_definitions=True,
+            last_theorem_surviving_invariants_commutative_diagram=True,
+        )
+        assert scope['all_gates_satisfied'] is True
+        assert scope['conjectural_physics_arithmetic_abstract_allowed'] is True
+        assert scope['final_surviving_invariants_diagram_complete'] is True
+
+    def test_aggregate_notation_hypothesis_abstract_defaults_block_everything(self):
+        """The aggregate 981--1000 scope starts blocked without supplied evidence."""
+        scope = notation_hypothesis_abstract_obligation_scope()
+        assert scope['all_gates_satisfied'] is False
+        assert set(scope['blocked_components']) == {
+            'notation_discipline',
+            'hypothesis_reference',
+            'abstract_front_back',
+        }
+
+    def test_aggregate_notation_hypothesis_abstract_all_gates_positive(self):
+        """All notation/hypothesis/endpoint families must pass together."""
+        scope = notation_hypothesis_abstract_obligation_scope(
+            notation={
+                'notation_table_before_main_theorem': True,
+                'unused_symbols_removed_after_definition': True,
+                'C_reused_for_curve_coalgebra_category_same_proof': False,
+                'D_reused_for_divisor_differential_duality_same_proof': False,
+                'D_reserved_for_verdier_duality': True,
+                'd_reserved_for_differentials': True,
+                'delta_subscripts_distinguish_diagonal_coproduct_discriminant': True,
+                'fm_notation_consistent': True,
+                'bar_notation_consistent': True,
+                'ch_hh_thh_notation_consistent': True,
+                'z_notation_distinct': True,
+            },
+            hypothesis={
+                'hypothesis_index_added': True,
+                'hypothesis_package_referenced_before_definition': False,
+                'missing_section_refs_present': False,
+                'standard_landscape_defined_finite_list': True,
+                'landscape_coverage_proved': True,
+            },
+            abstract_front_back={
+                'arxiv_abstract_from_theorem_spine_only': True,
+                'conjectural_physics_arithmetic_in_abstract': True,
+                'conjectural_physics_arithmetic_final_abstract_labelled': True,
+                'first_20_pages_type_correct_definitions': True,
+                'last_theorem_surviving_invariants_commutative_diagram': True,
+            },
+        )
+        assert scope['all_gates_satisfied'] is True
+        assert scope['blocked_components'] == []
+
+
+# ============================================================
+# SECTION 1: MC STATUS (MC5 ambient-sensitive)
 # ============================================================
 
 class TestMCStatus:
@@ -74,11 +921,19 @@ class TestMCStatus:
 
     def test_mc5_partially_proved(self):
         """MC5 is partially proved per editorial_constitution.tex:149-150, 179-191, 819:
-        analytic HS-sewing lane proved at all genera; genuswise BV/BRST/bar
-        identification conjectural; genus 0 algebraic BRST/bar proved
-        (thm:algebraic-string-dictionary); tree-level amplitude pairing
-        conditional on cor:string-amplitude-genus0."""
+        analytic HS-sewing, coderived, and strict ML completed/pro
+        surfaces are proved; bounded direct-sum and downstream physical
+        comparison surfaces are not proved."""
         assert MC_STATUS['MC5'] == 'PARTIALLY_PROVED'
+
+    def test_mc5_ambient_split(self):
+        """MC5 status is split by ambient rather than forced to PROVED."""
+        assert MC5_AMBIENT_STATUS['analytic_hs_sewing']['status'] == 'PROVED'
+        assert MC5_AMBIENT_STATUS['coderived_bv_bar']['status'] == 'PROVED'
+        assert MC5_AMBIENT_STATUS['strict_ml_completed_chain']['status'] == 'PROVED'
+        assert MC5_AMBIENT_STATUS['bounded_direct_sum_chain']['status'] == 'FAILS_CLASS_M'
+        assert MC5_AMBIENT_STATUS['tree_level_amplitude_pairing']['status'] == 'CONDITIONAL'
+        assert MC5_AMBIENT_STATUS['physical_holographic_identification']['status'] == 'DOWNSTREAM_OPEN'
 
     def test_mc1_through_mc4_proved(self):
         """MC1 through MC4 are proved (concordance constitutional claim).
@@ -387,16 +1242,18 @@ class TestKoszulnessProgramme:
     """Verify concordance Koszulness programme claims."""
 
     def test_meta_theorem_count(self):
-        """10 unconditional + 1 conditional + 1 one-directional = 12."""
+        """7 + 1 + 2 + 1 + 1 = 12."""
         m = KOSZULNESS_META_THEOREM
-        assert m['unconditional_equivalences'] == 10
-        assert m['conditional'] == 1
+        assert m['independent_bidirectional_equivalences'] == 7
+        assert m['listed_consequences'] == 1
+        assert m['conditional_comparisons'] == 2
+        assert m['one_way_consequences'] == 1
         assert m['one_directional'] == 1
         assert m['total_items'] == 12
 
     def test_lagrangian_standard_landscape(self):
-        """K11 unconditional for standard landscape."""
-        assert KOSZULNESS_META_THEOREM['lagrangian_standard_landscape'] == 'unconditional'
+        """K11 has perfectness verified for the standard landscape."""
+        assert KOSZULNESS_META_THEOREM['lagrangian_standard_landscape'] == 'perfectness_input_verified'
 
     def test_d_module_purity_one_directional(self):
         """D-module purity: forward proved, converse open."""
@@ -641,6 +1498,16 @@ class TestFullAudit:
         # All critical checks should pass (kappa, complementarity, etc.)
         assert len(critical) == 0, \
             f"Critical findings: {[f['finding'] for f in critical]}"
+
+    def test_mc5_partial_status_is_expected(self):
+        """MC5 partial aggregate status is an ambient split, not an error."""
+        findings = audit_concordance_claims()
+        mc5 = [f for f in findings if f['section'] == 'MC frontier'
+               and f['finding'].startswith('MC5 ambient split recorded')]
+        assert len(mc5) == 1
+        assert mc5[0]['severity'] == 'INFO'
+        assert 'bounded_direct_sum_chain' in mc5[0]['finding']
+        assert 'strict_ml_completed_chain' in mc5[0]['finding']
 
     def test_mok25_documented(self):
         """Mok25 dependency correctly documented."""

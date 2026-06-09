@@ -38,6 +38,7 @@ References:
 
 import cmath
 import math
+from pathlib import Path
 
 import numpy as np
 import pytest
@@ -99,6 +100,45 @@ from compute.lib.quantum_group_bar_engine import (
     comprehensive_uq_sl2_verification,
     comprehensive_uq_sl3_verification,
 )
+
+
+ROOT = Path(__file__).resolve().parents[2]
+ORDERED_KD_TEX = ROOT / "chapters" / "theory" / "ordered_associative_chiral_kd.tex"
+QUANTUM_GROUP_ENGINE = ROOT / "compute" / "lib" / "quantum_group_bar_engine.py"
+LATTICE_ENGINE = ROOT / "compute" / "lib" / "integrable_lattice_shadow_engine.py"
+
+
+def test_yangian_spectral_parameter_not_erased_by_topological_center():
+    ordered = ORDERED_KD_TEX.read_text(encoding="utf-8")
+    quantum_engine = QUANTUM_GROUP_ENGINE.read_text(encoding="utf-8")
+    quantum_engine_normalized = quantum_engine.replace("-\n    ", "-")
+    lattice_engine = LATTICE_ENGINE.read_text(encoding="utf-8")
+    active = "\n".join([ordered, quantum_engine, lattice_engine])
+
+    assert "Spectral-parameter firewall" in ordered
+    assert "The associative Yangian $Y(\\mathfrak g)$ has evaluation modules" in ordered
+    assert "$V(u)\\otimes W(v)$ gives the rational matrix $R_{V,W}(u-v)$" in ordered
+    assert "primitive topological bar\ndeconcatenation coproduct" in ordered
+    assert "The chiral bar differential is different" in ordered
+
+    assert "constant Drinfeld-Jimbo braid-form R-matrix" in quantum_engine
+    assert "no additive evaluation parameter" in quantum_engine
+    assert "evaluation modules V(u), W(v)" in quantum_engine
+    assert "representation-theoretic parameter u - v" in quantum_engine_normalized
+
+    assert "Yangian evaluation modules V(u), W(v)" in lattice_engine
+    assert "topological bar coproduct is z-independent" in lattice_engine
+    assert "chiral bar differential is z-dependent" in lattice_engine
+
+    forbidden = [
+        "Topological Drinfeld center has no spectral parameters",
+        "topological Drinfeld center has no spectral parameters",
+        "topological Drinfeld centre has no spectral parameters",
+        "Drinfeld center has no spectral parameters",
+        "Drinfeld centre has no spectral parameters",
+    ]
+    for phrase in forbidden:
+        assert phrase not in active
 
 
 # =========================================================================

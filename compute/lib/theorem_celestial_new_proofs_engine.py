@@ -106,7 +106,7 @@ FOUR QUESTIONS INVESTIGATED:
     The soft Ward identity at sub-leading order gives S_3 = the cubic
     shadow, which matches the genus-0, arity-3 projection of Theta.
 
-    For the full Theorem D (obs_g = kappa * lambda_g at all genera for
+    For the scalar Theorem D (obs_g^sc = kappa * lambda_g at all genera for
     uniform-weight algebras), the soft route requires the genus-g
     generalization of the soft theorem, which IS the sewing amplitude
     at genus g -- this circles back to the algebraic-family rigidity
@@ -795,7 +795,7 @@ def theorem_d_via_soft_ward() -> List[SoftWardKappaDerivation]:
             scope="Decoupled systems (all genera)",
         ),
         SoftWardKappaDerivation(
-            property_name="obs_g = kappa * lambda_g (all genera, uniform weight)",
+            property_name="obs_g^sc = kappa * lambda_g (all genera, uniform weight)",
             algebraic_proof=(
                 "Algebraic-family rigidity (thm:algebraic-family-rigidity): "
                 "for algebraic families with rational OPE, the scalar projection "

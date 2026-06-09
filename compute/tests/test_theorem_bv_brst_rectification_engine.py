@@ -20,15 +20,19 @@ from sympy import Rational, Symbol, simplify
 
 from compute.lib.theorem_bv_brst_rectification_engine import (
     AlgebraData,
+    BOUNDARY_VERTEX_GATES,
     BetaGammaBVGenus1,
+    BV_PVA_ACTION_GATES,
     ConjectureStatusUpdate,
     LinftyComparison,
     ObstructionStatus,
+    QME_RENORMALIZATION_GATES,
     PaperAnalysis,
     TwistClassification,
     UVFinitenessImplication,
     additivity_check,
     affine_km_data,
+    all_loop_qme_scope,
     all_paper_analyses,
     analyze_esw_lattice,
     analyze_esw_twists,
@@ -39,6 +43,7 @@ from compute.lib.theorem_bv_brst_rectification_engine import (
     affine_kernel_normalization,
     bar_free_energy,
     bc_lambda_kappa,
+    boundary_vertex_from_bv_scope,
     betagamma_bv_genus1,
     betagamma_bv_genus1_numerical,
     betagamma_data,
@@ -48,6 +53,7 @@ from compute.lib.theorem_bv_brst_rectification_engine import (
     conjecture_status_by_family,
     cross_family_genus1_check,
     esw_twist_classification,
+    finite_type_pva_bv_action_scope,
     finite_diagnostic_promotion_guard,
     full_rectification_synthesis,
     genus2_planted_forest_bv_comparison,
@@ -58,6 +64,7 @@ from compute.lib.theorem_bv_brst_rectification_engine import (
     lambda_fp_from_ahat,
     object_role_table,
     obstruction_status_analysis,
+    pva_bv_qme_boundary_scope,
     si_li_linfty_comparison,
     standard_collision_kernels,
     virasoro_data,
@@ -266,6 +273,101 @@ class TestComparisonScopeGuards:
         guard = finite_diagnostic_promotion_guard('uv_finiteness')
         assert 'existence' in guard.supports
         assert 'Theta_A' in guard.does_not_support
+
+    def test_finite_pva_bv_action_missing_by_default(self):
+        """No finite-PVA/BV claim is certified without the action gates."""
+        scope = finite_type_pva_bv_action_scope()
+        assert not scope['bv_action_defined']
+        assert not scope['cme_statement_allowed']
+        assert not scope['cme_iff_pva_hamiltonian_proved']
+        assert not scope['qme_claim_allowed']
+        assert 'finite-type PVA supplied' in scope['missing_gates']
+
+    def test_cme_iff_pva_hamiltonian_after_classical_gates(self):
+        """The CME equivalence is classical and requires signs."""
+        scope = finite_type_pva_bv_action_scope(
+            finite_type_pva_supplied=True,
+            fields_and_antifields_defined=True,
+            odd_symplectic_pairing_defined=True,
+            bv_action_functional_defined=True,
+            hamiltonian_pva_condition_proved=True,
+            field_parity_signs_defined=True,
+        )
+        assert scope['bv_action_defined']
+        assert scope['cme_statement_allowed']
+        assert scope['cme_iff_pva_hamiltonian_proved']
+        assert scope['classical_bv_status'] == 'CME_IFF_PVA_HAMILTONIAN_PROVED'
+        assert not scope['qme_claim_allowed']
+        assert not scope['missing_gates']
+
+    def test_classical_bv_action_does_not_prove_qme(self):
+        """A complete finite-PVA CME package is not an all-loop QME."""
+        classical = {key: True for key, _ in BV_PVA_ACTION_GATES}
+        aggregate = pva_bv_qme_boundary_scope(**classical)
+        assert aggregate['bv']['cme_iff_pva_hamiltonian_proved']
+        assert not aggregate['qme']['all_loop_qme_proved']
+        assert 'analytic_all_loop_qme' in aggregate['unresolved_obligation_blocks']
+
+    def test_qme_blocked_without_renormalization_package(self):
+        """All-loop QME is blocked until the analytic package is complete."""
+        scope = all_loop_qme_scope(
+            analytic_sdr_defined=True,
+            stokes_image_choice_defined=True,
+            field_parity_signs_defined=True,
+        )
+        assert not scope['qme_claim_allowed']
+        assert not scope['all_loop_qme_proved']
+        assert 'self-image renormalisation defined' in scope['missing_gates']
+        assert 'renormalization package built' in scope['missing_gates']
+
+    def test_all_loop_qme_requires_all_renormalization_gates(self):
+        """The QME turns positive exactly when all renormalization gates hold."""
+        qme = {key: True for key, _ in QME_RENORMALIZATION_GATES}
+        scope = all_loop_qme_scope(**qme)
+        assert scope['qme_claim_allowed']
+        assert scope['all_loop_qme_proved']
+        assert scope['qme_status'] == (
+            'ALL_LOOP_QME_CERTIFIED_BY_ANALYTIC_RENORMALIZATION_PACKAGE'
+        )
+        assert not scope['missing_gates']
+
+    def test_boundary_vertex_requires_ope_and_reflected_weight(self):
+        """Boundary vertex/OPE and reflected-weight statements are separate."""
+        scope = boundary_vertex_from_bv_scope(
+            boundary_vertex_algebra_defined=True,
+            boundary_ope_maps_defined=True,
+            boundary_opes_proved=True,
+            reflected_weight_identity_defined=True,
+            reflected_weight_identity_proved=False,
+        )
+        assert scope['boundary_vertex_algebra_certified']
+        assert scope['boundary_ope_theorem_proved']
+        assert scope['reflected_weight_identity_status'] == 'CONDITIONAL_PENDING_PROOF'
+        assert not scope['all_boundary_claims_certified']
+
+    def test_boundary_vertex_all_gates_positive(self):
+        """All boundary claims are certified only when every gate is present."""
+        boundary = {key: True for key, _ in BOUNDARY_VERTEX_GATES}
+        scope = boundary_vertex_from_bv_scope(**boundary)
+        assert scope['all_boundary_claims_certified']
+        assert scope['reflected_weight_identity_status'] == 'PROVED'
+        assert not scope['missing_gates']
+
+    def test_all_801_812_obligations_certified_only_together(self):
+        """The aggregate gate stays false until BV, QME, and boundary all pass."""
+        kwargs = {key: True for key, _ in BV_PVA_ACTION_GATES}
+        kwargs.update({key: True for key, _ in QME_RENORMALIZATION_GATES})
+        kwargs.update({key: True for key, _ in BOUNDARY_VERTEX_GATES})
+        scope = pva_bv_qme_boundary_scope(**kwargs)
+        assert scope['all_obligations_801_812_certified']
+        assert not scope['unresolved_obligation_blocks']
+
+    def test_all_loop_qme_diagnostic_guard(self):
+        """The diagnostic guard prevents QME promotion from UV finiteness."""
+        guard = finite_diagnostic_promotion_guard('all_loop_qme')
+        assert 'analytic SDR' in guard.supports
+        assert 'UV finiteness alone' in guard.does_not_support
+        assert 'renormalization package' in guard.missing_witnesses
 
 
 # =====================================================================

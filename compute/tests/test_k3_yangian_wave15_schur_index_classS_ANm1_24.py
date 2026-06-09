@@ -43,9 +43,12 @@ from compute.lib.k3_yangian_wave15_schur_index_classS_ANm1_24 import (
     trinion_nh,
     trinion_nv,
     umbral_group,
+    umbral_group_coxeter_companion,
     umbral_group_corrected,
     umbral_group_order,
+    umbral_group_order_coxeter_companion,
     umbral_group_order_corrected,
+    umbral_niemeier_coxeter_companion,
     umbral_niemeier,
     umbral_niemeier_corrected,
     wave17_record,
@@ -290,14 +293,14 @@ def test_constant_fourier_coefficient_three_path(N):
     assert f0 % 2 == 0
 
 
-# -- (I) WAVE 18 RE-ANCHORING: N = 6 umbral Niemeier labelling -------------
+# -- (I) WAVE 18 RE-ANCHORING: N = 6 anchor discrimination -----------------
 
 @pytest.mark.parametrize("N,expected", [
     (2, "24 A_1"),
     (3, "12 A_2"),
     (4, "8 A_3"),
     (5, "6 A_4"),
-    (6, "6 D_4"),  # Wave 18: re-anchored from the failing naive 4 A_5
+    (6, "4 A_5 D_4"),  # class-S anchor preserving the A_5 fugacity
 ])
 def test_wave18_umbral_niemeier_corrected(N, expected):
     assert umbral_niemeier_corrected(N) == expected
@@ -308,7 +311,7 @@ def test_wave18_umbral_niemeier_corrected(N, expected):
     (3, "2.M_12", 190080),
     (4, "2.AGL_3(2)", 2688),
     (5, "GL_2(5)/{+-1}", 240),
-    (6, "3.Sym_6", 2160),  # Wave 18: umbral group of 6 D_4 per CDH 2014 Tab. 1
+    (6, "Sym_3", 6),  # CDH 2014 Tab. 1 row 4 A_5 D_4
 ])
 def test_wave18_umbral_group_corrected(N, expected_group, expected_order):
     assert umbral_group_corrected(N) == expected_group
@@ -316,13 +319,13 @@ def test_wave18_umbral_group_corrected(N, expected_group, expected_order):
 
 
 def test_wave18_naive_labelling_breaks_at_N6_but_not_below():
-    """Wave 18 headline: the systematic (24/N) A_{N-1} labelling is a
+    """Wave 18 headline: the systematic (24/(N-1)) A_{N-1} labelling is a
     valid Niemeier root system for N <= 5 and FAILS at N = 6 because
     4 A_5 is not among the 23 Niemeier root systems (Niemeier 1973;
     Conway-Sloane 1988 SPLAG Ch. 16)."""
     for N in (2, 3, 4, 5):
         assert labelling_breaks_at(N, scheme="naive") is False, (
-            f"Naive (24/N) A_(N-1) labelling must not break at N = {N}"
+            f"Naive (24/(N-1)) A_(N-1) labelling must not break at N = {N}"
         )
     assert labelling_breaks_at(6, scheme="naive") is True, (
         "Naive labelling 4 A_5 at N = 6 must break (no such Niemeier lattice)"
@@ -341,6 +344,21 @@ def test_wave18_naive_4A5_is_not_a_niemeier_root_system():
     N = 6 naive label 4 A_5 is NOT one of the 23 Niemeier root systems
     (Conway-Sloane 1988 SPLAG Table 16.1)."""
     assert is_niemeier_root_system("4 A_5") is False
+    assert is_niemeier_root_system("4 A_5 D_4") is True
+
+
+def test_wave18_N6_classS_anchor_and_6D4_companion_are_distinct():
+    """At N = 6 the class-S anchor and the Coxeter-slot companion are
+    distinct Niemeier rows: 4 A_5 D_4 preserves the A_5 fugacity, while
+    6 D_4 carries the CDH mock-modular companion H^{(6D_4)}."""
+    assert umbral_niemeier_corrected(6) == "4 A_5 D_4"
+    assert umbral_group_corrected(6) == "Sym_3"
+    assert umbral_group_order_corrected(6) == 6
+    assert umbral_niemeier_coxeter_companion(6) == "6 D_4"
+    assert umbral_group_coxeter_companion(6) == "3.Sym_6"
+    assert umbral_group_order_coxeter_companion(6) == 2160
+    slot = {name for name, _ in niemeiers_at_coxeter_slot(6)}
+    assert {"4 A_5 D_4", "6 D_4"} <= slot
 
 
 @pytest.mark.parametrize("root_system", [
@@ -355,28 +373,28 @@ def test_wave18_niemeier_existence(root_system):
 
 
 def test_wave18_niemeier_coxeter_number_6D4_equals_6():
-    """Coxeter number h(D_4) = 6, matching the N = 6 Coxeter slot
+    """Coxeter number h(D_4) = 6, matching the N = 6 companion slot
     (Humphreys 1990 Section 2.11)."""
     assert niemeier_coxeter_number("6 D_4") == 6
 
 
 def test_wave18_niemeier_coxeter_numbers_ANm1_table():
-    """Cross-check: the naive (24/N) A_{N-1} labelling assigns Coxeter
-    number h(A_{N-1}) = N, and the Niemeier 6 D_4 hosts h = 6. At
-    N = 6 the 6 D_4 Coxeter number AGREES with the naive-N value,
-    so the re-anchoring preserves the Coxeter slot."""
+    """Cross-check: the naive (24/(N-1)) A_{N-1} labelling assigns Coxeter
+    number h(A_{N-1}) = N. At N = 6 both 4 A_5 D_4 and 6 D_4 have
+    Coxeter number 6, but only 4 A_5 D_4 contains A_5 summands."""
     assert niemeier_coxeter_number("24 A_1") == 2
     assert niemeier_coxeter_number("12 A_2") == 3
     assert niemeier_coxeter_number("8 A_3") == 4
     assert niemeier_coxeter_number("6 A_4") == 5
-    # N = 6: 6 D_4 Coxeter number h(D_4) = 6, matching h(A_5) = 6.
+    # N = 6: the class-S anchor and companion both sit at h = 6.
+    assert niemeier_coxeter_number("4 A_5 D_4") == 6
     assert niemeier_coxeter_number("6 D_4") == 6
 
 
 def test_wave18_mock_modular_6D4_leading_coefficients_nonzero():
-    """The Wave 18 corrected N = 6 labelling carries a mock-modular
-    form $H^{(6 D_4)}$ (CDH 2014 Table 5 / App. C): test that the
-    leading Fourier coefficients are non-trivially populated."""
+    """The N = 6 Coxeter-slot companion carries the mock-modular form
+    $H^{(6 D_4)}$ (CDH 2014 Table 5 / App. C): test that the leading
+    Fourier coefficients are non-trivially populated."""
     coeffs = mock_modular_form_6D4_low_coefficients()
     assert coeffs[0] == -2, "Polar term of H^{(6D_4)}_1 must be -2 q^{-1/12}"
     # Positive-exponent coefficients should be non-zero.
@@ -387,11 +405,10 @@ def test_wave18_mock_modular_6D4_leading_coefficients_nonzero():
 
 
 def test_wave18_siegel_weight_k6_is_9_over_2_under_corrected_labelling():
-    """Wave 18 headline: even under the corrected (6 D_4) labelling,
-    the Siegel weight on the spin cover at N = 6 is k_6 = 9/2 via the
-    formula (N + 3)/2. The re-anchoring is a labelling choice; the
-    Jacobi-form-input f^(6)(0,0) = 2(6+3) = 18 and Borcherds 1998
-    Thm 13.3 are unchanged by the Niemeier substitution."""
+    """Wave 18 headline: the Siegel weight on the spin cover at N = 6
+    is k_6 = 9/2 via the formula (N + 3)/2. The anchor/companion
+    distinction does not affect the Jacobi-form-input
+    f^(6)(0,0) = 18 or Borcherds 1998 Thm 13.3."""
     assert siegel_weight(6, spin=True) == Fraction(9, 2)
     assert borcherds_weight(6, honest=True) == Fraction(9)
     assert constant_fourier_coefficient(6) == 18
@@ -399,30 +416,32 @@ def test_wave18_siegel_weight_k6_is_9_over_2_under_corrected_labelling():
 
 def test_wave18_record_N6_contains_corrected_and_break_diagnostics():
     """The wave17_record must be Wave-18-aware at N = 6: it must carry
-    both the naive (now-failing) and corrected (6 D_4) labels, plus
-    the break diagnostics."""
+    the class-S corrected anchor, the 6 D_4 companion, and the break
+    diagnostics."""
     r = wave17_record(6)
-    # Naive label retained for reference (string notes the failure).
-    assert "6 D_4" in r["niemeier_root_system"]
-    # Corrected label is clean 6 D_4.
-    assert r["niemeier_root_system_corrected"] == "6 D_4"
-    assert r["umbral_group_corrected"] == "3.Sym_6"
-    assert r["umbral_group_order_corrected"] == 2160
+    assert r["niemeier_root_system"] == "4 A_5 D_4"
+    assert r["niemeier_root_system_corrected"] == "4 A_5 D_4"
+    assert r["umbral_group_corrected"] == "Sym_3"
+    assert r["umbral_group_order_corrected"] == 6
+    assert r["niemeier_root_system_coxeter_companion"] == "6 D_4"
+    assert r["umbral_group_coxeter_companion"] == "3.Sym_6"
+    assert r["umbral_group_order_coxeter_companion"] == 2160
     # Break diagnostics.
     assert r["labelling_breaks_naive"] is True
     assert r["labelling_breaks_corrected"] is False
 
 
 def test_wave18_sym6_order_is_720_so_3Sym6_is_2160():
-    """Verify the factor-of-3 central extension: |Sym_6| = 720, and
-    |3.Sym_6| = 3 * 720 = 2160 (CDH 2014 Table 1)."""
+    """Verify the 6 D_4 companion factor-of-3 central extension:
+    |Sym_6| = 720, and |3.Sym_6| = 3 * 720 = 2160
+    (CDH 2014 Table 1)."""
     # Sym_6 order = 6! = 720.
     order_Sym_6 = 1
     for k in range(1, 7):
         order_Sym_6 *= k
     assert order_Sym_6 == 720
     # 3.Sym_6 is a non-split central extension by Z/3.
-    assert 3 * order_Sym_6 == umbral_group_order_corrected(6)
+    assert 3 * order_Sym_6 == umbral_group_order_coxeter_companion(6)
 
 
 def test_N2_canonical_agreement_with_gritsenko_nikulin_1998():

@@ -36,12 +36,13 @@ REGIME 2: INTEGRAL level (k in Z_{>= 0})
    confirming thm:bar-cohomology-level-independence.
 
 REGIME 3: ADMISSIBLE level (k = -h^v + p/q, p,q coprime, p >= h^v)
-   Koszulness of L_k(sl_2): PROVED at all admissible levels
-   (rem:admissible-koszul-status in kac_moody.tex).
-   Creutzig [Cre24]: proves ribbon structure on weight modules
-   at admissible sl_2 levels.  This STRENGTHENS the bar-complex
-   picture: the bar-cobar adjunction must preserve ribbon/braided
-   structure.
+   Ribbon structure on weight modules for admissible L_k(sl_2):
+   PROVED by Creutzig [Cre24].
+   Koszulness of the simple quotient L_k(sl_2): CONDITIONAL/OPEN
+   unless the quotient bar comparison for V_k(sl_2) -> L_k(sl_2)
+   is supplied.  Ribbon structure, modularity, and universal PBW
+   Koszulness of V_k do not automatically descend through the
+   maximal proper graded ideal N_k.
    sl_3 and higher rank: Koszulness OPEN.
 
 REGIME 4: CRITICAL level (k = -h^v)
@@ -98,6 +99,16 @@ from fractions import Fraction
 from functools import lru_cache
 from math import comb, factorial
 from typing import Dict, List, Optional, Tuple, Union
+
+
+ADMISSIBLE_QUOTIENT_BAR_HYPOTHESES: Tuple[str, ...] = (
+    "simple quotient L_k(g)=V_k(g)/N_k with N_k the maximal proper graded ideal",
+    "explicit filtered null-vector ideal N_k and generating set",
+    "comparison morphism B(V_k(g)) -> B(L_k(g)) in the completed bar ambient",
+    "derived Tor/bar spectral sequence controlling non-right-exactness of B(-)",
+    "finite-weight or completed quotient comparison for the induced bar differential",
+    "vanishing of quotient-created high-degree bar/Hochschild defects",
+)
 
 
 # =========================================================================
@@ -493,12 +504,11 @@ def ribbon_admissible_sl2(k: Fraction) -> Dict[str, object]:
     L_k(sl_2) at admissible level carries a ribbon braided tensor
     category structure.
 
-    For our framework: the bar-cobar adjunction must preserve this
-    ribbon structure.  Specifically:
-    - The bar functor sends ribbon objects to coribbon comodules.
-    - The braiding on modules maps to the R-matrix on comodules.
-    - At k = -1/2: the fusion ring Z[Z/2] (Proposition admissible-verlinde-bar)
-      is consistent with the ribbon structure.
+    This is a module-category theorem.  It does not by itself prove chiral
+    Koszulness for the simple quotient, nor that the
+    universal affine bar theorem descends through V_k -> L_k.  That
+    descent requires the quotient bar comparison package recorded in
+    ADMISSIBLE_QUOTIENT_BAR_HYPOTHESES.
     """
     lam = k + 2  # k + h^v for sl_2
     p = lam.numerator
@@ -512,9 +522,45 @@ def ribbon_admissible_sl2(k: Fraction) -> Dict[str, object]:
         "num_admissible_modules": num_modules,
         "is_ribbon": True,
         "ribbon_twist_order": 2 * p * q,  # ribbon twist theta has finite order
-        "bar_cobar_preserves_ribbon": True,
+        "bar_cobar_preserves_ribbon": None,
+        "bar_cobar_preservation_status": "requires_quotient_bar_comparison",
+        "quotient_bar_comparison_hypotheses": ADMISSIBLE_QUOTIENT_BAR_HYPOTHESES,
         "reference": "Creutzig [2411.11386]",
         "fusion_ring_consistent": True,
+    }
+
+
+def admissible_simple_quotient_scope_sl2(k: Fraction) -> Dict[str, object]:
+    """Scope report for admissible simple quotient L_k(sl_2).
+
+    Type signature: Open quadrant, affine presentation, Beilinson level
+    1 -> 2. The proved theorem on this surface is the universal affine
+    PBW/Koszul theorem for V_k(sl_2). The simple quotient
+    L_k(sl_2)=V_k(sl_2)/N_k is a different object; bar construction is
+    not right exact, so a quotient bar comparison is an extra hypothesis.
+    """
+    if not is_admissible_level(SL2, k):
+        raise ValueError(f"k={k} is not an admissible sl_2 level")
+
+    lam = k + 2
+    p = lam.numerator
+    q = lam.denominator
+    return {
+        "k": k,
+        "p": p,
+        "q": q,
+        "is_admissible": True,
+        "universal_affine_theorem_surface": "V_k(sl_2)",
+        "simple_quotient": "L_k(sl_2)=V_k(sl_2)/N_k",
+        "quotient_ideal": "N_k maximal proper graded null-vector ideal",
+        "generic_universal_theorem_descends": False,
+        "quotient_bar_comparison_status": "required",
+        "quotient_bar_comparison_hypotheses": ADMISSIBLE_QUOTIENT_BAR_HYPOTHESES,
+        "is_koszul": None,
+        "koszulness_status": "conditional_open",
+        "ribbon_structure_status": "proved_elsewhere",
+        "ribbon_structure_reference": "Creutzig [2411.11386]",
+        "ribbon_implies_bar_koszulness": False,
     }
 
 
@@ -724,7 +770,7 @@ def fle_bridge_check(g: LieData, max_weight: int = 8) -> Dict[str, object]:
 # =========================================================================
 
 def sl2_bar_at_minus_half() -> Dict[str, object]:
-    """Explicit bar complex data for L_{-1/2}(sl_2).
+    """Explicit scalar and quotient-scope data for L_{-1/2}(sl_2).
 
     k = -1/2, p = 3, q = 2, h^v = 2.
     lambda = k + h^v = 3/2.
@@ -758,10 +804,11 @@ def sl2_bar_at_minus_half() -> Dict[str, object]:
     n_mod = admissible_module_count_sl2(k)
     assert n_mod == 2, f"|Adm| should be 2, got {n_mod}"
 
-    # Bar complex: the curvature parameter
+    # Bar complex: the curvature parameter for the quotient surface.
     # m_0 = (k + h^v)/(2*h^v) = (-1/2 + 2)/(2*2) = (3/2)/4 = 3/8
     m0 = curvature_m0(SL2, k)
     assert m0 == Fraction(3, 8), f"m_0 should be 3/8, got {m0}"
+    scope = admissible_simple_quotient_scope_sl2(k)
 
     return {
         "k": k,
@@ -773,7 +820,12 @@ def sl2_bar_at_minus_half() -> Dict[str, object]:
         "num_modules": n_mod,
         "curvature_m0": m0,
         "E2_degeneration": True,
-        "is_koszul": True,
+        "is_koszul": None,
+        "koszulness_status": "conditional_open",
+        "generic_universal_theorem_descends": False,
+        "quotient_bar_comparison_status": "required",
+        "quotient_bar_comparison_hypotheses": ADMISSIBLE_QUOTIENT_BAR_HYPOTHESES,
+        "scope_report": scope,
         "fusion_ring": "Z[Z/2]",
     }
 

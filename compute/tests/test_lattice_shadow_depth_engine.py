@@ -327,7 +327,7 @@ class TestRMatrix:
     def test_r_matrix_Z1(self):
         """r(z) = 1/z for Z^1 (k=1)."""
         data = compute_shadow_data(Zn_lattice(1))
-        # VERIFIED: [DC] r(z) = k/z = 1/z; [CF] C10.
+        # VERIFIED: [DC] r(z) = k*Omega_H/z (rank-one coeff k/z) = 1/z; [CF] C10.
         assert r_matrix_at_z(data, 1.0) == pytest.approx(1.0)
         assert r_matrix_at_z(data, 2.0) == pytest.approx(0.5)
 
@@ -355,7 +355,7 @@ class TestRMatrix:
         """AP141: if level were 0, r-matrix would vanish.
 
         We cannot construct a rank-0 lattice (rank >= 1), but we verify
-        the formula: r(z) = k/z vanishes when k=0.
+        the formula: r(z) = k*Omega_H/z (rank-one coeff k/z) vanishes when k=0.
         """
         # Direct formula check: 0/z = 0 for any z != 0
         assert 0 / 1.0 == 0.0

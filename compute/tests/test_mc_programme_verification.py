@@ -10,7 +10,7 @@ MC4 (completion): pronilpotent/weight-filtered completion
 MC5 (sewing): HS-sewing criterion, bar chain group growth bounds
 
 Additional:
-  - Koszulness programme: 10 unconditional equivalences verified
+  - Koszulness programme: seven independent equivalences plus qualified surfaces
   - Shadow archetype classification: G/L/C/M for all families
   - Universal H^1 theorem: H^1 = generators for all families
   - Bar chain group dimensions: combinatorial identities
@@ -593,13 +593,14 @@ class TestMC5_Sewing:
 
 
 # ============================================================================
-# Koszulness programme: 10 unconditional equivalences
+# Koszulness programme: seven independent equivalences plus qualified surfaces
 # ============================================================================
 
 class TestKoszulnessProgramme:
-    """10 unconditional equivalences from thm:koszul-equivalences-meta.
+    """Koszulness criteria from thm:koszul-equivalences-meta.
 
-    All 4 archetype families (H, sl_2, bg, Vir) should satisfy all 10.
+    All 4 generic archetype families (H, sl_2, bg, Vir) should satisfy
+    the Theorem-H-conditional ChirHoch range on the H-surface.
     """
 
     def test_shadow_depth_classification(self):
@@ -617,7 +618,7 @@ class TestKoszulnessProgramme:
         assert virasoro_data().shadow_depth == 999  # stands for infinity
 
     def test_hochschild_range_universal(self):
-        """ChirHoch vanishes outside {0, 1, 2} for all Koszul families."""
+        """ChirHoch vanishes outside {0, 1, 2} on the Theorem H surface."""
         from compute.lib.koszulness_ten_verifier import (
             heisenberg_data, sl2_data, betagamma_data, virasoro_data,
         )

@@ -2,17 +2,19 @@
 Lagrangian perfectness verification for the ambient complementarity datum.
 
 Ground truth: bar_cobar_adjunction_inversion.tex (Proposition prop:lagrangian-perfectness,
-Corollary cor:lagrangian-unconditional), higher_genus_complementarity.tex
+Corollary cor:lagrangian-conditional-standard-landscape), higher_genus_complementarity.tex
 (Definition def:ambient-complementarity-datum, Theorem thm:ambient-complementarity-tangent).
 
 The Lagrangian criterion (item (xi) of thm:koszul-equivalences-meta) is CONDITIONAL
-on perfectness of the cyclic pairing on L_A ⊕ K_A ⊕ L_{A!}.
+on the shifted-symplectic hypothesis package; perfectness of the cyclic pairing
+on L_A ⊕ K_A ⊕ L_{A!} is only one input.
 
 Proposition prop:lagrangian-perfectness proves: under hypotheses
   (P1) finite-dimensional conformal weight spaces,
   (P2) nondegenerate invariant bilinear form,
   (P3) Koszul dual A! also satisfies (P1)-(P2),
-the cyclic pairing is perfect weight-by-weight, making K11 unconditional.
+the cyclic pairing is perfect weight-by-weight. This verifies the
+perfectness input, not the full C2 Lagrangian package.
 
 This module verifies (P1)-(P2) computationally for the standard landscape:
 Heisenberg, affine KM (sl_2), Virasoro, bc, βγ.  At each conformal weight n,

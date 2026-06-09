@@ -228,10 +228,11 @@ class TestConvolutionDSquaredZero:
         from compute.lib.modular_deformation_package import DSquaredVerification
         assert DSquaredVerification.convolution_d_squared_zero()
 
-    def test_d_squared_ambient(self):
-        """D^2 = 0 at ambient level (thm:ambient-d-squared-zero via Mok25)."""
+    def test_d_squared_ambient_conditional(self):
+        """Ambient D^2 is conditional on the signed log-FM package."""
         from compute.lib.modular_deformation_package import DSquaredVerification
-        assert DSquaredVerification.ambient_d_squared_zero()
+        assert DSquaredVerification.ambient_d_squared_zero() is False
+        assert DSquaredVerification.ambient_d_squared_status()["status"] == "CONDITIONAL"
 
     def test_five_component_differential_genus_preservation(self):
         """Each component of D preserves or has controlled genus change."""

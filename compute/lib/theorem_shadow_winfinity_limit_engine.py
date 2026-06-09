@@ -45,7 +45,7 @@ Kernel normalizations used by this module's tests:
 
     affine raw trace form:        r^{KM}(z) = k*Omega_tr/z
     affine KZ form:               r_KZ(z) = Omega/((k+h^vee)z)
-    Heisenberg collision form:    r^{Heis}(z) = k/z
+    Heisenberg collision form:    r^{Heis}(z) = k*Omega_H/z (coeff k/z)
     Virasoro collision form:      r^{Vir}(z) = (c/2)/z^3 + 2T/z
 
 Canonical local sources:
@@ -98,7 +98,7 @@ def kernel_normalization_constants() -> Dict[str, str]:
     return {
         'affine_raw_trace_form': 'r^{KM}(z) = k*Omega_tr/z',
         'affine_kz_form': 'r_KZ(z) = Omega/((k+h^vee)z)',
-        'heisenberg_collision_form': 'r^{Heis}(z) = k/z',
+        'heisenberg_collision_form': 'r^{Heis}(z) = k*Omega_H/z (coeff k/z)',
         'virasoro_collision_form': 'r^{Vir}(z) = (c/2)/z^3 + 2T/z',
         'source': 'chapters/examples/landscape_census.tex',
     }

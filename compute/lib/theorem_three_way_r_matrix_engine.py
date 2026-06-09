@@ -30,9 +30,9 @@ FAMILIES AND THEIR r-MATRICES:
 
   Heisenberg H_k:
     OPE: alpha(z) alpha(w) ~ k/(z-w)^2.   Max pole = 2.
-    r(z) = k/z   (single pole, max_pole - 1 = 1 by AP19).
+    r(z) = k*Omega_H/z (rank-one coeff k/z)   (single pole, max_pole - 1 = 1 by AP19).
     PVA: {alpha_lambda alpha} = k*lambda -> r^{cl}(z) = k/z.
-    DNP: r(z) = k/z (quadratic, strict, CYBE trivially satisfied for abelian).
+    DNP: r(z) = k*Omega_H/z (rank-one coeff k/z) (quadratic, strict, CYBE trivially satisfied for abelian).
     GZ26: H_i = sum_{j != i} k / z_{ij} (scalar KZ with no Lie algebra structure).
 
   Affine KM sl_2 at level k:
@@ -167,7 +167,7 @@ class RMatrixFromBar:
 
         OPE: alpha(z) alpha(w) ~ k/(z-w)^2.
         Max OPE pole = 2.
-        Collision residue: r(z) = k/z.
+        Collision residue: r(z) = k*Omega_H/z (rank-one coeff k/z).
 
         Returns dict of pole coefficients: {pole_order: coefficient}.
         """
@@ -503,7 +503,7 @@ class RMatrixFromDNP:
     def heisenberg(k):
         r"""r(z) for Heisenberg: MC element in the abelian Yangian.
 
-        r(z) = k/z.  Abelian, so CYBE is trivially satisfied.
+        r(z) = k*Omega_H/z (rank-one coeff k/z).  Abelian, so CYBE is trivially satisfied.
         """
         return {1: k}
 

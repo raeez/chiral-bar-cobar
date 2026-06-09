@@ -17,6 +17,8 @@ Structure:
   6. Subregular comparison
 """
 
+from pathlib import Path
+
 import pytest
 from sympy import Rational, Symbol, simplify
 
@@ -51,6 +53,33 @@ from compute.lib.w_finite_arity import (
 )
 
 
+ROOT = Path(__file__).resolve().parents[2]
+SEMISTRICT_TEX = ROOT / "chapters" / "connections" / "semistrict_modular_higher_spin_w3.tex"
+W_ALGEBRAS_TEX = ROOT / "chapters" / "examples" / "w_algebras.tex"
+
+
+def test_w3_semistrict_surfaces_are_classical_not_quantum():
+    """Semistrictity is proved for the classical PVA formal HT envelope."""
+    semistrict = SEMISTRICT_TEX.read_text(encoding="utf-8")
+    w_algebras = W_ALGEBRAS_TEX.read_text(encoding="utf-8")
+    active = semistrict + "\n" + w_algebras
+
+    assert "Semistrictity of the classical $W_3$ bulk" in semistrict
+    assert "formal HT envelope $\\HS(W_3^{\\mathrm{cl}})$, not of the" in semistrict
+    assert "classical $\\mathcal{W}_3$ semistrict modular higher-spin" in w_algebras
+    assert "Finite semistrict reduction of the classical $W_3$ frontier" in semistrict
+    assert "all-loop quantum HT theory" in semistrict
+
+    forbidden = [
+        "The $\\mathcal{W}_3$ semistrict modular higher-spin",
+        "Finite semistrict reduction of the $W_3$ frontier",
+        "Boundary enhancement and centre map for the semistrict $W_3$ package",
+        "One-loop quantization of the semistrict $W_3$ package",
+    ]
+    for phrase in forbidden:
+        assert phrase not in active
+
+
 # =========================================================================
 # 1. PVA structure and generator-degree analysis
 # =========================================================================
@@ -69,7 +98,8 @@ class TestPVAStructure:
     def test_virasoro_max_gen_degree(self):
         """Virasoro: all lambda-bracket monomials have gen-degree <= 1.
 
-        {T_lambda T} = c/2 lambda^3 + 2T lambda + dT
+        Ordinary polynomial form: {T_lambda T} = (c/12)lambda^3 + 2T lambda + dT.
+        Equivalently, the n-th-product central term is T_(3)T = c/2.
         The only monomials are: vacuum (deg 0), T (deg 1), dT (deg 1).
         Max gen-degree = 1.
         """
@@ -84,7 +114,7 @@ class TestPVAStructure:
         assert pva["arity_bound"] == 2
 
     def test_w3_generators(self):
-        """W_3 has generators T (spin 2) and W (spin 3)."""
+        """Classical W_3 PVA has generators T (spin 2) and W (spin 3)."""
         pva = w3_pva()
         assert pva["N"] == 3
         assert len(pva["generators"]) == 2
@@ -92,7 +122,7 @@ class TestPVAStructure:
         assert spins == [2, 3]
 
     def test_w3_max_gen_degree(self):
-        """W_3: the T^2 and T*dT terms in {W_lambda W} give gen-degree 2.
+        """Classical W_3: T^2 and T*dT in {W_lambda W} give gen-degree 2.
 
         cor:w-semistrictity-classical-w3: max gen-degree = 2.
         """
@@ -101,7 +131,7 @@ class TestPVAStructure:
         assert d == 2
 
     def test_w3_arity_bound(self):
-        """W_3: arity bound = d+1 = 3. Bulk is 3-strict (semistrict).
+        """Classical W_3: arity bound = d+1 = 3 for the HT envelope.
 
         cor:w-semistrictity-classical-w3: ell_n = 0 for n >= 4.
         """
@@ -241,7 +271,7 @@ class TestLinftyBrackets:
         assert linf.nonzero_brackets() == [1, 2]
 
     def test_w3_semistrict(self):
-        """W_3: ell_1, ell_2, ell_3 nonzero; ell_n = 0 for n >= 4.
+        """Classical W_3 envelope has ell_1, ell_2, ell_3; ell_n = 0 for n >= 4.
 
         cor:w-semistrictity-classical-w3.
         """

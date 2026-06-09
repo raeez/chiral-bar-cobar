@@ -62,6 +62,15 @@ from compute.lib.physics_horizon import (
     bv_bar_curvature_interpretation,
     qme_bar_equivalence_genus0,
     # 5. Holographic
+    PHYSICS_THEOREM_NAME_GATES,
+    ENTROPY_CHARACTER_GATES,
+    CELESTIAL_COMPARISON_GATES,
+    HOLOGRAPHIC_TUPLE_GATES,
+    physics_theorem_naming_scope,
+    entropy_character_asymptotic_scope,
+    celestial_comparison_scope,
+    holographic_tuple_reconstruction_scope,
+    physics_celestial_holographic_scope,
     holographic_koszul_dictionary,
     ads3_cft2_virasoro,
     holographic_central_charge_matching,
@@ -667,25 +676,182 @@ class TestQMEBarGenus0:
 class TestHolographicDictionary:
     """Holographic Koszul duality dictionary."""
 
-    def test_bar_is_boundary_to_bulk(self):
-        """Bar = boundary-to-bulk operator map."""
+    def test_bar_is_boundary_twisting_coalgebra(self):
+        """Bar is the boundary twisting coalgebra, not a physical bulk map."""
         d = holographic_koszul_dictionary()
-        assert "boundary-to-bulk" in d["bar"]
+        assert "twisting coalgebra" in d["bar"]
+        assert "boundary-to-bulk" not in d["bar"]
 
-    def test_cobar_is_bulk_to_boundary(self):
-        """Cobar = bulk-to-boundary reconstruction."""
+    def test_cobar_recovers_boundary_chart(self):
+        """Cobar reconstruction returns the boundary algebra, not a bulk object."""
         d = holographic_koszul_dictionary()
-        assert "bulk-to-boundary" in d["cobar"]
+        assert "algebraic reconstruction" in d["cobar"]
+        assert "A_boundary" in d["cobar"]
+        assert "bulk-to-boundary" not in d["cobar"]
 
-    def test_adjunction_is_ads_cft(self):
-        """Bar-cobar adjunction = algebraic shadow of AdS/CFT."""
+    def test_adjunction_requires_tuple_scope(self):
+        """Bar-cobar adjunction does not assert an unsupported AdS/CFT identification."""
         d = holographic_koszul_dictionary()
-        assert "AdS/CFT" in d["bar_cobar_adjunction"]
+        assert "AdS/CFT" not in d["bar_cobar_adjunction"]
+        assert "seven-object tuple" in d["bar_cobar_adjunction"]
+        assert d["unsupported_ads_cft_identification"] == "False"
+        assert d["physical_boundary_bulk_promotion_allowed"] == "False"
+        assert "OCA" in d["physical_bulk_requires"]
 
     def test_status_conjectured(self):
         """Status is ClaimStatusConjectured."""
         d = holographic_koszul_dictionary()
         assert "Conjectured" in d["status"]
+
+
+class TestPhysicsCelestialHolographicScopeGates:
+    """Executable guards for the physics/celestial/holographic PDF obligations."""
+
+    def test_gate_sets_cover_lane_obligations(self):
+        """The four gate families are non-empty and named explicitly."""
+        assert len(PHYSICS_THEOREM_NAME_GATES) == 3
+        assert len(ENTROPY_CHARACTER_GATES) == 5
+        assert len(CELESTIAL_COMPARISON_GATES) == 5
+        assert len(HOLOGRAPHIC_TUPLE_GATES) == 5
+
+    def test_physics_name_blocks_physics_named_theorem(self):
+        """Physics terms in theorem names block the corollary gate."""
+        scope = physics_theorem_naming_scope(
+            theorem_name_contains_physics=True,
+            algebraic_theorem_statement_supplied=True,
+            physics_corollary_separated=True,
+        )
+        assert scope["physics_named_theorem_allowed"] is False
+        assert scope["physics_corollary_allowed"] is False
+        assert "physics_metaphors_removed_from_theorem_names" in scope["missing"]
+
+    def test_physics_corollary_requires_algebra_first(self):
+        """A physical corollary is allowed only after the algebraic theorem is present."""
+        scope = physics_theorem_naming_scope(
+            theorem_name_contains_physics=False,
+            algebraic_theorem_statement_supplied=True,
+            physics_corollary_separated=True,
+        )
+        assert scope["all_gates_satisfied"] is True
+        assert scope["physics_corollary_allowed"] is True
+        assert scope["physics_named_theorem_allowed"] is False
+
+    def test_entropy_is_character_asymptotic_before_btz(self):
+        """Character asymptotics do not by themselves prove BTZ entropy."""
+        scope = entropy_character_asymptotic_scope(
+            character_asymptotic_formula_defined=True,
+            entropy_formula_identified_as_character_asymptotic=True,
+        )
+        assert scope["character_entropy_statement_allowed"] is True
+        assert scope["btz_entropy_theorem_allowed"] is False
+        assert "modular_invariance_hypothesis_stated" in scope["missing"]
+        assert scope["physical_entropy_without_character_asymptotic_allowed"] is False
+
+    def test_btz_entropy_requires_modular_and_large_n_gates(self):
+        """BTZ entropy unlocks only with modular invariance, large-n, and proof gates."""
+        scope = entropy_character_asymptotic_scope(
+            character_asymptotic_formula_defined=True,
+            entropy_formula_identified_as_character_asymptotic=True,
+            modular_invariance_hypothesis_stated=True,
+            large_n_condition_stated=True,
+            btz_entropy_proof_supplied=True,
+        )
+        assert scope["all_gates_satisfied"] is True
+        assert scope["btz_entropy_theorem_allowed"] is True
+
+    def test_celestial_comparison_blocks_shared_notation(self):
+        """Shared OPE notation is not a celestial comparison proof."""
+        scope = celestial_comparison_scope(
+            celestial_comparison_defined=True,
+            celestial_algebra_input_defined=True,
+            factorization_comparison_map_defined=True,
+            factorization_comparison_proved=False,
+            celestial_theorem_scope_stated=True,
+        )
+        assert scope["shared_ope_notation_suffices"] is False
+        assert scope["celestial_theorem_allowed"] is False
+        assert "factorization_comparison_proved" in scope["missing"]
+
+    def test_celestial_comparison_all_gates_positive(self):
+        """Celestial theorem status unlocks only after all comparison data are present."""
+        scope = celestial_comparison_scope(
+            celestial_comparison_defined=True,
+            celestial_algebra_input_defined=True,
+            factorization_comparison_map_defined=True,
+            factorization_comparison_proved=True,
+            celestial_theorem_scope_stated=True,
+        )
+        assert scope["all_gates_satisfied"] is True
+        assert scope["celestial_theorem_allowed"] is True
+
+    def test_holographic_tuple_requires_maps_and_failure_modes(self):
+        """A seven-object list without maps is not a reconstruction theorem."""
+        scope = holographic_tuple_reconstruction_scope(
+            seven_object_tuple_defined=True,
+            tuple_maps_defined=False,
+            unsupported_ads_cft_identifications_removed=True,
+            reconstruction_from_tuple_proved=False,
+            failure_modes_when_maps_absent_stated=False,
+        )
+        assert scope["legacy_holographic_datum_phrase_allowed"] is False
+        assert scope["seven_object_tuple_available"] is False
+        assert scope["holographic_reconstruction_theorem_allowed"] is False
+        assert "tuple_maps_defined" in scope["missing"]
+        assert "failure_modes_when_maps_absent_stated" in scope["missing"]
+
+    def test_holographic_tuple_all_gates_positive(self):
+        """Tuple reconstruction unlocks only with maps, proof, and failure modes."""
+        scope = holographic_tuple_reconstruction_scope(
+            seven_object_tuple_defined=True,
+            tuple_maps_defined=True,
+            unsupported_ads_cft_identifications_removed=True,
+            reconstruction_from_tuple_proved=True,
+            failure_modes_when_maps_absent_stated=True,
+        )
+        assert scope["all_gates_satisfied"] is True
+        assert scope["holographic_reconstruction_theorem_allowed"] is True
+        assert scope["unsupported_ads_cft_identification_allowed"] is False
+
+    def test_aggregate_scope_defaults_block_everything(self):
+        """The aggregate Front F gate starts blocked without supplied evidence."""
+        scope = physics_celestial_holographic_scope()
+        assert scope["all_gates_satisfied"] is False
+        assert set(scope["blocked_components"]) == {
+            "naming", "entropy", "celestial", "holographic"
+        }
+
+    def test_aggregate_scope_all_gates_positive(self):
+        """All four gate families must pass for the aggregate claim to pass."""
+        scope = physics_celestial_holographic_scope(
+            naming={
+                "theorem_name_contains_physics": False,
+                "algebraic_theorem_statement_supplied": True,
+                "physics_corollary_separated": True,
+            },
+            entropy={
+                "character_asymptotic_formula_defined": True,
+                "entropy_formula_identified_as_character_asymptotic": True,
+                "modular_invariance_hypothesis_stated": True,
+                "large_n_condition_stated": True,
+                "btz_entropy_proof_supplied": True,
+            },
+            celestial={
+                "celestial_comparison_defined": True,
+                "celestial_algebra_input_defined": True,
+                "factorization_comparison_map_defined": True,
+                "factorization_comparison_proved": True,
+                "celestial_theorem_scope_stated": True,
+            },
+            holographic={
+                "seven_object_tuple_defined": True,
+                "tuple_maps_defined": True,
+                "unsupported_ads_cft_identifications_removed": True,
+                "reconstruction_from_tuple_proved": True,
+                "failure_modes_when_maps_absent_stated": True,
+            },
+        )
+        assert scope["all_gates_satisfied"] is True
+        assert scope["blocked_components"] == []
 
 
 class TestAdS3CFT2Virasoro:
@@ -697,19 +863,20 @@ class TestAdS3CFT2Virasoro:
         assert data["sum"] == 26
 
     def test_c26_dual_is_0(self):
-        """At c=26, bulk dual c' = 0."""
+        """At c=26, the Koszul companion has c' = 0."""
         data = ads3_cft2_virasoro(26)
-        assert data["bulk_c_dual"] == 0
+        assert data["dual_c"] == 0
+        assert data["physical_bulk_identification_allowed"] is False
 
     def test_c0_dual_is_26(self):
-        """At c=0, bulk dual c' = 26."""
+        """At c=0, the Koszul companion has c' = 26."""
         data = ads3_cft2_virasoro(0)
-        assert data["bulk_c_dual"] == 26
+        assert data["dual_c"] == 26
 
     def test_c13_self_dual(self):
         """At c=13, self-dual point."""
         data = ads3_cft2_virasoro(13)
-        assert data["bulk_c_dual"] == 13
+        assert data["dual_c"] == 13
 
     def test_symbolic_sum(self):
         """Symbolic: c + (26-c) = 26."""
@@ -759,6 +926,8 @@ class TestWInfinityHigherSpin:
         """Bulk theory is Vasiliev hs[lambda]."""
         data = w_infinity_higher_spin(10)
         assert "Vasiliev" in data["bulk_theory"]
+        assert data["physical_bulk_identification_allowed"] is False
+        assert "holographic tuple" in data["cobar_role"]
 
     def test_boundary_c(self):
         """Boundary central charge = N."""

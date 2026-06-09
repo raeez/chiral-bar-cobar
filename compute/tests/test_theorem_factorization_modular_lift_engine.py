@@ -660,9 +660,11 @@ class TestConstructiveness:
         ml = build_modular_lift(2, Fraction(0))
         assert ml.hs_sewing_proved is True
 
-    def test_mc_equation_proved(self):
+    def test_mc_equation_conditional_on_signed_package(self):
         ml = build_modular_lift(2, Fraction(0))
-        assert ml.mc_equation_proved is True
+        assert ml.mc_equation_proved is False
+        assert ml.mc_equation_status == 'CONDITIONAL'
+        assert 'signed log-FM residue-pushforward package' in ml.mc_equation_requires
 
     def test_genus_data_present(self):
         ml = build_modular_lift(3, Fraction(0), max_genus=3)

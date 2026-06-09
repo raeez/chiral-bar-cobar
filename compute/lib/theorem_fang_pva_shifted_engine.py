@@ -181,7 +181,7 @@ def heisenberg_pva_bracket(k: Fraction) -> PVABracket:
     Lambda-bracket: {J_lambda J} = (lambda^1 / 1!) * k = k * lambda.
 
     AP19: The bar kernel d log(z-w) absorbs one power. The collision
-    residue r(z) = k/z (simple pole from double OPE pole).
+    residue r(z) = k*Omega_H/z (rank-one coeff k/z) (simple pole from double OPE pole).
     """
     return PVABracket(
         modes={0: Fraction(0), 1: k},
@@ -478,7 +478,7 @@ class FangRMatrixMC:
 def fang_r_matrix_heisenberg(k: Fraction) -> FangRMatrixMC:
     """Fang's R-matrix MC datum for Heisenberg.
 
-    r(z) = k/z satisfies CYBE trivially (abelian: all commutators vanish).
+    r(z) = k*Omega_H/z (rank-one coeff k/z) satisfies CYBE trivially (abelian: all commutators vanish).
     No genus corrections needed (Heisenberg is Gaussian, shadow depth 2).
     Fang and monograph AGREE completely for Heisenberg.
     """

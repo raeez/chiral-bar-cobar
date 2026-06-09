@@ -121,6 +121,84 @@ from typing import Any, Dict, List, Optional, Tuple
 import numpy as np
 from numpy import linalg as la
 
+COHA_HALL_DRINFELD_REQUIRED_DATA = (
+    'CoHA source category fixed',
+    'Hall product and coproduct defined',
+    'Hall pairing nondegenerate or radical quotient specified',
+    'Drinfeld double completion fixed',
+    'Lusztig root-of-unity specialization fixed',
+    'finite quantum group truncation presentation fixed',
+    'PBW basis and dimension computed for the stated root order',
+)
+
+
+def sl2_lusztig_pbw_dimension(root_order: int) -> Dict[str, Any]:
+    r"""PBW dimension for the simply-connected small u_q(sl_2).
+
+    The statement is presentation-sensitive.  For the simply-connected
+    sl_2 form with q a primitive N-th root, the finite PBW monomials are
+    E^a K^c F^b with 0 <= a,b,c < N, hence N^3.  This does not assert a
+    CoHA source, a Hall--Drinfeld double, or a general quantum-group
+    truncation outside this presentation.
+    """
+    if root_order < 2:
+        raise ValueError(f"root order must be >= 2, got {root_order}")
+    return {
+        'root_order': root_order,
+        'root_label': f'zeta_{root_order}',
+        'presentation': 'simply-connected small u_q(sl_2)',
+        'pbw_basis': 'E^a K^c F^b, 0 <= a,b,c < N',
+        'pbw_dimension': root_order ** 3,
+        'pbw_dimension_proved_for_presentation': True,
+        'adjoint_or_other_forms_same_dimension': False,
+        'coha_source_defined': False,
+        'hall_drinfeld_double_defined': False,
+    }
+
+
+def zeta_pbw_dimension_report(root_orders: Tuple[int, ...] = (8, 12, 24)) -> Dict[int, Dict[str, Any]]:
+    """PBW dimensions for explicitly claimed zeta_N root orders."""
+    return {N: sl2_lusztig_pbw_dimension(N) for N in root_orders}
+
+
+def coha_hall_drinfeld_lusztig_scope(
+    coha_source_defined: bool = False,
+    hall_drinfeld_double_defined: bool = False,
+    drinfeld_double_structure_proved: bool = False,
+    lusztig_specialization_defined: bool = False,
+    finite_quantum_group_truncation_proved: bool = False,
+    root_order: Optional[int] = None,
+    pbw_dimension_computed: bool = False,
+) -> Dict[str, Any]:
+    """Scope report for CoHA/Hall--Drinfeld/Lusztig root-of-unity claims."""
+    supplied = {
+        'CoHA source category fixed': coha_source_defined,
+        'Hall product and coproduct defined': hall_drinfeld_double_defined,
+        'Hall pairing nondegenerate or radical quotient specified': drinfeld_double_structure_proved,
+        'Drinfeld double completion fixed': drinfeld_double_structure_proved,
+        'Lusztig root-of-unity specialization fixed': lusztig_specialization_defined and root_order is not None,
+        'finite quantum group truncation presentation fixed': finite_quantum_group_truncation_proved,
+        'PBW basis and dimension computed for the stated root order': pbw_dimension_computed and root_order is not None,
+    }
+    missing = tuple(
+        item for item in COHA_HALL_DRINFELD_REQUIRED_DATA
+        if not supplied[item]
+    )
+    pbw = sl2_lusztig_pbw_dimension(root_order) if root_order is not None else None
+    return {
+        'coha_source_defined': coha_source_defined,
+        'hall_drinfeld_double_defined': hall_drinfeld_double_defined,
+        'drinfeld_double_structure_proved': drinfeld_double_structure_proved,
+        'lusztig_specialization_defined': lusztig_specialization_defined,
+        'finite_quantum_group_truncation_proved': finite_quantum_group_truncation_proved,
+        'root_order': root_order,
+        'pbw_dimension_computed': pbw_dimension_computed,
+        'pbw_dimension_data': pbw,
+        'missing_hypotheses': missing,
+        'full_hall_drinfeld_lusztig_claim_allowed': not missing,
+        'status': 'proved_on_supplied_surface' if not missing else 'conditional_open',
+    }
+
 
 # =========================================================================
 # 0.  Quantum number primitives
@@ -760,19 +838,10 @@ def small_quantum_group_data(k: int) -> Dict[str, Any]:
       u_q(sl_2) = U_q(sl_2) / (E^N, F^N, K^N - 1)
     where N = k+2.
 
-    Properties:
-      - dim u_q = N^3 / gcd stuff... Actually for sl_2 with N = k+2:
-        If N is odd:  dim u_q = N^3
-        If N is even: dim u_q = N^3 / 4 (extra relations from K^{N/2} = +/-1)
-        More precisely: dim u_q(sl_2) = N^3 when gcd(N, det of Cartan matrix) = 1.
-        For sl_2, det(Cartan) = 2.
-        - N odd: dim = N^3
-        - N even: dim = N^3 / 4  (Lusztig; but the standard reference gives N^3
-          for the simply-connected form)
-
-      Actually, the clean statement: u_q(sl_2) is spanned by E^a F^b K^c
-      with 0 <= a, b < N and 0 <= c < N (for the simply-connected form),
-      giving dim = N^3. But K^N = 1 already, and the PBW basis is
+    Properties for the simply-connected presentation used here:
+      - u_q(sl_2) is spanned by E^a F^b K^c
+      with 0 <= a, b < N and 0 <= c < N, giving dim = N^3.
+      Since K^N = 1, the PBW basis is
       {E^a K^c F^b : 0 <= a < N, 0 <= c < N, 0 <= b < N}, dim = N^3.
 
       For the ADJOINT form, K has order N/gcd(N,2) instead of N.
@@ -790,7 +859,8 @@ def small_quantum_group_data(k: int) -> Dict[str, Any]:
     q = q_from_level(k)
 
     # PBW dimension
-    dim_uq = N ** 3  # simply-connected form
+    pbw = sl2_lusztig_pbw_dimension(N)
+    dim_uq = pbw['pbw_dimension']  # simply-connected form
 
     # Build generators on the regular representation would require
     # the full N^3-dimensional space. Instead, verify on small reps.
@@ -814,7 +884,16 @@ def small_quantum_group_data(k: int) -> Dict[str, Any]:
         'level': k,
         'N': N,
         'q': q,
+        'root_order': N,
+        'root_label': f'zeta_{N}',
         'dim_uq': dim_uq,
+        'pbw_dimension_data': pbw,
+        'pbw_dimension_proved_for_presentation': True,
+        'lusztig_specialization_defined': True,
+        'finite_quantum_group_truncation_proved': True,
+        'coha_source_defined': False,
+        'hall_drinfeld_double_defined': False,
+        'full_hall_drinfeld_lusztig_claim_allowed': False,
         'n_simples': n_simples_expected,
         'central_charge': c_wzw,
         'kappa': kappa,
@@ -1024,14 +1103,13 @@ def modular_yangian_center_detection(k: int, tol: float = 1e-8) -> Dict[str, Any
     The QUESTION: does the bar-cobar R-matrix (the collision residue
     Res^{coll}_{0,2}(Theta_A) for A = L_k(sl_2)) detect this center?
 
-    ANSWER: The bar R-matrix R(z) acts on tensor products of admissible
+    Finite spectral answer: the bar R-matrix R(z) acts on tensor products of admissible
     modules.  Its eigenvalues on V_{j1} tensor V_{j2} depend on the
     decomposition into V_J channels via the Verlinde fusion rules.
-    The R-matrix eigenvalue on each V_J channel involves the quantum
-    Casimir eigenvalue c_J, which IS the Frobenius center's character.
-
-    So YES: the modular Yangian at roots of unity sees the FL center
-    through the SPECTRUM of the R-matrix on tensor products.
+    The R-matrix eigenvalue on each V_J channel involves finite Casimir
+    eigenvalue data.  This is a spectral witness on admissible modules, not
+    a reconstruction of the full Frobenius-Lusztig center or a CoHA/Hall
+    double theorem.
     """
     N = k + 2
     q = q_from_level(k)
@@ -1108,7 +1186,10 @@ def modular_yangian_center_detection(k: int, tol: float = 1e-8) -> Dict[str, Any
         'channels_generic_count': len(channels_generic),
         'channels_truncated_count': len(channels_jmax_jmax),
         'r_matrix_eigenvalues': sorted(eigs_R, key=lambda z: (z.real, z.imag)),
-        'fl_center_detected': casimir_separated,  # YES if Casimirs are distinct
+        'fl_center_detected': casimir_separated,
+        'fl_center_detection_status': 'finite_admissible_spectral_witness',
+        'full_fl_center_reconstructed': False,
+        'coha_hall_double_witnessed': False,
     }
 
 
@@ -1140,9 +1221,11 @@ def bar_complex_integrable_level(k: int) -> Dict[str, Any]:
 
     The Kazhdan-Lusztig equivalence:
       Rep(L_k(sl_2)) ~ Rep_ss(u_q(sl_2))   at q = e^{2*pi*i/(k+2)}
-    This is an equivalence of BRAIDED TENSOR CATEGORIES. The bar complex
-    of L_k(sl_2) should therefore recover the TRUNCATED quantum group
-    structure, including:
+    This is an equivalence of BRAIDED TENSOR CATEGORIES after the stated
+    semisimplified quotient. The bar complex of L_k(sl_2) has finite
+    scalar and fusion evidence for the truncated quantum group structure,
+    but recovery is conditional until a bar/quantum-group comparison is
+    supplied. The missing comparison would have to preserve:
       - The fusion rules (from bar collision residues)
       - The braiding (from the R-matrix = Res^{coll}_{0,2}(Theta_A))
       - The modular data (from the S-matrix)
@@ -1196,6 +1279,15 @@ def bar_complex_integrable_level(k: int) -> Dict[str, Any]:
         'fusion': fusion,
         'S_matrix_ok': S_props['unitary'] and S_props['symmetric'],
         'S_squared_is_C': S_props['S_squared_is_C'],
+        'kl_semisimplified_scope': True,
+        'bar_recovers_truncated_quantum_group_proved': False,
+        'missing_bar_quantum_group_comparison': (
+            'bar collision residue functor',
+            'braiding preservation',
+            'fusion product preservation',
+            'modular S-matrix compatibility',
+            'root-of-unity truncation compatibility',
+        ),
     }
 
 

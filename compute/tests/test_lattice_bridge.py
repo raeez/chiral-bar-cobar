@@ -1,7 +1,8 @@
 """The lattice bridge: the intermediate E₁ atom between Heisenberg and Yangian.
 
 The lattice vertex algebra V_Λ sits between the two extremes:
-  - Heisenberg H_κ (E∞): purely commutative, trivial braiding
+  - Heisenberg H_κ (E∞): no nonabelian/simple-pole braiding, but scalar
+    ordered-bar R(z) = exp(k*hbar/z)
   - Yangian Y(𝔤) (pure E₁): purely braided, R-matrix ordering
 
 The lattice is BOTH: its Heisenberg sublattice is E∞, while the
@@ -164,7 +165,7 @@ class TestTriptych:
     """Three atoms, two strata of commutativity, one logarithm."""
 
     def test_heisenberg_is_einf(self):
-        """Heisenberg: E∞, no braiding, trivial R-matrix."""
+        """Heisenberg: E∞, no nonabelian/simple-pole Yangian braiding."""
         from compute.lib.heisenberg_bar import heisenberg_nth_products
         products = heisenberg_nth_products()
         assert 0 not in products, "Heisenberg has no simple pole"

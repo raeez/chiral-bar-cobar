@@ -23,10 +23,12 @@ import pytest
 
 from compute.lib.symmetric_orbifold_shadow_engine import (
     FREE_BOSON,
+    DMVV_SCOPE,
     HOLOGRAPHIC_PACKAGE_ENTRIES,
     K3_SIGMA,
     LEECH_VOA,
     MODULAR_KOSZUL_COMPUTE_PROJECTIONS,
+    SYMMETRIC_ORBIFOLD_KOSZUL_HYPOTHESES,
     T4_SIGMA,
     HolographicDatum,
     SeedTheory,
@@ -68,6 +70,7 @@ from compute.lib.symmetric_orbifold_shadow_engine import (
     shadow_kappa_sym_n,
     shadow_quartic_sym_n,
     shadow_tower_sym_n,
+    symmetric_orbifold_scope_report,
     twist_field_weight,
     twist_sector_weight,
     twist_sectors_with_weights,
@@ -235,6 +238,44 @@ class TestTwistSectors:
         """Z_3 twist field of c=1 free boson: h = (1/24)(9-1)/3 = 1/9."""
         h = twist_field_weight(F(1), 3)
         assert h == F(1, 9)
+
+
+# =========================================================================
+# Section 3b: Symmetric-orbifold scope report
+# =========================================================================
+
+class TestSymmetricOrbifoldScopeReport:
+    """Status firewall for twist sectors, DMVV, and fixed-point Koszulness."""
+
+    def test_scope_report_defines_twist_sectors(self):
+        report = symmetric_orbifold_scope_report(K3_SIGMA, 4)
+        assert report["twist_sector_definition"].startswith("conjugacy classes")
+        assert report["twist_sector_count"] == number_of_twist_sectors(4)
+        assert report["twist_sector_partitions"] == tuple(
+            s.partition for s in enumerate_twist_sectors(4)
+        )
+
+    def test_fixed_point_koszulness_is_conditional(self):
+        report = symmetric_orbifold_scope_report(K3_SIGMA, 3)
+        assert report["fixed_point_koszulness_status"] == "conditional"
+        assert report["fixed_point_koszulness_hypotheses"] == (
+            SYMMETRIC_ORBIFOLD_KOSZUL_HYPOTHESES
+        )
+        assert report["missing_for_bar_theorem"] == (
+            SYMMETRIC_ORBIFOLD_KOSZUL_HYPOTHESES
+        )
+
+    def test_dmvv_scope_is_character_not_bar_theorem(self):
+        report = symmetric_orbifold_scope_report(K3_SIGMA, 2)
+        assert report["dmvv_status"] == "character identity"
+        assert report["dmvv_scope"] == DMVV_SCOPE
+        assert not report["dmvv_is_bar_theorem"]
+
+    def test_moonshine_k3_constants_are_firewalled(self):
+        report = symmetric_orbifold_scope_report(K3_SIGMA, 2)
+        assert "Monster" in report["monster_voa_lane"]
+        assert "K3/Mukai" in report["k3_mukai_lane"]
+        assert not report["moonshine_constants_as_k3_constants"]
 
 
 # =========================================================================

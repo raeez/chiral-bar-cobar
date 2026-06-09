@@ -7,7 +7,7 @@ Validates the higher-genus graph sum engine through genus 5:
   3. Orbifold Euler characteristic verification at g = 2, 3, 4
   4. Scalar graph sum polynomial structure
   5. Genus spectral sequence E_1 page decomposition
-  6. Cross-family free energy table (Heisenberg, Virasoro, affine, betagamma)
+  6. Cross-family diagonal scalar table (Heisenberg, Virasoro, affine, betagamma)
   7. Planted-forest correction at genus 2
   8. Complementarity checks
   9. Bernoulli asymptotic growth
@@ -27,6 +27,7 @@ import pytest
 from fractions import Fraction
 
 from compute.lib.higher_genus_graph_sum_engine import (
+    graph_sum_theorem_d_scope,
     # Faber-Pandharipande
     lambda_fp,
     lambda_fp_table,
@@ -80,6 +81,32 @@ from compute.lib.higher_genus_graph_sum_engine import (
     genus_summary,
     genus_growth_check,
 )
+
+
+# ============================================================================
+# Theorem D scope
+# ============================================================================
+
+class TestTheoremDGraphScope:
+    """Graph sums certify finite-window diagonal scalar data."""
+
+    def test_default_graph_scope_not_full_tower(self):
+        scope = graph_sum_theorem_d_scope(3)
+        assert scope["graph_sum_certifies"] == "finite_window_diagonal_scalar_projection"
+        assert scope["certified_quantity"] == "diagonal_scalar_cohomology_class"
+        assert not scope["all_weight_formula_verified"]
+        assert not scope["analytic_partition_function_claim"]
+        assert "cross_channel_terms_absent_or_supplied" in scope[
+            "missing_all_weight_hypotheses"
+        ]
+
+    def test_uniform_weight_with_completion_upgrades_formal_scope(self):
+        scope = graph_sum_theorem_d_scope(
+            3, uniform_weight=True, strict_ml_completion=True
+        )
+        assert scope["all_weight_formula_verified"]
+        assert not scope["missing_all_weight_hypotheses"]
+        assert not scope["analytic_partition_function_claim"]
 
 
 # ============================================================================
@@ -431,11 +458,11 @@ class TestSpectralSequence:
         assert set(counts.keys()) == {0, 1, 2}
 
     def test_g2_h1_counts(self):
-        """g=2: h^1=0 -> 2, h^1=1 -> 2, h^1=2 -> 2."""
+        """g=2: h^1=0 -> 2, h^1=1 -> 2, h^1=2 -> 3."""
         counts = spectral_sequence_counts(2)
         assert counts[0] == 2
         assert counts[1] == 2
-        assert counts[2] == 2
+        assert counts[2] == 3
 
     def test_g3_h1_range(self):
         """g=3: h^1 in {0, 1, 2, 3}."""
@@ -506,8 +533,8 @@ class TestScalarGraphSum:
         assert scalar_sum_evaluate(1, Fraction(1)) == Fraction(3, 2)
 
     def test_g2_evaluate_kappa1(self):
-        """g=2: scalar sum at kappa=1 is 65/24."""
-        assert scalar_sum_evaluate(2, Fraction(1)) == Fraction(65, 24)
+        """g=2: scalar sum at kappa=1 is 17/6."""
+        assert scalar_sum_evaluate(2, Fraction(1)) == Fraction(17, 6)
 
     def test_g3_evaluate_kappa1(self):
         """g=3: scalar sum at kappa=1 is 121/12."""
@@ -547,11 +574,9 @@ class TestGraphWeightSum:
         assert graph_weight_sum(1) == Fraction(1, 2)
 
     def test_g2_weight_sum(self):
-        """g=2: compute from 6 graphs."""
+        """g=2: compute from 7 stable graphs."""
         ws = graph_weight_sum(2)
-        # Direct: 1 - 1/2 + 1/8 - 1/2 + 1/12 - 1/2
-        # = 1 - 3/2 + 1/8 + 1/12 = -1/2 + 5/24 = -12/24 + 5/24 = -7/24
-        # Actually let me just check it's a consistent fraction
+        # Direct: 1 - 1/2 + 1/8 - 1/2 - 1/12 + 1/2 - 1/8 = 5/12.
         assert isinstance(ws, Fraction)
         # Check via kappa = -1 evaluation
         assert ws == scalar_sum_evaluate(2, Fraction(-1))
@@ -826,9 +851,9 @@ class TestBoundaryStrata:
         assert strata.get(0, 0) == 1
 
     def test_g2_strata(self):
-        """g=2 boundary strata: {0:1, 1:2, 2:2, 3:1}."""
+        """g=2 boundary strata: {0:1, 1:2, 2:2, 3:2}."""
         strata = boundary_strata_counts(2)
-        assert strata == {0: 1, 1: 2, 2: 2, 3: 1}
+        assert strata == {0: 1, 1: 2, 2: 2, 3: 2}
 
     def test_g3_strata(self):
         """g=3 boundary strata: known from genus3_stable_graphs."""
@@ -874,8 +899,8 @@ class TestGraphTopology:
         assert graphs_by_vertex_count(1) == {1: 2}
 
     def test_g2_by_vertices(self):
-        """g=2: {1: 3, 2: 3}."""
-        assert graphs_by_vertex_count(2) == {1: 3, 2: 3}
+        """g=2: {1: 3, 2: 4}."""
+        assert graphs_by_vertex_count(2) == {1: 3, 2: 4}
 
     def test_g3_by_vertices(self):
         """g=3: {1: 4, 2: 12, 3: 15, 4: 11}."""
@@ -886,8 +911,8 @@ class TestGraphTopology:
         assert graphs_by_edge_count(1) == {0: 1, 1: 1}
 
     def test_g2_by_edges(self):
-        """g=2: {0: 1, 1: 2, 2: 2, 3: 1}."""
-        assert graphs_by_edge_count(2) == {0: 1, 1: 2, 2: 2, 3: 1}
+        """g=2: {0: 1, 1: 2, 2: 2, 3: 2}."""
+        assert graphs_by_edge_count(2) == {0: 1, 1: 2, 2: 2, 3: 2}
 
     def test_g3_by_edges(self):
         """g=3: known distribution."""
@@ -899,8 +924,8 @@ class TestGraphTopology:
         assert automorphism_spectrum(1) == [1, 2]
 
     def test_g2_aut_spectrum(self):
-        """g=2: automorphism orders [1, 2, 2, 2, 8, 12]."""
-        assert automorphism_spectrum(2) == [1, 2, 2, 2, 8, 12]
+        """g=2: automorphism orders [1, 2, 2, 2, 8, 8, 12]."""
+        assert automorphism_spectrum(2) == [1, 2, 2, 2, 8, 8, 12]
 
     def test_g3_aut_spectrum(self):
         """g=3: known automorphism spectrum (42 values)."""
@@ -1281,7 +1306,8 @@ class TestGenus2Structure:
         theta = [g for g in graphs
                  if g.num_vertices == 2
                  and all(gv == 0 for gv in g.vertex_genera)
-                 and g.num_edges == 3]
+                 and g.num_edges == 3
+                 and all(u != v for (u, v) in g.edges)]
         assert len(theta) == 1
         assert theta[0].automorphism_order() == 12
 

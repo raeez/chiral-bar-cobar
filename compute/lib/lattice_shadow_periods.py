@@ -2,7 +2,7 @@
 r"""Lattice shadow periods: the arithmetic sieve for lattice VOAs.
 
 The fundamental principle: for lattice VOAs, each arity of the shadow
-Postnikov tower maps to a specific L-function in the Hecke decomposition
+obstruction tower maps to a specific L-function in the Hecke decomposition
 of the lattice theta function. The homotopy becomes arithmetic.
 
 ARITHMETIC SIEVE:

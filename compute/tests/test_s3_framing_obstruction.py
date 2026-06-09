@@ -17,6 +17,7 @@ Test groups:
 
 import math
 import pytest
+from pathlib import Path
 from fractions import Fraction
 
 from compute.lib.s3_framing_obstruction import (
@@ -54,6 +55,9 @@ from compute.lib.s3_framing_obstruction import (
     # Summary
     d3_functor_existence_analysis,
 )
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+PREFACE_TEX = REPO_ROOT / "chapters/frame/preface.tex"
 
 
 # =========================================================================
@@ -643,6 +647,14 @@ class TestSummaryAnalysis:
         """C^3 BV class is zero in the summary."""
         analysis = d3_functor_existence_analysis()
         assert analysis["examples"]["C^3"]["bv_class"] == Fraction(0)
+
+    def test_preface_records_d3_inf_categorical_resolution(self):
+        """The preface records CY-A_3 as proved, not chain-framing conditional."""
+        preface = PREFACE_TEX.read_text()
+        assert "proved for $d=2$ and $d=3$" in preface
+        assert "infty$-categorical" in preface
+        assert "conditional on chain-level S^3-framing for d=3" not in preface
+        assert "conditional on chain-level S³-framing for d=3" not in preface
 
 
 # =========================================================================

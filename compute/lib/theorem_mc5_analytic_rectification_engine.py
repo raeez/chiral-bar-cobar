@@ -1088,7 +1088,7 @@ def hs_sewing_convergence_rate(family: str, params: Dict,
         rank = params.get('rank', 1)
         dims = [partitions(n) if rank == 1 else colored_partitions(n, rank)
                 for n in range(N + 1)]
-        ope_pole_order = 1  # J(z)J(w) ~ k/(z-w)^2, but for Heis k/(z-w) in lambda-bracket
+        ope_pole_order = 2  # J(z)J(w) ~ k/(z-w)^2; lambda degree/r-kernel order is 1
         kappa = params.get('level', 1)  # kappa(H_k) = k (AP39)
 
     elif family == 'virasoro':

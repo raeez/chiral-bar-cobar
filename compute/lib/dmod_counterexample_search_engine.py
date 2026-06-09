@@ -50,7 +50,7 @@ CANDIDATE NON-KOSZUL ALGEBRAS:
 (E) Admissible simple quotients L_k(sl_2), k = p/q - 2:
     Koszulness OPEN for most. Null vectors in bar-relevant range.
 
-(F) Symplectic fermions (betagamma at lambda=1/2, c=-2):
+(F) Symplectic fermions / bc_1 (c=-2):
     IS Koszul (freely strongly generated). NOT a counterexample candidate.
     Included for contrast/verification.
 
@@ -1028,27 +1028,27 @@ def analyze_triplet(p_param: int = 2) -> DModulePurityAnalysis:
 
 
 def analyze_symplectic_fermion() -> DModulePurityAnalysis:
-    """D-module purity for symplectic fermions (betagamma at lambda=1/2).
+    """D-module purity for symplectic fermions / bc_1.
 
-    c = -2 (SAME as triplet W(2)), but the PARENT betagamma is
-    freely strongly generated => Koszul by PBW universality.
+    c = -2 (same as triplet W(2)), but the parent free odd
+    first-order system is freely strongly generated => Koszul by
+    PBW universality.
 
     This is a CONTROL CASE: Koszul AND pure.
     The logarithmic phenomena appear in the Z_2 orbifold = triplet,
-    NOT in the parent betagamma system.
+    NOT in the bosonic beta-gamma_{lambda=1/2} symplectic-boson
+    system.
 
     Shadow class: C (contact), r_max = 4.
     """
-    # Betagamma central charge: c_betagamma(lambda) = 2(6*lambda^2 - 6*lambda + 1)
-    # At lambda = 1/2: c = 2*(3/2 - 3 + 1) = 2*(-1/2) = -1
-    # Cross-check: c_bc(1/2) = 1 - 3*(2*1/2-1)^2 = 1, and c_bg + c_bc = -1+1 = 0.
-    c_sf = Fraction(-1)
-    kappa_sf = c_sf / 2  # = -1/2
+    # Symplectic fermion / bc_1 central charge: c = -2, so kappa = c/2 = -1.
+    # The bosonic beta-gamma_{1/2} symplectic boson has c = -1 and is a
+    # different parent lane.
+    c_sf = Fraction(-2)
+    kappa_sf = c_sf / 2  # = -1
 
     dims: Dict[Tuple[int, int], int] = {}
-    dims[(1, 1)] = 2  # beta and gamma generators at weight 1 and 0
-    # Actually betagamma has generators beta (weight lambda) and gamma (weight 1-lambda)
-    # At lambda=1/2: both have weight 1/2. But PBW puts them at different levels.
+    dims[(1, 1)] = 2  # free odd first-order generators in the H^1 lane
     # For the bar complex, the key is: freely generated => H^1 only.
     dims[(1, 1)] = 2
 
@@ -1057,7 +1057,7 @@ def analyze_symplectic_fermion() -> DModulePurityAnalysis:
     wf_list = [weight_filtration_universal(n, 8) for n in range(1, 4)]
 
     return DModulePurityAnalysis(
-        name="Symplectic fermion (betagamma lambda=1/2)",
+        name="Symplectic fermion / bc_1",
         algebra_type="free_field",
         central_charge=c_sf,
         kappa=kappa_sf,

@@ -12,13 +12,20 @@ Virasoro, W_3), this module computes dimensions of:
       endomorphism operad End^ch_A(n+1), i.e., multilinear OPE maps with
       polynomial dependence on insertion coordinates.
 
-The quasi-isomorphism between (A) and (B) follows from the formality of the
-FM operad (Kontsevich) and the recognition theorem (lem:product-weiss-descent):
+The quasi-isomorphism between (A) and (B), on the PBW chiral Koszul
+generic surface, follows from the formality of the FM operad
+(Kontsevich) and the recognition theorem (lem:product-weiss-descent):
 both complexes compute ChirHoch*(A).
 
-For the Swiss-cheese pair (Z^der, A) = (bulk, boundary), the module also
-computes the bulk derived center dimensions (from Theorem H) alongside the
-boundary algebra dimension at each weight.
+For the universal Swiss-cheese pair, the module also computes the
+derived-centre closed-sector dimensions from Theorem H alongside the
+boundary algebra dimension at each weight.  A physical bulk
+identification is a separate OCA comparison problem:
+O_bulk^phys(A) -> Z_ch^der(A) must be defined and proved to be a
+quasi-isomorphism before holographic language is licensed.  The
+Theorem H scope record is returned explicitly; outside that package the
+defect object is the Hochschild Koszul-defect complex KD_H^bullet(A),
+not the three-degree dimension vector.
 
 Weight-truncated model: at weight bound W, we count elements whose total
 conformal weight (sum of generator weights in input minus output weight,
@@ -35,7 +42,10 @@ CRITICAL PITFALLS:
   - FM compactification is a BLOWUP along diagonals, NOT complement (AP)
   - The geometric model counts sections with LOG poles (not arbitrary poles)
   - Weight truncation must respect the conformal grading, not naive degree
-  - Quasi-isomorphism is for KOSZUL algebras; non-Koszul case may differ
+  - Theorem H amplitude [0,2] is only for the PBW/Koszul/generic,
+    finite-type/perfect, E_infty-completed, strict-ML surface
+  - The ordered bar complex is a twisting coalgebra; SC^{ch,top} acts
+    on the derived-centre pair, not on B(A) by itself
 """
 
 from __future__ import annotations
@@ -62,6 +72,50 @@ from compute.lib.open_closed_derived_center import (
 
 FAMILIES = ("Heisenberg", "Affine_sl2", "Virasoro", "W3")
 
+THEOREM_H_HYPOTHESES = (
+    "PBW chiral Koszulness",
+    "finite-type/perfect diagonal chiral Hochschild complexes",
+    "genericity away from critical affine and non-generic simple quotient loci",
+    "E_infty chiral completion",
+    "strict Mittag-Leffler passage through finite conformal-weight windows",
+    "PBW/Arnold Shelton-Yuzvinsky contraction",
+)
+
+OCA_HYPOTHESES = (
+    "physical bulk observable complex O_bulk^phys(A) defined",
+    "open/closed comparison map OCA: O_bulk^phys(A) -> Z_ch^der(A) defined",
+    "OCA quasi-isomorphism proved in the ambient completion",
+)
+
+SC_CH_TOP_OPERATION_GATES = (
+    ("operation_spaces_defined", "SC^{ch,top} operation spaces defined"),
+    (
+        "minimal_generators_fully_known",
+        "minimal generators asserted only after a full generator list is known",
+    ),
+    ("codim_one_generators_stated", "codimension-one generators stated"),
+    ("codim_two_relations_stated", "codimension-two relations stated"),
+    ("arnold_closed_proved", "closed-colour Arnold relation proved"),
+    ("stasheff_open_proved", "open-colour Stasheff relation proved"),
+    ("mixed_square_proved", "mixed square relation proved"),
+    ("no_open_to_closed_rule_defined", "no-open-to-closed rule defined"),
+    ("closed_colour_retract_proved", "closed colour operadic retract proved"),
+    ("derived_center_sc_action_proved", "derived-centre SC^{ch,top} action proved"),
+    ("bar_complex_sc_action_excluded", "bar complex SC^{ch,top} action excluded"),
+)
+
+SC_CH_TOP_ACTION_GATE_KEYS = (
+    "operation_spaces_defined",
+    "codim_one_generators_stated",
+    "codim_two_relations_stated",
+    "arnold_closed_proved",
+    "stasheff_open_proved",
+    "mixed_square_proved",
+    "no_open_to_closed_rule_defined",
+    "closed_colour_retract_proved",
+    "derived_center_sc_action_proved",
+)
+
 _FAMILY_FACTORIES = {
     "Heisenberg": heisenberg_data,
     "Affine_sl2": affine_sl2_data,
@@ -83,6 +137,140 @@ def _get_algebra(family: str, **kwargs) -> ChiralAlgebraData:
         return factory(kwargs.get("c", Fraction(2)))
     else:
         raise ValueError(f"Unknown family: {family}")
+
+
+def theorem_h_scope(family: str, **kwargs) -> Dict[str, object]:
+    """Return the precise Theorem H surface used by this finite model."""
+    if family not in FAMILIES:
+        raise ValueError(f"Unknown family: {family}")
+
+    excluded_loci: List[str] = []
+    if family == "Affine_sl2":
+        k = kwargs.get("k", Fraction(1))
+        if k == Fraction(-2):
+            excluded_loci.append("critical affine level k = -h^vee = -2")
+    if family == "W3":
+        c = kwargs.get("c", Fraction(2))
+        if c == Fraction(-22, 5):
+            excluded_loci.append("degenerate W3 value c = -22/5")
+
+    applies = not excluded_loci
+    return {
+        "claim": "ChirHoch amplitude [0,2]",
+        "applies": applies,
+        "theorem_refs": (
+            "thm:main-koszul-hoch",
+            "thm:theorem-h-on-koszul-locus",
+        ),
+        "hypothesis_package": THEOREM_H_HYPOTHESES,
+        "amplitude": (0, 2) if applies else None,
+        "excluded_loci": tuple(excluded_loci),
+        "defect_complex": None if applies else "KD_H^bullet(A)",
+        "defect_ref": None if applies else "def:koszul-defect-complex",
+    }
+
+
+def physical_bulk_oca_scope(
+    *,
+    physical_bulk_observables_defined: bool = False,
+    oca_map_defined: bool = False,
+    oca_quasi_isomorphism_proved: bool = False,
+) -> Dict[str, object]:
+    """Record whether the derived centre may be called physical bulk.
+
+    The finite Swiss-cheese dimension model computes the universal
+    cochain closed sector Z_ch^der(A).  It does not construct a
+    holomorphic-topological field theory, its physical bulk observable
+    factorization algebra, or the OCA quasi-isomorphism.
+    """
+    hypotheses = {
+        "physical_bulk_observables_defined": physical_bulk_observables_defined,
+        "oca_map_defined": oca_map_defined,
+        "oca_quasi_isomorphism_proved": oca_quasi_isomorphism_proved,
+    }
+    missing = tuple(
+        label for present, label in zip(hypotheses.values(), OCA_HYPOTHESES)
+        if not present
+    )
+    physical_identification = all(hypotheses.values())
+    return {
+        "status": (
+            "physical_bulk_identified"
+            if physical_identification
+            else "universal_closed_sector_only"
+        ),
+        "physical_bulk_observables_symbol": "O_bulk^phys(A)",
+        "comparison_map_symbol": "OCA: O_bulk^phys(A) -> Z_ch^der(A)",
+        "target": "Z_ch^der(A)",
+        "hypotheses": hypotheses,
+        "missing_hypotheses": missing,
+        "derived_center_is_physical_bulk": physical_identification,
+        "holographic_language_allowed": physical_identification,
+        "universal_closed_sector_computed": True,
+    }
+
+
+def sc_ch_top_operation_scope(
+    *,
+    operation_spaces_defined: bool = False,
+    minimal_generators_fully_known: bool = False,
+    codim_one_generators_stated: bool = False,
+    codim_two_relations_stated: bool = False,
+    arnold_closed_proved: bool = False,
+    stasheff_open_proved: bool = False,
+    mixed_square_proved: bool = False,
+    no_open_to_closed_rule_defined: bool = False,
+    closed_colour_retract_proved: bool = False,
+    derived_center_sc_action_proved: bool = False,
+    bar_complex_sc_action_excluded: bool = False,
+) -> Dict[str, object]:
+    """Record the operation-space gates for SC^{ch,top}.
+
+    This model can certify a finite dimension vector for the derived
+    centre.  It does not, by itself, define the two-coloured operation
+    spaces or prove the codimension-two relations that make a full
+    SC^{ch,top} action.  The ordered bar complex remains a one-coloured
+    twisting coalgebra in every case.
+    """
+    hypotheses = {
+        "operation_spaces_defined": operation_spaces_defined,
+        "minimal_generators_fully_known": minimal_generators_fully_known,
+        "codim_one_generators_stated": codim_one_generators_stated,
+        "codim_two_relations_stated": codim_two_relations_stated,
+        "arnold_closed_proved": arnold_closed_proved,
+        "stasheff_open_proved": stasheff_open_proved,
+        "mixed_square_proved": mixed_square_proved,
+        "no_open_to_closed_rule_defined": no_open_to_closed_rule_defined,
+        "closed_colour_retract_proved": closed_colour_retract_proved,
+        "derived_center_sc_action_proved": derived_center_sc_action_proved,
+        "bar_complex_sc_action_excluded": bar_complex_sc_action_excluded,
+    }
+    missing = tuple(
+        label for key, label in SC_CH_TOP_OPERATION_GATES
+        if not hypotheses[key]
+    )
+    action_certified = all(hypotheses[key] for key in SC_CH_TOP_ACTION_GATE_KEYS)
+    return {
+        "status": (
+            "SC_ch_top_action_on_derived_center_certified"
+            if action_certified
+            else "dimension_vector_only"
+        ),
+        "hypotheses": hypotheses,
+        "missing_operation_gates": missing,
+        "minimal_generators_claim_allowed": minimal_generators_fully_known,
+        "closed_colour_operadic_retract": closed_colour_retract_proved,
+        "no_open_to_closed_rule_defined": no_open_to_closed_rule_defined,
+        "derived_center_carries_sc_ch_top": action_certified,
+        "sc_ch_top_action_on_derived_center_certified": action_certified,
+        "bar_complex_carries_sc_ch_top": False,
+        "bar_complex_sc_action_excluded": bar_complex_sc_action_excluded,
+        "bar_complex_sc_status": (
+            "excluded_by_type"
+            if bar_complex_sc_action_excluded
+            else "not certified; SC^{ch,top} belongs to the derived-centre pair"
+        ),
+    }
 
 
 # ======================================================================
@@ -112,7 +300,7 @@ def _max_ope_order(family: str) -> int:
     """Maximum singular OPE order (pole order) for the family.
 
     This controls the polynomial degree in lambda for a single OPE:
-      Heisenberg: a_{(1)} a = k  =>  max order 1 (double pole)
+      Heisenberg: a_{(1)} a = k  =>  lambda degree 1 (OPE double pole)
       Affine sl_2: J_{(0)} J = f, J_{(1)} J = k  =>  max order 1
       Virasoro: T_{(3)} T = c/2  =>  max order 3 (quartic pole)
       W_3: W_{(5)} W = c/3  =>  max order 5 (sextic pole)
@@ -317,36 +505,43 @@ def verify_quasi_isomorphism_range(family: str, max_degree: int,
 
 
 # ======================================================================
-#  Swiss-cheese pair dimensions: (Z^der, A) = (bulk, boundary)
+#  Swiss-cheese pair dimensions: derived-centre closed slot and boundary
 # ======================================================================
 
 def swiss_cheese_pair_dimensions(family: str,
                                  weight_bound: int,
                                  **kwargs) -> Dict[str, object]:
-    """Compute dimensions of (Z^der, A) = (bulk, boundary) at each weight.
+    """Compute dimensions of (Z^der_ch(A), A) at each weight.
 
     The Swiss-cheese pair consists of:
-      - Bulk (closed sector): the derived center Z^der_ch(A)
-        By Theorem H, concentrated in degrees {0, 1, 2}.
-      - Boundary (open sector): the algebra A itself, graded by
+      - closed sector: the derived center Z^der_ch(A)
+        On the Theorem H surface, concentrated in degrees {0, 1, 2}.
+      - open sector: the algebra A itself, graded by
         conformal weight.
 
     At each weight level w <= weight_bound, we compute:
-      - bulk_dim[n]: dim Z^n for n in {0, 1, 2} (from Theorem H)
+      - bulk_dim[n]: dim Z^n for n in {0, 1, 2} (from Theorem H scope)
       - boundary_dim[w]: number of states in A at weight w
         (counting derivatives of generators up to weight w)
 
-    The same two geometric directions feed the ordered bar complex:
-    the differential records the C-direction factorization and the
-    coproduct records the R-direction factorization. The genuine
-    Swiss-cheese datum is the pair (Z^der_ch(A), A), not the bar
-    complex by itself.
+    A physical bulk comparison requires OCA data that this finite
+    dimension model does not supply.  Likewise, the genuine two-colour
+    Swiss-cheese datum is the pair (Z^der_ch(A), A), not the ordered
+    bar complex by itself.
     """
+    theorem_h = theorem_h_scope(family, **kwargs)
+    if not theorem_h["applies"]:
+        raise ValueError(
+            "Swiss-cheese derived-center dimensions use Theorem H only on "
+            f"the generic PBW/Koszul surface; use {theorem_h['defect_complex']} "
+            "off that package."
+        )
+
     algebra = _get_algebra(family, **kwargs)
     weights = _generator_weights(family)
     r = len(weights)
 
-    # Bulk dimensions (from Theorem H, weight-independent)
+    # Bulk dimensions (from the Theorem H surface, weight-independent)
     bulk = derived_center_dimensions(algebra)
 
     # Boundary dimensions: count states at each conformal weight
@@ -390,16 +585,33 @@ def swiss_cheese_pair_dimensions(family: str,
 
     # Kappa (modular characteristic) for cross-reference
     kappa = modular_characteristic(algebra)
+    oca_scope = physical_bulk_oca_scope()
+    sc_scope = sc_ch_top_operation_scope()
 
     return {
         "family": family,
         "weight_bound": weight_bound,
         "bulk_dimensions": bulk,  # {0: z0, 1: z1, 2: z2}
+        "theorem_h_surface": theorem_h,
         "boundary_dimensions": boundary_dims,  # {w: dim_w}
         "total_boundary_dim": total_boundary,
         "kappa": kappa,
         "bulk_total": sum(bulk.values()),
         "calabi_yau": bulk[0] == bulk[2],  # CY duality check
+        "physical_bulk_oca_scope": oca_scope,
+        "sc_ch_top_operation_scope": sc_scope,
+        "derived_center_is_physical_bulk": oca_scope[
+            "derived_center_is_physical_bulk"
+        ],
+        "holographic_language_allowed": oca_scope[
+            "holographic_language_allowed"
+        ],
+        "bar_complex_carries_sc_ch_top": sc_scope[
+            "bar_complex_carries_sc_ch_top"
+        ],
+        "sc_ch_top_action_on_derived_center_certified": sc_scope[
+            "sc_ch_top_action_on_derived_center_certified"
+        ],
     }
 
 

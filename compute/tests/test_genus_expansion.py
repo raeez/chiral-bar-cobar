@@ -13,16 +13,65 @@ import pytest
 from sympy import Rational, Symbol, pi, simplify
 
 from compute.lib.genus_expansion import (
+    ANALYTIC_FREE_ENERGY_HYPOTHESES,
     genus_table_numeric,
     complementarity_sum_w,
     convergence_radius,
     ratio_successive,
+    theorem_d_scope_report,
     verify_F1,
     KNOWN_F1,
     kappa_heisenberg,
     kappa_sl2,
     genus_table,
 )
+
+
+class TestTheoremDScope:
+    def test_default_scope_is_diagonal_scalar_only(self):
+        """The diagonal formula is not the full genus tower by default."""
+        scope = theorem_d_scope_report(genus=2)
+        assert scope["certified_quantity"] == "diagonal_scalar_cohomology_class"
+        assert not scope["all_weight_formula_verified"]
+        assert "cross_channel_terms_absent_or_supplied" in scope[
+            "missing_all_weight_hypotheses"
+        ]
+        assert not scope["analytic_free_energy_verified"]
+        assert not scope["physical_free_energy_language_allowed"]
+
+    def test_genus_one_has_no_cross_channel_gap(self):
+        """Genus one is the scalar/all-weight coincidence lane."""
+        scope = theorem_d_scope_report(genus=1)
+        assert scope["all_weight_formula_verified"]
+        assert "cross_channel_terms_absent_or_supplied" not in scope[
+            "missing_all_weight_hypotheses"
+        ]
+
+    def test_uniform_weight_still_requires_strict_ml_for_all_weights(self):
+        """Uniform-weight input alone does not assert all-weight completion."""
+        partial = theorem_d_scope_report(genus=3, uniform_weight=True)
+        assert not partial["all_weight_formula_verified"]
+        assert "strict_Mittag_Leffler_completion" in partial[
+            "missing_all_weight_hypotheses"
+        ]
+
+        complete = theorem_d_scope_report(
+            genus=3, uniform_weight=True, strict_ml_completion=True
+        )
+        assert complete["all_weight_formula_verified"]
+        assert not complete["missing_all_weight_hypotheses"]
+
+    def test_analytic_free_energy_requires_separate_package(self):
+        """The formal radius does not by itself certify analytic free energy."""
+        scope = theorem_d_scope_report(
+            genus=2,
+            uniform_weight=True,
+            strict_ml_completion=True,
+            analytic_hypotheses=ANALYTIC_FREE_ENERGY_HYPOTHESES,
+        )
+        assert scope["all_weight_formula_verified"]
+        assert scope["analytic_free_energy_verified"]
+        assert scope["physical_free_energy_language_allowed"]
 
 
 class TestGenusTableNumeric:

@@ -30,6 +30,7 @@ from compute.lib.yangian_rtt_exceptional import (
     G2_dim,
     weyl_dim_explicit,
     yang_baxter_check_generic,
+    exceptional_rtt_obstruction_report,
 )
 
 
@@ -294,6 +295,14 @@ class TestYangBaxterGeneric(unittest.TestCase):
             res = yang_baxter_check_generic(N_rep, kappa, 1.5, 2.3)
             self.assertTrue(res["passes"],
                             f"YBE failed for N={N_rep}, kappa={kappa}")
+
+    def test_generic_ybe_is_not_exceptional_rtt_theorem(self):
+        """The orthogonal-style P,Q test must not be promoted to exceptional RTT."""
+        report = exceptional_rtt_obstruction_report("E8")
+        self.assertFalse(report["an_rtt_extrapolation_allowed"])
+        self.assertFalse(report["orthogonal_test_matrix_is_full_rtt"])
+        self.assertIn("Drinfeld/J-presentation or RTT presentation theorem",
+                      report["required_extra_data"])
 
 
 # ===================================================================

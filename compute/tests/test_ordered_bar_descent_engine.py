@@ -81,7 +81,7 @@ class TestHeisenbergRMatrix:
 
     def test_collision_residue_is_simple_pole(self, heis_level1):
         """AP19: double OPE pole -> simple collision residue pole.
-        r(z) = k/z (simple pole from k/(z-w)^2 via d log absorption)."""
+        r(z) = k*Omega_H/z (rank-one coeff k/z) (simple pole from k/(z-w)^2 via d log absorption)."""
         assert heis_level1.collision_residue() == "(1)/z"
 
     def test_strong_unitarity_exact(self, heis_level1):
@@ -505,6 +505,10 @@ class TestStructuralConsistency:
         assert 'E_1 coalgebra' in summary['three_bar_complexes']['B_ord']
         assert 'cocommutative' in summary['coproducts']['factorization']
         assert 'NOT cocommutative' in summary['coproducts']['deconcatenation']
+        assert summary['naive_reynolds_is_chain_map'] is False
+        assert summary['averaging_commutes_with_differential_only_under_descent'] is True
+        assert summary['descent_hypotheses']['differential_equivariance'] is True
+        assert summary['descent_hypotheses']['bracket_equivariance'] is True
 
     def test_run_all_verifications(self):
         """Integration test: run_all_verifications completes without error."""
@@ -702,7 +706,7 @@ class TestMultiPathCrossChecks:
         for ope_p, r_p in zip(vir_poles['ope_poles'], vir_poles['collision_residue_poles']):
             assert ope_p - r_p == 1, "AP19: each pole order shifts by exactly 1"
         # Path 2: Heisenberg
-        # OPE: k/(z-w)^2 (pole order 2) -> r(z) = k/z (pole order 1)
+        # OPE: k/(z-w)^2 (pole order 2) -> r(z) = k*Omega_H/z (rank-one coeff k/z) (pole order 1)
         assert 2 - 1 == 1  # pole shift by 1
 
     def test_cocomm_factorization_cross_check(self):

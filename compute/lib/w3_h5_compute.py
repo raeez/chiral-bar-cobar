@@ -45,7 +45,8 @@ from typing import Dict, List, Tuple
 
 # Convention note: the legacy H^n(B(W3)) notation in this file is bar-WEIGHT
 # indexing inside H^1(B(W_3)), not cohomological bar degree. Concretely,
-# KNOWN_VALUES[n] = dim H^1(B(W_3))_n = dim (W_3)^!_n. In the manuscript's
+# KNOWN_VALUES[n] = dim H^1(B(W_3))_n = dim (W_3)^i_n, matching
+# dim (W_3)^!_n only after the dual branch. In the manuscript's
 # chirally Koszul convention for universal W_3, the actual bar-degree
 # cohomology satisfies H^m(B(W_3)) = 0 for m >= 2, so only H^1 survives and
 # is then refined by the bar-weight grading used here.

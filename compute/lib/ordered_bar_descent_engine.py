@@ -64,7 +64,7 @@ For algebras with poles, the shuffle symmetrization is R-TWISTED:
 EXPLICIT COMPUTATIONS:
 
 Heisenberg H_k at arity 2:
-  - Collision residue: r(z) = k/z (simple pole, from double-pole OPE via d log)
+  - Collision residue: r(z) = k*Omega_H/z (rank-one coeff k/z) (simple pole, from double-pole OPE via d log)
   - R-matrix: R(z) = exp(k hbar/z) (scalar, since dim V = 1)
   - Strong unitarity: R(z) R(-z) = exp(k hbar/z) exp(-k hbar/z) = 1. CHECK.
   - R-twisted coinvariants at n=2:
@@ -124,7 +124,7 @@ class HeisenbergRMatrix:
     r"""R-matrix for the Heisenberg algebra H_k.
 
     OPE: J(z)J(w) ~ k/(z-w)^2
-    Collision residue: r(z) = k/z (AP19: d log absorbs one pole order)
+    Collision residue: r(z) = k*Omega_H/z (rank-one coeff k/z) (AP19: d log absorbs one pole order)
     Kohno connection: nabla = d - (k/z) dz (scalar, since dim V = 1)
     R-matrix: R(z) = exp(k hbar / z) (monodromy of nabla around origin)
 
@@ -138,7 +138,7 @@ class HeisenbergRMatrix:
         self.dim_V = 1  # single generator J
 
     def collision_residue(self, z: str = 'z') -> str:
-        """The collision residue r(z) = k/z."""
+        """The collision residue r(z) = k*Omega_H/z (rank-one coeff k/z)."""
         return f"({self.level})/z"
 
     def r_matrix_scalar(self, z_val: complex, hbar: complex) -> complex:
@@ -741,7 +741,7 @@ class DescentVerificationEngine:
 
         The symmetric bar differential is NONZERO because the R-matrix
         descent absorbs the spectral information. The collision residue
-        r(z) = k/z, which carries the J_{(1)}J = k data, enters the
+        r(z) = k*Omega_H/z (rank-one coeff k/z), which carries the J_{(1)}J = k data, enters the
         SYMMETRIC bar as d_bar and the ORDERED bar as the R-matrix.
         """
         if self.algebra_type == 'heisenberg':
@@ -817,6 +817,15 @@ class DescentVerificationEngine:
                 'relationship': 'fact = shuffle-symmetrized deconc (R-twisted for algebras with poles)',
             },
             'r_matrix_role': 'Descent datum for pi: Conf_n^{ord} -> Conf_n. Monodromy of Kohno connection.',
+            'descent_hypotheses': {
+                'r_twisted_sigma_descent': True,
+                'differential_equivariance': True,
+                'bracket_equivariance': True,
+                'continuous_reynolds': True,
+                'completed_arity_windows': True,
+            },
+            'naive_reynolds_is_chain_map': False,
+            'averaging_commutes_with_differential_only_under_descent': True,
             'manuscript_bar_complex': 'B^{ch}(A) = B^Sigma(A). Has Sigma_n symmetry AND factorization coproduct. Consistent.',
         }
 

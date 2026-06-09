@@ -8,7 +8,7 @@ Ground truth references:
   C1-C7:   central charges and kappa per family
   C18:     K(A) = kappa+kappa': 0 (KM/Heis/lattice/free), 13 (Vir),
            250/3 (W_3), 98/3 (BP scalar lane)
-  C20:     K_BP = 196, self-dual at k=-3 on the central-charge lane
+  C20:     K_BP = 196 on the self-transpose BP branch; k=-3 is a pole
   AP136:   H_N = sum_{j=1}^N 1/j, NOT H_{N-1}
   B7:      WRONG: kappa(W_N) = c*H_{N-1}
   B9:      WRONG: kappa+kappa' = 0 universally
@@ -18,6 +18,12 @@ import pytest
 from fractions import Fraction
 
 from compute.lib.koszul_conductor_table_engine import (
+    AFFINE_CONDUCTOR_HYPOTHESES,
+    AFFINE_CRITICAL_STATUS,
+    VIRASORO_DUALITY_HYPOTHESES,
+    VIRASORO_EXCEPTIONAL_CHARGES,
+    VIRASORO_SHADOW_TOWER_HYPOTHESES,
+    VIRASORO_SHADOW_TOWER_MISSING_AT_SINGULAR,
     harmonic,
     heisenberg_c,
     heisenberg_kappa,
@@ -30,6 +36,7 @@ from compute.lib.koszul_conductor_table_engine import (
     virasoro_dual_kappa,
     virasoro_K_cc,
     virasoro_K_kk,
+    virasoro_scope_report,
     km_c,
     km_dual_level,
     km_dual_c,
@@ -37,14 +44,25 @@ from compute.lib.koszul_conductor_table_engine import (
     km_dual_kappa,
     km_K_cc,
     km_K_kk,
+    km_level_scope,
     wn_kappa,
     wn_dual_c,
+    wn_spin_set,
+    wn_central_charge_conductor,
+    wn_conductor_constant,
     WN_CONDUCTORS,
     WN_CC_SUMS,
+    BP_DUALITY_HYPOTHESES,
+    BP_STRONG_GENERATORS,
     bp_c,
     bp_dual_c,
     bp_K_cc,
     bp_K_kk,
+    bp_j_line_scalar,
+    bp_t_line_scalar,
+    bp_g_mixed_pairing,
+    bp_ds_ghost_leg_scalar,
+    bp_scope_report,
     bc_c,
     bg_c,
     bc_bg_K_cc,
@@ -175,13 +193,50 @@ class TestVirasoro:
         for c in [Fraction(0), Fraction(1), Fraction(13), Fraction(26), Fraction(-5)]:
             assert virasoro_K_kk(c) == Fraction(13)
 
+    def test_scope_report_generic(self):
+        """Generic Virasoro carries theorem-scoped duality and S4 hypotheses."""
+        scope = virasoro_scope_report(Fraction(1))
+        assert scope["dual_central_charge"] == Fraction(25)
+        assert scope["duality_claim_requires_theorem"] is True
+        assert scope["duality_hypothesis_package"] == VIRASORO_DUALITY_HYPOTHESES
+        assert scope["K_kk"] == Fraction(13)
+        assert scope["self_dual"] is False
+        assert scope["shadow_tower_formula_applies"] is True
+        assert scope["shadow_tower_hypothesis_package"] == VIRASORO_SHADOW_TOWER_HYPOTHESES
+        assert scope["missing_shadow_tower_hypotheses"] == tuple()
+        assert scope["S4_formula"] == "10/[c(5c+22)]"
+
+    def test_scope_report_exceptional_charges(self):
+        """The four PDF-specified Virasoro charges have distinct statuses."""
+        c0 = virasoro_scope_report(Fraction(0))
+        assert c0["exceptional_status"] == VIRASORO_EXCEPTIONAL_CHARGES[Fraction(0)]
+        assert c0["shadow_tower_formula_applies"] is False
+        assert c0["missing_shadow_tower_hypotheses"] == VIRASORO_SHADOW_TOWER_MISSING_AT_SINGULAR
+
+        yang_lee = virasoro_scope_report(Fraction(-22, 5))
+        assert yang_lee["exceptional_status"] == VIRASORO_EXCEPTIONAL_CHARGES[Fraction(-22, 5)]
+        assert yang_lee["shadow_tower_formula_applies"] is False
+
+        c26 = virasoro_scope_report(Fraction(26))
+        assert c26["exceptional_status"] == VIRASORO_EXCEPTIONAL_CHARGES[Fraction(26)]
+        assert c26["dual_central_charge"] == Fraction(0)
+        assert c26["self_dual"] is False
+        assert c26["critical_string_central_charge"] is True
+        assert c26["shadow_tower_formula_applies"] is True
+
+        c13 = virasoro_scope_report(Fraction(13))
+        assert c13["exceptional_status"] == VIRASORO_EXCEPTIONAL_CHARGES[Fraction(13)]
+        assert c13["dual_central_charge"] == Fraction(13)
+        assert c13["self_dual"] is True
+        assert c13["critical_string_central_charge"] is False
+
 
 # ===========================================================================
 # Affine Kac-Moody (C3, C9, C13, C18)
 # ===========================================================================
 
 class TestAffineKM:
-    """V_k(g): kappa=dim(g)*(k+h^v)/(2*h^v), K_kk=0."""
+    """V_k(g): non-critical conductor lane and critical FF separation."""
 
     def test_kappa_sl2_k0(self):
         """kappa(V_0(sl2)) = dim(sl2)/2 = 3/2.  (C3: k=0 -> dim/2)"""
@@ -189,25 +244,25 @@ class TestAffineKM:
         assert km_kappa(3, 2, Fraction(0)) == Fraction(3, 2)
 
     def test_kappa_sl2_k_critical(self):
-        """kappa at k=-h^v (critical level) = 0.  (C3)"""
-        # VERIFIED: [DC] 3*(-2+2)/(2*2)=0, [LT] C3 boundary
-        assert km_kappa(3, 2, Fraction(-2)) == Fraction(0)
+        """Generic kappa helper rejects the critical FF boundary."""
+        with pytest.raises(ValueError, match="critical level"):
+            km_kappa(3, 2, Fraction(-2))
 
     def test_kappa_sl3_k0(self):
         # VERIFIED: [DC] 8*(0+3)/(2*3)=4, [LT] C3
         assert km_kappa(8, 3, Fraction(0)) == Fraction(4)
 
     def test_kappa_sl3_k_critical(self):
-        # VERIFIED: [DC] 8*(-3+3)/(2*3)=0, [LT] C3
-        assert km_kappa(8, 3, Fraction(-3)) == Fraction(0)
+        with pytest.raises(ValueError, match="critical level"):
+            km_kappa(8, 3, Fraction(-3))
 
     def test_kappa_e8_k0(self):
         # VERIFIED: [DC] 248*(0+30)/(2*30)=124, [LT] C3
         assert km_kappa(248, 30, Fraction(0)) == Fraction(124)
 
     def test_kappa_e8_k_critical(self):
-        # VERIFIED: [DC] 248*(-30+30)/(2*30)=0, [LT] C3
-        assert km_kappa(248, 30, Fraction(-30)) == Fraction(0)
+        with pytest.raises(ValueError, match="critical level"):
+            km_kappa(248, 30, Fraction(-30))
 
     def test_dual_level(self):
         """k' = -k - 2*h^v."""
@@ -233,6 +288,40 @@ class TestAffineKM:
         # VERIFIED: [DC] 1*3/3=1, [LT] Sugawara formula
         assert km_c(3, 2, Fraction(1)) == Fraction(1)
 
+    def test_km_c_critical_raises(self):
+        """Sugawara central charge is undefined at k=-h^v."""
+        with pytest.raises(ValueError, match="critical level"):
+            km_c(3, 2, Fraction(-2))
+
+    def test_K_kk_critical_raises(self):
+        """Generic conductor complementarity does not apply at critical level."""
+        with pytest.raises(ValueError, match="critical level"):
+            km_K_kk(3, 2, Fraction(-2))
+
+    def test_noncritical_scope_report(self):
+        """Non-critical affine KM carries the generic conductor package."""
+        scope = km_level_scope(3, 2, Fraction(1))
+        assert scope["is_critical"] is False
+        assert scope["generic_conductor_formula_applies"] is True
+        assert scope["hypothesis_package"] == AFFINE_CONDUCTOR_HYPOTHESES
+        assert scope["missing_hypotheses"] == tuple()
+        assert scope["kappa_scalar"] == Fraction(9, 4)
+        assert scope["K_kk_scalar_indicator"] == Fraction(0)
+
+    def test_critical_scope_report(self):
+        """Critical scalar vanishing is recorded without promoting it."""
+        scope = km_level_scope(3, 2, Fraction(-2))
+        assert scope["is_critical"] is True
+        assert scope["generic_conductor_formula_applies"] is False
+        assert scope["central_charge_defined"] is False
+        assert scope["status"] == AFFINE_CRITICAL_STATUS
+        assert scope["missing_hypotheses"] == AFFINE_CONDUCTOR_HYPOTHESES
+        assert scope["kappa_scalar"] == Fraction(0)
+        assert scope["kappa_dual_scalar"] == Fraction(0)
+        assert scope["K_kk_scalar_indicator"] == Fraction(0)
+        assert scope["critical_scalar_kappa_vanishes"] is True
+        assert scope["ff_center_lane"] is True
+
 
 # ===========================================================================
 # W_N algebras (C4, C17, C19, AP136)
@@ -256,6 +345,56 @@ class TestWN:
         """K_kk(W_3) = 250/3.  (C18)"""
         # VERIFIED: [LT] C18, [DC] 100*(11/6-1) = 100*5/6 = 500/6 = 250/3
         assert WN_CONDUCTORS[3] == Fraction(250, 3)
+
+    def test_wn_spin_set(self):
+        """Principal W_N strong generators have spins {2, ..., N}."""
+        assert wn_spin_set(2) == (2,)
+        assert wn_spin_set(5) == (2, 3, 4, 5)
+        with pytest.raises(ValueError, match="N >= 2"):
+            wn_spin_set(1)
+
+    def test_wn_central_charge_conductor_formula(self):
+        """K_c(W_N) = 4N^3 - 2N - 2, not the scalar K_kk lane."""
+        expected = {
+            2: Fraction(26),
+            3: Fraction(100),
+            4: Fraction(246),
+            5: Fraction(488),
+        }
+        for n, value in expected.items():
+            assert wn_central_charge_conductor(n) == value
+            assert WN_CC_SUMS[n] == value
+        with pytest.raises(ValueError, match="N >= 2"):
+            wn_central_charge_conductor(1)
+
+    def test_wn_scalar_conductor_formula(self):
+        """K_kk(W_N) = (H_N - 1) K_c(W_N)."""
+        expected = {
+            2: Fraction(13),
+            3: Fraction(250, 3),
+            4: Fraction(533, 2),
+            5: Fraction(9394, 15),
+        }
+        for n, value in expected.items():
+            assert wn_conductor_constant(n) == value
+            assert WN_CONDUCTORS[n] == value
+            assert value == (
+                harmonic(n) - Fraction(1)
+            ) * wn_central_charge_conductor(n)
+
+    def test_wn_Kc_not_Kkappa(self):
+        """The central-charge conductor and scalar conductor are distinct."""
+        assert wn_central_charge_conductor(3) == Fraction(100)
+        assert wn_conductor_constant(3) == Fraction(250, 3)
+        assert wn_central_charge_conductor(4) == Fraction(246)
+        assert wn_conductor_constant(4) == Fraction(533, 2)
+        assert wn_conductor_constant(4) != wn_central_charge_conductor(4)
+
+    def test_w4_w5_dual_c_available(self):
+        """The closed W_N conductor formula supplies N >= 4 dual charges."""
+        assert wn_dual_c(Fraction(1), 4) == Fraction(245)
+        assert wn_dual_c(Fraction(1), 5) == Fraction(487)
+        assert wn_dual_c(Fraction(1), 6) == wn_central_charge_conductor(6) - 1
 
     def test_w3_kappa_at_c1(self):
         """kappa(W_3, c=1) = 1*(H_3-1) = 1*5/6 = 5/6."""
@@ -306,7 +445,7 @@ class TestWN:
 # ===========================================================================
 
 class TestBershadskyPolyakov:
-    """BP: K_kk = 98/3, K_cc = 196, self-dual at k=-3."""
+    """BP: K_kk = 98/3, K_cc = 196 on the non-principal DS branch."""
 
     def test_K_kk_98_over_3(self):
         """K_kk(BP) = 98/3 on the scalar lane.  (C18, C20)"""
@@ -318,12 +457,53 @@ class TestBershadskyPolyakov:
         # VERIFIED: [DC] c(0)+c(-6)=-6+202=196, [LT] BP self-duality proposition
         assert bp_K_cc(Fraction(0)) == Fraction(196)
 
-    def test_self_dual_level(self):
-        """Self-dual at k=-3: k'=-(-3)-6=-3."""
-        # VERIFIED: [DC] -(-3)-6=-3, [LT] C20
-        k = Fraction(-3)
-        k_dual = -k - 6
-        assert k_dual == k
+    def test_bp_scope_report_nonprincipal_fields(self):
+        """BP is subregular/minimal DS, not the principal W_N branch."""
+        scope = bp_scope_report(Fraction(0))
+        assert scope["presentation"] == "subregular_DS_W3^(2)"
+        assert scope["nilpotent_orbit_partition"] == (2, 1)
+        assert scope["ds_orbit"] == "subregular/minimal"
+        assert scope["is_principal_W_N"] is False
+        assert scope["strong_generators"] == BP_STRONG_GENERATORS
+        assert scope["duality_claim_requires_theorem"] is True
+        assert scope["duality_hypothesis_package"] == BP_DUALITY_HYPOTHESES
+
+    def test_bp_shadow_lines_are_separate(self):
+        """The BP J-line, T-line, G-pairing, kappa, and ghost leg differ."""
+        k = Fraction(0)
+        scope = bp_scope_report(k)
+        lines = scope["shadow_lines"]
+        assert lines["J"]["scalar"] == Fraction(1)
+        assert lines["T"]["scalar"] == Fraction(-3)
+        assert lines["G_pairing"]["scalar"] == Fraction(3)
+        assert lines["full_kappa"]["scalar"] == Fraction(-1)
+        assert lines["DS_ghost_leg"]["presentation_dependent"] is True
+        assert lines["DS_ghost_leg"]["scalar"] == Fraction(-6)
+        assert bp_j_line_scalar(k) != bp_t_line_scalar(k)
+        assert bp_t_line_scalar(k) != bp_K_kk(k)
+        assert bp_ds_ghost_leg_scalar(k) != bp_K_kk(k)
+
+    def test_bp_fixed_real_level_is_pole_not_attained_self_duality(self):
+        """k=-3 is fixed by k -> -k-6 but c_BP is undefined there."""
+        scope = bp_scope_report(Fraction(-3))
+        assert scope["level_fixed_by_sigma"] is True
+        assert scope["central_charge_defined"] is False
+        assert scope["real_level_self_dual_c_attained"] is False
+        assert scope["formal_self_dual_central_charge"] == Fraction(98)
+        assert scope["formal_self_dual_levels"] == ("k=-3+2i", "k=-3-2i")
+        assert scope["missing_hypotheses"] == ("k_plus_3_nonzero",)
+        assert scope["status"] == (
+            "critical_level_pole_not_attained_self_dual_real_level"
+        )
+
+    def test_bp_line_scalar_helpers(self):
+        """Direct BP line scalar helpers match the OPE scalar package."""
+        k = Fraction(1)
+        assert bp_j_line_scalar(k) == Fraction(5, 3)
+        assert bp_t_line_scalar(k) == bp_c(k) / 2
+        assert bp_t_line_scalar(k) == Fraction(-11)
+        assert bp_g_mixed_pairing(k) == Fraction(10)
+        assert bp_ds_ghost_leg_scalar(k) == Fraction(-24)
 
     def test_bp_c_symmetry(self):
         """c_BP(k) + c_BP(-k-6) is the same for multiple k values."""

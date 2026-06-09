@@ -222,15 +222,40 @@ class TestDSquaredZero:
         """D^2 = 0 at convolution level (from del^2 = 0 on M-bar_{g,n})."""
         assert self.d2v.convolution_d_squared_zero()
 
-    def test_ambient_d_squared_zero(self):
-        """D^2 = 0 at ambient level (thm:ambient-d-squared-zero)."""
-        assert self.d2v.ambient_d_squared_zero()
+    def test_strict_convolution_transport_status(self):
+        """Convolution D^2 is strict stable-curve Hom transport, not ambient log-FM."""
+        status = self.d2v.strict_convolution_transport_status()
+        assert status["status"] == "PROVED"
+        assert status["operator"] == "D_st"
+        assert status["hom_complex_is_strict"] is True
+        assert status["uses_stable_curve_boundary"] is True
+        assert status["uses_ordered_E1_curvature"] is False
+        assert status["uses_planted_forest_correction"] is False
+        assert status["uses_mok_log_fm_package"] is False
+
+    def test_ambient_d_squared_conditional(self):
+        """Ambient D^2 = 0 is conditional on the signed log-FM package."""
+        assert self.d2v.ambient_d_squared_zero() is False
+        status = self.d2v.ambient_d_squared_status()
+        assert status["status"] == "CONDITIONAL"
+        assert status["requires"]
 
     def test_cross_term_identity(self):
         """Critical cross-term: [d_sew, d_pf] + [d_int, hbar*Delta] + ... = 0."""
         result = self.d2v.verify_cross_term_identity()
         assert "identity" in result
         assert "mechanism" in result
+
+    def test_worked_codim2_sign_check_k3_g1(self):
+        """The k=3, g=1 mixed corner has two residue orders with opposite signs."""
+        result = self.d2v.worked_codim2_sign_check_k3_g1()
+        signs = result["orientation_signs"]
+        assert result["local_normals"] == ("r12", "q")
+        assert signs["degeneration_after_collision"] == 1
+        assert signs["collision_after_degeneration"] == -1
+        assert result["signed_sum"] == 0
+        assert result["factor_two"] is False
+        assert "d_sew, d_pf" in result["identity"]
 
     def test_genus_0_d_squared(self):
         """At genus 0, D^2 = 0 reduces to d_CE^2 = 0 (Jacobi)."""
@@ -800,7 +825,8 @@ class TestModularDeformationPackageHeisenberg:
         result = self.pkg.verify_mc_equation()
         assert result["d0_squared_zero"]
         assert result["dA_squared_zero"]
-        assert result["ambient_d_squared_zero"]
+        assert result["ambient_d_squared_zero"] is False
+        assert result["ambient_d_squared_status"]["status"] == "CONDITIONAL"
         assert result["mc_from_d_squared"]
 
     def test_shadow_termination(self):
@@ -939,12 +965,13 @@ class TestFullVerificationSuite:
             mc = results[family]["mc_equation"]
             assert mc["mc_from_d_squared"], f"MC failed for {family}"
 
-    def test_d_squared_zero_both_levels(self):
-        """D^2 = 0 at convolution and ambient levels."""
+    def test_d_squared_zero_status_split(self):
+        """D^2 is proved at convolution level and conditional ambiently."""
         results = verify_modular_deformation_package()
         d2 = results["d_squared_zero"]
         assert d2["convolution"]
-        assert d2["ambient"]
+        assert d2["ambient"] is False
+        assert d2["ambient_status"]["status"] == "CONDITIONAL"
 
     def test_all_complementarity_checks(self):
         """Complementarity holds for all sl_2 levels tested."""

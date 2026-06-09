@@ -10,7 +10,12 @@ at spin 2, W_3 generator W at spin 3, etc.).  It interpolates between:
   - W_N at lambda = N (truncation)
   - U(gl_1-hat) at lambda = 0 (free field)
 
-The CHIRAL QUANTUM GROUP structure on W_{1+inf} consists of:
+The CHIRAL QUANTUM GROUP structure verified here is the completed
+positive-energy/Yangian presentation of W_{1+inf}.  It is not the raw
+direct-sum class-M bar complex, where ordinary chain-level bar-cobar
+inversion fails and the universal fallback is coderived.
+
+This completed structure consists of:
 
   (1) A chiral coproduct Delta^{ch}: A -> A boxtimes A  (D-module on X x X)
       encoding the factorization splitting of the bar complex.
@@ -52,7 +57,9 @@ R-MATRIX (Maulik-Okounkov):
   where Delta^{ch,op} is the opposite coproduct (swap tensor factors).
   This is the chiral analogue of the RTT relation.
 
-  For the Heisenberg sector: g(z) = 1 (abelian, R = identity).
+  For the Heisenberg sector: g(z) = 1 for the nonabelian structure
+  function, while the ordered-bar braiding is the scalar
+  R(z) = exp(k*hbar/z), nontrivial for k != 0.
   For the Virasoro sector: g(z) = z^2/(z^2 - 1) at leading order.
   For W_3: g(z) has additional poles from the spin-3 OPE.
 
@@ -61,6 +68,9 @@ CoHA COMPARISON (Yang-Zhao, Schiffmann-Vasserot):
   associated graded (Schiffmann-Vasserot, arXiv:1202.2756).  The CoHA
   bialgebra structure (multiplication from extension of sheaves, vertex
   coproduct from JKL26) dualizes to the bar complex coalgebra structure.
+  This is the completed positive-half/Yangian comparison surface, not a
+  claim that the raw direct-sum class-M bar complex carries a strict
+  chain-level inverse.
 
   At the character level:
     chi_{CoHA}(q, t) = prod_{n >= 1} (1 - q^n)^{-1}  (per spin)
@@ -314,7 +324,9 @@ class ChiralCoproduct:
           (b) The coproduct of a free field is always primitive
               (no normal-ordering anomalies between tensor factors).
           (c) The Heisenberg algebra is abelian (class G), so the
-              R-matrix is trivial: R(z) = 1.
+              scalar ordered-bar R(z) = exp(k*hbar/z) commutes with
+              the primitive coproduct.  The nonabelian structure
+              function is trivial, but the scalar R is not.
 
         AP126 check: at k=0, the OPE vanishes and J generates a
         trivial (zero-level) Heisenberg.  Coproduct still primitive.
@@ -839,19 +851,23 @@ class AxiomVerifier:
     def structure_function_heisenberg(self) -> Dict[str, Any]:
         r"""Structure function g(z) for the Heisenberg sector.
 
-        For abelian algebras (class G), the R-matrix is trivial: R(z) = 1.
+        For abelian algebras (class G), the nonabelian structure
+        function is trivial: g(z) = 1.  The Heisenberg ordered-bar
+        braiding itself is scalar,
+        R(z) = exp(k*hbar/z), and is nontrivial for k != 0.
         The compatibility equation R(z) Delta(a) = Delta^{op}(a) R(z)
         is trivially satisfied since Delta = Delta^{op} for primitive elements
-        (J tensor 1 + 1 tensor J is symmetric under swap).
+        (J tensor 1 + 1 tensor J is symmetric under swap) and the scalar
+        R commutes with it.
 
         g(z) = 1 (trivial structure function).
         """
         return {
             "sector": "Heisenberg",
             "g_z": Rational(1),
-            "R_z": "identity",
+            "R_z": "exp(k*hbar/z) (scalar; nontrivial for k != 0)",
             "shadow_class": "G",
-            "note": "Abelian: R-matrix trivial, coproduct symmetric",
+            "note": "Abelian: nonabelian structure function trivial; scalar R commutes",
         }
 
     def structure_function_virasoro(self, z: Optional[Symbol] = None) -> Dict[str, Any]:
@@ -1022,8 +1038,8 @@ class MOStructureFunction:
           g(z) = det(R(z)) / det(R(-z))  (for rank-1 sectors)
 
         For the Heisenberg sector:
-          R(z) = 1 + (k/z) * P  (where P is the permutation)
-          g(z) = 1  (abelian)
+          R(z) = exp(k*hbar/z)  (scalar ordered-bar braiding)
+          g(z) = 1  (abelian nonabelian-structure function)
 
         For the Virasoro sector (at the scalar level):
           The effective R-matrix on the 1-dimensional vacuum sector is
@@ -1058,11 +1074,13 @@ class MOStructureFunction:
 class CoHAComparison:
     r"""Comparison of the chiral QG coproduct with the CoHA bialgebra.
 
-    The CoHA of the Jordan quiver with potential produces Y(gl_1-hat),
-    which acts on the equivariant cohomology of Hilb^n(C^2).
+    The CoHA of the Jordan quiver with potential produces the positive
+    half Y^+(gl_1-hat), which acts on the equivariant cohomology of
+    Hilb^n(C^2). The full Yangian/W_{1+inf} target appears only after
+    Drinfeld double/completion and evaluation.
 
     Schiffmann-Vasserot (arXiv:1202.2756) proved:
-      CoHA(Jordan) ~ Y(gl_1-hat) ~ W_{1+inf} (as associative algebras)
+      CoHA(Jordan) ~ Y^+(gl_1-hat) (positive half)
 
     The CoHA MULTIPLICATION is extension of sheaves:
       m: H*(M_a) tensor H*(M_b) -> H*(M_{a+b})
@@ -1082,7 +1100,7 @@ class CoHAComparison:
         self.c = _rat(c)
 
     def coha_character_jordan(self, max_n: int = 10) -> Dict[str, Any]:
-        r"""Character of CoHA(Jordan quiver) = Y(gl_1-hat) at each dimension.
+        r"""Character of CoHA(Jordan quiver) = Y^+(gl_1-hat) at each dimension.
 
         chi_n = dim H^*(M_n) where M_n = pt/GL_n (classifying stack).
         For the unframed Jordan quiver: H^*(BGL_n) = Q[c_1, ..., c_n].
@@ -1764,7 +1782,7 @@ class WInfinityChiralQG:
     Spin 1 (Heisenberg J):
         OPE: J(z)J(w) ~ Psi/(z-w)^2   (level k = Psi, AP126)
         Coproduct: Delta(J) = J tensor 1 + 1 tensor J  (primitive)
-        R-matrix: R_{JJ}(z) = 1  (abelian, class G)
+        R-matrix: R_{JJ}(z) = exp(Psi*hbar/z)  (scalar abelian, class G)
 
     Spin 2 (Sugawara T):
         T = (1/(2*Psi)) :JJ:  (normal-ordered product)

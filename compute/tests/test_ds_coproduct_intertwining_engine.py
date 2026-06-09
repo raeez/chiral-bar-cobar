@@ -36,6 +36,7 @@ from compute.lib.ds_coproduct_intertwining_engine import (
     N_EIGENVALUES,
     c_W3,
     central_charge_consistency,
+    ds_w3_degree2_rtt_miura_witness,
     delta_psi_sl3,
     delta_psi_w1inf,
     delta_T_from_psi,
@@ -46,8 +47,10 @@ from compute.lib.ds_coproduct_intertwining_engine import (
     kappa_sl3,
     kappa_W3,
     level_from_psi,
+    miura_primitive_stress_tensor_cross_terms,
     miura_T_explicit,
     psi_from_level,
+    rtt_projected_stress_tensor_coproduct,
     run_all,
     spectral_degree_analysis,
     verify_coassociativity_partial,
@@ -499,6 +502,43 @@ class TestMiuraSpin2:
         assert simplify(dt[("J", "J")] - (Psi - 1) / Psi) == 0
         assert simplify(dt[("1", "J")] - z) == 0
 
+    def test_w3_two_boson_miura_coproduct_cross_terms(self):
+        """The W_3 two-boson Miura coproduct has the expected cross matrix."""
+        dt = delta_T_from_psi(Psi, z)
+        cross = {
+            key: value
+            for key, value in dt.items()
+            if key[0] != "1" and key[1] != "1"
+        }
+        assert simplify(cross[("psi_1", "psi_2")] - (Psi - 1) / Psi) == 0
+        assert simplify(cross[("psi_2", "psi_1")] - (Psi - 1) / Psi) == 0
+        assert simplify(cross[("psi_1", "psi_1")] + 1 / Psi) == 0
+        assert simplify(cross[("psi_2", "psi_2")] + 1 / Psi) == 0
+
+    def test_projected_rtt_matches_two_boson_miura_window(self):
+        """Projected RTT diagonal window matches the primitive Miura T coproduct."""
+        witness = ds_w3_degree2_rtt_miura_witness(Psi)
+        assert witness["intertwines"]
+        assert witness["mismatches"] == {}
+        assert witness["finite_window"] == "z^0 degree-2 Cartan/Sugawara sector"
+        assert witness["surviving_diagonal_generators"] == ("psi_1", "psi_2")
+        assert len(witness["killed_offdiagonal_rtt_terms"]) == 6
+        assert witness["rtt_cross_terms"] == witness["miura_cross_terms"]
+
+    def test_projected_rtt_source_terms_are_not_delta_psi_formula(self):
+        """The finite witness records RTT source terms before DS projection."""
+        rtt = rtt_projected_stress_tensor_coproduct(Psi)
+        miura_cross = miura_primitive_stress_tensor_cross_terms(Psi)
+        assert rtt["cross_terms"] == miura_cross
+        assert ("t_12^(1) tensor t_21^(1)" in rtt["killed_offdiagonal_rtt_terms"])
+
+    def test_spin2_intertwining_helper_exercises_finite_window(self):
+        """The public helper now checks the finite RTT-vs-Miura window."""
+        result = verify_spin2_intertwining_psi_level(Psi, z)
+        assert result["intertwines"]
+        assert result["mismatches"] == {}
+        assert result["num_terms_rtt"] == result["num_terms_miura"]
+
 
 # ============================================================================
 # 14.  CRITICAL LEVEL k = -3
@@ -562,67 +602,41 @@ class TestMasterVerification:
 
 
 @independent_verification(
-    claim="rem:ds-intertwining-w3",
+    claim="comp:ds-w3-degree2-rtt-miura-witness",
     derived_from=[
-        "Drinfeld second-presentation coproduct Delta_z(psi_n) on Y(sl_3) "
-        "computed from T(u) T(u-z)",
-        "Miura-transform W_{1+inf} coproduct Delta_z(psi_n) on the W_3 "
-        "image (Prochazka-Rapcak arXiv:1711.11582, combined with the "
-        "programme's DS projection pi_3: Y(sl_3) -> Y(W_3))",
-        "DS projection pi_3 on sl_3 current generators (Cartan survives, "
-        "root vectors killed)",
+        "Projected sl_3 RTT component coproduct on diagonal Gauss/Cartan "
+        "matrix entries with DS projection killing root entries",
+        "Sugawara/Miura degree-2 source T=e2-e1^2/(2*Psi) on the sl_3 side",
     ],
     verified_against=[
-        "Tsymbaliuk arXiv:1404.5240 affine Yangian coproduct (gives "
-        "Y(sl_3) Delta_z(psi_2) INDEPENDENTLY of Prochazka-Rapcak; "
-        "derived from a different R-matrix presentation)",
-        "miura_spin3_coproduct_engine.py cross-family compute (computes "
-        "the W_3 coproduct via Miura at spin 3 directly, bypassing "
-        "the Y(sl_3) side)",
-        "Specific integer-level evaluations k in {0, 1, 2, 5, 10} and "
-        "critical level k=-3 (Psi=0) boundary behavior; each level is "
-        "a separate numerical instance, not a symbolic re-derivation "
-        "of the coproduct formula",
+        "Primitive two-boson W_3 Miura coproduct of T=:psi_1 psi_2:-"
+        "(psi_1+psi_2)^2/(2*Psi), expanded directly in the psi-product basis",
+        "Off-diagonal RTT bookkeeping: six root matrix components are listed "
+        "and killed before comparison, leaving only psi_1 and psi_2",
     ],
     disjoint_rationale=(
-        "degree-1 (psi_1) intertwining is TAUTOLOGICAL: both Y(sl_3) "
-        "and W_{1+inf} define psi_1 as primitive, so Delta(psi_1) = "
-        "psi_1 otimes 1 + 1 otimes psi_1 on both sides by fiat. "
-        "HZ-IV at degree 1 is IMPOSSIBLE by construction, and the "
-        "test_psi1_intertwines_tautological test is explicitly "
-        "UNDECORATED to prevent tautology registration. This "
-        "decorator binds the CLAIM at degree 2 (psi_2) and above, "
-        "where the intertwining has genuine content: the cross-term "
-        "psi_1 psi_1 and spectral z^{-1} psi_1 terms on the sl_3 side "
-        "must survive the DS projection pi_3 and match the W_3 "
-        "Miura expansion. Derivation uses the programme's own "
-        "DS-projection machinery; verification uses Tsymbaliuk's "
-        "R-matrix presentation (independent), the Miura-transform "
-        "cross-engine (independent), and level-by-level numerical "
-        "evaluations (independent). No source recomputes pi_3."
+        "The derivation path enumerates the sl_3 RTT matrix-component "
+        "coproduct and then applies the DS projection to diagonal and root "
+        "entries.  The verification path starts from the W_3 two-boson "
+        "Miura stress tensor and primitive free-field coproduct, with no "
+        "call to delta_psi_sl3 or delta_psi_w1inf.  Agreement is term-by-term "
+        "in the psi-product basis, not equality of two copies of the same "
+        "universal Drinfeld formula."
     ),
 )
-def test_ds_coproduct_intertwining_degree_ge_2_hz_iv():
-    """HZ-IV sentinel: (pi_3 x pi_3) o Delta_z^{sl_3}(psi_2) =
-    Delta_z^{W_3}(psi_2) o pi_3, verified at degree 2 specifically.
-
-    Degree-1 tautology excluded by construction.
-    """
-    # Degree-2 intertwining (nontrivial content).
-    psi2_result = verify_psi2_intertwining()
-    assert psi2_result["intertwines"]
-    assert psi2_result["has_cross_term_psi1_psi1"]
-    assert psi2_result["has_spectral_term_z_1_psi1"]
-    assert psi2_result["num_terms"] == 4
-
-    # Term-by-term sl3 vs W1inf agreement at degree 2.
-    sl3 = delta_psi_sl3(2, z)
-    w1inf = delta_psi_w1inf(2, z)
-    for key in set(sl3.keys()) | set(w1inf.keys()):
-        assert simplify(sl3.get(key, 0) - w1inf.get(key, 0)) == 0, (
-            f"Term mismatch at key {key!r}: "
-            f"sl3={sl3.get(key, 0)}, w1inf={w1inf.get(key, 0)}"
-        )
+def test_ds_w3_degree2_rtt_miura_hz_iv():
+    """HZ-IV sentinel for the non-tautological finite DS window."""
+    witness = ds_w3_degree2_rtt_miura_witness(Psi)
+    assert witness["intertwines"]
+    assert witness["mismatches"] == {}
+    expected_cross = {
+        ("psi_1", "psi_2"): simplify((Psi - 1) / Psi),
+        ("psi_2", "psi_1"): simplify((Psi - 1) / Psi),
+        ("psi_1", "psi_1"): simplify(-1 / Psi),
+        ("psi_2", "psi_2"): simplify(-1 / Psi),
+    }
+    assert witness["rtt_cross_terms"] == expected_cross
+    assert witness["miura_cross_terms"] == expected_cross
 
 
 # ============================================================================

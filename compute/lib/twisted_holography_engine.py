@@ -1466,7 +1466,7 @@ def collision_residue(A: TwistedHolographicAlgebra) -> Dict[str, object]:
     """r(z) = Res^{coll}_{0,2}(Theta_A): the binary genus-0 shadow.
 
     For affine: r(z) = Omega/z where Omega is the Casimir (AP19: pole at z^{-1}).
-    For Heisenberg: r(z) = k/z (scalar).
+    For Heisenberg: r(z) = k*Omega_H/z (rank-one coeff k/z) (rank-one abelian).
     For Virasoro: r(z) = (c/2)/z^3 + 2T/z (higher poles from L_{-2} and L_0).
     For W_N: r(z) has poles up to z^{-(2N-1)}.
 

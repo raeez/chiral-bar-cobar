@@ -1049,7 +1049,7 @@ def verify_virasoro_arity4(c_val=None) -> Dict[str, Any]:
         exchange = 24/1 = 24
         full Feynman = 10/27 + 24 = 658/27
 
-    At c = 25 (near self-dual c = 26):
+    At c = 25 (near critical c = 26, not the self-dual point):
         Q_contact = 10/(25*147) = 10/3675 = 2/735
     """
     c = Symbol('c') if c_val is None else Rational(c_val)

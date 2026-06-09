@@ -703,7 +703,7 @@ def tangent_arity_data(family: str, arity: int, **params) -> TangentArityData:
             return TangentArityData(
                 family=family,
                 arity=2,
-                controlling_object='r(z) = k/z (abelian Casimir)',
+                controlling_object='r(z) = k*Omega_H/z (rank-one coeff k/z) (abelian Casimir)',
                 dimension=1,
                 is_zero=False,
                 scalar_value=kappa_heisenberg(k),

@@ -107,7 +107,7 @@ class TestGenus1Contradiction(unittest.TestCase):
         With c_1(E_2) = 13·λ_1, this would be (c/2)·13/24 = 13c/48 ≠ c/48.
         CONTRADICTION.  Therefore the bar complex produces λ_1, not c_1(E_2).
         """
-        c = Fraction(26)  # self-dual point
+        c = Fraction(26)  # critical string charge; self-dual point is c=13
         kappa_vir = c / 2
         fp1 = faber_pandharipande_lambda_g(1)
 

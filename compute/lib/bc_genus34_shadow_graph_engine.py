@@ -59,7 +59,7 @@ expansion, which is a constant (AP15: do not conflate!).
 
 The shadow partition function Z^sh(A, hbar) = sum_g F_g * hbar^{2g}
 is the generating function; its modular properties come from the
-A-hat genus: kappa * [1 - A-hat(hbar)] / hbar^2.
+  A-hat genus: kappa * [A-hat(i*hbar) - 1].
 
 ZETA ZEROS
 ==========
@@ -963,8 +963,11 @@ def modular_form_identification(max_genus: int = 5) -> Dict[int, Dict[str, Any]]
     At the scalar level, F_g = kappa * lambda_g^FP where:
       lambda_g^FP = (2^{2g-1} - 1) |B_{2g}| / (2^{2g-1} (2g)!)
 
-    The generating function is kappa * [(x/2)/sinh(x/2) - 1] / x^2
-    (AP22: careful with the hbar convention!).
+    The positive FP scalar generating function is
+      kappa * [(x/2)/sin(x/2) - 1].
+    The real A-hat branch (x/2)/sinh(x/2) has alternating signs and is
+    used only before the Wick rotation (AP22: careful with the hbar
+    convention).
 
     The Bernoulli number |B_{2g}| grows like 2*(2g)!/(2*pi)^{2g},
     so the shadow partition function is DIVERGENT (genus factorial growth).
@@ -1029,7 +1032,7 @@ def quasi_modular_structure() -> Dict[str, Any]:
         'F_2': '7*kappa/5760 (constant, proportional to |B_4|/(4!) * 7/8 = 7/5760)',
         'F_3': '31*kappa/967680 (constant, proportional to |B_6|/(6!) * 31/32)',
         'F_4': '127*kappa/154828800 (constant, proportional to |B_8|/(8!) * 127/128)',
-        'generating_function': 'kappa * [1 - A-hat(hbar)] / hbar^2',
+        'generating_function': 'kappa * [A-hat(i*hbar) - 1]',
         'ahat': '(x/2)/sinh(x/2) = 1 - x^2/24 + 7x^4/5760 - ...',
         'modular_content': (
             'The tau-dependence is NOT in F_g but in the propagator '

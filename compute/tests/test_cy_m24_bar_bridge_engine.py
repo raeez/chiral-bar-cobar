@@ -836,7 +836,7 @@ from compute.lib.independent_verification import (
     ],
     verified_against=[
         "Milnor 1958 topological Euler characteristic chi(K3) = 24; "
-        "combined with the Hirzebruch-Riemann-Roch CY_2 relation "
+        "combined with the CY_2 shadow-tower relation "
         "kappa = chi / 12 for the lattice VOA shadow gives kappa = 2",
         "Vol III thm:kappa-stratification-by-d: kappa_cat(CY_2) = "
         "chi(O_X) via HKR; for K3 chi(O) = 2 (h^{0,0} + h^{0,2} = 2)",
@@ -848,7 +848,7 @@ from compute.lib.independent_verification import (
         "Niemeier orbit",
     ],
     disjoint_rationale=(
-        "Path A (Milnor 1958 + HRR): chi(K3) = 24 is a topological "
+        "Path A (Milnor 1958 + Euler topology): chi(K3) = 24 is a topological "
         "invariant, computable from Poincare polynomial or from the "
         "Weil conjectures applied to K3 over F_p; kappa = chi/12 = 2 "
         "follows from the CY_2 shadow-tower relation F_1 = kappa/24 "

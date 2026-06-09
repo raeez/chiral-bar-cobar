@@ -267,7 +267,7 @@ class TestKoszulDual:
     def test_kappa_sum(self):
         """kappa(k) + kappa(-k-6) = 98/3 = rho * K_BP.
 
-        # AP140: corrected from 1/3; rho*K = (1/6)*196 = 98/3
+        # AP140: rho*K = (1/6)*196 = 98/3
         """
         dual = bp_koszul_dual()
         assert simplify(dual["kappa_sum"] - Rational(98, 3)) == 0
@@ -496,7 +496,7 @@ class TestCrossFamilyConsistency:
     def test_kappa_complementarity_at_5_levels(self):
         """kappa(k) + kappa(-k-6) = 98/3 at 5 different levels.
 
-        # AP140: corrected from 1/3; rho*K = (1/6)*196 = 98/3
+        # AP140: rho*K = (1/6)*196 = 98/3
         """
         rho = bp_anomaly_ratio()
         for kk in [0, 1, 2, 5, Rational(1, 2)]:

@@ -70,6 +70,7 @@ from bps_entropy_shadow import (
     verify_kappa_weight_consistency, verify_bessel_coefficients_exact,
     holographic_package_entries, modular_koszul_package_projections,
     koszul_object_firewall, kernel_normalizations,
+    hdelta5_recognition_firewall,
 )
 
 PI = math.pi
@@ -159,6 +160,18 @@ class TestCY3Kappa:
         """
         chi_top_k3_times_e = 0  # chi(K3)*chi(E) = 24*0 = 0
         assert float(kappa_k3_times_e()) != chi_top_k3_times_e / 2
+
+    def test_delta5_scalar_lane_not_hdelta5_recognition(self):
+        """Delta_5 scalar entropy data does not recognize H_Delta5."""
+        status = hdelta5_recognition_firewall()
+        assert status['recognition_complete'] is False
+        assert status['hdelta5_name_allowed'] is False
+        assert status['omega_b_hdelta5_equivalence_allowed'] is False
+        assert status['target_label'] == 'H_{Delta_5}^{target}'
+        assert len(status['missing_four_part_datum']) == 4
+        assert len(status['missing_finite_window_checks']) == 8
+        assert any('Hall bialgebra' in item for item in status['missing_four_part_datum'])
+        assert any('strict Mittag-Leffler' in item for item in status['missing_finite_window_checks'])
 
 
 # =========================================================================
@@ -288,6 +301,8 @@ class TestShadowEntropyDictionary:
         assert result['kappa_BKM_K3E'] == 5
         assert result['kappa_K3E'] == 5  # compatibility alias
         assert result['weight_Phi10'] == 10
+        assert result['hdelta5_recognition']['recognition_complete'] is False
+        assert result['hdelta5_recognition']['hdelta5_name_allowed'] is False
         assert 2 in result['contributions']
         assert result['S_BH'] > 0
 

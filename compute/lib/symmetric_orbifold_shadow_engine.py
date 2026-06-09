@@ -39,7 +39,9 @@ holographic package.
    At z = 0 for K3 (chi(K3) = 24):
      sum_N p^N chi(Sym^N(K3)) = prod_{n>=1} (1-p^n)^{-24}
 
-   This is the Gottsche formula for chi(Hilb^N(K3)).
+   This is the Gottsche formula for chi(Hilb^N(K3)).  It is a
+   character / Euler-characteristic identity.  It is not, by itself,
+   a bar-complex theorem or a proof of fixed-point Koszulness.
 
 4. SHADOW TOWER OF Sym^N
    The shadow obstruction tower Theta_{Sym^N(X)} decomposes into:
@@ -48,10 +50,12 @@ holographic package.
    The key invariant: kappa(Sym^N(X)) = N * kappa(X) at leading order,
    with O(1) corrections from twisted sectors.
 
-   For finite shadow-tower projections at finite N:
+   For finite scalar shadow-tower projections at finite N:
    - Shadow depth: at least r_max(X) (inherited from seed theory)
    - Cubic shadow: receives twist-sector corrections
    - Quartic and higher: increasingly complex S_N combinatorics
+   A full fixed-point bar/Koszul theorem requires the orbifold
+   hypothesis package recorded by symmetric_orbifold_scope_report.
 
 5. LARGE-N LIMIT
    At N -> infinity:  kappa(Sym^N) ~ N * kappa(X).
@@ -141,6 +145,24 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 F = Fraction
 PI = math.pi
 TWO_PI = 2.0 * PI
+
+
+SYMMETRIC_ORBIFOLD_KOSZUL_HYPOTHESES = (
+    "seed chiral algebra Koszul/PBW package",
+    "finite group action by VOA automorphisms preserving OPE and conformal vector",
+    "construction of all g-twisted sectors for conjugacy classes",
+    "rational/C2-cofinite or finite-type twisted-module control",
+    "derived fixed-point or exact invariant functor comparison",
+    "bar comparison between fixed points, invariant bar, and twisted sectors",
+    "completed finite-weight or strict Mittag-Leffler passage",
+)
+
+DMVV_SCOPE = (
+    "character identity",
+    "Euler/elliptic-genus coefficient identity",
+    "not a bar-complex theorem",
+    "not a fixed-point Koszulness proof",
+)
 
 
 # =========================================================================
@@ -268,6 +290,34 @@ def kappa_sym_n_free_boson(N: int, k: int = 1) -> Fraction:
 def kappa_growth_rate(seed: SeedTheory) -> Fraction:
     """Leading growth rate: kappa(Sym^N(X)) / N -> kappa(X) as N -> infinity."""
     return seed.kappa
+
+
+def symmetric_orbifold_scope_report(seed: SeedTheory, N: int) -> Dict[str, Any]:
+    r"""Typed status report for Sym^N(X) scalar, DMVV, and Koszul claims."""
+    if N < 0:
+        raise ValueError(f"N must be non-negative, got {N}")
+
+    twist_sectors = enumerate_twist_sectors(N)
+    return {
+        "surface": f"Sym^{N}({seed.name})",
+        "seed": seed.name,
+        "N": N,
+        "central_charge": central_charge_sym_n(seed, N),
+        "kappa_scalar": kappa_sym_n(seed, N),
+        "twist_sector_definition": "conjugacy classes of S_N, equivalently partitions of N",
+        "twist_sector_count": len(twist_sectors),
+        "twist_sector_partitions": tuple(s.partition for s in twist_sectors),
+        "fixed_point_koszulness_status": "conditional",
+        "fixed_point_koszulness_hypotheses": SYMMETRIC_ORBIFOLD_KOSZUL_HYPOTHESES,
+        "missing_for_bar_theorem": SYMMETRIC_ORBIFOLD_KOSZUL_HYPOTHESES,
+        "dmvv_status": "character identity",
+        "dmvv_scope": DMVV_SCOPE,
+        "dmvv_is_bar_theorem": False,
+        "scalar_shadow_status": "finite scalar projection",
+        "monster_voa_lane": "V^natural / Monster constants are separate from K3/Mukai data",
+        "k3_mukai_lane": "K3/Mukai constants require an explicit comparison map",
+        "moonshine_constants_as_k3_constants": False,
+    }
 
 
 # =========================================================================
@@ -495,7 +545,9 @@ def dmvv_partition_function_z0(
     At z=0, the DMVV product formula reduces to:
       sum_N p^N chi(Sym^N(X)) = prod_{n>=1} (1-p^n)^{-chi(X)}
 
-    which is Gottsche's formula.
+    which is Gottsche's formula.  This function computes character /
+    Euler-characteristic coefficients; it does not assert a bar-complex
+    quasi-isomorphism or fixed-point Koszulness.
     """
     return [gottsche_euler_char(N, chi_surface) for N in range(N_max + 1)]
 
@@ -571,7 +623,9 @@ def shadow_depth_sym_n(seed: SeedTheory, N: int) -> int:
     additional shadow depth, but does not reduce it.
 
     Conservative estimate: r_max(Sym^N(X)) >= r_max(X).
-    For free/Gaussian seeds: r_max(Sym^N) = 2.
+    For free/Gaussian seeds: this scalar projection reports
+    r_max(Sym^N) = 2.  The full fixed-point bar/Koszul statement is
+    conditional on the orbifold package in symmetric_orbifold_scope_report.
     For interacting seeds: r_max(Sym^N) >= r_max(X).
     """
     if N <= 1:

@@ -49,7 +49,7 @@ from compute.lib.qec_shadow_code_deep_engine import (
     genus_g_hodge_dimension,
     genus_g_shadow_code_parameters,
     genus_code_table,
-    # 6. Holographic tensor network
+    # 6. Bar-graph shadow network
     holographic_tensor_network_code,
     # 7. Threshold
     threshold_from_shadow_convergence,
@@ -323,7 +323,7 @@ class TestShadowRedundancy:
         assert data.r_max == -1
 
     def test_arity_distance_universal(self):
-        """Arity-filtration distance = 2 for ALL families."""
+        """Arity proxy = 2 for all families."""
         for fam in ['heisenberg', 'affine', 'betagamma', 'virasoro']:
             data = shadow_code_redundancy(fam)
             assert data.arity_distance == 2
@@ -558,17 +558,19 @@ class TestGenusShadowCode:
 
 
 # ===================================================================
-#  6. HOLOGRAPHIC TENSOR NETWORK CODE
+#  6. BAR-GRAPH SHADOW NETWORK
 # ===================================================================
 
 class TestHolographicTensorNetwork:
-    """Holographic code from bar complex."""
+    """Bar-complex shadow network with holographic-code analogy."""
 
     def test_heisenberg_basic(self):
         result = holographic_tensor_network_code('heisenberg', 6)
         assert result['n_boundary'] == 6
         assert result['shadow_class'] == 'G'
         assert result['min_cut'] >= 1
+        assert result['physical_holographic_code'] is False
+        assert 'tensor-network realization' in result['physical_reconstruction_status']
 
     def test_virasoro_basic(self):
         result = holographic_tensor_network_code('virasoro', 8, c=13)
@@ -752,10 +754,12 @@ class TestWeightEnumerator:
             result = weight_enumerator_lagrangian(dim)
             assert result['self_dual'] is True
 
-    def test_distance_2(self):
+    def test_arity_proxy_2(self):
         for dim in [1, 2, 3]:
             result = weight_enumerator_lagrangian(dim)
             assert result['d'] == 2
+            assert result['d_kind'] == 'arity proxy; not Hilbert-space code distance'
+            assert result['physical_distance'] is None
 
     def test_singleton_check(self):
         """Lagrangian code satisfies (symplectic) Singleton bound."""
@@ -765,7 +769,7 @@ class TestWeightEnumerator:
 
 
 class TestRateDistance:
-    """Rate-distance analysis."""
+    """Rate and arity-proxy analysis."""
 
     def test_all_rate_half(self):
         result = rate_distance_analysis(['heisenberg', 'virasoro'], h_max=5)
@@ -773,13 +777,17 @@ class TestRateDistance:
             for entry in entries:
                 assert entry['rate'] == 0.5
 
-    def test_distance_always_2(self):
+    def test_arity_proxy_always_2(self):
         result = rate_distance_analysis(['heisenberg'], h_max=8)
         for entry in result['families']['heisenberg']:
             assert entry['d'] == 2
+        assert result['universal_distance_kind'] == (
+            'arity proxy; not Hilbert-space code distance'
+        )
+        assert 'physical inner product' in result['physical_distance_status']
 
     def test_fractional_distance_decreasing(self):
-        """delta = 2/n → 0 as n → infinity."""
+        """The arity-proxy ratio 2/n tends to 0 as n grows."""
         result = rate_distance_analysis(['heisenberg'], h_max=10)
         deltas = [e['fractional_distance'] for e in result['families']['heisenberg']]
         # Fractional distance should generally decrease (or stay constant)
@@ -911,11 +919,13 @@ class TestCodeEquivalence:
 # ===================================================================
 
 class TestMultipathDistance:
-    """Six-path verification of code distance."""
+    """Six-path verification of the arity proxy."""
 
     def test_heisenberg(self):
         result = code_distance_multipath('heisenberg', 4)
         assert result['distance'] == 2
+        assert result['distance_kind'] == 'arity proxy; not Hilbert-space code distance'
+        assert result['physical_distance'] is None
         assert result['all_paths_agree'] is True
         assert result['n_paths'] == 6
 
@@ -935,7 +945,7 @@ class TestMultipathDistance:
         assert result['all_paths_agree'] is True
 
     def test_all_six_paths(self):
-        """Each of six paths gives d = 2."""
+        """Each of six paths gives arity proxy 2."""
         for fam in ['heisenberg', 'virasoro', 'affine', 'betagamma']:
             result = code_distance_multipath(fam, 4)
             assert result['path1_arity'] == 2
@@ -945,18 +955,19 @@ class TestMultipathDistance:
             assert result['path5_rains'] == 2
             assert result['path6_shadow'] == 2
 
-    def test_distance_independent_of_weight(self):
-        """Distance = 2 at ALL weight levels."""
+    def test_arity_proxy_independent_of_weight(self):
+        """Arity proxy = 2 at all weight levels."""
         for h in range(2, 8):
             result = code_distance_multipath('heisenberg', h)
             assert result['distance'] == 2
 
-    def test_distance_independent_of_shadow_class(self):
-        """Distance = 2 for ALL shadow classes."""
+    def test_arity_proxy_independent_of_shadow_class(self):
+        """Arity proxy = 2 for all shadow classes."""
         for fam, cls in [('heisenberg', 'G'), ('affine', 'L'),
                           ('betagamma', 'C'), ('virasoro', 'M')]:
             result = code_distance_multipath(fam, 4)
             assert result['distance'] == 2
+            assert result['distance_kind'] == 'arity proxy; not Hilbert-space code distance'
             assert result['shadow_class'] == cls
 
 
@@ -1062,12 +1073,13 @@ class TestCrossVerification:
         table = cross_family_code_table(5)
         assert all(t['rate'] == Fraction(1, 2) for t in table)
 
-    def test_distance_2_universality(self):
-        """Distance = 2 across ALL constructions for ALL families."""
+    def test_arity_proxy_2_universality(self):
+        """Arity proxy = 2 across all checked constructions."""
         # Multi-path
         for fam in ['heisenberg', 'affine', 'betagamma', 'virasoro']:
             result = code_distance_multipath(fam, 4)
             assert result['distance'] == 2
+            assert result['distance_kind'] == 'arity proxy; not Hilbert-space code distance'
 
         # Genus-g
         for g in range(1, 4):

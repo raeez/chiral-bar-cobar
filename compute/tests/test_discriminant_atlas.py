@@ -392,7 +392,7 @@ class TestBetaGamma:
         assert betagamma_kappa(1) == Fraction(1)
 
     def test_betagamma_kappa_symplectic(self):
-        """Symplectic fermion (lambda=1/2): kappa = -1/2."""
+        """Symplectic boson beta-gamma half-point: kappa = -1/2."""
         from lib.discriminant_atlas import betagamma_kappa
         assert betagamma_kappa(Fraction(1, 2)) == Fraction(-1, 2)
 

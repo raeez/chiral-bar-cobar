@@ -170,7 +170,7 @@ def heisenberg_pva(k: Fraction) -> PVAData:
     {J_lambda J} = k*lambda.  The ordinary Poisson bracket on the
     affine variety Spec(C[J]) is the zeroth product and is therefore
     trivial.  The level is nevertheless visible to the vertex Poisson
-    lambda bracket and to the collision residue r(z)=k/z.
+    lambda bracket and to the collision residue r(z)=k*Omega_H/z (rank-one coeff k/z).
     """
     return PVAData(
         name=f"Heisenberg_k={k}",

@@ -15,6 +15,11 @@ References:
 """
 
 import pytest
+from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+ALGEBRAIC_FOUNDATIONS_TEX = REPO_ROOT / "chapters/theory/algebraic_foundations.tex"
+DEFORMATION_EXAMPLES_TEX = REPO_ROOT / "chapters/examples/deformation_quantization_examples.tex"
 
 from compute.lib.deformation_bar import (
     QUANTIZATION_LEVELS,
@@ -25,6 +30,20 @@ from compute.lib.deformation_bar import (
     deformation_examples,
     verify_deformation,
 )
+
+
+def test_pinf_pva_direction_recorded_in_tex_sources():
+    """The manuscript distinguishes PVA descent from P_inf ascent."""
+    algebraic = " ".join(ALGEBRAIC_FOUNDATIONS_TEX.read_text().split())
+    examples = " ".join(DEFORMATION_EXAMPLES_TEX.read_text().split())
+
+    assert "homotopy chiral Poisson \\emph{lift}" in algebraic
+    assert "strict descended shadow" in algebraic
+    assert "descent to PVA, ascent to $\\Pinf$" in algebraic
+
+    assert "It is not a Poisson vertex algebra" in examples
+    assert "PVA/coisson object is the strict descended shadow" in examples
+    assert "upward homotopy lift used for quantization" in examples
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -152,6 +171,12 @@ class TestPinfVsCoisson:
         """Coisson has PVA as an alternative name."""
         names = self.pvc["Coisson"]["alternative_names"]
         assert "PVA" in names or "Poisson vertex algebra" in names
+
+    def test_pva_and_pinf_have_opposite_directions(self):
+        """PVA is descended strict shadow; P_inf is homotopy lift."""
+        assert self.pvc["Coisson"]["direction"] == "descended strict PVA shadow"
+        assert self.pvc["P_inf_chiral"]["direction"] == "upward homotopy chiral Poisson lift"
+        assert self.pvc["Coisson"]["direction"] != self.pvc["P_inf_chiral"]["direction"]
 
     def test_coisson_quantizes_to_va(self):
         """Coisson quantizes to a vertex algebra (E_inf-chiral)."""

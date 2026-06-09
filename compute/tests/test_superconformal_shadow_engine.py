@@ -305,83 +305,83 @@ class TestN2CY:
 # =========================================================================
 
 class TestN4Kappa:
-    """Test kappa(N=4) = (k+2)/2 = 6/(6-c)."""
+    """Test kappa(N=4) = 2k = c/3."""
 
     def test_kappa_k1(self):
-        """k=1 (c=2): kappa = (1+2)/2 = 3/2."""
-        assert N4SmallSuperconformal.kappa(k_val=1) == Rational(3, 2)
+        """k=1 (c=6): kappa = 2."""
+        assert N4SmallSuperconformal.kappa(k_val=1) == Rational(2)
 
     def test_kappa_k2(self):
-        """k=2 (c=3): kappa = (2+2)/2 = 2."""
-        assert N4SmallSuperconformal.kappa(k_val=2) == Rational(2)
+        """k=2 (c=12): kappa = 4."""
+        assert N4SmallSuperconformal.kappa(k_val=2) == Rational(4)
 
     def test_kappa_k3(self):
-        """k=3 (c=18/5): kappa = (3+2)/2 = 5/2."""
-        assert N4SmallSuperconformal.kappa(k_val=3) == Rational(5, 2)
+        """k=3 (c=18): kappa = 6."""
+        assert N4SmallSuperconformal.kappa(k_val=3) == Rational(6)
 
     def test_kappa_c_formula(self):
-        """c-formula kappa = 6/(6-c) matches k-formula at k=1 (c=2)."""
-        assert N4SmallSuperconformal.kappa(c_val=2) == Rational(6) / (6 - 2)
-        assert N4SmallSuperconformal.kappa(c_val=2) == Rational(3, 2)
+        """c-formula kappa = c/3 matches k-formula at k=1 (c=6)."""
+        assert N4SmallSuperconformal.kappa(c_val=6) == Rational(6) / 3
+        assert N4SmallSuperconformal.kappa(c_val=6) == Rational(2)
 
     def test_kappa_k3_c_formula(self):
-        """k=3 gives c=18/5; kappa from c-formula = 6/(6-18/5) = 6/(12/5) = 5/2."""
-        c_v = Rational(6) * 3 / (3 + 2)
-        assert c_v == Rational(18, 5)
-        assert N4SmallSuperconformal.kappa(c_val=c_v) == Rational(5, 2)
+        """k=3 gives c=18; kappa from c-formula = 18/3 = 6."""
+        c_v = Rational(6) * 3
+        assert c_v == Rational(18)
+        assert N4SmallSuperconformal.kappa(c_val=c_v) == Rational(6)
         # Also verify k-formula agrees
-        assert N4SmallSuperconformal.kappa(k_val=3) == Rational(5, 2)
+        assert N4SmallSuperconformal.kappa(k_val=3) == Rational(6)
 
     def test_k3_kappa(self):
         """K3 sigma model: kappa = 2 (complex dimension)."""
         assert N4SmallSuperconformal.kappa_k3() == Rational(2)
 
     def test_central_charge_k1(self):
-        """k=1: c = 6*1/(1+2) = 2."""
-        assert N4SmallSuperconformal.central_charge(k_val=1) == Rational(2)
+        """k=1: c = 6."""
+        assert N4SmallSuperconformal.central_charge(k_val=1) == Rational(6)
 
     def test_central_charge_k2(self):
-        """k=2: c = 6*2/(2+2) = 3."""
-        assert N4SmallSuperconformal.central_charge(k_val=2) == Rational(3)
+        """k=2: c = 12."""
+        assert N4SmallSuperconformal.central_charge(k_val=2) == Rational(12)
 
 
 class TestN4KoszulDuality:
-    """Test N=4 Koszul duality: c' = 12-c, kappa+kappa' = 0."""
+    """Test N=4 Koszul duality: c' = -c-24, kappa+kappa' = -8."""
 
-    def test_dual_c2(self):
-        """c=2 (k=1): dual c' = 12-2 = 10."""
-        assert N4SmallSuperconformal.koszul_dual_c(2) == 10
+    def test_dual_c6(self):
+        """c=6 (k=1): dual c' = -30."""
+        assert N4SmallSuperconformal.koszul_dual_c(6) == -30
 
-    def test_dual_c3(self):
-        """c=3 (k=2): dual c' = 12-3 = 9."""
-        assert N4SmallSuperconformal.koszul_dual_c(3) == 9
+    def test_dual_c12(self):
+        """c=12 (k=2): dual c' = -36."""
+        assert N4SmallSuperconformal.koszul_dual_c(12) == -36
 
-    @pytest.mark.parametrize("c_val", [1, 2, 3, 4, 5, Rational(18, 5)])
-    def test_complementarity_zero(self, c_val):
-        """kappa + kappa' = 0 for all c != 6."""
+    @pytest.mark.parametrize("c_val", [1, 6, 12, -30, 0])
+    def test_complementarity_minus_eight(self, c_val):
+        """kappa + kappa' = -8 for all c under FF duality."""
         result = N4SmallSuperconformal.complementarity_sum(c_val=c_val)
-        assert result['sum'] == Rational(0), \
+        assert result['sum'] == Rational(-8), \
             f"N=4 complementarity failed at c={c_val}: sum={result['sum']}"
 
     @pytest.mark.parametrize("k_val", [1, 2, 3, 4, 10])
     def test_complementarity_from_k(self, k_val):
-        """kappa(k) + kappa(-k-4) = 0 from k-parametrization."""
+        """kappa(k) + kappa(-k-4) = -8 from k-parametrization."""
         result = N4SmallSuperconformal.complementarity_sum(k_val=k_val)
-        assert result['sum'] == Rational(0)
+        assert result['sum'] == Rational(-8)
 
-    def test_self_dual_c6(self):
+    def test_self_dual_c_minus_12(self):
         sd = N4SmallSuperconformal.self_dual_point()
-        assert sd['c_self_dual'] == Rational(6)
+        assert sd['c_self_dual'] == Rational(-12)
 
 
 class TestN4ShadowData:
     """Test shadow data for N=4 SCA."""
 
     def test_T_line_class_M(self):
-        """T-line at c=2 (k=1): kappa_T = c/2 = 1."""
-        data = N4SmallSuperconformal.shadow_data_T_line(2)
+        """T-line at c=6 (k=1): kappa_T = c/2 = 3."""
+        data = N4SmallSuperconformal.shadow_data_T_line(6)
         assert data['class'] == 'M'
-        assert data['kappa'] == Rational(1)
+        assert data['kappa'] == Rational(3)
 
     def test_J_line_class_L(self):
         """SU(2)_R currents at level k: class L (Lie algebra)."""
@@ -412,10 +412,10 @@ class TestCrossFamilyComparisons:
         """At c=1: verify kappa ordering across families."""
         kap_n1 = N1SuperVirasoro.kappa(1)  # (3-2)/4 = 1/4
         kap_n2 = N2Superconformal.kappa(c_val=1)  # (6-1)/(2*2) = 5/4
-        kap_n4 = N4SmallSuperconformal.kappa(c_val=1)  # 6/5
+        kap_n4 = N4SmallSuperconformal.kappa(c_val=1)  # 1/3
         assert kap_n1 == Rational(1, 4)
         assert kap_n2 == Rational(5, 4)
-        assert kap_n4 == Rational(6, 5)
+        assert kap_n4 == Rational(1, 3)
 
     def test_all_class_M(self):
         """All three superconformal algebras are class M."""
@@ -424,25 +424,25 @@ class TestCrossFamilyComparisons:
             assert depth_table[N_name]['class'] == 'M'
 
     def test_koszul_c_sums(self):
-        """Critical dimensions: 15, 6, 12 for N=1,2,4."""
+        """FF central-charge sums: 15, 6, -24 for N=1,2,4."""
         table = superconformal_koszul_duality_table()
         assert table['N=1']['c_sum'] == 15
         assert table['N=2']['c_sum'] == 6
-        assert table['N=4']['c_sum'] == 12
+        assert table['N=4']['c_sum'] == -24
 
     def test_kappa_sums(self):
-        """Complementarity sums: 41/4, 1, 0 for N=1,2,4."""
+        """Complementarity sums: 41/4, 1, -8 for N=1,2,4."""
         table = superconformal_koszul_duality_table()
         assert table['N=1']['kappa_sum'] == Rational(41, 4)
         assert table['N=2']['kappa_sum'] == Rational(1)
-        assert table['N=4']['kappa_sum'] == Rational(0)
+        assert table['N=4']['kappa_sum'] == Rational(-8)
 
     def test_self_dual_points(self):
-        """Self-dual points: 15/2, 3, 6 for N=1,2,4."""
+        """Self-dual points: 15/2, 3, -12 for N=1,2,4."""
         table = superconformal_koszul_duality_table()
         assert table['N=1']['self_dual_c'] == Rational(15, 2)
         assert table['N=2']['self_dual_c'] == Rational(3)
-        assert table['N=4']['self_dual_c'] == Rational(6)
+        assert table['N=4']['self_dual_c'] == Rational(-12)
 
     def test_generator_counts(self):
         """N=1: 2 gen, N=2: 4 gen, N=4: 8 gen."""
@@ -470,7 +470,7 @@ class TestCrossFamilyComparisons:
         row = table[0]
         assert row['kappa_N1'] == Rational(1, 4)
         assert row['kappa_N2'] == Rational(5, 4)
-        assert row['kappa_N4'] == Rational(6, 5)
+        assert row['kappa_N4'] == Rational(1, 3)
 
     def test_n1_contains_virasoro(self):
         """N=1 T-line shadow data matches pure Virasoro."""
@@ -673,11 +673,11 @@ class TestMultiPathVerification:
         assert simplify(kap + kap_dual) == 1
 
     def test_n4_complementarity_algebraic(self):
-        """N=4: verify kappa + kappa' = 0 algebraically."""
+        """N=4: verify kappa + kappa' = -8 algebraically."""
         c_sym = Symbol('c')
-        kap = Rational(6) / (6 - c_sym)
-        kap_dual = Rational(6) / (6 - (12 - c_sym))
-        assert simplify(kap + kap_dual) == 0
+        kap = c_sym / 3
+        kap_dual = (-c_sym - 24) / 3
+        assert simplify(kap + kap_dual) == -8
 
     def test_n1_complementarity_algebraic(self):
         """N=1: verify kappa + kappa' = 41/4 algebraically."""
@@ -759,8 +759,8 @@ class TestComplementarityHierarchyStructure:
 
     def test_hierarchy_n4_data(self):
         h = superconformal_complementarity_hierarchy()
-        assert h[4]['sum'] == Rational(0)
-        assert h[4]['c_crit'] == Rational(12)
+        assert h[4]['sum'] == Rational(-8)
+        assert h[4]['c_crit'] == Rational(-24)
 
     def test_boson_fermion_balance(self):
         """For N >= 1, n_bosonic == n_fermionic (bose-fermi balance)."""
@@ -789,7 +789,7 @@ class TestComplementaritySumGeneral:
         assert complementarity_sum_general(2) == Rational(1)
 
     def test_n4(self):
-        assert complementarity_sum_general(4) == Rational(0)
+        assert complementarity_sum_general(4) == Rational(-8)
 
     def test_n3_raises(self):
         """N=3 is not in the standard Ademollo et al. hierarchy."""
@@ -837,7 +837,7 @@ class TestCCriticalSuperconformal:
         assert c_critical_superconformal(2) == 6
 
     def test_n4(self):
-        assert c_critical_superconformal(4) == 12
+        assert c_critical_superconformal(4) == -24
 
     def test_invalid(self):
         with pytest.raises(ValueError):
@@ -850,7 +850,7 @@ class TestMethod1DirectKappaFormula:
     N=0: (c/2) + ((26-c)/2) = 13.
     N=1: (3c-2)/4 + (3(15-c)-2)/4 = 41/4.
     N=2: (6-c)/(2(3-c)) + c/(2(c-3)) = 1.
-    N=4: 6/(6-c) + 6/(c-6) = 0.
+    N=4: c/3 + (-c-24)/3 = -8.
     """
 
     @pytest.mark.parametrize("N_susy", [0, 1, 2, 4])
@@ -864,7 +864,7 @@ class TestMethod1DirectKappaFormula:
         (0, 1), (0, 10), (0, 13), (0, 25),
         (1, 1), (1, Rational(3, 2)), (1, Rational(15, 2)), (1, 14),
         (2, 1), (2, Rational(3, 2)), (2, 5), (2, -3),
-        (4, 1), (4, 2), (4, 3), (4, Rational(18, 5)),
+        (4, 1), (4, 6), (4, 12), (4, -30),
     ])
     def test_numerical_verification(self, N_susy, c_val):
         """Verify at specific c values."""
@@ -893,11 +893,11 @@ class TestMethod1DirectKappaFormula:
         assert simplify(kap + kap_dual) == 1
 
     def test_n4_explicit_algebra(self):
-        """N=4: 6/(6-c) + 6/(c-6) = 0."""
+        """N=4: c/3 + (-c-24)/3 = -8."""
         c_sym = Symbol('c')
-        kap = Rational(6) / (6 - c_sym)
-        kap_dual = Rational(6) / (6 - (12 - c_sym))
-        assert simplify(kap + kap_dual) == 0
+        kap = c_sym / 3
+        kap_dual = (-c_sym - 24) / 3
+        assert simplify(kap + kap_dual) == -8
 
 
 class TestMethod2KParametrization:
@@ -916,11 +916,11 @@ class TestMethod2KParametrization:
         assert simplify(kap + kap_dual) == 1
 
     def test_n4_k_formula(self):
-        """N=4: kappa(k) = (k+2)/2, kappa(-k-4) = (-k-2)/2, sum = 0."""
+        """N=4: kappa(k) = 2k, kappa(-k-4) = -2k-8, sum = -8."""
         k_sym = Symbol('k')
-        kap = (k_sym + 2) / 2
-        kap_dual = (-k_sym - 2) / 2
-        assert simplify(kap + kap_dual) == 0
+        kap = 2 * k_sym
+        kap_dual = 2 * (-k_sym - 4)
+        assert simplify(kap + kap_dual) == -8
 
     def test_n1_linear_formula(self):
         """N=1: slope*c_crit + 2*intercept = (3/4)*15 + 2*(-1/2) = 41/4."""
@@ -942,17 +942,17 @@ class TestMethod2KParametrization:
 
     @pytest.mark.parametrize("k_val", [1, 2, 3, 5, 10, 100])
     def test_n4_numerical_k(self, k_val):
-        """N=4 at various k: kappa(k) + kappa(-k-4) = 0."""
-        kap = (Rational(k_val) + 2) / 2
-        kap_dual = (-Rational(k_val) - 2) / 2
-        assert kap + kap_dual == 0
+        """N=4 at various k: kappa(k) + kappa(-k-4) = -8."""
+        kap = 2 * Rational(k_val)
+        kap_dual = 2 * (-Rational(k_val) - 4)
+        assert kap + kap_dual == -8
 
 
 class TestMethod3SelfDualPoint:
     """METHOD 3: Self-dual point evaluation.
 
-    For linear kappa (N=0, N=1): Sigma = 2*kappa(c_sd).
-    For Moebius kappa (N=2, N=4): algebraic simplification.
+    For linear kappa (N=0, N=1, N=4): Sigma = 2*kappa(c_sd).
+    For Moebius kappa (N=2): algebraic simplification.
     """
 
     def test_all_verified(self):
@@ -978,24 +978,25 @@ class TestMethod3SelfDualPoint:
         result = verify_complementarity_sum_symbolic(2)
         assert result['verified']
 
-    def test_n4_self_dual_is_pole(self):
-        """N=4: c_sd=6 is a pole of kappa."""
-        result = verify_complementarity_sum_symbolic(4)
-        assert result['verified']
+    def test_n4_self_dual_linear(self):
+        """N=4: c_sd=-12, kappa(-12)=-4, Sigma=-8."""
+        kap_sd = kappa_superconformal(4, -12)
+        assert kap_sd == Rational(-4)
+        assert 2 * kap_sd == Rational(-8)
 
 
 class TestMethod4AnomalyCancellation:
     """METHOD 4: Anomaly cancellation interpretation.
 
     The complementarity sum measures residual chiral anomaly after
-    Koszul pairing. N=4 achieves complete cancellation.
+    Koszul pairing. The N=4 FF line keeps the su(2) critical shift.
     """
 
-    def test_n4_is_km_type(self):
-        """N=4 has KM-type anti-symmetry: kappa + kappa' = 0."""
+    def test_n4_is_ff_su2_type(self):
+        """N=4 FF duality has su(2) critical-shift complementarity -8."""
         h = superconformal_complementarity_hierarchy()
-        assert h[4]['anomaly_type'] == 'KM-type (exact cancellation)'
-        assert h[4]['sum'] == 0
+        assert h[4]['anomaly_type'] == 'FF su(2) R-symmetry shift'
+        assert h[4]['sum'] == -8
 
     def test_n0_residual_anomaly(self):
         """N=0 (Virasoro) has the largest residual anomaly."""
@@ -1074,8 +1075,8 @@ class TestStrictDecrease:
         assert Rational(41, 4) - 1 == Rational(37, 4)
 
     def test_n2_minus_n4(self):
-        """1 - 0 = 1."""
-        assert Rational(1) - Rational(0) == 1
+        """1 - (-8) = 9."""
+        assert Rational(1) - Rational(-8) == 9
 
 
 class TestCrossConsistency:
@@ -1137,13 +1138,13 @@ class TestPhysicalSpecialValues:
         assert kap_dual == Rational(3, 4)
         assert kap + kap_dual == Rational(1)
 
-    def test_k3_universal_n4(self):
-        """c=3 (N=4, k=2): kappa=2, dual c=9, kappa'=-2."""
-        kap = kappa_superconformal(4, 3)
-        kap_dual = kappa_superconformal(4, 9)
+    def test_k3_n4_ff_duality(self):
+        """c=6 (N=4, k=1): kappa=2, FF dual c=-30, kappa'=-10."""
+        kap = kappa_superconformal(4, 6)
+        kap_dual = kappa_superconformal(4, -30)
         assert kap == Rational(2)
-        assert kap_dual == Rational(-2)
-        assert kap + kap_dual == 0
+        assert kap_dual == Rational(-10)
+        assert kap + kap_dual == Rational(-8)
 
     def test_bosonic_string_worldsheet(self):
         """c=26 (N=0 bosonic string): kappa=13, dual c=0, kappa'=0."""
@@ -1164,6 +1165,6 @@ class TestPhysicalSpecialValues:
         assert kap == Rational(5, 4)
 
     def test_n4_first_minimal(self):
-        """c=2 (N=4 k=1): kappa=3/2."""
-        kap = kappa_superconformal(4, 2)
-        assert kap == Rational(3, 2)
+        """c=6 (N=4 k=1): kappa=2."""
+        kap = kappa_superconformal(4, 6)
+        assert kap == Rational(2)

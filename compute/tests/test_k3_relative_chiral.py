@@ -1,7 +1,10 @@
 r"""Tests for the relative chiral algebra A_{K3 x E / E}.
 
-Verifies the full chain:
-  K3 sigma model -> relative chiral algebra -> shadow tower -> BKM -> Delta_5.
+Verifies the scalar K3 lane:
+  K3 sigma model -> relative chiral algebra -> scalar shadow evidence
+  compared with the Borcherds/Gritsenko Delta_5 product.
+The Hall--Borcherds/K3 recognition theorem remains conditional on the
+four-part chain datum.
 
 Multi-path verification mandate: every numerical result verified by 3+ paths.
 """
@@ -39,6 +42,8 @@ from compute.lib.k3_relative_chiral import (
     dmvv_product_coeffs,
     hilb_k3_euler,
     # BKM
+    HALL_BORCHERDS_CHAIN_DATUM,
+    HALL_BORCHERDS_FINITE_WINDOW_CHECKS,
     bkm_root_multiplicity,
     verify_real_root_multiplicities,
     shadow_tower_to_product_formula,
@@ -512,7 +517,7 @@ class TestMathieuMoonshine:
 # =========================================================================
 
 class TestShadowBKMBridge:
-    """Verify the shadow tower -> BKM product formula connection."""
+    """Verify scalar shadow evidence against the BKM product formula."""
 
     def test_bridge_kappa(self):
         """Shadow tower arity 2 gives kappa = 2."""
@@ -541,13 +546,20 @@ class TestShadowBKMBridge:
             expected = phi01_discriminant_coeffs().get(D, 0)
             assert mult == expected, f"Root ({n},{l},{m}): D={D}, mult={mult}, expected={expected}"
 
+    def test_bridge_is_scalar_evidence_not_recognition(self):
+        """The product comparison does not complete H_Delta5 recognition."""
+        result = shadow_tower_to_product_formula(Fraction(2), nmax=3)
+        assert result['comparison_status'] == 'scalar evidence only'
+        assert result['recognition_complete'] is False
+        assert result['missing_chain_datum'] == HALL_BORCHERDS_CHAIN_DATUM
+
 
 # =========================================================================
 # Section 13: Igusa cusp form
 # =========================================================================
 
 class TestIgusaConnection:
-    """Verify primitive Gritsenko-Nikulin denominator Delta_5 connection."""
+    """Verify primitive Gritsenko-Nikulin denominator Delta_5 scalar data."""
 
     def test_igusa_weight(self):
         """Delta_5 is weight 5 on H_2."""
@@ -558,6 +570,12 @@ class TestIgusaConnection:
         """kappa = 2 in the Igusa computation."""
         result = igusa_cusp_form_from_shadow()
         assert result['kappa_k3'] == Fraction(2)
+
+    def test_igusa_not_chain_recognition(self):
+        """Delta_5 product data is not the Hall--Borcherds chain theorem."""
+        result = igusa_cusp_form_from_shadow()
+        assert result['recognition_complete'] is False
+        assert result['missing_chain_datum'] == HALL_BORCHERDS_CHAIN_DATUM
 
 
 # =========================================================================
@@ -590,24 +608,31 @@ class TestRelativeSewing:
 # =========================================================================
 
 class TestFullBridge:
-    """Verify the full bridge A_{K3 x E / E} -> BKM -> Delta_5."""
+    """Verify the scalar bridge and the missing recognition datum."""
 
     def test_bridge_exists(self):
-        """The full bridge summary is self-consistent."""
+        """The scalar bridge summary is self-consistent."""
         result = full_bridge_summary()
         assert result['kappa'] == 2
         assert result['shadow_class'] == 'M (infinite depth)'
-        assert result['bypasses_d3_functor'] is True
+        assert result['bypasses_d3_functor'] is False
+        assert result['recognition_complete'] is False
 
     def test_bridge_chain_length(self):
-        """The identification chain has 5 steps."""
+        """The scalar evidence chain has 5 steps."""
         result = full_bridge_summary()
         assert len(result['chain']) == 5
 
     def test_bridge_bkm(self):
-        """The BKM algebra is g_{Delta_5}."""
+        """The BKM algebra remains the recognition target."""
         result = full_bridge_summary()
         assert result['bkm_algebra'] == 'g_{Delta_5}'
+
+    def test_bridge_names_chain_datum(self):
+        """The missing beta/delta/epsilon/tau datum is explicit."""
+        result = full_bridge_summary()
+        assert result['missing_chain_datum'] == HALL_BORCHERDS_CHAIN_DATUM
+        assert result['finite_window_checks'] == HALL_BORCHERDS_FINITE_WINDOW_CHECKS
 
 
 # =========================================================================

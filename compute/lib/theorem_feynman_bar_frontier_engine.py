@@ -43,7 +43,7 @@ DIRECTION B: Loop expansion of the collision residue r(z)
 The collision residue r(z) = Res^coll_{0,2}(Theta_A) has poles shifted
 by one order relative to the OPE (AP19: d log absorption).
 
-For Heisenberg:  r(z) = k/z     (tree-level exact, class G)
+For Heisenberg:  r(z) = k*Omega_H/z (rank-one coeff k/z)     (tree-level exact, class G)
 For KM sl_2:     r(z) = kappa/z (tree-level exact, class L)
 For Virasoro:    r(z) = (c/2)/z^3 + 2T/z  (all poles from OPE)
                  Quantum corrections: 1-loop bubble = -S_3^2/kappa
@@ -588,7 +588,7 @@ def tree_level_r_heisenberg(k_val: Fraction) -> CollisionResidue:
     r"""Tree-level r-matrix for Heisenberg H_k.
 
     OPE: alpha(z) alpha(w) ~ k/(z-w)^2
-    After d log (AP19): r(z) = k/z
+    After d log (AP19): r(z) = k*Omega_H/z (rank-one coeff k/z)
 
     Tree-level exact: class G has S_3 = 0, so no loop corrections.
     """

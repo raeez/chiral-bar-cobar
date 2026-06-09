@@ -42,7 +42,7 @@ Conventions
 -----------
 - Cohomological grading (|d| = +1), bar uses desuspension s^{-1} (AP45: |s^{-1}v| = |v|-1).
 - kappa(H_k) = k (AP1, AP39).
-- Heisenberg OPE: a(z)a(w) ~ k/(z-w)^2 (simple pole in d log = k d log(z-w)/(z-w)).
+- Heisenberg OPE: a(z)a(w) ~ k/(z-w)^2 (simple collision kernel after dlog absorption).
 - Bar differential extracts residues along d log(z_i - z_j) (AP19: pole order one below OPE).
 - Harrison complex = Lie cooperad component = weight-1 Eulerian = shuffle-antisymmetric.
 

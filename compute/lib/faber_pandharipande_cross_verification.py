@@ -326,6 +326,82 @@ def scalar_diagonal_free_energy(kappa, g: int):
     return kappa * method4_sympy_bernoulli(g)
 
 
+def genus2_fp_closed_coefficient() -> Rational:
+    r"""Genus-2 Faber-Pandharipande coefficient by the closed formula.
+
+    This is the finite-window input used by
+    comp:heisenberg-g2-fp-grr-check:
+
+        lambda_2^FP = ((2^3 - 1) / 2^3) * |B_4| / 4!
+                    = 7/5760.
+
+    The Bernoulli value B_4 = -1/30 is inserted explicitly so the
+    witness does not call the general Bernoulli helpers.
+    """
+    b4_abs = Rational(1, 30)
+    return Rational(2**3 - 1, 2**3) * b4_abs / factorial(4)
+
+
+def genus2_grr_ahat_coefficient() -> Rational:
+    r"""Genus-2 GRR/A-hat coefficient by direct series extraction.
+
+    The scalar GRR index lane has generating series
+
+        (x/2)/sin(x/2) - 1.
+
+    The coefficient of x^4 is the genus-2 scalar coefficient.  This
+    intentionally computes the coefficient directly from the series,
+    rather than routing through the closed Faber-Pandharipande formula.
+    """
+    x = Symbol('x')
+    grr_series = series(x / 2 / sin(x / 2) - 1, x, 0, 6)
+    return Rational(grr_series.coeff(x, 4))
+
+
+def genus2_heisenberg_fp_grr_disjoint_check() -> Dict[str, object]:
+    r"""Finite-window FP/GRR agreement for rank-one Heisenberg at genus 2.
+
+    This witness verifies the exact scalar free energy
+
+        F_2(H_1) = 7/5760
+
+    by two finite computations:
+
+    * Faber-Pandharipande/Mumford closed coefficient, and
+    * GRR/A-hat coefficient extraction.
+
+    It also records the distinct genus-2 Hodge socle integral
+    int_{M-bar_2} lambda_2 lambda_1 = 1/5760, so tests cannot confuse
+    the free-energy coefficient with the clutching-socle pairing.
+    """
+    heisenberg_kappa = Rational(1)
+    fp_lambda2 = genus2_fp_closed_coefficient()
+    grr_lambda2 = genus2_grr_ahat_coefficient()
+    f2_from_fp = heisenberg_kappa * fp_lambda2
+    f2_from_grr = heisenberg_kappa * grr_lambda2
+    expected = Rational(7, 5760)
+    socle_integral = Rational(1, 5760)
+
+    return {
+        'claim': 'comp:heisenberg-g2-fp-grr-check',
+        'scope': 'rank-one Heisenberg genus-2 scalar free energy',
+        'heisenberg_kappa': heisenberg_kappa,
+        'fp_lambda2': fp_lambda2,
+        'grr_lambda2': grr_lambda2,
+        'F2_from_fp': f2_from_fp,
+        'F2_from_grr': f2_from_grr,
+        'expected_F2': expected,
+        'socle_integral_lambda2_lambda1': socle_integral,
+        'socle_integral_is_free_energy': False,
+        'all_match': (
+            simplify(fp_lambda2 - grr_lambda2) == 0
+            and simplify(f2_from_fp - expected) == 0
+            and simplify(f2_from_grr - expected) == 0
+            and socle_integral != expected
+        ),
+    }
+
+
 def definitive_table(g_max: int = DEFAULT_VERIFICATION_GENUS_MAX) -> Dict[int, Rational]:
     """Produce a finite-window table of lambda_g^FP for g=1,...,g_max.
 

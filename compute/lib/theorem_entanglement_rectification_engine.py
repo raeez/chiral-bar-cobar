@@ -14,14 +14,11 @@ This engine combines the entanglement programme (G11-G16) with:
    to the entanglement entropy.
 
 2. K11 LAGRANGIAN CRITERION AND QEC RATE:
-   The Lagrangian Koszulness criterion (K11) gives code rate R = 1/2
-   (half-dimensional code subspace). Holstein-Rivera's removal of
-   hypothesis (P3) simplifies the perfectness verification:
-   the shifted symplectic structure on Perf(X) descends to the
-   bar complex without the explicit nondegeneracy check at each
-   weight.  The simplified QEC rate is R = 1/2 unconditionally
-   on the standard landscape (Lagrangian perfectness theorem,
-   prop:lagrangian-perfectness).
+   The K11 scalar rate diagnostic gives code rate R = 1/2
+   (half-dimensional code subspace). It becomes a C2 Lagrangian
+   certification only after the shifted-symplectic hypothesis package
+   is supplied. The rate calculation is therefore separated from the
+   Lagrangian upgrade flag.
 
 3. PAGE CURVE FOR THE SHADOW CohFT:
    The shadow CohFT (thm:shadow-cohft) assigns classes
@@ -93,6 +90,11 @@ from compute.lib.entanglement_shadow_engine import (
     shadow_radius_virasoro,
     entanglement_correction_bound,
     STANDARD_KAPPAS,
+)
+from compute.lib.symplectic_duality_engine import (
+    C2_LAGRANGIAN_CONDITIONAL_STATUS,
+    C2_LAGRANGIAN_HYPOTHESES,
+    c2_lagrangian_hypothesis_report,
 )
 
 # ---------------------------------------------------------------------------
@@ -409,7 +411,7 @@ def coha_entanglement_spectrum_sl2(k, n_levels=5) -> Dict[str, Any]:
 # =========================================================================
 
 def qec_rate_lagrangian() -> Rational:
-    r"""QEC rate from the Lagrangian criterion K11.
+    r"""QEC scalar rate diagnostic from the K11 lane.
 
     The Lagrangian code subspace Q_g(A) is half-dimensional:
       dim Q_g(A) = (1/2) * dim C_g(A)
@@ -417,16 +419,9 @@ def qec_rate_lagrangian() -> Rational:
     This gives code rate R = 1/2, which is the MAXIMUM possible
     for a symplectic (isotropic) code.
 
-    This rate is UNIVERSAL for all Koszul algebras, independent
-    of the family, shadow depth, or central charge.
-
-    The Holstein-Rivera result (removing hypothesis P3 = properness)
-    means the perfectness of the cyclic pairing is automatic for
-    smooth proper dg-categories. Since every chirally Koszul algebra
-    has a perfect Shapovalov form (by the Kac-Shapovalov criterion K8),
-    the Lagrangian condition K11 holds unconditionally on the standard
-    landscape. The QEC rate R = 1/2 therefore requires NO additional
-    hypothesis beyond Koszulness.
+    This scalar diagnostic is uniform across the standard families.
+    It is not by itself a C2 Lagrangian certificate: the Lagrangian
+    upgrade requires the explicit shifted-symplectic hypothesis package.
 
     >>> qec_rate_lagrangian()
     1/2
@@ -434,23 +429,25 @@ def qec_rate_lagrangian() -> Rational:
     return Rational(1, 2)
 
 
-def qec_rate_with_perfectness(is_koszul: bool, has_perfect_pairing: bool) -> Dict[str, Any]:
-    r"""QEC rate with explicit perfectness tracking.
+def qec_rate_with_perfectness(
+    is_koszul: bool,
+    has_perfect_pairing: bool,
+    c2_hypotheses: Optional[Tuple[str, ...]] = None,
+) -> Dict[str, Any]:
+    r"""QEC rate with explicit perfectness and C2 tracking.
 
     Before Holstein-Rivera: K11 required explicit verification of
     perfectness (P3) at each weight. The QEC rate was:
       R = 1/2  if K11 holds (Koszul + perfect pairing)
       R = ?    if K11 fails (non-degenerate but not perfect)
 
-    After Holstein-Rivera: properness of the dg-category suffices.
-    For the standard landscape, every chirally Koszul algebra has
-    a perfect Shapovalov form, so:
-      R = 1/2  if Koszul (unconditional on standard landscape)
-      R < 1/2  if not Koszul (bar spectral sequence does not collapse)
+    The rate R = 1/2 is the scalar diagnostic once the Koszul input is
+    present. The Lagrangian flag is upgraded only when the explicit
+    C2 shifted-symplectic package is supplied.
 
     Multi-path verification:
-      Path 1: Lagrangian dimension = (1/2) * ambient dimension
-      Path 2: K11 <=> K4 <=> K1 (unconditional equivalences)
+      Path 1: scalar half-dimensional diagnostic
+      Path 2: K11 rate lane through K4/K1 after hypotheses
       Path 3: Kac-Shapovalov nondegeneracy (K8) => perfectness
 
     >>> data = qec_rate_with_perfectness(True, True)
@@ -463,30 +460,40 @@ def qec_rate_with_perfectness(is_koszul: bool, has_perfect_pairing: bool) -> Dic
     >>> data['rate'] is None
     True
     """
+    c2_report = c2_lagrangian_hypothesis_report(c2_hypotheses)
     if is_koszul:
         return {
             'rate': Rational(1, 2),
             'code_distance': 2,
-            'is_lagrangian': True,
+            'scalar_rate_diagnostic': True,
+            'is_lagrangian': c2_report['complete'],
+            'lagrangian_upgrade_status': c2_report['status'],
+            'c2_missing_hypotheses': c2_report['missing'],
             'simplified_by_HR': True,
             'old_hypothesis': 'P3 (properness/perfectness)',
-            'new_status': 'automatic for smooth proper dg-categories',
-            'verification': 'K8 (Kac-Shapovalov) => perfectness => K11',
+            'new_status': 'rate diagnostic; C2 still requires its package',
+            'verification': 'K8 perfectness feeds K11; C2 package certifies Lagrangian upgrade',
         }
     else:
         return {
             'rate': None,
             'code_distance': None,
+            'scalar_rate_diagnostic': False,
             'is_lagrangian': False,
+            'lagrangian_upgrade_status': C2_LAGRANGIAN_CONDITIONAL_STATUS,
+            'c2_missing_hypotheses': c2_report['missing'],
             'simplified_by_HR': True,
             'failure_reason': 'not Koszul => bar spectral sequence fails to collapse',
         }
 
 
-def qec_parameters_by_family(family: str) -> Dict[str, Any]:
+def qec_parameters_by_family(
+    family: str,
+    c2_hypotheses: Optional[Tuple[str, ...]] = None,
+) -> Dict[str, Any]:
     r"""QEC code parameters for each standard family.
 
-    Rate R = 1/2 (universal, from K11).
+    Scalar rate R = 1/2 (uniform diagnostic from K11).
     Distance d = 2 (universal, from bar degree shift).
     Channels = r_max - 2 (family-dependent, from shadow depth).
 
@@ -526,6 +533,7 @@ def qec_parameters_by_family(family: str) -> Dict[str, Any]:
     }
 
     cls, r_max, channels = depth_map.get(family_lower, ('M', -1, -1))
+    c2_report = c2_lagrangian_hypothesis_report(c2_hypotheses)
 
     return {
         'family': family,
@@ -536,7 +544,10 @@ def qec_parameters_by_family(family: str) -> Dict[str, Any]:
         'channels': channels,
         'code_type': 'symplectic',
         'stabilizer_group': 'Sp',
-        'lagrangian': True,
+        'scalar_rate_diagnostic': True,
+        'lagrangian': c2_report['complete'],
+        'lagrangian_upgrade_status': c2_report['status'],
+        'c2_missing_hypotheses': c2_report['missing'],
         'HR_simplified': True,
     }
 
@@ -1241,7 +1252,8 @@ def verify_qec_universality() -> Dict[str, bool]:
         checks[f'{fam}_rate'] = params['rate'] == Rational(1, 2)
         checks[f'{fam}_distance'] = params['distance'] == 2
         checks[f'{fam}_symplectic'] = params['code_type'] == 'symplectic'
-        checks[f'{fam}_lagrangian'] = params['lagrangian'] is True
+        checks[f'{fam}_scalar_rate_diagnostic'] = params['scalar_rate_diagnostic'] is True
+        checks[f'{fam}_lagrangian_conditional'] = params['lagrangian'] is False
 
     return checks
 

@@ -11,7 +11,7 @@ In particular, z^{-1} in the OPE becomes z^0 = regular and DROPS.
 
 Families computed
 -----------------
-1. Heisenberg at level k:       r(z) = k/z
+1. Heisenberg at level k:       r(z) = k*Omega_H/z (rank-one coeff k/z)
 2. Affine sl_2 at level k:      r(z) = k * Omega_{sl_2} / z
 3. Affine sl_3 at level k:      r(z) = k * Omega_{sl_3} / z
 4. Virasoro at central charge c: r(z) = (c/2)/z^3 + 2T/z
@@ -163,7 +163,7 @@ def heisenberg_rmatrix(k: Fraction = Fraction(1)) -> FamilyRMatrix:
     r"""Heisenberg at level k.
 
     OPE:  J(z) J(w) ~ k / (z-w)^2
-    r-matrix: r(z) = k/z  (single simple pole)
+    r-matrix: r(z) = k*Omega_H/z (rank-one coeff k/z)  (single simple pole)
 
     The Heisenberg is abelian (no bracket), so the OPE has only
     the double pole from the bilinear form.  The d log absorption
@@ -752,7 +752,7 @@ def verify_casimir_symmetry(Omega: np.ndarray, n: int,
 # ========================================================================
 
 def heisenberg_r_explicit(k: Fraction, z: complex) -> complex:
-    """r(z) = k/z for the Heisenberg at level k."""
+    """r(z) = k*Omega_H/z (rank-one coeff k/z) for the Heisenberg at level k."""
     return complex(k) / z
 
 

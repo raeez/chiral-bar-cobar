@@ -29,11 +29,14 @@ KEY RESULTS PROVED IN THIS MODULE:
     (thm:propagator-variance) but NOT the per-channel shadow data.
 
 (3) SPECTRAL-FLOW-INVARIANT SHADOW TOWER: The total modular characteristic
-    kappa(N=2, c) = 7c/6 is a spectral flow invariant. The full shadow
-    tower {S_r^{(T)}, S_r^{(J)}, S_r^{(G)}} is invariant per channel.
-    The spectral flow orbit of (kappa, alpha, S_4) is a FIXED POINT
-    at (7c/6, 2, 10/(c(5c+22))) for the T-line, and similarly for
-    the J-line and G-line.
+    is the coset value
+        kappa(N=2, c) = (6-c)/(2(3-c)) = (k+4)/4.
+    The naive channel curvature sum c/2 + c/3 + c/3 = 7c/6 is retained
+    only as a diagnostic; it is not the modular-Koszul kappa. The full
+    shadow tower {S_r^{(T)}, S_r^{(J)}, S_r^{(G)}} is invariant per
+    channel. The spectral flow orbit is a fixed point because spectral
+    flow is an automorphism of the OPE package, not because it proves a
+    new Koszulness theorem.
 
 (4) N=2 CHIRAL RING: For the N=2 unitary minimal models at
     c = 3(K-2)/K (K >= 3), the chiral ring R = H*(G^+_0) is a
@@ -89,6 +92,52 @@ from sympy import (
 c = Symbol('c')
 k = Symbol('k')
 theta = Symbol('theta')
+
+
+N2_GENERATORS = ('T', 'J', 'G+', 'G-')
+
+N2_KOSZUL_HYPOTHESES = (
+    'Kazama-Suzuki coset realization',
+    'sl2 Feigin-Frenkel level-shift transport',
+    'completed PBW/bar comparison',
+    'finite-window or completed Verdier lane',
+    'spectral-flow OPE-package invariance',
+)
+
+N2_G_LINE_MISSING = (
+    'G-line quartic contact S4 computation',
+)
+
+
+def n2_total_kappa(c_val=None):
+    """Total modular-Koszul kappa for the N=2 SCA.
+
+    The value is the Kazama-Suzuki/coset value
+    (6-c)/(2(3-c)).  The point c=3 is the free-field/self-dual limit
+    where this chart has a pole, so numerical callers receive None
+    rather than a false finite scalar.
+    """
+    if c_val is None:
+        return (6 - c) / (2 * (3 - c))
+
+    c_v = Rational(c_val)
+    if c_v == 3:
+        return None
+    return simplify((6 - c_v) / (2 * (3 - c_v)))
+
+
+def n2_koszul_dual_central_charge(c_val=None):
+    """Additive N=2 Koszul-dual central charge c' = 6-c."""
+    if c_val is None:
+        return 6 - c
+    return 6 - Rational(c_val)
+
+
+def _optional_equal(lhs, rhs):
+    """Equality for values that may be undefined at the c=3 kappa pole."""
+    if lhs is None or rhs is None:
+        return lhs is None and rhs is None
+    return simplify(lhs - rhs) == 0
 
 
 # ===========================================================================
@@ -337,17 +386,17 @@ def spectral_flow_shadow_orbit(c_val=None, theta_val=1):
         'S4': Rational(0),
     }
 
-    # Per-channel curvature sum (NOT the total kappa)
+    # Per-channel curvature sum (NOT the total modular-Koszul kappa).
     channel_sum = T_data['kappa'] + J_data['kappa'] + G_data['kappa']
-    # Total kappa from the coset decomposition (the correct value)
-    total_kappa = (6 - c_v) / (2 * (3 - c_v))
+    total_kappa = n2_total_kappa(c_v) if c_val is not None else n2_total_kappa()
 
     return {
         'theta': th,
         'T_line': T_data,
         'J_line': J_data,
         'G_line': G_data,
-        'total_kappa': simplify(total_kappa),
+        'total_kappa': total_kappa if total_kappa is None else simplify(total_kappa),
+        'total_kappa_defined': total_kappa is not None,
         'channel_curvature_sum': simplify(channel_sum),
         'is_fixed_point': True,
         'reason': 'spectral flow is automorphism; OPE structure constants invariant',
@@ -387,7 +436,8 @@ def spectral_flow_orbit_explicit(c_val, max_theta=3):
         # G+', G-': structure constants invariant
         kappa_G_prime = c_v / 3
 
-        total_kappa = kappa_T_prime + kappa_J_prime + kappa_G_prime
+        channel_sum = kappa_T_prime + kappa_J_prime + kappa_G_prime
+        total_kappa = n2_total_kappa(c_v)
 
         result[th_val] = {
             'kappa_T': kappa_T_prime,
@@ -395,7 +445,9 @@ def spectral_flow_orbit_explicit(c_val, max_theta=3):
             'S4_T': S4_T_prime,
             'kappa_J': kappa_J_prime,
             'kappa_G': kappa_G_prime,
-            'kappa_total': simplify(total_kappa),
+            'kappa_total': total_kappa,
+            'kappa_total_defined': total_kappa is not None,
+            'channel_curvature_sum': simplify(channel_sum),
         }
 
     return result
@@ -420,12 +472,12 @@ def spectral_flow_fixed_point_locus():
 
     For the N=2 algebra:
       - Spectral flow Z acts TRIVIALLY on shadow space (automorphism)
-      - Koszul duality c -> 9/c acts NON-TRIVIALLY
-      - Self-dual point under Koszul: c = 3 (positive) or c = -3 (negative)
+      - Koszul duality c -> 6-c acts NON-TRIVIALLY
+      - Self-dual point under Koszul: c = 3, where this kappa chart has a pole
 
     The spectral-flow-invariant quantities are ALL shadow quantities,
     since the action is trivial. The Koszul-duality-invariant quantities
-    are those satisfying f(c) = f(9/c).
+    are those satisfying f(c) = f(6-c).
     """
     # Koszul-invariant combinations (CORRECTED: c' = 6-c, additive)
     # kappa(c) + kappa(6-c) = 1 (constant)
@@ -437,9 +489,54 @@ def spectral_flow_fixed_point_locus():
         'spectral_flow_action': 'trivial (automorphism)',
         'fixed_point': 'entire shadow space',
         'koszul_duality': 'c -> 6-c',
-        'koszul_self_dual': {'positive': Rational(3)},
+        'koszul_self_dual': {'positive': Rational(3), 'attained_finite_level': False},
+        'no_negative_self_dual_branch': True,
         'kappa_sum_invariant': kappa_sum,  # kappa(c)+kappa(6-c) = 1
         'note': 'spectral flow constrains the representation theory, not the shadow obstruction tower',
+    }
+
+
+def n2_scope_report(c_val=None):
+    """Status/scope record for N=2 SCA spectral-flow and Koszul claims."""
+    if c_val is None:
+        c_v = c
+        dual_c = n2_koszul_dual_central_charge()
+        kap = n2_total_kappa()
+        dual_kap = simplify((6 - dual_c) / (2 * (3 - dual_c)))
+    else:
+        c_v = Rational(c_val)
+        dual_c = n2_koszul_dual_central_charge(c_v)
+        kap = n2_total_kappa(c_v)
+        dual_kap = n2_total_kappa(dual_c)
+    channel_sum = Rational(7) * c_v / 6
+
+    complementarity_sum = None
+    if kap is not None and dual_kap is not None:
+        complementarity_sum = simplify(kap + dual_kap)
+
+    return {
+        'family': 'N=2 superconformal algebra',
+        'generators': N2_GENERATORS,
+        'OPE_source': 'compute/lib/n2_superconformal_shadow.py',
+        'spectral_flow_action': (
+            'L_n -> L_n + theta J_n + c theta^2 delta/6; '
+            'J_n -> J_n + c theta delta/3; '
+            'G^+_r -> G^+_{r+theta}; G^-_r -> G^-_{r-theta}'
+        ),
+        'spectral_flow_status': 'proved by OPE automorphism checks in this module',
+        'koszul_claim_status': 'conditional',
+        'koszul_claim_requires_theorem': True,
+        'koszul_hypotheses': N2_KOSZUL_HYPOTHESES,
+        'kappa': kap,
+        'kappa_defined': kap is not None,
+        'kappa_formula': '(6-c)/(2(3-c))',
+        'kappa_pole': Rational(3),
+        'channel_curvature_sum': simplify(channel_sum),
+        'channel_curvature_sum_is_total_kappa': False,
+        'koszul_dual_central_charge': dual_c,
+        'kappa_complementarity_sum': complementarity_sum,
+        'G_line_status': 'conditional',
+        'G_line_missing': N2_G_LINE_MISSING,
     }
 
 
@@ -456,8 +553,9 @@ def elliptic_genus_jacobi_property(c_val=None):
 
     This is the defining property of a WEAK JACOBI FORM of weight 0 and index m.
 
-    For the shadow obstruction tower at genus 1:
-      F_1 = kappa/24 = 7c/(6*24) = 7c/144
+    For the scalar shadow obstruction tower at genus 1:
+      F_1 = kappa/24 = (6-c)/(48(3-c)).
+    This value is undefined at the c=3 pole in this coordinate chart.
 
     The genus-1 shadow is a SINGLE NUMBER (not a function of z), so the
     Jacobi property is automatically satisfied trivially: the shadow
@@ -473,11 +571,13 @@ def elliptic_genus_jacobi_property(c_val=None):
         c_v = c
 
     m = c_v / 3  # Jacobi index
-    F1 = 7 * c_v / 144  # genus-1 shadow (z-independent)
+    kap = n2_total_kappa(c_v) if c_val is not None else n2_total_kappa()
+    F1 = None if kap is None else simplify(kap / 24)
 
     return {
         'index': m,
         'F_1': F1,
+        'F_1_defined': F1 is not None,
         'jacobi_weight': 0,
         'jacobi_index': m,
         'z_dependent': 'elliptic genus (not captured by shadow obstruction tower)',
@@ -803,9 +903,8 @@ def kappa_method_A(c_val=None):
     See n2_kappa_resolution.py for the full derivation.
     """
     if c_val is not None:
-        c_v = Rational(c_val)
-        return (6 - c_v) / (2 * (3 - c_v))
-    return (6 - c) / (2 * (3 - c))
+        return n2_total_kappa(c_val)
+    return n2_total_kappa()
 
 
 def kappa_method_B_kazama_suzuki(c_val=None):
@@ -823,9 +922,8 @@ def kappa_method_B_kazama_suzuki(c_val=None):
       - k=-4 (c=6): kappa = 0 (critical level).
     """
     if c_val is not None:
-        c_v = Rational(c_val)
-        return (6 - c_v) / (2 * (3 - c_v))
-    return (6 - c) / (2 * (3 - c))
+        return n2_total_kappa(c_val)
+    return n2_total_kappa()
 
 
 def kappa_method_C_spectral_flow(c_val=None):
@@ -838,13 +936,12 @@ def kappa_method_C_spectral_flow(c_val=None):
 
     The correct kappa with additive complementarity c' = 6-c:
       kappa(-3) = 9/12 = 3/4.
-      kappa(9) = -3/12 = -1/4.
+      kappa(9) = 1/4.
       kappa + kappa' = 1 at all c.
     """
     if c_val is not None:
-        c_v = Rational(c_val)
-        return (6 - c_v) / (2 * (3 - c_v))
-    return (6 - c) / (2 * (3 - c))
+        return n2_total_kappa(c_val)
+    return n2_total_kappa()
 
 
 def three_method_consistency(c_val):
@@ -854,14 +951,20 @@ def three_method_consistency(c_val):
     kB = kappa_method_B_kazama_suzuki(c_v)
     kC = kappa_method_C_spectral_flow(c_v)
 
+    A_equals_B = _optional_equal(kA, kB)
+    A_equals_C = _optional_equal(kA, kC)
+    kappa_defined = kA is not None
+
     return {
         'c': c_v,
         'method_A': kA,
         'method_B': kB,
         'method_C': kC,
-        'A_equals_B': simplify(kA - kB) == 0,
-        'A_equals_C': simplify(kA - kC) == 0,
-        'all_agree': simplify(kA - kB) == 0 and simplify(kA - kC) == 0,
+        'kappa_defined': kappa_defined,
+        'pole_agreement': not kappa_defined and A_equals_B and A_equals_C,
+        'A_equals_B': A_equals_B,
+        'A_equals_C': A_equals_C,
+        'all_agree': kappa_defined and A_equals_B and A_equals_C,
     }
 
 
@@ -883,26 +986,25 @@ def S4_spectral_flow_constraint(c_val=None):
     The spectral flow constraint on S_4 is VACUOUS (S_4 is a structure
     constant, and automorphisms preserve structure constants).
 
-    However, there IS a non-trivial constraint from combining spectral
-    flow with Koszul duality (c -> 9/c):
+    However, there IS a non-trivial comparison from combining spectral
+    flow with Koszul duality (c -> 6-c):
 
-    S_4(c) vs S_4(9/c) on the T-line:
+    S_4(c) vs S_4(6-c) on the T-line:
       S_4(c) = 10 / (c(5c+22))
-      S_4(9/c) = 10 / ((9/c)(5*9/c + 22)) = 10c / (9(45/c + 22))
-               = 10c^2 / (9(45 + 22c))
+      S_4(6-c) = 10 / ((6-c)(5(6-c)+22))
 
     These are NOT equal in general (S_4 is not Koszul-self-dual on the T-line).
 
     At c = 3: S_4(3) = 10/(3*37) = 10/111
-    At c = 9/3 = 3: S_4(3) = 10/111 (self-dual!)
+    At c' = 6-3 = 3: S_4(3) = 10/111 (self-dual!)
 
     At c = 1: S_4(1) = 10/27
-    At c = 9: S_4(9) = 10/(9*67) = 10/603
+    At c' = 5: S_4(5) = 10/(5*47) = 2/47
     """
     if c_val is not None:
         c_v = Rational(c_val)
         s4 = Rational(10) / (c_v * (5 * c_v + 22))
-        c_dual = Rational(9) / c_v
+        c_dual = n2_koszul_dual_central_charge(c_v)
         s4_dual = Rational(10) / (c_dual * (5 * c_dual + 22))
         return {
             'c': c_v,
@@ -911,11 +1013,15 @@ def S4_spectral_flow_constraint(c_val=None):
             'S4_dual': simplify(s4_dual),
             'S4_equals_S4_dual': simplify(s4 - s4_dual) == 0,
             'spectral_flow_invariant': True,  # trivially
+            'koszul_duality': 'c -> 6-c',
         }
+    c_dual = n2_koszul_dual_central_charge()
     return {
         'S4': Rational(10) / (c * (5 * c + 22)),
+        'S4_dual': simplify(Rational(10) / (c_dual * (5 * c_dual + 22))),
         'spectral_flow_invariant': True,
         'koszul_invariant': False,
+        'koszul_duality': 'c -> 6-c',
     }
 
 
@@ -1154,12 +1260,14 @@ def genus1_spectral_flow_check(c_val):
     Since kappa is spectral-flow-invariant, so is F_1.
     """
     c_v = Rational(c_val)
-    F1 = 7 * c_v / 144
+    kap = n2_total_kappa(c_v)
+    F1 = None if kap is None else simplify(kap / 24)
 
     return {
         'c': c_v,
         'F_1': F1,
-        'F_1_float': float(F1),
+        'F_1_defined': F1 is not None,
+        'F_1_float': None if F1 is None else float(F1),
         'sf_invariant': True,
     }
 
@@ -1179,7 +1287,7 @@ def n2_minimal_model_landscape(K_max=10):
     landscape = []
     for K in range(3, K_max + 1):
         c_v = n2_chiral_ring_central_charge(K)
-        kap = 7 * c_v / 6
+        kap = n2_total_kappa(c_v)
         F1 = kap / 24
 
         # Shadow obstruction tower on T-line
@@ -1214,13 +1322,15 @@ def n2_minimal_model_landscape(K_max=10):
 def spectral_flow_orbit_at_c3():
     """Spectral flow orbit at c = 3 (free field limit).
 
-    c = 3: kappa = 7*3/6 = 7/2.
+    c = 3: the coset kappa chart (6-c)/(2(3-c)) has a pole.
+    The channel curvature sum is 7*3/6 = 7/2, but this is not the
+    modular-Koszul kappa.
     T-line: kappa_T = 3/2, alpha = 2, S4 = 10/(3*37) = 10/111.
     J-line: kappa_J = 1.
     G-line: kappa_G = 1.
 
-    Koszul dual: c' = 9/3 = 3 (SELF-DUAL at c = 3!).
-    So the N=2 algebra at c=3 is Koszul self-dual.
+    Koszul dual: c' = 6-3 = 3. This is the self-dual free-field
+    limit, not an attained finite-level kappa value.
     """
     c_v = Rational(3)
     return spectral_flow_orbit_explicit(c_v)
@@ -1229,12 +1339,13 @@ def spectral_flow_orbit_at_c3():
 def spectral_flow_orbit_at_c6():
     """Spectral flow orbit at c = 6.
 
-    c = 6: kappa = 7*6/6 = 7.
+    c = 6: kappa = (6-6)/(2(3-6)) = 0.
+    The channel curvature sum is 7*6/6 = 7.
     T-line: kappa_T = 3, alpha = 2, S4 = 10/(6*52) = 10/312 = 5/156.
     J-line: kappa_J = 2.
     G-line: kappa_G = 2.
 
-    Koszul dual: c' = 9/6 = 3/2.
+    Koszul dual: c' = 6-6 = 0.
     """
     c_v = Rational(6)
     return spectral_flow_orbit_explicit(c_v)
@@ -1243,12 +1354,13 @@ def spectral_flow_orbit_at_c6():
 def spectral_flow_orbit_at_c9():
     """Spectral flow orbit at c = 9.
 
-    c = 9: kappa = 7*9/6 = 21/2.
+    c = 9: kappa = (6-9)/(2(3-9)) = 1/4.
+    The channel curvature sum is 7*9/6 = 21/2.
     T-line: kappa_T = 9/2, alpha = 2, S4 = 10/(9*67) = 10/603.
     J-line: kappa_J = 3.
     G-line: kappa_G = 3.
 
-    Koszul dual: c' = 9/9 = 1.
+    Koszul dual: c' = 6-9 = -3.
     """
     c_v = Rational(9)
     return spectral_flow_orbit_explicit(c_v)

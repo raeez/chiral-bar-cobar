@@ -195,7 +195,7 @@ def e1_r_matrix(family: str, **params) -> Any:
 
     if family == 'heisenberg':
         lev = params.get('k', params.get('level', k))
-        # r(z) = k/z  (scalar, 1x1)
+        # r(z) = k*Omega_H/z (rank-one coeff k/z)  (rank-one abelian, 1x1)
         return lev / z
 
     elif family == 'affine_sl2':

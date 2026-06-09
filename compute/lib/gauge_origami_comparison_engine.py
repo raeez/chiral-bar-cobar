@@ -100,11 +100,11 @@ COHA BRIDGE (Rapcak-Soibelman-Yang-Zhao, arXiv:1810.10402):
     The CoHA of a quiver Q with potential W is an algebra:
         CoHA(Q, W) = bigoplus_n H*(M_n(Q), phi_W)
     with multiplication from extension of representations.
-    The KEY STRUCTURAL THEOREM (Section 5 of RSYZ):
-        CoHA(Q, W) = affine Yangian Y_hbar(hat{g}_Q)
-    For the Jordan quiver: CoHA = Y(gl_1) = affine Yangian.
-    For A_{N-1} quiver: CoHA = Y(sl_N).
-    This Yangian IS our r-matrix shadow r(z) = Res^{coll}_{0,2}(Theta_A).
+    The KEY STRUCTURAL THEOREM (Section 5 of RSYZ) is positive-half first:
+        CoHA(Q, W) = Y^+_hbar(hat{g}_Q)
+    For the Jordan quiver: CoHA = Y^+(gl_1), the positive half of the
+    affine Yangian. For A_{N-1} quivers: CoHA = Y^+(sl_N). The full
+    Yangian/r-matrix target requires the Drinfeld double and completion.
 
 CONVENTIONS
 ===========

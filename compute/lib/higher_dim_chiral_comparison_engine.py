@@ -723,33 +723,33 @@ def e2_braiding_vs_e1_bar() -> Dict[str, Any]:
     (b) The R-matrix / braiding (additional E_2 data)
     (c) YBE (E_2 associativity)
 
-    But our bar complex ALSO captures (b) and (c):
-    - r(z) = Res^{coll}_{0,2}(Theta_A) IS the R-matrix (at tree level)
-    - The MC equation for Theta_A implies YBE for r(z)
+    The ordered bar records the classical shadow of (b) and (c):
+    - r(z) = Res^{coll}_{0,2}(Theta_A) is the tree-level residue.
+    - The MC equation for Theta_A implies the classical YBE for r(z).
 
-    So: the E_1 bar complex, via the shadow obstruction tower, RECOVERS
-    the E_2 braiding data.  This is not a coincidence: the chiral algebra
-    on a curve X encodes the FULL E_2 structure via the Swiss-cheese
-    construction (our Vol II).
-
-    Precisely: the Swiss-cheese operad SC^{ch,top} realizes E_2 inside
-    the chiral setting.  The bar complex in the C-direction is the
-    factorization coalgebra; its coproduct in the R-direction gives the
-    associative (topological) structure.  Together: E_2.
+    It does not recover the full E_2 braiding.  The E_2 structure is
+    produced after passing to the derived chiral center, via the
+    Deligne--Tamarkin/chiral Deligne transfer (equivalently the
+    Drinfeld-center route for representation categories).  The
+    SC^{ch,top} product operation spaces are the comparison operad;
+    the ordered bar is the E_1 coalgebraic input, not the E_2 output.
     """
     return {
         'e2_contains_e1': True,
-        'e1_bar_recovers_e2': True,  # Via Swiss-cheese
+        'e1_bar_recovers_e2': False,
+        'bar_records_classical_shadow': True,
         'mechanism': (
-            'Bar coproduct = R-direction factorization. '
-            'Bar differential = C-direction factorization. '
-            'Together: Swiss-cheese = E_2.'
+            'Ordered bar coproduct = R-direction E_1 input; '
+            'bar differential = C-direction chiral input; '
+            'Deligne--Tamarkin/chiral Deligne transfer on the derived center '
+            'produces the E_2 structure.'
         ),
+        'full_e2_location': 'derived chiral center Z^der_ch(A), or Drinfeld center of Rep^{E_1}(A)',
         'r_matrix_from_bar': 'r(z) = Res^{coll}_{0,2}(Theta_A)',
         'ybe_from_mc': 'MC equation => r(z) satisfies classical YBE',
         'quantum_ybe_from_bar': (
-            'Quantum R-matrix from bar perturbative expansion '
-            'satisfies quantum YBE (proved for type A).'
+            'Quantum R-matrix requires the center/Deligne transfer package; '
+            'the ordered bar alone supplies only the perturbative residue input.'
         ),
         'reference': 'Vol II Swiss-cheese chapter; costello_4d_cs_comparison_engine.py',
     }
@@ -1110,11 +1110,11 @@ def structure_comparison_summary() -> Dict[str, Any]:
             'detail': (
                 'Our algebras are E_1 (associative/chiral on curves). Costello 4d CS gives '
                 'E_2 = E_1 x E_1 (Dunn) where one E_1 is chiral (C-direction) and one is '
-                'topological (Sigma-direction). The E_2 braiding IS the R-matrix, which our '
-                'bar complex also captures via Res^{coll}_{0,2}(Theta_A). The Swiss-cheese '
-                'construction (Vol II) is the precise mechanism: SC^{ch,top} realizes the '
-                'E_2 structure inside the chiral framework. So: E_2 braiding is ALREADY '
-                'encoded in our E_1 bar complex via the Swiss-cheese decomposition.'
+                'topological (Sigma-direction). The E_2 braiding is the R-matrix; the ordered '
+                'bar records its classical residue Res^{coll}_{0,2}(Theta_A), but the full '
+                'E_2 structure appears only after the Deligne--Tamarkin/chiral Deligne '
+                'transfer to the derived center, or through the Drinfeld center of '
+                'Rep^{E_1}(A).'
             ),
         },
     }

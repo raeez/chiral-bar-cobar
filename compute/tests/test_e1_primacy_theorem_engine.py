@@ -340,7 +340,7 @@ class TestMCProjection:
         """Test 22: av(Theta^{E_1}) = Theta_A (eq:e1-to-einfty-mc).
 
         Path D (consistency check): for Heisenberg at arity 2,
-        Theta^{E_1}_{0,2} = r(z) = k/z and av(k/z) = k/z = kappa/z.
+        Theta^{E_1}_{0,2} = r(z) = k*Omega_H/z (rank-one coeff k/z) and av(k/z) = k/z = kappa/z.
         Since kappa(H_k) = k, this confirms av(Theta^{E_1}) = Theta.
         """
         for k in [1, 2, 5]:
@@ -425,7 +425,7 @@ class TestInformationContent:
     def test_27_kappa_recovery_heisenberg(self):
         """Test 27: kappa(H_k) = k recovered from av(r(z)).
 
-        Path A (direct): r(z) = k/z, av is trivial, kappa = k.
+        Path A (direct): r(z) = k*Omega_H/z (rank-one coeff k/z), av is trivial, kappa = k.
         Path D (from CLAUDE.md): kappa(H_k) = k.
         """
         for k in [1, 2, 3, 5, 10]:

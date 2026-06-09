@@ -77,7 +77,7 @@ from theorem_three_way_r_matrix_engine import (
 # ============================================================
 
 class TestHeisenbergRMatrix:
-    """Four-perspective cross-check for Heisenberg r(z) = k/z."""
+    """Four-perspective cross-check for Heisenberg r(z) = k*Omega_H/z (rank-one coeff k/z)."""
 
     def test_heisenberg_bar_k1(self):
         """Bar collision residue: r(z) = 1/z at level k=1."""

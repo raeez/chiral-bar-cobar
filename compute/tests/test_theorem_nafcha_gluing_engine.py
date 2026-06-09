@@ -531,7 +531,7 @@ class TestDSquaredZeroComparison:
         assert 'proof_3' in data
 
     def test_strength_ordering(self):
-        """Chain-level (Mok) > derived-category (Nafcha) > convolution (GK)."""
+        """Conditional chain-level log-FM route is still distinguished."""
         data = d_squared_zero_comparison()
         assert 'Chain-level' in data['strength_ordering']
 

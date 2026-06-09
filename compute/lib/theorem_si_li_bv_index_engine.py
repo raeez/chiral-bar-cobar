@@ -335,7 +335,8 @@ def qme_hierarchy_comparison() -> List[QMEComparison]:
                 "The elliptic trace map (Thm 4.10) is a quasi-isomorphism for "
                 "betagamma-bc systems on elliptic curves.  Both give F_1 = kappa/24. "
                 "Si Li's BV trace gives the Witten genus; our Theorem D gives "
-                "obs_g = kappa * lambda_g at all genera.  At genus 1 these match: "
+                "obs_g^sc = kappa * lambda_g at all genera on the scalar lane. "
+                "At genus 1 these match: "
                 "Witten genus leading term = kappa/24 = kappa * lambda_1^FP."
             ),
         ),
@@ -572,7 +573,7 @@ def a_hat_genus_coefficient(g: int) -> Rational:
 
     This is the connection: the A-hat genus generates Faber-Pandharipande
     numbers, and Si Li's algebraic index theorem produces A-hat via BV
-    quantization.  Our Theorem D says obs_g = kappa * lambda_g^FP, and
+    quantization.  Our Theorem D says obs_g^sc = kappa * lambda_g^FP, and
     the A-hat generating function gives exactly these coefficients.
     """
     return faber_pandharipande(g)

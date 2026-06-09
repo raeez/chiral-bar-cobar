@@ -1,7 +1,7 @@
 """Quintic shadow obstruction o^(5)_Vir for the Virasoro algebra.
 
 The quintic obstruction class is the arity-5 component of the shadow
-Postnikov tower master equation. For the Virasoro algebra (archetype M,
+obstruction tower master equation. For the Virasoro algebra (archetype M,
 shadow depth r_max = infinity), the quintic is the FIRST obstruction
 that proves the tower is infinite (thm:w-virasoro-quintic-forced).
 

@@ -558,9 +558,12 @@ def virasoro_genus1_e2_dims(c_val, max_degree: int = 4) -> Dict[int, int]:
     This means: for Virasoro, the genus-1 spectral sequence carries
     NO information beyond kappa = c/2.
 
-    The c-independence of bar cohomology dims is a manifestation of
-    Koszul duality: the bar cohomology computes the Koszul dual A^!,
-    and for Virasoro, A^! = Vir_{26-c} has the same dimensions as Vir_c.
+    The c-independence of bar cohomology dims is a manifestation of the
+    five-object firewall: the bar cohomology is the Koszul-dual
+    coalgebra A^i = H^*(B(A)).  The Verdier/continuous-linear dual
+    branch gives A^! only after the separate duality functor and its
+    convergence hypotheses; for Virasoro that branch has the same
+    weight dimensions as Vir_c after the c -> 26-c involution.
     """
     return _virasoro_genus0_e2_dims(max_degree)
 

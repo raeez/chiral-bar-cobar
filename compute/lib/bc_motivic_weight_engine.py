@@ -443,7 +443,7 @@ def hodge_realization_Mbar_g(g):
       g=2: H^*(M-bar_2) has Hodge numbers from Mumford's calculation
 
     The key point: lambda_g = c_g(Hodge bundle) lives in H^{2g} with
-    Hodge type (g,g).  So obs_g = kappa * lambda_g has Hodge weight 2g.
+    Hodge type (g,g).  So obs_g^sc = kappa * lambda_g has Hodge weight 2g.
 
     Returns: dict with lambda class weight information.
     """
@@ -455,7 +455,7 @@ def hodge_realization_Mbar_g(g):
         'Faber_Pandharipande_weight': 0,  # rational number, weight 0
         'obs_g_hodge_weight': 2 * g,
         'obs_g_interpretation': (
-            f"obs_g = kappa * lambda_g lives in H^{{{2*g}}}(M-bar_{g}), "
+            f"obs_g^sc = kappa * lambda_g lives in H^{{{2*g}}}(M-bar_{g}), "
             f"Hodge type ({g},{g}), weight {2*g}."
         ),
     }

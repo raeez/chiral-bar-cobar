@@ -100,7 +100,7 @@ Stage 1 carries the entire mathematical weight. Stages 2-4 add progressively les
 3. **Premature retrospective coherence**: rewriting history as if platonic order were logical order
 
 ### The correct Beilinsonian verdict:
-Keep: bar≠bulk (proved), derived center = universal bulk (proved at Stage 1), Morita invariance (proved). Dismiss: "every object is a projection," "every theorem is a consequence," universal scope of N4.
+Keep: bar≠closed-sector vertex (proved), derived center = algebraic closed-sector vertex (proved at Stage 1), physical bulk comparison scoped by HT data, Morita invariance (proved). Dismiss: "every object is a projection," "every theorem is a consequence," universal scope of N4.
 
 ## SOUND: Kontsevich — Operadic foundations are solid
 

@@ -34,7 +34,7 @@ class TestBridge1_Laplace:
     """Verify r(z) = Laplace transform of λ-bracket for all families."""
 
     def test_heisenberg_laplace(self):
-        """Heisenberg: {a_λ a} = kλ → r(z) = k/z²."""
+        """Heisenberg: {a_λ a} = kλ gives pre-dlog coefficient k/z²."""
         results = verify_bridge_1(heisenberg_family())
         for key, data in results.items():
             assert data["match"], f"{key}: diff = {data['diff']}"

@@ -1,9 +1,13 @@
 r"""Tests for the universal chiral genus extension engine.
 
 Verifies the three-tier architecture (thm:three-tier-architecture):
-  Tier 0: MC existence is unconditional for ALL chiral algebras.
+  Tier 0: fixed smooth-curve convolution MC existence is unconditional
+          for ALL chiral algebras.
   Tier 1: Koszul algebras have computable shadows and full engine.
   Tier 2: Finitely generated Koszul algebras have analytic convergence.
+
+The ambient relative log-FM six-component differential is a separate
+conditional LF package, not a Tier-0 consequence.
 
 Multi-path verification on kappa values cross-checks against
 known formulas from landscape_census.tex (AP1, AP10, AP39).
@@ -29,6 +33,8 @@ from compute.lib.theorem_universal_chiral_genus_extension_engine import (
     lattice_voa,
     non_koszul_hypothetical,
     non_lie_conformal_example,
+    theorem_b_inversion_surface,
+    virasoro_raw_direct_sum_obstruction,
     verify_tier_chain,
     virasoro,
     w_algebra,
@@ -133,11 +139,11 @@ class TestFamilyConstructors:
 
 
 # =================================================================
-# 2. Tier 0: MC existence is unconditional for ALL chiral algebras
+# 2. Tier 0: fixed-carrier MC existence for ALL chiral algebras
 # =================================================================
 
 class TestTier0Unconditional:
-    """D^2 = 0 holds for ALL chiral algebras, including non-Koszul."""
+    """Fixed smooth-curve convolution D^2=0 holds, including non-Koszul."""
 
     @pytest.mark.parametrize("factory", [
         lambda: heisenberg(1),
@@ -172,6 +178,8 @@ class TestTier0Unconditional:
         assert analysis["genus_0_gives_mc"] is True
         assert analysis["tier_0_unconditional"]["mc_element_exists"] is True
         assert analysis["tier_0_unconditional"]["shadow_tower_converges"] is True
+        assert analysis["tier_0_unconditional"]["carrier"] == "fixed smooth-curve convolution"
+        assert analysis["tier_0_unconditional"]["ambient_log_fm_D2"] == "conditional on LF"
 
 
 # =================================================================
@@ -331,11 +339,16 @@ class TestGenusZeroDetermines:
         assert "tier_1" in analysis
         assert "tier_2" in analysis
         assert analysis["genus_0_is_sufficient"] is True
+        assert analysis["tier_1"]["bar_cobar_inversion"]["raw_direct_sum_chain_qi"] is True
 
     def test_tier1_missing_tier2(self):
         analysis = genus_zero_determines(w_infinity())
         assert "tier_1" in analysis
         assert "tier_2" not in analysis
+        surface = analysis["tier_1"]["bar_cobar_inversion"]
+        assert surface["applies"] is True
+        assert surface["raw_direct_sum_chain_qi"] is False
+        assert "completed" in surface["ambient"] or "coderived" in surface["ambient"]
 
     def test_tier0_minimal(self):
         analysis = genus_zero_determines(non_koszul_hypothetical())
@@ -372,9 +385,46 @@ class TestFourRegimeHierarchy:
             assert data["mc_exists"] is True, f"{regime} must have MC"
 
     def test_all_regimes_have_inversion(self):
-        """Bar-cobar inversion works in every regime (MC4 proved)."""
+        """Bar-cobar inversion is ambient-qualified in every regime."""
         for regime, data in four_regime_hierarchy().items():
-            assert data["bar_cobar_inversion"] is True
+            assert data["bar_cobar_inversion"]["applies"] is True
+            assert "ambient" in data["bar_cobar_inversion"]
+
+    def test_completed_regimes_do_not_claim_raw_direct_sum(self):
+        """Class M / completed regimes must not claim raw direct-sum inversion."""
+        h = four_regime_hierarchy()
+        assert h["filtered_complete"]["bar_cobar_inversion"]["raw_direct_sum_chain_qi"] is False
+        assert h["programmatic"]["bar_cobar_inversion"]["raw_direct_sum_chain_qi"] is False
+
+    def test_virasoro_theorem_b_surface_is_completed(self):
+        surface = theorem_b_inversion_surface(virasoro(1))
+        assert surface["applies"] is True
+        assert surface["raw_direct_sum_chain_qi"] is False
+        assert "completed" in surface["ambient"] or "coderived" in surface["ambient"]
+        witness = surface["raw_failure_witness"]
+        assert witness["symbol"] == "xi_N"
+        assert witness["raw_direct_sum_limit_exists"] is False
+        assert witness["completed_product_limit_exists"] is True
+        assert witness["support_growth"] == "strictly increasing with N"
+
+    def test_heisenberg_theorem_b_surface_is_raw(self):
+        surface = theorem_b_inversion_surface(heisenberg(1))
+        assert surface["applies"] is True
+        assert surface["raw_direct_sum_chain_qi"] is True
+        assert "raw" in surface["ambient"]
+        assert "raw_failure_witness" not in surface
+
+    def test_virasoro_xi_n_has_no_raw_direct_sum_limit(self):
+        witness = virasoro_raw_direct_sum_obstruction(5)
+        assert witness["support_size"] == 11
+        assert witness["previous_support_size"] == 9
+        assert witness["new_terms_from_previous"] == 2
+        assert witness["each_stage_in_raw_direct_sum"] is True
+        assert witness["raw_direct_sum_limit_exists"] is False
+        assert witness["completed_product_limit_exists"] is True
+        assert len(witness["finite_stage_terms"]) == witness["support_size"]
+        assert ("s^-1 L_5", "s^-1 L_-5") in witness["finite_stage_terms"]
+        assert ("s^-1 L_-5", "s^-1 L_5") in witness["finite_stage_terms"]
 
     def test_heisenberg_is_quadratic(self):
         A = heisenberg(1)
@@ -481,7 +531,8 @@ class TestCompareGenusExtensionMethods:
     def test_bar_intrinsic_is_most_general(self):
         comp = compare_genus_extension_methods()
         assert comp["bar_intrinsic"]["scope"] == "all chiral algebras"
-        assert comp["bar_intrinsic"]["hypothesis"] == "none (D^2 = 0 unconditional)"
+        assert "fixed smooth-curve convolution" in comp["bar_intrinsic"]["hypothesis"]
+        assert "LF required" in comp["bar_intrinsic"]["hypothesis"]
 
     def test_factorization_envelope_restricted(self):
         comp = compare_genus_extension_methods()
@@ -584,6 +635,8 @@ class TestVerificationPaths:
         result = classify_genus_extension(virasoro(1))
         vp = result.verification_paths
         assert "P1_d_squared_zero" in vp
+        assert "P1_carrier" in vp
+        assert "ambient_log_FM_D2_status" in vp
         assert "P2_pbw" in vp
         assert "P3_koszul" in vp
         assert "P4_analytic" in vp
@@ -594,6 +647,8 @@ class TestVerificationPaths:
             A = factory() if callable(factory) else factory
             vp = classify_genus_extension(A).verification_paths
             assert vp["P1_d_squared_zero"] is True
+            assert vp["P1_carrier"] == "fixed smooth-curve convolution"
+            assert vp["ambient_log_FM_D2_status"] == "conditional"
 
 
 # =================================================================

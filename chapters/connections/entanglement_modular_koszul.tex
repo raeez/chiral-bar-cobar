@@ -39,6 +39,21 @@ This is the entanglement shadow of the conductor identity
 $c+c^!=26$, equivalently
 $\kappa(\mathrm{Vir}_c)+\kappa(\mathrm{Vir}_{26-c})=13$.
 
+\paragraph{Modular terminology.}
+\index{modular terminology!entanglement}
+In the title and throughout this chapter, ``modular'' in
+\emph{modular Koszul duality} means the Hodge/moduli and
+modular-characteristic package: the $\lambda_g^{\mathrm{FP}}$ lane,
+the $\mathrm{SL}_2(\mathbb Z)$ and mapping-class constraints in the
+scalar boundary theory, and the invariant~$\kappa(\cA)$.  It does not
+assert a Tomita--Takesaki modular operator.  Tomita--Takesaki modular
+flow and Tomita conjugation appear only in the separate conjectural
+analytic comparison of
+Conjectures~\ref{conj:thqg-tomita-from-verdier}
+and~\ref{conj:thqg-modular-flow}, where a unitary sewing envelope,
+a faithful normal state, anti-linearity, and a physical Hilbert-space
+inner product are additional hypotheses.
+
 The higher projection is algebraic.  The shadow tower gives
 classes~$\Sh_r(\Theta_\cA)$ and bounds their growth; a chosen
 replica functional can turn those classes into numbers
@@ -57,8 +72,8 @@ log curve $(X,D,\tau)$.  The bar coalgebra
 $B(A_b)=T^c(s^{-1}\bar A_b)$ at level~$2$ is the twisting object;
 inversion is the level-$1$ reconstruction
 $\Omega B(A_b)\xrightarrow{\sim}A_b$ (Theorem~B on the Koszul
-locus), not the bulk.  The bulk at level~$3$ is the derived chiral
-centre
+locus), not the closed-sector object.  The level-$3$ closed-sector
+object is the derived chiral centre
 $Z^{\mathrm{der}}_{\mathrm{ch}}(A_b)
 \simeq C^\bullet_{\mathrm{ch}}(A_b,A_b)$,
 constructed from chiral Hochschild cochains; the Hochschild concentration
@@ -182,9 +197,16 @@ Setup~\textup{\ref{setup:ent-framework}} (EH1)--(EH3); positive
 central charge $c(\cA)>0$ for the entropy reading, formal anomaly
 otherwise.
 
-Under (EH1)--(EH3), the scalar-level R\'enyi and von~Neumann entropies
-of a single interval are:
+Under (EH1)--(EH3), the scalar-level replica partition function
+(non-chiral convention, left plus right movers), R\'enyi entropy, and
+von~Neumann entropy of a single interval are:
 \begin{align}
+\log Z_n^{\mathrm{sc}}(\Sigma)
+&\;=\;
+-\frac{c(\cA)}{6}\Bigl(n - \frac{1}{n}\Bigr)
+\log\frac{L}{\varepsilon},
+\label{eq:ent-replica-partition}
+\\[4pt]
 S_n^{\mathrm{sc}}(\Sigma)
 &\;=\;
 \frac{c(\cA)}{6}\Bigl(1 + \frac{1}{n}\Bigr)
@@ -212,14 +234,7 @@ power-law form.  Hypothesis (EH3) is the input that the entangling
 cut adds no anomalous Schwarzian contribution beyond (EH2), so that
 the stress-tensor Ward identity on the cover is the Calabrese--Cardy
 one.  Under these three inputs, the replica partition function on
-the $n$-sheeted branched cover is (non-chiral convention, left$+$right
-movers):
-\begin{equation}\label{eq:ent-replica-partition}
-\log Z_n
-\;=\;
--\frac{c(\cA)}{6}\Bigl(n - \frac{1}{n}\Bigr)
-\log\frac{L}{\varepsilon},
-\end{equation}
+the $n$-sheeted branched cover is~\eqref{eq:ent-replica-partition},
 following from the two-point function
 $\langle \sigma_n(0)\,\bar\sigma_n(L) \rangle
 = (L/\varepsilon)^{-2(h_n + \bar{h}_n)}
@@ -263,7 +278,7 @@ paths agree on the coefficient $-c/6$.
 \index{A-hat genus@$\hat{A}$-genus!entanglement}
 The scalar free energy
 $F_g^{\mathrm{sc}}(\cA) = \kappa(\cA) \cdot \lambda_g^{\mathrm{FP}}$
-on the uniform-weight lane
+on the uniform-weight scalar lane
 (Corollary~\ref{cor:free-energy-ahat-genus})
 resums as $F(\cA;\hbar) = (\kappa/\hbar^2)[\hat{A}(i\hbar)-1]$.
 The replica partition function~\eqref{eq:ent-replica-partition}
@@ -289,7 +304,7 @@ coefficient is the Virasoro central charge:
  {\log(L/\varepsilon)}
  =\frac{c(\cA)}{3}.
 \]
-The genus-shadow coefficient on the uniform-weight lane is instead
+The genus-shadow coefficient on the uniform-weight scalar lane is instead
 \[
  F_1^{\mathrm{sc}}(\cA)
  =\kappa(\cA)\lambda_1^{\mathrm{FP}}
@@ -981,7 +996,7 @@ change this coefficient.
 \item \emph{Higher-genus corrections.}
 The shadow free energies
 $F_g^{\mathrm{sc}}(\mathrm{Vir}_c) = \kappa\cdot\lambda_g^{\mathrm{FP}}$
-on the uniform-weight lane
+on the uniform-weight scalar lane
 \textup{(}Corollary~\textup{\ref{cor:free-energy-ahat-genus}}\textup{)}
 are scalar closed-sector inputs to a saddle expansion.  After a
 gravitational one-loop measure and a shadow-to-bulk dictionary have
@@ -1027,8 +1042,13 @@ For the stated BTZ saddle this is the one-loop gravitational
 contribution determined by the quadratic fluctuation structure.
 
 \emph{Part~(iii).}
-The genus-$g$ contribution to the free energy is
-$F_g = \kappa\cdot\lambda_g^{\mathrm{FP}}$ at the scalar level.
+The scalar genus-$g$ contribution to the free energy is
+\[
+F_g^{\mathrm{sc}}
+= \kappa\cdot\lambda_g^{\mathrm{FP}} .
+\]
+The full coefficient decomposes as
+$F_g=F_g^{\mathrm{sc}}+\delta F_g^{\mathrm{cross}}$.
 Given a physical saddle functional whose loop expansion uses these
 scalar closed-sector inputs, its saddle-point expansion yields a
 formal entropy series of the shape
@@ -1495,12 +1515,15 @@ degenerates to the JT gravity genus expansion:
  after integration against the JT measure.
 
 \item \emph{Shadow CohFT reconstruction.}
- The shadow CohFT extracts Faber--Pandharipande
- intersection numbers $\lambda_g^{\mathrm{FP}}$ that
- govern the scalar contribution to the JT genus expansion.
- At genus~$g$, the shadow free energy
-$F_g = \kappa\cdot\lambda_g^{\mathrm{FP}}$
- on the uniform-weight lane with
+The shadow CohFT extracts Faber--Pandharipande
+intersection numbers $\lambda_g^{\mathrm{FP}}$ that
+govern the scalar contribution to the JT genus expansion.
+At genus~$g$, the scalar shadow free energy
+\[
+F_g^{\mathrm{sc}}
+=\kappa\cdot\lambda_g^{\mathrm{FP}}
+\]
+on the uniform-weight scalar lane, with
  $\lambda_g^{\mathrm{FP}}
  = (2^{2g-1}-1)|B_{2g}|/(2^{2g-1}(2g)!)$
  matches the leading-order JT amplitude

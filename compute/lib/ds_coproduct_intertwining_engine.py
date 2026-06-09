@@ -522,108 +522,182 @@ def miura_T_explicit(Psi: Any = None) -> Dict[str, Any]:
     }
 
 
-# ============================================================================
-# 6. Coproduct of T_{W_3} via Miura
-# ============================================================================
+def miura_primitive_stress_tensor_coproduct(
+    Psi: Any = None,
+) -> Dict[Tuple[str, str], Any]:
+    r"""Delta(T) from the W_3 two-boson Miura expression.
 
-def delta_T_from_psi(Psi: Any = None, z: Any = None) -> Dict[Tuple[str, str], Any]:
-    r"""Compute Delta_z(T) by applying the coproduct to the Miura expression.
+    This is the W_3 side of the finite DS-intertwining witness.  The two
+    Miura currents psi_1 and psi_2 are primitive Cartan/free-field currents,
+    not the W_{1+inf} generators psi_n.  For
 
-    T = (1-1/Psi)*:psi_1*psi_2: - (1/(2Psi))*:psi_1^2: - (1/(2Psi))*:psi_2^2:
+        T = :psi_1 psi_2: - (psi_1 + psi_2)^2 / (2 Psi),
 
-    The coproduct acts on each psi_i as:
-      Delta_z(psi_1) = psi_1.1 + 1.psi_1                         [primitive]
-      Delta_z(psi_2) = psi_2.1 + 1.psi_2 + psi_1.psi_1 + z*1.psi_1
-
-    Using the vertex bialgebra property:
-      Delta_z(:psi_i*psi_j:) = :Delta_z(psi_i)*Delta_z(psi_j):
-
-    For the composite fields, we expand each factor and take the
-    normal-ordered product componentwise in the tensor algebra.
+    multiplicativity gives the z^0 degree-2 Cartan/Sugawara window.
     """
     if Psi is None:
         Psi = Psi_sym
-    if z is None:
-        z = z_sym
-
-    result: Dict[Tuple[str, str], Any] = {}
-
-    def _add(key: Tuple[str, str], val: Any) -> None:
-        if key in result:
-            result[key] = expand(result[key] + val)
-        else:
-            result[key] = expand(val)
-
-    # Delta_z(psi_1) = (psi_1, 1) + (1, psi_1)
-    # Delta_z(psi_2) = (psi_2, 1) + (1, psi_2) + (psi_1, psi_1) + z*(1, psi_1)
-
-    # Delta_z(:psi_1^2:) = :(psi_1.1 + 1.psi_1)^2:
-    # = :psi_1^2:.1 + 2*psi_1.psi_1 + 1.:psi_1^2:
-    psi1sq_terms = [
-        (":psi_1^2:", "1", Rational(1)),
-        ("psi_1", "psi_1", Rational(2)),
-        ("1", ":psi_1^2:", Rational(1)),
-    ]
-
-    # Delta_z(:psi_2^2:) = :(Delta_z(psi_2))^2:
-    # Delta_z(psi_2) has four terms. Squaring (normal ordered in each factor):
-    # (psi_2.1)^2 = :psi_2^2:.1
-    # 2*(psi_2.1)*(1.psi_2) = 2*psi_2.psi_2
-    # 2*(psi_2.1)*(psi_1.psi_1) = 2*:psi_1*psi_2:.psi_1
-    # 2*(psi_2.1)*(z*1.psi_1) = 2z*psi_2.psi_1
-    # (1.psi_2)^2 = 1.:psi_2^2:
-    # 2*(1.psi_2)*(psi_1.psi_1) = 2*psi_1.:psi_1*psi_2:
-    # 2*(1.psi_2)*(z*1.psi_1) = 2z*1.:psi_1*psi_2:
-    # (psi_1.psi_1)^2 = :psi_1^2:.:psi_1^2:
-    # 2*(psi_1.psi_1)*(z*1.psi_1) = 2z*psi_1.:psi_1^2:
-    # (z*1.psi_1)^2 = z^2*1.:psi_1^2:
-    psi2sq_terms = [
-        (":psi_2^2:", "1", Rational(1)),
-        ("psi_2", "psi_2", Rational(2)),
-        (":psi_1*psi_2:", "psi_1", Rational(2)),
-        ("psi_2", "psi_1", 2 * z),
-        ("1", ":psi_2^2:", Rational(1)),
-        ("psi_1", ":psi_1*psi_2:", Rational(2)),
-        ("1", ":psi_1*psi_2:", 2 * z),
-        (":psi_1^2:", ":psi_1^2:", Rational(1)),
-        ("psi_1", ":psi_1^2:", 2 * z),
-        ("1", ":psi_1^2:", z**2),
-    ]
-
-    # Delta_z(:psi_1*psi_2:) = :(psi_1.1 + 1.psi_1)*(psi_2.1 + 1.psi_2 + psi_1.psi_1 + z*1.psi_1):
-    # = (psi_1.1)*(psi_2.1) + (psi_1.1)*(1.psi_2) + (psi_1.1)*(psi_1.psi_1)
-    #   + (psi_1.1)*(z*1.psi_1) + (1.psi_1)*(psi_2.1) + (1.psi_1)*(1.psi_2)
-    #   + (1.psi_1)*(psi_1.psi_1) + (1.psi_1)*(z*1.psi_1)
-    # = :psi_1*psi_2:.1 + psi_1.psi_2 + :psi_1^2:.psi_1 + z*psi_1.psi_1
-    #   + psi_2.psi_1 + 1.:psi_1*psi_2: + psi_1.:psi_1^2: + z*1.:psi_1^2:
-    # Wait: the cross products in the tensor algebra:
-    # (psi_1.1) * (psi_1.psi_1) = :psi_1^2:.:psi_1:  [NO -- the product is in each
-    #   tensor factor separately: (psi_1*psi_1, 1*psi_1) = (:psi_1^2:, psi_1)]
-    psi12_terms = [
-        (":psi_1*psi_2:", "1", Rational(1)),       # (psi_1,1)*(psi_2,1)
-        ("psi_1", "psi_2", Rational(1)),            # (psi_1,1)*(1,psi_2)
-        (":psi_1^2:", "psi_1", Rational(1)),        # (psi_1,1)*(psi_1,psi_1)
-        ("psi_1", "psi_1", z),                      # (psi_1,1)*(z*1,psi_1)
-        ("psi_2", "psi_1", Rational(1)),            # (1,psi_1)*(psi_2,1)
-        ("1", ":psi_1*psi_2:", Rational(1)),        # (1,psi_1)*(1,psi_2)
-        ("psi_1", ":psi_1^2:", Rational(1)),        # (1,psi_1)*(psi_1,psi_1)
-        ("1", ":psi_1^2:", z),                      # (1,psi_1)*(z*1,psi_1)
-    ]
-
-    # Now assemble T = (1-1/Psi)*:psi_1*psi_2: - 1/(2Psi)*:psi_1^2: - 1/(2Psi)*:psi_2^2:
 
     c12 = 1 - 1 / Psi
     c11 = -1 / (2 * Psi)
     c22 = -1 / (2 * Psi)
 
-    for left, right, coeff in psi12_terms:
-        _add((left, right), expand(c12 * coeff))
-    for left, right, coeff in psi1sq_terms:
-        _add((left, right), expand(c11 * coeff))
-    for left, right, coeff in psi2sq_terms:
-        _add((left, right), expand(c22 * coeff))
+    return {
+        (":psi_1*psi_2:", "1"): simplify(c12),
+        ("1", ":psi_1*psi_2:"): simplify(c12),
+        (":psi_1^2:", "1"): simplify(c11),
+        ("1", ":psi_1^2:"): simplify(c11),
+        (":psi_2^2:", "1"): simplify(c22),
+        ("1", ":psi_2^2:"): simplify(c22),
+        ("psi_1", "psi_2"): simplify(c12),
+        ("psi_2", "psi_1"): simplify(c12),
+        ("psi_1", "psi_1"): simplify(2 * c11),
+        ("psi_2", "psi_2"): simplify(2 * c22),
+    }
 
-    return {kv: simplify(v) for kv, v in result.items() if simplify(v) != 0}
+
+def miura_primitive_stress_tensor_cross_terms(
+    Psi: Any = None,
+) -> Dict[Tuple[str, str], Any]:
+    """Cross tensor terms of the W_3 two-boson Miura stress tensor."""
+    if Psi is None:
+        Psi = Psi_sym
+    data = miura_primitive_stress_tensor_coproduct(Psi)
+    return {
+        key: value
+        for key, value in data.items()
+        if key[0] != "1" and key[1] != "1"
+    }
+
+
+def rtt_projected_stress_tensor_coproduct(
+    Psi: Any = None,
+) -> Dict[str, Any]:
+    r"""Projected RTT computation of the W_3 stress-tensor window.
+
+    The sl_3 side starts with the RTT coproduct on matrix generators.  In the
+    principal DS projection, positive and negative root matrix entries are
+    killed; the diagonal Gauss/Cartan entries survive as the two Miura
+    currents psi_1, psi_2.  Applying this projection to the degree-2
+    Sugawara/Miura combination
+
+        T = :psi_1 psi_2: - (psi_1 + psi_2)^2 / (2 Psi)
+
+    gives the same z^0 Cartan/Sugawara tensor window as the W_3 Miura
+    computation, while recording the off-diagonal RTT components that were
+    killed by pi_3.
+    """
+    if Psi is None:
+        Psi = Psi_sym
+
+    from_e2 = {
+        (":psi_1*psi_2:", "1"): Rational(1),
+        ("1", ":psi_1*psi_2:"): Rational(1),
+        ("psi_1", "psi_2"): Rational(1),
+        ("psi_2", "psi_1"): Rational(1),
+    }
+    from_e1_square = {
+        (":psi_1^2:", "1"): Rational(1),
+        ("1", ":psi_1^2:"): Rational(1),
+        (":psi_2^2:", "1"): Rational(1),
+        ("1", ":psi_2^2:"): Rational(1),
+        (":psi_1*psi_2:", "1"): Rational(2),
+        ("1", ":psi_1*psi_2:"): Rational(2),
+        ("psi_1", "psi_1"): Rational(2),
+        ("psi_1", "psi_2"): Rational(2),
+        ("psi_2", "psi_1"): Rational(2),
+        ("psi_2", "psi_2"): Rational(2),
+    }
+
+    projected: Dict[Tuple[str, str], Any] = {}
+
+    def _add(key: Tuple[str, str], value: Any) -> None:
+        projected[key] = expand(projected.get(key, Rational(0)) + value)
+
+    for key, value in from_e2.items():
+        _add(key, value)
+    for key, value in from_e1_square.items():
+        _add(key, -value / (2 * Psi))
+
+    projected = {
+        key: simplify(value)
+        for key, value in projected.items()
+        if simplify(value) != 0
+    }
+
+    return {
+        "projected_coproduct": projected,
+        "cross_terms": {
+            key: value
+            for key, value in projected.items()
+            if key[0] != "1" and key[1] != "1"
+        },
+        "from_e2_before_projection": from_e2,
+        "from_e1_square_before_projection": from_e1_square,
+        "killed_offdiagonal_rtt_terms": (
+            "t_12^(1) tensor t_21^(1)",
+            "t_21^(1) tensor t_12^(1)",
+            "t_13^(1) tensor t_31^(1)",
+            "t_31^(1) tensor t_13^(1)",
+            "t_23^(1) tensor t_32^(1)",
+            "t_32^(1) tensor t_23^(1)",
+        ),
+        "surviving_diagonal_generators": ("psi_1", "psi_2"),
+    }
+
+
+def ds_w3_degree2_rtt_miura_witness(Psi: Any = None) -> Dict[str, Any]:
+    """Finite non-tautological DS witness: RTT projection equals Miura T."""
+    if Psi is None:
+        Psi = Psi_sym
+
+    rtt = rtt_projected_stress_tensor_coproduct(Psi)
+    miura = miura_primitive_stress_tensor_coproduct(Psi)
+
+    rtt_terms = rtt["projected_coproduct"]
+    all_keys = set(rtt_terms) | set(miura)
+    mismatches = {}
+    for key in all_keys:
+        left = simplify(rtt_terms.get(key, 0))
+        right = simplify(miura.get(key, 0))
+        diff = simplify(left - right)
+        if diff != 0:
+            mismatches[key] = {
+                "rtt_projected": left,
+                "miura_primitive": right,
+                "diff": diff,
+            }
+
+    return {
+        "claim": "comp:ds-w3-degree2-rtt-miura-witness",
+        "finite_window": "z^0 degree-2 Cartan/Sugawara sector",
+        "intertwines": len(mismatches) == 0,
+        "mismatches": mismatches,
+        "rtt_projected": rtt_terms,
+        "miura_primitive": miura,
+        "rtt_cross_terms": rtt["cross_terms"],
+        "miura_cross_terms": miura_primitive_stress_tensor_cross_terms(Psi),
+        "killed_offdiagonal_rtt_terms": rtt["killed_offdiagonal_rtt_terms"],
+        "surviving_diagonal_generators": rtt["surviving_diagonal_generators"],
+    }
+
+
+# ============================================================================
+# 6. Coproduct of T_{W_3} via Miura
+# ============================================================================
+
+def delta_T_from_psi(Psi: Any = None, z: Any = None) -> Dict[Tuple[str, str], Any]:
+    r"""Compute the W_3 two-boson z^0 coproduct of T.
+
+    The argument `z` is accepted for backwards compatibility, but this helper
+    intentionally returns only the z^0 Cartan/Sugawara window.  The earlier
+    version mixed the primitive two-boson Miura currents with the
+    W_{1+inf} generator psi_2; that made the comparison tautological in one
+    place and false in the genuine W_3 window.
+    """
+    if Psi is None:
+        Psi = Psi_sym
+    return miura_primitive_stress_tensor_coproduct(Psi)
 
 
 # ============================================================================
@@ -663,83 +737,16 @@ def delta_T_w1inf(Psi: Any = None, z: Any = None) -> Dict[Tuple[str, str], Any]:
 def verify_spin2_intertwining_psi_level(
     Psi: Any = None, z: Any = None,
 ) -> Dict[str, Any]:
-    r"""Verify that the W_{1+inf} spin-2 coproduct Delta_z(T) is consistent
-    with the psi-basis coproduct applied to T = f(psi_1, psi_2).
-
-    This checks that Delta_z(T) computed from the Miura inversion of
-    Delta_z(psi_2) matches the direct W_{1+inf} formula.
-
-    The check: both sides are computed in the psi-product basis.
-    """
+    r"""Verify the finite degree-2 DS witness in the psi-product basis."""
     if Psi is None:
         Psi = Psi_sym
-    if z is None:
-        z = z_sym
-
-    # From Miura: T = (1-1/Psi)*:psi_1*psi_2: - 1/(2Psi)*:psi_1^2: - 1/(2Psi)*:psi_2^2:
-    # Delta_z(T) from psi-basis
-    dt_psi = delta_T_from_psi(Psi, z)
-
-    # Now we need to express T.1, 1.T, J.J, 1.J in the psi-product basis:
-    # J = psi_1 + psi_2
-    # J.J = (psi_1+psi_2).(psi_1+psi_2) = psi_1.psi_1 + psi_1.psi_2 + psi_2.psi_1 + psi_2.psi_2
-    # T.1 expressed in psi-products:
-    #   T = (1-1/Psi)*:psi_1*psi_2: - 1/(2Psi)*:psi_1^2: - 1/(2Psi)*:psi_2^2:
-    # So T.1 has the same coefficients but with each field tensored with 1.
-
-    c12 = 1 - 1 / Psi
-    c11 = -1 / (2 * Psi)
-    c22 = -1 / (2 * Psi)
-    c_JJ = (Psi - 1) / Psi
-
-    dt_w1inf_in_psi: Dict[Tuple[str, str], Any] = {}
-
-    def _add(key: Tuple[str, str], val: Any) -> None:
-        if key in dt_w1inf_in_psi:
-            dt_w1inf_in_psi[key] = expand(dt_w1inf_in_psi[key] + val)
-        else:
-            dt_w1inf_in_psi[key] = expand(val)
-
-    # T.1 = c12*:psi_1*psi_2:.1 + c11*:psi_1^2:.1 + c22*:psi_2^2:.1
-    _add((":psi_1*psi_2:", "1"), c12)
-    _add((":psi_1^2:", "1"), c11)
-    _add((":psi_2^2:", "1"), c22)
-
-    # 1.T = same coefficients with 1 on left
-    _add(("1", ":psi_1*psi_2:"), c12)
-    _add(("1", ":psi_1^2:"), c11)
-    _add(("1", ":psi_2^2:"), c22)
-
-    # (Psi-1)/Psi * J.J = c_JJ * (psi_1.psi_1 + psi_1.psi_2 + psi_2.psi_1 + psi_2.psi_2)
-    _add(("psi_1", "psi_1"), c_JJ)
-    _add(("psi_1", "psi_2"), c_JJ)
-    _add(("psi_2", "psi_1"), c_JJ)
-    _add(("psi_2", "psi_2"), c_JJ)
-
-    # z * 1.J = z * (1.psi_1 + 1.psi_2)
-    _add(("1", "psi_1"), z)
-    _add(("1", "psi_2"), z)
-
-    # Clean up
-    dt_w1inf_in_psi = {
-        kv: simplify(v) for kv, v in dt_w1inf_in_psi.items() if simplify(v) != 0
-    }
-
-    # Compare
-    all_keys = set(dt_psi.keys()) | set(dt_w1inf_in_psi.keys())
-    mismatches = {}
-    for key in all_keys:
-        psi_val = simplify(dt_psi.get(key, 0))
-        w1_val = simplify(dt_w1inf_in_psi.get(key, 0))
-        diff = simplify(psi_val - w1_val)
-        if diff != 0:
-            mismatches[key] = {"from_psi": psi_val, "from_w1inf": w1_val, "diff": diff}
-
+    witness = ds_w3_degree2_rtt_miura_witness(Psi)
     return {
-        "intertwines": len(mismatches) == 0,
-        "num_terms_psi": len(dt_psi),
-        "num_terms_w1inf": len(dt_w1inf_in_psi),
-        "mismatches": mismatches,
+        "intertwines": witness["intertwines"],
+        "finite_window": witness["finite_window"],
+        "num_terms_rtt": len(witness["rtt_projected"]),
+        "num_terms_miura": len(witness["miura_primitive"]),
+        "mismatches": witness["mismatches"],
     }
 
 

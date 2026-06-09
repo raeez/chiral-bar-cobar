@@ -32,8 +32,8 @@ KEY RESULTS (in the r^{sc} sense for scalar families):
   4. Virasoro at central charge c: r^{sc}(z) = c/(2z), depth ∞ (mixed).
   5. CYBE verification: [r₁₂, r₁₃] + [r₁₂, r₂₃] + [r₁₃, r₂₃] = 0.
 
-The E₁ shadow obstruction tower is the ORDERED version of the unordered shadow
-Postnikov tower Θ_A^{≤r}.  The binary R-matrix r(z) is precisely
+The E₁ shadow obstruction tower is the ORDERED version of the unordered
+shadow obstruction tower Θ_A^{≤r}.  The binary R-matrix r(z) is precisely
 the collision residue Res^coll_{0,2}(Θ_A) of the universal MC element.
 Its averaged form gives the degree-2 scalar shadow. For non-abelian
 affine KM this is κ_dp, and the full κ(A) adds dim(g)/2.
@@ -71,7 +71,7 @@ class HeisenbergShadow:
     """E₁ shadow obstruction tower for the Heisenberg algebra H_k.
 
     H_k has a single generator h with OPE h(z)h(w) ~ k/(z-w)².
-    The R-matrix is scalar: r(z) = k/z.
+    The tensor kernel is rank-one abelian: r(z) = k*Omega_H/z (rank-one coeff k/z).
     The tower terminates at arity 2 (Gaussian class G).
     """
 
@@ -79,7 +79,7 @@ class HeisenbergShadow:
         self.level = level if level is not None else k
 
     def r_matrix(self):
-        """Binary R-matrix: r(z) = k/z (scalar)."""
+        """Binary R-matrix: r(z) = k*Omega_H/z (rank-one coeff k/z) (rank-one abelian)."""
         return self.level / z
 
     def r3(self):
@@ -108,7 +108,7 @@ class HeisenbergShadow:
     def cybe_lhs(self):
         """CYBE left-hand side: [r12, r13] + [r12, r23] + [r13, r23].
 
-        For scalar r(z) = k/z in 1d, all commutators vanish: CYBE = 0.
+        For rank-one abelian r(z) = k*Omega_H/z (rank-one coeff k/z) in 1d, all commutators vanish: CYBE = 0.
         """
         return Rational(0)
 
@@ -546,6 +546,19 @@ def verify_kappa_averaging(family: str, **kwargs) -> Dict:
 
     Returns verification data.
     """
+    scalar_scope = {
+        "averaging_scope": "degree_2_scalar_shadow",
+        "scalar_projection_only": True,
+        "averaging_commutes_with_bar_differential": False,
+        "requires_descent_hypotheses": (
+            "r_twisted_sigma_descent",
+            "differential_equivariance",
+            "bracket_equivariance",
+            "continuous_reynolds",
+            "completed_arity_windows",
+        ),
+    }
+
     if family == "Heisenberg":
         level_val = kwargs.get("k", 1.0)
         h = HeisenbergShadow(level=Symbol('k'))
@@ -556,6 +569,7 @@ def verify_kappa_averaging(family: str, **kwargs) -> Dict:
             "r_coefficient": r_coeff,
             "kappa_expected": kappa_expected,
             "match": abs(r_coeff - kappa_expected) < 1e-14,
+            **scalar_scope,
         }
 
     elif family == "Affine_sl2":
@@ -575,6 +589,7 @@ def verify_kappa_averaging(family: str, **kwargs) -> Dict:
             "kappa_value": kappa_formula,
             "tr_omega": float(np.real(tr_omega)),
             "match": True,
+            **scalar_scope,
         }
 
     elif family == "BetaGamma":
@@ -584,6 +599,7 @@ def verify_kappa_averaging(family: str, **kwargs) -> Dict:
             "kappa_expected": 1,
             "note": "kappa = c/2 = +1 for beta-gamma (c = +2)",
             "match": True,
+            **scalar_scope,
         }
 
     elif family == "Virasoro":
@@ -595,6 +611,7 @@ def verify_kappa_averaging(family: str, **kwargs) -> Dict:
             "r_coefficient": r_coeff,
             "kappa_expected": kappa_expected,
             "match": abs(r_coeff - kappa_expected) < 1e-14,
+            **scalar_scope,
         }
 
     else:

@@ -23,8 +23,10 @@ Two distinct modular characteristics appear (AP20, AP48):
     This is the effective weight parameter of the second-quantized
     BPS partition function 1/Phi_10.
 
-The ratio kappa_BPS / kappa_ch = 5/3 encodes the passage from
-first-quantized to second-quantized physics.
+The ratio kappa_BPS / kappa_ch = 5/3 is a scalar comparison between
+distinct lanes. It is not a source-level functor, not a categorical lift,
+and not permission to transfer numbers between the K3, K3 x E, and BPS
+objects without an explicit comparison map.
 
 THE FIVE KEY COMPUTATIONS
 =========================
@@ -102,6 +104,100 @@ KAPPA_E = 1             # kappa(Omega^ch(E)) = dim_C(E) = 1
 KAPPA_BPS = 5           # weight parameter: chi(K3)/4 - 1 = 24/4 - 1 = 5
 WEIGHT_PHI10 = 10       # weight(Phi_10) = 2 * kappa_BPS = 10
 RATIO_BPS_CH = F(5, 3)  # kappa_BPS / kappa_ch = 5/3
+CY_TO_CHIRAL_STAGE1 = 'Phi_d^FA'
+CY_TO_CHIRAL_STAGE2 = 'Sp^ch_{Sigma_{d-1},C}'
+CY_TO_CHIRAL_TWO_STAGE = 'Phi_d^(Sigma_{d-1},C) = Sp^ch_{Sigma_{d-1},C} circ Phi_d^FA'
+CY_TO_CHIRAL_REQUIRED_HYPOTHESES = (
+    'reference curve C fixed',
+    'transverse manifold Sigma_{d-1} fixed',
+    'factorization-homology hypotheses verified',
+    'HH^{-1}=0 slice verified when the slice is used',
+)
+
+
+def cy_to_chiral_two_stage_scope(
+    d: int,
+    reference_curve: Optional[str] = None,
+    transverse_manifold: Optional[str] = None,
+    factorization_homology_hypotheses: bool = False,
+    hh_minus_one_zero: bool = False,
+) -> Dict[str, Any]:
+    r"""Scope report for the two-stage CY-to-chiral functor.
+
+    The permitted expression is
+    Phi_d^(Sigma_{d-1},C) = Sp^ch_{Sigma_{d-1},C} circ Phi_d^FA.
+    A bare one-stage Phi_d is a notation error on this surface.
+    """
+    if d < 2:
+        raise ValueError(f"CY-to-chiral surface requires d >= 2, got {d}")
+
+    supplied = {
+        'reference curve C fixed': reference_curve is not None,
+        'transverse manifold Sigma_{d-1} fixed': transverse_manifold is not None,
+        'factorization-homology hypotheses verified': factorization_homology_hypotheses,
+        'HH^{-1}=0 slice verified when the slice is used': hh_minus_one_zero,
+    }
+    missing = tuple(
+        hyp for hyp in CY_TO_CHIRAL_REQUIRED_HYPOTHESES
+        if not supplied[hyp]
+    )
+    d_slice = 'd=2 surface slice' if d == 2 else 'd>=3 transverse-factorization slice'
+
+    return {
+        'two_stage_label': CY_TO_CHIRAL_TWO_STAGE,
+        'stage1': CY_TO_CHIRAL_STAGE1,
+        'stage2': CY_TO_CHIRAL_STAGE2,
+        'one_stage_phi_d_allowed': False,
+        'reference_curve': reference_curve,
+        'transverse_manifold': transverse_manifold,
+        'd': d,
+        'd_slice': d_slice,
+        'd2_slice_separate_from_d_ge_3': True,
+        'hh_minus_one_zero_slice_used': hh_minus_one_zero,
+        'factorization_homology_hypotheses_verified': factorization_homology_hypotheses,
+        'missing_hypotheses': missing,
+        'composition_on_stated_surface_proved': not missing,
+        'composition_status': 'proved_on_supplied_surface' if not missing else 'conditional_open',
+    }
+
+
+def hilb_fock_categorical_lift_scope(
+    categorical_lift_proved: bool = False,
+) -> Dict[str, Any]:
+    """Separate Hilbert-scheme/Fock character bridges from categorical lifts."""
+    return {
+        'hilbert_scheme_fock_bridge_status': 'computed character/Euler/Fock bridge',
+        'hilbert_scheme_fock_bridge_is_categorical_lift': False,
+        'dmvv_status': 'elliptic-genus/character identity',
+        'dmvv_is_bar_theorem': False,
+        'dmvv_is_categorical_lift': False,
+        'categorical_lift_status': 'proved' if categorical_lift_proved else 'conjectural',
+        'categorical_lift_proved': categorical_lift_proved,
+        'number_transfer_allowed_without_comparison': False,
+        'required_for_categorical_lift': (
+            'source category, functor on objects/morphisms, monoidal/factorization '
+            'compatibility, and comparison with the Hilbert-scheme/Fock character bridge'
+        ),
+    }
+
+
+def bps_chiral_kappa_lane_scope() -> Dict[str, Any]:
+    """Scalar lane separation for K3, K3 x E, and Delta_5/BPS values."""
+    numerical_sum = KAPPA_BPS == KAPPA_K3 + KAPPA_CH_K3E
+    return {
+        'kappa_K3': KAPPA_K3,
+        'kappa_E': KAPPA_E,
+        'kappa_K3xE_chiral': KAPPA_CH_K3E,
+        'kappa_BPS_Delta5': KAPPA_BPS,
+        'ratio_BPS_ch': RATIO_BPS_CH,
+        'numerical_coincidence_BPS_equals_K3_plus_K3xE': numerical_sum,
+        'bps_is_sum_relation': False,
+        'number_transfer_allowed_without_comparison': False,
+        'required_comparison': (
+            'explicit source-level comparison between the K3 chiral lane, '
+            'the K3 x E chiral lane, and the Delta_5/BPS modular lane'
+        ),
+    }
 
 
 # =========================================================================
@@ -353,11 +449,15 @@ def _jacobi_form_product(
 
 
 # =========================================================================
-# Section 4: chi(Sym^N(K3)) at z=0: Euler characteristic
+# Section 4: chi(Hilb^N(K3)) at z=0: Euler characteristic
 # =========================================================================
 
 def sym_n_k3_euler_char(N: int) -> int:
-    r"""Euler characteristic chi(Sym^N(K3)) = chi(Hilb^N(K3)).
+    r"""Euler characteristic chi(Hilb^N(K3)).
+
+    This is the Hilbert-scheme/Gottsche lane.  It is not the ordinary
+    symmetric-product Euler characteristic for N >= 2; that Burnside
+    surface is computed by sym_n_euler_char_orbifold.
 
     By Gottsche's formula, the generating function of Euler characteristics
     of Hilbert schemes of points on a surface S is:
@@ -890,6 +990,9 @@ def ratio_interpretation_check() -> Dict[str, Any]:
         and results["path2_from_chi"] == expected
         and results["path3_from_weight"] == expected
     )
+    results["lane_scope"] = bps_chiral_kappa_lane_scope()
+    results["ratio_is_scalar_only"] = True
+    results["one_stage_functor_witnessed"] = False
 
     return results
 
@@ -1015,27 +1118,16 @@ def sym_n_euler_char_orbifold(N: int) -> int:
     For N=1: chi(K3) = 24
     For N=2: (chi(K3)^2 + chi(K3)) / 2 = (576 + 24)/2 = 300.
 
-    Wait. chi(Sym^N(K3)) = chi(Hilb^N(K3)) by the Hilbert-Chow map.
-    The Gottsche formula gives chi(Hilb^N) = coefficient of p^N in
-    prod (1-p^n)^{-24}.
+    The Hilbert-scheme/Gottsche lane gives 324 at N=2; this Burnside
+    surface gives the ordinary symmetric-product value 300.  The two
+    lanes agree only for N=0,1 unless a crepant-resolution comparison
+    for the refined elliptic genus is invoked.
 
-    N=0: 1
-    N=1: 24
-    N=2: 324
-
-    But the ORBIFOLD formula for chi gives:
+    The Burnside formula for chi gives:
     chi(Sym^N(M)) = (1/N!) sum_{g in S_N} prod_{cycles} chi(M)
 
     For chi only (z=0): every g in S_N contributes
     prod_{k-cycles in g} chi(M) = chi(M)^{number of cycles}
-
-    Wait NO. The orbifold Euler characteristic is:
-    chi(Sym^N(M)) = sum over partitions lambda of N:
-        prod_i chi(S^{lambda_i}(M))
-
-    But chi(S^k(M)) counts fixed points of the k-cycle action.
-    For M = K3 (a smooth surface), the fixed points of a k-cycle
-    acting on M^N / S_N are analyzed via the Burnside lemma.
 
     Burnside: chi(M^N / S_N) = (1/|S_N|) sum_{g in S_N} chi(M^N_g)
     where M^N_g = {x in M^N : g.x = x} = fixed locus.
@@ -1484,35 +1576,19 @@ def bps_weight_from_chi(chi_surface: int) -> int:
 
 
 def cross_check_kappa_values() -> Dict[str, Any]:
-    r"""Cross-check all kappa values and their relations.
+    r"""Cross-check all kappa values and keep their lanes separate.
 
     kappa_ch(K3) = 2 = dim_C(K3)
     kappa_ch(E) = 1 = dim_C(E)
     kappa_ch(K3 x E) = 3 = dim_C(K3 x E) (additivity)
     kappa_BPS = 5 = chi(K3)/4 - 1 = weight(Phi_10)/2
 
-    Relations:
-    kappa_BPS - kappa_ch(K3 x E) = 5 - 3 = 2 = kappa_ch(K3)
-    kappa_BPS / kappa_ch(K3 x E) = 5/3
-    kappa_BPS = kappa_ch(K3 x E) + kappa_ch(K3) = 3 + 2 = 5
-
-    The third relation is STRIKING:
-    kappa_BPS = kappa(K3 x E) + kappa(K3) = 3 + 2 = 5
-
-    This suggests: the passage from first-quantized to second-quantized
-    adds an EXTRA kappa(K3) = 2 from the compactification surface.
-    Equivalently: kappa_BPS = kappa(K3) * (1 + dim_C(E)/dim_C(K3))
-    = 2 * (1 + 1/2) = 2 * 3/2 = 3. NO, that gives 3 not 5.
-
-    Better: kappa_BPS = kappa(K3) + kappa(K3 x E)
-    = dim_C(K3) + dim_C(K3 x E) = 2 + 3 = 5. YES.
-
-    This is suggestive of: the BPS modular characteristic sums the
-    SINGLE-PARTICLE kappa (from the bar complex of the single-copy algebra)
-    and the FIELD-THEORY kappa (from the target geometry). The former
-    gives kappa(K3) = 2 from the K3 surface sigma model; the latter gives
-    kappa(K3xE) = 3 from the full CY3 geometry.
+    The equality 5 = 2 + 3 is a numerical coincidence on this surface
+    unless a source-level comparison map is supplied.  The executable
+    record therefore exposes it as a coincidence, not as a theorem or
+    transfer rule.
     """
+    lane_scope = bps_chiral_kappa_lane_scope()
     results = {
         "kappa_K3": KAPPA_K3,
         "kappa_E": KAPPA_E,
@@ -1521,7 +1597,12 @@ def cross_check_kappa_values() -> Dict[str, Any]:
         "additivity_K3xE": KAPPA_K3 + KAPPA_E == KAPPA_CH_K3E,
         "ratio_BPS_ch": F(KAPPA_BPS, KAPPA_CH_K3E),
         "difference_BPS_ch": KAPPA_BPS - KAPPA_CH_K3E,
-        "sum_relation": KAPPA_BPS == KAPPA_K3 + KAPPA_CH_K3E,
+        "numerical_coincidence_BPS_equals_K3_plus_K3xE": (
+            lane_scope['numerical_coincidence_BPS_equals_K3_plus_K3xE']
+        ),
+        "sum_relation": False,
+        "number_transfer_allowed_without_comparison": False,
+        "lane_scope": lane_scope,
         "BPS_from_chi": KAPPA_BPS == CHI_K3 // 4 - 1,
         "BPS_from_weight": KAPPA_BPS == WEIGHT_PHI10 // 2,
         "weight_from_chi": WEIGHT_PHI10 == CHI_K3 // 2 - 2,

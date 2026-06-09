@@ -150,7 +150,7 @@ class TestKappaBetagamma:
         assert kappa_betagamma(1) == Fraction(1)
 
     def test_lambda_2(self):
-        # VERIFIED [DC] 24 - 12 + 1 = 13; [SY] matches Vir self-dual kappa at c=26
+        # VERIFIED [DC] 24 - 12 + 1 = 13; [SY] matches Vir critical-string kappa at c=26, distinct from self-dual c=13
         assert kappa_betagamma(2) == Fraction(13)
 
     def test_lambda_0(self):

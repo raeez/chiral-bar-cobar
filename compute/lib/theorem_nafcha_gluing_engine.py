@@ -601,17 +601,17 @@ def d_squared_zero_comparison() -> Dict[str, str]:
     KEY DISTINCTION:
       Nafcha's proof is in the DERIVED CATEGORY (IndCoh).  It gives D^2=0
       as a quasi-isomorphism, not as a strict chain-level identity.
-      Our proof (via Mok) gives D^2=0 at the CHAIN LEVEL on the log-FM
-      compactification, which is strictly stronger.
+      Our ambient route (via Mok plus the signed residue-pushforward
+      package) gives a conditional chain-level log-FM comparison.
     """
     return {
         'proof_1': "Convolution: partial^2=0 on M-bar => D^2=0 (thm:convolution-d-squared-zero)",
-        'proof_2': "Ambient/log-FM: Mok25 Thm 3.3.1 => D^2=0 (thm:ambient-d-squared-zero)",
+        'proof_2': "Ambient/log-FM: Mok25 Thm 3.3.1 plus signed residue-pushforward package => conditional D^2=0 (thm:ambient-d-squared-zero)",
         'proof_3': "Nafcha: sheaf gluing cocycle condition => D^2=0 (algebraic, in IndCoh)",
-        'strength_ordering': "Chain-level (Mok) > derived-category (Nafcha) > convolution (GK)",
+        'strength_ordering': "Conditional Chain-level log-FM (Mok plus signed package) vs derived-category (Nafcha) vs fixed-carrier convolution",
         'nafcha_new_content': "Nafcha's proof gives D^2=0 for ALL universal factorization algebras, "
                               "not just chirally Koszul ones. This is a broader scope than our "
-                              "thm:ambient-d-squared-zero which requires the log-FM input.",
+                              "thm:ambient-d-squared-zero which requires the log-FM input and the signed package.",
     }
 
 

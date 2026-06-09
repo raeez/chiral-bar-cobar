@@ -12,7 +12,9 @@ under which:
       bar comultiplication (deconcatenation / factorization splitting),
   (b) the CoHA vertex coproduct (JKL26) dualizes to the vertex product
       on B(A_Q) (factorization product on Ran),
-  (c) both produce the Yangian Y(g_Q) via the respective filtrations.
+  (c) the CoHA side produces the positive half Y^+(g_Q), while the
+      full Yangian Y(g_Q) is the target only after Drinfeld
+      double/completion data are supplied.
 
 PROOF BY FOUR INDEPENDENT METHODS:
 
@@ -30,11 +32,13 @@ Method 1 (Character + Koszul Universal Property):
   the PBW spectral sequence degenerates, making the filtration splitting.
 
 Method 2 (Schiffmann-Vasserot + MC4+ Composition):
-  For the Jordan quiver: SV prove CoHA(Jordan) = Y(gl_1-hat), and our MC4+
-  proves the completed bar-cobar of H_k produces Y(gl_1-hat) via weight
-  stabilization. The composition gives CoHA(Jordan)^* ~ B(H_k). For ADE
-  quivers: Yang-Zhao and Davison prove CoHA(prep(Q)) = Y(g_Q), and our
-  MC3 (all simple types) proves bar-cobar of g_Q-hat produces Y(g_Q).
+  For the Jordan quiver: SV prove CoHA(Jordan) = Y^+(gl_1-hat), and our
+  MC4+ proves the completed bar-cobar of H_k produces the full target
+  Y(gl_1-hat) after Drinfeld double/completion. The composition gives a
+  positive-half comparison surface for CoHA(Jordan)^* ~ B(H_k). For ADE
+  quivers: Yang-Zhao and Davison prove the positive-half CoHA surface
+  Y^+(g_Q), and our MC3 (all simple types) proves bar-cobar of g_Q-hat
+  produces the full target Y(g_Q) after the double/completion package.
   Since the Yangian Y(g_Q) is rigid (unique deformation quantization of
   the Kirillov-Kostant bracket on g_Q^*), the two routes must agree.
 
@@ -409,32 +413,37 @@ def proof_method_2_sv_mc4_composition(
     r"""Proof Method 2: SV identification + MC3/MC4 composition.
 
     STEP 1 (Jordan quiver / gl_1):
-      SV (2012): CoHA(Jordan) = Y(gl_1-hat) (affine Yangian of gl(1))
+      SV (2012): CoHA(Jordan) = Y^+(gl_1-hat) (positive half)
       RSYZ (2018): Y(gl_1-hat) acts on W_{r1,r2,r3} corner VOAs
-      MC4+ (PROVED): Completed bar-cobar of H_k -> Y(gl_1) via stabilization
-      Therefore: CoHA(Jordan)^* ~ B(H_k) (both produce Y(gl_1) structure)
+      MC4+ (PROVED): Completed bar-cobar of H_k -> full Y(gl_1)
+        after Drinfeld double/completion via stabilization
+      Therefore: CoHA(Jordan)^* ~ B(H_k) only on the positive-half
+        comparison surface before the double/completion step
 
     STEP 2 (A_n quivers / sl_{n+1}):
-      Yang-Zhao (2014): CoHA(preprojective A_n) -> Y(sl_{n+1})
+      Yang-Zhao (2014): CoHA(preprojective A_n) -> Y^+(sl_{n+1})
       Davison (2016): PBW theorem for quivers with potential
-      MC3 (PROVED, all simple types): Bar-cobar of sl_{n+1}-hat -> Y(sl_{n+1})
+      MC3 (PROVED, all simple types): Bar-cobar of sl_{n+1}-hat -> full Y(sl_{n+1})
       Uniqueness: Y(sl_{n+1}) is the unique deformation quantization of
         the Kirillov-Kostant bracket, classified by r-matrix k*Omega/z
-      Therefore: CoHA(A_n)^* ~ B(sl_{n+1}-hat) via Y(sl_{n+1}) bridge
+      Therefore: CoHA(A_n)^* ~ B(sl_{n+1}-hat) via a positive-half
+        bridge, with full Y(sl_{n+1}) only after double/completion
 
     STEP 3 (D_n quivers / so_{2n}):
-      Yang-Zhao generalization: CoHA(preprojective D_n) -> Y(so_{2n})
+      Yang-Zhao generalization: CoHA(preprojective D_n) -> Y^+(so_{2n})
       MC3 (all simple types, cor:mc3-all-types): bar-cobar for so_{2n}-hat
       Same uniqueness argument via r-matrix classification
 
     STEP 4 (E_6, E_7, E_8):
-      Same argument: CoHA produces Y(g_Q) (Yang-Zhao + Davison),
+      Same argument: CoHA produces Y^+(g_Q) (Yang-Zhao + Davison),
       bar-cobar produces Y(g_Q) (MC3 all types), uniqueness closes the bridge.
 
     The CRITICAL input is Yangian rigidity: the Yangian Y(g) is the UNIQUE
     filtered deformation of U(g[t]) with classical r-matrix Omega_{g}/z.
-    Both the CoHA and bar-cobar routes produce Y(g) with this r-matrix,
-    hence they must agree.
+    The CoHA route produces the positive half with this r-matrix; the
+    bar-cobar route produces the full target after double/completion.
+    The comparison is therefore positive-half first, full-Yangian only
+    after the extra package.
 
     Returns proof data with route comparison.
     """
@@ -445,28 +454,32 @@ def proof_method_2_sv_mc4_composition(
         # sl_2 case
         coha_route = {
             "step1": "CoHA(preprojective A_1) = shuffle algebra",
-            "step2": "Identify with Y(sl_2) (Yang-Zhao 2014)",
+            "step2": "Identify with Y^+(sl_2) (Yang-Zhao 2014)",
+            "full_target_after_double": "Y(sl_2)",
             "reference": "arXiv:1401.3979",
         }
     elif dynkin_type == "A":
         coha_route = {
             "step1": f"CoHA(preprojective A_{rank}) with PBW filtration",
             "step2": f"gr(CoHA) = U(n^+_{{sl_{rank+1}}}[t]) (Davison PBW)",
-            "step3": f"Full CoHA = Y(sl_{rank+1}) (deformation of PBW)",
+            "step3": f"CoHA surface = Y^+(sl_{rank+1}) (deformation of PBW)",
+            "full_target_after_double": f"Y(sl_{rank+1})",
             "reference": "arXiv:1311.7172",
         }
     elif dynkin_type == "D":
         coha_route = {
             "step1": f"CoHA(preprojective D_{rank}) with PBW filtration",
             "step2": f"gr(CoHA) = U(n^+_{{so_{2*rank}}}[t])",
-            "step3": f"Full CoHA = Y(so_{2*rank})",
+            "step3": f"CoHA surface = Y^+(so_{2*rank})",
+            "full_target_after_double": f"Y(so_{2*rank})",
             "reference": "Yang-Zhao generalization",
         }
     else:  # E type
         coha_route = {
             "step1": f"CoHA(preprojective E_{rank}) with PBW filtration",
             "step2": f"gr(CoHA) = U(n^+_{{{data['lie_algebra']}}}[t])",
-            "step3": f"Full CoHA = Y({data['lie_algebra']})",
+            "step3": f"CoHA surface = Y^+({data['lie_algebra']})",
+            "full_target_after_double": f"Y({data['lie_algebra']})",
             "reference": "Yang-Zhao + Davison",
         }
 

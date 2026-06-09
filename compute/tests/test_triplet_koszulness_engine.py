@@ -31,6 +31,7 @@ from fractions import Fraction
 from sympy import Rational
 
 from compute.lib.triplet_koszulness_engine import (
+    TRIPLET_WP_KOSZUL_HYPOTHESES,
     triplet_central_charge,
     triplet_kappa,
     generator_data,
@@ -42,6 +43,8 @@ from compute.lib.triplet_koszulness_engine import (
     pbw_vs_virasoro,
     feigin_fuchs_data,
     shadow_classification,
+    high_degree_hochschild_defect,
+    triplet_wp_scope_report,
     proved_vs_open,
 )
 
@@ -155,10 +158,13 @@ class TestGenerators(unittest.TestCase):
         for p in range(2, 10):
             self.assertTrue(generator_data(p)['strongly_generated'])
 
-    def test_freely_strongly_generated_open(self):
-        """Free strong generation is OPEN (not proved)."""
+    def test_freely_strongly_generated_false(self):
+        """Free strong generation is false by C_2-cofiniteness."""
         for p in range(2, 10):
-            self.assertIsNone(generator_data(p)['freely_strongly_generated'])
+            gen = generator_data(p)
+            self.assertFalse(gen['freely_strongly_generated'])
+            self.assertTrue(gen['non_free_generation'])
+            self.assertTrue(gen['c2_cofinite'])
 
 
 # =========================================================================
@@ -268,22 +274,24 @@ class TestOPEData(unittest.TestCase):
 # =========================================================================
 
 class TestKoszulnessOpen(unittest.TestCase):
-    """Koszulness of W(p) is OPEN for all p >= 2.
+    """Koszulness of W(p) is conjectural/open for all p >= 2.
 
     This is the Beilinson rectification of the previous false claim.
     """
 
-    def test_status_is_open(self):
-        """Koszulness status is OPEN."""
+    def test_status_is_conjectural_open(self):
+        """Koszulness status is conjectural/open."""
         for p in range(2, 15):
             ks = koszulness_status(p)
-            self.assertEqual(ks['status'], 'OPEN')
+            self.assertEqual(ks['status'], 'CONJECTURAL_OPEN')
+            self.assertFalse(ks['koszulness_proved'])
 
     def test_pbw_universality_not_applicable(self):
-        """prop:pbw-universality requires free strong gen (unproved)."""
+        """prop:pbw-universality requires free strong gen, which fails."""
         for p in range(2, 10):
             ks = koszulness_status(p)
-            self.assertIsNone(ks['pbw_universality_applicable'])
+            self.assertFalse(ks['pbw_universality_applicable'])
+            self.assertFalse(ks['freely_strongly_generated'])
 
     def test_kac_shapovalov_not_resolved(self):
         for p in range(2, 10):
@@ -300,7 +308,35 @@ class TestKoszulnessOpen(unittest.TestCase):
     def test_definitive_test_documented(self):
         for p in [2, 3]:
             ks = koszulness_status(p)
-            self.assertIn('PBW character', ks['definitive_test'])
+            self.assertIn('finite-window PBW', ks['definitive_test'])
+
+
+class TestTripletScopeReport(unittest.TestCase):
+    """Typed status report for C_2, non-free generation, and defects."""
+
+    def test_scope_report_records_pdf_obligations(self):
+        report = triplet_wp_scope_report(3)
+        self.assertTrue(report['c2_cofinite'])
+        self.assertEqual(report['c2_cofiniteness_status'], 'proved_elsewhere')
+        self.assertFalse(report['freely_strongly_generated'])
+        self.assertEqual(report['koszulness_status'], 'conjectural_open')
+        self.assertFalse(report['koszulness_proved'])
+
+    def test_high_degree_defect_is_defined_not_vanishing(self):
+        defect = high_degree_hochschild_defect(2)
+        self.assertEqual(defect['object'], 'KD_H^bullet(W(2))')
+        self.assertTrue(defect['defect_defined'])
+        self.assertFalse(defect['defect_vanishing_proved'])
+        self.assertFalse(defect['theorem_h_applies'])
+        self.assertEqual(defect['resolution_requires'], TRIPLET_WP_KOSZUL_HYPOTHESES)
+
+    def test_scope_missing_hypotheses(self):
+        report = triplet_wp_scope_report(5)
+        self.assertEqual(report['missing_for_koszulness'], TRIPLET_WP_KOSZUL_HYPOTHESES)
+        self.assertEqual(
+            report['high_degree_hochschild_defect']['resolution_requires'],
+            TRIPLET_WP_KOSZUL_HYPOTHESES,
+        )
 
 
 # =========================================================================
@@ -379,6 +415,8 @@ class TestProvedVsOpen(unittest.TestCase):
             self.assertIsNotNone(proved['kappa'])
             self.assertTrue(proved['strong_generation'])
             self.assertTrue(proved['c2_cofinite'])
+            self.assertFalse(proved['freely_strongly_generated'])
+            self.assertTrue(proved['non_free_generation'])
             self.assertFalse(proved['zhu_semisimple'])
             self.assertEqual(proved['n_generators'], 4)
 
@@ -386,9 +424,9 @@ class TestProvedVsOpen(unittest.TestCase):
         for p in [2, 3, 5]:
             po = proved_vs_open(p)
             open_items = po['open']
-            self.assertIsNone(open_items['freely_strongly_generated'])
             self.assertIsNone(open_items['koszul'])
             self.assertIsNone(open_items['pbw_collapse'])
+            self.assertIsNone(open_items['high_degree_hochschild_defect_vanishes'])
 
     def test_zhu_dim_2p(self):
         for p in range(2, 10):

@@ -35,9 +35,10 @@ MATHEMATICAL CONVENTIONS:
 CRITICAL DISTINCTIONS (from CLAUDE.md):
     - Universal V_k(g) is ALWAYS Koszul (cor:universal-koszul).
     - Simple L_k(g) may fail at admissible/integrable levels (AP7).
-    - Symplectic fermion (betagamma at lambda=1/2) IS Koszul
-      (the parent betagamma is Koszul; logarithmic phenomena
-      appear in the Z_2 orbifold = triplet, not in the parent).
+    - Symplectic fermion / bc_1 at c=-2 IS Koszul
+      (the free odd parent is Koszul; logarithmic phenomena
+      appear in the Z_2 fixed-point triplet W(2), not in the
+      bosonic beta-gamma_{1/2} symplectic-boson lane).
     - Triplet W(p) Koszulness is OPEN (may fail bar concentration,
       rem:symplectic-logarithmic).
     - W_{1+infty} has INFINITELY many generators; PBW universality
@@ -734,16 +735,16 @@ def d4_lattice() -> AlgebraKoszulData:
 
 
 def symplectic_fermion() -> AlgebraKoszulData:
-    """Symplectic fermion = betagamma at lambda = 1/2
-    (equivalently, bc system at lambda = 1).
+    """Symplectic fermion / bc_1 system at c = -2.
 
-    Two generators chi^+, chi^- of weight 1/2 (both beta and gamma
-    have conformal weight 1/2 at lambda = 1/2).
+    This is the free odd first-order system in the repository's
+    beta-gamma/bc convention, not the bosonic beta-gamma point
+    lambda = 1/2.  The latter is the symplectic boson with c = -1.
 
-    This IS Koszul: the parent betagamma system is chirally
-    Koszul (rem:symplectic-logarithmic, line 1442: "the system
-    is Koszul").  The logarithmic phenomena appear in the
-    Z_2 orbifold (= triplet algebra W(2)), not in the parent.
+    This IS Koszul: the free-field PBW mechanism applies to the
+    symplectic-fermion/bc_1 parent.  The logarithmic phenomena appear
+    in the Z_2 fixed-point algebra (= triplet algebra W(2)), not in
+    the symplectic-boson beta-gamma_{1/2} lane.
 
     CORRECTION to user's initial claim: the user stated
     "NOT Koszul? (logarithmic VOA)".  This is WRONG.  The
@@ -757,10 +758,10 @@ def symplectic_fermion() -> AlgebraKoszulData:
     assignment depends on the OPE pole structure).
     """
     return AlgebraKoszulData(
-        name="Symplectic fermion (betagamma at lambda=1/2)",
+        name="Symplectic fermion / bc_1 at c = -2",
         algebra_type="free_field",
-        generators=["chi^+", "chi^-"],
-        generator_weights=[Rational(1, 2), Rational(1, 2)],
+        generators=["b", "c"],
+        generator_weights=[Rational(1), Rational(0)],
         num_generators=2,
         strongly_generated=True,
         pbw_filtration_exists=True,
@@ -770,19 +771,20 @@ def symplectic_fermion() -> AlgebraKoszulData:
         proof_mechanism=ProofMechanism.PBW_UNIVERSALITY,
         shadow_class=ShadowClass.C,
         shadow_depth=4,
-        kappa=Rational(-1, 2),
-        central_charge=Rational(-1),
+        kappa=Rational(-1),
+        central_charge=Rational(-2),
         notes=(
-            "Symplectic fermion = betagamma at lambda = 1/2 (or bc "
-            "at lambda = 1, rem:sf-koszul-dual). Two generators of "
-            "weight 1/2 (beta_gamma.tex line 1365). "
-            "c = -1, kappa = -1/2. "
+            "Symplectic fermion / bc_1 at c = -2, kappa = -1. "
+            "It is not the bosonic beta-gamma_{lambda=1/2} "
+            "symplectic-boson point (c = -1, kappa = -1/2); see "
+            "beta_gamma.tex, rem:symplectic-logarithmic. "
             "IS KOSZUL: freely strongly generated, PBW universality "
             "applies. The logarithmic phenomena (Jordan blocks for L_0) "
             "appear in the MODULE category, not in the bar complex of "
             "the algebra itself (rem:symplectic-logarithmic: 'the "
-            "system is Koszul'). The Z_2 orbifold (= triplet W(2)) "
-            "may fail bar concentration, but the PARENT is Koszul."
+            "system is Koszul'). The Z_2 fixed-point algebra "
+            "(= triplet W(2)) may fail bar concentration, but the "
+            "free odd parent is Koszul."
         ),
         caveats=(
             "The shadow class assignment varies across manuscript "
@@ -794,17 +796,20 @@ def symplectic_fermion() -> AlgebraKoszulData:
 
 
 def triplet_w2() -> AlgebraKoszulData:
-    """Triplet algebra W(2) = (betagamma)^{Z_2} at c = -2.
+    """Triplet algebra W(2) = SF^{Z_2} at c = -2.
 
-    This is the Z_2 orbifold of the betagamma system at lambda = 1/2.
+    This is the Z_2 fixed-point/orbifold algebra of the rank-one
+    symplectic-fermion system, not an orbifold of the bosonic
+    beta-gamma_{lambda=1/2} symplectic boson.
     It is C_2-cofinite but NOT rational: the module category is
     non-semisimple with 4 simple modules (2 projective, 2 not).
 
     Koszulness status: OPEN.
 
-    The parent betagamma is Koszul, but the orbifold construction
+    The parent symplectic-fermion/bc_1 algebra is Koszul, but the
+    orbifold construction
     introduces equivariant complications.  The bar complex
-    B(betagamma)^{Z_2} has additional structure from the
+    B(SF)^{Z_2} has additional structure from the
     Z_2 action (rem:symplectic-logarithmic).  Whether bar
     cohomology concentrates for the triplet algebra is not proved.
 
@@ -833,13 +838,14 @@ def triplet_w2() -> AlgebraKoszulData:
         kappa=Rational(-1),
         central_charge=Rational(-2),
         notes=(
-            "Triplet W(2) = (betagamma)^{Z_2}. c = -2. "
+            "Triplet W(2) = SF^{Z_2}. c = -2. "
             "C_2-cofinite but NOT rational. 4 simple modules. "
             "Non-semisimple module category with nontrivial "
             "extensions (prop:w2-ext-bar: Ext^1 != 0 between "
             "non-projective simples). "
-            "Koszulness OPEN: the parent betagamma is Koszul, but "
-            "the orbifold may fail bar concentration "
+            "Koszulness OPEN: the parent symplectic-fermion/bc_1 "
+            "free field is Koszul, but the Z_2 fixed-point algebra "
+            "may fail bar concentration "
             "(rem:symplectic-logarithmic). C_2-cofiniteness does "
             "not imply Koszulness (rem:rationality-not-koszul-criterion)."
         ),

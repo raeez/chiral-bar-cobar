@@ -43,6 +43,43 @@ def _boundary_square_coefficients(edge_count: int) -> dict[tuple[int, ...], int]
 
 
 @independent_verification(
+    claim="comp:heisenberg-g2-fp-grr-check",
+    derived_from=[
+        "Faber-Pandharipande closed lambda_2 formula with explicit Bernoulli B4",
+        "Rank-one Heisenberg scalar characteristic kappa(H_1)=1",
+    ],
+    verified_against=[
+        "GRR A-hat x^4 coefficient extraction from (x/2)/sin(x/2)-1",
+        "Exact finite-window scalar free-energy witness in faber_pandharipande_cross_verification",
+    ],
+    disjoint_rationale=(
+        "The manuscript computation derives F_2(H_1) from the explicit "
+        "Faber-Pandharipande/Mumford genus-2 coefficient.  The verification "
+        "extracts the same coefficient from the GRR/A-hat series and checks "
+        "the rank-one scalar free energy directly, while separately recording "
+        "that the genus-2 Hodge socle integral 1/5760 is not this coefficient."
+    ),
+)
+def test_heisenberg_g2_fp_grr_disjoint_scalar_window():
+    """Rank-one Heisenberg has F_2=7/5760 by both FP and GRR routes."""
+    from compute.lib.faber_pandharipande_cross_verification import (
+        genus2_heisenberg_fp_grr_disjoint_check,
+    )
+
+    witness = genus2_heisenberg_fp_grr_disjoint_check()
+
+    assert witness["claim"] == "comp:heisenberg-g2-fp-grr-check"
+    assert witness["heisenberg_kappa"] == Rational(1)
+    assert witness["fp_lambda2"] == Rational(7, 5760)
+    assert witness["grr_lambda2"] == Rational(7, 5760)
+    assert witness["F2_from_fp"] == Rational(7, 5760)
+    assert witness["F2_from_grr"] == Rational(7, 5760)
+    assert witness["socle_integral_lambda2_lambda1"] == Rational(1, 5760)
+    assert witness["socle_integral_is_free_energy"] is False
+    assert witness["all_match"] is True
+
+
+@independent_verification(
     claim="thm:differential-square-zero",
     derived_from=[
         "higher_genus_modular_koszul ambient D_A proof via relative log Fulton--MacPherson compactification",

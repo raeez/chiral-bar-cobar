@@ -9,7 +9,7 @@ Verification strategy:
   6. Modular Hamiltonian for Heisenberg, Virasoro, affine sl_2
   7. Shadow correction convergence for rho < 1
   8. Class-by-class: G=exact, L=one correction, C=two, M=infinite
-  9. QES condition at scalar level
+  9. Scalar complementarity proxy for the conjectural QES dictionary
   10. Mutual information from cross-ratio
   11. Page point at c=13
   12. Entanglement capacity C_E
@@ -22,6 +22,7 @@ Verification strategy:
 import math
 import pytest
 from fractions import Fraction
+from pathlib import Path
 from sympy import Rational, simplify, pi, Symbol
 
 from compute.lib.modular_entanglement_flow_engine import (
@@ -82,6 +83,58 @@ from compute.lib.modular_entanglement_flow_engine import (
     verify_renyi_von_neumann_limit,
     verify_page_point_self_duality,
 )
+
+
+ROOT = Path(__file__).resolve().parents[2]
+ENTANGLEMENT_TEX = ROOT / "chapters" / "connections" / "entanglement_modular_koszul.tex"
+ENGINE = ROOT / "compute" / "lib" / "modular_entanglement_flow_engine.py"
+CONCORDANCE = ROOT / "chapters" / "connections" / "concordance.tex"
+THQG_ENTANGLEMENT = ROOT / "chapters" / "connections" / "thqg_entanglement_theory.tex"
+
+
+def test_qes_dictionary_surface_requires_gravitational_inputs():
+    manuscript = ENTANGLEMENT_TEX.read_text(encoding="utf-8")
+    engine = ENGINE.read_text(encoding="utf-8")
+    active = manuscript + "\n" + engine
+
+    assert "QES dictionary for the shadow connection" in manuscript
+    assert "Under these three inputs, QES stationarity" in manuscript
+    assert "Without that dictionary the Ward" in manuscript
+    assert "physical QES requires a gravitational dual" in engine
+    assert "Brown-Henneaux/RT/FLM dictionary" in engine
+
+    forbidden = [
+        "QES STATIONARITY verification",
+        "Verify QES stationarity at the scalar level",
+        "This is the QES condition at the scalar level",
+        "Direct QES stationarity check.",
+    ]
+    for phrase in forbidden:
+        assert phrase not in active
+
+
+def test_modular_terminology_separates_moduli_from_tomita():
+    entanglement = ENTANGLEMENT_TEX.read_text(encoding="utf-8")
+    concordance = CONCORDANCE.read_text(encoding="utf-8")
+    thqg = THQG_ENTANGLEMENT.read_text(encoding="utf-8")
+    engine = ENGINE.read_text(encoding="utf-8")
+
+    assert "Hodge/moduli and" in entanglement
+    assert "It does not\nassert a Tomita--Takesaki modular operator" in entanglement
+    assert "a unitary sewing envelope" in entanglement
+    assert "faithful normal state" in entanglement
+    assert "not a proved\n identification with the Tomita--Takesaki $J$-operator" in concordance
+    assert "Verdier involution as Tomita conjugation" in thqg
+    assert "requires an additional\nanalytic completion" in thqg
+    assert "conjectural\n    algebraic analogue of modular flow" in engine
+
+    forbidden = [
+        r"\textbf{proved} to coincide with the Tomita--Takesaki $J$-operator",
+        "Shadow connection nabla^sh = d - Q'/(2Q) dt generates modular flow",
+    ]
+    active = entanglement + "\n" + concordance + "\n" + engine
+    for phrase in forbidden:
+        assert phrase not in active
 
 from compute.lib.entanglement_shadow_engine import (
     kappa_virasoro,
@@ -387,37 +440,41 @@ class TestClassByClass:
 
 
 # ===================================================================
-#  9. QES CONDITION
+#  9. SCALAR PROXY FOR THE QES DICTIONARY
 # ===================================================================
 
-class TestQES:
-    """Quantum extremal surface at scalar level."""
+class TestQESDictionaryProxy:
+    """Scalar complementarity proxy for the conjectural QES dictionary."""
 
     def test_qes_virasoro_stationarity(self):
-        """S_gen(c) = S(c) + S(26-c) = 26/3 is constant => stationary."""
+        """S_gen(c) = S(c) + S(26-c) = 26/3 is a scalar stationary proxy."""
         for c in [Rational(1), Rational(13), Rational(25)]:
             result = qes_virasoro(c)
             assert result['is_stationary']
             assert result['S_gen'] == Rational(26, 3)
+            assert result['physical_qes_status'] == 'requires Brown-Henneaux/RT/FLM dictionary'
 
     def test_qes_heisenberg_exact(self):
-        """Heisenberg: exact, class G, no corrections."""
+        """Heisenberg: scalar class G proxy has no shadow corrections."""
         result = qes_heisenberg(Rational(1))
         assert result['exact']
         assert result['shadow_corrections'] == 0
         assert result['S_EE'] == Rational(2, 3)
+        assert 'requires gravitational dual' in result['physical_qes_status']
 
     def test_qes_affine_sl2(self):
-        """Affine sl_2: class L, correction depth 3."""
+        """Affine sl_2: scalar proxy class L has correction depth 3."""
         result = qes_affine_sl2(Rational(1))
         assert result['class'] == 'L'
         assert result['correction_depth'] == 3
+        assert 'requires gravitational dual' in result['physical_qes_status']
 
     def test_qes_stationarity_scalar_direct(self):
-        """Direct QES stationarity check."""
+        """Direct scalar stationarity proxy check."""
         result = qes_stationarity_scalar(Rational(13, 2), Rational(13, 2), 1)
         assert result['is_stationary']
         assert result['kappa_sum'] == Rational(13)
+        assert result['physical_qes_status'] == 'requires Brown-Henneaux/RT/FLM dictionary'
 
 
 # ===================================================================

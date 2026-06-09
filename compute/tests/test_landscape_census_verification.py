@@ -10,7 +10,7 @@ Anti-pattern regression coverage:
   AP10 — cross-family consistency checks (not single-family hardcodes)
   AP19 — r-matrix pole absorption
   AP24 — complementarity sum NOT universally zero
-  AP39 — S_2 vs kappa for non-Virasoro families
+  AP39/AP127 — S_2/kappa lane discipline
   AP48 — kappa != c/2 for general VOAs
 
 References:
@@ -321,7 +321,7 @@ class TestKappaBetaGammaBc:
         assert central_charge_betagamma(Rational(1)) == Rational(2)
 
     def test_betagamma_lam_half(self):
-        """betagamma at lam=1/2 (symplectic fermion): c=-1, kappa=-1/2."""
+        """betagamma at lam=1/2 (symplectic boson): c=-1, kappa=-1/2."""
         assert kappa_betagamma(Rational(1, 2)) == Rational(-1, 2)
         assert central_charge_betagamma(Rational(1, 2)) == Rational(-1)
 
@@ -613,18 +613,21 @@ class TestShadowGrowthRate:
 
 
 # ============================================================================
-# Section 7: AP39 regression — S_2 vs kappa
+# Section 7: AP39/AP127 regression — S_2/kappa lane discipline
 # ============================================================================
 
 class TestAP39Regression:
-    """AP39: S_2 = c/2 is NOT the same as kappa for non-Virasoro families."""
+    """AP39/AP127: unqualified S_2 is valid only on the active lane."""
 
-    def test_heisenberg_s2_ne_kappa(self):
-        """Heisenberg at k=2: S_2=c/2=1/2 but kappa=2."""
-        assert Rational(1, 2) != kappa_heisenberg(Rational(2))
+    def test_heisenberg_current_line_s2_equals_kappa(self):
+        """Heisenberg at k=2: current-line S_2=kappa=2."""
+        k = Rational(2)
+        S2_current = k
+        assert S2_current == kappa_heisenberg(k)
+        assert Rational(1, 2) != S2_current  # c/2 is a different projection.
 
     def test_affine_sl2_s2_ne_kappa(self):
-        """sl_2 at k=1: c = 3*1/(1+2) = 1, S_2 = c/2 = 1/2, kappa = 9/4."""
+        """sl_2 at k=1: stress-tensor S_2^T=c/2=1/2, kappa=9/4."""
         c = central_charge_affine("A", 1, Rational(1))
         assert c == Rational(1)  # 3*1/3 = 1
         S2 = c / 2
@@ -642,12 +645,12 @@ class TestAP39Regression:
         assert c / 2 != kap
 
     def test_virasoro_s2_equals_kappa(self):
-        """Virasoro: S_2 = c/2 = kappa (the ONLY standard family where they coincide)."""
+        """Virasoro: stress-tensor S_2 = c/2 = kappa."""
         for c_val in [Rational(1), Rational(13), Rational(26)]:
             assert c_val / 2 == kappa_virasoro(c_val)
 
     def test_lattice_s2_ne_kappa(self):
-        """Lattice VOA rank 8: c=8, S_2=4, kappa=8. S_2 != kappa."""
+        """Lattice VOA rank 8: stress-tensor S_2^T=4, kappa=8."""
         c = Rational(8)
         kap = kappa_lattice(8)
         assert c / 2 == 4

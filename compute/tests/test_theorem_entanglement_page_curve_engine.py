@@ -323,11 +323,16 @@ class TestQECRate(unittest.TestCase):
             self.assertEqual(data['verification_steps'], 2)
             self.assertFalse(data['P3_needed'])
 
-    def test_qec_distance_universal_2(self):
-        """Code distance d = 2 for all families (bar degree shift)."""
+    def test_qec_arity_proxy_universal_2(self):
+        """The arity proxy is 2; operational QEC distance is external."""
         for family in ['heisenberg', 'virasoro', 'affine', 'betagamma']:
             data = qec_rate_by_family_simplified(family)
             self.assertEqual(data['distance'], 2)
+            self.assertEqual(data['distance_kind'],
+                             'arity proxy; not Hilbert-space code distance')
+            self.assertIsNone(data['physical_distance'])
+            self.assertIn('physical inner product',
+                          data['physical_distance_status'])
 
     def test_qec_channels_by_class(self):
         """Redundancy channels depend on shadow depth."""

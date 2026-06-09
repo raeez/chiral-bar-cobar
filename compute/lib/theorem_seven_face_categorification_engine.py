@@ -361,7 +361,7 @@ class GaudinSystemData:
 # ============================================================
 
 def _r_matrix_heisenberg(k: Fraction) -> Dict[int, Any]:
-    """r(z) = k/z for Heisenberg."""
+    """r(z) = k*Omega_H/z (rank-one coeff k/z) for Heisenberg."""
     return {1: k}
 
 

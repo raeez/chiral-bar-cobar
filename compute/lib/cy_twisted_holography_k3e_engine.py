@@ -98,7 +98,7 @@ Components:
   A = boundary chiral algebra (free-field, c=24, kappa=24)
   A^i = bar-dual coalgebra of A
   A^! = Verdier/Koszul branch (dual boundary/line slot, kappa = -24)
-  C = chiral derived center Z^der_ch(A) (universal bulk observables)
+  C = chiral derived center Z^der_ch(A) (algebraic closed-sector observables)
   r(z) = collision r-matrix (genus-0 binary shadow of Theta_A)
   Theta_A = universal MC element (shadow obstruction tower)
   nabla^hol = holographic shadow connection
@@ -889,11 +889,11 @@ def r_matrix_k3e() -> RMatrixData:
 
 
 # =========================================================================
-# Section 6: Derived center (universal bulk observables)
+# Section 6: Derived center (algebraic closed-sector observables)
 # =========================================================================
 
 class DerivedCenterData(NamedTuple):
-    """Chiral derived center Z^der_ch(A) = universal bulk observables.
+    """Chiral derived center Z^der_ch(A) = algebraic closed-sector observables.
 
     From the monograph (Theorem H and AP34):
       Z^der_ch(A) = H*(C^bullet_ch(A, A), delta)

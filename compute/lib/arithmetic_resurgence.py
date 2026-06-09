@@ -854,7 +854,8 @@ def virasoro_special_charges() -> Dict[str, Dict[str, Any]]:
     r"""Detailed analysis at the four physically distinguished c values.
 
     c = 1/2 (Ising): minimal model, finite representation theory.
-        kappa = 1/4.  Self-dual at c = 26 - 1/2 = 51/2 (kappa_dual = 51/4).
+        kappa = 1/4.  Koszul dual partner c' = 26 - 1/2 = 51/2
+        (kappa_dual = 51/4); this is not a self-dual point.
         Shadow obstruction tower diverges (rho > 1 since c < c*).
 
     c = 1 (free boson compactified on circle):
@@ -915,8 +916,9 @@ def self_dual_stokes_analysis() -> Dict[str, Any]:
     r"""Stokes structure at the self-dual point c = 13.
 
     At c = 13: kappa = kappa_dual = 13/2.
-    Koszul duality is Vir_{13} <-> Vir_{13} (self-dual, AP8 safe:
-    this is QUADRATIC self-duality for c=13, not c=0 or c=26).
+    Koszul duality is Vir_{13} <-> Vir_{13} (chiral Koszul
+    self-duality, AP8 safe: quadratic uncurved self-duality is at
+    c=0, not c=13 or c=26).
 
     The complementarity sum: kappa + kappa' = 13/2 + 13/2 = 13 (AP24).
     delta_kappa = kappa - kappa' = 0 (AP29).

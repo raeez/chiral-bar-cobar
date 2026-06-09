@@ -103,7 +103,7 @@ class TestFunctorApplication:
     """Apply each of the seven functors to standard families."""
 
     def test_f1_heisenberg(self):
-        """F1 (bar-cobar) on Heisenberg: r(z) = k/z."""
+        """F1 (bar-cobar) on Heisenberg: r(z) = k*Omega_H/z (rank-one coeff k/z)."""
         A = make_heisenberg(1)
         out = F1_BarCobar.apply(A)
         assert isinstance(out, TwistingMorphismData)
@@ -741,7 +741,7 @@ class TestMultiPathKappaFromRMatrix:
     Path B: kappa recomputed from the r-matrix leading coefficient
     Path C: kappa from the three-way engine's kappa functions
 
-    For Heisenberg r(z) = k/z: the z^{-1} coeff IS k = kappa.
+    For Heisenberg r(z) = k*Omega_H/z (rank-one coeff k/z): the z^{-1} coeff IS k = kappa.
     For sl_2 r(z) = 1/(k+2) * Omega/z: the scalar prefactor is
     1/(k+2), and kappa = 3(k+2)/4, so prefactor = 3/(4*kappa).
     For Virasoro r(z) = (c/2)/z^3 + 2T/z: the z^{-3} coeff is

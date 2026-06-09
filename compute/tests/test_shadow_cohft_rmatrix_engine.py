@@ -358,7 +358,7 @@ class TestRank1RMatrix:
     """Tests for shadow R-matrix R(z) = sqrt(Q_L(z)/Q_L(0))."""
 
     def test_heisenberg_R_is_identity(self):
-        """Heisenberg: R(z) = 1 (trivial, Q_L constant)."""
+        """Heisenberg: Givental/shadow R(z) = 1 (trivial, Q_L constant)."""
         result = compute_r_matrix_rank1('heisenberg', 10, kappa=Rational(1))
         R = result['coefficients']
         assert R[0] == 1
@@ -366,7 +366,7 @@ class TestRank1RMatrix:
             assert R[i] == 0
 
     def test_heisenberg_is_polynomial(self):
-        """Heisenberg R-matrix is polynomial (degree 0)."""
+        """Heisenberg Givental/shadow R-matrix is polynomial (degree 0)."""
         result = compute_r_matrix_rank1('heisenberg', 10, kappa=Rational(1))
         assert result['is_polynomial'] is True
         assert result['polynomial_degree'] == 0

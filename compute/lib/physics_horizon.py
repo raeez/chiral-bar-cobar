@@ -24,8 +24,8 @@ Conjectures covered:
    Shadow: QME coefficients, ghost numbers, curvature data.
 
 5. HOLOGRAPHIC KOSZUL (conj:holographic-koszul, conj:ads-cft-bar)
-   Bar-cobar adjunction = algebraic shadow of AdS/CFT.
-   Shadow: boundary/bulk central charge relations for AdS3/CFT2.
+   Bar-cobar comparison is conditional on the seven-object tuple with maps.
+   Shadow: Virasoro complementarity and boundary/bulk central-charge numerics.
 
 6. AGT (conj:agt-bar-cobar, conj:agt-w-algebra, conj:q-agt)
    4D gauge partition function = 2D W-algebra conformal blocks.
@@ -50,6 +50,245 @@ from sympy import (
     Rational, Symbol, bernoulli, pi, simplify, sqrt, sympify,
     oo, series, Abs, prod as symprod,
 )
+
+
+PHYSICS_THEOREM_NAME_GATES: Tuple[Tuple[str, str], ...] = (
+    (
+        "physics_metaphors_removed_from_theorem_names",
+        "Theorem names are algebraic; physics language appears only in scoped corollaries.",
+    ),
+    (
+        "algebraic_theorem_statement_supplied",
+        "The algebraic theorem exists before any physical interpretation is attached.",
+    ),
+    (
+        "physics_corollary_separated",
+        "The physical reading is a corollary or heuristic with its own hypotheses.",
+    ),
+)
+
+
+ENTROPY_CHARACTER_GATES: Tuple[Tuple[str, str], ...] = (
+    (
+        "character_asymptotic_formula_defined",
+        "The entropy quantity is defined as an asymptotic of character coefficients.",
+    ),
+    (
+        "entropy_formula_identified_as_character_asymptotic",
+        "No black-hole or entanglement interpretation is asserted before the character asymptotic.",
+    ),
+    (
+        "modular_invariance_hypothesis_stated",
+        "The modular-invariance hypothesis used by the Cardy/BTZ step is explicit.",
+    ),
+    (
+        "large_n_condition_stated",
+        "The large-level or large-charge asymptotic regime is explicit.",
+    ),
+    (
+        "btz_entropy_proof_supplied",
+        "The BTZ entropy statement is proved under those hypotheses, not read off from notation.",
+    ),
+)
+
+
+CELESTIAL_COMPARISON_GATES: Tuple[Tuple[str, str], ...] = (
+    (
+        "celestial_comparison_defined",
+        "The celestial comparison functor or relation is defined.",
+    ),
+    (
+        "celestial_algebra_input_defined",
+        "The celestial algebra input and its OPE/filtration conventions are fixed.",
+    ),
+    (
+        "factorization_comparison_map_defined",
+        "The map to the factorization/chiral comparison target is specified.",
+    ),
+    (
+        "factorization_comparison_proved",
+        "The comparison is proved, not inferred from a shared symbol.",
+    ),
+    (
+        "celestial_theorem_scope_stated",
+        "The statement records whether it is algebraic, conditional, heuristic, or open.",
+    ),
+)
+
+
+HOLOGRAPHIC_TUPLE_GATES: Tuple[Tuple[str, str], ...] = (
+    (
+        "seven_object_tuple_defined",
+        "The replacement for 'holographic datum' is a seven-object tuple.",
+    ),
+    (
+        "tuple_maps_defined",
+        "The maps among the seven objects are part of the datum.",
+    ),
+    (
+        "unsupported_ads_cft_identifications_removed",
+        "No AdS/CFT identification is asserted without the tuple maps and proof.",
+    ),
+    (
+        "reconstruction_from_tuple_proved",
+        "Reconstruction is proved from the tuple, not presumed from terminology.",
+    ),
+    (
+        "failure_modes_when_maps_absent_stated",
+        "The statement names what fails when the maps are absent.",
+    ),
+)
+
+
+def _gate_report(
+    gates: Tuple[Tuple[str, str], ...],
+    satisfied: Dict[str, bool],
+) -> Dict[str, object]:
+    """Return the common gate report used by physics-scope guards."""
+    missing = [name for name, _ in gates if not satisfied.get(name, False)]
+    return {
+        "gates": {name: description for name, description in gates},
+        "satisfied": {name: bool(satisfied.get(name, False)) for name, _ in gates},
+        "missing": missing,
+        "all_gates_satisfied": len(missing) == 0,
+    }
+
+
+def physics_theorem_naming_scope(
+    theorem_name_contains_physics: bool = False,
+    algebraic_theorem_statement_supplied: bool = False,
+    physics_corollary_separated: bool = False,
+) -> Dict[str, object]:
+    """Gate physics language so theorem names remain algebraic."""
+    satisfied = {
+        "physics_metaphors_removed_from_theorem_names": not theorem_name_contains_physics,
+        "algebraic_theorem_statement_supplied": algebraic_theorem_statement_supplied,
+        "physics_corollary_separated": physics_corollary_separated,
+    }
+    report = _gate_report(PHYSICS_THEOREM_NAME_GATES, satisfied)
+    return {
+        **report,
+        "physics_named_theorem_allowed": False,
+        "physics_corollary_allowed": (
+            satisfied["physics_metaphors_removed_from_theorem_names"]
+            and algebraic_theorem_statement_supplied
+            and physics_corollary_separated
+        ),
+        "status": "corollary_scope" if report["all_gates_satisfied"] else "blocked",
+    }
+
+
+def entropy_character_asymptotic_scope(
+    character_asymptotic_formula_defined: bool = False,
+    entropy_formula_identified_as_character_asymptotic: bool = False,
+    modular_invariance_hypothesis_stated: bool = False,
+    large_n_condition_stated: bool = False,
+    btz_entropy_proof_supplied: bool = False,
+) -> Dict[str, object]:
+    """Gate entropy claims through character asymptotics and BTZ hypotheses."""
+    satisfied = {
+        "character_asymptotic_formula_defined": character_asymptotic_formula_defined,
+        "entropy_formula_identified_as_character_asymptotic": (
+            entropy_formula_identified_as_character_asymptotic
+        ),
+        "modular_invariance_hypothesis_stated": modular_invariance_hypothesis_stated,
+        "large_n_condition_stated": large_n_condition_stated,
+        "btz_entropy_proof_supplied": btz_entropy_proof_supplied,
+    }
+    report = _gate_report(ENTROPY_CHARACTER_GATES, satisfied)
+    character_entropy_allowed = (
+        character_asymptotic_formula_defined
+        and entropy_formula_identified_as_character_asymptotic
+    )
+    return {
+        **report,
+        "character_entropy_statement_allowed": character_entropy_allowed,
+        "btz_entropy_theorem_allowed": report["all_gates_satisfied"],
+        "physical_entropy_without_character_asymptotic_allowed": False,
+        "status": "btz_entropy_scope" if report["all_gates_satisfied"] else "blocked",
+    }
+
+
+def celestial_comparison_scope(
+    celestial_comparison_defined: bool = False,
+    celestial_algebra_input_defined: bool = False,
+    factorization_comparison_map_defined: bool = False,
+    factorization_comparison_proved: bool = False,
+    celestial_theorem_scope_stated: bool = False,
+) -> Dict[str, object]:
+    """Gate celestial statements through explicit comparison data."""
+    satisfied = {
+        "celestial_comparison_defined": celestial_comparison_defined,
+        "celestial_algebra_input_defined": celestial_algebra_input_defined,
+        "factorization_comparison_map_defined": factorization_comparison_map_defined,
+        "factorization_comparison_proved": factorization_comparison_proved,
+        "celestial_theorem_scope_stated": celestial_theorem_scope_stated,
+    }
+    report = _gate_report(CELESTIAL_COMPARISON_GATES, satisfied)
+    return {
+        **report,
+        "celestial_theorem_allowed": report["all_gates_satisfied"],
+        "shared_ope_notation_suffices": False,
+        "status": "celestial_comparison_scope" if report["all_gates_satisfied"] else "blocked",
+    }
+
+
+def holographic_tuple_reconstruction_scope(
+    seven_object_tuple_defined: bool = False,
+    tuple_maps_defined: bool = False,
+    unsupported_ads_cft_identifications_removed: bool = False,
+    reconstruction_from_tuple_proved: bool = False,
+    failure_modes_when_maps_absent_stated: bool = False,
+) -> Dict[str, object]:
+    """Gate holographic reconstruction through a seven-object tuple with maps."""
+    satisfied = {
+        "seven_object_tuple_defined": seven_object_tuple_defined,
+        "tuple_maps_defined": tuple_maps_defined,
+        "unsupported_ads_cft_identifications_removed": (
+            unsupported_ads_cft_identifications_removed
+        ),
+        "reconstruction_from_tuple_proved": reconstruction_from_tuple_proved,
+        "failure_modes_when_maps_absent_stated": failure_modes_when_maps_absent_stated,
+    }
+    report = _gate_report(HOLOGRAPHIC_TUPLE_GATES, satisfied)
+    tuple_available = seven_object_tuple_defined and tuple_maps_defined
+    return {
+        **report,
+        "legacy_holographic_datum_phrase_allowed": False,
+        "seven_object_tuple_available": tuple_available,
+        "holographic_reconstruction_theorem_allowed": report["all_gates_satisfied"],
+        "unsupported_ads_cft_identification_allowed": False,
+        "status": "tuple_reconstruction_scope" if report["all_gates_satisfied"] else "blocked",
+    }
+
+
+def physics_celestial_holographic_scope(
+    naming: Optional[Dict[str, bool]] = None,
+    entropy: Optional[Dict[str, bool]] = None,
+    celestial: Optional[Dict[str, bool]] = None,
+    holographic: Optional[Dict[str, bool]] = None,
+) -> Dict[str, object]:
+    """Aggregate the Front F scope gates for physics/celestial/holographic claims."""
+    naming_report = physics_theorem_naming_scope(**(naming or {}))
+    entropy_report = entropy_character_asymptotic_scope(**(entropy or {}))
+    celestial_report = celestial_comparison_scope(**(celestial or {}))
+    holographic_report = holographic_tuple_reconstruction_scope(**(holographic or {}))
+    reports = {
+        "naming": naming_report,
+        "entropy": entropy_report,
+        "celestial": celestial_report,
+        "holographic": holographic_report,
+    }
+    return {
+        "reports": reports,
+        "all_gates_satisfied": all(
+            report["all_gates_satisfied"] for report in reports.values()
+        ),
+        "blocked_components": [
+            name for name, report in reports.items()
+            if not report["all_gates_satisfied"]
+        ],
+    }
 
 
 # ===========================================================================
@@ -567,17 +806,26 @@ def qme_bar_equivalence_genus0() -> Dict[str, object]:
 def holographic_koszul_dictionary() -> Dict[str, str]:
     """Holographic Koszul duality dictionary (conj:holographic-koszul).
 
-    bar(A_boundary) ~ A_bulk (schematic).
+    The bar object is the boundary twisting coalgebra, not a
+    boundary-to-bulk operator.  A physical bulk comparison requires the
+    seven-object tuple, its maps, and the reconstruction theorem.
 
     Ground truth: poincare_duality_quantum.tex, concordance.tex.
     """
     return {
-        "bar": "boundary-to-bulk operator map",
-        "cobar": "bulk-to-boundary reconstruction",
-        "bar_cobar_adjunction": "algebraic shadow of AdS/CFT",
-        "collision_residues": "bulk interactions",
+        "bar": "B(A_boundary), the boundary twisting coalgebra",
+        "cobar": "Omega(B(A_boundary)) -> A_boundary, algebraic reconstruction",
+        "bar_cobar_adjunction": (
+            "algebraic bar-cobar adjunction; physical interpretation requires "
+            "the seven-object tuple with maps"
+        ),
+        "physical_boundary_bulk_promotion_allowed": "False",
+        "physical_bulk_requires": "OCA plus the seven-object tuple with maps",
+        "collision_residues": "candidate interaction shadows",
         "status": "ClaimStatusConjectured",
         "conjecture_label": "conj:holographic-koszul",
+        "unsupported_ads_cft_identification": "False",
+        "required_scope_gate": "holographic_tuple_reconstruction_scope",
     }
 
 
@@ -585,8 +833,9 @@ def ads3_cft2_virasoro(c: object = None) -> Dict[str, object]:
     """AdS3/CFT2 holographic pair for Virasoro.
 
     Boundary: Virasoro at central charge c.
-    Koszul dual: Virasoro at c' = 26 - c.
-    Holographic interpretation: c' is related to bulk cosmological constant.
+    Koszul-dual companion: Virasoro at c' = 26 - c.
+    A physical bulk interpretation of c' requires the holographic tuple
+    and open/closed comparison data.
 
     For AdS3/CFT2 with Vasiliev higher-spin gravity:
       Boundary: W_inf[lambda] at c = N.
@@ -597,15 +846,16 @@ def ads3_cft2_virasoro(c: object = None) -> Dict[str, object]:
     c_dual = 26 - c
     return {
         "boundary_c": c,
-        "bulk_c_dual": c_dual,
+        "dual_c": c_dual,
         "sum": simplify(c + c_dual),
         "kappa_boundary": c / 2,
-        "kappa_bulk": c_dual / 2,
-        "cosmological_constant_proxy": c_dual / 2,
+        "kappa_dual": c_dual / 2,
+        "physical_bulk_identification_allowed": False,
+        "cosmological_constant_proxy_status": "heuristic_requires_holographic_tuple",
         "special_cases": {
-            "c=26": "bulk dual c'=0 (uncurved, flat AdS limit)",
+            "c=26": "Koszul companion c'=0",
             "c=13": "self-dual point (c=c'=13)",
-            "c=0": "bulk dual c'=26 (maximal curvature)",
+            "c=0": "Koszul companion c'=26",
         },
     }
 
@@ -655,9 +905,10 @@ def w_infinity_higher_spin(N: int, lam: object = None) -> Dict[str, object]:
         "boundary_c": N,
         "bulk_theory": "Vasiliev hs[lambda] on AdS3",
         "bar_complex_role": "organizes higher-spin interaction data",
-        "cobar_role": "recovers boundary W_inf from bulk",
+        "cobar_role": "algebraic reconstruction target; physical comparison requires the holographic tuple",
         "parameter_lambda": lam,
         "lambda_controls": "both W-algebra structure constants and bulk coupling constants",
+        "physical_bulk_identification_allowed": False,
     }
 
 
@@ -1002,10 +1253,10 @@ def verify_all_physics_horizon() -> Dict[str, bool]:
     # --- Holographic ---
     holo = ads3_cft2_virasoro(26)
     results["AdS3/CFT2: c + c' = 26"] = (holo["sum"] == 26)
-    results["AdS3/CFT2 c=26: c' = 0"] = (holo["bulk_c_dual"] == 0)
+    results["AdS3/CFT2 c=26: c' = 0"] = (holo["dual_c"] == 0)
 
     holo13 = ads3_cft2_virasoro(13)
-    results["AdS3/CFT2 c=13: self-dual"] = (holo13["bulk_c_dual"] == 13)
+    results["AdS3/CFT2 c=13: self-dual"] = (holo13["dual_c"] == 13)
 
     # --- Sugawara ---
     c_sl2_k1 = sugawara_central_charge(3, 1, 2)

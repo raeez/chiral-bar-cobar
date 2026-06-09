@@ -186,7 +186,7 @@ def kappa_method1_genus1(family: str, **params) -> Optional[Rational]:
         # The genus-1 bar graph is a single vertex with one edge:
         #   F_1 = (1/|Aut|) * kappa * lambda_1 where the self-sewing extracts kappa.
         # For Heisenberg: the OPE J(z)J(w) ~ k/(z-w)^2, and the bar propagator
-        # d log E(z,w) extracts the residue, giving r(z) = k/z.
+        # d log E(z,w) extracts the residue, giving r(z) = k*Omega_H/z (rank-one coeff k/z).
         # The genus-1 graph (theta-graph on torus) evaluates to
         #   F_1 = (1/2) * Tr(r * P) where P is the torus propagator.
         # Actually, the torus self-sewing of a single edge gives:
@@ -309,7 +309,7 @@ def kappa_method2_ope(family: str, **params) -> Optional[Rational]:
 
     For Heisenberg H_k: kappa = k.
       The JJ OPE is J(z)J(w) = k/(z-w)^2.
-      The bar extraction gives r(z) = k/z.
+      The bar extraction gives r(z) = k*Omega_H/z (rank-one coeff k/z).
       The genus-1 trace: Tr(k) = k (single generator).
 
     For W_N: kappa = c * sigma(g) where sigma = sum 1/(m_i + 1).

@@ -214,7 +214,9 @@ def shadow_r_matrix_rank1(kappa_val, alpha_val, S4_val, max_order: int = 12):
 
     This gives R_n as the n-th Taylor coefficient of sqrt(1 + (q1/q0)*z + (q2/q0)*z^2).
 
-    For Heisenberg: q1 = q2 = 0, so R(z) = 1 (trivial).
+    For Heisenberg: q1 = q2 = 0, so the Givental/shadow R(z) = 1
+    (trivial).  This is not the ordered-bar quantum braiding
+    R_{H_k}(z) = exp(k*hbar/z).
     For affine: q2 = 9*alpha^2 (Delta = 0), R(z) polynomial.
     For Virasoro: Delta > 0, R(z) is an infinite power series.
 
@@ -868,7 +870,7 @@ def _cohft_vertex_1_2(R_coeffs: List):
 def classify_r_matrix_depth(family: str, max_order: int = 20, **params):
     r"""Classify the shadow depth from R-matrix polynomial/series nature.
 
-    Class G (Heisenberg): R(z) = 1 (trivial, degree 0)
+    Class G (Heisenberg): Givental/shadow R(z) = 1 (trivial, degree 0)
     Class L (affine): R(z) polynomial of degree <= 2
     Class C (beta-gamma): R(z) polynomial of degree <= 3
     Class M (Virasoro, W_N): R(z) infinite power series
@@ -935,7 +937,7 @@ def heisenberg_ahat_verification(max_genus: int = 5):
 
     For Heisenberg, the shadow CohFT is the trivial (Hodge) CohFT:
       - Q_L = const (shadow metric is flat)
-      - R(z) = 1 (trivial R-matrix)
+      - Givental/shadow R(z) = 1 (trivial R-matrix)
       - F_g = kappa * lambda_g^FP (directly from the Hodge class)
 
     The R-matrix of the HODGE CohFT (not the Heisenberg shadow CohFT)

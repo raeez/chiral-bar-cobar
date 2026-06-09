@@ -610,8 +610,11 @@ class PrimarySectorAInfinity:
         product (from the coalgebra coproduct and the algebra structure on k).
 
         Actually, for the transferred A-infinity on H*(B(A)), the relevant
-        product is: H*(B(A)) is the Koszul dual A^!, and the A-infinity
-        structure on A^! comes from the bar-cobar resolution.
+        product lives first on the bar-cohomology coalgebra
+        A^i = H*(B(A)).  The algebra A^! is obtained only after the
+        separate Verdier/continuous-linear dual branch and the required
+        completion/convergence hypotheses; it is not the output of the
+        bar-cobar counit.
 
         THE CORRECT INTERPRETATION:
 

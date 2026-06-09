@@ -57,6 +57,14 @@ from compute.lib.cy_bkm_algebra_engine import (
     # Truncated product
     borcherds_product_expansion, phi10_known_coefficients,
     denominator_identity_check_leading,
+    # Hall--Borcherds recognition gates
+    HDELTA5_TARGET_LABEL, HDELTA5_RECOGNIZED_LABEL,
+    HDELTA5_GATE_ORDER, HDELTA5_RECOGNITION_GATES,
+    HEEGNER_COMPARISON_GATES, FINITE_HALL_WINDOW_AXES,
+    hdelta5_recognition_status, finite_hall_window,
+    hall_borcherds_comparison_scope, heegner_comparison_gate_status,
+    hdelta5_theorem_recognition_scope, k3_bkm_lane_separation_report,
+    sieg_borcherds_associator_scope,
     # Shadow connection
     shadow_kappa_k3_sigma, shadow_kappa_k3xe_total,
     k3xe_kappa_split, igusa_delta5_normalization,
@@ -628,6 +636,151 @@ class TestBorcherdsProduct(unittest.TestCase):
         self.assertIsInstance(result, dict)
 
 
+class TestHallBorcherdsRecognition(unittest.TestCase):
+    """Section 14.5: D1-D5 gates before H_Delta5 recognition."""
+
+    def test_hdelta5_target_until_d1_d5_complete(self):
+        """Without D1-D5, the finite object is H_Delta5^target only."""
+        status = hdelta5_recognition_status()
+        self.assertEqual(status.allowed_label, HDELTA5_TARGET_LABEL)
+        self.assertIsNone(status.recognized_label)
+        self.assertEqual(status.missing_gates, HDELTA5_GATE_ORDER)
+        self.assertFalse(status.d1_d5_complete)
+        self.assertTrue(status.finite_window_only)
+        self.assertFalse(status.hdelta5_name_allowed)
+        self.assertFalse(status.omega_b_hdelta5_equivalence_allowed)
+
+    def test_hdelta5_recognized_only_after_all_gates(self):
+        """H_Delta5 and OmegaB(H_Delta5) are unlocked only after D1-D5."""
+        status = hdelta5_recognition_status(set(HDELTA5_GATE_ORDER))
+        self.assertEqual(status.allowed_label, HDELTA5_RECOGNIZED_LABEL)
+        self.assertEqual(status.recognized_label, HDELTA5_RECOGNIZED_LABEL)
+        self.assertEqual(status.completed_gates, HDELTA5_GATE_ORDER)
+        self.assertEqual(status.missing_gates, ())
+        self.assertTrue(status.d1_d5_complete)
+        self.assertTrue(status.hdelta5_name_allowed)
+        self.assertTrue(status.omega_b_hdelta5_equivalence_allowed)
+
+    def test_hdelta5_rejects_unknown_gate(self):
+        """The recognition ledger has no silent sixth gate."""
+        with self.assertRaises(ValueError):
+            hdelta5_recognition_status({'D1', 'DX'})
+
+    def test_gate_statements_cover_all_required_gates(self):
+        """Each D1-D5 gate has a load-bearing statement."""
+        self.assertEqual(tuple(HDELTA5_RECOGNITION_GATES), HDELTA5_GATE_ORDER)
+        for gate in HDELTA5_GATE_ORDER:
+            self.assertGreater(len(HDELTA5_RECOGNITION_GATES[gate]), 20)
+
+    def test_finite_hall_window_axes_and_bounds(self):
+        """Finite K3 Hall windows are bounded in height, charge, and weight."""
+        window = finite_hall_window(height=2, charge=3, weight=5)
+        self.assertEqual(window['axes'], FINITE_HALL_WINDOW_AXES)
+        self.assertEqual(window['bounds']['height'], 2)
+        self.assertEqual(window['bounds']['charge'], 3)
+        self.assertEqual(window['bounds']['weight'], 5)
+        self.assertTrue(window['finite_window_only'])
+        self.assertIn('K3', window['k3_source'])
+        self.assertIn('required for D2', window['associated_graded_status'])
+
+    def test_finite_hall_window_rejects_negative_bound(self):
+        """A finite window cannot have a negative truncation bound."""
+        with self.assertRaises(ValueError):
+            finite_hall_window(height=1, charge=-1, weight=1)
+
+    def test_hall_borcherds_scope_keeps_comparisons_missing(self):
+        """Finite coefficient samples do not construct Hall/bar comparison maps."""
+        scope = hall_borcherds_comparison_scope(height=1, charge=1, weight=1)
+        self.assertEqual(scope['target_label_before_D1_D5'], HDELTA5_TARGET_LABEL)
+        self.assertEqual(scope['recognized_label_after_D1_D5'], HDELTA5_RECOGNIZED_LABEL)
+        self.assertFalse(scope['bar_cobar_comparison_constructed'])
+        self.assertFalse(scope['product_preservation_proved'])
+        self.assertFalse(scope['coproduct_preservation_proved'])
+        self.assertFalse(scope['differential_preservation_proved'])
+        self.assertFalse(scope['augmentation_preservation_proved'])
+        self.assertFalse(scope['averaging_preservation_proved'])
+        self.assertFalse(scope['finite_window_counits_quasi_isomorphisms'])
+        self.assertFalse(scope['mittag_leffler_limit_proved'])
+        self.assertFalse(scope['omega_b_hdelta5_equivalence_allowed'])
+        self.assertFalse(scope['no_extra_root_spaces'])
+        self.assertFalse(scope['no_hidden_central_summands'])
+        self.assertFalse(scope['no_torsion_classes'])
+
+    def test_heegner_comparison_gates_default_missing(self):
+        """Heegner comparison gates are a second recognition layer."""
+        status = heegner_comparison_gate_status()
+        self.assertEqual(status['gate_statements'], HEEGNER_COMPARISON_GATES)
+        self.assertEqual(status['missing_gates'], status['gate_order'])
+        self.assertFalse(status['heegner_comparison_complete'])
+
+    def test_hdelta5_theorem_is_recognition_not_construction_until_all_gates(self):
+        """D1-D5 alone is not enough without Heegner comparison gates."""
+        scope = hdelta5_theorem_recognition_scope(
+            d1_d5_completed=set(HDELTA5_GATE_ORDER),
+        )
+        self.assertEqual(scope['allowed_label'], HDELTA5_TARGET_LABEL)
+        self.assertIsNone(scope['recognized_label'])
+        self.assertTrue(scope['recognition_not_construction'])
+        self.assertFalse(scope['construction_claim_allowed'])
+        self.assertFalse(scope['hdelta5_recognized'])
+        self.assertEqual(scope['missing_d1_d5_gates'], ())
+        self.assertEqual(scope['missing_heegner_gates'],
+                         scope['heegner_status']['gate_order'])
+
+    def test_hdelta5_theorem_recognized_only_after_d1_d5_and_heegner(self):
+        """The recognition label appears only after both gate packages close."""
+        heegner_gates = {f'G{i}' for i in range(1, len(HEEGNER_COMPARISON_GATES) + 1)}
+        scope = hdelta5_theorem_recognition_scope(
+            d1_d5_completed=set(HDELTA5_GATE_ORDER),
+            heegner_completed=heegner_gates,
+        )
+        self.assertEqual(scope['allowed_label'], HDELTA5_RECOGNIZED_LABEL)
+        self.assertEqual(scope['recognized_label'], HDELTA5_RECOGNIZED_LABEL)
+        self.assertTrue(scope['hdelta5_recognized'])
+        self.assertFalse(scope['construction_claim_allowed'])
+
+    def test_sieg_borcherds_associator_default_is_conjectural_hbar3(self):
+        """Scalar target data is not a Hall associator; pentagon is hbar^3 only."""
+        scope = sieg_borcherds_associator_scope()
+        self.assertEqual(scope['associator_status'], 'conjectural')
+        self.assertFalse(scope['associator_constructed'])
+        self.assertEqual(scope['pentagon_verified_order'], 3)
+        self.assertEqual(scope['pentagon_status'], 'verified_through_hbar^3')
+        self.assertFalse(scope['all_order_pentagon_proved'])
+        self.assertFalse(scope['scalar_target_is_hall_associator'])
+
+    def test_sieg_borcherds_associator_requires_all_order_hall_realization(self):
+        """All-order pentagon plus Hall realization are both required."""
+        partial = sieg_borcherds_associator_scope(
+            hall_realization_constructed=True,
+            all_order_pentagon_proved=False,
+            scalar_target_data_only=False,
+        )
+        full = sieg_borcherds_associator_scope(
+            hall_realization_constructed=True,
+            all_order_pentagon_proved=True,
+            scalar_target_data_only=False,
+        )
+        self.assertEqual(partial['associator_status'], 'conjectural')
+        self.assertFalse(partial['scalar_target_is_hall_associator'])
+        self.assertEqual(full['associator_status'], 'constructed')
+        self.assertTrue(full['scalar_target_is_hall_associator'])
+
+    def test_k3_bkm_lane_separation_report(self):
+        """Mukai, BKM, fibre, categorical, and Heisenberg lanes are disjoint."""
+        report = k3_bkm_lane_separation_report()
+        self.assertEqual(report['K_kappa_Mukai'], F(8))
+        self.assertEqual(report['kappa_BKM_Delta5'], F(5))
+        self.assertEqual(report['kappa_fiber'], F(24))
+        self.assertEqual(report['kappa_cat'], F(0))
+        self.assertEqual(report['kappa_Heis'], F(3))
+        self.assertFalse(report['number_transfer_allowed_without_comparison'])
+        self.assertEqual(
+            set(report['lane_values'].values()),
+            {F(0), F(3), F(5), F(8), F(24)},
+        )
+
+
 class TestShadowConnection(unittest.TestCase):
     """Section 15-16: Shadow tower connection."""
 
@@ -705,6 +858,14 @@ class TestShadowConnection(unittest.TestCase):
         self.assertEqual(data['product_exp_c0'], 20)
         self.assertEqual(data['sample_real_even_dim'], 1)
         self.assertEqual(data['sample_lightlike_even_dim'], 20)
+        self.assertEqual(data['allowed_hall_label'], HDELTA5_TARGET_LABEL)
+        self.assertFalse(data['hdelta5_name_allowed'])
+        self.assertFalse(data['omega_b_hdelta5_equivalence_allowed'])
+        self.assertFalse(data['bar_cobar_comparison_constructed'])
+        self.assertEqual(data['finite_hall_borcherds_recognition_required'],
+                         HDELTA5_GATE_ORDER)
+        self.assertEqual(data['k3_bkm_lane_separation']['K_kappa_Mukai'],
+                         F(8))
 
     def test_fg_positive(self):
         """F_g values are positive for g >= 1."""

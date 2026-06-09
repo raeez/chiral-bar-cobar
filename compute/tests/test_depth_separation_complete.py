@@ -60,6 +60,7 @@ from depth_separation_complete import (
     minimal_model_conformal_weights,
     minimal_model_n_primaries,
     minimal_model_scalar_primaries,
+    no_finite_depth_beyond_contact_witness,
     print_table,
     verify_all_additivity,
 )
@@ -196,6 +197,19 @@ class TestClassC:
         """kappa(betagamma, lambda=1) = 1 (AP1)."""
         entry = depth_betagamma(1)
         assert entry.kappa == Rational(1)
+
+    def test_no_finite_depth_beyond_contact_witness(self):
+        """Standard-landscape support alternatives exclude finite d_alg >= 3."""
+        witness = no_finite_depth_beyond_contact_witness()
+        assert witness["no_finite_depth_ge_3"] is True
+        assert witness["finite_d_alg_values"] == [0, 1, 2]
+        assert witness["bad_finite_entries"] == []
+        alternatives = witness["support_alternatives"]
+        assert alternatives["decoupled"]["composition_law"] == "max"
+        assert alternatives["decoupled"]["creates_depth_ge_3"] is False
+        assert alternatives["contact"]["self_target_dim_2q"] == 0
+        assert alternatives["contact"]["d_alg"] == 2
+        assert alternatives["coupled"]["d_alg"] is None
 
 
 # ========================================================================

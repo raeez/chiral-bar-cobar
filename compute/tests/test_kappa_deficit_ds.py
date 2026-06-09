@@ -274,7 +274,7 @@ class TestKoszulConductorToda:
     def test_BP_complementarity_value(self):
         """kappa(BP,k) + kappa(BP,k') = 98/3.
 
-        # AP140: corrected from 1/3; K_BP=196, rho=1/6, kappa_sum=(1/6)*196=98/3
+        # AP140: K_BP=196, rho=1/6, kappa_sum=(1/6)*196=98/3
         """
         kp = dual_level(k, 3)
         s = simplify(kappa_BP(k) + kappa_BP(kp))

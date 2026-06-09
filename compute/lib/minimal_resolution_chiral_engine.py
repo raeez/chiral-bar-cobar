@@ -306,9 +306,9 @@ def betagamma_hilbert(n: int) -> int:
 
     For lambda = 1/2 (the symplectic boson), beta and gamma both have weight
     1/2, so by-integer-weights modes contribute as the partition function.
-    For INTEGER lambda = 0/1 (the standard betagamma at c = -2), beta has
+    For INTEGER lambda = 0/1 (the standard betagamma at c = 2), beta has
     weight 0 (forbidden by positive-energy axiom) -- AP18 exception.
-    Here we use lambda = 1, c = -2: gamma has weight 0 (constant), beta has
+    Here we use lambda = 1, c = 2: gamma has weight 0 (constant), beta has
     weight 1; we count gamma-FREE descendants only.
     Standard convention: chi_{BG}(q) = prod_{m >= 1}(1 - q^m)^{-2} (after
     removing zero modes).

@@ -1335,9 +1335,9 @@ def definitive_answer() -> Dict[str, object]:
     Q: Are the bar cohomology dimensions 1,2,5,12,30,76,...
     INDEPENDENT of c? Or do they change at rational c?
 
-    A: The dimensions listed (which are actually dim(A^!)_n from
-    the Riordan/Koszul dual perspective, or equivalently dim H^n(B(V_c))
-    for the CHIRAL bar complex) are:
+    A: The dimensions listed are dim(A^i)_n for the chiral bar-dual
+    coalgebra, equivalently dim(A^!)_n after the Riordan/Koszul dual
+    branch, and match dim H^n(B(V_c)) for the CHIRAL bar complex:
 
     (1) For the UNIVERSAL Virasoro V_c (vacuum Verma module):
         INDEPENDENT of c at the chain level (chain dimensions

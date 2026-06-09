@@ -1,7 +1,10 @@
-"""Theorem C verification: complementarity Q_g(A) + Q_g(A!) = H*(M_bar_g, Z(A)).
+"""Theorem C verification: scalar complementarity and C2 upgrade scope.
 
-THEOREM C (Main Theorem 3 of 5): The genus-g quantum moduli of A and A!
-are complementary Lagrangian subvarieties.
+THEOREM C (Main Theorem 3 of 5) is stratified here as follows.
+  C0/C1: the coderived fiber-center and scalar Verdier/eigenspace
+    complementarity checks are computed in this module.
+  C2: the shifted-symplectic/Lagrangian upgrade is conditional on the
+    ambient perfectness, nondegeneracy, and BV/QME hypothesis package.
 
 At the scalar level (Theorem D):
   kappa(A) + kappa(A!) = constant (family-specific)
@@ -26,8 +29,8 @@ CRITICAL DISTINCTIONS:
   - Heisenberg is NOT self-dual: kappa -> -kappa under duality.
 
 Upgraded complementarity (Lagrangian geometry):
-  M_A and M_{A!} are shifted-symplectic Lagrangian subvarieties of the
-  ambient phase space C_g(A) = Q_g(A) + Q_g(A!).
+  The scalar computations below are indicators for the C2 upgrade; they
+  do not by themselves certify shifted-symplectic Lagrangian maps.
 
 References:
   thm:quantum-complementarity-main (higher_genus_complementarity.tex)
@@ -41,6 +44,45 @@ from fractions import Fraction
 from typing import Any, Dict, List, Optional, Tuple
 
 from sympy import Rational, Symbol, bernoulli, factorial, simplify, sympify
+
+
+C2_LAGRANGIAN_HYPOTHESES: Tuple[str, ...] = (
+    "C0_fiber_center_identification",
+    "C1_homotopy_eigenspace_decomposition",
+    "uniform_weight_perfectness",
+    "nondegenerate_cyclic_pairing",
+    "finite_modular_envelope",
+    "closed_cyclic_pairing",
+    "skew_adjoint_differential",
+    "modular_bracket_compatibility",
+    "twisted_tensor_acyclicity",
+    "ambient_BV_QME_input",
+)
+
+C2_LAGRANGIAN_CONDITIONAL_STATUS = (
+    "conditional_on_C2_shifted_symplectic_hypothesis_package"
+)
+
+
+def _c2_hypothesis_report(
+    provided: Optional[Tuple[str, ...]] = None,
+) -> Dict[str, Any]:
+    """Report which C2 Lagrangian hypotheses have been supplied."""
+    verified = tuple(provided or ())
+    verified_set = set(verified)
+    missing = tuple(
+        hyp for hyp in C2_LAGRANGIAN_HYPOTHESES if hyp not in verified_set
+    )
+    return {
+        "c2_required_hypotheses": C2_LAGRANGIAN_HYPOTHESES,
+        "c2_verified_hypotheses": verified,
+        "c2_missing_hypotheses": missing,
+        "c2_hypothesis_package_complete": not missing,
+        "lagrangian_upgrade_status": (
+            "C2_hypothesis_package_supplied"
+            if not missing else C2_LAGRANGIAN_CONDITIONAL_STATUS
+        ),
+    }
 
 
 # ========================================================================
@@ -191,6 +233,8 @@ def kappa(family: str, **params) -> Fraction:
         k = params.get("k", 1)
         dim_g, h_dual = _lie_dim_hdual(lie_type, rank)
         k_frac = Fraction(k)
+        if k_frac == -h_dual:
+            raise ValueError(f"Critical level k = -{h_dual}: kappa undefined")
         return Fraction(dim_g) * (k_frac + h_dual) / (2 * h_dual)
 
     elif family == "betagamma":
@@ -682,20 +726,20 @@ def virasoro_self_dual_check() -> Dict[str, Any]:
 # Lagrangian complementarity indicators
 # ========================================================================
 
-def lagrangian_complementarity_check(family: str, **params) -> Dict[str, Any]:
-    """Shifted-symplectic Lagrangian indicators for complementarity.
+def lagrangian_complementarity_check(
+    family: str,
+    c2_hypotheses: Optional[Tuple[str, ...]] = None,
+    **params,
+) -> Dict[str, Any]:
+    """Scalar indicators for the conditional C2 Lagrangian upgrade.
 
-    In the upgraded form of Theorem C:
-      - M_A and M_{A!} are Lagrangian subvarieties of C_g(A)
-      - C_g(A) = Q_g(A) + Q_g(A!) carries a (-1)-shifted symplectic structure
-      - The Lagrangian property: dim M_A = dim M_{A!} = (1/2) dim C_g(A)
-
-    At the scalar level, the Lagrangian condition requires:
+    At the C0/C1 scalar level, the complementarity indicator requires:
       1. kappa and kappa! are well-defined (non-critical)
       2. The complementarity sum kappa + kappa! is a topological constant
       3. The Lagrangian splitting is compatible with the genus expansion
 
-    CONDITIONAL on perfectness/nondegeneracy hypotheses.
+    This routine does not certify the C2 shifted-symplectic theorem.  It
+    reports the missing C2 hypothesis package explicitly.
 
     Returns dict with all indicators.
     """
@@ -708,17 +752,25 @@ def lagrangian_complementarity_check(family: str, **params) -> Dict[str, Any]:
     fg1_A = _F_g(k_A, 1)
     fg1_dual = _F_g(k_dual, 1)
 
+    scalar_ok = total == expected
+    c2_report = _c2_hypothesis_report(c2_hypotheses)
+
     return {
         "family": family,
+        "theorem_c_layer": "C1_scalar_indicator",
+        "c0_c1_status": "proved_scalar_Verdier_sum_indicator",
         "kappa_A": k_A,
         "kappa_A_dual": k_dual,
         "sum": total,
-        "sum_is_constant": total == expected,
+        "sum_is_constant": scalar_ok,
         "F1_A": fg1_A,
         "F1_A_dual": fg1_dual,
         "F1_sum": fg1_A + fg1_dual,
-        "lagrangian_splitting_scalar": total == expected,
-        "conditional_on": "perfectness and nondegeneracy hypotheses",
+        "lagrangian_splitting_scalar": scalar_ok,
+        "c2_lagrangian_upgrade_verified": False,
+        "c2_scalar_indicator_supports_upgrade": scalar_ok,
+        "conditional_on": C2_LAGRANGIAN_CONDITIONAL_STATUS,
+        **c2_report,
     }
 
 
@@ -1279,10 +1331,12 @@ def genus_g_complementarity_graph_sum(
 # ========================================================================
 
 def lagrangian_complementarity_computed(
-    family: str, max_genus: int = 3, **params
+    family: str,
+    max_genus: int = 3,
+    c2_hypotheses: Optional[Tuple[str, ...]] = None,
+    **params,
 ) -> Dict[str, Any]:
-    """Compute the Gram matrix of the complementarity pairing and verify
-    non-degeneracy and Lagrangian signature.
+    """Compute scalar Gram matrices for complementarity.
 
     At the scalar level, the complementarity data for each genus g is the pair
     (F_g(A), F_g(A!)) in C^2. The Gram matrix of the pairing
@@ -1291,16 +1345,14 @@ def lagrangian_complementarity_computed(
              [<F_g(A!), F_g(A)>,  <F_g(A!), F_g(A!)>  ]]
     where <x, y> = x * y (the natural scalar pairing).
 
-    For the Lagrangian splitting:
-      - Non-degeneracy: det(G) != 0
-      - Lagrangian property: The signature should be (1,1) or (0,2)
-        depending on the signs of F_g(A) and F_g(A!).
-
     The full vector-valued complementarity involves the Chern-Simons partition
-    function on Q_g(A), but at the scalar projection, we can verify:
+    function on Q_g(A).  At the scalar projection we can verify only:
       1. The 2x2 Gram matrix is computed (not hardcoded)
-      2. Its determinant is nonzero when kappa != 0 and kappa! != 0
-      3. The Lagrangian signature is checked
+      2. Its determinant is zero because both entries are multiples of lambda_g
+      3. The cross-pairing equals the Verdier complementarity sum
+
+    The scalar Gram computation is therefore a C1 indicator, not a C2
+    nondegeneracy or Lagrangian-signature proof.
     """
     k_A = kappa(family, **params)
     k_dual = kappa_dual(family, **params)
@@ -1357,9 +1409,12 @@ def lagrangian_complementarity_computed(
             "both_nonzero": nondegenerate,
         }
 
+    c2_report = _c2_hypothesis_report(c2_hypotheses)
+
     return {
         "family": family,
         "params": params,
+        "theorem_c_layer": "C1_scalar_gram_indicator",
         "kappa_A": k_A,
         "kappa_dual": k_dual,
         "max_genus": max_genus,
@@ -1368,8 +1423,11 @@ def lagrangian_complementarity_computed(
             r["cross_match"] for r in genus_results.values()
         ),
         "all_both_nonzero": all_nondegenerate,
+        "c2_lagrangian_upgrade_verified": False,
+        "scalar_gram_certifies": "C1_cross_pairing_only",
         "note": "Scalar Gram matrix has rank 1 (F_g and F_g! proportional to lambda_g). "
                 "Full non-degeneracy requires the vector-valued theory.",
+        **c2_report,
     }
 
 

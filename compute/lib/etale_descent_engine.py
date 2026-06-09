@@ -44,10 +44,10 @@ KEY RESULTS VERIFIED:
       The enrichment changes: H^{1,0}(Y) != H^{1,0}(X) in general.
 
   (F) GENUS-g HODGE DATA:
-      At genus g >= 1, the obstruction class obs_g = kappa * lambda_g
-      factors as (curve-independent scalar) * (universal tautological class).
-      lambda_g lives on M-bar_g, not on X, so obs_g is independent of X
-      within a fixed genus stratum.
+      At genus g >= 1, the scalar obstruction class
+      obs_g^sc = kappa * lambda_g factors as (curve-independent scalar) *
+      (universal tautological class).  lambda_g lives on M-bar_g, not on X,
+      so obs_g^sc is independent of X within a fixed genus stratum.
 
   (G) ETALE DESCENT FOR FACTORIZATION ALGEBRAS:
       A factorization algebra F on Ran(X) satisfies etale descent if for
@@ -425,7 +425,7 @@ def obstruction_class(ope: OPEData, g: int) -> Rational:
 def obstruction_curve_independent(ope: OPEData, g: int) -> bool:
     """Whether obs_g is curve-independent.
 
-    Always True: obs_g = kappa * lambda_g^FP factors as
+    Always True on the scalar lane: obs_g^sc = kappa * lambda_g^FP factors as
     (OPE-intrinsic scalar) * (universal tautological class).
     The tautological class lives on M-bar_g, not on X.
     """
@@ -554,7 +554,8 @@ def cross_genus_kappa_consistency(ope: OPEData, max_genus: int = 5) -> bool:
     """Verify that kappa is the SAME at all genera.
 
     kappa is an intrinsic invariant of A, computed from the genus-1
-    bar complex.  It appears in obs_g = kappa * lambda_g for all g.
+    bar complex.  It appears in obs_g^sc = kappa * lambda_g for all g on
+    the scalar lane.
     If kappa changed with genus, the factored form would be inconsistent.
     """
     kappa_values = []

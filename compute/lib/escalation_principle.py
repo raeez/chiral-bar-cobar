@@ -212,10 +212,12 @@ def mc_to_fourier_status(g: int) -> Tuple[ClaimStatus, str]:
     -----
     The MC equation D^2 = 0 at genus g produces the genus-g amplitude
     as a graph sum. For lattice VOAs, this is the genus-g theta series.
-    The MC-to-Fourier chain:
+    The convolution-level MC-to-Fourier chain:
       D^2 = 0 -> genus-g graph sum -> Theta^(g)_Lambda -> Fourier coefficients
-    is PROVED at all genera (it's a formal consequence of D^2 = 0, which is
-    proved by thm:ambient-d-squared-zero).
+    is proved at the fixed-carrier convolution level.  The ambient
+    relative-log refinement with planted-forest corrections is conditional on
+    the signed residue-pushforward/coherence package of
+    thm:ambient-d-squared-zero.
 
     However, INTERPRETING the Fourier coefficients as L-values requires
     the Böcherer formula (genus-dependent, see bocherer_status).
@@ -223,8 +225,10 @@ def mc_to_fourier_status(g: int) -> Tuple[ClaimStatus, str]:
     if g < 1:
         raise ValueError(f"Genus must be >= 1, got {g}")
     return (ClaimStatus.PROVED,
-            "D^2 = 0 (thm:ambient-d-squared-zero) -> genus-g graph sum -> "
-            "Fourier coefficients. The MC-to-Fourier step is unconditional.")
+            "Convolution D^2 = 0 is proved; the ambient log-FM "
+            "planted-forest refinement is conditional on the signed "
+            "residue-pushforward/coherence package of "
+            "thm:ambient-d-squared-zero.")
 
 
 # ============================================================================

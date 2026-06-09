@@ -229,6 +229,13 @@ J_COEFFICIENTS = {
     10: 22567393309593600,
 }
 
+MOONSHINE_K3_FIREWALL_HYPOTHESES = (
+    "explicit comparison morphism from Monster/Leech lane to K3/Mukai lane",
+    "normalization of kappa family: Monster/Virasoro, Leech/lattice, or Mukai/K3",
+    "source object identified before scalar constants are transported",
+    "proof that the transported scalar is invariant under the comparison",
+)
+
 
 # =========================================================================
 # Faber-Pandharipande intersection numbers
@@ -786,6 +793,51 @@ def comparison_table() -> List[Dict[str, Any]]:
     })
 
     return entries
+
+
+def moonshine_k3_mukai_firewall() -> Dict[str, Any]:
+    r"""Separate Monster/Leech constants from the K3/Mukai lane.
+
+    This module computes moonshine and Leech-lattice data only.  It does
+    not compute K3/Mukai constants, and it does not transport the Monster
+    coefficient or the Leech lattice kappa into the K3/Mukai lane.
+    """
+    return {
+        "monster_voa": {
+            "object": "V^natural",
+            "lane": "Monster moonshine VOA",
+            "central_charge": C_VNATURAL,
+            "dim_V1": DIM_V1_VNATURAL,
+            "kappa": Rational(12),
+            "constants": {
+                "J_1": J_COEFFICIENTS[1],
+                "dim_V2": DIM_V2_VNATURAL,
+                "monster_order": MONSTER_ORDER,
+            },
+        },
+        "leech_lattice_voa": {
+            "object": "V_Leech",
+            "lane": "Leech lattice VOA",
+            "central_charge": Rational(24),
+            "rank": RANK_LEECH,
+            "dim_V1": DIM_V1_LEECH,
+            "kappa": Rational(24),
+            "constants": {
+                "rank": RANK_LEECH,
+                "dim_V1": DIM_V1_LEECH,
+            },
+        },
+        "k3_mukai_lane": {
+            "object": "K3/Mukai data",
+            "lane": "K3/Mukai",
+            "constants_computed_here": False,
+            "status": "not computed by this moonshine helper",
+        },
+        "moonshine_constants_as_k3_constants": False,
+        "comparison_available_here": False,
+        "valid_transports": (),
+        "requires_comparison": MOONSHINE_K3_FIREWALL_HYPOTHESES,
+    }
 
 
 # =========================================================================

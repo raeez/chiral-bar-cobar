@@ -23,7 +23,7 @@ MATHEMATICAL FRAMEWORK
    the Whitehead lemma for abelian current algebras, the bar cohomology
    concentrates in bar degree 1:
      H^n(B(H_k^r)) = 0  for n >= 2  (Koszulness)
-     H^1(B(H_k^r))_h = dim(A^!)_h  (Koszul dual generators)
+     H^1(B(H_k^r))_h = dim(A^i)_h, matching dim(A^!)_h after duality
 
    The Koszul dual of the rank-r Heisenberg is the rank-r chiral
    exterior algebra (Lie cooperad dual to commutative operad).
@@ -208,7 +208,8 @@ def heisenberg_rank_r_euler_char(h: int, r: int) -> int:
 def heisenberg_rank_r_bar_cohomology_h1(h: int, r: int) -> int:
     r"""Bar cohomology H^1(B(H_k^r))_h.
 
-    For Koszul algebras: H^1 = dim(A^!)_h = Koszul dual dimension at weight h.
+    For Koszul algebras: H^1 = dim(A^i)_h, matching the Koszul-dual
+    dimension dim(A^!)_h after the dual branch.
     For rank-r Heisenberg: the Koszul dual is the rank-r chiral exterior
     algebra, whose augmentation ideal at weight h has a specific dimension.
 

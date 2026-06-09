@@ -57,6 +57,7 @@ from sympy import (
 Psi_sym, z_sym = symbols("Psi z", commutative=True)
 
 SPINS_TO_TEST: Tuple[int, ...] = (2, 3, 4, 5, 6)
+SPIN3_COMPOSITE_CORRECTION = simplify((1 - Psi_sym) / (2 * Psi_sym ** 2))
 # VERIFIED: [DC] explicit symbolic checks in this file.
 # VERIFIED: [LT] the same Miura channel mechanism is spin-independent.
 
@@ -69,6 +70,17 @@ class TensorSignature:
     left_w_spin: Optional[int]
     right_j_power: int
     right_w_spin: Optional[int]
+
+
+@dataclass(frozen=True)
+class TensorFiltrationBound:
+    """W-spin filtration bound for one tensor-support component."""
+
+    left_j_power: int
+    right_j_power: int
+    left_w_spin_bound: int
+    right_w_spin_bound: int
+    source_pair: Tuple[int, int]
 
 
 def _prod(items: Iterable[Any]) -> Any:
@@ -124,6 +136,51 @@ def drinfeld_cross_term_data(s: int, z: Any = None) -> Dict[str, Any]:
         "right_cross_coefficient": right,
         "other_pairs_with_index_s_minus_1": other_pairs,
     }
+
+
+def psi_index_w_spin_bound(index: int) -> int:
+    r"""W-spin bound of a psi-index after triangular Miura expansion.
+
+    The Prochazka-Rapcak triangular basis has
+
+        psi_n = W_n + P_n(J, W_2, ..., W_{n-1}).
+
+    Thus psi_0 is the unit, psi_1 = J has W-spin 1, and psi_n has
+    W-spin at most n for n >= 2.
+    """
+    if index < 0:
+        raise ValueError("psi index must be non-negative")
+    return index
+
+
+def delta_w_spin_filtration_pairs(w_spin: int, z: Any = None) -> Tuple[Tuple[int, int], ...]:
+    r"""Tensor-factor W-spin bounds for Delta_z(W_{w_spin}).
+
+    This derives the bound from the Drinfeld psi-index support and the
+    triangular Miura inverse, rather than from a preselected target support
+    set.  Lower inverse terms only decrease the W-spin bound.
+    """
+    if w_spin < 0:
+        raise ValueError("w_spin must be non-negative")
+    if w_spin == 0:
+        return ((0, 0),)
+
+    pairs = {
+        (
+            psi_index_w_spin_bound(left_idx),
+            psi_index_w_spin_bound(right_idx),
+        )
+        for left_idx, right_idx in delta_psi(w_spin, z).keys()
+    }
+    return tuple(sorted(pairs))
+
+
+def delta_w_primary_spin_bound(w_spin: int) -> int:
+    """Maximum W-spin appearing in either factor of Delta_z(W_{w_spin})."""
+    pairs = delta_w_spin_filtration_pairs(w_spin)
+    inverse_lower_bound = max(w_spin - 1, 0)
+    pair_bounds = [bound for pair in pairs for bound in pair]
+    return max([inverse_lower_bound, *pair_bounds])
 
 
 def miura_sector_expression(s: int, k: int, Psi: Any = None) -> Any:
@@ -194,12 +251,15 @@ def single_j_miura_channel_data(s: int, Psi: Any = None) -> Dict[str, Any]:
 def modeled_coproduct_support_for_composite(k: int, w_spin: int) -> Tuple[TensorSignature, ...]:
     r"""Tensor support of :J^k . W_{w_spin}: at the level needed here.
 
-    We only keep the leading W_{w_spin} piece of Delta_z(W_{w_spin}).
-    Lower-spin descendants cannot increase the W-spin and are therefore even
-    farther from the target W_{s-1} channel.
+    We only keep the leading W_{w_spin} placements of Delta_z(W_{w_spin}).
+    The admissible W-spin bound is derived from the Drinfeld psi-index support
+    through `delta_w_primary_spin_bound`.  Lower-spin descendants cannot
+    increase the W-spin and are therefore even farther from the target
+    W_{s-1} channel.
     """
     support: List[TensorSignature] = []
-    w_value = w_spin if w_spin > 0 else None
+    w_bound = delta_w_primary_spin_bound(w_spin)
+    w_value = w_bound if w_bound > 0 else None
     for left_j in range(k + 1):
         right_j = k - left_j
         support.append(
@@ -241,11 +301,15 @@ def hits_target_channel(signature: TensorSignature, target_spin: int) -> bool:
 def lower_miura_noncontribution_data(s: int) -> List[Dict[str, Any]]:
     r"""Verify Claim (B).
 
-    For k >= 2 the Miura sectors have the form :J^k . W_{s-k}: with s-k <= s-2.
-    Their coproduct support cannot hit W_{s-1} on either side.
+    For s >= 3 and k >= 2 the Miura sectors have the form
+    :J^k . W_{s-k}: with s-k <= s-2.  Their coproduct support cannot hit
+    W_{s-1} on either side.  The spin-2 case is handled separately by the
+    direct Miura inversion of Delta_z(T).
     """
     if s < 2:
         raise ValueError("s must be at least 2")
+    if s == 2:
+        return []
 
     target_spin = s - 1
     results: List[Dict[str, Any]] = []
@@ -263,6 +327,135 @@ def lower_miura_noncontribution_data(s: int) -> List[Dict[str, Any]]:
             }
         )
     return results
+
+
+def triangular_delta_bound_for_composite(s: int, k: int) -> Dict[str, Any]:
+    r"""Finite W-spin witness for Lemma lem:miura-triangularity-under-Delta.
+
+    The representative lower Miura sector is :J^k W_{s-k}:.  The calculation
+    enumerates the Drinfeld psi-index pairs in Delta_z(W_{s-k}), distributes
+    the k currents between tensor factors, and records the largest W-spin that
+    can appear in either tensor factor after triangular expansion.
+    """
+    if s < 3:
+        raise ValueError("triangularity witness is for s >= 3")
+    if k < 2 or k > s:
+        raise ValueError("k must satisfy 2 <= k <= s")
+
+    source_w_spin = s - k
+    target_spin = s - 1
+    pairs = delta_w_spin_filtration_pairs(source_w_spin)
+    tensor_bounds: List[TensorFiltrationBound] = []
+
+    for left_j in range(k + 1):
+        right_j = k - left_j
+        for left_w_bound, right_w_bound in pairs:
+            tensor_bounds.append(
+                TensorFiltrationBound(
+                    left_j_power=left_j,
+                    right_j_power=right_j,
+                    left_w_spin_bound=max(1 if left_j else 0, left_w_bound),
+                    right_w_spin_bound=max(1 if right_j else 0, right_w_bound),
+                    source_pair=(left_w_bound, right_w_bound),
+                )
+            )
+
+    max_bound = max(
+        max(item.left_w_spin_bound, item.right_w_spin_bound)
+        for item in tensor_bounds
+    )
+    return {
+        "spin": s,
+        "k": k,
+        "source_w_spin": source_w_spin,
+        "target_spin": target_spin,
+        "drinfeld_w_spin_pairs": pairs,
+        "tensor_bounds": tuple(tensor_bounds),
+        "max_tensor_w_spin_bound": max_bound,
+        "hits_target_channel": max_bound >= target_spin,
+    }
+
+
+def representative_lower_composite_bounds(s: int) -> Tuple[Dict[str, Any], ...]:
+    r"""Representative lower composites not necessarily written as J^k W_{s-k}.
+
+    These finite checks cover the first spins where composite corrections such
+    as :TT: coexist with current-insertion sectors.  Multiplication in the
+    W-spin filtration takes the maximum primary spin of the factors.
+    """
+    if s < 4:
+        return tuple()
+
+    representatives = {
+        4: (
+            (":J^2T:", (1, 1, 2)),
+            (":TT:", (2, 2)),
+        ),
+        5: (
+            (":J^2W_3:", (1, 1, 3)),
+            (":TW_3:", (2, 3)),
+        ),
+        6: (
+            (":J^2W_4:", (1, 1, 4)),
+            (":TW_4:", (2, 4)),
+            (":W_3W_3:", (3, 3)),
+        ),
+    }.get(s, ((f":J^2W_{s-2}:", (1, 1, s - 2)),))
+
+    target_spin = s - 1
+    rows = []
+    for label, factor_spins in representatives:
+        bound = max(factor_spins)
+        rows.append(
+            {
+                "spin": s,
+                "label": label,
+                "factor_w_spins": factor_spins,
+                "w_spin_bound": bound,
+                "target_spin": target_spin,
+                "hits_target_channel": bound >= target_spin,
+            }
+        )
+    return tuple(rows)
+
+
+def miura_triangularity_under_delta_witness(
+    spins: Sequence[int] = (4, 5, 6),
+) -> Dict[str, Any]:
+    """Finite symbolic witness package for the Miura triangularity lemma."""
+    spin_data: Dict[int, Dict[str, Any]] = {}
+    for s in spins:
+        if s < 3:
+            raise ValueError("triangularity witness spins must be at least 3")
+        current_sector_bounds = tuple(
+            triangular_delta_bound_for_composite(s, k)
+            for k in range(2, s + 1)
+        )
+        representative_composites = representative_lower_composite_bounds(s)
+        spin_data[s] = {
+            "target_spin": s - 1,
+            "current_sector_bounds": current_sector_bounds,
+            "representative_lower_composites": representative_composites,
+            "all_current_bounds_below_target": all(
+                item["hits_target_channel"] is False
+                for item in current_sector_bounds
+            ),
+            "all_representative_bounds_below_target": all(
+                item["hits_target_channel"] is False
+                for item in representative_composites
+            ),
+        }
+
+    return {
+        "claim": "lem:miura-triangularity-under-Delta",
+        "spin3_composite_correction": {
+            "coefficient": SPIN3_COMPOSITE_CORRECTION,
+            "source_w_spin_bound": 1,
+            "target_spin": 2,
+            "hits_target_channel": False,
+        },
+        "spins": spin_data,
+    }
 
 
 def combined_cross_coefficient(s: int, Psi: Any = None) -> Dict[str, Any]:
@@ -316,6 +509,7 @@ def verify_spin(s: int, Psi: Any = None) -> Dict[str, Any]:
 def run_assertions(spins: Sequence[int] = SPINS_TO_TEST) -> Dict[int, Dict[str, Any]]:
     """Assertion-based test suite."""
     results: Dict[int, Dict[str, Any]] = {}
+    triangular_spins = tuple(s for s in spins if s >= 4)
 
     for s in spins:
         result = verify_spin(s)
@@ -335,7 +529,7 @@ def run_assertions(spins: Sequence[int] = SPINS_TO_TEST) -> Dict[int, Dict[str, 
         assert simplify(miura["ordered_channel_coefficient"] - Rational(1) / Psi_sym) == 0
 
         # VERIFIED: [DC] lower sectors have W-spin <= s-2 in their tensor support.
-        # VERIFIED: [LT] Delta_z cannot raise W-spin.
+        # VERIFIED: [LT] Delta_z cannot raise W-spin by Drinfeld index bounds.
         for item in combined["lower_data"]:
             assert item["hits_target_channel"] is False
 
@@ -358,6 +552,18 @@ def run_assertions(spins: Sequence[int] = SPINS_TO_TEST) -> Dict[int, Dict[str, 
         for psi_value in spot_values:
             expected = simplify((psi_value - 1) / psi_value)
             assert simplify(total.subs(Psi_sym, psi_value) - expected) == 0
+
+    if triangular_spins:
+        triangular = miura_triangularity_under_delta_witness(triangular_spins)
+        for spin, data in triangular["spins"].items():
+            assert data["all_current_bounds_below_target"] is True
+            assert data["all_representative_bounds_below_target"] is True
+            for item in data["current_sector_bounds"]:
+                assert item["max_tensor_w_spin_bound"] <= spin - 2
+                assert item["hits_target_channel"] is False
+            for item in data["representative_lower_composites"]:
+                assert item["w_spin_bound"] <= spin - 2
+                assert item["hits_target_channel"] is False
 
     return results
 

@@ -1,0 +1,81 @@
+import re
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[2]
+TARGET = ROOT / "chapters/theory/koszulness_vii_multiweight_platonic.tex"
+
+
+def read() -> str:
+    return TARGET.read_text()
+
+
+def compact(text: str) -> str:
+    return re.sub(r"\s+", "", text).replace(r"\;", "")
+
+
+def squashed(text: str) -> str:
+    return " ".join(text.split())
+
+
+def test_koszulness_vii_types_diagonal_fp_term_as_scalar():
+    body = compact(read())
+
+    required_forms = (
+        (
+            r"F_g(\cA)=F_g^{\mathrm{sc}}(\cA)"
+            r"+\deltaF_g^{\mathrm{cross}}(\cA)"
+        ),
+        (
+            r"F_g^{\mathrm{sc}}(\cA)"
+            r"=\kappa(\cA)\cdot\lambda_g^{\mathrm{FP}}"
+        ),
+        (
+            r"F_g^{\mathrm{sc}}(\cA)"
+            r"=\sum_i\kappa_i\lambda_g^{\mathrm{FP}}"
+            r"=\kappa(\cA)\lambda_g^{\mathrm{FP}}"
+        ),
+        (
+            r"F_g(\cA)=F_g^{\mathrm{sc}}(\cA)"
+            r"=\kappa(\cA)\cdot\lambda_g^{\mathrm{FP}}"
+        ),
+        r"\deltaF_1^{\mathrm{cross}}(\cA)=0",
+        r"F_g=F_g^{\mathrm{sc}}",
+    )
+    for required in required_forms:
+        assert required in body
+
+
+def test_koszulness_vii_has_no_bare_full_fp_coefficient():
+    body = squashed(read())
+
+    stale_regexes = (
+        (
+            r"F_g\(" + r"\\cA" + r"\)\s*=\s*"
+            r"\\kappa\(" + r"\\cA" + r"\)"
+            r"(?:\s*\\cdot)?\s*\\lambda_g\^\{\\mathrm\{FP\}\}"
+        ),
+        (
+            r"F_g\(" + r"\\cA" + r"\)\s*=\s*"
+            r"\\kappa\(" + r"\\cA" + r"\)"
+            r"(?:\s*\\cdot)?\s*\\lambda_g\^\{\\mathrm\{FP\}\}"
+            r"\s*\+\s*\\delta\s*F_g\^\{\\mathrm\{cross\}\}\("
+            r"\\cA" + r"\)"
+        ),
+        r"F_g\s*=\s*\\kappa\s*(?:\\cdot)?\s*\\lambda_g\^\{\\mathrm\{FP\}\}",
+        r"F_g\(" + r"\\cA" + r"\)\s*=\s*\\kappa\s*\\cdot\s*\\lambda_g",
+    )
+    for pattern in stale_regexes:
+        assert re.search(pattern, body) is None, pattern
+
+
+def test_koszulness_vii_retired_untyped_phrases_do_not_reappear():
+    text = read()
+
+    retired_phrases = (
+        "The scalar " + "formula without the correction",
+        "F_g(\\cA)=\\kappa(\\cA)" + "\\cdot\\lambda_g^{\\mathrm{FP}}",
+        "F_g(\\cA)=\\kappa(\\cA)" + "\\lambda_g^{\\mathrm{FP}}",
+    )
+    for phrase in retired_phrases:
+        assert phrase not in text

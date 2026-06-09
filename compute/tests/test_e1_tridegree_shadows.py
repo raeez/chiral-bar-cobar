@@ -54,7 +54,7 @@ class TestRMatrix:
     """
 
     def test_heisenberg_r_matrix(self):
-        """Heisenberg: r(z) = k/z (scalar)."""
+        """Heisenberg: r(z) = k*Omega_H/z (rank-one coeff k/z) (rank-one abelian)."""
         r = e1_r_matrix('heisenberg')
         assert simplify(r - k / z) == 0
 
@@ -134,11 +134,11 @@ class TestCYBE:
         assert e1_cybe_check('virasoro') is True
 
     def test_cybe_lattice_vz(self):
-        """CYBE trivially satisfied for V_Z (scalar)."""
+        """CYBE trivially satisfied for V_Z (rank-one abelian)."""
         assert e1_cybe_check('lattice_vz') is True
 
     def test_cybe_lattice_va2(self):
-        """CYBE trivially satisfied for V_{A2} (scalar)."""
+        """CYBE trivially satisfied for V_{A2} (rank-one abelian)."""
         assert e1_cybe_check('lattice_va2') is True
 
     def test_cybe_affine_sl2_k1(self):
@@ -504,7 +504,7 @@ class TestGenus1RMatrix:
         assert r1.shape == (4, 4)
 
     def test_virasoro_genus1_scalar(self, tau_val):
-        """Virasoro genus-1: r^{(1)} = (c/2) * p(z; tau) (scalar)."""
+        """Virasoro genus-1: r^{(1)} = (c/2) * p(z; tau) (rank-one abelian)."""
         z_val = 0.1
         c_val = 10.0
         r1 = e1_genus1_r_matrix('virasoro', tau_val=tau_val,

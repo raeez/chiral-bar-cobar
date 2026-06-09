@@ -17,6 +17,7 @@ Convention notes:
 
 import cmath
 import math
+from pathlib import Path
 
 import numpy as np
 import pytest
@@ -51,6 +52,19 @@ from compute.lib.theorem_cs_knot_invariant_engine import (
     knot_invariant_table,
     cs_level_scan,
 )
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+ORDERED_KD_TEX = REPO_ROOT / "chapters/theory/ordered_associative_chiral_kd.tex"
+
+
+def test_rt_trace_not_raw_e1_ordered_output():
+    """RT link invariants require the external ribbon/CFG trace package."""
+    tex = ORDERED_KD_TEX.read_text()
+    compact = " ".join(tex.split())
+
+    assert "Part~(iv) is a restatement of the $E_1$-chiral factorisation structure" not in compact
+    assert "not a derivation of the Reshetikhin--Turaev invariant from the raw $E_1$-ordered bar" in compact
+    assert "$E_\\infty$ factorization-homology/CFG topological trace package" in compact
 
 
 # =========================================================================

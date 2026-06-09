@@ -6,8 +6,9 @@ MATHEMATICAL FRAMEWORK
 Open string field theory on a CY3 X with a brane B gives an A-infinity
 algebra on Ext*(B, B).  This is a CONCRETE E1-chiral algebra (associative,
 with higher products).  Its bar complex B(Ext*(B,B)) encodes open string
-amplitudes.  The derived center (Hochschild cochains) gives the closed
-string observables = the universal bulk.
+amplitudes.  The derived center (Hochschild cochains) gives the
+algebraic closed-string sector; its physical bulk interpretation uses
+the open/closed HT comparison datum.
 
 1. C^3 with brane B = O_0 (structure sheaf of origin):
    Ext*(O_0, O_0) = Wedge*(C^3) = exterior algebra on 3 generators
@@ -71,8 +72,8 @@ CONVENTIONS:
 Anti-patterns guarded against:
   AP19: bar propagator absorbs one pole order.
   AP25: B(A) != Omega(B(A)) != D_Ran(B(A)).
-  AP34: bar-cobar inversion recovers A, NOT the bulk.
-       The bulk is the derived center HH*.
+  AP34: bar-cobar inversion recovers A, not the closed sector.
+       The derived center HH* is the algebraic closed-sector vertex.
   AP45: s^{-1} shifts degree DOWN by 1.
 
 References:
@@ -82,7 +83,7 @@ References:
   Keller, "A-infinity algebras, modules and functor categories" (2006).
   Loday-Vallette, "Algebraic Operads" (2012), Ch. 2 (bar construction).
   Vol I: thm:mc2-bar-intrinsic, bar_cobar_adjunction_curved.tex.
-  Vol I: thm:thqg-swiss-cheese (derived center = universal bulk).
+  Vol I: thm:thqg-swiss-cheese (derived center = algebraic closed sector).
 """
 
 from __future__ import annotations
@@ -497,8 +498,9 @@ def bar_cohomology_c3_w0(max_arity: int = 5) -> Dict[Tuple[int, int], int]:
     H^k(B^n) = 0 for k > 0.
 
     The Koszul dual is (Wedge*(V))^! = Sym*(V*), and H*(B(A)) recovers
-    the Koszul dual coalgebra concentrated in cohomological degree 0.
-    At arity n: H^0(B^n) = dim(A^!)_n = dim Sym^n(V*) = binom(n+d-1, d-1).
+    the Koszul-dual coalgebra A^i concentrated in cohomological degree 0.
+    At arity n: H^0(B^n) = dim(A^i)_n, which matches dim(A^!)_n after
+    finite-dimensional linear duality.
     """
     results = {}
     d = 3  # C^3

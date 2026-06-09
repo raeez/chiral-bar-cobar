@@ -177,7 +177,7 @@ engine records the collision packet and refuses to promote it to full
 integrability data.
 
 CROSS-FAMILY COMPARISON:
-  Heisenberg: k_max = 1 (simple pole OPE), order 0 (multiplication only)
+  Heisenberg: k_max = 1 (double pole OPE -> simple dlog collision residue), order 0
   Affine KM:  k_max = 1 (double pole OPE -> simple pole residue), order 0
   Virasoro:   k_max = 3 (quartic pole OPE), order 2 on descendants, 1 on primaries
   W_3:        k_max = 5 (sixth-order pole OPE), order 4

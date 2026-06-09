@@ -195,6 +195,35 @@ class DiagnosticPromotionGuard:
     proves_full_bv_brst_bar_equivalence: bool = False
 
 
+BV_PVA_ACTION_GATES: Tuple[Tuple[str, str], ...] = (
+    ('finite_type_pva_supplied', 'finite-type PVA supplied'),
+    ('fields_and_antifields_defined', 'BV fields and antifields defined'),
+    ('odd_symplectic_pairing_defined', 'odd symplectic pairing defined'),
+    ('bv_action_functional_defined', 'BV action functional S defined'),
+    ('hamiltonian_pva_condition_proved', 'PVA Hamiltonian condition proved'),
+    ('field_parity_signs_defined', 'field-parity signs defined'),
+)
+
+
+QME_RENORMALIZATION_GATES: Tuple[Tuple[str, str], ...] = (
+    ('analytic_sdr_defined', 'analytic SDR defined'),
+    ('stokes_image_choice_defined', 'Stokes image choice defined'),
+    ('self_image_renormalisation_defined', 'self-image renormalisation defined'),
+    ('field_parity_signs_defined', 'field-parity signs defined'),
+    ('renormalization_package_built', 'renormalization package built'),
+    ('all_loop_counterterms_controlled', 'all-loop counterterms controlled'),
+)
+
+
+BOUNDARY_VERTEX_GATES: Tuple[Tuple[str, str], ...] = (
+    ('boundary_vertex_algebra_defined', 'boundary vertex algebra defined'),
+    ('boundary_ope_maps_defined', 'boundary OPE maps defined'),
+    ('boundary_opes_proved', 'boundary OPEs proved'),
+    ('reflected_weight_identity_defined', 'reflected weight identity defined'),
+    ('reflected_weight_identity_proved', 'reflected weight identity proved'),
+)
+
+
 AFFINE_TYPE_TABLE = {
     'sl2': {'dim': 3, 'hv': 2, 'rank': 1},
     'sl3': {'dim': 8, 'hv': 3, 'rank': 2},
@@ -483,6 +512,188 @@ def bv_brst_bar_scope(
     )
 
 
+def _gate_report(
+    gates: Tuple[Tuple[str, str], ...],
+    supplied: Dict[str, bool],
+) -> Dict[str, Tuple[str, ...]]:
+    """Return the supplied and missing gate labels for a finite checklist."""
+    return {
+        'provided_gates': tuple(label for key, label in gates if supplied[key]),
+        'missing_gates': tuple(label for key, label in gates if not supplied[key]),
+    }
+
+
+def finite_type_pva_bv_action_scope(
+    finite_type_pva_supplied: bool = False,
+    fields_and_antifields_defined: bool = False,
+    odd_symplectic_pairing_defined: bool = False,
+    bv_action_functional_defined: bool = False,
+    hamiltonian_pva_condition_proved: bool = False,
+    field_parity_signs_defined: bool = False,
+) -> Dict[str, Any]:
+    """Classical finite-PVA/BV gate for the CME, not the QME.
+
+    The finite-type PVA can support a classical BV action and the
+    statement "CME iff PVA Hamiltonian condition" only after the action,
+    odd pairing, Hamiltonian condition, and field-parity signs are all
+    part of the data.  It never promotes by itself to an all-loop QME.
+    """
+    supplied = {
+        'finite_type_pva_supplied': finite_type_pva_supplied,
+        'fields_and_antifields_defined': fields_and_antifields_defined,
+        'odd_symplectic_pairing_defined': odd_symplectic_pairing_defined,
+        'bv_action_functional_defined': bv_action_functional_defined,
+        'hamiltonian_pva_condition_proved': hamiltonian_pva_condition_proved,
+        'field_parity_signs_defined': field_parity_signs_defined,
+    }
+    action_defined = (
+        finite_type_pva_supplied
+        and fields_and_antifields_defined
+        and odd_symplectic_pairing_defined
+        and bv_action_functional_defined
+    )
+    cme_statement_allowed = action_defined and field_parity_signs_defined
+    cme_iff_pva_hamiltonian = (
+        cme_statement_allowed and hamiltonian_pva_condition_proved
+    )
+
+    if cme_iff_pva_hamiltonian:
+        classical_status = 'CME_IFF_PVA_HAMILTONIAN_PROVED'
+    elif cme_statement_allowed:
+        classical_status = 'CME_STATEMENT_PENDING_HAMILTONIAN_CONDITION'
+    elif action_defined:
+        classical_status = 'BV_ACTION_DEFINED_CME_SIGNS_MISSING'
+    else:
+        classical_status = 'BV_ACTION_NOT_DEFINED'
+
+    report = _gate_report(BV_PVA_ACTION_GATES, supplied)
+    return {
+        'scope': 'finite_type_pva_classical_bv',
+        'bv_action_defined': action_defined,
+        'cme_statement_allowed': cme_statement_allowed,
+        'cme_iff_pva_hamiltonian_proved': cme_iff_pva_hamiltonian,
+        'classical_bv_status': classical_status,
+        'qme_claim_allowed': False,
+        'qme_status': 'REQUIRES_ANALYTIC_RENORMALIZATION_PACKAGE',
+        'proof_obligations': (801, 802, 807),
+        **report,
+    }
+
+
+def all_loop_qme_scope(
+    analytic_sdr_defined: bool = False,
+    stokes_image_choice_defined: bool = False,
+    self_image_renormalisation_defined: bool = False,
+    field_parity_signs_defined: bool = False,
+    renormalization_package_built: bool = False,
+    all_loop_counterterms_controlled: bool = False,
+) -> Dict[str, Any]:
+    """Gate all-loop QME claims by the analytic renormalization package."""
+    supplied = {
+        'analytic_sdr_defined': analytic_sdr_defined,
+        'stokes_image_choice_defined': stokes_image_choice_defined,
+        'self_image_renormalisation_defined': self_image_renormalisation_defined,
+        'field_parity_signs_defined': field_parity_signs_defined,
+        'renormalization_package_built': renormalization_package_built,
+        'all_loop_counterterms_controlled': all_loop_counterterms_controlled,
+    }
+    all_loop_qme_proved = all(supplied.values())
+    report = _gate_report(QME_RENORMALIZATION_GATES, supplied)
+    return {
+        'scope': 'analytic_all_loop_qme',
+        'renormalization_package_required': True,
+        'qme_claim_allowed': all_loop_qme_proved,
+        'all_loop_qme_proved': all_loop_qme_proved,
+        'qme_status': (
+            'ALL_LOOP_QME_CERTIFIED_BY_ANALYTIC_RENORMALIZATION_PACKAGE'
+            if all_loop_qme_proved
+            else 'BLOCKED_PENDING_ANALYTIC_RENORMALIZATION_PACKAGE'
+        ),
+        'proof_obligations': (803, 804, 805, 806, 807, 808),
+        **report,
+    }
+
+
+def boundary_vertex_from_bv_scope(
+    boundary_vertex_algebra_defined: bool = False,
+    boundary_ope_maps_defined: bool = False,
+    boundary_opes_proved: bool = False,
+    reflected_weight_identity_defined: bool = False,
+    reflected_weight_identity_proved: bool = False,
+) -> Dict[str, Any]:
+    """Gate boundary vertex algebra, OPE, and reflected-weight claims."""
+    supplied = {
+        'boundary_vertex_algebra_defined': boundary_vertex_algebra_defined,
+        'boundary_ope_maps_defined': boundary_ope_maps_defined,
+        'boundary_opes_proved': boundary_opes_proved,
+        'reflected_weight_identity_defined': reflected_weight_identity_defined,
+        'reflected_weight_identity_proved': reflected_weight_identity_proved,
+    }
+    boundary_vertex_algebra_certified = (
+        boundary_vertex_algebra_defined and boundary_ope_maps_defined
+    )
+    boundary_ope_theorem_proved = (
+        boundary_vertex_algebra_certified and boundary_opes_proved
+    )
+    reflected_weight_identity_certified = (
+        reflected_weight_identity_defined and reflected_weight_identity_proved
+    )
+
+    if reflected_weight_identity_certified:
+        reflected_weight_status = 'PROVED'
+    elif reflected_weight_identity_defined:
+        reflected_weight_status = 'CONDITIONAL_PENDING_PROOF'
+    else:
+        reflected_weight_status = 'UNDEFINED'
+
+    report = _gate_report(BOUNDARY_VERTEX_GATES, supplied)
+    return {
+        'scope': 'boundary_vertex_from_bv',
+        'boundary_vertex_algebra_certified': boundary_vertex_algebra_certified,
+        'boundary_ope_theorem_proved': boundary_ope_theorem_proved,
+        'reflected_weight_identity_status': reflected_weight_status,
+        'reflected_weight_identity_proved': reflected_weight_identity_certified,
+        'all_boundary_claims_certified': (
+            boundary_ope_theorem_proved and reflected_weight_identity_certified
+        ),
+        'proof_obligations': (809, 810, 811, 812),
+        **report,
+    }
+
+
+def pva_bv_qme_boundary_scope(**kwargs: bool) -> Dict[str, Any]:
+    """Aggregate the PDF 801--812 finite-PVA/BV/QME/boundary gate."""
+    bv_kwargs = {key: bool(kwargs.get(key, False)) for key, _ in BV_PVA_ACTION_GATES}
+    qme_kwargs = {
+        key: bool(kwargs.get(key, False)) for key, _ in QME_RENORMALIZATION_GATES
+    }
+    boundary_kwargs = {
+        key: bool(kwargs.get(key, False)) for key, _ in BOUNDARY_VERTEX_GATES
+    }
+    bv_scope = finite_type_pva_bv_action_scope(**bv_kwargs)
+    qme_scope = all_loop_qme_scope(**qme_kwargs)
+    boundary_scope = boundary_vertex_from_bv_scope(**boundary_kwargs)
+    return {
+        'scope': 'pva_bv_qme_boundary_801_812',
+        'bv': bv_scope,
+        'qme': qme_scope,
+        'boundary': boundary_scope,
+        'all_obligations_801_812_certified': (
+            bv_scope['cme_iff_pva_hamiltonian_proved']
+            and qme_scope['all_loop_qme_proved']
+            and boundary_scope['all_boundary_claims_certified']
+        ),
+        'unresolved_obligation_blocks': tuple(
+            name for name, scope in (
+                ('finite_pva_classical_bv', bv_scope),
+                ('analytic_all_loop_qme', qme_scope),
+                ('boundary_vertex_from_bv', boundary_scope),
+            )
+            if scope['missing_gates']
+        ),
+    }
+
+
 def finite_diagnostic_promotion_guard(diagnostic: str) -> DiagnosticPromotionGuard:
     """Return the exact claim supported by a finite diagnostic."""
     guards = {
@@ -516,6 +727,23 @@ def finite_diagnostic_promotion_guard(diagnostic: str) -> DiagnosticPromotionGua
             supports='both sides carry genus-expanded L_infty structures',
             does_not_support='coefficient equality of the higher brackets',
             missing_witnesses=('ell_k^{(g)} = l_k^hbar coefficient check',),
+        ),
+        'all_loop_qme': DiagnosticPromotionGuard(
+            diagnostic='all_loop_qme',
+            supports=(
+                'all-loop QME only after analytic SDR, Stokes image, '
+                'self-image renormalisation, field-parity signs, and '
+                'counterterm control'
+            ),
+            does_not_support='promotion from finite PVA Hamiltonian data or UV finiteness alone',
+            missing_witnesses=(
+                'analytic SDR',
+                'Stokes image choice',
+                'self-image renormalisation',
+                'field-parity signs',
+                'renormalization package',
+                'all-loop counterterm control',
+            ),
         ),
     }
     try:
@@ -598,7 +826,9 @@ def analyze_si_li() -> PaperAnalysis:
         key_results=[
             'Thm 3.21: Algebraic index via BV = A-hat genus',
             'Thm 4.4: UV finiteness for chiral deformations of betagamma',
-            'Thm 4.6: Chiral QME iff vertex algebra Jacobi identity',
+            'Thm 4.6: Chiral QME iff vertex algebra Jacobi identity in '
+            'Si Li\'s renormalized chiral package; this does not supply '
+            'our all-loop QME gate without analytic SDR/Stokes/self-image/sign data',
             'Thm 4.10: Elliptic trace map (genus-1 quasi-isomorphism)',
             'Thm 4.11: 2d-to-1d reduction (holomorphic limit)',
             'Section 2.4: L_infty conjecture for effective QME',

@@ -776,7 +776,10 @@ class TestHolographicDatum:
         centre = hd["C"]
 
         assert centre["object"] == "Z^{der}_ch(A_{K3xE})"
-        assert centre["definition"] == "chiral derived centre = universal bulk"
+        assert (
+            centre["definition"]
+            == "chiral derived centre = algebraic closed-sector vertex"
+        )
         assert centre["hh_dimensions"] == hh_dimensions_k3xe()
         assert centre["hh_total"] == hh_total_dim_k3xe()
         assert centre["hh_total"] == sum(centre["hh_dimensions"].values())

@@ -44,7 +44,10 @@ from numpy import linalg as la
 from compute.lib.theorem_dk0_evaluation_bridge_engine import (
     # Constants
     PI, I2, I4, SIGMA_X, SIGMA_Y, SIGMA_Z, PERM_2, P_SYM, P_ASYM,
-    CASIMIR_SL2_FUND, LIE_DATA,
+    CASIMIR_SL2_FUND, LIE_DATA, HAS_SCIPY,
+    LINE_OPERATOR_DK_GATES, QUANTUM_GROUP_CONVENTION_GATES,
+    line_operator_dk_scope, quantum_group_convention_scope,
+    line_dk_convention_obligation_scope,
     # KZ data
     KZData,
     # Casimir
@@ -76,6 +79,86 @@ from compute.lib.theorem_dk0_evaluation_bridge_engine import (
     # Full verification
     verify_dk0_fund, verify_dk0_multi_level, verify_dk0_higher_spin,
 )
+
+
+# ============================================================================
+# 0. SCOPE GATES FOR PDF OBLIGATIONS 825--838
+# ============================================================================
+
+class TestLineDKConventionGates:
+    """Gate line-operator, DK, Baxter, and quantum-group convention claims."""
+
+    def test_line_operator_dk_missing_by_default(self):
+        """No line-operator DK claim is certified without gates."""
+        scope = line_operator_dk_scope()
+        assert not scope['line_operator_category_defined']
+        assert not scope['evaluation_generation_certified']
+        assert not scope['mc3_evaluation_core_proved']
+        assert not scope['full_dk_boundary_open']
+        assert not scope['full_dk_boundary_claim_allowed']
+        assert 'line-operator category defined' in scope['missing_gates']
+
+    def test_line_operator_dk_evaluation_core_positive(self):
+        """MC3 is proved only on the evaluation-generated core."""
+        kwargs = {key: True for key, _ in LINE_OPERATOR_DK_GATES}
+        scope = line_operator_dk_scope(lie_type='sl3', **kwargs)
+        assert scope['is_type_a']
+        assert scope['evaluation_generation_certified']
+        assert scope['mc3_evaluation_core_proved']
+        assert scope['full_dk_boundary_open']
+        assert not scope['full_dk_boundary_claim_allowed']
+        assert scope['baxter_retraction_allowed']
+        assert scope['baxter_scope_status'] == 'TYPE_A_ONLY_RETRACTION_AVAILABLE'
+        assert scope['all_line_operator_dk_gates_certified']
+        assert not scope['missing_gates']
+
+    def test_baxter_retraction_blocked_outside_type_a(self):
+        """The Baxter retraction is not exported beyond type A."""
+        scope = line_operator_dk_scope(
+            lie_type='g2',
+            line_operator_category_defined=True,
+            evaluation_modules_defined=True,
+            evaluation_modules_generate_proved=True,
+            thick_generation_hypotheses_stated=True,
+            mc3_evaluation_core_proved=True,
+            full_dk_boundary_marked_open=True,
+            baxter_retraction_type_a_defined=True,
+            baxter_non_type_a_blocked=True,
+        )
+        assert not scope['is_type_a']
+        assert not scope['baxter_retraction_allowed']
+        assert scope['baxter_scope_status'] == 'BLOCKED_OUTSIDE_TYPE_A'
+
+    def test_quantum_group_conventions_missing_by_default(self):
+        """q/KZ/T/framing conversions are absent by default."""
+        scope = quantum_group_convention_scope()
+        assert scope['q_value'] is None
+        assert not scope['kz_monodromy_signs_certified']
+        assert not scope['convention_conversions_proved']
+        assert scope['framing_square_root_status'] == 'UNDEFINED'
+        assert scope['kz_monodromy_is_not_braiding']
+        assert 'quantum group parameter q defined' in scope['missing_gates']
+
+    def test_quantum_group_conventions_all_positive(self):
+        """The convention package is positive only after all conversions."""
+        kwargs = {key: True for key, _ in QUANTUM_GROUP_CONVENTION_GATES}
+        scope = quantum_group_convention_scope(level=1.0, **kwargs)
+        assert scope['q_value'] == quantum_group_q(1.0)
+        assert scope['q_convention'] == 'q = exp(pi*i/(k+h^vee))'
+        assert scope['kz_monodromy_signs_certified']
+        assert scope['modular_t_matrix_conventions_checked']
+        assert scope['self_monodromy_vs_mutual_monodromy_separated']
+        assert scope['framing_square_root_status'] == 'DEFINED'
+        assert scope['convention_conversions_proved']
+        assert not scope['missing_gates']
+
+    def test_aggregate_825_838_certified_only_together(self):
+        """The aggregate 825-838 gate requires line/DK and convention packages."""
+        kwargs = {key: True for key, _ in LINE_OPERATOR_DK_GATES}
+        kwargs.update({key: True for key, _ in QUANTUM_GROUP_CONVENTION_GATES})
+        scope = line_dk_convention_obligation_scope(**kwargs)
+        assert scope['all_obligations_825_838_certified']
+        assert not scope['unresolved_obligation_blocks']
 
 
 # ============================================================================
@@ -189,6 +272,8 @@ class TestKZMonodromy:
 
     def test_kz_monodromy_scipy_vs_exact(self):
         """scipy ODE solver matches analytic monodromy."""
+        if not HAS_SCIPY:
+            pytest.skip("scipy not installed")
         for k in [1, 2, 3]:
             Mon_exact = kz_monodromy_fund(float(k))
             Mon_scipy = kz_monodromy_scipy(float(k))
@@ -616,6 +701,8 @@ class TestCrossPath:
 
     def test_three_monodromy_methods_agree(self):
         """Analytic, numerical, and scipy monodromy all agree."""
+        if not HAS_SCIPY:
+            pytest.skip("scipy not installed")
         for k in [1, 2, 3]:
             Mon_a = kz_monodromy_fund(float(k))
             Mon_n = kz_monodromy_numerical(float(k), n_steps=5000)

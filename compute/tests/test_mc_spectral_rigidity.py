@@ -393,7 +393,7 @@ class TestCrossValidation:
                 f"Power sum p_{r} exceeds Ramanujan bound"
 
     def test_virasoro_shadow_tower_consistency(self):
-        """Shadow obstruction tower at c=26 gives kappa=13, consistent with self-dual point."""
+        """Shadow obstruction tower at c=26 gives kappa=13; self-dual charge is c=13."""
         result = genus1_correction_analysis(26.0)
         assert abs(result['kappa'] - 13.0) < 1e-10
         # Q^contact at c=26

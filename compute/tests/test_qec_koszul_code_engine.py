@@ -5,7 +5,7 @@ Verification strategy:
   2. Symplectic code construction at each weight
   3. Code parameters for 5+ algebras
   4. Knill-Laflamme verification via three independent paths
-  5. Code distance vs shadow depth (multi-path)
+  5. Arity proxy vs shadow depth (multi-path)
   6. Encoding/decoding round-trip
   7. Logical operators from the post-Verdier dual lane
   8. Threshold error rate estimates
@@ -18,11 +18,13 @@ Verification strategy:
 
 import pytest
 from fractions import Fraction
+from pathlib import Path
 from sympy import Rational
 
 from compute.lib.qec_koszul_code_engine import (
     # Weight dimensions
     koszul_firewall,
+    theorem_b_recovery_surface_from_family,
     partition_count,
     heisenberg_weight_dim,
     affine_sl2_weight_dim,
@@ -41,7 +43,7 @@ from compute.lib.qec_koszul_code_engine import (
     knill_laflamme_path2_genus2,
     knill_laflamme_path3_complementarity,
     verify_knill_laflamme_three_paths,
-    # Code distance
+    # Arity proxy
     code_distance_from_shadow_depth,
     code_distance_census,
     # Encoding/decoding
@@ -71,6 +73,37 @@ from compute.lib.entanglement_shadow_engine import (
     kappa_heisenberg,
     shadow_depth_class,
 )
+
+
+ROOT = Path(__file__).resolve().parents[2]
+HC_TEX = ROOT / "chapters" / "connections" / "holographic_codes_koszul.tex"
+QEC_ENGINE = ROOT / "compute" / "lib" / "qec_koszul_code_engine.py"
+QEC_DEEP_ENGINE = ROOT / "compute" / "lib" / "qec_shadow_code_deep_engine.py"
+
+
+def test_holographic_code_surface_is_algebraic_not_physical_qec():
+    manuscript = HC_TEX.read_text(encoding="utf-8")
+    engine = QEC_ENGINE.read_text(encoding="utf-8")
+    deep_engine = QEC_DEEP_ENGINE.read_text(encoding="utf-8")
+    active = manuscript + "\n" + engine + "\n" + deep_engine
+
+    assert r"\chapter{Algebraic code skeletons from Koszul duality}" in manuscript
+    assert "It is not a physical-bulk construction" in manuscript
+    assert "physical holographic reconstruction theorem is obtained" in manuscript
+    assert "only after adding a comparison map" in manuscript
+    assert "Algebraic code skeletons from Koszul duality" in engine
+    assert "bar-cobar counit quasi-isomorphism" in engine
+    assert "Exact physical QEC requires additional unitary" in deep_engine
+
+    forbidden = [
+        "The central theorem (G12): KOSZULNESS <=> AMBIENT-QUALIFIED EXACT QEC",
+        "The central identification (G12): Koszulness <=> exact QEC",
+        "Holographic codes from Koszul duality",
+        "Holographic tensor network from bar complex",
+        "Holographic code from bar complex",
+    ]
+    for phrase in forbidden:
+        assert phrase not in active
 
 
 # ===================================================================
@@ -253,6 +286,9 @@ class TestHeisenbergCodes:
         assert params['shadow_class'] == 'G'
         assert params['redundancy_channels'] == 0
         assert params['exact_recovery'] is True
+        assert params['exact_recovery_status'] == 'AMBIENT_QUALIFIED'
+        assert params['exact_recovery_ambient'] == params['recovery_surface']['ambient']
+        assert params['raw_direct_sum_chain_qi'] is True
         assert params['rate'] == Fraction(1, 2)
 
     def test_h1_dimensions(self):
@@ -341,12 +377,14 @@ class TestKnillLaflamme:
 # ===================================================================
 
 class TestCodeDistance:
-    """Code distance from shadow depth via three paths."""
+    """Arity proxy from shadow depth via three paths."""
 
     def test_heisenberg_distance(self):
         result = code_distance_from_shadow_depth('heisenberg')
         assert result['arity_distance'] == 2
         assert result['redundancy_channels'] == 0
+        assert result['physical_code_distance'] is None
+        assert 'physical inner product' in result['physical_distance_status']
         assert result['all_paths_agree'] is True
 
     def test_affine_distance(self):
@@ -372,6 +410,8 @@ class TestCodeDistance:
         census = code_distance_census()
         for fam, data in census.items():
             assert data['arity_distance'] == 2, f"Family {fam}"
+            assert data['arity_proxy_kind'] == 'first essential shadow arity'
+            assert data['physical_code_distance'] is None
 
     def test_three_distance_paths_agree(self):
         """All three paths agree for every family."""
@@ -391,10 +431,27 @@ class TestEncodingDecoding:
         result = encoding_decoding_structure('heisenberg', h=2)
         assert result['round_trip'] == 'quasi-isomorphism'
         assert result['exact_recovery'] is True
+        assert result['exact_recovery_status'] == 'AMBIENT_QUALIFIED'
+        assert result['exact_recovery_ambient'] == result['recovery_surface']['ambient']
+        assert result['raw_direct_sum_chain_qi'] is True
+        assert result['recovery_surface']['raw_direct_sum_chain_qi'] is True
 
     def test_structure_virasoro(self):
         result = encoding_decoding_structure('virasoro', h=4)
         assert result['exact_recovery'] is True
+        assert result['exact_recovery_status'] == 'AMBIENT_QUALIFIED'
+        assert result['exact_recovery_ambient'] == result['recovery_surface']['ambient']
+        assert result['raw_direct_sum_chain_qi'] is False
+        assert result['recovery_surface']['raw_direct_sum_chain_qi'] is False
+        assert result['recovery_surface']['completion_required'] is True
+        assert 'completed' in result['recovery_surface']['ambient'] or 'coderived' in result['recovery_surface']['ambient']
+
+    def test_theorem_b_surface_class_m_not_raw(self):
+        surface = theorem_b_recovery_surface_from_family('virasoro')
+        assert surface['exact_recovery'] is True
+        assert surface['status'] == 'AMBIENT_QUALIFIED'
+        assert surface['raw_direct_sum_chain_qi'] is False
+        assert surface['completion_required'] is True
 
     def test_round_trip_dimensions_heisenberg(self):
         """Dimensions preserved at each weight."""
@@ -518,11 +575,11 @@ class TestThreshold:
 
 
 # ===================================================================
-#  9. HOLOGRAPHIC TENSOR NETWORK
+#  9. BAR-GRAPH SHADOW NETWORK
 # ===================================================================
 
 class TestTensorNetwork:
-    """Holographic tensor network from bar complex."""
+    """Bar-graph shadow network from bar complex."""
 
     def test_heisenberg_tree(self):
         result = bar_complex_tensor_network('heisenberg', 3)
@@ -530,6 +587,8 @@ class TestTensorNetwork:
         assert result['num_edges'] == 2
         assert result['graph_type'] == 'tree'
         assert result['min_cut_edges'] == 1
+        assert result['physical_tensor_network_code'] is False
+        assert 'derived-centre/BRST comparison' in result['physical_reconstruction_status']
 
     def test_virasoro_tree(self):
         result = bar_complex_tensor_network('virasoro', 5, c=13)
@@ -587,6 +646,10 @@ class TestCodeComparisons:
     def test_happy_correspondences(self):
         result = compare_with_happy()
         assert len(result['correspondences']) == 4
+        assert result['physical_bulk_identification'] is False
+        assert result['oca_comparison_required'] is True
+        assert result['correspondences'][2][0] == 'Wedge reconstruction'
+        assert 'not physical bulk' in result['correspondences'][2][2]
 
     def test_steane_rate_mismatch(self):
         result = compare_with_steane()
@@ -603,10 +666,13 @@ class TestCodeComparisons:
     def test_toric_correspondence(self):
         result = compare_with_toric()
         assert result['structural_correspondence'] is True
+        assert result['physical_bulk_identification'] is False
+        assert result['oca_comparison_required'] is True
 
     def test_toric_candidate(self):
         result = compare_with_toric()
         assert result['koszul_candidate']['shadow_class'] == 'G'
+        assert 'not a physical bulk code' in result['key_insight']
 
 
 # ===================================================================
@@ -617,12 +683,13 @@ class TestMultiPathCrossChecks:
     """Cross-checks that verify consistency across computations."""
 
     def test_kl_distance_consistent(self):
-        """KL verified AND distance = 2 for all families."""
+        """KL surface and arity proxy stay separated."""
         kl = verify_knill_laflamme_three_paths()
         assert kl['all_paths_agree']
         census = code_distance_census()
         for fam, data in census.items():
             assert data['arity_distance'] == 2
+            assert data['physical_code_distance'] is None
 
     def test_lagrangian_rate_universal(self):
         """Rate = 1/2 from Lagrangian structure, for all families at all weights."""
@@ -643,6 +710,8 @@ class TestMultiPathCrossChecks:
         """Exact recovery (encoding/decoding) implies KL at genus 1."""
         enc = encoding_decoding_structure('heisenberg', h=0)
         assert enc['exact_recovery'] is True
+        assert enc['exact_recovery_status'] == 'AMBIENT_QUALIFIED'
+        assert enc['raw_direct_sum_chain_qi'] is True
         kl = knill_laflamme_path2_direct()
         assert kl['kl_verified'] is True
 
@@ -673,9 +742,13 @@ class TestFullDictionary:
         d = full_code_dictionary(5)
         assert all(entry['rate'] == Fraction(1, 2) for entry in d)
 
-    def test_all_distance_2(self):
+    def test_all_dictionary_entries_mark_D_as_arity_proxy(self):
         d = full_code_dictionary(5)
         assert all(entry['D'] == 2 for entry in d)
+        assert all(entry['D_kind'] == 'arity proxy; not Hilbert-space code distance'
+                   for entry in d)
+        assert all('physical inner product' in entry['physical_distance_status']
+                   for entry in d)
 
     def test_heisenberg_entries(self):
         """H_1 through H_5 in dictionary."""
@@ -778,3 +851,10 @@ class TestAdditionalVerifications:
         result = compare_with_happy()
         assert 'orthogonal' in result['happy_code']['type']
         assert 'symplectic' in result['koszul_code']['type']
+
+    def test_tensor_network_not_physical_bulk(self):
+        """Bar tensor networks compute shadow amplitudes, not physical bulk."""
+        result = bar_complex_tensor_network('heisenberg', 3)
+        assert result['physical_bulk_reconstruction'] is False
+        assert result['oca_comparison_required'] is True
+        assert 'not a physical bulk' in result['note']

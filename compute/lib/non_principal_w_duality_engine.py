@@ -506,10 +506,11 @@ def ds_koszul_generator_test(partition: Partition) -> Dict[str, Any]:
     as W(f_{lambda^t}), but the f-centralizer dimensions generically DIFFER:
       dim(g^{f_lam}) != dim(g^{f_{lam^t}}) for lam != lam^t.
 
-    This is NOT a contradiction: the Koszul dual has generators from the
-    BAR COHOMOLOGY H^1(B(W(f_lam))), which for a Koszul algebra is the
-    linear dual of the relations. The PREDICTION of the conjecture is:
-      dim H^1(B(W(f_lam)))^! = dim(g^{f_{lam^t}})
+    This is NOT a contradiction: bar cohomology first gives the
+    bar-dual cogenerators H^1(B(W(f_lam))) of A^i, and the Koszul-dual
+    generators appear only after the dual branch. The PREDICTION of the
+    conjecture is:
+      dim((H^1(B(W(f_lam))))^v) = dim(g^{f_{lam^t}})
     which is a non-trivial statement when lam != lam^t.
 
     At the ANOMALY RATIO level, the test is: does

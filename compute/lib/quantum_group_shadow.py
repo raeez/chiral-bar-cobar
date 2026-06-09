@@ -31,7 +31,7 @@ MATHEMATICAL FRAMEWORK:
   The MC element Theta_A := D_A - d_0 is proved (thm:mc2-bar-intrinsic).
   Its binary collision residue on Conf_2(C) gives r(z):
 
-    For Heisenberg H_k:   r(z) = k/z               (abelian, trivial CYBE)
+    For Heisenberg H_k:   r(z) = k*Omega_H/z (rank-one coeff k/z)               (abelian, trivial CYBE)
     For affine sl_2(k):   r(z) = Omega/z            (classical r-matrix, CYBE)
     For Virasoro Vir_c:   r(z) = (c/2)/z^3 + 2T/z
                                                      (Virasoro r-matrix)
@@ -171,7 +171,7 @@ class ClassicalRMatrix:
 
 
 def heisenberg_r_matrix(k=None) -> ClassicalRMatrix:
-    r"""r-matrix for Heisenberg H_k: r(z) = k/z.
+    r"""r-matrix for Heisenberg H_k: r(z) = k*Omega_H/z (rank-one coeff k/z).
 
     The Heisenberg is abelian, so the r-matrix is a scalar multiple
     of 1/z.  The OPE has a double pole, and the collision-residue
@@ -463,7 +463,7 @@ def verify_cybe_yang(N: int) -> Dict[str, Any]:
 
 
 def verify_cybe_heisenberg() -> Dict[str, Any]:
-    r"""Verify CYBE for Heisenberg r-matrix r(z) = k/z.
+    r"""Verify CYBE for Heisenberg r-matrix r(z) = k*Omega_H/z (rank-one coeff k/z).
 
     For abelian (rank 1), r(z) is scalar.  All commutators vanish
     trivially: [r_{12}, r_{13}] = 0 since everything commutes.

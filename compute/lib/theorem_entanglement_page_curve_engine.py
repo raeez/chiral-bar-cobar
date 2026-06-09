@@ -846,7 +846,10 @@ def qec_rate_by_family_simplified(family: str) -> Dict[str, Any]:
       Koszul => R = 1/2 (unconditional on standard landscape)
       Not Koszul => R undefined (code structure fails)
 
-    The code distance d = 2 is universal (bar degree shift).
+    The historical distance field below is only the arity proxy
+    \(d_{\mathrm{arity}}=2\): the first essential shadow datum appears
+    at arity 2.  It is not an operational QEC distance, which requires
+    a physical inner product, an error basis, and recovery maps.
     The number of redundancy channels depends on shadow depth.
 
     >>> data = qec_rate_by_family_simplified('heisenberg')
@@ -869,6 +872,11 @@ def qec_rate_by_family_simplified(family: str) -> Dict[str, Any]:
         'is_koszul': True,  # all standard families are Koszul
         'rate': Rational(1, 2),
         'distance': 2,
+        'distance_kind': 'arity proxy; not Hilbert-space code distance',
+        'physical_distance': None,
+        'physical_distance_status': (
+            'requires physical inner product, error algebra, and recovery maps'
+        ),
         'shadow_class': cls,
         'r_max': r_max,
         'channels': channels,

@@ -258,6 +258,23 @@ Explicitly, a degree $n$ cochain is a sum of expressions
 \]
 where $a_i^{(I)} \in \mathcal{A}$ and $\omega_I$ is an $n$-form on $\overline{C}_{n+2}(X)$ with logarithmic singularities.
 
+\begin{lemma}[Three-point Arnold relation; \ClaimStatusProvedElsewhere]
+\label{lem:arnold-three-point-hochschild}
+For the logarithmic $1$-forms
+$\eta_{ij}=d\log(z_i-z_j)$ on $C_3(X)$,
+\begin{equation}\label{eq:arnold-three-point}
+\eta_{12} \wedge \eta_{23}
++ \eta_{23} \wedge \eta_{31}
++ \eta_{31} \wedge \eta_{12} = 0.
+\end{equation}
+\end{lemma}
+
+\begin{proof}[Attribution]
+This is the three-point case of Arnold's relation
+(Arnold~\cite{Arnold69}); it is also the $n=3$ specialization of
+Theorem~\ref{thm:arnold-relations}.
+\end{proof}
+
 \subsection{The differential: three components}
 
 The chiral Hochschild differential
@@ -367,14 +384,8 @@ as:
  \otimes d_{\mathrm{dR}}\eta_{12}\bigr].
 \end{align*}
 
-The key identity is Arnold's relation
-\cite{Arnold69}: for the logarithmic 1-forms
-$\eta_{ij} = d\log(z_i - z_j)$ on $C_3(X)$,
-\begin{equation}\label{eq:arnold-three-point}
-\eta_{12} \wedge \eta_{23}
-+ \eta_{23} \wedge \eta_{31}
-+ \eta_{31} \wedge \eta_{12} = 0.
-\end{equation}
+The key identity is the three-point Arnold relation
+(Lemma~\ref{lem:arnold-three-point-hochschild}).
 Equivalently, $d_{\mathrm{dR}}\eta_{12}$ (which is
 supported on the boundary divisor) decomposes as a sum of
 residues at $D_{13}$ and $D_{23}$:
@@ -386,8 +397,7 @@ d_{\mathrm{dR}}(\eta_{12})
 \]
 In each residue term, $d_{\text{fact}}$ extracts the OPE
 at a collision, and $d_{\text{config}}$ produces the
-boundary form. The Arnold relation
-\eqref{eq:arnold-three-point} ensures these contributions
+boundary form. The three-point Arnold relation ensures these contributions
 cancel pairwise, yielding
 $\{d_{\text{fact}}, d_{\text{config}}\}(\phi) = 0$.
 
@@ -1044,7 +1054,7 @@ Precisely:
  The $d_1$-differential on the collision-depth spectral
  sequence annihilates every Arnold class of positive fibre
  degree by a route that bypasses
- Theorem~\textup{\ref{thm:bar-concentration}}. The argument
+ the global bar-concentration theorem. The argument
  uses three independent inputs, each intrinsic to its
  home category: the PBW-Koszulness criterion
  \textup{(}Theorem~\textup{\ref{thm:pbw-koszulness-criterion}}\textup{)}
@@ -1076,8 +1086,8 @@ Precisely:
 \item \emph{Surviving contribution.}\;
  The sole surviving $E_2$-term comes from the deepest
  collision stratum, where all $p+2$ points have fully
- collided to a single point of~$X$. After
- bar-concentration, this stratum contributes the coefficient
+ collided to a single point of~$X$. After the Arnold--Koszul
+ fibre contraction of \textup{(iii)}, this stratum contributes the coefficient
  $\cD_X$-module $\cA^i_p = H^{p,0}(\barB^{\mathrm{ch}}(\cA))$
  on the base curve. Applying Verdier duality on~$X$ gives
  $(\cA^!)_p = \mathbb{D}_X(\cA^i_p)$, and the surviving
@@ -1101,7 +1111,7 @@ Precisely:
  $\ChirHoch^*(\cA)$ is $[0,2]$: the FM tower of
  configuration spaces of unbounded dimension contributes
  \emph{zero} net amplitude beyond the base curve, because
- bar-concentration eliminates all fiber cohomology above
+ the Arnold--Koszul fibre contraction eliminates all fiber cohomology above
  degree~$0$.
 \end{enumerate}
 \end{proposition}
@@ -1137,7 +1147,7 @@ homotopy on the $E_1$-page.}\;
 We show that the $d_1$-differential on the collision-depth
 spectral sequence kills all $E_1$-classes coming from the
 Arnold-algebra cohomology in degrees $k \geq 1$, without
-invoking Theorem~\ref{thm:bar-concentration}. The argument
+invoking the global bar-concentration theorem. The argument
 is intrinsic to the Arnold algebra and the chiral operadic
 Koszul dual, and proceeds through three inputs.
 
@@ -1203,7 +1213,7 @@ $\ell < p+2$, this collapses the partial-collision stratum
 to its base, which itself lies in lower filtration degree;
 iterating, only the full-collision $\ell = 1$, $m_1 = p+2$
 survives. This completes Step~3 without any appeal to
-Theorem~\ref{thm:bar-concentration}: the tower collapse is
+the global bar-concentration theorem: the tower collapse is
 powered by the quadratic Koszulness of the Arnold algebra
 and the chiral-operadic transfer of
 Lemma~\ref{lem:chiral-quadratic-koszul}.
@@ -1362,6 +1372,19 @@ the $t^{1}$-column is the single outer derivation encoding the
 level deformation $k \mapsto k + \varepsilon$, the unique chiral
 derivation not absorbed by the double-pole OPE.
 \end{corollary}
+
+\begin{remark}[Family parameter versus fixed fibre]
+\label{rem:heisenberg-family-vs-fixed-fiber}
+The display in Corollary~\ref{cor:chirhoch-heisenberg} is the
+cohomology of the fixed generic fibre~$\mathfrak H_k$.  The formal
+deformation parameter ring of the one-parameter Heisenberg family is
+instead a completed base such as $\mathbb C[[\kappa]]$ or
+$\mathbb C[[k]]$, recording motion of the level.  This base is not the
+vector space $\ChirHoch^\bullet(\mathfrak H_k,\mathfrak H_k)$ at a
+fixed level; the single class in $\ChirHoch^1$ is the tangent direction
+to that family, while the fixed-fibre Poincar\'e polynomial remains
+$1+t+t^2$.
+\end{remark}
 
 \begin{proof}
 The abelian zero mode of $\mathfrak{H}_k$ is central, so every
@@ -1677,10 +1700,16 @@ The dimension $\dim\ChirHoch^{1}(\cA)$ alone is a coarse coordinate.
 The chiral Hochschild engine
 \textup{(}\texttt{compute/lib/chiral\_hochschild\_engine.py}\textup{)}
 records a finer datum: which type of first-order chiral
-deformation each derivation realises. The breakdown across the
-standard landscape exhibits a structural distinction between
-class~$\mathsf G$ \emph{level-deformable} families and class~$\mathsf
-L$ \emph{level-rigid} families.
+deformation each derivation realises. It also records which apparent
+parameter motions are \emph{not} elements of
+$\ChirHoch^1$: a conformal-weight motion changes the chosen stress
+tensor, and a simple-pole charge rescaling is killed by the zero-mode
+gauge action. The breakdown across the standard landscape exhibits a
+structural distinction between class~$\mathsf G$
+\emph{level-deformable} families, class~$\mathsf L$
+\emph{current-deformable} families, and simple-pole free-field
+families whose contact/shadow parameters live outside the
+curve-level Hochschild tangent.
 \begin{center}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{@{}l c l@{}}
@@ -1691,12 +1720,11 @@ Heisenberg $\cH_k$
  & $1$
  & level deformation $k\mapsto k+\epsilon$ \\
 free fermion $\psi$
- & $1$
- & antisymmetric bilinear rescaling \\
+ & $0$
+ & simple-pole Clifford innerness; bilinear rescaling is degree~$2$ \\
 $\beta\gamma_\lambda$
- & $2$
- & charge rescaling $\oplus$ weight deformation
-   $\lambda\mapsto\lambda+\epsilon$ \\
+ & $0$
+ & charge rescaling inner; $\lambda$ changes the conformal vector \\
 $V_k(\fg)$ generic
  & $\dim\fg$
  & adjoint-action derivations of $\fg$
@@ -1733,16 +1761,19 @@ between distinct fixed-$c$ slices but is external to the
 chiral-bimodule deformation theory of any individual $\Vir_c$. The
 same holds for $\cW_3$ at generic $c$: $\dim\ChirHoch^{1}(\cW_3)=0$.
 This is class~$\mathsf M$ chiral rigidity at generic central charge.
-\textit{(iii) The two-derivation structure of $\beta\gamma_\lambda$.}
-Class $\mathsf C$ records two distinct deformation directions: a
-\emph{charge rescaling} \textup{(}rescaling the symplectic-boson
-pairing $\beta(z)\gamma(w)\sim 1/(z-w)$\textup{)} and a \emph{weight
-deformation} $\lambda\mapsto\lambda+\epsilon$ \textup{(}moving along
-the conformal-weight family\textup{).}  Both are first-order
-chiral-bimodule deformations of $\beta\gamma_\lambda$. The
-two-dimensional $\ChirHoch^{1}$ is consistent with class
-$\mathsf C$'s shadow depth $r_{\max}=4$ \textup{(}quartic shadow,
-contact-form rigidity\textup{).}
+\textit{(iii) The simple-pole firewall for class $\mathsf C$.}
+For the $\beta\gamma$ and $bc$ systems the charge/ghost-number
+rescaling is implemented by the zero mode of the current
+$J={:}\beta\gamma{:}$ or ${:}bc{:}$, hence it is inner in
+$\Der(\cA)/\Inn(\cA)$. The conformal-weight motion
+$T\mapsto T+\epsilon\,\partial J$ moves the chosen conformal vector
+and the scalar shadow parameter $\lambda$; it does not change the
+underlying curve-level chiral product counted by $\ChirHoch^1$.
+Thus $\dim\ChirHoch^1(\beta\gamma_\lambda)
+=\dim\ChirHoch^1(bc_\lambda)=0$ on the Theorem~H surface. Class
+$\mathsf C$ still has shadow depth $r_{\max}=4$: that depth is a
+level-$5$ scalar/contact invariant, not a degree-$1$ Hochschild
+tangent.
 
 The breakdown is recorded in the engine and verified for
 $\fg = \mathfrak{sl}_N$, $N \in \{2, 3, 4, 5, 6, 10\}$. The
@@ -1756,8 +1787,9 @@ landscape; \ClaimStatusConditional]
 \index{deformation theory!unobstructedness}
 \index{formal moduli!smoothness}
 For every $\cA$ in the standard landscape
-$\{\cH_k,\,V_k(\fg),\,\beta\gamma_\lambda,\,\Vir_c,\,\cW_N\,(N\geq 3),
-\,\BP_k\}$ at generic parameter, the formal moduli space
+$\{\cH_k,\,V_k(\fg),\,\beta\gamma_\lambda,\,bc_\lambda,\,
+\Vir_c,\,\cW_N\,(N\geq 3),\,\BP_k\}$ at generic parameter, the
+curve-level chiral-product formal moduli space
 $\mathcal{M}_{\cA} = \mathrm{MC}(\Defcyc(\cA))/\mathrm{gauge}$
 of chiral $A_\infty$-deformations is \emph{smooth} at $\cA$, with
 tangent space $\ChirHoch^{1}(\cA)$ and dimension as in
@@ -1776,24 +1808,24 @@ obstruction class $[\xi,\xi]\in\ChirHoch^{2}(\cA)$ for every
 $\xi\in\ChirHoch^{1}(\cA)$, together with vanishing of all
 higher Massey-type obstructions.
 
-For $\Vir_c$, $\cW_N$ at generic $c$, and $\BP_k$ at generic $k$:
+For $\Vir_c$, $\cW_N$ at generic $c$, $\BP_k$ at generic $k$,
+$\beta\gamma_\lambda$, $bc_\lambda$, and the free fermion:
 $\ChirHoch^{1}(\cA)=0$ \textup{(}chiral rigidity, verified in the
-chiral-Hochschild engine for $\cW_N$ at $N=3,\ldots,10$\textup{),}
+chiral-Hochschild engine for $\cW_N$ at $N=3,\ldots,10$ and by the
+simple-pole zero-mode computation for the free-field systems\textup{),}
 so the obstruction map has empty domain and the formal moduli is
 the reduced point.
 
-For $\cH_k$, $V_k(\fg)$, and $\beta\gamma_\lambda$: each
+For $\cH_k$ and $V_k(\fg)$: each
 generator $\xi_i$ of $\ChirHoch^{1}(\cA)$ is realised by an
 \emph{actual} smooth one-parameter family
 $\{\cA_{\epsilon}\}_{\epsilon\in\mathbb{C}}$ of chiral algebras
 extending the trivial deformation. For $\cH_k$ this is the
 level rescaling $k\mapsto k+\epsilon$; for $V_k(\fg)$ the
 $\dim\fg$-parameter family of inner-gauge orbits of the affine
-current $J^a$; for $\beta\gamma_\lambda$ the charge rescaling
-and the conformal-weight family
-$\lambda\mapsto\lambda+\epsilon$. Each family extends to all
-orders in $\epsilon$, so each $\xi_i$ admits a Maurer--Cartan
-extension $\Theta(\epsilon)=\xi_i\epsilon+
+current $J^a$. Each family extends to all orders in $\epsilon$,
+so each $\xi_i$ admits a Maurer--Cartan extension
+$\Theta(\epsilon)=\xi_i\epsilon+
 \Theta_2\epsilon^2+\cdots$ with vanishing obstruction at every
 order. By rescaling and superposition, the same holds on the
 full $\ChirHoch^{1}(\cA)$-affine subspace, since the families
@@ -1801,6 +1833,10 @@ commute: levels of distinct generators are independent
 parameters. Hence $[\xi,\xi]=0$ in $\ChirHoch^{2}(\cA)$ for
 every $\xi$, and all higher Massey obstructions vanish. The
 formal moduli is smooth of dimension $\dim\ChirHoch^{1}(\cA)$.
+The conformal-weight family $\lambda\mapsto\lambda+\epsilon$ for
+$\beta\gamma_\lambda$ and $bc_\lambda$ belongs to the enriched
+conformal-vector/shadow atlas, not to this curve-level
+chiral-product tangent.
 \end{proof}
 
 \begin{remark}[Meaning of smoothness across archetypes;
@@ -1820,13 +1856,16 @@ Archetype & Family & $\dim\mathcal{M}_{\cA}$ \\
 \midrule
 $\mathsf G$ Heisenberg & $\cH_k$ & $1$ \\
 $\mathsf L$ affine KM & $V_k(\fg)$ & $\dim\fg$ \\
-$\mathsf C$ contact & $\beta\gamma_\lambda$ & $2$ \\
+$\mathsf C$ contact & $\beta\gamma_\lambda$, $bc_\lambda$ & $0$ \\
 $\mathsf M$ minimal & $\Vir_c$ & $0$ \\
 $\mathsf M$ minimal & $\cW_N\,(N\geq 3)$ & $0$ \\
 $\mathsf M$ subreg.\ & $\BP_k$ & $0$ \\
 \bottomrule
 \end{tabular}
 \end{center}
+For class~$\mathsf C$ this table concerns the chiral-product moduli
+controlled by $\ChirHoch^1$. The conformal-weight line and the quartic
+shadow tower remain part of the enriched free-field/contact atlas.
 The non-generic loci (admissible levels for class $\mathsf L$,
 minimal models for class $\mathsf M$) are excluded from this
 generic-smoothness statement: at these special points the
@@ -2553,20 +2592,21 @@ Three invariants must be distinguished:
  Theorem~1.4.3): a polynomial ring, unbounded.
 \end{enumerate}
 At \emph{generic} level, $\ChirHoch^*(\cA)$ and
-$\HH^*(A_{\mathrm{mode}})$ have the same cohomological
-dimension (both finite, both concentrated). The genuine
+$\HH^*(A_{\mathrm{mode}})$ are finite and concentrated in the
+standard Koszul examples, but their cohomological dimensions need not
+agree. For the Heisenberg fibre the chiral table gives
+$\dim\ChirHoch^\bullet(\cH_k)=3$, while the Weyl-mode algebra has
+$\HH^0(A_1)=\bC$ and $\HH^n(A_1)=0$ for $n\ge1$. The genuine
 difference is \emph{structural}: $\ChirHoch^*$ carries an
 $\Etwo$-algebra structure with spectral parameters from the
 chiral endomorphism operad, while
 $\HH^*(A_{\mathrm{mode}})$ carries $\Etwo$ from the Deligne
 conjecture (abstract, no spectral data).
 
-The \emph{only} regime where the two genuinely diverge in
-\emph{dimension} is the \textbf{critical level} $k = -h^\vee$:
-here $\ChirHoch^*$ becomes infinite-dimensional
-(the Feigin--Frenkel centre
-$\mathrm{Fun}(\mathrm{Op}_{\fg^\vee}(D))$ populates $\ChirHoch^0$),
-while $\HH^*(A_{\mathrm{mode}})$ remains finite.
+The high-degree divergence used in the three-Hochschild comparison is
+scalar Gel'fand--Fuchs cohomology, not THH. The \textbf{critical level}
+$k=-h^\vee$ is a separate boundary surface: the Feigin--Frenkel centre
+$\mathrm{Fun}(\mathrm{Op}_{\fg^\vee}(D))$ populates $\ChirHoch^0$.
 This is the scope boundary of Theorem~H: Koszulness by itself is
 not enough. At critical level the generic finite-type/perfectness
 and completion hypotheses needed by the FM-tower collapse fail, and
@@ -3642,7 +3682,7 @@ invariant bilinear form
 $\langle{-},{-}\rangle_{\cA}\colon \cA\otimes\cA\to\omega_X$.
 Let $\bar{B}_X(\cA) = T^c(s^{-1}\bar{\cA})$ be the reduced bar
 coalgebra
-\textup{(}\S\textup{\ref{sec:bar-cobar}}\textup{)}.
+\textup{(}Convention~\textup{\ref{conv:bar-coalgebra-identity}}\textup{)}.
 Then:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Cyclic coalgebra structure.}
@@ -3902,7 +3942,7 @@ formula of Theorem~\ref{thm:modular-characteristic}.
 \end{proof}
 
 \begin{definition}[Cyclic deformation complex: bar-intrinsic
- form]
+ form; \ClaimStatusDefinitional]
 \label{def:cyclic-deformation-bar}
 \index{cyclic deformation complex!bar-intrinsic form}
 Let $\cA$ be a modular Koszul chiral algebra
@@ -4378,7 +4418,7 @@ construction~\cite{KontsevichSoibelman} to chiral algebras on algebraic
 curves via configuration space integrals on
 Fulton--MacPherson compactifications.
 
-\begin{definition}[Chiral graphs]\label{def:chiral-graph}
+\begin{definition}[Chiral graphs; \ClaimStatusDefinitional]\label{def:chiral-graph}
 \index{chiral graph}
 A \emph{chiral graph} of type $(n, L)$ is a datum
 $\Gamma = (V_{\mathrm{ext}}, V_{\mathrm{int}}, E, \sigma)$ where:
@@ -4400,7 +4440,7 @@ ribbon structure. Let $\mathfrak{G}_{n,L}$ denote the set of
 isomorphism classes of chiral graphs of type $(n, L)$.
 \end{definition}
 
-\begin{definition}[Graph amplitude]\label{def:graph-amplitude}
+\begin{definition}[Graph amplitude; \ClaimStatusDefinitional]\label{def:graph-amplitude}
 \index{graph amplitude!chiral}
 Let $\cA$ be a Koszul chiral algebra on a smooth projective curve~$X$
 with non-degenerate invariant form
@@ -4882,8 +4922,8 @@ enters the deformation object itself rather than merely its differential
 Filter $\operatorname{Def}^{\mathrm{mod}}(\cA)$ by genus and
 bar length. Choose any complete filtered contraction of this
 quantum $L_\infty$-algebra onto a smaller filtered complex.
-By the homotopy transfer package of
-Appendix~\ref{app:homotopy-transfer}, the transferred higher
+By the operadic homotopy transfer theorem
+(Theorem~\ref{thm:htt-operadic}), the transferred higher
 brackets $\{\ell_n\}_{n\ge 1}$ endow the target with a cyclic
 $L_\infty$-structure. Its filtered $L_\infty$ quasi-isomorphism class
 is denoted
@@ -4914,8 +4954,10 @@ of $\Definfmod(\cA)$. Consequently:
 \end{proposition}
 
 \begin{proof}
-The first statement is exactly the output of homotopy transfer for
-complete filtered dg~Lie algebras (Appendix~\ref{app:homotopy-transfer}).
+The first statement is exactly the output of operadic homotopy transfer
+for complete filtered dg~Lie algebras
+(Theorem~\ref{thm:htt-operadic}, applied to the dg~Lie operad in the
+complete filtered category).
 Maurer--Cartan deformation functors are invariant under filtered
 $L_\infty$ quasi-isomorphism
 \cite{KontsevichSoibelman,Get09}. Restricting the stable-graph
@@ -5860,7 +5902,7 @@ We construct the universal non-scalar class
 for algebras with
 $\dim H^2_{\mathrm{cyc}}(\cA,\cA) \geq 2$.
 
-\begin{construction}[HPT non-scalar MC recursion]
+\begin{construction}[HPT non-scalar MC recursion; \ClaimStatusDefinitional]
 \label{constr:non-scalar-hpt}
 \index{homotopy perturbation theory!non-scalar MC}
 Let $L = \Defcyc(\cA)$ be the cyclic deformation complex
@@ -7129,7 +7171,7 @@ with $\mathcal{B}^! = \mathrm{CE}(\mathfrak{h}_{-k})$ generated by a single elem
 0 & n \geq 3 \text{ (Koszul resolution length 2)}
 \end{cases}\]
 
-The Poincar\'e polynomial is $P_{\mathcal{B}}(t) = 1 + t + t^2$. For algebras whose OPE among generators has \emph{no simple pole} (i.e., the zero mode $a_{(0)}$ is central), all outer derivations survive and $\ChirHoch^1 = \mathbb{C}^d$ where $d$ is the number of strong generators. The Heisenberg ($d = 1$, double pole only) is the prototypical case. For algebras with simple poles, the structure of $\ChirHoch^1$ depends on the family: for affine Kac--Moody $V_k(\fg)$ at generic level, $\ChirHoch^1(V_k(\fg)) \cong \fg$ (Proposition~\ref{prop:chirhoch1-affine-km}), reflecting the $\dim(\fg)$-dimensional space of current-algebra deformations; for the $bc$ and $\beta\gamma$ systems, the simple-pole sector is one-dimensional and $\ChirHoch^1 = \mathbb{C}$ (Remark~\ref{rem:boson-fermion-hochschild-comparison}).
+The Poincar\'e polynomial is $P_{\mathcal{B}}(t) = 1 + t + t^2$. For algebras whose OPE among generators has \emph{no simple pole} (i.e., the zero mode $a_{(0)}$ is central), all outer derivations survive and $\ChirHoch^1 = \mathbb{C}^d$ where $d$ is the number of strong generators. The Heisenberg ($d = 1$, double pole only) is the prototypical case. For algebras with simple poles, the structure of $\ChirHoch^1$ depends on the family: for affine Kac--Moody $V_k(\fg)$ at generic level, $\ChirHoch^1(V_k(\fg)) \cong \fg$ (Proposition~\ref{prop:chirhoch1-affine-km}), reflecting the $\dim(\fg)$-dimensional space of current-algebra deformations; for the $bc$ and $\beta\gamma$ systems, the zero mode of the charge or ghost current makes the apparent rescaling inner, while the spin parameter changes the conformal vector. Hence $\ChirHoch^1(bc_\lambda)=\ChirHoch^1(\beta\gamma_\lambda)=0$ on the curve-level Theorem~H surface (Example~\ref{ver:boson-fermion-HH}).
 \end{example}
 
 \subsection{Explicit computation: free fermion}
@@ -7153,7 +7195,12 @@ Since the OPE has no deformation parameters, we find:
 
 \subsubsection{\texorpdfstring{Degree 2: $\ChirHoch^2(\mathcal{F})$}{Degree 2: HH 2(F)}}
 
-Deformations of the fermionic structure. The free fermion $bc$ ghost system admits a one-parameter family of deformations parametrized by the spin $\lambda$: the conformal weights $(h_b, h_c) = (\lambda, 1-\lambda)$ vary while the OPE $b(z)c(w) \sim 1/(z-w)$ is preserved. This gives:
+Deformations of the fermionic structure. The degree-$2$ class rescales
+the simple-pole pairing
+$b(z)c(w)\sim (1+\epsilon)/(z-w)$. The spin line
+$(h_b,h_c)=(\lambda,1-\lambda)$ preserves the same OPE and changes the
+chosen conformal vector; it belongs to the conformal/free-field atlas,
+not to $\ChirHoch^1$. The product-deformation class gives:
 \[\ChirHoch^2(\mathcal{F}) = \mathbb{C}\]
 
 \subsubsection{$\ChirHoch^*(\mathcal{F})$: free-fermion cohomology table}
@@ -7250,8 +7297,9 @@ here by OPE residues on configuration spaces.
 \begin{proof}
 Choose homogeneous cocycle representatives, still denoted
 $f,g,h$, in the geometric chiral Hochschild complex. By
-Remark~\ref{rem:comparison-geometric-hoch}, this geometric
-complex is identified with the algebraic cochain complex
+Proposition~\ref{prop:geometric-algebraic-hochschild}, under its
+logarithmic/completed finite-piece hypotheses, this geometric complex
+is identified with the algebraic cochain complex
 $C^\bullet_{\mathrm{ch}}(A,A)$ of
 Definition~\ref{def:chiral-hochschild-cochain-brace}. In that
 model the single brace $f\{g\}$ is the one-fold insertion of
@@ -7273,7 +7321,7 @@ f \circ g
 where $f \circ_i g$ is the residue along the boundary divisor where
 the output point of the $g$-configuration collides with the
 $i$-th marked point of the $f$-configuration. Under the
-comparison of Remark~\ref{rem:comparison-geometric-hoch}, each
+comparison of Proposition~\ref{prop:geometric-algebraic-hochschild}, each
 residue term $f \circ_i g$ is the $i$-th chiral insertion, so
 $f \circ g = f\{g\}$. Therefore the residue bracket of
 Construction~\ref{const:gerstenhaber-bracket} is exactly the
@@ -7724,7 +7772,7 @@ of~$\tau_\cA$ in the $\cA$- and $\cA^!$-directions give maps
 \]
 \end{definition}
 
-\begin{definition}[Ambient complementarity tangent complex]
+\begin{definition}[Ambient complementarity tangent complex; \ClaimStatusDefinitional]
 \label{def:ambient-tangent-complex}
 Define
 \begin{equation}\label{eq:ambient-tangent}

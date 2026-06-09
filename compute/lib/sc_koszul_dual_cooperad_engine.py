@@ -84,7 +84,7 @@ VERIFICATION AGAINST KNOWN RESULTS:
      (the logarithm, compositional inverse of exp)
   3. Classical result (Livernet): The bar complex of SC is acyclic except
      in the Koszul dual degree, confirming SC is Koszul.
-  4. Mixed sector check: at (k,m) = (1,1), dim = 1 (single generator).
+  4. Mixed sector check: at (k,m) = (1,1), dim = 2 (two interleavings).
      At (k,m) = (2,0), dim = 1 (the Lie bracket).
      At (k,m) = (0,2), dim = 2 (associative product, two orderings).
 

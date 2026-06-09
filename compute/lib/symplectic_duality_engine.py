@@ -27,8 +27,11 @@ Theorem C (complementarity) states:
 
     Q_g(A) + Q_g(A!) = H*(M_g, Z(A))
 
-upgraded to: Q_g(A) and Q_g(A!) are complementary Lagrangians in the
-(-(3g-3))-shifted symplectic space C_g(A) = R Gamma(M_g, Z(A)).
+The C1 Verdier-side package gives the eigenspace decomposition.  The
+C2 Lagrangian upgrade is conditional: Q_g(A) and Q_g(A!) are certified
+as complementary Lagrangians in the (-(3g-3))-shifted symplectic space
+C_g(A) = R Gamma(M_g, Z(A)) only after the explicit C2
+shifted-symplectic hypothesis package has been supplied.
 
 The symplectic duality interpretation:
 
@@ -121,6 +124,45 @@ from fractions import Fraction
 from compute.lib.wn_central_charge_canonical import c_wn_fl as canonical_c_wn_fl
 from typing import Any, Dict, List, Optional, Tuple
 import math
+
+
+C2_LAGRANGIAN_HYPOTHESES: Tuple[str, ...] = (
+    "C0_fiber_center_identification",
+    "C1_homotopy_eigenspace_decomposition",
+    "uniform_weight_perfectness",
+    "nondegenerate_cyclic_pairing",
+    "finite_modular_envelope",
+    "closed_cyclic_pairing",
+    "skew_adjoint_differential",
+    "modular_bracket_compatibility",
+    "twisted_tensor_acyclicity",
+    "ambient_BV_QME_input",
+)
+
+C2_LAGRANGIAN_CONDITIONAL_STATUS = (
+    "conditional_on_C2_shifted_symplectic_hypothesis_package"
+)
+
+
+def c2_lagrangian_hypothesis_report(
+    provided: Optional[Tuple[str, ...]] = None,
+) -> Dict[str, Any]:
+    """Report the C2 hypotheses needed for the Lagrangian upgrade."""
+    verified = tuple(provided or ())
+    verified_set = set(verified)
+    missing = tuple(
+        hyp for hyp in C2_LAGRANGIAN_HYPOTHESES if hyp not in verified_set
+    )
+    return {
+        "required": C2_LAGRANGIAN_HYPOTHESES,
+        "verified": verified,
+        "missing": missing,
+        "complete": not missing,
+        "status": (
+            "C2_hypothesis_package_supplied"
+            if not missing else C2_LAGRANGIAN_CONDITIONAL_STATUS
+        ),
+    }
 
 
 # ===========================================================================
@@ -368,12 +410,14 @@ class ShiftedSymplecticData:
     """Data of a shifted-symplectic structure on the ambient complex C_g(A).
 
     The ambient complex C_g(A) = R Gamma(M_g, Z(A)) carries a
-    (-(3g-3))-shifted symplectic structure (PTVV, prop:ptvv-lagrangian).
+    (-(3g-3))-shifted symplectic structure only in the paired C2 regime
+    (PTVV, prop:ptvv-lagrangian).
 
     The formal moduli M_comp(A) carries a (-1)-shifted symplectic
     structure (thm:ambient-complementarity-fmp).
 
-    Q_g(A) and Q_g(A!) are complementary Lagrangians in C_g(A).
+    The scalar complementarity sum is tracked separately from the C2
+    Lagrangian certification flag.
     """
     genus: int
     ptvv_shift: int          # -(3g-3)
@@ -384,10 +428,15 @@ class ShiftedSymplecticData:
     complementarity_sum: Fraction
     is_lagrangian: bool       # Q_g(A) Lagrangian?
     is_lagrangian_dual: bool  # Q_g(A!) Lagrangian?
+    scalar_complementarity_indicator: bool
+    lagrangian_upgrade_status: str
+    c2_required_hypotheses: Tuple[str, ...]
+    c2_verified_hypotheses: Tuple[str, ...]
+    c2_missing_hypotheses: Tuple[str, ...]
 
     @property
     def is_complementary_pair(self) -> bool:
-        """Both Q_g(A) and Q_g(A!) are Lagrangian."""
+        """Both Q_g(A) and Q_g(A!) are C2-certified Lagrangians."""
         return self.is_lagrangian and self.is_lagrangian_dual
 
 
@@ -416,14 +465,17 @@ def compute_shifted_symplectic_data(
     algebra_name: str,
     kappa: Fraction,
     kappa_dual: Fraction,
+    c2_hypotheses: Optional[Tuple[str, ...]] = None,
 ) -> ShiftedSymplecticData:
-    """Compute the full shifted-symplectic package for complementarity.
+    """Compute scalar complementarity and report C2 certification status.
 
-    Lagrangian condition: Q_g(A) is Lagrangian when A is chirally Koszul.
-    This is K11 of the Koszulness characterization programme (conditional
-    on perfectness/nondegeneracy for the general statement, but unconditional
-    for the standard landscape by prop:lagrangian-perfectness).
+    The scalar sum ``kappa + kappa_dual`` is not a Lagrangian certificate.
+    The returned Lagrangian flags are true only when the explicit C2 package
+    is supplied.
     """
+    c2_report = c2_lagrangian_hypothesis_report(c2_hypotheses)
+    scalar_ok = True
+    c2_verified = scalar_ok and c2_report["complete"]
     return ShiftedSymplecticData(
         genus=genus,
         ptvv_shift=ptvv_shift(genus),
@@ -432,8 +484,13 @@ def compute_shifted_symplectic_data(
         kappa=kappa,
         kappa_dual=kappa_dual,
         complementarity_sum=kappa + kappa_dual,
-        is_lagrangian=True,  # standard landscape: unconditional
-        is_lagrangian_dual=True,
+        is_lagrangian=c2_verified,
+        is_lagrangian_dual=c2_verified,
+        scalar_complementarity_indicator=scalar_ok,
+        lagrangian_upgrade_status=c2_report["status"],
+        c2_required_hypotheses=c2_report["required"],
+        c2_verified_hypotheses=c2_report["verified"],
+        c2_missing_hypotheses=c2_report["missing"],
     )
 
 
@@ -842,19 +899,26 @@ class LagrangianVerification:
     (b) Half-rank: Q(A) has half the rank of C_g(A)
     (c) Q(A) = Q(A!)^v[-(3g-3)]
 
-    For the standard landscape, Lagrangian perfectness is PROVED
-    (prop:lagrangian-perfectness + cor:lagrangian-unconditional).
+    The scalar complementarity check is separate.  The Lagrangian flags
+    below are C2 certification flags.
     """
     genus: int
     algebra_name: str
     is_isotropic: bool          # omega|_{Q(A)} = 0
     is_half_rank: bool          # dim Q(A) = dim C_g / 2
     is_verdier_dual: bool       # Q(A) = Q(A!)^v[shift]
-    is_lagrangian: bool         # all three conditions
-    complementarity_sum: Fraction
+    is_lagrangian: bool         # all three conditions, C2-certified
+    complementarity_sum: Optional[Fraction]
+    scalar_complementarity_indicator: bool
+    lagrangian_upgrade_status: str
+    c2_missing_hypotheses: Tuple[str, ...]
 
 
-def verify_lagrangian_heisenberg(k, genus: int = 1) -> LagrangianVerification:
+def verify_lagrangian_heisenberg(
+    k,
+    genus: int = 1,
+    c2_hypotheses: Optional[Tuple[str, ...]] = None,
+) -> LagrangianVerification:
     """Verify Lagrangian condition for Heisenberg.
 
     Class G: the simplest case.  Q_g(H_k) is spanned by kappa * lambda_g.
@@ -864,19 +928,29 @@ def verify_lagrangian_heisenberg(k, genus: int = 1) -> LagrangianVerification:
     """
     kap = kappa_heisenberg(k)
     kap_dual = kappa_dual_heisenberg(k)
+    c2_report = c2_lagrangian_hypothesis_report(c2_hypotheses)
+    scalar_ok = kap + kap_dual == Fraction(0)
+    c2_verified = scalar_ok and c2_report["complete"]
 
     return LagrangianVerification(
         genus=genus,
         algebra_name=f"Heisenberg k={k}",
-        is_isotropic=True,
-        is_half_rank=True,
-        is_verdier_dual=True,
-        is_lagrangian=True,
+        is_isotropic=c2_verified,
+        is_half_rank=c2_verified,
+        is_verdier_dual=c2_verified,
+        is_lagrangian=c2_verified,
         complementarity_sum=kap + kap_dual,
+        scalar_complementarity_indicator=scalar_ok,
+        lagrangian_upgrade_status=c2_report["status"],
+        c2_missing_hypotheses=c2_report["missing"],
     )
 
 
-def verify_lagrangian_virasoro(c, genus: int = 1) -> LagrangianVerification:
+def verify_lagrangian_virasoro(
+    c,
+    genus: int = 1,
+    c2_hypotheses: Optional[Tuple[str, ...]] = None,
+) -> LagrangianVerification:
     """Verify Lagrangian condition for Virasoro.
 
     Class M: infinite shadow depth, but still Lagrangian (Koszul).
@@ -885,24 +959,36 @@ def verify_lagrangian_virasoro(c, genus: int = 1) -> LagrangianVerification:
     """
     kap = kappa_virasoro(c)
     kap_dual = kappa_dual_virasoro(c)
+    c2_report = c2_lagrangian_hypothesis_report(c2_hypotheses)
+    scalar_ok = kap + kap_dual == Fraction(13)
+    c2_verified = scalar_ok and c2_report["complete"]
 
     return LagrangianVerification(
         genus=genus,
         algebra_name=f"Virasoro c={c}",
-        is_isotropic=True,
-        is_half_rank=True,
-        is_verdier_dual=True,
-        is_lagrangian=True,
+        is_isotropic=c2_verified,
+        is_half_rank=c2_verified,
+        is_verdier_dual=c2_verified,
+        is_lagrangian=c2_verified,
         complementarity_sum=kap + kap_dual,
+        scalar_complementarity_indicator=scalar_ok,
+        lagrangian_upgrade_status=c2_report["status"],
+        c2_missing_hypotheses=c2_report["missing"],
     )
 
 
-def verify_lagrangian_affine(N: int, k, genus: int = 1) -> LagrangianVerification:
+def verify_lagrangian_affine(
+    N: int,
+    k,
+    genus: int = 1,
+    c2_hypotheses: Optional[Tuple[str, ...]] = None,
+) -> LagrangianVerification:
     """Verify Lagrangian condition for affine sl_N at non-critical level.
 
-    Class L: terminates at arity 3.  Lagrangian at all non-critical levels.
-    Critical level k = -N: Sugawara undefined, Lagrangian condition needs
-    separate analysis.
+    Class L: terminates at arity 3.  Non-critical levels pass the scalar
+    complementarity check.  The Lagrangian flag still requires the C2 package.
+    Critical level k = -N: Sugawara undefined, so even the scalar affine
+    check is outside this routine.
     """
     k = _frac(k)
     dim_g = N * N - 1
@@ -910,6 +996,7 @@ def verify_lagrangian_affine(N: int, k, genus: int = 1) -> LagrangianVerificatio
     is_critical = (k + h_dual == 0)
 
     if is_critical:
+        c2_report = c2_lagrangian_hypothesis_report(c2_hypotheses)
         return LagrangianVerification(
             genus=genus,
             algebra_name=f"affine sl_{N} k={k} (CRITICAL)",
@@ -918,19 +1005,28 @@ def verify_lagrangian_affine(N: int, k, genus: int = 1) -> LagrangianVerificatio
             is_verdier_dual=False,
             is_lagrangian=False,
             complementarity_sum=None,
+            scalar_complementarity_indicator=False,
+            lagrangian_upgrade_status=c2_report["status"],
+            c2_missing_hypotheses=c2_report["missing"],
         )
 
     kap = kappa_affine(dim_g, h_dual, k)
     kap_dual = -kap
+    c2_report = c2_lagrangian_hypothesis_report(c2_hypotheses)
+    scalar_ok = kap + kap_dual == Fraction(0)
+    c2_verified = scalar_ok and c2_report["complete"]
 
     return LagrangianVerification(
         genus=genus,
         algebra_name=f"affine sl_{N} k={k}",
-        is_isotropic=True,
-        is_half_rank=True,
-        is_verdier_dual=True,
-        is_lagrangian=True,
+        is_isotropic=c2_verified,
+        is_half_rank=c2_verified,
+        is_verdier_dual=c2_verified,
+        is_lagrangian=c2_verified,
         complementarity_sum=kap + kap_dual,
+        scalar_complementarity_indicator=scalar_ok,
+        lagrangian_upgrade_status=c2_report["status"],
+        c2_missing_hypotheses=c2_report["missing"],
     )
 
 
@@ -1235,31 +1331,38 @@ def genus_g_complementarity(g: int, kappa, kappa_dual) -> Dict[str, Any]:
 # 15. FULL LANDSCAPE VERIFICATION
 # ===========================================================================
 
-def full_landscape_symplectic_duality() -> List[Dict[str, Any]]:
+def full_landscape_symplectic_duality(
+    c2_hypotheses: Optional[Tuple[str, ...]] = None,
+) -> List[Dict[str, Any]]:
     """Cross-verify symplectic duality data across the entire standard landscape.
 
     For each family, verify:
     1. kappa + kappa^! matches expected sum
-    2. Lagrangian condition holds
+    2. scalar complementarity is recorded separately from C2 certification
     3. PTVV shift is correct
     4. F_g complementarity at g=1,2
     """
     results = []
+    c2_report = c2_lagrangian_hypothesis_report(c2_hypotheses)
 
     # Heisenberg at various levels
     for k_val in [1, 2, 3, 5, Fraction(1, 2)]:
         k = _frac(k_val)
         kap = kappa_heisenberg(k)
         kap_d = kappa_dual_heisenberg(k)
+        match = (kap + kap_d) == 0
         results.append({
             "family": f"Heisenberg k={k}",
             "kappa": kap,
             "kappa_dual": kap_d,
             "sum": kap + kap_d,
             "expected_sum": Fraction(0),
-            "match": (kap + kap_d) == 0,
+            "match": match,
+            "scalar_complementarity_indicator": match,
             "shadow_class": "G",
-            "lagrangian": True,
+            "lagrangian": match and c2_report["complete"],
+            "lagrangian_upgrade_status": c2_report["status"],
+            "c2_missing_hypotheses": c2_report["missing"],
         })
 
     # Virasoro at various central charges
@@ -1267,15 +1370,19 @@ def full_landscape_symplectic_duality() -> List[Dict[str, Any]]:
         c = _frac(c_val)
         kap = kappa_virasoro(c)
         kap_d = kappa_dual_virasoro(c)
+        match = (kap + kap_d) == 13
         results.append({
             "family": f"Virasoro c={c}",
             "kappa": kap,
             "kappa_dual": kap_d,
             "sum": kap + kap_d,
             "expected_sum": Fraction(13),
-            "match": (kap + kap_d) == 13,
+            "match": match,
+            "scalar_complementarity_indicator": match,
             "shadow_class": "M",
-            "lagrangian": True,
+            "lagrangian": match and c2_report["complete"],
+            "lagrangian_upgrade_status": c2_report["status"],
+            "c2_missing_hypotheses": c2_report["missing"],
         })
 
     # Affine sl_N at non-critical levels
@@ -1286,15 +1393,19 @@ def full_landscape_symplectic_duality() -> List[Dict[str, Any]]:
             h_dual = N
             kap = kappa_affine(dim_g, h_dual, k)
             kap_d = kappa_dual_affine(dim_g, h_dual, k)
+            match = (kap + kap_d) == 0
             results.append({
                 "family": f"affine sl_{N} k={k}",
                 "kappa": kap,
                 "kappa_dual": kap_d,
                 "sum": kap + kap_d,
                 "expected_sum": Fraction(0),
-                "match": (kap + kap_d) == 0,
+                "match": match,
+                "scalar_complementarity_indicator": match,
                 "shadow_class": "L",
-                "lagrangian": True,
+                "lagrangian": match and c2_report["complete"],
+                "lagrangian_upgrade_status": c2_report["status"],
+                "c2_missing_hypotheses": c2_report["missing"],
             })
 
     return results
@@ -1380,12 +1491,13 @@ def symplectic_dim_check(gauge_datum: GaugeTheoryDatum) -> Dict[str, Any]:
 def cross_verify_complementarity(
     family: str,
     params: Dict[str, Any],
+    c2_hypotheses: Optional[Tuple[str, ...]] = None,
 ) -> Dict[str, Any]:
     """Cross-verify complementarity via 3+ independent paths.
 
     Path 1: Direct kappa computation
     Path 2: Gauge theory / symplectic duality data
-    Path 3: Lagrangian condition
+    Path 3: scalar indicator plus C2 Lagrangian certification status
     Path 4: F_g at genus 1
     Path 5: Shadow connection discriminant (for Virasoro)
     """
@@ -1404,8 +1516,11 @@ def cross_verify_complementarity(
         results["path2_gauge_sum"] = gt.complementarity_sum
 
         # Path 3: Lagrangian
-        lag = verify_lagrangian_heisenberg(k)
+        lag = verify_lagrangian_heisenberg(k, c2_hypotheses=c2_hypotheses)
         results["path3_lagrangian"] = lag.is_lagrangian
+        results["path3_scalar_indicator"] = lag.scalar_complementarity_indicator
+        results["path3_c2_status"] = lag.lagrangian_upgrade_status
+        results["path3_c2_missing_hypotheses"] = lag.c2_missing_hypotheses
         results["path3_lag_sum"] = lag.complementarity_sum
 
         # Path 4: F_1
@@ -1414,9 +1529,10 @@ def cross_verify_complementarity(
 
         results["all_agree"] = (
             results["path1_direct_sum"] == Fraction(0) and
-            results["path3_lagrangian"] and
+            results["path3_scalar_indicator"] and
             results["path4_F1_match"]
         )
+        results["c2_all_agree"] = results["all_agree"] and results["path3_lagrangian"]
 
     elif family == "virasoro":
         c = _frac(params["c"])
@@ -1435,8 +1551,11 @@ def cross_verify_complementarity(
             results["path2_gauge_sum"] = kap + kap_d  # general Virasoro
 
         # Path 3: Lagrangian
-        lag = verify_lagrangian_virasoro(c)
+        lag = verify_lagrangian_virasoro(c, c2_hypotheses=c2_hypotheses)
         results["path3_lagrangian"] = lag.is_lagrangian
+        results["path3_scalar_indicator"] = lag.scalar_complementarity_indicator
+        results["path3_c2_status"] = lag.lagrangian_upgrade_status
+        results["path3_c2_missing_hypotheses"] = lag.c2_missing_hypotheses
         results["path3_lag_sum"] = lag.complementarity_sum
 
         # Path 4: F_1
@@ -1456,9 +1575,10 @@ def cross_verify_complementarity(
 
         results["all_agree"] = (
             results["path1_direct_sum"] == Fraction(13) and
-            results["path3_lagrangian"] and
+            results["path3_scalar_indicator"] and
             results["path4_F1_match"]
         )
+        results["c2_all_agree"] = results["all_agree"] and results["path3_lagrangian"]
 
     elif family == "affine_sl":
         N = params["N"]
@@ -1477,8 +1597,11 @@ def cross_verify_complementarity(
         results["path2_gauge_sum"] = gt.complementarity_sum
 
         # Path 3: Lagrangian
-        lag = verify_lagrangian_affine(N, k)
+        lag = verify_lagrangian_affine(N, k, c2_hypotheses=c2_hypotheses)
         results["path3_lagrangian"] = lag.is_lagrangian
+        results["path3_scalar_indicator"] = lag.scalar_complementarity_indicator
+        results["path3_c2_status"] = lag.lagrangian_upgrade_status
+        results["path3_c2_missing_hypotheses"] = lag.c2_missing_hypotheses
         results["path3_lag_sum"] = lag.complementarity_sum
 
         # Path 4: F_1
@@ -1488,9 +1611,10 @@ def cross_verify_complementarity(
         results["all_agree"] = (
             results["path1_direct_sum"] == Fraction(0) and
             results["path2_gauge_sum"] == Fraction(0) and
-            results["path3_lagrangian"] and
+            results["path3_scalar_indicator"] and
             results["path4_F1_match"]
         )
+        results["c2_all_agree"] = results["all_agree"] and results["path3_lagrangian"]
 
     else:
         raise ValueError(f"Unknown family: {family}")

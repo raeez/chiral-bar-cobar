@@ -1170,7 +1170,7 @@ def shadow_gravity_dictionary() -> Dict[str, str]:
         'F_g': 'Genus-g correction to black hole free energy',
         'shadow_depth': 'Number of independent quantum corrections to entropy',
         'Q_contact': 'Quartic contact term = subleading Rademacher correction?',
-        'Koszul_dual': 'Boundary-to-bulk passage (holographic dictionary)',
+        'Koszul_dual': 'Verdier-dual companion A^!; not the open-closed derived-centre branch',
         'complementarity': 'Information paradox resolution: Q_g(A) + Q_g(A!) = H*(M_g)',
         'c=26': 'Critical string: kappa_eff=0, topological gravity, exterior algebra',
         'c=13': 'Self-dual point: delta_kappa=0, maximal Koszul symmetry',

@@ -63,6 +63,22 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'lib'))
 from theorem_arithmetic_rectification_engine import (
     # Constants
     PI, TWO_PI, FOUR_PI_SQ, UNIVERSAL_INSTANTON_ACTION,
+    ARITHMETIC_SHADOW_FUNCTOR_GATES,
+    HECKE_CPS_RAMANUJAN_GATES,
+    HECKE_NEWTON_DIRICHLET_GATES,
+    SPECTRAL_SEWING_GATES,
+    GENUS2_LIFT_BRIDGE_GATES,
+    BORCHERDS_IGUSA_MODULAR_GATES,
+    BRACKET_GRT_SPINE_GATES,
+    arithmetic_shadow_functor_scope,
+    hecke_cps_ramanujan_scope,
+    hecke_newton_dirichlet_scope,
+    arithmetic_modular_obligation_scope,
+    spectral_sewing_scope,
+    genus2_lift_bridge_scope,
+    borcherds_igusa_modular_scope,
+    bracket_grt_theorem_spine_scope,
+    arithmetic_modular_tail_scope,
     # Families
     AlgebraData, FAMILIES,
     # Faber-Pandharipande
@@ -99,6 +115,465 @@ from theorem_arithmetic_rectification_engine import (
     # Discriminant
     virasoro_shadow_discriminant, virasoro_shadow_field_discriminant,
 )
+
+
+# =====================================================================
+# Group 0: Arithmetic modular theorem-scope gates (PDF obligations 851--870)
+# =====================================================================
+
+class TestArithmeticModularScopeGates:
+    """Executable scope gates for arithmetic shadow and Hecke/Ramanujan claims."""
+
+    def test_000_gate_families_cover_obligation_block(self):
+        """The lane has separate gates for shadow, Hecke/CPS, and Dirichlet scope."""
+        assert len(ARITHMETIC_SHADOW_FUNCTOR_GATES) == 6
+        assert len(HECKE_CPS_RAMANUJAN_GATES) == 10
+        assert len(HECKE_NEWTON_DIRICHLET_GATES) == 6
+
+    def test_001_shadow_functor_blocks_undefined_theta_source(self):
+        """An arithmetic shadow functor cannot be stated before Theta_A is fixed."""
+        scope = arithmetic_shadow_functor_scope(
+            theta_source_defined=False,
+            arithmetic_shadow_functor_defined=True,
+            moment_l_function_defined=True,
+            rankin_selberg_integral_defined=True,
+            convergence_domain_stated=True,
+        )
+        assert scope['arithmetic_shadow_functor_theorem_allowed'] is False
+        assert 'theta_source_defined' in scope['missing']
+
+    def test_002_moment_l_function_requires_rankin_domain(self):
+        """Moment L-functions require Rankin-Selberg data and convergence domain."""
+        scope = arithmetic_shadow_functor_scope(
+            theta_source_defined=True,
+            arithmetic_shadow_functor_defined=True,
+            moment_l_function_defined=True,
+            rankin_selberg_integral_defined=False,
+            convergence_domain_stated=False,
+        )
+        assert scope['moment_l_function_claim_allowed'] is False
+        assert 'rankin_selberg_integral_defined' in scope['missing']
+        assert 'convergence_domain_stated' in scope['missing']
+
+    def test_003_claimed_meromorphic_continuation_needs_proof(self):
+        """Meromorphic continuation is blocked when it is claimed but not proved."""
+        scope = arithmetic_shadow_functor_scope(
+            theta_source_defined=True,
+            arithmetic_shadow_functor_defined=True,
+            moment_l_function_defined=True,
+            rankin_selberg_integral_defined=True,
+            convergence_domain_stated=True,
+            meromorphic_continuation_claimed=True,
+            meromorphic_continuation_proved=False,
+        )
+        assert scope['meromorphic_continuation_claim_allowed'] is False
+        assert 'meromorphic_continuation_proved_where_claimed' in scope['missing']
+
+    def test_004_shadow_functor_all_gates_positive(self):
+        """The arithmetic shadow theorem unlocks only after all shadow gates pass."""
+        scope = arithmetic_shadow_functor_scope(
+            theta_source_defined=True,
+            arithmetic_shadow_functor_defined=True,
+            moment_l_function_defined=True,
+            rankin_selberg_integral_defined=True,
+            convergence_domain_stated=True,
+            meromorphic_continuation_claimed=True,
+            meromorphic_continuation_proved=True,
+        )
+        assert scope['all_gates_satisfied'] is True
+        assert scope['arithmetic_shadow_functor_theorem_allowed'] is True
+
+    def test_005_hecke_lift_requires_base_action_and_lift(self):
+        """A Hecke lift needs both the M_1,1 action and the gmod lift."""
+        scope = hecke_cps_ramanujan_scope(
+            hecke_action_m11_defined=True,
+            hecke_lift_to_gmod_defined=False,
+        )
+        assert scope['hecke_lift_claim_allowed'] is False
+        assert 'hecke_lift_to_gmod_defined' in scope['missing']
+
+    def test_006_lattice_prime_locality_claim_needs_proof(self):
+        """Lattice prime-locality is not a theorem when it is claimed without proof."""
+        scope = hecke_cps_ramanujan_scope(
+            hecke_action_m11_defined=True,
+            hecke_lift_to_gmod_defined=True,
+            prime_locality_conjecture_stated=True,
+            lattice_prime_locality_claimed=True,
+            lattice_prime_locality_proved=False,
+            non_lattice_prime_locality_hypothesis_stated=True,
+            cps_hypotheses_defined=True,
+            automorphic_representation_pi_r_defined=True,
+            gl_functoriality_hypothesis_for_r_ge_5_stated=True,
+            ramanujan_scope_respects_known_functoriality=True,
+            kim_sarnak_bound_stated_when_unconditional=True,
+        )
+        assert scope['prime_locality_theorem_allowed'] is False
+        assert 'lattice_prime_locality_proved_when_claimed' in scope['missing']
+
+    def test_007_ramanujan_beyond_functoriality_is_blocked(self):
+        """Ramanujan language cannot outrun functoriality and Kim-Sarnak scope."""
+        scope = hecke_cps_ramanujan_scope(
+            hecke_action_m11_defined=True,
+            hecke_lift_to_gmod_defined=True,
+            prime_locality_conjecture_stated=True,
+            lattice_prime_locality_claimed=True,
+            lattice_prime_locality_proved=True,
+            non_lattice_prime_locality_hypothesis_stated=True,
+            cps_hypotheses_defined=True,
+            automorphic_representation_pi_r_defined=True,
+            gl_functoriality_hypothesis_for_r_ge_5_stated=False,
+            ramanujan_scope_respects_known_functoriality=False,
+            kim_sarnak_bound_stated_when_unconditional=False,
+        )
+        assert scope['ramanujan_comparison_claim_allowed'] is False
+        assert scope['unconditional_ramanujan_claim_allowed'] is False
+        assert scope['ramanujan_beyond_known_functoriality_allowed'] is False
+        assert 'gl_functoriality_hypothesis_for_r_ge_5_stated' in scope['missing']
+        assert 'kim_sarnak_bound_stated_when_unconditional' in scope['missing']
+
+    def test_008_hecke_cps_ramanujan_all_gates_positive(self):
+        """The Hecke/CPS/Ramanujan scope unlocks only after all gates pass."""
+        scope = hecke_cps_ramanujan_scope(
+            hecke_action_m11_defined=True,
+            hecke_lift_to_gmod_defined=True,
+            prime_locality_conjecture_stated=True,
+            lattice_prime_locality_claimed=True,
+            lattice_prime_locality_proved=True,
+            non_lattice_prime_locality_hypothesis_stated=True,
+            cps_hypotheses_defined=True,
+            automorphic_representation_pi_r_defined=True,
+            gl_functoriality_hypothesis_for_r_ge_5_stated=True,
+            ramanujan_scope_respects_known_functoriality=True,
+            kim_sarnak_bound_stated_when_unconditional=True,
+        )
+        assert scope['all_gates_satisfied'] is True
+        assert scope['ramanujan_comparison_claim_allowed'] is True
+        assert scope['unconditional_ramanujan_claim_allowed'] is False
+        assert scope['kim_sarnak_unconditional_bound_claim_allowed'] is True
+
+    def test_009_hecke_newton_blocks_non_lattice_and_irrational_theorems(self):
+        """Non-lattice and irrational extensions remain non-theorem lanes."""
+        scope = hecke_newton_dirichlet_scope(
+            hecke_newton_closure_defined=True,
+            lattice_finite_hecke_span_proof_supplied=True,
+            non_lattice_extension_defined_separately=True,
+            irrational_extension_defined_separately=True,
+            irrational_extension_marked_conditional=True,
+            dirichlet_l_functions_from_shadow_metric_defined=True,
+        )
+        assert scope['all_gates_satisfied'] is True
+        assert scope['lattice_hecke_newton_theorem_allowed'] is True
+        assert scope['non_lattice_extension_theorem_allowed'] is False
+        assert scope['irrational_extension_theorem_allowed'] is False
+        assert scope['dirichlet_shadow_metric_claim_allowed'] is True
+
+    def test_010_hecke_newton_requires_irrational_conditional_marker(self):
+        """Irrational extension must be explicitly marked conditional."""
+        scope = hecke_newton_dirichlet_scope(
+            hecke_newton_closure_defined=True,
+            lattice_finite_hecke_span_proof_supplied=True,
+            non_lattice_extension_defined_separately=True,
+            irrational_extension_defined_separately=True,
+            irrational_extension_marked_conditional=False,
+            dirichlet_l_functions_from_shadow_metric_defined=True,
+        )
+        assert scope['all_gates_satisfied'] is False
+        assert 'irrational_extension_marked_conditional' in scope['missing']
+
+    def test_011_aggregate_scope_defaults_block_everything(self):
+        """The aggregate arithmetic scope starts blocked without supplied evidence."""
+        scope = arithmetic_modular_obligation_scope()
+        assert scope['all_gates_satisfied'] is False
+        assert set(scope['blocked_components']) == {
+            'shadow_functor', 'hecke_cps_ramanujan', 'hecke_newton_dirichlet'
+        }
+
+    def test_012_aggregate_scope_all_gates_positive(self):
+        """All lane-32 gate families must pass for the aggregate claim to pass."""
+        scope = arithmetic_modular_obligation_scope(
+            shadow={
+                'theta_source_defined': True,
+                'arithmetic_shadow_functor_defined': True,
+                'moment_l_function_defined': True,
+                'rankin_selberg_integral_defined': True,
+                'convergence_domain_stated': True,
+                'meromorphic_continuation_claimed': True,
+                'meromorphic_continuation_proved': True,
+            },
+            hecke={
+                'hecke_action_m11_defined': True,
+                'hecke_lift_to_gmod_defined': True,
+                'prime_locality_conjecture_stated': True,
+                'lattice_prime_locality_claimed': True,
+                'lattice_prime_locality_proved': True,
+                'non_lattice_prime_locality_hypothesis_stated': True,
+                'cps_hypotheses_defined': True,
+                'automorphic_representation_pi_r_defined': True,
+                'gl_functoriality_hypothesis_for_r_ge_5_stated': True,
+                'ramanujan_scope_respects_known_functoriality': True,
+                'kim_sarnak_bound_stated_when_unconditional': True,
+            },
+            hecke_newton={
+                'hecke_newton_closure_defined': True,
+                'lattice_finite_hecke_span_proof_supplied': True,
+                'non_lattice_extension_defined_separately': True,
+                'irrational_extension_defined_separately': True,
+                'irrational_extension_marked_conditional': True,
+                'dirichlet_l_functions_from_shadow_metric_defined': True,
+            },
+        )
+        assert scope['all_gates_satisfied'] is True
+        assert scope['blocked_components'] == []
+
+
+# =====================================================================
+# Group 0b: Arithmetic modular tail gates (PDF obligations 871--900)
+# =====================================================================
+
+class TestArithmeticModularTailScopeGates:
+    """Executable gates for spectral/lift/Borcherds/bracket arithmetic claims."""
+
+    def test_020_tail_gate_families_cover_obligation_block(self):
+        """The tail block has four independent scope families."""
+        assert len(SPECTRAL_SEWING_GATES) == 5
+        assert len(GENUS2_LIFT_BRIDGE_GATES) == 4
+        assert len(BORCHERDS_IGUSA_MODULAR_GATES) == 15
+        assert len(BRACKET_GRT_SPINE_GATES) == 6
+
+    def test_021_spectral_decomposition_requires_basis_and_partition_proof(self):
+        """Spectral decomposition cannot bypass Roelcke-Selberg and partition compatibility."""
+        scope = spectral_sewing_scope(
+            spectral_decomposition_proved=True,
+            roelcke_selberg_basis_defined=False,
+            chiral_partition_compatibility_proved=False,
+            sewing_operator_defined=True,
+            sewing_selberg_formula_proved=True,
+        )
+        assert scope['spectral_decomposition_theorem_allowed'] is False
+        assert 'roelcke_selberg_basis_defined' in scope['missing']
+        assert 'chiral_partition_compatibility_proved' in scope['missing']
+
+    def test_022_sewing_selberg_requires_operator_and_formula(self):
+        """The sewing-Selberg theorem needs the sewing operator and formula proof."""
+        scope = spectral_sewing_scope(
+            spectral_decomposition_proved=False,
+            roelcke_selberg_basis_defined=True,
+            chiral_partition_compatibility_proved=True,
+            sewing_operator_defined=False,
+            sewing_selberg_formula_proved=True,
+        )
+        assert scope['sewing_selberg_theorem_allowed'] is False
+        assert 'sewing_operator_defined' in scope['missing']
+
+    def test_023_spectral_sewing_all_gates_positive(self):
+        """The spectral/sewing theorem surface unlocks only after all gates pass."""
+        scope = spectral_sewing_scope(
+            spectral_decomposition_proved=True,
+            roelcke_selberg_basis_defined=True,
+            chiral_partition_compatibility_proved=True,
+            sewing_operator_defined=True,
+            sewing_selberg_formula_proved=True,
+        )
+        assert scope['all_gates_satisfied'] is True
+        assert scope['spectral_decomposition_theorem_allowed'] is True
+        assert scope['sewing_selberg_theorem_allowed'] is True
+
+    def test_024_genus2_bridge_blocks_unproved_critical_line_access(self):
+        """Critical-line access must be proved or explicitly conditional."""
+        scope = genus2_lift_bridge_scope(
+            saito_kurokawa_lift_defined=True,
+            genus_two_bridge_known_scope_proved=True,
+            boecherer_bridge_defined=True,
+            critical_line_access_proved=False,
+            critical_line_access_marked_conditional=False,
+        )
+        assert scope['all_gates_satisfied'] is False
+        assert 'critical_line_access_proved_or_conditional' in scope['missing']
+
+    def test_025_genus2_bridge_allows_conditional_critical_line_access(self):
+        """Conditional critical-line access is allowed without theorem promotion."""
+        scope = genus2_lift_bridge_scope(
+            saito_kurokawa_lift_defined=True,
+            genus_two_bridge_known_scope_proved=True,
+            boecherer_bridge_defined=True,
+            critical_line_access_proved=False,
+            critical_line_access_marked_conditional=True,
+        )
+        assert scope['all_gates_satisfied'] is True
+        assert scope['genus_two_bridge_theorem_allowed'] is True
+        assert scope['critical_line_access_theorem_allowed'] is False
+        assert scope['critical_line_access_conditional_allowed'] is True
+
+    def test_026_borcherds_blocks_chl_transfer_to_k3_mukai(self):
+        """CHL constants never transfer automatically to K3 Mukai K^kappa."""
+        scope = borcherds_igusa_modular_scope(
+            borcherds_product_delta5_defined=True,
+            c_delta_0_computed=True,
+            kappa_bkm_identity_proved=True,
+            chl_scope_stated=True,
+            chl_constants_not_transferred_to_k3_mukai=False,
+            igusa_phi10_defined=True,
+            modular_weight_stated=True,
+            transformation_law_proved=True,
+            fricke_ldp_defined=True,
+            subleading_correction_proved_at_each_node=True,
+            shimura_waldspurger_conversion_defined=True,
+            weights_7_9_11_stated=True,
+            conversion_proved_or_precisely_cited=True,
+        )
+        assert scope['chl_to_k3_mukai_transfer_allowed'] is False
+        assert 'chl_constants_not_transferred_to_k3_mukai' in scope['missing']
+
+    def test_027_borcherds_blocks_unproved_associator_and_eta_use(self):
+        """Associator appearances and eta^24 quotients are gated independently."""
+        scope = borcherds_igusa_modular_scope(
+            borcherds_product_delta5_defined=True,
+            c_delta_0_computed=True,
+            kappa_bkm_identity_proved=True,
+            chl_scope_stated=True,
+            chl_constants_not_transferred_to_k3_mukai=True,
+            igusa_phi10_defined=True,
+            associator_cocycle_appearance_claimed=True,
+            associator_cocycle_appearance_proved=False,
+            eta24_quotient_used=True,
+            eta24_quotient_defined=False,
+            modular_weight_stated=True,
+            transformation_law_proved=True,
+            fricke_ldp_defined=True,
+            subleading_correction_proved_at_each_node=True,
+            shimura_waldspurger_conversion_defined=True,
+            weights_7_9_11_stated=True,
+            conversion_proved_or_precisely_cited=True,
+        )
+        assert scope['associator_cocycle_claim_allowed'] is False
+        assert 'associator_cocycle_appearance_proved_when_claimed' in scope['missing']
+        assert 'eta24_quotient_defined_when_used' in scope['missing']
+
+    def test_028_borcherds_igusa_all_gates_positive(self):
+        """Borcherds/Igusa/Shimura claims unlock only after all gates pass."""
+        scope = borcherds_igusa_modular_scope(
+            borcherds_product_delta5_defined=True,
+            c_delta_0_computed=True,
+            kappa_bkm_identity_proved=True,
+            chl_scope_stated=True,
+            chl_constants_not_transferred_to_k3_mukai=True,
+            igusa_phi10_defined=True,
+            associator_cocycle_appearance_claimed=True,
+            associator_cocycle_appearance_proved=True,
+            eta24_quotient_used=True,
+            eta24_quotient_defined=True,
+            modular_weight_stated=True,
+            transformation_law_proved=True,
+            fricke_ldp_defined=True,
+            subleading_correction_proved_at_each_node=True,
+            shimura_waldspurger_conversion_defined=True,
+            weights_7_9_11_stated=True,
+            conversion_proved_or_precisely_cited=True,
+        )
+        assert scope['all_gates_satisfied'] is True
+        assert scope['kappa_bkm_theorem_allowed'] is True
+        assert scope['shimura_waldspurger_claim_allowed'] is True
+        assert scope['chl_to_k3_mukai_transfer_allowed'] is False
+
+    def test_029_bracket_gate_blocks_bar_differential_mixing_without_map(self):
+        """Arithmetic brackets cannot be mixed with bar differentials without a map."""
+        scope = bracket_grt_theorem_spine_scope(
+            yetter_drinfeld_schauenburg_bracket_defined=True,
+            delta_n_computed_for_claimed_n=True,
+            arithmetic_bracket_mixed_with_bar_differential=True,
+            arithmetic_bracket_to_bar_map_defined=False,
+            arithmetic_moved_beyond_theorem_spine=True,
+        )
+        assert scope['arithmetic_bracket_bar_differential_claim_allowed'] is False
+        assert 'arithmetic_bracket_not_mixed_with_bar_without_map' in scope['missing']
+
+    def test_030_grt_transitivity_may_be_conjectural_but_not_theorem(self):
+        """GRT transitivity may be marked conjectural without becoming a theorem."""
+        scope = bracket_grt_theorem_spine_scope(
+            yetter_drinfeld_schauenburg_bracket_defined=True,
+            delta_n_computed_for_claimed_n=True,
+            arithmetic_bracket_mixed_with_bar_differential=True,
+            arithmetic_bracket_to_bar_map_defined=True,
+            grt_action_on_k3_bkm_used=True,
+            grt_action_on_k3_bkm_defined=True,
+            grt_transitivity_proved=False,
+            grt_transitivity_marked_conjectural=True,
+            arithmetic_moved_beyond_theorem_spine=True,
+        )
+        assert scope['all_gates_satisfied'] is True
+        assert scope['grt_transitivity_theorem_allowed'] is False
+        assert scope['grt_transitivity_conjectural_allowed'] is True
+
+    def test_031_arithmetic_theorem_spine_requires_algebraic_need(self):
+        """Arithmetic stays beyond the theorem spine unless needed by the algebra."""
+        scope = bracket_grt_theorem_spine_scope(
+            yetter_drinfeld_schauenburg_bracket_defined=True,
+            delta_n_computed_for_claimed_n=True,
+            arithmetic_moved_beyond_theorem_spine=False,
+            arithmetic_consequence_needed_for_algebraic_claim=False,
+        )
+        assert scope['arithmetic_in_theorem_spine_allowed'] is False
+        assert 'arithmetic_beyond_theorem_spine_unless_needed' in scope['missing']
+
+    def test_032_tail_aggregate_defaults_block_everything(self):
+        """The aggregate tail scope starts blocked without supplied evidence."""
+        scope = arithmetic_modular_tail_scope()
+        assert scope['all_gates_satisfied'] is False
+        assert set(scope['blocked_components']) == {
+            'spectral_sewing',
+            'genus2_lift_bridge',
+            'borcherds_igusa_modular',
+            'bracket_grt_spine',
+        }
+
+    def test_033_tail_aggregate_all_gates_positive(self):
+        """All lane-33 gate families must pass for the aggregate claim to pass."""
+        scope = arithmetic_modular_tail_scope(
+            spectral={
+                'spectral_decomposition_proved': True,
+                'roelcke_selberg_basis_defined': True,
+                'chiral_partition_compatibility_proved': True,
+                'sewing_operator_defined': True,
+                'sewing_selberg_formula_proved': True,
+            },
+            genus2={
+                'saito_kurokawa_lift_defined': True,
+                'genus_two_bridge_known_scope_proved': True,
+                'boecherer_bridge_defined': True,
+                'critical_line_access_marked_conditional': True,
+            },
+            borcherds={
+                'borcherds_product_delta5_defined': True,
+                'c_delta_0_computed': True,
+                'kappa_bkm_identity_proved': True,
+                'chl_scope_stated': True,
+                'chl_constants_not_transferred_to_k3_mukai': True,
+                'igusa_phi10_defined': True,
+                'associator_cocycle_appearance_claimed': True,
+                'associator_cocycle_appearance_proved': True,
+                'eta24_quotient_used': True,
+                'eta24_quotient_defined': True,
+                'modular_weight_stated': True,
+                'transformation_law_proved': True,
+                'fricke_ldp_defined': True,
+                'subleading_correction_proved_at_each_node': True,
+                'shimura_waldspurger_conversion_defined': True,
+                'weights_7_9_11_stated': True,
+                'conversion_proved_or_precisely_cited': True,
+            },
+            bracket_grt={
+                'yetter_drinfeld_schauenburg_bracket_defined': True,
+                'delta_n_computed_for_claimed_n': True,
+                'arithmetic_bracket_mixed_with_bar_differential': True,
+                'arithmetic_bracket_to_bar_map_defined': True,
+                'grt_action_on_k3_bkm_used': True,
+                'grt_action_on_k3_bkm_defined': True,
+                'grt_transitivity_marked_conjectural': True,
+                'arithmetic_moved_beyond_theorem_spine': True,
+            },
+        )
+        assert scope['all_gates_satisfied'] is True
+        assert scope['blocked_components'] == []
 
 
 # =====================================================================

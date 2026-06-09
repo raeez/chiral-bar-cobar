@@ -1,16 +1,17 @@
-r"""Definitive W(p) Koszulness test suite.
+r"""Finite-window W(p) PBW comparison test suite.
 
 Tests the PBW character vs actual W(p) vacuum character comparison
-for p = 2, 3, 4, 5. The definitive test for free strong generation
-(and hence chiral Koszulness via prop:pbw-universality).
+for p = 2, 3, 4, 5. These tests provide finite-window evidence only;
+they do not prove global free strong generation or chiral Koszulness.
 
 30+ tests with 3+ independent verification paths per claim.
 
 EXPECTED RESULTS:
-  p=2: freely strongly generated through weight 20. Koszulness LIKELY.
-  p=3: freely strongly generated through weight 20. Koszulness LIKELY.
-  p=4: first null vector at weight 14 = 2*(2*4-1). Not freely generated.
-  p=5: first null vector at weight 18 = 2*(2*5-1). Not freely generated.
+  p=2: no relation detected through weight 20.
+  p=3: no relation detected through weight 20.
+  p=4: first finite-window relation at weight 14 = 2*(2*4-1).
+  p=5: first finite-window relation at weight 18 = 2*(2*5-1).
+Global status: non-free strong generation; Koszulness conjectural/open.
 
 References:
     Adamovic-Milas (2008), FGST (2006), Kausch (1991),
@@ -258,10 +259,12 @@ class TestW2Definitive(unittest.TestCase):
         comp = character_comparison(2, 20)
         self.assertEqual(len(comp['discrepancies']), 0)
 
-    def test_verdict_likely_koszul(self):
-        """W(2): verdict is FREELY_STRONGLY_GENERATED."""
+    def test_verdict_finite_window_only(self):
+        """W(2): finite-window PBW agreement is not a Koszulness proof."""
         v = koszulness_verdict(2, 20)
-        self.assertEqual(v['verdict'], 'FREELY_STRONGLY_GENERATED')
+        self.assertEqual(v['verdict'], 'FINITE_WINDOW_PBW_AGREEMENT')
+        self.assertEqual(v['koszulness_status'], 'CONJECTURAL_OPEN')
+        self.assertFalse(v['global_freely_strongly_generated'])
 
     def test_w2_pbw_specific_weights(self):
         """W(2): PBW at specific weights matches independent hand computation.
@@ -297,9 +300,10 @@ class TestW3Definitive(unittest.TestCase):
                         f"Discrepancies: {comp['discrepancies']}")
 
     def test_verdict(self):
-        """W(3): verdict is FREELY_STRONGLY_GENERATED."""
+        """W(3): verdict is finite-window agreement only."""
         v = koszulness_verdict(3, 20)
-        self.assertEqual(v['verdict'], 'FREELY_STRONGLY_GENERATED')
+        self.assertEqual(v['verdict'], 'FINITE_WINDOW_PBW_AGREEMENT')
+        self.assertEqual(v['koszulness_status'], 'CONJECTURAL_OPEN')
 
 
 # =========================================================================
@@ -325,9 +329,9 @@ class TestW4Definitive(unittest.TestCase):
         self.assertTrue(comp['is_freely_generated_through_max_weight'])
 
     def test_verdict_not_free(self):
-        """W(4): verdict is NOT_FREELY_GENERATED."""
+        """W(4): finite-window relation detected."""
         v = koszulness_verdict(4, 20)
-        self.assertEqual(v['verdict'], 'NOT_FREELY_GENERATED')
+        self.assertEqual(v['verdict'], 'FINITE_WINDOW_RELATION_DETECTED')
 
 
 # =========================================================================
@@ -445,23 +449,27 @@ class TestNullWeightPattern(unittest.TestCase):
 # =========================================================================
 
 class TestKoszulnessDichotomy(unittest.TestCase):
-    """Summary: p=2,3 likely Koszul; p>=4 requires different argument."""
+    """Summary: finite-window evidence; global Koszulness remains open."""
 
-    def test_p2_likely_koszul(self):
+    def test_p2_conjectural_open(self):
         v = koszulness_verdict(2, 20)
-        self.assertIn('LIKELY', v['koszulness'].upper())
+        self.assertEqual(v['koszulness_status'], 'CONJECTURAL_OPEN')
+        self.assertIn('FINITE-WINDOW', v['koszulness'].upper())
 
-    def test_p3_likely_koszul(self):
+    def test_p3_conjectural_open(self):
         v = koszulness_verdict(3, 20)
-        self.assertIn('LIKELY', v['koszulness'].upper())
+        self.assertEqual(v['koszulness_status'], 'CONJECTURAL_OPEN')
+        self.assertIn('FINITE-WINDOW', v['koszulness'].upper())
 
-    def test_p4_requires_different_argument(self):
+    def test_p4_conjectural_open_with_relation(self):
         v = koszulness_verdict(4, 20)
-        self.assertIn('DIFFERENT', v['koszulness'].upper())
+        self.assertEqual(v['koszulness_status'], 'CONJECTURAL_OPEN')
+        self.assertEqual(v['verdict'], 'FINITE_WINDOW_RELATION_DETECTED')
 
-    def test_p5_requires_different_argument(self):
+    def test_p5_conjectural_open_with_relation(self):
         v = koszulness_verdict(5, 20)
-        self.assertIn('DIFFERENT', v['koszulness'].upper())
+        self.assertEqual(v['koszulness_status'], 'CONJECTURAL_OPEN')
+        self.assertEqual(v['verdict'], 'FINITE_WINDOW_RELATION_DETECTED')
 
 
 if __name__ == '__main__':

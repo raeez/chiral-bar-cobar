@@ -1545,7 +1545,8 @@ def verify_koszul_euler_char(max_weight: int = 12) -> Dict[str, Any]:
 
     For a Koszul algebra A, the alternating bar Euler characteristic at
     each weight h stabilizes (all terms beyond a finite arity vanish)
-    and equals dim H^1(B(A))_h, the cogenerator dimension of A^!.
+    and equals dim H^1(B(A))_h, the cogenerator dimension of the
+    bar-dual coalgebra A^i; after the dual branch it matches dim(A^!)_h.
 
     The Hilbert series identity for Koszul duality is:
         H_{A^!}(-t) * H_A(t) = 1

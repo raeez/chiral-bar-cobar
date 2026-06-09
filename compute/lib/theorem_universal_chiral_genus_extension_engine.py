@@ -5,15 +5,23 @@ tower.  The monograph's three-tier architecture (Theorem
 thm:three-tier-architecture in higher_genus_modular_koszul.tex)
 identifies three logically distinct levels of genus extension:
 
-TIER 0 (TOPOLOGICAL / UNCONDITIONAL):
+TIER 0 (FIXED SMOOTH-CURVE CONVOLUTION / UNCONDITIONAL):
     For ANY chiral algebra A on Ran(X), the bar-intrinsic MC element
     Theta_A := D_A - d_0 exists (thm:mc2-bar-intrinsic) because
-    D_A^2 = 0 follows from d^2 = 0 on the chain complex of the
-    compactified moduli space (thm:convolution-d-squared-zero).
+    the fixed smooth-curve convolution differential squares to zero
+    by d^2 = 0 on the chain complex of the stable-moduli carrier
+    (thm:convolution-d-squared-zero).
     The shadow obstruction tower Theta_A^{<=r} converges
     (thm:recursive-existence) for pronilpotent weight reasons.
     The modular characteristic kappa(A) and shadow algebra A^sh
     exist unconditionally.
+
+    This is NOT the relative ambient logarithmic FM theorem.  The
+    six-component operator D_mod^log on relative log-FM chains squares
+    to zero only under the signed LF package: global Gysin residues,
+    proper pushforwards, orientation-line signs, finite stabilizer
+    normalisation, and Boardman--Vogt coherent cocompositions
+    (thm:six-component-logfm-d-squared-zero).
 
     What genus-0 data determines: the bar differential d_0, hence
     the convolution algebra g^mod_A, hence the full MC element
@@ -55,7 +63,7 @@ TIER 2 (ANALYTIC / SEWING):
 THE SYNTHESIS: The class of chiral algebras for which genus-0 data
 determines the full genus tower is (in order of decreasing generality):
 
-(i)   ALL chiral algebras on Ran(X) -- MC existence is unconditional
+(i)   ALL chiral algebras on Ran(X) -- fixed-convolution MC existence is unconditional
 (ii)  ALL chiral algebras with PBW filtration -- explicit shadows
 (iii) ALL chirally Koszul algebras -- full algebraic engine
 (iv)  ALL finitely strongly generated Koszul algebras -- analytic convergence
@@ -64,15 +72,28 @@ The real question is not "which algebras extend" (they all do, at
 Tier 0) but "which algebras have COMPUTABLE extensions" (Tier 1-2).
 
 The four properties tested here:
-  P1: D^2 = 0 (unconditional for all chiral algebras)
+  P1: fixed smooth-curve convolution D^2 = 0 (unconditional for all chiral algebras)
   P2: PBW filtration (conformal weight bounded below, L_0 diagonalizable)
   P3: Bar spectral sequence collapse (chirally Koszul)
   P4: HS-sewing (polynomial OPE growth + subexponential sector growth)
 
-P1 => MC existence.  P2 => shadow computability.  P3 => full algebraic
+P1 => bar-intrinsic MC existence.  P2 => shadow computability.  P3 => full algebraic
 engine.  P4 => analytic convergence.  These form a strict chain of
 implications: P4 => P3 => P2 => P1 (for standard families; in general
 P3 does not imply P4 for infinitely generated algebras).
+
+Theorem B completion firewall:
+  P3/full_engine means the bar-cobar counit is available on the
+  appropriate Theorem B surface. It does NOT mean that the raw
+  direct-sum bar complex carries a chain contracting homotopy. Class M
+  families (Virasoro, principal W_N, W_infinity) require the
+  finite-window strict Mittag-Leffler tower or the weight-completed
+  pro-conilpotent/coderived ambient. The raw direct-sum statement is
+  false there.
+
+Separate LF firewall:
+  ambient_log_FM_D2 requires the signed log-FM residue-pushforward
+  package and is not inferred from P1.
 
 Manuscript references:
     thm:three-tier-architecture (higher_genus_modular_koszul.tex)
@@ -493,6 +514,113 @@ class GenusExtensionResult:
     verification_paths: Dict[str, Any] = field(default_factory=dict)
 
 
+def theorem_b_inversion_surface(A: ChiralAlgebraData) -> Dict[str, Any]:
+    """Ambient-qualified Theorem B surface for a standard family.
+
+    The output separates the truth of the bar-cobar counit on the
+    Koszul/completed surface from the stronger and often false claim that
+    the raw direct-sum bar complex carries a chain-level inverse.
+    """
+    class_m = (
+        A.shadow_depth == -1
+        or A.family in {"Virasoro", "W_N", "W_infinity"}
+        or A.regime in {"filtered-complete", "programmatic"}
+    )
+
+    if not A.is_koszul:
+        return {
+            "applies": False,
+            "raw_direct_sum_chain_qi": False,
+            "ambient": "none",
+            "hypothesis_package": "fails P3/Koszul collapse",
+            "reason": "Bar spectral sequence does not collapse; Theorem B is not invoked.",
+        }
+
+    if class_m:
+        witness = virasoro_raw_direct_sum_obstruction(max_mode=4)
+        return {
+            "applies": True,
+            "raw_direct_sum_chain_qi": False,
+            "ambient": "weight-completed pro-conilpotent / coderived",
+            "hypothesis_package": "H3a + finite-window strict Mittag-Leffler + completed bar-cobar",
+            "model": "Omega^cont(hat B(A)) -> A in the completed/coderived surface",
+            "raw_failure_witness": witness,
+            "reason": (
+                "Class M has infinite shadow depth; the raw direct-sum bar "
+                "complex does not carry the chain contracting homotopy. "
+                "The finite Virasoro tensors xi_N have strictly growing "
+                "support and no finite-support direct-sum limit."
+            ),
+        }
+
+    if A.regime == "curved-central":
+        return {
+            "applies": True,
+            "raw_direct_sum_chain_qi": True,
+            "ambient": "raw finite-window at genus 0; coderived for curved higher-genus fibres",
+            "hypothesis_package": "H3b on raw finite windows, with coderived curved correction when m0 != 0",
+            "model": "Omega(B(A)) -> A on the raw finite-window surface",
+            "reason": "Finite bar windows satisfy the ordinary comparison; curvature is handled coderived.",
+        }
+
+    return {
+        "applies": True,
+        "raw_direct_sum_chain_qi": True,
+        "ambient": "raw finite-window chain complex",
+        "hypothesis_package": "H3b finite bar-degree pieces + finite-support comparison",
+        "model": "Omega(B(A)) -> A on the raw bar complex",
+        "reason": "Finite conilpotent windows supply the ordinary chain quasi-isomorphism.",
+    }
+
+
+def virasoro_raw_direct_sum_obstruction(max_mode: int = 4) -> Dict[str, Any]:
+    r"""Finite-mode witness for the raw class-M direct-sum failure.
+
+    The PDF strengthening memo singles out the sequence
+
+        xi_N = sum_{|k| <= N} s^{-1}L_{-k} tensor s^{-1}L_k.
+
+    Each xi_N is a finite-support element of the raw direct sum.  The
+    support size is 2N+1, and the transition N -> N+1 adds two new
+    basis tensors.  Hence the coordinatewise limit exists in the
+    product / weight-completed pro-object, but not in the raw direct
+    sum, whose elements have finite support.
+    """
+    if max_mode < 0:
+        raise ValueError("max_mode must be nonnegative")
+
+    terms = [
+        (f"s^-1 L_{-k}", f"s^-1 L_{k}")
+        for k in range(-max_mode, max_mode + 1)
+    ]
+    previous_support = 0 if max_mode == 0 else 2 * (max_mode - 1) + 1
+    support_size = len(terms)
+
+    return {
+        "family": "Virasoro",
+        "symbol": "xi_N",
+        "max_mode": max_mode,
+        "formula": "sum_{|k|<=N} s^{-1}L_{-k} tensor s^{-1}L_k",
+        "finite_stage_terms": terms,
+        "support_size": support_size,
+        "previous_support_size": previous_support,
+        "new_terms_from_previous": support_size - previous_support,
+        "support_growth": "strictly increasing with N",
+        "each_stage_in_raw_direct_sum": True,
+        "raw_direct_sum_limit_exists": False,
+        "completed_product_limit_exists": True,
+        "raw_direct_sum_reason": (
+            "A raw direct-sum vector has finite support; the sequence xi_N "
+            "requires one nonzero coordinate for every Virasoro mode k."
+        ),
+        "completed_ambient": "product / weight-completed pro-conilpotent bar coalgebra",
+        "theorem_b_consequence": (
+            "The class-M counit is a finite-window or completed/coderived "
+            "Theorem B statement, not a raw Ch(Vect) direct-sum statement."
+        ),
+    }
+
+
 def classify_genus_extension(A: ChiralAlgebraData) -> GenusExtensionResult:
     """Classify the genus extension tier for a chiral algebra.
 
@@ -505,13 +633,24 @@ def classify_genus_extension(A: ChiralAlgebraData) -> GenusExtensionResult:
     obstructions = []
     verification = {}
 
-    # P1: D^2 = 0 is unconditional for all chiral algebras on Ran(X).
-    # This is a theorem (thm:convolution-d-squared-zero), not a hypothesis.
+    # P1: fixed smooth-curve convolution D^2 = 0 is unconditional for
+    # chiral algebras on Ran(X).  This is a theorem
+    # (thm:convolution-d-squared-zero), not a hypothesis.  It is not the
+    # relative ambient log-FM six-component D_mod^log theorem.
     mc_exists = True
     verification["P1_d_squared_zero"] = True
+    verification["P1_carrier"] = "fixed smooth-curve convolution"
     verification["P1_reason"] = (
-        "D^2 = 0 follows from d^2 = 0 on C_*(M-bar_{g,n}). "
-        "Unconditional for all chiral algebras."
+        "Convolution-level D^2 = 0 follows from d^2 = 0 on "
+        "C_*(M-bar_{g,n}). This gives the bar-intrinsic MC element "
+        "for all chiral algebras; it does not construct the relative "
+        "six-component log-FM differential."
+    )
+    verification["ambient_log_FM_D2_status"] = "conditional"
+    verification["ambient_log_FM_D2_hypothesis"] = (
+        "LF signed residue-pushforward package: global Gysin residues, "
+        "proper pushforwards, orientation-line signs, finite stabilizer "
+        "normalisation, and homotopy-coherent log-FM cocompositions"
     )
 
     # P2: PBW filtration requires positive-energy (L_0 bounded below)
@@ -538,6 +677,7 @@ def classify_genus_extension(A: ChiralAlgebraData) -> GenusExtensionResult:
         )
     verification["P3_koszul"] = A.is_koszul
     verification["P3_full_engine"] = full_engine
+    verification["Theorem_B_surface"] = theorem_b_inversion_surface(A)
 
     # P4: HS-sewing convergence.
     # For finitely generated Koszul algebras, HS-sewing is automatic
@@ -611,8 +751,13 @@ def genus_zero_determines(A: ChiralAlgebraData) -> Dict[str, Any]:
             "shadow_tower_converges": True,
             "kappa_determined": True,
             "shadow_algebra_exists": True,
-            "reason": "D_A^2 = 0 from topology of M-bar_{g,n}. "
-                      "No algebraic hypothesis needed.",
+            "carrier": "fixed smooth-curve convolution",
+            "ambient_log_fm_D2": "conditional on LF",
+            "reason": "The bar-intrinsic convolution differential squares "
+                      "to zero from topology of M-bar_{g,n}. No algebraic "
+                      "hypothesis is needed for this fixed-carrier MC "
+                      "existence. The relative six-component log-FM "
+                      "ambient differential requires the LF package.",
         },
     }
 
@@ -625,14 +770,18 @@ def genus_zero_determines(A: ChiralAlgebraData) -> Dict[str, Any]:
         }
 
     if result.full_engine:
+        theorem_b_surface = theorem_b_inversion_surface(A)
         analysis["tier_1"] = {
-            "bar_cobar_inversion": True,
+            "bar_cobar_inversion": theorem_b_surface,
             "complementarity": True,
             "hochschild_koszul": True,
             "shadow_cohft": True,
             "curve_independence": True,
             "reason": "Genus-0 Koszulness propagates to all genera "
-                      "by PBW propagation (locality of bar differential).",
+                      "by PBW propagation (locality of bar differential). "
+                      "Theorem B is read in the ambient recorded by "
+                      "bar_cobar_inversion; for class M this is completed, "
+                      "not raw direct-sum.",
         }
 
     if result.analytic_convergence:
@@ -732,10 +881,12 @@ def curve_independence_check(A: ChiralAlgebraData) -> Dict[str, Any]:
 def compare_genus_extension_methods() -> Dict[str, Any]:
     """Compare three approaches to genus extension.
 
-    METHOD 1: Bar-intrinsic MC (the monograph's approach).
+    METHOD 1: Bar-intrinsic MC (the monograph's fixed-carrier approach).
         Input: any chiral algebra A on Ran(X).
         Output: Theta_A = D_A - d_0 in MC(g^mod_A).
-        Hypothesis: NONE (D^2 = 0 is unconditional).
+        Hypothesis: NONE for the fixed smooth-curve convolution D^2=0.
+        LF is required only for the relative six-component log-FM ambient
+        enhancement.
         Computability: requires PBW + Koszulness for explicit shadows.
 
     METHOD 2: Factorization-envelope (Vicedo/Nishinaka).
@@ -766,8 +917,8 @@ def compare_genus_extension_methods() -> Dict[str, Any]:
     return {
         "bar_intrinsic": {
             "input": "any chiral algebra on Ran(X)",
-            "output": "MC element Theta_A at all genera",
-            "hypothesis": "none (D^2 = 0 unconditional)",
+            "output": "fixed-carrier MC element Theta_A at all genera",
+            "hypothesis": "none for fixed smooth-curve convolution D^2=0; LF required for ambient log-FM D_mod^log",
             "computable": "requires PBW + Koszulness",
             "scope": "all chiral algebras",
         },
@@ -812,7 +963,9 @@ def four_regime_hierarchy() -> Dict[str, Dict[str, Any]]:
 
     From bar_cobar_adjunction_curved.tex lines 68-80.
     Each regime requires successively stronger completions.
-    ALL regimes have D^2 = 0 and MC existence.
+    ALL regimes have fixed smooth-curve convolution D^2 = 0 and MC
+    existence.  Relative log-FM ambient D_mod^log requires LF in every
+    regime.
     The regime determines WHAT COMPLETION is needed, not WHETHER
     genus extension works.
     """
@@ -822,7 +975,11 @@ def four_regime_hierarchy() -> Dict[str, Dict[str, Any]]:
             "completion": "none needed",
             "examples": ["Heisenberg", "free fields", "lattice VOAs"],
             "mc_exists": True,
-            "bar_cobar_inversion": True,
+            "bar_cobar_inversion": {
+                "applies": True,
+                "raw_direct_sum_chain_qi": True,
+                "ambient": "raw finite-window chain complex",
+            },
         },
         "curved_central": {
             "condition": "d_0^2 != 0, mu_0 in Z(A)",
@@ -830,21 +987,33 @@ def four_regime_hierarchy() -> Dict[str, Dict[str, Any]]:
             "curvature": "d_fib^2 = kappa * omega_g",
             "examples": ["affine KM", "Virasoro"],
             "mc_exists": True,
-            "bar_cobar_inversion": True,
+            "bar_cobar_inversion": {
+                "applies": True,
+                "raw_direct_sum_chain_qi": "family-dependent",
+                "ambient": "raw finite-window for finite-type affine examples; completed/coderived for class M",
+            },
         },
         "filtered_complete": {
             "condition": "non-quadratic OPE",
             "completion": "I-adic completion, coderived category",
             "examples": ["W_N at finite N"],
             "mc_exists": True,
-            "bar_cobar_inversion": True,
+            "bar_cobar_inversion": {
+                "applies": True,
+                "raw_direct_sum_chain_qi": False,
+                "ambient": "I-adic / weight-completed coderived category",
+            },
         },
         "programmatic": {
             "condition": "infinite generators, no finite presentation",
             "completion": "MC4 completion (thm:completed-bar-cobar-strong)",
             "examples": ["W_infinity"],
             "mc_exists": True,
-            "bar_cobar_inversion": True,  # MC4 proved
+            "bar_cobar_inversion": {
+                "applies": True,
+                "raw_direct_sum_chain_qi": False,
+                "ambient": "strong completion tower / pro-conilpotent coderived category",
+            },
         },
     }
 
@@ -948,7 +1117,8 @@ def verify_tier_chain(A: ChiralAlgebraData) -> Dict[str, Any]:
     For STANDARD families, the chain is strict:
     - P4 (HS-sewing) => P3 (Koszul) for finitely generated
     - P3 (Koszul) => P2 (PBW) by definition (bar SS collapse implies PBW)
-    - P2 (PBW) => P1 (D^2=0) vacuously (P1 is unconditional)
+    - P2 (PBW) => P1 (fixed-convolution D^2=0) vacuously
+      (P1 is unconditional)
 
     The reverse implications FAIL:
     - P1 does NOT imply P2 (non-PBW algebras exist in principle)
@@ -961,7 +1131,9 @@ def verify_tier_chain(A: ChiralAlgebraData) -> Dict[str, Any]:
 
     chain = {
         "algebra": A.name,
-        "P1_d_squared": True,  # unconditional
+        "P1_d_squared": True,  # unconditional fixed smooth-curve convolution
+        "P1_carrier": "fixed smooth-curve convolution",
+        "ambient_log_FM_D2": "conditional on LF",
         "P2_pbw": A.has_pbw and A.is_positive_energy,
         "P3_koszul": A.is_koszul,
         "P4_hs_sewing": result.analytic_convergence,
@@ -1021,6 +1193,7 @@ def analyze_all_standard_families() -> List[Dict[str, Any]]:
             "mc_exists": ext.mc_exists,
             "shadow_computable": ext.shadow_computable,
             "full_engine": ext.full_engine,
+            "theorem_b_surface": ext.verification_paths["Theorem_B_surface"],
             "analytic": ext.analytic_convergence,
             "regime": A.regime,
             "koszul": A.is_koszul,

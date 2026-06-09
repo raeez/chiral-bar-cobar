@@ -24,6 +24,8 @@ import pytest
 from numpy import linalg as la
 
 from compute.lib.theorem_yangian_roots_unity_engine import (
+    COHA_HALL_DRINFELD_REQUIRED_DATA,
+    coha_hall_drinfeld_lusztig_scope,
     quantum_integer,
     quantum_factorial,
     quantum_binomial,
@@ -47,6 +49,8 @@ from compute.lib.theorem_yangian_roots_unity_engine import (
     modular_yangian_center_detection,
     bar_complex_integrable_level,
     level_rank_check,
+    sl2_lusztig_pbw_dimension,
+    zeta_pbw_dimension_report,
 )
 
 
@@ -577,6 +581,59 @@ class TestSmallQuantumGroup:
             lusztig_dim = N ** 3  # dim(sl_2) = 3, but PBW uses N for each of E, F, K
             assert data['dim_uq'] == pbw_dim == lusztig_dim
 
+    def test_small_quantum_group_scope_not_hall_double(self):
+        """The sl_2 PBW surface does not define the CoHA/Hall double."""
+        data = small_quantum_group_data(6)  # root order zeta_8
+        assert data['root_order'] == 8
+        assert data['root_label'] == 'zeta_8'
+        assert data['pbw_dimension_data']['pbw_dimension'] == 8 ** 3
+        assert data['lusztig_specialization_defined']
+        assert data['finite_quantum_group_truncation_proved']
+        assert not data['coha_source_defined']
+        assert not data['hall_drinfeld_double_defined']
+        assert not data['full_hall_drinfeld_lusztig_claim_allowed']
+
+    def test_zeta_8_12_24_pbw_dimensions(self):
+        """PBW dimensions for the claimed zeta_8, zeta_12, zeta_24 orders."""
+        report = zeta_pbw_dimension_report()
+        assert report[8]['pbw_dimension'] == 512
+        assert report[12]['pbw_dimension'] == 1728
+        assert report[24]['pbw_dimension'] == 13824
+        for N, data in report.items():
+            assert data['root_order'] == N
+            assert data['root_label'] == f'zeta_{N}'
+            assert data['pbw_dimension_proved_for_presentation']
+            assert not data['coha_source_defined']
+            assert not data['hall_drinfeld_double_defined']
+
+    def test_coha_hall_drinfeld_scope_requires_all_gates(self):
+        """A root-order PBW count alone is not a Hall-Drinfeld double theorem."""
+        scope = coha_hall_drinfeld_lusztig_scope(
+            lusztig_specialization_defined=True,
+            finite_quantum_group_truncation_proved=True,
+            root_order=8,
+            pbw_dimension_computed=True,
+        )
+        assert scope['pbw_dimension_data']['pbw_dimension'] == 512
+        assert scope['missing_hypotheses'][:4] == COHA_HALL_DRINFELD_REQUIRED_DATA[:4]
+        assert not scope['full_hall_drinfeld_lusztig_claim_allowed']
+        assert scope['status'] == 'conditional_open'
+
+    def test_coha_hall_drinfeld_scope_unlocks_only_with_all_data(self):
+        """The full claim is allowed only when every CoHA/Hall gate is supplied."""
+        scope = coha_hall_drinfeld_lusztig_scope(
+            coha_source_defined=True,
+            hall_drinfeld_double_defined=True,
+            drinfeld_double_structure_proved=True,
+            lusztig_specialization_defined=True,
+            finite_quantum_group_truncation_proved=True,
+            root_order=12,
+            pbw_dimension_computed=True,
+        )
+        assert scope['missing_hypotheses'] == ()
+        assert scope['full_hall_drinfeld_lusztig_claim_allowed']
+        assert scope['status'] == 'proved_on_supplied_surface'
+
     def test_kappa_formula_multipath(self):
         """kappa(L_k(sl_2)) = dim(g)*(k+h^v)/(2*h^v) = 3(k+2)/4.
 
@@ -802,6 +859,13 @@ class TestBarComplexIntegrable:
             result = bar_complex_integrable_level(k)
             assert result['shadow_class'] == 'L'
 
+    def test_bar_quantum_group_recovery_remains_conditional(self):
+        """KL/Verlinde data does not prove bar recovery of the quantum group."""
+        result = bar_complex_integrable_level(3)
+        assert result['kl_semisimplified_scope']
+        assert not result['bar_recovers_truncated_quantum_group_proved']
+        assert 'braiding preservation' in result['missing_bar_quantum_group_comparison']
+
 
 # =====================================================================
 # V12.  Higher spin R-matrices at roots of unity
@@ -881,10 +945,13 @@ class TestModularYangianCenterDetection:
 
     @pytest.mark.parametrize("k", [1, 3, 5])
     def test_fl_center_detected(self, k):
-        """FL center is detected via Casimir separation (at levels with distinct eigenvalues)."""
+        """Finite admissible spectra witness center data, not full reconstruction."""
         result = modular_yangian_center_detection(k)
         assert result['fl_center_detected'], (
             f"FL center not detected at k={k}")
+        assert result['fl_center_detection_status'] == 'finite_admissible_spectral_witness'
+        assert not result['full_fl_center_reconstructed']
+        assert not result['coha_hall_double_witnessed']
 
     def test_level_rank_consistency(self):
         """Level-rank data is consistent for small levels."""

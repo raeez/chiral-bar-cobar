@@ -1,6 +1,6 @@
 """Genus-2 boundary strata and graph-by-graph amplitude decomposition.
 
-Computes the individual graph amplitudes for all 6 genus-2 stable graphs
+Computes the individual graph amplitudes for all 7 genus-2 stable graphs
 and verifies they sum to F_2(A) = kappa * lambda_2^FP via the Mumford relations.
 
 This is the computational verification of the genus spectral sequence
@@ -870,7 +870,7 @@ def genus2_shell_profile(family: str) -> Dict[str, object]:
       (Gamma_4 = 0 for sl_2 since cubic Casimir vanishes.)
 
     For mixed (r_max = infinity):
-      h^1 = 0, 1, 2 all contribute. All 6 graphs active.
+      h^1 = 0, 1, 2 all contribute. All 7 graphs active.
     """
     graphs = genus2_stable_graphs()
     e1 = genus_spectral_sequence_e1(graphs)
@@ -882,8 +882,8 @@ def genus2_shell_profile(family: str) -> Dict[str, object]:
         active = {"Gamma_0", "Gamma_1", "Gamma_2", "Gamma_3", "Gamma_5"}
         shell_type = "Lie/tree (all h^1, except theta vanishes)"
     elif family.lower() in ("virasoro", "vir"):
-        active = {"Gamma_0", "Gamma_1", "Gamma_2", "Gamma_3", "Gamma_4", "Gamma_5"}
-        shell_type = "mixed (all 6 graphs active)"
+        active = {"Gamma_0", "Gamma_1", "Gamma_2", "Gamma_3", "Gamma_4", "Gamma_5", "Gamma_6"}
+        shell_type = "mixed (all 7 graphs active)"
     elif family.lower() in ("betagamma", "bg"):
         active = {"Gamma_0", "Gamma_1", "Gamma_2", "Gamma_3", "Gamma_5"}
         shell_type = "contact (quartic vanishes: mu=0)"

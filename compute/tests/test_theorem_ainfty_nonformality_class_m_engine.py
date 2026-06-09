@@ -49,6 +49,7 @@ from compute.lib.theorem_ainfty_nonformality_class_m_engine import (
     virasoro_quintic_shadow,
     nonformality_depth,
     koszulness_nonformality_dictionary,
+    standard_sc_tree_detection_witness,
     linfty_ell3_virasoro_mode_sum,
     linfty_ell3_heisenberg,
     linfty_ell4_virasoro_exact,
@@ -88,6 +89,11 @@ class TestShadowClassification:
     def test_all_four_classes_defined(self):
         """All four shadow classes are present in the dictionary."""
         assert set(SHADOW_CLASSES.keys()) == {"G", "L", "C", "M"}
+
+    def test_lattice_voa_is_gaussian(self):
+        """Lattice VOAs belong to class G on the SC-formality surface."""
+        assert "lattice VOA" in SHADOW_CLASSES["G"]["families"]
+        assert "lattice VOA" not in SHADOW_CLASSES["L"]["families"]
 
 
 # ============================================================================
@@ -380,6 +386,33 @@ class TestKoszulnessNonformalityDictionary:
         assert d["Virasoro"]["shadow_depth"] == float("inf")
 
 
+class TestStandardSCTreeDetection:
+    """Verify the standard support table for prop:sc-formal-iff-class-g."""
+
+    def test_package_is_required(self):
+        """The witness does not claim bare averaging injectivity."""
+        data = standard_sc_tree_detection_witness()
+        assert data["package_required"] is True
+        assert data["bare_averaging_injective"] is False
+        assert data["hypothesis_package"] == "SC^{tree-det}_{std}"
+
+    def test_sc_formality_iff_class_g_under_package(self):
+        """Under the named package, SC-formality is exactly class G."""
+        data = standard_sc_tree_detection_witness()
+        assert data["all_rows_match"] is True
+        for row in data["rows"]:
+            assert row["sc_formal"] == row["class_g"]
+            assert row["shadow_vanishes_after_2"] == row["class_g"]
+
+    def test_non_gaussian_rows_have_detected_operation(self):
+        """Each non-G row has a matching shadow and SC operation."""
+        data = standard_sc_tree_detection_witness()
+        for row in data["rows"]:
+            if row["class"] != "G":
+                assert row["shadow_nonzero_degrees_ge_3"]
+                assert row["shadow_nonzero_degrees_ge_3"] == row["sc_nonzero_degrees_ge_3"]
+
+
 # ============================================================================
 # Test 41-44: Loop exactness order (physical interpretation)
 # ============================================================================
@@ -415,22 +448,31 @@ class TestLoopExactness:
 class TestOPEPoleStructure:
     """Verify OPE pole order -> shadow depth heuristic."""
 
-    def test_simple_pole_class_G(self):
-        """Simple pole (order 1) -> depth 2 (class G, Heisenberg)."""
-        assert shadow_depth_from_ope(1) == 2
+    def test_heisenberg_double_pole_class_G(self):
+        """Heisenberg has OPE double pole but class G/depth 2."""
+        assert shadow_depth_from_ope(2, "heisenberg") == 2
+
+    def test_free_fermion_simple_pole_class_G(self):
+        """Odd free-field simple pole gives class G/depth 2."""
+        assert shadow_depth_from_ope(1, "free_fermion") == 2
 
     def test_double_pole_class_L(self):
-        """Double pole (order 2) -> depth 3 (class L, affine KM)."""
-        assert shadow_depth_from_ope(2) == 3
+        """Affine double pole plus simple-pole bracket channel gives class L."""
+        assert shadow_depth_from_ope(2, "affine_km") == 3
 
-    def test_triple_pole_class_C(self):
-        """Triple pole (order 3) -> depth 4 (class C)."""
-        assert shadow_depth_from_ope(3) == 4
+    def test_contact_class_C(self):
+        """Contact/betagamma lane has class C/depth 4."""
+        assert shadow_depth_from_ope(1, "betagamma") == 4
 
     def test_quartic_pole_class_M(self):
         """Quartic pole (order 4) -> depth infinity (class M, Virasoro)."""
         # Convention: -1 means infinity
-        assert shadow_depth_from_ope(4) == -1
+        assert shadow_depth_from_ope(4, "virasoro") == -1
+
+    def test_pole_order_alone_is_insufficient(self):
+        """Pole order alone must not classify Heisenberg versus affine KM."""
+        with pytest.raises(ValueError):
+            shadow_depth_from_ope(2)
 
 
 # ============================================================================
@@ -505,6 +547,7 @@ class TestNonformalityDepth:
         """Virasoro: d_NF = 3 (first nonzero Swiss-cheese operation at k=3)."""
         data = nonformality_depth("Virasoro", c=F(26))
         assert data["d_NF"] == 3
+        assert data["d_alg"] is None  # algebraic depth is infinity
         assert data["is_formal"] is False
 
     def test_betagamma_d_NF_4(self):
@@ -517,12 +560,14 @@ class TestNonformalityDepth:
         """W_3: d_NF = 3 (class M, same as Virasoro)."""
         data = nonformality_depth("W_3", c=F(26))
         assert data["d_NF"] == 3
+        assert data["d_alg"] is None  # algebraic depth is infinity
         assert data["is_formal"] is False
 
     def test_affine_d_NF_3(self):
         """Affine sl_2 at generic k: d_NF = 3 (S_3 != 0)."""
         data = nonformality_depth("affine_sl2", k=F(1))
         assert data["d_NF"] == 3
+        assert data["d_alg"] == 1
 
 
 # ============================================================================

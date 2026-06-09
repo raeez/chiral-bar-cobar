@@ -484,10 +484,13 @@ def mc_ainfinity_arity4(c_val):
     The value of the obstruction:
     For Virasoro, m_2(T,T) = 2T.  The double composition:
         m_2(2T, 2T) = 4 m_2(T,T) = 8T.
-    But this lives in arity 1, not arity 4.  The actual A-infinity
-    relation at arity 4 involves the TRANSFERRED m_4 from the bar complex.
+    But this lives in arity 1, not arity 4.  The arity-four minimal
+    identity contains the transferred source m_2 circ m_3 + m_3 circ m_2;
+    a chain model supplies d*m_4 as the primitive equation.  The first
+    minimal relation in which the transferred m_4 itself appears is
+    arity five.
 
-    The transferred m_4(T,T,T,T) is computed by the homotopy transfer
+    The transferred m_4(T,T,T,T) is chosen by the homotopy transfer
     formula (HTT).  Its cyclic pairing gives:
         <T, m_4(T,T,T,T)>_cyc = Q^contact * (normalization)
 
@@ -1207,7 +1210,7 @@ def free_boson_crossing_from_mc():
 
 
 def critical_string_crossing(c_val=26):
-    r"""Critical string (c=26): MC equation at self-dual point.
+    r"""Critical string (c=26): MC equation at the critical string charge.
 
     At c=26, the Koszul dual is Vir_0 (kappa' = 0).
     kappa(Vir_26) = 13.  Q^contact = 10/(26*152) = 5/1976.

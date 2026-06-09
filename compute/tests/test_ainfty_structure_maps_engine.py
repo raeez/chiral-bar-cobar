@@ -520,7 +520,8 @@ class TestNonKoszulFormality:
     def test_poly3_bar_cohomology_growth(self):
         """k[x]/(x^3): bar cohomology grows faster than polynomial.
 
-        For a Koszul algebra, dim H^n(B) = dim(A^!)_n grows polynomially.
+        For a Koszul algebra, dim H^n(B) = dim(A^i)_n grows polynomially;
+        after the dual branch this matches dim(A^!)_n.
         For k[x]/(x^3), bar cohomology exhibits anomalous growth at high bar degree.
         """
         A = truncated_poly(3)

@@ -2,7 +2,7 @@ r"""
 quartic_residue_engine.py — Quartic residue programme: computational engine.
 
 Implements the quartic layer of the shadow-zeta interface, where the shadow
-Postnikov tower and zeta-zero residues genuinely meet.  The engine covers:
+obstruction tower and zeta-zero residues genuinely meet.  The engine covers:
 
   1. Shadow data extraction (Virasoro and W_N families)
   2. 3x3 Hankel matrix and Schur complement for quartic contact isolation

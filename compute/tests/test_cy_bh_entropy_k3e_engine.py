@@ -789,6 +789,9 @@ class TestMultiPath:
         assert 'F_1 = kappa/24' in d
         assert 'shadow_depth' in d
         assert 'complementarity' in d
+        assert 'Boundary-to-bulk' not in d['Koszul_dual']
+        assert 'boundary-to-bulk' not in d['Koszul_dual']
+        assert 'Verdier-dual companion' in d['Koszul_dual']
 
 
 # ============================================================

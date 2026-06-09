@@ -70,7 +70,7 @@ class TestRiordan:
 
 
 class TestSl2BarCohomology:
-    """sl_2-hat bar cohomology: dim(A^!)_n = R(n+3)."""
+    """sl_2-hat bar cohomology: dim(A^i)_n = R(n+3), matching A^! dims."""
 
     def test_h0(self):
         """H^0 = R(3) = 1."""

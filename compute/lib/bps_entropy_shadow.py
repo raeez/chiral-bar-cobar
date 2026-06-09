@@ -111,6 +111,9 @@ for a Virasoro subalgebra and not the compact total-space value
 kappa_cat(K3 x E)=0.  The exact finite-D degeneracies require the full
 Rademacher series; the functions below compute the leading logarithmic
 asymptotic and the local shadow-normalized power expansion.
+The Delta_5/Phi_10 scalar entropy lane is not the Hall--Borcherds
+recognition theorem for H_{Delta_5}; that recognition requires
+(beta, delta, epsilon, tau) and finite-window Hall comparison gates.
 
 Manuscript references:
     higher_genus_modular_koszul.tex (shadow obstruction tower, Theorems A-D)
@@ -174,6 +177,24 @@ MODULAR_KOSZUL_PACKAGE_PROJECTIONS: Tuple[str, ...] = (
     "R_4^mod(L)",
 )
 
+HDELTA5_FOUR_PART_DATUM: Tuple[str, ...] = (
+    "beta: finite-window E1-chiral Hall bialgebra morphism",
+    "delta: completed Drinfeld-double extension",
+    "epsilon: current-envelope morphism along the elliptic fibre",
+    "tau: derived-centre trace identity Tr_Z(epsilon)=Delta_5^{-2}",
+)
+
+HDELTA5_FINITE_WINDOW_CHECKS: Tuple[str, ...] = (
+    "finite Hall/CoHA source",
+    "parity/root fixtures",
+    "PBW/no-extra-root condition",
+    "nondegenerate Hall pairing/radical quotient",
+    "current locality on E",
+    "SC^{ch,top} commutation",
+    "strict Mittag-Leffler completion maps",
+    "comparison morphisms to H_{Delta_5}",
+)
+
 
 def holographic_package_entries() -> Tuple[str, ...]:
     """Seven-entry holographic package."""
@@ -183,6 +204,38 @@ def holographic_package_entries() -> Tuple[str, ...]:
 def modular_koszul_package_projections() -> Tuple[str, ...]:
     """Six primary projections of the modular Koszul compute package."""
     return MODULAR_KOSZUL_PACKAGE_PROJECTIONS
+
+
+def hdelta5_recognition_firewall() -> Dict[str, Any]:
+    r"""Recognition status for the scalar K3 x E entropy lane.
+
+    The entropy functions use scalar data: weight(Delta_5)=5,
+    Phi_10=Delta_5^2, and the DVV/Sen large-discriminant asymptotic.
+    These facts do not construct the chain-level Hall--Borcherds object
+    H_{Delta_5}.  Recognition requires the four-part datum
+    (beta, delta, epsilon, tau) and the finite-window checks listed
+    here.
+    """
+    return {
+        "scalar_lane": "BPS/BKM automorphic Delta_5/Phi_10 entropy lane",
+        "target_label": "H_{Delta_5}^{target}",
+        "recognized_label": "H_{Delta_5}",
+        "recognition_complete": False,
+        "hdelta5_name_allowed": False,
+        "omega_b_hdelta5_equivalence_allowed": False,
+        "scalar_evidence": (
+            "weight(Delta_5)=5, Phi_10=Delta_5^2, and the DVV/Sen "
+            "large-discriminant asymptotic"
+        ),
+        "missing_four_part_datum": HDELTA5_FOUR_PART_DATUM,
+        "missing_finite_window_checks": HDELTA5_FINITE_WINDOW_CHECKS,
+        "reason": (
+            "Scalar Borcherds product and entropy asymptotics are evidence "
+            "for the target lane only; they do not supply beta, delta, "
+            "epsilon, tau, Hall pairing, current locality, SC^{ch,top} "
+            "commutation, or strict Mittag-Leffler comparison maps."
+        ),
+    }
 
 
 def koszul_object_firewall() -> Dict[str, str]:
@@ -546,6 +599,7 @@ def shadow_entropy_expansion_k3e(D: int, max_arity: int = 8) -> Dict[str, Any]:
         'kappa_BKM_K3E': int(K3E_BKM_KAPPA),
         'kappa_K3E': int(K3E_BKM_KAPPA),
         'weight_Phi10': PHI10_WEIGHT,
+        'hdelta5_recognition': hdelta5_recognition_firewall(),
         'nu_holomorphic_weight': float(K3E_SIEGEL_WEIGHT_BESSEL_INDEX),
         'nu_shadow_hankel': float(K3E_SHADOW_HANKEL_INDEX),
         'nu_bessel': float(K3E_SHADOW_HANKEL_INDEX),

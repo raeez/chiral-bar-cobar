@@ -20,6 +20,7 @@ import unittest
 import math
 
 from compute.lib.exceptional_yangian_engine import (
+    EXCEPTIONAL_RTT_FINITE_WINDOW_HYPOTHESES,
     casimir_eigenvalue,
     _omega_metric_correct,
     tensor_product_decomposition,
@@ -34,6 +35,7 @@ from compute.lib.exceptional_yangian_engine import (
     drinfeld_polynomials_fundamental,
     quantum_r_matrix_expansion,
     verify_pole_structure,
+    exceptional_rtt_scope_report,
     e6_detailed,
     e7_detailed,
     e8_detailed,
@@ -716,18 +718,39 @@ class TestRTT(unittest.TestCase):
     def test_e6_rtt(self):
         result = rtt_spectral_check("E6", 1.5, 2.3)
         self.assertTrue(result['rtt_passes'])
+        self.assertEqual(result['rtt_implication_status'], 'finite_window_spectral_only')
+        self.assertFalse(result['full_exceptional_rtt_presentation_proved'])
+        self.assertFalse(result['an_rtt_extrapolation'])
 
     def test_e7_rtt(self):
         result = rtt_spectral_check("E7", 1.5, 2.3)
         self.assertTrue(result['rtt_passes'])
+        self.assertEqual(result['missing_hypotheses'],
+                         EXCEPTIONAL_RTT_FINITE_WINDOW_HYPOTHESES[4:])
 
     def test_e8_rtt(self):
         result = rtt_spectral_check("E8", 1.5, 2.3)
         self.assertTrue(result['rtt_passes'])
+        self.assertFalse(result['full_exceptional_rtt_presentation_proved'])
 
     def test_g2_rtt(self):
         result = rtt_spectral_check("G2", 1.5, 2.3)
         self.assertTrue(result['rtt_passes'])
+        self.assertEqual(result['rtt_implication_status'], 'finite_window_spectral_only')
+
+    def test_scope_report_blocks_type_a_extrapolation(self):
+        for name in ["G2", "E6", "E7", "E8"]:
+            result = exceptional_rtt_scope_report(name)
+            self.assertEqual(result['finite_window_status'],
+                             'type_specific_spectral_window')
+            self.assertTrue(result['component_dimension_check'])
+            self.assertFalse(result['an_rtt_extrapolation'])
+            self.assertFalse(result['full_exceptional_rtt_presentation_proved'])
+
+    def test_f4_scope_root_data_only(self):
+        result = exceptional_rtt_scope_report("F4")
+        self.assertEqual(result['finite_window_status'], 'root_data_only')
+        self.assertFalse(result['full_exceptional_rtt_presentation_proved'])
 
 
 # =====================================================================
@@ -1045,6 +1068,13 @@ class TestFullComputation(unittest.TestCase):
         for name in ["G2", "E6", "E7", "E8"]:
             with self.subTest(name=name):
                 self.assertIn('kappa_multipath', result[name])
+
+    def test_full_computation_has_rtt_scope(self):
+        result = full_exceptional_computation()
+        for name in ["G2", "E6", "E7", "E8"]:
+            with self.subTest(name=name):
+                self.assertIn('rtt_scope', result[name])
+                self.assertFalse(result[name]['rtt_scope']['an_rtt_extrapolation'])
 
 
 # =====================================================================

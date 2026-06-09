@@ -571,7 +571,7 @@ class TestHeisenbergComparison:
     """
 
     def test_virasoro_S3_nonzero(self):
-        """S_3(Vir) = 2 != 0 (class M non-formality witness)."""
+        """S_3(Vir) = 2 != 0 on the weight-three scalar shadow lane."""
         # VERIFIED: [DC] OPE ratio = 2,
         #           [CF] Heisenberg has S_3 = 0 (class G), contrast with Vir
         assert shadow_S3() != F(0)

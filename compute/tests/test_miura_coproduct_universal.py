@@ -18,6 +18,8 @@ Verified computationally at:
 #        spin-independent by the Miura tower structure.
 """
 
+from pathlib import Path
+
 import pytest
 from sympy import Rational, Symbol, limit, oo, simplify, symbols
 
@@ -40,6 +42,23 @@ from compute.lib.miura_coproduct_universal_engine import (
 
 Psi = Symbol('Psi')
 z = Symbol('z')
+REPO_ROOT = Path(__file__).resolve().parents[2]
+ORDERED_KD_TEX = REPO_ROOT / "chapters/theory/ordered_associative_chiral_kd.tex"
+ORDERED_STANDALONE_TEX = REPO_ROOT / "standalone/ordered_chiral_homology.tex"
+
+
+def test_miura_cross_term_is_not_called_one_over_psi():
+    """The final universal Miura cross-term is (Psi-1)/Psi, not 1/Psi."""
+    chapter = ORDERED_KD_TEX.read_text()
+    standalone = ORDERED_STANDALONE_TEX.read_text()
+
+    for tex in (chapter, standalone):
+        assert r"Miura coefficient $1/\Psi$" not in tex
+        assert r"The total coefficient is $1 - 1/\Psi = (\Psi - 1)/\Psi$" in tex
+        assert r"single-slot Miura factor $1/\Psi$" in tex
+
+    assert r"coefficient $1/\Psi$ appearing in both places" not in chapter
+    assert r"single-slot factor $1/\Psi$ appearing in both places" in chapter
 
 
 # ============================================================================

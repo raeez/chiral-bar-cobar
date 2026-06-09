@@ -9,6 +9,7 @@ Multi-path verification: every numerical claim is verified by at least
 """
 
 import pytest
+from pathlib import Path
 from sympy import Rational, simplify, Symbol, bernoulli, factorial, S
 
 from compute.lib.theorem_preface_positioning_engine import (
@@ -42,6 +43,22 @@ from compute.lib.theorem_preface_positioning_engine import (
     MC_STATUS,
     KOSZULNESS_COUNTS,
     _get_lie,
+)
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+PREFACE_TEX = REPO_ROOT / "chapters/frame/preface.tex"
+EN_KOSZUL_TEX = REPO_ROOT / "chapters/theory/en_koszul_duality.tex"
+OPERADIC_CIRCLE_SURFACES = (
+    PREFACE_TEX,
+    EN_KOSZUL_TEX,
+    REPO_ROOT / "chapters/frame/part_iv_platonic_introduction.tex",
+    REPO_ROOT / "chapters/connections/holographic_datum_master.tex",
+    REPO_ROOT / "standalone/seven_faces.tex",
+    REPO_ROOT / "standalone/holographic_datum.tex",
+    REPO_ROOT / "standalone/cy_quantum_groups_6d_hcs.tex",
+    REPO_ROOT / "standalone/cy_to_chiral_functor.tex",
+    REPO_ROOT / "standalone/ordered_chiral_homology.tex",
+    REPO_ROOT / "standalone/survey_modular_koszul_duality_v2.tex",
 )
 
 
@@ -604,6 +621,42 @@ class TestAPChecks:
             rmat = r_matrix_pole_orders(fam)
             for r in rmat:
                 assert (r + 1) in ope
+
+    def test_ap_cy54_drinfeld_center_not_averaging(self):
+        """The Drinfeld center constructs braiding; averaging destroys it."""
+        active = "\n".join(
+            path.read_text()
+            for path in (PREFACE_TEX, EN_KOSZUL_TEX)
+        )
+        assert "right adjoint to the forgetful" in active
+        assert "center constructs what averaging destroys" in active
+        assert r"\emph{not} the averaging map" in active
+        assert "categorified analogue of the averaging map" not in active
+        assert "categorical averaging map" not in active
+
+    def test_ap150_operadic_circle_is_not_composite_confabulation(self):
+        """The E_n passage is guarded arrow-by-arrow on active surfaces."""
+        active = "\n".join(path.read_text() for path in OPERADIC_CIRCLE_SURFACES)
+        forbidden = [
+            "categorified analogue of the averaging map",
+            "categorified averaging through the Drinfeld",
+            "categorified averaging (Drinfeld",
+            "categorified averaging; higher Deligne",
+            "Drinfeld center is the categorified averaging map",
+            "Drinfeld centre categorifies the Reynolds averaging map",
+            "the categorified averaging map.",
+            "The circle closes when the derived chiral center",
+            "circle closes for 3d HT theories with conformal vector",
+            "Faces F1, F2, F4, and F5 see the full E_1 structure",
+            r"Faces F3, F6, and F7 see the E_\infty shadow",
+        ]
+        for phrase in forbidden:
+            assert phrase not in active
+
+        assert "Drinfeld-centre passage to categorical half-braidings" in active
+        assert "right adjoint to forgetting the braiding" in active
+        assert "round trip closes only on the named comparison loci" in active
+        assert "open corridor, not a constructed circle" in active
 
 
 # ============================================================================

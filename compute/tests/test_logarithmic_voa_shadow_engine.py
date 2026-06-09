@@ -244,10 +244,11 @@ class TestGeneratorData(unittest.TestCase):
     """Generator structure for W(p)."""
 
     def test_n_generators(self):
-        """W(p) has exactly 2 strong generators."""
+        """W(p) has exactly 4 strong generators."""
         for p in range(2, 10):
             gen = triplet_generators(p)
-            self.assertEqual(gen.n_generators, 2)
+            self.assertEqual(gen.n_generators, 4)
+            self.assertEqual(gen.W_multiplicity, 3)
 
     def test_T_weight(self):
         """T (Virasoro) has weight 2."""
@@ -256,10 +257,11 @@ class TestGeneratorData(unittest.TestCase):
             self.assertEqual(gen.T_weight, 2)
 
     def test_W_weight(self):
-        """W has weight 2p-1."""
+        """Each W^a has weight 2p-1."""
         for p in range(2, 10):
             gen = triplet_generators(p)
             self.assertEqual(gen.W_weight, 2 * p - 1)
+            self.assertEqual(gen.generator_weights, [2] + [2 * p - 1] * 3)
 
     def test_W_weight_explicit(self):
         """Explicit W weights: p=2->3, p=3->5, p=4->7, p=5->9."""
@@ -350,7 +352,8 @@ class TestBarComplex(unittest.TestCase):
         """Bar differential structure is well-defined."""
         for p in range(2, 8):
             data = bar_differential_structure(p)
-            self.assertEqual(data['n_generators'], 2)
+            self.assertEqual(data['n_generators'], 4)
+            self.assertEqual(data['W_multiplicity'], 3)
             self.assertEqual(data['max_ope_pole'],
                              triplet_WW_ope_pole_order(p))
 
@@ -647,7 +650,8 @@ class TestCrossFamilyConsistency(unittest.TestCase):
         for p in range(2, 8):
             data = triplet_vs_virasoro_comparison(p)
             self.assertTrue(data['kappas_equal'])
-            self.assertEqual(data['triplet_n_generators'], 2)
+            self.assertEqual(data['triplet_n_generators'], 4)
+            self.assertEqual(data['triplet_unique_generator_weights'], [2, 2 * p - 1])
             self.assertEqual(data['virasoro_n_generators'], 1)
             self.assertTrue(data['triplet_c2_cofinite'])
             self.assertFalse(data['virasoro_c2_cofinite'])

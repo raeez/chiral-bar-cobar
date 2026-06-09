@@ -126,59 +126,28 @@ N=4 SMALL SUPERCONFORMAL ALGEBRA
 
 Generators: T (h=2), G^a (h=3/2) x 4 fermionic, J^i (h=1) x 3 bosonic
             (the SU(2)_R currents).
-c = 6k/(k+2) where k = k_R (the SU(2)_R level).
-At k=1: c = 2.  At k=2: c = 3.  At k->inf: c = 6 (free-field limit).
+c = 6k where k = k_R (the SU(2)_R level).
+At k=1: c = 6 (the K3 sigma-model value).  At k=2: c = 12.
 
 Modular characteristic:
-  kappa(N=4, c) = (6-c)/(3-c)
-  from the coset: sl(2)_k x 4 fermions / SU(2)_1.
-  Explicit: kappa = kappa(sl(2)_k) + 4*kappa(fermion) - kappa(su(2)_1)
-          = 3(k+2)/4 + 4*(1/4) - 3*3/(2*4)
-  Wait, this needs more care.
+  kappa(N=4, k) = 2k
+  kappa(N=4, c) = c/3.
 
-  The small N=4 SCA has c = 6k/(k+2). The modular characteristic is
-  determined by the genus-1 partition function. For the K3 sigma model
-  (c = 6, identified with k -> inf or k_R = 1 in the free-field limit):
-    kappa(K3) = 2  (the complex dimension of K3, 5-path verified).
-
-  For general c = 6k/(k+2):
-    kappa(N=4, k) = (k+2)/2
-    kappa(N=4, c) = 3/(3 - c/2) = 6/(6-c)
-
-  CROSS-CHECK at c = 6 (k -> inf): kappa = 6/(6-6) = pole.
-  That is wrong for the K3 case where kappa = 2.
-
-  The issue: at c=6 (k_R=1 for the K3 chiral algebra), the algebra
-  is a specific VOA, not the universal N=4 at c=6. The K3 VOA has
-  kappa = 2 from geometric arguments.
-
-  For the UNIVERSAL small N=4 at c = 6k/(k+2):
-    At k=1: c = 2, and the algebra is the N=4 minimal model.
-    At k=2: c = 3.
-    At k -> inf: c -> 6.
-
-  The modular characteristic:
-    kappa(N=4, k) = (k+2)/2
-  In terms of c = 6k/(k+2), so k = 2c/(6-c):
-    kappa = (2c/(6-c) + 2) / 2 = (2c + 2(6-c)) / (2(6-c)) = 12 / (2(6-c)) = 6/(6-c).
-
-  CROSS-CHECK at k=1 (c=3):
-    kappa = 6/(6-3) = 2.
-  CROSS-CHECK at k=2 (c=4):
-    kappa = 6/(6-4) = 3.
+  The Virasoro T-line still has kappa_T = c/2.  The full small N=4
+  algebra has kappa = c/3 because the extended supersymmetry reduces
+  the full genus-1 modular characteristic by a factor 2/3 relative to
+  the T-line projection.  At k=1 (c=6), kappa = 2, agreeing with the
+  K3 sigma model.
 
 Koszul duality for N=4:
-  c + c' = 6 (same as N=2, since both arise from sl(2) cosets).
-  Wait, for the SMALL N=4: c = 6k/(k+2), and the FF involution
-  k -> -k-2h^v. For SU(2): h^v = 2, so k -> -k-4.
-  c' = 6(-k-4)/(-k-2) = 6(k+4)/(k+2).
-  c + c' = 6k/(k+2) + 6(k+4)/(k+2) = 6(2k+4)/(k+2) = 12.
-  So c' = 12 - c (NOT 6 - c as for N=2).
-  Self-dual: c = 6.
+  The affine R-symmetry line is su(2), so h^v = 2 and the
+  Feigin-Frenkel involution is k -> -k-2h^v = -k-4.
+  With c = 6k, this gives c' = 6(-k-4) = -c-24.
+  Self-dual: c = -12 (k = -2 = -h^v).
 
-  kappa(c) + kappa(12-c) = 6/(6-c) + 6/(6-(12-c)) = 6/(6-c) + 6/(c-6)
-    = 6/(6-c) - 6/(6-c) = 0.
-  So kappa + kappa' = 0 for N=4. This is the KM-type complementarity.
+  kappa(c) + kappa(-c-24) = c/3 + (-c-24)/3 = -8.
+  This is distinct from the CY/K3 sigma-model Verdier duality
+  k -> -k, where kappa + kappa' = 0.
 
 BEEM-RASTELLI 4d/2d CORRESPONDENCE
 ====================================
@@ -923,99 +892,93 @@ class N4SmallSuperconformal:
 
     Total: 1 + 4 + 3 = 8 generators.
 
-    Central charge: c = 6k/(k+2) where k = SU(2)_R level.
-      k=1: c=2 (first minimal model).
-      k=2: c=3.
-      k=3: c=18/5.
-      k->inf: c=6 (free-field limit).
+    Central charge: c = 6k where k = SU(2)_R level.
+      k=1: c=6 (K3 sigma-model value).
+      k=2: c=12.
+      k=3: c=18.
+
+    Full modular characteristic: kappa = 2k = c/3.
+    The Virasoro T-line projection remains kappa_T = c/2.
     """
 
     @staticmethod
     def central_charge(k_val=None):
-        """c = 6k/(k+2)."""
+        """c = 6k."""
         if k_val is None:
-            return 6 * k / (k + 2)
-        return Rational(6) * Rational(k_val) / (Rational(k_val) + 2)
+            return 6 * k
+        return Rational(6) * Rational(k_val)
 
     @staticmethod
     def k_from_c(c_val):
-        """k = 2c/(6-c)."""
+        """k = c/6."""
         c_v = Rational(c_val)
-        return 2 * c_v / (6 - c_v)
+        return c_v / 6
 
     @staticmethod
     def kappa(c_val=None, k_val=None):
-        """kappa(N=4) = 6/(6-c) = (k+2)/2.
+        """kappa(N=4) = 2k = c/3.
 
-        From the coset structure: the small N=4 at c = 6k/(k+2) has
-        kappa = (k+2)/2. In terms of c: kappa = 6/(6-c).
+        The full small N=4 algebra has kappa = c/3.  The Virasoro
+        T-line has kappa_T = c/2; using that value for the full algebra
+        is AP48's shadow/object error.
 
         Cross-checks:
-          k=1 (c=2): kappa = 3/2.
-          k=2 (c=3): kappa = 2.
-          k=3 (c=18/5): kappa = 5/2.
+          k=1 (c=6): kappa = 2.
+          k=2 (c=12): kappa = 4.
+          k=3 (c=18): kappa = 6.
         """
         if k_val is not None:
-            return (Rational(k_val) + 2) / 2
+            return 2 * Rational(k_val)
         if c_val is not None:
-            c_v = Rational(c_val)
-            return Rational(6) / (6 - c_v)
-        return Rational(6) / (6 - c)
+            return Rational(c_val) / 3
+        return c / 3
 
     @staticmethod
     def kappa_k3():
         """kappa for the K3 sigma model VOA (c=6).
 
-        The K3 sigma model is NOT the universal small N=4 at c=6
-        (which has kappa = 6/(6-6) = pole). Rather, it is a SPECIFIC
-        c=6 VOA (free field realization: 4 bosons + 4 fermions).
-
-        kappa(K3) = 2 (complex dimension of K3).
-        This is independently verified by 5 paths in cy_n4sca_k3_engine.py.
-
-        The universal N=4 formula kappa = 6/(6-c) has a POLE at c=6,
-        which signals the transition from the discrete series to the
-        free-field limit. The K3 VOA sits at this boundary.
+        k=1, c=6, and kappa = 2.  This is independently verified by
+        5 paths in cy_n4sca_k3_engine.py and matches the full N=4
+        formula kappa = c/3.
         """
         return Rational(2)
 
     @staticmethod
     def koszul_dual_c(c_val=None):
-        """Koszul dual: c' = 12 - c.
+        """Koszul dual: c' = -c - 24.
 
         Under the SU(2) FF involution k -> -k-4:
-          c' = 6(-k-4)/(-k-2) = 6(k+4)/(k+2).
-          c + c' = 6k/(k+2) + 6(k+4)/(k+2) = 6(2k+4)/(k+2) = 12.
+          c' = 6(-k-4) = -c - 24.
         """
         if c_val is None:
-            return 12 - c
-        return 12 - Rational(c_val)
+            return -c - 24
+        return -Rational(c_val) - 24
 
     @staticmethod
     def complementarity_sum(c_val=None, k_val=None):
-        """kappa(c) + kappa(12-c) = 0.
+        """kappa(c) + kappa(-c-24) = -8 under FF duality.
 
-        Proof: 6/(6-c) + 6/(6-(12-c)) = 6/(6-c) + 6/(c-6) = 0.
+        Proof: c/3 + (-c-24)/3 = -8.
 
-        This is the KM-type complementarity (kappa + kappa' = 0),
-        in contrast with the N=2 case (kappa + kappa' = 1) and the
-        Virasoro case (kappa + kappa' = 13).
+        This is distinct from the CY/K3 sigma-model duality k -> -k,
+        whose geometric Verdier complementarity sum is zero.
         """
         if c_val is not None:
             c_v = Rational(c_val)
-            kap = Rational(6) / (6 - c_v)
-            kap_dual = Rational(6) / (6 - (12 - c_v))
+            c_dual = -c_v - 24
+            kap = c_v / 3
+            kap_dual = c_dual / 3
             return {
                 'c': c_v,
-                'c_dual': 12 - c_v,
+                'c_dual': c_dual,
                 'kappa': kap,
                 'kappa_dual': simplify(kap_dual),
                 'sum': simplify(kap + kap_dual),
             }
         if k_val is not None:
             k_v = Rational(k_val)
-            kap = (k_v + 2) / 2
-            kap_dual = (-k_v - 4 + 2) / 2
+            kap = 2 * k_v
+            kap_dual = 2 * (-k_v - 4)
             return {
                 'k': k_v,
                 'k_dual': -k_v - 4,
@@ -1023,12 +986,12 @@ class N4SmallSuperconformal:
                 'kappa_dual': kap_dual,
                 'sum': simplify(kap + kap_dual),
             }
-        return {'sum': Rational(0)}
+        return {'sum': Rational(-8)}
 
     @staticmethod
     def self_dual_point():
-        """Self-dual: c = 6 (free-field limit)."""
-        return {'c_self_dual': Rational(6)}
+        """Self-dual: c = -12 (critical su(2) level k=-2)."""
+        return {'c_self_dual': Rational(-12)}
 
     @staticmethod
     def shadow_data_T_line(c_val=None):
@@ -1065,7 +1028,7 @@ class N4SmallSuperconformal:
             kap = Rational(3) * (k_v + 2) / 4
         elif c_val is not None:
             c_v = Rational(c_val)
-            k_v = 2 * c_v / (6 - c_v)
+            k_v = c_v / 6
             kap = Rational(3) * (k_v + 2) / 4
         else:
             kap = Rational(3) * (k + 2) / 4
@@ -1092,7 +1055,7 @@ class N4SmallSuperconformal:
             k_v = Rational(k_val)
         elif c_val is not None:
             c_v = Rational(c_val)
-            k_v = 2 * c_v / (6 - c_v)
+            k_v = c_v / 6
         else:
             k_v = k
         return {
@@ -1295,13 +1258,9 @@ def superconformal_kappa_table(c_values=None):
             row['kappa_N2'] = 'pole'
             row['N2_c_dual'] = Rational(3)
 
-        # N=4: kappa = 6/(6-c), defined for c != 6
-        if c_v != 6:
-            row['kappa_N4'] = N4SmallSuperconformal.kappa(c_v)
-            row['N4_c_dual'] = 12 - c_v
-        else:
-            row['kappa_N4'] = 'pole'
-            row['N4_c_dual'] = Rational(6)
+        # N=4: kappa = c/3 and FF dual c' = -c-24
+        row['kappa_N4'] = N4SmallSuperconformal.kappa(c_v)
+        row['N4_c_dual'] = -c_v - 24
 
         table.append(row)
     return table
@@ -1341,15 +1300,15 @@ def superconformal_shadow_depth_table():
 def superconformal_koszul_duality_table():
     """Koszul duality data for all three superconformal families.
 
-    The critical dimension (c + c' value) increases with N:
+    The FF central-charge sum (c + c' value) is family-specific:
       N=1: c + c' = 15  (d=10 superstring critical dim)
       N=2: c + c' = 6   (Calabi-Yau threefold)
-      N=4: c + c' = 12  (related to d=6 compactification)
+      N=4: c + c' = -24 (su(2) FF line with c=6k)
 
     The complementarity sum kappa + kappa':
       N=1: 41/4  (nontrivial constant)
       N=2: 1     (simplest nontrivial)
-      N=4: 0     (KM-type anti-symmetry)
+      N=4: -8    (FF affine R-symmetry)
     """
     return {
         'N=1': {
@@ -1365,23 +1324,23 @@ def superconformal_koszul_duality_table():
             'type': 'Intermediate (unit sum)',
         },
         'N=4': {
-            'c_sum': Rational(12),
-            'kappa_sum': Rational(0),
-            'self_dual_c': Rational(6),
-            'type': 'KM type (anti-symmetric)',
+            'c_sum': Rational(-24),
+            'kappa_sum': Rational(-8),
+            'self_dual_c': Rational(-12),
+            'type': 'FF su(2) R-symmetry type',
         },
     }
 
 
 def superconformal_complementarity_hierarchy():
-    r"""The superconformal complementarity sum hierarchy: 13 > 41/4 > 1 > 0.
+    r"""The superconformal complementarity sum hierarchy: 13 > 41/4 > 1 > -8.
 
     For each N in {0, 1, 2, 4}, the complementarity sum
         Sigma_N := kappa(c) + kappa(c_crit - c)
     is a CONSTANT independent of c (the c-dependence cancels algebraically).
 
     The hierarchy is STRICTLY DECREASING in N:
-        Sigma_0 = 13 > Sigma_1 = 41/4 > Sigma_2 = 1 > Sigma_4 = 0.
+        Sigma_0 = 13 > Sigma_1 = 41/4 > Sigma_2 = 1 > Sigma_4 = -8.
 
     This is proved by 5 independent methods:
 
@@ -1389,11 +1348,11 @@ def superconformal_complementarity_hierarchy():
       N=0: (c/2) + ((26-c)/2) = 26/2 = 13.
       N=1: (3c-2)/4 + (3(15-c)-2)/4 = (3c-2+45-3c-2)/4 = 41/4.
       N=2: (6-c)/(2(3-c)) + c/(2(c-3)) = (6-2c)/(2(3-c)) = 1.
-      N=4: 6/(6-c) + 6/(c-6) = 0.
+      N=4: c/3 + (-c-24)/3 = -8.
 
     METHOD 2 (k-parametrization with FF involution):
       N=2: kappa(k)=(k+4)/4, kappa(-k-4)=-k/4, sum=1.
-      N=4: kappa(k)=(k+2)/2, kappa(-k-4)=(-k-2)/2, sum=0.
+      N=4: kappa(k)=2k, kappa(-k-4)=-2k-8, sum=-8.
       N=1: kappa=(3c-2)/4 is linear in c; sum = slope*c_crit + 2*intercept
            = (3/4)*15 + 2*(-1/2) = 41/4.
 
@@ -1401,12 +1360,14 @@ def superconformal_complementarity_hierarchy():
       For linear kappa: Sigma_N = 2*kappa(c_sd) where c_sd = c_crit/2.
         N=0: 2*kappa(13) = 2*13/2 = 13.
         N=1: 2*kappa(15/2) = 2*41/8 = 41/4.
-      For Moebius kappa: the self-dual point is a POLE, but the
-      algebraic identity gives a finite constant (1 for N=2, 0 for N=4).
+      For N=2 Moebius kappa: the self-dual point is a POLE, but the
+      algebraic identity gives the finite constant 1.
+      For N=4: Sigma_4 = 2*kappa(-12) = -8.
 
     METHOD 4 (Anomaly cancellation):
       The sum measures the RESIDUAL CHIRAL ANOMALY after Koszul pairing.
-      N=4 achieves exact cancellation (KM-type anti-symmetry).
+      The N=4 FF line keeps the su(2) critical shift and gives -8.
+      The separate CY/K3 Verdier duality k -> -k gives exact cancellation.
       Each step from N=4 to N=0 introduces a residual anomaly from
       the reduced supersymmetric cancellation.
 
@@ -1460,15 +1421,15 @@ def superconformal_complementarity_hierarchy():
         },
         4: {
             'name': 'N=4 Small Superconformal',
-            'c_crit': Rational(12),
-            'c_self_dual': Rational(6),
-            'kappa_formula': '6/(6-c)',
-            'kappa_type': 'moebius',  # pure simple pole
-            'sum': Rational(0),
+            'c_crit': Rational(-24),
+            'c_self_dual': Rational(-12),
+            'kappa_formula': 'c/3',
+            'kappa_type': 'linear',
+            'sum': Rational(-8),
             'n_generators': 8,
             'n_bosonic': 4,
             'n_fermionic': 4,
-            'anomaly_type': 'KM-type (exact cancellation)',
+            'anomaly_type': 'FF su(2) R-symmetry shift',
         },
     }
 
@@ -1490,7 +1451,7 @@ def complementarity_sum_general(N_susy: int) -> Rational:
     Rational
         The complementarity sum.
     """
-    sums = {0: Rational(13), 1: Rational(41, 4), 2: Rational(1), 4: Rational(0)}
+    sums = {0: Rational(13), 1: Rational(41, 4), 2: Rational(1), 4: Rational(-8)}
     if N_susy not in sums:
         raise ValueError(
             f"N={N_susy} not in standard Ademollo et al. hierarchy {{0, 1, 2, 4}}. "
@@ -1505,7 +1466,7 @@ def kappa_superconformal(N_susy: int, c_val=None):
     N=0: kappa = c/2  (Virasoro).
     N=1: kappa = (3c-2)/4  (super-Mumford with 1 Majorana fermion).
     N=2: kappa = (6-c)/(2(3-c))  (Kazama-Suzuki coset structure).
-    N=4: kappa = 6/(6-c)  (small N=4 SCA with SU(2)_R).
+    N=4: kappa = c/3  (small N=4 SCA with SU(2)_R).
 
     Parameters
     ----------
@@ -1538,9 +1499,9 @@ def c_critical_superconformal(N_susy: int) -> Rational:
         N=0: 26  (bosonic string critical dimension)
         N=1: 15  (superstring critical dimension, d=10)
         N=2: 6   (Calabi-Yau threefold internal c)
-        N=4: 12  (related to d=6 compactification)
+        N=4: -24 (su(2) FF line with c=6k)
     """
-    crits = {0: Rational(26), 1: Rational(15), 2: Rational(6), 4: Rational(12)}
+    crits = {0: Rational(26), 1: Rational(15), 2: Rational(6), 4: Rational(-24)}
     if N_susy not in crits:
         raise ValueError(f"N={N_susy} not in {{0, 1, 2, 4}}")
     return crits[N_susy]
@@ -1565,8 +1526,8 @@ def verify_complementarity_sum_symbolic(N_susy: int):
         kap = (6 - c_sym) / (2 * (3 - c_sym))
         kap_dual = (6 - (C - c_sym)) / (2 * (3 - (C - c_sym)))
     elif N_susy == 4:
-        kap = Rational(6) / (6 - c_sym)
-        kap_dual = Rational(6) / (6 - (C - c_sym))
+        kap = c_sym / 3
+        kap_dual = (C - c_sym) / 3
     else:
         raise ValueError(f"N={N_susy} not in {{0, 1, 2, 4}}")
 
@@ -1614,8 +1575,10 @@ def hierarchy_proof_method_self_dual():
 
     For LINEAR kappa functions (N=0, N=1):
         Sigma_N = 2 * kappa_N(c_crit/2).
-    For MOEBIUS kappa functions (N=2, N=4):
+    For the N=2 MOEBIUS kappa function:
         The self-dual point is a pole; the sum is computed algebraically.
+    For the N=4 AP49 FF convention:
+        kappa = c/3 is linear and the self-dual point is c=-12.
 
     Returns verification data for each N.
     """
@@ -1633,9 +1596,22 @@ def hierarchy_proof_method_self_dual():
             'expected': expected,
             'verified': sigma == expected,
         }
-    # N=2 and N=4: self-dual is a pole of kappa, use algebraic verification
-    for N_val in [2, 4]:
-        results[N_val] = verify_complementarity_sum_symbolic(N_val)
+    # N=2: self-dual is a pole of kappa, use algebraic verification
+    results[2] = verify_complementarity_sum_symbolic(2)
+
+    # N=4: kappa = c/3 is linear in the AP49 FF convention.
+    C = c_critical_superconformal(4)
+    c_sd = C / 2
+    kap_sd = kappa_superconformal(4, c_sd)
+    sigma = 2 * kap_sd
+    expected = complementarity_sum_general(4)
+    results[4] = {
+        'c_self_dual': c_sd,
+        'kappa_at_self_dual': kap_sd,
+        'sigma_from_self_dual': sigma,
+        'expected': expected,
+        'verified': sigma == expected,
+    }
     return results
 
 
@@ -1647,7 +1623,7 @@ def hierarchy_proof_method_k_param():
         k -> -k - 4.
 
     N=2: kappa(k) = (k+4)/4, kappa(-k-4) = -k/4, sum = 1.
-    N=4: kappa(k) = (k+2)/2, kappa(-k-4) = (-k-2)/2, sum = 0.
+    N=4: kappa(k) = 2k, kappa(-k-4) = -2k-8, sum = -8.
 
     For N=0 and N=1: the kappa formula is linear in c, and the
     sum is computed directly: slope*c_crit + 2*intercept.
@@ -1688,7 +1664,7 @@ def hierarchy_proof_method_k_param():
     }
 
     # N=4: k-parametrization
-    kap_n4_k = (k_sym + 2) / 2
+    kap_n4_k = 2 * k_sym
     kap_n4_dual_k = kap_n4_k.subs(k_sym, -k_sym - 4)
     sum_n4 = simplify(kap_n4_k + kap_n4_dual_k)
     results[4] = {
@@ -1696,7 +1672,7 @@ def hierarchy_proof_method_k_param():
         'kappa_k': kap_n4_k,
         'kappa_dual_k': kap_n4_dual_k,
         'sum': sum_n4,
-        'verified': sum_n4 == 0,
+        'verified': sum_n4 == -8,
     }
 
     return results
@@ -1706,7 +1682,7 @@ def hierarchy_strict_decrease():
     r"""Verify the strict decrease: Sigma_0 > Sigma_1 > Sigma_2 > Sigma_4.
 
     The complementarity sums form a strictly decreasing sequence:
-        13 > 41/4 > 1 > 0.
+        13 > 41/4 > 1 > -8.
     """
     N_values = [0, 1, 2, 4]
     sums = [complementarity_sum_general(N) for N in N_values]

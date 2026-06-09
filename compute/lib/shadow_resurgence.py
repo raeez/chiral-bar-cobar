@@ -66,7 +66,7 @@ def object_and_kernel_firewalls() -> Dict[str, Any]:
         'kernel_constants': {
             'affine_collision_trace_form': 'r^{KM}(z) = k*Omega_tr/z',
             'affine_kz_normalization': 'r_KZ(z) = Omega/((k+h^vee)z)',
-            'heisenberg_collision': 'r^{Heis}(z) = k/z',
+            'heisenberg_collision': 'r^{Heis}(z) = k*Omega_H/z (coeff k/z)',
             'virasoro_collision': 'r^{Vir}(z) = (c/2)/z^3 + 2T/z',
         },
     }

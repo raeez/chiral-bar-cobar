@@ -399,16 +399,20 @@ class TestCriticalLevel:
 # =====================================================================
 
 class TestKoszulCriteria:
-    """12 Koszulness characterizations: 10 unconditional + 1 conditional + 1 one-directional."""
+    """12 Koszulness characterizations with exact status qualifiers."""
 
     def test_12_criteria_status(self):
-        """10 unconditional; (xi) Lagrangian conditional; (xii) D-module purity one-directional."""
+        """FH and Lagrangian are conditional; ChirHoch is one-way."""
         status = koszulness_12_criteria_status()
         assert len(status) == 12
         for name, info in status.items():
-            if name == "lagrangian_criterion":
+            if name in {"fh_concentration", "lagrangian_criterion"}:
                 assert info["proved"] == "conditional", (
-                    f"Lagrangian criterion should be 'conditional', got {info['proved']}"
+                    f"{name} should be 'conditional', got {info['proved']}"
+                )
+            elif name == "e2_formality":
+                assert info["proved"] == "one-way", (
+                    f"{name} should be 'one-way', got {info['proved']}"
                 )
             else:
                 assert info["proved"] is True, f"Criterion {name} not proved"
@@ -425,7 +429,7 @@ class TestKoszulCriteria:
         """FH concentration is one of the 12 criteria."""
         status = koszulness_12_criteria_status()
         assert "fh_concentration" in status
-        assert status["fh_concentration"]["proved"] is True
+        assert status["fh_concentration"]["proved"] == "conditional"
         assert status["fh_concentration"]["compute_verified"] is True
 
     def test_fm_boundary_in_criteria(self):

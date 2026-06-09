@@ -52,11 +52,15 @@ YANG-BAXTER EQUATION:
 
 This is verified numerically for the Yang R-matrix at each N.
 
-OPE COMPATIBILITY (Theorem): The Drinfeld coproduct satisfies OPE
-compatibility at all spins by two arguments:
-  (A) Coderivation on Koszul-locus bar complex (generic Psi).
-  (B) JKL vertex bialgebra theorem on the CoHA of the Jordan quiver
-      at rank N (JKL26 Theorem C for general quivers).
+OPE COMPATIBILITY STATUS: this module verifies the matrix-algebra
+surface (R-matrix, YBE, RTT, Drinfeld coproduct, qdet).  The vertex/OPE
+compatibility is a manuscript-level conditional statement:
+  (A) coderivation on the Koszul-locus bar complex (generic Psi);
+  (B) CoHA comparison only after a type-A positive-half CoHA is
+      identified with the required Y^+, then transported through the
+      Drinfeld double, completion, and Miura/DS evaluation.
+No higher-rank extension of the Jordan-quiver Schiffmann-Vasserot
+identification is assumed by this engine.
 
 QUANTUM DETERMINANT:
     qdet T(u) = sum_{sigma in S_N} sgn(sigma) prod_{i=1}^{N}

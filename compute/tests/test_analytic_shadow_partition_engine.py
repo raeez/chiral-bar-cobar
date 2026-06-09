@@ -1133,7 +1133,7 @@ class TestSpecificFamilies:
         """kappa(Ising) = c/2 = 1/4."""
         assert abs(kappa_virasoro(0.5) - 0.25) < 1e-15
 
-    def test_virasoro_c26_self_dual(self):
+    def test_virasoro_c26_dual_is_c0(self):
         """At c=26: Vir_{26}^! = Vir_0. kappa(Vir_26) = 13."""
         assert abs(kappa_virasoro(26) - 13.0) < 1e-12
 

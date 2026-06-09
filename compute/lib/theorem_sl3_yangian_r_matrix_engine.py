@@ -24,8 +24,9 @@ For A = sl_3-hat_k at level k:
 
   * h^vee(sl_3) = 3, dim(sl_3) = 8, rank = 2.
   * kappa(sl_3_k) = dim(g)(k + h^vee) / (2 h^vee) = 4(k+3)/3.
-  * The ordered bar cohomology algebra is A^!_{line} = Y_hbar(sl_3)
-    at hbar = 1/(k+3).
+  * The ordered bar cohomology first gives the line bar-dual coalgebra
+    A^i_{line}; after the Verdier/continuous-linear dual branch, the
+    algebra A^!_{line} is Y_hbar(sl_3) at hbar = 1/(k+3).
 
   * The raw affine collision residue (AP19) is r(z) = k*Omega/z where
     Omega is the quadratic Casimir tensor.  The d log propagator absorbs

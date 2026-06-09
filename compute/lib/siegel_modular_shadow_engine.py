@@ -139,7 +139,7 @@ def heisenberg_F2(k: int) -> Dict[str, Any]:
     All boundary graphs vanish because S_r = 0 for r >= 3.
 
     Three verification paths:
-      (a) Graph sum: sum over 6 stable graphs, only smooth contributes.
+      (a) Graph sum: sum over 7 stable graphs, only smooth contributes.
       (b) Bernoulli/A-hat: lambda_2 = (2^3-1)/2^3 * |B_4|/4!.
       (c) Mumford isomorphism: det'(Delta)^{-k/2} -> k * lambda_2.
 

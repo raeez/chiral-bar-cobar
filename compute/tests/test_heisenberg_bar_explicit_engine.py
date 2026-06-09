@@ -5,7 +5,7 @@ Ground truth sources:
     2. bar_complex.py (OPE algebra and bar dimensions)
     3. heisenberg_bv_bar_proof.py (BV/bar identification, Faber-Pandharipande)
     4. Signs appendix (signs_and_shifts.tex): desuspension convention
-    5. prop:heisenberg-r-matrix: r(z) = k/z
+    5. prop:heisenberg-r-matrix: r(z) = k*Omega_H/z (rank-one coeff k/z)
     6. rem:heisenberg-bar-absorbs-pole: AP19 pole absorption
 
 Multi-path verification (CLAUDE.md mandate: 3+ independent paths per claim):
@@ -483,7 +483,7 @@ class TestDimensions:
 # ============================================================================
 
 class TestRMatrix:
-    """r(z) = k/z. R(z) = exp(k/z)."""
+    """r(z) = k*Omega_H/z (rank-one coeff k/z). R(z) = exp(k/z)."""
 
     def test_r_matrix_symbolic(self):
         z = Symbol('z')
@@ -526,7 +526,7 @@ class TestRMatrix:
         """
         # OPE: J(z)J(w) ~ k/(z-w)^2 -> max pole order = 2
         ope_max_pole = 2
-        # r-matrix: r(z) = k/z -> max pole order = 1
+        # r-matrix: r(z) = k*Omega_H/z (rank-one coeff k/z) -> max pole order = 1
         r_max_pole = 1
         assert r_max_pole == ope_max_pole - 1
 
@@ -878,11 +878,11 @@ class TestStructuralProperties:
         assert simplify(shadow_kappa() - k) == 0
 
     def test_r_matrix_is_abelian(self):
-        """r(z) = k/z is the r-matrix of an abelian Lie algebra.
+        """r(z) = k*Omega_H/z (rank-one coeff k/z) is the r-matrix of an abelian Lie algebra.
 
         For a non-abelian algebra (e.g., sl_2), r(z) = Omega/z where
         Omega is the Casimir. For Heisenberg: Omega = k (a scalar),
-        so r(z) = k/z.
+        so r(z) = k*Omega_H/z (rank-one coeff k/z).
         """
         z = Symbol('z')
         r = heisenberg_r_matrix()

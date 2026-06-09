@@ -30,6 +30,7 @@ from math import gcd
 import numpy as np
 
 from compute.lib.admissible_level_bar_engine import (
+    ADMISSIBLE_QUOTIENT_BAR_HYPOTHESES,
     # Kappa paths
     kappa_path1_sugawara,
     kappa_path2_character,
@@ -43,6 +44,7 @@ from compute.lib.admissible_level_bar_engine import (
     # Main analysis
     admissible_bar_analysis_sl2,
     admissible_bar_analysis_sl3,
+    admissible_quotient_scope_sl2,
     # Associated variety
     associated_variety_sl2,
     associated_variety_sl3,
@@ -174,7 +176,7 @@ class TestKappaMultiPath(unittest.TestCase):
 # =========================================================================
 
 class TestUniversalKoszulness(unittest.TestCase):
-    """V_k(sl_2) is Koszul at ALL levels (prop:pbw-universality)."""
+    """Universal V_k(sl_2) obeys the PBW/Koszul theorem."""
 
     def test_bar_cohomology_universal(self):
         """Bar cohomology of V_k concentrated in degree 1."""
@@ -201,15 +203,17 @@ class TestUniversalKoszulness(unittest.TestCase):
 class TestSimpleQuotientKoszulness(unittest.TestCase):
     """Koszulness analysis for L_k(sl_2) at admissible levels."""
 
-    def test_integrable_koszul(self):
-        """Integrable levels (q=1): L_k is Koszul."""
+    def test_integrable_conditional_open(self):
+        """Integrable simple quotients still need quotient bar comparison."""
         for p in range(2, 8):
             analysis = admissible_bar_analysis_sl2(p, 1)
-            self.assertTrue(analysis.is_quotient_koszul,
-                            f"L_k should be Koszul at integrable k={p-2}")
+            self.assertIsNone(analysis.is_quotient_koszul)
+            self.assertEqual(analysis.koszulness_status, 'conditional_open')
+            self.assertEqual(analysis.quotient_bar_comparison_status, 'required')
+            self.assertFalse(analysis.generic_universal_theorem_descends)
 
-    def test_high_null_koszul(self):
-        """Levels with h_null >= 4: L_k is Koszul."""
+    def test_high_null_conditional_open(self):
+        """High null weight is finite-window evidence, not quotient Koszulness."""
         # h_null = (p-1)*q >= 4 and null above max bar arity
         test_cases = [(3, 2), (5, 3), (7, 2), (7, 3), (7, 4)]
         for p, q in test_cases:
@@ -218,21 +222,23 @@ class TestSimpleQuotientKoszulness(unittest.TestCase):
             h_null = (p - 1) * q
             if h_null >= 4:
                 analysis = admissible_bar_analysis_sl2(p, q)
-                self.assertTrue(analysis.is_quotient_koszul,
-                                f"L_k should be Koszul when h_null={h_null} >= 4")
+                self.assertIsNone(analysis.is_quotient_koszul)
+                self.assertEqual(analysis.quotient_bar_comparison_hypotheses,
+                                 ADMISSIBLE_QUOTIENT_BAR_HYPOTHESES)
 
-    def test_k_minus_half_koszul(self):
-        """k = -1/2 (p=3, q=2): h_null = 4, L_k is Koszul."""
+    def test_k_minus_half_conditional_open(self):
+        """k = -1/2: scalar data computed, quotient Koszulness open."""
         analysis = admissible_bar_analysis_sl2(3, 2)
         self.assertEqual(analysis.h_null, 4)
-        self.assertTrue(analysis.is_quotient_koszul)
+        self.assertIsNone(analysis.is_quotient_koszul)
+        self.assertEqual(analysis.koszulness_status, 'conditional_open')
         self.assertEqual(analysis.kappa_km, Fraction(9, 8))
 
-    def test_k_minus_4_3_koszul(self):
-        """k = -4/3 (p=2, q=3): h_null = 3, L_k is Koszul."""
+    def test_k_minus_4_3_conditional_open(self):
+        """k = -4/3: h_null = 3 requires quotient bar comparison."""
         analysis = admissible_bar_analysis_sl2(2, 3)
         self.assertEqual(analysis.h_null, 3)
-        self.assertTrue(analysis.is_quotient_koszul)
+        self.assertIsNone(analysis.is_quotient_koszul)
         self.assertEqual(analysis.kappa_km, Fraction(1, 2))
 
     def test_k_minus_3_2(self):
@@ -241,13 +247,13 @@ class TestSimpleQuotientKoszulness(unittest.TestCase):
             admissible_bar_analysis_sl2(1, 2)
 
     def test_k_minus_1_3(self):
-        """k = -1/3 (p=5, q=3): h_null = 12 >> 3, Koszul."""
+        """k = -1/3: h_null = 12 gives evidence, not descent."""
         analysis = admissible_bar_analysis_sl2(5, 3)
         self.assertEqual(analysis.h_null, 12)
-        self.assertTrue(analysis.is_quotient_koszul)
+        self.assertIsNone(analysis.is_quotient_koszul)
 
     def test_no_koszul_failure_found(self):
-        """No Koszul failure found at any admissible level."""
+        """No quotient Koszul failure is detected, but cases remain open."""
         for q in range(1, 5):
             for p in range(2, 3 * q + 3):
                 if gcd(p, q) != 1:
@@ -255,6 +261,15 @@ class TestSimpleQuotientKoszulness(unittest.TestCase):
                 analysis = admissible_bar_analysis_sl2(p, q)
                 self.assertIsNot(analysis.is_quotient_koszul, False,
                                  f"Unexpected Koszul failure at (p,q)=({p},{q})")
+
+    def test_scope_report_requires_quotient_bar_comparison(self):
+        """Scope report defines L_k and blocks automatic universal descent."""
+        scope = admissible_quotient_scope_sl2(3, 2)
+        self.assertEqual(scope['simple_quotient'], 'L_k(sl_2)=V_k(sl_2)/N_k')
+        self.assertFalse(scope['generic_universal_theorem_descends'])
+        self.assertEqual(scope['quotient_bar_comparison_status'], 'required')
+        self.assertIsNone(scope['is_quotient_koszul'])
+        self.assertIn('universal PBW/Koszulness of V_k', scope['non_proofs'])
 
 
 # =========================================================================
@@ -278,15 +293,14 @@ class TestNullVectorBarEffect(unittest.TestCase):
             self.assertEqual(eff.h_null, expected_h,
                              f"h_null wrong at (p,q)=({p},{q})")
 
-    def test_high_null_no_new_cycles(self):
-        """Null at h >= 4 cannot create new bar cycles."""
+    def test_high_null_new_cycles_undetermined(self):
+        """Null at h >= 4 still needs quotient-created defect control."""
         for p, q in [(3, 2), (5, 3), (7, 2), (7, 4)]:
             if gcd(p, q) != 1:
                 continue
             eff = null_vector_bar_effect_sl2(p, q)
             if eff.h_null >= 4:
-                self.assertFalse(eff.creates_new_cycles,
-                                 f"Should be False at h_null={eff.h_null}")
+                self.assertIsNone(eff.creates_new_cycles)
 
     def test_all_bar_relevant(self):
         """All admissible levels with p >= 2 have bar-relevant nulls."""
@@ -650,11 +664,12 @@ class TestSl3Admissible(unittest.TestCase):
             self.assertEqual(result['ce_dims'][d], C(8, d))
 
     def test_high_null_above_bar(self):
-        """sl_3 at k = -5/3 (p=4, q=3): h_null = 9 > 8, above bar range."""
+        """sl_3 high-null case is finite-window evidence only."""
         result = admissible_bar_analysis_sl3(4, 3)
         self.assertEqual(result['h_null_estimate'], 9)
         self.assertFalse(result['bar_relevant_null'])
-        self.assertTrue(result['is_quotient_koszul'])
+        self.assertIsNone(result['is_quotient_koszul'])
+        self.assertEqual(result['quotient_bar_comparison_status'], 'required')
 
     def test_low_null_in_bar(self):
         """sl_3 at k=1 (p=4, q=1): h_null=3, bar relevant (3 <= 8)."""
@@ -799,9 +814,11 @@ class TestMasterAnalysis(unittest.TestCase):
         self.assertTrue(result['all_universal_koszul'])
 
     def test_master_no_failure(self):
-        """No Koszul failure found."""
+        """No quotient Koszul failure found; comparison remains required."""
         result = master_admissible_analysis(max_q=4, max_k_abs=3.0)
         self.assertFalse(result['any_quotient_failure'])
+        self.assertEqual(result['quotient_bar_comparison_status'], 'required')
+        self.assertFalse(result['generic_universal_theorem_descends'])
 
     def test_master_kappa_agree(self):
         """All kappa multi-path checks agree."""
@@ -832,25 +849,25 @@ class TestSpecificLevels(unittest.TestCase):
     """Detailed verification at specific well-understood levels."""
 
     def test_k0_trivial(self):
-        """k=0 (p=2, q=1): L_0(sl_2) = C, trivially Koszul."""
+        """k=0 scalar data: quotient Koszulness not inferred here."""
         analysis = admissible_bar_analysis_sl2(2, 1)
         self.assertEqual(analysis.k, Fraction(0))
         self.assertEqual(analysis.c, Fraction(0))
-        self.assertTrue(analysis.is_quotient_koszul)
+        self.assertIsNone(analysis.is_quotient_koszul)
 
     def test_k1_su2_level1(self):
-        """k=1 (p=3, q=1): SU(2)_1 WZW, 2 modules, Koszul."""
+        """k=1 SU(2)_1 data: quotient Koszulness remains conditional/open."""
         analysis = admissible_bar_analysis_sl2(3, 1)
         self.assertEqual(analysis.k, Fraction(1))
         self.assertEqual(analysis.c, Fraction(1))
-        self.assertTrue(analysis.is_quotient_koszul)
+        self.assertIsNone(analysis.is_quotient_koszul)
         self.assertEqual(analysis.n_admissible_modules, 2)
 
     def test_k2_su2_level2(self):
-        """k=2 (p=4, q=1): SU(2)_2 WZW, 3 modules, Koszul."""
+        """k=2 SU(2)_2 data: quotient Koszulness remains conditional/open."""
         analysis = admissible_bar_analysis_sl2(4, 1)
         self.assertEqual(analysis.k, Fraction(2))
-        self.assertTrue(analysis.is_quotient_koszul)
+        self.assertIsNone(analysis.is_quotient_koszul)
         self.assertEqual(analysis.n_admissible_modules, 3)
 
     def test_k_minus_half_m25(self):
@@ -859,7 +876,7 @@ class TestSpecificLevels(unittest.TestCase):
         self.assertEqual(analysis.k, Fraction(-1, 2))
         self.assertEqual(analysis.c, Fraction(-1))
         self.assertEqual(analysis.h_null, 4)
-        self.assertTrue(analysis.is_quotient_koszul)
+        self.assertIsNone(analysis.is_quotient_koszul)
         # kappa = 3*3/(4*2) = 9/8
         self.assertEqual(analysis.kappa_km, Fraction(9, 8))
 
@@ -869,7 +886,7 @@ class TestSpecificLevels(unittest.TestCase):
         self.assertEqual(analysis.k, Fraction(-4, 3))
         self.assertEqual(analysis.c, Fraction(-6))
         self.assertEqual(analysis.h_null, 3)
-        self.assertTrue(analysis.is_quotient_koszul)
+        self.assertIsNone(analysis.is_quotient_koszul)
 
     def test_kappa_additivity_check(self):
         """kappa at different levels follows 3p/(4q)."""
@@ -895,27 +912,27 @@ class TestBoundaryCases(unittest.TestCase):
     """Boundary cases where h_null is small."""
 
     def test_h_null_equals_3(self):
-        """All levels with h_null = 3 are Koszul."""
+        """All levels with h_null = 3 need quotient bar comparison."""
         # h_null = 3 when (p-1)*q = 3
         # Solutions: (p,q) = (4,1), (2,3)
         for p, q in [(4, 1), (2, 3)]:
             analysis = admissible_bar_analysis_sl2(p, q)
             self.assertEqual(analysis.h_null, 3)
-            self.assertTrue(analysis.is_quotient_koszul)
+            self.assertIsNone(analysis.is_quotient_koszul)
 
     def test_h_null_equals_2(self):
-        """All levels with h_null = 2 are Koszul (integrable only)."""
+        """h_null = 2 remains conditional/open on this quotient surface."""
         # h_null = 2 when (p-1)*q = 2
         # Solutions: (p,q) = (3,1) -> k=1 (integrable)
         analysis = admissible_bar_analysis_sl2(3, 1)
         self.assertEqual(analysis.h_null, 2)
-        self.assertTrue(analysis.is_quotient_koszul)
+        self.assertIsNone(analysis.is_quotient_koszul)
 
     def test_h_null_equals_1(self):
-        """h_null = 1 at k=0 (p=2, q=1): still Koszul."""
+        """h_null = 1 at k=0 is still fenced by quotient comparison."""
         analysis = admissible_bar_analysis_sl2(2, 1)
         self.assertEqual(analysis.h_null, 1)
-        self.assertTrue(analysis.is_quotient_koszul)
+        self.assertIsNone(analysis.is_quotient_koszul)
 
 
 # =========================================================================

@@ -514,7 +514,7 @@ class TestStokesDiagnostics:
         kernels = firewall['kernel_constants']
         assert kernels['affine_collision_trace_form'] == 'r^{KM}(z) = k*Omega_tr/z'
         assert kernels['affine_kz_normalization'] == 'r_KZ(z) = Omega/((k+h^vee)z)'
-        assert kernels['heisenberg_collision'] == 'r^{Heis}(z) = k/z'
+        assert kernels['heisenberg_collision'] == 'r^{Heis}(z) = k*Omega_H/z (coeff k/z)'
         assert kernels['virasoro_collision'] == 'r^{Vir}(z) = (c/2)/z^3 + 2T/z'
 
     def test_certification_profile_blocks_promotion(self):

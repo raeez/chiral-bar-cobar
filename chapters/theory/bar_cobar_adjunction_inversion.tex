@@ -691,7 +691,7 @@ Expanding via~\eqref{eq:cdg-hom-differential} gives~\eqref{eq:contracting-homoto
 \subsection{The correspondence functors}
 \label{subsec:chiral-correspondence-functors}
 
-\begin{definition}[Functors \texorpdfstring{$\Phi_C^{\mathrm{ch}}$}{Phi_C^ch} and \texorpdfstring{$\Psi_C^{\mathrm{ch}}$}{Psi_C^ch}]
+\begin{definition}[Functors \texorpdfstring{$\Phi_C^{\mathrm{ch}}$}{Phi_C^ch} and \texorpdfstring{$\Psi_C^{\mathrm{ch}}$}{Psi_C^ch}; \ClaimStatusDefinitional]
 \label{def:chiral-Phi-Psi}
 \index{Positselski!functors PhiPsi@$\Phi_C$, $\Psi_C$}
 Let $(C, d, h)$ be a chiral CDG-coalgebra.
@@ -1311,9 +1311,17 @@ finite-dimensional strong generators inhabit this class.
 $\bar B_X(A)$ has $\dim \bar B^1_X(A) = \infty$ \textup{(}for
 $\mathrm{Vir}_c$, the space
 $\mathbb{C}\{T, \partial T, \partial^2 T, \ldots\}$ is the
-obstruction; Example~\ref{ex:vir-bar-completion} records the
-concrete witness\textup{)}, so the direct-sum bar differential fails
-the Mittag-Leffler condition on the bar-degree filtration and no
+first obstruction; the finite-mode family
+\[
+\xi_N=\sum_{\lvert k\rvert\leq N}
+s^{-1}L_{-k}\otimes s^{-1}L_k
+\]
+records the direct-sum failure: each $\xi_N$ is finite, but the
+coordinatewise limit has one nonzero coordinate for every Virasoro
+mode and therefore lives only in the weight-completed product
+ambient; Example~\ref{ex:virasoro-not-conilpotent} is the local
+model\textup{)}, so the direct-sum bar differential fails the
+Mittag-Leffler condition on the bar-degree filtration and no
 chain-level contracting homotopy exists in raw
 $\mathrm{Ch}(\mathrm{Vect})$. The chain-level qi lives on the
 weight-completed bar complex
@@ -1429,7 +1437,7 @@ $B\mapsto\varprojlim_N B/F^{N+1}$; on the finite-window essential
 image of Definition~\ref{def:finite-window-essential-image-bci}, this
 functor preserves the bar-cobar unit and counit.
 
-\begin{definition}[Finite-window bar-cobar essential image]
+\begin{definition}[Finite-window bar-cobar essential image; \ClaimStatusDefinitional]
 \label{def:finite-window-essential-image-bci}
 \index{finite-window essential image}
 \index{bar-cobar inversion!finite-window essential image}
@@ -1765,18 +1773,43 @@ where $\Omega_X^{\mathrm{cont}}=\Omega_X$ on the raw surface and denotes
 the continuous completed cobar functor on the pro-conilpotent surface.
 Its strongest proved form is:
 \begin{enumerate}
-\item \emph{Strict Koszul surface.}
- If $\mathcal{A}$ is Koszul
- \textup{(}Definition~\ref{def:koszul-chiral-algebra}; equivalently,
- $\cA \in \operatorname{Kosz}(X)$\textup{)}, then the genus-$0$
-	 counit in the chosen ambient
+\item \emph{Strict genus-\(0\) FTM surface.}
+ For the genus-\(0\) chiral twisting datum
+ \[
+ (\mathcal A,C_{\mathcal A,0},\tau_{\mathcal A,0},F_\bullet),
+ \]
+ the following four conditions are equivalent:
+ \begin{enumerate}[label=\textup{(\alph*)}]
+ \item \(\tau_{\mathcal A,0}\) is a chiral Koszul morphism
+  \textup{(}Definition~\ref{def:chiral-koszul-morphism}\textup{)};
+ \item the genus-\(0\) counit in the chosen ambient
 	 \[
 	 \psi_0 \colon
 	 \Omega^{\mathrm{cont}}_0(C_{\mathcal A,0})
 	 \longrightarrow \mathcal{A}
 	 \]
- is a quasi-isomorphism of chiral algebras.
- If, in addition, $\mathcal{A}$ lies on the higher-genus Koszul locus
+ is a quasi-isomorphism of chiral algebras;
+ \item the genus-\(0\) unit
+ \[
+ \eta_0\colon C_{\mathcal A,0}
+ \longrightarrow \bar B^{\mathrm{ch}}_0(\mathcal A)
+ \]
+ is a weak equivalence of conilpotent complete factorization
+ coalgebras;
+ \item the twisted tensor products
+ \(K_{\tau_{\mathcal A,0}}^L(\mathcal A,C_{\mathcal A,0})\)
+ and
+ \(K_{\tau_{\mathcal A,0}}^R(C_{\mathcal A,0},\mathcal A)\)
+ are acyclic.
+ \end{enumerate}
+ Thus \(\mathcal A \in \operatorname{Kosz}(X)\)
+ \textup{(}Definition~\ref{def:koszul-chiral-algebra}\textup{)}
+ is the algebra-level name for condition~\textup{(b)} on the raw
+ genus-\(0\) bar surface, while the theorem records the equivalent
+ twisting-morphism, unit, and twisted-tensor formulations as the
+ non-tautological FTM package.
+ If these genus-\(0\) equivalent conditions hold and, in addition,
+ $\mathcal{A}$ lies on the higher-genus Koszul locus
  of Theorem~\ref{thm:higher-genus-inversion}
  \textup{(}for the standard landscape, by
  Theorems~\ref{thm:pbw-allgenera-km}--\ref{thm:pbw-allgenera-principal-w}\textup{)},
@@ -1859,14 +1892,21 @@ the extra input needed to recover an ordinary quasi-isomorphism there.
 We verify each numbered clause by previously established results in
 this chapter and in the coderived appendix.
 \begin{enumerate}[label=(D\arabic*)]
-\item \emph{Strict Koszul surface.}
-The genus-$0$ quasi-isomorphism is proved independently by
+\item \emph{Strict genus-\(0\) FTM surface.}
+Apply the fundamental theorem of chiral twisting morphisms
+\textup{(}Theorem~\ref{thm:fundamental-twisting-morphisms}\textup{)}
+to the genus-\(0\) twisting datum
+\((\mathcal A,C_{\mathcal A,0},\tau_{\mathcal A,0},F_\bullet)\).
+The theorem gives the equivalence of the four displayed conditions:
+\ref{ftm:koszul} is condition~\textup{(a)},
+\ref{ftm:counit} is condition~\textup{(b)},
+\ref{ftm:unit} is condition~\textup{(c)}, and
+\ref{ftm:acyclic} is condition~\textup{(d)}. In particular, the
+genus-\(0\) counit quasi-isomorphism is not proved by reusing
+Definition~\ref{def:koszul-chiral-algebra}; it is one face of the
+FTM equivalence package. The strict standard examples are checked by
 Theorem~\ref{thm:bar-nilpotency-complete} and
-Theorem~\ref{thm:chiral-koszul-duality};
-equivalently, it is the implication
-\ref{ftm:koszul}$\Rightarrow$\ref{ftm:counit} of
-the fundamental theorem of chiral twisting morphisms
-(Theorem~\ref{thm:fundamental-twisting-morphisms}).
+Theorem~\ref{thm:chiral-koszul-duality}.
 Under the higher-genus hypotheses of
 Theorem~\ref{thm:higher-genus-inversion}, the genus-$g$ components
 $\psi_g$ for $g \geq 1$ are quasi-isomorphisms by induction on genus,
@@ -2102,7 +2142,12 @@ higher-genus coderived continuation of the same bar-cobar comparison.
  \]
  is a quasi-isomorphism at genus~$0$
  \textup{(}Definition~\ref{def:koszul-locus},
- Remark~\ref{rem:equivalent-formulations-koszul}\textup{)}.
+ Remark~\ref{rem:equivalent-formulations-koszul}\textup{)}. On a
+ chosen chiral twisting datum this is one member of the four-way FTM
+ package of
+ Theorem~\ref{thm:fundamental-twisting-morphisms}: chiral Koszul
+ morphism, counit quasi-isomorphism, unit weak equivalence, and
+ acyclicity of the two twisted tensor products.
  Equivalently, the PBW/bar spectral sequence collapses at~$E_2$; and
  equivalently, $H^*(\barB_X(\cA))$ is concentrated on the Koszul
  diagonal
@@ -2267,8 +2312,10 @@ an input to the definition it appears to verify.
 \begin{remark}[Higher-genus conditionality on MK3]
 \label{rem:higher-genus-mk3-conditionality}
 At genus~$0$, Theorem~\ref{thm:bar-cobar-inversion-qi} is
-unconditional: it follows from genus-$0$ Koszulity
-(axiom~\ref{MK:koszul}) alone, via the fundamental theorem of
+the four-way FTM package attached to genus-$0$ Koszulity
+(axiom~\ref{MK:koszul}): chiral Koszul morphism, counit
+quasi-isomorphism, unit weak equivalence, and acyclicity of the two
+twisted tensor products are equivalent by the fundamental theorem of
 chiral twisting morphisms
 (Theorem~\ref{thm:fundamental-twisting-morphisms}).
 At genus~$g \geq 1$, the proof of clause~(2) invokes
@@ -2946,8 +2993,9 @@ of this condition (descent, factorization homology, FM boundary
 acyclicity, $\mathcal{D}$-module purity, Lagrangian geometry):
 three are proved equivalent to Koszulness
 (Theorem~\ref{thm:koszul-equivalences-meta}),
-one is conditional on perfectness, and one ($\mathcal{D}$-module
-purity) remains partially proved (forward direction only).
+one is conditional on the shifted-symplectic hypothesis package, and
+one ($\mathcal{D}$-module purity) remains partially proved
+(forward direction only).
 Their common theme is that Koszulness is a
 \emph{finiteness and regularity} condition: the bar complex has
 the simplest possible behavior.
@@ -3246,8 +3294,8 @@ filtrations.
 
 \subsubsection{Lagrangian criterion in the shifted-symplectic deformation space}
 
-Ambient complementarity
-(Conjecture~\ref{conj:ambient-complementarity},
+The ambient complementarity criterion
+(Theorem~\ref{conj:ambient-complementarity};
 Theorem~\ref{thm:ambient-complementarity-fmp}) equips the modular
 deformation space with a $(-1)$-shifted symplectic structure.
 Koszulness is conjectural Lagrangian transversality.
@@ -3319,18 +3367,18 @@ ordinary twisted tensor product.
 
 \begin{remark}[Conditional hypotheses and their verification]
 \label{rem:lagrangian-conditional}
-Conjecture~\ref{conj:lagrangian-koszulness} is conditional on three
-sub-hypotheses of ambient complementarity: perfectness of
-the deformation complex, non-degeneracy of the shifted-symplectic
-pairing, and finiteness of the modular envelope. The tangent-level
-Lagrangian structure
+Conjecture~\ref{conj:lagrangian-koszulness} is conditional on the
+shifted-symplectic hypothesis package: perfectness of the deformation
+complex, non-degeneracy of the shifted-symplectic pairing, finiteness
+of the modular envelope, the cyclic/BV compatibility inputs, and the
+bar-chart acyclicity inputs. The tangent-level
+shifted-symplectic structure
 (Theorem~\ref{thm:ambient-complementarity-fmp}) is proved
-unconditionally at the ambient cyclic-deformation level; the characterization of Koszulness as Lagrangian
+at the ambient cyclic-deformation level; the characterization of Koszulness as Lagrangian
 transversality then follows from the PTVV derived-intersection
-computation (Remark~\ref{rem:lagrangian-ptvv}) once the three
-sub-hypotheses are proved. Global Lagrangian at the tangent level and
-globally Lagrangian are equivalent when the derived intersection is
-discrete.
+computation (Remark~\ref{rem:lagrangian-ptvv}) only after that package
+is supplied. Global Lagrangian at the tangent level and globally
+Lagrangian are equivalent when the derived intersection is discrete.
 
 \emph{Verification for the standard landscape.}
 Proposition~\ref{prop:lagrangian-perfectness} verifies
@@ -3353,13 +3401,16 @@ is automatically a quasi-isomorphism), hence the pairing is
 perfect.
 Once perfectness holds, the PTVV principle gives
 $\cM_{\mathrm{comp}}$ its $(-1)$-shifted symplectic structure;
-finiteness of the modular envelope is immediate from~(P1).
-Corollary~\ref{cor:lagrangian-unconditional} upgrades the
-Lagrangian criterion to an unconditional equivalence for the
+finiteness of the modular envelope is immediate from~(P1). The
+remaining cyclic/BV compatibility and bar-chart acyclicity inputs are
+not consequences of perfectness.
+Corollary~\ref{cor:lagrangian-conditional-standard-landscape}
+therefore records the conditional Lagrangian upgrade on the
 standard-landscape Koszul cases covered by
-Theorem~\ref{thm:bar-cobar-inversion-qi}. The filtered-complete
-off-locus regime remains on the intrinsic coderived/contraderived
-bar-coalgebra surface of
+Theorem~\ref{thm:bar-cobar-inversion-qi} once the full
+shifted-symplectic hypothesis package is supplied. The
+filtered-complete off-locus regime remains on the intrinsic
+coderived/contraderived bar-coalgebra surface of
 Theorem~\ref{thm:positselski-chiral-proved} and is not part of
 that upgrade.
 \end{remark}
@@ -3499,30 +3550,34 @@ $\omega$ is perfect at each~$n$, so the pro-complete
 pairing on~$\fg = \varprojlim_n \fg/F_n$ is perfect.
 \end{proof}
 
-\begin{corollary}[Lagrangian criterion for the
+\begin{corollary}[Conditional Lagrangian criterion for the
 standard landscape]
-\label{cor:lagrangian-unconditional}
+\label{cor:lagrangian-conditional-standard-landscape}
 \ClaimStatusConditional
-\index{Koszulness!Lagrangian criterion unconditional}
-\index{Lagrangian!unconditional equivalence}
-Under hypotheses \textup{(P1)--(P3)}, and on the Koszul locus to
+\index{Koszulness!Lagrangian criterion conditional}
+\index{Lagrangian!conditional equivalence}
+Under hypotheses \textup{(P1)--(P3)}, the remaining inputs of the
+shifted-symplectic hypothesis package, and on the Koszul locus to
 which Theorems~\ref{thm:koszul-reflection} and
 \ref{thm:higher-genus-inversion} apply, the Lagrangian criterion
 \textup{(}item~\textup{(xi)} of the meta-theorem,
 Theorem~\textup{\ref{thm:koszul-equivalences-meta})} is an
-unconditional equivalence: $\cA$ is chirally Koszul if and only if
+equivalence: $\cA$ is chirally Koszul if and only if
 $\mathcal{M}_\cA$ and $\mathcal{M}_{\cA^!}$ are transverse
 Lagrangians in the $(-1)$-shifted symplectic deformation
 space~$\mathcal{M}_{\mathrm{comp}}$.
 
-In particular, this applies unconditionally to every algebra in the
-standard landscape at the non-critical, non-degenerate levels for
-which Theorems~\ref{thm:koszul-reflection} and
+In particular, Proposition~\ref{prop:lagrangian-perfectness} supplies
+the perfectness part of the package for algebras in the standard
+landscape at the non-critical, non-degenerate levels for which
+Theorems~\ref{thm:koszul-reflection} and
 \ref{thm:higher-genus-inversion} apply:
 Heisenberg at $k \neq 0$, affine Kac--Moody $V_k(\fg)$ at
 $k \neq -h^\vee$, Virasoro at generic~$c$, principal
-$\mathcal{W}$-algebras at non-critical level, and all free-field
-families $bc$, $\beta\gamma$.
+$\mathcal{W}$-algebras at non-critical level, and the free-field
+families $bc$, $\beta\gamma$. The C2 Lagrangian conclusion still
+requires the remaining cyclic/BV compatibility and bar-chart
+acyclicity inputs.
 \end{corollary}
 
 \begin{proof}
@@ -3677,8 +3732,9 @@ The following conditions are related as indicated
  Lagrangians in $\mathcal{M}_{\mathrm{comp}}$
  \textup{(Conjecture~\ref{conj:lagrangian-koszulness};
  meta-theorem item~(xi);
- conditional on perfectness, unconditional for the standard
- landscape by Corollary~\ref{cor:lagrangian-unconditional})}.
+ conditional on the shifted-symplectic hypothesis package;
+ Proposition~\ref{prop:lagrangian-perfectness} supplies the
+ perfectness input on the standard landscape)}.
 \end{enumerate}
 The algebraic, descent-theoretic, and FM-boundary criteria are proved
 equivalent on their stated surfaces
@@ -3688,8 +3744,9 @@ criterion is the conditional comparison of
 Theorem~\ref{thm:fh-concentration-koszulness}; it is not a definition
 of Koszulness outside those hypotheses.
 The implication (e)$\Rightarrow$(d) is proved; the converse is open.
-Item~(f) is conditional on perfectness (proved unconditionally for the
-standard landscape, Corollary~\ref{cor:lagrangian-unconditional}).
+Item~(f) is conditional on the shifted-symplectic hypothesis package;
+Proposition~\ref{prop:lagrangian-perfectness} verifies only its
+perfectness input on the standard landscape.
 The full equivalence of all six would parallel the classical theorem
 that Koszulness, purity, formality, and derived equivalence coincide
 for graded algebras arising from geometry~\cite{BGS96}.
@@ -6862,7 +6919,7 @@ natural on first encounter:
 The geometric lift is not an automatic consequence of the
 discriminant. It is extra data.
 
-\begin{definition}[Geometric divisor-core lift datum]
+\begin{definition}[Geometric divisor-core lift datum; \ClaimStatusDefinitional]
 \label{def:geometric-divisor-core-lift-datum-inv}
 \index{geometric divisor-core lift}
 Let $\cA$ satisfy

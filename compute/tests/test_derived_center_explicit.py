@@ -81,7 +81,7 @@ class TestOpenClosedFirewall:
             "Verdier/linear duality",
             "Omega(B(A)) = A is bar-cobar inversion",
             "derived center Z^der_ch(A) is NOT the bar complex",
-            "Bar/cobar = twisting morphisms; derived center = bulk operators",
+            "Bar/cobar = twisting morphisms; derived center = closed-sector operators",
             "Hochschild cochains",
         )
         for phrase in required:
@@ -504,8 +504,9 @@ class TestOpenClosedMC:
         assert mc_heis.theta_oc(1, 2) == Fraction(1)
 
     def test_theta_genus2_n0(self, mc_heis):
-        """F_2 = kappa/1152."""
-        assert mc_heis.theta_oc(2, 0) == Fraction(1, 1152)
+        """F_2 = kappa * lambda_2^FP = 7/5760, not kappa/1152."""
+        assert mc_heis.theta_oc(2, 0) == Fraction(7, 5760)
+        assert mc_heis.theta_oc(2, 0) != Fraction(1, 1152)
 
     def test_theta_genus0_unstable_vanishes(self, mc_heis):
         """Unstable curves (g=0, n <= 2)."""

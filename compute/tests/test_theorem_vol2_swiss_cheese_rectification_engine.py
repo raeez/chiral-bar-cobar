@@ -606,7 +606,7 @@ class TestHeisenbergGenus1:
 # ============================================================================
 
 class TestBulkIdentification:
-    """The bulk is the derived center, distinct from the bar complex."""
+    """The closed-sector model is the derived center, distinct from the bar complex."""
 
     def test_ap_oc(self):
         result = verify_bulk_identification()

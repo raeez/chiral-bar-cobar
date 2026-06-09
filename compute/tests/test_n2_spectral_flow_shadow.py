@@ -32,6 +32,9 @@ from compute.lib.n2_spectral_flow_shadow import (
     # Shadow orbit
     spectral_flow_shadow_orbit,
     spectral_flow_orbit_explicit,
+    n2_scope_report,
+    N2_KOSZUL_HYPOTHESES,
+    N2_G_LINE_MISSING,
     # Fixed-point locus
     spectral_flow_fixed_point_locus,
     # Elliptic genus
@@ -203,14 +206,16 @@ class TestShadowInvariance:
         assert simplify(orbit['total_kappa'] - Rational(-1, 4)) == 0
 
     def test_orbit_explicit_all_theta_same_c3(self):
-        """All spectral flow levels give identical shadow data at c=3."""
+        """All spectral flow levels give identical channel data at c=3."""
         orbit = spectral_flow_orbit_explicit(3, max_theta=4)
         ref = orbit[0]
+        assert ref['kappa_total'] is None
         for th in range(1, 5):
             assert orbit[th]['kappa_T'] == ref['kappa_T']
             assert orbit[th]['kappa_J'] == ref['kappa_J']
             assert orbit[th]['kappa_G'] == ref['kappa_G']
-            assert simplify(orbit[th]['kappa_total'] - ref['kappa_total']) == 0
+            assert orbit[th]['kappa_total'] is None
+            assert orbit[th]['channel_curvature_sum'] == ref['channel_curvature_sum']
 
     def test_orbit_explicit_all_theta_same_c1(self):
         orbit = spectral_flow_orbit_explicit(1, max_theta=3)
@@ -256,7 +261,8 @@ class TestFixedPointLocus:
 
     def test_koszul_self_dual_negative(self):
         fp = spectral_flow_fixed_point_locus()
-        assert fp['koszul_self_dual']['positive'] == 3
+        assert fp['koszul_self_dual']['attained_finite_level'] is False
+        assert fp['no_negative_self_dual_branch']
 
     def test_kappa_sum_invariant(self):
         """kappa(c) + kappa(6-c) = 1 for all c (constant, additive)."""
@@ -311,6 +317,33 @@ class TestThreeMethodConsistency:
 
     def test_method_C_formula(self):
         assert simplify(kappa_method_C_spectral_flow() - (6 - c) / (2 * (3 - c))) == 0
+
+
+# =========================================================================
+# 5b. N=2 scope report
+# =========================================================================
+
+class TestN2ScopeReport:
+    """Tests for theorem-scope reporting on the N=2 SCA lane."""
+
+    def test_scope_report_marks_koszul_conditional(self):
+        report = n2_scope_report(1)
+        assert report['koszul_claim_status'] == 'conditional'
+        assert report['koszul_claim_requires_theorem']
+        assert report['koszul_hypotheses'] == N2_KOSZUL_HYPOTHESES
+        assert report['G_line_missing'] == N2_G_LINE_MISSING
+
+    def test_scope_report_separates_channel_sum(self):
+        report = n2_scope_report(1)
+        assert report['kappa'] == Rational(5, 4)
+        assert report['channel_curvature_sum'] == Rational(7, 6)
+        assert not report['channel_curvature_sum_is_total_kappa']
+
+    def test_scope_report_c3_pole(self):
+        report = n2_scope_report(3)
+        assert not report['kappa_defined']
+        assert report['kappa'] is None
+        assert report['kappa_pole'] == 3
 
 
 # =========================================================================
@@ -557,11 +590,12 @@ class TestEllipticGenus:
 
     def test_F1_at_c1(self):
         ej = elliptic_genus_jacobi_property(1)
-        assert ej['F_1'] == Rational(7, 144)
+        assert ej['F_1'] == Rational(5, 96)
 
     def test_F1_at_c3(self):
         ej = elliptic_genus_jacobi_property(3)
-        assert ej['F_1'] == Rational(7, 48)
+        assert not ej['F_1_defined']
+        assert ej['F_1'] is None
 
 
 # =========================================================================
@@ -580,13 +614,14 @@ class TestS4Constraint:
         assert result['S4'] == Rational(10, 111)
 
     def test_S4_koszul_self_dual_at_c3(self):
-        """At c=3 (Koszul self-dual): S4(3) = S4(9/3) = S4(3)."""
+        """At c=3 (Koszul self-dual): S4(3) = S4(6-3) = S4(3)."""
         result = S4_spectral_flow_constraint(3)
         assert result['S4_equals_S4_dual']
 
     def test_S4_not_koszul_invariant_c1(self):
-        """S4(1) != S4(9): not Koszul-invariant at c=1."""
+        """S4(1) != S4(5): not Koszul-invariant at c=1."""
         result = S4_spectral_flow_constraint(1)
+        assert result['c_dual'] == 5
         assert not result['S4_equals_S4_dual']
 
 
@@ -599,21 +634,21 @@ class TestGenus1:
 
     def test_F1_c1(self):
         g1 = genus1_spectral_flow_check(1)
-        assert g1['F_1'] == Rational(7, 144)
+        assert g1['F_1'] == Rational(5, 96)
         assert g1['sf_invariant']
 
     def test_F1_c3(self):
         g1 = genus1_spectral_flow_check(3)
-        assert g1['F_1'] == Rational(7, 48)
+        assert not g1['F_1_defined']
+        assert g1['F_1'] is None
 
     def test_F1_c6(self):
         g1 = genus1_spectral_flow_check(6)
-        assert g1['F_1'] == Rational(7, 24)
+        assert g1['F_1'] == 0
 
     def test_F1_c9(self):
         g1 = genus1_spectral_flow_check(9)
-        assert g1['F_1'] == Rational(21, 48)
-        # = 7/16
+        assert g1['F_1'] == Rational(1, 96)
 
 
 # =========================================================================
@@ -701,7 +736,7 @@ class TestMinimalModelLandscape:
     def test_landscape_kappa_formula(self):
         landscape = n2_minimal_model_landscape(8)
         for entry in landscape:
-            expected = 7 * entry['c'] / 6
+            expected = (6 - entry['c']) / (2 * (3 - entry['c']))
             assert simplify(entry['kappa'] - expected) == 0
 
     def test_landscape_all_class_M(self):
@@ -730,22 +765,26 @@ class TestSpecificOrbits:
     def test_c3_kappa_total(self):
         orbit = spectral_flow_orbit_at_c3()
         for th, data in orbit.items():
-            assert data['kappa_total'] == Rational(7, 2)
+            assert data['kappa_total'] is None
+            assert data['channel_curvature_sum'] == Rational(7, 2)
 
     def test_c6_kappa_total(self):
         orbit = spectral_flow_orbit_at_c6()
         for th, data in orbit.items():
-            assert data['kappa_total'] == 7
+            assert data['kappa_total'] == 0
+            assert data['channel_curvature_sum'] == 7
 
     def test_c9_kappa_total(self):
         orbit = spectral_flow_orbit_at_c9()
         for th, data in orbit.items():
-            assert simplify(data['kappa_total'] - Rational(21, 2)) == 0
+            assert simplify(data['kappa_total'] - Rational(1, 4)) == 0
+            assert data['channel_curvature_sum'] == Rational(21, 2)
 
     def test_c3_self_dual(self):
-        """c=3 is Koszul self-dual (c' = 9/c = 3)."""
+        """c=3 is Koszul self-dual for c' = 6-c, with kappa undefined."""
         orbit = spectral_flow_orbit_at_c3()
         assert orbit[0]['kappa_T'] == Rational(3, 2)
+        assert orbit[0]['kappa_total'] is None
 
     def test_c6_kappa_T(self):
         orbit = spectral_flow_orbit_at_c6()

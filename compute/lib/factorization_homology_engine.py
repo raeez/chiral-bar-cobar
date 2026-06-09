@@ -1032,8 +1032,12 @@ def heisenberg_fh_explicit(k: int, g: int,
 def koszulness_12_criteria_status() -> Dict[str, Dict[str, object]]:
     r"""Status of the 12 Koszulness characterizations (thm:koszul-equivalences-meta).
 
-    Items (i)-(x): 10 unconditional equivalences, all PROVED.
-    Item (xi): Lagrangian criterion — CONDITIONAL on perfectness/nondegeneracy.
+    Exact status split: seven independent bidirectional equivalences;
+    Barr--Beck--Lurie is a listed consequence of the bar-cobar counit;
+    factorization homology is a conditional comparison avatar;
+    ChirHoch concentration is a one-way consequence on the Koszul locus.
+    Item (xi): Lagrangian criterion — CONDITIONAL on the
+    shifted-symplectic hypothesis package.
     Item (xii): D-module purity — ONE-DIRECTIONAL ((x)=>(xii) proved, converse open).
     This function
     reports which ones have independent computational verification in the
@@ -1072,10 +1076,15 @@ def koszulness_12_criteria_status() -> Dict[str, Dict[str, object]]:
         },
         "e2_formality": {
             "label": "prop:e2-formality-hochschild",
-            "proved": True,
+            "proved": "one-way",
             "compute_verified": False,
             "module": None,
-            "description": "E_2-formality of ChirHoch*(A) for Koszul algebras",
+            "condition": (
+                "Koszulness implies ChirHoch concentration/formality on the "
+                "Theorem H surface; the converse to the bar-cobar counit is "
+                "not proved here."
+            ),
+            "description": "One-way ChirHoch consequence on the Koszul locus",
         },
         "curve_independence": {
             "label": "prop:genus0-curve-independence",
@@ -1114,10 +1123,14 @@ def koszulness_12_criteria_status() -> Dict[str, Dict[str, object]]:
         },
         "fh_concentration": {
             "label": "thm:fh-concentration-koszulness",
-            "proved": True,
+            "proved": "conditional",
             "compute_verified": True,
             "module": "factorization_homology_engine.py (this module)",
-            "description": "FH concentrated in degree 0 iff chirally Koszul",
+            "condition": (
+                "Requires prop:bar-fh filtered comparison plus the detection "
+                "hypothesis from FH concentration back to Koszulness."
+            ),
+            "description": "FH concentrated in degree 0 under comparison/detection hypotheses",
         },
         "fm_boundary_acyclicity": {
             "label": "thm:fm-boundary-acyclicity",
@@ -1135,10 +1148,10 @@ def koszulness_12_criteria_status() -> Dict[str, Dict[str, object]]:
         },
         "lagrangian_criterion": {
             "label": "thm:lagrangian-koszulness",
-            "proved": "conditional",  # pending perfectness/nondegeneracy hypotheses
+            "proved": "conditional",  # pending shifted-symplectic package
             "compute_verified": False,
             "module": None,
-            "description": "Lagrangian criterion for Koszulness (conditional on perfectness/nondegeneracy)",
+            "description": "Lagrangian criterion for Koszulness (conditional on shifted-symplectic package)",
         },
     }
 

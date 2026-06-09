@@ -1229,10 +1229,16 @@ class TestBetagamma:
     """Test beta-gamma shadow coefficients (class C)."""
 
     def test_betagamma_kappa(self):
-        """kappa(betagamma, lambda=1) = c/2 = -1."""
+        """kappa(betagamma, lambda=1) = 1."""
         from lib.shadow_euler_product_engine import betagamma_shadow_coefficients
         S = betagamma_shadow_coefficients(1, max_r=10)
-        assert S[2] == Rational(-1)
+        assert S[2] == Rational(1)
+
+    def test_betagamma_symplectic_kappa(self):
+        """kappa(betagamma, lambda=1/2) = -1/2."""
+        from lib.shadow_euler_product_engine import betagamma_shadow_coefficients
+        S = betagamma_shadow_coefficients(Rational(1, 2), max_r=10)
+        assert S[2] == Rational(-1, 2)
 
     def test_betagamma_S3_zero(self):
         """S_3 = 0 for betagamma on primary line."""

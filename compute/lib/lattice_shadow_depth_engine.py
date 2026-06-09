@@ -28,7 +28,7 @@ J^i(z) J^j(w) ~ k delta^{ij}/(z-w)^2 is purely quadratic-pole).  Therefore:
 - Delta = 8 * kappa * S_4 = 0 (finite shadow tower)
 - Koszul complementarity: kappa + kappa' = 0 (lattice/free family)
 
-The r-matrix is r(z) = k/z = n/z (AP126: level prefix mandatory; k=0 -> r=0).
+The r-matrix is r(z) = k*Omega_H/z (rank-one coeff k/z) = n/z (AP126: level prefix mandatory; k=0 -> r=0).
 
 The Type I vs Type II distinction does NOT affect shadow depth (both are
 class G).  It affects the SPECTRUM of vertex operators:
@@ -204,7 +204,7 @@ class LatticeVOAShadowData:
     # G/L/C/M classification
     shadow_class: str     # = "G"
 
-    # r-matrix: r(z) = k/z = rank/z
+    # r-matrix: r(z) = k*Omega_H/z (rank-one coeff k/z) = rank/z
     # AP126: level prefix mandatory. k=0 -> r=0. VERIFIED.
     r_matrix_level: int   # = rank
 
@@ -255,7 +255,7 @@ def compute_shadow_data(lattice: UnimodularLattice) -> LatticeVOAShadowData:
     shadow_class = "G"
 
     # r-matrix level: k = rank
-    # AP126: r(z) = k/z. At k=0: r=0. Verified.
+    # AP126: r(z) = k*Omega_H/z (rank-one coeff k/z). At k=0: r=0. Verified.
     r_matrix_level = n
 
     # Koszul complementarity
@@ -315,9 +315,9 @@ def shadow_tower_terms(data: LatticeVOAShadowData, max_r: int = 10) -> Dict[int,
 # ======================================================================
 
 def r_matrix_at_z(data: LatticeVOAShadowData, z: complex) -> complex:
-    r"""Evaluate the classical r-matrix r(z) = k/z for the lattice VOA.
+    r"""Evaluate the classical r-matrix r(z) = k*Omega_H/z (rank-one coeff k/z) for the lattice VOA.
 
-    AP126: level prefix mandatory. r(z) = k/z with k = rank.
+    AP126: level prefix mandatory. r(z) = k*Omega_H/z (rank-one coeff k/z) with k = rank.
     AP141: k=0 -> r=0 (verified in tests).
 
     Parameters
@@ -330,7 +330,7 @@ def r_matrix_at_z(data: LatticeVOAShadowData, z: complex) -> complex:
     Returns
     -------
     complex
-        r(z) = k/z.
+        r(z) = k*Omega_H/z (rank-one coeff k/z).
     """
     if z == 0:
         raise ValueError("r-matrix has a simple pole at z=0")

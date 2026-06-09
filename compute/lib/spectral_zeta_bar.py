@@ -22,15 +22,18 @@ CHARACTER RELATION:
 where chi_V(q) = sum dim(V_h) q^h is the character of the algebra V, and
 chi_{A!}(q) = sum dim(A!_h) q^h is the Hilbert series of the Koszul dual.
 
-The dimensions dim(A!_h) ARE the bar cohomology:
+The bar-dual dimensions dim(A^i_h) are computed by bar cohomology:
 
-    dim(A!_h) = sum_k (-1)^k dim H^k(B(V))_h
+    dim(A^i_h) = sum_k (-1)^k dim H^k(B(V))_h
 
 (alternating sum of bar cohomology at weight h across all bar degrees).
+After the finite/completed dual branch exists, these numbers equal
+dim(A!_h).
 
 For Koszul algebras (H^* concentrated in bar degree 1), this simplifies to
-dim(A!_h) = dim H^1(B(V))_h.  For Virasoro: A! has 1 generator at each
-of weights 2, 3, 4 (CE cohomology of Vir_-).
+dim(A^i_h) = dim H^1(B(V))_h, matching dim(A!_h) after duality.  For
+Virasoro: A! has 1 generator at each of weights 2, 3, 4 (CE cohomology
+of Vir_-).
 
 From (*), chi_V = 1/chi_{A!}(-q), so the vacuum module character -- and hence
 d(h) = dim V_h - dim V_{h-1} -- is determined by bar cohomology.
@@ -475,9 +478,10 @@ def spectral_zeta_koszul_dual(s, N: int = 200):
     zeta_{A!}(s) = sum_{h>=2} dim(A!)_h * h^{-s}
 
     Unlike the quasi-primary spectral zeta, this uses the Koszul dual
-    dimensions directly.  These are the bar cohomology dimensions
-    (for Koszul algebras: dim(A!)_h = dim H^1(B(V))_h in the ALGEBRAIC
-    sense, i.e., the full algebra dimension not just generators).
+    dimensions directly.  These match the bar-dual cohomology dimensions
+    after the dual branch (for Koszul algebras:
+    dim(A^i)_h = dim H^1(B(V))_h and then dim(A!)_h = dim(A^i)_h in the
+    ALGEBRAIC sense, i.e., the full algebra dimension not just generators).
 
     For Virasoro: dim(A!)_h grows more slowly than d(h) because A! is
     finitely generated (three generators at weights 2, 3, 4) with

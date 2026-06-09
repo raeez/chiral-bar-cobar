@@ -8,8 +8,10 @@ states that chiral Koszulness of A is equivalent to the moduli spaces
 M_A and M_{A!} being transverse Lagrangians in the (-1)-shifted symplectic
 deformation space M_comp.
 
-STATUS: K11 is conditional on perfectness and nondegeneracy of the ambient
-tangent complex.  The manuscript proof of prop:lagrangian-perfectness requires
+STATUS: K11 is conditional on the shifted-symplectic hypothesis package:
+perfectness, nondegeneracy of the ambient tangent complex, cyclic/BV
+compatibility, and bar-chart acyclicity.  The manuscript proof of
+prop:lagrangian-perfectness verifies the perfectness input from
 (P1) finite conformal weight spaces, (P2) a nondegenerate invariant form on A,
 and (P3) the same finite-type/nondegenerate input on A^!.  The relative
 family-level hypotheses of lem:perfectness-criterion still require PBW
@@ -51,7 +53,7 @@ CONVENTIONS (from CLAUDE.md):
 References:
   thm:koszul-equivalences-meta, item (xi) (chiral_koszul_pairs.tex)
   prop:lagrangian-perfectness (bar_cobar_adjunction_inversion.tex)
-  cor:lagrangian-unconditional (bar_cobar_adjunction_inversion.tex)
+  cor:lagrangian-conditional-standard-landscape (bar_cobar_adjunction_inversion.tex)
   thm:quantum-complementarity-main (higher_genus_complementarity.tex)
   thm:ambient-complementarity-fmp (higher_genus_complementarity.tex)
   lem:perfectness-criterion (higher_genus_complementarity.tex)
@@ -1089,11 +1091,14 @@ def k11_conditionality_analysis(family: str) -> Dict:
     K11 requires:
     (1) (-1)-shifted symplectic structure on M_comp (from PTVV)
     (2) M_A and M_{A!} are Lagrangian (from Theorem C)
-    (3) Perfectness of the cyclic pairing (the hypothesis)
+    (3) Perfectness of the cyclic pairing (one hypothesis)
+    (4) The remaining cyclic/BV and bar-chart acyclicity inputs
 
-    Current status: the Lagrangian criterion is conditional on perfectness
-    and nondegeneracy.  For the standard landscape, the manuscript discharges
-    those hypotheses through prop:lagrangian-perfectness under (P1)-(P3).
+    Current status: the Lagrangian criterion is conditional on the
+    shifted-symplectic hypothesis package.  For the standard landscape,
+    the manuscript discharges the perfectness input through
+    prop:lagrangian-perfectness under (P1)-(P3); it does not discharge
+    the full package by scalar or weightwise diagnostics.
 
     Literature contribution:
     - Holstein-Rivera: (P2) gives proper CY on B(A), fiberwise

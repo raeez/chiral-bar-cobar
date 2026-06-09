@@ -300,19 +300,19 @@ def kappa_w3_dual(c: Rational) -> Rational:
 
 
 def kappa_betagamma() -> Rational:
-    """kappa(betagamma) = -1.  Central charge c = -2, so kappa = c/2 = -1.
+    """kappa(betagamma) = 1.  Central charge c = 2, so kappa = c/2 = 1.
 
-    The standard betagamma system at lambda = 1 has c = -2.
+    The standard betagamma system at lambda = 1 has c = 2.
     """
-    return Rational(-1)
+    return Rational(1)
 
 
 def kappa_betagamma_dual() -> Rational:
-    """kappa(bc) = kappa(betagamma^!) = 1.
+    """kappa(bc) = kappa(betagamma^!) = -1.
 
-    Complementarity: kappa + kappa! = -1 + 1 = 0.
+    Complementarity: kappa + kappa! = 1 + (-1) = 0.
     """
-    return Rational(1)
+    return Rational(-1)
 
 
 # =========================================================================
@@ -540,8 +540,8 @@ def identify_betagamma_generators(max_weight: int = 8
 
     Koszul dual: bc ghost system.  kappa(bg) + kappa(bc) = 0.
 
-    For the standard betagamma (lambda = 1): c = -2.
-    kappa(bg) = c/2 = -1.  kappa(bc) = 1.
+    For the standard betagamma (lambda = 1): c = 2.
+    kappa(bg) = c/2 = 1.  kappa(bc) = -1.
 
     Bar cohomology dimensions: h(n) = [x^n] sqrt((1+x)/(1-3x)).
     Values: 2, 4, 10, 26, 70, 192, ...

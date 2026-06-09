@@ -262,7 +262,7 @@ class ShadowTower:
     def summary(self) -> str:
         """Human-readable summary of the tower."""
         lines = [
-            f"Shadow Postnikov Tower: {self.algebra_name}",
+            f"Shadow obstruction tower: {self.algebra_name}",
             f"  Depth class: {self.depth_class}",
             f"  Max arity computed: {self.max_arity}",
             f"  kappa (S_2) = {self.kappa}",
@@ -1445,7 +1445,7 @@ def standard_family_tower(family: str, param, max_r: int = 20) -> ShadowTower:
 
 if __name__ == '__main__':
     print("=" * 72)
-    print("SHADOW POSTNIKOV TOWER — RECURSIVE COMPUTATION")
+    print("SHADOW OBSTRUCTION TOWER — RECURSIVE COMPUTATION")
     print("=" * 72)
 
     # Virasoro at c = 25 (convergent)

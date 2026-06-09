@@ -149,14 +149,14 @@ class TestBershadsky:
             assert st[r]['nonzero'], f"S_{r} is zero at k=1"
 
     def test_bp_koszul_dual_is_self(self):
-        """BP is self-dual since (2,1) is self-transpose."""
+        """The BP branch is self-transpose; same-family duality is theorem-scoped."""
         bp = bershadsky_polyakov_profile()
         assert bp.koszul_dual_partition == (2, 1)
 
     def test_bp_complementarity_sum_constant(self):
         """For self-transpose BP: kappa(k) + kappa(k') = rho*(c+c') = (1/6)*196 = 98/3.
 
-        # AP140: corrected from 1/3; K_BP=196, rho=1/6, so kappa_sum=98/3
+        # AP140: K_BP=196, rho=1/6, so kappa_sum=98/3
         """
         bp = bershadsky_polyakov_profile()
         assert simplify(bp.kappa_complementarity - Rational(98, 3)) == 0

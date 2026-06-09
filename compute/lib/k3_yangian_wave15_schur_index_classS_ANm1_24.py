@@ -78,19 +78,20 @@ For the 4d N=2 SCFT $\mathcal T[A_{N-1}, \Sigma_{0,24}]$ at $N \ge 2$:
                      \oplus A_{N-1}(-1)$
     signature $(N+1, 2)$ (Gritsenko-Nikulin 1998 convention).
 
-(iv) Umbral moonshine labelling (Cheng-Duncan-Harvey 2014, Table 1):
-    $N = 2$: Niemeier root system $24 A_1$, umbral group $M_{24}$;
-    $N = 3$: Niemeier root system $12 A_2$, umbral group $2.M_{12}$;
-    $N = 4$: Niemeier root system $8 A_3$, umbral group
-             $2.\mathrm{AGL}_3(2)$;
-    $N = 5$: Niemeier root system $6 A_4$, umbral group
-             $\mathrm{GL}_2(5) / \pm \mathbb{1}$;
-    $N = 6$: Niemeier root system $6 D_4$, umbral group
-             $3.\mathrm{Sym}_6$ (note: $D_4$, not $A_5$; the $A_5$
-             Niemeier does not exist among the 23 root systems).
-    The systematic labelling $(24/(N-1+1)) \cdot A_{N-1}$ holds for
-    $N \le 5$ with root-system rank $(N-1) \cdot (24/N) = 24 - 24/N$
-    totalling 24 only when $N | 24$.
+  (iv) Umbral moonshine labelling (Cheng-Duncan-Harvey 2014, Table 1):
+      $N = 2$: Niemeier root system $24 A_1$, umbral group $M_{24}$;
+      $N = 3$: Niemeier root system $12 A_2$, umbral group $2.M_{12}$;
+      $N = 4$: Niemeier root system $8 A_3$, umbral group
+               $2.\mathrm{AGL}_3(2)$;
+      $N = 5$: Niemeier root system $6 A_4$, umbral group
+               $\mathrm{GL}_2(5) / \pm \mathbb{1}$;
+      $N = 6$: the pure label $4 A_5$ has rank 20 and is not a
+               Niemeier root system. The class-S fugacity-preserving
+               anchor is $4 A_5 D_4$ with umbral group $\mathrm{Sym}_3$;
+               $6 D_4$ is a separate Coxeter-slot/mock-modular companion
+               with umbral group $3.\mathrm{Sym}_6$.
+      The systematic pure-A labelling $(24/(N-1)) \cdot A_{N-1}$ holds
+      exactly when $(N-1) | 24$.
 
 VERIFICATION PATHS
 ==================
@@ -331,13 +332,12 @@ _UMBRAL_NIEMEIER_TABLE: Dict[int, Dict[str, object]] = {
         "order": 2688},
     5: {"root_system": "6 A_4",  "umbral_group": "GL_2(5)/{+-1}",
         "order": 240},
-    # N = 6 has NO Niemeier root system of the form (24/N) A_{N-1} = 4 A_5,
-    # because no Niemeier lattice realises 4 A_5. The (N, X) assignment
-    # breaks at N = 6; the closest 24-rank Niemeier with A-type roots of
-    # comparable size is 6 D_4. Kept here for reference.
-    6: {"root_system": "6 D_4 (NOT 4 A_5; A_5-Niemeier does not exist)",
-        "umbral_group": "3.Sym_6",
-        "order": 2160},
+    # N = 6 has no pure Niemeier root system 4 A_5: the class-S
+    # A_5-fugacity anchor is 4 A_5 D_4, while 6 D_4 is an independent
+    # Coxeter-slot/mock-modular companion.
+    6: {"root_system": "4 A_5 D_4",
+        "umbral_group": "Sym_3",
+        "order": 6},
 }
 
 
@@ -424,61 +424,51 @@ def niemeier_coxeter_number(name: str) -> int:
     return int(_NIEMEIER_LATTICES_CDH14_TABLE1[name]["coxeter_h"])
 
 
-# Wave 18 Gaiotto DNA: re-anchoring for N = 6. The naive labelling
-# (24/N) A_{N-1} = 4 A_5 FAILS at N = 6 because pure 4 A_5 is not a
-# Niemeier root system (4 * 5 = 20 < 24 rank; the Niemeier hosting
-# A_5 roots is 4 A_5 D_4 with extra D_4 summand, not pure 4 A_5).
-# The CORRECT Wave 18 substitute is 6 D_4 with umbral group
-# 3.Sym_6, because:
-#   (i) 6 D_4 has Coxeter number h(D_4) = 6, matching the N = 6
-#       Coxeter slot;
-#   (ii) the umbral group 3.Sym_6 has a natural Sym_6 action
-#        permuting six D_4 copies, parallel to the Sym_6 action on
-#        six A_4 copies at N = 5;
-#   (iii) Cheng-Duncan-Harvey 2014 Table 1 assigns 3.Sym_6 as the
-#         umbral group of 6 D_4, with mock-modular form H^{(6D_4)}
-#         of weight 1/2, vector-valued, shadow = D_4 theta series.
-# The A_5-fugacity identification must be rederived via the embedding
-# A_5 -> D_4 branching (no canonical embedding; requires
-# su(6) -> so(8) branching, known but non-unique up to triality).
+# Wave 18 Gaiotto DNA: anchor discrimination for N = 6. The naive
+# pure-A labelling (24/(N-1)) A_{N-1} = 4 A_5 FAILS because pure
+# 4 A_5 has rank 20 and is not a Niemeier root system. The class-S
+# A_5-fugacity anchor is 4 A_5 D_4. The Niemeier 6 D_4 remains a valid
+# Coxeter-slot/mock-modular companion: it has h(D_4) = 6 and umbral
+# group 3.Sym_6, but it contains no A_5 root summand.
 
 def umbral_niemeier_corrected(N: int) -> str:
-    r"""Wave 18 corrected umbral Niemeier labelling for
+    r"""Wave 18 corrected class-S umbral Niemeier labelling for
     $\mathcal T[A_{N-1}, \Sigma_{0, 24}]$, returning the Niemeier
     root system attached to the class-$\mathcal S$ family.
 
-    For $N \in \{2, 3, 4, 5\}$ the naive $(24/N) A_{N-1}$ labelling
+    For $N \in \{2, 3, 4, 5\}$ the naive $(24/(N-1)) A_{N-1}$ labelling
     is a valid Niemeier root system and is returned:
         $N = 2$: $24 A_1$
         $N = 3$: $12 A_2$
         $N = 4$: $8 A_3$
         $N = 5$: $6 A_4$
 
-    For $N = 6$ the naive label $4 A_5$ is NOT a Niemeier root system
-    (Niemeier 1973; Conway-Sloane 1988 SPLAG Ch. 16 Table 16.1); the
-    Wave 18 re-anchored label is
-        $N = 6$: $6 D_4$
-    with Coxeter number $h(D_4) = 6$ (matching the slot) and umbral
-    group $3.\mathrm{Sym}_6$ of order $2160$
-    (Cheng-Duncan-Harvey 2014 arXiv:1307.5793 Table 1).
+    For $N = 6$ the naive pure label $4 A_5$ is NOT a Niemeier root
+    system (Niemeier 1973; Conway-Sloane 1988 SPLAG Ch. 16 Table 16.1).
+    The corrected class-S anchor is
+        $N = 6$: $4 A_5 D_4$
+    because it is the unique Coxeter-$6$ Niemeier containing $A_5$
+    summands and therefore preserves the $\mathfrak{su}(6)$ fugacity
+    structure. The separate $6 D_4$ row is retained by
+    ``umbral_niemeier_coxeter_companion``.
     """
     _WAVE18_CORRECTED: Dict[int, str] = {
         2: "24 A_1",
         3: "12 A_2",
         4: "8 A_3",
         5: "6 A_4",
-        6: "6 D_4",
+        6: "4 A_5 D_4",
     }
     if N not in _WAVE18_CORRECTED:
         raise ValueError(
-            f"Wave 18 corrected labelling defined for N in {{2,...,6}};"
-            f" got {N}"
+                 f"Wave 18 corrected labelling defined for N in {{2,...,6}};"
+                 f" got {N}"
         )
     return _WAVE18_CORRECTED[N]
 
 
 def labelling_breaks_at(N: int, scheme: str = "naive") -> bool:
-    r"""Determine whether the $(24/N) A_{N-1}$ umbral labelling scheme
+    r"""Determine whether the pure-A umbral labelling scheme
     is well-defined at $N$.
 
     Parameters
@@ -486,9 +476,9 @@ def labelling_breaks_at(N: int, scheme: str = "naive") -> bool:
     N : int
         Class-$\mathcal S$ rank parameter, $N \ge 2$.
     scheme : str
-        Either ``"naive"`` (the systematic $(24/N) A_{N-1}$ labelling)
-        or ``"corrected"`` (the Wave 18 re-anchored labelling which
-        substitutes $6 D_4$ at $N = 6$).
+         Either ``"naive"`` (the systematic $(24/(N-1)) A_{N-1}$ labelling)
+         or ``"corrected"`` (the Wave 18 class-S re-anchored labelling
+         which substitutes $4 A_5 D_4$ at $N = 6$).
 
     Returns
     -------
@@ -497,27 +487,18 @@ def labelling_breaks_at(N: int, scheme: str = "naive") -> bool:
         is not a Niemeier root system per Niemeier 1973 / Conway-Sloane
         1988 SPLAG Ch. 16); False otherwise.
 
-    At $N = 6$ the naive label $4 A_5$ is not a Niemeier root system
-    (the only Niemeier containing $A_5$ is $4 A_5 D_4$, which adds a
-    $D_4$ summand). The Wave 18 corrected label $6 D_4$ IS a valid
-    Niemeier root system.
+    At $N = 6$ the naive pure label $4 A_5$ is not a Niemeier root
+    system. The corrected class-S label $4 A_5 D_4$ is a valid
+    Niemeier root system and preserves the $A_5$ summand; the separate
+    $6 D_4$ row is a Coxeter-slot companion, not the class-S anchor.
     """
     if scheme not in ("naive", "corrected"):
         raise ValueError(
             f"scheme must be 'naive' or 'corrected'; got {scheme!r}"
         )
     if scheme == "naive":
-        if N in (2, 3, 4, 5):
-            return False
-        if N == 6:
-            return True  # 4 A_5 is not a Niemeier root system
-        # General N: labelling requires N | 24 and (24/N) A_{N-1}
-        # in the Niemeier list; only N <= 5 is valid.
-        if 24 % N != 0:
-            return True
-        candidate = f"{24 // N} A_{N - 1}"
-        return not is_niemeier_root_system(candidate)
-    # scheme == "corrected": N = 6 is re-anchored to 6 D_4.
+        return not naive_labelling_valid(N)
+    # scheme == "corrected": N = 6 is re-anchored to 4 A_5 D_4.
     if N in (2, 3, 4, 5, 6):
         return False
     return True
@@ -526,8 +507,8 @@ def labelling_breaks_at(N: int, scheme: str = "naive") -> bool:
 def umbral_group_corrected(N: int) -> str:
     r"""Umbral moonshine group $G^{(X_N)}$ under the Wave 18 corrected
     labelling. For $N \in \{2, 3, 4, 5\}$ matches the Wave 17 table;
-    at $N = 6$ returns $3.\mathrm{Sym}_6$ (umbral group of $6 D_4$,
-    per CDH 2014 Table 1) rather than raising / defaulting.
+    at $N = 6$ returns $\mathrm{Sym}_3$, the CDH 2014 Table 1 group
+    of the class-S anchor $4 A_5 D_4$.
     """
     root = umbral_niemeier_corrected(N)
     rec = _NIEMEIER_LATTICES_CDH14_TABLE1.get(root)
@@ -545,6 +526,50 @@ def umbral_group_order_corrected(N: int) -> int:
     if rec is None:
         raise ValueError(
             f"No umbral-group-order record for Niemeier {root!r}"
+        )
+    return int(rec["umbral_order"])
+
+
+def umbral_niemeier_coxeter_companion(N: int) -> str:
+    r"""Coxeter-slot companion Niemeier row.
+
+    For $N \le 5$ this agrees with the corrected class-S anchor. At
+    $N = 6$ it returns $6 D_4$, the valid Coxeter-$6$ Niemeier carrying
+    the mock-modular form $H^{(6D_4)}$, but not the $A_5$-fugacity
+    class-S anchor.
+    """
+    _COMPANION: Dict[int, str] = {
+        2: "24 A_1",
+        3: "12 A_2",
+        4: "8 A_3",
+        5: "6 A_4",
+        6: "6 D_4",
+    }
+    if N not in _COMPANION:
+        raise ValueError(
+            f"Coxeter companion defined for N in {{2,...,6}}; got {N}"
+        )
+    return _COMPANION[N]
+
+
+def umbral_group_coxeter_companion(N: int) -> str:
+    r"""Umbral group of the Coxeter-slot companion row."""
+    root = umbral_niemeier_coxeter_companion(N)
+    rec = _NIEMEIER_LATTICES_CDH14_TABLE1.get(root)
+    if rec is None:
+        raise ValueError(
+            f"No umbral-group record for companion Niemeier {root!r}"
+        )
+    return str(rec["umbral_group"])
+
+
+def umbral_group_order_coxeter_companion(N: int) -> int:
+    r"""Order of the Coxeter-slot companion umbral group."""
+    root = umbral_niemeier_coxeter_companion(N)
+    rec = _NIEMEIER_LATTICES_CDH14_TABLE1.get(root)
+    if rec is None:
+        raise ValueError(
+            f"No umbral-group-order record for companion Niemeier {root!r}"
         )
     return int(rec["umbral_order"])
 
@@ -578,9 +603,9 @@ def umbral_niemeier(N: int) -> str:
         N = 3: 12 A_2 (umbral $2.M_{12}$),
         N = 4: 8 A_3  (umbral $2.\mathrm{AGL}_3(2)$),
         N = 5: 6 A_4  (umbral $\mathrm{GL}_2(5)/\{\pm 1\}$).
-    At $N = 6$ there is no Niemeier lattice with root system $4 A_5$;
-    the labelling breaks and the closest analogue uses $6 D_4$
-    (Niemeier / Conway-Sloane 1988 Ch. 16).
+      At $N = 6$ there is no pure Niemeier lattice with root system
+      $4 A_5$; the class-S anchor is $4 A_5 D_4$, while $6 D_4$ is a
+      Coxeter-slot companion (Niemeier / Conway-Sloane 1988 Ch. 16).
     """
     if N not in _UMBRAL_NIEMEIER_TABLE:
         raise ValueError(
@@ -655,11 +680,20 @@ def wave17_record(N: int) -> Dict[str, object]:
         out["niemeier_root_system"] = umbral_niemeier(N)
         out["umbral_group"] = umbral_group(N)
         out["umbral_group_order"] = umbral_group_order(N)
-        # Wave 18: re-anchored labelling (validated as a Niemeier root
-        # system) and the scheme-break diagnostic.
+        # Wave 18: class-S re-anchored labelling, the Coxeter-slot
+        # companion row, and the scheme-break diagnostic.
         out["niemeier_root_system_corrected"] = umbral_niemeier_corrected(N)
         out["umbral_group_corrected"] = umbral_group_corrected(N)
         out["umbral_group_order_corrected"] = umbral_group_order_corrected(N)
+        out["niemeier_root_system_coxeter_companion"] = (
+            umbral_niemeier_coxeter_companion(N)
+        )
+        out["umbral_group_coxeter_companion"] = (
+            umbral_group_coxeter_companion(N)
+        )
+        out["umbral_group_order_coxeter_companion"] = (
+            umbral_group_order_coxeter_companion(N)
+        )
         out["labelling_breaks_naive"] = labelling_breaks_at(N, scheme="naive")
         out["labelling_breaks_corrected"] = labelling_breaks_at(
             N, scheme="corrected"

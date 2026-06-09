@@ -37,6 +37,7 @@ from platonic_red_team import (
     CyclicAdmissibilityData,
     standard_families_admissibility,
     w_N_max_pole_order,
+    w_N_ope_pole_order,
     count_w_N_generators,
     pbw_weight_space_dim,
     pbw_growth_rate,
@@ -73,14 +74,14 @@ class TestCyclicAdmissibility:
         families = standard_families_admissibility()
         data = families['Affine_generic']
         assert data.is_cyclically_admissible
-        assert data.max_pole_order == 1  # first-order poles only
+        assert data.max_pole_order == 1  # lambda/collision order; OPE pole order 2
 
     def test_virasoro_is_admissible(self):
-        """Virasoro algebra is cyclically admissible (pole order 3)."""
+        """Virasoro algebra is cyclically admissible (lambda/collision order 3)."""
         families = standard_families_admissibility()
         data = families['Virasoro']
         assert data.is_cyclically_admissible
-        assert data.max_pole_order == 3  # T(z)T(w) ~ c/2 * (z-w)^{-4}
+        assert data.max_pole_order == 3  # T(z)T(w) has OPE pole order 4
 
     def test_betagamma_is_admissible(self):
         """BetaGamma system is cyclically admissible."""
@@ -96,10 +97,11 @@ class TestCyclicAdmissibility:
         assert data.max_pole_order == 5  # WW OPE pole order 6 => lambda order 5
 
     def test_w_N_pole_order_grows(self):
-        """W_N pole order grows linearly with N: max pole = 2N-1."""
+        """W_N OPE pole order is 2N; lambda/collision order is 2N-1."""
         for N in [2, 3, 4, 5, 10]:
+            assert w_N_ope_pole_order(N) == 2 * N
             assert w_N_max_pole_order(N) == 2 * N - 1
-        # For each fixed N, pole order is bounded => condition (iii) OK
+        # For each fixed N, the lambda/collision order is bounded => condition (iii) OK
         families = standard_families_admissibility()
         data = families['W_N_general']
         assert data.is_cyclically_admissible
@@ -124,12 +126,13 @@ class TestCyclicAdmissibility:
         assert len(obstructions) >= 2
 
     def test_w_infty_pole_order_unbounded(self):
-        """W_{1+infty} pole order: W^s . W^t has pole order s+t-1, unbounded."""
+        """W_{1+infty} lambda/collision order grows as s+t-1, unbounded."""
         for s in range(1, 10):
             for t in range(1, 10):
-                pole_order = s + t - 1
-                assert pole_order >= s  # grows with spin
-        # At large spin: pole order ~ 2s - 1 -> infinity
+                shifted_order = s + t - 1
+                assert shifted_order >= s  # grows with spin
+        # At large spin: shifted order ~ 2s - 1 -> infinity
+        assert w_N_ope_pole_order(100) == 200
         assert w_N_max_pole_order(100) == 199
 
     def test_affine_critical_formally_admissible(self):

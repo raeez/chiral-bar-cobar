@@ -416,7 +416,7 @@ class TestAnalyticHierarchy:
         assert len(h) >= 7
 
     def test_all_algebraic(self):
-        """Bar D^2=0 holds unconditionally (algebraic level)."""
+        """Fixed-carrier bar D^2=0 holds unconditionally (algebraic level)."""
         for entry in analytic_hierarchy_table():
             assert entry.algebraic is True
 

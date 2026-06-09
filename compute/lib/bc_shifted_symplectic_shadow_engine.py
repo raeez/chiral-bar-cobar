@@ -125,6 +125,44 @@ from fractions import Fraction
 from typing import Any, Dict, List, Optional, Tuple
 import math
 
+C2_LAGRANGIAN_HYPOTHESES: Tuple[str, ...] = (
+    "C0_fiber_center_identification",
+    "C1_homotopy_eigenspace_decomposition",
+    "uniform_weight_perfectness",
+    "nondegenerate_cyclic_pairing",
+    "finite_modular_envelope",
+    "closed_cyclic_pairing",
+    "skew_adjoint_differential",
+    "modular_bracket_compatibility",
+    "twisted_tensor_acyclicity",
+    "ambient_BV_QME_input",
+)
+
+C2_LAGRANGIAN_CONDITIONAL_STATUS = (
+    "conditional_on_C2_shifted_symplectic_hypothesis_package"
+)
+
+
+def c2_lagrangian_hypothesis_report(
+    provided: Optional[Tuple[str, ...]] = None,
+) -> Dict[str, Any]:
+    """Report the C2 hypotheses needed for the Lagrangian upgrade."""
+    verified = tuple(provided or ())
+    verified_set = set(verified)
+    missing = tuple(
+        hyp for hyp in C2_LAGRANGIAN_HYPOTHESES if hyp not in verified_set
+    )
+    return {
+        "required": C2_LAGRANGIAN_HYPOTHESES,
+        "verified": verified,
+        "missing": missing,
+        "complete": not missing,
+        "status": (
+            "C2_hypothesis_package_supplied"
+            if not missing else C2_LAGRANGIAN_CONDITIONAL_STATUS
+        ),
+    }
+
 try:
     import mpmath
     from mpmath import (
@@ -566,14 +604,16 @@ def poisson_bracket_degree(shift: int = -1) -> int:
 def evaluate_poisson_bracket_quadratic(
     fam: AlgebraFamily,
     max_arity: int = 4,
+    c2_hypotheses: Optional[Tuple[str, ...]] = None,
 ) -> Dict[str, Any]:
-    """Evaluate the quadratic part of the degree +1 Poisson bracket.
+    """Evaluate the quadratic scalar diagnostic of the degree +1 bracket.
 
     The MC equation Theta_A in MC(g^mod_A) satisfies:
         D * Theta + (1/2) {Theta, Theta}_{-1} = 0
 
-    This is equivalent to the Lagrangian condition in the shifted
-    symplectic framework (PTVV, Thm 2.9).
+    This is a scalar diagnostic for the Lagrangian condition in the
+    shifted-symplectic framework.  It certifies C2 only after the
+    shifted-symplectic hypothesis package is supplied.
 
     We evaluate {Theta, Theta}_{-1} at the point (kappa, S_3, S_4, ...)
     for the given algebra family.
@@ -591,7 +631,7 @@ def evaluate_poisson_bracket_quadratic(
     the arity-(r+1) component of Theta given the lower-arity
     components.  This is the shadow obstruction tower.
 
-    Return the quadratic evaluation and consistency checks.
+    Return the quadratic evaluation and C2 certification status.
     """
     coords = shadow_darboux_coordinates(fam, max_arity)
 
@@ -642,11 +682,17 @@ def evaluate_poisson_bracket_quadratic(
                                    'invariant (AP: thm:cubic-gauge-triviality)'),
             }
 
+    bracket_vanishes = Fraction(0) == Fraction(0)
+    c2_report = c2_lagrangian_hypothesis_report(c2_hypotheses)
+    c2_verified = bracket_vanishes and c2_report["complete"]
     return {
         'algebra': fam.name,
         'poisson_bracket_degree': 1,
         'bracket_Theta_Theta': Fraction(0),  # antisymmetric, always 0
-        'mc_is_lagrangian': True,
+        'mc_scalar_indicator': bracket_vanishes,
+        'mc_is_lagrangian': c2_verified,
+        'lagrangian_upgrade_status': c2_report["status"],
+        'c2_missing_hypotheses': c2_report["missing"],
         'obstructions_by_arity': obstructions,
         'num_active_darboux_pairs': sum(
             1 for c in coords if c.q_value != 0 or c.p_value != 0
@@ -670,6 +716,9 @@ class LagrangianData:
     """
     algebra_name: str
     is_lagrangian: bool
+    scalar_lagrangian_diagnostic: bool
+    lagrangian_upgrade_status: str
+    c2_missing_hypotheses: Tuple[str, ...]
     complementarity_sum: Fraction
     theta_primitive: Dict[int, Fraction]  # arity -> theta value
     lagrangian_rank: int
@@ -680,8 +729,9 @@ class LagrangianData:
 def compute_lagrangian_structure(
     fam: AlgebraFamily,
     max_arity: int = 5,
+    c2_hypotheses: Optional[Tuple[str, ...]] = None,
 ) -> LagrangianData:
-    """Compute the Lagrangian structure for the Koszul pair (A, A!).
+    """Compute scalar Darboux data and report C2 Lagrangian status.
 
     The ambient space is RDef(A + A!) with the direct-sum coordinates
     (q_2, p_2, ..., q_r, p_r) where q_j = S_j(A), p_j = S_j(A!).
@@ -691,7 +741,9 @@ def compute_lagrangian_structure(
 
     The graph of L_A is the locus { (S_j(A), S_j(A!)) : j = 2, ..., r }.
 
-    The Lagrangian condition: L_A* omega_{-1}^{amb} = d theta.
+    The C2 Lagrangian condition is
+    L_A^* omega_{-1}^{amb} = d theta, with the full hypothesis package.
+    The primitive computed here is a scalar diagnostic, not a certificate.
 
     For a Lagrangian submanifold of a (-1)-shifted symplectic space,
     the pullback of omega is EXACT (not zero).  The primitive theta
@@ -722,9 +774,14 @@ def compute_lagrangian_structure(
     ambient_rank = 2 * len(coords)
     lagrangian_rank = active_count
 
+    c2_report = c2_lagrangian_hypothesis_report(c2_hypotheses)
+    scalar_diagnostic = True
     return LagrangianData(
         algebra_name=fam.name,
-        is_lagrangian=True,  # standard landscape: unconditional
+        is_lagrangian=scalar_diagnostic and c2_report["complete"],
+        scalar_lagrangian_diagnostic=scalar_diagnostic,
+        lagrangian_upgrade_status=c2_report["status"],
+        c2_missing_hypotheses=c2_report["missing"],
         complementarity_sum=fam.complementarity_sum,
         theta_primitive=theta_primitive,
         lagrangian_rank=lagrangian_rank,
@@ -922,9 +979,13 @@ def _universal_residue_factor(rho, c, dps=30):
         zp = diff(zeta, rho)
         den = (2 * power(pi, rho + mpf('0.5'))
                * mpgamma((c - rho - 1) / 2) * mpgamma(rho / 2) * zp)
-        if fabs(den) < power(10, -dps + 5):
+        try:
+            value = num / den
+        except ZeroDivisionError:
             return complex(mpc(inf))
-        return complex(num / den)
+        if not (mp.isfinite(mpre(value)) and mp.isfinite(mpim(value))):
+            return complex(mpc(inf))
+        return complex(value)
 
 
 @dataclass
@@ -1236,6 +1297,7 @@ def full_shifted_symplectic_package(
     fam: AlgebraFamily,
     max_arity: int = 5,
     genus_range: Tuple[int, int] = (0, 3),
+    c2_hypotheses: Optional[Tuple[str, ...]] = None,
 ) -> Dict[str, Any]:
     """Compute the full shifted symplectic package for a given algebra family.
 
@@ -1252,10 +1314,14 @@ def full_shifted_symplectic_package(
     form = compute_shifted_symplectic_form(fam, max_arity)
 
     # Poisson bracket
-    poisson = evaluate_poisson_bracket_quadratic(fam, max_arity)
+    poisson = evaluate_poisson_bracket_quadratic(
+        fam, max_arity, c2_hypotheses=c2_hypotheses
+    )
 
     # Lagrangian structure
-    lagrangian = compute_lagrangian_structure(fam, max_arity)
+    lagrangian = compute_lagrangian_structure(
+        fam, max_arity, c2_hypotheses=c2_hypotheses
+    )
 
     # AKSZ at each genus
     aksz_data = {}
@@ -1282,6 +1348,9 @@ def full_shifted_symplectic_package(
         'poisson_bracket': poisson,
         'lagrangian': {
             'is_lagrangian': lagrangian.is_lagrangian,
+            'scalar_lagrangian_diagnostic': lagrangian.scalar_lagrangian_diagnostic,
+            'lagrangian_upgrade_status': lagrangian.lagrangian_upgrade_status,
+            'c2_missing_hypotheses': lagrangian.c2_missing_hypotheses,
             'theta_primitive': lagrangian.theta_primitive,
             'rank': lagrangian.lagrangian_rank,
             'codimension': lagrangian.codimension,
@@ -1302,6 +1371,7 @@ def full_shifted_symplectic_package(
 
 def cross_family_symplectic_comparison(
     max_arity: int = 5,
+    c2_hypotheses: Optional[Tuple[str, ...]] = None,
 ) -> Dict[str, Dict[str, Any]]:
     """Compare shifted symplectic data across all standard families.
 
@@ -1311,7 +1381,9 @@ def cross_family_symplectic_comparison(
     """
     results = {}
     for name, fam in STANDARD_FAMILIES.items():
-        results[name] = full_shifted_symplectic_package(fam, max_arity)
+        results[name] = full_shifted_symplectic_package(
+            fam, max_arity, c2_hypotheses=c2_hypotheses
+        )
     return results
 
 
@@ -1350,12 +1422,16 @@ def verify_lagrangian_additivity(
 # 12. VERIFICATION FUNCTIONS
 # ============================================================================
 
-def verify_mc_equals_lagrangian(fam: AlgebraFamily) -> Dict[str, Any]:
-    """Verify: MC equation = Lagrangian condition.
+def verify_mc_equals_lagrangian(
+    fam: AlgebraFamily,
+    c2_hypotheses: Optional[Tuple[str, ...]] = None,
+) -> Dict[str, Any]:
+    """Verify the MC scalar diagnostic and report C2 Lagrangian status.
 
-    The MC equation D*Theta + (1/2)[Theta, Theta] = 0 is equivalent
-    to the graph of Theta being a Lagrangian submanifold of the
-    (-1)-shifted symplectic target.
+    The MC equation is the scalar diagnostic for the graph of Theta
+    being Lagrangian in the (-1)-shifted symplectic target.  The C2
+    Lagrangian flag is true only when the full hypothesis package is
+    supplied.
 
     This is PTVV Thm 2.9 / Kontsevich-Pridham:
         MC(g) <==> Lagrangian(graph Theta, omega_{-1})
@@ -1364,8 +1440,10 @@ def verify_mc_equals_lagrangian(fam: AlgebraFamily) -> Dict[str, Any]:
     with primitive theta encoding the MC data.
     """
     form = compute_shifted_symplectic_form(fam)
-    poisson = evaluate_poisson_bracket_quadratic(fam)
-    lagrangian = compute_lagrangian_structure(fam)
+    poisson = evaluate_poisson_bracket_quadratic(
+        fam, c2_hypotheses=c2_hypotheses
+    )
+    lagrangian = compute_lagrangian_structure(fam, c2_hypotheses=c2_hypotheses)
 
     # MC equation in Poisson language: {Theta, Theta}_{-1} + dTheta = 0
     # {Theta, Theta}_{-1} = 0 by antisymmetry
@@ -1377,12 +1455,18 @@ def verify_mc_equals_lagrangian(fam: AlgebraFamily) -> Dict[str, Any]:
     return {
         'algebra': fam.name,
         'mc_is_lagrangian': mc_is_lagrangian,
+        'mc_scalar_indicator': poisson['mc_scalar_indicator'],
+        'lagrangian_upgrade_status': poisson['lagrangian_upgrade_status'],
+        'c2_missing_hypotheses': poisson['c2_missing_hypotheses'],
         'bracket_vanishes': bracket_vanishes,
         'symplectic_shift': form.shift,
         'poisson_degree': poisson_bracket_degree(form.shift),
         'lagrangian_primitive_exists': lagrangian.is_lagrangian,
         'theta_primitive': lagrangian.theta_primitive,
-        'verification_status': 'CONSISTENT' if mc_is_lagrangian else 'INCONSISTENT',
+        'verification_status': (
+            'C2_CERTIFIED' if mc_is_lagrangian
+            else 'SCALAR_DIAGNOSTIC_ONLY'
+        ),
     }
 
 

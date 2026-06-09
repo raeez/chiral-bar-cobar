@@ -24,6 +24,7 @@ from compute.lib.moonshine_kappa_resolution_engine import (
     DIM_GRIESS_PRIMARY,
     MONSTER_ORDER,
     J_COEFFICIENTS,
+    MOONSHINE_K3_FIREWALL_HYPOTHESES,
     # Core functions
     faber_pandharipande,
     kappa_bar_complex_virasoro,
@@ -47,6 +48,7 @@ from compute.lib.moonshine_kappa_resolution_engine import (
     diagnose_wrong_kappa_24,
     vnatural_shadow_depth_analysis,
     comparison_table,
+    moonshine_k3_mukai_firewall,
     resolution_summary,
     VOAData,
 )
@@ -512,6 +514,34 @@ class TestComparisonTable:
         assert table[0]['kappa'] != table[1]['kappa']
 
 
+class TestMoonshineK3MukaiFirewall:
+    """Monster/Leech constants do not become K3/Mukai constants here."""
+
+    def test_firewall_separates_monster_leech_and_k3(self):
+        firewall = moonshine_k3_mukai_firewall()
+        assert firewall["monster_voa"]["object"] == "V^natural"
+        assert firewall["monster_voa"]["kappa"] == Rational(12)
+        assert firewall["leech_lattice_voa"]["object"] == "V_Leech"
+        assert firewall["leech_lattice_voa"]["kappa"] == Rational(24)
+        assert firewall["k3_mukai_lane"]["constants_computed_here"] is False
+
+    def test_firewall_forbids_unproved_constant_transport(self):
+        firewall = moonshine_k3_mukai_firewall()
+        assert firewall["moonshine_constants_as_k3_constants"] is False
+        assert firewall["comparison_available_here"] is False
+        assert firewall["valid_transports"] == ()
+        assert firewall["requires_comparison"] == MOONSHINE_K3_FIREWALL_HYPOTHESES
+
+    def test_firewall_keeps_constants_on_source_objects(self):
+        firewall = moonshine_k3_mukai_firewall()
+        assert firewall["monster_voa"]["constants"]["J_1"] == J_COEFFICIENTS[1]
+        assert firewall["monster_voa"]["constants"]["dim_V2"] == DIM_V2_VNATURAL
+        assert firewall["leech_lattice_voa"]["constants"]["rank"] == RANK_LEECH
+        assert firewall["k3_mukai_lane"]["status"] == (
+            "not computed by this moonshine helper"
+        )
+
+
 # =========================================================================
 # Cross-checks with existing engines
 # =========================================================================
@@ -586,7 +616,7 @@ class TestEdgeCases:
         assert kappa_bar_complex_virasoro(Rational(0)) == 0
 
     def test_kappa_virasoro_c26(self):
-        """kappa(Vir_26) = 13 (self-dual point)."""
+        """kappa(Vir_26) = 13 (critical string charge; not self-dual)."""
         assert kappa_bar_complex_virasoro(Rational(26)) == 13
 
     def test_anomaly_ratio_c0_raises(self):
@@ -600,7 +630,7 @@ class TestEdgeCases:
             virasoro_quartic_contact(Rational(0))
 
     def test_critical_discriminant_c26(self):
-        """Delta at c = 26 (self-dual): well-defined."""
+        """Delta at c = 26 (critical string charge): well-defined."""
         Delta = critical_discriminant_virasoro(Rational(26))
         assert Delta == Rational(40, 152)  # 40 / (5*26+22) = 40/152 = 5/19
         assert Delta == Rational(5, 19)
@@ -826,7 +856,7 @@ class TestMultiPathShadowInvariants:
         assert delta_recomputed == result['Delta']
 
     def test_virasoro_complementarity_of_discriminants(self):
-        """Delta(c) + Delta(26-c) at the Virasoro self-dual pair.
+        """Delta(c) + Delta(26-c) at the Virasoro dual pair.
         Complementarity of discriminants: verified by computing both sides."""
         for c_val in [1, 12, 13, 24]:
             c_r = Rational(c_val)

@@ -183,7 +183,7 @@ class TestCollisionResidue:
         assert r.max_pole_order() == 1  # Simple pole, one less than OPE
 
     def test_heisenberg_collision_residue_coefficient(self):
-        """r(z) = k/z for Heisenberg."""
+        """r(z) = k*Omega_H/z (rank-one coeff k/z) for Heisenberg."""
         k = Fraction(7)
         r = collision_residue_heisenberg(k)
         assert r.poles[1] == k
@@ -594,13 +594,13 @@ class TestNumericalEvaluation:
         assert abs(float(f2) - 7.0 / 5760) < 1e-15
 
     def test_collision_residue_heisenberg_numerical(self):
-        """r(z) = k/z evaluated at z=1 gives k."""
+        """r(z) = k*Omega_H/z (rank-one coeff k/z) evaluated at z=1 gives k."""
         k = Fraction(5)
         r = collision_residue_heisenberg(k)
         assert r.evaluate_at(Fraction(1)) == k
 
     def test_collision_residue_heisenberg_at_z2(self):
-        """r(z) = k/z evaluated at z=2 gives k/2."""
+        """r(z) = k*Omega_H/z (rank-one coeff k/z) evaluated at z=2 gives k/2."""
         k = Fraction(6)
         r = collision_residue_heisenberg(k)
         assert r.evaluate_at(Fraction(2)) == Fraction(3)

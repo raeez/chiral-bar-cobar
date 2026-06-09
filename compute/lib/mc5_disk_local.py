@@ -192,7 +192,7 @@ def verify_C3_identification(
 # ═══════════════════════════════════════════════════════════════════════
 
 def verify_abelian_cs():
-    """Abelian CS: J(z)J(w) ~ k/(z-w)²."""
+    """Abelian CS: J(z)J(w) ~ k/(z-w)^2."""
     k = Symbol('k')
     ope = {1: k}  # {J_λ J} = kλ → OPE: k/(z-w)²
     c2 = verify_C2_identification(ope)

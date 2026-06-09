@@ -1,20 +1,28 @@
-r"""Quantum error-correcting codes from Koszul duality: explicit construction.
+r"""Algebraic code skeletons from Koszul duality.
 
 MATHEMATICAL FRAMEWORK
 ======================
 
-The bar-cobar adjunction B -| Omega defines a symplectic quantum
-error-correcting code for each chirally Koszul algebra A.  This module
-constructs EXPLICIT codes, verifies the Knill-Laflamme conditions via
-three independent paths, and computes code parameters.
+The bar-cobar adjunction B -| Omega defines an algebraic symplectic
+code skeleton for each chirally Koszul algebra A.  This module
+constructs finite weight-level matrices, records KL-style algebraic
+isotropy checks, and computes arity-proxy parameters.  A Hilbert-space
+quantum error-correcting code requires additional unitary completion,
+a physical inner product, an error algebra, and recovery maps.
 
 Firewall: Omega(B(A)) -> A is bar-cobar reconstruction.  It does not
 construct A!.  The post-Verdier Koszul dual A! appears only after the
 finite-type/completed Verdier lane represents D_Ran B(A) and the
 completed cobar construction converges.  The derived chiral centre is
 the Hochschild cochain object, not the bar coalgebra and not A!.
+Theorem B recovery is also ambient-qualified: raw finite-window for
+finite-type G/L/C examples, but weight-completed pro-conilpotent /
+coderived for class M. Raw direct-sum class-M chain recovery is false.
 
-The central theorem (G12): KOSZULNESS <=> EXACT QEC.
+The central G12 surface: Koszulness is equivalent to the
+ambient-qualified bar-cobar counit quasi-isomorphism.  Physical QEC
+or holographic reconstruction is an extra comparison theorem, not a
+consequence of the counit alone.
 
 The code is SYMPLECTIC, not orthogonal:
   - Code subspace C = Q_g(A) (one Lagrangian summand)
@@ -26,26 +34,27 @@ The code is SYMPLECTIC, not orthogonal:
 
 Key objects constructed here:
   1. Symplectic code matrices from Koszul pair data
-  2. Knill-Laflamme verification via three independent paths
-  3. Code distance from shadow depth and weight enumerators
+  2. KL-style algebraic isotropy checks via three paths
+  3. Arity proxy from shadow depth and algebraic slot counts
   4. Encoding/decoding maps from bar-cobar
   5. Logical operators from A and the post-Verdier dual lane
   6. Threshold error rates from shadow radius
-  7. Holographic tensor network from bar graph amplitudes
+  7. Bar-graph shadow networks, not physical tensor-network codes
   8. Decoupling bounds from shadow CohFT
   9. Comparison with HaPPY, Steane, surface codes
 
 NOTE ON CODE PARAMETERS:
   The traditional [[n, k, d]] parameterization applies to stabilizer
-  codes on finite-dimensional Hilbert spaces.  The Koszul code lives
-  on the infinite-dimensional Hilbert space of a chiral algebra,
-  graded by conformal weight.  At each weight level h, the code has
+  codes on finite-dimensional Hilbert spaces.  The Koszul construction
+  here lives first on weight-graded algebraic vector spaces; it becomes
+  Hilbert-theoretic only after unitary completion.  At each weight level h,
+  the algebraic skeleton has
   FINITE-DIMENSIONAL parameters [[n_h, k_h, d_h]] where:
     n_h = dim(ambient complex at weight h)
     k_h = dim(code subspace at weight h) = n_h / 2 (Lagrangian)
-    d_h = minimum weight of a non-trivial logical error at level h
+    d_h = first-essential-arity proxy at level h, not operational distance
 
-  The GLOBAL code parameters aggregate over all weight levels.
+  The GLOBAL algebraic parameters aggregate over all weight levels.
 
 References:
   thm:hc-koszulness-exact-qec (holographic_codes_koszul.tex)
@@ -83,6 +92,32 @@ from compute.lib.entanglement_shadow_engine import (
     faber_pandharipande,
     STANDARD_KAPPAS,
 )
+
+
+def theorem_b_recovery_surface_from_family(family: str) -> Dict[str, object]:
+    """Ambient-qualified Theorem B recovery surface for QEC data."""
+    cls = shadow_depth_class(family)
+    if cls == 'M':
+        return {
+            'exact_recovery': True,
+            'valid_recovery': True,
+            'status': 'AMBIENT_QUALIFIED',
+            'raw_direct_sum_chain_qi': False,
+            'ambient': 'weight-completed pro-conilpotent / coderived',
+            'hypotheses': 'finite-window strict Mittag-Leffler + completed bar-cobar',
+            'counit': 'Omega_X B_X(A) -> A',
+            'completion_required': True,
+        }
+    return {
+        'exact_recovery': True,
+        'valid_recovery': True,
+        'status': 'AMBIENT_QUALIFIED',
+        'raw_direct_sum_chain_qi': True,
+        'ambient': 'raw finite-window chain complex',
+        'hypotheses': 'H3b finite bar-degree pieces + finite-support comparison',
+        'counit': 'Omega_X B_X(A) -> A',
+        'completion_required': False,
+    }
 
 
 # ---------------------------------------------------------------------------
@@ -302,7 +337,7 @@ def symplectic_code_at_weight(family: str, h: int, **kwargs) -> Dict:
       n_h = dim(ambient complex) =
             dim(V_h(A)) plus the paired Verdier-lane dimension
       k_h = dim(code subspace) = dim(V_h(A)) = n_h / 2 (Lagrangian)
-      d_h = minimum distance at weight h
+      d_h = arity proxy at weight h, not operational distance
 
     The ambient complex at genus g is
     C_g(A) = Q_g(A) + Q_g(A!) only after the finite-type/completed
@@ -317,16 +352,12 @@ def symplectic_code_at_weight(family: str, h: int, **kwargs) -> Dict:
     For the Lagrangian splitting: the code subspace is HALF the
     ambient space, so k_h = n_h / 2.
 
-    The code distance d_h at each weight level: since the Lagrangian
-    splitting is determined by the Verdier involution sigma, and sigma
-    acts by +1 on Q_g(A) and -1 on the paired Verdier lane, any
-    non-trivial error outside that lane will be detected.  The
-    minimum distance is thus related to the minimum weight of a
-    non-trivial element in the paired lane that has non-zero overlap
-    with Q_g(A) under the Shapovalov form.  Since the cross-pairing
-    is non-degenerate (Lagrangian), d_h >= 1 always; at the scalar
-    level d = 2 (the arity filtration distance from
-    thm:hc-shadow-redundancy).
+    The entry d_h below is an arity-filtration proxy, not a
+    Hilbert-space QEC distance.  The Verdier/Lagrangian splitting
+    records algebraic isotropy; an operational distance requires a
+    physical inner product, an error basis, and recovery maps.  The
+    universal value d_h = 2 means only that the first essential scalar
+    shadow datum is kappa at arity 2.
 
     >>> code = symplectic_code_at_weight('heisenberg', 2, k=1)
     >>> code['n_h']
@@ -347,10 +378,8 @@ def symplectic_code_at_weight(family: str, h: int, **kwargs) -> Dict:
     k_h = dim_h       # code subspace = one Lagrangian summand
     rate = Fraction(1, 2)
 
-    # Distance: at the level of the arity filtration, the code
-    # distance is 2 for all families (thm:hc-shadow-redundancy).
-    # At the weight level, the symplectic distance is at least 1.
-    d_h = 2  # arity filtration distance
+    # Historical field d_h: arity proxy, not an operational QEC distance.
+    d_h = 2  # first essential shadow arity
 
     return {
         'family': family,
@@ -358,6 +387,11 @@ def symplectic_code_at_weight(family: str, h: int, **kwargs) -> Dict:
         'n_h': n_h,
         'k_h': k_h,
         'd_h': d_h,
+        'd_h_kind': 'arity proxy; not Hilbert-space code distance',
+        'physical_distance': None,
+        'physical_distance_status': (
+            'requires physical inner product, error algebra, and recovery maps'
+        ),
         'rate': rate,
         'dim_code': dim_h,
         'dim_error': dim_h_dual,
@@ -387,7 +421,10 @@ def _weight_dim(family: str, h: int, **kwargs) -> int:
 
 
 def code_parameters_at_weight(family: str, h: int, **kwargs) -> Tuple[int, int, int]:
-    r"""Return [[n, k, d]] at weight h.
+    r"""Return the historical [[n, k, d_arity]] tuple at weight h.
+
+    The third entry is the first-essential-arity proxy, not an
+    operational Knill--Laflamme code distance.
 
     >>> code_parameters_at_weight('heisenberg', 0)
     (2, 1, 2)
@@ -403,10 +440,10 @@ def code_parameters_at_weight(family: str, h: int, **kwargs) -> Tuple[int, int, 
 def code_parameters_up_to_weight(family: str, h_max: int, **kwargs) -> Dict:
     r"""Aggregate code parameters up to weight h_max.
 
-    The total code parameters [[N, K, D]] are:
+    The total algebraic parameters [[N, K, D_arity]] are:
       N = sum_{h=0}^{h_max} n_h
       K = sum_{h=0}^{h_max} k_h = N / 2  (Lagrangian)
-      D = min_{h: n_h > 0} d_h = 2  (arity filtration)
+      D = min_{h: n_h > 0} d_h = 2  (arity proxy, not QEC distance)
 
     >>> params = code_parameters_up_to_weight('heisenberg', 5)
     >>> params['N'] == 2 * params['K']
@@ -436,6 +473,11 @@ def code_parameters_up_to_weight(family: str, h_max: int, **kwargs) -> Dict:
         'N': N,
         'K': K,
         'D': int(D),
+        'D_kind': 'arity proxy; not Hilbert-space code distance',
+        'physical_distance': None,
+        'physical_distance_status': (
+            'requires physical inner product, error algebra, and recovery maps'
+        ),
         'rate': Fraction(K, N) if N > 0 else Fraction(0),
         'weight_data': weight_data,
     }
@@ -448,7 +490,7 @@ def heisenberg_code_parameters(k_val: int, h_max: int = 10) -> Dict:
     the code at each weight h has:
       n_h = 2 * p(h)  (p = partition function)
       k_h = p(h)
-      d_h = 2
+      d_h = 2 as the arity proxy, not as a Hilbert-space distance
 
     >>> params = heisenberg_code_parameters(1, 5)
     >>> params['kappa']
@@ -460,13 +502,18 @@ def heisenberg_code_parameters(k_val: int, h_max: int = 10) -> Dict:
     """
     kappa = int(k_val)  # kappa(H_k) = k
     code = code_parameters_up_to_weight('heisenberg', h_max, k=k_val)
+    recovery_surface = theorem_b_recovery_surface_from_family('heisenberg')
 
     return {
         **code,
         'kappa': kappa,
         'shadow_class': 'G',
         'redundancy_channels': 0,
-        'exact_recovery': True,
+        'exact_recovery': recovery_surface['exact_recovery'],
+        'exact_recovery_status': recovery_surface['status'],
+        'exact_recovery_ambient': recovery_surface['ambient'],
+        'raw_direct_sum_chain_qi': recovery_surface['raw_direct_sum_chain_qi'],
+        'recovery_surface': recovery_surface,
         'convergent': True,  # class G: no corrections
     }
 
@@ -772,24 +819,25 @@ def verify_knill_laflamme_three_paths(c_val=Rational(13)) -> Dict:
 
 
 # ===========================================================================
-# 4. CODE DISTANCE FROM SHADOW DEPTH
+# 4. ARITY PROXY FROM SHADOW DEPTH
 # ===========================================================================
 
 def code_distance_from_shadow_depth(family: str) -> Dict:
-    r"""Code distance related to shadow depth.
+    r"""Historical API for the arity proxy related to shadow depth.
 
-    From thm:hc-shadow-redundancy: the code distance in the
-    ARITY FILTRATION is always 2 for all families.  The scalar
-    datum kappa is the minimum essential information; it cannot
-    be recovered from lower-arity data.
+    From thm:hc-shadow-redundancy: the first essential datum in the
+    arity filtration is always at arity 2 for all families.  This is
+    not a Hilbert-space QEC code distance; operational distance
+    requires a physical inner product, an error basis, and recovery
+    maps.
 
     The shadow depth r_max determines the REDUNDANCY STRUCTURE:
     how many independent channels for error correction.
 
-    Multi-path verification:
+    Multi-path arity-proxy verification:
       Path 1: from shadow depth directly
-      Path 2: from weight enumerator (symplectic code)
-      Path 3: from minimum distance search
+      Path 2: from the algebraic symplectic slot count
+      Path 3: from first nonzero shadow arity
 
     >>> result = code_distance_from_shadow_depth('heisenberg')
     >>> result['arity_distance']
@@ -801,25 +849,15 @@ def code_distance_from_shadow_depth(family: str) -> Dict:
     r_max = entanglement_correction_depth(family)
     channels = {'G': 0, 'L': 1, 'C': 2, 'M': -1}[cls]
 
-    # Path 1: arity filtration distance
+    # Path 1: arity filtration proxy.
     # The scalar kappa (arity 2) is essential; cannot be recovered from arity < 2
     arity_distance = 2
 
-    # Path 2: symplectic weight enumerator
-    # For a Lagrangian code C in a 2n-dimensional symplectic space,
-    # the weight enumerator A(x, y) satisfies the MacWilliams identity
-    # for symplectic codes.  The minimum distance equals the minimum
-    # weight of a nonzero codeword in the dual code C^perp.
-    # Since C is Lagrangian (self-dual under symplectic form),
-    # d(C) = d(C^perp) = minimum nonzero weight.
-    #
-    # For the Koszul code: the "weight" is the arity.  kappa lives
-    # at arity 2, so the minimum nonzero weight = 2.
+    # Path 2: algebraic symplectic slot count, not a physical
+    # Shor-Laflamme weight enumerator.
     weight_enumerator_distance = 2
 
-    # Path 3: minimum distance search
-    # The minimum distance is the minimum arity at which a
-    # non-trivial shadow component exists.
+    # Path 3: first nonzero shadow arity.
     # For all standard families: the first non-trivial component is
     # kappa at arity 2.
     min_distance_search = 2
@@ -834,6 +872,12 @@ def code_distance_from_shadow_depth(family: str) -> Dict:
         'min_distance_search': min_distance_search,
         'all_paths_agree': (arity_distance == weight_enumerator_distance ==
                             min_distance_search),
+        'arity_proxy_kind': 'first essential shadow arity',
+        'physical_code_distance': None,
+        'physical_distance_status': (
+            'not determined by bar degree or shadow depth; requires '
+            'physical inner product, error algebra, and recovery maps'
+        ),
         'distance_by_class': {
             'G': 'arity 2 (kappa only; no redundancy)',
             'L': 'arity 2 (kappa essential; cubic is redundant)',
@@ -844,10 +888,11 @@ def code_distance_from_shadow_depth(family: str) -> Dict:
 
 
 def code_distance_census() -> Dict:
-    r"""Code distance for all standard families.
+    r"""Arity-proxy census for all standard families.
 
-    KEY RESULT: the arity-filtration code distance is 2 for ALL families.
-    The shadow depth controls redundancy, not distance.
+    KEY RESULT: the first essential shadow arity is 2 for all standard
+    families.  The shadow depth controls redundancy; no Hilbert-space
+    code distance is determined until a physical error model is supplied.
 
     >>> census = code_distance_census()
     >>> all(v['arity_distance'] == 2 for v in census.values())
@@ -873,8 +918,9 @@ def encoding_decoding_structure(family: str, h: int = 2, **kwargs) -> Dict:
       Exact on the Koszul locus (Theorem B).
 
     The bar-cobar round-trip: Omega(B(A)) ~ A  (quasi-isomorphism)
-    This IS the error correction: encoding followed by decoding
-    gives back the original data (up to homotopy).
+    This is the ambient-qualified error-correction statement: encoding
+    followed by decoding gives back the original data (up to homotopy)
+    on the finite-window or completed Theorem B surface.
 
     IMPORTANT: bar-cobar inversion recovers A ITSELF.
     The Koszul dual A! is obtained only by the separate
@@ -891,6 +937,7 @@ def encoding_decoding_structure(family: str, h: int = 2, **kwargs) -> Dict:
     True
     """
     dim_h = _weight_dim(family, h, **kwargs)
+    recovery_surface = theorem_b_recovery_surface_from_family(family)
     firewall_note = (
         'Omega(B(A)) = A (recovers the original algebra). '
         'A! is post-Verdier: it is obtained only from the '
@@ -916,8 +963,12 @@ def encoding_decoding_structure(family: str, h: int = 2, **kwargs) -> Dict:
             'mechanism': 'cobar differential d_Omega from coalgebra structure',
         },
         'round_trip': 'quasi-isomorphism',
-        'exact_recovery': True,
-        'source': 'Theorem B (bar-cobar inversion on Koszul locus)',
+        'exact_recovery': recovery_surface['exact_recovery'],
+        'exact_recovery_status': recovery_surface['status'],
+        'exact_recovery_ambient': recovery_surface['ambient'],
+        'raw_direct_sum_chain_qi': recovery_surface['raw_direct_sum_chain_qi'],
+        'recovery_surface': recovery_surface,
+        'source': 'Theorem B (ambient-qualified bar-cobar inversion on Koszul locus)',
         'bar_cobar_firewall_note': firewall_note,
         'note_ap25': firewall_note,
         'koszul_firewall': koszul_firewall(),
@@ -1128,14 +1179,14 @@ def threshold_census() -> Dict:
 
 
 # ===========================================================================
-# 8. HOLOGRAPHIC TENSOR NETWORK FROM BAR COMPLEX
+# 8. BAR-GRAPH SHADOW NETWORK FROM BAR COMPLEX
 # ===========================================================================
 
 def bar_complex_tensor_network(family: str, n_vertices: int = 5,
                                  **kwargs) -> Dict:
-    r"""Holographic tensor network from the bar complex.
+    r"""Bar-graph shadow network from the bar complex.
 
-    The bar complex B(A) defines a tensor network on a graph:
+    The bar complex B(A) defines an algebraic graph-amplitude network:
       - Each vertex = a bar tensor (element of T^n(s^{-1}A))
       - Each edge = the bar propagator d log E(z,w)
       - Each face = the bar differential (collision)
@@ -1143,16 +1194,15 @@ def bar_complex_tensor_network(family: str, n_vertices: int = 5,
     For a tree graph with n vertices: the tensor network computes
     the n-point shadow amplitude l_Gamma.
 
-    The holographic interpretation:
-      - The tree = a time slice of the hyperbolic plane
-      - Each tensor = a bulk vertex (graviton interaction)
-      - The boundary = the asymptotic boundary of AdS
+    Algebraic holographic analogy:
+      - The tree is an algebraic shadow of a hyperbolic time slice
+      - Each tensor is a bar differential contribution
+      - A physical bulk interpretation requires a separate OCA comparison
 
-    The Ryu-Takayanagi formula S = A/(4G) emerges from:
-      - Area A = number of edges cut by the minimal surface
-      - 4G = 1/(2*kappa) (the inverse modular characteristic)
-      - S = 2*kappa * (edges cut) = (c/2) * (geodesic length)
-    which is the Calabrese-Cardy formula for a single interval.
+    The Ryu--Takayanagi comparison is not produced by this function.
+    It requires the external holographic dictionary of the manuscript.
+    Internally this routine only records the scalar Calabrese--Cardy
+    shadow and the bar-graph min-cut analogy.
 
     >>> result = bar_complex_tensor_network('heisenberg', 3)
     >>> result['num_vertices']
@@ -1202,10 +1252,17 @@ def bar_complex_tensor_network(family: str, n_vertices: int = 5,
                      + ' * log(L/eps)',
         },
         'tensor_network_type': 'bar complex tree graph',
+        'physical_bulk_reconstruction': False,
+        'physical_tensor_network_code': False,
+        'oca_comparison_required': True,
+        'physical_reconstruction_status': (
+            'requires derived-centre/BRST comparison and physical recovery maps'
+        ),
         'note': (
             'The bar complex tree graph is the algebraic analog of the HaPPY '
             'tensor network.  Each tensor is a bar differential contribution; '
-            'the network computes shadow amplitudes.'
+            'the network computes shadow amplitudes, not a physical bulk '
+            'factorization algebra.'
         ),
     }
 
@@ -1266,7 +1323,7 @@ def decoupling_bound(kappa_val, k_logical: int = 1) -> Dict:
 # ===========================================================================
 
 def compare_with_happy() -> Dict:
-    r"""Compare the Koszul code with the HaPPY code.
+    r"""Compare the algebraic Koszul skeleton with the HaPPY code.
 
     The HaPPY code (Pastawski-Yoshida-Harlow-Preskill 2015) is a
     holographic tensor network code built from perfect tensors on
@@ -1278,16 +1335,17 @@ def compare_with_happy() -> Dict:
       2. HaPPY uses orthogonal code structure;
          Koszul uses symplectic (Lagrangian) structure
       3. HaPPY has finite code distance d;
-         Koszul has arity-filtration distance 2 with
-         infinite redundancy channels for class M
+         the Koszul skeleton has arity proxy 2 with infinite formal
+         redundancy channels for class M
       4. HaPPY does not have a natural notion of shadow depth;
          the Koszul code has G/L/C/M classification
 
     Correspondences:
       - HaPPY perfect tensor <-> bar complex tensor at each vertex
       - HaPPY graph <-> bar complex graph
-      - HaPPY Ryu-Takayanagi <-> Koszul S_EE = (c/3) log(L/eps)
-      - HaPPY bulk reconstruction <-> Koszul Omega(B(A)) ~ A
+      - HaPPY Ryu--Takayanagi <-> Koszul scalar entropy analogy
+      - HaPPY wedge reconstruction <-> Koszul Omega(B(A)) ~ A as an
+        algebraic analogy, not a physical-bulk identification
 
     >>> result = compare_with_happy()
     >>> result['correspondence_count']
@@ -1305,18 +1363,26 @@ def compare_with_happy() -> Dict:
         'koszul_code': {
             'type': 'symplectic (Lagrangian)',
             'dimension': 'infinite (weight-graded)',
-            'distance': '2 (arity filtration) + infinite redundancy (class M)',
+            'distance': 'not determined; arity proxy 2 + formal redundancy (class M)',
             'tensor_type': 'bar differential tensors (graph amplitudes)',
             'graph': 'stable graphs on moduli space',
-            'rt_formula': 'S_EE = (c/3) log(L/eps) from shadow CohFT',
+            'rt_formula': 'scalar S_EE = (c/3) log(L/eps); RT requires external dictionary',
         },
         'correspondences': [
             ('Perfect tensor', 'Bar complex tensor', 'Both are multi-index tensors on a graph'),
-            ('Graph min-cut', 'Shadow tree min-cut', 'Both compute entanglement entropy'),
-            ('Bulk reconstruction', 'Bar-cobar inversion', 'Both recover bulk from boundary'),
+            ('Graph min-cut', 'Shadow tree min-cut',
+             'HaPPY computes code entropy; the Koszul side is a scalar shadow analogy'),
+            (
+                'Wedge reconstruction',
+                'Bar-cobar inversion',
+                'HaPPY reconstructs a code subregion; bar-cobar recovers the boundary chart A, not physical bulk',
+            ),
             ('Stabilizer code', 'Lagrangian code', 'Both have code/error decomposition'),
         ],
         'correspondence_count': 4,
+        'physical_bulk_identification': False,
+        'happy_equivalence': False,
+        'oca_comparison_required': True,
         'key_difference': (
             'The Koszul code is SYMPLECTIC (Verdier-isotropic summands), '
             'not orthogonal.  The cross-pairing has a sign flip: '
@@ -1343,8 +1409,9 @@ def compare_with_steane() -> Dict:
 
     However, at weight h = 3 for Heisenberg (rank 1):
       dim V_3 = p(3) = 3
-      Code: [[6, 3, 2]] (rate 1/2, distance 2)
-    This is a different structure (higher rate, lower distance).
+      Algebraic tuple: [[6, 3, 2]] (rate 1/2, arity proxy 2)
+    This is a different structure; the operational distance is not
+    determined by the tuple without a physical error model.
 
     >>> result = compare_with_steane()
     >>> result['rate_match']
@@ -1363,7 +1430,10 @@ def compare_with_steane() -> Dict:
         'closest_koszul': {
             'family': 'Heisenberg at weight 3',
             'params': (6, 3, 2),
-            'note': 'rate 1/2, distance 2 (higher rate, lower distance)',
+            'note': (
+                'rate 1/2, arity proxy 2; operational distance not '
+                'determined without a physical error model'
+            ),
         },
     }
 
@@ -1390,7 +1460,7 @@ def compare_with_toric() -> Dict:
       - Shadow depth: class G (Gaussian)
 
     The toric code's DISTANCE d = L grows with system size;
-    the Koszul code distance is 2 (arity filtration).
+    the Koszul arity proxy is 2.  These are different metrics.
     These are fundamentally different metrics.
 
     >>> result = compare_with_toric()
@@ -1414,14 +1484,17 @@ def compare_with_toric() -> Dict:
             'The lattice VOA V_{Z_2} provides a chiral algebra whose '
             'Lagrangian code structure encodes the same topological data. '
             'The difference: the toric code distance grows with L (spatial), '
-            'while the Koszul distance is 2 (arity filtration).'
+            'while the Koszul invariant here is only an arity proxy equal to 2.'
         ),
         'key_insight': (
             'The toric code lives at the TOPOLOGICAL level (TQFT); '
             'the Koszul code lives at the ALGEBRAIC level (chiral algebra). '
-            'The holographic dictionary connects them: the toric code is '
-            'the boundary code, and the Koszul code is the bulk code.'
+            'A holographic dictionary can compare them only after a typed '
+            'open/closed comparison; the Koszul code is not a physical bulk '
+            'code by itself.'
         ),
+        'physical_bulk_identification': False,
+        'oca_comparison_required': True,
     }
 
 
@@ -1457,6 +1530,8 @@ def full_code_dictionary(h_max: int = 10) -> List[Dict]:
             'N': params['N'],
             'K': params['K'],
             'D': params['D'],
+            'D_kind': params['D_kind'],
+            'physical_distance_status': params['physical_distance_status'],
             'rate': params['rate'],
             'shadow_class': 'G',
             'redundancy_channels': 0,
@@ -1470,6 +1545,8 @@ def full_code_dictionary(h_max: int = 10) -> List[Dict]:
         'N': aff_params['N'],
         'K': aff_params['K'],
         'D': aff_params['D'],
+        'D_kind': aff_params['D_kind'],
+        'physical_distance_status': aff_params['physical_distance_status'],
         'rate': aff_params['rate'],
         'shadow_class': 'L',
         'redundancy_channels': 1,
@@ -1483,6 +1560,8 @@ def full_code_dictionary(h_max: int = 10) -> List[Dict]:
         'N': bg_params['N'],
         'K': bg_params['K'],
         'D': bg_params['D'],
+        'D_kind': bg_params['D_kind'],
+        'physical_distance_status': bg_params['physical_distance_status'],
         'rate': bg_params['rate'],
         'shadow_class': 'C',
         'redundancy_channels': 2,
@@ -1496,6 +1575,8 @@ def full_code_dictionary(h_max: int = 10) -> List[Dict]:
         'N': vir_ising_params['N'],
         'K': vir_ising_params['K'],
         'D': vir_ising_params['D'],
+        'D_kind': vir_ising_params['D_kind'],
+        'physical_distance_status': vir_ising_params['physical_distance_status'],
         'rate': vir_ising_params['rate'],
         'shadow_class': 'M',
         'redundancy_channels': -1,
@@ -1511,6 +1592,8 @@ def full_code_dictionary(h_max: int = 10) -> List[Dict]:
         'N': vir_sd_params['N'],
         'K': vir_sd_params['K'],
         'D': vir_sd_params['D'],
+        'D_kind': vir_sd_params['D_kind'],
+        'physical_distance_status': vir_sd_params['physical_distance_status'],
         'rate': vir_sd_params['rate'],
         'shadow_class': 'M',
         'redundancy_channels': -1,
@@ -1557,7 +1640,7 @@ def code_summary_report(h_max: int = 10) -> str:
         "",
         "All codes are SYMPLECTIC (Lagrangian, not orthogonal).",
         "Rate = 1/2 universally (Lagrangian = half-dimensional).",
-        "Distance = 2 (arity filtration) for all families.",
+        "D_arity = 2 for all families; operational distance is external.",
         "Redundancy channels determined by shadow depth.",
     ])
 

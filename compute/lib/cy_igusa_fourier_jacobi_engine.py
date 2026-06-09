@@ -102,6 +102,110 @@ from compute.lib.cy_modular_k3e_engine import (
     sigma_k,
 )
 
+HUMBERT_HEEGNER_NEARBY_REQUIRED_DATA = (
+    'Humbert divisors H_D defined with D > 0 and D = 0 or 1 mod 4',
+    'admissible Heegner union fixed',
+    'bi-unipotent Malcev ladder proved',
+    'codim-3 transversality theorem proved',
+    'codim-4 emptiness theorem proved',
+    'nearby-cycle functor psi_nw defined',
+    'bar filtration compatibility with nearby cycles proved',
+    'lim^1 obstruction formula proved',
+    'phi_{-2,1} Fourier coefficient convention fixed',
+    'Baily-Borel compatibility proved',
+)
+
+
+def humbert_divisor_definition(D: int) -> Dict[str, Any]:
+    """Define the Humbert divisor H_D with the standard discriminant filter."""
+    admissible = D > 0 and D % 4 in (0, 1)
+    return {
+        'label': f'H_{D}',
+        'discriminant': D,
+        'admissible_discriminant': admissible,
+        'congruence_condition': 'D > 0 and D mod 4 in {0,1}',
+        'h4_sqrt2_warning': D == 4,
+        'status': 'defined' if admissible else 'invalid_discriminant',
+    }
+
+
+def admissible_heegner_union(discriminants: Tuple[int, ...]) -> Dict[str, Any]:
+    """Finite admissible Heegner union from Humbert discriminants."""
+    divisors = tuple(humbert_divisor_definition(D) for D in discriminants)
+    admissible = tuple(d for d in divisors if d['admissible_discriminant'])
+    rejected = tuple(d for d in divisors if not d['admissible_discriminant'])
+    return {
+        'input_discriminants': discriminants,
+        'admissible_labels': tuple(d['label'] for d in admissible),
+        'rejected_labels': tuple(d['label'] for d in rejected),
+        'union_defined': len(admissible) > 0 and len(rejected) == 0,
+        'divisors': divisors,
+    }
+
+
+def phi_m21_coefficient(n: int, l: int, nmax: int = 12) -> Dict[str, Any]:
+    r"""Fourier coefficient of phi_{-2,1} in EZ convention."""
+    if n < 0:
+        raise ValueError(f"n must be nonnegative, got {n}")
+    if n >= nmax:
+        nmax = n + 2
+    coeffs = phi_m21_fourier(nmax)
+    D = 4 * n - l * l
+    return {
+        'form': 'phi_{-2,1}',
+        'normalization': 'Eichler-Zagier, phi_{-2,1}=y-2+y^{-1}+O(q)',
+        'n': n,
+        'l': l,
+        'discriminant': D,
+        'coefficient': coeffs.get((n, l), 0),
+        'source': 'cy_modular_k3e_engine.phi_m21_fourier',
+    }
+
+
+def humbert_heegner_nearby_cycle_scope(
+    humbert_divisors_defined: bool = False,
+    admissible_heegner_union_defined: bool = False,
+    malcev_ladder_proved: bool = False,
+    codim3_transversality_proved: bool = False,
+    codim4_emptiness_proved: bool = False,
+    nearby_cycle_functor_defined: bool = False,
+    bar_filtration_compatibility_proved: bool = False,
+    lim1_obstruction_formula_proved: bool = False,
+    phi_m21_coefficient_defined: bool = False,
+    baily_borel_compatibility_proved: bool = False,
+) -> Dict[str, Any]:
+    """Gate Humbert/Heegner/nearby-cycle recognition claims."""
+    supplied = {
+        'Humbert divisors H_D defined with D > 0 and D = 0 or 1 mod 4': humbert_divisors_defined,
+        'admissible Heegner union fixed': admissible_heegner_union_defined,
+        'bi-unipotent Malcev ladder proved': malcev_ladder_proved,
+        'codim-3 transversality theorem proved': codim3_transversality_proved,
+        'codim-4 emptiness theorem proved': codim4_emptiness_proved,
+        'nearby-cycle functor psi_nw defined': nearby_cycle_functor_defined,
+        'bar filtration compatibility with nearby cycles proved': bar_filtration_compatibility_proved,
+        'lim^1 obstruction formula proved': lim1_obstruction_formula_proved,
+        'phi_{-2,1} Fourier coefficient convention fixed': phi_m21_coefficient_defined,
+        'Baily-Borel compatibility proved': baily_borel_compatibility_proved,
+    }
+    missing = tuple(
+        item for item in HUMBERT_HEEGNER_NEARBY_REQUIRED_DATA
+        if not supplied[item]
+    )
+    return {
+        'missing_hypotheses': missing,
+        'full_humbert_heegner_nearby_claim_allowed': not missing,
+        'nearby_cycle_bar_compatibility_status': (
+            'proved' if bar_filtration_compatibility_proved else 'conditional_open'
+        ),
+        'lim1_obstruction_status': (
+            'proved' if lim1_obstruction_formula_proved else 'conditional_open'
+        ),
+        'baily_borel_compatibility_status': (
+            'proved' if baily_borel_compatibility_proved else 'conditional_open'
+        ),
+        'status': 'proved_on_supplied_surface' if not missing else 'conditional_open',
+    }
+
 
 # =====================================================================
 # Section 0: Independent product-formula computation of Jacobi forms

@@ -69,6 +69,16 @@ from typing import Dict, List, Optional, Tuple
 from sympy import Rational
 
 
+TRIPLET_WP_KOSZUL_HYPOTHESES = (
+    "explicit bar complex for the screening-kernel VOA",
+    "relations in the C2 quotient lifted to filtered bar relations",
+    "PBW or replacement spectral sequence with controlled higher differentials",
+    "Kac-Shapovalov nondegeneracy in the bar-relevant range",
+    "strict finite-weight or completed Mittag-Leffler passage",
+    "vanishing of the high-degree Hochschild defect complex",
+)
+
+
 # =========================================================================
 # Central charge (verified, 3 paths)
 # =========================================================================
@@ -113,8 +123,10 @@ def generator_data(p: int) -> Dict:
       'Strongly generated' means these fields generate W(p) under
       normal ordering and derivatives.
       'FREELY strongly generated' means additionally that there are
-      NO relations among the normally ordered monomials.
-      The former is proved; the latter is OPEN.
+      NO relations among the normally ordered monomials.  This is false
+      for W(p): C_2-cofiniteness forces polynomial relations in the
+      C_2 quotient, so the finite positive-weight generator set is not
+      freely strongly generated.
     """
     h_W = 2 * p - 1
     return {
@@ -129,8 +141,15 @@ def generator_data(p: int) -> Dict:
         'W_weight': h_W,
         'T_multiplicity': 1,
         'W_multiplicity': 3,
-        'strongly_generated': True,       # PROVED (Adamovic-Milas)
-        'freely_strongly_generated': None,  # OPEN
+        'strongly_generated': True,          # PROVED (Adamovic-Milas)
+        'freely_strongly_generated': False,  # PROVED false by C_2-cofiniteness
+        'non_free_generation': True,
+        'non_free_reason': (
+            'C_2-cofiniteness makes W(p)/C_2(W(p)) finite-dimensional; '
+            'a freely strongly generated positive-weight VOA would have '
+            'a polynomial, hence infinite-dimensional, C_2 quotient.'
+        ),
+        'c2_cofinite': True,
     }
 
 
@@ -230,14 +249,15 @@ def ope_data(p: int) -> Dict:
 def koszulness_status(p: int) -> Dict:
     """Koszulness status for W(p).
 
-    STATUS: OPEN for all p >= 2.
+    STATUS: CONJECTURAL/OPEN for all p >= 2.
 
     What would prove Koszulness:
-      (a) Show W(p) is freely strongly generated (PBW character = actual).
-          Then prop:pbw-universality gives Koszulness.
+      (a) Give a replacement for the free-PBW argument compatible with
+          the known C_2 relations.
       (b) Show the Kac-Shapovalov determinant is nonzero in the
           bar-relevant range (thm:kac-shapovalov-koszulness).
-      (c) Direct bar complex computation showing H^n(B(W(p))) = 0 for n >= 2.
+      (c) Direct bar complex computation showing the high-degree
+          Hochschild defect complex vanishes.
 
     What would disprove Koszulness:
       (a) Find a null vector in the bar-relevant range (conformal weight
@@ -258,16 +278,22 @@ def koszulness_status(p: int) -> Dict:
         'p': p,
         'c': triplet_central_charge(p),
         'kappa': triplet_kappa(p),
-        'status': 'OPEN',
+        'status': 'CONJECTURAL_OPEN',
+        'koszulness_conjecture': 'W(p) is chirally Koszul after logarithmic completion',
+        'koszulness_proved': False,
         'generators': gen,
         'ope': ope,
         'bar_relevant_start': bar_relevant_start,
-        'pbw_universality_applicable': None,  # requires free strong gen
+        'c2_cofinite': True,
+        'freely_strongly_generated': False,
+        'non_free_generation': True,
+        'pbw_universality_applicable': False,  # free strong generation fails
         'kac_shapovalov_applicable': None,    # requires Shapovalov analysis
         'obstructions_to_koszulness': [
-            'W-W OPE produces composites that may not be freely generated',
+            'W-W OPE produces composites subject to non-free C_2 relations',
             'C_2-cofiniteness does not imply Koszulness',
             'Non-semisimple Zhu algebra may reflect bar obstructions',
+            'High-degree Hochschild defect has not been proved zero',
         ],
         'evidence_for_koszulness': [
             'Parent lattice VOA is Koszul',
@@ -275,11 +301,61 @@ def koszulness_status(p: int) -> Dict:
             'No known counterexample (no proof of non-Koszulness)',
         ],
         'definitive_test': (
-            'Compare the PBW character (4 generators: 1 at wt 2, 3 at wt 2p-1) '
-            'with the actual W(p) vacuum character from Adamovic-Milas (2008). '
-            'Match => freely strongly generated => Koszul. '
-            'PBW > actual => null vectors => Koszulness requires different argument.'
+            'Compute finite-window PBW excess and the high-degree Hochschild '
+            'defect for the 4 generators (1 at wt 2, 3 at wt 2p-1). '
+            'Finite-window agreement is evidence only; global Koszulness '
+            'requires the logarithmic bar package.'
         ),
+    }
+
+
+def high_degree_hochschild_defect(p: int) -> Dict:
+    """High-degree Hochschild defect for the triplet W(p) surface.
+
+    This is the object that must vanish before Theorem H concentration can
+    be asserted for W(p).  It is defined here, not computed away.
+    """
+    gen = generator_data(p)
+    return {
+        'p': p,
+        'object': f'KD_H^bullet(W({p}))',
+        'ambient': 'logarithmic VOA / completed finite-weight bar complex',
+        'theorem_h_applies': False,
+        'defect_defined': True,
+        'defect_vanishing_proved': False,
+        'high_degree_range': 'bar/Hochschild degrees >= 3',
+        'generators': gen['generator_list'],
+        'obstruction_sources': (
+            'non-free C_2 quotient relations',
+            'non-semisimple Zhu algebra',
+            'pseudo-trace modular sector',
+            'unresolved Kac-Shapovalov determinant in bar-relevant range',
+        ),
+        'resolution_requires': TRIPLET_WP_KOSZUL_HYPOTHESES,
+    }
+
+
+def triplet_wp_scope_report(p: int) -> Dict:
+    """Typed status report for the triplet W(p) repair lane."""
+    gen = generator_data(p)
+    defect = high_degree_hochschild_defect(p)
+    return {
+        'p': p,
+        'object': f'W({p}) triplet VOA',
+        'central_charge': triplet_central_charge(p),
+        'kappa': triplet_kappa(p),
+        'c2_cofiniteness_status': 'proved_elsewhere',
+        'c2_cofinite': True,
+        'strong_generation_status': 'proved_elsewhere',
+        'generators': gen['generator_list'],
+        'n_generators': gen['n_generators'],
+        'non_free_generation_status': 'proved_from_C2_cofiniteness',
+        'freely_strongly_generated': False,
+        'koszulness_status': 'conjectural_open',
+        'koszulness_proved': False,
+        'koszulness_hypotheses': TRIPLET_WP_KOSZUL_HYPOTHESES,
+        'missing_for_koszulness': TRIPLET_WP_KOSZUL_HYPOTHESES,
+        'high_degree_hochschild_defect': defect,
     }
 
 
@@ -288,7 +364,8 @@ def pbw_vs_virasoro(p: int, max_weight: int = 15) -> Dict:
 
     The Virasoro sub-VOA character is a LOWER BOUND for the W(p) character
     (W(p) contains the Virasoro sub-VOA). The PBW character is an
-    UPPER BOUND (actual <= PBW, with equality iff freely strongly generated).
+    UPPER BOUND (actual <= PBW in a finite window; equality is
+    finite-window evidence only, not global free strong generation).
     """
     vir = virasoro_pbw_character(max_weight)
     pbw = triplet_pbw_character(p, max_weight)
@@ -381,6 +458,7 @@ def proved_vs_open(p: int) -> Dict:
       - Central charge c(p) = 1 - 6(p-1)^2/p
       - kappa(W(p)) = c(p)/2
       - Strong generation by T (wt 2) and W^a (wt 2p-1), a=+,0,-
+      - Non-free strong generation, forced by C_2-cofiniteness
       - C_2-cofiniteness (Adamovic-Milas 2008)
       - Zhu algebra dim = 2p, non-semisimple (Adamovic-Milas 2008)
       - 2p simple modules (Adamovic-Milas 2008)
@@ -390,7 +468,6 @@ def proved_vs_open(p: int) -> Dict:
       - kappa + kappa^! = 13 (Virasoro complementarity, AP24)
 
     OPEN:
-      - Free strong generation (no null vectors among normal-ordered products)
       - Chiral Koszulness (bar cohomology concentration)
       - PBW spectral sequence collapse
       - Kac-Shapovalov determinant in bar-relevant range
@@ -406,6 +483,8 @@ def proved_vs_open(p: int) -> Dict:
             'kappa': kappa,
             'strong_generation': True,
             'n_generators': 4,
+            'freely_strongly_generated': False,
+            'non_free_generation': True,
             'c2_cofinite': True,
             'zhu_dim': 2 * p,
             'zhu_semisimple': False,
@@ -414,12 +493,13 @@ def proved_vs_open(p: int) -> Dict:
             'shadow_class': 'M',
             'obs_1': kappa / 24,
             'complementarity_sum': 13,
+            'high_degree_hochschild_defect_defined': True,
         },
         'open': {
-            'freely_strongly_generated': None,
             'koszul': None,
             'pbw_collapse': None,
             'kac_shapovalov_nondegenerate': None,
             'bar_cohomology_dimensions': None,
+            'high_degree_hochschild_defect_vanishes': None,
         },
     }

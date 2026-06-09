@@ -43,7 +43,8 @@ CONSTRUCTIVE MODULAR LIFT (class L specific):
       (a) The shadow tower terminates (S_r = 0 for r >= 4), giving
           polynomial genus-g amplitudes in (kappa, S_3).
       (b) HS-sewing (thm:general-hs-sewing) guarantees convergence.
-      (c) The MC equation D^2 = 0 holds at all genera (thm:ambient-d-squared-zero).
+      (c) The ambient MC equation is conditional on the signed log-FM
+          residue-pushforward/coherence package (thm:ambient-d-squared-zero).
 
 COMPARISON WITH CLASS G (Heisenberg):
     For class G (S_3 = 0), the lift is trivial: F_g = kappa * lambda_g^FP
@@ -440,7 +441,9 @@ class ModularLift:
       (1) The shadow tower terminates at S_3 (r_max = 3).
       (2) Each genus-g amplitude is a polynomial in (kappa, S_3).
       (3) HS-sewing guarantees convergence (thm:general-hs-sewing).
-      (4) D^2 = 0 at all genera (thm:ambient-d-squared-zero).
+      (4) Ambient D^2 = 0 at all genera is conditional on the signed
+          log-FM residue-pushforward/coherence package
+          (thm:ambient-d-squared-zero).
 
     The key distinction from class G (Heisenberg):
       Class G: delta_pf = 0 at all genera.  F_g = kappa * lambda_g^FP.
@@ -464,7 +467,8 @@ class ModularLift:
         shadow_tower_terminates: True (class L)
         termination_arity: 3 (class L)
         hs_sewing_proved: True (thm:general-hs-sewing)
-        mc_equation_proved: True (thm:ambient-d-squared-zero)
+        mc_equation_proved: False on the ambient relative-log route;
+            mc_equation_status records the conditional signed-package gate.
         is_constructive: True (class L)
     """
     N: int
@@ -478,6 +482,8 @@ class ModularLift:
     termination_arity: int
     hs_sewing_proved: bool
     mc_equation_proved: bool
+    mc_equation_status: str
+    mc_equation_requires: List[str]
     is_constructive: bool
 
 
@@ -511,7 +517,15 @@ def build_modular_lift(
         shadow_tower_terminates=True,
         termination_arity=3,
         hs_sewing_proved=True,
-        mc_equation_proved=True,
+        mc_equation_proved=False,
+        mc_equation_status='CONDITIONAL',
+        mc_equation_requires=[
+            'signed log-FM residue-pushforward package',
+            'determinant-line signs',
+            'proper pushforwards',
+            'finite-stabilizer normalisations',
+            'homotopy-coherent codimension-two comparisons',
+        ],
         is_constructive=True,
     )
 

@@ -81,7 +81,7 @@ HOLOGRAPHIC PACKAGE AND MODULAR-KOSZUL PROJECTIONS
   - A = N=4 SCA at c=6 tensor H_1, in the sigma/CDR compute package
   - A^i = H^*(B(A)), the bar-dual coalgebra
   - A^! = Verdier/Koszul branch; not Omega(B(A))
-  - C = chiral derived centre Z^{der}_ch(A) (universal bulk)
+  - C = chiral derived centre Z^{der}_ch(A) (algebraic closed-sector vertex)
   - r(z) = binary genus-0 collision r-matrix from the N=4 OPE
   - Theta_A = universal MC element (bar-intrinsic construction)
   - nabla^hol = shadow connection from Q_L
@@ -1114,10 +1114,10 @@ def holographic_datum_k3xe() -> Dict[str, Any]:
         "A_dual": koszul_dual_k3xe(),
         "C": {
             "object": "Z^{der}_ch(A_{K3xE})",
-            "definition": "chiral derived centre = universal bulk",
+            "definition": "chiral derived centre = algebraic closed-sector vertex",
             "hh_dimensions": hh_dimensions_k3xe(),
             "hh_total": hh_total_dim_k3xe(),
-            "note": "AP34: derived centre != bar complex, A^i, or A^!; C classifies bulk operators",
+            "note": "AP34: derived centre != bar complex, A^i, or A^!; physical bulk requires HT comparison data",
         },
         "r_matrix": n4_ope_structure(),
         "Theta_A": {

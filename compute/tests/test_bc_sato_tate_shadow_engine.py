@@ -166,8 +166,8 @@ class TestFamilyCoeffs:
 
     def test_betagamma_terminates(self):
         S = _get_shadow_coeffs('betagamma', 1, 20)
-        # betagamma lambda=1: c = -2, kappa = -1
-        assert abs(S[2] - (-1.0)) < 1e-12
+        # betagamma lambda=1: c = 2, kappa = 1
+        assert abs(S[2] - 1.0) < 1e-12
         assert abs(S[3]) < 1e-15  # no cubic
         # S_4 nonzero
         assert abs(S[4]) > 1e-15

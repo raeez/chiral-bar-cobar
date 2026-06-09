@@ -63,7 +63,8 @@ CONVENTIONS (from CLAUDE.md anti-patterns):
   AP25:  B(A), A^i, A^!, Omega(B(A)), and Z_ch^der(A) are typed apart
   AP29:  delta_kappa != kappa_eff (distinct objects)
   AP33:  H_k^! = Sym^ch(V*) != H_{-k}
-  AP34:  bar-cobar inversion != open-to-closed; derived center = bulk
+  AP34:  bar-cobar inversion != open-to-closed; derived center is the
+         algebraic closed-sector vertex
   AP39:  kappa != c/2 for general VOA; kappa = c/2 only for Virasoro
   AP48:  kappa depends on the whole algebra, not its Virasoro subalgebra
 

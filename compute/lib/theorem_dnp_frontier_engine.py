@@ -38,7 +38,7 @@ COMPUTATION of m_3^{SC}:
 
   From the shadow-formality identification (prop:shadow-formality-low-arity):
     m_3^{SC}(T, T, T) = S_3(Vir_c) * Lambda_T
-  where S_3(Vir_c) = -12/(c(5c + 22)) (the cubic shadow coefficient).
+  where S_3(Vir_c) = 2 (the c-independent cubic shadow coefficient).
 
 VERIFICATION PATHS:
   Path 1: Direct extraction from ordered bar differential at arity 3
@@ -111,33 +111,14 @@ def shadow_S3_virasoro(c: Fraction) -> Fraction:
     r"""Cubic shadow S_3 for Virasoro at central charge c.
 
     From the shadow obstruction tower (higher_genus_modular_koszul.tex):
-      S_3(Vir_c) = -12 / (c * (5c + 22))
+      S_3(Vir_c) = 2.
 
     This is the arity-3 projection of Theta_A on the T primary line.
-    It is nonzero for all c != 0 and c != -22/5.
-
-    CONVENTION CHECK: The cubic shadow S_3 is the coefficient of t^3
-    in the shadow generating function H(t) = 2*kappa*t^2 * sqrt(Q_L(t)/Q_L(0)).
-    For Virasoro: kappa = c/2, alpha = -12/(c*(5c+22)) * (normalization).
-    The explicit formula: S_3 = (3*alpha)/(2*kappa) where alpha is the cubic
-    coupling in Q_L = (2*kappa + 3*alpha*t)^2 + 2*Delta*t^2.
-
-    Actually from the Virasoro shadow data:
-      alpha_Vir = -2 (from the OPE structure T_{(1)}T = 2T, after normalization)
-      S_3 = alpha / kappa = -2 / (c/2) = -4/c
-
-    CORRECTION: S_3 is the arity-3 shadow coefficient extracted from the
-    recursive tower. For Virasoro:
-      H(t) satisfies H'' + (Q'/2Q)H' = (stuff) with Q(t) = c^2 + 12ct + ...
-      The arity-3 coefficient from the Taylor expansion gives
-      S_3 = -4/c.
-
-    This is cross-checked against compute/lib/shadow_tower_recursive.py
-    and compute/lib/virasoro_ainfty_explicit.py.
+    It is nonzero and c-independent on the nondegenerate Virasoro lane.
     """
     if c == 0:
         raise ValueError("S_3 undefined at c = 0 (degenerate)")
-    return FR(-4, 1) / c
+    return FR(2)
 
 
 def shadow_S3_heisenberg(k: Fraction) -> Fraction:
@@ -233,7 +214,7 @@ def sc_m3_virasoro_primary(c: Fraction) -> Dict[str, Any]:
       m_3^{SC}(T, T, T) = S_3(c) * Lambda_T
 
     where Lambda_T is the quartic-Casimir-direction composite and
-    S_3(c) = -4/c is the cubic shadow.
+    S_3(c) = 2 is the c-independent cubic shadow.
 
     For the coefficient in the Lambda_T direction:
     The m_3 extracts the non-exact part of the descendant correction,
@@ -283,12 +264,10 @@ def sc_m3_virasoro_primary(c: Fraction) -> Dict[str, Any]:
     # This element, when hit by m_2 with T, gives a contribution proportional
     # to the conformal weight structure, yielding:
     #
-    # m_3_coefficient = -2 * 2 / c = -4/c = S_3(c)
-    #
-    # (The -2 comes from the T_{(1)}T = 2T action on the descendant,
-    #  and the 2/c comes from the vacuum normalization c/2.)
+    # In the normalized scalar shadow convention, the descendant/vacuum
+    # factors cancel and the cubic coefficient is S_3 = 2.
 
-    m3_coefficient_path1 = FR(-4, 1) / c
+    m3_coefficient_path1 = FR(2)
 
     # Path 2: Shadow-formality identification
     m3_coefficient_path2 = S3
@@ -501,17 +480,13 @@ def sc_m3_virasoro_koszul_dual_consistency(c: Fraction) -> Dict[str, Any]:
     r"""Verify that m_3^{SC} transforms correctly under Koszul duality.
 
     Virasoro at c has Koszul dual Virasoro at 26 - c.
-    The cubic shadow transforms as:
-      S_3(c) = -4/c
-      S_3(26 - c) = -4/(26 - c)
-
-    These are NOT negatives of each other (Koszul duality does not
-    simply negate the shadow, it transforms the central charge).
+    The cubic shadow is c-independent:
+      S_3(c) = S_3(26 - c) = 2.
 
     The complementarity relation for S_3:
-      S_3(c) + S_3(26-c) = -4/c - 4/(26-c) = -4*26 / (c*(26-c))
+      S_3(c) + S_3(26-c) = 4.
 
-    This is nonzero (unlike kappa + kappa' for KM, which IS zero;
+    This is nonzero (unlike kappa + kappa' for KM, which is zero;
     for Virasoro, kappa + kappa' = 13 by AP24).
     """
     c_dual = FR(26) - c
@@ -519,8 +494,7 @@ def sc_m3_virasoro_koszul_dual_consistency(c: Fraction) -> Dict[str, Any]:
     S3_dual = shadow_S3_virasoro(c_dual)
     S3_sum = S3 + S3_dual
 
-    # The sum should be -4*26 / (c*(26-c)) = -104 / (c*(26-c))
-    expected_sum = FR(-104) / (c * c_dual)
+    expected_sum = FR(4)
 
     return {
         'central_charge': c,
@@ -532,8 +506,7 @@ def sc_m3_virasoro_koszul_dual_consistency(c: Fraction) -> Dict[str, Any]:
         'sum_consistent': S3_sum == expected_sum,
         'note': (
             'Unlike kappa+kappa\'=13 (constant for Virasoro), '
-            'S_3+S_3\' depends on c. The complementarity structure '
-            'at arity 3 is richer than at arity 2.'
+            'S_3+S_3\'=4 is constant in the normalized cubic-shadow lane.'
         ),
     }
 
@@ -544,8 +517,8 @@ def sc_m3_virasoro_self_dual_point() -> Dict[str, Any]:
     At c = 13, Virasoro is Koszul self-dual: Vir_13^! = Vir_13.
     The full shadow tower is self-dual (prop:c13-full-self-duality).
 
-    For S_3: S_3(13) = -4/13.
-    S_3_dual = S_3(26 - 13) = S_3(13) = -4/13.
+    For S_3: S_3(13) = 2.
+    S_3_dual = S_3(26 - 13) = S_3(13) = 2.
     So S_3 IS self-dual at c = 13, as expected.
     """
     c = FR(13)
@@ -558,7 +531,7 @@ def sc_m3_virasoro_self_dual_point() -> Dict[str, Any]:
         'S3_at_dual': S3_dual,
         'self_dual': S3 == S3_dual,
         'value': float(S3),
-        'note': 'At c=13, S_3 = S_3\' = -4/13 (self-dual)',
+        'note': 'At c=13, S_3 = S_3\' = 2 (self-dual)',
     }
 
 
@@ -581,14 +554,13 @@ def two_loop_line_correction_virasoro(c: Fraction) -> Dict[str, Any]:
     - m_3^{SC} != 0 is the 2-loop correction (class M non-formality)
 
     The 2-loop correction is:
-      delta_{2-loop} OPE(T, T, T) = m_3^{SC}(T, T, T) = (-4/c) * Lambda
+      delta_{2-loop} OPE(T, T, T) = m_3^{SC}(T, T, T) = 2 * Lambda
 
-    This is SUPPRESSED at large c (large central charge = classical limit)
-    and ENHANCED at small c (strongly coupled regime).
+    This scalar shadow coefficient is c-independent; the central charge
+    dependence lives in S_2 = kappa = c/2 and in higher coefficients such
+    as S_4.
 
-    At c = 26 (bosonic string): m_3 = -4/26 = -2/13.
-    At c = 1 (Ising-like): m_3 = -4.
-    At c = 13 (self-dual): m_3 = -4/13.
+    At c = 26, c = 1, and c = 13, the cubic coefficient is 2.
     """
     m3 = shadow_S3_virasoro(c)
 
@@ -596,9 +568,9 @@ def two_loop_line_correction_virasoro(c: Fraction) -> Dict[str, Any]:
         'central_charge': c,
         'm3_SC': m3,
         'loop_order': 2,
-        'suppression': f'1/c scaling at large c',
-        'large_c_regime': 'classical limit, m_3 -> 0',
-        'small_c_regime': 'strongly coupled, m_3 diverges',
+        'suppression': 'none: S_3 is c-independent',
+        'large_c_regime': 'S_3 remains 2; no 1/c suppression',
+        'small_c_regime': 'S_3 remains 2 away from degenerate c=0',
         'c26_value': float(shadow_S3_virasoro(FR(26))),
         'c1_value': float(shadow_S3_virasoro(FR(1))),
         'c13_value': float(shadow_S3_virasoro(FR(13))),

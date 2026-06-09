@@ -27,6 +27,8 @@ from compute.lib.lattice_voa_shadows import (
     verify_class_G,
     genus_expansion,
     complementarity,
+    lattice_scope_report,
+    LATTICE_VOA_HYPOTHESES,
     r_matrix_data,
     d4_shadow_data,
     e8_shadow_data,
@@ -370,19 +372,25 @@ class TestComplementarity:
         assert comp['kappa_dual'] == Rational(-24)
 
     def test_d4_not_self_dual(self):
-        """D_4 is NOT Koszul self-dual (det(Gram) = 4, not unimodular)."""
+        """D_4 is not bar-coalgebra or Koszul-algebra self-dual."""
         comp = complementarity(4, is_unimodular=False)
         assert not comp['koszul_self_dual']
+        assert not comp['bar_coalgebra_self_dual']
+        assert not comp['koszul_algebra_self_dual']
 
     def test_e8_self_dual(self):
-        """E_8 IS Koszul self-dual (unimodular)."""
+        """E_8 is bar-coalgebra self-dual, not Koszul-algebra self-dual."""
         comp = complementarity(8, is_unimodular=True)
-        assert comp['koszul_self_dual']
+        assert comp['bar_coalgebra_self_dual']
+        assert not comp['koszul_algebra_self_dual']
+        assert not comp['koszul_self_dual']
 
     def test_leech_self_dual(self):
-        """Leech IS Koszul self-dual (unimodular)."""
+        """Leech is bar-coalgebra self-dual, not Koszul-algebra self-dual."""
         comp = complementarity(24, is_unimodular=True)
-        assert comp['koszul_self_dual']
+        assert comp['bar_coalgebra_self_dual']
+        assert not comp['koszul_algebra_self_dual']
+        assert not comp['koszul_self_dual']
 
     @pytest.mark.parametrize("rank", [1, 2, 3, 4, 5, 8, 16, 24])
     def test_complementarity_universal(self, rank):
@@ -400,6 +408,41 @@ class TestComplementarity:
         assert comp['kappa'] == Rational(1)
         assert comp['kappa_dual'] == Rational(-1)
         assert comp['complementarity_sum'] == 0
+
+
+# =========================================================================
+# 4b. Lattice scope report
+# =========================================================================
+
+class TestLatticeScopeReport:
+    """Executable object firewall for lattice VOA claims."""
+
+    def test_scope_report_hypotheses(self):
+        report = lattice_scope_report('E_8', 8, gram_det=1, is_unimodular=True)
+        assert report['hypotheses'] == LATTICE_VOA_HYPOTHESES
+        assert report['missing_hypotheses'] == ()
+        assert report['valid_voa_surface']
+
+    def test_unimodular_scope_separates_duals(self):
+        report = lattice_scope_report('E_8', 8, gram_det=1, is_unimodular=True)
+        assert report['bar_coalgebra_self_dual']
+        assert not report['koszul_algebra_self_dual']
+        assert report['kappa'] == Rational(8)
+        assert report['kappa_dual'] == Rational(-8)
+        assert report['kappa_complementarity_sum'] == 0
+
+    def test_nonunimodular_scope_requires_discriminant_form(self):
+        report = lattice_scope_report('D_4', 4, gram_det=4, is_unimodular=False)
+        assert not report['bar_coalgebra_self_dual']
+        assert report['discriminant_order'] == 4
+        assert report['theta_claim_requires_discriminant_form']
+        assert 'vector-valued theta surface' in report['theta_status']
+
+    def test_missing_even_lattice_blocks_voa_surface(self):
+        report = lattice_scope_report('odd rank one', 1, gram_det=1, is_even=False)
+        assert not report['valid_voa_surface']
+        assert 'even lattice' in report['missing_hypotheses']
+        assert report['koszul_claim_status'] == 'conditional'
 
 
 # =========================================================================

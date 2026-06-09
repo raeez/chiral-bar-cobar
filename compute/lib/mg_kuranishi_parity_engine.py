@@ -1,6 +1,6 @@
 r"""Kuranishi map parity analysis at genus 2 for multi-weight algebras.
 
-FRONTIER COMPUTATION.  The current proof that obs_g = kappa * lambda_g
+FRONTIER COMPUTATION.  The current proof that obs_g^sc = kappa * lambda_g
 for UNIFORM-WEIGHT algebras uses two ingredients:
 
   (A) Cyclic rigidity: dim H^2_cyc(A,A) = 1, forcing the minimal MC
@@ -290,7 +290,7 @@ def heisenberg_cyclic_cohomology_genus2() -> CyclicCohomologyData:
     Heisenberg has a single generator of weight 1 (uniform weight).
     dim H^2_cyc = 1 at all genera.
     No mixed channels (single generator).
-    Parity argument works: obs_g = kappa * lambda_g PROVED at all genera.
+    Parity argument works: obs_g^sc = kappa * lambda_g PROVED at all genera.
     """
     return CyclicCohomologyData(
         genus=2,
@@ -303,7 +303,7 @@ def heisenberg_cyclic_cohomology_genus2() -> CyclicCohomologyData:
         parity_grading_intact=True,
         notes=(
             "Single generator: no mixed channels at any genus. "
-            "obs_g = kappa * lambda_g is PROVED at all genera."
+            "obs_g^sc = kappa * lambda_g is PROVED at all genera."
         ),
     )
 
@@ -326,7 +326,7 @@ def virasoro_cyclic_cohomology_genus2() -> CyclicCohomologyData:
         parity_grading_intact=True,
         notes=(
             "Single generator: no mixed channels. "
-            "obs_g = kappa * lambda_g is PROVED at all genera on the "
+            "obs_g^sc = kappa * lambda_g is PROVED at all genera on the "
             "uniform-weight lane."
         ),
     )
@@ -756,7 +756,7 @@ def classify_parity_obstruction(
     For uniform-weight algebras (all generators same weight):
       - There is only one channel type.
       - Mixed channels are impossible at ANY genus.
-      - obs_g = kappa * lambda_g is PROVED at all genera.
+      - obs_g^sc = kappa * lambda_g is PROVED at all genera.
 
     For multi-weight algebras:
       - Mixed channels exist at genus >= 2.

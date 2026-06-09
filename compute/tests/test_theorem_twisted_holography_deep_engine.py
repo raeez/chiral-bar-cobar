@@ -222,7 +222,7 @@ class TestAxis1ZengBoundaryDefect:
     def test_boundary_bulk_derived_center_distinction_ap34(self):
         """AP34: bar-cobar inversion != open-to-closed.
 
-        The bulk is the derived center, distinct from the bar complex.
+        The closed-sector model is the derived center, distinct from the bar complex.
         """
         A = make_boundary_sl_N(2, Fraction(1))
         triangle = construct_triangle(A)
@@ -394,7 +394,7 @@ class TestAxis4ReproducibleComputations:
         assert r.kz_denominator == Fraction(2)
 
     def test_collision_residue_heisenberg_scalar(self):
-        """r(z) = k/z for Heisenberg (scalar)."""
+        """r(z) = k*Omega_H/z (rank-one coeff k/z) for Heisenberg (rank-one abelian)."""
         A = make_boundary_heisenberg(Fraction(3))
         r = compute_collision_residue(A)
         assert r.r_matrix_type == "scalar/z"
@@ -795,7 +795,7 @@ class TestDerivedCenter:
     """Verify derived center properties (AP34, AP-OC)."""
 
     def test_derived_center_is_bulk(self):
-        """The bulk is the derived center, distinct from the bar complex."""
+        """The closed-sector model is the derived center, distinct from the bar complex."""
         A = make_boundary_sl_N(2, Fraction(1))
         center = compute_derived_center(A)
         assert center.is_not_bar_complex

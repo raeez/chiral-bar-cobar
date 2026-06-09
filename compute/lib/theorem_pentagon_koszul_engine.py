@@ -658,10 +658,12 @@ def pbw_spectral_sequence_sl2(k_val: Rational, max_bar_degree: int = 4
 
 
 def koszul_equivalences_status() -> Dict[str, Any]:
-    r"""Status of the 12 Koszulness equivalences from thm:koszul-equivalences-meta.
+    r"""Status of the 12 Koszulness items from thm:koszul-equivalences-meta.
 
-    This encodes the proved equivalence circuit and flags which items
-    are directly related to the Gaiotto-Khan categorification.
+    This encodes the seven independent bidirectional equivalences, the
+    listed consequence, conditional comparisons, and one-way items,
+    while flagging which rows are directly related to the Gaiotto-Khan
+    categorification.
     """
     equivalences = {
         '(i)': {
@@ -691,17 +693,17 @@ def koszul_equivalences_status() -> Dict[str, Any]:
         },
         '(vi)': {
             'name': 'Barr-Beck-Lurie monadicity',
-            'status': 'unconditional',
+            'status': 'listed-consequence',
             'gk_connection': 'categorical enhancement of (v)',
         },
         '(vii)': {
             'name': 'FH concentration',
-            'status': 'unconditional',
+            'status': 'conditional',
             'gk_connection': 'indirect (factorization homology)',
         },
         '(viii)': {
             'name': 'ChirHoch polynomial',
-            'status': 'unconditional',
+            'status': 'one-way',
             'gk_connection': 'indirect (Hochschild)',
         },
         '(ix)': {
@@ -729,8 +731,12 @@ def koszul_equivalences_status() -> Dict[str, Any]:
     # Count
     unconditional = sum(1 for v in equivalences.values()
                         if v['status'] == 'unconditional')
+    listed = sum(1 for v in equivalences.values()
+                 if v['status'] == 'listed-consequence')
     conditional = sum(1 for v in equivalences.values()
                       if v['status'].startswith('conditional'))
+    one_way = sum(1 for v in equivalences.values()
+                  if v['status'].startswith('one-way'))
     partial = sum(1 for v in equivalences.values()
                   if v['status'].startswith('one-directional'))
 
@@ -740,7 +746,9 @@ def koszul_equivalences_status() -> Dict[str, Any]:
     return {
         'total': len(equivalences),
         'unconditional': unconditional,
+        'listed_consequences': listed,
         'conditional': conditional,
+        'one_way_consequences': one_way,
         'partial': partial,
         'equivalences': equivalences,
         'gk_direct_items': gk_direct,

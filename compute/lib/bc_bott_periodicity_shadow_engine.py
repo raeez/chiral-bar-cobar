@@ -857,7 +857,8 @@ def thom_class_bar(family: str, **params) -> ThomClassData:
 
     For Koszul algebras, PBW degeneration gives:
         chi(B(A)) = chi(A^i) = chi(A^!)
-    where A^i is the bar cohomology and A^! = (A^i)^v is the Koszul dual.
+    where A^i is the bar cohomology and A^! is reached from (A^i)^v only
+    after the finite/completed Verdier-linear dual branch exists.
 
     The Chern character is:
         ch(xi_bar) = exp(kappa * [omega])

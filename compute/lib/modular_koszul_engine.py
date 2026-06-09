@@ -7,7 +7,7 @@ the existing specialized modules.
 Pipeline stages:
   1. OPE validation and identity extraction
   2. Bar complex dimensions
-  3. Shadow Postnikov tower through finite arity
+  3. Shadow obstruction tower through finite arity
   4. Shadow metric Q_L, discriminant Delta, depth class G/L/C/M
   5. Shadow connection nabla^sh, monodromy, parallel transport
   6. Koszulness diagnosis (FH concentration + resonance rank)

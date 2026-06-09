@@ -977,7 +977,7 @@ class TestNonIntegerC:
         assert exact[2] == Fraction(7, 20)  # kappa = 7/20
 
     def test_c_25(self):
-        """c = 25 (near self-dual c=26-1=25, dual c'=1)."""
+        """c = 25 (near critical c=26; Koszul dual c'=1, not self-dual)."""
         exact = virasoro_shadow_coefficients_exact(25, max_r=5)
         assert exact[2] == Fraction(25, 2)
 

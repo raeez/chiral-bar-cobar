@@ -1028,7 +1028,7 @@ class TestRMatrixPoleOrders:
     def test_heisenberg_r_matrix(self):
         """Heisenberg: OPE pole 2, r-matrix pole 1.
         OPE: J(z)J(w) ~ k/(z-w)^2.
-        r-matrix: r(z) = k/z (single pole).
+        r-matrix: r(z) = k*Omega_H/z (rank-one coeff k/z) (single pole).
         """
         L = heisenberg_lca()
         pfa = build_vicedo_prefactorization(L)

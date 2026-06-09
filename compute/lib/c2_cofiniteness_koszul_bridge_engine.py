@@ -35,10 +35,13 @@ KEY THEOREMS ON C_2-COFINITENESS:
 
 CHIRAL KOSZULNESS (this monograph):
   V is chirally Koszul if bar cohomology H*(B(V)) is concentrated in
-  bar degree 1 (def:chiral-koszul-morphism). Equivalently, any of the
-  10 unconditional equivalences of thm:koszul-equivalences-meta:
-  PBW E_2 collapse, A_infinity formality, Ext diagonal vanishing,
-  bar-cobar inversion, factorization homology concentration, etc.
+  bar degree 1 (def:chiral-koszul-morphism). The exact
+  thm:koszul-equivalences-meta split is seven independent
+  bidirectional equivalences, one listed Barr-Beck-Lurie consequence,
+  one conditional factorization-homology comparison, one one-way
+  ChirHoch consequence, one shifted-symplectic-package-conditional
+  Lagrangian criterion, and one one-directional D-module purity
+  implication.
 
 THE BRIDGE:
   (1) Koszulness => C_2-cofiniteness? NO in general.

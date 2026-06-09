@@ -12,10 +12,13 @@ CONCENTRATED IN DEGREES [0, 2].  Explicitly
       ChirHoch^n(A) = ChirHoch^{2-n}(A^!)^v tensor omega_X
       (thm:main-koszul-hoch).
 
-The amplitude [0, 2] is forced by dim_C X = 1: the de Rham functor on
-the curve has cohomological length 2.  This degree bound applies UNIFORMLY
-to every Koszul chiral algebra in the standard landscape, including
-the W-algebra family (Virasoro, W_3, W_N, ...).
+The amplitude [0, 2] is forced on the Theorem H surface: PBW chiral
+Koszulness, E_infty-chiral completion, finite-type/perfect diagonal
+Hochschild complexes, generic non-critical parameter, strict
+Mittag-Leffler passage, and the PBW/Arnold Shelton-Yuzvinsky
+contraction.  Outside that package the high-degree tail is measured by
+the Hochschild Koszul-defect complex KD_H^bullet(A), not by this finite
+table.
 
 ---- AP94 RECTIFICATION (supersedes prior model) --------------------
 
@@ -52,6 +55,14 @@ Virasoro bounded data (generic c, Koszul per prop:virasoro-koszul-acyclic):
   dim ChirHoch^2(Vir_c) = dim Z(Vir_c^!)            = 1
   P_{Vir}(t) = 1 + t^2, total dim 2.
 
+Simple-pole free-field data (generic curve-level chiral product):
+  dim ChirHoch^1(beta-gamma) = dim ChirHoch^1(bc) = 0.
+  Charge/ghost-number rescalings are zero-mode gauge directions, and
+  the conformal-weight parameter changes the chosen stress tensor rather
+  than the chiral product.  The same simple-pole mechanism gives
+  dim ChirHoch^1(free fermion) = 0.  Thus these three entries have
+  P(t) = 1 + t^2 on the Theorem H surface.
+
 W_N bounded data (generic level, principal nilpotent f_prin):
   dim ChirHoch^0 = 1, dim ChirHoch^1 = 0, dim ChirHoch^2 = 1.
   P_{W_N}(t) = 1 + t^2, total dim 2.
@@ -74,7 +85,7 @@ from typing import Any, Dict, List, Optional, Tuple
 # Family data
 # ============================================================
 
-# Every family is in the bounded Koszul regime (Theorem H).
+# Every family in FAMILY_DATA is a generic entry on the Theorem H surface.
 # Each entry:
 #   regime:          always 'bounded_koszul'
 #   n_strong_gen:    number of strong generators
@@ -85,11 +96,27 @@ from typing import Any, Dict, List, Optional, Tuple
 #   koszul_dual:     name of the Koszul dual family
 #   notes:           additional context
 #
-# The W-algebra families (virasoro, w3, wN) are Koszul at generic
-# level; by Theorem H their ChirHoch is concentrated in [0, 2] with
-# dim <= 4.  The prior polynomial-ring model is REFUTED.
+# The W-algebra families (virasoro, w3, wN) are recorded only at generic
+# level on the PBW/completed/strict-ML surface; by Theorem H their
+# ChirHoch is concentrated in [0, 2].  The prior polynomial-ring model is
+# REFUTED.
 
 BOUNDED_KOSZUL = 'bounded_koszul'
+THEOREM_H_DEFECT_COMPLEX = 'KD_H^bullet(A)'
+THEOREM_H_HYPOTHESES = (
+    'PBW chiral Koszulness',
+    'E_infty-chiral completion',
+    'finite-type/perfect diagonal chiral Hochschild complexes',
+    'generic non-critical parameter',
+    'strict Mittag-Leffler completion passage',
+    'PBW/Arnold Shelton-Yuzvinsky contraction',
+)
+THEOREM_H_EXCLUDED_SURFACES = (
+    'critical affine level k = -h^vee',
+    'minimal-model and admissible quotients unless PBW/completion is proved',
+    'logarithmic triplet W(p) unless the logarithmic bar package is proved',
+    'bare rationality, C2-cofiniteness, or finite module category alone',
+)
 
 FAMILY_DATA: Dict[str, dict] = {
     'heisenberg': {
@@ -141,10 +168,12 @@ FAMILY_DATA: Dict[str, dict] = {
         'n_strong_gen': 2,
         'gen_weights': [1, 0],
         'center_dim': 1,
-        'hoch1_dim': 2,
+        'hoch1_dim': 0,
         'dual_center_dim': 1,
         'koszul_dual': 'bc_ghosts',
         'notes': 'Two generators beta (weight 1), gamma (weight 0). '
+                 'The charge rescaling is zero-mode gauge and the lambda '
+                 'weight motion changes the stress tensor, not ChirHoch^1. '
                  'Koszul dual = bc ghost system.',
     },
     'bc_ghosts': {
@@ -152,10 +181,12 @@ FAMILY_DATA: Dict[str, dict] = {
         'n_strong_gen': 2,
         'gen_weights': [2, -1],
         'center_dim': 1,
-        'hoch1_dim': 2,
+        'hoch1_dim': 0,
         'dual_center_dim': 1,
         'koszul_dual': 'betagamma',
         'notes': 'Two generators b (weight 2), c (weight -1). '
+                 'Ghost-number rescaling is zero-mode gauge and the lambda '
+                 'weight motion changes the stress tensor, not ChirHoch^1. '
                  'Koszul dual = betagamma.',
     },
     'free_fermion': {
@@ -163,11 +194,13 @@ FAMILY_DATA: Dict[str, dict] = {
         'n_strong_gen': 1,
         'gen_weights': [1],
         'center_dim': 1,
-        'hoch1_dim': 1,
+        'hoch1_dim': 0,
         'dual_center_dim': 1,
         'koszul_dual': 'free_fermion_dual',
         'notes': 'Single fermionic weight-1/2 generator (graded as weight 1 '
-                 'in the bar complex). Odd parity.',
+                 'in the bar complex). Simple-pole Clifford innerness kills '
+                 'ChirHoch^1; the bilinear rescaling is a degree-2 product '
+                 'deformation. Odd parity.',
     },
     'virasoro': {
         'regime': BOUNDED_KOSZUL,
@@ -218,6 +251,45 @@ FAMILY_DATA: Dict[str, dict] = {
                  'contributes r weight-1 generators.',
     },
 }
+
+
+def theorem_h_scope_record(family: Optional[str] = None,
+                           applies: Optional[bool] = None,
+                           reason: Optional[str] = None) -> Dict[str, Any]:
+    """Return the exact scope record for Theorem H.
+
+    Theorem H is a curve-level chiral Hochschild statement at Beilinson
+    level 3.  A family in FAMILY_DATA is a generic PBW/completed entry on
+    that surface.  Any wider family must carry KD_H^bullet(A) and prove
+    high-degree acyclicity before claiming amplitude [0,2].
+    """
+    known_generic_family = family in FAMILY_DATA if family is not None else True
+    if applies is None:
+        applies = known_generic_family
+    return {
+        'claim': 'ChirHoch amplitude [0,2]',
+        'type_signature': {
+            'quadrant': 'Open-Chain',
+            'presentation': 'curve-level chiral Hochschild cochains',
+            'level': 3,
+            'hypothesis_package': 'Theorem H PBW/generic/completed/strict-ML package',
+        },
+        'family': family,
+        'applies': bool(applies),
+        'status': 'proved_on_scope' if applies else 'outside_scope',
+        'hypotheses': THEOREM_H_HYPOTHESES,
+        'defect_complex': None if applies else THEOREM_H_DEFECT_COMPLEX,
+        'high_degree_acyclicity_proved': bool(applies),
+        'missing_if_off_surface': (
+            () if applies else (
+                'define KD_H^bullet(A)',
+                'prove H^n(KD_H^bullet(A)) = 0 for n >= 4',
+                'prove the degree-three boundary map controls ChirHoch^3',
+            )
+        ),
+        'excluded_surfaces': THEOREM_H_EXCLUDED_SURFACES,
+        'reason': reason,
+    }
 
 
 def _lcm(a: int, b: int) -> int:
@@ -277,7 +349,7 @@ def quadratic_total_dim(family: str) -> int:
     """Total dimension P_A(1) for a bounded Koszul family.
 
     P_A(1) = dim Z(A) + dim ChirHoch^1(A) + dim Z(A^!).
-    Always finite (Theorem H concentration in {0,1,2}).
+    Finite on the Theorem H PBW/generic/completed surface.
     """
     data = FAMILY_DATA[family]
     assert data['regime'] == BOUNDED_KOSZUL
@@ -297,8 +369,8 @@ class RefutedModelError(NotImplementedError):
     """Raised when caller tries to use the refuted polynomial-ring model.
 
     See AP94, AP128 in CLAUDE.md.  ChirHoch*(W^k(g)) is NOT the
-    polynomial ring C[Theta_1, ..., Theta_r]; under Theorem H it has
-    amplitude [0, 2] and dim <= 4.
+    polynomial ring C[Theta_1, ..., Theta_r]; on the Theorem H generic
+    PBW/completed surface it has amplitude [0, 2].
     """
 
 
@@ -504,13 +576,19 @@ def _get_gen_degrees(family: str, **kwargs) -> List[int]:
 def verify_concentration(family: str, **kwargs) -> dict:
     """Verify concentration: ChirHoch^n = 0 for n outside [0, 2].
 
-    Under Theorem H this holds for EVERY Koszul chiral family: the
-    de Rham functor on a curve forces amplitude [0, 2].  The refuted
-    W-algebra polynomial-ring model (which predicted unbounded
-    support) is no longer an exception.
+    This verifies a family already placed on the Theorem H
+    PBW/generic/completed/strict-ML surface.  Outside that surface the
+    output object is KD_H^bullet(A), and concentration is not asserted.
     """
     data = FAMILY_DATA[family]
-    result = {'family': family, 'regime': data['regime'], 'passed': True, 'details': {}}
+    scope = theorem_h_scope_record(family)
+    result = {
+        'family': family,
+        'regime': data['regime'],
+        'passed': True,
+        'details': {},
+        'theorem_h_scope': scope,
+    }
 
     if data['regime'] == BOUNDED_KOSZUL:
         for n in range(-3, 0):
@@ -600,14 +678,18 @@ def verify_koszul_duality_hochschild(family: str) -> dict:
 def verify_theorem_h(family: str, **kwargs) -> dict:
     """Full verification of all Theorem H claims for one family.
 
-    Every Koszul family is in the bounded regime under Theorem H.
+    The input family must be one of the generic PBW/completed entries
+    carried by FAMILY_DATA.  The verification result returns the scope
+    record explicitly.
     """
     data = FAMILY_DATA[family]
+    scope = theorem_h_scope_record(family)
     result = {
         'family': family,
         'regime': data['regime'],
         'passed': True,
         'checks': {},
+        'theorem_h_scope': scope,
     }
 
     result['checks']['generator_count'] = generator_count(family, **kwargs)
@@ -749,21 +831,28 @@ def exterior_algebra_verification(family: str) -> dict:
 # ============================================================
 
 def non_koszul_failure_example() -> dict:
-    """Demonstrate that Theorem H fails for non-Koszul algebras.
+    """Return an off-Theorem-H surface governed by KD_H^bullet(A).
 
-    A non-Koszul chiral algebra would have bar cohomology NOT concentrated
-    on the diagonal, so the spectral sequence would NOT collapse and
-    ChirHoch* would fall outside amplitude [0, 2].
+    A non-Koszul chiral algebra can have bar cohomology not concentrated
+    on the diagonal, so the spectral sequence need not collapse.  The
+    correct conclusion is not a bare failure theorem; it is that
+    Theorem H is unavailable until KD_H^bullet(A) is defined and proved
+    acyclic in the relevant high degrees.
 
     Example: the simple quotient L_k(g) at an admissible level k can
     fail to be Koszul (vacuum null vectors obstruct PBW), leading to
     Hochschild concentration outside [0, 2].
     """
     return {
-        'description': 'Non-Koszul failure: simple quotient L_k(g) at admissible level',
+        'description': 'Off-Theorem-H surface: simple quotient L_k(g) at admissible level',
+        'theorem_h_scope': theorem_h_scope_record(
+            family='admissible_simple_quotient',
+            applies=False,
+            reason='admissible quotient is not in the generic PBW/completed package',
+        ),
         'mechanism': 'Vacuum null vectors prevent PBW concentration, '
                      'spectral sequence has nontrivial differentials, '
-                     'Hochschild not concentrated in [0,2]',
+                     'Hochschild concentration must be proved through KD_H^bullet(A)',
         'example': 'L_{-1/2}(sl_2) at admissible level k = -1/2',
         'known_data': {
             'ChirHoch^0': 1,  # center = C
@@ -774,9 +863,9 @@ def non_koszul_failure_example() -> dict:
                     'True non-concentration requires non-rational '
                     'non-Koszul algebras.',
         },
-        'structural_prediction': 'For genuinely non-Koszul algebras, '
-                                  'E_2 differentials produce nonzero '
-                                  'ChirHoch^n for n > 2.',
+        'structural_prediction': 'For a genuinely non-Koszul algebra, '
+                                  'H^n(KD_H^bullet(A)) controls the '
+                                  'high-degree ChirHoch tail.',
     }
 
 
@@ -959,22 +1048,22 @@ THEOREM_H_STATUS: Dict[str, dict] = {
     'betagamma': {
         'status': 'PROVED',
         'regime': BOUNDED_KOSZUL,
-        'poincare': [1, 2, 1],
-        'detail': 'P(t) = 1 + 2t + t^2. Two generators. Koszul dual = bc.',
+        'poincare': [1, 0, 1],
+        'detail': 'P(t) = 1 + t^2. Charge/weight motions are not curve-level ChirHoch^1. Koszul dual = bc.',
         'ref': 'thm:hochschild-polynomial-growth',
     },
     'bc_ghosts': {
         'status': 'PROVED',
         'regime': BOUNDED_KOSZUL,
-        'poincare': [1, 2, 1],
-        'detail': 'P(t) = 1 + 2t + t^2. Two generators. Koszul dual = betagamma.',
+        'poincare': [1, 0, 1],
+        'detail': 'P(t) = 1 + t^2. Ghost-number/weight motions are not curve-level ChirHoch^1. Koszul dual = betagamma.',
         'ref': 'thm:hochschild-polynomial-growth',
     },
     'free_fermion': {
         'status': 'PROVED',
         'regime': BOUNDED_KOSZUL,
-        'poincare': [1, 1, 1],
-        'detail': 'P(t) = 1 + t + t^2. One fermionic generator.',
+        'poincare': [1, 0, 1],
+        'detail': 'P(t) = 1 + t^2. Simple-pole Clifford innerness kills ChirHoch^1.',
         'ref': 'thm:hochschild-polynomial-growth',
     },
     'virasoro': {
@@ -1400,7 +1489,7 @@ def palindromicity_derived(family: str) -> Dict[str, Any]:
 if __name__ == '__main__':
     print("=== Theorem H: Hochschild Polynomial Growth (bounded amplitude) ===\n")
 
-    print("--- Bounded Koszul regime (concentration in [0,2], dim <= 4) ---")
+    print("--- Theorem H generic PBW/completed scope (concentration in [0,2]) ---")
     for family in ['heisenberg', 'affine_sl2', 'affine_sl3',
                     'betagamma', 'bc_ghosts', 'free_fermion',
                     'virasoro', 'w3']:

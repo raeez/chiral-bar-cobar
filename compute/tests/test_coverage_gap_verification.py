@@ -362,8 +362,8 @@ class TestSelfDualHalving:
 # ===========================================================================
 # Test Suite 3: lem:perfectness-criterion (Shapovalov nondegeneracy)
 #
-# For the Lagrangian criterion K11 to be unconditional, we need the
-# Shapovalov form to be nondegenerate at each conformal weight.
+# For the Lagrangian criterion K11, Shapovalov nondegeneracy verifies
+# only the perfectness input of the shifted-symplectic package.
 # Verify via explicit computation for Heisenberg (weight 1-6) and
 # Virasoro (weight 2-6) at generic parameters.
 # ===========================================================================

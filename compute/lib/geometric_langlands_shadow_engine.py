@@ -1225,7 +1225,7 @@ def bar_koszul_object_firewall() -> Dict[str, Dict[str, str]]:
         'Z_der_ch_A': {
             'notation': 'Z_der_ch(A) = C^*_ch(A, A)',
             'type': 'chiral Hochschild/derived-center bulk object',
-            'role': 'universal bulk; not B_X(A), A^i, A!, or Omega_X(B_X(A))',
+            'role': 'algebraic closed sector; not B_X(A), A^i, A!, or Omega_X(B_X(A))',
         },
     }
 

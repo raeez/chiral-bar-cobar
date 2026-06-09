@@ -18,7 +18,10 @@ import unittest
 from fractions import Fraction
 
 from compute.lib.cy_igusa_fourier_jacobi_engine import (
+    HUMBERT_HEEGNER_NEARBY_REQUIRED_DATA,
+    admissible_heegner_union,
     phi_m21_product,
+    phi_m21_coefficient,
     phi101_product,
     phi101_qy_expansion,
     phi101_disc_coeffs,
@@ -43,6 +46,8 @@ from compute.lib.cy_igusa_fourier_jacobi_engine import (
     verify_cusp_dimensions,
     verify_phi101_weight_index,
     full_igusa_data,
+    humbert_divisor_definition,
+    humbert_heegner_nearby_cycle_scope,
     dvv_literature_table,
 )
 
@@ -68,6 +73,71 @@ def _independent_delta_tau_n(n):
     if n in known_tau:
         return known_tau[n]
     return None
+
+
+# =====================================================================
+# Humbert--Heegner and nearby-cycle recognition gates
+# =====================================================================
+
+class TestHumbertHeegnerNearbyGates(unittest.TestCase):
+    """Test Humbert/Heegner/nearby-cycle gate discipline."""
+
+    def test_humbert_discriminant_filter(self):
+        """H_D is admissible only for D > 0 and D = 0 or 1 mod 4."""
+        self.assertTrue(humbert_divisor_definition(1)['admissible_discriminant'])
+        self.assertTrue(humbert_divisor_definition(4)['admissible_discriminant'])
+        self.assertFalse(humbert_divisor_definition(2)['admissible_discriminant'])
+        self.assertFalse(humbert_divisor_definition(0)['admissible_discriminant'])
+        self.assertTrue(humbert_divisor_definition(4)['h4_sqrt2_warning'])
+
+    def test_admissible_heegner_union_rejects_bad_discriminant(self):
+        """A finite Heegner union is not defined if a bad D is included."""
+        ok = admissible_heegner_union((1, 4, 5, 8))
+        bad = admissible_heegner_union((1, 2, 4))
+        self.assertTrue(ok['union_defined'])
+        self.assertEqual(ok['admissible_labels'], ('H_1', 'H_4', 'H_5', 'H_8'))
+        self.assertFalse(bad['union_defined'])
+        self.assertEqual(bad['rejected_labels'], ('H_2',))
+
+    def test_phi_m21_coefficient_convention(self):
+        """The phi_{-2,1} coefficient is returned with n,l,D and EZ convention."""
+        c01 = phi_m21_coefficient(0, 1)
+        c00 = phi_m21_coefficient(0, 0)
+        self.assertEqual(c01['coefficient'], 1)
+        self.assertEqual(c01['discriminant'], -1)
+        self.assertEqual(c00['coefficient'], -2)
+        self.assertEqual(c00['discriminant'], 0)
+        self.assertIn('Eichler-Zagier', c01['normalization'])
+
+    def test_nearby_cycle_scope_missing_by_default(self):
+        """No nearby-cycle or Baily-Borel theorem is allowed by default."""
+        scope = humbert_heegner_nearby_cycle_scope()
+        self.assertEqual(scope['missing_hypotheses'],
+                         HUMBERT_HEEGNER_NEARBY_REQUIRED_DATA)
+        self.assertFalse(scope['full_humbert_heegner_nearby_claim_allowed'])
+        self.assertEqual(scope['nearby_cycle_bar_compatibility_status'],
+                         'conditional_open')
+        self.assertEqual(scope['lim1_obstruction_status'], 'conditional_open')
+        self.assertEqual(scope['baily_borel_compatibility_status'],
+                         'conditional_open')
+
+    def test_nearby_cycle_scope_unlocks_only_with_all_data(self):
+        """The full claim requires every Humbert/Heegner/nearby-cycle gate."""
+        scope = humbert_heegner_nearby_cycle_scope(
+            humbert_divisors_defined=True,
+            admissible_heegner_union_defined=True,
+            malcev_ladder_proved=True,
+            codim3_transversality_proved=True,
+            codim4_emptiness_proved=True,
+            nearby_cycle_functor_defined=True,
+            bar_filtration_compatibility_proved=True,
+            lim1_obstruction_formula_proved=True,
+            phi_m21_coefficient_defined=True,
+            baily_borel_compatibility_proved=True,
+        )
+        self.assertEqual(scope['missing_hypotheses'], ())
+        self.assertTrue(scope['full_humbert_heegner_nearby_claim_allowed'])
+        self.assertEqual(scope['status'], 'proved_on_supplied_surface')
 
 
 # =====================================================================
@@ -1178,4 +1248,3 @@ class TestBPSPolarStructure(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-

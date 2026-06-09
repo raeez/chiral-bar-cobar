@@ -85,6 +85,64 @@ from compute.lib.chiral_hochschild_engine import (
 )
 
 
+ROOT = Path(__file__).resolve().parents[2]
+CHIRAL_CENTER_TEX = ROOT / "chapters" / "theory" / "chiral_center_theorem.tex"
+CHIRAL_HOCHSCHILD_TEX = (
+    ROOT / "chapters" / "theory" / "chiral_hochschild_koszul.tex"
+)
+THEOREM_A_TEX = ROOT / "chapters" / "theory" / "theorem_A_infinity_2.tex"
+
+
+def test_geometric_algebraic_chirhoch_switch_uses_named_proposition():
+    """Model switches use the named bridge, not remark-level identification."""
+    center = CHIRAL_CENTER_TEX.read_text()
+    target = CHIRAL_HOCHSCHILD_TEX.read_text()
+
+    assert r"\label{prop:geometric-algebraic-hochschild}" in center
+    assert r"Theorem~\ref{thm:geometric-equals-operadic-bar}" in center
+    assert "At genus~$\\ge 1$, the geometric model carries" in center
+    assert "curve-dependent data" in center
+
+    assert r"Proposition~\ref{prop:geometric-algebraic-hochschild}" in target
+    assert "logarithmic/completed finite-piece hypotheses" in target
+    assert (
+        r"comparison of Proposition~\ref{prop:geometric-algebraic-hochschild}"
+        in target
+    )
+    assert r"Remark~\ref{rem:comparison-geometric-hoch}, this geometric" not in target
+    assert r"comparison of Remark~\ref{rem:comparison-geometric-hoch}" not in target
+
+
+def test_endch_spectral_variables_are_formal_laurent_not_fm_definition():
+    """End^ch_A is algebraic; FM geometry enters by comparison."""
+    center = CHIRAL_CENTER_TEX.read_text()
+    theorem_a = THEOREM_A_TEX.read_text()
+    active = "\n".join([center, theorem_a])
+    center_flat = " ".join(center.split())
+    active_flat = " ".join(active.split())
+
+    assert r"\label{rem:endch-spectral-variable-layering}" in center
+    assert r"\label{def:chiral-endomorphism-operad}" in center
+    assert "operation spaces are multilinear maps with values in iterated formal Laurent" in center_flat
+    assert "Fulton--MacPherson geometry enters only through a comparison theorem" in center_flat
+    assert "formal completion along the total diagonal" in center_flat
+    assert "geometric FM/log-form model, formal-disk" in center_flat
+    assert r"Proposition~\ref{prop:geometric-algebraic-hochschild}" in center
+    assert r"Proposition~\ref{prop:bd-algebraic-bridge}" in center
+    assert "it is not the definition\nof $\\End^{\\mathrm{ch}}_A$" in center
+    assert "after formal-disk restriction\nof ordered Ran configurations" in theorem_a
+
+    for forbidden in [
+        "Spectral parameters from FM_k(C)",
+        "End^ch_A is defined by FM",
+        "FM_k(C) defines End^ch_A",
+        "FM enters the definition of End^ch_A",
+        "formal variables on $\\Ran^{\\ord}(X)$",
+    ]:
+        if forbidden in active_flat:
+            raise AssertionError(f"forbidden phrase remained: {forbidden}")
+
+
 # ===================================================================
 # I. ChirHoch^0 = Z(A) — center computation
 # ===================================================================
@@ -268,45 +326,45 @@ class TestChirHoch1W3:
 
 
 class TestChirHoch1Betagamma:
-    """ChirHoch^1(βγ) = C^2 (charge rescaling + weight deformation)."""
+    """ChirHoch^1(βγ) = 0 on the curve-level chiral product surface."""
 
     def test_dim_h1(self):
         da = derivation_analysis(betagamma_data())
-        assert da.dim_chirhoch1 == 2
+        assert da.dim_chirhoch1 == 0
 
-    def test_two_derivation_types(self):
+    def test_charge_rescaling_is_inner(self):
         da = derivation_analysis(betagamma_data())
-        assert len(da.derivation_types) == 2
+        assert da.derivation_types["charge_rescaling_inner_zero_mode"] == 1
+        assert da.inner_derivations == 1
 
-    def test_charge_rescaling(self):
+    def test_weight_deformation_is_parameter_metadata(self):
         da = derivation_analysis(betagamma_data())
-        assert 'charge_rescaling' in da.derivation_types
-
-    def test_weight_deformation(self):
-        da = derivation_analysis(betagamma_data())
-        assert 'weight_deformation' in da.derivation_types
+        assert da.derivation_types["conformal_weight_not_chiral_derivation"] == 0
+        assert da.parameter_tangents["conformal_weight_lambda"] == 1
 
 
 class TestChirHoch1BcGhosts:
-    """ChirHoch^1(bc) = C^2 (by Koszul duality with βγ)."""
+    """ChirHoch^1(bc) = 0 (by Koszul duality with βγ)."""
 
     def test_dim_h1(self):
         da = derivation_analysis(bc_ghosts_data())
-        assert da.dim_chirhoch1 == 2
+        assert da.dim_chirhoch1 == 0
 
     def test_matches_betagamma(self):
         """dim ChirHoch^1(bc) = dim ChirHoch^1(βγ) by Koszul duality."""
         da_bc = derivation_analysis(bc_ghosts_data())
         da_bg = derivation_analysis(betagamma_data())
         assert da_bc.dim_chirhoch1 == da_bg.dim_chirhoch1
+        assert da_bc.parameter_tangents["conformal_weight_lambda"] == 1
 
 
 class TestChirHoch1FreeFermion:
-    """ChirHoch^1(ψ) = C (bilinear rescaling)."""
+    """ChirHoch^1(ψ) = 0; bilinear rescaling is degree 2."""
 
     def test_dim_h1(self):
         da = derivation_analysis(free_fermion_data())
-        assert da.dim_chirhoch1 == 1
+        assert da.dim_chirhoch1 == 0
+        assert da.parameter_tangents["bilinear_rescaling_degree_2"] == 1
 
 
 class TestChirHoch1KMParametric:
@@ -357,15 +415,15 @@ class TestHilbertPolynomial:
 
     def test_betagamma(self):
         poly = compute_hochschild_polynomial(betagamma_data())
-        assert poly.coefficients == [1, 2, 1]
+        assert poly.coefficients == [1, 0, 1]
 
     def test_bc_ghosts(self):
         poly = compute_hochschild_polynomial(bc_ghosts_data())
-        assert poly.coefficients == [1, 2, 1]
+        assert poly.coefficients == [1, 0, 1]
 
     def test_free_fermion(self):
         poly = compute_hochschild_polynomial(free_fermion_data())
-        assert poly.coefficients == [1, 1, 1]
+        assert poly.coefficients == [1, 0, 1]
 
     def test_w_algebra_raises(self):
         """W-algebras are not in quadratic regime — polynomial not defined."""
@@ -392,9 +450,9 @@ class TestPolynomialProperties:
         assert poly.euler_characteristic == -6
 
     def test_betagamma_euler_char(self):
-        """χ(βγ) = 1 - 2 + 1 = 0."""
+        """χ(βγ) = 1 - 0 + 1 = 2."""
         poly = compute_hochschild_polynomial(betagamma_data())
-        assert poly.euler_characteristic == 0
+        assert poly.euler_characteristic == 2
 
     def test_palindromic_all_families(self):
         """P_A(t) is palindromic for all standard quadratic families
@@ -782,13 +840,13 @@ class TestCrossFamilyConsistency:
         assert result['euler_full'] == -1
 
     def test_betagamma_bc_euler_product(self):
-        """χ(βγ) · χ(bc) = 0 · 0 = 0."""
+        """χ(βγ) · χ(bc) = 2 · 2 = 4."""
         r = verify_euler_char_additivity(betagamma_data(), bc_ghosts_data())
-        assert r['chi_A'] == 0
-        assert r['chi_B'] == 0
-        assert r['product'] == 0
-        assert r['chi_tensor_full'] == 0
-        assert r['P_product_full'] == [1, 4, 6, 4, 1]
+        assert r['chi_A'] == 2
+        assert r['chi_B'] == 2
+        assert r['product'] == 4
+        assert r['chi_tensor_full'] == 4
+        assert r['P_product_full'] == [1, 0, 2, 0, 1]
 
 
 # ===================================================================

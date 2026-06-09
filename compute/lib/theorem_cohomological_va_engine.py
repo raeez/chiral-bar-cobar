@@ -813,7 +813,7 @@ class HigherDimShadowAnalysis:
     2. HODGE CLASSES: lambda_g = c_g(E_1) lives on M-bar_g. For n >= 2,
        the Hodge bundle is replaced by higher-dimensional cohomology sheaves
        R^i pi_* omega, and there is no single "lambda class" to produce
-       the scalar obstruction obs_g = kappa * lambda_g.
+       the scalar obstruction obs_g^sc = kappa * lambda_g.
 
     3. SEWING: The bar propagator d log E(z,w) sews curves by identifying
        punctures. For n >= 2, sewing must identify codimension-1 boundaries,
@@ -837,7 +837,7 @@ class HigherDimShadowAnalysis:
        algebraic and extend to any dimension.
 
     CONCLUSION (Theorem CVA-5):
-        The shadow obstruction tower in its SCALAR form (obs_g = kappa * lambda_g)
+        The shadow obstruction tower in its SCALAR form (obs_g^sc = kappa * lambda_g)
         is specific to dimension 1. The algebraic ingredients (kappa, Koszulness,
         curved A-infinity) extend. The genus expansion as a whole requires a
         higher-dimensional modular operad structure that does not yet exist.
@@ -863,7 +863,7 @@ class HigherDimShadowAnalysis:
         return True
 
     def shadow_tower_scalar_extends(self) -> bool:
-        """obs_g = kappa * lambda_g does NOT extend for dim >= 2.
+        """obs_g^sc = kappa * lambda_g does NOT extend for dim >= 2.
 
         The lambda class lives on M-bar_g, which is specific to curves.
         """

@@ -5,7 +5,7 @@ The key datum is sl_2 total = 5 > 4, which forces correction of Theorem H.
 
 Test categories:
     1. Individual family dimensions (manuscript ground truth)
-    2. Concentration in degrees {0, 1, 2} (Theorem H, unconditional)
+    2. Concentration in degrees {0, 1, 2} on the Theorem H scope
     3. Old Theorem H bound violations (dim_total <= 4)
     4. Koszul duality consistency (palindromic Poincare polynomial)
     5. Parametric scaling (affine KM: ChirHoch^1 = dim(g))
@@ -20,9 +20,13 @@ Manuscript references:
 """
 
 import pytest
+from pathlib import Path
 
 from compute.lib.chirhoch_dimension_engine import (
     ChirHochData,
+    THEOREM_H_DEFECT_COMPLEX,
+    THEOREM_H_HYPOTHESES,
+    theorem_h_scope_record,
     chirhoch_heisenberg,
     chirhoch_affine_km,
     chirhoch_virasoro,
@@ -41,6 +45,11 @@ from compute.lib.chirhoch_dimension_engine import (
     LIE_ALGEBRA_DIMS,
     DUAL_COXETER_NUMBERS,
 )
+
+
+ROOT = Path(__file__).resolve().parents[2]
+CHIRHOCH_TEX = ROOT / "chapters" / "theory" / "chiral_hochschild_koszul.tex"
+HOCHSCHILD_TEX = ROOT / "chapters" / "theory" / "hochschild_cohomology.tex"
 
 
 # =============================================================================
@@ -75,6 +84,20 @@ class TestHeisenberg:
     def test_hilbert_triple(self):
         h = chirhoch_heisenberg()
         assert h.hilbert_triple == (1, 1, 1)
+
+    def test_family_parameter_space_is_not_fixed_fiber_chirhoch(self):
+        h = chirhoch_heisenberg()
+        assert h.cohomology_scope == "fixed generic fiber"
+        assert "deformation bases" in h.family_parameter_status
+        assert h.total == 3
+
+        manuscript = CHIRHOCH_TEX.read_text(encoding="utf-8")
+        companion = HOCHSCHILD_TEX.read_text(encoding="utf-8")
+        active = manuscript + "\n" + companion
+        assert r"\label{rem:heisenberg-family-vs-fixed-fiber}" in manuscript
+        assert "cohomology of the fixed generic fibre" in manuscript
+        assert "not the cohomology vector space" in active
+        assert "$1+t+t^2$" in manuscript
 
 
 class TestAffineSl2:
@@ -251,14 +274,14 @@ class TestLattice:
 
 
 # =============================================================================
-# 2. Concentration in degrees {0, 1, 2} -- Theorem H unconditional
+# 2. Concentration in degrees {0, 1, 2} -- Theorem H scoped
 # =============================================================================
 
 class TestConcentration:
     """Theorem H concentration: ChirHoch^n = 0 for n not in {0, 1, 2}.
 
-    This is proved for ALL Koszul chiral algebras via the de Rham
-    amplitude bound on curves (dim X = 1 => Ext vanishes for n > 2).
+    This census uses only generic PBW/completed entries where the
+    Theorem H hypothesis package is in force.
     """
 
     def test_all_families_concentrated(self):
@@ -266,6 +289,32 @@ class TestConcentration:
             assert theorem_h_concentration_holds(data), (
                 f"{data.family} fails concentration"
             )
+
+    def test_scope_record_for_standard_family(self):
+        scope = theorem_h_scope_record("affine_km")
+        assert scope["applies"] is True
+        assert scope["defect_complex"] is None
+        assert "PBW chiral Koszulness" in scope["hypotheses"]
+        assert "strict Mittag-Leffler completion passage" in scope["hypotheses"]
+
+    def test_scope_record_for_logarithmic_triplet_is_defect(self):
+        scope = theorem_h_scope_record(
+            "triplet_Wp",
+            applies=False,
+            reason="logarithmic triplet PBW/completion package not proved",
+        )
+        assert scope["applies"] is False
+        assert scope["defect_complex"] == THEOREM_H_DEFECT_COMPLEX
+        assert scope["high_degree_acyclicity_proved"] is False
+
+    def test_scope_hypotheses_complete(self):
+        hypotheses = set(THEOREM_H_HYPOTHESES)
+        assert "PBW chiral Koszulness" in hypotheses
+        assert "E_infty-chiral completion" in hypotheses
+        assert "finite-type/perfect diagonal chiral Hochschild complexes" in hypotheses
+        assert "generic non-critical parameter" in hypotheses
+        assert "strict Mittag-Leffler completion passage" in hypotheses
+        assert "PBW/Arnold Shelton-Yuzvinsky contraction" in hypotheses
 
 
 # =============================================================================

@@ -353,8 +353,9 @@ def bershadsky_polyakov_anomaly_ratio() -> Rational:
 def bershadsky_polyakov_koszul_dual_central_charge(level=None):
     """Central charge of the Koszul dual of BP.
 
-    BP = W^k(sl_3, f_{(2,1)}).  Transpose (2,1)^t = (2,1) -- self-transpose!
-    So BP is self-dual: (BP_k)^! = BP_{k'} with k' = -k - 6.
+    BP = W^k(sl_3, f_{(2,1)}).  The orbit (2,1) is self-transpose.
+    Same-family duality is the theorem-scoped subregular DS/bar branch:
+    (BP_k)^! = BP_{k'} with k' = -k - 6 under that package.
 
     # AP140: uses corrected BP central charge, not krw_central_charge
     """

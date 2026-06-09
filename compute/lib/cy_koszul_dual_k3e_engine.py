@@ -1,4 +1,4 @@
-r"""Koszul dual of the K3 x E chiral algebra: boundary-to-bulk passage.
+r"""Koszul dual of the K3 x E chiral algebra and derived-centre branch.
 
 MATHEMATICAL FRAMEWORK
 ======================
@@ -14,16 +14,18 @@ Verdier/linear-dual Koszul algebra A^! obtained from A^i under the
 finite-type or completed duality hypotheses.  It also records the
 homotopy Koszul dual A^!_infty = D_Ran(B(A)) for these algebras,
 verifying the complementarity pairing (Theorem C) and connecting
-to the boundary-to-bulk passage in holographic modular Koszul duality.
+to the separate Hochschild/open-closed branch in holographic modular
+Koszul duality.
 
 KEY DISTINCTIONS (from CLAUDE.md anti-patterns):
 
   AP19: Bar r-matrix poles are ONE LESS than OPE poles (d log absorption).
   AP20: kappa(A) is intrinsic to A; kappa_eff is a composite system property.
   AP24: kappa(A) + kappa(A^!) = 0 for KM/free fields/lattice VOAs/CY sigma models.
-        For Virasoro: kappa + kappa' = 13 (NOT zero). For N=4 SCA at c=6:
-        the complementarity sum depends on the FULL algebra, not just the
-        Virasoro subalgebra.
+        For Virasoro: kappa + kappa' = 13 (NOT zero). For the geometric
+        K3 sigma-model realization of the c=6 N=4 algebra, the CY Verdier
+        scalar projection gives zero complementarity; the abstract small
+        N=4 FF line is the distinct su(2) shift k -> -k-4.
   AP25: B(A) is the bar coalgebra; A^i = H*(B(A)) is the bar-dual
         coalgebra; A^! is obtained from A^i only after Verdier or
         continuous linear duality hypotheses; Omega(B(A)) = A is
@@ -75,8 +77,8 @@ For A = A_{K3} (N=4 SCA at c=6, k_R=1):
      c(A_{K3xE}) = 6 + 1 = 7.
      c(A_{K3xE}^!) = -6 + (-1) = -7.
 
-BOUNDARY-TO-BULK PASSAGE
-==========================
+DERIVED-CENTRE / OPEN-CLOSED BRANCH
+===================================
 
   AP25/AP34 distinguish five objects:
     (0) Bar construction: B(A), a coalgebra chain object
@@ -84,11 +86,12 @@ BOUNDARY-TO-BULK PASSAGE
     (1) Bar-cobar inversion: Omega(B(A)) = A (recovers original algebra)
     (2) Koszul duality: A^! from A^i after Verdier/linear duality
         hypotheses; homotopy dual A^!_infty = D_Ran(B(A))
-    (3) Derived center: Z^ch_der(A) = HH*(A) (universal bulk)
+    (3) Derived center: Z^ch_der(A) = HH*(A) (universal algebraic closed sector)
 
-  The boundary-to-bulk passage is functor (3), NOT functor (2).
+  The open-closed comparison branch is functor (3), NOT functor (2).
   The Verdier/linear-dual A^! is the DUAL BOUNDARY CONDITION.
-  The derived center Z^ch_der(A) is the BULK ALGEBRA.
+  The derived center Z^ch_der(A) is the universal algebraic closed sector.
+  Identifying it with a physical bulk factorization algebra requires OCA.
 
   For Koszul algebras (including the N=4 SCA):
     Z^ch_der(A) = HH*(A) is polynomial in degrees {0, 1, 2} (Theorem H).
@@ -183,8 +186,8 @@ class KoszulDualData:
     """Complete Koszul dual data for a chiral algebra.
 
     Contains the Verdier/linear-dual Koszul algebra A^!, the homotopy
-    dual A^!_infty, complementarity pairing, and boundary-to-bulk
-    passage data.  The intrinsic bar-dual coalgebra is A^i = H*(B(A));
+    dual A^!_infty, complementarity pairing, and derived-centre branch
+    data.  The intrinsic bar-dual coalgebra is A^i = H*(B(A));
     A^! is not identified with A^i until the finite-type or completed
     duality hypotheses are in force.
     """
@@ -212,7 +215,7 @@ class KoszulDualData:
     on_koszul_locus: bool  # whether A is Koszul
     homotopy_dual_agrees: bool  # whether A^!_infty agrees with A^! under hypotheses
 
-    # Boundary-to-bulk (derived center)
+    # Derived-centre/open-closed branch
     hh_polynomial: bool  # whether HH*(A) is polynomial in {0,1,2}
     hh_dim_0: Optional[int] = None  # dim HH^0 = dim center
     hh_dim_1: Optional[int] = None  # dim HH^1 = outer derivations
@@ -435,8 +438,9 @@ def complementarity_sum_virasoro_component() -> Fraction:
     """kappa(Vir_6) + kappa(Vir_20) = 3 + 10 = 13.
 
     AP24: The Virasoro SUBALGEBRA complementarity is 13, NOT zero.
-    This is different from the FULL N=4 algebra complementarity (which is 0).
-    The N=4 supersymmetry reduces the complementarity from 13 to 0.
+    This is different from the geometric K3/CY Verdier scalar projection
+    (which is 0).  It is also distinct from the abstract small N=4 FF
+    line, where c=6k and k -> -k-4 gives kappa+kappa'=-8.
     """
     kappa_vir6 = K3_CENTRAL_CHARGE / 2  # = 3
     kappa_vir20 = (26 - K3_CENTRAL_CHARGE) / 2  # = 10
@@ -695,7 +699,7 @@ def bar_dim_1_dual_k3e() -> int:
 
 
 # =========================================================================
-# Section 8: Hochschild cohomology (derived center / bulk)
+# Section 8: Hochschild cohomology (derived center / closed sector)
 # =========================================================================
 
 def hochschild_dim_0_k3() -> int:
@@ -867,9 +871,9 @@ def ff_dual_level_su2_of_n4() -> Dict[str, Any]:
     kappa(su(2)_{-5}) = 3*(-5+2)/4 = -9/4.
     Sum: 0 (affine KM complementarity is always zero).
 
-    AP33: This is NOT the same as the Koszul dual of the FULL N=4 SCA.
+    AP33: This is NOT the same as the geometric K3/CY Verdier scalar projection.
     The FF dual of the su(2)_R subalgebra gives k_R' = -5, but the
-    Koszul dual of the N=4 algebra gives k_R' = -1.  These are different
+    K3 scalar projection uses k_R' = -1.  These are different
     operations on different objects.
     """
     k_R = K3_SU2_LEVEL
@@ -886,7 +890,7 @@ def ff_dual_level_su2_of_n4() -> Dict[str, Any]:
         'kappa_su2_k_minus5': kappa_ff,
         'sum_zero': kappa_orig + kappa_ff == 0,
         'ff_dual_level': k_ff,
-        'koszul_dual_k_R': -k_R,  # k_R' = -1 for the full N=4
+        'koszul_dual_k_R': -k_R,  # k_R' = -1 for the K3/CY scalar projection
         'ff_ne_koszul': k_ff != -k_R,  # -5 != -1: different operations
     }
 
@@ -939,11 +943,11 @@ def homotopy_vs_strict_koszul_dual_k3() -> Dict[str, Any]:
 
 
 # =========================================================================
-# Section 12: Boundary-to-bulk passage (AP25, AP34)
+# Section 12: Derived-centre/open-closed branch (AP25, AP34)
 # =========================================================================
 
 def boundary_bulk_passage_k3() -> Dict[str, Any]:
-    """The boundary-to-bulk passage for the K3 sigma model.
+    """The derived-centre/open-closed branch for the K3 sigma model.
 
     AP25/AP34: five objects must stay separated:
       (0) Bar construction: B(A), a coalgebra chain object
@@ -951,12 +955,13 @@ def boundary_bulk_passage_k3() -> Dict[str, Any]:
       (1) Bar-cobar inversion: Omega(B(A)) = A (recovers original algebra)
       (2) Koszul duality: A^! from A^i after Verdier/linear duality
           hypotheses; homotopy version A^!_infty = D_Ran(B(A))
-      (3) Derived center: Z^ch_der(A) = HH*(A) (universal bulk)
+      (3) Derived center: Z^ch_der(A) = HH*(A) (universal algebraic closed sector)
 
-    The boundary-to-bulk passage is functor (3), NOT functor (2).
+    The open-closed comparison branch is functor (3), NOT functor (2).
     A_{K3} = boundary chiral algebra (open string on K3).
     A_{K3}^! = Verdier/linear-dual boundary condition.
-    Z^ch_der(A_{K3}) = universal bulk algebra = closed string observables.
+    Z^ch_der(A_{K3}) = universal algebraic closed sector.  A physical
+    bulk factorization algebra requires an OCA comparison.
 
     The five objects are DISTINCT and serve different physical roles.
     """
@@ -985,12 +990,15 @@ def boundary_bulk_passage_k3() -> Dict[str, Any]:
         },
         'derived_center': {
             'functor': 'HH*(A) = C^*_ch(A,A)',
-            'result': 'Z^ch_der(A) (universal bulk)',
-            'role': 'closed-string / bulk observables',
+            'result': 'Z^ch_der(A) (universal algebraic closed sector)',
+            'role': 'closed-sector Hochschild object; physical bulk requires OCA',
         },
+        'physical_bulk_identification_allowed': False,
+        'physical_bulk_requires': 'OCA comparison from physical bulk observables to Z^ch_der(A)',
         'objects_kept_distinct': True,
         'warning': ('Bar-cobar inversion does NOT produce the bulk. '
-                    'The bulk is the derived center. '
+                    'The derived center is the universal closed sector, '
+                    'not a physical bulk without OCA. '
                     'The dual boundary is A^! only after the '
                     'Verdier/linear duality hypotheses.'),
     }
@@ -1146,7 +1154,8 @@ def cross_check_kappa_vs_virasoro() -> Dict[str, Any]:
 def cross_check_complementarity_components() -> Dict[str, Any]:
     """Cross-check complementarity at the subalgebra level.
 
-    The full N=4 SCA complementarity is kappa + kappa' = 0.
+    The geometric K3/CY Verdier scalar projection has kappa + kappa' = 0.
+    The abstract small N=4 FF line has kappa + kappa' = -8.
     The Virasoro subalgebra complementarity is 13 (AP24).
     The su(2) subalgebra complementarity is 0 (affine KM).
     These are DIFFERENT and should NOT be added to get the full answer.
@@ -1174,7 +1183,7 @@ def cross_check_ff_vs_koszul() -> Dict[str, Any]:
 
     For the su(2) subalgebra:
       FF dual: k=1 -> k'=-5 (kappa = -9/4)
-      Koszul dual (of full N=4): k_R=1 -> k_R'=-1 (kappa = -2)
+      K3/CY scalar projection: k_R=1 -> k_R'=-1 (kappa = -2)
 
     These are different operations on different objects.
     """

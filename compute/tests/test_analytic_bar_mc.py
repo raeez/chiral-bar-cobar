@@ -258,7 +258,7 @@ class TestAnalyticContinuation:
         assert result["analyticity_verified"]
 
     def test_coefficient_value(self):
-        """Theta^{(1,1)} = kappa * 2*pi*i = pi*i at kappa=1/2."""
+        """The local d tau coefficient is kappa * 2*pi*i = pi*i at kappa=1/2."""
         result = verify_analyticity_on_uhp(kappa=0.5)
         expected = 0.5 * 2.0 * np.pi * 1j
         assert abs(result["coefficient_value"] - expected) < 1e-12

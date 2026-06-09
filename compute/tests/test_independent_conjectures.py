@@ -1,7 +1,7 @@
 """Tests for independent conjectures (not subsumed by MC1-MC5).
 
 Three conjectures:
-1. Virasoro c=26 self-duality — complementarity c+c'=26, special c=26 structure
+1. Virasoro c=26 complementarity — c+c'=26, special c=26 structure
 2. Derived bc-betagamma equivalence — Koszul Hilbert series relation
 3. Near-rationality Pade — W_3 and Virasoro bar GF near-rationality
 

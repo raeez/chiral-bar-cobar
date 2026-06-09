@@ -916,8 +916,9 @@ def cdr_character_k3xe(nmax: int) -> Dict[str, Any]:
 def hochschild_homology_dims_free(rank: int, nmax: int) -> List[int]:
     """Dimensions of HH_n(A) for the rank-r Heisenberg (free boson) algebra.
 
-    For the Heisenberg VOA H_r:
-        HH_*(H_r) = int_{S^1} H_r
+    For the locally constant interval model A_H attached to the
+    Heisenberg VOA H_r:
+        HH_*(A_H) = int_{S^1} F_{A_H}
 
     By the HKR theorem for chiral algebras (Theorem H):
         HH^n(H_r) = 0 for n > 1 (polynomial Hochschild cohomology)
@@ -935,9 +936,11 @@ def hochschild_homology_dims_free(rank: int, nmax: int) -> List[int]:
     For simplicity, we return dim HH_*(H_r) = (1+r) * dim H_r at each weight.
 
     Actually, the correct statement is more subtle for vertex algebras.
-    The factorization homology int_{S^1} A for a chiral algebra A on a
-    curve C, evaluated on S^1, gives the TRACE:
-        int_{S^1} A = Tr_A = coinvariants of A under the circle action.
+    The circle expression is not a D-module restriction of a chiral algebra
+    to a real circle.  One first chooses the locally constant interval
+    E_1 model A_H (or a spectrum-level lift), then the circle trace gives
+    a Hochschild chain object:
+        int_{S^1} F_{A_H} = HH_*(A_H).
 
     For the Heisenberg: the trace is the partition function, i.e., the
     graded dimension prod(1-q^n)^{-r}.

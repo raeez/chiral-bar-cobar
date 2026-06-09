@@ -43,9 +43,9 @@ Primary: Beilinson-Drinfeld 2004 *Chiral Algebras* §3.4; Drinfeld 1989 *Alg Ana
 | $\mathsf L$ | $V_k(\mathfrak g)$ | Noether current $J^a(z)$ | $\dim\mathfrak g(k+h^\vee)/(2h^\vee)$ | $3$ | GKO 1986 |
 | $\mathsf C$ | $\beta\gamma_\lambda$ | FP ghost $(\beta,\gamma)$ | $-(6\lambda^2-6\lambda+1)$ | $4$ | FMS 1986 |
 | $\mathsf M$ | $\mathrm{Vir}_c$ | stress tensor $T(z)$ | $c/2$ | $\infty$ | BPZ 1984 |
-| $\mathsf B$ | $\mathbf H_{\Delta_5}$ | rank-3 chiral Heisenberg + BKM tower | $3$ (rank), $5$ (Borcherds weight) | $\infty$ | DVV 1997 + GN 1998 |
+| $\mathsf B$ | $\mathbf H_{\Delta_5}$ | rank-3 chiral Heisenberg + BKM tower | $3$ (rank), $5$ (Borcherds weight) | $5$ (recognition gate) | DVV 1997 + GN 1998 |
 
-The archetype classes are defined by shadow-tower depth $r_{\max}\in\{2,3,4,\infty,\infty\}$; the table maps canonical witnesses to physical field types bijectively.
+The Open-row shadow depths are $r_{\max}\in\{2,3,4,\infty\}$ for $\mathsf G/\mathsf L/\mathsf C/\mathsf M$; the $\mathsf B$ crown is attached by the CY recognition gate with Vol I coordinate $r_{\max}=5$. The table maps canonical witnesses to physical field types bijectively.
 
 **Scope declaration.** The prior inscription "$\mathsf G/\mathsf L/\mathsf C/\mathsf M/\mathsf B=\{\text{boson},\text{current},\text{ghost},\text{stress},\text{BPS}\}$" is NOT a class-wise functorial equivalence: a generic algebra in class $\mathsf M$ (rational CFT, W-algebra of type $E_n$) contains a stress tensor *among many other generating fields*; "$\mathsf M=$ stress-tensor particle" fails class-wise. The correct statement: the *canonical witness* of each archetype has as its generating field the corresponding physical field type, and any algebra in the class is connected to the canonical witness by shadow-tower universality. The five-particle labeling classifies canonical witnesses only.
 

@@ -24,17 +24,16 @@ print("=" * 80)
 print()
 
 # The Airy curve y^2 = x has free energies F_g^Airy.
-# lambda_g^FP = |B_{2g}| / (4g(g-1)) for g >= 2, and 1/24 for g = 1.
-# These should be the SAME as the EO free energies of the Airy curve.
+# The Airy Euler-characteristic numbers are |B_{2g}|/(4g(g-1)) for
+# g >= 2. The manuscript's FP/A-hat scalar coefficients are different:
+# they are the coefficients of A-hat(ix)-1.
 #
 # Bernoulli numbers: B_2 = 1/6, B_4 = -1/30, B_6 = 1/42, B_8 = -1/30,
 # B_10 = 5/66, B_12 = -691/2730.
 #
 # lambda_1^FP = 1/24
-# lambda_2^FP = |B_4|/(4*2*1) = (1/30)/8 = 1/240
-# lambda_3^FP = |B_6|/(4*3*2) = (1/42)/24 = 1/1008
-# lambda_4^FP = |B_8|/(4*4*3) = (1/30)/48 = 1/1440
-# lambda_5^FP = |B_10|/(4*5*4) = (5/66)/80 = 1/1056
+# Airy/Euler g=2 magnitude = |B_4|/(4*2*1) = (1/30)/8 = 1/240.
+# FP/A-hat scalar g=2 = 7/5760.
 
 # The EO result for the Airy curve (Kontsevich's theorem):
 # F_g^Airy = chi(M_g) = B_{2g}/(4g(g-1)) for g >= 2.
@@ -42,13 +41,13 @@ print()
 #
 # CAREFUL: chi(M_g) = B_{2g}/(4g(g-1)) includes the SIGN.
 # B_4 = -1/30, so chi(M_2) = -1/(30*8) = -1/240.
-# But lambda_2^FP = |B_4|/(4*2*1) = 1/240 (positive).
+# But lambda_2^FP = 7/5760, not 1/240.
 #
 # The SIGN CONVENTION in the shadow obstruction tower:
 # F_g = kappa * lambda_g^FP where all F_g values are POSITIVE
 # (from the A-hat generating function, whose coefficients are all positive).
-# So lambda_g^FP = |B_{2g}| / (4g(g-1)) (always positive).
-# The EO F_g^Airy includes signs, but the PHYSICAL F_g uses |B_{2g}|.
+# So lambda_g^FP is the A-hat coefficient, not the positive Airy
+# Euler-characteristic magnitude.
 
 # Actually let me re-examine. The A-hat genus:
 # A-hat(ix) = (x/2)/sin(x/2) = 1 + x^2/24 + 7x^4/5760 + ...
@@ -61,11 +60,11 @@ print()
 # 1/240 = 24/5760. So 7/5760 != 1/240.
 # WAIT: this means lambda_2^FP != |B_4|/(4*2*1)?
 
-# Let me recheck. The claim from the manuscript is:
-# F_g = kappa * lambda_g^FP where lambda_g = integral of lambda_g over M_g.
-# For g=1: lambda_1 = 1/24.
-# For g=2: lambda_2 = 1/1152 (not 1/240).
-# Hmm, different references use different normalizations.
+# Let me recheck. The manuscript convention is:
+# F_g = kappa * lambda_g^FP, where lambda_g^FP is the FP/A-hat scalar
+# coefficient. Thus lambda_1^FP = 1/24 and lambda_2^FP = 7/5760.
+# The value 1/1152 belongs to a different Hodge-intersection lane,
+# e.g. int_{Mbar_2} lambda_1 lambda_2, not to lambda_2^FP.
 
 # From the A-hat function:
 # A-hat(x) = x/2 / sinh(x/2)
@@ -80,9 +79,9 @@ print()
 # So F_1 = kappa/24, F_2 = 7*kappa/5760, F_3 = 31*kappa/967680.
 
 # Now from lambda classes on M-bar_g:
-# lambda_g^FP (Faber-Pandharipande) = integral_{M_g} lambda_g.
-# For g=1: int_{M_1} lambda_1 = 1/24.
-# For g=2: int_{M_2} lambda_2 = 1/1152? Let me check.
+# the bare phrase "int lambda_2" is convention-dependent and dimensionally
+# incomplete. The scalar obstruction coefficient used here is 7/5760;
+# the separate intersection int_{Mbar_2} lambda_1 lambda_2 is 1/1152.
 
 # Actually, the Faber-Pandharipande formula:
 # int_{M_g} lambda_g = (-1)^g * B_{2g}/(2g) * B_{2g-2}/(2g-2) * 1/(2g-2)!

@@ -1,8 +1,9 @@
-r"""Virasoro spectral R-matrix from OPE collision residues.
+r"""Virasoro primary Ward factor from OPE collision residues.
 
-Computes the spectral R-matrix for the Virasoro algebra on Verma module
-weight spaces, by extracting collision residues from the OPE and computing
-the path-ordered exponential of the resulting connection on Conf_2^ord(C).
+Computes the scalar primary-state Ward factor, and low-level descendant
+checks, for the Virasoro collision-residue connection on
+Conf_2^ord(C).  This is not a construction of the full completed
+Virasoro spectral R-operator.
 
 MATHEMATICAL FRAMEWORK
 ======================
@@ -30,30 +31,30 @@ MATHEMATICAL FRAMEWORK
    On a primary state |h1> otimes |h2>, L_0 acts as h1 (or h2 on the
    second factor).
 
-3. R-MATRIX ON PRIMARY STATES
+3. PRIMARY-STATE SCALAR FACTOR
 
    On the primary sector V_h1^{(0)} otimes V_h2^{(0)} (level-0 subspace),
-   L_0 otimes 1 and 1 otimes L_0 act as scalars h1 and h2.  The R-matrix is
-   the formal series:
+   L_0 otimes 1 and 1 otimes L_0 act as scalars h1 and h2.  The scalar
+   primary Ward factor is the formal series:
 
        R(z) = z^{h1+h2} * (1 + sum_{k>=1} R_k / z^k)
 
    where the leading power z^{h1+h2} comes from the L_0 term in the connection.
-   The higher corrections R_k arise from the non-abelian structure of the
-   Virasoro algebra (the c/2 central term and descendants).
+   The higher scalar coefficients in this quotient arise from the c/2
+   central term.  They do not by themselves prove class M.
 
-4. DESCENDANT SECTOR AND NON-FORMALITY
+4. DESCENDANT SECTOR AND COMPLETED OBSTRUCTION DATA
 
-   The Virasoro is class M (shadow depth infinity, AP14).  On the primary
-   sector alone, R(z) is diagonal.  The non-formality manifests when
-   descendants are included:
+   The Virasoro class-M statement requires the completed obstruction tower.
+   On the primary sector alone, R(z) is diagonal.  Descendants provide the
+   first matrix-valued correction surface:
 
    At level 1, the state space includes:
        |h, 0> = |h>            (primary, L_{-1} eigenstate trivially)
        |h, 1> = L_{-1} |h>    (level-1 descendant)
 
-   The full Virasoro r-matrix on this extended space mixes primaries and
-   descendants through the c-dependent cubic pole term.
+   The Virasoro collision connection on this extended space mixes primaries
+   and descendants through the c-dependent cubic pole term.
 
 5. YANG-BAXTER EQUATION
 
@@ -75,10 +76,11 @@ MATHEMATICAL FRAMEWORK
 
 7. COMPARISON WITH KM AND HEISENBERG
 
-   - Heisenberg (class G): R(z) = exp(k/z), terminates at order 1/z.
-   - Affine sl_2 (class L): R(z) = 1 + Omega/(k+h^v)z + O(1/z^2),
-     corrections terminate at 1/z^{shadow_depth}.
-   - Virasoro (class M): R(z) has ALL orders 1/z^k, non-terminating.
+   - Heisenberg (class G): scalar factor is abelian/Gaussian.
+   - Affine sl_2 (class L): KZ/Sugawara scalar factor is a Casimir
+     monodromy on the chosen channel.
+   - Virasoro (class M): the primary scalar quotient has all even orders,
+     while the full class-M statement is completed and matrix-valued.
 
 CONVENTIONS
 ===========
@@ -726,7 +728,7 @@ def shadow_depth_classification() -> Dict[str, Dict[str, Any]]:
 
 
 def virasoro_nonformality_witness(c: Fraction) -> Dict[str, Any]:
-    """The first non-formality witness for Virasoro (class M).
+    """Quartic/contact obstruction witness for Virasoro class M.
 
     The Virasoro has shadow depth infinity.  The first visible
     non-formality is at the quartic level:
@@ -735,9 +737,10 @@ def virasoro_nonformality_witness(c: Fraction) -> Dict[str, Any]:
 
     This is NONZERO for all c != 0, confirming class M.
 
-    Additionally, the R-matrix on the primary sector has the correction:
+    Additionally, the primary scalar Ward factor has the correction:
         R(z) = z^{2h1} * (1 - (c/4)/z^2 + (c^2/32)/z^4 - ...)
-    which is an infinite series, not a polynomial.
+    which is an infinite scalar series.  This scalar fact is a
+    normalization check, not the class-M proof.
 
     The descendant-level R-matrix has the mixing term at z^{-2}
     involving L_{-1} otimes L_1, which is the first visible
@@ -770,12 +773,13 @@ def heisenberg_rmatrix_primary(k_val: float, z_val: complex) -> complex:
 
     For Heisenberg at level k with weight-1 generator J:
         OPE: J(z)J(w) ~ k/(z-w)^2
-        r-matrix: r(z) = k/z  (single simple pole after AP19)
+        r-matrix: r(z) = k*Omega_H/z (rank-one coeff k/z)  (single simple pole after AP19)
 
     R(z) = exp(k * log(z)) = z^k
-    (or more precisely, on |h1> otimes |h2> with h1=h2=0:
-     R(z) = z^0 * exp(0) = 1, since Heisenberg primaries are
-     the vacuum and r_0 = 0.)
+    (or more precisely, on the vacuum primary sector |h1> otimes |h2>
+     with h1=h2=0: R(z) = z^0 * exp(0) = 1.  This is a sector
+     specialization, not a statement that the level-k Heisenberg
+     ordered-bar scalar R is trivial.)
 
     Actually: for Heisenberg, the r-matrix on J fields gives
     R(z) = z^k (the monodromy picks up the level).
@@ -784,7 +788,7 @@ def heisenberg_rmatrix_primary(k_val: float, z_val: complex) -> complex:
     The KEY point: Heisenberg terminates at order 1/z.
     No higher corrections.  This is class G.
     """
-    # r(z) = k/z, so integral = k*log(z)
+    # r(z) = k*Omega_H/z (rank-one coeff k/z), so integral = k*log(z)
     # R(z) = exp(k * log(z)) = z^k
     return z_val ** k_val
 
@@ -839,7 +843,7 @@ def first_higher_correction(c: Fraction, h1: Fraction) -> Dict[str, Any]:
     it comes entirely from the quartic OPE pole T_{(3)}T = c/2,
     which after d log absorption gives (c/2)/z^3 in r(z).
 
-    For Heisenberg: the OPE has only z^{-2}, so r(z) = k/z, and R_2 = 0.
+    For Heisenberg: the OPE has only z^{-2}, so r(z) = k*Omega_H/z (rank-one coeff k/z), and R_2 = 0.
     For affine KM: the OPE has z^{-2} and z^{-1}, so r(z) = Omega/z,
         and R_2 = 0 (no z^{-3} pole).
     For Virasoro: R_2 = -c/4, NONZERO for c != 0.

@@ -16,7 +16,7 @@ Anti-pattern coverage:
   AP9  — explicit qualifiers for every kappa
   AP10 — cross-check tests, not single-family hardcodes
   AP24 — complementarity sum NOT assumed zero
-  AP39 — S_2 vs kappa explicitly distinguished
+  AP39/AP127 — S_2/kappa lane discipline explicitly distinguished
   AP48 — kappa != c/2 for general VOAs
 
 References:
@@ -499,11 +499,11 @@ def build_free_energy_entries() -> List[FreeEnergyEntry]:
         lane="multi",
     ))
 
-    # betagamma (lam=1/2) = symplectic fermion
+    # betagamma (lam=1/2) = symplectic boson, not symplectic fermion.
     # c_bg(1/2) = 2*(6/4 - 3 + 1) = 2*(6/4 - 2) = 2*(-2/4) = -1.
     # kappa = 6/4 - 3 + 1 = 3/2 - 2 = -1/2.
     entries.append(FreeEnergyEntry(
-        name="betagamma (lam=1/2)",
+        name="betagamma symplectic boson (lam=1/2)",
         kappa_val=Rational(-1, 2),
         F1_val=Rational(-1, 48),
         F2_val=Rational(-7, 11520),
@@ -1036,39 +1036,41 @@ def verify_anomaly_ratio_wN() -> List[VerificationResult]:
 
 
 def verify_ap39_s2_vs_kappa() -> List[VerificationResult]:
-    """AP39 regression: S_2 = c/2 vs kappa for non-Virasoro families.
+    """AP39/AP127 regression: S_2 is a lane coefficient.
 
-    For Virasoro: S_2 = c/2 = kappa. They coincide.
-    For Heisenberg: S_2 = c/2 = 1/2 but kappa = k (level). They differ when k != 1/2.
-    For affine KM: S_2 = c/2 but kappa = d*t/(2h^v). They differ in general.
+    Virasoro permits the unqualified identity S_2 = c/2 = kappa on the
+    stress-tensor line. Heisenberg permits the unqualified identity
+    S_2 = kappa = k on the current line. Outside these one-line lanes,
+    a stress-tensor coefficient c/2 must be written as S_2^T and is not
+    interchangeable with the family scalar kappa.
     """
     results = []
 
-    # Heisenberg at k=2: S_2 = c/2 = 1/2 (c=1), kappa = k = 2
-    S2_heis = Rational(1, 2)  # c/2 = 1/2
+    # Heisenberg at k=2: on the current line S_2 = kappa = k.
+    S2_heis = Rational(2)
     kappa_heis = Rational(2)
     results.append(VerificationResult(
         entry_name="Heisenberg k=2",
-        field_name="AP39: S_2 vs kappa",
-        table_value="S_2 != kappa for k != 1/2",
+        field_name="AP127: current-line S_2 == kappa",
+        table_value="S_2 = kappa on the Heisenberg current line",
         computed_value=f"S_2={S2_heis}, kappa={kappa_heis}",
-        method="AP39 regression",
-        passed=S2_heis != kappa_heis,
-        notes="AP39: S_2 and kappa differ for Heisenberg when k != 1/2",
+        method="AP39/AP127 regression",
+        passed=S2_heis == kappa_heis,
+        notes="The stress-tensor coefficient c/2 is a different projection, not the Heisenberg current-line S_2.",
     ))
 
-    # Affine sl_2 at k=1: c = 3/2, S_2 = 3/4, kappa = 9/4
-    c_sl2 = Rational(3, 2)
-    S2_sl2 = c_sl2 / 2  # = 3/4
+    # Affine sl_2 at k=1: c = 1, stress-tensor S_2^T = 1/2, kappa = 9/4.
+    c_sl2 = central_charge_affine("A", 1, Rational(1))
+    S2_sl2 = c_sl2 / 2
     kappa_sl2 = kappa_affine("A", 1, Rational(1))  # = 9/4
     results.append(VerificationResult(
         entry_name="sl_2 k=1",
-        field_name="AP39: S_2 vs kappa",
-        table_value="S_2 != kappa",
+        field_name="AP127: stress-tensor S_2^T vs kappa",
+        table_value="S_2^T != kappa",
         computed_value=f"S_2={S2_sl2}, kappa={kappa_sl2}",
-        method="AP39 regression",
+        method="AP39/AP127 regression",
         passed=S2_sl2 != kappa_sl2,
-        notes="AP39: c/2=3/4 != kappa=9/4 for affine sl_2",
+        notes="AP39: c/2=1/2 is the stress-tensor projection; kappa=9/4 is the affine modular characteristic",
     ))
 
     # sl_3 at k=1: c = 8/4 = 2, S_2 = 1, kappa = 16/3
@@ -1077,23 +1079,23 @@ def verify_ap39_s2_vs_kappa() -> List[VerificationResult]:
     kappa_sl3 = kappa_affine("A", 2, Rational(1))
     results.append(VerificationResult(
         entry_name="sl_3 k=1",
-        field_name="AP39: S_2 vs kappa",
-        table_value="S_2 != kappa",
+        field_name="AP127: stress-tensor S_2^T vs kappa",
+        table_value="S_2^T != kappa",
         computed_value=f"S_2={S2_sl3}, kappa={kappa_sl3}",
-        method="AP39 regression",
+        method="AP39/AP127 regression",
         passed=S2_sl3 != kappa_sl3,
-        notes="AP39: for rank > 1, S_2 and kappa always differ",
+        notes="AP39: for nonabelian affine families, the stress-tensor projection and kappa differ",
     ))
 
-    # Virasoro: S_2 = c/2 = kappa. This is the ONLY standard family where they coincide.
+    # Virasoro: S_2 = c/2 = kappa on the stress-tensor line.
     results.append(VerificationResult(
         entry_name="Vir_c",
-        field_name="AP39: S_2 == kappa",
-        table_value="S_2 = kappa for Virasoro",
+        field_name="AP127: stress-tensor S_2 == kappa",
+        table_value="S_2 = kappa on the Virasoro stress-tensor line",
         computed_value="c/2 = c/2",
-        method="AP39 confirmation",
+        method="AP39/AP127 confirmation",
         passed=True,
-        notes="AP39: Virasoro is the unique single-generator family where S_2 = kappa",
+        notes="The Virasoro stress-tensor line is a scalar one-line lane.",
     ))
 
     return results

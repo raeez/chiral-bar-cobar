@@ -177,9 +177,9 @@ Koszul dual / companion & $\mathrm{Vir}_{26-c}$
  & characteristic companion $\mathcal{W}_3^{-k-6}$ \\
 Central conductor $K^c$ &
  $26$ & $100$ \\
-Scalar conductor $K^\kappa$ &
- $\kappa + \kappa' = 13$ &
- $\kappa + \kappa' = 250/3$ \\
+Scalar conductor $K^\kappa=\kappa(A)+\kappa(A^!)$ &
+ $13$ &
+ $250/3$ \\
 Fixed point &
  $c = 13$ & companion fixed charge $c = 50$ \\
 SC formality &
@@ -841,7 +841,8 @@ additional proof of Koszul duality.
 
 \subsection{Classical Drinfeld--Sokolov}
 
-\begin{definition}[Classical DS reduction]\label{def:classical-ds}
+\begin{definition}[Classical DS reduction;
+\ClaimStatusDefinitional{}]\label{def:classical-ds}
 Let $\mathfrak{g}$ be a simple Lie algebra and $f \in \mathfrak{g}$ a nilpotent element. Choose an $\mathfrak{sl}_2$-triple $\{e, h, f\}$ with $[h,e] = 2e$, $[h,f] = -2f$, $[e,f] = h$.
 
 The \emph{classical Drinfeld--Sokolov reduction} constructs a Poisson algebra from:
@@ -1372,7 +1373,14 @@ At critical level $k = -h^\vee$, the curvature vanishes: $m_0 = 0$.
 \end{theorem}
 
 \begin{proof}[Computation for $\mathcal{W}_3$]
-We detect the curvature by computing $m_1^2$ on a generator $T$. Here $m_1$ denotes the $A_\infty$ structure map (the bar differential using only $m_2$). Note that the \emph{full} bar complex differential $d_{\bar{B}}$ always satisfies $d_{\bar{B}}^2 = 0$; the failure of $m_1^2 = 0$ reveals the curvature $m_0$ via the curved $A_\infty$ relation $m_1^2(a) = m_2(m_0, a) - m_2(a, m_0) = [m_0, a]$ (see Appendix~\ref{app:koszul-reference}).
+We detect the curvature by computing $m_1^2$ on a generator $T$.
+Here $m_1$ denotes the $A_\infty$ structure map (the bar
+differential using only $m_2$). Note that the \emph{full} bar
+complex differential $d_{\bar{B}}$ always satisfies
+$d_{\bar{B}}^2 = 0$. The twofold application of the transferred
+linear map is interpreted through the defining curved $A_\infty$
+relation
+$m_1^2(a) = m_2(m_0, a) - m_2(a, m_0) = [m_0, a]$.
 
 \emph{Step~1.} Apply $m_1$ once:
 \begin{equation}
@@ -1582,6 +1590,11 @@ quadratic dual is
 \begin{equation}
 \mathrm{Vir}_0^{!_{\mathrm{quad}}} \;\simeq\; \mathrm{Vir}_0.
 \end{equation}
+The corresponding singular OPE is
+\begin{equation}\label{eq:vir-c0-ope}
+T(z)\,T(w) \;=\; \frac{2T(w)}{(z-w)^2} + \frac{\partial T(w)}{z-w},
+\end{equation}
+with no fourth-order pole.
 The chiral Koszul dual governed by the level-reflection package is a
 different object: the chiral Koszul involution $c \mapsto 26-c$ has
 its fixed point at $c = 13$, not $c = 0$.
@@ -1592,11 +1605,8 @@ We give a direct proof via the bar complex, avoiding the Wakimoto
 realization and its attendant K\"unneth/BRST compatibility issues.
 
 \emph{Step~1} (Uncurved bar complex).
-At $c = 0$, the Virasoro OPE reduces to:
-\begin{equation}\label{eq:vir-c0-ope}
-T(z)\,T(w) \;=\; \frac{2T(w)}{(z-w)^2} + \frac{\partial T(w)}{z-w}
-\end{equation}
-with no fourth-order pole. The bar complex
+At $c = 0$, the Virasoro OPE is~\eqref{eq:vir-c0-ope}, with no
+fourth-order pole. The bar complex
 $\bar{B}(\mathrm{Vir}_0)$ therefore has $\dfib^{\,2} = 0$ (the curvature
 $\mcurv{1} \propto c$ vanishes), making it a genuine cochain complex.
 
@@ -1865,10 +1875,12 @@ $(d^{(1)})^2 = (c/2) \cdot \omega_1 \cdot \operatorname{id}$.
 
 \emph{Step~3: Consistency.}
 The genus universality theorem gives
-$\mathrm{obs}_1(\mathrm{Vir}_c) = \kappa \cdot \lambda_1$
+\(\mathrm{obs}_1(\mathrm{Vir}_c)
+=\kappa(\mathrm{Vir}_c)\lambda_1\)
 \textup{(unconditional at $g=1$)} with
-$\kappa = c/2$. The computation gives exactly $\kappa = c/2$.
-In particular, $\kappa = 0 \iff c = 0$: the bar complex is uncurved at
+\(\kappa(\mathrm{Vir}_c)=c/2\). The computation gives exactly
+\(\kappa(\mathrm{Vir}_c)=c/2\).
+In particular, \(\kappa(\mathrm{Vir}_c)=0 \iff c=0\): the bar complex is uncurved at
 genus~1 precisely when it is uncurved at genus~0
 (Theorem~\ref{thm:virasoro-self-duality}).
 \end{proof}
@@ -2184,11 +2196,11 @@ verifies the three main theorems, paralleling the Virasoro computation
 (\S\ref{sec:virasoro-genus-one-computation}) and the
 $\widehat{\mathfrak{sl}}_2$ computation (\S\ref{sec:sl2-genus-one-computation}).
 
-Unlike the Virasoro algebra, which has a single generator $T$, giving a single
-curvature channel $\kappa = c/2$. The $\mathcal{W}_3$ algebra has two
-generators $T$ (weight~$2$) and $W$ (weight~$3$), producing two
+Unlike the Virasoro algebra, which has a single generator $T$, giving
+the single curvature channel \(c/2\), the $\mathcal{W}_3$ algebra has
+two generators $T$ (weight~$2$) and $W$ (weight~$3$), producing two
 independent vacuum leakages whose sum gives the total obstruction
-coefficient $\kappa = c/2 + c/3 = 5c/6$. The cross-terms
+coefficient \(\kappa(\mathcal W_3^k)=c/2+c/3=5c/6\). The cross-terms
 $T \otimes W$ and $W \otimes T$ contribute no vacuum leakage
 (the $TW$ OPE has at most a double pole), so the curvature is
 purely ``diagonal'' in the generator space.
@@ -2197,9 +2209,12 @@ $\Theta_{\mathcal{W}_3}$ (Theorem~\ref{thm:explicit-theta}):
 the genus-$1$ component $\theta_1 = (5c/6) \cdot \mu^{W_3}
 \otimes \lambda_1$ carries both the $T$-channel ($c/2$) and the
 $W$-channel ($c/3$) as separate coderivation components,
-but their sum $\kappa = 5c/6$ is the unique scalar
+but their sum \(\kappa(\mathcal W_3^k)=5c/6\) is the unique scalar
 controlled by $H^2_{\mathrm{cyc}} \cong \mathbb{C}$.
-Dually, the complementarity sum $\kappa + \kappa' = 250/3$
+Dually, the complementarity sum
+\[
+\kappa(\mathcal W_3^k)+\kappa((\mathcal W_3^k)^!)=250/3
+\]
 is an equality only after projecting the two MC elements to the
 genus-$1$ scalar line:
 \[
@@ -2414,8 +2429,13 @@ H^2(\overline{\mathcal{M}}_{1,1})$.
 \item \emph{$c = 0$}: $Q_1 = 0$ (uncurved, $k = -5/3$ or $-9/4$),
  so $Q_1^! = H^*(\overline{\mathcal{M}}_{1,1})$. \checkmark
 \item \emph{Obstruction coefficient sum}:
- $\kappa + \kappa' = 5c/6 + 5(100-c)/6 = 250/3$.
- Unlike $\widehat{\mathfrak{sl}}_2$ (where $\kappa + \kappa' = 0$),
+ \[
+ \kappa(\mathcal W_3^k)+\kappa((\mathcal W_3^k)^!)
+ = 5c/6 + 5(100-c)/6 = 250/3 .
+ \]
+ Unlike $\widehat{\mathfrak{sl}}_2$ (where
+ \(\kappa(\widehat{\mathfrak{sl}}_{2,k})
+ +\kappa(\widehat{\mathfrak{sl}}_{2,-k-4})=0\)),
  the sum is nonzero, reflecting the nontrivial central charge
  relation $c + c' = 100$
  (Remark~\ref{rem:sl2-vs-vir-complementarity}). \checkmark
@@ -2424,15 +2444,15 @@ H^2(\overline{\mathcal{M}}_{1,1})$.
 
 \begin{remark}[Comparison of scalar obstruction coefficient sums]
 \label{rem:w3-kappa-sums}
-The scalar obstruction sum $\kappa+\kappa'$ under Feigin--Frenkel
-duality is a genus-$1$ trace. It is not the derived centre
+The scalar obstruction sum \(\kappa(A)+\kappa(A^!)\) under
+Feigin--Frenkel duality is a genus-$1$ trace. It is not the derived centre
 $Z^{\mathrm{der}}_{\mathrm{ch}}(A)$ and it is not a Hochschild
 amplitude.
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
 \begin{tabular}{lccc}
 \toprule
-\textbf{Algebra} & $c + c'$ & $\kappa + \kappa'$ & \textbf{Fixed point} \\
+\textbf{Algebra} & $c + c'$ & $\kappa(A)+\kappa(A^!)$ & \textbf{Fixed point} \\
 \midrule
 $\widehat{\mathfrak{sl}}_{2,k}$ & $6$ & $0$ & $k = -2$ (critical) \\
 $\mathrm{Vir}_c$ & $26$ & $13$ & $c = 13$ \\
@@ -2444,7 +2464,15 @@ For KM, $\kappa$ is linear in~$k$ (sum vanishes); for $\mathcal{W}$-algebras, $\
 \end{remark}
 
 \begin{remark}[Convention: \texorpdfstring{$\kappa$}{kappa} vs.\ \texorpdfstring{$\kappa_g$}{kappa\_g}]\label{rem:kappa-convention-disambiguation}
-Throughout this chapter, $\kappa$ (without subscript) denotes the \emph{obstruction coefficient} of the genus-1 bar complex: the scalar in the formula $\mathrm{obs}_1 = \kappa \cdot \lambda_1$, where $\lambda_1 = c_1(\mathbb{E})$ is the Hodge class. This is a number depending on the chiral algebra (e.g., $\kappa = c/2$ for Virasoro, $\kappa = 5c/6$ for $\mathcal{W}_3$).
+Throughout this chapter, the modular characteristic is written as a
+typed invariant \(\kappa(\cA)\). It is the obstruction coefficient of
+the genus-$1$ bar complex:
+\[
+\mathrm{obs}_1(\cA)=\kappa(\cA)\lambda_1,
+\qquad \lambda_1=c_1(\mathbb E).
+\]
+For example, \(\kappa(\mathrm{Vir}_c)=c/2\) and
+\(\kappa(\mathcal W_3^k)=5c/6\).
 
 This should not be confused with the \emph{Mumford--Miller--Morita kappa class} $\kappa_g = \pi_*(\psi^{g+1}) \in H^{2g}(\overline{\mathcal{M}}_g)$, which is a tautological class on the moduli space of curves (cf.\ Chapter~\ref{chap:higher-genus}). The level of the affine algebra is denoted~$k$, not~$\kappa$.
 \end{remark}
@@ -2454,8 +2482,9 @@ This should not be confused with the \emph{Mumford--Miller--Morita kappa class} 
 \index{obstruction coefficient!general W_N@general $\mathcal{W}_N$}
 
 The Virasoro ($N = 2$) and $\mathcal{W}_3$ ($N = 3$) genus-$1$ computations
-reveal a pattern in the obstruction coefficients: $\kappa = c/2$ and
-$\kappa = c/2 + c/3 = 5c/6$ respectively, with each generator
+reveal a pattern in the obstruction coefficients:
+\(\kappa(\mathrm{Vir}_c)=c/2\) and
+\(\kappa(\mathcal W_3^k)=c/2+c/3=5c/6\) respectively, with each generator
 contributing its own vacuum leakage. The universal generic formula
 for principal $\mathcal{W}_N$ validates the Master Table entry
 (Table~\ref{tab:master-invariants}).
@@ -2550,33 +2579,45 @@ and~\ref{thm:w3-genus1-curvature}. Summing over generators:
 \end{equation}
 By definition, $\kappa(\mathcal{W}_N^k)$ is the coefficient of
 $\omega_1$ in $(d^{(1)})^2$, so
-$\kappa = c \cdot (H_N - 1)$. This is consistent with the
+$\kappa(\mathcal{W}_N^k) = c \cdot (H_N - 1)$. This is consistent with the
 genus universality theorem
 (Theorem~\ref{thm:genus-universality}): at genus~$1$,
-$\mathrm{obs}_1 = \kappa \cdot \lambda_1$ unconditionally.
+\(\mathrm{obs}_1(\mathcal W_N^k)
+=\kappa(\mathcal W_N^k)\lambda_1\) unconditionally.
 For $N = 2$ (Virasoro, uniform weight), the factorization
-$\mathrm{obs}_g = \kappa \cdot \lambda_g$ \textup{(UNIFORM-WEIGHT)} holds at all genera;
+\(\mathrm{obs}_g(\mathrm{Vir}_c)
+=\kappa(\mathrm{Vir}_c)\lambda_g\) \textup{(UNIFORM-WEIGHT)}
+holds at all genera;
 for $N \geq 3$ (multi-weight), the scalar formula \emph{fails}
 at genus $g \geq 2$: the free energy receives a cross-channel
 correction $\delta F_g^{\mathrm{cross}} \neq 0$
 (Theorem~\ref{thm:multi-weight-genus-expansion}; for $\mathcal{W}_3$,
 $\delta F_2 = (c{+}204)/(16c)$). The
-unconditional statement is $\mathrm{obs}_1=\kappa\lambda_1$.
+unconditional statement is
+\(\mathrm{obs}_1(\mathcal W_N^k)
+=\kappa(\mathcal W_N^k)\lambda_1\).
 
 \emph{Boundary values.}
 \begin{itemize}
-\item $N = 2$: $\kappa = c \cdot (1/2) = c/2$.
+\item $N = 2$: \(\kappa(\mathrm{Vir}_c)=c\cdot(1/2)=c/2\).
  (Theorem~\ref{thm:vir-genus1-curvature})
-\item $N = 3$: $\kappa = c \cdot (1/2 + 1/3) = 5c/6$.
+\item $N = 3$: \(\kappa(\mathcal W_3^k)
+=c\cdot(1/2+1/3)=5c/6\).
  (Theorem~\ref{thm:w3-genus1-curvature})
-\item $N = 4$: $\kappa = c \cdot (H_4 - 1) = 13c/12$.
+\item $N = 4$: \(\kappa(\mathcal W_4^k)
+=c\cdot(H_4-1)=13c/12\).
  Three channels $(\kappa_2, \kappa_3, \kappa_4) = (c/2, c/3, c/4)$
  with $\kappa_2 + \kappa_3 + \kappa_4 = 13c/12$.
- Complementarity: $c + c' = 246$, $\kappa + \kappa' = 13 \cdot 246/12$.
-\item $N = 5$: $\kappa = c \cdot (H_5 - 1) = 77c/60$.
+ Complementarity: $c + c' = 246$ and
+ \(\kappa(\mathcal W_4^k)+\kappa((\mathcal W_4^k)^!)
+ =13\cdot246/12\).
+\item $N = 5$: \(\kappa(\mathcal W_5^k)
+=c\cdot(H_5-1)=77c/60\).
  Four channels $(\kappa_2, \kappa_3, \kappa_4, \kappa_5) = (c/2, c/3, c/4, c/5)$
  with $\sum_j \kappa_j = 77c/60$.
- Complementarity: $c + c' = 488$, $\kappa + \kappa' = 77 \cdot 488/60$.
+ Complementarity: $c + c' = 488$ and
+ \(\kappa(\mathcal W_5^k)+\kappa((\mathcal W_5^k)^!)
+ =77\cdot488/60\).
 \item $N \to \infty$ at fixed central-charge normalization:
  $\kappa \sim c \cdot \ln N$, reflecting the logarithmic growth of
  the harmonic series. If instead $c=c(\mathcal W_N^k)$ is allowed to
@@ -2593,14 +2634,23 @@ Under the Feigin--Frenkel duality $k \mapsto k' = -k - 2N$:
 = (H_N - 1) \cdot (c + c')
 = (H_N - 1) \cdot 2(N{-}1)(2N^2{+}2N{+}1)
 \end{equation}
-In particular, $\kappa + \kappa' = 0$ if and only if $N = 1$
-(the trivial case) or $c + c' = 0$ (which does not occur for
+In particular,
+\[
+\kappa(\mathcal{W}_N^k)+\kappa(\mathcal{W}_N^{k'})=0
+\]
+if and only if $N = 1$ (the trivial case) or $c + c' = 0$
+(which does not occur for
 $\mathfrak{sl}_N$ with $N \geq 2$).
 \end{corollary}
 
 \begin{proof}
-Since $\kappa = c \cdot (H_N - 1)$ and $\kappa' = c' \cdot (H_N - 1)$:
-$\kappa + \kappa' = (H_N - 1)(c + c')$.
+Since
+\(\kappa(\mathcal W_N^k)=c\cdot(H_N-1)\) and
+\(\kappa(\mathcal W_N^{k'})=c'\cdot(H_N-1)\),
+\[
+\kappa(\mathcal W_N^k)+\kappa(\mathcal W_N^{k'})
+=(H_N-1)(c+c').
+\]
 The complementarity sum $c + c' = 2(N{-}1)(2N^2{+}2N{+}1)$
 is level-independent
 (Theorem~\ref{thm:central-charge-complementarity}).
@@ -2630,13 +2680,18 @@ holds by orthogonality of generators of distinct conformal weights.
 Summing the diagonal Gram entries and promoting to genus~$1$ via the
 $B$-cycle mechanism gives
 \[
-\kappa = \sum_{i=1}^{r} \frac{c}{m_i + 1} = c \sum_{i=1}^{r} \frac{1}{m_i + 1}. \qedhere
+\kappa(\mathcal W^k(\mathfrak g))
+= \sum_{i=1}^{r} \frac{c}{m_i + 1}
+= c \sum_{i=1}^{r} \frac{1}{m_i + 1}. \qedhere
 \]
 \end{proof}
 
 \begin{remark}[Values for classical and exceptional types]\label{rem:general-w-kappa-values}
 \index{obstruction coefficient!classical types}
-The harmonic sum $\varrho(\mathfrak{g}) = \sum_{i=1}^r 1/(m_i + 1)$, so that $\kappa = c \cdot \varrho(\mathfrak{g})$, takes the following values:
+The harmonic sum
+\(\varrho(\mathfrak{g}) = \sum_{i=1}^r 1/(m_i + 1)\), so that
+\(\kappa(\mathcal W^k(\mathfrak g))=c\cdot\varrho(\mathfrak g)\),
+takes the following values:
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
 \begin{tabular}{lccl}
@@ -2882,7 +2937,14 @@ $m_4, m_5, \ldots$: Higher operations from multi-residues.
 \end{theorem}
 
 \begin{proof}
-The $A_\infty$ structure on $\bar{B}(\mathcal{W})$ arises from the homotopy transfer theorem (Appendix~\ref{app:homotopy-transfer}) applied to the bar complex equipped with the differential $d = d_{\mathrm{int}} + d_{\mathrm{res}} + d_{\mathrm{dR}}$. The operations $m_n$ are defined by integration over $\overline{C}_{n+1}(X)$: for $\omega_1, \ldots, \omega_n \in \bar{B}$,
+The $A_\infty$ structure on $\bar{B}(\mathcal{W})$ arises from the
+homotopy transfer theorem and its chiral form
+(Theorems~\ref{thm:htt} and~\ref{thm:chiral-htt}) applied to the bar
+complex equipped with the differential
+$d = d_{\mathrm{int}} + d_{\mathrm{res}} + d_{\mathrm{dR}}$.
+The operations $m_n$ are defined by integration over
+$\overline{C}_{n+1}(X)$: for
+$\omega_1, \ldots, \omega_n \in \bar{B}$,
 \[
 m_n(\omega_1, \ldots, \omega_n) = \int_{\overline{C}_{n+1}(X)} \omega_1 \wedge \cdots \wedge \omega_n \wedge P
 \]
@@ -2960,14 +3022,20 @@ $H_N = 1 + 1/2 + \cdots + 1/N$\textup{)}.
 The Nekrasov free energy
 $F = \log \mathcal{Z}^{\mathrm{inst}} =
 \sum_{g \geq 0} \hbar^{g-1} F_g(\vec{a}, q)$
-has genus-$g$ coefficient
-$F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}
-\bigl(\mathrm{ALL\mbox{-}WEIGHT} + \delta F_g^{\mathrm{cross}}\bigr) +
-\text{(representation-dependent terms)}$
-in the symmetric limit $\vec{a} \to 0$, $q \to 0$.
-The leading \textup{(}universal\textup{)} term
-$\kappa \cdot \lambda_g^{\mathrm{FP}}$ is the shadow
-amplitude $F_g(\mathcal{W}_N)$.
+has, in the symmetric limit $\vec{a}\to0$, $q\to0$, the universal
+shadow decomposition
+\[
+F_g^{\mathrm{Nek}}(\vec a,q)
+=F_g^{\mathrm{sc}}(\mathcal W_N)
+ +\delta F_g^{\mathrm{cross}}(\mathcal W_N)
+ +F_g^{\mathrm{rep}}(\vec a,q),
+\qquad
+F_g^{\mathrm{sc}}(\mathcal W_N)
+=\kappa(\mathcal W_N)\lambda_g^{\mathrm{FP}}.
+\]
+The first summand is the scalar shadow amplitude; the second is the
+multi-weight cross-channel shadow of $\mathcal W_N$; the third depends
+on the chosen representation and instanton sector.
 
 \item \textup{(Multi-channel shadow metric for $\mathrm{SU}(3)$.)}
 The $\mathrm{SU}(3)$ Nekrasov partition function involves
@@ -2992,12 +3060,16 @@ governs the WKB transport.
 Part~(i) is the standard AGT parameter map
 (Alday--Gaiotto--Tachikawa, arXiv:0906.3219;
 Wyllard, arXiv:0907.2189 for $\mathrm{SU}(N)$).
-Part~(ii): the Nekrasov genus expansion in the symmetric limit
-reduces to the constant map contribution, where the
-instanton sum degenerates and the perturbative part
-reproduces the Faber--Pandharipande numbers via the
-$\hat{A}$-genus
-(Theorem~\ref{thm:universal-generating-function}).
+Part~(ii): in the symmetric limit, the scalar part of the Nekrasov
+genus expansion reduces to the constant-map contribution, where the
+perturbative factor gives
+\(\kappa(\mathcal W_N)\lambda_g^{\mathrm{FP}}\) via the
+\(\hat A\)-genus
+\textup{(}Theorem~\ref{thm:universal-generating-function}\textup{)}.
+The non-scalar all-weight contribution is exactly the
+cross-channel term \(\delta F_g^{\mathrm{cross}}(\mathcal W_N)\), and
+the remaining summands depend on the representation labels and
+instanton sector.
 Part~(iii) follows from the explicit form of the
 $\mathcal{W}_3$ shadow metric
 (Theorem~\ref{prop:propagator-variance}).
@@ -3076,11 +3148,15 @@ with $c = 1 - 6(k+1)^2/(k+2)$ realizes all five theorems:
  genus-$1$ scalar projection is the conductor identity.
  \\
 \textbf{D} (Modular characteristic) &
- $\mathrm{obs}_g = \kappa \cdot \lambda_g$ \textup{(UNIFORM-WEIGHT)} on the scalar lane with
+ $\mathrm{obs}_g(\mathrm{Vir}_c)=\kappa(\mathrm{Vir}_c)\lambda_g$
+ \textup{(UNIFORM-WEIGHT)} on the scalar lane with
  $\kappa(\mathrm{Vir}_c) = c/2$, anomaly ratio $\varrho = 1/2$.
- Complementarity sum $\kappa + \kappa' = c/2 + (26-c)/2 = 13$
+ Complementarity sum
+ $\kappa(\mathrm{Vir}_c)+\kappa(\mathrm{Vir}_{26-c})
+ = c/2 + (26-c)/2 = 13$
  \textup{(}Theorem~\textup{\ref{thm:modular-characteristic}}\textup{)}.
- Self-dual point $c = 13$: $\kappa = \kappa' = 13/2$.
+ Self-dual point $c = 13$:
+ $\kappa(\mathrm{Vir}_{13})=\kappa(\mathrm{Vir}_{26-13})=13/2$.
  \\
 \textbf{H} (chiral Hochschild) &
  $\operatorname{ChirHoch}^*(\mathrm{Vir}_c)$ is concentrated in
@@ -3136,13 +3212,18 @@ with $c = 2 - 24(k+2)^2/(k+3)$ realizes all five theorems:
  Z^{\mathrm{der}}_{\mathrm{ch}}(\mathcal W_3^k))$
  is the stronger Theorem~\textup{\ref{thm:quantum-complementarity-main}}
  statement and uses the DS/bar plus Verdier comparison hypotheses.
- \\
+\\
 \textbf{D} (Modular characteristic) &
- $\mathrm{obs}_1 = \kappa \cdot \lambda_1$ \textup{(unconditional at $g=1$)} with
+ $\mathrm{obs}_1(\mathcal W_3^k)=\kappa(\mathcal W_3^k)\lambda_1$
+ \textup{(unconditional at $g=1$)} with
  $\kappa(\mathcal{W}_3^k) = c/2 + c/3 = 5c/6$,
  anomaly ratio $\varrho(\mathfrak{sl}_3) = 1/2 + 1/3 = 5/6$
  \textup{(}Theorem~\textup{\ref{thm:w3-genus1-curvature}}\textup{)}.
- Complementarity sum $\kappa + \kappa' = 5c/6 + 5(100-c)/6 = 250/3$.
+ Complementarity sum
+ $\kappa(\mathcal W_3^k)+\kappa((\mathcal W_3^k)^!)
+ = 5c/6 + 5(100-c)/6 = 250/3$.
+ At the companion fixed central charge $c=50$,
+ $\kappa(\mathcal W_3^k)=\kappa((\mathcal W_3^k)^!)=125/3$.
  At genus $g \geq 2$: unconditional on the $T$-line (uniform weight);
  multi-channel identification
  $\Gamma_{\mathcal{W}_3} = \kappa(\mathcal{W}_3)\Lambda$
@@ -3482,7 +3563,7 @@ $\mathcal W_3$ VOA at a shifted central charge. This comparison is
 separate from the scalar conductor, the derived-centre statement, and
 Theorem~H Hochschild concentration.
 
-\begin{example}[Zamolodchikov $\mathcal{W}_3$ brackets and the associated 3d action;
+\begin{proposition}[Zamolodchikov $\mathcal{W}_3$ brackets and the associated 3d action;
 \ClaimStatusProvedElsewhere]
 \label{ex:w3-classical-pva}
 The Zamolodchikov $\mathcal{W}_3$ Poisson vertex algebra is
@@ -3522,7 +3603,7 @@ $(T,\mu)$ of spins $(2,-1)$ and $(W,\chi)$ of spins $(3,-2)$, with
 interaction terms explicitly determined by the brackets
 \eqref{eq:w3-TT-bracket}--\eqref{eq:w3-WW-bracket}; see
 \cite[\S3.4]{KhanZeng25}.
-\end{example}
+\end{proposition}
 
 \begin{proposition}[Topological enhancement in the $\mathcal{W}_3$ case;
 \ClaimStatusProvedElsewhere]
@@ -3859,7 +3940,7 @@ Three identifications connect the bar complex to 3d gravity:
  of the gravity theory on $T^*\mathcal{T}_g$.
 \item $\overline{\mathcal{M}}_g$ is the reduced phase space.
 \item The curvature identity
- $d^2_{\mathrm{fib}} = \kappa \cdot \omega_g$
+ $d^2_{\mathrm{fib}} = \kappa(\mathrm{Vir}_c)\omega_g$
  (Theorem~\ref{thm:genus1-universal-curvature}) says the bar
  differential fails to square to zero by the symplectic form,
  weighted by the central charge.
@@ -3873,9 +3954,10 @@ The Koszul complementarity sum is
 the total gravitational central charge of a Koszul-dual pair.
 This is the Virasoro instance of Theorem~\textup{\ref{thm:modular-characteristic}}
 \textup{(}Theorem~D\textup{)}: for a single-generator $\mathcal{W}$-algebra with
-$\mathrm{Vir}_c^! = \mathrm{Vir}_{26-c}$, the sum $\kappa + \kappa'$
+$\mathrm{Vir}_c^! = \mathrm{Vir}_{26-c}$, the typed sum
+\(\kappa(\mathrm{Vir}_c)+\kappa(\mathrm{Vir}_{26-c})\)
 equals $\rho \cdot K = \frac{1}{2}\cdot 26 = 13$
-\textup{(}$\rho = \kappa/c = 1/2$, $K = 26$\textup{)}.
+\textup{(}$\rho = \kappa(\mathrm{Vir}_c)/c = 1/2$, $K = 26$\textup{)}.
 \end{remark}
 
 
@@ -4617,7 +4699,7 @@ $T_{(1)}W=3W$.
 
 For the quartic sector, the $W$--$W$ OPE contains the quasi-primary
 composite $\Lambda$ at order $(z-w)^{-2}$ with the well-known coefficient
-$16/(22+5c)$ (see Example~\ref{ex:w3-ope-structure}). The weight-$6$ composites
+$16/(22+5c)$ (Theorem~\ref{thm:w-w-ope-complete}). The weight-$6$ composites
 $\Lambda_2,\Lambda_3$ arise from the regular part of the $W$--$W$ OPE
 and contribute independent quartic channels.\qedhere
 \end{proof}
@@ -4704,7 +4786,7 @@ For the mixed and pure-$W$ channels, each $W$-leg at the quartic
 vertex couples to the weight-$4$ quasi-primary $\Lambda$ through the
 $W$--$W$ OPE. The $W(z)W(w)$ OPE contains $\Lambda$ at order
 $(z-w)^{-2}$ with coefficient $16/(22+5c)$
-(Example~\ref{ex:w3-ope-structure}), giving the $W$--$W$--$\Lambda$
+(Theorem~\ref{thm:w-w-ope-complete}), giving the $W$--$W$--$\Lambda$
 coupling $\alpha = 16/(5c+22)$.
 
 The $Q_{TTWW}$ channel has one pair of $W$-legs, contributing
@@ -4887,7 +4969,11 @@ $N=3,4,5,6$.
 \begin{proof}
 On the $T$-line, the shadow data is
 $(\kappa, \alpha, S_4) = (c/2, 2, 10/(c(5c{+}22)))$, where
-$c = c(\mathcal{W}_N^k)$ (see Remark~\ref{rem:wn-five-theorems}).
+$c = c(\mathcal{W}_N^k)$: the leading Virasoro pole gives
+$\kappa=c/2$, the universal gravitational cubic gives $\alpha=2$
+\textup{(}Theorem~\textup{\ref{thm:w-universal-gravitational-cubic}}\textup{)},
+and the quartic coefficient is
+Theorem~\ref{thm:w-virasoro-quartic-explicit}.
 For fixed positive~$k$,
 \[
 c(\mathcal W_N^k)
@@ -5386,7 +5472,7 @@ polynomials. Therefore $\nabla_H^{-1}(\alpha\, x^r) =
 = -\frac{48}{c^2(5c+22)}\,x^5.
 \]
 The intensity normalizes against the quadratic shadow
-$\mathrm{Sh}_2 = \kappa = c/2$:
+\(\mathrm{Sh}_2=\kappa(\mathrm{Vir}_c)=c/2\):
 $\rho_5 = |\mathrm{Sh}_5|/|\kappa|^{5/2}
 = 48/[c^2(5c+22)] \cdot (2/c)^{5/2}
 = 192\sqrt{2}/[c^{9/2}(5c+22)]$.
@@ -5777,7 +5863,7 @@ $Q_0 = 10/[c(5c+22)]$, one has:
 = \frac{240}{c^3(5c+22)}.
 \end{equation}
 This is a nontrivial rational function of $c$ that is not
-determined by $\kappa = c/2$ alone. Two algebras with the same
+determined by \(\kappa(\mathrm{Vir}_c)=c/2\) alone. Two algebras with the same
 $\kappa$ but different $c$ are distinguished by
 $\rho^{(1)}$.
 \end{enumerate}
@@ -5858,7 +5944,7 @@ The genus-$1$ Hessian correction
 $\delta H^{(1)}_{\mathrm{Vir}} = 120/[c^2(5c+22)] \cdot x^2$
 is a \emph{tensorial} modular invariant: it lives in
 $\operatorname{Sym}^2(V^*)$ and is not determined by the scalar
-curvature $\kappa = c/2$. In particular, consider two hypothetical
+curvature \(\kappa(\mathrm{Vir}_c)=c/2\). In particular, consider two hypothetical
 chiral algebras $\cA$ and $\cA'$ with
 $\kappa(\cA) = \kappa(\cA') = c/2$ but whose quartic contact
 coefficients differ. Then
@@ -6155,8 +6241,8 @@ $1,2,9,54,378,2916,24057,\dots$
 \textup{(}$n = 2, 3, \dots$\textup{)}.
 These are the autonomous coefficients. The full two-channel shadow
 restriction to $x_T=0$ is obtained by adding the transverse
-corrections of Remark~\ref{rem:w3-interchannel-coupling} beginning at
-degree~$6$.
+corrections beginning at degree~$6$; those corrections are not part of
+the autonomous projection asserted here.
 \end{proposition}
 
 \begin{proof}
@@ -6723,7 +6809,7 @@ result is a complete dg algebra.
 \subsection{The semistrict modular higher-spin package}
 \label{subsec:semistrict-package}
 
-\begin{theorem}[The $\mathcal{W}_3$ semistrict modular higher-spin
+\begin{theorem}[The classical $\mathcal{W}_3$ semistrict modular higher-spin
 package; \ClaimStatusProvedHere]
 \label{thm:w-semistrict-package}
 \index{semistrict modular higher-spin package!W3@$\mathcal{W}_3$}
@@ -6794,7 +6880,7 @@ and~\ref{prop:w-semistrict-stable-graph}.
 \end{enumerate}
 \end{proof}
 
-\begin{conjecture}[Finite-degree principle for principal
+\begin{conjecture}[Finite-degree principle for classical principal
 $\mathcal{W}_N$; \ClaimStatusConjectured]
 \label{conj:w-finite-degree-WN}
 \index{finite-degree principle!principal WN@principal $\mathcal{W}_N$}
@@ -7242,7 +7328,8 @@ The Feigin--Semikhatov realization provides the exact singular OPE
 coefficients for the entire subregular family through a single
 recursive formula.
 
-\begin{definition}[Recursive coefficient operators]
+\begin{definition}[Recursive coefficient operators;
+\ClaimStatusDefinitional{}]
 \label{def:w-recursive-coefficient-operators}
 \index{recursive coefficient operators!subregular}
 For fixed~$n$, set $K_n := k + n - 1$ and
@@ -7435,11 +7522,16 @@ yield a clean structural classification of the subregular family.
 \label{thm:w-subregular-classification}
 \index{W-algebra@$\mathcal{W}$-algebra!subregular classification}
 For the subregular family $\mathcal{W}_n^{(2)}$ in type~$A$ at
-generic level:
+generic level on the Li/PBW subregular locus
+\[
+\operatorname{gr}_{\mathrm{Li}}\mathcal{W}_n^{(2)}
+\cong \mathbb C[J\mathcal S_{\mathrm{subreg}}],
+\]
+one has:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item Each $\mathcal{W}_n^{(2)}$ is completed Koszul
-(Corollary~\ref{cor:w-principal-completed-koszul} and
-Remark~\ref{rem:w-arbitrary-nilpotent-completed-koszul}).
+\item Each $\mathcal{W}_n^{(2)}$ is completed Koszul by the
+PBW--Slodowy collapse theorem
+\textup{(}Theorem~\textup{\ref{thm:w-pbw-slodowy-collapse}}\textup{)}.
 
 \item The canonical homotopy degree is exactly $n-1$
 (Corollary~\ref{cor:w-subregular-degree-staircase}).
@@ -7667,8 +7759,10 @@ At the $\kappa$ level, this translates to:
 \;=\; \text{const}(N,m),
 \]
 a complementarity-type identity for non-principal $\mathcal{W}$-algebras.
-The hook-type corridor is the first genuine proved non-principal
-corridor (Fehily, Creutzig--Linshaw--Nakatsuka--Sato, 2023--2025).
+The hook-type corridor is the first genuine non-principal
+reduction-theoretic corridor; its Koszul-duality transport is
+conditional on hook-wide DS/bar compatibility
+(Fehily, Creutzig--Linshaw--Nakatsuka--Sato, 2023--2025).
 \end{remark}
 
 \section{W-algebras and the K3 chiral bialgebra}

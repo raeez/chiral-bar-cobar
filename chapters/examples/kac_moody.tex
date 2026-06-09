@@ -935,7 +935,8 @@ The level shift $k \mapsto -k - 2h^\vee$ is Verdier duality on configuration spa
 For the Heisenberg algebra, Koszul duality sends the Lie-type
 $\mathcal{H}_k$ to the Com-type
 $\mathrm{Sym}^{\mathrm{ch}}(V^*)$
-(\S\ref{sec:frame-koszul-dual}): the dual algebra changes type.
+(Theorem~\ref{thm:frame-heisenberg-koszul-dual}): the dual algebra
+changes type.
 For non-abelian Kac--Moody algebras on the non-critical completed
 universal surface, the dual bar construction shifts the level.  The
 Koszul dual is
@@ -974,11 +975,11 @@ $-k - 2h^\vee$ current presentation underlying the chiral CE algebra
 (Step~4).
 \end{proof}
 
-\begin{remark}[Central charge sum]\label{rem:km-central-charge-sum}
+\begin{remark}[Central charge sum; \ClaimStatusProvedHere]\label{rem:km-central-charge-sum}
 The central charges satisfy $c(\widehat{\mathfrak{g}}_k) + c(\widehat{\mathfrak{g}}_{-k-2h^\vee}) = 2\dim\mathfrak{g}$, independent of $k$ (Theorem~\ref{thm:central-charge-complementarity}).
 \end{remark}
 
-\begin{definition}[Curved Koszul complex]\label{def:curved-koszul-km}
+\begin{definition}[Curved Koszul complex; \ClaimStatusDefinitional]\label{def:curved-koszul-km}
 For $k \neq -h^\vee$, the $A_\infty$ structure has curvature:
 \begin{equation}
 m_0 =
@@ -1559,7 +1560,12 @@ m_0 &= \frac{k + h^\vee}{2h^\vee} \cdot \mathsf C_{\mathfrak{sl}_2},
 \end{align}
 where $\mathsf C_{\mathfrak{sl}_2}$ is the Casimir element.
 
-Thus $m_1^2 = 0$ if and only if $k = -h^\vee = -2$ (critical level); for $k \neq -2$, the curved $A_\infty$ curvature $m_0$ is proportional to $k+2$.
+Thus the curvature vanishes if and only if
+$k = -h^\vee = -2$ (critical level); for $k \neq -2$, the curved
+$A_\infty$ curvature $m_0$ is proportional to $k+2$. The relation
+$m_1^2=[m_0,-]$ is the curved identity; the curvature-vanishing
+criterion is $m_0=0$ (equivalently the scalar fiberwise square
+vanishes), not the bare commutator test in isolation.
 
 Applying $\Omega$ to $\bar{B}$ gives free generators dual to the above, with differential twisted by the curvature.
 
@@ -1797,10 +1803,9 @@ residue containing the factor~$k$ in the double-pole coefficient
 $J^a_{(1)}J^b = k\,\delta^{ab}$. Consequently the
 curvature-flat comparison cohomology and the CDG/coderived
 bar invariants may depend on~$k$, but the chain groups do not.
-The comparison cohomology dimensions
-(Table~\ref{tab:bar-dimensions}) are significantly smaller
-than the chain-group dimensions and exhibit polynomial growth for
-Koszul algebras.
+The comparison cohomology dimensions are separate cohomological data:
+they are significantly smaller than the chain-group dimensions and
+exhibit polynomial growth for Koszul algebras.
 \end{lemma}
 
 \subsection{Level decomposition of the bar differential}
@@ -1855,8 +1860,7 @@ is the shifted curvature class, not the OPE double pole.
 \begin{proof}
 The OPE of $\widehat{\mathfrak{g}}_k$ is
 $J^a(z) J^b(w) \sim k(J^a, J^b)/(z-w)^2 + f^{ab}{}_c J^c(w)/(z-w)$.
-The bar differential~\eqref{eq:bar-diff-general}
-acts on $\bar{B}^n$ by extracting residues at collision
+The bar differential acts on $\bar{B}^n$ by extracting residues at collision
 divisors. At each collision $z_i \to z_j$, the residue
 separates into:
 \begin{itemize}
@@ -2388,12 +2392,14 @@ surface of affine currents, the higher-genus scalar obstruction is then
 determined by the modular characteristic
 $\kappa(\widehat{\fg}_k) = \dim(\fg)(k + h^\vee)/(2h^\vee)$
 (Theorem~\ref{thm:modular-characteristic}(i)):
-$\mathrm{obs}_g = \kappa \cdot \lambda_g$ for every $g \geq 1$
+\(\mathrm{obs}_g(\widehat{\fg}_k)
+=\kappa(\widehat{\fg}_k)\lambda_g\) for every $g \geq 1$
 \textup{(}: all currents share conformal weight~$1$, so
 the scalar formula holds without a cross-channel correction,
 cf.\ Theorem~D\textup{)}.
 The duality clause
-$\kappa + \kappa' = 0$ for affine Kac--Moody is then a
+\(\kappa(\widehat{\fg}_k)
+ +\kappa(\widehat{\fg}_{-k-2h^\vee})=0\) for affine Kac--Moody is then a
 \emph{consequence} of the genus-$0$ level identification:
 $\kappa' = \dim(\fg)(-k - 2h^\vee + h^\vee)/(2h^\vee)
 = -\dim(\fg)(k + h^\vee)/(2h^\vee) = -\kappa$.
@@ -3660,8 +3666,9 @@ $\mathcal{C}(U_{\zeta_k}(\mathfrak{g})) \to
 \mathcal{C}(U_{\zeta_k^{-1}}(\mathfrak{g}))$
 on semisimplified tilting categories,
 yielding the parameter correspondence
-\(\zeta_k \mapsto \zeta_k^{-1}\). This is~(iii). See Remark~\ref{rem:km-categorical-refinement}
-below for the stronger categorical statement.
+\(\zeta_k \mapsto \zeta_k^{-1}\). This is~(iii). The stronger
+categorical tensor-equivalence statement is separate and is not used
+in this theorem.
 \end{proof}
 
 \begin{remark}[Categorical refinement]\label{rem:km-categorical-refinement}
@@ -4947,7 +4954,7 @@ The first summand is the Heisenberg-type contribution (proportional to $k$, inde
 We compute $\dfib^{\,2}$ on a degree-1 element $J^a(z_1) \otimes J^b(z_2) \cdot K^{(1)}_{12}$ by tracking the $B$-cycle monodromy.
 
 \emph{Step~1: Transport around the $B$-cycle.}
-Consider the parallel transport of $K^{(1)}_{12} = K^{(1)}(z_1,z_2|\tau)$ as $z_1$ traverses the $B$-cycle $z_1 \mapsto z_1 + \tau$. By~\eqref{eq:B-cycle-quasi-periodicity}:
+Consider the parallel transport of $K^{(1)}_{12} = K^{(1)}(z_1,z_2|\tau)$ as $z_1$ traverses the $B$-cycle $z_1 \mapsto z_1 + \tau$. The elliptic-kernel $B$-cycle quasi-periodicity gives
 \begin{equation}
 K^{(1)}(z_1+\tau,z_2|\tau) - K^{(1)}(z_1,z_2|\tau) = -2\pi i
 \end{equation}
@@ -4961,7 +4968,7 @@ The residue at $z_1 = z_2$ of $J^a(z_1) J^b(z_2) \cdot K^{(1)}_{12}$ extracts th
 The factor $h^\vee$ arises exactly as in the genus-0 curvature computation (Theorem~\ref{thm:universal-kac-moody-koszul}, Step~2): the contraction $\sum_c f^{ac}{}_d f^{bc}{}_e$ over the adjoint representation produces the eigenvalue $2h^\vee$ of the quadratic Casimir.
 
 \emph{Step~3: Identification with $\omega_1$.}
-The constant $(-2\pi i)$ from the $B$-cycle monodromy represents the generator $\omega_1 = c_1(\mathbb{E}) \in H^2(\overline{\mathcal{M}}_{1,1})$, where $\mathbb{E}$ is the Hodge bundle. (The Hodge bundle on $\overline{\mathcal{M}}_{1,1}$ is the line bundle whose fiber over $[E_\tau]$ is $H^0(E_\tau, \omega_{E_\tau})$; its first Chern class is represented by the curvature of the natural connection, which is $-2\pi i \cdot d\tau \wedge d\bar{\tau}/(2i \cdot \operatorname{Im}\tau)^2$ in the $\tau$ coordinate.)
+The constant $(-2\pi i)$ from the $B$-cycle monodromy is the local connection coefficient whose Chern curvature represents the generator $\omega_1 = c_1(\mathbb{E}) \in H^2(\overline{\mathcal{M}}_{1,1})$, where $\mathbb{E}$ is the Hodge bundle. (The Hodge bundle on $\overline{\mathcal{M}}_{1,1}$ is the line bundle whose fiber over $[E_\tau]$ is $H^0(E_\tau, \omega_{E_\tau})$; its first Chern class is represented by the curvature of the natural connection, which is $-2\pi i \cdot d\tau \wedge d\bar{\tau}/(2i \cdot \operatorname{Im}\tau)^2$ in the $\tau$ coordinate.)
 
 On the invariant form, the full contraction gives
 $k \cdot (J^a, J^b) + h^\vee \cdot \delta^{ab}$, which on
@@ -4983,7 +4990,9 @@ Setting $f^{abc} = 0$ and $h^\vee = 0$ (i.e., replacing $\mathfrak{sl}_2$ by a $
 \begin{equation}
 \dfib^{\,2}\big|_{f=0} = k \cdot \omega_1 \cdot \operatorname{id}
 \end{equation}
-This is the Heisenberg curvature $\kappa \cdot \omega_1 \cdot \operatorname{id}$ from Example~\ref{ex:heisenberg-complementarity-explicit}, with $\kappa = k$ (the level of each Cartan generator).
+This is the abelian Heisenberg curvature
+$\kappa \cdot \omega_1 \cdot \operatorname{id}$ with
+$\kappa = k$ (the level of each Cartan generator).
 \end{proof}
 
 \begin{remark}[Critical level]
@@ -5274,7 +5283,9 @@ The curvature decomposes as:
 \end{theorem}
 
 \begin{proof}
-The computation parallels Theorem~\ref{thm:sl2-genus1-curvature}, with the $B$-cycle monodromy~\eqref{eq:B-cycle-quasi-periodicity} providing the curvature mechanism.
+The computation parallels Theorem~\ref{thm:sl2-genus1-curvature},
+with the elliptic-kernel $B$-cycle shift $-2\pi i$ providing the
+curvature mechanism.
 
 \emph{Step~1: OPE contraction.}
 For $\widehat{\mathfrak{sl}}_3$, the double-pole contribution to the residue is $k \cdot (J^a, J^b)$ (the normalized invariant form, with $(H_i, H_j) = A_{ij}$ and $(E_\alpha, F_\beta) = \delta_{\alpha\beta}$ as in Computation~\ref{comp:sl3-ope}), and the simple-pole contribution is $f^{ab}{}_{c} J^c$. Applying $d^{(1)}$ twice with the $B$-cycle shift, the self-contraction loop yields:
@@ -6018,7 +6029,7 @@ The precise statements are
 Theorem~\ref{thm:affine-cubic-normal-form} and
 Corollary~\ref{cor:affine-postnikov-termination} below.
 
-\begin{definition}[Strict current-level sector]%
+\begin{definition}[Strict current-level sector; \ClaimStatusDefinitional]%
 \label{def:affine-strict-current-sector}
 \index{strict current-level sector}
 For the affine Kac--Moody algebra $\widehat{\fg}_k$ at level
@@ -6926,8 +6937,7 @@ Then $\widehat{\fg}_k$ at non-critical level $k \neq -h^\vee$ has:
  $r^{\mathrm{coll}}(z)=k\Omega_{\mathrm{tr}}/z$ in trace-form
  normalization, while the KZ coefficient is
  $r^{\mathrm{KZ}}(z) =
- \Omega_{\mathrm{KZ}}/\bigl((k{+}h^\vee)\,z\bigr)$
- \textup{(}Remark~\textup{\ref{rem:km-collision-residue-rmatrix}}\textup{)}.
+ \Omega_{\mathrm{KZ}}/\bigl((k{+}h^\vee)\,z\bigr)$.
  At the critical level $k = -h^\vee$ the KZ denominator vanishes,
  tracking the Sugawara singularity; the trace-form collision residue
  does not have this denominator.
@@ -7111,8 +7121,7 @@ $r$-matrix data
 $r^{\mathrm{coll}}(z)=k\Omega_{\mathrm{tr}}/z$ and
 $r^{\mathrm{KZ}}(z)=
 \Omega_{\mathrm{KZ}}/\bigl((k{+}h^\vee)\,z\bigr)$
-\textup{(}trace-form collision and KZ normalisations, cf.\
-Remark~\textup{\ref{rem:km-collision-residue-rmatrix}}\textup{)}.
+\textup{(}trace-form collision and KZ normalisations\textup{)}.
 \end{proposition}
 
 \begin{proof}

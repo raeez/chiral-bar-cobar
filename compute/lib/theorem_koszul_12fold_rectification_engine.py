@@ -15,7 +15,7 @@ UNCONDITIONAL EQUIVALENCES (i)-(x):
   (v)   Bar-cobar counit quasi-isomorphism                            PROVED
   (vi)  Barr-Beck-Lurie comparison equivalence                        PROVED
   (vii) Factorization homology degree-0 concentration                 PROVED
-  (viii)ChirHoch polynomial, degrees {0,1,2}                          PROVED
+  (viii)ChirHoch polynomial, degrees {0,1,2}                          CONDITIONAL
   (ix)  Kac-Shapovalov det != 0 in bar-relevant range                 PROVED
   (x)   FM boundary acyclicity                                        PROVED
 
@@ -69,7 +69,7 @@ CONVENTIONS (from CLAUDE.md):
 References:
   thm:koszul-equivalences-meta (chiral_koszul_pairs.tex)
   prop:lagrangian-perfectness (bar_cobar_adjunction_inversion.tex)
-  cor:lagrangian-unconditional (bar_cobar_adjunction_inversion.tex)
+  cor:lagrangian-conditional-standard-landscape (bar_cobar_adjunction_inversion.tex)
   rem:d-module-purity-content (chiral_koszul_pairs.tex)
   prop:d-module-purity-km (chiral_koszul_pairs.tex)
   Holstein-Rivera (2410.03604)
@@ -97,9 +97,11 @@ class KoszulItem:
     """One item of the meta-theorem thm:koszul-equivalences-meta."""
     number: str            # (i), (ii), ..., (xii), K13, K14
     name: str
-    status: str            # 'unconditional', 'conditional', 'one-directional',
-                           # 'false', 'candidate'
-    proof_direction: str   # 'both', 'forward_only', 'conditional_both', 'n/a'
+    status: str            # 'unconditional', 'listed-consequence',
+                           # 'conditional', 'one-way-consequence',
+                           # 'one-directional', 'false', 'candidate'
+    proof_direction: str   # 'both', 'from_v', 'forward_only',
+                           # 'conditional_both', 'n/a'
     condition: str         # what condition is needed ('' if unconditional)
     proved_for: str        # which families
     manuscript_ref: str    # label in the manuscript
@@ -198,9 +200,9 @@ def _build_registry():
         KoszulItem(
             number='(vi)',
             name='Barr-Beck-Lurie comparison equivalence',
-            status='unconditional',
-            proof_direction='both',
-            condition='',
+            status='listed-consequence',
+            proof_direction='from_v',
+            condition='proved consequence of item (v), not independent',
             proved_for='all standard families on Koszul locus',
             manuscript_ref='thm:barr-beck-lurie-koszulness',
             new_paper_impact='No direct impact from 2024-2026 papers.',
@@ -209,10 +211,19 @@ def _build_registry():
         KoszulItem(
             number='(vii)',
             name='Factorization homology degree-0 concentration',
-            status='unconditional',
-            proof_direction='both',
-            condition='',
-            proved_for='all standard families for all genera g',
+            status='conditional',
+            proof_direction='conditional_both',
+            condition=(
+                'Proposition prop:bar-fh gives a filtered model under '
+                'locally constant, constructible, compact Ran hypotheses; '
+                'the converse from factorization-homology concentration to '
+                'Koszulness requires the extra detection hypothesis.'
+            ),
+            proved_for=(
+                'genus-0 comparison clause on the standard landscape; '
+                'all-genus equivalence only under the stated comparison '
+                'and detection hypotheses'
+            ),
             manuscript_ref='thm:fh-concentration-koszulness',
             new_paper_impact='No direct impact from 2024-2026 papers.',
             upgraded=False,
@@ -220,10 +231,14 @@ def _build_registry():
         KoszulItem(
             number='(viii)',
             name='ChirHoch polynomial in degrees {0,1,2}',
-            status='unconditional',
-            proof_direction='both',
-            condition='',
-            proved_for='all standard families (Theorem H)',
+            status='one-way-consequence',
+            proof_direction='forward_only',
+            condition=(
+                'Koszulness implies chiral Hochschild concentration and '
+                'duality on the Theorem H surface; the converse to the '
+                'bar-cobar counit is not proved here.'
+            ),
+            proved_for='standard generic families on the Theorem H surface',
             manuscript_ref='thm:main-koszul-hoch',
             new_paper_impact=(
                 'De Leger (2512.20167) proves SC(E_2) ~ SC_2, giving an '
@@ -272,15 +287,17 @@ def _build_registry():
             status='conditional',
             proof_direction='conditional_both',
             condition=(
-                'Perfectness of the cyclic pairing on Def_cyc^mod(A). '
-                'Hypotheses (P1) finite weight spaces + (P2) nondegenerate '
-                'invariant form suffice. (P3) dual regularity is REDUNDANT '
-                'on the Koszul locus by Holstein-Rivera (2410.03604).'
+                'Shifted-symplectic hypothesis package: perfectness of the '
+                'cyclic pairing on Def_cyc^mod(A), ambient nondegeneracy, '
+                'cyclic/BV compatibility, and bar-chart acyclicity. '
+                'Holstein-Rivera supplies evidence for one perfectness input; '
+                'it does not certify the full package.'
             ),
             proved_for=(
-                'unconditional for entire standard landscape at '
+                'perfectness input verified for the standard landscape at '
                 'non-critical non-degenerate levels '
-                '(prop:lagrangian-perfectness, cor:lagrangian-unconditional)'
+                '(prop:lagrangian-perfectness, '
+                'cor:lagrangian-conditional-standard-landscape)'
             ),
             manuscript_ref='conj:lagrangian-koszulness',
             new_paper_impact=(
@@ -576,9 +593,21 @@ def verify_item_status(item_number: str) -> Dict[str, Any]:
                 f'Unconditional item should have both directions proved, '
                 f'but proof_direction = {item.proof_direction}'
             )
+    elif item.status == 'listed-consequence':
+        if item.proof_direction != 'from_v':
+            issues.append(
+                f'Listed consequence should be derived from item (v), '
+                f'but proof_direction = {item.proof_direction}'
+            )
     elif item.status == 'conditional':
         if not item.condition:
             issues.append('Conditional item should specify the condition')
+    elif item.status == 'one-way-consequence':
+        if item.proof_direction != 'forward_only':
+            issues.append(
+                f'One-way consequence has unexpected proof_direction: '
+                f'{item.proof_direction}'
+            )
     elif item.status == 'one-directional':
         if item.proof_direction not in ('forward_only',):
             issues.append(
@@ -602,12 +631,13 @@ def verify_item_status(item_number: str) -> Dict[str, Any]:
 
 
 def count_unconditional() -> int:
-    """Count the number of unconditional equivalences.
+    """Count the independent unconditional bidirectional equivalences.
 
-    The meta-theorem has 10 unconditional items (i)-(x).
+    The meta-theorem surface has seven independent bidirectional
+    equivalences: items (i)--(v), (ix), and (x).
 
     >>> count_unconditional()
-    10
+    7
     """
     return sum(
         1 for item in KOSZUL_ITEMS.values()
@@ -615,17 +645,47 @@ def count_unconditional() -> int:
     )
 
 
-def count_conditional() -> int:
-    """Count conditional items.
+def count_listed_consequences() -> int:
+    """Count proved consequences listed as numbered items.
 
-    Item (xi) is conditional (on perfectness).
+    Item (vi), Barr--Beck--Lurie monadicity, is a consequence of
+    item (v), not an independent equivalence.
 
-    >>> count_conditional()
+    >>> count_listed_consequences()
     1
     """
     return sum(
         1 for item in KOSZUL_ITEMS.values()
+        if item.status == 'listed-consequence'
+    )
+
+
+def count_conditional() -> int:
+    """Count conditional items.
+
+    Items (vii) and (xi) are conditional.
+
+    >>> count_conditional()
+    2
+    """
+    return sum(
+        1 for item in KOSZUL_ITEMS.values()
         if item.status == 'conditional'
+    )
+
+
+def count_one_way_consequences() -> int:
+    """Count one-way consequences on the Koszul locus.
+
+    Item (viii), chiral Hochschild concentration and duality, is
+    proved from Koszulness; the converse is not proved here.
+
+    >>> count_one_way_consequences()
+    1
+    """
+    return sum(
+        1 for item in KOSZUL_ITEMS.values()
+        if item.status == 'one-way-consequence'
     )
 
 
@@ -681,11 +741,17 @@ def verify_item_for_family(
     item = KOSZUL_ITEMS[item_number]
     fam = FAMILIES[family_name]
 
-    # For unconditional items: Koszul <=> item holds
+    # For independent unconditional items: Koszul <=> item holds.
     if item.status == 'unconditional':
         # If family is Koszul, item should hold
         # If family is not Koszul, item should fail
         # We encode this as: item_holds == fam.koszul
+        item_holds = _check_item_for_family(item_number, fam)
+        consistent = (item_holds == fam.koszul)
+    elif item.status == 'listed-consequence':
+        item_holds = _check_item_for_family(item_number, fam)
+        consistent = (item_holds == fam.koszul)
+    elif item.number in ('(vii)', '(viii)'):
         item_holds = _check_item_for_family(item_number, fam)
         consistent = (item_holds == fam.koszul)
     elif item.number == '(xi)':
@@ -730,10 +796,12 @@ def verify_item_for_family(
 
 
 def _check_item_for_family(item_number: str, fam: FamilyData) -> bool:
-    """Check whether a specific unconditional item holds for a family.
+    """Check whether a registered item holds for a family.
 
-    For items (i)-(x), the item holds iff the family is Koszul.
-    This is the content of the meta-theorem: all 10 are equivalent.
+    For the independent unconditional items, listed consequences,
+    conditional comparison surfaces, and the one-way Hochschild
+    consequence, the standard-family check holds exactly on the
+    Koszul locus.
     """
     if item_number in (
         '(i)', '(ii)', '(iii)', '(iv)', '(v)',
@@ -751,13 +819,16 @@ def k11_upgrade_analysis(family_name: str) -> Dict[str, Any]:
     """Analyze the K11 upgrade for a specific family.
 
     Holstein-Rivera (2410.03604) shows that (P3) dual regularity follows
-    from (P1) + (P2) on the Koszul locus. This means K11 needs only
-    (P1) + (P2), not (P1) + (P2) + (P3).
+    from (P1) + (P2) on the Koszul locus. This verifies one
+    perfectness input for K11; it does not remove the full
+    shifted-symplectic hypothesis package.
 
     >>> result = k11_upgrade_analysis('heisenberg')
     >>> result['p3_redundant']
     True
     >>> result['k11_unconditional']
+    False
+    >>> result['k11_perfectness_input_verified']
     True
     """
     if family_name not in FAMILIES:
@@ -775,10 +846,8 @@ def k11_upgrade_analysis(family_name: str) -> Dict[str, Any]:
     # (P3) redundancy: if smooth + Koszul + (P1) + (P2), then (P3) follows
     p3_redundant = smooth and koszul and p1 and p2
 
-    # K11 unconditional for this family: needs (P1) + (P2) only
-    k11_unconditional = p1 and p2 and (koszul or not koszul)
-    # Actually: K11 is an equivalence, so it holds iff Koszul
-    # The question is whether the PERFECTNESS HYPOTHESIS is satisfied
+    # K11 remains conditional; the question here is whether the
+    # perfectness input in the hypothesis package is verified.
     perfectness_holds = p1 and p2 and (p3_redundant or True)
 
     return {
@@ -788,12 +857,14 @@ def k11_upgrade_analysis(family_name: str) -> Dict[str, Any]:
         'smooth': smooth,
         'koszul': koszul,
         'p3_redundant': p3_redundant,
-        'k11_unconditional': p1 and p2,
+        'k11_unconditional': False,
+        'k11_perfectness_input_verified': perfectness_holds,
         'perfectness_holds': perfectness_holds,
         'holstein_rivera': (
             'Holstein-Rivera (2410.03604), Theorem 1.1: Koszul duality '
-            'exchanges smooth/proper CY. On Koszul locus, (P3) follows '
-            'from (P1)+(P2)+smoothness.'
+            'exchanges smooth/proper CY. On the Koszul locus, this verifies '
+            'a perfectness input; K11 still requires the full '
+            'shifted-symplectic package.'
         ),
     }
 
@@ -1096,8 +1167,12 @@ def full_rectification_summary() -> Dict[str, Any]:
     >>> summary['total_items']
     14
     >>> summary['unconditional']
-    10
+    7
+    >>> summary['listed_consequences']
+    1
     >>> summary['conditional']
+    2
+    >>> summary['one_way_consequences']
     1
     >>> summary['one_directional']
     1
@@ -1114,21 +1189,37 @@ def full_rectification_summary() -> Dict[str, Any]:
     return {
         'total_items': len(KOSZUL_ITEMS),
         'unconditional': count_unconditional(),
+        'listed_consequences': count_listed_consequences(),
         'conditional': count_conditional(),
+        'one_way_consequences': count_one_way_consequences(),
         'one_directional': count_one_directional(),
         'false_candidates': count_false_candidates(),
         'upgraded_items': upgraded,
         'status_changes': {
+            '(vi)': (
+                'listed as a proved Barr-Beck-Lurie consequence of item (v), '
+                'not counted as an independent equivalence'
+            ),
+            '(vii)': (
+                'conditional factorization-homology comparison: prop:bar-fh '
+                'plus detection hypotheses'
+            ),
+            '(viii)': (
+                'one-way consequence on the Koszul locus; converse to the '
+                'bar-cobar counit is not proved here'
+            ),
             '(xi)': (
-                'UPGRADED: (P3) dual regularity redundant on Koszul locus '
-                'by Holstein-Rivera (2410.03604). K11 now needs only '
-                '(P1) finite weight spaces + (P2) nondegenerate form. '
-                'Unconditional for entire standard landscape.'
+                'UPGRADED INPUT: Holstein-Rivera (2410.03604) supplies '
+                'perfectness evidence on the Koszul locus; K11 remains '
+                'conditional on the full shifted-symplectic package.'
             ),
         },
         'no_change_items': [
             item.number for item in KOSZUL_ITEMS.values()
-            if not item.upgraded and item.status in ('unconditional', 'one-directional')
+            if not item.upgraded and item.status in (
+                'unconditional', 'listed-consequence',
+                'one-way-consequence', 'one-directional',
+            )
         ],
         'false_candidates_detail': {
             'K13': 'E_3-formality => Koszulness (one-directional, not biconditional)',
@@ -1155,45 +1246,55 @@ def verify_proof_circuit() -> Dict[str, Any]:
     """Verify the logical circuit of implications in the meta-theorem proof.
 
     The proof establishes:
-      (i) <=> (ii) <=> (iii) <=> (v) <=> (viii)  [core circuit]
-      (i) <=> (iv)                                 [Ext diagonal]
-      (i) <=> (vi)                                 [BBL monadicity]
-      (i) <=> (vii)                                [FH concentration]
-      (i) <=> (ix)                                 [Kac-Shapovalov]
-      (i) <=> (x)                                  [FM boundary]
-      (i) <=> (xi)  [conditional on perfectness]
+      (i) <=> (ii) <=> (iii) <=> (v)              [core circuit]
+      (i) <=> (iv)                                [Ext diagonal]
+      (i) <=> (ix)                                [Kac-Shapovalov]
+      (i) <=> (x)                                 [FM boundary]
+      (v) => (vi)                                 [BBL consequence]
+      (i) <=> (vii) [conditional comparison + detection]
+      (i) => (viii)                               [ChirHoch consequence]
+      (i) <=> (xi)  [conditional shifted-symplectic package]
       (x) => (xii)  [forward only]
 
     >>> result = verify_proof_circuit()
     >>> result['core_circuit_complete']
     True
-    >>> result['all_equivalences_proved']
+    >>> result['all_items_covered']
     True
     """
-    # Core circuit: (i) <=> (ii) <=> (iii) <=> (v) <=> (viii)
+    # Core circuit: (i) <=> (ii) <=> (iii) <=> (v)
     core = [
         ('(i)', '(ii)', 'both', 'PBW criterion'),
         ('(ii)', '(iii)', 'both', 'HPL transfer / Keller classicality'),
         ('(ii)', '(v)', 'both', 'bar concentration / twisted product cone'),
-        ('(v)', '(viii)', 'both', 'free resolution / Beilinson-Drinfeld'),
     ]
 
     # Radial connections to (i)
     radial = [
         ('(i)', '(iv)', 'both', 'E_2-collapse / diagonal concentration'),
-        ('(i)', '(vi)', 'both', 'conservativity + Quillen equivalence'),
-        ('(i)', '(vii)', 'both', 'bar = FH / genus-0 concentration'),
         ('(i)', '(ix)', 'both', 'PBW strictness / Shapovalov injectivity'),
         ('(i)', '(x)', 'both', 'stratum-by-stratum PBW / binary collision'),
     ]
 
-    # Conditional / partial
+    listed = [
+        ('(v)', '(vi)', 'from_v', 'Barr-Beck-Lurie monadicity'),
+    ]
+
+    # Conditional / one-way / partial
     conditional = [
-        ('(i)', '(xi)', 'conditional_both', 'PTVV Lagrangian / perfectness'),
+        ('(i)', '(vii)', 'conditional_both',
+         'bar-to-factorization-homology comparison + detection'),
+        ('(i)', '(xi)', 'conditional_both',
+         'PTVV Lagrangian / shifted-symplectic package'),
+    ]
+
+    one_way = [
+        ('(i)', '(viii)', 'forward_only',
+         'Theorem H Hochschild concentration on the Koszul locus'),
         ('(x)', '(xii)', 'forward_only', 'Saito strictness'),
     ]
 
-    all_links = core + radial + conditional
+    all_links = core + radial + listed + conditional + one_way
     all_items_covered = set()
     for src, tgt, _, _ in all_links:
         all_items_covered.add(src)
@@ -1207,9 +1308,12 @@ def verify_proof_circuit() -> Dict[str, Any]:
     return {
         'core_circuit': core,
         'radial_connections': radial,
+        'listed_consequence_links': listed,
         'conditional_links': conditional,
-        'core_circuit_complete': len(core) == 4,
-        'all_equivalences_proved': len(missing) == 0,
+        'one_way_links': one_way,
+        'core_circuit_complete': len(core) == 3,
+        'all_items_covered': len(missing) == 0,
+        'all_equivalences_proved': False,
         'missing_items': list(missing),
         'total_links': len(all_links),
     }

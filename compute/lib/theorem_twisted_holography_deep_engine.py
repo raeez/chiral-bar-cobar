@@ -91,7 +91,8 @@ ANTI-PATTERN COMPLIANCE:
     AP24: kappa + kappa' = 0 for KM; != 0 for W-algebras.
     AP25: B(A) != D_Ran(B(A)) != Omega(B(A)).
     AP33: H_k^! = Sym^ch(V*) != H_{-k}.
-    AP34: bar-cobar inversion != open-to-closed; derived center = bulk.
+    AP34: bar-cobar inversion != open-to-closed; derived center is the
+    algebraic closed-sector vertex.
     AP39: kappa != c/2 in general.
     AP44: OPE mode / n! = lambda-bracket coefficient.
     AP48: kappa depends on full algebra, not Virasoro subalgebra.
@@ -388,7 +389,7 @@ class CollisionResidue:
 
     For Heisenberg H_k:
       OPE: J(z)J(w) ~ k/(z-w)^2
-      Collision residue: r(z) = k/z (scalar, single pole after d log absorption).
+      Collision residue: r(z) = k*Omega_H/z (rank-one coeff k/z) (rank-one abelian tensor, single pole after d log absorption).
     """
     algebra_name: str
     pole_order: int  # after d log absorption
@@ -520,12 +521,13 @@ class DerivedCenter:
     """Z^der_ch(A) = C^*_ch(A_b, A_b) = chiral Hochschild cochains.
 
     CRITICAL DISTINCTION (AP34, AP-OC):
-      - The bulk is the derived center, not the bar complex.
+      - The derived center is the algebraic closed-sector vertex,
+        not the bar complex.
       - B(A) classifies twisting morphisms (couplings between A and A!).
-      - Z^der_ch(A) classifies bulk operators acting on boundary.
+      - Z^der_ch(A) models closed-sector operators acting on boundary.
       - Omega(B(A)) = A is reconstruction.
       - D_Ran(B(A)) is the Verdier surface for the A^! branch.
-      - C^*_ch(A,A) = Z^der is the bulk.
+      - C^*_ch(A,A) = Z^der is the closed-sector cochain model.
 
     For affine sl(N)_k:
       Bulk = commutative chiral algebra with shifted Poisson bracket (CDG20).
@@ -539,12 +541,12 @@ class DerivedCenter:
 
     @property
     def is_derived_center(self) -> bool:
-        """By definition, the bulk is the derived center."""
+        """By definition, this model is the derived center."""
         return True
 
     @property
     def is_not_bar_complex(self) -> bool:
-        """AP34: the bulk is the derived center."""
+        """AP34: the closed-sector model is the derived center."""
         return True
 
 

@@ -1,8 +1,9 @@
 """The Yangian bridge: Vol I E₁-chiral bar complex → Vol II spectral braiding.
 
-The Yangian is the E₁ atom of the monograph — the braided counterpart
-to the Heisenberg (E∞) atom.  Where the Heisenberg has trivial R-matrix,
-trivial lambda-bracket, and formal bar complex, the Yangian has:
+The Yangian is the E₁ atom of the monograph — the nonabelian braided
+counterpart to the Heisenberg (E∞) atom.  Where the Heisenberg has no
+field-valued simple OPE pole and no Yangian R-matrix, but does retain the
+scalar ordered-bar braiding R(z) = exp(k*hbar/z), the Yangian has:
 
   - Nontrivial R-matrix R(u) solving Yang-Baxter
   - Nontrivial spectral braiding from ordered configurations
@@ -44,6 +45,7 @@ from compute.lib.yangian_residue_extraction import (
     verify_yang_baxter_slN,
     verify_auxiliary_kernel_identity,
 )
+from compute.lib.ordered_bar_descent_engine import HeisenbergRMatrix
 
 
 # ============================================================
@@ -254,16 +256,20 @@ class TestVolII_ThreeLayerReduction:
 class TestDiptych:
     """The two atoms compared: Heisenberg (E∞) vs Yangian (E₁)."""
 
-    def test_heisenberg_has_no_braiding(self):
-        """Heisenberg: no simple pole → no R-matrix → E∞.
+    def test_heisenberg_has_scalar_not_yangian_braiding(self):
+        """Heisenberg: no simple OPE pole, but scalar ordered-bar R.
 
         The Heisenberg OPE a(z)a(w) = κ/(z-w)² has ONLY a double pole.
-        No simple pole means no braiding, no R-matrix, no spectral parameter.
+        No simple OPE pole means no nonabelian Yangian R-matrix.  After
+        dlog absorption, the ordered-bar descent still has the scalar
+        braiding R(z) = exp(k*hbar/z), nontrivial for k != 0.
         """
         from compute.lib.heisenberg_bar import heisenberg_nth_products
         products = heisenberg_nth_products()
         assert 0 not in products, "Heisenberg: no simple pole"
         assert 1 in products, "Heisenberg: has double pole (curvature)"
+        scalar_r = HeisenbergRMatrix(1).r_matrix_scalar(z_val=2.0, hbar=0.5)
+        assert not np.isclose(scalar_r, 1.0), "Heisenberg scalar R is nontrivial"
 
     def test_yangian_has_braiding(self):
         """Yangian: simple pole in R-matrix → nontrivial braiding → E₁.

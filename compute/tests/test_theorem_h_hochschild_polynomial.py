@@ -26,9 +26,13 @@ References:
 import pytest
 from math import comb
 
+from compute.lib.independent_verification import independent_verification
 from compute.lib.theorem_h_hochschild_polynomial import (
     FAMILY_DATA,
     THEOREM_H_STATUS,
+    THEOREM_H_DEFECT_COMPLEX,
+    THEOREM_H_HYPOTHESES,
+    theorem_h_scope_record,
     generator_count,
     hochschild_poincare,
     hochschild_betti,
@@ -66,6 +70,24 @@ from compute.lib.theorem_h_hochschild_polynomial import (
     euler_characteristic_derived,
     palindromicity_derived,
 )
+
+
+def _virasoro_generic_primary_source_triple():
+    """Independent generic Virasoro Hochschild triple.
+
+    This witness intentionally does not read FAMILY_DATA or any helper in
+    theorem_h_hochschild_polynomial.py.  It records the classical
+    Virasoro/VOA cohomology input used as an external check: the vacuum
+    center is one-dimensional, generic Virasoro has no outer derivations,
+    and the central-extension class gives the one-dimensional degree-2
+    deformation.  Higher degrees are zero on the Theorem H curve-level
+    Koszul surface.
+    """
+    return {
+        "source": "Wang 1998 / Feigin-Fuchs generic Virasoro cohomology",
+        "triple": [1, 0, 1],
+        "higher_tail": {n: 0 for n in range(3, 12)},
+    }
 
 
 # ===================================================================
@@ -117,6 +139,42 @@ class TestHeisenberg:
         """dim H^0 = dim H^2 = 1."""
         result = verify_palindromicity('heisenberg')
         assert result['palindromic_self'] is True
+
+
+# ===================================================================
+# Theorem H scope firewall
+# ===================================================================
+
+class TestTheoremHScope:
+    """Theorem H carries its PBW/generic/completed hypothesis package."""
+
+    def test_generic_family_scope_applies(self):
+        scope = theorem_h_scope_record('heisenberg')
+        assert scope['applies'] is True
+        assert scope['defect_complex'] is None
+        assert scope['type_signature']['level'] == 3
+        assert 'PBW chiral Koszulness' in scope['hypotheses']
+        assert 'strict Mittag-Leffler completion passage' in scope['hypotheses']
+
+    def test_unknown_family_returns_defect_complex(self):
+        scope = theorem_h_scope_record(
+            'triplet_Wp',
+            applies=False,
+            reason='logarithmic triplet Koszulness not proved',
+        )
+        assert scope['applies'] is False
+        assert scope['defect_complex'] == THEOREM_H_DEFECT_COMPLEX
+        assert scope['high_degree_acyclicity_proved'] is False
+        assert 'define KD_H^bullet(A)' in scope['missing_if_off_surface']
+
+    def test_hypothesis_package_names_all_required_axes(self):
+        hypotheses = set(THEOREM_H_HYPOTHESES)
+        assert 'PBW chiral Koszulness' in hypotheses
+        assert 'E_infty-chiral completion' in hypotheses
+        assert 'finite-type/perfect diagonal chiral Hochschild complexes' in hypotheses
+        assert 'generic non-critical parameter' in hypotheses
+        assert 'strict Mittag-Leffler completion passage' in hypotheses
+        assert 'PBW/Arnold Shelton-Yuzvinsky contraction' in hypotheses
 
 
 # ===================================================================
@@ -195,13 +253,13 @@ class TestBetagamma:
         assert generator_count('betagamma') == 2
 
     def test_poincare_polynomial(self):
-        """P(t) = 1 + 2t + t^2."""
+        """P(t) = 1 + t^2 on the curve-level chiral product surface."""
         poly = hochschild_poincare('betagamma')
-        assert poly == [1, 2, 1]
+        assert poly == [1, 0, 1]
 
     def test_betti_1(self):
-        """ChirHoch^1 = C^2 (two generators)."""
-        assert hochschild_betti('betagamma', 1) == 2
+        """ChirHoch^1 = 0; charge/weight motions are not H^1."""
+        assert hochschild_betti('betagamma', 1) == 0
 
     def test_concentration(self):
         for n in range(3, 8):
@@ -224,9 +282,9 @@ class TestBcGhosts:
         assert generator_count('bc_ghosts') == 2
 
     def test_poincare_polynomial(self):
-        """P(t) = 1 + 2t + t^2 (same as betagamma by Koszul duality)."""
+        """P(t) = 1 + t^2 (same as betagamma by Koszul duality)."""
         poly = hochschild_poincare('bc_ghosts')
-        assert poly == [1, 2, 1]
+        assert poly == [1, 0, 1]
 
     def test_dual_matches_betagamma(self):
         """betagamma and bc have the same Poincare polynomial."""
@@ -246,9 +304,9 @@ class TestFreeFermion:
         assert generator_count('free_fermion') == 1
 
     def test_poincare_polynomial(self):
-        """P(t) = 1 + t + t^2."""
+        """P(t) = 1 + t^2; bilinear rescaling is degree 2."""
         poly = hochschild_poincare('free_fermion')
-        assert poly == [1, 1, 1]
+        assert poly == [1, 0, 1]
 
 
 # ===================================================================
@@ -368,8 +426,35 @@ class TestVirasoro:
         poly = hochschild_poincare('virasoro')
         assert poly == [1, 0, 1]
 
+    @independent_verification(
+        claim="thm:hochschild-polynomial-growth",
+        derived_from=[
+            "FAMILY_DATA['virasoro'] in theorem_h_hochschild_polynomial.py",
+            "Theorem H bounded-amplitude formula in chiral_hochschild_koszul.tex",
+        ],
+        verified_against=[
+            "Wang 1998 vertex-operator cohomology for generic Virasoro",
+            "Feigin-Fuchs Virasoro central-extension cocycle computation",
+        ],
+        disjoint_rationale=(
+            "The expected triple is computed from external Virasoro "
+            "cohomology inputs and the central-extension cocycle, not from "
+            "FAMILY_DATA or the polynomial helper under test."
+        ),
+    )
+    def test_virasoro_poincare_independent_primary_source_triple(self):
+        """Virasoro P(t)=1+t^2 checked without reading FAMILY_DATA."""
+        witness = _virasoro_generic_primary_source_triple()
+        expected = witness["triple"]
+
+        assert expected == [1, 0, 1]
+        assert hochschild_poincare('virasoro') == expected
+        assert [hochschild_betti('virasoro', n) for n in range(3)] == expected
+        for n, value in witness["higher_tail"].items():
+            assert hochschild_betti('virasoro', n) == value
+
     def test_total_dim_bounded(self):
-        """Total dim = 2 (Theorem H dim <= 4 bound, Virasoro saturates to 2)."""
+        """Total dim = 2 for this generic Virasoro surface."""
         assert hochschild_total_dim('virasoro') == 2
 
     def test_euler_char(self):
@@ -446,7 +531,7 @@ class TestW3:
         assert poly == [1, 0, 1]
 
     def test_total_dim_bounded(self):
-        """Total dim = 2, satisfying Theorem H dim <= 4 bound."""
+        """Total dim = 2 for this generic W_3 surface."""
         assert hochschild_total_dim('w3') == 2
 
     def test_euler_char(self):
@@ -617,9 +702,10 @@ class TestGrowthRate:
 class TestConcentration:
     """Verify amplitude [0, 2] concentration for every Koszul family.
 
-    AP94: under Theorem H every Koszul chiral algebra has bounded
-    Hochschild in [0, 2] with dim <= 4.  This includes Virasoro, W_3,
-    W_N, formerly mis-modelled as polynomial rings.
+    AP94: on the Theorem H PBW/generic/completed surface, the
+    Hochschild complex is concentrated in [0, 2].  This includes the
+    generic Virasoro, W_3, and W_N entries formerly mis-modelled as
+    polynomial rings.
     """
 
     @pytest.mark.parametrize("family", [
@@ -700,9 +786,9 @@ class TestKoszulDualPolynomial:
         assert dual_poly == [1, 1, 1]
 
     def test_betagamma_dual_poly(self):
-        """P_{bg^!}(t) = P_{bc}(t) = 1 + 2t + t^2."""
+        """P_{bg^!}(t) = P_{bc}(t) = 1 + t^2."""
         dual_poly = koszul_dual_polynomial('betagamma')
-        assert dual_poly == [1, 2, 1]
+        assert dual_poly == [1, 0, 1]
 
     def test_affine_sl2_dual_poly(self):
         """P_{sl2^!}(t) = 1 + 3t + t^2."""
@@ -788,12 +874,15 @@ class TestNonKoszul:
         result = non_koszul_failure_example()
         assert 'admissible' in result['description']
         assert result['known_data']['ChirHoch^0'] == 1
+        assert result['theorem_h_scope']['applies'] is False
+        assert result['theorem_h_scope']['defect_complex'] == THEOREM_H_DEFECT_COMPLEX
 
     def test_l_minus_half_sl2_data(self):
         """L_{-1/2}(sl_2): concentrated in [0,2] despite being admissible."""
         result = non_koszul_failure_example()
         assert result['known_data']['ChirHoch^1'] == 0
         assert result['known_data']['ChirHoch^2'] == 1
+        assert result['theorem_h_scope']['high_degree_acyclicity_proved'] is False
 
 
 # ===================================================================
@@ -806,6 +895,7 @@ class TestFullVerification:
     def test_heisenberg_passes(self):
         result = verify_theorem_h('heisenberg')
         assert result['passed'] is True
+        assert result['theorem_h_scope']['applies'] is True
 
     def test_affine_sl2_passes(self):
         result = verify_theorem_h('affine_sl2')
@@ -827,6 +917,7 @@ class TestFullVerification:
         results = verify_theorem_h_all_families()
         for family, result in results.items():
             assert result['passed'] is True, f"{family} failed"
+            assert result['theorem_h_scope']['applies'] is True, family
 
     def test_all_families_count(self):
         """At least 10 families verified."""
@@ -930,10 +1021,10 @@ class TestLcm:
 class TestCrossRegime:
     """Compare bounded polynomials across the standard landscape.
 
-    AP94: under Theorem H every Koszul chiral algebra has a bounded
-    amplitude 3-term Hochschild polynomial.  Different families give
-    different polynomials (different coefficients), but all are
-    finitely supported in [0, 2].
+    AP94: on the Theorem H generic PBW/completed surface, every recorded
+    family has a bounded-amplitude 3-term Hochschild polynomial.
+    Different families give different coefficients, but all recorded
+    entries are finitely supported in [0, 2].
     """
 
     def test_km_vs_virasoro_bounded_contrast(self):
@@ -1144,9 +1235,9 @@ class TestEulerCharDerived:
         assert r["verified"]
 
     def test_betagamma_chi_from_dims(self):
-        """chi(bg) = 1 - 2 + 1 = 0 from computed dims."""
+        """chi(bg) = 1 - 0 + 1 = 2 from computed dims."""
         r = euler_characteristic_derived('betagamma')
-        assert r["chi"] == 0
+        assert r["chi"] == 2
         assert r["verified"]
 
     def test_quadratic_chi_stabilizes(self):

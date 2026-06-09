@@ -10,8 +10,8 @@ Assertions:
   (b) Berezinian sum:      kappa_berezinian(2,1,k) + kappa_berezinian(1,2,k) == 2
   (c) Bridge shift:        quantum_berezinian_leading(2, 1) == 1
 
-Status: marked xfail pending analytic implementation of
-compute.lib.super_yangian_shadow (see lem:super-trace-berezinian-bridge).
+Status: finite-window normalized arithmetic implemented in
+compute.lib.super_yangian_shadow.
 
 Independent-verification paths (three disjoint routes to the bridge; any two
 agreeing pin the third):
@@ -32,9 +32,8 @@ agreeing pin the third):
     "quasideterminants."
 """
 
-import pytest
-
 from compute.lib.super_yangian_shadow import (
+    feigin_frenkel_dual_level,
     kappa_berezinian,
     kappa_supertrace,
     quantum_berezinian_leading,
@@ -50,48 +49,33 @@ MAX_MN = max(M, N)    # = 2
 K_GRID = [-1, 0, 1, 2]
 
 
-@pytest.mark.xfail(
-    reason="library stub; pending implementation per "
-    "lem:super-trace-berezinian-bridge",
-    strict=False,
-)
 def test_super_trace_sum_sl21_vanishes():
     """Clause (a): super-trace pairing sum vanishes on the sub-Sugawara line.
 
-    For each level in K_GRID, the canonical complementarity pairing (A, A^!)
-    realised as (Y_hbar(sl(2|1)), Y_hbar(sl(1|2))) under the Feigin-Frenkel
-    involution must sum to zero under the super-trace normalisation.
+    For each level in K_GRID, the canonical complementarity pairing
+    (A, A^!) is realised by the Feigin-Frenkel dual level
+    k' = -k - 2 h^v_s for the same super-rank.
     """
     for k in K_GRID:
         left = kappa_supertrace(M, N, k)
-        right = kappa_supertrace(N, M, k)
-        assert abs(left + right) < 1e-12, (
+        right = kappa_supertrace(M, N, feigin_frenkel_dual_level(M, N, k))
+        assert left + right == 0, (
             f"super-trace complementarity failed at k={k}: "
             f"{left} + {right} != 0"
         )
 
 
-@pytest.mark.xfail(
-    reason="library stub; pending implementation per "
-    "lem:super-trace-berezinian-bridge",
-    strict=False,
-)
 def test_berezinian_sum_sl21_equals_max():
     """Clause (b): Berezinian pairing sum equals max(m, n) = 2 for sl(2|1)."""
     for k in K_GRID:
         left = kappa_berezinian(M, N, k)
-        right = kappa_berezinian(N, M, k)
-        assert abs((left + right) - MAX_MN) < 1e-12, (
+        right = kappa_berezinian(M, N, feigin_frenkel_dual_level(M, N, k))
+        assert (left + right) == MAX_MN, (
             f"Berezinian complementarity failed at k={k}: "
             f"{left} + {right} != {MAX_MN}"
         )
 
 
-@pytest.mark.xfail(
-    reason="library stub; pending implementation per "
-    "lem:super-trace-berezinian-bridge",
-    strict=False,
-)
 def test_bridge_shift_sl21_equals_one():
     """Clause (c): Nazarov quantum Berezinian leading shift magnitude equals 1.
 
@@ -101,6 +85,6 @@ def test_bridge_shift_sl21_equals_one():
     """
     shift = quantum_berezinian_leading(M, N)
     expected = 0.5 * MAX_MN
-    assert abs(shift - expected) < 1e-12, (
+    assert shift == expected, (
         f"bridge shift magnitude failed: {shift} != {expected}"
     )

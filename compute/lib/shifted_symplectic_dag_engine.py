@@ -28,16 +28,22 @@ where Tr_Def is the trace on the modular cyclic deformation complex.  This
 pairing has cohomological degree -1 because the bar desuspension (AP45:
 |s^{-1}v| = |v| - 1) shifts the total degree.
 
-The (-1)-shifted 2-form omega_{-1} on M_B is CLOSED (d omega = 0) and
-NONDEGENERATE (the induced map T_M -> L_M[1] is a quasi-isomorphism).
+Under the PTVV input package (perfect cyclic pairing, closed cyclic form,
+and the relevant finiteness/completion hypotheses), the (-1)-shifted 2-form
+omega_{-1} on M_B is CLOSED (d omega = 0) and NONDEGENERATE (the induced map
+T_M -> L_M[1] is a quasi-isomorphism).  The finite scalar checks in this
+engine are evidence for that package; they are not by themselves a global
+C2 Lagrangian theorem.
 
 2. LAGRANGIAN INTERSECTION (THEOREM C)
 ---------------------------------------
 
 Theorem C (complementarity): Q_g(A) + Q_g(A^!) = H*(M_g_bar, Z(A)).
 
-The Lagrangian upgrade: Q_g(A) and Q_g(A^!) are complementary Lagrangians in
-the (-(3g-3))-shifted symplectic space C_g(A) = R Gamma(M_g_bar, Z(A)).
+The Lagrangian upgrade is conditional at C2: Q_g(A) and Q_g(A^!) become
+complementary Lagrangians in the (-(3g-3))-shifted symplectic space
+C_g(A) = R Gamma(M_g_bar, Z(A)) only after the explicit perfectness,
+nondegeneracy, and BV/QME hypothesis package is present.
 
 The Lagrangian condition for L_A: Q_g(A) -> C_g(A):
 
@@ -281,6 +287,45 @@ from dataclasses import dataclass, field
 from fractions import Fraction
 from typing import Any, Dict, List, Optional, Tuple
 from functools import lru_cache
+
+
+C2_LAGRANGIAN_HYPOTHESES: Tuple[str, ...] = (
+    "C0_fiber_center_identification",
+    "C1_homotopy_eigenspace_decomposition",
+    "uniform_weight_perfectness",
+    "nondegenerate_cyclic_pairing",
+    "finite_modular_envelope",
+    "closed_cyclic_pairing",
+    "skew_adjoint_differential",
+    "modular_bracket_compatibility",
+    "twisted_tensor_acyclicity",
+    "ambient_BV_QME_input",
+)
+
+C2_LAGRANGIAN_CONDITIONAL_STATUS = (
+    "conditional_on_C2_shifted_symplectic_hypothesis_package"
+)
+
+
+def c2_lagrangian_hypothesis_report(
+    provided: Optional[Tuple[str, ...]] = None,
+) -> Dict[str, Any]:
+    """Report the C2 hypotheses needed for the Lagrangian upgrade."""
+    verified = tuple(provided or ())
+    verified_set = set(verified)
+    missing = tuple(
+        hyp for hyp in C2_LAGRANGIAN_HYPOTHESES if hyp not in verified_set
+    )
+    return {
+        "required": C2_LAGRANGIAN_HYPOTHESES,
+        "verified": verified,
+        "missing": missing,
+        "complete": not missing,
+        "status": (
+            "C2_hypothesis_package_supplied"
+            if not missing else C2_LAGRANGIAN_CONDITIONAL_STATUS
+        ),
+    }
 
 
 # ============================================================================
@@ -701,10 +746,16 @@ class LagrangianData:
     """Lagrangian structure from the post-Verdier Koszul pair (A, A^!).
 
     Theorem C: Q_g(A) + Q_g(A^!) = H*(M_g_bar, Z(A)).
-    Upgraded: Q_g(A), Q_g(A^!) are complementary Lagrangians in C_g(A).
+    C2 upgrade: Q_g(A), Q_g(A^!) are complementary Lagrangians in C_g(A)
+    only after the explicit shifted-symplectic hypothesis package is present.
     """
     algebra: str
-    is_lagrangian: bool
+    is_lagrangian: bool  # True only when the C2 hypothesis package is complete.
+    scalar_complementarity_indicator: bool
+    lagrangian_upgrade_status: str
+    c2_required_hypotheses: Tuple[str, ...]
+    c2_verified_hypotheses: Tuple[str, ...]
+    c2_missing_hypotheses: Tuple[str, ...]
     complementarity_sum: Fraction
     # theta_A: the Lagrangian primitive (L_A^* omega = d theta_A)
     theta_primitive_arity2: Fraction
@@ -716,8 +767,10 @@ class LagrangianData:
 
 
 def lagrangian_from_koszul_pair(fam: DAGAlgebraFamily,
-                                 genus: int = 1) -> LagrangianData:
-    """Compute the Lagrangian structure from Theorem C.
+                                 genus: int = 1,
+                                 c2_hypotheses: Optional[Tuple[str, ...]] = None
+                                 ) -> LagrangianData:
+    """Compute C0/C1 complementarity data and the C2 upgrade status.
 
     The Lagrangian primitive at arity 2:
         theta_2 = kappa(A) * kappa(A^!)
@@ -731,12 +784,23 @@ def lagrangian_from_koszul_pair(fam: DAGAlgebraFamily,
     PTVV shift at genus g on C_g(A) = R Gamma(M_g_bar, Z(A)):
         shift = -(3g - 3)  for g >= 1
         shift = 0           for g = 0 (convention)
+    The returned ``is_lagrangian`` flag is a C2 certification flag.  It is
+    false unless the full shifted-symplectic hypothesis package has been
+    supplied; the scalar Theorem C check is recorded separately.
     """
     theta_2 = fam.kappa * fam.kappa_dual
     ptvv = -(3 * genus - 3) if genus >= 1 else 0
+    c2_report = c2_lagrangian_hypothesis_report(c2_hypotheses)
+    scalar_ok = fam.complementarity_sum == fam.kappa + fam.kappa_dual
+    c2_verified = scalar_ok and c2_report["complete"]
     return LagrangianData(
         algebra=fam.name,
-        is_lagrangian=True,
+        is_lagrangian=c2_verified,
+        scalar_complementarity_indicator=scalar_ok,
+        lagrangian_upgrade_status=c2_report["status"],
+        c2_required_hypotheses=c2_report["required"],
+        c2_verified_hypotheses=c2_report["verified"],
+        c2_missing_hypotheses=c2_report["missing"],
         complementarity_sum=fam.complementarity_sum,
         theta_primitive_arity2=theta_2,
         intersection_degree=-fam.complementarity_sum,
@@ -1458,13 +1522,15 @@ def ds_preserves_bar_shift() -> Dict[str, Any]:
 
 def full_dag_package(fam: DAGAlgebraFamily,
                      genus: int = 1,
-                     max_arity: int = 5) -> Dict[str, Any]:
+                     max_arity: int = 5,
+                     c2_hypotheses: Optional[Tuple[str, ...]] = None
+                     ) -> Dict[str, Any]:
     """Complete DAG package for an algebra family.
 
     Assembles all 10 structures and their consistency checks.
     """
     symp = shifted_symplectic_on_bar_moduli(fam, max_arity)
-    lagr = lagrangian_from_koszul_pair(fam, genus)
+    lagr = lagrangian_from_koszul_pair(fam, genus, c2_hypotheses)
     aksz = aksz_construction(fam, genus)
     dcrit = derived_critical_locus(fam, genus)
     dcrit_match = dcrit_matches_bar_moduli(fam, genus)
@@ -1486,7 +1552,9 @@ def full_dag_package(fam: DAGAlgebraFamily,
         'consistency': {
             'all_minus_1_shifted': (symp.shift == -1),
             'poisson_degree_plus_1': (symp.poisson_degree == 1),
-            'lagrangian_is_lagrangian': lagr.is_lagrangian,
+            'lagrangian_scalar_indicator': lagr.scalar_complementarity_indicator,
+            'lagrangian_c2_verified': lagr.is_lagrangian,
+            'lagrangian_c2_status_conditional': bool(lagr.c2_missing_hypotheses),
             'aksz_shift_minus_3': (aksz.mapping_shift == -3),
             'dcrit_is_symplectic': dcrit_is_shifted_symplectic(),
             'dcrit_bar_agree': dcrit_match['both_minus_1_shifted'],
@@ -1518,8 +1586,10 @@ def verify_ptvv_shifts_all_genera(max_genus: int = 5) -> List[Dict[str, Any]]:
     return results
 
 
-def verify_lagrangian_complementarity_all_families() -> List[Dict[str, Any]]:
-    """Verify the Lagrangian complementarity for all standard families.
+def verify_lagrangian_complementarity_all_families(
+    c2_hypotheses: Optional[Tuple[str, ...]] = None,
+) -> List[Dict[str, Any]]:
+    """Verify scalar complementarity and report C2 status for all families.
 
     For each family: kappa + kappa' = complementarity constant (AP24).
     theta_2 = kappa * kappa'.
@@ -1527,7 +1597,7 @@ def verify_lagrangian_complementarity_all_families() -> List[Dict[str, Any]]:
     """
     results = []
     for name, fam in STANDARD_FAMILIES.items():
-        lagr = lagrangian_from_koszul_pair(fam)
+        lagr = lagrangian_from_koszul_pair(fam, c2_hypotheses=c2_hypotheses)
         results.append({
             'family': name,
             'kappa': fam.kappa,
@@ -1536,6 +1606,9 @@ def verify_lagrangian_complementarity_all_families() -> List[Dict[str, Any]]:
             'theta_2': lagr.theta_primitive_arity2,
             'int_deg': lagr.intersection_degree,
             'is_lagrangian': lagr.is_lagrangian,
+            'scalar_complementarity_indicator': lagr.scalar_complementarity_indicator,
+            'lagrangian_upgrade_status': lagr.lagrangian_upgrade_status,
+            'c2_missing_hypotheses': lagr.c2_missing_hypotheses,
         })
     return results
 

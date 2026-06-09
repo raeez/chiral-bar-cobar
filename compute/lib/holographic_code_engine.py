@@ -7,18 +7,22 @@ The bar-cobar adjunction B -| Omega defines a quantum error-correcting
 code structure for each chirally Koszul algebra A (Theorem G12).  The
 key identification:
 
-  KOSZULNESS  <=>  EXACT QUANTUM ERROR CORRECTION
+  KOSZULNESS  <=>  AMBIENT-QUALIFIED EXACT QUANTUM ERROR CORRECTION
 
 Specifically:
   - Encoding:  B: A -> B(A) (bar construction)
   - Decoding:  Omega: B(A) -> Omega(B(A)) ~ A (cobar construction)
-  - Exact recovery:  Omega(B(A)) ~ A (Theorem B, on the Koszul locus)
+  - Exact recovery:  Omega(B(A)) ~ A (Theorem B, on the Koszul locus),
+    with the chain ambient specified by the family: raw finite-window
+    for finite-type G/L/C examples; weight-completed pro-conilpotent /
+    coderived for class M. Raw direct-sum class-M recovery is false.
   - Code subspace:  Q_g(A) (one Lagrangian summand)
   - Error space:  Q_g(A!) (complementary Lagrangian)
   - Code/error orthogonality:  from Lagrangian isotropy (Theorem C)
 
-The 12 equivalent characterizations of Koszulness (K1-K12) are
-12 equivalent conditions for the code to admit exact recovery.
+The 12 Koszulness tests and consequences (K1-K12) are
+12 qualified conditions for the code to admit ambient-qualified exact
+recovery.
 
 KNILL-LAFLAMME FROM LAGRANGIAN ORTHOGONALITY
 =============================================
@@ -89,11 +93,36 @@ from compute.lib.entanglement_shadow_engine import (
 )
 
 
+def theorem_b_recovery_surface_from_shadow_class(cls: str) -> Dict[str, object]:
+    """Return the ambient-qualified Theorem B recovery surface."""
+    if cls == 'M':
+        return {
+            'exact_recovery': True,
+            'valid_recovery': True,
+            'status': 'AMBIENT_QUALIFIED',
+            'raw_direct_sum_chain_qi': False,
+            'ambient': 'weight-completed pro-conilpotent / coderived',
+            'hypotheses': 'finite-window strict Mittag-Leffler + completed bar-cobar',
+            'counit': 'Omega_X B_X(A) -> A',
+            'completion_required': True,
+        }
+    return {
+        'exact_recovery': True,
+        'valid_recovery': True,
+        'status': 'AMBIENT_QUALIFIED',
+        'raw_direct_sum_chain_qi': True,
+        'ambient': 'raw finite-window chain complex',
+        'hypotheses': 'H3b finite bar-degree pieces + finite-support comparison',
+        'counit': 'Omega_X B_X(A) -> A',
+        'completion_required': False,
+    }
+
+
 # ===================================================================
 #  SECTION 1: KOSZULNESS CONDITIONS AS CODE PROPERTIES
 # ===================================================================
 
-# The 12 equivalent characterizations of chiral Koszulness
+# The 12 tests and consequences around chiral Koszulness
 # (thm:koszul-equivalences-meta), each with a code-theoretic translation.
 
 KOSZULNESS_CODE_DICTIONARY = [
@@ -124,10 +153,20 @@ KOSZULNESS_CODE_DICTIONARY = [
     {
         'id': 'K4',
         'name': 'Bar-cobar quasi-isomorphism',
-        'algebraic': 'Omega(B(A)) -> A is quasi-isomorphism (Theorem B)',
+        'algebraic': (
+            'Omega(B(A)) -> A is quasi-isomorphism on the finite-window '
+            'or completed Theorem B surface'
+        ),
         'code_property': 'Exact recovery',
-        'code_meaning': 'Decoding perfectly inverts encoding; zero logical error rate',
-        'status': 'unconditional',
+        'code_meaning': (
+            'Decoding inverts encoding on the stated raw finite-window or '
+            'completed ambient'
+        ),
+        'status': 'ambient-qualified',
+        'condition': (
+            'Theorem B package: raw finite-window conilpotent comparison, '
+            'or class-M strict Mittag-Leffler completed coderived/contraderived comparison'
+        ),
     },
     {
         'id': 'K5',
@@ -135,7 +174,8 @@ KOSZULNESS_CODE_DICTIONARY = [
         'algebraic': 'The comparison functor is an equivalence',
         'code_property': 'Categorical determinism',
         'code_meaning': 'Code has no hidden degrees of freedom; reconstruction is unique',
-        'status': 'unconditional',
+        'status': 'listed-consequence',
+        'condition': 'proved consequence of the bar-cobar quasi-isomorphism row',
     },
     {
         'id': 'K6',
@@ -143,7 +183,8 @@ KOSZULNESS_CODE_DICTIONARY = [
         'algebraic': 'Factorization homology concentrated in degree 0',
         'code_property': 'Optimal threshold',
         'code_meaning': 'Code achieves minimum distance; no wasted redundancy',
-        'status': 'unconditional',
+        'status': 'conditional',
+        'condition': 'prop:bar-fh comparison plus detection hypothesis',
     },
     {
         'id': 'K7',
@@ -151,7 +192,12 @@ KOSZULNESS_CODE_DICTIONARY = [
         'algebraic': 'Chiral Hochschild cohomology vanishes in degrees > 2',
         'code_property': 'Code rigidity',
         'code_meaning': 'No non-trivial deformations of the code; structurally stable',
-        'status': 'unconditional',
+        'status': 'conditional',
+        'condition': (
+            'Theorem H package: PBW chiral Koszulness, finite-type/perfectness, '
+            'genericity, E_infty completion, strict Mittag-Leffler passage, '
+            'and PBW/Arnold contraction; otherwise use KD_H^bullet(A)'
+        ),
     },
     {
         'id': 'K8',
@@ -213,10 +259,13 @@ def get_koszulness_code_dictionary() -> List[Dict]:
 
 
 def unconditional_equivalences() -> List[Dict]:
-    """Return the 10 unconditional Koszulness-code equivalences.
+    """Return rows still marked unconditional in the code dictionary.
+
+    K4 is ambient-qualified, K5 is a listed consequence, and K6 is a
+    conditional factorization-homology comparison.
 
     >>> len(unconditional_equivalences())
-    10
+    6
     """
     return [k for k in KOSZULNESS_CODE_DICTIONARY if k['status'] == 'unconditional']
 
@@ -234,7 +283,8 @@ def code_parameters(family: str, **kwargs) -> Dict:
         r_max: shadow depth
         redundancy_channels: number of independent error-correction channels
         is_koszul: whether the algebra is Koszul (all standard families are)
-        exact_recovery: whether Theorem B applies (= is_koszul)
+        exact_recovery: ambient-qualified Theorem B recovery flag
+        recovery_surface: ambient-qualified Theorem B surface
         code_rate: fraction of physical Hilbert space used for logical data
 
     >>> p = code_parameters('heisenberg', k=1)
@@ -247,6 +297,7 @@ def code_parameters(family: str, **kwargs) -> Dict:
     """
     cls = shadow_depth_class(family)
     r_max = entanglement_correction_depth(family)
+    recovery_surface = theorem_b_recovery_surface_from_shadow_class(cls)
 
     if cls == 'G':
         redundancy = 0
@@ -281,7 +332,11 @@ def code_parameters(family: str, **kwargs) -> Dict:
         'r_max': r_max,
         'redundancy_channels': redundancy,
         'is_koszul': True,  # all standard families are Koszul
-        'exact_recovery': True,  # Theorem B applies on the Koszul locus
+        'exact_recovery': recovery_surface['exact_recovery'],
+        'exact_recovery_status': recovery_surface['status'],
+        'exact_recovery_ambient': recovery_surface['ambient'],
+        'raw_direct_sum_chain_qi': recovery_surface['raw_direct_sum_chain_qi'],
+        'recovery_surface': recovery_surface,
         'code_rate': Rational(1, 2),  # Lagrangian = half-dimensional
     }
 
@@ -479,11 +534,14 @@ def koszulness_equals_exact_qec() -> Dict:
     """The main theorem: Koszulness <=> exact quantum error correction.
 
     Theorem (G12): For a chiral algebra A on a smooth projective
-    curve X, the following are equivalent:
+    curve X, the algebraic statements (i) and (ii) are equivalent:
 
     (i) A is chirally Koszul (any of K1-K12)
-    (ii) The bar-cobar code admits exact recovery: Omega(B(A)) ~ A
-    (iii) The holographic dual admits exact bulk reconstruction
+    (ii) The bar-cobar code admits ambient-qualified exact recovery:
+         Omega(B(A)) -> A on the finite-window or completed surface.
+
+    A physical bulk reconstruction statement is a separate conditional
+    corollary requiring OCA/open-closed comparison data.
 
     Moreover, when A is Koszul:
     (a) The Lagrangian decomposition provides the code/error split
@@ -493,13 +551,17 @@ def koszulness_equals_exact_qec() -> Dict:
 
     >>> thm = koszulness_equals_exact_qec()
     >>> thm['status']
-    'PROVED'
+    'PROVED_ALGEBRAIC_CONDITIONAL_PHYSICAL'
     >>> len(thm['equivalences'])
     3
     """
     return {
         'theorem': 'G12: Koszulness = Exact Quantum Error Correction',
-        'status': 'PROVED',
+        'status': 'PROVED_ALGEBRAIC_CONDITIONAL_PHYSICAL',
+        'status_map': {
+            'algebraic_koszul_qec_equivalence': 'PROVED',
+            'physical_bulk_reconstruction': 'CONDITIONAL_ON_OCA',
+        },
         'equivalences': [
             {
                 'label': '(i)',
@@ -508,28 +570,35 @@ def koszulness_equals_exact_qec() -> Dict:
             },
             {
                 'label': '(ii)',
-                'statement': 'Bar-cobar code admits exact recovery: Omega(B(A)) ~ A',
+                'statement': (
+                    'Bar-cobar code admits ambient-qualified exact recovery: '
+                    'Omega(B(A)) -> A on the finite-window or completed surface'
+                ),
                 'source': 'Theorem B (bar-cobar inversion)',
             },
             {
                 'label': '(iii)',
-                'statement': 'Holographic dual admits exact bulk reconstruction',
-                'source': 'thm:thqg-entanglement-wedge (open/closed realization)',
+                'statement': (
+                    'Physical bulk reconstruction requires OCA/open-closed '
+                    'comparison data; it is not implied by Theorem B alone'
+                ),
+                'source': 'OCA + thm:thqg-entanglement-wedge',
+                'status': 'CONDITIONAL',
             },
         ],
         'proof_sketch': (
             '(i) <=> (ii): K4 states that Omega(B(A)) -> A is a quasi-isomorphism, '
-            'which is EXACTLY exact recovery. Theorem B proves this on the Koszul locus. '
-            '(ii) => (iii): exact recovery + open/closed realization (Theorem thm:thqg-entanglement-wedge) '
-            '=> every bulk operator recoverable from boundary data. '
-            '(iii) => (i): if bulk reconstruction fails, the counit map is not a quasi-iso, '
-            'so K4 fails, so A is not Koszul.'
+            'which is exact recovery on the stated finite-window or completed ambient. '
+            'Theorem B proves this on the Koszul locus. '
+            'The passage from (ii) to physical bulk reconstruction is conditional: '
+            'it requires OCA/open-closed comparison data in addition to the bar-cobar counit.'
         ),
+        'oca_required_for_physical_bulk': True,
         'consequences': {
             '(a)': 'Lagrangian decomposition = code/error split (Theorem C)',
             '(b)': 'Knill-Laflamme from Lagrangian orthogonality',
             '(c)': 'Shadow depth = redundancy channels (resolved conjecture)',
-            '(d)': 'Entanglement entropy = code entropy (G11)',
+            '(d)': 'Entanglement entropy comparison is conditional on the analytic/OCA package',
         },
     }
 
@@ -630,6 +699,14 @@ def standard_landscape_code_census() -> List[Dict]:
             'convergent': True,
         },
     ]
+
+    for entry in families:
+        entry['recovery_surface'] = theorem_b_recovery_surface_from_shadow_class(
+            entry['class']
+        )
+        entry['exact_recovery_status'] = entry['recovery_surface']['status']
+        entry['exact_recovery_ambient'] = entry['recovery_surface']['ambient']
+        entry['raw_direct_sum_chain_qi'] = entry['recovery_surface']['raw_direct_sum_chain_qi']
 
     return families
 

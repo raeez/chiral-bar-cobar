@@ -52,22 +52,32 @@ class TestKoszulnessCodeDictionary:
         d = get_koszulness_code_dictionary()
         assert len(d) == 12
 
-    def test_10_unconditional(self):
-        """10 unconditional equivalences (K1-K10)."""
-        assert len(unconditional_equivalences()) == 10
+    def test_6_unconditional_rows(self):
+        """K4 is ambient-qualified; K5, K6, K7, and K11 are qualified."""
+        assert len(unconditional_equivalences()) == 6
 
     def test_k4_is_exact_recovery(self):
-        """K4 (bar-cobar quasi-iso) = exact recovery."""
+        """K4 (bar-cobar quasi-iso) is ambient-qualified exact recovery."""
         d = get_koszulness_code_dictionary()
         k4 = [x for x in d if x['id'] == 'K4'][0]
         assert k4['code_property'] == 'Exact recovery'
         assert 'Theorem B' in k4['algebraic']
+        assert k4['status'] == 'ambient-qualified'
+        assert 'strict Mittag-Leffler' in k4['condition']
 
     def test_k11_is_conditional(self):
         """K11 (Lagrangian criterion) is conditional."""
         d = get_koszulness_code_dictionary()
         k11 = [x for x in d if x['id'] == 'K11'][0]
         assert k11['status'] == 'conditional'
+
+    def test_k7_is_theorem_h_conditional(self):
+        """K7 carries the full Theorem H hypothesis package."""
+        d = get_koszulness_code_dictionary()
+        k7 = [x for x in d if x['id'] == 'K7'][0]
+        assert k7['status'] == 'conditional'
+        assert 'PBW chiral Koszulness' in k7['condition']
+        assert 'KD_H^bullet(A)' in k7['condition']
 
     def test_k12_is_one_directional(self):
         """K12 (bifunctor decomposition) is one-directional."""
@@ -108,6 +118,9 @@ class TestCodeParameters:
         assert p['shadow_class'] == 'G'
         assert p['redundancy_channels'] == 0
         assert p['exact_recovery']
+        assert p['exact_recovery_status'] == 'AMBIENT_QUALIFIED'
+        assert p['exact_recovery_ambient'] == p['recovery_surface']['ambient']
+        assert p['recovery_surface']['raw_direct_sum_chain_qi'] is True
         assert p['code_rate'] == Rational(1, 2)
 
     def test_affine_sl2(self):
@@ -126,6 +139,11 @@ class TestCodeParameters:
         assert p['shadow_class'] == 'M'
         assert p['redundancy_channels'] == -1  # infinite
         assert p['kappa'] == Rational(13, 2)
+        assert p['exact_recovery_status'] == 'AMBIENT_QUALIFIED'
+        assert p['exact_recovery_ambient'] == p['recovery_surface']['ambient']
+        assert p['raw_direct_sum_chain_qi'] is False
+        assert p['recovery_surface']['raw_direct_sum_chain_qi'] is False
+        assert 'completed' in p['recovery_surface']['ambient'] or 'coderived' in p['recovery_surface']['ambient']
 
     def test_all_standard_are_koszul(self):
         """All standard families are Koszul."""
@@ -133,12 +151,23 @@ class TestCodeParameters:
             p = code_parameters(family)
             assert p['is_koszul']
             assert p['exact_recovery']
+            assert p['exact_recovery_status'] == 'AMBIENT_QUALIFIED'
 
     def test_code_rate_is_half(self):
         """Lagrangian = half-dimensional => code rate 1/2."""
         for family in ['heisenberg', 'affine', 'betagamma', 'virasoro']:
             p = code_parameters(family)
             assert p['code_rate'] == Rational(1, 2)
+
+    def test_exact_recovery_is_ambient_qualified(self):
+        """Exact QEC must not mean raw direct-sum recovery for class M."""
+        heisenberg = code_parameters('heisenberg')
+        virasoro = code_parameters('virasoro')
+        assert heisenberg['recovery_surface']['status'] == 'AMBIENT_QUALIFIED'
+        assert heisenberg['recovery_surface']['raw_direct_sum_chain_qi'] is True
+        assert virasoro['recovery_surface']['status'] == 'AMBIENT_QUALIFIED'
+        assert virasoro['recovery_surface']['raw_direct_sum_chain_qi'] is False
+        assert virasoro['recovery_surface']['completion_required'] is True
 
 
 class TestRedundancyChannels:
@@ -245,7 +274,9 @@ class TestMainTheorem:
 
     def test_theorem_proved(self):
         thm = koszulness_equals_exact_qec()
-        assert thm['status'] == 'PROVED'
+        assert thm['status'] == 'PROVED_ALGEBRAIC_CONDITIONAL_PHYSICAL'
+        assert thm['status_map']['algebraic_koszul_qec_equivalence'] == 'PROVED'
+        assert thm['status_map']['physical_bulk_reconstruction'] == 'CONDITIONAL_ON_OCA'
 
     def test_three_equivalences(self):
         thm = koszulness_equals_exact_qec()
@@ -259,9 +290,11 @@ class TestMainTheorem:
         thm = koszulness_equals_exact_qec()
         assert 'exact recovery' in thm['equivalences'][1]['statement']
 
-    def test_equivalence_iii_is_bulk_reconstruction(self):
+    def test_equivalence_iii_is_oca_conditional(self):
         thm = koszulness_equals_exact_qec()
-        assert 'bulk reconstruction' in thm['equivalences'][2]['statement']
+        assert 'OCA' in thm['equivalences'][2]['statement']
+        assert thm['equivalences'][2]['status'] == 'CONDITIONAL'
+        assert thm['oca_required_for_physical_bulk'] is True
 
     def test_four_consequences(self):
         thm = koszulness_equals_exact_qec()
@@ -290,6 +323,18 @@ class TestCodeCensus:
     def test_all_exact_recovery(self):
         census = standard_landscape_code_census()
         assert all(c['exact_recovery'] for c in census)
+        assert all('recovery_surface' in c for c in census)
+        assert all(c['exact_recovery_status'] == 'AMBIENT_QUALIFIED' for c in census)
+        assert all(c['exact_recovery_ambient'] == c['recovery_surface']['ambient'] for c in census)
+
+    def test_m_class_census_recovery_completed(self):
+        census = standard_landscape_code_census()
+        for entry in census:
+            if entry['class'] == 'M':
+                assert entry['raw_direct_sum_chain_qi'] is False
+                assert entry['recovery_surface']['raw_direct_sum_chain_qi'] is False
+                assert entry['recovery_surface']['completion_required'] is True
+                assert 'completed' in entry['recovery_surface']['ambient'] or 'coderived' in entry['recovery_surface']['ambient']
 
     def test_class_coverage(self):
         """Census covers all four shadow depth classes."""

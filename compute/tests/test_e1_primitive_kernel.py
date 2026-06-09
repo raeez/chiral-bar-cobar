@@ -1,8 +1,9 @@
 """Tests for E₁ primitive kernel profiles and coinvariant projection.
 
-Verifies the structural identity av(K^{E₁}_A) = K_A:
-the coinvariant projection of the E₁ (ordered/ribbon) primitive
-kernel recovers the E_∞ primitive kernel for all standard families.
+Verifies the structural identity av(K^{E₁}_A) = K_A under the
+standard R-twisted descent package: the coinvariant projection of
+the E₁ (ordered/ribbon) primitive kernel recovers the E_∞ primitive
+kernel for all standard families.
 
 References:
   - Vol I, Remark rem:e1-primitive-kernel
@@ -15,6 +16,7 @@ from fractions import Fraction
 
 from compute.lib.e1_primitive_kernel import (
     AFFINE_SL2_E1,
+    AveragingDescentHypotheses,
     BETAGAMMA_E1,
     E1_PROFILES,
     HEISENBERG_E1,
@@ -22,6 +24,7 @@ from compute.lib.e1_primitive_kernel import (
     W3_E1,
     YANGIAN_SL2_E1,
     coinvariant_kappa_check,
+    coinvariant_projection_audit,
     e1_master_equation_face_count,
     get_e1_profile,
     projection_table,
@@ -197,7 +200,7 @@ class TestLowArityIdentifications:
     """K^{E₁}_{0,2} = r(z), K^{E₁}_{0,3} = Φ_KZ for affine."""
 
     def test_heisenberg_r_matrix_scalar(self):
-        """Heisenberg: r(z) = k/z, scalar type."""
+        """Heisenberg: r(z) = k*Omega_H/z (rank-one coeff k/z), rank-one abelian type."""
         assert HEISENBERG_E1.r_matrix_type == "scalar"
         assert HEISENBERG_E1.r_matrix_scalar == Fraction(1)
 
@@ -277,6 +280,30 @@ class TestProjectionTable:
         table = projection_table()
         for name, e1_comps, _, _ in table:
             assert len(e1_comps) >= 2, f"{name}: E₁ kernel too small"
+
+    def test_coinvariant_projection_requires_descent_for_chain_map(self):
+        """Component projection is not a chain-map theorem without descent data."""
+        audit = coinvariant_projection_audit(
+            "heisenberg",
+            HEISENBERG_E1.einfty_kernel,
+            AveragingDescentHypotheses(r_twisted_sigma_descent=True),
+        )
+        assert audit["component_projection_valid"] is True
+        assert audit["projection_valid"] is False
+        assert audit["profile_level_only"] is True
+        assert "differential_equivariance" in audit["missing_hypotheses"]
+        assert audit["averaging_commutes_with_bar_differential"] is False
+
+    def test_standard_descent_package_promotes_projection(self):
+        """The standard package supplies differential and bracket equivariance."""
+        audit = coinvariant_projection_audit(
+            "affine_sl2",
+            AFFINE_SL2_E1.einfty_kernel,
+        )
+        assert audit["projection_valid"] is True
+        assert audit["averaging_commutes_with_bar_differential"] is True
+        assert audit["averaging_preserves_convolution_bracket"] is True
+        assert audit["missing_hypotheses"] == ()
 
 
 # ══════════════════════════════════════════════════════════════════════

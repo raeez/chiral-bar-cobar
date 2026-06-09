@@ -39,8 +39,8 @@
 % ================================================================
 \begin{document}
 
-\title{The Virasoro spectral $R$-matrix:\\
-closed form and non-formality}
+\title{The primary-state Virasoro Ward factor:\\
+closed form and limits of the scalar quotient}
 
 \author{Raeez Lorgat}
 \date{}
@@ -48,19 +48,14 @@ closed form and non-formality}
 \maketitle
 
 \begin{abstract}
-The spectral $R$-matrix of the Virasoro algebra on a primary state of
-conformal weight~$h$ admits the closed form
-$R(z) = z^{2h}\exp(-c/(4z^2))$. Only even powers of $1/z$ appear,
-reflecting bosonic parity. The non-terminating character of the
-exponential series is the genus-$0$ signature of shadow class~$M$:
-unlike Heisenberg ($R(z) = z^k$, polynomial) or affine Kac--Moody
-($R(z) = z^{\Omega/(k+h^\vee)}$, terminating), the Virasoro
-$R$-matrix has infinitely many corrections in $1/z^2$. The cubic
-shadow coefficient $S_3(\Vir_c) = 2$ is independent of the central
-charge~$c$, providing a finite algebraic proof of class~$M$
-membership. The first correction $R_2 = -c/4$ is the genus-$0$
-non-formality witness from which the infinite primitive-cumulant
-series descends.
+The highest-weight-line quotient of the Virasoro collision-residue
+connection has scalar Ward factor
+$R^{\mathrm{prim}}_{h,c}(z)=z^{2h}\exp(-c/(4z^2))$.  After the
+leading factor $z^{2h}$ is removed, only even powers of $1/z$ appear.
+This note records the scalar primary-state computation and its
+normalisation.  It is not a construction of the full completed
+Virasoro spectral $R$-operator, and the scalar coefficient
+$R_2=-c/4$ is not by itself a proof of class~$M$ non-formality.
 \end{abstract}
 
 % ================================================================
@@ -86,14 +81,14 @@ The $r$-matrix encodes the leading
 singularity of the bar differential and controls the commuting
 Hamiltonians of the shadow connection at genus~$0$. On a rank-$1$
 primary line, the path-ordered exponential of $r(z)$ produces the
-spectral $R$-matrix, which is a scalar function of the spectral
+scalar primary-state Ward factor, which is a function of the spectral
 parameter~$z$.
 
-For the Virasoro algebra $\Vir_c$, the $R$-matrix on a primary state
-of weight $h$ closes into an elementary function. This paper derives
-the closed form, expands it in series, extracts the shadow
-coefficients, and uses the result to distinguish the Virasoro from
-simpler families at the genus-$0$ level.
+For the Virasoro algebra $\Vir_c$, this primary-state quotient closes
+into an elementary function. This note derives the closed form and
+expands it in series. The full class~$M$ statement belongs to the
+completed Virasoro obstruction tower, not to this scalar quotient
+alone.
 
 The passage from OPE to $r$-matrix uses the $d\log$ absorption
 principle: the bar propagator $d\log(z-w) = dz/(z-w)$ absorbs one
@@ -121,15 +116,16 @@ $r$-matrix.
 % ================================================================
 
 % Statement as theorem; self-contained proof follows.
-\begin{theorem}[Virasoro spectral $R$-matrix on primary states]
+\begin{theorem}[Primary-state Virasoro Ward factor]
 \label{thm:vir-R}
 Let $\Vir_c$ be the Virasoro vertex algebra at central charge $c$
 in BPZ normalisation (so $T(z)T(w) \sim (c/2)(z-w)^{-4} + 2T(w)(z-w)^{-2}
 + \partial T(w)(z-w)^{-1}$, with the fourth-order pole coefficient
 $c/2$). For $\Vir_c$ acting on a primary state $|h\rangle$ of
-conformal weight $h$, the spectral $R$-matrix is
+conformal weight $h$, the scalar primary-state Ward factor is
 \begin{equation}\label{eq:vir-R-closed}
-R(z) = z^{2h}\,\exp\!\left(-\frac{c}{4z^2}\right)
+R^{\mathrm{prim}}_{h,c}(z)
+= z^{2h}\,\exp\!\left(-\frac{c}{4z^2}\right)
 = z^{2h}\,\sum_{k=0}^{\infty}
 \frac{(-c/4)^k}{k!\,z^{2k}}.
 \end{equation}
@@ -274,58 +270,31 @@ and the single-line dichotomy forces $r_{\max} = \infty$.
 \end{corollary}
 
 % ================================================================
-\section{Non-formality: the class $M$ signature at genus $0$}
+\section{What the scalar factor does not prove}
 \label{sec:non-formality}
 % ================================================================
 
-The closed form $R(z) = z^{2h}\exp(-c/(4z^2))$ encodes the
-genus-$0$ non-formality of the Virasoro algebra. The first
-correction beyond the leading power is
+The scalar factor
+$R^{\mathrm{prim}}_{h,c}(z)=z^{2h}\exp(-c/(4z^2))$ records the
+highest-weight-line projection of the Virasoro collision residue. The
+first correction beyond the leading power is
 \begin{equation}\label{eq:R2}
 R_2 = -\frac{c}{4},
 \end{equation}
-which is the coefficient from which the infinite
-primitive-cumulant series $\Delta_{\Vir}(t) = t^3 + 2t^5 + \cdots$
-of the Virasoro shadow obstruction tower descends.
-
-For a chirally Koszul algebra, the $A_\infty$ operations
-$m_n$ on the bar cohomology $H^*(\barB^{\mathrm{ch}}(\cA))$
-encode the non-formality: $m_n = 0$ for $n \geq 3$ is equivalent to
-formality ($A_\infty$ quasi-isomorphism to the strict associative
-algebra). The non-vanishing of $R_2$ is the genus-$0$
-obstruction to formality.
-
-\begin{proposition}[Non-formality witness]\label{prop:non-formality}
-Let $\cA$ be a chirally Koszul algebra with spectral $R$-matrix
-$R(z) = z^{2h}(1 + R_2 z^{-2} + R_4 z^{-4} + \cdots)$ on a
-primary line. If $R_2 \neq 0$, then $\cA$ is not
-$A_\infty$-formal on that primary line: the transferred
-$A_\infty$ operation $m_3 \neq 0$.
-\end{proposition}
-
-\begin{proof}
-The coefficient $R_2$ is determined by the modular
-characteristic: on a primary line, $R_2 = -\kappa/2$,
-which equals $-c/4$ for Virasoro (where $\kappa = c/2$). The
-shadow-formality identification at degree~$3$ gives
-$S_3 \neq 0 \Leftrightarrow m_3 \neq 0$. Since
-$R_2 \neq 0 \Leftrightarrow S_3 \neq 0$, the non-vanishing
-of $R_2$ witnesses the failure of $A_\infty$-formality.
-\end{proof}
-
-For the Virasoro algebra, $R_2 = -c/4 \neq 0$ for all $c \neq 0$:
-the Virasoro is non-formal at every nonzero central charge.
-The non-formality is encoded in the single number $c/4$ and
-propagates through the exponential to produce infinitely many
-nonvanishing corrections.
+which is forced by the central collision coefficient \(c/2\). This is
+a necessary normalisation check, not a sufficient non-formality
+theorem.  The class~$M$ statement requires the completed Virasoro
+obstruction tower and the survival of the transferred wheel classes;
+it cannot be inferred from the scalar primary quotient alone.
 
 % ================================================================
 \section{Comparison with Heisenberg and affine Kac--Moody}
 \label{sec:comparison}
 % ================================================================
 
-The spectral $R$-matrix provides a sharp invariant distinguishing
-the three main families.
+The primary scalar factors provide a quick normalisation comparison
+between the three main families; they are not the full line-operator
+comparison.
 
 \begin{example}[Heisenberg: class $G$]\label{ex:heisenberg}
 The Heisenberg algebra $\cH_k$ has OPE
@@ -355,12 +324,12 @@ extends to degree~$3$; the quartic and higher terms vanish by
 independent sum factorization: class~$L$.
 \end{example}
 
-\begin{example}[Virasoro: class $M$]\label{ex:virasoro}
-The $R$-matrix $R(z) = z^{2h}\exp(-c/(4z^2))$ has infinitely many
-nonvanishing coefficients. The essential singularity at $z = 0$
-is the datum that no finite truncation of the shadow obstruction
-tower captures the full $R$-matrix: every degree contributes, and
-the tower does not terminate.
+\begin{example}[Virasoro: primary scalar factor]\label{ex:virasoro}
+The scalar factor
+$R^{\mathrm{prim}}_{h,c}(z)=z^{2h}\exp(-c/(4z^2))$ has infinitely
+many nonzero coefficients. This reflects the irregular scalar
+highest-weight connection. The non-termination of the full Virasoro
+shadow tower is a separate completed-bar statement.
 \end{example}
 
 The comparison is summarized in the following table:
@@ -368,7 +337,7 @@ The comparison is summarized in the following table:
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{@{}llccc@{}}
 \toprule
-\textbf{Family} & $R(z)$ & $S_3$ & $r_{\max}$ & \textbf{Class}\\
+\textbf{Family} & scalar factor & $S_3$ & $r_{\max}$ & \textbf{Class}\\
 \midrule
 Heisenberg $\cH_k$ & $z^k$ & $0$ & $2$ & $G$\\
 Affine $\widehat{\fg}_k$ &

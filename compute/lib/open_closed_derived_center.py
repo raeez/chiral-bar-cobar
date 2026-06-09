@@ -497,13 +497,19 @@ def shadow_depth(algebra: ChiralAlgebraData) -> str:
 
 
 # ======================================================================
-#  Derived center dimensions (by Theorem H)
+#  Derived center dimensions (Theorem-H scalar model)
 # ======================================================================
 
 def derived_center_dimensions(
         algebra: ChiralAlgebraData) -> Dict[int, int]:
     """
     Compute scalar-lane dimensions of Z^der_ch(A) = ChirHoch^*(A,A).
+
+    This is the three-degree Theorem-H model on the PBW chiral Koszul,
+    finite-type/perfect, generic, E_infty-completed, strict-ML surface.
+    Off that package the high-degree tail is controlled by the
+    Hochschild Koszul-defect complex KD_H^bullet(A), not by this
+    dictionary.
 
     The returned dictionary records the three degrees used by the
     open/closed resonance computations:
@@ -541,7 +547,7 @@ def hochschild_hilbert_series(
         algebra: ChiralAlgebraData) -> List[int]:
     """
     The Hochschild-Hilbert series P_A(t) = sum dim(Z^n) * t^n.
-    By Theorem H, this is a polynomial of degree <= 2.
+    On the Theorem-H surface this is a polynomial of degree <= 2.
 
     Returns coefficients [p_0, p_1, p_2] for the scalar-lane derived
     center, not for the bar complex or the Koszul dual algebra.

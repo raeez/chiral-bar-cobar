@@ -341,8 +341,9 @@ class TestMORmatrixHilb3:
 class TestMOvsVolII:
     """Tests that MO and Vol II R-matrices agree.
 
-    This is the CENTRAL test: agreement proves the E_1 -> E_2 passage
-    via Drinfeld center at the level of explicit matrix coefficients.
+    This is the CENTRAL test: agreement proves the categorical
+    E_1 -> E_2 passage via the Drinfeld center at the level of
+    explicit matrix coefficients.
     """
 
     @pytest.mark.parametrize("n1,n2", [(1, 1), (1, 2), (2, 1), (2, 2), (1, 3), (3, 1), (2, 3), (3, 2), (3, 3)])

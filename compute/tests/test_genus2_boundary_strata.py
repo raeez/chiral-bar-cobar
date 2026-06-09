@@ -51,7 +51,7 @@ from compute.lib.utils import lambda_fp, F_g
 # =====================================================================
 
 class TestStableGraphArithmetic:
-    """Verify genus formula g = sum g_v + h^1(Gamma) for all 6 graphs."""
+    """Verify genus formula g = sum g_v + h^1(Gamma) for all 7 graphs."""
 
     def test_seven_graphs(self):
         """There are exactly 7 stable graphs for M-bar_{2,0}."""
@@ -169,9 +169,9 @@ class TestSpectralSequence:
         assert "Gamma_4" not in profile["active_graphs"]
 
     def test_virasoro_shell_profile(self):
-        """Virasoro: all 6 graphs active."""
+        """Virasoro: all 7 graphs active."""
         profile = genus2_shell_profile("virasoro")
-        assert profile["n_active"] == 6
+        assert profile["n_active"] == 7
 
 
 # =====================================================================

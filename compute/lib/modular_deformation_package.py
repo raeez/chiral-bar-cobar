@@ -284,10 +284,11 @@ class FiveComponentDifferential:
     d_pf:    planted-forest correction (FM codim-2 boundary strata)
     ℏΔ:      non-separating clutching (M̄_{g,n+2} → M̄_{g+1,n})
 
-    D² = 0 is a THEOREM at both levels:
+    D² = 0 has two status levels:
     - Convolution level: from ∂² = 0 on M̄_{g,n} (thm:convolution-d-squared-zero)
-    - Ambient level: five-component cross-term cancellation
-      (thm:ambient-d-squared-zero, via Mok's log FM normal-crossings)
+    - Ambient level: five-component cross-term cancellation is conditional
+      on Mok's log FM normal-crossings together with the signed
+      residue-pushforward/coherence package (thm:ambient-d-squared-zero)
 
     The critical identity for ambient D² = 0:
       [d_sew, d_pf] + [d_int, ℏΔ] + [[τ,-], d_sew + d_pf] = 0
@@ -336,16 +337,18 @@ class FiveComponentDifferential:
         The critical cross-term identity:
           [d_sew, d_pf] + [d_int, ℏΔ] + [[τ,-], d_sew + d_pf] = 0
 
-        This follows from the codimension-2 boundary cancellation on M̄_{g,n}
-        (Mok's log FM normal-crossings theorem, [Mok25, Thm 3.3.1]).
+        This follows from the codimension-2 boundary cancellation on the
+        relative log-FM carrier only after the signed residue-pushforward and
+        coherence package identifies the two global pushforward targets.
         """
         return {
             "d_int_squared": "zero (CE differential)",
             "delta_squared": "zero (symmetric cochains)",
             "d_sew_d_pf_cross": "[d_sew, d_pf] + [d_int, hbar*Delta] + "
                                 "[[tau,-], d_sew + d_pf] = 0",
-            "source": "codim-2 face cancellation in log FM space "
-                      "(thm:ambient-d-squared-zero via Mok25 Thm 3.3.1)",
+            "source": "conditional codim-2 face cancellation in relative "
+                      "log FM space (Mok25 plus signed residue-pushforward "
+                      "package; thm:ambient-d-squared-zero)",
         }
 
     @staticmethod
@@ -383,7 +386,8 @@ class DSquaredVerification:
     AMBIENT LEVEL (thm:ambient-d-squared-zero):
       With planted-forest corrections (from FM_n(X|D), log FM compactification),
       D² = 0 requires cross-term cancellation among the five components.
-      Proved via Mok's log FM normal-crossings result [Mok25, Thm 3.3.1].
+      This is conditional on Mok's log FM normal-crossings result together
+      with the signed residue-pushforward/coherence package.
 
     AT THE SCALAR LEVEL:
       The five-component identity reduces to:
@@ -405,9 +409,49 @@ class DSquaredVerification:
         return True  # Theorem: consequence of CW structure of M̄_{g,n}
 
     @staticmethod
+    def strict_convolution_transport_status() -> Dict[str, object]:
+        """Status record for thm:convolution-d-squared-zero.
+
+        The theorem is about the strict stable-curve convolution Hom complex.
+        It does not include the ambient planted-forest correction and does not
+        use the conditional log-FM residue-pushforward package.
+        """
+        return {
+            "status": "PROVED",
+            "operator": "D_st",
+            "carrier": "C_*(Mbar_{g,n})",
+            "hom_complex_is_strict": True,
+            "uses_internal_endomorphism_differential": True,
+            "uses_stable_curve_boundary": True,
+            "uses_ordered_E1_curvature": False,
+            "uses_planted_forest_correction": False,
+            "uses_mok_log_fm_package": False,
+            "residual_curvature_accounting": (
+                "ordered and ambient curvature are recorded separately by the "
+                "shadow tower and thm:ambient-d-squared-zero"
+            ),
+        }
+
+    @staticmethod
     def ambient_d_squared_zero() -> bool:
-        """D² = 0 at the ambient level (thm:ambient-d-squared-zero)."""
-        return True  # Proved via Mok25 Thm 3.3.1
+        """Whether the ambient theorem is proved with all hypotheses discharged."""
+        return False
+
+    @staticmethod
+    def ambient_d_squared_status() -> Dict[str, object]:
+        """Status record for ambient D² = 0 (thm:ambient-d-squared-zero)."""
+        return {
+            "status": "CONDITIONAL",
+            "applies": False,
+            "requires": [
+                "Mok relative log-FM normal-crossings geometry",
+                "Gysin residue maps",
+                "determinant-line signs",
+                "finite-stabilizer normalisations",
+                "proper pushforwards",
+                "homotopy-coherent codimension-two comparisons",
+            ],
+        }
 
     @staticmethod
     def verify_cross_term_identity() -> Dict[str, str]:
@@ -428,6 +472,36 @@ class DSquaredVerification:
             "mechanism": "codimension-2 face cancellation",
             "source_convolution": "del^2 = 0 on M_bar_{g,n}",
             "source_ambient": "Mok25 Thm 3.3.1 (log FM normal-crossings)",
+        }
+
+    @staticmethod
+    def worked_codim2_sign_check_k3_g1() -> Dict[str, object]:
+        """Minimal mixed log-FM corner sign check.
+
+        This records the worked case used in thm:ambient-d-squared-zero:
+        k=3 points over a genus-1 universal curve, with points 1 and 2
+        forming the planted two-leaf cluster and q the node-smoothing
+        parameter. For local normals (r12, q), the oriented corner is
+        reached in two orders with signs +1 and -1.
+        """
+        orientation_signs = {
+            "degeneration_after_collision": 1,
+            "collision_after_degeneration": -1,
+        }
+        return {
+            "corner": "FM_3(C_{1,n}/Mbar_{1,n}) with cluster {1,2} and one node",
+            "local_normals": ("r12", "q"),
+            "orientation_signs": orientation_signs,
+            "signed_sum": sum(orientation_signs.values()),
+            "identity": "[d_sew, d_pf] + [d_int, hbar*Delta] + "
+                        "[[tau,-], d_sew + d_pf] = 0",
+            "algebraic_branches": (
+                "separating-edge/planted-forest",
+                "internal/non-separating",
+                "bar-cobar-twist",
+            ),
+            "factor_two": False,
+            "status": "CONDITIONAL on signed log-FM residue-pushforward package",
         }
 
     @staticmethod
@@ -1187,6 +1261,7 @@ class ModularDeformationPackage:
             "d0_squared_zero": True,
             "dA_squared_zero": self.d_squared.convolution_d_squared_zero(),
             "ambient_d_squared_zero": self.d_squared.ambient_d_squared_zero(),
+            "ambient_d_squared_status": self.d_squared.ambient_d_squared_status(),
             "mc_from_d_squared": self.mc_element.mc_from_d_squared_zero(),
         }
 
@@ -1367,6 +1442,7 @@ def verify_modular_deformation_package() -> Dict[str, object]:
     results["d_squared_zero"] = {
         "convolution": d2v.convolution_d_squared_zero(),
         "ambient": d2v.ambient_d_squared_zero(),
+        "ambient_status": d2v.ambient_d_squared_status(),
         "cross_terms": d2v.verify_cross_term_identity(),
     }
 

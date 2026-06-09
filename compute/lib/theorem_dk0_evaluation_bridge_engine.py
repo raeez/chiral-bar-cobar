@@ -127,6 +127,174 @@ LIE_DATA = {
 }
 
 
+LINE_OPERATOR_DK_GATES: Tuple[Tuple[str, str], ...] = (
+    ('line_operator_category_defined', 'line-operator category defined'),
+    ('evaluation_modules_defined', 'evaluation modules defined'),
+    ('evaluation_modules_generate_proved', 'evaluation modules generate it proved'),
+    ('thick_generation_hypotheses_stated', 'thick-generation hypotheses stated'),
+    ('mc3_evaluation_core_proved', 'MC3 on evaluation-generated core proved'),
+    ('full_dk_boundary_marked_open', 'full DK boundary marked open'),
+    ('baxter_retraction_type_a_defined', 'Baxter retraction defined as type-A only'),
+    ('baxter_non_type_a_blocked', 'Baxter retraction blocked outside type A'),
+)
+
+
+QUANTUM_GROUP_CONVENTION_GATES: Tuple[Tuple[str, str], ...] = (
+    ('q_parameter_defined', 'quantum group parameter q defined'),
+    ('q_convention_bridge_stated', 'q-convention bridge stated'),
+    ('kz_monodromy_signs_checked', 'KZ monodromy signs checked'),
+    ('modular_t_matrix_conventions_checked', 'modular T-matrix conventions checked'),
+    ('self_vs_mutual_monodromy_separated', 'self-monodromy vs mutual monodromy separated'),
+    ('framing_square_root_defined', 'framing square root defined'),
+    ('all_convention_conversions_proved', 'all convention conversions proved'),
+)
+
+
+def _gate_report(
+    gates: Tuple[Tuple[str, str], ...],
+    supplied: Dict[str, bool],
+) -> Dict[str, Tuple[str, ...]]:
+    """Return supplied and missing gate labels for a DK comparison scope."""
+    return {
+        'provided_gates': tuple(label for key, label in gates if supplied[key]),
+        'missing_gates': tuple(label for key, label in gates if not supplied[key]),
+    }
+
+
+def line_operator_dk_scope(
+    lie_type: str = 'sl2',
+    line_operator_category_defined: bool = False,
+    evaluation_modules_defined: bool = False,
+    evaluation_modules_generate_proved: bool = False,
+    thick_generation_hypotheses_stated: bool = False,
+    mc3_evaluation_core_proved: bool = False,
+    full_dk_boundary_marked_open: bool = False,
+    baxter_retraction_type_a_defined: bool = False,
+    baxter_non_type_a_blocked: bool = False,
+) -> Dict[str, Any]:
+    """Gate the line-operator/DK/Baxter scope for obligations 825--831."""
+    supplied = {
+        'line_operator_category_defined': line_operator_category_defined,
+        'evaluation_modules_defined': evaluation_modules_defined,
+        'evaluation_modules_generate_proved': evaluation_modules_generate_proved,
+        'thick_generation_hypotheses_stated': thick_generation_hypotheses_stated,
+        'mc3_evaluation_core_proved': mc3_evaluation_core_proved,
+        'full_dk_boundary_marked_open': full_dk_boundary_marked_open,
+        'baxter_retraction_type_a_defined': baxter_retraction_type_a_defined,
+        'baxter_non_type_a_blocked': baxter_non_type_a_blocked,
+    }
+    is_type_a = lie_type.startswith('sl')
+    evaluation_generation_certified = (
+        evaluation_modules_defined
+        and evaluation_modules_generate_proved
+        and thick_generation_hypotheses_stated
+    )
+    mc3_core_certified = (
+        line_operator_category_defined
+        and evaluation_generation_certified
+        and mc3_evaluation_core_proved
+    )
+    if is_type_a and baxter_retraction_type_a_defined:
+        baxter_status = 'TYPE_A_ONLY_RETRACTION_AVAILABLE'
+    elif not is_type_a and baxter_non_type_a_blocked:
+        baxter_status = 'BLOCKED_OUTSIDE_TYPE_A'
+    else:
+        baxter_status = 'BAXTER_SCOPE_UNSPECIFIED'
+
+    report = _gate_report(LINE_OPERATOR_DK_GATES, supplied)
+    return {
+        'scope': 'line_operator_dk_825_831',
+        'lie_type': lie_type,
+        'is_type_a': is_type_a,
+        'line_operator_category_defined': line_operator_category_defined,
+        'evaluation_generation_certified': evaluation_generation_certified,
+        'mc3_evaluation_core_proved': mc3_core_certified,
+        'full_dk_boundary_open': full_dk_boundary_marked_open,
+        'full_dk_boundary_claim_allowed': False,
+        'baxter_retraction_allowed': is_type_a and baxter_retraction_type_a_defined,
+        'baxter_scope_status': baxter_status,
+        'all_line_operator_dk_gates_certified': all(supplied.values()),
+        'proof_obligations': (825, 826, 827, 828, 829, 830, 831),
+        **report,
+    }
+
+
+def quantum_group_convention_scope(
+    level: float = 1.0,
+    q_parameter_defined: bool = False,
+    q_convention_bridge_stated: bool = False,
+    kz_monodromy_signs_checked: bool = False,
+    modular_t_matrix_conventions_checked: bool = False,
+    self_vs_mutual_monodromy_separated: bool = False,
+    framing_square_root_defined: bool = False,
+    all_convention_conversions_proved: bool = False,
+) -> Dict[str, Any]:
+    """Gate q, KZ, T-matrix, monodromy, and framing conventions."""
+    supplied = {
+        'q_parameter_defined': q_parameter_defined,
+        'q_convention_bridge_stated': q_convention_bridge_stated,
+        'kz_monodromy_signs_checked': kz_monodromy_signs_checked,
+        'modular_t_matrix_conventions_checked': modular_t_matrix_conventions_checked,
+        'self_vs_mutual_monodromy_separated': self_vs_mutual_monodromy_separated,
+        'framing_square_root_defined': framing_square_root_defined,
+        'all_convention_conversions_proved': all_convention_conversions_proved,
+    }
+    convention_package_proved = all(supplied.values())
+    report = _gate_report(QUANTUM_GROUP_CONVENTION_GATES, supplied)
+    return {
+        'scope': 'quantum_group_conventions_832_838',
+        'level': level,
+        'q_value': quantum_group_q(level) if q_parameter_defined else None,
+        'q_convention': 'q = exp(pi*i/(k+h^vee))' if q_parameter_defined else None,
+        'kz_monodromy_signs_certified': (
+            q_parameter_defined
+            and q_convention_bridge_stated
+            and kz_monodromy_signs_checked
+        ),
+        'modular_t_matrix_conventions_checked': modular_t_matrix_conventions_checked,
+        'self_monodromy_vs_mutual_monodromy_separated': (
+            self_vs_mutual_monodromy_separated
+        ),
+        'framing_square_root_status': (
+            'DEFINED' if framing_square_root_defined else 'UNDEFINED'
+        ),
+        'convention_conversions_proved': convention_package_proved,
+        'kz_monodromy_is_not_braiding': True,
+        'self_monodromy_is_not_mutual_monodromy': True,
+        'proof_obligations': (832, 833, 834, 835, 836, 837, 838),
+        **report,
+    }
+
+
+def line_dk_convention_obligation_scope(**kwargs: bool) -> Dict[str, Any]:
+    """Aggregate PDF obligations 825--838."""
+    line_kwargs = {
+        key: bool(kwargs.get(key, False)) for key, _ in LINE_OPERATOR_DK_GATES
+    }
+    convention_kwargs = {
+        key: bool(kwargs.get(key, False))
+        for key, _ in QUANTUM_GROUP_CONVENTION_GATES
+    }
+    line_scope = line_operator_dk_scope(**line_kwargs)
+    convention_scope = quantum_group_convention_scope(**convention_kwargs)
+    return {
+        'scope': 'line_dk_conventions_825_838',
+        'line_operator_dk': line_scope,
+        'quantum_group_conventions': convention_scope,
+        'all_obligations_825_838_certified': (
+            line_scope['all_line_operator_dk_gates_certified']
+            and convention_scope['convention_conversions_proved']
+        ),
+        'unresolved_obligation_blocks': tuple(
+            name for name, scope in (
+                ('line_operator_dk', line_scope),
+                ('quantum_group_conventions', convention_scope),
+            )
+            if scope['missing_gates']
+        ),
+    }
+
+
 # =========================================================================
 # I. KZ CONNECTION DATA
 # =========================================================================

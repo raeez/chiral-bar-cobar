@@ -81,7 +81,12 @@ $\ShadowGF(t) = t^2 \sqrt{\ShadowMetric(t)}$.
 Three coefficients. A quadratic. An algebraic function of
 degree~$2$. The Taylor coefficients of $\sqrt{\ShadowMetric}$
 are determined by $(\kappa, \alpha, S_4)$ through the convolution
-recursion: write $\sqrt{\ShadowMetric(t)} = \sum_{n \geq 0} a_n\, t^n$.
+recursion.
+
+\begin{lemma}[Taylor recursion for the formal square root;
+\ClaimStatusProvedHere]
+\label{lem:comp-sqrt-recursion}
+Write $\sqrt{\ShadowMetric(t)} = \sum_{n \geq 0} a_n\, t^n$.
 Then
 \begin{equation}\label{eq:comp-sqrt-recursion}
  a_0 = 2\kappa, \qquad
@@ -95,6 +100,17 @@ and for $n \geq 3$,
 \end{equation}
 No square roots are extracted. Every~$a_n$ is a rational
 function of $(\kappa, \alpha, S_4)$ with rational coefficients.
+\end{lemma}
+
+\begin{proof}
+Let $A(t)=\sum_{n\ge0}a_nt^n$.  The defining identity
+$A(t)^2=\ShadowMetric(t)$ gives, by comparing coefficients of
+$t^0,t^1,t^2$, the three initial values in
+\eqref{eq:comp-sqrt-recursion}.  For $n\ge3$ the coefficient of
+$t^n$ in $\ShadowMetric(t)$ vanishes, hence
+$2a_0a_n+\sum_{j=1}^{n-1}a_ja_{n-j}=0$.  Solving for~$a_n$ gives
+\eqref{eq:comp-sqrt-higher}.
+\end{proof}
 
 \begin{theorem}[Riccati algebraicity]
 \label{thm:comp-algebraic-shadow}
@@ -606,16 +622,17 @@ methods.
 \end{theorem}
 
 \begin{proof}
-The three methods compared in
-\S\ref{subsec:comp-ds-reduction} are the direct
-Drinfeld--Sokolov transfer, the MC recursion on the transferred
-$T$-line data, and the shadow-metric reconstruction from the same
-transferred invariants. For each of the $4 \times 5$ pairs $(N,k)$,
-each method produces an exact rational value for every
-$S_r$, $2 \le r \le 20$. The resulting finite comparison is recorded
-in the DS tables of \S\ref{subsec:comp-ds-table} and summarized in
-Table~\ref{tab:comp-methods-summary}. Since those exact outputs agree
-entrywise, the theorem follows.
+The three methods are the direct Drinfeld--Sokolov transfer, the MC
+recursion on the transferred $T$-line data, and the shadow-metric
+reconstruction from the same transferred invariants.  For each of the
+$4\times5$ pairs $(N,k)$, each method produces an exact rational value
+for every $S_r$, $2\le r\le20$.  The finite comparison is implemented by
+\texttt{systematic\_comparison} in
+\texttt{compute/lib/ds\_transferred\_shadows.py}: with
+$N\in\{2,3,4,5\}$, $k\in\{1,2,3,5,10\}$, and
+\texttt{max\_arity=20}, it compares all entries by exact rational
+equality and returns \texttt{all\_agree=True}.  Hence the three exact
+outputs agree entrywise.
 \end{proof}
 
 These are three descriptions of a single algebraic fact: the
@@ -701,16 +718,23 @@ the OPE
 For affine Kac--Moody algebras, the PBW spectral sequence
 relates bar cohomology to Lie algebra cohomology.
 
-\begin{proposition}[CE reduction]
+\begin{proposition}[CE page and the bar comparison hypothesis]
 \label{prop:comp-ce-bar}
-\ClaimStatusProvedHere
-For $\cA = V_k(\fg)$ at non-critical level:
+\ClaimStatusConditional
+For $\cA = V_k(\fg)$ at non-critical level, in the Open quadrant,
+standard bar presentation, and Beilinson level~$2$, the leading-pole
+PBW filtration on the chiral bar complex has Chevalley--Eilenberg page
 \begin{equation}\label{eq:comp-ce-bar}
- \dim H^n(\barBch(\cA))
- \;=\; \sum_{H} \dim H^n_{\CE}(\fg_-, \C)_H,
+ E_2^{p,H}
+ \;\cong\; H^p_{\CE}(\fg_-, \C)_H,
 \end{equation}
 where $\fg_- = \fg \otimes t^{-1}\C[t^{-1}]$ is the
-negative-mode Lie algebra.
+negative-mode Lie algebra.  Equality with
+$H^\bullet(\barBch(\cA))$ is asserted only under the
+OS-corrected PBW-collapse hypothesis package: the Orlik--Solomon
+configuration-space factor has been included and no higher
+subleading-pole differential survives in the finite window under
+comparison.
 \end{proposition}
 
 \begin{proof}
@@ -719,9 +743,12 @@ only the linear current terms survive, so the bar differential becomes
 the Chevalley--Eilenberg differential of the negative-mode Lie
 algebra~$\fg_-$. The central extension does not contribute in positive
 weight, because the Kac--Moody cocycle vanishes unless the mode
-numbers sum to zero. Therefore the bar cohomology in degree~$n$ is the
-sum of the Chevalley--Eilenberg groups in the corresponding weight
-sectors, which is exactly~\eqref{eq:comp-ce-bar}.
+numbers sum to zero. This proves the displayed CE page. Passing from
+that page to the actual chiral bar cohomology is a separate collapse
+assertion: for multi-generator algebras the Orlik--Solomon factor
+changes the bar chain groups, and higher OPE poles may contribute
+later PBW differentials. Those effects are part of the stated
+hypothesis package, not consequences of the leading-pole CE page alone.
 \end{proof}
 
 The central extension plays no role at positive weight: the
@@ -828,26 +855,35 @@ cohomology growth ($e^{C\sqrt{n}}$, partitions). Interacting
 fields have two poles and exponential growth ($3^n$, $8^n$).
 The jump from one pole to two is an asymptotic phase transition.
 
-\begin{theorem}[Three-way agreement for bar cohomology]
+\begin{theorem}[Finite-window comparison for bar cohomology]
 \label{thm:comp-three-way-bar}
-\ClaimStatusProvedHere
-For every algebra in the standard landscape, the bar
-cohomology dimensions through weight~$12$ agree across all
-applicable methods \textup{(}direct matrix for all families;
-CE for affine; Zhu for Virasoro and $\cW_N$\textup{)}.
+\ClaimStatusConditional
+In the Open quadrant, standard bar presentation, Beilinson level~$2$,
+under the OS-corrected PBW-collapse hypothesis package, the finite
+windows implemented by the local bar-dimension
+engines, the direct bar matrices, closed-form sequence formulae,
+and CE/Zhu comparison routines agree whenever they compute the same
+typed object.  The unconditional rows are the single-generator
+free-field and Virasoro windows and the affine low-degree windows
+where the OS factor is trivial or explicitly included.  The
+multi-generator $\cW_N$ rows are conditional on the OS-corrected
+PBW-collapse package of Proposition~\ref{prop:comp-ce-bar}.
 \end{theorem}
 
 \begin{proof}
-The direct-matrix method computes the bar differential for every
-family by definition. Proposition~\ref{prop:comp-ce-bar} identifies
-the same dimensions with Chevalley--Eilenberg cohomology in the affine
-cases, and Theorem~\ref{thm:comp-zhu-c-dependence} describes the Zhu
-comparison for Virasoro and $\cW_N$ quotients. The explicit outputs
-through weight~$12$ are tabulated in
-\S\ref{subsec:comp-bar-table}; comparing those finite lists shows that
-whenever two or three methods apply to the same algebra, they give the
-same dimensions. Hence the methods agree on the entire standard
-landscape through the stated range.
+The direct matrices are built in
+\texttt{compute/lib/bar\_cohomology\_dimensions.py}.  The independent
+closed-form witnesses live in \texttt{compute/lib/bar\_complex.py} and
+are tested in \texttt{compute/tests/test\_bar\_complex.py} and
+\texttt{compute/tests/test\_bar\_cohomology\_dimensions.py}.  The
+single-generator CE comparison is isolated in
+\texttt{compute/lib/ce\_vs\_chiral\_bar\_reconciliation\_engine.py}
+and its test file.  These computations agree in the implemented
+finite windows after the typed-object distinction is imposed: CE
+computes the leading-pole page, while the chiral bar computation also
+contains the Orlik--Solomon and subleading-pole data.  The theorem is
+therefore a finite-window conditional comparison, not an
+all-landscape collapse theorem.
 \end{proof}
 
 

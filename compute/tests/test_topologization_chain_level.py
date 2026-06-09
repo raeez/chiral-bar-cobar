@@ -1,8 +1,9 @@
 """
 test_topologization_chain_level.py
 
-HZ-IV Independent-Verification tests for strict chain-level
-topologization of affine Kac-Moody at non-critical level.
+HZ-IV Independent-Verification tests for cubic chain-level
+rectification of affine Kac-Moody at non-critical level, with
+conditional original-complex topologization.
 
 Corresponding theorem:  thm:chain-level-E3-top-class-L
   (chapters/theory/topologization_chain_level_platonic.tex)
@@ -21,6 +22,7 @@ All work attributed to Raeez Lorgat. No AI attribution.
 
 import sympy as sp
 import unittest
+from pathlib import Path
 
 
 # ---------------------------------------------------------------
@@ -284,7 +286,7 @@ class TestTopologizationChainLevel(unittest.TestCase):
         self.assertTrue(limit_from_minus in (sp.oo, -sp.oo))
 
     @independent_verification(
-        claim="thm:chain-level-E3-top-class-L::shadow-depth",
+        claim="thm:chain-level-E3-top-class-L::scalar-shadow-depth",
         derived_from=(
             "chapters/theory/topologization_chain_level_platonic.tex::"
             "thm:chain-level-E3-top-class-L",
@@ -298,29 +300,41 @@ class TestTopologizationChainLevel(unittest.TestCase):
             "The shadow depth r_max = 3 for class L is declared in "
             "the motivic shadow tower chapter (theoretical), "
             "enumerated in landscape_census (census), and computed "
-            "by compute engine -- three independent witnesses."
+            "by compute engine -- three independent witnesses. It "
+            "witnesses scalar shadow truncation, not brace-arity "
+            "vanishing."
         ),
     )
     def test_class_L_shadow_depth(self):
-        """Class L has shadow depth r_max = 3; the key input for
-        Theorem thm:chain-level-E3-top-class-L termination."""
+        """Class L has shadow depth r_max = 3 as scalar shadow data."""
         # Class L: affine KM, shadow depth r_max = 3.
-        # This is a structural fact about the shadow tower.
-        # Encoded here as a sanity assertion aligned with the
-        # manuscript's classification.
+        # This is a structural fact about the scalar shadow tower.
+        # It does not imply higher brace components vanish.
         class_L_shadow_depth = 3
         self.assertEqual(class_L_shadow_depth, 3)
+
+    def test_hbc_condition_declared_for_original_complex(self):
+        """The all-arity original-complex lift is conditional on HBC_L."""
+        root = Path(__file__).resolve().parents[2]
+        topol = root / "chapters/theory/topologization_chain_level_platonic.tex"
+        main = root / "chapters/theory/en_koszul_duality.tex"
+        topol_text = topol.read_text()
+        main_text = main.read_text()
+
+        self.assertIn(r"\mathsf{HBC}_L(\fg,k)", topol_text)
+        self.assertIn(r"\ClaimStatusConditional", topol_text)
+        self.assertIn(r"\mathsf{HBC}_L(\fg,k)", main_text)
+        self.assertNotIn("using shadow-depth truncation", topol_text)
+        self.assertNotIn("higher obstructions are absent", main_text)
 
     def test_hziv_coverage_manifest(self):
         """Manifest: every ProvedHere-tagged statement in
         topologization_chain_level_platonic.tex has at least one
         test in this file with @independent_verification."""
-        expected_coverage = {
+        expected_proved_coverage = {
             "thm:sugawara-antighost-primitive-chain-level":
                 "test_sl2_jacobi_closure + test_sugawara_prefactor_"
                 "sl2_level_1",
-            "thm:chain-level-E3-top-class-L":
-                "test_class_L_shadow_depth + test_sl2_jacobi_closure",
             "prop:eta-formula-sl2-k1-explicit":
                 "test_sl2_jacobi_closure + test_sugawara_prefactor_"
                 "sl2_level_1 + test_kappa_sl2_level_1",
@@ -332,10 +346,17 @@ class TestTopologizationChainLevel(unittest.TestCase):
             "cor:eta-primitive": "test_sl2_jacobi_closure",
             "prop:translation-inv-tildeG": "test_sl2_jacobi_closure",
         }
+        expected_conditional_coverage = {
+            "thm:chain-level-E3-top-class-L":
+                "test_class_L_shadow_depth + "
+                "test_hbc_condition_declared_for_original_complex + "
+                "test_sl2_jacobi_closure",
+        }
         # Coverage delta: Vol I was 0/2275 at installation (2026-04-16);
-        # this file adds 9 covered statements. New snapshot: 9/2275.
+        # this file adds 8 proved and 1 conditional covered statements.
         # (This is a structural record, not a runtime check.)
-        self.assertEqual(len(expected_coverage), 9)
+        self.assertEqual(len(expected_proved_coverage), 8)
+        self.assertEqual(len(expected_conditional_coverage), 1)
 
 
 if __name__ == "__main__":

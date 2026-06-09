@@ -21,6 +21,7 @@ import pytest
 from fractions import Fraction
 
 from lib.theorem_km_chapter_rectification_engine import (
+    ADMISSIBLE_QUOTIENT_BAR_HYPOTHESES,
     LieData, lie_data, SL2, SL3, SL4, SO5, SP4, G2,
     kappa_km, central_charge_km, ff_dual_level, curvature_m0,
     is_critical, is_admissible_level,
@@ -39,6 +40,7 @@ from lib.theorem_km_chapter_rectification_engine import (
     km_landscape_invariants, fle_bridge_check,
     sl2_bar_at_minus_half, r_matrix_sl2, r_matrix_general,
     admissible_bar_degeneration_page_sl2,
+    admissible_simple_quotient_scope_sl2,
 )
 
 
@@ -229,7 +231,20 @@ class TestAdmissibleLevel:
         assert data["c_sum"] == 6
         assert data["num_modules"] == 2
         assert data["E2_degeneration"]
-        assert data["is_koszul"]
+        assert data["is_koszul"] is None
+        assert data["koszulness_status"] == "conditional_open"
+        assert data["generic_universal_theorem_descends"] is False
+        assert data["quotient_bar_comparison_status"] == "required"
+        assert data["quotient_bar_comparison_hypotheses"] == ADMISSIBLE_QUOTIENT_BAR_HYPOTHESES
+
+    def test_A6b_sl2_minus_half_quotient_scope(self):
+        """Simple quotient needs quotient bar comparison, not universal descent."""
+        scope = admissible_simple_quotient_scope_sl2(Fraction(-1, 2))
+        assert scope["simple_quotient"] == "L_k(sl_2)=V_k(sl_2)/N_k"
+        assert scope["generic_universal_theorem_descends"] is False
+        assert scope["quotient_bar_comparison_status"] == "required"
+        assert scope["is_koszul"] is None
+        assert scope["ribbon_implies_bar_koszulness"] is False
 
     def test_A7_sl2_admissible_multiple_levels(self):
         """Test admissible data at multiple levels."""
@@ -255,6 +270,8 @@ class TestAdmissibleLevel:
         assert result["is_ribbon"]
         assert result["num_admissible_modules"] == 2
         assert result["fusion_ring_consistent"]
+        assert result["bar_cobar_preserves_ribbon"] is None
+        assert result["bar_cobar_preservation_status"] == "requires_quotient_bar_comparison"
 
     def test_A10_ribbon_sl2_multiple_admissible(self):
         """Ribbon structure at several admissible levels."""

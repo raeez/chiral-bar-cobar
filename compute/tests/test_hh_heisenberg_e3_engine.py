@@ -607,7 +607,7 @@ class TestRMatrixKappa:
 
     def test_r_matrix_level_prefix(self):
         """r-matrix has level prefix k (AP126 enforcement)."""
-        # VERIFIED: [DC] r(z) = k/z, not Omega/z;
+        # VERIFIED: [DC] r(z) = k*Omega_H/z (rank-one coeff k/z), not Omega/z;
         #           [LT] CLAUDE.md C10, AP126
         # At k=3, r(z=1) = 3, not 1
         assert abs(r_matrix_heisenberg(1.0, k=3) - 3.0) < 1e-15

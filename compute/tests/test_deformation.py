@@ -43,6 +43,11 @@ class TestPinfVsCoisson:
         data = pinf_vs_coisson()
         assert data["P_inf_chiral"]["has_ope"]
 
+    def test_pva_descends_pinf_ascends(self):
+        data = pinf_vs_coisson()
+        assert data["Coisson"]["direction"] == "descended strict PVA shadow"
+        assert data["P_inf_chiral"]["direction"] == "upward homotopy chiral Poisson lift"
+
     def test_koszul_property(self):
         data = pinf_vs_coisson()
         assert "chirCom^! = chirLie" in data["P_inf_chiral"]["key_property"]

@@ -512,7 +512,7 @@ class TestPAdicShadow:
         assert S[4] == Fraction(10, 27)
 
     def test_shadow_coefficients_at_c_26(self):
-        """S_r at c=26 (self-dual Virasoro): S_2=13, S_3=2."""
+        """S_r at c=26 (critical string charge): S_2=13, S_3=2."""
         S = shadow_coefficients_at_c(Fraction(26))
         assert S[2] == Fraction(13)
         assert S[3] == Fraction(2)

@@ -718,7 +718,7 @@ class TestStructural:
         kernels = firewall['kernel_constants']
         assert kernels['affine_collision_trace_form'] == 'r^{KM}(z) = k*Omega_tr/z'
         assert kernels['affine_kz_normalization'] == 'r_KZ(z) = Omega/((k+h^vee)z)'
-        assert kernels['heisenberg_collision'] == 'r^{Heis}(z) = k/z'
+        assert kernels['heisenberg_collision'] == 'r^{Heis}(z) = k*Omega_H/z (coeff k/z)'
         assert kernels['virasoro_collision'] == 'r^{Vir}(z) = (c/2)/z^3 + 2T/z'
         assert firewall['holographic_package_entries'] == (
             'A', 'A^i', 'A^!', 'C', 'r(z)', 'Theta_A', 'nabla^hol',

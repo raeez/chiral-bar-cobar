@@ -96,7 +96,7 @@ from compute.lib.cy_koszul_dual_k3e_engine import (
     ff_dual_level_su2_of_n4,
     # Homotopy vs strict (AP50)
     homotopy_vs_strict_koszul_dual_k3,
-    # Boundary-to-bulk (AP25/AP34)
+    # Derived-centre/open-closed branch (AP25/AP34)
     boundary_bulk_passage_k3,
     # Generators
     n4_dual_generators,
@@ -346,7 +346,7 @@ class TestCrossFamilyConsistency:
         assert bar_dim_1_dual_k3e() == bar_dim_1_k3e()
 
     def test_complementarity_different_from_virasoro(self):
-        """Full N=4 complementarity (0) != Virasoro complementarity (13)."""
+        """K3/CY Verdier scalar projection (0) != Virasoro complementarity (13)."""
         assert complementarity_sum_k3() != complementarity_sum_virasoro_component()
 
     def test_kappa_ne_c_over_2(self):
@@ -471,7 +471,9 @@ class TestAntiPatternCrossChecks:
         assert len(objects) == 5
         assert bbp['bar_dual_coalgebra']['type'] == 'coalgebra'
         assert 'hypotheses' in bbp['koszul_duality']['result']
-        assert 'bulk' in bbp['derived_center']['result']
+        assert 'closed sector' in bbp['derived_center']['result']
+        assert bbp['physical_bulk_identification_allowed'] is False
+        assert 'OCA' in bbp['physical_bulk_requires']
         assert bbp['objects_kept_distinct'] is True
 
 
@@ -560,11 +562,11 @@ class TestBarComplex:
 
 
 # =========================================================================
-# Hochschild cohomology (boundary-to-bulk)
+# Hochschild cohomology (derived centre / open-closed branch)
 # =========================================================================
 
 class TestHochschildCohomology:
-    """Derived center / bulk algebra tests."""
+    """Derived center / universal closed-sector tests."""
 
     def test_hh0_is_1(self):
         """Center is 1-dimensional."""

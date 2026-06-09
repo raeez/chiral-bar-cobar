@@ -55,9 +55,11 @@ separate:
 RANK-1 ANALYSIS
 ===============
 
-For rank-1 families (V = C), R(z) is a scalar power series.
+For rank-1 families (V = C), the Givental/shadow R(z) is a scalar power series.
 The unit vector e = 1 in C.  The string equation R(z)*1 = 1 holds
-iff R(z) = 1, i.e., iff the R-matrix is trivial (Heisenberg only).
+iff this Givental R(z) = 1, i.e., iff the shadow R-matrix is trivial
+(Heisenberg only).  This is not the ordered-bar quantum braiding
+R_{H_k}(z) = exp(k*hbar/z).
 
 For Virasoro: R(z) = 1 + (6/c)z + ... != 1, so the string equation
 FAILS with defect sigma(z) = (6/c)z + O(z^2).

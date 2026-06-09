@@ -905,9 +905,9 @@ def collision_residue_affine(N: int, k: Fraction) -> CollisionResidue:
 
 
 def collision_residue_heisenberg(k: Fraction) -> CollisionResidue:
-    """r(z) = k/z for Heisenberg (scalar trace-form r-matrix).
+    """r(z) = k*Omega_H/z (rank-one coeff k/z) for Heisenberg (rank-one abelian trace-form kernel).
 
-    The single-generator Heisenberg has r(z) = k/z.
+    The single-generator Heisenberg has r(z) = k*Omega_H/z (rank-one coeff k/z).
     CYBE is trivially satisfied (everything commutes).
     """
     k_frac = _frac(k)

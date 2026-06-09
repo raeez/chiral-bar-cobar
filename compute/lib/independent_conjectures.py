@@ -2,11 +2,12 @@
 
 Three independent conjectures with computational handles:
 
-1. VIRASORO c=26 SELF-DUALITY
+1. VIRASORO c=26 DUALITY TEST
    The Virasoro complementarity c + c' = 26 implies self-duality at c = 13
-   (or trivial duality c = 26, c' = 0). At c = 26, the dual is the trivial
-   algebra (c' = 0, uncurved), and the bar complex B(Vir_26) acquires special
-   structure related to the bosonic string critical dimension.
+   and a critical-string endpoint at c = 26, c' = 0. At c = 26, the dual is
+   the trivial algebra (c' = 0, uncurved), and the bar complex B(Vir_26)
+   acquires special structure related to the bosonic string critical
+   dimension; it is not Koszul self-dual.
 
 2. DERIVED bc-betagamma EQUIVALENCE
    The bc ghost system and betagamma system are Koszul dual:
@@ -41,7 +42,7 @@ from sympy import Rational, Symbol, simplify
 
 
 # ===========================================================================
-# Conjecture 1: Virasoro c=26 self-duality
+# Conjecture 1: Virasoro c=26 complementarity
 # ===========================================================================
 
 def virasoro_complementarity_sum() -> int:
@@ -672,7 +673,7 @@ if __name__ == "__main__":
     print("INDEPENDENT CONJECTURES: COMPUTATIONAL CHECKS")
     print("=" * 70)
 
-    print("\n--- Conjecture 1: Virasoro c=26 Self-Duality ---")
+    print("\n--- Conjecture 1: Virasoro c=26 duality test ---")
 
     print("\n  Complementarity:")
     for name, ok in verify_virasoro_complementarity().items():
@@ -689,7 +690,7 @@ if __name__ == "__main__":
     sd = virasoro_self_duality_check(6)
     print(f"    Koszul product: {sd['koszul_product']}")
     print(f"    Is Koszul self-dual: {sd['is_koszul_self_dual']}")
-    print(f"    c=26 is self-dual: {sd['c26_is_self_dual']}")
+    print(f"    c=26 passes self-duality test: {sd['c26_is_self_dual']} (expected False)")
 
     print("\n--- Conjecture 2: bc-betagamma Koszul Duality ---")
 

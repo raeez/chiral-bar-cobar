@@ -1113,8 +1113,8 @@ class TestEdgeCases:
         result = shadow_petersson_genus1(0.0)
         assert abs(result['inner_product']) < 1e-15
 
-    def test_virasoro_c26_self_dual_point(self):
-        """Virasoro at c=26: kappa=13 (close to self-dual c=13)."""
+    def test_virasoro_c26_critical_string_charge(self):
+        """Virasoro at c=26: kappa=13, distinct from self-dual c=13."""
         result = virasoro_shadow_mzv_analysis(26.0)
         assert abs(result['kappa'] - 13.0) < 1e-10
 

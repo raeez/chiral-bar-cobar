@@ -559,8 +559,8 @@ class TestKappaValues:
         assert kappa_w3(Rational(12)) == 10
 
     def test_betagamma_kappa(self):
-        """kappa(bg) = -1."""
-        assert kappa_betagamma() == -1
+        """kappa(bg) = 1 for lambda = 1 betagamma."""
+        assert kappa_betagamma() == 1
 
     def test_dual_kappa_heisenberg(self):
         """kappa(H_k^!) = -k (AP33)."""

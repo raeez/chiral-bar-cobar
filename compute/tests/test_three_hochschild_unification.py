@@ -15,7 +15,23 @@ tests.
 
 from __future__ import annotations
 
+from pathlib import Path
+
 from compute.lib.independent_verification import independent_verification
+
+
+ROOT = Path(__file__).resolve().parents[2]
+HOCHSCHILD_CONVENTIONS = ROOT / "appendices" / "hochschild_conventions.tex"
+HOCHSCHILD_COHOMOLOGY = ROOT / "chapters" / "theory" / "hochschild_cohomology.tex"
+CHIRAL_HOCHSCHILD_KOSZUL = (
+    ROOT / "chapters" / "theory" / "chiral_hochschild_koszul.tex"
+)
+THREE_HOCHSCHILD_TEX = (
+    ROOT / "chapters" / "theory" / "three_hochschild_unification_platonic.tex"
+)
+E1_MODULAR_KOSZUL = ROOT / "chapters" / "theory" / "e1_modular_koszul.tex"
+PREFACE_TEX = ROOT / "chapters" / "frame" / "preface.tex"
+CY_FH_ENGINE = ROOT / "compute" / "lib" / "cy_factorization_homology_k3e_engine.py"
 
 
 # ---------------------------------------------------------------------------
@@ -99,6 +115,120 @@ EXPECTED_EULER_CHARACTERISTICS = {
     "affine_sl2_generic": {"chirhoch": -1, "hh_mode": 1, "gf_cont": 2},
     "virasoro_generic": {"chirhoch": 2, "hh_mode": 1, "gf_cont": 2},
 }
+
+
+def test_circle_restriction_firewall_is_inscribed():
+    """Circle FH, mode extraction, and real-ray E_1 pullback are distinct."""
+    conventions = HOCHSCHILD_CONVENTIONS.read_text()
+    hochschild = HOCHSCHILD_COHOMOLOGY.read_text()
+    e1_modular = E1_MODULAR_KOSZUL.read_text()
+    engine = CY_FH_ENGINE.read_text()
+    active = "\n".join([conventions, hochschild, e1_modular, engine])
+    conventions_flat = " ".join(conventions.split())
+    active_flat = " ".join(active.split())
+
+    assert r"\label{rem:hochschild-circle-restriction-firewall}" in conventions
+    for required in [
+        "restrict the $\\cD$-module to",
+        "formal-disk mode algebra $A_{\\mathrm{mode}}$",
+        "strict associative topological/dg algebra",
+        "Hochschild chain complex",
+        "oriented real interval or real ray",
+        "characteristic-zero homotopy-transfer/rectification theorem",
+    ]:
+        assert required in conventions_flat
+
+    assert r"\int_{S^1} \mathcal F_{A_{\partial}}" in e1_modular
+    assert r"B^{\mathrm{cyc}}_n(A_{\partial})" in e1_modular
+    assert "not the $\\cD$-module restriction of~$\\cA$" in e1_modular
+    assert r"\int_{S^1}\mathcal F_{\mathcal{H}_k}^{\mathrm{lc}}" in hochschild
+    assert "not a D-module restriction of a chiral algebra" in engine
+    assert "int_{S^1} F_{A_H} = HH_*(A_H)" in engine
+
+    for forbidden in [
+        "Restricting chiral algebra to S^1 gives A_inf algebra",
+        "D-module restriction to S^1 gives",
+        "mode algebra is A_inf",
+        r"\int_{S^1}\cA",
+        "int_{S^1} A = Tr_A = coinvariants of A under the circle action",
+    ]:
+        assert forbidden not in active_flat
+
+
+def test_bzfn_ambient_not_dial_firewall_is_inscribed():
+    """BZFN is applied in a fixed ambient to a chosen input algebra."""
+    conventions = HOCHSCHILD_CONVENTIONS.read_text()
+    three = THREE_HOCHSCHILD_TEX.read_text()
+    active = "\n".join([conventions, three])
+    conventions_flat = " ".join(conventions.split())
+    active_flat = " ".join(active.split())
+
+    assert r"\label{rem:bzfn-ambient-not-dial}" in conventions
+    for required in [
+        r"the symmetric monoidal target~$\mathcal S$ is fixed",
+        r"inside that same~$\mathcal S$",
+        "changes the input algebra and its native presentation",
+        "not a free scalar or categorical knob",
+        r"Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)",
+        r"\HH^\bullet(A_{\mathrm{mode}},A_{\mathrm{mode}})",
+        "requires the named formal-disk mode-extraction",
+        "BZFN by itself does not identify the chiral and mode centres",
+    ]:
+        assert required in conventions_flat
+
+    for forbidden in [
+        "BZFN gives different answers depending on ambient category S",
+        "ambient category S as tunable parameter",
+        "S is a free parameter",
+        "same algebra by changing S",
+        "chiral and mode centres are identified by BZFN",
+    ]:
+        assert forbidden not in active_flat
+
+
+def test_theorem_h_thh_gf_amplitude_firewall_is_inscribed():
+    """Theorem H is chiral; GF unboundedness is not a THH failure."""
+    conventions = HOCHSCHILD_CONVENTIONS.read_text()
+    three = THREE_HOCHSCHILD_TEX.read_text()
+    chiral = CHIRAL_HOCHSCHILD_KOSZUL.read_text()
+    preface = PREFACE_TEX.read_text()
+    active = "\n".join([conventions, three, chiral, preface])
+    conventions_flat = " ".join(conventions.split())
+    three_flat = " ".join(three.split())
+    chiral_flat = " ".join(chiral.split())
+    preface_flat = " ".join(preface.split())
+    active_flat = " ".join(active.split())
+
+    assert r"\label{rem:theorem-h-chiral-only}" in conventions
+    assert r"\label{rem:GF-unbounded-but-image-bounded}" in three
+    assert r"\label{rem:why-theorem-H-not-GF}" in three
+    assert r"\label{rem:three-hochschild-agreement-precision}" in three
+    assert "None of these steps is a statement about" in conventions_flat
+    assert "\\THH" in conventions_flat
+    assert (
+        "This is a structural distinction among operads and differentials, "
+        "not a size theorem about topological Hochschild homology."
+    ) in three_flat
+    assert "the high-degree comparison target used below is scalar GF, not THH" in three_flat
+    assert "cohomological dimensions need not agree" in chiral_flat
+    assert "while the Weyl-mode algebra has" in chiral_flat
+    assert "The high-degree divergence used in the three-Hochschild comparison is scalar" in chiral_flat
+    assert "The same boundary excludes topological Hochschild homology" in three_flat
+    assert "GF cohomology is continuous Lie algebra cohomology" in three_flat
+    assert (
+        "The chiral, algebraic, and topological constructions use different "
+        "ambient categories and produce different outputs."
+    ) in preface_flat
+
+    for forbidden in [
+        "Theorem H fails for THH",
+        "concentration has no THH analogue",
+        "ChirHoch* and THH* are different-sized objects",
+        "dim 3 vs infinite",
+        "have the same cohomological dimension",
+    ]:
+        if forbidden in active_flat:
+            raise AssertionError(f"forbidden phrase remained: {forbidden}")
 
 
 def alternating_euler(dims: tuple[int, int, int]) -> int:

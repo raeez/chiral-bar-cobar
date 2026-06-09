@@ -1707,8 +1707,8 @@ def derived_center_vs_cg_bulk() -> Dict[str, object]:
 
     OUR FRAMEWORK (thm:thqg-swiss-cheese, AP25, AP34):
       The chiral derived center Z^der_ch(A) = C^*_ch(A, A) (Hochschild
-      cochains) is the UNIVERSAL BULK.  It classifies bulk operators
-      acting on the boundary algebra A.  This is NOT the bar complex
+      cochains) is the algebraic closed-sector vertex.  It models
+      closed-sector operators acting on the boundary algebra A.  This is NOT the bar complex
       (which classifies twisting morphisms / couplings).
 
     CG FRAMEWORK:
@@ -1720,14 +1720,14 @@ def derived_center_vs_cg_bulk() -> Dict[str, object]:
           over a disk -> boundary observables
 
     THE IDENTIFICATION:
-      CG bulk = our derived center Z^der_ch(A)
-      Both are the algebra of local operators in the topological direction.
-      The shifted Poisson structure on the CG bulk matches the PVA
-      structure on the derived center.
+      CG bulk maps to our derived center Z^der_ch(A) under the scoped
+      HT comparison.  The shifted Poisson structure on the CG bulk then
+      matches the PVA structure on the derived center.
 
     CRITICAL DISTINCTION (AP25, AP34):
       B(A) is NOT the bulk.  B(A) classifies COUPLINGS (twisting morphisms).
-      Z^der_ch(A) IS the bulk.  Z^der_ch(A) classifies BULK OPERATORS.
+      Z^der_ch(A) is the algebraic closed-sector vertex.  Its physical
+      bulk reading requires the HT comparison data.
       The bar complex and the derived center are DIFFERENT objects with
       DIFFERENT physical interpretations.
     """
@@ -1738,7 +1738,7 @@ def derived_center_vs_cg_bulk() -> Dict[str, object]:
         "pva_match": True,
         "bar_is_not_bulk": True,
         "bar_classifies": "twisting morphisms (couplings between A and A!)",
-        "center_classifies": "bulk operators acting on boundary",
+        "center_classifies": "closed-sector operators; physical bulk under HT comparison",
         "ap25_compliant": True,
         "ap34_compliant": True,
         "swiss_cheese_theorem": "thm:thqg-swiss-cheese",

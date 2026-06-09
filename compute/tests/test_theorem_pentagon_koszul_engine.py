@@ -315,11 +315,13 @@ class TestPBWKoszul(unittest.TestCase):
         self.assertTrue(result['gk_connection']['quadratic_duality_is_pbw_criterion'])
 
     def test_koszul_equivalences_count(self):
-        """12 equivalences: 10 unconditional + 1 conditional + 1 partial."""
+        """12 items: 7 independent + 1 listed + 2 conditional + 1 one-way + 1 partial."""
         result = koszul_equivalences_status()
         self.assertEqual(result['total'], 12)
-        self.assertEqual(result['unconditional'], 10)
-        self.assertEqual(result['conditional'], 1)
+        self.assertEqual(result['unconditional'], 7)
+        self.assertEqual(result['listed_consequences'], 1)
+        self.assertEqual(result['conditional'], 2)
+        self.assertEqual(result['one_way_consequences'], 1)
         self.assertEqual(result['partial'], 1)
 
     def test_gk_direct_items(self):

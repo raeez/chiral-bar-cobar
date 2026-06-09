@@ -1123,7 +1123,7 @@ def double_resurgence_coefficients(alg: DeepResurgenceAlgebra,
     where F_{g,r} = F_g * S_r (factorized in the scalar sector).
 
     This factorization F_{g,r} = F_g * S_r is a consequence of
-    the scalar projection (obs_g = kappa * lambda_g) times the
+    the scalar projection (obs_g^sc = kappa * lambda_g) times the
     arity-r shadow coefficient S_r.
 
     The factorized form means:

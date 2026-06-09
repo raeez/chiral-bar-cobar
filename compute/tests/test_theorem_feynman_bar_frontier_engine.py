@@ -399,7 +399,7 @@ class TestCollisionResidue:
     """Test the collision residue r(z) = Res^coll_{0,2}(Theta_A)."""
 
     def test_heisenberg_tree_exact(self):
-        """Heisenberg r(z) = k/z: tree-level exact, no loop corrections."""
+        """Heisenberg r(z) = k*Omega_H/z (rank-one coeff k/z): tree-level exact, no loop corrections."""
         k = FR(3)
         r = tree_level_r_heisenberg(k)
         assert r.poles == {1: k}

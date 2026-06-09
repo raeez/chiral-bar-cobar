@@ -21,6 +21,10 @@ import os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'lib'))
 
 from gaiotto_3d_ht_comparison_engine import (
+    AGT_COMPARISON_GATES,
+    CS_HT_AFFINE_GATES,
+    POISSON_SIGMA_HT_GATES,
+    SLAB_W3_REDUCTION_GATES,
     # Section 1: Shadow depth
     ShadowDepthData,
     standard_shadow_data,
@@ -39,6 +43,11 @@ from gaiotto_3d_ht_comparison_engine import (
     cdg_bulk_comparison_free,
     cdg_bulk_comparison_gauge,
     cdg_bulk_comparison_lg,
+    chern_simons_ht_affine_scope,
+    w3_pva_slab_reduction_scope,
+    poisson_sigma_ht_enhancement_scope,
+    agt_comparison_scope,
+    cs_ht_agt_obligation_scope,
     # Section 5: DNP lines
     dnp_line_comparison_gauge,
     # Section 6: Shadow depth vs GKW
@@ -294,6 +303,128 @@ class TestCDGBulkComparisons:
             assert 'HH' in comparison.our_bulk or 'C^bullet' in comparison.our_bulk \
                 or 'H*' in comparison.our_bulk, \
                 "Our bulk must reference derived center / Hochschild, not bar"
+
+
+class TestCSHTAGTGates:
+    """Gate the Chern-Simons/HT/slab/PSM/AGT comparison claims."""
+
+    def test_cs_ht_affine_missing_by_default(self):
+        """No CS/HT affine comparison is certified without gates."""
+        scope = chern_simons_ht_affine_scope()
+        assert not scope['cs_comparison_defined']
+        assert not scope['abelian_heisenberg_center_proved']
+        assert not scope['nonabelian_affine_currents_proved']
+        assert not scope['perturbative_finiteness_package_stated']
+        assert not scope['bulk_boundary_separated']
+        assert scope['three_d_ht_bulk_is_curve_level_chiral_algebra'] is False
+        assert 'affine Kac-Moody boundary algebra defined' in scope['missing_gates']
+
+    def test_cs_ht_affine_all_gates_positive(self):
+        """Affine CS/HT theorem requires comparison, proofs, finiteness, and scope."""
+        kwargs = {key: True for key, _ in CS_HT_AFFINE_GATES}
+        kwargs.pop('theory_level_declared')
+        scope = chern_simons_ht_affine_scope(
+            **kwargs,
+            theory_level='perturbative_quantum',
+        )
+        assert scope['cs_comparison_defined']
+        assert scope['abelian_heisenberg_center_proved']
+        assert scope['nonabelian_affine_currents_proved']
+        assert scope['perturbative_finiteness_package_stated']
+        assert scope['cg_factorization_algebra_defined']
+        assert scope['theory_level'] == 'perturbative_quantum'
+        assert scope['bulk_boundary_separated']
+        assert scope['all_cs_ht_claims_certified']
+        assert not scope['missing_gates']
+
+    def test_cs_ht_affine_rejects_undeclared_theory_level(self):
+        """Classical/quantum level must be declared for the theorem package."""
+        scope = chern_simons_ht_affine_scope(
+            affine_km_boundary_algebra_defined=True,
+            chern_simons_action_defined=True,
+            cs_to_current_map_defined=True,
+            abelian_cs_heisenberg_center_proved=True,
+            nonabelian_ht_cs_affine_currents_proved=True,
+            perturbative_finiteness_hypotheses_stated=True,
+        )
+        assert not scope['theory_level_declared']
+        assert 'classical/quantum theory level declared' in scope['missing_gates']
+
+    def test_w3_slab_reduction_requires_proof_gates(self):
+        """Defining a slab is weaker than proving W3 PVA reduction."""
+        scope = w3_pva_slab_reduction_scope(
+            slab_geometry_defined=True,
+            slab_boundary_conditions_defined=True,
+            slab_pushforward_to_curve_defined=True,
+            w3_pva_defined=True,
+        )
+        assert scope['slab_reduction_defined']
+        assert not scope['w3_pva_slab_reduction_proved']
+        assert 'DS/BRST reduction map defined' in scope['missing_gates']
+        assert 'W3 lambda-bracket match proved' in scope['missing_gates']
+
+    def test_w3_slab_reduction_all_gates_positive(self):
+        """The W3 slab theorem is positive only after all slab gates."""
+        kwargs = {key: True for key, _ in SLAB_W3_REDUCTION_GATES}
+        scope = w3_pva_slab_reduction_scope(**kwargs)
+        assert scope['slab_reduction_defined']
+        assert scope['w3_pva_slab_reduction_proved']
+        assert scope['w3_pva_status'] == 'SLAB_REDUCTION_PROVED'
+        assert not scope['missing_gates']
+
+    def test_poisson_sigma_ht_enhancement_requires_theorem(self):
+        """A defined PSM is not yet an HT enhancement theorem."""
+        scope = poisson_sigma_ht_enhancement_scope(
+            psm_fields_defined=True,
+            psm_target_poisson_defined=True,
+            psm_aksz_bv_action_defined=True,
+            psm_boundary_conditions_defined=True,
+            psm_ht_enhancement_defined=True,
+        )
+        assert scope['poisson_sigma_model_defined']
+        assert not scope['ht_enhancement_proved']
+        assert 'PSM factorization algebra defined' in scope['missing_gates']
+        assert 'HT enhancement proved' in scope['missing_gates']
+
+    def test_poisson_sigma_ht_enhancement_all_gates_positive(self):
+        """HT enhancement is certified only with factorization algebra and proof."""
+        kwargs = {key: True for key, _ in POISSON_SIGMA_HT_GATES}
+        scope = poisson_sigma_ht_enhancement_scope(**kwargs)
+        assert scope['poisson_sigma_model_defined']
+        assert scope['ht_enhancement_proved']
+        assert scope['ht_enhancement_status'] == 'HT_ENHANCEMENT_PROVED'
+        assert not scope['missing_gates']
+
+    def test_agt_default_is_external_motivation_only(self):
+        """AGT language is not theorem language by default."""
+        scope = agt_comparison_scope(
+            agt_parameter_dictionary_defined=True,
+            nekrasov_partition_side_defined=True,
+            conformal_block_side_defined=True,
+        )
+        assert not scope['agt_theorem_allowed']
+        assert scope['agt_used_as_motivation_only']
+        assert scope['agt_status'] == 'EXTERNAL_MOTIVATION_ONLY'
+        assert 'operator-algebra map defined' in scope['missing_gates']
+
+    def test_agt_all_gates_positive_allows_theorem(self):
+        """An AGT theorem requires the dictionary, both sides, map, and proof."""
+        kwargs = {key: True for key, _ in AGT_COMPARISON_GATES}
+        scope = agt_comparison_scope(**kwargs)
+        assert scope['agt_theorem_allowed']
+        assert not scope['agt_used_as_motivation_only']
+        assert scope['agt_status'] == 'THEOREM_ALLOWED'
+        assert not scope['missing_gates']
+
+    def test_aggregate_813_824_certified_only_together(self):
+        """The aggregate 813-824 gate is positive only when every block passes."""
+        kwargs = {key: True for key, _ in CS_HT_AFFINE_GATES}
+        kwargs.update({key: True for key, _ in SLAB_W3_REDUCTION_GATES})
+        kwargs.update({key: True for key, _ in POISSON_SIGMA_HT_GATES})
+        kwargs.update({key: True for key, _ in AGT_COMPARISON_GATES})
+        scope = cs_ht_agt_obligation_scope(**kwargs)
+        assert scope['all_obligations_813_824_certified']
+        assert not scope['unresolved_obligation_blocks']
 
 
 # ============================================================================

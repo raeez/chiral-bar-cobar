@@ -18,6 +18,8 @@ from fractions import Fraction
 from sympy import Rational, simplify
 
 from compute.lib.theorem_entanglement_rectification_engine import (
+    C2_LAGRANGIAN_CONDITIONAL_STATUS,
+    C2_LAGRANGIAN_HYPOTHESES,
     # Section 1: CoHA / DT
     kappa_affine_sl2,
     kappa_affine_sl2_dual,
@@ -185,11 +187,25 @@ class TestK11QECRate(unittest.TestCase):
         """Koszul algebra gives rate 1/2."""
         data = qec_rate_with_perfectness(True, True)
         self.assertEqual(data['rate'], Rational(1, 2))
+        self.assertTrue(data['scalar_rate_diagnostic'])
+        self.assertFalse(data['is_lagrangian'])
+        self.assertEqual(data['lagrangian_upgrade_status'],
+                         C2_LAGRANGIAN_CONDITIONAL_STATUS)
+
+    def test_koszul_rate_lagrangian_with_c2_package(self):
+        """The C2 package upgrades the QEC Lagrangian flag."""
+        data = qec_rate_with_perfectness(
+            True, True, c2_hypotheses=C2_LAGRANGIAN_HYPOTHESES)
+        self.assertEqual(data['rate'], Rational(1, 2))
+        self.assertTrue(data['is_lagrangian'])
+        self.assertFalse(data['c2_missing_hypotheses'])
 
     def test_non_koszul_no_rate(self):
         """Non-Koszul algebra gives no code rate."""
         data = qec_rate_with_perfectness(False, True)
         self.assertIsNone(data['rate'])
+        self.assertFalse(data['scalar_rate_diagnostic'])
+        self.assertFalse(data['is_lagrangian'])
 
     def test_HR_simplification(self):
         """Holstein-Rivera simplifies K11."""
@@ -210,6 +226,15 @@ class TestK11QECRate(unittest.TestCase):
             params = qec_parameters_by_family(fam)
             self.assertEqual(params['rate'], Rational(1, 2),
                              f"Rate != 1/2 for {fam}")
+            self.assertTrue(params['scalar_rate_diagnostic'])
+            self.assertFalse(params['lagrangian'])
+
+    def test_lagrangian_certified_with_c2_package(self):
+        """Family QEC parameters certify Lagrangian status only with C2."""
+        params = qec_parameters_by_family(
+            'w3', c2_hypotheses=C2_LAGRANGIAN_HYPOTHESES)
+        self.assertTrue(params['lagrangian'])
+        self.assertFalse(params['c2_missing_hypotheses'])
 
     def test_symplectic_code_type(self):
         """Code type is symplectic for all families."""
@@ -635,7 +660,8 @@ class TestBeilinsonAntiPatternGuards(unittest.TestCase):
         complexity WITHIN the Koszul world."""
         # W_3 is Koszul (class M) but has infinite shadow depth
         params = qec_parameters_by_family('w3')
-        self.assertTrue(params['lagrangian'])  # Koszul => Lagrangian
+        self.assertFalse(params['lagrangian'])  # C2 package not supplied
+        self.assertTrue(params['scalar_rate_diagnostic'])
         self.assertEqual(params['shadow_class'], 'M')  # infinite depth
         self.assertEqual(params['channels'], -1)  # infinite channels
 

@@ -39,11 +39,12 @@ For an even lattice Lambda of rank r:
    kappa + kappa' = 0.
 
    This holds for ALL lattice VOAs, including unimodular ones.
-   For unimodular Lambda, V_Lambda^! is isomorphic to V_Lambda as
-   an abstract vertex algebra (thm:lattice:unimodular-self-dual),
-   but the Koszul dual carries the inverse cocycle with negated
-   Cartan level (Verdier duality negates the level).  The curvature
-   is a bar-complex invariant distinguishing the two presentations.
+   For unimodular Lambda, the intrinsic bar-dual coalgebra
+   V_Lambda^i is isomorphic to the same coalgebra presentation
+   (thm:lattice:unimodular-self-dual).  This is not the assertion
+   an algebra-level self-identification: the Koszul dual algebra is
+   the Verdier/continuous linear dual of that coalgebra, and its
+   scalar curvature has the opposite sign.
 
    SUBTLETY: Heisenberg is NOT self-dual.  H_k^! = Sym^ch(V*) with
    curvature m_0 = -k*omega (prop:heisenberg-complementarity).  The
@@ -60,17 +61,20 @@ D_4:  rank 4, kappa = 4.  det(Gram) = 4, NOT unimodular.
       D_4^*/D_4 = (Z/2Z)^2 (discriminant group of order 4).
       Triality: S_3 symmetry from D_4 Dynkin diagram outer automorphisms,
       permuting vector/spinor/conjugate-spinor representations.
-      V_{D_4}^! = (V_{D_4}^{eps^{-1}})^c (NOT self-dual).
+      V_{D_4}^i = (V_{D_4}^{eps^{-1}})^c (not self-dual as a
+      discriminant-module coalgebra).
 
 E_8:  rank 8, kappa = 8.  det(Gram) = 1, unimodular (self-dual).
       Theta_{E_8} = E_4 (the Eisenstein series of weight 4).
       240 roots, no vectors with (v,v)/2 = 1 (even lattice, min norm 2).
-      V_{E_8}^! = V_{E_8} (Koszul self-dual).
+      V_{E_8}^i is bar-coalgebra self-dual; V_{E_8}^! is the
+      Verdier-dual algebra with kappa -8.
 
 Leech: rank 24, kappa = 24.  det(Gram) = 1, unimodular (self-dual).
        NO roots: r_Leech(1) = 0.  196560 minimal vectors at (v,v)/2 = 2.
        Theta_Leech = E_12 - (65520/691)*Delta.
-       V_Leech^! = V_Leech (Koszul self-dual).
+       V_Leech^i is bar-coalgebra self-dual; V_Leech^! is the
+       Verdier-dual algebra with kappa -24.
 
 Mathematical references:
   - lattice_foundations.tex: thm:lattice:curvature-braiding-orthogonal
@@ -86,6 +90,16 @@ from __future__ import annotations
 from typing import Any, Dict, List, Optional, Tuple
 
 from sympy import Abs, Rational, bernoulli, factorial
+
+
+LATTICE_VOA_HYPOTHESES = (
+    'even non-degenerate lattice',
+    'positive-definite form for VOA/HS-sewing theta convergence',
+    'normalized Borcherds-symmetric FLM 2-cocycle',
+    'finite discriminant group D(Lambda)=Lambda*/Lambda',
+    'intrinsic bar-dual coalgebra separated from Verdier-dual algebra',
+    'completed or finite-type Verdier dual branch for A^!',
+)
 
 
 # =========================================================================
@@ -247,13 +261,14 @@ def complementarity(rank: int, is_unimodular: bool = False) -> Dict[str, Any]:
     This holds for ALL lattice VOAs (unimodular or not).
 
     For unimodular lattices (E_8, Leech, D_8^+, ...):
-      V_Lambda^! = V_Lambda as abstract vertex algebras
-      (thm:lattice:unimodular-self-dual), but the bar-complex
-      curvature distinguishes the two Koszul-pair roles.
+      V_Lambda^i is bar-coalgebra self-dual
+      (thm:lattice:unimodular-self-dual), but the Verdier-dual algebra
+      V_Lambda^! carries kappa = -rank.  Thus this function never uses
+      unimodularity to assert algebra-level self-identification.
 
     For non-unimodular lattices (D_4, A_2, E_6, E_7, ...):
-      V_Lambda^! = (V_{Lambda}^{eps^{-1}})^c  (coalgebra on inverse cocycle)
-      The dual lattice Lambda* appears via the coalgebra structure.
+      V_Lambda^i = (V_{Lambda}^{eps^{-1}})^c  (coalgebra on inverse cocycle)
+      The dual lattice Lambda* appears via the discriminant-module envelope.
 
     Returns dict with kappa, kappa_dual, complementarity_sum, and metadata.
     """
@@ -267,8 +282,79 @@ def complementarity(rank: int, is_unimodular: bool = False) -> Dict[str, Any]:
         'complementarity_sum': comp_sum,
         'sum_is_zero': comp_sum == 0,
         'is_unimodular': is_unimodular,
-        'koszul_self_dual': is_unimodular,
+        'bar_coalgebra_self_dual': is_unimodular,
+        'koszul_algebra_self_dual': False,
+        'koszul_self_dual': False,
+        'self_duality_scope': (
+            'intrinsic bar-dual coalgebra only'
+            if is_unimodular else 'not self-dual; nontrivial discriminant envelope'
+        ),
+        'intrinsic_dual_coalgebra': '(V_Lambda^{epsilon^{-1}})^c',
+        'koszul_dual_algebra': '(V_Lambda^i)^vee (Verdier/continuous linear dual)',
         'rank': rank,
+    }
+
+
+def lattice_scope_report(
+    name: str,
+    rank: int,
+    gram_det: Optional[int] = None,
+    is_even: bool = True,
+    is_positive_definite: bool = True,
+    is_unimodular: bool = False,
+    cocycle: str = 'normalized Borcherds-symmetric FLM 2-cocycle',
+) -> Dict[str, Any]:
+    r"""Typed status report for lattice VOA shadow/Koszul/theta claims.
+
+    The report separates the even-lattice VOA input, the discriminant
+    form/theta surface, the intrinsic bar-dual coalgebra, and the
+    Verdier-dual algebra.  It is intended as the executable firewall
+    for claims of the form "unimodular implies self-dual".
+    """
+    if rank < 0:
+        raise ValueError(f"Rank must be non-negative, got {rank}")
+
+    missing = []
+    if not is_even:
+        missing.append('even lattice')
+    if not is_positive_definite:
+        missing.append('positive-definite form')
+    if gram_det is None:
+        missing.append('Gram determinant/discriminant order')
+    if not cocycle:
+        missing.append('normalized Borcherds-symmetric FLM 2-cocycle')
+
+    disc_order = abs(int(gram_det)) if gram_det is not None else None
+    valid_voa_surface = not missing
+
+    if is_unimodular:
+        theta_status = 'scalar theta modularity on the unimodular positive-definite surface'
+    else:
+        theta_status = 'vector-valued theta surface for the discriminant form; scalar modularity not asserted'
+
+    return {
+        'name': name,
+        'rank': rank,
+        'hypotheses': LATTICE_VOA_HYPOTHESES,
+        'missing_hypotheses': tuple(missing),
+        'valid_voa_surface': valid_voa_surface,
+        'is_even': is_even,
+        'is_positive_definite': is_positive_definite,
+        'is_unimodular': is_unimodular,
+        'gram_det': gram_det,
+        'discriminant_order': disc_order,
+        'discriminant_trivial': disc_order == 1 if disc_order is not None else None,
+        'cocycle': cocycle,
+        'kappa': kappa_lattice(rank),
+        'kappa_dual': kappa_lattice_dual(rank),
+        'kappa_complementarity_sum': Rational(0),
+        'theta_status': theta_status,
+        'theta_claim_requires_discriminant_form': not is_unimodular,
+        'intrinsic_dual_coalgebra': '(V_Lambda^{epsilon^{-1}})^c',
+        'koszul_dual_algebra': '(V_Lambda^i)^vee (Verdier/continuous linear dual)',
+        'bar_coalgebra_self_dual': is_unimodular and valid_voa_surface,
+        'koszul_algebra_self_dual': False,
+        'koszul_claim_status': 'proved on the stated lattice package' if valid_voa_surface else 'conditional',
     }
 
 
@@ -340,6 +426,12 @@ def d4_shadow_data() -> Dict[str, Any]:
         'has_triality': True,
         'shadow': shadow,
         'complementarity': comp,
+        'scope': lattice_scope_report(
+            'D_4',
+            rank,
+            gram_det=4,
+            is_unimodular=False,
+        ),
         'genus_expansion': genus,
         'r_matrix': r_matrix_data(rank),
         'theta_first_shells': [1, 24, 24, 96, 24, 144],  # r_{D_4}(0..5)
@@ -351,7 +443,9 @@ def e8_shadow_data() -> Dict[str, Any]:
 
     E_8: rank 8, 240 roots, det(Gram) = 1.
     Unimodular: E_8 = E_8^* (self-dual lattice).
-    V_{E_8}^! = V_{E_8} (Koszul self-dual, thm:lattice:unimodular-self-dual).
+    The intrinsic bar-dual coalgebra is self-dual
+    (thm:lattice:unimodular-self-dual), while the Verdier-dual algebra
+    has scalar kappa -8.
 
     Theta_{E_8} = E_4(tau) = 1 + 240*sum sigma_3(n) q^n.
 
@@ -373,6 +467,7 @@ def e8_shadow_data() -> Dict[str, Any]:
         'is_unimodular': True,
         'shadow': shadow,
         'complementarity': comp,
+        'scope': lattice_scope_report('E_8', rank, gram_det=1, is_unimodular=True),
         'genus_expansion': genus,
         'r_matrix': r_matrix_data(rank),
         'theta_first_shells': [1, 240, 2160, 6720, 17520, 30240],
@@ -384,7 +479,8 @@ def leech_shadow_data() -> Dict[str, Any]:
 
     Leech: rank 24, NO roots, 196560 minimal vectors, det(Gram) = 1.
     Unimodular: Leech = Leech^* (self-dual lattice).
-    V_Leech^! = V_Leech (Koszul self-dual).
+    The intrinsic bar-dual coalgebra is self-dual, while the
+    Verdier-dual algebra has scalar kappa -24.
 
     Theta_Leech = E_12 - (65520/691)*Delta.
     r_Leech(0) = 1, r_Leech(1) = 0, r_Leech(2) = 196560.
@@ -408,6 +504,7 @@ def leech_shadow_data() -> Dict[str, Any]:
         'is_unimodular': True,
         'shadow': shadow,
         'complementarity': comp,
+        'scope': lattice_scope_report('Leech', rank, gram_det=1, is_unimodular=True),
         'genus_expansion': genus,
         'r_matrix': r_matrix_data(rank),
         'theta_first_shells': [1, 0, 196560, 16773120, 398034000],
@@ -446,6 +543,12 @@ def barnes_wall_shadow_data() -> Dict[str, Any]:
         'is_even': True,
         'shadow': shadow,
         'complementarity': comp,
+        'scope': lattice_scope_report(
+            'BW_16',
+            rank,
+            gram_det=256,
+            is_unimodular=False,
+        ),
         'genus_expansion': genus,
         'r_matrix': r_matrix_data(rank),
     }
@@ -533,6 +636,12 @@ def niemeier_shadow_data(index_or_name) -> Dict[str, Any]:
         'is_even': True,
         'shadow': shadow,
         'complementarity': comp,
+        'scope': lattice_scope_report(
+            entry['name'],
+            rank,
+            gram_det=1,
+            is_unimodular=True,
+        ),
         'genus_expansion': genus,
         'r_matrix': r_matrix_data(rank),
     }

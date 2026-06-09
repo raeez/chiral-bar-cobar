@@ -592,11 +592,11 @@ $\Theta_{\mathcal{F}} = (1/4) \cdot \eta \otimes \Lambda$.
 The shadow metric \textup{(}Definition~\textup{\ref{def:shadow-metric}}\textup{)}
 evaluates to:
 \begin{equation}\label{eq:fermion-shadow-metric}
-Q_{\mathcal{F}}(t) = (2\kappa)^2 = \tfrac{1}{4},
+Q_{\mathcal{F}}(t) = (2\kappa(\mathcal F))^2 = \tfrac{1}{4},
 \end{equation}
 a constant independent of $t$. The weighted shadow generating function
 $H(t) = t^2 \sqrt{Q_{\mathcal{F}}} = \tfrac{1}{2}\,t^2$ is purely
-quadratic; only $S_2 = \kappa = 1/4$ contributes. The shadow
+quadratic; only $S_2 = \kappa(\mathcal F)=1/4$ contributes. The shadow
 connection $\nabla^{\mathrm{sh}} = d - Q'/(2Q)\,dt$ is trivial
 \textup{(}$\omega = d\log Q = 0$\textup{)}, and parallel transport
 carries no monodromy.
@@ -623,13 +623,16 @@ $Q_{\mathcal{F}}(t) = (2 \cdot \tfrac{1}{4})^2 = (1/2)^2 = 1/4$.
 \begin{theorem}[Free fermion genus expansion; \ClaimStatusConditional]
 \textup{(}UNIFORM-WEIGHT\textup{})
 \label{thm:fermion-genus-expansion}
-For all $g \geq 1$, the genus-$g$ free energy of the free fermion is:
+For all $g \geq 1$, the genus-$g$ scalar/full free energy of the free
+fermion is:
 \begin{equation}\label{eq:fermion-Fg}
 F_g(\mathcal{F})
+=F_g^{\mathrm{sc}}(\mathcal{F})
 = \frac{1}{4} \cdot \frac{2^{2g-1}-1}{2^{2g-1}}
  \cdot \frac{|B_{2g}|}{(2g)!}
 \end{equation}
-where $B_{2g}$ denotes the $2g$-th Bernoulli number.
+where $B_{2g}$ denotes the $2g$-th Bernoulli number, and
+$\delta F_g^{\mathrm{cross}}(\mathcal F)=0$ on this class~G lane.
 The first values are:
 \begin{align}
 F_1(\mathcal{F}) &= \frac{1}{96},
@@ -644,6 +647,7 @@ F_4(\mathcal{F}) &= \frac{127}{619315200}.
 The generating function is:
 \begin{equation}\label{eq:fermion-generating-function}
 \sum_{g=1}^{\infty} F_g(\mathcal{F})\,x^{2g}
+=\sum_{g=1}^{\infty} F_g^{\mathrm{sc}}(\mathcal{F})\,x^{2g}
 = \frac{1}{4}\left(\frac{x/2}{\sin(x/2)} - 1\right).
 \end{equation}
 \end{theorem}
@@ -654,32 +658,45 @@ with $\kappa(\mathcal{F}) = 1/4$
 \textup{(}Proposition~\textup{\ref{prop:fermion-shadow-invariants}}\textup{)},
 uniform conformal weight $h = 1/2$, and a single generator. By
 Theorem~\ref{thm:modular-characteristic},
-$\mathrm{obs}_g(\mathcal{F}) = \kappa \cdot \lambda_g$ for all
+$\mathrm{obs}_g(\mathcal{F})
+ = \kappa(\mathcal{F}) \cdot \lambda_g$ for all
 $g \geq 1$. The genus-$g$ free energy is
-$F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$ where
+$F_g(\mathcal{F})=F_g^{\mathrm{sc}}(\mathcal{F})
+ = \kappa(\mathcal{F}) \cdot \lambda_g^{\mathrm{FP}}$ where
 \[
 \lambda_g^{\mathrm{FP}}
+=\int_{\overline{\mathcal M}_{g,1}}\psi_1^{2g-2}\lambda_g
 = \frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!}
 \]
-is the Faber--Pandharipande intersection number. This gives
-$F_g = (1/4) \cdot \lambda_g^{\mathrm{FP}}$, yielding the stated
-values via $B_2 = 1/6$, $B_4 = -1/30$, $B_6 = 1/42$, $B_8 = -1/30$.
+is the marked Faber--Pandharipande scalar coefficient. This gives
+$F_g(\mathcal{F})=F_g^{\mathrm{sc}}(\mathcal{F})
+= (1/4) \cdot \lambda_g^{\mathrm{FP}}$, yielding the
+stated values via $B_2 = 1/6$, $B_4 = -1/30$, $B_6 = 1/42$,
+$B_8 = -1/30$.
 The generating function is the $\hat{A}$-genus at imaginary argument
 (equation~\eqref{eq:frame-generating-function} with $k$ replaced
-by $\kappa = 1/4$).
+by $\kappa(\mathcal F)=1/4$).
 
-The explicit checks: $F_1 = (1/4)(1/24) = 1/96$;
-$F_2 = (1/4)(7/5760) = 7/23040$;
-$F_3 = (1/4) \cdot 31/32 \cdot (1/42)/(720) = 31/3870720$;
-$F_4 = (1/4) \cdot 127/128 \cdot (1/30)/(40320) = 127/619315200$.
+The explicit checks:
+$F_1(\mathcal F)=F_1^{\mathrm{sc}}(\mathcal F)
+=\kappa(\mathcal F)(1/24)=1/96$,
+$F_2(\mathcal F)=F_2^{\mathrm{sc}}(\mathcal F)
+=\kappa(\mathcal F)(7/5760)=7/23040$,
+$F_3(\mathcal F)=F_3^{\mathrm{sc}}(\mathcal F)
+=(1/4)\cdot31/32\cdot(1/42)/(720)=31/3870720$,
+and
+$F_4(\mathcal F)=F_4^{\mathrm{sc}}(\mathcal F)
+=(1/4)\cdot127/128\cdot(1/30)/(40320)=127/619315200$.
 \end{proof}
 
 \begin{remark}[Fermion versus Heisenberg genus tower]
 \label{rem:fermion-vs-heisenberg-genus}
 \index{free fermion!comparison with Heisenberg}
 Both the free fermion and the Heisenberg algebra have genus expansions
-of the form $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$
-\textup{(}UNIFORM-WEIGHT\textup{)}. The ratio at
+of the form
+$F_g(\cA)=F_g^{\mathrm{sc}}(\cA)
+=\kappa(\cA) \cdot \lambda_g^{\mathrm{FP}}$
+\textup{(}UNIFORM-WEIGHT, class~G exact lane\textup{)}. The ratio at
 each genus is:
 \[
 \frac{F_g(\mathcal{F})}{F_g(\mathcal{H}_k)}
@@ -690,7 +707,8 @@ In particular, $F_g(\mathcal{F}) = F_g(\mathcal{H}_{1/4})$: the free
 fermion genus tower coincides with that of the Heisenberg at level
 $k = 1/4$. The equality follows from
 class~G termination: when the shadow obstruction tower terminates at degree~$2$,
-the genus expansion depends only on $\kappa$, and the combinatorial
+the full genus coefficient equals the scalar coefficient and depends
+only on $\kappa$, and the combinatorial
 genus weights (encoded in the $\hat{A}$-class) are universal.
 \end{remark}
 
@@ -711,20 +729,19 @@ No poles survive the $d\log$ extraction.
 \begin{proof}
 The OPE $\psi(z)\psi(w) = 1/(z-w)$ has a simple pole of order~$1$.
 The bar construction extracts residues along $d\log(z_i - z_j)$
-\textup{(}Remark~\textup{\ref{rem:heisenberg-bar-absorbs-pole}}\textup{)},
-which lowers the pole order by one in the collision-residue
-normalization of Table~\ref{tab:rmatrix-census}. Thus an OPE term
-$a_n(z-w)^{-n}$ contributes $a_n(z-w)^{-(n-1)}$ to the polar
-trace-form residue. For the free fermion the only singular
-coefficient is the scalar identity $a_1=\mathbf 1$, so the extracted
-term is regular and scalar. The scalar contraction survives in the
-ordered bar differential before reduction, but its projection to the
-field-valued rational $r$-matrix has no polar part. Hence
-$r(z)=0$.
+and thereby lowers the pole order by one in the collision-residue
+normalization used here. Thus an OPE term $a_n(z-w)^{-n}$
+contributes $a_n(z-w)^{-(n-1)}$ to the polar trace-form residue. For
+the free fermion the only singular coefficient is the scalar identity
+$a_1=\mathbf 1$, so the extracted term is regular and scalar. The
+scalar contraction survives in the ordered bar differential before
+reduction, but its projection to the field-valued rational $r$-matrix
+has no polar part. Hence $r(z)=0$.
 
 Compare with the Heisenberg, where the double-pole OPE
 $\alpha(z)\alpha(w) \sim k/(z-w)^2$ gives
-$r(z) = k/z$ (a simple pole after $d\log$ absorption).
+$r_{\mathcal H}(z)=k\Omega_{\mathcal H}/z$ (a simple tensor pole after
+$d\log$ absorption, with rank-one coefficient $k/z$).
 The one-step pole reduction works uniformly: double pole
 $\to$ simple pole (Heisenberg), simple pole $\to$ regular (fermion).
 \end{proof}
@@ -1328,7 +1345,14 @@ The FM boundary $\partial\overline{C}_n(X)$ decomposes into divisors $D_{I,J}$ i
 where $\sigma_{I,J}$ is the shuffle sending $(1,\ldots,n)$ to $(i_1,\ldots,i_{|I|},j_1,\ldots,j_{|J|})$, and $\alpha_I = \bigotimes_{i\in I}\psi_i \otimes \omega|_{C_{|I|}(X)}$ uses restriction of the log-form $\omega$ to the appropriate stratum. Summing over all bi-partitions gives the formula stated in (1).
 
 \noindent\emph{Coassociativity.}
-Coassociativity $(\Delta \otimes \mathrm{id}) \circ \Delta = (\mathrm{id} \otimes \Delta) \circ \Delta$ follows from the associativity of the FM stratification: the codimension-2 boundary of $\overline{C}_n(X)$ is covered by iterated $D_{I,J}$-strata in two orderings, and the two resulting expressions for $(\Delta \otimes \mathrm{id}) \circ \Delta(\alpha)$ agree by the Arnold relation on orientation forms (Appendix~\ref{app:arnold-relations}).
+Coassociativity $(\Delta \otimes \mathrm{id}) \circ \Delta
+= (\mathrm{id} \otimes \Delta) \circ \Delta$ follows from the
+associativity of the FM stratification: the codimension-$2$ boundary
+of $\overline{C}_n(X)$ is covered by iterated $D_{I,J}$-strata in two
+orderings, and the two resulting expressions for
+$(\Delta \otimes \mathrm{id}) \circ \Delta(\alpha)$ agree by the
+Arnold relation on orientation forms
+(Theorem~\ref{thm:arnold-relations-appendix}).
 
 \noindent\emph{Counit.}
 The counit is the standard counit of the cofree conilpotent coalgebra:
@@ -1339,7 +1363,17 @@ $(\epsilon\otimes\mathrm{id})\circ\Delta
 $B^{\mathrm{ch}}(\mathcal{F})$ by the deconcatenation formula.
 
 \noindent\emph{Chain map property.}
-The differential $d_{\bar{B}}$ and the comultiplication $\Delta$ are compatible (i.e.\ $\Delta$ is a chain map $(\bar{B}^{\mathrm{ch}}(\mathcal{F}), d_{\bar{B}}) \to (\bar{B}^{\mathrm{ch}}(\mathcal{F}) \otimes \bar{B}^{\mathrm{ch}}(\mathcal{F}), d \otimes 1 + 1 \otimes d)$) by the Leibniz rule for the bar differential on FM strata: the differential and comultiplication both arise from boundary residues, and the Stokes theorem $\partial \circ \partial = 0$ ensures they commute up to sign in the standard way for dg coalgebras (see Appendix~\ref{app:arnold-relations} for the relevant Arnold relations).
+The differential $d_{\bar{B}}$ and the comultiplication $\Delta$ are
+compatible (i.e.\ $\Delta$ is a chain map
+$(\bar{B}^{\mathrm{ch}}(\mathcal{F}), d_{\bar{B}}) \to
+(\bar{B}^{\mathrm{ch}}(\mathcal{F}) \otimes
+\bar{B}^{\mathrm{ch}}(\mathcal{F}), d \otimes 1 + 1 \otimes d)$) by
+the Leibniz rule for the bar differential on FM strata: the
+differential and comultiplication both arise from boundary residues,
+and Stokes' theorem $\partial \circ \partial = 0$ ensures they commute
+up to sign in the standard way for dg coalgebras, with the relevant
+Arnold relations supplied by
+Theorem~\ref{thm:arnold-relations-appendix}.
 
 \noindent\emph{Graded symmetry.}
 The sign formula in (3) encodes the Koszul sign rule for the fermion system: swapping $\psi_i$ and $\psi_j$ in the tensor product introduces a sign $(-1)^{|\psi_i||\psi_j|}$. Since each fermion has odd degree, this produces $(-1)^1 = -1$ for each transposition, so reversing all $n$ factors gives $(-1)^{n(n-1)/2}$, matching the stated formula.
@@ -1808,8 +1842,8 @@ Theorem~\ref{thm:heisenberg-higher-genus}.
 \end{theorem}
 
 \begin{proof}
-The degree-by-degree computation is carried out in
-Chapter~\ref{ch:heisenberg-frame}, \S\ref{sec:frame-bar-deg1}--\S\ref{sec:frame-bar-all}:
+The degree-by-degree computation is the frame calculation of
+Theorem~\ref{thm:frame-heisenberg-bar}:
 the double-pole-only OPE kills the degree-$1$ differential,
 the degree-$2$ triple-collision residue produces the level central
 class $\omega_{\mathrm{cen},k}$, and degrees $\geq 3$ vanish by
@@ -1899,10 +1933,10 @@ carries the opposite scalar:
 The OPE $\alpha(z)\alpha(w)=k(z-w)^{-2}$ has no simple-pole
 field-valued bracket, so the bracket part of the bar differential
 vanishes on degree~$1$. The double pole is not discarded: with the
-trace-form collision convention of
-Remark~\ref{rem:kappa-vir-is-c-over-2}, it produces the ordered
-residue $r_{\cH_k}^{\mathrm{coll}}(z)=k/z$ and the central
-two-cochain $\omega_{\mathrm{cen}}$.
+trace-form collision convention, the Heisenberg scalar is the level
+$k$, not the Virasoro scalar \(c/2\). It produces the ordered residue
+$r_{\cH_k}^{\mathrm{coll}}(z)=k/z$ and the central two-cochain
+$\omega_{\mathrm{cen}}$.
 
 At triple collision the two boundary orders give opposite Arnold
 orientation signs and leave the scalar central class:
@@ -2464,7 +2498,7 @@ Since $\mathfrak{h}_k$ is abelian, the Chevalley--Eilenberg complex is formal: $
 
 \medskip
 \emph{Proof~2: Explicit bar complex computation}
-(Chapter~\ref{ch:heisenberg-frame}, \S\ref{sec:frame-bar-deg1}--\S\ref{sec:frame-bar-all}).
+(Theorem~\ref{thm:frame-heisenberg-bar}).
 The double-pole-only OPE makes the coproduct on $\bar{B}^{\mathrm{ch}}(\mathcal{H}_k)$ cocommutative (the residue $\mathrm{Res}_{z_i = z_j}[\omega/(z_i - z_j)^2]$ is symmetric under $z_i \leftrightarrow z_j$). By Milnor--Moore, a conilpotent cocommutative coalgebra is a coLie coalgebra, whose cobar is $\mathrm{Sym}^{\mathrm{ch}}(V^*)$.
 
 The level $k$ determines the curvature of the Koszul dual:
@@ -2603,9 +2637,9 @@ Koszul pair $(\mathcal{H}_k,\,
 
 \subsection{Heisenberg module Koszul duality}
 
-\begin{definition}[Fock module]\label{def:fock-module}
+\begin{definition}[Fock module; \ClaimStatusDefinitional]\label{def:fock-module}
 \index{Fock module|textbf}
-For $\lambda \in \mathbb{C}$, the \emph{Fock module}
+For $\lambda \in \mathbb{C}$ and nonzero level~$k$, the \emph{Fock module}
 $F_\lambda$ over $\mathcal{H}_k$ is generated by a vector
 $|\lambda\rangle$ with:
 \begin{itemize}
@@ -2613,12 +2647,29 @@ $|\lambda\rangle$ with:
  $J_n|\lambda\rangle = 0$ for $n > 0$;
 \item $F_\lambda \cong \mathbb{C}[J_{-1}, J_{-2}, \ldots]$ as a
  vector space, with character
- $\operatorname{ch}(F_\lambda) = q^{\lambda^2/2k}\,
- \prod_{n \geq 1}(1-q^n)^{-1}$.
+  $\operatorname{ch}(F_\lambda) = q^{\lambda^2/2k}\,
+  \prod_{n \geq 1}(1-q^n)^{-1}$.
 \end{itemize}
-$F_\lambda$ is simple for all $\lambda \in \mathbb{C}$
-(no singular vectors exist because $\mathcal{H}_k$ is abelian).
 \end{definition}
+
+\begin{lemma}[Fock module simplicity; \ClaimStatusProvedHere]
+\label{lem:fock-module-simplicity}
+For nonzero level~$k$, the Heisenberg Fock module $F_\lambda$ is simple
+for every $\lambda\in\mathbb C$.
+\end{lemma}
+
+\begin{proof}
+Use the oscillator relations
+$[J_n,J_m]=n k\,\delta_{n+m,0}$ with $k\neq0$.
+Let $0\neq v\in F_\lambda$ and write it in PBW monomials in the negative
+modes $J_{-n}$. Choose a highest monomial in a lexicographic order
+refining total oscillator degree. Applying the matching product of
+positive modes gives a nonzero scalar multiple of $|\lambda\rangle$ plus
+terms of lower order; descending induction puts $|\lambda\rangle$ in
+the submodule generated by~$v$. The negative modes generate all of
+$F_\lambda$ from $|\lambda\rangle$, so any nonzero submodule is the
+whole module.
+\end{proof}
 
 \begin{proposition}[Fock module bar resolution; \ClaimStatusProvedHere]
 \label{prop:fock-bar-resolution}
@@ -4225,9 +4276,9 @@ At $n = 2$, the linking sphere $S^1$ is the contour
 $|z_i - z_j| = \varepsilon$, the propagator
 $G = d\log(z_i - z_j)$ is the holomorphic $1$-form, and the
 residue is the classical OPE extraction. At $n = 3$, the linking
-sphere $S^2$ computes linking numbers and the bar differential
-encodes the perturbative Chern--Simons invariants
-(Example~\ref{ex:n3-propagator}).
+sphere $S^2$ computes linking numbers, with Green's two-form
+$\frac{1}{4\pi}\epsilon_{abc}r^a\,dr^b\wedge dr^c/|r|^3$, and the
+bar differential encodes the perturbative Chern--Simons invariants.
 
 The identity $d^2 = 0$ at general~$n$ follows from
 Theorem~\ref{thm:e2-d-squared} (proved there for $n = 2$ via
@@ -4375,8 +4426,8 @@ fermionic generator of conformal weight~$\frac{1}{2}$):
 \end{equation}
 where $p(m)$ is the number of partitions of~$m$
 ($p(0) = 1$, $p(1) = 1$, $p(2) = 2$, $p(3) = 3$, $p(4) = 5$).
-This gives the Master Table sequence $1, 1, 2, 3, 5$
-(Table~\ref{tab:master-invariants}) at the chain-counting level.
+This gives the master-census sequence $1, 1, 2, 3, 5$ at the
+chain-counting level.
 The identity~\eqref{eq:fermion-bar-partitions} follows from
 $\bar{B}^n(\psi) \cong \Lambda^n_{\mathrm{co}}(\psi)$
 (cofree cocommutative coalgebra on the odd mode system):
@@ -4488,15 +4539,16 @@ For the full Koszul duality table (including all entries formerly listed here), 
 \index{free fermion!genus expansion|textbf}
 \index{spin structure!genus expansion}
 
-The free fermion $\cF$ ($c = 1/2$, $\kappa = 1/4$) is
+The free fermion $\cF$ ($c = 1/2$, $\kappa(\cF)=1/4$) is
 an example where spin structures enter the genus
 expansion. The Heisenberg genus expansion
 (Chapter~\ref{ch:heisenberg-frame}) involves determinants of
 the $\bar\partial$ operator on the trivial line bundle; the free
 fermion replaces determinants with Pfaffians and theta functions
 with theta constants. The shadow obstruction tower prediction
-$F_g = \kappa \cdot \lambda_g^{\mathrm{FP}} = \frac{1}{4}
-\lambda_g^{\mathrm{FP}}$ remains valid
+$F_g(\cF)=F_g^{\mathrm{sc}}(\cF)
+=\kappa(\cF) \cdot \lambda_g^{\mathrm{FP}}
+= \frac{1}{4}\lambda_g^{\mathrm{FP}}$ remains valid
 (Theorem~\ref{thm:genus-universality}), but the partition
 function from which $F_g$ is extracted has a richer structure
 than the Heisenberg case: it depends on a choice of spin
@@ -4744,8 +4796,8 @@ F_1(\cF) = \frac{\kappa(\cF)}{24}
 = \frac{1/4}{24} = \frac{1}{96}.
 \end{equation}
 This matches the shadow obstruction tower prediction
-$F_1 = \kappa \cdot \lambda_1^{\mathrm{FP}}
-= \kappa/24$
+$F_1(\cF) = \kappa(\cF) \cdot \lambda_1^{\mathrm{FP}}
+= \kappa(\cF)/24$
 \textup{(}Theorem~\textup{\ref{thm:genus-universality})}.
 \end{theorem}
 
@@ -4760,7 +4812,8 @@ free energy is extracted from the effective central charge:
 \[
 c_{\mathrm{eff}} = c - 24 h_{\min} = \frac{1}{2},
 \]
-giving $F_1 = c_{\mathrm{eff}}/48 = 1/96 = \kappa/24$.
+giving
+$F_1(\cF)=c_{\mathrm{eff}}/48=1/96=\kappa(\cF)/24$.
 Alternatively, the result follows from the genus universality
 theorem applied to $\kappa(\cF) = c/2 = 1/4$:
 \[
@@ -4774,9 +4827,11 @@ F_1(\cF) = \kappa(\cF) \cdot \frac{1}{24}
 \label{comp:fermion-genus-expansion}
 \index{free fermion!genus expansion table}
 By Theorem~\textup{\ref{thm:genus-universality}} with
-$\kappa(\cF) = 1/4$, the free energy at genus $g \geq 1$ is:
+$\kappa(\cF) = 1/4$, the scalar/full free energy at genus $g \geq 1$
+is:
 \begin{equation}\label{eq:fermion-Fg-formula}
-F_g(\cF) = \frac{1}{4} \cdot
+F_g(\cF)=F_g^{\mathrm{sc}}(\cF)
+= \frac{1}{4} \cdot
 \frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!}.
 \end{equation}
 Explicit values:
@@ -4796,11 +4851,14 @@ $5$ & $511/98099527680$ & $5.21 \times 10^{-9}$ \\
 \end{center}
 The ratio to the Heisenberg values
 \textup{(}Table~\textup{\ref{tab:free-energy-values})} is
-$F_g(\cF)/F_g(\cH_1) = 1/4$ at every genus, confirming
+$F_g(\cF)/F_g(\cH_1)
+=F_g^{\mathrm{sc}}(\cF)/F_g^{\mathrm{sc}}(\cH_1)
+=1/4$ at every genus, confirming
 $\kappa(\cF)/\kappa(\cH_1) = (1/4)/1 = 1/4$.
 The generating function is:
 \begin{equation}\label{eq:fermion-GF}
 \sum_{g=1}^\infty F_g(\cF)\,\hbar^{2g}
+=\sum_{g=1}^\infty F_g^{\mathrm{sc}}(\cF)\,\hbar^{2g}
 = \frac{1}{4\hbar^2}\bigl(\hat{A}(i\hbar) - 1\bigr)
 = \frac{1}{4}\Bigl(\frac{1}{24}
 + \frac{7}{5760}\hbar^2
@@ -4900,16 +4958,17 @@ $\kappa$}
 The spin structure $\sigma$ enters the genus-$g$ partition
 function $Z_g(\cF, \sigma)$ through the Szeg\H{o} kernel, but
 the modular characteristic $\kappa(\cF) = 1/4$ and the
-obstruction class $\mathrm{obs}_g = \frac{1}{4}\lambda_g$
+obstruction class
+\(\mathrm{obs}_g(\cF)=\kappa(\cF)\lambda_g=\frac14\lambda_g\)
 \textup{(}UNIFORM-WEIGHT\textup{}) are
-spin-structure-independent. The reason: $\kappa$ is determined
+spin-structure-independent. The reason: $\kappa(\cF)$ is determined
 by the \emph{local} OPE data (the quartic-pole coefficient of
 $T(z)T(w)$, which is $c/2$), while spin structures are
 \emph{global} data on $\Sigma_g$. In the language of the
-shadow obstruction tower, $\kappa$ is a genus-$0$ invariant
+shadow obstruction tower, $\kappa(\cF)$ is a genus-$0$ invariant
 (Definition~\ref{def:modular-characteristic-package}) that determines
 the genus-$g$ obstruction class via the universal formula
-$\mathrm{obs}_g = \kappa \cdot \lambda_g$
+\(\mathrm{obs}_g(\cF)=\kappa(\cF)\lambda_g\)
 \textup{(}UNIFORM-WEIGHT\textup{)}.
 \end{remark}
 
@@ -5114,21 +5173,23 @@ Ising model & $M(3,4)$ at $c = 1/2$ & N/A \\
 \index{free fermion!$\hat{A}$-genus}
 Both Gaussian archetypes (the free fermion and the Heisenberg)
 produce the same $\hat{A}$-genus generating function,
-differing only in the overall coefficient $\kappa$.
+differing only in the overall scalar modular characteristic.
 By the genus universality theorem
 (Theorem~\ref{thm:genus-universality}), class~G
 is characterized by $r_{\max} = 2$: all higher
 shadow invariants vanish and the genus expansion is
 controlled by the scalar modular characteristic alone.
 The free fermion confirms this at the non-trivial
-value $\kappa = 1/4$ (non-integer, unlike the Heisenberg
+value $\kappa(\cF)=1/4$ (non-integer, unlike the Heisenberg
 where $\kappa$ is typically an integer). The
 $\hat{A}$-genus structure is insensitive to statistics
 (bosonic vs fermionic), spin structure dependence, and the
 distinction between determinants and Pfaffians: these are
 features of the partition function $Z_g$, not of the
-free energy $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$
-\textup{(}UNIFORM-WEIGHT\textup{)}.
+free energy
+$F_g(\cF)=F_g^{\mathrm{sc}}(\cF)
+=\kappa(\cF) \cdot \lambda_g^{\mathrm{FP}}$
+\textup{(}UNIFORM-WEIGHT, class~G exact lane\textup{)}.
 \end{remark}
 
 
@@ -6424,8 +6485,9 @@ D (modular char.) &
  $\kappa = 6\lambda^2{-}6\lambda{+}1$;\; $= 1$ at $\lambda=0,1$;\; $= -\tfrac{1}{2}$ at $\lambda=\tfrac{1}{2}$ \\
 H (chiral Hochschild) &
  Degree-preserving sub-MC &
- $\ChirHoch^n(\beta\gamma_\lambda)=0$ for
- $n\notin\{0,1,2\}$ \\
+ $\ChirHoch^0(\beta\gamma_\lambda)=\mathbb{C}$,\;
+ $\ChirHoch^1(\beta\gamma_\lambda)=0$,\;
+ $\ChirHoch^2(\beta\gamma_\lambda)=\mathbb{C}$ \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -6442,6 +6504,8 @@ Mumford connection) is in
 \S\ref{sec:betagamma-shadow-tower-free}.
 The two-generator free-field systems ($\beta\gamma$ and $bc$)
 are the free-field archetypes outside the Gaussian class.
+Their conformal-weight line is a stress-tensor/shadow parameter, not
+a curve-level $\ChirHoch^1$ class.
 The infinite sequence in
 Remark~\ref{rem:betagamma-bar-cohomology-gf} is bar cohomology, not
 chiral Hochschild cohomology; Theorem~H concerns the latter.
@@ -6481,8 +6545,9 @@ D (modular char.) &
  $\kappa(bc) = -\kappa(\beta\gamma) = -(6\lambda^2{-}6\lambda{+}1)$ \\
 H (chiral Hochschild) &
  Degree-preserving sub-MC &
- $\ChirHoch^n(bc_\lambda)=0$ for
- $n\notin\{0,1,2\}$ \\
+ $\ChirHoch^0(bc_\lambda)=\mathbb{C}$,\;
+ $\ChirHoch^1(bc_\lambda)=0$,\;
+ $\ChirHoch^2(bc_\lambda)=\mathbb{C}$ \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -6499,6 +6564,8 @@ The ordered-to-symmetric averaging step for Theorem~H is the
 Hochschild averaging of
 Corollary~\ref{cor:hochschild-averaging-symmetric}; it does not
 identify bar cohomology growth with Hochschild amplitude.
+Ghost-number rescaling is zero-mode gauge, and the spin line changes
+the conformal vector rather than the curve-level chiral product.
 At the bosonic string point $\lambda = 2$:
 $\kappa(\mathrm{matter}) + \kappa(\mathrm{ghost}) = 13 + (-13) = 0$ \textup{(}free-field string sector\textup{)},
 the anomaly cancellation of the $c = 26$ string.

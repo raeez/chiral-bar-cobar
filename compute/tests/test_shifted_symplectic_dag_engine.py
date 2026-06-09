@@ -31,6 +31,8 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'lib'))
 
 import shifted_symplectic_dag_engine as dag_engine
 from shifted_symplectic_dag_engine import (
+    C2_LAGRANGIAN_HYPOTHESES,
+    C2_LAGRANGIAN_CONDITIONAL_STATUS,
     # Typed object conventions
     TYPED_KOSZUL_OBJECTS, FORBIDDEN_KOSZUL_COLLAPSES,
     koszul_object_conventions,
@@ -285,11 +287,24 @@ class TestShiftedSymplectic:
 class TestLagrangian:
     """Verify Lagrangian structure from Koszul pair."""
 
-    def test_all_standard_are_lagrangian(self):
-        """All standard families give Lagrangian subspaces."""
+    def test_all_standard_are_scalar_indicators_by_default(self):
+        """All standard families give scalar indicators, not default C2 proofs."""
         for fam in STANDARD_FAMILIES.values():
             lagr = lagrangian_from_koszul_pair(fam)
-            assert lagr.is_lagrangian
+            assert lagr.scalar_complementarity_indicator
+            assert not lagr.is_lagrangian
+            assert lagr.lagrangian_upgrade_status == C2_LAGRANGIAN_CONDITIONAL_STATUS
+            assert "ambient_BV_QME_input" in lagr.c2_missing_hypotheses
+
+    def test_complete_c2_package_sets_lagrangian_flag(self):
+        """The C2 flag is true only when the full package is supplied."""
+        fam = heisenberg()
+        lagr = lagrangian_from_koszul_pair(
+            fam, c2_hypotheses=C2_LAGRANGIAN_HYPOTHESES
+        )
+        assert lagr.scalar_complementarity_indicator
+        assert lagr.is_lagrangian
+        assert not lagr.c2_missing_hypotheses
 
     def test_heisenberg_theta_primitive(self):
         """Heisenberg: theta_2 = k * (-k) = -k^2."""
@@ -356,10 +371,22 @@ class TestLagrangian:
         """Cross-family complementarity check (AP24)."""
         results = verify_lagrangian_complementarity_all_families()
         for r in results:
-            assert r['is_lagrangian']
+            assert not r['is_lagrangian']
+            assert r['scalar_complementarity_indicator']
+            assert r['lagrangian_upgrade_status'] == C2_LAGRANGIAN_CONDITIONAL_STATUS
             # Check the complementarity sum is correct
             expected_sum = r['kappa'] + r['kappa_dual']
             assert r['sum'] == expected_sum
+
+    def test_complementarity_all_families_with_c2_package(self):
+        """Supplying C2 hypotheses upgrades the certification flag."""
+        results = verify_lagrangian_complementarity_all_families(
+            c2_hypotheses=C2_LAGRANGIAN_HYPOTHESES
+        )
+        for r in results:
+            assert r['is_lagrangian']
+            assert r['scalar_complementarity_indicator']
+            assert not r['c2_missing_hypotheses']
 
 
 # ============================================================================
@@ -751,7 +778,9 @@ class TestFullPackage:
         pkg = full_dag_package(fam, genus=1)
         assert pkg['consistency']['all_minus_1_shifted']
         assert pkg['consistency']['poisson_degree_plus_1']
-        assert pkg['consistency']['lagrangian_is_lagrangian']
+        assert pkg['consistency']['lagrangian_scalar_indicator']
+        assert not pkg['consistency']['lagrangian_c2_verified']
+        assert pkg['consistency']['lagrangian_c2_status_conditional']
         assert pkg['consistency']['aksz_shift_minus_3']
         assert pkg['consistency']['dcrit_is_symplectic']
         assert pkg['consistency']['dcrit_bar_agree']
@@ -760,22 +789,52 @@ class TestFullPackage:
         """Full DAG package for Virasoro is consistent."""
         fam = virasoro(1)
         pkg = full_dag_package(fam, genus=1)
-        for key, val in pkg['consistency'].items():
+        for key in [
+            'all_minus_1_shifted',
+            'poisson_degree_plus_1',
+            'lagrangian_scalar_indicator',
+            'lagrangian_c2_status_conditional',
+            'aksz_shift_minus_3',
+            'dcrit_is_symplectic',
+            'dcrit_bar_agree',
+        ]:
+            val = pkg['consistency'][key]
             assert val, f"Consistency check failed: {key}"
+        assert not pkg['consistency']['lagrangian_c2_verified']
 
     def test_full_package_affine(self):
         """Full DAG package for affine sl_2 is consistent."""
         fam = affine_sl(2, 1)
         pkg = full_dag_package(fam, genus=1)
-        for key, val in pkg['consistency'].items():
+        for key in [
+            'all_minus_1_shifted',
+            'poisson_degree_plus_1',
+            'lagrangian_scalar_indicator',
+            'lagrangian_c2_status_conditional',
+            'aksz_shift_minus_3',
+            'dcrit_is_symplectic',
+            'dcrit_bar_agree',
+        ]:
+            val = pkg['consistency'][key]
             assert val, f"Consistency check failed: {key}"
+        assert not pkg['consistency']['lagrangian_c2_verified']
 
     def test_full_package_all_families(self):
         """Full DAG package for all standard families is consistent."""
         for name, fam in STANDARD_FAMILIES.items():
             pkg = full_dag_package(fam, genus=1)
-            for key, val in pkg['consistency'].items():
+            for key in [
+                'all_minus_1_shifted',
+                'poisson_degree_plus_1',
+                'lagrangian_scalar_indicator',
+                'lagrangian_c2_status_conditional',
+                'aksz_shift_minus_3',
+                'dcrit_is_symplectic',
+                'dcrit_bar_agree',
+            ]:
+                val = pkg['consistency'][key]
                 assert val, f"{name}: consistency check failed: {key}"
+            assert not pkg['consistency']['lagrangian_c2_verified']
 
 
 # ============================================================================

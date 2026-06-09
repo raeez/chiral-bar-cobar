@@ -124,6 +124,8 @@ equations require, no more.
 \subsection{The Arnold connection}
 \label{ssec:climax-platonic-arnold}
 
+\begin{lemma}[Arnold three-term form identity; \ClaimStatusProvedElsewhere]
+\label{lem:arnold-three-term-forms-platonic}
 For the Arnold part of the climax, $\Conf$ denotes an affine
 genus-$0$ coordinate screen, equivalently a formal disk inside
 $\mathbb{P}^1$, with coordinate~$z$. Let
@@ -146,6 +148,13 @@ Arnold's three-term identity reads
  \quad\text{in }\Omega^{2}\bigl(\Conf_3^{\mathrm{ord}}(\Conf)\bigr),
 \end{equation}
 for every triple of distinct indices.
+\end{lemma}
+
+\begin{proof}[Attribution]
+This is the logarithmic-form relation in Arnold's braid-arrangement
+calculation; the cohomological version and the Arnold--Orlik--Solomon
+attribution are recalled immediately below.
+\end{proof}
 
 \begin{theorem}[Arnold 1969]
 \label{thm:arnold-cohomology-platonic}
@@ -174,6 +183,8 @@ corrections are the genus split of
 Proposition~\ref{prop:arnold-higher-genus}.
 \end{remark}
 
+\begin{definition}[Infinitesimal braid Lie algebra; \ClaimStatusDefinitional]
+\label{def:infinitesimal-braid-lie-algebra-platonic}
 The infinitesimal braid Lie algebra $\mathfrak{t}_n$ is the free
 $\mathbb{Z}$-graded Lie algebra on generators
 $t_{ij} = t_{ji}$ for $1 \leq i \neq j \leq n$ modulo the
@@ -184,8 +195,9 @@ infinitesimal braid relations
  \qquad
  [t_{ij},\, t_{ik} + t_{jk}] = 0 \quad \text{for distinct } i,j,k.
 \end{equation}
+\end{definition}
 
-\begin{definition}[Arnold's universal KZ connection]
+\begin{definition}[Arnold's universal KZ connection; \ClaimStatusDefinitional]
 \label{def:arnold-universal-kz-connection-platonic}
 \emph{Arnold's universal KZ connection} on the trivial
 $U(\mathfrak{t}_n)$\nobreakdash-bundle over $\Confnord(\Conf)$ is
@@ -258,7 +270,7 @@ $(V(A),\nabla(A))$ in this arena and is the geometric incarnation of
 the question the pullback identity answers: does the bar differential
 $\dbar$ equal $\KZ^{*}(\nabla_{\Arn})$?
 
-\begin{definition}[The arena $\ConnConf$]
+\begin{definition}[The arena $\ConnConf$; \ClaimStatusDefinitional]
 \label{def:connconf-platonic}
 The category $\ConnConf = \ConnConf_{\Conf}$ has objects pairs
 $(V, \nabla)$ where:
@@ -287,7 +299,7 @@ morphism and $\phi$ identifying $f^{*}\nabla'$ with $\nabla$ modulo
 logarithmic gauge.
 \end{definition}
 
-\begin{remark}[Initial object]
+\begin{remark}[Initial object; \ClaimStatusProvedHere]
 \label{rem:connconf-initial-platonic}
 The Arnold pair
 $(U(\mathfrak{t}_\bullet), \nabla_{\Arn})$ from
@@ -295,11 +307,26 @@ Definition~\ref{def:arnold-universal-kz-connection-platonic} is the
 initial object of $\ConnConf$, in the sense that for any
 $(V, \nabla) \in \ConnConf$ the assignment
 $t_{ij} \mapsto r^{(ij)}(z_{ij}) \cdot z_{ij}$ extends uniquely to a
-ring morphism $U(\mathfrak{t}_n) \to V_n$ realising $\nabla$ as the
-pullback of $\nabla_{\Arn}$.
+ring morphism $U(\mathfrak{t}_n) \to \End(V_n)$ realising $\nabla$ as
+the pullback of $\nabla_{\Arn}$.
 \end{remark}
 
-\begin{construction}[The KZ functor $\KZ$]
+\begin{proof}
+For an object $(V,\nabla)\in\ConnConf$, the universal KZ form of
+Definition~\ref{def:connconf-platonic} supplies the coefficients
+$r^{(ij)}(z_{ij})$. Multiplying by $z_{ij}$ gives endomorphisms
+satisfying the infinitesimal braid relations of
+Definition~\ref{def:infinitesimal-braid-lie-algebra-platonic}, because
+flatness of $\nabla$ is exactly the Arnold flatness condition of
+Proposition~\ref{prop:arnold-flatness-platonic}. The presentation of
+$\mathfrak{t}_n$ therefore gives a unique Lie-algebra map
+$\mathfrak{t}_n\to \End(V_n)$, and the universal property of the
+enveloping algebra extends it uniquely to
+$U(\mathfrak{t}_n)\to \End(V_n)$. Pulling back
+\eqref{eq:nabla-arnold} along this map gives the connection~$\nabla$.
+\end{proof}
+
+\begin{construction}[The KZ functor $\KZ$; \ClaimStatusDefinitional]
 \label{constr:kz-functor-platonic}
 For $A$ a chirally Koszul $E_\infty$\nobreakdash-chiral algebra on
 $\Conf$, the KZ functor produces $\KZ(A) = (\BarOrd(A), \nabla(A))
@@ -338,7 +365,7 @@ factor was absorbed into step~(K3) via the trade $\dlog(z_i - z_j) =
 (z_i - z_j)^{-1}\,d(z_i - z_j)$, which exchanges one unit of OPE
 pole for one unit of $(z_i - z_j)^{-1}$.
 
-\begin{example}[Affine Kac--Moody, both conventions]
+\begin{computation}[Affine Kac--Moody, both conventions; \ClaimStatusProvedHere]
 \label{ex:kz-of-vk-g-platonic}
 For $A = V^{k}(\fg)$ the universal affine vertex algebra, the OPE
 residues are $\Res^{(2)}(J^a, J^b) = k\,\delta^{ab}$ and
@@ -364,9 +391,22 @@ represent the same $r$\nobreakdash-matrix up to normalisation of the
 bilinear form $\Omega$. The KZ representative satisfies
 $r|_{k=0} = \Omega/(\hv\,z) \neq 0$ for non-abelian $\fg$ (the Lie
 bracket persists), and $r|_{k=-\hv}$ diverges. The trace-form
-representative is finite at both endpoints; the KZ representative
-diverges only at $k = -\hv$.
-\end{example}
+ representative is finite at both endpoints; the KZ representative
+ diverges only at $k = -\hv$.
+\end{computation}
+
+\begin{proof}[Computation]
+The affine current OPE is
+$J^{a}(z)J^{b}(w)\sim k\delta^{ab}(z-w)^{-2}
++f^{ab}{}_{c}J^{c}(w)(z-w)^{-1}$.
+Step~\textup{(K3)} of Construction~\ref{constr:kz-functor-platonic}
+absorbs one logarithmic differential into the pole order, so the
+second-order trace term contributes
+$k\Omega_{ij}/z$ to the trace-form representative. Rescaling the
+invariant form from trace normalisation to KZ normalisation by
+$1/(k(k+\hv))$ gives
+$\Omega_{ij}/((k+\hv)z)$.
+\end{proof}
 
 \subsection{Quasi-free BRST resolution and ghost charge}
 \label{ssec:climax-platonic-brst}
@@ -430,7 +470,7 @@ of one universal flat connection, Arnold's $\nabla_{\Arn}$: no new
 data is generated by the chiral bar beyond what the OPE already
 encodes.
 
-\begin{definition}[The pullback identity, structural form]
+\begin{definition}[The pullback identity, structural form; \ClaimStatusDefinitional]
 \label{def:pullback-identity-structural-platonic}
 The \emph{pullback identity} for $A \in \ChirAlg^{E_\infty}$ at
 genus zero is the equation on the Arnold-local subcategory of
@@ -534,9 +574,11 @@ functoriality is a separate conjectural problem.
  at $K^\kappa=8$
  (Convention~\ref{conv:theorem-c-bucket}); Theorem~D as the
  all-weight formula
- $F_g=\kappa\lambda_g^{\mathrm{FP}}+\delta F_g^{\mathrm{cross}}$
+ \(F_g(\cA)=F_g^{\mathrm{sc}}(\cA)
+ +\delta F_g^{\mathrm{cross}}(\cA)\),
+ \(F_g^{\mathrm{sc}}(\cA)=\kappa(\cA)\lambda_g^{\mathrm{FP}}\),
 with the exact scalar identity
-$\mathrm{obs}_g=\kappa\lambda_g$ only on the uniform-weight surface;
+\(\mathrm{obs}_g(\cA)=\kappa(\cA)\lambda_g\) only on the uniform-weight surface;
  and Theorem~H as the chiral Hochschild theorem, not a topological or
  categorical Hochschild statement, on its proved Koszul/generic
  surface. No broader assertion than those native theorem surfaces is
@@ -637,16 +679,37 @@ and their wedge contribution to $\nabla(A)^{2}$ vanishes by~\eqref{eq:inf-braid-
 At every codimension-two stratum $\Delta_{ij} \cap \Delta_{ik}$ with
 shared index $i$, the leading-pole contribution to $\nabla(A)^{2}$
 is the chain-level incarnation of Arnold's three-term identity
-\eqref{eq:arnold-three-term}; the OPE residue at the triple collision
-is the chiral CYBE
+\eqref{eq:arnold-three-term}; equivalently, the OPE residue at the
+triple collision satisfies the chiral CYBE recorded in
+Lemma~\ref{lem:triple-collision-cybe-platonic}. This is verified by
+directly matching the wedge-product expansion to the bar-differential
+expansion at the codimension-two FM stratum.
+\end{proof}
+
+\begin{lemma}[Triple-collision chiral CYBE; \ClaimStatusProvedHere]
+\label{lem:triple-collision-cybe-platonic}
+At a shared-index codimension-two stratum
+$\Delta_{ij}\cap\Delta_{ik}$, the OPE residues extracted by
+Construction~\ref{constr:kz-functor-platonic} satisfy
 \begin{equation}
 \label{eq:cybe-on-r}
  [r^{(ij)},\, r^{(ik)} + r^{(jk)}]
  \;+\; [r^{(ik)},\, r^{(jk)}] \;=\; 0,
 \end{equation}
-verified in Lemma~\ref{lem:fm-residue-dbar-platonic} by directly
-matching the wedge-product expansion to the bar-differential expansion
-at the codimension-two FM stratum.
+for every triple of distinct indices.
+\end{lemma}
+
+\begin{proof}
+By Lemma~\ref{lem:fm-residue-dbar-platonic}, the shared-index
+codimension-two contribution to $\dbar^{2}$ is the OPE-residue
+coefficient at the corresponding triple collision. Pulling the Arnold
+connection back by Construction~\ref{constr:kz-functor-platonic}
+identifies the same coefficient with the shared-index part of
+$\nabla(A)^{2}$. Arnold's three-term form identity
+\eqref{eq:arnold-three-term} and the infinitesimal braid relation
+\eqref{eq:inf-braid-relations} give exactly the displayed bracket
+combination. Hence the coefficient vanishes precisely as
+\eqref{eq:cybe-on-r}.
 \end{proof}
 
 \begin{remark}[Closure of Path~A]
@@ -780,7 +843,7 @@ $\rho_n^{U_q(\fg)}$ at $q = \exp(2\pi i/(k+\hv))$:
 \end{corollary}
 
 \begin{proof}
-By Example~\ref{ex:kz-of-vk-g-platonic}, the connection coefficient
+By Computation~\ref{ex:kz-of-vk-g-platonic}, the connection coefficient
 of $\KZ(V^{k}(\fg))$ in KZ normalisation is $\Omega_{ij}/((k+\hv)\,z_{ij})$;
 hence $\nabla(V^{k}(\fg))$ is the standard KZ connection. By
 Theorem~\ref{thm:kohno-monodromy-platonic}, its monodromy on
@@ -1250,15 +1313,19 @@ $\overline{\mathcal{A}_2}\setminus H_1$.
 \textup{(All $g \geq 1$ on the proved all-weight surface; exact scalar
 identity only on the uniform-weight surface.)}
 Theorem~D is not merely the scalar formula
-$\mathrm{obs}_g=\kappa\lambda_g$.
+\(\mathrm{obs}_g(\cA)=\kappa(\cA)\lambda_g\).
 Its strongest honest form is the all-weight theorem
 \[
  F_g(\cA)
  \;=\;
- \kappa(\cA)\lambda_g^{\mathrm{FP}}
+ F_g^{\mathrm{sc}}(\cA)
  \;+\;
  \delta F_g^{\mathrm{cross}}(\cA)
  \qquad (g\geq 1),
+\]
+where
+\[
+F_g^{\mathrm{sc}}(\cA)=\kappa(\cA)\lambda_g^{\mathrm{FP}},
 \]
  with $\delta F_1^{\mathrm{cross}}=0$ universally and
  $\delta F_g^{\mathrm{cross}}=0$ on the uniform-weight surface
@@ -1562,7 +1629,7 @@ $\Phihol\colon \ChirAlg^{\omega,\mathrm{BL}}_{\Conf}
 defined on the boundary-linear and tempered source surface. It assigns
 $(A, \omega, \mathrm{BL}) \mapsto
 (\text{boundary} = A,\,
-\text{bulk} = \cC_A:=Z^{\mathrm{der}}_{\mathrm{ch}}(A)=
+\text{closed sector} = \cC_A:=Z^{\mathrm{der}}_{\mathrm{ch}}(A)=
 \ChirHoch^\bullet(A,A),\,
 \text{interaction} = \mathrm{SC}^{\mathrm{ch},\mathrm{top}}\text{-action})$.
 The chain-level comparison is the restriction map
@@ -2152,8 +2219,8 @@ unitary pair and the Frenkel--Reshetikhin second $q$-Casimir
 eigenvalue $C_2^{\mathrm{FR}}(\alpha_p) = (a_p^2/p^{17}) - 2$ lies in the tempered range
 $[-2, +2]$ at every new prime.
 
-\emph{Cross-volume cross-check.} Volume~III
-Remark~\ref{rem:dl-hecke-extension} records $\Sps_1(T_p)$ via the
+\emph{Cross-volume cross-check, not proof input.} The derived-Langlands
+Hecke-extension discussion records $\Sps_1(T_p)$ via the
 Chenevier determinant on the paramodular Hecke algebra
 $\Tpar_1$; the values displayed here for
 $p\in\{127, \ldots, 199\}$ are the same arithmetic object
@@ -3028,7 +3095,7 @@ $\mathsf G$ & $\mathcal{H}_k$ (Heisenberg) & $0$ & $2$ & lattice VOA \\
 $\mathsf L$ & $\widehat{\mathfrak{g}}_k$ (affine Kac--Moody) & $0$ & $3$ & Chern--Simons \\
 $\mathsf C$ & $\beta\gamma_\lambda$ ($bc_\lambda$) & $0$ & $4$ & first-order bc \\
 $\mathsf M$ & $\mathrm{Vir}_c$ (Virasoro) & $13$ & $\infty$ & string worldsheet \\
-$\mathbf B$ & $\mathbf{H}_{\Delta_5}$ (K3 Mukai--Hall--Drinfeld) & $8$ & $\infty$ & Sp$_4$ Siegel--Borcherds
+$\mathbf B$ & $\mathbf{H}_{\Delta_5}$ (K3 Mukai--Hall--Drinfeld) & $8$ & $5$ & Sp$_4$ Siegel--Borcherds
 \end{tabular}
 \end{center}
 The $\mathsf W$-algebra extensions inside class $\mathsf M$ realise
@@ -3045,7 +3112,9 @@ $\mathbf B$ satisfies the universal identity
 pinned simultaneously by Mukai doubling
 $K=2c_+(\widetilde H(K3,\mathbb Z))=8$, Lusztig root-of-unity order
 $\ell=8$, and Bruinier \cite[Prop.~5.1]{Bruinier2002LNM} Humbert
-monodromy.
+monodromy. The infinite Borcherds root tower of $\Delta_5$ is
+denominator data; the Vol~I shadow-depth coordinate is the finite
+recognition-gated value $5$.
 \end{proposition}
 
 \begin{proof}
@@ -3065,7 +3134,10 @@ rank $24$, positive index $c_+=4$, Serre doubling
 $K=2c_+=8=\kappa(\cA)+\kappa(\cA^!)$ at the chiral Koszul pair
 $(\mathbf{H}_{\Delta_5},\,\mathbf{H}_{\Delta_5}^!)$, and the
 identity~\eqref{eq:unified-crown-identity} is verified across the
-stable items (I.2)--(I.3) of the Vol~III crown computation. The
+stable items (I.2)--(I.3) of the Vol~III crown computation. Its
+depth entry is the recognition-gated Vol~I coordinate $5$; admissible
+Heegner accumulation controls the denominator and obstruction-wall
+tower, not $r_{\max}$. The
 $\mathsf W_3$ value $250/3$ is
 $\kappa(\mathcal W_3^k)+\kappa((\mathcal W_3^k)^!)=250/3$ at the
 Fateev--Lukyanov critical triple
@@ -3107,11 +3179,13 @@ genuinely disjoint paths.
  $\mathbf B$ inserts $8$; the $\mathsf W$-sublandscape completes the
  five-value set~\eqref{eq:unified-kappa-plus-kappadual-finite-set} to
  $\{0,8,13,250/3,98/3\}$. The shadow-tower depth $r_{\max}$ specialises
- to $\{2,3,4,\infty,\infty\}$ on the five rows: the first four match
+ to $\{2,3,4,\infty,5\}$ on the five rows: the first four match
  the ordinary landscape quadrichotomy
  \textup{(}Chapter~\ref{ch:landscape-census}\textup{)}; the fifth is
- the Vol~III BKM row with $r_{\max}=\infty$ driven by the admissible
- Heegner accumulation. No single family can carry all five
+ the Vol~III BKM row after the Hall/CoHA source-recognition gates,
+ with Vol~I coordinate $5$. The admissible Heegner accumulation is
+ the denominator and obstruction-wall tower, not the shadow-depth
+ coordinate. No single family can carry all five
  $\kappa+\kappa^!$ values, and each row's witness is primary-source
  cross-verified.
 \item \emph{Obstruction-tower vanishing.} The
@@ -3226,12 +3300,14 @@ five-archetype portrait of
 Theorem~\ref{thm:chirhoch3-five-archetype-portrait}
 (\texttt{hochschild\_cohomology.tex}): the ambient-curve rows
 $\mathsf G,\mathsf L,\mathsf C,\mathsf M$ carry
-$[\chi_3^{\cA}]=0$ (averaged Verdier dual
-$\kappa^!=-\kappa$, shadow truncation at $r_{\max}\in\{2,3,4\}$,
-explicit coboundary primitives
-$\beta_2^{\mathcal H},\beta_2^{\mathrm{GF}},\beta_2^{\mathrm{ghost}}$);
-the infinite-depth row $\mathsf M$ and the product-ambient crown row
-$\mathbf B$ share the GF/shadow Virasoro skeleton
+$[\chi_3^{\cA}]=0$: for $\mathsf G,\mathsf L,\mathsf C$ this is
+finite shadow truncation at $r_{\max}\in\{2,3,4\}$ with explicit
+coboundary primitives
+$\beta_2^{\mathcal H},\beta_2^{\mathrm{GF}},\beta_2^{\mathrm{ghost}}$,
+and for $\mathsf M$ it is the ambient-curve concentration of
+Theorem~H rather than finite shadow depth;
+the infinite-depth row $\mathsf M$ and the recognition-gated
+product-ambient crown row $\mathbf B$ share the GF/shadow Virasoro skeleton
 $W_3^{\mathrm{Zam}}={:}T\partial T{:}-(1/4)\partial^3 T$
 (Zamolodchikov~\textup{\cite{Zam1985}}), and the crown row
 $\mathbf B=\mathbf H_{\Delta_5}$ acquires in addition the
@@ -3255,8 +3331,9 @@ dictionary). Thus the typed comparison formula is
 It is a comparison across native ambients, not a non-zero
 $\ChirHoch^3$ assertion for the Vol~I curve. The classical limit
 $\chi_3^{\mathbf B}\bigm|_{\hbar=0,\,\mathrm{K3}=\mathrm{pt}}
-=[W_3^{\mathrm{Zam}}]_{\mathrm{GF/shadow}}$ pins the infinite-depth
-rows onto a common shadow skeleton, and the quantum tail measures the
+=[W_3^{\mathrm{Zam}}]_{\mathrm{GF/shadow}}$ pins the
+$\mathsf M$ infinite-depth row and the $\mathbf B$ crown row onto a
+common shadow skeleton, while the quantum tail measures the
 BKM-specific Planck-order addition from the K3$\times E$ Mukai
 pairing. Theorem~\ref{thm:chirhoch3-five-archetype-portrait} supplies
 the rowwise derivations.

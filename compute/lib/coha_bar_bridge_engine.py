@@ -541,50 +541,56 @@ def coha_multiplication_sign(Q: Quiver, d1: List[int], d2: List[int]) -> int:
 # ============================================================
 
 def yangian_from_coha(quiver_type: str) -> Dict[str, object]:
-    r"""Yangian produced by the CoHA route.
+    r"""Positive-half Yangian surface produced by the CoHA route.
 
-    ROUTE 1 (CoHA -> Yangian):
+    ROUTE 1 (CoHA -> positive half):
       Step 1: Construct CoHA(Q, W) = bigoplus H*(M_n, phi_W)
       Step 2: CoHA has a filtration by dimension vector
       Step 3: Associated graded = U(n^+_Q) (enveloping algebra of positive part)
-      Step 4: Full CoHA = Y(g_Q) (Yangian of g_Q)
+      Step 4: CoHA realizes Y^+(g_Q), the positive half.
+              The full Yangian requires Drinfeld double/completion data.
 
     For the Jordan quiver:
-      CoHA = affine Yangian of gl(1) = Y(gl_1-hat)
+      CoHA = positive half of the affine Yangian of gl(1) = Y^+(gl_1-hat)
       [Schiffmann-Vasserot 2012, Rapcak-Soibelman-Yang-Zhao 2018]
 
     For A_n preprojective:
-      CoHA = Y(sl_{n+1})
+      CoHA = Y^+(sl_{n+1}); the full Y(sl_{n+1}) is the doubled target
       [Yang-Zhao 2014, Davison 2016]
 
-    Returns dict with route description and Yangian type.
+    Returns dict with route description, positive-half surface, and full
+    target when the double/completion package is supplied.
     """
     routes = {
         "jordan": {
             "coha": "H*_{GL_n}(gl_n)",
             "intermediate": "Fock space of Heisenberg",
-            "yangian": "Y(gl_1-hat) = affine Yangian of gl(1)",
+            "yangian": "Y^+(gl_1-hat) = positive half of affine Yangian of gl(1)",
+            "full_yangian_after_double": "Y(gl_1-hat) = affine Yangian of gl(1)",
             "w_algebra": "W_{1+infty}",
             "references": ["SV12", "RSYZ18"],
         },
         "framed_jordan": {
             "coha": "H*(Hilb^n(C^2))",
             "intermediate": "rank-r Fock space",
-            "yangian": "Y(gl_r-hat)",
+            "yangian": "Y^+(gl_r-hat)",
+            "full_yangian_after_double": "Y(gl_r-hat)",
             "w_algebra": "W(gl_r)",
             "references": ["SV12", "RSYZ18"],
         },
         "A1": {
             "coha": "H*(Prep(A_1)-mod)",
             "intermediate": "Chevalley-Eilenberg complex",
-            "yangian": "Y(sl_2)",
+            "yangian": "Y^+(sl_2)",
+            "full_yangian_after_double": "Y(sl_2)",
             "w_algebra": "affine W(sl_2) = Virasoro",
             "references": ["YZ14", "Dav16"],
         },
         "A2": {
             "coha": "H*(Prep(A_2)-mod)",
             "intermediate": "CE complex for sl_3",
-            "yangian": "Y(sl_3)",
+            "yangian": "Y^+(sl_3)",
+            "full_yangian_after_double": "Y(sl_3)",
             "w_algebra": "W(sl_3) = W_3 algebra",
             "references": ["YZ14"],
         },
@@ -658,11 +664,13 @@ def yangian_from_bar_cobar(algebra_type: str) -> Dict[str, object]:
 def yangian_comparison(family: str) -> Dict[str, object]:
     r"""Compare Yangian production: CoHA route vs bar-cobar route.
 
-    Tests whether both routes produce the SAME Yangian for a given family.
+    Tests whether the CoHA positive-half route matches the positive-half
+    surface of the Yangian produced by the bar-cobar route. The full
+    target is reached only after Drinfeld double/completion data.
 
     The identification is:
-      CoHA(Q) -> Y(g_Q)  [Kontsevich-Soibelman, Schiffmann-Vasserot, Yang-Zhao]
-      B(A_Q) -> Y(g_Q)   [our MC3, via R-matrix from Theta_A]
+      CoHA(Q) -> Y^+(g_Q)  [Kontsevich-Soibelman, Schiffmann-Vasserot, Yang-Zhao]
+      B(A_Q) -> Y(g_Q)     [our MC3, via R-matrix from Theta_A]
 
     Both routes produce the same Yangian because:
     1. The CoHA of Q is a DEFORMATION of U(n^+_Q) (PBW filtration)
@@ -680,6 +688,7 @@ def yangian_comparison(family: str) -> Dict[str, object]:
             "bar_route": yangian_from_bar_cobar("heisenberg"),
             "yangian_match": True,
             "yangian": "Y(gl_1)",
+            "coha_surface": "Y^+(gl_1-hat)",
             "r_matrix": "k*Omega/z",
         },
         "sl2_A1": {
@@ -687,6 +696,7 @@ def yangian_comparison(family: str) -> Dict[str, object]:
             "bar_route": yangian_from_bar_cobar("affine_sl2"),
             "yangian_match": True,
             "yangian": "Y(sl_2)",
+            "coha_surface": "Y^+(sl_2)",
             "r_matrix": "Omega_{sl_2}/z",
         },
         "sl3_A2": {
@@ -694,6 +704,7 @@ def yangian_comparison(family: str) -> Dict[str, object]:
             "bar_route": yangian_from_bar_cobar("affine_sl3"),
             "yangian_match": True,
             "yangian": "Y(sl_3)",
+            "coha_surface": "Y^+(sl_3)",
             "r_matrix": "Omega_{sl_3}/z",
         },
     }
@@ -877,8 +888,9 @@ def vertex_bialgebra_compatibility(n: int) -> Dict[str, object]:
     - The compatibility encodes the self-consistency of DT wall-crossing
 
     For the bar complex:
-    - The vertex coproduct is the bar comultiplication (deconcatenation)
-    - The compatibility is automatic from the coalgebra axiom
+    - The bar coalgebra coproduct is deconcatenation; it is not the
+      Joyce vertex coproduct Delta^v on the CoHA vertex algebra.
+    - The compatibility is the coderivation condition for the bar differential
       Delta(d xi) = (d tensor 1 + 1 tensor d)(Delta xi)
 
     At dimension n, the compatibility condition relates:
@@ -1127,14 +1139,16 @@ def w_infinity_from_coha() -> Dict[str, object]:
         = affine Yangian of gl(1) action
         => W_{r1,r2,r3} corner vertex algebras
 
-    The affine Yangian Y(gl_1-hat) is isomorphic (up to completion)
+    The CoHA gives the positive half. After Drinfeld double/completion,
+    the affine Yangian Y(gl_1-hat) is isomorphic (up to completion)
     to the universal enveloping algebra of W_{1+infty}.
 
     Connection to our MC4:
     - MC4 positive tower (MC4+): W_{1+infty}, affine Yangians, RTT
       are all in the POSITIVE tower, solved by weight stabilization
-    - The CoHA produces the SAME algebra via a different route
-    - The identification: CoHA(Jordan) = Y(gl_1-hat) = U(W_{1+infty})
+    - The CoHA produces the positive-half comparison surface
+    - The full identification requires the Drinfeld double/completion:
+      D(CoHA(Jordan)) = Y(gl_1-hat) -> U(W_{1+infty})
 
     Returns structural comparison.
     """
@@ -1142,7 +1156,7 @@ def w_infinity_from_coha() -> Dict[str, object]:
         "coha_route": {
             "start": "CoHA of Jordan quiver (Kontsevich-Soibelman)",
             "step1": "Action on spiked instanton cohomology",
-            "step2": "Identify with affine Yangian Y(gl_1-hat)",
+            "step2": "Identify positive half Y^+(gl_1-hat)",
             "step3": "Derive W_{r1,r2,r3} corner vertex algebras",
             "end": "W_{1+infty} (Schiffmann-Vasserot deformation of Witt)",
         },
@@ -1153,7 +1167,7 @@ def w_infinity_from_coha() -> Dict[str, object]:
             "step3": "Completed bar-cobar = W_{1+infty} tower",
             "end": "W_{1+infty} via weight stabilization",
         },
-        "identification": "CoHA(Jordan) = Y(gl_1-hat) = completed B/Omega(H_k)",
+        "identification": "D(CoHA(Jordan)) = Y(gl_1-hat) after double/completion; CoHA itself is Y^+",
         "mc4_status": "PROVED (thm:completed-bar-cobar-strong)",
         "rsyz_reference": "arXiv:1810.10402",
     }
@@ -1208,12 +1222,13 @@ def coha_bar_bridge_summary() -> Dict[str, object]:
        For ADE quivers: follows from the vertex bialgebra
        structure of JKL26.
 
-    3. YANGIAN PRODUCTION (PROVED, both routes):
-       CoHA -> Y(g_Q) [SV12, YZ14, RSYZ18]
-       Bar-cobar -> Y(g_Q) [MC3, all simple types]
+    3. YANGIAN PRODUCTION (POSITIVE-HALF FIRST):
+       CoHA -> Y^+(g_Q) [SV12, YZ14, RSYZ18]
+       Bar-cobar -> full Y(g_Q) [MC3, all simple types]
+       Full comparison requires Drinfeld double/completion.
 
-    4. W_{1+infty} IDENTIFICATION (PROVED):
-       CoHA(Jordan) = Y(gl_1-hat) = U(W_{1+infty}) [RSYZ18]
+    4. W_{1+infty} IDENTIFICATION (PROVED AFTER DOUBLE/COMPLETION):
+       D(CoHA(Jordan)) = Y(gl_1-hat) -> U(W_{1+infty}) [RSYZ18]
        MC4+ tower stabilization produces W_{1+infty} [MC4]
 
     5. DT-SHADOW CONNECTION (PARTIALLY PROVED):
@@ -1237,8 +1252,8 @@ def coha_bar_bridge_summary() -> Dict[str, object]:
     return {
         "character_match": "PROVED (all standard families)",
         "coalgebra_duality": "PROVED (Jordan), STRUCTURAL (ADE via JKL26)",
-        "yangian_production": "PROVED (both routes, all simple types via MC3)",
-        "w_infinity": "PROVED (CoHA = MC4+ tower)",
+        "yangian_production": "PROVED for positive-half CoHA surfaces; full targets require double/completion",
+        "w_infinity": "PROVED after Drinfeld double/completion comparison with the MC4+ tower",
         "dt_shadow": "PARTIALLY PROVED (scalar level; motivic level conjectural)",
         "vertex_bialgebra": "PROVED for CoHA (JKL26); bar side OPEN",
         "key_open": [

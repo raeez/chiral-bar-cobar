@@ -89,7 +89,7 @@ class TestPVAJetOrder:
 
 class TestPVABrackets:
     def test_heisenberg_pole_order(self):
-        """Heisenberg has max pole order 1 (simple pole)."""
+        """Heisenberg has lambda-degree 1, coming from the OPE double pole."""
         pva = free_boson_pva()
         assert pva.max_pole_order == 1
 

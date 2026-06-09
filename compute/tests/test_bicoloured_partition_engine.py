@@ -270,15 +270,15 @@ class TestSpecificValues:
         """
         assert bicoloured_partition_number(20) == 24842
 
-    def test_p2_30_equals_595910(self):
-        """p_{-2}(30) = 595910.
+    def test_p2_30_equals_589128(self):
+        """p_{-2}(30) = 589128.
 
         # VERIFIED:
         # [DC] Convolution
         # [DC] Product expansion
         # [LT] OEIS A000712
         """
-        assert bicoloured_partition_number(30) == 595910
+        assert bicoloured_partition_number(30) == 589128
 
 
 # ============================================================================

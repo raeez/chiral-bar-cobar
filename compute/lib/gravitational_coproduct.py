@@ -1470,7 +1470,7 @@ def verify_primitivity_edge_cases() -> Dict[str, Any]:
       - k = -2 (critical level): Sugawara undefined, no Virasoro.
       - k -> infinity: c(Vir) -> 1, semi-classical limit.
       - k = 4: c(Vir) = 0, uncurved.
-      - c = 26 (k = 56): Virasoro self-dual complement.
+      - c = 26 (k = 56): critical string charge; dual Virasoro charge is 0.
       - c = 13 (k = 30): Virasoro self-dual point.
 
     The ghost-number argument is INDEPENDENT of k (it depends only

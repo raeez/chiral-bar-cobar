@@ -760,7 +760,7 @@ class BarCobarResolutionStrategy:
                 'Reduces adjunction to Thm A (bar-cobar adjunction)',
                 'Modular extension by tensoring with G_mod is natural',
                 'Koszulness automatic for universal VAs (PBW)',
-                'D²=0 guaranteed by thm:ambient-d-squared-zero',
+                'Convolution D²=0 is proved; ambient log-FM D²=0 is conditional on the signed residue-pushforward package',
             ],
             'weaknesses': [
                 'Requires Koszulness for inversion (Thm B) — restricts scope',

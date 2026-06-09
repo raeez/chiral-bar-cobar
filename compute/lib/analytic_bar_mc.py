@@ -265,20 +265,26 @@ def mock_virasoro_shadow_truncation(c: float = 25.0, r_max: int = 8) -> List[Dic
 def theta_genus1_heisenberg(tau: complex, kappa: float = 1.0) -> Dict[str, object]:
     """Compute Theta^{(1,1)}_H as a function of the modular parameter tau.
 
-    At genus 1, the MC element has component:
+    At genus 1, the scalar MC curvature has component:
       Theta^{(1,1)}_H = kappa * omega_1
 
-    where omega_1 = 2*pi*i * dtau in the holomorphic normalization on
-    the upper half-plane H = {tau : Im(tau) > 0}.
+    where omega_1 is the Hodge curvature class c_1(lambda) on the
+    moduli base.  After choosing the upper-half-plane coordinate tau,
+    the holomorphic connection component has d tau coefficient
+    kappa * (2*pi*i).  This coefficient is not the Hodge class itself;
+    the class is represented on the quotient by a Chern curvature
+    (1,1)-form.
 
-    The key claim: this is ANALYTIC in tau on H (it is constant!).
+    The key claim: the local holomorphic d tau coefficient is ANALYTIC
+    in tau on H (it is constant).
     The non-trivial tau dependence enters through the sewing variable
     q = exp(2*pi*i*tau), not through Theta^{(1,1)} directly.
 
-    The full genus-1 contribution including the sewing operator is:
+    The local genus-1 holomorphic connection component is:
       Theta^{(1)}_H(tau) = kappa * (2*pi*i) * dtau
 
-    which is a holomorphic 1-form on H.
+    which is a holomorphic 1-form on H before descent to the modular
+    quotient.
     """
     if tau.imag <= 0:
         return {
@@ -289,8 +295,8 @@ def theta_genus1_heisenberg(tau: complex, kappa: float = 1.0) -> Dict[str, objec
     # q = exp(2*pi*i*tau)
     q = np.exp(2j * np.pi * tau)
 
-    # The MC component at (genus=1, arity=1)
-    # In the holomorphic sector: Theta^{(1,1)} = kappa * (2*pi*i)
+    # The MC component at (genus=1, arity=1): this is the coefficient of
+    # the local d tau connection component, not the base Hodge class.
     theta_11_coefficient = kappa * 2.0 * np.pi * 1j
 
     # This is constant in tau (analytic trivially)

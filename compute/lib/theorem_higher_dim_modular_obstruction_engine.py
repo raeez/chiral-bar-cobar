@@ -776,7 +776,7 @@ class SurfaceFamilyToddClass:
         lambda_1^{surf} = chi(O_S) is a TOPOLOGICAL INVARIANT of the
         fiber, not a cohomological class varying over moduli.
 
-        This rigidity is WHY the scalar formula obs_g = kappa * lambda_g
+        This rigidity is WHY the scalar formula obs_g^sc = kappa * lambda_g
         does not directly extend: the surface lambda class lacks the
         moduli-theoretic variability of the curve lambda class.
         """
@@ -1164,7 +1164,7 @@ class DimensionalObstructionSummary:
                 ),
             },
             {
-                "property": "scalar obstruction obs_g = kappa * lambda_g",
+                "property": "scalar obstruction obs_g^sc = kappa * lambda_g",
                 "dim_1": "PROVED (uniform-weight lane)",
                 "dim_n": "NO analogue (no single lambda class, no modular operad)"
                          if self.dim > 1 else "PROVED (uniform-weight lane)",
@@ -1438,7 +1438,7 @@ def why_dim_1_is_special() -> Dict[str, Any]:
 
     Layer 3 (HOLOMORPHIC, dim-1 only): The modular operad structure on
     M-bar_{g,n}, the Hodge bundle E_1 = R^0 pi_* omega, the lambda classes
-    lambda_i = c_i(E_1), and the scalar obstruction obs_g = kappa * lambda_g
+    lambda_i = c_i(E_1), and the scalar obstruction obs_g^sc = kappa * lambda_g
     are ALL specific to curves (complex dim 1).
 
     THE FUNDAMENTAL REASON: Sewing of curves identifies POINTS
@@ -1468,7 +1468,7 @@ def why_dim_1_is_special() -> Dict[str, Any]:
         "obstructs_dim_ge_2": [
             "modular operad on moduli of n-folds",
             "Hodge bundle (single lambda class)",
-            "scalar obstruction obs_g = kappa * lambda_g",
+            "scalar obstruction obs_g^sc = kappa * lambda_g",
             "shadow obstruction tower at genus >= 1",
             "sewing locality (finite-dim sewing data)",
         ],

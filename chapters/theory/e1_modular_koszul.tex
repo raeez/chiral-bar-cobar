@@ -287,9 +287,8 @@ target at the Hom-level, where $\operatorname{End}_\cA(n)$ sees only
 external legs.
 \end{proof}
 
-\begin{definition}[$E_1$ modular convolution dg~Lie algebra]
+\begin{definition}[$E_1$ modular convolution dg~Lie algebra; \ClaimStatusDefinitional]
 \label{def:e1-modular-convolution}
-\ClaimStatusProvedHere
 \index{E1 algebra@$E_1$-algebra!modular convolution|textbf}
 \index{modular convolution dg Lie algebra!E1@$E_1$ (ordered)}
 Let $\cA$ be a cyclic $E_1$-chiral algebra
@@ -762,7 +761,9 @@ For Heisenberg $\cH_\kappa$ at $\kappa \neq 0$
 \textup{(}$\kappa(\cH_\kappa) = \kappa$, landscape
 census~\textup{(}Chapter~\textup{\ref{ch:landscape-census}}\textup{)}\textup{)}, the genus-$1$
 quasi-modular obstruction is active, while the genus-$0$ associator
-obstruction is absent because the Heisenberg binary residue is scalar.
+obstruction is absent because the Heisenberg binary residue is the
+rank-one tensor $k\Omega_{\cH}/z$ with $\Omega_{\cH}=J\otimes J$ and
+carries no noncommutative Casimir channel.
 \end{remark}
 
 \begin{conjecture}[$E_1$ genus-two modular-section obstruction: seven stable-graph
@@ -1657,7 +1658,8 @@ $\tau\cdot r_\cA(z)=r_\cA(z)$ on the symmetric component (where
 $\tau$ is the flip). This is stated in
 Corollary~\ref{cor:r-matrix-sigma2-symmetric} below for each of
 the four archetypes by direct computation:
-$\cH_k$: $r(z)=k/z$, scalar, symmetric automatically;
+$\cH_k$: $r_{\cH}(z)=k\Omega_{\cH}/z$ with
+$\Omega_{\cH}=J\otimes J$, rank-one and symmetric;
 $V_k(\fg)$: $r^{KM}(z)=k\,\Omega/z$, $\Omega=\Omega_{ij}$ symmetric
 Casimir, hence $\tau$-invariant;
 $\beta\gamma$: $r(z)=0$, trivially symmetric;
@@ -1850,15 +1852,16 @@ symmetric slot.
 \end{corollary}
 
 \begin{proof}
-$\cH_k$: $r(z)=k/z$, scalar-valued in $\bC[[z^{-1}]]$, flip-invariant
-automatically. $\widehat{\fg}_k$: $r^{KM}(z)=k\,\Omega_{\mathrm{tr}}/z$
+$\cH_k$: $r_{\cH}(z)=k\Omega_{\cH}/z$ with
+$\Omega_{\cH}=J\otimes J$, hence flip-invariant in the rank-one tensor
+window. $\widehat{\fg}_k$: $r^{KM}(z)=k\,\Omega_{\mathrm{tr}}/z$
 with $\Omega_{\mathrm{tr}}\in\operatorname{Sym}^2(\fg)$ the symmetric
 trace-form Casimir, flip-invariant by definition of
-$\operatorname{Sym}^2$. $\beta\gamma$: $r(z)=0$ by the
-modular Koszul triple $\mathfrak{T}_{\beta\gamma}$ of
-\eqref{eq:betagamma-triple-ch} (class~$\mathbf{C}$
-vanishing of the binary residue, from $d\log$-absorption of the
-simple-pole $\beta\gamma$ OPE), trivially flip-invariant.
+$\operatorname{Sym}^2$. $\beta\gamma$: the beta--gamma modular
+Koszul triple has collision entry
+$r^{\mathrm{coll}}_{\beta\gamma}(z)=0$ (class~$\mathbf{C}$ vanishing
+of the binary residue, from $d\log$-absorption of the simple-pole
+$\beta\gamma$ OPE), so the $r$-matrix is trivially flip-invariant.
 $\mathrm{Vir}_c$: $r(z)=(c/2)/z^3+2T/z$; the leading central term
 $c/2$ is scalar, flip-invariant; the subleading $2T/z$-term has
 $T$ acting on both slots symmetrically under
@@ -1927,7 +1930,8 @@ the symmetric theory.
 \label{ex:ord-ch-hoch-heisenberg}
 \index{Heisenberg algebra!ordered chiral Hochschild}
 The Heisenberg $\cH_k$ ($\Einf$-chiral, class $\mathbf{G}$,
-$r(z) = k/z$, $\kappa = k$) has ordered chiral Hochschild
+$r_{\cH}(z)=k\Omega_{\cH}/z$ with averaged trace $\kappa = k$)
+has ordered chiral Hochschild
 cohomology on the formal disk with Poincar\'e polynomial
 \begin{equation}\label{eq:heis-poincare-poly}
 P_{\cH_k}(t)
@@ -1970,8 +1974,9 @@ introduces two decisive changes: the bar propagator
 acquires the elliptic function
 $\wp_1(z,\tau) = \theta_1'(z|\tau)/\theta_1(z|\tau)$ in
 place of $1/z$, and the KZ connection is replaced by the
-KZB connection carrying a $d\tau$ term from the Hodge class
-$\omega_1 = c_1(\lambda)$ on $\overline{\cM}_{1,n}$.
+KZB connection carrying a local $d\tau$ component whose descended
+curvature has Hodge shadow $\omega_1 = c_1(\lambda)$ on
+$\overline{\cM}_{1,n}$.
 
 \smallskip
 \noindent
@@ -2125,17 +2130,24 @@ complexes compute invariants of a chiral algebra~$\cA$
 from these strata.
 
 The \emph{topological Hochschild homology} is the
-factorisation homology of $\cA$, viewed as an
-$\Eone$-algebra, over $S^1 = \partial D$:
+factorisation homology of a locally constant interval model extracted
+from~$\cA$ after a chosen real-ray/topological comparison. If
+$A_{\partial}$ denotes that boundary $E_1$-algebra and
+$\mathcal F_{A_{\partial}}$ its locally constant factorization algebra
+on the circle, then
 \[
- \HH^{\mathrm{top}}_*(\cA)
- := \int_{S^1} \cA.
+ \HH^{\mathrm{top}}_*(\cA;A_{\partial})
+ := \int_{S^1} \mathcal F_{A_{\partial}}
+ \simeq \mathrm{HH}_{\bullet,\mathrm{alg}}(A_{\partial}).
 \]
-This is computed by the cyclic bar complex
-$B^{\mathrm{cyc}}_n(\cA) = \cA^{\otimes n}/\text{cyclic}$
-with the topological Hochschild differential; it uses $m_2$ (and higher
-$\Ainf$-operations if present) but no meromorphic data,
-no Arnold relations, and no spectral parameter.
+This is not the $\cD$-module restriction of~$\cA$ to
+$\partial D$. It is computed by the cyclic bar complex
+$B^{\mathrm{cyc}}_n(A_{\partial})
+= A_{\partial}^{\otimes n}/\text{cyclic}$
+with the Hochschild differential; it uses the $E_1$ product
+\textup{(}and higher $\Ainf$ operations only after a chosen chain
+model/transfer\textup{)} but no meromorphic data, no Arnold
+relations, and no spectral parameter.
 
 The \emph{ordered chiral homology of $D^\times$} is the
 factorisation homology of the ordered factorisation
@@ -2147,9 +2159,9 @@ compactification.
 
 The comparison map
 $\int_{D^\times}^{\mathrm{ord}} \cA \to
-\HH^{\mathrm{top}}_*(\cA)$ is induced by the boundary
-retraction $D^\times \to S^1$, which forgets the complex
-structure. Operad formality
+\HH^{\mathrm{top}}_*(\cA;A_{\partial})$ is induced by the boundary
+retraction $D^\times \to S^1$ together with the chosen interval-model
+comparison, which forgets the complex structure. Operad formality
 (Theorem~\ref{thm:e1-formality-bridge} below) makes this a
 quasi-isomorphism for $\Einf$-chiral algebras;
 Theorem~\ref{thm:e1-formality-failure} shows it fails for
@@ -2316,7 +2328,7 @@ $\operatorname{End}(V^{\otimes r})$: the $E_1$ shadow at degree~$r$.
 
 \begin{definition}[$E_1$ shadow at degree~$r$]
 \label{def:e1-shadow-degree-r}
-\ClaimStatusProvedHere
+\ClaimStatusDefinitional
 \index{E1 shadow@$E_1$ shadow!degree $r$|textbf}
 The \emph{$E_1$ shadow at degree~$r$} of a cyclic $E_1$-chiral
 algebra $\cA$ is the component
@@ -2504,8 +2516,8 @@ operad\_engine.py} ($55$ tests); $\chi^{\mathrm{orb}}(\overline{\cM}_2)
 At the scalar level, the Feynman transforms of the commutative and
 associative modular operads produce identical amplitudes: the
 modular characteristic $\kappa(\cA)$, all shadow obstruction tower
-coefficients $S_r(\cA)$, and all genus-$g$ free energies $F_g(\cA)$
-\textup{(all-weight, with cross-channel correction $\delta F_g^{\mathrm{cross}}$)}
+coefficients $S_r(\cA)$, and the scalar genus-$g$ free energies
+$F_g^{\mathrm{sc}}(\cA)$
 are $\En$-independent. Concretely, for every connected stable
 graph~$\Gamma$:
 \begin{equation}
@@ -2623,7 +2635,7 @@ $Y_\hbar(\fg)$
 \end{example}
 
 \begin{remark}[Three $r$-matrices: Laplace kernel, collision residue,
- pre-dualisation form]
+ pre-dualisation form; \ClaimStatusDefinitional]
 \label{rem:three-r-matrices}
 \index{r-matrix@$r$-matrix!disambiguation}
 \index{r-matrix@$r$-matrix!Laplace kernel}
@@ -2675,7 +2687,7 @@ they differ in pole orders, target spaces, and normalisation.
  \renewcommand{\arraystretch}{1.1}
  \begin{tabular}{ll}
  Heisenberg $\cH_k$\textup: &
- $r^{\mathrm{coll}}(z) = k/z$
+ $r^{\mathrm{coll}}_{\cH}(z) = k\Omega_{\cH}/z$
  \quad\textup{(simple pole; OPE had double)} \\
  Affine $\hat\fg_k$\textup: &
  $r^{\mathrm{coll}}(z)
@@ -3284,8 +3296,7 @@ $\operatorname{av}$ is a dg~Lie morphism.
 \item $(K_\cA^{E_1})_{1,1}$ is the genus-$1$ primitive, whose
  coinvariant gives the genus-$1$ curvature $\kappa(\cA) \cdot
  \lambda_1$
- \textup{(all-weight, with cross-channel correction
- $\delta F_g^{\mathrm{cross}}$; at $g=1$ this correction vanishes)}.
+ \textup{(the scalar and all-weight lanes coincide at genus~$1$)}.
 \end{enumerate}
 
 \medskip
@@ -3310,7 +3321,8 @@ $dK_\cA + K_\cA \star K_\cA
 + \hbar\,\Delta_{\mathrm{ns}}(K_\cA) = 0$.
 \end{remark}
 
-\begin{remark}[Lie/associative dichotomy in the averaging kernel]
+\begin{remark}[Lie/associative dichotomy in the averaging kernel;
+\ClaimStatusProvedHere]
 \label{rem:lie-associative-dichotomy}
 \index{averaging map!Lie/associative dichotomy}
 \index{kernel of averaging map}
@@ -3558,9 +3570,10 @@ The total genus expansion is then
 \;=\;
 \sum_{g=0}^\infty N^{2-2g}\,F_g(\lambda),
 \end{equation}
-\textup{(all-weight, with cross-channel correction
-$\delta F_g^{\mathrm{cross}}$).}
-where $\lambda = g_{\mathrm{YM}}^2 N$. This is a
+where $\lambda = g_{\mathrm{YM}}^2 N$. In a multi-weight channel
+decomposition, the coefficient is
+$F_g=F_g^{\mathrm{sc}}+\delta F_g^{\mathrm{cross}}$ for
+$g \geq 2$. This is a
 literal 't~Hooft expansion\textup: the $N$-power
 is determined by the Euler characteristic of the
 thickened surface.
@@ -3860,7 +3873,9 @@ equivalence.
 \begin{remark}[$E_1$ ordering at the $\Delta_5$ point]
 \label{rem:e1mkd-1}
 Assume the D1--D5 recognition datum of
-Theorem~\ref{thm:e1mkd-HDelta5-conditional}. Under that datum the
+Theorem~\ref{thm:e1mkd-delta5-conditional-inversion}, equivalently the
+finite-window projection of
+Convention~\ref{conv:master-hall-borcherds-datum}. Under that datum the
 $E_1$-ordered convention matters. The averaging map
 $\mathrm{av} = \mathrm{Torelli}_{K3}\circ\mathrm{KugaSatake}\circ j_{\mathrm{Kod}}$
 from $\mathfrak g^{E_1}_{\Delta_5}$ to $\mathfrak g^{\mathrm{mod}}_{\Delta_5}$

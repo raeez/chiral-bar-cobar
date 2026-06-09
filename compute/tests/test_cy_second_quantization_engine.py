@@ -26,6 +26,10 @@ F = Fraction
 
 from compute.lib.cy_second_quantization_engine import (
     CHI_K3,
+    CY_TO_CHIRAL_REQUIRED_HYPOTHESES,
+    CY_TO_CHIRAL_STAGE1,
+    CY_TO_CHIRAL_STAGE2,
+    CY_TO_CHIRAL_TWO_STAGE,
     KAPPA_BPS,
     KAPPA_CH_K3E,
     KAPPA_E,
@@ -34,8 +38,10 @@ from compute.lib.cy_second_quantization_engine import (
     WEIGHT_PHI10,
     adams_operation_on_shadow,
     bps_weight_from_chi,
+    bps_chiral_kappa_lane_scope,
     compute_ratio_bps_ch,
     cross_check_kappa_values,
+    cy_to_chiral_two_stage_scope,
     dmvv_euler_chars_from_product,
     dmvv_full_verification,
     dmvv_product_coefficients,
@@ -43,6 +49,7 @@ from compute.lib.cy_second_quantization_engine import (
     extract_kappa_from_generating_function,
     gottsche_generating_coefficients,
     gottsche_via_eta,
+    hilb_fock_categorical_lift_scope,
     k3_elliptic_genus_at_z0,
     k3_elliptic_genus_fourier,
     kappa_orbifold_correction,
@@ -115,9 +122,71 @@ class TestFundamentalConstants:
         assert RATIO_BPS_CH == F(5, 3)
         assert RATIO_BPS_CH == F(KAPPA_BPS, KAPPA_CH_K3E)
 
-    def test_bps_equals_k3_plus_k3xe(self):
-        """kappa_BPS = kappa(K3) + kappa(K3 x E) = 2 + 3 = 5."""
+    def test_bps_sum_is_numerical_coincidence_not_transfer_rule(self):
+        """5 = 2 + 3 is recorded, but not promoted to a kappa transfer."""
+        scope = bps_chiral_kappa_lane_scope()
         assert KAPPA_BPS == KAPPA_K3 + KAPPA_CH_K3E
+        assert scope["numerical_coincidence_BPS_equals_K3_plus_K3xE"]
+        assert not scope["bps_is_sum_relation"]
+        assert not scope["number_transfer_allowed_without_comparison"]
+
+
+class TestCYToChiralTwoStageScope:
+    """Verify the CY-to-chiral surface is always two-stage."""
+
+    def test_two_stage_labels_are_explicit(self):
+        scope = cy_to_chiral_two_stage_scope(
+            d=3,
+            reference_curve="C",
+            transverse_manifold="Sigma_2",
+            factorization_homology_hypotheses=True,
+            hh_minus_one_zero=True,
+        )
+        assert scope["stage1"] == CY_TO_CHIRAL_STAGE1
+        assert scope["stage2"] == CY_TO_CHIRAL_STAGE2
+        assert scope["two_stage_label"] == CY_TO_CHIRAL_TWO_STAGE
+        assert not scope["one_stage_phi_d_allowed"]
+        assert scope["composition_on_stated_surface_proved"]
+        assert scope["missing_hypotheses"] == ()
+
+    def test_missing_surface_data_keeps_composition_conditional(self):
+        scope = cy_to_chiral_two_stage_scope(d=3)
+        assert not scope["composition_on_stated_surface_proved"]
+        assert scope["composition_status"] == "conditional_open"
+        assert scope["missing_hypotheses"] == CY_TO_CHIRAL_REQUIRED_HYPOTHESES
+
+    def test_d2_slice_is_separate_from_d_ge_3(self):
+        d2 = cy_to_chiral_two_stage_scope(d=2, reference_curve="C")
+        d3 = cy_to_chiral_two_stage_scope(d=3, reference_curve="C")
+        assert d2["d_slice"] == "d=2 surface slice"
+        assert d3["d_slice"] == "d>=3 transverse-factorization slice"
+        assert d2["d2_slice_separate_from_d_ge_3"]
+        assert d3["d2_slice_separate_from_d_ge_3"]
+
+    def test_d_less_than_two_is_rejected(self):
+        with pytest.raises(ValueError):
+            cy_to_chiral_two_stage_scope(d=1)
+
+
+class TestHilbFockCategoricalLiftScope:
+    """Separate Fock/Hilbert-scheme character bridges from categorical lifts."""
+
+    def test_categorical_lift_is_conjectural_by_default(self):
+        scope = hilb_fock_categorical_lift_scope()
+        assert scope["hilbert_scheme_fock_bridge_status"] == (
+            "computed character/Euler/Fock bridge"
+        )
+        assert not scope["hilbert_scheme_fock_bridge_is_categorical_lift"]
+        assert not scope["dmvv_is_bar_theorem"]
+        assert not scope["dmvv_is_categorical_lift"]
+        assert scope["categorical_lift_status"] == "conjectural"
+        assert not scope["categorical_lift_proved"]
+        assert not scope["number_transfer_allowed_without_comparison"]
+
+    def test_categorical_lift_can_only_be_marked_by_explicit_flag(self):
+        scope = hilb_fock_categorical_lift_scope(categorical_lift_proved=True)
+        assert scope["categorical_lift_status"] == "proved"
+        assert scope["categorical_lift_proved"]
 
 
 # =================================================================
@@ -395,6 +464,9 @@ class TestRatio53:
         """All interpretation paths give 5/3."""
         result = ratio_interpretation_check()
         assert result["all_agree"]
+        assert result["ratio_is_scalar_only"]
+        assert not result["one_stage_functor_witnessed"]
+        assert not result["lane_scope"]["bps_is_sum_relation"]
 
     def test_path1_direct(self):
         assert ratio_interpretation_check()["path1_direct"] == F(5, 3)
@@ -426,7 +498,9 @@ class TestCrossCheckKappa:
     def test_cross_check_all_pass(self):
         result = cross_check_kappa_values()
         assert result["additivity_K3xE"]
-        assert result["sum_relation"]
+        assert result["numerical_coincidence_BPS_equals_K3_plus_K3xE"]
+        assert not result["sum_relation"]
+        assert not result["number_transfer_allowed_without_comparison"]
         assert result["BPS_from_chi"]
         assert result["BPS_from_weight"]
         assert result["weight_from_chi"]
@@ -436,9 +510,10 @@ class TestCrossCheckKappa:
         assert result["ratio_BPS_ch"] == F(5, 3)
 
     def test_difference_is_kappa_k3(self):
-        """kappa_BPS - kappa_ch = 5 - 3 = 2 = kappa(K3)."""
+        """The numerical difference is 2, without becoming a transfer rule."""
         result = cross_check_kappa_values()
         assert result["difference_BPS_ch"] == KAPPA_K3
+        assert not result["lane_scope"]["bps_is_sum_relation"]
 
     def test_bps_weight_from_chi(self):
         """bps_weight_from_chi(24) = 5."""
@@ -867,11 +942,13 @@ class TestConsistency:
     """Cross-consistency checks across all computations."""
 
     def test_kappa_bps_three_paths(self):
-        """kappa_BPS via three independent paths."""
+        """kappa_BPS via scalar paths, with the sum kept as coincidence."""
         path1 = CHI_K3 // 4 - 1  # From chi
         path2 = WEIGHT_PHI10 // 2  # From Phi_10 weight
-        path3 = KAPPA_K3 + KAPPA_CH_K3E  # From sum relation
-        assert path1 == path2 == path3 == 5
+        scope = bps_chiral_kappa_lane_scope()
+        assert path1 == path2 == 5
+        assert scope["numerical_coincidence_BPS_equals_K3_plus_K3xE"]
+        assert not scope["bps_is_sum_relation"]
 
     def test_f1_ratio_all_g(self):
         """F_g(BPS)/F_g(ch) = 5/3 is independent of g."""
@@ -881,10 +958,11 @@ class TestConsistency:
             assert fg_bps / fg_ch == F(5, 3)
 
     def test_additivity_chain(self):
-        """kappa(K3) + kappa(E) = kappa(K3xE) and
-        kappa(K3) + kappa(K3xE) = kappa_BPS."""
+        """K3xE additivity is proved; BPS equality remains a coincidence."""
         assert F(KAPPA_K3) + F(KAPPA_E) == F(KAPPA_CH_K3E)
+        scope = bps_chiral_kappa_lane_scope()
         assert F(KAPPA_K3) + F(KAPPA_CH_K3E) == F(KAPPA_BPS)
+        assert not scope["bps_is_sum_relation"]
 
     def test_weight_chain(self):
         """weight(Phi_10) = 2*kappa_BPS = chi(K3)/2 - 2."""

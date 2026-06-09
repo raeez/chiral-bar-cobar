@@ -1186,11 +1186,19 @@ def compare_with_drinfeld(z: complex, k: float = 1.0,
     r"""Compare the bar-complex R-matrix with Drinfeld's universal R.
 
     The bar complex produces R(z) = z*I + P (rational, spectral parameter).
-    Drinfeld's universal R evaluated on fund tensor fund (no spectral parameter)
-    gives the constant R-matrix.  The connection is:
+    The constant Drinfeld-Jimbo universal R evaluated on fixed fundamental
+    tensor factors has no additive evaluation parameter; that is a statement
+    about this braid-form model, not about associative Yangians in general.
+    Yangian evaluation modules V(u), W(v) carry the spectral parameter u-v
+    already in the topological/representation-theoretic category.  The
+    connection with the constant braid form is:
 
         R_{bar}(z) = z*I + P  (additive spectral parameter)
         R_{Drinfeld}(q) = q^{HH/4} * ...  (multiplicative, q-deformed)
+
+    The topological bar coproduct is z-independent before choosing
+    evaluation-module shifts; the chiral bar differential is z-dependent
+    because z is a Ran collision coordinate.
 
     The DRINFELD-KOHNO THEOREM says:
         monodromy of KZ_z around 0 at level k

@@ -36,7 +36,7 @@ class TestHeisenbergShadow:
     """Heisenberg H_k: Gaussian class G, depth 2."""
 
     def test_r_matrix_form(self):
-        """r(z) = k/z."""
+        """r(z) = k*Omega_H/z (rank-one coeff k/z)."""
         h = HeisenbergShadow()
         z = Symbol('z')
         k = Symbol('k')
@@ -439,18 +439,24 @@ class TestKappaAveraging:
         result = verify_kappa_averaging("Heisenberg", k=3.0)
         assert result["match"]
         assert result["kappa_expected"] == pytest.approx(3.0)
+        assert result["averaging_scope"] == "degree_2_scalar_shadow"
+        assert result["scalar_projection_only"] is True
+        assert result["averaging_commutes_with_bar_differential"] is False
 
     def test_affine_sl2_averaging(self):
         result = verify_kappa_averaging("Affine_sl2", k=4.0)
         assert result["match"]
         assert result["av_r_value"] == pytest.approx(3.0)
         assert result["kappa_value"] == pytest.approx(4.5)  # 3*(4+2)/4 = 4.5
+        assert "differential_equivariance" in result["requires_descent_hypotheses"]
 
     def test_betagamma_averaging(self):
         result = verify_kappa_averaging("BetaGamma")
         assert result["match"]
+        assert result["scalar_projection_only"] is True
 
     def test_virasoro_averaging(self):
         result = verify_kappa_averaging("Virasoro", c=26.0)
         assert result["match"]
         assert result["kappa_expected"] == pytest.approx(13.0)
+        assert result["averaging_commutes_with_bar_differential"] is False

@@ -21,6 +21,7 @@ Canonical references:
   C1.  kappa(H_k) = k
   C2.  kappa(Vir_c) = c/2
   C3.  kappa(V_k(g)) = dim(g)*(k+h^v) / (2*h^v)
+       on the non-critical affine conductor lane
   C4.  kappa(W_N) = c*(H_N - 1),  H_N = sum_{j=1}^{N} 1/j
   C5.  c_bc(lambda) = 1 - 3*(2*lambda - 1)^2
   C6.  c_bg(lambda) = 2*(6*lambda^2 - 6*lambda + 1)
@@ -30,7 +31,46 @@ Canonical references:
 """
 
 from fractions import Fraction
-from typing import Dict, Tuple
+from typing import Any, Dict, Tuple
+
+
+AFFINE_CONDUCTOR_HYPOTHESES: Tuple[str, ...] = (
+    "noncritical_level_k_plus_h_dual_nonzero",
+    "Sugawara_stress_tensor_defined",
+    "Feigin_Frenkel_level_shift_stays_in_generic_lane",
+    "finite_or_completed_bar_window",
+)
+
+AFFINE_CRITICAL_MISSING_HYPOTHESES: Tuple[str, ...] = AFFINE_CONDUCTOR_HYPOTHESES
+
+AFFINE_NONCRITICAL_STATUS = "generic_affine_noncritical_conductor"
+AFFINE_CRITICAL_STATUS = (
+    "critical_Feigin_Frenkel_center_separate_not_generic_conductor"
+)
+
+VIRASORO_DUALITY_HYPOTHESES: Tuple[str, ...] = (
+    "Virasoro_Koszul_duality_theorem_applies",
+    "class_M_completed_or_finite_window_bar_lane",
+    "stress_tensor_normalization_fixed",
+)
+
+VIRASORO_SHADOW_TOWER_HYPOTHESES: Tuple[str, ...] = (
+    *VIRASORO_DUALITY_HYPOTHESES,
+    "c_times_5c_plus_22_nonzero",
+    "Zamolodchikov_norm_nonzero",
+)
+
+VIRASORO_SHADOW_TOWER_MISSING_AT_SINGULAR: Tuple[str, ...] = (
+    "c_times_5c_plus_22_nonzero",
+    "Zamolodchikov_norm_nonzero",
+)
+
+VIRASORO_EXCEPTIONAL_CHARGES: Dict[Fraction, str] = {
+    Fraction(0): "uncurved_kappa_zero_shadow_tower_singular_dual_is_c_26",
+    Fraction(-22, 5): "Yang_Lee_Zamolodchikov_norm_zero_shadow_tower_singular",
+    Fraction(26): "critical_string_central_charge_dual_is_c_0_not_self_dual",
+    Fraction(13): "Koszul_self_dual_fixed_point",
+}
 
 
 # ---------------------------------------------------------------------------
@@ -83,7 +123,7 @@ def virasoro_c(c: Fraction) -> Fraction:
 
 
 def virasoro_dual_c(c: Fraction) -> Fraction:
-    """Vir^! = Vir_{26-c}.  (C8)"""
+    """Central charge of the theorem-scoped Koszul partner Vir_{26-c}.  (C8)"""
     return Fraction(26) - Fraction(c)
 
 
@@ -107,16 +147,111 @@ def virasoro_K_kk(c: Fraction) -> Fraction:
     return virasoro_kappa(c) + virasoro_dual_kappa(c)
 
 
+def virasoro_scope_report(c: Fraction) -> Dict[str, Any]:
+    """Scope report for Virasoro duality and shadow-tower computations.
+
+    The scalar conductor identity is valid as an algebra-level invariant.
+    The object-level statement Vir_c^! = Vir_{26-c} is theorem-scoped, and
+    the universal shadow-tower formula uses the nonsingular surface
+    c(5c+22) != 0.
+    """
+    c = Fraction(c)
+    c_dual = virasoro_dual_c(c)
+    nonsingular_shadow = c != 0 and 5 * c + 22 != 0
+    return {
+        "family": "Virasoro",
+        "central_charge": c,
+        "dual_central_charge": c_dual,
+        "duality_claim": "Vir_c^! = Vir_{26-c}",
+        "duality_claim_requires_theorem": True,
+        "duality_hypothesis_package": VIRASORO_DUALITY_HYPOTHESES,
+        "kappa": virasoro_kappa(c),
+        "kappa_dual": virasoro_dual_kappa(c),
+        "K_kk": virasoro_K_kk(c),
+        "self_dual": c == 13,
+        "critical_string_central_charge": c == 26,
+        "shadow_tower_formula_applies": nonsingular_shadow,
+        "shadow_tower_hypothesis_package": (
+            VIRASORO_SHADOW_TOWER_HYPOTHESES if nonsingular_shadow else tuple()
+        ),
+        "missing_shadow_tower_hypotheses": (
+            tuple()
+            if nonsingular_shadow
+            else VIRASORO_SHADOW_TOWER_MISSING_AT_SINGULAR
+        ),
+        "S4_formula": "10/[c(5c+22)]" if nonsingular_shadow else None,
+        "exceptional_status": VIRASORO_EXCEPTIONAL_CHARGES.get(
+            c, "generic_or_nonexceptional_Virasoro_charge"
+        ),
+    }
+
+
 # ---------------------------------------------------------------------------
 # Affine Kac-Moody  V_k(g)  (C3, C9, C13)
 # ---------------------------------------------------------------------------
+
+def _km_is_critical(h_v: int, k: Fraction) -> bool:
+    """Whether k is the affine critical level -h^v."""
+    return Fraction(k) == -Fraction(h_v)
+
+
+def _raise_if_km_critical(h_v: int, k: Fraction, formula_name: str) -> None:
+    if _km_is_critical(h_v, k):
+        raise ValueError(
+            f"{formula_name} is a generic affine conductor formula; "
+            "critical level k = -h^v belongs to the Feigin-Frenkel "
+            "center lane and is not a Sugawara/KZ conductor point"
+        )
+
+
+def _km_scalar_kappa(dim_g: int, h_v: int, k: Fraction) -> Fraction:
+    """Scalar kappa expression, including its critical zero."""
+    k = Fraction(k)
+    return Fraction(dim_g) * (k + Fraction(h_v)) / (2 * Fraction(h_v))
+
+
+def km_level_scope(dim_g: int, h_v: int, k: Fraction) -> Dict[str, Any]:
+    """Scope report for affine KM conductor computations.
+
+    The scalar expression for kappa vanishes at k=-h^v, but that
+    critical value is not a generic conductor/Koszul-duality point:
+    Sugawara, KZ, and the non-critical bar diagonal package are absent.
+    """
+    k = Fraction(k)
+    h_dual = Fraction(h_v)
+    critical = _km_is_critical(h_v, k)
+    kappa_scalar = _km_scalar_kappa(dim_g, h_v, k)
+    kappa_dual_scalar = _km_scalar_kappa(dim_g, h_v, km_dual_level(k, h_v))
+    return {
+        "family": "affine_kac_moody",
+        "level": k,
+        "critical_level": -h_dual,
+        "dim_g": dim_g,
+        "h_dual": h_dual,
+        "is_critical": critical,
+        "generic_conductor_formula_applies": not critical,
+        "central_charge_defined": not critical,
+        "status": AFFINE_CRITICAL_STATUS if critical else AFFINE_NONCRITICAL_STATUS,
+        "hypothesis_package": AFFINE_CONDUCTOR_HYPOTHESES if not critical else tuple(),
+        "missing_hypotheses": (
+            AFFINE_CRITICAL_MISSING_HYPOTHESES if critical else tuple()
+        ),
+        "kappa_scalar": kappa_scalar,
+        "kappa_dual_scalar": kappa_dual_scalar,
+        "K_kk_scalar_indicator": kappa_scalar + kappa_dual_scalar,
+        "critical_scalar_kappa_vanishes": critical and kappa_scalar == 0,
+        "ff_center_lane": critical,
+    }
+
 
 def km_c(dim_g: int, h_v: int, k: Fraction) -> Fraction:
     """c(V_k(g)) = k * dim(g) / (k + h^v).
 
     Sugawara formula.  k is the level (Fraction for exactness).
+    Undefined at the critical level k = -h^v.
     """
     k = Fraction(k)
+    _raise_if_km_critical(h_v, k, "km_c")
     return k * Fraction(dim_g) / (k + Fraction(h_v))
 
 
@@ -132,9 +267,10 @@ def km_dual_c(dim_g: int, h_v: int, k: Fraction) -> Fraction:
 
 
 def km_kappa(dim_g: int, h_v: int, k: Fraction) -> Fraction:
-    """kappa(V_k(g)) = dim(g) * (k + h^v) / (2 * h^v).  (C3)"""
+    """kappa(V_k(g)) on the non-critical affine conductor lane.  (C3)"""
     k = Fraction(k)
-    return Fraction(dim_g) * (k + Fraction(h_v)) / (2 * Fraction(h_v))
+    _raise_if_km_critical(h_v, k, "km_kappa")
+    return _km_scalar_kappa(dim_g, h_v, k)
 
 
 def km_dual_kappa(dim_g: int, h_v: int, k: Fraction) -> Fraction:
@@ -178,138 +314,40 @@ def wn_K_kk(c: Fraction, c_dual: Fraction, n: int) -> Fraction:
 
 
 # For W_N the dual central charge depends on N.
-# W_2 = Vir: c' = 26 - c, K_kk = 13.
-# W_3: c' = 250/3 - c  (from K_kk = 250/3 at all c).
-# General W_N: K_kk = K_N is a constant independent of c.
+# K_c(W_N) = c + c' = 4*N^3 - 2*N - 2.
+# K_kk(W_N) = (H_N - 1) * K_c(W_N).
+
+def wn_spin_set(n: int) -> Tuple[int, ...]:
+    """Principal W_N strong-generator spin set {2, 3, ..., N}."""
+    if n < 2:
+        raise ValueError("W_N conductor lane requires N >= 2")
+    return tuple(range(2, n + 1))
+
+
+def wn_central_charge_conductor(n: int) -> Fraction:
+    """K_c(W_N) = c(W_N) + c(W_N^!) = 4*N^3 - 2*N - 2."""
+    if n < 2:
+        raise ValueError("W_N conductor lane requires N >= 2")
+    return Fraction(4 * n**3 - 2 * n - 2)
+
 
 def wn_conductor_constant(n: int) -> Fraction:
-    """The constant K_N such that kappa(W_N,c) + kappa(W_N,c') = K_N.
+    """Scalar K_kk(W_N) = kappa(W_N,c) + kappa(W_N,c').
 
-    Since kappa(W_N) = c*(H_N - 1), and K_N = (c + c')*(H_N - 1),
-    we need c + c' for the W_N family.  Known:
-      W_2: c + c' = 26,  K_kk = 26 * (3/2 - 1) = 26 * 1/2 = 13
-      W_3: K_kk = 250/3 (C18)
-           so c + c' = (250/3) / (H_3 - 1) = (250/3) / (11/6 - 1) = (250/3) / (5/6) = 100
+    This is not the central-charge conductor K_c.  The relation is
+    K_kk(W_N) = (H_N - 1) * K_c(W_N), with
+    K_c(W_N) = 4*N^3 - 2*N - 2.
     """
     h_n = harmonic(n)
     factor = h_n - Fraction(1)
     if factor == 0:
         raise ValueError("W_1 has no Koszul conductor (trivial)")
-    # c + c' for W_N family
-    cc_sum = _wn_cc_sum(n)
-    return cc_sum * factor
+    return wn_central_charge_conductor(n) * factor
 
 
 def _wn_cc_sum(n: int) -> Fraction:
-    """c + c' for the W_N family.
-
-    Known values:
-      W_2 (= Vir): c + c' = 26
-      W_3: c + c' = 100  (derived from K_kk = 250/3 and H_3 - 1 = 5/6)
-      W_4: c + c' = 196  (Feigin-Frenkel; 2*N*(2*N^2 + 1)/3 at N=4 gives 196/3? No.)
-
-    General formula: c + c' for W_N under DS reduction of sl_N at levels k, k'=-k-2N:
-      c(W_N, k) = (N-1)[1 - N(N+1)/(k+N)]  (Fateev-Lukyanov)
-      c(W_N, k') with k'=-k-2N:
-      c + c' = (N-1)[2 - N(N+1)/(k+N) - N(N+1)/(-k-N)]
-             = (N-1)[2 - N(N+1)*(1/(k+N) + 1/(-k-N))]
-             = (N-1)[2 - N(N+1)*(1/(k+N) - 1/(k+N))]
-             = 2*(N-1)
-
-    Wait, that gives c+c' = 2*(N-1) which at N=2 gives 2, not 26.
-    The standard c formula is different.  Let me use the FLM form:
-
-      c(W_N, k) = (N-1) - N*(N^2-1)*(N-1+k+N)*(stuff)...
-
-    Actually the correct Sugawara-DS formula is:
-      c(W_N, k) = (N-1)[1 - N(N+1)(N-1)/{(k+N)(k+N-1)... }]
-
-    This is getting complicated.  Let me just use known tabulated values.
-    """
-    known = {
-        2: Fraction(26),         # Virasoro
-        3: Fraction(100),        # From K_kk = 250/3 and H_3 - 1 = 5/6
-    }
-    if n in known:
-        return known[n]
-    # For general N, use the Feigin-Frenkel central charge sum formula:
-    # c(W_N) = -(N-1)(N(N+1)(k+N) - (k+N)^2 - N^2(N^2-1)/(k+N)) ... complicated
-    # Fall back to the explicit Fateev-Lukyanov formula computed symbolically
-    return _wn_cc_sum_from_fl(n)
-
-
-def _wn_cc_sum_from_fl(n: int) -> Fraction:
-    """Compute c + c' for W_N from Fateev-Lukyanov central charge formula.
-
-    The central charge of W_N at level k (via DS of sl_N) is:
-      c(k) = (N-1)[1 - N(N+1)/(k+N)]  ... no, that is the coset formula.
-
-    Standard formula (Bouwknegt-Schoutens):
-      c(W_N, k) = (N-1) * [1 - N*(N+1) / (k+N)]
-
-    Dual level: k' = -k - 2N (same as sl_N).
-    c(k') = (N-1) * [1 - N*(N+1) / (-k - 2N + N)]
-           = (N-1) * [1 - N*(N+1) / (-k - N)]
-           = (N-1) * [1 + N*(N+1) / (k + N)]
-
-    c + c' = (N-1) * [1 - N(N+1)/(k+N) + 1 + N(N+1)/(k+N)]
-           = (N-1) * 2
-           = 2*(N-1)
-
-    But 2*(2-1) = 2, not 26 for Virasoro.  This formula is WRONG for Vir.
-
-    The issue: the Bouwknegt-Schoutens formula is for the COSET, not DS.
-    The correct Virasoro central charge from DS of sl_2 is:
-      c = 1 - 6*(k+1)^2/(k+2)    ... no.
-
-    Let me use the standard parametrization:
-      c(Vir, t) = 13 - 6*t - 6/t   where t = (k+2) for sl_2 DS.
-    Dual: t -> -t (or t -> 1/t for some conventions).
-
-    Actually for Virasoro: c = 1 - 6*(p-q)^2/(p*q) with p=k+2, q=1.
-    For generic k: c = 1 - 6*(k+1)^2/(k+2).
-
-    Let me just use the monograph's own parametrization.  We know:
-      Vir:  c + c' = 26, K_kk = 13
-      W_3:  K_kk = 250/3 (C18)
-
-    For W_4, W_5 we compute K_kk from the DS central charge formula.
-    """
-    # Use the Frenkel-Kac-Wakimoto / Fateev-Lukyanov parametrization.
-    # For W_N via DS of sl_N at level k:
-    #   c(W_N, k) = (N-1)[1 - N(N+1)(N-1) / product]
-    # This is complicated.  Instead, compute symbolically.
-    #
-    # The correct central charge for W_N from quantum DS of sl_N at level k is:
-    #   c = rank * (1 - h*(h+1) / ((k+h)(k+h+1))) ... no.
-    #
-    # Actually the correct formula (Arakawa, Frenkel-Ben-Zvi) for W_N = W(sl_N) is:
-    #   c(k) = (N-1) - 12 * |rho|^2 / (k+N)
-    # where |rho|^2 = N(N^2-1)/12 for sl_N, so:
-    #   c(k) = (N-1) - N(N^2-1) / (k+N)
-    #
-    # Dual level k' = -k - 2N:
-    #   c(k') = (N-1) - N(N^2-1) / (-k - 2N + N)
-    #         = (N-1) - N(N^2-1) / (-k - N)
-    #         = (N-1) + N(N^2-1) / (k + N)
-    #
-    # c + c' = 2(N-1)
-    #
-    # At N=2: 2*(2-1)=2.  But Virasoro c+c'=26.  CONTRADICTION.
-    #
-    # Resolution: the formula c(k)=(N-1)-N(N^2-1)/(k+N) is the SUGAWARA c,
-    # not the DS/W-algebra c.  The correct DS formula involves the full
-    # Weyl vector shift.
-    #
-    # The correct formula is (Kac-Wakimoto):
-    #   c(W_N, k) = -(N-1) + (dim sl_N) * (k/(k+N)) - 12*(N-1)*|rho_+|^2/(k+N)
-    # where |rho_+|^2 involves the nilpotent embedding.  For principal:
-    #   c = (N-1)(1 - N(N+1)*(N-1+1)/(k+N)) ... still messy.
-    #
-    # Let me just hardcode the known cc sums and flag unknown ones.
-    raise NotImplementedError(
-        f"c+c' for W_{n} not yet tabulated; add to _wn_cc_sum known dict"
-    )
+    """Backward-compatible alias for K_c(W_N) = c + c'."""
+    return wn_central_charge_conductor(n)
 
 
 # Precomputed W_N Koszul conductors K_kk for principal W-algebras.
@@ -317,29 +355,43 @@ def _wn_cc_sum_from_fl(n: int) -> Fraction:
 #   K_kk(W_N) = (c + c') * (H_N - 1)
 
 WN_CONDUCTORS: Dict[int, Fraction] = {
-    # W_2 = Vir: K_kk = 26 * (3/2 - 1) = 26 * 1/2 = 13
-    2: Fraction(13),
-    # W_3: K_kk = 250/3 (C18, monograph)
-    3: Fraction(250, 3),
+    n: wn_conductor_constant(n) for n in range(2, 6)
 }
 
 # W_N dual central charge: c'(W_N) = K_cc(W_N) - c
 WN_CC_SUMS: Dict[int, Fraction] = {
-    2: Fraction(26),    # Virasoro: c + c' = 26
-    3: Fraction(100),   # From K_kk=250/3, H_3-1=5/6: 250/3 / (5/6) = 500/6*6/5... = 100
+    n: wn_central_charge_conductor(n) for n in range(2, 6)
 }
 
 
 def wn_dual_c(c: Fraction, n: int) -> Fraction:
     """Dual central charge for W_N family."""
-    if n not in WN_CC_SUMS:
-        raise NotImplementedError(f"c+c' for W_{n} not yet tabulated")
-    return WN_CC_SUMS[n] - Fraction(c)
+    return wn_central_charge_conductor(n) - Fraction(c)
 
 
 # ---------------------------------------------------------------------------
 # Bershadsky-Polyakov  (C20, C31)
 # ---------------------------------------------------------------------------
+
+BP_DUALITY_HYPOTHESES: Tuple[str, ...] = (
+    "subregular_sl3_DS_bar_transport",
+    "self_transpose_orbit_(2,1)",
+    "PBW_Koszul_locus",
+    "finite_type_or_completed_Verdier_lane",
+)
+
+BP_STRONG_GENERATORS: Tuple[Tuple[str, Fraction, str], ...] = (
+    ("J", Fraction(1), "bosonic"),
+    ("G+", Fraction(3, 2), "fermionic"),
+    ("G-", Fraction(3, 2), "fermionic"),
+    ("T", Fraction(2), "bosonic"),
+)
+
+
+def _bp_is_critical(k: Fraction) -> bool:
+    """Whether the BP level is the parent sl_3 critical level k=-3."""
+    return Fraction(k) == Fraction(-3)
+
 
 def bp_c(k: Fraction) -> Fraction:
     """Central charge of Bershadsky-Polyakov W(sl_3, f_sub) at level k.
@@ -381,6 +433,111 @@ def bp_K_kk(k: Fraction = Fraction(0)) -> Fraction:
     """
     k = Fraction(k)
     return bp_kappa(k) + bp_kappa(-k - 6)
+
+
+def bp_j_line_scalar(k: Fraction) -> Fraction:
+    """BP Gaussian J-line scalar S_2^J = (2k+3)/3."""
+    k = Fraction(k)
+    return (2 * k + 3) / Fraction(3)
+
+
+def bp_t_line_scalar(k: Fraction) -> Fraction:
+    """BP Virasoro T-line scalar S_2^T = c_BP(k)/2."""
+    return bp_c(k) / Fraction(2)
+
+
+def bp_g_mixed_pairing(k: Fraction) -> Fraction:
+    """BP odd mixed pairing <G+,G-> = (k+1)(2k+3)."""
+    k = Fraction(k)
+    return (k + 1) * (2 * k + 3)
+
+
+def bp_ds_ghost_leg_scalar(k: Fraction) -> Fraction:
+    """Presentation-dependent DS ghost leg scalar for BP."""
+    k = Fraction(k)
+    return -Fraction(6) * (4 * k**2 + 9 * k + 3) / (k + 3)
+
+
+def bp_scope_report(k: Fraction) -> Dict[str, Any]:
+    """Scope report for the Bershadsky-Polyakov conductor lane.
+
+    BP is the subregular/minimal sl_3 Drinfeld-Sokolov branch
+    W^k(sl_3, f_(2,1)), not the principal W_N branch.  The orbit is
+    self-transpose, but same-family Koszul duality is theorem-scoped
+    and the fixed real level k=-3 is a pole of c_BP(k), not an
+    attained self-dual VOA point.
+    """
+    k = Fraction(k)
+    critical = _bp_is_critical(k)
+    report: Dict[str, Any] = {
+        "family": "Bershadsky-Polyakov",
+        "presentation": "subregular_DS_W3^(2)",
+        "parent_lie_algebra": "sl_3",
+        "nilpotent_orbit_partition": (2, 1),
+        "ds_orbit": "subregular/minimal",
+        "is_principal_W_N": False,
+        "strong_generators": BP_STRONG_GENERATORS,
+        "dual_level": -k - 6,
+        "level_fixed_by_sigma": k == -k - 6,
+        "central_charge_defined": not critical,
+        "self_transpose_orbit": True,
+        "same_family_duality_claim": "BP_k^! ~= BP_{-k-6}",
+        "duality_claim_requires_theorem": True,
+        "duality_hypothesis_package": BP_DUALITY_HYPOTHESES,
+        "formal_self_dual_central_charge": Fraction(98),
+        "formal_self_dual_levels": ("k=-3+2i", "k=-3-2i"),
+        "real_level_self_dual_c_attained": False,
+        "K_cc": Fraction(196),
+        "K_kappa": Fraction(98, 3),
+        "anomaly_ratio": Fraction(1, 6),
+        "missing_hypotheses": (
+            ("k_plus_3_nonzero",) if critical else tuple()
+        ),
+    }
+    if critical:
+        report["shadow_lines"] = {
+            "J": {"class": "G", "scalar": None},
+            "T": {"class": "M", "scalar": None},
+            "G_pairing": {"class": "mixed_fermionic", "scalar": None},
+            "full_kappa": {"scalar": None},
+            "DS_ghost_leg": {
+                "presentation_dependent": True,
+                "scalar": None,
+            },
+        }
+        report["status"] = (
+            "critical_level_pole_not_attained_self_dual_real_level"
+        )
+    else:
+        report["central_charge"] = bp_c(k)
+        report["dual_central_charge"] = bp_dual_c(k)
+        report["shadow_lines"] = {
+            "J": {
+                "class": "G",
+                "scalar": bp_j_line_scalar(k),
+            },
+            "T": {
+                "class": "M",
+                "scalar": bp_t_line_scalar(k),
+                "quartic_formula": (
+                    "5(k+3)^2/[8(12k^2+23k+9)(15k^2+26k+3)]"
+                ),
+            },
+            "G_pairing": {
+                "class": "mixed_fermionic",
+                "scalar": bp_g_mixed_pairing(k),
+            },
+            "full_kappa": {
+                "scalar": bp_kappa(k),
+                "anomaly_ratio": Fraction(1, 6),
+            },
+            "DS_ghost_leg": {
+                "presentation_dependent": True,
+                "scalar": bp_ds_ghost_leg_scalar(k),
+            },
+        }
+        report["status"] = "subregular_DS_nonprincipal_conductor_lane"
+    return report
 
 
 # ---------------------------------------------------------------------------

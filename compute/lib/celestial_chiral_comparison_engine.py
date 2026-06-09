@@ -685,13 +685,15 @@ def compare_cp_koszul_duality() -> TwistedHolographyComparison:
             "A^! is obtained from A^i by Verdier/linear duality under the "
             "finite-type or completed hypotheses.  "
             "Omega(B(A)) = A (inversion).  "
-            "Derived center Z^der_ch(A) = universal bulk (NOT bar complex).  "
+            "Derived center Z^der_ch(A) = algebraic closed-sector vertex "
+            "(NOT bar complex).  "
             "AP25: bar != bulk.  AP34: inversion != open-to-closed."
         ),
         relationship="COMPLEMENTARY: CP identify the algebras, we compute the bar complex",
         notes=(
             "CRITICAL DISTINCTION (AP25): the bar complex B(A) classifies "
-            "TWISTING MORPHISMS.  The bulk is the derived center, not the bar.  "
+            "TWISTING MORPHISMS.  The derived center is the algebraic "
+            "closed-sector vertex, not the bar.  "
             "CP's identification bulk = A tensor A! is the genus-0 approximation.  "
             "Our shadow tower provides the higher-genus corrections."
         ),

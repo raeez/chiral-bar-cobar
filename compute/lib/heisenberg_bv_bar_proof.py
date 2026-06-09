@@ -2,8 +2,8 @@ r"""Heisenberg BV/bar identification at all genera: proof and verification.
 
 THEOREM (thm:heisenberg-bv-bar-all-genera):
   For the Heisenberg algebra H_k (free boson at level k != 0) on a
-  compact Riemann surface Sigma_g of genus g >= 1, the BV partition
-  function and the bar complex free energy coincide:
+  compact Riemann surface Sigma_g of genus g >= 1, the determinant-line
+  BV free energy and the bar complex free energy coincide:
 
     F_g^{BV}(H_k) = F_g^{bar}(H_k) = k * lambda_g^{FP}
 
@@ -13,7 +13,8 @@ THEOREM (thm:heisenberg-bv-bar-all-genera):
 PROOF OUTLINE (four independent paths):
 
   Path (a): Zeta-regularization + Quillen anomaly.
-    The BV partition function is Z_g^{BV}(H_k) = (det'_zeta dbar)^{-k}.
+    The determinant-line scalar is
+    Z_g^{det}(H_k) = (det'_zeta dbar)^{-k}.
     By the Quillen anomaly formula (Quillen 1985), the curvature of the
     Quillen metric on det(R pi_* O) is the first Chern form of the Hodge
     bundle E = R^0 pi_* omega_{C/M_g}. The free energy is
@@ -26,7 +27,8 @@ PROOF OUTLINE (four independent paths):
     For a compact hyperbolic surface, the D'Hoker-Phong determinant
     formula gives det'_zeta(Delta) = Z_Sel(1) * e^{c_g} where Z_Sel is
     the Selberg zeta function and c_g = (4pi(g-1))^{-1} * zeta'_R(-1).
-    The Heisenberg partition function Z_g(H_k) = (det Im Omega)^{-k/2}
+    The Heisenberg determinant-line scalar
+    Z_g^{det}(H_k) = (det Im Omega)^{-k/2}
     * Z_Sel(1)^{-k/2} * e^{-k*c_g/2}. When integrated over M_g, the
     moduli-dependent part yields F_g = k * lambda_g^{FP} by the Mumford
     form factorization (Belavin-Knizhnik 1986).
@@ -79,7 +81,7 @@ CONVENTIONS:
     to coincide for the Heisenberg but for different reasons, see AP48).
   - lambda_g^{FP} = |B_{2g}|*(2^{2g-1}-1)/(2^{2g-1}*(2g)!)
   - F_g = kappa * lambda_g^{FP} (POSITIVE for k > 0, g >= 1)
-  - The BV partition function uses zeta-regularized determinants:
+  - The determinant-line scalar uses zeta-regularized determinants:
     det'_zeta(dbar) = exp(-zeta'_{dbar}(0))
   - Sign: B_{2g} has sign (-1)^{g+1}, so |B_{2g}| = (-1)^{g+1} B_{2g}
 
@@ -201,17 +203,17 @@ KNOWN_LAMBDA_FP = {
 
 
 # =====================================================================
-# Section 2: BV partition function for the Heisenberg
+# Section 2: determinant-line scalar for the Heisenberg
 # =====================================================================
 
 def heisenberg_bv_free_energy(k, g: int) -> Rational:
     """BV free energy F_g^{BV}(H_k) at genus g.
 
-    The BV partition function of k free bosons on Sigma_g is:
-      Z_g^{BV}(H_k) = (det'_zeta dbar_{Sigma_g})^{-k}
+    The determinant-line scalar of k free bosons on Sigma_g is:
+      Z_g^{det}(H_k) = (det'_zeta dbar_{Sigma_g})^{-k}
 
-    The free energy (log of the partition function, integrated over M_g)
-    is:
+    The free energy (log of the determinant-line scalar, integrated over
+    M_g) is:
       F_g^{BV} = -k * int_{M_g} log det'_zeta(dbar) * (moduli measure)
 
     By the Quillen anomaly formula + GRR (Path a), this equals:
@@ -486,10 +488,15 @@ def prove_bv_bar_heisenberg(g_max: int = 10) -> Dict[str, object]:
 # =====================================================================
 
 def ahat_generating_function_check(g_max: int = 8) -> bool:
-    """Verify that sum_{g>=1} lambda_g^{FP} x^{2g} = (x/2)/sinh(x/2) - 1.
+    """Verify the real A-hat coefficients underlying lambda_g^{FP}.
 
-    This is the functional identity underlying the proof: the generating
-    function of the Faber-Pandharipande numbers is the A-hat genus minus 1.
+    The positive Faber-Pandharipande scalar series is the Wick-rotated
+    identity
+
+        sum_{g>=1} lambda_g^{FP} x^{2g} = (x/2)/sin(x/2) - 1.
+
+    This check stays on the real A-hat branch and verifies the alternating
+    coefficients before taking the Wick rotation.
 
     The sign convention: A-hat(x) = (x/2)/sinh(x/2) = 1 + sum_{g>=1} a_g x^{2g}
     where a_g = (-1)^g * lambda_g^{FP}.
@@ -633,8 +640,8 @@ The Heisenberg is class G (shadow depth 2), uniform-weight (single
 generator of weight 1), so the scalar formula holds at all genera
 without cross-channel corrections.
 
-The BV side is the Gaussian functional integral:
-  Z_g^{BV}(H_k) = (det'_zeta dbar_{Sigma_g})^{-k}.
+The BV side is the determinant-line scalar:
+  Z_g^{det}(H_k) = (det'_zeta dbar_{Sigma_g})^{-k}.
 
 The identification proceeds by the Grothendieck-Riemann-Roch theorem
 applied to the universal curve pi: C_g -> M_g.

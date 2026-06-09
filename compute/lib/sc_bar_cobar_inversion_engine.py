@@ -53,7 +53,7 @@ MATHEMATICAL CONTENT:
 CRITICAL DISTINCTIONS (from CLAUDE.md):
   - Omega(B(A)) = A (bar-cobar INVERSION, recovers original) [AP25]
   - D_Ran(B(A)) is the Verdier bar-side comparison for the A^! branch [AP25, AP50]
-  - Z^der_ch(A) = universal bulk (derived center, NOT bar) [AP-OC, AP34]
+  - Z^der_ch(A) = algebraic closed sector (derived center, NOT bar) [AP-OC, AP34]
   - Bar propagator d log E(z,w) is weight 1 regardless of field weight [AP27]
   - Desuspension s^{-1} LOWERS degree by 1 [AP45]
   - H_k^! = Sym^ch(V*) != H_{-k} [AP33]
@@ -699,7 +699,7 @@ def analyze_sc_bar_cobar(ope: OPEData) -> SCBarCobarResult:
     The open/closed architecture (AP34):
       Functor (1): Omega(B(A)) = A (reconstruction)
       Functor (2): D_Ran(B(A)) gives the Verdier bar-side comparison for A^!
-      Functor (3): C^*_ch(A, A) = Z^der_ch(A) (derived center = bulk)
+      Functor (3): C^*_ch(A, A) = Z^der_ch(A) (derived center = closed sector)
     """
     result = SCBarCobarResult()
     result.recovers_closed_colour = True
@@ -1121,12 +1121,12 @@ def verify_koszul_dual_not_cobar(k=None) -> Dict[str, Any]:
       2. A^i = H^*(B(A)) is the bar-dual coalgebra; A^! is obtained from
          A^i by Verdier/linear duality under finite-type or completion
          hypotheses.
-      3. C^*_ch(A, A) = Z^der_ch(A) (derived center = BULK)
+      3. C^*_ch(A, A) = Z^der_ch(A) (derived center = closed sector)
 
     For Heisenberg H_k:
       Omega(B(H_k)) = H_k (the Heisenberg algebra itself)
       H_k^! = Sym^ch(V*) after the Verdier/linear passage (AP33: NOT H_{-k})
-      Z^der_ch(H_k) = universal bulk (different object entirely)
+      Z^der_ch(H_k) = algebraic closed sector (different object entirely)
 
     These are THREE DIFFERENT OBJECTS.
     """

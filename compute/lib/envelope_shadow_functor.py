@@ -809,12 +809,12 @@ class EnvelopeShadowEngine:
           - The composite [TT] normalization from the 2nd-order pole
           - No information beyond the T-T OPE itself
 
-        The quartic shadow at arity 4 is determined by m_2, m_3, m_4
-        (and m_2 o m_2). For Virasoro:
+        The quartic shadow is computed from the chosen transferred
+        operations m_2, m_3, m_4 (and m_2 o m_2). For Virasoro:
           - m_2 from the double pole (giving 2T)
           - m_3 from the simple pole (giving dT)
           - m_4 from composite field (from [TT])
-        All determined by the T-T OPE up to order 4 in the pole.
+        These inputs are read from the T-T OPE up to order 4 in the pole.
         """
         return {
             'family': 'Virasoro',

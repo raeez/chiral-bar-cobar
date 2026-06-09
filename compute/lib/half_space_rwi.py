@@ -127,7 +127,7 @@ class PVA:
 
     @property
     def max_pole_order(self) -> int:
-        """Maximum pole order in the lambda-bracket."""
+        """Maximum lambda degree; OPE pole order is this value plus one."""
         return self._max_pole
 
     def lambda_bracket_jet_decomposition(self, i: int, j: int,
@@ -339,13 +339,14 @@ def free_boson_pva() -> PVA:
     """Free boson PVA (Heisenberg): jet order 0.
 
     Generator: J (weight 1).
-    {J_lambda J} = lambda (constant in fields).
+    {J_lambda J} = lambda (constant in fields), corresponding to the
+    double-pole OPE J(z)J(w) ~ (z-w)^{-2}.
     Jet order = 0.
     """
     gens = [PVAGenerator("J", Rational(1))]
     pva = PVA("Heisenberg", gens)
 
-    # {J_lambda J} = lambda: pole order 1, jet order 0
+    # {J_lambda J} = lambda: lambda degree 1, OPE pole order 2, jet order 0
     pva.set_bracket(0, 0, 1, 0, Rational(1))
 
     return pva

@@ -19,14 +19,16 @@ Strategy B: Vacuum module g-invariants (PBW spectral sequence E_1).
   computations: km_vacuum_module (PBW basis + zero-mode kernel) and
   spectral_sequence.adjoint_invariant_dim (adjoint rep on Sym algebra).
 
-Strategy C: Koszul dual Hilbert series (Riordan numbers).
-  dim(A^!)_n = R(n+3) from the generating function of the Koszul dual
-  algebra (combinatorial_frontier.tex, subsec:riordan).
+Strategy C: Bar-dual/Koszul-dual Hilbert series (Riordan numbers).
+  dim(A^i)_n = R(n+3), matching dim(A^!)_n after the dual branch, from
+  the generating function of the Koszul dual algebra
+  (combinatorial_frontier.tex, subsec:riordan).
   R(4)=3, R(5)=6, R(6)=15, R(7)=36, R(8)=91, R(9)=232.
 
 IMPORTANT: Strategies A and C compute DIFFERENT things.
   Strategy A (CE of g_-) gives H^2 = 5.
-  Strategy C (Riordan) predicts dim(A^!)_2 = R(5) = 6.
+  Strategy C (Riordan) predicts dim(A^i)_2 = dim(A^!)_2 = R(5) = 6
+  after the dual branch.
   They agree at degree 1 (both give 3) but disagree at degree 2.
 
   The discrepancy arises because the CE complex uses exterior powers

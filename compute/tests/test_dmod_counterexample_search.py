@@ -32,6 +32,8 @@ References:
     BGS96: Beilinson-Ginzburg-Soergel, Koszul duality patterns
 """
 
+from fractions import Fraction
+
 import pytest
 from fractions import Fraction
 
@@ -559,6 +561,11 @@ class TestSymplecticFermionAnalysis:
     def test_not_counterexample(self):
         result = analyze_symplectic_fermion()
         assert result.counterexample_status == CounterexampleStatus.NOT_COUNTEREXAMPLE
+
+    def test_central_charge_and_kappa(self):
+        result = analyze_symplectic_fermion()
+        assert result.central_charge == Fraction(-2)
+        assert result.kappa == Fraction(-1)
 
     def test_bar_concentrated(self):
         result = analyze_symplectic_fermion()

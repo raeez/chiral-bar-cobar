@@ -30,6 +30,10 @@ References:
 import pytest
 from fractions import Fraction
 from math import comb
+from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+EN_KOSZUL_DUALITY_TEX = REPO_ROOT / "chapters/theory/en_koszul_duality.tex"
 
 from compute.lib.e1_from_chiral_bar_engine import (
     FR0, FR1,
@@ -73,6 +77,14 @@ from compute.lib.e1_from_chiral_bar_engine import (
     ce_differential_arity3,
     algebraic_vs_geometric_analysis,
 )
+
+
+def test_bar_product_space_requires_deligne_tamarkin_center_passage():
+    """The product space is not itself the chain-level SC/E_2 output."""
+    source = " ".join(EN_KOSZUL_DUALITY_TEX.read_text().split())
+    assert "operation-space witness for the product operad" in source
+    assert "not a chain-level Deligne--Tamarkin output" in source
+    assert "requires passage to the derived chiral center" in source
 
 
 # ============================================================

@@ -336,7 +336,7 @@ class TestVirasoroF2:
         assert v1 == Fraction(755, 2304)
 
     def test_virasoro_c26(self):
-        """F_2(Vir, c=26): the self-dual-adjacent point."""
+        """F_2(Vir, c=26): critical-string charge; dual is c=0, not self-dual."""
         v1 = F2_bar_virasoro(Fraction(26))
         v2 = F2_bar_virasoro_direct(Fraction(26))
         assert v1 == v2

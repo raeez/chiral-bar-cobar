@@ -432,7 +432,7 @@ def r_matrix_virasoro(z: complex, c: complex = 1) -> complex:
 def kappa_from_r_matrix_heisenberg(k: complex) -> complex:
     """Compute kappa = av(r(z)) for Heisenberg.
 
-    r(z) = k/z is already S_2-invariant (it's a scalar).
+    r(z) = k*Omega_H/z (rank-one coeff k/z) is already S_2-invariant (its coefficient is scalar after evaluation).
     av_{r=2}(r(z)) = kappa = k (the residue at z=0 of k/z
     integrated against the Sigma_2 averaging measure).
 
@@ -1310,14 +1310,14 @@ def verify_dim_formula_against_computation(n: int, d: int) -> bool:
 def verify_kappa_recovery_heisenberg(k: int = 1) -> bool:
     """Verify av(r(z)) = kappa for Heisenberg.
 
-    Heisenberg: dim(V) = 1, r(z) = k/z (scalar).
+    Heisenberg: dim(V) = 1, r(z) = k*Omega_H/z (rank-one coeff k/z) (rank-one abelian).
     av is trivial (S_2 acts trivially on a 1-dim space).
     kappa(H_k) = k.
 
     av(r(z)) should recover kappa = k (as the residue extraction
     of the S_2-coinvariant of the scalar r-matrix).
     """
-    # r(z) = k/z, already scalar, already S_2-invariant
+    # r(z) = k*Omega_H/z (rank-one coeff k/z), already rank-one abelian, already S_2-invariant
     # "kappa" = residue of r(z) at z=0 = k
     return kappa_from_r_matrix_heisenberg(k) == k
 

@@ -13,9 +13,11 @@ on H*(B(A)) for:
 
 TWO FUNDAMENTALLY DIFFERENT A-INFINITY STRUCTURES:
 
-  (1) A-infinity on H*(B(A)): the KOSZUL DUAL A^! carries an A-infinity
-      structure transferred from B(A). This is FORMAL (m_k=0 for k>=3)
-      iff A is Koszul (thm:koszul-equivalences-meta item (iii)).
+  (1) A-infinity on H*(B(A)): the bar-dual coalgebra A^i=H*(B(A))
+      carries the transferred bar model. The algebra A^! is reached only
+      after the separate Verdier/linear dual branch. This transferred
+      bar model is FORMAL (m_k=0 for k>=3) iff A is Koszul
+      (thm:koszul-equivalences-meta item (iii)).
 
   (2) Swiss-cheese operations m_k^{SC}: the SC^{ch,top} operad acts on A
       itself. These encode boundary-to-bulk coupling. For class M algebras

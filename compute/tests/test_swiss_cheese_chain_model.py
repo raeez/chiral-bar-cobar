@@ -7,9 +7,12 @@ complex for all standard families.
 Ground truth:
   - Both models compute ChirHoch*(A), so their dimensions must agree
     (FM formality + recognition theorem).
-  - Theorem H: ChirHoch^n concentrated in {0, 1, 2} for Koszul algebras.
-  - Swiss-cheese pair (Z^der, A) = (bulk, boundary): bulk is the derived
+  - Theorem H: ChirHoch^n concentrated in {0, 1, 2} only on the
+    PBW/Koszul/generic, finite-type/perfect, completed strict-ML surface.
+  - Swiss-cheese pair (Z^der_ch(A), A): the closed slot is the derived
     center, boundary is the algebra A with PBW grading.
+  - Physical bulk and holographic language require OCA data; the finite
+    dimension model does not prove that comparison.
   - Heisenberg: 1 generator weight 1
   - Affine sl_2: 3 generators weight 1
   - Virasoro: 1 generator weight 2
@@ -31,6 +34,9 @@ from compute.lib.swiss_cheese_chain_model import (
     verify_quasi_isomorphism,
     verify_quasi_isomorphism_range,
     swiss_cheese_pair_dimensions,
+    theorem_h_scope,
+    physical_bulk_oca_scope,
+    sc_ch_top_operation_scope,
     # Growth analysis
     cochain_growth_rate,
     dimension_table,
@@ -44,6 +50,8 @@ from compute.lib.swiss_cheese_chain_model import (
     verify_all_families,
     # Internal helpers
     FAMILIES,
+    OCA_HYPOTHESES,
+    SC_CH_TOP_OPERATION_GATES,
     _count_pbw_states,
     _generator_weights,
     _num_generators,
@@ -186,20 +194,59 @@ class TestCochainDimensions:
 class TestSwissCheesePair:
 
     def test_bulk_concentrated_012(self, family):
-        """Bulk (derived center) concentrated in degrees {0, 1, 2}."""
+        """Bulk concentration is recorded on the Theorem H surface."""
         result = swiss_cheese_pair_dimensions(family, 6)
         bulk = result["bulk_dimensions"]
+        surface = result["theorem_h_surface"]
+        assert surface["applies"] is True
+        assert "PBW chiral Koszulness" in surface["hypothesis_package"]
+        assert surface["defect_complex"] is None
         assert set(bulk.keys()) == {0, 1, 2}
         for n in range(3, 10):
             assert bulk.get(n, 0) == 0
 
+    def test_affine_critical_level_is_defect_surface(self):
+        """Critical affine level is excluded from Theorem H concentration."""
+        surface = theorem_h_scope("Affine_sl2", k=Fraction(-2))
+        assert surface["applies"] is False
+        assert surface["amplitude"] is None
+        assert surface["defect_complex"] == "KD_H^bullet(A)"
+        assert "critical affine level" in surface["excluded_loci"][0]
+
+    def test_swiss_cheese_rejects_off_theorem_h_surface(self):
+        """The finite Swiss-cheese vector is not a critical-level theorem."""
+        with pytest.raises(ValueError, match="KD_H"):
+            swiss_cheese_pair_dimensions("Affine_sl2", 6, k=Fraction(-2))
+
     def test_bulk_each_degree_one(self, family):
-        """Bulk dimensions = 1 at each degree for standard families."""
+        """Derived-center dimensions = 1 at each degree for standard families."""
         result = swiss_cheese_pair_dimensions(family, 6)
         bulk = result["bulk_dimensions"]
         assert bulk[0] == 1
         assert bulk[1] == 1
         assert bulk[2] == 1
+
+    def test_pair_records_oca_firewall(self, family):
+        """Finite pair dimensions do not identify physical bulk by default."""
+        result = swiss_cheese_pair_dimensions(family, 6)
+        oca = result["physical_bulk_oca_scope"]
+        assert oca["universal_closed_sector_computed"] is True
+        assert oca["derived_center_is_physical_bulk"] is False
+        assert result["derived_center_is_physical_bulk"] is False
+        assert result["holographic_language_allowed"] is False
+        assert set(oca["missing_hypotheses"]) == set(OCA_HYPOTHESES)
+
+    def test_pair_records_bar_swiss_cheese_firewall(self, family):
+        """The ordered bar complex is not certified as an SC^{ch,top} object."""
+        result = swiss_cheese_pair_dimensions(family, 6)
+        sc_scope = result["sc_ch_top_operation_scope"]
+        assert sc_scope["derived_center_carries_sc_ch_top"] is False
+        assert sc_scope["bar_complex_carries_sc_ch_top"] is False
+        assert result["bar_complex_carries_sc_ch_top"] is False
+        assert result["sc_ch_top_action_on_derived_center_certified"] is False
+        assert len(sc_scope["missing_operation_gates"]) == len(
+            SC_CH_TOP_OPERATION_GATES
+        )
 
     def test_boundary_vacuum(self, family):
         """Boundary at weight 0 = 1 (the vacuum)."""
@@ -237,7 +284,70 @@ class TestSwissCheesePair:
 
 
 # ======================================================================
-#  4. PBW state counting
+#  4. Physical-bulk and SC^{ch,top} scope gates
+# ======================================================================
+
+class TestPhysicalBulkAndSCGates:
+
+    def test_physical_bulk_oca_missing_by_default(self):
+        """Derived-center computation is not a physical-bulk equivalence."""
+        scope = physical_bulk_oca_scope()
+        assert scope["status"] == "universal_closed_sector_only"
+        assert scope["derived_center_is_physical_bulk"] is False
+        assert scope["holographic_language_allowed"] is False
+        assert scope["comparison_map_symbol"] == (
+            "OCA: O_bulk^phys(A) -> Z_ch^der(A)"
+        )
+        assert set(scope["missing_hypotheses"]) == set(OCA_HYPOTHESES)
+
+    def test_physical_bulk_oca_unlocks_with_quasi_isomorphism(self):
+        """OCA language is allowed only after all comparison data."""
+        scope = physical_bulk_oca_scope(
+            physical_bulk_observables_defined=True,
+            oca_map_defined=True,
+            oca_quasi_isomorphism_proved=True,
+        )
+        assert scope["status"] == "physical_bulk_identified"
+        assert scope["missing_hypotheses"] == ()
+        assert scope["derived_center_is_physical_bulk"] is True
+        assert scope["holographic_language_allowed"] is True
+
+    def test_sc_ch_top_scope_missing_by_default(self):
+        """Dimension vectors alone do not define SC^{ch,top} operations."""
+        scope = sc_ch_top_operation_scope()
+        assert scope["status"] == "dimension_vector_only"
+        assert scope["minimal_generators_claim_allowed"] is False
+        assert scope["derived_center_carries_sc_ch_top"] is False
+        assert scope["bar_complex_carries_sc_ch_top"] is False
+        assert "SC^{ch,top} operation spaces defined" in scope[
+            "missing_operation_gates"
+        ]
+
+    def test_sc_ch_top_scope_unlocks_with_all_data(self):
+        """The derived-center action requires the full operation package."""
+        scope = sc_ch_top_operation_scope(
+            operation_spaces_defined=True,
+            minimal_generators_fully_known=True,
+            codim_one_generators_stated=True,
+            codim_two_relations_stated=True,
+            arnold_closed_proved=True,
+            stasheff_open_proved=True,
+            mixed_square_proved=True,
+            no_open_to_closed_rule_defined=True,
+            closed_colour_retract_proved=True,
+            derived_center_sc_action_proved=True,
+            bar_complex_sc_action_excluded=True,
+        )
+        assert scope["status"] == "SC_ch_top_action_on_derived_center_certified"
+        assert scope["missing_operation_gates"] == ()
+        assert scope["minimal_generators_claim_allowed"] is True
+        assert scope["derived_center_carries_sc_ch_top"] is True
+        assert scope["bar_complex_carries_sc_ch_top"] is False
+        assert scope["bar_complex_sc_status"] == "excluded_by_type"
+
+
+# ======================================================================
+#  5. PBW state counting
 # ======================================================================
 
 class TestPBWStates:
@@ -284,7 +394,7 @@ class TestPBWStates:
 
 
 # ======================================================================
-#  5. FM geometry
+#  6. FM geometry
 # ======================================================================
 
 class TestFMGeometry:
@@ -328,7 +438,7 @@ class TestFMGeometry:
 
 
 # ======================================================================
-#  6. Weight-bound convergence
+#  7. Weight-bound convergence
 # ======================================================================
 
 class TestWeightConvergence:
@@ -347,7 +457,7 @@ class TestWeightConvergence:
 
 
 # ======================================================================
-#  7. Cross-family comparison
+#  8. Cross-family comparison
 # ======================================================================
 
 class TestCrossFamilyComparison:
@@ -373,7 +483,7 @@ class TestCrossFamilyComparison:
 
 
 # ======================================================================
-#  8. Euler characteristic
+#  9. Euler characteristic
 # ======================================================================
 
 class TestEulerCharacteristic:
@@ -391,7 +501,7 @@ class TestEulerCharacteristic:
 
 
 # ======================================================================
-#  9. Generator metadata
+#  10. Generator metadata
 # ======================================================================
 
 class TestGeneratorMetadata:
@@ -422,7 +532,7 @@ class TestGeneratorMetadata:
 
 
 # ======================================================================
-#  10. Parametric sweeps
+#  11. Parametric sweeps
 # ======================================================================
 
 class TestParametricSweeps:

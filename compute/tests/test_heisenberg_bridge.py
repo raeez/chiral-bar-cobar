@@ -17,7 +17,7 @@ the FULL inter-volume pipeline on the simplest atom:
        SC lives on the derived-center pair
     8. m_k = 0 for k >= 3 (formality: Heisenberg is E_infty)
     9. PVA descent: regular part of m_2 = commutative, singular = lambda-bracket
-   10. Spectral R-matrix: trivial (E_infty => no braiding)
+   10. Ordered-bar R-matrix: scalar exp(k*hbar/z), abelian but nontrivial
 
 One example. All structure visible.
 
@@ -39,6 +39,7 @@ from compute.lib.heisenberg_bar import (
     heisenberg_bar_cohomology_dim,
     partition_number,
 )
+from compute.lib.ordered_bar_descent_engine import HeisenbergRMatrix
 
 
 # ============================================================
@@ -243,18 +244,19 @@ class TestVolII_SwissCheese:
         # For Heisenberg, it's absent
         assert 0 not in products, "No simple pole => trivial lambda-bracket"
 
-    def test_spectral_r_matrix_trivial(self):
-        """The spectral R-matrix is trivial for the Heisenberg atom.
+    def test_scalar_ordered_bar_r_matrix_nontrivial(self):
+        """The Heisenberg ordered-bar R-matrix is scalar, not trivial.
 
-        Heisenberg is E_infty (commutative), not E_1 (braided).
-        There is no spectral parameter, no R-matrix, no Yang-Baxter.
-        The Yangian atom is the E_1 counterpart where R(z) is nontrivial.
+        Heisenberg is E_infty/local in the field-valued bracket sense:
+        there is no simple OPE pole and no nonabelian Yangian R-matrix.
+        The ordered-bar descent datum is nevertheless
+        R(z) = exp(k*hbar/z), nontrivial at nonzero level.
         """
-        # E_infty = commutative = trivial braiding
-        # Verified by: no simple pole, no m_k for k >= 3, formal bar complex
+        # E_infty/local bracket data: no simple OPE pole and formal bar complex.
         products = heisenberg_nth_products()
-        # Only the double pole exists: this is the E_infty signature
         assert set(products.keys()) == {1}, "Only double pole: E_infty atom"
+        scalar_r = HeisenbergRMatrix(1).r_matrix_scalar(z_val=2.0, hbar=0.5)
+        assert abs(scalar_r - 1.0) > 1e-8, "Scalar R(z) is nontrivial at k != 0"
 
 
 # ============================================================

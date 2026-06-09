@@ -422,7 +422,7 @@ the ordinary Leibniz rule.
 \subsection{I-adic completion: topology and convergence}
 \label{sec:i-adic-completion}
 
-\begin{definition}[I-adic topology]
+\begin{definition}[I-adic topology; \ClaimStatusDefinitional]
 \label{def:i-adic-topology}
 \index{nilpotent completion}
 Let $A$ be a curved $A_\infty$ algebra with augmentation ideal $I = \ker(\varepsilon: A \to \mathbb{C})$.
@@ -777,7 +777,7 @@ Theorem~\ref{thm:bar-convergence}.
 \subsection{Conilpotency and convergence without completion}
 \label{sec:conilpotency-convergence}
 
-\begin{definition}[Conilpotent coalgebra]
+\begin{definition}[Conilpotent coalgebra; \ClaimStatusDefinitional]
 \label{def:conilpotent-complete}
 \index{conilpotent!coalgebra}
 \index{conilpotent!filtration}
@@ -981,23 +981,23 @@ At the M/S level, the completed dual has infinitely many primitive cumulants ($\
 \end{example}
 
 The infinite primitive-cumulant tail in
-Example~\ref{ex:virasoro-koszul-dual} is the genus-$0$ shadow of
-a more concrete analytic object: the spectral R-matrix of
-$\mathrm{Vir}_c$ acting on a primary state. On a rank-$1$
-primary line the path-ordered exponential of the collision
-residue closes into an elementary function.
+Example~\ref{ex:virasoro-koszul-dual} has a rank-$1$ primary-state
+shadow. On the highest-weight line of a primary module, the
+path-ordered exponential of the Virasoro collision residue becomes a
+scalar Ward factor and closes into an elementary function.
 
-\begin{computation}[Virasoro spectral R-matrix on primary states;
+\begin{computation}[Primary-state Virasoro Ward factor;
 \ClaimStatusProvedHere]
 \label{comp:virasoro-spectral-r-matrix}
-\index{Virasoro spectral R-matrix!closed form|textbf}
-\index{R-matrix!Virasoro closed form}
+\index{Virasoro!primary-state Ward factor|textbf}
+\index{Ward identity!Virasoro primary-state factor}
 For the Virasoro algebra at central charge $c$ acting on a
-primary state of conformal weight $h$, the spectral R-matrix
-admits the closed form
+primary state of conformal weight $h$, the scalar primary-state
+Ward factor is
 \begin{equation}
 \label{eq:virasoro-r-matrix-closed}
-R(z) \;=\; z^{2h}\,\exp\!\left(-\frac{c}{4\,z^{2}}\right)
+R^{\mathrm{prim}}_{h,c}(z)
+\;=\; z^{2h}\,\exp\!\left(-\frac{c}{4\,z^{2}}\right)
  \;=\; z^{2h}\,\sum_{k=0}^{\infty}
  \frac{(-c/4)^{k}}{k!\,z^{2k}}.
 \end{equation}
@@ -1011,13 +1011,8 @@ The first four series coefficients are
  \qquad
  R_6 \;=\; -\frac{c^{3}}{384}.
 \]
-Only even powers of $1/z$ appear, reflecting bosonic parity.
-The non-terminating character of this series is the genus-$0$
-signature of class~$M$ (infinite shadow depth): unlike
-Heisenberg ($R(z) = z^{k}$, terminating after the leading
-power) or affine Kac--Moody
-($R(z) = z^{\Omega/(k+h^{\vee})}$, terminating), the Virasoro
-R-matrix has infinitely many corrections in $1/z^{2}$.
+After the leading factor $z^{2h}$ is removed, only even powers of
+$1/z$ appear.
 \end{computation}
 
 \begin{proof}
@@ -1037,14 +1032,15 @@ $T_{(1)}\lvert h\rangle = h\,\lvert h\rangle$ (by
 $L_{0}\lvert h\rangle = h\lvert h\rangle$), while $T_{(3)}$
 acts as the central scalar $c/2$. The path-ordered exponential
 \[
- R(z) \;=\; \mathcal{P}\exp\!\left(\oint\;\sum_{n\geq 0}
+ R^{\mathrm{prim}}_{h,c}(z)
+ \;=\; \mathcal{P}\exp\!\left(\oint\;\sum_{n\geq 0}
  r_{n}\,z^{-n-1}\,dz\right)
 \]
 on the primary sector is a scalar path-ordered exponential of
 commuting generators ($\mathbbm{1}$ and $L_{0}$), hence reduces
 to the ordinary exponential
 \[
- R(z)\,\lvert h\rangle
+ R^{\mathrm{prim}}_{h,c}(z)\,\lvert h\rangle
  \;=\; \exp\!\left(2h\,\log z \;-\; \frac{c/2}{2\,z^{2}}\right)
  \lvert h\rangle
  \;=\; z^{2h}\,\exp\!\left(-\frac{c}{4\,z^{2}}\right)
@@ -1052,14 +1048,16 @@ to the ordinary exponential
 \]
 The $z^{2h}$ factor comes from integrating $2h/z$ along the
 contour; the exponential of the central term produces
-$\exp(-c/(4z^{2}))$. Expanding the exponential yields
-\eqref{eq:virasoro-r-matrix-closed}.
+$\exp(-c/(4z^{2}))$. Expanding the single monomial
+$-c/(4z^2)$ gives powers $z^{-2k}$ and no odd inverse powers,
+yielding \eqref{eq:virasoro-r-matrix-closed}.
 \end{proof}
 
 \begin{remark}[Independent checks]
 \label{rem:virasoro-r-matrix-paths}
-The closed form
-$R(z) = z^{2h}\,\exp(-c/(4z^{2}))$ is checked by $91$ tests in
+The scalar primary-state factor
+$R^{\mathrm{prim}}_{h,c}(z)=z^{2h}\,\exp(-c/(4z^{2}))$
+is checked by $91$ tests in
 \texttt{compute/lib/theorem\_virasoro\_spectral\_r\_matrix\_engine.py},
 including:
 \begin{itemize}
@@ -1070,11 +1068,12 @@ including:
 \item bosonic parity (only even $1/z$ powers).
 \end{itemize}
 The $R_{2} = -c/4$ first correction is the genus-$0$
-non-formality witness: it is the coefficient from which the
-infinite primitive-cumulant series
+primary-line footprint of the quartic Virasoro pole. It is one scalar
+projection of the data from which the infinite primitive-cumulant series
 $\Delta_{\mathrm{Vir}}(t) = t^{3} + 2t^{5} + \cdots$ of
 Example~\ref{ex:virasoro-koszul-dual} descends via the shadow
-obstruction tower.
+obstruction tower. It is not the full completed spectral
+$R$-operator.
 \end{remark}
 
 The Virasoro example exposes the shape of the general completion
@@ -1138,7 +1137,7 @@ of this equation involves only finitely many terms
 (Lemma~\ref{lem:degree-cutoff}); the passage to the completion is then
 quotientwise finite.
 
-\begin{definition}[Strong completion tower]
+\begin{definition}[Strong completion tower; \ClaimStatusDefinitional]
 \label{def:strong-completion-tower}
 \index{strong completion tower|textbf}
 \index{completion closure!strong completion tower}
@@ -6795,8 +6794,8 @@ agrees with $Z(\mathcal{A})$ modulo $\hbar^{2N}$.
 Here $\Dg{g}^{\,2} = 0$ holds \emph{strictly} at each genus for
 the period-corrected total differential, so each $Z_g$ is an ordinary
 cohomology object in that ambient, not the cohomology of the raw curved
-fiberwise CDG operator. This is the strict nilpotence established in
-Section~\ref{sec:strict-vs-homotopy}.
+fiberwise CDG operator. This is the strict nilpotence input used in the
+convergence argument.
 \end{proof}
 
 \subsection{Perspectives on strict nilpotence}
@@ -7835,7 +7834,8 @@ of $H_n$.
 \subsection{The curved nearby-cycle functor $\psi_n^w$}
 \label{subsec:bcac-curved-nearby-cycle}
 
-\begin{definition}[Curved nearby cycle of the curved bar coalgebra]
+\begin{definition}[Curved nearby cycle of the curved bar coalgebra;
+\ClaimStatusDefinitional]
 \label{def:bcac-curved-nearby-cycle}
 \index{nearby cycle!curved bar coalgebra!along admissible $H_n$}
 \index{CDG-coalgebra!curved nearby cycle}
@@ -7892,8 +7892,8 @@ is a CDG-coalgebra in the sense of
 \begin{proof}
 The curved bar coalgebra $(B^w(A),d_{B^w},w^{\mathrm{chir}})$
 satisfies $d_{B^w}^2+[w^{\mathrm{chir}},-]=0$ on
-$\widehat{\mathcal{O}}_{H_n}$
-(Remark~\ref{rem:bcac-deep-1}). The $V$-filtration is
+$\widehat{\mathcal{O}}_{H_n}$ by the defining CDG identity. The
+$V$-filtration is
 preserved by both $d_{B^w}$ and the action of $w^{\mathrm{chir}}$
 (by
 Lemma~\ref{lem:bar-differential-preserves-monodromy-filtration}

@@ -9,9 +9,10 @@ curved fiber complex determines a well-defined coderived object on
 Mbar_{g,n} whose global cohomology is the genus-g fiber center of A.
 (The full Theorem C package is C0 + C1 + C2; C0 is the unconditional
 fiber-center identification, and it is the ProvedHere anchor here.
-C1 Lagrangian-eigenspace decomposition is ProvedElsewhere via PTVV; C2
-is conditional on perfectness + BV -- those are decorated separately if
-and when they receive ProvedHere status.)
+C1 homotopy eigenspace decomposition is ProvedElsewhere; C2 is the
+shifted-symplectic/BV Lagrangian upgrade, conditional on its full
+hypothesis package -- those inputs are decorated separately if and when
+they receive ProvedHere status.)
 
 Derivation source (the manuscript's proof path):
   - fiberwise construction of the genus-g bar complex over Mbar_g via

@@ -30,24 +30,27 @@ Theorem H just like the quadratic regime.
 
 MATHEMATICAL CONTENT:
 
-A. E_3-ACTION ON ChirHoch VIA DE LEGER:
+A. SC/BRACE ACTION AND THE E_3-TOPOLOGISATION GATE:
    De Leger constructs SC(E_2) and proves SC(E_2) ~ SC_2 = SC^{ch,top}.
-   For any E_2-algebra A, the Hochschild-Pirashvili object Hoch(A) carries
-   an E_3-action. For CHIRAL algebras on a curve X, A is E_2-chiral
-   (factorization on FM_k(C)). By De Leger's theorem, ChirHoch*(A, A)
-   carries an E_3-action.
+   This supplies an operadic comparison target for the cochain
+   Swiss-cheese / brace structure. It does NOT by itself prove a raw
+   chain-level E_3^{top} physical bulk.  That stronger topologisation
+   requires the T1--T5 package of master_concordance.tex:
+   construct G, prove [Q,G]=T, verify filtration/completion, finite
+   propagation or a completed ambient, SDR-independence, and anomaly
+   cancellation.
 
    EXPLICIT COMPUTATION for Heisenberg:
    ChirHoch*(H_k, H_k) = (C, C, C) (degrees 0, 1, 2).
-   The E_3 operations:
+   The cochain operation data:
      - Cup product: ChirHoch^0 x ChirHoch^0 -> ChirHoch^0 (composition)
      - Gerstenhaber bracket: [,]: ChirHoch^i x ChirHoch^j -> ChirHoch^{i+j-1}
        For Heisenberg: bracket is abelian (class G)
-     - E_3 linking operations (degree 2): trivial for Heisenberg by dimension
+     - E_3 linking-degree candidates (degree 2): scalar/finite evidence only
 
-   The brace dg algebra from thm:thqg-swiss-cheese IS the explicit E_3 action
-   restricted to the tree-level stratum. De Leger's SC(E_2) construction
-   provides the OPERADIC framework for what we prove concretely.
+   The brace dg algebra from thm:thqg-swiss-cheese is the explicit
+   cochain closed-sector operation package. Calling it a raw
+   E_3^{top} action is licensed only after the topologisation gates below.
 
 B. AKL's U(N) vs OUR ChirHoch*(Vir):
    AKL compute HH*(U(N), M) where U(N) is the universal associative conformal
@@ -92,25 +95,19 @@ D. W_3 ChirHoch COMPUTATION (BOUNDED, per AP94):
 E. E_3-KOSZULNESS CONJECTURE ASSESSMENT:
    "E_3-formality of ChirHoch <=> chiral Koszulness?"
 
-   ASSESSMENT: This is FALSE as a biconditional.
-   - Forward direction (Koszulness => E_3-formality): This is WEAKER than
-     what we already prove. We prove E_2-formality (prop:e2-formality-hochschild)
-     from Koszulness via PBW concentration. E_3-formality would follow from
-     E_2-formality plus the additional SC structure. But De Leger's E_3
-     action is ALWAYS formal for any E_2-formal algebra on a curve (because
-     the SC_2 = SC^{ch,top} structure is homotopy Koszul, proved in Vol II).
-     So the forward direction is automatic: Koszulness => E_2-formality =>
-     E_3-formality (via the homotopy-Koszulity of SC^{ch,top}).
+   ASSESSMENT: This is not an unconditional biconditional.  Koszulness
+   gives the cochain Theorem-H / E_2-formality lane.  A raw
+   E_3^{top} topologisation is a further T1--T5 theorem, not a formal
+   consequence of a conformal vector or an E_2 chiral structure.
 
    - Backward direction (E_3-formality => Koszulness): FALSE.
-     E_3-formality of ChirHoch is a consequence of the SC^{ch,top} homotopy
-     Koszulity, which holds for ALL algebras, not just Koszul ones.
-     The E_3 structure on ChirHoch is formal as soon as the underlying
-     algebra is well-defined as an E_2-chiral algebra.
+     Even where the E_3^{top} package is proved, it is a topological
+     closed-sector structure, not a reconstruction theorem for the
+     bar-cobar Koszul package.
 
    CONCLUSION: E_3-formality is NOT a 13th Koszulness characterization.
-   It is AUTOMATIC and does not discriminate. The correct 12+1
-   characterizations are already in thm:koszul-equivalences-meta.
+   The correct 12+1 characterizations are already in
+   thm:koszul-equivalences-meta.
 
    However, a WEAKER variant is interesting:
    "E_3-RIGIDITY of ChirHoch (i.e., vanishing of the E_3 deformation
@@ -135,6 +132,42 @@ from fractions import Fraction
 from math import comb, factorial, gcd
 from functools import reduce
 from typing import Any, Dict, List, Optional, Tuple
+
+
+TOPOLOGIZATION_T1_T5_GATES = (
+    (
+        "conformal_vector_supplied",
+        "conformal vector T supplied in the closed-sector complex",
+    ),
+    (
+        "noncritical_level_or_alternative_twist",
+        "non-critical Sugawara denominator or a named alternative twist",
+    ),
+    (
+        "g_constructed",
+        "T1: construct G in the complete filtered BV ambient",
+    ),
+    (
+        "qg_equals_t_proved",
+        "T1: prove [Q,G]=T as the holomorphic-translation homotopy",
+    ),
+    (
+        "filtration_completion_compatible",
+        "T2: prove filtration/completion compatibility",
+    ),
+    (
+        "finite_propagation_or_completed_ambient",
+        "T3: prove finite propagation or explicitly remain completed",
+    ),
+    (
+        "sdr_independence_proved",
+        "T4: prove transferred E3 operations are SDR-independent",
+    ),
+    (
+        "anomaly_cancelled",
+        "T5: verify anomaly cancellation in H1/H2",
+    ),
+)
 
 
 # ============================================================
@@ -206,6 +239,97 @@ def e3_linking_degree() -> int:
     These give operations ChirHoch^i x ChirHoch^j -> ChirHoch^{i+j-2}.
     """
     return -2
+
+
+def raw_chain_e3_topologization_scope(
+    *,
+    family: str = "affine_km",
+    level: Optional[Fraction] = None,
+    h_vee: Optional[Fraction] = None,
+    conformal_vector_supplied: bool = False,
+    noncritical_level_or_alternative_twist: bool = False,
+    g_constructed: bool = False,
+    qg_equals_t_proved: bool = False,
+    filtration_completion_compatible: bool = False,
+    finite_propagation_or_completed_ambient: bool = False,
+    sdr_independence_proved: bool = False,
+    anomaly_cancelled: bool = False,
+) -> Dict[str, Any]:
+    """Gate raw chain-level E_3^{top} topologisation.
+
+    This is the executable version of master_concordance.tex,
+    Convention conv:master-topologisation.  A conformal vector is not
+    enough: the stress tensor must be null-homotopic as T=[Q,G] in a
+    complete filtered BV ambient, and the transferred operations must
+    survive T1--T5.
+    """
+    affine_critical = (
+        family == "affine_km"
+        and level is not None
+        and h_vee is not None
+        and level == -h_vee
+    )
+    if affine_critical:
+        noncritical_level_or_alternative_twist = False
+
+    hypotheses = {
+        "conformal_vector_supplied": conformal_vector_supplied,
+        "noncritical_level_or_alternative_twist": noncritical_level_or_alternative_twist,
+        "g_constructed": g_constructed,
+        "qg_equals_t_proved": qg_equals_t_proved,
+        "filtration_completion_compatible": filtration_completion_compatible,
+        "finite_propagation_or_completed_ambient": (
+            finite_propagation_or_completed_ambient
+        ),
+        "sdr_independence_proved": sdr_independence_proved,
+        "anomaly_cancelled": anomaly_cancelled,
+    }
+    missing = tuple(
+        label for key, label in TOPOLOGIZATION_T1_T5_GATES
+        if not hypotheses[key]
+    )
+    translations_brst_exact = g_constructed and qg_equals_t_proved
+    e2_to_e3_on_brs_cohomology = (
+        conformal_vector_supplied
+        and translations_brst_exact
+        and filtration_completion_compatible
+        and anomaly_cancelled
+        and not affine_critical
+    )
+    raw_chain_e3_topological = all(hypotheses.values()) and not affine_critical
+
+    if affine_critical:
+        status = "critical_level_failure"
+        residual = (
+            "Sugawara denominator vanishes; Feigin-Frenkel centre gives "
+            "at most the critical E2-topological closed-sector lane."
+        )
+    elif raw_chain_e3_topological:
+        status = "raw_chain_E3_topologization_certified"
+        residual = None
+    elif e2_to_e3_on_brs_cohomology:
+        status = "cohomological_E3_BRST_only"
+        residual = "T3/T4 raw-chain transfer gates may still be missing."
+    else:
+        status = "SC_brace_or_E2_data_only"
+        residual = "T1--T5 topologisation package incomplete."
+
+    return {
+        "family": family,
+        "level": level,
+        "h_vee": h_vee,
+        "status": status,
+        "hypotheses": hypotheses,
+        "missing_gates": missing,
+        "conformal_vector_is_sufficient": False,
+        "e2_chiral_structure_implies_e3_topological": False,
+        "translations_brst_exact": translations_brst_exact,
+        "e2_to_e3_on_brs_cohomology": e2_to_e3_on_brs_cohomology,
+        "raw_chain_e3_topological": raw_chain_e3_topological,
+        "critical_level_failure": affine_critical,
+        "residual_obstruction": residual,
+        "reference": "master_concordance.tex::conv:master-topologisation",
+    }
 
 
 # ============================================================
@@ -506,7 +630,7 @@ def akl_vs_chirhoch_virasoro(locality_N: int = 3) -> AKLComparisonResult:
     """
     if locality_N < 3:
         agreement = False
-        reason = ('Locality N < 3 misses the c/2 lambda^3 term in the '
+        reason = ('Locality N < 3 misses the T_(3)T = c/2 central term in the '
                   'Virasoro lambda-bracket. U(N) does not see the full OPE.')
     else:
         agreement = True
@@ -633,38 +757,33 @@ class E3KoszulnessAssessment:
 def assess_e3_koszulness_conjecture() -> E3KoszulnessAssessment:
     """Assess: "E_3-formality of ChirHoch <=> chiral Koszulness"?
 
-    RESULT: FALSE as biconditional. NOT a 13th characterization.
+    RESULT: not an unconditional biconditional. NOT a 13th characterization.
 
-    Forward: PROVED. Koszulness => PBW concentration (Theorem bar-concentration)
-    => ChirHoch concentrated in {0,1,2} => E_2-formality
-    (prop:e2-formality-hochschild) => E_3-formality (via homotopy-Koszulity
-    of SC^{ch,top}, Vol II thm:homotopy-Koszul).
+    Forward: CONDITIONAL. Koszulness => PBW concentration (Theorem
+    bar-concentration) => ChirHoch concentrated in {0,1,2} =>
+    E_2/brace formality on the cochain closed-sector lane.  Upgrading
+    this to raw E_3^{top} requires the T1--T5 topologisation package.
 
-    Backward: FALSE. E_3-formality is automatic from the homotopy-Koszulity
-    of SC^{ch,top}. It does not require Koszulness of the algebra A.
-    A non-Koszul algebra can have E_3-formal ChirHoch if the SC structure
-    happens to be formal (which it always is, by Vol II's theorem).
-
-    The E_3-formality is a property of the OPERAD (SC^{ch,top}), not of
-    the ALGEBRA (A). Since the operad is always homotopy-Koszul, the
-    E_3 structure is always formal.
+    Backward: FALSE. Even a proved E_3^{top} topologisation is a
+    closed-sector topological structure, not a bar-cobar reconstruction
+    theorem for A.  It does not recover the Koszul hypothesis package.
     """
     return E3KoszulnessAssessment(
-        forward_direction='Koszulness => E_3-formality',
-        forward_proved=True,
+        forward_direction='Koszulness + T1--T5 => E_3^{top} formality',
+        forward_proved=False,
         backward_direction='E_3-formality => Koszulness',
         backward_proved=False,
         backward_counterexample=(
-            'Any non-Koszul vertex algebra A still has E_3-formal ChirHoch '
-            'because the SC^{ch,top} operad is homotopy-Koszul (Vol II '
-            'thm:homotopy-Koszul). The E_3-formality is a property of the '
-            'operad, not the algebra.'
+            'A raw E_3^{top} closed-sector structure, even when T1--T5 '
+            'are discharged, is not a reconstruction theorem for the '
+            'bar-cobar Koszul package of A.'
         ),
         is_13th_characterization=False,
         reason=(
-            'E_3-formality is AUTOMATIC for all E_2-chiral algebras, Koszul '
-            'or not. It does not discriminate. The converse direction fails '
-            'because the SC^{ch,top} homotopy-Koszulity is universal.'
+            'E_2/brace formality and raw E_3^{top} topologisation live on '
+            'different typed lanes. The forward implication needs T1--T5; '
+            'the converse fails because topologisation does not reconstruct '
+            'the Koszul bar-cobar data.'
         ),
         weaker_variant=(
             'E_3-RIGIDITY: vanishing of the E_3 deformation complex '
@@ -778,50 +897,55 @@ def verify_euler_characteristic_consistency() -> Dict[str, Any]:
 
 
 def de_leger_sc_e2_identification() -> Dict[str, Any]:
-    """Verify De Leger's SC(E_2) ~ SC_2 identification.
+    """Record the De Leger SC(E_2) ~ SC_2 comparison scope.
 
     De Leger proves: for P = E_n, the operad SC(P) is equivalent to
     the Swiss-cheese operad SC_n. For n=2: SC(E_2) ~ SC_2 = SC^{ch,top}.
 
-    This means: any SC^{ch,top}-algebra A (which is what our chiral
-    algebras are) automatically gets an E_3-action on its Hochschild
-    object Hoch(A) via De Leger's construction.
-
-    The identification SC(E_2) ~ SC_2 is compatible with our
-    thm:thqg-swiss-cheese (the Swiss-cheese theorem in Vol I).
+    This is compatible with thm:thqg-swiss-cheese as a cochain
+    Swiss-cheese / brace operation statement.  It is not, by itself,
+    the raw E_3^{top} topologisation theorem.
     """
+    topologization = raw_chain_e3_topologization_scope()
     return {
         'de_leger_identification': 'SC(E_2) ~ SC_2',
         'our_identification': 'SC_2 = SC^{ch,top} (Vol I, thm:thqg-swiss-cheese)',
         'compatible': True,
-        'consequence': 'E_3-action on ChirHoch*(A, A) for all chiral algebras A',
-        'formal_for_koszul': True,
-        'formal_for_non_koszul': True,  # SC^{ch,top} homotopy-Koszul
+        'consequence': (
+            'cochain Swiss-cheese/brace operation target for ChirHoch; '
+            'raw E_3^{top} requires T1--T5'
+        ),
+        'formal_for_koszul': False,
+        'formal_for_koszul_conditional_on_t1_t5': True,
+        'formal_for_non_koszul': False,
+        'raw_e3_topological_requires_t1_t5': True,
+        'topologization_scope': topologization,
         'note': ('De Leger provides the OPERADIC framework. Our Swiss-cheese '
-                 'theorem provides the ALGEBRAIC content. Together they give '
-                 'a complete E_3-structured theory of chiral Hochschild.'),
+                 'theorem provides the ALGEBRAIC cochain content. A complete '
+                 'raw E_3^{top} theorem additionally requires T1--T5.'),
     }
 
 
 def brace_e3_compatibility_check() -> Dict[str, Any]:
-    """Verify brace dg algebra from thm:thqg-swiss-cheese is compatible
-    with De Leger's E_3 action.
+    """Check brace data against the E_3 topologisation firewall.
 
     The brace dg algebra B_k: ChirHoch^p x (ChirHoch^{q_1} x ... x ChirHoch^{q_k})
-    -> ChirHoch^{p + sum(q_i) - k}
-    encodes the SC^{ch,top} action. De Leger's E_3 structure CONTAINS this
-    as the tree-level (genus 0) contribution.
-
-    Compatibility: the brace operations are EXACTLY the E_3 operations
-    restricted to the tree-level stratum of the operad.
+    -> ChirHoch^{p + sum(q_i) - k} encodes the cochain
+    SC^{ch,top} action.  It is compatible with the tree-level
+    operation lane, but it is not equal to raw chain-level
+    E_3^{top} topologisation unless T1--T5 have been supplied.
     """
     return {
         'brace_from_swiss_cheese': True,
-        'e3_from_de_leger': True,
-        'compatibility': 'The brace dg algebra is the tree-level E_3 structure',
+        'e3_from_de_leger': False,
+        'raw_e3_topological_claim': False,
+        'compatibility': (
+            'The brace dg algebra is the tree-level SC/brace cochain '
+            'structure; raw E3^{top} is gated by T1--T5'
+        ),
         'higher_genus': ('At genus >= 1, the E_3 structure receives corrections '
                         'from the curved bar complex (curvature kappa * omega_g). '
-                        'These are NOT part of De Leger\'s E_3 (which is genus 0). '
+                        'These are NOT part of the cochain SC/brace data. '
                         'The full modular structure requires the quantum L_infinity '
                         'extension of the cyclic deformation complex.'),
     }
@@ -836,14 +960,15 @@ def full_rectification_summary() -> Dict[str, Any]:
     return {
         'de_leger': {
             'paper': 'arXiv:2512.20167',
-            'main_result': 'SC(E_2) ~ SC_2 => E_3-action on Hochschild',
+            'main_result': 'SC(E_2) ~ SC_2 comparison for Hochschild operations',
             'impact_on_manuscript': (
-                'CONSISTENT. De Leger provides operadic framework for '
-                'our brace dg algebra structure. No corrections needed.'
+                'CONSISTENT WITH GATES. De Leger provides operadic framework '
+                'for the brace dg algebra structure; raw E3^{top} still '
+                'requires T1--T5.'
             ),
             'new_content': (
-                'E_3-formality of ChirHoch is automatic from homotopy-'
-                'Koszulity of SC^{ch,top}. NOT a new Koszulness characterization.'
+                'E3-formality of ChirHoch is not an automatic new '
+                'Koszulness characterization; topologisation is gated.'
             ),
         },
         'akl': {
@@ -870,9 +995,10 @@ def full_rectification_summary() -> Dict[str, Any]:
         },
         'e3_koszulness_conjecture': {
             'statement': 'E_3-formality of ChirHoch <=> chiral Koszulness?',
-            'verdict': 'FALSE as biconditional. NOT a 13th characterization.',
-            'forward': 'PROVED (automatic from PBW + SC homotopy-Koszulity)',
-            'backward': 'FALSE (E_3-formality is universal, not discriminating)',
+            'verdict': 'NOT UNCONDITIONAL. NOT a 13th characterization.',
+            'forward': 'CONDITIONAL on the T1--T5 topologisation package',
+            'backward': 'FALSE (topologisation does not reconstruct Koszulness)',
+            'topologization_scope': raw_chain_e3_topologization_scope(),
         },
         'w3_computation': {
             'chirhoch_dims_0_to_10': w3_chirhoch_dims(10),
@@ -882,12 +1008,12 @@ def full_rectification_summary() -> Dict[str, Any]:
             'matches_theorem_h': True,
         },
         'findings': [
-            'F1: De Leger SC(E_2) ~ SC_2 is CONSISTENT with our Swiss-cheese theorem. No fix needed.',
+            'F1: De Leger SC(E_2) ~ SC_2 is compatible with our Swiss-cheese theorem only on the cochain SC/brace lane; raw E3^{top} still needs T1--T5.',
             'F2: AKL HH*(U(3), Vir) AGREES with our ChirHoch*(Vir) at generic c. The relationship is via spectral sequence degeneration.',
             'F3: Griffin CVA BRST at n=1 RECOVERS our DS reduction. Consistent.',
-            'F4: E_3-formality does NOT give a 13th Koszulness characterization. It is automatic from SC homotopy-Koszulity.',
+            'F4: E_3-formality does NOT give a 13th Koszulness characterization; the forward topologisation claim is conditional on T1--T5.',
             'F5: W_3 ChirHoch verified at weights 0-10 against Theorem-H bounded amplitude [0,2] prediction (AP94, AP95).',
-            'F6: POTENTIAL FINDING (MODERATE): The brace dg algebra in the manuscript is the tree-level E_3 structure. This should be stated explicitly at Remark rem:e2-formality-vs-thmH.',
+            'F6: POTENTIAL FINDING (MODERATE): The brace dg algebra in the manuscript is the tree-level SC/brace cochain structure, not raw E3^{top} without T1--T5.',
             'F7: POTENTIAL FINDING (MINOR): AKL reference should be cited when discussing associative conformal envelope vs chiral Hochschild comparison.',
         ],
     }

@@ -33,15 +33,19 @@ from sympy import (
     symbols,
 )
 
+from compute.lib.independent_verification import independent_verification
 from compute.lib.miura_universality_proof_engine import (
     SPINS_TO_TEST,
+    SPIN3_COMPOSITE_CORRECTION,
     combined_cross_coefficient,
     delta_psi,
     drinfeld_cross_term_data,
     lower_miura_noncontribution_data,
+    miura_triangularity_under_delta_witness,
     miura_sector_expression,
     run_assertions,
     single_j_miura_channel_data,
+    triangular_delta_bound_for_composite,
     verify_spin,
 )
 
@@ -124,7 +128,7 @@ def test_classical_and_free_boson_limits(s):
 # support <= s-2 and cannot hit the J tensor W_{s-1} channel on either side.
 # ---------------------------------------------------------------------------
 
-@pytest.mark.parametrize("s", [3, 4, 5])
+@pytest.mark.parametrize("s", [3, 4, 5, 6])
 def test_lower_miura_sectors_do_not_hit_target_channel(s):
     lower = lower_miura_noncontribution_data(s)
     # For each k >= 2, the Miura sector :J^k . W_{s-k}: has W-spin = s-k <= s-2
@@ -132,6 +136,67 @@ def test_lower_miura_sectors_do_not_hit_target_channel(s):
         assert item["hits_target_channel"] is False, (
             f"lower Miura sector at s={s}, k={item['k']} hits target channel"
         )
+
+
+# ---------------------------------------------------------------------------
+# (Independent verification) Lemma lem:miura-triangularity-under-Delta
+# Drinfeld index-pair enumeration gives a finite witness that Delta_z cannot
+# raise the W-spin filtration in the lower Miura sectors at spins 4, 5, 6.
+# ---------------------------------------------------------------------------
+
+@independent_verification(
+    claim="lem:miura-triangularity-under-Delta",
+    derived_from=[
+        "Manuscript proof in ordered_associative_chiral_kd.tex using the W-spin filtration and triangular Miura inverse",
+        "Prochazka-Rapcak triangular basis input psi_n = W_n + P_n(J,W_2,...,W_{n-1})",
+    ],
+    verified_against=[
+        "Drinfeld psi-index support enumeration from delta_psi(n,z): all tensor indices in Delta_z(psi_n) are <= n",
+        "Finite lower-sector witness at spins 4,5,6 including :J^2T:, :TT:, :J^2W_3:, :TW_3:, :J^2W_4:, :TW_4:, :W_3W_3:",
+        "Spin-3 composite coefficient (1-Psi)/(2*Psi**2) has source W-spin 1 below target spin 2",
+    ],
+    disjoint_rationale=(
+        "The manuscript proof is a filtration argument in the primary W-basis. "
+        "This test enumerates Drinfeld psi-index tensor pairs and finite "
+        "representative lower composites, then checks only the numerical "
+        "spin bounds.  It does not reuse the manuscript support conclusion "
+        "that the target channel is absent."
+    ),
+)
+def test_miura_triangularity_under_delta_finite_witness_spins_4_to_6():
+    witness = miura_triangularity_under_delta_witness((4, 5, 6))
+
+    spin3 = witness["spin3_composite_correction"]
+    assert simplify(spin3["coefficient"] - SPIN3_COMPOSITE_CORRECTION) == 0
+    assert simplify(spin3["coefficient"] - (1 - Psi_sym) / (2 * Psi_sym ** 2)) == 0
+    assert spin3["source_w_spin_bound"] == 1
+    assert spin3["target_spin"] == 2
+    assert spin3["hits_target_channel"] is False
+
+    for spin, data in witness["spins"].items():
+        assert data["target_spin"] == spin - 1
+        assert data["all_current_bounds_below_target"] is True
+        assert data["all_representative_bounds_below_target"] is True
+        for item in data["current_sector_bounds"]:
+            assert item["source_w_spin"] <= spin - 2
+            assert item["max_tensor_w_spin_bound"] <= spin - 2
+            assert item["hits_target_channel"] is False
+        for item in data["representative_lower_composites"]:
+            assert item["w_spin_bound"] <= spin - 2
+            assert item["hits_target_channel"] is False
+
+
+@pytest.mark.parametrize("s,k,expected_bound", [(4, 2, 2), (5, 2, 3), (6, 2, 4)])
+def test_current_sector_triangular_delta_bound_is_sharp_in_worst_case(
+    s,
+    k,
+    expected_bound,
+):
+    data = triangular_delta_bound_for_composite(s, k)
+    assert data["source_w_spin"] == expected_bound
+    assert data["max_tensor_w_spin_bound"] == expected_bound
+    assert data["target_spin"] == s - 1
+    assert data["hits_target_channel"] is False
 
 
 # ---------------------------------------------------------------------------

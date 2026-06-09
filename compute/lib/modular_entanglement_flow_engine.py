@@ -21,7 +21,7 @@ EXTENDS entanglement_shadow_engine.py with:
 5. ENTANGLEMENT SPECTRUM:
    lambda_i = exp(-E_i), E_i = (2pi/beta_eff)(h_i - c/24).
 
-6. QES STATIONARITY verification.
+6. Scalar complementarity proxy for the conjectural QES dictionary.
 
 7. MUTUAL INFORMATION from cross-ratio.
 
@@ -32,7 +32,8 @@ EXTENDS entanglement_shadow_engine.py with:
 10. CROSS-FAMILY CENSUS.
 
 Mathematical framework:
-  - Shadow connection nabla^sh = d - Q'/(2Q) dt generates modular flow
+  - Shadow connection nabla^sh = d - Q'/(2Q) dt models a conjectural
+    algebraic analogue of modular flow after analytic completion
   - Parallel transport Phi(t) = sqrt(Q(t)/Q(0))
   - Modular Hamiltonian is the generator of the flow
   - Replica trick: Z_n = Tr(rho^n) = (L/eps)^{-2h_n} with h_n = (c/24)(n-1/n)
@@ -606,27 +607,32 @@ def entanglement_spectrum_primaries(c_val, primaries, L_val=1):
 
 
 # ===========================================================================
-# 6. QES STATIONARITY VERIFICATION
+# 6. SCALAR PROXY FOR THE QES DICTIONARY
 # ===========================================================================
 
 def qes_stationarity_scalar(kappa_val, kappa_dual_val, log_ratio):
-    r"""Verify QES stationarity at the scalar level.
+    r"""Compute the scalar complementarity proxy for the QES dictionary.
 
-    The quantum extremal surface condition:
+    A physical quantum extremal surface condition has the form:
         d/dA [ A_RT/4G + S_EE^{bulk} ] = 0
 
-    In the modular Koszul framework:
+    The modular Koszul scalar calculation supplies only the algebraic
+    proxy:
         A_RT/4G = S_EE(A) = (2*kappa/3)*log(L/eps)
         S_EE^{bulk} = S_EE(A!) = (2*kappa!/3)*log(L/eps)
+    after a Brown-Henneaux/RT dictionary has identified the scalar
+    entropy with an area term.
 
     The total generalized entropy:
         S_gen = S_EE(A) + S_EE(A!)
               = (2/3)(kappa + kappa')*log(L/eps)
 
     For Virasoro: kappa + kappa' = 13 (constant), so d/dc S_gen = 0
-    trivially.  This is the QES condition at the scalar level.
+    trivially.  This is not, by itself, a physical QES theorem:
+    physical QES requires a gravitational dual, Brown-Henneaux
+    normalization, and the replica/FLM dictionary.
 
-    Returns dict with area term, bulk term, total, and stationarity check.
+    Returns dict with scalar proxy terms and a stationarity check.
     """
     kappa_val = Rational(kappa_val)
     kappa_dual = Rational(kappa_dual_val)
@@ -641,17 +647,19 @@ def qes_stationarity_scalar(kappa_val, kappa_dual_val, log_ratio):
         'total_gen_entropy': total,
         'kappa_sum': kappa_sum,
         'is_stationary': True,  # d/dc(kappa + kappa') = 0 when sum is const
+        'physical_qes_status': 'requires Brown-Henneaux/RT/FLM dictionary',
     }
 
 
 def qes_heisenberg(k_val, log_ratio=1):
-    r"""QES for Heisenberg: EXACT (class G, no corrections).
+    r"""Scalar QES-dictionary proxy for Heisenberg.
 
     S_gen = S_EE(H_k) = (2*k/3)*log(L/eps)
 
     Heisenberg is NOT self-dual; there is no complementarity partner
-    in the same family.  The QES condition is trivially satisfied
-    because there are no shadow corrections.
+    in the same family.  The scalar shadow proxy has no correction
+    channels; a physical QES interpretation still requires the
+    external gravitational dictionary.
     """
     k_val = Rational(k_val)
     kappa = kappa_heisenberg(k_val)
@@ -662,11 +670,12 @@ def qes_heisenberg(k_val, log_ratio=1):
         'S_EE': s_ee,
         'exact': True,
         'shadow_corrections': 0,
+        'physical_qes_status': 'requires gravitational dual for QES interpretation',
     }
 
 
 def qes_virasoro(c_val, log_ratio=1):
-    r"""QES for Virasoro at central charge c.
+    r"""Scalar QES-dictionary proxy for Virasoro at central charge c.
 
     S_gen(c) = S_EE(Vir_c) + S_EE(Vir_{26-c})
              = (2/3)(c/2 + (26-c)/2)*log(L/eps)
@@ -674,8 +683,10 @@ def qes_virasoro(c_val, log_ratio=1):
 
     The stationarity dS_gen/dc = 0 is automatic because
     kappa(c) + kappa(26-c) = 13 is independent of c.
+    Interpreting this scalar identity as QES stationarity requires
+    the Brown-Henneaux/RT/FLM dictionary.
 
-    Returns dict with all QES data.
+    Returns dict with scalar proxy data.
     """
     c_val = Rational(c_val)
     kappa = kappa_virasoro(c_val)
@@ -695,11 +706,12 @@ def qes_virasoro(c_val, log_ratio=1):
         'expected_S_gen': Rational(26, 3) * log_ratio,
         'is_stationary': s_ee + s_dual == Rational(26, 3) * log_ratio,
         'self_dual': c_val == 13,
+        'physical_qes_status': 'requires Brown-Henneaux/RT/FLM dictionary',
     }
 
 
 def qes_affine_sl2(k_val, log_ratio=1):
-    r"""QES data for affine sl_2 at level k.
+    r"""Scalar QES-dictionary proxy for affine sl_2 at level k.
 
     kappa(sl_2, k) = 3(k+2)/4.
     Class L: one cubic correction (sub-leading).
@@ -715,6 +727,7 @@ def qes_affine_sl2(k_val, log_ratio=1):
         'kappa': kappa,
         'S_EE_scalar': s_ee,
         'correction_depth': 3,
+        'physical_qes_status': 'requires gravitational dual for QES interpretation',
     }
 
 

@@ -552,10 +552,10 @@ class TestConvenienceFunctions:
 # ============================================================
 
 class TestKoszulDualHilbert:
-    """The Koszul dual Hilbert function dim(A^!)_n."""
+    """The bar-dual dimensions dim(A^i)_n, matching dim(A^!)_n after duality."""
 
     def test_hilbert_series_values(self, engine_w12):
-        """dim(A^!)_n = 2n+1 for n = 1..4."""
+        """dim(A^i)_n = 2n+1 for n = 1..4."""
         for n in range(1, 5):
             total = sum(engine_w12.cohomology_dim(n, h) for h in range(13))
             assert total == 2 * n + 1

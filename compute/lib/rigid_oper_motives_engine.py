@@ -83,7 +83,7 @@ IV. MOTIVIC WEIGHT AND HODGE STRUCTURE
 The rank-1 local system with monodromy -1 defines a weight-0 variation of
 mixed Hodge structure (pure Hodge type (0,0) with Z/2 coefficients).
 
-The shadow obstruction class obs_g = kappa * lambda_g has Hodge type (g,g)
+The scalar shadow obstruction class obs_g^sc = kappa * lambda_g has Hodge type (g,g)
 on M_g. The rigidity of the oper constrains the motivic Galois group:
 the monodromy group Z/2 is ABELIAN, hence the motivic Galois group acts
 through its abelianization = the connected component of the identity in the
@@ -738,10 +738,10 @@ def shadow_oper_motivic_data() -> MotivicData:
 
 
 def obstruction_class_hodge_type(genus: int) -> Dict[str, Any]:
-    r"""Hodge type of obs_g = kappa * lambda_g on M_g.
+    r"""Hodge type of obs_g^sc = kappa * lambda_g on M_g.
 
     The Hodge bundle lambda_g = c_g(E) has Hodge type (g, g) in
-    H^{2g}(M_g). Therefore obs_g = kappa * lambda_g has:
+    H^{2g}(M_g). Therefore obs_g^sc = kappa * lambda_g has:
 
     - Cohomological degree: 2g
     - Hodge type: (g, g)
@@ -1375,7 +1375,7 @@ def motivic_galois_constraints() -> Dict[str, Any]:
        through its abelianization. For CM motives, this means the
        action factors through the Galois group of the CM field.
 
-    3. CONSTRAINED TOWER: The genus-g obstruction obs_g = kappa * lambda_g
+    3. CONSTRAINED TOWER: The scalar genus-g obstruction obs_g^sc = kappa * lambda_g
        transforms under the motivic Galois group by the character
        chi^g = (-1)^g. This ALTERNATION is a consequence of the Z/2
        monodromy.

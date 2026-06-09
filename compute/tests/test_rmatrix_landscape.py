@@ -557,7 +557,7 @@ class TestSkewSymmetrySl3:
 
 
 class TestSkewSymmetryHeisenberg:
-    """Heisenberg: r(z) = k/z is an odd function => r(z) + r(-z) = 0."""
+    """Heisenberg: r(z) = k*Omega_H/z (rank-one coeff k/z) is an odd function => r(z) + r(-z) = 0."""
 
     def test_odd_function(self):
         k = Fraction(5)
@@ -593,7 +593,7 @@ class TestSkewSymmetryVirasoro:
 # ========================================================================
 
 class TestExplicitHeisenberg:
-    """Verify r(z) = k/z at specific values."""
+    """Verify r(z) = k*Omega_H/z (rank-one coeff k/z) at specific values."""
 
     def test_at_z_1(self):
         assert heisenberg_r_explicit(Fraction(3), 1.0) == pytest.approx(3.0)
@@ -781,7 +781,7 @@ class TestCrossFamilyConsistency:
     def test_heisenberg_is_abelian_sl1(self):
         """Heisenberg r-matrix has same structure as affine abelian (no bracket).
 
-        Both have r(z) = k/z with a simple pole only.
+        Both have r(z) = k*Omega_H/z (rank-one coeff k/z) with a simple pole only.
         """
         k = Fraction(3)
         h = heisenberg_rmatrix(k)
@@ -937,7 +937,7 @@ class TestEdgeCases:
     """Edge cases and parametric tests."""
 
     def test_heisenberg_negative_level(self):
-        """Negative level k < 0: r(z) = k/z with k < 0."""
+        """Negative level k < 0: r(z) = k*Omega_H/z (rank-one coeff k/z) with k < 0."""
         k = Fraction(-3, 2)
         fam = heisenberg_rmatrix(k)
         assert fam.channels["JJ"]["rmatrix_poles"][1] == k
@@ -1019,7 +1019,7 @@ class TestAP126AbelianLimit:
         # The single OPE pole has coefficient 0; after AP19 absorption
         # the resulting r-matrix has no nonzero poles.
         assert fam.channels["JJ"]["rmatrix_poles"] == {}, (
-            "Heisenberg r(z) = k/z must vanish at k=0; AP126 violation"
+            "Heisenberg r(z) = k*Omega_H/z (rank-one coeff k/z) must vanish at k=0; AP126 violation"
         )
 
     def test_heisenberg_k_zero_kappa(self):

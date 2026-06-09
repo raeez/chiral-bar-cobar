@@ -527,6 +527,19 @@ class TestFormalityComparison:
         assert len(our_classes) == 4
         assert our_classes == {'G', 'L', 'C', 'M'}
 
+    def test_ap126_nonformality_is_feature_not_defect(self):
+        """AP126: d'=1 non-formality is refined structure, not a defect."""
+        for fam, shadow_class in [
+            ('affine_km', 'L'),
+            ('betagamma', 'C'),
+            ('virasoro', 'M'),
+        ]:
+            fc = formality_comparison(fam, d_prime=1)
+            assert not fc.gkw_is_formal
+            assert fc.shadow_class == shadow_class
+            assert 'higher-operation feature' in fc.gkw_extends_to
+            assert 'not a defect' in fc.gkw_extends_to
+
 
 # ============================================================================
 # 7. Quantitative bridge at arities 2, 3, 4
@@ -608,7 +621,7 @@ class TestQuantitativeBridgeArity4:
 # ============================================================================
 
 class TestDSquaredProof:
-    """D^2=0 has three independent proof routes."""
+    """D^2=0 has status-split comparison routes."""
 
     def test_three_routes_exist(self):
         result = feynman_d_squared_analysis('virasoro')
@@ -622,15 +635,22 @@ class TestDSquaredProof:
         result = feynman_d_squared_analysis('virasoro')
         assert result['routes']['route_A']['status'] == 'PROVED'
 
-    def test_route_b_proved(self):
+    def test_route_b_conditional_on_signed_package(self):
         result = feynman_d_squared_analysis('virasoro')
-        assert result['routes']['route_B']['status'] == 'PROVED'
+        route_b = result['routes']['route_B']
+        assert route_b['status'] == 'CONDITIONAL'
+        assert 'signed residue-pushforward' in route_b['method']
+        assert route_b['requires']
 
     def test_route_c_genus0(self):
         """GKW route is proved at genus 0 only."""
         result = feynman_d_squared_analysis('virasoro')
         assert 'genus 0' in result['routes']['route_C']['status'].lower() or \
                'Genus 0' in result['routes']['route_C']['status']
+
+    def test_routes_are_status_split(self):
+        result = feynman_d_squared_analysis('virasoro')
+        assert 'status-split' in result['notes']
 
 
 # ============================================================================
@@ -727,6 +747,8 @@ class TestKoszulnessGKW:
     def test_d1_note_mentions_12_equivalences(self):
         result = gkw_implies_koszulness_equivalence(1)
         assert '12' in result['notes']
+        assert 'higher-operation feature' in result['notes']
+        assert 'not a defect' in result['notes']
 
 
 # ============================================================================

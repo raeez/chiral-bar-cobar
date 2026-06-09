@@ -88,7 +88,7 @@ THE SYMMETRIC BAR B^Sigma_n: S_n-coinvariants (with Koszul signs).
 THE HARRISON BAR B_{Com,n}: weight-1 Eulerian idempotent component.
 
 R-MATRIX AND R-TWISTED COINVARIANTS:
-The Heisenberg r-matrix is r(z) = k/z (prop:heisenberg-r-matrix).
+The Heisenberg r-matrix is r(z) = k*Omega_H/z (rank-one coeff k/z) (prop:heisenberg-r-matrix).
 The R-matrix R(z) = exp(r(z) * hbar) acts on the bar complex.
 
 CONVENTIONS:
@@ -838,7 +838,7 @@ def compare_bar_complexes(max_arity=6):
 # ============================================================================
 
 def heisenberg_r_matrix(level=None):
-    r"""The Heisenberg r-matrix: r(z) = k/z.
+    r"""The Heisenberg r-matrix: r(z) = k*Omega_H/z (rank-one coeff k/z).
 
     From prop:heisenberg-r-matrix:
         r(z) = Res^{coll}_{0,2}(Theta_{H_k}) = k/z.

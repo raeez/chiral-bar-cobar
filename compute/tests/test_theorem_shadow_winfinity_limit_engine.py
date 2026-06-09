@@ -238,7 +238,7 @@ class TestConstantFirewalls:
         kernels = kernel_normalization_constants()
         assert kernels['affine_raw_trace_form'] == 'r^{KM}(z) = k*Omega_tr/z'
         assert kernels['affine_kz_form'] == 'r_KZ(z) = Omega/((k+h^vee)z)'
-        assert kernels['heisenberg_collision_form'] == 'r^{Heis}(z) = k/z'
+        assert kernels['heisenberg_collision_form'] == 'r^{Heis}(z) = k*Omega_H/z (coeff k/z)'
         assert kernels['virasoro_collision_form'] == 'r^{Vir}(z) = (c/2)/z^3 + 2T/z'
 
     def test_no_analytic_or_hierarchy_promotion(self):

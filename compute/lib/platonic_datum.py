@@ -273,7 +273,7 @@ class PlatonicPackage:
             "--- Component 2: Bar Coalgebra ---",
             f"  Source           : {self.bar_coalgebra.get('source', 'N/A')}",
             "",
-            "--- Component 3: Shadow Postnikov Tower ---",
+            "--- Component 3: Shadow Obstruction Tower ---",
             f"  kappa            : {self.theta_kappa}",
             f"  Cubic shadow C   : {self.theta_cubic}",
             f"  Quartic contact Q: {self.theta_quartic}",

@@ -480,7 +480,7 @@ class TestGiventalRMatrix:
         assert result['R_0'] == 'Id_{3}'
 
     def test_heisenberg_R_is_trivial(self):
-        """R-matrix is trivial for Heisenberg (shadow terminates at arity 2)."""
+        """Givental/shadow R-matrix is trivial for Heisenberg."""
         result = givental_r_matrix('heisenberg')
         assert result['is_trivial']
 

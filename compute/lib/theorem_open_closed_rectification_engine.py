@@ -6,7 +6,7 @@ CHAPTER ANCHOR: thqg_open_closed_realization.tex
   - Brace dg algebra (thm:thqg-brace-dg-algebra)
   - Open/closed MC element Theta^oc (constr:thqg-oc-mc-element)
   - Annulus trace theorem (thm:thqg-annulus-trace)
-  - Completed 8-fold platonic datum (def:thqg-completed-platonic-datum)
+  - Completed modular Koszul datum (def:thqg-completed-platonic-datum)
 
 FOUR-STAGE ARCHITECTURE:
   Stage 1: Local one-colour (A_infty-chiral -> braces -> derived center)
@@ -121,10 +121,24 @@ def open_closed_object_separation_witness() -> Dict[str, Any]:
         "bulk_to_center": "Obs^bulk(T) compares to Z_ch^der(A) only through a typed boundary map",
         "open_category_to_chart": "C_op -> End_C_op(b) loses Morita-invariant data",
     }
+    algebraic_sector_notation = {
+        "boundary": "A",
+        "closed_actor": "Z_ch^der(A)",
+        "interaction": "SC^{ch,top}-brace",
+        "physical_bulk_symbol_reserved": "Obs^bulk(T)",
+        "derived_center_is_physical_bulk_without_oca": False,
+        "one_boundary_one_physical_bulk_target": True,
+        "centers_are_computational_models_not_bulk_theories": True,
+        "drinfeld_center_equals_bulk_status": (
+            "conjectural until OCA comparison, quasi-isomorphism, and "
+            "topologization/completion data are supplied"
+        ),
+    }
     return {
         "objects": objects,
         "forbidden_equalities": forbidden_equalities,
         "valid_maps": valid_maps,
+        "algebraic_sector_notation": algebraic_sector_notation,
         "all_forbidden_equalities_rejected": not any(forbidden_equalities.values()),
     }
 
@@ -259,7 +273,7 @@ class HeisenbergOpenClosedMC:
       (1,0): the genus-1 curvature kappa * lambda_1
       (g,0): the genus-g shadow F_g = kappa * lambda_g^FP
 
-    The r-matrix for Heisenberg is r(z) = k/z (single pole, AP19):
+    The r-matrix for Heisenberg is r(z) = k*Omega_H/z (rank-one coeff k/z) (single pole, AP19):
     OPE has z^{-2} pole, r-matrix has z^{-1} (one less via d log absorption).
     """
 
@@ -270,10 +284,10 @@ class HeisenbergOpenClosedMC:
     def theta_closed_genus0_arity2(self) -> Dict[str, Any]:
         """Closed-sector MC element at (g,n) = (0,2): the r-matrix.
 
-        r(z) = k/z for Heisenberg (AP19: pole order one less than OPE).
+        r(z) = k*Omega_H/z (rank-one coeff k/z) for Heisenberg (AP19: pole order one less than OPE).
         The OPE a(z)a(w) ~ k/(z-w)^2 has a double pole.
         The bar differential extracts residue along d log(z-w),
-        which absorbs one power, giving r(z) = k/z.
+        which absorbs one power, giving r(z) = k*Omega_H/z (rank-one coeff k/z).
 
         In the lambda-bracket: {a_lambda a} = k*lambda (AP44: divided power).
         The collision residue: Res^coll_{0,2}(Theta_A) = k/z.
@@ -348,7 +362,7 @@ class HeisenbergOpenClosedMC:
           [r_{12}, r_{13}] + [r_{12}, r_{23}] + [r_{13}, r_{23}] = 0.
         For abelian Lie algebra (Heisenberg): all brackets vanish trivially.
         """
-        # r(z) = k/z, abelian => [r,r] = 0 trivially
+        # r(z) = k*Omega_H/z (rank-one coeff k/z), abelian => [r,r] = 0 trivially
         return {
             "genus": 0,
             "mc_holds": True,
@@ -559,7 +573,7 @@ def ainfty_yang_baxter_arity3(family: str, **params) -> Dict[str, Any]:
     """
     if family == "Heisenberg":
         k = Fraction(params.get("k", 1))
-        # Heisenberg r-matrix: r(z) = k/z
+        # Heisenberg r-matrix: r(z) = k*Omega_H/z (rank-one coeff k/z)
         # CYBE: [r_{12}, r_{13}] + [r_{12}, r_{23}] + [r_{13}, r_{23}]
         # For abelian: all commutators vanish => CYBE trivially satisfied
         return {

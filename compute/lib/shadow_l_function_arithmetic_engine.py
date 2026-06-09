@@ -833,7 +833,7 @@ def monster_kappa_correction() -> Dict[str, float]:
 def full_diagnostic(kappa_val: float = 13.0, p: int = 5) -> Dict[str, object]:
     """Run the full arithmetic diagnostic for a given kappa.
 
-    kappa = 13 is the Virasoro self-dual point (c = 26).
+    kappa = 13 is the Virasoro value at c = 26; the self-dual charge is c = 13.
     """
     return {
         "kappa": kappa_val,

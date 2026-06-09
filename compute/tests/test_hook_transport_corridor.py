@@ -1,7 +1,8 @@
 """Tests for the hook-type transport corridor and reduction graph.
 
 Verifies:
-  - thm:hook-transport-corridor: hook-type duality at generic level
+  - thm:hook-transport-corridor: conditional hook-type duality under
+    DS--bar compatibility at generic level
   - prop:transport-propagation: duality propagates through Gamma_N
   - conj:type-a-transport-to-transpose: hook transport-closure = Par(N)
 
@@ -9,6 +10,8 @@ References:
   - Fehily (FehilyHook), Genra-Juillard (GenraStages),
     Butson-Nair (ButsonNair), CLNS24, CFLN24
 """
+
+from pathlib import Path
 
 import pytest
 
@@ -24,6 +27,55 @@ from compute.lib.nonprincipal_ds_orbits import (
     normalize_partition,
     transpose_partition,
 )
+
+
+ROOT = Path(__file__).resolve().parents[2]
+HOOK_TEX = ROOT / "chapters" / "connections" / "subregular_hook_frontier.tex"
+CONCORDANCE_TEX = ROOT / "chapters" / "connections" / "concordance.tex"
+OUTLOOK_TEX = ROOT / "chapters" / "connections" / "outlook.tex"
+W_ALGEBRAS_TEX = ROOT / "chapters" / "examples" / "w_algebras.tex"
+FRONTIER_TEX = (
+    ROOT / "chapters" / "connections" / "frontier_modular_holography_platonic.tex"
+)
+HIGHER_GENUS_TEX = ROOT / "chapters" / "theory" / "higher_genus_modular_koszul.tex"
+
+
+def test_manuscript_surfaces_keep_hook_duality_conditional():
+    """The hook corridor is not an unconditional DS--KD theorem."""
+    hook = HOOK_TEX.read_text(encoding="utf-8")
+    active = "\n".join(
+        path.read_text(encoding="utf-8")
+        for path in [
+            HOOK_TEX,
+            CONCORDANCE_TEX,
+            OUTLOOK_TEX,
+            W_ALGEBRAS_TEX,
+            FRONTIER_TEX,
+            HIGHER_GENUS_TEX,
+        ]
+    )
+
+    assert (
+        r"\begin{theorem}[Hook-type transport corridor under DS--bar "
+        r"compatibility; \ClaimStatusConditional]"
+    ) in hook
+    assert "Assume that, at generic level, bar--cobar/Koszul duality intertwines" in hook
+    assert "conditional on hook-wide DS/bar compatibility" in active
+    assert "DS--bar compatibility package" in active
+
+    forbidden = [
+        "full hook-type duality is proved",
+        "Full hook-type duality is proved",
+        "Koszul duality is completely understood",
+        "Hook-type corridor proved",
+        "Hook-type seeds proved",
+        "DS--KD proved for self-transpose",
+        "proved non-principal corridor",
+        "The first axis is now proved on a substantial type~$A$ corridor",
+        "thm:hook-type-transport-koszul-duality",
+    ]
+    for phrase in forbidden:
+        assert phrase not in active
 
 
 # ===================================================================

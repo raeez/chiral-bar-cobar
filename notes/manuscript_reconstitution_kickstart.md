@@ -176,7 +176,7 @@ $(\Sigma_{d-1}, C)$ indices where Vol III content is invoked.
 | B1 | `chapters/connections/holographic_datum_master.tex` | Replace "$A$ as primitive open sector" with $(\mathcal{C}^{\mathrm{op}}, b, A_b)$; install seven structural elements |
 | B2 | `chapters/connections/holographic_codes_koszul.tex` | "bar = bulk" → "bar = twisting; $Z^{\mathrm{der}}_{\mathrm{ch}}$ = bulk" everywhere |
 | B3 | `chapters/connections/entanglement_modular_koszul.tex` | Same MA-4 sweep + entanglement-from-$\kappa$ scope |
-| B4 | `chapters/connections/feynman_connection.tex` + `feynman_diagrams.tex` | $E_1$-bar direction → chiral Deligne–Tamarkin / Swiss-cheese (MA-5) |
+| B4 | `chapters/connections/feynman_connection.tex` + `feynman_diagrams.tex` | bar-only uplift explanation → chiral Deligne–Tamarkin / Swiss-cheese (MA-5) |
 | B5 | `chapters/connections/genus1_seven_faces.tex` + `genus_complete.tex` + `poincare_computations.tex` | Modularity = trace + clutching (MA-3) |
 | B6 | `chapters/connections/frontier_modular_holography_platonic.tex` + `subregular_hook_frontier.tex` + `semistrict_modular_higher_spin_w3.tex` | Modularity reframing + KSDual scope |
 | B7 | `chapters/examples/landscape_census.tex` | 5×5 $\kappa$-matrix table per family; explicit $(\Sigma_{d-1}, C)$ indexing on every CY-derived shadow; delete additive $\kappa_{\mathrm{BKM}} = \kappa_{\mathrm{ch}} + \chi(\mathcal{O}_{\mathrm{fiber}})$ |

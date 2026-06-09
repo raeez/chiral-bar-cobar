@@ -1,8 +1,10 @@
 r"""Chiral Hochschild cohomology dimensions for standard families.
 
-Computes dim ChirHoch^n(A) for n in {0, 1, 2} across the standard
-landscape of chiral algebras.  ChirHoch^n = 0 for n < 0 and n > 2
-by Theorem H (concentration, thm:hochschild-polynomial-growth).
+Computes dim ChirHoch^n(A) for n in {0, 1, 2} across the generic
+standard landscape entries carried by the Theorem H surface.
+ChirHoch^n = 0 for n < 0 and n > 2 only after the
+PBW/generic/completed/strict-ML hypothesis package is in force
+(thm:hochschild-polynomial-growth).
 
 DEFINITIONS:
   ChirHoch^0(A) = Z(A) = chiral center (scalars at generic parameters)
@@ -51,6 +53,57 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Tuple
+
+
+THEOREM_H_DEFECT_COMPLEX = "KD_H^bullet(A)"
+THEOREM_H_HYPOTHESES = (
+    "PBW chiral Koszulness",
+    "E_infty-chiral completion",
+    "finite-type/perfect diagonal chiral Hochschild complexes",
+    "generic non-critical parameter",
+    "strict Mittag-Leffler completion passage",
+    "PBW/Arnold Shelton-Yuzvinsky contraction",
+)
+THEOREM_H_SCOPE_FAMILIES = {
+    "heisenberg", "heis", "h_k",
+    "virasoro", "vir", "vir_c",
+    "affine_km", "affine", "km", "kac_moody",
+    "bc", "free_fermion", "fermion", "free_fermion_bc",
+    "betagamma", "bg", "free_betagamma", "free_boson_bg",
+    "w_algebra", "w_n", "w",
+    "lattice", "lattice_va",
+}
+
+
+def theorem_h_scope_record(family: Optional[str] = None,
+                           applies: Optional[bool] = None,
+                           reason: Optional[str] = None) -> Dict[str, object]:
+    """Return the Theorem H scope record for this dimension census.
+
+    A positive record means the entry is being used on the generic
+    PBW/completed/strict-Mittag-Leffler surface.  Outside that package
+    the high-degree object is KD_H^bullet(A), and the census does not
+    assert concentration.
+    """
+    fam = None if family is None else family.lower().replace("-", "_").replace(" ", "_")
+    if applies is None:
+        applies = fam in THEOREM_H_SCOPE_FAMILIES if fam is not None else True
+    return {
+        "claim": "ChirHoch amplitude [0,2]",
+        "type_signature": {
+            "quadrant": "Open-Chain",
+            "presentation": "curve-level chiral Hochschild cochains",
+            "level": 3,
+            "hypothesis_package": "Theorem H PBW/generic/completed/strict-ML package",
+        },
+        "family": family,
+        "applies": bool(applies),
+        "status": "proved_on_scope" if applies else "outside_scope",
+        "hypotheses": THEOREM_H_HYPOTHESES,
+        "defect_complex": None if applies else THEOREM_H_DEFECT_COMPLEX,
+        "high_degree_acyclicity_proved": bool(applies),
+        "reason": reason,
+    }
 
 
 # =========================================================================
@@ -221,6 +274,11 @@ class ChirHochData:
     total: int         # dim0 + dim1 + dim2
     mechanism_dim1: str  # explanation for dim1
     poincare_poly: str   # P_A(t) as string
+    cohomology_scope: str = "fixed generic fiber"
+    family_parameter_status: str = (
+        "formal parameter rings such as C[[kappa]] are deformation bases, "
+        "not fixed-fiber ChirHoch vector spaces"
+    )
 
     def __post_init__(self):
         assert self.total == self.dim0 + self.dim1 + self.dim2
@@ -231,8 +289,12 @@ class ChirHochData:
 
     @property
     def concentrated_in_012(self) -> bool:
-        """Theorem H: ChirHoch^n = 0 for n not in {0, 1, 2}."""
-        return True  # proved for all Koszul chiral algebras
+        """Theorem H: ChirHoch^n = 0 for n not in {0, 1, 2}.
+
+        The dataclass is used only for entries already placed on the
+        generic PBW/completed/strict-ML surface.
+        """
+        return True
 
 
 # =========================================================================
@@ -245,6 +307,10 @@ def chirhoch_heisenberg() -> ChirHochData:
     ChirHoch^0 = C (center = scalars)
     ChirHoch^1 = C (outer derivation D(alpha) = 1; level deformation k -> k + eps)
     ChirHoch^2 = C (dual vacuum; obstruction class of H_k^! = Sym^ch(V*))
+
+    This returns fixed-level cohomology dimensions.  A formal base such
+    as C[[kappa]] records the one-parameter Heisenberg family, not the
+    vector-space dimension of ChirHoch*(H_k) at fixed generic k.
 
     # VERIFIED: [DC] chiral_center_theorem.tex lines 1780-1795
     # VERIFIED: [DC] chiral_hochschild_koszul.tex lines 4760-4772 (Koszul resolution)
@@ -558,8 +624,9 @@ def old_theorem_h_bound_holds(data: ChirHochData) -> bool:
 def theorem_h_concentration_holds(data: ChirHochData) -> bool:
     """Theorem H concentration: ChirHoch^n = 0 for n not in {0, 1, 2}.
 
-    This part of Theorem H is UNCONDITIONALLY TRUE for all Koszul
-    chiral algebras (proved via de Rham amplitude on curves).
+    This predicate is valid only for data records on the Theorem H
+    PBW/generic/completed/strict-ML surface.  Off that surface, the
+    Hochschild Koszul-defect complex KD_H^bullet(A) must be used.
     """
     return data.concentrated_in_012
 

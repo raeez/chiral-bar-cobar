@@ -21,6 +21,8 @@ import pytest
 from fractions import Fraction
 
 from compute.lib.theorem_c_complementarity import (
+    C2_LAGRANGIAN_HYPOTHESES,
+    C2_LAGRANGIAN_CONDITIONAL_STATUS,
     kappa,
     kappa_dual,
     complementarity_sum,
@@ -458,22 +460,36 @@ class TestTwoChannelDecomposition:
 
 
 class TestLagrangianIndicators:
-    """Verify Lagrangian complementarity indicators."""
+    """Verify scalar indicators and C2 Lagrangian scope."""
 
     def test_virasoro_lagrangian(self):
         r = lagrangian_complementarity_check("virasoro", c=10)
         assert r["lagrangian_splitting_scalar"]
         assert r["sum"] == Fraction(13)
+        assert r["theorem_c_layer"] == "C1_scalar_indicator"
+        assert not r["c2_lagrangian_upgrade_verified"]
+        assert r["lagrangian_upgrade_status"] == C2_LAGRANGIAN_CONDITIONAL_STATUS
+        assert "uniform_weight_perfectness" in r["c2_missing_hypotheses"]
 
     def test_heisenberg_lagrangian(self):
         r = lagrangian_complementarity_check("heisenberg", k=5)
         assert r["lagrangian_splitting_scalar"]
         assert r["sum"] == Fraction(0)
+        assert not r["c2_lagrangian_upgrade_verified"]
 
     def test_w3_lagrangian(self):
         r = lagrangian_complementarity_check("w3", c=20)
         assert r["lagrangian_splitting_scalar"]
         assert r["sum"] == Fraction(250, 3)
+        assert not r["c2_lagrangian_upgrade_verified"]
+
+    def test_c2_package_is_reported_but_not_proved_by_scalar_check(self):
+        r = lagrangian_complementarity_check(
+            "virasoro", c=10, c2_hypotheses=C2_LAGRANGIAN_HYPOTHESES
+        )
+        assert r["c2_hypothesis_package_complete"]
+        assert not r["c2_missing_hypotheses"]
+        assert not r["c2_lagrangian_upgrade_verified"]
 
 
 # ========================================================================
@@ -863,12 +879,16 @@ class TestLagrangianComputed:
         r = lagrangian_complementarity_computed("virasoro", max_genus=3, c=10)
         assert r["all_cross_pairings_match"]
         assert r["all_both_nonzero"]
+        assert r["theorem_c_layer"] == "C1_scalar_gram_indicator"
+        assert r["scalar_gram_certifies"] == "C1_cross_pairing_only"
+        assert not r["c2_lagrangian_upgrade_verified"]
 
     def test_heisenberg_gram_matrix(self):
         """Heisenberg: Gram matrix computed."""
         r = lagrangian_complementarity_computed("heisenberg", max_genus=3, k=5)
         assert r["all_cross_pairings_match"]
         assert r["all_both_nonzero"]
+        assert not r["c2_lagrangian_upgrade_verified"]
 
     def test_affine_gram_matrix(self):
         """Affine: Gram matrix, cross pairing = 0."""

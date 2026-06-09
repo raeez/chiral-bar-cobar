@@ -1,15 +1,20 @@
-"""Genus expansion via the universal formula.
+"""Genus expansion on the diagonal scalar Theorem-D lane.
 
-For any Koszul chiral algebra A with obstruction coefficient kappa(A):
+For the diagonal scalar projection of a modular Koszul chiral algebra A:
 
-  F_g(A) = kappa(A) * lambda_g^FP
+  F_g^diag(A) = kappa(A) * lambda_g^FP
 
 where lambda_g^FP = (2^{2g-1}-1)/2^{2g-1} * |B_{2g}|/(2g)! are Faber-Pandharipande numbers.
 
-The universal generating function (thm:universal-generating-function):
-  sum_{g>=1} F_g(A) x^{2g} = kappa * ((x/2)/sin(x/2) - 1)
+The diagonal scalar generating function (thm:universal-generating-function):
+  sum_{g>=1} F_g^diag(A) x^{2g} = kappa * ((x/2)/sin(x/2) - 1)
 
-Radius of convergence: |x| = 2*pi (independent of A).
+Formal radius of the diagonal scalar series: |x| = 2*pi (independent of A).
+This is not, by itself, an analytic VOA partition function.
+
+Full all-weight genus data require either genus one, the uniform-weight lane,
+or an explicit cross-channel correction delta F_g^cross.  Analytic free-energy
+language requires a separate convergence and partition-function package.
 
 Complementarity (thm:quantum-complementarity-main):
   kappa(A) + kappa(A!) = sigma * (c + c')
@@ -32,6 +37,75 @@ from .lie_algebra import (
     cartan_data, sugawara_c, ff_dual_level, kappa_km,
     sigma_invariant, virasoro_ds_c, w3_ds_c,
 )
+
+
+THEOREM_D_DIAGONAL_HYPOTHESES: Tuple[str, ...] = (
+    "F_g_defined_as_cohomology_class",
+    "lambda_FP_normalization_fixed",
+    "scalar_projection_tr_diag_defined",
+    "kappa_defined_from_genus_one_curvature",
+    "finite_window_graph_sum_converges",
+)
+
+THEOREM_D_ALL_WEIGHT_HYPOTHESES: Tuple[str, ...] = (
+    "genus_one_or_uniform_weight_lane",
+    "cross_channel_terms_absent_or_supplied",
+    "strict_Mittag_Leffler_completion",
+)
+
+ANALYTIC_FREE_ENERGY_HYPOTHESES: Tuple[str, ...] = (
+    "VOA_trace_convergence",
+    "analytic_partition_function_defined",
+    "renormalization_or_SDR_package",
+)
+
+
+def theorem_d_scope_report(
+    genus: Optional[int] = None,
+    *,
+    uniform_weight: bool = False,
+    cross_channel_terms_supplied: bool = False,
+    strict_ml_completion: bool = False,
+    analytic_hypotheses: Optional[Tuple[str, ...]] = None,
+) -> Dict[str, object]:
+    """Return the theorem scope certified by the diagonal formula.
+
+    The diagonal formula is a scalar cohomology-class statement.  It becomes
+    the full formal all-weight genus value only at genus one, on the
+    uniform-weight lane, or after the mixed-channel correction is supplied.
+    It becomes analytic free energy only after the analytic package is present.
+    """
+    genus_one = genus == 1
+    all_weight_input = genus_one or uniform_weight or cross_channel_terms_supplied
+    all_weight = all_weight_input and (genus_one or strict_ml_completion)
+    analytic_verified = set(analytic_hypotheses or ()) == set(
+        ANALYTIC_FREE_ENERGY_HYPOTHESES
+    )
+
+    missing_all_weight = []
+    if not (genus_one or uniform_weight):
+        missing_all_weight.append("genus_one_or_uniform_weight_lane")
+    if not (genus_one or uniform_weight or cross_channel_terms_supplied):
+        missing_all_weight.append("cross_channel_terms_absent_or_supplied")
+    if not (genus_one or strict_ml_completion):
+        missing_all_weight.append("strict_Mittag_Leffler_completion")
+
+    missing_analytic = tuple(
+        hyp for hyp in ANALYTIC_FREE_ENERGY_HYPOTHESES
+        if hyp not in set(analytic_hypotheses or ())
+    )
+
+    return {
+        "certified_quantity": "diagonal_scalar_cohomology_class",
+        "formula": "F_g^diag(A)=kappa(A)*lambda_g^FP",
+        "diagonal_hypotheses": THEOREM_D_DIAGONAL_HYPOTHESES,
+        "all_weight_hypotheses": THEOREM_D_ALL_WEIGHT_HYPOTHESES,
+        "all_weight_formula_verified": all_weight,
+        "missing_all_weight_hypotheses": tuple(missing_all_weight),
+        "analytic_free_energy_verified": analytic_verified,
+        "missing_analytic_hypotheses": missing_analytic,
+        "physical_free_energy_language_allowed": analytic_verified,
+    }
 
 
 # ---------------------------------------------------------------------------
@@ -114,7 +188,7 @@ def kappa_b2(k=None):
 # ---------------------------------------------------------------------------
 
 def genus_table(kappa_val, max_genus: int = 10) -> Dict[int, Rational]:
-    """Compute F_g for g = 1, ..., max_genus.
+    """Compute the diagonal scalar values F_g^diag for g = 1, ..., max_genus.
 
     Uses exact rational arithmetic throughout.
     """
@@ -125,7 +199,7 @@ def genus_table(kappa_val, max_genus: int = 10) -> Dict[int, Rational]:
 
 
 def genus_table_numeric(kappa_val, max_genus: int = 10) -> Dict[int, str]:
-    """Genus table with both exact and approximate values."""
+    """Diagonal scalar genus table as exact string values."""
     table = {}
     for g in range(1, max_genus + 1):
         exact = F_g(kappa_val, g)
@@ -183,17 +257,18 @@ def complementarity_sum_w(type_: str, rank: int, k=None):
 # ---------------------------------------------------------------------------
 
 def convergence_radius() -> Rational:
-    """Radius of convergence of the genus expansion.
+    """Formal radius of the diagonal scalar genus series.
 
     |x| = 2*pi, so ratio |F_{g+1}/F_g| -> 1/(2*pi)^2 as g -> inf.
 
-    This is the content of thm:bernoulli-universality.
+    This is the content of thm:bernoulli-universality for the diagonal
+    scalar series.  It is not an analytic partition-function assertion.
     """
     return 2 * pi
 
 
 def ratio_successive(kappa_val, g: int):
-    """Compute |F_{g+1}/F_g| for checking convergence."""
+    """Compute F_{g+1}^diag/F_g^diag for the diagonal scalar series."""
     fg = F_g(kappa_val, g)
     fg1 = F_g(kappa_val, g + 1)
     if fg == 0:

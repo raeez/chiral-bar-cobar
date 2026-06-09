@@ -624,7 +624,7 @@ class TestAntiPatternGuards(unittest.TestCase):
 
     def test_AP39_kappa_equals_c_over_2_for_virasoro(self):
         """AP39: kappa = c/2 for Virasoro (rank 1 coincidence).
-        NOT kappa = c. NOT kappa = c/12."""
+        NOT kappa = c. NOT the ordinary lambda-cubic coefficient."""
         for c_val in [1, 2, 10, 26]:
             sd = virasoro_shadow_values(Fraction(c_val))
             self.assertEqual(sd['kappa'], Fraction(c_val, 2))

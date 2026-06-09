@@ -1,59 +1,64 @@
-r"""Deep quantum error-correcting codes from shadow data: concrete constructions.
+r"""Deep algebraic shadow-code skeletons from shadow data.
 
 MATHEMATICAL FRAMEWORK
 ======================
 
-This module extends qec_koszul_code_engine.py with CONCRETE code
-constructions derived from the bar complex and shadow obstruction tower.
-The central identification (G12): Koszulness <=> exact QEC.
+This module extends qec_koszul_code_engine.py with finite algebraic
+models derived from the bar complex and shadow obstruction tower.
+The central G12 surface is bar-cobar recovery of the chart algebra on
+the Koszul locus.  Exact physical QEC requires additional unitary
+completion, a physical error algebra, and recovery maps.
 
 The shadow depth classification G/L/C/M determines the code structure:
-  - Class G (r_max=2): stabilizer codes (CSS type from Lagrangian)
-  - Class L (r_max=3): one correction round beyond stabilizer
+  - Class G (r_max=2): stabilizer-like algebraic skeletons
+  - Class L (r_max=3): one formal correction round beyond stabilizer-like
   - Class C (r_max=4): two correction rounds, then terminates
-  - Class M (r_max=∞): infinite correction hierarchy (approximate QEC)
+  - Class M (r_max=∞): infinite formal correction hierarchy
 
 Key constructions in this module:
 
-  1. EXPLICIT STABILIZER GENERATORS from the bar differential:
+  1. EXPLICIT STABILIZER-LIKE GENERATORS from the bar differential:
      The bar differential d_B at arity 2 defines binary collision
-     operators.  For the Heisenberg algebra, these are the generators
-     of a stabilizer code.  The stabilizer group S = <S_1, ..., S_r>
-     where each S_i is a tensor product of Pauli operators derived
-     from the modes of the Heisenberg field.
+     operators.  For the Heisenberg algebra, these model the algebraic
+     checks of a stabilizer-like skeleton.  A genuine stabilizer group
+     on qubits requires an external Hilbert-space realization.
 
-  2. KNILL-LAFLAMME from the bar complex:
-     The bar-cobar adjunction provides encoding (B) and decoding (Omega).
-     The KL condition P_C E†E P_C = c(E) P_C follows from:
+  2. KL-STYLE ALGEBRAIC ISOTROPY from the bar complex:
+     The bar-cobar adjunction provides algebraic encoding (B) and
+     decoding (Omega).  The physical KL condition
+     P_C E†E P_C = c(E) P_C requires extra Hilbert data; the algebraic
+     skeleton records:
        (a) Lagrangian isotropy: <C, C>_D = 0
        (b) Complementarity: H = C + C^perp with dim C = dim C^perp
        (c) The Verdier anti-involution: <sigma(v), sigma(w)> = -<v,w>
 
   3. SHADOW DEPTH as CODE REDUNDANCY:
      Shadow depth r_max controls the number of independent error-
-     correction channels.  The arity-filtration code distance is
-     ALWAYS 2 (kappa is the essential datum).  Shadow depth adds
+     correction channels.  The first-essential-arity proxy is
+     always 2 (kappa is the essential datum).  It is not an
+     operational QEC distance without a physical error model.  Shadow depth adds
      REDUNDANCY beyond this minimum:
        Class G: 0 redundancy channels (kappa only)
        Class L: 1 channel (cubic shadow is redundant)
        Class C: 2 channels (cubic + quartic redundant)
        Class M: infinite channels (infinite tower of redundancies)
 
-  4. LATTICE VOA → TORIC CODE bridge:
+  4. LATTICE VOA -> TORIC CODE comparison:
      For the lattice VOA V_Lambda on Lambda = Z^d:
        - The bar complex at arity 2 gives the lattice Laplacian
        - Stabilizers = vertex operators and plaquette operators
        - The code is a CSS code with X-stabilizers from Lambda
          and Z-stabilizers from Lambda^* (the dual lattice)
-       - For Lambda = Z^2: this reproduces the toric code structure
+      - For Lambda = Z^2: this models the toric-code pattern only
+        after a physical topological-code realization
 
-  5. GENUS-g SURFACE CODES:
+  5. GENUS-g SHADOW-CODE SKELETONS:
      The genus-g shadow Sh_g(Theta_A) lives on M_bar_g.
      At genus g, the shadow code has parameters determined by
      the Hodge structure of M_bar_g:
        n_g = dim H*(M_bar_g, Q_g(A))
        k_g = dim Q_g(A) (Lagrangian half)
-       d_g >= 2 (arity filtration, independent of g)
+      a_g = 2 as first-essential-arity proxy, independent of g
 
   6. THRESHOLD from SHADOW CONVERGENCE:
      The shadow partition function Z^sh converges absolutely when
@@ -61,7 +66,7 @@ Key constructions in this module:
        p_th = 1 - rho(A) (heuristic estimate)
      For Vir at c=13: rho ~ 0.467, p_th ~ 0.533.
 
-  7. WEIGHT ENUMERATOR and QUANTUM BOUNDS:
+  7. ALGEBRAIC WEIGHT ENUMERATOR and QUANTUM-BOUND ANALOGUES:
      For the symplectic code at each weight level h:
        - Shor-Laflamme weight enumerator A(x,y)
        - Quantum Singleton bound: k <= n - 2(d-1)
@@ -617,7 +622,7 @@ class ShadowCodeRedundancy:
     shadow_class: str
     r_max: int  # -1 for infinite
     channels: int  # -1 for infinite
-    arity_distance: int  # always 2
+    arity_distance: int  # first essential arity, not operational distance
     correction_schedule: List[Tuple[int, str]]  # (arity, description)
     cumulative_redundancy: List[int]
 
@@ -661,7 +666,7 @@ def shadow_code_redundancy(family: str) -> ShadowCodeRedundancy:
     channels = channels_map.get(cls, -1)
 
     # Build correction schedule
-    schedule = [(2, 'kappa (essential datum; arity-filtration distance = 2)')]
+    schedule = [(2, 'kappa (essential datum; arity proxy = 2)')]
     cumulative = [0]
 
     if cls in ('L', 'C', 'M'):
@@ -1002,7 +1007,7 @@ def genus_g_shadow_code_parameters(g: int, family: str, **kwargs) -> Dict:
     The code subspace Q_g(A) is determined by the bar complex
     at genus g.
 
-    For the scalar level (obs_g = kappa * lambda_g):
+    For the scalar level (obs_g^sc = kappa * lambda_g):
       - dim Q_g^{sc}(A) = 1 (the lambda_g class is one-dimensional)
       - dim Q_g^{sc}(A!) = 1 (same for the dual)
       - Code: [[2, 1, 2]] at the scalar level
@@ -1064,7 +1069,7 @@ def genus_g_shadow_code_parameters(g: int, family: str, **kwargs) -> Dict:
     dim_total = dim_scalar + dim_correction
     n_g = 2 * dim_total
     k_g = dim_total
-    d_g = 2  # arity filtration distance (universal)
+    d_g = 2  # arity proxy, not operational QEC distance
 
     # Free energy at genus g (scalar level)
     if g >= 1:
@@ -1082,6 +1087,11 @@ def genus_g_shadow_code_parameters(g: int, family: str, **kwargs) -> Dict:
         'n_g': n_g,
         'k_g': k_g,
         'd_g': d_g,
+        'd_g_kind': 'arity proxy; not Hilbert-space code distance',
+        'physical_distance': None,
+        'physical_distance_status': (
+            'requires physical inner product, error algebra, and recovery maps'
+        ),
         'rate': Fraction(1, 2),
         'dim_scalar': dim_scalar,
         'dim_correction': dim_correction,
@@ -1128,32 +1138,32 @@ def _get_kappa_for_family(family: str, **kwargs):
 
 def holographic_tensor_network_code(family: str, n_boundary: int = 6,
                                      **kwargs) -> Dict:
-    r"""Holographic code from bar complex tensor network.
+    r"""Bar-complex shadow network with holographic-code analogy.
 
-    The bar complex B(A) viewed on the hyperbolic disk gives a
-    tensor network.  The tree structure of the planted forests
-    = the tensor network graph.
+    The bar complex B(A) viewed on a planted-forest graph gives an
+    algebraic tensor-amplitude network.  It is not a HaPPY code or a
+    physical bulk tensor network without an external holographic
+    realization.
 
-    For class L (tree-level shadow): exact tree tensor network.
+    For class L (tree-level shadow): finite tree-level shadow network.
     For class M (infinite tower): loop corrections included.
 
-    The code parameters of the holographic code depend on the
-    tensor network structure:
-      - n = number of boundary legs (boundary qubits)
-      - k = number of bulk legs (bulk/logical qubits)
-      - d = minimum distance (related to min-cut through the network)
+    The displayed parameters are graph analogues:
+      - n_boundary = number of boundary legs in the graph
+      - n_bulk = number of internal graph legs/nodes in the model
+      - effective_distance = min-cut analogue, not QEC distance
 
-    The RT formula S = A/(4G_N) is the holographic version of
-    the code's entanglement structure.
+    The RT formula requires the physical holographic dictionary; this
+    function only records the scalar shadow/min-cut analogy.
 
     For the bar-complex tensor network:
       - Each tensor has arity determined by the shadow class
       - Class G: binary tensors (arity 2, like MERA)
       - Class L: binary + ternary (arity 2+3)
-      - Class M: all arities (full holographic code)
+      - Class M: all arities (formal infinite shadow network)
 
-    The min-cut through the network gives the code distance:
-      d = min-cut weight = minimum number of edges cut
+    The min-cut through the graph gives an algebraic min-cut number,
+    not an operational code distance.
 
     >>> result = holographic_tensor_network_code('heisenberg', 6)
     >>> result['n_boundary']
@@ -1170,7 +1180,7 @@ def holographic_tensor_network_code(family: str, n_boundary: int = 6,
     n_internal = n_boundary - 1  # internal nodes of a binary tree
 
     # Min-cut through a tree: always 1 (single edge separates)
-    # For the holographic code: min-cut gives the code distance
+    # Algebraic min-cut analogue, not physical code distance.
     min_cut = 1
 
     # Number of bulk (logical) qubits = internal nodes
@@ -1179,7 +1189,7 @@ def holographic_tensor_network_code(family: str, n_boundary: int = 6,
     n_bulk = n_internal
 
     # For class M: include loop corrections
-    # Each loop adds to the code distance via shadow corrections
+    # Each loop adds to the effective arity/min-cut proxy.
     if cls == 'M':
         # Approximate: each genus adds one protection layer
         effective_distance = 2 + depth  # base distance + tree depth
@@ -1198,11 +1208,18 @@ def holographic_tensor_network_code(family: str, n_boundary: int = 6,
         'tree_depth': depth,
         'min_cut': min_cut,
         'effective_distance': effective_distance,
+        'effective_distance_kind': 'graph min-cut/arity proxy; not QEC distance',
+        'physical_holographic_code': False,
+        'physical_reconstruction_status': (
+            'requires tensor-network realization, physical inner product, '
+            'error algebra, and recovery maps'
+        ),
         'kappa': float(kappa) if kappa else None,
-        'code_type': f'holographic tree network (class {cls})',
+        'code_type': f'algebraic shadow tree network (class {cls})',
         'rt_formula': {
             'S_EE': f'({float(2*kappa/3):.4f}) * log(L/eps)' if kappa else 'N/A',
             '4G_N': float(1 / (2 * kappa)) if kappa and kappa != 0 else None,
+            'status': 'scalar shadow only; RT requires external dictionary',
         },
         'tensor_arities': _tensor_arities_for_class(cls),
     }
@@ -1439,7 +1456,7 @@ def weight_enumerator_lagrangian(dim_code: int) -> Dict:
     n = 2 * dim_code
     k = dim_code
 
-    # For the Koszul code: distance d = 2 (arity filtration)
+    # Historical field d: arity proxy, not operational QEC distance.
     d = 2
 
     # Weight enumerator coefficients
@@ -1467,6 +1484,11 @@ def weight_enumerator_lagrangian(dim_code: int) -> Dict:
         'n': n,
         'k': k,
         'd': d,
+        'd_kind': 'arity proxy; not Hilbert-space code distance',
+        'physical_distance': None,
+        'physical_distance_status': (
+            'requires physical inner product, error algebra, and recovery maps'
+        ),
         'A_0': A[0],
         'A_d': A[d],
         'self_dual': True,  # Lagrangian => self-dual weight enumerator
@@ -1478,15 +1500,15 @@ def weight_enumerator_lagrangian(dim_code: int) -> Dict:
 
 def rate_distance_analysis(families: Optional[List[str]] = None,
                             h_max: int = 10) -> Dict:
-    r"""Rate-distance analysis for shadow codes.
+    r"""Rate and arity-proxy analysis for shadow codes.
 
-    Compute the rate R = k/n and distance delta = d/n for
-    shadow codes at various weight levels and compare with
-    quantum bounds.
+    Compute the rate R = k/n and the arity-proxy ratio d_arity/n for
+    shadow codes at various weight levels.  This is not an operational
+    QEC relative distance without a physical error model.
 
     For the Koszul code:
       R = 1/2 (universal, Lagrangian)
-      delta = 2/n → 0 as n → infinity
+      arity_proxy_ratio = 2/n
 
     This gives a point (R=1/2, delta→0) in the rate-distance plane,
     which is ABOVE the quantum GV bound for large n.
@@ -1540,10 +1562,15 @@ def rate_distance_analysis(families: Optional[List[str]] = None,
         'families': all_data,
         'universal_rate': 0.5,
         'universal_distance': 2,
+        'universal_distance_kind': 'arity proxy; not Hilbert-space code distance',
+        'physical_distance_status': (
+            'requires physical inner product, error algebra, and recovery maps'
+        ),
         'note': (
             'Rate = 1/2 universally (Lagrangian). '
-            'Arity-filtration distance = 2. '
-            'Fractional distance delta = 2/n → 0 as weight increases.'
+            'Arity proxy = 2. '
+            'The displayed delta is an arity-proxy ratio, not an '
+            'operational QEC relative distance.'
         ),
     }
 
@@ -1752,23 +1779,26 @@ def code_equivalence_by_shadow_class() -> Dict:
 # ===========================================================================
 
 def code_distance_multipath(family: str, h: int = 4, **kwargs) -> Dict:
-    r"""Multi-path verification of code distance.
+    r"""Multi-path verification of the arity proxy.
 
-    Verifies the code distance d = 2 via six independent paths:
+    Verifies the first-essential-arity proxy d_arity = 2 via six
+    independent paths.  This is not an operational QEC distance; that
+    requires a physical inner product, an error basis, and recovery
+    maps.
 
     Path 1: Arity filtration (structural)
       The bar complex has an arity filtration with kappa at arity 2.
       No non-trivial shadow datum exists at arity < 2.
-      => d >= 2 in the arity metric.
+      => d_arity >= 2 in the arity metric.
 
     Path 2: Weight enumerator (algebraic)
       The weight enumerator A(x,y) has A_1 = 0 (no weight-1 stabilizers).
-      => d >= 2.
+      => arity proxy >= 2.
 
     Path 3: Minimum logical operator weight (computational)
-      The minimum weight of a non-trivial logical operator is 2.
+      The first non-trivial algebraic logical slot has arity 2.
       The bar differential at arity 1 is trivial (no linear collisions).
-      => d >= 2.
+      => arity proxy >= 2.
 
     Path 4: Singleton bound check
       For the code [[n, k, d]] with k = n/2 (Lagrangian):
@@ -1782,8 +1812,8 @@ def code_distance_multipath(family: str, h: int = 4, **kwargs) -> Dict:
       At n = 2: d <= 2. Combined with d >= 2: d = 2.
 
     Path 6: Shadow depth consistency
-      Shadow depth r_max determines redundancy but NOT distance.
-      The distance is 2 for ALL shadow classes.
+      Shadow depth r_max determines redundancy but not Hilbert-space
+      code distance.  The arity proxy is 2 for all shadow classes.
 
     >>> result = code_distance_multipath('heisenberg', 4)
     >>> result['distance']
@@ -1798,13 +1828,13 @@ def code_distance_multipath(family: str, h: int = 4, **kwargs) -> Dict:
     k = dim_h
     cls = shadow_depth_class(family)
 
-    # Path 1: Arity filtration
+    # Path 1: Arity filtration proxy.
     d_arity = 2  # kappa lives at arity 2; nothing at arity < 2
 
-    # Path 2: Weight enumerator
-    d_we = 2  # A_1 = 0 for all families (no weight-1 stabilizers)
+    # Path 2: algebraic slot count, not a physical weight enumerator.
+    d_we = 2
 
-    # Path 3: Minimum logical operator
+    # Path 3: first nontrivial algebraic logical slot.
     d_logical = 2  # bar differential at arity 1 is trivial
 
     # Path 4: Singleton
@@ -1815,8 +1845,8 @@ def code_distance_multipath(family: str, h: int = 4, **kwargs) -> Dict:
     rains_max = 2 * (n // 6) + 2 if n > 0 else 0
     d_rains = 2 if 2 <= rains_max else 'VIOLATION'
 
-    # Path 6: Shadow depth consistency
-    d_shadow = 2  # distance is INDEPENDENT of shadow depth
+    # Path 6: Shadow depth consistency.
+    d_shadow = 2  # arity proxy is independent of shadow depth
 
     paths = [d_arity, d_we, d_logical, d_singleton, d_rains, d_shadow]
     all_agree = all(p == 2 for p in paths)
@@ -1828,6 +1858,11 @@ def code_distance_multipath(family: str, h: int = 4, **kwargs) -> Dict:
         'k': k,
         'shadow_class': cls,
         'distance': 2,
+        'distance_kind': 'arity proxy; not Hilbert-space code distance',
+        'physical_distance': None,
+        'physical_distance_status': (
+            'requires physical inner product, error algebra, and recovery maps'
+        ),
         'path1_arity': d_arity,
         'path2_weight_enumerator': d_we,
         'path3_logical': d_logical,
@@ -1910,7 +1945,7 @@ def full_deep_analysis(h_max: int = 8, g_max: int = 3) -> Dict:
     3. Shadow redundancy structure
     4. Lattice/toric code bridge
     5. Genus-g surface code table
-    6. Holographic tensor network
+    6. Bar-graph shadow network
     7. Threshold estimates
     8. Weight enumerator analysis
     9. Rate-distance analysis

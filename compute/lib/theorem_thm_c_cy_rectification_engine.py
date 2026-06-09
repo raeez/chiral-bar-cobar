@@ -43,8 +43,8 @@ IMPACT ON THE MONOGRAPH
 
 2. K11 (LAGRANGIAN CRITERION):
 
-   K11 is conditional on perfectness/nondegeneracy of the ambient tangent
-   complex.  The three sub-hypotheses (P1)-(P3):
+   K11 is conditional on the shifted-symplectic hypothesis package.
+   The perfectness sub-hypotheses (P1)-(P3):
      (P1) finite weight spaces
      (P2) nondegenerate invariant bilinear form
      (P3) dual A! also satisfies (P1)-(P2)
@@ -1170,7 +1170,8 @@ FINDING_REGISTER = {
         'finding': 'For self-dual algebras (c=13 Virasoro, bc/betagamma), (P3) '
                    'follows from (P2) automatically.',
         'status': 'KNOWN',
-        'action': 'Already implicit in cor:lagrangian-unconditional.',
+        'action': 'Recorded as a perfectness input in '
+                  'cor:lagrangian-conditional-standard-landscape.',
     },
     'F5': {
         'severity': 'MINOR',

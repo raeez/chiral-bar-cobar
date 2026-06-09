@@ -297,7 +297,7 @@ def bp_koszul_dual() -> Dict[str, object]:
         "dual_kappa": simplify(kappa_dual),
         "koszul_conductor": simplify(K_BP),
         "kappa_sum": simplify(rho * K_BP),
-        "kappa_sum_value": Rational(98, 3),  # AP140: corrected from 1/3; (1/6)*196=98/3
+        "kappa_sum_value": Rational(98, 3),  # AP140: BP complementarity (1/6)*196=98/3
         "K_is_constant": simplify(K_BP.diff(k) if hasattr(K_BP, 'diff') else 0) == 0,
     }
 
@@ -677,7 +677,7 @@ def verify_sl3_subregular_bar() -> Dict[str, bool]:
     results["K_BP = 196"] = simplify(K - 196) == 0
 
     # 9. Complementarity
-    # AP140: corrected from 1/3 to 98/3
+    # AP140: BP complementarity is 98/3.
     results["kappa sum = 98/3"] = simplify(dual["kappa_sum"] - Rational(98, 3)) == 0
 
     # 10. DS intertwining

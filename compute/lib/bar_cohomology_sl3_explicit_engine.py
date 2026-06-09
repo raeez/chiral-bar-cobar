@@ -24,16 +24,20 @@ spectral sequence, NOT from a naive d^2 = 0 complex.
 The PBW spectral sequence collapses at E_2 by Koszulness
 (thm:koszul-equivalences-meta), giving:
 
-    dim H*(B(V_k(g)))_n = dim(A^!)_n
+    dim H*(B(V_k(g)))_n = dim(A^i)_n,
+    and after the Verdier/continuous-linear dual branch,
+    dim(A^i)_n = dim(A^!)_n.
 
-where A^! is the Koszul dual algebra. The result is INDEPENDENT OF k
-(the level parameter), because the CE cohomology of g_- has no k-dependence.
+Here A^i is the bar-dual coalgebra and A^! is the Koszul dual algebra.
+The result is INDEPENDENT OF k (the level parameter), because the CE
+cohomology of g_- has no k-dependence.
 
 COMPUTATION METHODS
 ===================
 
-Method 1 (Koszul dual Hilbert series): For KM algebras, A^! is determined
-by the relations dual to the OPE. The Hilbert series sum dim(A^!)_n x^n
+Method 1 (Koszul dual Hilbert series): For KM algebras, the dual branch
+A^! is determined by the relations dual to the OPE. The Hilbert series
+sum dim(A^i)_n x^n, equivalently sum dim(A^!)_n x^n after duality,
 satisfies an algebraic equation. For sl_2: Riordan numbers R(n+3) (corrected).
 For sl_3: conjectured recurrence a(n) = 11a(n-1) - 23a(n-2) - 8a(n-3).
 

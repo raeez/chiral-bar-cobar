@@ -110,7 +110,7 @@ class TestKappaAndDerivedCenter:
     def test_derived_center_is_fourth_object(self):
         """AP25+AP34: Z^der_ch(A) is DISTINCT from B(A), Omega(B(A)), D_Ran(B(A))."""
         dc = derived_center_description(Fraction(26))
-        assert "universal bulk" in dc["interpretation"]
+        assert "algebraic closed sector" in dc["interpretation"]
         assert "DISTINCT" in dc["derived_center"]
 
     def test_derived_center_c26(self):
@@ -124,7 +124,7 @@ class TestKappaAndDerivedCenter:
         """AP34: derived center is NOT the bar complex."""
         dc = derived_center_description(Fraction(26))
         assert "twisting morphisms" in dc["bar_complex"]
-        assert "universal bulk" in dc["derived_center"]
+        assert "algebraic closed sector" in dc["derived_center"]
 
     def test_constants(self):
         """Fundamental constants are correct."""
@@ -938,7 +938,10 @@ class TestFullSummary:
     def test_summary_derived_center(self):
         """Summary includes derived center description."""
         summary = csft_from_derived_center_summary(c_matter=26)
-        assert "universal bulk" in summary["derived_center"]["interpretation"]
+        assert (
+            "algebraic closed sector"
+            in summary["derived_center"]["interpretation"]
+        )
 
     def test_summary_cubic_vertex(self):
         """Summary includes cubic vertex."""

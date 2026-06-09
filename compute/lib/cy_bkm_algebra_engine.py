@@ -131,6 +131,24 @@ from typing import Dict, List, Optional, Tuple, Set
 
 F = Fraction
 
+HDELTA5_TARGET_LABEL = 'H_Delta5^target'
+HDELTA5_RECOGNIZED_LABEL = 'H_Delta5'
+HDELTA5_GATE_ORDER = ('D1', 'D2', 'D3', 'D4', 'D5')
+HDELTA5_RECOGNITION_GATES: Dict[str, str] = {
+    'D1': 'compact K3 Hall source named with finite height/charge/weight window',
+    'D2': 'associated graded Hall algebra identified with finite Borcherds truncation',
+    'D3': 'augmentation, coproduct, completion, and inverse-system maps defined',
+    'D4': 'parity, PBW, no-extra-root, no-central-summand, and no-torsion checks proved',
+    'D5': 'bar/cobar comparison maps preserve product, coproduct, differential, augmentation, averaging, finite counits, and strict Mittag-Leffler passage',
+}
+FINITE_HALL_WINDOW_AXES = ('height', 'charge', 'weight')
+HEEGNER_COMPARISON_GATES = (
+    'Humbert divisors and admissible Heegner union fixed',
+    'bi-unipotent Malcev ladder and codimension transversality/emptiness proved',
+    'nearby-cycle functor and bar-filtration compatibility proved',
+    'lim^1 obstruction formula and Baily-Borel compatibility proved',
+)
+
 
 # ============================================================================
 # Section 0: Lattice infrastructure
@@ -1174,6 +1192,205 @@ def igusa_delta5_normalization() -> Dict[str, object]:
     }
 
 
+@dataclass(frozen=True)
+class HDelta5RecognitionStatus:
+    """Recognition status for the Hall--Borcherds object targeted by Delta_5."""
+    target_label: str
+    recognized_label: Optional[str]
+    allowed_label: str
+    completed_gates: Tuple[str, ...]
+    missing_gates: Tuple[str, ...]
+    d1_d5_complete: bool
+    finite_window_only: bool
+    hdelta5_name_allowed: bool
+    omega_b_hdelta5_equivalence_allowed: bool
+    obstruction: str
+
+
+def hdelta5_recognition_status(
+        completed_gates: Optional[Set[str]] = None) -> HDelta5RecognitionStatus:
+    """Gate the name H_Delta5 behind the finite Hall--Borcherds datum D1--D5."""
+    completed = set(completed_gates or set())
+    unknown = completed.difference(HDELTA5_GATE_ORDER)
+    if unknown:
+        bad = ', '.join(sorted(unknown))
+        raise ValueError(f"unknown H_Delta5 recognition gate(s): {bad}")
+
+    completed_ordered = tuple(g for g in HDELTA5_GATE_ORDER if g in completed)
+    missing = tuple(g for g in HDELTA5_GATE_ORDER if g not in completed)
+    complete = not missing
+    return HDelta5RecognitionStatus(
+        target_label=HDELTA5_TARGET_LABEL,
+        recognized_label=HDELTA5_RECOGNIZED_LABEL if complete else None,
+        allowed_label=HDELTA5_RECOGNIZED_LABEL if complete else HDELTA5_TARGET_LABEL,
+        completed_gates=completed_ordered,
+        missing_gates=missing,
+        d1_d5_complete=complete,
+        finite_window_only=not complete,
+        hdelta5_name_allowed=complete,
+        omega_b_hdelta5_equivalence_allowed=complete,
+        obstruction='none' if complete else 'D1-D5 recognition incomplete',
+    )
+
+
+def finite_hall_window(height: int, charge: int, weight: int) -> Dict[str, object]:
+    """A compact finite Hall source window for K3, before full recognition."""
+    bounds = {
+        'height': height,
+        'charge': charge,
+        'weight': weight,
+    }
+    for axis, value in bounds.items():
+        if value < 0:
+            raise ValueError(f"{axis} bound must be nonnegative, got {value}")
+
+    return {
+        'source': 'compact K3 coherent Hall source',
+        'k3_source': 'D^b(Coh(K3)) Mukai charge lattice, finite truncation',
+        'axes': FINITE_HALL_WINDOW_AXES,
+        'bounds': bounds,
+        'finite_window_only': True,
+        'associated_graded_status': 'required for D2; not constructed here',
+        'completion_status': 'required for D3; not constructed here',
+        'augmentation_status': 'required for D3; not constructed here',
+        'coproduct_status': 'required for D3; not constructed here',
+    }
+
+
+def hall_borcherds_comparison_scope(
+        height: int = 2,
+        charge: int = 2,
+        weight: int = 2,
+        completed_gates: Optional[Set[str]] = None) -> Dict[str, object]:
+    """Scope report separating finite samples from H_Delta5 recognition."""
+    status = hdelta5_recognition_status(completed_gates)
+    window = finite_hall_window(height, charge, weight)
+    return {
+        'recognition_status': status,
+        'finite_window': window,
+        'target_label_before_D1_D5': HDELTA5_TARGET_LABEL,
+        'recognized_label_after_D1_D5': HDELTA5_RECOGNIZED_LABEL,
+        'g_delta5_status': 'target Borcherds Lie superalgebra; full recognition requires D1-D5',
+        'root_multiplicity_status': 'finite signed exponent samples only',
+        'euler_form_status': 'Mukai/Euler form must be supplied by the compact Hall source in D1',
+        'real_root_status': 'finite sample, not a complete real-root set',
+        'imaginary_simple_root_status': 'finite sample, not a complete imaginary-simple-root classification',
+        'weyl_vector_status': 'finite prefactor sanity, not full denominator proof',
+        'super_parity_status': 'required in D4; finite even/odd samples only',
+        'pbw_status': 'required in D4; not proved here',
+        'no_extra_root_spaces': False,
+        'no_hidden_central_summands': False,
+        'no_torsion_classes': False,
+        'bar_cobar_comparison_constructed': False,
+        'product_preservation_proved': False,
+        'coproduct_preservation_proved': False,
+        'differential_preservation_proved': False,
+        'augmentation_preservation_proved': False,
+        'averaging_preservation_proved': False,
+        'finite_window_counits_quasi_isomorphisms': False,
+        'mittag_leffler_limit_proved': False,
+        'omega_b_hdelta5_equivalence_allowed': status.omega_b_hdelta5_equivalence_allowed,
+    }
+
+
+def heegner_comparison_gate_status(
+        completed_gates: Optional[Set[str]] = None) -> Dict[str, object]:
+    """Gate the Heegner comparison package needed after D1--D5."""
+    completed = set(completed_gates or set())
+    valid = {f'G{i}' for i in range(1, len(HEEGNER_COMPARISON_GATES) + 1)}
+    unknown = completed.difference(valid)
+    if unknown:
+        bad = ', '.join(sorted(unknown))
+        raise ValueError(f"unknown Heegner comparison gate(s): {bad}")
+    ordered = tuple(f'G{i}' for i in range(1, len(HEEGNER_COMPARISON_GATES) + 1))
+    missing = tuple(g for g in ordered if g not in completed)
+    return {
+        'gate_order': ordered,
+        'gate_statements': HEEGNER_COMPARISON_GATES,
+        'completed_gates': tuple(g for g in ordered if g in completed),
+        'missing_gates': missing,
+        'heegner_comparison_complete': not missing,
+    }
+
+
+def hdelta5_theorem_recognition_scope(
+        d1_d5_completed: Optional[Set[str]] = None,
+        heegner_completed: Optional[Set[str]] = None) -> Dict[str, object]:
+    """H_Delta5 is recognition, not construction, until D1--D5 and Heegner gates close."""
+    d_status = hdelta5_recognition_status(d1_d5_completed)
+    h_status = heegner_comparison_gate_status(heegner_completed)
+    recognized = d_status.d1_d5_complete and h_status['heegner_comparison_complete']
+    return {
+        'target_label': HDELTA5_TARGET_LABEL,
+        'recognized_label': HDELTA5_RECOGNIZED_LABEL if recognized else None,
+        'allowed_label': HDELTA5_RECOGNIZED_LABEL if recognized else HDELTA5_TARGET_LABEL,
+        'd1_d5_status': d_status,
+        'heegner_status': h_status,
+        'recognition_not_construction': True,
+        'construction_claim_allowed': False,
+        'hdelta5_recognized': recognized,
+        'missing_d1_d5_gates': d_status.missing_gates,
+        'missing_heegner_gates': h_status['missing_gates'],
+    }
+
+
+def sieg_borcherds_associator_scope(
+        hall_realization_constructed: bool = False,
+        pentagon_verified_order: int = 3,
+        all_order_pentagon_proved: bool = False,
+        scalar_target_data_only: bool = True) -> Dict[str, object]:
+    """Scope the speculative Phi^{Sieg-Bor} associator surface."""
+    if pentagon_verified_order < 0:
+        raise ValueError(f"pentagon order must be nonnegative, got {pentagon_verified_order}")
+    associator_constructed = hall_realization_constructed and all_order_pentagon_proved
+    return {
+        'label': 'Phi_Sieg-Bor',
+        'hall_realization_constructed': hall_realization_constructed,
+        'scalar_target_data_only': scalar_target_data_only,
+        'associator_constructed': associator_constructed,
+        'associator_status': 'constructed' if associator_constructed else 'conjectural',
+        'pentagon_verified_order': pentagon_verified_order,
+        'all_order_pentagon_proved': all_order_pentagon_proved,
+        'pentagon_status': (
+            'all_orders' if all_order_pentagon_proved
+            else f'verified_through_hbar^{pentagon_verified_order}'
+        ),
+        'scalar_target_is_hall_associator': (
+            hall_realization_constructed and not scalar_target_data_only and all_order_pentagon_proved
+        ),
+        'missing_for_hall_associator': () if associator_constructed else (
+            'Hall realization',
+            'all-order pentagon proof',
+            'non-scalar source data beyond target characters',
+        ),
+    }
+
+
+def k3_bkm_lane_separation_report() -> Dict[str, object]:
+    """Keep Mukai, BKM, fibre, categorical, and Heisenberg numbers disjoint."""
+    split = k3xe_kappa_split()
+    return {
+        'K_kappa_Mukai': F(8),
+        'kappa_BKM_Delta5': split['kappa_bkm_delta5'],
+        'kappa_fiber': split['kappa_fiber_mukai'],
+        'kappa_cat': split['kappa_cat'],
+        'kappa_Heis': split['kappa_ch_heisenberg'],
+        'number_transfer_allowed_without_comparison': False,
+        'required_comparison': (
+            'source-level map between the K3 Mukai scalar lane, the Delta_5 '
+            'Borcherds lane, the K3 fibre-rank lane, the compact CY3 '
+            'categorical lane, and the chiral Heisenberg lane'
+        ),
+        'lane_values': {
+            'mukai_scalar': F(8),
+            'bkm_delta5_weight': split['kappa_bkm_delta5'],
+            'fiber_mukai_rank': split['kappa_fiber_mukai'],
+            'categorical_k3xe': split['kappa_cat'],
+            'heisenberg_k3xe': split['kappa_ch_heisenberg'],
+        },
+    }
+
+
 def shadow_kappa_complementarity() -> Dict[str, object]:
     """Check kappa complementarity for K3 x E.
 
@@ -1282,6 +1499,7 @@ def shadow_denominator_connection() -> Dict[str, object]:
     scalar shadow target until a source-level forgetful/trace map and the
     finite Hall--Borcherds recognition datum are constructed.
     """
+    recognition = hdelta5_recognition_status()
     return {
         'kappa_k3': shadow_kappa_k3_sigma(),
         'F_1': shadow_fg_k3_relative(1),
@@ -1292,6 +1510,14 @@ def shadow_denominator_connection() -> Dict[str, object]:
         'sample_real_even_dim': 1,
         'sample_lightlike_even_dim': SIGNED_BORCHERDS_EXPONENT_SAMPLES[0],
         'bridge': 'K3 EG = input to both Borcherds product and shadow tower',
+        'allowed_hall_label': recognition.allowed_label,
+        'hdelta5_name_allowed': recognition.hdelta5_name_allowed,
+        'omega_b_hdelta5_equivalence_allowed': (
+            recognition.omega_b_hdelta5_equivalence_allowed
+        ),
+        'bar_cobar_comparison_constructed': False,
+        'finite_hall_borcherds_recognition_required': recognition.missing_gates,
+        'k3_bkm_lane_separation': k3_bkm_lane_separation_report(),
     }
 
 
@@ -1334,7 +1560,7 @@ def root_norm_distribution(height_bound: int = 3) -> Dict[int, int]:
 
 @dataclass
 class BKMAlgebraSummary:
-    """Summary of the BKM algebra for K3 x E."""
+    """Finite target-summary data for the K3 x E BKM denominator lane."""
     real_simple_roots: List[BKMRoot]
     imaginary_simple_roots: List[BKMRoot]
     weyl_vector: BKMRoot
@@ -1346,7 +1572,7 @@ class BKMAlgebraSummary:
 
 
 def bkm_algebra_summary() -> BKMAlgebraSummary:
-    """Compute a summary of the K3 BKM algebra."""
+    """Compute finite target-summary data, not full BKM recognition."""
     real = simple_real_roots()
     imag = simple_imaginary_roots()
     rho = weyl_vector()

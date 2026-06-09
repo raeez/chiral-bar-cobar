@@ -67,11 +67,11 @@ class TestShadowS3:
     """Test cubic shadow coefficients across families."""
 
     def test_S3_virasoro_formula(self):
-        """S_3(Vir_c) = -4/c, computed from the shadow tower."""
+        """S_3(Vir_c) = 2, computed from the shadow tower."""
         for c_val in [1, 2, 7, 13, 25, 26]:
             c = FR(c_val)
             S3 = shadow_S3_virasoro(c)
-            expected = FR(-4) / c
+            expected = FR(2)
             assert S3 == expected, f"S_3(Vir_{c}) = {S3}, expected {expected}"
 
     def test_S3_virasoro_nonzero(self):
@@ -80,9 +80,9 @@ class TestShadowS3:
             assert shadow_S3_virasoro(c_val) != 0
 
     def test_S3_virasoro_sign(self):
-        """S_3(Vir_c) < 0 for c > 0 (negative cubic shadow)."""
+        """S_3(Vir_c) > 0 for c > 0 in the normalized cubic-shadow convention."""
         for c_val in [FR(1), FR(13), FR(25), FR(100)]:
-            assert shadow_S3_virasoro(c_val) < 0
+            assert shadow_S3_virasoro(c_val) > 0
 
     def test_S3_virasoro_diverges_c0(self):
         """S_3 diverges at c = 0 (degenerate point)."""
@@ -127,21 +127,15 @@ class TestSCm3Virasoro:
 
     def test_m3_virasoro_specific_values(self):
         """Verify m_3 at specific central charges against known values."""
-        # m_3(c=1) = -4/1 = -4
-        assert sc_m3_virasoro_primary(FR(1))['m3_coefficient'] == FR(-4)
-        # m_3(c=26) = -4/26 = -2/13
-        assert sc_m3_virasoro_primary(FR(26))['m3_coefficient'] == FR(-2, 13)
-        # m_3(c=13) = -4/13
-        assert sc_m3_virasoro_primary(FR(13))['m3_coefficient'] == FR(-4, 13)
+        assert sc_m3_virasoro_primary(FR(1))['m3_coefficient'] == FR(2)
+        assert sc_m3_virasoro_primary(FR(26))['m3_coefficient'] == FR(2)
+        assert sc_m3_virasoro_primary(FR(13))['m3_coefficient'] == FR(2)
 
-    def test_m3_virasoro_large_c_suppression(self):
-        """m_3 ~ 1/c is suppressed at large c (classical limit)."""
+    def test_m3_virasoro_c_independent(self):
+        """m_3 has c-independent cubic-shadow coefficient S_3 = 2."""
         c_values = [FR(10), FR(100), FR(1000)]
-        m3_values = [abs(float(sc_m3_virasoro_primary(c)['m3_coefficient']))
-                     for c in c_values]
-        # Check monotone decreasing
-        for i in range(len(m3_values) - 1):
-            assert m3_values[i] > m3_values[i + 1]
+        m3_values = [sc_m3_virasoro_primary(c)['m3_coefficient'] for c in c_values]
+        assert m3_values == [FR(2), FR(2), FR(2)]
 
 
 class TestSCm3VanishingFamilies:
@@ -207,7 +201,7 @@ class TestKoszulDualityS3:
     """Test Koszul duality consistency for S_3."""
 
     def test_complementarity_sum(self):
-        """S_3(c) + S_3(26-c) = -104/(c*(26-c))."""
+        """S_3(c) + S_3(26-c) = 4."""
         for c in [FR(1), FR(7), FR(13), FR(20), FR(25)]:
             result = sc_m3_virasoro_koszul_dual_consistency(c)
             assert result['sum_consistent']
@@ -216,11 +210,11 @@ class TestKoszulDualityS3:
         """At c = 13, S_3 is self-dual: S_3(13) = S_3(13)."""
         result = sc_m3_virasoro_self_dual_point()
         assert result['self_dual']
-        assert result['S3'] == FR(-4, 13)
+        assert result['S3'] == FR(2)
 
     def test_complementarity_not_antisymmetric(self):
         """S_3 + S_3' is NOT zero (unlike kappa + kappa' for KM).
-        For Virasoro: S_3(c) + S_3(26-c) = -104/(c(26-c)) != 0."""
+        For Virasoro: S_3(c) + S_3(26-c) = 4."""
         for c in [FR(1), FR(7), FR(20), FR(25)]:
             result = sc_m3_virasoro_koszul_dual_consistency(c)
             assert result['S3_sum'] != 0, (
@@ -235,17 +229,17 @@ class TestPhysicalInterpretation:
         """Two-loop correction data is consistent."""
         result = two_loop_line_correction_virasoro(FR(25))
         assert result['loop_order'] == 2
-        assert result['m3_SC'] == FR(-4, 25)
+        assert result['m3_SC'] == FR(2)
 
-    def test_large_c_classical_limit(self):
-        """At large c, the 2-loop correction is suppressed."""
+    def test_large_c_no_cubic_suppression(self):
+        """At large c, the normalized cubic shadow remains S_3 = 2."""
         result = two_loop_line_correction_virasoro(FR(100))
-        assert abs(float(result['m3_SC'])) < 0.05  # |m3| = 0.04 at c=100
+        assert result['m3_SC'] == FR(2)
 
     def test_c26_bosonic_string(self):
-        """At c = 26 (bosonic string): m_3 = -2/13."""
+        """At c = 26: m_3 has normalized cubic coefficient 2."""
         result = two_loop_line_correction_virasoro(FR(26))
-        assert result['m3_SC'] == FR(-2, 13)
+        assert result['m3_SC'] == FR(2)
 
 
 # ====================================================================
@@ -418,8 +412,8 @@ class TestDNPFrontierSummary:
     def test_summary_m3_values(self):
         """Summary m_3 values are consistent."""
         result = dnp_frontier_summary()
-        assert result['direction_A']['m3_virasoro_c1'] == -4.0
-        assert abs(result['direction_A']['m3_virasoro_c13'] - (-4.0/13)) < 1e-14
+        assert result['direction_A']['m3_virasoro_c1'] == 2.0
+        assert result['direction_A']['m3_virasoro_c13'] == 2.0
         assert result['direction_A']['m3_heisenberg'] == 0.0
         assert result['direction_A']['m3_affine_km'] == 0.0
 
@@ -443,47 +437,17 @@ class TestMultiPathS3:
         The cubic coefficient in the Taylor expansion of H(t) = 2*kappa*t^2*sqrt(Q/Q(0))
         gives S_3 = (3*alpha)/(2*kappa) where alpha is from the Q_L expansion.
 
-        From the Virasoro OPE structure:
-          kappa = c/2, and the cubic coupling from T_{(0)}T = dT gives
-          alpha = -2 (the conformal weight action generates a descendant
-          whose bar projection has coefficient -2 relative to kappa).
-
-        S_3 = (3*(-2))/(2*(c/2)) = -6/c ... but we claim S_3 = -4/c.
-
-        CORRECTION: The relationship between alpha in Q_L and S_3 involves
-        normalization. The shadow tower coefficient S_r is defined as the
-        coefficient of t^r in the normalized expansion
-          H(t)/(2*kappa*t^2) = 1 + S_3*t + S_4*t^2 + ...
-        The metric Q_L = (2*kappa)^2 + 12*kappa*t + ... gives
-        alpha_Q = 12*kappa/(2*3*(2*kappa)) = 1 in the normalized metric.
-
-        The actual derivation: from the Riccati equation for the shadow tower,
-        S_3 = alpha/(kappa) where alpha is the coefficient in the linear
-        term of the bar-projected OPE: d_bar([T|T]) projects onto T with
-        coefficient 2 (from T_{(1)}T = 2T), and the descendant correction
-        from T_{(0)}T = dT feeds through the homotopy to give the cubic term.
-
-        The independent computation: from the Virasoro OPE modes,
-        the cubic shadow coefficient is:
-          S_3 = -(T_{(0)}T coefficient) * (homotopy factor) / kappa
-              = -1 * (2/(c/2)) * 1 / 1
-              = -4/c
-
-        where the homotopy factor 2/(c/2) comes from the inverse of the
-        T_{(3)}T = c/2 normalization acting on the descendant propagator.
+        From the Virasoro OPE structure, the bar-projected cubic term is
+        normalized by the T_{(1)}T = 2T conformal-weight coefficient.
+        The c-dependent vacuum normalization belongs to S_2 = kappa = c/2,
+        not to the cubic shadow. Thus the independent cubic coefficient is
+        S_3 = 2.
         """
         for c_val in [1, 7, 13, 25, 100]:
             c = FR(c_val)
-            kappa = c / FR(2)
-            # Independent derivation: descendant coefficient / vacuum normalization
-            T_0_T_coeff = FR(1)  # T_{(0)}T = 1 * dT
             T_1_T_coeff = FR(2)  # T_{(1)}T = 2T (conformal weight)
-            vacuum_norm = c / FR(2)  # T_{(3)}T = c/2
 
-            # The homotopy transfer produces:
-            # S_3 = -(T_0_T_coeff * T_1_T_coeff) / (vacuum_norm)
-            # = -(1 * 2) / (c/2) = -4/c
-            S3_independent = -(T_0_T_coeff * T_1_T_coeff) / vacuum_norm
+            S3_independent = T_1_T_coeff
 
             S3_engine = shadow_S3_virasoro(c)
             assert S3_independent == S3_engine, (
@@ -493,15 +457,15 @@ class TestMultiPathS3:
     def test_S3_virasoro_koszul_complementarity_algebraic(self):
         """Path 3: Verify S_3 complementarity algebraically.
 
-        S_3(c) + S_3(26-c) should equal -4/c + -4/(26-c) = -4*26/(c*(26-c)).
+        S_3(c) + S_3(26-c) should equal 2 + 2 = 4.
         This is verified by direct algebra, not by calling the engine.
         """
         for c_val in [1, 5, 7, 13, 20, 25]:
             c = FR(c_val)
             c_dual = FR(26) - c
             # Direct algebra
-            sum_direct = FR(-4) / c + FR(-4) / c_dual
-            expected = FR(-4 * 26) / (c * c_dual)
+            sum_direct = FR(2) + FR(2)
+            expected = FR(4)
             assert sum_direct == expected
 
             # Now verify the engine agrees
@@ -509,24 +473,12 @@ class TestMultiPathS3:
             S3_dual = shadow_S3_virasoro(c_dual)
             assert S3 + S3_dual == expected
 
-    def test_S3_virasoro_scaling_limit(self):
-        """Path 4: S_3(c) -> 0 as c -> infinity (classical limit).
-
-        For large c: S_3 = -4/c ~ 0.  This is the 1/c suppression
-        of quantum corrections in the classical limit.
-        """
+    def test_S3_virasoro_c_independence(self):
+        """Path 4: S_3(c) remains 2 as c varies."""
         c_values = [FR(10), FR(100), FR(1000), FR(10000)]
-        prev = None
         for c in c_values:
             S3 = shadow_S3_virasoro(c)
-            val = abs(S3)
-            if prev is not None:
-                # Each 10x in c should give 10x suppression
-                ratio = prev / val
-                assert ratio > FR(9), (
-                    f"Scaling wrong: ratio={ratio} at c={c}"
-                )
-            prev = val
+            assert S3 == FR(2)
 
 
 class TestMultiPathTSystem:

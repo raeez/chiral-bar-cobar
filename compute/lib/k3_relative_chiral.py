@@ -10,9 +10,13 @@ on each fiber assembles into a sheaf of vertex algebras on C, whose global
 
 This module treats the SIMPLEST case: X = K3 x E (trivial fibration over an
 elliptic curve E).  The relative chiral algebra A_{K3 x E / E} is a chiral
-algebra on E.  Its shadow obstruction tower, computed via the Vol I machinery,
-should recover the Borcherds-Kac-Moody (BKM) superalgebra g_{Delta_5} and
-the DMVV formula — bypassing the abstract d=3 CY functor entirely.
+algebra on E.  Its scalar shadows match the first K3/Borcherds numerical
+evidence: kappa = 2 on the K3 fibre, phi_{0,1} coefficients for the
+paramodular product, and the primitive weight-5 denominator Delta_5.
+Those checks are not a recognition theorem for the Hall--Borcherds
+K3 chiral bialgebra. Chain-level recognition still requires the four-part
+Hall--Borcherds datum (beta, delta, epsilon, tau) and finite-window Hall
+source/completion checks.
 
 1. THE K3 SIGMA MODEL VOA:
    The K3 sigma model at a generic point in the moduli space is a c=6 N=(4,4)
@@ -47,7 +51,7 @@ the DMVV formula — bypassing the abstract d=3 CY functor entirely.
        sum_{N >= 0} p^N * Z(Sym^N(K3); tau) = prod_{n>0,m>=0} 1/(1-p^m*q^n)^{c(mn)}
      where c(n) are coefficients of the K3 partition function.
 
-4. CONNECTION TO BKM SUPERALGEBRA:
+4. SCALAR CONNECTION TO THE BKM DENOMINATOR:
    The denominator of the DMVV product IS the denominator formula of the
    BKM superalgebra g_{Delta_5} (Borcherds 1995, Gritsenko-Nikulin 1996).
    Root multiplicities = phi_{0,1} Fourier coefficients.
@@ -58,18 +62,21 @@ the DMVV formula — bypassing the abstract d=3 CY functor entirely.
      S_3, S_4, ... from the K3 OPE structure
      Theta_A = full MC element encoding all-arity data
 
-   The all-genera sewing (MC5, thm:general-hs-sewing) produces the full
-   partition function, whose structure matches the BKM denominator.
+   The all-genera sewing (MC5, thm:general-hs-sewing) supplies scalar
+   shadow evidence whose structure can be compared with the BKM denominator.
+   It does not by itself construct the Hall source, the Drinfeld double, or
+   the current-envelope comparison maps.
 
-5. KEY IDENTIFICATION (this module's central computation):
+5. KEY SCALAR CHECK (this module's central computation):
    The shadow obstruction tower Theta_{A_{K3}} projects to:
      (a) kappa = 2 (genus-1 scalar curvature from the K3 sigma model)
-     (b) The BKM root system via the phi_{0,1} Fourier expansion
-     (c) The primitive Gritsenko-Nikulin BKM denominator Delta_5 via
-         the full product formula
+     (b) candidate BKM root multiplicities via the phi_{0,1} Fourier expansion
+     (c) the primitive Gritsenko-Nikulin scalar denominator Delta_5 via
+         the Borcherds/Gritsenko product formula
 
-   Path: Shadow tower -> product formula -> BKM denominator -> Delta_5
-   This is the CHIRAL-ALGEBRAIC route to the BKM, bypassing string theory.
+   This is scalar evidence for the recognition target, not the chain-level
+   recognition target itself. It must not be read as bypassing the
+   d=3 CY/Hall construction.
 
 CONVENTIONS:
   - q = e^{2*pi*i*tau}, y = e^{2*pi*i*z}, p = e^{2*pi*i*sigma}
@@ -102,6 +109,24 @@ from collections import defaultdict
 from fractions import Fraction
 from functools import lru_cache
 from typing import Any, Dict, List, Optional, Tuple
+
+HALL_BORCHERDS_CHAIN_DATUM = (
+    "beta: finite-window E1-chiral Hall bialgebra morphism",
+    "delta: completed Drinfeld-double extension with Hall pairing",
+    "epsilon: current-envelope morphism along the elliptic fibre E",
+    "tau: derived-centre trace identity Tr_Z(epsilon) = Delta_5^{-2}",
+)
+
+HALL_BORCHERDS_FINITE_WINDOW_CHECKS = (
+    "finite Hall/CoHA source",
+    "root multiplicities and parity fixtures",
+    "PBW/no-extra-root condition",
+    "Hall pairing nondegeneracy and radical quotient",
+    "current locality on E",
+    "SC^{ch,top} commutation",
+    "strict Mittag-Leffler completion maps",
+    "comparison morphisms to H_{Delta_5}",
+)
 
 # =========================================================================
 # 0. Arithmetic helpers
@@ -663,7 +688,7 @@ def hilb_k3_euler(N: int) -> int:
 
 
 # =========================================================================
-# 6. BKM root multiplicities from the shadow tower
+# 6. BKM root multiplicities from the phi_{0,1} product
 # =========================================================================
 
 def bkm_root_multiplicity(n: int, m: int, l: int) -> int:
@@ -788,7 +813,7 @@ def verify_real_root_multiplicities() -> Dict[str, Any]:
 def shadow_tower_to_product_formula(
     kappa: Fraction, nmax: int = 5
 ) -> Dict[str, Any]:
-    r"""Connect the shadow obstruction tower of A_{K3} to the BKM product.
+    r"""Compare the scalar shadow data of A_{K3} with the BKM product.
 
     The shadow obstruction tower Theta_A has projections:
       Theta^{<=2}: kappa = 2 (arity 2, genus 1)
@@ -804,22 +829,27 @@ def shadow_tower_to_product_formula(
       arity 3: products of three simples
       ...
 
-    The IDENTIFICATION:
-      The arity-r shadow projection Theta^{(r)} controls the roots of
-      total arity r in the BKM.  The shadow obstruction tower IS the
-      logarithm of the BKM product, expanded by arity.
+    The scalar comparison:
+      The arity-r shadow projection Theta^{(r)} gives a grading by
+      collision/arity. The BKM product gives a separate grading by
+      positive roots. Matching their low-level numerical data is evidence
+      for the recognition target, not an equality of chain objects.
 
     Concretely:
       log(1/Phi_BKM) = sum_{alpha>0} mult(alpha) * sum_{k>=1} (1/k) e^{-k*alpha}
                       = sum_{r>=1} [sum over arity-r positive roots]
 
-    The arity-r contribution is exactly the arity-r shadow projection
-    of the MC element Theta_A.
-
-    This function computes the first few arity layers and verifies
-    the match with the phi_{0,1} coefficients.
+    This function computes the first few BKM product layers and verifies
+    that their multiplicities are phi_{0,1} coefficients. It does not
+    construct the Hall source, Drinfeld double, current-envelope map, or
+    derived-centre trace comparison needed for H_{Delta_5} recognition.
     """
-    results = {}
+    results = {
+        "comparison_status": "scalar evidence only",
+        "recognition_complete": False,
+        "missing_chain_datum": HALL_BORCHERDS_CHAIN_DATUM,
+        "finite_window_checks": HALL_BORCHERDS_FINITE_WINDOW_CHECKS,
+    }
 
     # Arity 2: genus-1 scalar curvature
     results['arity_2'] = {
@@ -979,7 +1009,7 @@ def k3_complementarity() -> Dict[str, Any]:
 # =========================================================================
 
 def igusa_cusp_form_from_shadow(nmax: int = 5) -> Dict[str, Any]:
-    r"""Verify the connection: shadow tower -> product formula -> Delta_5.
+    r"""Verify the scalar Delta_5 product data seen by the K3 shadow lane.
 
     The denominator of the BKM superalgebra g_{Delta_5} is
     (1/64) * Delta_5(Z), where Delta_5 is the theta-normalized
@@ -992,16 +1022,15 @@ def igusa_cusp_form_from_shadow(nmax: int = 5) -> Dict[str, Any]:
 
     where f(nm, l) = c(4nm - l^2) from phi_{0,1}.
 
-    The shadow tower of A_{K3} projects to:
+    The scalar shadow lane of A_{K3} projects to:
       arity 2 (kappa = 2): the leading Weyl vector contribution
       arity >= 3: the imaginary root corrections, controlled by S_3, S_4, ...
 
-    The IDENTIFICATION:
+    The comparison:
       log(Phi_BKM) = sum_r sum_{alpha at level r} mult(alpha) * log(1 - e^{-alpha})
-                   = sum_r Theta_A^{(r)}  [shadow tower at arity r]
-
-    This gives a CHIRAL-ALGEBRAIC derivation of the product formula:
-    the BKM denominator = exp(shadow obstruction tower of A_{K3}).
+    is a Borcherds/Gritsenko product statement. Low-level shadow data can
+    be compared with this scalar product, but no exponential equality
+    between the shadow MC element and the BKM denominator is asserted here.
 
     We verify this identification at low orders by comparing:
     (a) The phi_{0,1} Fourier coefficients (root multiplicities)
@@ -1046,8 +1075,14 @@ def igusa_cusp_form_from_shadow(nmax: int = 5) -> Dict[str, Any]:
         'kappa_k3': Fraction(2),
         'level_data': level_data,
         'igusa_weight': 5,
-        'note': ('The shadow tower of A_{K3} produces the BKM denominator '
-                 'formula, which equals (1/64)*Delta_5.'),
+        'comparison_status': 'scalar product evidence only',
+        'recognition_complete': False,
+        'missing_chain_datum': HALL_BORCHERDS_CHAIN_DATUM,
+        'note': (
+            'The phi_{0,1} product formula gives the BKM denominator '
+            '(1/64)*Delta_5; the K3 shadow lane supplies scalar evidence '
+            'for the same coefficients, not a chain-level recognition theorem.'
+        ),
     }
 
 
@@ -1277,7 +1312,7 @@ def hilb_k3_partition_detailed(nmax: int = 10) -> Dict[str, Any]:
 # =========================================================================
 
 def full_bridge_summary() -> Dict[str, Any]:
-    r"""Summary of the relative chiral algebra -> BKM -> Delta_5 bridge.
+    r"""Summary of the scalar K3 lane and its Hall--Borcherds target.
 
     THE CHAIN OF IDENTIFICATIONS:
 
@@ -1291,26 +1326,21 @@ def full_bridge_summary() -> Dict[str, Any]:
        - Shadow class M (infinite depth, from Virasoro Q^contact != 0)
        - Higher-arity projections determined by the N=4 OPE structure
 
-    4. The BKM denominator formula:
-       exp(-Theta_A) = prod_{alpha>0} (1 - e^{-alpha})^{mult(alpha)}
+    4. The BKM denominator formula gives an independent scalar product:
+       prod_{alpha>0} (1 - e^{-alpha})^{mult(alpha)}
        where mult(alpha) = c(D) from phi_{0,1} (the K3 elliptic genus).
 
     5. The product formula gives (1/64) * Delta_5. Squaring gives the
        unnormalised Igusa weight-10 form Phi_10^{un} = Delta_5^2; the
        OP/DT scalar uses D_5 = 64^{-1} Delta_5.
 
-    6. BYPASSES THE d=3 FUNCTOR: this derivation uses ONLY:
-       - The K3 sigma model (well-defined VOA)
-       - The sewing construction (Vol I MC5)
-       - The shadow obstruction tower (Vol I Theorem D)
-       - The product formula identification (Borcherds/Gritsenko-Nikulin)
-       No abstract higher-dimensional categorification is needed.
+    6. Recognition does not bypass the d=3 CY/Hall construction. The scalar
+       lane must be promoted through the four-part chain datum
+       (beta, delta, epsilon, tau) before it becomes H_{Delta_5}.
 
-    7. WHAT IS NEW: the identification of the BKM denominator with the
-       exponential of the shadow obstruction tower gives a CHIRAL-ALGEBRAIC
-       proof that the BKM superalgebra controls the K3 x E amplitudes.
-       Previously this was understood string-theoretically
-       (Dijkgraaf-Verlinde-Verlinde, Harvey-Moore).
+    7. WHAT IS PROVED HERE: low-level scalar checks and coefficient
+       comparisons. WHAT IS NOT PROVED HERE: the Hall--Borcherds/K3
+       recognition theorem.
 
     OPEN QUESTIONS:
     - Does this work for non-trivial K3 fibrations X -> C?
@@ -1326,13 +1356,17 @@ def full_bridge_summary() -> Dict[str, Any]:
         'bkm_algebra': 'g_{Delta_5}',
         'siegel_form': 'Delta_5 (weight 5 on H_2)',
         'root_multiplicities': 'c(4nm - l^2) from phi_{0,1}',
+        'comparison_status': 'scalar evidence only',
+        'recognition_complete': False,
+        'missing_chain_datum': HALL_BORCHERDS_CHAIN_DATUM,
+        'finite_window_checks': HALL_BORCHERDS_FINITE_WINDOW_CHECKS,
         'chain': [
             'K3 x E -> E (trivial fibration)',
             'Relative chiral algebra A = V_{K3} tensor O_E',
-            'Shadow tower Theta_A with kappa = 2',
-            'exp(-Theta_A) = BKM denominator',
-            'BKM denominator = (1/64) * Delta_5',
+            'Scalar shadow lane with kappa = 2',
+            'Borcherds/Gritsenko product has phi_{0,1} root multiplicities',
+            'Recognition target H_{Delta_5} needs beta, delta, epsilon, tau',
         ],
-        'bypasses_d3_functor': True,
+        'bypasses_d3_functor': False,
         'vol1_inputs': ['MC5 (sewing)', 'Theorem D (kappa)', 'thm:mc2-bar-intrinsic (MC element)'],
     }

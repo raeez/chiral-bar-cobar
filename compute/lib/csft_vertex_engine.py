@@ -161,14 +161,14 @@ def derived_center_description(c_matter: Fraction) -> Dict[str, Any]:
 
     return {
         "object": "Z^der_ch(A) = C^bullet_ch(A, A)",
-        "interpretation": "universal bulk / closed-string observables",
+        "interpretation": "algebraic closed sector / closed-string observables",
         "c_matter": c_matter,
         "kappa_matter": kap,
         "kappa_eff": kap_eff,
         "bar_complex": "B(A): classifies twisting morphisms (open couplings)",
         "cobar": "Omega(B(A)) ~ A: recovers original algebra (inversion)",
         "verdier_dual": "D_Ran(B(A)) ~ B(A!): gives bar of Koszul dual",
-        "derived_center": "Z^der_ch(A): universal bulk (DISTINCT from above 3)",
+        "derived_center": "Z^der_ch(A): algebraic closed sector (DISTINCT from above 3)",
         "genus_0_structure": "L-infinity algebra on Z^der_ch(A)",
         "all_genera_structure": "quantum L-infinity (BV algebra on Z^der_ch(A))",
     }

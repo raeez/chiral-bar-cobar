@@ -778,7 +778,7 @@ class Genus2Extension:
 
     For uniform-weight algebras (single generator, or all generators same weight):
       F_2 = kappa * 7/(5760) (from A-hat series).
-      The scalar formula obs_g = kappa * lambda_g holds at ALL genera.
+      The scalar formula obs_g^sc = kappa * lambda_g holds at ALL genera.
 
     For multi-weight algebras (e.g., W_3 with weights 2 and 3):
       F_2 = kappa * lambda_2^FP + delta_F2^cross
@@ -1356,7 +1356,7 @@ class ObstructionAnalysis:
     1. At genus 0: nothing blocks.  The Nishinaka-Vicedo envelope exists.
     2. At genus 1: kappa * lambda_1 is the scalar obstruction.
        The extension succeeds with curvature kappa on this scalar lane.
-    3. At genus 2+: for uniform-weight, obs_g = kappa * lambda_g.
+    3. At genus 2+: for uniform-weight, obs_g^sc = kappa * lambda_g.
        For multi-weight, the cross-channel correction delta_F_g is nonzero
        (thm:multi-weight-genus-expansion).
     4. The shadow obstruction tower provides the systematic organization

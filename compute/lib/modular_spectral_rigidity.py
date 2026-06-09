@@ -1194,7 +1194,7 @@ def spectral_rigidity_landscape(
     The landscape shows qualitative behavior:
     - At c=1 (free boson): single atom, Gaussian class
     - At c=1/2 (free fermion): single atom, Gaussian class
-    - At c=26 (critical bosonic string): Virasoro self-dual point
+    - At c=26 (critical bosonic string): dual charge is c=0, not self-dual
     - At c -> infinity: perturbative regime, atoms cluster near 0
     """
     landscape = []

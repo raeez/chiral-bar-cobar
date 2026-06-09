@@ -40,8 +40,10 @@ We use the following typed Hochschild constructions.
  category on~$X$, carrying the chiral brace/Gerstenhaber structure and
  recovering the derived chiral centre
  $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$.
- On the Koszul locus this is the Hochschild theory of Theorem~H and is
- concentrated in cohomological degrees~$\{0,1,2\}$.
+ The definition is not an amplitude theorem: the assertion that this
+ object has cohomological amplitude~$[0,2]$ is a separate Theorem~H
+ package with its own PBW, perfectness, genericity, completion, and
+ strict Mittag--Leffler hypotheses.
 
 \item \emph{Topological Hochschild homology.}
  Let $R$ be an $E_1$-ring spectrum. Its topological Hochschild
@@ -53,12 +55,6 @@ We use the following typed Hochschild constructions.
  Input type: $E_1$-ring spectrum.
  Output type: $S^1$-equivariant spectrum.
  This is the closed trace of the spectrum-level bar construction.
- When a discrete or dg algebra~$A$ is viewed through its
- Eilenberg--Mac Lane realization, the classical Hochschild chain
- complex is the rational shadow of the passage
- $B^{\mathrm{Sp}}(A) \to \THH(A)$
- \textup{(}Chapter~\textup{\ref{ch:en-koszul-duality}},
- spectrum-level bar-lift discussion\textup{)}.
  In particular, the phrase ``topological Hochschild'' in these
  volumes names $\THH$, not the cochain complex
  $\RHom_{A^e}(A,A)$ of a discrete algebra.
@@ -122,19 +118,111 @@ The comparison rules are:
  mode/Gel'fand--Fuchs complexes in
  Chapter~\textup{\ref{chap:three-hochschild-unification}}.
 
-\item \emph{Topological and algebraic agree only on the rational
- discrete shadow.}
- In the discrete/dg regime accessed through Eilenberg--Mac Lane
- realizations, the dg Hochschild chain complex is the rational shadow
- of the spectrum-level closed trace
- $B^{\mathrm{Sp}}(A) \to \THH(A)$
- \textup{(}Chapter~\textup{\ref{ch:en-koszul-duality}},
- Remark~\textup{\ref{rem:spectrum-bar-lift-evidence}}\textup{)}.
- Outside that rational shadow the comparison is not an identification:
+\item \emph{Topological and algebraic are not identified by notation.}
+ A discrete or dg algebra can be spectrified, but the resulting
+ $\THH$ is a spectrum-valued trace. Any comparison with the dg
+ Hochschild chain complex must name the Eilenberg--Mac Lane
+ realization, the rationalization or completion used, and the map from
+ the bar model to the spectral trace. Outside such a named comparison
  $\THH$ retains torsion/chromatic information invisible to the
  classical dg Hochschild complex.
 \end{enumerate}
 \end{proposition}
+
+\begin{remark}[Circle and restriction firewall;
+\ClaimStatusProvedElsewhere]
+\label{rem:hochschild-circle-restriction-firewall}
+\index{circle!restriction firewall for chiral algebras}
+\index{mode algebra!not circle restriction}
+Four circle-adjacent operations are distinct.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item A chiral algebra is a $\cD$-module/factorization object on a
+ complex algebraic curve. The operation ``restrict the $\cD$-module to
+ the real submanifold $S^1$'' is not used in these volumes to produce
+ an algebra; real boundary values require extra analytic data.
+\item Choosing a formal coordinate and taking modes gives the
+ formal-disk mode algebra $A_{\mathrm{mode}}$. This is a strict
+ associative topological/dg algebra, not factorization homology over
+ the circle and not an $A_\infty$ transfer by itself.
+\item If $\mathcal F_A$ is the locally constant factorization algebra
+ on $S^1$ associated with an $E_1$-algebra~$A$, then
+ \[
+  \int_{S^1}\mathcal F_A \simeq
+  \mathrm{HH}_{\bullet,\mathrm{alg}}(A)
+ \]
+ by the circle trace theorem for factorization homology
+ \cite{BZFN10,AF15,CG17}. The output is a Hochschild chain complex
+ \textup{(}or, after spectrification, a spectrum-level trace\textup{)},
+ not the mode algebra itself.
+\item Pulling a holomorphic/topological factorization algebra to an
+ oriented real interval or real ray, when the analytic/constructible
+ comparison hypotheses are supplied, gives an $E_1$-algebra. Calling a
+ chain model of this object an $A_\infty$-algebra uses the
+ characteristic-zero homotopy-transfer/rectification theorem
+ \cite{LV12,Kadeishvili80}; it is not a bare topological restriction
+ statement.
+\end{enumerate}
+Consequently a comparison statement must name which operation is in
+force: mode extraction, circle factorization homology, real-ray
+pullback to an $E_1$-algebra, or an analytic boundary-value
+construction.
+\end{remark}
+
+\begin{remark}[BZFN ambient discipline;
+\ClaimStatusProvedElsewhere]
+\label{rem:bzfn-ambient-not-dial}
+\index{Ben--Zvi--Francis--Nadler!ambient discipline}
+\index{ambient category!not a free parameter}
+In the Ben--Zvi--Francis--Nadler circle-trace theorem
+\cite{BZFN10}, the symmetric monoidal target~$\mathcal S$ is fixed
+as part of a single application. The $E_1$-algebra object and its
+Hochschild trace are formed inside that same~$\mathcal S$. Changing
+from a chiral factorisation algebra~$\cA$ in $\cD$-modules on
+$\Ran(X)$ to a formal-disk mode algebra~$A_{\mathrm{mode}}$ in
+chain complexes changes the input algebra and its native
+presentation, not a free scalar or categorical knob holding the
+algebra fixed. Thus
+\[
+ Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
+ \qquad\text{and}\qquad
+ \HH^\bullet(A_{\mathrm{mode}},A_{\mathrm{mode}})
+\]
+are different centre objects because their inputs differ. A comparison
+between them requires the named formal-disk mode-extraction and
+local-global comparison maps; BZFN by itself does not identify the
+chiral and mode centres.
+\end{remark}
+
+\begin{remark}[Theorem~H package in the Hochschild crosswalk;
+\ClaimStatusConditional]
+\label{rem:hochschild-crosswalk-theorem-h-package}
+The amplitude statement attached to the chiral entry of
+Proposition~\ref{prop:hochschild-crosswalk} is exactly the
+conditional Theorem~H surface. If~$\cA$ is PBW chiral Koszul,
+finite-type/perfect and generic, taken through the
+$E_\infty$ chiral completion and strict Mittag--Leffler passage of
+Theorem~\ref{thm:main-koszul-hoch}, then
+$\ChirHoch^\bullet(\cA)$ is concentrated in cohomological
+degrees~$\{0,1,2\}$. Off that package the object remains
+$RHH_{\mathrm{ch}}(\cA)$, but its high-degree part is measured by the
+Hochschild Koszul-defect complex
+$\mathrm{KD}_{\mathrm H}^{\bullet}(\cA)$ of
+Definition~\ref{def:koszul-defect-complex}, not by the
+degree-$\{0,1,2\}$ formula.
+\end{remark}
+
+\begin{remark}[Spectrum-level bar lift is not a crosswalk axiom;
+\ClaimStatusConjectured]
+\label{rem:hochschild-crosswalk-spectrum-lift-package}
+The phrase ``rational shadow'' for the passage from a dg bar complex
+to a spectrum-valued trace is governed by the spectrum-lift package
+Conjecture~\ref{conj:spectrum-bar-lift} and by the trace constraints
+of Remark~\ref{rem:spectrum-bar-lift-trace-constraints}. It is not an
+axiom of Proposition~\ref{prop:hochschild-crosswalk}. Until that lift
+is supplied, the proved crosswalk records only the type distinction:
+$\HHalg$ is algebraic/categorical on a compact generator, while
+$\THH$ is the $S^1$-equivariant trace of an $E_1$-ring spectrum.
+\end{remark}
 
 \begin{remark}[Theorem~H is exclusively chiral]
 \label{rem:theorem-h-chiral-only}

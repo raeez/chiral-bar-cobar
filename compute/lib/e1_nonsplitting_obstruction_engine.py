@@ -922,7 +922,7 @@ def heisenberg_obstruction_analysis(k: int = 1) -> Dict[str, object]:
     So the kernel is TRIVIAL, the extension is trivial, and the
     obstruction vanishes.  This is consistent with:
     - Heisenberg is class G (shadow depth 2, terminates)
-    - The r-matrix r(z) = k/z is a scalar (no matrix structure)
+    - The r-matrix r(z) = k*Omega_H/z (rank-one coeff k/z) has rank-one tensor structure; its coefficient is scalar after evaluation
     - The associator is trivial (r_3 = 0 in the archetype table)
     - Quantization is unique (no GRT ambiguity for abelian algebras)
     """

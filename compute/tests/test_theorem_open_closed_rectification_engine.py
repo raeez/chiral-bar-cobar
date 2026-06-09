@@ -19,8 +19,10 @@ Multi-path verification per claim:
   - Path 3: cross-family consistency / duality
 """
 
-import pytest
 from fractions import Fraction
+from pathlib import Path
+
+import pytest
 
 from compute.lib.theorem_open_closed_rectification_engine import (
     LAMBDA_1,
@@ -45,6 +47,73 @@ from compute.lib.theorem_open_closed_rectification_engine import (
     shadow_archetype_classification,
     virasoro_quartic_contact,
 )
+
+
+ROOT = Path(__file__).resolve().parents[2]
+THQG_TEX = ROOT / "chapters" / "connections" / "thqg_open_closed_realization.tex"
+FRONTIER_TEX = (
+    ROOT / "chapters" / "connections" / "frontier_modular_holography_platonic.tex"
+)
+CONCORDANCE_TEX = ROOT / "chapters" / "connections" / "concordance.tex"
+EDITORIAL_TEX = ROOT / "chapters" / "connections" / "editorial_constitution.tex"
+PREFACE_TEX = ROOT / "chapters" / "frame" / "preface.tex"
+INTRODUCTION_TEX = ROOT / "chapters" / "theory" / "introduction.tex"
+ENGINE = ROOT / "compute" / "lib" / "theorem_open_closed_rectification_engine.py"
+
+
+def test_completed_datum_terminology_is_not_ade_mckay():
+    thqg = THQG_TEX.read_text(encoding="utf-8")
+    active = "\n".join(
+        path.read_text(encoding="utf-8")
+        for path in [THQG_TEX, FRONTIER_TEX, CONCORDANCE_TEX, EDITORIAL_TEX, ENGINE]
+    )
+
+    assert r"\begin{definition}[Completed modular Koszul datum]" in thqg
+    assert "Terminology: completed datum, not ADE/McKay" in thqg
+    assert "Platonic-solids/ADE/McKay usage" in thqg
+    assert "not ADE/McKay or Platonic-solids data" in active
+    assert "Completed modular Koszul datum (def:thqg-completed-platonic-datum)" in active
+
+    forbidden = [
+        "Completed 8-fold platonic datum",
+        "Platonic summary",
+        "The mature platonic theorem",
+        "Platonic completion theorem",
+        "platonic package|textbf",
+    ]
+    for phrase in forbidden:
+        assert phrase not in active
+
+
+def test_bd_algebraic_end_bridge_is_coordinate_dependent():
+    thqg = THQG_TEX.read_text(encoding="utf-8")
+    preface = PREFACE_TEX.read_text(encoding="utf-8")
+    active = "\n".join([thqg, preface, ENGINE.read_text(encoding="utf-8")])
+
+    assert r"\label{prop:bd-algebraic-bridge}" in thqg
+    assert "coordinate-dependent isomorphism of non-$\\Sigma$ operads" in thqg
+    for step in [
+        "Formal-disk restriction.",
+        "D-module trivialisation.",
+        "Spectral-variable identification.",
+        "Operadic composition.",
+    ]:
+        assert step in thqg
+    assert r"\operatorname{Aut}(\mathcal{O})" in thqg
+    assert "provides descent data" in thqg
+
+    assert r"Proposition~\ref{prop:bd-algebraic-bridge}" in preface
+    assert "not an equality of the\nglobal BD" in preface
+    assert r"$\End^{\mathrm{ch}}_{A_p}$" in preface
+
+    forbidden = [
+        "BD chiral operad = algebraic",
+        "BD chiral operad is the algebraic",
+        "BD operad equals End^ch_A",
+        "End^ch_A is the BD operad",
+    ]
+    for phrase in forbidden:
+        assert phrase not in active
 
 
 # ======================================================================
@@ -416,6 +485,36 @@ class TestCrossChecks:
         assert witness["forbidden_equalities"]["koszul_dual_equals_derived_center"] is False
         assert witness["objects"]["bar_cobar_inverse"]["symbol"] == "Omega(B(A)) -> A"
         assert witness["objects"]["derived_center"]["producer"] == "Hochschild cohomology"
+
+    def test_algebraic_closed_actor_not_physical_bulk(self):
+        """The derived center is the algebraic closed actor, not physical bulk without OCA."""
+        notation = open_closed_object_separation_witness()["algebraic_sector_notation"]
+        assert notation["closed_actor"] == "Z_ch^der(A)"
+        assert notation["physical_bulk_symbol_reserved"] == "Obs^bulk(T)"
+        assert notation["derived_center_is_physical_bulk_without_oca"] is False
+        assert notation["one_boundary_one_physical_bulk_target"] is True
+        assert notation["centers_are_computational_models_not_bulk_theories"] is True
+        assert notation["drinfeld_center_equals_bulk_status"].startswith("conjectural")
+
+    def test_drinfeld_center_bulk_closure_remains_conjectural(self):
+        """Center comparisons are evidence for one bulk target, not proved closures."""
+        active = "\n".join(
+            path.read_text(encoding="utf-8")
+            for path in [PREFACE_TEX, INTRODUCTION_TEX, THQG_TEX, ENGINE]
+        )
+        assert "Finite-window evidence and" in active
+        assert "conditional center-comparison checks exist" in active
+        assert "physical-bulk equivalence remains" in active
+        assert "one boundary bulk target, not separate physical bulk theories" in active
+        assert "centers_are_computational_models_not_bulk_theories" in active
+
+        for forbidden in [
+            "conj:drinfeld-center-equals-bulk}$, proved for Heisenberg",
+            "\\emph{proved} for Heisenberg",
+            "two different bulk theories",
+            "are separate physical bulk theories",
+        ]:
+            assert forbidden not in active
 
     def test_physical_bulk_comparison_requires_typed_data(self):
         """Physical bulk is identified with the center only after all hypotheses."""

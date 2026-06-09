@@ -501,8 +501,10 @@ r_{ij}(z_i-z_j)\,d(z_i-z_j).
 Here $r_{ij}$ acts in the $(i,j)$ tensor slots of~$\bar A^{\otimes n}$
 and $r_{ij}(z_{ij})\,dz_{ij}$ is the connection $1$-form
 on $\mathrm{Conf}_n^{\mathrm{ord}}(\mathbb{C})$.
-For instance, when $r^{\mathrm{coll}}(z)=k/z$ (Heisenberg), this gives
-$k\,dz/z$. For affine Kac--Moody the collision residue in trace-form
+For instance, when
+$r^{\mathrm{coll}}(z)=k\Omega_{\cH}/z$ with
+$\Omega_{\cH}=J\otimes J$ on the Heisenberg current line, its
+rank-one coefficient gives $k\,dz/z$. For affine Kac--Moody the collision residue in trace-form
 normalization is $r^{\mathrm{coll}}(z)=k\Omega_{\mathrm{tr}}/z$; the
 KZ/Yangian form $\Omega_{\mathrm{KZ}}/((k+h^\vee)z)$ is the rescaled
 Casimir-and-coupling normalization, not the trace-form collision residue.
@@ -644,7 +646,9 @@ Define the \emph{$R$-twisted action} on generators by
 \end{equation}
 
 \emph{Step~2: well-definedness via YBE and strong unitarity.}
-The formula~\eqref{eq:r-twisted-action} defines a representation
+The assignment
+\(\sigma_i\mapsto\tau_{i,i+1}\circ R_{i,i+1}(z_i-z_{i+1})\)
+defines a representation
 $\rho_R\colon B_n\to\operatorname{GL}(\bar A^{\otimes n})$
 of the braid group, provided the braid relation holds.
 To factor $\rho_R$ through $\Sigma_n=B_n/\langle\sigma_i^2\rangle$,
@@ -759,8 +763,10 @@ Proposition~\ref{prop:r-matrix-descent-vol1}.
 If the OPE has no poles, every collision residue vanishes identically,
 so the connection form in~\eqref{eq:kohno-connection} is zero and the
 monodromy~\eqref{eq:r-matrix-monodromy-vol1} is the identity.
-The $R$-twisted $\Sigma_n$-action~\eqref{eq:r-twisted-action}
-reduces to the plain permutation $\tau_{i,i+1}$, and the
+Since
+\(\rho_R(\sigma_i)=\tau_{i,i+1}\circ R_{i,i+1}(z_i-z_{i+1})\),
+the $R$-twisted $\Sigma_n$-action reduces to the plain permutation
+$\tau_{i,i+1}$, and the
 $R$-twisted invariants identify with the ordinary
 $\Sigma_n$-coinvariants by the Reynolds idempotent, since
 \(\operatorname{char} k=0\).
@@ -2522,8 +2528,8 @@ on cohomology inherits the trivial differential and the
 deconcatenation coproduct, with all higher operations vanishing.
 The vanishing of $m_{k\ge 3}$ is equivalent to saying that the
 OPE has a single pole order (the double pole),
-and the collision residue $r^{\mathrm{coll}} = k/z$ has a
-simple pole, which falls in class~G.
+and the collision residue $r^{\mathrm{coll}}_{\cH}=k\Omega_{\cH}/z$
+has a simple pole, which falls in class~G.
 \end{proof}
 
 \begin{remark}[Contrast with the chiral \textup{(}symmetric\textup{)}
@@ -2911,9 +2917,8 @@ OPE. This is tier~(iii) of the three-tier picture.
 \end{theorem}
 
 \begin{proof}
-The differential follows from the
-lattice OPE~\eqref{eq:lattice-ope-ordered} and the ordered bar
-construction: adjacent collisions in the ordered bar complex use the
+The differential follows from the ordered lattice OPE and the ordered
+bar construction: adjacent collisions in the ordered bar complex use the
 $d\log$ kernel, selecting simple poles
 ($\langle\alpha_i,\alpha_{i+1}\rangle = -1$) with coefficient
 $\varepsilon(\alpha_i, \alpha_{i+1})$ at the specific ordered pair.
@@ -4258,7 +4263,7 @@ A &= [[X_2,[X_1,X_c]],X_3]
  \qquad(\text{since }[X_1,X_2]=0).
 \end{align*}
 The identical computation with $2\leftrightarrow 3$ gives
-$B=[X_1,[X_3,[X_c,X_2]]]$. By~\eqref{eq:jacobi-star-v1},
+$B=[X_1,[X_3,[X_c,X_2]]]$. The displayed Jacobi consequence gives
 $[X_2,[X_c,X_3]]=[X_3,[X_c,X_2]]$, hence $A=B$.
 \end{proof}
 
@@ -6987,6 +6992,7 @@ $U(\mathfrak{g})$.
 
 \begin{definition}[Evaluation module]
 \label{def:evaluation-module-app}
+\ClaimStatusDefinitional
 Let $(\rho,V)$ be a finite-dimensional
 $\mathfrak{g}$-representation and $a\in\mathbb{C}$.
 The \emph{evaluation module} $V_a$ is the
@@ -7336,7 +7342,7 @@ Y_\hbar(\mathfrak{g})\text{-}\mathrm{mod}^{\mathrm{fd}}.
 \]
 
 \item The evaluation modules $V_a$ of
-Definition~\textup{\ref{def:evaluation-module}} are the line
+Definition~\textup{\ref{def:evaluation-module-app}} are the line
 operators obtained by inserting a Wilson line in
 representation~$V$ at position $z=a$. The spectral
 parameter $a$ is the holomorphic position on $\mathbb{C}_z$.
@@ -8382,7 +8388,9 @@ The $d\log$ bar kernel absorbs one pole order
 (the $d\log$ absorption principle; see Section~\ref{def:bar-differential-complete}):
 the collision residue $r^{\mathrm{coll}}(z)$ from an OPE pole of
 order~$d$ has pole of order~$d{-}1$. For Heisenberg:
-double-pole $k/(z{-}w)^2$ gives $r^{\mathrm{coll}} = k/z$.
+double-pole $k/(z{-}w)^2$ gives
+$r^{\mathrm{coll}}_{\cH}=k\Omega_{\cH}/z$, whose rank-one coefficient
+is $k/z$.
 For affine $\widehat{\mathfrak{g}}_k$: the trace-form Casimir
 $\Omega_{\mathrm{tr}} = \sum_a t^a \otimes t_a$ produces
 $r^{\mathrm{coll}} = k\Omega_{\mathrm{tr}}/z$; the KZ/Yangian

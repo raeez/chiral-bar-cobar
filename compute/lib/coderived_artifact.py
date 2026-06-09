@@ -115,8 +115,11 @@ def heisenberg_genus1_curvature(c=1):
     """Curvature kappa for c free bosons.
 
     kappa(Heis_c) = c (anomaly ratio rho = 1 for Heisenberg/lattice).
-    At genus 1: d^2 = kappa * omega_1, where omega_1 = 2*pi*i*dtau.
-    The curvature as a NUMBER (on the fundamental domain) is kappa.
+    At genus 1: d^2 = kappa * omega_1^Ar on a fixed elliptic fiber.
+    The moduli-base Hodge class is c_1(lambda), represented by the
+    Chern curvature (1,1)-form on the upper-half-plane quotient; it is
+    not the holomorphic coordinate form dtau.  The curvature coefficient
+    as a NUMBER is kappa.
     """
     return float(c)
 

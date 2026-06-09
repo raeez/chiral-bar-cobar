@@ -6,8 +6,10 @@ FRONTIER COMPUTATION for MC3 extension to exceptional Dynkin types
   1. Root systems and Cartan matrices for ALL exceptional types (G_2, F_4, E_6, E_7, E_8)
   2. Weyl dimension formulas and weight multiplicities via Freudenthal
   3. Character-level prefundamental CG verification
-  4. R-matrix structure and Yang-Baxter verification for the standard
-     R-matrix R(u) = I - P/u + Q/(u - kappa) with trace-projection Q
+  4. Orthogonal-style R-matrix test object
+     R(u) = I - P/u + Q/(u - kappa) with trace-projection Q.
+     This is a finite-window diagnostic, not a uniform RTT presentation
+     theorem for exceptional Yangians.
 
 MC3 DIFFICULTY GRADES:
   D: grade B (orthogonal RTT, see yangian_rtt_typeD.py)
@@ -767,17 +769,17 @@ def weyl_dim_explicit(name: str, hw: Weight) -> int:
 # ---------------------------------------------------------------------------
 
 def exceptional_r_matrix(N_rep: int, u: float) -> np.ndarray:
-    """Standard R-matrix R(u) = I - P/u + Q/(u-kappa) on N_rep-dim rep.
+    """Orthogonal-style test R-matrix R(u)=I-P/u+Q/(u-kappa).
 
     For any representation V of dim N_rep:
       P = permutation on V tensor V
       Q = trace projection (sum over orthonormal basis)
       kappa depends on the Lie algebra and representation
 
-    This is the UNIVERSAL R-matrix evaluated on V tensor V.
+    This is not the universal exceptional R-matrix evaluated on V tensor V.
     For the standard/vector representation of so(N), kappa = N/2 - 1.
-    For other types and representations, kappa is determined by the
-    quadratic Casimir eigenvalue.
+    For exceptional types it is only a finite-window obstruction test until
+    a type-specific RTT or Drinfeld/J-presentation theorem is supplied.
 
     For now: implements the generic R-matrix for any N_rep.
     The kappa parameter must be supplied separately.
@@ -798,6 +800,27 @@ def exceptional_r_matrix(N_rep: int, u: float) -> np.ndarray:
 
     R = np.eye(dim) - P / u + Q / (u - kappa)
     return R
+
+
+def exceptional_rtt_obstruction_report(name: str) -> Dict[str, object]:
+    """Report why type-A/orthogonal RTT formulas do not automatically extend."""
+    if name not in EXCEPTIONAL_DATA:
+        raise ValueError(f"unknown exceptional type {name!r}")
+    data = EXCEPTIONAL_DATA[name]
+    return {
+        "type": name,
+        "rank": len(data[5]),
+        "dim_g": data[4],
+        "an_rtt_extrapolation_allowed": False,
+        "orthogonal_test_matrix_is_full_rtt": False,
+        "required_extra_data": (
+            "type-specific tensor-product decomposition",
+            "Casimir eigenvalues on each component",
+            "spectral finite-window YBE check",
+            "Drinfeld/J-presentation or RTT presentation theorem",
+            "PBW/flatness comparison for the generated exceptional window",
+        ),
+    }
 
 
 def yang_baxter_check_generic(N_rep: int, kappa: float,

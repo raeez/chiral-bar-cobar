@@ -1,8 +1,9 @@
-r"""Higher-genus graph sum engine: Theorem D verification through genus 5.
+r"""Higher-genus graph sum engine: diagonal Theorem-D verification through genus 5.
 
-Implements the graph-sum decomposition of the modular free energy:
+Implements the finite-window graph-sum checks for the diagonal scalar
+projection:
 
-    F_g(A) = \kappa(A) \cdot \lambda_g^{FP}     (Theorem D)
+    F_g^diag(A) = \kappa(A) \cdot \lambda_g^{FP}     (Theorem D)
 
 where \lambda_g^{FP} is the Faber-Pandharipande intersection number
 
@@ -23,8 +24,8 @@ This module provides:
    and a fast dedicated enumerator for genus 4
 3. **Orbifold Euler characteristic verification** via graph-vertex-product
 4. **Genus spectral sequence E_1 page** decomposition by loop number h^1
-5. **Cross-family free energy table** for Heisenberg, Virasoro, affine sl_2,
-   beta-gamma through genus 5
+5. **Cross-family diagonal scalar table** for Heisenberg, Virasoro, affine sl_2,
+   beta-gamma through genus 5, on the diagonal scalar lane
 6. **Scalar graph sum polynomial** in kappa at each genus
 7. **Bernoulli asymptotics** for lambda_g^FP at large genus
 8. **Planted-forest correction** delta_pf^{(g,0)} at genus 2
@@ -65,6 +66,35 @@ from compute.lib.stable_graph_enumeration import (
     _lambda_fp_exact,
     _chi_orb_open,
 )
+from compute.lib.genus_expansion import theorem_d_scope_report
+
+
+def graph_sum_theorem_d_scope(
+    genus: int,
+    *,
+    uniform_weight: bool = False,
+    cross_channel_terms_supplied: bool = False,
+    strict_ml_completion: bool = False,
+) -> Dict[str, object]:
+    """Scope certified by this finite graph-sum engine.
+
+    The graph enumeration in this module checks diagonal scalar
+    Faber--Pandharipande coefficients in finite genus/arity windows.  The
+    all-weight theorem requires the mixed-channel and completion hypotheses
+    recorded in ``theorem_d_scope_report``.
+    """
+    scope = theorem_d_scope_report(
+        genus,
+        uniform_weight=uniform_weight,
+        cross_channel_terms_supplied=cross_channel_terms_supplied,
+        strict_ml_completion=strict_ml_completion,
+    )
+    scope.update({
+        "graph_sum_certifies": "finite_window_diagonal_scalar_projection",
+        "full_stable_graph_mixed_channel_sum_included": cross_channel_terms_supplied,
+        "analytic_partition_function_claim": False,
+    })
+    return scope
 
 
 # ============================================================================
@@ -155,7 +185,7 @@ def stable_graphs(g: int, n: int = 0) -> Tuple[StableGraph, ...]:
     Feasible for g <= 4, n <= 4. Returns a frozen tuple for hashability.
 
     Known counts at n = 0:
-        g=1: 2, g=2: 6, g=3: 42, g=4: 379
+        g=1: 2, g=2: 7, g=3: 42, g=4: 379
 
     Note: (g=1, n=0) is a boundary case where 2g-2+n = 0, but M_bar_{1,0}
     still has a meaningful stable graph decomposition (2 graphs). The
@@ -167,7 +197,7 @@ def stable_graphs(g: int, n: int = 0) -> Tuple[StableGraph, ...]:
 def graph_count(g: int, n: int = 0) -> int:
     """Number of stable graphs at (g, n).
 
-    Known values at n = 0: g=1: 2, g=2: 6, g=3: 42, g=4: 379.
+    Known values at n = 0: g=1: 2, g=2: 7, g=3: 42, g=4: 379.
     """
     return len(stable_graphs(g, n))
 
@@ -333,7 +363,7 @@ class FamilyKappa:
     central_charge: Optional[Fraction] = None
 
     def free_energy(self, g: int) -> Fraction:
-        """F_g(A) = kappa(A) * lambda_g^FP (Theorem D)."""
+        """Diagonal scalar F_g^diag(A) = kappa(A) * lambda_g^FP."""
         return self.kappa * lambda_fp(g)
 
 
@@ -368,7 +398,7 @@ def betagamma_family() -> FamilyKappa:
 
 
 def cross_family_free_energy_table(max_genus: int = 5) -> Dict[str, Dict[int, Fraction]]:
-    """Free energy table F_g for standard families at g = 1..max_genus.
+    """Diagonal scalar F_g^diag table for standard families.
 
     Returns {family_name: {g: F_g}}.
 
@@ -392,10 +422,11 @@ def cross_family_free_energy_table(max_genus: int = 5) -> Dict[str, Dict[int, Fr
 
 def free_energy_additivity_check(families: List[FamilyKappa],
                                  g: int) -> Tuple[Fraction, Fraction, bool]:
-    """Verify additivity: F_g(A_1 + A_2) = F_g(A_1) + F_g(A_2).
+    """Verify additivity on the diagonal scalar projection.
 
     For independent sums with vanishing mixed OPE (prop:independent-sum-factorization),
-    kappa is additive, hence F_g is additive.
+    kappa is additive, hence F_g^diag is additive.  This does not include
+    cross-channel mixed-edge corrections.
 
     Returns (sum_of_Fg, Fg_of_sum, match).
     """

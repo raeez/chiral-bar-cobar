@@ -36,6 +36,8 @@ from compute.lib.theorem_thm_h_e3_rectification_engine import (
     e2_operation_space_dim,
     gerstenhaber_bracket_degree,
     e3_linking_degree,
+    raw_chain_e3_topologization_scope,
+    TOPOLOGIZATION_T1_T5_GATES,
     # Heisenberg E_3
     heisenberg_e3_structure,
     E3StructureData,
@@ -398,7 +400,7 @@ class TestAKLComparison:
         assert result.e2_page_agrees is True
 
     def test_locality_2_disagrees(self):
-        """At locality N=2, AKL misses the c/2 lambda^3 term."""
+        """At locality N=2, AKL misses the T_(3)T = c/2 central term."""
         result = akl_vs_chirhoch_virasoro(2)
         assert result.e2_page_agrees is False
 
@@ -463,10 +465,11 @@ class TestGriffinComparison:
 class TestE3KoszulnessConjecture:
     """Assessment of E_3-formality as a Koszulness characterization."""
 
-    def test_forward_proved(self):
-        """Koszulness => E_3-formality is PROVED."""
+    def test_forward_conditional(self):
+        """Koszulness => raw E_3^{top} formality is T1--T5-conditional."""
         assessment = assess_e3_koszulness_conjecture()
-        assert assessment.forward_proved is True
+        assert assessment.forward_proved is False
+        assert 'T1--T5' in assessment.forward_direction
 
     def test_backward_false(self):
         """E_3-formality => Koszulness is FALSE."""
@@ -479,10 +482,10 @@ class TestE3KoszulnessConjecture:
         assert assessment.is_13th_characterization is False
 
     def test_counterexample_exists(self):
-        """A counterexample to the backward direction exists."""
+        """The backward direction is rejected by type, not reconstruction."""
         assessment = assess_e3_koszulness_conjecture()
         assert assessment.backward_counterexample is not None
-        assert 'homotopy-Koszul' in assessment.backward_counterexample
+        assert 'not a reconstruction theorem' in assessment.backward_counterexample
 
     def test_weaker_variant_open(self):
         """The weaker E_3-rigidity variant is OPEN."""
@@ -549,20 +552,23 @@ class TestDeLegerIdentification:
         result = de_leger_sc_e2_identification()
         assert result['compatible'] is True
 
-    def test_e3_action_consequence(self):
-        """Consequence: E_3-action on ChirHoch for all chiral algebras."""
+    def test_e3_topologization_not_automatic(self):
+        """Consequence is cochain SC/brace data, not raw E_3^{top}."""
         result = de_leger_sc_e2_identification()
-        assert 'E_3-action' in result['consequence']
+        assert 'Swiss-cheese' in result['consequence']
+        assert result['raw_e3_topological_requires_t1_t5'] is True
+        assert result['topologization_scope']['raw_chain_e3_topological'] is False
 
-    def test_formal_for_koszul(self):
-        """E_3-formal for Koszul algebras."""
+    def test_formal_for_koszul_conditional(self):
+        """E_3^{top} formality for Koszul algebras is conditional."""
         result = de_leger_sc_e2_identification()
-        assert result['formal_for_koszul'] is True
+        assert result['formal_for_koszul'] is False
+        assert result['formal_for_koszul_conditional_on_t1_t5'] is True
 
     def test_formal_for_non_koszul(self):
-        """E_3-formal even for non-Koszul (SC homotopy-Koszulity)."""
+        """Non-Koszul algebras do not get a free raw E_3^{top} claim."""
         result = de_leger_sc_e2_identification()
-        assert result['formal_for_non_koszul'] is True
+        assert result['formal_for_non_koszul'] is False
 
 
 # ===================================================================
@@ -577,15 +583,86 @@ class TestBraceE3Compatibility:
         result = brace_e3_compatibility_check()
         assert result['brace_from_swiss_cheese'] is True
 
-    def test_e3_from_de_leger(self):
-        """E_3 structure from De Leger's construction."""
+    def test_e3_from_de_leger_is_not_raw_topologization(self):
+        """De Leger compatibility is not raw E_3^{top} certification."""
         result = brace_e3_compatibility_check()
-        assert result['e3_from_de_leger'] is True
+        assert result['e3_from_de_leger'] is False
+        assert result['raw_e3_topological_claim'] is False
 
     def test_compatibility_statement(self):
-        """Brace = tree-level E_3."""
+        """Brace = tree-level SC/brace data."""
         result = brace_e3_compatibility_check()
         assert 'tree-level' in result['compatibility']
+        assert 'T1--T5' in result['compatibility']
+
+
+# ===================================================================
+# XIIa. Raw E_3^{top} topologisation gates
+# ===================================================================
+
+class TestRawE3TopologizationGates:
+    """MA-15 firewall: conformal vector alone does not give E_3^{top}."""
+
+    def test_conformal_vector_alone_is_not_enough(self):
+        scope = raw_chain_e3_topologization_scope(
+            conformal_vector_supplied=True,
+        )
+        assert scope['conformal_vector_is_sufficient'] is False
+        assert scope['raw_chain_e3_topological'] is False
+        assert scope['e2_chiral_structure_implies_e3_topological'] is False
+        assert len(scope['missing_gates']) == len(TOPOLOGIZATION_T1_T5_GATES) - 1
+
+    def test_brs_cohomology_e3_before_raw_chain_transfer(self):
+        scope = raw_chain_e3_topologization_scope(
+            conformal_vector_supplied=True,
+            noncritical_level_or_alternative_twist=True,
+            g_constructed=True,
+            qg_equals_t_proved=True,
+            filtration_completion_compatible=True,
+            anomaly_cancelled=True,
+        )
+        assert scope['translations_brst_exact'] is True
+        assert scope['e2_to_e3_on_brs_cohomology'] is True
+        assert scope['raw_chain_e3_topological'] is False
+        assert 'T3' in ' '.join(scope['missing_gates'])
+        assert 'T4' in ' '.join(scope['missing_gates'])
+
+    def test_all_t1_t5_gates_certify_raw_chain_e3(self):
+        scope = raw_chain_e3_topologization_scope(
+            family='affine_km',
+            level=1,
+            h_vee=2,
+            conformal_vector_supplied=True,
+            noncritical_level_or_alternative_twist=True,
+            g_constructed=True,
+            qg_equals_t_proved=True,
+            filtration_completion_compatible=True,
+            finite_propagation_or_completed_ambient=True,
+            sdr_independence_proved=True,
+            anomaly_cancelled=True,
+        )
+        assert scope['status'] == 'raw_chain_E3_topologization_certified'
+        assert scope['missing_gates'] == ()
+        assert scope['raw_chain_e3_topological'] is True
+
+    def test_critical_level_forces_failure(self):
+        scope = raw_chain_e3_topologization_scope(
+            family='affine_km',
+            level=-2,
+            h_vee=2,
+            conformal_vector_supplied=True,
+            noncritical_level_or_alternative_twist=True,
+            g_constructed=True,
+            qg_equals_t_proved=True,
+            filtration_completion_compatible=True,
+            finite_propagation_or_completed_ambient=True,
+            sdr_independence_proved=True,
+            anomaly_cancelled=True,
+        )
+        assert scope['status'] == 'critical_level_failure'
+        assert scope['critical_level_failure'] is True
+        assert scope['raw_chain_e3_topological'] is False
+        assert 'Sugawara denominator vanishes' in scope['residual_obstruction']
 
 
 # ===================================================================
@@ -615,7 +692,10 @@ class TestFullSummary:
     def test_e3_not_13th(self):
         """E_3-formality is NOT a 13th characterization."""
         summary = full_rectification_summary()
-        assert 'FALSE' in summary['e3_koszulness_conjecture']['verdict']
+        assert 'NOT UNCONDITIONAL' in summary['e3_koszulness_conjecture']['verdict']
+        assert summary['e3_koszulness_conjecture']['topologization_scope'][
+            'raw_chain_e3_topological'
+        ] is False
 
     def test_findings_count(self):
         """At least 7 findings in the register."""

@@ -393,7 +393,7 @@ class TestCrossFamily:
         Multi-path:
           Path 1: Direct formula z^k
           Path 2: exp(k*log(z))
-          Path 3: From r(z) = k/z integrated
+          Path 3: From r(z) = k*Omega_H/z (rank-one coeff k/z) integrated
         """
         k_val = 3.0
         z_val = 2.0 + 0j

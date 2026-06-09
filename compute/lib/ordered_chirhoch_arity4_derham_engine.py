@@ -90,8 +90,11 @@ from fractions import Fraction
 from typing import Dict, List, Optional, Tuple
 from functools import lru_cache
 
-from compute.lib.os_algebra import (
-    os_dimension, os_basis, _all_pairs, _all_monomials, make_pair,
+from compute.lib.os_algebra import os_dimension
+from compute.lib.os_algebra_exact import (
+    edge as exact_os_edge,
+    nbc_basis as exact_nbc_basis,
+    wedge as exact_os_wedge,
 )
 from compute.lib.ordered_chirhoch_yangian_engine import (
     casimir_sl2_v_tensor_v, qgroup_r_matrix, q_from_hbar,
@@ -187,75 +190,24 @@ def os_wedge_map(n: int, k: int, pair: Tuple[int, int]) -> np.ndarray:
     Returns matrix of shape (dim_OS^{k+1}, dim_OS^k) acting on
     coefficient vectors in the OS basis.
     """
-    # Source: OS^k monomials and basis
-    src_mons = _all_monomials(n, k)
-    _, src_basis = os_basis(n, k)  # (dim_src, num_src_mons)
-    dim_src = src_basis.shape[0] if src_basis.size > 0 else 0
-
-    # Target: OS^{k+1} monomials and basis
-    tgt_mons = _all_monomials(n, k + 1)
-    _, tgt_basis = os_basis(n, k + 1)  # (dim_tgt, num_tgt_mons)
-    dim_tgt = tgt_basis.shape[0] if tgt_basis.size > 0 else 0
+    # Use the exact NBC reduction oracle. The old float least-squares
+    # projection did not preserve OS multiplication strictly enough for the
+    # Arnold/IBR flatness cancellation.
+    src_basis = list(exact_nbc_basis(n, k))
+    tgt_basis = list(exact_nbc_basis(n, k + 1))
+    dim_src = len(src_basis)
+    dim_tgt = len(tgt_basis)
 
     if dim_src == 0 or dim_tgt == 0:
         return np.zeros((max(dim_tgt, 1), max(dim_src, 1)), dtype=float)
 
-    num_src_mons = len(src_mons)
-    num_tgt_mons = len(tgt_mons)
-    tgt_mon_idx = {m: idx for idx, m in enumerate(tgt_mons)}
-
-    p = make_pair(pair[0], pair[1])
-
-    # Build wedge map on monomial level: num_tgt_mons x num_src_mons
-    wedge_on_mons = np.zeros((num_tgt_mons, num_src_mons), dtype=float)
-
-    for s_idx, s_mon in enumerate(src_mons):
-        if p in s_mon:
-            # omega_{ij} ^ (...containing ij...) = 0
-            continue
-        # Insert p into s_mon and sort
-        combined = [p] + list(s_mon)
-        sorted_combined = tuple(sorted(combined))
-        # Compute sign of the sorting permutation
-        # p is placed at position 0; we need to sort it into place
-        # The sign is (-1)^(position of p in sorted list)
-        pos_of_p = list(sorted_combined).index(p)
-        sign = (-1) ** pos_of_p
-
-        if sorted_combined in tgt_mon_idx:
-            wedge_on_mons[tgt_mon_idx[sorted_combined], s_idx] = sign
-
-    # Project through OS bases:
-    # src_basis: (dim_src, num_src_mons) -- each row is a basis vector
-    # tgt_basis: (dim_tgt, num_tgt_mons) -- each row is a basis vector
-    #
-    # We need: for each source basis vector v (row of src_basis),
-    # compute wedge_on_mons @ v (in target monomial coords),
-    # then express in target basis coords.
-    #
-    # wedge_in_tgt_mons = wedge_on_mons @ src_basis^T  shape: (num_tgt_mons, dim_src)
-    # Project onto target basis: tgt_basis @ wedge_in_tgt_mons  shape: (dim_tgt, dim_src)
-    # But tgt_basis rows span the quotient; we need pseudoinverse.
-
-    # Actually: the target basis vectors tgt_basis (rows) are an ONB-like basis
-    # for OS^{k+1}. To express a monomial-coord vector in this basis,
-    # we use least squares: if tgt_basis has full row rank, then
-    # coeffs = (tgt_basis @ tgt_basis^T)^{-1} @ tgt_basis @ vec
-
-    wedge_in_tgt_mons = wedge_on_mons @ src_basis.T  # (num_tgt_mons, dim_src)
-
-    # Project each column of wedge_in_tgt_mons onto tgt_basis
-    # tgt_basis: (dim_tgt, num_tgt_mons)
-    # We want c such that tgt_basis^T @ c = wedge_in_tgt_mons (approximately)
-    # i.e., c = (tgt_basis @ tgt_basis^T)^{-1} @ tgt_basis @ wedge_in_tgt_mons
-
-    gram = tgt_basis @ tgt_basis.T  # (dim_tgt, dim_tgt)
-    if dim_tgt > 0:
-        gram_inv = la.inv(gram)
-        result = gram_inv @ tgt_basis @ wedge_in_tgt_mons  # (dim_tgt, dim_src)
-    else:
-        result = np.zeros((1, max(dim_src, 1)), dtype=float)
-
+    tgt_idx = {m: idx for idx, m in enumerate(tgt_basis)}
+    left = exact_os_edge(pair[0], pair[1])
+    result = np.zeros((dim_tgt, dim_src), dtype=float)
+    for s_idx, src_mon in enumerate(src_basis):
+        image = exact_os_wedge(n, left, {src_mon: 1})
+        for tgt_mon, coeff in image.items():
+            result[tgt_idx[tgt_mon], s_idx] = float(coeff)
     return result
 
 

@@ -54,6 +54,8 @@ from compute.lib.symplectic_duality_engine import (
     ff_dual_level,
     koszul_dual_central_charge_virasoro,
     # Shifted symplectic
+    C2_LAGRANGIAN_HYPOTHESES,
+    C2_LAGRANGIAN_CONDITIONAL_STATUS,
     ptvv_shift,
     formal_moduli_shift,
     compute_shifted_symplectic_data,
@@ -347,8 +349,19 @@ class TestLagrangianHeisenberg:
     """Path 3: Lagrangian condition for Heisenberg (class G)."""
 
     @pytest.mark.parametrize("k_val", [1, 2, 5, Fraction(1, 2)])
-    def test_is_lagrangian(self, k_val):
+    def test_scalar_indicator_default_c2_conditional(self, k_val):
         lag = verify_lagrangian_heisenberg(k_val)
+        assert lag.scalar_complementarity_indicator
+        assert not lag.is_lagrangian
+        assert not lag.is_isotropic
+        assert not lag.is_half_rank
+        assert not lag.is_verdier_dual
+        assert lag.lagrangian_upgrade_status == C2_LAGRANGIAN_CONDITIONAL_STATUS
+
+    def test_complete_c2_package_sets_lagrangian_flag(self):
+        lag = verify_lagrangian_heisenberg(
+            1, c2_hypotheses=C2_LAGRANGIAN_HYPOTHESES
+        )
         assert lag.is_lagrangian
         assert lag.is_isotropic
         assert lag.is_half_rank
@@ -365,8 +378,17 @@ class TestLagrangianVirasoro:
     @pytest.mark.parametrize("c_val", [
         Fraction(1, 2), 1, Fraction(-22, 5), 13, 25, 26,
     ])
-    def test_is_lagrangian(self, c_val):
+    def test_scalar_indicator_default_c2_conditional(self, c_val):
         lag = verify_lagrangian_virasoro(c_val)
+        assert lag.scalar_complementarity_indicator
+        assert not lag.is_lagrangian
+        assert lag.complementarity_sum == Fraction(13)
+        assert lag.lagrangian_upgrade_status == C2_LAGRANGIAN_CONDITIONAL_STATUS
+
+    def test_complete_c2_package_sets_lagrangian_flag(self):
+        lag = verify_lagrangian_virasoro(
+            Fraction(1, 2), c2_hypotheses=C2_LAGRANGIAN_HYPOTHESES
+        )
         assert lag.is_lagrangian
         assert lag.complementarity_sum == Fraction(13)
 
@@ -375,8 +397,17 @@ class TestLagrangianAffine:
     """Path 3: Lagrangian condition for affine sl_N."""
 
     @pytest.mark.parametrize("N,k", [(2, 1), (3, 1), (4, 2)])
-    def test_non_critical_is_lagrangian(self, N, k):
+    def test_non_critical_scalar_indicator_default_c2_conditional(self, N, k):
         lag = verify_lagrangian_affine(N, k)
+        assert lag.scalar_complementarity_indicator
+        assert not lag.is_lagrangian
+        assert lag.complementarity_sum == Fraction(0)
+        assert lag.lagrangian_upgrade_status == C2_LAGRANGIAN_CONDITIONAL_STATUS
+
+    def test_complete_c2_package_sets_lagrangian_flag(self):
+        lag = verify_lagrangian_affine(
+            2, 1, c2_hypotheses=C2_LAGRANGIAN_HYPOTHESES
+        )
         assert lag.is_lagrangian
         assert lag.complementarity_sum == Fraction(0)
 
@@ -481,7 +512,9 @@ class TestComputeShiftedSymplecticData:
         assert data.ptvv_shift == 0
         assert data.formal_moduli_shift == -1
         assert data.complementarity_sum == Fraction(0)
-        assert data.is_complementary_pair
+        assert data.scalar_complementarity_indicator
+        assert not data.is_complementary_pair
+        assert data.lagrangian_upgrade_status == C2_LAGRANGIAN_CONDITIONAL_STATUS
 
     def test_virasoro_g1(self):
         data = compute_shifted_symplectic_data(
@@ -492,7 +525,8 @@ class TestComputeShiftedSymplecticData:
         )
         assert data.ptvv_shift == 0
         assert data.complementarity_sum == Fraction(13)
-        assert data.is_complementary_pair
+        assert data.scalar_complementarity_indicator
+        assert not data.is_complementary_pair
 
     def test_virasoro_g2(self):
         data = compute_shifted_symplectic_data(
@@ -503,6 +537,18 @@ class TestComputeShiftedSymplecticData:
         )
         assert data.ptvv_shift == -3
         assert data.complementarity_sum == Fraction(13)
+        assert data.scalar_complementarity_indicator
+
+    def test_complete_c2_package_sets_complementary_pair(self):
+        data = compute_shifted_symplectic_data(
+            genus=1,
+            algebra_name="Heisenberg k=1",
+            kappa=Fraction(1),
+            kappa_dual=Fraction(-1),
+            c2_hypotheses=C2_LAGRANGIAN_HYPOTHESES,
+        )
+        assert data.is_complementary_pair
+        assert not data.c2_missing_hypotheses
 
 
 class TestShadowConnectionMirror:
@@ -849,35 +895,53 @@ class TestCrossVerification:
         r = cross_verify_complementarity("heisenberg", {"k": 1})
         assert r["all_agree"]
         assert r["path1_direct_sum"] == Fraction(0)
-        assert r["path3_lagrangian"]
+        assert r["path3_scalar_indicator"]
+        assert not r["path3_lagrangian"]
+        assert not r["c2_all_agree"]
         assert r["path4_F1_match"]
 
     def test_heisenberg_k5(self):
         r = cross_verify_complementarity("heisenberg", {"k": 5})
         assert r["all_agree"]
+        assert not r["c2_all_agree"]
+
+    def test_heisenberg_k1_with_c2_package(self):
+        r = cross_verify_complementarity(
+            "heisenberg",
+            {"k": 1},
+            c2_hypotheses=C2_LAGRANGIAN_HYPOTHESES,
+        )
+        assert r["all_agree"]
+        assert r["path3_lagrangian"]
+        assert r["c2_all_agree"]
 
     def test_virasoro_c_half(self):
         r = cross_verify_complementarity("virasoro", {"c": Fraction(1, 2)})
         assert r["all_agree"]
         assert r["path1_direct_sum"] == Fraction(13)
+        assert not r["path3_lagrangian"]
 
     def test_virasoro_c_lee_yang(self):
         r = cross_verify_complementarity("virasoro", {"c": Fraction(-22, 5)})
         assert r["all_agree"]
+        assert not r["c2_all_agree"]
 
     def test_virasoro_c13_self_dual(self):
         r = cross_verify_complementarity("virasoro", {"c": 13})
         assert r["all_agree"]
+        assert not r["c2_all_agree"]
 
     def test_affine_sl2_k1(self):
         r = cross_verify_complementarity("affine_sl", {"N": 2, "k": 1})
         assert r["all_agree"]
         assert r["path1_direct_sum"] == Fraction(0)
         assert r["path2_gauge_sum"] == Fraction(0)
+        assert not r["path3_lagrangian"]
 
     def test_affine_sl3_k2(self):
         r = cross_verify_complementarity("affine_sl", {"N": 3, "k": 2})
         assert r["all_agree"]
+        assert not r["c2_all_agree"]
 
 
 # =========================================================================
@@ -894,6 +958,18 @@ class TestFullLandscape:
                 f"Family {entry['family']}: sum={entry['sum']}, "
                 f"expected={entry['expected_sum']}"
             )
+            assert entry["scalar_complementarity_indicator"]
+            assert not entry["lagrangian"]
+            assert entry["lagrangian_upgrade_status"] == C2_LAGRANGIAN_CONDITIONAL_STATUS
+
+    def test_all_entries_lagrangian_with_c2_package(self):
+        results = full_landscape_symplectic_duality(
+            c2_hypotheses=C2_LAGRANGIAN_HYPOTHESES
+        )
+        for entry in results:
+            assert entry["match"]
+            assert entry["lagrangian"]
+            assert not entry["c2_missing_hypotheses"]
 
     def test_heisenberg_entries_sum_zero(self):
         results = full_landscape_symplectic_duality()

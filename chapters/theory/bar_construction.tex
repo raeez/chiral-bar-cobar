@@ -113,11 +113,11 @@ Throughout this chapter, the unadorned differential $d$ on the bar complex denot
 
 \medskip
 
-\begin{convention}[Set notation and ordering]\label{conv:set-notation}
+\begin{convention}[Set notation and ordering; \ClaimStatusDefinitional]\label{conv:set-notation}
 Throughout this chapter: collision divisors are $D_{ij}$ with $i < j$ (indices in increasing order); the hat notation $\widehat{ij}$ denotes \emph{omission} of both factors $\phi_i$ and $\phi_j$ after applying the OPE (we write $\widehat{ij}$ for the collision pattern itself, and $\widehat{\phi_i, \phi_j}$ when listing omitted terms in a tensor product).
 \end{convention}
 
-\begin{convention}[Bar coalgebra and Koszul dual algebra]
+\begin{convention}[Bar coalgebra and Koszul dual algebra; \ClaimStatusDefinitional]
 \label{conv:bar-coalgebra-identity}
 \index{bar construction!as bar coalgebra|textbf}
 \index{Koszul dual!coalgebra vs.\ algebra|textbf}
@@ -258,7 +258,7 @@ $\Omega_X(\barB_X(\cA))$ & chiral algebra
 \end{center}
 \end{convention}
 
-\begin{convention}[Chiral product vs.\ chiral bracket]
+\begin{convention}[Chiral product vs.\ chiral bracket; \ClaimStatusDefinitional]
 \label{conv:product-vs-bracket}
 \index{chiral product|textbf}
 \index{chiral bracket|textbf}
@@ -547,13 +547,14 @@ convergence domain (the Koszul locus); Theorem~C that the failure
 off the convergence domain decomposes into complementary
 Lagrangians (the branch structure of the logarithm); and
 Theorem~D that the leading coefficient~$\kappa(\cA)$ of the
-logarithm determines the genus expansion
-$F_g(\cA) = \kappa(\cA)\cdot\lambda_g^{\mathrm{FP}}$
-\textup{(}UNIFORM-WEIGHT\textup{)}
-at all genera, while the
-multi-weight extension at genus~$g \geq 2$ receives a
-nonvanishing cross-channel correction
-(Theorem~\ref{thm:multi-weight-genus-expansion}).
+logarithm determines the scalar genus expansion
+$F_g^{\mathrm{sc}}(\cA)=\kappa(\cA)\cdot\lambda_g^{\mathrm{FP}}$.
+On the uniform-weight exact lane the full coefficient satisfies
+$F_g(\cA)=F_g^{\mathrm{sc}}(\cA)$ at all genera. For a multi-weight
+algebra and $g\geq2$, the full coefficient is
+$F_g(\cA)=F_g^{\mathrm{sc}}(\cA)+\delta F_g^{\mathrm{cross}}(\cA)$,
+with the cross-channel correction supplied by
+Theorem~\ref{thm:multi-weight-genus-expansion}.
 
 The modular periodicity profile~$\Pi(\cA)$ is the
 global/exponential counterpart of the infinitesimal/nilpotent
@@ -658,7 +659,7 @@ This grows rapidly with $n$.
 
 \subsubsection{The bar differential}
 
-\begin{definition}[Bar differential]\label{def:bar-differential-complete}%
+\begin{definition}[Bar differential; \ClaimStatusDefinitional]\label{def:bar-differential-complete}%
 \label{def:geometric-bar}\label{def:geometric-bar-definition}\label{def:bar-geometric}%
 \label{def:bar-diff-detailed}\label{def:diff-total}%
 \index{bar complex!differential|textbf}
@@ -785,7 +786,222 @@ where $d_{\text{dR}}: \Omega^n \to \Omega^{n+1}$ is the de Rham differential on 
 
 \end{definition}
 
-\begin{convention}[Length filtration]
+\begin{definition}[Ordered chiral bar term with logarithmic coefficients]
+\label{def:ordered-chiral-bar-term-log}
+\index{ordered chiral bar!logarithmic coefficient complex}
+\index{tensor powers!external, chiral, factorization}
+Let $\varepsilon\colon\cA\to\omega_X$ be an augmentation of a
+dg chiral algebra on a smooth curve~$X$, and put
+$\bar\cA=\ker\varepsilon$. For $n\ge0$ let
+$U_n(X)=X^n\setminus\bigcup_{i<j}\Delta_{ij}$, let
+$j_n\colon U_n(X)\hookrightarrow X^n$ be the inclusion, and let
+$q_n\colon\FM_n(X)\to X^n$ be the Fulton--MacPherson resolution with
+normal-crossings boundary $D_n=\FM_n(X)\setminus U_n(X)$.
+
+There are three tensor powers in the bar construction.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item The \emph{external tensor power} is
+ $(s^{-1}\bar\cA)^{\boxtimes n}$ on $X^n$.
+\item The \emph{chiral tensor power} is the meromorphic extension
+ $j_{n,*}j_n^*((s^{-1}\bar\cA)^{\boxtimes n})$; the chiral product
+ is read from its restrictions to the diagonals.
+\item The \emph{factorization tensor power} is the restriction of this
+ object to products of pairwise disjoint opens; on such a product it
+ is the external product of the corresponding lower-arity factors.
+\end{enumerate}
+The logarithmic Fulton--MacPherson coefficient complex is
+\[
+\cK^{\ord}_n(\cA)
+=
+q_n^*j_{n,*}j_n^*((s^{-1}\bar\cA)^{\boxtimes n})
+\otimes_{\cO_{\FM_n(X)}}
+\Omega^\bullet_{\FM_n(X)}(\log D_n).
+\]
+The $n$-th ordered chiral bar term is
+\[
+B^{\ord}_{X,n}(\cA)
+=
+R\Gamma_{\mathrm{dR}}\bigl(\FM_n(X),\cK^{\ord}_n(\cA)\bigr),
+\qquad
+B_X^{\ord}(\cA)=\bigoplus_{n\ge0}B^{\ord}_{X,n}(\cA).
+\]
+After forgetting the logarithmic coefficient model, the underlying
+coalgebra is the ordered tensor coalgebra
+$T^c(s^{-1}\bar\cA)$; the logarithmic forms record the
+configuration-space residues that define the differential.
+\end{definition}
+
+\begin{proposition}[Ordered bar differential and local identities;
+\ClaimStatusProvedHere]
+\label{prop:ordered-bar-local-differential-identities}
+\index{ordered chiral bar!local differential identities}
+\index{bar differential!desuspended ordered formula}
+\textup{[Type signature: Open quadrant; ordered
+$\cD$-module/Fulton--MacPherson presentation; Beilinson level~$2$;
+finite-window augmented complete $\chirAss$ or chiral
+$A_\infty$ hypothesis package.]}
+
+On the affine ordered collision screen, the differential on
+$B_X^{\ord}(\cA)$ is
+\[
+d_B=d_\cA+d_{\mathrm{dR}}+d_{\mathrm{res}}.
+\]
+For a homogeneous word
+$[a_1|\cdots|a_n]=s^{-1}a_1\otimes\cdots\otimes s^{-1}a_n$
+and a logarithmic form $\alpha$, the three components are:
+\begin{align}
+d_\cA([a_1|\cdots|a_n]\otimes\alpha)
+&=
+\sum_{i=1}^{n}
+(-1)^{\sum_{q<i}(|a_q|-1)}
+[a_1|\cdots|-d_\cA a_i|\cdots|a_n]\otimes\alpha,
+\label{eq:ordered-bar-dA}\\
+d_{\mathrm{dR}}([a_1|\cdots|a_n]\otimes\alpha)
+&=
+(-1)^{\sum_i |a_i|}
+[a_1|\cdots|a_n]\otimes d_{\mathrm{dR}}\alpha,
+\label{eq:ordered-bar-ddR}\\
+d_{\mathrm{res}}([a_1|\cdots|a_n]\otimes\alpha)
+&=
+\sum_{i=1}^{n-1}\sum_{r\ge0}
+(-1)^{\sum_{q<i}(|a_q|-1)+|a_i|}
+[a_1|\cdots|a_i{}_{(r)}a_{i+1}|\cdots|a_n]
+\otimes\Res_{D_{i,i+1}}\alpha .
+\label{eq:ordered-bar-dres}
+\end{align}
+Here $a_{(r)}b$ is the $r$-th OPE mode of the chiral product, and
+$\Res_{D_{i,i+1}}$ is the Poincar\'e residue of the logarithmic form
+factor. Thus the length-$2$ and length-$3$ residue computations are
+\[
+d_{\mathrm{res}}([a|b]\otimes\eta_{12})
+=
+\sum_{r\ge0}(-1)^{|a|}[a_{(r)}b],
+\]
+and
+\[
+\begin{aligned}
+d_{\mathrm{res}}([a|b|c]\otimes\alpha)
+&=
+\sum_{r\ge0}(-1)^{|a|}
+[a_{(r)}b|c]\otimes\Res_{D_{12}}\alpha\\
+&\quad
+-\sum_{r\ge0}(-1)^{|a|+|b|}
+[a|b_{(r)}c]\otimes\Res_{D_{23}}\alpha .
+\end{aligned}
+\]
+With the signs of
+Convention~\ref{conv:A-infinity-2-ordered-bar-signs} and
+Computation~\ref{comp:bar-signs-2-1},
+\[
+d_\cA^2=d_{\mathrm{dR}}^2=d_{\mathrm{res}}^2=0,\qquad
+d_\cA d_{\mathrm{dR}}+d_{\mathrm{dR}}d_\cA=
+d_\cA d_{\mathrm{res}}+d_{\mathrm{res}}d_\cA=
+d_{\mathrm{dR}}d_{\mathrm{res}}+d_{\mathrm{res}}d_{\mathrm{dR}}=0.
+\]
+Consequently $d_B^2=0$. The deconcatenation coproduct
+\[
+\Delta_{\mathrm{dec}}[a_1|\cdots|a_n]
+=
+\sum_{p=0}^{n}
+[a_1|\cdots|a_p]\otimes[a_{p+1}|\cdots|a_n]
+\]
+is coassociative, $d_B$ is a coderivation for it, and
+$B_X^{\ord}(\cA)$ is conilpotent by word length. Its completion
+$\widehat B_X^{\ord}(\cA)=\prod_{n\ge0}B^{\ord}_{X,n}(\cA)$ is complete
+for the length filtration, and every finite weight window is
+conilpotent after quotienting by sufficiently long words. If
+$\varepsilon$ is a morphism of dg chiral algebras, then
+$\bar\cA=\ker\varepsilon$ is preserved by $d_\cA$ and by the reduced
+OPE differential, so the reduced bar removes all vacuum degeneracies;
+the length-$0$ summand is the coaugmentation and the projection to it
+is the counit.
+\end{proposition}
+
+\begin{proof}
+The formulas are the desuspended coderivation formulas recorded in
+Convention~\ref{conv:A-infinity-2-ordered-bar-signs}. The unary part is
+$b_1(s^{-1}a)=-s^{-1}(d_\cA a)$; the binary OPE-mode part is
+$b_2^{(r)}(s^{-1}a\otimes s^{-1}b)=(-1)^{|a|}s^{-1}(a_{(r)}b)$, and
+extension as a coderivation gives the prefix signs in
+\eqref{eq:ordered-bar-dA} and~\eqref{eq:ordered-bar-dres}. The
+de~Rham sign in~\eqref{eq:ordered-bar-ddR} is the geometric
+totalization sign of Definition~\ref{def:bar-differential-complete}.
+The displayed length-$2$ and length-$3$ identities are the special
+cases computed in
+Computation~\ref{comp:bar-signs-2-1}.
+
+The diagonal identities follow from the three source complexes:
+$d_\cA^2=0$ because $\cA$ is dg, $d_{\mathrm{dR}}^2=0$ for logarithmic forms,
+and $d_{\mathrm{res}}^2=0$ from the codimension-two calculation of
+Theorem~\ref{thm:bar-nilpotency-complete}. In the strict ordered
+$\chirAss$ quotient this is the consecutive-block Stasheff identity of
+Construction~\ref{constr:bar-diff-collision}; in the full pairwise
+Fulton--MacPherson screen it is the Borcherds identity multiplied by
+Arnold's three-term logarithmic relation
+Theorem~\ref{thm:arnold-three}. The mixed anticommutators are the three
+compatibilities proved in the last paragraph of
+Theorem~\ref{thm:bar-nilpotency-complete}: the chiral product is a
+chain map, logarithmic de~Rham forms obey the standard tensor-product
+sign rule, and Poincar\'e residue commutes with $d_{\mathrm{dR}}$ up to the
+Koszul sign fixed by Convention~\ref{conv:orientations-enhanced}.
+
+Coassociativity of $\Delta_{\mathrm{dec}}$ is the equality of the two ways of
+cutting an ordered word into three consecutive pieces. Since $d_B$ is
+defined as the coderivation extending its projections to
+$s^{-1}\bar\cA$, the coderivation identity follows from the universal
+property of the cofree tensor coalgebra. Iterating the reduced
+coproduct on a word of length $n$ gives zero after more than $n$
+iterations, which proves conilpotence; the completed statement is the
+finite-window form of the length filtration in
+Convention~\ref{conv:bar-length-filtration}. Finally, a morphism of
+augmented dg chiral algebras satisfies
+$\varepsilon d_\cA=d_{\omega_X}\varepsilon$ and
+$\varepsilon\mu=\mu_{\omega_X}(\varepsilon\boxtimes\varepsilon)$, so
+the reduced differential preserves $\ker\varepsilon$ after projecting
+away the scalar vacuum term. This is exactly the reduced-bar
+normalization.
+\end{proof}
+
+\begin{proposition}[Symmetric bar descent criterion;
+\ClaimStatusConditional]
+\label{prop:symmetric-bar-descent-criterion}
+\index{symmetric bar!descent criterion}
+\index{ordered-to-symmetric bar descent}
+The symmetric bar
+\[
+B^\Sigma_X(\cA):=\bigl(B_X^{\ord}(\cA)\bigr)_{\Sigma_\bullet}
+\]
+exists as a dg factorization coalgebra on $\Ran(X)$ precisely when the
+ordered coefficient system on $\Ran^{\ord}(X)$ carries a
+$\Sigma_\bullet$-descent datum compatible with the OPE residue
+differential, the de~Rham differential, and deconcatenation. In the
+pole-free symmetric case this is ordinary equivariant descent. In the
+with-poles $\Eone$-chiral case it is the strong-unitary
+$R$-twisted descent of Lemma~\ref{lem:R-twisted-descent}; without that
+locality/descent datum, $B^\Sigma_X(\cA)$ is only a formal quotient of
+graded objects and not a well-defined dg factorization coalgebra.
+\end{proposition}
+
+\begin{proof}
+The quotient map
+$\Ran^{\ord}(X)\to\Ran(X)=\Ran^{\ord}(X)/\Sigma_\bullet$ is finite
+etale on each configuration stratum. Descent of a $\cD$-module with
+differential across this quotient is equivalent to a compatible
+$\Sigma_\bullet$-equivariant structure on each arity, with the cocycle
+condition on double overlaps. Compatibility with $d_\cA$,
+$d_{\mathrm{dR}}$, $d_{\mathrm{res}}$, and $\Delta_{\mathrm{dec}}$ is exactly the assertion
+that the quotient differential and coshuffle coalgebra structure are
+well-defined. The pole-free case is the usual Koszul-signed
+permutation action. With poles, analytic continuation around
+diagonals supplies braid monodromy, so a symmetric quotient exists only
+after the braid action factors through $\Sigma_\bullet$ by the
+strong-unitary $R$-twisted descent package. This is the criterion
+already isolated in Definition~\ref{def:ordered-fact-dmod},
+Theorem~\ref{thm:three-bar-complexes}, and
+Lemma~\ref{lem:R-twisted-descent}.
+\end{proof}
+
+\begin{convention}[Length filtration; \ClaimStatusDefinitional]
 \label{conv:bar-length-filtration}
 \index{bar complex!length filtration}
 The ordered bar carries the decreasing complete word-length filtration
@@ -959,7 +1175,7 @@ at degree~$1$: the full chiral product extracts the double-pole mode $J_{(1)}J =
 
 \subsection{Sign conventions}\label{sec:sign-conventions}
 
-\begin{convention}[Enhanced sign system]\label{conv:orientations-enhanced}
+\begin{convention}[Enhanced sign system; \ClaimStatusDefinitional]\label{conv:orientations-enhanced}
 The bar complex requires three types of sign conventions:
 
 \emph{Type 1: Koszul signs (algebraic).}
@@ -1137,9 +1353,8 @@ The cancellation comes from the signed sum in $d_2$: the ordered pairs $(i,j),(k
 
 \emph{Case (ii): One overlap} (say $j = k$).
 This is the case that produced the Arnold relation in the
-Heisenberg degree-$2$ computation
-(\S\ref{sec:frame-bar-deg2}): three boundary strata meet at a
-triple collision, and their contributions cancel cyclically.
+Heisenberg degree-$2$ model computation: three boundary strata meet
+at a triple collision, and their contributions cancel cyclically.
 We give the complete argument.
 
 \smallskip
@@ -1201,7 +1416,7 @@ codimension-$2$ locus $D_{ij\ell}$. (All other pairs in the
 double sum either have disjoint indices or identical indices,
 handled by Cases~(i) and~(iii).) The total contribution of
 Case~(ii) at the triple $\{i,j,\ell\}$ is thus:
-\begin{equation}\label{eq:case-ii-cyclic-sum}
+\begin{equation}
 \sum_{\textup{cyclic}}
  \text{Res}_{D_{j\ell}}\circ\text{Res}_{D_{ij}}
  \bigl[\mu\bigl(\mu(\phi_i,\phi_j),\,\phi_\ell\bigr)
@@ -1223,12 +1438,12 @@ $\partial^2=0$ asserts that these three faces, with their
 orientation signs, sum to zero. Since each face carries the
 corresponding iterated residue of
 $\mu(\mu(\phi_?,\phi_?),\phi_?)\otimes\omega$, the relation
-$\partial^2=0$ translates directly into the algebraic identity
-\eqref{eq:case-ii-cyclic-sum}.
+$\partial^2=0$ translates directly into the displayed cyclic-sum
+identity.
 
 \smallskip
 \emph{Step (d): Equivalence with the Borcherds identity.}
-The vanishing~\eqref{eq:case-ii-cyclic-sum} is precisely
+The displayed vanishing is precisely
 axiom~(ii) of Definition~\ref{def:chiral-algebra}: the
 associativity of the chiral product $\mu$, i.e., the
 Borcherds identity. This identity couples
@@ -1239,13 +1454,14 @@ The Borcherds identity is both necessary and sufficient for the
 vanishing: any meromorphic product $\mu$ satisfying
 locality~(i) and producing $d_2^2=0$ must satisfy~(ii), and
 conversely any chiral algebra (satisfying~(ii) by definition)
-gives $d_2^2=0$ in Case~(ii)
-(cf.\ \S\ref{sec:selection-principle}).
+gives $d_2^2=0$ in Case~(ii), because the residue differential
+selects exactly the triple-collision coefficient in that Borcherds
+identity.
 
 \smallskip
 \emph{Step (e): Conclusion.}
 By the Borcherds identity (axiom~(ii) of $\cA$), the cyclic
-sum~\eqref{eq:case-ii-cyclic-sum} vanishes for every triple
+sum displayed above vanishes for every triple
 $\{i,j,\ell\}$ and every choice of sections and forms.
 Therefore $d_2^2 = 0$ on all Case~(ii) contributions.
 
@@ -1433,11 +1649,152 @@ is the conductor
 (Chapter~\ref{chap:deformation-theory}).
 \end{remark}
 
+\begin{proposition}[Operator-valued collision residue and scalar trace;
+\ClaimStatusProvedHere]
+\label{prop:operator-valued-collision-residue-trace}
+\index{collision residue!operator-valued}
+\index{r-matrix@$r$-matrix!operator-valued collision residue}
+\index{scalar trace!degree-two collision residue}
+Work in the Open quadrant, ordered logarithmic bar presentation,
+Beilinson level~$2$. Assume the finite current trace-window package
+$\mathsf H_{\mathrm{cur,tr}}$: a finite locally free homogeneous
+subquotient $V\subset\bar\cA$ closed under the current OPE modes below,
+an even non-degenerate invariant pairing $(\,,\,)_V$ on~$V$, and a
+quadratic current OPE
+\begin{equation}\label{eq:finite-current-window-ope}
+a(z)b(w)
+\;\sim\;
+\frac{\ell_V(a,b)\mathbf{1}}{(z-w)^2}
+\;+\;
+\frac{[a,b](w)}{z-w}
+\;+\; \textup{regular}
+\qquad (a,b\in V),
+\end{equation}
+where $[a,b]=a_{(0)}b$ is a graded Lie bracket and
+\[
+\ell_V([a,b],c)=\ell_V(a,[b,c])
+\]
+with the Koszul sign convention fixed by
+Convention~\ref{conv:orientations-enhanced}. Let
+$\{e_\alpha\}$ be a homogeneous basis of~$V$ and
+$\{e^\alpha\}$ the $(\,,\,)_V$-dual basis. The degree-two collision
+residue is the tensor-valued one-form
+\begin{equation}\label{eq:operator-valued-collision-r}
+r^{\mathrm{coll}}_{\cA,V}(z)
+\;:=\;
+\Omega_{\ell,V}\,\frac{dz}{z},
+\qquad
+\Omega_{\ell,V}
+\;:=\;
+\sum_{\alpha,\beta}\ell_V(e_\alpha,e_\beta)\,
+e^\alpha\otimes e^\beta
+\;\in\; V\otimes V\subset\bar\cA\otimes\bar\cA .
+\end{equation}
+Thus $r^{\mathrm{coll}}_{\cA,V}(z)$ is a class in
+$\bar\cA\otimes\bar\cA\otimes
+\Omega^1_{\Conf^{\mathrm{ord}}_2}(*D_{12})$, not a scalar.
+Rank-one formulas such as $k\,dz/z$ are matrix coefficients of
+\eqref{eq:operator-valued-collision-r}.
+
+The logarithmic form $\eta_{12}=d\log(z_1-z_2)$ sees the OPE modes in
+two different ways. In the bar differential, Proposition~\ref{prop:pole-decomposition}
+uses every singular mode: $a_{(m)}b$ contributes to~$d_{(m)}$. In the
+polar connection kernel, one $d\log$ has already been absorbed: the
+simple-pole bracket mode $m=0$ becomes regular, the double-pole mode
+$m=1$ gives the simple pole $dz/z$ in
+\eqref{eq:operator-valued-collision-r}, and a pole of order $m+1\ge3$
+would give $z^{-m}dz$. The current-window hypothesis
+\eqref{eq:finite-current-window-ope} is precisely the regime in which
+only the degree-two polar tensor remains.
+
+Under the same hypotheses, $r^{\mathrm{coll}}_{\cA,V}$ satisfies the
+classical Yang--Baxter equation on
+$\Conf^{\mathrm{ord}}_3(\bC)$, with brackets taken in the graded tensor
+algebra and the one-form factors wedged:
+\begin{equation}\label{eq:current-window-cybe}
+[r^{12}(z_{12}),r^{13}(z_{13})]
++[r^{12}(z_{12}),r^{23}(z_{23})]
++[r^{13}(z_{13}),r^{23}(z_{23})]
+=0 .
+\end{equation}
+The scalar attached to the same degree-two window is the averaged trace
+of the tensor coefficient of~$dz/z$:
+\begin{equation}\label{eq:kappa-degree-two-trace}
+\kappa_{\mathrm{tr},V}(\cA)
+\;:=\;
+\frac{1}{\operatorname{rk}V}\,
+\operatorname{contr}_{(\,,\,)_V}
+\!\left(\operatorname{Coeff}_{dz/z}
+r^{\mathrm{coll}}_{\cA,V}\right)
+\;=\;
+\frac{1}{\operatorname{rk}V}
+\sum_\alpha \ell_V(e_\alpha,e^\alpha).
+\end{equation}
+When the manuscript's family normalization declares this finite window
+to be the conductor window, $\kappa(\cA)=\kappa_{\mathrm{tr},V}(\cA)$
+in that normalization. Before this trace and normalization, there is no
+scalar $\kappa(\cA)$ in the collision kernel.
+\end{proposition}
+
+\begin{proof}
+The bilinear form $\ell_V$ determines the tensor
+$\Omega_{\ell,V}$ by the non-degenerate pairing $(\,,\,)_V$; changing a
+homogeneous basis changes the two dual bases by inverse matrices with
+the Koszul signs already included in the dual-pairing convention, so
+\eqref{eq:operator-valued-collision-r} is basis-independent.
+
+In the local relative coordinate $z=z_1-z_2$, the OPE mode
+$a_{(m)}b$ is the coefficient of $z^{-m-1}$. The ordered bar connection
+kernel has one logarithmic collision form $d\log z=dz/z$. Passing from
+the OPE density to the polar connection kernel removes one pole order:
+$z^{-m-1}$ becomes $z^{-m}dz$. Hence the bracket mode $m=0$ is regular,
+the double-pole mode $m=1$ is the simple-pole one-form
+$z^{-1}dz$, and higher modes would produce higher poles. This is the
+connection-kernel version of the mode decomposition in
+Proposition~\ref{prop:pole-decomposition}; it is not a second residue
+of $z^{-m-1}d\log z$.
+
+Let $x=z_{12}$ and $y=z_{23}$, so $z_{13}=x+y$. Invariance of
+$\ell_V$ and the graded Jacobi identity for $[\, ,\,]$ give the graded
+infinitesimal braid identities
+\[
+[\Omega_{\ell,V}^{12},
+ \Omega_{\ell,V}^{13}+\Omega_{\ell,V}^{23}]=0,
+\qquad
+[\Omega_{\ell,V}^{13},
+ \Omega_{\ell,V}^{12}+\Omega_{\ell,V}^{23}]=0 .
+\]
+Writing
+$A=[\Omega_{\ell,V}^{12},\Omega_{\ell,V}^{13}]$,
+$B=[\Omega_{\ell,V}^{12},\Omega_{\ell,V}^{23}]$, and
+$C=[\Omega_{\ell,V}^{13},\Omega_{\ell,V}^{23}]$, these identities give
+$B=-A$ and $C=A$. The left side of
+\eqref{eq:current-window-cybe} is therefore
+\[
+A\left(\frac{1}{x(x+y)}-\frac{1}{xy}
+        +\frac{1}{(x+y)y}\right)\,dx\wedge dy,
+\]
+and the parenthesized rational function is zero. This proves the CYBE
+on the finite current trace-window surface.
+
+Formula~\eqref{eq:kappa-degree-two-trace} is the contraction of the
+$V\otimes V$ coefficient of $dz/z$ against the same trace pairing.
+The contraction of a tensor defined from a bilinear form is invariant
+under change of homogeneous dual basis. For a rank-one Heisenberg
+window $V=\bC J$ with $(J,J)_V=1$ and $\ell_V(J,J)=k$, the tensor
+residue is $k\,J\otimes J\,dz/z$ and the averaged trace is~$k$.
+\end{proof}
+
 \begin{corollary}[Functoriality; \ClaimStatusConditional]\label{cor:bar-functorial}
 Since $d^2 = 0$, the bar complex
 $(\bar{B}^{\bullet}(\cA), d)$ is a chain complex for every
 chiral algebra~$\cA$.
-(The collision residue $r(z) = \operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)$ is the universal twisting morphism; see Theorem~\ref{thm:gz26-commuting-differentials} for its genus-$0$ realization as commuting Hamiltonians.) Morphisms of chiral algebras induce
+(The tensor-valued collision residue
+$r(z)=\operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)$ is the
+universal twisting morphism; on a finite current trace-window it is
+typed by Proposition~\ref{prop:operator-valued-collision-residue-trace}.
+See Theorem~\ref{thm:gz26-commuting-differentials} for its genus-$0$
+realization as commuting Hamiltonians.) Morphisms of chiral algebras induce
 chain maps (apply~$f$ to algebra factors, leave forms
 unchanged); the resulting functor
 $\bar{B}^{\mathrm{geom}} \colon
@@ -1604,7 +1961,9 @@ index set of the collision divisor under consideration.
 
 \begin{theorem}[Arnold relations; \ClaimStatusProvedHere]\label{thm:arnold-three}
 \index{Arnold relations|textbf}
-We encountered these relations concretely in the Heisenberg bar complex (\S\ref{sec:frame-bar-deg2}), where they appeared as the identity forcing $d^2 = 0$ at degree~$2$. In full generality:
+We encountered these relations concretely in the Heisenberg degree-$2$
+bar model, where they appeared as the identity forcing $d^2 = 0$.
+In full generality:
 
 For distinct indices $i, j, k \in \{1, \ldots, n\}$, the logarithmic 1-forms $\eta_{ij} = d\log(z_i - z_j)$ satisfy:
 
@@ -1627,7 +1986,9 @@ not a presentation of the whole compactified cohomology ring.
 
 \begin{proof}
 See Theorem~\ref{thm:arnold-relations} for the partial-fractions proof.
-The topological, combinatorial, and operadic perspectives are developed in \S\ref{sec:arnold-three-proofs-comprehensive}.
+The topological, combinatorial, and operadic perspectives give
+parallel proofs of the same three-term relation and introduce no
+additional hypothesis.
 \end{proof}
 
 \begin{remark}[Arnold relation and the Jacobi screen]\label{rem:arnold-jacobi-geometric}
@@ -2354,7 +2715,9 @@ the cohomological degree.
 
 \subsection{Explicit residue computations}\label{sec:residue-calculus}
 
-\begin{remark}[Sign conventions: comparison with Loday--Vallette]\label{rem:LV-signs}
+\begin{lemma}[Geometric--operadic sign comparison; \ClaimStatusProvedHere]
+\label{lem:LV-sign-comparison}
+\label{rem:LV-signs}
 Our sign conventions for the bar construction follow the geometric approach, which differs slightly from the operadic conventions in Loday--Vallette~\cite{LV12}.
 
 The differences are as follows.
@@ -2379,10 +2742,56 @@ Suspension degree $|s a_i| = |a_i| + 1$ & Form degree $|\omega| = n$ \\
 \end{tabular}
 \end{center}
 
-The two conventions agree up to an overall normalization constant, absorbed into the definition of the pairing.
+The two conventions agree under the suspension isomorphism
+\[
+\iota_n\colon
+s\bar\cA^{\otimes n}
+\xrightarrow{\;\sim\;}
+\bar\cA^{\otimes n}\otimes
+\det H^0\!\bigl(\FM_n(X),\Omega^1_{\FM_n(X)}(\log D)\bigr),
+\]
+up to the single scalar fixed by orienting the one-point stratum. This
+scalar is absorbed into the normalization of the cyclic pairing.
 
 The nine-term proof of $d^2 = 0$ (Theorem~\ref{thm:bar-nilpotency-complete}) uses geometric signs throughout. Translating to operadic conventions via the dictionary above preserves $d^2 = 0$.
-\end{remark}
+\end{lemma}
+
+\begin{proof}
+Both sign systems are multiplicative characters of the groupoid of
+ordered collision trees. It is therefore enough to compare them on two
+generators: an adjacent transposition of two inputs and a single
+codimension-one residue face. For an adjacent transposition of
+homogeneous inputs \(a_i,a_{i+1}\), the Loday--Vallette suspended word
+contributes
+\[
+(-1)^{(|a_i|+1)(|a_{i+1}|+1)}
+=
+(-1)^{|a_i||a_{i+1}|}
+(-1)^{|a_i|+|a_{i+1}|}
+(-1).
+\]
+Under \(\iota_n\), the first factor is the ordinary Koszul sign of the
+fields, the middle factor is the suspension/form-degree shift, and the
+last factor is the orientation sign for interchanging the two
+configuration coordinates. This is exactly the enhanced orientation
+convention of Convention~\ref{conv:orientations-enhanced} together with
+the desuspension convention of
+Convention~\ref{conv:A-infinity-2-ordered-bar-signs}.
+
+For a residue face \(D_{ij}\), the operadic cocomposition sign is the
+sign obtained by moving the suspended collision block through the
+preceding suspended factors. Under \(\iota_n\) this is the sign obtained
+by moving the logarithmic normal form \(d\log(z_i-z_j)\) through the
+preceding coefficient factors before applying the Poincare residue.
+The outward-normal convention supplies the same normal-orientation
+character. Thus \(\iota_n d_{\bar B}\iota_n^{-1}\) is the geometric
+operator \(d_{\mathrm{dR}}+d_{\mathrm{res}}\) with the signs used in
+this chapter. The only remaining freedom is the orientation of the
+one-point stratum, a global scalar; fixing it fixes all tree signs
+because every tree is generated by adjacent transpositions and residue
+faces. Hence the geometric and operadic bar differentials are
+conjugate under \(\iota_n\), and nilpotence is preserved.
+\end{proof}
 
 \begin{theorem}[Ordered, symmetric, and Harrison bars; \ClaimStatusConditional]\label{thm:three-bar-complexes}
 \index{bar complex!three variants|textbf}
@@ -2697,7 +3106,7 @@ differential $d_{\mathrm{dR}}$ on $\Omega^*(\log D)$ (which detects
 the codimension-one boundary strata of $\overline{C}_n(X)$), and
 $d_2$ corresponds to the residue differential $d_{\mathrm{res}}$
 (which extracts OPE data at collision divisors). The sign
-comparison of Remark~\ref{rem:LV-signs} shows these agree up to
+  comparison of Lemma~\ref{lem:LV-sign-comparison} shows these agree up to
 the suspension isomorphism
 $s\bar{\mathcal{A}} \cong \bar{\mathcal{A}} \otimes
 \Omega^1(\log D)|_{\text{codim-1}}$.
@@ -3010,7 +3419,7 @@ branch point.
 \section{Ordered K3 convolution}
 \label{sec:barconstr-supplement}
 
-\begin{remark}[Hall-theoretic bar construction]
+\begin{definition}[Hall-theoretic ordered bar differential; \ClaimStatusDefinitional]
 \label{rem:barconstr-1}
 The ordered bar construction on the K3 chiral bialgebra
 $\mathbf H_{\Delta_5}$ takes the form
@@ -3031,10 +3440,10 @@ is genuinely non-trivial. This is the source of the non-abelian chiral
 structure of $\mathbf H_{\Delta_5}$. Primary-lit: Schiffmann--Vasserot
 2012, Kontsevich--Soibelman 2011 ($\mathrm{CoHA}$), Davison 2017 (CY-3
 extension).
-\end{remark}
+\end{definition}
 
 \begin{definition}[Ordered convolution dGLA $\mathfrak{C}_{\mathbf{H}_{\Delta_5}}$;
-\ClaimStatusProvedHere]
+\ClaimStatusDefinitional]
 \label{def:convolution-dgla-k3}
 Let $A = \mathbf{H}_{\Delta_5}$ with product
 $\mu\colon A\otimes A\to A$, augmentation
@@ -3091,8 +3500,9 @@ Etingof--Kazhdan quantisation; Borcherds 1988 \S 4).
  with convolution cup product
  $\phi\smile\psi := \mu\circ(\phi\otimes\psi)\circ\bar\Delta$.
 \end{enumerate}
-The triple $(\mathfrak{C}_{\mathbf{H}_{\Delta_5}},\, D,\, [\cdot,\cdot])$
-is a differential graded Lie algebra.
+This is the ordered convolution datum attached to the K3 Hall bar
+coalgebra; Proposition~\ref{prop:dgla-axioms-k3-convolution} verifies
+that it is a differential graded Lie algebra.
 \end{definition}
 
 \begin{proposition}[dGLA axioms for
@@ -3161,7 +3571,7 @@ This is the chain-level pro-object / weight-completed ambient in which
 the class-M Maurer--Cartan tower is well-defined.
 \end{remark}
 
-\begin{remark}[K3 Maurer--Cartan input]
+\begin{definition}[K3 Maurer--Cartan input data; \ClaimStatusDefinitional]
 \label{rem:theta-universal-MC-k3}
 For the ordered K3 Hall model, write a degree-one series
 \[
@@ -3189,7 +3599,7 @@ representatives. These coefficients are input data for this section.
 Only the ordered-convolution implications from explicit finite
 identities among the $\phi^{(n)}$ are asserted here; no cross-volume
 statement is used as a proof of those identities in this chapter.
-\end{remark}
+\end{definition}
 
 \begin{theorem}[Finite Maurer--Cartan window at $\hbar^3,\hbar^4$;
 \ClaimStatusProvedHere]
@@ -3198,7 +3608,7 @@ On the weight-completed dGLA
 $\mathfrak{C}_{\mathbf{H}_{\Delta_5}}[[\hbar]]$ of
 Definition~\ref{def:convolution-dgla-k3}, let
 $\Theta_{\mathbf{H}_{\Delta_5}}$ of
-Remark~\ref{rem:theta-universal-MC-k3} satisfy
+Definition~\ref{rem:theta-universal-MC-k3} satisfy
 \[
 \phi^{(0)}=\phi^{(1)}=\phi^{(2)}=0,\qquad
 D\phi^{(3)}=0,\qquad \phi^{(4)}=0.

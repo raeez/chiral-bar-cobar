@@ -406,7 +406,7 @@ def feigin_frenkel_dual_kappa(N: int, k: Fraction) -> Fraction:
 
 
 def heisenberg_kernel_normalization(k: Fraction) -> Dict[str, object]:
-    """Rank-one Heisenberg collision residue r(z) = k/z."""
+    """Rank-one Heisenberg collision residue r(z) = k*Omega_H/z (rank-one coeff k/z)."""
     k_frac = _frac(k)
     return {
         "family": "Heisenberg",

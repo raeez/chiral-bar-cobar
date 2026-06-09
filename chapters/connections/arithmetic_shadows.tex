@@ -78,8 +78,8 @@ $\varepsilon^c_s(\cA) = \sum_{\Delta \in \mathcal{S}}(2\Delta)^{-s}$,
 which factors into $L$-functions. This factorization defines the
 arithmetic component $d_{\mathrm{arith}}$ of shadow depth.
 A second component is purely homotopy-theoretic: the $A_\infty$
-non-formality depth $d_{\mathrm{alg}}$, measuring how many
-transferred operations $m_r$ on bar cohomology are nonzero.
+algebraic-depth component $d_{\mathrm{alg}}$, measuring whether the
+transferred operations $m_r$ on bar cohomology truncate.
 For the universal Virasoro family, $d_{\mathrm{arith}}$ is finite on
 each rational model while $d_{\mathrm{alg}}=\infty$ over $\bQ(c)$: the
 tower detects the algebra itself via the self-referential OPE
@@ -115,7 +115,7 @@ counts the functional-equation centres of the Hecke constituents in
 the constrained Epstein decomposition; it does not locate the zeros
 of the resulting linear combination. The algebraic component
 $d_{\mathrm{alg}} \ge 0$
-is the $A_\infty$ non-formality depth
+is the $A_\infty$ tower-depth component
 (Theorem~\ref{thm:ainfty-formality-depth}):
 $d_{\mathrm{alg}} = \max\{r : m_r \ne 0\} - 2$ for finite
 shadow depth, $d_{\mathrm{alg}} = \infty$ when all
@@ -724,8 +724,9 @@ In every row, the depth equals $1$ plus the constituent-centre count.
 The five lattice rows expose an intrinsic deficiency of the scalar tower.
 All even unimodular lattice vertex algebras $V_\Lambda$ of rank~$r$
 share $\kappa(V_\Lambda) = r$, class~G shadow depth $r_{\max} = 2$,
-and genus expansion $F_g(V_\Lambda) = r \cdot \lambda_g^{\mathrm{FP}}$
-\textup{(}UNIFORM-WEIGHT\textup{)} at every genus.
+and scalar genus expansion
+$F_g^{\mathrm{sc}}(V_\Lambda) = r \cdot \lambda_g^{\mathrm{FP}}$
+at every genus.
 For the $24$ Niemeier lattices ($r = 24$), the scalar invariants
 $(\kappa, S_3, S_4, \ldots) = (24, 0, 0, \ldots)$ are identical:
 the scalar tower is blind to the root
@@ -924,9 +925,8 @@ where\textup{:}
  \cdot |\eta_g(\Omega)|^{-2r}$
  depends only on the rank~$r$ and is controlled by
  the scalar shadow tower
- \textup{(}$F_g^{\mathrm{scal}}
- = r \cdot \lambda_g^{\mathrm{FP}}$,
- UNIFORM-WEIGHT\textup{)};
+ \textup{(}$F_g^{\mathrm{sc}}(V_\Lambda)
+ = r \cdot \lambda_g^{\mathrm{FP}}$\textup{)};
 \item $\Theta_\Lambda^{(g)}(\Omega)
  = \sum_{v_1, \ldots, v_g \in \Lambda}
  e^{\pi i\, \sum_{j,k} \Omega_{jk}\, (v_j, v_k)}$
@@ -3093,7 +3093,12 @@ by Brown \cite{Brown12}\textup{)}, spanned by~$\zeta(2)$.
 \item \textup{(Weight $3$.)}
 The cubic shadow $S_3(\cA)$ controls the coefficient of
 $\zeta(3)$ in the genus-$0$ five-point amplitude.
-(The $c$-independent identity $S_3(\mathrm{Vir}_c) = 2$ (Theorem~\ref{thm:s3-virasoro-c-independent}) provides a finite algebraic proof of class~$\mathsf{M}$ membership.)
+The $c$-independent identity
+$S_3(\mathrm{Vir}_c)=2$
+\textup{(}Theorem~\ref{thm:s3-virasoro-c-independent}\textup{)}
+is the Virasoro weight-three scalar shadow.  Class~$\mathsf{M}$
+membership is certified only after the quartic/contact obstruction
+and completed tower data are included.
 For algebras with $S_3 = 0$
 \textup{(}classes~$\mathbf{G}$ and~$\mathbf{C}$\textup{)},
 $\zeta(3)$ does not appear.
@@ -3394,8 +3399,22 @@ $\widehat{\fsl}_2$ at level~$1$,
 $\Theta_{D_{16}^+} = E_4^2$,
 and (v) from Zhu's modular invariance theorem applied to the
 holomorphic $c = 24$ VOA~$V^\natural$.
-The $\kappa$ values are from the landscape census
-(Table~\ref{tab:shadow-tower-census}).
+The $\kappa$ values are computed in the scalar convention of
+Definition~\ref{def:kappa-scalar-vs-mumford}: the displayed
+Heisenberg row is normalized by $\kappa(\cH_1)=1$; the universal
+affine $\widehat{\fsl}_2$ level-$1$ vacuum has
+\[
+\kappa(V_1(\fsl_2))
+=\frac{\dim(\fsl_2)(1+h^\vee)}{2h^\vee}
+=\frac{3(1+2)}{4}
+=\frac94,
+\]
+whereas the simple Frenkel--Kac--Segal lattice quotient is a separate
+lattice row; the lattice VOAs have scalar $\kappa$ equal to the rank
+of their oscillator sector, hence $8$ for $E_8$ and $16$ for
+$D_{16}^+$; and $V^\natural$ has central charge~$24$ with no
+weight-one Heisenberg channel, so the Virasoro scalar lane gives
+$\kappa(V^\natural)=24/2=12$.
 \end{proof}
 
 \begin{proposition}[Quasi-modular content from the genus-$1$
@@ -4300,9 +4319,11 @@ frame bundle. These are the same Bernoulli
 numbers controlling the shadow $\hat{A}$-genus
 generating function of
 Theorem~\ref{thm:shadow-tower-asymptotics}: the
-genus-$g$ free energy
-$F_g(\cA) = \kappa(\cA)\cdot\lambda_g^{\mathrm{FP}}$
-\textup{(}UNIFORM-WEIGHT\textup{)},
+scalar-lane genus-$g$ coefficient
+\[
+F_g^{\mathrm{sc}}(\cA)
+=\kappa(\cA)\cdot\lambda_g^{\mathrm{FP}},
+\]
 where $\lambda_g^{\mathrm{FP}} = \tfrac{2^{2g-1}-1}{2^{2g-1}}\cdot
 \lvert B_{2g}\rvert/(2g)!$, and
 the CS perturbative coefficient
@@ -4315,9 +4336,10 @@ tangent bundle to the moduli space of flat connections
 (for CS) and of the moduli space of curves (for the shadow
 tower). The Bernoulli numbers enter via the Todd
 class of the respective cotangent complexes.
-Note: $F_g$ is the \emph{genus}-$g$ projection of the
-shadow obstruction tower, not the \emph{degree}-$r$ shadow
-coefficient~$S_r$. The two sequences are distinct.
+Note: $F_g^{\mathrm{sc}}$ is the \emph{genus}-$g$ scalar
+projection of the shadow obstruction tower, not the
+\emph{degree}-$r$ shadow coefficient~$S_r$. The two
+sequences are distinct.
 \end{remark}
 
 \begin{theorem}[Shadow Higgs field]
@@ -7073,8 +7095,8 @@ additional spectral interpretation is supplied.
 The Li criterion is therefore structurally inapplicable
 to the sewing lift $S_\cA(u)$. Any approach to zero-location
 questions through the shadow tower must bypass the Li
-framework; the genus-$2$ B\"ocherer bridge
-\textup{(}\S\textup{\ref{subsec:bocherer-bridge-theorem}}\textup{)}
+framework; the genus-$2$ B\"ocherer bridge theorem
+\textup{(}Theorem~\textup{\ref{thm:bocherer-bridge}}\textup{)}
 is one such bypass.
 \end{proposition}
 
@@ -8192,13 +8214,39 @@ $\det(I - tA) = \exp(-\sum_{r\ge1} \operatorname{tr}(A^r)\,t^r/r)$
 applied to $A = \operatorname{diag}(\alpha_p,\beta_p)$.
 \end{proof}
 
-\begin{remark}[The Serre reduction]%
+\begin{remark}[The Serre--Langlands reduction;
+\ClaimStatusProvedElsewhere]%
 \label{rem:serre-reduction}%
 \index{Serre's observation}%
 \index{Langlands functoriality!and symmetric powers}%
-Serre observed: if $L(s,\operatorname{Sym}^r f)$ has analytic
-continuation and satisfies the Riemann hypothesis for all $r \ge 1$,
-then $|\alpha_p| = |\beta_p| = p^{(k-1)/2}$ (the Ramanujan bound).
+For a holomorphic cuspidal Hecke eigenform~$f$ of weight~$k$,
+write the normalized Satake parameters at an unramified prime~$p$ as
+\[
+\widetilde\alpha_p=\alpha_p\,p^{-(k-1)/2},\qquad
+\widetilde\beta_p=\beta_p\,p^{-(k-1)/2},
+\qquad
+\widetilde\alpha_p\widetilde\beta_p=1 .
+\]
+The Serre--Langlands reduction
+\cite{Serre1968Abelian,Langlands1970Problems,LuoRudnickSarnak1999}
+is the following implication.  If, for every $r\geq 1$, the
+symmetric-power lift $\operatorname{Sym}^r f$ is automorphic on
+$\mathrm{GL}_{r+1}$ and lies in the automorphic class to which the
+Luo--Rudnick--Sarnak local bound applies, then
+$|\widetilde\alpha_p|=|\widetilde\beta_p|=1$ for every unramified
+prime~$p$, equivalently
+$|\alpha_p|=|\beta_p|=p^{(k-1)/2}$.
+Indeed, the largest normalized Satake parameter of
+$\operatorname{Sym}^r f$ at~$p$ has size
+$|\widetilde\alpha_p|^r$ if $|\widetilde\alpha_p|>1$; the
+Luo--Rudnick--Sarnak bound for automorphic representations of
+$\mathrm{GL}_{r+1}$ forces this size to be at most
+$p^{1/2-1/((r+1)^2+1)}$, and letting $r\to\infty$ gives
+$|\widetilde\alpha_p|\leq 1$. Applying the same argument after
+interchanging $\alpha_p$ and~$\beta_p$ gives
+$|\widetilde\beta_p|\leq1$, and the product-one relation gives
+equality.
+
 If prime-locality holds at every degree, the shadow obstruction tower
 encodes the local coefficients of the symmetric power $L$-functions.
 The MC constraints at all degrees give polynomial relations between
@@ -8207,9 +8255,9 @@ these local traces. The conditional chain is:
 \text{MC (all degrees)}
 \;\xrightarrow{\;\text{Prop.~\ref{prop:shadow-symmetric-power}}\;}
 \operatorname{Sym}^r \text{ data}
-\;\xrightarrow{\;\text{[analytic cont.]}\;}
+\;\xrightarrow{\;\text{[automorphy/analytic input]}\;}
 L(s,\operatorname{Sym}^r f)
-\;\xrightarrow{\;\text{Serre}\;}
+\;\xrightarrow{\;\text{Serre--Langlands reduction}\;}
 \text{Ramanujan.}
 \]
 The gap is the middle arrow: the MC constraints give polynomial
@@ -8219,7 +8267,12 @@ Dirichlet coefficients do not imply analytic continuation of
 the Dirichlet series. The passage from algebraic (MC) to
 analytic (continuation) is a special case of
 \emph{Langlands functoriality}: the automorphy of
-$\operatorname{Sym}^r(\rho_f)$ for all~$r$.
+$\operatorname{Sym}^r(\rho_f)$ for all~$r$.  For holomorphic
+eigenforms of regular algebraic weight this functoriality is now
+available by Newton--Thorne~\cite{NewtonThorne2021}; Deligne's
+Weil-theoretic proof of Ramanujan for holomorphic modular forms
+\cite{Deligne1974} is the stronger classical input already used on
+the lattice-VOA lane.
 \end{remark}
 
 \begin{remark}[Precise diagnosis]%
@@ -8406,7 +8459,7 @@ $\mathfrak{g}^{\mathrm{mod}}$ forces the atoms to be Hecke
 eigenvalues with Petersson-orthogonal weights.
 \end{proof}
 
-\begin{definition}[Rigidity defect]%
+\begin{definition}[Rigidity defect; \ClaimStatusDefinitional]%
 \label{def:rigidity-defect}%
 \index{rigidity defect|textbf}%
 For a spectral measure with $m$~atoms, the MC recursion at
@@ -8416,8 +8469,9 @@ $2m$~unknowns ($m$~atoms $+$ $m$~weights). The
 \begin{equation}\label{eq:rigidity-defect}
  \delta(m, r) \;:=\; (r - 1) - 2m\,.
 \end{equation}
-For $\delta > 0$ the system is overdetermined and the spectral
-measure is rigid.
+When $\delta(m,r)>0$, we say that the truncated MC system is
+\emph{overdetermined}; in this terminology the corresponding
+spectral measure is \emph{rigid at degree~$r$}.
 \end{definition}
 
 \begin{proposition}[Rigidity threshold]%
@@ -8920,12 +8974,14 @@ For $h^1 = 0$ (tree, one genus-$1$ vertex):
 $|E| = |V| - 1 < |V| \le r$.
 \end{proof}
 
-\begin{remark}[Quasi-modular obstruction to naive multiplicativity]%
+\begin{remark}[Quasi-modular obstruction to naive multiplicativity;
+\ClaimStatusProvedHere]%
 \label{rem:quasimodular-obstruction}%
 \index{shadow-level multiplicativity!quasi-modular obstruction}%
 \index{quasi-modular forms!and shadow projections}%
-The genus-$1$ propagator is the quasi-modular Eisenstein
-series~$E_2^*(\tau)$, whose non-holomorphic completion is
+By Proposition~\ref{prop:quasi-modular-propagator}, the genus-$1$
+propagator is the quasi-modular Eisenstein series~$E_2^*(\tau)$,
+whose non-holomorphic completion is
 $\widehat{E}_2(\tau) = E_2^*(\tau) - 3/(\pi\,\mathrm{Im}\,\tau)$.
 The holomorphic series~$E_2^*(\tau)$ is \emph{not} a modular form for
 $\mathrm{SL}(2,\bZ)$.
@@ -8936,18 +8992,8 @@ this applies only to \emph{holomorphic} forms; the space of
 The shadow projection $\operatorname{Sh}_r^{(1)}$ involves
 products of~$E_2^*$, which are quasi-modular polynomials in
 $\{E_2^*, E_4, E_6\}$, not polynomials in $\{E_4, E_6\}$ alone.
-
-\textbf{Consequence for the Euler product.}
-The moment $L$-function
-$M_r(s) = \int \operatorname{Sh}_r^{(1)} \cdot E(s,\tau)\,d\mu$
-involves Rankin--Selberg integrals of \emph{quasi-modular}
-forms against~$E(s,\tau)$. The unfolding theory for such
-integrals is more subtle than for holomorphic eigenforms
-(it involves~$\widehat{E}_2$ and
-Zagier's theory of quasi-modular Rankin--Selberg integrals).
-The Euler product question for~$M_r(s)$ at degrees~$r \le 5$
-remains \emph{open}; it requires an explicit quasi-modular
-Rankin--Selberg analysis that has not been carried out.
+This is the Kaneko--Zagier ring of level-one quasi-modular forms
+\cite{KanekoZagier1995}.
 
 The weight bound (Proposition~\ref{prop:genus1-weight-bound})
 and the absence of holomorphic cusp forms below weight~$12$
@@ -8963,6 +9009,22 @@ At degrees~$r \ge 6$, the MC recursion constraints
 (Newton's identities,
 Proposition~\ref{prop:mc-bracket-determines-atoms}) are
 essential for determining the $\Delta$ coefficient.
+\end{remark}
+
+\begin{remark}[Euler-product consequence of the quasi-modular
+obstruction; \ClaimStatusOpen]%
+\label{rem:quasimodular-rankin-selberg-open}%
+\index{shadow-level multiplicativity!Euler product question}%
+The moment $L$-function
+$M_r(s) = \int \operatorname{Sh}_r^{(1)} \cdot E(s,\tau)\,d\mu$
+involves Rankin--Selberg integrals of \emph{quasi-modular}
+forms against~$E(s,\tau)$, in the regularized regime of
+Zagier~\cite{Zagier1981RankinSelberg}.
+The unfolding theory for such integrals is more subtle than for
+holomorphic eigenforms, since it involves~$\widehat{E}_2$.
+The Euler product question for~$M_r(s)$ at degrees~$r \le 5$
+is open: it requires an explicit quasi-modular Rankin--Selberg
+analysis that has not been carried out.
 \end{remark}
 
 \begin{conjecture}[Operadic Rankin--Selberg, main form]%
@@ -9501,7 +9563,7 @@ acts component-by-component:
  Rankin--Selberg method remain algebraic and analytic inputs;
 \item CPS, strong multiplicity one, and Serre are applied to each
  spectral component $L(s, \phi_j \times \bar\phi_j)$. The CPS
- hypotheses hold (Theorem~\ref{conj:cps-from-mc});
+ hypotheses are supplied by Conjecture~\ref{conj:cps-from-mc};
  CPS gives automorphy; prime-locality follows from
  multiplicativity of~$\phi_j$; strong multiplicity one
  gives the $\operatorname{Sym}^r$ identification; Serre
@@ -10370,8 +10432,9 @@ $q = e^{2\pi i\tau}$.
 \end{proposition}
 
 \begin{proof}
-Part~(i): the sewing operator $K(\tau)$ on Fock space has
-eigenvalues~$q^n$ ($n\ge 1$, \S\ref{sec:sewing-RS-bridge}), so
+Part~(i): with the Fock-space sewing normalization of
+Proposition~\ref{prop:divisor-sum-decomposition}, the operator
+$K(\tau)$ has eigenvalues~$q^n$ for $n\ge 1$, so
 $\det(1-K) = \prod(1-q^n) = q^{-1/24}\,\eta(\tau)
 = e^{-\pi i\tau/12}\,\eta(\tau)$.
 
@@ -10710,7 +10773,8 @@ factors~$\sigma$; complexifying~$\sigma$ extends the integral
 to a contour whose saddle-point structure may detect the
 arithmetic content directly.
 
-\begin{construction}[Complexified Liouville functional integral]%
+\begin{construction}[Complexified Liouville functional integral;
+\ClaimStatusDefinitional]%
 \label{constr:liouville-complexified}%
 \index{Liouville!complexified functional integral}%
 The Polyakov--Alvarez conformal anomaly formula expresses
@@ -10741,10 +10805,11 @@ for $\sigma\colon E_\tau\to\bC$,
  e^{-S_L[\sigma]/(6\pi)}\;D\sigma\,,
 \end{equation}
 where $\mathcal{C}$ is a contour in the space of complex-valued
-conformal factors, chosen to make the integral convergent. On
-the real section $\mathcal{C}_{\bR} = \{\sigma\colon E_\tau
-\to\bR\}$, the integral is Gaussian (since $S_L$ is quadratic
-for the flat torus) and reproduces the standard spectral
+conformal factors, chosen to make the integral convergent. The
+normalization is fixed by the real section
+$\mathcal{C}_{\bR} = \{\sigma\colon E_\tau \to\bR\}$: since
+$S_L$ is quadratic for the flat torus, this reference contour is
+Gaussian and is normalized to recover the standard spectral
 determinant.
 \end{construction}
 
@@ -11025,7 +11090,7 @@ $\zeta(\rho) = 0$, the RS integral $I(s;\cA)$
 is holomorphic (Proposition~\ref{prop:scattering-residue}).
 Its value there is a well-defined invariant of~$\cA$.
 
-\begin{definition}[Scattering coupling]%
+\begin{definition}[Scattering coupling; \ClaimStatusDefinitional]%
 \label{def:scattering-coupling}%
 \index{scattering coupling|textbf}%
 For a chirally Koszul algebra~$\cA$ with HS-sewing and a
@@ -11237,7 +11302,7 @@ The Hecke defect of
 Remark~\ref{rem:prime-locality-obstruction} admits a natural
 interpretation as a cohomological obstruction.
 
-\begin{definition}[Hecke defect class]%
+\begin{definition}[Hecke defect class; \ClaimStatusDefinitional]%
 \label{def:hecke-defect-class}%
 \index{Hecke defect!class|textbf}%
 For a prime~$p$ and a chirally Koszul algebra~$\cA$ with
@@ -11934,7 +11999,7 @@ The principle: \emph{arithmetic is semisimple; homotopy
 defect is unipotent.}
 \end{remark}
 
-\begin{definition}[Frontier defect form]%
+\begin{definition}[Frontier defect form; \ClaimStatusDefinitional]%
 \label{def:frontier-defect-form}%
 \index{frontier defect form|textbf}%
 \index{scattering matrix!frontier defect}%
@@ -12794,8 +12859,7 @@ Then:
 \item \textup{(Conditional MC determination)}
 The genus-$2$ MC equation
 \textup{(}$D^2 = 0$ restricted to genus~$2$, giving the three-shell
-decomposition of
-Remark~\textup{\ref{rem:saito-kurokawa-bridge}}\textup{)}
+loop-square, separating-loop, and planted-forest decomposition\textup{)}
 determines the cusp projection of $\Theta_\Lambda^{(2)}$ from
 genus-$1$ shadow data and boundary contributions.
 
@@ -13612,13 +13676,13 @@ object.}
  \textup{(}which requires $|a_n| = O(n^\varepsilon)$\textup{)}
  also fails.
 \item \emph{The shadow $L$-function is a separate series.}
- The shadow $L$-function
- $L_\cA^{\mathrm{sh}}(s) = \sum_{r \ge 2} S_r\,r^{-s}$
- \textup{(}a different object from~$D_2$; see
- Remark~\textup{\ref{rem:shadow-eisenstein-correct-scope}}\textup{)}
- has no Euler-product assertion here. No Selberg-class or
- subconvexity statement about $L_\cA^{\mathrm{sh}}$ follows from the
- Eisenstein identity for~$D_2$.
+The shadow $L$-function
+$L_\cA^{\mathrm{sh}}(s) = \sum_{r \ge 2} S_r\,r^{-s}$
+\textup{(}degree-indexed by shadow coefficients, not
+Fourier-indexed by the genus-$1$ amplitude coefficients\textup{)}
+has no Euler-product assertion here. No Selberg-class or
+subconvexity statement about $L_\cA^{\mathrm{sh}}$ follows from the
+Eisenstein identity for~$D_2$.
 \end{enumerate}
 \end{proposition}
 
@@ -14209,10 +14273,8 @@ non-crossing partitions of $[10]$ enumerate to
 $C_9 = 4862$ (Stanley~$1999$ \emph{EC2} Ex.~$6.19$; direct
 count via the Narayana refinement
 $N_{10,k}=\tfrac1{10}\binom{10}{k}\binom{10}{k-1}$ summing to $4862$);
-the Brown weight-$10$ basis
-$\{\zeta(3)^2\zeta(3,3),\zeta(3)\zeta(7),\zeta(5)^2,\zeta(3,7),\zeta(5,5),
-\zeta(3,3,3,1),\zeta(3,5,1,1)\}$ has cardinality $d_{10}=7$
-(Brown--Deligne~$2013$ Bourbaki~$1054$ \S$3.4$); product
+Brown's motivic MZV dimension theorem gives $d_{10}=7$, equivalently
+the coefficient of $x^{10}$ in $(1-x^2-x^3)^{-1}$ is~$7$; product
 $4862\cdot 7 = 34034$ matches Eq.~\eqref{eq:YD-delta-789-dim}.
 \textup{(ii)} Borcherds-weight induction at $n = 11$:
 the weight $\lfloor 11/2\rfloor + 1 = 6$ matches the
@@ -14922,8 +14984,7 @@ $\kapch(\Vir_c) = c/2$ of the Vol~I landscape census
 (\texttt{landscape\_census.tex}, Virasoro row) gives
 $\kapch(\Vnat) = 12$ (the Monster Heisenberg sector vanishes
 since $\dim \Vnat_1 = 0$, so the Virasoro $c/2$ is the full
-$\kapch$; cf.~Remark~\ref{rem:moonshine-kappa-ch-table} of
-\texttt{chiral\_moonshine\_unified.tex}). Conway--Norton~$1979$
+$\kapch$). Conway--Norton~$1979$
 \S$2$ identifies the Fricke-fixed cusp lattice as $II_{1, 1}$
 with signature $(1, 1)$, giving $c_+(II_{1, 1}) = 1$. Product:
 $2 \cdot 12 \cdot 1 = 24 = c(\Vnat)$.

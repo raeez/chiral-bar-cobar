@@ -71,8 +71,12 @@ F = Fraction
 # ============================================================================
 
 SHADOW_CLASSES = {
-    "G": {"name": "Gaussian", "r_max": 2, "families": ["Heisenberg"]},
-    "L": {"name": "Lie/tree", "r_max": 3, "families": ["affine KM", "lattice VOA"]},
+    "G": {
+        "name": "Gaussian",
+        "r_max": 2,
+        "families": ["Heisenberg", "lattice VOA", "free fermion"],
+    },
+    "L": {"name": "Lie/tree", "r_max": 3, "families": ["affine KM"]},
     "C": {"name": "contact/quartic", "r_max": 4, "families": ["betagamma"]},
     "M": {"name": "mixed", "r_max": None, "families": ["Virasoro", "W_N"]},
 }
@@ -576,7 +580,9 @@ def nonformality_depth(family: str, c: Optional[Fraction] = None,
       r_max = maximum r such that S_r != 0
       d_NF = minimum k such that the corresponding Swiss-cheese operation is nonzero
 
-    For Virasoro (class M): d_NF = 3, r_max = infinity.
+    This is not the algebraic depth d_alg.  The algebraic depth records
+    termination of the whole tower: for Virasoro (class M), d_NF = 3
+    but d_alg = r_max = infinity.
     """
     family_lower = family.lower()
 
@@ -585,6 +591,7 @@ def nonformality_depth(family: str, c: Optional[Fraction] = None,
             "family": family,
             "class": "G",
             "d_NF": float("inf"),
+            "d_alg": 0,
             "r_max": 2,
             "is_formal": True,
             "explanation": "Heisenberg: class G, Swiss-cheese formal.",
@@ -600,6 +607,7 @@ def nonformality_depth(family: str, c: Optional[Fraction] = None,
             "family": family,
             "class": "L",
             "d_NF": d_NF,
+            "d_alg": 1,
             "r_max": 3,
             "S3": S3,
             "is_formal": d_NF > 3,
@@ -611,6 +619,7 @@ def nonformality_depth(family: str, c: Optional[Fraction] = None,
             "family": family,
             "class": "C",
             "d_NF": 4,
+            "d_alg": 2,
             "r_max": 4,
             "is_formal": False,
             "explanation": "Betagamma: class C, m_3=0 but m_4 != 0.",
@@ -625,6 +634,7 @@ def nonformality_depth(family: str, c: Optional[Fraction] = None,
             "family": family,
             "class": "M",
             "d_NF": 3,
+            "d_alg": None,
             "r_max": float("inf"),
             "S3": S3,
             "S4": S4_data.get("S4"),
@@ -639,6 +649,7 @@ def nonformality_depth(family: str, c: Optional[Fraction] = None,
             "family": family,
             "class": "M",
             "d_NF": 3,
+            "d_alg": None,
             "r_max": float("inf"),
             "is_formal": False,
             "explanation": f"W_3 c={c}: class M, m_3 != 0, infinite tower.",
@@ -665,7 +676,8 @@ def koszulness_nonformality_dictionary() -> Dict[str, Dict[str, Any]]:
       H*(B(A)) is formal (m_k^{tr} = 0 for k >= 3).
 
     KEY DISTINCTION (AP14):
-      KOSZULNESS = A-infinity formality of H*(B(A))    [the Koszul dual A^!]
+      KOSZULNESS = A-infinity formality of H*(B(A))
+                   [the bar-dual A^i; A^! only after Verdier/linear duality]
       SHADOW DEPTH = Swiss-cheese non-formality of A   [A itself]
 
     All standard families are Koszul. Shadow depth classifies COMPLEXITY
@@ -717,6 +729,91 @@ def koszulness_nonformality_dictionary() -> Dict[str, Dict[str, Any]]:
             "first_nonzero_SC_mk": 3,
             "physical_interpretation": "Higher spin: requires all-loop resummation.",
         },
+    }
+
+
+def standard_sc_tree_detection_witness() -> Dict[str, Any]:
+    r"""Witness for the scoped SC-formality iff class G statement.
+
+    This records the exact support statement used by
+    lem:sc-tree-detection-standard and prop:sc-formal-iff-class-g.
+    It is not a proof that the raw ordered-to-symmetric averaging map is
+    injective.  The manuscript package
+    SC^{tree-det}_{std} is the additional input saying that the standard
+    primitive tree support has no hidden ordered or open-colour kernel.
+
+    Under that package, the standard-family table satisfies:
+      m_k^{SC}=0 for all k>=3  iff  S_r=0 for all r>=3  iff class G.
+    """
+    rows = [
+        {
+            "family": "Heisenberg",
+            "class": "G",
+            "shadow_nonzero_degrees_ge_3": [],
+            "sc_nonzero_degrees_ge_3": [],
+        },
+        {
+            "family": "lattice VOA",
+            "class": "G",
+            "shadow_nonzero_degrees_ge_3": [],
+            "sc_nonzero_degrees_ge_3": [],
+        },
+        {
+            "family": "free fermion",
+            "class": "G",
+            "shadow_nonzero_degrees_ge_3": [],
+            "sc_nonzero_degrees_ge_3": [],
+        },
+        {
+            "family": "affine sl2",
+            "class": "L",
+            "shadow_nonzero_degrees_ge_3": [3],
+            "sc_nonzero_degrees_ge_3": [3],
+        },
+        {
+            "family": "betagamma",
+            "class": "C",
+            "shadow_nonzero_degrees_ge_3": [4],
+            "sc_nonzero_degrees_ge_3": [4],
+        },
+        {
+            "family": "Virasoro",
+            "class": "M",
+            "shadow_nonzero_degrees_ge_3": [3, 4, 5, "infinitely_many"],
+            "sc_nonzero_degrees_ge_3": [3, 4, 5, "infinitely_many"],
+        },
+        {
+            "family": "W_N",
+            "class": "M",
+            "shadow_nonzero_degrees_ge_3": [3, 4, 5, "infinitely_many"],
+            "sc_nonzero_degrees_ge_3": [3, 4, 5, "infinitely_many"],
+        },
+    ]
+
+    for row in rows:
+        shadow_vanishes_after_2 = len(row["shadow_nonzero_degrees_ge_3"]) == 0
+        sc_formal = len(row["sc_nonzero_degrees_ge_3"]) == 0
+        row["shadow_vanishes_after_2"] = shadow_vanishes_after_2
+        row["sc_formal"] = sc_formal
+        row["class_g"] = row["class"] == "G"
+        row["equivalence_holds_under_package"] = (
+            shadow_vanishes_after_2 == sc_formal == row["class_g"]
+        )
+
+    failures = [
+        row["family"] for row in rows
+        if not row["equivalence_holds_under_package"]
+    ]
+
+    return {
+        "manuscript_anchor": "lem:sc-tree-detection-standard",
+        "proposition_anchor": "prop:sc-formal-iff-class-g",
+        "hypothesis_package": "SC^{tree-det}_{std}",
+        "bare_averaging_injective": False,
+        "package_required": True,
+        "rows": rows,
+        "all_rows_match": not failures,
+        "failures": failures,
     }
 
 
@@ -849,8 +946,10 @@ def linfty_ell4_virasoro_exact(c: Fraction) -> Dict[str, Any]:
 def loop_exactness_order(family: str) -> Dict[str, Any]:
     """Compute the loop-exactness order for line-operator OPE.
 
-    The Swiss-cheese m_k^{SC} = 0 for k >= d_NF + 1 means the line-operator
-    OPE is (d_NF - 1)-loop exact.
+    For finite-depth families, m_k^{SC} = 0 for k >= d_NF + 1 means the
+    line-operator OPE is (d_NF - 1)-loop exact.  Class M is the opposite
+    case: d_NF = 3 but d_alg = infinity, so no finite loop truncation
+    suffices.
 
     Physical interpretation (from thm:dnp-bar-cobar-identification(iii)):
       m_k != 0 means k-loop corrections to line-operator OPE are nonzero
@@ -900,13 +999,15 @@ def loop_exactness_order(family: str) -> Dict[str, Any]:
 # ============================================================================
 
 def shadow_depth_from_ope(max_pole_order: int, algebra_type: str = "single_generator") -> int:
-    r"""Estimate shadow depth from the maximum OPE pole order.
+    r"""Estimate shadow depth from maximum OPE pole order plus family type.
 
     For a single-generator algebra with OPE T(z)T(w) ~ sum c_n (z-w)^{-n}:
-    - Max pole order 1 (simple pole only): depth 2 (class G, Heisenberg)
-    - Max pole order 2 (double pole): depth 3 (class L, affine KM)
-    - Max pole order 3 (triple pole): depth 4 (class C, betagamma-like)
-    - Max pole order 4+ (quartic+ pole): depth infinity (class M, Virasoro)
+    - Heisenberg: max pole order 2 (double pole), but class G/depth 2.
+    - Affine KM: max pole order 2 with a simple-pole bracket channel,
+      class L/depth 3.
+    - Contact/betagamma-type: fundamental simple-pole fields plus a
+      composite contact quartic, class C/depth 4.
+    - Virasoro: max pole order 4, class M/infinite depth.
 
     After d-log absorption (AP19): the r-matrix pole orders are one less.
     Virasoro OPE: z^{-4}, z^{-2}, z^{-1} poles.
@@ -916,20 +1017,31 @@ def shadow_depth_from_ope(max_pole_order: int, algebra_type: str = "single_gener
     shadow coefficients S_r probe higher-order OPE structure via nested
     contractions through the propagator.
 
-    NOTE: This is a HEURISTIC. The exact relationship between pole orders
-    and shadow depth involves the full structure of the algebra, not just
-    the maximal pole order. For algebras with multiple generators, the
-    interplay between different OPE channels matters.
+    NOTE: This is family-aware. Pole order alone is insufficient:
+    Heisenberg and affine Kac--Moody both have a double-pole channel,
+    but Heisenberg has no simple-pole bracket and remains class G.
     """
-    if max_pole_order <= 1:
+    family = algebra_type.lower().replace("-", "_")
+    if family in {"heisenberg", "free_boson"}:
+        if max_pole_order != 2:
+            raise ValueError("Heisenberg has OPE max pole order 2")
         return 2  # class G
-    elif max_pole_order == 2:
+    if family in {"free_fermion", "symplectic_fermion"}:
+        if max_pole_order != 1:
+            raise ValueError("Free/symplectic fermion has OPE max pole order 1")
+        return 2  # class G on the odd free-field lane
+    if family in {"affine", "affine_km", "sl2", "sl_2", "kac_moody"}:
+        if max_pole_order != 2:
+            raise ValueError("Affine KM has OPE max pole order 2")
         return 3  # class L
-    elif max_pole_order == 3:
-        return 4  # class C
-    else:
-        # max_pole_order >= 4: infinite tower
+    if family in {"betagamma", "beta_gamma", "contact"}:
+        return 4  # class C, from the contact composite channel
+    if family in {"virasoro", "w", "w_n", "w3", "w_3", "class_m"}:
         return -1  # convention: -1 means infinity
+
+    raise ValueError(
+        "Pole order alone does not determine shadow depth; pass algebra_type"
+    )
 
 
 # ============================================================================

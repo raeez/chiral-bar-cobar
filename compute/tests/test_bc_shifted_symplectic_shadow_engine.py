@@ -28,6 +28,8 @@ import os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'lib'))
 
 from bc_shifted_symplectic_shadow_engine import (
+    C2_LAGRANGIAN_HYPOTHESES,
+    C2_LAGRANGIAN_CONDITIONAL_STATUS,
     # Family constructors
     AlgebraFamily,
     heisenberg_family,
@@ -340,11 +342,22 @@ class TestPoissonBracket:
             result = evaluate_poisson_bracket_quadratic(fam)
             assert result['bracket_Theta_Theta'] == Fraction(0)
 
-    def test_mc_is_lagrangian(self):
-        """MC equation = Lagrangian condition for all families."""
+    def test_mc_scalar_indicator_default_c2_conditional(self):
+        """The MC scalar diagnostic is not a default C2 certificate."""
         for name, fam in STANDARD_FAMILIES.items():
             result = evaluate_poisson_bracket_quadratic(fam)
-            assert result['mc_is_lagrangian'] is True
+            assert result['mc_scalar_indicator'] is True
+            assert result['mc_is_lagrangian'] is False
+            assert result['lagrangian_upgrade_status'] == C2_LAGRANGIAN_CONDITIONAL_STATUS
+
+    def test_mc_lagrangian_with_c2_package(self):
+        """Supplying the C2 package certifies the MC/Lagrangian flag."""
+        fam = heisenberg_family()
+        result = evaluate_poisson_bracket_quadratic(
+            fam, c2_hypotheses=C2_LAGRANGIAN_HYPOTHESES
+        )
+        assert result['mc_is_lagrangian'] is True
+        assert not result['c2_missing_hypotheses']
 
     def test_heisenberg_single_active_pair(self):
         """Heisenberg: only arity-2 pair is active."""
@@ -378,11 +391,22 @@ class TestPoissonBracket:
 class TestLagrangianStructure:
     """Test Lagrangian embeddings from Koszul pairs."""
 
-    def test_all_families_lagrangian(self):
-        """All standard families have Lagrangian structure."""
+    def test_all_families_scalar_diagnostic_default_c2_conditional(self):
+        """All standard families have scalar diagnostics, not default C2 proofs."""
         for name, fam in STANDARD_FAMILIES.items():
             lag = compute_lagrangian_structure(fam)
-            assert lag.is_lagrangian, f"{name} not Lagrangian"
+            assert lag.scalar_lagrangian_diagnostic, f"{name} missing scalar diagnostic"
+            assert not lag.is_lagrangian, f"{name} should not be C2-certified by default"
+            assert lag.lagrangian_upgrade_status == C2_LAGRANGIAN_CONDITIONAL_STATUS
+
+    def test_all_families_lagrangian_with_c2_package(self):
+        """The C2 package upgrades the Lagrangian certification flag."""
+        for name, fam in STANDARD_FAMILIES.items():
+            lag = compute_lagrangian_structure(
+                fam, c2_hypotheses=C2_LAGRANGIAN_HYPOTHESES
+            )
+            assert lag.is_lagrangian, f"{name} not Lagrangian after C2 package"
+            assert not lag.c2_missing_hypotheses
 
     def test_heisenberg_theta_primitive(self):
         """Heisenberg theta_2 = k * (-k) = -k^2."""
@@ -671,14 +695,26 @@ class TestIntersectionDegree:
 # ========================================================================
 
 class TestMCEqualsLagrangian:
-    """Verify MC equation = Lagrangian condition (PTVV Thm 2.9)."""
+    """Verify MC scalar diagnostics and C2 Lagrangian certification."""
 
-    def test_all_families_consistent(self):
-        """MC = Lagrangian for all standard families."""
+    def test_all_families_scalar_diagnostic_only_by_default(self):
+        """MC diagnostics do not certify C2 without the package."""
         for name, fam in STANDARD_FAMILIES.items():
             result = verify_mc_equals_lagrangian(fam)
-            assert result['verification_status'] == 'CONSISTENT', (
-                f"MC-Lagrangian inconsistent for {name}")
+            assert result['verification_status'] == 'SCALAR_DIAGNOSTIC_ONLY', (
+                f"MC status mis-scoped for {name}")
+            assert result['mc_scalar_indicator'] is True
+            assert result['mc_is_lagrangian'] is False
+
+    def test_all_families_c2_certified_with_package(self):
+        """Supplying the C2 hypotheses upgrades the MC/Lagrangian flag."""
+        for name, fam in STANDARD_FAMILIES.items():
+            result = verify_mc_equals_lagrangian(
+                fam, c2_hypotheses=C2_LAGRANGIAN_HYPOTHESES
+            )
+            assert result['verification_status'] == 'C2_CERTIFIED', (
+                f"MC-Lagrangian not certified for {name}")
+            assert result['mc_is_lagrangian'] is True
 
     def test_bracket_vanishes_all(self):
         """{Theta, Theta}_{-1} = 0 for all families."""
@@ -713,8 +749,18 @@ class TestFullPackage:
         assert pkg['kappa'] == Fraction(1)
         assert pkg['complementarity_sum'] == Fraction(0)
         assert pkg['shifted_symplectic_form']['shift'] == -1
-        assert pkg['lagrangian']['is_lagrangian']
+        assert not pkg['lagrangian']['is_lagrangian']
+        assert pkg['lagrangian']['scalar_lagrangian_diagnostic']
         assert pkg['shadow_metric_discriminant'] == Fraction(0)
+
+    def test_heisenberg_package_with_c2(self):
+        """Full package becomes C2-certified only with the C2 hypotheses."""
+        fam = heisenberg_family()
+        pkg = full_shifted_symplectic_package(
+            fam, c2_hypotheses=C2_LAGRANGIAN_HYPOTHESES
+        )
+        assert pkg['lagrangian']['is_lagrangian']
+        assert not pkg['lagrangian']['c2_missing_hypotheses']
 
     def test_virasoro_package(self):
         """Full package for Virasoro c=26."""
@@ -897,9 +943,10 @@ class TestMultiPathVerification:
         fam = heisenberg_family()
         form = compute_shifted_symplectic_form(fam)
         lag = compute_lagrangian_structure(fam)
-        # Form shift = -1, Lagrangian exists
+        # Form shift = -1; C2 certification requires the explicit package.
         assert form.shift == -1
-        assert lag.is_lagrangian
+        assert lag.scalar_lagrangian_diagnostic
+        assert not lag.is_lagrangian
 
     def test_path1_vs_path3_aksz(self):
         """Path 1 (PTVV form) vs Path 3 (AKSZ): shift consistency."""
@@ -913,7 +960,9 @@ class TestMultiPathVerification:
         """Path 2 (Lagrangian) vs Path 4 (Poisson): MC = Lagrangian."""
         for name, fam in list(STANDARD_FAMILIES.items())[:5]:
             mc_lag = verify_mc_equals_lagrangian(fam)
-            assert mc_lag['verification_status'] == 'CONSISTENT'
+            assert mc_lag['verification_status'] == 'SCALAR_DIAGNOSTIC_ONLY'
+            assert mc_lag['mc_scalar_indicator'] is True
+            assert mc_lag['mc_is_lagrangian'] is False
 
     def test_path1_path2_path3_full_consistency(self):
         """Full 3-path check: PTVV + Lagrangian + AKSZ for Virasoro."""
@@ -926,7 +975,8 @@ class TestMultiPathVerification:
 
         # Path 2: Lagrangian
         lag = compute_lagrangian_structure(fam)
-        assert lag.is_lagrangian
+        assert lag.scalar_lagrangian_diagnostic
+        assert not lag.is_lagrangian
         theta_2 = lag.theta_primitive[2]
         assert theta_2 == lagrangian_primitive_virasoro(Fraction(2))
 

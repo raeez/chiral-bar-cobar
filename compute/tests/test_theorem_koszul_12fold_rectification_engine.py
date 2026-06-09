@@ -15,7 +15,7 @@ the 2024-2026 literature:
 Manuscript references:
   thm:koszul-equivalences-meta (chiral_koszul_pairs.tex)
   prop:lagrangian-perfectness (bar_cobar_adjunction_inversion.tex)
-  cor:lagrangian-unconditional (bar_cobar_adjunction_inversion.tex)
+  cor:lagrangian-conditional-standard-landscape (bar_cobar_adjunction_inversion.tex)
   rem:d-module-purity-content (chiral_koszul_pairs.tex)
   sec:concordance-koszulness-programme (concordance.tex)
 """
@@ -29,7 +29,9 @@ from compute.lib.theorem_koszul_12fold_rectification_engine import (
     FamilyData,
     verify_item_status,
     count_unconditional,
+    count_listed_consequences,
     count_conditional,
+    count_one_way_consequences,
     count_one_directional,
     count_false_candidates,
     verify_item_for_family,
@@ -57,13 +59,21 @@ class TestItemCounts:
         """12 meta-theorem items + 2 candidates = 14 total."""
         assert len(KOSZUL_ITEMS) == 14
 
-    def test_unconditional_10(self):
-        """Items (i)-(x) are unconditional equivalences."""
-        assert count_unconditional() == 10
+    def test_unconditional_7(self):
+        """Items (i)--(v), (ix), and (x) are independent equivalences."""
+        assert count_unconditional() == 7
 
-    def test_conditional_1(self):
-        """Item (xi) is conditional on perfectness."""
-        assert count_conditional() == 1
+    def test_listed_consequence_1(self):
+        """Item (vi) is a listed consequence of item (v)."""
+        assert count_listed_consequences() == 1
+
+    def test_conditional_2(self):
+        """Items (vii) and (xi) are conditional."""
+        assert count_conditional() == 2
+
+    def test_one_way_consequence_1(self):
+        """Item (viii) is a one-way Hochschild consequence."""
+        assert count_one_way_consequences() == 1
 
     def test_one_directional_1(self):
         """Item (xii) is one-directional (forward proved, converse open)."""
@@ -89,21 +99,19 @@ class TestItemCounts:
 # =========================================================================
 
 class TestUnconditionalItems:
-    """Verify each of the 10 unconditional equivalences."""
+    """Verify each unconditional equivalence."""
 
     @pytest.mark.parametrize("item_num", [
-        '(i)', '(ii)', '(iii)', '(iv)', '(v)',
-        '(vi)', '(vii)', '(viii)', '(ix)', '(x)',
+        '(i)', '(ii)', '(iii)', '(iv)', '(v)', '(ix)', '(x)',
     ])
     def test_unconditional_status(self, item_num):
-        """Each of (i)-(x) has status 'unconditional'."""
+        """Each listed item has status 'unconditional'."""
         result = verify_item_status(item_num)
         assert result['status'] == 'unconditional'
         assert result['verified']
 
     @pytest.mark.parametrize("item_num", [
-        '(i)', '(ii)', '(iii)', '(iv)', '(v)',
-        '(vi)', '(vii)', '(viii)', '(ix)', '(x)',
+        '(i)', '(ii)', '(iii)', '(iv)', '(v)', '(ix)', '(x)',
     ])
     def test_both_directions_proved(self, item_num):
         """Each unconditional item has both directions proved."""
@@ -139,10 +147,28 @@ class TestUnconditionalItems:
 class TestConditionalItems:
     """Verify conditional / partial items."""
 
+    def test_vi_listed_consequence(self):
+        """Item (vi) is listed as a consequence of item (v)."""
+        result = verify_item_status('(vi)')
+        assert result['status'] == 'listed-consequence'
+        assert result['proof_direction'] == 'from_v'
+
+    def test_vii_conditional_comparison(self):
+        """Item (vii) has the factorization-homology comparison package."""
+        result = verify_item_status('(vii)')
+        assert result['status'] == 'conditional'
+        assert 'detection hypothesis' in result['condition']
+
     def test_xi_conditional(self):
         """Item (xi) has status 'conditional'."""
         result = verify_item_status('(xi)')
         assert result['status'] == 'conditional'
+
+    def test_viii_one_way_consequence(self):
+        """Item (viii) is a one-way Hochschild consequence."""
+        result = verify_item_status('(viii)')
+        assert result['status'] == 'one-way-consequence'
+        assert result['proof_direction'] == 'forward_only'
 
     def test_xi_upgraded(self):
         """Item (xi) IS upgraded by Holstein-Rivera."""
@@ -216,13 +242,14 @@ class TestK11Upgrade:
         result = k11_upgrade_analysis('w3')
         assert result['p3_redundant']
 
-    def test_k11_unconditional_for_standard_landscape(self):
-        """K11 is unconditional for all standard families with (P1)+(P2)."""
+    def test_k11_perfectness_input_verified_for_standard_landscape(self):
+        """K11 perfectness input is verified for standard Koszul families."""
         for name, fam in FAMILIES.items():
             if fam.has_nondeg_form and fam.finite_weight_spaces and fam.koszul:
                 result = k11_upgrade_analysis(name)
-                assert result['k11_unconditional'], (
-                    f'K11 should be unconditional for {name}'
+                assert not result['k11_unconditional']
+                assert result['k11_perfectness_input_verified'], (
+                    f'K11 perfectness input should be verified for {name}'
                 )
 
     def test_ising_not_p3_redundant(self):
@@ -408,14 +435,14 @@ class TestProofCircuit:
     """Verify the logical circuit of the meta-theorem proof."""
 
     def test_core_circuit_complete(self):
-        """The core circuit (i)-(ii)-(iii)-(v)-(viii) is complete."""
+        """The core circuit (i)-(ii)-(iii)-(v) is complete."""
         result = verify_proof_circuit()
         assert result['core_circuit_complete']
 
-    def test_all_equivalences_proved(self):
-        """All 12 items are covered by the proof circuit."""
+    def test_all_items_covered(self):
+        """All 12 items are covered by the status circuit."""
         result = verify_proof_circuit()
-        assert result['all_equivalences_proved']
+        assert result['all_items_covered']
 
     def test_no_missing_items(self):
         """No items are missing from the proof circuit."""
@@ -534,8 +561,7 @@ class TestItemFamilyCrossChecks:
     """Verify each item against each family for consistency."""
 
     @pytest.mark.parametrize("item_num", [
-        '(i)', '(ii)', '(iii)', '(iv)', '(v)',
-        '(vi)', '(vii)', '(viii)', '(ix)', '(x)',
+        '(i)', '(ii)', '(iii)', '(iv)', '(v)', '(ix)', '(x)',
     ])
     @pytest.mark.parametrize("family", [
         'heisenberg', 'affine_sl2', 'betagamma', 'virasoro',
@@ -549,8 +575,7 @@ class TestItemFamilyCrossChecks:
         assert result['item_holds']
 
     @pytest.mark.parametrize("item_num", [
-        '(i)', '(ii)', '(iii)', '(iv)', '(v)',
-        '(vi)', '(vii)', '(viii)', '(ix)', '(x)',
+        '(i)', '(ii)', '(iii)', '(iv)', '(v)', '(ix)', '(x)',
     ])
     def test_unconditional_item_fails_for_ising(self, item_num):
         """For non-Koszul Ising, all unconditional items fail."""
@@ -571,13 +596,21 @@ class TestFullSummary:
         summary = full_rectification_summary()
         assert summary['total_items'] == 14
 
-    def test_unconditional_10(self):
+    def test_unconditional_7(self):
         summary = full_rectification_summary()
-        assert summary['unconditional'] == 10
+        assert summary['unconditional'] == 7
 
-    def test_conditional_1(self):
+    def test_listed_consequence_1(self):
         summary = full_rectification_summary()
-        assert summary['conditional'] == 1
+        assert summary['listed_consequences'] == 1
+
+    def test_conditional_2(self):
+        summary = full_rectification_summary()
+        assert summary['conditional'] == 2
+
+    def test_one_way_consequence_1(self):
+        summary = full_rectification_summary()
+        assert summary['one_way_consequences'] == 1
 
     def test_one_directional_1(self):
         summary = full_rectification_summary()

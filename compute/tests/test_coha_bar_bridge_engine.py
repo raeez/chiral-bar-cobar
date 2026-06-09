@@ -371,7 +371,8 @@ class TestYangianComparison:
     def test_coha_route_jordan(self):
         """CoHA route for Jordan quiver."""
         data = yangian_from_coha("jordan")
-        assert data["yangian"] == "Y(gl_1-hat) = affine Yangian of gl(1)"
+        assert data["yangian"] == "Y^+(gl_1-hat) = positive half of affine Yangian of gl(1)"
+        assert data["full_yangian_after_double"] == "Y(gl_1-hat) = affine Yangian of gl(1)"
         assert data["w_algebra"] == "W_{1+infty}"
 
     def test_bar_route_heisenberg(self):

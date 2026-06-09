@@ -539,8 +539,9 @@ def verify_pbw_deg2(max_weight: int = 8) -> Dict[str, bool]:
 def bp_koszul_dual_generators() -> Dict[str, Dict[str, object]]:
     """Generators of the Koszul dual BP_k^!.
 
-    For a chirally Koszul algebra A, the Koszul dual A^! is extracted from
-    bar cohomology: H^1(B(A)) = generators of A^!.
+    For a chirally Koszul algebra A, H^1(B(A)) is the degree-one piece of
+    the bar-dual coalgebra A^i. The generator space of A^! is obtained
+    only after the separate Verdier/continuous-linear dual branch.
 
     For BP_k = W_k(sl_3, f_{(2,1)}):
     - Self-transpose partition: (2,1)^t = (2,1)

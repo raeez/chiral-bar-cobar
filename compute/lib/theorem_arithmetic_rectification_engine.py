@@ -71,6 +71,626 @@ FOUR_PI_SQ = TWO_PI ** 2  # = (2*pi)^2, the universal instanton action
 UNIVERSAL_INSTANTON_ACTION = FOUR_PI_SQ
 
 
+ARITHMETIC_SHADOW_FUNCTOR_GATES: Tuple[Tuple[str, str], ...] = (
+    (
+        'theta_source_defined',
+        'The source MC element Theta_A and its shadow projections are fixed.',
+    ),
+    (
+        'arithmetic_shadow_functor_defined',
+        'The arithmetic shadow tower is defined as a functor out of Theta_A.',
+    ),
+    (
+        'moment_l_function_defined',
+        'Moment L-functions have a precise Dirichlet/Rankin-Selberg definition.',
+    ),
+    (
+        'rankin_selberg_integral_defined',
+        'The Rankin-Selberg integral and its measure/normalization are specified.',
+    ),
+    (
+        'convergence_domain_stated',
+        'The domain where the integral or Dirichlet series converges is stated.',
+    ),
+    (
+        'meromorphic_continuation_proved_where_claimed',
+        'Meromorphic continuation is proved whenever it is asserted.',
+    ),
+)
+
+
+HECKE_CPS_RAMANUJAN_GATES: Tuple[Tuple[str, str], ...] = (
+    (
+        'hecke_action_m11_defined',
+        'The Hecke action on M_{1,1} is defined.',
+    ),
+    (
+        'hecke_lift_to_gmod_defined',
+        'The lift of Hecke correspondences to the modular convolution algebra is defined.',
+    ),
+    (
+        'prime_locality_conjecture_stated',
+        'Prime-locality is stated as a precise conjecture or theorem with hypotheses.',
+    ),
+    (
+        'lattice_prime_locality_proved_when_claimed',
+        'Lattice VOA prime-locality is proved whenever it is claimed.',
+    ),
+    (
+        'non_lattice_prime_locality_hypothesis_stated',
+        'Non-lattice prime-locality is a named hypothesis, not an inherited theorem.',
+    ),
+    (
+        'cps_hypotheses_defined',
+        'The Cogdell-Piatetski-Shapiro converse-theorem hypotheses are listed.',
+    ),
+    (
+        'automorphic_representation_pi_r_defined',
+        'The automorphic representation pi_r is defined.',
+    ),
+    (
+        'gl_functoriality_hypothesis_for_r_ge_5_stated',
+        'Functoriality GL(2)->GL(r+1) is stated as a hypothesis for r >= 5.',
+    ),
+    (
+        'ramanujan_scope_respects_known_functoriality',
+        'Ramanujan is not claimed beyond known functoriality and stated hypotheses.',
+    ),
+    (
+        'kim_sarnak_bound_stated_when_unconditional',
+        'The unconditional replacement is the Kim-Sarnak bound when applicable.',
+    ),
+)
+
+
+HECKE_NEWTON_DIRICHLET_GATES: Tuple[Tuple[str, str], ...] = (
+    (
+        'hecke_newton_closure_defined',
+        'Hecke-Newton closure is defined before it is used.',
+    ),
+    (
+        'lattice_finite_hecke_span_proof_supplied',
+        'The lattice finite-Hecke-span case has its proof supplied.',
+    ),
+    (
+        'non_lattice_extension_defined_separately',
+        'The non-lattice extension is a separate definition/hypothesis lane.',
+    ),
+    (
+        'irrational_extension_defined_separately',
+        'The irrational extension is a separate definition/hypothesis lane.',
+    ),
+    (
+        'irrational_extension_marked_conditional',
+        'The irrational extension is explicitly conditional.',
+    ),
+    (
+        'dirichlet_l_functions_from_shadow_metric_defined',
+        'Dirichlet L-functions arising from the shadow metric are defined.',
+    ),
+)
+
+
+SPECTRAL_SEWING_GATES: Tuple[Tuple[str, str], ...] = (
+    (
+        'spectral_decomposition_proved',
+        'The spectral decomposition is proved, not inferred from the Dirichlet series.',
+    ),
+    (
+        'roelcke_selberg_basis_defined',
+        'The Roelcke-Selberg basis is defined before spectral expansion is used.',
+    ),
+    (
+        'chiral_partition_compatibility_proved',
+        'Compatibility with the chiral partition function is proved.',
+    ),
+    (
+        'sewing_operator_defined',
+        'The sewing operator is defined with its target space and convergence scope.',
+    ),
+    (
+        'sewing_selberg_formula_proved',
+        'The sewing-Selberg formula is proved under its stated hypotheses.',
+    ),
+)
+
+
+GENUS2_LIFT_BRIDGE_GATES: Tuple[Tuple[str, str], ...] = (
+    (
+        'saito_kurokawa_lift_defined',
+        'The Saito-Kurokawa lift is defined before genus-two bridge claims.',
+    ),
+    (
+        'genus_two_bridge_known_scope_proved',
+        'The genus-two bridge is proved only in the known scope.',
+    ),
+    (
+        'boecherer_bridge_defined',
+        'The Boecherer bridge is defined, including its central L-value input.',
+    ),
+    (
+        'critical_line_access_proved_or_conditional',
+        'Critical-line access is either proved or explicitly conditional.',
+    ),
+)
+
+
+BORCHERDS_IGUSA_MODULAR_GATES: Tuple[Tuple[str, str], ...] = (
+    (
+        'borcherds_product_delta5_defined',
+        'The Borcherds product Delta_5 is defined before its constants are used.',
+    ),
+    (
+        'c_delta_0_computed',
+        'The constant term c_Delta(0) is computed.',
+    ),
+    (
+        'kappa_bkm_identity_proved',
+        'The identity kappa_BKM = c(0)/2 is proved in the stated scope.',
+    ),
+    (
+        'chl_scope_stated',
+        'CHL scope is restricted to N in {1,2,3,4,6}.',
+    ),
+    (
+        'chl_constants_not_transferred_to_k3_mukai',
+        'CHL constants are not transferred to K3 Mukai K^kappa.',
+    ),
+    (
+        'igusa_phi10_defined',
+        'The Igusa cusp form Phi_10 is defined before use.',
+    ),
+    (
+        'associator_cocycle_appearance_proved_when_claimed',
+        'Any claimed appearance in an associator cocycle is proved.',
+    ),
+    (
+        'eta24_quotient_defined_when_used',
+        'The eta^24 quotient is defined whenever it is used.',
+    ),
+    (
+        'modular_weight_stated',
+        'The modular weight is stated.',
+    ),
+    (
+        'transformation_law_proved',
+        'The transformation law is proved.',
+    ),
+    (
+        'fricke_ldp_defined',
+        'The Fricke LDP is defined.',
+    ),
+    (
+        'subleading_correction_proved_at_each_node',
+        'The sub-leading correction is proved at each node.',
+    ),
+    (
+        'shimura_waldspurger_conversion_defined',
+        'The Shimura-Waldspurger conversion is defined.',
+    ),
+    (
+        'weights_7_9_11_stated',
+        'The weights k+1 in {7,9,11} are stated.',
+    ),
+    (
+        'conversion_proved_or_precisely_cited',
+        'The conversion is proved or cited by precise theorem.',
+    ),
+)
+
+
+BRACKET_GRT_SPINE_GATES: Tuple[Tuple[str, str], ...] = (
+    (
+        'yetter_drinfeld_schauenburg_bracket_defined',
+        'The Yetter-Drinfeld/Schauenburg bracket is defined before use.',
+    ),
+    (
+        'delta_n_computed_for_claimed_n',
+        'The claimed delta(n) values are computed.',
+    ),
+    (
+        'arithmetic_bracket_not_mixed_with_bar_without_map',
+        'Arithmetic brackets are not mixed with the bar differential without a map.',
+    ),
+    (
+        'grt_action_on_k3_bkm_defined_when_used',
+        'The GRT action on K3-BKM is defined whenever it is used.',
+    ),
+    (
+        'grt_transitivity_proved_or_conjectural',
+        'GRT transitivity is either proved or explicitly conjectural.',
+    ),
+    (
+        'arithmetic_beyond_theorem_spine_unless_needed',
+        'Arithmetic consequences sit beyond the theorem spine unless needed by the algebra.',
+    ),
+)
+
+
+def _gate_report(
+    gates: Tuple[Tuple[str, str], ...],
+    satisfied: Dict[str, bool],
+) -> Dict[str, object]:
+    """Return a normalized report for arithmetic theorem-scope gates."""
+    missing = [name for name, _ in gates if not satisfied.get(name, False)]
+    return {
+        'gates': {name: description for name, description in gates},
+        'satisfied': {name: bool(satisfied.get(name, False)) for name, _ in gates},
+        'missing': missing,
+        'all_gates_satisfied': len(missing) == 0,
+    }
+
+
+def arithmetic_shadow_functor_scope(
+    theta_source_defined: bool = False,
+    arithmetic_shadow_functor_defined: bool = False,
+    moment_l_function_defined: bool = False,
+    rankin_selberg_integral_defined: bool = False,
+    convergence_domain_stated: bool = False,
+    meromorphic_continuation_claimed: bool = False,
+    meromorphic_continuation_proved: bool = False,
+) -> Dict[str, object]:
+    """Gate the arithmetic shadow tower and moment-L-function claims."""
+    continuation_ok = (
+        not meromorphic_continuation_claimed
+        or meromorphic_continuation_proved
+    )
+    satisfied = {
+        'theta_source_defined': theta_source_defined,
+        'arithmetic_shadow_functor_defined': arithmetic_shadow_functor_defined,
+        'moment_l_function_defined': moment_l_function_defined,
+        'rankin_selberg_integral_defined': rankin_selberg_integral_defined,
+        'convergence_domain_stated': convergence_domain_stated,
+        'meromorphic_continuation_proved_where_claimed': continuation_ok,
+    }
+    report = _gate_report(ARITHMETIC_SHADOW_FUNCTOR_GATES, satisfied)
+    return {
+        **report,
+        'moment_l_function_claim_allowed': (
+            moment_l_function_defined
+            and rankin_selberg_integral_defined
+            and convergence_domain_stated
+        ),
+        'meromorphic_continuation_claim_allowed': continuation_ok,
+        'arithmetic_shadow_functor_theorem_allowed': report['all_gates_satisfied'],
+        'status': 'arithmetic_shadow_scope' if report['all_gates_satisfied'] else 'blocked',
+    }
+
+
+def hecke_cps_ramanujan_scope(
+    hecke_action_m11_defined: bool = False,
+    hecke_lift_to_gmod_defined: bool = False,
+    prime_locality_conjecture_stated: bool = False,
+    lattice_prime_locality_claimed: bool = False,
+    lattice_prime_locality_proved: bool = False,
+    non_lattice_prime_locality_hypothesis_stated: bool = False,
+    cps_hypotheses_defined: bool = False,
+    automorphic_representation_pi_r_defined: bool = False,
+    gl_functoriality_hypothesis_for_r_ge_5_stated: bool = False,
+    ramanujan_scope_respects_known_functoriality: bool = False,
+    kim_sarnak_bound_stated_when_unconditional: bool = False,
+) -> Dict[str, object]:
+    """Gate Hecke lifts, CPS input, and Ramanujan claims."""
+    lattice_claim_ok = (
+        not lattice_prime_locality_claimed
+        or lattice_prime_locality_proved
+    )
+    satisfied = {
+        'hecke_action_m11_defined': hecke_action_m11_defined,
+        'hecke_lift_to_gmod_defined': hecke_lift_to_gmod_defined,
+        'prime_locality_conjecture_stated': prime_locality_conjecture_stated,
+        'lattice_prime_locality_proved_when_claimed': lattice_claim_ok,
+        'non_lattice_prime_locality_hypothesis_stated': (
+            non_lattice_prime_locality_hypothesis_stated
+        ),
+        'cps_hypotheses_defined': cps_hypotheses_defined,
+        'automorphic_representation_pi_r_defined': automorphic_representation_pi_r_defined,
+        'gl_functoriality_hypothesis_for_r_ge_5_stated': (
+            gl_functoriality_hypothesis_for_r_ge_5_stated
+        ),
+        'ramanujan_scope_respects_known_functoriality': (
+            ramanujan_scope_respects_known_functoriality
+        ),
+        'kim_sarnak_bound_stated_when_unconditional': (
+            kim_sarnak_bound_stated_when_unconditional
+        ),
+    }
+    report = _gate_report(HECKE_CPS_RAMANUJAN_GATES, satisfied)
+    return {
+        **report,
+        'hecke_lift_claim_allowed': hecke_action_m11_defined and hecke_lift_to_gmod_defined,
+        'prime_locality_theorem_allowed': (
+            prime_locality_conjecture_stated
+            and lattice_claim_ok
+            and non_lattice_prime_locality_hypothesis_stated
+        ),
+        'ramanujan_comparison_claim_allowed': report['all_gates_satisfied'],
+        'unconditional_ramanujan_claim_allowed': False,
+        'kim_sarnak_unconditional_bound_claim_allowed': (
+            kim_sarnak_bound_stated_when_unconditional
+        ),
+        'ramanujan_beyond_known_functoriality_allowed': False,
+        'status': 'hecke_cps_ramanujan_scope' if report['all_gates_satisfied'] else 'blocked',
+    }
+
+
+def hecke_newton_dirichlet_scope(
+    hecke_newton_closure_defined: bool = False,
+    lattice_finite_hecke_span_proof_supplied: bool = False,
+    non_lattice_extension_defined_separately: bool = False,
+    irrational_extension_defined_separately: bool = False,
+    irrational_extension_marked_conditional: bool = False,
+    dirichlet_l_functions_from_shadow_metric_defined: bool = False,
+) -> Dict[str, object]:
+    """Gate Hecke-Newton closure and Dirichlet L-functions from shadow metrics."""
+    satisfied = {
+        'hecke_newton_closure_defined': hecke_newton_closure_defined,
+        'lattice_finite_hecke_span_proof_supplied': (
+            lattice_finite_hecke_span_proof_supplied
+        ),
+        'non_lattice_extension_defined_separately': (
+            non_lattice_extension_defined_separately
+        ),
+        'irrational_extension_defined_separately': (
+            irrational_extension_defined_separately
+        ),
+        'irrational_extension_marked_conditional': irrational_extension_marked_conditional,
+        'dirichlet_l_functions_from_shadow_metric_defined': (
+            dirichlet_l_functions_from_shadow_metric_defined
+        ),
+    }
+    report = _gate_report(HECKE_NEWTON_DIRICHLET_GATES, satisfied)
+    return {
+        **report,
+        'lattice_hecke_newton_theorem_allowed': (
+            hecke_newton_closure_defined
+            and lattice_finite_hecke_span_proof_supplied
+        ),
+        'non_lattice_extension_theorem_allowed': False,
+        'irrational_extension_theorem_allowed': False,
+        'dirichlet_shadow_metric_claim_allowed': (
+            dirichlet_l_functions_from_shadow_metric_defined
+        ),
+        'status': 'hecke_newton_dirichlet_scope' if report['all_gates_satisfied'] else 'blocked',
+    }
+
+
+def arithmetic_modular_obligation_scope(
+    shadow: Optional[Dict[str, bool]] = None,
+    hecke: Optional[Dict[str, bool]] = None,
+    hecke_newton: Optional[Dict[str, bool]] = None,
+) -> Dict[str, object]:
+    """Aggregate PDF obligations 851--870 into one arithmetic scope report."""
+    shadow_report = arithmetic_shadow_functor_scope(**(shadow or {}))
+    hecke_report = hecke_cps_ramanujan_scope(**(hecke or {}))
+    hecke_newton_report = hecke_newton_dirichlet_scope(**(hecke_newton or {}))
+    reports = {
+        'shadow_functor': shadow_report,
+        'hecke_cps_ramanujan': hecke_report,
+        'hecke_newton_dirichlet': hecke_newton_report,
+    }
+    return {
+        'reports': reports,
+        'all_gates_satisfied': all(
+            report['all_gates_satisfied'] for report in reports.values()
+        ),
+        'blocked_components': [
+            name for name, report in reports.items()
+            if not report['all_gates_satisfied']
+        ],
+    }
+
+
+def spectral_sewing_scope(
+    spectral_decomposition_proved: bool = False,
+    roelcke_selberg_basis_defined: bool = False,
+    chiral_partition_compatibility_proved: bool = False,
+    sewing_operator_defined: bool = False,
+    sewing_selberg_formula_proved: bool = False,
+) -> Dict[str, object]:
+    """Gate spectral decomposition and sewing-Selberg theorem language."""
+    satisfied = {
+        'spectral_decomposition_proved': spectral_decomposition_proved,
+        'roelcke_selberg_basis_defined': roelcke_selberg_basis_defined,
+        'chiral_partition_compatibility_proved': chiral_partition_compatibility_proved,
+        'sewing_operator_defined': sewing_operator_defined,
+        'sewing_selberg_formula_proved': sewing_selberg_formula_proved,
+    }
+    report = _gate_report(SPECTRAL_SEWING_GATES, satisfied)
+    return {
+        **report,
+        'spectral_decomposition_theorem_allowed': report['all_gates_satisfied'],
+        'sewing_selberg_theorem_allowed': (
+            sewing_operator_defined and sewing_selberg_formula_proved
+        ),
+        'status': 'spectral_sewing_scope' if report['all_gates_satisfied'] else 'blocked',
+    }
+
+
+def genus2_lift_bridge_scope(
+    saito_kurokawa_lift_defined: bool = False,
+    genus_two_bridge_known_scope_proved: bool = False,
+    boecherer_bridge_defined: bool = False,
+    critical_line_access_proved: bool = False,
+    critical_line_access_marked_conditional: bool = False,
+) -> Dict[str, object]:
+    """Gate Saito-Kurokawa/Boecherer bridge and critical-line claims."""
+    critical_ok = critical_line_access_proved or critical_line_access_marked_conditional
+    satisfied = {
+        'saito_kurokawa_lift_defined': saito_kurokawa_lift_defined,
+        'genus_two_bridge_known_scope_proved': genus_two_bridge_known_scope_proved,
+        'boecherer_bridge_defined': boecherer_bridge_defined,
+        'critical_line_access_proved_or_conditional': critical_ok,
+    }
+    report = _gate_report(GENUS2_LIFT_BRIDGE_GATES, satisfied)
+    return {
+        **report,
+        'genus_two_bridge_theorem_allowed': (
+            saito_kurokawa_lift_defined
+            and genus_two_bridge_known_scope_proved
+            and boecherer_bridge_defined
+        ),
+        'critical_line_access_theorem_allowed': critical_line_access_proved,
+        'critical_line_access_conditional_allowed': (
+            critical_line_access_marked_conditional and not critical_line_access_proved
+        ),
+        'status': 'genus2_lift_bridge_scope' if report['all_gates_satisfied'] else 'blocked',
+    }
+
+
+def borcherds_igusa_modular_scope(
+    borcherds_product_delta5_defined: bool = False,
+    c_delta_0_computed: bool = False,
+    kappa_bkm_identity_proved: bool = False,
+    chl_scope_stated: bool = False,
+    chl_constants_not_transferred_to_k3_mukai: bool = False,
+    igusa_phi10_defined: bool = False,
+    associator_cocycle_appearance_claimed: bool = False,
+    associator_cocycle_appearance_proved: bool = False,
+    eta24_quotient_used: bool = False,
+    eta24_quotient_defined: bool = False,
+    modular_weight_stated: bool = False,
+    transformation_law_proved: bool = False,
+    fricke_ldp_defined: bool = False,
+    subleading_correction_proved_at_each_node: bool = False,
+    shimura_waldspurger_conversion_defined: bool = False,
+    weights_7_9_11_stated: bool = False,
+    conversion_proved_or_precisely_cited: bool = False,
+) -> Dict[str, object]:
+    """Gate Borcherds, Igusa, Fricke, and Shimura-Waldspurger claims."""
+    associator_ok = (
+        not associator_cocycle_appearance_claimed
+        or associator_cocycle_appearance_proved
+    )
+    eta_ok = not eta24_quotient_used or eta24_quotient_defined
+    satisfied = {
+        'borcherds_product_delta5_defined': borcherds_product_delta5_defined,
+        'c_delta_0_computed': c_delta_0_computed,
+        'kappa_bkm_identity_proved': kappa_bkm_identity_proved,
+        'chl_scope_stated': chl_scope_stated,
+        'chl_constants_not_transferred_to_k3_mukai': (
+            chl_constants_not_transferred_to_k3_mukai
+        ),
+        'igusa_phi10_defined': igusa_phi10_defined,
+        'associator_cocycle_appearance_proved_when_claimed': associator_ok,
+        'eta24_quotient_defined_when_used': eta_ok,
+        'modular_weight_stated': modular_weight_stated,
+        'transformation_law_proved': transformation_law_proved,
+        'fricke_ldp_defined': fricke_ldp_defined,
+        'subleading_correction_proved_at_each_node': (
+            subleading_correction_proved_at_each_node
+        ),
+        'shimura_waldspurger_conversion_defined': shimura_waldspurger_conversion_defined,
+        'weights_7_9_11_stated': weights_7_9_11_stated,
+        'conversion_proved_or_precisely_cited': conversion_proved_or_precisely_cited,
+    }
+    report = _gate_report(BORCHERDS_IGUSA_MODULAR_GATES, satisfied)
+    return {
+        **report,
+        'kappa_bkm_theorem_allowed': (
+            borcherds_product_delta5_defined
+            and c_delta_0_computed
+            and kappa_bkm_identity_proved
+        ),
+        'chl_to_k3_mukai_transfer_allowed': False,
+        'associator_cocycle_claim_allowed': associator_ok,
+        'shimura_waldspurger_claim_allowed': (
+            shimura_waldspurger_conversion_defined
+            and weights_7_9_11_stated
+            and conversion_proved_or_precisely_cited
+        ),
+        'status': 'borcherds_igusa_modular_scope' if report['all_gates_satisfied'] else 'blocked',
+    }
+
+
+def bracket_grt_theorem_spine_scope(
+    yetter_drinfeld_schauenburg_bracket_defined: bool = False,
+    delta_n_computed_for_claimed_n: bool = False,
+    arithmetic_bracket_mixed_with_bar_differential: bool = False,
+    arithmetic_bracket_to_bar_map_defined: bool = False,
+    grt_action_on_k3_bkm_used: bool = False,
+    grt_action_on_k3_bkm_defined: bool = False,
+    grt_transitivity_proved: bool = False,
+    grt_transitivity_marked_conjectural: bool = False,
+    arithmetic_consequence_needed_for_algebraic_claim: bool = False,
+    arithmetic_moved_beyond_theorem_spine: bool = False,
+) -> Dict[str, object]:
+    """Gate arithmetic bracket/GRT claims and theorem-spine placement."""
+    bracket_ok = (
+        not arithmetic_bracket_mixed_with_bar_differential
+        or arithmetic_bracket_to_bar_map_defined
+    )
+    grt_action_ok = not grt_action_on_k3_bkm_used or grt_action_on_k3_bkm_defined
+    grt_transitivity_ok = (
+        not grt_action_on_k3_bkm_used
+        or grt_transitivity_proved
+        or grt_transitivity_marked_conjectural
+    )
+    spine_ok = (
+        arithmetic_moved_beyond_theorem_spine
+        or arithmetic_consequence_needed_for_algebraic_claim
+    )
+    satisfied = {
+        'yetter_drinfeld_schauenburg_bracket_defined': (
+            yetter_drinfeld_schauenburg_bracket_defined
+        ),
+        'delta_n_computed_for_claimed_n': delta_n_computed_for_claimed_n,
+        'arithmetic_bracket_not_mixed_with_bar_without_map': bracket_ok,
+        'grt_action_on_k3_bkm_defined_when_used': grt_action_ok,
+        'grt_transitivity_proved_or_conjectural': grt_transitivity_ok,
+        'arithmetic_beyond_theorem_spine_unless_needed': spine_ok,
+    }
+    report = _gate_report(BRACKET_GRT_SPINE_GATES, satisfied)
+    return {
+        **report,
+        'arithmetic_bracket_bar_differential_claim_allowed': bracket_ok,
+        'grt_transitivity_theorem_allowed': (
+            grt_action_on_k3_bkm_used
+            and grt_action_on_k3_bkm_defined
+            and grt_transitivity_proved
+        ),
+        'grt_transitivity_conjectural_allowed': (
+            grt_action_on_k3_bkm_used
+            and grt_action_on_k3_bkm_defined
+            and grt_transitivity_marked_conjectural
+            and not grt_transitivity_proved
+        ),
+        'arithmetic_in_theorem_spine_allowed': (
+            arithmetic_consequence_needed_for_algebraic_claim
+        ),
+        'status': 'bracket_grt_spine_scope' if report['all_gates_satisfied'] else 'blocked',
+    }
+
+
+def arithmetic_modular_tail_scope(
+    spectral: Optional[Dict[str, bool]] = None,
+    genus2: Optional[Dict[str, bool]] = None,
+    borcherds: Optional[Dict[str, bool]] = None,
+    bracket_grt: Optional[Dict[str, bool]] = None,
+) -> Dict[str, object]:
+    """Aggregate PDF obligations 871--900 into one arithmetic tail report."""
+    spectral_report = spectral_sewing_scope(**(spectral or {}))
+    genus2_report = genus2_lift_bridge_scope(**(genus2 or {}))
+    borcherds_report = borcherds_igusa_modular_scope(**(borcherds or {}))
+    bracket_grt_report = bracket_grt_theorem_spine_scope(**(bracket_grt or {}))
+    reports = {
+        'spectral_sewing': spectral_report,
+        'genus2_lift_bridge': genus2_report,
+        'borcherds_igusa_modular': borcherds_report,
+        'bracket_grt_spine': bracket_grt_report,
+    }
+    return {
+        'reports': reports,
+        'all_gates_satisfied': all(
+            report['all_gates_satisfied'] for report in reports.values()
+        ),
+        'blocked_components': [
+            name for name, report in reports.items()
+            if not report['all_gates_satisfied']
+        ],
+    }
+
+
 # =====================================================================
 # Section 1: Standard algebra families
 # =====================================================================

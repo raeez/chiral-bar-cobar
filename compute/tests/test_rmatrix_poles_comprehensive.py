@@ -184,7 +184,7 @@ class TestHeisenbergPoleShift:
         assert r_poles[1] == kappa
 
     def test_rmatrix_coefficient_level_k(self):
-        """At level k, r(z) = k/z."""
+        """At level k, r(z) = k*Omega_H/z (rank-one coeff k/z)."""
         for k in [Fraction(1), Fraction(2), Fraction(1, 2), Fraction(7, 3)]:
             r_poles = ope_to_rmatrix_poles(heisenberg_ope_poles(k))
             assert r_poles[1] == k
@@ -722,7 +722,7 @@ class TestUnitarity:
 
     def test_heisenberg_skew_symmetry(self):
         """For Heisenberg, r(z) = kappa/z is skew: r(z) + r(-z) = 0."""
-        # r(z) = k/z.  r(-z) = k/(-z) = -k/z.  Sum = 0.
+        # r(z) = k*Omega_H/z (rank-one coeff k/z).  r(-z) = k/(-z) = -k/z.  Sum = 0.
         kappa = Fraction(1)
         # r(z) at z and -z:
         # The function f(z) = kappa/z is odd: f(-z) = -f(z).

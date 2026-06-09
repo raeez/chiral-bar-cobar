@@ -36,9 +36,10 @@ dual to the bracket.
 GROUND TRUTH (from the manuscript):
 dim V_h = p_{>=2}(h): 1, 1, 2, 2, 4, 4, 7, 8, 12, 14, 21, ...
 
-For the Koszul dual, H^1(B(Vir)) should give dim(A^!)_w.
-These are the dimensions of the exterior algebra Lambda(Vir_-^*)
-modulo the image of the CE differential.
+For the bar-dual coalgebra, H^1(B(Vir)) gives dim(A^i)_w; after the
+finite/completed dual branch, the same number is dim(A^!)_w.
+These are the dimensions of the exterior algebra Lambda(Vir_-^*) modulo
+the image of the CE differential.
 
 GRADING:
 - Cohomological grading, |d| = +1.

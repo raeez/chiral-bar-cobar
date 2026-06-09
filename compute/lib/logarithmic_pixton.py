@@ -26,7 +26,9 @@ the R-matrix to transport r-spin relations to the target CohFT.
 Without the R-matrix identification, the transport breaks.
 
 WHAT SURVIVES:
-  (a) MC relations lie in I_Pixton (since D^2 = 0 is unconditional).
+  (a) MC relations lie in I_Pixton from the fixed convolution-level
+      D^2 = 0 theorem.  This does not assert the relative ambient
+      log-FM six-component square-zero theorem without LF.
   (b) The shadow CohFT of a logarithmic algebra still satisfies
       equivariance (CohFT-1) and splitting (CohFT-2).
   (c) At genus 2: the MC relation is DIRECTLY verifiable as a
@@ -53,7 +55,7 @@ THE NON-SEMISIMPLE LANDSCAPE:
   (II) Symplectic fermions SF: c = -2.
        - The simplest logarithmic VOA (before orbifolding to W(2)).
        - L_0 has Jordan blocks on the vacuum module.
-       - Bar complex: equivariant bar B(betagamma)^{Z_2} detects
+       - Bar complex: equivariant bar B(SF)^{Z_2} detects
          non-semisimplicity (rem:symplectic-logarithmic).
        - Koszulness of W(2) quotient: OPEN.
 
@@ -186,9 +188,10 @@ def triplet_central_charge_symbolic() -> Any:
 def symplectic_fermion_central_charge() -> Rational:
     """Central charge of symplectic fermions: c = -2.
 
-    Symplectic fermions = free field realization of W(2).
-    The parent beta-gamma system has c = -2 (lambda = 1/2).
-    The Z_2 orbifold gives the triplet W(2).
+    Symplectic fermions are the c=-2 free odd first-order system
+    in the bc_1 lane.  They are not the bosonic beta-gamma
+    lambda=1/2 symplectic-boson point, which has c=-1.  The
+    Z_2 fixed-point/orbifold algebra gives the triplet W(2).
     """
     return Rational(-2)
 
@@ -290,14 +293,15 @@ def triplet_shadow_data(p: int) -> ShadowData:
 
 
 def symplectic_fermion_shadow_data() -> ShadowData:
-    r"""Shadow data for symplectic fermions (= W(2) = betagamma^{Z_2}).
+    r"""Shadow data for symplectic fermions and the W(2) fixed-point line.
 
     c = -2, kappa = -1.
-    This is the same as the beta-gamma system at lambda = 1/2.
+    This is the same central charge as the W(2) triplet, not the
+    bosonic beta-gamma system at lambda = 1/2.
 
     The symplectic fermion has TWO strong generators:
       - T (weight 2, the stress tensor)
-      - chi^+ chi^- (weight 2, the symplectic boson bilinear)
+      - chi^+ chi^- (weight 2, the symplectic-fermion bilinear)
     But on the Virasoro primary line, kappa = c/2 = -1.
 
     The shadow data on the T-line is the SAME as Virasoro at c = -2
@@ -367,10 +371,10 @@ def verify_kappa_triplet(p: int) -> KappaVerification:
               The leading q-expansion: Z = q^{c/24} * (1 + ...).
               F_1 = -log Z = kappa/24 * (2pi i tau) + ...
               => kappa = c/2 = -1 (from the q^{c/24} prefactor).
-      Path 3: From beta-gamma at c = -2:
-              kappa(betagamma) = c/2 = -1 (Virasoro formula).
-              The Z_2 orbifold does NOT change kappa (AP20: kappa is
-              intrinsic to the algebra, and the Virasoro OPE is preserved).
+      Path 3: From the symplectic-fermion/bc_1 parent at c = -2:
+              kappa(SF) = c/2 = -1 on the Virasoro line.
+              The Z_2 fixed-point algebra preserves the Virasoro vector,
+              but this does not identify W(2) with a beta-gamma orbifold.
     """
     c_val = triplet_central_charge(p)
 
@@ -1060,7 +1064,7 @@ def logarithmic_pixton_summary() -> Dict[str, Any]:
 
     WHAT IS PROVED:
       (P1) MC relations of non-semisimple algebras lie in I_Pixton
-           (unconditional, from D^2 = 0).
+           (unconditional from fixed convolution-level D^2 = 0).
       (P2) The genus-2 MC relation for W(2) is a nonzero element of
            I_Pixton (explicit computation, Section 8).
       (P3) The critical discriminant of W(p) is negative for all p >= 2

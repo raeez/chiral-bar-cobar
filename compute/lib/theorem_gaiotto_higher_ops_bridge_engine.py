@@ -539,6 +539,8 @@ class FormalityComparison:
     The shadow depth classification is STRICTLY FINER than GKW:
     phi: {G,L,C,M} -> {formal, non-formal} with phi(G)=formal, phi(L,C,M)=non-formal
     is surjective but NOT injective (|{L,C,M}| = 3 > 1).
+    AP126: the d'=1 formality failure is a higher-operation feature,
+    not a defect in Koszulness or in the construction.
     """
     family: str
     d_prime: int
@@ -578,7 +580,11 @@ def formality_comparison(family: str, d_prime: int = 1) -> FormalityComparison:
     elif sc == 'G':
         extension = 'Our class G is formal WITHIN d\'=1: invisible to GKW'
     else:
-        extension = f'GKW says "non-formal"; we say class {sc} with r_max={rmax}'
+        extension = (
+            f'GKW says "non-formal"; we refine this to class {sc} with '
+            f'r_max={rmax}. The non-formality is the retained '
+            f'higher-operation feature, not a defect.'
+        )
 
     return FormalityComparison(
         family=family,
@@ -605,13 +611,14 @@ def feynman_d_squared_analysis(family: str) -> Dict[str, Any]:
     3. Higher operations satisfy Stasheff relations (proven geometrically)
     4. Therefore D^2 = 0 as an operator on the bar complex
 
-    This is an ALTERNATIVE PROOF to our two routes:
+    This is a comparison with the Vol I square-zero routes:
     Route A (Vol I): D^2 = 0 from partial^2 = 0 on M-bar_{g,n} (convolution level)
-    Route B (Vol I): D^2 = 0 from Mok's log FM normal-crossings (ambient level)
+    Route B (Vol I): D^2 = 0 from Mok's log FM normal-crossings plus the
+      signed residue-pushforward package (ambient level, conditional)
     Route C (GKW):   D^2 = 0 from BRST nilpotency + Feynman regularization
 
-    Route C is INDEPENDENT of Routes A and B: it uses the physics
-    of BRST symmetry rather than the geometry of moduli spaces.
+    Route C is independent of the Vol I geometric routes at genus 0:
+    it uses BRST symmetry rather than the geometry of moduli spaces.
     """
     routes = {
         'route_A': {
@@ -624,9 +631,20 @@ def feynman_d_squared_analysis(family: str) -> Dict[str, Any]:
         'route_B': {
             'name': 'Ambient D^2=0',
             'source': 'Vol I, thm:ambient-d-squared-zero',
-            'method': 'Mok log FM normal-crossings [Mok25, Thm 3.3.1]',
+            'method': (
+                'Mok log FM normal-crossings [Mok25, Thm 3.3.1] plus '
+                'signed residue-pushforward/coherence package'
+            ),
             'scope': 'All genera (with planted-forest corrections)',
-            'status': 'PROVED',
+            'status': 'CONDITIONAL',
+            'requires': [
+                'relative log-FM normal-crossings geometry',
+                'Gysin residue maps',
+                'determinant-line signs',
+                'finite-stabilizer normalisations',
+                'proper pushforwards',
+                'homotopy-coherent codimension-two comparisons',
+            ],
         },
         'route_C': {
             'name': 'BRST/Feynman D^2=0',
@@ -645,8 +663,10 @@ def feynman_d_squared_analysis(family: str) -> Dict[str, Any]:
         'notes': (
             'Route C from GKW gives an independent genus-0 proof of D^2=0 '
             'via BRST nilpotency. It does NOT extend to higher genera without '
-            'the non-perturbative input from Routes A/B. '
-            'The three routes are genuinely independent verification paths.'
+            'the non-perturbative input from Route A and the conditional '
+            'relative-log ambient package in Route B. The routes are '
+            'status-split: Route A is proved, Route B is conditional, and '
+            'Route C is proved at genus 0 only.'
         ),
     }
 
@@ -975,6 +995,7 @@ def gkw_implies_koszulness_equivalence(d_prime: int) -> Dict[str, Any]:
             'notes': (
                 'd\'=1: GKW says "generically non-formal" but says nothing about Koszulness. '
                 'Our 12 equivalences classify exactly which d\'=1 theories are Koszul. '
-                'ALL standard families (G/L/C/M) are Koszul despite non-formality.'
+                'ALL standard families (G/L/C/M) are Koszul; non-formality is the '
+                'higher-operation feature, not a defect.'
             ),
         }

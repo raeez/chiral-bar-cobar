@@ -123,6 +123,16 @@ from compute.lib.yangian_rtt_exceptional import (
 )
 
 
+EXCEPTIONAL_RTT_FINITE_WINDOW_HYPOTHESES: Tuple[str, ...] = (
+    "chosen exceptional type and finite representation window",
+    "type-specific tensor-product decomposition for V tensor V",
+    "quadratic Casimir eigenvalues on every component",
+    "spectral R-matrix check in the chosen evaluation representation",
+    "separate Drinfeld/J-presentation or RTT presentation theorem",
+    "PBW/flatness comparison for the generated exceptional Yangian window",
+)
+
+
 # =====================================================================
 # 1. Exceptional Lie algebra data
 # =====================================================================
@@ -1104,18 +1114,21 @@ def quantum_r_matrix_expansion(
 # =====================================================================
 
 def rtt_spectral_check(name: str, u: complex, v: complex) -> Dict:
-    """Verify RTT relation via spectral decomposition.
+    """Finite-window spectral check for an exceptional Yangian-facing R-matrix.
 
     The RTT relation R_{12}(u-v) T_1(u) T_2(v) = T_2(v) T_1(u) R_{12}(u-v)
     in the evaluation representation T(u) = R(u-a) becomes:
 
         R_{12}(u-v) R_{13}(u-a) R_{23}(v-a) = R_{23}(v-a) R_{13}(u-a) R_{12}(u-v)
 
-    which is EXACTLY the Yang-Baxter equation. So the RTT relation is
-    equivalent to YBE in the evaluation representation.
+    which is the Yang-Baxter equation in this evaluation window.  This is
+    not a full RTT presentation theorem for the exceptional Yangian.
 
     For the SPECTRAL R-matrix, this reduces to commutativity of multiplication,
-    which is automatic.
+    which is automatic after the type-specific spectral decomposition is
+    supplied.  The missing stronger datum is a Drinfeld/J-presentation or
+    RTT presentation theorem with PBW/flatness control for the generated
+    exceptional window.
     """
     try:
         sd = SpectralDecomposition(name)
@@ -1125,7 +1138,12 @@ def rtt_spectral_check(name: str, u: complex, v: complex) -> Dict:
             'u': u,
             'v': v,
             'rtt_passes': ybe['passes'],
-            'note': 'RTT = YBE in evaluation representation (spectral check)',
+            'finite_window_ybe_passes': ybe['passes'],
+            'full_exceptional_rtt_presentation_proved': False,
+            'an_rtt_extrapolation': False,
+            'rtt_implication_status': 'finite_window_spectral_only',
+            'missing_hypotheses': EXCEPTIONAL_RTT_FINITE_WINDOW_HYPOTHESES[4:],
+            'note': 'finite evaluation-window YBE check, not a full RTT presentation',
         }
     except Exception as e:
         return {
@@ -1133,8 +1151,53 @@ def rtt_spectral_check(name: str, u: complex, v: complex) -> Dict:
             'u': u,
             'v': v,
             'rtt_passes': None,
+            'finite_window_ybe_passes': None,
+            'full_exceptional_rtt_presentation_proved': False,
+            'an_rtt_extrapolation': False,
+            'rtt_implication_status': 'failed_to_construct_finite_window',
+            'missing_hypotheses': EXCEPTIONAL_RTT_FINITE_WINDOW_HYPOTHESES,
             'error': str(e),
         }
+
+
+def exceptional_rtt_scope_report(name: str) -> Dict:
+    """Type-by-type finite-window status for exceptional Yangian RTT claims."""
+    if name not in ("G2", "F4", "E6", "E7", "E8"):
+        raise ValueError(f"unknown exceptional type {name!r}")
+
+    root_data = EXCEPTIONAL_DATA[name]
+    report = {
+        'type': name,
+        'rank': len(root_data[5]),
+        'dim_g': root_data[4],
+        'h_vee': root_data[3],
+        'an_rtt_extrapolation': False,
+        'full_exceptional_rtt_presentation_proved': False,
+        'finite_window_hypotheses': EXCEPTIONAL_RTT_FINITE_WINDOW_HYPOTHESES,
+    }
+
+    if name == "F4":
+        report.update({
+            'finite_window_status': 'root_data_only',
+            'spectral_decomposition_status': 'not_supplied_in_this_engine',
+            'missing_hypotheses': EXCEPTIONAL_RTT_FINITE_WINDOW_HYPOTHESES[1:],
+        })
+        return report
+
+    sd = SpectralDecomposition(name)
+    spectral = sd.spectral_summary()
+    total_dim = sum(component['dim'] for component in spectral['components'])
+    report.update({
+        'finite_window_status': 'type_specific_spectral_window',
+        'spectral_decomposition_status': 'computed',
+        'spectral_components': len(spectral['components']),
+        'component_dimensions_sum': total_dim,
+        'expected_tensor_square_dim': spectral['fund_dim'] ** 2,
+        'component_dimension_check': total_dim == spectral['fund_dim'] ** 2,
+        'r_matrix_eigenvalues': classical_r_matrix_eigenvalues(name),
+        'missing_hypotheses': EXCEPTIONAL_RTT_FINITE_WINDOW_HYPOTHESES[4:],
+    })
+    return report
 
 
 # =====================================================================
@@ -1418,6 +1481,7 @@ def full_exceptional_computation() -> Dict:
             'r_matrix_eigenvalues': r_data,
             'kappa_multipath': kappa,
             'pole_structure': pole,
+            'rtt_scope': exceptional_rtt_scope_report(name),
         }
 
     # Also do E6_dual (27 x 27*)

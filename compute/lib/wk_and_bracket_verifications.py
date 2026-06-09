@@ -27,7 +27,7 @@ References:
   - Witten, Two-dimensional gravity and intersection theory on moduli space (1990)
   - Kontsevich, Intersection theory on the moduli space of curves (1992)
   - Faber, Algorithms for computing intersection numbers on moduli spaces (2007)
-  - CLAUDE.md: Shadow Postnikov tower, tautological classes tau_{g,n}(A)
+  - CLAUDE.md: shadow obstruction tower, tautological classes tau_{g,n}(A)
 """
 
 from __future__ import annotations
