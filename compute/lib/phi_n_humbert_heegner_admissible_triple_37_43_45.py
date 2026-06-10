@@ -284,6 +284,23 @@ def bk_padovan_twostep_consistency_check_tower() -> bool:
     return True
 
 
+def padovan_dim_via_bk_rowsum(n: int, D: Dict[Tuple[int, int], int]) -> int:
+    r"""Return $d_n$ from the BK depth row sum at weight $n + 3$ (path P2).
+
+    The depth extractor satisfies the two-step-lag diagnostic
+    $\sum_d D_{m, d} = d_{m - 3}$
+    (:func:`bk_padovan_twostep_consistency_check_tower`), so the full
+    row sum at weight $m = n + 3$ recovers $d_n$ by a path independent
+    of the recurrence.  Valid only when the supplied extraction covers
+    every depth present at weight $n + 3$: with
+    ``bk_depth_extract(60, 16)`` the first under-count is the depth-17
+    onset at weight 51, so the inversion is exact for $n + 3 \le 50$;
+    the tower targets $n \in \{37, 43, 45\}$ need weights
+    $\{40, 46, 48\}$ and sit safely inside.
+    """
+    return sum(v for (m, _depth), v in D.items() if m == n + 3)
+
+
 def bk_parity_split_check_tower() -> bool:
     """All three of {37, 43, 45} are odd; even depths must vanish."""
     D = bk_depth_extract(60, 16)

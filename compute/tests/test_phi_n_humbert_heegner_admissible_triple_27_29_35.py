@@ -16,7 +16,7 @@ SCOPE CASCADE:
 
 MULTI-PATH CROSS-VERIFICATION:
     P_1 Padovan recurrence d_n = d_{n-2} + d_{n-3} (direct).
-    P_2 BK two-step row-sum sum_d D_{n+2, d} = d_n.
+    P_2 BK row-sum lag sum_d D_{n+3, d} = d_n.
     P_3 Generating-function coefficient x / (1 - x^2 - x^3).
     P_4 Plastic-number asymptotic rounded d_n = [A rho^n].
     BK_A Symbolic geometric-series expansion.
@@ -112,9 +112,9 @@ class TestHumbertHeegnerAdmissibility:
 class TestPadovanDimensions:
     def test_padovan_values_at_triple(self):
         d = padovan_dim(46)
-        assert d[27] == 616
-        assert d[29] == 1081
-        assert d[35] == 5842
+        assert d[27] == 816
+        assert d[29] == 1432
+        assert d[35] == 7739
 
     def test_padovan_count_bulk(self):
         assert padovan_count_check_triple()
@@ -321,7 +321,7 @@ class TestInterPathCrossChecks:
     """
 
     def test_d_27_four_paths_cross_agree(self):
-        """d_{27} = 616 via recurrence matches three independent paths."""
+        """d_{27} = 816 via recurrence matches three independent paths."""
         d_P1 = padovan_dim(46)[27]
         d_P2 = padovan_dim_via_bk_rowsum(27, bk_depth_extract(40, 12))
         d_P3 = padovan_dim_via_generating_function(46)[27]
@@ -378,16 +378,16 @@ class TestInterPathCrossChecks:
         """BK row-sum identity (path 2) cross-agrees with Padovan recurrence
         (path 1) at every admissible weight.  This is a structural witness
         of the motivic-GRT_1 dimension count matching the Brown canonical
-        basis dimension two steps above.
+        basis dimension three steps above (sum_d D_{m, d} = d_{m-3}).
         """
         d_P1 = padovan_dim(46)
         D = bk_depth_extract(40, 12)
         for n in ADMISSIBLE_TRIPLE:
-            rowsum_for_n_plus_2 = sum(D.get((n + 2, k), 0) for k in range(1, 13))
-            # Cross-check: row-sum at n+2 equals d_n via two-step lag
-            assert rowsum_for_n_plus_2 == d_P1[n], (
-                f"Cross-check fails at n = {n}: row-sum @ {n+2} = "
-                f"{rowsum_for_n_plus_2}, d_{n} = {d_P1[n]}"
+            rowsum_for_n_plus_3 = sum(D.get((n + 3, k), 0) for k in range(1, 13))
+            # Cross-check: row-sum at n+3 equals d_n via the three-step lag
+            assert rowsum_for_n_plus_3 == d_P1[n], (
+                f"Cross-check fails at n = {n}: row-sum @ {n+3} = "
+                f"{rowsum_for_n_plus_3}, d_{n} = {d_P1[n]}"
             )
 
     def test_plastic_asymptotic_cross_agrees_with_recurrence(self):
@@ -448,7 +448,7 @@ class TestAggregateVerifier:
             "bk_parity_functional_equation",
             "first_depth_nine_at_27",
             "first_depth_eleven_at_33",
-            "bk_padovan_twostep_triple",
+            "bk_rowsum_lag_triple",
             "bk_parity_split_triple",
             "phi_n_leading_triple",
             "hardy_ramanujan_exact_triple",

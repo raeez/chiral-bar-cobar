@@ -171,6 +171,42 @@ def padovan_count_check_33_36() -> Dict[int, bool]:
     return {n: padovan(n) == vals[n] for n in (33, 34, 35, 36)}
 
 
+def _mat3_mul(
+    a: Tuple[Tuple[int, int, int], ...],
+    b: Tuple[Tuple[int, int, int], ...],
+) -> Tuple[Tuple[int, int, int], ...]:
+    return tuple(
+        tuple(sum(a[i][k] * b[k][j] for k in range(3)) for j in range(3))
+        for i in range(3)
+    )
+
+
+def padovan_sprint(n: int) -> int:
+    r"""Return $d_n$ via companion-matrix exponentiation (path P2).
+
+    With $M$ the companion matrix of $t^3 = t + 1$ acting on state
+    vectors $(d_k, d_{k+1}, d_{k+2})$ and Brown--Zagier seed
+    $(d_0, d_1, d_2) = (1, 0, 1)$, the first component of
+    $M^n (1, 0, 1)^T$ is $d_n$.  Binary powering touches neither the
+    memoised table of :func:`padovan` nor its linear recursion order,
+    giving an implementation-independent second path to the sprint
+    targets $(d_{33}, d_{34}, d_{35}, d_{36}) = (4410, 5842, 7739,
+    10252)$.
+    """
+    if n < 0:
+        raise ValueError(f"padovan_sprint(n) defined for n >= 0; got n = {n}")
+    m: Tuple[Tuple[int, int, int], ...] = ((0, 1, 0), (0, 0, 1), (1, 1, 0))
+    r: Tuple[Tuple[int, int, int], ...] = ((1, 0, 0), (0, 1, 0), (0, 0, 1))
+    e = n
+    while e:
+        if e & 1:
+            r = _mat3_mul(r, m)
+        m = _mat3_mul(m, m)
+        e >>= 1
+    seed = (1, 0, 1)
+    return sum(r[0][j] * seed[j] for j in range(3))
+
+
 # ---------------------------------------------------------------------------
 # 2. Broadhurst-Kreimer depth stratification D_{n, d}
 # ---------------------------------------------------------------------------

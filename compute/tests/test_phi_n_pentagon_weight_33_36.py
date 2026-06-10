@@ -2,9 +2,9 @@ r"""Tests for phi_n_pentagon_weight_33_36.
 
 Verifies:
     (A) Padovan recurrence $d_n = d_{n-2} + d_{n-3}$ delivers the sprint-
-        specified values $(d_{33}, d_{34}, d_{35}, d_{36}) = (3329, 4410,
-        5842, 7739)$ from seed $(d_{30}, d_{31}, d_{32}) = (1432, 1897,
-        2513)$.
+        specified values $(d_{33}, d_{34}, d_{35}, d_{36}) = (4410, 5842,
+        7739, 10252)$ from seed $(d_{30}, d_{31}, d_{32}) = (1897, 2513,
+        3329)$.
 
     (B) p_{24}(k) at k in {12, 13, 14, 15, 16, 17, 18} agrees between two
         independent first-principles paths (direct product of
@@ -62,11 +62,11 @@ from compute.lib.phi_n_pentagon_weight_33_36 import (
 
 class TestPadovan33To36:
     def test_sprint_values(self):
-        """Sprint-target Padovan values."""
-        assert padovan_sprint(33) == 3329
-        assert padovan_sprint(34) == 4410
-        assert padovan_sprint(35) == 5842
-        assert padovan_sprint(36) == 7739
+        """Sprint-target Padovan values d_33..d_36 via the matrix-power path."""
+        assert padovan_sprint(33) == 4410
+        assert padovan_sprint(34) == 5842
+        assert padovan_sprint(35) == 7739
+        assert padovan_sprint(36) == 10252
 
     def test_recurrence_holds(self):
         """Padovan recurrence $d_n = d_{n-2} + d_{n-3}$ verified."""
@@ -77,12 +77,12 @@ class TestPadovan33To36:
         assert checks[36] is True
 
     def test_recurrence_step_by_step(self):
-        """Step-by-step recurrence from seed (1432, 1897, 2513)."""
-        d30, d31, d32 = 1432, 1897, 2513
-        assert d30 + d31 == 3329    # d_{33} = d_{31} + d_{30}
-        assert d31 + d32 == 4410    # d_{34} = d_{32} + d_{31}
-        assert d32 + 3329 == 5842   # d_{35} = d_{33} + d_{32}
-        assert 3329 + 4410 == 7739  # d_{36} = d_{34} + d_{33}
+        """Step-by-step recurrence from seed (d_30, d_31, d_32) = (1897, 2513, 3329)."""
+        d30, d31, d32 = 1897, 2513, 3329
+        assert d31 + d30 == 4410     # d_{33} = d_{31} + d_{30}
+        assert d32 + d31 == 5842     # d_{34} = d_{32} + d_{31}
+        assert 4410 + d32 == 7739    # d_{35} = d_{33} + d_{32}
+        assert 5842 + 4410 == 10252  # d_{36} = d_{34} + d_{33}
 
 
 # ---------------------------------------------------------------------------
@@ -212,12 +212,12 @@ class TestBorcherdsDominance:
         assert float(ratios[35]) > float(ratios[34])
 
     def test_exact_ratios(self):
-        """First-principles ratio values."""
+        """First-principles ratio values p_{24}(ceil(n/2)) / d_n."""
         ratios = borcherds_over_mzv_ratio_33_36()
-        assert ratios[33] == Fraction(6_599_620_022_400, 3329)
-        assert ratios[34] == Fraction(6_599_620_022_400, 4410)
-        assert ratios[35] == Fraction(21_651_325_216_200, 5842)
-        assert ratios[36] == Fraction(21_651_325_216_200, 7739)
+        assert ratios[33] == Fraction(6_599_620_022_400, 4410)
+        assert ratios[34] == Fraction(6_599_620_022_400, 5842)
+        assert ratios[35] == Fraction(21_651_325_216_200, 7739)
+        assert ratios[36] == Fraction(21_651_325_216_200, 10252)
 
 
 # ---------------------------------------------------------------------------
@@ -296,11 +296,12 @@ class TestMultiPathPadovan:
             fpx = 3 * x**2 - 1
             x = x - fx / fpx
         rho = x
-        A = rho**2 / (2 * rho + 3)
+        A = rho**3 / (2 * rho + 3)
 
-        # Sprint Padovan values (shift 0 relative to canonical asymptotic
-        # $d_n \sim A \rho^n$ with $A = \rho^2/(2\rho+3)$).
-        sprint = {33: 3329, 34: 4410, 35: 5842, 36: 7739}
+        # Sprint Padovan values against the canonical asymptotic
+        # $d_n \sim A \rho^n$ with $A = \rho^3/(2\rho+3) = 0.41149558...$
+        # (the amplitude used by the manuscript and the 27-29-35 module).
+        sprint = {33: 4410, 34: 5842, 35: 7739, 36: 10252}
         for n in (33, 34, 35, 36):
             asymp = A * rho ** n
             rel_err = abs(asymp - sprint[n]) / sprint[n]
@@ -311,13 +312,13 @@ class TestMultiPathPadovan:
             )
 
     def test_recurrence_closure(self):
-        """Sum d_{33} + d_{34} + d_{35} + d_{36} = 21320, and
-        d_{36} = d_{34} + d_{33} = 4410 + 3329."""
-        sprint = {33: 3329, 34: 4410, 35: 5842, 36: 7739}
-        assert sum(sprint.values()) == 21320
+        """Sum d_{33} + d_{34} + d_{35} + d_{36} = 28243, and
+        d_{36} = d_{34} + d_{33} = 5842 + 4410."""
+        d32 = 3329
+        sprint = {33: 4410, 34: 5842, 35: 7739, 36: 10252}
+        assert sum(sprint.values()) == 28243
         assert sprint[36] == sprint[34] + sprint[33]
-        assert sprint[35] == sprint[33] + sprint[32] if False else True  # d32=2513
-        assert sprint[35] == 3329 + 2513
+        assert sprint[35] == sprint[33] + d32
 
 
 class TestMultiPathP24:
@@ -399,13 +400,13 @@ class TestSprintRecord:
     def test_record_values_at_n_35(self):
         """HH-admissible n = 35."""
         rec = sprint_record_33_36()
-        assert rec[35]["padovan_dim"] == 5842
+        assert rec[35]["padovan_dim"] == 7739
         assert rec[35]["p24_k"] == 21_651_325_216_200
         assert rec[35]["humbert_heegner_admissible"] is True
 
     def test_record_values_at_n_36(self):
         """Gottsche coincidence at n = 36 is GENERIC, not umbral."""
         rec = sprint_record_33_36()
-        assert rec[36]["padovan_dim"] == 7739
+        assert rec[36]["padovan_dim"] == 10252
         assert rec[36]["gottsche_coincidence_generic"] is True
         assert rec[36]["humbert_heegner_admissible"] is False

@@ -270,6 +270,22 @@ def bk_padovan_twostep_consistency_check_triple() -> bool:
     return True
 
 
+def padovan_dim_via_bk_rowsum(n: int, D: Dict[Tuple[int, int], int]) -> int:
+    r"""Return $d_n$ from the BK depth row sum at weight $n + 3$ (path P2).
+
+    The depth extractor satisfies the two-step-lag diagnostic
+    $\sum_d D_{m, d} = d_{m - 3}$
+    (:func:`bk_padovan_twostep_consistency_check_triple`), so the full
+    row sum at weight $m = n + 3$ recovers $d_n$ by a path independent
+    of the recurrence.  Valid only when the supplied extraction covers
+    every depth present at weight $n + 3$: truncation bites exactly at
+    the depth-onset weights (depth 13 enters at weight 39, so
+    ``bk_depth_extract(40, 12)`` under-counts the weight-39 row by
+    $D_{39, 13} = 36$; hence $n \le 35$ for that extraction).
+    """
+    return sum(v for (m, _depth), v in D.items() if m == n + 3)
+
+
 def bk_parity_split_check_triple() -> bool:
     """All three of {27, 29, 35} are odd; even depths must vanish."""
     D = bk_depth_extract(40, 12)

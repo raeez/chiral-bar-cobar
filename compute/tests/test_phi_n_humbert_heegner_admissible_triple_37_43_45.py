@@ -5,15 +5,15 @@ admissible triple {37, 43, 45} through multi-path cross-verification.
 
 SCOPE CASCADE (higher tower):
     n = 37: depth-9 stratum D_{37, 9} = 2023, depth-11 stratum
-            D_{37, 11} = 378; d_{37} = 10252.  TRIPLE-CONDITIONAL
+            D_{37, 11} = 378; d_{37} = 13581.  TRIPLE-CONDITIONAL
             (Zagier-Hoffman + Broadhurst-Kreimer + Brown 2017 Conj 5.3).
     n = 43: first admissible weight with D_{n, 13} > 0 (first depth-13
             onset is at n = 39, not admissible).  D_{43, 13} = 924;
-            d_{43} = 55405.  QUADRUPLE-CONDITIONAL
+            d_{43} = 73396.  QUADRUPLE-CONDITIONAL
             (triple + Broadhurst-Bailey 2010 numerical stability).
     n = 45: simultaneous depth-13 and depth-15 admissible entries:
             D_{45, 13} = 3076, D_{45, 15} = 69 (depth-15 first onset
-            coincides with admissible n = 45).  d_{45} = 97229.
+            coincides with admissible n = 45).  d_{45} = 128801.
             QUINTUPLE-CONDITIONAL (quadruple + Brown 2017 higher-depth
             generation of grt_1 at the depth-15 onset outside any
             Broadhurst-Bailey 2010 tabulated extractor).
@@ -23,7 +23,7 @@ DEEPEST load-bearing hypothesis.
 
 MULTI-PATH CROSS-VERIFICATION:
     P_1 Padovan recurrence d_n = d_{n-2} + d_{n-3} (direct).
-    P_2 BK two-step row-sum sum_d D_{n+2, d} = d_n.
+    P_2 BK row-sum lag sum_d D_{n+3, d} = d_n.
     P_3 Generating-function coefficient extraction x / (1 - x^2 - x^3).
     P_4 Plastic-number asymptotic rounded d_n = [A rho^n].
     BK_A Symbolic geometric-series expansion.
@@ -108,7 +108,7 @@ def test_admissibility_continuation():
 
 @pytest.mark.parametrize(
     "n, expected",
-    [(37, 10252), (43, 55405), (45, 97229)],
+    [(37, 13581), (43, 73396), (45, 128801)],
 )
 def test_padovan_dim_at_higher_triple(n, expected):
     d = padovan_dim(60)
@@ -271,9 +271,9 @@ def test_borcherds_mzv_ratio_tower():
     """Ratios at higher admissible triple."""
     r = borcherds_mzv_ratio_tower()
     expected_approx = {
-        37: 6.753e9,
-        43: 3.558e10,
-        45: 5.941e10,
+        37: 5.0975e9,
+        43: 2.6861e10,
+        45: 4.4847e10,
     }
     for n, v_approx in expected_approx.items():
         assert abs(r[n] - v_approx) / v_approx < 5e-3, (
@@ -295,9 +295,9 @@ def test_phi_n_leading_numerical_tower():
     vals = phi_n_leading_values_tower()
     # Reference values from module's direct computation
     expected = {
-        37: 7.449e-40,
-        43: 9.171e-49,
-        45: 8.128e-52,
+        37: 9.8672e-40,
+        43: 1.2149e-48,
+        45: 1.0767e-51,
     }
     for n, v_exp in expected.items():
         rel = abs(vals[n] - v_exp) / v_exp
