@@ -3,7 +3,12 @@
 # ============================================================================
 #
 #  Usage:
-#    make               Build everything: manuscript + working notes → out/
+#    make volume         Build the NORMATIVE volume → out/main_ordered_chiral.pdf
+#                        This is the mathematically current root.
+#    make legacy-manuscript
+#                        Build the retracted-architecture manuscript.
+#                        Reference only — see PORT_LEDGER.md.
+#    make               Build everything: normative volume + manuscript + notes
 #    make fast           Quick build for rapid iteration → out/main.pdf
 #    make release        Full release: manuscript + working notes + standalone → out/
 #    make standalone     Build standalone papers → out/
@@ -32,6 +37,7 @@
 # --- Configuration -----------------------------------------------------------
 
 MAIN      := main
+NEWVOL    := main_ordered_chiral
 TEX       := pdflatex
 TEXFLAGS  := -interaction=nonstopmode -file-line-error -synctex=0 -cnf-line='buf_size=1000000' -cnf-line='stack_size=20000'
 LATEXMK   := latexmk
@@ -93,7 +99,7 @@ AUX_EXTS  := aux log out toc synctex.gz fdb_latexmk fls bbl blg \
 
 .DEFAULT_GOAL := all
 
-.PHONY: all modular-koszul-core fast watch clean veryclean clean-builds count check draft integrity phase0-index metadata verify census test editorial standalone dist release help working-notes icloud verify-independence verify-independence-verbose mathematics-publish root-publish architecture unified-architecture
+.PHONY: all volume legacy-manuscript modular-koszul-core fast watch clean veryclean clean-builds count check draft integrity phase0-index metadata verify census test editorial standalone dist release help working-notes icloud verify-independence verify-independence-verbose mathematics-publish root-publish architecture unified-architecture
 
 ## icloud: Copy latest PDFs to iCloud Drive, organised by subject
 icloud: $(ICLOUD_MAIN_PREREQ) standalone
@@ -142,8 +148,38 @@ icloud: $(ICLOUD_MAIN_PREREQ) standalone
 	done
 	@echo "  Vol I PDFs copied to iCloud (5 folders)."
 
-## all: Full build — manuscript + working notes → out/
-all: $(STAMP) working-notes modular-koszul-core
+## volume: Build the normative volume, the current formulation → out/
+##   This is the mathematically current root. `make legacy-manuscript` builds
+##   the retracted-architecture manuscript; see PORT_LEDGER.md.
+volume:
+	@echo "  ── Building the normative volume ($(NEWVOL)) ──"
+	@mkdir -p $(OUT_DIR) $(LOG_DIR)
+	@for i in 1 2 3; do \
+		$(TEX) $(TEXFLAGS) $(NEWVOL).tex >$(LOG_DIR)/$(NEWVOL).log 2>&1 || true; \
+	done
+	@if [ -f $(NEWVOL).pdf ]; then \
+		cp $(NEWVOL).pdf $(OUT_DIR)/$(NEWVOL).pdf; \
+		echo "    ✓ out/$(NEWVOL).pdf ($$(pdfinfo $(NEWVOL).pdf 2>/dev/null | awk '/^Pages/{print $$2}') pages)"; \
+	else \
+		echo "    ✗ build failed — see $(LOG_DIR)/$(NEWVOL).log"; exit 1; \
+	fi
+	@if grep -aqE '^! ' $(LOG_DIR)/$(NEWVOL).log; then \
+		echo "    ⚠  LaTeX errors present:"; grep -aE '^! ' $(LOG_DIR)/$(NEWVOL).log | head -5; exit 1; \
+	fi
+	@if grep -aqE 'Reference .* undefined' $(LOG_DIR)/$(NEWVOL).log; then \
+		echo "    ⚠  undefined references:"; \
+		grep -aE 'Reference .* undefined' $(LOG_DIR)/$(NEWVOL).log | head -5; exit 1; \
+	fi
+	@echo "    0 errors, 0 undefined references."
+
+## legacy-manuscript: Build the retracted-architecture manuscript → out/
+##   Retained for reference and citation archaeology only. Its architecture
+##   (Open Beilinson tower, Theorems A/B/C/D/H, the 5x5 kappa matrix) is
+##   retracted by volume/no_go.tex. Do not build on it.
+legacy-manuscript: $(STAMP)
+
+## all: Full build — normative volume + manuscript + working notes → out/
+all: volume $(STAMP) working-notes modular-koszul-core
 
 ## modular-koszul-core: Build the core standalone paper → out/
 modular-koszul-core:

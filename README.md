@@ -1,46 +1,75 @@
-# Modular Koszul Duality
+# Chiral Koszul Duality
 
-**Volume I** of *Modular Homotopy Theory for Algebraic Factorization
-Algebras on Algebraic Curves*, by Raeez Lorgat.
+*Associative Chiral Algebras, Ordered Quantum Fields, and the Geometry
+of Defects*, by Raeez Lorgat.
 
-The ordered bar complex $B^{\mathrm{ord}}(A_b) = T^c(s^{-1}\bar A_b)$
-is an $E_1$-chiral coassociative coalgebra at a chosen vacuum $b \in
-\mathcal{C}^{\mathrm{op}}$ on a tangential log curve $(X, D, \tau)$.
-Its differential encodes the chiral product via collision residues on
-$\mathrm{FM}_n(C)$; its deconcatenation coproduct, the cofree-tensor
-structure. The symmetric bar $B^\Sigma$ is the $\Sigma_n$-coinvariant
-shadow. Integration over Fulton–MacPherson compactifications computes
-the bar complex; Verdier duality interchanges bar and cobar; the
-failure of nilpotence at genus $g \ge 1$ is controlled by a single
-scalar invariant $\kappa(A_b)$ that organises quantum corrections
-across all genera. The geometry determines the operad, the operad
-determines the bar complex, the bar complex computes the factorisation
-(co)homology.
-
-## Architecture
-
-Vol I is the **Open quadrant** of the four-quadrant programme, the
-complete five-level **Beilinson tower**:
-
-```
-factorisation dg-cat C^op on (X,D,τ)  [0: primitive]
-   → A_b = End_C(b) at chosen vacuum   [1: chart]
-   → B(A_b) = T^c(s^{-1} Ā_b)          [2: bar / twisting]
-   → Z^der_ch(A_b) ≃ ChirHoch^•        [3: BULK]
-   → line / brane operators             [4: operator]
-   → modular trace + clutching          [5: scalar]
+```bash
+make volume        # the normative volume → out/main_ordered_chiral.pdf
 ```
 
-Reconstruction theorems at each step (Morita, Theorem A, Theorem H/B,
-Drinfeld-double, modular reconstruction) carry named hypothesis
-packages. The **KSDual** sublocus is the $\mathbb{Z}/2$-fixed
-sublocus under chiral / antichiral involution $A \mapsto A^!$.
-**Vertical holographic equivalences** to Vol II (level 3
-$\mathsf{SC}^{\mathrm{ch,top}}$-brace; level 5 gravity-line
-completion) and Vol III (levels 0, 1, 2, 4, 5) are named at every
-level. The **Master Reconstruction Theorem** (the structural climax)
-states the tower with all reconstruction theorems and KSDual
-identification; Theorems A, B, C, D, H are corollaries.
+## The primitive objects
+
+A protected field theory on $X^{\mathrm{an}} \times \mathbb{R}$, with
+$X$ a smooth complex algebraic curve, has two elementary local motions.
+Points collide in the curve and produce a singular operator product.
+Intervals compose along the oriented line and produce an ordered
+associative product. Each motion carries its own associative structure,
+and the phrase *noncommutative chiral algebra* has been used for both:
+
+- a **transversely ordered chiral algebra** is an augmented
+  $E_1$-algebra for the componentwise coefficient tensor,
+  $A \in \mathrm{Alg}^{\mathrm{aug}}_{E_1}(\mathrm{FactD}(X), \otimes^!)$;
+- an **associative chiral algebra** is an augmented $E_1$-algebra for
+  chiral convolution,
+  $C \in \mathrm{Alg}^{\mathrm{aug}}_{E_1}(\mathrm{DMod}(\mathrm{Ran}\,X), \star^{\mathrm{ch}})$,
+  whose formal-disc realization is a nonlocal vertex algebra, and a
+  quantum vertex algebra once braided data is supplied.
+
+Neither determines the other. There are correspondingly **three** bars —
+$\mathrm{Bar}^\perp$, $\mathrm{Bar}^{\mathrm{ch}}_{\mathsf{Ass}}$, and
+chiral Chevalley chains $\mathrm{Bar}^{\mathrm{ch}}_{\mathsf{Lie}}$ — and
+an equality between any two of them requires a named comparison functor.
+
+The ordered bar is the transverse interval amplitude
+
+$$\mathrm{Bar}^{\perp}_X(A) \;\simeq\; \mathbf{1}\otimes^{L}_{A}\mathbf{1}
+\;\simeq\; \int_{([0,1],\,\partial[0,1])} A,$$
+
+and its differential multiplies adjacent transverse letters. It does not
+extract a collision residue: the de Rham differential of a configuration
+space, the residue differential along a collision divisor, and the
+simplicial bar differential are three distinct operators, and the chiral
+coefficient accompanies every bar term uncontracted.
+
+The two products on the Ran category do **not** interchange. The
+canonical comparison is a retraction with an idempotent onto the
+common-decomposition sector; strong duoidality holds only on aligned
+windows, and sheaf-level locality is the family of disjointness-locus
+squares.
+
+## Status of the earlier architecture
+
+The five-level Beilinson tower, Theorems A/B/C/D/H, the five-archetype
+classification, the $5\times5$ $\kappa$-matrix, and the Universal Trace
+Identity are **retracted**. They rested on placing the bar complex on
+$\overline{M}_{g,n}$ over a relative factorisation stack, which fuses the
+transverse and modular directions in the primitive object.
+
+Nothing has been deleted. The retracted-architecture manuscript still
+builds via `make legacy-manuscript`, every file remains tracked, and
+**[`PORT_LEDGER.md`](PORT_LEDGER.md)** records the disposition of the
+corpus file by file: what has been upgraded, what survives the reframing
+and awaits porting, and what is keyed to the dead architecture.
+
+The obstruction theorems that make each retraction explicit are in
+`volume/no_go.tex`. The falsified Motzkin/Riordan bar-cohomology tables
+are settled in `volume/enveloping_audit.tex`, verified by
+`compute/tests/test_witt_pentagonal_rigidity.py`.
+
+## Sections below
+
+What follows describes the archived architecture and is retained for
+citation archaeology. Read `PORT_LEDGER.md` first.
 
 ## The three volumes
 

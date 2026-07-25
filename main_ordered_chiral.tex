@@ -1,0 +1,169 @@
+% ===========================================================================
+%  Chiral Koszul Duality — the normative volume
+%
+%  Root of the current formulation.  Typography and macros are inherited
+%  verbatim from preamble.tex (memoir + EB Garamond), shared with main.tex.
+%
+%  The primitive objects are the two associative directions on a curve:
+%    transverse ordered fusion   A in Alg^aug_{E_1}(FactD(X), tensor^!)
+%    associative chiral fusion   C in Alg^aug_{E_1}(DMod(Ran X), star^ch)
+%  Neither determines the other.  See volume/two_directions.tex.
+%
+%  Retracted-corpus disposition: PORT_LEDGER.md
+% ===========================================================================
+\documentclass[11pt]{memoir}
+\input{preamble}
+
+\DeclareOldFontCommand{\rm}{\normalfont\rmfamily}{\mathrm}
+
+% --- objects of the current formulation -----------------------------------
+\providecommand{\FactD}{\mathrm{FactD}}
+\providecommand{\DMod}{\mathrm{DMod}}
+\providecommand{\Alg}{\mathrm{Alg}}
+\providecommand{\Coalg}{\mathrm{Coalg}}
+\providecommand{\sdim}{\mathrm{sdim}}
+\providecommand{\Sym}{\operatorname{Sym}}
+\providecommand{\CE}{\mathrm{CE}}
+\providecommand{\den}{\mathrm{den}}
+\providecommand{\Barperp}{\mathrm{Bar}^{\perp}}
+\providecommand{\BarchAss}{\mathrm{Bar}^{\mathrm{ch}}_{\mathsf{Ass}}}
+\providecommand{\BarchLie}{\mathrm{Bar}^{\mathrm{ch}}_{\mathsf{Lie}}}
+\providecommand{\starch}{\star^{\mathrm{ch}}}
+\providecommand{\Hd}{\boxtimes_{\mathrm{H}}}
+\providecommand{\Cy}{\boxtimes_{\mathrm{C}}}
+\providecommand{\unit}{\mathbf{1}}
+\providecommand{\id}{\mathrm{id}}
+
+% --- claim-status tags, used honestly -------------------------------------
+\providecommand{\StatusProved}{\textsc{[proved]}}
+\providecommand{\StatusComputed}{\textsc{[computed]}}
+\providecommand{\StatusFormal}{\textsc{[formal]}}
+\providecommand{\StatusConditional}{\textsc{[conditional]}}
+\providecommand{\StatusRetracted}{\textsc{[retracted]}}
+
+\title{\texorpdfstring{%
+  \textit{Chiral Koszul Duality}\\[0.5em]
+  \large Associative Chiral Algebras, Ordered Quantum Fields, and the
+  Geometry of Defects}{Chiral Koszul Duality: Associative Chiral Algebras,
+  Ordered Quantum Fields, and the Geometry of Defects}}
+\author{Raeez Lorgat}
+\date{July 2026}
+
+\begin{document}
+
+\frontmatter
+\maketitle
+
+\chapter*{Editorial and mathematical status}
+\addcontentsline{toc}{chapter}{Editorial and mathematical status}
+
+Every retained assertion has a specified source object, target object,
+construction map, and hypothesis set. Every discarded identification is
+replaced either by an obstruction theorem or by the name of the missing
+comparison morphism. A numerical table counts the homology of an
+explicitly displayed chain complex and nothing else.
+
+Statements carry one of five tags. \StatusProved{} is proved in the
+displayed hypotheses. \StatusComputed{} is supported by an exact
+chain-matrix or symbolic calculation in \texttt{compute/}, with the test
+named. \StatusFormal{} is an identity in a completed or formal category
+and makes no analytic-convergence claim. \StatusConditional{} is a
+theorem whose hypotheses are substantial geometric or physical inputs.
+\StatusRetracted{} is contradicted here and preserved only for the
+record.
+
+The disposition of the earlier corpus is recorded chapter by chapter in
+\texttt{PORT\_LEDGER.md}. Nothing has been deleted. Material not yet
+carried into this volume remains tracked at its original path and is
+listed there with the reason.
+
+\tableofcontents
+
+\mainmatter
+
+\part{The ordered chiral object}
+\include{volume/two_directions}
+\include{volume/aligned_locality}
+
+\part{Bar, cobar, and the Koszul--Morita square}
+\include{volume/ordered_bar}
+\include{volume/bar_cobar_reconstruction}
+
+\part{Exact models and the audit of the legacy tables}
+\include{volume/enveloping_audit}
+\include{volume/bar_denominators}
+
+\part{The obstruction constitution}
+\include{volume/no_go}
+\include{volume/structure_theorem}
+
+\backmatter
+
+\begin{thebibliography}{99}
+
+\bibitem{BK03}
+B.~Bakalov and V.\,G.~Kac,
+\emph{Field algebras},
+Int.\ Math.\ Res.\ Not.\ \textbf{2003} (2003), 123--159.
+
+\bibitem{Bor88}
+R.\,E.~Borcherds,
+\emph{Generalized Kac--Moody algebras},
+J.\ Algebra \textbf{115} (1988), 501--512.
+
+\bibitem{BG96}
+A.~Braverman and D.~Gaitsgory,
+\emph{Poincar\'e--Birkhoff--Witt theorem for quadratic algebras of
+Koszul type},
+J.\ Algebra \textbf{181} (1996), 315--328.
+
+\bibitem{EK00}
+P.~Etingof and D.~Kazhdan,
+\emph{Quantization of Lie bialgebras, V: quantum vertex operator
+algebras},
+Selecta Math.\ \textbf{6} (2000), 105--130.
+
+\bibitem{FG12}
+J.~Francis and D.~Gaitsgory,
+\emph{Chiral Koszul duality},
+Selecta Math.\ \textbf{18} (2012), 27--87.
+
+\bibitem{Gon73}
+L.\,V.~Goncharova,
+\emph{Cohomology of Lie algebras of formal vector fields on the line},
+Funktsional.\ Anal.\ i Prilozhen.\ \textbf{7} (1973), 6--14.
+
+\bibitem{GN97}
+V.~Gritsenko and V.\,V.~Nikulin,
+\emph{Siegel automorphic form corrections of some Lorentzian
+Kac--Moody Lie algebras},
+Amer.\ J.\ Math.\ \textbf{119} (1997), 181--224.
+
+\bibitem{Heu24}
+G.~Heuts,
+\emph{Koszul duality and a conjecture of Francis--Gaitsgory},
+preprint (2024).
+
+\bibitem{Kac90}
+V.\,G.~Kac,
+\emph{Infinite dimensional Lie algebras},
+3rd ed., Cambridge Univ.\ Press, 1990.
+
+\bibitem{Li05}
+H.~Li,
+\emph{Nonlocal vertex algebras generated by formal vertex operators},
+Selecta Math.\ \textbf{11} (2005), 349--397.
+
+\bibitem{LV12}
+J.-L.~Loday and B.~Vallette,
+\emph{Algebraic operads},
+Grundlehren der math.\ Wissenschaften \textbf{346}, Springer, 2012.
+
+\bibitem{Tor25}
+T.~Torii,
+\emph{On duoidal $\infty$-categories},
+J.\ Homotopy Relat.\ Struct.\ \textbf{20} (2025).
+
+\end{thebibliography}
+
+\end{document}

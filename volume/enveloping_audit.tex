@@ -1,0 +1,197 @@
+\chapter{Enveloping algebras and the exact audit of the legacy tables}
+\label{ch:enveloping-audit}
+
+\section{The bar of an enveloping algebra}
+
+\begin{theorem}[Bar--Chevalley comparison]
+\label{thm:bar-chevalley}
+\StatusProved{} Let $\mathfrak g$ be a Lie algebra object in $\FactD(X)$
+for the pointwise tensor, $K$-flat, positively graded and complete, with
+every total weight admitting finitely many decompositions, and suppose
+internal PBW holds for $U(\mathfrak g)$. There is a natural
+quasi-isomorphism of conilpotent coalgebras in $\FactD(X)$
+\[
+  \Barperp_X\,U(\mathfrak g)\ \xrightarrow{\ \sim\ }\ \CE_*(\mathfrak g),
+\]
+compatible with the factorisation coefficient and the PBW filtration.
+\end{theorem}
+
+\begin{proof}
+Filter $U(\mathfrak g)$ by PBW degree and both complexes by total word
+length. The associated graded enveloping algebra is $\Sym(\mathfrak g)$,
+and the bar of a symmetric algebra is the suspended symmetric coalgebra on
+$\mathfrak g$, which is the associated graded of Chevalley chains. The
+comparison is an isomorphism on the first page; finite decomposition gives
+a bounded exhaustive spectral sequence in each weight and completeness
+gives the quasi-isomorphism. Every step uses only internal tensor products
+and the bracket, so the map stays in $\FactD(X)$.
+\end{proof}
+
+Theorem~\ref{thm:bar-chevalley} is the only route by which a Lie-theoretic
+calculation computes an ordered bar, and it fixes what may be tabulated:
+the Chevalley--Eilenberg homology of the Lie algebra, in the grading the
+Lie algebra carries.
+
+\section{Simple Lie algebras}
+
+\begin{computation}[Finite-dimensional simple case]
+\label{comp:simple}
+\StatusComputed{} For a simple Lie algebra $\mathfrak g$ of rank $r$ with
+exponents $m_1,\dots,m_r$, $H^*(\mathfrak g;k)$ is the exterior algebra on
+primitive classes of degrees $2m_i+1$. Hence
+\[
+  \Barperp U(\mathfrak{sl}_2):\ 1+t^3, \qquad
+  \Barperp U(\mathfrak{sl}_3):\ (1+t^3)(1+t^5) = 1+t^3+t^5+t^8,
+\]
+\[
+  \Barperp U(\mathfrak g_2):\ (1+t^3)(1+t^{11}) = 1+t^3+t^{11}+t^{14}.
+\]
+The first two were recomputed here by exact rational elimination on
+$\Lambda^\bullet\mathfrak g^*$ built from matrix units, with $d^2=0$
+asserted on every cochain space rather than assumed; the results are
+$\dim H^n(\mathfrak{sl}_2) = 1,0,0,1$ and
+$\dim H^n(\mathfrak{sl}_3) = 1,0,0,1,0,1,0,0,1$. The chain dimensions are
+$\binom{\dim\mathfrak g}{n}$, so for $\mathfrak{sl}_2$ they are
+$1,3,3,1$.
+\end{computation}
+
+Verified in \texttt{compute/tests/test\_witt\_pentagonal\_rigidity.py}
+and \texttt{compute/lib/witt\_pentagonal\_rigidity.py}.
+
+\section{The Virasoro family}
+
+The transverse presentation of the Virasoro family is the enveloping
+algebra of the positive Witt algebra
+\[
+  L_1 \;=\; \bigoplus_{n\ge1}\mathbb C\,e_n,
+  \qquad [e_i,e_j]=(j-i)\,e_{i+j},
+\]
+to which Theorem~\ref{thm:bar-chevalley} applies: $L_1$ is positively
+graded with one-dimensional weight spaces, so every weight has finitely
+many decompositions.
+
+\begin{theorem}[Pentagonal rigidity]
+\label{thm:pentagonal-rigidity}
+\StatusComputed{} The bar homology of $U(L_1)$ satisfies
+\[
+  \dim H^n\bigl(\Barperp U(L_1)\bigr) = 2
+  \qquad\text{for every } n\ge1,
+\]
+one dimension in each of the weights $(3n^2-n)/2$ and $(3n^2+n)/2$. The
+graded Euler character is
+\begin{equation}
+\label{eq:witt-euler}
+  \chi_q\bigl(\Barperp U(L_1)\bigr) = \prod_{n\ge1}\bigl(1-q^n\bigr),
+\end{equation}
+and it is accounted for degree by degree with no residual freedom.
+\end{theorem}
+
+\begin{proof}
+By Theorem~\ref{thm:bar-chevalley} the bar of $U(L_1)$ is
+$\CE_*(L_1)$, whose cohomology is Goncharova's \cite{Gon73}: two
+dimensional in each degree $n\ge1$, in the weights $(3n^2\mp n)/2$.
+Equation~\eqref{eq:witt-euler} is Theorem~\ref{thm:bar-denominator}
+applied to $L_1$, where every root space is one dimensional and even, so
+$\sdim (L_1)_n = 1$. Euler's pentagonal number theorem expands the
+product as $\sum_{m\in\mathbb Z}(-1)^mq^{m(3m-1)/2}$, whose support is
+exactly $\{(3n^2\pm n)/2\}$ with coefficient $(-1)^n$ at each of
+$(3n^2-n)/2$ and $(3n^2+n)/2$. Comparing with $\sum_n(-1)^n\dim H^n_w$
+shows each weight of the Euler character is saturated by a single class in
+the degree Goncharova predicts, so no further classes and no cancellation
+are available.
+\end{proof}
+
+The cohomology was computed for $n=1,2,3,4$, occupying the weights
+$(1,2)$, $(5,7)$, $(12,15)$, $(22,26)$, one dimension in each; the nonzero
+coefficients of $\prod_{n\ge1}(1-q^n)$ occupy $0,1,2,5,7,12,15,22,26$ with
+signs $+,-,-,+,+,-,-,+,+$.
+
+\section{The legacy planar sequences}
+
+Two formulas were tabulated as bar cohomology dimensions:
+\[
+  \dim H^n = M(n+1)-M(n) = 1,2,5,12,30,76,196,512,1353,3610,\dots
+\]
+for the Virasoro family, with $M$ the Motzkin numbers, and
+\[
+  \dim H^n = R(n+3) = 3,6,15,36,91,232,603,1585,\dots
+\]
+for the $\mathfrak{sl}_2$ family, with $R$ the Riordan numbers. The
+coincidence of the discriminant $\sqrt{1-2z-3z^2}$ in the two generating
+functions was attributed to Drinfeld--Sokolov reduction.
+
+\begin{proposition}[The two sequences are one sequence]
+\label{prop:one-sequence}
+\StatusComputed{} For all $n\ge0$,
+\[
+  M(n) = R(n)+R(n+1),
+  \qquad
+  M(n+1)-M(n) = R(n+2)-R(n).
+\]
+The Virasoro sequence is therefore $R(n+2)-R(n)$ and the
+$\mathfrak{sl}_2$ sequence is $R(n+3)$: both are elementary transforms of
+one sequence, and their generating functions are rational in the single
+algebraic function $\sqrt{1-2z-3z^2}$ for that reason alone. No
+Drinfeld--Sokolov input is used or needed.
+\end{proposition}
+
+\begin{proof}
+Riordan numbers count Motzkin paths with no level step at height zero.
+Splitting a Motzkin path of length $n$ according to whether its first step
+is level gives $M(n)=R(n)+R(n+1)$; subtracting consecutive instances gives
+the second identity. Both were checked termwise for $n<24$.
+\end{proof}
+
+\begin{theorem}[Exact audit]
+\label{thm:exact-audit}
+\StatusComputed{} Neither sequence is the ordered bar homology of the
+algebra it names, and neither is a bar chain count.
+\begin{enumerate}
+\item For $\mathfrak{sl}_2$: the bar homology is $1,0,0,1$ by
+  Computation~\ref{comp:simple}, and for $\dim\bar A = 3$ the length-$r$
+  ordered bar term has dimension $3^r$, giving $3,9,27,81,243$. The
+  sequence $3,6,15,36,91$ is neither.
+\item For the Virasoro family: the bar homology is the constant $2$ by
+  Theorem~\ref{thm:pentagonal-rigidity}. On degrees $n=1,2,3$ the asserted
+  values are $1,2,5$; they agree with the truth at $n=2$ and nowhere else.
+\item Independently of any presentation, a Virasoro chiral coefficient
+  does not determine the transverse bar at all: a fixed coefficient
+  $\mathcal F_{\mathrm{Vir},c}$ may be combined with free, square-zero,
+  enveloping, or quantum-plane transverse algebras whose bars differ,
+  while the coefficient and the central charge are unchanged.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(i) and (ii) are the cited computations. For (iii), form $B\otimes^!
+\mathcal F_{\mathrm{Vir},c}$ for the four transverse algebras listed; the
+coefficient is fixed and $\Barperp$ varies with $B$.
+\end{proof}
+
+\begin{remark}[The type error beneath the numerical one]
+\label{rem:type-error}
+The bar homology of $U(L_1)$ is bigraded by cohomological degree and
+weight, and is finite in each degree only because
+Theorem~\ref{thm:pentagonal-rigidity} concentrates it in two weights. A
+formula assigning one integer to each degree, with no weight truncation
+named, does not specify an invariant of a graded object with
+infinite-dimensional graded pieces. The sequences above are counts of
+planar objects; passage from such a count to a homology dimension requires
+a differential, and no quasi-isomorphism to a Motzkin or Riordan complex
+has been constructed.
+\end{remark}
+
+\begin{remark}[Three chain models had been mixed]
+\label{rem:three-models}
+The legacy tables conflated the interval bar $\Barperp(A)$, whose
+differential uses transverse multiplication; chiral Chevalley chains,
+whose differential uses a diagonal-supported bracket; and a
+screen-enhanced bicomplex $B^{p,q}_{\mathrm{scr}}(A) = (s\bar
+A)^{\otimes^! p}\otimes C^q_{\mathrm{scr}}$ with total differential
+$b_A+d_A+d_{\mathrm{scr}}+\delta_{\mathrm{int}}$. Only the third can carry
+both bar words and configuration-space cohomology, and only after
+$\delta_{\mathrm{int}}$ is supplied and shown to square to zero. Filtering
+by screen degree gives $E_1^{p,q} = H^q(C_{\mathrm{scr}})\otimes
+B^\perp_p(A)$; a product of dimensions on an $E_1$ page is not the
+dimension of total homology.
+\end{remark}
