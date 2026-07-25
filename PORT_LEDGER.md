@@ -1,7 +1,68 @@
 # Port ledger
 
 Disposition of the legacy corpus against the normative volume
-(`main_ordered_chiral.tex`, built by `make volume`).
+(`reconstruction/reconstruction.tex`, built by `make volume`).
+
+## The three roots
+
+| root | build | pages | status |
+|---|---|---:|---|
+| `reconstruction/reconstruction.tex` | `make volume` | 104 | **normative**. Merges all four PDF witnesses plus the repository corpus. |
+| `main_ordered_chiral.tex` | `make skeleton` | 35 | superseded; its two unique results are merged into the normative volume. |
+| `main.tex` | `make legacy-manuscript` | — | retracted architecture. Reference only. |
+
+The normative volume arrived as upstream LaTeX (`reconstruction/UPSTREAM_BUILD_README.md`,
+`SOURCE_CORPUS_MANIFEST.md`, `INPUT_SHA256_MANIFEST.txt`). Four changes were
+made when deploying it into this repository:
+
+1. **Typography.** `book` + `lmodern` → `book` + `raeez-math-template`
+   (`localtheorems`), so the volume sets in EB Garamond like every other
+   document here. Its own page geometry, theorem environments, and tcolorbox
+   status/no-go boxes are preserved. Consequences handled: `imakeidx` removed
+   (the template already loads `makeidx` and calls `\makeindex`); `mathrsfs`
+   and `bm` dropped (zero uses, and the template's `newtxmath` leaves too few
+   free math alphabets); `bbm` dropped in favour of the document's own
+   documented `\one = \mathbf 1` fallback, for the same reason; `\widebar`
+   guarded against the template's definition.
+2. **Root renamed** `main.tex` → `reconstruction.tex`. With `TEXINPUTS`
+   including the repository root, a document named `main` picks up the memoir
+   manuscript's `main.ind` and fails on memoir index internals.
+3. **Bibliography regenerated.** The shipped `.bbl` was `plainnat`
+   author–year; the template sets `amsrn`. Regenerated with bibtex, which also
+   picked up the added `Goncharova1973` entry.
+4. **Two results merged in** — see below.
+
+## Merged into the normative volume
+
+Both were absent from every witness.
+
+- **`part3_examples.tex` — the Virasoro row computed.** The upstream
+  `thm:legacy-audit` refutes the $\mathfrak{sl}_2$ Motzkin/Riordan claim by
+  computing the answer, but refutes the Virasoro claim only by
+  *non-determination*. Added `thm:pentagonal` (bar homology of $U(L_1)$ is
+  constant 2 in the pentagonal weights, Euler character $\prod(1-q^n)$
+  saturating it degree by degree), `prop:one-sequence` ($M(n)=R(n)+R(n+1)$,
+  so the shared discriminant carries no Drinfeld–Sokolov content), and the
+  remarks recording that the asserted sequence agrees with the truth at $n=2$
+  alone and has the wrong type.
+- **`part1_foundations.tex` — `prop:lambda-sector`.** The upstream frontmatter
+  *asserts* that the aligned idempotent records the sector where the mixed law
+  is defined. Now proved, with the remark that no $\lambda$ is thereby
+  constructed.
+
+## Verification
+
+Two independent harnesses, cross-checked against each other:
+
+| harness | method | scope |
+|---|---|---|
+| `compute/lib/witt_pentagonal_rigidity.py` | exact `Fraction`, sparse elimination, `d²=0` asserted per space | Witt/Goncharova, $\mathfrak{sl}_2$, $\mathfrak{sl}_3$, Motzkin/Riordan identities |
+| `compute/lib/reconstruction_bar_models.py` | sympy `Rational` dense matrices | quantum/Jordan plane bar windows, $\mathfrak{sl}_2$ CE, $A_2$ Hall–Serre, stable trace Jacobi |
+
+They share exactly one claim, $H^*(\mathfrak{sl}_2)=1,0,0,1$, and agree on it
+with no shared code, basis, sign convention, or linear-algebra backend
+(`compute/tests/test_harness_cross_agreement.py`). 23 tests pass.
+Upstream outputs preserved at `compute/results/reconstruction_*`.
 
 **Nothing has been deleted.** Every file listed here remains tracked at its
 original path and is reachable in git history. "Cut" means *removed from the

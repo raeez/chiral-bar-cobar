@@ -1,0 +1,529 @@
+\chapter{Five carriers, three noncommutativities, one type discipline}
+
+\section{The local experiment}
+Let \(X\) be a smooth complex algebraic curve.  Place observables in a product chart \(U\times I\subset X^{\mathrm{an}}\times\mathbb R\), with \(U\) a small disc and \(I\) an oriented interval.  Two independent short-distance motions are visible before any algebra is chosen.
+
+In the first motion, the points in \(U\) collide while their interval positions remain fixed.  The result is not merely a residue.  It is a distribution supported on a partial diagonal, with all normal jets and their coordinate-change law.  In the second motion, two subintervals become adjacent while the points of \(U\) remain separated.  The result is an ordered associative composition.  Thickening \(I\) to a plane permits one interval to pass around another and creates braid transport.  Closing the interval creates a circle trace.  Allowing the complex curve to degenerate creates clutching and sewing.
+
+Thus the five carriers are
+\[
+ \text{diagonal},\qquad \text{interval},\qquad \text{plane},\qquad
+ \text{circle},\qquad \text{stable curve}.
+\]
+Their native algebraic structures are, respectively, a chiral distribution, an \(\Eone\)-product, braid transport, Hochschild/cyclic trace, and a modular action.  They are related by geometry, but none is a synonym for another.
+
+\begin{theorem}[Stokes-to-master principle]\label{thm:stokes-master}
+Let \(C\) be an oriented manifold with corners, let \((E,d_E)\) be a cochain complex, and assign to every oriented codimension-one face \(F\) an odd operator \(\rho_F\) on \(E\).  Assume the assignment restricts functorially to corners and
+\[
+ d_E\rho_F+\rho_Fd_E=0.
+\]
+For \(D=d_E+\sum_F\rho_F\), the component of \(D^2\) supported on a codimension-two stratum \(S\) is the oriented sum of the composites \(\rho_{F_2}\rho_{F_1}\) over flags \(S\subset F_2\subset C\).  Hence \(D^2=0\) exactly when every corner identity holds.
+\end{theorem}
+\begin{proof}
+Expand \(D^2\).  The internal square vanishes and the mixed terms cancel by the chain-map hypothesis.  The remaining terms are ordered pairs of incident faces.  Grouping by the common codimension-two stratum produces the cellular coefficient of \(\partial^2 C\), and the two induced corner orientations are opposite.  This is the entire sign mechanism.  The algebraic content enters only through the operators decorating the faces.
+\end{proof}
+
+Associativity, chiral Jacobi or chiral associativity, the Yang--Baxter equation, the BV master equation, and modular sewing all have this form, but they live on different compactified parameter spaces.  A universal boundary argument explains the shape of the equations; it does not identify their coefficient maps.
+
+\section{The Ran coefficient and its two products}
+Let \(\mathrm{Fin}^{\mathrm{surj}}_{\ne\varnothing}\) denote nonempty finite sets and surjections.  A surjection \(\alpha:I\twoheadrightarrow J\) determines a partial diagonal
+\[
+ \Delta_\alpha:X^J\longrightarrow X^I,
+ \qquad (x_j)_{j\in J}\longmapsto (x_{\alpha(i)})_{i\in I}.
+\]
+A right \(D\)-module on \(\Ran X\) is represented by a coherent family \(F_I\in\DMod(X^I)\) with extraordinary pullback identifications along these diagonals.  The unital completion adjoins the empty set.
+
+For a partition \(\pi=\{B_1,\dots,B_r\}\) of \(I\), let \(U_\pi\subset X^I\) be the locus where points in distinct blocks are disjoint, and write \(j_\pi:U_\pi\hookrightarrow X^I\).
+
+\begin{definition}[Factorisable coefficient]
+A factorisable right \(D\)-module is a Ran family \(F\) equipped with coherent equivalences
+\[
+ j_\pi^!F_I\simeq j_\pi^!\Bigl(\boxtimes_{B\in\pi}F_B\Bigr)
+\]
+for every partition, compatible with refinement, permutation, and diagonal transition maps.  The chosen stable presentable enhancement is denoted \(\FactD(X)\).
+\end{definition}
+
+There are two monoidal products.
+
+The pointwise coefficient product is
+\[
+ (F\tensorpt G)_I=F_I\otimes^!G_I.
+\]
+It does not add support cardinalities.  It is the product in which endomorphisms of a fixed boundary condition compose.
+
+Chiral convolution is the Day convolution for disjoint union:
+\[
+ (F\starc G)_I=\bigoplus_{I=I_1\sqcup I_2}
+ (j_{I_1,I_2})_*j_{I_1,I_2}^!(F_{I_1}\boxtimes G_{I_2}).
+\]
+It adds support cardinalities and is the ambient product for the Ran-space chiral Chevalley theory.
+
+\begin{proposition}[Cardinality pro-nilpotence]\label{prop:cardinality}
+Let \(\mathcal R_{\ge r}\) be Ran objects whose components vanish below cardinality \(r\).  Then
+\[
+ \mathcal R_{\ge r}\starc\mathcal R_{\ge s}\subseteq\mathcal R_{\ge r+s}.
+\]
+Consequently, reduced chiral convolution is nilpotent modulo cardinality \(>N\), and its inverse limit is pro-nilpotent.
+\end{proposition}
+\begin{proof}
+Every summand is indexed by a disjoint union of the supporting finite sets, so cardinalities add.  An \((N+1)\)-fold product of reduced objects has support cardinality at least \(N+1\) and vanishes in the \(N\)-th quotient.
+\end{proof}
+
+The same statement is false for \(\tensorpt\), whose cardinality degree is zero.  This elementary distinction is the first reason that the two bar constructions must not be conflated.
+
+\section{Three forms of noncommutativity}
+\begin{definition}[Transversely ordered chiral algebra]
+A transversely ordered chiral algebra is an augmented algebra
+\[
+ A\in\Alg^{\aug}_{\Eone}(\FactD(X),\tensorpt).
+\]
+The factorisable coefficient carries collision on \(X\).  The internal \(\Eone\)-multiplication \(m_\perp:A\tensorpt A\to A\) carries order along a transverse line.
+\end{definition}
+
+\begin{definition}[Associative chiral algebra]
+An associative chiral algebra is an augmented \(\Eone\)-algebra for chiral convolution,
+\[
+ C\in\Alg^{\aug}_{\Eone}(\mathcal R_X,\starc),
+\]
+or, in a local geometric presentation, an algebra over the non-symmetric associative chiral operad \(\Assch\).  Its multiplication composes ordered chiral insertions and may be nonlocal in the vertex-algebraic sense.
+\end{definition}
+
+\begin{definition}[Braided or exchange enhancement]
+An exchange enhancement is an \(\Etwo\)-lift, a flat meromorphic transport on labelled configuration spaces, or equivalent braided categorical data.  It supplies paths that exchange two ordered factors and is not part of a bare \(\Eone\)-algebra.
+\end{definition}
+
+These are three separate noncommutativities:
+\begin{enumerate}
+\item noncommutativity of an ordered word in the transverse direction;
+\item noncommutativity or nonlocality of chiral fields under formal-disc composition;
+\item nontrivial braid exchange after a second transverse direction or meromorphic connection is supplied.
+\end{enumerate}
+A theory may carry any one, any compatible pair, or all three.
+
+\begin{definition}[Doubly associative chiral algebra]\label{def:double-e1}
+A doubly associative chiral algebra is a Ran/factorisation object \(A\) equipped with
+\[
+ m_\perp:A\tensorpt A\to A,
+ \qquad
+ m_X:A\starc A\to A,
+\]
+coherent \(\Eone\)-structures for each multiplication, and a mixed locality datum on every common disjoint decomposition.  In a cofibrant model, this is an algebra over the two-coloured operadic tensor product
+\[
+ W\Ass_\perp\otimes W\Assch
+\]
+with the mixed cells retained rather than collapsed.
+\end{definition}
+
+The phrase ``the mixed locality datum'' is deliberate.  The ambient products do not admit a global interchange isomorphism in general.  The exact common-decomposition retract is constructed in \cref{chap:aligned}.
+
+\begin{nogobox}[title={No-go theorem 1: one associative direction does not generate the other}]
+There is no functor, natural on all factorisable coefficients, that reconstructs \(m_X\) from \(m_\perp\), or \(m_\perp\) from \(m_X\).  Indeed, fix a coefficient \(F\).  Distinct associative algebras \(B\) give distinct transverse products on \(B\otimes F\) with the same chiral coefficient.  Conversely, distinct nonlocal chiral products can be placed on a fixed underlying coefficient while the transverse product remains the same.  A comparison requires extra geometric data, not a change of notation.
+\end{nogobox}
+
+\section{Boundary and defect origin}
+Let \(\mathcal C\) be a \(\FactD(X)\)-linear factorisation category and \(b\in\mathcal C\) a factorisation-compatible boundary condition.  The internal endomorphism object
+\[
+ A_b=\RHom_{\mathcal C}(b,b)
+\]
+composes in an order and varies factorisably in \(X\).
+
+\begin{theorem}[Factorisation Morita chart]\label{thm:factorisation-morita}
+Assume that \(b\) restricts to a compact dualisable generator on a factorising basis, that these local generator equivalences commute with restriction, and that both sides satisfy Weiss descent.  Then \(A_b\) is a transversely ordered chiral algebra and
+\[
+ \RHom_{\mathcal C}(b,-):\mathcal C\xrightarrow{\sim}
+ \Mod_{A_b}(\FactD(X))
+\]
+is an equivalence of factorisation categories.
+\end{theorem}
+\begin{proof}
+Composition gives the internal \(\Eone\)-structure.  Factorisation of \(b\) on disjoint discs makes composition a morphism of coefficient systems.  The ordinary compact-generator Morita theorem applies on each basis element.  Compatibility on overlaps and Weiss descent glue the local equivalences.
+\end{proof}
+
+The algebra \(A_b\) is a chart, not the Morita-invariant totality.  Changing the generator changes the algebra while preserving the factorisation category.  This distinction becomes essential when comparing a boundary algebra with a physical bulk.
+
+\section{The complete diagonal coefficient}
+Let \(D=\Delta(X)\subset X^2\).  The meromorphic extension \(\mathcal O_{X^2}(*D)\) has pole filtration
+\[
+ P_m\mathcal O_{X^2}(*D)=\mathcal O_{X^2}((m+1)D),\qquad m\ge0,
+\]
+and
+\[
+ \gr_m^P\mathcal O_{X^2}(*D)\simeq
+ \mathcal O_D((m+1)D)\simeq N_{D/X^2}^{\otimes(m+1)}.
+\]
+Because \(N_{\Delta/X^2}\simeq T_X\), the coefficient of \((z-w)^{-m-1}\) is the local splitting of the \((m+1)\)-st normal symbol.  Coordinate changes act upper triangularly on these splittings.  The filtered distribution is invariant; individual modes are local coordinates on it.
+
+\begin{proposition}[Complete-coefficient principle]
+A chiral operation is the entire diagonal extension and structure morphism.  Residues, jets, delta derivatives, propagator coefficients, and formal modes are functorial projections or splittings of this object.  No finite list of residues reconstructs the entire operation without a stated bounded-pole hypothesis.
+\end{proposition}
+
+\begin{nogobox}[title={No-go theorem 2: no universal logarithmic extractor}]
+There is no coordinate-free linear map from logarithmic one-forms to arbitrary finite principal parts that is inverse to inclusion.  A logarithmic residue detects the simple normal coefficient.  Higher principal parts transform through higher jets of a coordinate change and therefore require the full filtered normal object.  Any formula that extracts all modes from \(d\log(z-w)\) has silently chosen additional coordinates or a connection.
+\end{nogobox}
+
+\chapter{Aligned decompositions and the exact locality law}\label{chap:aligned}
+
+\section{Linear species}
+Let \(\mathcal V\) be an additive stable symmetric monoidal category with finite direct sums.  A linear species is a functor \(F:\mathrm{Fin}^{\simeq}\to\mathcal V\).  It carries the Hadamard product
+\[
+ (F\boxtimes_HG)(I)=F(I)\otimes G(I)
+\]
+and the Cauchy product
+\[
+ (F\boxtimes_CG)(I)=\bigoplus_{I=I_1\sqcup I_2}F(I_1)\otimes G(I_2),
+\]
+where the sum is over ordered decompositions.
+
+The component of
+\[
+ (F_1\boxtimes_CF_2)\boxtimes_H(G_1\boxtimes_CG_2)
+\]
+is indexed by a pair \((d,e)\) of ordered decompositions of \(I\), while the component of
+\[
+ (F_1\boxtimes_HG_1)\boxtimes_C(F_2\boxtimes_HG_2)
+\]
+is indexed by one decomposition \(d\).  The latter is exactly the diagonal sector \((d,d)\) of the former.
+
+\begin{theorem}[Aligned-decomposition splitting]\label{thm:aligned-splitting}
+There are canonical natural transformations
+\begin{align*}
+ \iota:
+ &(F_1\boxtimes_HG_1)\boxtimes_C(F_2\boxtimes_HG_2)
+ \longrightarrow
+ (F_1\boxtimes_CF_2)\boxtimes_H(G_1\boxtimes_CG_2),\\
+ \pi:
+ &(F_1\boxtimes_CF_2)\boxtimes_H(G_1\boxtimes_CG_2)
+ \longrightarrow
+ (F_1\boxtimes_HG_1)\boxtimes_C(F_2\boxtimes_HG_2),
+\end{align*}
+with
+\[
+ \pi\iota=\id,
+ \qquad e:=\iota\pi,
+ \qquad e^2=e.
+\]
+The image of \(e\) is the common-decomposition summand.  These maps are compatible with associativity, units, and the symmetry of \(\boxtimes_H\).
+\end{theorem}
+\begin{proof}
+At arity \(I\), include the summand indexed by \(d\) into the summand indexed by \((d,d)\); this is \(\iota\).  Project the double sum onto those pairs with equal decompositions; this is \(\pi\).  The identities are immediate componentwise.  For three Cauchy factors, both coherence composites include, respectively project onto, triples with one common ordered decomposition.  Hence every coherence diagram reduces to equality of the same direct-summand map.
+\end{proof}
+
+\begin{nogobox}[title={No-go theorem 3: no global strong-duoidal isomorphism}]
+Unless all independent-decomposition summands vanish, \(\iota\) is not surjective and \(\pi\) is not injective.  Therefore Hadamard and Cauchy products are not related by a universal interchange isomorphism.  Any theorem using a strong duoidal law must either restrict to an aligned subcategory or retain the idempotent \(e\).
+\end{nogobox}
+
+\begin{definition}[Aligned window]\label{def:aligned-window}
+A full replete subcategory of species is aligned if it is closed under both products and if the projector \(e\) acts as the identity on every iterated mixed product of its objects.  On such a window, \(\iota\) and \(\pi\) are inverse and the two products form a strong duoidal pair.
+\end{definition}
+
+Finite support in a fixed decomposition type gives an elementary aligned window.  The full Ran theory is not one.
+
+\section{Sheaf-level locality}
+Fix an ordered decomposition \(d=(I_1,I_2)\) and the corresponding disjointness inclusion \(j_d:U_d\hookrightarrow X^I\).  A factorisation structure gives
+\[
+ \delta_d:j_d^!A_I\xrightarrow{\sim}
+ j_d^!(A_{I_1}\boxtimes A_{I_2}).
+\]
+An ambient pointwise multiplication \(m:A\tensorpt A\to A\) belongs to \(\FactD(X)\) exactly when the square
+\[
+\begin{tikzcd}[column sep=large,row sep=large]
+ j_d^!(A_I\tensorpt A_I) \arrow[r,"j_d^!m"] \arrow[d,"\delta_d\tensorpt\delta_d"']
+ &j_d^!A_I\arrow[d,"\delta_d"]\\
+ j_d^!\bigl((A_{I_1}\tensorpt A_{I_1})\boxtimes
+ (A_{I_2}\tensorpt A_{I_2})\bigr)
+ \arrow[r,"m\boxtimes m"']
+ &j_d^!(A_{I_1}\boxtimes A_{I_2})
+\end{tikzcd}
+\]
+commutes for every \(d\).
+
+\begin{theorem}[Exact locality criterion]\label{thm:locality-criterion}
+A pointwise \(\Eone\)-multiplication on the underlying Ran object defines a transversely ordered chiral algebra precisely when all of the displayed disjoint-locus squares and their higher \(\Eone\) coherences commute.  Under finite-set indexing, these equations lie in the image of the aligned projector of \cref{thm:aligned-splitting}.
+\end{theorem}
+\begin{proof}
+A morphism in the category of factorisation objects is by definition a Ran morphism intertwining all factorisation equivalences.  Applying this definition to every operation of the \(\Eone\)-algebra gives the stated squares.  The same decomposition \(d\) occurs before and after multiplication, which is exactly the common-decomposition sector.
+\end{proof}
+
+This criterion is stronger and more honest than saying that \(A\) is a ``bimonoid'' in a globally duoidal category.  The bialgebra equation is a family of locality squares, not an unsupported isomorphism of mixed products.
+
+\section{The two coproducts on the transverse bar}
+Once \(m_\perp\) is a morphism of factorisation objects, every face and degeneracy in the simplicial bar is a morphism of factorisation objects.  Geometric realization therefore retains the chiral factorisation coproduct.  Independently, the normalized word complex has the deconcatenation coproduct
+\[
+ \Delta_{\mathrm{dec}}[a_1|\cdots|a_r]
+ =\sum_{p=0}^r[a_1|\cdots|a_p]\otimes
+ [a_{p+1}|\cdots|a_r].
+\]
+The first coproduct separates support on the curve; the second cuts the transverse word.  They commute on the aligned locality sector because they operate on independent indices.  They should not be called the same coproduct.
+
+\section{What the projector repairs}
+The aligned projector resolves four recurring errors at once.
+\begin{enumerate}
+\item It prevents an independent pair of decompositions from being mistaken for one laboratory decomposition.
+\item It explains why locality squares are exact even though the ambient products are not strongly duoidal.
+\item It makes the bar inherit factorisation without pretending that all mixed species summands participate.
+\item It identifies the precise extra hypothesis needed to iterate transverse and chiral associative bars.
+\end{enumerate}
+The idempotent is therefore not an editorial technicality.  It is the algebraic memory of using the same decomposition of the physical experiment in both directions.
+
+The fourth item is a theorem rather than an observation.
+
+\begin{proposition}[Where a mixed distributive law can live]\label{prop:lambda-sector}
+The sector on which a mixed distributive law between \(\tensorpt\) and
+\(\starc\) is geometrically defined is the common-decomposition sector, that is
+the image of the idempotent \(e\) of \cref{thm:aligned-splitting}.  Off that
+sector the two products admit no interchange, only the retraction of
+\cref{thm:aligned-splitting}, so no distributive law can be written.
+\end{proposition}
+\begin{proof}
+A distributive law requires a natural transformation interchanging the two
+products in a fixed direction, subject to the coherence conditions of each.  By
+\cref{thm:aligned-splitting} the canonical comparison in the additive model is
+\(\iota\), with retraction \(\pi\), and \(\pi\iota=\id\) while \(\iota\pi=e\neq\id\)
+in general.  A natural transformation subject to both coherence conditions
+therefore exists only where \(e\) acts as the identity, which is \(\im e\) by
+\cref{def:aligned-window}.
+\end{proof}
+
+\begin{remark}[The law is located, not constructed]
+\Cref{prop:lambda-sector} does not exhibit a \(\lambda\).  No example in the
+present corpus does.  Zamolodchikov--Faddeev algebras of \cref{chap:zf} are the
+natural candidate, since their spectral variable belongs to the chiral direction
+while their word belongs to the transverse direction; producing \(\lambda\) for
+one of them, and verifying that it lands in \(\im e\), is the outstanding
+construction on which the doubly noncommutative object depends for content.
+\end{remark}
+
+\chapter{Rectangular recognition and its exact hypotheses}
+
+\section{Product-disk factorisation}
+Let \(\mathrm{Disk}_X\) be a factorising basis of sufficiently small analytic discs in \(X^{\mathrm{an}}\), and let \(\mathrm{Disk}^{\ord}_1\) be the little oriented intervals operad.  The product basis consists of rectangles \(U\times I\).  A multimorphism is a family of pairwise disjoint rectangular embeddings, ordered in the interval coordinate.
+
+\begin{definition}[Rectangular holomorphic--topological factorisation algebra]
+A rectangular factorisation algebra \(\mathcal O\) on \(X^{\mathrm{an}}\times\mathbb R\) satisfies:
+\begin{enumerate}
+\item Weiss descent on the product-disk basis;
+\item local constancy under isotopy in the interval variable;
+\item a holomorphic algebraisation in the \(X\)-variable by a factorisable right \(D\)-module;
+\item compatibility of that algebraisation with the finite colimits and tensor products used to form the structure maps.
+\end{enumerate}
+\end{definition}
+
+\begin{recognition}[Rectangular recognition]\label{thm:rect-recognition}
+Under the preceding algebraisation and descent hypotheses, restriction to a standard interval induces an equivalence
+\[
+ \operatorname{Fact}_{\mathrm{hol,lc}}^{\mathrm{rect}}(X\times\mathbb R)
+ \simeq
+ \Alg_{\Eone}(\FactD(X),\tensorpt).
+\]
+The internal multiplication is fusion of ordered subintervals; every operation is a morphism of chiral coefficient systems.
+\end{recognition}
+\begin{proof}
+A product-disk algebra is an algebra over the Boardman--Vogt tensor product \(\mathrm{Disk}_X\otimes\mathrm{Disk}^{\ord}_1\).  The operadic exponential law identifies its algebras with \(\Eone\)-algebras internal to \(\mathrm{Disk}_X\)-algebras.  Local constancy identifies all sufficiently small intervals through a contractible space of choices, and ordered embeddings produce the \(\Eone\)-operations.  Conversely, an internal \(\Eone\)-algebra evaluates a family of rectangles by external factorisation in \(X\), followed by ordered multiplication.  The tensor-product relation is exactly the locality square.  Weiss descent and the algebraisation hypothesis extend the equivalence from the basis to the asserted categories.
+\end{proof}
+
+\begin{warning}
+The theorem is not an equivalence between arbitrary analytic factorisation algebras and algebraic \(D\)-modules.  Irregular singularities, infinite products, non-algebraic monodromy, and failure of continuity under completion are genuine obstructions.  These are hypotheses, not notation.
+\end{warning}
+
+\section{Block-Ran recognition}
+An ordered block profile is a finite ordered list \(\mathbf I=(I_1,\ldots,I_r)\) of finite chiral label sets.  Its carrier is \(X^{I_1}\times\cdots\times X^{I_r}\).  Chiral refinements occur inside a block; transverse fusion joins adjacent blocks.  Let \(\mathrm{BRan}_X\) be the Grothendieck construction of the simplicial associative indexing category acting on the Ran diagram.
+
+\begin{theorem}[Block-Ran recognition]\label{thm:block-ran}
+Transversely ordered chiral algebras are equivalent to coCartesian sections over \(\mathrm{BRan}_X\) that are Segal in the block direction and factorising inside each chiral block.  Marking a left endpoint, right endpoint, or both endpoints gives left modules, right modules, and bimodules.  Gluing marked intervals computes relative tensor products.
+\end{theorem}
+\begin{proof}
+The simplicial nerve of an internal \(\Eone\)-algebra has \(r\)-simplices \(A^{\tensorpt r}\) and satisfies the Segal condition.  The active map \([2]\to[1]\) recovers multiplication, \([0]\to[1]\) recovers the unit, and the simplicial identities recover all coherence.  Factorisation inside each block says these maps live in \(\FactD(X)\).  Straightening and unstraightening provide inverse constructions.  The marked statements are the corresponding coloured operads.
+\end{proof}
+
+\section{Opposites and three reversals}
+Reflection of the interval, \(t\mapsto-t\), gives \(A^{\op,\perp}\) and reverses only the transverse multiplication.  Reversal of an exchange path acts on a braid or \(R\)-matrix.  Verdier duality acts on the \(D\)-module coefficient.  These operations can agree in a rigid unitary model, but in general they have different domains and cannot be merged into a single ``opposite'' operation.
+
+\begin{nogobox}[title={No-go theorem 4: order does not imply exchange}]
+The ordered chamber \(\Conf_n^{<}(\mathbb R)\) is contractible and contains no path exchanging two labelled points.  Hence an \(\Eone\)-product determines associativity but no braid generator and no \(R\)-matrix.  Exchange requires a second transverse direction, a meromorphic connection, or braided categorical input.
+\end{nogobox}
+
+\chapter{Associative chiral algebras and nonlocal vertex fields}
+
+\section{Why the second \(\Eone\) is necessary}
+The transverse theory keeps a conventional chiral coefficient and adds a line-order product.  This is the correct language for boundary operators in a holomorphic--topological theory.  It does not, by itself, construct an associative chiral multiplication whose formal fields are nonlocal.  The original motivation for an \(\Eone\)-chiral Koszul duality therefore requires an additional operad.
+
+Let \(\Assch(I)\) denote the complex of ordered chiral operations with inputs labelled by \(I\).  Geometrically, an operation is defined on the complement of collision diagonals, carries an ordering of the input flags, and extends as an allowed distribution across a specified diagonal.  Operadic substitution is composition along nested partial diagonals, with the order of flags retained.  Forgetting the order and antisymmetrising maps to the usual chiral Lie operad; imposing braided locality gives quantum-vertex-type quotients.
+
+\begin{definition}[Associative chiral multiplication]
+An associative chiral multiplication on a coefficient \(C\) is an algebra structure over \(\Assch\).  In arity two it is a distributional map
+\[
+ \mu_X:j_*j^*(C\boxtimes C)\longrightarrow \Delta_!C
+\]
+with ordered inputs.  In arity three, the two nested collision composites are related by the specified associative homotopy rather than by antisymmetrised Jacobi alone.
+\end{definition}
+
+The ordinary Beilinson--Drinfeld chiral algebra is Lie-like: its binary operation is skew after the appropriate transposition and satisfies Jacobi.  An associative chiral algebra contains more data.  Taking the commutator of ordered chiral multiplication gives a chiral Lie operation when the transposition and singular extensions are defined.
+
+\section{Formal-disc realization}
+Let \(V\) be a vector space with vacuum \(\mathbf1\) and a field map
+\[
+ Y(-,z):V\longrightarrow\End(V)((z)),
+ \qquad a\longmapsto Y(a,z)=\sum_{n\in\mathbb Z}a_{(n)}z^{-n-1}.
+\]
+
+\begin{definition}[Nonlocal vertex algebra]
+A nonlocal vertex algebra consists of \((V,Y,\mathbf1)\) such that
+\begin{enumerate}
+\item \(Y(\mathbf1,z)=\id_V\);
+\item \(Y(a,z)\mathbf1\in V[[z]]\) and its constant term is \(a\);
+\item for every \(a,b,c\in V\), there exists \(N\ge0\) with
+\[
+ (z_0+z_2)^N Y(a,z_0+z_2)Y(b,z_2)c
+ = (z_0+z_2)^N Y(Y(a,z_0)b,z_2)c.
+\]
+\end{enumerate}
+No commutativity or locality axiom is imposed.
+\end{definition}
+
+The weak associativity identity is the formal-disc image of an associative chiral three-corolla after denominators have been cleared.  It is the field-theoretic avatar of an \(\Eone\)-chiral structure, not of a transverse \(\Eone\)-word.
+
+\begin{definition}[Quantum vertex enhancement]
+A quantum vertex enhancement consists of a nonlocal vertex algebra together with an invertible rational quantum Yang--Baxter operator
+\[
+ \mathcal S(z):V\otimes V\longrightarrow V\otimes V\otimes\kfield((z))
+\]
+satisfying:
+\begin{align*}
+ &\mathcal S_{21}(-z)\mathcal S(z)=\id,\\
+ &\mathcal S_{12}(z_1)\mathcal S_{13}(z_1+z_2)\mathcal S_{23}(z_2)
+ =\mathcal S_{23}(z_2)\mathcal S_{13}(z_1+z_2)\mathcal S_{12}(z_1),\\
+ &[D\otimes1,\mathcal S(z)]=-\frac{d}{dz}\mathcal S(z),
+\end{align*}
+plus the braided locality and hexagon compatibility relating \(\mathcal S\) to \(Y\).  Here \(D(a)=\partial_zY(a,z)\mathbf1|_{z=0}\).
+\end{definition}
+
+Different authors package nondegeneracy and braided locality in slightly different but equivalent ways on suitable topologically free categories.  The invariant content is fixed: the exchange operator is extra structure and its three-body compatibility is Yang--Baxter.
+
+\begin{recognition}[Formal-disc recognition]\label{thm:formal-disc}
+Suppose an associative chiral algebra on the formal disc is translation equivariant, unital, complete for the pole/weight filtration, and its binary operations admit Laurent expansions with finite negative part on every vector.  Then its state space carries a nonlocal vertex algebra structure.  Conversely, a complete nonlocal vertex algebra satisfying the corresponding covariance and continuity conditions reconstructs an associative chiral operation on the formal disc.  A compatible \(\mathcal S\)-operator reconstructs the braided/quantum chiral enhancement.
+\end{recognition}
+\begin{proof}[Proof sketch with the exact construction]
+Expand the binary chiral distribution in a formal coordinate to define the modes \(a_{(n)}b\) and hence \(Y(a,z)b\).  The unit and translation-equivariance supply the vacuum and creation axioms.  The two boundary strata of the compactified ordered three-point collision give the two iterates; chiral associativity says their expansions agree after multiplication by a sufficient power of the common denominator, which is weak associativity.  Conversely, weak associativity gives compatible expansions on nested formal configuration domains.  Completeness glues them into the required distributional maps.  The Yang--Baxter, unitarity, and shift equations are exactly the three-point, two-point reversal, and translation compatibilities for braided exchange.
+\end{proof}
+
+\begin{nogobox}[title={No-go theorem 5: a transverse \(\Eone\)-algebra is not a quantum vertex algebra}]
+An object of \(\Alg_{\Eone}(\FactD(X),\tensorpt)\) contains no field map \(Y(a,z)b\) whose ordered chiral iterates satisfy weak associativity, and it contains no operator \(\mathcal S(z)\).  These may be supplied by the coefficient or by extra exchange data, but cannot be reconstructed from transverse multiplication alone.
+\end{nogobox}
+
+\section{The genuinely doubly noncommutative object}
+The local formal version of \cref{def:double-e1} consists of:
+\begin{enumerate}
+\item a nonlocal vertex operation \(Y_X(a,z)b\), possibly with \(\mathcal S(z)\);
+\item a transverse associative product \(a\cdot_\perp b\);
+\item mixed identities saying transverse multiplication is a morphism of nonlocal vertex algebras, or equivalently
+\[
+ Y_X(a\cdot_\perp b,z)(c\cdot_\perp d)
+ =\sum \bigl(Y_X(a,z)c\bigr)\cdot_\perp
+       \bigl(Y_X(b,z)d\bigr)
+\]
+in the aligned decomposition sector, with the appropriate braiding when factors are exchanged;
+\item all higher homotopies resolving the failure of strict equality in a derived model.
+\end{enumerate}
+This is at least doubly noncommutative: the field product need not be local, and the transverse word need not commute.  If \(\mathcal S\neq1\), exchange supplies a third noncommutative layer.
+
+\section{Elementary free construction}
+Let \(M\) be a complete translation module.  The free nonlocal vertex algebra \(T_{\mathrm{nv}}(M)\) is generated by fields corresponding to \(M\), with only vacuum, translation, and weak associativity imposed.  Let \(B\) be an augmented associative algebra.  The tensor product
+\[
+ A=B\otimes T_{\mathrm{nv}}(M)
+\]
+has transverse multiplication on \(B\) and nonlocal chiral multiplication on the second factor.  Both are explicit, and the mixed law is strict because the operations act on separate tensor factors.  Quotienting by an exchange relation generated by an \(R\)-matrix produces the Zamolodchikov--Faddeev models of \cref{chap:zf}.
+
+\chapter{Homotopy-coherent generators and relations}\label{chap:presentations}
+
+\section{Why ordinary quotients are insufficient}
+A presentation \(T(V)/(R)\) remembers generators and strict equations in an ordinary category.  In a derived coefficient category, a relation can hold by a chosen null-homotopy, two null-homotopies can differ by a second homotopy, and these choices affect bar and deformation complexes.  The correct quotient is therefore a homotopy pushout of free algebras.
+
+Fix a combinatorial monoidal model category \(\mathcal M\) presenting the desired stable symmetric monoidal \(\infty\)-category.  Assume the relevant coloured operads are admissible, well pointed, and \(\Sigma\)-cofibrant after replacement.  Let
+\[
+ \mathcal P=W\Ass_\perp\otimes W\Assch
+\]
+be a cofibrant two-direction resolution.
+
+\begin{definition}[Derived presentation]
+Let \(V\) be a collection of generators, \(R\) a collection of relation cells, and \(\partial_0,\partial_1:\Free_{\mathcal P}(R)\rightrightarrows\Free_{\mathcal P}(V)\) the two sides of each relation.  The derived algebra presented by \((V,R)\) is the homotopy coequalizer
+\[
+ A\simeq\operatorname*{hcoeq}
+ \bigl(\Free_{\mathcal P}(R)\rightrightarrows\Free_{\mathcal P}(V)\bigr),
+\]
+equivalently the corresponding homotopy pushout after adjoining relation disks.
+\end{definition}
+
+A cofibrant replacement of this homotopy coequalizer is the generators-and-relations object needed for derived mapping spaces.  A map \(A\to B\) is a choice of images of generators, null-homotopies of relations, and all higher compatibility data encoded by \(\mathcal P\).
+
+\section{Two-coloured levelled forests}
+A cell of \(\mathcal P\) is represented by a levelled forest whose internal edges are coloured \(\perp\) or \(X\).  A transverse edge resolves associative composition along the ordered line.  A chiral edge resolves nested collision.  For a forest \(T\), set
+\[
+ \operatorname{or}(T)=
+ \det\kfield E_\perp(T)\otimes\det\kfield E_X(T).
+\]
+The cellular complex is
+\[
+ \mathsf{Word}_{\mathcal P}(I)
+ =\bigoplus_T\operatorname{Dec}(T)\otimes\operatorname{or}(T)
+\]
+with
+\[
+ d=d_{\mathrm{dec}}+d_\perp+d_X.
+\]
+
+\begin{theorem}[Mixed boundary identity]\label{thm:mixed-boundary}
+With the product orientation,
+\[
+ d_\perp^2=d_X^2=0,
+ \qquad d_\perp d_X+d_Xd_\perp=0,
+\]
+and \(d_{\mathrm{dec}}\) supercommutes with both edge differentials.  Hence \(d^2=0\).
+\end{theorem}
+\begin{proof}
+A codimension-two cell has two contracted edges.  If the colours agree, the two orders give the opposite boundary orientations of the same cellular operad.  If the colours differ, both orders give the same decorated forest but exchange the two one-dimensional determinant factors, producing a minus sign.  Naturality of the decoration differential gives the remaining anticommutators.
+\end{proof}
+
+When vertices are decorated by operations, \(d_\perp^2=0\) is the Stasheff system, \(d_X^2=0\) is associative chiral coherence, and the mixed anticommutator is the entire hierarchy of locality/interchange homotopies.
+
+\section{Rectification and the \(\infty\)-category}
+\begin{theorem}[Cofibrant comparison]\label{thm:cofibrant-comparison}
+Assume:
+\begin{enumerate}
+\item \(W\Ass_\perp\), \(W\Assch\), and their tensor product are admissible;
+\item the tensor product is cofibrant;
+\item the augmentations to \(\Ass_\perp\) and \(\Assch\) tensor to a weak equivalence;
+\item change of operad along that weak equivalence is a Quillen equivalence.
+\end{enumerate}
+Then strict algebras over the target operad and homotopy-coherent algebras over \(\mathcal P\) present equivalent \(\infty\)-categories.  Derived presentations computed in either model represent the same mapping functor.
+\end{theorem}
+\begin{proof}
+The hypotheses make \(\mathcal P\to\Ass_\perp\otimes\Assch\) a cofibrant resolution and identify the localized algebra categories by change of operad.  Homotopy pushouts between cofibrant diagrams compute colimits in the localized \(\infty\)-category.
+\end{proof}
+
+This theorem is the proper relation between model-category tooling and \(\infty\)-category semantics.  A model is used to calculate; the localized mapping space is the invariant answer.
+
+\section{Low arity}
+At arity two there are two primitive binary operations \(m_\perp\) and \(m_X\).  At arity three, the codimension-one faces produce
+\begin{align*}
+ &m_\perp(m_\perp(a,b),c)-m_\perp(a,m_\perp(b,c)),\\
+ &m_X(m_X(a,b),c)-m_X(a,m_X(b,c)),
+\end{align*}
+and the mixed square compares
+\[
+ m_X(m_\perp(a,b),m_\perp(c,d))
+ \quad\text{with}\quad
+ m_\perp(m_X(a,c),m_X(b,d))
+\]
+on a common decomposition.  In a braided model, the middle factors are transported by the exchange operator before the second expression is evaluated.  At arity four the pentagons, chiral nested-collision cells, and mixed prisms appear automatically.  No independent ``coherence conjecture'' is needed: it is the cellular boundary of the cofibrant operad.
+
+\section{Homotopy transfer}
+Given a deformation retract
+\[
+ (H,d_H)\underset{p}{\stackrel{i}{\rightleftarrows}}(V,d_V),
+ \qquad ip-\id_V=d_Vh+hd_V,
+\]
+evaluate a decorated forest by placing original operations at vertices and \(h\) on internal edges.  The mixed boundary identity proves the Maurer--Cartan equation for the transferred two-direction structure.  The same formula is the algebraic skeleton of perturbative Feynman rules: interaction vertices decorate vertices, propagators decorate edges, and boundary restrictions of compactified graph configurations implement edge contraction.
+
+\begin{nogobox}[title={No-go theorem 6: incidence is not screen geometry}]
+The nerve of the incidence poset of collision strata can be contractible even when the geometric screen has nonzero cohomology.  For three points on the affine complex line, the projectivized screen is \(\mathbb P^1\setminus\{0,1,\infty\}\), whose first cohomology has rank two, whereas the incidence fibre with terminal corolla is contractible.  Therefore a poset resolution cannot replace screen chains unless a comparison theorem proves that the omitted rows are acyclic.
+\end{nogobox}

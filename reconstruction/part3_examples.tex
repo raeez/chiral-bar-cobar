@@ -1,0 +1,933 @@
+\chapter{Free and square-zero ordered chiral algebras}
+
+\section{Tensoring a coefficient by an algebra}
+Let \(F\in\FactD(X)\) be a commutative coefficient object and let \(B\) be an augmented associative dg algebra.  Then
+\[
+ A=B\otimes F
+\]
+is a transversely ordered chiral algebra: the coefficient factorises on \(X\), while the transverse multiplication is \(m_B\otimes m_F\).  If \(F\) also carries an associative chiral product, the two operations act tensor-factorwise and give the first strict doubly associative examples.
+
+This construction is elementary but decisive.  It proves that the chiral OPE does not determine the transverse bar: varying \(B\) while fixing \(F\) changes \(\Tor^B(\kfield,\kfield)\) and leaves every chiral singular coefficient unchanged.
+
+\section{The free algebra}
+Let \(B=T(V)\) with the standard augmentation.
+
+\begin{theorem}[Bar of a free algebra]\label{thm:free-bar}
+There is a natural deformation retract
+\[
+ \Barop(T(V))\simeq \kfield\oplus sV.
+\]
+Equivalently,
+\[
+ \Tor^{T(V)}_0(\kfield,\kfield)=\kfield,
+ \qquad
+ \Tor^{T(V)}_1(\kfield,\kfield)=V,
+ \qquad
+ \Tor^{T(V)}_r(\kfield,\kfield)=0\quad(r\ge2).
+\]
+The same statement holds internally after tensoring with a factorisable coefficient.
+\end{theorem}
+\begin{proof}
+Fix a word \(v_1\cdots v_n\) in the generators.  The normalized bar subcomplex spanned by all ways of inserting bars between its letters is the augmented cellular chain complex of the \((n-1)\)-simplex of cuts.  If \(n>1\), the extra degeneracy that removes the first cut contracts this complex.  If \(n=1\), one suspended generator remains.  Summing over all words gives the retract.
+\end{proof}
+
+The theorem supplies a strong diagnostic: any table claiming large higher bar homology for a free transverse algebra is counting chain states, configuration coefficients, or a different differential.
+
+\section{The square-zero algebra}
+Let \(B=\kfield\oplus M\) with \(M^2=0\).
+
+\begin{proposition}[Bar of a square-zero algebra]\label{prop:square-zero}
+The multiplication part of the normalized bar differential vanishes, and
+\[
+ \Barop(B)=T^c(sM)
+\]
+with only the internal differential.  If \(M\) is a \(d\)-dimensional vector space in degree zero, then
+\[
+ \dim\Tor_r^B(\kfield,\kfield)=d^r,
+ \qquad
+ P_B(t)=\frac{1}{1-dt}.
+\]
+\end{proposition}
+\begin{proof}
+Every adjacent multiplication in the augmentation ideal is zero, so every normalized word is a cycle and no nonzero word is a bar boundary.
+\end{proof}
+
+Free and square-zero algebras have the same generator space and maximally different bars.  This is the cleanest proof of multiplication dependence.
+
+\section{A first nonlocal factor}
+Let \(T_{\mathrm{nv}}(M_X)\) be the free nonlocal vertex algebra of \cref{thm:formal-disc}.  Then
+\[
+ T(V_\perp)\otimes T_{\mathrm{nv}}(M_X)
+\]
+is free in both associative directions.  Its transverse bar contracts to \(\kfield\oplus sV_\perp\) while its associative chiral bar retains the nonlocal composition trees of \(M_X\).  Replacing \(T(V_\perp)\) by \(\kfield\oplus V_\perp\) changes the first bar to a tensor coalgebra and leaves the second unchanged.  This is the basic calculational laboratory for the theorem of two bars.
+
+\chapter{The quantum and Jordan planes}\label{chap:planes}
+
+\section{The quantum plane}
+Fix \(q\in\kfield^\times\) and set
+\[
+ A_q=\kfield\langle x,y\rangle/(yx-qxy),
+ \qquad \eps(x)=\eps(y)=0.
+\]
+Orient the relation as \(yx\mapsto qxy\).  Every word reduces uniquely to \(x^ay^b\), so these monomials form a PBW basis and
+\[
+ H_{A_q}(z)=\frac{1}{(1-z)^2}.
+\]
+
+\begin{theorem}[Quantum-plane Koszul resolution]\label{thm:qplane}
+The complex of free left modules
+\[
+ 0\longrightarrow A_q(-2)
+ \xrightarrow{\ d_2\ }
+ A_q(-1)^{\oplus2}
+ \xrightarrow{\ d_1\ }
+ A_q\xrightarrow{\eps}\kfield\longrightarrow0,
+\]
+with
+\[
+ d_1(a,b)=ax+by,
+ \qquad
+ d_2(c)=(cy,-cq x),
+\]
+is exact.  Consequently
+\[
+ \Tor_*^{A_q}(\kfield,\kfield)
+ \cong \kfield\oplus \kfield\{sx,sy\}
+ \oplus\kfield\{\omega_q\},
+\]
+where \(|\omega_q|=2\), and a normalized bar representative is
+\[
+ \omega_q=[y|x]-q[x|y].
+\]
+The Poincare polynomial is \(1+2t+t^2\).
+\end{theorem}
+\begin{proof}
+The identity \(d_1d_2(c)=c(yx-qxy)=0\) proves that this is a complex.  The PBW basis and Hilbert-series identity
+\[
+ H_{A_q}(z)(1-2z+z^2)=1
+\]
+show that the graded Euler characteristic equals that of \(\kfield\).  The leading monomials in the two maps are compatible with the one-relation Grobner basis, so no hidden syzygy occurs; equivalently, the single quadratic relation has the displayed linear syzygy and the complex is the standard quadratic Koszul complex.  Tensoring with \(\kfield\) kills both differentials.  In the bar complex,
+\(
+ b([y|x]-q[x|y])=yx-qxy=0.
+\)
+\end{proof}
+
+The quadratic dual is
+\[
+ A_q^!=\kfield\langle\xi,\eta\rangle/
+ (\xi^2,\eta^2,\xi\eta+q\eta\xi).
+\]
+The ordered parameter \(q\) survives in the Yoneda product even though the ungraded Betti numbers agree with the commutative plane.
+
+\section{The Jordan plane}
+Set
+\[
+ A_J=\kfield\langle x,y\rangle/(yx-xy-x^2),
+ \qquad \eps(x)=\eps(y)=0.
+\]
+The rule \(yx\mapsto xy+x^2\) terminates and has no unresolved critical ambiguity, so \(x^ay^b\) again form a PBW basis.
+
+\begin{theorem}[Jordan-plane Koszul resolution]\label{thm:jordan}
+The complex
+\[
+ 0\longrightarrow A_J(-2)
+ \xrightarrow{\ d_2\ }
+ A_J(-1)^{\oplus2}
+ \xrightarrow{\ d_1\ }
+ A_J\xrightarrow{\eps}\kfield\longrightarrow0,
+\]
+with
+\[
+ d_1(a,b)=ax+by,
+ \qquad
+ d_2(c)=(c(y-x),-cx),
+\]
+is exact.  Thus
+\[
+ P_{\Tor^{A_J}(\kfield,\kfield)}(t)=1+2t+t^2,
+\]
+and the degree-two bar class is represented by
+\[
+ \omega_J=[y|x]-[x|y]-[x|x].
+\]
+\end{theorem}
+\begin{proof}
+The composite is \(c((y-x)x-xy)=c(yx-xy-x^2)=0\).  The quadratic rewriting system gives the same Hilbert series as the polynomial plane and the displayed complex is its Grobner--Koszul resolution.  Tensoring with the augmentation module makes both differentials zero.  The bar boundary of \(\omega_J\) is the defining relation.
+\end{proof}
+
+The quantum and Jordan planes have identical Betti numbers but inequivalent products, normal forms, quadratic duals, and module categories.  Numerical dimensions alone cannot classify the algebra.
+
+\section{Independent chain-matrix verification}
+The verification script enumerates all normalized bar words of fixed total polynomial weight, constructs the exact rational differential matrix, and computes ranks.  For the quantum plane it specializes to \(q=2\); the ranks are generic away from the finite determinantal exceptional locus.  The results through weight five are:
+
+\begin{center}
+\begin{tabular}{c c c c c c}
+\toprule
+algebra & weight & degree & chain dimension & outgoing rank & homology dimension\\
+\midrule
+\(A_q\) &1&1&2&0&2\\
+\(A_q\) &2&1&3&0&0\\
+\(A_q\) &2&2&4&3&1\\
+\(A_q\) &3&1&4&0&0\\
+\(A_q\) &3&2&12&4&0\\
+\(A_q\) &3&3&8&8&0\\
+\midrule
+\(A_J\) &1&1&2&0&2\\
+\(A_J\) &2&1&3&0&0\\
+\(A_J\) &2&2&4&3&1\\
+\(A_J\) &3&1&4&0&0\\
+\(A_J\) &3&2&12&4&0\\
+\(A_J\) &3&3&8&8&0\\
+\bottomrule
+\end{tabular}
+\end{center}
+All weights four and five have zero homology.  The script separately evaluates the displayed cycles and obtains zero boundary exactly.
+
+\section{Internal chiral realization}
+Let \(F\) be any augmented commutative factorisation coefficient.  Replacing \(x,y\) by generator objects \(x\otimes F,y\otimes F\) and interpreting the relation as a morphism in \(\FactD(X)\) gives quantum- and Jordan-plane ordered chiral algebras.  Their transverse bars are the preceding Koszul coalgebras tensored with the coefficient powers, while every collision map of \(F\) remains present.  If \(F\) is an associative chiral/nonlocal coefficient, these become strict doubly associative examples.
+
+\chapter{Augmentation obstructions, Weyl curvature, and matrix sectors}\label{chap:augmentation}
+
+\section{The Weyl obstruction}
+Let
+\[
+ W_1=\kfield\langle x,y\rangle/(yx-xy-1).
+\]
+
+\begin{theorem}[No scalar augmentation for the Weyl algebra]\label{thm:weyl-noaug}
+There is no unital algebra map \(W_1\to\kfield\).  Hence \(\kfield\otimes_{W_1}^{\mathbb L}\kfield\) with the alleged ``zero-generator augmentation'' is not defined.
+\end{theorem}
+\begin{proof}
+Applying a map to the defining relation gives \(\eps(y)\eps(x)-\eps(x)\eps(y)=1\).  The left side is zero in a commutative field, a contradiction.
+\end{proof}
+
+The correct replacements are typed.
+\begin{enumerate}
+\item The homogenized/Rees algebra
+\[
+ W_{\hbar}=\kfield[\hbar]\langle x,y\rangle/(yx-xy-\hbar),
+\]
+with \(\hbar\) central, has an augmentation as a \(\kfield\)-algebra only if \(\hbar\mapsto0\).  Its fibre at \(\hbar=0\) is the commutative plane, while the fibre at \(\hbar=1\) is not augmented.
+\item The nonhomogeneous quadratic dual is curved.  The constant term produces a curvature element \(h\) with \(d^2=[h,-]\), as in \cref{thm:curved-pbw}.
+\item A relative bar can be formed for a specified module or boundary idempotent without inventing a scalar augmentation.
+\end{enumerate}
+
+\begin{calcbox}[title={Curved dual of the first Weyl algebra}]
+The quadratic part is the polynomial plane, whose dual is the exterior algebra \(\Lambda(\xi,\eta)\).  The constant functional on the relation becomes, up to the suspension convention, the curvature
+\[
+ h=\xi\eta.
+\]
+There is no differential in the homogeneous two-generator case, and the curved identity is \(d^2=[h,-]=0\) because \(h\) is central in the graded exterior algebra.  Curvature records exactly why the ordinary augmentation and ordinary cohomology differential are unavailable after setting \(\hbar=1\).
+\end{calcbox}
+
+\section{The matrix obstruction}
+\begin{theorem}[No scalar augmentation for a full matrix algebra]\label{thm:matrix-noaug}
+For \(n>1\), there is no unital algebra map \(M_n(\kfield)\to\kfield\).
+\end{theorem}
+\begin{proof}
+The kernel of a unital homomorphism is a proper two-sided ideal.  Since \(M_n(\kfield)\) is simple, the kernel is zero, so the map would be injective.  Its image lies in a commutative algebra, forcing all matrix commutators to vanish, a contradiction.
+\end{proof}
+
+Matrix-valued fields are perfectly valid ordered chiral algebras, but their bar must be relative to a module, an idempotent, or a larger augmented algebra.  Morita invariance is the right language; a fictitious trace augmentation is not.  The ordinary matrix trace is linear and cyclic but not multiplicative.
+
+\section{An augmented noncommutative Frobenius algebra}
+Let \(D=\kfield[\epsilon]/(\epsilon^2)\) and
+\[
+ B_n=D\times M_n(\kfield),
+ \qquad
+ \eps_B(a+b\epsilon,M)=a.
+\]
+This algebra is noncommutative for \(n>1\) and genuinely augmented.  Give it the symmetric Frobenius trace
+\[
+ \tau_B(a+b\epsilon,M)=b+\Tr(M).
+\]
+The pairing \(\langle u,v\rangle=\tau_B(uv)\) is nondegenerate: the dual-number block pairs \(1\) with \(\epsilon\), and the matrix block has the trace pairing.
+
+\begin{proposition}[Bar and handle element of \(B_n\)]\label{prop:Bn}
+As an augmented algebra,
+\[
+ \kfield\otimes_{B_n}^{\mathbb L}\kfield
+ \simeq
+ \kfield\otimes_D^{\mathbb L}\kfield
+ \simeq T^c(s\kfield\epsilon).
+\]
+Thus \(\dim\Tor_r^{B_n}(\kfield,\kfield)=1\) for every \(r\ge0\).  The Frobenius handle element is
+\[
+ e_{B_n}=(2\epsilon,nI_n).
+\]
+Consequently
+\[
+ \tau_B(e_{B_n})=2+n^2,
+ \qquad
+ \tau_B(e_{B_n}^g)=n^{g+1}\quad(g\ge2).
+\]
+\end{proposition}
+\begin{proof}
+Modules over a direct product decompose.  The augmentation module is \((\kfield,0)\), so its derived tensor product over \(D\times M_n\) is the derived tensor product over \(D\).  Since the augmentation ideal of \(D\) is one-dimensional square-zero, \cref{prop:square-zero} gives the tensor coalgebra.  For the handle element, the basis \((1,\epsilon)\) of \(D\) has dual basis \((\epsilon,1)\), yielding \(2\epsilon\).  The matrix units \(E_{ij}\) have duals \(E_{ji}\), and \(\sum_{ij}E_{ij}E_{ji}=nI_n\).  Powers are computed blockwise.
+\end{proof}
+
+This single algebra simultaneously supplies noncommutativity, a legitimate augmentation, a nontrivial infinite bar, and an exact cyclic trace.  It will realize the transverse genus in \cref{chap:two-genus-example}.
+
+\begin{nogobox}[title={No-go theorem 13: a trace is not an augmentation}]
+A cyclic trace \(\tau(ab)=\tau(ba)\) is generally not multiplicative.  Replacing an augmentation by a trace changes a module-valued derived tensor product into a scalar pairing and invalidates the bar faces.  Matrix traces, path-integral expectation values, and conformal-block traces must be used in their native cyclic constructions.
+\end{nogobox}
+
+\chapter{Relative quiver bars and boundary conditions}\label{chap:quiver}
+
+\section{The natural base}
+Let \(Q\) be a finite quiver, let
+\[
+ S=\bigoplus_{i\in Q_0}\kfield e_i,
+ \qquad
+ M=\bigoplus_{a:i\to j}e_jMe_i,
+\]
+and let \(T_S(M)\) be the path algebra.  The map killing all arrows and fixing vertex idempotents is an augmentation to \(S\).  Relations generate an \(S\)-subbimodule ideal.
+
+The relative bar
+\[
+ \Barop_S(A)=S\otimes_A^{\mathbb L}S
+\]
+retains object labels and only allows tensors of composable arrows.  It is the algebraic form of a category of boundary conditions: vertices are boundaries, arrows are boundary-changing operators, and paths are ordered compositions.
+
+\section{A complete quadratic example}
+Consider
+\[
+ 1\xrightarrow{a}2\xrightarrow{b}3,
+ \qquad
+ A=\kfield Q/(ba).
+\]
+The relative augmentation ideal is spanned by \(a,b\).  The only composable length-two tensor is \(b\tensorS a\), and the defining relation makes its boundary zero.
+
+\begin{theorem}[Relative bar of the relation quiver]\label{thm:quiver-bar}
+As an \(S\)-bimodule,
+\[
+ \Tor_0^A(S,S)=S,
+ \qquad
+ \Tor_1^A(S,S)=\kfield a\oplus\kfield b,
+ \qquad
+ \Tor_2^A(S,S)=\kfield[b|a],
+\]
+and \(\Tor_r^A(S,S)=0\) for \(r\ge3\).
+\end{theorem}
+\begin{proof}
+The normalized relative bar has \(C_1=\kfield a\oplus\kfield b\), \(C_2=\kfield[b|a]\), and no composable words of length three.  Its only possible differential sends \([b|a]\) to \(ba=0\).  There are no incoming boundaries.  Adjoining \(C_0=S\) gives the result.
+\end{proof}
+
+For the free path algebra with no relation, the same differential sends \([b|a]\) to the nonzero path \(ba\), and the degree-two homology disappears.  The relative bar therefore detects the relation itself.
+
+\section{Simple modules and Ext}
+Let \(S_i=e_iS\) be the simple at vertex \(i\).  Cutting the relative bar by vertex idempotents computes derived boundary-changing fields:
+\[
+ e_j\Tor_r^A(S,S)e_i\cong\Tor_r^A(S_j,S_i).
+\]
+For the example,
+\[
+ \Tor_1^A(S_2,S_1)=\kfield a,
+ \quad
+ \Tor_1^A(S_3,S_2)=\kfield b,
+ \quad
+ \Tor_2^A(S_3,S_1)=\kfield[b|a].
+\]
+The degree-two class is a derived composite whose strict product vanishes.  It is the simplest explicit instance of a relation surviving as a higher boundary field.
+
+\section{Factorisation-family version}
+Let the arrow spaces be factorisable coefficient objects on \(X\), and form the internal tensor algebra over the vertex coefficient \(S\).  If the relation morphisms are compatible with disjoint restriction and diagonal extension, the relative path algebra is a transversely ordered chiral algebra.  Marked block-Ran sections recover its module categories.  A second associative chiral operation on each arrow coefficient produces a doubly associative quiver algebra, with mixed relations imposed by the derived presentation of \cref{chap:presentations}.
+
+\begin{nogobox}[title={No-go theorem 14: multi-idempotent quivers require a relative base}]
+A scalar augmentation chooses a single linear combination of vertices and forgets the object decomposition.  The canonical bar of a quiver category is \(S\otimes_A^{\mathbb L}S\), not \(\kfield\otimes_A^{\mathbb L}\kfield\), unless a separate scalar boundary object has been specified.
+\end{nogobox}
+
+\chapter{Enveloping algebras and the exact audit of the legacy sequences}\label{chap:enveloping}
+
+\section{Cartan--Eilenberg comparison}
+Let \(\mathfrak g\) be a dg Lie algebra object in the coefficient category and \(U(\mathfrak g)\) its augmented enveloping algebra.
+
+\begin{theorem}[Enveloping bar]\label{thm:enveloping-bar}
+The antisymmetrisation twisting map induces a natural quasi-isomorphism
+\[
+ \CE_*(\mathfrak g)
+ =\bigl(\Sym^c(s\mathfrak g),d_{\mathfrak g}+d_{[-,-]}\bigr)
+ \xrightarrow{\sim}
+ \Barop^\perp(U(\mathfrak g)).
+\]
+\end{theorem}
+\begin{proof}
+Filter both complexes by PBW degree.  The associated graded of \(U(\mathfrak g)\) is \(\Sym(\mathfrak g)\).  The comparison becomes the standard Koszul quasi-isomorphism from the exterior/symmetric coalgebra to the bar of a polynomial algebra.  The complete, bounded-below filtration spectral sequence lifts the equivalence.
+\end{proof}
+
+For a finite-dimensional semisimple Lie algebra over \(\mathbb C\),
+\[
+ H^*(\mathfrak g;\mathbb C)
+ \cong\Lambda(\zeta_{2m_1+1},\ldots,\zeta_{2m_r+1}),
+\]
+where \(m_i\) are the exponents.  By duality the same Poincare polynomial describes homology.
+
+\begin{calcbox}[title={The \(\mathfrak{sl}_2\) chain matrix}]
+Take \([h,e]=2e\), \([h,f]=-2f\), \([e,f]=h\).  In bases
+\[
+ C_1=(e,f,h),\qquad C_2=(e\wedge f,e\wedge h,f\wedge h),
+\]
+the Chevalley differential is
+\[
+ d_2=
+ \begin{pmatrix}
+ 0&-2&0\\
+ 0&0&2\\
+ 1&0&0
+ \end{pmatrix},
+ \qquad d_3=0.
+\]
+Thus \(d_2\) has rank three and
+\[
+ H_0\cong\mathbb C,
+ \quad H_1=H_2=0,
+ \quad H_3\cong\mathbb C,
+ \qquad P(t)=1+t^3.
+\]
+\end{calcbox}
+
+The standard exact values are
+\begin{align*}
+ U(\mathfrak{sl}_2):&\quad 1+t^3,\\
+ U(\mathfrak{sl}_3):&\quad(1+t^3)(1+t^5)=1+t^3+t^5+t^8,\\
+ U(\mathfrak g_2):&\quad(1+t^3)(1+t^{11})=1+t^3+t^{11}+t^{14}.
+\end{align*}
+
+\section{Three chain models}
+The repository tables had mixed three objects:
+\begin{enumerate}
+\item the interval bar \(\Barop^\perp(A)\), whose differential uses transverse multiplication;
+\item chiral Chevalley chains, whose differential uses a diagonal-supported chiral Lie bracket;
+\item a screen-enhanced bicomplex
+\[
+ B^{p,q}_{\mathrm{scr}}(A)=
+ (s\widebar A)^{\tensorpt p}\otimes C^q_{\mathrm{scr}}
+\]
+with total differential \(b_A+d_A+d_{\mathrm{scr}}+\delta_{\mathrm{int}}\).
+\end{enumerate}
+Only the third can contain both bar words and configuration-space cohomology, and only after the interaction differential is supplied and shown to square to zero.
+
+Filtering by screen degree gives an \(E_1\)-page
+\[
+ E_1^{p,q}=H^q(C_{\mathrm{scr}})\otimes B_p^\perp(A),
+\]
+while filtering by bar length gives
+\[
+ {}'E_1^{p,q}=\Tor_p^A(\one,\one)\otimes C^q_{\mathrm{scr}}.
+\]
+A product of dimensions on an \(E_1\)-page is not automatically the dimension of total homology.
+
+\section{The planar sequences}
+The Motzkin generating function is
+\[
+ M(z)=1+zM(z)+z^2M(z)^2
+ =\frac{1-z-\sqrt{1-2z-3z^2}}{2z^2}.
+\]
+For \(a_n=M_{n+1}-M_n\),
+\[
+ \sum_{n\ge1}a_nz^n
+ =\frac{4z}{\bigl(1-z+\sqrt{1-2z-3z^2}\bigr)^2},
+\]
+with first values
+\[
+ 1,2,5,12,30,76,196,512,1353,3610.
+\]
+The Riordan series is
+\[
+ R(z)=\frac{1+z-\sqrt{1-2z-3z^2}}{2z(1+z)}.
+\]
+Both have dominant singularity \(z=1/3\) and exponential growth rate three.  These are correct combinatorial facts.
+
+\begin{theorem}[Exact audit of the Motzkin and Riordan claims]\label{thm:legacy-audit}
+The displayed sequences are not the ordered bar homology of \(U(\mathfrak{sl}_2)\), and a Virasoro chiral coefficient does not determine a transverse bar whose dimensions are Motzkin differences.  The former is contradicted by \cref{thm:enveloping-bar}; the latter fails because the same Virasoro coefficient can be tensored with free, square-zero, enveloping, or quantum-plane transverse algebras having different bars.
+\end{theorem}
+\begin{proof}
+For \(U(\mathfrak{sl}_2)\), the exact Chevalley calculation gives only degrees zero and three.  For the Virasoro statement, choose a fixed Virasoro factorisation coefficient \(F_{\mathrm{Vir},c}\) and form \(B\otimes F_{\mathrm{Vir},c}\) for the four transverse algebras listed.  The coefficient and central charge are unchanged while the interval bar varies with \(B\).
+\end{proof}
+
+\Cref{thm:legacy-audit} refutes the \(\mathfrak{sl}_2\) claim by computing the
+answer and the Virasoro claim by non-determination.  The Virasoro row admits the
+stronger statement: in its transverse enveloping presentation the bar homology is
+known exactly, and it leaves no room for a Motzkin difference.
+
+\section{The Virasoro row computed}
+The transverse presentation of the Virasoro family is the enveloping algebra of
+the positive Witt algebra
+\[
+ L_1=\bigoplus_{n\ge1}\kfield\,e_n,
+ \qquad
+ [e_i,e_j]=(j-i)e_{i+j},
+\]
+to which \cref{thm:enveloping-bar} applies: \(L_1\) is positively graded with
+one-dimensional weight spaces, so every weight has finitely many decompositions.
+
+\begin{theorem}[Pentagonal rigidity]\label{thm:pentagonal}
+The bar homology of \(U(L_1)\) satisfies
+\[
+ \dim H^n\bigl(\Barop^{\perp}U(L_1)\bigr)=2
+ \qquad\text{for every }n\ge1,
+\]
+one dimension in each of the weights \((3n^2-n)/2\) and \((3n^2+n)/2\).  Its
+graded Euler character is
+\begin{equation}\label{eq:witt-euler}
+ \chi_q\bigl(\Barop^{\perp}U(L_1)\bigr)=\prod_{n\ge1}\bigl(1-q^n\bigr),
+\end{equation}
+and \eqref{eq:witt-euler} is accounted for degree by degree with no residual
+freedom.
+\end{theorem}
+\begin{proof}
+By \cref{thm:enveloping-bar} the bar of \(U(L_1)\) is \(\CE_*(L_1)\), whose
+cohomology is Goncharova's \cite{Goncharova1973}: two dimensional in each degree
+\(n\ge1\), in the weights \((3n^2\mp n)/2\).  Identity \eqref{eq:witt-euler} is
+\cref{thm:bar-denominator} applied to \(L_1\), where every root space is one
+dimensional and even, so \(\sdim(L_1)_n=1\).  Euler's pentagonal number theorem
+expands the product as \(\sum_{m\in\mathbb Z}(-1)^mq^{m(3m-1)/2}\), whose support
+is exactly \(\{(3n^2\pm n)/2\}\) with coefficient \((-1)^n\) at each of
+\((3n^2-n)/2\) and \((3n^2+n)/2\).  Comparing with \(\sum_n(-1)^n\dim H^n_w\),
+each weight of the Euler character is saturated by a single class in the degree
+Goncharova predicts, so no further classes and no cancellation are available.
+\end{proof}
+
+\begin{statusbox}
+Computationally verified.  The cohomology was computed for \(n=1,2,3,4\) by exact
+rational elimination on the weight-graded Chevalley--Eilenberg complex of
+\(L_1\), with \(d^2=0\) asserted on every cochain space rather than assumed,
+occupying the weights \((1,2)\), \((5,7)\), \((12,15)\), \((22,26)\), one
+dimension in each.  The nonzero coefficients of \(\prod_{n\ge1}(1-q^n)\) occupy
+\(0,1,2,5,7,12,15,22,26\) with signs \(+,-,-,+,+,-,-,+,+\).  Harness:
+\texttt{compute/lib/witt\_pentagonal\_rigidity.py},
+\texttt{compute/tests/test\_witt\_pentagonal\_rigidity.py}.
+\end{statusbox}
+
+\begin{proposition}[The two sequences are one sequence]\label{prop:one-sequence}
+For all \(n\ge0\),
+\[
+ M(n)=R(n)+R(n+1),
+ \qquad
+ M(n+1)-M(n)=R(n+2)-R(n).
+\]
+The Virasoro sequence is therefore \(R(n+2)-R(n)\) and the \(\mathfrak{sl}_2\)
+sequence is \(R(n+3)\): both are elementary transforms of one sequence, and their
+generating functions are rational in the single algebraic function
+\(\sqrt{1-2z-3z^2}\) for that reason alone.  No Drinfeld--Sokolov input is used
+or needed to explain the shared discriminant.
+\end{proposition}
+\begin{proof}
+Riordan numbers count Motzkin paths with no level step at height zero.  Splitting
+a Motzkin path of length \(n\) according to whether its first step is level gives
+\(M(n)=R(n)+R(n+1)\); subtracting consecutive instances gives the second
+identity.  Both were checked termwise for \(n<24\).
+\end{proof}
+
+\begin{remark}[Where the Virasoro formula appears to hold]
+On degrees \(n=1,2,3\) the true dimensions are \(2,2,2\) by
+\cref{thm:pentagonal} while the asserted values are \(1,2,5\).  The two agree at
+\(n=2\) and nowhere else.  A formula tested at that degree alone reproduces the
+truth, which is the mechanism by which a constant sequence is mistaken for a
+Motzkin difference.
+\end{remark}
+
+\begin{remark}[The type error beneath the numerical one]
+The bar homology of \(U(L_1)\) is bigraded by cohomological degree and weight,
+and is finite in each degree only because \cref{thm:pentagonal} concentrates it
+in two weights.  A formula assigning one integer to each degree, with no weight
+truncation named, does not specify an invariant of a graded object with
+infinite-dimensional graded pieces.
+\end{remark}
+
+\begin{nogobox}[title={No-go theorem 15: a scalar sequence is not homology data}]
+A sequence of integers becomes bar homology only after a chain complex, differential, grading convention, and quasi-isomorphism or rank computation are specified.  Matching initial values, discriminants, or growth rates does not construct such a map.
+\end{nogobox}
+
+\chapter{Zamolodchikov--Faddeev algebras as doubly noncommutative fields}\label{chap:zf}
+
+\section{Exchange presentation}
+Let \(V\) be finite dimensional and
+\[
+ R(u)\in\End(V\otimes V)\otimes\kfield(u)
+\]
+be invertible away from a specified pole divisor.  Introduce generators \(Z_i(u)\) and relations
+\[
+ Z_i(u)Z_j(v)=
+ \sum_{k,l}R_{ij}^{kl}(u-v)Z_l(v)Z_k(u).
+\]
+The spectral variable belongs to the chiral/meromorphic direction; the word belongs to the ordered associative direction.  The relation reverses order and transports the coefficient.
+
+Fix finitely many distinct spectral labels \(u_1,\ldots,u_m\), choose a total order, and orient every relation toward increasing labels.
+
+\begin{theorem}[Confluence is Yang--Baxter]\label{thm:zf-diamond}
+Assume
+\[
+ R(u)R_{21}(-u)=1.
+\]
+The oriented exchange relations are terminating and confluent exactly when
+\[
+ R_{12}(u-v)R_{13}(u-w)R_{23}(v-w)
+ =R_{23}(v-w)R_{13}(u-w)R_{12}(u-v).
+\]
+When these equations hold, ordered spectral words form a basis over the localized spectral field.
+\end{theorem}
+\begin{proof}
+The inversion number of a spectral word decreases under each oriented exchange, so reduction terminates.  Every irreducible critical overlap has three adjacent labels.  The two reduced expressions of the longest permutation in \(S_3\) produce the two sides of the Yang--Baxter equation.  A relation followed by its reverse gives the length-two ambiguity, resolved by unitarity.  Bergman's diamond lemma gives unique normal forms.
+\end{proof}
+
+This theorem is an exact generators-and-relations construction of a doubly noncommutative algebra.  It is not a recognition by analogy: the complete basis and the three-body obstruction are explicit.
+
+\section{The rational matrix}
+Let \(P(x\otimes y)=y\otimes x\) and
+\[
+ R(u)=1-\frac{\hbar P}{u}.
+\]
+The permutation identities
+\[
+ P_{12}P_{13}=P_{23}P_{12},\quad
+ P_{13}P_{23}=P_{12}P_{13},\quad
+ P_{12}P_{23}=P_{13}P_{12}
+\]
+verify Yang--Baxter after clearing denominators.  Since
+\[
+ R(u)R_{21}(-u)=1-\frac{\hbar^2}{u^2},
+\]
+a scalar factor \(f(u)\) with
+\[
+ f(u)f(-u)=\left(1-\frac{\hbar^2}{u^2}\right)^{-1}
+\]
+produces a unitary normalization.
+
+\section{A scalar braided exterior bar}
+If \(V\) is one-dimensional and the exchange coefficient for labels \(a<b\) is a nonzero scalar \(q_{ab}\), the finite-label algebra is multiparameter quantum affine space:
+\[
+ z_bz_a=q_{ab}z_az_b.
+\]
+It is a quadratic PBW algebra.  Its Koszul dual is the braided exterior algebra generated by \(\xi_a\) with
+\[
+ \xi_a^2=0,
+ \qquad
+ \xi_b\xi_a=-q_{ab}^{-1}\xi_a\xi_b.
+\]
+Hence the bar homology is completely explicit: one basis class for every subset of spectral labels, with the order and braiding recorded in the product.  This is the simplest calculational bridge from ZF exchange to chiral Koszul duality.
+
+\begin{nogobox}[title={No-go theorem 16: an exchange relation without Yang--Baxter has no coherent three-field algebra}]
+Pairwise rewrite rules can be written for any invertible \(R(u)\), but a three-letter word has two reduction paths.  Their equality is exactly Yang--Baxter.  Without it, the proposed generators-and-relations algebra has unresolved critical pairs and cannot define a coherent quantum vertex or braided factorisation structure.
+\end{nogobox}
+
+\chapter{RTT Yangians and the bar filtration}\label{chap:yangian}
+
+\section{RTT presentation}
+Set
+\[
+ T(u)=1+\sum_{r\ge1}T^{(r)}u^{-r},
+ \qquad T^{(r)}=(t_{ij}^{(r)})_{1\le i,j\le n}.
+\]
+The Rees RTT Yangian \(Y_\hbar^{\mathrm{RTT}}(\mathfrak{gl}_n)\) is generated over \(\kfield[\hbar]\) by the coefficients subject to
+\[
+ R(u-v)T_1(u)T_2(v)=T_2(v)T_1(u)R(u-v),
+ \qquad R(u)=1-\frac{\hbar P}{u}.
+\]
+Equivalently, with \(t_{ij}^{(0)}=\delta_{ij}\),
+\[
+ [t_{ij}^{(r+1)},t_{kl}^{(s)}]-[t_{ij}^{(r)},t_{kl}^{(s+1)}]
+ =\hbar\bigl(t_{kj}^{(r)}t_{il}^{(s)}-t_{kj}^{(s)}t_{il}^{(r)}\bigr).
+\]
+
+\section{Hopf structure}
+The formulas
+\[
+ \Delta T(u)=T_{13}(u)T_{23}(u),
+ \qquad \eps(T(u))=1,
+ \qquad S(T(u))=T(u)^{-1}
+\]
+define a Hopf algebra.  The proof moves auxiliary \(R\)-matrices through the product using Yang--Baxter.  The counit gives a genuine augmentation, so the ordered bar is defined.
+
+For \(n=2\),
+\[
+ \qdet T(u)=t_{11}(u)t_{22}(u-\hbar)-t_{12}(u)t_{21}(u-\hbar)
+\]
+is central and group-like.  The quotient \(\qdet T(u)=1\) is the \(\mathfrak{sl}_2\) RTT Yangian.
+
+\section{PBW and current shadow}
+Give \(t_{ij}^{(r)}\) loop degree \(r-1\).  The PBW theorem gives
+\[
+ \gr_{\mathrm{loop}}Y_\hbar^{\mathrm{RTT}}(\mathfrak{gl}_n)
+ \cong U_\hbar(\mathfrak{gl}_n[t]),
+\]
+and ordered monomials in the \(t_{ij}^{(r)}\) form a \(\kfield[\hbar]\)-basis.  The \(\hbar\)-adic completion is topologically free with the same basis.
+
+\begin{theorem}[Yangian bar spectral sequence]\label{thm:yangian-bar-ss}
+Filter the normalized bar of the augmented RTT Yangian by total loop degree.  Under the usual bounded-below and completion hypotheses, there is a multiplicative spectral sequence
+\[
+ E^1\cong H_*\bigl(\mathfrak{gl}_n[t];\kfield\bigr)[[\hbar]]
+ \Longrightarrow
+ \Tor_*^{Y_\hbar^{\mathrm{RTT}}(\mathfrak{gl}_n)}(\kfield,\kfield).
+\]
+For a finite current truncation, the same construction is an ordinary finite-filtration spectral sequence.
+\end{theorem}
+\begin{proof}
+The PBW filtration on the algebra induces a filtration on every bar length.  The associated graded bar is the bar of the current Rees enveloping algebra.  By \cref{thm:enveloping-bar}, its homology is the current Lie algebra's Chevalley homology.  Standard convergence of the complete filtered bar gives the abutment.
+\end{proof}
+
+No general collapse is asserted.  The differentials encode the difference between the Yangian and its current shadow.
+
+\section{The exactly calculable abelian case}
+For \(\mathfrak{gl}_1\), RTT is commutative and
+\[
+ Y(\mathfrak{gl}_1)\cong\kfield[t^{(1)},t^{(2)},\ldots].
+\]
+Thus
+\[
+ \Tor_*^{Y(\mathfrak{gl}_1)}(\kfield,\kfield)
+ \cong\Lambda(s t^{(1)},s t^{(2)},\ldots).
+\]
+For the subalgebra on the first \(N\) coefficients, the ungraded Poincare polynomial is \((1+t)^N\).  This is a genuine Yangian bar calculation, not a recognition slogan.
+
+\section{Ordered chiral interpretation}
+The coefficients \(T_{ij}(u)\) are meromorphic fields on the spectral curve.  RTT is their ordered multiplication, the coproduct acts on tensor products of line representations, and the rational \(R\)-matrix exchanges parallel lines.  The Yangian therefore realizes all three noncommutative layers: ordered word, meromorphic field coefficient, and braid transport.  A full associative-chiral bar requires the formal-disc/nonlocal structure maps in addition to the Hopf algebra presentation.
+
+\chapter{The \(A_2\) Hall algebra in complete detail}\label{chap:hall}
+
+\section{The representation category}
+Let \(Q:1\to2\) over \(\mathbb F_q\).  Its indecomposables are
+\[
+ S_1=(\mathbb F_q\to0),
+ \qquad S_2=(0\to\mathbb F_q),
+ \qquad M=(\mathbb F_q\xrightarrow{1}\mathbb F_q),
+\]
+and there is one nonsplit extension
+\[
+ 0\to S_2\to M\to S_1\to0.
+\]
+The Euler form is
+\[
+ \langle(a,b),(c,d)\rangle=ac+bd-ad.
+\]
+Let \([A]*[B]\) count subobjects isomorphic to \(B\) with quotient \(A\), and put \(e_i=[S_i]\).
+
+\section{Binary and triple products}
+The binary products are
+\[
+ e_1*e_2=[S_1\oplus S_2]+[M],
+ \qquad
+ e_2*e_1=[S_1\oplus S_2],
+ \qquad
+ e_1*e_1=(q+1)[2S_1].
+\]
+In dimension vector \((2,1)\), let
+\[
+ X=2S_1\oplus S_2,
+ \qquad Y=S_1\oplus M.
+\]
+Flag counting gives
+\begin{align*}
+ e_1^2e_2&=(q+1)([X]+[Y]),\\
+ e_1e_2e_1&=(q+1)[X]+[Y],\\
+ e_2e_1^2&=(q+1)[X].
+\end{align*}
+
+\begin{theorem}[Untwisted Hall--Serre relation]\label{thm:hall-serre}
+\[
+ e_1^2e_2-(q+1)e_1e_2e_1+qe_2e_1^2=0.
+\]
+The companion relation is
+\[
+ qe_2^2e_1-(q+1)e_2e_1e_2+e_1e_2^2=0.
+\]
+\end{theorem}
+\begin{proof}
+For the first relation, the coefficient of \([Y]\) is \((q+1)-(q+1)=0\), and the coefficient of \([X]\) is
+\[
+ (q+1)-(q+1)^2+q(q+1)=0.
+\]
+The second follows from the symmetric flag count in dimension vector \((1,2)\).
+\end{proof}
+
+The verification harness evaluates the first relation at \(q=2\) in the basis \(([X],[Y])\) and obtains the zero vector exactly.
+
+\section{Twist and quantum group}
+Let \(v^2=q\) and
+\[
+ [A]\diamond[B]=v^{\langle\dim A,\dim B\rangle}[A]*[B].
+\]
+The total twisting factors in the first three triple products are \(v^{-1},1,v\).  Therefore
+\[
+ e_1\diamond e_1\diamond e_2
+ -(v+v^{-1})e_1\diamond e_2\diamond e_1
+ +e_2\diamond e_1\diamond e_1=0,
+\]
+with the companion relation obtained by exchanging \(1,2\).
+
+Define
+\[
+ e_{12}=e_1\diamond e_2-v^{-1}e_2\diamond e_1=v^{-1}[M].
+\]
+Every representation is uniquely \(S_2^a\oplus M^b\oplus S_1^c\).  Ordered divided-power monomials
+\[
+ e_2^{(a)}e_{12}^{(b)}e_1^{(c)}
+\]
+are triangular with nonzero diagonal in the isomorphism-class basis ordered by arrow rank.  They form a PBW basis, identifying the generated algebra with \(U_v^+(\mathfrak{sl}_3)\).
+
+\section{Ordered chiral Hall coefficients}
+Let the representation categories vary in a factorisation family over \(X\).  Extension correspondences at fixed support define the transverse Hall multiplication; disjoint support gives the chiral coefficient.  If pull--push preserves the factorisation system and orientations, the Hall algebra is a transversely ordered chiral algebra.  If the sheaf theory itself carries ordered chiral convolution, the derived extension algebra becomes a doubly associative chiral object.  The finite-field calculation above is the exact local structure constant test.
+
+\chapter{Necklace Hamiltonians and the mixed trace algebra}\label{chap:trace}
+
+\section{The derived commuting scheme}
+Let
+\[
+ R=\mathbb C[[z_1,z_2]],
+ \qquad
+ \{f,g\}=\partial_{z_1}f\,\partial_{z_2}g-
+ \partial_{z_2}f\,\partial_{z_1}g,
+\]
+and let \(\mathfrak h=R/\mathbb C\cdot1\).  The shifted cotangent Lie algebra
+\[
+ \mathfrak g=\mathfrak h\ltimes\mathfrak h^\vee_{\mathrm{cont}}[1]
+\]
+controls formal closed Hamiltonian BF observables.
+
+For \(N\) branes, take even matrices \(X,Y\in\mathfrak{gl}_N\) and an odd matrix \(\psi\in\mathfrak{gl}_N[1]\) with
+\[
+ QX=QY=0,
+ \qquad Q\psi=[X,Y].
+\]
+Adding the conjugation ghost gives functions on the derived quotient of the commuting equation.  Gauge-invariant open observables are
+\[
+ J_N(f)=\Tr f(X,Y).
+\]
+
+\section{Necklace bracket}
+Let \(F=\mathbb C\langle x,y\rangle\) and \(F_{\cyc}=F/[F,F]\).  The cyclic derivative cuts a cyclic word after every occurrence of the indicated letter.  Define
+\[
+ \delta_f(x)=-\partial_y^{\cyc}f,
+ \qquad
+ \delta_f(y)=\partial_x^{\cyc}f,
+\]
+and
+\[
+ \{f,g\}_{\mathrm{neck}}
+ =\Bigl[
+ \partial_x^{\cyc}f\,\partial_y^{\cyc}g-
+ \partial_y^{\cyc}f\,\partial_x^{\cyc}g
+ \Bigr]_{\cyc}.
+\]
+The cyclic Euler identity
+\[
+ [x,\partial_x^{\cyc}f]+[y,\partial_y^{\cyc}f]=0
+\]
+implies \(\delta_f([x,y])=0\), so the action descends to the derived commuting equation.
+
+\begin{theorem}[Necklace Lie algebra and trace action]\label{thm:necklace}
+The bracket makes \(F_{\cyc}/\mathbb C\) a Lie algebra and
+\[
+ [\delta_f,\delta_g]=\delta_{\{f,g\}_{\mathrm{neck}}}.
+\]
+Moreover,
+\[
+ \delta_fJ_N(g)=J_N(\{f,g\}_{\mathrm{neck}}).
+\]
+\end{theorem}
+\begin{proof}
+Hamiltonian derivations preserve the noncommutative symplectic form \(dx\,dy\), so their commutator is Hamiltonian.  Evaluating on \(x,y\) gives the displayed bracket and Jacobi modulo commutators.  Cyclic differentiation of \(\Tr g(X,Y)\), followed by cyclicity of trace, gives the second identity.
+\end{proof}
+
+This theorem is an exact finite-\(N\) open--closed operation.  It constructs a coordinate map into the boundary action; it does not yet prove a quasi-isomorphism from all closed observables to the entire derived centre.
+
+\section{Stable trace Poisson algebra}
+On the semisimple commuting locus, write
+\[
+ X=\operatorname{diag}(x_1,\ldots,x_N),
+ \qquad
+ Y=\operatorname{diag}(y_1,\ldots,y_N),
+\]
+and define
+\[
+ p_{ab}=\sum_{i=1}^Nx_i^ay_i^b,
+ \qquad a,b\ge0,\quad a+b>0.
+\]
+The stable multisymmetric invariant algebra is
+\[
+ \Lambda_2=\mathbb C[p_{ab}:a+b>0].
+\]
+
+\begin{theorem}[Stable trace bracket]\label{thm:stable-trace}
+For \(\{x_i,y_j\}=\delta_{ij}\),
+\[
+ \boxed{\ \{p_{ab},p_{cd}\}=(ad-bc)p_{a+c-1,b+d-1}\ }.
+\]
+This is the commutative reduction of the necklace bracket.
+\end{theorem}
+\begin{proof}
+Different particles Poisson commute, and for one particle
+\[
+ \{x^ay^b,x^cy^d\}=(ad-bc)x^{a+c-1}y^{b+d-1}.
+\]
+Sum over particles.  Simultaneous diagonalization identifies cyclic traces with power sums.
+\end{proof}
+
+The verification harness checks Jacobi for all triples with \(0\le a,b,c,d\le3\) and nonzero total degree; every coefficient cancels exactly.
+
+\section{Two branes and the \(A_1\) cone}
+For \(N=2\), remove centre-of-mass variables and set \(\{x,y\}=2\).  The invariants
+\[
+ A=\frac{x^2}{2},
+ \qquad B=\frac{xy}{2},
+ \qquad C=\frac{y^2}{2}
+\]
+satisfy
+\[
+ B^2=AC,
+ \qquad
+ \{A,B\}=2A,
+ \quad \{B,C\}=2C,
+ \quad \{A,C\}=4B.
+\]
+After rescaling, this is the Kirillov--Kostant bracket on the nilpotent cone of \(\mathfrak{sl}_2\).  The first nontrivial finite-rank sector already contains a singular symplectic surface and a nonabelian bracket.
+
+\begin{nogobox}[title={No-go theorem 17: a trace-sector map is not the full open--closed equivalence}]
+The map \(f\mapsto J_N(f)\) intertwines Hamiltonian brackets, but it need not be essentially surjective on derived central observables and need not detect non-trace or finite-rank syzygies.  A full bulk-centre theorem requires a chain-level map, a filtration, and a proof that its cone is acyclic.
+\end{nogobox}
+
+\chapter{Modules, orbifolds, and higher \(\En\) directions}
+
+\section{Pointed bars and interfaces}
+For a right module \(M_R\) and left module \(M_L\),
+\[
+ \Barop_A(M_R,M_L)=
+ \bigl|[r]\mapsto M_R\tensorpt\widebar A^{\tensorpt r}\tensorpt M_L\bigr|
+ \simeq M_R\otimes_A^{\mathbb L}M_L.
+\]
+A marked chiral insertion gives left and right coactions of \(\Barop(A)\) by cutting the interval on either side.  Interfaces are therefore bimodules and compose by relative tensor product; after Koszul transform, they compose by cotensor product.
+
+\section{Crossed products}
+Let a finite group \(G\) act by augmented automorphisms of \(A\).  Then
+\[
+ \Mod_{A\rtimes G}\simeq(\Mod_A)^G.
+\]
+The crossed-product bar is the diagonal totalization of the group bar and the \(A\)-bar.  In characteristic zero, averaging contracts positive group-homology rows.  The fixed algebra \(A^G\) and crossed product \(A\rtimes G\) remain different: the first describes invariant operators, the second equivariant modules and symmetry defects.  A Galois or freeness theorem is needed for Morita equivalence.
+
+\section{Symmetric products and DMVV}
+For a graded vector space \(V\) with character \(f(q)\),
+\[
+ \sum_{N\ge0}p^N\operatorname{ch}\Sym^N(V)
+ =\exp\left(\sum_{r\ge1}\frac{p^r}{r}f(q^r)\right).
+\]
+For a suitable seed elliptic genus \(\sum c(m,\ell)q^my^\ell\), the symmetric-product orbifold trace is
+\[
+ \sum_{N\ge0}p^N\operatorname{Ell}_{\mathrm{orb}}(\operatorname{Sym}^NY)
+ =\prod_{n\ge1,m\ge0,\ell\in\mathbb Z}
+ (1-p^nq^my^\ell)^{-c(nm,\ell)}.
+\]
+The proof is cycle decomposition in symmetric groups.  This is a trace identity.  The orbifold operator algebra additionally requires twisted sectors, defect composition, and OPE maps.  It must not be identified with a bar complex from the product formula alone.
+
+\section{Higher transverse dimensions}
+Dunn additivity gives
+\[
+ \Alg_{\E_{n+1}}(\mathcal V)
+ \simeq\Alg_{\Eone}(\Alg_{\E_n}(\mathcal V)).
+\]
+An \(\E_n\)-ordered chiral algebra has \(n\) locally constant transverse directions while retaining its chiral coefficient.  Its \(n\)-fold bar is factorisation homology of the pointed \(n\)-disk and produces an \(\E_n\)-coalgebra under suitable positivity conditions.  The derived centre is an \(\E_{n+1}\)-object.
+
+Independently, one can form \(\E_n\)-associative chiral algebras for the chiral product.  The same theorem-of-two-bars warning persists: ``higher \(\En\)'' must specify which monoidal direction is being iterated.
+
+\begin{nogobox}[title={No-go theorem 18: dimension loss does not reconstruct a quantum group}]
+A list of graded dimensions, even if it matches a root multiplicity or partition function, contains no coproduct, antipode, associator, or \(R\)-matrix.  Tannaka reconstruction requires a tensor category and a fibre functor; Hall reconstruction requires extension correspondences and orientations.  Scalar agreement is a shadow, not the structured object.
+\end{nogobox}

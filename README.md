@@ -4,7 +4,9 @@
 of Defects*, by Raeez Lorgat.
 
 ```bash
-make volume        # the normative volume → out/main_ordered_chiral.pdf
+make volume        # the normative volume → out/reconstruction.pdf   (104pp)
+make skeleton      # the earlier 8-chapter spine, superseded          (35pp)
+make legacy-manuscript   # the retracted architecture, reference only
 ```
 
 ## The primitive objects

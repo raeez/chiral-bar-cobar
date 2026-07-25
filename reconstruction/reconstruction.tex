@@ -1,0 +1,211 @@
+\documentclass[10pt,oneside,openany]{book}
+
+% Repository typography: EB Garamond via the shared template, loaded
+% immediately after \documentclass per ecosystem invariant XII.  The
+% `localtheorems' option suppresses the template's own theorem
+% declarations so that this document's environments below stand.
+\usepackage[localtheorems]{raeez-math-template}
+
+% This document's page geometry, applied after the template's geometry
+% load so it wins without an option clash.
+\geometry{paperwidth=7in,paperheight=10in,inner=0.72in,outer=0.72in,%
+          top=0.72in,bottom=0.78in,headheight=14pt}
+
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+% mathrsfs and bm dropped: unused here, and the template's newtxmath
+% leaves too few free math alphabets to afford them.
+\usepackage{amsmath,amssymb,mathtools,amsthm}
+\usepackage{stmaryrd}
+\usepackage{booktabs,longtable,tabularx,array,multirow}
+\usepackage{enumitem}
+\usepackage{xcolor}
+% tcolorbox is loaded by raeez-math-template; add the library only.
+\tcbuselibrary{most}
+\usepackage{tikz-cd}
+\usepackage{graphicx}
+\usepackage{pdfpages}
+\usepackage{csquotes}
+\usepackage{etoolbox}
+\usepackage{fancyhdr}
+% imakeidx removed: raeez-math-template already loads makeidx,
+% calls \makeindex, and provides \printindex.
+\usepackage{hyperref}
+\usepackage[nameinlink,noabbrev,capitalise]{cleveref}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{titlesec}
+\usepackage{needspace}
+\usepackage{setspace}
+\usepackage{listings}
+
+\definecolor{ink}{HTML}{172033}
+\definecolor{deep}{HTML}{173B57}
+\definecolor{accent}{HTML}{8B3E2F}
+\definecolor{pale}{HTML}{EEF3F6}
+\definecolor{warm}{HTML}{F7F0E9}
+\definecolor{greenpale}{HTML}{EDF5EF}
+\definecolor{grayline}{HTML}{D8DEE4}
+\hypersetup{colorlinks=true,linkcolor=deep,citecolor=accent,urlcolor=deep,
+pdfauthor={Raeez Lorgat},
+pdftitle={Chiral Koszul Duality: Definitive Reconstruction},
+pdfsubject={Associative chiral algebras, ordered quantum fields, bar-cobar duality, and defects},
+pdfkeywords={chiral Koszul duality, factorisation D-modules, nonlocal vertex algebra, ordered quantum fields, bar-cobar, defects}}
+
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries\color{ink}}
+  {\filleft\Large\color{accent}\chaptername\ \thechapter}
+  {0.5ex}{\titlerule[0.8pt]\vspace{1ex}}
+\titleformat{\section}{\normalfont\Large\bfseries\color{ink}}{\thesection}{0.7em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries\color{deep}}{\thesubsection}{0.7em}{}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\nouppercase{\leftmark}}
+\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\thepage}\renewcommand{\headrulewidth}{0pt}}
+
+\setlength{\parindent}{1.15em}
+\setlength{\parskip}{0.12em}
+\setlist[itemize]{topsep=0.35em,itemsep=0.15em,parsep=0em,leftmargin=1.6em}
+\setlist[enumerate]{topsep=0.35em,itemsep=0.18em,parsep=0em,leftmargin=1.8em}
+\setstretch{1.035}
+\emergencystretch=2em
+
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{criterion}[theorem]{Criterion}
+\newtheorem{recognition}[theorem]{Recognition theorem}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{convention}[theorem]{Convention}
+\newtheorem{calculation}[theorem]{Calculation}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{warning}[theorem]{Warning}
+\newtheorem{question}[theorem]{Question}
+
+\newtcolorbox{statusbox}[1][]{breakable,colback=pale,colframe=deep,boxrule=0.6pt,arc=1.2mm,left=1.2mm,right=1.2mm,top=1mm,bottom=1mm,title={Status},fonttitle=\bfseries,#1}
+\newtcolorbox{nogobox}[1][]{breakable,colback=warm,colframe=accent,boxrule=0.7pt,arc=1.2mm,left=1.2mm,right=1.2mm,top=1mm,bottom=1mm,title={No-go theorem},fonttitle=\bfseries,#1}
+\newtcolorbox{calcbox}[1][]{breakable,colback=greenpale,colframe=deep,boxrule=0.6pt,arc=1.2mm,left=1.2mm,right=1.2mm,top=1mm,bottom=1mm,title={Exact calculation},fonttitle=\bfseries,#1}
+\newtcolorbox{sourcebox}[1][]{breakable,colback=white,colframe=grayline,boxrule=0.6pt,arc=0mm,left=1.2mm,right=1.2mm,top=1mm,bottom=1mm,title={Source reconciliation},fonttitle=\bfseries\color{ink},#1}
+\newcommand{\proved}{\textsc{proved}}
+\newcommand{\conditional}{\textsc{conditional}}
+\newcommand{\formalstatus}{\textsc{formal}}
+\newcommand{\retracted}{\textsc{retracted}}
+\newcommand{\computed}{\textsc{computed}}
+\newcommand{\native}{\textsc{native}}
+
+\newcommand{\kfield}{\Bbbk}
+\newcommand{\one}{\mathbbm{1}}
+\newcommand{\Ran}{\operatorname{Ran}}
+\newcommand{\DMod}{\operatorname{DMod}}
+\newcommand{\FactD}{\operatorname{FactD}}
+\newcommand{\Alg}{\operatorname{Alg}}
+\newcommand{\Coalg}{\operatorname{Coalg}}
+\newcommand{\Mod}{\operatorname{Mod}}
+\newcommand{\RHom}{\operatorname{RHom}}
+\newcommand{\Tor}{\operatorname{Tor}}
+\newcommand{\Ext}{\operatorname{Ext}}
+\newcommand{\Barop}{\operatorname{Bar}}
+\newcommand{\Cobar}{\operatorname{Cobar}}
+\newcommand{\HH}{\operatorname{HH}}
+\newcommand{\CH}{\operatorname{CH}}
+\newcommand{\CE}{\operatorname{CE}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\Conf}{\operatorname{Conf}}
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\Sym}{\operatorname{Sym}}
+\newcommand{\Free}{\operatorname{Free}}
+\newcommand{\Cofree}{\operatorname{Cofree}}
+\newcommand{\gr}{\operatorname{gr}}
+\newcommand{\Tot}{\operatorname{Tot}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\Res}{\operatorname{Res}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\cofib}{\operatorname{cofib}}
+\newcommand{\fib}{\operatorname{fib}}
+\newcommand{\Map}{\operatorname{Map}}
+\newcommand{\Perf}{\operatorname{Perf}}
+\newcommand{\IndCoh}{\operatorname{IndCoh}}
+\newcommand{\QCoh}{\operatorname{QCoh}}
+\newcommand{\starc}{\mathbin{\star_{\mathrm{ch}}}}
+\newcommand{\tensor}{\mathbin{\otimes}}
+\newcommand{\tensorpt}{\mathbin{\otimes_{!}}}
+\newcommand{\tensorS}{\mathbin{\otimes_{S}}}
+\newcommand{\E}{\mathsf E}
+\newcommand{\Eone}{\mathsf E_1}
+\newcommand{\Etwo}{\mathsf E_2}
+\newcommand{\En}{\mathsf E_n}
+\newcommand{\Ass}{\mathsf{Ass}}
+\newcommand{\Lie}{\mathsf{Lie}}
+\newcommand{\Com}{\mathsf{Com}}
+\newcommand{\Chir}{\mathsf{Chir}}
+\newcommand{\Assch}{\mathsf{Ass}^{\mathrm{ch}}_X}
+\newcommand{\Ainf}{\mathsf A_\infty}
+\newcommand{\Linf}{\mathsf L_\infty}
+\newcommand{\op}{\mathrm{op}}
+\newcommand{\ord}{\mathrm{ord}}
+\newcommand{\ch}{\mathrm{ch}}
+\newcommand{\perpdir}{\perp}
+\newcommand{\aug}{\mathrm{aug}}
+\newcommand{\conil}{\mathrm{conil}}
+\newcommand{\coaug}{\mathrm{coaug}}
+\newcommand{\nilc}{\mathrm{nil}}
+\providecommand{\widebar}[1]{\overline{#1}}
+\renewcommand{\widebar}[1]{\overline{#1}}
+\newcommand{\mcM}{\overline{\mathcal M}}
+\newcommand{\hbarX}{\hbar_X}
+\newcommand{\hbarp}{\hbar_{\perp}}
+\newcommand{\DeltaX}{\Delta_X}
+\newcommand{\Deltap}{\Delta_{\perp}}
+\newcommand{\brX}[2]{[#1,#2]_X}
+\newcommand{\brp}[2]{[#1,#2]_{\perp}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\qedherebox}{\hfill$\square$}
+\newcommand{\sourceversion}[1]{\textsf{#1}}
+\newcommand{\word}[1]{[\,#1\,]}
+\newcommand{\cyc}{\mathrm{cyc}}
+\newcommand{\sdim}{\operatorname{sdim}}
+\newcommand{\qdet}{\operatorname{qdet}}
+\newcommand{\ad}{\operatorname{ad}}
+\newcommand{\id}{\operatorname{id}}
+
+% mathbbm fallback
+% bbm would be a 17th math alphabet on top of the template's newtxmath,
+% which overflows LaTeX's limit of 16.  Use the document's own
+% documented fallback, matching \unit in the repository preamble.
+\renewcommand{\one}{\mathbf 1}
+
+
+\begin{document}
+\frontmatter
+\input{frontmatter}
+\tableofcontents
+
+\mainmatter
+\part{The invariant object and its two associative directions}
+\input{part1_foundations}
+\part{Bar, cobar, Morita, and homotopy-coherent presentations}
+\input{part2_duality}
+\part{Calculated noncommutative and doubly noncommutative models}
+\input{part3_examples}
+\part{Exchange, reduction, sewing, physics, and arithmetic}
+\input{part4_physics}
+\part{The disciplinary constitution of the theory}
+\input{part5_audit}
+
+\appendix
+\input{appendices}
+
+\backmatter
+\nocite{*}
+\bibliographystyle{plainnat}
+\bibliography{references}
+\printindex
+\end{document}

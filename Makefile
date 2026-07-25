@@ -3,8 +3,9 @@
 # ============================================================================
 #
 #  Usage:
-#    make volume         Build the NORMATIVE volume → out/main_ordered_chiral.pdf
+#    make volume         Build the NORMATIVE volume → out/reconstruction.pdf
 #                        This is the mathematically current root.
+#    make skeleton       Build the earlier 8-chapter spine (superseded).
 #    make legacy-manuscript
 #                        Build the retracted-architecture manuscript.
 #                        Reference only — see PORT_LEDGER.md.
@@ -38,6 +39,8 @@
 
 MAIN      := main
 NEWVOL    := main_ordered_chiral
+RECON     := reconstruction
+RECON_DIR := reconstruction
 TEX       := pdflatex
 TEXFLAGS  := -interaction=nonstopmode -file-line-error -synctex=0 -cnf-line='buf_size=1000000' -cnf-line='stack_size=20000'
 LATEXMK   := latexmk
@@ -99,7 +102,7 @@ AUX_EXTS  := aux log out toc synctex.gz fdb_latexmk fls bbl blg \
 
 .DEFAULT_GOAL := all
 
-.PHONY: all volume legacy-manuscript modular-koszul-core fast watch clean veryclean clean-builds count check draft integrity phase0-index metadata verify census test editorial standalone dist release help working-notes icloud verify-independence verify-independence-verbose mathematics-publish root-publish architecture unified-architecture
+.PHONY: all volume skeleton legacy-manuscript modular-koszul-core fast watch clean veryclean clean-builds count check draft integrity phase0-index metadata verify census test editorial standalone dist release help working-notes icloud verify-independence verify-independence-verbose mathematics-publish root-publish architecture unified-architecture
 
 ## icloud: Copy latest PDFs to iCloud Drive, organised by subject
 icloud: $(ICLOUD_MAIN_PREREQ) standalone
@@ -148,11 +151,44 @@ icloud: $(ICLOUD_MAIN_PREREQ) standalone
 	done
 	@echo "  Vol I PDFs copied to iCloud (5 folders)."
 
-## volume: Build the normative volume, the current formulation → out/
-##   This is the mathematically current root. `make legacy-manuscript` builds
-##   the retracted-architecture manuscript; see PORT_LEDGER.md.
+## volume: Build the normative volume → out/reconstruction.pdf
+##   THE mathematically current root: reconstruction/reconstruction.tex.
+##   Merges the four PDF witnesses plus the repository corpus, in EB Garamond.
+##   `make skeleton` builds the earlier 8-chapter spine (superseded);
+##   `make legacy-manuscript` builds the retracted architecture.
+##   See PORT_LEDGER.md.
 volume:
-	@echo "  ── Building the normative volume ($(NEWVOL)) ──"
+	@echo "  ── Building the normative volume (reconstruction) ──"
+	@mkdir -p $(OUT_DIR) $(LOG_DIR)
+	@cd $(RECON_DIR) && \
+	  TEXINPUTS=".:..:$$TEXINPUTS" BIBINPUTS=".:..:$$BIBINPUTS" \
+	  $(TEX) $(TEXFLAGS) $(RECON).tex >../$(LOG_DIR)/$(RECON).log 2>&1 || true; \
+	  TEXINPUTS=".:..:$$TEXINPUTS" BIBINPUTS=".:..:$$BIBINPUTS" \
+	  bibtex $(RECON) >>../$(LOG_DIR)/$(RECON).log 2>&1 || true; \
+	  for i in 1 2 3; do \
+	    TEXINPUTS=".:..:$$TEXINPUTS" BIBINPUTS=".:..:$$BIBINPUTS" \
+	    $(TEX) $(TEXFLAGS) $(RECON).tex >../$(LOG_DIR)/$(RECON).log 2>&1 || true; \
+	  done
+	@if [ -f $(RECON_DIR)/$(RECON).pdf ]; then \
+		cp $(RECON_DIR)/$(RECON).pdf $(OUT_DIR)/$(RECON).pdf; \
+		echo "    ✓ out/$(RECON).pdf ($$(pdfinfo $(RECON_DIR)/$(RECON).pdf 2>/dev/null | awk '/^Pages/{print $$2}') pages)"; \
+	else \
+		echo "    ✗ build failed — see $(LOG_DIR)/$(RECON).log"; exit 1; \
+	fi
+	@if grep -aqE '^! ' $(LOG_DIR)/$(RECON).log; then \
+		echo "    ⚠  LaTeX errors present:"; grep -aE '^! ' $(LOG_DIR)/$(RECON).log | head -5; exit 1; \
+	fi
+	@if grep -aqE 'Reference .* undefined|Citation .* undefined' $(LOG_DIR)/$(RECON).log; then \
+		echo "    ⚠  undefined references or citations:"; \
+		grep -aE 'Reference .* undefined|Citation .* undefined' $(LOG_DIR)/$(RECON).log | head -5; exit 1; \
+	fi
+	@echo "    0 errors, 0 undefined references, 0 undefined citations."
+
+## skeleton: Build the earlier 8-chapter normative spine → out/
+##   Superseded by `make volume`; its unique results are merged there.
+##   Retained because it is a self-contained, independently compiling account.
+skeleton:
+	@echo "  ── Building the 8-chapter spine ($(NEWVOL)) ──"
 	@mkdir -p $(OUT_DIR) $(LOG_DIR)
 	@for i in 1 2 3; do \
 		$(TEX) $(TEXFLAGS) $(NEWVOL).tex >$(LOG_DIR)/$(NEWVOL).log 2>&1 || true; \
@@ -166,11 +202,7 @@ volume:
 	@if grep -aqE '^! ' $(LOG_DIR)/$(NEWVOL).log; then \
 		echo "    ⚠  LaTeX errors present:"; grep -aE '^! ' $(LOG_DIR)/$(NEWVOL).log | head -5; exit 1; \
 	fi
-	@if grep -aqE 'Reference .* undefined' $(LOG_DIR)/$(NEWVOL).log; then \
-		echo "    ⚠  undefined references:"; \
-		grep -aE 'Reference .* undefined' $(LOG_DIR)/$(NEWVOL).log | head -5; exit 1; \
-	fi
-	@echo "    0 errors, 0 undefined references."
+	@echo "    0 errors."
 
 ## legacy-manuscript: Build the retracted-architecture manuscript → out/
 ##   Retained for reference and citation archaeology only. Its architecture
@@ -179,7 +211,7 @@ volume:
 legacy-manuscript: $(STAMP)
 
 ## all: Full build — normative volume + manuscript + working notes → out/
-all: volume $(STAMP) working-notes modular-koszul-core
+all: volume skeleton $(STAMP) working-notes modular-koszul-core
 
 ## modular-koszul-core: Build the core standalone paper → out/
 modular-koszul-core:
